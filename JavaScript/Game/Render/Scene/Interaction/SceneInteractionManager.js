@@ -24,7 +24,7 @@ class SceneInteractionManager {
       (this.WaterObjects = void 0),
       (this.TempVector = void 0),
       (this.xie = () => {
-        this.nOn();
+        this.Ikn();
       });
   }
   static Get() {
@@ -59,7 +59,7 @@ class SceneInteractionManager {
       ),
       this.LoadAssets();
   }
-  nOn() {
+  Ikn() {
     for (const t of ModelManager_1.ModelManager.SceneTeamModel.GetTeamItems()) {
       var e = t.EntityHandle?.Entity?.GetComponent(3)?.Owner;
       e &&
@@ -153,9 +153,9 @@ class SceneInteractionManager {
     e = this.AllSceneInteractionInfos.get(e);
     return !!e && e.IsStreamingComplete();
   }
-  ToggleSceneInteractionVisible(e, t, i = void 0) {
+  ToggleSceneInteractionVisible(e, t, i = !1, r = void 0) {
     e = this.AllSceneInteractionInfos.get(e);
-    e && e.ToggleLevelVisible(t, i);
+    e && e.ToggleLevelVisible(t, i, r);
   }
   GetSceneInteractionLevelName(e) {
     e = this.AllSceneInteractionInfos.get(e);

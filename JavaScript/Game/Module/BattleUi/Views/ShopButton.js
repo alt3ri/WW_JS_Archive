@@ -11,7 +11,7 @@ const UE = require("ue"),
 class ShopButton extends BattleChildView_1.BattleChildView {
   constructor() {
     super(...arguments),
-      (this.Dct = () => {
+      (this.Omt = () => {
         var e =
           CommonParamById_1.configCommonParamById.GetIntConfig(
             "BattleViewShopId",
@@ -29,7 +29,7 @@ class ShopButton extends BattleChildView_1.BattleChildView {
       [0, UE.UIButtonComponent],
       [1, UE.UIItem],
     ]),
-      (this.BtnBindInfo = [[0, this.Dct]]);
+      (this.BtnBindInfo = [[0, this.Omt]]);
   }
   Initialize(e) {
     super.Initialize(e),

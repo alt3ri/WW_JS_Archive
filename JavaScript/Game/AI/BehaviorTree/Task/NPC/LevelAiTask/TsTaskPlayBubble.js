@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
-const GlobalData_1 = require("../../../../../GlobalData"),
+const Log_1 = require("../../../../../../Core/Common/Log"),
+  GlobalData_1 = require("../../../../../GlobalData"),
   CharacterFlowComponent_1 = require("../../../../../NewWorld/Character/Common/Component/Flow/CharacterFlowComponent"),
   DynamicFlowController_1 = require("../../../../../NewWorld/Character/Common/Component/Flow/DynamicFlowController"),
   TsAiController_1 = require("../../../../Controller/TsAiController"),
@@ -23,38 +24,52 @@ class TsTaskPlayBubble extends TsTaskAbortImmediatelyBase_1.default {
       (this.TsFlowId = this.FlowId),
       (this.TsStateId = this.StateId));
   }
-  ReceiveExecuteAI(t, e) {
-    if ((this.InitTsVariables(), t instanceof TsAiController_1.default))
-      if (this.TsFlowListName) {
-        t = t.AiController.CharActorComp;
-        if (t) {
-          var o = {
-            FlowListName: this.TsFlowListName,
-            FlowId: this.TsFlowId,
-            StateId: this.TsStateId,
-          };
-          const s = t.CreatureData.GetPbDataId();
-          t = this.CreateCharacterFlowData(s, o);
-          (t.Callback = () => {
-            DynamicFlowController_1.DynamicFlowController.RemoveDynamicFlow(s);
-          }),
-            DynamicFlowController_1.DynamicFlowController.AddDynamicFlow(t),
-            this.FinishExecute(!0);
-        } else this.FinishExecute(!1);
-      } else this.FinishExecute(!1);
-    else this.FinishExecute(!1);
+  ReceiveExecuteAI(e, o) {
+    var t, r;
+    this.InitTsVariables(),
+      e instanceof TsAiController_1.default
+        ? this.TsFlowListName
+          ? (r = e.AiController.CharActorComp)
+            ? ((t = {
+                FlowListName: this.TsFlowListName,
+                FlowId: this.TsFlowId,
+                StateId: this.TsStateId,
+              }),
+              (r = r.CreatureData.GetPbDataId()),
+              (r = this.CreateCharacterFlowData(r, t)),
+              DynamicFlowController_1.DynamicFlowController.AddDynamicFlow(r))
+            : Log_1.Log.CheckError() &&
+              Log_1.Log.Error(
+                "BehaviorTree",
+                51,
+                "[TsTaskPlayBubble]无效的ActorComp",
+                ["Type", e.GetClass().GetName()],
+              )
+          : Log_1.Log.CheckError() &&
+            Log_1.Log.Error(
+              "BehaviorTree",
+              51,
+              "[TsTaskPlayBubble]无效的FlowListName",
+              ["Type", e.GetClass().GetName()],
+            )
+        : Log_1.Log.CheckError() &&
+          Log_1.Log.Error("BehaviorTree", 6, "错误的Controller类型", [
+            "Type",
+            e.GetClass().GetName(),
+          ]),
+      this.FinishExecute(!0);
   }
-  CreateCharacterFlowData(t, e) {
-    var o = new DynamicFlowController_1.CharacterDynamicFlowData(),
-      t = {
-        EntityIds: [t],
+  CreateCharacterFlowData(e, o) {
+    var t = new DynamicFlowController_1.CharacterDynamicFlowData(),
+      e = {
+        EntityIds: [e],
         EnterRadius: CharacterFlowComponent_1.DEFAULT_BUBBLE_ENTER_RANGE,
         LeaveRadius: CharacterFlowComponent_1.DEFAULT_BUBBLE_LEAVE_RANGE,
-        Flow: e,
+        Flow: o,
         WaitTime: 0,
         RedDot: !1,
       };
-    return (o.BubbleData = t), o;
+    return (t.BubbleData = e), t;
   }
 }
 exports.default = TsTaskPlayBubble;

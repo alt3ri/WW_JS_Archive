@@ -33,7 +33,7 @@ let PlayerTagComponent = class PlayerTagComponent extends BaseTagComponent_1.Bas
             this.PlayerId,
           ))
             r.EntityHandle?.Entity?.GetComponent(
-              185,
+              188,
             )?.TagContainer.UpdateExactTag(5, e, t - o);
       }),
       this.TagContainer.AddAnyExactTagListener(this.OnAnyExactTagChanged);
@@ -51,7 +51,7 @@ let PlayerTagComponent = class PlayerTagComponent extends BaseTagComponent_1.Bas
       for (const t of ModelManager_1.ModelManager.SceneTeamModel.GetTeamItemsByPlayer(
         this.PlayerId,
       ))
-        t.EntityHandle?.Entity?.GetComponent(185)?.TagContainer.RemoveExactTag(
+        t.EntityHandle?.Entity?.GetComponent(188)?.TagContainer.RemoveExactTag(
           5,
           e,
         );
@@ -64,14 +64,14 @@ let PlayerTagComponent = class PlayerTagComponent extends BaseTagComponent_1.Bas
     )?.EntityHandle?.Entity;
   }
   GetCurrentTagComponent() {
-    return this.GetEntity()?.GetComponent(185);
+    return this.GetEntity()?.GetComponent(188);
   }
   HasTag(e) {
     return this.GetCurrentTagComponent()?.HasTag(e) ?? !1;
   }
 };
 (PlayerTagComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(181)],
+  [(0, RegisterComponent_1.RegisterComponent)(184)],
   PlayerTagComponent,
 )),
   (exports.PlayerTagComponent = PlayerTagComponent);

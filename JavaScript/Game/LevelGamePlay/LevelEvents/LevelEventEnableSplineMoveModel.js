@@ -11,13 +11,13 @@ const Log_1 = require("../../../Core/Common/Log"),
 class LevelEventEnableSplineMoveModel extends LevelGeneralBase_1.LevelEventBase {
   constructor() {
     super(...arguments),
-      (this.lVs = void 0),
-      (this._Vs = new Array()),
-      (this.uVs = () => {
+      (this.pzs = void 0),
+      (this.vzs = new Array()),
+      (this.Mzs = () => {
         if (Global_1.Global.BaseCharacter?.IsValid()) {
-          TimerSystem_1.TimerSystem.Remove(this.lVs), (this.lVs = void 0);
-          for (var [e, t] of this._Vs) this.ExecuteNew(e, t);
-          this._Vs.length = 0;
+          TimerSystem_1.TimerSystem.Remove(this.pzs), (this.pzs = void 0);
+          for (var [e, t] of this.vzs) this.ExecuteNew(e, t);
+          this.vzs.length = 0;
         }
       });
   }
@@ -70,11 +70,11 @@ class LevelEventEnableSplineMoveModel extends LevelGeneralBase_1.LevelEventBase 
         case "Player":
           if (!Global_1.Global.BaseCharacter?.IsValid())
             return (
-              this._Vs.push([t, i]),
+              this.vzs.push([t, i]),
               void (
-                this.lVs ||
-                (this.lVs = TimerSystem_1.TimerSystem.Forever(
-                  this.uVs,
+                this.pzs ||
+                (this.pzs = TimerSystem_1.TimerSystem.Forever(
+                  this.Mzs,
                   CHECK_BASE_CHARACTER_INTERVAL,
                 ))
               )
@@ -93,7 +93,7 @@ class LevelEventEnableSplineMoveModel extends LevelGeneralBase_1.LevelEventBase 
             void this.FinishExecute(!1)
           );
       }
-      var o = e?.GetComponent(95);
+      var o = e?.GetComponent(97);
       o?.Valid
         ? ("Open" === n.Type
             ? o.StartSplineMove(n.SplineEntityId, n)

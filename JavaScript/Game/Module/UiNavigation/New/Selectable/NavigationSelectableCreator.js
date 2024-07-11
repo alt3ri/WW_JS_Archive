@@ -5,7 +5,7 @@ const UE = require("ue"),
   Log_1 = require("../../../../../Core/Common/Log"),
   StringUtils_1 = require("../../../../../Core/Utils/StringUtils");
 class NavigationSelectableCreator {
-  static Cwo(e) {
+  static mBo(e) {
     let t = void 0;
     return (
       (t =
@@ -20,10 +20,10 @@ class NavigationSelectableCreator {
                 : e instanceof UE.UIDraggableComponent
                   ? "DragComponent"
                   : "Selectable"),
-      [NavigationSelectableCreator.gwo.get(t), t]
+      [NavigationSelectableCreator.dBo.get(t), t]
     );
   }
-  static fwo(e) {
+  static CBo(e) {
     let t = e.GetComponentByClass(UE.UISelectableComponent.StaticClass());
     return (
       (t =
@@ -42,20 +42,20 @@ class NavigationSelectableCreator {
     );
   }
   static RegisterNavigationBehavior(e, t) {
-    NavigationSelectableCreator.gwo.set(e, t);
+    NavigationSelectableCreator.dBo.set(e, t);
   }
   static CreateNavigationBehavior(e, t) {
-    e = this.fwo(e);
+    e = this.CBo(e);
     let a = void 0,
       i = t;
     return (
       StringUtils_1.StringUtils.IsBlank(t) ||
-        ((a = NavigationSelectableCreator.gwo.get(t)), (i = t)),
-      a || ((t = this.Cwo(e)), (a = t[0]), (i = t[1])),
+        ((a = NavigationSelectableCreator.dBo.get(t)), (i = t)),
+      a || ((t = this.mBo(e)), (a = t[0]), (i = t[1])),
       new a(e, i)
     );
   }
 }
-(exports.NavigationSelectableCreator = NavigationSelectableCreator).gwo =
+(exports.NavigationSelectableCreator = NavigationSelectableCreator).dBo =
   new Map();
 //# sourceMappingURL=NavigationSelectableCreator.js.map

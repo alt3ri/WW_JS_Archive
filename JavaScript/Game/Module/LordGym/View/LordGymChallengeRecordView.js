@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.DropDownTitle = exports.LordGymChallengeRecordView = void 0);
 const UE = require("ue"),
+  ConfigCommon_1 = require("../../../../Core/Config/ConfigCommon"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
   UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
   CommonDropDown_1 = require("../../Common/DropDown/CommonDropDown"),
@@ -11,14 +12,13 @@ const UE = require("ue"),
   GenericScrollViewNew_1 = require("../../Util/ScrollView/GenericScrollViewNew"),
   LordGymDefine_1 = require("../LordGymDefine"),
   LordRecordItemView_1 = require("./LordRecordItemView"),
-  ConfigCommon_1 = require("../../../../Core/Config/ConfigCommon"),
   MIN_DIFFICULTY = 1,
   MAX_DIFFICULTY = 6;
 class LordGymChallengeRecordView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
       (this.wSi = 1),
-      (this.CLt = LordGymDefine_1.NONE_FILTER_TYPE),
+      (this.vDt = LordGymDefine_1.NONE_FILTER_TYPE),
       (this.BSi = void 0),
       (this.bSi = void 0),
       (this.qSi = (e, i) => {
@@ -28,7 +28,7 @@ class LordGymChallengeRecordView extends UiViewBase_1.UiViewBase {
         return new DropDownTitle(e);
       }),
       (this.NSi = (e, i) => {
-        (this.CLt = i.Id), this.OSi();
+        (this.vDt = i.Id), this.OSi();
       }),
       (this.kSi = () => {
         (this.wSi = Math.max(MIN_DIFFICULTY, this.wSi - 1)), this.OSi();
@@ -86,9 +86,9 @@ class LordGymChallengeRecordView extends UiViewBase_1.UiViewBase {
       );
     return (
       e?.filter((e) => !e.IsDebug),
-      this.CLt === LordGymDefine_1.NONE_FILTER_TYPE
+      this.vDt === LordGymDefine_1.NONE_FILTER_TYPE
         ? ConfigCommon_1.ConfigCommon.ToList(e)
-        : e?.filter((e) => e.FilterType === this.CLt)
+        : e?.filter((e) => e.FilterType === this.vDt)
     );
   }
   OSi() {

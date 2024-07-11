@@ -6,31 +6,31 @@ const CommonItemData_1 = require("../../../../../Inventory/ItemData/CommonItemDa
 class ItemSort extends CommonSort_1.CommonSort {
   constructor() {
     super(...arguments),
-      (this.OLt = (t, s, e) => {
+      (this.HDt = (t, s, e) => {
         return t.GetConfigId() - s.GetConfigId();
       }),
-      (this.kLt = (t, s, e) => {
+      (this.jDt = (t, s, e) => {
         t = t.GetConfigId();
         return (s.GetConfigId() - t) * (e ? -1 : 1);
       }),
-      (this.ZLt = (t, s, e) => {
+      (this.oRt = (t, s, e) => {
         t = t.GetAttributeLevel();
         return (s.GetAttributeLevel() - t) * (e ? -1 : 1);
       }),
-      (this.VLt = (t, s, e) => {
+      (this.KDt = (t, s, e) => {
         t = t.GetQuality();
         return (s.GetQuality() - t) * (e ? -1 : 1);
       }),
-      (this.HLt = (t, s, e) => {
+      (this.QDt = (t, s, e) => {
         return (t.GetCount() - s.GetCount()) * (e ? -1 : 1);
       }),
-      (this.FLt = (t, s, e) => {
+      (this.WDt = (t, s, e) => {
         return (t.GetSortIndex() - s.GetSortIndex()) * (e ? -1 : 1);
       }),
-      (this.eDt = (t, s, e) => {
+      (this.rRt = (t, s, e) => {
         return (t.GetUniqueId() - s.GetUniqueId()) * (e ? -1 : 1);
       }),
-      (this.tDt = (t, s, e) => {
+      (this.nRt = (t, s, e) => {
         (t = t.GetItemDataBase()), (s = s.GetItemDataBase());
         let r = 0,
           i = 0;
@@ -47,14 +47,14 @@ class ItemSort extends CommonSort_1.CommonSort {
       });
   }
   OnInitSortMap() {
-    this.SortMap.set(1, this.kLt),
-      this.SortMap.set(4, this.HLt),
-      this.SortMap.set(2, this.ZLt),
-      this.SortMap.set(3, this.VLt),
-      this.SortMap.set(5, this.FLt),
-      this.SortMap.set(6, this.eDt),
-      this.SortMap.set(7, this.OLt),
-      this.SortMap.set(8, this.tDt);
+    this.SortMap.set(1, this.jDt),
+      this.SortMap.set(4, this.QDt),
+      this.SortMap.set(2, this.oRt),
+      this.SortMap.set(3, this.KDt),
+      this.SortMap.set(5, this.WDt),
+      this.SortMap.set(6, this.rRt),
+      this.SortMap.set(7, this.HDt),
+      this.SortMap.set(8, this.nRt);
   }
 }
 exports.ItemSort = ItemSort;

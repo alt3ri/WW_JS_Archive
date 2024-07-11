@@ -10,11 +10,11 @@ class SilentAreaItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
       (this.Pe = void 0),
-      (this.b5e = void 0),
-      (this.EVe = void 0);
+      (this.$Ve = void 0),
+      (this.q6e = void 0);
   }
   BindCallback(t) {
-    this.EVe = t;
+    this.q6e = t;
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -24,22 +24,22 @@ class SilentAreaItem extends GridProxyAbstract_1.GridProxyAbstract {
     ];
   }
   OnStart() {
-    (this.b5e = this.GetExtendToggle(0)),
-      this.b5e.OnStateChange.Add((t) => {
-        this.yVe();
+    (this.$Ve = this.GetExtendToggle(0)),
+      this.$Ve.OnStateChange.Add((t) => {
+        this.G6e();
       }),
-      this.b5e.SetToggleState(0),
-      this.b5e.OnPostAudioEvent.Bind((t) => {
+      this.$Ve.SetToggleState(0),
+      this.$Ve.OnPostAudioEvent.Bind((t) => {
         t && this.PostClickAudioEvent(t);
       }),
-      this.b5e.OnPostAudioStateEvent.Bind((t, i) => {
+      this.$Ve.OnPostAudioStateEvent.Bind((t, i) => {
         i && this.PostClickAudioEvent(i);
       });
   }
   OnBeforeDestroy() {
-    this.b5e.OnStateChange.Clear(),
-      this.b5e.OnPostAudioEvent.Unbind(),
-      this.b5e.OnPostAudioStateEvent.Unbind();
+    this.$Ve.OnStateChange.Clear(),
+      this.$Ve.OnPostAudioEvent.Unbind(),
+      this.$Ve.OnPostAudioStateEvent.Unbind();
   }
   Refresh(t, i, e) {
     (this.Pe = t.SilentAreaDetectionData),
@@ -63,19 +63,19 @@ class SilentAreaItem extends GridProxyAbstract_1.GridProxyAbstract {
         this.RootItem.SetUIActive(!0),
         ModelManager_1.ModelManager.AdventureGuideModel.CurrentSilentId ===
           this.Pe.Conf.Id);
-    this.IVe(s, !1), s && this.yVe();
+    this.N6e(s, !1), s && this.G6e();
   }
   OnSelected(t) {
-    this.IVe(!0);
+    this.N6e(!0);
   }
   OnDeselected(t) {
-    this.IVe(!1);
+    this.N6e(!1);
   }
-  yVe() {
-    this.EVe && this.Pe && this.EVe(this.Pe.Conf.Id, this.b5e);
+  G6e() {
+    this.q6e && this.Pe && this.q6e(this.Pe.Conf.Id, this.$Ve);
   }
-  IVe(t, i = !0) {
-    t ? this.b5e.SetToggleState(1, i) : this.b5e.SetToggleState(0, !1);
+  N6e(t, i = !0) {
+    t ? this.$Ve.SetToggleState(1, i) : this.$Ve.SetToggleState(0, !1);
   }
 }
 exports.SilentAreaItem = SilentAreaItem;

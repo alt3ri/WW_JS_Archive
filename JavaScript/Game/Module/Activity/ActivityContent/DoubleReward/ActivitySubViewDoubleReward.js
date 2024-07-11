@@ -44,16 +44,15 @@ class ActivitySubViewDoubleReward extends ActivitySubViewBase_1.ActivitySubViewB
   }
   OnStart() {
     var i,
-      t,
-      e = this.ActivityBaseData.LocalConfig;
-    e &&
-      (this.LNe.SetTitleByText(this.ActivityBaseData.GetTitle()),
-      (i = e.DescTheme),
-      (e = e.Desc),
-      (t = !StringUtils_1.StringUtils.IsEmpty(i)),
-      this.DNe.SetTitleVisible(t),
-      t && this.DNe.SetTitleByTextId(i),
-      this.DNe.SetContentByTextId(e),
+      t = this.ActivityBaseData.LocalConfig;
+    t &&
+      ((i = t.DescTheme),
+      (i = !StringUtils_1.StringUtils.IsEmpty(i)),
+      this.LNe.SetTitleByText(this.ActivityBaseData.GetTitle()),
+      this.LNe.SetSubTitleVisible(i),
+      i && this.LNe.SetSubTitleByTextId(t.DescTheme),
+      (i = t.Desc),
+      this.DNe.SetContentByTextId(i),
       this.OnRefreshView());
   }
   OnTimer(i) {

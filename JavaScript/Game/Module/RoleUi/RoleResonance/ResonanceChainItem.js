@@ -15,19 +15,19 @@ class ResonanceChainBaseItem extends UiPanelBase_1.UiPanelBase {
     super(...arguments),
       (this.ResonanceId = 0),
       (this.RoleId = 0),
-      (this.Wsi = !1),
+      (this.Wai = !1),
       (this.pqe = void 0),
-      (this.Gft = void 0),
+      (this.$pt = void 0),
       (this.ActivateSequenceName = void 0),
       (this.OnActivateSequenceEndCallBack = void 0),
-      (this.Guo = 0),
+      (this.wco = 0),
       (this.LoadPromise = void 0),
       (this.OnSequenceEndCallBack = (e) => {
         e === this.ActivateSequenceName &&
           this.OnActivateSequenceEndCallBack &&
           this.OnActivateSequenceEndCallBack();
       }),
-      (this.Nuo = () => {
+      (this.Bco = () => {
         this.pqe && this.pqe(this.ResonanceId);
       });
   }
@@ -38,28 +38,28 @@ class ResonanceChainBaseItem extends UiPanelBase_1.UiPanelBase {
       [3, UE.UIItem],
       [2, UE.UIItem],
     ]),
-      (this.BtnBindInfo = [[1, this.Nuo]]);
+      (this.BtnBindInfo = [[1, this.Bco]]);
   }
   OnStart() {
     this.GetUiNiagara(0).SetTickableWhenPaused(!0);
   }
   OnStartImplement() {
-    (this.Gft = new LevelSequencePlayer_1.LevelSequencePlayer(
+    (this.$pt = new LevelSequencePlayer_1.LevelSequencePlayer(
       this.GetRootItem(),
     )),
-      this.Gft.BindSequenceCloseEvent(this.OnSequenceEndCallBack);
+      this.$pt.BindSequenceCloseEvent(this.OnSequenceEndCallBack);
   }
   Update(e, t) {
     (this.ResonanceId = t), (this.RoleId = e), this.Refresh();
   }
   async Refresh() {
     await this.LoadPromise,
-      this.RefreshToggleState(this.Wsi),
+      this.RefreshToggleState(this.Wai),
       this.Kbe(),
       this.RefreshRedDot();
   }
   async ShowItem() {
-    this.SetActive(!0), await this.Ouo();
+    this.SetActive(!0), await this.bco();
   }
   GetUiItemForGuide() {
     return this.GetExtendToggle(1)
@@ -71,20 +71,20 @@ class ResonanceChainBaseItem extends UiPanelBase_1.UiPanelBase {
   }
   RefreshToggleState(e, t = !1) {
     this.SetSelectState(e);
-    e = this.Wsi ? 1 : 0;
+    e = this.Wai ? 1 : 0;
     t
       ? this.GetExtendToggle(1).SetToggleStateForce(e)
       : this.GetExtendToggle(1).SetToggleState(e);
   }
   SetSelectState(e) {
-    this.Wsi = e;
+    this.Wai = e;
   }
   async SetIconRotation(e) {
-    (this.Guo = e), await this.LoadPromise, this.kuo();
+    (this.wco = e), await this.LoadPromise, this.qco();
   }
-  kuo() {
-    (ResonanceChainBaseItem.Fuo.Yaw = this.Guo),
-      this.GetItem(2).SetUIRelativeRotation(ResonanceChainBaseItem.Fuo);
+  qco() {
+    (ResonanceChainBaseItem.Gco.Yaw = this.wco),
+      this.GetItem(2).SetUIRelativeRotation(ResonanceChainBaseItem.Gco);
   }
   Kbe() {
     var e,
@@ -107,15 +107,15 @@ class ResonanceChainBaseItem extends UiPanelBase_1.UiPanelBase {
   async PlayActivateSequence(e) {
     (this.OnActivateSequenceEndCallBack = e),
       await this.LoadPromise,
-      this.Gft.PlayLevelSequenceByName(this.ActivateSequenceName);
+      this.$pt.PlayLevelSequenceByName(this.ActivateSequenceName);
   }
-  async Ouo() {
+  async bco() {
     await this.LoadPromise,
-      this.Gft.StopSequenceByKey("Start"),
-      this.Gft.PlayLevelSequenceByName("Start");
+      this.$pt.StopSequenceByKey("Start"),
+      this.$pt.PlayLevelSequenceByName("Start");
   }
 }
-(exports.ResonanceChainBaseItem = ResonanceChainBaseItem).Fuo = new UE.Rotator(
+(exports.ResonanceChainBaseItem = ResonanceChainBaseItem).Gco = new UE.Rotator(
   0,
   0,
   0,

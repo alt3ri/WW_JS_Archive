@@ -6,47 +6,47 @@ const Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
   ControllerHolder_1 = require("../../../Manager/ControllerHolder");
 class FlowNetworks {
   static Register() {
-    Net_1.Net.Register(13967, this.CXi),
-      Net_1.Net.Register(9916, this.gXi),
-      Net_1.Net.Register(7476, this.fXi);
+    Net_1.Net.Register(5917, this.m$i),
+      Net_1.Net.Register(24295, this.d$i),
+      Net_1.Net.Register(7272, this.C$i);
   }
   static UnRegister() {
-    Net_1.Net.UnRegister(13967),
-      Net_1.Net.UnRegister(9916),
-      Net_1.Net.UnRegister(7476);
+    Net_1.Net.UnRegister(5917),
+      Net_1.Net.UnRegister(24295),
+      Net_1.Net.UnRegister(7272);
   }
   static RequestGmFinish() {
-    var o = Protocol_1.Aki.Protocol.qQn.create();
-    (o.Z4n = 0),
-      (o.H3n = "@skipflow"),
-      Net_1.Net.Call(28935, Protocol_1.Aki.Protocol.qQn.create(o), (o) => {});
+    var o = Protocol_1.Aki.Protocol.Pzn.create();
+    (o.BVn = 0),
+      (o.y8n = "@skipflow"),
+      Net_1.Net.Call(29711, Protocol_1.Aki.Protocol.Pzn.create(o), (o) => {});
   }
   static RequestAction(o, t, e) {
-    var r = Protocol_1.Aki.Protocol.eZn.create();
-    (r.E8n = o),
-      (r.y8n = t),
-      Net_1.Net.Call(27547, r, (o) => {
-        e && e(), FlowNetworks.pXi(o.Kms, 20061);
+    var r = Protocol_1.Aki.Protocol.Qis.create();
+    (r.tHn = o),
+      (r.iHn = t),
+      Net_1.Net.Call(1478, r, (o) => {
+        e && e(), FlowNetworks.g$i(o.hvs, 14125);
       });
   }
   static RequestFlowEnd(o, t, e, r) {
-    var l = new Protocol_1.Aki.Protocol.Xzn(),
-      _ = ((l.E8n = o), (l.I8n = t), {});
+    var l = new Protocol_1.Aki.Protocol.$is(),
+      _ = ((l.tHn = o), (l.rHn = t), {});
     for (const i of e) {
       var s = i[0];
       const e = i[1];
       var n = [];
       for (const a of e) {
-        var c = { T8n: a[0], dFn: a[1] };
+        var c = { oHn: a[0], H5n: a[1] };
         n.push(c);
       }
-      _[s] = { L8n: n };
+      _[s] = { nHn: n };
     }
-    (l.D8n = _),
-      Net_1.Net.Call(17995, l, (o) => {
+    (l.sHn = _),
+      Net_1.Net.Call(20919, l, (o) => {
         o
-          ? (FlowNetworks.pXi(o.Kms, 20061),
-            r?.(o.Kms === Protocol_1.Aki.Protocol.lkn.Sys))
+          ? (FlowNetworks.g$i(o.hvs, 14125),
+            r?.(o.hvs === Protocol_1.Aki.Protocol.O4n.NRs))
           : (ControllerHolder_1.ControllerHolder.FlowController.LogError(
               "请求完成剧情时网络错误",
             ),
@@ -54,11 +54,11 @@ class FlowNetworks {
       });
   }
   static RequestFlowRestart(t) {
-    var o = new Protocol_1.Aki.Protocol.zzn();
-    (o.E8n = t),
-      Net_1.Net.Call(2177, o, (o) => {
+    var o = new Protocol_1.Aki.Protocol.Wis();
+    (o.tHn = t),
+      Net_1.Net.Call(9536, o, (o) => {
         o
-          ? o.Kms !== Protocol_1.Aki.Protocol.lkn.Sys &&
+          ? o.hvs !== Protocol_1.Aki.Protocol.O4n.NRs &&
             ControllerHolder_1.ControllerHolder.FlowController.LogError(
               "请求重启剧情失败",
               ["flowIncId", t],
@@ -69,12 +69,12 @@ class FlowNetworks {
             );
       });
   }
-  static pXi(o, t) {
-    o === Protocol_1.Aki.Protocol.lkn.Proto_ErrFinishFlowFail
+  static g$i(o, t) {
+    o === Protocol_1.Aki.Protocol.O4n.Proto_ErrFinishFlowFail
       ? ControllerHolder_1.ControllerHolder.FlowController.LogError(
           "请求服务器完成剧情失败",
         )
-      : o === Protocol_1.Aki.Protocol.lkn.Proto_ErrFlowActionFail &&
+      : o === Protocol_1.Aki.Protocol.O4n.Proto_ErrFlowActionFail &&
         (ControllerHolder_1.ControllerHolder.FlowController.LogError(
           "请求服务器剧情行为失败",
         ),
@@ -84,10 +84,10 @@ class FlowNetworks {
         ));
   }
   static RequestSafeTeleport(o, t) {
-    var e = new Protocol_1.Aki.Protocol.g4s();
-    (e.E8n = o),
-      Net_1.Net.Call(5649, e, (o) => {
-        o && o.Kms === Protocol_1.Aki.Protocol.lkn.Sys
+    var e = new Protocol_1.Aki.Protocol.d7s();
+    (e.tHn = o),
+      Net_1.Net.Call(3141, e, (o) => {
+        o && o.hvs === Protocol_1.Aki.Protocol.O4n.NRs
           ? t(!0)
           : (ControllerHolder_1.ControllerHolder.FlowController.LogError(
               "请求服务器传送到剧情起始点失败",
@@ -96,13 +96,13 @@ class FlowNetworks {
       });
   }
 }
-((exports.FlowNetworks = FlowNetworks).CXi = (o) => {
+((exports.FlowNetworks = FlowNetworks).m$i = (o) => {
   ControllerHolder_1.ControllerHolder.FlowController.StartNotify(o);
 }),
-  (FlowNetworks.gXi = (o) => {
+  (FlowNetworks.d$i = (o) => {
     ControllerHolder_1.ControllerHolder.FlowController.EndNotify(o);
   }),
-  (FlowNetworks.fXi = (o) => {
+  (FlowNetworks.C$i = (o) => {
     ControllerHolder_1.ControllerHolder.FlowController.SkipBlackScreenNotify(o);
   });
 //# sourceMappingURL=FlowNetworks.js.map

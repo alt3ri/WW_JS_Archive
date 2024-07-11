@@ -7,14 +7,20 @@ const UE = require("ue"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
   UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
   ItemTipsComponent_1 = require("../../Common/ItemTips/ItemTipsComponent"),
-  ItemTipsUtilTool_1 = require("../../Common/ItemTips/ItemTipsUtilTool");
+  ItemTipsUtilTool_1 = require("../../Common/ItemTips/ItemTipsUtilTool"),
+  PowerTipsData_1 = require("../../Power/SubViews/PowerTipsData"),
+  PowerTipsItem_1 = require("../../Power/SubViews/PowerTipsItem");
 class ItemTipsView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
       (this.IncId = 0),
       (this.ConfigId = 0),
       (this.ItemTipsComponent = void 0),
-      (this.CloseBtnClickCallBack = () => {
+      (this.EQs = void 0),
+      (this.Jvt = () => {
+        this.CloseMe();
+      }),
+      (this.DoCloseMe = () => {
         this.CloseMe();
       });
   }
@@ -23,42 +29,61 @@ class ItemTipsView extends UiViewBase_1.UiViewBase {
       [0, UE.UIButtonComponent],
       [1, UE.UIItem],
     ]),
-      (this.BtnBindInfo = [[0, this.CloseBtnClickCallBack]]);
+      (this.BtnBindInfo = [[0, this.Jvt]]);
   }
   async OnBeforeStartAsync() {
-    (this.ItemTipsComponent = new ItemTipsComponent_1.ItemTipsComponent()),
-      await this.ItemTipsComponent.CreateByActorAsync(
-        this.GetItem(1).GetOwner(),
-      );
-  }
-  OnStart() {
     var e = this.OpenParam;
-    (this.IncId = e?.ItemUid), (this.ConfigId = e.ItemId);
+    (this.IncId = e?.ItemUid),
+      (this.ConfigId = e.ItemId),
+      ConfigManager_1.ConfigManager.PowerConfig.GetPowerCurrencyIds().includes(
+        this.ConfigId,
+      )
+        ? ((this.EQs = new PowerTipsItem_1.PowerTipsItem()),
+          await this.EQs.CreateThenShowByResourceIdAsync(
+            "UiItem_ItemTips1",
+            this.GetItem(1),
+          ),
+          this.EQs.SetBackBackCallBack(this.DoCloseMe))
+        : ((this.ItemTipsComponent =
+            new ItemTipsComponent_1.ItemTipsComponent()),
+          await this.ItemTipsComponent.CreateThenShowByResourceIdAsync(
+            "UiItem_TipsScreenTips",
+            this.GetItem(1),
+          ));
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.ChangeChildView,
-      this.CloseBtnClickCallBack,
+      this.DoCloseMe,
     );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.ChangeChildView,
-      this.CloseBtnClickCallBack,
+      this.DoCloseMe,
     );
   }
   OnBeforeShow() {
-    var e = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
+    var e,
+      i = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
         this.ConfigId,
       ).ItemType,
       t = ItemTipsUtilTool_1.ItemTipsComponentUtilTool.GetTipsDataById(
         this.ConfigId,
         this.IncId,
       );
-    this.ItemTipsComponent.Refresh(t),
-      void 0 === this.IncId &&
-        this.ItemTipsComponent.SetTipsComponentLockButton(!1),
-      0 === e && this.ItemTipsComponent.SetTipsNumShow(!1);
+    (ConfigManager_1.ConfigManager.PowerConfig.GetPowerCurrencyIds().includes(
+      this.ConfigId,
+    )
+      ? (((e = new PowerTipsData_1.PowerTipsData()).ItemId = this.ConfigId),
+        this.EQs.RefreshByData(e),
+        this.EQs)
+      : (this.ItemTipsComponent.Refresh(t),
+        void 0 === this.IncId &&
+          this.ItemTipsComponent.SetTipsComponentLockButton(!1),
+        0 === i && this.ItemTipsComponent.SetTipsNumShow(!1),
+        this.ItemTipsComponent)
+    )?.SetActive(!0);
   }
   OnBeforeDestroy() {
     var e = this.OpenParam;
@@ -67,6 +92,9 @@ class ItemTipsView extends UiViewBase_1.UiViewBase {
       e.ItemId,
       e.ItemUid,
     );
+  }
+  OnBeforeHide() {
+    this.ItemTipsComponent?.SetActive(!1), this.EQs?.SetActive(!1);
   }
 }
 exports.ItemTipsView = ItemTipsView;

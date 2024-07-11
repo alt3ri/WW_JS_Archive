@@ -23,7 +23,7 @@ class TsAnimNotifyStateEnableAimIK extends UE.KuroAnimNotifyState {
     if (e instanceof TsBaseCharacter_1.default) {
       var s = e.CharacterActorComponent?.Entity;
       if (s) {
-        var s = s.GetComponent(160).MainAnimInstance;
+        var s = s.GetComponent(162).MainAnimInstance;
         if (
           UE.KuroStaticLibrary.IsObjectClassByName(
             s,
@@ -61,7 +61,7 @@ class TsAnimNotifyStateEnableAimIK extends UE.KuroAnimNotifyState {
     if (e instanceof TsBaseCharacter_1.default) {
       var i = e.CharacterActorComponent?.Entity;
       if (i) {
-        var i = i.GetComponent(160).MainAnimInstance;
+        var i = i.GetComponent(162).MainAnimInstance;
         if (
           UE.KuroStaticLibrary.IsObjectClassByName(
             i,

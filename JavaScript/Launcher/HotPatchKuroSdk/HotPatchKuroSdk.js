@@ -17,9 +17,9 @@ class HotPatchKuroSdk {
   }
   static Init() {
     this.CanUseSdk()
-      ? (this.OSr = new Promise((t) => {
+      ? (this.qSr = new Promise((t) => {
           UE.KuroLauncherLibrary.IsFirstIntoLauncher()
-            ? (this.kSr(t),
+            ? (this.GSr(t),
               this.ReportEvent(
                 SdkReportData_1.HotPatchReportData.CreateData(0, void 0),
               ))
@@ -27,7 +27,7 @@ class HotPatchKuroSdk {
         }))
       : HotPatchKuroTdm_1.HotPatchKuroTdm.Init();
   }
-  static kSr(e) {
+  static GSr(e) {
     if (this.CanUseSdk())
       if ((UE.KuroSDKManager.Start(), UE.KuroSDKManager.GetSdkInitState()))
         LauncherLog_1.LauncherLog.Info("SDK初始化已完成，无需再次初始化"),
@@ -53,13 +53,13 @@ class HotPatchKuroSdk {
     else e?.();
   }
   static ReportEvent(t) {
-    t && this.CanUseSdk() && this.FSr(t);
+    t && this.CanUseSdk() && this.NSr(t);
   }
-  static async FSr(t) {
+  static async NSr(t) {
     "" !== t.GetEventName() &&
-      (this.OSr && (await this.OSr),
+      (this.qSr && (await this.qSr),
       UE.KuroSDKManager.LogMarketingEvent(t.GetReportString()));
   }
 }
-(exports.HotPatchKuroSdk = HotPatchKuroSdk).OSr = void 0;
+(exports.HotPatchKuroSdk = HotPatchKuroSdk).qSr = void 0;
 //# sourceMappingURL=HotPatchKuroSdk.js.map

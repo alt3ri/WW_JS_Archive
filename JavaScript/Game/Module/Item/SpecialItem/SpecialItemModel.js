@@ -8,17 +8,17 @@ const ModelBase_1 = require("../../../../Core/Framework/ModelBase"),
 class SpecialItemModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
-      (this.iCi = new Map()),
-      (this.oCi = []),
+      (this.igi = new Map()),
+      (this.ogi = []),
       (this.TagWatchedItemId = 0),
       (this.TagWatchedEntityHandle = void 0),
       (this.WatchedAllowTagIds = new Set()),
       (this.WatchedBanTagIds = new Set());
   }
   OnInit() {
-    for (const t of this.oCi) {
+    for (const t of this.ogi) {
       var e = new SpecialItemDefine_1.specialItemLogic[t](t);
-      e.Init(), this.iCi.set(t, e);
+      e.Init(), this.igi.set(t, e);
     }
     return !0;
   }
@@ -26,7 +26,7 @@ class SpecialItemModel extends ModelBase_1.ModelBase {
     if (ConfigManager_1.ConfigManager.SpecialItemConfig.GetConfig(t)) {
       let e = void 0;
       return (e =
-        (e = this.iCi.get(t)) ||
+        (e = this.igi.get(t)) ||
         new SpecialItemDefine_1.specialItemLogic[t](t));
     }
   }
@@ -36,10 +36,10 @@ class SpecialItemModel extends ModelBase_1.ModelBase {
   }
   OnClear() {
     return (
-      this.iCi.forEach((e) => {
+      this.igi.forEach((e) => {
         e.Destroy();
       }),
-      this.iCi.clear(),
+      this.igi.clear(),
       !0
     );
   }

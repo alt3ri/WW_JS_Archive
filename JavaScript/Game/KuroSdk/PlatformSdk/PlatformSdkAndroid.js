@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PlatformSdkAndroid = void 0);
-const UE = require("ue"),
+const cpp_1 = require("cpp"),
+  UE = require("ue"),
   ue_1 = require("ue"),
   Json_1 = require("../../../Core/Common/Json"),
   Log_1 = require("../../../Core/Common/Log"),
@@ -25,7 +26,7 @@ class AndroidSdkRePointSt extends Json_1.JsonObjBase {
 class PlatformSdkAndroid extends PlatformSdkBase_1.PlatformSdkBase {
   constructor() {
     super(...arguments),
-      (this.wEe = new Map()),
+      (this.wSe = new Map()),
       (this.AnnounceRedPointCallBack = (e) => {
         e = Json_1.Json.Parse(e);
         Log_1.Log.CheckDebug() &&
@@ -64,13 +65,16 @@ class PlatformSdkAndroid extends PlatformSdkBase_1.PlatformSdkBase {
     (ue_1.KuroSDKManager.GetBasicInfo().bIsValid = !1),
       TimerSystem_1.TimerSystem.Delay(() => {
         (this.CurrentDid = ue_1.KuroSDKManager.GetBasicInfo().DeviceId),
-          UE.CrashSightProxy.SetCustomData("SdkDeviceId", this.CurrentDid),
-          UE.CrashSightProxy.SetCustomData("SdkOaid", this.GetOaid()),
-          UE.CrashSightProxy.SetCustomData("SdkJyId", this.GetJyDid()),
-          UE.CrashSightProxy.SetCustomData("SdkChannelId", this.GetChannelId());
+          cpp_1.FCrashSightProxy.SetCustomData("SdkDeviceId", this.CurrentDid),
+          cpp_1.FCrashSightProxy.SetCustomData("SdkOaid", this.GetOaid()),
+          cpp_1.FCrashSightProxy.SetCustomData("SdkJyId", this.GetJyDid()),
+          cpp_1.FCrashSightProxy.SetCustomData(
+            "SdkChannelId",
+            this.GetChannelId(),
+          );
       }, GETINFODELAY);
   }
-  SdkOpenUrlWnd(e, r, t, o, n = !0) {
+  SdkOpenUrlWnd(e, r, o, t, n = !0) {
     if (
       0 !== this.LastOpenTime &&
       Time_1.Time.Now - this.LastOpenTime <= WEBVIEWCD
@@ -79,7 +83,7 @@ class PlatformSdkAndroid extends PlatformSdkBase_1.PlatformSdkBase {
         "InDisplayCd",
       );
     (this.LastOpenTime = Time_1.Time.Now),
-      ue_1.KuroSDKManager.OpenWebView(e, r, t, o, n, "");
+      ue_1.KuroSDKManager.OpenWebView(e, r, o, t, n, "");
   }
   OpenFeedback() {
     var e,
@@ -92,7 +96,7 @@ class PlatformSdkAndroid extends PlatformSdkBase_1.PlatformSdkBase {
       : Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("KuroSdk", 28, "CDN没有反馈配置");
   }
-  OpenWebView(e, r, t, o, n) {
+  OpenWebView(e, r, o, t, n) {
     if (
       0 !== this.LastOpenTime &&
       Time_1.Time.Now - this.LastOpenTime <= WEBVIEWCD
@@ -101,53 +105,55 @@ class PlatformSdkAndroid extends PlatformSdkBase_1.PlatformSdkBase {
         "InDisplayCd",
       );
     (this.LastOpenTime = Time_1.Time.Now),
-      ue_1.KuroSDKManager.OpenWebView(e, r, t, o, n, "");
+      ue_1.KuroSDKManager.OpenWebView(e, r, o, t, n, "");
   }
-  BEe(e) {
-    if (0 === this.wEe.size) {
+  BSe(e) {
+    if (0 === this.wSe.size) {
       var r = ue_1.KuroSDKManager.GetSdkParams("").split(","),
-        t = r.length;
-      for (let e = 0; e < t; e++) {
-        var o = r[e].split("=");
-        2 === o.length && this.wEe.set(o[0], o[1]);
+        o = r.length;
+      for (let e = 0; e < o; e++) {
+        var t = r[e].split("=");
+        2 === t.length && this.wSe.set(t[0], t[1]);
       }
     }
-    e = this.wEe.get(e);
+    e = this.wSe.get(e);
     return e && !StringUtils_1.StringUtils.IsEmpty(e) ? e : "";
   }
   GetChannelId() {
-    return this.BEe("channelId");
+    return this.BSe("channelId");
   }
   GetGameId() {
-    return this.BEe("gameId");
+    return this.BSe("gameId");
   }
   GetChannelName() {
-    return this.BEe("channelName");
+    return this.BSe("channelName");
   }
   GetDid() {
-    return this.BEe("did");
+    return this.BSe("did");
   }
   GetAppChannelId() {
-    return this.BEe("appChannelId");
+    return this.BSe("appChannelId");
   }
   GetOaid() {
-    return this.BEe("oaid");
+    return this.BSe("oaid");
   }
   GetJyDid() {
-    return this.BEe("jyDid");
+    return this.BSe("jyDid");
   }
   GetAccessToken() {
-    return this.BEe("accessToken");
+    return this.BSe("accessToken");
   }
   SetFont() {
     var e = new KuroSdkData_1.SetFontParamAndroid(),
-      e =
+      r =
         ((e.fontType = "1"),
-        (e.fontPath = "H7GBKHeavy.TTF"),
-        Json_1.Json.Stringify(e));
-    ue_1.KuroSDKManager.SetFont(e);
+        ModelManager_1.ModelManager.KuroSdkModel.GetDeviceFontAsset()),
+      r = ((e.fontPath = r), Json_1.Json.Stringify(e));
+    Log_1.Log.CheckInfo() &&
+      Log_1.Log.Info("KuroSdk", 28, "SetFont", ["json", r]),
+      ue_1.KuroSDKManager.SetFont(r);
   }
-  IEe() {
+  ISe() {
     return ModelManager_1.ModelManager.PlayerInfoModel.GetId()
       ? ModelManager_1.ModelManager.PlayerInfoModel.GetId().toString()
       : ModelManager_1.ModelManager.LoginModel.GetCreatePlayerId()
@@ -156,14 +162,14 @@ class PlatformSdkAndroid extends PlatformSdkBase_1.PlatformSdkBase {
   }
   OpenCustomerService(e) {
     var r = ModelManager_1.ModelManager.LoginModel,
-      t = new KuroSdkData_1.OpenCustomerServiceParamAndroid(),
+      o = new KuroSdkData_1.OpenCustomerServiceParamAndroid(),
       e =
-        ((t.IsLogin = r.IsSdkLoggedIn() ? "1" : "0"),
-        (t.FromLogin = e.toString()),
-        (t.RoleId = this.IEe()),
-        (t.ServerId = r.GetServerId() ?? ""),
-        (t.IsLandscape = "0"),
-        Json_1.Json.Stringify(t));
+        ((o.IsLogin = r.IsSdkLoggedIn() ? "1" : "0"),
+        (o.FromLogin = e.toString()),
+        (o.RoleId = this.ISe()),
+        (o.ServerId = r.GetServerId() ?? ""),
+        (o.IsLandscape = "0"),
+        Json_1.Json.Stringify(o));
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug("KuroSdk", 28, "AndroidCustomerService", ["json", e]),
       ue_1.KuroSDKManager.OpenCustomerService(e);
@@ -171,8 +177,8 @@ class PlatformSdkAndroid extends PlatformSdkBase_1.PlatformSdkBase {
   SdkPay(e) {
     var r;
     ControllerHolder_1.ControllerHolder.KuroSdkController.CanUseSdk() &&
-      ((r = this.bEe()),
-      (r = this.qEe(e, r)),
+      ((r = this.bSe()),
+      (r = this.qSe(e, r)),
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "KuroSdk",
@@ -194,7 +200,7 @@ class PlatformSdkAndroid extends PlatformSdkBase_1.PlatformSdkBase {
     var e = ModelManager_1.ModelManager.LoginModel,
       r = new KuroSdkData_1.RoleInfoSdk();
     return (
-      (r.RoleId = this.IEe()),
+      (r.RoleId = this.ISe()),
       (r.RoleName = e.GetPlayerName() ? e.GetPlayerName() : ""),
       (r.ServerId = e.GetServerId() ? e.GetServerId() : ""),
       (r.ServerName = e.GetServerName() ? e.GetServerName() : ""),
@@ -219,42 +225,42 @@ class PlatformSdkAndroid extends PlatformSdkBase_1.PlatformSdkBase {
       Json_1.Json.Stringify(r) ?? ""
     );
   }
-  bEe() {
+  bSe() {
     var e = ModelManager_1.ModelManager.FunctionModel,
       r = ModelManager_1.ModelManager.LoginModel,
-      t = new KuroSdkData_1.AndroidSdkPayRole();
+      o = new KuroSdkData_1.AndroidSdkPayRole();
     return (
-      (t.roleId = this.IEe()),
-      (t.roleName = e.GetPlayerName() ? e.GetPlayerName() : ""),
-      (t.roleLevel = e.GetPlayerLevel() ? e.GetPlayerLevel().toString() : "1"),
-      (t.serverId = r.GetServerId() ? r.GetServerId() : ""),
-      (t.serverName = r.GetServerName() ? r.GetServerName() : ""),
-      (t.vipLevel = "0"),
-      (t.partyName = " "),
-      (t.setBalanceLevelOne = "0"),
-      (t.setBalanceLevelTwo = "0"),
-      t
+      (o.roleId = this.ISe()),
+      (o.roleName = e.GetPlayerName() ? e.GetPlayerName() : ""),
+      (o.roleLevel = e.GetPlayerLevel() ? e.GetPlayerLevel().toString() : "1"),
+      (o.serverId = r.GetServerId() ? r.GetServerId() : ""),
+      (o.serverName = r.GetServerName() ? r.GetServerName() : ""),
+      (o.vipLevel = "0"),
+      (o.partyName = " "),
+      (o.setBalanceLevelOne = "0"),
+      (o.setBalanceLevelTwo = "0"),
+      o
     );
   }
-  qEe(e, r) {
-    var t = new KuroSdkData_1.PayInfoAndroid();
-    (t.cpOrderId = e.cpOrderId.toString()),
-      (t.callbackUrl = e.callbackUrl.toString()),
-      (t.product_id = e.product_id.toString()),
-      (t.goodsName = e.goodsName.toString()),
-      (t.goodsDesc = e.goodsDesc.toString()),
-      (t.currency = e.currency.toString()),
-      (t.extraParams = e.extraParams?.toString());
-    let o = Json_1.Json.Stringify(t);
-    o =
-      (o = o.replace("}", ",")) +
+  qSe(e, r) {
+    var o = new KuroSdkData_1.PayInfoAndroid();
+    (o.cpOrderId = e.cpOrderId.toString()),
+      (o.callbackUrl = e.callbackUrl.toString()),
+      (o.product_id = e.product_id.toString()),
+      (o.goodsName = e.goodsName.toString()),
+      (o.goodsDesc = e.goodsDesc.toString()),
+      (o.currency = e.currency.toString()),
+      (o.extraParams = e.extraParams?.toString());
+    let t = Json_1.Json.Stringify(o);
+    t =
+      (t = t.replace("}", ",")) +
       StringUtils_1.StringUtils.Format('"price":{0}', e.price.toString()) +
       "}";
-    (t = Json_1.Json.Stringify(r)),
+    (o = Json_1.Json.Stringify(r)),
       (e = StringUtils_1.StringUtils.Format(
         '{"RoleInfo":{0},"OrderInfo":{1}}',
-        t,
         o,
+        t,
       ));
     return (
       Log_1.Log.CheckInfo() &&
@@ -274,7 +280,7 @@ class PlatformSdkAndroid extends PlatformSdkBase_1.PlatformSdkBase {
       Log_1.Log.Debug("KuroSdk", 28, "Share", ["json", e], ["imagePath", r]),
       UE.KuroSDKStaticLibrary.Share(r, e);
   }
-  OnShareResult(e, r, t) {
+  OnShareResult(e, r, o) {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug(
         "KuroSdk",
@@ -282,7 +288,7 @@ class PlatformSdkAndroid extends PlatformSdkBase_1.PlatformSdkBase {
         "OnShareResult",
         ["code", e],
         ["platform", r],
-        ["msg", t],
+        ["msg", o],
       ),
       0 === e
         ? EventSystem_1.EventSystem.Emit(

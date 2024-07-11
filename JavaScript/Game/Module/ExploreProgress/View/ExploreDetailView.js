@@ -18,12 +18,12 @@ const UE = require("ue"),
 class ExploreDetailView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.nVt = void 0),
-      (this.sVt = void 0),
-      (this.aVt = void 0),
+      (this.n6t = void 0),
+      (this.s6t = void 0),
+      (this.a6t = void 0),
       (this.kGe = void 0),
-      (this.hVt = -1),
-      (this.lVt = (e, r, i) => {
+      (this.h6t = -1),
+      (this.l6t = (e, r, i) => {
         const t = new ExploreProgressItem_1.ExploreProgressItem();
         return (
           t.CreateByActorAsync(r.GetOwner()).then(
@@ -35,10 +35,10 @@ class ExploreDetailView extends UiViewBase_1.UiViewBase {
           { Key: i, Value: t }
         );
       }),
-      (this.P3t = () => {
+      (this.x4t = () => {
         UiManager_1.UiManager.CloseView("ExploreDetailView");
       }),
-      (this._Vt = () => {
+      (this._6t = () => {
         ModelManager_1.ModelManager.FunctionModel.IsOpen(10057)
           ? (UiManager_1.UiManager.CloseView("ExploreDetailView"),
             SkipTaskManager_1.SkipTaskManager.Run(
@@ -50,27 +50,27 @@ class ExploreDetailView extends UiViewBase_1.UiViewBase {
               "ExploreProgressRewardNotOpen",
             );
       }),
-      (this.uVt = (e, r, i) => {
+      (this.u6t = (e, r, i) => {
         var t = new ExploreAreaParentItem_1.ExploreAreaParentItem();
         return (
-          t.BindOnCountrySelected(this.tVt),
-          t.BindOnAreaSelected(this.iVt),
-          i === this.hVt && ((this.sVt = t.ExploreAreaItem), (this.hVt = -1)),
+          t.BindOnCountrySelected(this.t6t),
+          t.BindOnAreaSelected(this.i6t),
+          i === this.h6t && ((this.s6t = t.ExploreAreaItem), (this.h6t = -1)),
           t
         );
       }),
-      (this.tVt = (e, r, i) => {
+      (this.t6t = (e, r, i) => {
         r = r.CountryId;
         1 === i
-          ? this.cVt(r)
+          ? this.c6t(r)
           : (((i =
               ModelManager_1.ModelManager
                 .ExploreProgressModel).SelectedCountryId = 0),
             (i.SelectedAreaId = 0)),
-          this.mVt();
+          this.m6t();
       }),
-      (this.iVt = (e, r, i) => {
-        i && (this.dVt(r.AreaId, e), this.CVt(), this.PlaySequence("Switch"));
+      (this.i6t = (e, r, i) => {
+        i && (this.d6t(r.AreaId, e), this.C6t(), this.PlaySequence("Switch"));
       });
   }
   OnRegisterComponent() {
@@ -83,43 +83,43 @@ class ExploreDetailView extends UiViewBase_1.UiViewBase {
       [5, UE.UIItem],
       [6, UE.UIButtonComponent],
     ]),
-      (this.BtnBindInfo = [[6, this._Vt]]);
+      (this.BtnBindInfo = [[6, this._6t]]);
   }
   async OnBeforeStartAsync() {
-    (this.aVt = new DynScrollView_1.DynamicScrollView(
+    (this.a6t = new DynScrollView_1.DynamicScrollView(
       this.GetUIDynScrollViewComponent(1),
       this.GetItem(2),
       new ExploreAreaDynamicItem_1.ExploreAreaDynamicItem(),
-      this.uVt,
+      this.u6t,
     )),
-      await this.aVt.Init();
+      await this.a6t.Init();
   }
   OnStart() {
-    (this.nVt = new PopupCaptionItem_1.PopupCaptionItem(this.GetItem(0))),
-      this.nVt.SetCloseCallBack(this.P3t),
+    (this.n6t = new PopupCaptionItem_1.PopupCaptionItem(this.GetItem(0))),
+      this.n6t.SetCloseCallBack(this.x4t),
       (this.kGe = new GenericScrollView_1.GenericScrollView(
         this.GetScrollViewWithScrollbar(4),
-        this.lVt,
+        this.l6t,
       )),
-      this.cVt(ModelManager_1.ModelManager.AreaModel.GetAreaCountryId()),
-      this.mVt(),
-      this.sVt || this.CVt();
+      this.c6t(ModelManager_1.ModelManager.AreaModel.GetAreaCountryId()),
+      this.m6t(),
+      this.s6t || this.C6t();
   }
   OnBeforeDestroy() {
-    this.nVt?.Destroy(),
-      (this.nVt = void 0),
-      this.aVt?.ClearChildren(),
-      (this.aVt = void 0),
+    this.n6t?.Destroy(),
+      (this.n6t = void 0),
+      this.a6t?.ClearChildren(),
+      (this.a6t = void 0),
       this.kGe?.ClearChildren(),
       (this.kGe = void 0);
   }
-  dVt(e, r) {
+  d6t(e, r) {
     r &&
-      (this.sVt?.SetSelected(!1),
-      (this.sVt = r).SetSelected(!0),
+      (this.s6t?.SetSelected(!1),
+      (this.s6t = r).SetSelected(!0),
       (ModelManager_1.ModelManager.ExploreProgressModel.SelectedAreaId = e));
   }
-  cVt(e) {
+  c6t(e) {
     var r,
       i = ModelManager_1.ModelManager.ExploreProgressModel;
     e <= 0 &&
@@ -132,12 +132,12 @@ class ExploreDetailView extends UiViewBase_1.UiViewBase {
           ExploreProgressDefine_1.AREA_LEVEL,
         ));
   }
-  mVt() {
+  m6t() {
     var e = [],
-      r = this.gVt(e);
-    e[r] ? (this.aVt.RefreshByData(e), (this.hVt = r)) : (this.sVt = void 0);
+      r = this.g6t(e);
+    e[r] ? (this.a6t.RefreshByData(e), (this.h6t = r)) : (this.s6t = void 0);
   }
-  gVt(e) {
+  g6t(e) {
     var r = ModelManager_1.ModelManager.ExploreProgressModel;
     let i = 0;
     for (const l of ModelManager_1.ModelManager.ExploreProgressModel.GetExploreCountryDataMap().values())
@@ -171,7 +171,7 @@ class ExploreDetailView extends UiViewBase_1.UiViewBase {
       }
     return i;
   }
-  CVt() {
+  C6t() {
     var e = ModelManager_1.ModelManager.ExploreProgressModel,
       r = e.SelectedAreaId,
       e = e.GetExploreAreaData(r);

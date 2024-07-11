@@ -11,110 +11,111 @@ const UE = require("ue"),
   UiNavigationDefine_1 = require("./UiNavigationDefine"),
   UiNavigationGlobalData_1 = require("./UiNavigationGlobalData"),
   UiNavigationLogic_1 = require("./UiNavigationLogic"),
-  UiNavigationViewHandle_1 = require("./UiNavigationViewHandle");
+  UiNavigationViewHandle_1 = require("./UiNavigationViewHandle"),
+  Info_1 = require("../../../../Core/Common/Info");
 class UiNavigationViewManager {
   static Initialize() {
-    this.dde(), this.agt();
+    this.dde(), this.v0t();
   }
   static Clear() {
-    this.Cde(), this._gt();
+    this.Cde(), this.S0t();
   }
-  static agt() {
-    this.Xje = TickSystem_1.TickSystem.Add(
+  static v0t() {
+    this.sKe = TickSystem_1.TickSystem.Add(
       UiNavigationViewManager.Tick,
       "UiNavigationViewManager",
       3,
       !0,
     ).Id;
   }
-  static _gt() {
-    this.Xje !== TickSystem_1.TickSystem.InvalidId &&
-      TickSystem_1.TickSystem.Remove(this.Xje);
+  static S0t() {
+    this.sKe !== TickSystem_1.TickSystem.InvalidId &&
+      TickSystem_1.TickSystem.Remove(this.sKe);
   }
   static dde() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.NavigationViewCreate,
-      this.GBo,
+      this.Bbo,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.NavigationViewDestroy,
-        this.NBo,
+        this.bbo,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.ResetNavigationListener,
-        this.OBo,
+        this.qbo,
       );
   }
   static Cde() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.NavigationViewCreate,
-      this.GBo,
+      this.Bbo,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.NavigationViewDestroy,
-        this.NBo,
+        this.bbo,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.ResetNavigationListener,
-        this.OBo,
+        this.qbo,
       );
   }
-  static kBo(a, e) {
+  static Gbo(a, e) {
     if (e.ViewName !== UiNavigationDefine_1.POP_TAG)
-      UiNavigationViewManager.FBo(a, e);
+      UiNavigationViewManager.Nbo(a, e);
     else {
       var t = UE.LGUIBPLibrary.GetComponentsInChildren(
         e.GetOwner(),
         UE.TsUiNavigationPanelConfig_C.StaticClass(),
         !1,
       );
-      if (t.Num() <= 0) UiNavigationViewManager.FBo(a, e);
+      if (t.Num() <= 0) UiNavigationViewManager.Nbo(a, e);
       else
         for (let i = t.Num() - 1; 0 <= i; --i) {
           var n = t.Get(i);
           if (n.Independent && n.ViewName === UiNavigationDefine_1.POP_TAG) {
-            UiNavigationViewManager.VBo(n)
-              ? UiNavigationViewManager.FBo(a, e)
-              : UiNavigationViewManager.HBo.set([a, e], n);
+            UiNavigationViewManager.Obo(n)
+              ? UiNavigationViewManager.Nbo(a, e)
+              : UiNavigationViewManager.kbo.set([a, e], n);
             break;
           }
         }
     }
   }
-  static jBo(i, a) {
+  static Fbo(i, a) {
     var e = new UiNavigationViewHandle_1.UiNavigationViewHandle(i, a);
-    e.AddPanelConfig(i, a), this.WBo.set(i, e), this.uBo.set(i, e);
+    e.AddPanelConfig(i, a), this.Vbo.set(i, e), this.hbo.set(i, e);
   }
-  static VBo(i) {
-    for (const a of this.WBo.values()) if (a.MainPanel === i) return !0;
+  static Obo(i) {
+    for (const a of this.Vbo.values()) if (a.MainPanel === i) return !0;
     return !1;
   }
-  static KBo(i, a) {
+  static Hbo(i, a) {
     let e = void 0;
-    for (const t of this.WBo.values()) t.ViewName === a.ViewName && (e = t);
-    e && (e.AddPanelConfig(i, a), this.uBo.set(i, e));
+    for (const t of this.Vbo.values()) t.ViewName === a.ViewName && (e = t);
+    e && (e.AddPanelConfig(i, a), this.hbo.set(i, e));
   }
-  static FBo(i, a) {
+  static Nbo(i, a) {
     UiNavigationGlobalData_1.UiNavigationGlobalData.NeedCalculateCurrentPanel
-      ? this.QBo.set(i, a)
-      : this.KBo(i, a);
+      ? this.jbo.set(i, a)
+      : this.Hbo(i, a);
   }
-  static XBo(i) {
-    var a = this.uBo.get(i);
-    return !!a && (this.uBo.delete(i), a.DeletePanelConfig(i), i === a.TagId);
+  static Wbo(i) {
+    var a = this.hbo.get(i);
+    return !!a && (this.hbo.delete(i), a.DeletePanelConfig(i), i === a.TagId);
   }
-  static $Bo(i) {
-    var a = this.WBo.get(i);
+  static Kbo(i) {
+    var a = this.Vbo.get(i);
     if (a) {
-      this.WBo.delete(i);
-      for (const e of a.GetPanelConfigMap().keys()) this.uBo.delete(e);
+      this.Vbo.delete(i);
+      for (const e of a.GetPanelConfigMap().keys()) this.hbo.delete(e);
       return a.ClearPanelConfig(), !0;
     }
     return !1;
   }
-  static YBo(i) {
-    this.JBo
-      ? this.JBo.TagId === i &&
+  static Qbo(i) {
+    this.Xbo
+      ? this.Xbo.TagId === i &&
         (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "UiNavigation",
@@ -122,7 +123,7 @@ class UiNavigationViewManager {
             "当前导航面板销毁,将导航对象置为空",
           ),
         UiNavigationLogic_1.UiNavigationLogic.UpdateNavigationListener(void 0),
-        (this.JBo = void 0))
+        (this.Xbo = void 0))
       : (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "UiNavigation",
@@ -135,19 +136,19 @@ class UiNavigationViewManager {
     UiNavigationGlobalData_1.UiNavigationGlobalData.NeedCalculateCurrentPanel =
       !0;
   }
-  static zBo() {
+  static $bo() {
     UiNavigationGlobalData_1.UiNavigationGlobalData.NeedCalculateCurrentPanel &&
       ((UiNavigationGlobalData_1.UiNavigationGlobalData.NeedCalculateCurrentPanel =
         !1),
-      this.ZBo());
+      this.Ybo());
   }
-  static ebo(i, a) {
+  static Jbo(i, a) {
     (i = i.GetDepth()), (a = a.GetDepth());
     return -1 !== i && -1 !== a;
   }
-  static ZBo() {
-    if (this.WBo.size <= 0)
-      (this.JBo = void 0),
+  static Ybo() {
+    if (this.Vbo.size <= 0)
+      (this.Xbo = void 0),
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "UiNavigation",
@@ -158,109 +159,111 @@ class UiNavigationViewManager {
     else {
       let i = void 0,
         a = !0;
-      for (const e of this.WBo.values())
+      for (const e of this.Vbo.values())
         if (e.GetIsActive() && e.GetIsUsable())
           if (i) {
-            if (!this.ebo(e, i)) {
+            if (!this.Jbo(e, i)) {
               a = !1;
               break;
             }
-            e.GetDepth() > i.GetDepth() && (i = e);
+            e.GetDepth() > i.GetDepth() ? (i = e) : e.SetIsInController(!1);
           } else i = e;
       a
-        ? this.JBo !== i &&
+        ? this.Xbo !== i &&
           (Log_1.Log.CheckInfo() &&
             Log_1.Log.Info("UiNavigation", 11, "查找当前导航界面句柄", [
               "名字",
               i?.ViewName,
             ]),
-          this.JBo?.SetIsInController(!1),
+          this.Xbo?.SetIsInController(!1),
+          this.Xbo?.CanOverridePositionByGamepad(!1),
           i?.SetIsInController(!0),
+          i?.CanOverridePositionByGamepad(!0),
           i?.ResetStateIfNullFocus(),
-          (this.JBo = i))
+          (this.Xbo = i))
         : this.MarkCalculateCurrentPanelDirty();
     }
   }
-  static tbo() {
-    this.JBo && this.JBo.FindDefaultNavigation();
+  static zbo() {
+    this.Xbo && this.Xbo.FindDefaultNavigation();
   }
-  static ibo() {
+  static Zbo() {
     UiNavigationGlobalData_1.UiNavigationGlobalData.NeedRefreshCurrentPanel &&
       ((UiNavigationGlobalData_1.UiNavigationGlobalData.NeedRefreshCurrentPanel =
         !1),
-      this.JBo) &&
-      (this.JBo.HasAnyPanelActive()
-        ? this.JBo.FindAddPanelConfigNavigation()
+      this.Xbo) &&
+      (this.Xbo.HasAnyPanelActive()
+        ? this.Xbo.FindAddPanelConfigNavigation()
         : this.MarkCalculateCurrentPanelDirty());
   }
-  static obo() {
-    if (!(this.QBo.size <= 0)) {
-      for (var [i, a] of this.QBo) this.KBo(i, a);
-      this.QBo.clear();
+  static eqo() {
+    if (!(this.jbo.size <= 0)) {
+      for (var [i, a] of this.jbo) this.Hbo(i, a);
+      this.jbo.clear();
     }
   }
-  static rbo() {
-    if (!(this.HBo.size <= 0) && this.JBo) {
+  static tqo() {
+    if (!(this.kbo.size <= 0) && this.Xbo) {
       var i,
         a,
         e = [];
-      for ([i, a] of this.HBo)
-        a === this.JBo.MainPanel && (e.push(i), this.FBo(i[0], i[1]));
-      for (const t of e) this.HBo.delete(t);
+      for ([i, a] of this.kbo)
+        a === this.Xbo.MainPanel && (e.push(i), this.Nbo(i[0], i[1]));
+      for (const t of e) this.kbo.delete(t);
     }
   }
-  static nbo() {
-    this.JBo && this.JBo.TickViewHandle();
+  static iqo() {
+    this.Xbo && this.Xbo.TickViewHandle();
   }
   static GetCurrentViewHandle() {
-    return this.JBo;
+    return this.Xbo;
   }
   static RefreshCurrentHotKey() {
-    this.JBo && this.JBo.MarkRefreshHotKeyDirty();
+    this.Xbo && this.Xbo.MarkRefreshHotKeyDirty();
   }
   static RefreshCurrentHotKeyTextId() {
-    this.JBo && this.JBo.MarkRefreshHotKeyTextIdDirty();
+    this.Xbo && this.Xbo.MarkRefreshHotKeyTextIdDirty();
   }
 }
 (exports.UiNavigationViewManager = UiNavigationViewManager),
-  ((_a = UiNavigationViewManager).JBo = void 0),
-  (UiNavigationViewManager.WBo = new Map()),
-  (UiNavigationViewManager.uBo = new Map()),
-  (UiNavigationViewManager.QBo = new Map()),
-  (UiNavigationViewManager.HBo = new Map()),
-  (UiNavigationViewManager.Xje = TickSystem_1.TickSystem.InvalidId),
+  ((_a = UiNavigationViewManager).Xbo = void 0),
+  (UiNavigationViewManager.Vbo = new Map()),
+  (UiNavigationViewManager.hbo = new Map()),
+  (UiNavigationViewManager.jbo = new Map()),
+  (UiNavigationViewManager.kbo = new Map()),
+  (UiNavigationViewManager.sKe = TickSystem_1.TickSystem.InvalidId),
   (UiNavigationViewManager.Tick = () => {
-    UiNavigationViewManager.ibo(),
-      UiNavigationViewManager.nbo(),
-      UiNavigationViewManager.zBo(),
-      UiNavigationViewManager.obo(),
-      UiNavigationViewManager.rbo(),
-      UiNavigationViewManager.tbo();
+    UiNavigationViewManager.Zbo(),
+      UiNavigationViewManager.iqo(),
+      UiNavigationViewManager.$bo(),
+      UiNavigationViewManager.eqo(),
+      UiNavigationViewManager.tqo(),
+      UiNavigationViewManager.zbo();
   }),
-  (UiNavigationViewManager.GBo = (i, a) => {
+  (UiNavigationViewManager.Bbo = (i, a) => {
     a = a.GetComponentByClass(UE.TsUiNavigationPanelConfig_C.StaticClass());
     a &&
-      (ModelManager_1.ModelManager.PlatformModel.IsMobile()
+      (Info_1.Info.IsInTouch()
         ? Log_1.Log.CheckError() &&
           Log_1.Log.Error("UiNavigation", 11, "移动端出现PC配置", [
             "ViewName",
             a.ViewName,
           ])
         : a.Independent
-          ? (UiNavigationViewManager.jBo(i, a),
+          ? (UiNavigationViewManager.Fbo(i, a),
             UiNavigationViewManager.MarkCalculateCurrentPanelDirty())
-          : _a.kBo(i, a));
+          : _a.Gbo(i, a));
   }),
-  (UiNavigationViewManager.NBo = (i, a) => {
+  (UiNavigationViewManager.bbo = (i, a) => {
     a &&
-      UiNavigationViewManager.XBo(i) &&
-      (UiNavigationViewManager.$Bo(i),
-      UiNavigationViewManager.YBo(i),
+      UiNavigationViewManager.Wbo(i) &&
+      (UiNavigationViewManager.Kbo(i),
+      UiNavigationViewManager.Qbo(i),
       UiNavigationViewManager.MarkCalculateCurrentPanelDirty());
   }),
-  (UiNavigationViewManager.OBo = () => {
-    _a.JBo &&
-      (_a.JBo.ResetNavigationListener(),
+  (UiNavigationViewManager.qbo = () => {
+    _a.Xbo &&
+      (_a.Xbo.ResetNavigationListener(),
       ModelManager_1.ModelManager.UiNavigationModel.MarkMoveInstantly());
   });
 //# sourceMappingURL=UiNavigationViewManager.js.map

@@ -9,7 +9,13 @@ const SkipTaskAdventureGuide_1 = require("./SkipTask/SkipTaskAdventureGuide"),
   SkipTaskVisionIntensifyView_1 = require("./SkipTask/SkipTaskVisionIntensifyView"),
   SkipTaskWeaponRoot_1 = require("./SkipTask/SkipTaskWeaponRoot"),
   SkipTaskWorldMap_1 = require("./SkipTask/SkipTaskWorldMap"),
-  SkipToDyMarkEntity_1 = require("./SkipTask/SkipToDyMarkEntity");
+  SkipToBuildingView_1 = require("./SkipTask/SkipToBuildingView"),
+  SkipToBusinessMainView_1 = require("./SkipTask/SkipToBusinessMainView"),
+  SkipToBusinessMainViewDirect_1 = require("./SkipTask/SkipToBusinessMainViewDirect"),
+  SkipToBusinessRoleView_1 = require("./SkipTask/SkipToBusinessRoleView"),
+  SkipToDyMarkEntity_1 = require("./SkipTask/SkipToDyMarkEntity"),
+  SkipToTaskView_1 = require("./SkipTask/SkipToTaskView"),
+  SkipToTaskViewDirect_1 = require("./SkipTask/SkipToTaskViewDirect");
 exports.skipClassMap = new Map([
   [0, SkipTaskWorldMap_1.SkipTaskWorldMap],
   [1, SkipTaskAdventureGuide_1.SkipTaskAdventureGuide],
@@ -20,5 +26,11 @@ exports.skipClassMap = new Map([
   [6, SkipTaskRogueActivity_1.SkipTaskRogueActivity],
   [7, SkipTaskQuest_1.SkipTaskQuest],
   [8, SkipToDyMarkEntity_1.SkipToDyMarkEntity],
+  [9, SkipToBusinessMainView_1.SkipToBusinessMainView],
+  [10, SkipToBusinessRoleView_1.SkipToBusinessRoleView],
+  [11, SkipToBuildingView_1.SkipToBuildingView],
+  [12, SkipToTaskView_1.SkipToTaskView],
+  [13, SkipToBusinessMainViewDirect_1.SkipToBusinessMainViewDirect],
+  [14, SkipToTaskViewDirect_1.SkipToTaskViewDirect],
 ]);
 //# sourceMappingURL=SkipInterfaceDefine.js.map

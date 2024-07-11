@@ -10,7 +10,7 @@ class LevelEventChangeToVision extends LevelGeneralBase_1.LevelEventBase {
       ((o = Global_1.Global.BaseCharacter.CharacterActorComponent.Entity)
         .GetComponent(3)
         .ClearInput(),
-      o.GetComponent(185)?.AddTag(-1697149502),
+      o.GetComponent(188)?.AddTag(-1697149502),
       (o = o.GetComponent(33))) &&
       (o.EndOwnerAndFollowSkills(),
       o.BeginSkill(e.Id, { Context: "LevelEventChangeToVision.ExecuteNew" }));

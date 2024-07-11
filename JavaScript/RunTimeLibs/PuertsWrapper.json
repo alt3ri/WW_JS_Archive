@@ -17,6 +17,12 @@
 						"IsCache": false
 					},
 					{
+						"PropertyName": "bStartPenetrating",
+						"ObfuscationName": "bStartPenetrating",
+						"IsWrapper": true,
+						"IsCache": false
+					},
+					{
 						"PropertyName": "Location",
 						"ObfuscationName": "Location",
 						"IsWrapper": true,
@@ -62,6 +68,14 @@
 						"IsCache": false
 					}
 				],
+				"Functions": []
+			},
+			{
+				"ClassPathName": "/Script/Engine.LatentActionInfo",
+				"JsName": "LatentActionInfo",
+				"ObfuscationName": "LatentActionInfo",
+				"IsWrapper": false,
+				"Properties": [],
 				"Functions": []
 			},
 			{
@@ -2047,48 +2061,6 @@
 				"Functions": []
 			},
 			{
-				"ClassPathName": "/Script/KuroAudio.KuroAudioEnvironmentInfo",
-				"JsName": "KuroAudioEnvironmentInfo",
-				"ObfuscationName": "KuroAudioEnvironmentInfo",
-				"IsWrapper": true,
-				"Properties": [
-					{
-						"PropertyName": "StateEvent",
-						"ObfuscationName": "StateEvent",
-						"IsWrapper": true,
-						"IsCache": false
-					},
-					{
-						"PropertyName": "bEnableDynamicReverb",
-						"ObfuscationName": "bEnableDynamicReverb",
-						"IsWrapper": true,
-						"IsCache": false
-					}
-				],
-				"Functions": []
-			},
-			{
-				"ClassPathName": "/Script/KuroAudio.KuroDynamicReverbParam",
-				"JsName": "KuroDynamicReverbParam",
-				"ObfuscationName": "KuroDynamicReverbParam",
-				"IsWrapper": true,
-				"Properties": [
-					{
-						"PropertyName": "HorizontalHitCount",
-						"ObfuscationName": "HorizontalHitCount",
-						"IsWrapper": true,
-						"IsCache": false
-					},
-					{
-						"PropertyName": "VerticalHitDistance",
-						"ObfuscationName": "VerticalHitDistance",
-						"IsWrapper": true,
-						"IsCache": false
-					}
-				],
-				"Functions": []
-			},
-			{
 				"ClassPathName": "/Script/KuroUtility.PreloadObjectCollection",
 				"JsName": "PreloadObjectCollection",
 				"ObfuscationName": "PreloadObjectCollection",
@@ -3562,6 +3534,12 @@
 						"IsReturnCache": false
 					},
 					{
+						"FunctionName": "IsOverlappingActor",
+						"ObfuscationName": "IsOverlappingActor",
+						"IsWrapper": true,
+						"IsReturnCache": false
+					},
+					{
 						"FunctionName": "IgnoreActorWhenMoving",
 						"ObfuscationName": "IgnoreActorWhenMoving",
 						"IsWrapper": true,
@@ -3942,6 +3920,12 @@
 						"IsReturnCache": false
 					},
 					{
+						"FunctionName": "IsControlled",
+						"ObfuscationName": "IsControlled",
+						"IsWrapper": true,
+						"IsReturnCache": false
+					},
+					{
 						"FunctionName": "GetMovementComponent",
 						"ObfuscationName": "GetMovementComponent",
 						"IsWrapper": true,
@@ -3950,12 +3934,6 @@
 					{
 						"FunctionName": "GetController",
 						"ObfuscationName": "GetController",
-						"IsWrapper": true,
-						"IsReturnCache": false
-					},
-					{
-						"FunctionName": "DetachFromControllerPendingDestroy",
-						"ObfuscationName": "DetachFromControllerPendingDestroy",
 						"IsWrapper": true,
 						"IsReturnCache": false
 					},
@@ -4113,12 +4091,6 @@
 				"IsWrapper": true,
 				"Properties": [],
 				"Functions": [
-					{
-						"FunctionName": "NavigationGetWaterDeep",
-						"ObfuscationName": "NavigationGetWaterDeep",
-						"IsWrapper": true,
-						"IsReturnCache": false
-					},
 					{
 						"FunctionName": "K2_ProjectPointToNavigation",
 						"ObfuscationName": "K2_ProjectPointToNavigation",
@@ -5943,12 +5915,6 @@
 						"IsReturnCache": false
 					},
 					{
-						"FunctionName": "IsStopped",
-						"ObfuscationName": "IsStopped",
-						"IsWrapper": true,
-						"IsReturnCache": false
-					},
-					{
 						"FunctionName": "IsPlaying",
 						"ObfuscationName": "IsPlaying",
 						"IsWrapper": true,
@@ -6232,12 +6198,6 @@
 					{
 						"FunctionName": "GetSequence",
 						"ObfuscationName": "GetSequence",
-						"IsWrapper": true,
-						"IsReturnCache": false
-					},
-					{
-						"FunctionName": "GetBindingByTagInTemplate",
-						"ObfuscationName": "GetBindingByTagInTemplate",
 						"IsWrapper": true,
 						"IsReturnCache": false
 					},
@@ -7442,6 +7402,12 @@
 				"Properties": [],
 				"Functions": [
 					{
+						"FunctionName": "UnloadStreamLevel",
+						"ObfuscationName": "UnloadStreamLevel",
+						"IsWrapper": true,
+						"IsReturnCache": false
+					},
+					{
 						"FunctionName": "SetGlobalTimeDilation",
 						"ObfuscationName": "SetGlobalTimeDilation",
 						"IsWrapper": true,
@@ -7583,12 +7549,6 @@
 						"IsReturnCache": false
 					},
 					{
-						"FunctionName": "SetMobileGameQualitySettingLevel",
-						"ObfuscationName": "SetMobileGameQualitySettingLevel",
-						"IsWrapper": true,
-						"IsReturnCache": false
-					},
-					{
 						"FunctionName": "SetGameQualitySettingLevel",
 						"ObfuscationName": "SetGameQualitySettingLevel",
 						"IsWrapper": true,
@@ -7650,12 +7610,6 @@
 					{
 						"FunctionName": "SetGameIsFakingTouchEvents",
 						"ObfuscationName": "SetGameIsFakingTouchEvents",
-						"IsWrapper": true,
-						"IsReturnCache": false
-					},
-					{
-						"FunctionName": "SaveKeyMappings",
-						"ObfuscationName": "SaveKeyMappings",
 						"IsWrapper": true,
 						"IsReturnCache": false
 					},
@@ -8037,12 +7991,6 @@
 					{
 						"FunctionName": "GetYear",
 						"ObfuscationName": "GetYear",
-						"IsWrapper": true,
-						"IsReturnCache": false
-					},
-					{
-						"FunctionName": "GetTotalMilliseconds",
-						"ObfuscationName": "GetTotalMilliseconds",
 						"IsWrapper": true,
 						"IsReturnCache": false
 					},
@@ -9015,6 +8963,18 @@
 				"IsWrapper": true,
 				"Properties": [
 					{
+						"PropertyName": "Settings",
+						"ObfuscationName": "Settings",
+						"IsWrapper": true,
+						"IsCache": false
+					},
+					{
+						"PropertyName": "Priority",
+						"ObfuscationName": "Priority",
+						"IsWrapper": true,
+						"IsCache": false
+					},
+					{
 						"PropertyName": "BlendWeight",
 						"ObfuscationName": "BlendWeight",
 						"IsWrapper": true,
@@ -9863,12 +9823,6 @@
 				"Properties": [],
 				"Functions": [
 					{
-						"FunctionName": "Test",
-						"ObfuscationName": "Test",
-						"IsWrapper": true,
-						"IsReturnCache": false
-					},
-					{
 						"FunctionName": "SetUserId",
 						"ObfuscationName": "SetUserId",
 						"IsWrapper": true,
@@ -9920,30 +9874,6 @@
 						"IsReturnCache": false
 					}
 				]
-			},
-			{
-				"ClassPathName": "/Script/EditorScriptingUtilities.EditorAssetLibrary",
-				"JsName": "EditorAssetLibrary",
-				"ObfuscationName": "EditorAssetLibrary",
-				"IsWrapper": false,
-				"Properties": [],
-				"Functions": []
-			},
-			{
-				"ClassPathName": "/Script/EditorScriptingUtilities.EditorDialogLibrary",
-				"JsName": "EditorDialogLibrary",
-				"ObfuscationName": "EditorDialogLibrary",
-				"IsWrapper": false,
-				"Properties": [],
-				"Functions": []
-			},
-			{
-				"ClassPathName": "/Script/EditorScriptingUtilities.EditorLevelLibrary",
-				"JsName": "EditorLevelLibrary",
-				"ObfuscationName": "EditorLevelLibrary",
-				"IsWrapper": false,
-				"Properties": [],
-				"Functions": []
 			},
 			{
 				"ClassPathName": "/Script/GameplayAbilities.AbilitySystemBlueprintLibrary",
@@ -11033,6 +10963,30 @@
 				]
 			},
 			{
+				"ClassPathName": "/Script/EditorScriptingUtilities.EditorAssetLibrary",
+				"JsName": "EditorAssetLibrary",
+				"ObfuscationName": "EditorAssetLibrary",
+				"IsWrapper": false,
+				"Properties": [],
+				"Functions": []
+			},
+			{
+				"ClassPathName": "/Script/EditorScriptingUtilities.EditorDialogLibrary",
+				"JsName": "EditorDialogLibrary",
+				"ObfuscationName": "EditorDialogLibrary",
+				"IsWrapper": false,
+				"Properties": [],
+				"Functions": []
+			},
+			{
+				"ClassPathName": "/Script/EditorScriptingUtilities.EditorLevelLibrary",
+				"JsName": "EditorLevelLibrary",
+				"ObfuscationName": "EditorLevelLibrary",
+				"IsWrapper": false,
+				"Properties": [],
+				"Functions": []
+			},
+			{
 				"ClassPathName": "/Script/LTween.LTweenBPLibrary",
 				"JsName": "LTweenBPLibrary",
 				"ObfuscationName": "LTweenBPLibrary",
@@ -11782,12 +11736,6 @@
 				"Properties": [],
 				"Functions": [
 					{
-						"FunctionName": "SimulationLineTraceOnCenterScreen",
-						"ObfuscationName": "SimulationLineTraceOnCenterScreen",
-						"IsWrapper": true,
-						"IsReturnCache": false
-					},
-					{
 						"FunctionName": "SetIsFullScreenUIRendering",
 						"ObfuscationName": "SetIsFullScreenUIRendering",
 						"IsWrapper": true,
@@ -11909,6 +11857,12 @@
 				"ObfuscationName": "LGUICanvas",
 				"IsWrapper": true,
 				"Properties": [
+					{
+						"PropertyName": "sortOrder",
+						"ObfuscationName": "sortOrder",
+						"IsWrapper": true,
+						"IsCache": false
+					},
 					{
 						"PropertyName": "clipRectOffset",
 						"ObfuscationName": "clipRectOffset",
@@ -14286,14 +14240,6 @@
 				]
 			},
 			{
-				"ClassPathName": "/Script/LGUI.UIMultiTemplateLayout",
-				"JsName": "UIMultiTemplateLayout",
-				"ObfuscationName": "UIMultiTemplateLayout",
-				"IsWrapper": false,
-				"Properties": [],
-				"Functions": []
-			},
-			{
 				"ClassPathName": "/Script/LGUI.UINavigationBehaviour",
 				"JsName": "UINavigationBehaviour",
 				"ObfuscationName": "UINavigationBehaviour",
@@ -14894,12 +14840,6 @@
 					{
 						"FunctionName": "SetText",
 						"ObfuscationName": "SetText",
-						"IsWrapper": true,
-						"IsReturnCache": false
-					},
-					{
-						"FunctionName": "IsInputActive",
-						"ObfuscationName": "IsInputActive",
 						"IsWrapper": true,
 						"IsReturnCache": false
 					},
@@ -15593,18 +15533,6 @@
 					{
 						"FunctionName": "IsPhotoLibraryAuthorized",
 						"ObfuscationName": "IsPhotoLibraryAuthorized",
-						"IsWrapper": true,
-						"IsReturnCache": false
-					},
-					{
-						"FunctionName": "ConvertColorsToBitmap",
-						"ObfuscationName": "ConvertColorsToBitmap",
-						"IsWrapper": true,
-						"IsReturnCache": false
-					},
-					{
-						"FunctionName": "CompressConvertColorsToBitmap",
-						"ObfuscationName": "CompressConvertColorsToBitmap",
 						"IsWrapper": true,
 						"IsReturnCache": false
 					}
@@ -16424,7 +16352,14 @@
 						"IsCache": false
 					}
 				],
-				"Functions": []
+				"Functions": [
+					{
+						"FunctionName": "SetWeatherDataAsset",
+						"ObfuscationName": "SetWeatherDataAsset",
+						"IsWrapper": true,
+						"IsReturnCache": false
+					}
+				]
 			},
 			{
 				"ClassPathName": "/Script/KuroRenderingRuntimeBPPlugin.KuroPostProcessVolume",
@@ -16528,12 +16463,6 @@
 					{
 						"FunctionName": "SetGlobalGITime",
 						"ObfuscationName": "SetGlobalGITime",
-						"IsWrapper": true,
-						"IsReturnCache": false
-					},
-					{
-						"FunctionName": "SetClusteredStuffVisible",
-						"ObfuscationName": "SetClusteredStuffVisible",
 						"IsWrapper": true,
 						"IsReturnCache": false
 					},
@@ -18589,75 +18518,6 @@
 				]
 			},
 			{
-				"ClassPathName": "/Script/Puerts.PuertsBlueprintLibrary",
-				"JsName": "PuertsBlueprintLibrary",
-				"ObfuscationName": "PuertsBlueprintLibrary",
-				"IsWrapper": true,
-				"Properties": [],
-				"Functions": [
-					{
-						"FunctionName": "PreloadJS",
-						"ObfuscationName": "PreloadJS",
-						"IsWrapper": true,
-						"IsReturnCache": false
-					},
-					{
-						"FunctionName": "ClearJSCache",
-						"ObfuscationName": "ClearJSCache",
-						"IsWrapper": true,
-						"IsReturnCache": false
-					}
-				]
-			},
-			{
-				"ClassPathName": "/Script/ReactUMG.ReactWidget",
-				"JsName": "ReactWidget",
-				"ObfuscationName": "ReactWidget",
-				"IsWrapper": true,
-				"Properties": [],
-				"Functions": [
-					{
-						"FunctionName": "RemoveChild",
-						"ObfuscationName": "RemoveChild",
-						"IsWrapper": true,
-						"IsReturnCache": false
-					},
-					{
-						"FunctionName": "AddChild",
-						"ObfuscationName": "AddChild",
-						"IsWrapper": true,
-						"IsReturnCache": false
-					}
-				]
-			},
-			{
-				"ClassPathName": "/Script/ReactUMG.UMGManager",
-				"JsName": "UMGManager",
-				"ObfuscationName": "UMGManager",
-				"IsWrapper": true,
-				"Properties": [],
-				"Functions": [
-					{
-						"FunctionName": "SynchronizeWidgetProperties",
-						"ObfuscationName": "SynchronizeWidgetProperties",
-						"IsWrapper": true,
-						"IsReturnCache": false
-					},
-					{
-						"FunctionName": "SynchronizeSlotProperties",
-						"ObfuscationName": "SynchronizeSlotProperties",
-						"IsWrapper": true,
-						"IsReturnCache": false
-					},
-					{
-						"FunctionName": "CreateWidget",
-						"ObfuscationName": "CreateWidget",
-						"IsWrapper": true,
-						"IsReturnCache": false
-					}
-				]
-			},
-			{
 				"ClassPathName": "/Script/TASdkPlugin.ThinkingAnalytics",
 				"JsName": "ThinkingAnalytics",
 				"ObfuscationName": "ThinkingAnalytics",
@@ -18745,6 +18605,75 @@
 					{
 						"FunctionName": "CalibrateTime",
 						"ObfuscationName": "CalibrateTime",
+						"IsWrapper": true,
+						"IsReturnCache": false
+					}
+				]
+			},
+			{
+				"ClassPathName": "/Script/Puerts.PuertsBlueprintLibrary",
+				"JsName": "PuertsBlueprintLibrary",
+				"ObfuscationName": "PuertsBlueprintLibrary",
+				"IsWrapper": true,
+				"Properties": [],
+				"Functions": [
+					{
+						"FunctionName": "PreloadJS",
+						"ObfuscationName": "PreloadJS",
+						"IsWrapper": true,
+						"IsReturnCache": false
+					},
+					{
+						"FunctionName": "ClearJSCache",
+						"ObfuscationName": "ClearJSCache",
+						"IsWrapper": true,
+						"IsReturnCache": false
+					}
+				]
+			},
+			{
+				"ClassPathName": "/Script/ReactUMG.ReactWidget",
+				"JsName": "ReactWidget",
+				"ObfuscationName": "ReactWidget",
+				"IsWrapper": true,
+				"Properties": [],
+				"Functions": [
+					{
+						"FunctionName": "RemoveChild",
+						"ObfuscationName": "RemoveChild",
+						"IsWrapper": true,
+						"IsReturnCache": false
+					},
+					{
+						"FunctionName": "AddChild",
+						"ObfuscationName": "AddChild",
+						"IsWrapper": true,
+						"IsReturnCache": false
+					}
+				]
+			},
+			{
+				"ClassPathName": "/Script/ReactUMG.UMGManager",
+				"JsName": "UMGManager",
+				"ObfuscationName": "UMGManager",
+				"IsWrapper": true,
+				"Properties": [],
+				"Functions": [
+					{
+						"FunctionName": "SynchronizeWidgetProperties",
+						"ObfuscationName": "SynchronizeWidgetProperties",
+						"IsWrapper": true,
+						"IsReturnCache": false
+					},
+					{
+						"FunctionName": "SynchronizeSlotProperties",
+						"ObfuscationName": "SynchronizeSlotProperties",
+						"IsWrapper": true,
+						"IsReturnCache": false
+					},
+					{
+						"FunctionName": "CreateWidget",
+						"ObfuscationName": "CreateWidget",
 						"IsWrapper": true,
 						"IsReturnCache": false
 					}
@@ -19175,6 +19104,29 @@
 				]
 			},
 			{
+				"ClassPathName": "/Script/KuroAutomationTool.KuroAutomationBlueprintLibrary",
+				"JsName": "KuroAutomationBlueprintLibrary",
+				"ObfuscationName": "KuroAutomationBlueprintLibrary",
+				"IsWrapper": true,
+				"Properties": [],
+				"Functions": [
+					{
+						"FunctionName": "CallMemoryOverrun",
+						"ObfuscationName": "CallMemoryOverrun",
+						"IsWrapper": true,
+						"IsReturnCache": false
+					}
+				]
+			},
+			{
+				"ClassPathName": "/Script/LGUI_TexturePackerImporter.LGUITexturePackerSpriteData",
+				"JsName": "LGUITexturePackerSpriteData",
+				"ObfuscationName": "LGUITexturePackerSpriteData",
+				"IsWrapper": false,
+				"Properties": [],
+				"Functions": []
+			},
+			{
 				"ClassPathName": "/Script/KuroAudio.KuroAmbientSoundActor",
 				"JsName": "KuroAmbientSoundActor",
 				"ObfuscationName": "KuroAmbientSoundActor",
@@ -19248,24 +19200,6 @@
 						"ObfuscationName": "GetEnvironmentStates",
 						"IsWrapper": true,
 						"IsReturnCache": false
-					},
-					{
-						"FunctionName": "GetEnvironmentInfo_MusicCompatible",
-						"ObfuscationName": "GetEnvironmentInfo_MusicCompatible",
-						"IsWrapper": true,
-						"IsReturnCache": false
-					},
-					{
-						"FunctionName": "GetEnvironmentInfo",
-						"ObfuscationName": "GetEnvironmentInfo",
-						"IsWrapper": true,
-						"IsReturnCache": false
-					},
-					{
-						"FunctionName": "CalculateDynamicReverbParam",
-						"ObfuscationName": "CalculateDynamicReverbParam",
-						"IsWrapper": true,
-						"IsReturnCache": false
 					}
 				]
 			},
@@ -19276,6 +19210,12 @@
 				"IsWrapper": true,
 				"Properties": [],
 				"Functions": [
+					{
+						"FunctionName": "UpdateAudioEnvironment",
+						"ObfuscationName": "UpdateAudioEnvironment",
+						"IsWrapper": true,
+						"IsReturnCache": false
+					},
 					{
 						"FunctionName": "StopAll",
 						"ObfuscationName": "StopAll",
@@ -19297,18 +19237,6 @@
 					{
 						"FunctionName": "SetRtpcValue",
 						"ObfuscationName": "SetRtpcValue",
-						"IsWrapper": true,
-						"IsReturnCache": false
-					},
-					{
-						"FunctionName": "SetIosAuditPackage",
-						"ObfuscationName": "SetIosAuditPackage",
-						"IsWrapper": true,
-						"IsReturnCache": false
-					},
-					{
-						"FunctionName": "IsAndroidApiUsingOpenSL",
-						"ObfuscationName": "IsAndroidApiUsingOpenSL",
 						"IsWrapper": true,
 						"IsReturnCache": false
 					},
@@ -19335,12 +19263,6 @@
 						"ObfuscationName": "ExecuteActionOnEventName",
 						"IsWrapper": true,
 						"IsReturnCache": false
-					},
-					{
-						"FunctionName": "ChangeIosAudioSessionProperties",
-						"ObfuscationName": "ChangeIosAudioSessionProperties",
-						"IsWrapper": true,
-						"IsReturnCache": false
 					}
 				]
 			},
@@ -19364,14 +19286,6 @@
 						"IsReturnCache": false
 					}
 				]
-			},
-			{
-				"ClassPathName": "/Script/LGUI_TexturePackerImporter.LGUITexturePackerSpriteData",
-				"JsName": "LGUITexturePackerSpriteData",
-				"ObfuscationName": "LGUITexturePackerSpriteData",
-				"IsWrapper": false,
-				"Properties": [],
-				"Functions": []
 			},
 			{
 				"ClassPathName": "/Script/LGUIEditor.LGUIEditorBPLibrary",
@@ -20029,12 +19943,6 @@
 						"IsReturnCache": false
 					},
 					{
-						"FunctionName": "GetMacAddress",
-						"ObfuscationName": "GetMacAddress",
-						"IsWrapper": true,
-						"IsReturnCache": false
-					},
-					{
 						"FunctionName": "GetLocalHostAddresses",
 						"ObfuscationName": "GetLocalHostAddresses",
 						"IsWrapper": true,
@@ -20366,12 +20274,6 @@
 				"Properties": [],
 				"Functions": [
 					{
-						"FunctionName": "UnloadStreamLevel",
-						"ObfuscationName": "UnloadStreamLevel",
-						"IsWrapper": true,
-						"IsReturnCache": false
-					},
-					{
 						"FunctionName": "LoadStreamLevel",
 						"ObfuscationName": "LoadStreamLevel",
 						"IsWrapper": true,
@@ -20380,12 +20282,6 @@
 					{
 						"FunctionName": "Clear",
 						"ObfuscationName": "Clear",
-						"IsWrapper": true,
-						"IsReturnCache": false
-					},
-					{
-						"FunctionName": "BindUnLoadStreamLevel",
-						"ObfuscationName": "BindUnLoadStreamLevel",
 						"IsWrapper": true,
 						"IsReturnCache": false
 					},
@@ -20461,21 +20357,6 @@
 					{
 						"FunctionName": "AddPrerequisiteActorComponent",
 						"ObfuscationName": "AddPrerequisiteActorComponent",
-						"IsWrapper": true,
-						"IsReturnCache": false
-					}
-				]
-			},
-			{
-				"ClassPathName": "/Script/KuroAutomationTool.KuroAutomationBlueprintLibrary",
-				"JsName": "KuroAutomationBlueprintLibrary",
-				"ObfuscationName": "KuroAutomationBlueprintLibrary",
-				"IsWrapper": true,
-				"Properties": [],
-				"Functions": [
-					{
-						"FunctionName": "CallMemoryOverrun",
-						"ObfuscationName": "CallMemoryOverrun",
 						"IsWrapper": true,
 						"IsReturnCache": false
 					}
@@ -20631,12 +20512,6 @@
 						"IsReturnCache": false
 					},
 					{
-						"FunctionName": "ResetModelLocation",
-						"ObfuscationName": "ResetModelLocation",
-						"IsWrapper": true,
-						"IsReturnCache": false
-					},
-					{
 						"FunctionName": "GetTransformOffsetInWorld",
 						"ObfuscationName": "GetTransformOffsetInWorld",
 						"IsWrapper": true,
@@ -20645,12 +20520,6 @@
 					{
 						"FunctionName": "AddModelQuat",
 						"ObfuscationName": "AddModelQuat",
-						"IsWrapper": true,
-						"IsReturnCache": false
-					},
-					{
-						"FunctionName": "AddModelLocation",
-						"ObfuscationName": "AddModelLocation",
 						"IsWrapper": true,
 						"IsReturnCache": false
 					}
@@ -20920,18 +20789,6 @@
 						"ObfuscationName": "PredictWorkload",
 						"IsWrapper": true,
 						"IsReturnCache": false
-					},
-					{
-						"FunctionName": "GetCurrentTemperatureData",
-						"ObfuscationName": "GetCurrentTemperatureData",
-						"IsWrapper": true,
-						"IsReturnCache": false
-					},
-					{
-						"FunctionName": "BoostCPU",
-						"ObfuscationName": "BoostCPU",
-						"IsWrapper": true,
-						"IsReturnCache": false
 					}
 				]
 			},
@@ -20949,29 +20806,6 @@
 						"IsReturnCache": false
 					}
 				]
-			},
-			{
-				"ClassPathName": "/Script/KuroPuertsWrapper.KuroDataTableFunctionLibrary",
-				"JsName": "KuroDataTableFunctionLibrary",
-				"ObfuscationName": "KuroDataTableFunctionLibrary",
-				"IsWrapper": true,
-				"Properties": [],
-				"Functions": [
-					{
-						"FunctionName": "GetDataTableRowFromName",
-						"ObfuscationName": "GetDataTableRowFromName",
-						"IsWrapper": true,
-						"IsReturnCache": false
-					}
-				]
-			},
-			{
-				"ClassPathName": "/Script/PuertsEditor.FileSystemOperation",
-				"JsName": "FileSystemOperation",
-				"ObfuscationName": "FileSystemOperation",
-				"IsWrapper": false,
-				"Properties": [],
-				"Functions": []
 			},
 			{
 				"ClassPathName": "/Script/KuroHotPatch.DownloaderProxy",
@@ -21170,12 +21004,6 @@
 						"IsReturnCache": false
 					},
 					{
-						"FunctionName": "GetAppChangeList",
-						"ObfuscationName": "GetAppChangeList",
-						"IsWrapper": true,
-						"IsReturnCache": false
-					},
-					{
 						"FunctionName": "DoesDiskHaveEnoughSpace",
 						"ObfuscationName": "DoesDiskHaveEnoughSpace",
 						"IsWrapper": true,
@@ -21330,6 +21158,29 @@
 						"IsReturnCache": false
 					}
 				]
+			},
+			{
+				"ClassPathName": "/Script/KuroPuertsWrapper.KuroDataTableFunctionLibrary",
+				"JsName": "KuroDataTableFunctionLibrary",
+				"ObfuscationName": "KuroDataTableFunctionLibrary",
+				"IsWrapper": true,
+				"Properties": [],
+				"Functions": [
+					{
+						"FunctionName": "GetDataTableRowFromName",
+						"ObfuscationName": "GetDataTableRowFromName",
+						"IsWrapper": true,
+						"IsReturnCache": false
+					}
+				]
+			},
+			{
+				"ClassPathName": "/Script/PuertsEditor.FileSystemOperation",
+				"JsName": "FileSystemOperation",
+				"ObfuscationName": "FileSystemOperation",
+				"IsWrapper": false,
+				"Properties": [],
+				"Functions": []
 			},
 			{
 				"ClassPathName": "/Script/IntroTutorials.EditorTutorial",
@@ -22872,6 +22723,12 @@
 						"IsCache": true
 					},
 					{
+						"PropertyName": "InheritTarget",
+						"ObfuscationName": "InheritTarget",
+						"IsWrapper": true,
+						"IsCache": true
+					},
+					{
 						"PropertyName": "SkillTargetDirection",
 						"ObfuscationName": "SkillTargetDirection",
 						"IsWrapper": true,
@@ -23258,12 +23115,6 @@
 					{
 						"PropertyName": "AimDirection",
 						"ObfuscationName": "AimDirection",
-						"IsWrapper": true,
-						"IsCache": true
-					},
-					{
-						"PropertyName": "WanderDirection",
-						"ObfuscationName": "WanderDirection",
 						"IsWrapper": true,
 						"IsCache": true
 					}
@@ -24870,14 +24721,6 @@
 				"Functions": []
 			},
 			{
-				"ClassPathName": "/Game/Aki/Character/BaseCharacter/StateMachine/BP_SM_ActionStopMontage.BP_SM_ActionStopMontage_C",
-				"JsName": "BP_SM_ActionStopMontage",
-				"ObfuscationName": "BP_SM_ActionStopMontage",
-				"IsWrapper": false,
-				"Properties": [],
-				"Functions": []
-			},
-			{
 				"ClassPathName": "/Game/Aki/Character/BaseCharacter/StateMachine/BP_SM_BindStateAiHateConfig.BP_SM_BindStateAiHateConfig_C",
 				"JsName": "BP_SM_BindStateAiHateConfig",
 				"ObfuscationName": "BP_SM_BindStateAiHateConfig",
@@ -25609,33 +25452,6 @@
 					{
 						"PropertyName": "结束时切换走路",
 						"ObfuscationName": "结束时切换走路",
-						"IsWrapper": true,
-						"IsCache": false
-					},
-					{
-						"PropertyName": "允许打断",
-						"ObfuscationName": "允许打断",
-						"IsWrapper": true,
-						"IsCache": false
-					}
-				],
-				"Functions": []
-			},
-			{
-				"ClassPathName": "/Game/Aki/Character/BaseCharacter/StateMachine/BP_SM_TaskPatrol.BP_SM_TaskPatrol_C",
-				"JsName": "BP_SM_TaskPatrol",
-				"ObfuscationName": "BP_SM_TaskPatrol",
-				"IsWrapper": true,
-				"Properties": [
-					{
-						"PropertyName": "移动方式",
-						"ObfuscationName": "移动方式",
-						"IsWrapper": true,
-						"IsCache": false
-					},
-					{
-						"PropertyName": "调试模式",
-						"ObfuscationName": "调试模式",
 						"IsWrapper": true,
 						"IsCache": false
 					},
@@ -26710,21 +26526,6 @@
 				"Functions": []
 			},
 			{
-				"ClassPathName": "/Game/Aki/Character/NPC/RoleNPC/ABP_BaseRoleNPC.ABP_BaseRoleNPC_C",
-				"JsName": "ABP_BaseRoleNPC",
-				"ObfuscationName": "ABP_BaseRoleNPC",
-				"IsWrapper": true,
-				"Properties": [
-					{
-						"PropertyName": "AimOffset",
-						"ObfuscationName": "AimOffset",
-						"IsWrapper": true,
-						"IsCache": false
-					}
-				],
-				"Functions": []
-			},
-			{
 				"ClassPathName": "/Game/Aki/Character/Role/Common/ABP_BaseRole.ABP_BaseRole_C",
 				"JsName": "ABP_BaseRole",
 				"ObfuscationName": "ABP_BaseRole",
@@ -26853,12 +26654,6 @@
 					{
 						"PropertyName": "技能ID",
 						"ObfuscationName": "技能ID",
-						"IsWrapper": true,
-						"IsCache": true
-					},
-					{
-						"PropertyName": "条件技能ID",
-						"ObfuscationName": "条件技能ID",
 						"IsWrapper": true,
 						"IsCache": true
 					},
@@ -31132,12 +30927,6 @@
 						"ObfuscationName": "草集群特效",
 						"IsWrapper": true,
 						"IsCache": false
-					},
-					{
-						"PropertyName": "启用简易水面交互",
-						"ObfuscationName": "启用简易水面交互",
-						"IsWrapper": true,
-						"IsCache": false
 					}
 				],
 				"Functions": []
@@ -32267,8 +32056,21 @@
 				"JsName": "SceneEffectStatePostVolume",
 				"ObfuscationName": "SceneEffectStatePostVolume",
 				"IsWrapper": true,
-				"Properties": [],
+				"Properties": [
+					{
+						"PropertyName": "KuroPostProcess",
+						"ObfuscationName": "KuroPostProcess",
+						"IsWrapper": true,
+						"IsCache": false
+					}
+				],
 				"Functions": [
+					{
+						"FunctionName": "DisableVolume",
+						"ObfuscationName": "DisableVolume",
+						"IsWrapper": true,
+						"IsReturnCache": false
+					},
 					{
 						"FunctionName": "SetToxicFog",
 						"ObfuscationName": "SetToxicFog",
@@ -34240,18 +34042,6 @@
 				"IsWrapper": true,
 				"Properties": [],
 				"Functions": [
-					{
-						"FunctionName": "GetLocalGameDataPath",
-						"ObfuscationName": "GetLocalGameDataPath",
-						"IsWrapper": true,
-						"IsReturnCache": false
-					},
-					{
-						"FunctionName": "TestSceneLoadBornLocation",
-						"ObfuscationName": "TestSceneLoadBornLocation",
-						"IsWrapper": true,
-						"IsReturnCache": false
-					},
 					{
 						"FunctionName": "TestSceneLoadServerIp",
 						"ObfuscationName": "TestSceneLoadServerIp",
@@ -38326,21 +38116,6 @@
 					{
 						"PropertyName": "CaughtId",
 						"ObfuscationName": "CaughtId",
-						"IsWrapper": true,
-						"IsCache": false
-					}
-				],
-				"Functions": []
-			},
-			{
-				"ClassPathName": "/Game/Aki/TypeScript/Game/AnimNotify/TsAnimNotifyFootprint.TsAnimNotifyFootprint_C",
-				"JsName": "TsAnimNotifyFootprint",
-				"ObfuscationName": "TsAnimNotifyFootprint",
-				"IsWrapper": true,
-				"Properties": [
-					{
-						"PropertyName": "IsLeftFoot",
-						"ObfuscationName": "IsLeftFoot",
 						"IsWrapper": true,
 						"IsCache": false
 					}
@@ -44024,14 +43799,6 @@
 				]
 			},
 			{
-				"ClassPathName": "/Game/Aki/TypeScript/Game/Utils/CombatDebugBlueprintFunctionLibrary.CombatDebugBlueprintFunctionLibrary_C",
-				"JsName": "CombatDebugBlueprintFunctionLibrary",
-				"ObfuscationName": "CombatDebugBlueprintFunctionLibrary",
-				"IsWrapper": false,
-				"Properties": [],
-				"Functions": []
-			},
-			{
 				"ClassPathName": "/Game/Aki/TypeScript/Launcher/TsSplash.TsSplash_C",
 				"JsName": "TsSplash",
 				"ObfuscationName": "TsSplash",
@@ -44456,12 +44223,6 @@
 						"IsCache": false
 					},
 					{
-						"PropertyName": "基础减速度",
-						"ObfuscationName": "基础减速度",
-						"IsWrapper": true,
-						"IsCache": false
-					},
-					{
 						"PropertyName": "基础目标速度",
 						"ObfuscationName": "基础目标速度",
 						"IsWrapper": true,
@@ -44476,18 +44237,6 @@
 					{
 						"PropertyName": "斜坡额外目标速度",
 						"ObfuscationName": "斜坡额外目标速度",
-						"IsWrapper": true,
-						"IsCache": false
-					},
-					{
-						"PropertyName": "忽视阶梯高度",
-						"ObfuscationName": "忽视阶梯高度",
-						"IsWrapper": true,
-						"IsCache": false
-					},
-					{
-						"PropertyName": "跳跃转向速度系数",
-						"ObfuscationName": "跳跃转向速度系数",
 						"IsWrapper": true,
 						"IsCache": false
 					}

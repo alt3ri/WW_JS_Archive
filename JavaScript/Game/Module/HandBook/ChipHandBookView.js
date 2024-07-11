@@ -4,6 +4,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const puerts_1 = require("puerts"),
   UE = require("ue"),
   AudioController_1 = require("../../../Core/Audio/AudioController"),
+  ConfigCommon_1 = require("../../../Core/Config/ConfigCommon"),
   MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang"),
   TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
@@ -13,169 +14,162 @@ const puerts_1 = require("puerts"),
   UiViewBase_1 = require("../../Ui/Base/UiViewBase"),
   PopupCaptionItem_1 = require("../../Ui/Common/PopupCaptionItem"),
   UiManager_1 = require("../../Ui/UiManager"),
-  GenericLayoutNew_1 = require("../Util/Layout/GenericLayoutNew"),
   LguiUtil_1 = require("../Util/LguiUtil"),
+  DynScrollView_1 = require("../Util/ScrollView/DynScrollView"),
   ChipHandBookItem_1 = require("./ChipHandBookItem"),
   HandBookController_1 = require("./HandBookController"),
   HandBookDefine_1 = require("./HandBookDefine"),
-  ConfigCommon_1 = require("../../../Core/Config/ConfigCommon");
+  HandBootChipDynamicItem_1 = require("./HandBootChipDynamicItem");
 class ChipHandBookView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.Vzt = void 0),
+      (this.VZt = void 0),
+      (this.ZQn = void 0),
+      (this.eXn = -1),
+      (this.tXn = -1),
       (this.HandBookCommonItemDataList = []),
-      (this.Qzt = void 0),
-      (this.Xzt = new AudioController_1.PlayResult()),
-      (this.$zt = 8),
-      (this.Yzt = void 0),
-      (this.Jzt = 1e3),
+      (this.QZt = void 0),
+      (this.XZt = new AudioController_1.PlayResult()),
+      (this.$Zt = 8),
+      (this.YZt = void 0),
+      (this.JZt = 1e3),
       (this.IRe = void 0),
-      (this.zzt = -0),
+      (this.zZt = -0),
       (this.oUe = -0),
-      (this.Zzt = 1e3),
-      (this.eZt = void 0),
-      (this.tZt = []),
+      (this.ZZt = 1e3),
+      (this.eei = void 0),
+      (this.tei = []),
       (this.lqe = void 0),
-      (this.iZt = 60),
-      (this.oZt = 10),
+      (this.iei = 60),
+      (this.oei = 10),
+      (this.zji = void 0),
       (this.Refresh = () => {
         this.InitScrollView(), this.RefreshCollectText();
       }),
       (this.OnHandBookRead = (i, t) => {
         if (6 === i) {
-          var e = this.tZt.length;
-          for (let i = 0; i < e; i++) {
-            var s = this.tZt[i],
-              h = (s.RefreshNewState(), s.GetChildItemList()),
-              o = h.length;
-            for (let i = 0; i < o; i++) {
-              var r = h[i];
-              if (r.GetData().Id === t) {
-                r.SetNewState(!1);
-                break;
-              }
-            }
-          }
+          var e = this.tei.length;
+          for (let i = 0; i < e; i++) this.tei[i].RefreshNewState();
         }
       }),
-      (this.rZt = (i, t, e) => {
+      (this.rei = (i, t, e) => {
         var s = new ChipHandBookItem_1.ChipHandBookItem();
         return (
-          s.Initialize(t),
-          s.Refresh(i, !1, 0),
-          s.BindToggleCallback(this.nZt),
-          s.BindChildToggleCallback(this.sZt),
-          this.tZt.push(s),
-          { Key: e, Value: s }
+          s.BindToggleCallback(this.nei),
+          s.BindChildToggleCallback(this.sei),
+          this.tei.push(s),
+          s
         );
       }),
-      (this.nZt = (i) => {
-        this.ResetChipItemToggleState(), i.SelectFirstChildItem();
+      (this.nei = (i) => {
+        this.eXn = i;
+        i = this.iXn();
+        this.VZt?.RefreshByData(i, !0),
+          this.VZt?.BindLateUpdate(() => {
+            this.VZt?.ScrollToItemIndex(this.tXn), this.VZt?.UnBindLateUpdate();
+          });
       }),
-      (this.sZt = (i) => {
-        this.Qzt = i;
-        var t =
+      (this.sei = (i, t) => {
+        (this.QZt = i), this.zji?.SetToggleStateForce(0, !1), (this.zji = t);
+        var t = ModelManager_1.ModelManager.HandBookModel.GetHandBookInfo(
+            6,
+            this.QZt.Id,
+          ),
+          e = void 0 === t,
+          s =
+            (e && this.RefreshLockState(e),
             ConfigManager_1.ConfigManager.InfoDisplayModuleConfig.GetInfoDisplayTitle(
-              this.Qzt.Id,
-            ),
-          t =
-            (this.GetText(4).SetText(t),
+              this.QZt.Id,
+            )),
+          s =
+            (this.GetText(4).SetText(s),
             ConfigManager_1.ConfigManager.HandBookConfig.GetChipTypeConfig(
               i.Type,
             )),
-          t =
-            (this.GetText(5).ShowTextNew(t.TypeDescription),
-            ConfigManager_1.ConfigManager.InfoDisplayModuleConfig.GetInfoDisplayPictures(
-              this.Qzt.Id,
-            )),
-          e = 0 < t.length,
-          s = this.GetItem(17),
           s =
-            (e
-              ? (s.SetUIActive(!0),
-                this.SetTextureByPath(t[0], this.GetTexture(7)))
-              : s.SetUIActive(!1),
-            t.length),
-          t =
-            (LguiUtil_1.LguiUtil.SetLocalText(this.GetText(8), "RoleExp", 1, s),
-            ConfigManager_1.ConfigManager.InfoDisplayModuleConfig.GetInfoDisplayAudio(
-              this.Qzt.Id,
+            (this.GetText(5).ShowTextNew(s.TypeDescription),
+            ConfigManager_1.ConfigManager.InfoDisplayModuleConfig.GetInfoDisplayPictures(
+              this.QZt.Id,
             )),
-          s = 0 < t.length,
-          t =
+          h = 0 < s.length,
+          o = this.GetItem(17),
+          h =
+            (h
+              ? (o.SetUIActive(!0),
+                this.SetTextureByPath(s[0], this.GetTexture(7)))
+              : o.SetUIActive(!1),
+            s.length),
+          o =
+            (LguiUtil_1.LguiUtil.SetLocalText(this.GetText(8), "RoleExp", 1, h),
+            ConfigManager_1.ConfigManager.InfoDisplayModuleConfig.GetInfoDisplayAudio(
+              this.QZt.Id,
+            )),
+          s = 0 < o.length,
+          h =
             (this.GetItem(16).SetUIActive(s),
             this.GetText(11).ShowTextNew(i.VoiceDescrtption),
             this.GetButton(12).RootUIComp.SetUIActive(!1),
             this.GetButton(13).RootUIComp.SetUIActive(!0),
             ConfigManager_1.ConfigManager.InfoDisplayModuleConfig.GetInfoDisplayDesc(
-              this.Qzt.Id,
+              this.QZt.Id,
             )),
-          i = 0 < t?.length,
-          e = !e && !s,
+          o = 0 < h?.length,
           s =
-            (this.GetItem(20).SetUIActive(e && i),
-            this.GetText(21).SetText(t),
-            this.GetItem(18).SetUIActive(!e && i),
-            this.GetText(9).SetText(t),
-            ModelManager_1.ModelManager.HandBookModel.GetHandBookInfo(
-              6,
-              this.Qzt.Id,
-            )),
-          e =
-            (void 0 !== s &&
-              !s.IsRead &&
-              HandBookController_1.HandBookController.SendIllustratedReadRequest(
-                6,
-                this.Qzt.Id,
-              ),
-            void 0 === s);
-        this.RefreshLockState(e),
+            (this.GetItem(20).SetUIActive(o),
+            this.GetText(21).SetText(h),
+            this.GetItem(18).SetUIActive(!1),
+            void 0 !== t && !t.IsRead);
+        s &&
+          HandBookController_1.HandBookController.SendIllustratedReadRequest(
+            6,
+            this.QZt.Id,
+          ),
           LguiUtil_1.LguiUtil.SetLocalText(
             this.GetText(6),
             "DateOfAcquisition",
-            e ? "" : s.CreateTime,
+            e ? "" : t.CreateTime,
           );
       }),
-      (this.aZt = (i, t) => i.Id - t.Id),
-      (this.JSt = () => {
+      (this.aei = (i, t) => i.Id - t.Id),
+      (this.lyt = () => {
         UiManager_1.UiManager.CloseView("ChipHandBookView");
       }),
-      (this.hZt = () => {
+      (this.hei = () => {
         this.GetButton(12).RootUIComp.SetUIActive(!0),
           this.GetButton(13).RootUIComp.SetUIActive(!1),
-          this.Yzt ||
-            (this.Yzt = (0, puerts_1.toManualReleaseDelegate)(this.lZt));
+          this.YZt ||
+            (this.YZt = (0, puerts_1.toManualReleaseDelegate)(this.lei));
         var i =
           ConfigManager_1.ConfigManager.InfoDisplayModuleConfig.GetInfoDisplayAudio(
-            this.Qzt.Id,
+            this.QZt.Id,
           );
         AudioController_1.AudioController.PostEventByUi(
           i,
-          this.Xzt,
-          this.$zt,
-          this.Yzt,
+          this.XZt,
+          this.$Zt,
+          this.YZt,
         );
       }),
-      (this._Zt = () => {
+      (this._ei = () => {
         this.GetButton(12).RootUIComp.SetUIActive(!1),
           this.GetButton(13).RootUIComp.SetUIActive(!0),
-          this.Qzt &&
-            (this.uZt(),
-            (this.zzt = 0),
-            AudioController_1.AudioController.StopEvent(this.Xzt),
-            this.eZt.SetText(""));
+          this.QZt &&
+            (this.uei(),
+            (this.zZt = 0),
+            AudioController_1.AudioController.StopEvent(this.XZt),
+            this.eei.SetText(""));
       }),
-      (this.cZt = () => {
+      (this.cei = () => {
         var i =
             ConfigManager_1.ConfigManager.InfoDisplayModuleConfig.GetInfoDisplayPictures(
-              this.Qzt.Id,
+              this.QZt.Id,
             ),
-          t = this.Qzt.Type,
+          t = this.QZt.Type,
           t = ConfigManager_1.ConfigManager.HandBookConfig.GetChipTypeConfig(t),
           e = new HandBookDefine_1.HandBookPhotoData(),
           s =
             ConfigManager_1.ConfigManager.InfoDisplayModuleConfig.GetInfoDisplayDesc(
-              this.Qzt.Id,
+              this.QZt.Id,
             ),
           h = [],
           s = (h.push(s), []),
@@ -188,7 +182,7 @@ class ChipHandBookView extends UiViewBase_1.UiViewBase {
             []),
           o =
             ConfigManager_1.ConfigManager.InfoDisplayModuleConfig.GetInfoDisplayTitle(
-              this.Qzt.Id,
+              this.QZt.Id,
             );
         t.push(o),
           (e.DescrtptionText = h),
@@ -199,22 +193,22 @@ class ChipHandBookView extends UiViewBase_1.UiViewBase {
           (e.TextureList = i),
           UiManager_1.UiManager.OpenView("HandBookPhotoView", e);
       }),
-      (this.lZt = (i, t) => {
+      (this.lei = (i, t) => {
         3 === i &&
-          ((this.oUe = Math.ceil(t.Duration / this.Jzt)),
+          ((this.oUe = Math.ceil(t.Duration / this.JZt)),
           (this.IRe = TimerSystem_1.TimerSystem.Loop(
             () => {
               var i, t, e, s;
-              (this.zzt = this.zzt + 1),
-                this.zzt > this.oUe
-                  ? this._Zt()
-                  : ((i = this.zzt % this.iZt),
-                    (t = Math.floor(this.zzt / this.iZt)),
-                    (e = this.oUe % this.iZt),
-                    (s = Math.floor(this.oUe / this.iZt)),
+              (this.zZt = this.zZt + 1),
+                this.zZt > this.oUe
+                  ? this._ei()
+                  : ((i = this.zZt % this.iei),
+                    (t = Math.floor(this.zZt / this.iei)),
+                    (e = this.oUe % this.iei),
+                    (s = Math.floor(this.oUe / this.iei)),
                     this.SetVoiceProgress(i, t, e, s));
             },
-            this.Zzt,
+            this.ZZt,
             this.oUe + 1,
           )));
       });
@@ -223,7 +217,7 @@ class ChipHandBookView extends UiViewBase_1.UiViewBase {
     (this.ComponentRegisterInfos = [
       [0, UE.UIItem],
       [1, UE.UIText],
-      [2, UE.UIVerticalLayout],
+      [2, UE.UIDynScrollViewComponent],
       [3, UE.UIItem],
       [4, UE.UIText],
       [5, UE.UIText],
@@ -246,16 +240,16 @@ class ChipHandBookView extends UiViewBase_1.UiViewBase {
       [22, UE.UIItem],
     ]),
       (this.BtnBindInfo = [
-        [12, this._Zt],
-        [13, this.hZt],
-        [14, this.cZt],
+        [12, this._ei],
+        [13, this.hei],
+        [14, this.cei],
       ]);
   }
   OnStart() {
     this.InitCommonTabTitle(),
       this.Refresh(),
       this.RefreshLockText(),
-      (this.eZt = this.GetText(10));
+      (this.eei = this.GetText(10));
   }
   RefreshLockState(i) {
     this.GetText(4).SetUIActive(!i),
@@ -302,55 +296,39 @@ class ChipHandBookView extends UiViewBase_1.UiViewBase {
         this.OnHandBookRead,
       );
   }
-  OnAfterShow() {
-    var i = 0 < this.tZt.length ? this.tZt[0] : void 0;
-    i &&
-      (i = 0 < (i = i.GetChildItemList()).length ? i[0] : void 0) &&
-      i.GetTog().SetToggleState(1);
+  async OnBeforeStartAsync() {
+    (this.ZQn = new HandBootChipDynamicItem_1.HandBootChipDynamicItem()),
+      (this.VZt = new DynScrollView_1.DynamicScrollView(
+        this.GetUIDynScrollViewComponent(2),
+        this.GetItem(3),
+        this.ZQn,
+        this.rei,
+      )),
+      await this.VZt.Init();
   }
   InitScrollView() {
     var t = ConfigCommon_1.ConfigCommon.ToList(
         ConfigManager_1.ConfigManager.HandBookConfig.GetChipTypeConfigList(),
       ),
-      e = (t.sort(this.aZt), t.length);
+      e = (t.sort(this.aei), t.length);
     this.HandBookCommonItemDataList = [];
     for (let i = 0; i < e; i++) {
       var s = t[i],
         h = new HandBookDefine_1.HandBookCommonItemData(),
         o = ModelManager_1.ModelManager.HandBookModel.GetHandBookInfo(6, s.Id),
-        r = void 0 === o,
+        n = void 0 === o,
         o = void 0 !== o && !o.IsRead;
       (h.Icon = s.Icon),
         (h.Title = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
           s.TypeDescription,
         )),
         (h.Config = s),
-        (h.IsLock = r),
+        (h.IsLock = n),
         (h.IsNew = o),
         this.HandBookCommonItemDataList.push(h);
     }
-    this.Vzt ||
-      (this.Vzt = new GenericLayoutNew_1.GenericLayoutNew(
-        this.GetVerticalLayout(2),
-        this.rZt,
-      )),
-      this.Vzt.ClearChildren(),
-      this.Vzt.RebuildLayoutByDataNew(this.HandBookCommonItemDataList),
-      this.ResetChipItemToggleState();
-    var n = this.tZt.length;
-    let a = !1;
-    for (let i = 0; i < n; i++) {
-      var _ = this.tZt[i];
-      if (_.CheckIsCanShowChildList()) {
-        _.SelectFirstChildItem(), (a = !0);
-        break;
-      }
-    }
-    a || this.RefreshLockState(!0);
-  }
-  ResetChipItemToggleState() {
-    var t = this.tZt.length;
-    for (let i = 0; i < t; i++) this.tZt[i].SetToggleStateForce(0);
+    var i = this.iXn();
+    this.VZt?.RefreshByData(i);
   }
   RefreshLockText() {
     var i =
@@ -361,18 +339,18 @@ class ChipHandBookView extends UiViewBase_1.UiViewBase {
     var i =
       ConfigManager_1.ConfigManager.HandBookConfig.GetHandBookEntranceConfig(6);
     (this.lqe = new PopupCaptionItem_1.PopupCaptionItem(this.GetItem(0))),
-      this.lqe.SetCloseCallBack(this.JSt),
+      this.lqe.SetCloseCallBack(this.lyt),
       this.lqe.SetTitleLocalText(i.Name),
       this.lqe.SetTitleIcon(i.TitleIcon);
   }
-  uZt() {
+  uei() {
     TimerSystem_1.TimerSystem.Has(this.IRe) &&
       TimerSystem_1.TimerSystem.Remove(this.IRe),
       (this.IRe = void 0);
   }
   SetVoiceProgress(i, t, e, s) {
     LguiUtil_1.LguiUtil.SetLocalText(
-      this.eZt,
+      this.eei,
       "VoiceProgress",
       this.TimeFormat(t),
       this.TimeFormat(i),
@@ -381,7 +359,7 @@ class ChipHandBookView extends UiViewBase_1.UiViewBase {
     );
   }
   TimeFormat(i) {
-    return i < this.oZt ? "0" + String(i) : String(i);
+    return i < this.oei ? "0" + String(i) : String(i);
   }
   RefreshCollectText() {
     var i = HandBookController_1.HandBookController.GetCollectProgress(6);
@@ -389,17 +367,42 @@ class ChipHandBookView extends UiViewBase_1.UiViewBase {
       this.GetText(1)?.SetUIActive(!1);
   }
   OnBeforeDestroy() {
-    this.Vzt && (this.Vzt.ClearChildren(), (this.Vzt = void 0)),
-      this.Yzt &&
-        ((0, puerts_1.releaseManualReleaseDelegate)(this.lZt),
-        (this.Yzt = void 0)),
-      AudioController_1.AudioController.StopEvent(this.Xzt),
-      (this.zzt = 0),
+    this.VZt && (this.VZt.ClearChildren(), (this.VZt = void 0)),
+      this.YZt &&
+        ((0, puerts_1.releaseManualReleaseDelegate)(this.lei),
+        (this.YZt = void 0)),
+      AudioController_1.AudioController.StopEvent(this.XZt),
+      (this.zZt = 0),
       (this.oUe = 0),
-      (this.eZt = void 0),
-      (this.tZt = []),
+      (this.eei = void 0),
+      (this.tei = []),
       (this.HandBookCommonItemDataList = []),
-      (this.Qzt = void 0);
+      (this.QZt = void 0);
+  }
+  iXn() {
+    -1 === this.eXn &&
+      (this.eXn = this.HandBookCommonItemDataList[0].Config.Id);
+    var t = [];
+    for (const h of this.HandBookCommonItemDataList) {
+      var i = this.eXn === h.Config.Id,
+        e = new HandBookDefine_1.HandBookChipDynamicData();
+      if (
+        ((e.HandBookCommonItemData = h), (e.IsShowContent = i), t.push(e), i)
+      ) {
+        this.tXn = this.HandBookCommonItemDataList.indexOf(h);
+        let i = !0;
+        for (const o of ConfigManager_1.ConfigManager.HandBookConfig.GetChipHandBookConfigList(
+          h.Config.Id,
+        )) {
+          var s = new HandBookDefine_1.HandBookChipDynamicData();
+          (s.HandBookChipConfigId = o.Id),
+            (s.IsShowContent = i),
+            t.push(s),
+            (i = !1);
+        }
+      }
+    }
+    return t;
   }
 }
 exports.ChipHandBookView = ChipHandBookView;

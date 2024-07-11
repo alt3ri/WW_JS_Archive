@@ -8,6 +8,7 @@ const UE = require("ue"),
   ConfigManager_1 = require("../../Manager/ConfigManager"),
   ModelManager_1 = require("../../Manager/ModelManager"),
   UiViewBase_1 = require("../../Ui/Base/UiViewBase"),
+  UiLayer_1 = require("../../Ui/UiLayer"),
   CommonTabComponentData_1 = require("../Common/TabComponent/CommonTabComponentData"),
   CommonTabData_1 = require("../Common/TabComponent/CommonTabData"),
   CommonTabTitleData_1 = require("../Common/TabComponent/CommonTabTitleData"),
@@ -24,15 +25,15 @@ class WeaponRootView extends UiViewBase_1.UiViewBase {
       (this.TabViewComponent = void 0),
       (this.TabComponent = void 0),
       (this.TabDataList = []),
-      (this.ANo = 0),
-      (this.Nki = void 0),
-      (this.Oki = void 0),
-      (this.dVe = (e) => new WeaponTabItem_1.WeaponTabItem()),
+      (this.DOo = 0),
+      (this.N2i = void 0),
+      (this.O2i = void 0),
+      (this.R6e = (e) => new WeaponTabItem_1.WeaponTabItem()),
       (this.pqe = (e) => {
         var t = this.TabDataList[e],
           n = t.ChildViewName,
           e = this.TabComponent.GetTabItemByIndex(e);
-        this.TabViewComponent.ToggleCallBack(t, n, e, this.ANo);
+        this.TabViewComponent.ToggleCallBack(t, n, e, this.DOo);
       }),
       (this.yqe = (e) => {
         e = this.TabDataList[e];
@@ -41,22 +42,23 @@ class WeaponRootView extends UiViewBase_1.UiViewBase {
           new CommonTabTitleData_1.CommonTabTitleData(e.TabName),
         );
       }),
-      (this.wOo = () => {
+      (this.Ako = () => {
         this.UpdateDynamicTabComponent();
       }),
-      (this._9i = (e) => {
+      (this.l7i = (e) => {
         "WeaponRootView" === e.ViewName &&
-          this.Nki &&
-          this.Oki &&
+          (UiLayer_1.UiLayer.SetShowMaskLayer("WeaponRootView", !1),
+          this.N2i) &&
+          this.O2i &&
           WeaponController_1.WeaponController.OnSelectedWeaponChange(
             ModelManager_1.ModelManager.WeaponModel.GetWeaponDataByIncId(
-              this.ANo,
+              this.DOo,
             ),
-            this.Nki,
-            this.Oki,
+            this.N2i,
+            this.O2i,
           );
       }),
-      (this.W9t = () => {
+      (this.W7t = () => {
         this.CloseMe();
       });
   }
@@ -69,16 +71,16 @@ class WeaponRootView extends UiViewBase_1.UiViewBase {
   OnBeforeCreate() {
     var e = this.OpenParam;
     e
-      ? ((this.ANo = e.WeaponIncId),
-        (this.Nki = UiSceneManager_1.UiSceneManager.InitWeaponObserver()),
-        (this.Oki =
+      ? ((this.DOo = e.WeaponIncId),
+        (this.N2i = UiSceneManager_1.UiSceneManager.InitWeaponObserver()),
+        (this.O2i =
           UiSceneManager_1.UiSceneManager.InitWeaponScabbardObserver()))
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error("Weapon", 44, "进入武器培养界面未传参");
   }
   async OnBeforeStartAsync() {
     var e = new CommonTabComponentData_1.CommonTabComponentData(
-      this.dVe,
+      this.R6e,
       this.pqe,
       this.yqe,
     );
@@ -86,7 +88,7 @@ class WeaponRootView extends UiViewBase_1.UiViewBase {
       new TabComponentWithCaptionItem_1.TabComponentWithCaptionItem(
         this.GetItem(0),
         e,
-        this.W9t,
+        this.W7t,
       )),
       await this.TabComponent.SetCurrencyItemList([ItemDefines_1.EItemId.Gold]),
       (this.TabViewComponent = new TabViewComponent_1.TabViewComponent(
@@ -94,22 +96,24 @@ class WeaponRootView extends UiViewBase_1.UiViewBase {
       ));
   }
   OnHandleLoadScene() {
-    this.Nki ||
-      (this.Nki = UiSceneManager_1.UiSceneManager.InitWeaponObserver()),
-      this.Oki ||
-        (this.Oki =
+    this.N2i ||
+      (this.N2i = UiSceneManager_1.UiSceneManager.InitWeaponObserver()),
+      this.O2i ||
+        (this.O2i =
           UiSceneManager_1.UiSceneManager.InitWeaponScabbardObserver());
   }
   OnBeforeShow() {
-    this.UpdateDynamicTabComponent(),
+    UiLayer_1.UiLayer.SetShowMaskLayer("WeaponRootView", !0),
+      this.UpdateDynamicTabComponent(),
       UiCameraAnimationManager_1.UiCameraAnimationManager.IsPlayingAnimation() ||
-        WeaponController_1.WeaponController.OnSelectedWeaponChange(
+        (WeaponController_1.WeaponController.OnSelectedWeaponChange(
           ModelManager_1.ModelManager.WeaponModel.GetWeaponDataByIncId(
-            this.ANo,
+            this.DOo,
           ),
-          this.Nki,
-          this.Oki,
-        );
+          this.N2i,
+          this.O2i,
+        ),
+        UiLayer_1.UiLayer.SetShowMaskLayer("WeaponRootView", !1));
   }
   OnAfterShow() {
     ModelManager_1.ModelManager.WeaponModel.SetCurSelectViewName(2);
@@ -117,44 +121,44 @@ class WeaponRootView extends UiViewBase_1.UiViewBase {
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.WeaponCanGoBreach,
-      this.wOo,
+      this.Ako,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnActivateUiCameraAnimationHandle,
-        this._9i,
+        this.l7i,
       );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.WeaponCanGoBreach,
-      this.wOo,
+      this.Ako,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnActivateUiCameraAnimationHandle,
-        this._9i,
+        this.l7i,
       );
   }
   OnBeforePlayCloseSequence() {
-    this.BOo();
+    this.Pko();
   }
   OnHandleReleaseScene() {
-    this.BOo();
+    this.Pko();
   }
-  BOo() {
-    this.Nki &&
+  Pko() {
+    this.N2i &&
       (UiSceneManager_1.UiSceneManager.HideObserver(
-        this.Nki,
+        this.N2i,
         "ShowHideWeaponEffect",
       ),
-      UiSceneManager_1.UiSceneManager.DestroyWeaponObserver(this.Nki),
-      (this.Nki = void 0)),
-      this.Oki &&
+      UiSceneManager_1.UiSceneManager.DestroyWeaponObserver(this.N2i),
+      (this.N2i = void 0)),
+      this.O2i &&
         (UiSceneManager_1.UiSceneManager.HideObserver(
-          this.Oki,
+          this.O2i,
           "ShowHideWeaponEffect",
         ),
-        UiSceneManager_1.UiSceneManager.DestroyWeaponScabbardObserver(this.Nki),
-        (this.Oki = void 0));
+        UiSceneManager_1.UiSceneManager.DestroyWeaponScabbardObserver(this.N2i),
+        (this.O2i = void 0));
   }
   OnBeforeDestroy() {
     var e = this.OpenParam;
@@ -186,7 +190,7 @@ class WeaponRootView extends UiViewBase_1.UiViewBase {
           "WeaponRootView",
         ),
       n = ModelManager_1.ModelManager.WeaponModel.GetWeaponDataByIncId(
-        this.ANo,
+        this.DOo,
       ).CanGoBreach();
     for (const i of t)
       ("WeaponBreachView" === i.ChildViewName && !n) ||

@@ -6,37 +6,37 @@ const UE = require("ue"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
   UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
   UiManager_1 = require("../../../Ui/UiManager"),
   LguiUtil_1 = require("../../Util/LguiUtil"),
   GenericScrollView_1 = require("../../Util/ScrollView/GenericScrollView"),
-  CommonManager_1 = require("./CommonManager"),
-  ControllerHolder_1 = require("../../../Manager/ControllerHolder");
+  CommonManager_1 = require("./CommonManager");
 class RewardPopView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.Kyi = void 0),
-      (this.Yqt = void 0),
-      (this.S9 = 0),
+      (this.KIi = void 0),
+      (this.ZGt = void 0),
+      (this.E9 = 0),
       (this.InitCommonPopItem = (e, t, i) => {
         t = new RewardPopItem(t);
         return t.Update(e), { Key: i, Value: t };
       }),
-      (this.mIt = () => {
-        this.Jqt();
+      (this.m2e = () => {
+        this.eNt();
       }),
-      (this.zqt = () => {
-        this.Jqt();
+      (this.Jke = () => {
+        this.eNt();
       }),
-      (this.dIt = () => {
-        CommonManager_1.CommonManager.SendFixToolRequest(), this.Jqt();
+      (this.Mke = () => {
+        CommonManager_1.CommonManager.SendFixToolRequest(), this.eNt();
       }),
-      (this.Zqt = () => {
-        this.Jqt();
+      (this.tNt = () => {
+        this.eNt();
       }),
-      (this.eGt = () => {
+      (this.iNt = () => {
         ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
           "MaterialShort",
         );
@@ -56,65 +56,65 @@ class RewardPopView extends UiViewBase_1.UiViewBase {
       [9, UE.UIButtonComponent],
     ]),
       (this.BtnBindInfo = [
-        [5, this.zqt],
-        [6, this.dIt],
-        [8, this.Zqt],
-        [9, this.eGt],
+        [5, this.Jke],
+        [6, this.Mke],
+        [8, this.tNt],
+        [9, this.iNt],
       ]);
   }
   OnStart() {
     var e = this.OpenParam,
       e =
-        ((this.S9 = e.RewardPopType),
-        (this.Kyi = new GenericScrollView_1.GenericScrollView(
+        ((this.E9 = e.RewardPopType),
+        (this.KIi = new GenericScrollView_1.GenericScrollView(
           this.GetScrollViewWithScrollbar(1),
           this.InitCommonPopItem,
         )),
-        this.GetItem(2).SetUIActive(0 === this.S9 || 3 === this.S9),
-        this.GetItem(4).SetUIActive(0 === this.S9),
-        1 === this.S9 || CommonManager_1.CommonManager.CheckCanShowExpItem());
+        this.GetItem(2).SetUIActive(0 === this.E9 || 3 === this.E9),
+        this.GetItem(4).SetUIActive(0 === this.E9),
+        1 === this.E9 || CommonManager_1.CommonManager.CheckCanShowExpItem());
     this.GetItem(7).SetUIActive(e),
-      e && (this.Yqt = new ExpItem(this.GetItem(7))),
+      e && (this.ZGt = new ExpItem(this.GetItem(7))),
       this.GetButton(8)
         .GetOwner()
         .GetUIItem()
-        .SetUIActive(0 !== this.S9);
+        .SetUIActive(0 !== this.E9);
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.FixSuccess,
-      this.mIt,
+      this.m2e,
     );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.FixSuccess,
-      this.mIt,
+      this.m2e,
     );
   }
   OnBeforeDestroy() {
-    this.Kyi && (this.Kyi.ClearChildren(), (this.Kyi = void 0)),
-      this.Yqt && (this.Yqt.Destroy(), (this.Yqt = void 0));
+    this.KIi && (this.KIi.ClearChildren(), (this.KIi = void 0)),
+      this.ZGt && (this.ZGt.Destroy(), (this.ZGt = void 0));
   }
   OnAfterShow() {
-    switch ((this.ILt(), this.tGt(), this.S9)) {
+    switch ((this.RDt(), this.oNt(), this.E9)) {
       case 0:
-        this.iGt(), this.oGt();
+        this.rNt(), this.nNt();
         break;
       case 1:
-        this.rGt();
+        this.sNt();
         break;
       case 3:
-        this.iGt();
+        this.rNt();
         break;
       case 2:
         break;
       case 4:
-        CommonManager_1.CommonManager.CheckCanShowExpItem() && this.rGt();
+        CommonManager_1.CommonManager.CheckCanShowExpItem() && this.sNt();
     }
   }
-  ILt() {
-    switch (this.S9) {
+  RDt() {
+    switch (this.E9) {
       case 0:
         LguiUtil_1.LguiUtil.SetLocalText(this.GetText(0), "UnlockTitle");
         break;
@@ -132,8 +132,8 @@ class RewardPopView extends UiViewBase_1.UiViewBase {
         LguiUtil_1.LguiUtil.SetLocalText(this.GetText(0), "ForgingSuccess");
     }
   }
-  tGt() {
-    if (0 === this.S9) {
+  oNt() {
+    if (0 === this.E9) {
       var e = new Array();
       for (const i of ConfigManager_1.ConfigManager.CookConfig.GetCookFixToolById(
         CommonManager_1.CommonManager.GetCurrentFixId(),
@@ -144,12 +144,12 @@ class RewardPopView extends UiViewBase_1.UiViewBase {
           );
         e.push({ ItemId: i[0], ItemNum: t });
       }
-      this.Kyi.RefreshByData(e);
+      this.KIi.RefreshByData(e);
     } else
-      this.Kyi.RefreshByData(CommonManager_1.CommonManager.GetCommonItemList());
+      this.KIi.RefreshByData(CommonManager_1.CommonManager.GetCommonItemList());
   }
-  iGt() {
-    if (0 === this.S9) {
+  rNt() {
+    if (0 === this.E9) {
       var i = ConfigManager_1.ConfigManager.CookConfig.GetCookFixToolById(
           CommonManager_1.CommonManager.GetCurrentFixId(),
         ),
@@ -167,19 +167,19 @@ class RewardPopView extends UiViewBase_1.UiViewBase {
     } else
       LguiUtil_1.LguiUtil.SetLocalText(this.GetText(3), "MaciningStudyFail");
   }
-  rGt() {
+  sNt() {
     var e = CommonManager_1.CommonManager.GetSumExpByLevel(
         CommonManager_1.CommonManager.GetCurrentRewardLevel(),
       ),
       t = CommonManager_1.CommonManager.GetCurrentRewardTotalProficiency();
-    this.Yqt.SetExpSprite(t, e),
-      this.Yqt.SetAddText(
+    this.ZGt.SetExpSprite(t, e),
+      this.ZGt.SetAddText(
         CommonManager_1.CommonManager.GetCurrentRewardAddExp(),
       ),
-      this.Yqt.SetLastText(t),
-      this.Yqt.SetSumText(e);
+      this.ZGt.SetLastText(t),
+      this.ZGt.SetSumText(e);
   }
-  oGt() {
+  nNt() {
     var e = this.GetButton(6)
         .GetOwner()
         .GetComponentByClass(UE.UIInteractionGroup.StaticClass()),
@@ -187,8 +187,8 @@ class RewardPopView extends UiViewBase_1.UiViewBase {
     e.SetInteractable(t),
       this.GetButton(9).GetOwner().GetUIItem().SetUIActive(!t);
   }
-  Jqt() {
-    switch (this.S9) {
+  eNt() {
+    switch (this.E9) {
       case 0:
         UiManager_1.UiManager.CloseView("CookPopFixView");
         break;
@@ -205,10 +205,10 @@ exports.RewardPopView = RewardPopView;
 class RewardPopItem extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
-      (this.dqt = void 0),
-      (this.Kyt = () => {
+      (this.fGt = void 0),
+      (this.eTt = () => {
         ControllerHolder_1.ControllerHolder.ItemController.OpenItemTipsByItemId(
-          this.dqt.ItemId,
+          this.fGt.ItemId,
         );
       }),
       this.CreateThenShowByActor(e.GetOwner());
@@ -220,19 +220,19 @@ class RewardPopItem extends UiPanelBase_1.UiPanelBase {
       [8, UE.UIText],
       [9, UE.UIButtonComponent],
     ]),
-      (this.BtnBindInfo = [[9, this.Kyt]]);
+      (this.BtnBindInfo = [[9, this.eTt]]);
   }
   Update(e) {
-    (this.dqt = e), this.Dnt(), this._xt(), this.GIt();
+    (this.fGt = e), this.Ost(), this.dwt(), this.VTt();
   }
-  Dnt() {
-    this.SetItemIcon(this.GetTexture(4), this.dqt.ItemId);
+  Ost() {
+    this.SetItemIcon(this.GetTexture(4), this.fGt.ItemId);
   }
-  _xt() {
-    this.SetItemQualityIcon(this.GetSprite(5), this.dqt.ItemId);
+  dwt() {
+    this.SetItemQualityIcon(this.GetSprite(5), this.fGt.ItemId);
   }
-  GIt() {
-    this.GetText(8).SetText(this.dqt.ItemNum.toString());
+  VTt() {
+    this.GetText(8).SetText(this.fGt.ItemNum.toString());
   }
 }
 class ExpItem extends UiPanelBase_1.UiPanelBase {

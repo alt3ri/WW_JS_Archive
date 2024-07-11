@@ -14,21 +14,21 @@ const Log_1 = require("../../../Core/Common/Log"),
   UiManager_1 = require("../../Ui/UiManager");
 class ChannelController extends UiControllerBase_1.UiControllerBase {
   static OnRegisterNetEvent() {
-    Net_1.Net.Register(15920, this.iMt);
+    Net_1.Net.Register(17292, this.dEt);
   }
   static OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(15920);
+    Net_1.Net.UnRegister(17292);
   }
   static OnAddEvents() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnShareResult,
-      this.oMt,
+      this.CEt,
     );
   }
   static OnRemoveEvents() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnShareResult,
-      this.oMt,
+      this.CEt,
     );
   }
   static CheckShareChannelOpen(e) {
@@ -50,11 +50,11 @@ class ChannelController extends UiControllerBase_1.UiControllerBase {
     ModelManager_1.ModelManager.ChannelModel.ProcessAccountSetting(e);
   }
   static RequestFirstShareReward(t) {
-    var e = Protocol_1.Aki.Protocol.xus.create();
-    (e.V3n = t),
-      Net_1.Net.Call(26885, e, (e) => {
+    var e = Protocol_1.Aki.Protocol.DCs.create();
+    (e.E8n = t),
+      Net_1.Net.Call(4458, e, (e) => {
         e &&
-          e.lkn === Protocol_1.Aki.Protocol.lkn.Sys &&
+          e.O4n === Protocol_1.Aki.Protocol.O4n.NRs &&
           (ModelManager_1.ModelManager.ChannelModel.MarkActionShared(t),
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.OnFirstShare,
@@ -99,11 +99,11 @@ class ChannelController extends UiControllerBase_1.UiControllerBase {
   }
 }
 (exports.ChannelController = ChannelController),
-  ((_a = ChannelController).iMt = (e) => {
-    for (const t of e.Vxs)
+  ((_a = ChannelController).dEt = (e) => {
+    for (const t of e.aGs)
       ModelManager_1.ModelManager.ChannelModel.MarkActionShared(t);
   }),
-  (ChannelController.oMt = (e) => {
+  (ChannelController.CEt = (e) => {
     var t = ModelManager_1.ModelManager.ChannelModel.SharingActionId;
     e &&
       ModelManager_1.ModelManager.ChannelModel.CouldGetShareReward(t) &&

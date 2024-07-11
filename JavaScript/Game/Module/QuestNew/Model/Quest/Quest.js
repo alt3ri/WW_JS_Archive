@@ -6,7 +6,6 @@ const Log_1 = require("../../../../../Core/Common/Log"),
   EventDefine_1 = require("../../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../../Common/Event/EventSystem"),
   PublicUtil_1 = require("../../../../Common/PublicUtil"),
-  TimeUtil_1 = require("../../../../Common/TimeUtil"),
   ConfigManager_1 = require("../../../../Manager/ConfigManager"),
   ModelManager_1 = require("../../../../Manager/ModelManager"),
   LogicTreeContainer_1 = require("../../../GeneralLogicTree/LogicTreeContainer"),
@@ -14,59 +13,62 @@ const Log_1 = require("../../../../../Core/Common/Log"),
   QuestController_1 = require("../../Controller/QuestController"),
   QuestDefine_1 = require("../../QuestDefine");
 class Quest extends LogicTreeContainer_1.LogicTreeContainer {
-  constructor(e, t) {
+  constructor(t, e) {
     super(),
       (this.InnerId = 0),
       (this.InnerType = void 0),
       (this.InnerMainType = 0),
       (this.InnerStatus = void 0),
       (this.Finished = !1),
+      (this.IsNewQuest = !1),
       (this.Lo = void 0),
       (this.QuestNameTid = ""),
-      (this.Yoo = ""),
-      (this.Joo = ""),
-      (this.zoo = ""),
-      (this.Zoo = 0),
+      (this.Kro = ""),
+      (this.Qro = ""),
+      (this.Xro = ""),
+      (this.$ro = 0),
       (this.StageRewardId = 0),
-      (this.ero = void 0),
+      (this.Yro = void 0),
       (this.OnlineType = void 0),
       (this.AutoTrack = !1),
       (this.AutoHideTrackMark = !0),
       (this.DungeonId = 0),
       (this.FunctionId = 0),
+      (this.TagId = 0),
       (this.DistributeType = void 0),
       (this.ActiveActions = void 0),
       (this.AcceptActions = void 0),
       (this.FinishActions = void 0),
       (this.TerminateActions = void 0),
       (this.AcceptQuestOptionConfig = void 0),
-      (this.tro = 0),
-      t
-        ? ((this.InnerId = t.Id),
-          (this.InnerStatus = Protocol_1.Aki.Protocol.kMs.Proto_InActive),
-          (this.InnerType = e),
-          (this.Lo = t),
-          (this.QuestNameTid = t.TidName),
-          (this.Yoo = t.TidDesc),
-          (this.Zoo = t.RewardId),
-          (this.DungeonId = t.DungeonId),
-          (this.FunctionId = t.FunctionId),
-          (this.DistributeType = t.DistributeType),
-          (this.OnlineType = t.OnlineType ?? "SingleHangUpOnline"),
-          (this.AcceptQuestOptionConfig = t.AddInteractOption),
-          (this.AutoTrack = t.IsAutoTrack),
-          (this.ero = t.RecommendPreQuest),
-          (e = ConfigManager_1.ConfigManager.QuestNewConfig.GetQuestTypeConfig(
+      (this.Jro = 0),
+      e
+        ? ((this.InnerId = e.Id),
+          (this.InnerStatus = Protocol_1.Aki.Protocol.tTs.Proto_InActive),
+          (this.InnerType = t),
+          (this.Lo = e),
+          (this.QuestNameTid = e.TidName),
+          (this.Kro = e.TidDesc),
+          (this.$ro = e.RewardId),
+          (this.DungeonId = e.DungeonId),
+          (this.FunctionId = e.FunctionId),
+          (this.DistributeType = e.DistributeType),
+          (this.OnlineType = e.OnlineType ?? "SingleHangUpOnline"),
+          (this.AcceptQuestOptionConfig = e.AddInteractOption),
+          (this.AutoTrack = e.IsAutoTrack),
+          (this.Yro = e.RecommendPreQuest),
+          (this.TagId = e.TagId ?? 0),
+          (t = ConfigManager_1.ConfigManager.QuestNewConfig.GetQuestTypeConfig(
             this.Type,
-          )) && (this.InnerMainType = e.MainId),
-          (e =
+          )) && (this.InnerMainType = t.MainId),
+          (t =
             ConfigManager_1.ConfigManager.QuestNewConfig.GetQuestMainTypeConfig(
               this.MainTypeId,
-            )) && (this.AutoHideTrackMark = e.AutoHideTrack),
-          (this.ActiveActions = t.ActiveActions),
-          (this.AcceptActions = t.AcceptActions),
-          (this.FinishActions = t.FinishActions),
-          (this.TerminateActions = t.TerminateActions))
+            )) && (this.AutoHideTrackMark = t.AutoHideTrack),
+          (this.ActiveActions = e.ActiveActions),
+          (this.AcceptActions = e.AcceptActions),
+          (this.FinishActions = e.FinishActions),
+          (this.TerminateActions = e.TerminateActions))
         : Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Quest",
@@ -95,7 +97,7 @@ class Quest extends LogicTreeContainer_1.LogicTreeContainer {
     return this.InnerStatus;
   }
   get IsProgressing() {
-    return this.Status === Protocol_1.Aki.Protocol.kMs.Gms;
+    return this.Status === Protocol_1.Aki.Protocol.tTs.zfs;
   }
   get IsInteractValid() {
     return (
@@ -104,20 +106,20 @@ class Quest extends LogicTreeContainer_1.LogicTreeContainer {
     );
   }
   get RewardId() {
-    return 0 !== this.StageRewardId ? this.StageRewardId : this.Zoo;
+    return 0 !== this.StageRewardId ? this.StageRewardId : this.$ro;
   }
   get Name() {
-    let e = this.Joo;
+    let t = this.Qro;
     return (
-      (void 0 !== e && 0 !== e.length) || (e = this.QuestNameTid),
-      PublicUtil_1.PublicUtil.GetConfigTextByKey(e)
+      (void 0 !== t && 0 !== t.length) || (t = this.QuestNameTid),
+      PublicUtil_1.PublicUtil.GetConfigTextByKey(t)
     );
   }
   get QuestDescribe() {
-    let e = this.zoo;
+    let t = this.Xro;
     return (
-      (void 0 !== e && 0 !== e.length) || (e = this.Yoo),
-      PublicUtil_1.PublicUtil.GetConfigTextByKey(e)
+      (void 0 !== t && 0 !== t.length) || (t = this.Kro),
+      PublicUtil_1.PublicUtil.GetConfigTextByKey(t)
     );
   }
   get QuestShowConditionDescribe() {
@@ -139,31 +141,31 @@ class Quest extends LogicTreeContainer_1.LogicTreeContainer {
   Destroy() {
     (this.Lo = void 0),
       this.AcceptQuestOptionConfig &&
-        ModelManager_1.ModelManager.MapModel.RemoveMapMark(12, this.tro),
+        ModelManager_1.ModelManager.MapModel.RemoveMapMark(12, this.Jro),
       super.Destroy();
   }
-  UpdateState(e, t) {
+  UpdateState(t, e) {
     var i = this.InnerStatus,
-      i = ((this.InnerStatus = e), i !== this.InnerStatus);
+      i = ((this.InnerStatus = t), i !== this.InnerStatus);
     if (i) {
-      switch (e) {
-        case Protocol_1.Aki.Protocol.kMs.WMs:
+      switch (((this.IsNewQuest = 1 === e), t)) {
+        case Protocol_1.Aki.Protocol.tTs.hTs:
           this.OnQuestStateToReady();
           break;
-        case Protocol_1.Aki.Protocol.kMs.Gms:
+        case Protocol_1.Aki.Protocol.tTs.zfs:
           this.OnQuestToProgress();
           break;
-        case Protocol_1.Aki.Protocol.kMs.Proto_Finish:
+        case Protocol_1.Aki.Protocol.tTs.Proto_Finish:
           this.OnQuestToFinish();
           break;
-        case Protocol_1.Aki.Protocol.kMs.Proto_Delete:
+        case Protocol_1.Aki.Protocol.tTs.Proto_Delete:
           this.OnQuestToDelete();
       }
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnQuestStateChange,
         this.Id,
         this.Status,
-        t,
+        e,
       );
     }
   }
@@ -171,7 +173,7 @@ class Quest extends LogicTreeContainer_1.LogicTreeContainer {
     switch (this.DistributeType) {
       case "Interact":
         ModelManager_1.ModelManager.QuestNewModel.AddCanAcceptQuest(this.Id),
-          this.iro();
+          this.zro();
         break;
       case "System":
       case "UseItem":
@@ -185,11 +187,11 @@ class Quest extends LogicTreeContainer_1.LogicTreeContainer {
           ]);
     }
   }
-  iro() {
-    var e;
+  zro() {
+    var t;
     this.HideAcceptQuestMark ||
-      ((e = this.AcceptQuestOptionConfig)
-        ? this.oro(e.EntityId)
+      ((t = this.AcceptQuestOptionConfig)
+        ? this.Zro(t.EntityId)
         : Log_1.Log.CheckError() &&
           Log_1.Log.Error("Quest", 19, "交互接取的任务没有配交互选项", [
             "任务Id",
@@ -199,89 +201,90 @@ class Quest extends LogicTreeContainer_1.LogicTreeContainer {
   OnQuestToProgress() {
     ModelManager_1.ModelManager.QuestNewModel.RemoveCanAcceptQuest(this.Id),
       this.AcceptQuestOptionConfig &&
-        ModelManager_1.ModelManager.MapModel.RemoveMapMark(12, this.tro);
+        ModelManager_1.ModelManager.MapModel.RemoveMapMark(12, this.Jro);
   }
   OnQuestToFinish() {
     this.Finished = !0;
   }
   OnQuestToDelete() {
-    var e;
+    var t;
     ModelManager_1.ModelManager.QuestNewModel.GetCurTrackedQuest()?.Id ===
       this.Id &&
-      ((e = this.Finished ? 1 : 0),
+      ((t = this.Finished ? 1 : 0),
       QuestController_1.QuestNewController.RequestTrackQuest(
         this.Id,
         !1,
         2,
-        e,
+        t,
       ));
   }
-  oro(e) {
-    var t;
-    ModelManager_1.ModelManager.CreatureModel.GetEntityData(e)
-      ? (t = this.QuestMarkId) &&
+  Zro(t) {
+    var e;
+    ModelManager_1.ModelManager.CreatureModel.GetEntityData(t)
+      ? (e = this.QuestMarkId) &&
         this.IsInteractValid &&
-        ((t = new MapDefine_1.QuestMarkCreateInfo(
+        ((e = new MapDefine_1.QuestMarkCreateInfo(
           this.DungeonId,
           this.Id,
           0,
-          e,
           t,
+          e,
           12,
           5,
         )),
-        (this.tro = ModelManager_1.ModelManager.MapModel.CreateMapMark(t)))
+        (this.Jro = ModelManager_1.ModelManager.MapModel.CreateMapMark(e)))
       : Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn(
           "Quest",
           50,
           "给任务添加地图标记时,找不到对应的实体",
           ["任务Id:", this.Id],
-          ["实体Id", e],
+          ["实体Id", t],
         );
-  }
-  CanShowGuideLine() {
-    return this.GetCurrentActiveChildQuestNode()?.ContainTag(4) ?? !1;
   }
   CanShowInUiPanel() {
     if (this.IsQuestCanPreShow()) return !0;
-    if (this.Status !== Protocol_1.Aki.Protocol.kMs.Gms) return !1;
-    var e = ModelManager_1.ModelManager.QuestNewModel.GetQuestBindingActivityId(
+    if (this.Status !== Protocol_1.Aki.Protocol.tTs.zfs) return !1;
+    var t = ModelManager_1.ModelManager.QuestNewModel.GetQuestBindingActivityId(
       this.Id,
     );
-    if (e) {
-      e = ModelManager_1.ModelManager.ActivityModel.GetActivityById(e);
-      if (e) {
-        var t = TimeUtil_1.TimeUtil.GetServerTime();
-        if (e.EndOpenTime - t <= 0) return !1;
-      }
-    }
+    if (
+      t &&
+      !ModelManager_1.ModelManager.ActivityModel.GetActivityById(
+        t,
+      )?.CheckIfInOpenTime()
+    )
+      return !1;
     return super.CanShowInUiPanel();
   }
   IsQuestCanPreShow() {
     return (
-      this.Status === Protocol_1.Aki.Protocol.kMs.Proto_InActive &&
+      this.Status === Protocol_1.Aki.Protocol.tTs.Proto_InActive &&
       void 0 !== this.Lo.PreShowInfo
     );
   }
   IsQuestHasRecommendPreQuest() {
-    return void 0 !== this.ero;
+    return void 0 !== this.Yro;
   }
   GetRecommendPreQuest() {
-    return this.ero;
+    return this.Yro;
   }
-  SetQuestStageName(e) {
-    this.Joo = e;
+  SetQuestStageName(t) {
+    (this.Qro = t),
+      EventSystem_1.EventSystem.Emit(
+        EventDefine_1.EEventName.OnQuestStageNameChange,
+        this.Id,
+      );
   }
-  SetQuestStageDesc(e) {
-    this.zoo = e;
+  SetQuestStageDesc(t) {
+    this.Xro = t;
   }
-  SetQuestStageReward(e) {
-    this.StageRewardId = e;
+  SetQuestStageReward(t) {
+    this.StageRewardId = t;
   }
-  SetTrack(e, t = 0) {
-    super.SetTrack(e, t),
-      e && QuestController_1.QuestNewController.RedDotRequest(this.Id, 0);
+  SetTrack(t, e = 0) {
+    super.SetTrack(t, e),
+      t && QuestController_1.QuestNewController.RedDotRequest(this.Id, 0);
   }
 }
 exports.Quest = Quest;

@@ -12,13 +12,13 @@ const UE = require("ue"),
   HEARTBEAT_DATA_EVENT_ID = "9";
 class AntiCheatModel extends ModelBase_1.ModelBase {
   constructor() {
-    super(...arguments), (this.Qre = ""), (this.IHe = ""), (this.THe = 0);
+    super(...arguments), (this.Qre = ""), (this.qje = ""), (this.Gje = 0);
   }
   GetVersion() {
     return this.Qre;
   }
   GetBundleId() {
-    return this.IHe;
+    return this.qje;
   }
   OnInit() {
     var e = UE.KuroLauncherLibrary.GetAppVersion();
@@ -27,7 +27,7 @@ class AntiCheatModel extends ModelBase_1.ModelBase {
         LocalStorageDefine_1.ELocalStorageGlobalKey.PatchVersion,
         e,
       )),
-      (this.IHe = UE.KismetSystemLibrary.GetGameBundleId()),
+      (this.qje = UE.KismetSystemLibrary.GetGameBundleId()),
       !0
     );
   }
@@ -46,16 +46,16 @@ class AntiCheatModel extends ModelBase_1.ModelBase {
     );
   }
   ResetHeartbeatException() {
-    this.THe = 0;
+    this.Gje = 0;
   }
   HitHeartbeatException() {
-    this.THe += 1;
+    this.Gje += 1;
   }
   GetHeartbeatException() {
-    return this.THe;
+    return this.Gje;
   }
   HasHeartbeatException() {
-    return 0 < this.THe;
+    return 0 < this.Gje;
   }
   GetHeartbeatData() {
     var e = new AntiCheatData_1.AntiCheatHeartbeatData();
@@ -65,7 +65,7 @@ class AntiCheatModel extends ModelBase_1.ModelBase {
       ControllerHolder_1.ControllerHolder.KuroSdkController.CanUseSdk() &&
         (t = ModelManager_1.ModelManager.LoginModel.GetSdkLoginConfig().Uid),
       (e.unique_id = t),
-      (e.i_exception_count = this.THe),
+      (e.i_exception_count = this.Gje),
       e
     );
   }

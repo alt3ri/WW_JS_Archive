@@ -4,8 +4,12 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const UE = require("ue"),
   CustomPromise_1 = require("../../../../../Core/Common/CustomPromise"),
   Log_1 = require("../../../../../Core/Common/Log"),
+  Time_1 = require("../../../../../Core/Common/Time"),
   CommonParamById_1 = require("../../../../../Core/Define/ConfigCommon/CommonParamById"),
+  TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem"),
+  Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
   Vector2D_1 = require("../../../../../Core/Utils/Math/Vector2D"),
+  MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
   StringUtils_1 = require("../../../../../Core/Utils/StringUtils"),
   EventDefine_1 = require("../../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../../Common/Event/EventSystem"),
@@ -19,14 +23,18 @@ const UE = require("ue"),
   MarkSelectComponent_1 = require("./Components/MarkSelectComponent"),
   MarkTrackComponent_1 = require("./Components/MarkTrackComponent"),
   MarkVerticalPointerComponent_1 = require("./Components/MarkVerticalPointerComponent"),
-  POINTER_RANGE = 2e3;
+  POINTER_RANGE = 2e3,
+  SCALE_TWEEN_DURATION = 0.2;
 class MarkItemView extends UiPanelBase_1.UiPanelBase {
   constructor(t) {
     super(),
       (this.Holder = void 0),
       (this.IsSelectedInternal = !1),
+      (this._aa = !1),
+      (this.uaa = 0),
+      (this.GOe = void 0),
       (this.IsShowIcon = !0),
-      (this.pDi = void 0),
+      (this.pRi = void 0),
       (this.LevelSequencePlayer = void 0),
       (this.OutOfBoundComponentInternal = void 0),
       (this.SelectComponentInternal = void 0),
@@ -35,22 +43,23 @@ class MarkItemView extends UiPanelBase_1.UiPanelBase {
       (this.NameComponentInternal = void 0),
       (this.VerticalPointerComponentInternal = void 0),
       (this.ChildIconComponentInternal = void 0),
-      (this.vDi = void 0),
-      (this.MDi = void 0),
-      (this.SDi = void 0),
-      (this.EDi = void 0),
-      (this.yDi = !1),
-      (this.IDi = void 0),
-      (this.TDi = void 0),
-      (this.LDi = void 0),
-      (this.DDi = void 0),
-      (this.RDi = void 0),
-      (this.UDi = void 0),
-      (this.ADi = void 0),
-      (this.PDi = !1),
-      (this.xDi = !1),
-      (this.wDi = void 0),
-      (this.BDi = 0),
+      (this.vRi = void 0),
+      (this.MRi = void 0),
+      (this.ERi = void 0),
+      (this.Gla = void 0),
+      (this.SRi = void 0),
+      (this.yRi = !1),
+      (this.IRi = void 0),
+      (this.TRi = void 0),
+      (this.LRi = void 0),
+      (this.DRi = void 0),
+      (this.RRi = void 0),
+      (this.URi = void 0),
+      (this.ARi = void 0),
+      (this.PRi = !1),
+      (this.xRi = !1),
+      (this.wRi = void 0),
+      (this.BRi = 0),
       (this.OnLevelSequenceStart = (t) => {
         this.Holder.OnLevelSequenceStart(t);
       }),
@@ -59,13 +68,28 @@ class MarkItemView extends UiPanelBase_1.UiPanelBase {
           "HideView" === t &&
             ((t = this.Holder.IsCanShowView),
             this.SetUiActive(t),
-            this.SDi?.SetAlpha(1));
+            this.ERi?.SetAlpha(1));
+      }),
+      (this.kOe = () => {
+        var t,
+          i,
+          e = CommonParamById_1.configCommonParamById.GetFloatConfig(
+            "MapMarkSelectedAdditionScale",
+          ),
+          e = this.Holder.MarkScale + e;
+        this.caa()
+          ? ((t = (Time_1.Time.NowSeconds - this.uaa) / SCALE_TWEEN_DURATION),
+            (i = this._aa ? this.Holder.MarkScale : e),
+            (e = this._aa ? e : this.Holder.MarkScale),
+            (i = MathUtils_1.MathUtils.Lerp(i, e, t)),
+            this.SetScale(i))
+          : (this.jm(), this.maa(this._aa));
       }),
       (this.Holder = t),
-      (this.pDi = new UE.Vector());
+      (this.pRi = new UE.Vector());
   }
   get LoadingPromise() {
-    return this.vDi;
+    return this.vRi;
   }
   get IsSelected() {
     return this.IsSelectedInternal;
@@ -79,14 +103,14 @@ class MarkItemView extends UiPanelBase_1.UiPanelBase {
       this.NameComponentInternal ||
         (this.NameComponentInternal =
           new MarkNameComponent_1.MarkNameComponent()),
-      this.IDi ||
-        ((this.IDi = this.NameComponentInternal.CreateThenShowByResourceIdAsync(
+      this.IRi ||
+        ((this.IRi = this.NameComponentInternal.CreateThenShowByResourceIdAsync(
           "UiItem_MarkMapName_Prefab",
-          this.SDi,
+          this.ERi,
           !0,
         )),
         this.AddChild(this.NameComponentInternal)),
-      await this.IDi,
+      await this.IRi,
       this.NameComponentInternal
     );
   }
@@ -95,15 +119,15 @@ class MarkItemView extends UiPanelBase_1.UiPanelBase {
       this.RangeComponentInternal ||
         (this.RangeComponentInternal =
           new MarkRangeImageComponent_1.MarkRangeImageComponent()),
-      this.TDi ||
-        ((this.TDi =
+      this.TRi ||
+        ((this.TRi =
           this.RangeComponentInternal.CreateThenShowByResourceIdAsync(
             "UiItem_MarkArea_Prefab",
-            this.SDi,
+            this.ERi,
             !0,
           )),
         this.AddChild(this.RangeComponentInternal)),
-      await this.TDi,
+      await this.TRi,
       this.RangeComponentInternal
     );
   }
@@ -112,15 +136,15 @@ class MarkItemView extends UiPanelBase_1.UiPanelBase {
       this.OutOfBoundComponentInternal ||
         (this.OutOfBoundComponentInternal =
           new MarkOutOfBoundComponent_1.MarkOutOfBoundComponent()),
-      this.LDi ||
-        ((this.LDi =
+      this.LRi ||
+        ((this.LRi =
           this.OutOfBoundComponentInternal.CreateThenShowByResourceIdAsync(
             "UiItem_MarkOut_Prefab",
-            this.SDi,
+            this.ERi,
             !0,
           )),
         this.AddChild(this.OutOfBoundComponentInternal)),
-      await this.LDi,
+      await this.LRi,
       this.OutOfBoundComponentInternal
     );
   }
@@ -129,15 +153,15 @@ class MarkItemView extends UiPanelBase_1.UiPanelBase {
       this.SelectComponentInternal ||
         (this.SelectComponentInternal =
           new MarkSelectComponent_1.MarkSelectComponent()),
-      this.DDi ||
-        ((this.DDi =
+      this.DRi ||
+        ((this.DRi =
           this.SelectComponentInternal.CreateThenShowByResourceIdAsync(
             "UiItem_MarkChoose_Prefab",
-            this.SDi,
+            this.ERi,
             !0,
           )),
         this.AddChild(this.SelectComponentInternal)),
-      await this.DDi,
+      await this.DRi,
       this.SelectComponentInternal
     );
   }
@@ -147,15 +171,15 @@ class MarkItemView extends UiPanelBase_1.UiPanelBase {
         ((this.TrackComponentInternal =
           new MarkTrackComponent_1.MarkTrackComponent()),
         (this.TrackComponentInternal.MapType = this.Holder.MapType)),
-      this.RDi ||
-        ((this.RDi =
+      this.RRi ||
+        ((this.RRi =
           this.TrackComponentInternal.CreateThenShowByResourceIdAsync(
             "UiItem_MarkTrackNia_Prefab",
-            this.SDi,
+            this.ERi,
             !0,
           )),
         this.AddChild(this.TrackComponentInternal)),
-      await this.RDi,
+      await this.RRi,
       this.TrackComponentInternal
     );
   }
@@ -164,15 +188,15 @@ class MarkItemView extends UiPanelBase_1.UiPanelBase {
       this.VerticalPointerComponentInternal ||
         (this.VerticalPointerComponentInternal =
           new MarkVerticalPointerComponent_1.MarkVerticalPointerComponent()),
-      this.UDi ||
-        ((this.UDi =
+      this.URi ||
+        ((this.URi =
           this.VerticalPointerComponentInternal.CreateThenShowByResourceIdAsync(
             "UiItem_MarkArrow_Prefab",
-            this.SDi,
+            this.ERi,
             !0,
           )),
         this.AddChild(this.VerticalPointerComponentInternal)),
-      await this.UDi,
+      await this.URi,
       this.VerticalPointerComponentInternal
     );
   }
@@ -181,26 +205,26 @@ class MarkItemView extends UiPanelBase_1.UiPanelBase {
       this.ChildIconComponentInternal ||
         (this.ChildIconComponentInternal =
           new MarkChildIconComponent_1.MarkChildIconComponent()),
-      this.ADi ||
-        ((this.ADi =
+      this.ARi ||
+        ((this.ARi =
           this.ChildIconComponentInternal.CreateThenShowByResourceIdAsync(
             "UiItem_MarkChildNode_Prefab",
-            this.SDi,
+            this.ERi,
             !0,
           )),
         this.AddChild(this.ChildIconComponentInternal)),
-      await this.ADi,
+      await this.ARi,
       this.ChildIconComponentInternal
     );
   }
   async InitializeMarkItemViewAsync() {
-    (this.vDi = this.CreateThenShowByResourceIdAsync(
+    (this.vRi = this.CreateThenShowByResourceIdAsync(
       "UiItem_WorldMapMark_Prefab",
       this.Holder.ViewRoot,
       !0,
     )),
-      await this.vDi,
-      this.bDi(this.yDi);
+      await this.vRi,
+      this.bRi(this.yRi);
   }
   OnSelectedStateChange(t) {}
   OnInitialize() {}
@@ -218,26 +242,35 @@ class MarkItemView extends UiPanelBase_1.UiPanelBase {
   OnStart() {
     GlobalData_1.GlobalData.IsPlayInEditor &&
       this.RootActor.SetActorLabel(
-        `MarkId:${this.Holder.MarkId},ShowPriority:` + this.Holder.ShowPriority,
-      ),
-      (this.SDi = this.GetItem(0)),
-      (this.LevelSequencePlayer = new LevelSequencePlayer_1.LevelSequencePlayer(
-        this.RootItem,
-      )),
-      this.LevelSequencePlayer.BindSequenceStartEvent(
-        this.OnLevelSequenceStart,
-      ),
-      this.LevelSequencePlayer.BindSequenceCloseEvent(this.OnLevelSequenceStop),
-      this.GetSprite(1).SetUIActive(!1);
-    var t = new UE.Vector(this.Holder.ConfigScale);
-    this.GetSprite(1).SetUIItemScale(t),
+        `MarkId:${this.Holder.MarkId},MarkType:${this.Holder.MarkType},ShowPriority:` +
+          this.Holder.ShowPriority,
+      );
+    var t = this.RootItem.GetAttachSocketName(),
+      i = this.RootItem.GetAttachParent(),
+      i =
+        ((this.Gla = i.GetSocketTransform(t)),
+        (this.ERi = this.GetItem(0)),
+        (this.LevelSequencePlayer =
+          new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem)),
+        this.LevelSequencePlayer.BindSequenceStartEvent(
+          this.OnLevelSequenceStart,
+        ),
+        this.LevelSequencePlayer.BindSequenceCloseEvent(
+          this.OnLevelSequenceStop,
+        ),
+        this.GetSprite(1).SetUIActive(!1),
+        new UE.Vector(this.Holder.ConfigScale));
+    this.GetSprite(1).SetUIItemScale(i),
       this.SetScale(this.Holder.MarkScale),
       this.OnInitialize(),
-      void 0 !== this.EDi && (this.EDi(), (this.EDi = void 0)),
+      void 0 !== this.SRi && (this.SRi(), (this.SRi = void 0)),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnMarkItemViewCreate,
         this,
       );
+  }
+  OnAfterHide() {
+    this.jm();
   }
   OnBeforeDestroy() {
     (this.OutOfBoundComponentInternal = void 0),
@@ -249,17 +282,25 @@ class MarkItemView extends UiPanelBase_1.UiPanelBase {
       (this.ChildIconComponentInternal = void 0),
       this.LevelSequencePlayer?.Clear(),
       (this.LevelSequencePlayer = void 0),
-      (this.vDi = void 0),
+      (this.vRi = void 0),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnMarkItemViewDestroy,
         this,
       ),
+      (this.Gla = void 0),
       (this.Holder = void 0);
   }
   SetScale(t) {
-    var i = 1 / this.Holder.LogicWorldScale;
-    this.pDi.Set(t * i, t * i, t * i),
-      this.RootItem.SetUIRelativeScale3D(this.pDi);
+    var i, e;
+    void 0 !== this.Holder &&
+      void 0 !== this.Gla &&
+      ((i = 1 / this.Holder.LogicWorldScale),
+      (e =
+        1 === this.Holder.MapType
+          ? this.Gla.GetScale3D()
+          : Vector_1.Vector.OneVectorProxy),
+      this.pRi.Set((t * i) / e.X, (t * i) / e.Y, (t * i) / e.Z),
+      this.RootItem.SetUIRelativeScale3D(this.pRi));
   }
   OnUpdate(t, i = !1, e = !1) {
     if (void 0 === this.Holder)
@@ -271,47 +312,45 @@ class MarkItemView extends UiPanelBase_1.UiPanelBase {
           ["ComponentState", this.IsDestroyOrDestroying],
           ["isCreating", this.IsCreating],
         );
-    else if (((this.yDi = e), this.IsCreating || this.IsDestroyOrDestroying))
-      this.EDi = () => {
+    else if (
+      ((this.yRi = e),
+      this.IsCreating || this.IsDestroyOrDestroying || this.IsHideOrHiding)
+    )
+      this.SRi = () => {
         this.OnUpdate(t, i, e);
       };
     else {
-      this.bDi(this.yDi);
+      this.bRi(this.yRi);
       var s = this.Holder.IsCanShowView;
       if ((this.SetUiActive(s), s)) {
-        2 === this.Holder.MapType &&
-          ((s = CommonParamById_1.configCommonParamById.GetFloatConfig(
-            "MapMarkSelectedAdditionScale",
-          )),
-          (s = this.IsSelected ? s : 0),
-          this.SetScale(this.Holder.MarkScale + s));
+        2 === this.Holder.MapType && this.maa(this.IsSelected);
         s = this.Holder.IsOutOfBound;
-        (this.PDi === s && void 0 !== this.PDi) ||
-          ((this.PDi = s),
-          this.PDi
+        (this.PRi === s && void 0 !== this.PRi) ||
+          ((this.PRi = s),
+          this.PRi
             ? this.GetOutOfBoundComponentAsync().then((t) => {
                 t.SetActive(!0);
               })
             : this.OutOfBoundComponentInternal?.SetActive(!1)),
           (s = this.Holder.IsTracked && !i),
-          (this.xDi === s && void 0 !== this.xDi) ||
-            ((this.xDi = s),
-            this.xDi
+          (this.xRi === s && void 0 !== this.xRi) ||
+            ((this.xRi = s),
+            this.xRi
               ? this.GetTrackComponentAsync().then((t) => {
                   t.SetActive(!0);
                 })
               : this.TrackComponentInternal?.SetActive(!1)),
           (s = this.IsSelected),
-          (this.wDi === s && void 0 !== this.wDi) ||
+          (this.wRi === s && void 0 !== this.wRi) ||
             (this.IsSelected
               ? this.GetSelectComponentAsync().then((t) => {
                   t.SetActive(!0);
                 })
               : this.SelectComponentInternal?.SetActive(!1),
-            (this.wDi = s));
-        const h = this.qDi(this.Holder.WorldPosition, t);
-        this.BDi !== h &&
-          ((this.BDi = h),
+            (this.wRi = s));
+        const h = this.qRi(this.Holder.WorldPosition, t);
+        this.BRi !== h &&
+          ((this.BRi = h),
           this.GetVerticalPointerComponentAsync().then((t) => {
             switch (h) {
               case 0:
@@ -323,11 +362,13 @@ class MarkItemView extends UiPanelBase_1.UiPanelBase {
               case 2:
                 t.ShowDown();
             }
-          }));
+          })),
+          this.OnSafeUpdate(t, i, e);
       }
     }
   }
-  bDi(t) {
+  OnSafeUpdate(t, i = 0, e) {}
+  bRi(t) {
     if (void 0 === this.Holder)
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
@@ -352,7 +393,7 @@ class MarkItemView extends UiPanelBase_1.UiPanelBase {
       } else
         (this.Holder.NeedPlayShowOrHideSeq = void 0),
           this.Holder.OnLevelSequenceStop("HideView");
-      this.yDi = !1;
+      this.yRi = !1;
     }
   }
   SetOutOfBoundDirection(e) {
@@ -376,9 +417,9 @@ class MarkItemView extends UiPanelBase_1.UiPanelBase {
       });
   }
   async LoadIconAsync(t, i) {
-    await this.vDi;
+    await this.vRi;
     const e = new CustomPromise_1.CustomPromise();
-    (this.MDi = e.Promise),
+    (this.MRi = e.Promise),
       t && !StringUtils_1.StringUtils.IsEmpty(i)
         ? this.SetSpriteByPath(i, t, !1, void 0, () => {
             t.SetUIActive(this.IsShowIcon), e.SetResult();
@@ -390,7 +431,7 @@ class MarkItemView extends UiPanelBase_1.UiPanelBase {
               50,
               "标记设置失败,检查传入的参数是否有空值",
             )),
-      await this.MDi;
+      await this.MRi;
   }
   GetInteractiveFlag() {
     return this.Holder?.IsCanShowView ?? !1;
@@ -412,7 +453,7 @@ class MarkItemView extends UiPanelBase_1.UiPanelBase {
     }
     return e;
   }
-  qDi(t, i) {
+  qRi(t, i) {
     return 2 === this.Holder.MapType ||
       ((t = t.Z - i.Z), Math.abs(t) < POINTER_RANGE)
       ? 0
@@ -429,6 +470,31 @@ class MarkItemView extends UiPanelBase_1.UiPanelBase {
       this.LevelSequencePlayer.PlayLevelSequenceByName("HideView");
   }
   async PlayUnlockSequence() {}
+  maa(t) {
+    var i;
+    if (this._aa === t)
+      return this.caa()
+        ? void 0
+        : ((i = CommonParamById_1.configCommonParamById.GetFloatConfig(
+            "MapMarkSelectedAdditionScale",
+          )),
+          (i = this._aa ? i : 0),
+          (i = this.Holder.MarkScale + i),
+          void this.SetScale(i));
+    (this._aa = t),
+      (this.uaa = Time_1.Time.NowSeconds),
+      this.jm(),
+      (this.GOe = TimerSystem_1.TimerSystem.Forever(this.kOe, 50));
+  }
+  caa() {
+    return (
+      0 < this.uaa && this.uaa + SCALE_TWEEN_DURATION >= Time_1.Time.NowSeconds
+    );
+  }
+  jm() {
+    TimerSystem_1.TimerSystem.Has(this.GOe) &&
+      (TimerSystem_1.TimerSystem.Remove(this.GOe), (this.GOe = void 0));
+  }
 }
 exports.MarkItemView = MarkItemView;
 //# sourceMappingURL=MarkItemView.js.map

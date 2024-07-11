@@ -7,59 +7,71 @@ const cpp_1 = require("cpp"),
 class PlayerPerceptionEvent {
   constructor() {
     (this.w_e = void 0),
-      (this.Yir = void 0),
-      (this.Sqo = void 0),
-      (this.$ir = void 0),
-      (this.EventToken = 0),
-      (this.tor = () => {
+      (this.$or = void 0),
+      (this.pGo = void 0),
+      (this.Xor = void 0),
+      (this.EventTokenInternal = 0),
+      (this.bTa = -1),
+      (this.qTa = -1),
+      (this.GTa = 0),
+      (this.OTa = void 0),
+      (this.err = () => {
         this.w_e && this.w_e();
       }),
-      (this.ior = () => {
-        this.Yir && this.Yir();
+      (this.trr = () => {
+        this.$or && this.$or();
       }),
-      (this.eor = () => !this.$ir || this.$ir()),
-      (this.dVs = () => {
-        (this.w_e = void 0),
-          (this.Yir = void 0),
-          (this.$ir = void 0),
-          (this.EventToken = 0),
-          this.Sqo && (this.Sqo(), (this.Sqo = void 0));
+      (this.Zor = () => !this.Xor || this.Xor()),
+      (this.Azs = () => {
+        (this.EventTokenInternal = 0),
+          (this.GTa = 0),
+          this.pGo && (this.pGo(), (this.pGo = void 0));
       });
+  }
+  IsValid() {
+    return 0 < this.EventTokenInternal;
+  }
+  get EventToken() {
+    return this.EventTokenInternal;
   }
   Init(
     i,
     t,
     s = void 0,
-    o = void 0,
     h = void 0,
+    o = void 0,
     e = void 0,
     r = -1,
     v = void 0,
   ) {
-    0 !== this.EventToken
+    0 !== this.EventTokenInternal
       ? Log_1.Log.CheckError() &&
         Log_1.Log.Error("Perception", 37, "重复初始化主角感知事件")
-      : s || o
+      : s || h
         ? t
-          ? ((this.w_e = s),
-            (this.Yir = o),
-            (this.Sqo = h),
-            (this.$ir = e),
-            (this.EventToken =
+          ? ((this.bTa = i),
+            (this.qTa = r),
+            (this.GTa = t),
+            (this.OTa = v),
+            (this.w_e = s),
+            (this.$or = h),
+            (this.pGo = o),
+            (this.Xor = e),
+            (this.EventTokenInternal =
               cpp_1.FKuroPerceptionInterface.RegisterPlayerPerceptionEvent(
                 i,
                 r,
                 t,
                 this,
-                this.$ir ? this.eor : void 0,
-                this.w_e ? this.tor : void 0,
-                this.Yir ? this.ior : void 0,
+                this.Xor ? this.Zor : void 0,
+                this.w_e ? this.err : void 0,
+                this.$or ? this.trr : void 0,
                 v && !v.Equals(Vector_1.Vector.ZeroVectorProxy)
                   ? v.ToUeVector()
                   : void 0,
-                this.Sqo ? this.dVs : void 0,
+                this.Azs,
               )),
-            0 === this.EventToken &&
+            0 === this.EventTokenInternal &&
               Log_1.Log.CheckError() &&
               Log_1.Log.Error("Perception", 37, "初始化感知事件失败"))
           : Log_1.Log.CheckError() &&
@@ -71,24 +83,62 @@ class PlayerPerceptionEvent {
         : Log_1.Log.CheckError() &&
           Log_1.Log.Error("Perception", 37, "初始化的主角感知事件没有意义");
   }
+  Register(i) {
+    0 !== this.EventTokenInternal
+      ? Log_1.Log.CheckInfo() &&
+        Log_1.Log.Info("Perception", 37, "重新注册时，仍然还存在感知事件")
+      : ((this.GTa = i),
+        (this.EventTokenInternal =
+          cpp_1.FKuroPerceptionInterface.RegisterPlayerPerceptionEvent(
+            this.bTa,
+            this.qTa,
+            this.GTa,
+            this,
+            this.Xor ? this.Zor : void 0,
+            this.w_e ? this.err : void 0,
+            this.$or ? this.trr : void 0,
+            this.OTa && !this.OTa.Equals(Vector_1.Vector.ZeroVectorProxy)
+              ? this.OTa.ToUeVector()
+              : void 0,
+            this.Azs,
+          )),
+        0 === this.EventTokenInternal &&
+          Log_1.Log.CheckError() &&
+          Log_1.Log.Error("Perception", 37, "重新注册感知事件失败"));
+  }
+  Unregister() {
+    0 === this.EventTokenInternal
+      ? Log_1.Log.CheckInfo() &&
+        Log_1.Log.Info("Perception", 37, "临时注销感知事件时，感知事件不存在")
+      : (cpp_1.FKuroPerceptionInterface.UnregisterPlayerPerceptionEvent(
+          this.EventTokenInternal,
+        ),
+        (this.EventTokenInternal = 0));
+  }
   Clear() {
     (this.w_e = void 0),
-      (this.Yir = void 0),
-      (this.Sqo = void 0),
-      (this.$ir = void 0),
-      0 !== this.EventToken &&
+      (this.$or = void 0),
+      (this.pGo = void 0),
+      (this.Xor = void 0),
+      (this.bTa = -1),
+      (this.qTa = -1),
+      (this.GTa = 0),
+      (this.OTa = void 0),
+      0 !== this.EventTokenInternal &&
         (cpp_1.FKuroPerceptionInterface.UnregisterPlayerPerceptionEvent(
-          this.EventToken,
+          this.EventTokenInternal,
         ),
-        (this.EventToken = 0));
+        (this.EventTokenInternal = 0));
   }
   UpdateDistance(i, t = -1) {
-    0 !== this.EventToken &&
-      cpp_1.FKuroPerceptionInterface.UpdatePerceptionEventDistance(
-        this.EventToken,
-        i,
-        t,
-      );
+    (this.bTa = i),
+      (this.qTa = t),
+      0 !== this.EventTokenInternal &&
+        cpp_1.FKuroPerceptionInterface.UpdatePerceptionEventDistance(
+          this.EventTokenInternal,
+          i,
+          t,
+        );
   }
 }
 exports.PlayerPerceptionEvent = PlayerPerceptionEvent;

@@ -20,7 +20,7 @@ const Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
   GameplayTagUtils_1 = require("../../../../Core/Utils/GameplayTagUtils"),
   Global_1 = require("../../../Global"),
   ModelManager_1 = require("../../../Manager/ModelManager");
-var EAttributeId = Protocol_1.Aki.Protocol.KBs;
+var EAttributeId = Protocol_1.Aki.Protocol.Bks;
 const energyAttrIds = [
   EAttributeId.Proto_Energy,
   EAttributeId.Proto_SpecialEnergy1,
@@ -80,7 +80,7 @@ class CheckEnergyCondition extends BaseCheckCondition {
       !!this.ParamsArray &&
       ((e = Global_1.Global.BaseCharacter.GetEntityIdNoBlueprint()),
       (e = EntitySystem_1.EntitySystem.Get(e)
-        ?.GetComponent(156)
+        ?.GetComponent(158)
         .GetCurrentValue(energyAttrIds[Number(this.ParamsArray[0])])) >=
         Number(this.ParamsArray[1])) &&
       e <= Number(this.ParamsArray[2])
@@ -94,7 +94,7 @@ class CheckIsJumpCondition extends BaseCheckCondition {
   }
   Check(t) {
     var e = Global_1.Global.BaseCharacter.GetEntityIdNoBlueprint();
-    return EntitySystem_1.EntitySystem.Get(e)?.GetComponent(161)?.IsJump ?? !1;
+    return EntitySystem_1.EntitySystem.Get(e)?.GetComponent(163)?.IsJump ?? !1;
   }
 }
 exports.CheckIsJumpCondition = CheckIsJumpCondition;
@@ -108,7 +108,7 @@ class CheckBuffAddCondition extends BaseCheckCondition {
       !!this.ParamsArray &&
       ((e = Global_1.Global.BaseCharacter.GetEntityIdNoBlueprint()),
       !!EntitySystem_1.EntitySystem.Get(e)
-        ?.GetComponent(157)
+        ?.GetComponent(159)
         ?.GetBuffTotalStackById(BigInt(this.ParamsArray[0])))
     );
   }
@@ -123,7 +123,7 @@ class CheckTagAddCondition extends BaseCheckCondition {
     return (
       !!this.ParamsArray &&
       ((e = Global_1.Global.BaseCharacter.GetEntityIdNoBlueprint()),
-      (e = EntitySystem_1.EntitySystem.Get(e)?.GetComponent(185)),
+      (e = EntitySystem_1.EntitySystem.Get(e)?.GetComponent(188)),
       (o = GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(
         this.ParamsArray[0],
       )),
@@ -142,7 +142,7 @@ class CheckBuffNotHaveCondition extends BaseCheckCondition {
       !!this.ParamsArray &&
       ((e = Global_1.Global.BaseCharacter.GetEntityIdNoBlueprint()),
       !EntitySystem_1.EntitySystem.Get(e)
-        ?.GetComponent(157)
+        ?.GetComponent(159)
         ?.GetBuffTotalStackById(BigInt(this.ParamsArray[0])))
     );
   }
@@ -158,7 +158,7 @@ class CheckTagNotHaveCondition extends BaseCheckCondition {
       !!this.ParamsArray &&
       ((e = Global_1.Global.BaseCharacter.GetEntityIdNoBlueprint()),
       !EntitySystem_1.EntitySystem.Get(e)
-        ?.GetComponent(185)
+        ?.GetComponent(188)
         ?.HasTag(
           GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(
             this.ParamsArray[0],
@@ -221,7 +221,7 @@ class CheckNotInSkillCondition extends BaseCheckCondition {
   Check(t) {
     var e = Global_1.Global.BaseCharacter.GetEntityIdNoBlueprint();
     return !EntitySystem_1.EntitySystem.Get(e)
-      ?.GetComponent(185)
+      ?.GetComponent(188)
       ?.HasTag(-1371021686);
   }
 }
@@ -232,7 +232,7 @@ class CheckIsInJumpCondition extends BaseCheckCondition {
   }
   Check(t) {
     var e = Global_1.Global.BaseCharacter.GetEntityIdNoBlueprint(),
-      e = EntitySystem_1.EntitySystem.Get(e)?.GetComponent(185),
+      e = EntitySystem_1.EntitySystem.Get(e)?.GetComponent(188),
       o = 0 < ModelManager_1.ModelManager.ComboTeachingModel.BeforeJumpTime,
       e = e?.HasTag(-1898186757);
     return !o && (e ?? !1);

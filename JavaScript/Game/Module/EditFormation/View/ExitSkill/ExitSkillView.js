@@ -26,26 +26,26 @@ class ExitSkillView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
       (this.Pe = void 0),
-      (this.P4t = void 0),
-      (this.x4t = !1),
-      (this.I4t = () => {
+      (this.P5t = void 0),
+      (this.x5t = !1),
+      (this.I5t = () => {
         UiManager_1.UiManager.CloseView("ExitSkillView");
       }),
-      (this.w4t = (i) => {
+      (this.w5t = (i) => {
         (ModelManager_1.ModelManager.RoleModel.IsShowMultiSkillDesc = i),
-          (this.x4t = i),
-          this.B4t(this.x4t);
+          (this.x5t = i),
+          this.B5t(this.x5t);
         const e = this.Pe?.GetItems();
         void 0 !== e &&
-          this.P4t.forEach((i, t) => {
-            i.Refresh(e[t], this.x4t);
+          this.P5t.forEach((i, t) => {
+            i.Refresh(e[t], this.x5t);
           });
       }),
-      (this.d3t = () => {
+      (this.C4t = (i) => {
         var t =
           ModelManager_1.ModelManager.EditBattleTeamModel.GetAllRoleSlotData;
-        for (let i = 0; i < this.P4t.length; i++) {
-          var e = this.P4t[i],
+        for (let i = 0; i < this.P5t.length; i++) {
+          var e = this.P5t[i],
             s = t[i],
             r = s?.GetRoleData;
           s && r
@@ -53,7 +53,7 @@ class ExitSkillView extends UiViewBase_1.UiViewBase {
                 r.ConfigId),
               (s.OnlineIndex = r.OnlineIndex),
               (s.PlayerId = r.PlayerId),
-              e.Refresh(s, this.x4t))
+              e.Refresh(s, this.x5t))
             : e.Refresh(void 0, !1);
         }
       });
@@ -70,48 +70,48 @@ class ExitSkillView extends UiViewBase_1.UiViewBase {
       [9, UE.UIItem],
     ]),
       (this.BtnBindInfo = [
-        [5, this.I4t],
-        [6, this.I4t],
-        [8, this.w4t],
+        [5, this.I5t],
+        [6, this.I5t],
+        [8, this.w5t],
       ]);
   }
   OnBeforeDestroy() {
     (this.Pe = void 0),
-      this.P4t?.splice(0, this.P4t.length),
-      (this.P4t = void 0);
+      this.P5t?.splice(0, this.P5t.length),
+      (this.P5t = void 0);
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnRefreshEditBattleRoleSlotData,
-      this.d3t,
+      this.C4t,
     );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnRefreshEditBattleRoleSlotData,
-      this.d3t,
+      this.C4t,
     );
   }
   OnStart() {
-    (this.Pe = this.OpenParam), (this.P4t = new Array());
+    (this.Pe = this.OpenParam), (this.P5t = new Array());
     var t = [this.GetItem(2), this.GetItem(3), this.GetItem(4)],
       i = ModelManager_1.ModelManager.GameModeModel.IsMulti,
       i =
         (this.GetItem(9).SetUIActive(i),
-        (this.x4t =
+        (this.x5t =
           ModelManager_1.ModelManager.RoleModel.IsShowMultiSkillDesc && i),
-        this.x4t ? 1 : 0),
+        this.x5t ? 1 : 0),
       e =
         (this.GetExtendToggle(8).SetToggleState(i),
-        this.B4t(this.x4t),
+        this.B5t(this.x5t),
         this.Pe?.GetItems());
     for (let i = 0; i < t.length; i++) {
       var s = new ExitSkillItem_1.ExitSkillItem(t[i]);
-      this.P4t.push(s),
-        e && i < e.length ? s.Refresh(e[i], this.x4t) : s.Refresh(void 0, !1);
+      this.P5t.push(s),
+        e && i < e.length ? s.Refresh(e[i], this.x5t) : s.Refresh(void 0, !1);
     }
   }
-  B4t(i) {
+  B5t(i) {
     let t = "Text_EditFormationSkill_Text";
     i && (t = "Text_EditFormationSkill_online_Text");
     i = this.GetText(7);

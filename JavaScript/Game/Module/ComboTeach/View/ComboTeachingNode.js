@@ -2,13 +2,13 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ComboTeachingNode = void 0);
 const UE = require("ue"),
+  Info_1 = require("../../../../Core/Common/Info"),
   EntitySystem_1 = require("../../../../Core/Entity/EntitySystem"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
   Global_1 = require("../../../Global"),
   InputEnums_1 = require("../../../Input/InputEnums"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
-  ModelManager_1 = require("../../../Manager/ModelManager"),
   UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
   InputMappingsDefine_1 = require("../../../Ui/InputDistribute/InputMappingsDefine"),
   CommonKeyItem_1 = require("../../BattleUi/Views/KeyItem/CommonKeyItem"),
@@ -46,7 +46,7 @@ const UE = require("ue"),
 class ComboTeachingNode extends UiPanelBase_1.UiPanelBase {
   constructor(i, t) {
     super(),
-      (this.Pyt = InputEnums_1.EInputAction.None),
+      (this.VIt = InputEnums_1.EInputAction.None),
       (this.Xy = 0),
       (this.HoldTime = -0),
       (this.HoldTotalTime = -0),
@@ -56,7 +56,7 @@ class ComboTeachingNode extends UiPanelBase_1.UiPanelBase {
       (this.IsEmit = !1),
       (this.IsHoldAction = !1),
       (this.IsShowTag = !1),
-      (this.EPe = void 0),
+      (this.SPe = void 0),
       (this.GuideGroupIdList = []),
       (this.KeyComponent = void 0),
       (this.CurConfig = void 0),
@@ -79,12 +79,10 @@ class ComboTeachingNode extends UiPanelBase_1.UiPanelBase {
     ];
   }
   async OnBeforeStartAsync() {
-    (this.EPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem)),
-      this.GetItem(9).SetUIActive(
-        ModelManager_1.ModelManager.PlatformModel.IsPc(),
-      ),
+    (this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem)),
+      this.GetItem(9).SetUIActive(Info_1.Info.IsInKeyBoard()),
       (this.KeyComponent = new CommonKeyItem_1.CommonKeyItem()),
-      ModelManager_1.ModelManager.PlatformModel?.IsMobile()
+      Info_1.Info.IsInTouch()
         ? await this.KeyComponent.CreateByActorAsync(this.GetItem(9).GetOwner())
         : await this.KeyComponent.CreateThenShowByActorAsync(
             this.GetItem(9).GetOwner(),
@@ -92,7 +90,7 @@ class ComboTeachingNode extends UiPanelBase_1.UiPanelBase {
       this.InitNode(this.Xy, this.CurConfig);
   }
   OnBeforeDestroy() {
-    this.EPe.Clear(), (this.EPe = void 0), (this.KeyComponent = void 0);
+    this.SPe.Clear(), (this.SPe = void 0), (this.KeyComponent = void 0);
   }
   InitNode(i, t) {
     const e =
@@ -128,16 +126,16 @@ class ComboTeachingNode extends UiPanelBase_1.UiPanelBase {
         ? this.RootItem.SetAlpha(0)
         : ((s = t.KeyID[i].split(";")[1]),
           (n = t.KeyID[i].split(";")[0]),
-          (this.Pyt = KeyMap.get(n.split("#")[0])),
+          (this.VIt = KeyMap.get(n.split("#")[0])),
           this.KeyComponent?.RefreshAction(ActionMap.get(n.split("#")[0])),
           (this.IsHoldAction = n.includes("#")),
           (this.IsShowTag =
             t.IconTagText.length > i && "" !== t.IconTagText[i]),
           this.IsHoldAction &&
             ((this.HoldTotalTime = Number(n.split("#")[1])),
-            this.EPe.PlayLevelSequenceByName("AutoLoop")),
-          this.EPe.StopCurrentSequence(),
-          this.EPe.PlayLevelSequenceByName("Start"),
+            this.SPe.PlayLevelSequenceByName("AutoLoop")),
+          this.SPe.StopCurrentSequence(),
+          this.SPe.PlayLevelSequenceByName("Start"),
           s &&
             ((n = Global_1.Global.BaseCharacter.GetEntityIdNoBlueprint()),
             (n = EntitySystem_1.EntitySystem.Get(n)
@@ -178,20 +176,20 @@ class ComboTeachingNode extends UiPanelBase_1.UiPanelBase {
   }
   PlayFailAnimation() {
     this.GetSprite(2).SetUIActive(!0),
-      this.EPe.StopCurrentSequence(),
-      this.EPe.PlayLevelSequenceByName("ClickRigMIs");
+      this.SPe.StopCurrentSequence(),
+      this.SPe.PlayLevelSequenceByName("ClickRigMIs");
   }
   PlaySuccessAnimation() {
     this.GetSprite(1).SetUIActive(!0),
-      this.EPe.StopCurrentSequence(),
-      this.EPe.PlayLevelSequenceByName("ClickRigMIs");
+      this.SPe.StopCurrentSequence(),
+      this.SPe.PlayLevelSequenceByName("ClickRigMIs");
   }
   OnPress(i, t) {}
   OnRelease(i, t) {
     (this.HoldTime = 0),
       this.GetSprite(3).SetFillAmount(0),
-      this.EPe.StopSequenceByKey("LongPress"),
-      this.IsHoldAction && this.EPe.PlayLevelSequenceByName("AutoLoop"),
+      this.SPe.StopSequenceByKey("LongPress"),
+      this.IsHoldAction && this.SPe.PlayLevelSequenceByName("AutoLoop"),
       !this.IsEmit &&
         this.IsHoldAction &&
         this.GetItem(4)?.SetUIActive(this.IsShowTag),
@@ -200,12 +198,12 @@ class ComboTeachingNode extends UiPanelBase_1.UiPanelBase {
   }
   OnHold(i, t) {
     this.IsHoldAction &&
-      i === this.Pyt &&
+      i === this.VIt &&
       ((this.HoldTime = t),
       this.GetItem(4)?.SetUIActive(this.IsShowTag),
       this.GetSprite(3).SetFillAmount(this.HoldTime / this.HoldTotalTime),
-      "LongPress" !== this.EPe.GetCurrentSequence()) &&
-      (this.EPe.PlayLevelSequenceByName("LongPress"),
+      "LongPress" !== this.SPe.GetCurrentSequence()) &&
+      (this.SPe.PlayLevelSequenceByName("LongPress"),
       this.GetItem(8).SetUIActive(!0),
       this.GetItem(6).SetUIActive(!1));
   }
@@ -248,9 +246,9 @@ class ComboTeachingNode extends UiPanelBase_1.UiPanelBase {
         this,
         !0,
       ),
-      this.EPe.StopSequenceByKey("LongPress"),
-      this.EPe.StopCurrentSequence(),
-      this.EPe.PlayLevelSequenceByName("ClickRigMIs"),
+      this.SPe.StopSequenceByKey("LongPress"),
+      this.SPe.StopCurrentSequence(),
+      this.SPe.PlayLevelSequenceByName("ClickRigMIs"),
       this.GetItem(8).SetUIActive(!1),
       (this.IsEmit = !0))
     );
@@ -267,8 +265,8 @@ class ComboTeachingNode extends UiPanelBase_1.UiPanelBase {
             this,
             !1,
           ),
-          this.EPe.StopCurrentSequence(),
-          this.EPe.PlayLevelSequenceByName("ClickRigMIs"),
+          this.SPe.StopCurrentSequence(),
+          this.SPe.PlayLevelSequenceByName("ClickRigMIs"),
           (this.IsEmit = !0));
     }
   }
@@ -284,8 +282,8 @@ class ComboTeachingNode extends UiPanelBase_1.UiPanelBase {
             this,
             !1,
           ),
-          this.EPe.StopCurrentSequence(),
-          this.EPe.PlayLevelSequenceByName("ClickRigMIs"),
+          this.SPe.StopCurrentSequence(),
+          this.SPe.PlayLevelSequenceByName("ClickRigMIs"),
           (this.IsEmit = !0));
     }
   }

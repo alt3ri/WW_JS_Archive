@@ -14,22 +14,22 @@ const UE = require("ue"),
 class CommonRewardView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.jIt = void 0),
+      (this.$Tt = void 0),
       (this.sOe = void 0),
-      (this.Vgi = (e) => {
+      (this.V0i = (e) => {
         var t = e.GetRewardInfo();
         1 === t.Type &&
           "CommonRewardView" === t.ViewName &&
           (this.UiViewSequence?.PlaySequencePurely("Start01", !0),
-          (this.jIt = e),
-          this.b$t()) &&
-          this.q$t();
+          (this.$Tt = e),
+          this.bYt()) &&
+          this.qYt();
       }),
-      (this.iSt = () => {
+      (this.dSt = () => {
         UiManager_1.UiManager.CloseView("CommonRewardView");
       }),
-      (this.B$t = (e) => {
-        this.b$t() && this.q$t();
+      (this.BYt = (e) => {
+        this.bYt() && this.qYt();
       });
   }
   OnRegisterComponent() {
@@ -40,34 +40,34 @@ class CommonRewardView extends UiViewBase_1.UiViewBase {
       [3, UE.UIItem],
       [4, UE.UIItem],
     ]),
-      (this.BtnBindInfo = [[0, this.iSt]]);
+      (this.BtnBindInfo = [[0, this.dSt]]);
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnRefreshRewardViewItemList,
-      this.B$t,
+      this.BYt,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.ChangeChildView,
-        this.iSt,
+        this.dSt,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnRefreshRewardView,
-        this.Vgi,
+        this.V0i,
       );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnRefreshRewardViewItemList,
-      this.B$t,
+      this.BYt,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.ChangeChildView,
-        this.iSt,
+        this.dSt,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnRefreshRewardView,
-        this.Vgi,
+        this.V0i,
       );
   }
   async OnBeforeStartAsync() {
@@ -90,7 +90,7 @@ class CommonRewardView extends UiViewBase_1.UiViewBase {
     this.UiViewSequence.StopSequenceByKey("Switch");
   }
   OnBeforeDestroy() {
-    var e = this.jIt.GetRewardInfo().OnCloseCallback;
+    var e = this.$Tt.GetRewardInfo().OnCloseCallback;
     e && e(),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnCloseRewardView,
@@ -98,41 +98,41 @@ class CommonRewardView extends UiViewBase_1.UiViewBase {
       ModelManager_1.ModelManager.ItemRewardModel.ClearCurrentRewardData();
   }
   bl(e) {
-    (this.jIt = e),
-      this.G$t() && this.mGe(),
-      this.N$t() && this.O$t(),
-      this.b$t() && this.q$t();
+    (this.$Tt = e),
+      this.GYt() && this.mGe(),
+      this.NYt() && this.OYt(),
+      this.bYt() && this.qYt();
   }
-  G$t() {
-    var e = this.jIt.GetRewardInfo().Title,
+  GYt() {
+    var e = this.$Tt.GetRewardInfo().Title,
       e = !StringUtils_1.StringUtils.IsEmpty(e);
     return this.GetItem(2).SetUIActive(e), e;
   }
   mGe() {
     var e,
-      t = this.jIt.GetRewardInfo().Title;
+      t = this.$Tt.GetRewardInfo().Title;
     StringUtils_1.StringUtils.IsEmpty(t) ||
       ((e = this.GetText(1)), LguiUtil_1.LguiUtil.SetLocalTextNew(e, t));
   }
-  N$t() {
-    var e = this.jIt.GetRewardInfo().ContinueText,
+  NYt() {
+    var e = this.$Tt.GetRewardInfo().ContinueText,
       e = !StringUtils_1.StringUtils.IsEmpty(e);
     return this.GetItem(4).SetUIActive(e), e;
   }
-  O$t() {
+  OYt() {
     var e,
-      t = this.jIt.GetRewardInfo().ContinueText;
+      t = this.$Tt.GetRewardInfo().ContinueText;
     StringUtils_1.StringUtils.IsEmpty(t) ||
       ((e = this.GetText(4)), LguiUtil_1.LguiUtil.SetLocalTextNew(e, t));
   }
-  b$t() {
-    var e = this.jIt.GetRewardInfo().IsItemVisible,
-      t = this.jIt.GetItemList(),
+  bYt() {
+    var e = this.$Tt.GetRewardInfo().IsItemVisible,
+      t = this.$Tt.GetItemList(),
       e = e && void 0 !== t && 0 < t?.length;
     return this.sOe.GetActive() !== e && this.sOe.SetActive(e), e;
   }
-  q$t() {
-    this.sOe.Refresh(this.jIt.GetItemList());
+  qYt() {
+    this.sOe.Refresh(this.$Tt.GetItemList());
   }
 }
 exports.CommonRewardView = CommonRewardView;

@@ -22,34 +22,34 @@ class WorldMapController extends UiControllerBase_1.UiControllerBase {
     return (
       InputManager_1.InputManager.RegisterOpenViewFunc(
         "WorldMapView",
-        WorldMapController.lOi,
+        WorldMapController._ki,
       ),
       !0
     );
   }
   static OnLeaveLevel() {
     return (
-      void 0 !== this.cFo &&
-        TimerSystem_1.TimerSystem.Has(this.cFo) &&
-        TimerSystem_1.TimerSystem.Remove(this.cFo),
+      void 0 !== this.l3o &&
+        TimerSystem_1.TimerSystem.Has(this.l3o) &&
+        TimerSystem_1.TimerSystem.Remove(this.l3o),
       !0
     );
   }
   static OnAddEvents() {
-    EventSystem_1.EventSystem.Add(EventDefine_1.EEventName.OpenView, this.mFo),
+    EventSystem_1.EventSystem.Add(EventDefine_1.EEventName.OpenView, this._3o),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.CloseView,
-        this.dFo,
+        this.u3o,
       );
   }
   static OnRemoveEvents() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OpenView,
-      this.mFo,
+      this._3o,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.CloseView,
-        this.dFo,
+        this.u3o,
       );
   }
   static TryTeleport(e) {
@@ -60,14 +60,14 @@ class WorldMapController extends UiControllerBase_1.UiControllerBase {
         );
   }
   static MapOpenPush(e) {
-    var r = new Protocol_1.Aki.Protocol.drs();
-    (r.BVn = e), Net_1.Net.Send(23528, r);
+    var r = new Protocol_1.Aki.Protocol._as();
+    (r._jn = e), Net_1.Net.Send(27516, r);
   }
   static LockView(e) {
-    this.CFo = e;
+    this.c3o = e;
   }
   static CanWoldMapViewOpen() {
-    return this.CFo;
+    return this.c3o;
   }
   static OpenView(o, e, r, t) {
     (ModelManager_1.ModelManager.WorldMapModel.IsBattleViewOpen = e),
@@ -112,44 +112,44 @@ class WorldMapController extends UiControllerBase_1.UiControllerBase {
   }
   static OnClear() {
     return (
-      void 0 !== this.cFo &&
-        (TimerSystem_1.TimerSystem.Remove(this.cFo), (this.cFo = void 0)),
-      this.iRi.ClearData(),
+      void 0 !== this.l3o &&
+        (TimerSystem_1.TimerSystem.Remove(this.l3o), (this.l3o = void 0)),
+      this.iUi.ClearData(),
       !0
     );
   }
   static OnAddOpenViewCheckFunction() {
     UiManager_1.UiManager.AddOpenViewCheckFunction(
       "WorldMapView",
-      WorldMapController.V4e,
+      WorldMapController.iVe,
       "WorldMapController.CanOpenView",
     );
   }
   static OnRemoveOpenViewCheckFunction() {
     UiManager_1.UiManager.RemoveOpenViewCheckFunction(
       "WorldMapView",
-      WorldMapController.V4e,
+      WorldMapController.iVe,
     );
   }
 }
 (exports.WorldMapController = WorldMapController),
-  ((_a = WorldMapController).cFo = void 0),
-  (WorldMapController.CFo = !0),
-  (WorldMapController.gFo = void 0),
-  (WorldMapController.iRi =
+  ((_a = WorldMapController).l3o = void 0),
+  (WorldMapController.c3o = !0),
+  (WorldMapController.m3o = void 0),
+  (WorldMapController.iUi =
     new WorldMapDefine_1.MarkPriority2HierarchyIndexHelper()),
-  (WorldMapController.lOi = () => {
+  (WorldMapController._ki = () => {
     WorldMapController.OpenView(0, !0);
   }),
-  (WorldMapController.mFo = (e, r) => {
+  (WorldMapController._3o = (e, r) => {
     "FunctionOpenView" === e &&
-      (_a.gFo =
+      (_a.m3o =
         ModelManager_1.ModelManager.FunctionModel?.GetNewOpenFunctionIdList());
   }),
-  (WorldMapController.dFo = (r, e) => {
+  (WorldMapController.u3o = (r, e) => {
     if ("FunctionOpenView" === r) {
       let e = void 0;
-      for (const o of _a.gFo)
+      for (const o of _a.m3o)
         if (
           (e =
             ConfigManager_1.ConfigManager.MapConfig.GetMapMarkFuncTypeConfigByFuncId(
@@ -177,7 +177,7 @@ class WorldMapController extends UiControllerBase_1.UiControllerBase {
           )));
     }
   }),
-  (WorldMapController.V4e = (e) => {
+  (WorldMapController.iVe = (e) => {
     return _a.CanWoldMapViewOpen()
       ? ModelManager_1.ModelManager.WorldMapModel.LevelEventDisableFlag
         ? (ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(

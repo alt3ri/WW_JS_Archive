@@ -11,34 +11,35 @@ const UE = require("ue"),
   TextInputComponent_1 = require("../../Common/InputView/View/TextInputComponent"),
   LoginDefine_1 = require("../../Login/Data/LoginDefine"),
   LoginController_1 = require("../../Login/LoginController"),
-  UiLoginSceneManager_1 = require("../../UiComponent/UiLoginSceneManager");
+  UiLoginSceneManager_1 = require("../../UiComponent/UiLoginSceneManager"),
+  Info_1 = require("../../../../Core/Common/Info");
 class CreateCharacterView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.iOt = void 0),
-      (this.oOt = !1),
-      (this.rOt = []),
-      (this.nOt = []),
-      (this.sOt = void 0),
-      (this.aOt = () => {
-        this.hOt(LoginDefine_1.ELoginSex.Boy);
+      (this.okt = void 0),
+      (this.rkt = !1),
+      (this.nkt = []),
+      (this.skt = []),
+      (this.akt = void 0),
+      (this.hkt = () => {
+        this.lkt(LoginDefine_1.ELoginSex.Boy);
       }),
-      (this.lOt = () => {
-        this.hOt(LoginDefine_1.ELoginSex.Girl);
+      (this._kt = () => {
+        this.lkt(LoginDefine_1.ELoginSex.Girl);
       }),
-      (this._Ot = () => {
-        this.sOt.SetActive(!1);
+      (this.ukt = () => {
+        this.akt.SetActive(!1);
       }),
-      (this.uOt = () => {
-        this.cOt();
+      (this.ckt = () => {
+        this.mkt();
       }),
-      (this.mOt = async (e) => (
+      (this.dkt = async (e) => (
         this.GetItem(3).SetUIActive(!1),
-        ModelManager_1.ModelManager.LoginModel.SetPlayerSex(this.iOt),
+        ModelManager_1.ModelManager.LoginModel.SetPlayerSex(this.okt),
         ModelManager_1.ModelManager.LoginModel.SetPlayerName(e),
         LoginController_1.LoginController.CreateCharacterRequest()
       )),
-      (this.dOt = (e) => {
+      (this.Ckt = (e) => {
         e
           ? (Log_1.Log.CheckInfo() &&
               Log_1.Log.Info("Login", 11, "创角界面请求创角成功"),
@@ -47,14 +48,14 @@ class CreateCharacterView extends UiViewBase_1.UiViewBase {
               (e) => {
                 LoginController_1.LoginController.DisConnect(e),
                   e
-                    ? (this.COt(),
+                    ? (this.gkt(),
                       this.GetItem(3).SetUIActive(!1),
                       UiLoginSceneManager_1.UiLoginSceneManager.PlayRoleMontage(
-                        this.rOt[this.iOt],
+                        this.nkt[this.okt],
                         17,
                       ),
                       UiLoginSceneManager_1.UiLoginSceneManager.LoadSequenceAsync(
-                        this.gOt(),
+                        this.fkt(),
                         () => {
                           this.CloseMe();
                         },
@@ -64,7 +65,7 @@ class CreateCharacterView extends UiViewBase_1.UiViewBase {
             ))
           : (Log_1.Log.CheckInfo() &&
               Log_1.Log.Info("Login", 11, "创角界面请求创角失败"),
-            this.sOt.ClearText(),
+            this.akt.ClearText(),
             this.GetItem(3).SetUIActive(!0));
       });
   }
@@ -77,61 +78,61 @@ class CreateCharacterView extends UiViewBase_1.UiViewBase {
       [4, UE.UIItem],
     ]),
       (this.BtnBindInfo = [
-        [1, this.aOt],
-        [2, this.lOt],
+        [1, this.hkt],
+        [2, this._kt],
       ]);
   }
-  hOt(e) {
+  lkt(e) {
     var i;
-    this.iOt !== e &&
-      ((i = this.iOt),
-      (this.iOt = e),
+    this.okt !== e &&
+      ((i = this.okt),
+      (this.okt = e),
       this.GetItem(3).SetUIActive(!1),
       this.GetItem(4).SetUIActive(!1),
-      this.oOt
-        ? (this.COt(),
+      this.rkt
+        ? (this.gkt(),
           UiLoginSceneManager_1.UiLoginSceneManager.LoadSequenceAsync(
-            this.fOt(),
+            this.pkt(),
             () => {
-              this.pOt();
+              this.vkt();
             },
           ),
-          this.nOt[i].RemoveRoleChooseRenderingMaterial())
+          this.skt[i].RemoveRoleChooseRenderingMaterial())
         : UiLoginSceneManager_1.UiLoginSceneManager.LoadSequenceAsync(
-            this.vOt(),
+            this.Mkt(),
             () => {
-              this.pOt();
+              this.vkt();
             },
           ),
-      this.nOt[e].SetRoleChooseRenderingMaterial());
+      this.skt[e].SetRoleChooseRenderingMaterial());
   }
-  fOt() {
-    return this.iOt === LoginDefine_1.ELoginSex.Boy
+  pkt() {
+    return this.okt === LoginDefine_1.ELoginSex.Boy
       ? "LevelSequence_SwitchMale"
       : "LevelSequence_SwitchFemale";
   }
-  vOt() {
-    return this.iOt === LoginDefine_1.ELoginSex.Boy
+  Mkt() {
+    return this.okt === LoginDefine_1.ELoginSex.Boy
       ? "LevelSequence_SelectMale"
       : "LevelSequence_SelectFemale";
   }
-  pOt() {
-    (this.oOt = !0),
+  vkt() {
+    (this.rkt = !0),
       this.GetItem(3)?.SetUIActive(!0),
       this.GetButton(1).RootUIComp.SetUIActive(
-        this.iOt !== LoginDefine_1.ELoginSex.Boy,
+        this.okt !== LoginDefine_1.ELoginSex.Boy,
       ),
       this.GetButton(2).RootUIComp.SetUIActive(
-        this.iOt !== LoginDefine_1.ELoginSex.Girl,
+        this.okt !== LoginDefine_1.ELoginSex.Girl,
       );
   }
   OnStart() {
-    this.UiViewSequence.AddSequenceFinishEvent("hide", this._Ot),
-      (this.rOt =
+    this.UiViewSequence.AddSequenceFinishEvent("hide", this.ukt),
+      (this.nkt =
         ConfigManager_1.ConfigManager.CreateCharacterConfig.GetInitialRoles()),
-      this.MOt(),
-      this.SOt(),
-      this.COt(!1),
+      this.Ekt(),
+      this.Skt(),
+      this.gkt(!1),
       this.GetItem(3).SetUIActive(!0),
       this.GetItem(4).SetUIActive(!0);
   }
@@ -141,51 +142,51 @@ class CreateCharacterView extends UiViewBase_1.UiViewBase {
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.CreateRoleShowInputName,
-      this.uOt,
+      this.ckt,
     );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.CreateRoleShowInputName,
-      this.uOt,
+      this.ckt,
     );
   }
-  MOt() {
+  Ekt() {
     var e = {
-      ConfirmFunc: this.mOt,
-      ResultFunc: this.dOt,
+      ConfirmFunc: this.dkt,
+      ResultFunc: this.Ckt,
       InputText: "",
       IsCheckNone: !0,
     };
-    this.sOt = new TextInputComponent_1.TextInputComponent(this.GetItem(0), e);
+    this.akt = new TextInputComponent_1.TextInputComponent(this.GetItem(0), e);
   }
-  SOt() {
+  Skt() {
     var e = new GenderButton(
         this.GetButton(2),
-        this.rOt[LoginDefine_1.ELoginSex.Girl],
+        this.nkt[LoginDefine_1.ELoginSex.Girl],
       ),
       e =
         (e.BindFunction(),
-        this.nOt.push(e),
+        this.skt.push(e),
         new GenderButton(
           this.GetButton(1),
-          this.rOt[LoginDefine_1.ELoginSex.Boy],
+          this.nkt[LoginDefine_1.ELoginSex.Boy],
         ));
-    e.BindFunction(), this.nOt.push(e);
+    e.BindFunction(), this.skt.push(e);
   }
   OnBeforeDestroy() {
-    for (const e of this.nOt)
+    for (const e of this.skt)
       e.RemoveRoleChooseRenderingMaterial(), e.UnbindFunction();
-    this.sOt.Destroy();
+    this.akt.Destroy();
   }
-  cOt() {
-    this.UiViewSequence.PlaySequence("show"), this.sOt.SetActive(!0);
+  mkt() {
+    this.UiViewSequence.PlaySequence("show"), this.akt.SetActive(!0);
   }
-  COt(e = !0) {
-    e ? this.UiViewSequence.PlaySequence("hide", !0) : this.sOt.SetActive(!1);
+  gkt(e = !0) {
+    e ? this.UiViewSequence.PlaySequence("hide", !0) : this.akt.SetActive(!1);
   }
-  gOt() {
-    return this.iOt === LoginDefine_1.ELoginSex.Boy
+  fkt() {
+    return this.okt === LoginDefine_1.ELoginSex.Boy
       ? "LevelSequence_MaleTurnHead"
       : "LevelSequence_FemaleTurnHead";
   }
@@ -193,77 +194,77 @@ class CreateCharacterView extends UiViewBase_1.UiViewBase {
 exports.CreateCharacterView = CreateCharacterView;
 class GenderButton {
   constructor(e, i) {
-    (this.EOt = void 0),
-      (this.yOt = void 0),
-      (this.IOt = void 0),
-      (this.TOt = void 0),
-      (this.VCt = void 0),
-      (this.zke = void 0),
-      (this.LOt = () => {
+    (this.ykt = void 0),
+      (this.Ikt = void 0),
+      (this.Tkt = void 0),
+      (this.Lkt = void 0),
+      (this.e0t = void 0),
+      (this.dFe = void 0),
+      (this.Dkt = () => {
         this.RemoveRoleRenderingMaterial(),
-          (this.EOt =
+          (this.ykt =
             UiLoginSceneManager_1.UiLoginSceneManager.SetRoleRenderingMaterial(
-              this.zke,
+              this.dFe,
               "CreateCharacterMaterialController",
             )),
-          (this.yOt =
+          (this.Ikt =
             UiLoginSceneManager_1.UiLoginSceneManager.SetHuluRenderingMaterial(
-              this.zke,
+              this.dFe,
               "CreateCharacterMaterialController",
             ));
       }),
       (this.RemoveRoleRenderingMaterial = () => {
-        void 0 !== this.EOt &&
+        void 0 !== this.ykt &&
           (UiLoginSceneManager_1.UiLoginSceneManager.RemoveRoleRenderingMaterialWithEnding(
-            this.zke,
-            this.EOt,
+            this.dFe,
+            this.ykt,
           ),
-          (this.EOt = void 0)),
-          void 0 !== this.yOt &&
+          (this.ykt = void 0)),
+          void 0 !== this.Ikt &&
             (UiLoginSceneManager_1.UiLoginSceneManager.RemoveHuluRenderingMaterialWithEnding(
-              this.zke,
-              this.yOt,
+              this.dFe,
+              this.Ikt,
             ),
-            (this.yOt = void 0));
+            (this.Ikt = void 0));
       }),
-      (this.VCt = e),
-      (this.zke = i);
+      (this.e0t = e),
+      (this.dFe = i);
   }
   BindFunction() {
-    ModelManager_1.ModelManager.PlatformModel.IsMobile() ||
-      (this.VCt.OnPointEnterCallBack.Bind(this.LOt),
-      this.VCt.OnPointExitCallBack.Bind(this.RemoveRoleRenderingMaterial));
+    Info_1.Info.IsInTouch() ||
+      (this.e0t.OnPointEnterCallBack.Bind(this.Dkt),
+      this.e0t.OnPointExitCallBack.Bind(this.RemoveRoleRenderingMaterial));
   }
   SetRoleChooseRenderingMaterial() {
     this.RemoveRoleChooseRenderingMaterial(),
-      (this.IOt =
+      (this.Tkt =
         UiLoginSceneManager_1.UiLoginSceneManager.SetRoleRenderingMaterial(
-          this.zke,
+          this.dFe,
           "ChooseCharacterMaterialController",
         )),
-      (this.TOt =
+      (this.Lkt =
         UiLoginSceneManager_1.UiLoginSceneManager.SetHuluRenderingMaterial(
-          this.zke,
+          this.dFe,
           "ChooseCharacterMaterialController",
         ));
   }
   RemoveRoleChooseRenderingMaterial() {
-    void 0 !== this.IOt &&
+    void 0 !== this.Tkt &&
       (UiLoginSceneManager_1.UiLoginSceneManager.RemoveRoleRenderingMaterialWithEnding(
-        this.zke,
-        this.IOt,
+        this.dFe,
+        this.Tkt,
       ),
-      (this.IOt = void 0)),
-      void 0 !== this.TOt &&
+      (this.Tkt = void 0)),
+      void 0 !== this.Lkt &&
         (UiLoginSceneManager_1.UiLoginSceneManager.RemoveHuluRenderingMaterialWithEnding(
-          this.zke,
-          this.TOt,
+          this.dFe,
+          this.Lkt,
         ),
-        (this.TOt = void 0));
+        (this.Lkt = void 0));
   }
   UnbindFunction() {
-    this.VCt.OnPointEnterCallBack.Unbind(),
-      this.VCt.OnPointExitCallBack.Unbind();
+    this.e0t.OnPointEnterCallBack.Unbind(),
+      this.e0t.OnPointExitCallBack.Unbind();
   }
 }
 //# sourceMappingURL=CreateCharacterView.js.map

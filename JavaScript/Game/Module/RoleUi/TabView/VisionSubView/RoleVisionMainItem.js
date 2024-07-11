@@ -6,7 +6,7 @@ const UE = require("ue"),
   RoleVisionCommonItem_1 = require("./RoleVisionCommonItem");
 class RoleVisionMainItem extends RoleVisionCommonItem_1.RoleVisionCommonItem {
   constructor() {
-    super(...arguments), (this.T7e = () => !1);
+    super(...arguments), (this.Lke = () => !1);
   }
   GetPlusItem() {}
   GetVisionTextureComponent() {
@@ -48,7 +48,7 @@ class RoleVisionMainItem extends RoleVisionCommonItem_1.RoleVisionCommonItem {
   OnStart() {
     var t = this.GetExtendToggle(0);
     this.GetTexture(1).SetUIActive(!1),
-      t.CanExecuteChange.Bind(() => this.T7e());
+      t.CanExecuteChange.Bind(() => this.Lke());
   }
   OnUpdateTrialItem(t) {}
   OnUpdateItem(t) {

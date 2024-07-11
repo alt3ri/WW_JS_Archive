@@ -11,23 +11,23 @@ class InventoryGiftItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
       (this.OGe = void 0),
-      (this.Qci = void 0),
-      (this.Xci = void 0),
-      (this.PIt = void 0),
-      (this.R4e = void 0),
-      (this.dqt = void 0),
-      (this.Xgt = void 0),
-      (this.$ci = void 0),
-      (this.Yci = void 0),
-      (this.Jci = () => {
-        this.R4e.SetToggleState(0, !1),
-          this.Xci.RootUIComp.SetUIActive(!1),
-          this.Yci && this.Yci(this.dqt);
+      (this.Qmi = void 0),
+      (this.Xmi = void 0),
+      (this.qTt = void 0),
+      (this.H5e = void 0),
+      (this.fGt = void 0),
+      (this.sft = void 0),
+      (this.$mi = void 0),
+      (this.Ymi = void 0),
+      (this.Jmi = () => {
+        this.H5e.SetToggleState(0, !1),
+          this.Xmi.RootUIComp.SetUIActive(!1),
+          this.Ymi && this.Ymi(this.fGt);
       }),
-      (this.Ysi = (i) => {
+      (this.Yai = (i) => {
         i = 1 === i;
-        this.Xci && this.Xci.RootUIComp.SetUIActive(i),
-          this.$ci && this.$ci(this.R4e, this.Xci, i, this.dqt);
+        this.Xmi && this.Xmi.RootUIComp.SetUIActive(i),
+          this.$mi && this.$mi(this.H5e, this.Xmi, i, this.fGt);
       });
   }
   Initialize(i) {
@@ -41,48 +41,48 @@ class InventoryGiftItem extends GridProxyAbstract_1.GridProxyAbstract {
       [3, UE.UIButtonComponent],
       [4, UE.UIExtendToggle],
     ]),
-      (this.BtnBindInfo = [[3, this.Jci]]);
+      (this.BtnBindInfo = [[3, this.Jmi]]);
   }
   OnStart() {
-    this.h7e();
+    this.SHe();
   }
   OnBeforeDestroy() {
     (this.OGe = void 0),
-      (this.Qci = void 0),
-      (this.Xci = void 0),
-      (this.PIt = void 0),
-      (this.R4e = void 0),
-      (this.dqt = void 0),
-      (this.Xgt = void 0);
+      (this.Qmi = void 0),
+      (this.Xmi = void 0),
+      (this.qTt = void 0),
+      (this.H5e = void 0),
+      (this.fGt = void 0),
+      (this.sft = void 0);
   }
-  h7e() {
+  SHe() {
     (this.OGe = this.GetText(1)),
-      (this.Qci = this.GetText(2)),
-      (this.R4e = this.GetExtendToggle(4)),
-      this.R4e.OnStateChange.Add(this.Ysi),
-      (this.Xci = this.GetButton(3)),
-      this.Xci.RootUIComp.SetUIActive(!1),
-      (this.Xgt = new CommonItemSmallItemGrid_1.CommonItemSmallItemGrid()),
-      this.Xgt.Initialize(this.GetItem(0).GetOwner());
+      (this.Qmi = this.GetText(2)),
+      (this.H5e = this.GetExtendToggle(4)),
+      this.H5e.OnStateChange.Add(this.Yai),
+      (this.Xmi = this.GetButton(3)),
+      this.Xmi.RootUIComp.SetUIActive(!1),
+      (this.sft = new CommonItemSmallItemGrid_1.CommonItemSmallItemGrid()),
+      this.sft.Initialize(this.GetItem(0).GetOwner());
   }
   Refresh(i, t, s) {
-    (this.dqt = i), this.RefreshItem(this.dqt[0], this.dqt[1]);
+    (this.fGt = i), this.RefreshItem(this.fGt[0], this.fGt[1]);
   }
   RefreshItem(i, t = 0) {
-    this.PIt = i.ItemId;
+    this.qTt = i.ItemId;
     var s = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
-        this.PIt,
+        this.qTt,
       ),
       s = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(s.Name) ?? "";
     this.OGe.SetText(s),
-      LguiUtil_1.LguiUtil.SetLocalText(this.Qci, "Quantity", t),
-      this.Xgt.RefreshByConfigId(i.ItemId);
+      LguiUtil_1.LguiUtil.SetLocalText(this.Qmi, "Quantity", t),
+      this.sft.RefreshByConfigId(i.ItemId);
   }
   SetOnToggleStateChangeFunction(i) {
-    this.$ci = i;
+    this.$mi = i;
   }
   SetOnReduceFunction(i) {
-    this.Yci = i;
+    this.Ymi = i;
   }
 }
 exports.InventoryGiftItem = InventoryGiftItem;

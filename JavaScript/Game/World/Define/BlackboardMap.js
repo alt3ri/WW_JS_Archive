@@ -6,57 +6,57 @@ const Log_1 = require("../../../Core/Common/Log"),
   MathUtils_1 = require("../../../Core/Utils/MathUtils");
 class BlackboardParam {
   constructor(t) {
-    (this.jSe = ""),
-      (this.epr = 0),
-      (this.tpr = void 0),
-      (this.ipr = !1),
-      (this.rpr = 0),
-      (this.npr = ""),
+    (this.jEe = ""),
+      (this.zpr = 0),
+      (this.Zpr = void 0),
+      (this.evr = !1),
+      (this.tvr = 0),
+      (this.ivr = ""),
       (this.IGe = void 0),
-      (this.spr = void 0),
-      (this.apr = void 0),
-      (this.hpr = void 0),
-      (this.S9 = t);
+      (this.ovr = void 0),
+      (this.rvr = void 0),
+      (this.nvr = void 0),
+      (this.E9 = t);
   }
   static CreateByProtocol(t) {
     if (void 0 !== t) {
       var r = t,
-        e = new BlackboardParam(r.Ikn),
-        t = (e.SetKey(r.Ckn), Protocol_1.Aki.Protocol.u2s);
-      switch (r.Ikn) {
+        e = new BlackboardParam(r.Z4n),
+        t = (e.SetKey(r.j4n), Protocol_1.Aki.Protocol.Zks);
+      switch (r.Z4n) {
         case t.Proto_BlackboardParamType_Int:
-          return e.SetIntValue(r.Z3n), e;
+          return e.SetIntValue(r.B8n), e;
         case t.Proto_BlackboardParamType_IntArray:
-          return e.SetIntValues(r.D7n.A7n), e;
+          return e.SetIntValues(r.sKn.aKn), e;
         case t.Proto_BlackboardParamType_Long:
-          return e.SetLongValue(MathUtils_1.MathUtils.LongToBigInt(r.U7n)), e;
+          return e.SetLongValue(MathUtils_1.MathUtils.LongToBigInt(r.hKn)), e;
         case t.Proto_BlackboardParamType_LongArray:
-          var s = r.R7n.A7n,
+          var s = r.lKn.aKn,
             a = new Array();
           for (const i of s) a.push(MathUtils_1.MathUtils.LongToBigInt(i));
           return e.SetLongValues(a), e;
         case t.Proto_BlackboardParamType_Boolean:
-          return e.SetBooleanValue(r.x7n), e;
+          return e.SetBooleanValue(r._Kn), e;
         case t.Proto_BlackboardParamType_String:
-          return e.SetStringValue(r.t4n), e;
+          return e.SetStringValue(r.b8n), e;
         case t.Proto_BlackboardParamType_StringArray:
-          return e.SetStringValues(r.w7n.A7n), e;
+          return e.SetStringValues(r.mKn.aKn), e;
         case t.Proto_BlackboardParamType_Float:
-          return e.SetFloatValue(r.P7n), e;
+          return e.SetFloatValue(r.uKn), e;
         case t.Proto_BlackboardParamType_FloatArray:
-          return e.SetFloatValues(r.B7n.A7n), e;
+          return e.SetFloatValues(r.cKn.aKn), e;
         case t.Proto_BlackboardParamType_Vector:
-          return e.SetVectorValue(r.b7n.X, r.b7n.Y, r.b7n.Z), e;
+          return e.SetVectorValue(r.dKn.X, r.dKn.Y, r.dKn.Z), e;
         case t.Proto_BlackboardParamType_VectorArray:
-          return e.SetVectorValues(r.q7n.A7n), e;
+          return e.SetVectorValues(r.CKn.aKn), e;
         case t.Proto_BlackboardParamType_Rotator:
-          return e.SetRotatorValue(r.G7n.Pitch, r.G7n.Roll, r.G7n.Yaw), e;
+          return e.SetRotatorValue(r.gKn.Pitch, r.gKn.Roll, r.gKn.Yaw), e;
         case t.Proto_BlackboardParamType_RotatorArray:
-          return e.SetRotatorValues(r.O7n.A7n), e;
+          return e.SetRotatorValues(r.fKn.aKn), e;
         case t.Proto_BlackboardParamType_Entity:
-          return e.SetLongValue(MathUtils_1.MathUtils.LongToBigInt(r.U7n)), e;
+          return e.SetLongValue(MathUtils_1.MathUtils.LongToBigInt(r.hKn)), e;
         case t.Proto_BlackboardParamType_EntityArray:
-          var s = r.R7n.A7n,
+          var s = r.lKn.aKn,
             o = new Array();
           for (const l of s) o.push(MathUtils_1.MathUtils.LongToBigInt(l));
           return e.SetLongValues(o), e;
@@ -66,144 +66,144 @@ class BlackboardParam {
     }
   }
   GetKey() {
-    return this.jSe;
+    return this.jEe;
   }
   GetType() {
-    return this.S9;
+    return this.E9;
   }
   SetKey(t) {
-    this.jSe = t;
+    this.jEe = t;
   }
   GetIntValue() {
-    return this.epr;
+    return this.zpr;
   }
   SetIntValue(t) {
-    this.epr = t;
+    this.zpr = t;
   }
   GetIntValues() {
-    return this.lpr;
+    return this.svr;
   }
   SetIntValues(t) {
-    this.lpr = t;
+    this.svr = t;
   }
   GetLongValue() {
-    return this.tpr;
+    return this.Zpr;
   }
   SetLongValue(t) {
-    this.tpr = t;
+    this.Zpr = t;
   }
   GetLongValues() {
-    return this._pr;
+    return this.avr;
   }
   SetLongValues(t) {
-    this._pr = t;
+    this.avr = t;
   }
   GetBooleanValue() {
-    return this.ipr;
+    return this.evr;
   }
   SetBooleanValue(t) {
-    this.ipr = t;
+    this.evr = t;
   }
   GetFloatValue() {
-    return this.rpr;
+    return this.tvr;
   }
   SetFloatValue(t) {
-    this.rpr = t;
+    this.tvr = t;
   }
   GetFloatValues() {
-    return this.upr;
+    return this.hvr;
   }
   SetFloatValues(t) {
-    this.upr = t;
+    this.hvr = t;
   }
   GetStringValue() {
-    return this.npr;
+    return this.ivr;
   }
   SetStringValue(t) {
-    this.npr = t;
+    this.ivr = t;
   }
   GetStringValues() {
-    return this.cpr;
+    return this.lvr;
   }
   SetStringValues(t) {
-    this.cpr = t;
+    this.lvr = t;
   }
   GetVectorValue() {
     return this.IGe;
   }
   SetVectorValue(t, r, e) {
-    this.IGe || (this.IGe = Protocol_1.Aki.Protocol.VBs.create()),
+    this.IGe || (this.IGe = Protocol_1.Aki.Protocol.Pks.create()),
       (this.IGe.X = t),
       (this.IGe.Y = r),
       (this.IGe.Z = e);
   }
   GetVectorValues() {
-    return this.spr;
+    return this.ovr;
   }
   SetVectorValues(t) {
-    this.spr = t;
+    this.ovr = t;
   }
   GetRotatorValue() {
-    return this.apr;
+    return this.rvr;
   }
   SetRotatorValue(t, r, e) {
-    this.apr || (this.apr = Protocol_1.Aki.Protocol.iws.create()),
-      (this.apr.Pitch = t),
-      (this.apr.Roll = r),
-      (this.apr.Yaw = e);
+    this.rvr || (this.rvr = Protocol_1.Aki.Protocol.S2s.create()),
+      (this.rvr.Pitch = t),
+      (this.rvr.Roll = r),
+      (this.rvr.Yaw = e);
   }
   GetRotatorValues() {
-    return this.hpr;
+    return this.nvr;
   }
   SetRotatorValues(t) {
-    this.hpr = t;
+    this.nvr = t;
   }
   ToString() {
-    var t = Protocol_1.Aki.Protocol.u2s;
-    switch (this.S9) {
+    var t = Protocol_1.Aki.Protocol.Zks;
+    switch (this.E9) {
       case t.Proto_BlackboardParamType_Int:
-        return this.epr.toString();
+        return this.zpr.toString();
       case t.Proto_BlackboardParamType_IntArray: {
         let r = "[";
-        if (void 0 !== this.lpr) {
-          var e = this.lpr.length;
+        if (void 0 !== this.svr) {
+          var e = this.svr.length;
           for (let t = 0; t < e; t++)
-            (r += this.lpr[t]), t !== e - 1 && (r += ", ");
+            (r += this.svr[t]), t !== e - 1 && (r += ", ");
         }
         return (r += "]");
       }
       case t.Proto_BlackboardParamType_Long:
-        return this.tpr.toString();
+        return this.Zpr.toString();
       case t.Proto_BlackboardParamType_LongArray: {
         let r = "[";
-        if (void 0 !== this._pr) {
-          var s = this._pr.length;
+        if (void 0 !== this.avr) {
+          var s = this.avr.length;
           for (let t = 0; t < s; t++)
-            (r += this._pr[t]), t !== s - 1 && (r += ", ");
+            (r += this.avr[t]), t !== s - 1 && (r += ", ");
         }
         return (r += "]");
       }
       case t.Proto_BlackboardParamType_Boolean:
-        return this.ipr.toString();
+        return this.evr.toString();
       case t.Proto_BlackboardParamType_String:
-        return this.npr;
+        return this.ivr;
       case t.Proto_BlackboardParamType_StringArray: {
         let r = "[";
-        if (void 0 !== this.cpr) {
-          var a = this.cpr.length;
+        if (void 0 !== this.lvr) {
+          var a = this.lvr.length;
           for (let t = 0; t < a; t++)
-            (r += this.cpr[t]), t !== a - 1 && (r += ", ");
+            (r += this.lvr[t]), t !== a - 1 && (r += ", ");
         }
         return (r += "]");
       }
       case t.Proto_BlackboardParamType_Float:
-        return this.rpr.toString();
+        return this.tvr.toString();
       case t.Proto_BlackboardParamType_FloatArray: {
         let r = "[";
-        if (void 0 !== this.upr) {
-          var o = this.upr.length;
+        if (void 0 !== this.hvr) {
+          var o = this.hvr.length;
           for (let t = 0; t < o; t++)
-            (r += this.upr[t]), t !== o - 1 && (r += ", ");
+            (r += this.hvr[t]), t !== o - 1 && (r += ", ");
         }
         return (r += "]");
       }
@@ -217,10 +217,10 @@ class BlackboardParam {
       }
       case t.Proto_BlackboardParamType_VectorArray: {
         let r = "[";
-        if (void 0 !== this.spr) {
-          var i = this.spr.length;
+        if (void 0 !== this.ovr) {
+          var i = this.ovr.length;
           for (let t = 0; t < i; t++) {
-            var l = this.spr[t];
+            var l = this.ovr[t];
             (r += `X:${l.X} Y:${l.Y} Z:` + l.Z), t !== i - 1 && (r += ", ");
           }
         }
@@ -229,19 +229,19 @@ class BlackboardParam {
       case t.Proto_BlackboardParamType_Rotator: {
         let t = "";
         return (
-          void 0 !== this.apr &&
+          void 0 !== this.rvr &&
             (t +=
-              `Pitch:${this.apr.Pitch} Roll:${this.apr.Roll} Yaw:` +
-              this.apr.Yaw),
+              `Pitch:${this.rvr.Pitch} Roll:${this.rvr.Roll} Yaw:` +
+              this.rvr.Yaw),
           t
         );
       }
       case t.Proto_BlackboardParamType_RotatorArray: {
         let r = "[";
-        if (void 0 !== this.hpr) {
-          var u = this.hpr.length;
+        if (void 0 !== this.nvr) {
+          var u = this.nvr.length;
           for (let t = 0; t < u; t++) {
-            var n = this.hpr[t];
+            var n = this.nvr[t];
             (r += `Pitch:${n.Pitch} Roll:${n.Roll} Yaw:` + n.Yaw),
               t !== u - 1 && (r += ", ");
           }
@@ -278,7 +278,7 @@ class BlackboardMap {
     let t = "";
     for (const e of this.BlackboardMap.keys()) {
       var r = this.BlackboardMap.get(e);
-      t += `key:${e}  type:${BlackboardMap.mpr(r.GetType())}  value:${r?.ToString()}
+      t += `key:${e}  type:${BlackboardMap._vr(r.GetType())}  value:${r?.ToString()}
 `;
     }
     return t;
@@ -292,45 +292,45 @@ class BlackboardMap {
           3,
           "[BlackboardMap.CheckValue] 设置黑板值失败,因为相同的Key使用了不同的数据类型。",
           ["Key", t],
-          ["Old字段类型", BlackboardMap.mpr(r.GetType())],
-          ["New字段类型", BlackboardMap.mpr(e)],
+          ["Old字段类型", BlackboardMap._vr(r.GetType())],
+          ["New字段类型", BlackboardMap._vr(e)],
         ),
       !1)
     );
   }
-  static mpr(t) {
+  static _vr(t) {
     switch (t) {
-      case Protocol_1.Aki.Protocol.u2s.Proto_BlackboardParamType_None:
+      case Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_None:
         return "none";
-      case Protocol_1.Aki.Protocol.u2s.Proto_BlackboardParamType_Int:
+      case Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_Int:
         return "int";
-      case Protocol_1.Aki.Protocol.u2s.Proto_BlackboardParamType_IntArray:
+      case Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_IntArray:
         return "array<int>";
-      case Protocol_1.Aki.Protocol.u2s.Proto_BlackboardParamType_Long:
+      case Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_Long:
         return "long";
-      case Protocol_1.Aki.Protocol.u2s.Proto_BlackboardParamType_LongArray:
+      case Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_LongArray:
         return "array<long>";
-      case Protocol_1.Aki.Protocol.u2s.Proto_BlackboardParamType_Boolean:
+      case Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_Boolean:
         return "boolean";
-      case Protocol_1.Aki.Protocol.u2s.Proto_BlackboardParamType_String:
+      case Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_String:
         return "string";
-      case Protocol_1.Aki.Protocol.u2s.Proto_BlackboardParamType_StringArray:
+      case Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_StringArray:
         return "array<string>";
-      case Protocol_1.Aki.Protocol.u2s.Proto_BlackboardParamType_Float:
+      case Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_Float:
         return "float";
-      case Protocol_1.Aki.Protocol.u2s.Proto_BlackboardParamType_FloatArray:
+      case Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_FloatArray:
         return "array<float>";
-      case Protocol_1.Aki.Protocol.u2s.Proto_BlackboardParamType_Vector:
+      case Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_Vector:
         return "vector";
-      case Protocol_1.Aki.Protocol.u2s.Proto_BlackboardParamType_VectorArray:
+      case Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_VectorArray:
         return "array<vector>";
-      case Protocol_1.Aki.Protocol.u2s.Proto_BlackboardParamType_Rotator:
+      case Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_Rotator:
         return "rotator";
-      case Protocol_1.Aki.Protocol.u2s.Proto_BlackboardParamType_RotatorArray:
+      case Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_RotatorArray:
         return "array<rotator>";
-      case Protocol_1.Aki.Protocol.u2s.Proto_BlackboardParamType_Entity:
+      case Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_Entity:
         return "entity";
-      case Protocol_1.Aki.Protocol.u2s.Proto_BlackboardParamType_EntityArray:
+      case Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_EntityArray:
         return "array<entity>";
       default:
         return;

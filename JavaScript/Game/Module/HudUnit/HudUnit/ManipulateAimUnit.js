@@ -8,24 +8,24 @@ const UE = require("ue"),
 class ManipulateAimUnit extends HudUnitBase_1.HudUnitBase {
   constructor() {
     super(...arguments),
-      (this.Kei = void 0),
-      (this.Qei = void 0),
-      (this.Xei = !1),
-      (this.znt = void 0),
-      (this.$ei = void 0),
+      (this.Kti = void 0),
+      (this.Qti = void 0),
+      (this.Xti = !1),
+      (this._at = void 0),
+      (this.$ti = void 0),
       (this.dce = !1),
-      (this.Yei = !1),
-      (this.ist = () => {
-        (this.znt = void 0), this.$ei?.();
+      (this.Yti = !1),
+      (this.dat = () => {
+        (this._at = void 0), this.$ti?.();
       });
   }
   OnRegisterComponent() {
-    "UiView_Sight" === this.ResourceId && (this.Xei = !0),
+    "UiView_Sight" === this.ResourceId && (this.Xti = !0),
       (this.ComponentRegisterInfos = [
         [0, UE.UIItem],
         [1, UE.UIItem],
       ]),
-      this.Xei
+      this.Xti
         ? (this.ComponentRegisterInfos = [
             [0, UE.UIItem],
             [1, UE.UIItem],
@@ -41,39 +41,39 @@ class ManipulateAimUnit extends HudUnitBase_1.HudUnitBase {
           ]);
   }
   OnStart() {
-    (this.Kei = this.GetItem(0)),
-      (this.Qei = this.GetItem(1)),
-      (this.Yei = !1),
-      this.Kei.SetUIActive(!1),
-      this.Brt(),
+    (this.Kti = this.GetItem(0)),
+      (this.Qti = this.GetItem(1)),
+      (this.Yti = !1),
+      this.Kti.SetUIActive(!1),
+      this.Qnt(),
       this.PlayStartAnim();
   }
   OnBeforeDestroy() {
-    (this.Kei = void 0),
-      (this.Qei = void 0),
-      (this.$ei = void 0),
+    (this.Kti = void 0),
+      (this.Qti = void 0),
+      (this.$ti = void 0),
       super.OnBeforeDestroy();
   }
   SetTargetItemOffset(i, t) {
-    this.Kei && (this.Kei.SetAnchorOffsetX(i), this.Kei.SetAnchorOffsetY(t));
+    this.Kti && (this.Kti.SetAnchorOffsetX(i), this.Kti.SetAnchorOffsetY(t));
   }
   SetTargetAimVisible(i) {
-    this.Kei &&
-      this.Yei !== i &&
-      ((this.Yei = i),
-      this.Xei
+    this.Kti &&
+      this.Yti !== i &&
+      ((this.Yti = i),
+      this.Xti
         ? i
-          ? (this.Kei.SetUIActive(i),
+          ? (this.Kti.SetUIActive(i),
             this.PlayStartAimAnim(),
             this.PlayLoopAimAnim())
           : (this.StopLoopAimAnim(), this.PlayCloseAimAnim())
-        : this.Kei.SetUIActive(i));
+        : this.Kti.SetUIActive(i));
   }
   SetIsWeakness(i) {
-    this.Qei && this.Qei.IsUIActiveSelf() !== i && this.Qei.SetUIActive(i);
+    this.Qti && this.Qti.IsUIActiveSelf() !== i && this.Qti.SetUIActive(i);
   }
-  Brt() {
-    this.Xei &&
+  Qnt() {
+    this.Xti &&
       (this.InitTweenAnim(2),
       this.InitTweenAnim(3),
       this.InitTweenAnim(4),
@@ -86,24 +86,24 @@ class ManipulateAimUnit extends HudUnitBase_1.HudUnitBase {
   PlayCloseAnim() {
     this.dce &&
       ((this.dce = !1),
-      this.Jei(),
+      this.Jti(),
       this.InAsyncLoading()
-        ? this.$ei?.()
-        : ((this.znt = TimerSystem_1.TimerSystem.Delay(
-            this.ist,
+        ? this.$ti?.()
+        : ((this._at = TimerSystem_1.TimerSystem.Delay(
+            this.dat,
             CLOSE_ANIM_TIME,
           )),
           this.PlayTweenAnim(3)));
   }
   StopCloseAnim() {
-    this.Jei(), this.StopTweenAnim(3);
+    this.Jti(), this.StopTweenAnim(3);
   }
-  Jei() {
-    this.znt &&
-      (TimerSystem_1.TimerSystem.Remove(this.znt), (this.znt = void 0));
+  Jti() {
+    this._at &&
+      (TimerSystem_1.TimerSystem.Remove(this._at), (this._at = void 0));
   }
   SetCloseAnimCallback(i) {
-    this.$ei = i;
+    this.$ti = i;
   }
   PlayStartAimAnim() {
     this.dce && this.PlayTweenAnim(4);
@@ -118,10 +118,10 @@ class ManipulateAimUnit extends HudUnitBase_1.HudUnitBase {
     this.dce && this.StopTweenAnim(6);
   }
   PlayTweenAnim(i) {
-    this.Xei && super.PlayTweenAnim(i);
+    this.Xti && super.PlayTweenAnim(i);
   }
   StopTweenAnim(i) {
-    this.Xei && super.StopTweenAnim(i);
+    this.Xti && super.StopTweenAnim(i);
   }
 }
 exports.ManipulateAimUnit = ManipulateAimUnit;

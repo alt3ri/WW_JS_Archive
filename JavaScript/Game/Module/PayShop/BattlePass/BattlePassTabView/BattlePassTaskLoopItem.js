@@ -22,9 +22,9 @@ exports.BattlePassTaskData = BattlePassTaskData;
 class BattlePassTaskLoopItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
-      (this.Uki = void 0),
+      (this.U2i = void 0),
       (this.BOe = 0),
-      (this.XOt = () => {
+      (this.$kt = () => {
         BattlePassController_1.BattlePassController.TryRequestTaskList([
           this.BOe,
         ]);
@@ -39,14 +39,14 @@ class BattlePassTaskLoopItem extends GridProxyAbstract_1.GridProxyAbstract {
       [4, UE.UIButtonComponent],
       [5, UE.UIItem],
     ]),
-      (this.BtnBindInfo = [[4, this.XOt]]);
+      (this.BtnBindInfo = [[4, this.$kt]]);
   }
   OnStart() {
-    (this.Uki = new CommonItemSmallItemGrid_1.CommonItemSmallItemGrid()),
-      this.Uki.Initialize(this.GetItem(5).GetOwner());
+    (this.U2i = new CommonItemSmallItemGrid_1.CommonItemSmallItemGrid()),
+      this.U2i.Initialize(this.GetItem(5).GetOwner());
   }
   Refresh(t, s, e) {
-    this.Uki.Refresh(t.RewardItemList[0]),
+    this.U2i.Refresh(t.RewardItemList[0]),
       this.GetButton(4).RootUIComp.SetUIActive(3 === t.TaskState),
       this.GetText(3).SetUIActive(1 === t.TaskState),
       this.GetSprite(2).SetUIActive(1 !== t.TaskState),

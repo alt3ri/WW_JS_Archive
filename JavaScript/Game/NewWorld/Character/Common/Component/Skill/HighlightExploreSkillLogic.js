@@ -6,102 +6,117 @@ const Log_1 = require("../../../../../../Core/Common/Log"),
   EventDefine_1 = require("../../../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../../../Common/Event/EventSystem"),
   TimeUtil_1 = require("../../../../../Common/TimeUtil"),
+  ControllerHolder_1 = require("../../../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../../../Manager/ModelManager"),
   RouletteController_1 = require("../../../../../Module/Roulette/RouletteController");
 class HighlightExploreSkillLogic {
   constructor() {
-    (this.MJo = -2028614394),
-      (this.Gco = 1001),
-      (this.SJo = !1),
-      (this.EJo = !1),
+    (this.fzo = -2028614394),
+      (this.wmo = 1001),
+      (this.pzo = !1),
+      (this.vzo = !1),
       (this.TDe = void 0),
       (this.Lie = void 0),
-      (this.yJo = () => {
+      (this.Mzo = () => {
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "LevelEvent",
             43,
             "高亮时间结束，玩家探索技能取消高亮",
-            ["Id", this.Gco],
+            ["Id", this.wmo],
           ),
-          this.IJo(this.SJo);
+          this.Ezo(this.pzo);
       }),
-      (this.TJo = () => {
+      (this.Szo = () => {
         ModelManager_1.ModelManager.RouletteModel.CurrentExploreSkillId !==
-          this.Gco &&
+          this.wmo &&
           (Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "LevelEvent",
               43,
               "切换探索技能，玩家探索技能取消高亮",
-              ["Id", this.Gco],
+              ["Id", this.wmo],
             ),
-          this.IJo(!1));
+          this.Ezo(!1));
       }),
-      (this.LJo = (t, e, i) => {
-        e === this.Gco - 1001 + 210001 &&
+      (this.yzo = (e, t, i) => {
+        t === this.wmo - 1001 + 210001 &&
           (Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "LevelEvent",
               43,
               "使用高亮技能，玩家探索技能取消高亮",
-              ["Id", this.Gco],
+              ["Id", this.wmo],
             ),
-          this.IJo(this.SJo));
+          this.Ezo(this.pzo));
       });
   }
-  Init(t) {
-    this.Lie = t;
+  Init(e) {
+    this.Lie = e;
   }
   Clear() {
-    this.EJo && this.IJo(), (this.Lie = void 0);
+    this.vzo && this.Ezo(), (this.Lie = void 0);
   }
-  ShowHighlightExploreSkill(t, e, i) {
-    this.EJo ||
-      ((this.Gco = t),
-      (this.SJo = void 0 !== i && i),
-      (t = e * TimeUtil_1.TimeUtil.InverseMillisecond),
+  ShowHighlightExploreSkill(e, t, i) {
+    this.vzo ||
+      ((this.wmo = e),
+      (this.pzo = i ?? !1),
+      (e = t * TimeUtil_1.TimeUtil.InverseMillisecond),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("LevelEvent", 43, "主动触发玩家探索技能高亮", [
           "Id",
-          this.Gco,
+          this.wmo,
         ]),
-      this.DJo(t));
+      this.Izo(e));
   }
   HideHighlightExploreSkill() {
-    this.EJo &&
+    this.vzo &&
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("LevelEvent", 43, "主动触发玩家探索技能取消高亮", [
           "Id",
-          this.Gco,
+          this.wmo,
         ]),
-      this.IJo(this.SJo));
+      this.Ezo(this.pzo));
   }
-  DJo(t) {
-    (this.EJo = !0),
-      this.Lie && !this.Lie.HasTag(this.MJo) && this.Lie.AddTag(this.MJo),
-      RouletteController_1.RouletteController.ExploreSkillSetRequest(this.Gco),
+  Izo(e) {
+    (this.vzo = !0),
+      this.Lie && !this.Lie.HasTag(this.fzo) && this.Lie.AddTag(this.fzo),
+      RouletteController_1.RouletteController.ExploreSkillSetRequest(this.wmo),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.CharUseSkill,
-        this.LJo,
+        this.yzo,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnChangeSelectedExploreId,
-        this.TJo,
+        this.Szo,
       ),
-      (this.TDe = TimerSystem_1.TimerSystem.Delay(this.yJo, t));
+      (this.TDe = TimerSystem_1.TimerSystem.Delay(this.Mzo, e));
   }
-  IJo(t = !1) {
-    (this.EJo = !1),
-      this.Lie && this.Lie.HasTag(this.MJo) && this.Lie.RemoveTag(this.MJo),
-      t && RouletteController_1.RouletteController.SetLastSkillId(),
-      EventSystem_1.EventSystem.Remove(
-        EventDefine_1.EEventName.CharUseSkill,
-        this.LJo,
-      ),
+  Ezo(t = !1) {
+    if (
+      ((this.vzo = !1),
+      this.Lie && this.Lie.HasTag(this.fzo) && this.Lie.RemoveTag(this.fzo),
+      t)
+    ) {
+      let e = !0;
+      (e =
+        1013 === this.wmo &&
+        ((t = ModelManager_1.ModelManager.CreatureModel.GetPlayerId()),
+        (t =
+          ControllerHolder_1.ControllerHolder.FormationDataController.GetPlayerEntity(
+            t,
+          )?.GetComponent(204))) &&
+        t.IsFollowerEnable()
+          ? !1
+          : e) && RouletteController_1.RouletteController.SetLastSkillId();
+    }
+    EventSystem_1.EventSystem.Remove(
+      EventDefine_1.EEventName.CharUseSkill,
+      this.yzo,
+    ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnChangeSelectedExploreId,
-        this.TJo,
+        this.Szo,
       ),
       this.TDe &&
         TimerSystem_1.TimerSystem.Has(this.TDe) &&

@@ -15,21 +15,21 @@ const UE = require("ue"),
 class ItemSelectView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.Upt = void 0),
-      (this.Apt = void 0),
-      (this.hft = void 0),
-      (this.aft = void 0),
+      (this.Fvt = void 0),
+      (this.vQs = void 0),
+      (this.Mpt = void 0),
+      (this.vpt = void 0),
       (this.OnClickMask = () => {
         this.GetItem(3).SetUIActive(!1), this.CloseMe();
       }),
-      (this.wpt = (e, t) => {
+      (this.Wvt = (e, t) => {
         e = ItemTipsUtilTool_1.ItemTipsComponentUtilTool.GetTipsDataById(e, t);
-        (e.CanClickLockButton = this.Bpt),
-          this.Apt.Refresh(e),
+        (e.CanClickLockButton = this.Kvt),
+          this.vQs.Refresh(e),
           this.GetItem(3).SetUIActive(!0);
       }),
-      (this.Bpt = (t) => {
-        var i = this.Upt.GetCurrentSelectedData(),
+      (this.Kvt = (t) => {
+        var i = this.Fvt.GetCurrentSelectedData(),
           r = i?.length;
         for (let e = 0; e < r; e++)
           if (i[e].IncId === t)
@@ -41,8 +41,8 @@ class ItemSelectView extends UiViewBase_1.UiViewBase {
             );
         return !0;
       }),
-      (this.bpt = (e) => {
-        this.Upt.UpdateByDataList(e);
+      (this.Qvt = (e) => {
+        this.Fvt.UpdateByDataList(e);
       });
   }
   OnRegisterComponent() {
@@ -57,41 +57,41 @@ class ItemSelectView extends UiViewBase_1.UiViewBase {
       (this.BtnBindInfo = [[2, this.OnClickMask]]);
   }
   async OnBeforeStartAsync() {
-    (this.Apt = new ItemTipsComponent_1.ItemTipsComponent()),
-      await this.Apt.CreateByActorAsync(this.GetItem(3).GetOwner());
+    (this.vQs = new ItemTipsComponent_1.ItemTipsComponentContentComponent()),
+      await this.vQs.CreateByActorAsync(this.GetItem(3).GetOwner());
   }
   OnStart() {
-    (this.Upt = new CommonItemSelectView_1.CommonItemSelectView(
+    (this.Fvt = new CommonItemSelectView_1.CommonItemSelectView(
       this.GetItem(0),
     )),
-      (this.hft = new SortEntrance_1.SortEntrance(this.GetItem(5), this.bpt)),
-      (this.aft = new FilterEntrance_1.FilterEntrance(
+      (this.Mpt = new SortEntrance_1.SortEntrance(this.GetItem(5), this.Qvt)),
+      (this.vpt = new FilterEntrance_1.FilterEntrance(
         this.GetItem(4),
-        this.bpt,
+        this.Qvt,
       ));
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnSelectItemAdd,
-      this.wpt,
+      this.Wvt,
     );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnSelectItemAdd,
-      this.wpt,
+      this.Wvt,
     );
   }
   OnBeforeShow() {
     var e = this.OpenParam;
-    this.Upt.UpdateSelectableComponent(
+    this.Fvt.UpdateSelectableComponent(
       e.SelectableComponentType,
       e.ItemDataBaseList,
       e.SelectedDataList,
       e.SelectableComponentData,
       e.ExpData,
     ),
-      this.hft.SetSortToggleState(e.InitSortToggleState),
+      this.Mpt.SetSortToggleState(e.InitSortToggleState),
       this.UpdateFilterComponent(e.UseWayId, e.ItemDataBaseList);
   }
   UpdateFilterComponent(e, t) {
@@ -105,14 +105,14 @@ class ItemSelectView extends UiViewBase_1.UiViewBase {
       (s = ConfigManager_1.ConfigManager.FilterConfig.GetFilterId(e))) &&
       0 < s &&
       (r = !0),
-      this.hft.GetRootItem().SetUIActive(i),
-      this.aft.GetRootItem().SetUIActive(r),
+      this.Mpt.GetRootItem().SetUIActive(i),
+      this.vpt.GetRootItem().SetUIActive(r),
       i || r
-        ? (i && this.hft.UpdateData(e, t), r && this.aft.UpdateData(e, t))
-        : this.Upt.UpdateByDataList(t);
+        ? (i && this.Mpt.UpdateData(e, t), r && this.vpt.UpdateData(e, t))
+        : this.Fvt.UpdateByDataList(t);
   }
   OnBeforeDestroy() {
-    this.Upt.Destroy(), this.Apt.Destroy();
+    this.Fvt.Destroy(), this.vQs.Destroy();
   }
 }
 exports.ItemSelectView = ItemSelectView;

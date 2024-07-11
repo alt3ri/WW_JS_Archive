@@ -47,6 +47,9 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     "关卡.Common.被控物.重力方块": !1,
     "关卡.Common.被控物.爆炸果实": !1,
     "关卡.Common.被控物.光线传导水晶": !0,
+    "关卡.Common.被控物.中继器": !1,
+    "关卡.Common.被控物.污染核心": !1,
+    "关卡.Common.被控物.油画": !0,
   }),
   (function (e) {
     (e.Player = "Player"), (e.Phantom = "Phantom");

@@ -80,8 +80,8 @@ class HandBookBaseView extends UiViewBase_1.UiViewBase {
         var s = new HandBookCommonTypeItem_1.HandBookCommonTypeItem();
         return s.Initialize(), { Key: e, Value: s };
       }),
-      (this.EZt = (t) => this.PhantomFetterDataList[t]),
-      (this.yZt = (t) => this.HandBookCommonItemDataList[t]),
+      (this.Sei = (t) => this.PhantomFetterDataList[t]),
+      (this.yei = (t) => this.HandBookCommonItemDataList[t]),
       (this.InitHandBookPhantom = (t, i, e) => {
         var s = new HandBookPhantomItem_1.HandBookPhantomItem();
         return (
@@ -200,12 +200,12 @@ class HandBookBaseView extends UiViewBase_1.UiViewBase {
       this.ScrollViewCommon.ClearGridProxies(),
       this.ScrollViewCommon.DeselectCurrentGridProxy(),
       this.ScrollViewCommon.ReloadProxyData(
-        this.yZt,
+        this.yei,
         this.HandBookCommonItemDataList.length,
         !1,
       ),
       this.ScrollViewCommon.RefreshAllGridProxies(),
-      -1 !== this.ScrollViewCommon.IZt &&
+      -1 !== this.ScrollViewCommon.Iei &&
         (this.ScrollViewCommon.ScrollToGridIndex(0),
         this.ScrollViewCommon.SelectGridProxy(0, !0));
   }
@@ -227,7 +227,7 @@ class HandBookBaseView extends UiViewBase_1.UiViewBase {
       t.SetUIActive(!1),
       this.ScrollViewFetter.ClearGridProxies(),
       this.ScrollViewFetter.ReloadProxyData(
-        this.EZt,
+        this.Sei,
         this.PhantomFetterDataList.length,
         !1,
       ),

@@ -2,27 +2,28 @@
 var CharacterAnimationSyncComponent_1,
   __decorate =
     (this && this.__decorate) ||
-    function (t, e, a, i) {
+    function (t, i, e, a) {
       var o,
         n = arguments.length,
         r =
           n < 3
-            ? e
-            : null === i
-              ? (i = Object.getOwnPropertyDescriptor(e, a))
-              : i;
+            ? i
+            : null === a
+              ? (a = Object.getOwnPropertyDescriptor(i, e))
+              : a;
       if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
-        r = Reflect.decorate(t, e, a, i);
+        r = Reflect.decorate(t, i, e, a);
       else
         for (var s = t.length - 1; 0 <= s; s--)
           (o = t[s]) &&
-            (r = (n < 3 ? o(r) : 3 < n ? o(e, a, r) : o(e, a)) || r);
-      return 3 < n && r && Object.defineProperty(e, a, r), r;
+            (r = (n < 3 ? o(r) : 3 < n ? o(i, e, r) : o(i, e)) || r);
+      return 3 < n && r && Object.defineProperty(i, e, r), r;
     };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharacterAnimationSyncComponent = void 0);
 const puerts_1 = require("puerts"),
   UE = require("ue"),
+  Time_1 = require("../../../../../Core/Common/Time"),
   Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
   EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent"),
   RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
@@ -31,7 +32,7 @@ const puerts_1 = require("puerts"),
   ModelManager_1 = require("../../../../Manager/ModelManager"),
   CombatMessage_1 = require("../../../../Module/CombatMessage/CombatMessage"),
   CombatMessageController_1 = require("../../../../Module/CombatMessage/CombatMessageController"),
-  CombatDebugController_1 = require("../../../../Utils/CombatDebugController"),
+  CombatLog_1 = require("../../../../Utils/CombatLog"),
   WorldGlobal_1 = require("../../../../World/WorldGlobal"),
   animationStateListRef = (0, puerts_1.$ref)(UE.NewArray(UE.BuiltinInt)),
   specialStateListRef = (0, puerts_1.$ref)(UE.NewArray(UE.BuiltinInt)),
@@ -52,21 +53,23 @@ let CharacterAnimationSyncComponent =
         (this.Hte = void 0),
         (this.oRe = void 0),
         (this.Lie = void 0),
-        (this.d4r = new Array()),
-        (this.C4r = (t) => {
-          this.g4r();
+        (this.Q3r = new Array()),
+        (this.X3r = (t) => {
+          this.$3r();
         }),
-        (this.f4r = (t, e) => {
-          var a;
+        (this.vTa = 0),
+        (this.MTa = 5),
+        (this.Y3r = (t, i) => {
+          var e;
           ModelManager_1.ModelManager.GameModeModel.IsMulti &&
             this.Hte.IsMoveAutonomousProxy &&
-            (((a = Protocol_1.Aki.Protocol.gNn.create()).E9n = t),
-            (a.y9n = e),
-            CombatMessage_1.CombatNet.Call(17952, this.Entity, a));
+            (((e = Protocol_1.Aki.Protocol.W3n.create()).Zjn = t),
+            (e.eWn = i),
+            CombatMessage_1.CombatNet.Call(6450, this.Entity, e));
         });
     }
     static get Dependencies() {
-      return [3, 160, 0];
+      return [3, 162, 0];
     }
     OnEnd() {
       return (
@@ -80,110 +83,114 @@ let CharacterAnimationSyncComponent =
       if (
         (CombatMessageController_1.CombatMessageController.RegisterAfterTick(
           this,
-          this.C4r,
+          this.X3r,
         ),
         (this.Hte = this.Entity.CheckGetComponent(3)),
-        (this.oRe = this.Entity.CheckGetComponent(160)),
-        (this.Lie = this.Entity.GetComponent(185)),
-        this.p4r(),
+        (this.oRe = this.Entity.CheckGetComponent(162)),
+        (this.Lie = this.Entity.GetComponent(188)),
+        this.J3r(),
         this.Lie)
       )
-        for (const e of animationTagList) {
-          var t = this.Lie.ListenForTagAddOrRemove(e, this.f4r);
-          this.d4r.push(t);
+        for (const i of animationTagList) {
+          var t = this.Lie.ListenForTagAddOrRemove(i, this.Y3r);
+          this.Q3r.push(t);
         }
       return !0;
     }
     OnClear() {
-      for (const t of this.d4r) t.EndTask();
+      for (const t of this.Q3r) t.EndTask();
       return !0;
     }
-    p4r() {
+    J3r() {
       if (
         this.oRe.MainAnimInstance &&
         UE.KismetSystemLibrary.IsValid(this.oRe.MainAnimInstance)
       ) {
-        var t = this.Entity.GetComponent(0).ComponentDataMap.get("Vvs"),
-          e = t?.Vvs.Kps,
-          a = t?.Vvs.p9n;
+        var t = this.Entity.GetComponent(0).ComponentDataMap.get("nys"),
+          i = t?.nys.lIs,
+          e = t?.nys.$jn;
         if (this.Hte.IsMoveAutonomousProxy)
           this.oRe.MainAnimInstance.SetStateMachineNetMode(!1),
             this.AnimationStateInitPush();
         else {
           this.oRe.MainAnimInstance.SetStateMachineNetMode(!0),
-            e && 0 < e.length
-              ? ((i = (0, puerts_1.$unref)(animationStateListRef)),
-                WorldGlobal_1.WorldGlobal.ToUeInt32Array(e, i),
-                this.oRe.MainAnimInstance.SetStateOrdersReceivePending(i),
-                CombatDebugController_1.CombatDebugController.CombatInfo(
+            i && 0 < i.length
+              ? ((a = (0, puerts_1.$unref)(animationStateListRef)),
+                WorldGlobal_1.WorldGlobal.ToUeInt32Array(i, a),
+                this.oRe.MainAnimInstance.SetStateOrdersReceivePending(a),
+                CombatLog_1.CombatLog.Info(
                   "Animation",
                   this.Entity,
                   "动画状态机初始化成功",
-                  ["v", CharacterAnimationSyncComponent_1.OrderToString(e)],
+                  ["v", CharacterAnimationSyncComponent_1.OrderToString(i)],
                 ))
-              : CombatDebugController_1.CombatDebugController.CombatInfo(
+              : CombatLog_1.CombatLog.Info(
                   "Animation",
                   this.Entity,
                   "动画状态机初始化失败",
                 ),
-            a &&
-              0 < a.length &&
-              ((i = (0, puerts_1.$unref)(specialStateListRef)),
-              WorldGlobal_1.WorldGlobal.ToUeInt32Array(a, i),
-              this.oRe.SpecialAnimInstance?.SetStateOrdersReceivePending(i));
-          var i,
-            e = t?.Vvs?.Xps;
-          if (e && 0 < e.length) {
-            for (const o of e) this.Lie.AddTag(o);
-            CombatDebugController_1.CombatDebugController.CombatInfo(
+            e &&
+              0 < e.length &&
+              ((a = (0, puerts_1.$unref)(specialStateListRef)),
+              WorldGlobal_1.WorldGlobal.ToUeInt32Array(e, a),
+              this.oRe.SpecialAnimInstance?.SetStateOrdersReceivePending(a));
+          var a,
+            i = t?.nys?.uIs;
+          if (i && 0 < i.length) {
+            for (const o of i) this.Lie.AddTag(o);
+            CombatLog_1.CombatLog.Info(
               "Animation",
               this.Entity,
               "AnimationTags",
-              ["tags", e.join(",")],
+              ["tags", i.join(",")],
             );
           }
         }
-        a = t?.Vvs?.Qps;
-        if (a && 0 < a.length)
-          for (const n of a)
+        e = t?.nys?._Is;
+        if (e && 0 < e.length)
+          for (const n of e)
             this.oRe.HideBone(
-              FNameUtil_1.FNameUtil.GetDynamicFName(n.M9n),
-              !n.S9n,
+              FNameUtil_1.FNameUtil.GetDynamicFName(n.Jjn),
+              !n.zjn,
               !1,
             );
       }
     }
-    g4r() {
-      var t, e, a, i;
-      ModelManager_1.ModelManager.GameModeModel.IsMulti &&
-        this.Hte.IsMoveAutonomousProxy &&
-        this.oRe.MainAnimInstance &&
+    $3r() {
+      var t, i, e, a;
+      this.oRe.MainAnimInstance &&
         UE.KismetSystemLibrary.IsValid(this.oRe.MainAnimInstance) &&
-        (this.oRe.MainAnimInstance.GetStateOrdersSendPending(
-          animationStateListRef,
-        ),
-        (t = (0, puerts_1.$unref)(animationStateListRef)),
-        this.oRe.SpecialAnimInstance?.GetStateOrdersSendPending(
-          specialStateListRef,
-        ),
-        (e = (0, puerts_1.$unref)(specialStateListRef)),
-        0 < t.Num() || (this.oRe.SpecialAnimInstance && 0 < e.Num())) &&
-        ((a = []),
-        (i = []),
-        WorldGlobal_1.WorldGlobal.ToTsArray(t, a),
-        this.oRe.SpecialAnimInstance &&
-          WorldGlobal_1.WorldGlobal.ToTsArray(e, i),
-        a.length > CharacterAnimationSyncComponent_1.v4r ||
-        i.length > CharacterAnimationSyncComponent_1.v4r
-          ? (CombatDebugController_1.CombatDebugController.CombatError(
-              "Animation",
-              this.Entity,
-              "状态机增量变化数组超长",
-              ["v", CharacterAnimationSyncComponent_1.OrderToString(a)],
-              ["length", a.length],
+        (ModelManager_1.ModelManager.GameModeModel.IsMulti
+          ? this.Hte.IsMoveAutonomousProxy &&
+            (this.oRe.MainAnimInstance.GetStateOrdersSendPending(
+              animationStateListRef,
             ),
-            this.AnimationStateInitPush())
-          : this.AnimationStateChangedPush(this.Entity, a, i));
+            (t = (0, puerts_1.$unref)(animationStateListRef)),
+            this.oRe.SpecialAnimInstance?.GetStateOrdersSendPending(
+              specialStateListRef,
+            ),
+            (i = (0, puerts_1.$unref)(specialStateListRef)),
+            0 < t.Num() || (this.oRe.SpecialAnimInstance && 0 < i.Num())) &&
+            ((e = []),
+            (a = []),
+            WorldGlobal_1.WorldGlobal.ToTsArray(t, e),
+            this.oRe.SpecialAnimInstance &&
+              WorldGlobal_1.WorldGlobal.ToTsArray(i, a),
+            e.length > CharacterAnimationSyncComponent_1.z3r ||
+            a.length > CharacterAnimationSyncComponent_1.z3r
+              ? (CombatLog_1.CombatLog.Error(
+                  "Animation",
+                  this.Entity,
+                  "状态机增量变化数组超长",
+                  ["v", CharacterAnimationSyncComponent_1.OrderToString(e)],
+                  ["length", e.length],
+                ),
+                this.AnimationStateInitPush())
+              : this.AnimationStateChangedPush(this.Entity, e, a))
+          : Time_1.Time.NowSeconds > this.vTa + this.MTa &&
+            (this.oRe.MainAnimInstance.ClearStateOrdersSendPending(),
+            this.oRe.SpecialAnimInstance?.ClearStateOrdersSendPending(),
+            (this.vTa = Time_1.Time.NowSeconds)));
     }
     ClearOrders() {
       this.oRe.MainAnimInstance.ClearStateOrdersReceivePending(),
@@ -192,145 +199,130 @@ let CharacterAnimationSyncComponent =
     AnimationGameplayTagHandle(t) {
       !this.Hte.IsMoveAutonomousProxy &&
         this.Lie &&
-        (t.y9n ? this.Lie.AddTag(t.E9n) : this.Lie.RemoveTag(t.E9n));
+        (t.eWn ? this.Lie.AddTag(t.Zjn) : this.Lie.RemoveTag(t.Zjn));
     }
-    static AnimationGameplayTagNotify(t, e) {
-      t?.GetComponent(41)?.AnimationGameplayTagHandle(e);
+    static AnimationGameplayTagNotify(t, i) {
+      t?.GetComponent(42)?.AnimationGameplayTagHandle(i);
     }
-    AnimationStateChangedPush(t, e, a) {
-      var i;
+    AnimationStateChangedPush(t, i, e) {
+      var a;
       ModelManager_1.ModelManager.GameModeModel.IsMulti &&
-        (((i = Protocol_1.Aki.Protocol.nNn.create()).f9n = e),
-        (i.p9n = a),
-        (i.f9n.length > MAX_ANIM_STATE_CHANGE_COUNT ||
-          i.p9n.length > MAX_ANIM_STATE_CHANGE_COUNT) &&
-          CombatDebugController_1.CombatDebugController.CombatError(
+        (((a = Protocol_1.Aki.Protocol.w3n.create()).Xjn = i),
+        (a.$jn = e),
+        (a.Xjn.length > MAX_ANIM_STATE_CHANGE_COUNT ||
+          a.$jn.length > MAX_ANIM_STATE_CHANGE_COUNT) &&
+          CombatLog_1.CombatLog.Error(
             "Animation",
             t,
             "状态机增量变化数组超长",
-            ["States", CharacterAnimationSyncComponent_1.OrderToString(i.f9n)],
+            ["States", CharacterAnimationSyncComponent_1.OrderToString(a.Xjn)],
             [
               "SpecialStates",
-              CharacterAnimationSyncComponent_1.OrderToString(i.p9n),
+              CharacterAnimationSyncComponent_1.OrderToString(a.$jn),
             ],
           ),
-        CombatDebugController_1.CombatDebugController.CombatDebug(
-          "Animation",
-          this.Entity,
-          "动画状态机修改请求",
-          ["v", CharacterAnimationSyncComponent_1.OrderToString(e)],
-          ["length", e.length],
-        ),
-        CombatMessage_1.CombatNet.Call(18967, t, i, () => {}));
+        CombatMessage_1.CombatNet.Call(15998, t, a, () => {}));
     }
     AnimationStateInitPush() {
-      var t, e, a, i;
+      var t, i, e, a;
       ModelManager_1.ModelManager.GameModeModel.IsMulti &&
         (this.oRe.MainAnimInstance.GetOriginStates(animationStateListRef),
-        (i = (0, puerts_1.$unref)(animationStateListRef)),
+        (a = (0, puerts_1.$unref)(animationStateListRef)),
         this.oRe.SpecialAnimInstance?.GetOriginStates(specialStateListRef),
         (t = (0, puerts_1.$unref)(specialStateListRef)),
-        i || t) &&
-        ((e = []),
-        (a = []),
-        WorldGlobal_1.WorldGlobal.ToTsArray(i, e),
-        WorldGlobal_1.WorldGlobal.ToTsArray(t, a),
-        ((i = Protocol_1.Aki.Protocol.sNn.create()).f9n = e),
-        (i.p9n = a),
-        (i.f9n.length > MAX_ANIM_STATE_CHANGE_COUNT ||
-          i.p9n.length > MAX_ANIM_STATE_CHANGE_COUNT) &&
-          CombatDebugController_1.CombatDebugController.CombatError(
+        a || t) &&
+        ((i = []),
+        (e = []),
+        WorldGlobal_1.WorldGlobal.ToTsArray(a, i),
+        WorldGlobal_1.WorldGlobal.ToTsArray(t, e),
+        ((a = Protocol_1.Aki.Protocol.b3n.create()).Xjn = i),
+        (a.$jn = e),
+        (a.Xjn.length > MAX_ANIM_STATE_CHANGE_COUNT ||
+          a.$jn.length > MAX_ANIM_STATE_CHANGE_COUNT) &&
+          CombatLog_1.CombatLog.Error(
             "Animation",
             this.Entity,
             "状态机增量变化数组超长",
-            ["States", CharacterAnimationSyncComponent_1.OrderToString(i.f9n)],
+            ["States", CharacterAnimationSyncComponent_1.OrderToString(a.Xjn)],
             [
               "SpecialStates",
-              CharacterAnimationSyncComponent_1.OrderToString(i.p9n),
+              CharacterAnimationSyncComponent_1.OrderToString(a.$jn),
             ],
           ),
-        CombatDebugController_1.CombatDebugController.CombatInfo(
+        CombatLog_1.CombatLog.Info(
           "Animation",
           this.Entity,
           "动画状态机初始化请求",
-          ["v", CharacterAnimationSyncComponent_1.OrderToString(e)],
+          ["v", CharacterAnimationSyncComponent_1.OrderToString(i)],
         ),
-        CombatMessage_1.CombatNet.Call(26094, this.Entity, i, () => {}));
+        CombatMessage_1.CombatNet.Call(23406, this.Entity, a, () => {}));
     }
-    static AnimationStateChangedNotify(t, e) {
-      var a = t?.GetComponent(1);
+    static AnimationStateChangedNotify(t, i) {
+      var e = t?.GetComponent(1);
       t &&
-        a &&
-        !a.IsMoveAutonomousProxy &&
-        ((a = t.GetComponent(160)),
-        WorldGlobal_1.WorldGlobal.ToUeInt32Array(e.f9n, animationStates),
-        WorldGlobal_1.WorldGlobal.ToUeInt32Array(e.p9n, specialAnimationStates),
-        CombatDebugController_1.CombatDebugController.CombatDebug(
-          "Animation",
-          t,
-          "动画状态机修改通知",
-          ["v", this.OrderToString(e.f9n)],
-        ),
-        a.MainAnimInstance.SetStateOrdersReceivePending(animationStates),
-        a.SpecialAnimInstance?.SetStateOrdersReceivePending(
+        e &&
+        !e.IsMoveAutonomousProxy &&
+        ((e = t.GetComponent(162)),
+        WorldGlobal_1.WorldGlobal.ToUeInt32Array(i.Xjn, animationStates),
+        WorldGlobal_1.WorldGlobal.ToUeInt32Array(i.$jn, specialAnimationStates),
+        e.MainAnimInstance.SetStateOrdersReceivePending(animationStates),
+        e.SpecialAnimInstance?.SetStateOrdersReceivePending(
           specialAnimationStates,
         ));
     }
-    static AnimationStateInitNotify(t, e) {
-      CombatDebugController_1.CombatDebugController.CombatInfo(
-        "Animation",
-        t,
-        "动画状态机初始化通知",
-        ["v", this.OrderToString(e.f9n)],
-      );
-      var t = t.GetComponent(160),
-        a = UE.NewArray(UE.BuiltinInt);
-      WorldGlobal_1.WorldGlobal.ToUeInt32Array(e.f9n, a),
-        t.MainAnimInstance.SetStateOrdersReceivePending(a),
+    static AnimationStateInitNotify(t, i) {
+      CombatLog_1.CombatLog.Info("Animation", t, "动画状态机初始化通知", [
+        "v",
+        this.OrderToString(i.Xjn),
+      ]);
+      var t = t.GetComponent(162),
+        e = UE.NewArray(UE.BuiltinInt);
+      WorldGlobal_1.WorldGlobal.ToUeInt32Array(i.Xjn, e),
+        t.MainAnimInstance.SetStateOrdersReceivePending(e),
         t.SpecialAnimInstance &&
-          ((a = UE.NewArray(UE.BuiltinInt)),
-          WorldGlobal_1.WorldGlobal.ToUeInt32Array(e.p9n, a),
-          t.SpecialAnimInstance.SetStateOrdersReceivePending(a));
+          ((e = UE.NewArray(UE.BuiltinInt)),
+          WorldGlobal_1.WorldGlobal.ToUeInt32Array(i.$jn, e),
+          t.SpecialAnimInstance.SetStateOrdersReceivePending(e));
     }
     static OrderToString(t) {
-      var e = new StringBuilder_1.StringBuilder();
-      let a = -1;
-      for (; a + 5 <= t.length; ) {
-        var i = t[++a],
-          o = t[++a],
-          n = a + o;
-        for (e.Append("[" + i); a + 3 <= n; ) {
-          var r = t[++a],
-            s = (++a, t[++a]);
-          e.Append("=>" + r), (a += s);
+      var i = new StringBuilder_1.StringBuilder();
+      let e = -1;
+      for (; e + 5 <= t.length; ) {
+        var a = t[++e],
+          o = t[++e],
+          n = e + o;
+        for (i.Append("[" + a); e + 3 <= n; ) {
+          var r = t[++e],
+            s = (++e, t[++e]);
+          i.Append("=>" + r), (e += s);
         }
-        e.Append("]");
+        i.Append("]");
       }
-      return e.ToString();
+      return i.ToString();
     }
   });
-(CharacterAnimationSyncComponent.v4r = 600),
+(CharacterAnimationSyncComponent.z3r = 600),
   __decorate(
-    [CombatMessage_1.CombatNet.SyncHandle("u2n")],
+    [CombatMessage_1.CombatNet.SyncHandle("kFn")],
     CharacterAnimationSyncComponent,
     "AnimationGameplayTagNotify",
     null,
   ),
   __decorate(
-    [CombatMessage_1.CombatNet.SyncHandle("t2n")],
+    [CombatMessage_1.CombatNet.SyncHandle("RFn")],
     CharacterAnimationSyncComponent,
     "AnimationStateChangedNotify",
     null,
   ),
   __decorate(
-    [CombatMessage_1.CombatNet.SyncHandle("i2n")],
+    [CombatMessage_1.CombatNet.SyncHandle("xFn")],
     CharacterAnimationSyncComponent,
     "AnimationStateInitNotify",
     null,
   ),
   (CharacterAnimationSyncComponent = CharacterAnimationSyncComponent_1 =
     __decorate(
-      [(0, RegisterComponent_1.RegisterComponent)(41)],
+      [(0, RegisterComponent_1.RegisterComponent)(42)],
       CharacterAnimationSyncComponent,
     )),
   (exports.CharacterAnimationSyncComponent = CharacterAnimationSyncComponent);

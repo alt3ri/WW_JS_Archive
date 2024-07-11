@@ -11,13 +11,13 @@ class HandBookFetterItem extends GridProxyAbstract_1.GridProxyAbstract {
       (this.PhantomFetter = void 0),
       (this.HandBookCommonItemDataList = []),
       (this.ContentGenericLayout = void 0),
-      (this.LZt = 0),
+      (this.Lei = 0),
       (this.FetterToggleFunction = void 0),
-      (this.GZt = (t) => {
+      (this.Gei = (t) => {
         this.FetterToggleFunction && 1 === t && this.FetterToggleFunction(this);
       }),
       (this.GetPhantomFetter = () => this.PhantomFetter),
-      (this.NZt = (t, e, i) => {
+      (this.Nei = (t, e, i) => {
         var s = new HandBookCommonItem_1.HandBookCommonItem();
         return (
           s.Initialize(e.GetOwner()),
@@ -37,11 +37,11 @@ class HandBookFetterItem extends GridProxyAbstract_1.GridProxyAbstract {
       [5, UE.UISprite],
       [6, UE.UIHorizontalLayout],
     ]),
-      (this.BtnBindInfo = [[0, this.GZt]]);
+      (this.BtnBindInfo = [[0, this.Gei]]);
   }
   Refresh(t, e, i) {
     (this.PhantomFetter = t),
-      (this.LZt = i),
+      (this.Lei = i),
       this.GetTexture(1).SetUIActive(!1),
       this.GetItem(2).SetUIActive(!1),
       this.GetText(3).SetUIActive(!1),
@@ -50,32 +50,32 @@ class HandBookFetterItem extends GridProxyAbstract_1.GridProxyAbstract {
       this.ContentGenericLayout && this.ContentGenericLayout.ClearChildren(),
       (this.ContentGenericLayout = new GenericLayoutNew_1.GenericLayoutNew(
         this.GetHorizontalLayout(6),
-        this.NZt,
+        this.Nei,
       )),
       (this.HandBookCommonItemDataList = []),
       this.ContentGenericLayout.RebuildLayoutByDataNew(
         this.HandBookCommonItemDataList,
       ),
-      this.OZt(e);
+      this.Oei(e);
   }
   GetGirdIndex() {
-    return this.LZt;
+    return this.Lei;
   }
   BindFetterToggleCallback(t) {
     this.FetterToggleFunction = t;
   }
-  OZt(t) {
+  Oei(t) {
     var e = this.GetExtendToggle(0);
     t ? e.SetToggleState(1, !1) : e.SetToggleState(0, !1);
   }
   OnDeselected(t) {
-    this.OZt(!1);
+    this.Oei(!1);
   }
   SetToggleStateForce(t, e = !1) {
     this.GetExtendToggle(0).SetToggleState(t, e);
   }
   OnSelected(t) {
-    t && (this.SetToggleStateForce(1), this.GZt(1));
+    t && (this.SetToggleStateForce(1), this.Gei(1));
   }
   OnBeforeDestroy() {
     (this.PhantomFetter = void 0),

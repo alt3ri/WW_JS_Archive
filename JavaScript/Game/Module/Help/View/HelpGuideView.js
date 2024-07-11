@@ -30,7 +30,7 @@ class HelpGuideView extends UiViewBase_1.UiViewBase {
           (s = this.GetItem(12)).SetUIRelativeLocation(
             new UE.Vector(-s.Width, s.RelativeLocation.Y, s.RelativeLocation.Z),
           ),
-          this.mei(),
+          this.mti(),
           this.oPe
             .GetRootItem()
             .SetUIRelativeLocation(new UE.Vector(i.Width, t.Y, t.Z)),
@@ -54,7 +54,7 @@ class HelpGuideView extends UiViewBase_1.UiViewBase {
           (s = this.GetItem(12)).SetUIRelativeLocation(
             new UE.Vector(s.Width, s.RelativeLocation.Y, s.RelativeLocation.Z),
           ),
-          this.mei(),
+          this.mti(),
           this.oPe
             .GetRootItem()
             .SetUIRelativeLocation(new UE.Vector(-i.Width, t.Y, t.Z)),
@@ -105,7 +105,7 @@ class HelpGuideView extends UiViewBase_1.UiViewBase {
     this.tPe && (this.tPe.ClearChildren(), (this.tPe = void 0)),
       this.rPe && (this.rPe.Kill(), (this.rPe = void 0));
   }
-  mei() {
+  mti() {
     this.oPe.SetUiActive(!0), this.iPe.PlayAnime(!0), this.oPe.PlayAnime(!1);
   }
   async OnBeforeStartAsync() {

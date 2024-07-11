@@ -15,28 +15,28 @@ class CharBodyInfo {
       (this.SpecifiedSlotList = void 0),
       (this.SkeletalComp = void 0),
       (this.SkeletalMesh = void 0),
-      (this.bar = void 0),
-      (this.qar = !1),
-      (this.Gar = !1),
-      (this.Nar = !1),
-      (this.Oar = !1),
-      (this.kar = 0),
-      (this.Far = 0),
-      (this.Har = 0),
-      (this.jar = 0),
-      (this.War = void 0),
-      (this.Kar = void 0),
-      (this.Qar = void 0),
-      (this.Xar = void 0),
-      (this.$ar = void 0),
-      (this.Yar = void 0),
-      (this.Jar = void 0),
-      (this.zar = void 0),
-      (this.Zar = void 0),
-      (this.Aar = void 0);
+      (this.whr = void 0),
+      (this.Bhr = !1),
+      (this.bhr = !1),
+      (this.qhr = !1),
+      (this.Ghr = !1),
+      (this.Nhr = 0),
+      (this.Ohr = 0),
+      (this.khr = 0),
+      (this.Fhr = 0),
+      (this.Vhr = void 0),
+      (this.Hhr = void 0),
+      (this.jhr = void 0),
+      (this.Whr = void 0),
+      (this.Khr = void 0),
+      (this.Qhr = void 0),
+      (this.Xhr = void 0),
+      (this.$hr = void 0),
+      (this.Yhr = void 0),
+      (this.Uhr = void 0);
   }
   Init(t, i, e, s, h) {
-    (this.Aar = h),
+    (this.Uhr = h),
       (this.ActorName = t),
       (this.BodyName = i),
       (this.BodyType = RenderConfig_1.RenderConfig.GetBodyTypeByName(i)),
@@ -49,16 +49,7 @@ class CharBodyInfo {
       (this.SpecifiedSlotList[3] = new Array());
     var r = e.GetMaterialSlotNames(),
       a = r.Num();
-    Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info(
-        "RenderCharacter",
-        41,
-        "CharBodyInfo.Init",
-        ["Actor", this.ActorName],
-        ["materialCount", a],
-        ["SkeletalName", i],
-      ),
-      (this.MaterialSlotList = new Array(a));
+    this.MaterialSlotList = new Array(a);
     for (let i = 0; i < a; i++) {
       var o =
         UE.KuroRenderingRuntimeBPPluginBPLibrary.GetSkeletalMaterialInterface(
@@ -108,11 +99,11 @@ class CharBodyInfo {
     var n = UE.KuroRenderingRuntimeBPPluginBPLibrary.GetCharacterSectionCount(
       this.SkeletalMesh,
     );
-    (this.bar = new Array(n)),
-      (this.War = new Array(n)),
-      (this.Kar = new Array(n)),
-      (this.Qar = new Array(n)),
-      (this.Xar = new Array(n));
+    (this.whr = new Array(n)),
+      (this.Vhr = new Array(n)),
+      (this.Hhr = new Array(n)),
+      (this.jhr = new Array(n)),
+      (this.Whr = new Array(n));
     for (let t = 0; t < n; t++) {
       var l =
         UE.KuroRenderingRuntimeBPPluginBPLibrary.GetCharacterSectionMaterialIndex(
@@ -120,53 +111,53 @@ class CharBodyInfo {
           t,
         );
       (this.MaterialSlotList[l].SectionIndex = t),
-        (this.bar[t] = l),
-        (this.War[t] = 0),
-        (this.Kar[t] = 0),
-        (this.Qar[t] = 0),
-        (this.Xar[t] = 0);
+        (this.whr[t] = l),
+        (this.Vhr[t] = 0),
+        (this.Hhr[t] = 0),
+        (this.jhr[t] = 0),
+        (this.Whr[t] = 0);
     }
-    (this.qar = !0),
-      (this.Gar = !0),
-      (this.Nar = !0),
-      (this.Oar = !0),
-      (this.kar = 0),
-      (this.Far = 0),
-      (this.Har = 0),
-      (this.jar = 0);
+    (this.Bhr = !0),
+      (this.bhr = !0),
+      (this.qhr = !0),
+      (this.Ghr = !0),
+      (this.Nhr = 0),
+      (this.Ohr = 0),
+      (this.khr = 0),
+      (this.Fhr = 0);
     this.ActorName, this.BodyName;
-    (this.$ar = void 0),
-      (this.Yar = void 0),
-      (this.Zar = void 0),
-      (this.Jar = void 0),
-      (this.zar = void 0);
+    (this.Khr = void 0),
+      (this.Qhr = void 0),
+      (this.Yhr = void 0),
+      (this.Xhr = void 0),
+      (this.$hr = void 0);
   }
   UseBattleMaskCommon() {
-    ++this.jar,
-      (this.Oar = !0),
-      this.jar >= RenderConfig_1.RenderConfig.RefErrorCount &&
+    ++this.Fhr,
+      (this.Ghr = !0),
+      this.Fhr >= RenderConfig_1.RenderConfig.RefErrorCount &&
         (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "RenderCharacter",
             14,
             "Battle类型引用异常，检查UseBattleMask调用情况",
-            ["Battle Mask Reference Count", this.jar],
+            ["Battle Mask Reference Count", this.Fhr],
             ["Actor", this.ActorName],
           ),
-        this.ehr());
+        this.Jhr());
   }
   UseBattleMask(t) {
-    var i = this.Xar.length;
+    var i = this.Whr.length;
     t < i
-      ? (++this.Xar[t],
-        (this.Oar = !0),
-        this.Xar[t] >= RenderConfig_1.RenderConfig.RefErrorCount &&
+      ? (++this.Whr[t],
+        (this.Ghr = !0),
+        this.Whr[t] >= RenderConfig_1.RenderConfig.RefErrorCount &&
           Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "RenderCharacter",
             14,
             "BattleMask类型引用异常，检查UseBattleMask调用情况",
-            ["Battle Mask Reference Count", this.Xar[t]],
+            ["Battle Mask Reference Count", this.Whr[t]],
             ["Actor", this.ActorName],
           ))
       : Log_1.Log.CheckError() &&
@@ -180,12 +171,12 @@ class CharBodyInfo {
         );
   }
   RevertBattleMaskCommon() {
-    0 < this.jar && (--this.jar, (this.Oar = !0)), this.UpdateBattleMask();
+    0 < this.Fhr && (--this.Fhr, (this.Ghr = !0)), this.UpdateBattleMask();
   }
   RevertBattleMask(t) {
-    var i = this.Xar.length;
+    var i = this.Whr.length;
     t < i
-      ? 0 < this.Xar[t] && (--this.Xar[t], (this.Oar = !0))
+      ? 0 < this.Whr[t] && (--this.Whr[t], (this.Ghr = !0))
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "RenderCharacter",
@@ -197,34 +188,34 @@ class CharBodyInfo {
         );
   }
   UseBattleCommon() {
-    ++this.Har,
-      (this.Nar = !0),
-      this.Har >= RenderConfig_1.RenderConfig.RefErrorCount &&
+    ++this.khr,
+      (this.qhr = !0),
+      this.khr >= RenderConfig_1.RenderConfig.RefErrorCount &&
         (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "RenderCharacter",
             14,
             "Battle类型引用异常，检查UseBattleCommon调用情况",
-            ["Battle Reference Count", this.Har],
+            ["Battle Reference Count", this.khr],
             ["Actor", this.ActorName],
           ),
-        this.ehr());
+        this.Jhr());
   }
   UseBattle(t) {
-    var i = this.Qar.length;
+    var i = this.jhr.length;
     t < i
-      ? (++this.Qar[t],
-        (this.Nar = !0),
-        this.Qar[t] >= RenderConfig_1.RenderConfig.RefErrorCount &&
+      ? (++this.jhr[t],
+        (this.qhr = !0),
+        this.jhr[t] >= RenderConfig_1.RenderConfig.RefErrorCount &&
           (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "RenderCharacter",
               14,
               "Battle类型引用异常，检查UseBattle调用情况",
-              ["Battle Reference Count", this.Qar[t]],
+              ["Battle Reference Count", this.jhr[t]],
               ["Actor", this.ActorName],
             ),
-          this.ehr()))
+          this.Jhr()))
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "RenderCharacter",
@@ -236,12 +227,12 @@ class CharBodyInfo {
         );
   }
   RevertBattleCommon() {
-    0 < this.Har && (--this.Har, (this.Nar = !0)), this.UpdateBattle();
+    0 < this.khr && (--this.khr, (this.qhr = !0)), this.UpdateBattle();
   }
   RevertBattle(t) {
-    var i = this.Qar.length;
+    var i = this.jhr.length;
     t < i
-      ? 0 < this.Qar[t] && (--this.Qar[t], (this.Nar = !0))
+      ? 0 < this.jhr[t] && (--this.jhr[t], (this.qhr = !0))
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "RenderCharacter",
@@ -253,30 +244,30 @@ class CharBodyInfo {
         );
   }
   UseAlphaTestCommon() {
-    ++this.kar,
-      (this.qar = !0),
-      this.kar >= RenderConfig_1.RenderConfig.RefErrorCount &&
+    ++this.Nhr,
+      (this.Bhr = !0),
+      this.Nhr >= RenderConfig_1.RenderConfig.RefErrorCount &&
         Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "RenderCharacter",
           14,
           "AlphaTest类型引用异常，检查UseAlphaTest调用情况",
-          ["AlphaTest Reference Count", this.kar],
+          ["AlphaTest Reference Count", this.Nhr],
           ["Actor", this.ActorName],
         );
   }
   UseAlphaTest(t) {
-    var i = this.War.length;
+    var i = this.Vhr.length;
     t < i
-      ? (++this.War[t],
-        (this.qar = !0),
-        this.War[t] >= RenderConfig_1.RenderConfig.RefErrorCount &&
+      ? (++this.Vhr[t],
+        (this.Bhr = !0),
+        this.Vhr[t] >= RenderConfig_1.RenderConfig.RefErrorCount &&
           Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "RenderCharacter",
             14,
             "AlphaTestMask类型引用异常，检查UseAlphaTest调用情况",
-            ["AlphaTest Reference Count", this.War[t]],
+            ["AlphaTest Reference Count", this.Vhr[t]],
             ["Actor", this.ActorName],
           ))
       : Log_1.Log.CheckError() &&
@@ -290,12 +281,12 @@ class CharBodyInfo {
         );
   }
   RevertAlphaTestCommon() {
-    0 < this.kar && (--this.kar, (this.qar = !0)), this.UpdateAlphaTest();
+    0 < this.Nhr && (--this.Nhr, (this.Bhr = !0)), this.UpdateAlphaTest();
   }
   RevertAlphaTest(t) {
-    var i = this.War.length;
+    var i = this.Vhr.length;
     t < i
-      ? 0 < this.War[t] && (--this.War[t], (this.qar = !0))
+      ? 0 < this.Vhr[t] && (--this.Vhr[t], (this.Bhr = !0))
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "RenderCharacter",
@@ -307,30 +298,30 @@ class CharBodyInfo {
         );
   }
   UseOutlineStencilTestCommon() {
-    ++this.Far,
-      (this.Gar = !0),
-      this.Far >= RenderConfig_1.RenderConfig.RefErrorCount &&
+    ++this.Ohr,
+      (this.bhr = !0),
+      this.Ohr >= RenderConfig_1.RenderConfig.RefErrorCount &&
         Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "RenderCharacter",
           14,
           "StencilOutline类型引用异常，检查UseAlphaTest调用情况",
-          ["StencilOutline Reference Count", this.kar],
+          ["StencilOutline Reference Count", this.Nhr],
           ["Actor", this.ActorName],
         );
   }
   UseOutlineStencilTest(t) {
-    var i = this.Kar.length;
+    var i = this.Hhr.length;
     t < i
-      ? (++this.Kar[t],
-        (this.Gar = !0),
-        this.Kar[t] >= RenderConfig_1.RenderConfig.RefErrorCount &&
+      ? (++this.Hhr[t],
+        (this.bhr = !0),
+        this.Hhr[t] >= RenderConfig_1.RenderConfig.RefErrorCount &&
           Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "RenderCharacter",
             14,
             "StencilOutlineMask类型引用异常，检查UseStencilOutline调用情况",
-            ["StencilOutline Reference Count", this.Kar[t]],
+            ["StencilOutline Reference Count", this.Hhr[t]],
             ["Actor", this.ActorName],
           ))
       : Log_1.Log.CheckError() &&
@@ -344,13 +335,13 @@ class CharBodyInfo {
         );
   }
   RevertOutlineStencilTestCommon() {
-    0 < this.Far && (--this.Far, (this.Gar = !0)),
+    0 < this.Ohr && (--this.Ohr, (this.bhr = !0)),
       this.UpdateStencilOutlineTest();
   }
   RevertOutlineStencilTest(t) {
-    var i = this.Kar.length;
+    var i = this.Hhr.length;
     t < i
-      ? 0 < this.Kar[t] && (--this.Kar[t], (this.Gar = !0))
+      ? 0 < this.Hhr[t] && (--this.Hhr[t], (this.bhr = !0))
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "RenderCharacter",
@@ -402,34 +393,34 @@ class CharBodyInfo {
     void 0 !== t &&
       this.SkeletalComp.IsValid() &&
       this.SkeletalComp.SetMeshShadingRate(t),
-      this.thr(),
+      this.zhr(),
       this.UpdateAlphaTest(),
       this.UpdateStencilOutlineTest(),
       this.UpdateBattle(),
       this.UpdateBattleMask();
   }
   ResetAllState() {
-    (this.qar = !0),
-      (this.Gar = !0),
-      (this.kar = 0),
-      (this.Far = 0),
-      this.War.fill(0),
-      this.Kar.fill(0),
-      this.Qar.fill(0),
-      this.Xar.fill(0),
-      this.Kar.fill(0),
+    (this.Bhr = !0),
+      (this.bhr = !0),
+      (this.Nhr = 0),
+      (this.Ohr = 0),
+      this.Vhr.fill(0),
+      this.Hhr.fill(0),
+      this.jhr.fill(0),
+      this.Whr.fill(0),
+      this.Hhr.fill(0),
       this.UpdateAlphaTest(),
       this.UpdateStencilOutlineTest(),
       this.UpdateBattle(),
       this.UpdateBattleMask();
   }
-  ehr() {
-    var t = this.Aar.GetRenderingComponent().GetComponent(
+  Jhr() {
+    var t = this.Uhr.GetRenderingComponent().GetComponent(
       RenderConfig_1.RenderConfig.IdMaterialController,
     );
     t && t.PrintCurrentInfo();
   }
-  thr() {
+  zhr() {
     if (this.SkeletalComp && this.SkeletalComp.IsValid()) {
       var i = this.MaterialSlotList.length;
       for (let t = 0; t < i; t++) {
@@ -439,14 +430,14 @@ class CharBodyInfo {
     }
   }
   UpdateBattleMask() {
-    if (this.Oar) {
-      let t = (this.Oar = !1),
+    if (this.Ghr) {
+      let t = (this.Ghr = !1),
         i = !1;
       var e = UE.NewArray(UE.BuiltinInt);
-      if (0 < this.jar) (t = !0), (i = !1);
+      if (0 < this.Fhr) (t = !0), (i = !1);
       else {
-        var s = this.Xar.length;
-        for (let t = 0; t < s; t++) 0 < this.Xar[t] && e.Add(t);
+        var s = this.Whr.length;
+        for (let t = 0; t < s; t++) 0 < this.Whr[t] && e.Add(t);
         (t = 0 < e.Num()), (i = t);
       }
       this.SkeletalComp?.IsValid() &&
@@ -455,14 +446,14 @@ class CharBodyInfo {
     }
   }
   UpdateBattle() {
-    if (this.Nar) {
-      let t = (this.Nar = !1),
+    if (this.qhr) {
+      let t = (this.qhr = !1),
         i = !1;
       var e = UE.NewArray(UE.BuiltinInt);
-      if (0 < this.Har) (t = !0), (i = !1);
+      if (0 < this.khr) (t = !0), (i = !1);
       else {
-        var s = this.Qar.length;
-        for (let t = 0; t < s; t++) 0 < this.Qar[t] && e.Add(t);
+        var s = this.jhr.length;
+        for (let t = 0; t < s; t++) 0 < this.jhr[t] && e.Add(t);
         (t = 0 < e.Num()), (i = t);
       }
       this.SkeletalComp?.IsValid() &&
@@ -471,14 +462,14 @@ class CharBodyInfo {
     }
   }
   UpdateAlphaTest() {
-    if (this.qar) {
-      let t = (this.qar = !1),
+    if (this.Bhr) {
+      let t = (this.Bhr = !1),
         i = !1;
       var e = UE.NewArray(UE.BuiltinInt);
-      if (0 < this.kar) (t = !0), (i = !1);
+      if (0 < this.Nhr) (t = !0), (i = !1);
       else {
-        var s = this.War.length;
-        for (let t = 0; t < s; t++) 0 < this.War[t] && e.Add(t);
+        var s = this.Vhr.length;
+        for (let t = 0; t < s; t++) 0 < this.Vhr[t] && e.Add(t);
         (t = 0 < e.Num()), (i = t);
       }
       this.SkeletalComp?.IsValid() &&
@@ -487,14 +478,14 @@ class CharBodyInfo {
     }
   }
   UpdateStencilOutlineTest() {
-    if (this.Gar) {
-      let t = (this.Gar = !1),
+    if (this.bhr) {
+      let t = (this.bhr = !1),
         i = !1;
       var e = UE.NewArray(UE.BuiltinInt);
-      if (0 < this.Far) (t = !0), (i = !1);
+      if (0 < this.Ohr) (t = !0), (i = !1);
       else {
-        var s = this.Kar.length;
-        for (let t = 0; t < s; t++) 0 < this.Kar[t] && e.Add(t);
+        var s = this.Hhr.length;
+        for (let t = 0; t < s; t++) 0 < this.Hhr[t] && e.Add(t);
         (t = 0 < e.Num()), (i = t);
       }
       this.SkeletalComp?.IsValid() &&

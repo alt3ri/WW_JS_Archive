@@ -46,17 +46,17 @@ class LguiResourceManager {
       },
     );
     return (
-      a !== LguiResourceManager.InvalidId && LguiResourceManager.Vmr.set(a, e),
+      a !== LguiResourceManager.InvalidId && LguiResourceManager.kdr.set(a, e),
       a
     );
   }
   static CancelLoadPrefab(e) {
     LguiResourceManager.InvalidId !== e &&
-      LguiResourceManager.Vmr.get(e) &&
-      (LguiResourceManager.Vmr.delete(e),
+      LguiResourceManager.kdr.get(e) &&
+      (LguiResourceManager.kdr.delete(e),
       ResourceSystem_1.ResourceSystem.CancelAsyncLoad(e));
   }
 }
-((exports.LguiResourceManager = LguiResourceManager).Vmr = new Map()),
+((exports.LguiResourceManager = LguiResourceManager).kdr = new Map()),
   (LguiResourceManager.InvalidId = -1);
 //# sourceMappingURL=LguiResourceManager.js.map

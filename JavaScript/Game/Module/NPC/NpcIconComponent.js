@@ -22,29 +22,29 @@ const UE = require("ue"),
   NpcIconComponentView_1 = require("./NpcIconComponentView");
 class NpcIconComponent {
   constructor(t) {
-    (this.Sbi = void 0),
+    (this.Eqi = void 0),
       (this.n8 = ""),
       (this.HeadView = void 0),
       (this.Pe = void 0),
-      (this.Ebi = -1),
+      (this.Sqi = -1),
       (this.Name = ""),
-      (this.ybi = 0),
-      (this.Ibi = 0),
-      (this.Tbi = 0),
-      (this.Lbi = void 0),
-      (this.Dbi = void 0),
-      (this.Rbi = 0),
+      (this.yqi = 0),
+      (this.Iqi = 0),
+      (this.Tqi = 0),
+      (this.Lqi = void 0),
+      (this.Dqi = void 0),
+      (this.Rqi = 0),
       (this.Kr = !1),
       (this.yW = void 0),
-      (this.Ubi = 0),
-      (this.Abi = !1),
+      (this.Uqi = 0),
+      (this.Aqi = !1),
       (this.Lz = Vector_1.Vector.Create()),
       (this.ScheduledAfterTick = void 0),
-      (this.Pbi = !1),
-      (this.xbi = !0),
+      (this.Pqi = !1),
+      (this.xqi = !0),
       (this.LocationProxyFunction = void 0),
       (this.Pe = t),
-      (this.ybi =
+      (this.yqi =
         ConfigManager_1.ConfigManager.NpcIconConfig.NpcIconHeadInfoLimitMaxDistanceSquared);
   }
   RegisterTick() {
@@ -66,7 +66,7 @@ class NpcIconComponent {
         t.GroupName,
         t.SignificanceGroup,
         this,
-        this.Sbi?.Actor,
+        this.Eqi?.Actor,
       );
   }
   UnregisterTick() {
@@ -82,34 +82,34 @@ class NpcIconComponent {
   OnEnabledChange(t, e) {
     this.SetRootItemState(t);
   }
-  get cot() {
-    return this.Pbi || this.xbi;
+  get Lrt() {
+    return this.Pqi || this.xqi;
   }
   OnWasRecentlyRenderedOnScreenChange(t) {
-    this.Pbi = t;
+    this.Pqi = t;
   }
   OnNpcWasRecentlyRenderedOnScreenChange(t) {
-    this.xbi = t;
+    this.xqi = t;
   }
   SetupCheckRange(t) {
-    this.ybi = t;
+    this.yqi = t;
   }
   async AddNpcIconAsync(t) {
     return (
       UiManager_1.UiManager.IsInited ||
-        ((this.Lbi = new CustomPromise_1.CustomPromise()),
-        (this.Dbi = () => {
-          this.Lbi.SetResult(void 0),
+        ((this.Lqi = new CustomPromise_1.CustomPromise()),
+        (this.Dqi = () => {
+          this.Lqi.SetResult(void 0),
             EventSystem_1.EventSystem.Remove(
               EventDefine_1.EEventName.UiManagerInit,
-              this.Dbi,
+              this.Dqi,
             );
         }),
         EventSystem_1.EventSystem.Add(
           EventDefine_1.EEventName.UiManagerInit,
-          this.Dbi,
+          this.Dqi,
         ),
-        await this.Lbi.Promise),
+        await this.Lqi.Promise),
       this.CreateNpcIcon(t)
     );
   }
@@ -119,19 +119,19 @@ class NpcIconComponent {
       (this.n8 = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
         "UiItem_NPCIcon_Prefab",
       )),
-      (this.Sbi = await UiActorPool_1.UiActorPool.GetAsync(
+      (this.Eqi = await UiActorPool_1.UiActorPool.GetAsync(
         this.n8,
         UiLayer_1.UiLayer.WorldSpaceUiRootItem,
       )),
       this.Kr
-        ? (UiActorPool_1.UiActorPool.RecycleAsync(this.Sbi, this.n8), !1)
+        ? (UiActorPool_1.UiActorPool.RecycleAsync(this.Eqi, this.n8), !1)
         : ((e = this.Pe.GetAttachToMeshComponent()),
-          this.Sbi.Actor.K2_AttachToComponent(e, void 0, 2, 0, 1, !1),
-          this.Sbi.Actor.SetActorHiddenInGame(!1),
+          this.Eqi.Actor.K2_AttachToComponent(e, void 0, 2, 0, 1, !1),
+          this.Eqi.Actor.SetActorHiddenInGame(!1),
           (this.HeadView = new NpcIconComponentView_1.NpcIconComponentView()),
           this.HeadView.SetNpcMessageId(t),
           UiModel_1.UiModel.AddNpcIconViewUnit(this.HeadView),
-          await this.HeadView.CreateByActorAsync(this.Sbi.Actor),
+          await this.HeadView.CreateByActorAsync(this.Eqi.Actor),
           !this.Kr &&
             (this.HeadView.SetHeadInfoNameState(!1),
             this.HeadView.SetDialogueActive(!1),
@@ -183,104 +183,104 @@ class NpcIconComponent {
     this.HeadView?.SetTrackEffectState(t);
   }
   SetEntityPbDataId(t) {
-    this.Ubi = t;
+    this.Uqi = t;
   }
   SetNpcQuest(t) {
     let e = "";
     void 0 !== t &&
       ((t = ConfigManager_1.ConfigManager.MapConfig.GetTaskMarkConfig(t)),
       (e = t.NpcTaskIcon),
-      (this.Ibi = t.IconDistant)),
+      (this.Iqi = t.IconDistant)),
       this.HeadView?.SetNpcQuestIcon(e);
   }
   SetDialogueText(t, e = -1, i = !1) {
-    (this.Ebi = e * CommonDefine_1.MILLIONSECOND_PER_SECOND),
+    (this.Sqi = e * CommonDefine_1.MILLIONSECOND_PER_SECOND),
       this.HeadView?.SetDialogueActive(!0, i),
       this.HeadView?.SetDialogueText(t),
-      i && this.wbi(!0);
+      i && this.wqi(!0);
   }
   HideDialogueText() {
-    (this.Ebi = -1), this.HeadView?.SetDialogueActive(!1), this.wbi(!1);
+    (this.Sqi = -1), this.HeadView?.SetDialogueActive(!1), this.wqi(!1);
   }
   IsDialogueTextActive() {
     return this.HeadView?.GetDialogueActive() ?? !1;
   }
-  wbi(t) {
-    var e = ModelManager_1.ModelManager.TrackModel.IsTargetTracking(this.Ubi);
+  wqi(t) {
+    var e = ModelManager_1.ModelManager.TrackModel.IsTargetTracking(this.Uqi);
     e &&
-      this.Abi &&
+      this.Aqi &&
       (TrackController_1.TrackController.SetTrackMarkOccupied(5, e.Id, t),
-      (this.Abi = t));
+      (this.Aqi = t));
   }
   TickDialogueText(t) {
-    this.Ebi < 0 || ((this.Ebi -= t), this.Ebi <= 0 && this.HideDialogueText());
+    this.Sqi < 0 || ((this.Sqi -= t), this.Sqi <= 0 && this.HideDialogueText());
   }
   Tick(t, e = !1) {
     this.Pe.CanTick(t) &&
-      (e || this.cot) &&
-      (this.Bbi(), this.TickDialogueText(t));
+      (e || this.Lrt) &&
+      (this.Bqi(), this.TickDialogueText(t));
   }
-  Bbi() {
+  Bqi() {
     var t;
     ModelManager_1.ModelManager.CameraModel &&
       ((t = Vector_1.Vector.DistSquared(
         ModelManager_1.ModelManager.CameraModel.CameraLocation,
         this.Pe.GetSelfLocation(),
       )),
-      this.bbi(t),
-      this.qbi());
+      this.bqi(t),
+      this.qqi());
   }
-  qbi() {
+  qqi() {
     var t;
     this.HeadView &&
       (t = CameraController_1.CameraController.CameraRotator) &&
       this.HeadView.UpdateRotation(t.Yaw, t.Pitch);
   }
-  Gbi(t) {
+  Gqi(t) {
     var e = this.Pe.IsInHeadItemShowRange(
         t,
-        this.ybi,
+        this.yqi,
         ConfigManager_1.ConfigManager.NpcIconConfig
           .NpcIconHeadInfoLimitMinDistanceSquared,
       ),
-      i = ModelManager_1.ModelManager.TrackModel.IsTargetTracking(this.Ubi);
+      i = ModelManager_1.ModelManager.TrackModel.IsTargetTracking(this.Uqi);
     this.SetQuestTrackCellState(i && 5 === i.TrackSource),
       this.SetHeadItemState(e),
-      0 < this.Ebi &&
-        (this.Rbi <
+      0 < this.Sqi &&
+        (this.Rqi <
           ConfigManager_1.ConfigManager.NpcIconConfig
             .NpcIconHeadInfoLimitMinDistanceSquared ||
-          this.Rbi > this.ybi) &&
+          this.Rqi > this.yqi) &&
         this.HideDialogueText(),
-      e && this.Nbi(t);
+      e && this.Nqi(t);
   }
-  Obi(t) {
+  Oqi(t) {
     var e =
       ConfigManager_1.ConfigManager.NpcIconConfig.GetNpcIconHeadInfoNameLimitDistance();
     return t <= e * e;
   }
-  kbi(t) {
+  kqi(t) {
     this.Pe.IsShowNameInfo() &&
-      ((t = this.Obi(t)), this.SetHeadInfoNameState(t));
+      ((t = this.Oqi(t)), this.SetHeadInfoNameState(t));
   }
-  Fbi(t) {
-    return 0 === this.Ibi || t <= this.Ibi * this.Ibi;
+  Fqi(t) {
+    return 0 === this.Iqi || t <= this.Iqi * this.Iqi;
   }
-  Vbi(t) {
-    return 0 === this.Tbi || t <= this.Tbi * this.Tbi;
+  Vqi(t) {
+    return 0 === this.Tqi || t <= this.Tqi * this.Tqi;
   }
-  Hbi(t) {
+  Hqi(t) {
     var e;
     this.Pe.IsShowQuestInfo() &&
-      ((e = this.Fbi(t)),
+      ((e = this.Fqi(t)),
       this.SetQuestInfoState(e),
-      (e = this.Vbi(t)),
+      (e = this.Vqi(t)),
       this.SetQuestTrackEffectState(e));
   }
-  bbi(t) {
-    this.Rbi !== t && ((this.Rbi = t), this.Gbi(t), this.kbi(t), this.Hbi(t));
+  bqi(t) {
+    this.Rqi !== t && ((this.Rqi = t), this.Gqi(t), this.kqi(t), this.Hqi(t));
   }
-  Nbi(t) {
+  Nqi(t) {
     t = ConfigManager_1.ConfigManager.NpcIconConfig.GetHeadStateScaleValue(t);
     this.HeadView?.SetHeadWorldScale3D(t);
   }
@@ -290,10 +290,10 @@ class NpcIconComponent {
         (UiModel_1.UiModel.RemoveNpcIconViewUnit(this.HeadView),
         this.HeadView.Destroy(),
         (this.HeadView = void 0)),
-      this.Sbi &&
-        (this.Sbi.Actor?.DetachRootComponentFromParent(),
-        UiActorPool_1.UiActorPool.RecycleAsync(this.Sbi, this.n8),
-        (this.Sbi = void 0),
+      this.Eqi &&
+        (this.Eqi.Actor?.DetachRootComponentFromParent(),
+        UiActorPool_1.UiActorPool.RecycleAsync(this.Eqi, this.n8),
+        (this.Eqi = void 0),
         (this.Pe = void 0)),
       this.UnregisterTick();
   }

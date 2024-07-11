@@ -30,16 +30,16 @@ class LoginDebugView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
       (this.IRe = void 0),
-      (this.lFt = -1),
-      (this._Ft = void 0),
-      (this.uFt = void 0),
-      (this.cFt = void 0),
-      (this.mFt = () => {
+      (this._3t = -1),
+      (this.u3t = void 0),
+      (this.c3t = void 0),
+      (this.m3t = void 0),
+      (this.d3t = () => {
         ControllerHolder_1.ControllerHolder.ReConnectController.Logout(
           ReconnectDefine_1.ELogoutReason.LoginViewQuit,
         );
       }),
-      (this.dFt = () => {
+      (this.C3t = () => {
         ModelManager_1.ModelManager.LoginModel.IsLoginStatus(
           LoginDefine_1.ELoginStatus.Init,
         )
@@ -47,7 +47,7 @@ class LoginDebugView extends UiViewBase_1.UiViewBase {
             ? ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
                 "LoginFailEmptyAccount",
               )
-            : (this.CFt(),
+            : (this.g3t(),
               "Windows" !== UE.GameplayStatics.GetPlatformName() &&
                 UE.KismetSystemLibrary.ExecuteConsoleCommand(
                   GlobalData_1.GlobalData.World,
@@ -65,7 +65,7 @@ class LoginDebugView extends UiViewBase_1.UiViewBase {
           : Log_1.Log.CheckInfo() &&
             Log_1.Log.Info("Login", 9, "正在登录中, 请勿重复操作！");
       }),
-      (this.gFt = () => {
+      (this.f3t = () => {
         ModelManager_1.ModelManager.LoginModel.IsLoginStatus(
           LoginDefine_1.ELoginStatus.Init,
         )
@@ -73,21 +73,21 @@ class LoginDebugView extends UiViewBase_1.UiViewBase {
             ? ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
                 "LoginFailEmptyAccount",
               )
-            : (this.CFt(),
+            : (this.g3t(),
               ModelManager_1.ModelManager.LoginModel.SetPlayerName(
                 "一键登录账号",
               ),
-              this.fFt())
+              this.p3t())
           : Log_1.Log.CheckInfo() &&
             Log_1.Log.Info("Login", 9, "正在登录中, 请勿重复操作！");
       }),
-      (this.pFt = () => {
+      (this.v3t = () => {
         var e;
         ModelManager_1.ModelManager.LoginModel.IsLoginStatus(
           LoginDefine_1.ELoginStatus.Init,
         )
-          ? (this.CFt(),
-            (e = this.vFt()),
+          ? (this.g3t(),
+            (e = this.M3t()),
             Log_1.Log.CheckInfo() &&
               Log_1.Log.Info("Login", 9, "生成账号", ["ip", e]),
             this.GetInputText(2).SetText(e),
@@ -95,17 +95,24 @@ class LoginDebugView extends UiViewBase_1.UiViewBase {
             ModelManager_1.ModelManager.LoginModel.SetPlayerName(
               "一键登录账号",
             ),
-            this.fFt())
+            this.p3t())
           : Log_1.Log.CheckInfo() &&
             Log_1.Log.Info("Login", 9, "正在登录中, 请勿重复操作！");
       }),
-      (this.MFt = (e) => {
+      (this.E3t = (e) => {
         this.GetSprite(8).SetUIActive(1 === e);
       }),
-      (this.SFt = (e) => {
+      (this.S3t = (e) => {
         this.GetSprite(10).SetUIActive(1 === e);
       }),
-      (this.EFt = (e) => {
+      (this.PSa = (e) => {
+        1 === e
+          ? ((ModelManager_1.ModelManager.LoginModel.IsCopyAccount = !0),
+            this.GetItem(17)?.SetUIActive(!0))
+          : ((ModelManager_1.ModelManager.LoginModel.IsCopyAccount = !1),
+            this.GetItem(17)?.SetUIActive(!1));
+      }),
+      (this.y3t = (e) => {
         var i;
         -1 !== e &&
           (ModelManager_1.ModelManager.LoginModel.IsLoginStatus(
@@ -118,30 +125,30 @@ class LoginDebugView extends UiViewBase_1.UiViewBase {
                 ? ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
                     "LoginFailEmptyAccount",
                   )
-                : (this.CFt(), this.fFt()))
+                : (this.g3t(), this.p3t()))
             : Log_1.Log.CheckInfo() &&
               Log_1.Log.Info("Login", 9, "正在登录中, 请勿重复操作！"));
       }),
-      (this.yFt = (e) => {
-        -1 !== (this.lFt = e) &&
+      (this.I3t = (e) => {
+        -1 !== (this._3t = e) &&
           (ModelManager_1.ModelManager.LoginModel.IsLoginStatus(
             LoginDefine_1.ELoginStatus.Init,
           ) ||
             (Log_1.Log.CheckInfo() &&
               Log_1.Log.Info("Login", 9, "正在登录中, 请勿重复操作！")),
-          UiManager_1.UiManager.OpenView("LoginDebugPlayerNameView", this.IFt));
+          UiManager_1.UiManager.OpenView("LoginDebugPlayerNameView", this.T3t));
       }),
-      (this.IFt = () => {
+      (this.T3t = () => {
         var e,
           i,
           o,
           r,
-          t = this.lFt;
+          t = this._3t;
         t < 0 ||
           ((e = ModelManager_1.ModelManager.LoginModel.GetPlayerName()),
           (o = (i = GmAccountAll_1.configGmAccountAll.GetConfigList())[t]
             .FirstName),
-          (r = this.vFt()),
+          (r = this.M3t()),
           this.GetInputText(2).SetText("" + e + o + "-" + r),
           (ModelManager_1.ModelManager.SundryModel.AccountGmId =
             i[t].GmOrderListId),
@@ -157,30 +164,30 @@ class LoginDebugView extends UiViewBase_1.UiViewBase {
             ? ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
                 "LoginFailEmptyAccount",
               )
-            : (this.CFt(), this.fFt()));
+            : (this.g3t(), this.p3t()));
       }),
-      (this.TFt = () => {
+      (this.L3t = () => {
         var i = this.GetInputText(11).GetText(),
           e = this.GetDropdown(4);
-        if (StringUtils_1.StringUtils.IsEmpty(i)) e.SetOptions(this._Ft);
+        if (StringUtils_1.StringUtils.IsEmpty(i)) e.SetOptions(this.u3t);
         else {
-          this.uFt.Empty();
-          for (let e = 0; e < this._Ft.Num(); e++) {
-            var o = this._Ft.Get(e);
-            o.TextOrConfigTableName.includes(i) && this.uFt.Add(o);
+          this.c3t.Empty();
+          for (let e = 0; e < this.u3t.Num(); e++) {
+            var o = this.u3t.Get(e);
+            o.TextOrConfigTableName.includes(i) && this.c3t.Add(o);
           }
-          0 !== this.uFt.Num() && (e.Options.Empty(), e.SetOptions(this.uFt));
+          0 !== this.c3t.Num() && (e.Options.Empty(), e.SetOptions(this.c3t));
         }
       }),
-      (this.LFt = (e, i, o) => {
+      (this.D3t = (e, i, o) => {
         var r;
         if (0 === o)
           return (r =
             BaseConfigController_1.BaseConfigController.GetPrivateServers())
             ? ((r = r.serverUrl),
-              Http_1.Http.Get(r, void 0, this.DFt),
+              Http_1.Http.Get(r, void 0, this.R3t),
               void (this.IRe = TimerSystem_1.TimerSystem.Delay(() => {
-                (this.IRe = void 0), this.DFt(!1, void 0, void 0, !0);
+                (this.IRe = void 0), this.R3t(!1, void 0, void 0, !0);
               }, 5 * TimeUtil_1.TimeUtil.InverseMillisecond)))
             : void 0;
         3 === o
@@ -191,7 +198,7 @@ class LoginDebugView extends UiViewBase_1.UiViewBase {
               `私服列表获取失败[${e}], EIcmpResponseStatus:` + o,
             );
       }),
-      (this.DFt = (e = 0, i, o = void 0, r = !0) => {
+      (this.R3t = (e = 0, i, o = void 0, r = !0) => {
         var t;
         void 0 !== this.IRe &&
           (TimerSystem_1.TimerSystem.Remove(this.IRe), (this.IRe = void 0)),
@@ -205,7 +212,7 @@ class LoginDebugView extends UiViewBase_1.UiViewBase {
                   o,
                 ])),
           r && ModelManager_1.ModelManager.LoginModel.AddDataTableServers(),
-          this.RFt();
+          this.U3t();
       });
   }
   OnRegisterComponent() {
@@ -225,41 +232,47 @@ class LoginDebugView extends UiViewBase_1.UiViewBase {
       [12, UE.UITextInputComponent],
       [13, UE.UIDropdownComponent],
       [14, UE.UIDropdownComponent],
+      [15, UE.UITextInputComponent],
+      [16, UE.UIExtendToggle],
+      [17, UE.UIItem],
     ]),
       (this.BtnBindInfo = [
-        [0, this.mFt],
-        [1, this.dFt],
-        [5, this.pFt],
-        [6, this.gFt],
-        [7, this.MFt],
-        [9, this.SFt],
+        [0, this.d3t],
+        [1, this.C3t],
+        [5, this.v3t],
+        [6, this.f3t],
+        [7, this.E3t],
+        [9, this.S3t],
+        [16, this.PSa],
       ]);
   }
   OnStart() {
-    (this.cFt = (0, puerts_1.toManualReleaseDelegate)(this.LFt)),
+    (this.m3t = (0, puerts_1.toManualReleaseDelegate)(this.D3t)),
       ModelManager_1.ModelManager.LoginModel.InitConfig(),
       ModelManager_1.ModelManager.LoginModel.FixLoginFailInfo(),
-      (this._Ft = UE.NewArray(UE.UIDropdownOptionData)),
-      (this.uFt = UE.NewArray(UE.UIDropdownOptionData)),
-      this.GetInputText(11).OnTextChange.Bind(this.TFt),
+      this.GetExtendToggle(16)?.SetToggleState(0),
+      this.GetItem(17)?.SetUIActive(!1),
+      (this.u3t = UE.NewArray(UE.UIDropdownOptionData)),
+      (this.c3t = UE.NewArray(UE.UIDropdownOptionData)),
+      this.GetInputText(11).OnTextChange.Bind(this.L3t),
       this.GetInputText(2).SetText(
         ModelManager_1.ModelManager.LoginModel.GetAccount(),
       ),
-      this.UFt();
+      this.A3t();
   }
-  RFt() {
-    this.AFt(),
-      this.PFt(),
-      this.xFt(),
-      this.wFt(),
+  U3t() {
+    this.P3t(),
+      this.x3t(),
+      this.w3t(),
+      this.B3t(),
       GlobalData_1.GlobalData.IsPlayInEditor &&
         !UiManager_1.UiManager.IsViewShow("LoginStatusView") &&
         UiManager_1.UiManager.OpenView("LoginStatusView"),
-      this.BFt(),
-      this.bFt(),
+      this.b3t(),
+      this.q3t(),
       (ModelManager_1.ModelManager.LoginModel.SmokeTestReady = !0);
   }
-  AFt() {
+  P3t() {
     var o = this.GetDropdown(3);
     if (o) {
       var e,
@@ -267,7 +280,7 @@ class LoginDebugView extends UiViewBase_1.UiViewBase {
         t =
           (o.Options.Empty(),
           ModelManager_1.ModelManager.LoginModel.GetServerInfoList()),
-        n = ModelManager_1.ModelManager.LoginModel.GetServerIp();
+        n = this.Kkn();
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Login",
@@ -290,7 +303,7 @@ class LoginDebugView extends UiViewBase_1.UiViewBase {
           ((e = t[(o.Value = 0)]), o.CaptionText.UIText.SetText(e.Name)));
     }
   }
-  PFt() {
+  x3t() {
     var r = this.GetDropdown(4);
     if (r) {
       var e,
@@ -305,12 +318,12 @@ class LoginDebugView extends UiViewBase_1.UiViewBase {
       if (n)
         for (let e = 0; e < n.length; ++e) {
           var _ = n[e],
-            l = _.MapId + "-" + _.MapName,
-            s = new UE.UIDropdownOptionData(l, t, 0, "");
-          this._Ft.Add(s),
-            r.Options.Add(s),
+            s = _.MapId + "-" + _.MapName,
+            l = new UE.UIDropdownOptionData(s, t, 0, "");
+          this.u3t.Add(l),
+            r.Options.Add(l),
             _.MapId === a &&
-              ((r.Value = e), r.CaptionText.UIText.SetText(l), (o = !0)),
+              ((r.Value = e), r.CaptionText.UIText.SetText(s), (o = !0)),
             _.MapId === g && (i = e);
         }
       o ||
@@ -321,7 +334,7 @@ class LoginDebugView extends UiViewBase_1.UiViewBase {
           r.CaptionText.UIText.SetText(e)));
     }
   }
-  xFt() {
+  w3t() {
     var e;
     this.GetExtendToggle(7) &&
       ((e = LocalStorage_1.LocalStorage.GetGlobal(
@@ -331,9 +344,9 @@ class LoginDebugView extends UiViewBase_1.UiViewBase {
         ? 1
         : 0),
       this.GetExtendToggle(7).SetToggleState(e),
-      this.MFt(e));
+      this.E3t(e));
   }
-  wFt() {
+  B3t() {
     var e,
       i = this.GetExtendToggle(9);
     i &&
@@ -344,18 +357,18 @@ class LoginDebugView extends UiViewBase_1.UiViewBase {
         ? 1
         : 0),
       i.SetToggleState(e),
-      this.SFt(e),
+      this.S3t(e),
       i.GetRootComponent().SetUIActive(!1));
   }
   OnBeforeDestroy() {
-    this.cFt &&
-      ((0, puerts_1.releaseManualReleaseDelegate)(this.LFt),
-      (this.cFt = void 0)),
+    this.m3t &&
+      ((0, puerts_1.releaseManualReleaseDelegate)(this.D3t),
+      (this.m3t = void 0)),
       this.GetDropdown(13).OnSelectChange.Unbind(),
       ModelManager_1.ModelManager.LoginModel.SaveRecentlyAccountList(),
       ModelManager_1.ModelManager.LoginModel.CleanConfig();
   }
-  bFt() {
+  q3t() {
     var e = this.GetDropdown(14);
     if (e) {
       e.CaptionText.UIText.text = "选择最近登录账号";
@@ -366,10 +379,10 @@ class LoginDebugView extends UiViewBase_1.UiViewBase {
       if (o)
         for (const r of o)
           e.Options.Add(new UE.UIDropdownOptionData(r, i, 0, ""));
-      e.OnSelectChange.Bind(this.EFt);
+      e.OnSelectChange.Bind(this.y3t);
     }
   }
-  BFt() {
+  b3t() {
     var e = this.GetDropdown(13);
     if (e) {
       var i = e.GetOption(0).Sprite,
@@ -379,10 +392,10 @@ class LoginDebugView extends UiViewBase_1.UiViewBase {
       for (const r of o)
         e.Options.Add(new UE.UIDropdownOptionData(r.GmName, i, 0, ""));
       e.CaptionText.UIText.SetText("创建指定GM账号"),
-        e.OnSelectChange.Bind(this.yFt);
+        e.OnSelectChange.Bind(this.I3t);
     }
   }
-  fFt() {
+  p3t() {
     PakKeyUpdate_1.PakKeyUpdate.CheckPakKey(
       () => {
         UE.KuroPakKeyLibrary.HasPendingEncryptedPaks()
@@ -394,23 +407,23 @@ class LoginDebugView extends UiViewBase_1.UiViewBase {
       void 0,
     ).catch((e) => {});
   }
-  vFt() {
+  M3t() {
     return `${PublicUtil_1.PublicUtil.GetLocalHost()}[${TimeUtil_1.TimeUtil.DateFormat(new Date())}]`;
   }
-  UBn(e) {
+  zqn(e) {
     e = /(?<ip>\d{1,3}\.\d{1,3}\.\d{1,3}\.\d{1,3})(?::(?<port>\d{1,5}))?/.exec(
       e,
     );
     if (e && e.groups) return { Ip: e.groups.ip, Port: e.groups.port };
   }
-  CFt() {
+  g3t() {
     var e = this.GetDropdown(4);
     let i = e?.Value;
     -1 === i && (i = 0);
     var o = e.GetOption(i);
     let r = -1;
-    for (let e = 0; e < this._Ft.Num(); e++)
-      if (this._Ft.Get(e).TextOrConfigTableName === o.TextOrConfigTableName) {
+    for (let e = 0; e < this.u3t.Num(); e++)
+      if (this.u3t.Get(e).TextOrConfigTableName === o.TextOrConfigTableName) {
         r = e;
         break;
       }
@@ -440,7 +453,7 @@ class LoginDebugView extends UiViewBase_1.UiViewBase {
               0 <= e &&
               ((e = ModelManager_1.ModelManager.LoginModel.GetServerInfo(e))
                 ? (ModelManager_1.ModelManager.LoginModel.SetServerName(e.Name),
-                  ModelManager_1.ModelManager.LoginModel.SetServerIp(e.Ip, 1))
+                  this.Qkn(e.Ip, 1))
                 : ((e =
                     ModelManager_1.ModelManager.LoginModel.GetServerInfoList()),
                   Log_1.Log.CheckInfo() &&
@@ -453,13 +466,13 @@ class LoginDebugView extends UiViewBase_1.UiViewBase {
         this.GetInputText(12).GetText()),
       e =
         (StringUtils_1.StringUtils.IsEmpty(e) ||
-          ((e = this.UBn(e)) &&
+          ((t = this.zqn(e)) &&
             (ModelManager_1.ModelManager.LoginModel.SetServerName(
               "手动输入IP地址服务器",
             ),
-            ModelManager_1.ModelManager.LoginModel.SetServerIp(e.Ip, 2),
+            this.Qkn(e, 2),
             ModelManager_1.ModelManager.LoginModel.TrySetCustomServerPort(
-              e.Port,
+              t.Port,
               2,
             ))),
         1 === this.GetExtendToggle(7).ToggleState
@@ -474,6 +487,9 @@ class LoginDebugView extends UiViewBase_1.UiViewBase {
         ModelManager_1.ModelManager.LoginModel.SetAccount(
           this.GetInputText(2).Text,
         ),
+        ModelManager_1.ModelManager.LoginModel.SetSourceAccount(
+          this.GetInputText(15).Text,
+        ),
         1 === this.GetExtendToggle(9).ToggleState);
     LocalStorage_1.LocalStorage.SetGlobal(
       LocalStorageDefine_1.ELocalStorageGlobalKey.SkipPlot,
@@ -484,7 +500,7 @@ class LoginDebugView extends UiViewBase_1.UiViewBase {
           "Login",
           9,
           "已保存登录数据",
-          ["ServerIp", ModelManager_1.ModelManager.LoginModel.GetServerIp()],
+          ["ServerIp", this.Kkn()],
           [
             "CustomServerPort",
             ModelManager_1.ModelManager.LoginModel.GetCustomServerPort(),
@@ -498,7 +514,7 @@ class LoginDebugView extends UiViewBase_1.UiViewBase {
           ["LoginSex", LoginDefine_1.ELoginSex[e]],
         );
   }
-  UFt() {
+  A3t() {
     var e, i;
     ControllerHolder_1.ControllerHolder.KuroSdkController.CanUseSdk() ||
       ((e = BaseConfigController_1.BaseConfigController.GetPrivateServers()) &&
@@ -509,12 +525,28 @@ class LoginDebugView extends UiViewBase_1.UiViewBase {
               UE.KuroStaticLibrary.IcmpPing(
                 i.substring(3, i.length - 1),
                 5,
-                this.cFt,
+                this.m3t,
               ))
             : ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenConfirmBoxByText(
                 `私服域名截取失败[${e.serverUrl}]`,
               )
-          : this.DFt(!1, void 0, void 0, !1)));
+          : this.R3t(!1, void 0, void 0, !1)));
+  }
+  Qkn(e, i) {
+    ModelManager_1.ModelManager.LoginModel.SetServerIp(e, i),
+      LocalStorage_1.LocalStorage.SetGlobal(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.LoginDebugServerIp,
+        e,
+      );
+  }
+  Kkn() {
+    var e = LocalStorage_1.LocalStorage.GetGlobal(
+      LocalStorageDefine_1.ELocalStorageGlobalKey.LoginDebugServerIp,
+      "-1",
+    );
+    return "-1" === e
+      ? ModelManager_1.ModelManager.LoginModel.GetServerIp()
+      : e;
   }
 }
 exports.LoginDebugView = LoginDebugView;

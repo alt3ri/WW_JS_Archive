@@ -25,6 +25,7 @@ class ModelManager extends ModelManagerBase_1.ModelManagerBase {}
   (ModelManager.EditBattleTeamModel = void 0),
   (ModelManager.MapModel = void 0),
   (ModelManager.SkillCdModel = void 0),
+  (ModelManager.BattleInputModel = void 0),
   (ModelManager.BattleUiModel = void 0),
   (ModelManager.BattleScoreModel = void 0),
   (ModelManager.InventoryModel = void 0),
@@ -172,6 +173,15 @@ class ModelManager extends ModelManagerBase_1.ModelManagerBase {}
   (ModelManager.PayGiftModel = void 0),
   (ModelManager.FragmentMemoryModel = void 0),
   (ModelManager.PortalModel = void 0),
+  (ModelManager.BossRushModel = void 0),
+  (ModelManager.TowerDefenseModel = void 0),
+  (ModelManager.MoonChasingModel = void 0),
+  (ModelManager.MoonChasingBusinessModel = void 0),
+  (ModelManager.MoonChasingBuildingModel = void 0),
+  (ModelManager.MoonChasingTaskModel = void 0),
+  (ModelManager.MoonChasingRewardModel = void 0),
   (ModelManager.AlertMarkModel = void 0),
-  (ModelManager.BossRushModel = void 0);
+  (ModelManager.ActivityRecallModel = void 0),
+  (ModelManager.DigitalScreenModel = void 0),
+  (ModelManager.ScreenEffectModel = void 0);
 //# sourceMappingURL=ModelManager.js.map

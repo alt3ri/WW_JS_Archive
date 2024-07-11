@@ -7,95 +7,130 @@ const MathUtils_1 = require("../../../../../../Core/Utils/MathUtils"),
   MILLISECOND_TO_SECOND = 0.001;
 class CharacterDitherEffectController {
   constructor(t, i) {
-    (this.O$o = !1),
-      (this.k$o = 1),
-      (this.F$o = 0),
-      (this.V$o = 1),
-      (this.H$o = !1),
+    (this.qYo = !1),
+      (this.GYo = 1),
+      (this.NYo = 0),
+      (this.OYo = 1),
+      (this.kYo = !1),
       (this.Ane = void 0),
       (this.Pne = void 0),
+      (this.yaa = !1),
       (this.OC = t),
-      (this.$6e = i),
-      ObjectUtils_1.ObjectUtils.IsValid(this.$6e) || (this.H$o = !1);
+      (this.l9e = i),
+      ObjectUtils_1.ObjectUtils.IsValid(this.l9e) || (this.kYo = !1);
   }
-  get j$o() {
+  get FYo() {
     return !this.OC || !this.OC.IsValid() || this.OC.bHidden;
   }
+  get CurrentDitherValue() {
+    return this.GYo;
+  }
+  get IsInAutoAnimationValue() {
+    return this.qYo;
+  }
+  get DitherSpeedRateValue() {
+    return this.OYo;
+  }
+  get IsDisableValue() {
+    return this.kYo;
+  }
   SetIsDisable(t, i = 0) {
-    this.H$o !== t &&
-      ((this.H$o = t)
+    this.kYo !== t &&
+      ((this.kYo = t)
         ? this.SetHiddenInGame(!0, !1)
-        : (!this.O$o &&
+        : (!this.qYo &&
           MathUtils_1.MathUtils.IsNearlyZero(
-            this.k$o,
+            this.GYo,
             MathUtils_1.MathUtils.KindaSmallNumber,
           )
             ? this.SetHiddenInGame(!0, !1)
             : this.SetHiddenInGame(!1, !1),
-          0 !== this.F$o && this.$6e.SetDitherEffect(this.k$o, this.F$o)));
+          0 !== this.NYo && this.l9e.SetDitherEffect(this.GYo, this.NYo)));
   }
   EnterAppearEffect(t = 1, i = 3, s = !0) {
-    this.j$o && this.SetHiddenInGame(!1, !0),
-      (this.O$o = !0),
-      (this.F$o = i),
-      (this.V$o = t),
-      s && ((this.k$o = 0), this.$6e.SetDitherEffect(this.k$o, this.F$o));
+    this.FYo && this.SetHiddenInGame(!1, !0),
+      (this.yaa = !1),
+      (this.qYo = !0),
+      (this.NYo = i),
+      (this.OYo = t),
+      s && ((this.GYo = 0), this.l9e.SetDitherEffect(this.GYo, this.NYo));
   }
   EnterDisappearEffect(t = 1, i = 3, s = !0) {
-    this.j$o ||
-      ((this.O$o = !0),
-      (this.F$o = i),
-      (this.V$o = -t),
-      s && ((this.k$o = 1), this.$6e.SetDitherEffect(this.k$o, this.F$o)));
+    this.FYo
+      ? ((this.GYo = 0), (this.NYo = i), this.Iaa())
+      : ((this.qYo = !0),
+        (this.NYo = i),
+        (this.OYo = -t),
+        s && ((this.GYo = 1), this.l9e.SetDitherEffect(this.GYo, this.NYo)));
   }
   SetDitherEffect(t, i = 3, s = !0) {
-    (this.k$o = MathUtils_1.MathUtils.Clamp(t, 0, 1)),
-      (this.F$o = i),
-      this.H$o ||
+    (this.GYo = MathUtils_1.MathUtils.Clamp(t, 0, 1)),
+      (this.NYo = i),
+      this.kYo ||
         (this.SetHiddenInGame(
           MathUtils_1.MathUtils.IsNearlyZero(
-            this.k$o,
+            this.GYo,
             MathUtils_1.MathUtils.KindaSmallNumber,
           ),
           s,
         ),
-        this.$6e?.SetDitherEffect(this.k$o, i));
+        this.l9e?.SetDitherEffect(this.GYo, i));
   }
   SetHiddenInGame(t, i) {
-    this.j$o !== t &&
-      this.OC &&
-      (t && i && this.O$o && ((this.O$o = !1), (this.k$o = 0)),
-      this.OC instanceof TsBaseCharacter_1.default
-        ? (i = this.OC.CharacterActorComponent) &&
-          (t
-            ? ((this.Ane = i.DisableActor(
+    if (this.OC) {
+      if (this.OC instanceof TsBaseCharacter_1.default) {
+        var s = this.OC.CharacterActorComponent;
+        if (!s) return;
+        if (t) {
+          if (this.Ane) return;
+          (this.Ane = s.DisableActor(
+            "[CharacterDitherEffectController.SetHiddenInGame]",
+          )),
+            s.Entity.GetComponent(170)?.IsNpcOutShowRange ||
+              (this.Pne = s.DisableCollision(
                 "[CharacterDitherEffectController.SetHiddenInGame]",
-              )),
-              (this.Pne = i.DisableCollision(
-                "[CharacterDitherEffectController.SetHiddenInGame]",
-              )))
-            : (this.Ane && (i.EnableActor(this.Ane), (this.Ane = void 0)),
-              this.Pne && (i.EnableCollision(this.Pne), (this.Pne = void 0))))
-        : this.OC.IsValid() &&
-          (this.OC.SetActorHiddenInGame(t),
-          this.OC.SetActorEnableCollision(!t)));
+              ));
+        } else
+          this.Ane && (s.EnableActor(this.Ane), (this.Ane = void 0)),
+            this.Pne && (s.EnableCollision(this.Pne), (this.Pne = void 0));
+      } else if (this.OC.IsValid()) {
+        if (this.FYo === t) return;
+        this.OC.SetActorHiddenInGame(t), this.OC.SetActorEnableCollision(!t);
+      }
+      t && i && this.qYo && ((this.qYo = !1), (this.GYo = 0));
+    }
   }
   Update(t) {
-    !this.H$o &&
-      this.O$o &&
-      ((t = t * MILLISECOND_TO_SECOND * this.V$o), this.W$o(t, this.F$o));
+    !this.kYo &&
+      this.qYo &&
+      ((t = t * MILLISECOND_TO_SECOND * this.OYo), this.VYo(t, this.NYo));
   }
-  W$o(t, i) {
-    (this.k$o = MathUtils_1.MathUtils.Clamp(this.k$o + t, 0, 1)),
-      0 === this.k$o && t < 0
-        ? ((this.O$o = !1), this.SetHiddenInGame(!0, !0))
-        : 1 === this.k$o && 0 < t && (this.O$o = !1),
-      this.$6e.SetDitherEffect(this.k$o, i);
+  Iaa() {
+    this.yaa ||
+      ((this.yaa = !0),
+      this.SetHiddenInGame(
+        MathUtils_1.MathUtils.IsNearlyZero(
+          this.GYo,
+          MathUtils_1.MathUtils.KindaSmallNumber,
+        ),
+        !0,
+      ),
+      this.l9e.SetDitherEffect(this.GYo, this.NYo));
+  }
+  ForceResetDither() {
+    (this.GYo = 0), (this.NYo = 1), this.Iaa();
+  }
+  VYo(t, i) {
+    (this.GYo = MathUtils_1.MathUtils.Clamp(this.GYo + t, 0, 1)),
+      0 === this.GYo && t < 0
+        ? ((this.qYo = !1), this.SetHiddenInGame(!0, !0))
+        : 1 === this.GYo && 0 < t && (this.qYo = !1),
+      this.l9e.SetDitherEffect(this.GYo, i);
   }
   Clear() {
     (this.OC = void 0),
-      this.$6e && this.$6e.ResetAllRenderingState(),
-      (this.$6e = void 0),
+      this.l9e && this.l9e.ResetAllRenderingState(),
+      (this.l9e = void 0),
       (this.Ane = void 0),
       (this.Pne = void 0);
   }

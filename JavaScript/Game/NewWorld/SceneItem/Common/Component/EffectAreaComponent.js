@@ -27,9 +27,9 @@ const EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent"),
 let EffectAreaComponent = class EffectAreaComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments),
-      (this.pln = !1),
-      (this.vln = (e) => {
-        (this.pln = e),
+      (this.Zhn = !1),
+      (this.eln = (e) => {
+        (this.Zhn = e),
           LevelGeneralNetworks_1.LevelGeneralNetworks.RequestPlayerAccessEffectArea(
             this.Entity.Id,
             e,
@@ -44,7 +44,7 @@ let EffectAreaComponent = class EffectAreaComponent extends EntityComponent_1.En
       EventSystem_1.EventSystem.AddWithTarget(
         this.Entity,
         EventDefine_1.EEventName.OnMyPlayerInOutRangeLocal,
-        this.vln,
+        this.eln,
       ),
       !0
     );
@@ -54,15 +54,15 @@ let EffectAreaComponent = class EffectAreaComponent extends EntityComponent_1.En
       EventSystem_1.EventSystem.RemoveWithTarget(
         this.Entity,
         EventDefine_1.EEventName.OnMyPlayerInOutRangeLocal,
-        this.vln,
+        this.eln,
       ),
-      this.pln && this.vln(!1),
+      this.Zhn && this.eln(!1),
       !0
     );
   }
 };
 (EffectAreaComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(195)],
+  [(0, RegisterComponent_1.RegisterComponent)(200)],
   EffectAreaComponent,
 )),
   (exports.EffectAreaComponent = EffectAreaComponent);

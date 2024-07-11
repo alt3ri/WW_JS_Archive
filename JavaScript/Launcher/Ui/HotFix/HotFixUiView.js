@@ -8,6 +8,7 @@ const puerts_1 = require("puerts"),
   LauncherResourceLib_1 = require("../../Util/LauncherResourceLib"),
   LaunchComponentsAction_1 = require("../LaunchComponentsAction"),
   LaunchUtil_1 = require("../LaunchUtil"),
+  SdkProtocolView_1 = require("../SdkView/SdkProtocolView"),
   HotFixManager_1 = require("./HotFixManager"),
   HotFixPopupRepairView_1 = require("./HotFixPopupRepairView"),
   HotFixPopupUiView_1 = require("./HotFixPopupUiView");
@@ -16,48 +17,48 @@ class HotFixUiView extends LaunchComponentsAction_1.LaunchComponentsAction {
     super(...arguments),
       (this.UiRoot = void 0),
       (this.WorldContext = void 0),
-      (this.xpi = void 0),
-      (this.LEr = void 0),
-      (this.DEr = void 0),
-      (this.REr = void 0),
+      (this.xvi = void 0),
+      (this.yyr = void 0),
+      (this.Iyr = void 0),
+      (this.Tyr = void 0),
       (this.Cve = void 0),
-      (this.UEr = void 0),
-      (this.AEr = void 0),
-      (this.PEr = void 0),
-      (this.xEr = void 0),
-      (this.wEr = void 0),
-      (this.BEr = void 0),
-      (this.bEr = "WutheringWave_"),
-      (this.qEr = (t) => {
+      (this.Lyr = void 0),
+      (this.Dyr = void 0),
+      (this.Ryr = void 0),
+      (this.Uyr = void 0),
+      (this.Ayr = void 0),
+      (this.Pyr = void 0),
+      (this.xyr = "WutheringWave_"),
+      (this.wyr = (t) => {
         this.UiRoot = t;
       }),
-      (this.GEr = (t) => {
+      (this.Byr = (t) => {
         this.SetRootActorLaunchComponentsAction(t),
           this.SetContainerItemActive(!1);
       }),
       (this.OnPressActionCallback = () => {
-        this.PEr.InputTrigger(this.wEr.bPress, 0);
+        this.Ryr.InputTrigger(this.Ayr.bPress, 0);
       }),
       (this.OnTouchActionCallback = () => {
-        this.xEr.InputTouchTrigger(
-          this.wEr.bPress,
-          this.wEr.TouchIndex,
-          this.wEr.TouchPosition,
+        this.Uyr.InputTouchTrigger(
+          this.Ayr.bPress,
+          this.Ayr.TouchIndex,
+          this.Ayr.TouchPosition,
         );
       }),
       (this.OnTouchMovedActionCallback = () => {
-        this.xEr.InputTouchMoved(this.wEr.TouchIndex, this.wEr.TouchPosition);
+        this.Uyr.InputTouchMoved(this.Ayr.TouchIndex, this.Ayr.TouchPosition);
       }),
-      (this.NEr = (t) => {
-        (this.BEr = UE.GameplayStatics.GetPlayerController(
+      (this.byr = (t) => {
+        (this.Pyr = UE.GameplayStatics.GetPlayerController(
           this.WorldContext,
           0,
         )),
-          (this.UEr = t),
-          (this.PEr = this.UEr.GetComponentByClass(
+          (this.Lyr = t),
+          (this.Ryr = this.Lyr.GetComponentByClass(
             UE.LGUI_StandaloneInputModule.StaticClass(),
           )),
-          (this.xEr = this.UEr.GetComponentByClass(
+          (this.Uyr = this.Lyr.GetComponentByClass(
             UE.LGUI_TouchInputModule.StaticClass(),
           )),
           this.InitActionHandle();
@@ -71,13 +72,13 @@ class HotFixUiView extends LaunchComponentsAction_1.LaunchComponentsAction {
         LaunchUtil_1.LaunchUtil.UiRootPath,
         this.WorldContext,
         void 0,
-        this.qEr,
+        this.wyr,
       ),
       await LaunchUtil_1.LaunchUtil.LoadResourceAsync(
         "/Game/Aki/UI/Module/HotFix/Prefab/UiView_HotFix.UiView_HotFix",
         this.WorldContext,
         this.UiRoot.RootComponent,
-        this.GEr,
+        this.Byr,
       ),
       await this.LoadResourceAsync(),
       (this.Cve = new UE.KuroTickManager(
@@ -86,8 +87,13 @@ class HotFixUiView extends LaunchComponentsAction_1.LaunchComponentsAction {
       )),
       this.OnShow();
   }
+  async ShowProtocolView(t) {
+    var i = new SdkProtocolView_1.SdkProtocolView();
+    i.SetViewData(t),
+      await i.Init(this.WorldContext, this.UiRoot.RootComponent);
+  }
   async InitRuntimeEventSystemActor() {
-    const s = new UE.Transform();
+    const e = new UE.Transform();
     await new Promise((i) => {
       LauncherResourceLib_1.LauncherResourceLib.LoadAsync(
         "/Game/Aki/UI/Module/HotFix/HotFixLGUIEventSystemActor.HotFixLGUIEventSystemActor_C",
@@ -96,22 +102,22 @@ class HotFixUiView extends LaunchComponentsAction_1.LaunchComponentsAction {
           t = UE.GameplayStatics.BeginSpawningActorFromClass(
             this.WorldContext,
             t,
-            s,
+            e,
           );
-          UE.GameplayStatics.FinishSpawningActor(t, s),
+          UE.GameplayStatics.FinishSpawningActor(t, e),
             t.AddComponentByClass(
               UE.LGUI_StandaloneInputModule.StaticClass(),
               !1,
-              s,
+              e,
               !1,
             ),
             t.AddComponentByClass(
               UE.LGUI_TouchInputModule.StaticClass(),
               !1,
-              s,
+              e,
               !1,
             ),
-            this.NEr(t),
+            this.byr(t),
             i();
         },
       );
@@ -120,9 +126,9 @@ class HotFixUiView extends LaunchComponentsAction_1.LaunchComponentsAction {
   InitInputSettings() {
     var t = UE.InputSettings.GetInputSettings(),
       i = new UE.FName("UI左键点击"),
-      s = new UE.FName("LeftMouseButton"),
-      s = new UE.Key(s),
-      i = new UE.InputActionKeyMapping(i, !1, !1, !1, !1, s);
+      e = new UE.FName("LeftMouseButton"),
+      e = new UE.Key(e),
+      i = new UE.InputActionKeyMapping(i, !1, !1, !1, !1, e);
     t.AddActionMapping(i);
   }
   async LoadResourceAsync() {
@@ -137,27 +143,27 @@ class HotFixUiView extends LaunchComponentsAction_1.LaunchComponentsAction {
         "/Game/Aki/UI/Module/HotFix/Prefab/UiView_HotFixPopup.UiView_HotFixPopup",
         HotFixPopupRepairView_1.HotFixPopupRepairView,
       ),
-      this.OEr(!1),
-      await this.kEr();
+      this.qyr(!1),
+      await this.Gyr();
   }
-  async kEr() {
-    let s = new Map(),
+  async Gyr() {
+    let e = new Map(),
       t =
         (await new Promise((i) => {
           LauncherResourceLib_1.LauncherResourceLib.LoadAsync(
             "/Game/Aki/HotPatch/Splash/SplashTable.SplashTable",
             UE.DataTable,
             (t) => {
-              (s = LaunchUtil_1.LaunchUtil.GetDataTableMap(t, "Path")),
+              (e = LaunchUtil_1.LaunchUtil.GetDataTableMap(t, "Path")),
                 i(void 0);
             },
           );
         }),
-        s.get(
-          this.bEr +
+        e.get(
+          this.xyr +
             LauncherLanguageLib_1.LauncherLanguageLib.GetPackageLanguage(),
         ));
-    (t = t || s.get(this.bEr + LauncherLanguageLib_1.ENGLISH_ISO639_1)),
+    (t = t || e.get(this.xyr + LauncherLanguageLib_1.ENGLISH_ISO639_1)),
       await new Promise((i) => {
         LauncherResourceLib_1.LauncherResourceLib.LoadAsync(
           t,
@@ -170,26 +176,26 @@ class HotFixUiView extends LaunchComponentsAction_1.LaunchComponentsAction {
   }
   OnBeforeDestroy() {
     this.Cve && (this.Cve = void 0),
-      this.xpi && (this.xpi = void 0),
-      this.LEr && (this.LEr = void 0),
-      this.DEr && (this.DEr = void 0),
-      this.REr && (this.REr = void 0);
+      this.xvi && (this.xvi = void 0),
+      this.yyr && (this.yyr = void 0),
+      this.Iyr && (this.Iyr = void 0),
+      this.Tyr && (this.Tyr = void 0);
   }
   SetWindowCursorStyle() {
     var t = new UE.Vector2D(0, 0),
       i = this.WorldContext;
-    let s = void 0,
-      e = void 0,
+    let e = void 0,
+      s = void 0,
       o = void 0;
     (o = UE.KuroStaticLibrary.IsEditor(i)
-      ? ((s = new UE.FName("Aki/UI/Module/Cursor/SourceResource/CursorNor")),
-        (e = new UE.FName("Aki/UI/Module/Cursor/SourceResource/CursorHi")),
+      ? ((e = new UE.FName("Aki/UI/Module/Cursor/SourceResource/CursorNor")),
+        (s = new UE.FName("Aki/UI/Module/Cursor/SourceResource/CursorHi")),
         new UE.FName("Aki/UI/Module/Cursor/SourceResource/CursorPre"))
-      : ((s = new UE.FName("Aki/Cursor/CursorNor")),
-        (e = new UE.FName("Aki/Cursor/CursorHi")),
+      : ((e = new UE.FName("Aki/Cursor/CursorNor")),
+        (s = new UE.FName("Aki/Cursor/CursorHi")),
         new UE.FName("Aki/Cursor/CursorPre"))),
-      UE.WidgetBlueprintLibrary.SetHardwareCursor(i, 1, s, t),
-      UE.WidgetBlueprintLibrary.SetHardwareCursor(i, 16, e, t),
+      UE.WidgetBlueprintLibrary.SetHardwareCursor(i, 1, e, t),
+      UE.WidgetBlueprintLibrary.SetHardwareCursor(i, 16, s, t),
       UE.WidgetBlueprintLibrary.SetHardwareCursor(i, 15, o, t);
   }
   InitActionHandle() {
@@ -198,7 +204,7 @@ class HotFixUiView extends LaunchComponentsAction_1.LaunchComponentsAction {
       UE.Class,
       (t) => {
         switch (
-          ((this.wEr = UE.NewObject(
+          ((this.Ayr = UE.NewObject(
             UE.TsHotFixActionHandle_C.StaticClass(),
             this.WorldContext,
           )),
@@ -206,39 +212,39 @@ class HotFixUiView extends LaunchComponentsAction_1.LaunchComponentsAction {
         ) {
           case "IOS":
           case "Android":
-            (this.AEr = this.xEr), this.RegisterMobileInput();
+            (this.Dyr = this.Uyr), this.RegisterMobileInput();
             break;
           default:
-            (this.AEr = this.PEr),
+            (this.Dyr = this.Ryr),
               this.SetWindowCursorStyle(),
               this.RegisterPcInput();
         }
-        this.AEr.Activate(!1);
+        this.Dyr.Activate(!1);
       },
     );
   }
   RegisterPcInput() {
-    this.wEr.OnPressActionCallback.Add(this.OnPressActionCallback),
-      this.wEr.AddPressBinding("UI左键点击", this.BEr),
-      this.wEr.AddReleaseBinding("UI左键点击", this.BEr);
+    this.Ayr.OnPressActionCallback.Add(this.OnPressActionCallback),
+      this.Ayr.AddPressBinding("UI左键点击", this.Pyr),
+      this.Ayr.AddReleaseBinding("UI左键点击", this.Pyr);
   }
   RegisterMobileInput() {
-    this.wEr.OnTouchActionCallback.Add(this.OnTouchActionCallback),
-      this.wEr.OnTouchMovedActionCallback.Add(this.OnTouchMovedActionCallback),
-      this.wEr.AddTouchPressBinding(this.BEr),
-      this.wEr.AddTouchReleaseBinding(this.BEr),
-      this.wEr.AddTouchMoveBinding(this.BEr);
+    this.Ayr.OnTouchActionCallback.Add(this.OnTouchActionCallback),
+      this.Ayr.OnTouchMovedActionCallback.Add(this.OnTouchMovedActionCallback),
+      this.Ayr.AddTouchPressBinding(this.Pyr),
+      this.Ayr.AddTouchReleaseBinding(this.Pyr),
+      this.Ayr.AddTouchMoveBinding(this.Pyr);
   }
   OnShow() {
-    (this.xpi = this.GetText(4)),
-      (this.LEr = this.GetText(8)),
-      (this.DEr = this.GetText(7)),
-      (this.REr = this.GetTexture(3)),
+    (this.xvi = this.GetText(4)),
+      (this.yyr = this.GetText(8)),
+      (this.Iyr = this.GetText(7)),
+      (this.Tyr = this.GetTexture(3)),
       this.ShowAppInfoText(this.WorldContext),
       this.SetRepairButtonText("PatchClearbutton"),
       this.SetRepairButtonEnable(!1),
       this.SetRepairButtonCallBack(() => {
-        this.OEr(!0);
+        this.qyr(!0);
       });
   }
   SetContainerItemActive(t) {
@@ -247,33 +253,33 @@ class HotFixUiView extends LaunchComponentsAction_1.LaunchComponentsAction {
       this.GetItem(0).SetUIActive(t);
   }
   UpdateProgressRate(t) {
-    this.SetProgressActive(!0), this.REr.SetFillAmount(t);
+    this.SetProgressActive(!0), this.Tyr.SetFillAmount(t);
   }
   SetProgressActive(t) {
-    this.GetTexture(2).SetUIActive(t), this.REr.SetUIActive(t);
+    this.GetTexture(2).SetUIActive(t), this.Tyr.SetUIActive(t);
   }
   SetConfirmationItemActive(t) {
     this.GetElement(100).SetActive(t);
   }
-  OEr(t) {
+  qyr(t) {
     this.GetElement(101).SetActive(t);
   }
   SetProgressLeftTips(t, ...i) {
-    HotFixManager_1.HotFixManager.SetLocalText(this.xpi, t, ...i),
-      this.LEr.SetText(""),
-      this.DEr.SetText("");
+    HotFixManager_1.HotFixManager.SetLocalText(this.xvi, t, ...i),
+      this.yyr.SetText(""),
+      this.Iyr.SetText("");
   }
   SetProgressText(t, ...i) {
-    HotFixManager_1.HotFixManager.SetLocalText(this.xpi, t, ...i);
+    HotFixManager_1.HotFixManager.SetLocalText(this.xvi, t, ...i);
   }
   SetPatchText(t, ...i) {
-    HotFixManager_1.HotFixManager.SetLocalText(this.LEr, t, ...i);
+    HotFixManager_1.HotFixManager.SetLocalText(this.yyr, t, ...i);
   }
   SetSpeedText(t, ...i) {
-    HotFixManager_1.HotFixManager.SetLocalText(this.DEr, t, ...i);
+    HotFixManager_1.HotFixManager.SetLocalText(this.Iyr, t, ...i);
   }
   SetProgressLeftActive(t) {
-    this.xpi.SetUIActive(t), this.LEr.SetUIActive(t), this.DEr.SetUIActive(t);
+    this.xvi.SetUIActive(t), this.yyr.SetUIActive(t), this.Iyr.SetUIActive(t);
   }
   SetProgressRightTips(t) {
     HotFixManager_1.HotFixManager.SetLocalText(this.GetText(5), t);
@@ -340,12 +346,12 @@ class HotFixUiView extends LaunchComponentsAction_1.LaunchComponentsAction {
     );
   }
   SetNextFrameCallback(i, t) {
-    const s = (t) => {
+    const e = (t) => {
       i(),
         this.Cve.RemoveTick(0),
-        (0, puerts_1.releaseManualReleaseDelegate)(s);
+        (0, puerts_1.releaseManualReleaseDelegate)(e);
     };
-    this.Cve.AddTick(0, (0, puerts_1.toManualReleaseDelegate)(s));
+    this.Cve.AddTick(0, (0, puerts_1.toManualReleaseDelegate)(e));
   }
   async Hide() {
     await new Promise((t) => {
@@ -360,19 +366,19 @@ class HotFixUiView extends LaunchComponentsAction_1.LaunchComponentsAction {
       this.UiRoot &&
         (UE.LGUIBPLibrary.DestroyActorWithHierarchy(this.UiRoot, !0),
         (this.UiRoot = void 0)),
-      this.BEr && (this.wEr.ClearActionBinding(this.BEr), (this.BEr = void 0)),
-      this.UEr &&
-        (this.UEr.PreDestroy(),
-        UE.LGUIBPLibrary.DestroyActorWithHierarchy(this.UEr, !0),
+      this.Pyr && (this.Ayr.ClearActionBinding(this.Pyr), (this.Pyr = void 0)),
+      this.Lyr &&
+        (this.Lyr.PreDestroy(),
+        UE.LGUIBPLibrary.DestroyActorWithHierarchy(this.Lyr, !0),
         UE.KismetSystemLibrary.CollectGarbage(),
-        (this.UEr = void 0),
-        (this.AEr = void 0),
-        (this.PEr = void 0),
-        (this.xEr = void 0)),
-      this.wEr &&
-        (this.wEr.OnPressActionCallback.Clear(),
-        this.wEr.OnTouchActionCallback.Clear(),
-        (this.wEr = void 0)),
+        (this.Lyr = void 0),
+        (this.Dyr = void 0),
+        (this.Ryr = void 0),
+        (this.Uyr = void 0)),
+      this.Ayr &&
+        (this.Ayr.OnPressActionCallback.Clear(),
+        this.Ayr.OnTouchActionCallback.Clear(),
+        (this.Ayr = void 0)),
       this.WorldContext && (this.WorldContext = void 0);
   }
 }

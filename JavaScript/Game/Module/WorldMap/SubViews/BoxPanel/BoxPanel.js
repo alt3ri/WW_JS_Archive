@@ -5,7 +5,7 @@ const WorldMapSecondaryUi_1 = require("../../ViewComponent/WorldMapSecondaryUi")
   WorldMapDefine_1 = require("../../WorldMapDefine");
 class BoxPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
   constructor() {
-    super(...arguments), (this.dko = void 0);
+    super(...arguments), (this.u2o = void 0);
   }
   GetResourceId() {
     return "UiItem_GeneralPanel_Prefab";
@@ -19,10 +19,10 @@ class BoxPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
     this.RootItem.SetRaycastTarget(!1);
   }
   OnShowWorldMapSecondaryUi(e) {
-    (this.dko = e),
-      this.GetText(1).SetText(this.dko.GetTitleText()),
-      this.GetText(4).SetText(this.dko.GetDescText()),
-      this.SetSpriteByPath(this.dko.IconPath, this.GetSprite(0), !1),
+    (this.u2o = e),
+      this.GetText(1).SetText(this.u2o.GetTitleText()),
+      this.GetText(4).SetText(this.u2o.GetDescText()),
+      this.SetSpriteByPath(this.u2o.IconPath, this.GetSprite(0), !1),
       this.GetItem(12).SetUIActive(!1),
       this.GetItem(2).SetUIActive(!1),
       this.GetVerticalLayout(7).RootUIComp.SetUIActive(!1),

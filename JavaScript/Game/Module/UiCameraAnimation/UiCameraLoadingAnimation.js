@@ -7,51 +7,51 @@ const MathUtils_1 = require("../../../Core/Utils/MathUtils"),
 class UiCameraLoadingAnimation {
   constructor() {
     (this.Cce = 0),
-      (this.dUo = -0),
-      (this.QAo = -0),
-      (this.XAo = -0),
-      (this.$Ao = -0),
-      (this.YAo = -0),
+      (this.uAo = -0),
+      (this.jPo = -0),
+      (this.WPo = -0),
+      (this.KPo = -0),
+      (this.QPo = -0),
       (this.IsPlaying = !1),
-      (this.JAo = void 0),
-      (this.JRo = void 0),
-      (this.zAo = void 0);
+      (this.XPo = void 0),
+      (this.XUo = void 0),
+      (this.$Po = void 0);
   }
   Initialize() {}
   Play(i, t, s) {
-    (this.JRo = UiCameraManager_1.UiCameraManager.Get()),
-      (this.zAo = this.JRo.GetUiCameraComponent(
+    (this.XUo = UiCameraManager_1.UiCameraManager.Get()),
+      (this.$Po = this.XUo.GetUiCameraComponent(
         UiCameraPostEffectComponent_1.UiCameraPostEffectComponent,
       )),
       (this.Cce = 0),
-      (this.dUo = i),
-      (this.$Ao = this.zAo.GetManualFocusDistance()),
-      (this.YAo = this.zAo.GetCurrentAperture()),
-      (this.QAo = t),
-      (this.XAo = s),
+      (this.uAo = i),
+      (this.KPo = this.$Po.GetManualFocusDistance()),
+      (this.QPo = this.$Po.GetCurrentAperture()),
+      (this.jPo = t),
+      (this.WPo = s),
       (this.IsPlaying = !0);
   }
   Stop() {
-    (this.dUo = 0), (this.IsPlaying = !1), (this.JAo = void 0);
+    (this.uAo = 0), (this.IsPlaying = !1), (this.XPo = void 0);
   }
   Tick(i) {
     var t, s;
-    this.dUo &&
+    this.uAo &&
       this.IsPlaying &&
-      (this.Cce >= this.dUo
-        ? (this.JAo?.SetResult(), this.Stop())
+      (this.Cce >= this.uAo
+        ? (this.XPo?.SetResult(), this.Stop())
         : ((t = MathUtils_1.MathUtils.Lerp(
-            this.$Ao,
-            this.QAo,
-            this.Cce / this.dUo,
+            this.KPo,
+            this.jPo,
+            this.Cce / this.uAo,
           )),
           (s = MathUtils_1.MathUtils.Lerp(
-            this.YAo,
-            this.XAo,
-            this.Cce / this.dUo,
+            this.QPo,
+            this.WPo,
+            this.Cce / this.uAo,
           )),
-          this.zAo.SetCameraFocalDistance(t),
-          this.zAo.SetCameraAperture(s),
+          this.$Po.SetCameraFocalDistance(t),
+          this.$Po.SetCameraAperture(s),
           (this.Cce += 10)));
   }
 }

@@ -5,6 +5,7 @@ const AimHandle_1 = require("./HudUnitHandle/AimHandle"),
   CameraAimHandle_1 = require("./HudUnitHandle/CameraAimHandle"),
   LockCursorHandle_1 = require("./HudUnitHandle/LockCursorHandle"),
   LockExecutionHandle_1 = require("./HudUnitHandle/LockExecutionHandle"),
+  LockPredictedHandle_1 = require("./HudUnitHandle/LockPredictedHandle"),
   ManipulateAimHandle_1 = require("./HudUnitHandle/ManipulateAimHandle"),
   ManipulateCursorHandle_1 = require("./HudUnitHandle/ManipulateCursorHandle"),
   MonsterCursorHandle_1 = require("./HudUnitHandle/MonsterCursorHandle"),
@@ -23,6 +24,7 @@ class HudUnitHandleManager {
       LockExecutionHandle_1.LockExecutionHandle,
       CameraAimHandle_1.CameraAimHandle,
       RogueScoreHandle_1.RogueScoreHandle,
+      LockPredictedHandle_1.LockPredictedHandle,
     ];
   }
 }

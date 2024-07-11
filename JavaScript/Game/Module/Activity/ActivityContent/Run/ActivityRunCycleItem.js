@@ -16,9 +16,9 @@ class ActivityRunCycleItem extends UiPanelBase_1.UiPanelBase {
       (this.ScrollViewDelegate = void 0),
       (this.GridIndex = 0),
       (this.DisplayIndex = 0),
-      (this.p2e = 0),
-      (this.v2e = void 0),
-      (this.M2e = !1),
+      (this.BFe = 0),
+      (this.bFe = void 0),
+      (this.qFe = !1),
       (this.jbe = (t) => {
         1 === t &&
           this.ScrollViewDelegate.SelectGridProxy(
@@ -50,19 +50,19 @@ class ActivityRunCycleItem extends UiPanelBase_1.UiPanelBase {
       (this.BtnBindInfo = [[0, this.jbe]]);
   }
   TryBindRedDot() {
-    this.M2e ||
-      ((this.M2e = !0),
+    this.qFe ||
+      ((this.qFe = !0),
       RedDotController_1.RedDotController.BindRedDot(
         "ActivityRun",
         this.GetItem(10),
         void 0,
-        this.p2e,
+        this.BFe,
       ),
       RedDotController_1.RedDotController.BindRedDot(
         "ActivityRun",
         this.GetItem(6),
         void 0,
-        this.p2e,
+        this.BFe,
       ));
   }
   OnStart() {
@@ -72,33 +72,33 @@ class ActivityRunCycleItem extends UiPanelBase_1.UiPanelBase {
     RedDotController_1.RedDotController.UnBindGivenUi(
       "ActivityRun",
       this.GetItem(10),
-      this.p2e,
+      this.BFe,
     ),
       RedDotController_1.RedDotController.UnBindGivenUi(
         "ActivityRun",
         this.GetItem(6),
-        this.p2e,
+        this.BFe,
       ),
       this.GetSprite(7).SetSprite(void 0);
   }
   Og() {
-    (this.v2e = ModelManager_1.ModelManager.ActivityRunModel.GetActivityRunData(
-      this.p2e,
+    (this.bFe = ModelManager_1.ModelManager.ActivityRunModel.GetActivityRunData(
+      this.BFe,
     )),
       this.SetTextureByPath(
-        this.v2e.GetBackgroundTexturePath(),
+        this.bFe.GetBackgroundTexturePath(),
         this.GetTexture(11),
       ),
       this.mGe(),
-      this.S2e(),
-      this.E2e();
+      this.GFe(),
+      this.NFe();
   }
   mGe() {
-    this.GetText(1).SetText(this.v2e.GetTitle());
+    this.GetText(1).SetText(this.bFe.GetTitle());
   }
-  S2e() {
-    this.GetSprite(3).SetUIActive(this.v2e.GetIfRewardAllFinished()),
-      this.GetSprite(8).SetUIActive(this.v2e.GetIfRewardAllFinished()),
+  GFe() {
+    this.GetSprite(3).SetUIActive(this.bFe.GetIfRewardAllFinished()),
+      this.GetSprite(8).SetUIActive(this.bFe.GetIfRewardAllFinished()),
       this.GetSprite(2).SetUIActive(!1);
     var t = (this.GridIndex + 1).toString();
     this.SetSpriteByPath(
@@ -107,27 +107,27 @@ class ActivityRunCycleItem extends UiPanelBase_1.UiPanelBase {
       !1,
     );
   }
-  E2e() {
-    this.GetItem(9).SetUIActive(!this.v2e.GetIsShow()),
-      this.GetItem(5).SetUIActive(!this.v2e.GetIsShow()),
-      this.GetItem(4).SetUIActive(!this.v2e.GetIsShow());
+  NFe() {
+    this.GetItem(9).SetUIActive(!this.bFe.GetIsShow()),
+      this.GetItem(5).SetUIActive(!this.bFe.GetIsShow()),
+      this.GetItem(4).SetUIActive(!this.bFe.GetIsShow());
   }
   Refresh(t, e, i) {
-    (this.p2e = t), this.TryBindRedDot(), this.Og();
+    (this.BFe = t), this.TryBindRedDot(), this.Og();
   }
   Clear() {}
   OnSelected(t) {
     this.GetExtendToggle(0).SetToggleState(1, t),
       (ModelManager_1.ModelManager.ActivityRunModel.CurrentSelectChallengeId =
-        this.p2e);
+        this.BFe);
     t = ModelManager_1.ModelManager.ActivityModel.GetActivityById(
-      this.v2e.GetActivityId(),
+      this.bFe.GetActivityId(),
     );
     t &&
       (t.SetActivityContentIndex(this.GridIndex),
-      this.v2e.GetIsShow() &&
-        this.v2e.GetChallengeNewLocalRedPoint() &&
-        this.v2e.SetChallengeLocalRedPointState(!1),
+      this.bFe.GetIsShow() &&
+        this.bFe.GetChallengeNewLocalRedPoint() &&
+        this.bFe.SetChallengeLocalRedPointState(!1),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnSelectActivityRunChallengeItem,
       ));

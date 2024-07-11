@@ -21,9 +21,10 @@ class PhotoSaveMarkItem extends UiPanelBase_1.UiPanelBase {
       ConfigManager_1.ConfigManager.UiResourceConfig.GetLogoPathByLanguage(
         "PhotoLogo",
       );
-    this.GetTexture(0).SetUIActive(!1),
+    const a = this.GetTexture(0);
+    a.SetUIActive(!1),
       this.SetTextureByPath(e, this.GetTexture(0), void 0, () => {
-        this.GetTexture(0).SetUIActive(!0);
+        a && (a.SetUIActive(!0), a.SetSizeFromTexture());
       }),
       this.GetText(1).SetText(
         ModelManager_1.ModelManager.FunctionModel.GetPlayerName() ?? "",

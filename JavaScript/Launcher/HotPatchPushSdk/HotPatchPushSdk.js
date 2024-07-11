@@ -30,6 +30,7 @@ class HotPatchPushSdk {
         UE.KuroPushSdkStaticLibrary.Init(),
         UE.KuroPushSdkStaticLibrary.RegistRemoteNotification(),
         UE.KuroPushSdkStaticLibrary.StartPushSdk(e, r, t),
+        UE.KuroPushSdkStaticLibrary.ResetBudge(),
         LauncherStorageLib_1.LauncherStorageLib.GetGlobal(
           LauncherStorageLib_1.ELauncherStorageGlobalKey.NotFirstTimeOpenPush,
           !1,

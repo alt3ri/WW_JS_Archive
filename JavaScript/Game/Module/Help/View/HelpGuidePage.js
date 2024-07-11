@@ -7,7 +7,7 @@ const UE = require("ue"),
   LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer");
 class HelpGuidePage extends UiPanelBase_1.UiPanelBase {
   constructor() {
-    super(...arguments), (this.EPe = void 0);
+    super(...arguments), (this.SPe = void 0);
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -18,7 +18,7 @@ class HelpGuidePage extends UiPanelBase_1.UiPanelBase {
     ];
   }
   OnStart() {
-    (this.EPe = new LevelSequencePlayer_1.LevelSequencePlayer(
+    (this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(
       this.GetRootItem(),
     )),
       this.GetTexture(3).SetUIActive(!1),
@@ -26,7 +26,7 @@ class HelpGuidePage extends UiPanelBase_1.UiPanelBase {
       this.GetItem(0).SetUIActive(!1);
   }
   OnBeforeDestroy() {
-    this.EPe.Clear(), (this.EPe = void 0);
+    this.SPe.Clear(), (this.SPe = void 0);
   }
   RefreshPage(e) {
     var i;
@@ -43,7 +43,7 @@ class HelpGuidePage extends UiPanelBase_1.UiPanelBase {
       this.GetText(2).ShowTextNew(e.Content);
   }
   PlayAnime(e) {
-    this.EPe.PlayLevelSequenceByName(e ? "Show" : "Hide");
+    this.SPe.PlayLevelSequenceByName(e ? "Show" : "Hide");
   }
 }
 exports.HelpGuidePage = HelpGuidePage;

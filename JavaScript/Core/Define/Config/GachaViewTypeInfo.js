@@ -23,11 +23,14 @@ class GachaViewTypeInfo {
   get OptionalDesc() {
     return this.optionaldesc();
   }
-  __init(t, e) {
-    return (this.z7 = t), (this.J7 = e), this;
+  get GachaButtonTip() {
+    return this.gachabuttontip();
   }
-  static getRootAsGachaViewTypeInfo(t, e) {
-    return (e || new GachaViewTypeInfo()).__init(
+  __init(t, i) {
+    return (this.z7 = t), (this.J7 = i), this;
+  }
+  static getRootAsGachaViewTypeInfo(t, i) {
+    return (i || new GachaViewTypeInfo()).__init(
       t.readInt32(t.position()) + t.position(),
       t,
     );
@@ -37,24 +40,28 @@ class GachaViewTypeInfo {
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   tagtext(t) {
-    var e = this.J7.__offset(this.z7, 6);
-    return e ? this.J7.__string(this.z7 + e, t) : null;
+    var i = this.J7.__offset(this.z7, 6);
+    return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   tagcolor(t) {
-    var e = this.J7.__offset(this.z7, 8);
-    return e ? this.J7.__string(this.z7 + e, t) : null;
+    var i = this.J7.__offset(this.z7, 8);
+    return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   typetext(t) {
-    var e = this.J7.__offset(this.z7, 10);
-    return e ? this.J7.__string(this.z7 + e, t) : null;
+    var i = this.J7.__offset(this.z7, 10);
+    return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   optionaltitle(t) {
-    var e = this.J7.__offset(this.z7, 12);
-    return e ? this.J7.__string(this.z7 + e, t) : null;
+    var i = this.J7.__offset(this.z7, 12);
+    return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   optionaldesc(t) {
-    var e = this.J7.__offset(this.z7, 14);
-    return e ? this.J7.__string(this.z7 + e, t) : null;
+    var i = this.J7.__offset(this.z7, 14);
+    return i ? this.J7.__string(this.z7 + i, t) : null;
+  }
+  gachabuttontip(t) {
+    var i = this.J7.__offset(this.z7, 16);
+    return i ? this.J7.__string(this.z7 + i, t) : null;
   }
 }
 exports.GachaViewTypeInfo = GachaViewTypeInfo;

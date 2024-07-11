@@ -13,18 +13,18 @@ const UE = require("ue"),
 class RoleBreakPreviewView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.QTn = void 0),
-      (this.XTn = void 0),
-      (this.$Tn = void 0),
-      (this.YTn = void 0),
-      (this.JTn = () => {
-        this.YTn.HandleClickLeft();
+      (this.xLn = void 0),
+      (this.wLn = void 0),
+      (this.BLn = void 0),
+      (this.bLn = void 0),
+      (this.qLn = () => {
+        this.bLn.HandleClickLeft();
       }),
-      (this.zTn = () => {
-        this.YTn.HandleClickRight();
+      (this.GLn = () => {
+        this.bLn.HandleClickRight();
       }),
-      (this.I4t = () => {
-        this.YTn.HandleViewClosePromise(
+      (this.I5t = () => {
+        this.bLn.HandleViewClosePromise(
           UiManager_1.UiManager.CloseViewAsync("RoleBreakPreviewView"),
         );
       });
@@ -44,41 +44,41 @@ class RoleBreakPreviewView extends UiViewBase_1.UiViewBase {
       [10, UE.UIText],
     ]),
       (this.BtnBindInfo = [
-        [6, this.JTn],
-        [7, this.zTn],
-        [8, this.I4t],
+        [6, this.qLn],
+        [7, this.GLn],
+        [8, this.I5t],
       ]);
   }
   async OnBeforeStartAsync() {
-    (this.YTn = this.OpenParam),
-      (this.$Tn = new CostContentItem(this.YTn)),
-      await this.$Tn.CreateByActorAsync(this.GetItem(5).GetOwner());
+    (this.bLn = this.OpenParam),
+      (this.BLn = new CostContentItem(this.bLn)),
+      await this.BLn.CreateByActorAsync(this.GetItem(5).GetOwner());
   }
   OnStart() {
-    (this.QTn = new GenericLayout_1.GenericLayout(
+    (this.xLn = new GenericLayout_1.GenericLayout(
       this.GetHorizontalLayout(0),
-      this.YTn.CreateLevelLayoutGrid,
+      this.bLn.CreateLevelLayoutGrid,
     )),
-      (this.XTn = new GenericLayout_1.GenericLayout(
+      (this.wLn = new GenericLayout_1.GenericLayout(
         this.GetHorizontalLayout(3),
-        this.YTn.CreateItemLayoutGrid,
+        this.bLn.CreateItemLayoutGrid,
       )),
-      this.YTn.BindView(this),
-      this.YTn.HandleViewOnStart();
+      this.bLn.BindView(this),
+      this.bLn.HandleViewOnStart();
   }
   OnBeforeDestroy() {
-    this.YTn.Dispose(),
-      (this.YTn = void 0),
-      (this.QTn = void 0),
-      (this.XTn = void 0),
-      (this.$Tn = void 0);
+    this.bLn.Dispose(),
+      (this.bLn = void 0),
+      (this.xLn = void 0),
+      (this.wLn = void 0),
+      (this.BLn = void 0);
   }
   RefreshLevelLayout(t) {
-    this.QTn.RefreshByData(t);
+    this.xLn.RefreshByData(t);
   }
   RefreshItemLayout(t) {
-    this.XTn.RefreshByData(t, () => {
-      this.XTn?.GetUiAnimController()?.Play();
+    this.wLn.RefreshByData(t, () => {
+      this.wLn?.GetUiAnimController()?.Play();
     });
   }
   RefreshLevelContent(t) {
@@ -101,14 +101,14 @@ exports.RoleBreakPreviewView = RoleBreakPreviewView;
 class LevelLayoutGrid extends GridProxyAbstract_1.GridProxyAbstract {
   constructor(t) {
     super(),
-      (this.YTn = void 0),
+      (this.bLn = void 0),
       (this.kqe = () => {
-        this.YTn.HandleItemOnClickToggle(this.GridIndex);
+        this.bLn.HandleItemOnClickToggle(this.GridIndex);
       }),
-      (this.YTn = t);
+      (this.bLn = t);
   }
-  ZTn() {
-    this.YTn = void 0;
+  NLn() {
+    this.bLn = void 0;
   }
   OnRegisterComponent() {
     (this.ComponentRegisterInfos = [
@@ -133,13 +133,13 @@ class LevelLayoutGrid extends GridProxyAbstract_1.GridProxyAbstract {
       this.GetExtendToggle(5).SetToggleState(t.IsChosen ? 1 : 0);
   }
   OnBeforeDestroy() {
-    super.OnBeforeDestroy(), this.ZTn();
+    super.OnBeforeDestroy(), this.NLn();
   }
 }
 exports.LevelLayoutGrid = LevelLayoutGrid;
 class CostContentItem extends UiPanelBase_1.UiPanelBase {
   constructor(t) {
-    super(), (this.YTn = void 0), (this.YTn = t);
+    super(), (this.bLn = void 0), (this.bLn = t);
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -149,10 +149,10 @@ class CostContentItem extends UiPanelBase_1.UiPanelBase {
     ];
   }
   OnStart() {
-    this.YTn.BindCostContentItem(this), this.YTn.HandleCostContentItemOnStart();
+    this.bLn.BindCostContentItem(this), this.bLn.HandleCostContentItemOnStart();
   }
   OnBeforeDestroy() {
-    this.YTn.UnbindCostContentItem(), (this.YTn = void 0);
+    this.bLn.UnbindCostContentItem(), (this.bLn = void 0);
   }
   RefreshTitle(t) {
     t = t || "";

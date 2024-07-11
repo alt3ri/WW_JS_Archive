@@ -11,11 +11,11 @@ const UE = require("ue"),
 class TowerGuideView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.EPe = void 0),
-      (this.ACt = () => {
+      (this.SPe = void 0),
+      (this.Vgt = () => {
         this.CloseMe(),
-          this.EPe?.StopCurrentSequence(!1, !0),
-          this.EPe?.PlayLevelSequenceByName("Close");
+          this.SPe?.StopCurrentSequence(!1, !0),
+          this.SPe?.PlayLevelSequenceByName("Close");
       });
   }
   OnRegisterComponent() {
@@ -35,18 +35,18 @@ class TowerGuideView extends UiViewBase_1.UiViewBase {
       [12, UE.UIItem],
       [14, UE.UIItem],
     ]),
-      (this.BtnBindInfo = [[2, this.ACt]]);
+      (this.BtnBindInfo = [[2, this.Vgt]]);
   }
   OnStart() {
     this.GetItem(14).SetUIActive(!1),
-      (this.EPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem)),
+      (this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem)),
       this.GetItem(4)?.SetUIActive(!1),
       new TowerGuidePanel_1.TowerGuidePanel().CreateThenShowByActorAsync(
         this.GetItem(3).GetOwner(),
       ),
       LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(1), "TowerGuideTitle"),
-      this.EPe?.StopCurrentSequence(!1, !0),
-      this.EPe?.PlayLevelSequenceByName("StartAtOnce");
+      this.SPe?.StopCurrentSequence(!1, !0),
+      this.SPe?.PlayLevelSequenceByName("StartAtOnce");
   }
   OnAfterDestroy() {
     EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.OnTowerGuideClose);

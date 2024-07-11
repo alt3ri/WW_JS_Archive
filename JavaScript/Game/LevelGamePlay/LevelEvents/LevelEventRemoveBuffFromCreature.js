@@ -46,7 +46,7 @@ class LevelEventRemoveBuffFromCreature extends LevelGeneralBase_1.LevelEventBase
     for (const o of this.fLe) {
       var e = ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(o);
       if (e?.IsInit) {
-        var t = e.Entity.GetComponent(157);
+        var t = e.Entity.GetComponent(159);
         for (const r of this.gLe.BuffIds)
           t.RemoveBuff(BigInt(r), -1, "LevelEventRemoveBuffFromCreature");
       }

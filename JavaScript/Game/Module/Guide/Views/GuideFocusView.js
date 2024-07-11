@@ -15,22 +15,22 @@ class GuideFocusView extends GuideBaseView_1.GuideBaseView {
     super(...arguments),
       (this.Config = void 0),
       (this.IsAttachItemsReady = !1),
-      (this.ozt = !1),
+      (this.oZt = !1),
       (this.ReadyToShow = !1),
-      (this.rzt = 4e3),
-      (this.nzt = void 0),
-      (this.szt = void 0),
-      (this.azt = () => {
+      (this.rZt = 4e3),
+      (this.nZt = void 0),
+      (this.sZt = void 0),
+      (this.aZt = () => {
         var t;
-        !this.hzt ||
+        !this.hZt ||
           ((t = UiManager_1.UiManager.GetViewByName(
             "BattleView",
           )?.GetGuideUiItemAndUiItemForShowEx(this.Config.ExtraParam)) &&
             t[0] === this.GuideStepInfo?.ViewData?.GetAttachedUiItem()) ||
           this.GuideStepInfo.SwitchState(3);
       }),
-      (this.lzt = () => {
-        var t = this._zt();
+      (this.lZt = () => {
+        var t = this._Zt();
         this.SetActive(t),
           this.IsAttachItemsReady !== t &&
             (this.IsAttachItemsReady = t) &&
@@ -42,12 +42,12 @@ class GuideFocusView extends GuideBaseView_1.GuideBaseView {
                 "[聚焦引导界面:CheckAttachedItemVisible 附着UI对象可见性检查通过]",
                 ["引导步骤", this.GuideStepInfo.Id],
               ),
-            this.uzt());
+            this.uZt());
       }),
-      (this.czt = () => {
+      (this.cZt = () => {
         this.UiViewSequence.PlaySequence("AutoLoopManual");
       }),
-      (this.mzt = (t, i) => {
+      (this.mZt = (t, i) => {
         (this.RootItem && !this.RootItem.bIsUIActive) ||
           (t &&
             (this.CombineInputMap.set(t, i), !this.IsAllCombineInputPass())) ||
@@ -68,38 +68,38 @@ class GuideFocusView extends GuideBaseView_1.GuideBaseView {
   OnGuideBaseViewStart() {
     switch (
       (this.GetRootItem().SetAlpha(0),
-      (this.rzt = 4e3),
+      (this.rZt = 4e3),
       this.Config.ContentDirection)
     ) {
       case "D":
-        this.szt = "StartManualUp";
+        this.sZt = "StartManualUp";
         break;
       case "U":
-        this.szt = "StartManualDown";
+        this.sZt = "StartManualDown";
         break;
       case "L":
-        this.szt = "StartManualRight";
+        this.sZt = "StartManualRight";
         break;
       case "R":
-        this.szt = "StartManualLeft";
+        this.sZt = "StartManualLeft";
     }
-    this.szt && this.UiViewSequence.AddSequenceFinishEvent(this.szt, this.czt);
+    this.sZt && this.UiViewSequence.AddSequenceFinishEvent(this.sZt, this.cZt);
   }
   OnGuideBaseViewAddEvent() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnSkillButtonIndexRefresh,
-      this.azt,
+      this.aZt,
     );
   }
   OnGuideBaseViewRemoveEvent() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnSkillButtonIndexRefresh,
-      this.azt,
+      this.aZt,
     );
   }
   OnGuideViewAfterShow() {
     this.RootItem.SetRaycastTarget(!1),
-      this.lzt(),
+      this.lZt(),
       this.BindInputAfterSequence(),
       InputManager_1.InputManager.SetShowCursor(this.Config.ShowMouse);
   }
@@ -110,9 +110,9 @@ class GuideFocusView extends GuideBaseView_1.GuideBaseView {
       EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.RefreshCursor);
   }
   OnGuideBaseViewDestroy() {
-    this.nzt && (this.nzt.Destroy(), (this.nzt = void 0));
+    this.nZt && (this.nZt.Destroy(), (this.nZt = void 0));
   }
-  get hzt() {
+  get hZt() {
     return (
       "BattleView" === this.Config?.ViewName &&
       this.Config.ExtraParam &&
@@ -120,15 +120,15 @@ class GuideFocusView extends GuideBaseView_1.GuideBaseView {
     );
   }
   OnGuideBaseViewTick(t) {
-    this.lzt(),
+    this.lZt(),
       this.IsShow &&
         this.Config.ShowMouse &&
         InputManager_1.InputManager.SetShowCursor(!0),
-      this.nzt?.OnTick(t),
-      this.dzt(),
-      this.ozt &&
+      this.nZt?.OnTick(t),
+      this.dZt(),
+      this.oZt &&
         !this.IsAttachItemsReady &&
-        ((this.rzt -= t), this.rzt < 0) &&
+        ((this.rZt -= t), this.rZt < 0) &&
         (Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "Guide",
@@ -139,9 +139,9 @@ class GuideFocusView extends GuideBaseView_1.GuideBaseView {
         this.CloseMe());
   }
   OnDurationChange(t) {
-    this.nzt?.OnDurationChange(t);
+    this.nZt?.OnDurationChange(t);
   }
-  _zt() {
+  _Zt() {
     var t = this.GuideStepInfo.ViewData.GetAttachedView();
     if (
       !t ||
@@ -150,19 +150,19 @@ class GuideFocusView extends GuideBaseView_1.GuideBaseView {
       !t.IsShow ||
       this.HasConflictView()
     )
-      return (this.ozt = !1);
-    this.ozt = !0;
+      return (this.oZt = !1);
+    this.oZt = !0;
     t = this.GuideStepInfo.ViewData.GetAttachedUiItemForShow();
     return !(
       !ObjectUtils_1.ObjectUtils.IsValid(t) || !t.IsUIActiveInHierarchy()
     );
   }
-  uzt() {
+  uZt() {
     var t,
       i = this.GuideStepInfo.ViewData.GetAttachedUiItem();
     i?.IsValid() &&
       ((t = this.GuideStepInfo.ViewData.GetAttachedUiItemForShow()),
-      (this.nzt = this.Czt(i, t)),
+      (this.nZt = this.CZt(i, t)),
       Log_1.Log.CheckDebug()) &&
       Log_1.Log.Debug(
         "Guide",
@@ -173,12 +173,12 @@ class GuideFocusView extends GuideBaseView_1.GuideBaseView {
         ["框住的显示节点名称", t.GetDisplayName()],
       );
   }
-  dzt() {
+  dZt() {
     this.GetActive() &&
       this.ReadyToShow &&
       ((this.ReadyToShow = !1),
       this.GetRootItem().SetAlpha(1),
-      this.szt ? this.UiViewSequence.PlaySequence(this.szt) : this.czt(),
+      this.sZt ? this.UiViewSequence.PlaySequence(this.sZt) : this.cZt(),
       Log_1.Log.CheckDebug()) &&
       Log_1.Log.Debug("Guide", 17, "[聚焦引导界面:ShowInner 真正显示]", [
         "引导步骤",
@@ -196,14 +196,14 @@ class GuideFocusView extends GuideBaseView_1.GuideBaseView {
   }
   BindInputAfterSequence() {
     var t = this.Config.InputEnums;
-    this.BindInput(this.Config.InputEnums, t, this.mzt);
+    this.BindInput(this.Config.InputEnums, t, this.mZt);
   }
   OnGuideViewCloseWhenFinish() {
     this.UiViewSequence?.HasSequenceNameInPlaying("Start") &&
       this.UiViewSequence.StopPrevSequence(!1, !0),
-      this.nzt?.OnBaseViewCloseWhenFinish();
+      this.nZt?.OnBaseViewCloseWhenFinish();
   }
-  Czt(t, i) {
+  CZt(t, i) {
     var e = this.GetItem(0),
       t = (e.SetActive(!1), new GuideFocusItem_1.GuideFocusItem(t, i, this));
     return t.Init(e), t;

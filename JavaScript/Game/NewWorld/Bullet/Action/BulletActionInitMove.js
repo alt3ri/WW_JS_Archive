@@ -35,32 +35,32 @@ class BulletActionInitMove extends BulletActionBase_1.BulletActionBase {
   constructor() {
     super(...arguments),
       (this.Pe = void 0),
-      (this.t5o = !1),
-      (this.i5o = void 0),
-      (this.o5o = void 0),
-      (this.r5o = !1);
+      (this.z5o = !1),
+      (this.Z5o = void 0),
+      (this.eVo = void 0),
+      (this.tVo = !1);
   }
-  get n5o() {
+  get iVo() {
     return (
-      this.t5o ||
-        ((this.t5o = !0),
-        (this.i5o = this.s5o(this.a5o, this.Pe.Move.SkeletonComponentName))),
-      this.i5o
+      this.z5o ||
+        ((this.z5o = !0),
+        (this.Z5o = this.oVo(this.rVo, this.Pe.Move.SkeletonComponentName))),
+      this.Z5o
     );
   }
-  set a5o(t) {
-    this.o5o !== t && ((this.o5o = t), (this.t5o = !1), (this.i5o = void 0));
+  set rVo(t) {
+    this.eVo !== t && ((this.eVo = t), (this.z5o = !1), (this.Z5o = void 0));
   }
-  get a5o() {
-    return this.o5o || (this.o5o = this.BulletInfo.AttackerActorComp), this.o5o;
+  get rVo() {
+    return this.eVo || (this.eVo = this.BulletInfo.AttackerActorComp), this.eVo;
   }
   Clear() {
     super.Clear(),
       (this.Pe = void 0),
-      (this.t5o = !1),
-      (this.i5o = void 0),
-      (this.o5o = void 0),
-      (this.r5o = !1);
+      (this.z5o = !1),
+      (this.Z5o = void 0),
+      (this.eVo = void 0),
+      (this.tVo = !1);
   }
   OnExecute() {
     var t = this.BulletInfo.BulletInitParams;
@@ -78,8 +78,8 @@ class BulletActionInitMove extends BulletActionBase_1.BulletActionBase {
             FNameUtil_1.FNameUtil.GetDynamicFName(r.SkillTargetSocket)),
         (i.BulletSpeed = l.Speed),
         i.ObstaclesOffset.FromUeVector(o.Center),
-        this.l5o(),
-        this._5o(),
+        this.sVo(),
+        this.aVo(),
         e.Base),
       o = e.Aimed;
     if (
@@ -87,16 +87,18 @@ class BulletActionInitMove extends BulletActionBase_1.BulletActionBase {
         o.AimedCtrlDir &&
         (t.FromRemote
           ? i.BeginSpeedRotator.FromUeRotator(t.InitialTransform.Rotator())
-          : this.c5o(i.BeginSpeedRotator),
+          : this.lVo(i.BeginSpeedRotator),
         this.BulletInfo.SetActorRotation(i.BeginSpeedRotator.ToUeRotator())),
-      this.m5o(),
-      this.d5o(),
-      this.C5o(),
-      this.g5o(),
+      this._Vo(),
+      this.uVo(),
+      this.cVo(),
+      this.mVo(),
       0 < l.TrackParams.length)
     ) {
       const e = l.TrackParams[0];
-      (i.MinFollowHeight = e.Y), (i.SpeedFollowTarget = e.X);
+      (i.MinFollowHeight = e.Y),
+        (i.SpeedFollowTarget = e.X),
+        0 < e.Z && (i.FollowTargetBottom = !1);
     }
     i.LastFramePosition.FromUeVector(this.BulletInfo.GetActorLocation()),
       i.FollowBoneBulletRotator.FromUeRotator(
@@ -104,7 +106,7 @@ class BulletActionInitMove extends BulletActionBase_1.BulletActionBase {
       ),
       this.BulletInfo.ApplyCacheLocationAndRotation();
   }
-  s5o(t, e) {
+  oVo(t, e) {
     if (e !== StringUtils_1.NONE_STRING) {
       var l = t.Actor.K2_GetComponentsByClass(
           UE.SkeletalMeshComponent.StaticClass(),
@@ -117,13 +119,13 @@ class BulletActionInitMove extends BulletActionBase_1.BulletActionBase {
     }
     return t.SkeletalMesh;
   }
-  f5o(t) {
+  dVo(t) {
     var e,
       l,
       o = this.Pe.Move;
     0 === o.FollowType
       ? ((l = this.BulletInfo),
-        (e = this.s5o(
+        (e = this.oVo(
           t?.Valid ? t : l.AttackerActorComp,
           o.SkeletonComponentName,
         )),
@@ -133,7 +135,7 @@ class BulletActionInitMove extends BulletActionBase_1.BulletActionBase {
         l.InitPosition.FromUeVector(l.ActorComponent.ActorLocationProxy))
       : 3 === o.FollowType &&
         ((e = this.BulletInfo),
-        (l = this.s5o(
+        (l = this.oVo(
           t?.Valid ? t : e.AttackerActorComp,
           o.SkeletonComponentName,
         )),
@@ -154,14 +156,14 @@ class BulletActionInitMove extends BulletActionBase_1.BulletActionBase {
         ),
         e.InitPosition.FromUeVector(e.ActorComponent.ActorLocationProxy));
   }
-  l5o() {
+  sVo() {
     var t = this.BulletInfo;
     switch (this.Pe.Base.BornPositionStandard) {
       case 0:
-        this.p5o(t.AttackerActorComp);
+        this.CVo(t.AttackerActorComp);
         break;
       case 1:
-        this.v5o(t.BaseTransformEntity?.Entity?.GetComponent(1));
+        this.gVo(t.BaseTransformEntity?.Entity?.GetComponent(1));
         break;
       case 7:
       case 8:
@@ -169,38 +171,38 @@ class BulletActionInitMove extends BulletActionBase_1.BulletActionBase {
       case 10:
       case 9:
       case 4:
-        this.M5o(t.BaseTransformEntity);
+        this.fVo(t.BaseTransformEntity);
         break;
       case 3:
-        this.E5o(t);
+        this.vVo(t);
         break;
       case 2:
-        this.y5o(MathUtils_1.MathUtils.DefaultTransformProxy);
+        this.MVo(MathUtils_1.MathUtils.DefaultTransformProxy);
         break;
       case 6:
-        this.I5o();
+        this.EVo();
     }
   }
-  p5o(t) {
-    this.y5o(void 0), this.f5o(t);
+  CVo(t) {
+    this.MVo(void 0), this.dVo(t);
   }
-  v5o(t) {
+  gVo(t) {
     var e = BulletMoveInfo_1.BulletMoveInfo.TempTransform1;
-    this.T5o(t, e),
-      this.y5o(e),
-      (0, RegisterComponent_1.isComponentInstance)(t, 3) && this.f5o(t);
+    this.SVo(t, e),
+      this.MVo(e),
+      (0, RegisterComponent_1.isComponentInstance)(t, 3) && this.dVo(t);
   }
-  M5o(t) {
+  fVo(t) {
     var e = BulletMoveInfo_1.BulletMoveInfo.TempTransform1,
       t = t?.Entity?.GetComponent(1);
     (0, RegisterComponent_1.isComponentInstance)(t, 3)
-      ? (this.T5o(t, e), (this.a5o = t), this.y5o(e), this.f5o(t))
-      : (this.T5o(t, e), this.y5o(e));
+      ? (this.SVo(t, e), (this.rVo = t), this.MVo(e), this.dVo(t))
+      : (this.SVo(t, e), this.MVo(e));
   }
-  E5o(t) {
+  vVo(t) {
     var e, l, o, i, r;
     4 === this.Pe.Move.FollowType
-      ? this.L5o(t)
+      ? this.yVo(t)
       : ((e = BulletMoveInfo_1.BulletMoveInfo.TempTransform1),
         (o = t.BulletInitParams),
         (i = this.Pe.Base),
@@ -211,7 +213,7 @@ class BulletActionInitMove extends BulletActionBase_1.BulletActionBase {
           Vector_1.Vector.ZeroVectorProxy,
           MathCommon_1.MathCommon.KindaSmallNumber,
         )
-          ? this.y5o(e)
+          ? this.MVo(e)
           : ((o = i.BornPositionRandom),
             (i = BulletPool_1.BulletPool.CreateVector()),
             (r = BulletPool_1.BulletPool.CreateVector()),
@@ -231,7 +233,7 @@ class BulletActionInitMove extends BulletActionBase_1.BulletActionBase {
             BulletPool_1.BulletPool.RecycleVector(r)),
         BulletPool_1.BulletPool.RecycleVector(l));
   }
-  L5o(t) {
+  yVo(t) {
     var e,
       l = ModelManager_1.ModelManager.BulletModel.GetBulletEntityById(
         t.ParentEntityId,
@@ -259,17 +261,17 @@ class BulletActionInitMove extends BulletActionBase_1.BulletActionBase {
             ["BulletRowName", t.BulletRowName],
             ["ParentEntityId", t.ParentEntityId],
           ),
-        this.y5o(void 0));
+        this.MVo(void 0));
   }
-  I5o() {
+  EVo() {
     var t = BulletUtil_1.BulletUtil.GetCurrentRole(this.BulletInfo),
       e = BulletMoveInfo_1.BulletMoveInfo.TempTransform1;
     e.FromUeTransform(t.ActorTransform),
-      (this.a5o = t),
-      this.y5o(e),
-      this.f5o(t);
+      (this.rVo = t),
+      this.MVo(e),
+      this.dVo(t);
   }
-  y5o(t) {
+  MVo(t) {
     var e = this.BulletInfo,
       l = e.MoveInfo,
       o = this.Pe.Base,
@@ -289,8 +291,8 @@ class BulletActionInitMove extends BulletActionBase_1.BulletActionBase {
             _.AdditionEqual(e.BornLocationOffset)),
         BulletPool_1.BulletPool.CreateVector()),
       s = BulletPool_1.BulletPool.CreateVector();
-    FNameUtil_1.FNameUtil.IsEmpty(i.BoneName) || !this.n5o
-      ? (1 !== o.BornPositionStandard && (_.Z -= a.ScaledHalfHeight),
+    FNameUtil_1.FNameUtil.IsNothing(i.BoneName) || !this.iVo
+      ? (0 === o.BornPositionStandard && (_.Z -= a.ScaledHalfHeight),
         (
           t ||
           ((o = BulletMoveInfo_1.BulletMoveInfo.TempTransform1).SetRotation(
@@ -301,7 +303,7 @@ class BulletActionInitMove extends BulletActionBase_1.BulletActionBase {
           o)
         ).TransformPosition(_, r))
       : (l.SocketTransform.FromUeTransform(
-          this.n5o.GetSocketTransform(i.BoneName, 0),
+          this.iVo.GetSocketTransform(i.BoneName, 0),
         ),
         r.FromUeVector(l.SocketTransform.GetLocation()),
         a.ActorQuatProxy.RotateVector(_, s),
@@ -312,7 +314,7 @@ class BulletActionInitMove extends BulletActionBase_1.BulletActionBase {
       BulletPool_1.BulletPool.RecycleVector(r),
       BulletPool_1.BulletPool.RecycleVector(s);
   }
-  T5o(t, e) {
+  SVo(t, e) {
     var l = this.BulletInfo,
       o = l.AttackerActorComp;
     t
@@ -320,24 +322,24 @@ class BulletActionInitMove extends BulletActionBase_1.BulletActionBase {
         (t = BulletPool_1.BulletPool.CreateVector()).FromUeVector(
           e.GetLocation(),
         ),
-        this.D5o(t),
+        this.IVo(t),
         e.SetLocation(t),
         BulletPool_1.BulletPool.RecycleVector(t))
       : (e.Reset(),
         (l = BulletPool_1.BulletPool.CreateVector()).FromUeVector(
           o.ActorLocation,
         ),
-        this.D5o(l),
+        this.IVo(l),
         e.SetLocation(l),
         BulletPool_1.BulletPool.RecycleVector(l)),
       e.SetRotation(o.ActorQuat);
   }
-  D5o(t) {
+  IVo(t) {
     var e,
       l,
       o = this.BulletInfo,
       i = this.BulletInfo.BulletDataMain.Base,
-      r = ((this.r5o = !1), BulletPool_1.BulletPool.CreateVector()),
+      r = ((this.tVo = !1), BulletPool_1.BulletPool.CreateVector()),
       i = (r.FromUeVector(i.BornDistLimit), r.Y),
       a = r.X,
       _ = r.Z;
@@ -349,9 +351,9 @@ class BulletActionInitMove extends BulletActionBase_1.BulletActionBase {
           r.Normalize(),
           r.MultiplyEqual(i),
           r.AdditionEqual(e),
-          (this.r5o = !0))
+          (this.tVo = !0))
         : l <= a
-          ? ((this.r5o = !0),
+          ? ((this.tVo = !0),
             o.TargetActorComp?.Valid
               ? (r.SubtractionEqual(e), r.Normalize(), r.MultiplyEqual(a))
               : (r.FromUeVector(o.AttackerActorComp.ActorForward),
@@ -361,7 +363,7 @@ class BulletActionInitMove extends BulletActionBase_1.BulletActionBase {
       t.FromUeVector(r)),
       BulletPool_1.BulletPool.RecycleVector(r);
   }
-  c5o(t) {
+  lVo(t) {
     var e = this.BulletInfo,
       l = this.BulletInfo.BulletDataMain.Aimed,
       o = Global_1.Global.CharacterCameraManager,
@@ -456,43 +458,50 @@ class BulletActionInitMove extends BulletActionBase_1.BulletActionBase {
       BulletPool_1.BulletPool.RecycleVector(a),
       BulletPool_1.BulletPool.RecycleVector(_);
   }
-  _5o() {
+  aVo() {
     var t,
       e,
       l,
-      o = this.Pe.Aimed,
-      i = this.Pe.Move;
-    o.AimedCtrlDir ||
-      3 === i.FollowType ||
-      5 === i.Trajectory ||
-      4 === i.Trajectory ||
-      ((t = (o = this.BulletInfo).MoveInfo),
+      o,
+      i,
+      r = this.Pe.Aimed,
+      a = this.Pe.Move;
+    r.AimedCtrlDir ||
+      3 === a.FollowType ||
+      5 === a.Trajectory ||
+      4 === a.Trajectory ||
+      ((t = (r = this.BulletInfo).MoveInfo),
       (e = this.Pe.Base),
-      this.R5o(t.BeginSpeedRotator),
+      this.TVo(t.BeginSpeedRotator),
       (l = BulletPool_1.BulletPool.CreateRotator()),
-      i.InitVelocityRot.IsNearlyZero() ||
+      a.InitVelocityRot.IsNearlyZero() ||
         (l.FromUeRotator(t.BeginSpeedRotator),
         MathUtils_1.MathUtils.ComposeRotator(
-          i.InitVelocityRot,
+          a.InitVelocityRot,
           l,
           t.BeginSpeedRotator,
         )),
+      (o = r.BulletInitParams.BeginRotatorOffset) &&
+        ((i = BulletPool_1.BulletPool.CreateRotator()).FromUeRotator(o),
+        l.FromUeRotator(t.BeginSpeedRotator),
+        MathUtils_1.MathUtils.ComposeRotator(i, l, t.BeginSpeedRotator),
+        BulletPool_1.BulletPool.RecycleRotator(i)),
       (e.StickGround && !e.IgnoreGradient) ||
-        (e.Rotator.IsNearlyZero() || (o.IsCollisionRelativeRotationModify = !0),
-        i.InitVelocityDirRandom.IsZero() ||
-          this.U5o(t.BeginSpeedRotator, i.InitVelocityDirRandom),
-        BulletUtil_1.BulletUtil.ClampBeginRotator(o),
-        o.SetActorRotation(t.BeginSpeedRotator)),
+        (e.Rotator.IsNearlyZero() || (r.IsCollisionRelativeRotationModify = !0),
+        a.InitVelocityDirRandom.IsZero() ||
+          this.LVo(t.BeginSpeedRotator, a.InitVelocityDirRandom),
+        BulletUtil_1.BulletUtil.ClampBeginRotator(r),
+        r.SetActorRotation(t.BeginSpeedRotator)),
       BulletPool_1.BulletPool.RecycleRotator(l));
   }
-  U5o(t, e) {
+  LVo(t, e) {
     var l, o;
     0 < e.X
       ? ((o = BulletPool_1.BulletPool.CreateVector()),
         this.BulletInfo.BulletInitParams.FromRemote
           ? o.FromUeVector(this.BulletInfo.RandomInitSpeedOffset)
           : ((l = UE.KismetMathLibrary.RandomUnitVectorInConeInDegrees(
-              Vector_1.Vector.OneVector,
+              Vector_1.Vector.ForwardVector,
               e.X,
             )),
             o.FromUeVector(l),
@@ -517,7 +526,7 @@ class BulletActionInitMove extends BulletActionBase_1.BulletActionBase {
         BulletPool_1.BulletPool.RecycleRotator(l),
         BulletPool_1.BulletPool.RecycleRotator(o));
   }
-  R5o(t) {
+  TVo(t) {
     let e = void 0;
     var l = this.BulletInfo,
       o = l.MoveInfo,
@@ -614,7 +623,7 @@ class BulletActionInitMove extends BulletActionBase_1.BulletActionBase {
     }
     t.FromUeRotator(Rotator_1.Rotator.ZeroRotatorProxy);
   }
-  d5o() {
+  uVo() {
     var e = this.BulletInfo,
       l = e.MoveInfo,
       o = e.BulletDataMain.Move;
@@ -645,7 +654,7 @@ class BulletActionInitMove extends BulletActionBase_1.BulletActionBase {
       } else {
         r = e.TargetActorComp;
         r?.Valid
-          ? (this.A5o(r),
+          ? (this.DVo(r),
             (t = r.ActorRotation.Yaw),
             i.FromUeVector(r.ActorForward))
           : (l.RoundCenter.FromUeVector(e.InitPosition),
@@ -669,7 +678,7 @@ class BulletActionInitMove extends BulletActionBase_1.BulletActionBase {
         BulletPool_1.BulletPool.RecycleVector(o);
     }
   }
-  A5o(t) {
+  DVo(t) {
     var e = this.BulletInfo,
       l = e.MoveInfo;
     e.ClearCacheLocationAndRotation(),
@@ -679,144 +688,148 @@ class BulletActionInitMove extends BulletActionBase_1.BulletActionBase {
       ),
       l.RoundCenterLastLocation.FromUeVector(t.ActorLocation);
   }
-  C5o() {
-    var i = this.Pe.Move,
-      r = i.Trajectory,
-      a = 4 === r;
-    if (a || 5 === r) {
-      r = i.TrackParams;
-      if (r && !(r.length < 2)) {
-        var _ = this.BulletInfo,
-          s = _.MoveInfo;
+  cVo() {
+    var r = this.Pe.Move,
+      a = r.Trajectory,
+      _ = 4 === a;
+    if (_ || 5 === a) {
+      a = r.TrackParams;
+      if (a && !(a.length < 2)) {
+        var s = this.BulletInfo,
+          h = s.MoveInfo;
         let t = 0,
           e = !1,
-          l = 0;
-        a
-          ? (h = r[2]) && ((t = h.X), (e = 0 < h.Z), (l = h.Y))
-          : (h = r[1]) && (t = h.Y),
-          s.GravityMoveRotator.Reset();
-        var h = _.Attacker?.GetComponent(3),
-          n = _.TargetActorComp,
-          u = BulletPool_1.BulletPool.CreateVector(),
-          B = FNameUtil_1.FNameUtil.GetDynamicFName(i.TrackTargetBlackboardKey),
-          B = BulletUtil_1.BulletUtil.GetTargetLocation(
-            n,
-            FNameUtil_1.FNameUtil.IsNothing(B) ? _.SkillBoneName : B,
-            _,
+          l = 0,
+          o = void 0;
+        _
+          ? ((n = a[2]), (o = a[3]), n && ((t = n.X), (e = 0 < n.Z), (l = n.Y)))
+          : ((n = a[1]), (o = a[2]), n && (t = n.Y)),
+          h.GravityMoveRotator.Reset();
+        var n = s.Attacker?.GetComponent(3),
+          u = s.TargetActorComp,
+          B = BulletPool_1.BulletPool.CreateVector(),
+          m = FNameUtil_1.FNameUtil.GetDynamicFName(r.TrackTargetBlackboardKey),
+          m = BulletUtil_1.BulletUtil.GetTargetLocation(
+            u,
+            FNameUtil_1.FNameUtil.IsNothing(m) ? s.SkillBoneName : m,
+            s,
           );
-        if (B) {
-          n?.Valid && (0, RegisterComponent_1.isComponentInstance)(n, 3)
-            ? (u.FromUeVector(B),
+        if (m) {
+          u?.Valid && (0, RegisterComponent_1.isComponentInstance)(u, 3)
+            ? (B.FromUeVector(m),
               0 !== t &&
-                (u.Z += n.Actor.CapsuleComponent.CapsuleHalfHeight * t),
+                (B.Z += u.Actor.CapsuleComponent.CapsuleHalfHeight * t),
               e &&
-                (m = n.Entity?.GetComponent(161)) &&
-                (u.Z -= m.GetHeightAboveGround()))
-            : u.FromUeVector(B);
-          var m = BulletPool_1.BulletPool.CreateVector(!0);
-          const P = BulletPool_1.BulletPool.CreateVector();
-          switch (i.DestOffsetForward) {
+                (c = u.Entity?.GetComponent(163)) &&
+                (B.Z -= c.GetHeightAboveGround()))
+            : B.FromUeVector(m);
+          var c = BulletPool_1.BulletPool.CreateVector(!0);
+          const C = BulletPool_1.BulletPool.CreateVector();
+          switch (r.DestOffsetForward) {
             case 0:
-              P.FromUeVector(_.AttackerActorComp.ActorForwardProxy);
+              C.FromUeVector(s.AttackerActorComp.ActorForwardProxy);
               break;
             case 2:
-              u.Subtraction(_.AttackerActorComp.ActorLocationProxy, P),
-                (P.Z = 0),
-                P.Normalize();
+              B.Subtraction(s.AttackerActorComp.ActorLocationProxy, C),
+                (C.Z = 0),
+                C.Normalize();
               break;
             case 1:
-              P.FromUeVector(n.ActorForwardProxy);
+              C.FromUeVector(u.ActorForwardProxy);
           }
-          var B = i.DestOffset.X,
-            c = i.DestOffset.Y,
-            v = i.DestOffset.Z;
-          0 !== c &&
-            ((M = BulletPool_1.BulletPool.CreateVector()),
-            Vector_1.Vector.CrossProduct(P, Vector_1.Vector.UpVectorProxy, M),
-            M.MultiplyEqual(c),
-            m.AdditionEqual(M),
-            BulletPool_1.BulletPool.RecycleVector(M)),
-            0 !== B && (P.MultiplyEqual(B), m.AdditionEqual(P)),
-            0 !== v &&
-              ((c = BulletPool_1.BulletPool.CreateVector()).FromUeVector(
+          var m = r.DestOffset.X,
+            v = r.DestOffset.Y,
+            M = r.DestOffset.Z;
+          0 !== v &&
+            ((P = BulletPool_1.BulletPool.CreateVector()),
+            Vector_1.Vector.CrossProduct(C, Vector_1.Vector.UpVectorProxy, P),
+            P.MultiplyEqual(v),
+            c.AdditionEqual(P),
+            BulletPool_1.BulletPool.RecycleVector(P)),
+            0 !== m && (C.MultiplyEqual(m), c.AdditionEqual(C)),
+            0 !== M &&
+              ((v = BulletPool_1.BulletPool.CreateVector()).FromUeVector(
                 Vector_1.Vector.UpVectorProxy,
               ),
-              c.MultiplyEqual(v),
-              m.AdditionEqual(c),
-              BulletPool_1.BulletPool.RecycleVector(c)),
-            u.AdditionEqual(m),
-            BulletPool_1.BulletPool.RecycleVector(m),
-            BulletPool_1.BulletPool.RecycleVector(P);
+              v.MultiplyEqual(M),
+              c.AdditionEqual(v),
+              BulletPool_1.BulletPool.RecycleVector(v)),
+            B.AdditionEqual(c),
+            BulletPool_1.BulletPool.RecycleVector(c),
+            BulletPool_1.BulletPool.RecycleVector(C);
         } else
-          u.FromUeVector(h.ActorForwardProxy),
-            u.MultiplyEqual(r[0].X),
-            u.AdditionEqual(h.ActorLocationProxy);
-        let o = 0;
-        var M = r[0],
-          c =
-            (a
-              ? ((v = 0 < (B = r[1]).Z ? B.Z : 1),
-                (s.Gravity = 0 !== M.Z ? M.Z : DEFAULT_GRAVITY),
-                (c = Vector_1.Vector.Dist2D(u, _.GetActorLocation())),
-                (c += l),
-                (c = Math.max(c, M.X)),
-                (c = Math.min(c, M.Y)),
-                (s.BulletSpeed2D = c / v),
-                (m = u.Z - _.GetActorLocation().Z),
-                (m = Math.max(m, B.X)),
-                (m = Math.min(m, B.Y)),
-                (s.BulletSpeedZ = m / v - 0.5 * s.Gravity * v),
-                (s.BulletSpeed = Math.sqrt(
-                  Math.pow(s.BulletSpeed2D, 2) + Math.pow(s.BulletSpeedZ, 2),
+          B.FromUeVector(n.ActorForwardProxy),
+            B.MultiplyEqual(a[0].X),
+            B.AdditionEqual(n.ActorLocationProxy);
+        let i = 0;
+        var P = a[0],
+          v =
+            (_
+              ? ((M = 0 < (m = a[1]).Z ? m.Z : 1),
+                (h.Gravity = 0 !== P.Z ? P.Z : DEFAULT_GRAVITY),
+                (v = Vector_1.Vector.Dist2D(B, s.GetActorLocation())),
+                (v += l),
+                (v = Math.max(v, P.X)),
+                (v = Math.min(v, P.Y)),
+                (h.BulletSpeed2D = v / M),
+                (c = B.Z - s.GetActorLocation().Z),
+                (c = Math.max(c, m.X)),
+                (c = Math.min(c, m.Y)),
+                (h.BulletSpeedZ = c / M - 0.5 * h.Gravity * M),
+                (h.BulletSpeed = Math.sqrt(
+                  Math.pow(h.BulletSpeed2D, 2) + Math.pow(h.BulletSpeedZ, 2),
                 )),
-                (o =
-                  Math.atan(s.BulletSpeedZ / s.BulletSpeed2D) *
+                (i =
+                  Math.atan(h.BulletSpeedZ / h.BulletSpeed2D) *
                   MathCommon_1.MathCommon.RadToDeg))
-              : ((o = r[1].X),
-                (s.Gravity = 0 !== M.Z ? M.Z : DEFAULT_GRAVITY),
-                (h = Vector_1.Vector.Dist2D(u, _.GetActorLocation())),
-                (a = u.Z - _.GetActorLocation().Z),
-                (s.BulletSpeed2D = Math.sqrt(
+              : ((i = a[1].X),
+                (h.Gravity = 0 !== P.Z ? P.Z : DEFAULT_GRAVITY),
+                (n = Vector_1.Vector.Dist2D(B, s.GetActorLocation())),
+                (_ = B.Z - s.GetActorLocation().Z),
+                (h.BulletSpeed2D = Math.sqrt(
                   Math.abs(
-                    (h * h * s.Gravity) /
-                      (2 * a -
-                        2 * Math.tan(o * MathCommon_1.MathCommon.DegToRad) * h),
+                    (n * n * h.Gravity) /
+                      (2 * _ -
+                        2 * Math.tan(i * MathCommon_1.MathCommon.DegToRad) * n),
                   ),
                 )),
-                (s.BulletSpeedZ =
-                  Math.tan(o * MathCommon_1.MathCommon.DegToRad) *
-                  s.BulletSpeed2D),
-                (s.BulletSpeed = Math.sqrt(
-                  Math.pow(s.BulletSpeed2D, 2) + Math.pow(s.BulletSpeedZ, 2),
+                (h.BulletSpeedZ =
+                  Math.tan(i * MathCommon_1.MathCommon.DegToRad) *
+                  h.BulletSpeed2D),
+                (h.BulletSpeed = Math.sqrt(
+                  Math.pow(h.BulletSpeed2D, 2) + Math.pow(h.BulletSpeedZ, 2),
                 )),
-                (s.BulletSpeed = Math.max(M.X, s.BulletSpeed)),
-                (s.BulletSpeed = Math.min(M.Y, s.BulletSpeed)),
-                (s.BulletSpeedZ =
-                  Math.sin(o * MathCommon_1.MathCommon.DegToRad) *
-                  s.BulletSpeed),
-                (s.BulletSpeed2D =
-                  Math.cos(o * MathCommon_1.MathCommon.DegToRad) *
-                  s.BulletSpeed)),
-            s.GravityMoveRotator);
-        const P = BulletPool_1.BulletPool.CreateVector();
-        u.Subtraction(_.GetActorLocation(), P),
-          P.Normalize(),
+                (h.BulletSpeed = Math.max(P.X, h.BulletSpeed)),
+                (h.BulletSpeed = Math.min(P.Y, h.BulletSpeed)),
+                (h.BulletSpeedZ =
+                  Math.sin(i * MathCommon_1.MathCommon.DegToRad) *
+                  h.BulletSpeed),
+                (h.BulletSpeed2D =
+                  Math.cos(i * MathCommon_1.MathCommon.DegToRad) *
+                  h.BulletSpeed)),
+            h.GravityMoveRotator);
+        const C = BulletPool_1.BulletPool.CreateVector();
+        B.Subtraction(s.GetActorLocation(), C),
+          C.Normalize(),
           MathUtils_1.MathUtils.LookRotationUpFirst(
-            P,
+            C,
             Vector_1.Vector.UpVectorProxy,
-            c,
+            v,
           ),
-          BulletPool_1.BulletPool.RecycleVector(P),
-          (c.Pitch = o),
-          i.InitVelocityRot.IsNearlyZero() ||
-            ((B = BulletPool_1.BulletPool.CreateRotator()).FromUeRotator(c),
-            MathUtils_1.MathUtils.ComposeRotator(i.InitVelocityRot, B, c),
-            BulletPool_1.BulletPool.RecycleRotator(B)),
-          BulletPool_1.BulletPool.RecycleVector(u);
+          BulletPool_1.BulletPool.RecycleVector(C),
+          (v.Pitch = i),
+          r.InitVelocityRot.IsNearlyZero() ||
+            ((m = BulletPool_1.BulletPool.CreateRotator()).FromUeRotator(v),
+            MathUtils_1.MathUtils.ComposeRotator(r.InitVelocityRot, m, v),
+            BulletPool_1.BulletPool.RecycleRotator(m)),
+          !o ||
+            (1 !== o.X && 2 !== o.X) ||
+            (s.SetActorRotation(v), (h.ActorRotateParabola = 2 === o.X)),
+          BulletPool_1.BulletPool.RecycleVector(B);
       }
     }
   }
-  g5o() {
+  mVo() {
     var t = this.BulletInfo,
       e = t.MoveInfo,
       l = t.AttackerMoveComp,
@@ -840,7 +853,7 @@ class BulletActionInitMove extends BulletActionBase_1.BulletActionBase {
             (i = l.DeltaBaseMovementSpeed) &&
               e.LastBaseMovementSpeed.FromUeVector(i)));
   }
-  m5o() {
+  _Vo() {
     var t = this.BulletInfo,
       e = this.Pe.Base;
     if (e.StickGround) {
@@ -876,7 +889,7 @@ class BulletActionInitMove extends BulletActionBase_1.BulletActionBase {
         s =
           (r.FromUeVector(t.GetActorLocation()),
           _?.Valid &&
-            !this.r5o &&
+            !this.tVo &&
             (0, RegisterComponent_1.isComponentInstance)(_, 3));
       let l = 0;
       (l = (
@@ -937,6 +950,6 @@ class BulletActionInitMove extends BulletActionBase_1.BulletActionBase {
     return 0 === t ? 0 : Math.random() * t;
   }
 }
-((exports.BulletActionInitMove = BulletActionInitMove).h5o = void 0),
-  (BulletActionInitMove.u5o = void 0);
+((exports.BulletActionInitMove = BulletActionInitMove).nVo = void 0),
+  (BulletActionInitMove.hVo = void 0);
 //# sourceMappingURL=BulletActionInitMove.js.map

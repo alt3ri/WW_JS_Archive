@@ -5,22 +5,31 @@ const Log_1 = require("../../../../Core/Common/Log"),
   StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
   UiNavigationNewController_1 = require("../New/UiNavigationNewController"),
   HotKeyComponent_1 = require("./HotKeyComponent"),
-  THRESHOLD = 0.6;
+  THRESHOLD = 0.1;
 class ScrollBarComponent extends HotKeyComponent_1.HotKeyComponent {
-  OnInputAxis(o, e) {
-    Math.abs(e) <= THRESHOLD ||
-      UiNavigationNewController_1.UiNavigationNewController.ScrollBarChangeSchedule(
-        e,
-      );
+  constructor() {
+    super(...arguments), (this.BBo = 0);
   }
-  OnRefreshSelfHotKeyState(o) {
-    var e = this.GetBindButtonTag();
-    StringUtils_1.StringUtils.IsEmpty(e)
+  OnInputAxis(t, o) {
+    Math.abs(o) <= THRESHOLD
+      ? 0 !== this.BBo &&
+        ((this.BBo = 0),
+        UiNavigationNewController_1.UiNavigationNewController.ScrollBarChangeSchedule(
+          0,
+        ))
+      : ((this.BBo = o),
+        UiNavigationNewController_1.UiNavigationNewController.ScrollBarChangeSchedule(
+          o,
+        ));
+  }
+  OnRefreshSelfHotKeyState(t) {
+    var o = this.GetBindButtonTag();
+    StringUtils_1.StringUtils.IsEmpty(o)
       ? Log_1.Log.CheckError() &&
         Log_1.Log.Error("UiNavigationHotKey", 11, "ScrollBar需要配置tag")
-      : (o = o.GetScrollbarData().GetCurrentListener()) &&
-          o.IsListenerActive() &&
-          o.TagArray?.Contains(e)
+      : (t = t.GetScrollbarData().GetCurrentListener()) &&
+          t.IsListenerActive() &&
+          t.TagArray?.Contains(o)
         ? this.SetVisibleMode(2, !0)
         : this.SetVisibleMode(2, !1);
   }

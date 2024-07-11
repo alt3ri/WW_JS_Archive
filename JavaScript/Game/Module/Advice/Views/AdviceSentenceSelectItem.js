@@ -10,15 +10,15 @@ const UE = require("ue"),
 class AdviceSentenceSelectItem extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
-      (this.K7e = void 0),
-      (this.T7e = () =>
+      (this.rje = void 0),
+      (this.Lke = () =>
         ModelManager_1.ModelManager.AdviceModel.CurrentSentenceSelectIndex !==
-        this.K7e),
-      (this.j7e = () => {
+        this.rje),
+      (this.ije = () => {
         ModelManager_1.ModelManager.AdviceModel.CurrentSentenceSelectIndex !==
-          this.K7e &&
+          this.rje &&
           ((ModelManager_1.ModelManager.AdviceModel.CurrentSentenceSelectIndex =
-            this.K7e),
+            this.rje),
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.OnClickAdviceSort,
           ));
@@ -37,27 +37,27 @@ class AdviceSentenceSelectItem extends UiPanelBase_1.UiPanelBase {
   }
   OnStart() {
     var e = this.GetExtendToggle(0);
-    e.CanExecuteChange.Unbind(), e.CanExecuteChange.Bind(this.T7e);
+    e.CanExecuteChange.Unbind(), e.CanExecuteChange.Bind(this.Lke);
   }
   UpdateItem(e) {
     this.GetExtendToggle(0).OnStateChange.Clear(),
-      this.GetExtendToggle(0).OnStateChange.Add(this.j7e),
-      (this.K7e = e),
+      this.GetExtendToggle(0).OnStateChange.Add(this.ije),
+      (this.rje = e),
       this.Og(),
-      this.Q7e();
+      this.nje();
   }
   Og() {
     var e = this.GetExtendToggle(0).ToggleState,
       t =
         ModelManager_1.ModelManager.AdviceModel.CurrentSentenceSelectIndex !==
-        this.K7e
+        this.rje
           ? 0
           : 1;
     e !== t && this.GetExtendToggle(0).SetToggleStateForce(t, !1);
   }
-  Q7e() {
+  nje() {
     let e = "";
-    (e = 0 === this.K7e ? "AdviceFirstSentence" : "AdviceSecondSentence"),
+    (e = 0 === this.rje ? "AdviceFirstSentence" : "AdviceSecondSentence"),
       LguiUtil_1.LguiUtil.SetLocalText(this.GetText(4), e);
   }
   OnBeforeDestroy() {}

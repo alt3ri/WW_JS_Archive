@@ -3,6 +3,8 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiAssistant = exports.ESequenceEventName = void 0);
 const UE = require("ue"),
   CustomPromise_1 = require("../../../../../Core/Common/CustomPromise"),
+  LanguageSystem_1 = require("../../../../../Core/Common/LanguageSystem"),
+  Log_1 = require("../../../../../Core/Common/Log"),
   Queue_1 = require("../../../../../Core/Container/Queue"),
   Event_1 = require("../../../../../Core/Event/Event"),
   EventDefine_1 = require("../../../../Common/Event/EventDefine"),
@@ -14,7 +16,9 @@ const UE = require("ue"),
   UiManager_1 = require("../../../../Ui/UiManager"),
   SequenceController_1 = require("../SequenceController"),
   SequenceDefine_1 = require("../SequenceDefine"),
-  SeqBaseAssistant_1 = require("./SeqBaseAssistant");
+  SeqBaseAssistant_1 = require("./SeqBaseAssistant"),
+  SUBTITLE_ACTION_PAUSE = "Action",
+  OPTION_ACTION_PAUSE = "Option";
 var ESequenceEventName;
 !(function (e) {
   (e[(e.UpdateSeqSubtitle = 0)] = "UpdateSeqSubtitle"),
@@ -27,34 +31,44 @@ var ESequenceEventName;
     exports.ESequenceEventName || (exports.ESequenceEventName = {})),
 );
 class CacheDialogueData {
-  constructor(e, t, i, r, n) {
+  constructor(e, t, i, r, o, n) {
     (this.Show = e),
       (this.DialogueId = t),
       (this.GuardTime = i),
       (this.AudioDelay = r),
-      (this.AudioTransitionDuration = n);
+      (this.AudioTransitionDuration = o),
+      (this.LanguageAudio = n);
   }
 }
 class UiAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
   constructor() {
     super(...arguments),
       (this.Event = new Event_1.Event(ESequenceEventName)),
-      (this.kto = new Queue_1.Queue()),
-      (this.Fto = !1),
-      (this.yze = (e) => {
+      (this.qio = new Queue_1.Queue()),
+      (this.Gio = !1),
+      (this.bZe = (e) => {
         this.Promise?.SetResult(e), (this.Promise = void 0);
       }),
-      (this.OnShowDialogue = (e, t, i, r, n) => {
+      (this.OnShowDialogue = (e, t, i, r, o, n) => {
         3 === this.Model.State &&
-          ((i = i / SequenceDefine_1.FRAME_PER_MILLISECOND),
-          this.kto.Push(new CacheDialogueData(e, t, i, r, n)));
+          (Log_1.Log.CheckDebug() &&
+            Log_1.Log.Debug(
+              "Plot",
+              27,
+              "字幕事件触发",
+              ["bShow", e],
+              ["id", t],
+              ["language", n],
+            ),
+          (i = i / SequenceDefine_1.FRAME_PER_MILLISECOND),
+          this.qio.Push(new CacheDialogueData(e, t, i, r, o, n)));
       });
   }
   async LoadPromise() {
     return (
       (this.Promise = new CustomPromise_1.CustomPromise()),
       ControllerHolder_1.ControllerHolder.PlotController.WaitViewCallback(
-        this.yze,
+        this.bZe,
       ),
       this.Promise
         ? this.Promise.Promise
@@ -62,11 +76,31 @@ class UiAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
     );
   }
   PreAllPlay() {
-    this.Model.IsSubtitleUiUse && this.Vto(),
+    if (
+      (this.Model.IsSubtitleUiUse && this.Nio(),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.PlotDoingTextShow,
         this.Model.SequenceData.标识为演出制作中,
-      );
+      ),
+      0 === this.Model.GetType())
+    )
+      switch (LanguageSystem_1.LanguageSystem.PackageAudio) {
+        case "zh":
+          this.Model.CurLanguageAudio = 1;
+          break;
+        case "ja":
+          this.Model.CurLanguageAudio = 3;
+          break;
+        case "ko":
+          this.Model.CurLanguageAudio = 4;
+          break;
+        case "en":
+          this.Model.CurLanguageAudio = 2;
+          break;
+        default:
+          this.Model.CurLanguageAudio = 0;
+      }
+    else this.Model.CurLanguageAudio = 0;
   }
   EachStop() {
     this.Event.Emit(ESequenceEventName.HandleSubSequenceStop);
@@ -83,26 +117,26 @@ class UiAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
       ));
   }
   End() {
-    this.Model.IsSubtitleUiUse && this.Hto(),
+    this.Model.IsSubtitleUiUse && this.Oio(),
       ControllerHolder_1.ControllerHolder.PlotController.RemoveViewCallback(
-        this.yze,
+        this.bZe,
       ),
       this.Promise && (this.Promise.SetResult(!1), (this.Promise = void 0));
   }
-  Vto() {
+  Nio() {
     var e;
-    !this.Fto &&
-      ((this.Fto = !0),
+    !this.Gio &&
+      ((this.Gio = !0),
       (e = UE.KuroRenderingRuntimeBPPluginBPLibrary.GetSubsystem(
         GlobalData_1.GlobalData.World,
         UE.MovieSceneDialogueSubsystem.StaticClass(),
       ))) &&
       e.OnShowDialogue.Add(this.OnShowDialogue);
   }
-  Hto() {
+  Oio() {
     var e;
-    this.Fto &&
-      ((this.Fto = !1),
+    this.Gio &&
+      ((this.Gio = !1),
       (e = UE.KuroRenderingRuntimeBPPluginBPLibrary.GetSubsystem(
         GlobalData_1.GlobalData.World,
         UE.MovieSceneDialogueSubsystem.StaticClass(),
@@ -110,43 +144,37 @@ class UiAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
       e.OnShowDialogue.Remove(this.OnShowDialogue);
   }
   TriggerAllSubtitle() {
-    for (; 0 < this.kto.Size; ) {
-      var e = this.kto.Pop();
-      e &&
-        this.jto(
-          e?.Show,
-          e?.DialogueId,
-          e?.GuardTime,
-          e?.AudioDelay,
-          e?.AudioTransitionDuration,
-        );
-    }
+    if (!this.Model.IsPaused)
+      for (; 0 < this.qio.Size; ) {
+        var e = this.qio.Pop();
+        e &&
+          this.kio(
+            e?.Show,
+            e?.DialogueId,
+            e?.GuardTime,
+            e?.AudioDelay,
+            e?.AudioTransitionDuration,
+            e?.LanguageAudio,
+          );
+      }
   }
-  jto(e, t, i, r, n) {
-    e ? this.Wto(t, i, r, n) : this.Kto(t);
+  kio(e, t, i, r, o, n) {
+    (0 !== n && n !== this.Model.CurLanguageAudio) ||
+      (e ? this.Fio(t, i, r, o) : this.Vio(t));
   }
-  Wto(e, t, i, r) {
+  Fio(e, t, i, r) {
     "None" !== e &&
       ((e = parseInt(e)),
       (e =
         ControllerHolder_1.ControllerHolder.FlowController.FlowSequence.CreateSubtitleFromTalkItem(
           e,
         ))) &&
-      (ControllerHolder_1.ControllerHolder.PlotController.PlotViewManager.OnUpdateSubtitle(
-        e,
-      ),
-      this.HandlePlotSubtitle(e, t, i, r));
+      this.HandlePlotSubtitle(e, t, i, r);
   }
-  Kto(e) {
-    "None" !== e &&
-      ((e = parseInt(e)),
-      ControllerHolder_1.ControllerHolder.FlowController.FlowSequence.OnSubtitleEnd(
-        e,
-      ),
-      ControllerHolder_1.ControllerHolder.PlotController.PlotViewManager.OnSubmitSubtitle(),
-      this.HandlePlotSubtitleEnd(e));
+  Vio(e) {
+    "None" !== e && ((e = parseInt(e)), this.HandlePlotSubtitleEnd(e));
   }
-  Qto() {
+  Hio() {
     (this.Model.DefaultGuardTime =
       ModelManager_1.ModelManager.PlotModel.PlotGlobalConfig.GuardTime),
       (this.Model.DefaultAudioDelay =
@@ -156,7 +184,7 @@ class UiAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
       (this.Model.IsSubtitleConfigInit = !0);
   }
   HandlePlotSubtitle(e, t, i, r) {
-    this.Model.IsSubtitleConfigInit || this.Qto(),
+    this.Model.IsSubtitleConfigInit || this.Hio(),
       (this.Model.CurSubtitle.Subtitles = e),
       (this.Model.CurSubtitle.GuardTime =
         t < 0
@@ -180,23 +208,63 @@ class UiAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
               TimeUtil_1.TimeUtil.InverseMillisecond
             : r);
     e = this.Model.CurSubtitle;
-    e &&
-      (this.Event.Emit(ESequenceEventName.UpdateSeqSubtitle, e),
-      e.Subtitles?.PlayVoice) &&
-      "InnerVoice" !== e.Subtitles.Style?.Type &&
-      SequenceController_1.SequenceController.TryApplyMouthAnim(
-        e.Subtitles.PlotLineKey,
-        e.Subtitles.WhoId,
-      );
-  }
-  HandlePlotSubtitleEnd(e) {
-    this.Event.Emit(ESequenceEventName.HandleSeqSubtitleEnd, e);
-  }
-  HandleSelectedOption(e) {
-    ControllerHolder_1.ControllerHolder.FlowController.FlowSequence.OnSelectOption(
-      e,
+    ControllerHolder_1.ControllerHolder.PlotController.PlotViewManager.OnUpdateSubtitle(
+      e.Subtitles,
     ),
+      ControllerHolder_1.ControllerHolder.FlowController.FlowSequence.OnSubtitleStart(
+        e.Subtitles.Id,
+      ),
+      this.Event.Emit(ESequenceEventName.UpdateSeqSubtitle, e),
+      e.Subtitles?.PlayVoice &&
+        "InnerVoice" !== (t = e.Subtitles).Style?.Type &&
+        !t.NoMouthAnim &&
+        SequenceController_1.SequenceController.TryApplyMouthAnim(
+          e.Subtitles.PlotLineKey,
+          e.Subtitles.WhoId,
+        );
+  }
+  async HandlePlotSubtitleEnd(e, t = !1) {
+    var i;
+    ControllerHolder_1.ControllerHolder.FlowController.FlowSequence.OnSubtitleEnd(
+      e,
+    ) &&
+      (Log_1.Log.CheckDebug() && Log_1.Log.Debug("Plot", 27, "结束字幕"),
+      ControllerHolder_1.ControllerHolder.PlotController.PlotViewManager.OnSubmitSubtitle(),
+      (i =
+        ControllerHolder_1.ControllerHolder.FlowController.FlowSequence
+          .SubtitleActionPromise?.Promise)
+        ? (ControllerHolder_1.ControllerHolder.SequenceController.PauseSequence(
+            SUBTITLE_ACTION_PAUSE,
+          ),
+          this.Event.Emit(ESequenceEventName.HandleSeqSubtitleEnd, e, t),
+          await i,
+          this.Model.IsPlaying &&
+            ControllerHolder_1.ControllerHolder.SequenceController.ResumeSequence(
+              SUBTITLE_ACTION_PAUSE,
+            ))
+        : this.Event.Emit(ESequenceEventName.HandleSeqSubtitleEnd, e, t));
+  }
+  async HandleSelectedOption(e, t) {
+    this.HandlePlotSubtitleEnd(t, !0),
+      ControllerHolder_1.ControllerHolder.SequenceController.PauseSequence(
+        OPTION_ACTION_PAUSE,
+      ),
       this.Event.Emit(ESequenceEventName.HandlePlotOptionSelected, e);
+    var t =
+      ControllerHolder_1.ControllerHolder.FlowController.FlowSequence
+        .SubtitleActionPromise?.Promise;
+    t && (await t),
+      this.Model.IsPlaying &&
+        (ControllerHolder_1.ControllerHolder.FlowController.FlowSequence.OnSelectOption(
+          e,
+        ),
+        (t =
+          ControllerHolder_1.ControllerHolder.FlowController.FlowSequence
+            .OptionActionPromise?.Promise) && (await t),
+        this.Model.IsPlaying) &&
+        ControllerHolder_1.ControllerHolder.SequenceController.ResumeSequence(
+          OPTION_ACTION_PAUSE,
+        );
   }
 }
 exports.UiAssistant = UiAssistant;

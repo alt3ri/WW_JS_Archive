@@ -16,7 +16,7 @@ class PayShopRecommendView extends UiTabViewBase_1.UiTabViewBase {
       (this.TabViewComponent = void 0),
       (this.TabList = []),
       (this.CurrentSelectTabId = 0),
-      (this._Fi = 0),
+      (this._3i = 0),
       (this.fqe = (e, i) => {
         return new PayShopSwitchItem_1.PayShopSwitchItem();
       }),
@@ -60,12 +60,12 @@ class PayShopRecommendView extends UiTabViewBase_1.UiTabViewBase {
         ]);
   }
   OnBeforeShow() {
-    (this._Fi = this.Params), this.GetText(5).SetUIActive(!1);
+    (this._3i = this.Params), this.GetText(5).SetUIActive(!1);
     var e = ConfigManager_1.ConfigManager.PayShopConfig.GetPayShopTableList(1);
     this.TabList = e;
     let i = 0;
     this.ExtraParams && (i = this.ExtraParams) >= e.length && (i = 0),
-      this.t7e().finally(() => {
+      this.CHe().finally(() => {
         this.TabGroup.SelectToggleByIndex(i, !0),
           this.TabViewComponent.SetCurrentTabViewState(!0);
       });
@@ -80,14 +80,14 @@ class PayShopRecommendView extends UiTabViewBase_1.UiTabViewBase {
   OnBeforeHide() {
     this.TabViewComponent.SetCurrentTabViewState(!1);
   }
-  async t7e() {
+  async CHe() {
     var e,
       i,
       t = this.TabList.length,
       t =
         (await this.TabGroup.RefreshTabItemByLengthAsync(t),
         this.TabGroup.GetTabItemMap());
-    for ([e, i] of t) i.UpdateView(this._Fi, this.TabList[e]);
+    for ([e, i] of t) i.UpdateView(this._3i, this.TabList[e]);
   }
   OnBeforeDestroy() {
     this.TabGroup.Destroy(),

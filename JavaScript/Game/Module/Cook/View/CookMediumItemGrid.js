@@ -7,15 +7,15 @@ const ConfigManager_1 = require("../../../Manager/ConfigManager"),
   CookController_1 = require("../CookController");
 class CookMediumItemGrid extends LoopScrollMediumItemGrid_1.LoopScrollMediumItemGrid {
   constructor() {
-    super(...arguments), (this.Gft = void 0);
+    super(...arguments), (this.$pt = void 0);
   }
   OnStart() {
-    this.Gft = new LevelSequencePlayer_1.LevelSequencePlayer(
+    this.$pt = new LevelSequencePlayer_1.LevelSequencePlayer(
       this.GetRootItem(),
     );
   }
   OnBeforeDestroy() {
-    this.Gft.Clear(), (this.Gft = void 0);
+    this.$pt.Clear(), (this.$pt = void 0);
   }
   OnSelected(e) {
     this.SetSelected(!0);

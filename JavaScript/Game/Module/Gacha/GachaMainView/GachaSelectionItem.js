@@ -18,18 +18,18 @@ class GachaSelectionItem extends GridProxyAbstract_1.GridProxyAbstract {
       (this.$be = void 0),
       (this.Pe = void 0),
       (this.TDe = void 0),
-      (this.QHt = void 0),
-      (this.XHt = !1),
+      (this.Qjt = void 0),
+      (this.Xjt = !1),
       (this.ToggleCallBack = void 0),
       (this.CanToggleChange = void 0),
-      (this.I6e = () => {
+      (this.N8e = () => {
         this.ToggleCallBack?.(this.GridIndex);
       }),
-      (this.IHt = () => {
+      (this.Ijt = () => {
         var i,
-          e = this.QHt.ShowIdList[0],
+          e = this.Qjt.ShowIdList[0],
           e = ConfigManager_1.ConfigManager.GachaConfig.GetGachaTextureInfo(e);
-        this.XHt
+        this.Xjt
           ? ((i = [e.TrialId]),
             RoleController_1.RoleController.OpenRoleMainView(1, 0, i))
           : ((i = new WeaponTrialData_1.WeaponTrialData()).SetTrialId(
@@ -73,8 +73,8 @@ class GachaSelectionItem extends GridProxyAbstract_1.GridProxyAbstract {
       [9, UE.UIItem],
     ]),
       (this.BtnBindInfo = [
-        [8, this.IHt],
-        [0, this.I6e],
+        [8, this.Ijt],
+        [0, this.N8e],
       ]);
   }
   OnStart() {
@@ -87,19 +87,19 @@ class GachaSelectionItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
   Refresh(i, e, t) {
     var r = (this.Pe = i).GachaInfo,
-      i = i.PoolInfo.Id,
+      s = i.PoolInfo.Id,
       r =
-        (this.GetItem(9)?.SetUIActive(r.UsePoolId === i),
-        ConfigManager_1.ConfigManager.GachaConfig.GetGachaViewInfo(i)),
-      i = (this.QHt = r).Type,
-      i =
-        ((this.XHt = ModelManager_1.ModelManager.GachaModel.IsRolePool(i)),
+        (this.GetItem(9)?.SetUIActive(r.UsePoolId === s),
+        ConfigManager_1.ConfigManager.GachaConfig.GetGachaViewInfo(s)),
+      a = (this.Qjt = r).Type,
+      a =
+        ((this.Xjt = ModelManager_1.ModelManager.GachaModel.IsRolePool(a)),
         r.ShowIdList[0]),
-      i = ConfigManager_1.ConfigManager.GachaConfig.GetGachaTextureInfo(i);
-    this.SetTextureByPath(i.GachaResultViewTexture, this.GetTexture(1)),
-      LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(5), r.SummaryTitle),
+      r = ConfigManager_1.ConfigManager.GachaConfig.GetGachaTextureInfo(a);
+    this.SetTextureByPath(r.GachaResultViewTexture, this.GetTexture(1)),
+      this.GetText(5)?.SetText(i.GachaInfo.GetPoolInfo(s).Title),
       this.RefreshLeftTime(),
-      this.XHt ? this.$Ht() : this.YHt(),
+      this.Xjt ? this.$jt() : this.Yjt(),
       e
         ? this.GetExtendToggle(0)?.SetToggleState(1)
         : this.GetExtendToggle(0)?.SetToggleState(0);
@@ -110,8 +110,8 @@ class GachaSelectionItem extends GridProxyAbstract_1.GridProxyAbstract {
   OnDeselected(i) {
     this.GetExtendToggle(0)?.SetToggleState(0);
   }
-  $Ht() {
-    var i = this.QHt.ShowIdList[0],
+  $jt() {
+    var i = this.Qjt.ShowIdList[0],
       i = ConfigManager_1.ConfigManager.GachaConfig.GetRoleInfoById(i),
       e =
         (LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(7), i.Name),
@@ -123,14 +123,23 @@ class GachaSelectionItem extends GridProxyAbstract_1.GridProxyAbstract {
         (this.SetElementIcon(e, this.GetTexture(3), i.ElementId), i.QualityId);
     this.$be?.RebuildLayout(e);
   }
-  YHt() {
-    var i = this.QHt,
-      i = (this.GetItem(2)?.SetUIActive(!1), i.ShowIdList[0]),
-      i = ConfigManager_1.ConfigManager.InventoryConfig.GetWeaponItemConfig(i);
-    i &&
-      (LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(7), i.WeaponName),
-      (i = i.QualityId),
-      this.$be?.RebuildLayout(i));
+  Yjt() {
+    var i,
+      e,
+      t = this.Qjt,
+      t = (this.GetItem(2)?.SetUIActive(!0), t.ShowIdList[0]),
+      t = ConfigManager_1.ConfigManager.InventoryConfig.GetWeaponItemConfig(t);
+    t &&
+      ((i =
+        ConfigManager_1.ConfigManager.GachaConfig?.GetGachaWeaponTransformConfig(
+          t.WeaponType,
+        )),
+      (e = new UE.Vector(0.6, 0.6, 0.6)),
+      this.GetTexture(3).SetUIItemScale(e),
+      this.SetTextureByPath(i.WeaponTypeTexture, this.GetTexture(3)),
+      LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(7), t.WeaponName),
+      (e = t.QualityId),
+      this.$be?.RebuildLayout(e));
   }
   OnBeforeDestroy() {
     this.TDe &&

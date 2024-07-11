@@ -33,15 +33,15 @@ exports.VisionDetailInfoComponentData = VisionDetailInfoComponentData;
 class VisionDetailInfoComponent extends UiPanelBase_1.UiPanelBase {
   constructor(i) {
     super(),
-      (this.u8i = void 0),
-      (this.Y6i = void 0),
-      (this.c8i = void 0),
-      (this.m8i = void 0),
-      (this.d8i = void 0),
-      (this.C8i = void 0),
+      (this._9i = void 0),
+      (this.$8i = void 0),
+      (this.u9i = void 0),
+      (this.c9i = void 0),
+      (this.m9i = void 0),
+      (this.d9i = void 0),
       (this.wqe = void 0),
       (this.OnClickArrow = () => {
-        this.C8i?.();
+        this.d9i?.();
       }),
       (this.wqe = i);
   }
@@ -57,63 +57,63 @@ class VisionDetailInfoComponent extends UiPanelBase_1.UiPanelBase {
     ];
   }
   async OnBeforeStartAsync() {
-    (this.d8i = new VisionDetailDescComponent_1.VisionDetailDescComponent(
+    (this.m9i = new VisionDetailDescComponent_1.VisionDetailDescComponent(
       this.GetItem(3),
     )),
-      await this.d8i.Init(),
-      (this.u8i = new VisionDetailTop(this.GetItem(0))),
-      await this.u8i.Init(),
-      (this.m8i =
+      await this.m9i.Init(),
+      (this._9i = new VisionDetailTop(this.GetItem(0))),
+      await this._9i.Init(),
+      (this.c9i =
         new RoleVisionIdentifyAttribute_1.RoleVisionIdentifyAttribute()),
-      await this.m8i.CreateByActorAsync(this.GetItem(2).GetOwner());
+      await this.c9i.CreateByActorAsync(this.GetItem(2).GetOwner());
   }
   OnStart() {
-    (this.c8i = new RoleVisionAttribute_1.RoleVisionAttribute(this.GetItem(1))),
-      this.c8i.Init();
+    (this.u9i = new RoleVisionAttribute_1.RoleVisionAttribute(this.GetItem(1))),
+      this.u9i.Init();
   }
   SetClickCallBack(i) {
-    this.C8i = i;
+    this.d9i = i;
   }
   Refresh(i, t, e) {
-    (this.Y6i = i),
-      this.u8i.Update(this.Y6i.DataBase),
-      this.u8i.SetActive(!0),
-      this.g8i(),
-      this.f8i(),
-      this.p8i();
+    (this.$8i = i),
+      this._9i.Update(this.$8i.DataBase),
+      this._9i.SetActive(!0),
+      this.C9i(),
+      this.g9i(),
+      this.f9i();
   }
   GetTxtItemByIndex(i) {
-    return this.d8i?.GetTxtItemByIndex(i);
+    return this.m9i?.GetTxtItemByIndex(i);
   }
-  p8i() {
-    this.d8i.Refresh(this.Y6i.DescData), this.d8i.SetActive(!0);
+  f9i() {
+    this.m9i.Refresh(this.$8i.DescData), this.m9i.SetActive(!0);
   }
-  g8i() {
-    this.c8i.Refresh(this.Y6i.GetMainPropData());
+  C9i() {
+    this.u9i.Refresh(this.$8i.GetMainPropData());
   }
-  f8i() {
-    var i = this.Y6i.GetSubPropData();
+  g9i() {
+    var i = this.$8i.GetSubPropData();
     0 < i.length
-      ? (this.m8i.Refresh(i, this.Y6i?.DataBase), this.m8i.SetActive(!0))
-      : this.m8i.SetActive(!1);
+      ? (this.c9i.Refresh(i, this.$8i?.DataBase), this.c9i.SetActive(!0))
+      : this.c9i.SetActive(!1);
   }
 }
 exports.VisionDetailInfoComponent = VisionDetailInfoComponent;
 class VisionDetailTop extends UiPanelBase_1.UiPanelBase {
   constructor(i) {
     super(),
-      (this.Y6i = void 0),
-      (this.v8i = void 0),
+      (this.$8i = void 0),
+      (this.p9i = void 0),
       (this.wqe = void 0),
-      (this.PPt = void 0),
+      (this.bxt = void 0),
       (this.OnClickLockToggle = () => {
         ControllerHolder_1.ControllerHolder.InventoryController.ItemLockRequest(
-          this.Y6i.GetUniqueId(),
-          !this.Y6i.GetIfLock(),
+          this.$8i.GetUniqueId(),
+          !this.$8i.GetIfLock(),
         );
       }),
-      (this.IPt = (i, t) => {
-        this.Y6i?.GetUniqueId() === i &&
+      (this.Rxt = (i, t) => {
+        this.$8i?.GetUniqueId() === i &&
           ((i = t ? 0 : 1), this.GetExtendToggle(1).SetToggleState(i, !1));
       }),
       (this.wqe = i);
@@ -133,22 +133,22 @@ class VisionDetailTop extends UiPanelBase_1.UiPanelBase {
       (this.BtnBindInfo = [[1, this.OnClickLockToggle]]);
   }
   async OnBeforeStartAsync() {
-    (this.PPt = new VisionFetterSuitItem_1.VisionFetterSuitItem(
+    (this.bxt = new VisionFetterSuitItem_1.VisionFetterSuitItem(
       this.GetItem(5),
     )),
-      await this.PPt.Init(),
-      this.PPt.SetActive(!0);
+      await this.bxt.Init(),
+      this.bxt.SetActive(!0);
   }
   OnStart() {
-    (this.v8i = new VisionNameText_1.VisionNameText(this.GetText(0))),
+    (this.p9i = new VisionNameText_1.VisionNameText(this.GetText(0))),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnItemLock,
-        this.IPt,
+        this.Rxt,
       );
   }
   Update(i) {
-    (this.Y6i = i),
-      this.v8i.Update(i),
+    (this.$8i = i),
+      this.p9i.Update(i),
       this.GetText(4).SetText(i.GetCost().toString()),
       this.GetText(2).SetText(
         StringUtils_1.StringUtils.Format(
@@ -160,13 +160,13 @@ class VisionDetailTop extends UiPanelBase_1.UiPanelBase {
     var t = ModelManager_1.ModelManager.InventoryModel.GetPhantomItemData(
         i.GetUniqueId(),
       ),
-      t = (this.IPt(t.GetUniqueId(), t.GetIsLock()), i.GetFetterGroupConfig());
-    this.PPt.Update(t);
+      t = (this.Rxt(t.GetUniqueId(), t.GetIsLock()), i.GetFetterGroupConfig());
+    this.bxt.Update(t);
   }
   OnBeforeDestroy() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnItemLock,
-      this.IPt,
+      this.Rxt,
     );
   }
 }

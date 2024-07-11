@@ -17,9 +17,9 @@ class RouletteAssemblyTips extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
       (this.Pe = void 0),
-      (this.LPt = void 0),
-      (this.u0o = void 0),
-      (this.c0o = void 0),
+      (this.Axt = void 0),
+      (this.hfo = void 0),
+      (this.lfo = void 0),
       (this.XOe = () => {
         var t = this.Pe.HelpId;
         0 !== t && HelpController_1.HelpController.OpenHelpById(t);
@@ -47,37 +47,37 @@ class RouletteAssemblyTips extends UiPanelBase_1.UiPanelBase {
   async OnBeforeStartAsync() {
     var t = this.GetItem(10),
       t =
-        ((this.u0o = new RouletteTipsItemPanel()),
-        await this.u0o.CreateByActorAsync(t.GetOwner()),
+        ((this.hfo = new RouletteTipsItemPanel()),
+        await this.hfo.CreateByActorAsync(t.GetOwner()),
         this.GetItem(11));
-    (this.c0o = new RouletteTipsItemPanel()),
-      await this.c0o.CreateByActorAsync(t.GetOwner());
+    (this.lfo = new RouletteTipsItemPanel()),
+      await this.lfo.CreateByActorAsync(t.GetOwner());
   }
   OnStart() {
     var t = this.GetItem(9);
-    this.LPt = new ItemTipsGetWay_1.TipsGetWayPanel(t);
+    this.Axt = new ItemTipsGetWay_1.TipsGetWayPanel(t);
   }
   OnBeforeDestroy() {
-    this.LPt && (this.LPt.Destroy(), (this.LPt = void 0)),
-      this.u0o && (this.u0o.Destroy(), (this.u0o = void 0)),
-      this.c0o && (this.c0o.Destroy(), (this.c0o = void 0));
+    this.Axt && (this.Axt.Destroy(), (this.Axt = void 0)),
+      this.hfo && (this.hfo.Destroy(), (this.hfo = void 0)),
+      this.lfo && (this.lfo.Destroy(), (this.lfo = void 0));
   }
   Refresh(t) {
     (this.Pe = t),
       this.mGe(),
-      this.m0o(),
+      this._fo(),
       this.WNe(),
-      this.d0o(),
+      this.ufo(),
       this.Kbe(),
-      this.C0o(),
-      this.g0o(),
-      this.f0o(),
-      this.p0o();
+      this.cfo(),
+      this.mfo(),
+      this.dfo(),
+      this.Cfo();
   }
   mGe() {
     this.GetText(3).ShowTextNew(this.Pe.Title);
   }
-  m0o() {
+  _fo() {
     var t = this.Pe.HelpId;
     this.GetButton(4).RootUIComp.SetUIActive(0 !== t);
   }
@@ -88,7 +88,7 @@ class RouletteAssemblyTips extends UiPanelBase_1.UiPanelBase {
       );
     this.SetTextureByPath(e.RouletteTipsQualityTexPath, t);
   }
-  d0o() {
+  ufo() {
     var t = "" !== this.Pe.TextMain && void 0 !== this.Pe.TextMain,
       t =
         (this.GetText(5).SetUIActive(t),
@@ -114,11 +114,11 @@ class RouletteAssemblyTips extends UiPanelBase_1.UiPanelBase {
                 e.SetUIActive(!0);
               }));
   }
-  C0o() {
+  cfo() {
     var t = this.Pe.GetWayData;
-    this.LPt.SetActive(0 < t.length), t && this.LPt.Refresh(t);
+    this.Axt.SetActive(0 < t.length), t && this.Axt.Refresh(t);
   }
-  g0o() {
+  mfo() {
     var [t, e] = this.Pe.CanSetItemNum;
     this.GetItem(12).SetUIActive(0 !== e),
       0 !== e &&
@@ -135,9 +135,9 @@ class RouletteAssemblyTips extends UiPanelBase_1.UiPanelBase {
           t,
         ));
   }
-  f0o() {
+  dfo() {
     var t = this.Pe.NeedItemMap;
-    if ((this.u0o.SetActive(0 !== t.size), 0 !== t.size)) {
+    if ((this.hfo.SetActive(0 !== t.size), 0 !== t.size)) {
       const s = [];
       t.forEach((t, e) => {
         var i =
@@ -157,12 +157,12 @@ class RouletteAssemblyTips extends UiPanelBase_1.UiPanelBase {
           };
         s.push(e);
       }),
-        this.u0o.RefreshItemPanel(s);
+        this.hfo.RefreshItemPanel(s);
     }
   }
-  p0o() {
+  Cfo() {
     var t = this.Pe.Authorization;
-    if ((this.c0o.SetActive(0 < t.length), 0 !== t.length)) {
+    if ((this.lfo.SetActive(0 < t.length), 0 !== t.length)) {
       var e = [];
       for (const s of t) {
         var i =
@@ -172,7 +172,7 @@ class RouletteAssemblyTips extends UiPanelBase_1.UiPanelBase {
           i = { ItemId: s, NeedLock: i <= 0 };
         e.push(i);
       }
-      this.c0o.RefreshItemPanel(e);
+      this.lfo.RefreshItemPanel(e);
     }
   }
 }
@@ -180,8 +180,8 @@ exports.RouletteAssemblyTips = RouletteAssemblyTips;
 class RouletteTipsItemPanel extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this.jFe = void 0),
-      (this.Rke = () => {
+      (this.s4e = void 0),
+      (this.W2e = () => {
         return new CommonItemSmallItemGridWrap();
       });
   }
@@ -193,16 +193,16 @@ class RouletteTipsItemPanel extends UiPanelBase_1.UiPanelBase {
     ];
   }
   OnStart() {
-    this.jFe = new GenericLayout_1.GenericLayout(
+    this.s4e = new GenericLayout_1.GenericLayout(
       this.GetGridLayout(0),
-      this.Rke,
+      this.W2e,
     );
   }
   RefreshTitle(t) {
     this.GetText(2).ShowTextNew(t);
   }
   RefreshItemPanel(t) {
-    this.jFe.RefreshByData(t);
+    this.s4e.RefreshByData(t);
   }
 }
 exports.RouletteTipsItemPanel = RouletteTipsItemPanel;

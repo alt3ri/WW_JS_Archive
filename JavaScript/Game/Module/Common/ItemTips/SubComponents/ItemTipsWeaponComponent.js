@@ -15,17 +15,17 @@ class TipsWeaponComponent extends ItemTipsBaseSubComponent_1.TipsBaseSubComponen
   constructor(t) {
     super(t),
       (this.Pe = void 0),
-      (this.UPt = void 0),
-      (this.LPt = void 0),
-      (this.APt = void 0),
+      (this.wxt = void 0),
+      (this.Axt = void 0),
+      (this.Bxt = void 0),
       (this.StarLayout = void 0),
-      (this.tpt = (t, e, i) => {
+      (this.mvt = (t, e, i) => {
         return {
           Key: i,
           Value: new ItemTipsAttribute_1.TipsAttributeItem(e, t),
         };
       }),
-      (this.sAt = () => {
+      (this.vke = () => {
         return new StarItem_1.StarItem();
       }),
       this.CreateThenShowByResourceIdAsync("UiItem_TipsWeapon", t);
@@ -55,16 +55,16 @@ class TipsWeaponComponent extends ItemTipsBaseSubComponent_1.TipsBaseSubComponen
   OnStart() {
     var t = this.GetItem(5),
       t =
-        ((this.UPt = new ItemTipsLockButton_1.TipsLockButton(t)),
-        (this.APt = new GenericLayoutNew_1.GenericLayoutNew(
+        ((this.wxt = new ItemTipsLockButton_1.TipsLockButton(t)),
+        (this.Bxt = new GenericLayoutNew_1.GenericLayoutNew(
           this.GetVerticalLayout(6),
-          this.tpt,
+          this.mvt,
         )),
         this.GetItem(12));
-    (this.LPt = new ItemTipsGetWay_1.TipsGetWayPanel(t)),
+    (this.Axt = new ItemTipsGetWay_1.TipsGetWayPanel(t)),
       (this.StarLayout = new GenericLayout_1.GenericLayout(
         this.GetHorizontalLayout(3),
-        this.sAt,
+        this.vke,
       ));
   }
   OnBeforeDestroy() {
@@ -78,10 +78,10 @@ class TipsWeaponComponent extends ItemTipsBaseSubComponent_1.TipsBaseSubComponen
       this.GetText(0).SetText(t.WeaponType),
         this.GetText(1).SetText(t.WeaponLevel.toString() + "/"),
         this.GetText(2).SetText(t.WeaponLimitLevel.toString()),
-        this.kPt(t.BreachLevel, t.BreachMaxLevel),
-        t.IncId && this.UPt.Refresh(t.IncId, t.CanClickLockButton),
-        this.UPt.SetUiActive(0 < t.IncId),
-        this.APt.RebuildLayoutByDataNew(t.AttributeData),
+        this.jxt(t.BreachLevel, t.BreachMaxLevel),
+        t.IncId && this.wxt.Refresh(t.IncId, t.CanClickLockButton),
+        this.wxt.SetUiActive(0 < t.IncId),
+        this.Bxt.RebuildLayoutByDataNew(t.AttributeData),
         LguiUtil_1.LguiUtil.SetLocalTextNew(
           this.GetText(8),
           "Text_WeaponResonanceItemLevelText_Text",
@@ -97,15 +97,15 @@ class TipsWeaponComponent extends ItemTipsBaseSubComponent_1.TipsBaseSubComponen
           this.GetText(11),
           t.WeaponDescription,
         ),
-        this.DPt(t.GetWayData),
-        this.RPt(t.LimitTimeTxt),
-        this.BPt(t.IsEquip, t.EquippedId);
+        this.Pxt(t.GetWayData),
+        this.xxt(t.LimitTimeTxt),
+        this.Nxt(t.IsEquip, t.EquippedId);
     };
     (this.Pe = t),
       ModelManager_1.ModelManager.ItemTipsModel.SetCurrentItemTipsData(t),
       this.InAsyncLoading() ? this.OperationMap.set("Refresh", e) : e();
   }
-  kPt(e, i) {
+  jxt(e, i) {
     var s = new Array(i);
     for (let t = 0; t < i; ++t) {
       var r = {
@@ -120,14 +120,14 @@ class TipsWeaponComponent extends ItemTipsBaseSubComponent_1.TipsBaseSubComponen
     }
     this.StarLayout.RefreshByData(s);
   }
-  DPt(t) {
-    this.GetItem(12).SetUIActive(0 !== t.length), t && this.LPt.Refresh(t);
+  Pxt(t) {
+    this.GetItem(12).SetUIActive(0 !== t.length), t && this.Axt.Refresh(t);
   }
-  RPt(t) {
+  xxt(t) {
     this.GetItem(13).SetUIActive(void 0 !== t),
       t && this.GetText(14).ShowTextNew(t);
   }
-  BPt(t, e = void 0) {
+  Nxt(t, e = void 0) {
     this.GetItem(15).SetUIActive(t),
       t &&
         void 0 !== e &&

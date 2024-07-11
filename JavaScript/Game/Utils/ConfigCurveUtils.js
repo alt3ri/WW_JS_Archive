@@ -5,9 +5,9 @@ const UE = require("ue"),
   CurveUtils_1 = require("../../Core/Utils/Curve/CurveUtils");
 class ConfigCurveUtils {
   static CreateCurveByBaseCurve(e) {
-    return CurveUtils_1.CurveUtils.CreateCurveByStruct(this.SCr(e));
+    return CurveUtils_1.CurveUtils.CreateCurveByStruct(this.pgr(e));
   }
-  static SCr(e) {
+  static pgr(e) {
     switch (
       (this.BaseCurve || (this.BaseCurve = new UE.SBaseCurve()), e.Type)
     ) {

@@ -19,6 +19,7 @@ class TsUiNavigationBehaviorListener extends UE.UINavigationBehaviour {
       (this.TagArray = void 0),
       (this.ShieldHotKeyIndexArray = void 0),
       (this.ScrollViewActor = void 0),
+      (this.GridBaseActor = void 0),
       (this.LayoutActor = void 0),
       (this.HotKeyTipsTextIdMap = void 0),
       (this.ClickPivot = new UE.Vector2D(0.5, 0.5)),
@@ -27,6 +28,9 @@ class TsUiNavigationBehaviorListener extends UE.UINavigationBehaviour {
       (this.ScrollbarIndex = 0),
       (this.InteractiveTag = ""),
       (this.DynamicTag = ""),
+      (this.OpenAdsorbed = !1),
+      (this.AdsorbedDistance = 0),
+      (this.AdsorbedPivot = new UE.Vector2D(0.5, 0.5)),
       (this.ScrollView = void 0),
       (this.LayoutBase = void 0),
       (this.TextChangeComponent = void 0),
@@ -318,6 +322,20 @@ class TsUiNavigationBehaviorListener extends UE.UINavigationBehaviour {
       !this.HasLoopScrollView() ||
       -1 === (i = this.ScrollView).NavigationIndex ||
       i.NavigationIndex === this.LoopScrollViewGridIndex
+    );
+  }
+  IsInLoopScrollDisplayByGridActor() {
+    var i, t, s;
+    return (
+      !this.GridBaseActor ||
+      !this.HasLoopScrollView() ||
+      ((i = this.ScrollView),
+      (t = (0, puerts_1.$ref)(3)),
+      (s = (0, puerts_1.$ref)(3)),
+      i.GetOutOfBottomBoundsType(this.GridBaseActor.GetUIItem(), t, s),
+      i.Vertical
+        ? 0 === (0, puerts_1.$unref)(t)
+        : 0 === (0, puerts_1.$unref)(s))
     );
   }
   IsInDynScrollDisplay(i) {

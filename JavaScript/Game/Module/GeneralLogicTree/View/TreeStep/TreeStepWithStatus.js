@@ -42,10 +42,10 @@ class TreeStepWithStatus extends TreeStepBase_1.TreeStepBase {
     var e = this.IsShowNodeStatus();
     return this.Config && e
       ? (this.StepStatusNode.SetUIActive(!0),
-        !!this.k$t() || (this.F$t(!1), this.V$t(!1), !1))
+        !!this.kYt() || (this.FYt(!1), this.VYt(!1), !1))
       : (this.StepStatusNode.SetUIActive(!1), !1);
   }
-  k$t() {
+  kYt() {
     var e = ModelManager_1.ModelManager.GeneralLogicTreeModel.GetBehaviorTree(
       this.TreeIncId,
     );
@@ -55,13 +55,13 @@ class TreeStepWithStatus extends TreeStepBase_1.TreeStepBase {
       case IQuest_1.EQuestScheduleType.ChildQuestCompleted:
         var r = e.GetNode(t.ChildQuestId);
         if (!r || r.IsProcessing) return !1;
-        this.F$t(r.IsSuccess), this.V$t(r.IsFailure);
+        this.FYt(r.IsSuccess), this.VYt(r.IsFailure);
         break;
       case IQuest_1.EQuestScheduleType.TimeLeft:
         (r = t.TimerType), (r = e.GetChallengeRemainTime(r));
         if (!r) return !0;
         var s = t.TimeLeft;
-        this.F$t(s <= r), this.V$t(r < s);
+        this.FYt(s <= r), this.VYt(r < s);
         break;
       case IQuest_1.EQuestScheduleType.Condition:
         r = t.Condition;
@@ -79,15 +79,15 @@ class TreeStepWithStatus extends TreeStepBase_1.TreeStepBase {
               void 0,
               s,
             ));
-        this.F$t(r), this.V$t(!r);
+        this.FYt(r), this.VYt(!r);
     }
     return !0;
   }
-  F$t(e) {
+  FYt(e) {
     (this.StepSuccess.IsUIActiveSelf() && 1 === this.StepSuccess.Alpha) !== e &&
       (this.StepSuccess.SetUIActive(e), this.OnSuccessNodeActive(e));
   }
-  V$t(e) {
+  VYt(e) {
     this.StepLose.IsUIActiveSelf() !== e &&
       (this.StepLose.SetUIActive(e), this.OnLoseNodeActive(e));
   }

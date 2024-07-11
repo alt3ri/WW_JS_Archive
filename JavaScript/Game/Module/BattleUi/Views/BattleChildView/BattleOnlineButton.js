@@ -14,27 +14,27 @@ const UE = require("ue"),
 class BattleOnlineButton extends BattleEntranceButton_1.BattleEntranceButton {
   constructor() {
     super(...arguments),
-      (this.EPe = void 0),
-      (this.b$e = void 0),
-      (this.q$e = ""),
-      (this.G$e = () => {
+      (this.SPe = void 0),
+      (this.QYe = void 0),
+      (this.XYe = ""),
+      (this.$Ye = () => {
         0 ===
           ModelManager_1.ModelManager.InstanceDungeonEntranceModel.GetMatchingState() &&
-          (this.GetItem(2).SetUIActive(!1), this.EPe?.StopCurrentSequence());
+          (this.GetItem(2).SetUIActive(!1), this.SPe?.StopCurrentSequence());
       }),
-      (this.N$e = () => {
+      (this.YYe = () => {
         this.GetItem(2).SetUIActive(!0),
-          this.EPe?.StopCurrentSequence(),
-          this.EPe?.PlayLevelSequenceByName("AutoLoop");
+          this.SPe?.StopCurrentSequence(),
+          this.SPe?.PlayLevelSequenceByName("AutoLoop");
       }),
-      (this.O$e = () => {
+      (this.JYe = () => {
         ModelManager_1.ModelManager.GameModeModel.IsMulti &&
           this.RefreshButtonState();
       }),
-      (this.k$e = () => {
+      (this.zYe = () => {
         this.RefreshButtonState();
       }),
-      (this.F$e = () => {
+      (this.ZYe = () => {
         this.RefreshButtonState();
       });
   }
@@ -45,9 +45,9 @@ class BattleOnlineButton extends BattleEntranceButton_1.BattleEntranceButton {
   Initialize(e) {
     super.Initialize(e),
       e &&
-        ((this.b$e = this.GetSprite(3)),
+        ((this.QYe = this.GetSprite(3)),
         this.AddEvents(),
-        (this.EPe = new LevelSequencePlayer_1.LevelSequencePlayer(
+        (this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(
           this.RootItem.GetParentAsUIItem(),
         )));
   }
@@ -56,57 +56,57 @@ class BattleOnlineButton extends BattleEntranceButton_1.BattleEntranceButton {
       1 ===
       ModelManager_1.ModelManager.InstanceDungeonEntranceModel.GetMatchingState()
         ? (this.GetItem(2).SetUIActive(!0),
-          "AutoLoop" === this.EPe.GetCurrentSequence()
-            ? this.EPe.ReplaySequenceByKey("AutoLoop")
-            : this.EPe.PlayLevelSequenceByName("AutoLoop"))
-        : (this.GetItem(2).SetUIActive(!1), this.EPe?.StopCurrentSequence()),
+          "AutoLoop" === this.SPe.GetCurrentSequence()
+            ? this.SPe.ReplaySequenceByKey("AutoLoop")
+            : this.SPe.PlayLevelSequenceByName("AutoLoop"))
+        : (this.GetItem(2).SetUIActive(!1), this.SPe?.StopCurrentSequence()),
       this.RefreshButtonState();
   }
   Reset() {
-    this.EPe?.Clear(), (this.EPe = void 0), this.RemoveEvents(), super.Reset();
+    this.SPe?.Clear(), (this.SPe = void 0), this.RemoveEvents(), super.Reset();
   }
   AddEvents() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnMatchingChange,
-      this.G$e,
+      this.$Ye,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnMatchingBegin,
-        this.N$e,
+        this.YYe,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnUpdateSceneTeam,
-        this.O$e,
+        this.JYe,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.ChangeModeFinish,
-        this.k$e,
+        this.zYe,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnlineDisableStateChange,
-        this.F$e,
+        this.ZYe,
       );
   }
   RemoveEvents() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnMatchingChange,
-      this.G$e,
+      this.$Ye,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnMatchingBegin,
-        this.N$e,
+        this.YYe,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnUpdateSceneTeam,
-        this.O$e,
+        this.JYe,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.ChangeModeFinish,
-        this.k$e,
+        this.zYe,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnlineDisableStateChange,
-        this.F$e,
+        this.ZYe,
       );
   }
   SetGamepadHide(e) {
@@ -114,7 +114,7 @@ class BattleOnlineButton extends BattleEntranceButton_1.BattleEntranceButton {
       ? super.SetGamepadHide(!1)
       : super.SetGamepadHide(e);
   }
-  V$e() {
+  eJe() {
     let e = void 0;
     if (ModelManager_1.ModelManager.GameModeModel.IsMulti) {
       var t = ModelManager_1.ModelManager.CreatureModel.GetPlayerId(),
@@ -125,17 +125,17 @@ class BattleOnlineButton extends BattleEntranceButton_1.BattleEntranceButton {
       e = ModelManager_1.ModelManager.OnlineModel.IsOnlineDisabled()
         ? "OnlineLimitIcon"
         : "OnlineNoLimitIcon";
-    this.q$e === e ||
-      ((this.q$e = e),
+    this.XYe === e ||
+      ((this.XYe = e),
       (t = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(e)),
       StringUtils_1.StringUtils.IsEmpty(t)) ||
-      this.SetSpriteByPath(t, this.b$e, !0);
+      this.SetSpriteByPath(t, this.QYe, !0);
   }
   RefreshButtonState() {
-    this.b$e &&
+    this.QYe &&
       (ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance()
         ? this.SetOtherHide(!0)
-        : (this.SetOtherHide(!1), this.V$e()));
+        : (this.SetOtherHide(!1), this.eJe()));
   }
 }
 exports.BattleOnlineButton = BattleOnlineButton;

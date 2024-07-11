@@ -7,6 +7,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.csvCellTypeConfig =
       void 0);
 const BranchDefine_1 = require("../BranchDefine"),
+  Config_1 = require("../Config"),
   CsvParser_1 = require("../Misc/CsvParser"),
   File_1 = require("../Misc/File"),
   Log_1 = require("../Misc/Log"),
@@ -94,6 +95,7 @@ const customExportType = ["C", "S", "CS", "", "@Tag"],
     56: "String",
     57: "String",
     58: "String",
+    59: "Array<Int>",
   },
   csvFieldValidValues = {
     ExportType: { CnName: "客户端/服务端 使用", Range: customExportType },
@@ -149,7 +151,7 @@ class GlobalCsv {
 exports.GlobalCsv = GlobalCsv;
 class CsvLoader {
   constructor(e, r) {
-    (this.aOn = []),
+    (this.Lkn = []),
       (this.T = new Map()),
       (this.FiledTypes = r.slice()),
       (this.Name = e),
@@ -184,7 +186,7 @@ class CsvLoader {
       throw new Error(
         `CSV file [${this.Name}] first column invalid, expect[${t.CnName}] actual:[${r[0]}]`,
       );
-    "Name" === e && (this.aOn = r);
+    "Name" === e && (this.Lkn = r);
     for (let e = 1; e < r.length; e++)
       if (t.Range) {
         var i = r[e];
@@ -225,33 +227,37 @@ class CsvLoader {
       throw new Error(
         `CSV [${this.Name}] row count [${e.TotalLine}] not enough`,
       );
+    if ("" !== r.toString() && r.length < this.Lkn.length)
+      throw new Error(
+        `CSV [${this.Name}] 行解析失败，行内容 【${r.toString()}】`,
+      );
     var t = {};
     for (let e = 1; e < r.length; e++) {
-      var i = this.aOn[e],
-        a = this.T.get(i);
-      if (a) {
-        var n = r[e];
-        switch (a.Type) {
+      var i = this.Lkn[e],
+        n = this.T.get(i);
+      if (n) {
+        var a = r[e];
+        switch (n.Type) {
           case "Int":
-            "" === r[e] ? (t[a.Name] = void 0) : (t[a.Name] = parseInt(n, 10));
+            "" === r[e] ? (t[n.Name] = void 0) : (t[n.Name] = parseInt(a, 10));
             break;
           case "Long":
-            t[a.Name] = BigInt(n);
+            t[n.Name] = BigInt(a);
             break;
           case "String":
-            t[a.Name] = n;
+            t[n.Name] = a;
             break;
           case "Bool":
-            t[a.Name] = (0, Util_1.parseBool)(n);
+            t[n.Name] = (0, Util_1.parseBool)(a);
             break;
           case "Float":
-            t[a.Name] = parseFloat(n);
+            t[n.Name] = parseFloat(a);
             break;
           case "Array<Int>":
-            t[a.Name] = (0, Util_1.parseCsvIntArray)(n);
+            t[n.Name] = (0, Util_1.parseCsvIntArray)(a);
             break;
           case "Array<String>":
-            t[a.Name] = (0, Util_1.parseCsvStringArray)(n);
+            t[n.Name] = (0, Util_1.parseCsvStringArray)(a);
         }
       }
     }
@@ -301,13 +307,32 @@ class CsvLoader {
     var r = new CsvParser_1.LineWriter();
     return this.O(r), this.k(r, e), r.Gen();
   }
-  Load(e) {
-    var r = (0, File_1.readFile)(e);
-    return r ? ((0, Log_1.log)(`Load csv: [${e}]`), this.Parse(r)) : [];
+  Load(r) {
+    var e = (0, File_1.readFile)(r);
+    if (e)
+      try {
+        return (0, Log_1.log)(`Load csv: [${r}]`), this.Parse(e);
+      } catch (e) {
+        if (e instanceof Error)
+          throw new Error(
+            `CSV [${r}] 解析失败，错误如下:
+` + e.message,
+          );
+      }
+    return [];
   }
-  TryLoad(e) {
-    e = (0, File_1.readFile)(e);
-    return e ? this.Parse(e) : [];
+  TryLoad(r) {
+    try {
+      var e = (0, File_1.readFile)(r);
+      return e ? this.Parse(e) : [];
+    } catch (e) {
+      if (e instanceof Error)
+        throw new Error(
+          `CSV [${r}] 解析失败，错误如下:
+` + e.message,
+        );
+    }
+    return [];
   }
   LoadOne(e) {
     e = (0, File_1.readFile)(e);
@@ -319,26 +344,28 @@ class CsvLoader {
   SaveOne(e, r) {
     (0, File_1.writeFile)(r, this.StringifyOne(e));
   }
+  GetOtherBranchCsvPath(e, r) {
+    return (0, File_1.getSavePath)(`Editor/c.Csv/${e}/${r}.csv`).replace(
+      "\\",
+      "/",
+    );
+  }
   RequestDepotCsv(e, r) {
-    var t, i;
-    return (0, Util_1.isUePlatform)()
-      ? depotCsvCache.has(r)
-        ? depotCsvCache.get(r)
-        : ((i = r.indexOf("/c.Csv/")),
-          (i = r.substring(i + 1)),
-          (e =
-            `p4 print -q -o ${(t = (0, File_1.getSavePath)("Editor/" + i).replace("\\", "/"))} //aki/${e}/Source/Config/Raw/Tables/k.可视化编辑/` +
-            i),
-          (0, Util_1.exec)(e),
-          (i = (0, File_1.existFile)(t) ? t : ""),
-          depotCsvCache.set(r, i),
-          i)
-      : "";
+    if (!(0, Util_1.isUePlatform)()) return "";
+    r = (0, File_1.getDirName)((0, File_1.getDir)(r));
+    let t = e;
+    var i = `//aki/${(t = (0, BranchDefine_1.isPlannedBranch)(e) ? "development" : t)}/Source/Config/Raw/Tables/k.可视化编辑/c.Csv/${r}/${e}.csv`;
+    return depotCsvCache.has(i)
+      ? depotCsvCache.get(i)
+      : ((e = `p4 print -q -o ${(r = this.GetOtherBranchCsvPath(r, e))} ` + i),
+        (0, Util_1.exec)(e),
+        depotCsvCache.set(i, r),
+        r);
   }
   V(e) {
     return e.replace(/\\/g, "/").split("/").pop().replace(".csv", "");
   }
-  hOn(e, r) {
+  Dkn(e, r) {
     e.forEach((e) => {
       e.Branch = r;
     });
@@ -349,22 +376,24 @@ class CsvLoader {
       e = (0, BranchDefine_1.getAllBranches)();
     if (!e) return [];
     var i = [];
-    for (const n of e)
-      if (n !== r) {
-        var a = `${t}/${n}.csv`;
-        let e = a;
-        (0, File_1.existFile)(a) ||
-          (0, BranchDefine_1.isReachBranch)(n) ||
-          ((a = this.RequestDepotCsv(n, a)),
-          (0, File_1.existFile)(a) && (e = a));
-        a = this.TryLoad(e);
-        this.hOn(a, n),
+    for (const a of e)
+      if (a !== r) {
+        var n = `${t}/${a}.csv`;
+        let e = n;
+        Config_1.Config.IsStartWithCliServer ||
+          (0, Util_1.isPipelineEnv)() ||
+          (0, File_1.existFile)(n) ||
+          (0, BranchDefine_1.isReachBranch)(a) ||
+          ((n = this.RequestDepotCsv(a, n)),
+          (0, File_1.existFile)(n) && (e = n));
+        n = this.TryLoad(e);
+        this.Dkn(n, a),
           i.push({
-            Name: n,
+            Name: a,
             FieldTypes: this.FiledTypes,
-            Rows: a,
+            Rows: n,
             Tables: [],
-            Branch: n,
+            Branch: a,
             OtherBranchCsv: [],
           });
       }
@@ -374,7 +403,7 @@ class CsvLoader {
     var r = this.V(e),
       t = this.Load(e);
     return (
-      this.hOn(t, r),
+      this.Dkn(t, r),
       {
         Name: this.Name,
         FieldTypes: this.FiledTypes,

@@ -10,7 +10,6 @@ const puerts_1 = require("puerts"),
   ControllerBase_1 = require("../../../Core/Framework/ControllerBase"),
   Net_1 = require("../../../Core/Net/Net"),
   ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem"),
-  TickSystem_1 = require("../../../Core/Tick/TickSystem"),
   TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
   FNameUtil_1 = require("../../../Core/Utils/FNameUtil"),
   MathUtils_1 = require("../../../Core/Utils/MathUtils"),
@@ -23,6 +22,7 @@ const puerts_1 = require("puerts"),
   ConfigManager_1 = require("../../Manager/ConfigManager"),
   ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../Manager/ModelManager"),
+  PerfSightController_1 = require("../../PerfSight/PerfSightController"),
   ScreenEffectSystem_1 = require("../../Render/Effect/ScreenEffectSystem/ScreenEffectSystem"),
   InputDistributeController_1 = require("../../Ui/InputDistribute/InputDistributeController"),
   WorldDefine_1 = require("../../World/Define/WorldDefine"),
@@ -41,17 +41,17 @@ const puerts_1 = require("puerts"),
 class TeleportController extends ControllerBase_1.ControllerBase {
   static OnInit() {
     return (
-      Net_1.Net.Register(1095, this.wyo),
-      Net_1.Net.Register(17111, this.Byo),
+      Net_1.Net.Register(27457, this.AIo),
+      Net_1.Net.Register(6459, this.PIo),
       !0
     );
   }
   static OnClear() {
-    return Net_1.Net.UnRegister(1095), Net_1.Net.UnRegister(17111), !0;
+    return Net_1.Net.UnRegister(27457), Net_1.Net.UnRegister(6459), !0;
   }
   static OnTick(e) {
     ModelManager_1.ModelManager.TeleportModel.IsTeleport ||
-      (void 0 !== TeleportController.byo && this.wyo(TeleportController.byo));
+      (void 0 !== TeleportController.xIo && this.AIo(TeleportController.xIo));
   }
   static CheckCanTeleport() {
     return !RoleController_1.RoleController.IsInRoleTrial();
@@ -59,9 +59,9 @@ class TeleportController extends ControllerBase_1.ControllerBase {
   static async TeleportToPositionNoLoading(e, o, r) {
     return Global_1.Global.BaseCharacter?.IsValid()
       ? this.QueryCanTeleportNoLoading(e)
-        ? this.qyo(e, o, r, void 0, 0)
+        ? this.wIo(e, o, r, void 0, 0)
         : ((ModelManager_1.ModelManager.TeleportModel.TeleportMode = 2),
-          this.Gyo(e, o, r, new TeleportDefine_1.TeleportContext()))
+          this.BIo(e, o, r, new TeleportDefine_1.TeleportContext()))
       : (Log_1.Log.CheckError() &&
           Log_1.Log.Error("Teleport", 30, "无加载传送:失败,找不到当前玩家", [
             "Reason",
@@ -96,10 +96,10 @@ class TeleportController extends ControllerBase_1.ControllerBase {
         ));
     let l = t;
     return (((l = l || new TeleportDefine_1.TeleportContext())
-      .TeleportReason === Protocol_1.Aki.Protocol.EOs.Proto_Action ||
-      l.TeleportReason === Protocol_1.Aki.Protocol.EOs.RCs) &&
+      .TeleportReason === Protocol_1.Aki.Protocol.u4s.Proto_Action ||
+      l.TeleportReason === Protocol_1.Aki.Protocol.u4s.Vvs) &&
       ModelManager_1.ModelManager.AutoRunModel.IsInLogicTreeGmMode()) ||
-      (l.TeleportReason === Protocol_1.Aki.Protocol.EOs.Proto_Gm &&
+      (l.TeleportReason === Protocol_1.Aki.Protocol.u4s.Proto_Gm &&
         ModelManager_1.ModelManager.PlotModel.IsInHighLevelPlot())
       ? (Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
@@ -109,8 +109,8 @@ class TeleportController extends ControllerBase_1.ControllerBase {
             ["TeleportReason", l.TeleportReason],
             ["Reason", r],
           ),
-        TeleportController.Nyo(l, r))
-      : TeleportController.Gyo(e, o, r, l);
+        TeleportController.bIo(l, r))
+      : TeleportController.BIo(e, o, r, l);
   }
   static SendTeleportTransferRequest(e) {
     (ModelManager_1.ModelManager.WorldMapModel.WaitToTeleportMarkItem = e),
@@ -121,29 +121,29 @@ class TeleportController extends ControllerBase_1.ControllerBase {
       ModelManager_1.ModelManager.GameModeModel.AddLoadMapHandle(
         "SendTeleportTransferRequestById",
       );
-    e = Protocol_1.Aki.Protocol.cus.create({ Ekn: e });
-    Net_1.Net.Call(3195, e, (e) => {
+    e = Protocol_1.Aki.Protocol.aCs.create({ J4n: e });
+    Net_1.Net.Call(12463, e, (e) => {
       ModelManager_1.ModelManager.GameModeModel.RemoveLoadMapHandle(
         "SendTeleportTransferRequestById",
       ),
         GlobalData_1.GlobalData.World
-          ? e.lkn !==
-              Protocol_1.Aki.Protocol.lkn
+          ? e.O4n !==
+              Protocol_1.Aki.Protocol.O4n
                 .Proto_ErrPlayerIsTeleportCanNotDoTeleport &&
-            e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys &&
+            e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs &&
             ((ModelManager_1.ModelManager.GameModeModel.IsTeleport = !1),
             (ModelManager_1.ModelManager.WorldMapModel.WaitToTeleportMarkItem =
               void 0),
             ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-              e.lkn,
-              22378,
+              e.O4n,
+              16509,
             ))
           : ((ModelManager_1.ModelManager.GameModeModel.IsTeleport = !1),
             (ModelManager_1.ModelManager.WorldMapModel.WaitToTeleportMarkItem =
               void 0));
     });
   }
-  static async qyo(e, o, r, t, l = 0) {
+  static async wIo(e, o, r, t, l = 0) {
     var a = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
     let _ = void 0;
     a && (_ = a.Entity.GetComponent(3));
@@ -200,10 +200,10 @@ class TeleportController extends ControllerBase_1.ControllerBase {
         ),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("Teleport", 30, "无加载传送:处理开始事件(完成)"),
-      this.Oyo(),
+      this.qIo(),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("Teleport", 30, "无加载传送:设置角色状态(开始)"),
-      TeleportController.kyo(),
+      TeleportController.GIo(),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("Teleport", 30, "无加载传送:设置角色状态(完成)"),
       (ModelManager_1.ModelManager.GameModeModel.IsTeleport = !1),
@@ -216,14 +216,14 @@ class TeleportController extends ControllerBase_1.ControllerBase {
           ((ModelManager_1.ModelManager.GameModeModel.LoadingPhase = 11),
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info("Teleport", 30, "无加载传送:检测体素流送(开始)"),
-          await this.Fyo(!0),
+          await this.NIo(!0),
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info("Teleport", 30, "无加载传送:检测体素流送(完成)"),
           (ModelManager_1.ModelManager.GameModeModel.LoadingPhase = 12),
           (ModelManager_1.ModelManager.GameModeModel.LoadingPhase = 13),
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info("Teleport", 30, "无加载传送:检测场景流送(开始)"),
-          await this.Fyo(),
+          await this.NIo(),
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info("Teleport", 30, "无加载传送:检测场景流送(完成)"),
           (ModelManager_1.ModelManager.GameModeModel.LoadingPhase = 14)),
@@ -232,7 +232,7 @@ class TeleportController extends ControllerBase_1.ControllerBase {
         ),
         (ModelManager_1.ModelManager.GameModeModel.LoadingPhase = 15),
         ControllerHolder_1.ControllerHolder.CreatureController.CreateEntityFromPending(
-          Protocol_1.Aki.Protocol.jBs.Proto_Normal,
+          Protocol_1.Aki.Protocol.xks.Proto_Normal,
         ),
         (ModelManager_1.ModelManager.GameModeModel.LoadingPhase = 16),
         n.ResetPromise(),
@@ -244,7 +244,7 @@ class TeleportController extends ControllerBase_1.ControllerBase {
           EventDefine_1.EEventName.TeleportComplete,
           l,
         ),
-        TeleportController.Vyo(t),
+        TeleportController.OIo(t),
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("Teleport", 30, "无加载传送:处理完成事件(完成)"),
         Log_1.Log.CheckInfo() &&
@@ -258,7 +258,7 @@ class TeleportController extends ControllerBase_1.ControllerBase {
       r.Promise
     );
   }
-  static async Nyo(e, o) {
+  static async bIo(e, o) {
     const r = ModelManager_1.ModelManager.TeleportModel;
     if (r.IsTeleport)
       return (
@@ -282,13 +282,13 @@ class TeleportController extends ControllerBase_1.ControllerBase {
       "FakeTeleportToPositionImpl",
       async () => (
         r.CreatePromise(),
-        e.TeleportReason === Protocol_1.Aki.Protocol.EOs.Proto_Gm &&
+        e.TeleportReason === Protocol_1.Aki.Protocol.u4s.Proto_Gm &&
           (await LevelLoadingController_1.LevelLoadingController.WaitCloseLoading(
             7,
           )),
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("Teleport", 40, "伪传送:通知服务器传送完成(开始)"),
-        this.Hyo(),
+        this.kIo(),
         await r.TeleportFinishRequest.Promise,
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("Teleport", 40, "伪传送:通知服务器传送完成(完成)"),
@@ -305,7 +305,7 @@ class TeleportController extends ControllerBase_1.ControllerBase {
       t.Promise
     );
   }
-  static async Gyo(o, e, r, t) {
+  static async BIo(o, e, r, t) {
     var l = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
     let a = void 0;
     l && (a = l.Entity.GetComponent(3));
@@ -373,29 +373,29 @@ class TeleportController extends ControllerBase_1.ControllerBase {
       (ModelManager_1.ModelManager.GameModeModel.LoadingPhase = 3),
       t.TeleportReason)
     ) {
-      case Protocol_1.Aki.Protocol.EOs.Proto_Fall:
-      case Protocol_1.Aki.Protocol.EOs.Proto_Rouge:
+      case Protocol_1.Aki.Protocol.u4s.Proto_Fall:
+      case Protocol_1.Aki.Protocol.u4s.Proto_Rouge:
         break;
-      case Protocol_1.Aki.Protocol.EOs.Proto_Action:
-      case Protocol_1.Aki.Protocol.EOs.RCs:
+      case Protocol_1.Aki.Protocol.u4s.Proto_Action:
+      case Protocol_1.Aki.Protocol.u4s.Vvs:
         if (t.Option)
-          switch (t.Option.wkn) {
-            case Protocol_1.Aki.Protocol.wkn.Proto_PlayMp4:
+          switch (t.Option.l5n) {
+            case Protocol_1.Aki.Protocol.l5n.Proto_PlayMp4:
               Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info("Teleport", 46, "TransitionType.PlayMp4开始"),
-                this.jyo(t.Option.Nkn);
+                this.FIo(t.Option.d5n);
               break;
-            case Protocol_1.Aki.Protocol.wkn.Proto_CenterText:
+            case Protocol_1.Aki.Protocol.l5n.Proto_CenterText:
               Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info("Teleport", 46, "TransitionType.CenterText开始"),
-                this.TeleportWithCenterTextStart(t.Option.Okn);
+                this.TeleportWithCenterTextStart(t.Option.m5n);
               break;
-            case Protocol_1.Aki.Protocol.wkn.Proto_PlayEffect:
+            case Protocol_1.Aki.Protocol.l5n.Proto_PlayEffect:
               Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info("Teleport", 46, "TransitionType.PlayEffect开始"),
-                "" !== t.Option.Nkn &&
+                "" !== t.Option.d5n &&
                   ResourceSystem_1.ResourceSystem.LoadAsync(
-                    t.Option.Nkn,
+                    t.Option.d5n,
                     UE.EffectScreenPlayData_C,
                     (e) => {
                       ScreenEffectSystem_1.ScreenEffectSystem.GetInstance().PlayScreenEffect(
@@ -430,20 +430,23 @@ class TeleportController extends ControllerBase_1.ControllerBase {
       (ModelManager_1.ModelManager.GameModeModel.LoadingPhase = 4),
       (2 !== ModelManager_1.ModelManager.TeleportModel.TeleportMode &&
         1 !== ModelManager_1.ModelManager.TeleportModel.TeleportMode) ||
-        UE.KuroStaticLibrary.ForceGarbageCollection(!1),
-      this.Oyo(),
+        ControllerHolder_1.ControllerHolder.WorldController.ForceGarbageCollection(
+          !1,
+        ),
+      this.qIo(),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnUpdateSceneTeam,
-        this.Oyo,
+        this.qIo,
       );
     e = new AsyncTask_1.AsyncTask("TeleportToPositionImpl", async () => {
-      TickSystem_1.TickSystem.IsPaused &&
-        (ControllerHolder_1.ControllerHolder.GameModeController.ForceDisableGamePaused(
+      PerfSightController_1.PerfSightController.StartPersistentOrDungeon(!1),
+        UE.PerfSightHelper.BeginExtTag("Teleport"),
+        UE.PerfSightHelper.BeginExtTag("Teleport.CheckVoxelStreaming"),
+        ControllerHolder_1.ControllerHolder.GameModeController.ForceDisableGamePaused(
           !0,
         ),
-        (TeleportController.Wyo = !0),
-        Log_1.Log.CheckInfo()) &&
-        Log_1.Log.Info("Teleport", 30, "传送:时停解除(开始)", ["Reason", r]);
+        Log_1.Log.CheckInfo() &&
+          Log_1.Log.Info("Teleport", 30, "传送:时停解除(开始)", ["Reason", r]);
       var e =
         2 === ModelManager_1.ModelManager.TeleportModel.TeleportMode ||
         1 === ModelManager_1.ModelManager.TeleportModel.TeleportMode;
@@ -453,10 +456,15 @@ class TeleportController extends ControllerBase_1.ControllerBase {
           Log_1.Log.Info("Teleport", 30, "传送:检测体素流送(开始)"),
         e &&
           ControllerHolder_1.ControllerHolder.WorldController.ManuallyClearStreamingPool(),
-        await this.Kyo(!0),
+        await this.HIo(!0),
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("Teleport", 30, "传送:检测体素流送(完成)"),
-        e && UE.KuroStaticLibrary.ForceGarbageCollection(!1),
+        UE.PerfSightHelper.EndExtTag("Teleport.CheckVoxelStreaming"),
+        UE.PerfSightHelper.BeginExtTag("Teleport.CheckStreaming"),
+        e &&
+          ControllerHolder_1.ControllerHolder.WorldController.ForceGarbageCollection(
+            !1,
+          ),
         ControllerHolder_1.ControllerHolder.GameModeController.AddOrRemoveRenderAssetsQueryViewInfo(
           o,
           ResourceSystem_1.WAIT_RENDER_ASSET_DURATION,
@@ -464,33 +472,45 @@ class TeleportController extends ControllerBase_1.ControllerBase {
         (ModelManager_1.ModelManager.GameModeModel.LoadingPhase = 13),
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("Teleport", 7, "传送:检测场景流送(开始)"),
-        await this.Kyo(),
+        await this.HIo(),
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("Teleport", 7, "传送:检测场景流送(完成)"),
         (ModelManager_1.ModelManager.GameModeModel.LoadingPhase = 14),
+        UE.PerfSightHelper.EndExtTag("Teleport.CheckStreaming"),
+        UE.PerfSightHelper.BeginExtTag("Teleport.CheckRenderAssets"),
         e &&
-          (UE.KuroStaticLibrary.ForceGarbageCollection(!1),
+          (ControllerHolder_1.ControllerHolder.WorldController.ForceGarbageCollection(
+            !1,
+          ),
           ControllerHolder_1.ControllerHolder.WorldController.ManuallyResetStreamingPool()),
         ModelManager_1.ModelManager.GameModeModel.RemoveLoadMapHandle(
           "TeleportToPositionImpl",
         ),
         (ModelManager_1.ModelManager.GameModeModel.LoadingPhase = 15),
         ControllerHolder_1.ControllerHolder.CreatureController.CreateEntityFromPending(
-          Protocol_1.Aki.Protocol.jBs.Proto_Normal,
+          Protocol_1.Aki.Protocol.xks.Proto_Normal,
         ),
+        await ControllerHolder_1.ControllerHolder.GameModeController.CheckRenderAssetsStreamingCompleted(
+          o,
+          "传送:",
+        ),
+        UE.PerfSightHelper.EndExtTag("Teleport.CheckRenderAssets"),
+        UE.PerfSightHelper.BeginExtTag("Teleport.LoadTeam"),
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("Teleport", 30, "传送:等待编队加载(开始)"),
         await ModelManager_1.ModelManager.SceneTeamModel.LoadTeamPromise
           ?.Promise,
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("Teleport", 30, "传送:等待编队加载(完成)"),
+        UE.PerfSightHelper.EndExtTag("Teleport.LoadTeam"),
+        UE.PerfSightHelper.BeginExtTag("Teleport.CloseLoading"),
         EventSystem_1.EventSystem.Remove(
           EventDefine_1.EEventName.OnUpdateSceneTeam,
-          this.Oyo,
+          this.qIo,
         ),
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("Teleport", 30, "传送:设置角色状态(开始)"),
-        TeleportController.kyo(),
+        TeleportController.GIo(),
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("Teleport", 30, "传送:设置角色状态(完成)"),
         (ModelManager_1.ModelManager.GameModeModel.LoadingPhase = 16),
@@ -499,27 +519,26 @@ class TeleportController extends ControllerBase_1.ControllerBase {
           GlobalData_1.GlobalData.World,
           r,
         ),
-        e && UE.KuroStaticLibrary.ForceGarbageCollection(!1),
-        await ControllerHolder_1.ControllerHolder.GameModeController.CheckRenderAssetsStreamingCompleted(
-          o,
-          "传送:",
-        ),
+        e &&
+          ControllerHolder_1.ControllerHolder.WorldController.ForceGarbageCollection(
+            !1,
+          ),
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.FixBornLocation,
         ),
         (ModelManager_1.ModelManager.GameModeModel.LoadingPhase = 19),
         t.TeleportReason)
       ) {
-        case Protocol_1.Aki.Protocol.EOs.Proto_Fall:
+        case Protocol_1.Aki.Protocol.u4s.Proto_Fall:
           await LevelLoadingController_1.LevelLoadingController.WaitCloseLoading(
             1,
           );
           break;
-        case Protocol_1.Aki.Protocol.EOs.Proto_Action:
-        case Protocol_1.Aki.Protocol.EOs.RCs:
+        case Protocol_1.Aki.Protocol.u4s.Proto_Action:
+        case Protocol_1.Aki.Protocol.u4s.Vvs:
           if (t.Option)
-            switch (t.Option.wkn) {
-              case Protocol_1.Aki.Protocol.wkn.Proto_PlayMp4:
+            switch (t.Option.l5n) {
+              case Protocol_1.Aki.Protocol.l5n.Proto_PlayMp4:
                 Log_1.Log.CheckInfo() &&
                   Log_1.Log.Info("Teleport", 46, "传送:CG传送完成(开始)"),
                   await _.CgTeleportCompleted?.Promise,
@@ -531,7 +550,7 @@ class TeleportController extends ControllerBase_1.ControllerBase {
                   Log_1.Log.CheckInfo() &&
                     Log_1.Log.Info("Teleport", 46, "传送:CG传送完成(完成)");
                 break;
-              case Protocol_1.Aki.Protocol.wkn.Proto_CenterText:
+              case Protocol_1.Aki.Protocol.l5n.Proto_CenterText:
                 Log_1.Log.CheckInfo() &&
                   Log_1.Log.Info("Teleport", 46, "传送:黑幕白字传送完成(开始)"),
                   await _.CgTeleportCompleted?.Promise,
@@ -547,7 +566,7 @@ class TeleportController extends ControllerBase_1.ControllerBase {
                       "传送:黑幕白字传送完成(完成)",
                     );
                 break;
-              case Protocol_1.Aki.Protocol.wkn.Proto_PlayEffect:
+              case Protocol_1.Aki.Protocol.l5n.Proto_PlayEffect:
                 Log_1.Log.CheckInfo() &&
                   Log_1.Log.Info(
                     "Teleport",
@@ -572,16 +591,21 @@ class TeleportController extends ControllerBase_1.ControllerBase {
       }
       return (
         (ModelManager_1.ModelManager.GameModeModel.LoadingPhase = 20),
+        UE.PerfSightHelper.EndExtTag("Teleport.CloseLoading"),
+        UE.PerfSightHelper.BeginExtTag("Teleport.TeleportFinishRequest"),
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("Teleport", 30, "传送:通知服务器传送完成(开始)"),
-        this.Hyo(),
+        this.kIo(),
         await _.TeleportFinishRequest.Promise,
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("Teleport", 30, "传送:通知服务器传送完成(完成)"),
+        UE.PerfSightHelper.EndExtTag("Teleport.TeleportFinishRequest"),
+        UE.PerfSightHelper.BeginExtTag("Teleport.TeleportFinish"),
         InputDistributeController_1.InputDistributeController.RefreshInputTag(),
         (_.IsTeleport = !1),
-        TeleportController.Vyo(t.TeleportId),
+        TeleportController.OIo(t.TeleportId),
         _.ResetPromise(),
+        PerfSightController_1.PerfSightController.MarkLevelLoadCompleted(),
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("Teleport", 30, "传送:处理完成事件(开始)"),
         EventSystem_1.EventSystem.Emit(
@@ -591,21 +615,18 @@ class TeleportController extends ControllerBase_1.ControllerBase {
         ),
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("Teleport", 30, "传送:处理完成事件(完成)"),
-        TeleportController.Wyo &&
-          (Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info("Teleport", 46, "传送:更新游戏时停状态"),
-          ControllerHolder_1.ControllerHolder.GameModeController.ForceDisableGamePaused(
-            !1,
-          ),
-          Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info("Teleport", 30, "传送:时停解除(完成)", [
-              "Reason",
-              r,
-            ]),
-          (TeleportController.Wyo = !1)),
+        Log_1.Log.CheckInfo() &&
+          Log_1.Log.Info("Teleport", 46, "传送:更新游戏时停状态"),
+        ControllerHolder_1.ControllerHolder.GameModeController.ForceDisableGamePaused(
+          !1,
+        ),
+        Log_1.Log.CheckInfo() &&
+          Log_1.Log.Info("Teleport", 30, "传送:时停解除(完成)", ["Reason", r]),
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("Teleport", 30, "传送:完成", ["Reason", r]),
         (ModelManager_1.ModelManager.GameModeModel.LoadingPhase = 1),
+        UE.PerfSightHelper.EndExtTag("Teleport.TeleportFinish"),
+        UE.PerfSightHelper.EndExtTag("Teleport"),
         !0
       );
     });
@@ -615,166 +636,190 @@ class TeleportController extends ControllerBase_1.ControllerBase {
       e.Promise
     );
   }
-  static O6s(r, t) {
-    const l = UE.KuroRenderingRuntimeBPPluginBPLibrary.GetSubsystem(
+  static CKs(e, o) {
+    const r = UE.KuroRenderingRuntimeBPPluginBPLibrary.GetSubsystem(
         GlobalData_1.GlobalData.World,
         UE.WorldPartitionSubsystem.StaticClass(),
       ),
-      a =
-        ((TeleportController.Qyo = 3e3),
+      t =
+        ((TeleportController.jIo = 3e3),
         TimerSystem_1.TimerSystem.Forever(() => {
-          var e, o;
           ModelManager_1.ModelManager.GameModeModel.StreamingSource?.IsValid() &&
-            ((e = new UE.WorldPartitionStreamingQuerySource(
-              ModelManager_1.ModelManager.GameModeModel.StreamingSource.K2_GetActorLocation(),
-              ResourceSystem_1.STREAMING_SOURCE_RADIUS,
+            (r &&
+            e.IsStreamingCompletedForLayers(
+              void 0,
               !1,
+              ResourceSystem_1.STREAMING_SOURCE_RADIUS,
               !1,
               void 0,
               !1,
-              !0,
-              t,
-            )),
-            (o = UE.NewArray(UE.WorldPartitionStreamingQuerySource)).Add(e),
-            l && l.IsStreamingCompleted(2, o, !1, void 0, void 0, !0)
-              ? ((TeleportController.Qyo = 0),
-                TimerSystem_1.TimerSystem.Remove(a),
-                r.SetResult(!0))
-              : ((TeleportController.Qyo +=
+            )
+              ? ((TeleportController.jIo = 0),
+                TimerSystem_1.TimerSystem.Remove(t),
+                o.SetResult(!0))
+              : ((TeleportController.jIo +=
                   ResourceSystem_1.CHECK_STREAMING_INTERVAL),
-                3e3 < TeleportController.Qyo &&
-                  ((TeleportController.Qyo = 0), Log_1.Log.CheckDebug()) &&
+                3e3 < TeleportController.jIo &&
+                  ((TeleportController.jIo = 0), Log_1.Log.CheckDebug()) &&
                   Log_1.Log.Debug(
                     "Teleport",
                     30,
                     "无加载传送:流送中",
-                    [
-                      "StreamingSource",
-                      ModelManager_1.ModelManager.GameModeModel.StreamingSource.K2_GetActorLocation(),
-                    ],
-                    ["QuerySource", e.Location],
+                    ["WorldPartitionSubsystem", r ? "true" : "false"],
+                    ["StreamingSource", e.GetOwner().K2_GetActorLocation()],
                   )));
         }, ResourceSystem_1.CHECK_STREAMING_INTERVAL));
-    return a;
+    return t;
   }
-  static async Fyo(o = !1) {
-    var r = ModelManager_1.ModelManager.TeleportModel;
-    if (ModelManager_1.ModelManager.GameModeModel.UseWorldPartition) {
-      ModelManager_1.ModelManager.GameModeModel.StreamingSource?.IsValid() &&
-        !o &&
-        ControllerHolder_1.ControllerHolder.WorldController.EnvironmentInfoUpdate(
-          ModelManager_1.ModelManager.GameModeModel.StreamingSource.K2_GetActorLocation(),
-          !0,
-          !0,
-        );
-      var t = o ? r.VoxelStreamingCompleted : r.StreamingCompleted;
-      let e = void 0;
-      o && (e = UE.NewSet(UE.BuiltinName)).Add(WorldDefine_1.VOXEL_GRID_NAME),
-        (r.CheckStreamingCompletedTimerId = this.O6s(t, e)),
-        await t.Promise,
-        (r.CheckStreamingCompletedTimerId = void 0);
-    } else (o ? r.VoxelStreamingCompleted : r.StreamingCompleted).SetResult(!0);
+  static async NIo(e = !1) {
+    var o,
+      r,
+      t = ModelManager_1.ModelManager.TeleportModel;
+    ModelManager_1.ModelManager.GameModeModel.UseWorldPartition
+      ? (ModelManager_1.ModelManager.GameModeModel.StreamingSource?.IsValid() &&
+          !e &&
+          ControllerHolder_1.ControllerHolder.WorldController.EnvironmentInfoUpdate(
+            ModelManager_1.ModelManager.GameModeModel.StreamingSource.K2_GetActorLocation(),
+            !0,
+            !0,
+          ),
+        (r = e
+          ? ModelManager_1.ModelManager.GameModeModel.VoxelStreamingSource
+          : ModelManager_1.ModelManager.GameModeModel.StreamingSource),
+        (o = e ? t.VoxelStreamingCompleted : t.StreamingCompleted),
+        (r = r.GetComponentByClass(
+          UE.WorldPartitionStreamingSourceComponent.StaticClass(),
+        )),
+        (t.CheckStreamingCompletedTimerId = this.CKs(r, o)),
+        await o.Promise,
+        (t.CheckStreamingCompletedTimerId = void 0))
+      : (e ? t.VoxelStreamingCompleted : t.StreamingCompleted).SetResult(!0);
   }
-  static N6s(e, o, r, t) {
+  static gKs(o, r, t, l = !1) {
+    var e = o.TargetGrids;
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "Teleport",
         61,
         "传送:检测参数",
-        ["dataLayers", null != r && 0 < r.Num() ? r.Get(0).toString() : void 0],
+        [
+          "dataLayers",
+          void 0 !== t && 0 < t.Num() ? t.Get(0).toString() : void 0,
+        ],
         [
           "targetGrids",
-          null != t && 0 < t.Num() ? t.Get(0).toString() : void 0,
+          void 0 !== e && 0 < e.Num() ? e.Get(0).toString() : void 0,
         ],
       );
-    const l = new UE.WorldPartitionStreamingQuerySource(
-        e,
-        ResourceSystem_1.STREAMING_SOURCE_RADIUS,
-        !0,
-        null != r && 0 < r.Num(),
-        r,
-        !1,
-        !0,
-        t,
-      ),
-      a = UE.NewArray(UE.WorldPartitionStreamingQuerySource),
-      _ =
-        (a.Add(l),
-        UE.KuroRenderingRuntimeBPPluginBPLibrary.GetSubsystem(
-          GlobalData_1.GlobalData.World,
-          UE.WorldPartitionSubsystem.StaticClass(),
-        )),
-      n =
-        ((TeleportController.Qyo = 3e3),
-        TimerSystem_1.TimerSystem.Forever(() => {
-          _ && _.IsStreamingCompleted(2, a, !1, void 0, void 0, !0)
-            ? ((TeleportController.Qyo = 0),
-              TimerSystem_1.TimerSystem.Remove(n),
-              o.SetResult(!0))
-            : ((TeleportController.Qyo +=
-                ResourceSystem_1.CHECK_STREAMING_INTERVAL),
-              3e3 < TeleportController.Qyo &&
-                (_ && !_.IsStreamingEnable() && _.SetStreamingEnable(!0),
-                (TeleportController.Qyo = 0),
-                Log_1.Log.CheckInfo()) &&
-                Log_1.Log.Info(
-                  "Teleport",
-                  30,
-                  "传送:流送中",
-                  ["StreamingSource", e],
-                  ["QuerySource", l.Location],
-                ));
-        }, ResourceSystem_1.CHECK_STREAMING_INTERVAL));
+    const a = UE.KuroRenderingRuntimeBPPluginBPLibrary.GetSubsystem(
+      GlobalData_1.GlobalData.World,
+      UE.WorldPartitionSubsystem.StaticClass(),
+    );
+    let _ = !1;
+    TeleportController.jIo = 3e3;
+    const n = TimerSystem_1.TimerSystem.Forever(() => {
+      var e = () => {
+        (TeleportController.jIo += ResourceSystem_1.CHECK_STREAMING_INTERVAL),
+          3e3 < TeleportController.jIo &&
+            (a && !a.IsStreamingEnable() && a.SetStreamingEnable(!0),
+            (TeleportController.jIo = 0),
+            Log_1.Log.CheckInfo()) &&
+            Log_1.Log.Info(
+              "Teleport",
+              30,
+              "传送:流送中",
+              ["WorldPartitionSubsystem", a ? "true" : "false"],
+              ["StreamingSource", o.GetOwner().K2_GetActorLocation()],
+            );
+      };
+      if (a) {
+        if (!_) {
+          const r = o.IsStreamingCompletedForLayers(
+            t,
+            !1,
+            ResourceSystem_1.STREAMING_SOURCE_RADIUS,
+            !1,
+            void 0,
+            !1,
+          );
+          if (!r) return void e();
+          (_ = l) &&
+            Log_1.Log.CheckInfo() &&
+            Log_1.Log.Info("Teleport", 61, "传送:检测场景物理体(开始)");
+        }
+        if (_) {
+          const r = o.IsStreamingCompletedForLayers(
+            t,
+            !1,
+            ResourceSystem_1.STREAMING_SOURCE_RADIUS,
+            !1,
+            void 0,
+            !0,
+          );
+          if (!r) return void e();
+          Log_1.Log.CheckInfo() &&
+            Log_1.Log.Info("Teleport", 61, "传送:检测场景物理体(结束)");
+        }
+        (TeleportController.jIo = 0),
+          TimerSystem_1.TimerSystem.Remove(n),
+          r.SetResult(!0);
+      } else e();
+    }, ResourceSystem_1.CHECK_STREAMING_INTERVAL);
     return n;
   }
-  static async Kyo(r = !1) {
-    var t = ModelManager_1.ModelManager.TeleportModel;
+  static async HIo(e = !1) {
+    var r = ModelManager_1.ModelManager.TeleportModel;
     if (ModelManager_1.ModelManager.GameModeModel.UseWorldPartition) {
-      var l = t.TargetPosition.ToUeVector();
-      (r
+      var t = r.TargetPosition.ToUeVector();
+      (e
         ? ModelManager_1.ModelManager.GameModeModel.VoxelStreamingSource
         : ModelManager_1.ModelManager.GameModeModel.StreamingSource
-      ).K2_SetActorLocation(l, !1, void 0, !1);
-      let o = void 0,
-        e = void 0;
-      if (r) (e = UE.NewSet(UE.BuiltinName)).Add(WorldDefine_1.VOXEL_GRID_NAME);
+      ).K2_SetActorLocation(t, !1, void 0, !1);
+      let o = void 0;
+      if (e) UE.NewSet(UE.BuiltinName).Add(WorldDefine_1.VOXEL_GRID_NAME);
       else {
         o = UE.NewArray(UE.BuiltinName);
         let e =
           ControllerHolder_1.ControllerHolder.WorldController.EnvironmentInfoUpdate(
-            l,
+            t,
             !0,
             !0,
           );
         if (e) {
-          var a = (0, puerts_1.$ref)(void 0);
+          t = (0, puerts_1.$ref)(void 0);
           UE.KuroRenderingRuntimeBPPluginBPLibrary.GetWorldPartitionDataLayerNameByLabel(
             GlobalData_1.GlobalData.World,
             e,
-            a,
+            t,
           ),
-            o.Add((0, puerts_1.$unref)(a));
+            o.Add((0, puerts_1.$unref)(t));
         } else
-          for (const n of WorldDefine_1.dataLayerRuntimeHLOD) {
-            var _ = (0, puerts_1.$ref)(void 0);
-            (e = FNameUtil_1.FNameUtil.GetDynamicFName(n)),
+          for (const _ of WorldDefine_1.dataLayerRuntimeHLOD) {
+            var l = (0, puerts_1.$ref)(void 0);
+            (e = FNameUtil_1.FNameUtil.GetDynamicFName(_)),
               UE.KuroRenderingRuntimeBPPluginBPLibrary.GetWorldPartitionDataLayerNameByLabel(
                 GlobalData_1.GlobalData.World,
                 e,
-                _,
+                l,
               ),
-              o.Add((0, puerts_1.$unref)(_));
+              o.Add((0, puerts_1.$unref)(l));
           }
       }
-      a = r ? t.VoxelStreamingCompleted : t.StreamingCompleted;
-      (t.CheckStreamingCompletedTimerId = this.N6s(l, a, o, e)),
+      var t = e
+          ? ModelManager_1.ModelManager.GameModeModel.VoxelStreamingSource
+          : ModelManager_1.ModelManager.GameModeModel.StreamingSource,
+        a = e ? r.VoxelStreamingCompleted : r.StreamingCompleted,
+        t = t.GetComponentByClass(
+          UE.WorldPartitionStreamingSourceComponent.StaticClass(),
+        );
+      (r.CheckStreamingCompletedTimerId = this.gKs(t, a, o, !e)),
         await a.Promise,
-        (t.CheckStreamingCompletedTimerId = void 0);
-    } else (r ? t.VoxelStreamingCompleted : t.StreamingCompleted).SetResult(!0);
+        (r.CheckStreamingCompletedTimerId = void 0);
+    } else (e ? r.VoxelStreamingCompleted : r.StreamingCompleted).SetResult(!0);
   }
-  static Hyo() {
-    var e = new Protocol_1.Aki.Protocol.fus();
-    Net_1.Net.Call(5004, e, (e) => {
+  static kIo() {
+    var e = new Protocol_1.Aki.Protocol.cCs();
+    Net_1.Net.Call(22302, e, (e) => {
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Teleport",
@@ -792,7 +837,7 @@ class TeleportController extends ControllerBase_1.ControllerBase {
           );
     });
   }
-  static kyo() {
+  static GIo() {
     var e,
       o,
       r = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
@@ -809,11 +854,11 @@ class TeleportController extends ControllerBase_1.ControllerBase {
           "TeleportController",
           !1,
         ),
-        r.Entity.GetComponent(158)?.ResetCharState(),
-        r.Entity.GetComponent(160)?.MainAnimInstance?.SyncAnimStates(void 0),
-        (TeleportController.Xyo = TimerSystem_1.TimerSystem.Delay(() => {
+        r.Entity.GetComponent(160)?.ResetCharState(),
+        r.Entity.GetComponent(162)?.MainAnimInstance?.SyncAnimStates(void 0),
+        (TeleportController.WIo = TimerSystem_1.TimerSystem.Delay(() => {
           (ModelManager_1.ModelManager.DeadReviveModel.SkipFallInjure = !1),
-            (TeleportController.Xyo = void 0);
+            (TeleportController.WIo = void 0);
         }, SKIP_FALL_INJURE_TIME)),
         CameraController_1.CameraController.FightCamera.LogicComponent.SetRotation(
           CameraUtility_1.CameraUtility.GetCameraDefaultFocusUeRotator(),
@@ -821,11 +866,11 @@ class TeleportController extends ControllerBase_1.ControllerBase {
         CameraController_1.CameraController.FightCamera.LogicComponent.ResetFightCameraLogic(),
         1 === o.CallSource &&
           DeadReviveController_1.DeadReviveController.PlayerReviveEnded(),
-        r.Entity.GetComponent(172)?.ResetDrowning())
+        r.Entity.GetComponent(175)?.ResetDrowning())
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error("Teleport", 30, "传送:失败,找不到当前实体");
   }
-  static $yo(e) {
+  static KIo(e) {
     var o;
     return ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance() ||
       (Global_1.Global.BaseCharacter?.IsValid() &&
@@ -847,7 +892,7 @@ class TeleportController extends ControllerBase_1.ControllerBase {
       ? 3
       : 2;
   }
-  static Vyo(e) {
+  static OIo(e) {
     e &&
       (e =
         ConfigManager_1.ConfigManager.WorldMapConfig.GetTeleportEntityConfigId(
@@ -859,7 +904,7 @@ class TeleportController extends ControllerBase_1.ControllerBase {
   }
   static OnLeaveLevel() {
     return (
-      (TeleportController.Qyo = 0),
+      (TeleportController.jIo = 0),
       ModelManager_1.ModelManager.TeleportModel
         .CheckStreamingCompletedTimerId &&
         (Log_1.Log.CheckDebug() &&
@@ -882,7 +927,7 @@ class TeleportController extends ControllerBase_1.ControllerBase {
       !0
     );
   }
-  static async jyo(e) {
+  static async FIo(e) {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info("Teleport", 46, "传送:CG传送开始(视频)"),
       (ModelManager_1.ModelManager.GameModeModel.PlayTravelMp4 = !0),
@@ -902,27 +947,24 @@ class TeleportController extends ControllerBase_1.ControllerBase {
       (ModelManager_1.ModelManager.GameModeModel.UseShowCenterText = !0),
       e
         ? (ModelManager_1.ModelManager.PlotModel.PlayFlow =
-            new PlotData_1.PlotFlow(e.bkn, e.qkn, e.Gkn))
+            new PlotData_1.PlotFlow(e._5n, e.u5n, e.c5n))
         : Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("Teleport", 46, "transitionFlow为空"),
       await LevelLoadingController_1.LevelLoadingController.WaitOpenLoading(
         8,
         0,
       ),
-      ModelManager_1.ModelManager.PlotModel.ShowCenterTextForTeleport(
-        ModelManager_1.ModelManager.PlotModel.OnShowCenterTextFinished,
-      );
+      ModelManager_1.ModelManager.PlotModel.ShowCenterTextForTeleport();
   }
 }
 (exports.TeleportController = TeleportController),
-  ((_a = TeleportController).Qyo = 0),
-  (TeleportController.Xyo = void 0),
-  (TeleportController.byo = void 0),
-  (TeleportController.Wyo = !1),
-  (TeleportController.Oyo = () => {
-    TeleportController.Xyo &&
-      (TimerSystem_1.TimerSystem.Remove(TeleportController.Xyo),
-      (TeleportController.Xyo = void 0)),
+  ((_a = TeleportController).jIo = 0),
+  (TeleportController.WIo = void 0),
+  (TeleportController.xIo = void 0),
+  (TeleportController.qIo = () => {
+    TeleportController.WIo &&
+      (TimerSystem_1.TimerSystem.Remove(TeleportController.WIo),
+      (TeleportController.WIo = void 0)),
       (ModelManager_1.ModelManager.DeadReviveModel.SkipFallInjure = !0);
     var e = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
     e?.Valid &&
@@ -931,23 +973,23 @@ class TeleportController extends ControllerBase_1.ControllerBase {
       e.Actor.CharacterMovement?.IsValid() &&
       e.Actor.CharacterMovement.SetMovementMode(0);
   }),
-  (TeleportController.wyo = (e) => {
-    var o = e.Hms,
-      r = e.Bkn,
+  (TeleportController.AIo = (e) => {
+    var o = e.nvs,
+      r = e.h5n,
       t =
         ModelManager_1.ModelManager.WorldMapModel.WaitToTeleportMarkItem
           ?.MarkConfigId,
       t =
         ((ModelManager_1.ModelManager.LoadingModel.TargetTeleportId = t),
         new TeleportDefine_1.TeleportContext(
-          e.V5n,
+          e.E9n,
           t,
           void 0,
-          o ? o.Xms : void 0,
+          o ? o._vs : void 0,
           r,
         )),
-      l = new UE.Vector(e.N6n, e.k6n, e.O6n),
-      a = new UE.Rotator(0, e.IIs, 0);
+      l = new UE.Vector(e.p7n, e.v7n, e.f7n),
+      a = new UE.Rotator(0, e.$Ds, 0);
     let _ = "";
     try {
       _ = JSON.stringify(o);
@@ -961,14 +1003,14 @@ class TeleportController extends ControllerBase_1.ControllerBase {
           7,
           "服务端驱动执行行为组",
           ["Context", _],
-          ["PosX", e.N6n],
-          ["PosY", e.k6n],
-          ["PosZ", e.O6n],
-          ["Reason", e.V5n],
+          ["PosX", e.p7n],
+          ["PosY", e.v7n],
+          ["PosZ", e.f7n],
+          ["Reason", e.E9n],
         ),
       ModelManager_1.ModelManager.TeleportModel.IsTeleport)
     )
-      (TeleportController.byo = e),
+      (TeleportController.xIo = e),
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Teleport",
@@ -993,15 +1035,21 @@ class TeleportController extends ControllerBase_1.ControllerBase {
             ["原因", t.TeleportReason],
           );
     else {
-      switch (((TeleportController.byo = void 0), t.TeleportReason)) {
-        case Protocol_1.Aki.Protocol.EOs.Proto_Action:
-        case Protocol_1.Aki.Protocol.EOs.RCs:
-          r && r.wkn === Protocol_1.Aki.Protocol.wkn.Proto_CenterText
+      switch (((TeleportController.xIo = void 0), t.TeleportReason)) {
+        case Protocol_1.Aki.Protocol.u4s.Proto_Action:
+        case Protocol_1.Aki.Protocol.u4s.Vvs:
+          r && r.l5n === Protocol_1.Aki.Protocol.l5n.Proto_CenterText
             ? (ModelManager_1.ModelManager.TeleportModel.TeleportMode = 0)
             : (ModelManager_1.ModelManager.TeleportModel.TeleportMode =
-                _a.$yo(l));
+                _a.KIo(l));
           break;
-        case Protocol_1.Aki.Protocol.EOs.Proto_Drown:
+        case Protocol_1.Aki.Protocol.u4s.Proto_BtRollbackFailed:
+          r?.l5n === Protocol_1.Aki.Protocol.l5n.Proto_FadeInScreen
+            ? (ModelManager_1.ModelManager.TeleportModel.TeleportMode = 3)
+            : (ModelManager_1.ModelManager.TeleportModel.TeleportMode =
+                _a.KIo(l));
+          break;
+        case Protocol_1.Aki.Protocol.u4s.Proto_Drown:
           ModelManager_1.ModelManager.TeleportModel.TeleportMode = 2;
           break;
         default:
@@ -1019,7 +1067,7 @@ class TeleportController extends ControllerBase_1.ControllerBase {
           void 0);
     }
   }),
-  (TeleportController.Byo = (e) => {
+  (TeleportController.PIo = (e) => {
     ModelManager_1.ModelManager.DeadReviveModel.SkipDeathAnim = !1;
   });
 //# sourceMappingURL=TeleportController.js.map

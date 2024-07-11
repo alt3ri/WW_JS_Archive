@@ -9,9 +9,9 @@ class VisibleAnimMachine {
       (this.VisibleCallback = void 0),
       (this.PlayAnimCallback = void 0),
       (this.StopAnimCallback = void 0),
-      (this.zmt = void 0),
-      (this.Zmt = () => {
-        (this.zmt = void 0),
+      (this._Ct = void 0),
+      (this.uCt = () => {
+        (this._Ct = void 0),
           3 === this.State
             ? ((this.State = 0), this.VisibleCallback(!1))
             : 2 === this.State && (this.State = 1);
@@ -33,7 +33,7 @@ class VisibleAnimMachine {
         ? (i ? (this.VisibleCallback(!0), (this.State = 2)) : (this.State = 3),
           this.PlayAnimCallback(i),
           this.BCe(),
-          (this.zmt = TimerSystem_1.TimerSystem.Delay(this.Zmt, s)))
+          (this._Ct = TimerSystem_1.TimerSystem.Delay(this.uCt, s)))
         : ((this.State = i ? 1 : 0), this.VisibleCallback(i)));
   }
   ForcePlayShowAnim(i) {
@@ -42,14 +42,14 @@ class VisibleAnimMachine {
       (this.State = 2),
       this.PlayAnimCallback(!0),
       this.BCe(),
-      (this.zmt = TimerSystem_1.TimerSystem.Delay(this.Zmt, i)));
+      (this._Ct = TimerSystem_1.TimerSystem.Delay(this.uCt, i)));
   }
   Reset() {
     this.BCe();
   }
   BCe() {
-    this.zmt &&
-      (TimerSystem_1.TimerSystem.Remove(this.zmt), (this.zmt = void 0));
+    this._Ct &&
+      (TimerSystem_1.TimerSystem.Remove(this._Ct), (this._Ct = void 0));
   }
 }
 exports.VisibleAnimMachine = VisibleAnimMachine;

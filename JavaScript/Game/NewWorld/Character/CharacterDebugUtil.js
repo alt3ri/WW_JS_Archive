@@ -22,7 +22,7 @@ class CharacterDebugUtil {
           ? this.LoadCharacterFightDtNewPreload(r.Entity, e).then(
               () => {
                 Log_1.Log.CheckDebug() &&
-                  Log_1.Log.Debug("Temp", 1, "测试加载战斗DT完成", [
+                  Log_1.Log.Debug("Battle", 18, "测试加载战斗DT完成", [
                     "entityId",
                     r.Entity.Id,
                   ]);
@@ -32,7 +32,7 @@ class CharacterDebugUtil {
           : this.LoadCharacterFightDtOldPreload(r.Entity, e).then(
               () => {
                 Log_1.Log.CheckDebug() &&
-                  Log_1.Log.Debug("Temp", 1, "测试加载战斗DT完成", [
+                  Log_1.Log.Debug("Battle", 18, "测试加载战斗DT完成", [
                     "entityId",
                     r.Entity.Id,
                   ]);
@@ -43,37 +43,37 @@ class CharacterDebugUtil {
   static async LoadCharacterFightDtOldPreload(e, o) {
     var a = e.GetComponent(0),
       t = e.GetComponent(33),
-      e = e.GetComponent(1),
+      r = e.GetComponent(1),
       l = ModelManager_1.ModelManager.PreloadModel.AllEntityAssetMap.get(
         a.GetCreatureDataId(),
       );
     if (l) {
       (a = UE.KismetSystemLibrary.Conv_ClassToSoftClassReference(
-        e.Actor.GetClass(),
+        r.Actor.GetClass(),
       )),
-        (e = UE.KismetSystemLibrary.Conv_SoftClassReferenceToString(a)),
+        (r = UE.KismetSystemLibrary.Conv_SoftClassReferenceToString(a)),
         (a =
-          ConfigManager_1.ConfigManager.WorldConfig.GetCharacterFightInfo(e));
+          ConfigManager_1.ConfigManager.WorldConfig.GetCharacterFightInfo(r));
       if (a) {
         var i = a?.SkillDataTableMap.Get(o)?.ToAssetPathName(),
           i =
             (i &&
               0 < i.length &&
               "None" !== i &&
-              ((i = ResourceSystem_1.ResourceSystem.SyncLoad(i, UE.DataTable)),
+              ((i = ResourceSystem_1.ResourceSystem.Load(i, UE.DataTable)),
               (t.DtSkillInfoExtra = i)),
             a?.BulletDataTableMap.Get(o)?.ToAssetPathName()),
           i =
             (i &&
               0 < i.length &&
               "None" !== i &&
-              ((i = ResourceSystem_1.ResourceSystem.SyncLoad(i, UE.DataTable)),
+              ((i = ResourceSystem_1.ResourceSystem.Load(i, UE.DataTable)),
               (t.DtBulletInfoExtra = i)),
             a?.HitEffectTableMap.Get(o)?.ToAssetPathName());
         i &&
           0 < i.length &&
           "None" !== i &&
-          ((a = ResourceSystem_1.ResourceSystem.SyncLoad(i, UE.DataTable)),
+          ((a = ResourceSystem_1.ResourceSystem.Load(i, UE.DataTable)),
           (t.DtHitEffectExtra = a));
         let r = void 0;
         if (t.DtSkillInfoExtra) {
@@ -122,114 +122,121 @@ class CharacterDebugUtil {
             t.DtBulletInfoExtra,
             l,
           );
-        const P = new GameModePromise_1.GameModePromise();
-        if (
-          (PreloadController_1.PreloadController.CheckPreloadByAssetElement(
-            l,
-            void 0,
-            (e) => {
-              P.SetResult(e);
-            },
-          ),
-          await P.Promise,
-          r?.Num())
-        )
+        const v = new GameModePromise_1.GameModePromise();
+        PreloadController_1.PreloadController.CheckPreloadByAssetElement(
+          l,
+          void 0,
+          (e) => {
+            v.SetResult(e);
+          },
+        ),
+          await v.Promise;
+        var c = e.GetComponent(191);
+        if (r?.Num())
           for (let e = 0; e < r.Num(); e++) {
-            var c = Number(r.Get(e).toString()),
-              C = t.GetSkillInfo(c);
-            C && 0 === C.SkillLoadType && t.GiveSkillDebug(c);
+            var C = Number(r.Get(e).toString()),
+              P = t.GetSkillInfo(C);
+            P && (t.GiveSkillDebug(C, P), c.AddSkillTriggerDebug(C, P));
           }
       } else
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("Character", 18, "找不到当前角色的FightInfo配置", [
             "actorPath",
-            e,
+            r,
           ]);
     }
   }
   static async LoadCharacterFightDtNewPreload(e, r) {
     var o = e.GetComponent(0),
       a = e.GetComponent(33),
-      e = e.GetComponent(1),
-      t = ModelManager_1.ModelManager.PreloadModelNew.GetEntityAssetElement(
+      t = e.GetComponent(1),
+      l = ModelManager_1.ModelManager.PreloadModelNew.GetEntityAssetElement(
         o.GetCreatureDataId(),
       );
-    if (t) {
+    if (l) {
       (o = UE.KismetSystemLibrary.Conv_ClassToSoftClassReference(
-        e.Actor.GetClass(),
+        t.Actor.GetClass(),
       )),
-        (e = UE.KismetSystemLibrary.Conv_SoftClassReferenceToString(o)),
+        (t = UE.KismetSystemLibrary.Conv_SoftClassReferenceToString(o)),
         (o =
-          ConfigManager_1.ConfigManager.WorldConfig.GetCharacterFightInfo(e));
+          ConfigManager_1.ConfigManager.WorldConfig.GetCharacterFightInfo(t));
       if (o) {
-        var l = o?.SkillDataTableMap.Get(r)?.ToAssetPathName(),
-          l =
-            (l &&
-              0 < l.length &&
-              "None" !== l &&
-              ((l = ResourceSystem_1.ResourceSystem.SyncLoad(l, UE.DataTable)),
-              (a.DtSkillInfoExtra = l)),
+        var i = o?.SkillDataTableMap.Get(r)?.ToAssetPathName(),
+          i =
+            (i &&
+              0 < i.length &&
+              "None" !== i &&
+              ((i = ResourceSystem_1.ResourceSystem.Load(i, UE.DataTable)),
+              (a.DtSkillInfoExtra = i)),
             o?.BulletDataTableMap.Get(r)?.ToAssetPathName()),
-          l =
-            (l &&
-              0 < l.length &&
-              "None" !== l &&
-              ((l = ResourceSystem_1.ResourceSystem.GetLoadedAsset(
-                l,
+          i =
+            (i &&
+              0 < i.length &&
+              "None" !== i &&
+              ((i = ResourceSystem_1.ResourceSystem.GetLoadedAsset(
+                i,
                 UE.DataTable,
               )),
-              (a.DtBulletInfoExtra = l)),
+              (a.DtBulletInfoExtra = i)),
             (0, puerts_1.$ref)(void 0)),
-          i =
+          n =
             (UE.DataTableFunctionLibrary.GetDataTableRowNames(
               a.DtBulletInfoExtra,
-              l,
+              i,
             ),
-            (0, puerts_1.$unref)(l));
-        for (let e = 0; e < i.Num(); e++) {
-          var n = BigInt(i.Get(e).toString());
+            (0, puerts_1.$unref)(i));
+        for (let e = 0; e < n.Num(); e++) {
+          var s = BigInt(n.Get(e).toString());
           PreloadControllerNew_1.PreloadControllerNew.CollectAssetByBulletId(
-            t,
-            n,
+            l,
+            s,
           );
         }
-        var l = o?.HitEffectTableMap.Get(r)?.ToAssetPathName(),
+        var i = o?.HitEffectTableMap.Get(r)?.ToAssetPathName(),
           r =
-            (l &&
-              0 < l.length &&
-              "None" !== l &&
+            (i &&
+              0 < i.length &&
+              "None" !== i &&
               ((o = ResourceSystem_1.ResourceSystem.GetLoadedAsset(
-                l,
+                i,
                 UE.DataTable,
               )),
               (a.DtHitEffectExtra = o)),
             new GameModePromise_1.GameModePromise()),
-          l =
+          _ =
             (PreloadControllerNew_1.PreloadControllerNew.LoadAssetAsync(
-              t.MainAsset,
-              t.LoadPriority,
+              l.MainAsset,
+              l.LoadPriority,
               !1,
               r,
             ),
             await r.Promise,
-            (0, puerts_1.$ref)(void 0)),
-          s =
+            e.GetComponent(191)),
+          i = (0, puerts_1.$ref)(void 0),
+          d =
             (UE.DataTableFunctionLibrary.GetDataTableRowNames(
               a.DtSkillInfoExtra,
-              l,
+              i,
             ),
-            (0, puerts_1.$unref)(l));
-        if (s?.Num())
-          for (let e = 0; e < s.Num(); e++) {
-            var _ = Number(s.Get(e).toString()),
-              d = a.GetSkillInfo(_);
-            d && 0 === d.SkillLoadType && a.GiveSkillDebug(_);
+            (0, puerts_1.$unref)(i));
+        if (d?.Num())
+          for (let e = 0; e < d.Num(); e++) {
+            var u = Number(d.Get(e).toString()),
+              g = a.GetSkillInfo(u);
+            g &&
+              (Log_1.Log.CheckDebug() &&
+                Log_1.Log.Debug("Battle", 18, "【debug】加载额外技能", [
+                  "skillId",
+                  u,
+                ]),
+              a.GiveSkillDebug(u, g),
+              _.AddSkillTriggerDebug(u, g));
           }
       } else
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("Character", 18, "找不到当前角色的FightInfo配置", [
             "actorPath",
-            e,
+            t,
           ]);
     }
   }

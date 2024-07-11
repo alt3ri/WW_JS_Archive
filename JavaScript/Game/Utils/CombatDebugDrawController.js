@@ -21,48 +21,48 @@ class CombatDebugDrawController extends ControllerBase_1.ControllerBase {
     );
   }
   static OnTick(t) {
-    this.DebugMonsterControl && this.gCr(),
-      this.fCr(CombatDebugController_1.CombatDebugController.DebugEntityId);
+    this.DebugMonsterControl && this.mgr(),
+      this.dgr(CombatDebugController_1.CombatDebugController.DebugEntityId);
   }
-  static gCr() {
-    this.pCr.clear();
+  static mgr() {
+    this.Cgr.clear();
     for (const e of ModelManager_1.ModelManager.CreatureModel.GetAllEntities() ??
       []) {
       var t;
       e.Entity.Active &&
         (t = e.Entity.GetComponent(0)).IsRole() &&
-        this.pCr.set(t.GetPlayerId(), e.Entity);
+        this.Cgr.set(t.GetPlayerId(), e.Entity);
     }
     for (const a of ModelManager_1.ModelManager.CreatureModel.GetAllEntities() ??
       []) {
       var r, o;
       a.Entity.Active &&
         a.Entity.GetComponent(0).IsMonster() &&
-        (o = a.Entity.GetComponent(38)?.AiController) &&
-        (r = this.pCr.get(o.ControllerPlayerId)) &&
-        (this.vCr.DeepCopy(a.Entity.GetComponent(3).ActorLocationProxy),
-        this.MCr.DeepCopy(r.GetComponent(3).ActorLocationProxy),
+        (o = a.Entity.GetComponent(39)?.AiController) &&
+        (r = this.Cgr.get(o.ControllerPlayerId)) &&
+        (this.ggr.DeepCopy(a.Entity.GetComponent(3).ActorLocationProxy),
+        this.fgr.DeepCopy(r.GetComponent(3).ActorLocationProxy),
         UE.KismetSystemLibrary.DrawDebugArrow(
           GlobalData_1.GlobalData.World,
-          this.vCr.ToUeVector(),
-          this.MCr.ToUeVector(),
+          this.ggr.ToUeVector(),
+          this.fgr.ToUeVector(),
           2,
           this.GreenColor,
         ),
-        (r = a.Entity.GetComponent(57))) &&
+        (r = a.Entity.GetComponent(59))) &&
         o.ControllerPlayerId !== r.ControllerPlayerId &&
-        (o = this.pCr.get(r.ControllerPlayerId)) &&
-        (this.MCr.DeepCopy(o.GetComponent(3).ActorLocationProxy),
+        (o = this.Cgr.get(r.ControllerPlayerId)) &&
+        (this.fgr.DeepCopy(o.GetComponent(3).ActorLocationProxy),
         UE.KismetSystemLibrary.DrawDebugArrow(
           GlobalData_1.GlobalData.World,
-          this.vCr.ToUeVector(),
-          this.MCr.ToUeVector(),
+          this.ggr.ToUeVector(),
+          this.fgr.ToUeVector(),
           2,
           this.YellowColor,
         ));
     }
   }
-  static fCr(r) {
+  static dgr(r) {
     var r = EntitySystem_1.EntitySystem.Get(r),
       o = r?.GetComponent(3),
       e = o?.Actor,
@@ -88,13 +88,13 @@ class CombatDebugDrawController extends ControllerBase_1.ControllerBase {
         t +=
           `
 ` + (o?.IsAutonomousProxy ? "主控" : "非主控");
-        (l = r.GetComponent(107)),
+        (l = r.GetComponent(109)),
           (o =
             (l &&
               (t +=
                 `
 时间缩放: ` + l.CurrentTimeScale.toFixed(2)),
-            r.GetComponent(65)));
+            r.GetComponent(67)));
         for (const i of o?.StateMachineGroup?.StateMachines ?? [])
           t +=
             `
@@ -132,7 +132,7 @@ class CombatDebugDrawController extends ControllerBase_1.ControllerBase {
   (CombatDebugDrawController.YellowColor = void 0),
   (CombatDebugDrawController.EntityBoxColor = void 0),
   (CombatDebugDrawController.EntityBoxInfoColor = void 0),
-  (CombatDebugDrawController.vCr = Vector_1.Vector.Create()),
-  (CombatDebugDrawController.MCr = Vector_1.Vector.Create()),
-  (CombatDebugDrawController.pCr = new Map());
+  (CombatDebugDrawController.ggr = Vector_1.Vector.Create()),
+  (CombatDebugDrawController.fgr = Vector_1.Vector.Create()),
+  (CombatDebugDrawController.Cgr = new Map());
 //# sourceMappingURL=CombatDebugDrawController.js.map

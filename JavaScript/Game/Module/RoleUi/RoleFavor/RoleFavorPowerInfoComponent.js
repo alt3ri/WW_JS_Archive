@@ -6,7 +6,7 @@ const UE = require("ue"),
   LguiUtil_1 = require("../../Util/LguiUtil");
 class RoleFavorPowerInfoComponent extends UiPanelBase_1.UiPanelBase {
   constructor(e, t) {
-    super(), (this.M_o = t), e && this.CreateThenShowByActor(e.GetOwner());
+    super(), (this.guo = t), e && this.CreateThenShowByActor(e.GetOwner());
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -21,12 +21,12 @@ class RoleFavorPowerInfoComponent extends UiPanelBase_1.UiPanelBase {
   OnStart() {
     var e = this.GetText(0);
     LguiUtil_1.LguiUtil.SetLocalText(e, "FavorPowerFile"),
-      this.GetText(3).ShowTextNew(this.M_o.TalentName),
-      this.GetText(4).ShowTextNew(this.M_o.TalentDoc),
-      this.GetText(5).ShowTextNew(this.M_o.TalentCertification);
+      this.GetText(3).ShowTextNew(this.guo.TalentName),
+      this.GetText(4).ShowTextNew(this.guo.TalentDoc),
+      this.GetText(5).ShowTextNew(this.guo.TalentCertification);
   }
   OnBeforeDestroy() {
-    this.M_o = void 0;
+    this.guo = void 0;
   }
 }
 exports.RoleFavorPowerInfoComponent = RoleFavorPowerInfoComponent;

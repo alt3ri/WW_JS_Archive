@@ -12,33 +12,33 @@ class NpcIconComponentView extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
       (this.RootActorRotation = void 0),
-      (this.jbi = void 0),
-      (this.Wbi = !1),
-      (this.Kbi = !1),
-      (this.Qbi = !1),
-      (this.Xbi = !1),
-      (this.$bi = !1),
-      (this.Ybi = !1),
-      (this.Jbi = void 0),
-      (this.zbi = void 0),
+      (this.jqi = void 0),
+      (this.Wqi = !1),
+      (this.Kqi = !1),
+      (this.Qqi = !1),
+      (this.Xqi = !1),
+      (this.$qi = !1),
+      (this.Yqi = !1),
+      (this.Jqi = void 0),
+      (this.zqi = void 0),
       (this.IconPath = ""),
-      (this.Zbi = void 0),
-      (this.eqi = new UE.Vector(1, 1, 1)),
-      (this.tqi = 0),
-      (this.iqi = void 0),
-      (this.oqi = void 0),
-      (this.rqi = void 0),
-      (this.nqi = new UE.Vector(1, 1, 1)),
-      (this.sqi = 0),
-      (this.aqi = void 0),
-      (this.uct = 0),
-      (this.CDi = void 0),
-      (this.hqi = !1),
-      (this.lqi = void 0),
-      (this._qi = !1),
-      (this.uqi = void 0),
-      (this.cqi = (t) => {
-        this.uqi?.(), (this.uqi = void 0);
+      (this.Zqi = void 0),
+      (this.eGi = new UE.Vector(1, 1, 1)),
+      (this.tGi = 0),
+      (this.iGi = void 0),
+      (this.oGi = void 0),
+      (this.rGi = void 0),
+      (this.nGi = new UE.Vector(1, 1, 1)),
+      (this.sGi = 0),
+      (this.aGi = void 0),
+      (this.ymt = 0),
+      (this.CRi = void 0),
+      (this.hGi = !1),
+      (this.lGi = void 0),
+      (this._Gi = !1),
+      (this.uGi = void 0),
+      (this.cGi = (t) => {
+        this.uGi?.(), (this.uGi = void 0);
       });
   }
   OnRegisterComponent() {
@@ -56,26 +56,26 @@ class NpcIconComponentView extends UiPanelBase_1.UiPanelBase {
   }
   OnStart() {
     (this.RootActorRotation = this.RootActor.K2_GetActorRotation()),
-      (this.jbi = new UE.Vector(0, 0, 0)),
-      (this.iqi = this.GetItem(6)),
-      (this.tqi = this.iqi.K2_GetComponentScale().X),
-      (this.aqi = this.GetItem(2)),
-      (this.sqi = this.aqi.K2_GetComponentScale().X),
-      (this.Jbi = this.GetItem(5)),
-      (this.zbi = this.GetTexture(4)),
-      (this.rqi = this.GetItem(8)),
-      (this.oqi = this.GetItem(10)),
-      (this.$bi = this.zbi.bIsUIActive),
-      (this.Qbi = this.iqi.bIsUIActive),
-      (this.Kbi = this.RootItem.bIsUIActive),
-      (this.Wbi = this.Jbi.bIsUIActive),
-      this.mqi(),
+      (this.jqi = new UE.Vector(0, 0, 0)),
+      (this.iGi = this.GetItem(6)),
+      (this.tGi = this.iGi.K2_GetComponentScale().X),
+      (this.aGi = this.GetItem(2)),
+      (this.sGi = this.aGi.K2_GetComponentScale().X),
+      (this.Jqi = this.GetItem(5)),
+      (this.zqi = this.GetTexture(4)),
+      (this.rGi = this.GetItem(8)),
+      (this.oGi = this.GetItem(10)),
+      (this.$qi = this.zqi.bIsUIActive),
+      (this.Qqi = this.iGi.bIsUIActive),
+      (this.Kqi = this.RootItem.bIsUIActive),
+      (this.Wqi = this.Jqi.bIsUIActive),
+      this.mGi(),
       this.SetDialogueActive(!1),
-      this.dqi();
+      this.dGi();
   }
-  mqi() {
-    (this.CDi = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem)),
-      this.CDi.BindSequenceCloseEvent(this.cqi);
+  mGi() {
+    (this.CRi = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem)),
+      this.CRi.BindSequenceCloseEvent(this.cGi);
   }
   SetNpcName(t) {
     var i = this.GetText(0);
@@ -86,13 +86,13 @@ class NpcIconComponentView extends UiPanelBase_1.UiPanelBase {
   SetNpcQuestIcon(t) {
     (this.IconPath = t),
       StringUtils_1.StringUtils.IsEmpty(t)
-        ? this.dqi()
-        : (this.SetTextureByPath(t, this.zbi), this.Cqi(!0), (this.lqi = 1));
+        ? this.dGi()
+        : (this.SetTextureByPath(t, this.zqi), this.CGi(!0), (this.lGi = 1));
   }
   InitItemLocation(t, i) {
-    (this.jbi = t),
-      (this.jbi.Z = t.Z + i),
-      this.RootActor.K2_SetActorLocation(this.jbi, !1, void 0, !1);
+    (this.jqi = t),
+      (this.jqi.Z = t.Z + i),
+      this.RootActor.K2_SetActorLocation(this.jqi, !1, void 0, !1);
   }
   UpdateRotation(t, i) {
     t += 90;
@@ -102,25 +102,25 @@ class NpcIconComponentView extends UiPanelBase_1.UiPanelBase {
       this.RootItem.SetUIWorldRotation(this.RootActorRotation);
   }
   SetDialogueActive(t, i = !1) {
-    t !== this.Ybi &&
-      ((this.Ybi = t)
-        ? (this.aqi.SetUIActive(!0),
-          this.gqi("DialogueStart"),
-          this.rqi.SetUIActive(i))
-        : ((this.uqi = () => {
-            this.aqi.SetUIActive(!1);
+    t !== this.Yqi &&
+      ((this.Yqi = t)
+        ? (this.aGi.SetUIActive(!0),
+          this.gGi("DialogueStart"),
+          this.rGi.SetUIActive(i))
+        : ((this.uGi = () => {
+            this.aGi.SetUIActive(!1);
           }),
-          this.gqi("DialogueClose") || this.uqi?.()));
+          this.gGi("DialogueClose") || this.uGi?.()));
   }
   GetDialogueActive() {
-    return this.Ybi;
+    return this.Yqi;
   }
-  gqi(t) {
+  gGi(t) {
     return (
-      this.CDi.GetCurrentSequence() === t
-        ? this.CDi.ReplaySequenceByKey(t)
-        : (this.CDi.StopCurrentSequence(!1, !0),
-          this.CDi.PlayLevelSequenceByName(t)),
+      this.CRi.GetCurrentSequence() === t
+        ? this.CRi.ReplaySequenceByKey(t)
+        : (this.CRi.StopCurrentSequence(!1, !0),
+          this.CRi.PlayLevelSequenceByName(t)),
       !0
     );
   }
@@ -128,93 +128,93 @@ class NpcIconComponentView extends UiPanelBase_1.UiPanelBase {
     this.GetText(3).SetText(t);
   }
   SetHeadItemState(t) {
-    this.Qbi !== t &&
-      ((this.Qbi = t), this.iqi.SetUIActive(t), t) &&
-      this.$bi &&
-      !this.hqi &&
-      0 === this.lqi &&
-      (this.fqi(), (this.hqi = !1));
+    this.Qqi !== t &&
+      ((this.Qqi = t), this.iGi.SetUIActive(t), t) &&
+      this.$qi &&
+      !this.hGi &&
+      0 === this.lGi &&
+      (this.fGi(), (this.hGi = !1));
   }
   SetQuestTrackCellState(t) {
-    this._qi !== t && ((this._qi = t), this.oqi.SetUIActive(t));
+    this._Gi !== t && ((this._Gi = t), this.oGi.SetUIActive(t));
   }
   SetRootItemState(t) {
-    this.Kbi !== t &&
-      ((this.Kbi = t), this.SetActive(t && !UiLayer_1.UiLayer.IsForceHideUi()));
+    this.Kqi !== t &&
+      ((this.Kqi = t), this.SetActive(t && !UiLayer_1.UiLayer.IsForceHideUi()));
   }
   GetRootItemState() {
-    return this.Kbi;
+    return this.Kqi;
   }
   SetTrackEffectState(t) {
-    this.Xbi !== t &&
-      ((this.Xbi = t), EffectSystem_1.EffectSystem.IsValid(this.uct)) &&
-      EffectSystem_1.EffectSystem.GetEffectActor(this.uct).SetActorHiddenInGame(
+    this.Xqi !== t &&
+      ((this.Xqi = t), EffectSystem_1.EffectSystem.IsValid(this.ymt)) &&
+      EffectSystem_1.EffectSystem.GetEffectActor(this.ymt).SetActorHiddenInGame(
         t,
       );
   }
   SetHeadInfoNameState(t) {
-    this.Wbi !== t &&
-      ((this.Wbi = t),
-      this.Jbi.SetUIActive(t),
-      this.aqi.SetUIActive(t && this.Ybi));
+    this.Wqi !== t &&
+      ((this.Wqi = t),
+      this.Jqi.SetUIActive(t),
+      this.aGi.SetUIActive(t && this.Yqi));
   }
   SetNpcQuestIconState(t) {
-    this.Cqi(t);
+    this.CGi(t);
   }
   SetNpcSecondName() {
     var t,
       i = this.GetText(1);
-    this.Zbi &&
-    (t = ConfigManager_1.ConfigManager.NpcIconConfig.GetNpcHeadInfo(this.Zbi))
+    this.Zqi &&
+    (t = ConfigManager_1.ConfigManager.NpcIconConfig.GetNpcHeadInfo(this.Zqi))
       .SecondName
       ? (i.SetUIActive(!0), i.ShowTextNew(t.SecondName))
       : i.SetUIActive(!1);
   }
-  dqi() {
+  dGi() {
     var t;
-    this.Zbi &&
-    (t = ConfigManager_1.ConfigManager.NpcIconConfig.GetNpcHeadInfo(this.Zbi))
+    this.Zqi &&
+    (t = ConfigManager_1.ConfigManager.NpcIconConfig.GetNpcHeadInfo(this.Zqi))
       .FunctionPath
-      ? (this.Cqi(!0),
-        this.SetTextureByPath(t.FunctionPath, this.zbi),
-        (this.lqi = 0))
-      : this.Cqi(!1);
+      ? (this.CGi(!0),
+        this.SetTextureByPath(t.FunctionPath, this.zqi),
+        (this.lGi = 0))
+      : this.CGi(!1);
   }
   SetNpcMessageId(t) {
-    this.Zbi = t;
+    this.Zqi = t;
   }
   SetHeadWorldScale3D(t) {
-    this.Qbi &&
-      this.tqi !== t &&
-      ((this.tqi = t),
-      (this.eqi.X = t),
-      (this.eqi.Y = t),
-      (this.eqi.Z = t),
-      this.iqi.SetWorldScale3D(this.eqi));
+    this.Qqi &&
+      this.tGi !== t &&
+      ((this.tGi = t),
+      (this.eGi.X = t),
+      (this.eGi.Y = t),
+      (this.eGi.Z = t),
+      this.iGi.SetWorldScale3D(this.eGi));
   }
   SetDialogWorldScale3D(t) {
-    this.sqi !== t &&
-      ((this.sqi = t),
-      (this.nqi.X = t),
-      (this.nqi.Y = t),
-      (this.nqi.Z = t),
-      this.aqi.SetWorldScale3D(this.nqi));
+    this.sGi !== t &&
+      ((this.sGi = t),
+      (this.nGi.X = t),
+      (this.nGi.Y = t),
+      (this.nGi.Z = t),
+      this.aGi.SetWorldScale3D(this.nGi));
   }
-  fqi() {
-    this.CDi.PlayLevelSequenceByName("FirstStart");
+  fGi() {
+    this.CRi.PlayLevelSequenceByName("FirstStart");
   }
-  Cqi(t) {
-    t !== this.$bi && ((this.$bi = t), this.zbi.SetUIActive(t));
+  CGi(t) {
+    t !== this.$qi && ((this.$qi = t), this.zqi.SetUIActive(t));
   }
   OnBeforeDestroy() {
-    EffectSystem_1.EffectSystem.IsValid(this.uct) &&
+    EffectSystem_1.EffectSystem.IsValid(this.ymt) &&
       (EffectSystem_1.EffectSystem.StopEffectById(
-        this.uct,
+        this.ymt,
         "[NpcIconComponentView.OnBeforeDestroy]",
         !0,
       ),
-      (this.uct = 0)),
-      this.CDi?.Clear();
+      (this.ymt = 0)),
+      this.CRi?.Clear();
   }
 }
 exports.NpcIconComponentView = NpcIconComponentView;

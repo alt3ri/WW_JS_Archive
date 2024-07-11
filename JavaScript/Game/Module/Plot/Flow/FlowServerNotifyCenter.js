@@ -5,93 +5,60 @@ const Log_1 = require("../../../../Core/Common/Log"),
   Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
   Vector_1 = require("../../../../Core/Utils/Math/Vector"),
   MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
-  LevelGeneralContextDefine_1 = require("../../../LevelGamePlay/LevelGeneralContextDefine"),
   LevelGeneralContextUtil_1 = require("../../../LevelGamePlay/LevelGeneralContextUtil"),
   ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   ControllerAssistantBase_1 = require("../../GeneralLogicTree/ControllerAssistant/ControllerAssistantBase"),
   LevelLoadingController_1 = require("../../LevelLoading/LevelLoadingController"),
-  FlowController_1 = require("./FlowController"),
-  FlowNetworks_1 = require("./FlowNetworks");
+  FlowController_1 = require("./FlowController");
 class FlowServerNotifyCenter extends ControllerAssistantBase_1.ControllerAssistantBase {
   OnDestroy() {}
-  HandleFlowStartNotify(l) {
-    if (
-      ModelManager_1.ModelManager.AutoRunModel.IsInLogicTreeGmMode() &&
-      ModelManager_1.ModelManager.AutoRunModel.ShouldFastSkip
-    )
-      Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug(
-          "Plot",
-          40,
-          "GM模式下预处理Flow相关Notify: 快速推进模式下收到FlowStartNotify直接强跳剧情",
-          ["FlowId", l.qkn],
-          ["FlowIncId", l.E8n],
-          ["FlowListName", l.bkn],
-          ["ContextType", l.Hms?.Xms],
-        ),
-        FlowNetworks_1.FlowNetworks.RequestGmFinish();
-    else {
-      var r = MathUtils_1.MathUtils.LongToNumber(l.E8n);
-      let e =
-          LevelGeneralContextUtil_1.LevelGeneralContextUtil.CreateByServerContext(
-            l.Hms,
-          ),
-        o =
-          ((e = e || LevelGeneralContextDefine_1.QuestContext.Create()),
-          Log_1.Log.CheckDebug() &&
-            Log_1.Log.Debug(
-              "Plot",
-              27,
-              "服务器下发剧情",
-              ["Type", e.Type],
-              ["FlowIncID", r],
-              ["isAsync", l.QLs],
-              ["isSkip", l.I8n],
-            ),
-          l.Hms?.Xms === Protocol_1.Aki.Protocol.Pbs.Proto_GmPlayFlow &&
-            (ModelManager_1.ModelManager.PlotModel.PlotConfig.IsGmPlayPlotOnce =
-              !0),
-          void 0);
-      l.E6s &&
-        (l.y6s
-          ? (o = Vector_1.Vector.Create(l.y6s.X, l.y6s.Y, l.y6s.Z))
-          : FlowController_1.FlowController.LogError("未配置剧情坐标点", [
-              "incId",
-              r,
-            ])),
-        ControllerHolder_1.ControllerHolder.FlowController.StartFlow(
-          l.bkn,
-          l.qkn,
-          l.Gkn,
-          e,
-          r,
-          !0,
-          l.QLs,
-          l.I8n,
-          o,
+  HandleFlowStartNotify(e) {
+    var o = MathUtils_1.MathUtils.LongToNumber(e.tHn),
+      r =
+        LevelGeneralContextUtil_1.LevelGeneralContextUtil.CreateByServerContext(
+          e.nvs,
         );
-    }
+    Log_1.Log.CheckDebug() &&
+      Log_1.Log.Debug(
+        "Plot",
+        27,
+        "服务器下发剧情",
+        ["Type", r?.Type],
+        ["FlowIncID", o],
+        ["isAsync", e.dUs],
+        ["isSkip", e.rHn],
+      ),
+      e.nvs?._vs === Protocol_1.Aki.Protocol.vOs.Proto_GmPlayFlow &&
+        (ModelManager_1.ModelManager.PlotModel.PlotConfig.IsGmPlayPlotOnce =
+          !0);
+    let l = void 0;
+    e.z$s &&
+      (e.Z$s
+        ? (l = Vector_1.Vector.Create(e.Z$s.X, e.Z$s.Y, e.Z$s.Z))
+        : FlowController_1.FlowController.LogError("未配置剧情坐标点", [
+            "incId",
+            o,
+          ])),
+      ControllerHolder_1.ControllerHolder.FlowController.StartFlow(
+        e._5n,
+        e.u5n,
+        e.c5n,
+        r,
+        o,
+        !0,
+        e.dUs,
+        e.rHn,
+        l,
+      );
   }
   HandleFlowEndNotify(e) {
-    var o = MathUtils_1.MathUtils.LongToNumber(e.E8n);
-    e.$0s
-      ? ModelManager_1.ModelManager.PlotModel.SetPendingPlotState(
-          o,
-          !1,
-          !0,
-          !0,
-        ) ||
-        ControllerHolder_1.ControllerHolder.FlowController.BackgroundFlow(
-          "服务器通知跳过剧情",
-          !0,
-          !0,
-        )
-      : ControllerHolder_1.ControllerHolder.FlowController.FinishFlow(
-          "服务器剧情通知打断剧情",
-          o,
-          !0,
-        );
+    e = MathUtils_1.MathUtils.LongToNumber(e.tHn);
+    ControllerHolder_1.ControllerHolder.FlowController.FinishFlow(
+      "服务器剧情通知打断剧情",
+      e,
+      !0,
+    );
   }
   HandleFlowSkipBlackScreenNotify(e) {
     e &&
@@ -100,10 +67,10 @@ class FlowServerNotifyCenter extends ControllerAssistantBase_1.ControllerAssista
           "Plot",
           46,
           "服务器跳过剧情，检查是否有黑幕",
-          ["FlowListName", e.bkn],
-          ["FlowId", e.qkn],
-          ["StateId", e.Gkn],
-          ["FadeOutScreen", e.YLs],
+          ["FlowListName", e._5n],
+          ["FlowId", e.u5n],
+          ["StateId", e.c5n],
+          ["FadeOutScreen", e.CUs],
         ),
       LevelLoadingController_1.LevelLoadingController.CloseLoading(0));
   }

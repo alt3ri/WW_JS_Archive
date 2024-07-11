@@ -13,7 +13,7 @@ class ConfirmBoxButton extends UiPanelBase_1.UiPanelBase {
       (this.Timer = void 0),
       (this.DelayTime = 0),
       (this.ClickFunction = void 0),
-      (this.j7e = () => {
+      (this.ije = () => {
         this.CloseView();
       });
   }
@@ -22,7 +22,7 @@ class ConfirmBoxButton extends UiPanelBase_1.UiPanelBase {
       [1, UE.UIText],
       [0, UE.UIButtonComponent],
     ]),
-      (this.BtnBindInfo = [[0, this.j7e]]);
+      (this.BtnBindInfo = [[0, this.ije]]);
   }
   CloseView() {
     this.ClickFunction && this.ClickFunction();
@@ -41,15 +41,15 @@ class ConfirmBoxButton extends UiPanelBase_1.UiPanelBase {
   SetTimer(i, e, t) {
     t || this.SetBtnCanClick(t),
       (this.DelayTime = e),
-      this.mbt(i),
+      this.gqt(i),
       (this.Timer = TimerSystem_1.TimerSystem.Forever(() => {
         --this.DelayTime,
-          this.mbt(i),
+          this.gqt(i),
           this.DelayTime <= 0 &&
             (t ? this.CloseView() : this.SetBtnCanClick(!0));
       }, ConfirmBoxDefine_1.BUTTON_DELAYTIME));
   }
-  mbt(i) {
+  gqt(i) {
     LguiUtil_1.LguiUtil.SetLocalTextNew(
       this.GetText(1),
       i,

@@ -8,7 +8,7 @@ class TsAnimNotifyStateAudioEvent extends UE.KuroAnimNotifyState {
   constructor() {
     super(...arguments),
       (this.AudioEvent = void 0),
-      (this.SocketName = new UE.FName("None")),
+      (this.SocketName = void 0),
       (this.Follow = !0),
       (this.KeepAlive = !1),
       (this.FadeDuration = DEFAULT_FADE_DURATION),
@@ -53,8 +53,8 @@ class TsAnimNotifyStateAudioEvent extends UE.KuroAnimNotifyState {
           TransitionFadeCurve: this.FadeCurve,
         }),
         this.HandleMap.Remove(o),
-        Log_1.Log.CheckInfo()) &&
-        Log_1.Log.Info(
+        Log_1.Log.CheckDebug()) &&
+        Log_1.Log.Debug(
           "Audio",
           57,
           "[Game.AnimNotifyState] StopEvent",
@@ -78,8 +78,8 @@ class TsAnimNotifyStateAudioEvent extends UE.KuroAnimNotifyState {
         ? (o = this.GetAkComponent(s, this.SocketName))?.IsValid() &&
           ((o = AudioSystem_1.AudioSystem.PostEvent(t, o)),
           this.HandleMap.Set(s, o),
-          Log_1.Log.CheckInfo()) &&
-          Log_1.Log.Info(
+          Log_1.Log.CheckDebug()) &&
+          Log_1.Log.Debug(
             "Audio",
             57,
             "[Game.AnimNotifyState] PostEvent",
@@ -92,8 +92,8 @@ class TsAnimNotifyStateAudioEvent extends UE.KuroAnimNotifyState {
         : ((o = i.GetSocketTransform(this.SocketName)),
           (o = AudioSystem_1.AudioSystem.PostEvent(t, o)),
           this.HandleMap.Set(s, o),
-          Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info(
+          Log_1.Log.CheckDebug() &&
+            Log_1.Log.Debug(
               "Audio",
               57,
               "[Game.AnimNotifyState] PostEvent",
@@ -107,7 +107,7 @@ class TsAnimNotifyStateAudioEvent extends UE.KuroAnimNotifyState {
   GetAkComponent(t, i) {
     let e = void 0;
     if (t.IsA(UE.TsBaseCharacter_C.StaticClass())) {
-      var o = t.CharacterActorComponent?.Entity?.GetComponent(42);
+      var o = t.CharacterActorComponent?.Entity?.GetComponent(43);
       if (!o?.Valid) return;
       e = o.GetAkComponent(i);
     } else

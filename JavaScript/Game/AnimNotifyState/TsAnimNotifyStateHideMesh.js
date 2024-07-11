@@ -12,8 +12,7 @@ class TsAnimNotifyStateHideMesh extends UE.KuroAnimNotifyState {
       (this.HideChildren = !0),
       (this.HideChildrenActors = !0),
       (this.EndEffect = void 0),
-      (this.Hide = !0),
-      (this.AnimDefaultTickOption = void 0);
+      (this.Hide = !0);
   }
   K2_NotifyBegin(t, r, e) {
     var s = t.GetOwner();
@@ -30,10 +29,10 @@ class TsAnimNotifyStateHideMesh extends UE.KuroAnimNotifyState {
       }
     } else i = t;
     if (!i) return !1;
-    let h = actorAnsMap.get(s);
-    h || ((h = new Map()), actorAnsMap.set(s, h));
-    var n = h.get(this);
-    if (n)
+    let n = actorAnsMap.get(s);
+    n || ((n = new Map()), actorAnsMap.set(s, n));
+    var h = n.get(this);
+    if (h)
       return (
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
@@ -46,7 +45,7 @@ class TsAnimNotifyStateHideMesh extends UE.KuroAnimNotifyState {
         !1
       );
     if (
-      (((n = [void 0, new Array()])[0] = i).SetVisibility(
+      (((h = [void 0, new Array()])[0] = i).SetVisibility(
         !this.Hide,
         this.HideChildren,
       ),
@@ -56,24 +55,24 @@ class TsAnimNotifyStateHideMesh extends UE.KuroAnimNotifyState {
         var f = i.AttachChildren;
         for (let t = f.Num() - 1; 0 <= t; --t) {
           var u = f.Get(t).GetOwner();
-          u.bHidden || n[1].push(u);
+          u.bHidden || h[1].push(u);
         }
       } else {
         var t = (0, puerts_1.$ref)(void 0),
           c = (s.GetAllChildActors(t, !0), (0, puerts_1.$unref)(t));
         for (let t = c.Num() - 1; 0 <= t; --t) {
           var v = c.Get(t);
-          v.bHidden || n[1].push(v);
+          v.bHidden || h[1].push(v);
         }
       }
-      for (const p of n[1]) p.SetActorHiddenInGame(this.Hide);
+      for (const p of h[1]) p.SetActorHiddenInGame(this.Hide);
     }
     return (
-      h.set(this, n),
+      n.set(this, h),
       s instanceof TsBaseCharacter_1.default &&
-        ((r = s.CharacterActorComponent?.Entity?.GetComponent(160)),
-        (this.AnimDefaultTickOption = r?.GetAnimDefaultTickOption()),
-        r?.ChangeAnimDefaultTickOption(1)),
+        s.CharacterActorComponent?.Entity?.GetComponent(
+          162,
+        )?.StartForceDisableAnimOptimization(2, !1),
       !0
     );
   }
@@ -97,10 +96,9 @@ class TsAnimNotifyStateHideMesh extends UE.KuroAnimNotifyState {
           .GetComponentByClass(UE.CharRenderingComponent_C.StaticClass())
           ?.AddMaterialControllerData(this.EndEffect),
       t instanceof TsBaseCharacter_1.default &&
-        ((s = t.CharacterActorComponent?.Entity?.GetComponent(160)),
-        this.AnimDefaultTickOption) &&
-        (s?.ChangeAnimDefaultTickOption(this.AnimDefaultTickOption),
-        (this.AnimDefaultTickOption = void 0)),
+        t.CharacterActorComponent?.Entity?.GetComponent(
+          162,
+        )?.CancelForceDisableAnimOptimization(2),
       !0
     );
   }

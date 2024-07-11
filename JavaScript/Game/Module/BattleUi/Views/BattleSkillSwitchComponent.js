@@ -11,11 +11,11 @@ const UE = require("ue"),
 class BattleSkillSwitchComponent extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this.lit = -1),
-      (this._it = Rotator_1.Rotator.Create()),
-      (this.uit = void 0),
-      (this.nit = new Map()),
-      (this.cit = () => new ItemUseComponent());
+      (this.yot = -1),
+      (this.Iot = Rotator_1.Rotator.Create()),
+      (this.Tot = void 0),
+      (this.vot = new Map()),
+      (this.Lot = () => new ItemUseComponent());
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -27,20 +27,20 @@ class BattleSkillSwitchComponent extends UiPanelBase_1.UiPanelBase {
     ];
   }
   OnStart() {
-    this.uit = new GenericLayout_1.GenericLayout(
+    this.Tot = new GenericLayout_1.GenericLayout(
       this.GetHorizontalLayout(4),
-      this.cit,
+      this.Lot,
     );
-    for (const t of this.nit.values()) t();
+    for (const t of this.vot.values()) t();
   }
   OnBeforeDestroy() {
-    this.nit.clear();
+    this.vot.clear();
   }
   SetComponentActive(t) {
     var e = () => {
       this.SetActive(t);
     };
-    this.InAsyncLoading() ? this.nit.set("SetActive", e) : e();
+    this.InAsyncLoading() ? this.vot.set("SetActive", e) : e();
   }
   RefreshSwitch() {
     var t = () => {
@@ -53,11 +53,11 @@ class BattleSkillSwitchComponent extends UiPanelBase_1.UiPanelBase {
         ? this.UpdateSwitch(e)
         : (3002 !== t && 3001 !== t) || this.UpdateItemGridSwitch();
     };
-    this.InAsyncLoading() ? this.nit.set("RefreshComponent", t) : t();
+    this.InAsyncLoading() ? this.vot.set("RefreshComponent", t) : t();
   }
   UpdateSwitch(i) {
     var t;
-    this.lit === i ||
+    this.yot === i ||
       i < 0 ||
       i >= rotatorAngles.length ||
       ((t = () => {
@@ -65,26 +65,26 @@ class BattleSkillSwitchComponent extends UiPanelBase_1.UiPanelBase {
         var t = this.GetSprite(0),
           e =
             (t.SetUIActive(!0),
-            (this._it.Yaw = rotatorAngles[i]),
-            this._it.ToUeRotator());
-        t.SetUIRelativeRotation(e), (this.lit = i);
+            (this.Iot.Yaw = rotatorAngles[i]),
+            this.Iot.ToUeRotator());
+        t.SetUIRelativeRotation(e), (this.yot = i);
       }),
-      this.InAsyncLoading() ? this.nit.set("UpdateSwitch", t) : t());
+      this.InAsyncLoading() ? this.vot.set("UpdateSwitch", t) : t());
   }
   UpdateItemGridSwitch() {
     var t = () => {
       this.GetSprite(0).SetUIActive(!1),
         this.GetSprite(1).SetUIActive(!0),
-        (this.lit = -1);
+        (this.yot = -1);
     };
-    this.InAsyncLoading() ? this.nit.set("UpdateSwitchByAngle", t) : t();
+    this.InAsyncLoading() ? this.vot.set("UpdateSwitchByAngle", t) : t();
   }
   UpdateNumPanel(t, e) {
     var i = () => {
       this.GetItem(2).SetUIActive(t),
         t && void 0 !== e && this.GetText(3).SetText(e.toString());
     };
-    this.InAsyncLoading() ? this.nit.set("UpdateNumPanel", i) : i();
+    this.InAsyncLoading() ? this.vot.set("UpdateNumPanel", i) : i();
   }
   UpdatePointPanel(i, s, r) {
     var t = () => {
@@ -97,9 +97,9 @@ class BattleSkillSwitchComponent extends UiPanelBase_1.UiPanelBase {
           ((e = new Array(s - r).fill(!0)),
           (t = new Array(r).fill(!1)),
           (e = e.concat(t)),
-          this.uit.RefreshByData(e));
+          this.Tot.RefreshByData(e));
     };
-    this.InAsyncLoading() ? this.nit.set("UpdatePointPanel", t) : t();
+    this.InAsyncLoading() ? this.vot.set("UpdatePointPanel", t) : t();
   }
 }
 exports.BattleSkillSwitchComponent = BattleSkillSwitchComponent;

@@ -9,7 +9,8 @@ const UE = require("ue"),
   ButtonItem_1 = require("../../../../Common/Button/ButtonItem"),
   CommonItemSmallItemGrid_1 = require("../../../../Common/ItemGrid/CommonItemSmallItemGrid"),
   GridProxyAbstract_1 = require("../../../../Util/Grid/GridProxyAbstract"),
-  GenericLayout_1 = require("../../../../Util/Layout/GenericLayout");
+  GenericLayout_1 = require("../../../../Util/Layout/GenericLayout"),
+  LguiUtil_1 = require("../../../../Util/LguiUtil");
 class ActivityRewardPopUpView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
@@ -17,27 +18,33 @@ class ActivityRewardPopUpView extends UiViewBase_1.UiViewBase {
       (this.DataList = []),
       (this.ContentLayout = void 0),
       (this.TabLayout = void 0),
-      (this.$Fe = 0),
+      (this.u4e = 0),
       (this.InitContentItem = () => {
-        return new ActivityRewardPopUpContent();
+        var t = new ActivityRewardPopUpContent();
+        return (
+          (t.CloseViewFunction = () => {
+            this.CloseMe();
+          }),
+          t
+        );
       }),
       (this.InitTabItem = () => {
         return new TabItem();
       }),
-      (this.YFe = (t) => {
+      (this.c4e = (t) => {
         (this.Data = t), this.Refresh();
       }),
-      (this.JFe = (t) => {
+      (this.m4e = (t) => {
         var i = this.Data.DataPageList[t],
-          e = this.$Fe;
-        (this.$Fe = t),
+          e = this.u4e;
+        (this.u4e = t),
           0 <= e &&
-            e !== this.$Fe &&
+            e !== this.u4e &&
             this.TabLayout.GetLayoutItemByIndex(e)?.SetTabToggleState(!1, !1),
-          this.zFe(i.DataList),
-          this.ZFe(void 0 !== i.TabTips, i.TabTips);
+          this.d4e(i.DataList),
+          this.C4e(void 0 !== i.TabTips, i.TabTips);
       }),
-      (this.e3e = (t, i) => !0);
+      (this.g4e = (t, i) => !0);
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -53,13 +60,13 @@ class ActivityRewardPopUpView extends UiViewBase_1.UiViewBase {
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.RefreshCommonActivityRewardPopUpView,
-      this.YFe,
+      this.c4e,
     );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.RefreshCommonActivityRewardPopUpView,
-      this.YFe,
+      this.c4e,
     );
   }
   OnStart() {
@@ -77,9 +84,9 @@ class ActivityRewardPopUpView extends UiViewBase_1.UiViewBase {
         this.Refresh());
   }
   Refresh() {
-    this.t3e();
+    this.f4e();
   }
-  t3e() {
+  f4e() {
     if (0 !== this.Data.DataPageList.length) {
       var i = [];
       let t = !1;
@@ -90,15 +97,15 @@ class ActivityRewardPopUpView extends UiViewBase_1.UiViewBase {
           (t = !0);
         var e = {
           TabData: s,
-          TabFunction: this.JFe,
-          TabCanExecuteFunction: this.e3e,
+          TabFunction: this.m4e,
+          TabCanExecuteFunction: this.g4e,
         };
         i.push(e);
       }
       this.TabLayout?.RefreshByData(
         i,
         () => {
-          this.TabLayout.GetLayoutItemByIndex(this.$Fe)?.SetTabToggleState(
+          this.TabLayout.GetLayoutItemByIndex(this.u4e)?.SetTabToggleState(
             !0,
             !0,
           );
@@ -108,11 +115,11 @@ class ActivityRewardPopUpView extends UiViewBase_1.UiViewBase {
         this.GetItem(3).SetUIActive(t);
     }
   }
-  zFe(t) {
+  d4e(t) {
     (this.DataList = t),
       this.ContentLayout?.RefreshByData(this.DataList, void 0, !1);
   }
-  ZFe(t, i) {
+  C4e(t, i) {
     i && this.GetText(6).SetText(i), this.GetText(6).SetUIActive(t);
   }
 }
@@ -120,9 +127,10 @@ exports.ActivityRewardPopUpView = ActivityRewardPopUpView;
 class ActivityRewardPopUpContent extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
-      (this.i3e = void 0),
-      (this.jFe = void 0),
-      (this.Rke = () => {
+      (this.p4e = void 0),
+      (this.s4e = void 0),
+      (this.CloseViewFunction = void 0),
+      (this.W2e = () => {
         return new CommonItemSmallItemGrid_1.CommonItemSmallItemGrid();
       });
   }
@@ -137,39 +145,49 @@ class ActivityRewardPopUpContent extends GridProxyAbstract_1.GridProxyAbstract {
     ];
   }
   OnStart() {
-    (this.jFe = new GenericLayout_1.GenericLayout(
+    (this.s4e = new GenericLayout_1.GenericLayout(
       this.GetHorizontalLayout(1),
-      this.Rke,
+      this.W2e,
     )),
-      (this.i3e = new ButtonItem_1.ButtonItem(this.GetItem(3)));
+      (this.p4e = new ButtonItem_1.ButtonItem(this.GetItem(3)));
   }
   Refresh(t, i, e) {
-    this.mGe(t.NameText),
-      this.o3e(t.RewardList ?? [], t.RewardState),
+    var s;
+    t.NameTextId
+      ? ((s = t.NameTextArgs ?? []), this.Kua(t.NameTextId, s))
+      : this.mGe(t.NameText),
+      this.v4e(t.RewardList ?? [], t.RewardState),
       this._Oe(t);
   }
   mGe(t) {
     this.GetText(0).SetText(t);
   }
-  o3e(t, i) {
-    this.jFe?.SetActive(0 !== t.length),
-      0 !== t.length && this.jFe?.RefreshByData(t);
+  Kua(t, i) {
+    LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(0), t, ...i);
+  }
+  v4e(t, i) {
+    this.s4e?.SetActive(0 !== t.length),
+      0 !== t.length && this.s4e?.RefreshByData(t);
   }
   _Oe(t) {
     switch (
-      (this.i3e.SetActive(1 === t.RewardState),
+      (this.p4e.SetActive(1 === t.RewardState),
       this.GetItem(4)?.SetUIActive(2 === t.RewardState),
       this.GetText(5)?.SetUIActive(0 === t.RewardState),
       t.RewardState)
     ) {
       case 1:
-        this.i3e?.SetRedDotVisible(!0),
-          t.ClickFunction && this.i3e?.SetFunction(t.ClickFunction),
+        this.p4e?.SetRedDotVisible(t.RewardButtonRedDot ?? !0),
+          t.ClickFunction &&
+            this.p4e?.SetFunction(() => {
+              t.ClickFunction?.(),
+                t.ClickFunctionAndCloseSelf && this.CloseViewFunction?.();
+            }),
           void 0 !== t.RewardButtonText &&
-            this.i3e?.SetText(t.RewardButtonText);
+            this.p4e?.SetText(t.RewardButtonText);
         break;
       case 0:
-        this.i3e?.SetRedDotVisible(!1),
+        this.p4e?.SetRedDotVisible(!1),
           void 0 !== t.RewardButtonText &&
             this.GetText(5).SetText(t.RewardButtonText);
     }
@@ -178,11 +196,11 @@ class ActivityRewardPopUpContent extends GridProxyAbstract_1.GridProxyAbstract {
 class TabItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
-      (this.JFe = void 0),
-      (this.r3e = void 0),
-      (this.n3e = void 0),
+      (this.m4e = void 0),
+      (this.M4e = void 0),
+      (this.E4e = void 0),
       (this.kqe = () => {
-        this.JFe?.(this.GridIndex), this.r3e?.(this.GridIndex);
+        this.m4e?.(this.GridIndex), this.M4e?.(this.GridIndex);
       });
   }
   OnRegisterComponent() {
@@ -195,11 +213,11 @@ class TabItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
   OnStart() {
     const t = this.GetExtendToggle(0);
-    t.CanExecuteChange.Bind(() => this.s3e(t.ToggleState)),
+    t.CanExecuteChange.Bind(() => this.S4e(t.ToggleState)),
       this.GetItem(2).SetUIActive(!1);
   }
-  s3e(t) {
-    return !this.n3e || this.n3e(1 === t, this.GridIndex);
+  S4e(t) {
+    return !this.E4e || this.E4e(1 === t, this.GridIndex);
   }
   Refresh(t, i, e) {
     t.TabData.TabName && !StringUtils_1.StringUtils.IsEmpty(t.TabData.TabName)
@@ -212,9 +230,9 @@ class TabItem extends GridProxyAbstract_1.GridProxyAbstract {
         break;
       }
     this.GetItem(2).SetUIActive(s),
-      t.TabData.TabExtraFunction && (this.r3e = t.TabData.TabExtraFunction),
-      (this.JFe = t.TabFunction),
-      (this.n3e = t.TabCanExecuteFunction);
+      t.TabData.TabExtraFunction && (this.M4e = t.TabData.TabExtraFunction),
+      (this.m4e = t.TabFunction),
+      (this.E4e = t.TabCanExecuteFunction);
   }
   SetTabToggleState(t, i) {
     this.GetExtendToggle(0).SetToggleState(t ? 1 : 0), t && i && this.kqe();

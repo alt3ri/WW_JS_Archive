@@ -6,31 +6,29 @@ const ModelManager_1 = require("../../Manager/ModelManager"),
   DynamicFlowController_1 = require("../../NewWorld/Character/Common/Component/Flow/DynamicFlowController"),
   LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelEventPlayBubble extends LevelGeneralBase_1.LevelEventBase {
-  ExecuteNew(e, o, r) {
-    if (e) {
-      const a = e.EntityId;
-      e = this.BTe(a, e.Flow);
-      (e.Callback = () => {
-        DynamicFlowController_1.DynamicFlowController.RemoveDynamicFlow(a);
-      }),
+  ExecuteNew(e, r, o) {
+    var a;
+    e
+      ? ((a = e.EntityId),
+        (e = this.BTe(a, e.Flow)),
         DynamicFlowController_1.DynamicFlowController.AddDynamicFlow(e),
-        6 === o?.Type &&
+        6 === r?.Type &&
           ModelManager_1.ModelManager.GeneralLogicTreeModel.GetBehaviorTree(
-            o.TreeIncId,
+            r.TreeIncId,
           )?.AddDynamicFlowNpc(a),
-        this.FinishExecute(!0);
-    } else this.FinishExecute(!1);
+        this.FinishExecute(!0))
+      : this.FinishExecute(!1);
   }
-  BTe(e, o) {
-    var r = new DynamicFlowController_1.CharacterDynamicFlowData(),
+  BTe(e, r) {
+    var o = new DynamicFlowController_1.CharacterDynamicFlowData(),
       e = {
         EntityIds: [e],
         EnterRadius: CharacterFlowComponent_1.DEFAULT_BUBBLE_ENTER_RANGE,
         LeaveRadius: CharacterFlowComponent_1.DEFAULT_BUBBLE_LEAVE_RANGE,
-        Flow: o,
+        Flow: r,
         WaitTime: 0,
       };
-    return (r.BubbleData = e), (r.Type = 2), r;
+    return (o.BubbleData = e), (o.Type = 2), o;
   }
 }
 exports.LevelEventPlayBubble = LevelEventPlayBubble;

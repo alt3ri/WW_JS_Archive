@@ -38,9 +38,9 @@ let MonsterFrozenComponent = class MonsterFrozenComponent extends BaseFrozenComp
     var t, o, n;
     this.IsFrozenInternal !== e &&
       ((this.IsFrozenInternal = e),
-      (t = this.Entity.GetComponent(107)),
+      (t = this.Entity.GetComponent(109)),
       (o = this.Entity.GetComponent(19)),
-      (n = this.Entity.GetComponent(185)?.TagContainer),
+      (n = this.Entity.GetComponent(188)?.TagContainer),
       e
         ? ((this.FrozenHandle =
             this.FrozenHandle ?? t?.SetTimeScale(1 / 0, 0, void 0, 1 / 0, 6)),
@@ -69,7 +69,7 @@ let MonsterFrozenComponent = class MonsterFrozenComponent extends BaseFrozenComp
   }
 };
 (MonsterFrozenComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(166)],
+  [(0, RegisterComponent_1.RegisterComponent)(168)],
   MonsterFrozenComponent,
 )),
   (exports.MonsterFrozenComponent = MonsterFrozenComponent);

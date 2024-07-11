@@ -5,13 +5,13 @@ const CustomPromise_1 = require("../../../../Core/Common/CustomPromise"),
   Log_1 = require("../../../../Core/Common/Log");
 class SkipTask {
   constructor() {
-    (this.cp = !1), (this.Lbi = void 0);
+    (this.cp = !1), (this.Lqi = void 0);
   }
   Initialize() {
     this.OnAddEvents(), this.OnInitialize();
   }
   Destroy() {
-    this.pii(), this.OnDestroyed(), this.OnRemoveEvents();
+    this.poi(), this.OnDestroyed(), this.OnRemoveEvents();
   }
   Run(...t) {
     Log_1.Log.CheckInfo() &&
@@ -19,7 +19,7 @@ class SkipTask {
         "Name",
         this.constructor.name,
       ]),
-      this.fii(...t);
+      this.foi(...t);
   }
   async AsyncRun(...t) {
     return (
@@ -28,9 +28,9 @@ class SkipTask {
           "Name",
           this.constructor.name,
         ]),
-      (this.Lbi = new CustomPromise_1.CustomPromise()),
-      this.fii(...t),
-      this.Lbi.Promise
+      (this.Lqi = new CustomPromise_1.CustomPromise()),
+      this.foi(...t),
+      this.Lqi.Promise
     );
   }
   GetIsRunning() {
@@ -42,9 +42,9 @@ class SkipTask {
         "Name",
         this.constructor.name,
       ]),
-      this.Lbi && this.Lbi.SetResult(0),
+      this.Lqi && this.Lqi.SetResult(0),
       this.OnFinished(),
-      this.pii();
+      this.poi();
   }
   Stop() {
     Log_1.Log.CheckInfo() &&
@@ -52,15 +52,15 @@ class SkipTask {
         "Name",
         this.constructor.name,
       ]),
-      this.Lbi && this.Lbi.SetResult(1),
+      this.Lqi && this.Lqi.SetResult(1),
       this.OnStopped(),
-      this.pii();
+      this.poi();
   }
-  fii(...t) {
+  foi(...t) {
     (this.cp = !0), this.OnRun(...t);
   }
-  pii() {
-    (this.cp = !1), (this.Lbi = void 0);
+  poi() {
+    (this.cp = !1), (this.Lqi = void 0);
   }
   OnInitialize() {}
   OnRun() {}

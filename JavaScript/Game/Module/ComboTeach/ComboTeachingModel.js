@@ -5,84 +5,84 @@ const ModelBase_1 = require("../../../Core/Framework/ModelBase");
 class ComboTeachingModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
-      (this.vyt = 0),
-      (this.Myt = 0),
-      (this.Syt = !1),
-      (this.Eyt = !1),
-      (this.yyt = 0),
-      (this.Iyt = 0),
-      (this.Tyt = []),
-      (this.Lyt = []),
-      (this.Dyt = 0),
-      (this.Ryt = !1),
-      (this.Uyt = !1),
-      (this.Ayt = 0);
+      (this.AIt = 0),
+      (this.PIt = 0),
+      (this.xIt = !1),
+      (this.wIt = !1),
+      (this.BIt = 0),
+      (this.bIt = 0),
+      (this.qIt = []),
+      (this.GIt = []),
+      (this.NIt = 0),
+      (this.OIt = !1),
+      (this.kIt = !1),
+      (this.FIt = 0);
   }
   get BeforeJumpTime() {
-    return this.Ayt;
+    return this.FIt;
   }
   set BeforeJumpTime(t) {
-    this.Ayt = t;
+    this.FIt = t;
   }
   get IsClose() {
-    return this.Uyt;
+    return this.kIt;
   }
   set IsClose(t) {
-    this.Uyt = t;
+    this.kIt = t;
   }
   get IsEmit() {
-    return this.Ryt;
+    return this.OIt;
   }
   set IsEmit(t) {
-    this.Ryt = t;
+    this.OIt = t;
   }
   get RecoveryComboId() {
-    return this.Dyt;
+    return this.NIt;
   }
   set RecoveryComboId(t) {
-    this.Dyt = t;
+    this.NIt = t;
   }
   get AddBuffList() {
-    return this.Tyt;
+    return this.qIt;
   }
   get AddTagList() {
-    return this.Lyt;
+    return this.GIt;
   }
   get NextAttrSkillId() {
-    return this.Iyt;
+    return this.bIt;
   }
   set NextAttrSkillId(t) {
-    this.Iyt = t;
+    this.bIt = t;
   }
   set UseSkillId(t) {
-    this.vyt = t;
+    this.AIt = t;
   }
   get UseSkillId() {
-    return this.vyt;
+    return this.AIt;
   }
   set UseSkillTime(t) {
-    this.Myt = t;
+    this.PIt = t;
   }
   get UseSkillTime() {
-    return this.Myt;
+    return this.PIt;
   }
   set PreNextAttr(t) {
-    this.Syt = t;
+    this.xIt = t;
   }
   get PreNextAttr() {
-    return this.Syt;
+    return this.xIt;
   }
   set NextAttr(t) {
-    (this.Syt = this.Eyt), (this.Eyt = t);
+    (this.xIt = this.wIt), (this.wIt = t);
   }
   get NextAttr() {
-    return this.Eyt;
+    return this.wIt;
   }
   set HitSkillId(t) {
-    this.yyt = t;
+    this.BIt = t;
   }
   get HitSkillId() {
-    return this.yyt;
+    return this.BIt;
   }
 }
 exports.ComboTeachingModel = ComboTeachingModel;

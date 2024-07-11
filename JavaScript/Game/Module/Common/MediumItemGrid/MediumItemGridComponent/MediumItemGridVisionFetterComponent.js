@@ -7,7 +7,7 @@ const UE = require("ue"),
   MediumItemGridComponent_1 = require("./MediumItemGridComponent");
 class MediumItemGridVisionFetterComponent extends MediumItemGridComponent_1.MediumItemGridComponent {
   constructor() {
-    super(...arguments), (this.PPt = void 0);
+    super(...arguments), (this.bxt = void 0);
   }
   GetResourceId() {
     return "UiItem_ItemRogue";
@@ -19,10 +19,10 @@ class MediumItemGridVisionFetterComponent extends MediumItemGridComponent_1.Medi
     ];
   }
   async OnBeforeStartAsync() {
-    (this.PPt = new VisionFetterSuitItem_1.VisionFetterSuitItem(
+    (this.bxt = new VisionFetterSuitItem_1.VisionFetterSuitItem(
       this.GetItem(0),
     )),
-      await this.PPt.Init().finally(() => {
+      await this.bxt.Init().finally(() => {
         this.GetItem(0).SetUIActive(!0);
       });
   }
@@ -31,7 +31,7 @@ class MediumItemGridVisionFetterComponent extends MediumItemGridComponent_1.Medi
   }
   OnRefresh(e) {
     e = ConfigManager_1.ConfigManager.PhantomBattleConfig.GetFetterGroupById(e);
-    this.SetActive(!0), this.PPt.Update(e);
+    this.SetActive(!0), this.bxt.Update(e);
   }
 }
 exports.MediumItemGridVisionFetterComponent =

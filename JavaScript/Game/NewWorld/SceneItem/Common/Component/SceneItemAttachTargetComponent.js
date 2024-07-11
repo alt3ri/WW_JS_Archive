@@ -40,82 +40,82 @@ let SceneItemAttachTargetComponent =
     constructor() {
       super(...arguments),
         (this.Lo = void 0),
-        (this.SIe = void 0),
-        (this.Mln = "Relatively"),
-        (this.Sln = "Relatively"),
-        (this.Eln = void 0),
-        (this.yln = void 0),
-        (this.Iln = void 0),
-        (this.Tln = void 0),
+        (this.EIe = void 0),
+        (this.tln = "Relatively"),
+        (this.iln = "Relatively"),
+        (this.oln = void 0),
+        (this.rln = void 0),
+        (this.nln = void 0),
+        (this.sln = void 0),
         (this.Hte = void 0),
-        (this.Lln = void 0),
-        (this.Dln = (t, e, i) => {
+        (this.aln = void 0),
+        (this.hln = (t, e, i) => {
           e?.Valid &&
             (e = e.Entity.GetComponent(0)?.GetPbDataId()) &&
-            this.Eln === e &&
-            this.Rln();
+            this.oln === e &&
+            this.lln();
         }),
-        (this.Aln = (t, e) => {
+        (this._ln = (t, e) => {
           e?.Valid &&
             (e = e.Entity.GetComponent(0)?.GetPbDataId()) &&
-            this.Eln === e &&
-            (this.Uln(),
+            this.oln === e &&
+            (this.uln(),
             EventSystem_1.EventSystem.Has(
               EventDefine_1.EEventName.AddEntity,
-              this.Dln,
+              this.hln,
             ) ||
               EventSystem_1.EventSystem.Add(
                 EventDefine_1.EEventName.AddEntity,
-                this.Dln,
+                this.hln,
               ));
         }),
-        (this.Pln = () => {
+        (this.cln = () => {
           var t = ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(
-            this.Eln,
+            this.oln,
           );
           t &&
             t.Entity &&
             (EventSystem_1.EventSystem.HasWithTarget(
               t.Entity,
               EventDefine_1.EEventName.OnSceneInteractionLoadCompleted,
-              this.Pln,
+              this.cln,
             ) &&
               EventSystem_1.EventSystem.RemoveWithTarget(
                 t.Entity,
                 EventDefine_1.EEventName.OnSceneInteractionLoadCompleted,
-                this.Pln,
+                this.cln,
               ),
-            this.Rln());
+            this.lln());
         }),
-        (this.xln = (t) => {
-          t.op_Equality(this.Tln) &&
-            ((t = this.Lln.GetActor(this.Tln)), this.wln(t));
+        (this.mln = (t) => {
+          t.op_Equality(this.sln) &&
+            ((t = this.aln.GetActor(this.sln)), this.dln(t));
         }),
-        (this.Bln = (t) => {
-          this.bln(t);
+        (this.Cln = (t) => {
+          this.gln(t);
         });
     }
     static get Dependencies() {
-      return [182, 0];
+      return [185, 0];
     }
     OnInitData(t) {
       t = t.GetParam(SceneItemAttachTargetComponent_1)[0];
       if (
         ((this.Lo = t),
-        (this.SIe = this.Entity.GetComponent(0)),
+        (this.EIe = this.Entity.GetComponent(0)),
         this.Lo?.AttachTarget)
       )
         switch (
-          ((this.Mln = this.Lo.PosRule ?? "Relatively"),
-          (this.Sln = this.Lo.RotRule ?? "Relatively"),
+          ((this.tln = this.Lo.PosRule ?? "Relatively"),
+          (this.iln = this.Lo.RotRule ?? "Relatively"),
           this.Lo.AttachTarget?.Type)
         ) {
           case "Entity":
-            (this.Eln = this.Lo.AttachTarget.EntityId),
-              (this.yln = this.Lo.AttachTarget.AttachPoint);
+            (this.oln = this.Lo.AttachTarget.EntityId),
+              (this.rln = this.Lo.AttachTarget.AttachPoint);
             break;
           case "Actor":
-            this.Iln = this.Lo.AttachTarget.ActorRef?.PathName ?? "";
+            this.nln = this.Lo.AttachTarget.ActorRef?.PathName ?? "";
         }
       else
         Log_1.Log.CheckError() &&
@@ -123,165 +123,165 @@ let SceneItemAttachTargetComponent =
             "SceneItem",
             7,
             "[SceneItemAttachTargetComponent]附加目标配置无效，请联系对应策划检查配置",
-            ["PbDataId:", this.SIe?.GetPbDataId()],
+            ["PbDataId:", this.EIe?.GetPbDataId()],
           );
       return !0;
     }
     OnStart() {
       return (
-        (this.Hte = this.Entity.GetComponent(182)),
+        (this.Hte = this.Entity.GetComponent(185)),
         !!this.Hte ||
           (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "SceneItem",
               7,
               "[SceneItemAttachTargetComponent]Invalid ActorComp",
-              ["PbDataId:", this.SIe?.GetPbDataId()],
+              ["PbDataId:", this.EIe?.GetPbDataId()],
             ),
           !1)
       );
     }
     OnActivate() {
-      this.qln();
+      this.fln();
     }
     OnEnd() {
       return (
-        this.Gln(),
+        this.pln(),
         EventSystem_1.EventSystem.Has(
           EventDefine_1.EEventName.AddEntity,
-          this.Dln,
+          this.hln,
         ) &&
           EventSystem_1.EventSystem.Remove(
             EventDefine_1.EEventName.AddEntity,
-            this.Dln,
+            this.hln,
           ),
         !0
       );
     }
-    qln() {
+    fln() {
       switch (this.Lo.AttachTarget?.Type) {
         case "Entity":
-          this.Rln();
+          this.lln();
           break;
         case "Actor":
-          this.Nln();
+          this.vln();
       }
     }
-    Gln() {
+    pln() {
       switch (this.Lo.AttachTarget?.Type) {
         case "Entity":
-          this.Uln();
+          this.uln();
           break;
         case "Actor":
-          this.Oln();
+          this.Mln();
       }
     }
-    Rln() {
-      if (this.Eln) {
+    lln() {
+      if (this.oln) {
         var t = ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(
-          this.Eln,
+          this.oln,
         );
         if (t?.IsInit) {
-          var e = t.Entity?.GetComponent(182);
+          var e = t.Entity?.GetComponent(185);
           if (e)
-            if (this.yln && !e?.GetIsSceneInteractionLoadCompleted())
+            if (this.rln && !e?.GetIsSceneInteractionLoadCompleted())
               EventSystem_1.EventSystem.HasWithTarget(
                 t.Entity,
                 EventDefine_1.EEventName.OnSceneInteractionLoadCompleted,
-                this.Pln,
+                this.cln,
               ) ||
                 EventSystem_1.EventSystem.AddWithTarget(
                   t.Entity,
                   EventDefine_1.EEventName.OnSceneInteractionLoadCompleted,
-                  this.Pln,
+                  this.cln,
                 );
             else {
               let t = void 0;
-              (t = this.yln ? e.GetActorInSceneInteraction(this.yln) : e.Owner),
-                this.wln(t),
+              (t = this.rln ? e.GetActorInSceneInteraction(this.rln) : e.Owner),
+                this.dln(t),
                 EventSystem_1.EventSystem.Has(
                   EventDefine_1.EEventName.RemoveEntity,
-                  this.Aln,
+                  this._ln,
                 ) ||
                   EventSystem_1.EventSystem.Add(
                     EventDefine_1.EEventName.RemoveEntity,
-                    this.Aln,
+                    this._ln,
                   );
             }
         } else
           EventSystem_1.EventSystem.Has(
             EventDefine_1.EEventName.AddEntity,
-            this.Dln,
+            this.hln,
           ) ||
             EventSystem_1.EventSystem.Add(
               EventDefine_1.EEventName.AddEntity,
-              this.Dln,
+              this.hln,
             );
       }
     }
-    Uln() {
-      if (this.Eln) {
+    uln() {
+      if (this.oln) {
         EventSystem_1.EventSystem.Has(
           EventDefine_1.EEventName.RemoveEntity,
-          this.Aln,
+          this._ln,
         ) &&
           EventSystem_1.EventSystem.Remove(
             EventDefine_1.EEventName.RemoveEntity,
-            this.Aln,
+            this._ln,
           );
         var e = ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(
-            this.Eln,
+            this.oln,
           ),
           e =
             (e?.Entity &&
               EventSystem_1.EventSystem.HasWithTarget(
                 e.Entity,
                 EventDefine_1.EEventName.OnSceneInteractionLoadCompleted,
-                this.Pln,
+                this.cln,
               ) &&
               EventSystem_1.EventSystem.RemoveWithTarget(
                 e.Entity,
                 EventDefine_1.EEventName.OnSceneInteractionLoadCompleted,
-                this.Pln,
+                this.cln,
               ),
-            e?.Entity?.GetComponent(182));
+            e?.Entity?.GetComponent(185));
         let t = void 0;
-        (t = this.yln
+        (t = this.rln
           ? e?.GetIsSceneInteractionLoadCompleted()
-            ? e?.GetActorInSceneInteraction(this.yln)
+            ? e?.GetActorInSceneInteraction(this.rln)
             : void 0
           : e?.Owner),
-          this.bln(t);
+          this.gln(t);
       }
     }
-    Nln() {
-      if (this.Iln) {
+    vln() {
+      if (this.nln) {
         var t = this.Hte.CreatureData.GetPbDataId(),
           t = StaticSceneUtils_1.StaticSceneUtils.GetActorRefByPbDataId(t);
         if (t) {
           for (const e of t)
-            this.Iln = e.PathName.split(".")[1] + "." + e.ActorName;
-          (this.Lln?.IsValid() ||
-            ((this.Lln = UE.KuroRenderingRuntimeBPPluginBPLibrary.GetSubsystem(
+            this.nln = e.PathName.split(".")[1] + "." + e.ActorName;
+          (this.aln?.IsValid() ||
+            ((this.aln = UE.KuroRenderingRuntimeBPPluginBPLibrary.GetSubsystem(
               GlobalData_1.GlobalData.World,
               UE.KuroActorSubsystem.StaticClass(),
             )),
-            this.Lln?.IsValid())) &&
-            (this.Tln || (this.Tln = new UE.FName(this.Iln)),
-            this.Lln.OnAddToSubsystem.Add(this.xln),
-            (t = this.Lln.GetActor(this.Tln))?.IsValid()) &&
-            this.wln(t);
+            this.aln?.IsValid())) &&
+            (this.sln || (this.sln = new UE.FName(this.nln)),
+            this.aln.OnAddToSubsystem.Add(this.mln),
+            (t = this.aln.GetActor(this.sln))?.IsValid()) &&
+            this.dln(t);
         }
       }
     }
-    Oln() {
+    Mln() {
       var t;
-      this.Tln &&
-        (this.Lln?.IsValid() && this.Lln.OnAddToSubsystem.Remove(this.xln),
-        (t = this.Lln?.GetActor(this.Tln)),
-        this.bln(t));
+      this.sln &&
+        (this.aln?.IsValid() && this.aln.OnAddToSubsystem.Remove(this.mln),
+        (t = this.aln?.GetActor(this.sln)),
+        this.gln(t));
     }
-    wln(i) {
+    dln(i) {
       if (this.Hte?.Owner?.IsValid() && i?.IsValid()) {
         if (
           (Log_1.Log.CheckDebug() &&
@@ -289,7 +289,7 @@ let SceneItemAttachTargetComponent =
               "SceneItem",
               40,
               "[SceneItemAttachTargetComponent] AttachToTargetActor: 开始",
-              ["PbDataId", this.SIe?.GetPbDataId()],
+              ["PbDataId", this.EIe?.GetPbDataId()],
               [
                 "自身坐标",
                 Vector_1.Vector.Create(this.Hte.Owner.K2_GetActorLocation()),
@@ -301,42 +301,42 @@ let SceneItemAttachTargetComponent =
               ["目标坐标", Vector_1.Vector.Create(i.K2_GetActorLocation())],
               ["目标旋转", Rotator_1.Rotator.Create(i.K2_GetActorRotation())],
               ["目标PathName", UE.KismetSystemLibrary.GetPathName(i)],
-              ["PosAttachRule", this.Mln],
-              ["RotAttachRule", this.Sln],
+              ["PosAttachRule", this.tln],
+              ["RotAttachRule", this.iln],
             ),
           this.Hte.Owner.RootComponent?.SetAbsolute(
-            "Absolute" === this.Mln,
-            "Absolute" === this.Sln,
+            "Absolute" === this.tln,
+            "Absolute" === this.iln,
             !0,
           ),
           this.Hte.Owner.K2_AttachToActor(
             i,
             void 0,
-            "AlignTarget" === this.Mln ? 2 : 1,
-            "AlignTarget" === this.Sln ? 2 : 1,
+            "AlignTarget" === this.tln ? 2 : 1,
+            "AlignTarget" === this.iln ? 2 : 1,
             1,
             !0,
           ),
-          i.OnDestroyed.Add(this.Bln),
-          "Relatively" === this.Mln || "Relatively" === this.Sln)
+          i.OnDestroyed.Add(this.Cln),
+          "Relatively" === this.tln || "Relatively" === this.iln)
         ) {
           let e = void 0;
-          if (this.Iln?.length) {
+          if (this.nln?.length) {
             var s = (0, puerts_1.$ref)(void 0);
-            this.Lln.GetActorOriginalTransform(this.Tln, s),
+            this.aln.GetActorOriginalTransform(this.sln, s),
               (e = (0, puerts_1.$unref)(s));
           } else {
             var s =
                 ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(
-                  this.Eln,
+                  this.oln,
                 ).Entity,
-              h = s.GetComponent(182),
+              h = s.GetComponent(185),
               s = s.GetComponent(0),
               n = s.GetPbEntityInitData()?.Transform,
-              n = n ? this.kln(n) : s.GetTransform();
+              n = n ? this.Eln(n) : s.GetTransform();
             let t = void 0;
             (t =
-              (t = this.yln?.length
+              (t = this.rln?.length
                 ? h.GetActorInSceneInteractionOriginalRelTransform(i)
                 : t) ||
               i.GetTransform().GetRelativeTransform(h.Owner.GetTransform())),
@@ -348,17 +348,17 @@ let SceneItemAttachTargetComponent =
                 "SceneItem",
                 40,
                 "[SceneItemAttachTargetComponent] 目标初始坐标获取失败",
-                ["PbDataId:", this.SIe?.GetPbDataId()],
+                ["PbDataId:", this.EIe?.GetPbDataId()],
               ));
-          (s = this.SIe.GetPbEntityInitData()?.Transform),
-            (h = s ? this.kln(s) : this.SIe.GetTransform()),
+          (s = this.EIe.GetPbEntityInitData()?.Transform),
+            (h = s ? this.Eln(s) : this.EIe.GetTransform()),
             (n = h.GetRelativeTransform(e));
           Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug(
               "SceneItem",
               40,
               "[SceneItemAttachTargetComponent] AttachToTargetActor: 计算相对信息",
-              ["PbDataId", this.SIe?.GetPbDataId()],
+              ["PbDataId", this.EIe?.GetPbDataId()],
               ["自身初始坐标", Vector_1.Vector.Create(h.GetLocation())],
               ["自身初始旋转", Rotator_1.Rotator.Create(h.Rotator())],
               ["目标初始坐标", Vector_1.Vector.Create(e.GetLocation())],
@@ -366,14 +366,14 @@ let SceneItemAttachTargetComponent =
               ["彼此相对坐标", Vector_1.Vector.Create(n.GetLocation())],
               ["彼此相对旋转", Rotator_1.Rotator.Create(n.Rotator())],
             ),
-            "Relatively" === this.Mln &&
+            "Relatively" === this.tln &&
               this.Hte.Owner.K2_SetActorRelativeLocation(
                 n.GetLocation(),
                 !1,
                 void 0,
                 !1,
               ),
-            "Relatively" === this.Sln &&
+            "Relatively" === this.iln &&
               this.Hte.Owner.K2_SetActorRelativeRotation(
                 n.Rotator(),
                 !1,
@@ -386,7 +386,7 @@ let SceneItemAttachTargetComponent =
             "SceneItem",
             40,
             "[SceneItemAttachTargetComponent] AttachToTargetActor: 完成",
-            ["PbDataId", this.SIe?.GetPbDataId()],
+            ["PbDataId", this.EIe?.GetPbDataId()],
             [
               "自身坐标",
               Vector_1.Vector.Create(this.Hte.Owner.K2_GetActorLocation()),
@@ -412,14 +412,14 @@ let SceneItemAttachTargetComponent =
           );
       }
     }
-    bln(t) {
+    gln(t) {
       this.Hte?.Owner?.IsValid() &&
         (Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "SceneItem",
             40,
             "[SceneItemAttachTargetComponent] DetachFromTargetActor: 开始",
-            ["PbDataId", this.SIe?.GetPbDataId()],
+            ["PbDataId", this.EIe?.GetPbDataId()],
             [
               "自身坐标",
               Vector_1.Vector.Create(this.Hte.Owner.K2_GetActorLocation()),
@@ -430,9 +430,9 @@ let SceneItemAttachTargetComponent =
             ],
           ),
         this.Hte.Owner.K2_DetachFromActor(1, 1, 1),
-        t?.OnDestroyed.Remove(this.Bln));
+        t?.OnDestroyed.Remove(this.Cln));
     }
-    kln(t) {
+    Eln(t) {
       var e = new UE.Transform();
       return (
         e.SetLocation(new UE.Vector(t.Pos.X ?? 0, t.Pos.Y ?? 0, t.Pos.Z ?? 0)),
@@ -450,7 +450,7 @@ let SceneItemAttachTargetComponent =
   });
 (SceneItemAttachTargetComponent = SceneItemAttachTargetComponent_1 =
   __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(109)],
+    [(0, RegisterComponent_1.RegisterComponent)(111)],
     SceneItemAttachTargetComponent,
   )),
   (exports.SceneItemAttachTargetComponent = SceneItemAttachTargetComponent);

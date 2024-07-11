@@ -4,25 +4,25 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const ModelBase_1 = require("../../../Core/Framework/ModelBase");
 class ScoreModel extends ModelBase_1.ModelBase {
   constructor() {
-    super(...arguments), (this.D2e = 0), (this.apo = 0);
+    super(...arguments), (this.HFe = 0), (this.rvo = 0);
   }
   GetCurrentScore() {
-    return this.D2e;
+    return this.HFe;
   }
   GetTargetScore() {
-    return this.apo;
+    return this.rvo;
   }
   SetCurrentScore(e) {
-    this.D2e = e;
+    this.HFe = e;
   }
   SetTargetScore(e) {
-    this.apo = e;
+    this.rvo = e;
   }
   SetScore(e, t) {
-    (this.D2e = e), (this.apo = t);
+    (this.HFe = e), (this.rvo = t);
   }
   Reset() {
-    (this.D2e = void 0), (this.apo = void 0);
+    (this.HFe = void 0), (this.rvo = void 0);
   }
 }
 exports.ScoreModel = ScoreModel;

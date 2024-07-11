@@ -6,7 +6,7 @@ const UE = require("ue"),
   RoleDescribeComponent_1 = require("./RoleDescribeComponent");
 class CommonRoleGachaPoolItem extends GachaPoolItem_1.GachaPoolItem {
   constructor() {
-    super(...arguments), (this.iHt = void 0);
+    super(...arguments), (this.ijt = void 0);
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -18,21 +18,21 @@ class CommonRoleGachaPoolItem extends GachaPoolItem_1.GachaPoolItem {
     ];
   }
   async OnBeforeStartAsync() {
-    this.iHt = [];
+    this.ijt = [];
     var e = [];
     for (const s of [1, 2, 3]) {
       var o = this.GetItem(s);
       if (!o) break;
       var t = new RoleDescribeComponent_1.RoleDescribeComponent();
-      e.push(t.CreateThenShowByActorAsync(o.GetOwner())), this.iHt.push(t);
+      e.push(t.CreateThenShowByActorAsync(o.GetOwner())), this.ijt.push(t);
     }
     await Promise.all(e);
   }
   Refresh() {
     if (this.GachaViewInfo) {
       var o = this.GachaViewInfo.ShowIdList;
-      for (let e = 0; e < o.length && e < this.iHt.length; e++)
-        this.iHt[e].Update(o[e]);
+      for (let e = 0; e < o.length && e < this.ijt.length; e++)
+        this.ijt[e].Update(o[e]);
       var e = UE.Color.FromHex(this.GachaViewInfo.ThemeColor);
       this.GetTexture(4).SetColor(e);
     }

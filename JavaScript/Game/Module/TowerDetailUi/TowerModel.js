@@ -17,11 +17,13 @@ const CommonDefine_1 = require("../../../Core/Define/CommonDefine"),
   ConfigManager_1 = require("../../Manager/ConfigManager"),
   UiManager_1 = require("../../Ui/UiManager"),
   EditBattleTeamController_1 = require("../EditBattleTeam/EditBattleTeamController"),
-  TowerData_1 = require("./TowerData");
-(exports.FLOOR_STAR = 3),
-  (exports.FINISH_COLOR = "#FFD12F"),
-  (exports.NORMOL_COLOR = "#ECE5D8"),
-  (exports.LOCK_COLOR = "#ADADAD");
+  TowerData_1 = require("./TowerData"),
+  TOWER_LOOP_ACTIVITY_ID =
+    ((exports.FLOOR_STAR = 3),
+    (exports.FINISH_COLOR = "#FFD12F"),
+    (exports.NORMOL_COLOR = "#ECE5D8"),
+    (exports.LOCK_COLOR = "#ADADAD"),
+    100300002);
 class TowerModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
@@ -41,20 +43,20 @@ class TowerModel extends ModelBase_1.ModelBase {
       (this.RecommendFormation = void 0),
       (this.CurrentTowerLock = !1),
       (this.DefaultFloor = -1),
-      (this.KTo = 0),
+      (this.HLo = 0),
       (this.TowerGuideDelayTime = 0),
       (this.TowerSettlementDelayTime = 0),
-      (this.QTo = new Map()),
-      (this.XTo = void 0),
-      (this.$To = -1),
-      (this.YTo = new Map()),
-      (this.JTo = new Map()),
-      (this.zTo = void 0),
+      (this.jLo = new Map()),
+      (this.WLo = void 0),
+      (this.KLo = -1),
+      (this.QLo = new Map()),
+      (this.XLo = new Map()),
+      (this.$Lo = void 0),
       (this.NeedOpenReviveView = !1);
   }
   OnInit() {
     return (
-      (this.KTo =
+      (this.HLo =
         CommonParamById_1.configCommonParamById.GetIntConfig(
           "TowerRoleTotalCost",
         )),
@@ -66,64 +68,69 @@ class TowerModel extends ModelBase_1.ModelBase {
         CommonParamById_1.configCommonParamById.GetIntConfig(
           "TowerSettleDelayTime",
         )),
-      this.Nqt(),
+      this.FGt(),
       !0
     );
   }
   OnLeaveLevel() {
     return (this.CurrentSelectFloor = -1), (this.CurrentTowerId = -1), !0;
   }
-  Nqt() {
-    this.ZTo(TowerData_1.LOW_RISK_DIFFICULTY, void 0),
-      this.ZTo(TowerData_1.HIGH_RISK_DIFFICULTY, void 0),
-      this.ZTo(TowerData_1.VARIATION_RISK_DIFFICULTY, void 0);
+  FGt() {
+    this.YLo(TowerData_1.LOW_RISK_DIFFICULTY, void 0),
+      this.YLo(TowerData_1.HIGH_RISK_DIFFICULTY, void 0),
+      this.YLo(TowerData_1.VARIATION_RISK_DIFFICULTY, void 0);
   }
   RefreshTowerInfo(t) {
-    (this.TowerBeginTime = t.HCs),
-      (this.TowerEndTime = t.jCs),
-      (this.CurrentSeason = t.Yxs),
-      (this.DataSeason = t.Jxs),
-      this.RefreshTowerInfoByDifficulty(t.zxs);
+    (this.TowerBeginTime = t.nps),
+      (this.TowerEndTime = t.sps),
+      this.CurrentSeason !== t.CGs &&
+        EventSystem_1.EventSystem.Emit(
+          EventDefine_1.EEventName.RefreshCommonActivityRedDot,
+          TOWER_LOOP_ACTIVITY_ID,
+        ),
+      (this.CurrentSeason = t.CGs),
+      (this.DataSeason = t.gGs),
+      this.RefreshTowerInfoByDifficulty(t.fGs);
   }
   RefreshTowerInfoByFloor(t) {
-    for (const e of t) this.eLo(e);
+    for (const e of t) this.JLo(e);
   }
   RefreshTowerInfoByDifficulty(t) {
     for (const e of t)
-      this.ZTo(e.yVn, e.b5n), this.tLo(e.Zxs), this.JTo.set(e.yVn, e.ebs);
+      this.YLo(e.ejn, e.C9n), this.zLo(e.vGs), this.XLo.set(e.ejn, e.pGs);
   }
   DeleteVariationTowerInfo() {
-    for (var [t, e] of this.QTo)
+    for (var [t, e] of this.jLo)
       e.Difficulties === TowerData_1.VARIATION_RISK_DIFFICULTY &&
-        this.QTo.delete(t);
-    this.ZTo(TowerData_1.VARIATION_RISK_DIFFICULTY, void 0),
-      this.JTo.set(TowerData_1.VARIATION_RISK_DIFFICULTY, 0);
+        this.jLo.delete(t);
+    this.YLo(TowerData_1.VARIATION_RISK_DIFFICULTY, void 0),
+      this.XLo.set(TowerData_1.VARIATION_RISK_DIFFICULTY, 0);
     for (var [, r] of this.RoleDifficultyFormationMap)
       r.set(TowerData_1.VARIATION_RISK_DIFFICULTY, 0);
   }
   GetFloorStars(t) {
-    return this.QTo.get(t)?.Star;
+    return this.jLo.get(t)?.Star;
   }
   GetFloorStarsIndex(t) {
-    return this.QTo.get(t)?.StarIndex;
+    return this.jLo.get(t)?.StarIndex;
   }
   GetAreaStars(t, e, r = !1) {
     let i = 0;
     if (r)
-      for (var [, o] of this.XTo)
+      for (var [, o] of this.WLo)
         o.Difficulties === t && o.Area === e && (i += o.Star);
     else
-      for (var [, s] of this.QTo)
+      for (var [, s] of this.jLo)
         s.Difficulties === t && s.Area === e && (i += s.Star);
     return i;
   }
   GetDifficultyMaxStars(t, e = !1) {
     let r = void 0;
-    return (r = e ? this.zTo?.get(t) : this.JTo.get(t)) ?? 0;
+    return (r = e ? this.$Lo?.get(t) : this.XLo.get(t)) ?? 0;
   }
   GetDifficultyStars(t) {
     let e = 0;
-    for (var [, r] of this.QTo) r.Difficulties === t && (e += r.Star);
+    for (var [, r] of this.jLo) r.Difficulties === t && (e += r.Star);
     return e;
   }
   GetAreaAllStars(t, e) {
@@ -140,26 +147,26 @@ class TowerModel extends ModelBase_1.ModelBase {
     return (
       exports.FLOOR_STAR *
       ConfigManager_1.ConfigManager.TowerClimbConfig.GetDifficultyFloorNumber(
-        e ? this.$To : this.CurrentSeason,
+        e ? this.KLo : this.CurrentSeason,
         t,
       )
     );
   }
   GetDifficultyReward(t) {
-    t = this.YTo.get(t);
+    t = this.QLo.get(t);
     if (t) return t;
   }
   GetHaveChallengeFloor(t) {
-    return !!this.QTo.get(t);
+    return !!this.jLo.get(t);
   }
   GetHaveChallengeFloorAndFormation(t) {
-    t = this.QTo.get(t);
+    t = this.jLo.get(t);
     return !(!t || !t.Formation || 0 === t.Formation.length);
   }
   GetFloorData(t) {
-    return this.QTo.get(t);
+    return this.jLo.get(t);
   }
-  ZTo(t, e) {
+  YLo(t, e) {
     var r = this.GetDifficultyReward(t);
     if (r) for (const n of r) n.IsReceived = e?.includes(n.Index);
     else {
@@ -172,30 +179,30 @@ class TowerModel extends ModelBase_1.ModelBase {
           a = new TowerData_1.TowerReward(a.Item1, a.Item2, t);
         (a.IsReceived = e?.includes(t)), s.push(a);
       }
-      this.YTo.set(t, s);
+      this.QLo.set(t, s);
     }
   }
-  tLo(t) {
-    for (const e of t) for (const r of e.ibs) this.eLo(r);
+  zLo(t) {
+    for (const e of t) for (const r of e.SGs) this.JLo(r);
   }
-  eLo(t) {
-    let e = this.QTo.get(t.EVn);
+  JLo(t) {
+    let e = this.jLo.get(t.ZHn);
     if (e) {
-      (e.Star = t.UDs), (e.StarIndex = t.rbs);
+      (e.Star = t.Yws), (e.StarIndex = t.EGs);
       for (const r of e.Formation)
-        this.ReduceRoleFormationCost(r.l3n, e.Difficulties, e.Cost);
-      e.Formation = t.SVn;
+        this.ReduceRoleFormationCost(r.O6n, e.Difficulties, e.Cost);
+      e.Formation = t.zHn;
     } else
-      (e = new TowerData_1.TowerFloorInfo(t.EVn, t.UDs, t.SVn, t.rbs)),
-        this.QTo.set(t.EVn, e),
+      (e = new TowerData_1.TowerFloorInfo(t.ZHn, t.Yws, t.zHn, t.EGs)),
+        this.jLo.set(t.ZHn, e),
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.OnTowerRecordUpdate,
-          t.EVn,
+          t.ZHn,
           e.Difficulties,
         );
-    for (const i of e.Formation) this.iLo(i.l3n, e.Difficulties, e.Cost);
+    for (const i of e.Formation) this.ZLo(i.O6n, e.Difficulties, e.Cost);
   }
-  iLo(t, e, r) {
+  ZLo(t, e, r) {
     let i = this.RoleDifficultyFormationMap.get(t);
     var o;
     i
@@ -216,7 +223,7 @@ class TowerModel extends ModelBase_1.ModelBase {
       t,
     );
     let e = 0;
-    for (const r of t) void 0 !== this.QTo.get(r) && e++;
+    for (const r of t) void 0 !== this.jLo.get(r) && e++;
     return [e, t.length];
   }
   GetDifficultyIsClear(t) {
@@ -224,7 +231,7 @@ class TowerModel extends ModelBase_1.ModelBase {
       this.CurrentSeason,
       t,
     ))
-      if (!this.QTo.get(e)) return !1;
+      if (!this.jLo.get(e)) return !1;
     return !0;
   }
   GetMaxDifficulty() {
@@ -236,7 +243,7 @@ class TowerModel extends ModelBase_1.ModelBase {
   }
   GetDifficultyAllAreaFirstFloor(t, e = !1) {
     return ConfigManager_1.ConfigManager.TowerClimbConfig.GetDifficultyAllAreaFirstFloor(
-      e ? this.$To : this.CurrentSeason,
+      e ? this.KLo : this.CurrentSeason,
       t,
     );
   }
@@ -257,11 +264,11 @@ class TowerModel extends ModelBase_1.ModelBase {
   }
   GetRoleRemainCost(t, e) {
     var t = this.RoleDifficultyFormationMap.get(t);
-    return (t = t && t.get(e)) ? this.KTo - t : this.KTo;
+    return (t = t && t.get(e)) ? this.HLo - t : this.HLo;
   }
   GetFloorIncludeRole(t, e) {
-    e = this.QTo.get(e);
-    if (e) for (const r of e.Formation) if (r.l3n === t) return !0;
+    e = this.jLo.get(e);
+    if (e) for (const r of e.Formation) if (r.O6n === t) return !0;
     return !1;
   }
   OpenTowerFormationView(t) {
@@ -288,8 +295,8 @@ class TowerModel extends ModelBase_1.ModelBase {
   }
   GetFloorFormation(t) {
     var e = [],
-      t = this.QTo.get(t);
-    if (t && t.Formation) for (const r of t.Formation) e.push(r.l3n);
+      t = this.jLo.get(t);
+    if (t && t.Formation) for (const r of t.Formation) e.push(r.O6n);
     return e;
   }
   SaveNeedOpenConfirmView() {
@@ -310,16 +317,16 @@ class TowerModel extends ModelBase_1.ModelBase {
       (this.DataSeason = this.CurrentSeason));
   }
   SaveHandleData() {
-    (this.XTo = new Map(this.QTo)),
-      (this.zTo = new Map(this.JTo)),
-      (this.$To = this.CurrentSeason);
+    (this.WLo = new Map(this.jLo)),
+      (this.$Lo = new Map(this.XLo)),
+      (this.KLo = this.CurrentSeason);
   }
   ClearHandleData() {
-    this.XTo?.clear(),
-      (this.XTo = void 0),
-      this.zTo?.clear(),
-      (this.zTo = void 0),
-      (this.$To = -1);
+    this.WLo?.clear(),
+      (this.WLo = void 0),
+      this.$Lo?.clear(),
+      (this.$Lo = void 0),
+      (this.KLo = -1);
   }
   CheckInTower() {
     return -1 !== this.CurrentTowerId;

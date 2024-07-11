@@ -7,13 +7,13 @@ const MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTex
   ServerMarkItem_1 = require("./ServerMarkItem");
 class SoundBoxMarkItem extends ServerMarkItem_1.ServerMarkItem {
   constructor(e, t, r, i) {
-    super(e, t, r, i), (this.DetectorId = 0), (this.NLi = !1);
+    super(e, t, r, i), (this.DetectorId = 0), (this.NDi = !1);
   }
   get MarkType() {
     return this.ServerMarkInfo?.MarkType ?? 16;
   }
   get IsNewCustomMarkItem() {
-    return this.NLi;
+    return this.NDi;
   }
   Initialize() {
     super.Initialize();
@@ -33,7 +33,7 @@ class SoundBoxMarkItem extends ServerMarkItem_1.ServerMarkItem {
     this.OnAfterSetConfigId(e);
   }
   SetIsNew(e) {
-    this.NLi = e;
+    this.NDi = e;
   }
   GetTitleText() {
     var e = ConfigManager_1.ConfigManager.MapConfig.GetSoundBoxMarkConfig(

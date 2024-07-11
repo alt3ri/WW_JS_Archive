@@ -7,44 +7,44 @@ const CustomPromise_1 = require("../../../../Core/Common/CustomPromise"),
 class ItemGridComponent extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this.Qet = void 0),
-      (this.bAt = void 0),
-      (this.qAt = void 0),
-      (this.GAt = !1),
-      (this.NAt = !1),
-      (this.OAt = void 0);
+      (this.sit = void 0),
+      (this.NPt = void 0),
+      (this.OPt = void 0),
+      (this.kPt = !1),
+      (this.FPt = !1),
+      (this.VPt = void 0);
   }
   Initialize(t) {
-    this.GAt ||
-      ((this.Qet = t),
-      (this.bAt = this.GetResourceId()),
+    this.kPt ||
+      ((this.sit = t),
+      (this.NPt = this.GetResourceId()),
       this.OnInitialize(),
-      (this.GAt = !0));
+      (this.kPt = !0));
   }
   async Load() {
     return (
-      (this.OAt = new CustomPromise_1.CustomPromise()),
-      await this.CreateByResourceIdAsync(this.bAt, this.Qet),
-      this.OAt.SetResult(this),
+      (this.VPt = new CustomPromise_1.CustomPromise()),
+      await this.CreateByResourceIdAsync(this.NPt, this.sit),
+      this.VPt.SetResult(this),
       this
     );
   }
   async GetAsync() {
-    return this.IsCreating ? this.OAt.Promise : this;
+    return this.IsCreating ? this.VPt.Promise : this;
   }
   OnStartImplement() {
-    (this.NAt = !0),
+    (this.FPt = !0),
       this.OnActivate(),
-      void 0 !== this.qAt && this.OnRefresh(this.qAt);
+      void 0 !== this.OPt && this.OnRefresh(this.OPt);
   }
   Refresh(t) {
-    (this.qAt = t), this.InAsyncLoading() || this.OnRefresh(t);
+    (this.OPt = t), this.InAsyncLoading() || this.OnRefresh(t);
   }
   OnBeforeDestroyImplement() {
-    this.NAt && this.OnDeactivate(),
-      (this.NAt = !1),
-      (this.GAt = !1),
-      (this.qAt = void 0);
+    this.FPt && this.OnDeactivate(),
+      (this.FPt = !1),
+      (this.kPt = !1),
+      (this.OPt = void 0);
   }
   OnInitialize() {}
   OnActivate() {}

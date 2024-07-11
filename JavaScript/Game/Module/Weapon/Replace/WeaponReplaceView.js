@@ -24,69 +24,71 @@ class WeaponReplaceView extends UiViewBase_1.UiViewBase {
     super(...arguments),
       (this.SelectedIncId = 0),
       (this.RoleDataId = 0),
-      (this.hOo = void 0),
-      (this.lOo = void 0),
-      (this._Oo = !1),
+      (this.nko = void 0),
+      (this.sko = void 0),
+      (this.ako = !1),
       (this.SortComponent = void 0),
       (this.LoopScrollView = void 0),
       (this.ItemDataList = void 0),
-      (this.pco = void 0),
-      (this.W9t = () => {
-        var e = ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(
+      (this.dmo = void 0),
+      (this.W7t = () => {
+        var e = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(
             this.RoleDataId,
           ).GetRoleId(),
           e =
             ModelManager_1.ModelManager.WeaponModel.GetWeaponDataByRoleDataId(
               e,
             );
-        this.pco.Model?.CheckGetComponent(14)?.SetWeaponByWeaponData(e),
+        this.dmo.Model?.CheckGetComponent(14)?.SetWeaponByWeaponData(e),
           this.CloseMe();
       }),
-      (this.uOo = () => {
+      (this.hko = () => {
         this.SetContrast();
       }),
-      (this.cOo = (e) => {
+      (this.lko = (e) => {
         e = this.ItemDataList[e];
         return SelectablePropDataUtil_1.SelectablePropDataUtil.GetSelectablePropData(
           e,
         );
       }),
-      (this.mOo = () => {
+      (this._ko = () => {
         var e = new WeaponReplaceMediumItemGrid_1.WeaponReplaceMediumItemGrid();
         return (
-          e.BindOnExtendToggleStateChanged(this.U4e),
-          e.BindOnCanExecuteChange(this.T7e),
+          e.BindOnExtendToggleStateChanged(this.j5e),
+          e.BindOnCanExecuteChange(this.Lke),
           e
         );
       }),
-      (this.U4e = (e) => {
+      (this.j5e = (e) => {
         e = e.Data.IncId;
         this.SelectedWeaponHandle(e);
       }),
-      (this.T7e = (e, t) => {
+      (this.Lke = (e, t) => {
         return this.SelectedIncId !== e.IncId;
       }),
       (this.UpdateList = (e) => {
-        this.LoopScrollView.ReloadProxyData(this.cOo, e.length, !1),
-          0 < this.SelectedIncId &&
-            ((e = this.GetWeaponItemIndex(this.SelectedIncId)),
-            this.LoopScrollView.ScrollToGridIndex(e),
-            this.LoopScrollView.SelectGridProxy(e, !0));
+        this.LoopScrollView.DeselectCurrentGridProxy(!0),
+          this.LoopScrollView.ReloadProxyData(this.lko, e.length, !1),
+          e.length <= 0 ||
+            (this.LoopScrollView.ScrollToGridIndex(0),
+            this.LoopScrollView.SelectGridProxy(0, !0),
+            (e = e[0]),
+            this.SelectedWeaponHandle(e.GetUniqueId()));
       }),
-      (this.dOo = (e) => {
+      (this.uko = (e) => {
         e = { WeaponIncId: e, IsFromRoleRootView: !0 };
         UiManager_1.UiManager.OpenView("WeaponRootView", e),
           WeaponController_1.WeaponController.RoleFadeIn(
             UiSceneManager_1.UiSceneManager.GetRoleSystemRoleActor(),
           );
       }),
-      (this.COo = (e) => {
+      (this.cko = (e) => {
         var t,
           i = ModelManager_1.ModelManager.WeaponModel.GetWeaponDataByRoleDataId(
             this.RoleDataId,
           ),
           r = ModelManager_1.ModelManager.WeaponModel.GetWeaponDataByIncId(e);
-        const s = i.GetRoleId();
+        const o = i.GetRoleId();
         r.HasRole()
           ? ((i = ConfigManager_1.ConfigManager.WeaponConfig.GetWeaponName(
               r.GetWeaponConfig().WeaponName,
@@ -100,7 +102,7 @@ class WeaponReplaceView extends UiViewBase_1.UiViewBase {
             ),
             t.FunctionMap.set(2, () => {
               WeaponController_1.WeaponController.SendPbEquipTakeOnRequest(
-                s,
+                o,
                 WeaponDefine_1.WEAPON_EQUIPTYPE,
                 e,
               );
@@ -109,19 +111,19 @@ class WeaponReplaceView extends UiViewBase_1.UiViewBase {
               t,
             ))
           : WeaponController_1.WeaponController.SendPbEquipTakeOnRequest(
-              s,
+              o,
               WeaponDefine_1.WEAPON_EQUIPTYPE,
               e,
             );
       }),
-      (this.gOo = () => {
+      (this.mko = () => {
         this.UpdateCurrentTips(),
           this.UpdateSelectedTips(this.SelectedIncId),
           this.RefreshPropItem();
       }),
-      (this.fOo = (e, t) => {
-        this.lOo.GetWeaponIncId() === e && this.lOo.UpdateWeaponLock(t),
-          this.hOo.GetWeaponIncId() === e && this.hOo.UpdateWeaponLock(t),
+      (this.dko = (e, t) => {
+        this.sko.GetWeaponIncId() === e && this.sko.UpdateWeaponLock(t),
+          this.nko.GetWeaponIncId() === e && this.nko.UpdateWeaponLock(t),
           this.RefreshPropItem();
       });
   }
@@ -136,40 +138,45 @@ class WeaponReplaceView extends UiViewBase_1.UiViewBase {
       [6, UE.UIItem],
     ]),
       (this.BtnBindInfo = [
-        [1, this.W9t],
-        [4, this.uOo],
+        [1, this.W7t],
+        [4, this.hko],
       ]);
   }
   async OnBeforeStartAsync() {
-    (this.hOo = new WeaponDetailTipsComponent_1.WeaponDetailTipsComponent()),
-      await this.hOo.CreateThenShowByActorAsync(this.GetItem(2).GetOwner()),
-      (this.lOo = new WeaponDetailTipsComponent_1.WeaponDetailTipsComponent()),
-      await this.lOo.CreateThenShowByActorAsync(this.GetItem(3).GetOwner());
+    (this.nko = new WeaponDetailTipsComponent_1.WeaponDetailTipsComponent()),
+      await this.nko.CreateThenShowByActorAsync(this.GetItem(2).GetOwner()),
+      (this.sko = new WeaponDetailTipsComponent_1.WeaponDetailTipsComponent()),
+      await this.sko.CreateThenShowByActorAsync(this.GetItem(3).GetOwner());
   }
   OnStart() {
-    (this.SelectedIncId = this.OpenParam),
-      (this.pco = UiSceneManager_1.UiSceneManager.GetRoleSystemRoleActor());
-    var e = this.GetItem(6).GetOwner();
-    (this.LoopScrollView = new LoopScrollView_1.LoopScrollView(
-      this.GetLoopScrollViewComponent(0),
-      e,
-      this.mOo,
-    )),
-      this.hOo.SetReplaceFunction(this.COo),
-      this.hOo.SetCultureFunction(this.dOo),
-      this.hOo.SetCanShowEquip(!0),
-      this.lOo.SetCanShowEquip(!0),
-      this.lOo.SetCanShowLock(!1),
-      (this.SortComponent = new SortEntrance_1.SortEntrance(
-        this.GetItem(5),
-        this.UpdateList,
-      ));
+    var e = this.OpenParam;
+    void 0 === e
+      ? Log_1.Log.CheckError() &&
+        Log_1.Log.Error("Character", 59, "WeaponReplaceView界面输入为空")
+      : ((this.SelectedIncId = e.WeaponIncId),
+        (this.RoleDataId = e.RoleId),
+        (this.dmo = UiSceneManager_1.UiSceneManager.GetRoleSystemRoleActor()),
+        (e = this.GetItem(6).GetOwner()),
+        (this.LoopScrollView = new LoopScrollView_1.LoopScrollView(
+          this.GetLoopScrollViewComponent(0),
+          e,
+          this._ko,
+        )),
+        this.nko.SetReplaceFunction(this.cko),
+        this.nko.SetCultureFunction(this.uko),
+        this.nko.SetCanShowEquip(!0),
+        this.sko.SetCanShowEquip(!0),
+        this.sko.SetCanShowLock(!1),
+        (this.SortComponent = new SortEntrance_1.SortEntrance(
+          this.GetItem(5),
+          this.UpdateList,
+        )));
   }
   SetContrast() {
     var e;
-    (this._Oo = !this._Oo),
-      this.lOo &&
-        ((e = this._Oo), this.SetWeaponTipsRootItemState(e), e) &&
+    (this.ako = !this.ako),
+      this.sko &&
+        ((e = this.ako), this.SetWeaponTipsRootItemState(e), e) &&
         this.UpdateCurrentTips();
   }
   OnBeforeShow() {
@@ -179,8 +186,7 @@ class WeaponReplaceView extends UiViewBase_1.UiViewBase {
         this.SelectedIncId,
       );
     void 0 !== t &&
-      (t.HasRole() && (this.RoleDataId = t.GetRoleId()),
-      (e = t.GetWeaponConfig()),
+      ((e = t.GetWeaponConfig()),
       (this.ItemDataList =
         ModelManager_1.ModelManager.WeaponModel.GetWeaponListFromReplace(
           e.WeaponType,
@@ -190,30 +196,30 @@ class WeaponReplaceView extends UiViewBase_1.UiViewBase {
       this.SelectedWeaponHandle(t.GetIncId(), !0));
   }
   OnAfterHide() {
-    this._Oo && this.SetContrast();
+    this.ako && this.SetContrast();
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.EquipWeapon,
-      this.gOo,
+      this.mko,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnItemLock,
-        this.fOo,
+        this.dko,
       );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.EquipWeapon,
-      this.gOo,
+      this.mko,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnItemLock,
-        this.fOo,
+        this.dko,
       );
   }
   OnBeforeDestroy() {
-    this.hOo.Destroy(), this.lOo.Destroy(), this.SortComponent.Destroy();
+    this.nko.Destroy(), this.sko.Destroy(), this.SortComponent.Destroy();
   }
   RefreshPropItem() {
     this.LoopScrollView.RefreshAllGridProxies();
@@ -230,26 +236,24 @@ class WeaponReplaceView extends UiViewBase_1.UiViewBase {
       (this.LoopScrollView.SelectGridProxy(i, t),
       (this.SelectedIncId = e),
       (i = ModelManager_1.ModelManager.WeaponModel.GetWeaponDataByIncId(e)),
-      this.pco.Model?.CheckGetComponent(14)?.SetWeaponByWeaponData(i));
+      this.dmo.Model?.CheckGetComponent(14)?.SetWeaponByWeaponData(i));
   }
   UpdateSelectedTips(e) {
     (e = ModelManager_1.ModelManager.WeaponModel.GetWeaponDataByIncId(e)),
-      this.hOo.UpdateComponent(e),
-      (e = ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(
+      this.nko.UpdateComponent(e),
+      (e = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(
         this.RoleDataId,
       ));
-    this.hOo.UpdateEquip(e.GetRoleId());
+    this.nko.UpdateEquip(e.GetRoleId());
   }
   UpdateCurrentTips() {
     var e = ModelManager_1.ModelManager.WeaponModel.GetWeaponDataByRoleDataId(
         this.RoleDataId,
       ),
       e =
-        (this.lOo.UpdateComponent(e),
-        ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(
-          this.RoleDataId,
-        ));
-    this.lOo.UpdateEquip(e.GetRoleId());
+        (this.sko.UpdateComponent(e),
+        ModelManager_1.ModelManager.RoleModel.GetRoleDataById(this.RoleDataId));
+    this.sko.UpdateEquip(e.GetRoleId());
   }
   GetWeaponItemIndex(t) {
     for (let e = 0; e < this.ItemDataList.length; e++)
@@ -275,7 +279,7 @@ class WeaponReplaceView extends UiViewBase_1.UiViewBase {
           );
         if (r.ItemId === i && ((t = e), r.RoleId !== this.RoleDataId)) break;
       }
-      -1 !== this.LoopScrollView.IZt &&
+      -1 !== this.LoopScrollView.Iei &&
         this.LoopScrollView.ScrollToGridIndex(t);
       e = this.LoopScrollView.GetGrid(t);
       if (e && void 0 !== t) return [e, e];

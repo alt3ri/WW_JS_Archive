@@ -15,7 +15,7 @@ const UE = require("ue"),
     "/Game/Aki/Data/Fight/DA_DefaultBulletConfig.DA_DefaultBulletConfig";
 class BulletActionInitRender extends BulletActionBase_1.BulletActionBase {
   constructor() {
-    super(...arguments), (this.P5o = void 0);
+    super(...arguments), (this.RVo = void 0);
   }
   OnExecute() {
     BulletModel_1.BulletModel.DefaultBulletSceneInteraction ||
@@ -32,7 +32,7 @@ class BulletActionInitRender extends BulletActionBase_1.BulletActionBase {
           t,
           UE.BulletSceneInteraction_C,
           (e) => {
-            this.x5o(e);
+            this.UVo(e);
           },
         );
       else {
@@ -51,7 +51,7 @@ class BulletActionInitRender extends BulletActionBase_1.BulletActionBase {
             t,
             UE.BulletSceneInteraction_C,
             (e) => {
-              this.x5o(e);
+              this.UVo(e);
             },
           );
       }
@@ -78,21 +78,21 @@ class BulletActionInitRender extends BulletActionBase_1.BulletActionBase {
       ? this.BulletInfo.Size.X
       : Math.max(this.BulletInfo.Size.X, this.BulletInfo.Size.Y);
   }
-  x5o(e) {
-    (this.P5o = new SceneObjectWaterEffect_1.SceneObjectWaterEffect()),
-      this.P5o.Start(
+  UVo(e) {
+    (this.RVo = new SceneObjectWaterEffect_1.SceneObjectWaterEffect()),
+      this.RVo.Start(
         e.WaterEffect,
         this.BulletInfo.CollisionInfo.CollisionComponent,
       ),
       SceneInteractionManager_1.SceneInteractionManager.Get().RegisterWaterEffectObject(
-        this.P5o,
+        this.RVo,
       );
   }
   Clear() {
     super.Clear(),
-      this.P5o &&
+      this.RVo &&
         SceneInteractionManager_1.SceneInteractionManager.Get().UnregisterWaterEffectObject(
-          this.P5o,
+          this.RVo,
         );
   }
 }

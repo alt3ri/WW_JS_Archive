@@ -9,7 +9,7 @@ class SelectablePropTypeOne extends SelectablePropComponentBase_1.SelectableProp
     super(...arguments),
       (this.PropData = void 0),
       (this.OnClickBtnBtnCall = (t) => {}),
-      (this.x4e = (t) => {
+      (this.Bke = (t) => {
         this.OnClickBtnBtnCall?.(t);
       });
   }
@@ -36,7 +36,7 @@ class SelectablePropTypeOne extends SelectablePropComponentBase_1.SelectableProp
       [
         12,
         (t) => {
-          this.x4e(t);
+          this.Bke(t);
         },
       ],
     ];
@@ -44,7 +44,7 @@ class SelectablePropTypeOne extends SelectablePropComponentBase_1.SelectableProp
   SetToggleClick(t) {
     this.OnClickBtnBtnCall = t;
   }
-  zwt() {
+  tbt() {
     this.SetItemIcon(this.GetTexture(1), this.PropData.ItemId),
       this.SetItemQualityIcon(this.GetSprite(2), this.PropData.ItemId);
     var t = this.GetSprite(0);
@@ -67,26 +67,26 @@ class SelectablePropTypeOne extends SelectablePropComponentBase_1.SelectableProp
         ))
       : e.SetUIActive(!1);
   }
-  Zwt() {
+  ibt() {
     this.GetItem(7).SetUIActive(this.PropData.GetIsLock());
   }
-  eBt() {
+  obt() {
     var t = this.GetItem(5);
     this.PropData.ResonanceLevel
       ? (t.SetUIActive(!0),
         this.GetText(6).SetText(this.PropData.ResonanceLevel.toString()))
       : t.SetUIActive(!1);
   }
-  bIt() {
+  kTt() {
     this.GetText(8).SetText(this.PropData.LevelText);
   }
   Refresh(t, e, s) {
     (this.PropData = t),
-      this.zwt(),
-      this.bIt(),
+      this.tbt(),
+      this.kTt(),
       this.SetRoleIconState(),
-      this.eBt(),
-      this.Zwt();
+      this.obt(),
+      this.ibt();
   }
   GetSelectItem() {
     return this.GetItem(15);

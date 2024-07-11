@@ -6,41 +6,41 @@ const UE = require("ue"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
   UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
   UiManager_1 = require("../../../Ui/UiManager"),
   LguiUtil_1 = require("../../Util/LguiUtil"),
   GenericScrollView_1 = require("../../Util/ScrollView/GenericScrollView"),
-  CookController_1 = require("../CookController"),
-  ControllerHolder_1 = require("../../../Manager/ControllerHolder");
+  CookController_1 = require("../CookController");
 class CookPopView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.$qt = void 0),
-      (this.Yqt = void 0),
-      (this.S9 = 0),
+      (this.zGt = void 0),
+      (this.ZGt = void 0),
+      (this.E9 = 0),
       (this.InitCookPopItem = (e, t, i) => {
         t = new CookPopItem(t);
         return t.Update(e), { Key: i, Value: t };
       }),
-      (this.mIt = () => {
-        this.Jqt();
+      (this.m2e = () => {
+        this.eNt();
       }),
-      (this.zqt = () => {
-        this.Jqt();
+      (this.Jke = () => {
+        this.eNt();
       }),
-      (this.dIt = () => {
+      (this.Mke = () => {
         CookController_1.CookController.SendFixToolRequest(
           CookController_1.CookController.GetCurrentFixId(),
           CookController_1.CookController.GetCurrentEntityId(),
         ),
-          this.Jqt();
+          this.eNt();
       }),
-      (this.Zqt = () => {
-        this.Jqt();
+      (this.tNt = () => {
+        this.eNt();
       }),
-      (this.eGt = () => {
+      (this.iNt = () => {
         ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
           "MaterialShort",
         );
@@ -60,61 +60,61 @@ class CookPopView extends UiViewBase_1.UiViewBase {
       [9, UE.UIButtonComponent],
     ]),
       (this.BtnBindInfo = [
-        [5, this.zqt],
-        [6, this.dIt],
-        [8, this.Zqt],
-        [9, this.eGt],
+        [5, this.Jke],
+        [6, this.Mke],
+        [8, this.tNt],
+        [9, this.iNt],
       ]);
   }
   OnStart() {
-    this.ChildPopView?.PopItem.OverrideBackBtnCallBack(this.mIt);
+    this.ChildPopView?.PopItem.OverrideBackBtnCallBack(this.m2e);
     var e = this.OpenParam,
       e =
-        ((this.S9 = e.CookRewardPopType),
-        (this.$qt = new GenericScrollView_1.GenericScrollView(
+        ((this.E9 = e.CookRewardPopType),
+        (this.zGt = new GenericScrollView_1.GenericScrollView(
           this.GetScrollViewWithScrollbar(1),
           this.InitCookPopItem,
         )),
-        this.GetItem(2).SetUIActive(0 === this.S9 || 3 === this.S9),
-        this.GetItem(4).SetUIActive(0 === this.S9),
-        1 === this.S9 && CookController_1.CookController.CheckCanShowExpItem());
+        this.GetItem(2).SetUIActive(0 === this.E9 || 3 === this.E9),
+        this.GetItem(4).SetUIActive(0 === this.E9),
+        1 === this.E9 && CookController_1.CookController.CheckCanShowExpItem());
     this.GetItem(7).SetUIActive(e),
-      1 === this.S9 && (this.Yqt = new ExpItem(this.GetItem(7))),
+      1 === this.E9 && (this.ZGt = new ExpItem(this.GetItem(7))),
       this.GetButton(8)
         .GetOwner()
         .GetUIItem()
-        .SetUIActive(0 !== this.S9);
+        .SetUIActive(0 !== this.E9);
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.FixSuccess,
-      this.mIt,
+      this.m2e,
     );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.FixSuccess,
-      this.mIt,
+      this.m2e,
     );
   }
   OnBeforeDestroy() {
-    this.$qt && (this.$qt.ClearChildren(), (this.$qt = void 0)),
-      this.Yqt && (this.Yqt.Destroy(), (this.Yqt = void 0));
+    this.zGt && (this.zGt.ClearChildren(), (this.zGt = void 0)),
+      this.ZGt && (this.ZGt.Destroy(), (this.ZGt = void 0));
   }
   OnAfterShow() {
-    switch ((this.ILt(), this.tGt(), this.S9)) {
+    switch ((this.RDt(), this.oNt(), this.E9)) {
       case 0:
-        this.iGt(), this.oGt();
+        this.rNt(), this.nNt();
         break;
       case 1:
-        this.rGt();
+        this.sNt();
         break;
       case 3:
-        this.iGt();
+        this.rNt();
     }
   }
-  ILt() {
-    switch (this.S9) {
+  RDt() {
+    switch (this.E9) {
       case 0:
         LguiUtil_1.LguiUtil.SetLocalText(this.GetText(0), "UnlockTitle");
         break;
@@ -126,8 +126,8 @@ class CookPopView extends UiViewBase_1.UiViewBase {
         LguiUtil_1.LguiUtil.SetLocalText(this.GetText(0), "StudyFail");
     }
   }
-  tGt() {
-    if (0 === this.S9) {
+  oNt() {
+    if (0 === this.E9) {
       var e = new Array();
       for (const i of ConfigManager_1.ConfigManager.CookConfig.GetCookFixToolById(
         CookController_1.CookController.GetCurrentFixId(),
@@ -138,14 +138,14 @@ class CookPopView extends UiViewBase_1.UiViewBase {
           );
         e.push({ ItemId: i[0], ItemNum: t });
       }
-      this.$qt.RefreshByData(e);
+      this.zGt.RefreshByData(e);
     } else
-      this.$qt.RefreshByData(
+      this.zGt.RefreshByData(
         ModelManager_1.ModelManager.CookModel.GetCookItemList(),
       );
   }
-  iGt() {
-    if (0 === this.S9) {
+  rNt() {
+    if (0 === this.E9) {
       var i = ConfigManager_1.ConfigManager.CookConfig.GetCookFixToolById(
           CookController_1.CookController.GetCurrentFixId(),
         ),
@@ -163,17 +163,17 @@ class CookPopView extends UiViewBase_1.UiViewBase {
     } else
       LguiUtil_1.LguiUtil.SetLocalText(this.GetText(3), "MaciningStudyFail");
   }
-  rGt() {
+  sNt() {
     var e = ModelManager_1.ModelManager.CookModel.GetCookerInfo(),
       t = ModelManager_1.ModelManager.CookModel.GetSumExpByLevel(
         ModelManager_1.ModelManager.CookModel.GetCookerInfo().CookingLevel,
       );
-    this.Yqt.SetExpSprite(e.TotalProficiencys, t),
-      this.Yqt.SetAddText(e.AddExp),
-      this.Yqt.SetLastText(e.TotalProficiencys),
-      this.Yqt.SetSumText(t);
+    this.ZGt.SetExpSprite(e.TotalProficiencys, t),
+      this.ZGt.SetAddText(e.AddExp),
+      this.ZGt.SetLastText(e.TotalProficiencys),
+      this.ZGt.SetSumText(t);
   }
-  oGt() {
+  nNt() {
     var e = this.GetButton(6)
         .GetOwner()
         .GetComponentByClass(UE.UIInteractionGroup.StaticClass()),
@@ -181,8 +181,8 @@ class CookPopView extends UiViewBase_1.UiViewBase {
     e.SetInteractable(t),
       this.GetButton(9).GetOwner().GetUIItem().SetUIActive(!t);
   }
-  Jqt() {
-    0 === this.S9
+  eNt() {
+    0 === this.E9
       ? UiManager_1.UiManager.CloseView("CookPopFixView")
       : UiManager_1.UiManager.CloseView("CookPopView");
   }
@@ -191,10 +191,10 @@ exports.CookPopView = CookPopView;
 class CookPopItem extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
-      (this.dqt = void 0),
-      (this.Kyt = () => {
+      (this.fGt = void 0),
+      (this.eTt = () => {
         ControllerHolder_1.ControllerHolder.ItemController.OpenItemTipsByItemId(
-          this.dqt.ItemId,
+          this.fGt.ItemId,
         );
       }),
       this.CreateThenShowByActor(e.GetOwner());
@@ -206,19 +206,19 @@ class CookPopItem extends UiPanelBase_1.UiPanelBase {
       [8, UE.UIText],
       [9, UE.UIButtonComponent],
     ]),
-      (this.BtnBindInfo = [[9, this.Kyt]]);
+      (this.BtnBindInfo = [[9, this.eTt]]);
   }
   Update(e) {
-    (this.dqt = e), this.Dnt(), this._xt(), this.GIt();
+    (this.fGt = e), this.Ost(), this.dwt(), this.VTt();
   }
-  Dnt() {
-    this.SetItemIcon(this.GetTexture(4), this.dqt.ItemId);
+  Ost() {
+    this.SetItemIcon(this.GetTexture(4), this.fGt.ItemId);
   }
-  _xt() {
-    this.SetItemQualityIcon(this.GetSprite(5), this.dqt.ItemId);
+  dwt() {
+    this.SetItemQualityIcon(this.GetSprite(5), this.fGt.ItemId);
   }
-  GIt() {
-    this.GetText(8).SetText(this.dqt.ItemNum.toString());
+  VTt() {
+    this.GetText(8).SetText(this.fGt.ItemNum.toString());
   }
 }
 class ExpItem extends UiPanelBase_1.UiPanelBase {

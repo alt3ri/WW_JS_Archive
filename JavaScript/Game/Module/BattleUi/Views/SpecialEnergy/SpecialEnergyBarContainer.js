@@ -10,32 +10,32 @@ const Log_1 = require("../../../../../Core/Common/Log"),
 class SpecialEnergyBarContainer extends BattleChildView_1.BattleChildView {
   constructor() {
     super(...arguments),
-      (this.hmt = void 0),
+      (this.Mdt = void 0),
       (this.E0 = 0),
-      (this.lmt = void 0),
-      (this._mt = new Map()),
+      (this.Edt = void 0),
+      (this.Sdt = new Map()),
       (this.kpe = () => {
-        this.umt(), this.cmt();
+        this.ydt(), this.Idt();
       });
   }
   Initialize(e) {
     super.Initialize(e),
-      (this.hmt = e),
+      (this.Mdt = e),
       (this.E0 =
         ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity?.Id ?? 0),
-      this.umt(),
-      this.cmt(),
+      this.ydt(),
+      this.Idt(),
       this.Ore();
   }
   OnBeforeDestroy() {
-    this.lmt = void 0;
-    for (const e of this._mt.values()) e.Destroy();
+    this.Edt = void 0;
+    for (const e of this.Sdt.values()) e.Destroy();
   }
   Reset() {
     this.kre(), super.Reset();
   }
   Tick(e) {
-    for (const t of this._mt.values()) t.Tick(e);
+    for (const t of this.Sdt.values()) t.Tick(e);
   }
   OnChangeRole(e) {
     var t;
@@ -48,16 +48,16 @@ class SpecialEnergyBarContainer extends BattleChildView_1.BattleChildView {
       this.E0 &&
         (ModelManager_1.ModelManager.BattleUiModel.SpecialEnergyBarData
           .IsSpecialEnergyBarEditorModeOpen &&
-          (t = this._mt.get(this.E0)) &&
-          (t.Destroy(), this._mt.delete(this.E0)),
-        this.mmt(e)),
-      this.cmt();
+          (t = this.Sdt.get(this.E0)) &&
+          (t.Destroy(), this.Sdt.delete(this.E0)),
+        this.Tdt(e)),
+      this.Idt();
   }
   OnRemoveEntity(e) {
-    var t = this._mt.get(e);
+    var t = this.Sdt.get(e);
     t &&
-      (t.Destroy(), this._mt.delete(e), this.lmt === t) &&
-      (this.lmt = void 0);
+      (t.Destroy(), this.Sdt.delete(e), this.Edt === t) &&
+      (this.Edt = void 0);
   }
   Ore() {
     EventSystem_1.EventSystem.Add(
@@ -71,28 +71,28 @@ class SpecialEnergyBarContainer extends BattleChildView_1.BattleChildView {
       this.kpe,
     );
   }
-  umt() {
+  ydt() {
     for (const t of ModelManager_1.ModelManager.SceneTeamModel.GetTeamItems(
       !0,
     )) {
       var e = t.EntityHandle?.Id;
       e &&
         (e = ModelManager_1.ModelManager.BattleUiModel.GetRoleData(e)) &&
-        this.mmt(e);
+        this.Tdt(e);
     }
   }
-  async mmt(t) {
+  async Tdt(t) {
     var i = t.EntityHandle?.Id;
-    if (i && !this._mt.has(i)) {
+    if (i && !this.Sdt.has(i)) {
       var s = new RoleSpecialEnergyBar_1.RoleSpecialEnergyBar();
-      this._mt.set(i, s);
+      this.Sdt.set(i, s);
       let e = this.RootItem;
-      t.IsPhantom() && (e = this.hmt), await s.InitAsync(e, t);
+      t.IsPhantom() && (e = this.Mdt), await s.InitAsync(e, t);
     }
   }
-  cmt() {
-    for (var [e, t] of this._mt)
-      e === this.E0 ? (t.SetVisible(!0), (this.lmt = t)) : t.SetVisible(!1);
+  Idt() {
+    for (var [e, t] of this.Sdt)
+      e === this.E0 ? (t.SetVisible(!0), (this.Edt = t)) : t.SetVisible(!1);
   }
 }
 exports.SpecialEnergyBarContainer = SpecialEnergyBarContainer;

@@ -22,48 +22,48 @@ const puerts_1 = require("puerts"),
 class SceneItemManipulableHoldState extends SceneItemManipulableBaseState_1.SceneItemManipulableBaseState {
   constructor(t, e, i, s) {
     super(t),
-      (this.M$i = void 0),
-      (this.inr = void 0),
-      (this.anr = void 0),
-      (this.opi = 0),
+      (this.pYi = void 0),
+      (this.Znr = void 0),
+      (this.rsr = void 0),
+      (this.rvi = 0),
       (this.jye = Vector_1.Vector.Create()),
-      (this.k1t = Vector_1.Vector.Create()),
-      (this.hnr = void 0),
-      (this.lnr = void 0),
-      (this._nr = (0, puerts_1.$ref)(void 0)),
-      (this.unr = (0, puerts_1.$ref)(void 0)),
-      (this.cnr = (0, puerts_1.$ref)(void 0)),
-      (this.mnr = UE.NewArray(UE.Actor)),
-      (this.dnr = void 0),
-      (this.Cnr = void 0),
-      (this.gnr = void 0),
-      (this.fnr = void 0),
-      (this.pnr = void 0),
-      (this.M$i = e),
-      (this.inr = i),
-      (this.anr = s),
+      (this.z_t = Vector_1.Vector.Create()),
+      (this.nsr = void 0),
+      (this.ssr = void 0),
+      (this.asr = (0, puerts_1.$ref)(void 0)),
+      (this.hsr = (0, puerts_1.$ref)(void 0)),
+      (this.lsr = (0, puerts_1.$ref)(void 0)),
+      (this._sr = UE.NewArray(UE.Actor)),
+      (this.usr = void 0),
+      (this.csr = void 0),
+      (this.msr = void 0),
+      (this.dsr = void 0),
+      (this.Csr = void 0),
+      (this.pYi = e),
+      (this.Znr = i),
+      (this.rsr = s),
       (this.StateType = "BeHolding");
   }
   SetEnterCallback(t) {
     this.EnterCallback = t;
   }
   OnEnter() {
-    this.StartCameraShake(this.M$i),
+    this.StartCameraShake(this.pYi),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.AddSubCameraTag,
-        this.inr,
+        this.Znr,
       ),
-      (this.pnr = this.inr),
+      (this.Csr = this.Znr),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.AddExtraHoldingTags,
-        this.anr,
+        this.rsr,
       ),
       (this.SceneItem.ActorComp.PhysicsMode = 2),
       this.SceneItem.ActorComp.GetPrimitiveComponent().SetPhysicsLinearVelocity(
         Vector_1.Vector.ZeroVector,
       ),
-      this.mnr.Add(this.SceneItem.ActorComp.Owner),
-      this.mnr.Add(Global_1.Global.BaseCharacter.CharacterActorComponent.Owner),
+      this._sr.Add(this.SceneItem.ActorComp.Owner),
+      this._sr.Add(Global_1.Global.BaseCharacter.CharacterActorComponent.Owner),
       this.EnterCallback && this.EnterCallback(),
       FNameUtil_1.FNameUtil.IsNothing(
         this.SceneItem.ManipulateBaseConfig.保持状态碰撞预设,
@@ -71,22 +71,22 @@ class SceneItemManipulableHoldState extends SceneItemManipulableBaseState_1.Scen
         this.SceneItem.ActorComp.GetPrimitiveComponent().SetCollisionProfileName(
           this.SceneItem.ManipulateBaseConfig.保持状态碰撞预设,
         ),
-      this.SceneItem.Config?.HoldCfg?.TrackTarget && this.vnr(),
-      this.SceneItem.IsProjectileAimMode && this.Yrr();
+      this.SceneItem.Config?.HoldCfg?.TrackTarget && this.gsr(),
+      this.SceneItem.IsProjectileAimMode && this.Qnr();
     var t =
         Global_1.Global.BaseCharacter.CharacterActorComponent.Entity.GetComponent(
-          185,
+          188,
         ),
       e =
         (t.AddTag(-1011082332),
         this.SceneItem.ManipulateBaseConfig?.抛物瞄准模式开关 ||
           t.AddTag(510134989),
-        this.SceneItem.Entity.GetComponent(122));
+        this.SceneItem.Entity.GetComponent(124));
     e?.Valid ? t.AddTag(882475449) : t.AddTag(1892366727);
   }
   OnTick(t) {
     this.Timer += t;
-    (t = this.snr()),
+    (t = this.osr()),
       (this.SceneItem.MovementTargetLocation = t.Loc),
       (this.SceneItem.MovementTargetRotation = t.Rot),
       (t = Vector_1.Vector.Distance(
@@ -95,28 +95,28 @@ class SceneItemManipulableHoldState extends SceneItemManipulableBaseState_1.Scen
       ));
     return !(
       t > ConfigManager_1.ConfigManager.ManipulateConfig.DisconnectDistance ||
-      (this.SceneItem.Config?.HoldCfg?.TrackTarget && this.Mnr(),
-      this.SceneItem.IsProjectileAimMode && this.Snr(),
+      (this.SceneItem.Config?.HoldCfg?.TrackTarget && this.fsr(),
+      this.SceneItem.IsProjectileAimMode && this.psr(),
       0)
     );
   }
   OnExit() {
     this.StopCameraShake(),
-      void 0 !== this.pnr &&
+      void 0 !== this.Csr &&
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.RemoveSubCameraTag,
-          this.pnr,
+          this.Csr,
         ),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.RemoveExtraHoldingTags,
-        this.anr,
+        this.rsr,
       ),
-      this.mnr.Empty(),
-      this.SceneItem.Config?.HoldCfg?.TrackTarget && this.Enr(),
-      this.ynr();
+      this._sr.Empty(),
+      this.SceneItem.Config?.HoldCfg?.TrackTarget && this.vsr(),
+      this.Msr();
     var t =
       Global_1.Global.BaseCharacter?.CharacterActorComponent?.Entity?.GetComponent(
-        185,
+        188,
       );
     t?.RemoveTag(-1011082332),
       t?.RemoveTag(510134989),
@@ -126,7 +126,7 @@ class SceneItemManipulableHoldState extends SceneItemManipulableBaseState_1.Scen
         this.SceneItem.ActorComp.ActorLocationProxy,
       );
   }
-  snr() {
+  osr() {
     var t = this.SceneItem.ManipulateBaseConfig,
       e = Global_1.Global.BaseCharacter.CharacterActorComponent.ActorTransform,
       i = this.SceneItem.UsingAssistantHoldOffset
@@ -141,7 +141,7 @@ class SceneItemManipulableHoldState extends SceneItemManipulableBaseState_1.Scen
     var e = new UE.Rotator(0, this.Timer * t.角速度, 0),
       t =
         ((s = UE.KismetMathLibrary.ComposeRotators(e, s)),
-        this.SceneItem.Entity.GetComponent(122));
+        this.SceneItem.Entity.GetComponent(124));
     return (
       t?.Valid &&
         ((e = new UE.Rotator(0, -t.Rotation, 0)),
@@ -149,44 +149,44 @@ class SceneItemManipulableHoldState extends SceneItemManipulableBaseState_1.Scen
       { Loc: i, Rot: s }
     );
   }
-  Mnr() {
+  fsr() {
     var t, e;
-    this.lnr &&
+    this.ssr &&
       ((t = this.SceneItem.ActorComp.ActorLocationProxy),
-      (e = this.Inr(t, this.k1t)),
-      this.lnr.SetSplinePoints(e, 0, !0),
-      this.hnr.K2_SetActorLocation(t.ToUeVector(), !1, void 0, !0));
+      (e = this.Esr(t, this.z_t)),
+      this.ssr.SetSplinePoints(e, 0, !0),
+      this.nsr.K2_SetActorLocation(t.ToUeVector(), !1, void 0, !0));
   }
-  Enr() {
-    EffectSystem_1.EffectSystem.IsValid(this.opi) &&
+  vsr() {
+    EffectSystem_1.EffectSystem.IsValid(this.rvi) &&
       (EffectSystem_1.EffectSystem.StopEffectById(
-        this.opi,
+        this.rvi,
         "[SceneItemManipulableHoldState.ClearCurSplineAndEffectHandle]",
         !0,
       ),
-      (this.opi = 0)),
-      this.hnr?.IsValid() &&
-        (ActorSystem_1.ActorSystem.Put(this.hnr),
-        (this.hnr = void 0),
-        (this.lnr = void 0));
+      (this.rvi = 0)),
+      this.nsr?.IsValid() &&
+        (ActorSystem_1.ActorSystem.Put(this.nsr),
+        (this.nsr = void 0),
+        (this.ssr = void 0));
   }
-  vnr() {
+  gsr() {
     var t = ModelManager_1.ModelManager.CreatureModel.GetCompleteEntityData(
       this.SceneItem.Config.HoldCfg.TrackTarget.EntityId,
     );
     t &&
-      (this.k1t.Set(t.Transform.Pos.X, t.Transform.Pos.Y, t.Transform.Pos.Z),
-      (t = this.Inr(this.SceneItem.ActorComp.ActorLocationProxy, this.k1t)),
+      (this.z_t.Set(t.Transform.Pos.X, t.Transform.Pos.Y, t.Transform.Pos.Z),
+      (t = this.Esr(this.SceneItem.ActorComp.ActorLocationProxy, this.z_t)),
       (t = GameSplineUtils_1.GameSplineUtils.GenerateGuideEffect(
-        this.k1t,
+        this.z_t,
         t,
         this.SceneItem.Config.HoldCfg.TrackTarget.EffectPath,
       ))) &&
-      ((this.opi = t.EffectHandle),
-      (this.hnr = t.SplineActor),
-      (this.lnr = t.SplineComp));
+      ((this.rvi = t.EffectHandle),
+      (this.nsr = t.SplineActor),
+      (this.ssr = t.SplineComp));
   }
-  Inr(t, e) {
+  Esr(t, e) {
     var i = UE.NewArray(UE.Vector),
       s = (i.Add(Vector_1.Vector.ZeroVector), Vector_1.Vector.Distance(t, e)),
       h = this.SceneItem.Config.HoldCfg.TrackTarget.EffectLength;
@@ -197,20 +197,20 @@ class SceneItemManipulableHoldState extends SceneItemManipulableBaseState_1.Scen
       i
     );
   }
-  Yrr() {
+  Qnr() {
     var t = this.SceneItem.ManipulateBaseConfig,
       e = this.SceneItem.ActorComp.ActorLocation,
-      i = (0, puerts_1.$unref)(this.unr),
+      i = (0, puerts_1.$unref)(this.hsr),
       e = GameSplineUtils_1.GameSplineUtils.GenerateGuideEffect(
         Vector_1.Vector.Create(e),
         i,
         t.抛物瞄准模式样条特效.AssetPathName.toString(),
       );
     e &&
-      ((this.dnr = e.EffectHandle),
-      (this.Cnr = e.SplineActor),
-      (this.gnr = e.SplineComp),
-      (this.fnr = EffectSystem_1.EffectSystem.SpawnEffect(
+      ((this.usr = e.EffectHandle),
+      (this.csr = e.SplineActor),
+      (this.msr = e.SplineComp),
+      (this.dsr = EffectSystem_1.EffectSystem.SpawnEffect(
         GlobalData_1.GlobalData.World,
         MathUtils_1.MathUtils.DefaultTransform,
         t.抛物瞄准模式终点特效.AssetPathName.toString(),
@@ -218,8 +218,8 @@ class SceneItemManipulableHoldState extends SceneItemManipulableBaseState_1.Scen
         new EffectContext_1.EffectContext(this.SceneItem?.Entity.Id),
       )));
   }
-  Snr() {
-    if (this.gnr) {
+  psr() {
+    if (this.msr) {
       var t = this.SceneItem.ManipulateBaseConfig,
         i = this.SceneItem.ActorComp.ActorLocation,
         e = Vector_1.Vector.Create(0, 0, 0),
@@ -236,31 +236,31 @@ class SceneItemManipulableHoldState extends SceneItemManipulableBaseState_1.Scen
           s.Add(QueryTypeDefine_1.KuroObjectTypeQuery.Destructible),
           UE.GameplayStatics.Blueprint_PredictProjectilePath_ByObjectType(
             this.SceneItem.ActorComp.Owner,
-            this._nr,
-            this.unr,
-            this.cnr,
+            this.asr,
+            this.hsr,
+            this.lsr,
             i,
             e.ToUeVector(),
             !0,
             this.SceneItem.ManipulateBaseConfig.抛物瞄准射线检测半径,
             s,
             !1,
-            this.mnr,
+            this._sr,
             this.SceneItem?.ManipulateBaseConfig?.抛物瞄准射线Debug ? 1 : 0,
             5,
             10,
             10,
             t.抛物瞄准模式重力加速度,
           ),
-          (0, puerts_1.$unref)(this.unr));
+          (0, puerts_1.$unref)(this.hsr));
       for (let e = 0; e < h.Num(); e++) {
         let t = h.Get(e);
         (t = t.op_Subtraction(i)), h.Set(e, t);
       }
-      this.gnr.SetSplinePoints(h, 0, !0),
-        this.Cnr.K2_SetActorLocation(i, !1, void 0, !0),
+      this.msr.SetSplinePoints(h, 0, !0),
+        this.csr.K2_SetActorLocation(i, !1, void 0, !0),
         EffectSystem_1.EffectSystem.GetEffectActor(
-          this.fnr,
+          this.dsr,
         ).K2_SetActorLocation(
           h.Get(h.Num() - 1).op_Addition(i),
           !1,
@@ -269,43 +269,43 @@ class SceneItemManipulableHoldState extends SceneItemManipulableBaseState_1.Scen
         );
     }
   }
-  ynr() {
-    EffectSystem_1.EffectSystem.IsValid(this.dnr) &&
+  Msr() {
+    EffectSystem_1.EffectSystem.IsValid(this.usr) &&
       (EffectSystem_1.EffectSystem.StopEffectById(
-        this.dnr,
+        this.usr,
         "[SceneItemManipulableHoldState.ClearProjectileSpline]",
         !0,
       ),
-      (this.dnr = 0)),
-      this.Cnr?.IsValid() &&
-        (ActorSystem_1.ActorSystem.Put(this.Cnr),
-        (this.Cnr = void 0),
-        (this.gnr = void 0)),
-      EffectSystem_1.EffectSystem.IsValid(this.fnr) &&
+      (this.usr = 0)),
+      this.csr?.IsValid() &&
+        (ActorSystem_1.ActorSystem.Put(this.csr),
+        (this.csr = void 0),
+        (this.msr = void 0)),
+      EffectSystem_1.EffectSystem.IsValid(this.dsr) &&
         (EffectSystem_1.EffectSystem.StopEffectById(
-          this.fnr,
+          this.dsr,
           "[SceneItemManipulableHoldState.ClearProjectileSpline]",
           !0,
         ),
-        (this.fnr = 0));
+        (this.dsr = 0));
   }
   EnterProjectileAimMode() {
-    this.Yrr(),
+    this.Qnr(),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.RemoveSubCameraTag,
-        this.inr,
+        this.Znr,
       ),
-      (this.pnr = void 0);
+      (this.Csr = void 0);
     var t = this.SceneItem.ManipulateBaseConfig.抛物瞄准模式镜头;
     void 0 !== t &&
       (EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.AddSubCameraTag,
         t,
       ),
-      (this.pnr = t));
+      (this.Csr = t));
   }
   ExitProjectileAimMode() {
-    this.ynr();
+    this.Msr();
     var t = this.SceneItem.ManipulateBaseConfig.抛物瞄准模式镜头;
     void 0 !== t &&
       EventSystem_1.EventSystem.Emit(
@@ -314,9 +314,9 @@ class SceneItemManipulableHoldState extends SceneItemManipulableBaseState_1.Scen
       ),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.AddSubCameraTag,
-        this.inr,
+        this.Znr,
       ),
-      (this.pnr = this.inr);
+      (this.Csr = this.Znr);
   }
 }
 exports.SceneItemManipulableHoldState = SceneItemManipulableHoldState;

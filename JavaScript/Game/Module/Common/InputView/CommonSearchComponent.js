@@ -9,27 +9,27 @@ class CommonSearchComponent extends UiPanelBase_1.UiPanelBase {
     super(),
       (this.SearchFunction = i),
       (this.ClearFunction = s),
-      (this.vUt = void 0),
-      (this.MUt = void 0),
-      (this.SUt = void 0),
-      (this.EUt = (t) => {
-        t && this.vUt.ActivateInputText();
+      (this.yAt = void 0),
+      (this.IAt = void 0),
+      (this.TAt = void 0),
+      (this.LAt = (t) => {
+        t && this.yAt.ActivateInputText();
       }),
-      (this.yUt = () => {
-        var t = this.vUt.GetText();
-        this.SearchFunction?.(t), this.IUt(!1), (this.TUt = !0);
+      (this.DAt = () => {
+        var t = this.yAt.GetText();
+        this.SearchFunction?.(t), this.RAt(!1), (this.UAt = !0);
       }),
-      (this.LUt = () => {
+      (this.AAt = () => {
         this.ResetSearch(!0);
       }),
       (this.ZGe = (t) => {
         StringUtils_1.StringUtils.IsEmpty(t)
-          ? (this.IUt(!0),
-            this.MUt.SetSelfInteractive(!1),
+          ? (this.RAt(!0),
+            this.IAt.SetSelfInteractive(!1),
             this.ClearFunction?.())
-          : (this.TUt && this.IUt(!0), this.MUt.SetSelfInteractive(!0));
+          : (this.UAt && this.RAt(!0), this.IAt.SetSelfInteractive(!0));
       }),
-      (this.TUt = !1),
+      (this.UAt = !1),
       this.CreateThenShowByActor(t.GetOwner());
   }
   OnRegisterComponent() {
@@ -39,31 +39,31 @@ class CommonSearchComponent extends UiPanelBase_1.UiPanelBase {
       [2, UE.UIButtonComponent],
     ]),
       (this.BtnBindInfo = [
-        [0, this.EUt],
-        [1, this.yUt],
-        [2, this.LUt],
+        [0, this.LAt],
+        [1, this.DAt],
+        [2, this.AAt],
       ]);
   }
   OnStart() {
-    (this.MUt = this.GetButton(1)),
-      (this.SUt = this.GetButton(2)),
-      (this.vUt = this.GetInputText(0)),
-      this.vUt.OnTextChange.Bind(this.ZGe),
-      this.vUt.OnTextSubmit.Bind(this.yUt),
+    (this.IAt = this.GetButton(1)),
+      (this.TAt = this.GetButton(2)),
+      (this.yAt = this.GetInputText(0)),
+      this.yAt.OnTextChange.Bind(this.ZGe),
+      this.yAt.OnTextSubmit.Bind(this.DAt),
       this.ResetSearch(!1),
-      this.IUt(!0),
-      this.MUt.SetSelfInteractive(!1);
+      this.RAt(!0),
+      this.IAt.SetSelfInteractive(!1);
   }
   OnBeforeDestroy() {
-    (this.vUt = void 0), (this.MUt = void 0), (this.SUt = void 0);
+    (this.yAt = void 0), (this.IAt = void 0), (this.TAt = void 0);
   }
-  IUt(t) {
-    this.MUt.RootUIComp.SetUIActive(t),
-      this.SUt.RootUIComp.SetUIActive(!t),
-      (this.TUt = !t);
+  RAt(t) {
+    this.IAt.RootUIComp.SetUIActive(t),
+      this.TAt.RootUIComp.SetUIActive(!t),
+      (this.UAt = !t);
   }
   ResetSearch(t) {
-    this.vUt.SetText("", t);
+    this.yAt.SetText("", t);
   }
 }
 exports.CommonSearchComponent = CommonSearchComponent;

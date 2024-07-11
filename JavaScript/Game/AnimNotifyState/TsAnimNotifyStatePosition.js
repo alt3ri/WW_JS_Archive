@@ -13,7 +13,7 @@ class TsAnimNotifyStatePosition extends UE.KuroAnimNotifyState {
     var r = t.GetOwner();
     return (
       r instanceof TsBaseCharacter_1.default &&
-      (r.CharacterActorComponent?.Entity?.GetComponent(36)?.SetAddMoveWithMesh(
+      (r.CharacterActorComponent?.Entity?.GetComponent(37)?.SetAddMoveWithMesh(
         t,
         this.移动速度,
         s,
@@ -28,7 +28,7 @@ class TsAnimNotifyStatePosition extends UE.KuroAnimNotifyState {
       !!this.是否持续朝向目标 &&
       (r = t.GetOwner()) instanceof TsBaseCharacter_1.default &&
       (r.CharacterActorComponent?.Entity?.GetComponent(
-        36,
+        37,
       )?.SetAddMoveWorldSpeedWithMesh(
         t,
         UE.KismetMathLibrary.TransformDirection(
@@ -43,7 +43,7 @@ class TsAnimNotifyStatePosition extends UE.KuroAnimNotifyState {
     var s = t.GetOwner();
     return (
       s instanceof TsBaseCharacter_1.default &&
-      (s.CharacterActorComponent?.Entity?.GetComponent(36)?.StopAddMoveWithMesh(
+      (s.CharacterActorComponent?.Entity?.GetComponent(37)?.StopAddMoveWithMesh(
         t,
       ),
       !0)

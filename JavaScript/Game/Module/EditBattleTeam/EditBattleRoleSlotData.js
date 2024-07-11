@@ -5,10 +5,10 @@ const ModelManager_1 = require("../../Manager/ModelManager"),
   EditBattleRoleData_1 = require("./EditBattleRoleData");
 class EditBattleRoleSlotData {
   constructor(t) {
-    (this.wnt = void 0), (this.cC = t);
+    (this.Wst = void 0), (this.cC = t);
   }
   SetRoleData(t) {
-    this.wnt = t;
+    this.Wst = t;
   }
   SetRoleDataByPrewarInfo(t) {
     var e = t.GetConfigId(),
@@ -18,14 +18,14 @@ class EditBattleRoleSlotData {
       r = t.GetLevel(),
       s = t.IsSelf(),
       t = t.GetIsReady();
-    this.wnt || (this.wnt = new EditBattleRoleData_1.EditBattleRoleData()),
-      this.wnt.Init(o, e, a, i, r, s, t);
+    this.Wst || (this.Wst = new EditBattleRoleData_1.EditBattleRoleData()),
+      this.Wst.Init(o, e, a, i, r, s, t);
   }
   ResetRoleData() {
-    this.wnt = void 0;
+    this.Wst = void 0;
   }
   get GetRoleData() {
-    return this.wnt;
+    return this.Wst;
   }
   get GetRoleConfigId() {
     var t = this.GetRoleData;

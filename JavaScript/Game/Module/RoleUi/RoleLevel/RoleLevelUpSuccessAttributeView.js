@@ -15,9 +15,9 @@ class RoleLevelUpSuccessAttributeView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
       (this.Pe = void 0),
-      (this.H_o = void 0),
-      (this.$7i = void 0),
-      (this.j_o = void 0),
+      (this.Ouo = void 0),
+      (this.XHi = void 0),
+      (this.kuo = void 0),
       (this.nqe = () => {
         var t = this.Pe.ClickFunction;
         t && t(), this.CloseMe();
@@ -50,17 +50,17 @@ class RoleLevelUpSuccessAttributeView extends UiViewBase_1.UiViewBase {
           38,
           "RoleLevelUpSuccessAttributeView 打开失败,未传入界面数据",
         )
-      : ((this.Pe = this.OpenParam), this.IBt());
+      : ((this.Pe = this.OpenParam), this.Dbt());
   }
   async OnBeforeStartAsync() {
-    (this.$7i = new StrengthUpgradeBarItem_1.StrengthUpgradeBarItem()),
-      await this.$7i.CreateByActorAsync(this.GetItem(10).GetOwner());
+    (this.XHi = new StrengthUpgradeBarItem_1.StrengthUpgradeBarItem()),
+      await this.XHi.CreateByActorAsync(this.GetItem(10).GetOwner());
   }
   OnStart() {
     var t = this.GetItem(5),
       t =
-        ((this.H_o = new LevelShowItem()),
-        this.H_o.CreateThenShowByActor(t.GetOwner()),
+        ((this.Ouo = new LevelShowItem()),
+        this.Ouo.CreateThenShowByActor(t.GetOwner()),
         this.Pe.WiderScrollView ?? !1),
       t =
         (this.GetItem(9).SetUIActive(t),
@@ -69,7 +69,7 @@ class RoleLevelUpSuccessAttributeView extends UiViewBase_1.UiViewBase {
       e = this.GetLoopScrollViewComponent(6);
     e.RootUIComp.SetWidth(t.GetWidth()),
       this.GetItem(8).SetWidth(t.GetWidth()),
-      (this.j_o = new LoopScrollView_1.LoopScrollView(e, t.GetOwner(), () => {
+      (this.kuo = new LoopScrollView_1.LoopScrollView(e, t.GetOwner(), () => {
         return new AttributeSlotItem();
       }));
   }
@@ -77,32 +77,32 @@ class RoleLevelUpSuccessAttributeView extends UiViewBase_1.UiViewBase {
     this.Refresh();
   }
   OnBeforeDestroy() {
-    this.H_o.Destroy(),
-      (this.H_o = void 0),
-      this.j_o.ClearGridProxies(),
-      (this.j_o = void 0);
+    this.Ouo.Destroy(),
+      (this.Ouo = void 0),
+      this.kuo.ClearGridProxies(),
+      (this.kuo = void 0);
   }
-  IBt() {
+  Dbt() {
     var t = this.Pe.AudioId;
     t &&
       ((t = ConfigManager_1.ConfigManager.AudioConfig.GetAudioPath(t).Path),
       this.SetAudioEvent(t));
   }
   Refresh() {
-    this.ILt(), this.C_o(), this.W_o(), this.K_o(), this.Q_o(), this.X_o();
+    this.RDt(), this.uuo(), this.Fuo(), this.Vuo(), this.Huo(), this.juo();
   }
-  C_o() {
+  uuo() {
     var t = this.Pe.ClickText ?? "Text_BackToView_Text";
     this.GetText(1).ShowTextNew(t);
   }
-  ILt() {
+  RDt() {
     var t = this.Pe.Title ?? "Text_LevelUpSuccessful_Text";
     this.GetText(0).ShowTextNew(t);
   }
-  W_o() {
+  Fuo() {
     var t = this.Pe.LevelInfo;
     void 0 !== t &&
-      this.H_o.Refresh(
+      this.Ouo.Refresh(
         t.PreUpgradeLv,
         t.UpgradeLv,
         t?.FormatStringId,
@@ -110,17 +110,17 @@ class RoleLevelUpSuccessAttributeView extends UiViewBase_1.UiViewBase {
       ),
       this.GetItem(5).SetUIActive(void 0 !== t);
   }
-  K_o() {
+  Vuo() {
     var t = this.Pe.StrengthUpgradeData;
-    void 0 !== t && this.$7i.Update(t),
+    void 0 !== t && this.XHi.Update(t),
       this.GetItem(10).SetUIActive(void 0 !== t);
   }
-  Q_o() {
+  Huo() {
     void 0 === this.Pe.AttributeInfo || 0 === this.Pe.AttributeInfo.length
       ? this.GetLoopScrollViewComponent(6).RootUIComp.SetUIActive(!1)
-      : this.j_o.ReloadData(this.Pe.AttributeInfo);
+      : this.kuo.ReloadData(this.Pe.AttributeInfo);
   }
-  X_o() {
+  juo() {
     this.GetItem(4).SetUIActive(this.Pe.IsShowArrow ?? !1);
   }
 }
@@ -142,7 +142,7 @@ class LevelShowItem extends UiPanelBase_1.UiPanelBase {
 }
 class AttributeSlotItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
-    super(...arguments), (this.$_o = void 0);
+    super(...arguments), (this.Wuo = void 0);
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -152,12 +152,12 @@ class AttributeSlotItem extends GridProxyAbstract_1.GridProxyAbstract {
     ];
   }
   OnStart() {
-    (this.$_o = new RoleAttributeItem()),
-      this.$_o.CreateThenShowByActor(this.GetItem(0).GetOwner());
+    (this.Wuo = new RoleAttributeItem()),
+      this.Wuo.CreateThenShowByActor(this.GetItem(0).GetOwner());
   }
   OnBeforeDestroy() {}
   Refresh(t, e, i) {
-    this.$_o.Refresh(t), this.WNe(t.IsNormalBg);
+    this.Wuo.Refresh(t), this.WNe(t.IsNormalBg);
   }
   WNe(t) {
     t = t ?? !0;
@@ -176,28 +176,28 @@ class RoleAttributeItem extends UiPanelBase_1.UiPanelBase {
     ];
   }
   Refresh(t) {
-    this.C4e(t.Name),
+    this.P5e(t.Name),
       this.Kbe(t.IconPath),
       this.GetItem(2).SetUIActive(t.ShowArrow ?? !0);
     var e = [this.GetText(3), this.GetText(1)];
     const i = [t.PreText, t.CurText];
     e.forEach((t, e) => {
-      this.Y_o(t, i[e]);
+      this.Kuo(t, i[e]);
     }),
-      void 0 !== t.InnerShowBg && this.J_o(t.InnerShowBg);
+      void 0 !== t.InnerShowBg && this.Quo(t.InnerShowBg);
   }
   Kbe(t) {
     void 0 !== t && this.SetTextureByPath(t, this.GetTexture(4)),
       this.GetTexture(4).SetUIActive(void 0 !== t);
   }
-  C4e(t) {
+  P5e(t) {
     void 0 !== t && this.GetText(0).ShowTextNew(t),
       this.GetText(0).SetUIActive(void 0 !== t);
   }
-  Y_o(t, e) {
+  Kuo(t, e) {
     void 0 !== e && t.SetText(e), t.SetUIActive(void 0 !== e);
   }
-  J_o(t) {
+  Quo(t) {
     var e = this.GetItem(5);
     e && e.SetUIActive(t);
   }

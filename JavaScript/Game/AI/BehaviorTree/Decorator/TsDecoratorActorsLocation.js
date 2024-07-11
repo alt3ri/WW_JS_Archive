@@ -40,8 +40,8 @@ class TsDecoratorActorsLocation extends UE.BTDecorator_BlueprintBase {
     var e = t.AiController;
     if (!e)
       return (
-        Log_1.Log.CheckError() &&
-          Log_1.Log.Error("BehaviorTree", 6, "错误的Controller类型", [
+        Log_1.Log.CheckWarn() &&
+          Log_1.Log.Warn("BehaviorTree", 6, "错误的Controller类型", [
             "Type",
             t.GetClass().GetName(),
           ]),
@@ -58,8 +58,8 @@ class TsDecoratorActorsLocation extends UE.BTDecorator_BlueprintBase {
       );
       if (!i)
         return (
-          Log_1.Log.CheckError() &&
-            Log_1.Log.Error(
+          Log_1.Log.CheckWarn() &&
+            Log_1.Log.Warn(
               "BehaviorTree",
               6,
               "不存在BlackboardKey",
@@ -74,8 +74,8 @@ class TsDecoratorActorsLocation extends UE.BTDecorator_BlueprintBase {
         );
       if (!a)
         return (
-          Log_1.Log.CheckError() &&
-            Log_1.Log.Error("BehaviorTree", 6, "不存在Entity", ["Id", i]),
+          Log_1.Log.CheckWarn() &&
+            Log_1.Log.Warn("BehaviorTree", 6, "不存在Entity", ["Id", i]),
           !1
         );
       s = a;
@@ -88,8 +88,8 @@ class TsDecoratorActorsLocation extends UE.BTDecorator_BlueprintBase {
       );
       if (!i)
         return (
-          Log_1.Log.CheckError() &&
-            Log_1.Log.Error(
+          Log_1.Log.CheckWarn() &&
+            Log_1.Log.Warn(
               "BehaviorTree",
               6,
               "不存在BlackboardKey",
@@ -101,8 +101,8 @@ class TsDecoratorActorsLocation extends UE.BTDecorator_BlueprintBase {
       a = EntitySystem_1.EntitySystem.GetComponent(i, 2);
       if (!a)
         return (
-          Log_1.Log.CheckError() &&
-            Log_1.Log.Error("BehaviorTree", 6, "不存在Entity", ["Id", i]),
+          Log_1.Log.CheckWarn() &&
+            Log_1.Log.Warn("BehaviorTree", 6, "不存在Entity", ["Id", i]),
           !1
         );
       h = a;

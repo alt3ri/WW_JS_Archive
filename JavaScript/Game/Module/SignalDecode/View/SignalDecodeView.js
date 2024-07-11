@@ -25,59 +25,59 @@ const UE = require("ue"),
 class SignalDecodeView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
-      (this.OMo = ""),
-      (this.kMo = void 0),
-      (this.FMo = void 0),
-      (this.VMo = void 0),
-      (this.HMo = void 0),
-      (this.jMo = void 0),
-      (this.WMo = 0),
-      (this.KMo = 0),
-      (this.QMo = 0),
-      (this.XMo = -0),
-      (this.$Mo = -0),
-      (this.k_t = 0),
-      (this.YMo = 0),
-      (this.JMo = !1),
-      (this.cVe = 0),
-      (this.zMo = 0),
-      (this.ZMo = 0),
-      (this.eSo = () => {
+      (this.qEo = ""),
+      (this.GEo = void 0),
+      (this.NEo = void 0),
+      (this.OEo = void 0),
+      (this.kEo = void 0),
+      (this.FEo = void 0),
+      (this.VEo = 0),
+      (this.HEo = 0),
+      (this.jEo = 0),
+      (this.WEo = -0),
+      (this.KEo = -0),
+      (this.ict = 0),
+      (this.QEo = 0),
+      (this.XEo = !1),
+      (this.L6e = 0),
+      (this.$Eo = 0),
+      (this.YEo = 0),
+      (this.JEo = () => {
         if (
-          this.VMo &&
-          this.VMo.length &&
-          !(TimeUtil_1.TimeUtil.GetServerTime() - this.cVe <= this.zMo)
+          this.OEo &&
+          this.OEo.length &&
+          !(TimeUtil_1.TimeUtil.GetServerTime() - this.L6e <= this.$Eo)
         ) {
-          this.cVe = TimeUtil_1.TimeUtil.GetServerTime();
-          var i = this.VMo[0].GetAnchorOffsetX(),
-            t = this.jMo.get(0),
-            t = this.tSo(t),
+          this.L6e = TimeUtil_1.TimeUtil.GetServerTime();
+          var i = this.OEo[0].GetAnchorOffsetX(),
+            t = this.FEo.get(0),
+            t = this.zEo(t),
             t = Math.abs(t - i);
-          if (!(t > this.ZMo)) {
-            for (let i = 0; i < this.VMo.length; i++) {
-              var e = this.VMo[i];
+          if (!(t > this.YEo)) {
+            for (let i = 0; i < this.OEo.length; i++) {
+              var e = this.OEo[i];
               if (!e.IsUIActiveInHierarchy()) return;
-              var s = this.jMo.get(i),
-                s = this.tSo(s);
+              var s = this.FEo.get(i),
+                s = this.zEo(s);
               e.SetAnchorOffsetX(s);
             }
-            this.kMo[this.QMo - 1].SetComplete(),
+            this.GEo[this.jEo - 1].SetComplete(),
               TimerSystem_1.TimerSystem.Delay(() => {
-                for (const t of this.VMo) this.iSo(t);
-                (this.VMo.length = 0), this.jMo.clear();
-                var i = ++this.QMo;
-                i <= 4 ? this.oSo(i) : this.Gei(-1);
-              }, 1e3 * this.zMo);
+                for (const t of this.OEo) this.ZEo(t);
+                (this.OEo.length = 0), this.FEo.clear();
+                var i = ++this.jEo;
+                i <= 4 ? this.eSo(i) : this.Gti(-1);
+              }, 1e3 * this.$Eo);
           }
         }
       }),
-      (this.wvo = () => {
+      (this.AMo = () => {
         UiManager_1.UiManager.CloseView("SignalDecodeView");
       }),
-      (this.rSo = () => {
+      (this.tSo = () => {
         GeneralLogicTreeController_1.GeneralLogicTreeController.RequestFinishUiGameplay(
-          Protocol_1.Aki.Protocol.dqs.Proto_SignalBreak,
-          this.OMo,
+          Protocol_1.Aki.Protocol.t3s.Proto_SignalBreak,
+          this.qEo,
         ),
           UiManager_1.UiManager.CloseView("SignalDecodeView");
       });
@@ -99,8 +99,8 @@ class SignalDecodeView extends UiTickViewBase_1.UiTickViewBase {
       [12, UE.UIItem],
     ]),
       (this.BtnBindInfo = [
-        [3, this.eSo],
-        [4, this.wvo],
+        [3, this.JEo],
+        [4, this.AMo],
       ]);
   }
   OnStart() {
@@ -109,64 +109,64 @@ class SignalDecodeView extends UiTickViewBase_1.UiTickViewBase {
       this.GetItem(7).SetUIActive(!1),
       this.GetItem(8).SetUIActive(!1);
     var i = this.GetTexture(11),
-      i = ((this.WMo = i.GetWidth()), this.GetSprite(2));
-    (this.FMo = []),
-      this.FMo.push(i),
-      (this.VMo = []),
-      (this.HMo = []),
-      (this.jMo = new Map()),
-      (this.QMo = 1),
-      (this.k_t = 0),
-      (this.XMo = 0),
-      (this.$Mo = 0),
-      (this.cVe = 0),
-      (this.zMo =
+      i = ((this.VEo = i.GetWidth()), this.GetSprite(2));
+    (this.NEo = []),
+      this.NEo.push(i),
+      (this.OEo = []),
+      (this.kEo = []),
+      (this.FEo = new Map()),
+      (this.jEo = 1),
+      (this.ict = 0),
+      (this.WEo = 0),
+      (this.KEo = 0),
+      (this.L6e = 0),
+      (this.$Eo =
         CommonParamById_1.configCommonParamById.GetFloatConfig(
           "SignalDecodeFailStopTime",
         ) ?? 0.8),
-      (this.ZMo =
+      (this.YEo =
         CommonParamById_1.configCommonParamById.GetFloatConfig(
           "SignalDecodeSuccessRange",
         ) ?? 50),
-      (this.OMo = this.OpenParam),
-      this.OMo &&
+      (this.qEo = this.OpenParam),
+      this.qEo &&
         ((i =
           SignalDecodeGamePlayById_1.configSignalDecodeGamePlayById.GetConfig(
-            this.OMo,
+            this.qEo,
           ))
-          ? this._no(i)
+          ? this.sso(i)
           : Log_1.Log.CheckError() &&
             Log_1.Log.Error("Quest", 19, "找不到信号破译配置", [
               "id",
-              this.OMo,
+              this.qEo,
             ]));
   }
   OnAfterShow() {
-    this.Gei(++this.k_t);
+    this.Gti(++this.ict);
   }
   OnTick(i) {
-    (this.$Mo += i), this.nSo(), this.sSo(i), (this.XMo = this.$Mo);
+    (this.KEo += i), this.iSo(), this.oSo(i), (this.WEo = this.KEo);
   }
-  nSo() {
-    this.$Mo > ANIM_TIME &&
-      this.XMo <= ANIM_TIME &&
-      (this.Gei(++this.k_t), (this.$Mo = 0), (this.XMo = 0));
+  iSo() {
+    this.KEo > ANIM_TIME &&
+      this.WEo <= ANIM_TIME &&
+      (this.Gti(++this.ict), (this.KEo = 0), (this.WEo = 0));
   }
-  sSo(i) {
+  oSo(i) {
     if (
-      ((this.JMo = TimeUtil_1.TimeUtil.GetServerTime() - this.cVe > this.zMo),
-      this.VMo && 0 !== this.VMo.length && this.JMo)
+      ((this.XEo = TimeUtil_1.TimeUtil.GetServerTime() - this.L6e > this.$Eo),
+      this.OEo && 0 !== this.OEo.length && this.XEo)
     )
-      for (const e of this.VMo) {
+      for (const e of this.OEo) {
         var t = e.GetAnchorOffsetX(),
           t =
-            (e.SetAnchorOffsetX(t + (i / 1e3) * 250 * this.KMo),
+            (e.SetAnchorOffsetX(t + (i / 1e3) * 250 * this.HEo),
             e.GetAnchorOffsetX());
-        t >= this.WMo &&
-          (e.SetAnchorOffsetX(t - this.WMo - 85), e.SetUIActive(!0));
+        t >= this.VEo &&
+          (e.SetAnchorOffsetX(t - this.VEo - 85), e.SetUIActive(!0));
       }
   }
-  Gei(i) {
+  Gti(i) {
     switch (i) {
       case 1:
         this.GetItem(5).SetUIActive(!0);
@@ -177,18 +177,18 @@ class SignalDecodeView extends UiTickViewBase_1.UiTickViewBase {
       case 3:
         this.GetItem(6).SetUIActive(!1),
           this.GetItem(7).SetUIActive(!0),
-          this.oSo(this.QMo);
+          this.eSo(this.jEo);
         break;
       case -1:
         this.GetItem(7).SetUIActive(!1),
           this.GetItem(8).SetUIActive(!0),
-          TimerSystem_1.TimerSystem.Delay(this.rSo, 1e3);
+          TimerSystem_1.TimerSystem.Delay(this.tSo, 1e3);
     }
   }
-  _no(i) {
+  sso(i) {
     var t, e, s;
     i.SignalData1
-      ? ((this.kMo = []),
+      ? ((this.GEo = []),
         (s = this.GetItem(1)),
         (t = this.GetItem(0)),
         (e = new SignalDecodeTabItem_1.SignalDecodeTabItem(
@@ -196,7 +196,7 @@ class SignalDecodeView extends UiTickViewBase_1.UiTickViewBase {
           i.SignalData1,
           s,
         )),
-        this.kMo.push(e),
+        this.GEo.push(e),
         s.SetUIActive(!0),
         i.SignalData2 &&
           ((e = LguiUtil_1.LguiUtil.CopyItem(s, t)),
@@ -205,7 +205,7 @@ class SignalDecodeView extends UiTickViewBase_1.UiTickViewBase {
             i.SignalData2,
             e,
           )),
-          this.kMo.push(e)),
+          this.GEo.push(e)),
         i.SignalData3 &&
           ((e = LguiUtil_1.LguiUtil.CopyItem(s, t)),
           (e = new SignalDecodeTabItem_1.SignalDecodeTabItem(
@@ -213,7 +213,7 @@ class SignalDecodeView extends UiTickViewBase_1.UiTickViewBase {
             i.SignalData3,
             e,
           )),
-          this.kMo.push(e)),
+          this.GEo.push(e)),
         i.SignalData4 &&
           ((e = LguiUtil_1.LguiUtil.CopyItem(s, t)),
           (s = new SignalDecodeTabItem_1.SignalDecodeTabItem(
@@ -221,22 +221,22 @@ class SignalDecodeView extends UiTickViewBase_1.UiTickViewBase {
             i.SignalData4,
             e,
           )),
-          this.kMo.push(s)))
+          this.GEo.push(s)))
       : Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Quest", 19, "找不到信号1", ["id", this.OMo]);
+        Log_1.Log.Error("Quest", 19, "找不到信号1", ["id", this.qEo]);
   }
-  oSo(i) {
+  eSo(i) {
     var t, e, s;
-    this.kMo &&
-      0 !== this.kMo.length &&
-      ((t = this.kMo[i - 1].WaveformId),
+    this.GEo &&
+      0 !== this.GEo.length &&
+      ((t = this.GEo[i - 1].WaveformId),
       (e =
         SignalDecodeWaveformById_1.configSignalDecodeWaveformById.GetConfig(t))
         ? (s =
             SignalDecodeTabColorById_1.configSignalDecodeTabColorById.GetConfig(
               i,
             ))
-          ? (this.aSo(s), this.hSo(s), this.lSo(e), this._So(e, s), this.uSo())
+          ? (this.rSo(s), this.nSo(s), this.sSo(e), this.aSo(e, s), this.hSo())
           : Log_1.Log.CheckError() &&
             Log_1.Log.Error("Quest", 19, "找不到信号破译页签的颜色配置", [
               "tabIndex",
@@ -245,76 +245,76 @@ class SignalDecodeView extends UiTickViewBase_1.UiTickViewBase {
         : Log_1.Log.CheckError() &&
           Log_1.Log.Error("Quest", 19, "找不到信号谱面配置", ["id", t]));
   }
-  aSo(i) {
-    for (const t of this.kMo) t.UpdateColor(i), t.OnProcess(this.QMo);
+  rSo(i) {
+    for (const t of this.GEo) t.UpdateColor(i), t.OnProcess(this.jEo);
   }
-  hSo(i) {
+  nSo(i) {
     this.GetTexture(9).SetColor(UE.Color.FromHex(i.VacancyColor)),
       this.GetTexture(10).SetColor(UE.Color.FromHex(i.VacancyColor)),
       this.GetTexture(11).SetColor(UE.Color.FromHex(i.DefaultColor));
   }
-  lSo(i) {
+  sSo(i) {
     const s = this.GetSprite(2),
       h = s.GetParentAsUIItem();
-    (this.KMo = i.SpeedRate),
+    (this.HEo = i.SpeedRate),
       Json_1.Json.Parse(i.SignalFragment).forEach((i, t) => {
         let e = void 0;
-        t < this.FMo.length
-          ? (e = this.FMo[t])
-          : ((e = this.cSo(s, h)), this.FMo.push(e));
-        t = this.tSo(t);
+        t < this.NEo.length
+          ? (e = this.NEo[t])
+          : ((e = this.lSo(s, h)), this.NEo.push(e));
+        t = this.zEo(t);
         e.SetAnchorOffsetX(t), e.SetHeight(UNIT_HEIGHT * i);
       });
   }
-  _So(i, t) {
+  aSo(i, t) {
     var e = this.GetItem(12),
       s = Json_1.Json.Parse(i.MissingParts);
-    this.YMo = i.Offset;
+    this.QEo = i.Offset;
     for (let i = s.length - 1; 0 <= i; --i) {
       var h,
         r = 1 === s[i],
-        o = this.FMo[i];
+        o = this.NEo[i];
       r
         ? (o.SetUIActive(!0),
           o.SetColor(UE.Color.FromHex(t.VacancyColor)),
           (h =
-            ((r = this.mSo(o, e)).SetColor(UE.Color.FromHex(t.HighlightColor)),
-            this.tSo(i))),
+            ((r = this._So(o, e)).SetColor(UE.Color.FromHex(t.HighlightColor)),
+            this.zEo(i))),
           r.SetAnchorOffsetX(h),
-          this.VMo.push(r),
-          this.jMo.set(this.VMo.length - 1, i),
-          this.YMo > this.VMo.length && r.SetUIActive(!1))
+          this.OEo.push(r),
+          this.FEo.set(this.OEo.length - 1, i),
+          this.QEo > this.OEo.length && r.SetUIActive(!1))
         : o.SetUIActive(!1);
     }
   }
-  uSo() {
-    var i = this.jMo.get(this.YMo),
-      t = this.tSo(i + 1);
-    for (const s of this.VMo) {
+  hSo() {
+    var i = this.FEo.get(this.QEo),
+      t = this.zEo(i + 1);
+    for (const s of this.OEo) {
       var e = s.GetAnchorOffsetX();
       s.SetAnchorOffsetX(e - t);
     }
   }
-  tSo(i) {
+  zEo(i) {
     return (
       i * (2 * SLOT_OUTLINE_WIDTH + SLOT_WIDTH + SLOT_INTERVAL) +
       SLOT_PADDING_LEFT +
       SLOT_OUTLINE_WIDTH
     );
   }
-  mSo(i, t) {
-    return 0 === this.HMo.length
-      ? this.cSo(i, t)
-      : ((t = this.HMo.pop()).SetHeight(i.GetHeight()), t);
+  _So(i, t) {
+    return 0 === this.kEo.length
+      ? this.lSo(i, t)
+      : ((t = this.kEo.pop()).SetHeight(i.GetHeight()), t);
   }
-  cSo(i, t) {
+  lSo(i, t) {
     return LguiUtil_1.LguiUtil.DuplicateActor(
       i.GetOwner(),
       t,
     ).GetComponentByClass(UE.UISprite.StaticClass());
   }
-  iSo(i) {
-    i.SetAnchorOffsetX(-1e4), this.HMo.push(i);
+  ZEo(i) {
+    i.SetAnchorOffsetX(-1e4), this.kEo.push(i);
   }
 }
 exports.SignalDecodeView = SignalDecodeView;

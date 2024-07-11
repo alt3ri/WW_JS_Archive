@@ -20,7 +20,7 @@ const UE = require("ue"),
   ElementItem_1 = require("./ElementItem");
 class PhantomElementItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
-    super(...arguments), (this.jso = void 0), (this.uao = void 0);
+    super(...arguments), (this.kao = void 0), (this.aho = void 0);
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -30,17 +30,17 @@ class PhantomElementItem extends GridProxyAbstract_1.GridProxyAbstract {
     ];
   }
   async OnBeforeStartAsync() {
-    (this.uao = new ElementItem_1.ElementItem()),
-      await this.uao.CreateThenShowByActorAsync(this.GetItem(0).GetOwner());
+    (this.aho = new ElementItem_1.ElementItem()),
+      await this.aho.CreateThenShowByActorAsync(this.GetItem(0).GetOwner());
   }
   Refresh(e, t, i) {
     this.Update(e);
   }
   Update(e) {
-    (this.jso = e), this.uao.Update(this.jso), this.RefreshPanel();
+    (this.kao = e), this.aho.Update(this.kao), this.RefreshPanel();
   }
   RefreshPanel(e = void 0) {
-    var [e, t, i, s, r] = this.cao(e);
+    var [e, t, i, s, r] = this.hho(e);
     this.GetSprite(2).SetUIActive(e),
       this.GetText(1).SetUIActive(!e),
       this.GetItem(0).SetUIActive(!e);
@@ -55,17 +55,17 @@ class PhantomElementItem extends GridProxyAbstract_1.GridProxyAbstract {
       e
     );
   }
-  cao(e = void 0) {
+  hho(e = void 0) {
     var t = ModelManager_1.ModelManager.RoguelikeModel.RogueInfo.ElementDict,
-      i = this.jso.Count,
-      s = t.get(this.jso.ElementId) ?? 0;
+      i = this.kao.Count,
+      s = t.get(this.kao.ElementId) ?? 0;
     s += t.get(7) ?? 0;
     let r = 0,
       n = !1;
     return (
       e &&
-        ((r = (e.get(this.jso.ElementId) ?? 0) + (e.get(7) ?? 0)),
-        9 === this.jso.ElementId &&
+        ((r = (e.get(this.kao.ElementId) ?? 0) + (e.get(7) ?? 0)),
+        9 === this.kao.ElementId &&
           e.forEach((e) => {
             r += e;
           }),
@@ -79,11 +79,11 @@ exports.PhantomElementItem = PhantomElementItem;
 class PhantomEntryItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
-      (this.mao = void 0),
-      (this.dao = void 0),
-      (this.EPe = void 0),
-      (this.Cao = !1),
-      (this.jhi = () => {
+      (this.lho = void 0),
+      (this._ho = void 0),
+      (this.SPe = void 0),
+      (this.uho = !1),
+      (this.jli = () => {
         return new PhantomElementItem();
       });
   }
@@ -97,18 +97,18 @@ class PhantomEntryItem extends GridProxyAbstract_1.GridProxyAbstract {
     ];
   }
   OnStart() {
-    (this.dao = new GenericLayout_1.GenericLayout(
+    (this._ho = new GenericLayout_1.GenericLayout(
       this.GetVerticalLayout(0),
-      this.jhi,
+      this.jli,
     )),
-      (this.EPe = new LevelSequencePlayer_1.LevelSequencePlayer(
+      (this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(
         this.GetRootItem(),
       ));
   }
   Refresh(e, t, i) {
-    this.mao = e;
+    this.lho = e;
     var s,
-      e = this.mao.GetSortElementInfoArrayByCount();
+      e = this.lho.GetSortElementInfoArrayByCount();
     for (const r of e)
       9 === r.ElementId
         ? (r.Name = RoguelikeDefine_1.ROGUELIKEVIEW_16_TEXT)
@@ -120,40 +120,40 @@ class PhantomEntryItem extends GridProxyAbstract_1.GridProxyAbstract {
       "Rogue_Phantom_Info_Index",
       i + 1,
     ),
-      this.dao.RefreshByData(e);
+      this._ho.RefreshByData(e);
   }
   RefreshPreview(e = void 0) {
     let t = !0;
-    for (const r of this.dao.GetLayoutItemList()) r.RefreshPanel(e) || (t = !1);
-    var i = !this.mao.IsUnlock && t,
+    for (const r of this._ho.GetLayoutItemList()) r.RefreshPanel(e) || (t = !1);
+    var i = !this.lho.IsUnlock && t,
       s =
         (i
-          ? (this.gao(),
-            (this.Cao = !0),
+          ? (this.cho(),
+            (this.uho = !0),
             EventSystem_1.EventSystem.Emit(
               EventDefine_1.EEventName.RogueTermUnlock,
             ))
-          : this.Cao &&
-            (this.EPe.PlayLevelSequenceByName("Disappear"), (this.Cao = !1)),
+          : this.uho &&
+            (this.SPe.PlayLevelSequenceByName("Disappear"), (this.uho = !1)),
         this.GetItem(2).SetUIActive(i),
         this.GetText(3));
-    LguiUtil_1.LguiUtil.SetLocalTextNew(s, this.mao.GetAffixDesc()),
+    LguiUtil_1.LguiUtil.SetLocalTextNew(s, this.lho.GetAffixDesc()),
       s.SetChangeColor(i, s?.changeColor);
   }
-  gao() {
-    this.EPe.PlayLevelSequenceByName(RoguelikeDefine_1.COMPLETE);
+  cho() {
+    this.SPe.PlayLevelSequenceByName(RoguelikeDefine_1.COMPLETE);
   }
 }
 exports.PhantomEntryItem = PhantomEntryItem;
 class PhantomInfoPanel extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this.fao = void 0),
-      (this.pao = void 0),
-      (this.vao = () => {
+      (this.mho = void 0),
+      (this.dho = void 0),
+      (this.Cho = () => {
         UiManager_1.UiManager.OpenView(
           "RoguePhantomSelectResultView",
-          new RogueSelectResult_1.RogueSelectResult(this.fao, void 0, void 0),
+          new RogueSelectResult_1.RogueSelectResult(this.mho, void 0, void 0),
         );
       }),
       (this.CreatePhantomEntryItem = () => {
@@ -170,26 +170,26 @@ class PhantomInfoPanel extends UiPanelBase_1.UiPanelBase {
       [5, UE.UIButtonComponent],
       [6, UE.UITexture],
     ]),
-      (this.BtnBindInfo = [[5, this.vao]]);
+      (this.BtnBindInfo = [[5, this.Cho]]);
   }
   OnStart() {
-    this.pao = new GenericLayout_1.GenericLayout(
+    this.dho = new GenericLayout_1.GenericLayout(
       this.GetVerticalLayout(3),
       this.CreatePhantomEntryItem,
     );
   }
   Update(e) {
-    this.fao = e;
+    this.mho = e;
   }
   Refresh() {
-    this.V9i(), this.Mao();
+    this.F7i(), this.gho();
   }
   GetAttributeItem(e) {
-    return this.pao?.GetItemByIndex(e);
+    return this.dho?.GetItemByIndex(e);
   }
-  V9i() {
+  F7i() {
     var e = ConfigManager_1.ConfigManager.RoguelikeConfig.GetRoguePhantomConfig(
-      this.fao.ConfigId,
+      this.mho.ConfigId,
     );
     e &&
       (this.GetText(2).ShowTextNew(e.PokemonName),
@@ -201,11 +201,11 @@ class PhantomInfoPanel extends UiPanelBase_1.UiPanelBase {
       (this.SetTextureByPath(e.PhantomBgC, this.GetTexture(0)),
       this.SetTextureByPath(e.PhantomBgB, this.GetTexture(6)));
   }
-  Mao() {
-    this.pao.RefreshByData(this.fao.AffixEntryList ?? []);
+  gho() {
+    this.dho.RefreshByData(this.mho.AffixEntryList ?? []);
   }
   RefreshPhantomEntryItemRefreshPreview(e = void 0) {
-    for (const t of this.pao.GetLayoutItemList()) t.RefreshPreview(e);
+    for (const t of this.dho.GetLayoutItemList()) t.RefreshPreview(e);
   }
 }
 exports.PhantomInfoPanel = PhantomInfoPanel;

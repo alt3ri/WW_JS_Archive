@@ -6,18 +6,18 @@ const UE = require("ue"),
   Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
   LguiUtil_1 = require("../../../Util/LguiUtil"),
   BattleEntityChildView_1 = require("../BattleChildView/BattleEntityChildView");
-var EAttributeId = Protocol_1.Aki.Protocol.KBs;
+var EAttributeId = Protocol_1.Aki.Protocol.Bks;
 class BattleDefendCreatureView extends BattleEntityChildView_1.BattleEntityChildView {
   constructor() {
     super(...arguments),
-      (this.A_t = (e, t, i) => {
+      (this.Kut = (e, t, i) => {
         var r, n;
         this.IsValid() &&
-          ((r = (n = this.GetEntity().GetComponent(156)).GetCurrentValue(
+          ((r = (n = this.GetEntity().GetComponent(158)).GetCurrentValue(
             EAttributeId.Proto_Life,
           )),
-          (n = n.GetCurrentValue(EAttributeId.Tkn)),
-          this.P_t(0 < n ? r / n : 0));
+          (n = n.GetCurrentValue(EAttributeId.e5n)),
+          this.Qut(0 < n ? r / n : 0));
       });
   }
   OnRegisterComponent() {
@@ -38,15 +38,15 @@ class BattleDefendCreatureView extends BattleEntityChildView_1.BattleEntityChild
       ),
       this.GetText(2).SetUIActive(!1),
       this.GetItem(5).SetUIActive(!1),
-      this.P_t(1);
+      this.Qut(1);
   }
   Reset() {
     super.Reset();
   }
   AddEntityEvents(e) {
-    this.ListenForAttributeChanged(e, EAttributeId.Proto_Life, this.A_t);
+    this.ListenForAttributeChanged(e, EAttributeId.Proto_Life, this.Kut);
   }
-  P_t(e) {
+  Qut(e) {
     e = (e * CommonDefine_1.PERCENTAGE_FACTOR).toFixed(0);
     LguiUtil_1.LguiUtil.SetLocalText(
       this.GetText(1),

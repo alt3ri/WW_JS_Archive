@@ -10,10 +10,10 @@ class HandBookCommonTypeItem extends GridProxyAbstract_1.GridProxyAbstract {
     super(...arguments),
       (this.HandBookCommonItemDataList = []),
       (this.HandBookCommonItemList = []),
-      (this.TZt = void 0),
-      (this.Gzt = void 0),
-      (this.LZt = 0),
-      (this.DZt = (t, i, e) => {
+      (this.Tei = void 0),
+      (this.GZt = void 0),
+      (this.Lei = 0),
+      (this.Dei = (t, i, e) => {
         var s = new HandBookCommonItem_1.HandBookCommonItem();
         return (
           s.Initialize(i.GetOwner()),
@@ -25,7 +25,7 @@ class HandBookCommonTypeItem extends GridProxyAbstract_1.GridProxyAbstract {
       }),
       (this.OnToggleClick = (t) => {
         var i = t.Data;
-        this.Gzt && ((t = t.MediumItemGrid), this.Gzt(i, t));
+        this.GZt && ((t = t.MediumItemGrid), this.GZt(i, t));
       });
   }
   Initialize(t = void 0) {
@@ -38,13 +38,13 @@ class HandBookCommonTypeItem extends GridProxyAbstract_1.GridProxyAbstract {
     ];
   }
   InitGridLayout() {
-    this.TZt && (this.TZt.ClearChildren(), (this.TZt = void 0)),
+    this.Tei && (this.Tei.ClearChildren(), (this.Tei = void 0)),
       (this.HandBookCommonItemList = []),
-      (this.TZt = new GenericLayoutNew_1.GenericLayoutNew(
+      (this.Tei = new GenericLayoutNew_1.GenericLayoutNew(
         this.GetGridLayout(1),
-        this.DZt,
+        this.Dei,
       )),
-      this.TZt.RebuildLayoutByDataNew(this.HandBookCommonItemDataList);
+      this.Tei.RebuildLayoutByDataNew(this.HandBookCommonItemDataList);
   }
   InitTitle() {
     0 !== this.HandBookCommonItemDataList.length &&
@@ -64,22 +64,22 @@ class HandBookCommonTypeItem extends GridProxyAbstract_1.GridProxyAbstract {
     for (let t = 0; t < i; t++) this.HandBookCommonItemList[t].SetSelected(!1);
   }
   Refresh(t, i, e) {
-    (this.LZt = e),
+    (this.Lei = e),
       (this.HandBookCommonItemDataList = t),
       this.InitGridLayout(),
       this.InitTitle();
   }
   GetGirdIndex() {
-    return this.LZt;
+    return this.Lei;
   }
   GetHandBookCommonItemList() {
     return this.HandBookCommonItemList;
   }
   BindToggleCallback(t) {
-    this.Gzt = t;
+    this.GZt = t;
   }
   OnBeforeDestroy() {
-    this.TZt && (this.TZt.ClearChildren(), (this.TZt = void 0));
+    this.Tei && (this.Tei.ClearChildren(), (this.Tei = void 0));
   }
 }
 exports.HandBookCommonTypeItem = HandBookCommonTypeItem;

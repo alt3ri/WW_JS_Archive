@@ -5,12 +5,12 @@ const FNameUtil_1 = require("../../../../../../../Core/Utils/FNameUtil"),
   GameplayCueBase_1 = require("./GameplayCueBase");
 class GameplayCueHideBone extends GameplayCueBase_1.GameplayCueBase {
   OnCreate() {
-    this.YXo(!0);
+    this.Q$o(!0);
   }
   OnDestroy() {
-    this.YXo(!1);
+    this.Q$o(!1);
   }
-  YXo(e) {
+  Q$o(e) {
     var t = FNameUtil_1.FNameUtil.GetDynamicFName(this.CueConfig.Parameters[0]);
     let s = "1" === (this.CueConfig.Parameters[1] ?? "1");
     e || (s = !s),

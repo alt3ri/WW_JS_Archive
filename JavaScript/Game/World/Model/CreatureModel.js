@@ -36,90 +36,111 @@ const puerts_1 = require("puerts"),
 class CreatureModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
-      (this.mvr = 0),
-      (this.dvr = void 0),
-      (this.zfr = void 0),
+      (this.EnableEntityLog = !0),
+      (this._Mr = 0),
+      (this.uMr = void 0),
+      (this.Ypr = void 0),
       (this.NUe = 0),
       (this.ScenePlayerDataMap = new Map()),
-      (this.Cvr = zero),
-      (this.xPr = new EntityContainer_1.EntityContainer()),
-      (this.gvr = new Map()),
-      (this.fvr = new Map()),
-      (this.pvr = !1),
+      (this.cMr = zero),
+      (this.hPr = new EntityContainer_1.EntityContainer()),
+      (this.mMr = new Map()),
+      (this.dMr = new Map()),
+      (this.Oca = new Map()),
+      (this.CMr = !1),
       (this.RemoveCreaturePendingSet = new Set()),
-      (this.vvr = void 0),
-      (this.Mvr = void 0),
-      (this.Svr = void 0),
-      (this.Evr = void 0),
-      (this.yvr = void 0),
-      (this.Ivr = void 0),
-      (this.Tvr = void 0),
+      (this.gMr = void 0),
+      (this.fMr = void 0),
+      (this.pMr = void 0),
+      (this.vMr = void 0),
+      (this.MMr = void 0),
+      (this.EMr = void 0),
+      (this.SMr = void 0),
       (this.DelayRemoveContainer = new EntityContainer_1.EntityContainer()),
-      (this.wPr = new EntityContainer_1.EntityContainer()),
-      (this.GVs = new CreatureDensityContainer_1.CreatureDensityContainer()),
-      (this.Rvr = new Set()),
-      (this.Uvr = !1),
-      (this.Avr = void 0),
-      (this.Pvr = new Map()),
-      (this.xvr = void 0),
+      (this.lPr = new EntityContainer_1.EntityContainer()),
+      (this.QQs = new CreatureDensityContainer_1.CreatureDensityContainer()),
+      (this.TMr = new Set()),
+      (this.LMr = !1),
+      (this.DMr = void 0),
+      (this.RMr = new Map()),
+      (this.UMr = void 0),
       (this.EntityDisableHandleMap = new Map()),
       (this.ActorMovableHandleMap = new Map()),
       (this.DisableLock = new Set()),
       (this.EntitiesSortedList = []),
       (this.LeavingLevel = !1),
-      (this.wvr = () => {
+      (this.AMr = () => {
         for (const t of this.GetAllEntities())
-          this.fvr.has(t.Id) ||
-            this.fvr.set(
+          this.dMr.has(t.Id) ||
+            this.dMr.set(
               t.Id,
               t.Entity.Disable("[CharacterModel.OnLoadMap] Loading"),
             );
-        this.pvr = !0;
+        this.CMr = !0;
       }),
       (this.nye = () => {
-        this.pvr = !1;
-        for (var [t, e] of this.fvr) {
+        this.CMr = !1;
+        for (var [t, e] of this.dMr) {
           t = ModelManager_1.ModelManager.CreatureModel.GetEntityById(t);
           t?.Valid && t.Entity.Enable(e, "CreatureModel.OnWorldDone");
         }
-        this.fvr.clear();
+        this.dMr.clear();
       }),
-      (this.Gfr = (t) => {
+      (this.bpr = (t) => {
         if (t) {
-          for (const e of this.GetAllEntities())
+          for (const i of this.GetAllEntities()) {
+            var e;
             (Global_1.Global.BaseCharacter?.IsValid() &&
-              Global_1.Global.BaseCharacter.EntityId === e.Id) ||
-              e.Entity.GetComponent(0).GetEntityType() ===
-                Protocol_1.Aki.Protocol.HBs.Proto_SceneItem ||
-              this.fvr.has(e.Id) ||
-              this.fvr.set(
-                e.Id,
-                e.Entity.Disable("CreatureModel.OnTeleportStart"),
-              );
-          this.pvr = !0;
+              Global_1.Global.BaseCharacter.EntityId === i.Id) ||
+              i.Entity.GetComponent(0).GetEntityType() ===
+                Protocol_1.Aki.Protocol.wks.Proto_SceneItem ||
+              this.dMr.has(i.Id) ||
+              this.Oca.has(i.Id) ||
+              (i.IsInit
+                ? (e = i.Entity.GetComponent(98)) &&
+                  ((e = e.DisableTickWithLog("CreatureModel.OnTeleportStart")),
+                  this.Oca.set(i.Id, e))
+                : this.dMr.set(
+                    i.Id,
+                    i.Entity.Disable("CreatureModel.OnTeleportStart"),
+                  ));
+          }
+          this.CMr = !0;
         }
       }),
-      (this.uht = () => {
-        if (this.pvr) {
-          this.pvr = !1;
-          for (var [t, e] of this.fvr) {
+      (this.Ilt = () => {
+        if (this.CMr) {
+          this.CMr = !1;
+          for (var [t, e] of this.dMr) {
             t = ModelManager_1.ModelManager.CreatureModel.GetEntityById(t);
             t?.Valid && t.Entity.Enable(e, "CreatureModel.OnTeleportComplete");
           }
-          this.fvr.clear();
+          for (var [i, r] of this.Oca) {
+            i = ModelManager_1.ModelManager.CreatureModel.GetEntityById(i);
+            i?.Valid &&
+              i.Entity.GetComponent(98).EnableTickWithLog(
+                r,
+                "CreatureModel.OnTeleportComplete",
+              );
+          }
+          this.dMr.clear(), this.Oca.clear();
         }
       });
   }
   OnInit() {
     return (
+      (this.EnableEntityLog = Info_1.Info.IsBuildDevelopmentOrDebug),
       Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("World", 3, "是否启用DB", [
-          "启用状态",
-          PublicUtil_1.PublicUtil.UseDbConfig(),
-        ]),
+        Log_1.Log.Info(
+          "World",
+          3,
+          "实体配置信息",
+          ["是否启用DB", PublicUtil_1.PublicUtil.UseDbConfig()],
+          ["EnableEntityLog", this.EnableEntityLog],
+        ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.AfterLoadMap,
-        this.wvr,
+        this.AMr,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.WorldDone,
@@ -127,11 +148,11 @@ class CreatureModel extends ModelBase_1.ModelBase {
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.TeleportStart,
-        this.Gfr,
+        this.bpr,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.TeleportComplete,
-        this.uht,
+        this.Ilt,
       ),
       !0
     );
@@ -140,7 +161,7 @@ class CreatureModel extends ModelBase_1.ModelBase {
     return (
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.AfterLoadMap,
-        this.wvr,
+        this.AMr,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.WorldDone,
@@ -148,25 +169,25 @@ class CreatureModel extends ModelBase_1.ModelBase {
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.TeleportStart,
-        this.Gfr,
+        this.bpr,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.TeleportComplete,
-        this.uht,
+        this.Ilt,
       ),
       !0
     );
   }
   AddEntity(t, e) {
-    this.xPr.AddEntity(t, e);
-    t = this.GVs.GetItem(t);
+    this.hPr.AddEntity(t, e);
+    t = this.QQs.GetItem(t);
     t && (t.EntityHandle = e);
   }
   AddLoadingEntity(t) {
     t?.Valid
-      ? this.pvr &&
-        !this.fvr.has(t.Id) &&
-        this.fvr.set(
+      ? this.CMr &&
+        !this.dMr.has(t.Id) &&
+        this.dMr.set(
           t.Id,
           t.Entity.Disable("[CreatureModel.AddEntity] LoadingWorld"),
         )
@@ -174,9 +195,10 @@ class CreatureModel extends ModelBase_1.ModelBase {
         Log_1.Log.Error("Entity", 3, "实体句柄无效。");
   }
   RemoveEntity(t, e) {
-    var i = this.xPr.RemoveEntity(t),
+    var i = this.hPr.RemoveEntity(t),
       e =
-        (Log_1.Log.CheckInfo() &&
+        (this.EnableEntityLog &&
+          Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "Entity",
             3,
@@ -185,25 +207,25 @@ class CreatureModel extends ModelBase_1.ModelBase {
             ["Reason", e],
             ["Result", i],
           ),
-        this.GVs.GetItem(t));
+        this.QQs.GetItem(t));
     return e && (e.EntityHandle = void 0), i;
   }
   GetAllEntities() {
-    return this.xPr.GetAllEntities();
+    return this.hPr.GetAllEntities();
   }
-  Bvr(i, r, n) {
+  PMr(i, r, n) {
     if (!(i.length < 1) && r < n) {
       var o = i[Math.floor((r + n) / 2)];
       let t = r,
         e = n;
-      for (var s; t <= e; ) {
+      for (var a; t <= e; ) {
         for (; i[t].Entity.DistanceWithCamera < o.Entity.DistanceWithCamera; )
           t++;
         for (; i[e].Entity.DistanceWithCamera > o.Entity.DistanceWithCamera; )
           e--;
-        t <= e && ((s = i[t]), (i[t] = i[e]), (i[e] = s), t++, e--);
+        t <= e && ((a = i[t]), (i[t] = i[e]), (i[e] = a), t++, e--);
       }
-      this.Bvr(i, r, e), this.Bvr(i, t, n);
+      this.PMr(i, r, e), this.PMr(i, t, n);
     }
   }
   GetEntitiesInRange(t, e, i, r = !0) {
@@ -229,43 +251,43 @@ class CreatureModel extends ModelBase_1.ModelBase {
     EntityHelper_1.EntitySystemHelper.IsSortDirty &&
       EntityHelper_1.EntitySystemHelper.SortedFrame !== Time_1.Time.Frame &&
       ((EntityHelper_1.EntitySystemHelper.IsSortDirty = !1),
-      this.Bvr(this.EntitiesSortedList, 0, this.EntitiesSortedList.length - 1),
+      this.PMr(this.EntitiesSortedList, 0, this.EntitiesSortedList.length - 1),
       (EntityHelper_1.EntitySystemHelper.SortedFrame = Time_1.Time.Frame));
     let o = 0,
-      s = this.EntitiesSortedList.length - 1;
-    var a;
-    for (o; o <= s; ) {
-      var l = Math.floor((o + s) / 2);
+      a = this.EntitiesSortedList.length - 1;
+    var s;
+    for (o; o <= a; ) {
+      var l = Math.floor((o + a) / 2);
       this.EntitiesSortedList[l].Entity.DistanceWithCamera <= t
         ? (o = l + 1)
-        : (s = l - 1);
+        : (a = l - 1);
     }
-    for (a = o, o = 0, s = a - 1; o <= s; ) {
-      var h = Math.floor((o + s) / 2);
+    for (s = o, o = 0, a = s - 1; o <= a; ) {
+      var h = Math.floor((o + a) / 2);
       this.EntitiesSortedList[h].Entity.DistanceWithCamera < 0
         ? (o = h + 1)
-        : (s = h - 1);
+        : (a = h - 1);
     }
     var u = o,
       _ = (r && (i.length = 0), void 0),
-      y = void 0;
-    for (let t = u; t < a; t++)
-      if ((_ = (y = this.EntitiesSortedList[t]).Entity.GetComponent(0)))
+      d = void 0;
+    for (let t = u; t < s; t++)
+      if ((_ = (d = this.EntitiesSortedList[t]).Entity.GetComponent(0)))
         switch (e) {
           case 0:
-            i.push(y);
+            i.push(d);
             break;
           case 2:
-            _.IsCharacter() && i.push(y);
+            _.IsCharacter() && i.push(d);
             break;
           case 1:
-            _.IsSceneItem() && i.push(y);
+            _.IsSceneItem() && i.push(d);
             break;
           case 3:
-            (_.IsCharacter() || _.IsSceneItem()) && i.push(y);
+            (_.IsCharacter() || _.IsSceneItem()) && i.push(d);
             break;
           case 4:
-            _.IsCustom() && i.push(y);
+            _.IsCustom() && i.push(d);
         }
   }
   GetEntitiesInRangeWithLocation(t, e, i, r, n = !0) {
@@ -293,23 +315,23 @@ class CreatureModel extends ModelBase_1.ModelBase {
       i.Entity.GetComponent(0).GetOwnerId() === t && e.push(i);
   }
   GetEntity(t) {
-    return this.xPr.GetEntity(t);
+    return this.hPr.GetEntity(t);
   }
   GetEntityWithDelayRemoveContainer(t) {
     return this.DelayRemoveContainer.GetEntity(t);
   }
   ExistEntity(t) {
-    return this.xPr.ExistEntity(t);
+    return this.hPr.ExistEntity(t);
   }
   GetEntityById(t) {
-    return this.xPr.GetEntityById(t);
+    return this.hPr.GetEntityById(t);
   }
   GetCreatureDataId(t) {
     t = EntitySystem_1.EntitySystem.Get(t);
     return t ? t.GetComponent(0).GetCreatureDataId() : 0;
   }
   GetEntityId(t) {
-    return this.xPr.GetEntity(t)?.Id ?? 0;
+    return this.hPr.GetEntity(t)?.Id ?? 0;
   }
   GetEntityIdByPbDataId(t) {
     t = this.GetEntityByPbDataId(t);
@@ -329,21 +351,21 @@ class CreatureModel extends ModelBase_1.ModelBase {
       this.ScenePlayerDataMap.clear(),
       this.RemoveCreaturePendingSet.clear(),
       this.DelayRemoveContainer.Clear(),
-      this.wPr.Clear(),
-      this.Rvr.clear(),
-      this.Pvr.clear(),
-      this.xPr.Clear(),
-      this.GVs.Clear(),
-      (this.vvr = void 0),
-      (this.Mvr = void 0),
-      !(this.Svr = void 0)
+      this.lPr.Clear(),
+      this.TMr.clear(),
+      this.RMr.clear(),
+      this.hPr.Clear(),
+      this.QQs.Clear(),
+      (this.gMr = void 0),
+      (this.fMr = void 0),
+      !(this.pMr = void 0)
     );
   }
   GetWorldOwner() {
-    return this.mvr;
+    return this._Mr;
   }
   SetWorldOwner(t) {
-    this.mvr = t;
+    this._Mr = t;
   }
   GetInstanceId() {
     return this.NUe;
@@ -356,10 +378,10 @@ class CreatureModel extends ModelBase_1.ModelBase {
     return t || 0;
   }
   IsMyWorld() {
-    return this.mvr === this.GetPlayerId();
+    return this._Mr === this.GetPlayerId();
   }
   IsWorldOwner(t) {
-    return this.mvr === t;
+    return this._Mr === t;
   }
   GetScenePlayerData(t) {
     return this.ScenePlayerDataMap.get(t);
@@ -378,22 +400,22 @@ class CreatureModel extends ModelBase_1.ModelBase {
     return e && e.Clear(), this.ScenePlayerDataMap.delete(t);
   }
   GetGameplayTagHash() {
-    return this.Cvr;
+    return this.cMr;
   }
   SetGameplayTagHash(t) {
-    this.Cvr = t;
+    this.cMr = t;
   }
   SetSceneId(t) {
-    this.dvr = t;
+    this.uMr = t;
   }
   GetSceneId() {
-    return this.dvr;
+    return this.uMr;
   }
   SetToken(t) {
-    this.zfr = t;
+    this.Ypr = t;
   }
   GetToken() {
-    return this.zfr;
+    return this.Ypr;
   }
   AddRemoveCreaturePending(t) {
     return (
@@ -429,9 +451,9 @@ class CreatureModel extends ModelBase_1.ModelBase {
         t = t.trim();
         var n = Info_1.Info.IsBuildDevelopmentOrDebug,
           i = JSON.parse(t);
-        this.vvr = new Map();
+        this.gMr = new Map();
         for (const o of i.EntityDatas)
-          (o.EdWpPath = void 0), n || (o.Name = ""), this.vvr.set(o.Id, o);
+          (o.EdWpPath = void 0), n || (o.Name = ""), this.gMr.set(o.Id, o);
       } else
         Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn("World", 3, "不存在EntityConfigData配置文件。", [
@@ -461,12 +483,12 @@ class CreatureModel extends ModelBase_1.ModelBase {
       return !1;
     var i = Info_1.Info.IsBuildDevelopmentOrDebug,
       t = JSON.parse(t);
-    this.Mvr = new Map();
+    this.fMr = new Map();
     for (const r of t.EntityDatas)
-      (r.EdWpPath = void 0), i || (r.Name = ""), this.Mvr.set(r.Id, r);
+      (r.EdWpPath = void 0), i || (r.Name = ""), this.fMr.set(r.Id, r);
     return !0;
   }
-  bvr() {
+  xMr() {
     if (!PublicUtil_1.PublicUtil.UseDbConfig()) {
       var e = (0, puerts_1.$ref)("");
       let t = (0, PublicUtil_1.getConfigPath)(
@@ -484,13 +506,13 @@ class CreatureModel extends ModelBase_1.ModelBase {
           r,
           e = (0, puerts_1.$unref)(e),
           e = JSON.parse(e);
-        for ([i, r] of Object.entries(e.BlueprintConfig)) this.Evr.set(i, r);
+        for ([i, r] of Object.entries(e.BlueprintConfig)) this.vMr.set(i, r);
       }
     }
   }
-  qvr(e = !1) {
+  wMr(e = !1) {
     if (e || !PublicUtil_1.PublicUtil.UseDbConfig()) {
-      (this.yvr = new Map()), (this.Tvr = new Map());
+      (this.MMr = new Map()), (this.SMr = new Map());
       e = (0, puerts_1.$ref)("");
       let t = (0, PublicUtil_1.getConfigPath)(
         IGlobal_1.globalConfig.TemplateConfigPath,
@@ -505,7 +527,7 @@ class CreatureModel extends ModelBase_1.ModelBase {
         UE.KuroStaticLibrary.LoadFileToString(e, t);
         e = (0, puerts_1.$unref)(e);
         for (const i of JSON.parse(e).Templates)
-          this.yvr.set(i.Id, i), this.Tvr.set(i.BlueprintType, i.Id);
+          this.MMr.set(i.Id, i), this.SMr.set(i.BlueprintType, i.Id);
       } else
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
@@ -516,9 +538,9 @@ class CreatureModel extends ModelBase_1.ModelBase {
           );
     }
   }
-  Gvr(e = !1) {
+  BMr(e = !1) {
     if (e || !PublicUtil_1.PublicUtil.UseDbConfig()) {
-      this.Ivr = new Map();
+      this.EMr = new Map();
       e = (0, puerts_1.$ref)("");
       let t = (0, PublicUtil_1.getConfigPath)(
         IGlobal_1.globalConfig.PrefabConfigPath,
@@ -534,8 +556,8 @@ class CreatureModel extends ModelBase_1.ModelBase {
         e = (0, puerts_1.$unref)(e);
         for (const r of JSON.parse(e).Prefabs)
           if (r.Entities?.length) {
-            let t = this.Ivr.get(r.PrefabId);
-            t || ((t = new Map()), this.Ivr.set(r.PrefabId, t));
+            let t = this.EMr.get(r.PrefabId);
+            t || ((t = new Map()), this.EMr.set(r.PrefabId, t));
             for (const n of r.Entities) {
               var i = this.GetEntityTemplate(n.EntityData.BlueprintType);
               i
@@ -562,8 +584,8 @@ class CreatureModel extends ModelBase_1.ModelBase {
           );
     }
   }
-  Nvr() {
-    this.Svr = new Map();
+  bMr() {
+    this.pMr = new Map();
     let t = (0, PublicUtil_1.getConfigPath)(
       IGlobal_1.globalConfig.EntityOwnerConfigPath,
     );
@@ -580,8 +602,8 @@ class CreatureModel extends ModelBase_1.ModelBase {
           (e = (0, puerts_1.$unref)(e)),
           JSON.parse(e));
       for (const i of e) {
-        let t = this.Svr.get(i.LevelId);
-        t || ((t = new Map()), this.Svr.set(i.LevelId, t)),
+        let t = this.pMr.get(i.LevelId);
+        t || ((t = new Map()), this.pMr.set(i.LevelId, t)),
           t.set(i.EntityId, i);
       }
     } else
@@ -596,8 +618,8 @@ class CreatureModel extends ModelBase_1.ModelBase {
   GetEntityData(t) {
     var e;
     if (void 0 !== t)
-      return !PublicUtil_1.PublicUtil.UseDbConfig() && this.vvr
-        ? this.vvr.get(t)
+      return !PublicUtil_1.PublicUtil.UseDbConfig() && this.gMr
+        ? this.gMr.get(t)
         : (t =
               LevelEntityConfigByMapIdAndEntityId_1.configLevelEntityConfigByMapIdAndEntityId.GetConfig(
                 ModelManager_1.ModelManager.GameModeModel.MapId,
@@ -643,10 +665,10 @@ class CreatureModel extends ModelBase_1.ModelBase {
   }
   GetAllEntityIdOfBlueprintType(t) {
     if (!PublicUtil_1.PublicUtil.UseDbConfig()) {
-      if (void 0 === this.vvr) return [];
+      if (void 0 === this.gMr) return [];
       const r = new Array();
-      for (const n of this.vvr.keys()) {
-        var e = this.vvr.get(n);
+      for (const n of this.gMr.keys()) {
+        var e = this.gMr.get(n);
         e.BlueprintType === t && r.push(e.Id);
       }
       return r;
@@ -661,7 +683,7 @@ class CreatureModel extends ModelBase_1.ModelBase {
     return r;
   }
   GetDynamicEntityData(t) {
-    if (this.Mvr) return this.Mvr.get(t);
+    if (this.fMr) return this.fMr.get(t);
   }
   GetEntityModel(t) {
     var e, i;
@@ -676,16 +698,16 @@ class CreatureModel extends ModelBase_1.ModelBase {
           (i.HalfHeight = e.HalfHeight),
           i)
         : void 0
-      : (this.Evr || ((this.Evr = new Map()), this.bvr()), this.Evr.get(t));
+      : (this.vMr || ((this.vMr = new Map()), this.xMr()), this.vMr.get(t));
   }
   GetAllEntityTemplate(t = !1) {
-    return this.yvr || this.qvr(t), this.yvr;
+    return this.MMr || this.wMr(t), this.MMr;
   }
   GetEntityTemplate(e) {
     if (!PublicUtil_1.PublicUtil.UseDbConfig()) {
-      this.yvr || this.qvr();
+      this.MMr || this.wMr();
       let t = 0;
-      return (t = "string" == typeof e ? this.Tvr.get(e) : e), this.yvr.get(t);
+      return (t = "string" == typeof e ? this.SMr.get(e) : e), this.MMr.get(t);
     }
     let t = void 0;
     if (
@@ -705,13 +727,13 @@ class CreatureModel extends ModelBase_1.ModelBase {
   }
   GetEntityPrefab(t, e) {
     if (!PublicUtil_1.PublicUtil.UseDbConfig())
-      return this.Ivr || this.Gvr(), this.Ivr.get(t)?.get(e);
-    this.Ivr || (this.Ivr = new Map());
-    let i = this.Ivr.get(t);
+      return this.EMr || this.BMr(), this.EMr.get(t)?.get(e);
+    this.EMr || (this.EMr = new Map());
+    let i = this.EMr.get(t);
     if (i?.size) return i.get(e);
     var r = PrefabConfigById_1.configPrefabConfigById.GetConfig(t);
     if (r) {
-      (i = new Map()), this.Ivr.set(t, i);
+      (i = new Map()), this.EMr.set(t, i);
       for (const o of JSON.parse(r.Entities)) {
         var n = this.GetEntityTemplate(o.EntityData.BlueprintType);
         n
@@ -742,9 +764,9 @@ class CreatureModel extends ModelBase_1.ModelBase {
   GetEntityOwner(t, e) {
     if (PublicUtil_1.PublicUtil.UseDbConfig()) {
       if (
-        (this.Svr || (this.Svr = new Map()),
-        this.Svr.get(t) || this.Svr.set(t, new Map()),
-        !this.Svr.get(t).get(e))
+        (this.pMr || (this.pMr = new Map()),
+        this.pMr.get(t) || this.pMr.set(t, new Map()),
+        !this.pMr.get(t).get(e))
       ) {
         var i = t.toString() + "_" + e.toString();
         const r =
@@ -753,35 +775,35 @@ class CreatureModel extends ModelBase_1.ModelBase {
           );
         if (!r) return;
         i = { LevelId: t, EntityId: e, Owner: JSON.parse(r.Owner) };
-        this.Svr.get(t).set(e, i);
+        this.pMr.get(t).set(e, i);
       }
-      const r = this.Svr.get(t).get(e);
+      const r = this.pMr.get(t).get(e);
       return 0 === r.Owner.length ? void 0 : r.Owner[0];
     }
-    this.Svr || this.Nvr();
-    i = this.Svr.get(t);
+    this.pMr || this.bMr();
+    i = this.pMr.get(t);
     if (i) {
       const r = i.get(e);
       if (r && 0 !== r.Owner.length) return r.Owner[0];
     }
   }
   CheckSetPrefabEntity(t) {
-    this.xPr.CheckSetPrefabEntity(t);
+    this.hPr.CheckSetPrefabEntity(t);
   }
   GetPbDataIdByEntity(t) {
     return (t = t && t.Entity.GetComponent(0)) ? t.GetPbDataId() : 0;
   }
   GetEntityByPbDataId(t) {
-    return this.xPr.GetEntityByPbDataId(t);
+    return this.hPr.GetEntityByPbDataId(t);
   }
   GetIsLoadingScene() {
-    return this.Uvr;
+    return this.LMr;
   }
   SetIsLoadingScene(t) {
-    this.Uvr = t;
+    this.LMr = t;
   }
   GetCreatureDataIdByPbDataId(t) {
-    return this.xPr.GetCreatureDataIdByPbDataId(t);
+    return this.hPr.GetCreatureDataIdByPbDataId(t);
   }
   AddDelayRemoveEntity(t, e) {
     return e.Valid
@@ -811,7 +833,7 @@ class CreatureModel extends ModelBase_1.ModelBase {
   }
   AddPendingRemoveEntity(t, e) {
     return e?.Valid
-      ? (this.wPr.AddEntity(t, e), this.wPr.CheckSetPrefabEntity(e), !0)
+      ? (this.lPr.AddEntity(t, e), this.lPr.CheckSetPrefabEntity(e), !0)
       : (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "World",
@@ -823,44 +845,44 @@ class CreatureModel extends ModelBase_1.ModelBase {
         !1);
   }
   PopPendingRemoveEntity() {
-    return this.wPr.PopEntity();
+    return this.lPr.PopEntity();
   }
   GetPendingRemoveEntity(t) {
-    return this.wPr.GetEntity(t);
+    return this.lPr.GetEntity(t);
   }
   GetPendingRemoveEntityByPbDataId(t) {
-    return this.wPr.GetEntityByPbDataId(t);
+    return this.lPr.GetEntityByPbDataId(t);
   }
   RemovePendingRemoveEntity(t) {
-    return this.wPr.RemoveEntity(t);
+    return this.lPr.RemoveEntity(t);
   }
   PendingRemoveEntitySize() {
-    return this.wPr.Size();
+    return this.lPr.Size();
   }
   AddPreCreature(t) {
-    return this.Rvr.add(t), !0;
+    return this.TMr.add(t), !0;
   }
   RemovePreCreature(t) {
-    return this.Rvr.delete(t);
+    return this.TMr.delete(t);
   }
   SetRestoreEntityId(t) {
-    this.Avr = t;
+    this.DMr = t;
   }
   GetRestoreEntityId() {
-    return this.Avr;
+    return this.DMr;
   }
   RecordEntitySilenceState(t, e) {
-    this.Pvr.set(t, e);
+    this.RMr.set(t, e);
   }
   CheckEntityVisible(t) {
     return (
       !!ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(t) ||
-      !this.Pvr.get(t)
+      !this.RMr.get(t)
     );
   }
   GetActorRefData() {
-    if (this.xvr) return this.xvr;
-    this.xvr = new Map();
+    if (this.UMr) return this.UMr;
+    this.UMr = new Map();
     let t = "";
     if (
       ((t = PublicUtil_1.PublicUtil.UseDbConfig()
@@ -880,21 +902,21 @@ class CreatureModel extends ModelBase_1.ModelBase {
           Json_1.Json.Parse(e));
       for (const n of e.LevelRefList) {
         var i = n.LevelPath;
-        let e = this.xvr.get(i);
+        let e = this.UMr.get(i);
         e = e || new Map();
         for (const o of n.StreamingGroups) {
           var r = o.EntityId;
           let t = e.get(r);
           t = t || [];
-          for (const s of o.RefData)
-            ("Desktop" === s.Platform && !GlobalData_1.GlobalData.IsSm5) ||
-              ("Mobile" === s.Platform && !GlobalData_1.GlobalData.IsEs3) ||
-              t.push(s);
+          for (const a of o.RefData)
+            ("Desktop" === a.Platform && !GlobalData_1.GlobalData.IsSm5) ||
+              ("Mobile" === a.Platform && !GlobalData_1.GlobalData.IsEs3) ||
+              t.push(a);
           e.set(r, t);
         }
-        this.xvr.set(i, e);
+        this.UMr.set(i, e);
       }
-      return this.xvr;
+      return this.UMr;
     }
     Log_1.Log.CheckError() &&
       Log_1.Log.Error("SceneItem", 7, "检查配置文件是否存在", ["filePath", t]);
@@ -921,16 +943,16 @@ class CreatureModel extends ModelBase_1.ModelBase {
     }
   }
   GetOwnerEntity(t) {
-    t = this.gvr.get(t);
+    t = this.mMr.get(t);
     if (t) return t[0];
   }
   AddOwnerEntityInfo(e) {
-    var t = this.xPr.GetEntity(e)?.Entity?.GetComponent(0),
+    var t = this.hPr.GetEntity(e)?.Entity?.GetComponent(0),
       i = t?.GetBaseInfo()?.ChildEntityIds;
     if (i) {
       var r = t.GetPbDataId();
       for (const n of i) {
-        let t = this.gvr.get(n);
+        let t = this.mMr.get(n);
         if (t) {
           if (t[0] !== r) {
             Log_1.Log.CheckError() &&
@@ -946,7 +968,7 @@ class CreatureModel extends ModelBase_1.ModelBase {
             continue;
           }
           t[1]++;
-        } else (t = [r, 1]), this.gvr.set(n, t);
+        } else (t = [r, 1]), this.mMr.set(n, t);
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "World",
@@ -961,15 +983,15 @@ class CreatureModel extends ModelBase_1.ModelBase {
     }
   }
   RemoveOwnerEntityInfo(t) {
-    var e = this.xPr
+    var e = this.hPr
       .GetEntity(t)
       ?.Entity?.GetComponent(0)
       ?.GetBaseInfo()?.ChildEntityIds;
     if (e)
       for (const r of e) {
-        var i = this.gvr.get(r);
+        var i = this.mMr.get(r);
         i &&
-          (0 == --i[1] && this.gvr.delete(r), Log_1.Log.CheckDebug()) &&
+          (0 == --i[1] && this.mMr.delete(r), Log_1.Log.CheckDebug()) &&
           Log_1.Log.Debug(
             "World",
             51,
@@ -982,29 +1004,39 @@ class CreatureModel extends ModelBase_1.ModelBase {
       }
   }
   GetOrAddDensityItem(t, e) {
-    var i = this.GVs.GetItem(t);
-    if (i) return i;
-    (i = e.R5n),
-      (i = ModelManager_1.ModelManager.CreatureModel.GetCompleteEntityData(i)),
-      (i = (0, IComponent_1.getComponent)(
-        i.ComponentsData,
-        "BaseInfoComponent",
-      ));
-    let r = 0;
+    var i,
+      r = this.QQs.GetItem(t);
+    if (r) return r;
+    let n = 0;
     return (
-      2 === i?.Category.NpcType
-        ? (r = 2)
-        : 1 === i?.Category.NpcType &&
-          (r = void 0 === i.LowerNpcDensity ? 1 : i?.LowerNpcDensity),
-      this.GVs.AddItem(t, r, e)
+      2 === e.JEs
+        ? (n = 2)
+        : 1 === e.JEs &&
+          ((r = e._9n),
+          (i =
+            ModelManager_1.ModelManager.CreatureModel.GetCompleteEntityData(r))
+            ? ((i = (0, IComponent_1.getComponent)(
+                i.ComponentsData,
+                "BaseInfoComponent",
+              )),
+              (n = i && void 0 !== i.LowerNpcDensity ? i.LowerNpcDensity : 1))
+            : Log_1.Log.CheckError() &&
+              Log_1.Log.Error(
+                "World",
+                6,
+                "不存在的pbDataId",
+                ["creatureDataID", t],
+                ["pbDataId", r],
+              )),
+      this.QQs.AddItem(t, n, e)
     );
   }
   RemoveDensityItem(t) {
-    var e = this.GVs.GetItem(t);
-    return this.GVs.RemoveItem(t), e;
+    var e = this.QQs.GetItem(t);
+    return this.QQs.RemoveItem(t), e;
   }
   GetDensityLevelGroup(t) {
-    return this.GVs.GetLevel(t);
+    return this.QQs.GetLevel(t);
   }
 }
 exports.CreatureModel = CreatureModel;

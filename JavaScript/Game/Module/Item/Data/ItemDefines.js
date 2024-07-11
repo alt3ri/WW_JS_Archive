@@ -1,8 +1,9 @@
 "use strict";
-var EItemId, EItemFunctionType;
+var EItemId, EPowerId, EItemFunctionType;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CALABASH_ITEM_SHOW_TYPE =
     exports.EItemFunctionType =
+    exports.EPowerId =
     exports.EItemId =
       void 0),
   (function (e) {
@@ -10,8 +11,12 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
       (e[(e.Gold = 2)] = "Gold"),
       (e[(e.BlackCard = 3)] = "BlackCard"),
       (e[(e.PayGold = 4)] = "PayGold"),
-      (e[(e.Power = 5)] = "Power");
+      (e[(e.Power = 5)] = "Power"),
+      (e[(e.OverPower = 6)] = "OverPower");
   })((EItemId = exports.EItemId || (exports.EItemId = {}))),
+  (function (e) {
+    e[(e.MoonChasingPower = 14)] = "MoonChasingPower";
+  })((EPowerId = exports.EPowerId || (exports.EPowerId = {}))),
   (function (e) {
     (e[(e.ManualOpenGift = 2)] = "ManualOpenGift"),
       (e[(e.AutoOpenGift = 4)] = "AutoOpenGift"),

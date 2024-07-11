@@ -45,88 +45,88 @@ let SceneItemBuffConsumerComponent =
     constructor() {
       super(...arguments),
         (this.Hte = void 0),
-        (this.zsn = void 0),
+        (this.wsn = void 0),
         (this.mBe = void 0),
-        (this.C1n = void 0),
-        (this.ktn = void 0),
-        (this.Xfo = 0),
-        (this.Tdn = ""),
-        (this.MHr = BigInt(0)),
-        (this.Ldn = void 0),
-        (this.jDn = void 0),
-        (this.Ddn = !1),
-        (this.d_n = (e) => {
+        (this.Xln = void 0),
+        (this.vtn = void 0),
+        (this.Wpo = 0),
+        (this.odn = ""),
+        (this.eHr = BigInt(0)),
+        (this.rdn = void 0),
+        (this.JUn = void 0),
+        (this.ndn = !1),
+        (this.Q1n = (e) => {
           e &&
-            this.Rdn() &&
-            ((this.Ddn = !0),
+            this.sdn() &&
+            ((this.ndn = !0),
             SceneItemBuffController_1.SceneItemBuffController.BuffOperate(
               this.Entity.Id,
-              Protocol_1.Aki.Protocol.nGs.Proto_RemoveBuff,
-              this.Adn,
+              Protocol_1.Aki.Protocol.K3s.Proto_RemoveBuff,
+              this.adn,
             ));
         }),
-        (this.Adn = (e, t) => {
-          e === Protocol_1.Aki.Protocol.nGs.Proto_RemoveBuff && t
-            ? this.Udn()
-            : (this.Ddn = !1);
+        (this.adn = (e, t) => {
+          e === Protocol_1.Aki.Protocol.K3s.Proto_RemoveBuff && t
+            ? this.hdn()
+            : (this.ndn = !1);
         }),
-        (this.M1n = (e) => {
+        (this.Zln = (e) => {
           e.ReBulletData.Base.HitConditionTagId === HIT_CONDITION_TAGID &&
             (EntitySystem_1.EntitySystem.Get(e.BulletEntityId)?.Valid &&
               BulletController_1.BulletController.DestroyBullet(
                 e.BulletEntityId,
                 !1,
               ),
-            this.Ldn &&
-              (TimerSystem_1.TimerSystem.Remove(this.Ldn), (this.Ldn = void 0)),
+            this.rdn &&
+              (TimerSystem_1.TimerSystem.Remove(this.rdn), (this.rdn = void 0)),
             EventSystem_1.EventSystem.RemoveWithTarget(
               this,
               EventDefine_1.EEventName.OnSceneItemHitByHitData,
-              this.M1n,
+              this.Zln,
             ),
-            this.Pdn());
+            this.ldn());
         }),
-        (this.xdn = () => {
+        (this._dn = () => {
           EventSystem_1.EventSystem.HasWithTarget(
             this,
             EventDefine_1.EEventName.OnSceneItemHitByHitData,
-            this.M1n,
+            this.Zln,
           ) &&
             EventSystem_1.EventSystem.RemoveWithTarget(
               this,
               EventDefine_1.EEventName.OnSceneItemHitByHitData,
-              this.M1n,
+              this.Zln,
             ),
-            (this.Ldn = void 0),
-            this.Pdn();
+            (this.rdn = void 0),
+            this.ldn();
         });
     }
     OnInitData(e) {
       e = e.GetParam(SceneItemBuffConsumerComponent_1)[0];
-      (this.MHr = BigInt(e.BuffId)),
-        e.BulletId && (this.Tdn = e.BulletId.toString());
-      e = this.Entity.GetComponent(0)?.ComponentDataMap.get("Tps");
-      return (this.jDn = MathUtils_1.MathUtils.LongToBigInt(e?.Tps?.S4n)), !0;
+      (this.eHr = BigInt(e.BuffId)),
+        e.BulletId && (this.odn = e.BulletId.toString());
+      e = this.Entity.GetComponent(0)?.ComponentDataMap.get("Vys");
+      return (this.JUn = MathUtils_1.MathUtils.LongToBigInt(e?.Vys?.tVn)), !0;
     }
     OnStart() {
       return (
-        (this.Hte = this.Entity.GetComponent(182)),
+        (this.Hte = this.Entity.GetComponent(185)),
         this.Hte
-          ? ((this.zsn = this.Entity.GetComponent(177)),
-            this.zsn
-              ? ((this.mBe = this.Entity.GetComponent(117)),
+          ? ((this.wsn = this.Entity.GetComponent(180)),
+            this.wsn
+              ? ((this.mBe = this.Entity.GetComponent(119)),
                 this.mBe
-                  ? ((this.ktn = this.Entity.GetComponent(74)),
-                    this.ktn
+                  ? ((this.vtn = this.Entity.GetComponent(76)),
+                    this.vtn
                       ? ((ModelManager_1.ModelManager.GameModeModel.IsMulti &&
                           ModelManager_1.ModelManager.PlayerInfoModel.GetId() !==
                             ModelManager_1.ModelManager.CreatureModel.GetWorldOwner()) ||
-                          ((this.Xfo =
+                          ((this.Wpo =
                             this.Hte.CreatureData.GetCreatureDataId()),
-                          this.zsn.AddTag(HIT_CONDITION_TAGID),
-                          (this.C1n = this.Entity.GetComponent(138)),
-                          this.C1n.RegisterComponent(this),
-                          this.ktn.AddOnPlayerOverlapCallback(this.d_n)),
+                          this.wsn.AddTag(HIT_CONDITION_TAGID),
+                          (this.Xln = this.Entity.GetComponent(140)),
+                          this.Xln.RegisterComponent(this),
+                          this.vtn.AddOnPlayerOverlapCallback(this.Q1n)),
                         !0)
                       : (Log_1.Log.CheckError() &&
                           Log_1.Log.Error(
@@ -178,42 +178,42 @@ let SceneItemBuffConsumerComponent =
     }
     OnEnd() {
       return (
-        this.ktn?.RemoveOnPlayerOverlapCallback(this.d_n),
-        this.Ldn && TimerSystem_1.TimerSystem.Remove(this.Ldn) && this.xdn(),
+        this.vtn?.RemoveOnPlayerOverlapCallback(this.Q1n),
+        this.rdn && TimerSystem_1.TimerSystem.Remove(this.rdn) && this._dn(),
         !0
       );
     }
-    Rdn() {
+    sdn() {
       return !(
         (ModelManager_1.ModelManager.GameModeModel.IsMulti &&
           ModelManager_1.ModelManager.PlayerInfoModel.GetId() !==
             ModelManager_1.ModelManager.CreatureModel.GetWorldOwner()) ||
-        this.Ddn ||
+        this.ndn ||
         !this.mBe.IsInState(1) ||
         ModelManager_1.ModelManager.SceneTeamModel.IsPhantomTeam ||
-        !this.wdn()
+        !this.udn()
       );
     }
-    wdn() {
+    udn() {
       var e = Global_1.Global.BaseCharacter;
       if (!e) return !1;
       var e = e.CharacterActorComponent.Entity,
-        t = e.CheckGetComponent(157);
+        t = e.CheckGetComponent(159);
       if (!t) return !1;
-      let n = 0 < t.GetBuffTotalStackById(this.MHr);
-      t = e.CheckGetComponent(171);
+      let n = 0 < t.GetBuffTotalStackById(this.eHr);
+      t = e.CheckGetComponent(174);
       return (
         t &&
           (n ||=
             0 <
-            (t.GetFormationBuffComp()?.GetBuffTotalStackById(this.MHr) ?? 0)),
+            (t.GetFormationBuffComp()?.GetBuffTotalStackById(this.eHr) ?? 0)),
         n
       );
     }
-    Udn() {
-      this.Tdn ? this.szo() : this.Pdn();
+    hdn() {
+      this.odn ? this.oZo() : this.ldn();
     }
-    szo() {
+    oZo() {
       var e,
         t = Global_1.Global.BaseCharacter;
       t &&
@@ -225,33 +225,33 @@ let SceneItemBuffConsumerComponent =
         ),
         BulletController_1.BulletController.CreateBulletCustomTarget(
           Global_1.Global.BaseCharacter,
-          this.Tdn,
+          this.odn,
           t.ActorTransform,
           {},
-          this.jDn,
+          this.JUn,
         ),
         EventSystem_1.EventSystem.AddWithTarget(
           this,
           EventDefine_1.EEventName.OnSceneItemHitByHitData,
-          this.M1n,
+          this.Zln,
         ),
-        (this.Ldn = TimerSystem_1.TimerSystem.Delay(
-          this.xdn,
+        (this.rdn = TimerSystem_1.TimerSystem.Delay(
+          this._dn,
           MAX_BULLET_HIT_TIME,
         )));
     }
-    Pdn() {
+    ldn() {
       LevelGamePlayController_1.LevelGamePlayController.EntityBuffProducerRequest(
-        this.Xfo,
+        this.Wpo,
         (e) => {
-          this.Ddn = !1;
+          this.ndn = !1;
         },
       );
     }
   });
 (SceneItemBuffConsumerComponent = SceneItemBuffConsumerComponent_1 =
   __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(183)],
+    [(0, RegisterComponent_1.RegisterComponent)(186)],
     SceneItemBuffConsumerComponent,
   )),
   (exports.SceneItemBuffConsumerComponent = SceneItemBuffConsumerComponent);

@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.OpenSystemInstanceEntrance = void 0);
 const ConfigManager_1 = require("../../../Manager/ConfigManager"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
-  InstanceDungeonEntranceConfig_1 = require("../../../Module/InstanceDungeon/InstanceDungeonEntranceConfig"),
   InstanceDungeonEntranceController_1 = require("../../../Module/InstanceDungeon/InstanceDungeonEntranceController"),
   TowerData_1 = require("../../../Module/TowerDetailUi/TowerData"),
   OpenSystemBase_1 = require("./OpenSystemBase");
@@ -12,17 +11,17 @@ class OpenSystemInstanceEntrance extends OpenSystemBase_1.OpenSystemBase {
     if (!e.BoardId) return !1;
     if (!ModelManager_1.ModelManager.GameModeModel.WorldDoneAndLoadingClosed)
       return !1;
-    let a = void 0;
+    let r = void 0;
     switch (n.Type) {
       case 5:
-        a = n.TriggerEntityId;
+        r = n.TriggerEntityId;
         break;
       case 1:
-        a = n.EntityId;
+        r = n.EntityId;
     }
     return InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.EnterEntrance(
       e.BoardId,
-      a,
+      r,
     );
   }
   GetViewName(e) {
@@ -30,17 +29,13 @@ class OpenSystemInstanceEntrance extends OpenSystemBase_1.OpenSystemBase {
       ConfigManager_1.ConfigManager.InstanceDungeonEntranceConfig.GetInstanceDungeonEntranceFlowId(
         e.BoardId,
       );
-    return e ===
-      InstanceDungeonEntranceConfig_1.EInstanceEntranceFlowType.SingleTimeTower
+    return 3 === e
       ? "SingleTimeTowerView"
-      : e ===
-          InstanceDungeonEntranceConfig_1.EInstanceEntranceFlowType.CycleTower
+      : 4 === e
         ? "CycleTowerView"
-        : e ===
-            InstanceDungeonEntranceConfig_1.EInstanceEntranceFlowType.BossRush
+        : 7 === e
           ? "BossRushMainView"
-          : e ===
-              InstanceDungeonEntranceConfig_1.EInstanceEntranceFlowType.NewTower
+          : 5 === e
             ? ModelManager_1.ModelManager.TowerModel.GetMaxDifficulty() !==
               TowerData_1.VARIATION_RISK_DIFFICULTY
               ? "TowerNormalView"

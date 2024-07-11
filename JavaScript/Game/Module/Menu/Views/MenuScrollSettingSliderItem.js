@@ -13,19 +13,19 @@ class MenuScrollSettingSliderItem extends MenuScrollSettingBaseItem_1.MenuScroll
   constructor() {
     super(...arguments),
       (this.Data = void 0),
-      (this.uBi = 0),
-      (this.cBi = (t, e = !0) => {
+      (this.ubi = 0),
+      (this.cbi = (t, e = !0) => {
         this.GetItemClickLimit(this.GetSlider(1))
-          ? this.mBi(this.uBi, e)
-          : this.mBi(t, e);
+          ? this.mbi(this.ubi, e)
+          : this.mbi(t, e);
       }),
-      (this.dBi = () => {
-        this.GetItemClickLimit(this.GetSlider(1)) || this.CBi();
+      (this.dbi = () => {
+        this.GetItemClickLimit(this.GetSlider(1)) || this.Cbi();
       }),
-      (this.mBi = (t, e = !0) => {
-        this.GetSlider(1).SetValue(t, e), this.gBi(t, e);
+      (this.mbi = (t, e = !0) => {
+        this.GetSlider(1).SetValue(t, e), this.gbi(t, e);
       }),
-      (this.nwi = (t, e) => {
+      (this.nBi = (t, e) => {
         var i;
         this.Data.MenuDataFunctionId === t &&
           ((i = (t = this.Data.MenuDataSliderRange)[0]),
@@ -34,11 +34,10 @@ class MenuScrollSettingSliderItem extends MenuScrollSettingBaseItem_1.MenuScroll
             e,
             this.Data.MenuDataSliderDigits,
           )),
-          this.mBi(MathUtils_1.MathUtils.Clamp(e, i, t), !1));
+          this.mbi(MathUtils_1.MathUtils.Clamp(e, i, t), !1));
       }),
-      (this.CBi = () => {
-        MenuController_1.MenuController.SaveLocalConfig(),
-          (ModelManager_1.ModelManager.MenuModel.IsEdited = !0),
+      (this.Cbi = () => {
+        (ModelManager_1.ModelManager.MenuModel.IsEdited = !0),
           this.PlaySequenceByName("Flashing");
       });
   }
@@ -50,28 +49,28 @@ class MenuScrollSettingSliderItem extends MenuScrollSettingBaseItem_1.MenuScroll
     ];
   }
   OnStart() {
-    this.GetSlider(1).SetCanClickWhenDisable(!0), this.fBi();
+    this.GetSlider(1).SetCanClickWhenDisable(!0), this.fbi();
   }
   OnClear() {
     this.GetSlider(1).OnValueChangeCb?.Unbind(),
       this.GetSlider(1).OnEndDragCb?.Unbind(),
       EventSystem_1.EventSystem.Has(
         EventDefine_1.EEventName.ChangeConfigValue,
-        this.nwi,
+        this.nBi,
       ) &&
         EventSystem_1.EventSystem.Remove(
           EventDefine_1.EEventName.ChangeConfigValue,
-          this.nwi,
+          this.nBi,
         ),
       this.Data && (this.Data = void 0);
   }
   Update(t) {
-    (this.Data = t), this.mGe(), this.eNt();
+    (this.Data = t), this.mGe(), this.tOt();
   }
   mGe() {
     this.GetText(0).ShowTextNew(this.Data.MenuDataFunctionName ?? "");
   }
-  eNt() {
+  tOt() {
     var t = this.Data.MenuDataSliderRange,
       e = t[0],
       t = t[1],
@@ -86,17 +85,17 @@ class MenuScrollSettingSliderItem extends MenuScrollSettingBaseItem_1.MenuScroll
     s.GetRootComponent()?.SetUIActive(!0),
       s.SetMaxValue(t, !0, !1),
       s.SetMinValue(e, !0, !1),
-      this.mBi(MathUtils_1.MathUtils.Clamp(i, e, t), !1);
+      this.mbi(MathUtils_1.MathUtils.Clamp(i, e, t), !1);
   }
-  fBi() {
-    this.GetSlider(1)?.OnValueChangeCb.Bind(this.cBi),
-      this.GetSlider(1)?.OnEndDragCb.Bind(this.dBi),
+  fbi() {
+    this.GetSlider(1)?.OnValueChangeCb.Bind(this.cbi),
+      this.GetSlider(1)?.OnEndDragCb.Bind(this.dbi),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.ChangeConfigValue,
-        this.nwi,
+        this.nBi,
       );
   }
-  gBi(t, e = !0) {
+  gbi(t, e = !0) {
     t = MathUtils_1.MathUtils.GetFloatPointFloor(
       t,
       this.Data.MenuDataSliderDigits,
@@ -110,7 +109,7 @@ class MenuScrollSettingSliderItem extends MenuScrollSettingBaseItem_1.MenuScroll
   }
   SetInteractionActive(t) {
     this.GetSlider(1).SetSelfInteractive(t),
-      t || (this.uBi = this.GetSlider(1).GetValue());
+      t || (this.ubi = this.GetSlider(1).GetValue());
   }
 }
 exports.MenuScrollSettingSliderItem = MenuScrollSettingSliderItem;

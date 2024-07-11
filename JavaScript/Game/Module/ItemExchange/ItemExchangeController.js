@@ -17,41 +17,62 @@ class ItemExchangeController extends UiControllerBase_1.UiControllerBase {
   static OnAddEvents() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnLoadingNetDataDone,
-      this.ICi,
+      this.Igi,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.CrossDay,
-        this.TCi,
+        this.Tgi,
       );
   }
   static OnRemoveEvents() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnLoadingNetDataDone,
-      this.ICi,
+      this.Igi,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.CrossDay,
-        this.TCi,
+        this.Tgi,
       );
   }
   static get NeedPop() {
-    return this.LCi;
+    return this.Lgi;
   }
-  static OpenExchangeViewByItemId(e, t = void 0, n = !1) {
+  static OpenExchangeViewByItemId(e, n = void 0, t = !1) {
     var o = new CommonExchangeData_1.CommonExchangeData();
     o.InitByItemId(e),
-      (o.ConfirmNoClose = n),
-      (o.ConfirmCallBack = t),
+      (o.ConfirmNoClose = t),
+      (o.ConfirmCallBack = n),
       o.ConfirmCallBack ||
         (o.ConfirmCallBack = ItemExchangeController.ItemExchangeRequest),
       ItemExchangeController.OpenExchangeViewByData(o);
   }
   static OpenExchangeViewByData(e) {
-    UiManager_1.UiManager.OpenView("CommonExchangeView", e);
+    var n = new CommonExchangeData_1.CommonExchangeViewData(),
+      t = ModelManager_1.ModelManager.ItemExchangeModel.GetMaxExChangeTime(
+        e.GetDestItemId(),
+      ),
+      o = ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
+        e.GetSrcItemId(),
+      );
+    (n.GetGainCount = (e, n) => {
+      return ModelManager_1.ModelManager.ItemExchangeModel.GetCurExchangeInfo(
+        e,
+        n,
+      ).GainCount;
+    }),
+      (n.GetConsumeCount = (e, n) => {
+        return ModelManager_1.ModelManager.ItemExchangeModel.GetCurExchangeInfo(
+          e,
+          n,
+        ).ConsumeCount;
+      }),
+      (n.GetConsumeTotalCount = (e, n) => e * n),
+      n.CreateData(e, t, o),
+      UiManager_1.UiManager.OpenView("CommonExchangeView", n);
   }
 }
 (exports.ItemExchangeController = ItemExchangeController),
-  ((_a = ItemExchangeController).TCi = () => {
+  ((_a = ItemExchangeController).Tgi = () => {
     var e = ModelManager_1.ModelManager.LoginModel.GetLoginStatus();
     e < LoginDefine_1.ELoginStatus.EnterGameRet
       ? Log_1.Log.CheckWarn() &&
@@ -61,42 +82,42 @@ class ItemExchangeController extends UiControllerBase_1.UiControllerBase {
           "登录状态错误, 无法请求物品兑换数据",
           ["loginStatus", e],
         )
-      : ItemExchangeController.ICi();
+      : ItemExchangeController.Igi();
   }),
-  (ItemExchangeController.ICi = () => {
+  (ItemExchangeController.Igi = () => {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug("ItemExchange", 9, "请求物品兑换数据");
-    var e = Protocol_1.Aki.Protocol.Ots.create();
-    Net_1.Net.Call(16460, e, (e) => {
+    var e = Protocol_1.Aki.Protocol.bns.create();
+    Net_1.Net.Call(26043, e, (e) => {
       ModelManager_1.ModelManager.ItemExchangeModel.InitItemExchangeTimeInfo(
-        e.zDs,
+        e.fxs,
       );
     });
   }),
-  (ItemExchangeController.LCi = !0),
-  (ItemExchangeController.ItemExchangeRequest = (t, n, e = !0, o = void 0) => {
-    0 !== n &&
-      ((_a.LCi = e),
-      ((e = Protocol_1.Aki.Protocol.Nts.create()).G3n = t),
-      (e.i6n = n),
-      Net_1.Net.Call(14071, e, (e) => {
-        (_a.LCi = !0),
+  (ItemExchangeController.Lgi = !0),
+  (ItemExchangeController.ItemExchangeRequest = (n, t, e = !0, o = void 0) => {
+    0 !== t &&
+      ((_a.Lgi = e),
+      ((e = Protocol_1.Aki.Protocol.qns.create()).f8n = n),
+      (e.b9n = t),
+      Net_1.Net.Call(10533, e, (e) => {
+        (_a.Lgi = !0),
           e &&
-            (e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys
+            (e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs
               ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-                  e.lkn,
-                  29039,
+                  e.O4n,
+                  6955,
                 )
               : (ModelManager_1.ModelManager.ItemExchangeModel.AddExchangeTime(
-                  t,
                   n,
+                  t,
                 ),
                 EventSystem_1.EventSystem.Emit(
                   EventDefine_1.EEventName.ItemExChangeResponse,
-                  e.G3n,
-                  e.g5n,
+                  e.f8n,
+                  e.YVn,
                 ),
-                o && o(e.G3n, e.g5n)));
+                o && o(e.f8n, e.YVn)));
       }));
   });
 //# sourceMappingURL=ItemExchangeController.js.map

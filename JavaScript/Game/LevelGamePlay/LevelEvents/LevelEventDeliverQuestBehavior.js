@@ -11,7 +11,7 @@ class LevelEventDeliverQuestBehavior extends LevelGeneralBase_1.LevelEventBase {
         r.EntityId,
       );
       let e = "";
-      l && (e = l.Entity.GetComponent(102)?.PawnName ?? ""),
+      l && (e = l.Entity.GetComponent(104)?.PawnName ?? ""),
         ItemDeliverController_1.ItemDeliverController.OpenItemDeliverViewByHandInItem(
           r.Items,
           e,

@@ -39,7 +39,7 @@ class LevelAiTaskSitDown extends LevelAiTask_1.LevelAiTask {
             ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(i)),
           this.jTe)
         ) {
-          var t = this.jTe.Entity.GetComponent(178);
+          var t = this.jTe.Entity.GetComponent(181);
           if (t) {
             var t = t.GetSubEntityInteractLogicController(),
               s = this.CreatureDataComponent.Entity.GetComponent(1),

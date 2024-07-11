@@ -10,32 +10,32 @@ const UE = require("ue"),
   GlobalData_1 = require("../../../../../../../GlobalData");
 class GameplayCueBeamCommonItem {
   constructor(t, e) {
-    (this.OKt = t),
+    (this.OQt = t),
       (this.n8 = e),
-      (this._Xo = void 0),
-      (this.uXo = 0),
+      (this.a$o = void 0),
+      (this.h$o = 0),
       (this.dce = !1);
   }
   static Spawn(t, e) {
     t = new this(t, e);
-    return (t.dce = !0), (t._Xo = t.cXo()), t;
+    return (t.dce = !0), (t.a$o = t.l$o()), t;
   }
   Tick(e, t) {
-    this._Xo
+    this.a$o
       .GetOwner()
-      .K2_SetActorLocation(this.OKt.K2_GetActorLocation(), !1, void 0, !0);
+      .K2_SetActorLocation(this.OQt.K2_GetActorLocation(), !1, void 0, !0);
     var r = e.length;
-    r !== this.uXo && this.mXo(r);
-    for (let t = 0; t < r; t++) this._Xo.SetWorldLocationAtSplinePoint(t, e[t]);
+    r !== this.h$o && this._$o(r);
+    for (let t = 0; t < r; t++) this.a$o.SetWorldLocationAtSplinePoint(t, e[t]);
   }
   Destroy() {
     (this.dce = !1),
-      this._Xo.GetOwner() && ActorSystem_1.ActorSystem.Put(this._Xo.GetOwner());
+      this.a$o.GetOwner() && ActorSystem_1.ActorSystem.Put(this.a$o.GetOwner());
   }
   GetOwner() {
-    return this._Xo.GetOwner();
+    return this.a$o.GetOwner();
   }
-  cXo() {
+  l$o() {
     const r = ActorSystem_1.ActorSystem.Get(
         UE.Actor.StaticClass(),
         MathUtils_1.MathUtils.DefaultTransform,
@@ -43,7 +43,7 @@ class GameplayCueBeamCommonItem {
       s =
         (GlobalData_1.GlobalData.IsPlayInEditor &&
           r.SetActorLabel(
-            this.OKt.GetActorLabel() + ":" + GameplayCueBeamCommonItem.name,
+            this.OQt.GetActorLabel() + ":" + GameplayCueBeamCommonItem.name,
           ),
         r.AddComponentByClass(
           UE.SplineComponent.StaticClass(),
@@ -77,10 +77,10 @@ class GameplayCueBeamCommonItem {
       s
     );
   }
-  mXo(e) {
-    if (e > this.uXo)
-      for (let t = 0; t < e - this.uXo; t++) {
-        var r = this.uXo + t,
+  _$o(e) {
+    if (e > this.h$o)
+      for (let t = 0; t < e - this.h$o; t++) {
+        var r = this.h$o + t,
           r = new UE.SplinePoint(
             r,
             Vector_1.Vector.ZeroVector,
@@ -90,10 +90,10 @@ class GameplayCueBeamCommonItem {
             Vector_1.Vector.OneVector,
             0,
           );
-        this._Xo.AddPoint(r);
+        this.a$o.AddPoint(r);
       }
-    else for (let t = this.uXo - 1; t >= e; t--) this._Xo.RemoveSplinePoint(t);
-    this.uXo = e;
+    else for (let t = this.h$o - 1; t >= e; t--) this.a$o.RemoveSplinePoint(t);
+    this.h$o = e;
   }
 }
 exports.GameplayCueBeamCommonItem = GameplayCueBeamCommonItem;

@@ -1,6 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
-  (exports.TestOp =
+  (exports.getCurrentTestRunningContextName =
+    exports.popTestRunningContextName =
+    exports.pushTestRunningContextName =
+    exports.getTestContext =
+    exports.TestOp =
     exports.TestFilter =
     exports.TestResult =
     exports.TestContext =
@@ -34,12 +38,6 @@ class TestContext {
       }),
       this.ze.push(this.RootSuite);
   }
-  static get Current() {
-    return TestContext.et;
-  }
-  static set Current(t) {
-    TestContext.et = t;
-  }
   get CurrentSuite() {
     return this.ze[this.ze.length - 1];
   }
@@ -70,16 +68,16 @@ class TestContext {
     e = e ?? this.RootSuite;
     if (e.Name === t) return e;
     if ("case" !== e.Type)
-      for (const r of e.Cases) {
-        var s = this.PickNode(t, r);
+      for (const i of e.Cases) {
+        var s = this.PickNode(t, i);
         if (s) return s;
       }
   }
   ot(t, e) {
     if (t.Name === e) return t;
-    for (const r of t.Cases)
-      if ("suite" === r.Type) {
-        var s = this.ot(r, e);
+    for (const i of t.Cases)
+      if ("suite" === i.Type) {
+        var s = this.ot(i, e);
         if (s) return s;
       }
   }
@@ -136,29 +134,29 @@ class TestOp {
     return TestOp.st(t, s, e), s;
   }
   static st(t, e, s) {
-    var r;
+    var i;
     "case" === t.Type
-      ? (r = s.Get(t.Id)) &&
+      ? (i = s.Get(t.Id)) &&
         ((e.Total += 1),
-        r.Result ? (e.Passed += 1) : (e.Failed += 1),
-        (e.Time += r.RunTime))
+        i.Result ? (e.Passed += 1) : (e.Failed += 1),
+        (e.Time += i.RunTime))
       : t.Cases.forEach((t) => {
           TestOp.st(t, e, s);
         });
   }
   static Output(t, e, s = "") {
     if (e.ContainsAny(t)) {
-      var r;
+      var i;
       if ("case" === t.Type)
-        return (r = e.Get(t.Id))
+        return (i = e.Get(t.Id))
           ? ((0, Log_1.log)(
-              `${s}[${(0, ColorDefine_1.blue)(t.Name)}] ${r.Result ? (0, ColorDefine_1.green)("OK") : (0, ColorDefine_1.red)("FAIL")} ${r.RunTime}ms ` +
+              `${s}[${(0, ColorDefine_1.blue)(t.Name)}] ${i.Result ? (0, ColorDefine_1.green)("OK") : (0, ColorDefine_1.red)("FAIL")} ${i.RunTime}ms ` +
                 t.FileLocation,
             ),
             void (
-              !r.Result &&
-              r.Error &&
-              (0, Log_1.log)(beatifyError(r.Error, s + "  "))
+              !i.Result &&
+              i.Error &&
+              (0, Log_1.log)(beatifyError(i.Error, s + "  "))
             ))
           : void 0;
       (0, Log_1.log)(`${s}# ${(0, ColorDefine_1.cyan)(t.Name)} ${t.RunTime}ms`),
@@ -179,64 +177,64 @@ class TestOp {
               ErrorMsg: s.Error ? beatifyError(s.Error, "") : void 0,
             }
           : void 0;
-      const r = { Name: t.Name, File: t.FileLocation, RunTime: t.RunTime };
+      const i = { Name: t.Name, File: t.FileLocation, RunTime: t.RunTime };
       return (
         t.Cases.forEach((t) => {
           t = TestOp.GenTestReport(t, e);
-          t && (r.SubReports || (r.SubReports = []), r.SubReports.push(t));
+          t && (i.SubReports || (i.SubReports = []), i.SubReports.push(t));
         }),
-        r
+        i
       );
     }
   }
-  static async RunSuite(t, e, s) {
-    if (e.Contains(t)) {
+  static async RunSuite(t, e, s, i) {
+    if (s.Contains(e)) {
       var r,
-        i = Date.now();
-      await t.BeforeAll?.();
-      for (const o of t.Cases)
+        n = Date.now();
+      await e.BeforeAll?.();
+      for (const o of e.Cases)
         "suite" === o.Type
-          ? await TestOp.RunSuite(o, e, s)
-          : e.Contains(o) && ((r = s.Gen(o.Id)), await this.RunCase(t, o, r));
-      await t.AfterAll?.(), (t.RunTime = Date.now() - i);
+          ? await TestOp.RunSuite(t, o, s, i)
+          : s.Contains(o) &&
+            ((r = i.Gen(o.Id)), await this.RunCase(t, e, o, r));
+      await e.AfterAll?.(), (e.RunTime = Date.now() - n);
     }
   }
   static async lt(e, t, s) {
-    let r = !1,
-      i = !1;
-    var o = Date.now();
+    let i = !1,
+      r = !1;
+    var n = Date.now();
     try {
       await e.BeforeEach?.(),
-        (r = !0),
+        (i = !0),
         await t.Run(),
         await e.AfterEach?.(),
-        (i = !0),
+        (r = !0),
         (s.Result = !0),
-        (s.RunTime = Date.now() - o);
+        (s.RunTime = Date.now() - n);
     } catch (t) {
-      (s.RunTime = Date.now() - o),
+      (s.RunTime = Date.now() - n),
         (s.Result = !1),
         (s.Error = t),
-        r && !i && (await e.AfterEach?.());
+        i && !r && (await e.AfterEach?.());
     }
   }
-  static async RunCase(r, i, o) {
+  static async RunCase(i, r, n, o) {
     return (
-      logTestMsg("开始运行测试用例: " + i.Name),
+      logTestMsg("开始运行测试用例: " + n.Name),
       new Promise((e) => {
-        const t =
-            (TestContext.Current.CurrentTest = i).TimeOut ?? DEFAULT_TIMEOUT,
+        const t = (i.CurrentTest = n).TimeOut ?? DEFAULT_TIMEOUT,
           s = setTimeout(() => {
             (o.Result = !1),
               (o.Error = new Error(
                 `Reason: timeout for ${t} ms
-File  : ` + i.FileLocation,
+File  : ` + n.FileLocation,
               )),
               e();
-          }, i.TimeOut ?? DEFAULT_TIMEOUT);
-        this.lt(r, i, o)
+          }, n.TimeOut ?? DEFAULT_TIMEOUT);
+        this.lt(r, n, o)
           .then(() => {
-            logTestMsg("测试用例运行结束: " + i.Name), clearTimeout(s), e();
+            logTestMsg("测试用例运行结束: " + n.Name), clearTimeout(s), e();
           })
           .catch((t) => {
             clearTimeout(s), (0, Log_1.log)("RunCaseAsync failed: " + t), e();
@@ -247,8 +245,8 @@ File  : ` + i.FileLocation,
   static FindNodeById(t, e) {
     if (t.Id === e) return t;
     if ("suite" === t.Type)
-      for (const r of t.Cases) {
-        var s = TestOp.FindNodeById(r, e);
+      for (const i of t.Cases) {
+        var s = TestOp.FindNodeById(i, e);
         if (s) return s;
       }
   }
@@ -261,4 +259,24 @@ File  : ` + i.FileLocation,
   }
 }
 exports.TestOp = TestOp;
+const contextMap = new Map();
+function getTestContext(t) {
+  let e = contextMap.get(t);
+  return e || ((e = new TestContext()), contextMap.set(t, e)), e;
+}
+exports.getTestContext = getTestContext;
+const testRunningContextStack = [];
+function pushTestRunningContextName(t) {
+  testRunningContextStack.push(t);
+}
+function popTestRunningContextName() {
+  testRunningContextStack.pop();
+}
+function getCurrentTestRunningContextName() {
+  if (0 !== testRunningContextStack.length)
+    return testRunningContextStack[testRunningContextStack.length - 1];
+}
+(exports.pushTestRunningContextName = pushTestRunningContextName),
+  (exports.popTestRunningContextName = popTestRunningContextName),
+  (exports.getCurrentTestRunningContextName = getCurrentTestRunningContextName);
 //# sourceMappingURL=TestOp.js.map

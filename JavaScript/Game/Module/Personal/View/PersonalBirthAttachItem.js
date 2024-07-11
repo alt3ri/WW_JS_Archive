@@ -10,17 +10,17 @@ class PersonalBirthAttachItem extends AutoAttachItem_1.AutoAttachItem {
   constructor() {
     super(...arguments),
       (this.kG = new UE.Vector(0)),
-      (this.Mnt = 0),
-      (this.EVe = void 0);
+      (this.wst = 0),
+      (this.q6e = void 0);
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [[0, UE.UIText]];
   }
   OnBeforeDestroy() {
-    this.Mnt = void 0;
+    this.wst = void 0;
   }
   OnRefreshItem(t) {
-    (this.Mnt = t), this.GetText(0).SetText(String(this.Mnt));
+    (this.wst = t), this.GetText(0).SetText(String(this.wst));
   }
   OnMoveItem() {
     var t = this.GetCurrentMovePercentage(),
@@ -32,10 +32,10 @@ class PersonalBirthAttachItem extends AutoAttachItem_1.AutoAttachItem {
       this.GetText(0).SetAlpha(t);
   }
   BindOnSelected(t) {
-    this.EVe = t;
+    this.q6e = t;
   }
   OnSelect() {
-    this.EVe && this.EVe(this.Mnt);
+    this.q6e && this.q6e(this.wst);
   }
   OnUnSelect() {}
 }

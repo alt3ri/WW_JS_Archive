@@ -5,26 +5,26 @@ const UE = require("ue"),
   GenericPromptFloatTipsBase_1 = require("./GenericPromptFloatTipsBase");
 class FloatLineFloatTips extends GenericPromptFloatTipsBase_1.GenericPromptFloatTipsBase {
   constructor() {
-    super(...arguments), (this.Q$t = void 0), (this.X$t = void 0);
+    super(...arguments), (this.QYt = void 0), (this.XYt = void 0);
   }
   OnStart() {
     var t;
     super.OnStart(),
-      (this.Q$t = this.MainText.GetOwner().GetComponentByClass(
+      (this.QYt = this.MainText.GetOwner().GetComponentByClass(
         UE.UIEffectTextAnimation.StaticClass(),
       )),
-      (this.X$t = this.ExtraText.GetOwner().GetComponentByClass(
+      (this.XYt = this.ExtraText.GetOwner().GetComponentByClass(
         UE.LGUIPlayTweenComponent.StaticClass(),
       )),
-      this.Q$t?.SetSelectorOffset(1),
-      this.X$t &&
+      this.QYt?.SetSelectorOffset(1),
+      this.XYt &&
         ((t = 0.5 * this.TickDuration),
         (t =
-          this.X$t.GetPlayTween().duration > t
+          this.XYt.GetPlayTween().duration > t
             ? t
-            : this.X$t.GetPlayTween().duration),
-        (this.X$t.GetPlayTween().duration = t),
-        this.X$t?.Play());
+            : this.XYt.GetPlayTween().duration),
+        (this.XYt.GetPlayTween().duration = t),
+        this.XYt?.Play());
   }
 }
 exports.FloatLineFloatTips = FloatLineFloatTips;

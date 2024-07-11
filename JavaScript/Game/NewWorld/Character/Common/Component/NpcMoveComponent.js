@@ -32,6 +32,7 @@ const UE = require("ue"),
   EventDefine_1 = require("../../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../../Common/Event/EventSystem"),
   ModelManager_1 = require("../../../../Manager/ModelManager"),
+  GravityUtils_1 = require("../../../../Utils/GravityUtils"),
   PreloadConstants_1 = require("../../../../World/Controller/PreloadConstants"),
   CharacterNameDefines_1 = require("../CharacterNameDefines"),
   CharacterAttributeTypes_1 = require("./Abilities/CharacterAttributeTypes"),
@@ -108,6 +109,7 @@ let NpcMoveComponent = (NpcMoveComponent_1 = class NpcMoveComponent extends (
   }
   OnClear() {
     return (
+      super.OnClear(),
       this.JumpDelayTimer &&
         TimerSystem_1.TimerSystem.Remove(this.JumpDelayTimer),
       this.MoveController?.Dispose(),
@@ -115,7 +117,7 @@ let NpcMoveComponent = (NpcMoveComponent_1 = class NpcMoveComponent extends (
     );
   }
   OnInit() {
-    return !0;
+    return super.OnInit();
   }
   OnStart() {
     (this.AccelerationLerpCurve =
@@ -135,8 +137,8 @@ let NpcMoveComponent = (NpcMoveComponent_1 = class NpcMoveComponent extends (
       (this.CharacterMovement = t.Actor.CharacterMovement),
       (this.CharacterMovement.GravityScale = 2),
       (this.CharacterMovement.bRotationFollowBaseMovement = !0),
-      (this.AnimComp = this.Entity.GetComponent(160)),
-      (this.UnifiedStateComponent = this.Entity.GetComponent(89)),
+      (this.AnimComp = this.Entity.GetComponent(162)),
+      (this.UnifiedStateComponent = this.Entity.GetComponent(91)),
       (this.CapsuleOffset = Vector_1.Vector.Create(
         0,
         0,
@@ -259,14 +261,15 @@ let NpcMoveComponent = (NpcMoveComponent_1 = class NpcMoveComponent extends (
           this.UpdateAddMoveOffset() && (e = !0),
           s && e && this.AnimComp.SetModelBuffer(t, i),
           this.OnTickGravityScale(),
-          this.ActorComp.SetInputRotatorByNumber(
-            this.ActorComp.InputRotator.Pitch,
-            this.ActorComp.InputRotator.Yaw + this.DeltaBaseMovementYaw,
-            this.ActorComp.InputRotator.Roll,
-          );
-        var h =
-          this.ActorComp.InputRotator.Yaw -
-          this.ActorComp.ActorRotationProxy.Yaw;
+          this.HasBaseMovement &&
+            (this.DeltaBaseMovementQuat.RotateVector(
+              this.ActorComp.InputFacingProxy,
+              this.TmpVector,
+            ),
+            this.ActorComp.SetInputFacing(this.TmpVector, !0));
+        var h = GravityUtils_1.GravityUtils.GetAngleOffsetFromCurrentToInput(
+          this.ActorComp,
+        );
         this.CanResponseInput() &&
           (MathUtils_1.MathUtils.IsNearlyZero(
             this.CachedDeltaYaw,
@@ -378,7 +381,7 @@ let NpcMoveComponent = (NpcMoveComponent_1 = class NpcMoveComponent extends (
     this.CanUpdateMovingRotation() &&
       (this.ActorComp.OverrideTurnSpeed
         ? (this.SmoothCharacterRotation(
-            this.ActorComp.InputRotator,
+            this.ActorComp.InputRotatorProxy,
             this.ActorComp.OverrideTurnSpeed,
             this.DeltaTimeSeconds,
             !1,
@@ -390,7 +393,7 @@ let NpcMoveComponent = (NpcMoveComponent_1 = class NpcMoveComponent extends (
 });
 (NpcMoveComponent = NpcMoveComponent_1 =
   __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(163)],
+    [(0, RegisterComponent_1.RegisterComponent)(165)],
     NpcMoveComponent,
   )),
   (exports.NpcMoveComponent = NpcMoveComponent);

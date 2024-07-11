@@ -6,20 +6,20 @@ const ModelBase_1 = require("../../../../Core/Framework/ModelBase"),
   EventSystem_1 = require("../../../Common/Event/EventSystem");
 class DailyTaskModel extends ModelBase_1.ModelBase {
   constructor() {
-    super(...arguments), (this.$oo = void 0);
+    super(...arguments), (this.Wro = void 0);
   }
   OnInit() {
-    return (this.$oo = new Map()), !0;
+    return (this.Wro = new Map()), !0;
   }
   OnClear() {
-    return this.$oo?.clear(), !(this.$oo = void 0);
+    return this.Wro?.clear(), !(this.Wro = void 0);
   }
   GetAllDailyQuest() {
-    return this.$oo;
+    return this.Wro;
   }
   GetDailyTaskCorrelativeEntities() {
     const t = new Array();
-    for (var [, e] of this.$oo)
+    for (var [, e] of this.Wro)
       e.GetCurrentCorrelativeEntities()?.forEach((e) => {
         t.push(e);
       });
@@ -27,11 +27,11 @@ class DailyTaskModel extends ModelBase_1.ModelBase {
   }
   AddDailyQuest(e) {
     e &&
-      (this.$oo.set(e.Id, e),
+      (this.Wro.set(e.Id, e),
       EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.DailyTaskChange));
   }
   RemoveDailyQuest(e) {
-    this.$oo.delete(e);
+    this.Wro.delete(e);
   }
 }
 exports.DailyTaskModel = DailyTaskModel;

@@ -9,11 +9,11 @@ const UE = require("ue"),
 class ItemView extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(),
-      (this.rmi = void 0),
-      (this.EPe = void 0),
-      (this.nmi = void 0),
-      (this.s_i = (e) => {
-        this.nmi && this.nmi(this.rmi);
+      (this.rdi = void 0),
+      (this.SPe = void 0),
+      (this.ndi = void 0),
+      (this.sui = (e) => {
+        this.ndi && this.ndi(this.rdi);
       });
   }
   OnRegisterComponent() {
@@ -38,16 +38,16 @@ class ItemView extends GridProxyAbstract_1.GridProxyAbstract {
       [17, UE.UISprite],
       [18, UE.UIText],
     ]),
-      (this.BtnBindInfo = [[5, this.s_i]]);
+      (this.BtnBindInfo = [[5, this.sui]]);
   }
   OnStart() {
-    this.EPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem);
+    this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem);
   }
   OnBeforeDestroy() {
-    (this.nmi = void 0), this.EPe.Clear(), (this.EPe = void 0);
+    (this.ndi = void 0), this.SPe.Clear(), (this.SPe = void 0);
   }
   BindOnItemButtonClickedCallback(e) {
-    this.nmi = e;
+    this.ndi = e;
   }
   Refresh(e, t, i) {
     this.RefreshItemViewByItemData(e), this.SetSelected(t);
@@ -59,70 +59,70 @@ class ItemView extends GridProxyAbstract_1.GridProxyAbstract {
     this.SetSelected(!1);
   }
   RefreshItemViewByItemData(e) {
-    var e = (this.rmi = e).GetItemViewInfo(),
+    var e = (this.rdi = e).GetItemViewInfo(),
       t = e.QualityId,
       i = e.IsLock,
       s = e.IsNewItem,
       e = e.ItemDataType;
     switch (
-      (this.Odi(),
-      this.kdi(t),
-      this.Fdi(i),
+      (this.OCi(),
+      this.kCi(t),
+      this.FCi(i),
       this.SetIsNewItem(s),
       this.RefreshCdTimeDisplay(),
       e)
     ) {
       case 0:
-        var r = this.rmi.GetCount();
-        this.Vdi(r);
+        var r = this.rdi.GetCount();
+        this.VCi(r);
         break;
       case 2:
-        (r = this.rmi.GetItemDataBase().GetUniqueId()),
+        (r = this.rdi.GetItemDataBase().GetUniqueId()),
           (r =
             ModelManager_1.ModelManager.WeaponModel.GetWeaponDataByIncId(
               r,
             ).GetLevel());
-        this.Hdi(r);
+        this.HCi(r);
         break;
       case 3:
-        (r = this.rmi.GetItemDataBase().GetUniqueId()),
+        (r = this.rdi.GetItemDataBase().GetUniqueId()),
           (r =
             ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomBattleData(
               r,
             ).GetPhantomLevel());
-        this.Hdi(r);
+        this.HCi(r);
         break;
       default:
-        r = this.rmi.GetCount();
-        this.Vdi(r);
+        r = this.rdi.GetCount();
+        this.VCi(r);
     }
   }
-  Odi() {
+  OCi() {
     var e = this.GetTexture(0);
-    this.SetItemIcon(e, this.rmi.GetConfigId());
+    this.SetItemIcon(e, this.rdi.GetConfigId());
   }
-  kdi(e) {
+  kCi(e) {
     var t = this.GetSprite(2);
-    t && this.SetItemQualityIcon(t, this.rmi.GetConfigId());
+    t && this.SetItemQualityIcon(t, this.rdi.GetConfigId());
   }
   SetSelected(e) {
     var t = this.GetExtendToggle(5);
     e ? t.SetToggleState(1, !1) : t.SetToggleState(0, !1);
   }
-  Fdi(e) {
+  FCi(e) {
     var t = this.GetSprite(6);
     t && t.SetUIActive(e);
   }
   SetIsNewItem(e) {
     this.GetSprite(7).SetUIActive(e);
   }
-  Vdi(e) {
+  VCi(e) {
     var t = this.GetText(4);
     t &&
       (t.SetText(e.toString()), t.SetUIActive(!0), (e = this.GetText(3))) &&
       e.SetUIActive(!1);
   }
-  Hdi(e) {
+  HCi(e) {
     var t = this.GetText(3);
     t &&
       (LguiUtil_1.LguiUtil.SetLocalText(t, "LevelShow", e),
@@ -133,21 +133,21 @@ class ItemView extends GridProxyAbstract_1.GridProxyAbstract {
   SetRoleHeadVisible(e) {
     this.GetItem(14).SetUIActive(e);
   }
-  jdi(e) {
+  jCi(e) {
     var t = this.GetItem(16);
     t.bIsUIActive !== e &&
       (t.SetUIActive(e), e) &&
-      this.EPe.PlayLevelSequenceByName("EnterCd");
+      this.SPe.PlayLevelSequenceByName("EnterCd");
   }
   RefreshCdTimeDisplay() {
-    var e = this.rmi.GetConfigId(),
+    var e = this.rdi.GetConfigId(),
       t = ModelManager_1.ModelManager.BuffItemModel,
       i = t.GetBuffItemRemainCdTime(e);
     i <= 0
-      ? this.jdi(!1)
-      : ((t = t.GetBuffItemTotalCdTime(e)), this.Wdi(i, t), this.jdi(!0));
+      ? this.jCi(!1)
+      : ((t = t.GetBuffItemTotalCdTime(e)), this.WCi(i, t), this.jCi(!0));
   }
-  Wdi(e, t) {
+  WCi(e, t) {
     var e = Math.ceil(e),
       i = this.GetSprite(17),
       s = this.GetText(18);

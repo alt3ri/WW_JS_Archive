@@ -32,8 +32,8 @@ const puerts_1 = require("puerts"),
 class BattleUiModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
-      (this.sQe = new Map()),
-      (this.aQe = void 0),
+      (this.pXe = new Map()),
+      (this.vXe = void 0),
       (this.FormationData = void 0),
       (this.SpecialEnergyBarData = void 0),
       (this.ChildViewData = void 0),
@@ -43,13 +43,13 @@ class BattleUiModel extends ModelBase_1.ModelBase {
       (this.MergeHeadStateData = void 0),
       (this.EnvironmentKeyData = void 0),
       (this.FormationPanelData = void 0),
-      (this.hQe = []),
-      (this.lQe = []),
-      (this._Qe = !0),
-      (this.uQe = void 0),
-      (this.cQe = new Map()),
+      (this.MXe = []),
+      (this.EXe = []),
+      (this.SXe = !0),
+      (this.yXe = void 0),
+      (this.IXe = new Map()),
       (this.HeadStateCommonParam = void 0),
-      (this.mQe = void 0),
+      (this.TXe = void 0),
       (this.ThreatLevel1 = 0),
       (this.ThreatLevel3 = 0),
       (this.ThreatLevelColor1 = ""),
@@ -57,47 +57,47 @@ class BattleUiModel extends ModelBase_1.ModelBase {
       (this.ThreatLevelColor3 = ""),
       (this.IsOpenJoystickLog = !1),
       (this.ConcertoChangeEffectDelay = 0),
-      (this.dQe = void 0),
+      (this.LXe = void 0),
       (this.CursorCameraRotatorOffset = Rotator_1.Rotator.Create(0, 0, 0)),
       (this.ResetAddRotator = Rotator_1.Rotator.Create(0, 0, 0)),
       (this.CursorCameraRotationTime = 0),
-      (this.CQe = (0, puerts_1.$ref)(0)),
-      (this.gQe = (0, puerts_1.$ref)(0)),
+      (this.DXe = (0, puerts_1.$ref)(0)),
+      (this.RXe = (0, puerts_1.$ref)(0)),
       (this.ViewportSize = Vector2D_1.Vector2D.Create()),
       (this.ScreenPositionScale = 0),
       (this.ScreenPositionOffset = Vector2D_1.Vector2D.Create()),
       (this.IsLongPressExploreButton = !1),
       (this.IsPressJoyStick = !1),
-      (this.fQe = !1),
-      (this.pQe = !1),
-      (this.vQe = !1),
+      (this.UXe = !1),
+      (this.AXe = !1),
+      (this.PXe = !1),
       (this.IsInBattleSettlement = !1),
-      (this.MQe = !1),
-      (this.SQe = void 0),
-      (this.EQe = !1),
-      (this.yQe = void 0),
-      (this.IQe = void 0),
-      (this.TQe = () => {
-        (this.SQe = void 0),
-          this.EQe &&
-            (this.LQe(),
+      (this.xXe = !1),
+      (this.wXe = void 0),
+      (this.BXe = !1),
+      (this.bXe = void 0),
+      (this.qXe = void 0),
+      (this.GXe = () => {
+        (this.wXe = void 0),
+          this.BXe &&
+            (this.NXe(),
             EventSystem_1.EventSystem.Emit(
               EventDefine_1.EEventName.BattleUiCurRoleDataChangedNextTick,
-              this.yQe,
-              this.IQe,
+              this.bXe,
+              this.qXe,
             ),
-            (this.EQe = !1),
-            (this.yQe = void 0),
-            (this.IQe = void 0));
+            (this.BXe = !1),
+            (this.bXe = void 0),
+            (this.qXe = void 0));
       });
   }
   OnInit() {
     (this.HeadStateCommonParam =
       new HeadStateCommonParam_1.HeadStateCommonParam()),
       this.HeadStateCommonParam.Init(),
-      (this.mQe = new Array());
+      (this.TXe = new Array());
     for (let t = 0; t <= 6; t++)
-      this.mQe[t] = CommonParamById_1.configCommonParamById.GetStringConfig(
+      this.TXe[t] = CommonParamById_1.configCommonParamById.GetStringConfig(
         "MonsterBarColor" + t,
       );
     return (
@@ -121,7 +121,7 @@ class BattleUiModel extends ModelBase_1.ModelBase {
         CommonParamById_1.configCommonParamById.GetIntConfig(
           "ConcertoChangeEffectDelay",
         )),
-      (this.dQe = new Map([
+      (this.LXe = new Map([
         [
           0,
           CommonParamById_1.configCommonParamById.GetStringConfig(
@@ -186,7 +186,7 @@ class BattleUiModel extends ModelBase_1.ModelBase {
       (this.CursorCameraRotationTime =
         CommonParamById_1.configCommonParamById.GetIntConfig("RotationTime") /
         CommonDefine_1.MILLIONSECOND_PER_SECOND),
-      (this.uQe = BigInt(0)),
+      (this.yXe = BigInt(0)),
       (this.FormationData =
         new BattleUiFormationData_1.BattleUiFormationData()),
       this.FormationData.Init(),
@@ -218,19 +218,19 @@ class BattleUiModel extends ModelBase_1.ModelBase {
   }
   async Preload() {
     return (
-      this.fQe || (await this.SpecialEnergyBarData.Preload(), (this.fQe = !0)),
+      this.UXe || (await this.SpecialEnergyBarData.Preload(), (this.UXe = !0)),
       !0
     );
   }
   GetHeadStateHpColor(t) {
-    return this.dQe.get(t);
+    return this.LXe.get(t);
   }
   GetPropertyColor(t) {
-    return this.mQe[t];
+    return this.TXe[t];
   }
   OnLeaveLevel() {
     return (
-      (this.fQe = !1),
+      (this.UXe = !1),
       this.FormationData.OnLeaveLevel(),
       this.SpecialEnergyBarData.OnLeaveLevel(),
       this.ChildViewData.OnLeaveLevel(),
@@ -239,19 +239,19 @@ class BattleUiModel extends ModelBase_1.ModelBase {
       this.ExploreModeData.OnLeaveLevel(),
       this.MergeHeadStateData.OnLeaveLevel(),
       this.EnvironmentKeyData.OnLeaveLevel(),
-      (this.fQe = !1),
+      (this.UXe = !1),
       (this.IsInBattleSettlement = !1),
-      !(this.MQe = !1)
+      !(this.xXe = !1)
     );
   }
   OnClear() {
     return (
-      this.DQe(),
-      this.RQe(),
+      this.OXe(),
+      this.kXe(),
       this.ClearAllLevelUpCacheData(),
-      this.cQe.clear(),
+      this.IXe.clear(),
       (this.HeadStateCommonParam = void 0),
-      (this.mQe = void 0),
+      (this.TXe = void 0),
       this.FormationData.Clear(),
       (this.FormationData = void 0),
       this.SpecialEnergyBarData.Clear(),
@@ -287,7 +287,7 @@ class BattleUiModel extends ModelBase_1.ModelBase {
   }
   TryBroadcastCacheRoleLevelUpData() {
     if (UiManager_1.UiManager.IsViewShow("BattleView")) {
-      for (const a of this.hQe) {
+      for (const a of this.MXe) {
         var t = a.ConfigId,
           e = a.Exp,
           i = a.Level;
@@ -303,10 +303,10 @@ class BattleUiModel extends ModelBase_1.ModelBase {
   }
   AddLevelUpCacheData(t, e, i) {
     t = new LevelUpCacheData_1.LevelUpCacheData(t, e, i);
-    this.hQe.push(t);
+    this.MXe.push(t);
   }
   ClearAllLevelUpCacheData() {
-    this.hQe.length = 0;
+    this.MXe.length = 0;
   }
   TryBroadcastRevive(t) {
     UiManager_1.UiManager.IsViewShow("BattleView")
@@ -320,30 +320,30 @@ class BattleUiModel extends ModelBase_1.ModelBase {
     UiManager_1.UiManager.IsViewShow("BattleView") &&
       (EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnFormationPlayRevive,
-        this.lQe,
+        this.EXe,
       ),
       this.ClearReviveEntityIdList());
   }
   AddReviveEntityIdList(t) {
-    this.lQe.push(t);
+    this.EXe.push(t);
   }
   ClearReviveEntityIdList() {
-    this.lQe.length = 0;
+    this.EXe.length = 0;
   }
   GetIsBossStateVisible() {
-    return this._Qe;
+    return this.SXe;
   }
   GetFullScreenEffect(t) {
-    return this.cQe.get(t);
+    return this.IXe.get(t);
   }
   AddFullScreenEffect(t, e) {
     let i = void 0;
-    i = void 0 === e ? this.uQe-- : e;
+    i = void 0 === e ? this.yXe-- : e;
     e = this.GetFullScreenEffect(i);
     return (
       e ||
         ((e = new FullScreenEffectHandle_1.FullScreenEffectHandle(i, t)),
-        this.cQe.set(i, e),
+        this.IXe.set(i, e),
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.OnAddFullScreenEffect,
           e,
@@ -358,53 +358,53 @@ class BattleUiModel extends ModelBase_1.ModelBase {
         t,
       ),
       (t = t.UniqueId),
-      this.cQe.delete(t));
+      this.IXe.delete(t));
   }
   RemoveFullScreenEffectByUniqueId(t) {
-    t = this.cQe.get(t);
+    t = this.IXe.get(t);
     this.RemoveFullScreenEffect(t);
   }
   ClearFullScreenEffect() {
-    this.cQe.clear(),
+    this.IXe.clear(),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnClearFullScreenEffect,
       );
   }
   UpdateViewPortSize() {
-    Global_1.Global.CharacterController.GetViewportSize(this.CQe, this.gQe);
-    var t = (0, puerts_1.$unref)(this.CQe),
-      e = (0, puerts_1.$unref)(this.gQe),
+    Global_1.Global.CharacterController.GetViewportSize(this.DXe, this.RXe);
+    var t = (0, puerts_1.$unref)(this.DXe),
+      e = (0, puerts_1.$unref)(this.RXe),
       e = (this.ViewportSize.Set(t, e), UiLayer_1.UiLayer.UiRootItem);
     e &&
       ((this.ScreenPositionScale = e.GetWidth() / t),
       this.ScreenPositionOffset.Set(0.5 * -e.GetWidth(), 0.5 * -e.GetHeight()));
   }
   GetRoleData(t) {
-    return this.sQe.get(t);
+    return this.pXe.get(t);
   }
   GetCurRoleData() {
-    return this.aQe;
+    return this.vXe;
   }
   OnChangeRole(t, e) {
     let i = !1;
-    for (const a of this.sQe.values())
+    for (const a of this.pXe.values())
       t === a.EntityHandle
-        ? (a.OnChangeRole(!0), (this.aQe = a), (i = !0))
+        ? (a.OnChangeRole(!0), (this.vXe = a), (i = !0))
         : a.OnChangeRole(!1);
-    i || (this.aQe = this.UQe(t, !0)),
-      (this.EQe = !0),
-      (this.yQe = t?.Id),
-      (this.IQe = e?.Id),
+    i || (this.vXe = this.FXe(t, !0)),
+      (this.BXe = !0),
+      (this.bXe = t?.Id),
+      (this.qXe = e?.Id),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.BattleUiCurRoleDataChanged,
-        this.yQe,
-        this.IQe ?? 0,
+        this.bXe,
+        this.qXe ?? 0,
       ),
-      this.AQe();
+      this.VXe();
   }
   OnFormationLoaded() {
     this.FormationPanelData.UpdateFormationPanelData(),
-      this.PQe(),
+      this.HXe(),
       this.ClearFullScreenEffect(),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.BattleUiAllRoleDataChanged,
@@ -414,50 +414,50 @@ class BattleUiModel extends ModelBase_1.ModelBase {
     this.MergeHeadStateData.OnAddEntity(t);
   }
   OnRemoveEntity(t) {
-    var e = this.sQe.get(t.Id);
+    var e = this.pXe.get(t.Id);
     e &&
-      (this.sQe.delete(t.Id),
+      (this.pXe.delete(t.Id),
       e.Clear(),
-      this.aQe === e && (this.aQe = void 0),
+      this.vXe === e && (this.vXe = void 0),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.BattleUiRemoveRoleData,
         t.Entity,
       )),
       this.MergeHeadStateData.OnRemoveEntity(t);
   }
-  PQe() {
+  HXe() {
     var t = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
     for (const e of ModelManager_1.ModelManager.SceneTeamModel.GetTeamEntities())
-      e === t ? (this.aQe = this.UQe(e, !0)) : this.UQe(e, !1);
+      e === t ? (this.vXe = this.FXe(e, !0)) : this.FXe(e, !1);
   }
-  UQe(t, e) {
-    let i = this.sQe.get(t.Id);
+  FXe(t, e) {
+    let i = this.pXe.get(t.Id);
     return (
       i
         ? i.IsCurEntity !== e && i.OnChangeRole(e)
         : ((i = new BattleUiRoleData_1.BattleUiRoleData()).Init(t, e),
-          this.sQe.set(t.Id, i)),
+          this.pXe.set(t.Id, i)),
       i
     );
   }
-  RQe() {
-    for (const t of this.sQe.values()) t.Clear();
-    this.sQe.clear();
+  kXe() {
+    for (const t of this.pXe.values()) t.Clear();
+    this.pXe.clear();
   }
-  AQe() {
-    this.SQe ||
-      (this.SQe = TimerSystem_1.TimerSystem.Next(this.TQe, BattleUiModel.xQe));
+  VXe() {
+    this.wXe ||
+      (this.wXe = TimerSystem_1.TimerSystem.Next(this.GXe, BattleUiModel.jXe));
   }
-  DQe() {
-    this.SQe ||
-      (TimerSystem_1.TimerSystem.Has(this.SQe) &&
-        TimerSystem_1.TimerSystem.Remove(this.SQe),
-      (this.SQe = void 0),
-      (this.EQe = !1),
-      (this.yQe = void 0),
-      (this.IQe = void 0));
+  OXe() {
+    this.wXe ||
+      (TimerSystem_1.TimerSystem.Has(this.wXe) &&
+        TimerSystem_1.TimerSystem.Remove(this.wXe),
+      (this.wXe = void 0),
+      (this.BXe = !1),
+      (this.bXe = void 0),
+      (this.qXe = void 0));
   }
-  LQe() {
+  NXe() {
     var t = ModelManager_1.ModelManager.BattleUiModel.GetCurRoleData();
     t?.RoleBattleViewInfo
       ? (this.ChildViewData.SetChildVisible(
@@ -510,28 +510,28 @@ class BattleUiModel extends ModelBase_1.ModelBase {
         this.ChildViewData.SetChildVisible(3, 10, !0));
   }
   SetIsDynamicJoystick(t) {
-    (this.pQe = t),
+    (this.AXe = t),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnSetJoystickMode,
         t,
       );
   }
   GetIsDynamicJoystick() {
-    return this.pQe;
+    return this.AXe;
   }
   SetIsAutoSwitchSkillButtonMode(t) {
-    (this.vQe = t), this.ExploreModeData?.SetAutoSwitch(t);
+    (this.PXe = t), this.ExploreModeData?.SetAutoSwitch(t);
   }
   GetIsAutoSwitchSkillButtonMode() {
-    return this.vQe;
+    return this.PXe;
   }
   SetExecutionInteractEnable(t) {
-    (this.MQe = t),
+    (this.xXe = t),
       InputDistributeController_1.InputDistributeController.RefreshInputTag();
   }
   ExistBattleInteract() {
-    return this.MQe;
+    return this.xXe;
   }
 }
-(exports.BattleUiModel = BattleUiModel).xQe = void 0;
+(exports.BattleUiModel = BattleUiModel).jXe = void 0;
 //# sourceMappingURL=BattleUiModel.js.map

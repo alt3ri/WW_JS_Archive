@@ -10,12 +10,12 @@ const UE = require("ue"),
 class SignalMovePanel extends UiComponentsAction_1.UiComponentsAction {
   constructor() {
     super(...arguments),
-      (this.xMo = void 0),
-      (this.wMo = void 0),
-      (this.BMo = void 0),
-      (this.bMo = void 0),
-      (this.Pxn = void 0),
-      (this.unt = 0);
+      (this.UEo = void 0),
+      (this.AEo = void 0),
+      (this.PEo = void 0),
+      (this.xEo = void 0),
+      (this.uBn = void 0),
+      (this.Ist = 0);
   }
   async Init(t, i) {
     t.SetAnchorOffsetY(0),
@@ -31,23 +31,23 @@ class SignalMovePanel extends UiComponentsAction_1.UiComponentsAction {
     ];
   }
   OnStart() {
-    (this.wMo = this.GetItem(0)),
-      (this.BMo = this.GetItem(1)),
-      (this.bMo = this.GetItem(2)),
-      (this.Pxn = this.GetItem(3)),
-      this.qMo(),
-      this.wMo.SetUIActive(!1),
-      this.bMo.SetUIActive(!1),
-      this.BMo.SetUIActive(!1),
-      this.Pxn.SetUIActive(!1);
+    (this.AEo = this.GetItem(0)),
+      (this.PEo = this.GetItem(1)),
+      (this.xEo = this.GetItem(2)),
+      (this.uBn = this.GetItem(3)),
+      this.wEo(),
+      this.AEo.SetUIActive(!1),
+      this.xEo.SetUIActive(!1),
+      this.PEo.SetUIActive(!1),
+      this.uBn.SetUIActive(!1);
   }
-  qMo() {
+  wEo() {
     var t = ModelManager_1.ModelManager.SignalDecodeModel,
       e = t.CurrentMorseCode,
-      s = ((this.unt = t.Speed), t.StartDecisionSize),
+      s = ((this.Ist = t.Speed), t.StartDecisionSize),
       n = t.EndDecisionSize,
       o = 3 === t.CurrentGameplayType;
-    this.xMo = [];
+    this.UEo = [];
     for (let i = e.length - 1; 0 <= i; --i) {
       var a,
         h = e[i],
@@ -55,68 +55,68 @@ class SignalMovePanel extends UiComponentsAction_1.UiComponentsAction {
       let t = void 0;
       switch (r) {
         case 1:
-          var l = LguiUtil_1.LguiUtil.CopyItem(this.BMo, this.RootItem);
+          var l = LguiUtil_1.LguiUtil.CopyItem(this.PEo, this.RootItem);
           (t = new SignalItem_1.SignalItem(r, s, n)).Init(l);
           break;
         case 2:
-          l = LguiUtil_1.LguiUtil.CopyItem(this.wMo, this.RootItem);
+          l = LguiUtil_1.LguiUtil.CopyItem(this.AEo, this.RootItem);
           (t = new SignalItem_1.SignalItem(r, s, n)).Init(l);
           break;
         default:
-          var g = LguiUtil_1.LguiUtil.CopyItem(this.bMo, this.RootItem);
+          var g = LguiUtil_1.LguiUtil.CopyItem(this.xEo, this.RootItem);
           (t = new SignalLineItem_1.SignalLineItem(0, s, n)).Init(g);
       }
       0 === r &&
         o &&
-        ((h = LguiUtil_1.LguiUtil.CopyItem(this.Pxn, this.RootItem)),
+        ((h = LguiUtil_1.LguiUtil.CopyItem(this.uBn, this.RootItem)),
         (a = new SignalLineItem_1.SignalLineItem(0, s, n)).Init(h),
-        this.xMo.push(a)),
-        this.xMo.push(t),
+        this.UEo.push(a)),
+        this.UEo.push(t),
         0 !== i &&
           0 !== r &&
-          ((h = LguiUtil_1.LguiUtil.CopyItem(this.bMo, this.RootItem)),
+          ((h = LguiUtil_1.LguiUtil.CopyItem(this.xEo, this.RootItem)),
           (a = new SignalLineItem_1.SignalLineItem(0, s, n)).Init(h),
-          this.xMo.push(a));
+          this.UEo.push(a));
     }
   }
   InitByGameplayType(t) {
-    if (this.xMo) for (const i of this.xMo) i.InitByGameplayType(t);
+    if (this.UEo) for (const i of this.UEo) i.InitByGameplayType(t);
   }
   StartAgain() {
-    if (this.xMo) for (const t of this.xMo) t.Reset();
+    if (this.UEo) for (const t of this.UEo) t.Reset();
   }
   UpdateMove(t) {
-    this.GMo(t), this.NMo();
+    this.BEo(t), this.bEo();
   }
   GetCompleteness() {
     let t = 0,
       i = 0;
-    for (const e of this.xMo)
+    for (const e of this.UEo)
       e instanceof SignalItem_1.SignalItem && ((i += e.GetCompleteness()), t++);
     return 0 === t ? 1 : i / t;
   }
   GetProgress() {
     let t = 0,
       i = 0;
-    for (const e of this.xMo) (i += e.GetProgress()), t++;
+    for (const e of this.UEo) (i += e.GetProgress()), t++;
     return 0 === t ? 1 : i / t;
   }
-  GMo(t) {
-    t = this.RootItem.GetAnchorOffsetX() + (t / 1e3) * this.unt;
+  BEo(t) {
+    t = this.RootItem.GetAnchorOffsetX() + (t / 1e3) * this.Ist;
     this.RootItem.SetAnchorOffsetX(t);
   }
-  NMo() {
+  bEo() {
     var t = this.RootItem.GetAnchorOffsetX();
-    for (const e of this.xMo) {
+    for (const e of this.UEo) {
       var i = t + e.GetRootItem().GetAnchorOffsetX();
       e.Update(i);
     }
   }
   OnCatchBtnDown() {
-    for (const t of this.xMo) t.OnCatchBtnDown();
+    for (const t of this.UEo) t.OnCatchBtnDown();
   }
   OnCatchBtnUp() {
-    for (const t of this.xMo) t.OnCatchBtnUp();
+    for (const t of this.UEo) t.OnCatchBtnUp();
   }
 }
 exports.SignalMovePanel = SignalMovePanel;

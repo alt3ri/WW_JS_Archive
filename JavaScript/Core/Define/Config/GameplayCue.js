@@ -98,11 +98,17 @@ class GameplayCue {
       this.parameters(t),
     );
   }
-  __init(t, s) {
-    return (this.z7 = t), (this.J7 = s), this;
+  get Group() {
+    return this.group();
   }
-  static getRootAsGameplayCue(t, s) {
-    return (s || new GameplayCue()).__init(
+  get Priority() {
+    return this.priority();
+  }
+  __init(t, r) {
+    return (this.z7 = t), (this.J7 = r), this;
+  }
+  static getRootAsGameplayCue(t, r) {
+    return (r || new GameplayCue()).__init(
       t.readInt32(t.position()) + t.position(),
       t,
     );
@@ -112,8 +118,8 @@ class GameplayCue {
     return t ? this.J7.readInt64(this.z7 + t) : BigInt("0");
   }
   path(t) {
-    var s = this.J7.__offset(this.z7, 6);
-    return s ? this.J7.__string(this.z7 + s, t) : null;
+    var r = this.J7.__offset(this.z7, 6);
+    return r ? this.J7.__string(this.z7 + r, t) : null;
   }
   cuetype() {
     var t = this.J7.__offset(this.z7, 8);
@@ -124,36 +130,36 @@ class GameplayCue {
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   compname(t) {
-    var s = this.J7.__offset(this.z7, 12);
-    return s ? this.J7.__string(this.z7 + s, t) : null;
+    var r = this.J7.__offset(this.z7, 12);
+    return r ? this.J7.__string(this.z7 + r, t) : null;
   }
   socket(t) {
-    var s = this.J7.__offset(this.z7, 14);
-    return s ? this.J7.__string(this.z7 + s, t) : null;
+    var r = this.J7.__offset(this.z7, 14);
+    return r ? this.J7.__string(this.z7 + r, t) : null;
   }
   location(t) {
-    var s = this.J7.__offset(this.z7, 16);
-    return s
+    var r = this.J7.__offset(this.z7, 16);
+    return r
       ? (t || new Vector_1.Vector()).__init(
-          this.J7.__indirect(this.z7 + s),
+          this.J7.__indirect(this.z7 + r),
           this.J7,
         )
       : null;
   }
   rotation(t) {
-    var s = this.J7.__offset(this.z7, 18);
-    return s
+    var r = this.J7.__offset(this.z7, 18);
+    return r
       ? (t || new Vector_1.Vector()).__init(
-          this.J7.__indirect(this.z7 + s),
+          this.J7.__indirect(this.z7 + r),
           this.J7,
         )
       : null;
   }
   scale(t) {
-    var s = this.J7.__offset(this.z7, 20);
-    return s
+    var r = this.J7.__offset(this.z7, 20);
+    return r
       ? (t || new Vector_1.Vector()).__init(
-          this.J7.__indirect(this.z7 + s),
+          this.J7.__indirect(this.z7 + r),
           this.J7,
         )
       : null;
@@ -183,8 +189,8 @@ class GameplayCue {
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   tag(t) {
-    var s = this.J7.__offset(this.z7, 34);
-    return s ? this.J7.__string(this.z7 + s, t) : null;
+    var r = this.J7.__offset(this.z7, 34);
+    return r ? this.J7.__string(this.z7 + r, t) : null;
   }
   max() {
     var t = this.J7.__offset(this.z7, 36);
@@ -207,10 +213,10 @@ class GameplayCue {
     return !!t && !!this.J7.readInt8(this.z7 + t);
   }
   lockrotation(t) {
-    var s = this.J7.__offset(this.z7, 46);
-    return s
+    var r = this.J7.__offset(this.z7, 46);
+    return r
       ? (t || new Vector_1.Vector()).__init(
-          this.J7.__indirect(this.z7 + s),
+          this.J7.__indirect(this.z7 + r),
           this.J7,
         )
       : null;
@@ -224,10 +230,10 @@ class GameplayCue {
     return t ? this.J7.readInt32(this.z7 + t) : 100;
   }
   faulttolerance(t) {
-    var s = this.J7.__offset(this.z7, 52);
-    return s
+    var r = this.J7.__offset(this.z7, 52);
+    return r
       ? (t || new Vector_1.Vector()).__init(
-          this.J7.__indirect(this.z7 + s),
+          this.J7.__indirect(this.z7 + r),
           this.J7,
         )
       : null;
@@ -236,8 +242,8 @@ class GameplayCue {
     return this.targetscaleup(t);
   }
   targetscaleup(t) {
-    var s = this.J7.__offset(this.z7, 54);
-    return s ? this.J7.readFloat32(this.J7.__vector(this.z7 + s) + 4 * t) : 0;
+    var r = this.J7.__offset(this.z7, 54);
+    return r ? this.J7.readFloat32(this.J7.__vector(this.z7 + r) + 4 * t) : 0;
   }
   targetscaleupLength() {
     var t = this.J7.__offset(this.z7, 54);
@@ -256,10 +262,10 @@ class GameplayCue {
   GetResourcesAt(t) {
     return this.resources(t);
   }
-  resources(t, s) {
-    var r = this.J7.__offset(this.z7, 56);
-    return r
-      ? this.J7.__string(this.J7.__vector(this.z7 + r) + 4 * t, s)
+  resources(t, r) {
+    var s = this.J7.__offset(this.z7, 56);
+    return s
+      ? this.J7.__string(this.J7.__vector(this.z7 + s) + 4 * t, r)
       : null;
   }
   resourcesLength() {
@@ -269,15 +275,23 @@ class GameplayCue {
   GetParametersAt(t) {
     return this.parameters(t);
   }
-  parameters(t, s) {
-    var r = this.J7.__offset(this.z7, 58);
-    return r
-      ? this.J7.__string(this.J7.__vector(this.z7 + r) + 4 * t, s)
+  parameters(t, r) {
+    var s = this.J7.__offset(this.z7, 58);
+    return s
+      ? this.J7.__string(this.J7.__vector(this.z7 + s) + 4 * t, r)
       : null;
   }
   parametersLength() {
     var t = this.J7.__offset(this.z7, 58);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
+  }
+  group() {
+    var t = this.J7.__offset(this.z7, 60);
+    return t ? this.J7.readInt32(this.z7 + t) : 0;
+  }
+  priority() {
+    var t = this.J7.__offset(this.z7, 62);
+    return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
 }
 exports.GameplayCue = GameplayCue;

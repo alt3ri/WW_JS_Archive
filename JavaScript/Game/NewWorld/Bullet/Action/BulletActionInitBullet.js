@@ -21,7 +21,7 @@ class BulletActionInitBullet extends BulletActionBase_1.BulletActionBase {
       o = ((l.GenerateTime = Time_1.Time.WorldTime), e.TargetId),
       o = ((l.TargetId = o), l.SetTargetById(o), l.AttackerCreatureDataComp);
     if (o) {
-      o.GetEntityType() !== Protocol_1.Aki.Protocol.HBs.Proto_Player
+      o.GetEntityType() !== Protocol_1.Aki.Protocol.wks.Proto_Player
         ? (l.AttackerCamp = o.GetEntityCamp())
         : (l.AttackerCamp = 0),
         (l.IsAutonomousProxy = l.AttackerActorComp.IsAutonomousProxy),
@@ -56,14 +56,14 @@ class BulletActionInitBullet extends BulletActionBase_1.BulletActionBase {
       for (const B of o) l.AddTagId(B);
       if (GlobalData_1.GlobalData.IsPlayInEditor) {
         0 < B &&
-          this.V4o(
+          this.O5o(
             B,
             e.BulletRowName,
             "子弹的'基础设置.子弹标签'中的值必须是以[子弹.]开头的",
           );
         for (const B of o)
           0 < B &&
-            this.V4o(
+            this.O5o(
               B,
               e.BulletRowName,
               "子弹的'逻辑设置.预设.预设标签'中的值必须是以[子弹.]开头的",
@@ -94,7 +94,7 @@ class BulletActionInitBullet extends BulletActionBase_1.BulletActionBase {
     } else
       BulletController_1.BulletController.DestroyBullet(l.BulletEntityId, !1);
   }
-  V4o(l, e, t) {
+  O5o(l, e, t) {
     l = GameplayTagUtils_1.GameplayTagUtils.GetNameByTagId(l);
     l?.startsWith(BULLET_TAG_PREFIX) ||
       (Log_1.Log.CheckError() &&

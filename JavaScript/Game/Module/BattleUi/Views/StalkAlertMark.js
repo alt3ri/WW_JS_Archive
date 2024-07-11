@@ -29,28 +29,28 @@ const puerts_1 = require("puerts"),
 class StalkAlertMark extends EntityHeadIconItem_1.EntityHeadIconItem {
   constructor(t, i) {
     super(),
-      (this.lXe = void 0),
-      (this.Vmt = void 0),
-      (this.Hmt = void 0),
-      (this.jmt = void 0),
-      (this._Xe = (0, puerts_1.$ref)(void 0)),
-      (this.p$e = Vector2D_1.Vector2D.Create()),
-      (this.g$e = (0, puerts_1.$ref)(0)),
-      (this.v$e = Vector2D_1.Vector2D.Create()),
-      (this.pXe = Vector2D_1.Vector2D.Create(1, -1)),
-      (this.Wmt = Vector_1.Vector.Create()),
-      (this.Kmt = Vector_1.Vector.Create()),
-      (this.Qmt = Vector_1.Vector.Create()),
-      (this.C$e = Vector_1.Vector.Create()),
-      (this.Xmt = (0, puerts_1.$ref)(0)),
-      (this.$mt = !1),
-      (this.EPe = void 0),
+      (this.E$e = void 0),
+      (this.eCt = void 0),
+      (this.tCt = void 0),
+      (this.iCt = void 0),
+      (this.S$e = (0, puerts_1.$ref)(void 0)),
+      (this.AYe = Vector2D_1.Vector2D.Create()),
+      (this.RYe = (0, puerts_1.$ref)(0)),
+      (this.PYe = Vector2D_1.Vector2D.Create()),
+      (this.A$e = Vector2D_1.Vector2D.Create(1, -1)),
+      (this.oCt = Vector_1.Vector.Create()),
+      (this.rCt = Vector_1.Vector.Create()),
+      (this.nCt = Vector_1.Vector.Create()),
+      (this.DYe = Vector_1.Vector.Create()),
+      (this.sCt = (0, puerts_1.$ref)(0)),
+      (this.aCt = !1),
+      (this.SPe = void 0),
       (this.bre = void 0),
-      (this.uXe = 0),
-      (this.cXe = 0),
-      (this.Ymt = 0),
-      (this.Jmt = void 0),
-      (this.y$e = (t) => {
+      (this.y$e = 0),
+      (this.I$e = 0),
+      (this.hCt = 0),
+      (this.lCt = void 0),
+      (this.bYe = (t) => {
         var i = 7.776280778151;
         return (
           367.327774667328 /
@@ -60,10 +60,10 @@ class StalkAlertMark extends EntityHeadIconItem_1.EntityHeadIconItem {
       }),
       GlobalData_1.GlobalData.World &&
         (this.CreateThenShowByResourceIdAsync("UiItem_Alert", t),
-        (this.lXe = i),
+        (this.E$e = i),
         (t = UiLayer_1.UiLayer.UiRootItem),
-        (this.uXe = Math.min(MAX_A, ((t?.GetWidth() ?? 0) - MARGIN_A) / 2)),
-        (this.cXe = Math.min(MAX_B, ((t?.GetHeight() ?? 0) - MARGIN_B) / 2)));
+        (this.y$e = Math.min(MAX_A, ((t?.GetWidth() ?? 0) - MARGIN_A) / 2)),
+        (this.I$e = Math.min(MAX_B, ((t?.GetHeight() ?? 0) - MARGIN_B) / 2)));
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -73,18 +73,18 @@ class StalkAlertMark extends EntityHeadIconItem_1.EntityHeadIconItem {
     ];
   }
   OnStart() {
-    (this.Vmt = this.GetSprite(0)),
-      (this.Hmt = this.GetSprite(1)),
-      (this.jmt = this.GetItem(2)),
-      (this.EPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem)),
+    (this.eCt = this.GetSprite(0)),
+      (this.tCt = this.GetSprite(1)),
+      (this.iCt = this.GetItem(2)),
+      (this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem)),
       this.SetActive(!1);
   }
   Update() {
     GlobalData_1.GlobalData.World &&
       this.RootItem &&
-      (this.I$e(), this.$mt || this.LXe(), super.Update());
+      (this.qYe(), this.aCt || this.N$e(), super.Update());
   }
-  I$e() {
+  qYe() {
     var t,
       i,
       e,
@@ -92,52 +92,51 @@ class StalkAlertMark extends EntityHeadIconItem_1.EntityHeadIconItem {
       r = GeneralLogicTreeUtil_1.GeneralLogicTreeUtil.GetPlayerLocation();
     r &&
       ((e = Global_1.Global.CharacterController),
-      this.Wmt.DeepCopy(this.lXe.K2_GetActorLocation()),
+      this.oCt.DeepCopy(this.E$e.K2_GetActorLocation()),
       (t = UE.GameplayStatics.ProjectWorldToScreen(
         e,
-        this.Wmt.ToUeVector(),
-        this._Xe,
+        this.oCt.ToUeVector(),
+        this.S$e,
       )) ||
-        (this.Wmt.Subtraction(r, this.Kmt),
+        (this.oCt.Subtraction(r, this.rCt),
         (i = Global_1.Global.CharacterCameraManager),
-        Rotator_1.Rotator.Create(i.GetCameraRotation()).Vector(this.Qmt),
+        Rotator_1.Rotator.Create(i.GetCameraRotation()).Vector(this.nCt),
         (i = UE.KismetMathLibrary.ProjectVectorOnToVector(
-          this.Kmt.ToUeVector(),
-          this.Qmt.ToUeVector(),
+          this.rCt.ToUeVector(),
+          this.nCt.ToUeVector(),
         ).op_Multiply(2)),
-        this.C$e.Set(i.X, i.Y, i.Z),
-        this.Kmt.SubtractionEqual(this.C$e),
-        r.Addition(this.Kmt, this.Wmt),
+        this.DYe.Set(i.X, i.Y, i.Z),
+        this.rCt.SubtractionEqual(this.DYe),
+        r.Addition(this.rCt, this.oCt),
         UE.GameplayStatics.ProjectWorldToScreen(
           e,
-          this.Wmt.ToUeVector(),
-          this._Xe,
+          this.oCt.ToUeVector(),
+          this.S$e,
         )),
-      (i = (0, puerts_1.$unref)(this._Xe)),
-      e.GetViewportSize(this.g$e, this.Xmt),
-      (e = (0, puerts_1.$unref)(this.g$e)),
-      this.p$e.Set(i.X, i.Y),
-      this.v$e.Set(0.5 * s.GetWidth(), 0.5 * s.GetHeight()),
-      this.p$e
-        .MultiplyEqual(s.GetWidth() / e)
-        .SubtractionEqual(this.v$e)
-        .MultiplyEqual(this.pXe),
-      (i = this.PXe(this.p$e, t)),
-      (s = this.p$e.AdditionEqual(center)),
+      (i = (0, puerts_1.$unref)(this.S$e)),
+      e.GetViewportSize(this.RYe, this.sCt),
+      (e = (0, puerts_1.$unref)(this.RYe)),
+      this.AYe.Set(i.X, i.Y),
+      this.PYe.Set(0.5 * s.GetWidth(), 0.5 * s.GetHeight()),
+      this.AYe.MultiplyEqual(s.GetWidth() / e)
+        .SubtractionEqual(this.PYe)
+        .MultiplyEqual(this.A$e),
+      (i = this.H$e(this.AYe, t)),
+      (s = this.AYe.AdditionEqual(center)),
       i &&
-        ((e = Vector_1.Vector.Distance(r, this.Wmt)),
-        s.AdditionEqual(Vector2D_1.Vector2D.Create(0, this.y$e(e)))),
+        ((e = Vector_1.Vector.Distance(r, this.oCt)),
+        s.AdditionEqual(Vector2D_1.Vector2D.Create(0, this.bYe(e)))),
       this.RootItem.SetAnchorOffset(s.ToUeVector2D()),
-      this.jmt?.SetUIActive(!i),
-      this.jmt?.SetUIRelativeRotation(
+      this.iCt?.SetUIActive(!i),
+      this.iCt?.SetUIRelativeRotation(
         new UE.Rotator(0, (180 * Math.atan2(s.Y, s.X)) / Math.PI, 0),
       ));
   }
-  PXe(t, i) {
+  H$e(t, i) {
     var e = t.X,
       s = t.Y,
-      r = this.uXe,
-      h = this.cXe;
+      r = this.y$e,
+      h = this.I$e;
     return (
       !!(i && (e * e) / (r * r) + (s * s) / (h * h) <= 1) ||
       ((i = (r * h) / Math.sqrt(h * h * e * e + r * r * s * s)),
@@ -145,22 +144,22 @@ class StalkAlertMark extends EntityHeadIconItem_1.EntityHeadIconItem {
       !1)
     );
   }
-  LXe() {
+  N$e() {
     var t = this.AiComponent?.AiController.AiAlert.AlertValue ?? 0;
-    this.Vmt.SetFillAmount(
+    this.eCt.SetFillAmount(
       MathUtils_1.MathUtils.Clamp(t, 0, AiAlertClass_1.MAX_ALERT) /
         AiAlertClass_1.MAX_ALERT,
     ),
-      0 === this.Ymt &&
+      0 === this.hCt &&
         0 < t &&
-        (void 0 === this.Jmt &&
-          (this.Jmt =
+        (void 0 === this.lCt &&
+          (this.lCt =
             ConfigManager_1.ConfigManager.AudioConfig?.GetAudioPath(
               ADD_AUDIO_ID,
             )?.Path),
-        this.Jmt) &&
-        AudioController_1.AudioController.PostEvent(this.Jmt, void 0),
-      (this.Ymt = t);
+        this.lCt) &&
+        AudioController_1.AudioController.PostEvent(this.lCt, void 0),
+      (this.hCt = t);
   }
   SetAlertIcon(t) {
     ResourceSystem_1.ResourceSystem.LoadAsync(
@@ -171,26 +170,26 @@ class StalkAlertMark extends EntityHeadIconItem_1.EntityHeadIconItem {
           t.IsValid() &&
           this &&
           this.RootItem?.IsValid() &&
-          this.Hmt?.IsValid() &&
-          this.Hmt.SetSprite(t);
+          this.tCt?.IsValid() &&
+          this.tCt.SetSprite(t);
       },
     );
   }
   StopUpdateAlertValue() {
-    this.$mt = !0;
+    this.aCt = !0;
   }
   ActivateAlertEffect() {
-    this.EPe?.PlaySequencePurely("Show"), this.I$e();
+    this.SPe?.PlaySequencePurely("Show"), this.qYe();
   }
   CheckShowUiCondition() {
     var t;
     return this.AiComponent
       ? ((t =
-          this.lXe.WasRecentlyRenderedOnScreen() ||
+          this.E$e.WasRecentlyRenderedOnScreen() ||
           this.AiComponent.AiController.AiAlert.CheckInAlertRange() ||
           0 < this.AiComponent.AiController.AiAlert.AlertValue) &&
           !this.GetActive() &&
-          (this.SetActive(!0), this.EPe?.PlaySequencePurely("Start")),
+          (this.SetActive(!0), this.SPe?.PlaySequencePurely("Start")),
         !t && this.GetActive() && this.SetActive(!1),
         t)
       : (Log_1.Log.CheckError() &&
@@ -201,8 +200,8 @@ class StalkAlertMark extends EntityHeadIconItem_1.EntityHeadIconItem {
     var t;
     return (
       this.bre ||
-        ((t = ActorUtils_1.ActorUtils.GetEntityByActor(this.lXe)),
-        (this.bre = t.Entity.GetComponent(38))),
+        ((t = ActorUtils_1.ActorUtils.GetEntityByActor(this.E$e)),
+        (this.bre = t.Entity.GetComponent(39))),
       this.bre
     );
   }

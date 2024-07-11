@@ -9,9 +9,9 @@ const UE = require("ue"),
 class RewardExploreTargetReachedList extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this._0i = void 0),
-      (this.u0i = void 0),
-      (this.Ygi = []);
+      (this._fi = void 0),
+      (this.ufi = void 0),
+      (this.Y0i = []);
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -20,33 +20,33 @@ class RewardExploreTargetReachedList extends UiPanelBase_1.UiPanelBase {
     ];
   }
   OnStart() {
-    (this.u0i = this.GetItem(0)),
-      (this._0i = this.GetItem(1)),
-      this._0i.SetUIActive(!1);
+    (this.ufi = this.GetItem(0)),
+      (this._fi = this.GetItem(1)),
+      this._fi.SetUIActive(!1);
   }
   OnBeforeDestroy() {
-    (this.u0i = void 0), (this._0i = void 0), this.c0i();
+    (this.ufi = void 0), (this._fi = void 0), this.cfi();
   }
   SetBarList(e) {
-    this.c0i();
+    this.cfi();
     var t = this.GetItem(0);
     if (e && 0 !== e.length) {
-      for (const r of e) this.C0i(r);
+      for (const r of e) this.Cfi(r);
       t.SetUIActive(!0);
     } else t.SetUIActive(!1);
   }
-  C0i(e) {
-    var t = LguiUtil_1.LguiUtil.DuplicateActor(this._0i.GetOwner(), this.u0i),
+  Cfi(e) {
+    var t = LguiUtil_1.LguiUtil.DuplicateActor(this._fi.GetOwner(), this.ufi),
       t = new RewardExploreTargetReached_1.RewardExploreTargetReached(t);
     t.Refresh(e),
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("Test", 5, e?.DescriptionTextId),
       t.SetActive(!0),
-      this.Ygi.push(t);
+      this.Y0i.push(t);
   }
-  c0i() {
-    for (const e of this.Ygi) e.Destroy();
-    this.Ygi.length = 0;
+  cfi() {
+    for (const e of this.Y0i) e.Destroy();
+    this.Y0i.length = 0;
   }
 }
 exports.RewardExploreTargetReachedList = RewardExploreTargetReachedList;

@@ -22,8 +22,8 @@ class BulletInfo {
   constructor() {
     (this.xe = 0),
       (this.Entity = void 0),
-      (this.I7o = !1),
-      (this.T7o = void 0),
+      (this.EHo = !1),
+      (this.SHo = void 0),
       (this.Lo = void 0),
       (this.ActionInfoList = []),
       (this.NextActionInfoList = []),
@@ -39,37 +39,40 @@ class BulletInfo {
       (this.ShakeNumbers = 0),
       (this.IsFrozen = !1),
       (this.FrozenTime = void 0),
-      (this.L7o = void 0),
-      (this.bEn = !1),
+      (this.yHo = void 0),
+      (this.Fyn = !1),
       (this.RandomPosOffset = Vector_1.Vector.Create()),
       (this.RandomInitSpeedOffset = Vector_1.Vector.Create()),
-      (this.D7o = !1),
-      (this.R7o = !1),
-      (this.U7o = Vector_1.Vector.Create()),
-      (this.gti = Rotator_1.Rotator.Create()),
+      (this.IHo = !1),
+      (this.THo = !1),
+      (this.LHo = Vector_1.Vector.Create()),
+      (this.gii = Rotator_1.Rotator.Create()),
       (this.InitPosition = Vector_1.Vector.Create()),
-      (this.A7o = new Array()),
-      (this.LiveTime = -0),
+      (this.DHo = new Array()),
+      (this.CreateFrame = 0),
+      (this.LiveTimeAddDelta = 0),
+      (this.LiveTime = 0),
+      (this.LiveTimeCurHit = 0),
       (this.IsTimeNotEnough = !1),
       (this.Size = Vector_1.Vector.Create()),
-      (this.P7o = Vector_1.Vector.Create()),
-      (this.x7o = void 0),
+      (this.RHo = Vector_1.Vector.Create()),
+      (this.UHo = void 0),
       (this.CloseCollision = !1),
       (this.CollisionInfo = new BulletCollisionInfo_1.BulletCollisionInfo()),
-      (this.w7o = Vector_1.Vector.Create()),
+      (this.AHo = Vector_1.Vector.Create()),
       (this.GetCollisionLocationFrame = 0),
       (this.IsCollisionRelativeLocationZero = !1),
       (this.IsCollisionRelativeRotationModify = !1),
       (this.MoveInfo = new BulletMoveInfo_1.BulletMoveInfo()),
       (this.EffectInfo = new BulletEffectInfo_1.BulletEffectInfo()),
-      (this.B7o = 0),
-      (this.b7o = void 0),
-      (this.q7o = void 0),
-      (this.o5o = void 0),
-      (this.G7o = void 0),
-      (this.N7o = void 0),
-      (this.O7o = void 0),
-      (this.k7o = void 0),
+      (this.PHo = 0),
+      (this.xHo = void 0),
+      (this.wHo = void 0),
+      (this.eVo = void 0),
+      (this.BHo = void 0),
+      (this.bHo = void 0),
+      (this.qHo = void 0),
+      (this.GHo = void 0),
       (this.IsAutonomousProxy = !1),
       (this.AttackerCamp = 0),
       (this.AttackerPlayerId = 0),
@@ -77,8 +80,8 @@ class BulletInfo {
       (this.SkillLevel = 0),
       (this.TargetId = 0),
       (this.TargetIdLast = 0),
-      (this.F7o = void 0),
-      (this.V7o = void 0),
+      (this.NHo = void 0),
+      (this.OHo = void 0),
       (this.ParentBulletInfo = void 0),
       (this.ChildEntityIds = void 0),
       (this.ChildInfo = void 0),
@@ -96,14 +99,14 @@ class BulletInfo {
       (this.BornFrameCount = void 0),
       (this.PreContextId = void 0),
       (this.ContextId = void 0),
-      (this.K7o = () => {
+      (this.HHo = () => {
         this.ClearAttacker(),
           BulletController_1.BulletController.DestroyBullet(
             this.BulletEntityId,
             !1,
           );
       }),
-      (this.Q7o = () => {
+      (this.jHo = () => {
         this.ClearTarget();
       }),
       (this.BornLocationOffset = Vector_1.Vector.Create());
@@ -112,26 +115,26 @@ class BulletInfo {
     return this.xe;
   }
   get HasCheckedPosition() {
-    return this.I7o;
+    return this.EHo;
   }
   CheckedPosition() {
-    this.I7o = !0;
+    this.EHo = !0;
   }
   get BulletInitParams() {
-    return this.T7o;
+    return this.SHo;
   }
   get TransformCreate() {
-    return this.T7o.InitialTransform;
+    return this.SHo.InitialTransform;
   }
   get BaseVelocityEntityId() {
-    return this.T7o.BaseVelocityId;
+    return this.SHo.BaseVelocityId;
   }
   get BulletRowName() {
-    return this.T7o.BulletRowName;
+    return this.SHo.BulletRowName;
   }
   GetBaseVelocityTarget() {
     return EntitySystem_1.EntitySystem.Get(
-      this.T7o.BaseVelocityId,
+      this.SHo.BaseVelocityId,
     )?.GetComponent(1);
   }
   get BulletDataMain() {
@@ -143,13 +146,13 @@ class BulletInfo {
   get BaseTransformEntity() {
     var t;
     return (
-      this.bEn ||
-        this.L7o ||
+      this.Fyn ||
+        this.yHo ||
         ((t = ModelManager_1.ModelManager.CharacterModel.GetHandle(
-          this.T7o.BaseTransformId,
-        ))?.Valid && (this.L7o = t),
-        (this.bEn = !0)),
-      this.L7o
+          this.SHo.BaseTransformId,
+        ))?.Valid && (this.yHo = t),
+        (this.Fyn = !0)),
+      this.yHo
     );
   }
   SetActorLocation(t) {
@@ -167,7 +170,7 @@ class BulletInfo {
           this.BulletEntityId,
           !1,
         ))
-      : (this.U7o.FromUeVector(t), (this.D7o = !0));
+      : (this.LHo.FromUeVector(t), (this.IHo = !0));
   }
   SetActorRotation(t) {
     isNaN(t.Pitch) || isNaN(t.Yaw) || isNaN(t.Roll)
@@ -184,21 +187,21 @@ class BulletInfo {
           this.BulletEntityId,
           !1,
         ))
-      : (this.gti.FromUeRotator(t), (this.R7o = !0));
+      : (this.gii.FromUeRotator(t), (this.THo = !0));
   }
   GetActorLocation() {
-    return this.D7o ? this.U7o : this.ActorComponent.ActorLocationProxy;
+    return this.IHo ? this.LHo : this.ActorComponent.ActorLocationProxy;
   }
   GetActorRotation() {
-    return this.R7o ? this.gti : this.ActorComponent.ActorRotationProxy;
+    return this.THo ? this.gii : this.ActorComponent.ActorRotationProxy;
   }
   GetActorForward(t) {
-    this.R7o
-      ? this.gti.Vector(t)
+    this.THo
+      ? this.gii.Vector(t)
       : t.FromUeVector(this.ActorComponent.ActorForwardProxy);
   }
   ActorRotateVector(t, i) {
-    (this.R7o ? this.gti : this.ActorComponent.ActorRotationProxy)
+    (this.THo ? this.gii : this.ActorComponent.ActorRotationProxy)
       .Quaternion()
       .RotateVector(t, i);
   }
@@ -207,63 +210,63 @@ class BulletInfo {
       this.ActorComponent.AddBulletLocalRotator(t);
   }
   ApplyCacheLocationAndRotation() {
-    if (this.D7o)
-      return this.R7o
+    if (this.IHo)
+      return this.THo
         ? (this.ActorComponent.SetActorLocationAndRotation(
-            this.U7o.ToUeVector(),
-            this.gti.ToUeRotator(),
+            this.LHo.ToUeVector(),
+            this.gii.ToUeRotator(),
             this.constructor.name,
             !1,
           ),
-          (this.D7o = !1),
-          void (this.R7o = !1))
+          (this.IHo = !1),
+          void (this.THo = !1))
         : (this.ActorComponent.SetActorLocation(
-            this.U7o.ToUeVector(),
+            this.LHo.ToUeVector(),
             this.constructor.name,
             !1,
           ),
-          void (this.D7o = !1));
-    this.R7o &&
+          void (this.IHo = !1));
+    this.THo &&
       (this.ActorComponent.SetActorRotation(
-        this.gti.ToUeRotator(),
+        this.gii.ToUeRotator(),
         this.constructor.name,
         !1,
       ),
-      (this.R7o = !1));
+      (this.THo = !1));
   }
   ClearCacheLocationAndRotation() {
-    (this.D7o = !1), (this.R7o = !1);
+    (this.IHo = !1), (this.THo = !1);
   }
   get Tags() {
-    return this.A7o;
+    return this.DHo;
   }
   AddTag(t) {
-    this.A7o.push(t.TagId);
+    this.DHo.push(t.TagId);
   }
   AddTagId(t) {
-    this.A7o.push(t);
+    this.DHo.push(t);
   }
   HasTag(t) {
-    if (this.A7o && 0 < this.A7o.length)
-      for (const i of this.A7o) if (i === t.TagId) return !0;
+    if (this.DHo && 0 < this.DHo.length)
+      for (const i of this.DHo) if (i === t.TagId) return !0;
     return !1;
   }
   HasTagId(t) {
-    return !!this.A7o && this.A7o.includes(t);
+    return !!this.DHo && this.DHo.includes(t);
   }
   get CenterLocation() {
     return (
       this.ActorComponent.ActorQuatProxy.RotateVector(
         this.CollisionInfo.CenterLocalLocation,
-        this.P7o,
+        this.RHo,
       ),
-      this.P7o.AdditionEqual(this.ActorComponent.ActorLocationProxy),
-      this.P7o
+      this.RHo.AdditionEqual(this.ActorComponent.ActorLocationProxy),
+      this.RHo
     );
   }
   get RayInfo() {
     return (
-      this.x7o || (this.x7o = new BulletRayInfo_1.BulletRayInfo()), this.x7o
+      this.UHo || (this.UHo = new BulletRayInfo_1.BulletRayInfo()), this.UHo
     );
   }
   get CollisionRotator() {
@@ -277,82 +280,82 @@ class BulletInfo {
         ((this.GetCollisionLocationFrame = Time_1.Time.Frame),
         !this.IsCollisionRelativeLocationZero &&
         this.CollisionInfo.CollisionComponent
-          ? this.w7o.FromUeVector(
+          ? this.AHo.FromUeVector(
               this.CollisionInfo.CollisionComponent.K2_GetComponentLocation(),
             )
-          : this.w7o.FromUeVector(this.ActorComponent.ActorLocationProxy)),
-      this.w7o
+          : this.AHo.FromUeVector(this.ActorComponent.ActorLocationProxy)),
+      this.AHo
     );
   }
   get AttackerId() {
-    return this.B7o;
+    return this.PHo;
   }
   get AttackerHandle() {
-    return this.b7o;
+    return this.xHo;
   }
   get Attacker() {
-    return this.b7o?.Entity;
+    return this.xHo?.Entity;
   }
   ClearAttacker() {
-    this.$7o(),
-      (this.b7o = void 0),
-      (this.q7o = void 0),
-      (this.o5o = void 0),
-      (this.G7o = void 0),
-      (this.N7o = void 0),
-      (this.O7o = void 0),
-      (this.k7o = void 0);
+    this.KHo(),
+      (this.xHo = void 0),
+      (this.wHo = void 0),
+      (this.eVo = void 0),
+      (this.BHo = void 0),
+      (this.bHo = void 0),
+      (this.qHo = void 0),
+      (this.GHo = void 0);
   }
   get AttackerCreatureDataComp() {
-    return this.q7o || (this.q7o = this.Attacker?.GetComponent(0)), this.q7o;
+    return this.wHo || (this.wHo = this.Attacker?.GetComponent(0)), this.wHo;
   }
   get AttackerActorComp() {
-    return this.o5o || (this.o5o = this.Attacker?.GetComponent(3)), this.o5o;
+    return this.eVo || (this.eVo = this.Attacker?.GetComponent(3)), this.eVo;
   }
   get AttackerSkillComp() {
-    return this.G7o || (this.G7o = this.Attacker?.GetComponent(33)), this.G7o;
+    return this.BHo || (this.BHo = this.Attacker?.GetComponent(33)), this.BHo;
   }
   get AttackerBuffComp() {
-    return this.N7o || (this.N7o = this.Attacker?.GetComponent(157)), this.N7o;
+    return this.bHo || (this.bHo = this.Attacker?.GetComponent(159)), this.bHo;
   }
   get AttackerMoveComp() {
-    return this.O7o || (this.O7o = this.Attacker?.GetComponent(161)), this.O7o;
+    return this.qHo || (this.qHo = this.Attacker?.GetComponent(163)), this.qHo;
   }
   get AttackerAudioComponent() {
-    return this.k7o || (this.k7o = this.Attacker?.GetComponent(42)), this.k7o;
+    return this.GHo || (this.GHo = this.Attacker?.GetComponent(43)), this.GHo;
   }
   get Target() {
-    if (this.F7o) return this.F7o?.Entity;
+    if (this.NHo) return this.NHo?.Entity;
   }
   SetTargetById(t) {
     t = ModelManager_1.ModelManager.CharacterModel.GetHandle(t);
     t?.Valid
-      ? (this.Y7o(), (this.F7o = t), (this.V7o = void 0), this.J7o())
+      ? (this.QHo(), (this.NHo = t), (this.OHo = void 0), this.XHo())
       : this.ClearTarget();
   }
   ClearTarget() {
-    this.Y7o(), (this.F7o = void 0), (this.TargetId = 0), (this.V7o = void 0);
+    this.QHo(), (this.NHo = void 0), (this.TargetId = 0), (this.OHo = void 0);
   }
   get TargetActorComp() {
-    return this.V7o || (this.V7o = this.Target?.GetComponent(1)), this.V7o;
+    return this.OHo || (this.OHo = this.Target?.GetComponent(1)), this.OHo;
   }
   GetLockOnTargetDynamic() {
-    return this.b7o?.Entity?.GetComponent(29)
+    return this.xHo?.Entity?.GetComponent(29)
       ?.GetCurrentTarget()
       ?.Entity?.GetComponent(1);
   }
   get ParentEntityId() {
-    return this.T7o.ParentId;
+    return this.SHo.ParentId;
   }
   Init(t, i) {
-    (this.T7o = t),
+    (this.SHo = t),
       (this.Lo = i),
       (this.ActionInfoList.length = 0),
       (this.NextActionInfoList.length = 0),
       (this.PersistentActionList.length = 0),
-      (this.B7o = this.T7o.Owner?.Id),
-      (this.b7o = ModelManager_1.ModelManager.CharacterModel.GetHandle(
-        this.B7o,
+      (this.PHo = this.SHo.Owner?.Id),
+      (this.xHo = ModelManager_1.ModelManager.CharacterModel.GetHandle(
+        this.PHo,
       )),
       (this.IsInit = !1),
       (this.NeedDestroy = !1),
@@ -366,7 +369,7 @@ class BulletInfo {
         ? (this.BornLocationOffset.FromUeVector(t.LocationOffset),
           this.BornLocationOffset.AdditionEqual(i.Base.BornPosition))
         : this.BornLocationOffset.FromUeVector(i.Base.BornPosition),
-      this.eHo(),
+      this.JHo(),
       PerformanceController_1.PerformanceController
         .IsEntityTickPerformanceTest &&
         (this.BornFrameCount = UE.KismetSystemLibrary.GetFrameCount());
@@ -377,7 +380,7 @@ class BulletInfo {
   Clear() {
     (this.xe = 0),
       (this.Entity = void 0),
-      (this.T7o = void 0),
+      (this.SHo = void 0),
       (this.Lo = void 0);
     var t = BulletController_1.BulletController.GetActionCenter();
     for (const i of this.ActionInfoList) t.RecycleBulletActionInfo(i);
@@ -390,33 +393,35 @@ class BulletInfo {
       (this.ActorComponent = void 0),
       (this.ActionLogicComponent = void 0),
       (this.IsInit = !1),
-      (this.I7o = !1),
+      (this.EHo = !1),
       (this.NeedDestroy = !1),
       (this.IsDestroyByCharSkillEnd = !1),
       (this.GenerateTime = 0),
       (this.BulletCamp = 0),
-      (this.L7o = void 0),
-      (this.D7o = !1),
-      (this.R7o = !1),
-      this.U7o.Reset(),
-      this.gti.Reset(),
+      (this.yHo = void 0),
+      (this.IHo = !1),
+      (this.THo = !1),
+      this.LHo.Reset(),
+      this.gii.Reset(),
       this.RandomInitSpeedOffset.Reset(),
       this.RandomPosOffset.Reset(),
       (this.ShakeNumbers = 0),
       (this.IsFrozen = !1),
       (this.FrozenTime = void 0),
       this.InitPosition.Reset(),
-      (this.A7o.length = 0),
+      (this.DHo.length = 0),
+      (this.CreateFrame = 0),
+      (this.LiveTimeAddDelta = 0),
       (this.LiveTime = 0),
       (this.IsTimeNotEnough = !1),
       this.Size.Reset(),
-      this.P7o.Reset(),
+      this.RHo.Reset(),
       (this.CloseCollision = !1),
-      this.w7o.Reset(),
+      this.AHo.Reset(),
       (this.GetCollisionLocationFrame = 0),
       (this.IsCollisionRelativeLocationZero = !1),
       (this.IsCollisionRelativeRotationModify = !1),
-      (this.B7o = 0),
+      (this.PHo = 0),
       this.ClearAttacker(),
       (this.IsAutonomousProxy = !1),
       (this.AttackerCamp = 0),
@@ -442,12 +447,12 @@ class BulletInfo {
       this.MoveInfo.Clear(),
       this.EffectInfo.Clear(),
       (this.ChildInfo = void 0),
-      (this.x7o = void 0),
+      (this.UHo = void 0),
       this.BornLocationOffset.Reset(),
       (this.ContextId = void 0),
       (this.PreContextId = void 0),
-      (this.bEn = !1),
-      BulletConstant_1.BulletConstant.OpenClearCheck && BulletInfo.tHo(this);
+      (this.Fyn = !1),
+      BulletConstant_1.BulletConstant.OpenClearCheck && BulletInfo.zHo(this);
   }
   SwapActionInfoList() {
     var t;
@@ -456,39 +461,39 @@ class BulletInfo {
       (this.ActionInfoList = this.NextActionInfoList),
       (this.NextActionInfoList = t));
   }
-  eHo() {
+  JHo() {
     this.AttackerHandle &&
       EventSystem_1.EventSystem.AddWithTarget(
         this.AttackerHandle,
         EventDefine_1.EEventName.RemoveEntity,
-        this.K7o,
+        this.HHo,
       );
   }
-  $7o() {
+  KHo() {
     this.AttackerHandle &&
       EventSystem_1.EventSystem.RemoveWithTarget(
         this.AttackerHandle,
         EventDefine_1.EEventName.RemoveEntity,
-        this.K7o,
+        this.HHo,
       );
   }
-  J7o() {
-    this.F7o &&
+  XHo() {
+    this.NHo &&
       EventSystem_1.EventSystem.AddWithTarget(
-        this.F7o,
+        this.NHo,
         EventDefine_1.EEventName.RemoveEntity,
-        this.Q7o,
+        this.jHo,
       );
   }
-  Y7o() {
-    this.F7o &&
+  QHo() {
+    this.NHo &&
       EventSystem_1.EventSystem.RemoveWithTarget(
-        this.F7o,
+        this.NHo,
         EventDefine_1.EEventName.RemoveEntity,
-        this.Q7o,
+        this.jHo,
       );
   }
-  static tHo(t) {
+  static zHo(t) {
     for (const e in t) {
       var i = t[e],
         s = typeof i;
@@ -499,7 +504,7 @@ class BulletInfo {
         (i instanceof BulletCollisionInfo_1.BulletCollisionInfo ||
         i instanceof BulletMoveInfo_1.BulletMoveInfo ||
         i instanceof BulletEffectInfo_1.BulletEffectInfo
-          ? this.tHo(i)
+          ? this.zHo(i)
           : i instanceof Vector_1.Vector
             ? i.IsZero() ||
               (Log_1.Log.CheckError() &&

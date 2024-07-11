@@ -115,15 +115,15 @@ class RenderModuleController extends ControllerBase_1.ControllerBase {
       (this.tZ = !0),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnBossFight,
-        this.Flr,
+        this.N1r,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnBattleStateChanged,
         this.yK,
       ),
-      this.Vlr ||
+      this.O1r ||
         TickSystem_1.TickSystem.Add(
-          this.Hlr.bind(this),
+          this.k1r.bind(this),
           "RenderModuleController",
           3,
           !0,
@@ -136,7 +136,7 @@ class RenderModuleController extends ControllerBase_1.ControllerBase {
       (this.tZ = !1),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnBossFight,
-        this.Flr,
+        this.N1r,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnBattleStateChanged,
@@ -146,9 +146,9 @@ class RenderModuleController extends ControllerBase_1.ControllerBase {
     );
   }
   static OnTick(e) {
-    this.Vlr && this.Hlr(e);
+    this.O1r && this.k1r(e);
   }
-  static Hlr(e) {
+  static k1r(e) {
     this.tZ &&
       ((this.GlobalTimeDilation = 1),
       (this.IsGamePaused = MathUtils_1.MathUtils.IsNearlyEqual(
@@ -167,7 +167,7 @@ class RenderModuleController extends ControllerBase_1.ControllerBase {
 ((exports.RenderModuleController =
   RenderModuleController).IsTickEvenPausedInternal = !0),
   (RenderModuleController.tZ = !1),
-  (RenderModuleController.Vlr = !1),
+  (RenderModuleController.O1r = !1),
   (RenderModuleController.WaitingForAddWuYinQuBattleActors = void 0),
   (RenderModuleController.IsGamePaused = !1),
   (RenderModuleController.GlobalTimeDilation = 1),
@@ -176,7 +176,7 @@ class RenderModuleController extends ControllerBase_1.ControllerBase {
   (RenderModuleController.UiSceneOffsetTransform = void 0),
   (RenderModuleController.DebugStartShowingUiSceneRendering = !1),
   (RenderModuleController.DebugInUiSceneRendering = !1),
-  (RenderModuleController.Flr = (e) => {
+  (RenderModuleController.N1r = (e) => {
     UE.KismetSystemLibrary.ExecuteConsoleCommand(
       GlobalData_1.GlobalData.World,
       "r.Kuro.GlobalGIRenderQuality 1",

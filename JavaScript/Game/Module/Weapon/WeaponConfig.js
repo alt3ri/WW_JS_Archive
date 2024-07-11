@@ -22,10 +22,10 @@ const Log_1 = require("../../../Core/Common/Log"),
 class WeaponConfig extends ConfigBase_1.ConfigBase {
   constructor() {
     super(...arguments),
-      (this.pOo = new Map()),
-      (this.vOo = new Map()),
-      (this.MOo = new Map()),
-      (this.SOo = new Map());
+      (this.Cko = new Map()),
+      (this.gko = new Map()),
+      (this.fko = new Map()),
+      (this.pko = new Map());
   }
   GetWeaponConfigByItemId(e) {
     return WeaponConfByItemId_1.configWeaponConfByItemId.GetConfig(e);
@@ -126,6 +126,13 @@ class WeaponConfig extends ConfigBase_1.ConfigBase {
   GetWeaponQualityInfo(e) {
     return WeaponQualityInfoById_1.configWeaponQualityInfoById.GetConfig(e);
   }
+  GetWeaponLevelUpCostRatio() {
+    return (
+      CommonParamById_1.configCommonParamById.GetIntConfig(
+        "WeaponLevelUpCoinCost",
+      ) / 1e3
+    );
+  }
   GetWeaponExpCoefficient() {
     return (
       CommonParamById_1.configCommonParamById.GetIntConfig(
@@ -166,7 +173,7 @@ class WeaponConfig extends ConfigBase_1.ConfigBase {
   }
   OnClear() {
     return (
-      this.pOo.clear(), this.vOo.clear(), this.MOo.clear(), this.SOo.clear(), !0
+      this.Cko.clear(), this.gko.clear(), this.fko.clear(), this.pko.clear(), !0
     );
   }
 }

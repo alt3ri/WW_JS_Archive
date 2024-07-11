@@ -83,7 +83,7 @@ class RoguelikeTokenOverView extends UiViewBase_1.UiViewBase {
       (this.CommonGridItem = void 0),
       (this.LoopScrollView = void 0),
       (this.LastSelectGrid = void 0),
-      (this.dVe = (e, t) => {
+      (this.R6e = (e, t) => {
         return new CommonTabItem_1.CommonTabItem();
       }),
       (this.pqe = (e) => {
@@ -237,16 +237,16 @@ class RoguelikeTokenOverView extends UiViewBase_1.UiViewBase {
   async OnBeforeStartAsync() {
     var e = this.OpenParam,
       e =
-        ((this.SeasonId = e.F8n),
-        e.Xws.forEach((e) => {
-          this.DataMap.set(e.Ekn, e.qms);
+        ((this.SeasonId = e.MHn),
+        e.mqs.forEach((e) => {
+          this.DataMap.set(e.J4n, e.Jfs);
         }),
         void 0 === this.CommonGridItem &&
           ((this.CommonGridItem = new RogueTokenCommonItemSmallItemGrid()),
           this.CommonGridItem.Initialize(this.GetItem(8).GetOwner())),
         this.CommonGridItem.SetActive(!1),
         new CommonTabComponentData_1.CommonTabComponentData(
-          this.dVe,
+          this.R6e,
           this.pqe,
           this.yqe,
         )),

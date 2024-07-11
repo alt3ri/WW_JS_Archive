@@ -19,220 +19,224 @@ const Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
 class BehaviorTreeExpressionComponent {
   constructor(e) {
     (this.Yre = void 0),
-      (this.yKt = void 0),
-      (this.IKt = void 0),
-      (this.TKt = void 0),
-      (this.LKt = void 0),
-      (this.DKt = (e, t, i, s) => {
+      (this.yQt = void 0),
+      (this.IQt = void 0),
+      (this.TQt = void 0),
+      (this.LQt = void 0),
+      (this.DQt = (e, t, i, s) => {
         6 === e.Type &&
           e.TreeIncId === this.Yre.TreeIncId &&
           (e = this.Yre.GetNode(e.NodeId)) &&
-          (this.yKt.UpdateTrackTextData(e, i),
-          this.TKt.UpdateTrackMarkExpression(this.Yre, e, i),
-          this.IKt.UpdateTrackEffectExpression(e.NodeId, i),
-          (e = this.RKt(e, i, s)),
-          this.yKt.UpdateTextExpress(e));
+          (this.yQt.UpdateTrackTextData(e, i),
+          this.TQt.UpdateTrackMarkExpression(this.Yre, e, i),
+          this.IQt.UpdateTrackEffectExpression(e.NodeId, i),
+          (e = this.RQt(e, i, s)),
+          this.yQt.UpdateTextExpress(e));
       }),
-      (this.REe = (e, t, i) => {
+      (this.RSe = (e, t, i) => {
         if (6 === e.Type && e.TreeIncId === this.Yre.TreeIncId) {
           var s,
             r,
             n = this.Yre.GetNode(e.NodeId);
           if (n)
             switch (i) {
-              case Protocol_1.Aki.Protocol.W2s.Proto_CQNS_Progress:
+              case Protocol_1.Aki.Protocol.bNs.Proto_CQNS_Progress:
                 n.ContainTag(0) &&
                   (s = n.TrackTarget) &&
                   ((r = this.Yre.IsOccupied),
                   n instanceof ReachAreaBehaviorNode_1.ReachAreaBehaviorNode &&
                     n.EffectPathKey &&
-                    this.LKt.OnNodeStart(
+                    this.LQt.OnNodeStart(
                       e.NodeId,
                       n.EffectPathKey,
                       n.GetTargetPosition(),
                       r,
                     ),
-                  this.TKt.NodeTrackMarkStart(n.NodeId, this.Yre, s, r),
+                  this.TQt.NodeTrackMarkStart(n.NodeId, this.Yre, s, r),
                   (r = s.EffectOption)) &&
-                  this.IKt.NodeTrackEffectStart(
+                  this.IQt.NodeTrackEffectStart(
                     n.NodeId,
                     r,
                     this.Yre.IsTracking,
                   );
                 break;
-              case Protocol_1.Aki.Protocol.W2s.Proto_CQNS_Finished:
-                this.TKt.NodeTrackMarkEnd(n.NodeId),
-                  this.IKt.NodeTrackEffectEnd(n.NodeId),
+              case Protocol_1.Aki.Protocol.bNs.Proto_CQNS_Finished:
+                this.TQt.NodeTrackMarkEnd(n.NodeId),
+                  this.IQt.NodeTrackEffectEnd(n.NodeId),
                   n instanceof ReachAreaBehaviorNode_1.ReachAreaBehaviorNode &&
-                    this.LKt.OnNodeEnd(n.NodeId);
+                    this.LQt.OnNodeEnd(n.NodeId);
             }
         }
       }),
-      (this.UKt = (e, t, i) => {
+      (this.UQt = (e, t, i) => {
         this.Yre.TreeIncId === e &&
-          (this.yKt.OnSuspend(t, i), this.TKt.OnSuspend(i));
+          (this.yQt.OnSuspend(t, i), this.TQt.OnSuspend(i));
       }),
-      (this.AKt = (e) => {
+      (this.AQt = (e) => {
         this.Yre.TreeIncId === e &&
-          (this.yKt.OnCancelSuspend(), this.TKt.OnCancelSuspend());
+          (this.yQt.OnCancelSuspend(), this.TQt.OnCancelSuspend());
       }),
-      (this.PKt = () => {
-        this.IKt.OnBattleViewActive();
+      (this.PQt = () => {
+        this.IQt.OnBattleViewActive();
       }),
-      (this.xKt = () => {
-        this.IKt.OnBattleViewHide();
+      (this.xQt = () => {
+        this.IQt.OnBattleViewHide();
       }),
-      (this.wKt = (t, i) => {
+      (this.wQt = (t, i) => {
         if (t && 6 === t.Type && i && t.TreeIncId === this.Yre.TreeIncId) {
           let e = void 0;
-          switch (i.Gms) {
-            case "Qfs":
-              e = i.Qfs.tvs;
+          switch (i.zfs) {
+            case "uEs":
+              e = i.uEs.vEs;
               break;
-            case "Hfs":
-              e = i.Hfs.Jfs;
+            case "aEs":
+              e = i.aEs.mEs;
               break;
-            case "Wfs":
+            case "lEs":
               e = [];
-              for (const s of i.Wfs.ovs) e.concat(s.svs);
+              for (const s of i.lEs.SEs) e.concat(s.yEs);
               break;
-            case "Yfs":
-              e = i.Yfs.rkn;
+            case "dEs":
+              e = i.dEs.P4n;
           }
-          this.TKt.GetNodeTrackMarkCreator(t.NodeId)?.OnNodeProgressChanged(e);
+          this.TQt.GetNodeTrackMarkCreator(t.NodeId)?.OnNodeProgressChanged(e);
         }
       }),
-      (this.BKt = (e) => {
+      (this.BQt = (e) => {
         e = this.Yre.TreeIncId === e;
-        this.yKt.OnBtApplyExpressionOccupation(e),
-          this.TKt.OnBtApplyExpressionOccupation(e),
-          this.IKt.OnBtApplyExpressionOccupation(e),
-          this.LKt.OnBtApplyExpressionOccupation(e);
+        this.yQt.OnBtApplyExpressionOccupation(e),
+          this.TQt.OnBtApplyExpressionOccupation(e),
+          this.IQt.OnBtApplyExpressionOccupation(e),
+          this.LQt.OnBtApplyExpressionOccupation(e);
       }),
-      (this.bKt = (e) => {
+      (this.bQt = (e) => {
         e = this.Yre.TreeIncId === e;
-        this.yKt.OnBtReleaseExpressionOccupation(e),
-          this.TKt.OnBtReleaseExpressionOccupation(e),
-          this.IKt.OnBtReleaseExpressionOccupation(e),
-          this.LKt.OnBtReleaseExpressionOccupation(e);
+        this.yQt.OnBtReleaseExpressionOccupation(e),
+          this.TQt.OnBtReleaseExpressionOccupation(e),
+          this.IQt.OnBtReleaseExpressionOccupation(e),
+          this.LQt.OnBtReleaseExpressionOccupation(e);
       }),
       (this.Yre = e),
-      (this.yKt = new TrackTextExpressController_1.TrackTextExpressController(
+      (this.yQt = new TrackTextExpressController_1.TrackTextExpressController(
         e,
       )),
-      (this.TKt = new TrackMarkExpressController_1.TrackMarkExpressController(
+      (this.TQt = new TrackMarkExpressController_1.TrackMarkExpressController(
         e,
       )),
-      (this.IKt =
+      (this.IQt =
         new TrackEffectExpressController_1.TrackEffectExpressController(this)),
-      (this.LKt =
+      (this.LQt =
         new CheckPointEffectController_1.CheckPointEffectController());
   }
   Init() {
-    this.tKt();
+    this.tQt();
   }
   Dispose() {
-    this.yKt.Clear(), this.TKt.Clear(), this.IKt.Clear(), this.iKt();
+    this.yQt.Clear(),
+      this.TQt.Clear(),
+      this.IQt.Clear(),
+      this.LQt.EnableAllEffects(!1),
+      this.iQt();
   }
-  tKt() {
+  tQt() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnLogicTreeChildQuestNodeStatusChange,
-      this.REe,
+      this.RSe,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.ActiveBattleView,
-        this.PKt,
+        this.PQt,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.DisActiveBattleView,
-        this.xKt,
+        this.xQt,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnLogicTreeNodeProgressChange,
-        this.wKt,
+        this.wQt,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.GeneralLogicTreeApplyExpressionOccupation,
-        this.BKt,
+        this.BQt,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.GeneralLogicTreeReleaseExpressionOccupation,
-        this.bKt,
+        this.bQt,
       ),
       EventSystem_1.EventSystem.AddWithTarget(
         this.Yre,
         EventDefine_1.EEventName.OnLogicTreeNodeStatusChange,
-        this.DKt,
+        this.DQt,
       ),
       EventSystem_1.EventSystem.AddWithTarget(
         this.Yre,
         EventDefine_1.EEventName.GeneralLogicTreeSuspend,
-        this.UKt,
+        this.UQt,
       ),
       EventSystem_1.EventSystem.AddWithTarget(
         this.Yre,
         EventDefine_1.EEventName.GeneralLogicTreeCancelSuspend,
-        this.AKt,
+        this.AQt,
       );
   }
-  iKt() {
+  iQt() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnLogicTreeChildQuestNodeStatusChange,
-      this.REe,
+      this.RSe,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.ActiveBattleView,
-        this.PKt,
+        this.PQt,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.DisActiveBattleView,
-        this.xKt,
+        this.xQt,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnLogicTreeNodeProgressChange,
-        this.wKt,
+        this.wQt,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.GeneralLogicTreeApplyExpressionOccupation,
-        this.BKt,
+        this.BQt,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.GeneralLogicTreeReleaseExpressionOccupation,
-        this.bKt,
+        this.bQt,
       ),
       EventSystem_1.EventSystem.RemoveWithTarget(
         this.Yre,
         EventDefine_1.EEventName.OnLogicTreeNodeStatusChange,
-        this.DKt,
+        this.DQt,
       ),
       EventSystem_1.EventSystem.RemoveWithTarget(
         this.Yre,
         EventDefine_1.EEventName.GeneralLogicTreeSuspend,
-        this.UKt,
+        this.UQt,
       ),
       EventSystem_1.EventSystem.RemoveWithTarget(
         this.Yre,
         EventDefine_1.EEventName.GeneralLogicTreeCancelSuspend,
-        this.AKt,
+        this.AQt,
       );
   }
   EnableTrack(e, t = 0) {
-    this.yKt.EnableTrack(e, t),
-      this.TKt.EnableTrack(e),
-      this.IKt.EnableTrack(e),
-      this.LKt.EnableAllEffects(e);
+    this.yQt.EnableTrack(e, t),
+      this.TQt.EnableTrack(e),
+      this.IQt.EnableTrack(e),
+      this.LQt.EnableAllEffects(e);
   }
   StartTextExpress(e = 0) {
-    this.yKt.StartTextExpress(e);
+    this.yQt.StartTextExpress(e);
   }
   EndTextExpress(e = 0) {
-    this.yKt.EndTextExpress(e);
+    this.yQt.EndTextExpress(e);
   }
   GetNodeTrackPosition(e) {
-    return this.TKt.GetNodeTrackMarkCreator(e)?.GetTrackPosition();
+    return this.TQt.GetNodeTrackMarkCreator(e)?.GetTrackPosition();
   }
   GetDefaultMark(e) {
-    return this.TKt.GetNodeTrackMarkCreator(e)?.GetDefaultMark();
+    return this.TQt.GetNodeTrackMarkCreator(e)?.GetDefaultMark();
   }
   GetTrackDistance(e) {
     var t = GeneralLogicTreeUtil_1.GeneralLogicTreeUtil.GetPlayerLocation();
@@ -241,20 +245,20 @@ class BehaviorTreeExpressionComponent {
       : TrackDefine_1.INVALID_TRACKDISTANCE;
   }
   GetRangeMarkSize(e) {
-    e = this.TKt.GetNodeTrackMarkCreator(e);
+    e = this.TQt.GetNodeTrackMarkCreator(e);
     return e ? e.MarkRange : 0;
   }
   GetRangeMarkShowDis(e) {
-    return this.TKt.GetNodeTrackMarkCreator(e).RangeMarkShowDis;
+    return this.TQt.GetNodeTrackMarkCreator(e).RangeMarkShowDis;
   }
   GetTrackEffectOption(e) {
-    return this.TKt.GetNodeTrackMarkCreator(e).TrackEffectOption;
+    return this.TQt.GetNodeTrackMarkCreator(e).TrackEffectOption;
   }
-  RKt(e, t, i) {
+  RQt(e, t, i) {
     return (
       0 === i &&
-      t === Protocol_1.Aki.Protocol.N2s.Lkn &&
-      this.Yre.BtType === Protocol_1.Aki.Protocol.NCs.Proto_BtTypeQuest &&
+      t === Protocol_1.Aki.Protocol.DNs.t5n &&
+      this.Yre.BtType === Protocol_1.Aki.Protocol.tps.Proto_BtTypeQuest &&
       !(
         !e.ContainTag(0) ||
         e.ContainTag(3) ||
@@ -269,21 +273,25 @@ class BehaviorTreeExpressionComponent {
           e.NodeId,
           this.Yre.CreateShowBridge(),
         ),
-        this.Yre.RemoveTag(8),
+        this.Yre.RemoveTag(9),
         0)
       )
     );
   }
   CheckCanShow() {
-    var e;
-    let t = 0,
-      i = !1;
-    for ([, e] of this.Yre.GetAllNodes())
-      e.ContainTag(2) && (i = !0), e.ContainTag(0) && (t += 1);
-    return 0 !== t || !i;
+    var e,
+      t = this.Yre.GetAllNodes();
+    if (!t) return !1;
+    if (0 === t.size) return !1;
+    let i = 0,
+      s = !1;
+    for ([, e] of t)
+      e.IsProcessing && e.ContainTag(2) && (s = !0),
+        e.ContainTag(0) && (i += 1);
+    return 0 !== i || !s;
   }
   CreateMapMarks() {
-    this.TKt.CreateMapMarks();
+    this.TQt.CreateMapMarks();
   }
 }
 exports.BehaviorTreeExpressionComponent = BehaviorTreeExpressionComponent;

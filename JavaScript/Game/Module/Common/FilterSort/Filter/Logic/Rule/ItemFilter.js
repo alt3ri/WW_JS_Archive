@@ -7,7 +7,7 @@ const ConfigManager_1 = require("../../../../../../Manager/ConfigManager"),
 class ItemFilter extends CommonFilter_1.CommonFilter {
   constructor() {
     super(...arguments),
-      (this.XTt = (e) => {
+      (this.zLt = (e) => {
         var t = e.GetConfigId();
         if (
           3 ===
@@ -27,11 +27,11 @@ class ItemFilter extends CommonFilter_1.CommonFilter {
       });
   }
   OnInitFilterMap() {
-    this.FilterMap.set(3, this.XTt),
-      this.FilterMap.set(18, this.XTt),
-      this.FilterMap.set(19, this.XTt),
-      this.FilterMap.set(20, this.XTt),
-      this.FilterMap.set(21, this.XTt);
+    this.FilterMap.set(3, this.zLt),
+      this.FilterMap.set(18, this.zLt),
+      this.FilterMap.set(19, this.zLt),
+      this.FilterMap.set(20, this.zLt),
+      this.FilterMap.set(21, this.zLt);
   }
 }
 exports.ItemFilter = ItemFilter;

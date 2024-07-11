@@ -5,7 +5,7 @@ const CommonSort_1 = require("./CommonSort");
 class ComposePurificationSort extends CommonSort_1.CommonSort {
   constructor() {
     super(...arguments),
-      (this.XLt = (t, o, r) => {
+      (this.zDt = (t, o, r) => {
         return t.IsUnlock !== o.IsUnlock
           ? (o.IsUnlock - t.IsUnlock) * (r ? -1 : 1)
           : 1 === t.IsUnlock &&
@@ -14,7 +14,7 @@ class ComposePurificationSort extends CommonSort_1.CommonSort {
             ? o.IsPurification - t.IsPurification
             : 0;
       }),
-      (this.VLt = (t, o, r) => {
+      (this.KDt = (t, o, r) => {
         var s;
         return o.IsUnlock !== t.IsUnlock
           ? ((s = o.IsUnlock - t.IsUnlock), r ? s : -s)
@@ -24,7 +24,7 @@ class ComposePurificationSort extends CommonSort_1.CommonSort {
       });
   }
   OnInitSortMap() {
-    this.SortMap.set(1, this.XLt), this.SortMap.set(2, this.VLt);
+    this.SortMap.set(1, this.zDt), this.SortMap.set(2, this.KDt);
   }
 }
 exports.ComposePurificationSort = ComposePurificationSort;

@@ -123,13 +123,13 @@ class LevelAiPlanner {
         e = this.uTe.GetWorldState(this.lTe);
       for (const s of i)
         (this.RIe.WorldStateProxy = e),
-          LevelAiPlanner.STe(s) &&
+          LevelAiPlanner.ETe(s) &&
             ((t = new PlanningContext(this, s, this.uTe, this.lTe, e)),
             s.MakePlanExpansions(t, e));
       this.MTe();
     }
   }
-  static STe(t) {
+  static ETe(t) {
     return !!((t) => {
       let i = 1;
       for (const s of t)

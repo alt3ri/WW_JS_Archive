@@ -4,6 +4,8 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const BossRushBuffSelectView_1 = require("../Module/Activity/ActivityContent/BossRush/BossRushBuffSelectView"),
   BossRushLevelDetailView_1 = require("../Module/Activity/ActivityContent/BossRush/BossRushLevelDetailView"),
   BossRushSelectView_1 = require("../Module/Activity/ActivityContent/BossRush/BossRushSelectView"),
+  RewardShopTabView_1 = require("../Module/Activity/ActivityContent/MoonChasing/Main/Reward/Shop/RewardShopTabView"),
+  RewardTargetTabView_1 = require("../Module/Activity/ActivityContent/MoonChasing/Main/Reward/Target/RewardTargetTabView"),
   AdventureTargetView_1 = require("../Module/AdventureGuide/Views/AdventureTargetView"),
   MonsterDetectView_1 = require("../Module/AdventureGuide/Views/MonsterDetectView"),
   NewSoundAreaView_1 = require("../Module/AdventureGuide/Views/NewSoundAreaView"),
@@ -24,8 +26,6 @@ const BossRushBuffSelectView_1 = require("../Module/Activity/ActivityContent/Bos
   PayShopRechargeView_1 = require("../Module/PayShop/PayShopTab/PayShopRechargeView"),
   PayShopRecommendView_1 = require("../Module/PayShop/PayShopTab/PayShopRecommendView"),
   RogueShopTabView_1 = require("../Module/PayShop/PayShopTab/RogueShopTabView"),
-  PersonalCardTabView_1 = require("../Module/Personal/View/PersonalCardTabView"),
-  PersonalInfoTabView_1 = require("../Module/Personal/View/PersonalInfoTabView"),
   VisionIdentifyView_1 = require("../Module/Phantom/Vision/View/VisionIdentifyView"),
   VisionLevelUpView_1 = require("../Module/Phantom/Vision/View/VisionLevelUpView"),
   RoleHandBookPreviewView_1 = require("../Module/RoleHandBook/RoleHandBookPreviewView"),
@@ -149,16 +149,6 @@ class UiTabViewManager {
         "UiTabView_RoleDescribe_Prefab",
       ],
       [
-        "PersonalInfoTabView",
-        PersonalInfoTabView_1.PersonalInfoTabView,
-        "UiView_ShowRole",
-      ],
-      [
-        "PersonalCardTabView",
-        PersonalCardTabView_1.PersonalCardTabView,
-        "UiItem_Card",
-      ],
-      [
         "AdventureTargetView",
         AdventureTargetView_1.AdventureTargetView,
         "UiView_Completion",
@@ -242,6 +232,16 @@ class UiTabViewManager {
         "BossRushSelectView",
         BossRushSelectView_1.BossRushSelectView,
         "UiItem_BossrushSleLevel",
+      ],
+      [
+        "RewardTargetTabView",
+        RewardTargetTabView_1.RewardTargetTabView,
+        "UiItem_ShopMission",
+      ],
+      [
+        "RewardShopTabView",
+        RewardShopTabView_1.RewardShopTabView,
+        "MoonChasing_UiItem_ShopItem",
       ],
     ]);
   }

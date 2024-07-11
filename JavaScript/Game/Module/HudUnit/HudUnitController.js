@@ -13,10 +13,10 @@ class HudUnitController extends UiControllerBase_1.UiControllerBase {
     return !0;
   }
   static OnClear() {
-    return HudUnitManager_1.HudUnitManager.Clear(), this.Yti(), !0;
+    return HudUnitManager_1.HudUnitManager.Clear(), this.Yii(), !0;
   }
   static OnLeaveLevel() {
-    return HudUnitManager_1.HudUnitManager.Clear(), this.Yti(), !0;
+    return HudUnitManager_1.HudUnitManager.Clear(), this.Yii(), !0;
   }
   static OnTick(e) {
     HudUnitManager_1.HudUnitManager.Tick(e);
@@ -31,7 +31,7 @@ class HudUnitController extends UiControllerBase_1.UiControllerBase {
     ),
       ModelManager_1.ModelManager.BattleUiModel.ChildViewData.AddCallback(
         17,
-        this.j$e,
+        this.iJe,
       );
   }
   static OnRemoveEvents() {
@@ -41,34 +41,36 @@ class HudUnitController extends UiControllerBase_1.UiControllerBase {
     ),
       ModelManager_1.ModelManager.BattleUiModel.ChildViewData.RemoveCallback(
         17,
-        this.j$e,
+        this.iJe,
       );
   }
-  static Jti(e) {}
-  static zti(e) {
-    this.Yti();
+  static Jii(e) {}
+  static zii(e) {
+    this.Yii();
   }
   static ListenForTagSignificantChanged(e, t, n) {
-    e = e.GetComponent(185).ListenForTagAddOrRemove(t?.TagId, n);
-    this.Zti.push(e);
+    e = e.GetComponent(188).ListenForTagAddOrRemove(t?.TagId, n);
+    this.Zii.push(e);
   }
-  static Yti() {
-    for (const e of this.Zti) e.EndTask();
-    this.Zti.length = 0;
+  static Yii() {
+    for (const e of this.Zii) e.EndTask();
+    this.Zii.length = 0;
   }
 }
-((exports.HudUnitController = HudUnitController).Zti = []),
+((exports.HudUnitController = HudUnitController).Zii = []),
   (HudUnitController.xie = (e, t) => {
-    t?.Valid && HudUnitController.zti(t), e?.Valid && HudUnitController.Jti(e);
+    t?.Valid && HudUnitController.zii(t), e?.Valid && HudUnitController.Jii(e);
   }),
-  (HudUnitController.j$e = () => {
+  (HudUnitController.iJe = () => {
     var e = UiLayer_1.UiLayer.GetBattleViewUnit(1),
-      t =
+      t = UiLayer_1.UiLayer.GetBattleViewUnit(3),
+      n =
         ModelManager_1.ModelManager.BattleUiModel.ChildViewData.GetChildVisible(
           17,
         );
-    e.SetUIActive(t),
-      t
+    e.SetUIActive(n),
+      t.SetUIActive(n),
+      n
         ? ModelManager_1.ModelManager.GameModeModel.WorldDone
           ? HudUnitManager_1.HudUnitManager.ShowHud()
           : Log_1.Log.CheckInfo() &&

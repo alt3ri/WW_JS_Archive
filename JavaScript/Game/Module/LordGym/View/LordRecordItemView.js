@@ -19,8 +19,8 @@ class LoadRecordItemView extends UiPanelBase_1.UiPanelBase {
       (this.ScrollViewDelegate = void 0),
       (this.GridIndex = 0),
       (this.DisplayIndex = 0),
-      (this.Nke = void 0),
-      (this.uEi = () => new RoleItem());
+      (this.tFe = void 0),
+      (this.uyi = () => new RoleItem());
   }
   OnRegisterComponent() {
     (this.ComponentRegisterInfos = [
@@ -36,9 +36,9 @@ class LoadRecordItemView extends UiPanelBase_1.UiPanelBase {
       (this.BtnBindInfo = []);
   }
   OnStart() {
-    this.Nke = new GenericLayout_1.GenericLayout(
+    this.tFe = new GenericLayout_1.GenericLayout(
       this.GetHorizontalLayout(3),
-      this.uEi,
+      this.uyi,
     );
   }
   Clear() {}
@@ -70,21 +70,21 @@ class LoadRecordItemView extends UiPanelBase_1.UiPanelBase {
           ))),
         this.GetText(2).SetUIActive(n && a),
         this.GetText(4).SetUIActive(!n && a && r),
-        this.Nke.SetActive(n),
+        this.tFe.SetActive(n),
         a &&
           n &&
-          (this.GetText(2)?.SetText(TimeUtil_1.TimeUtil.GetTimeString(o.EAs)),
-          this.Nke.RefreshByData(this.cEi(o))))
+          (this.GetText(2)?.SetText(TimeUtil_1.TimeUtil.GetTimeString(o.Fxs)),
+          this.tFe.RefreshByData(this.cyi(o))))
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error("SceneGameplay", 50, "领主挑战缺少对应怪物配置", [
           "id",
           e.Id,
         ]);
   }
-  cEi(t) {
+  cyi(t) {
     var i = Array(EditFormationDefine_1.EDITE_FORAMTION_MAX_NUM);
     for (let e = 0; e < EditFormationDefine_1.EDITE_FORAMTION_MAX_NUM; e++)
-      i[e] = t.xkn[e] ?? { RoleId: -1, Level: 1 };
+      i[e] = t.s5n[e] ?? { RoleId: -1, Level: 1 };
     return i;
   }
   GetKey(e, t) {
@@ -94,35 +94,35 @@ class LoadRecordItemView extends UiPanelBase_1.UiPanelBase {
 exports.LoadRecordItemView = LoadRecordItemView;
 class RoleItem extends LoopScrollSmallItemGrid_1.LoopScrollSmallItemGrid {
   constructor() {
-    super(...arguments), (this.mEi = void 0);
+    super(...arguments), (this.myi = void 0);
   }
   async OnCreateAsync() {
     var e = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
         "UiItem_ItemBNoneRole",
       ),
       e = await this.LoadPrefabAsync(e, this.RootItem);
-    this.mEi = e.GetComponentByClass(UE.UIItem.StaticClass());
+    this.myi = e.GetComponentByClass(UE.UIItem.StaticClass());
   }
   OnRefresh(e, t, i) {
     var r,
-      o = e.l3n;
-    this.mEi?.SetUIActive(o < 0),
-      !o || o < 0
-        ? this.Apply({ Type: 1 })
-        : ((o = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(o)),
-          (r = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
-            "Text_InstanceDungeonRecommendLevel_Text",
-          )),
-          (r = StringUtils_1.StringUtils.Format(r, e.r3n.toString())),
-          (e = {
-            Data: e,
-            ElementId: o.ElementId,
-            Type: 2,
-            ItemConfigId: o.Id,
-            BottomText: r,
-            QualityId: o.QualityId,
-          }),
-          this.Apply(e));
+      o = e.O6n;
+    !o || o < 0
+      ? (this.Apply({ Type: 1 }), this.myi?.SetUIActive(!0))
+      : (this.myi?.SetUIActive(!1),
+        (o = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(o)),
+        (r = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
+          "Text_InstanceDungeonRecommendLevel_Text",
+        )),
+        (r = StringUtils_1.StringUtils.Format(r, e.P6n.toString())),
+        (e = {
+          Data: e,
+          ElementId: o.ElementId,
+          Type: 2,
+          ItemConfigId: o.Id,
+          BottomText: r,
+          QualityId: o.QualityId,
+        }),
+        this.Apply(e));
   }
 }
 //# sourceMappingURL=LordRecordItemView.js.map

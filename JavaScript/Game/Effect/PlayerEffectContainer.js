@@ -15,7 +15,7 @@ class PlayerEffectContainer {
       (this.Gpe = new Array(SceneTeamDefine_1.SCENE_TEAM_MAX_NUM)),
       (this.Npe = new Array(SceneTeamDefine_1.SCENE_TEAM_MAX_NUM)),
       (this.Ope = new Array(SceneTeamDefine_1.SCENE_TEAM_MAX_NUM)),
-      (this.xwn = new Array(SceneTeamDefine_1.SCENE_TEAM_MAX_NUM)),
+      (this.uqn = new Array(SceneTeamDefine_1.SCENE_TEAM_MAX_NUM)),
       (this.kpe = () => {
         for (let e = 0; e < SceneTeamDefine_1.SCENE_TEAM_MAX_NUM; e++)
           this.Ope[e] = this.Npe[e];
@@ -27,14 +27,14 @@ class PlayerEffectContainer {
           n?.IsMyRole() && r ? (this.Npe[e] = r.Id) : (this.Npe[e] = 0);
         }
         for (let e = 0; e < SceneTeamDefine_1.SCENE_TEAM_MAX_NUM; e++)
-          (this.Gpe[e] = -1), (this.xwn[e] = !1);
+          (this.Gpe[e] = -1), (this.uqn[e] = !1);
         for (let e = 0; e < SceneTeamDefine_1.SCENE_TEAM_MAX_NUM; e++)
           (this.qpe[e] = e),
             0 < this.Ope[e] &&
               -1 < (t = this.Fpe(this.Ope[e])) &&
-              ((this.Gpe[t] = e), (this.xwn[e] = !0));
+              ((this.Gpe[t] = e), (this.uqn[e] = !0));
         for (let e = 0; e < SceneTeamDefine_1.SCENE_TEAM_MAX_NUM; e++)
-          this.xwn[e] || this.Bpe[e].Clear();
+          this.uqn[e] || this.Bpe[e].Clear();
         for (let e = 0; e < SceneTeamDefine_1.SCENE_TEAM_MAX_NUM; e++) {
           var s,
             a = this.Gpe[e];

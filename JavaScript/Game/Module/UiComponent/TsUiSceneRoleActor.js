@@ -2,8 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: !0 });
 const UE = require("ue"),
   ActorSystem_1 = require("../../../Core/Actor/ActorSystem"),
-  UiModelSystem_1 = require("../UiModel/UiModel/UiModelSystem"),
-  Vector_1 = require("../../../Core/Utils/Math/Vector");
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  UiModelSystem_1 = require("../UiModel/UiModel/UiModelSystem");
 class TsUiSceneRoleActor extends UE.Actor {
   constructor() {
     super(...arguments),
@@ -34,11 +34,11 @@ class TsUiSceneRoleActor extends UE.Actor {
     return this.RoleActorIndex;
   }
   Destroy() {
-    this.Model?.End(),
+    ActorSystem_1.ActorSystem.Put(this),
+      this.Model?.End(),
       this.Model?.Clear(),
       (this.Model = void 0),
-      (this.RoleActorIndex = 0),
-      ActorSystem_1.ActorSystem.Put(this);
+      (this.RoleActorIndex = 0);
   }
   IsShowUiWepaonEffect() {
     return !0;

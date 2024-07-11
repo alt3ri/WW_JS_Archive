@@ -10,7 +10,6 @@ const Time_1 = require("../../../Core/Common/Time"),
   ModelManager_1 = require("../../Manager/ModelManager"),
   CharacterUnifiedStateTypes_1 = require("../../NewWorld/Character/Common/Component/Abilities/CharacterUnifiedStateTypes"),
   InputMappingsDefine_1 = require("../../Ui/InputDistribute/InputMappingsDefine"),
-  AdventureDefine_1 = require("../AdventureGuide/AdventureDefine"),
   TIMER_INTERVAL = 1e3,
   actionNames = [
     InputMappingsDefine_1.actionMappings.攻击,
@@ -21,34 +20,34 @@ const Time_1 = require("../../../Core/Common/Time"),
   ];
 class BattleUiExploreModeData {
   constructor() {
-    (this.qKe = !0),
+    (this.XQe = !0),
       (this.j3 = void 0),
-      (this.GKe = !1),
-      (this.NKe = !1),
-      (this.OKe = new Map()),
-      (this.kKe = []),
-      (this.FKe = 0),
-      (this.VKe = 3e3),
-      (this.HKe = !1),
-      (this.jKe = !1),
-      (this.E9e = () => {
+      (this.$Qe = !1),
+      (this.YQe = !1),
+      (this.JQe = new Map()),
+      (this.zQe = []),
+      (this.ZQe = 0),
+      (this.eXe = 3e3),
+      (this.tXe = !1),
+      (this.iXe = !1),
+      (this.q7e = () => {
         if (
-          this.qKe &&
-          !this.GKe &&
-          !this.NKe &&
-          !(Time_1.Time.WorldTime < this.FKe || this.HKe || this.jKe)
+          this.XQe &&
+          !this.$Qe &&
+          !this.YQe &&
+          !(Time_1.Time.WorldTime < this.ZQe || this.tXe || this.iXe)
         ) {
-          for (const i of this.kKe)
+          for (const i of this.zQe)
             if (i) {
-              var t = this.kKe.length;
-              for (let e = 0; e < t; e++) this.kKe[e] = !1;
+              var t = this.zQe.length;
+              for (let e = 0; e < t; e++) this.zQe[e] = !1;
               return void this.DelayExitBattleMode();
             }
           var e = ModelManager_1.ModelManager.BattleUiModel.GetCurRoleData();
           e &&
             e.EntityHandle &&
-            (this.WKe(e) ||
-              ((this.GKe = !0),
+            (this.oXe(e) ||
+              ((this.$Qe = !0),
               EventSystem_1.EventSystem.Emit(
                 EventDefine_1.EEventName.BattleUiExploreModeChanged,
                 !0,
@@ -57,12 +56,12 @@ class BattleUiExploreModeData {
       });
   }
   Init() {
-    this.VKe = CommonParamById_1.configCommonParamById.GetIntConfig(
+    this.eXe = CommonParamById_1.configCommonParamById.GetIntConfig(
       "ExploreModeWaitTime",
     );
     for (let e = 0; e < actionNames.length; e++) {
       var t = actionNames[e];
-      this.kKe.push(!1), this.OKe.set(t, e);
+      this.zQe.push(!1), this.JQe.set(t, e);
     }
     var e =
       ModelManager_1.ModelManager.BattleUiModel.GetIsAutoSwitchSkillButtonMode();
@@ -76,45 +75,45 @@ class BattleUiExploreModeData {
     return actionNames;
   }
   GetIsInExploreMode() {
-    return this.GKe;
+    return this.$Qe;
   }
   SetAutoSwitch(e) {
-    (this.qKe = !1),
-      this.qKe
+    (this.XQe = !1),
+      this.XQe
         ? this.j3 ||
           (this.j3 = TimerSystem_1.TimerSystem.Forever(
-            this.E9e,
+            this.q7e,
             TIMER_INTERVAL,
           ))
         : (this.BCe(),
-          this.GKe &&
-            ((this.GKe = !1),
+          this.$Qe &&
+            ((this.$Qe = !1),
             EventSystem_1.EventSystem.Emit(
               EventDefine_1.EEventName.BattleUiExploreModeChanged,
               !1,
             )));
   }
   EnterBattleMode() {
-    this.GKe &&
-      ((this.GKe = !1),
+    this.$Qe &&
+      ((this.$Qe = !1),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.BattleUiExploreModeChanged,
         !1,
       ));
   }
   DelayExitBattleMode() {
-    this.FKe = Time_1.Time.WorldTime + this.VKe;
+    this.ZQe = Time_1.Time.WorldTime + this.eXe;
   }
   UpdateGuidingState(e) {
-    (this.HKe = e) ? this.EnterBattleMode() : this.DelayExitBattleMode();
+    (this.tXe = e) ? this.EnterBattleMode() : this.DelayExitBattleMode();
   }
   UpdateBossState(e) {
-    (this.jKe = e) ? this.EnterBattleMode() : this.DelayExitBattleMode();
+    (this.iXe = e) ? this.EnterBattleMode() : this.DelayExitBattleMode();
   }
   InputAction(e, t) {
-    e = this.OKe.get(e);
+    e = this.JQe.get(e);
     void 0 === e ||
-      (!(this.kKe[e] = t) && this.GKe) ||
+      (!(this.zQe[e] = t) && this.$Qe) ||
       (this.EnterBattleMode(), this.DelayExitBattleMode());
   }
   BeHit(e) {
@@ -125,20 +124,21 @@ class BattleUiExploreModeData {
       (this.EnterBattleMode(), this.DelayExitBattleMode());
   }
   UpdateDungeonState() {
-    (this.NKe = this.KKe()), this.NKe && this.GKe && this.EnterBattleMode();
+    (this.YQe = this.rXe()), this.YQe && this.$Qe && this.EnterBattleMode();
   }
-  WKe(e) {
+  oXe(e) {
     return (
-      e.EntityHandle.Entity.GetComponent(158).DirectionState ===
+      e.EntityHandle.Entity.GetComponent(160).DirectionState ===
       CharacterUnifiedStateTypes_1.ECharDirectionState.AimDirection
     );
   }
-  KKe() {
+  rXe() {
     var e = ModelManager_1.ModelManager.InstanceDungeonEntranceModel.InstanceId;
     return (
       0 !== e &&
-      ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(e)
-        .InstSubType === AdventureDefine_1.EDungeonSubType.RoleTrail
+      7 ===
+        ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(e)
+          .InstSubType
     );
   }
   BCe() {

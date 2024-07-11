@@ -15,45 +15,45 @@ class GuideModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
       (this.IsGmInvoke = !1),
-      (this.BYt = void 0),
-      (this.bYt = void 0),
+      (this.BJt = void 0),
+      (this.bJt = void 0),
       (this.CurrentGroupMap = void 0),
-      (this.qYt = void 0),
-      (this.GYt = void 0),
-      (this.NYt = void 0),
-      (this.OYt = !1),
-      (this.kYt = void 0),
-      (this.FYt = 0),
-      (this.VYt = (i) => {
-        for (let i = 0; i < this.qYt.length; i++)
-          this.qYt[i].Tick(TimerSystem_1.MIN_TIME) &&
-            (this.qYt.splice(i, 1), this.TryPauseTimer(), i--);
+      (this.qJt = void 0),
+      (this.GJt = void 0),
+      (this.NJt = void 0),
+      (this.OJt = !1),
+      (this.kJt = void 0),
+      (this.FJt = 0),
+      (this.VJt = (i) => {
+        for (let i = 0; i < this.qJt.length; i++)
+          this.qJt[i].Tick(TimerSystem_1.MIN_TIME) &&
+            (this.qJt.splice(i, 1), this.TryPauseTimer(), i--);
       });
   }
   get IsGuideLockingInput() {
-    return 0 < this.FYt;
+    return 0 < this.FJt;
   }
   AddGuideLockInput() {
-    this.FYt++ || this.HYt();
+    this.FJt++ || this.HJt();
   }
   RemoveGuideLockInput() {
-    --this.FYt || this.HYt();
+    --this.FJt || this.HJt();
   }
-  HYt() {
+  HJt() {
     UiLayer_1.UiLayer.SetShowNormalMaskLayer(this.IsGuideLockingInput, "Guide"),
       ModelManager_1.ModelManager.InputDistributeModel?.RefreshInputDistributeTag();
   }
   OnInit() {
-    (this.bYt = new Set()), (this.BYt = new Set());
+    (this.bJt = new Set()), (this.BJt = new Set());
     for (const i of ConfigManager_1.ConfigManager.GuideConfig.GetAllGroup())
-      i.ResetInDungeon && this.BYt.add(i.Id);
+      i.ResetInDungeon && this.BJt.add(i.Id);
     return (
       (this.CurrentGroupMap = new Map()),
-      (this.kYt = new Map([
+      (this.kJt = new Map([
         [4, void 0],
         [1, void 0],
       ])),
-      (this.FYt = 0),
+      (this.FJt = 0),
       !(this.IsGmInvoke = !1)
     );
   }
@@ -72,84 +72,84 @@ class GuideModel extends ModelBase_1.ModelBase {
       (i && this.ClearAllGroup(), (GuideModel.IsGmLock = i));
   }
   AddTutorialInfo(i) {
-    this.qYt || (this.qYt = []),
-      this.qYt.push(i),
-      this.GYt ||
-        (this.GYt = TimerSystem_1.TimerSystem.Forever(
-          this.VYt,
+    this.qJt || (this.qJt = []),
+      this.qJt.push(i),
+      this.GJt ||
+        (this.GJt = TimerSystem_1.TimerSystem.Forever(
+          this.VJt,
           TimerSystem_1.MIN_TIME,
         )),
       this.TryShowTutorial();
   }
   TryShowTutorial() {
     var i;
-    this.qYt.length <= 0 ||
-      ((i = this.qYt[this.qYt.length - 1]),
-      this.NYt &&
-        (2 === this.NYt.TipState ||
-          (i.TutorialTip && 1 !== this.NYt.TipState))) ||
-      this.jYt(i);
+    this.qJt.length <= 0 ||
+      ((i = this.qJt[this.qJt.length - 1]),
+      this.NJt &&
+        (2 === this.NJt.TipState ||
+          (i.TutorialTip && 1 !== this.NJt.TipState))) ||
+      this.jJt(i);
   }
-  jYt(i) {
-    (this.NYt = i),
+  jJt(i) {
+    (this.NJt = i),
       UiManager_1.UiManager.IsViewOpen("GuideTutorialTipsView") &&
         UiManager_1.UiManager.CloseView("GuideTutorialTipsView"),
-      this.NYt.TutorialTip
-        ? (this.WYt(),
-          UiManager_1.UiManager.OpenView("GuideTutorialTipsView", this.NYt))
+      this.NJt.TutorialTip
+        ? (this.WJt(),
+          UiManager_1.UiManager.OpenView("GuideTutorialTipsView", this.NJt))
         : (this.TryPauseTimer(), this.TryShowGuideTutorialView());
   }
   TryShowGuideTutorialView() {
-    UiManager_1.UiManager.OpenView("GuideTutorialView", this.NYt, (i) => {
-      this.OYt = !i && !UiManager_1.UiManager.IsViewOpen("GuideTutorialView");
+    UiManager_1.UiManager.OpenView("GuideTutorialView", this.NJt, (i) => {
+      this.OJt = !i && !UiManager_1.UiManager.IsViewOpen("GuideTutorialView");
     });
   }
   ShowFailedOpenTutorialView() {
-    this.OYt && this.TryShowGuideTutorialView();
+    this.OJt && this.TryShowGuideTutorialView();
   }
   ClipTipState() {
-    for (const i of this.qYt) 0 === i.TipState && (i.TipState = 1);
+    for (const i of this.qJt) 0 === i.TipState && (i.TipState = 1);
   }
   RemoveCurrentTutorialInfo() {
-    var i = this.qYt.indexOf(this.NYt);
-    (this.NYt = void 0),
+    var i = this.qJt.indexOf(this.NJt);
+    (this.NJt = void 0),
       0 <= i &&
-        (this.qYt[i].StopGuide(), this.qYt.splice(i, 1), this.TryPauseTimer());
+        (this.qJt[i].StopGuide(), this.qJt.splice(i, 1), this.TryPauseTimer());
   }
   HaveCurrentTutorial() {
-    return void 0 !== this.NYt;
+    return void 0 !== this.NJt;
   }
   TryPauseTimer() {
-    this.GYt &&
-      !this.GYt.IsPause() &&
-      (0 === this.qYt.length || (this.NYt && 2 === this.NYt.TipState)) &&
-      TimerSystem_1.TimerSystem.Pause(this.GYt);
+    this.GJt &&
+      !this.GJt.IsPause() &&
+      (0 === this.qJt.length || (this.NJt && 2 === this.NJt.TipState)) &&
+      TimerSystem_1.TimerSystem.Pause(this.GJt);
   }
-  WYt() {
-    this.GYt &&
-      this.GYt.IsPause() &&
-      this.qYt.length &&
-      (!this.NYt || 2 !== this.NYt.TipState) &&
-      (TimerSystem_1.TimerSystem.Has(this.GYt)
-        ? TimerSystem_1.TimerSystem.Resume(this.GYt)
-        : (this.GYt = TimerSystem_1.TimerSystem.Forever(
-            this.VYt,
+  WJt() {
+    this.GJt &&
+      this.GJt.IsPause() &&
+      this.qJt.length &&
+      (!this.NJt || 2 !== this.NJt.TipState) &&
+      (TimerSystem_1.TimerSystem.Has(this.GJt)
+        ? TimerSystem_1.TimerSystem.Resume(this.GJt)
+        : (this.GJt = TimerSystem_1.TimerSystem.Forever(
+            this.VJt,
             TimerSystem_1.MIN_TIME,
           )));
   }
   BreakTypeViewStep(i) {
-    this.kYt.get(i)?.SwitchState(3), this.kYt.set(i, void 0);
+    this.kJt.get(i)?.SwitchState(3), this.kJt.set(i, void 0);
   }
   OpenGuideView(i) {
     var e = i.Config.ContentType;
-    this.kYt.set(e, i),
+    this.kJt.set(e, i),
       4 === e
         ? UiManager_1.UiManager.OpenView("GuideFocusView", i)
         : UiManager_1.UiManager.OpenView("GuideTipsView", i);
   }
   RemoveStepViewSingletonMap(i) {
     var e = i.Config.ContentType;
-    this.kYt.get(e) === i && this.kYt.set(e, void 0);
+    this.kJt.get(e) === i && this.kJt.set(e, void 0);
   }
   EnsureCurrentDungeonId() {
     const e = ModelManager_1.ModelManager.CreatureModel.GetInstanceId();
@@ -166,7 +166,7 @@ class GuideModel extends ModelBase_1.ModelBase {
             "进入副本时清除不属于当前副本的引导数据",
             ["groupId", i],
           ));
-    for (const r of this.BYt)
+    for (const r of this.BJt)
       ConfigManager_1.ConfigManager.GuideConfig.GetGroup(r)?.DungeonId.find(
         (i) => i === e,
       ) && GuideController_1.GuideController.ResetFinishedGuide(r);
@@ -178,7 +178,7 @@ class GuideModel extends ModelBase_1.ModelBase {
         17,
         "通过GM命令清除了本地缓存的所有已完成引导数据, 同时所有执行中引导状态被重置, 重登后恢复",
       ),
-      this.bYt.clear(),
+      this.bJt.clear(),
       this.ClearAllGroup();
   }
   ClearAllGroup() {
@@ -189,13 +189,13 @@ class GuideModel extends ModelBase_1.ModelBase {
   }
   FinishGroup(i) {
     var e = this.CurrentGroupMap.get(i);
-    e && (e.Reset(), this.CurrentGroupMap.delete(i)), this.bYt.add(i);
+    e && (e.Reset(), this.CurrentGroupMap.delete(i)), this.bJt.add(i);
   }
   ResetFinishedGuide(i) {
-    this.bYt.delete(i);
+    this.bJt.delete(i);
   }
   IsGroupFinished(i) {
-    return this.bYt?.has(i);
+    return this.bJt?.has(i);
   }
   CanGroupInvoke(i) {
     return !this.IsGroupFinished(i) || this.IsGroupCanRepeat(i);
@@ -221,45 +221,61 @@ class GuideModel extends ModelBase_1.ModelBase {
       var e = ConfigManager_1.ConfigManager.GuideConfig.GetGroup(i);
       if (e)
         if (this.CanGroupInvoke(i)) {
-          var t,
-            r = e.OpenLimitCondition;
-          if (
-            !r ||
-            this.IsGmInvoke ||
-            ControllerHolder_1.ControllerHolder.LevelGeneralController.CheckCondition(
-              r.toString(),
-              void 0,
-            )
-          ) {
-            const s = ModelManager_1.ModelManager.CreatureModel.GetInstanceId();
-            if (e.DungeonId.find((i) => i === s))
-              return (
-                (t = new GuideGroupInfo_1.GuideGroupInfo(i)),
-                this.CurrentGroupMap.set(t.Id, t),
-                Log_1.Log.CheckDebug() &&
-                  Log_1.Log.Debug("Guide", 17, "创建引导组数据成功", [
-                    "组Id",
-                    i,
-                  ]),
-                t
-              );
-            Log_1.Log.CheckWarn() &&
-              Log_1.Log.Warn(
-                "Guide",
-                17,
-                "引导组的副本Id与当前所在副本不匹配",
-                ["组Id", i],
-                ["当前所在副本Id", s],
-                ["配置副本Id", e.DungeonId],
-              );
+          var t = e.OnlineMode;
+          if (GuideController_1.GuideController.CheckAvailableWhenOnline(t)) {
+            var r,
+              s = e.OpenLimitCondition;
+            if (
+              !s ||
+              this.IsGmInvoke ||
+              ControllerHolder_1.ControllerHolder.LevelGeneralController.CheckCondition(
+                s.toString(),
+                void 0,
+              )
+            ) {
+              const o =
+                ModelManager_1.ModelManager.CreatureModel.GetInstanceId();
+              if (e.DungeonId.find((i) => i === o))
+                return (
+                  (r = new GuideGroupInfo_1.GuideGroupInfo(i)),
+                  this.CurrentGroupMap.set(r.Id, r),
+                  Log_1.Log.CheckDebug() &&
+                    Log_1.Log.Debug("Guide", 17, "创建引导组数据成功", [
+                      "组Id",
+                      i,
+                    ]),
+                  r
+                );
+              Log_1.Log.CheckWarn() &&
+                Log_1.Log.Warn(
+                  "Guide",
+                  17,
+                  "引导组的副本Id与当前所在副本不匹配",
+                  ["组Id", i],
+                  ["当前所在副本Id", o],
+                  ["配置副本Id", e.DungeonId],
+                );
+            } else
+              Log_1.Log.CheckWarn() &&
+                Log_1.Log.Warn(
+                  "Guide",
+                  17,
+                  "引导组的入队条件组不通过",
+                  ["组Id", i],
+                  ["conditionGroupId", s],
+                );
           } else
             Log_1.Log.CheckWarn() &&
               Log_1.Log.Warn(
                 "Guide",
-                17,
-                "引导组的入队条件组不通过",
+                65,
+                "引导组用于是否联机的情况不匹配",
                 ["组Id", i],
-                ["conditionGroupId", r],
+                ["OnlineMode", t],
+                [
+                  "是否处于联机",
+                  ModelManager_1.ModelManager.GameModeModel.IsMulti,
+                ],
               );
         } else
           Log_1.Log.CheckWarn() &&
@@ -285,7 +301,7 @@ class GuideModel extends ModelBase_1.ModelBase {
         Log_1.Log.Error("Guide", 17, "引导组数据未创建", ["组Id", i]);
   }
   CheckGroupStatus(i, e, t) {
-    if (!this.bYt)
+    if (!this.bJt)
       return (
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
@@ -311,14 +327,14 @@ class GuideModel extends ModelBase_1.ModelBase {
       );
     let r = 0;
     return (
-      this.bYt.has(i)
+      this.bJt.has(i)
         ? (r = 4)
         : (i = this.CurrentGroupMap.get(i)) &&
           (r = i.StateMachine.CurrentState),
-      GuideModel.KYt(r, e, t)
+      GuideModel.KJt(r, e, t)
     );
   }
-  static KYt(i, e, t) {
+  static KJt(i, e, t) {
     return "" === t
       ? i === e
       : "!=" === t
@@ -333,19 +349,26 @@ class GuideModel extends ModelBase_1.ModelBase {
   }
   OnClear() {
     return (
-      this.bYt.clear(),
+      this.bJt.clear(),
       this.CurrentGroupMap.clear(),
-      this.BYt.clear(),
-      this.qYt && (this.qYt.length = 0),
-      this.GYt && TimerSystem_1.TimerSystem.Remove(this.GYt),
-      (this.bYt = void 0),
+      this.BJt.clear(),
+      this.qJt && (this.qJt.length = 0),
+      this.GJt && TimerSystem_1.TimerSystem.Remove(this.GJt),
+      (this.bJt = void 0),
       (this.CurrentGroupMap = void 0),
-      (this.BYt = void 0),
-      (this.qYt = void 0),
-      (this.NYt = void 0),
-      (this.GYt = void 0),
-      !(this.OYt = !1)
+      (this.BJt = void 0),
+      (this.qJt = void 0),
+      (this.NJt = void 0),
+      (this.GJt = void 0),
+      !(this.OJt = !1)
     );
+  }
+  GetRunningGroupIdList() {
+    var i,
+      e,
+      t = [];
+    for ([i, e] of this.CurrentGroupMap) e.CheckIsGuideRunning() && t.push(i);
+    return t;
   }
 }
 ((exports.GuideModel = GuideModel).IsLock = !1), (GuideModel.IsGmLock = !1);

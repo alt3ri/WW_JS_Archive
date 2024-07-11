@@ -28,10 +28,10 @@ class AchievementData {
     this.ube = t;
   }
   Phrase(t) {
-    (this._be = t.Bms),
-      (this.mbe = t.qms),
-      (this.dbe = t.Gms.xms),
-      (this.Cbe = t.Gms.bms);
+    (this._be = t.Yfs),
+      (this.mbe = t.Jfs),
+      (this.dbe = t.zfs.Qfs),
+      (this.Cbe = t.zfs.Xfs);
   }
   GetId() {
     return this.xe;
@@ -293,7 +293,7 @@ class AchievementGroupData {
       (this.xe = t);
   }
   Phrase(t) {
-    (this.mbe = t.qms), (this._be = t.Bms), (this.vbe = !0);
+    (this.mbe = t.Jfs), (this._be = t.Yfs), (this.vbe = !0);
   }
   GetId() {
     return this.xe;

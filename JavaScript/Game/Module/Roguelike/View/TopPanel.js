@@ -10,15 +10,15 @@ const UE = require("ue"),
 class TopPanel extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this.nVt = void 0),
+      (this.n6t = void 0),
       (this.CloseCallback = void 0),
-      (this.Xno = () => {
+      (this.jso = () => {
         this.CloseCallback?.();
       }),
-      (this.Gho = (e) => {
+      (this.Blo = (e) => {
         ModelManager_1.ModelManager.RoguelikeModel.UpdateDescModel(1 === e);
       }),
-      (this.Nho = () => {
+      (this.blo = () => {
         RoguelikeController_1.RoguelikeController.OpenRogueInfoView();
       });
   }
@@ -33,15 +33,15 @@ class TopPanel extends UiPanelBase_1.UiPanelBase {
       [6, UE.UIText],
     ]),
       (this.BtnBindInfo = [
-        [1, this.Xno],
-        [2, this.Gho],
-        [4, this.Nho],
+        [1, this.jso],
+        [2, this.Blo],
+        [4, this.blo],
       ]);
   }
   OnStart() {
-    (this.nVt = new PopupCaptionItem_1.PopupCaptionItem(this.GetItem(0))),
-      this.nVt.SetCloseBtnActive(!1),
-      this.nVt.SetHelpBtnActive(!1);
+    (this.n6t = new PopupCaptionItem_1.PopupCaptionItem(this.GetItem(0))),
+      this.n6t.SetCloseBtnActive(!1),
+      this.n6t.SetHelpBtnActive(!1);
   }
   OnBeforeShow() {
     this.RefreshTabBtn();
@@ -55,10 +55,10 @@ class TopPanel extends UiPanelBase_1.UiPanelBase {
     this.CloseCallback = void 0;
   }
   RefreshTitle(e) {
-    this.nVt.SetTitleByTextIdAndArgNew(e);
+    this.n6t.SetTitleByTextIdAndArgNew(e);
   }
   async RefreshCurrency(e) {
-    return this.nVt.SetCurrencyItemList(e);
+    return this.n6t.SetCurrencyItemList(e);
   }
   RefreshSelectTipsText(e, t = !1, ...i) {
     t
@@ -69,7 +69,7 @@ class TopPanel extends UiPanelBase_1.UiPanelBase {
     this.GetText(5).SetText("");
   }
   GetCostItemByIndex(e) {
-    var t = this.nVt?.GetCurrencyItemList();
+    var t = this.n6t?.GetCurrencyItemList();
     if (t && t.length > e) return t[e].GetRootItem();
   }
 }

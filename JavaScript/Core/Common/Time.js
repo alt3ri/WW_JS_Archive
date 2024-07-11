@@ -1,10 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.Time = void 0);
-const NetInfo_1 = require("../Net/NetInfo");
+const cpp_1 = require("cpp"),
+  NetInfo_1 = require("../Net/NetInfo");
 class Time {
-  static get D9() {
-    return Date.now();
+  static get ServerTimeStamp() {
+    return cpp_1.KuroTime.GetMilliseconds64() + Time.A9;
+  }
+  static SetServerTimeStamp(t) {
+    this.A9 =
+      t + NetInfo_1.NetInfo.RttMs / 2 - cpp_1.KuroTime.GetMilliseconds64();
+  }
+  static SyncTime(t, e, i) {
+    Time.SetServerTimeStamp(t),
+      Time.SetServerTimeOffset(e),
+      Time.SetTimeCheckServerStopTimeStamp(i);
   }
   static get TimeDilation() {
     return this.R9;
@@ -12,14 +22,8 @@ class Time {
   static get ServerStopTimeStamp() {
     return this.U9 + this.WorldTime + NetInfo_1.NetInfo.RttMs;
   }
-  static get ServerTimeStamp() {
-    return this.A9 + this.D9;
-  }
   static get CombatServerTime() {
     return Math.floor(this.P9 + this.Now + NetInfo_1.NetInfo.RttMs / 2);
-  }
-  static SetServerTimeStamp(t, e) {
-    this.A9 = t + e / 2 - this.D9;
   }
   static SetServerTimeOffset(t) {
     this.P9 = t;

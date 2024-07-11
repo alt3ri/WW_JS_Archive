@@ -8,86 +8,86 @@ class ItemGridBase extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
       (this.Data = void 0),
-      (this._At = new Map()),
-      (this.uAt = new Set()),
-      (this.cAt = new Set()),
-      (this.mAt = []),
-      (this.dAt = []),
-      (this.CAt = void 0),
-      (this.gAt = void 0),
+      (this.mPt = new Map()),
+      (this.dPt = new Set()),
+      (this.CPt = new Set()),
+      (this.gPt = []),
+      (this.fPt = []),
+      (this.pPt = void 0),
+      (this.vPt = void 0),
       (this.LongPressButton = new LongPressButtonItem_1.LongPressButtonItem()),
       (this.IsHover = !1),
       (this.IsSelected = !1),
       (this.IsForceSelected = !1),
-      (this.fAt = !0),
-      (this.pAt = !1),
-      (this.vAt = void 0),
-      (this.MAt = void 0),
-      (this.SAt = void 0),
-      (this.EAt = void 0),
-      (this.yAt = void 0),
-      (this.IAt = void 0),
-      (this.TAt = void 0),
-      (this.LAt = () => {
+      (this.MPt = !0),
+      (this.EPt = !1),
+      (this.SPt = void 0),
+      (this.yPt = void 0),
+      (this.IPt = void 0),
+      (this.TPt = void 0),
+      (this.LPt = void 0),
+      (this.DPt = void 0),
+      (this.RPt = void 0),
+      (this.UPt = () => {
         var t;
         this.OnExtendTogglePress(),
-          this.MAt &&
+          this.yPt &&
             ((t = {
               MediumItemGrid: this,
               State: this.GetItemGridExtendToggle().GetToggleState(),
               Data: this.Data,
             }),
-            this.MAt(t));
+            this.yPt(t));
       }),
-      (this.DAt = () => {
+      (this.APt = () => {
         var t;
         this.OnExtendToggleRelease(),
-          this.SAt &&
+          this.IPt &&
             ((t = {
               MediumItemGrid: this,
               State: this.GetItemGridExtendToggle().GetToggleState(),
               Data: this.Data,
             }),
-            this.SAt(t)),
+            this.IPt(t)),
           this.OnExtendToggleClicked(),
-          this.EAt &&
+          this.TPt &&
             ((t = {
               MediumItemGrid: this,
               State: this.GetItemGridExtendToggle().GetToggleState(),
               Data: this.Data,
             }),
-            this.EAt(t));
+            this.TPt(t));
       }),
-      (this.RAt = (t) => {
+      (this.PPt = (t) => {
         this.OnExtendToggleStateChanged(t),
-          this.vAt &&
+          this.SPt &&
             ((t = { MediumItemGrid: this, State: t, Data: this.Data }),
-            this.vAt(t));
+            this.SPt(t));
       }),
-      (this.T7e = () =>
-        this.yAt
-          ? this.yAt(
+      (this.Lke = () =>
+        this.LPt
+          ? this.LPt(
               this.Data,
               this.IsForceSelected,
               this.GetItemGridExtendToggle().GetToggleState(),
             )
           : this.OnCanExecuteChange()),
-      (this.UAt = () => {
+      (this.xPt = () => {
         this.IsHover = !0;
       }),
-      (this.AAt = () => {
+      (this.wPt = () => {
         this.IsHover = !1;
       }),
       (this.OnLongPressActivate = (t) => {
-        this.IAt && this.IAt(t, this, this.Data);
+        this.DPt && this.DPt(t, this, this.Data);
       }),
       (this.CanItemLongPressClick = () =>
-        !this.TAt || this.TAt(this, this.Data)),
-      (this.PAt = (t) => {
-        this.xAt(t),
-          this.uAt.delete(t),
-          0 < this.uAt.size ||
-            ((this.pAt = !1),
+        !this.RPt || this.RPt(this, this.Data)),
+      (this.BPt = (t) => {
+        this.bPt(t),
+          this.dPt.delete(t),
+          0 < this.dPt.size ||
+            ((this.EPt = !1),
             this.RefreshComponentVisible(),
             this.RefreshComponentHierarchyIndex());
       });
@@ -96,25 +96,25 @@ class ItemGridBase extends UiPanelBase_1.UiPanelBase {
     t && this.CreateThenShowByActor(t);
   }
   OnStartImplement() {
-    (this.CAt = this.OnSetTopAdditionItem()),
-      (this.gAt = this.OnSetBottomAdditionItem()),
+    (this.pPt = this.OnSetTopAdditionItem()),
+      (this.vPt = this.OnSetBottomAdditionItem()),
       this.LongPressButton.Initialize(
         this.GetItemGridExtendToggle(),
         this.OnLongPressActivate,
-        this.LAt,
-        this.DAt,
+        this.UPt,
+        this.APt,
       ),
       this.LongPressButton.SetTickConditionDelegate(this.CanItemLongPressClick),
       this.AddEvents();
   }
   OnBeforeDestroyImplement() {
-    (this.CAt = void 0),
-      (this.gAt = void 0),
-      (this.mAt.length = 0),
-      (this.dAt.length = 0),
+    (this.pPt = void 0),
+      (this.vPt = void 0),
+      (this.gPt.length = 0),
+      (this.fPt.length = 0),
       this.LongPressButton?.Clear(),
       (this.LongPressButton = void 0),
-      (this.pAt = !1),
+      (this.EPt = !1),
       this.UnBindOnExtendTogglePress(),
       this.UnBindOnExtendToggleRelease(),
       this.UnBindOnExtendToggleStateChanged(),
@@ -140,18 +140,18 @@ class ItemGridBase extends UiPanelBase_1.UiPanelBase {
   }
   AddEvents() {
     var t = this.GetItemGridExtendToggle();
-    t.OnStateChange.Add(this.RAt),
-      t.CanExecuteChange.Bind(this.T7e),
-      t.OnHover.Add(this.UAt),
-      t.OnUnHover.Add(this.AAt),
+    t.OnStateChange.Add(this.PPt),
+      t.CanExecuteChange.Bind(this.Lke),
+      t.OnHover.Add(this.xPt),
+      t.OnUnHover.Add(this.wPt),
       this.OnAddEvents();
   }
   RemoveEvents() {
     var t = this.GetItemGridExtendToggle();
-    t.OnStateChange.Remove(this.RAt),
+    t.OnStateChange.Remove(this.PPt),
       t.CanExecuteChange.Unbind(),
-      t.OnHover.Remove(this.UAt),
-      t.OnUnHover.Remove(this.AAt),
+      t.OnHover.Remove(this.xPt),
+      t.OnUnHover.Remove(this.wPt),
       this.OnRemoveEvents();
   }
   UnBindComponentEvents() {}
@@ -178,121 +178,121 @@ class ItemGridBase extends UiPanelBase_1.UiPanelBase {
   }
   SetExtendToggleEnable(t, i = !1) {
     var s;
-    (this.fAt === t && !i) ||
-      ((this.fAt = t),
+    (this.MPt === t && !i) ||
+      ((this.MPt = t),
       (s = this.GetItemGridExtendToggle()),
       t ? this.SetSelected(this.IsSelected, i) : s.SetToggleState(2));
   }
   BindOnExtendTogglePress(t) {
-    this.MAt = t;
+    this.yPt = t;
   }
   UnBindOnExtendTogglePress() {
-    this.MAt = void 0;
+    this.yPt = void 0;
   }
   BindOnExtendToggleRelease(t) {
-    this.SAt = t;
+    this.IPt = t;
   }
   UnBindOnExtendToggleRelease() {
-    this.SAt = void 0;
+    this.IPt = void 0;
   }
   BindOnExtendToggleStateChanged(t) {
-    this.vAt = t;
+    this.SPt = t;
   }
   UnBindOnExtendToggleStateChanged() {
-    this.vAt = void 0;
+    this.SPt = void 0;
   }
   BindOnExtendToggleClicked(t) {
-    this.EAt = t;
+    this.TPt = t;
   }
   UnBindOnExtendToggleClicked() {
-    this.EAt = void 0;
+    this.TPt = void 0;
   }
   BindOnCanExecuteChange(t) {
-    this.yAt = t;
+    this.LPt = t;
   }
   UnBindOnCanExecuteChange() {
-    this.yAt = void 0;
+    this.LPt = void 0;
   }
   BindLongPress(t, i, s) {
     this.LongPressButton.Deactivate(),
       this.LongPressButton.Activate(t),
-      (this.IAt = i),
-      (this.TAt = s);
+      (this.DPt = i),
+      (this.RPt = s);
   }
   UnBindLongPress() {
-    (this.IAt = void 0), (this.TAt = void 0);
+    (this.DPt = void 0), (this.RPt = void 0);
   }
   RefreshComponent(t, i, s) {
     let e = this.GetItemGridComponent(t);
     return (
       void 0 === s
-        ? (e?.SetActive(!1), this.cAt.delete(e))
-        : (e = !e && i ? this.wAt(t) : e) &&
-          (e.Refresh(s), this.BAt(e), e.IsCreating || this.xAt(e)),
+        ? (e?.SetActive(!1), this.CPt.delete(e))
+        : (e = !e && i ? this.qPt(t) : e) &&
+          (e.Refresh(s), this.GPt(e), e.IsCreating || this.bPt(e)),
       e
     );
   }
-  xAt(t) {
-    t.IsShowOrShowing ? this.cAt.add(t) : this.cAt.delete(t);
+  bPt(t) {
+    t.IsShowOrShowing ? this.CPt.add(t) : this.CPt.delete(t);
   }
   SetComponentVisible(t, i) {
-    t && (i ? this.cAt.add(t) : this.cAt.delete(t), t.SetActive(i));
+    t && (i ? this.CPt.add(t) : this.CPt.delete(t), t.SetActive(i));
   }
-  wAt(t) {
-    var i = this._At.get(t);
+  qPt(t) {
+    var i = this.mPt.get(t);
     if (!i) {
       switch ((i = new t()).GetLayoutLevel()) {
         case 0:
-          i.Initialize(this.CAt);
+          i.Initialize(this.pPt);
           break;
         case 1:
-          i.Initialize(this.gAt);
+          i.Initialize(this.vPt);
       }
-      this._At.set(t, i),
-        this.uAt.add(i),
-        (this.pAt = !0),
-        i.Load().then(this.PAt, () => {});
+      this.mPt.set(t, i),
+        this.dPt.add(i),
+        (this.EPt = !0),
+        i.Load().then(this.BPt, () => {});
     }
     return i;
   }
   RefreshComponentVisible() {
-    for (const t of this._At.values()) this.cAt.has(t) || t.SetActive(!1);
+    for (const t of this.mPt.values()) this.CPt.has(t) || t.SetActive(!1);
   }
   ClearVisibleComponent() {
-    this.cAt.clear();
+    this.CPt.clear();
   }
-  BAt(t) {
+  GPt(t) {
     switch (t.GetLayoutLevel()) {
       case 0:
-        this.dAt.push(t);
+        this.fPt.push(t);
         break;
       case 1:
-        this.mAt.push(t);
+        this.gPt.push(t);
     }
   }
   ClearComponentList() {
-    (this.mAt.length = 0), (this.dAt.length = 0);
+    (this.gPt.length = 0), (this.fPt.length = 0);
   }
   RefreshComponentHierarchyIndex() {
-    if (!this.pAt) {
-      for (let t = 0; t < this.dAt.length; t++)
-        this.dAt[t].SetHierarchyIndex(t);
-      for (let t = 0; t < this.mAt.length; t++)
-        this.mAt[t].SetHierarchyIndex(t);
+    if (!this.EPt) {
+      for (let t = 0; t < this.fPt.length; t++)
+        this.fPt[t].SetHierarchyIndex(t);
+      for (let t = 0; t < this.gPt.length; t++)
+        this.gPt[t].SetHierarchyIndex(t);
     }
   }
   GetItemGridComponent(t) {
-    t = this._At.get(t);
+    t = this.mPt.get(t);
     if (t) return t;
   }
   HiddenAllItemGridComponents() {
-    for (const t of this._At.values()) t.SetActive(!1);
+    for (const t of this.mPt.values()) t.SetActive(!1);
   }
   SetItemGridComponentVisible(t, i) {
-    this._At.get(t)?.SetActive(i);
+    this.mPt.get(t)?.SetActive(i);
   }
   ClearItemGridComponents() {
-    this._At.clear(), this.uAt.clear(), this.ClearComponentList();
+    this.mPt.clear(), this.dPt.clear(), this.ClearComponentList();
   }
   SetToggleInteractive(t) {
     this.GetItemGridExtendToggle().SetSelfInteractive(t);

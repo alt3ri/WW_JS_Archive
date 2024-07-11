@@ -7,7 +7,7 @@ const UE = require("ue"),
   VisionFetterSuitItem_1 = require("./VisionFetterSuitItem");
 class VisionEquipmentDragItem extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
-    super(), (this.wqe = void 0), (this.PPt = void 0), (this.wqe = e);
+    super(), (this.wqe = void 0), (this.bxt = void 0), (this.wqe = e);
   }
   async Init() {
     await this.CreateByActorAsync(this.wqe.GetOwner());
@@ -21,11 +21,11 @@ class VisionEquipmentDragItem extends UiPanelBase_1.UiPanelBase {
     ];
   }
   async OnBeforeStartAsync() {
-    (this.PPt = new VisionFetterSuitItem_1.VisionFetterSuitItem(
+    (this.bxt = new VisionFetterSuitItem_1.VisionFetterSuitItem(
       this.GetItem(3),
     )),
-      await this.PPt.Init(),
-      this.PPt.SetActive(!1);
+      await this.bxt.Init(),
+      this.bxt.SetActive(!1);
   }
   OnStart() {}
   GetDragComponent() {
@@ -39,7 +39,7 @@ class VisionEquipmentDragItem extends UiPanelBase_1.UiPanelBase {
         ),
       i = e.GetFetterGroupConfig(),
       i =
-        (this.PPt.Update(i),
+        (this.bxt.Update(i),
         this.SetSpriteByPath(t, this.GetSprite(0), !1),
         ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
           e.GetConfigId(!0),

@@ -9,7 +9,7 @@ class AndroidHotPatchProcedure extends MobileHotPatchProcedure_1.MobileHotPatchP
   constructor(e, r) {
     super(e, r);
   }
-  async KSr(r) {
+  async HSr(r) {
     return new Promise((e) => {
       const u = UE.AndroidPermissionFunctionLibrary.AcquirePermissions(r),
         i = (r, t) => {

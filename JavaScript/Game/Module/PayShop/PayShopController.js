@@ -21,22 +21,22 @@ const Log_1 = require("../../../Core/Common/Log"),
   ExchangePopData_1 = require("./PopView/Exchange/ExchangePopData");
 class PayShopController extends UiControllerBase_1.UiControllerBase {
   static OnRegisterNetEvent() {
-    Net_1.Net.Register(19949, PayShopController.d2i),
-      Net_1.Net.Register(18469, PayShopController.C2i),
-      Net_1.Net.Register(28135, PayShopController.g2i),
-      Net_1.Net.Register(21342, PayShopController.f2i);
+    Net_1.Net.Register(21842, PayShopController.dFi),
+      Net_1.Net.Register(4308, PayShopController.CFi),
+      Net_1.Net.Register(10690, PayShopController.gFi),
+      Net_1.Net.Register(21989, PayShopController.fFi);
   }
   static OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(19949),
-      Net_1.Net.UnRegister(18469),
-      Net_1.Net.UnRegister(28135),
-      Net_1.Net.UnRegister(21342);
+    Net_1.Net.UnRegister(21842),
+      Net_1.Net.UnRegister(4308),
+      Net_1.Net.UnRegister(10690),
+      Net_1.Net.UnRegister(21989);
   }
   static OnAddEvents() {
     EventSystem_1.EventSystem.Add(EventDefine_1.EEventName.WorldDone, this.nye),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnFunctionOpenUpdate,
-        this.gKe,
+        this.RQe,
       );
   }
   static OnRemoveEvents() {
@@ -46,39 +46,39 @@ class PayShopController extends UiControllerBase_1.UiControllerBase {
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnFunctionOpenUpdate,
-        this.gKe,
+        this.RQe,
       );
   }
   static async SendRequestPayShopInfo(e = !0) {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info("Shop", 28, "PayShop:ShopItem 请求商品信息");
     var o,
-      t = Protocol_1.Aki.Protocol.Zos.create(),
+      t = Protocol_1.Aki.Protocol.Xhs.create(),
       t =
-        ((t.o8n = ModelManager_1.ModelManager.PayShopModel.Version),
-        await Net_1.Net.CallAsync(16248, t));
-    return t.lkn === Protocol_1.Aki.Protocol.lkn.Sys
-      ? (ModelManager_1.ModelManager.PayShopModel.Version !== t.o8n &&
+        ((t.G7n = ModelManager_1.ModelManager.PayShopModel.Version),
+        await Net_1.Net.CallAsync(8315, t));
+    return t.O4n === Protocol_1.Aki.Protocol.O4n.NRs
+      ? (ModelManager_1.ModelManager.PayShopModel.Version !== t.G7n &&
           ModelManager_1.ModelManager.PayShopModel.ClearData(),
-        (o = t.cRs),
-        (ModelManager_1.ModelManager.PayShopModel.Version = t.o8n),
+        (o = t.UUs),
+        (ModelManager_1.ModelManager.PayShopModel.Version = t.G7n),
         ModelManager_1.ModelManager.PayShopModel.SetPayShopInfoList(o),
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "Shop",
             28,
             "PayShop:ShopItem 请求商品信息结束",
-            ["version", t.o8n],
+            ["version", t.G7n],
             ["info", o],
           ),
         ControllerHolder_1.ControllerHolder.PayGiftController.OnShopInfoReceive(
-          t?.iUs,
+          t?.SBs,
         ),
         !0)
       : (e &&
           ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-            t.lkn,
-            1124,
+            t.O4n,
+            25610,
           ),
         !1);
   }
@@ -91,13 +91,13 @@ class PayShopController extends UiControllerBase_1.UiControllerBase {
         ["ShopId", t],
         ["IsSwitch", r],
       );
-    var e = Protocol_1.Aki.Protocol.tns.create();
-    (e.Ekn = t),
-      Net_1.Net.Call(17541, e, (e) => {
+    var e = Protocol_1.Aki.Protocol.Jhs.create();
+    (e.J4n = t),
+      Net_1.Net.Call(9183, e, (e) => {
         var o;
         e &&
-          (e.lkn === Protocol_1.Aki.Protocol.lkn.Sys
-            ? ((o = e.a5n),
+          (e.O4n === Protocol_1.Aki.Protocol.O4n.NRs
+            ? ((o = e.FVn),
               Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info(
                   "Shop",
@@ -107,17 +107,17 @@ class PayShopController extends UiControllerBase_1.UiControllerBase {
                   ["IsSwitch", r],
                 ),
               ModelManager_1.ModelManager.PayShopModel.SetPayShopInfo(o, r),
-              (o = this.p2i(t)),
+              (o = this.pFi(t)),
               ControllerHolder_1.ControllerHolder.KuroSdkController.QueryProductByProductId(
                 o,
               ))
             : ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-                e.lkn,
-                5433,
+                e.O4n,
+                9081,
               ));
       });
   }
-  static p2i(e) {
+  static pFi(e) {
     var o = new Array();
     if (100 === e)
       for (const r of ModelManager_1.ModelManager.PayItemModel.GetDataList()) {
@@ -137,16 +137,16 @@ class PayShopController extends UiControllerBase_1.UiControllerBase {
         "goodsIdList",
         e,
       ]);
-    var o = Protocol_1.Aki.Protocol.rns.create();
-    (o.n8n = e),
-      Net_1.Net.Call(27780, o, (e) => {
+    var o = Protocol_1.Aki.Protocol.Zhs.create();
+    (o.O7n = e),
+      Net_1.Net.Call(24543, o, (e) => {
         var o;
-        e.lkn === Protocol_1.Aki.Protocol.lkn.Sys
-          ? ((o = e._gs),
+        e.O4n === Protocol_1.Aki.Protocol.O4n.NRs
+          ? ((o = e.RMs),
             ModelManager_1.ModelManager.PayShopModel.SetPayShopGoodsList(o))
           : ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-              e.lkn,
-              21744,
+              e.O4n,
+              1477,
             );
       });
   }
@@ -166,15 +166,15 @@ class PayShopController extends UiControllerBase_1.UiControllerBase {
     PayShopController.SendRequestPayShopNormalBuy(e, t.ItemId, t.ItemCount, o);
   }
   static SendRequestPayShopNormalBuy(t, e, o, r) {
-    var a = Protocol_1.Aki.Protocol.nns.create();
-    (a.Ekn = t),
-      (a.I5n = r),
-      (a.o8n = ModelManager_1.ModelManager.PayShopModel.Version),
-      Net_1.Net.Call(27482, a, (e) => {
+    var a = Protocol_1.Aki.Protocol.tls.create();
+    (a.J4n = t),
+      (a.o9n = r),
+      (a.G7n = ModelManager_1.ModelManager.PayShopModel.Version),
+      Net_1.Net.Call(18073, a, (e) => {
         var o;
-        e.lkn === Protocol_1.Aki.Protocol.lkn.Sys
+        e.O4n === Protocol_1.Aki.Protocol.O4n.NRs
           ? ConfigManager_1.ConfigManager.PayShopConfig.GetPayShopGoodsConfig(
-              e.Ekn,
+              e.J4n,
             ) &&
             (Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
@@ -185,13 +185,13 @@ class PayShopController extends UiControllerBase_1.UiControllerBase {
                 ["Count", r],
               ),
             ModelManager_1.ModelManager.PayShopModel.UpdatePayShopGoodsCount(
-              e.Ekn,
-              e.I5n,
+              e.J4n,
+              e.o9n,
             ),
             EventSystem_1.EventSystem.Emit(
               EventDefine_1.EEventName.PayShopGoodsBuy,
             ))
-          : e.lkn === Protocol_1.Aki.Protocol.lkn.Proto_ErrPayShopDataChanged
+          : e.O4n === Protocol_1.Aki.Protocol.O4n.Proto_ErrPayShopDataChanged
             ? (Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info(
                   "Shop",
@@ -213,8 +213,8 @@ class PayShopController extends UiControllerBase_1.UiControllerBase {
                 EventDefine_1.EEventName.ShopVersionCodeChange,
               ))
             : ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-                e.lkn,
-                15214,
+                e.O4n,
+                15219,
               );
       });
   }
@@ -303,26 +303,26 @@ class PayShopController extends UiControllerBase_1.UiControllerBase {
       UiManager_1.UiManager.IsViewOpen(e) && UiManager_1.UiManager.CloseView(e);
   }
 }
-((exports.PayShopController = PayShopController).d2i = (e) => {
+((exports.PayShopController = PayShopController).dFi = (e) => {
   Log_1.Log.CheckInfo() &&
     Log_1.Log.Info(
       "Shop",
       28,
       "PayShop:ShopItem NotifyPayShopInfo 接收到商品信息更新",
-      ["version", e.o8n],
-      ["payShopInfoList", e.cRs],
+      ["version", e.G7n],
+      ["payShopInfoList", e.UUs],
     );
-  var o = e.cRs;
-  (ModelManager_1.ModelManager.PayShopModel.Version = e.o8n),
+  var o = e.UUs;
+  (ModelManager_1.ModelManager.PayShopModel.Version = e.G7n),
     ModelManager_1.ModelManager.PayShopModel.SetPayShopInfoList(o),
     ControllerHolder_1.ControllerHolder.PayGiftController.OnShopInfoNotify(e);
 }),
-  (PayShopController.C2i = (e) => {
-    e = e.rUs;
+  (PayShopController.CFi = (e) => {
+    e = e.EBs;
     ModelManager_1.ModelManager.PayShopModel.UnLockPayShopGoods(e);
   }),
-  (PayShopController.f2i = (e) => {
-    e = e._gs;
+  (PayShopController.fFi = (e) => {
+    e = e.RMs;
     ModelManager_1.ModelManager.PayShopModel.SetPayShopGoodsList(e),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
@@ -331,33 +331,33 @@ class PayShopController extends UiControllerBase_1.UiControllerBase {
           "PayShop:ShopItem NotifyPayShopConditionFinish 接收到商品信息更新",
         );
   }),
-  (PayShopController.g2i = (e) => {
+  (PayShopController.gFi = (e) => {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "Shop",
         28,
         "PayShop:ShopItem NotifyPayShopDirectBuy 接收到直购结构",
-        ["id", e.oUs],
-        ["count", e.g5n],
+        ["id", e.yBs],
+        ["count", e.YVn],
       ),
-      KuroSdkReport_1.KuroSdkReport.OnPayShopDirectBuy(e.oUs),
-      void 0 !== e.oUs &&
-        0 !== e.oUs &&
+      KuroSdkReport_1.KuroSdkReport.OnPayShopDirectBuy(e.yBs),
+      void 0 !== e.yBs &&
+        0 !== e.yBs &&
         ModelManager_1.ModelManager.PayShopModel.UpdatePayShopGoodsCount(
-          e.oUs,
-          e.g5n,
+          e.yBs,
+          e.YVn,
         ),
-      e.oUs !== PayShopDefine_1.MONTH_CARD_SHOP_ID &&
-        e.oUs !== PayShopDefine_1.BATTLE_PASS_PRIMARY_ID &&
-        e.oUs !== PayShopDefine_1.BATTLE_PASS_HIGH_ID &&
-        (e.oUs, PayShopDefine_1.BATTLE_PASS_PRIMARY_TO_HIGH_ID),
+      e.yBs !== PayShopDefine_1.MONTH_CARD_SHOP_ID &&
+        e.yBs !== PayShopDefine_1.BATTLE_PASS_PRIMARY_ID &&
+        e.yBs !== PayShopDefine_1.BATTLE_PASS_HIGH_ID &&
+        (e.yBs, PayShopDefine_1.BATTLE_PASS_PRIMARY_TO_HIGH_ID),
       EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.PayShopGoodsBuy);
   }),
   (PayShopController.nye = () => {
     ModelManager_1.ModelManager.FunctionModel.IsOpen(10010) &&
       PayShopController.SendRequestPayShopInfo(!1);
   }),
-  (PayShopController.gKe = (e, o) => {
+  (PayShopController.RQe = (e, o) => {
     10010 === e && o && PayShopController.SendRequestPayShopInfo(!1);
   });
 //# sourceMappingURL=PayShopController.js.map

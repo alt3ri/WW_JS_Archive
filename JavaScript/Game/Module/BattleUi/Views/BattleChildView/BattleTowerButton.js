@@ -9,7 +9,7 @@ const UE = require("ue"),
 class BattleTowerButton extends BattleEntranceButton_1.BattleEntranceButton {
   constructor() {
     super(...arguments),
-      (this.H$e = () => {
+      (this.tJe = () => {
         this.GetUiNiagara(2)?.SetNiagaraUIActive(!1, !0),
           this.GetUiNiagara(3)?.SetNiagaraUIActive(!1, !0),
           TimerSystem_1.TimerSystem.Next(() => {
@@ -25,13 +25,13 @@ class BattleTowerButton extends BattleEntranceButton_1.BattleEntranceButton {
   AddEvents() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnTowerGuideClose,
-      this.H$e,
+      this.tJe,
     );
   }
   RemoveEvents() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnTowerGuideClose,
-      this.H$e,
+      this.tJe,
     );
   }
   Initialize(e) {

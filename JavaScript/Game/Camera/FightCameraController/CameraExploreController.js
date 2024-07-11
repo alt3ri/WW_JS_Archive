@@ -9,9 +9,6 @@ const Rotator_1 = require("../../../Core/Utils/Math/Rotator"),
   CharacterUnifiedStateTypes_1 = require("../../NewWorld/Character/Common/Component/Abilities/CharacterUnifiedStateTypes"),
   CameraControllerBase_1 = require("./CameraControllerBase");
 class DefaultState extends StateBase_1.StateBase {
-  OnEnter() {
-    this.Owner.ResetBreakModifyInfo();
-  }
   OnUpdate(t) {
     this.Owner.CheckAdjust() && this.StateMachine.Switch(1);
   }
@@ -171,7 +168,8 @@ class AdjustState extends StateBase_1.StateBase {
         t,
         0,
       )),
-      (this.Owner.Camera.IsModifiedArmRotation = !0)),
+      (this.Owner.Camera.IsModifiedArmRotationPitch = !0),
+      (this.Owner.Camera.IsModifiedArmRotationYaw = !0)),
       (this.Owner.Camera.DesiredCamera.ArmLength =
         MathUtils_1.MathUtils.RangeClamp(i, 0, 1, this.L1e, this.b1e)),
       (this.Owner.Camera.IsModifiedArmLength = !0);
@@ -279,9 +277,10 @@ class CameraExploreController extends CameraControllerBase_1.CameraControllerBas
       else this.F1e = !1;
   }
   UpdateInternal(t) {
-    this.UpdateBreakModifyInfo(),
-      (this.BreakModifyArmRotation || this.BreakModifyArmLength) &&
-        (this.Lle.Switch(0), this.ResetBreakModifyInfo()),
+    (this.Camera.IsModifiedArmRotationPitch ||
+      this.Camera.IsModifiedArmRotationYaw ||
+      this.Camera.IsModifiedArmLength) &&
+      this.Lle.Switch(0),
       this.Lle.Update(t);
   }
   CheckAdjust() {
@@ -301,7 +300,7 @@ class CameraExploreController extends CameraControllerBase_1.CameraControllerBas
         return !1;
     }
     switch (
-      this.Camera.CharacterEntityHandle.Entity.GetComponent(158).MoveState
+      this.Camera.CharacterEntityHandle.Entity.GetComponent(160).MoveState
     ) {
       case CharacterUnifiedStateTypes_1.ECharMoveState.Walk:
       case CharacterUnifiedStateTypes_1.ECharMoveState.WalkStop:

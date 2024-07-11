@@ -48,13 +48,13 @@ let RoleFrozenComponent =
       var o, t, n, i, r, s;
       this.IsFrozenInternal !== e &&
         ((this.IsFrozenInternal = e),
-        (o = this.Entity.GetComponent(161)),
-        (t = this.Entity.GetComponent(99)),
+        (o = this.Entity.GetComponent(163)),
+        (t = this.Entity.GetComponent(101)),
         (n = this.Entity.GetComponent(17)),
         (i = this.Entity.GetComponent(33)),
         (r = this.Entity.GetComponent(19)),
-        (s = this.Entity.GetComponent(185)?.TagContainer),
-        (this.Entity.GetComponent(98).Frozen = e)
+        (s = this.Entity.GetComponent(188)?.TagContainer),
+        (this.Entity.GetComponent(100).Frozen = e)
           ? ((this.MoveForbidHandle =
               this.MoveForbidHandle ?? o?.Disable("RoleFrozen")),
             (this.AnimForbidHandle =
@@ -130,7 +130,7 @@ let RoleFrozenComponent =
               s.RemoveTag(6, 1448371427),
               s.RemoveTag(6, 930178923),
               s.RemoveTag(6, -291592299)),
-            (e = this.Entity.GetComponent(160)) &&
+            (e = this.Entity.GetComponent(162)) &&
               e.MainAnimInstance.冰冻结束事件()));
     }
     ChangeMovementModeInFrozen(e) {
@@ -147,7 +147,7 @@ let RoleFrozenComponent =
 (RoleFrozenComponent.TmpVector = Vector_1.Vector.Create()),
   (RoleFrozenComponent = RoleFrozenComponent_1 =
     __decorate(
-      [(0, RegisterComponent_1.RegisterComponent)(173)],
+      [(0, RegisterComponent_1.RegisterComponent)(176)],
       RoleFrozenComponent,
     )),
   (exports.RoleFrozenComponent = RoleFrozenComponent);

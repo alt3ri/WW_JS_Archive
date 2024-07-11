@@ -31,28 +31,28 @@ let RoleGrowComponent = class RoleGrowComponent extends EntityComponent_1.Entity
     super(...arguments),
       (this.$te = void 0),
       (this.Xte = void 0),
-      (this.elt = void 0),
-      (this._do = void 0),
-      (this.Eon = 0),
+      (this.m1t = void 0),
+      (this.aCo = void 0),
+      (this.ion = 0),
       (this.RefreshAttributeGrowHandle = (e, t) => {
-        this.RefreshGrowAttribute(t), this.yon(e);
+        this.RefreshGrowAttribute(t), this.oon(e);
       });
   }
   OnStart() {
-    (this.$te = this.Entity.CheckGetComponent(156)),
-      (this.Xte = this.Entity.CheckGetComponent(185)),
-      (this.elt = this.Entity.CheckGetComponent(157)),
-      this.Ion();
+    (this.$te = this.Entity.CheckGetComponent(158)),
+      (this.Xte = this.Entity.CheckGetComponent(188)),
+      (this.m1t = this.Entity.CheckGetComponent(159)),
+      this.ron();
     var e = this.Entity.CheckGetComponent(0),
       t = e.GetPlayerId(),
       t = ModelManager_1.ModelManager.PlayerInfoModel.GetId() === t,
       i = e.GetRoleId();
     return (
-      (this.Eon = e.GetRoleConfig().WeaponType),
-      (this._do = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(i, t)),
-      this._do &&
+      (this.ion = e.GetRoleConfig().WeaponType),
+      (this.aCo = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(i, t)),
+      this.aCo &&
         EventSystem_1.EventSystem.AddWithTarget(
-          this._do,
+          this.aCo,
           EventDefine_1.EEventName.RoleRefreshAttribute,
           this.RefreshAttributeGrowHandle,
         ),
@@ -61,33 +61,33 @@ let RoleGrowComponent = class RoleGrowComponent extends EntityComponent_1.Entity
   }
   OnEnd() {
     return (
-      this._do &&
+      this.aCo &&
         EventSystem_1.EventSystem.RemoveWithTarget(
-          this._do,
+          this.aCo,
           EventDefine_1.EEventName.RoleRefreshAttribute,
           this.RefreshAttributeGrowHandle,
         ),
       !0
     );
   }
-  Ion() {
+  ron() {
     this.Xte.AddTag(1098729489), this.Xte.AddTag(-8769906);
   }
-  yon(t) {
+  oon(t) {
     for (let e = 1; e < CharacterAttributeTypes_1.ATTRIBUTE_ID_MAX; e++) {
       var i;
       t.has(e) && ((i = t.get(e)), this.$te.SetBaseValue(e, i));
     }
   }
   RefreshGrowAttribute(e) {
-    this.elt.UpdateSysGrowBuff(e);
+    this.m1t.UpdateSysGrowBuff(e);
   }
   GetWeaponType() {
-    return this.Eon || 0;
+    return this.ion || 0;
   }
   GetSkillLevelBySkillInfoId(e) {
-    return this._do
-      ? this._do
+    return this.aCo
+      ? this.aCo
           .GetSkillData()
           .GetReferencedSkillLevel(
             e,
@@ -96,8 +96,8 @@ let RoleGrowComponent = class RoleGrowComponent extends EntityComponent_1.Entity
       : 0;
   }
   GetSkillLevelByBuffId(e) {
-    return this._do
-      ? this._do
+    return this.aCo
+      ? this.aCo
           .GetSkillData()
           .GetReferencedSkillLevel(
             e,
@@ -106,8 +106,8 @@ let RoleGrowComponent = class RoleGrowComponent extends EntityComponent_1.Entity
       : 0;
   }
   GetSkillLevelByDamageId(e) {
-    return this._do
-      ? this._do
+    return this.aCo
+      ? this.aCo
           .GetSkillData()
           .GetReferencedSkillLevel(
             e,
@@ -117,7 +117,7 @@ let RoleGrowComponent = class RoleGrowComponent extends EntityComponent_1.Entity
   }
 };
 (RoleGrowComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(83)],
+  [(0, RegisterComponent_1.RegisterComponent)(85)],
   RoleGrowComponent,
 )),
   (exports.RoleGrowComponent = RoleGrowComponent);

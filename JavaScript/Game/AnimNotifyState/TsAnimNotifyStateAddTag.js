@@ -15,7 +15,7 @@ class TsAnimNotifyStateAddTag extends UE.KuroAnimNotifyState {
     if (e instanceof TsBaseCharacter_1.default && i) {
       var s = e.CharacterActorComponent?.Entity;
       if (s) {
-        s = s.GetComponent(185);
+        s = s.GetComponent(188);
         if (s) return s.TagContainer.UpdateExactTag(4, i, 1), !0;
       } else
         Log_1.Log.CheckWarn() &&
@@ -42,7 +42,7 @@ class TsAnimNotifyStateAddTag extends UE.KuroAnimNotifyState {
     if (e instanceof TsBaseCharacter_1.default && o) {
       var i = e.CharacterActorComponent?.Entity;
       if (i) {
-        i = i.GetComponent(185);
+        i = i.GetComponent(188);
         if (i) return i.TagContainer.UpdateExactTag(4, o, -1), !0;
       } else
         Log_1.Log.CheckWarn() &&

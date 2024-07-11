@@ -5,8 +5,6 @@ const UE = require("ue"),
   MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
-  LocalStorage_1 = require("../../../Common/LocalStorage"),
-  LocalStorageDefine_1 = require("../../../Common/LocalStorageDefine"),
   TimeUtil_1 = require("../../../Common/TimeUtil"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
   ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
@@ -19,20 +17,19 @@ const UE = require("ue"),
 class RoguelikeInstanceBtnPanel extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this.Xao = () => {
+      (this.jho = () => {
         var e,
           o = ModelManager_1.ModelManager.RoguelikeModel.CurrSeasonData;
         void 0 !== o &&
           ((o =
             ConfigManager_1.ConfigManager.RoguelikeConfig.GetRogueSeasonConfigById(
-              o.F8n,
+              o.MHn,
             )),
           ((e = new PayShopViewData_1.PayShopViewData()).ShowShopIdList = [
             o.ShopId,
           ]),
           (e.PayShopId = o.ShopId),
-          LocalStorage_1.LocalStorage.SetPlayer(
-            LocalStorageDefine_1.ELocalStoragePlayerKey.RoguelikeShopRecord,
+          ModelManager_1.ModelManager.RoguelikeModel?.RecordRoguelikeShopRedDot(
             !0,
           ),
           EventSystem_1.EventSystem.Emit(
@@ -42,11 +39,11 @@ class RoguelikeInstanceBtnPanel extends UiPanelBase_1.UiPanelBase {
             e,
           ));
       }),
-      (this.$ao = () => {
+      (this.Kho = () => {
         var e = ModelManager_1.ModelManager.RoguelikeModel.CurrSeasonData;
         void 0 !== e &&
           RoguelikeController_1.RoguelikeController.OpenRoguelikeSkillView(
-            e.F8n,
+            e.MHn,
           );
       });
   }
@@ -61,8 +58,8 @@ class RoguelikeInstanceBtnPanel extends UiPanelBase_1.UiPanelBase {
       [6, UE.UIItem],
     ]),
       (this.BtnBindInfo = [
-        [1, this.Xao],
-        [0, this.$ao],
+        [1, this.jho],
+        [0, this.Kho],
       ]);
   }
   async OnBeforeStartAsync() {
@@ -72,7 +69,7 @@ class RoguelikeInstanceBtnPanel extends UiPanelBase_1.UiPanelBase {
         (e =
           await RoguelikeController_1.RoguelikeController.RoguelikeSeasonDataRequest()) &&
       (await RoguelikeController_1.RoguelikeController.RoguelikeTalentInfoRequest(
-        e.F8n,
+        e.MHn,
       ));
   }
   OnStart() {
@@ -99,12 +96,12 @@ class RoguelikeInstanceBtnPanel extends UiPanelBase_1.UiPanelBase {
           ((r =
             ModelManager_1.ModelManager.RoguelikeModel.GetParamConfigBySeasonId()
               ?.WeekTokenMaxCount ?? 1),
-          (o = e.Jws / r),
+          (o = e.gqs / r),
           this.GetSprite(4)?.SetFillAmount(o),
           LguiUtil_1.LguiUtil.SetLocalTextNew(
             this.GetText(3),
             "Roguelike_ActivityMain_Score",
-            e.Jws,
+            e.gqs,
             r,
           )),
         MathUtils_1.MathUtils.LongToBigInt(

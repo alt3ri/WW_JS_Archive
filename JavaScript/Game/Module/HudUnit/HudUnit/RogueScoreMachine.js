@@ -7,75 +7,75 @@ const Time_1 = require("../../../../Core/Common/Time"),
   MAX_SCORE_DIFF = 1e3;
 class RogueScoreMachine {
   constructor() {
-    (this.nyn = void 0),
-      (this.syn = void 0),
-      (this.YDn = 0),
-      (this.ayn = 0),
-      (this.apo = 0),
-      (this.hyn = void 0),
-      (this.lyn = void 0),
-      (this.unt = 0);
+    (this.SIn = void 0),
+      (this.yIn = void 0),
+      (this.oAn = 0),
+      (this.IIn = 0),
+      (this.rvo = 0),
+      (this.TIn = void 0),
+      (this.LIn = void 0),
+      (this.Ist = 0);
   }
   SetUpdateCallback(i, t) {
-    (this.nyn = i), (this.syn = t);
+    (this.SIn = i), (this.yIn = t);
   }
   UpdateTargetScore(t, s) {
     if (
       (s && t >= s.LowerUpperLimits[1]
-        ? (this.apo = s.LowerUpperLimits[1])
-        : (this.apo = t),
-      (this.lyn = s),
-      this.ayn !== this.apo)
+        ? (this.rvo = s.LowerUpperLimits[1])
+        : (this.rvo = t),
+      (this.LIn = s),
+      this.IIn !== this.rvo)
     ) {
-      s = this.apo > this.ayn;
-      if ((s && this.syn?.(), this.hyn || this.lyn)) {
-        var i = this.hyn?.Level ?? 0,
-          h = this.lyn?.Level ?? 0;
-        if (1 < Math.abs(h - i)) this._yn();
+      s = this.rvo > this.IIn;
+      if ((s && this.yIn?.(), this.TIn || this.LIn)) {
+        var i = this.TIn?.Level ?? 0,
+          h = this.LIn?.Level ?? 0;
+        if (1 < Math.abs(h - i)) this.DIn();
         else {
           let i = !1;
-          if (!this.hyn) {
+          if (!this.TIn) {
             if (
-              ((this.ayn = this.lyn.LowerUpperLimits[0]),
-              (this.hyn = this.lyn),
-              this.ayn === this.apo)
+              ((this.IIn = this.LIn.LowerUpperLimits[0]),
+              (this.TIn = this.LIn),
+              this.IIn === this.rvo)
             )
-              return (this.unt = 0), void this.nyn?.(this.ayn, this.hyn);
+              return (this.Ist = 0), void this.SIn?.(this.IIn, this.TIn);
             i = !0;
           }
-          Math.abs(t - this.ayn) >= MAX_SCORE_DIFF
-            ? this._yn()
-            : ((this.unt = s
-                ? (this.apo - this.ayn) / SERVER_SCORE_UP_INTERVAL
-                : (this.apo - this.ayn) / SERVER_SCORE_DOWN_INTERVAL),
+          Math.abs(t - this.IIn) >= MAX_SCORE_DIFF
+            ? this.DIn()
+            : ((this.Ist = s
+                ? (this.rvo - this.IIn) / SERVER_SCORE_UP_INTERVAL
+                : (this.rvo - this.IIn) / SERVER_SCORE_DOWN_INTERVAL),
               i &&
-                (this.nyn?.(this.ayn, this.hyn),
-                (this.YDn = Time_1.Time.Frame)));
+                (this.SIn?.(this.IIn, this.TIn),
+                (this.oAn = Time_1.Time.Frame)));
         }
       }
     }
   }
-  _yn() {
-    (this.ayn = this.apo),
-      (this.hyn = this.lyn),
-      (this.unt = 0),
-      this.nyn?.(this.ayn, this.hyn);
+  DIn() {
+    (this.IIn = this.rvo),
+      (this.TIn = this.LIn),
+      (this.Ist = 0),
+      this.SIn?.(this.IIn, this.TIn);
   }
   Tick(i) {
     var t;
-    0 !== this.unt &&
-      this.YDn !== Time_1.Time.Frame &&
-      ((this.ayn += this.unt * i),
-      this.hyn !== this.lyn &&
-        ((i = this.hyn.LowerUpperLimits[0]),
-        (t = this.hyn.LowerUpperLimits[1]),
-        0 < this.unt
-          ? this.ayn >= t && (this.hyn = this.lyn)
-          : this.ayn < i && (this.hyn = this.lyn)),
-      0 < this.unt
-        ? this.ayn >= this.apo && ((this.ayn = this.apo), (this.unt = 0))
-        : this.ayn <= this.apo && ((this.ayn = this.apo), (this.unt = 0)),
-      this.nyn?.(this.ayn, this.hyn));
+    0 !== this.Ist &&
+      this.oAn !== Time_1.Time.Frame &&
+      ((this.IIn += this.Ist * i),
+      this.TIn !== this.LIn &&
+        ((i = this.TIn.LowerUpperLimits[0]),
+        (t = this.TIn.LowerUpperLimits[1]),
+        0 < this.Ist
+          ? this.IIn >= t && (this.TIn = this.LIn)
+          : this.IIn < i && (this.TIn = this.LIn)),
+      0 < this.Ist
+        ? this.IIn >= this.rvo && ((this.IIn = this.rvo), (this.Ist = 0))
+        : this.IIn <= this.rvo && ((this.IIn = this.rvo), (this.Ist = 0)),
+      this.SIn?.(this.IIn, this.TIn));
   }
 }
 exports.RogueScoreMachine = RogueScoreMachine;

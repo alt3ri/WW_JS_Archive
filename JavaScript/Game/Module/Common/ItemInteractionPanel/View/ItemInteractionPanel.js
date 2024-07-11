@@ -12,38 +12,45 @@ const UE = require("ue"),
 class ItemInteractionPanel extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this.HAt = void 0),
-      (this.jAt = new Map()),
-      (this.iCt = new Map()),
-      (this.WAt = []),
-      (this.KAt = []),
-      (this.QAt = new Map()),
-      (this.XAt = void 0),
-      (this.$At = void 0),
-      (this.YAt = void 0),
-      (this.JAt = void 0),
-      (this.z9e = () => {
+      (this.KPt = void 0),
+      (this.QPt = new Map()),
+      (this.dgt = new Map()),
+      (this.XPt = []),
+      (this.$Pt = []),
+      (this.YPt = new Map()),
+      (this.JPt = void 0),
+      (this.zPt = void 0),
+      (this.ZPt = void 0),
+      (this.LPt = void 0),
+      (this.ext = void 0),
+      (this.v0a = void 0),
+      (this.cHe = () => {
         var t =
           new ItemInteractionMediumItemGrid_1.ItemInteractionMediumItemGrid();
         return (
-          t.BindOnExtendToggleStateChanged(this.zAt),
-          t.BindOnExtendToggleClicked(this.MFe),
-          t.BindReduceLongPress(this.ZAt),
+          t.BindOnExtendToggleStateChanged(this.txt),
+          t.BindOnCanExecuteChange(this.gke),
+          t.BindReduceLongPress(this.ixt),
           t
         );
       }),
-      (this.ZAt = (t, e, i) => {
-        i && this.YAt && this.YAt(i);
+      (this.ixt = (t, i, e) => {
+        e && this.ZPt && this.ZPt(e);
       }),
-      (this.zAt = (t) => {
+      (this.txt = (t) => {
         t = t.Data;
-        this.KAt.indexOf(t) < 0 || this.SetItemGridSelected(!0, t);
+        this.SetItemGridSelected(!0, t), this.zPt && this.zPt(t);
       }),
-      (this.MFe = (t) => {
-        t = t.Data;
-        this.$At && this.$At(t);
+      (this.gke = (t, i, e) => {
+        return (
+          !(
+            (this.v0a && this.v0a.IsSelected && t === this.v0a) ||
+            this.$Pt.indexOf(t) < 0
+          ) &&
+          (!this.LPt || this.LPt(t))
+        );
       }),
-      (this.ePt = (t) => {
+      (this.oxt = (t) => {
         this.SelectedMainType(t);
       });
   }
@@ -59,116 +66,122 @@ class ItemInteractionPanel extends UiPanelBase_1.UiPanelBase {
     ];
   }
   OnStart() {
-    this.XAt = new LoopScrollView_1.LoopScrollView(
+    this.JPt = new LoopScrollView_1.LoopScrollView(
       this.GetLoopScrollViewComponent(5),
       this.GetItem(6).GetOwner(),
-      this.z9e,
+      this.cHe,
     );
   }
   async Refresh(t) {
-    (this.HAt = t), this.tPt(), await this.iPt();
-    t = this.WAt[0];
+    (this.KPt = t), this.rxt(), await this.nxt();
+    t = this.XPt[0];
     t && this.SelectedMainType(t);
   }
   BindOnReduceButtonTrigger(t) {
-    this.YAt = t;
+    this.ZPt = t;
   }
   BindOnItemExtendToggleStateChanged(t) {
-    this.$At = t;
+    this.zPt = t;
+  }
+  BindOnCanExecuteChange(t) {
+    this.LPt = t;
   }
   OnBeforeDestroy() {
-    (this.WAt.length = 0),
-      (this.KAt.length = 0),
-      (this.XAt = void 0),
-      (this.JAt = void 0),
-      this.jAt.clear(),
-      this.iCt.clear(),
-      (this.$At = void 0),
-      (this.YAt = void 0),
-      this.oPt();
+    (this.XPt.length = 0),
+      (this.$Pt.length = 0),
+      (this.JPt = void 0),
+      (this.ext = void 0),
+      this.QPt.clear(),
+      this.dgt.clear(),
+      (this.zPt = void 0),
+      (this.ZPt = void 0),
+      this.sxt();
   }
-  tPt() {
-    this.jAt.clear(),
-      this.iCt.clear(),
-      (this.WAt.length = 0),
-      (this.KAt.length = 0);
+  rxt() {
+    this.QPt.clear(),
+      this.dgt.clear(),
+      (this.XPt.length = 0),
+      (this.$Pt.length = 0);
     var t = ConfigManager_1.ConfigManager.InventoryConfig;
-    for (const h of this.HAt.ItemInfoList) {
-      var e,
-        i,
-        s = h.ItemConfigId,
-        r = t.GetItemConfig(s);
-      r &&
-        ((e = r.MainTypeId),
-        (r = new ItemInteractionPanelItemData_1.ItemInteractionPanelItemData(
-          h,
-          r.QualityId,
+    for (const n of this.KPt.ItemInfoList) {
+      var i,
+        e,
+        s = n.ItemConfigId,
+        h = t.GetItemConfig(s);
+      h &&
+        ((i = h.MainTypeId),
+        (h = new ItemInteractionPanelItemData_1.ItemInteractionPanelItemData(
+          n,
+          h.QualityId,
         )),
-        (i = this.jAt.get(e))
-          ? i.push(r)
-          : (this.jAt.set(e, [r]), this.WAt.push(e)),
-        this.iCt.set(s, r));
+        (e = this.QPt.get(i))
+          ? e.push(h)
+          : (this.QPt.set(i, [h]), this.XPt.push(i)),
+        this.dgt.set(s, h));
     }
-    for (const n of this.jAt.values())
-      n.sort((t, e) => {
-        var i = t.GetQualityId(),
-          s = e.GetQualityId();
-        return i !== s
-          ? i - s
-          : (i = t.GetItemCount()) !== (s = e.GetItemCount())
-            ? s - i
-            : t.ItemConfigId - e.ItemConfigId;
+    for (const r of this.QPt.values())
+      r.sort((t, i) => {
+        var e = t.GetQualityId(),
+          s = i.GetQualityId();
+        return e !== s
+          ? e - s
+          : (e = t.GetItemCount()) !== (s = i.GetItemCount())
+            ? s - e
+            : t.ItemConfigId - i.ItemConfigId;
       });
   }
-  async iPt() {
-    this.oPt();
+  async nxt() {
+    this.sxt();
     var t = this.GetItem(4),
-      e = t.GetOwner(),
-      i = (t.SetUIActive(!0), []);
-    for (const h of this.WAt) {
-      var s = LguiUtil_1.LguiUtil.DuplicateActor(e, this.GetItem(3)),
-        r =
+      i = t.GetOwner(),
+      e = (t.SetUIActive(!0), []);
+    for (const n of this.XPt) {
+      var s = LguiUtil_1.LguiUtil.DuplicateActor(i, this.GetItem(3)),
+        h =
           new ItemInteractionPanelMainTypeItem_1.ItemInteractionPanelMainTypeItem();
-      r.BindOnExtendToggleStateChanged(this.ePt),
-        i.push(r.CreateByActorAsync(s, h)),
-        this.QAt.set(h, r);
+      h.BindOnExtendToggleStateChanged(this.oxt),
+        e.push(h.CreateByActorAsync(s, n)),
+        this.YPt.set(n, h);
     }
-    await Promise.all(i), t.SetUIActive(!1);
+    await Promise.all(e), t.SetUIActive(!1);
   }
   SelectedMainType(t) {
-    this.RefreshItemPanel(this.jAt.get(t)), this.JAt?.SetSelected(!1);
-    t = this.QAt.get(t);
-    t && (t.SetSelected(!0), t.SetRedDotVisible(!1), (this.JAt = t));
+    this.RefreshItemPanel(this.QPt.get(t)), this.ext?.SetSelected(!1);
+    t = this.YPt.get(t);
+    t && (t.SetSelected(!0), t.SetRedDotVisible(!1), (this.ext = t));
   }
-  SetMainTypeRedDotVisible(t, e) {
-    this.QAt.get(t)?.SetRedDotVisible(e);
+  SetMainTypeRedDotVisible(t, i) {
+    this.YPt.get(t)?.SetRedDotVisible(i);
   }
-  oPt() {
-    for (const t of this.QAt.values()) t.Destroy();
-    this.QAt.clear();
+  sxt() {
+    for (const t of this.YPt.values()) t.Destroy();
+    this.YPt.clear();
   }
   RefreshItemPanel(t) {
-    this.XAt?.RefreshByData(t), (this.KAt = t);
+    this.JPt?.RefreshByData(t), (this.$Pt = t), (this.v0a = void 0);
   }
   RefreshItemGrid(t) {
-    t = this.KAt.indexOf(t);
-    t < 0 || this.XAt?.RefreshGridProxy(t);
+    t = this.$Pt.indexOf(t);
+    t < 0 || this.JPt?.RefreshGridProxy(t);
   }
-  SetItemGridSelected(t, e) {
-    var i = this.KAt.indexOf(e);
-    i < 0 || ((e.IsSelected = t), this.XAt?.RefreshGridProxy(i));
+  SetItemGridSelected(t, i) {
+    var e = this.$Pt.indexOf(i);
+    e < 0 ||
+      ((i.IsSelected = t),
+      (this.v0a = t ? i : void 0),
+      this.JPt?.RefreshGridProxy(e));
   }
   GetCurrentItemDataList() {
-    return this.KAt;
+    return this.$Pt;
   }
   GetItemData(t) {
-    return this.iCt.get(t);
+    return this.dgt.get(t);
   }
   GetItemDataMainTypeMap() {
-    return this.jAt;
+    return this.QPt;
   }
   GetMainTypeIdList() {
-    return this.WAt;
+    return this.XPt;
   }
 }
 exports.ItemInteractionPanel = ItemInteractionPanel;

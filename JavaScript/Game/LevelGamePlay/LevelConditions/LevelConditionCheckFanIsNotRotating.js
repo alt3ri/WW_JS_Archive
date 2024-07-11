@@ -8,7 +8,7 @@ class LevelConditionCheckFanIsNotRotating extends LevelGeneralBase_1.LevelCondit
     return (
       !!e &&
       ((e = e.EntityId),
-      !!(e = EntitySystem_1.EntitySystem.GetComponent(e, 135))) &&
+      !!(e = EntitySystem_1.EntitySystem.GetComponent(e, 137))) &&
       !e.IsRotating
     );
   }

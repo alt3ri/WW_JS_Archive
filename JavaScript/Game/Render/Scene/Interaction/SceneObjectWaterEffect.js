@@ -24,7 +24,7 @@ class SceneObjectWaterEffect {
       (this.EnableSurfaceEffect = !1),
       (this.WaterSurfaceEffect = ""),
       (this.TimeAfterSurfaceEffectStop = 0),
-      (this.Nnr = void 0),
+      (this.bsr = void 0),
       (this.Handle = 0),
       (this.SurfaceHandle = 0),
       (this.WasHitWater = !1),
@@ -55,7 +55,7 @@ class SceneObjectWaterEffect {
           ),
           t.SetDrawDebugTrace(2))
         : t.SetDrawDebugTrace(0),
-      (this.Nnr = t);
+      (this.bsr = t);
   }
   Start(t, e) {
     t &&
@@ -100,7 +100,7 @@ class SceneObjectWaterEffect {
     if (this.IsEnabled && this.ActorToAttach?.IsValid()) {
       let e = !1;
       this.GetActorLocation();
-      var i = this.Nnr,
+      var i = this.bsr,
         s =
           (TraceElementCommon_1.TraceElementCommon.SetStartLocation(
             i,

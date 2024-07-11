@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AiStateMachineCondition = void 0);
 const Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
   CombatMessage_1 = require("../../../Module/CombatMessage/CombatMessage"),
-  CombatDebugController_1 = require("../../../Utils/CombatDebugController"),
+  CombatLog_1 = require("../../../Utils/CombatLog"),
   AiStateMachine_1 = require("../AiStateMachine");
 class AiStateMachineCondition {
   constructor(t, i, s) {
@@ -46,31 +46,18 @@ class AiStateMachineCondition {
   }
   OnExit() {}
   Tick() {
-    if (
-      (this.OnTick(), this.CheckForClient && this.Result !== this.LastResult)
-    ) {
-      const i = Protocol_1.Aki.Protocol.LNn.create();
-      (i.ukn = this.Node.RootNode.Uuid),
-        (i.mkn = this.Transition.From),
-        (i.dkn = this.Transition.To),
-        (i.fkn = this.Index),
-        (i.gkn = this.Result),
-        CombatDebugController_1.CombatDebugController.CombatDebug(
-          "StateMachineNew",
-          this.Node.Entity,
-          `客户端条件 [${i.mkn}=>${i.dkn}]，index:${this.Index}，res:` +
-            this.Result,
-        ),
-        CombatMessage_1.CombatNet.Call(13166, this.Node.Entity, i, (t) => {
-          CombatDebugController_1.CombatDebugController.CombatDebug(
-            "StateMachineNew",
-            this.Node?.Entity,
-            `客户端条件完成response [${i.mkn}=>${i.dkn}]，index:` + this.Index,
-            ["response", t.K0s],
-          );
-        });
-    }
-    this.LastResult = this.Result;
+    var t;
+    this.OnTick(),
+      this.CheckForClient &&
+        this.Result !== this.LastResult &&
+        (((t = Protocol_1.Aki.Protocol.t4n.create()).k4n =
+          this.Node.RootNode.Uuid),
+        (t.V4n = this.Transition.From),
+        (t.H4n = this.Transition.To),
+        (t.K4n = this.Index),
+        (t.W4n = this.Result),
+        CombatMessage_1.CombatNet.Call(28981, this.Node.Entity, t, (t) => {})),
+      (this.LastResult = this.Result);
   }
   OnTick() {}
   Clear() {

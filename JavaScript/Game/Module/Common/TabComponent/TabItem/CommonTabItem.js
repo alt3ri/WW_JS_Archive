@@ -7,9 +7,9 @@ const UE = require("ue"),
 class CommonTabItem extends CommonTabItemBase_1.CommonTabItemBase {
   constructor() {
     super(...arguments),
-      (this.GBt = void 0),
-      (this.QFe = void 0),
-      (this.x4e = (t) => {
+      (this.kbt = void 0),
+      (this.l4e = void 0),
+      (this.Bke = (t) => {
         1 === t && this.SelectedCallBack(this.GridIndex);
       }),
       (this.RefreshTransition = () => {
@@ -17,7 +17,7 @@ class CommonTabItem extends CommonTabItemBase_1.CommonTabItemBase {
         t && t.SetAllStateSprite(this.GetSprite(0).GetSprite());
       }),
       (this.SetOnUndeterminedClick = (t) => {
-        this.GBt = t;
+        this.kbt = t;
       });
   }
   OnRegisterComponent() {
@@ -27,12 +27,12 @@ class CommonTabItem extends CommonTabItemBase_1.CommonTabItemBase {
       [2, UE.UIItem],
       [3, UE.UIExtendToggleSpriteTransition],
     ]),
-      (this.BtnBindInfo = [[1, this.x4e]]);
+      (this.BtnBindInfo = [[1, this.Bke]]);
   }
   OnStart() {
     super.OnStart(), this.GetExtendToggle(1).SetToggleState(0);
     this.GetExtendToggle(1).OnUndeterminedClicked.Add(() => {
-      this.GBt?.();
+      this.kbt?.();
     }),
       this.GetItem(2).SetUIActive(!1);
   }
@@ -48,13 +48,14 @@ class CommonTabItem extends CommonTabItemBase_1.CommonTabItemBase {
     this.SelectedCallBack(this.GridIndex);
   }
   OnUpdateTabIcon(t) {
-    this.SetSpriteByPath(
-      t,
-      this.GetSprite(0),
-      !1,
-      void 0,
-      this.RefreshTransition,
-    );
+    "" !== t &&
+      this.SetSpriteByPath(
+        t,
+        this.GetSprite(0),
+        !1,
+        void 0,
+        this.RefreshTransition,
+      );
   }
   SetToggleStateForce(t, e) {
     this.GetExtendToggle(1).SetToggleStateForce(t, e);
@@ -69,8 +70,8 @@ class CommonTabItem extends CommonTabItemBase_1.CommonTabItemBase {
     return this.GetExtendToggle(1);
   }
   BindRedDot(t, e = 0) {
-    (this.QFe = t),
-      this.QFe &&
+    (this.l4e = t),
+      this.l4e &&
         RedDotController_1.RedDotController.BindRedDot(
           t,
           this.GetItem(2),
@@ -79,9 +80,9 @@ class CommonTabItem extends CommonTabItemBase_1.CommonTabItemBase {
         );
   }
   UnBindRedDot() {
-    this.QFe &&
-      (RedDotController_1.RedDotController.UnBindRedDot(this.QFe),
-      (this.QFe = void 0));
+    this.l4e &&
+      (RedDotController_1.RedDotController.UnBindRedDot(this.l4e),
+      (this.l4e = void 0));
   }
   GetIconSprite() {
     return this.GetSprite(0);

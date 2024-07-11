@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ChatPlayerData = void 0);
 class ChatPlayerData {
   constructor(t) {
-    (this.j8 = 0), (this.FMt = 0), (this.M8e = ""), (this.j8 = t);
+    (this.j8 = 0), (this.ZEt = 0), (this.B9e = ""), (this.j8 = t);
   }
   SetPlayerId(t) {
     this.j8 = t;
@@ -12,16 +12,16 @@ class ChatPlayerData {
     return this.j8;
   }
   SetPlayerIcon(t) {
-    this.FMt = t ?? 0;
+    this.ZEt = t ?? 0;
   }
   GetPlayerIcon() {
-    return this.FMt;
+    return this.ZEt;
   }
   SetPlayerName(t) {
-    this.M8e = t ?? "";
+    this.B9e = t ?? "";
   }
   GetPlayerName() {
-    return this.M8e;
+    return this.B9e;
   }
 }
 exports.ChatPlayerData = ChatPlayerData;

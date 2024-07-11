@@ -39,40 +39,40 @@ class SkillBehaviorAction {
             i.ActionType)
           ) {
             case 0:
-              this.rzo(i, r);
+              this.tZo(i, r);
               break;
             case 1:
               this.bd(i, r);
               break;
             case 2:
-              this.nzo(i, r);
+              this.iZo(i, r);
               break;
             case 3:
-              this.szo(i, r);
+              this.oZo(i, r);
               break;
             case 4:
-              this.azo(i, r);
+              this.rZo(i, r);
               break;
             case 5:
-              this.hzo(i, r);
+              this.nZo(i, r);
               break;
             case 6:
-              this.lzo(i, r);
+              this.sZo(i, r);
               break;
             case 7:
-              this._zo(i, r);
+              this.aZo(i, r);
               break;
             case 8:
-              this.uzo(i, r);
+              this.hZo(i, r);
               break;
             case 9:
-              this.Ent(i, r);
+              this.bst(i, r);
               break;
             case 10:
-              this.czo(i, r);
+              this.lZo(i, r);
               break;
             case 11:
-              this.mzo(i, r);
+              this._Zo(i, r);
           }
         }
       } catch (e) {
@@ -110,7 +110,7 @@ class SkillBehaviorAction {
             a.GameplayCue.Destroy();
             break;
           case 6:
-            a.Entity.GetComponent(161).CharacterMovement.SetMovementMode(
+            a.Entity.GetComponent(163).CharacterMovement.SetMovementMode(
               a.MovementMode,
             );
             break;
@@ -151,63 +151,63 @@ class SkillBehaviorAction {
     }),
       SkillBehaviorMisc_1.paramMap.delete(r);
   }
-  static rzo(a, r) {
+  static tZo(a, r) {
     var i = r.Entity.GetComponent(3);
-    let l = i.ActorLocation,
+    let t = i.ActorLocation,
       e = i.ActorForward;
     switch (a.LocationType) {
       case 0:
         break;
       case 1:
         r.SkillComponent.SkillTarget &&
-          (([l, e] = (0, SkillBehaviorMisc_1.getLocationAndDirection)(
+          (([t, e] = (0, SkillBehaviorMisc_1.getLocationAndDirection)(
             r.SkillComponent.SkillTarget.Entity.GetComponent(1).Owner,
           )),
-          (l = r.SkillComponent.GetTargetTransform().GetLocation()));
+          (t = r.SkillComponent.GetTargetTransform().GetLocation()));
         break;
       case 2:
-        var t =
+        var l =
           ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity.Entity.GetComponent(
             29,
           ).GetCurrentTarget();
-        t &&
-          ([l, e] = (0, SkillBehaviorMisc_1.getLocationAndDirection)(
-            t.Entity.GetComponent(1).Owner,
+        l &&
+          ([t, e] = (0, SkillBehaviorMisc_1.getLocationAndDirection)(
+            l.Entity.GetComponent(1).Owner,
           ));
         break;
       case 3:
-        [l, e] = (0, SkillBehaviorMisc_1.getLocationAndDirection)(
+        [t, e] = (0, SkillBehaviorMisc_1.getLocationAndDirection)(
           Global_1.Global.BaseCharacter,
         );
         break;
       case 4:
-        t = ModelManager_1.ModelManager.CreatureModel.GetEntity(
+        l = ModelManager_1.ModelManager.CreatureModel.GetEntity(
           r.Entity.GetComponent(0).GetSummonerId(),
         )?.Entity?.GetComponent(1);
-        [l, e] = (0, SkillBehaviorMisc_1.getLocationAndDirection)(t.Owner);
+        [t, e] = (0, SkillBehaviorMisc_1.getLocationAndDirection)(l.Owner);
         break;
       case 5:
-        [l, e] = (0, SkillBehaviorMisc_1.getLocationAndDirection)(
+        [t, e] = (0, SkillBehaviorMisc_1.getLocationAndDirection)(
           ModelManager_1.ModelManager.CameraModel.FightCamera.GetComponent(4)
             .CameraActor,
         );
         break;
       case 6:
-        t = BlackboardController_1.BlackboardController.GetVectorValueByEntity(
+        l = BlackboardController_1.BlackboardController.GetVectorValueByEntity(
           r.Entity.Id,
           a.BlackboardKey,
         );
-        l = WorldGlobal_1.WorldGlobal.ToUeVector(t);
+        t = WorldGlobal_1.WorldGlobal.ToUeVector(l);
         break;
       case 7:
-        (t = BlackboardController_1.BlackboardController.GetIntValueByEntity(
+        (l = BlackboardController_1.BlackboardController.GetIntValueByEntity(
           r.Entity.Id,
           a.BlackboardKey,
         )),
-          (t = EntitySystem_1.EntitySystem.Get(t));
-        t?.Valid &&
-          ([l, e] = (0, SkillBehaviorMisc_1.getLocationAndDirection)(
-            t.GetComponent(152).Owner,
+          (l = EntitySystem_1.EntitySystem.Get(l));
+        l?.Valid &&
+          ([t, e] = (0, SkillBehaviorMisc_1.getLocationAndDirection)(
+            l.GetComponent(154).Owner,
           ));
     }
     switch (a.LocationForwardType) {
@@ -217,17 +217,17 @@ class SkillBehaviorAction {
         e = i.Actor.GetActorForwardVector();
         break;
       case 2:
-        (e = i.ActorLocation.op_Subtraction(l)).Set(e.X, e.Y, 0);
+        (e = i.ActorLocation.op_Subtraction(t)).Set(e.X, e.Y, 0);
         break;
       case 3:
-        (e = l.op_Subtraction(
+        (e = t.op_Subtraction(
           Global_1.Global.CharacterCameraManager.GetCameraLocation(),
         )).Set(e.X, e.Y, 0);
     }
     var o,
-      s = Vector_1.Vector.Create(l),
-      c = new UE.Transform(e.Rotation(), l, Vector_1.Vector.OneVector);
-    if (((l = c.TransformPositionNoScale(a.LocationOffset)), a.Restrict)) {
+      s = Vector_1.Vector.Create(t),
+      c = new UE.Transform(e.Rotation(), t, Vector_1.Vector.OneVector);
+    if (((t = c.TransformPositionNoScale(a.LocationOffset)), a.Restrict)) {
       let e = i.ActorLocation;
       switch (a.RestrictType) {
         case 0:
@@ -239,16 +239,16 @@ class SkillBehaviorAction {
           r.Entity.GetComponent(0).IsMonster() &&
             ((o = i.GetInitLocation()), e.Set(o.X, o.Y, o.Z));
       }
-      var c = l.op_Subtraction(e).Size2D();
+      var c = t.op_Subtraction(e).Size2D();
       c > a.RestrictDistance &&
         ((c = a.RestrictDistance / c),
-        MathUtils_1.MathUtils.LerpVector(e, l, c, l));
+        MathUtils_1.MathUtils.LerpVector(e, t, c, t));
     }
-    let n = Vector_1.Vector.Create(l);
+    let n = Vector_1.Vector.Create(t);
     if (!s.Equals(n) && a.BestSpot) {
       switch (a.Strategy) {
         case 0:
-          var _ = (0, SkillBehaviorMisc_1.forwardTrace)(i, s, n, a.DebugTrace);
+          var _ = (0, SkillBehaviorMisc_1.traceWall)(i, s, n, a.DebugTrace);
           if (!_) return;
           n = _[1];
           break;
@@ -260,12 +260,7 @@ class SkillBehaviorAction {
           for (const h of SkillBehaviorMisc_1.angles) {
             k.RotateAngleAxis(h, Vector_1.Vector.UpVectorProxy, v),
               s.Addition(v, n);
-            var b = (0, SkillBehaviorMisc_1.forwardTrace)(
-              i,
-              s,
-              n,
-              a.DebugTrace,
-            );
+            var b = (0, SkillBehaviorMisc_1.traceWall)(i, s, n, a.DebugTrace);
             if (!b) return;
             if (!b[0]) {
               (e = !0), (n = b[1]);
@@ -276,23 +271,16 @@ class SkillBehaviorAction {
           return;
         }
       }
-      c = (0, SkillBehaviorMisc_1.downTrace)(i, n, a.DebugTrace);
-      n = c[0]
-        ? c[1]
-        : (0, SkillBehaviorMisc_1.getValidLocation)(
-            i,
-            s,
-            n,
-            Vector_1.Vector.Create(),
-            a.DebugTrace,
-          );
+      c = (0, SkillBehaviorMisc_1.traceGround)(i, n, a.DebugTrace);
+      if (!c[0]) return;
+      n = c[1];
     }
     if (
-      ((l = n.ToUeVector()),
+      ((t = n.ToUeVector()),
       0 < a.Navigation &&
         !UE.NavigationSystemV1.K2_ProjectPointToNavigation(
           GlobalData_1.GlobalData.World,
-          l,
+          t,
           void 0,
           void 0,
           void 0,
@@ -303,21 +291,21 @@ class SkillBehaviorAction {
       if (
         !UE.NavigationSystemV1.K2_GetRandomLocationInNavigableRadius(
           GlobalData_1.GlobalData.World,
-          l,
+          t,
           c,
           a.Navigation,
         )
       )
         return;
-      l = (0, puerts_1.$unref)(c);
+      t = (0, puerts_1.$unref)(c);
     }
     CombatDebugController_1.CombatDebugController.CombatDebug(
       "Skill",
       r.Entity,
       "SkillBehaviorAction.SetLocation",
-      ["位置", l],
+      ["位置", t],
     ),
-      i.SetActorLocation(l, SkillBehaviorMisc_1.CONTEXT + ".Final", !1);
+      i.SetActorLocation(t, SkillBehaviorMisc_1.CONTEXT + ".Final", !1);
   }
   static bd(e, a) {
     let r = void 0,
@@ -330,9 +318,9 @@ class SkillBehaviorAction {
         i = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
         break;
       case 2:
-        var l = a.Entity.GetComponent(0);
+        var t = a.Entity.GetComponent(0);
         i = ModelManager_1.ModelManager.CreatureModel.GetEntity(
-          l.GetSummonerId(),
+          t.GetSummonerId(),
         );
         break;
       case 3:
@@ -356,11 +344,11 @@ class SkillBehaviorAction {
         );
     }
     i && i.Entity !== a.Entity && (r = i.Entity.GetComponent(1).ActorLocation);
-    var t,
+    var l,
       o = a.Entity.GetComponent(3);
     let s = void 0;
     ((s = r
-      ? (((t = r.op_Subtraction(o.ActorLocation)).Z = 0), t.Rotation())
+      ? (((l = r.op_Subtraction(o.ActorLocation)).Z = 0), l.Rotation())
       : o.ActorRotation).Yaw += e.DirectionOffset),
       CombatDebugController_1.CombatDebugController.CombatDebug(
         "Skill",
@@ -370,32 +358,32 @@ class SkillBehaviorAction {
       ),
       o.SetActorRotation(s, "SkillBehaviorAction.SetDirection");
   }
-  static nzo(a, r) {
+  static iZo(a, r) {
     var i = r.Entity.GetComponent(19);
     for (let e = 0; e < a.Cues.Num(); e++) {
-      var l = a.Cues.Get(e),
-        t = GameplayCueById_1.configGameplayCueById.GetConfig(l.CueId),
-        t = i.CreateGameplayCue(t, { Sync: !0 });
-      l.Stop &&
+      var t = a.Cues.Get(e),
+        l = GameplayCueById_1.configGameplayCueById.GetConfig(t.CueId),
+        l = i.CreateGameplayCue(l, { Sync: !0 });
+      t.Stop &&
         (0, SkillBehaviorMisc_1.getEndSkillBehaviorParamList)(r.Skill).push({
           Entity: r.Entity,
           ActionType: a.ActionType,
-          GameplayCue: t,
+          GameplayCue: l,
         });
     }
   }
-  static szo(a, r) {
+  static oZo(a, r) {
     for (let e = 0; e < a.Bullets.Num(); e++) {
       var i,
-        l = a.Bullets.Get(e);
-      for (let e = 0; e < l.bulletCount; e++) {
+        t = a.Bullets.Get(e);
+      for (let e = 0; e < t.bulletCount; e++) {
         let e = -1;
         r.Skill.MontageContextId
           ? (i = r.Entity.GetComponent(3).Actor) instanceof
               TsBaseCharacter_1.default &&
             (e = BulletUtil_1.BulletUtil.CreateBulletFromAN(
               i,
-              l.bulletRowName,
+              t.bulletRowName,
               r.Entity.GetComponent(3).ActorTransform,
               r.Skill.SkillId.toString(),
               !1,
@@ -403,21 +391,21 @@ class SkillBehaviorAction {
             ))
           : (e = BulletController_1.BulletController.CreateBulletCustomTarget(
               r.Entity,
-              l.bulletRowName,
+              t.bulletRowName,
               r.Entity.GetComponent(3).ActorTransform,
               { SkillId: r.Skill.SkillId },
               r.Skill.CombatMessageId,
             ).Id),
-          l.BlackboardKey &&
+          t.BlackboardKey &&
             BlackboardController_1.BlackboardController.SetIntValueByEntity(
               r.Entity.Id,
-              l.BlackboardKey,
+              t.BlackboardKey,
               e,
             );
       }
     }
   }
-  static azo(e, a) {
+  static rZo(e, a) {
     a = ModelManager_1.ModelManager.CreatureModel.GetEntityById(a.Entity.Id);
     CameraUtility_1.CameraUtility.CheckApplyCameraModifyCondition(
       a,
@@ -439,7 +427,7 @@ class SkillBehaviorAction {
         e.CameraAttachSocket.toString(),
       );
   }
-  static hzo(e, a) {
+  static nZo(e, a) {
     CameraController_1.CameraController.SequenceCamera.PlayerComponent.PlayCameraSequence(
       e.CameraSequenceSettings,
       e.ResetLockOnCamera,
@@ -452,8 +440,8 @@ class SkillBehaviorAction {
       e.IsShowExtraSphere,
     );
   }
-  static lzo(e, a) {
-    a.Entity.GetComponent(161).CharacterMovement.SetMovementMode(
+  static sZo(e, a) {
+    a.Entity.GetComponent(163).CharacterMovement.SetMovementMode(
       e.BeginMovementMode,
     ),
       (0, SkillBehaviorMisc_1.getEndSkillBehaviorParamList)(a.Skill).push({
@@ -462,7 +450,7 @@ class SkillBehaviorAction {
         MovementMode: e.EndMovementMode,
       });
   }
-  static _zo(e, a) {
+  static aZo(e, a) {
     var r = a.Entity.GetComponent(3).Actor.CapsuleComponent;
     e.CollisionRestore &&
       (0, SkillBehaviorMisc_1.getEndSkillBehaviorParamList)(a.Skill).push({
@@ -473,10 +461,10 @@ class SkillBehaviorAction {
       }),
       r.SetCollisionResponseToChannel(e.CollisionChannel, e.CollisionResponse);
   }
-  static uzo(e, a) {
+  static hZo(e, a) {
     var r = PhantomUtil_1.PhantomUtil.GetSummonedEntity(
       a.Entity,
-      Protocol_1.Aki.Protocol.Oqs.Proto_ESummonTypeConcomitantCustom,
+      Protocol_1.Aki.Protocol.Summon.L3s.Proto_ESummonTypeConcomitantCustom,
       e.FollowIndex,
     );
     r &&
@@ -493,16 +481,16 @@ class SkillBehaviorAction {
         Context: "SkillBehaviorAction.UseSummonSkill",
       }));
   }
-  static Ent(e, a) {
+  static bst(e, a) {
     let r = void 0;
     switch (e.BuffTarget) {
       case 0:
-        r = a.Entity.GetComponent(157);
+        r = a.Entity.GetComponent(159);
         break;
       case 1:
-        r = a.SkillComponent.SkillTarget?.Entity?.GetComponent(157);
+        r = a.SkillComponent.SkillTarget?.Entity?.GetComponent(159);
     }
-    var i, l;
+    var i, t;
     r &&
       (e.Add
         ? ((i = {
@@ -514,18 +502,18 @@ class SkillBehaviorAction {
             PreMessageId: a.Skill.CombatMessageId,
           }),
           a.Skill.MontageContextId
-            ? ((l = a.Entity.GetComponent(157)),
-              r.AddBuffFromAnimNotify(e.BuffId, l, i))
+            ? ((t = a.Entity.GetComponent(159)),
+              r.AddBuffFromAnimNotify(e.BuffId, t, i))
             : r.AddBuff(e.BuffId, i))
         : r.RemoveBuff(e.BuffId, -1, "从技能行为移除Buff"));
   }
-  static czo(e, a) {
-    a = EntitySystem_1.EntitySystem.GetComponent(a.Entity.Id, 185);
+  static lZo(e, a) {
+    a = EntitySystem_1.EntitySystem.GetComponent(a.Entity.Id, 188);
     a?.Valid &&
       "None" !== e.Tag.TagName &&
       (e.Add ? a.AddTag(e.Tag.TagId) : a.RemoveTag(e.Tag.TagId));
   }
-  static mzo(e, a) {
+  static _Zo(e, a) {
     a = EntitySystem_1.EntitySystem.GetComponent(a.Entity.Id, 18);
     a?.Valid && a.TryExitWeakTime();
   }

@@ -1,42 +1,43 @@
 "use strict";
 var __decorate =
   (this && this.__decorate) ||
-  function (e, t, r, o) {
-    var n,
-      a = arguments.length,
+  function (e, t, r, a) {
+    var o,
+      n = arguments.length,
       i =
-        a < 3
+        n < 3
           ? t
-          : null === o
-            ? (o = Object.getOwnPropertyDescriptor(t, r))
-            : o;
+          : null === a
+            ? (a = Object.getOwnPropertyDescriptor(t, r))
+            : a;
     if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
-      i = Reflect.decorate(e, t, r, o);
+      i = Reflect.decorate(e, t, r, a);
     else
-      for (var s = e.length - 1; 0 <= s; s--)
-        (n = e[s]) && (i = (a < 3 ? n(i) : 3 < a ? n(t, r, i) : n(t, r)) || i);
-    return 3 < a && i && Object.defineProperty(t, r, i), i;
+      for (var l = e.length - 1; 0 <= l; l--)
+        (o = e[l]) && (i = (n < 3 ? o(i) : 3 < n ? o(t, r, i) : o(t, r)) || i);
+    return 3 < n && i && Object.defineProperty(t, r, i), i;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneCameraPlayerComponent = void 0);
 const UE = require("ue"),
   EntityComponent_1 = require("../../Core/Entity/EntityComponent"),
   RegisterComponent_1 = require("../../Core/Entity/RegisterComponent"),
+  GlobalData_1 = require("../GlobalData"),
   ModelManager_1 = require("../Manager/ModelManager"),
   CameraController_1 = require("./CameraController");
 let SceneCameraPlayerComponent = class SceneCameraPlayerComponent extends EntityComponent_1.EntityComponent {
   constructor() {
-    super(...arguments), (this.yxr = void 0), (this.Fxr = void 0);
+    super(...arguments), (this.ZPr = void 0), (this.fxr = void 0);
   }
   OnStart() {
     return (
-      (this.yxr = this.Entity.GetComponent(7)),
-      (this.Fxr = new Array()),
-      this.yxr.Valid
+      (this.ZPr = this.Entity.GetComponent(7)),
+      (this.fxr = new Array()),
+      this.ZPr.Valid
     );
   }
   OnEnd() {
-    return (this.yxr = void 0), !(this.Fxr = void 0);
+    return (this.ZPr = void 0), !(this.fxr = void 0);
   }
   ExitCameraMode(e = () => {}, t, r) {
     CameraController_1.CameraController.ExitCameraMode(
@@ -48,35 +49,35 @@ let SceneCameraPlayerComponent = class SceneCameraPlayerComponent extends Entity
     ) || e();
   }
   ExitSceneSubCamera(e, t = () => {}, r) {
-    this.yxr.RemoveBoundSceneCamera(e),
+    this.ZPr.RemoveBoundSceneCamera(e),
       ModelManager_1.ModelManager.PlotModel.IsInHighLevelPlot()
         ? this.ExitCameraMode(t, e, r)
-        : this.yxr.IsIdle()
+        : this.ZPr.IsIdle()
           ? (ModelManager_1.ModelManager.CameraModel.IsInHigherMode(3) ||
-              (this.yxr.UpdateViewTarget(0),
+              (this.ZPr.UpdateViewTarget(0),
               CameraController_1.CameraController.FightCamera.LogicComponent.SetRotation(
                 new UE.Rotator(
                   CameraController_1.CameraController.FightCamera.LogicComponent.CameraRotation.Pitch,
-                  this.yxr.CineCamera.K2_GetActorRotation().Yaw,
+                  this.ZPr.CineCamera.K2_GetActorRotation().Yaw,
                   CameraController_1.CameraController.FightCamera.LogicComponent.CameraRotation.Roll,
                 ),
               )),
             this.ExitCameraMode(t, e, r))
-          : (this.yxr.UpdateViewTarget(), t());
+          : (this.ZPr.UpdateViewTarget(), t());
   }
   EnterSceneSubCamera(e) {
-    e === this.yxr.CurSceneSubCamera && this.yxr.UpdateViewTarget();
+    e === this.ZPr.CurSceneSubCamera && this.ZPr.UpdateViewTarget();
   }
-  EnterFixSceneSubCamera(e, t, r, o, n, a) {
+  EnterFixSceneSubCamera(e, t, r, a, o, n) {
     ModelManager_1.ModelManager.PlotModel.IsInHighLevelPlot() ||
       (CameraController_1.CameraController.FightCamera.LogicComponent.SetIsDitherEffectEnable(
         !1,
       ),
-      ((a = this.yxr.GetUnBoundSceneCamera(a)).FadeIn = o),
-      (a.FadeOut = n),
-      a.Camera.GetCineCameraComponent().SetFieldOfView(r),
-      (a.Camera.CameraComponent.bConstrainAspectRatio = !1),
-      a.Camera.K2_SetActorTransform(
+      ((n = this.ZPr.GetUnBoundSceneCamera(n)).FadeIn = a),
+      (n.FadeOut = o),
+      n.Camera.GetCineCameraComponent().SetFieldOfView(r),
+      (n.Camera.CameraComponent.bConstrainAspectRatio = !1),
+      n.Camera.K2_SetActorTransform(
         new UE.Transform(
           t.ToUeRotator(),
           e.ToUeVector(),
@@ -86,48 +87,59 @@ let SceneCameraPlayerComponent = class SceneCameraPlayerComponent extends Entity
         void 0,
         !0,
       ),
-      this.Fxr.push(a),
+      this.fxr.push(n),
       3 === ModelManager_1.ModelManager.CameraModel.CameraMode
-        ? this.EnterSceneSubCamera(a)
-        : CameraController_1.CameraController.EnterCameraMode(3, o, 0, 0));
+        ? this.EnterSceneSubCamera(n)
+        : (UE.KismetSystemLibrary.ExecuteConsoleCommand(
+            GlobalData_1.GlobalData.World,
+            "r.Shadow.EnableCSMStable 0",
+          ),
+          CameraController_1.CameraController.EnterCameraMode(3, a, 0, 0)));
   }
   ExitFixSceneSubCamera() {
-    if (this.Fxr.length) {
+    var t = () => {
+      UE.KismetSystemLibrary.ExecuteConsoleCommand(
+        GlobalData_1.GlobalData.World,
+        "r.Shadow.EnableCSMStable 1",
+      );
+    };
+    if (this.fxr.length) {
       CameraController_1.CameraController.FightCamera.LogicComponent.SetIsDitherEffectEnable(
         !0,
       );
       let e = void 0;
       for (
-        1 === this.yxr.CurSceneSubCamera.Type &&
-        this.yxr.DefaultSceneSubCamera !== this.yxr.CurSceneSubCamera &&
-        (e = this.yxr.CurSceneSubCamera);
-        this.Fxr.length;
+        1 === this.ZPr.CurSceneSubCamera.Type &&
+        this.ZPr.DefaultSceneSubCamera !== this.ZPr.CurSceneSubCamera &&
+        (e = this.ZPr.CurSceneSubCamera);
+        this.fxr.length;
 
       ) {
-        var t = this.Fxr.pop();
-        this.yxr.RemoveBoundSceneCamera(t);
+        var r = this.fxr.pop();
+        this.ZPr.RemoveBoundSceneCamera(r);
       }
       if (3 === ModelManager_1.ModelManager.CameraModel.CameraMode)
-        return this.yxr.IsIdle()
+        return this.ZPr.IsIdle()
           ? ModelManager_1.ModelManager.CameraModel.IsInHigherMode(3)
-            ? void this.ExitCameraMode(void 0)
+            ? void this.ExitCameraMode(t)
             : (e &&
-                (this.yxr.DefaultSceneSubCamera.CopyData(e),
-                this.yxr.UpdateViewTarget(0)),
+                (this.ZPr.DefaultSceneSubCamera.CopyData(e),
+                this.ZPr.UpdateViewTarget(0)),
               CameraController_1.CameraController.FightCamera.LogicComponent.SetRotation(
                 new UE.Rotator(
                   CameraController_1.CameraController.FightCamera.LogicComponent.CameraRotation.Pitch,
-                  this.yxr.CineCamera.K2_GetActorRotation().Yaw,
+                  this.ZPr.CineCamera.K2_GetActorRotation().Yaw,
                   CameraController_1.CameraController.FightCamera.LogicComponent.CameraRotation.Roll,
                 ),
               ),
               void CameraController_1.CameraController.ExitCameraMode(
                 3,
-                this.yxr.DefaultSceneSubCamera.FadeOut,
+                this.ZPr.DefaultSceneSubCamera.FadeOut,
                 0,
                 0,
+                t,
               ))
-          : void this.yxr.UpdateViewTarget();
+          : void this.ZPr.UpdateViewTarget();
     }
   }
 };

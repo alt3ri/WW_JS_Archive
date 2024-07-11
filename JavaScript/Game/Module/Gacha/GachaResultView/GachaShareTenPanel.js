@@ -9,13 +9,13 @@ const UE = require("ue"),
 class GachaShareTenPanel extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this.bjt = void 0),
-      (this.Hjt = () => new GachaShareResultItem_1.GachaShareResultItem());
+      (this.bWt = void 0),
+      (this.HWt = () => new GachaShareResultItem_1.GachaShareResultItem());
   }
   async OnBeforeStartAsync() {
-    this.bjt = new GenericLayout_1.GenericLayout(
+    this.bWt = new GenericLayout_1.GenericLayout(
       this.GetGridLayout(0),
-      this.Hjt,
+      this.HWt,
     );
     var e = this.OpenParam;
     const n = (e) => {
@@ -32,22 +32,22 @@ class GachaShareTenPanel extends UiPanelBase_1.UiPanelBase {
     e.sort((e, a) => {
       var r =
           ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
-            e.u5n.G3n,
+            e.WVn.f8n,
           )?.QualityId ?? 0,
         t =
           ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
-            a.u5n.G3n,
+            a.WVn.f8n,
           )?.QualityId ?? 0;
       return r === t
         ? ((e = n(
-            ConfigManager_1.ConfigManager.GachaConfig.GetItemIdType(e.u5n.G3n),
+            ConfigManager_1.ConfigManager.GachaConfig.GetItemIdType(e.WVn.f8n),
           )),
           n(
-            ConfigManager_1.ConfigManager.GachaConfig.GetItemIdType(a.u5n.G3n),
+            ConfigManager_1.ConfigManager.GachaConfig.GetItemIdType(a.WVn.f8n),
           ) - e)
         : t - r;
     }),
-      await this.bjt.RefreshByDataAsync(e);
+      await this.bWt.RefreshByDataAsync(e);
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [[0, UE.UIGridLayout]];
@@ -56,7 +56,7 @@ class GachaShareTenPanel extends UiPanelBase_1.UiPanelBase {
     return this.GetGridLayout(0);
   }
   OnBeforeDestroy() {
-    this.bjt?.ClearChildren();
+    this.bWt?.ClearChildren();
   }
 }
 exports.GachaShareTenPanel = GachaShareTenPanel;

@@ -50,6 +50,30 @@ class RoleAudio {
       (t) => this.breakupeventlist(t),
     );
   }
+  get ExtremeDodgeEvent() {
+    return this.extremedodgeevent();
+  }
+  get ParryEvent() {
+    return this.parryevent();
+  }
+  get EnterBattleEvent() {
+    return this.enterbattleevent();
+  }
+  get UnderAttackEvent() {
+    return this.underattackevent();
+  }
+  get KnockUpEvent() {
+    return this.knockupevent();
+  }
+  get EnterGlideEvent() {
+    return this.enterglideevent();
+  }
+  get UseExploreHookEvent() {
+    return this.useexplorehookevent();
+  }
+  get ClimbLeapEvent() {
+    return this.climbleapevent();
+  }
   __init(t, e) {
     return (this.z7 = t), (this.J7 = e), this;
   }
@@ -95,10 +119,10 @@ class RoleAudio {
     return this.losthealtheventmap(t);
   }
   losthealtheventmap(t, e) {
-    var s = this.J7.__offset(this.z7, 20);
-    return s
+    var i = this.J7.__offset(this.z7, 20);
+    return i
       ? (e || new DicIntString_1.DicIntString()).__init(
-          this.J7.__indirect(this.J7.__vector(this.z7 + s) + 4 * t),
+          this.J7.__indirect(this.J7.__vector(this.z7 + i) + 4 * t),
           this.J7,
         )
       : null;
@@ -111,9 +135,9 @@ class RoleAudio {
     return this.lowstrengtheventlist(t);
   }
   lowstrengtheventlist(t, e) {
-    var s = this.J7.__offset(this.z7, 22);
-    return s
-      ? this.J7.__string(this.J7.__vector(this.z7 + s) + 4 * t, e)
+    var i = this.J7.__offset(this.z7, 22);
+    return i
+      ? this.J7.__string(this.J7.__vector(this.z7 + i) + 4 * t, e)
       : null;
   }
   lowstrengtheventlistLength() {
@@ -124,14 +148,46 @@ class RoleAudio {
     return this.breakupeventlist(t);
   }
   breakupeventlist(t, e) {
-    var s = this.J7.__offset(this.z7, 24);
-    return s
-      ? this.J7.__string(this.J7.__vector(this.z7 + s) + 4 * t, e)
+    var i = this.J7.__offset(this.z7, 24);
+    return i
+      ? this.J7.__string(this.J7.__vector(this.z7 + i) + 4 * t, e)
       : null;
   }
   breakupeventlistLength() {
     var t = this.J7.__offset(this.z7, 24);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
+  }
+  extremedodgeevent(t) {
+    var e = this.J7.__offset(this.z7, 26);
+    return e ? this.J7.__string(this.z7 + e, t) : null;
+  }
+  parryevent(t) {
+    var e = this.J7.__offset(this.z7, 28);
+    return e ? this.J7.__string(this.z7 + e, t) : null;
+  }
+  enterbattleevent(t) {
+    var e = this.J7.__offset(this.z7, 30);
+    return e ? this.J7.__string(this.z7 + e, t) : null;
+  }
+  underattackevent(t) {
+    var e = this.J7.__offset(this.z7, 32);
+    return e ? this.J7.__string(this.z7 + e, t) : null;
+  }
+  knockupevent(t) {
+    var e = this.J7.__offset(this.z7, 34);
+    return e ? this.J7.__string(this.z7 + e, t) : null;
+  }
+  enterglideevent(t) {
+    var e = this.J7.__offset(this.z7, 36);
+    return e ? this.J7.__string(this.z7 + e, t) : null;
+  }
+  useexplorehookevent(t) {
+    var e = this.J7.__offset(this.z7, 38);
+    return e ? this.J7.__string(this.z7 + e, t) : null;
+  }
+  climbleapevent(t) {
+    var e = this.J7.__offset(this.z7, 40);
+    return e ? this.J7.__string(this.z7 + e, t) : null;
   }
 }
 exports.RoleAudio = RoleAudio;

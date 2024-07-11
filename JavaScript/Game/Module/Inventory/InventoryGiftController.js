@@ -14,20 +14,20 @@ const Protocol_1 = require("../../../Core/Define/Net/Protocol"),
   ControllerHolder_1 = require("../../Manager/ControllerHolder");
 class InventoryGiftController extends UiControllerBase_1.UiControllerBase {
   static SendItemGiftUseRequest(t, e, r) {
-    var n = Protocol_1.Aki.Protocol._ts.create();
-    (n.G3n = t), (n.I5n = e), (n.J5n = r);
+    var n = Protocol_1.Aki.Protocol.sns.create();
+    (n.f8n = t), (n.o9n = e), (n.R9n = r);
     var r = ModelManager_1.ModelManager.InventoryModel.GetCommonItemData(t),
       i = r.GetConfig();
     i.Parameters.get(ItemDefines_1.EItemFunctionType.ManualOpenGift) ||
       i.Parameters.get(ItemDefines_1.EItemFunctionType.AutoOpenGift);
     const o = r.GetCount() - e;
-    Net_1.Net.Call(15549, n, (e) => {
+    Net_1.Net.Call(8179, n, (e) => {
       var r;
       e &&
-        (e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys
+        (e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs
           ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-              e.lkn,
-              24190,
+              e.O4n,
+              13087,
             )
           : (UiManager_1.UiManager.IsViewShow("InventoryGiftView") &&
               UiManager_1.UiManager.CloseView("InventoryGiftView"),
@@ -66,24 +66,24 @@ class InventoryGiftController extends UiControllerBase_1.UiControllerBase {
       UiManager_1.UiManager.CloseView("AcquireView");
   }
   static OnRegisterNetEvent() {
-    Net_1.Net.Register(5704, InventoryGiftController.ItemGiftUseNotify);
+    Net_1.Net.Register(15223, InventoryGiftController.ItemGiftUseNotify);
   }
   static OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(5704);
+    Net_1.Net.UnRegister(15223);
   }
 }
 (exports.InventoryGiftController = InventoryGiftController).ItemGiftUseNotify =
   (r) => {
-    var e = r.Ekn,
+    var e = r.J4n,
       e =
         ConfigManager_1.ConfigManager.GiftPackageConfig.GetGiftPackageConfig(e);
     if (1 !== e.ShowType && 0 === e.ShowType) {
-      var t = r.cRs.length,
+      var t = r.UUs.length,
         n = [];
       for (let e = 0; e < t; e++) {
-        var i = r.cRs[e],
-          o = i.Ekn,
-          i = i.I5n;
+        var i = r.UUs[e],
+          o = i.J4n,
+          i = i.o9n;
         n.push([{ IncId: 0, ItemId: o }, i]);
       }
       e = new AcquireData_1.AcquireData();

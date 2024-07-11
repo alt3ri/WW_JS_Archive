@@ -5,6 +5,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.functionRouletteMap =
       void 0);
 const UE = require("ue"),
+  Info_1 = require("../../../../Core/Common/Info"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
   LguiUtil_1 = require("../../Util/LguiUtil"),
@@ -32,8 +33,7 @@ const UE = require("ue"),
 class RouletteComponentBase extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this.InputControllerType = 0),
-      (this.Ego = void 0),
+      (this.v0o = void 0),
       (this.Angle = -1),
       (this.AreaIndex = 0),
       (this.cie = new UE.Rotator(0, 0, 0)),
@@ -64,21 +64,21 @@ class RouletteComponentBase extends UiPanelBase_1.UiPanelBase {
   OnStart() {
     this.GetItem(2).SetUIActive(!1),
       this.GetItem(3).SetUIActive(!1),
-      (this.Ego = this.GetItem(2));
+      (this.v0o = this.GetItem(2));
   }
   OnBeforeDestroy() {
-    (this.Ego = void 0),
+    (this.v0o = void 0),
       (this.cie = void 0),
-      this.ygo(),
+      this.M0o(),
       this.AreaIndexToGridIndex.clear(),
       (this.AreaIndexToGridIndex = void 0),
       (this.ToggleEventList = []);
   }
   Reset() {
-    this.Refresh(0, -1), this.RefreshRouletteComponent();
+    (this.AreaIndex = 0), (this.Angle = -1), this.RefreshRouletteComponent();
   }
-  Igo() {
-    this.ygo();
+  E0o() {
+    this.M0o();
     var t = this.GetRouletteInfoMap();
     let e = 0;
     var i = new Map([
@@ -127,17 +127,22 @@ class RouletteComponentBase extends UiPanelBase_1.UiPanelBase {
   JudgeGridStateByData(t, e) {
     return 1;
   }
-  ygo() {
+  M0o() {
     for (const t of this.RouletteGridList)
       t.SetGridEquipped(!1), t.SetGridToggleState(!1);
     this.RouletteGridList = [];
   }
+  GamepadReturnEmptyGrid() {}
   RefreshCurrentGridIndex(t) {
     this.AreaIndex = t;
     t = this.AreaIndexToGridIndex.get(this.AreaIndex);
-    this.CurrentGridIndex = t ?? -1;
+    void 0 !== t
+      ? ((this.CurrentGridIndex = t), (this.IsEmptyChoose = !1))
+      : Info_1.Info.IsInGamepad()
+        ? this.GamepadReturnEmptyGrid()
+        : ((this.CurrentGridIndex = -1), (this.IsEmptyChoose = !0));
   }
-  OnEmitCurrentGridSelectOn(t) {
+  OnEmitCurrentGridSelectOn() {
     this.GetCurrentGrid()?.SelectOnGrid(!0);
   }
   GetCurrentGrid() {
@@ -147,8 +152,8 @@ class RouletteComponentBase extends UiPanelBase_1.UiPanelBase {
   SetAllGridToggleSelfInteractive(t) {
     for (const e of this.RouletteGridList) e.SetToggleSelfInteractive(t);
   }
-  EmitCurrentGridSelectOn(t) {
-    this.OnEmitCurrentGridSelectOn(t);
+  TryEmitCurrentGridSelectOn() {
+    this.OnEmitCurrentGridSelectOn();
   }
   GetCurrentIndexAndAngle() {
     return [this.AreaIndex, this.Angle];
@@ -157,31 +162,29 @@ class RouletteComponentBase extends UiPanelBase_1.UiPanelBase {
     this.RefreshCurrentShowName(), this.RefreshTips();
   }
   Refresh(t, e) {
-    var i, s, r;
+    var i, s;
     void 0 !== t &&
       this.AreaIndex !== t &&
       ((i = 0 === this.AreaIndex),
-      (s = 0 === t),
-      (r =
+      (s =
         (this.AreaIndexToGridIndex.get(this.AreaIndex) ?? -1) !==
         (this.AreaIndexToGridIndex.get(t) ?? -1)),
-      (this.IsEmptyChoose = s),
-      !i && r && this.SetCurrentToggleState(!1),
+      !i && s && this.SetCurrentToggleState(!1),
       this.RefreshCurrentGridIndex(t),
-      !s && r && this.SetCurrentToggleState(!0),
+      !this.IsEmptyChoose && s && this.SetCurrentToggleState(!0),
       this.RefreshCurrentShowName(),
-      (i || s) && this.SetRingVisible(!s),
+      (i || this.IsEmptyChoose) && this.SetRingVisible(!this.IsEmptyChoose),
       this.RefreshTips()),
       void 0 !== e &&
         this.Angle !== e &&
-        ((this.Angle = e), this.IsEmptyChoose || this.Tgo(this.Angle));
+        ((this.Angle = e), this.IsEmptyChoose || this.S0o(this.Angle));
   }
   SetCurrentToggleState(t) {}
-  Tgo(t) {
-    (this.cie.Yaw = t), this.Ego.SetUIRelativeRotation(this.cie);
+  S0o(t) {
+    (this.cie.Yaw = t), this.v0o.SetUIRelativeRotation(this.cie);
   }
   SetRingVisible(t) {
-    this.Ego.SetUIActive(t);
+    this.v0o.SetUIActive(t);
   }
   RefreshCurrentShowName() {
     var t =
@@ -198,24 +201,27 @@ class RouletteComponentBase extends UiPanelBase_1.UiPanelBase {
   RefreshTipsByText(t, e = !1) {
     var i;
     void 0 !== t &&
-      ((i = this.GetText(1)).ShowTextNew(t), e) &&
-      LguiUtil_1.LguiUtil.ReplaceWildCard(i);
+      ((i = this.GetText(1)),
+      LguiUtil_1.LguiUtil.SetLocalTextNew(
+        i,
+        t,
+        e
+          ? ModelManager_1.ModelManager.RouletteModel.GetRouletteKeyRichText()
+          : void 0,
+      ));
   }
   SetTipsActive(t) {
     this.GetText(1).SetUIActive(t);
   }
   RefreshRouletteType() {
-    this.RefreshRouletteItem(),
-      (this.CurrentGridIndex = -1),
-      this.Reset(),
-      this.Igo();
+    this.RefreshRouletteItem(), this.Reset(), this.E0o();
   }
   RefreshRouletteItem() {}
   RefreshRoulettePlatformType(t) {
     this.Reset();
   }
-  RefreshRouletteInputType(t) {
-    (this.InputControllerType = t), this.Reset();
+  RefreshRouletteInputType() {
+    this.Reset();
   }
 }
 exports.RouletteComponentBase = RouletteComponentBase;

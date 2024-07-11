@@ -23,39 +23,39 @@ const RegisterComponent_1 = require("../../../../../../Core/Entity/RegisterCompo
   CharacterBuffComponent_1 = require("./CharacterBuffComponent");
 let VisionBuffComponent = class VisionBuffComponent extends CharacterBuffComponent_1.CharacterBuffComponent {
   constructor() {
-    super(...arguments), (this.P2r = void 0);
+    super(...arguments), (this.a2r = void 0);
   }
-  x2r() {
+  h2r() {
     var e, t;
-    return void 0 !== this.P2r
-      ? this.P2r
-      : (t = this.Entity.GetComponent(47)?.GetAttributeHolder()) !==
+    return void 0 !== this.a2r
+      ? this.a2r
+      : (t = this.Entity.GetComponent(48)?.GetAttributeHolder()) !==
           this.Entity &&
-          ((t = t?.CheckGetComponent(34)) &&
+          ((t = t?.CheckGetComponent(35)) &&
             ((e = t.GetVisionId()),
             (t = t.GetVisionData(e)),
-            (this.P2r = !0 === t?.buff是否转移)),
-          this.P2r ?? !1);
+            (this.a2r = !0 === t?.buff是否转移)),
+          this.a2r ?? !1);
   }
   AddBuff(e, t) {
-    !(this.CreatureDataId === t.InstigatorId) && this.x2r()
-      ? this.Entity.GetComponent(47)
+    !(this.CreatureDataId === t.InstigatorId) && this.h2r()
+      ? this.Entity.GetComponent(48)
           .GetAttributeHolder()
-          .GetComponent(157)
+          .GetComponent(159)
           .AddBuff(e, t)
       : super.AddBuff(e, t);
   }
   RemoveBuff(e, t, o) {
-    this.x2r() &&
-      this.Entity.GetComponent(47)
+    this.h2r() &&
+      this.Entity.GetComponent(48)
         .GetAttributeHolder()
-        .GetComponent(157)
+        .GetComponent(159)
         .RemoveBuff(e, t, o),
       super.RemoveBuff(e, t, o);
   }
 };
 (VisionBuffComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(159)],
+  [(0, RegisterComponent_1.RegisterComponent)(161)],
   VisionBuffComponent,
 )),
   (exports.VisionBuffComponent = VisionBuffComponent);

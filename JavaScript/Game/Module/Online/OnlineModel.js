@@ -26,208 +26,218 @@ const CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParam
 class OnlineModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
-      (this.Zqi = void 0),
-      (this.eGi = void 0),
-      (this.tGi = void 0),
+      (this.ZGi = void 0),
+      (this.eNi = void 0),
+      (this.tNi = void 0),
       (this.WorldTeamPlayerFightInfo = []),
-      (this.iGi = Protocol_1.Aki.Protocol.J3s.Proto_ConfirmJoin),
-      (this.oGi = void 0),
-      (this.rGi = 0),
-      (this.nGi = 0),
-      (this.sGi = 0),
-      (this.aGi = 0),
-      (this.hGi = void 0),
-      (this.lGi = 3),
-      (this._Gi = !1),
-      (this.uGi = !1),
-      (this.cGi = void 0),
-      (this.mGi = new Map()),
-      (this.dGi = -1),
-      (this.CGi = -1),
-      (this.gGi = !0),
-      (this.fGi = new Map()),
-      (this.CachePlayerData = void 0);
+      (this.iNi = Protocol_1.Aki.Protocol.$8s.Proto_ConfirmJoin),
+      (this.oNi = void 0),
+      (this.rNi = 0),
+      (this.nNi = 0),
+      (this.sNi = 0),
+      (this.aNi = 0),
+      (this.hNi = void 0),
+      (this.lNi = 3),
+      (this._Ni = !1),
+      (this.uNi = !1),
+      (this.cNi = void 0),
+      (this.mNi = new Map()),
+      (this.dNi = -1),
+      (this.CNi = -1),
+      (this.gNi = !0),
+      (this.fNi = new Map()),
+      (this.CachePlayerData = void 0),
+      (this.WCa = (e, t) => {
+        var i = ModelManager_1.ModelManager.WorldLevelModel.OriginWorldLevel;
+        return (e.PlayerOriginWorldLevel > i && t.PlayerOriginWorldLevel > i) ||
+          (e.PlayerOriginWorldLevel <= i && t.PlayerOriginWorldLevel <= i)
+          ? t.PlayerLastOfflineTime - e.PlayerLastOfflineTime
+          : e.PlayerOriginWorldLevel - t.PlayerOriginWorldLevel;
+      });
   }
   OnInit() {
     return (
-      (this.Zqi = new Array()),
-      (this.eGi = new Array()),
-      (this.tGi = new Array()),
-      (this.oGi = new Map()),
-      (this.hGi = new Map()),
-      (this.rGi = -1),
-      (this.aGi = -1),
-      (this.nGi =
+      (this.ZGi = new Array()),
+      (this.eNi = new Array()),
+      (this.tNi = new Array()),
+      (this.oNi = new Map()),
+      (this.hNi = new Map()),
+      (this.rNi = -1),
+      (this.aNi = -1),
+      (this.nNi =
         CommonParamById_1.configCommonParamById.GetIntConfig(
           "apply_valid_time",
         )),
-      (this.sGi = CommonParamById_1.configCommonParamById.GetIntConfig(
+      (this.sNi = CommonParamById_1.configCommonParamById.GetIntConfig(
         "world_level_enter_diff",
       )),
-      (this.cGi = new Map()),
+      (this.cNi = new Map()),
       !0
     );
   }
   OnClear() {
     return (
-      this.Zqi && (this.Zqi.length = 0),
-      (this.Zqi = void 0),
-      this.eGi && (this.eGi.length = 0),
-      (this.eGi = void 0),
-      this.tGi && (this.tGi.length = 0),
-      (this.tGi = void 0),
-      this.oGi && this.oGi.clear(),
-      (this.oGi = void 0),
-      this.hGi && this.hGi.clear(),
-      (this.hGi = void 0),
-      (this.rGi = void 0),
-      (this.nGi = void 0),
-      (this.sGi = void 0),
-      this.cGi?.clear(),
-      (this.cGi = void 0),
-      this.mGi && this.mGi.clear(),
-      this.fGi && this.fGi.clear(),
-      (this.dGi = -1),
-      (this.CGi = -1),
-      (this.gGi = !0)
+      this.ZGi && (this.ZGi.length = 0),
+      (this.ZGi = void 0),
+      this.eNi && (this.eNi.length = 0),
+      (this.eNi = void 0),
+      this.tNi && (this.tNi.length = 0),
+      (this.tNi = void 0),
+      this.oNi && this.oNi.clear(),
+      (this.oNi = void 0),
+      this.hNi && this.hNi.clear(),
+      (this.hNi = void 0),
+      (this.rNi = void 0),
+      (this.nNi = void 0),
+      (this.sNi = void 0),
+      this.cNi?.clear(),
+      (this.cNi = void 0),
+      this.mNi && this.mNi.clear(),
+      this.fNi && this.fNi.clear(),
+      (this.dNi = -1),
+      (this.CNi = -1),
+      (this.gNi = !0)
     );
   }
   OnLeaveLevel() {
     return (
-      this.mGi && this.mGi.clear(),
-      (this.dGi = -1),
-      (this.CGi = -1),
-      (this.gGi = !0)
+      this.mNi && this.mNi.clear(),
+      (this.dNi = -1),
+      (this.CNi = -1),
+      (this.gNi = !0)
     );
   }
   ClearOnlineTeamMap() {
-    this.hGi && this.hGi.clear();
+    this.hNi && this.hNi.clear();
   }
   get StrangerWorld() {
-    return this.Zqi;
+    return this.ZGi;
   }
   get FriendWorld() {
-    return this.eGi;
+    return this.eNi;
   }
   get SearchResult() {
-    return this.tGi;
+    return this.tNi;
   }
   get CurrentPermissionsSetting() {
-    return this.iGi;
+    return this.iNi;
   }
   get CurrentApply() {
-    return this.oGi.get(this.rGi);
+    return this.oNi.get(this.rNi);
   }
   get CurrentApplyList() {
-    return this.oGi;
+    return this.oNi;
   }
   get ApplyCd() {
-    return this.nGi;
+    return this.nNi;
   }
   get EnterDiff() {
-    return this.sGi;
+    return this.sNi;
   }
   get OwnerId() {
-    return this.aGi;
+    return this.aNi;
   }
   get TeamMaxSize() {
-    return this.lGi;
+    return this.lNi;
   }
   get ShowCanJoin() {
-    return this.uGi;
+    return this.uNi;
   }
   get ShowFriend() {
-    return this._Gi;
+    return this._Ni;
   }
   get ChallengeApplyPlayerId() {
-    return this.dGi;
+    return this.dNi;
   }
   get NextInitiateTime() {
-    return this.CGi;
+    return this.CNi;
   }
   get NextInitiateLeftTime() {
-    return this.CGi - TimeUtil_1.TimeUtil.GetServerTime();
+    return this.CNi - TimeUtil_1.TimeUtil.GetServerTime();
   }
   get AllowInitiate() {
-    return this.gGi;
+    return this.gNi;
   }
   SetHallShowCanJoin(e) {
-    this.uGi = e;
+    this.uNi = e;
   }
   SetHallShowFriend(e) {
-    this._Gi = e;
+    this._Ni = e;
   }
   SetTeamOwnerId(e) {
-    this.aGi = e;
+    this.aNi = e;
   }
   SetPermissionsSetting(e) {
-    this.iGi = e;
+    this.iNi = e;
   }
   CleanSearchResultList() {
-    this.tGi.length = 0;
+    this.tNi.length = 0;
   }
   CleanFriendWorldList() {
-    this.eGi.length = 0;
+    this.eNi.length = 0;
   }
   CleanStrangerWorldList() {
-    this.Zqi.length = 0;
+    this.ZGi.length = 0;
   }
   CleanCurrentApply() {
-    this.oGi.delete(this.rGi), (this.rGi = -1);
+    this.oNi.delete(this.rNi), (this.rNi = -1);
   }
   PushSearchResultList(e) {
-    this.tGi.push(e);
+    this.tNi.push(e);
   }
   PushFriendWorldList(e) {
-    this.eGi.push(e);
+    this.eNi.push(e);
   }
   PushStrangerWorldList(e) {
-    this.Zqi.push(e);
+    this.ZGi.push(e);
+  }
+  SortWorldList(e) {
+    (e ? this.eNi : this.ZGi)?.sort(this.WCa);
   }
   PushCurrentApplyList(e) {
-    this.oGi.set(e.PlayerId, e), -1 === this.rGi && (this.rGi = e.PlayerId);
+    this.oNi.set(e.PlayerId, e), -1 === this.rNi && (this.rNi = e.PlayerId);
   }
   PushCurrentTeamList(e) {
-    this.hGi.set(e.PlayerId, e);
+    this.hNi.set(e.PlayerId, e);
   }
   DeleteCurrentApplyListById(t) {
-    if ((this.oGi.delete(t), this.oGi.size < 1)) this.rGi = -1;
+    if ((this.oNi.delete(t), this.oNi.size < 1)) this.rNi = -1;
     else {
-      let e = this.nGi;
-      for (const [t, i] of this.oGi)
-        i.ApplyTimeLeftTime <= e && ((e = i.ApplyTimeLeftTime), (this.rGi = t));
+      let e = this.nNi;
+      for (const [t, i] of this.oNi)
+        i.ApplyTimeLeftTime <= e && ((e = i.ApplyTimeLeftTime), (this.rNi = t));
     }
   }
   DeleteCurrentTeamListById(e) {
-    this.hGi.delete(e);
+    this.hNi.delete(e);
   }
   ResetTeamDataPlayer(e) {
-    for (const i of this.hGi) {
+    for (const i of this.hNi) {
       var t = i[1];
       t.PlayerNumber > e && t.PlayerNumber--;
     }
   }
   GetCurrentApplyListById(e) {
-    return this.oGi.get(e);
+    return this.oNi.get(e);
   }
   GetCurrentTeamListById(e) {
-    return this.hGi.get(e);
+    return this.hNi.get(e);
   }
   GetCurrentApplyList() {
     var e,
       t,
       i = new Array();
-    for ([e, t] of this.oGi) 0 < e && i.push(t);
+    for ([e, t] of this.oNi) 0 < e && i.push(t);
     return i.sort((e, t) => e.ApplyTimeLeftTime - t.ApplyTimeLeftTime);
   }
   GetCurrentApplySize() {
-    return this.oGi.size;
+    return this.oNi.size;
   }
   GetCurrentTeamSize() {
-    return this.hGi.size;
+    return this.hNi.size;
   }
   GetIsTeamModel() {
-    return -1 !== this.aGi;
+    return -1 !== this.aNi;
   }
   GetIsMyTeam() {
     return (
@@ -241,13 +251,13 @@ class OnlineModel extends ModelBase_1.ModelBase {
   GetCanJoinFormStranger() {
     var e = ModelManager_1.ModelManager.WorldLevelModel.CurWorldLevel,
       t = new Array();
-    for (const i of this.Zqi) i.WorldLevel <= e + this.EnterDiff && t.push(i);
+    for (const i of this.ZGi) i.WorldLevel <= e + this.EnterDiff && t.push(i);
     return t;
   }
   GetCanJoinFormFriend() {
     var e = ModelManager_1.ModelManager.WorldLevelModel.CurWorldLevel,
       t = new Array();
-    for (const i of this.eGi)
+    for (const i of this.eNi)
       this.CanJoinOtherWorld(e, i.WorldLevel) && t.push(i);
     return t;
   }
@@ -256,20 +266,20 @@ class OnlineModel extends ModelBase_1.ModelBase {
   }
   GetTeamList() {
     var e = new Array();
-    for (const t of this.hGi) e.push(t[1]);
+    for (const t of this.hNi) e.push(t[1]);
     return e.sort((e, t) => e.PlayerNumber - t.PlayerNumber);
   }
   DisableOnline(e, t, i = 0) {
-    t ? this.cGi?.set(i, e) : this.cGi?.delete(i),
+    t ? this.cNi?.set(i, e) : this.cNi?.delete(i),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnlineDisableStateChange,
       );
   }
   IsOnlineDisabled() {
-    return !!this.cGi && 0 < this.cGi.size;
+    return !!this.cNi && 0 < this.cNi.size;
   }
   GetOnlineDisabledSource() {
-    return this.cGi;
+    return this.cNi;
   }
   ClearWorldTeamPlayerFightInfo() {
     this.WorldTeamPlayerFightInfo.length = 0;
@@ -296,13 +306,13 @@ class OnlineModel extends ModelBase_1.ModelBase {
   }
   RefreshWorldTeamRoleInfo(e) {
     for (const r of e) {
-      var t = this.GetWorldTeamPlayerFightInfo(r.aFn);
+      var t = this.GetWorldTeamPlayerFightInfo(r.q5n);
       if (t)
-        for (const n of r.J4n)
-          if (-1 === n.$4n) {
+        for (const s of r.xVn)
+          if (-1 === s.AVn) {
             var i = new Array();
-            for (const s of n.FLs)
-              i.push(new OnlineHallData_1.WorldTeamRoleInfo(s.l3n, s.r3n));
+            for (const n of s.sUs)
+              i.push(new OnlineHallData_1.WorldTeamRoleInfo(n.O6n, n.P6n));
             t.RoleInfos = i;
           }
     }
@@ -314,38 +324,38 @@ class OnlineModel extends ModelBase_1.ModelBase {
       for (const i of t.RoleInfos) i.RoleIndex = e++;
   }
   ResetContinuingChallengeConfirmState() {
-    this.mGi.clear();
+    this.mNi.clear();
     for (const t of ModelManager_1.ModelManager.CreatureModel.GetAllScenePlayers()) {
       var e = t.GetPlayerId();
-      this.mGi.set(e, 2);
+      this.mNi.set(e, 2);
     }
   }
   SetContinuingChallengeConfirmState(e, t) {
-    this.mGi.set(e, t);
+    this.mNi.set(e, t);
   }
   GetContinuingChallengeConfirmState(e) {
-    return this.mGi.get(e);
+    return this.mNi.get(e);
   }
   SetChallengeApplyPlayerId(e) {
-    this.dGi = e;
+    this.dNi = e;
   }
   RefreshInitiateTime() {
-    this.CGi = TimeUtil_1.TimeUtil.GetServerTime() + this.ApplyCd;
+    this.CNi = TimeUtil_1.TimeUtil.GetServerTime() + this.ApplyCd;
   }
   SetAllowInitiate(e) {
-    this.gGi = e;
+    this.gNi = e;
   }
   SetPlayerTeleportState(e, t) {
-    this.fGi.set(e, t);
+    this.fNi.set(e, t);
   }
   GetPlayerTeleportState(e) {
-    return this.fGi.get(e);
+    return this.fNi.get(e);
   }
   DeletePlayerTeleportState(e) {
-    this.fGi.delete(e);
+    this.fNi.delete(e);
   }
   ClearPlayerTeleportState() {
-    this.fGi.clear();
+    this.fNi.clear();
   }
   SetRoleActivated(e, t) {
     e = ModelManager_1.ModelManager.SceneTeamModel.GetTeamItem(e, {

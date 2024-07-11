@@ -1,16 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.StrengthUnit = void 0);
-const puerts_1 = require("puerts"),
-  UE = require("ue"),
+const UE = require("ue"),
   Stats_1 = require("../../../../Core/Common/Stats"),
   CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById"),
   TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+  Vector2D_1 = require("../../../../Core/Utils/Math/Vector2D"),
   MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
-  Global_1 = require("../../../Global"),
-  UiLayer_1 = require("../../../Ui/UiLayer"),
   LguiUtil_1 = require("../../Util/LguiUtil"),
   HudUnitBase_1 = require("../HudUnitBase"),
+  HudUnitUtils_1 = require("../Utils/HudUnitUtils"),
   PRELOAD_SINGLE_STRENGTH_ITEM_COUNT = 5,
   PRELOAD_SINGLE_TEMPORARY_STRENGTH_ITEM_COUNT = 1,
   MAX_DELTA_TIME = 200,
@@ -22,34 +21,32 @@ const puerts_1 = require("puerts"),
 class StrengthUnit extends HudUnitBase_1.HudUnitBase {
   constructor() {
     super(...arguments),
-      (this.mti = !0),
+      (this.Uua = new Vector2D_1.Vector2D()),
+      (this.mii = !0),
       (this.BuffType = 0),
-      (this.dti = []),
-      (this.Cti = []),
-      (this.gti = new UE.Rotator(0, 0, 0)),
+      (this.dii = []),
+      (this.Cii = []),
+      (this.gii = new UE.Rotator(0, 0, 0)),
       (this.EntityHandle = void 0),
       (this.ActorComponent = void 0),
-      (this.gXe = void 0),
-      (this.fti = (0, puerts_1.$ref)(void 0)),
-      (this.pti = void 0),
-      (this.vti = 0),
-      (this.Mti = 0),
+      (this.vii = 0),
+      (this.Mii = 0),
       (this.Xte = void 0),
-      (this.Sti = 0),
-      (this.Eti = 1),
-      (this.yti = 0),
-      (this.Iti = 0),
-      (this.Tti = 0),
-      (this.Lti = 0),
-      (this.Dti = !1),
+      (this.Eii = 0),
+      (this.Sii = 1),
+      (this.yii = 0),
+      (this.Iii = 0),
+      (this.Tii = 0),
+      (this.Lii = 0),
+      (this.Dii = !1),
       (this.IsStarted = !1),
-      (this.Rti = 0),
-      (this.Uti = 0),
-      (this.Ati = 0),
-      (this.Pti = 0),
-      (this.xti = void 0),
-      (this.wti = void 0),
-      (this.Bti = void 0);
+      (this.Rii = 0),
+      (this.Uii = 0),
+      (this.Aii = 0),
+      (this.Pii = 0),
+      (this.xii = void 0),
+      (this.wii = void 0),
+      (this.Bii = void 0);
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -77,42 +74,40 @@ class StrengthUnit extends HudUnitBase_1.HudUnitBase {
     ];
   }
   OnStart() {
+    this.RootItem.SetAnchorAlign(2, 2);
     for (let t = 0; t < PRELOAD_SINGLE_STRENGTH_ITEM_COUNT; t++)
-      this.bti(0 === t);
+      this.bii(0 === t);
     for (let t = 0; t < PRELOAD_SINGLE_TEMPORARY_STRENGTH_ITEM_COUNT; t++)
-      this.qti(0 === t);
-    (this.gXe = Global_1.Global.CharacterController),
-      (this.pti = UiLayer_1.UiLayer.UiRootItem),
-      (this.Sti = CommonParamById_1.configCommonParamById.GetIntConfig(
-        "SingleStrengthValue",
-      )),
-      (this.Eti = CommonParamById_1.configCommonParamById.GetIntConfig(
+      this.qii(0 === t);
+    (this.Eii = CommonParamById_1.configCommonParamById.GetIntConfig(
+      "SingleStrengthValue",
+    )),
+      (this.Sii = CommonParamById_1.configCommonParamById.GetIntConfig(
         "MaxSingleStrengthItemCount",
       )),
-      (this.yti = CommonParamById_1.configCommonParamById.GetIntConfig(
+      (this.yii = CommonParamById_1.configCommonParamById.GetIntConfig(
         "SingleTemporaryStrengthValue",
       )),
-      (this.Tti = 0),
-      (this.Lti = 0),
+      (this.Tii = 0),
+      (this.Lii = 0),
       this.SetVisible(!1),
-      this.Brt();
+      this.Qnt();
   }
   OnBeforeDestroy() {
     (this.EntityHandle = void 0),
       (this.ActorComponent = void 0),
       (this.Xte = void 0),
-      (this.gXe = void 0),
-      (this.Dti = !1),
+      (this.Dii = !1),
       (this.IsStarted = !1),
-      this.Gti(),
-      this.Nti(),
-      this.Oti(),
+      this.Gii(),
+      this.Nii(),
+      this.Oii(),
       super.OnBeforeDestroy();
   }
   SetNormal(t) {
     var i, s;
-    this.mti !== t &&
-      ((this.mti = t),
+    this.mii !== t &&
+      ((this.mii = t),
       (i = this.GetItem(0)),
       (s = this.GetItem(1)),
       i.IsUIActiveSelf() === t && i.SetUIActive(!t),
@@ -148,34 +143,34 @@ class StrengthUnit extends HudUnitBase_1.HudUnitBase {
     i.IsUIActiveSelf() !== t && i.SetUIActive(t);
   }
   SetStrengthPercent(t, i) {
-    this.vti !== t &&
-      ((this.vti = t),
+    this.vii !== t &&
+      ((this.vii = t),
       this.GetSprite(8).SetFillAmount(t / i),
       this.GetSprite(7).SetFillAmount(t / i),
-      this.kti(i));
+      this.kii(i));
   }
   RefreshSingleStrengthItemRotation(t) {
-    let s = Math.floor(t / this.Sti);
-    var h = 360 / (s = s > this.Eti ? this.Eti : s);
+    let s = Math.floor(t / this.Eii);
+    var h = 360 / (s = s > this.Sii ? this.Sii : s);
     let e = 0;
     for (let i = 0; i < s; i++) {
-      let t = this.Fti(i);
-      (t = t || this.bti()),
-        (this.gti.Yaw = e),
-        t.SetUIRelativeRotation(this.gti),
+      let t = this.Fii(i);
+      (t = t || this.bii()),
+        (this.gii.Yaw = e),
+        t.SetUIRelativeRotation(this.gii),
         (e += h);
     }
   }
-  kti(t) {
-    let i = Math.floor(t / this.Sti);
-    i > this.Eti && (i = this.Eti);
-    for (let t = 0; t < this.dti.length; t++) {
-      var s = this.dti[t],
+  kii(t) {
+    let i = Math.floor(t / this.Eii);
+    i > this.Sii && (i = this.Sii);
+    for (let t = 0; t < this.dii.length; t++) {
+      var s = this.dii[t],
         h = t < i;
       s.IsUIActiveSelf() !== h && s.SetUIActive(h);
     }
   }
-  bti(t = !1) {
+  bii(t = !1) {
     var i = this.GetItem(11),
       s = this.GetItem(10);
     let h = void 0;
@@ -186,12 +181,12 @@ class StrengthUnit extends HudUnitBase_1.HudUnitBase {
             s.GetOwner(),
             i,
           ).GetComponentByClass(UE.UIItem.StaticClass())),
-      this.dti.push(h),
+      this.dii.push(h),
       h
     );
   }
-  Fti(t) {
-    return this.dti[t];
+  Fii(t) {
+    return this.dii[t];
   }
   RefreshBuffState() {
     this.Xte.HasTag(334800376)
@@ -207,39 +202,39 @@ class StrengthUnit extends HudUnitBase_1.HudUnitBase {
     i.IsUIActiveSelf() !== t && i.SetUIActive(t);
   }
   PlayTemporaryAnim(t) {
-    this.Dti !== t &&
-      ((this.Dti = t)
+    this.Dii !== t &&
+      ((this.Dii = t)
         ? (this.StopTemporaryCloseAnim(), this.PlayTemporaryStartAnim())
         : (this.StopTemporaryStartAnim(), this.PlayTemporaryCloseAnim()));
   }
   SetTemporaryStrengthPercent(t, i) {
-    this.Mti !== t &&
-      ((this.Lti = t / i),
-      (this.Mti = t),
+    this.Mii !== t &&
+      ((this.Lii = t / i),
+      (this.Mii = t),
       this.RefreshSingleTemporaryStrengthItemVisible(i));
   }
   RefreshSingleTemporaryStrengthItemRotation(t) {
-    let s = Math.floor(t / this.yti);
-    var h = 360 / (s = s > this.Eti ? this.Eti : s);
+    let s = Math.floor(t / this.yii);
+    var h = 360 / (s = s > this.Sii ? this.Sii : s);
     let e = 0;
     for (let i = 0; i < s; i++) {
-      let t = this.Vti(i);
-      (t = t || this.qti()),
-        (this.gti.Yaw = e),
-        t.SetUIRelativeRotation(this.gti),
+      let t = this.Vii(i);
+      (t = t || this.qii()),
+        (this.gii.Yaw = e),
+        t.SetUIRelativeRotation(this.gii),
         (e += h);
     }
   }
   RefreshSingleTemporaryStrengthItemVisible(t) {
-    let i = Math.floor(t / this.yti);
-    i > this.Eti && (i = this.Eti);
-    for (let t = 0; t < this.Cti.length; t++) {
-      var s = this.Cti[t],
+    let i = Math.floor(t / this.yii);
+    i > this.Sii && (i = this.Sii);
+    for (let t = 0; t < this.Cii.length; t++) {
+      var s = this.Cii[t],
         h = t < i;
       s.IsUIActiveSelf() !== h && s.SetUIActive(h);
     }
   }
-  qti(t = !1) {
+  qii(t = !1) {
     var i = this.GetItem(13),
       s = this.GetItem(12);
     let h = void 0;
@@ -250,27 +245,27 @@ class StrengthUnit extends HudUnitBase_1.HudUnitBase {
             s.GetOwner(),
             i,
           ).GetComponentByClass(UE.UIItem.StaticClass())),
-      this.Cti.push(h),
+      this.Cii.push(h),
       h
     );
   }
-  Hti(t) {
+  Hii(t) {
     var i;
     this.GetActive() &&
-      this.Tti !== this.Lti &&
+      this.Tii !== this.Lii &&
       ((i = this.GetSprite(9)),
-      (this.Iti += t),
-      (this.Tti = MathUtils_1.MathUtils.Lerp(
-        this.Tti,
-        this.Lti,
-        this.Iti / TEMPORARY_STRENGTH_LERP_TIME,
+      (this.Iii += t),
+      (this.Tii = MathUtils_1.MathUtils.Lerp(
+        this.Tii,
+        this.Lii,
+        this.Iii / TEMPORARY_STRENGTH_LERP_TIME,
       )),
-      i.SetFillAmount(this.Tti),
-      this.Iti >= TEMPORARY_STRENGTH_LERP_TIME) &&
-      (this.Iti = 0);
+      i.SetFillAmount(this.Tii),
+      this.Iii >= TEMPORARY_STRENGTH_LERP_TIME) &&
+      (this.Iii = 0);
   }
-  Vti(t) {
-    return this.Cti[t];
+  Vii(t) {
+    return this.Cii[t];
   }
   RefreshEntity(t) {
     t
@@ -282,33 +277,33 @@ class StrengthUnit extends HudUnitBase_1.HudUnitBase {
         (this.Xte = void 0));
   }
   Tick(t) {
-    this.RefreshTargetPosition(t), this.Hti(t);
+    this.RefreshTargetPosition(t), this.Hii(t);
   }
   RefreshTargetPosition(t) {
     var i, s;
     this.GetActive() &&
       this.ActorComponent &&
       this.ActorComponent.Actor?.IsValid() &&
-      ((s = this.ActorComponent.ActorLocation),
-      UE.GameplayStatics.ProjectWorldToScreen(this.gXe, s, this.fti, !0),
-      (s = (0, puerts_1.$unref)(this.fti)),
-      (i = (s = this.pti
-        .GetCanvasScaler()
-        .ConvertPositionFromViewportToLGUICanvas(s)).X),
-      (s = s.Y),
-      (this.Ati = this.jti(t, i, this.Rti, this.Ati)),
-      (this.Pti = this.jti(t, s, this.Uti, this.Pti)),
-      (i = this.Ati * t),
-      (s = this.Pti * t),
+      ((i = this.ActorComponent.ActorLocation),
+      HudUnitUtils_1.HudUnitUtils.PositionUtil.ProjectWorldToScreen(
+        i,
+        this.Uua,
+      )) &&
+      ((i = this.Uua.X),
+      (s = this.Uua.Y),
+      (this.Aii = this.jii(t, i, this.Rii, this.Aii)),
+      (this.Pii = this.jii(t, s, this.Uii, this.Pii)),
+      (i = this.Aii * t),
+      (s = this.Pii * t),
       (i < MIN_DELTA_OFFSET &&
         i > -MIN_DELTA_OFFSET &&
         s < MIN_DELTA_OFFSET &&
         s > -MIN_DELTA_OFFSET) ||
-        ((this.Rti += i),
-        (this.Uti += s),
-        this.SetAnchorOffset(this.Rti, this.Uti)));
+        ((this.Rii += i),
+        (this.Uii += s),
+        this.SetAnchorOffset(this.Rii, this.Uii)));
   }
-  jti(t, i, s, h) {
+  jii(t, i, s, h) {
     let e = i - s,
       r = !1;
     if ((e < 0 && ((e = -e), (r = !0)), e < 1)) return 0;
@@ -319,7 +314,7 @@ class StrengthUnit extends HudUnitBase_1.HudUnitBase {
       MathUtils_1.MathUtils.Lerp(h, _, 0.5)
     );
   }
-  Brt() {
+  Qnt() {
     this.InitTweenAnim(14),
       this.InitTweenAnim(15),
       this.InitTweenAnim(16),
@@ -330,29 +325,29 @@ class StrengthUnit extends HudUnitBase_1.HudUnitBase {
   }
   PlayFullAnim() {
     this.PlayTweenAnim(16),
-      this.Nti(),
-      (this.wti = TimerSystem_1.TimerSystem.Delay(
+      this.Nii(),
+      (this.wii = TimerSystem_1.TimerSystem.Delay(
         () => {
-          (this.wti = void 0),
+          (this.wii = void 0),
             this.PlayCloseAnim(),
             this.GetItem(3).IsUIActiveSelf() && this.PlayTemporaryCloseAnim();
         },
         FULL_ANIM_TIME,
-        StrengthUnit.Wti,
+        StrengthUnit.Wii,
       )),
-      (this.Dti = !1),
+      (this.Dii = !1),
       (this.IsStarted = !1);
   }
-  Kti() {
-    this.Nti(), this.StopTweenAnim(16);
+  Kii() {
+    this.Nii(), this.StopTweenAnim(16);
   }
-  Nti() {
-    this.wti &&
-      (TimerSystem_1.TimerSystem.Remove(this.wti), (this.wti = void 0));
+  Nii() {
+    this.wii &&
+      (TimerSystem_1.TimerSystem.Remove(this.wii), (this.wii = void 0));
   }
   PlayStartAnim() {
     this.IsStarted ||
-      (this.Kti(), this.Qti(), this.PlayTweenAnim(14), (this.IsStarted = !0));
+      (this.Kii(), this.Qii(), this.PlayTweenAnim(14), (this.IsStarted = !0));
   }
   PlayNoneAnim() {
     this.PlayTweenAnim(17);
@@ -362,22 +357,22 @@ class StrengthUnit extends HudUnitBase_1.HudUnitBase {
   }
   PlayCloseAnim() {
     this.PlayTweenAnim(15),
-      this.Gti(),
-      (this.xti = TimerSystem_1.TimerSystem.Delay(
+      this.Gii(),
+      (this.xii = TimerSystem_1.TimerSystem.Delay(
         () => {
-          (this.xti = void 0), this.SetVisible(!1);
+          (this.xii = void 0), this.SetVisible(!1);
         },
         CLOSE_ANIM_TIME,
-        StrengthUnit.Xti,
+        StrengthUnit.Xii,
       )),
       (this.IsStarted = !1);
   }
-  Qti() {
-    this.Gti(), this.StopTweenAnim(15);
+  Qii() {
+    this.Gii(), this.StopTweenAnim(15);
   }
-  Gti() {
-    this.xti &&
-      (TimerSystem_1.TimerSystem.Remove(this.xti), (this.xti = void 0));
+  Gii() {
+    this.xii &&
+      (TimerSystem_1.TimerSystem.Remove(this.xii), (this.xii = void 0));
   }
   PlayTemporaryStartAnim() {
     this.PlayTweenAnim(19);
@@ -387,27 +382,27 @@ class StrengthUnit extends HudUnitBase_1.HudUnitBase {
   }
   PlayTemporaryCloseAnim() {
     this.PlayTweenAnim(20),
-      this.Oti(),
-      (this.Bti = TimerSystem_1.TimerSystem.Delay(
+      this.Oii(),
+      (this.Bii = TimerSystem_1.TimerSystem.Delay(
         () => {
-          (this.Bti = void 0), this.SetTemporaryVisible(!1), (this.Dti = !1);
+          (this.Bii = void 0), this.SetTemporaryVisible(!1), (this.Dii = !1);
         },
         TEMP_CLOSE_ANIM_TIME,
-        StrengthUnit.$ti,
+        StrengthUnit.$ii,
       ));
   }
   StopTemporaryCloseAnim() {
-    this.Oti(), this.StopTweenAnim(20);
+    this.Oii(), this.StopTweenAnim(20);
   }
-  Oti() {
-    this.Bti &&
-      (TimerSystem_1.TimerSystem.Remove(this.Bti), (this.Bti = void 0));
+  Oii() {
+    this.Bii &&
+      (TimerSystem_1.TimerSystem.Remove(this.Bii), (this.Bii = void 0));
   }
   PlayPickUpAnim() {
     this.PlayTweenAnim(18);
   }
 }
-((exports.StrengthUnit = StrengthUnit).Xti = void 0),
-  (StrengthUnit.Wti = void 0),
-  (StrengthUnit.$ti = void 0);
+((exports.StrengthUnit = StrengthUnit).Xii = void 0),
+  (StrengthUnit.Wii = void 0),
+  (StrengthUnit.$ii = void 0);
 //# sourceMappingURL=StrengthUnit.js.map

@@ -27,10 +27,10 @@ class GachaShareOnePanel extends UiPanelBase_1.UiPanelBase {
     (this.$be = new SimpleGenericLayout_1.SimpleGenericLayout(
       this.GetHorizontalLayout(1),
     )),
-      this.PWt();
+      this.PKt();
   }
-  PWt() {
-    var e = this.OpenParam.u5n.G3n,
+  PKt() {
+    var e = this.OpenParam.WVn.f8n,
       i = GaChaShareById_1.configGaChaShareById.GetConfig(e),
       i =
         (this.SetTextureByPath(i.SharePic, this.GetTexture(0)),

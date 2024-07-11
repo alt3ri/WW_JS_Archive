@@ -18,7 +18,7 @@ class ActivityDoubleRewardController extends ActivityControllerBase_1.ActivityCo
   }
   OnCreateActivityData(e) {
     return (
-      ActivityDoubleRewardController.UniversalActivityIdSet.add(e.Ekn),
+      ActivityDoubleRewardController.UniversalActivityIdSet.add(e.J4n),
       new ActivityDoubleRewardData_1.ActivityDoubleRewardData()
     );
   }

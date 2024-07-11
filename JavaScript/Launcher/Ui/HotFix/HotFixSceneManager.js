@@ -12,19 +12,19 @@ const puerts_1 = require("puerts"),
   SEQUNCE_CAMERA_NAME = new UE.FName("SequenceCamera");
 class HotFixSceneManager {
   constructor() {
-    (this.PSr = void 0), (this.yEr = void 0);
+    (this.RSr = void 0), (this.Myr = void 0);
   }
   SetupScene(e) {
-    this.PSr = e;
+    this.RSr = e;
     var a = UE.KismetMathLibrary.Now(),
       a = UE.KismetMathLibrary.GetHour(a);
-    UE.KuroRenderingRuntimeBPPluginBPLibrary.SetGlobalGITime(this.PSr, a),
+    UE.KuroRenderingRuntimeBPPluginBPLibrary.SetGlobalGITime(this.RSr, a),
       HotFixSceneManager.SpawnCamera(e),
       HotFixSceneManager.SetViewTarget(e),
-      this.IEr();
+      this.PlayHotPatchBgm();
   }
   Destroy() {
-    this.DWt();
+    this.DKt();
   }
   static SpawnCamera(e) {
     e = UE.KuroRenderingRuntimeBPPluginBPLibrary.SpawnActorFromClass(
@@ -52,7 +52,7 @@ class HotFixSceneManager {
     t?.IsValid()
       ? ((a = (0, puerts_1.$ref)(void 0)),
         UE.LevelSequencePlayer.CreateLevelSequencePlayer(
-          this.PSr,
+          this.RSr,
           t,
           new UE.MovieSceneSequencePlaybackSettings(),
           a,
@@ -77,42 +77,42 @@ class HotFixSceneManager {
     a?.IsValid()
       ? ((e = (0, puerts_1.$ref)(void 0)),
         UE.LevelSequencePlayer.CreateLevelSequencePlayer(
-          this.PSr,
+          this.RSr,
           a,
           new UE.MovieSceneSequencePlaybackSettings(),
           e,
         ),
-        (this.yEr = (0, puerts_1.$unref)(e)),
-        this.yEr.ResetBindings(),
-        this.yEr.AddBindingByTag(SEQUNCE_CAMERA_NAME, HotFixSceneManager.Hh),
-        this.yEr.SequencePlayer.PlayLooping(),
+        (this.Myr = (0, puerts_1.$unref)(e)),
+        this.Myr.ResetBindings(),
+        this.Myr.AddBindingByTag(SEQUNCE_CAMERA_NAME, HotFixSceneManager.Hh),
+        this.Myr.SequencePlayer.PlayLooping(),
         LauncherLog_1.LauncherLog.Info("热更场景循环Sequence播放"))
       : LauncherLog_1.LauncherLog.Error("热更场景循环Sequence加载失败", [
           "path",
           HOTPATCH_START_SEQUENCE,
         ]);
   }
-  DWt() {
+  DKt() {
     LauncherLog_1.LauncherLog.Info("热更场景结束");
   }
   static StopHotPatchBgm() {
-    HotFixSceneManager.Yje &&
+    HotFixSceneManager.hKe &&
       (UE.AkGameplayStatics.ExecuteActionOnEvent(
-        HotFixSceneManager.Yje,
+        HotFixSceneManager.hKe,
         0,
         void 0,
       ),
-      (HotFixSceneManager.Yje = void 0)),
-      HotFixSceneManager.TEr && (HotFixSceneManager.TEr = void 0),
+      (HotFixSceneManager.hKe = void 0)),
+      HotFixSceneManager.Syr && (HotFixSceneManager.Syr = void 0),
       LauncherLog_1.LauncherLog.Info("背景音乐销毁", ["path", HOTPATCH_BGM]);
   }
-  IEr() {
+  PlayHotPatchBgm() {
     LauncherResourceLib_1.LauncherResourceLib.LoadAsync(
       HOTPATCH_BGM,
       UE.AkAudioEvent,
       (e) => {
-        (HotFixSceneManager.Yje = e)?.IsValid()
-          ? ((HotFixSceneManager.TEr = UE.AkGameplayStatics.PostEvent(
+        (HotFixSceneManager.hKe = e)?.IsValid()
+          ? ((HotFixSceneManager.Syr = UE.AkGameplayStatics.PostEvent(
               e,
               void 0,
               0,
@@ -130,6 +130,6 @@ class HotFixSceneManager {
     );
   }
 }
-((exports.HotFixSceneManager = HotFixSceneManager).TEr = void 0),
-  (HotFixSceneManager.Yje = void 0);
+((exports.HotFixSceneManager = HotFixSceneManager).Syr = void 0),
+  (HotFixSceneManager.hKe = void 0);
 //# sourceMappingURL=HotFixSceneManager.js.map

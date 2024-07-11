@@ -36,23 +36,23 @@ const UE = require("ue"),
 class MediumItemGrid extends ItemGridBase_1.ItemGridBase {
   constructor() {
     super(...arguments),
-      (this.ext = 0),
-      (this.txt = 0),
-      (this.ixt = void 0),
-      (this.oxt = void 0),
-      (this.rxt = void 0),
-      (this.nxt = (e) => {
-        this.rxt && this.rxt(e, this, this.Data);
+      (this.rwt = 0),
+      (this.nwt = 0),
+      (this.swt = void 0),
+      (this.awt = void 0),
+      (this.hwt = void 0),
+      (this.lwt = (e) => {
+        this.hwt && this.hwt(e, this, this.Data);
       }),
       (this.OnClickedReduceButton = () => {
         var e;
-        this.ixt &&
-          ((e = { MediumItemGrid: this, Data: this.Data }), this.ixt(e));
+        this.swt &&
+          ((e = { MediumItemGrid: this, Data: this.Data }), this.swt(e));
       }),
       (this.OnClickedEmptySlotButton = () => {
         var e;
-        this.oxt &&
-          ((e = { MediumItemGrid: this, Data: this.Data }), this.oxt(e));
+        this.awt &&
+          ((e = { MediumItemGrid: this, Data: this.Data }), this.awt(e));
       });
   }
   OnRegisterComponent() {
@@ -80,24 +80,24 @@ class MediumItemGrid extends ItemGridBase_1.ItemGridBase {
   Apply(e) {
     this.ClearVisibleComponent(),
       this.ClearComponentList(),
-      1 === e.Type && this.sxt(e),
-      4 === e.Type && this.axt(e),
-      3 === e.Type && this.hxt(e),
-      2 === e.Type && this.lxt(e),
+      1 === e.Type && this._wt(e),
+      4 === e.Type && this.uwt(e),
+      3 === e.Type && this.cwt(e),
+      2 === e.Type && this.mwt(e),
       this.RefreshComponentVisible(),
       this.RefreshComponentHierarchyIndex();
   }
-  sxt(e) {
+  _wt(e) {
     (this.Data = e.Data),
       this.SetEmptySlotVisible(!0),
-      this.IIt(void 0),
-      this._xt(void 0),
-      this.uxt(!1),
-      this.cxt(!1),
+      this.UTt(void 0),
+      this.dwt(void 0),
+      this.Cwt(!1),
+      this.gwt(!1),
       this.SetExtendToggleEnable(!0),
       this.ApplyEmptyDisplay(e);
   }
-  axt(e) {
+  uwt(e) {
     var i = e.StarLevel,
       t = e.IsNewVisible,
       o = e.BuffIconType,
@@ -142,7 +142,7 @@ class MediumItemGrid extends ItemGridBase_1.ItemGridBase {
       this.SetVisionRoleHead(S),
       this.ApplyPropBaseDisplay(e);
   }
-  hxt(e) {
+  cwt(e) {
     var i = e.StarLevel,
       t = e.IsMainVisionVisible,
       o = e.RoleHeadInfo,
@@ -167,7 +167,7 @@ class MediumItemGrid extends ItemGridBase_1.ItemGridBase {
       this.SetVisionRoleHead(I),
       this.ApplyPhantomBaseDisplay(e);
   }
-  lxt(e) {
+  mwt(e) {
     this.SetElement(e.ElementId),
       this.SetSortIndex(e.Index, e.HighlightIndex),
       this.SetTeamIcon(e.IsInTeam),
@@ -176,7 +176,7 @@ class MediumItemGrid extends ItemGridBase_1.ItemGridBase {
       this.SetTrialRoleVisible(e.IsTrialRoleVisible),
       this.SetLevelAndLock(e.Level, e.IsShowLock, e.IsLevelTextUseChangeColor),
       this.SetNewVisible(e.IsNewVisible),
-      this.mxt(e.IsShowCost, e.ItemConfigId),
+      this.fwt(e.IsShowCost, e.ItemConfigId),
       this.ApplyCharacterBaseDisplay(e);
   }
   SetBuffSprite(e) {
@@ -281,7 +281,7 @@ class MediumItemGrid extends ItemGridBase_1.ItemGridBase {
     e &&
       (i
         ? (e.BindReduceButtonCallback(this.OnClickedReduceButton),
-          e.BindLongPressCallback(this.nxt))
+          e.BindLongPressCallback(this.lwt))
         : (e.UnBindReduceButtonCallback(), e.UnBindLongPressCallback()));
   }
   SetSortIndex(e, i = !1) {
@@ -305,10 +305,10 @@ class MediumItemGrid extends ItemGridBase_1.ItemGridBase {
     );
   }
   BindReduceLongPress(e) {
-    this.rxt = e;
+    this.hwt = e;
   }
   UnBindReduceLongPress() {
-    this.rxt = void 0;
+    this.hwt = void 0;
   }
   SetCheckTickVisible(e) {
     var i = { IsCheckTick: e };
@@ -351,7 +351,7 @@ class MediumItemGrid extends ItemGridBase_1.ItemGridBase {
         ? i.BindEmptySlotButtonCallback(this.OnClickedEmptySlotButton)
         : i.UnBindEmptySlotButtonCallback());
   }
-  uxt(e) {
+  Cwt(e) {
     this.GetSprite(3).SetUIActive(e);
   }
   SetElement(e) {
@@ -409,7 +409,7 @@ class MediumItemGrid extends ItemGridBase_1.ItemGridBase {
       o =
         !StringUtils_1.StringUtils.IsEmpty(i) ||
         !StringUtils_1.StringUtils.IsEmpty(t);
-    this.cxt(o), o && (this.SetBottomTextId(i, e), this.SetBottomText(t));
+    this.gwt(o), o && (this.SetBottomTextId(i, e), this.SetBottomText(t));
   }
   ApplyPropBaseDisplay(e) {
     var i = e.ItemConfigId,
@@ -423,7 +423,7 @@ class MediumItemGrid extends ItemGridBase_1.ItemGridBase {
           ? ((d = this.GetTexture(1)),
             this.SetTextureByPath(e.IconPath, d),
             d?.SetUIActive(!0))
-          : this.IIt(i),
+          : this.UTt(i),
         this.SetIconSprite(n),
         e.QualityId
           ? this.SetQualityIconById(
@@ -432,13 +432,13 @@ class MediumItemGrid extends ItemGridBase_1.ItemGridBase {
               void 0,
               e.QualityType,
             )
-          : this._xt(i),
+          : this.dwt(i),
         !StringUtils_1.StringUtils.IsEmpty(t) ||
           !StringUtils_1.StringUtils.IsEmpty(o));
-    this.cxt(d),
+    this.gwt(d),
       d && (this.SetBottomTextId(t, m), this.SetBottomText(o)),
       this.SetExtendToggleEnable(!0),
-      this.uxt(!0);
+      this.Cwt(!0);
   }
   ApplyPhantomBaseDisplay(e) {
     var i = e.ItemConfigId,
@@ -449,9 +449,9 @@ class MediumItemGrid extends ItemGridBase_1.ItemGridBase {
       d = e.QualityIconResourceId,
       n =
         ((this.Data = e.Data),
-        n ? this.dxt(n) : this.IIt(i),
+        n ? this.pwt(n) : this.UTt(i),
         void 0 !== d
-          ? this.Cxt(d)
+          ? this.vwt(d)
           : e.QualityId
             ? this.SetQualityIconById(
                 this.GetSprite(0),
@@ -459,13 +459,13 @@ class MediumItemGrid extends ItemGridBase_1.ItemGridBase {
                 void 0,
                 e.QualityType,
               )
-            : this._xt(i),
+            : this.dwt(i),
         !StringUtils_1.StringUtils.IsEmpty(t) ||
           !StringUtils_1.StringUtils.IsEmpty(o));
-    this.cxt(n),
+    this.gwt(n),
       n && (this.SetBottomTextId(t, m), this.SetBottomText(o)),
       this.SetExtendToggleEnable(!0),
-      this.uxt(!0);
+      this.Cwt(!0);
   }
   ApplyCharacterBaseDisplay(e) {
     let i = e.ItemConfigId;
@@ -481,23 +481,23 @@ class MediumItemGrid extends ItemGridBase_1.ItemGridBase {
       n = n.RoleHeadIconLarge,
       n =
         (this.SetRoleIcon(n, e, i),
-        this._xt(i),
+        this.dwt(i),
         e?.SetUIActive(!0),
         !StringUtils_1.StringUtils.IsEmpty(t) ||
           !StringUtils_1.StringUtils.IsEmpty(o));
-    this.cxt(n),
+    this.gwt(n),
       n && (this.SetBottomTextId(t, m), this.SetBottomText(o)),
       this.SetExtendToggleEnable(!0),
-      this.uxt(!0);
+      this.Cwt(!0);
   }
-  IIt(e) {
+  UTt(e) {
     var i = this.GetTexture(1);
     void 0 === e
       ? i.SetUIActive(!1)
-      : (this.ext !== e && ((this.ext = e), this.SetItemIcon(i, e)),
+      : (this.rwt !== e && ((this.rwt = e), this.SetItemIcon(i, e)),
         i.SetUIActive(!0));
   }
-  dxt(e) {
+  pwt(e) {
     var i = this.GetTexture(1);
     void 0 === e
       ? i.SetUIActive(!1)
@@ -506,12 +506,12 @@ class MediumItemGrid extends ItemGridBase_1.ItemGridBase {
         this.SetTextureByPath(e, i),
         i.SetUIActive(!0));
   }
-  _xt(e) {
+  dwt(e) {
     var i = this.GetSprite(0);
     void 0 === e
       ? i.SetUIActive(!1)
-      : (this.txt !== e &&
-          ((this.txt = e),
+      : (this.nwt !== e &&
+          ((this.nwt = e),
           this.SetItemQualityIcon(
             i,
             e,
@@ -520,7 +520,7 @@ class MediumItemGrid extends ItemGridBase_1.ItemGridBase {
           )),
         i.SetUIActive(!0));
   }
-  Cxt(e) {
+  vwt(e) {
     var i = this.GetSprite(0);
     void 0 === e ||
     ((e = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(e)),
@@ -528,7 +528,7 @@ class MediumItemGrid extends ItemGridBase_1.ItemGridBase {
       ? i.SetUIActive(!1)
       : (this.SetSpriteByPath(e, i, !0), i.SetUIActive(!0));
   }
-  cxt(e) {
+  gwt(e) {
     var i = this.GetText(2);
     i.IsUIActiveSelf() !== e && i.SetUIActive(e);
   }
@@ -544,21 +544,21 @@ class MediumItemGrid extends ItemGridBase_1.ItemGridBase {
     StringUtils_1.StringUtils.IsEmpty(e) || i.SetText(e);
   }
   BindReduceButtonCallback(e, i) {
-    this.ixt = e;
+    this.swt = e;
   }
   UnBindReduceButtonCallback() {
-    this.ixt = void 0;
+    this.swt = void 0;
   }
   BindEmptySlotButtonCallback(e) {
-    this.oxt = e;
+    this.awt = e;
   }
   UnBindEmptySlotButtonCallback() {
-    this.oxt = void 0;
+    this.awt = void 0;
   }
   GetItemGridExtendToggle() {
     return this.GetExtendToggle(6);
   }
-  mxt(e, i) {
+  fwt(e, i) {
     this.RefreshComponent(
       MediumItemGridCostComponent_1.MediumItemGridCostComponent,
       e,

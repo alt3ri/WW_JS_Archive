@@ -4,32 +4,32 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const CustomPromise_1 = require("../../../../Core/Common/CustomPromise");
 class NormalLoadingViewGlobalData {
   static CreateFirstProgressPromise() {
-    this.vpi = new CustomPromise_1.CustomPromise();
+    this.vvi = new CustomPromise_1.CustomPromise();
   }
   static FinishFirstProgressPromise() {
-    this.vpi.SetResult(void 0), (this.vpi = void 0);
+    this.vvi.SetResult(void 0), (this.vvi = void 0);
   }
   static get FirstProgressPromise() {
-    return this.vpi;
+    return this.vvi;
   }
   static get FinishPromise() {
-    return this.Mpi;
+    return this.Mvi;
   }
   static CreateFinishPromisePromise() {
-    this.Mpi = new CustomPromise_1.CustomPromise();
+    this.Mvi = new CustomPromise_1.CustomPromise();
   }
   static FinishEndPromise() {
-    this.Mpi.SetResult(void 0), (this.Mpi = void 0);
+    this.Mvi.SetResult(void 0), (this.Mvi = void 0);
   }
   static get IsNotifyCloseView() {
-    return this.Spi;
+    return this.Evi;
   }
   static ResetNotifyCloseView() {
-    this.Spi = !1;
+    this.Evi = !1;
   }
 }
-((exports.NormalLoadingViewGlobalData = NormalLoadingViewGlobalData).vpi =
+((exports.NormalLoadingViewGlobalData = NormalLoadingViewGlobalData).vvi =
   void 0),
-  (NormalLoadingViewGlobalData.Mpi = void 0),
-  (NormalLoadingViewGlobalData.Spi = !1);
+  (NormalLoadingViewGlobalData.Mvi = void 0),
+  (NormalLoadingViewGlobalData.Evi = !1);
 //# sourceMappingURL=NormalLoadingViewGlobalData.js.map

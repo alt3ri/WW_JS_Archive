@@ -7,8 +7,8 @@ const UE = require("ue"),
 class TowerDetailInformationMonsterSubItem extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
-      (this.TLo = 0),
-      (this.LLo = 0),
+      (this.SDo = 0),
+      (this.yDo = 0),
       this.CreateThenShowByActor(e.GetOwner());
   }
   OnRegisterComponent() {
@@ -21,17 +21,17 @@ class TowerDetailInformationMonsterSubItem extends UiPanelBase_1.UiPanelBase {
   }
   OnStart() {}
   Update(e, t) {
-    (this.TLo = e), (this.LLo = t), this.Og();
+    (this.SDo = e), (this.yDo = t), this.Og();
   }
   Og() {
     var e = ConfigManager_1.ConfigManager.MonsterInfoConfig.GetMonsterName(
-        this.TLo,
+        this.SDo,
       ),
-      e = (this.GetText(0).SetText(e), this.LLo.toString()),
+      e = (this.GetText(0).SetText(e), this.yDo.toString()),
       e =
         (this.GetText(1).SetText(e),
         ConfigManager_1.ConfigManager.MonsterInfoConfig.GetMonsterIcon(
-          this.TLo,
+          this.SDo,
         ));
     this.SetTextureByPath(e, this.GetTexture(2));
   }

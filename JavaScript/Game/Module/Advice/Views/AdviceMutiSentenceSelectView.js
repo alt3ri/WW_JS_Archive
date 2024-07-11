@@ -15,24 +15,24 @@ const UE = require("ue"),
 class AdviceMutiSentenceSelectView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.D7e = void 0),
-      (this.R7e = void 0),
-      (this.U7e = !1),
-      (this.A7e = 0),
-      (this.P7e = !1),
-      (this.x7e = 0),
-      (this.w7e = (e, t, i) => {
+      (this.OHe = void 0),
+      (this.kHe = void 0),
+      (this.FHe = !1),
+      (this.VHe = 0),
+      (this.HHe = !1),
+      (this.jHe = 0),
+      (this.WHe = (e, t, i) => {
         t = new AdviceSentenceSelectItem_1.AdviceSentenceSelectItem(t);
         return t.UpdateItem(e), { Key: i, Value: t };
       }),
-      (this.B7e = (e, t, i) => {
+      (this.KHe = (e, t, i) => {
         t =
           new AdviceSentenceSelectItemContent_1.AdviceSentenceSelectItemContent(
             t,
           );
         return t.UpdateItem(e), { Key: i, Value: t };
       }),
-      (this._Fe = () => {
+      (this.L3e = () => {
         ModelManager_1.ModelManager.AdviceModel.CurrentPreSentenceWordMap.forEach(
           (e, t) => {
             ModelManager_1.ModelManager.AdviceModel.CurrentSentenceWordMap.get(
@@ -54,55 +54,55 @@ class AdviceMutiSentenceSelectView extends UiViewBase_1.UiViewBase {
             EventDefine_1.EEventName.OnChangeAdviceWord,
           );
       }),
-      (this.J9e = () => {
+      (this.uHe = () => {
         this.CloseMe();
       }),
-      (this.b7e = () => {
+      (this.QHe = () => {
         var e = new Array();
         e.push(0),
           e.push(1),
-          this.D7e.RefreshByData(e),
-          this.q7e(),
-          (this.x7e = 0),
-          this.D7e.UnBindLateUpdate(),
-          (this.P7e = !0),
-          this.D7e.BindLateUpdate(this.G7e);
+          this.OHe.RefreshByData(e),
+          this.XHe(),
+          (this.jHe = 0),
+          this.OHe.UnBindLateUpdate(),
+          (this.HHe = !0),
+          this.OHe.BindLateUpdate(this.$He);
       }),
-      (this.G7e = (e) => {
+      (this.$He = (e) => {
         var t;
-        this.P7e &&
-          this.x7e >= WAITUPDATECOUNT &&
-          ((this.P7e = !1),
-          (t = this.N7e()),
+        this.HHe &&
+          this.jHe >= WAITUPDATECOUNT &&
+          ((this.HHe = !1),
+          (t = this.YHe()),
           this.GetScrollViewWithScrollbar(0).SetScrollProgress(t),
-          this.D7e.UnBindLateUpdate()),
-          this.x7e++;
+          this.OHe.UnBindLateUpdate()),
+          this.jHe++;
       }),
-      (this.q7e = () => {
+      (this.XHe = () => {
         const t = new Array();
         ConfigManager_1.ConfigManager.AdviceConfig.GetAdviceSentenceConfigs().forEach(
           (e) => {
             t.push(e.Id);
           },
         ),
-          this.R7e.RefreshByData(t),
-          (this.A7e = 0),
-          this.R7e.UnBindLateUpdate(),
-          (this.U7e = !0),
-          this.R7e.BindLateUpdate(this.O7e);
+          this.kHe.RefreshByData(t),
+          (this.VHe = 0),
+          this.kHe.UnBindLateUpdate(),
+          (this.FHe = !0),
+          this.kHe.BindLateUpdate(this.JHe);
       }),
-      (this.O7e = (e) => {
+      (this.JHe = (e) => {
         var t;
-        this.U7e &&
-          this.A7e >= WAITUPDATECOUNT &&
-          ((this.U7e = !1),
-          (t = this.k7e()),
+        this.FHe &&
+          this.VHe >= WAITUPDATECOUNT &&
+          ((this.FHe = !1),
+          (t = this.zHe()),
           this.GetScrollViewWithScrollbar(2).SetScrollProgress(t)),
-          this.A7e >= WAITUPDATECOUNT + 1 &&
-            ((t = this.k7e()),
+          this.VHe >= WAITUPDATECOUNT + 1 &&
+            ((t = this.zHe()),
             this.GetScrollScrollbar(6).SetValue(t),
-            this.R7e.UnBindLateUpdate()),
-          this.A7e++;
+            this.kHe.UnBindLateUpdate()),
+          this.VHe++;
       });
   }
   OnRegisterComponent() {
@@ -117,21 +117,21 @@ class AdviceMutiSentenceSelectView extends UiViewBase_1.UiViewBase {
       [7, UE.UIText],
     ]),
       (this.BtnBindInfo = [
-        [4, this.J9e],
-        [5, this._Fe],
+        [4, this.uHe],
+        [5, this.L3e],
       ]);
   }
   OnStart() {
-    (this.D7e = new GenericScrollView_1.GenericScrollView(
+    (this.OHe = new GenericScrollView_1.GenericScrollView(
       this.GetScrollViewWithScrollbar(0),
-      this.w7e,
+      this.WHe,
     )),
-      (this.R7e = new GenericScrollView_1.GenericScrollView(
+      (this.kHe = new GenericScrollView_1.GenericScrollView(
         this.GetScrollViewWithScrollbar(2),
-        this.B7e,
+        this.KHe,
       ));
     var e,
-      t = this.R7e.TempOriginalItem;
+      t = this.kHe.TempOriginalItem;
     t &&
       (e = (t = t.GetOwner()).GetComponentByClass(
         UE.UIButtonComponent.StaticClass(),
@@ -147,25 +147,25 @@ class AdviceMutiSentenceSelectView extends UiViewBase_1.UiViewBase {
           );
         },
       ),
-      this.b7e(),
+      this.QHe(),
       this.mGe();
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnClickAdviceSort,
-      this.b7e,
+      this.QHe,
     );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnClickAdviceSort,
-      this.b7e,
+      this.QHe,
     );
   }
   mGe() {
     LguiUtil_1.LguiUtil.SetLocalText(this.GetText(7), "AdvicePutSentence");
   }
-  N7e() {
+  YHe() {
     var t =
       ConfigManager_1.ConfigManager.AdviceConfig.GetAdviceWordTypeConfigs();
     let i = 0;
@@ -178,7 +178,7 @@ class AdviceMutiSentenceSelectView extends UiViewBase_1.UiViewBase {
       }
     return i / (t.length - 1);
   }
-  k7e() {
+  zHe() {
     var t =
         ModelManager_1.ModelManager.AdviceModel.CurrentPreSentenceWordMap.get(
           ModelManager_1.ModelManager.AdviceModel.CurrentSentenceSelectIndex,
@@ -193,8 +193,8 @@ class AdviceMutiSentenceSelectView extends UiViewBase_1.UiViewBase {
     return s / (i.length - 1);
   }
   OnBeforeDestroy() {
-    this.D7e && (this.D7e.ClearChildren(), (this.D7e = void 0)),
-      this.R7e && (this.R7e.ClearChildren(), (this.R7e = void 0));
+    this.OHe && (this.OHe.ClearChildren(), (this.OHe = void 0)),
+      this.kHe && (this.kHe.ClearChildren(), (this.kHe = void 0));
   }
 }
 exports.AdviceMutiSentenceSelectView = AdviceMutiSentenceSelectView;

@@ -9,79 +9,79 @@ class CharMaterialControlRuntimeDataGroup {
       (this.DataGroup = void 0),
       (this.IsDead = !1),
       (this.DataMap = void 0),
-      (this.war = void 0),
-      (this.Bhr = void 0),
-      (this.bhr = void 0),
-      (this.qhr = -0),
-      (this.Ghr = !1),
-      (this.Nhr = !1);
+      (this.xhr = void 0),
+      (this.Plr = void 0),
+      (this.xlr = void 0),
+      (this.wlr = -0),
+      (this.Blr = !1),
+      (this.blr = !1);
   }
   Init(s, t) {
     (this.CharRenderingComponent = s),
       (this.DataGroup = t),
       (this.DataMap = new Map()),
-      (this.war = []),
-      (this.Bhr = []),
-      (this.bhr = []),
+      (this.xhr = []),
+      (this.Plr = []),
+      (this.xlr = []),
       (this.IsDead = !1),
-      (this.qhr = 0),
-      (this.Ghr = !1),
+      (this.wlr = 0),
+      (this.Blr = !1),
       MapUtils_1.MapUtils.ForEach(this.DataGroup.DataMap, (t, i) => {
-        this.qhr < i && (this.qhr = i),
-          (this.Ghr = this.Ghr || 1 === t.DataType),
+        this.wlr < i && (this.wlr = i),
+          (this.Blr = this.Blr || 1 === t.DataType),
           0 < i
             ? this.DataMap.set(t, i)
-            : this.Bhr.push(s.AddMaterialControllerData(t));
+            : this.Plr.push(s.AddMaterialControllerData(t));
       });
   }
   BeforeUpdateState(t, i) {
-    this.Nhr || (this.Nhr = this.DataGroup.IgnoreTimeDilation);
+    this.blr || (this.blr = this.DataGroup.IgnoreTimeDilation);
     let s = t;
     if (
-      this.Nhr ||
+      this.blr ||
       !RenderModuleController_1.RenderModuleController.IsGamePaused
     ) {
       if (
-        (this.Nhr || (s = t * i),
-        (this.qhr -= s),
+        (this.blr || (s = t * i),
+        (this.wlr -= s),
         this.DataMap.forEach((t, i) => {
           t -= s;
           t <= 0
-            ? (this.Bhr.push(
+            ? (this.Plr.push(
                 this.CharRenderingComponent.AddMaterialControllerData(i),
               ),
-              this.war.push(i))
+              this.xhr.push(i))
             : this.DataMap.set(i, t);
         }),
-        0 < this.war.length)
+        0 < this.xhr.length)
       )
-        for (const h of this.war) this.DataMap.delete(h);
-      this.war = [];
+        for (const h of this.xhr) this.DataMap.delete(h);
+      this.xhr = [];
     }
   }
   AfterUpdateState(t) {
-    if (!this.Ghr && this.qhr <= 0) {
-      this.bhr = [];
-      for (let t = 0; t < this.Bhr.length; t++)
+    if (!this.Blr && this.wlr <= 0) {
+      this.xlr = [];
+      for (let t = 0; t < this.Plr.length; t++)
         this.CharRenderingComponent.IsMaterialControllerDataValid(
-          this.Bhr[t],
-        ) && this.bhr.push(this.Bhr[t]);
-      (this.Bhr = this.bhr),
-        (this.IsDead = 0 === this.Bhr.length && 0 === this.DataMap.size);
+          this.Plr[t],
+        ) && this.xlr.push(this.Plr[t]);
+      (this.Plr = this.xlr),
+        (this.IsDead = 0 === this.Plr.length && 0 === this.DataMap.size);
     }
   }
   EndState() {
-    (this.war = []),
+    (this.xhr = []),
       this.DataMap.clear(),
-      this.Bhr.forEach((t) => {
+      this.Plr.forEach((t) => {
         this.CharRenderingComponent.RemoveMaterialControllerData(t);
       }),
       (this.IsDead = !0);
   }
   EndStateWithEnding() {
-    (this.war = []),
+    (this.xhr = []),
       this.DataMap.clear(),
-      this.Bhr.forEach((t) => {
+      this.Plr.forEach((t) => {
         this.CharRenderingComponent.RemoveMaterialControllerDataWithEnding(t);
       }),
       (this.IsDead = !0);

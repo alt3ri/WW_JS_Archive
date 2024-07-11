@@ -11,10 +11,10 @@ const UE = require("ue"),
 class ExploreMissionView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.c8e = 0),
-      (this.BTn = []),
-      (this.qTn = void 0),
-      (this.z9e = () => {
+      (this.L9e = 0),
+      (this.VHs = []),
+      (this.HHs = void 0),
+      (this.cHe = () => {
         return new ExploreMissionItem_1.ExploreMissionItem();
       });
   }
@@ -26,42 +26,50 @@ class ExploreMissionView extends UiViewBase_1.UiViewBase {
     ];
   }
   OnStart() {
-    this.c8e = this.OpenParam;
+    this.L9e = this.OpenParam;
     var e =
       ConfigManager_1.ConfigManager.ExploreProgressConfig.GetAreaMissionConfigByAreaId(
-        this.c8e,
+        this.L9e,
       );
     if (e) {
       for (const r of e) {
         var s = new ExploreAreaMissionData_1.ExploreAreaMissionData(r);
-        this.BTn.push(s);
+        this.VHs.push(s);
       }
-      this.BTn.sort((i, e) => {
-        var s = i.QuestType;
-        return s !== e.QuestType
-          ? 2 === s
-            ? 1
-            : -1
-          : i.SortIndex - e.SortIndex;
+      this.VHs.sort((i, e) => {
+        var s = i.IsQuestVisible();
+        return s !== e.IsQuestVisible()
+          ? s
+            ? -1
+            : 1
+          : (s = i.QuestStatus) !== e.QuestStatus
+            ? 3 === s
+              ? 1
+              : -1
+            : (s = i.IsBranchQuest()) !== e.IsBranchQuest()
+              ? s
+                ? 1
+                : -1
+              : i.QuestId - e.QuestId;
       }),
-        (this.qTn = new LoopScrollView_1.LoopScrollView(
+        (this.HHs = new LoopScrollView_1.LoopScrollView(
           this.GetLoopScrollViewComponent(0),
           this.GetItem(1)?.GetOwner(),
-          this.z9e,
+          this.cHe,
         )),
-        this.qTn.RefreshByData(this.BTn);
+        this.HHs.RefreshByData(this.VHs);
       let i = 0;
-      for (const t of this.BTn) 3 === t.QuestStatus && i++;
+      for (const t of this.VHs) 3 === t.QuestStatus && i++;
       LguiUtil_1.LguiUtil.SetLocalTextNew(
         this.GetText(2),
         "ExploreMissionProgress",
         i,
-        this.BTn.length,
+        this.VHs.length,
       );
     }
   }
   OnBeforeDestroy() {
-    (this.c8e = 0), (this.BTn.length = 0);
+    (this.L9e = 0), (this.VHs.length = 0);
   }
 }
 exports.ExploreMissionView = ExploreMissionView;

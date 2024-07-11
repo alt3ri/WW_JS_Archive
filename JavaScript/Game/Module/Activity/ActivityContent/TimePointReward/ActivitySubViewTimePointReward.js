@@ -17,16 +17,16 @@ class ActivitySubViewTimePointReward extends ActivitySubViewBase_1.ActivitySubVi
     super(...arguments),
       (this.ActivityTimePointRewardData = void 0),
       (this.LNe = void 0),
-      (this.TZt = void 0),
-      (this.T8s = void 0),
+      (this.Tei = void 0),
+      (this.lXs = void 0),
       (this.sGe = () => {
         var e = new TimePointRewardItem_1.TimePointRewardItem();
-        return (e.OnClickToGet = this.L8s), e;
+        return (e.OnClickToGet = this._Xs), e;
       }),
       (this.wNe = (e) => {
-        this.ActivityBaseData.Id === e && this.GFe();
+        this.ActivityBaseData.Id === e && this.Z3e();
       }),
-      (this.L8s = (e) => {
+      (this._Xs = (e) => {
         ActivityTimePointRewardController_1.ActivityTimePointRewardController.GetRewardById(
           this.ActivityTimePointRewardData.Id,
           e,
@@ -51,18 +51,18 @@ class ActivitySubViewTimePointReward extends ActivitySubViewBase_1.ActivitySubVi
       i =
         ((this.LNe = new ActivityTitleTypeA_1.ActivityTitleTypeA()),
         e.push(this.LNe.CreateThenShowByActorAsync(i.GetOwner())),
-        (this.TZt = new GenericLayout_1.GenericLayout(
+        (this.Tei = new GenericLayout_1.GenericLayout(
           this.GetHorizontalLayout(2),
           this.sGe,
         )),
         ConfigManager_1.ConfigManager.ActivityTimePointRewardConfig.GetConfigByActivityId(
           this.ActivityBaseData.Id,
         ));
-    (this.T8s = new UiPanelBase_1.UiPanelBase()),
+    (this.lXs = new UiPanelBase_1.UiPanelBase()),
       e.push(
-        this.T8s.CreateThenShowByResourceIdAsync(i.UiPrefab, this.GetItem(4)),
+        this.lXs.CreateThenShowByResourceIdAsync(i.UiPrefab, this.GetItem(4)),
       ),
-      this.AddChild(this.T8s),
+      this.AddChild(this.lXs),
       await Promise.all(e);
   }
   OnStart() {
@@ -90,11 +90,11 @@ class ActivitySubViewTimePointReward extends ActivitySubViewBase_1.ActivitySubVi
     );
   }
   async OnBeforeShowSelfAsync() {
-    await this.GFe();
+    await this.Z3e();
   }
-  async GFe() {
+  async Z3e() {
     var e = this.ActivityTimePointRewardData.GetRewardDataList();
-    await this.TZt.RefreshByDataAsync(e);
+    await this.Tei.RefreshByDataAsync(e);
   }
   OnTimer(e) {
     this.FNe();

@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PingView = void 0);
 const UE = require("ue"),
+  Info_1 = require("../../../Core/Common/Info"),
   NetworkDefine_1 = require("../../../Launcher/NetworkDefine"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
@@ -18,22 +19,22 @@ const UE = require("ue"),
 class PingView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.NWt = ""),
-      (this.OWt = !1),
-      (this.kWt = -9999),
-      (this.FWt = 0),
-      (this.VWt = (e) => {
+      (this.NKt = ""),
+      (this.OKt = !1),
+      (this.kKt = -9999),
+      (this.FKt = 0),
+      (this.VKt = (e) => {
         var i;
-        Math.abs(e - this.kWt) < this.FWt ||
-          ((i = (this.kWt = e) > LOOPPING) !== this.OWt &&
+        Math.abs(e - this.kKt) < this.FKt ||
+          ((i = (this.kKt = e) > LOOPPING) !== this.OKt &&
             (this.GetSprite(0).SetUIActive(!i),
             this.GetItem(1).SetUIActive(i),
-            this.HWt(i),
-            (this.OWt = i)),
-          (i = this.jWt(e)),
-          this.NWt !== i[0] &&
+            this.HKt(i),
+            (this.OKt = i)),
+          (i = this.jKt(e)),
+          this.NKt !== i[0] &&
             (this.SetSpriteByPath(i[0], this.GetSprite(0), !1),
-            (this.NWt = i[0]),
+            (this.NKt = i[0]),
             this.GetText(2).SetColor(UE.Color.FromHex(i[1]))),
           LguiUtil_1.LguiUtil.SetLocalText(
             this.GetText(2),
@@ -51,53 +52,53 @@ class PingView extends UiViewBase_1.UiViewBase {
   }
   OnStart() {
     this.GetItem(1).SetUIActive(!1),
-      (this.OWt = !1),
-      (this.FWt =
+      (this.OKt = !1),
+      (this.FKt =
         ConfigManager_1.ConfigManager.CommonConfig.GetPingUnChangeValue());
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnCheckGamePing,
-      this.VWt,
+      this.VKt,
     );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnCheckGamePing,
-      this.VWt,
+      this.VKt,
     );
   }
   OnAfterShow() {
-    this.VWt(ModelManager_1.ModelManager.GamePingModel.CurrentPing);
+    this.VKt(ModelManager_1.ModelManager.GamePingModel.CurrentPing);
   }
-  HWt(e) {
+  HKt(e) {
     e
       ? this.UiViewSequence.PlaySequencePurely("Loop")
       : this.UiViewSequence.StopSequenceByKey("Loop");
   }
-  jWt(e) {
+  jKt(e) {
     return e <= GOODPING
-      ? [this.WWt(), GOODCOLOR]
+      ? [this.WKt(), GOODCOLOR]
       : e > GOODPING && e <= MIDDLEPING
-        ? [this.KWt(), MIDDLECOLOR]
-        : [this.QWt(), BADCOLOR];
+        ? [this.KKt(), MIDDLECOLOR]
+        : [this.QKt(), BADCOLOR];
   }
-  WWt() {
-    return 3 !== ModelManager_1.ModelManager.PlatformModel.PlatformType &&
+  WKt() {
+    return !Info_1.Info.IsPcOrGamepadPlatform() &&
       UE.KuroLauncherLibrary.GetNetworkConnectionType() ===
         NetworkDefine_1.ENetworkType.WiFi
       ? ConfigManager_1.ConfigManager.CommonConfig.GetNetGoodSpriteMobile()
       : ConfigManager_1.ConfigManager.CommonConfig.GetNetGoodSprite();
   }
-  KWt() {
-    return 3 !== ModelManager_1.ModelManager.PlatformModel.PlatformType &&
+  KKt() {
+    return !Info_1.Info.IsPcOrGamepadPlatform() &&
       UE.KuroLauncherLibrary.GetNetworkConnectionType() ===
         NetworkDefine_1.ENetworkType.WiFi
       ? ConfigManager_1.ConfigManager.CommonConfig.GetNetMiddleSpriteMobile()
       : ConfigManager_1.ConfigManager.CommonConfig.GetNetMiddleSprite();
   }
-  QWt() {
-    return 3 !== ModelManager_1.ModelManager.PlatformModel.PlatformType &&
+  QKt() {
+    return !Info_1.Info.IsPcOrGamepadPlatform() &&
       UE.KuroLauncherLibrary.GetNetworkConnectionType() ===
         NetworkDefine_1.ENetworkType.WiFi
       ? ConfigManager_1.ConfigManager.CommonConfig.GetNetBadSpriteMobile()

@@ -9,18 +9,18 @@ const UE = require("ue"),
   MathUtils_1 = require("../../../Core/Utils/MathUtils");
 class PointInPolygonTest {
   constructor() {
-    (this.$Di =
+    (this.$Ri =
       "/Game/Aki/Data/PathLine/Pathline_EdgeWall/BP_BasePathLine_Edgewall.BP_BasePathLine_Edgewall_C"),
       (this.IsSplineInit = !1),
-      (this.YDi = new BinSet()),
-      (this.JDi = new Array()),
-      (this.zDi = Vector2D_1.Vector2D.Create());
+      (this.YRi = new BinSet()),
+      (this.JRi = new Array()),
+      (this.zRi = Vector2D_1.Vector2D.Create());
   }
   InitSpline() {
-    var t = this.$Di;
+    var t = this.$Ri;
     this.IsSplineInit ||
       ResourceSystem_1.ResourceSystem.LoadAsync(t, UE.Class, (t) => {
-        this.zwe(t), (this.IsSplineInit = !0), this.Zwe(this.JDi, 30, this.YDi);
+        this.zwe(t), (this.IsSplineInit = !0), this.Zwe(this.JRi, 30, this.YRi);
       });
   }
   zwe(t) {
@@ -40,10 +40,10 @@ class PointInPolygonTest {
       ));
     var r = e.Spline,
       i = r.GetNumberOfSplinePoints();
-    this.JDi.slice(0, i);
+    this.JRi.slice(0, i);
     for (let t = 0, e = i; t < e; t++) {
       var s = r.GetWorldLocationAtSplinePoint(t);
-      this.JDi.push(new Vector2D_1.Vector2D(s.X, s.Y));
+      this.JRi.push(new Vector2D_1.Vector2D(s.X, s.Y));
     }
     t.K2_DestroyActor();
   }
@@ -58,10 +58,10 @@ class PointInPolygonTest {
   }
   BinTest(t) {
     if (!this.IsSplineInit) return !0;
-    this.zDi.Set(t.X, t.Y);
-    var e = this.zDi,
-      t = this.YDi,
-      r = this.JDi;
+    this.zRi.Set(t.X, t.Y);
+    var e = this.zRi,
+      t = this.YRi,
+      r = this.JRi;
     if (e.Y < t.MinY || e.Y >= t.MaxY || e.X < t.MinX || e.X >= t.MaxX)
       return !1;
     var i = Math.floor((e.Y - t.MinY) * t.InvDeltaY),

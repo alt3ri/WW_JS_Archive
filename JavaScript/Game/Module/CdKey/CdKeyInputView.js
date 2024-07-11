@@ -11,20 +11,20 @@ const CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParam
   ControllerHolder_1 = require("../../Manager/ControllerHolder");
 class CdKeyInputView extends CommonInputViewBase_1.CommonInputViewBase {
   constructor() {
-    super(...arguments), (this.zvt = 0), (this.Zvt = 0);
+    super(...arguments), (this._Et = 0), (this.uEt = 0);
   }
   InitExtraParam() {
     var e =
       CommonParamById_1.configCommonParamById.GetIntArrayConfig(
         "CdKeyLengthLimit",
       );
-    (this.Zvt = e[0]), (this.zvt = e[1]);
+    (this.uEt = e[0]), (this._Et = e[1]);
   }
   GetMaxLimit() {
-    return this.zvt;
+    return this._Et;
   }
   GetMinLimit() {
-    return this.Zvt;
+    return this.uEt;
   }
   IsAllowMultiLine() {
     return !1;
@@ -33,7 +33,7 @@ class CdKeyInputView extends CommonInputViewBase_1.CommonInputViewBase {
     this.InputData.ConfirmFunc?.(e).then(
       (e) => {
         var r;
-        e === Protocol_1.Aki.Protocol.lkn.Sys
+        e === Protocol_1.Aki.Protocol.O4n.NRs
           ? ((r = new ConfirmBoxDefine_1.ConfirmBoxDataNew(148)),
             ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
               r,
@@ -50,13 +50,13 @@ class CdKeyInputView extends CommonInputViewBase_1.CommonInputViewBase {
     );
   }
   ExtraConfirmCheck(e, r) {
-    return !this.eMt() && !this.tMt(r);
+    return !this.cEt() && !this.mEt(r);
   }
-  eMt() {
+  cEt() {
     var e = CdKeyInputController_1.CdKeyInputController.CheckInCdKeyUseCd();
     return e && this.RefreshTips(6), e;
   }
-  tMt(e) {
+  mEt(e) {
     e = StringUtils_1.StringUtils.CheckIsOnlyLettersAndNumbers(e);
     return e || this.RefreshTips(4), !e;
   }

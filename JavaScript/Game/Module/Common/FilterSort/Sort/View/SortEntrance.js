@@ -13,48 +13,48 @@ const UE = require("ue"),
 class SortItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
-      (this.ARt = void 0),
+      (this.BUt = void 0),
       (this.he = ""),
-      (this.U4e = void 0),
-      (this.gRt = void 0),
-      (this.cLt = (t) => {
-        1 === t && this.U4e?.(this.ARt.RuleId, this.he);
+      (this.j5e = void 0),
+      (this.MUt = void 0),
+      (this.gDt = (t) => {
+        1 === t && this.j5e?.(this.BUt.RuleId, this.he);
       }),
-      (this.T7e = () => !this.gRt || this.gRt(this.ARt.RuleId));
+      (this.Lke = () => !this.MUt || this.MUt(this.BUt.RuleId));
   }
   OnRegisterComponent() {
     (this.ComponentRegisterInfos = [
       [0, UE.UIText],
       [1, UE.UIExtendToggle],
     ]),
-      (this.BtnBindInfo = [[1, this.cLt]]);
+      (this.BtnBindInfo = [[1, this.gDt]]);
   }
   OnStart() {
-    this.GetExtendToggle(1).CanExecuteChange.Bind(this.T7e);
+    this.GetExtendToggle(1).CanExecuteChange.Bind(this.Lke);
   }
-  Ije() {
+  qWe() {
     (this.he = ConfigManager_1.ConfigManager.SortConfig.GetSortRuleName(
-      this.ARt.RuleId,
-      this.ARt.DataType,
+      this.BUt.RuleId,
+      this.BUt.DataType,
     )),
       this.GetText(0).SetText(this.he);
   }
-  PRt(t) {
+  bUt(t) {
     this.GetExtendToggle(1).SetToggleStateForce(t ? 1 : 0, !1);
   }
   SetToggleFunction(t) {
-    this.U4e = t;
+    this.j5e = t;
   }
   SetCanExecuteChange(t) {
-    this.gRt = t;
+    this.MUt = t;
   }
   SetToggleStateForce(t) {
     this.GetExtendToggle(1).SetToggleStateForce(t ? 1 : 0, !1);
   }
   Refresh(t, i, s) {
-    (this.ARt = t),
-      this.Ije(),
-      this.PRt(this.ARt.SelectedRule === this.ARt.RuleId);
+    (this.BUt = t),
+      this.qWe(),
+      this.bUt(this.BUt.SelectedRule === this.BUt.RuleId);
   }
   GetKey(t, i) {
     return t.RuleId;
@@ -64,48 +64,49 @@ class SortEntrance extends UiPanelBase_1.UiPanelBase {
   constructor(t, i) {
     super(),
       (this.UpdateDataListFunction = i),
-      (this.rLt = void 0),
-      (this.sLt = 1),
+      (this.hDt = void 0),
+      (this.Oma = !1),
+      (this._Dt = 1),
       (this.Mne = 0),
-      (this.CRt = 1),
-      (this.uft = []),
-      (this.nLt = []),
-      (this.xRt = void 0),
-      (this.wRt = !1),
-      (this.rTt = void 0),
-      (this.BRt = () => {
+      (this.vUt = 1),
+      (this.ypt = []),
+      (this.lDt = []),
+      (this.qUt = void 0),
+      (this.GUt = !1),
+      (this.lLt = void 0),
+      (this.NUt = () => {
         var t;
-        this.wRt
+        this.GUt
           ? (this.GetExtendToggle(0).SetToggleState(0),
-            (t = new SortViewData_1.SortViewData(this.Mne, this.cIt)),
+            (t = new SortViewData_1.SortViewData(this.Mne, this.vTt)),
             FilterSortController_1.FilterSortController.OpenSortView(t))
           : ((t = this.GetScrollViewWithScrollbar(3).RootUIComp.bIsUIActive),
-            this.bRt(!t));
+            this.OUt(!t));
       }),
-      (this.cIt = () => {
-        this.qRt(), this.Ift(!1);
+      (this.vTt = () => {
+        this.kUt(), this.qpt(!1);
       }),
-      (this.ARt = (t) => {
-        this.rLt.SetIsAscending(1 === t), this.Ift(!1);
+      (this.BUt = (t) => {
+        this.hDt.SetIsAscending(1 === t), this.qpt(!1);
       }),
-      (this.GRt = () => {
+      (this.FUt = () => {
         this.GetExtendToggle(0).SetToggleState(0, !0);
       }),
-      (this.MRt = () => {
+      (this.IUt = () => {
         var t = new SortItem();
         return (
-          t.SetToggleFunction(this.SRt), t.SetCanExecuteChange(this.T7e), t
+          t.SetToggleFunction(this.TUt), t.SetCanExecuteChange(this.Lke), t
         );
       }),
-      (this.SRt = (t, i) => {
-        this.RRt(),
-          this.rLt.SetSelectBaseSort([t, i]),
-          this.qRt(),
-          this.Ift(!1),
+      (this.TUt = (t, i) => {
+        this.xUt(),
+          this.hDt.SetSelectBaseSort([t, i]),
+          this.kUt(),
+          this.qpt(!1),
           this.GetExtendToggle(0).SetToggleState(0, !0);
       }),
-      (this.T7e = (t) => {
-        return this.rLt.GetSelectBaseSort()[0] !== t;
+      (this.Lke = (t) => {
+        return this.hDt.GetSelectBaseSort()[0] !== t;
       }),
       this.CreateThenShowByActor(t.GetOwner());
   }
@@ -118,86 +119,89 @@ class SortEntrance extends UiPanelBase_1.UiPanelBase {
       [4, UE.UIItem],
     ]),
       (this.BtnBindInfo = [
-        [0, this.BRt],
-        [2, this.ARt],
+        [0, this.NUt],
+        [2, this.BUt],
       ]);
   }
   OnStart() {
-    (this.rLt = new SortViewData_1.SortResultData()),
-      (this.xRt = new GenericScrollViewNew_1.GenericScrollViewNew(
+    (this.hDt = new SortViewData_1.SortResultData()),
+      (this.qUt = new GenericScrollViewNew_1.GenericScrollViewNew(
         this.GetScrollViewWithScrollbar(3),
-        this.MRt,
+        this.IUt,
         this.GetItem(4).GetOwner(),
       )),
       this.GetExtendToggle(0).SetToggleStateForce(0, !1);
   }
   OnBeforeDestroy() {
-    this.rTt?.Destroy(),
+    this.lLt?.Destroy(),
       ModelManager_1.ModelManager.SortModel.DeleteSortResultData(this.Mne);
   }
-  lLt(t) {
-    (this.sLt = t),
+  mDt(t) {
+    (this._Dt = t),
       (this.Mne = ConfigManager_1.ConfigManager.SortConfig.GetSortId(t));
   }
-  NRt() {
+  VUt() {
     var t = ConfigManager_1.ConfigManager.SortConfig.GetSortConfig(this.Mne);
-    this.wRt = 0 < t.AttributeSortList.length;
+    this.GUt = 0 < t.AttributeSortList.length;
   }
-  ORt() {
+  HUt() {
     var t = ConfigManager_1.ConfigManager.SortConfig.GetSortConfig(this.Mne);
-    this.CRt = t.DataId;
+    this.vUt = t.DataId;
   }
-  _Lt() {
+  dDt() {
     var t, i;
-    (this.rLt = ModelManager_1.ModelManager.SortModel.GetSortResultData(
+    (this.hDt = ModelManager_1.ModelManager.SortModel.GetSortResultData(
       this.Mne,
     )),
-      this.rLt ||
-        ((this.rLt = new SortViewData_1.SortResultData()),
-        (i = ConfigManager_1.ConfigManager.SortConfig.GetSortConfig(this.Mne)
+      (this.hDt && !this.Oma) ||
+        ((i = ConfigManager_1.ConfigManager.SortConfig.GetSortConfig(this.Mne)
           .BaseSortList[0]),
         (t = ConfigManager_1.ConfigManager.SortConfig.GetSortRuleName(
           i,
-          this.CRt,
+          this.vUt,
         )),
-        this.rLt.SetConfigId(this.Mne),
-        this.rLt.SetSelectBaseSort([i, t]),
-        (i = this.GetExtendToggle(2)),
-        this.rLt.SetIsAscending(1 === i.GetToggleState()),
-        ModelManager_1.ModelManager.SortModel.SetSortResultData(
-          this.Mne,
-          this.rLt,
-        ));
+        void 0 === this.hDt &&
+          ((this.hDt = new SortViewData_1.SortResultData()),
+          this.hDt.SetConfigId(this.Mne),
+          this.hDt.SetSelectBaseSort([i, t]),
+          (i = this.GetExtendToggle(2)),
+          this.hDt.SetIsAscending(1 === i.GetToggleState()),
+          ModelManager_1.ModelManager.SortModel.SetSortResultData(
+            this.Mne,
+            this.hDt,
+          )),
+        this.Oma &&
+          ((i = this.hDt.GetSelectBaseSort()) && (i[1] = t), (this.Oma = !1)));
   }
-  bRt(t) {
-    this.xRt.SetActive(t), t ? this.CTt().finally(void 0) : this.MTt();
+  OUt(t) {
+    this.qUt.SetActive(t), t ? this.MLt().finally(void 0) : this.TLt();
   }
-  LRt() {
-    if ((this.bRt(!1), !this.wRt)) {
+  AUt() {
+    if ((this.OUt(!1), !this.GUt)) {
       var t = ConfigManager_1.ConfigManager.SortConfig.GetSortConfig(this.Mne),
         i = [],
-        s = this.rLt.GetSelectBaseSort()[0];
+        s = this.hDt.GetSelectBaseSort()[0];
       for (const e of t.BaseSortList)
-        i.push({ RuleId: e, DataType: this.CRt, SelectedRule: s });
-      this.xRt.RefreshByData(i);
+        i.push({ RuleId: e, DataType: this.vUt, SelectedRule: s });
+      this.qUt.RefreshByData(i);
     }
   }
-  kRt() {
+  jUt() {
     var t = this.GetExtendToggle(2),
-      i = this.rLt.GetIsAscending() ? 1 : 0;
+      i = this.hDt.GetIsAscending() ? 1 : 0;
     t.SetToggleState(i, !1);
   }
-  RRt() {
-    var t = this.rLt.GetSelectBaseSort();
-    this.xRt.GetScrollItemByKey(t[0]).SetToggleStateForce(!1);
+  xUt() {
+    var t = this.hDt.GetSelectBaseSort();
+    this.qUt.GetScrollItemByKey(t[0]).SetToggleStateForce(!1);
   }
-  qRt() {
-    var t = this.rLt.ShowAllSortContent();
+  kUt() {
+    var t = this.hDt.ShowAllSortContent();
     this.GetText(1).SetText(t);
   }
-  Ift(t) {
-    var i = ConfigManager_1.ConfigManager.FilterConfig.GetFilterId(this.sLt);
-    let s = this.uft;
+  qpt(t) {
+    var i = ConfigManager_1.ConfigManager.FilterConfig.GetFilterId(this._Dt);
+    let s = this.ypt;
     var e,
       h = ModelManager_1.ModelManager.FilterModel.GetFilterResultData(i);
     h &&
@@ -213,38 +217,41 @@ class SortEntrance extends UiPanelBase_1.UiPanelBase {
       ModelManager_1.ModelManager.SortModel.SortDataList(
         s,
         this.Mne,
-        this.rLt,
-        ...this.nLt,
+        this.hDt,
+        ...this.lDt,
       ),
       this.UpdateDataListFunction?.(s, t, 1);
   }
-  async CTt() {
-    this.rTt ||
-      ((this.rTt = new DynamicMaskButton_1.DynamicMaskButton()),
-      this.rTt.SetButtonFunction(this.GRt),
-      await this.rTt.Init()),
-      this.rTt.SetAttachChildItem(this.RootItem),
-      this.rTt.SetActive(!0);
+  async MLt() {
+    this.lLt ||
+      ((this.lLt = new DynamicMaskButton_1.DynamicMaskButton()),
+      this.lLt.SetButtonFunction(this.FUt),
+      await this.lLt.Init()),
+      this.lLt.SetAttachChildItem(this.RootItem),
+      this.lLt.SetActive(!0);
   }
-  MTt() {
-    this.rTt && (this.rTt.ResetItemParent(), this.rTt.SetActive(!1));
+  TLt() {
+    this.lLt && (this.lLt.ResetItemParent(), this.lLt.SetActive(!1));
   }
-  FRt() {
+  WUt() {
     this.SetActive(0 < this.Mne);
   }
   UpdateData(t, i, ...s) {
-    this.lLt(t),
-      this.FRt(),
+    this.mDt(t),
+      this.WUt(),
       this.Mne <= 0 ||
-        ((this.uft = i),
-        (this.nLt = s),
-        this.NRt(),
-        this.ORt(),
-        this._Lt(),
-        this.LRt(),
-        this.kRt(),
-        this.qRt(),
-        this.Ift(!0));
+        ((this.ypt = i),
+        (this.lDt = s),
+        this.VUt(),
+        this.HUt(),
+        this.dDt(),
+        this.AUt(),
+        this.jUt(),
+        this.kUt(),
+        this.qpt(!0));
+  }
+  SetResultDataDirty() {
+    this.Oma = !0;
   }
   SetSortToggleState(t) {
     t = t ? 1 : 0;

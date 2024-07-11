@@ -12,9 +12,9 @@ const UE = require("ue"),
 class SilentAreaRewardPreviewPopView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.e2o = 0),
-      (this.u6e = void 0),
-      (this.t2o = () => new RewardPreviewListItem_1.RewardPreviewListItem());
+      (this.J2o = 0),
+      (this.T8e = void 0),
+      (this.z2o = () => new RewardPreviewListItem_1.RewardPreviewListItem());
   }
   OnRegisterComponent() {
     (this.ComponentRegisterInfos = [
@@ -25,23 +25,23 @@ class SilentAreaRewardPreviewPopView extends UiViewBase_1.UiViewBase {
   }
   async OnBeforeStartAsync() {}
   OnStart() {
-    (this.u6e = new GenericScrollViewNew_1.GenericScrollViewNew(
+    (this.T8e = new GenericScrollViewNew_1.GenericScrollViewNew(
       this.GetScrollViewWithScrollbar(2),
-      this.t2o,
+      this.z2o,
     )),
-      (this.e2o = this.OpenParam),
+      (this.J2o = this.OpenParam),
       LguiUtil_1.LguiUtil.SetLocalTextNew(
         this.GetText(1),
         "SilentArea_rewardinfo",
       );
   }
   OnBeforeShow() {
-    this.Wri();
+    this.Wni();
   }
-  Wri() {
+  Wni() {
     var e = [];
     for (const w of ExchangeRewardById_1.configExchangeRewardById.GetConfig(
-      this.e2o,
+      this.J2o,
     ).RewardId)
       e.push(w);
     e.sort((e, i) => e[0] - i[0]);
@@ -53,9 +53,9 @@ class SilentAreaRewardPreviewPopView extends UiViewBase_1.UiViewBase {
       o = 0;
     for ([i, r] of e)
       t.push([i, r]), a < i && s >= i && ((a = i), (o = t.length - 1));
-    this.u6e?.RefreshByDataAsync(e).finally(() => {
+    this.T8e?.RefreshByDataAsync(e).finally(() => {
       TimerSystem_1.TimerSystem.Next(() => {
-        this.u6e.ScrollToTop(o);
+        this.T8e.ScrollToTop(o);
       });
     });
   }

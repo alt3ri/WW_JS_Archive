@@ -12,6 +12,9 @@ class Activity {
   get Type() {
     return this.type();
   }
+  get OpenType() {
+    return this.opentype();
+  }
   get Sort() {
     return this.sort();
   }
@@ -88,39 +91,43 @@ class Activity {
     var t = this.J7.__offset(this.z7, 6);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  sort() {
+  opentype() {
     var t = this.J7.__offset(this.z7, 8);
+    return t ? this.J7.readInt32(this.z7 + t) : 0;
+  }
+  sort() {
+    var t = this.J7.__offset(this.z7, 10);
     return t ? this.J7.readInt32(this.z7 + t) : 10;
   }
   timeisdisplay() {
-    var t = this.J7.__offset(this.z7, 10);
+    var t = this.J7.__offset(this.z7, 12);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   showtabtime() {
-    var t = this.J7.__offset(this.z7, 12);
+    var t = this.J7.__offset(this.z7, 14);
     return !t || !!this.J7.readInt8(this.z7 + t);
   }
   preconditiongroupid() {
-    var t = this.J7.__offset(this.z7, 14);
+    var t = this.J7.__offset(this.z7, 16);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   showunlocktip() {
-    var t = this.J7.__offset(this.z7, 16);
+    var t = this.J7.__offset(this.z7, 18);
     return !!t && !!this.J7.readInt8(this.z7 + t);
   }
   GetPreshowguidequestAt(t) {
     return this.preshowguidequest(t);
   }
   preshowguidequest(t) {
-    var i = this.J7.__offset(this.z7, 18);
+    var i = this.J7.__offset(this.z7, 20);
     return i ? this.J7.readInt32(this.J7.__vector(this.z7 + i) + 4 * t) : 0;
   }
   preshowguidequestLength() {
-    var t = this.J7.__offset(this.z7, 18);
+    var t = this.J7.__offset(this.z7, 20);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   preshowguidequestArray() {
-    var t = this.J7.__offset(this.z7, 18);
+    var t = this.J7.__offset(this.z7, 20);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,
@@ -130,60 +137,60 @@ class Activity {
       : null;
   }
   ifshowquestlefttime() {
-    var t = this.J7.__offset(this.z7, 20);
-    return !t || !!this.J7.readInt8(this.z7 + t);
-  }
-  closegiveupguidequest() {
     var t = this.J7.__offset(this.z7, 22);
     return !t || !!this.J7.readInt8(this.z7 + t);
   }
+  closegiveupguidequest() {
+    var t = this.J7.__offset(this.z7, 24);
+    return !t || !!this.J7.readInt8(this.z7 + t);
+  }
   tabresource(t) {
-    var i = this.J7.__offset(this.z7, 24);
+    var i = this.J7.__offset(this.z7, 26);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   tabresource2(t) {
-    var i = this.J7.__offset(this.z7, 26);
+    var i = this.J7.__offset(this.z7, 28);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
   GetTabspriteAt(t) {
     return this.tabsprite(t);
   }
   tabsprite(t, i) {
-    var s = this.J7.__offset(this.z7, 28);
+    var s = this.J7.__offset(this.z7, 30);
     return s
       ? this.J7.__string(this.J7.__vector(this.z7 + s) + 4 * t, i)
       : null;
   }
   tabspriteLength() {
-    var t = this.J7.__offset(this.z7, 28);
+    var t = this.J7.__offset(this.z7, 30);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   name(t) {
-    var i = this.J7.__offset(this.z7, 30);
-    return i ? this.J7.__string(this.z7 + i, t) : null;
-  }
-  title(t) {
     var i = this.J7.__offset(this.z7, 32);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
-  desctheme(t) {
+  title(t) {
     var i = this.J7.__offset(this.z7, 34);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
-  desc(t) {
+  desctheme(t) {
     var i = this.J7.__offset(this.z7, 36);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
-  bgresource(t) {
+  desc(t) {
     var i = this.J7.__offset(this.z7, 38);
     return i ? this.J7.__string(this.z7 + i, t) : null;
   }
+  bgresource(t) {
+    var i = this.J7.__offset(this.z7, 40);
+    return i ? this.J7.__string(this.z7 + i, t) : null;
+  }
   previewdrop() {
-    var t = this.J7.__offset(this.z7, 40);
+    var t = this.J7.__offset(this.z7, 42);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   helpid() {
-    var t = this.J7.__offset(this.z7, 42);
+    var t = this.J7.__offset(this.z7, 44);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
 }

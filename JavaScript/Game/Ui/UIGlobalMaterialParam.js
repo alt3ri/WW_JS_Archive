@@ -7,22 +7,22 @@ const puerts_1 = require("puerts"),
   UiLayer_1 = require("./UiLayer");
 class UiGlobalMaterialParam {
   static Init() {
-    UiGlobalMaterialParam.Xmr(),
+    UiGlobalMaterialParam.Kdr(),
       Application_1.Application.AddApplicationHandler(
         1,
-        UiGlobalMaterialParam.$mr,
+        UiGlobalMaterialParam.Qdr,
       );
   }
   static Refresh() {
-    UiGlobalMaterialParam.Xmr();
+    UiGlobalMaterialParam.Kdr();
   }
   static Clear() {
     Application_1.Application.RemoveApplicationHandler(
       1,
-      UiGlobalMaterialParam.$mr,
+      UiGlobalMaterialParam.Qdr,
     );
   }
-  static Xmr() {
+  static Kdr() {
     var a = (0, puerts_1.$ref)(void 0),
       a =
         (UE.BP_CharacterRenderingFunctionLibrary_C.GetLGUIMPC(
@@ -49,7 +49,7 @@ class UiGlobalMaterialParam {
   (UiGlobalMaterialParam.LguiRenderOnScreen = new UE.FName(
     "RenderOnScreenWPO",
   )),
-  (UiGlobalMaterialParam.$mr = () => {
-    UiGlobalMaterialParam.Xmr();
+  (UiGlobalMaterialParam.Qdr = () => {
+    UiGlobalMaterialParam.Kdr();
   });
 //# sourceMappingURL=UIGlobalMaterialParam.js.map

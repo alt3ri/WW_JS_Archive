@@ -10,7 +10,7 @@ const UE = require("ue"),
 class AdviceAllViewShowContent extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
-      (this.hke = () => {
+      (this.T2e = () => {
         1 === ModelManager_1.ModelManager.AdviceModel.CurrentLineModel
           ? (this.GetText(8).SetUIActive(!0),
             this.GetText(8).SetText(
@@ -20,7 +20,7 @@ class AdviceAllViewShowContent extends UiPanelBase_1.UiPanelBase {
         var e = ModelManager_1.ModelManager.AdviceModel.GetFirstLineText();
         this.GetText(4).SetText(e);
       }),
-      (this.P9e = () => {
+      (this.W7e = () => {
         var e = ModelManager_1.ModelManager.AdviceModel.CurrentExpressionId;
         0 < e
           ? (this.GetTexture(1).SetUIActive(!0),
@@ -51,39 +51,39 @@ class AdviceAllViewShowContent extends UiPanelBase_1.UiPanelBase {
       this.GetText(8).SetUIActive(!1),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnSelectAdviceExpression,
-        this.P9e,
+        this.W7e,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnSelectAdviceWord,
-        this.hke,
+        this.T2e,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnChangeAdviceWord,
-        this.hke,
+        this.T2e,
       ),
-      this.x9e(),
-      this.P9e(),
-      this.hke();
+      this.K7e(),
+      this.W7e(),
+      this.T2e();
   }
-  x9e() {
+  K7e() {
     var e = ModelManager_1.ModelManager.FunctionModel.GetPlayerName();
     this.GetText(2).SetText(e);
   }
   RefreshView() {
-    this.hke();
+    this.T2e();
   }
   OnBeforeDestroy() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnSelectAdviceExpression,
-      this.P9e,
+      this.W7e,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnSelectAdviceWord,
-        this.hke,
+        this.T2e,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnChangeAdviceWord,
-        this.hke,
+        this.T2e,
       );
   }
 }

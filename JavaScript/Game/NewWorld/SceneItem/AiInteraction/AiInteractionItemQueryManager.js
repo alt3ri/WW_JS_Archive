@@ -25,10 +25,10 @@ class ItemQueryResult {
 exports.ItemQueryResult = ItemQueryResult;
 class AiInteractionItemQueryManager {
   constructor() {
-    (this.orr = void 0), (this.cz = void 0);
+    (this.enr = void 0), (this.cz = void 0);
   }
   AU() {
-    (this.orr = new Set()), (this.cz = Vector_1.Vector.Create(0, 0, 0));
+    (this.enr = new Set()), (this.cz = Vector_1.Vector.Create(0, 0, 0));
   }
   static Get() {
     return (
@@ -38,86 +38,86 @@ class AiInteractionItemQueryManager {
     );
   }
   RegisterItem(t) {
-    return void 0 !== t && !this.orr.has(t) && (this.orr.add(t), !0);
+    return void 0 !== t && !this.enr.has(t) && (this.enr.add(t), !0);
   }
   UnRegisterItem(t) {
-    return !!this.orr.has(t) && (this.orr.delete(t), !0);
+    return !!this.enr.has(t) && (this.enr.delete(t), !0);
   }
   GetCloseActor(t, e = 0, r = void 0, i = void 0) {
-    if (0 !== this.orr.size)
+    if (0 !== this.enr.size)
       switch (e) {
         case 0:
-          return this.rrr(t, r);
+          return this.tnr(t, r);
         case 1:
-          return this.nrr(t, i, r);
+          return this.inr(t, i, r);
       }
   }
   GetCloseActorsByRange(t, e, r = 0, i = void 0, s = void 0) {
-    if (0 !== e && 0 !== this.orr.size)
+    if (0 !== e && 0 !== this.enr.size)
       switch (r) {
         case 0:
-          return this.srr(t, e, i);
+          return this.onr(t, e, i);
         case 1:
-          return this.arr(t, e, s, i);
+          return this.rnr(t, e, s, i);
       }
     return [];
   }
-  srr(t, e, r) {
+  onr(t, e, r) {
     var i,
       s,
       o = new Array(),
       n = e * e;
-    for (const a of this.orr)
-      this.hrr(a, r) ||
-        ((i = this.lrr(t, a)) <= n &&
+    for (const a of this.enr)
+      this.nnr(a, r) ||
+        ((i = this.snr(t, a)) <= n &&
           (((s = new ItemQueryResult()).Entity = a),
           (s.Length = Math.sqrt(i)),
           o.push(s)));
     return o;
   }
-  arr(t, e, r, i) {
+  rnr(t, e, r, i) {
     var s,
       o,
       n = new Array();
-    for (const a of this.orr)
-      this.hrr(a, i) ||
-        ((s = this._rr(t, a, r))[1] &&
+    for (const a of this.enr)
+      this.nnr(a, i) ||
+        ((s = this.anr(t, a, r))[1] &&
           (s = s[0]) <= e &&
           (((o = new ItemQueryResult()).Entity = a),
           (o.Length = s),
           n.push(o)));
     return n;
   }
-  rrr(t, e) {
+  tnr(t, e) {
     var r,
       i = new ItemQueryResult();
     i.Length = MathUtils_1.MathUtils.MaxFloat;
     let s = i.Length;
-    for (const o of this.orr)
-      this.hrr(o, e) ||
-        ((r = this.lrr(t, o)) <= s && ((s = r), (i.Entity = o)));
+    for (const o of this.enr)
+      this.nnr(o, e) ||
+        ((r = this.snr(t, o)) <= s && ((s = r), (i.Entity = o)));
     return (i.Length = Math.sqrt(s)), i;
   }
-  nrr(t, e, r) {
+  inr(t, e, r) {
     var i,
       s = new ItemQueryResult();
     s.Length = MathUtils_1.MathUtils.MaxFloat;
-    for (const o of this.orr)
-      this.hrr(o, r) ||
-        ((i = this._rr(t, o, e))[1] &&
+    for (const o of this.enr)
+      this.nnr(o, r) ||
+        ((i = this.anr(t, o, e))[1] &&
           (i = i[0]) <= s.Length &&
           ((s.Entity = o), (s.Length = i)));
     return s;
   }
-  lrr(t, e) {
+  snr(t, e) {
     var r = this.cz,
-      t = (r.FromUeVector(t), e.GetComponent(182).ActorLocation),
+      t = (r.FromUeVector(t), e.GetComponent(185).ActorLocation),
       e = (r.Subtraction(Vector_1.Vector.Create(t), r), r.SizeSquared());
     return e;
   }
-  _rr(t, e, r) {
+  anr(t, e, r) {
     var i = new Array(),
-      e = e.GetComponent(182).ActorLocation;
+      e = e.GetComponent(185).ActorLocation;
     return AiContollerLibrary_1.AiControllerLibrary.NavigationFindPath(
       r,
       t,
@@ -127,8 +127,8 @@ class AiInteractionItemQueryManager {
       ? [AiContollerLibrary_1.AiControllerLibrary.GetPathLength(t, i), !0]
       : [-1, !1];
   }
-  hrr(e, r) {
-    var t = e.GetComponent(128);
+  nnr(e, r) {
+    var t = e.GetComponent(130);
     if (!SceneItemUtility_1.SceneItemUtility.GetBaseItemActor(e) || !e.Active)
       return !0;
     if (r) {

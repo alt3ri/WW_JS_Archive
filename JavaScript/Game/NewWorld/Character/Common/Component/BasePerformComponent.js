@@ -34,11 +34,11 @@ let BasePerformComponent = class BasePerformComponent extends EntityComponent_1.
   constructor() {
     super(...arguments),
       (this.AnimComp = void 0),
-      (this.sFr = 0),
-      (this.aFr = new Map()),
-      (this.hFr = new Set()),
+      (this.q2r = 0),
+      (this.G2r = new Map()),
+      (this.N2r = new Set()),
       (this.InLevelAiControl = () => !0),
-      (this.lFr = (e) => {
+      (this.O2r = (e) => {
         const s = (t, i) => {
           this.RemoveOnMontageEnded(s), this.RemoveMontageInfo(e);
         };
@@ -51,11 +51,11 @@ let BasePerformComponent = class BasePerformComponent extends EntityComponent_1.
           : (this.ForceStop(0.5, e.BodyMontage), this.RemoveMontageInfo(e));
       });
   }
-  _Fr() {
-    return ++this.sFr;
+  k2r() {
+    return ++this.q2r;
   }
   IsPlayingMontage(t) {
-    return this.aFr.has(t);
+    return this.G2r.has(t);
   }
   GetMontageController() {
     return this;
@@ -78,7 +78,7 @@ let BasePerformComponent = class BasePerformComponent extends EntityComponent_1.
         -1);
   }
   LoadAndPlayMontage(t, i, e = void 0, s = void 0, o = void 0) {
-    if (this.hFr.has(t))
+    if (this.N2r.has(t))
       return (
         Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
@@ -92,11 +92,11 @@ let BasePerformComponent = class BasePerformComponent extends EntityComponent_1.
           ),
         -1
       );
-    var h = this._Fr();
+    var h = this.k2r();
     const n = new PlayingMontageInfo(h, t, i, this, e, s, o);
     return (
-      this.aFr.set(h, n),
-      this.hFr.add(t),
+      this.G2r.set(h, n),
+      this.N2r.add(t),
       this.LoadAsync(t, (t, i) => {
         t?.IsValid() &&
           n.CheckPlayCondition() &&
@@ -104,8 +104,8 @@ let BasePerformComponent = class BasePerformComponent extends EntityComponent_1.
           0 === n.MontageConfig.PlayMontageTime
             ? n.MontageConfig.CalculatePlayTime(t)
             : (n.MontageConfig.OncePlayTime = t),
-          Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info(
+          Log_1.Log.CheckDebug() &&
+            Log_1.Log.Debug(
               "NPC",
               43,
               "开始播放蒙太奇动画",
@@ -114,21 +114,21 @@ let BasePerformComponent = class BasePerformComponent extends EntityComponent_1.
               ["剩余时间", n.MontageConfig.PlayMontageTime],
               ["MontagePath", n.MontagePath],
             ),
-          n.PlayMontageLoop(this.lFr));
+          n.PlayMontageLoop(this.O2r));
       }) !== ResourceSystem_1.ResourceSystem.InvalidId
         ? h
         : -1
     );
   }
   ClearAndStopMontage(t, i = 0) {
-    this.aFr.has(t) &&
-      (t = this.aFr.get(t)) &&
+    this.G2r.has(t) &&
+      (t = this.G2r.get(t)) &&
       (t.BodyMontage?.IsValid() && this.ForceStop(i, t.BodyMontage),
       this.RemoveMontageInfo(t));
   }
   RemoveMontageInfo(t) {
     t &&
-      (t.OnClearInfo(), this.hFr.delete(t.MontagePath), this.aFr.delete(t.Uid));
+      (t.OnClearInfo(), this.N2r.delete(t.MontagePath), this.G2r.delete(t.Uid));
   }
   LoadAsync(t, i) {
     return this.AnimComp.LoadAsync(t, i);
@@ -177,7 +177,7 @@ let BasePerformComponent = class BasePerformComponent extends EntityComponent_1.
   }
 };
 (BasePerformComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(37)],
+  [(0, RegisterComponent_1.RegisterComponent)(38)],
   BasePerformComponent,
 )),
   (exports.BasePerformComponent = BasePerformComponent);
@@ -217,45 +217,45 @@ class PlayingMontageInfo {
       (this.MontageConfig = void 0),
       (this.BodyMontage = void 0),
       (this.TimerHandle = void 0),
-      (this.R$o = void 0),
-      (this.U$o = void 0),
-      (this.A$o = void 0),
-      (this.P$o = void 0),
+      (this.TYo = void 0),
+      (this.LYo = void 0),
+      (this.DYo = void 0),
+      (this.RYo = void 0),
       (this.Uid = t),
       (this.MontagePath = i),
       (this.MontageConfig = e),
-      (this.U$o = o),
-      (this.A$o = h),
-      (this.R$o = n),
-      (this.P$o = s);
+      (this.LYo = o),
+      (this.DYo = h),
+      (this.TYo = n),
+      (this.RYo = s);
   }
   CheckPlayCondition() {
-    return !this.R$o || this.R$o();
+    return !this.TYo || this.TYo();
   }
   OnClearInfo() {
-    this.A$o && this.A$o(),
+    this.DYo && this.DYo(),
       this.TimerHandle &&
         TimerSystem_1.TimerSystem.Has(this.TimerHandle) &&
         (TimerSystem_1.TimerSystem.Remove(this.TimerHandle),
         (this.TimerHandle = void 0)),
       (this.MontageConfig = void 0),
-      (this.U$o = void 0),
-      (this.A$o = void 0),
-      (this.R$o = void 0);
+      (this.LYo = void 0),
+      (this.DYo = void 0),
+      (this.TYo = void 0);
   }
   PlayMontageLoop(t) {
-    this.U$o && this.U$o(), this.x$o(t);
+    this.LYo && this.LYo(), this.UYo(t);
   }
-  x$o(i) {
+  UYo(i) {
     if (this.MontageConfig.IsInfiniteLoop && this.MontageConfig.IsPlayLoop)
-      this.P$o.Play(this.BodyMontage);
+      this.RYo.Play(this.BodyMontage);
     else {
       let t = 0;
       this.MontageConfig.IsPlayLoop
         ? ((t = this.MontageConfig.PlayMontageTime),
-          this.P$o.Play(this.BodyMontage))
+          this.RYo.Play(this.BodyMontage))
         : ((t = this.MontageConfig.OncePlayTime),
-          this.P$o.PlayOnce(this.BodyMontage)),
+          this.RYo.PlayOnce(this.BodyMontage)),
         (this.MontageConfig.PlayMontageTime =
           this.MontageConfig.PlayMontageTime - t),
         !this.MontageConfig.IsInfiniteLoop &&

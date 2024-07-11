@@ -12,6 +12,7 @@ class TsAnimNotifyStateBulletDuration extends UE.KuroAnimNotifyState {
     super(...arguments),
       (this.BulletIds = void 0),
       (this.LocationOffsets = void 0),
+      (this.RotatorOffsets = void 0),
       (this.BulletEntityIds = void 0),
       (this.IsInitialize = !1),
       (this.UeTransform = void 0),
@@ -30,18 +31,20 @@ class TsAnimNotifyStateBulletDuration extends UE.KuroAnimNotifyState {
             s?.GetCurrentMontageCorrespondingSkillId()?.toString()),
           a = this.BulletIds.Num(),
           l = this.LocationOffsets.Num();
-        for (let e = 0; e < a; e++) {
-          let t = void 0;
-          l > e && (t = this.LocationOffsets.Get(e)),
+        for (let i = 0; i < a; i++) {
+          let t = void 0,
+            e = (l > i && (t = this.LocationOffsets.Get(i)), void 0);
+          l > i && (e = this.RotatorOffsets.Get(i)),
             this.BulletEntityIds.push(
               BulletUtil_1.BulletUtil.CreateBulletFromAN(
                 r,
-                this.BulletIds.Get(e),
+                this.BulletIds.Get(i),
                 this.UeTransform,
                 o,
                 !1,
                 void 0,
                 t,
+                e,
               ),
             );
         }

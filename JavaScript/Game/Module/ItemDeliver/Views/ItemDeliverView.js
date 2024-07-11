@@ -5,6 +5,8 @@ const UE = require("ue"),
   Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
   MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
   PublicUtil_1 = require("../../../Common/PublicUtil"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
   PopupCaptionItem_1 = require("../../../Ui/Common/PopupCaptionItem"),
@@ -12,52 +14,50 @@ const UE = require("ue"),
   ScrollingTipsController_1 = require("../../ScrollingTips/ScrollingTipsController"),
   GenericLayout_1 = require("../../Util/Layout/GenericLayout"),
   ItemDeliverController_1 = require("../ItemDeliverController"),
-  DeliverMediumItemGrid_1 = require("./DeliverMediumItemGrid"),
-  ConfigManager_1 = require("../../../Manager/ConfigManager"),
-  ControllerHolder_1 = require("../../../Manager/ControllerHolder");
+  DeliverMediumItemGrid_1 = require("./DeliverMediumItemGrid");
 class ItemDeliverView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.uCi = void 0),
-      (this.cCi = void 0),
-      (this.mCi = void 0),
-      (this.nVt = void 0),
-      (this.dCi = !1),
-      (this.nNt = () => {
-        if (!this.dCi)
-          if (this.CCi()) {
-            var t = this.uCi.Context;
+      (this.ugi = void 0),
+      (this.cgi = void 0),
+      (this.mgi = void 0),
+      (this.n6t = void 0),
+      (this.dgi = !1),
+      (this.sOt = () => {
+        if (!this.dgi)
+          if (this.Cgi()) {
+            var t = this.ugi.Context;
             if (t) {
-              this.dCi = !0;
-              var e = this.uCi.GetSlotDataList();
+              this.dgi = !0;
+              var e = this.ugi.GetSlotDataList();
               if (6 === t.Type) {
                 var i = [];
                 for (const o of e)
                   if (o.HasItem()) {
                     var r = {
-                      Z5n: [
+                      P9n: [
                         {
-                          Ykn: 0,
-                          G3n: o.GetCurrentItemConfigId(),
-                          O3n: o.GetCurrentCount(),
+                          T5n: 0,
+                          f8n: o.GetCurrentItemConfigId(),
+                          p8n: o.GetCurrentCount(),
                         },
                       ],
-                      I5n: o.GetNeedCount(),
-                      e6n: Protocol_1.Aki.Protocol.e6n.Proto_ItemIds,
+                      o9n: o.GetNeedCount(),
+                      B9n: Protocol_1.Aki.Protocol.B9n.Proto_ItemIds,
                     };
                     switch (o.HandInType) {
                       case "ItemIds":
-                        r.e6n = Protocol_1.Aki.Protocol.e6n.Proto_ItemIds;
+                        r.B9n = Protocol_1.Aki.Protocol.B9n.Proto_ItemIds;
                         break;
                       case "ItemType":
-                        r.e6n = Protocol_1.Aki.Protocol.e6n.t6n;
+                        r.B9n = Protocol_1.Aki.Protocol.B9n.w9n;
                     }
                     i.push(r);
                   }
                 ItemDeliverController_1.ItemDeliverController.HandInItemRequest(
                   t,
                   i,
-                  this.gCi,
+                  this.ggi,
                 );
               } else
                 1 === t.Type &&
@@ -66,7 +66,7 @@ class ItemDeliverView extends UiViewBase_1.UiViewBase {
                     t,
                     e.GetCurrentItemConfigId(),
                     e.GetCurrentCount(),
-                    this.gCi,
+                    this.ggi,
                   );
             }
           } else
@@ -74,50 +74,53 @@ class ItemDeliverView extends UiViewBase_1.UiViewBase {
               "DeliverNoMaterial",
             );
       }),
-      (this.gCi = (t) => {
-        (this.dCi = !1), t && this.CloseMe();
+      (this.ggi = (t) => {
+        (this.dgi = !1), t && this.CloseMe();
       }),
-      (this.zAt = (t) => {
+      (this.txt = (t) => {
         var e;
         t.IsEnable()
-          ? this.fCi(t.ItemConfigId, 1) &&
-            (this.pCi(),
-            (e = Math.min(t.GetCurrentCount() + 1, t.GetItemCount())),
-            t.SetCurrentCount(e),
-            this.mCi.RefreshItemGrid(t))
-          : ControllerHolder_1.ControllerHolder.ItemController.OpenItemTipsByItemId(
+          ? this.fgi(t.ItemConfigId, 1)
+            ? (this.pgi(),
+              (e = Math.min(t.GetCurrentCount() + 1, t.GetItemCount())),
+              t.SetCurrentCount(e),
+              this.mgi.RefreshItemGrid(t))
+            : this.mgi.SetItemGridSelected(!1, t)
+          : (ControllerHolder_1.ControllerHolder.ItemController.OpenItemTipsByItemId(
               t.ItemConfigId,
-            );
+            ),
+            this.mgi.SetItemGridSelected(!1, t));
       }),
-      (this.vCi = (t) => {
+      (this.gke = (t) => !!this.ugi && this.ugi.HasEmptySlot()),
+      (this.vgi = (t) => {
         var e = Math.max(t.GetCurrentCount() - 1, 0);
         t.SetCurrentCount(e),
-          this.mCi.RefreshItemGrid(t),
-          this.fCi(t.ItemConfigId, -1),
-          this.pCi(),
-          e <= 0 && this.mCi.SetItemGridSelected(!1, t);
+          this.mgi.RefreshItemGrid(t),
+          this.fgi(t.ItemConfigId, -1),
+          this.pgi(),
+          e <= 0 && this.mgi.SetItemGridSelected(!1, t);
       }),
-      (this.ACt = () => {
+      (this.Vgt = () => {
         ModelManager_1.ModelManager.ItemDeliverModel?.SetItemDeliverData(
           void 0,
         ),
           this.CloseMe();
       }),
-      (this.MCi = () => {
+      (this.Mgi = () => {
         var t = new DeliverMediumItemGrid_1.DeliverMediumItemGrid();
-        return t.BindReduceButtonCallback(this.SCi), t;
+        return t.BindReduceButtonCallback(this.Egi), t;
       }),
-      (this.SCi = (t) => {
+      (this.Egi = (t) => {
         var t = t.Data,
           e = t.GetCurrentCount() - 1,
           i =
             (t.SetCurrentCount(Math.max(e, 0)),
-            this.mCi.GetItemData(t.GetCurrentItemConfigId()));
+            this.mgi.GetItemData(t.GetCurrentItemConfigId()));
         i &&
           (i.SetCurrentCount(i.GetCurrentCount() - 1),
-          this.mCi.RefreshItemGrid(i)),
+          this.mgi.RefreshItemGrid(i)),
           e <= 0 && t.ClearItem(),
-          this.pCi();
+          this.pgi();
       });
   }
   OnRegisterComponent() {
@@ -130,68 +133,69 @@ class ItemDeliverView extends UiViewBase_1.UiViewBase {
       [5, UE.UIHorizontalLayout],
       [6, UE.UIText],
     ]),
-      (this.BtnBindInfo = [[2, this.nNt]]);
+      (this.BtnBindInfo = [[2, this.sOt]]);
   }
-  CCi() {
-    for (const t of this.uCi.GetSlotDataList())
+  Cgi() {
+    for (const t of this.ugi.GetSlotDataList())
       if (t.GetCurrentCount() < t.GetNeedCount()) return !1;
     return !0;
   }
   async OnBeforeStartAsync() {
-    (this.cCi = new GenericLayout_1.GenericLayout(
+    (this.cgi = new GenericLayout_1.GenericLayout(
       this.GetHorizontalLayout(5),
-      this.MCi,
+      this.Mgi,
     )),
-      (this.nVt = new PopupCaptionItem_1.PopupCaptionItem(this.GetItem(0))),
-      this.nVt.SetCloseCallBack(this.ACt),
-      (this.mCi = new ItemInteractionPanel_1.ItemInteractionPanel()),
-      this.mCi.BindOnItemExtendToggleStateChanged(this.zAt),
-      this.mCi.BindOnReduceButtonTrigger(this.vCi),
-      await this.mCi.CreateByActorAsync(this.GetItem(1).GetOwner());
+      (this.n6t = new PopupCaptionItem_1.PopupCaptionItem(this.GetItem(0))),
+      this.n6t.SetCloseCallBack(this.Vgt),
+      (this.mgi = new ItemInteractionPanel_1.ItemInteractionPanel()),
+      this.mgi.BindOnItemExtendToggleStateChanged(this.txt),
+      this.mgi.BindOnCanExecuteChange(this.gke),
+      this.mgi.BindOnReduceButtonTrigger(this.vgi),
+      await this.mgi.CreateByActorAsync(this.GetItem(1).GetOwner());
   }
   OnStart() {
-    (this.uCi = this.OpenParam),
-      this.uCi &&
-        (this.nVt.SetCloseBtnActive(!0),
-        this.nVt.SetHelpBtnActive(!1),
-        this.L0t(),
-        this.ECi(),
-        this.pCi(() => {
-          var t = this.uCi.GetSlotDataList()[0];
+    (this.ugi = this.OpenParam),
+      this.ugi &&
+        (this.n6t.SetCloseBtnActive(!0),
+        this.n6t.SetHelpBtnActive(!1),
+        this.Nft(),
+        this.Sgi(),
+        this.pgi(() => {
+          var t = this.ugi.GetSlotDataList()[0];
           t &&
-            (this.yCi(t, t.GetNeedCount()),
+            (this.ygi(t, t.GetNeedCount()),
             (t = t.GetItemRangeList().length <= 1),
-            this.nVt.SetTitleIconVisible(t),
-            this.nVt.SetTitleTextActive(t),
+            this.n6t.SetTitleIconVisible(t),
+            this.n6t.SetTitleTextActive(t),
             t) &&
             ((t =
               ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
                 "SP_IconDeliver",
               )),
-            this.nVt.SetTitleIcon(t));
+            this.n6t.SetTitleIcon(t));
         }));
   }
   OnBeforeDestroy() {
-    this.uCi?.Clear(),
-      (this.uCi = void 0),
-      (this.cCi = void 0),
-      (this.mCi = void 0);
+    this.ugi?.Clear(),
+      (this.ugi = void 0),
+      (this.cgi = void 0),
+      (this.mgi = void 0);
   }
-  L0t() {
-    var t = this.uCi.TitleTextId;
+  Nft() {
+    var t = this.ugi.TitleTextId;
     t &&
       ((t = void 0 === t ? "" : PublicUtil_1.PublicUtil.GetConfigTextByKey(t)),
       this.GetText(6)?.SetText(t));
   }
-  ECi() {
-    var t = this.uCi.DescriptionTextId,
+  Sgi() {
+    var t = this.ugi.DescriptionTextId,
       t = void 0 === t ? "" : PublicUtil_1.PublicUtil.GetConfigTextByKey(t);
     this.GetText(3)?.SetText(t);
   }
-  fCi(e, i) {
-    var r = this.uCi.GetSlotDataList();
+  fgi(e, i) {
+    var r = this.ugi.GetSlotDataList();
     if (0 < i) {
-      if (this.uCi?.IsSlotEnough(e))
+      if (this.ugi?.IsSlotEnough(e))
         return (
           ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
             "RepeatedDeliveryItem",
@@ -218,36 +222,36 @@ class ItemDeliverView extends UiViewBase_1.UiViewBase {
       }
     return !1;
   }
-  pCi(t) {
-    var e = this.uCi.GetSlotDataList();
-    this.cCi?.RefreshByData(e, t);
+  pgi(t) {
+    var e = this.ugi.GetSlotDataList();
+    this.cgi?.RefreshByData(e, t);
   }
-  yCi(t, e) {
+  ygi(t, e) {
     var i = [],
       t = t.GetItemRangeList();
-    if (t.length <= 1) this.mCi.SetActive(!1);
+    if (t.length <= 1) this.mgi.SetActive(!1);
     else {
       for (const o of t) {
         var r = { ItemConfigId: o, CurrentCount: 0, NeedCount: e };
         i.push(r);
       }
-      this.mCi.Refresh({ ItemInfoList: i }).then(
+      this.mgi.Refresh({ ItemInfoList: i }).then(
         () => {
           var t,
             e,
-            i = this.mCi.GetItemDataMainTypeMap(),
-            r = this.uCi.GetSlotDataList()[0].GetNeedCount(),
-            o = this.mCi.GetMainTypeIdList()[0];
+            i = this.mgi.GetItemDataMainTypeMap(),
+            r = this.ugi.GetSlotDataList()[0].GetNeedCount(),
+            o = this.mgi.GetMainTypeIdList()[0];
           for ([t, e] of i)
             for (const s of e)
               if (s.GetItemCount() >= r && t !== o) {
-                this.mCi?.SetMainTypeRedDotVisible(t, !0);
+                this.mgi?.SetMainTypeRedDotVisible(t, !0);
                 break;
               }
         },
         () => {},
       ),
-        this.mCi.SetActive(!0);
+        this.mgi.SetActive(!0);
     }
   }
 }

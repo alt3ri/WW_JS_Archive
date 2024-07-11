@@ -18,61 +18,61 @@ class AntiCheatController extends UiControllerBase_1.UiControllerBase {
   static OnAddEvents() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.ChangePlayerInfoId,
-      AntiCheatController.pHe,
+      AntiCheatController.Aje,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.SendHeartbeat,
-        AntiCheatController.vHe,
+        AntiCheatController.Pje,
       );
   }
   static OnRemoveEvents() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.ChangePlayerInfoId,
-      AntiCheatController.pHe,
+      AntiCheatController.Aje,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.SendHeartbeat,
-        AntiCheatController.vHe,
+        AntiCheatController.Pje,
       );
   }
-  static MHe() {
+  static xje() {
     var e;
-    AntiCheatController.SHe() &&
+    AntiCheatController.wje() &&
       ((e = AntiCheatModel_1.AntiCheatModel.GetBundleData()),
       LogReportController_1.LogReportController.LogReport(e));
   }
-  static SHe() {
+  static wje() {
     return "iOS" === UE.KuroLauncherLibrary.GetPlatform();
   }
 }
-((exports.AntiCheatController = AntiCheatController).EHe = 0),
-  (AntiCheatController.yHe = 0),
-  (AntiCheatController.pHe = () => {
+((exports.AntiCheatController = AntiCheatController).Bje = 0),
+  (AntiCheatController.bje = 0),
+  (AntiCheatController.Aje = () => {
     var e = ModelManager_1.ModelManager.PlayerInfoModel.GetId();
     ThirdPartySdkManager_1.ThirdPartySdkManager.SetUserInfoForTpSafe(
       e.toString(),
       e,
     ),
-      AntiCheatController.MHe();
+      AntiCheatController.xje();
   }),
-  (AntiCheatController.vHe = () => {
+  (AntiCheatController.Pje = () => {
     var e = TimeUtil_1.TimeUtil.GetServerTimeStamp(),
       t =
-        (0.001 * (e - AntiCheatController.yHe) >= HEARTBEAT_REPORT_INTERVAL &&
+        (0.001 * (e - AntiCheatController.bje) >= HEARTBEAT_REPORT_INTERVAL &&
           (ModelManager_1.ModelManager.AntiCheatModel.HasHeartbeatException() &&
             ((t =
               ModelManager_1.ModelManager.AntiCheatModel.GetHeartbeatData()),
             LogReportController_1.LogReportController.LogReport(t),
             ModelManager_1.ModelManager.AntiCheatModel.ResetHeartbeatException()),
-          (AntiCheatController.yHe = e)),
-        e - AntiCheatController.EHe),
+          (AntiCheatController.bje = e)),
+        e - AntiCheatController.Bje),
       r = Heartbeat_1.Heartbeat.GetHeartbeatInterval(),
       r = HEARTBEAT_EXCEPTION_FACTOR * r;
-    0 < AntiCheatController.EHe &&
+    0 < AntiCheatController.Bje &&
       t <= r &&
       (ModelManager_1.ModelManager.AntiCheatModel.HitHeartbeatException(),
-      Log_1.Log.CheckInfo()) &&
-      Log_1.Log.Info("Net", 22, "心跳过快"),
-      (AntiCheatController.EHe = e);
+      Log_1.Log.CheckDebug()) &&
+      Log_1.Log.Debug("Net", 22, "心跳过快"),
+      (AntiCheatController.Bje = e);
   });
 //# sourceMappingURL=AntiCheatController.js.map

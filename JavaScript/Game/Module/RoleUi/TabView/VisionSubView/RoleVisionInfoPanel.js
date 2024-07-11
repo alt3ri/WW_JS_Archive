@@ -18,14 +18,14 @@ const UE = require("ue"),
 class RoleVisionInfoPanel extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
-      (this.plo = void 0),
-      (this.c8i = void 0),
-      (this.d8i = void 0),
-      (this.jdo = void 0),
+      (this.d1o = void 0),
+      (this.u9i = void 0),
+      (this.m9i = void 0),
+      (this.FCo = void 0),
       (this.wqe = void 0),
-      (this.qdo = !1),
-      (this.Wdo = () => {
-        const e = this.plo.GetCurSelectRoleData(),
+      (this.wCo = !1),
+      (this.VCo = () => {
+        const e = this.d1o.GetCurSelectRoleData(),
           t = [0, 0, 0, 0, 0];
         var i = new ConfirmBoxDefine_1.ConfirmBoxDataNew(144);
         i.FunctionMap.set(1, () => {
@@ -43,20 +43,20 @@ class RoleVisionInfoPanel extends UiPanelBase_1.UiPanelBase {
             i,
           );
       }),
-      (this.Kdo = () => {
-        var e = this.plo.GetCurSelectRoleId();
+      (this.HCo = () => {
+        var e = this.d1o.GetCurSelectRoleId();
         ControllerHolder_1.ControllerHolder.PhantomBattleController.SendPhantomRecommendRequest(
           e,
-          this.Qdo,
+          this.jCo,
         );
       }),
-      (this.Qdo = () => {
+      (this.jCo = () => {
         var e,
-          t = this.plo.GetCurSelectRoleData();
+          t = this.d1o.GetCurSelectRoleData();
         ModelManager_1.ModelManager.PhantomBattleModel.GetRoleIfEquipVision(
           t.GetRoleId(),
         )
-          ? this.$Hi()
+          ? this.Qji()
           : ((e =
               ControllerHolder_1.ControllerHolder.PhantomBattleController.GetRecommendEquipUniqueIdList(
                 t.GetRoleId(),
@@ -67,9 +67,9 @@ class RoleVisionInfoPanel extends UiPanelBase_1.UiPanelBase {
             ),
             UiManager_1.UiManager.CloseView("VisionRecommendView"));
       }),
-      (this.uFe = () => {
+      (this.D3e = () => {
         var e,
-          t = this.plo.GetCurSelectRoleData();
+          t = this.d1o.GetCurSelectRoleData();
         t &&
           ((e = []),
           (e = ModelManager_1.ModelManager.PhantomBattleModel.GetExtraAttrList(
@@ -77,10 +77,10 @@ class RoleVisionInfoPanel extends UiPanelBase_1.UiPanelBase {
           )),
           UiManager_1.UiManager.OpenView("RoleAttributeDetailView", e));
       }),
-      (this.nNt = () => {
-        this.jdo?.();
+      (this.sOt = () => {
+        this.FCo?.();
       }),
-      (this.Xdo = () => {
+      (this.WCo = () => {
         this.Hqe();
       }),
       (this.wqe = e);
@@ -99,31 +99,31 @@ class RoleVisionInfoPanel extends UiPanelBase_1.UiPanelBase {
       [6, UE.UIItem],
     ]),
       (this.BtnBindInfo = [
-        [1, this.uFe],
-        [3, this.nNt],
-        [4, this.Wdo],
-        [5, this.Kdo],
+        [1, this.D3e],
+        [3, this.sOt],
+        [4, this.VCo],
+        [5, this.HCo],
       ]);
   }
   async OnBeforeStartAsync() {
-    (this.d8i = new VisionDetailDescComponent_1.VisionDetailDescComponent(
+    (this.m9i = new VisionDetailDescComponent_1.VisionDetailDescComponent(
       this.GetItem(2),
     )),
-      await this.d8i.Init();
+      await this.m9i.Init();
   }
   OnStart() {
-    this.d8i.SetActive(!0),
-      (this.c8i = new RoleVisionAttribute_1.RoleVisionAttribute(
+    this.m9i.SetActive(!0),
+      (this.u9i = new RoleVisionAttribute_1.RoleVisionAttribute(
         this.GetItem(0),
       )),
-      this.c8i.Init(),
+      this.u9i.Init(),
       this.AddEventListener();
   }
-  x6e() {
+  K8e() {
     var e;
-    this.qdo ||
-      ((this.qdo = !0),
-      (e = this.plo.GetCurSelectRoleId()),
+    this.wCo ||
+      ((this.wCo = !0),
+      (e = this.d1o.GetCurSelectRoleId()),
       RedDotController_1.RedDotController.BindRedDot(
         "VisionOneKeyEquip",
         this.GetItem(6),
@@ -131,19 +131,19 @@ class RoleVisionInfoPanel extends UiPanelBase_1.UiPanelBase {
         e,
       ));
   }
-  Dpt() {
-    this.qdo &&
-      ((this.qdo = !1),
+  Ovt() {
+    this.wCo &&
+      ((this.wCo = !1),
       RedDotController_1.RedDotController.UnBindGivenUi(
         "VisionOneKeyEquip",
         this.GetItem(6),
       ));
   }
   GetTxtItemByIndex(e) {
-    return this.d8i?.GetTxtItemByIndex(e);
+    return this.m9i?.GetTxtItemByIndex(e);
   }
-  $Hi() {
-    const t = this.plo.GetCurSelectRoleData();
+  Qji() {
+    const t = this.d1o.GetCurSelectRoleData();
     var e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(96);
     e.FunctionMap.set(1, () => {
       ControllerHolder_1.ControllerHolder.ConfirmBoxController.CloseConfirmBoxView();
@@ -164,10 +164,10 @@ class RoleVisionInfoPanel extends UiPanelBase_1.UiPanelBase {
       );
   }
   SetConfirmButtonCall(e) {
-    this.jdo = e;
+    this.FCo = e;
   }
   RefreshButtonShowState() {
-    var e = this.plo.GetCurSelectRoleData().IsTrialRole();
+    var e = this.d1o.GetCurSelectRoleData().IsTrialRole();
     this.RefreshConfirmButtonState(!e), this.RefreshOneKeyButtonState(!e);
   }
   RefreshConfirmButtonState(e) {
@@ -179,29 +179,29 @@ class RoleVisionInfoPanel extends UiPanelBase_1.UiPanelBase {
   AddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.PhantomEquip,
-      this.Xdo,
+      this.WCo,
     );
   }
   RemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.PhantomEquip,
-      this.Xdo,
+      this.WCo,
     );
   }
   RefreshView(e) {
-    (this.plo = e), this.Hqe();
+    (this.d1o = e), this.Hqe();
   }
   Hqe() {
-    this.npt(),
-      this.$do(),
-      this.Ydo(),
+    this.fvt(),
+      this.KCo(),
+      this.QCo(),
       this.RefreshButtonShowState(),
-      this.Dpt(),
-      this.x6e();
+      this.Ovt(),
+      this.K8e();
   }
-  npt() {
+  fvt() {
     let i;
-    var e = this.plo.GetCurSelectRoleData();
+    var e = this.d1o.GetCurSelectRoleData();
     const o = (i =
       ModelManager_1.ModelManager.PhantomBattleModel.GetShowAttrList(
         e.GetDataId(),
@@ -234,10 +234,10 @@ class RoleVisionInfoPanel extends UiPanelBase_1.UiPanelBase {
           ),
         );
     }),
-      this.c8i.Refresh(r, !0);
+      this.u9i.Refresh(r, !0);
   }
-  $do() {
-    var e = this.plo.GetCurSelectRoleData(),
+  KCo() {
+    var e = this.d1o.GetCurSelectRoleData(),
       t = e.GetPhantomData().GetDataByIndex(0);
     const i = new Array();
     t
@@ -271,10 +271,10 @@ class RoleVisionInfoPanel extends UiPanelBase_1.UiPanelBase {
       i.forEach((e) => {
         e.DoNotNeedCheckSimplyState = !0;
       }),
-      this.d8i.Refresh(i);
+      this.m9i.Refresh(i);
   }
-  Ydo() {
-    var e = this.plo.GetCurSelectRoleData();
+  QCo() {
+    var e = this.d1o.GetCurSelectRoleData();
     if (e.IsTrialRole())
       this.RefreshOneKeyButtonState(!1),
         this.GetButton(4).RootUIComp.SetUIActive(!1);
@@ -288,7 +288,7 @@ class RoleVisionInfoPanel extends UiPanelBase_1.UiPanelBase {
     }
   }
   OnBeforeDestroy() {
-    this.Dpt(), this.RemoveEventListener();
+    this.Ovt(), this.RemoveEventListener();
   }
 }
 exports.RoleVisionInfoPanel = RoleVisionInfoPanel;

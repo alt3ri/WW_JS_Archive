@@ -1,8 +1,10 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
-  (exports.ActivityViewJumpClickLogData =
+  (exports.ActivityRecallLogData =
+    exports.ActivityViewJumpClickLogData =
     exports.ActivityTabViewOpenLogData =
     exports.ActivityViewOpenLogData =
+    exports.FollowShooterUseLogData =
     exports.ScanSkillUseLogData =
     exports.ManipulateSkillUseLogData =
     exports.HookSkillUseLogData =
@@ -209,7 +211,7 @@ class MonsterStateRecord extends PlayerCommonLogData {
       (this.l_acc_heal_other = 0),
       (this.l_acc_heal_self = 0),
       (this.i_monster_result =
-        Protocol_1.Aki.Protocol.GOs.Proto_MonsterResultRun),
+        Protocol_1.Aki.Protocol.L4s.Proto_MonsterResultRun),
       (this.f_pos_x = 0),
       (this.f_pos_y = 0),
       (this.f_pos_z = 0),
@@ -522,7 +524,9 @@ class LoginProcessLink extends CommonLogData {
       (this.s_launcher_version = ""),
       (this.s_resource_version = ""),
       (this.s_client_version = ""),
-      (this.i_error_code = 0);
+      (this.i_error_code = 0),
+      (this.s_cpu_info = ""),
+      (this.s_device_info = "");
   }
 }
 exports.LoginProcessLink = LoginProcessLink;
@@ -720,6 +724,19 @@ class ScanSkillUseLogData extends PlayerCommonLogData {
   }
 }
 exports.ScanSkillUseLogData = ScanSkillUseLogData;
+class FollowShooterUseLogData extends PlayerCommonLogData {
+  constructor() {
+    super(...arguments),
+      (this.event_id = "1025"),
+      (this.i_father_area_id = 0),
+      (this.i_area_id = 0),
+      (this.f_pos_x = 0),
+      (this.f_pos_y = 0),
+      (this.f_pos_z = 0),
+      (this.i_has_target = 0);
+  }
+}
+exports.FollowShooterUseLogData = FollowShooterUseLogData;
 class ActivityViewOpenLogData extends PlayerCommonLogData {
   constructor() {
     super(...arguments), (this.event_id = "1019"), (this.i_open_way = 0);
@@ -748,4 +765,15 @@ class ActivityViewJumpClickLogData extends PlayerCommonLogData {
   }
 }
 exports.ActivityViewJumpClickLogData = ActivityViewJumpClickLogData;
+class ActivityRecallLogData extends PlayerCommonLogData {
+  constructor() {
+    super(...arguments),
+      (this.i_activity_id = 0),
+      (this.i_activity_type = 0),
+      (this.i_time_left = 0),
+      (this.i_type = 0),
+      (this.i_quest_id = 0);
+  }
+}
+exports.ActivityRecallLogData = ActivityRecallLogData;
 //# sourceMappingURL=LogReportDefine.js.map

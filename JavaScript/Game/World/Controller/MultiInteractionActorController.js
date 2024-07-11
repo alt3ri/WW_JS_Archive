@@ -7,28 +7,28 @@ const Queue_1 = require("../../../Core/Container/Queue"),
   MAX_DESTROY_TIME = 3;
 class MultiInteractionActorController extends ControllerBase_1.ControllerBase {
   static OnTick() {
-    if (!(this.W0r.Size <= 0)) {
+    if (!(this.Vfr.Size <= 0)) {
       let t = 0;
       for (; t < MAX_DESTROY_TIME; ) {
-        if (this.W0r.Size <= 0) return;
-        this.W0r.Pop().DestroySelf(), t++;
+        if (this.Vfr.Size <= 0) return;
+        this.Vfr.Pop().DestroySelf(), t++;
       }
     }
   }
   static OnClear() {
-    return this.K0r(), !0;
+    return this.Hfr(), !0;
   }
   static OnLeaveLevel() {
-    return this.K0r(), !0;
+    return this.Hfr(), !0;
   }
-  static K0r() {
-    for (; 0 < this.W0r.Size; ) {
-      var t = this.W0r.Pop();
+  static Hfr() {
+    for (; 0 < this.Vfr.Size; ) {
+      var t = this.Vfr.Pop();
       t?.IsValid() && t.DestroySelf();
     }
   }
   static AddWaitDestroyActor(t) {
-    this.W0r.Push(t),
+    this.Vfr.Push(t),
       AttachToActorController_1.AttachToActorController.DetachActor(
         t,
         !1,
@@ -40,5 +40,5 @@ class MultiInteractionActorController extends ControllerBase_1.ControllerBase {
   }
 }
 (exports.MultiInteractionActorController =
-  MultiInteractionActorController).W0r = new Queue_1.Queue();
+  MultiInteractionActorController).Vfr = new Queue_1.Queue();
 //# sourceMappingURL=MultiInteractionActorController.js.map

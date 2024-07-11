@@ -19,13 +19,13 @@ class UiModel {
     }
   }
   static AddNpcIconViewUnit(e) {
-    this.rCr.has(e) || this.rCr.add(e);
+    this.tgr.has(e) || this.tgr.add(e);
   }
   static RemoveNpcIconViewUnit(e) {
-    this.rCr.has(e) && this.rCr.delete(e);
+    this.tgr.has(e) && this.tgr.delete(e);
   }
   static SetNpcIconViewListShowState(i) {
-    this.rCr.forEach((e) => {
+    this.tgr.forEach((e) => {
       e.GetRootItem().SetUIActive(i);
     });
   }
@@ -40,7 +40,8 @@ class UiModel {
   (UiModel.LoadingMap = new Map()),
   (UiModel.DebugMap = new Map()),
   (UiModel.NetWorkList = []),
-  (UiModel.rCr = new Set()),
+  (UiModel.tgr = new Set()),
+  (UiModel.ResetToViewWhiteSet = new Set(["ReviveView"])),
   (UiModel.IsInMainView = !1),
   (UiModel.InNormalQueue = !1);
 //# sourceMappingURL=UiModel.js.map

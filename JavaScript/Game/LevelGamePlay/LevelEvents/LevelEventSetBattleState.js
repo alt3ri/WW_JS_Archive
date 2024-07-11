@@ -24,8 +24,8 @@ class LevelEventSetBattleState extends LevelGeneralBase_1.LevelEventBase {
   constructor() {
     super(...arguments),
       (this.MRe = new Array()),
-      (this.SRe = 0),
       (this.ERe = 0),
+      (this.SRe = 0),
       (this.aDe = void 0),
       (this.yRe = void 0),
       (this.IRe = void 0);
@@ -45,7 +45,7 @@ class LevelEventSetBattleState extends LevelGeneralBase_1.LevelEventBase {
                 ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(
                   a.EntityId,
                 );
-              a.BeforeHide && o?.Entity?.GetComponent(185)?.AddTag(447365096);
+              a.BeforeHide && o?.Entity?.GetComponent(188)?.AddTag(447365096);
             }
             this.CreateWaitEntityTask(i),
               Log_1.Log.CheckInfo() &&
@@ -86,7 +86,7 @@ class LevelEventSetBattleState extends LevelGeneralBase_1.LevelEventBase {
   }
   DRe() {
     var t = this.aDe;
-    this.SRe = t.SetTags.length;
+    this.ERe = t.SetTags.length;
     for (const i of t.SetTags) {
       const o = ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(
         i.EntityId,
@@ -113,9 +113,9 @@ class LevelEventSetBattleState extends LevelGeneralBase_1.LevelEventBase {
                 )
               : this.ARe(i.EntityId, o, a);
         }
-      } else this.ERe += 1;
+      } else this.SRe += 1;
     }
-    this.ERe >= this.SRe && this.FinishExecute(!0);
+    this.SRe >= this.ERe && this.FinishExecute(!0);
   }
   URe(t, e, i) {
     Log_1.Log.CheckInfo() &&
@@ -126,7 +126,7 @@ class LevelEventSetBattleState extends LevelGeneralBase_1.LevelEventBase {
         ["EntityId", t],
         ["TagName", i],
       );
-    e = e.Entity.GetComponent(185);
+    e = e.Entity.GetComponent(188);
     e
       ? (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
@@ -137,8 +137,8 @@ class LevelEventSetBattleState extends LevelGeneralBase_1.LevelEventBase {
             ["TagName", i],
           ),
         e.AddTag(GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(i)),
-        (this.ERe += 1),
-        this.ERe >= this.SRe && this.FinishExecute(!0))
+        (this.SRe += 1),
+        this.SRe >= this.ERe && this.FinishExecute(!0))
       : this.FinishExecute(!1);
   }
   ARe(t, e, i) {
@@ -150,7 +150,7 @@ class LevelEventSetBattleState extends LevelGeneralBase_1.LevelEventBase {
         ["EntityId", t],
         ["TagName", i],
       );
-    e = e.Entity.GetComponent(185);
+    e = e.Entity.GetComponent(188);
     e
       ? (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
@@ -161,8 +161,8 @@ class LevelEventSetBattleState extends LevelGeneralBase_1.LevelEventBase {
             ["TagName", i],
           ),
         e.RemoveTag(GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(i)),
-        (this.ERe += 1),
-        this.ERe >= this.SRe && this.FinishExecute(!0))
+        (this.SRe += 1),
+        this.SRe >= this.ERe && this.FinishExecute(!0))
       : this.FinishExecute(!1);
   }
   TRe(t) {
@@ -176,7 +176,7 @@ class LevelEventSetBattleState extends LevelGeneralBase_1.LevelEventBase {
             Log_1.Log.Error("Event", 32, "被通知Entity不合法", ["ID", s]),
           void this.FinishExecute(!1)
         );
-      o = o.Entity.GetComponent(38);
+      o = o.Entity.GetComponent(39);
       if (!o?.Valid)
         return (
           Log_1.Log.CheckError() &&
@@ -262,35 +262,35 @@ class LevelEventSetBattleState extends LevelGeneralBase_1.LevelEventBase {
   LRe(t, e) {
     if (0 !== t.StandbyTags.length && 1 === e.Type) {
       e = EntitySystem_1.EntitySystem.Get(e.EntityId);
-      if (e && e.GetComponent(38)?.AiController?.AiPatrol) {
+      if (e && e.GetComponent(39)?.AiController?.AiPatrol) {
         const o = e.GetComponent(1);
-        var e = e.GetComponent(39),
+        var e = e.GetComponent(40),
           i = Math.floor(
             MathUtils_1.MathUtils.GetRandomFloatNumber(0, t.StandbyTags.length),
           );
-        const a = Protocol_1.Aki.Protocol.vds.create();
-        (a.rkn = MathUtils_1.MathUtils.NumberToLong(
+        const a = Protocol_1.Aki.Protocol.dgs.create();
+        (a.P4n = MathUtils_1.MathUtils.NumberToLong(
           o.CreatureData.GetCreatureDataId(),
         )),
-          (a.Dkn = e?.GetCurrentPatrolSplineId() ?? 0),
-          (a.Akn = e?.GetLastPointRawIndex() ?? -1),
-          (a.Ukn =
+          (a.i5n = e?.GetCurrentPatrolSplineId() ?? 0),
+          (a.r5n = e?.GetLastPointRawIndex() ?? -1),
+          (a.o5n =
             GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(
               t.StandbyTags[i],
             ) ?? 0),
-          Net_1.Net.Call(14969, a, (t) => {
+          Net_1.Net.Call(20156, a, (t) => {
             t &&
-              t.lkn !== Protocol_1.Aki.Protocol.lkn.Sys &&
+              t.O4n !== Protocol_1.Aki.Protocol.O4n.NRs &&
               Log_1.Log.CheckWarn() &&
               Log_1.Log.Warn(
                 "AI",
                 51,
                 "请求状态机切换生态表演失败",
-                ["CreatureId", a.rkn],
+                ["CreatureId", a.P4n],
                 ["PbDataId", o.CreatureData.GetPbDataId()],
-                ["SplineId", a.Dkn],
-                ["Index", a.Akn],
-                ["Tag", a.Ukn],
+                ["SplineId", a.i5n],
+                ["Index", a.r5n],
+                ["Tag", a.o5n],
               );
           });
       }
@@ -302,8 +302,8 @@ class LevelEventSetBattleState extends LevelGeneralBase_1.LevelEventBase {
       TimerSystem_1.TimerSystem.Has(t) && TimerSystem_1.TimerSystem.Remove(t);
     void 0 !== this.IRe && TimerSystem_1.TimerSystem.Remove(this.IRe),
       (this.MRe.length = 0),
-      (this.SRe = 0),
-      (this.ERe = 0);
+      (this.ERe = 0),
+      (this.SRe = 0);
   }
 }
 exports.LevelEventSetBattleState = LevelEventSetBattleState;

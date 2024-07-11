@@ -34,6 +34,9 @@ class TsEffectActor extends UE.Actor {
   GetEffectPath() {
     return this.Handle?.Path;
   }
+  GetEffectType() {
+    return this.Handle?.GetEffectType();
+  }
 }
 exports.default = TsEffectActor;
 //# sourceMappingURL=TsEffectActor.js.map

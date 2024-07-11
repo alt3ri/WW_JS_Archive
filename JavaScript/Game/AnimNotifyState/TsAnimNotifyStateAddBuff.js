@@ -11,7 +11,7 @@ class TsAnimNotifyStateAddBuff extends UE.KuroAnimNotifyState {
     if (t instanceof TsBaseCharacter_1.default) {
       var t = t?.CharacterActorComponent?.Entity,
         s = this.GetBuffTarget(t),
-        a = t?.GetComponent(157),
+        a = t?.GetComponent(159),
         t = t.GetComponent(33);
       if (!s) return !0;
       t?.SetCurSkillAnIndex(this.exportIndex),
@@ -40,7 +40,7 @@ class TsAnimNotifyStateAddBuff extends UE.KuroAnimNotifyState {
       this.施加目标 && 1 === this.施加目标
         ? t?.GetComponent(33)?.SkillTarget?.Entity
         : t
-    )?.GetComponent(157);
+    )?.GetComponent(159);
   }
 }
 exports.default = TsAnimNotifyStateAddBuff;

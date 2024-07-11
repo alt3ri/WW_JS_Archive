@@ -6,115 +6,126 @@ const Stats_1 = require("../../../../Core/Common/Stats"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   MarkItemUtil_1 = require("../../Map/Marks/MarkItemUtil"),
+  TowerDefenceController_1 = require("../../TowerDefence/TowerDefenceController"),
   BattleChildView_1 = require("./BattleChildView/BattleChildView"),
-  TrackedMark_1 = require("./TrackedMark");
+  TrackedMark_1 = require("./TrackedMark"),
+  TrackedMarkForTower_1 = require("./TrackedMarkForTower");
 class TrackedMarksView extends BattleChildView_1.BattleChildView {
   constructor() {
     super(...arguments),
-      (this.Sct = new Map()),
-      (this.Kdt = !1),
-      (this.Qdt = (t) => {
+      (this.wmt = new Map()),
+      (this.rgt = !1),
+      (this.ngt = (r) => {
         if (
           MarkItemUtil_1.MarkItemUtil.IsTrackPointedMarkInCurrentDungeon(
-            t,
+            r,
             !0,
           ) &&
-          !MarkItemUtil_1.MarkItemUtil.IsHideTrackInView(t)
+          !MarkItemUtil_1.MarkItemUtil.IsHideTrackInView(r)
         ) {
-          let e = this.Sct.get(t.TrackSource);
-          var i;
-          e || ((e = new Map()), this.Sct.set(t.TrackSource, e)),
-            e.has(t.Id) ||
-              ((i = new TrackedMark_1.TrackedMark(t)),
-              e.set(t.Id, i),
-              i.Initialize("UiItem_Mark_Prefab", this.RootItem)),
-            (this.Kdt = !0);
+          let t = this.wmt.get(r.TrackSource);
+          if (
+            (t || ((t = new Map()), this.wmt.set(r.TrackSource, t)),
+            !t.has(r.Id))
+          ) {
+            let e = void 0;
+            (e = new (
+              TowerDefenceController_1.TowerDefenseController.CheckIsTowerEntity(
+                r,
+              )
+                ? TrackedMarkForTower_1.TrackedMarkForTower
+                : TrackedMark_1.TrackedMark
+            )(r)),
+              t.set(r.Id, e),
+              e.Initialize(this.RootItem);
+          }
+          this.rgt = !0;
         }
       }),
-      (this.Xdt = (e) => {
+      (this.sgt = (e) => {
         var t,
-          i = this.Sct.get(e.TrackSource);
-        i &&
-          ((t = i.get(e.Id)) && (t.Destroy(), i.delete(e.Id)), (this.Kdt = !0));
+          r = this.wmt.get(e.TrackSource);
+        r &&
+          ((t = r.get(e.Id)) && (t.Destroy(), r.delete(e.Id)), (this.rgt = !0));
       }),
-      (this.$dt = (e, t, i) => {
-        var e = this.Sct.get(e);
-        e && (e = e.get(t)) && e.UpdateTrackTarget(i);
+      (this.agt = (e, t, r) => {
+        var e = this.wmt.get(e);
+        e && (e = e.get(t)) && e.UpdateTrackTarget(r);
       }),
-      (this.Ydt = (e, t, i) => {
-        var e = this.Sct.get(e);
-        e && (e = e.get(t)) && e.SetVisibleByOccupied(i);
+      (this.hgt = (e, t, r) => {
+        var e = this.wmt.get(e);
+        e && (e = e.get(t)) && e.SetVisibleByOccupied(r);
       });
   }
   Initialize(e) {
-    super.Initialize(e), this.uje();
+    super.Initialize(e), this.yWe();
   }
   Reset() {
-    super.Reset(), this.Lct();
-    for (const e of this.Sct.values()) for (const t of e.values()) t.Destroy();
-    this.Sct.clear();
+    super.Reset(), this.Nmt();
+    for (const e of this.wmt.values()) for (const t of e.values()) t.Destroy();
+    this.wmt.clear();
   }
   OnShowBattleChildViewPanel() {
-    for (const e of this.Sct.values()) for (const t of e.values()) t.OnUiShow();
+    for (const e of this.wmt.values()) for (const t of e.values()) t.OnUiShow();
   }
   Update(e) {
     ModelManager_1.ModelManager.TrackModel.ClearGroupMinDistance();
-    for (const s of this.Sct.values())
-      for (const r of s.values()) r.UpdateTrackDistance();
-    for (var [t, i] of this.Sct)
-      for (const n of i.values())
-        this.Kdt &&
+    for (const i of this.wmt.values())
+      for (const s of i.values()) s.UpdateTrackDistance();
+    for (var [t, r] of this.wmt)
+      for (const n of r.values())
+        this.rgt &&
           (this.IsTrackTargetRepeat(n, t)
             ? (n.ShouldShowTrackMark = !1)
             : (n.ShouldShowTrackMark = !0)),
           n.Update(e);
-    this.Kdt = !1;
+    this.rgt = !1;
   }
   IsTrackTargetRepeat(e, t) {
-    for (var [i, s] of this.Sct)
-      for (const r of s.values())
-        if (e.TrackTarget === r.TrackTarget && t < i) return !0;
+    for (var [r, i] of this.wmt)
+      for (const s of i.values())
+        if (e.TrackTarget === s.TrackTarget && t < r) return !0;
     return !1;
   }
   OnHideBattleChildViewPanel() {
-    for (const e of this.Sct.values()) for (const t of e.values()) t.OnUiHide();
+    for (const e of this.wmt.values()) for (const t of e.values()) t.OnUiHide();
   }
-  uje() {
-    EventSystem_1.EventSystem.Add(EventDefine_1.EEventName.TrackMark, this.Qdt),
+  yWe() {
+    EventSystem_1.EventSystem.Add(EventDefine_1.EEventName.TrackMark, this.ngt),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.UnTrackMark,
-        this.Xdt,
+        this.sgt,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.UpdateTrackTarget,
-        this.$dt,
+        this.agt,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.SetTrackMarkOccupied,
-        this.Ydt,
+        this.hgt,
       );
   }
-  Lct() {
+  Nmt() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.TrackMark,
-      this.Qdt,
+      this.ngt,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.UnTrackMark,
-        this.Xdt,
+        this.sgt,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.UpdateTrackTarget,
-        this.$dt,
+        this.agt,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.SetTrackMarkOccupied,
-        this.Ydt,
+        this.hgt,
       );
   }
   DestroyOverride() {
     return !0;
   }
 }
-(exports.TrackedMarksView = TrackedMarksView).ght = void 0;
+(exports.TrackedMarksView = TrackedMarksView).Ult = void 0;
 //# sourceMappingURL=TrackedMarksView.js.map

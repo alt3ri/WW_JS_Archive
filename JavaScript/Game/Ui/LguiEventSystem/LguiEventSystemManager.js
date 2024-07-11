@@ -7,7 +7,7 @@ const LguiUtil_1 = require("../../../Game/Module/Util/LguiUtil"),
   InputMappingsDefine_1 = require("../InputDistribute/InputMappingsDefine");
 class LguiEventSystemManager {
   static get LguiEventSystem() {
-    return LguiEventSystemManager.Fmr?.EventSystem;
+    return LguiEventSystemManager.Odr?.EventSystem;
   }
   static async Initialize() {
     var e;
@@ -17,25 +17,25 @@ class LguiEventSystemManager {
         "UiItem_LGUIEventSystem_Actor",
         void 0,
       )),
-      (LguiEventSystemManager.Fmr = e),
+      (LguiEventSystemManager.Odr = e),
       LguiUtil_1.LguiUtil.SetActorIsPermanent(
-        LguiEventSystemManager.Fmr,
+        LguiEventSystemManager.Odr,
         !0,
         !0,
       )),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.LoadLguiEventSystemActor,
       ),
-      LguiEventSystemManager.Fmr.InitializeLguiEventSystemActor();
+      LguiEventSystemManager.Odr.InitializeLguiEventSystemActor();
   }
   static Clear() {
     EventSystem_1.EventSystem.Emit(
       EventDefine_1.EEventName.DestroyLguiEventSystemActor,
     ),
-      LguiEventSystemManager.Fmr.ResetLguiEventSystemActor();
+      LguiEventSystemManager.Odr.ResetLguiEventSystemActor();
   }
   static ClickedMouse(e, t) {
-    var n = LguiEventSystemManager.Fmr;
+    var n = LguiEventSystemManager.Odr;
     if (n?.IsValid()) {
       var i = 0 === t;
       switch (e) {
@@ -48,7 +48,7 @@ class LguiEventSystemManager {
     }
   }
   static InputNavigation(e, t) {
-    var n = LguiEventSystemManager.Fmr;
+    var n = LguiEventSystemManager.Odr;
     if (n?.IsValid()) {
       var i = 0 === t;
       switch (e) {
@@ -67,32 +67,32 @@ class LguiEventSystemManager {
     }
   }
   static RefreshCurrentInputModule() {
-    LguiEventSystemManager.Fmr?.RefreshCurrentInputModule();
+    LguiEventSystemManager.Odr?.RefreshCurrentInputModule();
   }
   static InputWheelAxis(e, t) {
-    LguiEventSystemManager.Fmr?.InputScroll(t);
+    LguiEventSystemManager.Odr?.InputScroll(t);
   }
   static InputTouchTrigger(e, t, n) {
-    LguiEventSystemManager.Fmr?.InputTouchTrigger(e, t, n);
+    LguiEventSystemManager.Odr?.InputTouchTrigger(e, t, n);
   }
   static InputLguiTouchMove(e, t) {
-    LguiEventSystemManager.Fmr?.InputTouchMove(e, t);
+    LguiEventSystemManager.Odr?.InputTouchMove(e, t);
   }
   static SetEventDataPrevPosition(e, t) {
-    LguiEventSystemManager.Fmr?.SetPrevMousePosition(e, t);
+    LguiEventSystemManager.Odr?.SetPrevMousePosition(e, t);
   }
   static get LguiEventSystemActor() {
-    return LguiEventSystemManager.Fmr;
+    return LguiEventSystemManager.Odr;
   }
   static GetNowHitComponent() {
-    return LguiEventSystemManager.Fmr.GetNowHitComponent();
+    return LguiEventSystemManager.Odr.GetNowHitComponent();
   }
   static GetNowHitComponentName() {
     var e = LguiEventSystemManager.GetNowHitComponent();
     if (e) return e.GetDisplayName();
   }
   static GetPointerEventData(e, t = !1) {
-    return LguiEventSystemManager.Fmr?.GetPointerEventData(e, t);
+    return LguiEventSystemManager.Odr?.GetPointerEventData(e, t);
   }
   static GetPointerEventDataPosition(e) {
     e = LguiEventSystemManager.GetPointerEventData(e);

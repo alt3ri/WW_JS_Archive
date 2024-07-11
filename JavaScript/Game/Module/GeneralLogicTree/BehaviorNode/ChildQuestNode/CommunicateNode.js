@@ -11,38 +11,38 @@ class CommunicateNode extends ChildQuestNodeBase_1.ChildQuestNodeBase {
   constructor() {
     super(...arguments),
       (this.CommunicateId = 0),
-      (this.BQt = !1),
-      (this.bQt = !1),
-      (this.qQt = (e) => {
+      (this.BXt = !1),
+      (this.bXt = !1),
+      (this.qXt = (e) => {
         e === this.CommunicateId &&
-          (this.Blackboard.RemoveTag(7), this.SubmitNode());
+          (this.Blackboard.RemoveTag(8), this.SubmitNode());
       }),
-      (this.GQt = (e) => {
-        e === this.CommunicateId && this.NQt();
+      (this.GXt = (e) => {
+        e === this.CommunicateId && this.NXt();
       }),
-      (this.OQt = (e, t) => {
+      (this.OXt = (e, t) => {
         t !== this.TreeIncId ||
           UiManager_1.UiManager.IsViewShow("BattleView") ||
-          (this.BQt = this.Blackboard.IsTracking);
+          (this.BXt = this.Blackboard.IsTracking);
       }),
       (this.rbe = () => {
-        this.BQt &&
+        this.BXt &&
           !UiManager_1.UiManager.IsViewShow("CommunicateView") &&
-          (this.NQt(), (this.BQt = !1));
+          (this.NXt(), (this.BXt = !1));
       }),
       (this.$Ge = (e) => {
         "CommunicateView" !== e ||
           this.ChildQuestStatus !==
-            Protocol_1.Aki.Protocol.W2s.Proto_CQNS_Progress ||
-          (this.Blackboard.AddTag(7), this.bQt) ||
-          this.BtType !== Protocol_1.Aki.Protocol.NCs.Proto_BtTypeQuest ||
-          ((this.bQt = !0),
+            Protocol_1.Aki.Protocol.bNs.Proto_CQNS_Progress ||
+          (this.Blackboard.AddTag(8), this.bXt) ||
+          this.BtType !== Protocol_1.Aki.Protocol.tps.Proto_BtTypeQuest ||
+          ((this.bXt = !0),
           QuestController_1.QuestNewController.RedDotRequest(
             this.TreeConfigId,
             1,
           ));
       }),
-      (this.kQt = () => {
+      (this.kXt = () => {
         UiManager_1.UiManager.CloseView("CommunicateView");
       });
   }
@@ -56,18 +56,18 @@ class CommunicateNode extends ChildQuestNodeBase_1.ChildQuestNodeBase {
   }
   OnStart(e) {
     super.OnStart(e),
-      (this.bQt = !1),
+      (this.bXt = !1),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.CommunicateFinished,
-        this.qQt,
+        this.qXt,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.CommunicateAgain,
-        this.GQt,
+        this.GXt,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnLogicTreeTrackUpdate,
-        this.OQt,
+        this.OXt,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.ActiveBattleView,
@@ -79,22 +79,22 @@ class CommunicateNode extends ChildQuestNodeBase_1.ChildQuestNodeBase {
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.ChangeMode,
-        this.kQt,
+        this.kXt,
       ),
-      this.NQt();
+      this.NXt();
   }
   OnEnd(e) {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.CommunicateFinished,
-      this.qQt,
+      this.qXt,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.CommunicateAgain,
-        this.GQt,
+        this.GXt,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnLogicTreeTrackUpdate,
-        this.OQt,
+        this.OXt,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.ActiveBattleView,
@@ -106,12 +106,12 @@ class CommunicateNode extends ChildQuestNodeBase_1.ChildQuestNodeBase {
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.ChangeMode,
-        this.kQt,
+        this.kXt,
       ),
       super.OnEnd(e);
   }
-  NQt() {
-    this.Blackboard.RemoveTag(7),
+  NXt() {
+    this.Blackboard.RemoveTag(8),
       UiManager_1.UiManager.OpenView("CommunicateView", this.CommunicateId);
   }
 }

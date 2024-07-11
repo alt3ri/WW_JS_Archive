@@ -2,8 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CommonItemSmallItemGrid = void 0);
 const ConfigManager_1 = require("../../../Manager/ConfigManager"),
-  LoopScrollSmallItemGrid_1 = require("../SmallItemGrid/LoopScrollSmallItemGrid"),
-  ControllerHolder_1 = require("../../../Manager/ControllerHolder");
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  LoopScrollSmallItemGrid_1 = require("../SmallItemGrid/LoopScrollSmallItemGrid");
 class CommonItemSmallItemGrid extends LoopScrollSmallItemGrid_1.LoopScrollSmallItemGrid {
   constructor() {
     super(...arguments), (this.Mne = 0);

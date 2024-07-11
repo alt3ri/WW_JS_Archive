@@ -1,52 +1,75 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelEventPlayerLoockAt = void 0);
-const Vector_1 = require("../../../Core/Utils/Math/Vector"),
+const Quat_1 = require("../../../Core/Utils/Math/Quat"),
+  Rotator_1 = require("../../../Core/Utils/Math/Rotator"),
+  Vector_1 = require("../../../Core/Utils/Math/Vector"),
   MathUtils_1 = require("../../../Core/Utils/MathUtils"),
   CameraBlueprintFunctionLibrary_1 = require("../../Camera/CameraBlueprintFunctionLibrary"),
   Global_1 = require("../../Global"),
-  LevelGeneralBase_1 = require("../LevelGeneralBase");
+  LevelGeneralBase_1 = require("../LevelGeneralBase"),
+  tmpVector = Vector_1.Vector.Create(),
+  tmpQuat = Quat_1.Quat.Create(),
+  tmpRotator = Rotator_1.Rotator.Create();
 class LevelEventPlayerLoockAt extends LevelGeneralBase_1.LevelEventBase {
-  Execute(e, t) {
-    var a = parseFloat(e.get("PosX")),
-      r = parseFloat(e.get("PosY")),
-      l = parseFloat(e.get("PosZ")),
-      e = "false" !== e.get("CameraMove")?.toLowerCase(),
-      a = Vector_1.Vector.Create(a, r, l),
-      r = Global_1.Global.BaseCharacter;
-    r &&
-      ((l = r.CharacterActorComponent),
-      (r = Vector_1.Vector.Create()),
-      a.Subtraction(l.ActorLocationProxy, r),
-      (Math.abs(r.X) < MathUtils_1.MathUtils.SmallNumber &&
-        Math.abs(r.Y) < MathUtils_1.MathUtils.SmallNumber) ||
-        ((r.Z = 0),
-        (a = r.ToUeVector().Rotation()),
-        l.SetActorRotation(a, "LevelEventPlayerLoockAt", !1),
-        l.SetInputRotator(a),
-        e && CameraBlueprintFunctionLibrary_1.default.SetCameraRotation(a)));
+  Execute(t, e) {
+    var r = parseFloat(t.get("PosX")),
+      a = parseFloat(t.get("PosY")),
+      o = parseFloat(t.get("PosZ")),
+      t = "false" !== t.get("CameraMove")?.toLowerCase(),
+      r = Vector_1.Vector.Create(r, a, o),
+      a = Global_1.Global.BaseCharacter;
+    a &&
+      ((o = a.CharacterActorComponent),
+      r.Subtraction(o.ActorLocationProxy, tmpVector),
+      MathUtils_1.MathUtils.LookRotationUpFirst(
+        tmpVector,
+        o.ActorUpProxy,
+        tmpQuat,
+      ),
+      tmpQuat.IsNearZero() ||
+        (tmpQuat.Rotator(tmpRotator),
+        o.SetActorRotation(
+          tmpRotator.ToUeRotator(),
+          "LevelEventPlayerLoockAt",
+          !1,
+        ),
+        o.SetInputRotator(tmpRotator),
+        t &&
+          CameraBlueprintFunctionLibrary_1.default.SetCameraRotation(
+            tmpRotator.ToUeRotator(),
+          )));
   }
-  ExecuteNew(e, t) {
-    var a, r, l;
-    e &&
-      ((l = e.Pos.X),
-      (r = e.Pos.Y),
-      (a = e.Pos.Z),
-      (e = e.CameraMove),
-      (l = Vector_1.Vector.Create(l ?? 0, r ?? 0, a ?? 0)),
-      (r = Global_1.Global.BaseCharacter)) &&
-      ((a = r.CharacterActorComponent),
-      (r = Vector_1.Vector.Create()),
-      l.Subtraction(a.ActorLocationProxy, r),
-      (Math.abs(r.X) < MathUtils_1.MathUtils.SmallNumber &&
-        Math.abs(r.Y) < MathUtils_1.MathUtils.SmallNumber) ||
-        ((r.Z = 0),
-        (l = r.ToUeVector().Rotation()),
-        a.SetActorRotation(l, "LevelEventPlayerLoockAt", !1),
-        a.SetInputRotator(l),
-        e && CameraBlueprintFunctionLibrary_1.default.SetCameraRotation(l)));
+  ExecuteNew(t, e) {
+    var r, a, o;
+    t &&
+      ((r = t.Pos.X),
+      (a = t.Pos.Y),
+      (o = t.Pos.Z),
+      (t = t.CameraMove),
+      (r = Vector_1.Vector.Create(r ?? 0, a ?? 0, o ?? 0)),
+      (a = Global_1.Global.BaseCharacter)) &&
+      ((o = a.CharacterActorComponent),
+      r.Subtraction(o.ActorLocationProxy, tmpVector),
+      MathUtils_1.MathUtils.LookRotationUpFirst(
+        tmpVector,
+        o.ActorUpProxy,
+        tmpQuat,
+      ),
+      tmpQuat.IsNearZero() ||
+        (tmpQuat.Rotator(tmpRotator),
+        o.SetActorRotation(
+          tmpRotator.ToUeRotator(),
+          "LevelEventPlayerLoockAt",
+          !1,
+        ),
+        o.SetInputRotator(tmpRotator),
+        t &&
+          CameraBlueprintFunctionLibrary_1.default.SetCameraRotation(
+            tmpRotator.ToUeRotator(),
+          )));
   }
-  ExecuteInGm(e, t) {
+  ExecuteInGm(t, e) {
     this.FinishExecute(!0);
   }
 }

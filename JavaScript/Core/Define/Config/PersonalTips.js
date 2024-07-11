@@ -14,6 +14,9 @@ class PersonalTips {
   get Sort() {
     return this.sort();
   }
+  get RedDotName() {
+    return this.reddotname();
+  }
   get Description() {
     return this.description();
   }
@@ -41,12 +44,16 @@ class PersonalTips {
     var t = this.J7.__offset(this.z7, 8);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  description(t) {
+  reddotname(t) {
     var s = this.J7.__offset(this.z7, 10);
     return s ? this.J7.__string(this.z7 + s, t) : null;
   }
-  iconpath(t) {
+  description(t) {
     var s = this.J7.__offset(this.z7, 12);
+    return s ? this.J7.__string(this.z7 + s, t) : null;
+  }
+  iconpath(t) {
+    var s = this.J7.__offset(this.z7, 14);
     return s ? this.J7.__string(this.z7 + s, t) : null;
   }
 }

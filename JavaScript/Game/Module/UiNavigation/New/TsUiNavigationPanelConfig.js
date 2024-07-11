@@ -2,12 +2,12 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TsUiNavigationPanelConfig = void 0);
 const UE = require("ue"),
+  Info_1 = require("../../../../Core/Common/Info"),
   Log_1 = require("../../../../Core/Common/Log"),
   StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
   GlobalData_1 = require("../../../GlobalData"),
-  ModelManager_1 = require("../../../Manager/ModelManager"),
   UiNavigationUtil_1 = require("../UiNavigationUtil"),
   FindNavigationResult_1 = require("./FindNavigationResult"),
   NavigationPanelHandleCreator_1 = require("./PanelHandle/NavigationPanelHandleCreator");
@@ -30,7 +30,9 @@ class TsUiNavigationPanelConfig extends UE.LGUIBehaviour {
       (this.ViewHandleCacheFunctionList = []),
       (this.IncId = 0),
       (this.HotKeyItemSet = void 0),
-      (this.CacheHotKeyStateMap = void 0);
+      (this.CacheHotKeyStateMap = void 0),
+      (this.GamepadMouseActor = void 0),
+      (this.GamepadMouseItemInternal = void 0);
   }
   AwakeBP() {
     GlobalData_1.GlobalData.GameInstance &&
@@ -138,8 +140,8 @@ class TsUiNavigationPanelConfig extends UE.LGUIBehaviour {
       i.GetNavigationComponent().Start(),
       StringUtils_1.StringUtils.IsEmpty(i.GroupName) ||
         ((t = this.PanelHandle.GetNavigationGroup(i.GroupName))
-          ? (Log_1.Log.CheckInfo() &&
-              Log_1.Log.Info(
+          ? (Log_1.Log.CheckDebug() &&
+              Log_1.Log.Debug(
                 "UiNavigation",
                 11,
                 "加入监听组件到导航组",
@@ -174,12 +176,13 @@ class TsUiNavigationPanelConfig extends UE.LGUIBehaviour {
           ? (t.LayoutActor && (i.LayoutActor = t.LayoutActor),
             t.ScrollActor && (i.ScrollViewActor = t.ScrollActor),
             this.PanelHandle.ReplaceDefaultNavigationListener(i, t.Index))
-          : Log_1.Log.CheckError() &&
-            Log_1.Log.Error(
+          : Log_1.Log.CheckWarn() &&
+            Log_1.Log.Warn(
               "UiNavigation",
               11,
               "导航监听组件找不到对应的动态配置",
               ["导航组名字", i.GroupName],
+              ["ViewName", this.ViewName],
             )
         : Log_1.Log.CheckError() &&
           Log_1.Log.Error(
@@ -187,6 +190,7 @@ class TsUiNavigationPanelConfig extends UE.LGUIBehaviour {
             11,
             "导航监听组件找不到对应的导航组",
             ["导航组名字", i.GroupName],
+            ["ViewName", this.ViewName],
           ));
   }
   UnRegisterNavigationListener(e) {
@@ -279,7 +283,7 @@ class TsUiNavigationPanelConfig extends UE.LGUIBehaviour {
       this.ViewHandle.MarkRefreshNavigationDirty();
   }
   IsAllowNavigate() {
-    var i = ModelManager_1.ModelManager.PlatformModel?.IsInGamepad() ?? !1;
+    var i = Info_1.Info.IsInGamepad() ?? !1;
     return this.AllowNavigateInKeyBoard || i;
   }
   AddHotKeyItem(i) {
@@ -331,6 +335,21 @@ class TsUiNavigationPanelConfig extends UE.LGUIBehaviour {
       for (const i of this.HotKeyItemSet)
         for (const t of i.GetHotKeyComponentArray())
           t.RefreshSelfHotKeyText(this.ViewHandle);
+  }
+  get IsGamepadControlMouse() {
+    return (
+      !!this.Independent &&
+      !!this.GamepadMouseActor &&
+      this.GamepadMouseActor.IsValid()
+    );
+  }
+  get GamepadMouseItem() {
+    return (
+      this.GamepadMouseItemInternal ||
+        (this.GamepadMouseItemInternal =
+          this.GamepadMouseActor?.GetComponentByClass(UE.UIItem.StaticClass())),
+      this.GamepadMouseItemInternal
+    );
   }
 }
 (exports.TsUiNavigationPanelConfig = TsUiNavigationPanelConfig),

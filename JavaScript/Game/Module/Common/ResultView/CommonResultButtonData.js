@@ -3,25 +3,25 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CommonResultButtonData = void 0);
 class CommonResultButtonData {
   constructor() {
-    (this.rBt = (t, e) => {}), (this.nBt = () => {}), (this.sBt = (t) => {});
+    (this.abt = (t, e) => {}), (this.hbt = () => {}), (this.lbt = (t) => {});
   }
   GetButtonTimerCallBack() {
-    return this.rBt;
+    return this.abt;
   }
   GetButtonClickCallBack() {
-    return this.nBt;
+    return this.hbt;
   }
   GetButtonRefreshCallBack() {
-    return this.sBt;
+    return this.lbt;
   }
   SetTimerCallBack(t) {
-    this.rBt = t;
+    this.abt = t;
   }
   SetClickCallBack(t) {
-    this.nBt = t;
+    this.hbt = t;
   }
   SetRefreshCallBack(t) {
-    this.sBt = t;
+    this.lbt = t;
   }
 }
 exports.CommonResultButtonData = CommonResultButtonData;

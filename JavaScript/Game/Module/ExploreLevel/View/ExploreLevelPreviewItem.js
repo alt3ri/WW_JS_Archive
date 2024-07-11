@@ -12,7 +12,7 @@ class ExploreLevelPreviewItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
       (this.bOe = void 0),
-      (this.g5t = (e, r, i) => {
+      (this.gVt = (e, r, i) => {
         var t = new CommonItemSmallItemGrid_1.CommonItemSmallItemGrid();
         return (
           t.Initialize(r.GetOwner()),
@@ -35,11 +35,11 @@ class ExploreLevelPreviewItem extends GridProxyAbstract_1.GridProxyAbstract {
   OnStart() {
     this.bOe = new GenericScrollView_1.GenericScrollView(
       this.GetScrollViewWithScrollbar(4),
-      this.g5t,
+      this.gVt,
     );
   }
   OnBeforeDestroy() {
-    this.bOe.ClearChildren(), (this.bOe = void 0);
+    this.bOe = void 0;
   }
   Refresh(e, r, i) {
     var t = e.GetDropItemNumMap(),

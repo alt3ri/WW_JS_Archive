@@ -11,16 +11,16 @@ class CharNpcDitherEffect extends CharRenderBase_1.CharRenderBase {
   constructor() {
     super(...arguments),
       (this.gU = !1),
-      (this.Rar = new Array()),
-      (this.Tfi = !0),
-      (this.k$o = -0);
+      (this.Dhr = new Array()),
+      (this.Lpi = !0),
+      (this.GYo = -0);
   }
   Start() {
     this.OnInitSuccess();
   }
   EnableNpcDitherEffect() {
     this.gU &&
-      this.Rar.forEach((r) => {
+      this.Dhr.forEach((r) => {
         ObjectUtils_1.ObjectUtils.IsValid(r) && r.SetUseCustomAlphaTest(!0);
         var i = r.GetMaterials();
         for (let t = 0, e = i.Num(); t < e; t++) {
@@ -40,7 +40,7 @@ class CharNpcDitherEffect extends CharRenderBase_1.CharRenderBase {
   }
   RemoveNpcDitherEffect() {
     this.gU &&
-      this.Rar.forEach((e) => {
+      this.Dhr.forEach((e) => {
         ObjectUtils_1.ObjectUtils.IsValid(e) && e.SetUseCustomAlphaTest(!1);
         var r = e.GetMaterials();
         for (let e = 0, t = r.Num(); e < t; e++) {
@@ -54,13 +54,13 @@ class CharNpcDitherEffect extends CharRenderBase_1.CharRenderBase {
       });
   }
   SetNpcDitherEffect(t) {
-    if (this.gU && 0 !== this.Rar.length) {
+    if (this.gU && 0 !== this.Dhr.length) {
       var r = MathUtils_1.MathUtils.Clamp(t, 0, 1);
       let e = !1;
-      this.Tfi ? ((this.Tfi = !1), (e = !0)) : this.k$o !== r && (e = !0),
+      this.Lpi ? ((this.Lpi = !1), (e = !0)) : this.GYo !== r && (e = !0),
         e &&
-          ((this.k$o = t),
-          this.Rar.forEach((r) => {
+          ((this.GYo = t),
+          this.Dhr.forEach((r) => {
             var i = r.GetMaterials();
             for (let t = 0, e = i.Num(); t < e; t++) {
               let e = void 0;
@@ -72,16 +72,16 @@ class CharNpcDitherEffect extends CharRenderBase_1.CharRenderBase {
                     r.SetMaterial(t, e)),
                 e.SetScalarParameterValue(
                   RenderConfig_1.RenderConfig.DitherValue,
-                  this.k$o,
+                  this.GYo,
                 ));
             }
           }));
     }
   }
   UpdateSkeletalComponents(e) {
-    if ((this.gU || this.Uar(), e && ObjectUtils_1.ObjectUtils.IsValid(e))) {
+    if ((this.gU || this.Rhr(), e && ObjectUtils_1.ObjectUtils.IsValid(e))) {
       var t = e.K2_GetComponentsByClass(UE.SkeletalMeshComponent.StaticClass());
-      this.Rar.length = 0;
+      this.Dhr.length = 0;
       for (let e = t.Num() - 1; 0 <= e; --e) {
         var r = t.Get(e);
         if (ObjectUtils_1.ObjectUtils.IsValid(r)) {
@@ -92,7 +92,7 @@ class CharNpcDitherEffect extends CharRenderBase_1.CharRenderBase {
               var a = r.CreateDynamicMaterialInstance(e, s.Get(e));
               r.SetMaterial(e, a);
             }
-            this.Rar.push(r);
+            this.Dhr.push(r);
           }
         }
       }
@@ -104,7 +104,7 @@ class CharNpcDitherEffect extends CharRenderBase_1.CharRenderBase {
           "NPC Rendering传入了一个无效的actor",
         );
   }
-  Uar() {
+  Rhr() {
     this.gU
       ? Log_1.Log.CheckError() &&
         Log_1.Log.Error("RenderCharacter", 12, "重复调用NPC dither初始化方法:")

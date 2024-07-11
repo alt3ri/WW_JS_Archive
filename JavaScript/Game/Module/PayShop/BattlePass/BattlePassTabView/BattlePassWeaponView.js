@@ -10,17 +10,22 @@ const UE = require("ue"),
 class BattlePassWeaponView extends UiTabViewBase_1.UiTabViewBase {
   constructor() {
     super(...arguments),
-      (this.qki = void 0),
-      (this.Gki = void 0),
-      (this.Nki = void 0),
-      (this.Oki = void 0),
-      (this.kki = () => {
-        var e = this.Gki.GetCurSelectedData();
-        this.qki.UpdateComponent(e),
+      (this.q2i = void 0),
+      (this.G2i = void 0),
+      (this.N2i = void 0),
+      (this.O2i = void 0),
+      (this.mMa = 1),
+      (this.k2i = () => {
+        let e = this.G2i.GetCurSelectedData();
+        var t,
+          i = e.GetFullLevelWeaponData();
+        void 0 !== i && ((t = 1 === this.mMa), (e = t ? i : e)),
+          this.q2i.UpdateComponent(e),
           WeaponController_1.WeaponController.OnSelectedWeaponChange(
             e,
-            this.Nki,
-            this.Oki,
+            this.N2i,
+            this.O2i,
+            !0,
           );
       });
   }
@@ -31,25 +36,40 @@ class BattlePassWeaponView extends UiTabViewBase_1.UiTabViewBase {
     ];
   }
   async OnBeforeStartAsync() {
-    (this.qki = new WeaponDetailTipsComponent_1.WeaponDetailTipsComponent()),
-      (this.Gki = new WeaponListComponent_1.WeaponListComponent()),
-      this.Gki.Init(this.GetScrollViewWithScrollbar(1)),
-      this.Gki.SetWeaponChangeCallBack(this.kki);
+    (this.q2i = new WeaponDetailTipsComponent_1.WeaponDetailTipsComponent()),
+      (this.G2i = new WeaponListComponent_1.WeaponListComponent()),
+      this.G2i.Init(this.GetScrollViewWithScrollbar(1)),
+      this.G2i.SetWeaponChangeCallBack(this.k2i);
     var e = ModelManager_1.ModelManager.BattlePassModel.GetWeaponDataList(),
       e =
         (await Promise.all([
-          this.qki.CreateThenShowByActorAsync(this.GetItem(0).GetOwner()),
-          this.Gki.UpdateDataList(e),
+          this.q2i.CreateThenShowByActorAsync(this.GetItem(0).GetOwner()),
+          this.G2i.UpdateDataList(e),
         ]),
-        this.qki.SetCanShowEquip(!1),
+        this.q2i.SetCanShowEquip(!1),
         this.ExtraParams);
-    (this.Nki = e.WeaponObserver), (this.Oki = e.WeaponScabbardObserver);
+    (this.N2i = e.WeaponObserver), (this.O2i = e.WeaponScabbardObserver);
   }
   OnBeforeShow() {
-    this.Gki?.SetCurSelect(0);
+    this.G2i?.SetCurSelect(0);
   }
   OnAfterHide() {
-    this.Gki?.CancelSelect();
+    this.G2i?.CancelSelect();
+  }
+  OnClickFullLevelToggle(t) {
+    if (t !== this.mMa) {
+      this.mMa = t;
+      let e = this.G2i.GetCurSelectedData();
+      var i = e.GetFullLevelWeaponData();
+      1 === t && i && (e = i),
+        this.q2i.UpdateComponent(e),
+        WeaponController_1.WeaponController.OnSelectedWeaponChange(
+          e,
+          this.N2i,
+          this.O2i,
+          !0,
+        );
+    }
   }
 }
 exports.BattlePassWeaponView = BattlePassWeaponView;

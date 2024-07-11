@@ -28,28 +28,28 @@ const UE = require("ue"),
 class ForgingRootView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.yTi = 0),
-      (this.wIi = void 0),
-      (this.ITi = void 0),
-      (this.MGt = !1),
-      (this.TTi = new Array()),
-      (this.LTi = void 0),
-      (this.pGt = void 0),
-      (this.vGt = void 0),
+      (this.yLi = 0),
+      (this.wTi = void 0),
+      (this.ILi = void 0),
+      (this.ENt = !1),
+      (this.TLi = new Array()),
+      (this.LLi = void 0),
+      (this.vNt = void 0),
+      (this.MNt = void 0),
       (this.GOe = void 0),
-      (this.m5s = void 0),
-      (this.c4s = !1),
-      (this.DTi = void 0),
-      (this.wGt = () => {
-        this.Dqt(),
-          (this.BGt() || this.GGt()) &&
+      (this.qjs = void 0),
+      (this.zVs = !1),
+      (this.DLi = void 0),
+      (this.BNt = () => {
+        this.AGt(),
+          (this.bNt() || this.NNt()) &&
             ForgingController_1.ForgingController.SendForgeInfoRequestAsync().then(
               () => {
-                this.RTi();
+                this.RLi();
               },
             );
       }),
-      (this.UTi = () => {
+      (this.ULi = () => {
         this.ChildPopView?.PlaySequenceAsync(
           "Close",
           new CustomPromise_1.CustomPromise(),
@@ -59,7 +59,7 @@ class ForgingRootView extends UiViewBase_1.UiViewBase {
           this.ChildPopView?.PopItem.SetActive(!1);
         });
       }),
-      (this.VIi = () => {
+      (this.VTi = () => {
         UiManager_1.UiManager.IsViewShow("ForgingRootView") &&
           ForgingController_1.ForgingController.PlayForgingLoopDisplay();
       }),
@@ -70,67 +70,67 @@ class ForgingRootView extends UiViewBase_1.UiViewBase {
           (e = ModelManager_1.ModelManager.ComposeModel.ComposeSuccessFlow),
           ForgingController_1.ForgingController.PlayForgingFlow(e));
       }),
-      (this.d5s = () => {
-        this.vGt.UpdateData(24, this.TGt()), this.Dqt();
+      (this.Gjs = () => {
+        this.MNt.UpdateData(24, this.LNt()), this.AGt();
       }),
       (this.jwe = (e) => {
         "OnBlackScreen" === e &&
-          (this.ChildPopView?.PlayLevelSequenceByName("Start"),
-          this.m5s?.SetResult(),
+          (this.ChildPopView?.PlayLevelSequenceByName("BlackScreenShow"),
+          this.qjs?.IsPending() && this.qjs.SetResult(),
           this.ChildPopView?.PopItem.SetActive(!0),
           ForgingController_1.ForgingController.PlayForgingEnterDisplay(
-            this.VIi,
+            this.VTi,
           ),
-          (this.c4s = !0));
+          (this.zVs = !0));
       }),
-      (this.PGt = (e, i, t) => {
+      (this.xNt = (e, i, t) => {
         i = new MainTypeItem(i, e);
         return (
-          i.Update(), i.SetMainTypeCallback(this.xGt), { Key: t, Value: i }
+          i.Update(), i.SetMainTypeCallback(this.wNt), { Key: t, Value: i }
         );
       }),
-      (this.xGt = (e) => {
-        for (const i of this.wIi.GetLayoutItemMap().values())
+      (this.wNt = (e) => {
+        for (const i of this.wTi.GetLayoutItemMap().values())
           i.OnDeselectedItem();
-        (this.MGt = !0), this.xTi();
+        (this.ENt = !0), this.xLi();
       }),
-      (this.z9e = () => {
+      (this.cHe = () => {
         var e = new ForgingMediumItemGrid_1.ForgingMediumItemGrid();
-        return e.BindOnExtendToggleStateChanged(this.HIi), e;
+        return e.BindOnExtendToggleStateChanged(this.HTi), e;
       }),
-      (this.HIi = (e) => {
+      (this.HTi = (e) => {
         e = e.Data;
-        this.ITi.DeselectCurrentGridProxy(),
-          (this.yTi = this.TTi.indexOf(e)),
-          (this.LTi = e),
-          this.ITi.IsGridDisplaying(this.yTi) &&
+        this.ILi.DeselectCurrentGridProxy(),
+          (this.yLi = this.TLi.indexOf(e)),
+          (this.LLi = e),
+          this.ILi.IsGridDisplaying(this.yLi) &&
             (e.IsNew &&
-              !this.MGt &&
+              !this.ENt &&
               ((e.IsNew = !1),
               ModelManager_1.ModelManager.NewFlagModel.RemoveNewFlag(
                 LocalStorageDefine_1.ELocalStoragePlayerKey.ForgingLevelKey,
                 e.ItemId,
               )),
-            this.ITi.SelectGridProxy(this.yTi),
-            this.ITi.RefreshGridProxy(this.yTi),
-            this.DTi.RefreshTips(e),
-            (this.MGt = !1));
+            this.ILi.SelectGridProxy(this.yLi),
+            this.ILi.RefreshGridProxy(this.yLi),
+            this.DLi.RefreshTips(e),
+            (this.ENt = !1));
       }),
-      (this.RTi = () => {
-        this.vGt.UpdateData(24, this.TGt());
+      (this.RLi = () => {
+        this.MNt.UpdateData(24, this.LNt());
       }),
-      (this.HGt = () => {
-        this.ITi.ReloadData(this.TTi);
+      (this.jNt = () => {
+        this.ILi.ReloadData(this.TLi);
       }),
-      (this.Q8t = () => {
+      (this.Q9t = () => {
         UiManager_1.UiManager.OpenView(
           "ManufactureHelpRoleView",
-          this.LTi.ItemId,
+          this.LLi.ItemId,
         );
       }),
-      (this.kGt = (e) => {
-        (this.TTi = e),
-          (this.TTi = this.TTi.filter(
+      (this.FNt = (e) => {
+        (this.TLi = e),
+          (this.TLi = this.TLi.filter(
             (e) =>
               e.ExistStartTime <= 0 ||
               TimeUtil_1.TimeUtil.IsInTimeSpan(
@@ -138,64 +138,64 @@ class ForgingRootView extends UiViewBase_1.UiViewBase {
                 e.ExistEndTime,
               ),
           )),
-          this.HGt(),
-          0 === this.TTi.length
-            ? (this.GetItem(8).SetUIActive(!0), this.DTi.SetActive(!1))
+          this.jNt(),
+          0 === this.TLi.length
+            ? (this.GetItem(8).SetUIActive(!0), this.DLi.SetActive(!1))
             : (this.GetItem(8).SetUIActive(!1),
-              this.DTi.SetActive(!0),
-              this.wTi(!0));
+              this.DLi.SetActive(!0),
+              this.wLi(!0));
       }),
-      (this.xTi = () => {
-        this.vGt.UpdateData(24, this.TGt());
+      (this.xLi = () => {
+        this.MNt.UpdateData(24, this.LNt());
       });
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.GetForgingData,
-      this.d5s,
+      this.Gjs,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OpenHelpRole,
-        this.Q8t,
+        this.Q9t,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.ForgingSuccess,
-        this.RTi,
+        this.RLi,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.ForgingFail,
-        this.RTi,
+        this.RLi,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnBeginPlayForgingWorkingDisplay,
-        this.UTi,
+        this.ULi,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.CloseView,
         this.$Ge,
       ),
-      (this.GOe = TimerSystem_1.TimerSystem.Forever(this.wGt, TIMERGAP));
+      (this.GOe = TimerSystem_1.TimerSystem.Forever(this.BNt, TIMERGAP));
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.GetForgingData,
-      this.d5s,
+      this.Gjs,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OpenHelpRole,
-        this.Q8t,
+        this.Q9t,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.ForgingSuccess,
-        this.HGt,
+        this.jNt,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.ForgingFail,
-        this.HGt,
+        this.jNt,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnBeginPlayForgingWorkingDisplay,
-        this.UTi,
+        this.ULi,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.CloseView,
@@ -205,20 +205,20 @@ class ForgingRootView extends UiViewBase_1.UiViewBase {
         TimerSystem_1.TimerSystem.Has(this.GOe) &&
         (TimerSystem_1.TimerSystem.Remove(this.GOe), (this.GOe = void 0));
   }
-  Dqt() {
+  AGt() {
     var e = ModelManager_1.ModelManager.ForgingModel.GetRefreshLimitTime();
     e
       ? (this.GetItem(12).SetUIActive(!0),
         LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(13), "RefreshTime", e))
       : this.GetItem(12).SetUIActive(!1);
   }
-  BGt() {
+  bNt() {
     return (
       ModelManager_1.ModelManager.ForgingModel.GetRefreshLimitTimeValue() <= 0
     );
   }
-  GGt() {
-    var e = this.TGt();
+  NNt() {
+    var e = this.LNt();
     if (e)
       for (const i of e)
         if (
@@ -246,38 +246,47 @@ class ForgingRootView extends UiViewBase_1.UiViewBase {
     ];
   }
   async OnBeforeStartAsync() {
-    (this.DTi = new ForgingIngredientsView_1.ForgingIngredientsView()),
-      await this.DTi.CreateByActorAsync(this.GetItem(4).GetOwner()),
-      this.DTi.SetActive(!0);
+    (this.DLi = new ForgingIngredientsView_1.ForgingIngredientsView()),
+      await this.DLi.CreateByActorAsync(this.GetItem(4).GetOwner()),
+      this.DLi.SetActive(!0);
   }
   OnStart() {
-    (this.wIi = new GenericLayoutNew_1.GenericLayoutNew(
+    (this.wTi = new GenericLayoutNew_1.GenericLayoutNew(
       this.GetHorizontalLayout(0),
-      this.PGt,
+      this.xNt,
     )),
       this.GetButton(5)
         .GetOwner()
         ?.GetComponentByClass(UE.UIItem.StaticClass())
         ?.SetUIActive(!1),
-      this.wIi.RebuildLayoutByDataNew([0]),
-      (this.pGt = new FilterEntrance_1.FilterEntrance(
+      this.wTi.RebuildLayoutByDataNew([0]),
+      (this.vNt = new FilterEntrance_1.FilterEntrance(
         this.GetItem(3),
-        this.kGt,
+        this.FNt,
       )),
-      (this.vGt = new SortEntrance_1.SortEntrance(this.GetItem(10), this.kGt)),
-      this.pGt.SetActive(!1),
-      (this.ITi = new LoopScrollView_1.LoopScrollView(
+      (this.MNt = new SortEntrance_1.SortEntrance(this.GetItem(10), this.FNt)),
+      this.vNt.SetActive(!1),
+      (this.ILi = new LoopScrollView_1.LoopScrollView(
         this.GetLoopScrollViewComponent(2),
         this.GetLoopScrollViewComponent(2).TemplateGrid,
-        this.z9e,
+        this.cHe,
       )),
       ForgingController_1.ForgingController.RegisterCurrentInteractionEntity(),
       CommonManager_1.CommonManager.SetCurrentSystem(2),
       (ModelManager_1.ModelManager.ForgingModel.CurrentForgingViewType = 0);
-    for (const e of this.wIi.GetLayoutItemMap().values()) e.OnSelectedItem();
-    (this.m5s = new CustomPromise_1.CustomPromise()),
+    for (const e of this.wTi.GetLayoutItemMap().values()) e.OnSelectedItem();
+    (this.qjs = new CustomPromise_1.CustomPromise()),
       (ModelManager_1.ModelManager.ForgingModel.CurrentInteractCreatureDataLongId =
         ModelManager_1.ModelManager.InteractionModel.InteractCreatureDataLongId),
+      void 0 ===
+        ModelManager_1.ModelManager.InteractionModel.CurrentInteractEntityId &&
+        (Log_1.Log.CheckInfo() &&
+          Log_1.Log.Info(
+            "Forging",
+            8,
+            "[LevelEventOpenSystem] 打开合成界面时找不到交互对象，直接关闭界面",
+          ),
+        this.CloseMe()),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnExecuteUiCameraSequenceEvent,
         this.jwe,
@@ -285,56 +294,57 @@ class ForgingRootView extends UiViewBase_1.UiViewBase {
   }
   async OnBeforeShowAsyncImplement() {
     UiCameraAnimationManager_1.UiCameraAnimationManager.IsPlayingBlendInSequence() &&
-      this.m5s &&
-      (await this.m5s.Promise);
+      this.qjs &&
+      (await this.qjs.Promise);
   }
   OnBeforeShow() {
-    this.d5s(), this.ChildPopView?.PopItem.SetMaskResponsibleState(!1);
+    this.Gjs(), this.ChildPopView?.PopItem.SetMaskResponsibleState(!1);
   }
   OnAfterShow() {
-    this.YGt();
+    this.JNt(), (this.qjs = void 0);
   }
   OnBeforeDestroy() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnExecuteUiCameraSequenceEvent,
       this.jwe,
     ),
-      this.pGt.Destroy(),
-      this.vGt.Destroy(),
-      this.wIi.ClearChildren(),
-      this.DTi.Destroy(),
+      this.vNt.Destroy(),
+      this.MNt.Destroy(),
+      this.wTi.ClearChildren(),
+      this.DLi.Destroy(),
       ForgingController_1.ForgingController.PlayLeaveForgingAudio(),
       ForgingController_1.ForgingController.ClearCurrentInteractionEntityDisplay(),
-      (this.m5s = void 0);
+      (this.qjs = void 0),
+      (ModelManager_1.ModelManager.ForgingModel.CurrentForgingRoleId = 0);
   }
-  YGt() {
+  JNt() {
     var e,
       i = this.ChildPopView.PopItem;
     i &&
-      !this.c4s &&
+      !this.zVs &&
       ((e =
         !UiCameraAnimationManager_1.UiCameraAnimationManager.IsPlayingBlendInSequence()),
       i.GetActive() !== e) &&
       i.SetActive(e);
   }
-  wTi(e = !1) {
-    this.ITi.DeselectCurrentGridProxy(),
-      e && this.ITi.ScrollToGridIndex(this.yTi),
-      this.ITi.SelectGridProxy(this.yTi);
-    e = this.TTi[this.yTi];
-    this.DTi.RefreshTips(e);
+  wLi(e = !1) {
+    this.ILi.DeselectCurrentGridProxy(),
+      e && this.ILi.ScrollToGridIndex(this.yLi),
+      this.ILi.SelectGridProxy(this.yLi);
+    e = this.TLi[this.yLi];
+    this.DLi.RefreshTips(e);
   }
-  TGt(e = !0) {
+  LNt(e = !0) {
     let i = ModelManager_1.ModelManager.ForgingModel.GetForgingDataList();
     return (i =
       i && e ? i.filter((e) => 0 < e.IsUnlock || 0 < e.FormulaItemId) : i);
   }
   GetGuideUiItemAndUiItemForShowEx(e) {
     var i;
-    if (this.ITi?.DataInited)
+    if (this.ILi?.DataInited)
       return (
         (i = Number(e[0])),
-        (i = this.ITi.GetGridByDisplayIndex(i))
+        (i = this.ILi.GetGridByDisplayIndex(i))
           ? [i, i]
           : void (
               Log_1.Log.CheckError() &&
@@ -357,7 +367,7 @@ class MainTypeItem extends UiPanelBase_1.UiPanelBase {
         1 === e && this.SelectedItem();
       }),
       this.CreateThenShowByActor(e.GetOwner()),
-      (this.zGt = i);
+      (this.ZNt = i);
   }
   OnRegisterComponent() {
     (this.ComponentRegisterInfos = [
@@ -367,7 +377,7 @@ class MainTypeItem extends UiPanelBase_1.UiPanelBase {
       (this.BtnBindInfo = [[1, this.OnItemButtonClicked]]);
   }
   GetMainType() {
-    return this.zGt;
+    return this.ZNt;
   }
   SetMainTypeCallback(e) {
     this.OnClickedCallback = e;
@@ -380,7 +390,7 @@ class MainTypeItem extends UiPanelBase_1.UiPanelBase {
     this.SetSpriteByPath(e, this.GetSprite(0), !1);
   }
   SelectedItem() {
-    this.OnClickedCallback && this.OnClickedCallback(this.zGt);
+    this.OnClickedCallback && this.OnClickedCallback(this.ZNt);
   }
   OnSelectedItem() {
     this.GetExtendToggle(1).SetToggleState(1, !1);

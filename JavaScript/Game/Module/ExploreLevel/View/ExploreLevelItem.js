@@ -13,18 +13,18 @@ class ExploreLevelItem extends UiPanelBase_1.UiPanelBase {
       (this.ScrollViewDelegate = void 0),
       (this.GridIndex = 0),
       (this.DisplayIndex = 0),
-      (this.c5t = void 0),
-      (this.m5t = void 0),
-      (this.d5t = () => {
-        var e = this.c5t.GetAreaConfig(),
+      (this.cVt = void 0),
+      (this.mVt = void 0),
+      (this.dVt = () => {
+        var e = this.cVt.GetAreaConfig(),
           i = e.DeliveryMarkType,
           e = e.DeliveryMarkId;
         1 !== i ||
           e <= 0 ||
           SkipTaskManager_1.SkipTaskManager.Run(0, i.toString(), e.toString());
       }),
-      (this.C5t = () => {
-        this.m5t && this.m5t(this.c5t);
+      (this.CVt = () => {
+        this.mVt && this.mVt(this.cVt);
       });
   }
   OnRegisterComponent() {
@@ -38,18 +38,18 @@ class ExploreLevelItem extends UiPanelBase_1.UiPanelBase {
       [6, UE.UISprite],
     ]),
       (this.BtnBindInfo = [
-        [4, this.d5t],
-        [5, this.C5t],
+        [4, this.dVt],
+        [5, this.CVt],
       ]);
   }
   Clear() {}
   OnSelected(e) {}
   OnDeselected(e) {}
   OnBeforeDestroy() {
-    (this.c5t = void 0), (this.m5t = void 0);
+    (this.cVt = void 0), (this.mVt = void 0);
   }
   Refresh(e, i, t) {
-    (this.c5t = e),
+    (this.cVt = e),
       this.SetTextureByPath(
         ModelManager_1.ModelManager.ExploreLevelModel
           .ExploreScoreItemTexturePath,
@@ -91,7 +91,7 @@ class ExploreLevelItem extends UiPanelBase_1.UiPanelBase {
             this.SetButtonUiActive(5, !1)));
   }
   BindOnClickedReceiveButton(e) {
-    this.m5t = e;
+    this.mVt = e;
   }
   GetKey(e, i) {
     return this.GridIndex;

@@ -118,13 +118,13 @@ class ConditionEventPair {
     this.Clear(),
       (this.Qte = new AiConditions(t)),
       (this.EventBinder = i),
-      (this.Xte = s.Entity.GetComponent(185)),
-      (this.$te = s.Entity.GetComponent(156)),
+      (this.Xte = s.Entity.GetComponent(188)),
+      (this.$te = s.Entity.GetComponent(158)),
       (this.eie =
         this.Qte.Tags.size +
         this.Qte.Attributes.size +
         this.Qte.AttributeRates.length);
-    var h = s.Entity.GetComponent(185);
+    var h = s.Entity.GetComponent(188);
     if (h)
       for (var [e] of this.Qte.Tags) {
         e = h.ListenForTagAnyCountChanged(e, this.hie(e));
@@ -183,7 +183,7 @@ class ConditionEventPair {
   ResetConditions(t = !1) {
     if (((this.Zte = 0), this.Xte))
       for (var [i, s] of this.Qte.Tags)
-        s.InRange(this.Xte.GetTagCountById(i)) && (this.Yte.add(i), ++this.Zte);
+        s.InRange(this.Xte.GetTagCount(i)) && (this.Yte.add(i), ++this.Zte);
     if (this.$te) {
       for (var [h, e] of this.Qte.Attributes) {
         var o = this.$te.GetCurrentValue(h);

@@ -26,9 +26,9 @@ class AppVersionMisc {
       (this.IndexSha1s = void 0),
       (this.UpdateVersionNodes = void 0),
       (this.UpdatePreVersionNodes = void 0),
-      (this.uyr = !1),
-      (this.cyr = !1),
-      (this.myr = new Set());
+      (this.hIr = !1),
+      (this.lIr = !1),
+      (this._Ir = new Set());
   }
   Init(e) {
     (this.PackageVersion = UE.KuroLauncherLibrary.GetAppVersion()),
@@ -46,14 +46,14 @@ class AppVersionMisc {
       ),
       (this.UpdateVersionNodes = new Array());
     for (const s of this.LocalSaveResourceVersions)
-      (s === this.PackageVersion && !this.uyr) ||
+      (s === this.PackageVersion && !this.hIr) ||
         this.UpdateVersionNodes.push(s);
     this.LocalSaveResourceVersion !== this.LatestVersion &&
       this.LatestVersion !== this.PackageVersion &&
       this.UpdateVersionNodes.push(this.LatestVersion),
       (this.UpdatePreVersionNodes = new Array()),
       this.LatestVersion === this.PackageVersion &&
-        this.uyr &&
+        this.hIr &&
         this.UpdatePreVersionNodes.push(this.PackageVersion),
       this.LatestVersion !== this.PackageVersion &&
         this.UpdatePreVersionNodes.push(this.PackageVersion);
@@ -71,8 +71,8 @@ class AppVersionMisc {
       this.LatestVersion = r;
       var [s, c] = BaseDefine_1.VersionInfo.TryParse(r),
         [i, d] = BaseDefine_1.VersionInfo.TryParse(o),
-        [p, l] = BaseDefine_1.VersionInfo.TryParse(u);
-      if (!s || !i || !p)
+        [L, p] = BaseDefine_1.VersionInfo.TryParse(u);
+      if (!s || !i || !L)
         throw (
           (LauncherLog_1.LauncherLog.Error(
             "转版本号失败",
@@ -85,29 +85,29 @@ class AppVersionMisc {
         );
       let e = !1,
         t = !1;
-      if (((this.cyr = !1), BaseDefine_1.VersionInfo.PackageEquals(c, d))) {
+      if (((this.lIr = !1), BaseDefine_1.VersionInfo.PackageEquals(c, d))) {
         if (c.Patch < d.Patch) {
-          this.cyr = !0;
+          this.lIr = !0;
           for (let e = c.Patch + 1; e <= d.Patch; e++)
-            this.myr.add(`${c.Major}.${c.Minor}.` + e);
+            this._Ir.add(`${c.Major}.${c.Minor}.` + e);
         }
       } else (o = this.PackageVersion), (n = [o]), (e = !0);
       if (BaseDefine_1.VersionInfo.PackageEquals(c, d)) {
-        if (c.Patch < l.Patch) {
-          this.cyr = !0;
-          for (let e = c.Patch + 1; e <= l.Patch; e++)
-            this.myr.add(`${c.Major}.${c.Minor}.` + e);
+        if (c.Patch < p.Patch) {
+          this.lIr = !0;
+          for (let e = c.Patch + 1; e <= p.Patch; e++)
+            this._Ir.add(`${c.Major}.${c.Minor}.` + e);
         }
       } else (u = this.PackageVersion), (a = [u]), (t = !0);
-      if (this.cyr) {
+      if (this.lIr) {
         this.LocalResourceVersions = new Array();
-        for (const L of n)
-          this.myr.has(L) || this.LocalResourceVersions.push(L);
+        for (const l of n)
+          this._Ir.has(l) || this.LocalResourceVersions.push(l);
         (this.LocalResourceVersion =
           this.LocalResourceVersions[this.LocalResourceVersions.length - 1]),
           (this.LocalSaveResourceVersions = new Array());
         for (const f of a)
-          this.myr.has(f) || this.LocalSaveResourceVersions.push(f);
+          this._Ir.has(f) || this.LocalSaveResourceVersions.push(f);
         (this.LocalSaveResourceVersion =
           this.LocalSaveResourceVersions[
             this.LocalSaveResourceVersions.length - 1
@@ -119,18 +119,18 @@ class AppVersionMisc {
           (this.LocalResourceVersion = o),
           (this.LocalSaveResourceVersions = a),
           (this.LocalSaveResourceVersion = u);
-      e && this.UpdateVersion(void 0),
-        t && this.UpdateSavedVersion(void 0),
-        (this.uyr = h.has(this.PackageVersion)),
+      e && this.UpdateVersion(void 0, !0),
+        t && this.UpdateSavedVersion(void 0, !0),
+        (this.hIr = h.has(this.PackageVersion)),
         (this.IndexSha1s = new Array());
       for (const _ of this.LocalSaveResourceVersions)
-        (_ === this.PackageVersion && !this.uyr) ||
+        (_ === this.PackageVersion && !this.hIr) ||
           this.IndexSha1s.push(h.get(_));
       this.LocalSaveResourceVersion !== this.LatestVersion &&
         this.IndexSha1s.push(h.get(this.LatestVersion)),
         (this.HasUpdatedResource =
           this.LatestVersion === this.PackageVersion
-            ? !this.uyr
+            ? !this.hIr
             : this.LocalResourceVersion === this.LatestVersion);
     } else
       LauncherLog_1.LauncherLog.Warn(
@@ -144,20 +144,20 @@ class AppVersionMisc {
         (this.HasUpdatedResource = !0);
   }
   NeedRevert() {
-    return this.cyr;
+    return this.lIr;
   }
   GetRevertVersions() {
-    return this.myr;
+    return this._Ir;
   }
   HasNewResourceVersionBaseOnPackage() {
     return this.PackageVersion !== this.LatestVersion;
   }
   IsBasePackageSplited() {
-    return this.uyr;
+    return this.hIr;
   }
   IsFirstUpdateResources() {
     return this.LatestVersion === this.PackageVersion
-      ? this.uyr
+      ? this.hIr
       : this.LatestVersion !== this.LocalSaveResourceVersion;
   }
   NeedCheckAppRestart() {
@@ -169,35 +169,64 @@ class AppVersionMisc {
   GetLatestVersion() {
     return this.LatestVersion;
   }
-  UpdateVersion(e) {
-    (this.LocalResourceVersion = this.LatestVersion),
-      (this.LocalResourceVersions.length <= 0 ||
-        this.LocalResourceVersions[this.LocalResourceVersions.length - 1] !==
-          this.LatestVersion) &&
-        this.LocalResourceVersions.push(this.LatestVersion);
-    var t = this.LocalResourceVersions.join(",");
-    LauncherStorageLib_1.LauncherStorageLib.SetGlobalString(
-      this.GetUpdateVersionKey(),
-      t,
-    );
-  }
-  UpdateSavedVersion(e) {
-    (this.LocalSaveResourceVersion = this.LatestVersion),
-      (this.LocalSaveResourceVersions.length <= 0 ||
-        this.LocalSaveResourceVersions[
-          this.LocalSaveResourceVersions.length - 1
-        ] !== this.LatestVersion) &&
-        this.LocalSaveResourceVersions.push(this.LatestVersion);
-    var t = this.LocalSaveResourceVersions.join(",");
-    LauncherLog_1.LauncherLog.Info(
-      "UpdateSavedVersion",
-      ["Type", this.GetResType()],
-      ["Versions", t],
-    ),
+  UpdateVersion(e, t = !1) {
+    if (t) {
+      const s = this.LocalResourceVersions.join(",");
       LauncherStorageLib_1.LauncherStorageLib.SetGlobalString(
-        this.GetSaveUpdateVersionKey(),
-        t,
+        this.GetUpdateVersionKey(),
+        s,
+      ),
+        void (
+          0 < UE.KuroLauncherLibrary.NeedRestartApp() &&
+          UE.KuroLauncherLibrary.SetRestartApp(1)
+        );
+    } else {
+      (this.LocalResourceVersion = this.LatestVersion),
+        (this.LocalResourceVersions.length <= 0 ||
+          this.LocalResourceVersions[this.LocalResourceVersions.length - 1] !==
+            this.LatestVersion) &&
+          this.LocalResourceVersions.push(this.LatestVersion);
+      const s = this.LocalResourceVersions.join(",");
+      LauncherStorageLib_1.LauncherStorageLib.SetGlobalString(
+        this.GetUpdateVersionKey(),
+        s,
       );
+    }
+  }
+  UpdateSavedVersion(e, t = !1) {
+    if (t) {
+      const s = this.LocalSaveResourceVersions.join(",");
+      LauncherLog_1.LauncherLog.Info(
+        "UpdateSavedVersion",
+        ["Type", this.GetResType()],
+        ["Versions", s],
+      ),
+        LauncherStorageLib_1.LauncherStorageLib.SetGlobalString(
+          this.GetSaveUpdateVersionKey(),
+          s,
+        ),
+        void (
+          0 < UE.KuroLauncherLibrary.NeedRestartApp() &&
+          UE.KuroLauncherLibrary.SetRestartApp(1)
+        );
+    } else {
+      (this.LocalSaveResourceVersion = this.LatestVersion),
+        (this.LocalSaveResourceVersions.length <= 0 ||
+          this.LocalSaveResourceVersions[
+            this.LocalSaveResourceVersions.length - 1
+          ] !== this.LatestVersion) &&
+          this.LocalSaveResourceVersions.push(this.LatestVersion);
+      const s = this.LocalSaveResourceVersions.join(",");
+      LauncherLog_1.LauncherLog.Info(
+        "UpdateSavedVersion",
+        ["Type", this.GetResType()],
+        ["Versions", s],
+      ),
+        LauncherStorageLib_1.LauncherStorageLib.SetGlobalString(
+          this.GetSaveUpdateVersionKey(),
+          s,
+        );
+    }
   }
   ClearAllPatchVersion(e) {
     LauncherStorageLib_1.LauncherStorageLib.DeleteGlobalString(
@@ -304,8 +333,8 @@ class LanguageVersionMisc extends AppVersionMisc {
   constructor(e) {
     super(),
       (this.LanguageCode = ""),
-      (this.dyr = void 0),
-      (this.Cyr = !1),
+      (this.uIr = void 0),
+      (this.cIr = !1),
       (this.LanguageCode = e);
   }
   GetUpdateVersionKey() {
@@ -325,22 +354,22 @@ class LanguageVersionMisc extends AppVersionMisc {
   }
   GetRemoteVersion() {
     return (
-      this.Cyr ||
-        ((this.dyr = RemoteConfig_1.RemoteInfo.Config?.Versions?.find(
+      this.cIr ||
+        ((this.uIr = RemoteConfig_1.RemoteInfo.Config?.Versions?.find(
           (e) => e.Name === this.LanguageCode,
         )),
-        (this.Cyr = !0)),
-      this.dyr?.Version
+        (this.cIr = !0)),
+      this.uIr?.Version
     );
   }
   GetRemoteSha1Map() {
     return (
-      this.Cyr ||
-        ((this.dyr = RemoteConfig_1.RemoteInfo.Config?.Versions?.find(
+      this.cIr ||
+        ((this.uIr = RemoteConfig_1.RemoteInfo.Config?.Versions?.find(
           (e) => e.Name === this.LanguageCode,
         )),
-        (this.Cyr = !0)),
-      this.dyr?.IndexSha1
+        (this.cIr = !0)),
+      this.uIr?.IndexSha1
     );
   }
   HasMountFile() {

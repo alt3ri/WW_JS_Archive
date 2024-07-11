@@ -6,7 +6,7 @@ const ModelManager_1 = require("../../../../../../Manager/ModelManager"),
 class WeaponSort extends CommonSort_1.CommonSort {
   constructor() {
     super(...arguments),
-      (this.ZLt = (t, e, r) => {
+      (this.oRt = (t, e, r) => {
         var t = ModelManager_1.ModelManager.WeaponModel.GetWeaponDataByIncId(
             t.GetUniqueId(),
           ),
@@ -22,7 +22,7 @@ class WeaponSort extends CommonSort_1.CommonSort {
             ? (i - s) * (r ? -1 : 1)
             : void 0;
       }),
-      (this.nRt = (t, e, r) => {
+      (this.lUt = (t, e, r) => {
         (t = ModelManager_1.ModelManager.WeaponModel.GetWeaponDataByIncId(
           t.GetUniqueId(),
         )),
@@ -33,7 +33,7 @@ class WeaponSort extends CommonSort_1.CommonSort {
           (e = e ? e.GetBreachLevel() : 0);
         if (t !== e) return (e - t) * (r ? -1 : 1);
       }),
-      (this.sRt = (t, e, r) => {
+      (this._Ut = (t, e, r) => {
         (t = ModelManager_1.ModelManager.WeaponModel.GetWeaponDataByIncId(
           t.GetUniqueId(),
         )),
@@ -44,52 +44,52 @@ class WeaponSort extends CommonSort_1.CommonSort {
           (e = e ? e.GetResonanceLevel() : 0);
         if (t !== e) return (e - t) * (r ? -1 : 1);
       }),
-      (this.VLt = (t, e, r) => {
+      (this.KDt = (t, e, r) => {
         if (t.GetQuality() !== e.GetQuality())
           return (e.GetQuality() - t.GetQuality()) * (r ? -1 : 1);
       }),
-      (this.VDt = (t, e, r) => {
+      (this.KRt = (t, e, r) => {
         if (t.GetIsLock() !== e.GetIsLock())
           return -1 * ((t.GetIsLock() ? 1 : 0) - (e.GetIsLock() ? 1 : 0));
       }),
-      (this.iDt = (t, e, r) => {
+      (this.sRt = (t, e, r) => {
         (t = ModelManager_1.ModelManager.WeaponModel.GetWeaponItemBaseExp(t)),
           (e = ModelManager_1.ModelManager.WeaponModel.GetWeaponItemBaseExp(e));
         if (t !== e) return (e - t) * (r ? -1 : 1);
       }),
-      (this.eDt = (t, e, r) => {
+      (this.rRt = (t, e, r) => {
         return (e.GetUniqueId() - t.GetUniqueId()) * (r ? -1 : 1);
       }),
-      (this.kLt = (t, e, r) => {
+      (this.jDt = (t, e, r) => {
         return (e.GetConfigId() - t.GetConfigId()) * (r ? -1 : 1);
       }),
-      (this.oDt = (t, e, r) => {
+      (this.aRt = (t, e, r) => {
         (t = 4 === t.GetType()), (e = 4 === e.GetType());
         if (t != e) return (e ? 1 : 0) - (t ? 1 : 0);
       }),
-      (this.aRt = (t, e, r) => {
-        (t = this.hRt(t)), (e = this.hRt(e));
+      (this.uUt = (t, e, r) => {
+        (t = this.cUt(t)), (e = this.cUt(e));
         return void 0 !== t && void 0 !== e && t !== e ? t - e : void 0;
       }),
-      (this.lRt = (t, e, r) => {
+      (this.mUt = (t, e, r) => {
         (t = 2 === t.GetType()), (e = 2 === e.GetType());
         if (t != e) return (e ? 1 : 0) - (t ? 1 : 0);
       });
   }
   OnInitSortMap() {
-    this.SortMap.set(1, this.ZLt),
-      this.SortMap.set(2, this.VLt),
-      this.SortMap.set(3, this.VDt),
-      this.SortMap.set(4, this.iDt),
-      this.SortMap.set(5, this.eDt),
-      this.SortMap.set(6, this.nRt),
-      this.SortMap.set(7, this.sRt),
-      this.SortMap.set(8, this.kLt),
-      this.SortMap.set(9, this.oDt),
-      this.SortMap.set(10, this.aRt),
-      this.SortMap.set(11, this.lRt);
+    this.SortMap.set(1, this.oRt),
+      this.SortMap.set(2, this.KDt),
+      this.SortMap.set(3, this.KRt),
+      this.SortMap.set(4, this.sRt),
+      this.SortMap.set(5, this.rRt),
+      this.SortMap.set(6, this.lUt),
+      this.SortMap.set(7, this._Ut),
+      this.SortMap.set(8, this.jDt),
+      this.SortMap.set(9, this.aRt),
+      this.SortMap.set(10, this.uUt),
+      this.SortMap.set(11, this.mUt);
   }
-  hRt(t) {
+  cUt(t) {
     var e;
     if (t)
       return 4 === (e = t.GetType())

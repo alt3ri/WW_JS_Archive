@@ -10,16 +10,16 @@ class CharDitherEffect extends CharRenderBase_1.CharRenderBase {
     super(...arguments),
       (this.CharNpcDither = void 0),
       (this.MaterialContainer = void 0),
-      (this.mar = -0),
-      (this.dar = -0),
-      (this.gar = -0),
-      (this.par = 0),
-      (this.var = -0),
-      (this.Mar = !1),
-      (this.Sar = void 0);
+      (this.mhr = -0),
+      (this.dhr = -0),
+      (this.Chr = -0),
+      (this.fhr = 0),
+      (this.phr = -0),
+      (this.vhr = !1),
+      (this.Mhr = void 0);
   }
   Start() {
-    this.Ear()
+    this.Ehr()
       ? ((this.CharNpcDither = this.RenderComponent.GetComponent(
           RenderConfig_1.RenderConfig.IdNpcDitherEffect,
         )),
@@ -40,59 +40,62 @@ class CharDitherEffect extends CharRenderBase_1.CharRenderBase {
               12,
               "非NPC类型没有添加组件 material container",
             ))),
-      (this.var = 1),
-      (this.mar = 0),
-      (this.dar = -0.2),
-      (this.gar = 1),
-      (this.par = 0),
-      (this.Mar = !1),
-      (this.Sar = new Map()),
+      (this.phr = 1),
+      (this.mhr = 0),
+      (this.dhr = -0.2),
+      (this.Chr = 1),
+      (this.fhr = 0),
+      (this.vhr = !1),
+      (this.Mhr = new Map()),
       this.OnInitSuccess();
   }
   ResetDitherEffect() {
-    this.yar(1), (this.par = 0), (this.Mar = !1), this.Sar.clear();
+    this.Shr(1), (this.fhr = 0), (this.vhr = !1), this.Mhr.clear();
   }
   UpdateNpcDitherComponent() {
-    this.Ear() &&
+    this.Ehr() &&
       this.CharNpcDither &&
       this.CharNpcDither.UpdateSkeletalComponents(
         this.RenderComponent.GetCachedOwner(),
       );
   }
   SetDitherEffect(i, s) {
-    if (i !== this.var) {
+    if (i !== this.phr) {
       let t = i < 0 || 1 <= i ? !0 : !1;
       if (t) {
-        this.Sar.has(s) && this.Sar.set(s, !1);
+        this.Mhr.has(s) && this.Mhr.set(s, !1);
         let e = !1,
           h = 0;
-        this.Sar.forEach((t, i) => {
+        this.Mhr.forEach((t, i) => {
           (e = e || t), t && h < i && (h = i);
         }),
-          (this.par = h),
-          !e && this.Mar && this.RemoveDitherEffect();
+          (this.fhr = h),
+          !e && this.vhr && this.RemoveDitherEffect();
       } else
-        this.Sar.set(s, !0),
-          (this.par === s || this.par < s) &&
-            ((this.par = s), this.Mar || this.Iar(), this.yar(i));
+        this.Mhr.set(s, !0),
+          (this.fhr === s || this.fhr < s) &&
+            ((this.fhr = s), this.vhr || this.yhr(), this.Shr(i));
     }
   }
   RemoveDitherEffect() {
-    this.Tar(), this.yar(1), (this.Mar = !1);
+    this.Ihr(), this.Shr(1), (this.vhr = !1);
   }
-  Iar() {
-    this.Lar(), (this.Mar = !0);
+  yhr() {
+    this.Thr(), (this.vhr = !0);
   }
   Update() {}
   GetComponentId() {
     return RenderConfig_1.RenderConfig.IdDitherEffect;
   }
-  yar(t) {
-    (this.mar = MathUtils_1.MathUtils.RangeClamp(t, 0, 1, this.dar, this.gar)),
-      Math.abs(this.var - t) < 1e-6 || (this.Dar(this.mar), (this.var = t));
+  GetDitherRate() {
+    return this.mhr;
   }
-  Lar() {
-    this.Ear()
+  Shr(t) {
+    (this.mhr = MathUtils_1.MathUtils.RangeClamp(t, 0, 1, this.dhr, this.Chr)),
+      Math.abs(this.phr - t) < 1e-6 || (this.Lhr(this.mhr), (this.phr = t));
+  }
+  Thr() {
+    this.Ehr()
       ? this.CharNpcDither?.EnableNpcDitherEffect()
       : (this.MaterialContainer.UseAlphaTestCommon(),
         this.MaterialContainer.SetFloat(
@@ -103,8 +106,8 @@ class CharDitherEffect extends CharRenderBase_1.CharRenderBase {
           0,
         ));
   }
-  Dar(t) {
-    this.Ear()
+  Lhr(t) {
+    this.Ehr()
       ? this.CharNpcDither?.SetNpcDitherEffect(t)
       : this.MaterialContainer.SetFloat(
           RenderConfig_1.RenderConfig.DitherValue,
@@ -114,8 +117,8 @@ class CharDitherEffect extends CharRenderBase_1.CharRenderBase {
           0,
         );
   }
-  Tar() {
-    this.Ear()
+  Ihr() {
+    this.Ehr()
       ? this.CharNpcDither?.RemoveNpcDitherEffect()
       : (this.MaterialContainer.RevertAlphaTestCommon(),
         this.MaterialContainer.SetFloat(
@@ -126,7 +129,7 @@ class CharDitherEffect extends CharRenderBase_1.CharRenderBase {
           0,
         ));
   }
-  Ear() {
+  Ehr() {
     return !!this.RenderComponent && 3 === this.RenderComponent.GetRenderType();
   }
   GetStatName() {

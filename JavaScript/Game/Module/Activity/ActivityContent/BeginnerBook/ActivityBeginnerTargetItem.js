@@ -7,13 +7,13 @@ const UE = require("ue"),
   ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
   UiManager_1 = require("../../../../Ui/UiManager"),
   SmallItemGrid_1 = require("../../../Common/SmallItemGrid/SmallItemGrid"),
-  RoleController_1 = require("../../../RoleUi/RoleController"),
   ScrollingTipsController_1 = require("../../../ScrollingTips/ScrollingTipsController"),
   GridProxyAbstract_1 = require("../../../Util/Grid/GridProxyAbstract"),
   LguiUtil_1 = require("../../../Util/LguiUtil"),
   WeaponTrialData_1 = require("../../../Weapon/Data/WeaponTrialData"),
   WorldMapController_1 = require("../../../WorldMap/WorldMapController"),
-  ActivityController_1 = require("../../ActivityController");
+  ActivityController_1 = require("../../ActivityController"),
+  RoleController_1 = require("../../../RoleUi/RoleController");
 class ActivityBeginnerTargetItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
@@ -63,10 +63,9 @@ class ActivityBeginnerTargetItem extends GridProxyAbstract_1.GridProxyAbstract {
               UiManager_1.UiManager.OpenView("CalabashRootView", r);
               break;
             case 5:
-              r = this.aNe[1].split("-");
               ControllerHolder_1.ControllerHolder.PayShopController.OpenPayShopViewWithTab(
-                Number(r[0]),
-                Number(r[1]),
+                Number(this.aNe[1]),
+                0,
               );
               break;
             case 6:

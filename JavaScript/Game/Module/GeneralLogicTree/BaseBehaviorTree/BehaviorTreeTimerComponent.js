@@ -11,63 +11,63 @@ const MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
   FAILEDRANGE_INTERTVAL = 100;
 class BehaviorTreeTimerCenter {
   constructor(e) {
-    (this.Gct = BigInt(0)),
-      (this.EJ = void 0),
-      (this.Gct = e),
-      (this.EJ = new Map());
+    (this.$mt = BigInt(0)),
+      (this.SJ = void 0),
+      (this.$mt = e),
+      (this.SJ = new Map());
   }
   Dispose() {
-    for (var [, e] of this.EJ) e.Destroy();
-    this.EJ.clear();
+    for (var [, e] of this.SJ) e.Destroy();
+    this.SJ.clear();
   }
   UpdateTimerInfo(e) {
     var i;
     e &&
-      ((i = e.y5n),
-      !e.jCs || 0 === (e = MathUtils_1.MathUtils.LongToNumber(e.jCs))
-        ? this.dKt(i)
-        : this.CKt(i, e));
+      ((i = e.r9n),
+      !e.sps || 0 === (e = MathUtils_1.MathUtils.LongToNumber(e.sps))
+        ? this.dQt(i)
+        : this.CQt(i, e));
   }
-  CKt(e, i) {
+  CQt(e, i) {
     let r = void 0;
     switch (e) {
       case "CountDownChallenge":
       case "PublicTime":
         (r = this.GetTimer(e)) ||
           ((r = new CountDownTimer_1.CountDownTimer(
-            this.Gct,
+            this.$mt,
             e,
             TICK_INTETVAL_TIME,
           )),
-          this.EJ.set(e, r));
+          this.SJ.set(e, r));
         break;
       case "WaitTime":
         (r = this.GetTimer(e)) ||
-          ((r = new NoUiTimer_1.NoUiTimer(this.Gct, e, !0, TICK_INTETVAL_TIME)),
-          this.EJ.set(e, r));
+          ((r = new NoUiTimer_1.NoUiTimer(this.$mt, e, !0, TICK_INTETVAL_TIME)),
+          this.SJ.set(e, r));
         break;
       case "GameStartCountDown":
         (r = this.GetTimer(e)) ||
           ((r = new LevelPlayPrepareTimer_1.LevelPlayPrepareTimer(
-            this.Gct,
+            this.$mt,
             e,
             !1,
           )),
-          this.EJ.set(e, r));
+          this.SJ.set(e, r));
         break;
       case GeneralLogicTreeDefine_1.OUTRANGEFAILED_TIMERTYPE:
       case GeneralLogicTreeDefine_1.NPCFARAWAY_TIMERTYPE:
         (r = this.GetTimer(e)) ||
           ((r = new FailRangeTimer_1.FailRangeTimer(
-            this.Gct,
+            this.$mt,
             e,
             FAILEDRANGE_INTERTVAL,
           )),
-          this.EJ.set(e, r));
+          this.SJ.set(e, r));
     }
     r?.StartShowTimer(i);
   }
-  dKt(e) {
+  dQt(e) {
     var i = this.GetTimer(e);
     if (i)
       switch (e) {
@@ -77,11 +77,11 @@ class BehaviorTreeTimerCenter {
           i.EndShowTimer();
           break;
         default:
-          i.Destroy(), this.EJ.delete(e);
+          i.Destroy(), this.SJ.delete(e);
       }
   }
   GetTimer(e) {
-    return this.EJ.get(e);
+    return this.SJ.get(e);
   }
   GetRemainTime(e = "CountDownChallenge") {
     return this.GetTimer(e)?.GetRemainTime() ?? 0;

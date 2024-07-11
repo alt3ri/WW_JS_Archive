@@ -18,40 +18,40 @@ class BattlePassTaskView extends UiTabViewBase_1.UiTabViewBase {
   constructor() {
     super(...arguments),
       (this.NOe = CommonDefine_1.INVALID_VALUE),
-      (this.vki = void 0),
-      (this.Aki = void 0),
-      (this.vkt = void 0),
-      (this.Pki = []),
-      (this.KVe = [1, 2, 0]),
-      (this.xki = () => {
-        this.wki();
+      (this.M2i = void 0),
+      (this.A2i = void 0),
+      (this.M2t = void 0),
+      (this.P2i = []),
+      (this.s8e = [1, 2, 0]),
+      (this.x2i = () => {
+        this.w2i();
       }),
-      (this.Bki = (e) => {
+      (this.B2i = (e) => {
         this.NOe !== CommonDefine_1.INVALID_VALUE &&
-          ((1 === this.KVe[this.NOe] || (2 === this.KVe[this.NOe] && e)) &&
+          ((1 === this.s8e[this.NOe] || (2 === this.s8e[this.NOe] && e)) &&
             ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
               new ConfirmBoxDefine_1.ConfirmBoxDataNew(146),
             ),
-          this.wki());
+          this.w2i());
       }),
-      (this.Iki = () => new BattlePassTaskLoopItem_1.BattlePassTaskLoopItem()),
+      (this.I2i = () => new BattlePassTaskLoopItem_1.BattlePassTaskLoopItem()),
       (this.hPe = () => {
         var e = new BattlePassTaskTabItem_1.BattlePassTaskTabItem();
         return (
-          e.SetSelectedCallBack(this.bki), e.SetCanExecuteChange(this.DTt), e
+          e.SetSelectedCallBack(this.b2i), e.SetCanExecuteChange(this.gke), e
         );
       }),
-      (this.bki = (e) => {
+      (this.b2i = (e) => {
         var t;
         e !== this.NOe &&
           ((t = this.NOe),
           (this.NOe = e),
           t !== CommonDefine_1.INVALID_VALUE &&
-            (e = this.Aki.GetLayoutItemByIndex(t)) &&
+            (e = this.A2i.GetLayoutItemByIndex(t)) &&
             e.SetForceSwitch(0),
-          this.wki());
+          this.w2i());
       }),
-      (this.DTt = (e) => this.NOe !== e);
+      (this.gke = (e) => this.NOe !== e);
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -61,71 +61,71 @@ class BattlePassTaskView extends UiTabViewBase_1.UiTabViewBase {
       [3, UE.UIItem],
     ];
   }
-  async KLn() {
-    this.vki = new BattlePassBackgroundPanel_1.BattlePassBackgroundPanel();
+  async wRn() {
+    this.M2i = new BattlePassBackgroundPanel_1.BattlePassBackgroundPanel();
     var e = { IsRewardPanel: !1, WeaponObservers: this.ExtraParams };
-    await this.vki.OnlyCreateByActorAsync(this.GetItem(0).GetOwner(), e),
-      this.AddChild(this.vki);
+    await this.M2i.OnlyCreateByActorAsync(this.GetItem(0).GetOwner(), e),
+      this.AddChild(this.M2i);
   }
-  async QLn() {
+  async BRn() {
     (this.NOe = CommonDefine_1.INVALID_VALUE),
-      (this.Aki = new GenericLayout_1.GenericLayout(
+      (this.A2i = new GenericLayout_1.GenericLayout(
         this.GetVerticalLayout(1),
         this.hPe,
       )),
-      await this.Aki.RefreshByDataAsync(this.KVe),
-      (this.vkt = new LoopScrollView_1.LoopScrollView(
+      await this.A2i.RefreshByDataAsync(this.s8e),
+      (this.M2t = new LoopScrollView_1.LoopScrollView(
         this.GetLoopScrollViewComponent(2),
         this.GetItem(3).GetOwner(),
-        this.Iki,
+        this.I2i,
       )),
       this.SelectToggleByIndex(0, !0);
   }
   async OnBeforeStartAsync() {
-    await Promise.all([this.KLn(), this.QLn()]);
+    await Promise.all([this.wRn(), this.BRn()]);
   }
   OnAfterShow() {
-    this.UiViewSequence?.PlaySequence("Switch"), this.wki();
+    this.UiViewSequence?.PlaySequence("Switch"), this.w2i();
   }
   SelectToggleByIndex(e, t = !1) {
     if (t) {
-      const i = this.Aki.GetLayoutItemByIndex(this.NOe);
+      const i = this.A2i.GetLayoutItemByIndex(this.NOe);
       i && i.SetForceSwitch(0), (this.NOe = CommonDefine_1.INVALID_VALUE);
     }
-    const i = this.Aki.GetLayoutItemByIndex(e);
+    const i = this.A2i.GetLayoutItemByIndex(e);
     i && i.SetForceSwitch(1, !0);
   }
   AddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.UpdateBattlePassTaskEvent,
-      this.xki,
+      this.x2i,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.ReceiveBattlePassTaskEvent,
-        this.Bki,
+        this.B2i,
       );
   }
   RemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.UpdateBattlePassTaskEvent,
-      this.xki,
+      this.x2i,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.ReceiveBattlePassTaskEvent,
-        this.Bki,
+        this.B2i,
       );
   }
-  wki() {
+  w2i() {
     this.NOe !== CommonDefine_1.INVALID_VALUE &&
       (ModelManager_1.ModelManager.BattlePassModel.GetTaskList(
-        this.KVe[this.NOe],
-        this.Pki,
+        this.s8e[this.NOe],
+        this.P2i,
       ),
-      this.vkt.ReloadData(this.Pki));
+      this.M2t.ReloadData(this.P2i));
   }
   OnBeforeDestroy() {
-    this.vkt && (this.vkt.ClearGridProxies(), (this.vkt = void 0)),
-      (this.Pki = []);
+    this.M2t && (this.M2t.ClearGridProxies(), (this.M2t = void 0)),
+      (this.P2i = []);
   }
 }
 exports.BattlePassTaskView = BattlePassTaskView;

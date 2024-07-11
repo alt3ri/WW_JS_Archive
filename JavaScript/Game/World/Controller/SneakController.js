@@ -9,27 +9,27 @@ const ControllerBase_1 = require("../../../Core/Framework/ControllerBase"),
   CharacterBuffIds_1 = require("../../NewWorld/Character/Common/Component/Abilities/CharacterBuffIds");
 class SneakController extends ControllerBase_1.ControllerBase {
   static StartSneaking() {
-    (this.bfr = !0),
-      this.BXt(!0),
-      this.GXt(),
+    (this.wpr = !0),
+      this.B$t(!0),
+      this.G$t(),
       EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.SneakStart);
   }
   static EndSneaking() {
-    (this.bfr = !1),
-      this.BXt(!1),
-      this.OXt(),
+    (this.wpr = !1),
+      this.B$t(!1),
+      this.O$t(),
       EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.SneakEnd);
   }
   static get IsSneaking() {
-    return this.bfr;
+    return this.wpr;
   }
-  static GXt() {
+  static G$t() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnBattleStateChanged,
       this.Zpe,
     );
   }
-  static OXt() {
+  static O$t() {
     EventSystem_1.EventSystem.Has(
       EventDefine_1.EEventName.OnBattleStateChanged,
       this.Zpe,
@@ -39,9 +39,9 @@ class SneakController extends ControllerBase_1.ControllerBase {
         this.Zpe,
       );
   }
-  static BXt(e) {
+  static B$t(e) {
     var t =
-      Global_1.Global.BaseCharacter.GetEntityNoBlueprint().GetComponent(157);
+      Global_1.Global.BaseCharacter.GetEntityNoBlueprint().GetComponent(159);
     t?.Valid &&
       (e
         ? t.AddBuff(CharacterBuffIds_1.buffId.StealthIgnoreHateBuff, {
@@ -56,15 +56,15 @@ class SneakController extends ControllerBase_1.ControllerBase {
   }
 }
 (exports.SneakController = SneakController),
-  ((_a = SneakController).bfr = !1),
-  (SneakController.RXt = !1),
+  ((_a = SneakController).wpr = !1),
+  (SneakController.R$t = !1),
   (SneakController.Zpe = (e) => {
-    _a.BXt(!e),
-      e !== _a.RXt &&
-        ((_a.RXt = e),
+    _a.B$t(!e),
+      e !== _a.R$t &&
+        ((_a.R$t = e),
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.OnSneakFoundChange,
-          _a.RXt,
+          _a.R$t,
           0,
         ));
   });

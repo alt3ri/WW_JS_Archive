@@ -6,22 +6,21 @@ const UE = require("ue"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
-  SceneTeamDefine_1 = require("../../SceneTeam/SceneTeamDefine"),
   BattleUiRoleData_1 = require("../BattleUiRoleData"),
   BattleChildView_1 = require("./BattleChildView/BattleChildView");
 class ConcertoResponseItem extends BattleChildView_1.BattleChildView {
   constructor() {
     super(...arguments),
-      (this.wnt = void 0),
+      (this.Wst = void 0),
       (this.E0 = void 0),
-      (this.Bnt = void 0),
-      (this.bnt = void 0),
-      (this.qnt = void 0),
+      (this.Kst = void 0),
+      (this.Qst = void 0),
+      (this.Xst = void 0),
       (this.hJ = 0),
-      (this.WQe = (e, t, i) => {
-        e === this.E0 && t === this.qnt && this.wnt && this.Gnt(i);
+      (this.o$e = (e) => {
+        e === this.E0 && this.KSa();
       }),
-      (this.Nnt = (e, t, i) => {
+      (this.Yst = (e, t, i) => {
         e === this.E0 && this.RefreshVisible();
       });
   }
@@ -42,21 +41,21 @@ class ConcertoResponseItem extends BattleChildView_1.BattleChildView {
   }
   Refresh(e) {
     e && 2 !== e.RoleConfig?.RoleType
-      ? ((this.wnt = e),
+      ? ((this.Wst = e),
         (this.E0 = e?.EntityHandle?.Id),
-        (this.Bnt = this.wnt.GameplayTagComponent),
-        (this.bnt = this.wnt.ElementConfig),
+        (this.Kst = this.Wst.GameplayTagComponent),
+        (this.Qst = this.Wst.ElementConfig),
         0 !== this.hJ &&
           (ResourceSystem_1.ResourceSystem.CancelAsyncLoad(this.hJ),
           (this.hJ = 0)),
-        this.Ont(this.wnt.ElementType),
-        this.Gnt(this.GetElementValue()),
+        this.Jst(this.Wst.ElementType),
+        this.KSa(),
         this.RefreshVisible())
-      : ((this.wnt = void 0),
+      : ((this.Wst = void 0),
         (this.E0 = void 0),
-        (this.Bnt = void 0),
-        (this.qnt = void 0),
-        (this.bnt = void 0),
+        (this.Kst = void 0),
+        (this.Xst = void 0),
+        (this.Qst = void 0),
         this.SetActive(!1));
   }
   GetEntityId() {
@@ -65,52 +64,47 @@ class ConcertoResponseItem extends BattleChildView_1.BattleChildView {
   Ore() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.BattleUiElementEnergyChanged,
-      this.WQe,
+      this.o$e,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.BattleUiElementHideTagChanged,
-        this.Nnt,
+        this.Yst,
       );
   }
   kre() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.BattleUiElementEnergyChanged,
-      this.WQe,
+      this.o$e,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.BattleUiElementHideTagChanged,
-        this.Nnt,
+        this.Yst,
       );
   }
   RefreshVisible() {
-    if (this.wnt)
+    if (this.Wst)
       if (ModelManager_1.ModelManager.FunctionModel.IsOpen(10036)) {
         for (const e of BattleUiRoleData_1.BattleUiRoleData.HideElementTagList)
-          if (this.Bnt.HasTag(e)) return void this.SetActive(!1);
+          if (this.Kst.HasTag(e)) return void this.SetActive(!1);
         this.SetActive(!0);
       } else this.SetActive(!1);
   }
-  Ont(e) {
+  Jst(e) {
     var t, i, s;
-    this.qnt !== e &&
-      ((t = this.bnt.Icon5),
+    this.Xst !== e &&
+      ((t = this.Qst.Icon5),
       (i = this.GetTexture(1)),
       (s = this.GetSprite(0)),
-      this.SetElementIcon(t, i, this.qnt),
-      i.SetColor(this.wnt.ElementColor),
-      s.SetColor(this.wnt.ElementColor),
-      (this.qnt = e));
+      this.SetElementIcon(t, i, this.Xst),
+      i.SetColor(this.Wst.ElementColor),
+      s.SetColor(this.Wst.ElementColor),
+      (this.Xst = e));
   }
-  Gnt(e) {
-    var t = this.GetSprite(0),
-      e = e / SceneTeamDefine_1.MAX_ELEMENT_ENERGY;
-    t.SetFillAmount(e);
+  KSa() {
+    this.GetSprite(0).SetFillAmount(this.GetElementPercent());
   }
-  GetElementValue() {
-    var e;
-    return this.wnt && (e = this.wnt.GetElementAttributeId())
-      ? this.wnt.AttributeComponent.GetCurrentValue(e)
-      : 0;
+  GetElementPercent() {
+    return this.Wst ? this.Wst.GetElementAttributePercent() : 0;
   }
 }
 exports.ConcertoResponseItem = ConcertoResponseItem;

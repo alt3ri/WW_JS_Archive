@@ -58,41 +58,41 @@ const UE = require("ue"),
   ];
 class TargetDamageStatistics {
   constructor(t) {
-    (this.TargetId = t), (this.AKo = 0), (this.IsValid = !0);
+    (this.TargetId = t), (this.DQo = 0), (this.IsValid = !0);
     var t = EntitySystem_1.EntitySystem.Get(t).GetComponent(0),
       i = t.GetEntityType();
-    (this.JB = i === Protocol_1.Aki.Protocol.HBs.Proto_Monster),
-      (this.XHt = i === Protocol_1.Aki.Protocol.HBs.Proto_Player),
+    (this.JB = i === Protocol_1.Aki.Protocol.wks.Proto_Monster),
+      (this.Xjt = i === Protocol_1.Aki.Protocol.wks.Proto_Player),
       (this.Mne = 0),
-      (this.PKo = ""),
+      (this.RQo = ""),
       this.JB
         ? ((this.Mne = t.GetPbDataId()),
-          (this.PKo = PublicUtil_1.PublicUtil.GetConfigTextByKey(
+          (this.RQo = PublicUtil_1.PublicUtil.GetConfigTextByKey(
             t.GetBaseInfo()?.TidName ?? "",
           )))
-        : this.XHt &&
+        : this.Xjt &&
           ((i = t.Valid ? t.GetRoleId() : 0),
-          (t = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(i))
-            ? ((this.Mne = t.GetRoleId()),
+          (t = ConfigManager_1.ConfigManager.RoleConfig.GetBaseRoleId(i))
+            ? ((this.Mne = t),
               (i = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(
                 this.Mne,
               )),
-              (this.PKo = ConfigManager_1.ConfigManager.RoleConfig.GetRoleName(
+              (this.RQo = ConfigManager_1.ConfigManager.RoleConfig.GetRoleName(
                 i.Name,
               )))
             : (this.IsValid = !1));
   }
   AddDamageValue(t) {
-    this.AKo += t;
+    this.DQo += t;
   }
   ToString() {
     return StringUtils_1.StringUtils.Format(
       ",{0},{1},{2},{3},{4}",
-      this.JB ? "怪物" : this.XHt ? "角色" : "出错？？",
-      this.PKo,
+      this.JB ? "怪物" : this.Xjt ? "角色" : "出错？？",
+      this.RQo,
       this.Mne.toString(),
       this.TargetId.toString(),
-      this.AKo.toString(),
+      this.DQo.toString(),
     );
   }
 }
@@ -102,22 +102,22 @@ class DamageStatisticsData {
       (this.RoleName = i),
       (this.DamageType = e),
       (this.IsHeal = a),
-      (this.xKo = new Map());
+      (this.UQo = new Map());
   }
   AddDamageValue(t, i) {
-    let e = this.xKo.get(t);
+    let e = this.UQo.get(t);
     if (!e) {
       if (!(e = new TargetDamageStatistics(t)).IsValid) return;
-      this.xKo.set(t, e);
+      this.UQo.set(t, e);
     }
     e.AddDamageValue(i);
   }
   GetTargetCount() {
-    return this.xKo.size;
+    return this.UQo.size;
   }
   ToString() {
     var t = new StringBuilder_1.StringBuilder();
-    for (const i of this.xKo.values()) t.Append(i.ToString());
+    for (const i of this.UQo.values()) t.Append(i.ToString());
     return StringUtils_1.StringUtils.Format(
       "{0},{1},{2},{3}{4}\n",
       this.RoleId.toString(),
@@ -155,16 +155,15 @@ class CombatDataBase {
       var i,
         t = t.GetComponent(0),
         e = t?.GetEntityType();
-      if (e === Protocol_1.Aki.Protocol.HBs.Proto_Player)
+      if (e === Protocol_1.Aki.Protocol.wks.Proto_Player)
         return (
           (i = t.Valid ? t.GetRoleId() : 0),
-          (i = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(i))
-            ? ((i = i.GetRoleId()),
-              (i = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(i)),
+          (i = ConfigManager_1.ConfigManager.RoleConfig.GetBaseRoleId(i))
+            ? ((i = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(i)),
               ConfigManager_1.ConfigManager.RoleConfig.GetRoleName(i.Name))
             : void 0
         );
-      if (e === Protocol_1.Aki.Protocol.HBs.Proto_Monster)
+      if (e === Protocol_1.Aki.Protocol.wks.Proto_Monster)
         return PublicUtil_1.PublicUtil.GetConfigTextByKey(
           t.GetBaseInfo()?.TidName ?? "",
         );
@@ -181,12 +180,11 @@ class CombatDataBase {
     if (t) {
       var r = t.GetComponent(0),
         n = r?.GetEntityType();
-      if (n === Protocol_1.Aki.Protocol.HBs.Proto_Player) {
+      if (n === Protocol_1.Aki.Protocol.wks.Proto_Player) {
         var o = r.Valid ? r.GetRoleId() : 0,
-          o = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(o);
+          o = ConfigManager_1.ConfigManager.RoleConfig.GetBaseRoleId(o);
         if (!o) return [void 0, void 0];
-        (o = o.GetRoleId()),
-          (o = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(o)),
+        (o = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(o)),
           (o =
             ((a = ConfigManager_1.ConfigManager.RoleConfig.GetRoleName(o.Name)),
             ConfigManager_1.ConfigManager.RoleSkillConfig.GetSkillList(
@@ -206,7 +204,7 @@ class CombatDataBase {
           [a, s]
         );
       }
-      if (n === Protocol_1.Aki.Protocol.HBs.Proto_Monster)
+      if (n === Protocol_1.Aki.Protocol.wks.Proto_Monster)
         return (
           (a = PublicUtil_1.PublicUtil.GetConfigTextByKey(
             r.GetBaseInfo()?.TidName ?? "",
@@ -235,8 +233,8 @@ class CombatDataDamage extends CombatDataBase {
       e = CombatDataBase.GetEntityConfigName(this.TargetId),
       a = 0,
       a = EntitySystem_1.EntitySystem.Get(this.TargetId)
-        .GetComponent(156)
-        .GetCurrentValue(Protocol_1.Aki.Protocol.KBs.Proto_Life);
+        .GetComponent(158)
+        .GetCurrentValue(Protocol_1.Aki.Protocol.Bks.Proto_Life);
     return StringUtils_1.StringUtils.Format(
       "<Date>[{0}]</><Atk>{1}</>施放了<Skill>{2}</>对<Victim>{3}</>造成<NumDmg>{4}</>点伤害<Change>{5}</>",
       this.DateCreate,
@@ -266,9 +264,9 @@ class CombatDataHeal extends CombatDataBase {
       ),
       e = CombatDataBase.GetEntityConfigName(this.TargetId),
       a = 0,
-      s = EntitySystem_1.EntitySystem.Get(this.TargetId).GetComponent(156),
-      a = s.GetCurrentValue(Protocol_1.Aki.Protocol.KBs.Proto_Life),
-      s = s.GetCurrentValue(Protocol_1.Aki.Protocol.KBs.Tkn);
+      s = EntitySystem_1.EntitySystem.Get(this.TargetId).GetComponent(158),
+      a = s.GetCurrentValue(Protocol_1.Aki.Protocol.Bks.Proto_Life),
+      s = s.GetCurrentValue(Protocol_1.Aki.Protocol.Bks.e5n);
     return StringUtils_1.StringUtils.Format(
       "<Date>[{0}]</><Atk>{1}</>施放了<Skill>{2}</>使<Victim>{3}</>恢复<NumDmg>{4}</>点生命<Change>{5}</>",
       this.DateCreate,
@@ -359,14 +357,14 @@ let CharacterStatisticsComponent =
   ) {
     constructor() {
       super(...arguments),
-        (this.skr = (t, i, e, a, s, r, n) => {
+        (this.qOr = (t, i, e, a, s, r, n) => {
           switch (a.CalculateType) {
             case 1:
-              this.akr && this.hkr(-e, t, i, r), this.lkr(-e, t, i, r, s);
+              this.GOr && this.NOr(-e, t, i, r), this.OOr(-e, t, i, r, s);
               break;
             case 0:
-              this.akr &&
-                this._kr(
+              this.GOr &&
+                this.kOr(
                   e,
                   a.Element,
                   n,
@@ -379,7 +377,7 @@ let CharacterStatisticsComponent =
                   s.BulletId,
                   s.BuffId,
                 ),
-                this.ukr(
+                this.FOr(
                   e,
                   a.Element,
                   n,
@@ -396,24 +394,24 @@ let CharacterStatisticsComponent =
                 );
           }
         }),
-        (this.ckr = () => {
-          this.mkr();
+        (this.VOr = () => {
+          this.HOr();
         }),
-        (this.akr = !1),
-        (this.dkr = new Map()),
-        (this.Ckr = new Map()),
-        (this.gkr = new Map()),
-        (this.fkr = new Array()),
-        (this.pkr = (t, i) => {
-          CharacterStatisticsComponent_1.vkr &&
+        (this.GOr = !1),
+        (this.jOr = new Map()),
+        (this.WOr = new Map()),
+        (this.KOr = new Map()),
+        (this.QOr = new Array()),
+        (this.XOr = (t, i) => {
+          CharacterStatisticsComponent_1.$Or &&
             this.Entity.GetComponent(0).IsRole() &&
-            (this.Mkr(t), this.Skr(i));
+            (this.YOr(t), this.JOr(i));
         }),
-        (this.Ekr = (t, i) => {
+        (this.zOr = (t, i) => {
           var e;
-          CharacterStatisticsComponent_1.vkr &&
+          CharacterStatisticsComponent_1.$Or &&
             this.Entity.GetComponent(0).IsRole() &&
-            (this.dkr.get(i) &&
+            (this.jOr.get(i) &&
               ((e = this.Entity.GetComponent(0).GetRoleConfig()),
               Log_1.Log.CheckError()) &&
               Log_1.Log.Error(
@@ -426,29 +424,29 @@ let CharacterStatisticsComponent =
                 ],
                 ["SkillId", i],
               ),
-            this.dkr.set(i, Time_1.Time.NowSeconds));
+            this.jOr.set(i, Time_1.Time.NowSeconds));
         }),
-        (this.ykr = (e, a) => {
+        (this.ZOr = (e, a) => {
           if (
-            CharacterStatisticsComponent_1.vkr &&
+            CharacterStatisticsComponent_1.$Or &&
             this.Entity.GetComponent(0).IsRole()
           ) {
-            let t = CharacterStatisticsComponent_1.Ikr.get(e);
+            let t = CharacterStatisticsComponent_1.ekr.get(e);
             t ||
               ((r = this.Entity.GetComponent(0).GetRoleConfig()),
               (s = ConfigManager_1.ConfigManager.RoleConfig.GetRoleName(
                 r.Name,
               )),
               (t = new CharacterOperationRecord(s, e, r.Id)),
-              CharacterStatisticsComponent_1.Ikr.set(e, t));
+              CharacterStatisticsComponent_1.ekr.set(e, t));
             var s = this.Entity.GetComponent(33).GetSkillInfo(a).SkillGenre;
             let i = t.SkillOperationMap.get(s);
             i ||
               ((i = new SkillOperationRecord(
-                CharacterStatisticsComponent_1.Tkr[s],
+                CharacterStatisticsComponent_1.tkr[s],
               )),
               t.SkillOperationMap.set(s, i));
-            var r = this.dkr.get(a);
+            var r = this.jOr.get(a);
             void 0 === r
               ? Log_1.Log.CheckError() &&
                 Log_1.Log.Error(
@@ -457,35 +455,35 @@ let CharacterStatisticsComponent =
                   "计算出现异常 EndSkill",
                   ["Name", t.Name],
                   ["Id", t.EntityId],
-                  ["Map", this.dkr],
+                  ["Map", this.jOr],
                 )
               : ((e = Time_1.Time.NowSeconds - r), i.AddOptCountAndTime(e)),
-              this.dkr.set(a, void 0);
+              this.jOr.set(a, void 0);
           }
         }),
-        (this.Pji = (e, a) => {
-          if (CharacterStatisticsComponent_1.vkr)
-            if (a) this.Ckr.set(e, Time_1.Time.NowSeconds);
+        (this.UWi = (e, a) => {
+          if (CharacterStatisticsComponent_1.$Or)
+            if (a) this.WOr.set(e, Time_1.Time.NowSeconds);
             else {
-              var a = this.Ckr.get(e),
+              var a = this.WOr.get(e),
                 s = Time_1.Time.NowSeconds - a,
                 r = this.Entity.Id;
-              let t = CharacterStatisticsComponent_1.Ikr.get(r);
+              let t = CharacterStatisticsComponent_1.ekr.get(r);
               var n = this.Entity.GetComponent(0);
               t ||
                 ((o = n.GetEntityType()) ===
-                Protocol_1.Aki.Protocol.HBs.Proto_Monster
+                Protocol_1.Aki.Protocol.wks.Proto_Monster
                   ? ((h = PublicUtil_1.PublicUtil.GetConfigTextByKey(
                       n.GetBaseInfo()?.TidName ?? "",
                     )),
                     (t = new CharacterOperationRecord(h, r, n.GetPbDataId())))
-                  : o === Protocol_1.Aki.Protocol.HBs.Proto_Player &&
+                  : o === Protocol_1.Aki.Protocol.wks.Proto_Player &&
                     ((h = n.GetRoleConfig()),
                     (o = ConfigManager_1.ConfigManager.RoleConfig.GetRoleName(
                       h.Name,
                     )),
                     (t = new CharacterOperationRecord(o, r, h.Id))),
-                CharacterStatisticsComponent_1.Ikr.set(r, t));
+                CharacterStatisticsComponent_1.ekr.set(r, t));
               let i = t.TagOperationMap.get(e);
               var o = n.GetEntityType(),
                 h = CharacterStatisticsComponent_1.StageInfo(o);
@@ -500,18 +498,18 @@ let CharacterStatisticsComponent =
                       "计算出现异常 OnTagChanged",
                       ["Id", this.Entity.Id],
                       ["beginTime", a],
-                      ["Map", this.Ckr],
+                      ["Map", this.WOr],
                       ["TagId", e],
                     )
                   : i.AddOptCountAndTime(s);
             }
         }),
-        (this.Lkr = (t, i) => {
-          CharacterStatisticsComponent_1.Dkr &&
+        (this.ikr = (t, i) => {
+          CharacterStatisticsComponent_1.okr &&
             ((i = new CombatDataSkill(this.Entity.Id, i)).ToString(),
-            CharacterStatisticsComponent_1.Rkr.push(i),
-            CharacterStatisticsComponent_1.Akr(i)) &&
-            CharacterStatisticsComponent_1.Ukr.push(i);
+            CharacterStatisticsComponent_1.rkr.push(i),
+            CharacterStatisticsComponent_1.nkr(i)) &&
+            CharacterStatisticsComponent_1.skr.push(i);
         });
     }
     OnInit(t) {
@@ -519,58 +517,58 @@ let CharacterStatisticsComponent =
         EventSystem_1.EventSystem.AddWithTarget(
           this.Entity,
           EventDefine_1.EEventName.CharBeDamage,
-          this.skr,
+          this.qOr,
         ),
         EventSystem_1.EventSystem.AddWithTarget(
           this.Entity,
           EventDefine_1.EEventName.CharUseSkill,
-          this.Lkr,
+          this.ikr,
         ),
         EventSystem_1.EventSystem.AddWithTarget(
           this.Entity,
           EventDefine_1.EEventName.CharOnRevive,
-          this.ckr,
+          this.VOr,
         ),
         !0
       );
     }
     OnStart() {
-      return this.Pkr(), !0;
+      return this.akr(), !0;
     }
     OnActivate() {
       CharacterStatisticsComponent_1.OpenOperationRecord &&
-        (this.akr = CharacterStatisticsComponent_1.IsInRecordArea(this.Entity)),
-        this.xkr();
+        (this.GOr = CharacterStatisticsComponent_1.IsInRecordArea(this.Entity)),
+        this.hkr();
     }
     OnEnd() {
       return (
         EventSystem_1.EventSystem.RemoveWithTarget(
           this.Entity,
           EventDefine_1.EEventName.CharBeDamage,
-          this.skr,
+          this.qOr,
         ),
         EventSystem_1.EventSystem.RemoveWithTarget(
           this.Entity,
           EventDefine_1.EEventName.CharUseSkill,
-          this.Lkr,
+          this.ikr,
         ),
         EventSystem_1.EventSystem.RemoveWithTarget(
           this.Entity,
           EventDefine_1.EEventName.CharOnRevive,
-          this.ckr,
+          this.VOr,
         ),
-        CharacterStatisticsComponent_1.vkr && this.wkr(),
+        CharacterStatisticsComponent_1.$Or && this.lkr(),
         !0
       );
     }
     OnBuffAdded(t) {
-      this.Bkr(t);
+      this._kr(t);
     }
     OnBuffRemoved(t) {
-      this.bkr(t);
+      this.ukr(t);
     }
     GetStatisticsEnable() {
-      return this.akr;
+      return this.GOr;
     }
     static SetStatisticsEnable(t) {
       if (t) {
@@ -578,25 +576,25 @@ let CharacterStatisticsComponent =
         for (const a of ModelManager_1.ModelManager.CreatureModel.GetAllEntities())
           CharacterStatisticsComponent_1.IsInRecordArea(a.Entity) &&
             (i = a.Entity.GetComponent(24))?.Valid &&
-            ((i.akr = !0), this.qkr.push(a.Id));
+            ((i.GOr = !0), this.ckr.push(a.Id));
       } else {
-        for (const s of this.qkr) {
+        for (const s of this.ckr) {
           var e = EntitySystem_1.EntitySystem.Get(s);
-          e?.Valid && (e.GetComponent(24).akr = !1);
+          e?.Valid && (e.GetComponent(24).GOr = !1);
         }
-        this.qkr.length = 0;
+        this.ckr.length = 0;
       }
     }
     static CleanupRecordData() {
-      this.Gkr.clear(), this.Nkr.clear(), this.Okr.clear(), this.kkr.clear();
+      this.mkr.clear(), this.dkr.clear(), this.Ckr.clear(), this.gkr.clear();
     }
-    hkr(t, i, e, a) {
+    NOr(t, i, e, a) {
       var s = a.Damage,
         a = a.DamageData.Id;
       CharacterStatisticsComponent_1.ProcessRecordBySkillType(s, i, e, a, !0),
-        CharacterStatisticsComponent_1.Fkr(s, i, e, a, !0);
+        CharacterStatisticsComponent_1.fkr(s, i, e, a, !0);
     }
-    _kr(t, i, e, a, s, r, n, o, h, c, C) {
+    kOr(t, i, e, a, s, r, n, o, h, c, C) {
       CharacterStatisticsComponent_1.ProcessRecordBySkillType(
         t,
         a,
@@ -606,16 +604,15 @@ let CharacterStatisticsComponent =
         c,
         C,
       ),
-        CharacterStatisticsComponent_1.Fkr(t, a, s, h, !1);
+        CharacterStatisticsComponent_1.fkr(t, a, s, h, !1);
     }
     static ProcessRecordBySkillType(a, t, s, r, n, o, h) {
       t = t.GetComponent(0);
-      if (t.GetEntityType() === Protocol_1.Aki.Protocol.HBs.Proto_Player) {
+      if (t.GetEntityType() === Protocol_1.Aki.Protocol.wks.Proto_Player) {
         var t = t.Valid ? t.GetRoleId() : 0,
-          c = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(t);
+          c = ConfigManager_1.ConfigManager.RoleConfig.GetBaseRoleId(t);
         if (c) {
-          var c = c.GetRoleId(),
-            C = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(c),
+          var C = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(c),
             _ = ConfigManager_1.ConfigManager.RoleConfig.GetRoleName(C.Name),
             C = ConfigManager_1.ConfigManager.RoleSkillConfig.GetSkillList(
               C.SkillId,
@@ -628,8 +625,8 @@ let CharacterStatisticsComponent =
                 break;
               }
           C = n
-            ? CharacterStatisticsComponent_1.kkr
-            : CharacterStatisticsComponent_1.Okr;
+            ? CharacterStatisticsComponent_1.gkr
+            : CharacterStatisticsComponent_1.Ckr;
           let e = C.get(c);
           if ((e || ((e = new Map()), C.set(c, e)), 0 < i)) {
             let t = e.get(i);
@@ -646,7 +643,7 @@ let CharacterStatisticsComponent =
                 ),
               e.set(i, t)),
               t.AddDamageValue(s.Id, a),
-              t.GetTargetCount() > this.Vkr && (this.Vkr = t.GetTargetCount());
+              t.GetTargetCount() > this.pkr && (this.pkr = t.GetTargetCount());
           } else if (5 !== DamageById_1.configDamageById.GetConfig(r).Type)
             Log_1.Log.CheckDebug() &&
               Log_1.Log.Debug(
@@ -671,25 +668,24 @@ let CharacterStatisticsComponent =
                 ),
               e.set(6, t)),
               t.AddDamageValue(s.Id, a),
-              t.GetTargetCount() > this.Vkr && (this.Vkr = t.GetTargetCount());
+              t.GetTargetCount() > this.pkr && (this.pkr = t.GetTargetCount());
           }
         } else
           Log_1.Log.CheckError() &&
             Log_1.Log.Error("Test", 21, "获取不到roleData", ["roleId", t]);
       }
     }
-    static Fkr(e, t, a, i, s) {
+    static fkr(e, t, a, i, s) {
       t = t.GetComponent(0);
       if (t?.IsRole()) {
         var r = DamageById_1.configDamageById.GetConfig(i);
         if (r) {
           var t = t.Valid ? t.GetRoleId() : 0,
-            n = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(t);
+            n = ConfigManager_1.ConfigManager.RoleConfig.GetBaseRoleId(t);
           if (n) {
-            var n = n.GetRoleId(),
-              o = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(n),
+            var o = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(n),
               o = ConfigManager_1.ConfigManager.RoleConfig.GetRoleName(o.Name),
-              h = s ? this.Nkr : this.Gkr;
+              h = s ? this.dkr : this.mkr;
             let t = h.get(n),
               i = (t || ((t = new Map()), h.set(n, t)), t.get(r.Type));
             i ||
@@ -701,7 +697,7 @@ let CharacterStatisticsComponent =
               )),
               t.set(r.Type, i)),
               i.AddDamageValue(a.Id, e),
-              this.Hkr < i.GetTargetCount() && (this.Hkr = i.GetTargetCount());
+              this.vkr < i.GetTargetCount() && (this.vkr = i.GetTargetCount());
           } else
             Log_1.Log.CheckError() &&
               Log_1.Log.Error("Test", 21, "获取不到roleData", ["roleId", t]);
@@ -713,112 +709,112 @@ let CharacterStatisticsComponent =
     static ExportStatisticsBySkillType() {
       var i = new StringBuilder_1.StringBuilder();
       i.Append("角色Id,名称,治疗/伤害,技能");
-      for (let t = 0; t < this.Vkr; t++) {
+      for (let t = 0; t < this.pkr; t++) {
         var e = (t + 1).toString();
-        i.Append(StringUtils_1.StringUtils.Format(this.jkr, e, e, e, e, e));
+        i.Append(StringUtils_1.StringUtils.Format(this.Mkr, e, e, e, e, e));
       }
       i.Append("\n");
-      var t = this.Okr;
+      var t = this.Ckr;
       if (0 < t?.size)
         for (var [, a] of t) for (var [, s] of a) i.Append(s.ToString());
-      if (0 < (t = this.kkr)?.size)
+      if (0 < (t = this.gkr)?.size)
         for (var [, r] of t) for (var [, n] of r) i.Append(n.ToString());
       return i.ToString();
     }
     static ExportStatisticsByAttackType() {
       var i = new StringBuilder_1.StringBuilder();
       i.Append("角色Id,名称,治疗/伤害,伤害类型");
-      for (let t = 0; t < this.Hkr; t++) {
+      for (let t = 0; t < this.vkr; t++) {
         var e = (t + 1).toString();
-        i.Append(StringUtils_1.StringUtils.Format(this.jkr, e, e, e, e, e));
+        i.Append(StringUtils_1.StringUtils.Format(this.Mkr, e, e, e, e, e));
       }
       i.Append("\n");
-      var t = this.Gkr;
+      var t = this.mkr;
       if (0 < t?.size)
         for (var [, a] of t) for (var [, s] of a) i.Append(s.ToString());
-      if (0 < (t = this.Nkr)?.size)
+      if (0 < (t = this.dkr)?.size)
         for (var [, r] of t) for (var [, n] of r) i.Append(n.ToString());
       return i.ToString();
     }
     static get OpenOperationRecord() {
-      return this.vkr;
+      return this.$Or;
     }
-    xkr() {
+    hkr() {
       var t;
-      CharacterStatisticsComponent_1.vkr &&
+      CharacterStatisticsComponent_1.$Or &&
         ((t = this.Entity),
-        CharacterStatisticsComponent_1.Ikr.has(t.Id) ||
-          (CharacterStatisticsComponent_1.IsInRecordArea(t) && this.Wkr()));
+        CharacterStatisticsComponent_1.ekr.has(t.Id) ||
+          (CharacterStatisticsComponent_1.IsInRecordArea(t) && this.Ekr()));
     }
-    Wkr() {
+    Ekr() {
       if (
-        (this.dkr.clear(),
-        this.gkr.clear(),
-        this.Ckr.clear(),
+        (this.jOr.clear(),
+        this.KOr.clear(),
+        this.WOr.clear(),
         this.Entity.GetComponent(0).IsRole())
       ) {
-        CharacterStatisticsComponent_1.Kkr.push(this.Entity.Id),
+        CharacterStatisticsComponent_1.Skr.push(this.Entity.Id),
           EventSystem_1.EventSystem.AddWithTarget(
             this.Entity,
             EventDefine_1.EEventName.CharUseSkill,
-            this.Ekr,
+            this.zOr,
           ),
           EventSystem_1.EventSystem.AddWithTarget(
             this.Entity,
             EventDefine_1.EEventName.OnSkillEnd,
-            this.ykr,
+            this.ZOr,
           ),
           EventSystem_1.EventSystem.AddWithTarget(
             this.Entity,
             EventDefine_1.EEventName.CharOnUnifiedMoveStateChanged,
-            this.pkr,
+            this.XOr,
           );
         var t,
-          i = this.Entity.GetComponent(158),
+          i = this.Entity.GetComponent(160),
           e =
-            (i?.Valid && ((i = i.MoveState), this.Skr(i)),
-            this.Entity.CheckGetComponent(185));
+            (i?.Valid && ((i = i.MoveState), this.JOr(i)),
+            this.Entity.CheckGetComponent(188));
         e?.Valid &&
-          this.fkr.push(e.ListenForTagAddOrRemove(-2044964178, this.Pji));
-        for ([t] of CharacterStatisticsComponent_1.Qkr)
-          e.HasTag(t) && this.Ckr.set(t, Time_1.Time.NowSeconds);
+          this.QOr.push(e.ListenForTagAddOrRemove(-2044964178, this.UWi));
+        for ([t] of CharacterStatisticsComponent_1.ykr)
+          e.HasTag(t) && this.WOr.set(t, Time_1.Time.NowSeconds);
       } else {
-        var a = this.Entity.CheckGetComponent(185);
+        var a = this.Entity.CheckGetComponent(188);
         if (a?.Valid) {
-          CharacterStatisticsComponent_1.Kkr.push(this.Entity.Id),
-            this.fkr.push(a.ListenForTagAddOrRemove(-1112841587, this.Pji)),
-            this.fkr.push(a.ListenForTagAddOrRemove(-1109506297, this.Pji)),
-            this.fkr.push(a.ListenForTagAddOrRemove(-1838149281, this.Pji)),
-            this.fkr.push(a.ListenForTagAddOrRemove(1922078392, this.Pji));
-          for (var [s] of CharacterStatisticsComponent_1.Xkr)
-            a.HasTag(s) && this.Ckr.set(s, Time_1.Time.NowSeconds);
+          CharacterStatisticsComponent_1.Skr.push(this.Entity.Id),
+            this.QOr.push(a.ListenForTagAddOrRemove(-1112841587, this.UWi)),
+            this.QOr.push(a.ListenForTagAddOrRemove(-1109506297, this.UWi)),
+            this.QOr.push(a.ListenForTagAddOrRemove(-1838149281, this.UWi)),
+            this.QOr.push(a.ListenForTagAddOrRemove(1922078392, this.UWi));
+          for (var [s] of CharacterStatisticsComponent_1.Ikr)
+            a.HasTag(s) && this.WOr.set(s, Time_1.Time.NowSeconds);
         }
       }
     }
-    wkr() {
+    lkr() {
       this.Entity.GetComponent(0)?.IsRole() &&
         (EventSystem_1.EventSystem.RemoveWithTarget(
           this.Entity,
           EventDefine_1.EEventName.CharUseSkill,
-          this.Ekr,
+          this.zOr,
         ),
         EventSystem_1.EventSystem.RemoveWithTarget(
           this.Entity,
           EventDefine_1.EEventName.OnSkillEnd,
-          this.ykr,
+          this.ZOr,
         ),
         EventSystem_1.EventSystem.RemoveWithTarget(
           this.Entity,
           EventDefine_1.EEventName.CharOnUnifiedMoveStateChanged,
-          this.pkr,
+          this.XOr,
         ));
-      for (const t of this.fkr) t.EndTask();
-      this.fkr.length = 0;
+      for (const t of this.QOr) t.EndTask();
+      this.QOr.length = 0;
     }
-    Skr(t) {
+    JOr(t) {
       var i;
-      CharacterStatisticsComponent_1.$kr.has(t) &&
-        (this.gkr.get(t) &&
+      CharacterStatisticsComponent_1.Tkr.has(t) &&
+        (this.KOr.get(t) &&
           ((i = this.Entity.GetComponent(0).GetRoleConfig()),
           Log_1.Log.CheckError()) &&
           Log_1.Log.Error(
@@ -831,12 +827,12 @@ let CharacterStatisticsComponent =
             ],
             ["State", t],
           ),
-        this.gkr.set(t, Time_1.Time.NowSeconds));
+        this.KOr.set(t, Time_1.Time.NowSeconds));
     }
-    Mkr(e) {
-      if (CharacterStatisticsComponent_1.$kr.has(e)) {
+    YOr(e) {
+      if (CharacterStatisticsComponent_1.Tkr.has(e)) {
         var a = this.Entity.Id;
-        let t = CharacterStatisticsComponent_1.Ikr.get(a),
+        let t = CharacterStatisticsComponent_1.ekr.get(a),
           i =
             (t ||
               ((s = this.Entity.GetComponent(0).GetRoleConfig()),
@@ -844,15 +840,15 @@ let CharacterStatisticsComponent =
                 s.Name,
               )),
               (t = new CharacterOperationRecord(r, a, s.Id)),
-              CharacterStatisticsComponent_1.Ikr.set(a, t)),
+              CharacterStatisticsComponent_1.ekr.set(a, t)),
             t.MoveOperationMap.get(e));
         i ||
           ((i = new SkillOperationRecord(
-            CharacterStatisticsComponent_1.$kr.get(e),
+            CharacterStatisticsComponent_1.Tkr.get(e),
           )),
           t.MoveOperationMap.set(e, i));
         var s,
-          r = this.gkr.get(e);
+          r = this.KOr.get(e);
         void 0 === r
           ? Log_1.Log.CheckError() &&
             Log_1.Log.Error(
@@ -861,28 +857,28 @@ let CharacterStatisticsComponent =
               "计算出现异常 OnMoveStateEnd",
               ["Name", t.Name],
               ["Id", t.EntityId],
-              ["Map", this.gkr],
+              ["Map", this.KOr],
             )
           : ((s = Time_1.Time.NowSeconds - r), i.AddOptCountAndTime(s)),
-          this.gkr.set(e, void 0);
+          this.KOr.set(e, void 0);
       }
     }
     static StageInfo(t) {
-      return t === Protocol_1.Aki.Protocol.HBs.Proto_Monster
-        ? CharacterStatisticsComponent_1.Xkr
-        : t === Protocol_1.Aki.Protocol.HBs.Proto_Player
-          ? CharacterStatisticsComponent_1.Qkr
+      return t === Protocol_1.Aki.Protocol.wks.Proto_Monster
+        ? CharacterStatisticsComponent_1.Ikr
+        : t === Protocol_1.Aki.Protocol.wks.Proto_Player
+          ? CharacterStatisticsComponent_1.ykr
           : void 0;
     }
-    Pkr() {
-      if (CharacterStatisticsComponent_1.vkr) {
-        var t = this.Entity.GetComponent(185);
+    akr() {
+      if (CharacterStatisticsComponent_1.$Or) {
+        var t = this.Entity.GetComponent(188);
         if (t) {
           var i,
             e = this.Entity.GetComponent(0).GetEntityType();
           for ([i] of CharacterStatisticsComponent_1.StageInfo(e))
             t.HasTag(i) &&
-              (this.Pji(i, !0), Log_1.Log.CheckDebug()) &&
+              (this.UWi(i, !0), Log_1.Log.CheckDebug()) &&
               Log_1.Log.Debug(
                 "Test",
                 21,
@@ -894,20 +890,20 @@ let CharacterStatisticsComponent =
       }
     }
     static OperationRecord(t) {
-      if ((this.vkr = t))
+      if ((this.$Or = t))
         for (const a of ModelManager_1.ModelManager.CreatureModel.GetAllEntities()) {
           var i = a.Entity.GetComponent(24);
           i &&
             a.Entity.GetComponent(17)?.Valid &&
             this.IsInRecordArea(a.Entity) &&
-            ((i.akr = !0), i.Wkr());
+            ((i.GOr = !0), i.Ekr());
         }
       else {
-        for (const s of this.Kkr) {
+        for (const s of this.Skr) {
           var e = EntitySystem_1.EntitySystem.Get(s);
-          e?.Valid && (e = e.GetComponent(24)) && ((e.akr = !1), e.wkr());
+          e?.Valid && (e = e.GetComponent(24)) && ((e.GOr = !1), e.lkr());
         }
-        this.Kkr.length = 0;
+        this.Skr.length = 0;
       }
     }
     static IsInRecordArea(t) {
@@ -929,55 +925,55 @@ let CharacterStatisticsComponent =
       return !1;
     }
     static ExportRecord() {
-      if (0 !== this.Ikr.size) {
-        this.vkr && this.OperationRecord(!1);
+      if (0 !== this.ekr.size) {
+        this.$Or && this.OperationRecord(!1);
         var t,
           i = new StringBuilder_1.StringBuilder();
-        i.Append(this.Ykr);
-        for ([, t] of this.Ikr) i.Append(t.ToString());
+        i.Append(this.Lkr);
+        for ([, t] of this.ekr) i.Append(t.ToString());
         return i.ToString();
       }
     }
     static OperationRecordCount() {
       let t = 0;
-      for (var [, i] of this.Ikr)
+      for (var [, i] of this.ekr)
         t =
           (t = (t += i.SkillOperationMap.size) + i.MoveOperationMap.size) +
           i.TagOperationMap.size;
       return t;
     }
     static CleanupOperationRecord() {
-      this.Ikr.clear();
+      this.ekr.clear();
     }
     static SetCombatStarted(t, i, e, a) {
-      (this.Dkr = t) &&
+      (this.okr = t) &&
         (this.SetTypeOpen(i),
         this.SetCurrentAttacker(e),
         this.SetCurrentTarget(a));
     }
     static GetAttackerCombatEntities() {
-      this.Jkr.length = 0;
+      this.Dkr.length = 0;
       var t = UE.NewArray(UE.BuiltinString),
         i =
           (t.Add("无"),
-          this.Jkr.push(0),
+          this.Dkr.push(0),
           ModelManager_1.ModelManager.CreatureModel.GetAllEntities());
       for (const a of i) {
         var e = this.GetEntityName(a);
-        e && (t.Add(e), this.Jkr.push(a.Id));
+        e && (t.Add(e), this.Dkr.push(a.Id));
       }
       return t;
     }
     static GetTargetCombatEntities() {
-      this.zkr.length = 0;
+      this.Rkr.length = 0;
       var t = UE.NewArray(UE.BuiltinString),
         i =
           (t.Add("无"),
-          this.zkr.push(0),
+          this.Rkr.push(0),
           ModelManager_1.ModelManager.CreatureModel.GetAllEntities());
       for (const a of i) {
         var e = this.GetEntityName(a);
-        e && (t.Add(e), this.zkr.push(a.Id));
+        e && (t.Add(e), this.Rkr.push(a.Id));
       }
       return t;
     }
@@ -985,86 +981,86 @@ let CharacterStatisticsComponent =
       var i, e;
       if (t)
         return (i = (t = t.Entity.GetComponent(0))?.GetEntityType()) ===
-          Protocol_1.Aki.Protocol.HBs.Proto_Player
+          Protocol_1.Aki.Protocol.wks.Proto_Player
           ? ((e = t.Valid ? t.GetRoleId() : 0),
-            (e = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(e))
-              ? ((e = e.GetRoleId()),
-                (e = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(e)),
+            (e = ConfigManager_1.ConfigManager.RoleConfig.GetBaseRoleId(e))
+              ? ((e =
+                  ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(e)),
                 ConfigManager_1.ConfigManager.RoleConfig.GetRoleName(e.Name))
               : void 0)
-          : i === Protocol_1.Aki.Protocol.HBs.Proto_Monster
+          : i === Protocol_1.Aki.Protocol.wks.Proto_Monster
             ? PublicUtil_1.PublicUtil.GetConfigTextByKey(
                 t.GetBaseInfo()?.TidName ?? "",
               )
             : void 0;
     }
     static SetTypeOpen(e) {
-      if (!this.Zkr) {
+      if (!this.Ukr) {
         var i = e.length;
-        if (this.e2r.size !== i) this.Zkr = !0;
+        if (this.Akr.size !== i) this.Ukr = !0;
         else
           for (let t = 0; t < i; t++) {
             var a = e[t];
-            if (!this.e2r.get(a)) {
-              this.Zkr = !0;
+            if (!this.Akr.get(a)) {
+              this.Ukr = !0;
               break;
             }
           }
       }
-      this.e2r.clear();
+      this.Akr.clear();
       for (let t = 0, i = e.length; t < i; t++) {
         var s = e[t];
-        this.e2r.set(s, !0);
+        this.Akr.set(s, !0);
       }
     }
     static SetCurrentAttacker(t) {
-      t = this.Jkr[t];
-      this.t2r !== t && (this.Zkr = !0), (this.t2r = t);
+      t = this.Dkr[t];
+      this.Pkr !== t && (this.Ukr = !0), (this.Pkr = t);
     }
     static SetCurrentTarget(t) {
-      t = this.zkr[t];
-      this.i2r !== t && (this.Zkr = !0), (this.i2r = t);
+      t = this.Rkr[t];
+      this.xkr !== t && (this.Ukr = !0), (this.xkr = t);
     }
     static get ItemReset() {
-      return this.Zkr;
+      return this.Ukr;
     }
     static OnItemsResetFinished() {
-      (this.Zkr = !1), (this.Ukr.length = 0);
-      for (const t of this.Rkr) this.Akr(t) && this.Ukr.push(t);
+      (this.Ukr = !1), (this.skr.length = 0);
+      for (const t of this.rkr) this.nkr(t) && this.skr.push(t);
     }
     static GetSubItemsListView(i, e) {
       var a = UE.NewArray(UE.BuiltinString);
-      for (let t = 0; t < e; t++) a.Add(this.Ukr[i + t].ToString());
+      for (let t = 0; t < e; t++) a.Add(this.skr[i + t].ToString());
       return a;
     }
     static GetItemListViewCount() {
-      return this.Ukr.length;
+      return this.skr.length;
     }
-    lkr(t, i, e, a, s) {
+    OOr(t, i, e, a, s) {
       var r;
-      CharacterStatisticsComponent_1.Dkr &&
+      CharacterStatisticsComponent_1.okr &&
         ((r = a.Damage),
         (a = a.DamageData.Id),
         (i = new CombatDataHeal(i.Id, a, r, s.SkillId, e.Id)).ToString(),
-        CharacterStatisticsComponent_1.Rkr.push(i),
-        CharacterStatisticsComponent_1.Akr(i)) &&
-        CharacterStatisticsComponent_1.Ukr.push(i);
+        CharacterStatisticsComponent_1.rkr.push(i),
+        CharacterStatisticsComponent_1.nkr(i)) &&
+        CharacterStatisticsComponent_1.skr.push(i);
     }
-    ukr(t, i, e, a, s, r, n, o, h, c, C, _, m) {
-      CharacterStatisticsComponent_1.Dkr &&
+    FOr(t, i, e, a, s, r, n, o, h, c, C, _, m) {
+      CharacterStatisticsComponent_1.okr &&
         ((h = new CombatDataDamage(a.Id, h, t, m.SkillId, s.Id)).ToString(),
-        CharacterStatisticsComponent_1.Rkr.push(h),
-        CharacterStatisticsComponent_1.Akr(h) &&
-          CharacterStatisticsComponent_1.Ukr.push(h),
+        CharacterStatisticsComponent_1.rkr.push(h),
+        CharacterStatisticsComponent_1.nkr(h) &&
+          CharacterStatisticsComponent_1.skr.push(h),
         _) &&
         ((t = new CombatDataKilled(a.Id, s.Id)).ToString(),
-        CharacterStatisticsComponent_1.Rkr.push(t),
-        CharacterStatisticsComponent_1.Akr(t)) &&
-        CharacterStatisticsComponent_1.Ukr.push(t);
+        CharacterStatisticsComponent_1.rkr.push(t),
+        CharacterStatisticsComponent_1.nkr(t)) &&
+        CharacterStatisticsComponent_1.skr.push(t);
     }
-    Bkr(t) {
+    _kr(t) {
       var i;
-      !CharacterStatisticsComponent_1.Dkr ||
+      !CharacterStatisticsComponent_1.okr ||
         !(i = t.Config.Id) ||
         i <= 0 ||
         ((i = new CombatDataBuffAdded(
@@ -1072,13 +1068,13 @@ let CharacterStatisticsComponent =
           i,
           t.GetOwner().Id,
         )).ToString(),
-        CharacterStatisticsComponent_1.Rkr.push(i),
-        CharacterStatisticsComponent_1.Akr(i) &&
-          CharacterStatisticsComponent_1.Ukr.push(i));
+        CharacterStatisticsComponent_1.rkr.push(i),
+        CharacterStatisticsComponent_1.nkr(i) &&
+          CharacterStatisticsComponent_1.skr.push(i));
     }
-    bkr(t) {
+    ukr(t) {
       var i;
-      !CharacterStatisticsComponent_1.Dkr ||
+      !CharacterStatisticsComponent_1.okr ||
         !(i = t.Config.Id) ||
         i <= 0 ||
         ((i = new CombatDataBuffRemoved(
@@ -1086,52 +1082,52 @@ let CharacterStatisticsComponent =
           i,
           t.GetOwner().Id,
         )).ToString(),
-        CharacterStatisticsComponent_1.Rkr.push(i),
-        CharacterStatisticsComponent_1.Akr(i) &&
-          CharacterStatisticsComponent_1.Ukr.push(i));
+        CharacterStatisticsComponent_1.rkr.push(i),
+        CharacterStatisticsComponent_1.nkr(i) &&
+          CharacterStatisticsComponent_1.skr.push(i));
     }
-    mkr() {
+    HOr() {
       var t;
-      CharacterStatisticsComponent_1.Dkr &&
+      CharacterStatisticsComponent_1.okr &&
         ((t = new CombatDataRevive(this.Entity.Id)).ToString(),
-        CharacterStatisticsComponent_1.Rkr.push(t),
-        CharacterStatisticsComponent_1.Akr(t)) &&
-        CharacterStatisticsComponent_1.Ukr.push(t);
+        CharacterStatisticsComponent_1.rkr.push(t),
+        CharacterStatisticsComponent_1.nkr(t)) &&
+        CharacterStatisticsComponent_1.skr.push(t);
     }
-    static Akr(t) {
+    static nkr(t) {
       return !(
-        (0 < this.t2r && this.t2r !== t.AttackerId) ||
-        (0 < this.i2r && this.i2r !== t.TargetId) ||
-        (!this.e2r.get(0) && t instanceof CombatDataDamage) ||
-        (!this.e2r.get(1) && t instanceof CombatDataHeal) ||
-        (!this.e2r.get(2) && t instanceof CombatDataSkill) ||
-        (!this.e2r.get(3) &&
+        (0 < this.Pkr && this.Pkr !== t.AttackerId) ||
+        (0 < this.xkr && this.xkr !== t.TargetId) ||
+        (!this.Akr.get(0) && t instanceof CombatDataDamage) ||
+        (!this.Akr.get(1) && t instanceof CombatDataHeal) ||
+        (!this.Akr.get(2) && t instanceof CombatDataSkill) ||
+        (!this.Akr.get(3) &&
           (t instanceof CombatDataBuffRemoved ||
             t instanceof CombatDataBuffAdded)) ||
-        (!this.e2r.get(4) && t instanceof CombatDataKilled) ||
-        (!this.e2r.get(5) && t instanceof CombatDataRevive)
+        (!this.Akr.get(4) && t instanceof CombatDataKilled) ||
+        (!this.Akr.get(5) && t instanceof CombatDataRevive)
       );
     }
   });
-(CharacterStatisticsComponent.qkr = new Array()),
-  (CharacterStatisticsComponent.Okr = new Map()),
-  (CharacterStatisticsComponent.Gkr = new Map()),
-  (CharacterStatisticsComponent.kkr = new Map()),
-  (CharacterStatisticsComponent.Nkr = new Map()),
-  (CharacterStatisticsComponent.jkr =
+(CharacterStatisticsComponent.ckr = new Array()),
+  (CharacterStatisticsComponent.Ckr = new Map()),
+  (CharacterStatisticsComponent.mkr = new Map()),
+  (CharacterStatisticsComponent.gkr = new Map()),
+  (CharacterStatisticsComponent.dkr = new Map()),
+  (CharacterStatisticsComponent.Mkr =
     ",目标{0}类型,目标{1}名称,目标{2}配置ID,目标{3}单位Id,目标{4}伤害"),
-  (CharacterStatisticsComponent.Vkr = 0),
-  (CharacterStatisticsComponent.Hkr = 0),
+  (CharacterStatisticsComponent.pkr = 0),
+  (CharacterStatisticsComponent.vkr = 0),
   (CharacterStatisticsComponent.HalfLengthRecordSquared = 25e6),
-  (CharacterStatisticsComponent.Ikr = new Map()),
-  (CharacterStatisticsComponent.vkr = !1),
-  (CharacterStatisticsComponent.$kr = new Map([
+  (CharacterStatisticsComponent.ekr = new Map()),
+  (CharacterStatisticsComponent.$Or = !1),
+  (CharacterStatisticsComponent.Tkr = new Map([
     [CharacterUnifiedStateTypes_1.ECharMoveState.Walk, "走"],
     [CharacterUnifiedStateTypes_1.ECharMoveState.Run, "跑"],
     [CharacterUnifiedStateTypes_1.ECharMoveState.Sprint, "冲刺"],
     [CharacterUnifiedStateTypes_1.ECharMoveState.Dodge, "闪避"],
   ])),
-  (CharacterStatisticsComponent.Tkr = [
+  (CharacterStatisticsComponent.tkr = [
     "普攻0",
     "蓄力1",
     "E技能2",
@@ -1146,25 +1142,25 @@ let CharacterStatisticsComponent =
     "空中闪避11",
     "无类别",
   ]),
-  (CharacterStatisticsComponent.Xkr = new Map([
+  (CharacterStatisticsComponent.Ikr = new Map([
     [-1109506297, "正常时间"],
     [-1838149281, "狂暴时间"],
     [1922078392, "瘫痪时间"],
     [-1112841587, "脆弱时间"],
   ])),
-  (CharacterStatisticsComponent.Qkr = new Map([[-2044964178, "受击硬直"]])),
-  (CharacterStatisticsComponent.Kkr = new Array()),
-  (CharacterStatisticsComponent.Ykr =
+  (CharacterStatisticsComponent.ykr = new Map([[-2044964178, "受击硬直"]])),
+  (CharacterStatisticsComponent.Skr = new Array()),
+  (CharacterStatisticsComponent.Lkr =
     "角色ID,角色名称,配置ID,技能/阶段,时间,次数\n"),
-  (CharacterStatisticsComponent.Dkr = !1),
-  (CharacterStatisticsComponent.e2r = new Map()),
-  (CharacterStatisticsComponent.Jkr = new Array()),
-  (CharacterStatisticsComponent.zkr = new Array()),
-  (CharacterStatisticsComponent.t2r = 0),
-  (CharacterStatisticsComponent.i2r = 0),
-  (CharacterStatisticsComponent.Zkr = !1),
-  (CharacterStatisticsComponent.Ukr = new Array()),
+  (CharacterStatisticsComponent.okr = !1),
+  (CharacterStatisticsComponent.Akr = new Map()),
+  (CharacterStatisticsComponent.Dkr = new Array()),
   (CharacterStatisticsComponent.Rkr = new Array()),
+  (CharacterStatisticsComponent.Pkr = 0),
+  (CharacterStatisticsComponent.xkr = 0),
+  (CharacterStatisticsComponent.Ukr = !1),
+  (CharacterStatisticsComponent.skr = new Array()),
+  (CharacterStatisticsComponent.rkr = new Array()),
   (CharacterStatisticsComponent = CharacterStatisticsComponent_1 =
     __decorate(
       [(0, RegisterComponent_1.RegisterComponent)(24)],
@@ -1174,17 +1170,17 @@ let CharacterStatisticsComponent =
 const SKILL_RECORD_FMT = "{0},{1},{2}";
 class SkillOperationRecord {
   constructor(t) {
-    (this.he = t), (this.oUe = 0), (this.JQt = 0);
+    (this.he = t), (this.oUe = 0), (this.JXt = 0);
   }
   AddOptCountAndTime(t, i = 1) {
-    (this.oUe += t), (this.JQt += i);
+    (this.oUe += t), (this.JXt += i);
   }
   ToString() {
     return StringUtils_1.StringUtils.Format(
       SKILL_RECORD_FMT,
       this.he,
       this.oUe.toString(),
-      this.JQt.toString(),
+      this.JXt.toString(),
     );
   }
 }
@@ -1193,7 +1189,7 @@ class CharacterOperationRecord {
   constructor(t, i, e) {
     (this.Name = t),
       (this.EntityId = i),
-      (this.wKo = e),
+      (this.AQo = e),
       (this.SkillOperationMap = new Map()),
       (this.MoveOperationMap = new Map()),
       (this.TagOperationMap = new Map());
@@ -1208,7 +1204,7 @@ class CharacterOperationRecord {
         CHARACTER_RECORD_FMT,
         this.EntityId.toString(),
         this.Name,
-        this.wKo.toString(),
+        this.AQo.toString(),
         t.ToString(),
       );
       a.Append(s);
@@ -1218,7 +1214,7 @@ class CharacterOperationRecord {
         CHARACTER_RECORD_FMT,
         this.EntityId.toString(),
         this.Name,
-        this.wKo.toString(),
+        this.AQo.toString(),
         i.ToString(),
       );
       a.Append(r);
@@ -1228,7 +1224,7 @@ class CharacterOperationRecord {
         CHARACTER_RECORD_FMT,
         this.EntityId.toString(),
         this.Name,
-        this.wKo.toString(),
+        this.AQo.toString(),
         e.ToString(),
       );
       a.Append(n);

@@ -4,8 +4,8 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const MeshComponentUtils_1 = require("./MeshComponentUtils");
 class SceneComponentPool {
   constructor() {
-    (this.nYo = new Array()),
-      (this.sYo = new Array()),
+    (this.iJo = new Array()),
+      (this.oJo = new Array()),
       (this.AttachComponentInternal = void 0),
       (this.ActorInternal = void 0),
       (this.MaxPoolSize = 0);
@@ -19,25 +19,25 @@ class SceneComponentPool {
     var o = new Array();
     if (i) {
       let s = t;
-      i = this.sYo.length;
+      i = this.oJo.length;
       if (i < t) (s = i), (h = t - i);
       else {
         var r = i - t;
         for (let t = 0; t < r; ++t) {
-          var n = this.sYo.pop();
+          var n = this.oJo.pop();
           this.BasePoolPush(n);
         }
       }
       for (let t = 0; t < s; ++t)
-        this.PoolPushInternal(this.sYo[t], o, !1),
-          e && this.CleanComponent(this.sYo[t]);
+        this.PoolPushInternal(this.oJo[t], o, !1),
+          e && this.CleanComponent(this.oJo[t]);
     }
     if (0 < h) {
       let s = 0;
-      i = this.nYo.length;
+      i = this.iJo.length;
       h > i && ((s = h - i), (h = i));
       for (let t = 0; t < h; ++t) {
-        var l = this.nYo.pop();
+        var l = this.iJo.pop();
         this.PoolPushInternal(l, o, !1), this.UsedPoolPush(l);
       }
       for (let t = 0; t < s; ++t) {
@@ -52,8 +52,8 @@ class SceneComponentPool {
     let s = !0;
     for (const e of t) {
       var i;
-      this.sYo.concat(e)
-        ? ((i = this.sYo.indexOf(e)), this.nYo.push(e), this.sYo.slice(i, 1))
+      this.oJo.concat(e)
+        ? ((i = this.oJo.indexOf(e)), this.iJo.push(e), this.oJo.slice(i, 1))
         : (s = !1);
     }
     return s;
@@ -72,7 +72,7 @@ class SceneComponentPool {
             n,
             this.AttachComponentInternal,
           ),
-          this.nYo.push(),
+          this.iJo.push(),
           !this.PoolPush(n, h, o))
         )
           break;
@@ -80,7 +80,7 @@ class SceneComponentPool {
     }
   }
   CheckPoolRange() {
-    return this.nYo.length + this.sYo.length < this.MaxPoolSize;
+    return this.iJo.length + this.oJo.length < this.MaxPoolSize;
   }
   PoolPush(t, s = !1, i = !0) {
     return (
@@ -89,20 +89,20 @@ class SceneComponentPool {
     );
   }
   BasePoolPush(t, s = !0) {
-    this.PoolPushInternal(t, this.nYo, s);
+    this.PoolPushInternal(t, this.iJo, s);
   }
   UsedPoolPush(t, s = !1) {
-    this.PoolPushInternal(t, this.sYo, s);
+    this.PoolPushInternal(t, this.oJo, s);
   }
   PoolPushInternal(t, s, i = !0) {
     s.push(t), i && this.CleanComponent(t);
   }
   Shrink() {
-    for (const t of this.nYo) t.K2_DestroyComponent(this.ActorInternal);
-    this.nYo.splice(0, this.nYo.length);
+    for (const t of this.iJo) t.K2_DestroyComponent(this.ActorInternal);
+    this.iJo.splice(0, this.iJo.length);
   }
   GetUsedLength() {
-    return this.sYo.length;
+    return this.oJo.length;
   }
 }
 exports.SceneComponentPool = SceneComponentPool;

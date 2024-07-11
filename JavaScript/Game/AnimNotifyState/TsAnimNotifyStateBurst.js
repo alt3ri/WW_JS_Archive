@@ -16,7 +16,7 @@ class TsAnimNotifyStateBurst extends UE.KuroAnimNotifyState {
       var s = e.CharacterActorComponent?.Entity;
       if (s)
         return (
-          (s = s.GetComponent(185)) &&
+          (s = s.GetComponent(188)) &&
             (this.不能切人 && s.TagContainer.UpdateExactTag(2, -1697149502, 1),
             this.是否无敌) &&
             s.TagContainer.UpdateExactTag(2, 501201e3, 1),
@@ -37,13 +37,13 @@ class TsAnimNotifyStateBurst extends UE.KuroAnimNotifyState {
       var r = e.CharacterActorComponent?.Entity;
       if (r)
         return (
-          (r = r.GetComponent(185)) &&
+          (r = r.GetComponent(188)) &&
             (this.不能切人 && r.TagContainer.UpdateExactTag(2, -1697149502, -1),
             this.是否无敌) &&
             r.TagContainer.UpdateExactTag(2, 501201e3, -1),
           e
             .GetEntityNoBlueprint()
-            .GetComponent(161)
+            .GetComponent(163)
             .ResetHitPriorityAndGoThrough(),
           !0
         );

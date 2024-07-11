@@ -7,10 +7,10 @@ const UE = require("ue"),
 class AccessPathButton extends UiPanelBase_1.UiPanelBase {
   constructor(t, s) {
     super(),
-      (this.Rci = () => {
-        this.Uci && this.Uci(this.Aci);
+      (this.Rmi = () => {
+        this.Umi && this.Umi(this.Ami);
       }),
-      (this.Aci = s),
+      (this.Ami = s),
       this.CreateThenShowByActor(t);
   }
   OnRegisterComponent() {
@@ -23,7 +23,7 @@ class AccessPathButton extends UiPanelBase_1.UiPanelBase {
       [5, UE.UIText],
       [6, UE.UIToggleComponent],
     ]),
-      (this.BtnBindInfo = [[6, this.Rci]]);
+      (this.BtnBindInfo = [[6, this.Rmi]]);
   }
   OnStart() {
     var t,
@@ -33,7 +33,7 @@ class AccessPathButton extends UiPanelBase_1.UiPanelBase {
       a,
       n,
       r = ConfigManager_1.ConfigManager.InventoryConfig.GetAccessPathConfig(
-        this.Aci,
+        this.Ami,
       );
     r &&
       ((t = this.GetText(0)),
@@ -57,10 +57,10 @@ class AccessPathButton extends UiPanelBase_1.UiPanelBase {
       n.ShowTextNew(r));
   }
   OnBeforeDestroy() {
-    this.Uci = void 0;
+    this.Umi = void 0;
   }
   BindOnGetWayButtonClickedCallback(t) {
-    this.Uci = t;
+    this.Umi = t;
   }
 }
 exports.AccessPathButton = AccessPathButton;

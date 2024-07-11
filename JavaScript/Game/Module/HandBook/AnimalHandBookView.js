@@ -17,14 +17,14 @@ const MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang"
 class AnimalHandBookView extends HandBookBaseView_1.HandBookBaseView {
   constructor() {
     super(...arguments),
-      (this.wzt = []),
-      (this.Bzt = []),
-      (this.bzt = void 0),
+      (this.wZt = []),
+      (this.BZt = []),
+      (this.bZt = void 0),
       (this.InitHandBookCommonItem = () => {
         var e = new HandBookCommonItem_1.HandBookCommonItem();
         return (
           e.BindOnExtendToggleStateChanged(this.OnToggleClick),
-          this.Bzt.push(e),
+          this.BZt.push(e),
           e
         );
       }),
@@ -64,16 +64,16 @@ class AnimalHandBookView extends HandBookBaseView_1.HandBookBaseView {
               this.RefreshDropItem(e),
               HandBookController_1.HandBookController.SetAnimalMeshShow(
                 e.Id,
-                this.qzt,
+                this.qZt,
               ));
       }),
       (this.Refresh = () => {
-        this.wzt =
+        this.wZt =
           ConfigManager_1.ConfigManager.HandBookConfig.GetAnimalHandBookConfigList();
         var n = [],
-          t = this.wzt.length;
+          t = this.wZt.length;
         for (let e = 0; e < t; e++) {
-          var o = this.wzt[e],
+          var o = this.wZt[e],
             i = ModelManager_1.ModelManager.HandBookModel.GetHandBookInfo(
               4,
               o.Id,
@@ -87,7 +87,7 @@ class AnimalHandBookView extends HandBookBaseView_1.HandBookBaseView {
             (r.IsNew = i),
             n.push(r);
         }
-        (this.Bzt = []), this.InitScrollViewByCommonItem(n);
+        (this.BZt = []), this.InitScrollViewByCommonItem(n);
         var e =
           ConfigManager_1.ConfigManager.HandBookConfig.GetHandBookEntranceConfig(
             4,
@@ -100,21 +100,21 @@ class AnimalHandBookView extends HandBookBaseView_1.HandBookBaseView {
       }),
       (this.OnHandBookRead = (e, n) => {
         if (4 === e) {
-          var t = this.Bzt.length;
+          var t = this.BZt.length;
           for (let e = 0; e < t; e++) {
-            var o = this.Bzt[e];
+            var o = this.BZt[e];
             if (o.GetData().Config.Id === n)
               return void o.SetNewFlagVisible(!1);
           }
         }
       }),
-      (this.qzt = void 0);
+      (this.qZt = void 0);
   }
   OnStart() {
     this.SetDefaultState(), this.Refresh(), this.RefreshLockText();
   }
   OnAfterShow() {
-    this.bzt =
+    this.bZt =
       UiCameraAnimationManager_1.UiCameraAnimationManager.PushCameraHandleByHandleName(
         "1062",
       );
@@ -185,19 +185,19 @@ class AnimalHandBookView extends HandBookBaseView_1.HandBookBaseView {
   }
   OnBeforePlayCloseSequence() {
     UiCameraAnimationManager_1.UiCameraAnimationManager.PopCameraHandle(
-      this.bzt,
+      this.bZt,
     );
   }
   OnBeforeCreate() {
     UiSceneManager_1.UiSceneManager.InitHandBookObserver(),
-      (this.qzt = UiSceneManager_1.UiSceneManager.GetHandBookObserver());
+      (this.qZt = UiSceneManager_1.UiSceneManager.GetHandBookObserver());
   }
   OnBeforeDestroy() {
     UiSceneManager_1.UiSceneManager.DestroyHandBookObserver(),
-      (this.qzt = void 0),
+      (this.qZt = void 0),
       HandBookController_1.HandBookController.ClearEffect(),
-      (this.wzt = []),
-      (this.Bzt = []);
+      (this.wZt = []),
+      (this.BZt = []);
   }
 }
 exports.AnimalHandBookView = AnimalHandBookView;

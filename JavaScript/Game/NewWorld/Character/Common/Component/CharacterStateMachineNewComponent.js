@@ -46,7 +46,7 @@ let CharacterStateMachineNewComponent = class CharacterStateMachineNewComponent 
   }
   OnActivate() {
     var t = this.Entity.GetComponent(3),
-      e = this.Entity.GetComponent(185),
+      e = this.Entity.GetComponent(188),
       t = t.CreatureData?.GetPbEntityInitData();
     if (t) {
       t = (0, IComponent_1.getComponent)(t.ComponentsData, "AiComponent");
@@ -72,58 +72,58 @@ let CharacterStateMachineNewComponent = class CharacterStateMachineNewComponent 
     this.StateMachineGroup.OnControl();
   }
   static ChangeStateNotify(t, e, o) {
-    o = MathUtils_1.MathUtils.LongToBigInt(o.s4n);
-    t?.GetComponent(65)?.StateMachineGroup.HandleSwitch(e.ukn, e.mkn, e.dkn, o);
+    o = MathUtils_1.MathUtils.LongToBigInt(o.k8n);
+    t?.GetComponent(67)?.StateMachineGroup.HandleSwitch(e.k4n, e.V4n, e.H4n, o);
   }
   static ChangeStateConfirmNotify(t, e) {
-    t?.GetComponent(65)?.StateMachineGroup.HandleChangeStateConfirm(
-      e.ukn,
-      e.ckn,
+    t?.GetComponent(67)?.StateMachineGroup.HandleChangeStateConfirm(
+      e.k4n,
+      e.F4n,
     );
   }
   static FsmResetNotify(t, e, o) {
-    o = MathUtils_1.MathUtils.LongToBigInt(o.s4n);
-    t?.GetComponent(65)?.StateMachineGroup.ResetStateMachine(e.aps, o);
+    o = MathUtils_1.MathUtils.LongToBigInt(o.k8n);
+    t?.GetComponent(67)?.StateMachineGroup.ResetStateMachine(e.Iys, o);
   }
   static FsmBlackboardNotify(t, e) {
-    t?.GetComponent(65)?.StateMachineGroup.HandleBlackboard(e);
+    t?.GetComponent(67)?.StateMachineGroup.HandleBlackboard(e);
   }
   static FsmCustomBlackboardNotify(t, e) {
-    t?.GetComponent(65)?.StateMachineGroup.HandleCustomBlackboard(e);
+    t?.GetComponent(67)?.StateMachineGroup.HandleCustomBlackboard(e);
   }
 };
 __decorate(
-  [CombatMessage_1.CombatNet.SyncHandle("g2n")],
+  [CombatMessage_1.CombatNet.SyncHandle("WFn")],
   CharacterStateMachineNewComponent,
   "ChangeStateNotify",
   null,
 ),
   __decorate(
-    [CombatMessage_1.CombatNet.SyncHandle("f2n")],
+    [CombatMessage_1.CombatNet.SyncHandle("KFn")],
     CharacterStateMachineNewComponent,
     "ChangeStateConfirmNotify",
     null,
   ),
   __decorate(
-    [CombatMessage_1.CombatNet.SyncHandle("S2n")],
+    [CombatMessage_1.CombatNet.SyncHandle("YFn")],
     CharacterStateMachineNewComponent,
     "FsmResetNotify",
     null,
   ),
   __decorate(
-    [CombatMessage_1.CombatNet.SyncHandle("I2n")],
+    [CombatMessage_1.CombatNet.SyncHandle("ZFn")],
     CharacterStateMachineNewComponent,
     "FsmBlackboardNotify",
     null,
   ),
   __decorate(
-    [CombatMessage_1.CombatNet.SyncHandle("k2n")],
+    [CombatMessage_1.CombatNet.SyncHandle("C3n")],
     CharacterStateMachineNewComponent,
     "FsmCustomBlackboardNotify",
     null,
   ),
   (CharacterStateMachineNewComponent = __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(65)],
+    [(0, RegisterComponent_1.RegisterComponent)(67)],
     CharacterStateMachineNewComponent,
   )),
   (exports.CharacterStateMachineNewComponent =

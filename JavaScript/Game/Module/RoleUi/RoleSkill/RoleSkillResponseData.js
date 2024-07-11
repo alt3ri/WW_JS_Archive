@@ -3,19 +3,19 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleSkillResponseData = void 0);
 class RoleSkillResponseData {
   constructor() {
-    (this.bco = void 0), (this.qco = void 0), (this.Gco = 0);
+    (this.Pmo = void 0), (this.xmo = void 0), (this.wmo = 0);
   }
   UpdateRoleSkillViewResponse(e, t, s) {
-    (this.bco = e), (this.qco = t), (this.Gco = s);
+    (this.Pmo = e), (this.xmo = t), (this.wmo = s);
   }
   GetSkillId() {
-    return this.Gco;
+    return this.wmo;
   }
   GetSkillEffect() {
-    return this.bco;
+    return this.Pmo;
   }
   GetNextLevelSkillEffect() {
-    return this.qco;
+    return this.xmo;
   }
 }
 exports.RoleSkillResponseData = RoleSkillResponseData;

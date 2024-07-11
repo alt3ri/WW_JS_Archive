@@ -7,21 +7,21 @@ class UiTabSequence extends UiTabViewBehavior_1.UiTabViewBehavior {
   constructor() {
     super(...arguments),
       (this.LevelSequencePlayer = void 0),
-      (this.KIt = void 0),
-      (this.jFt = void 0),
-      (this.WFt = (e) => {
-        e = this.KIt?.get(e);
+      (this.JTt = void 0),
+      (this.W3t = void 0),
+      (this.K3t = (e) => {
+        e = this.JTt?.get(e);
         if (e) for (const i of e) i?.();
       });
   }
   SetRootItem(e) {
-    this.jFt = e;
+    this.W3t = e;
   }
   Init() {
     (this.LevelSequencePlayer = new LevelSequencePlayer_1.LevelSequencePlayer(
-      this.jFt.GetRootItem(),
+      this.W3t.GetRootItem(),
     )),
-      this.LevelSequencePlayer.BindSequenceCloseEvent(this.WFt);
+      this.LevelSequencePlayer.BindSequenceCloseEvent(this.K3t);
   }
   Begin() {
     this.LevelSequencePlayer.PlayLevelSequenceByName("Start");
@@ -41,12 +41,12 @@ class UiTabSequence extends UiTabViewBehavior_1.UiTabViewBehavior {
   Destroy() {
     this.LevelSequencePlayer?.Clear(),
       (this.LevelSequencePlayer = void 0),
-      this.KIt?.clear();
+      this.JTt?.clear();
   }
   AddSequenceFinishEvent(e, i, t = !1) {
-    this.KIt || (this.KIt = new Map());
-    let s = this.KIt.get(e);
-    s ? t && s.clear() : ((s = new Set()), this.KIt.set(e, s)), s.add(i);
+    this.JTt || (this.JTt = new Map());
+    let s = this.JTt.get(e);
+    s ? t && s.clear() : ((s = new Set()), this.JTt.set(e, s)), s.add(i);
   }
   GetLevelSequencePlayer() {
     return this.LevelSequencePlayer;

@@ -46,62 +46,62 @@ let CharacterLevelShootComponent =
       super(...arguments),
         (this.Hte = void 0),
         (this.Lie = void 0),
-        (this.R9r = 5e3),
+        (this.h9r = 5e3),
         (this.dce = !1),
-        (this.A9r = void 0),
-        (this.U9r = void 0),
-        (this.P9r = void 0),
-        (this.x9r = void 0),
-        (this.w9r = void 0),
+        (this.l9r = void 0),
+        (this._9r = void 0),
+        (this.u9r = void 0),
+        (this.c9r = void 0),
+        (this.m9r = void 0),
         (this.cz = void 0),
-        (this.B9r = void 0),
-        (this.b9r = void 0),
-        (this.q9r = void 0),
-        (this.G9r = (t, e) => {});
+        (this.d9r = void 0),
+        (this.C9r = void 0),
+        (this.g9r = void 0),
+        (this.f9r = (t, e) => {});
     }
     OnInitData() {
       return (
         (this.Hte = this.Entity.GetComponent(3)),
-        (this.Lie = this.Entity.GetComponent(185)),
-        (this.U9r = new Array()),
-        (this.P9r = Vector_1.Vector.Create()),
-        (this.x9r = Vector_1.Vector.Create()),
-        (this.w9r = Vector_1.Vector.Create()),
+        (this.Lie = this.Entity.GetComponent(188)),
+        (this._9r = new Array()),
+        (this.u9r = Vector_1.Vector.Create()),
+        (this.c9r = Vector_1.Vector.Create()),
+        (this.m9r = Vector_1.Vector.Create()),
         (this.cz = Vector_1.Vector.Create()),
-        (this.q9r = Vector_1.Vector.Create()),
-        (this.B9r = new Map()),
+        (this.g9r = Vector_1.Vector.Create()),
+        (this.d9r = new Map()),
         !0
       );
     }
     OnActivate() {
-      this.N9r(),
-        (this.b9r = this.Lie.ListenForTagAddOrRemove(-1167409290, this.G9r));
+      this.p9r(),
+        (this.C9r = this.Lie.ListenForTagAddOrRemove(-1167409290, this.f9r));
     }
     End() {
       return (
         (this.Hte = void 0),
         (this.Lie = void 0),
-        (this.A9r = void 0),
-        (this.U9r = void 0),
-        (this.P9r = void 0),
-        (this.x9r = void 0),
-        (this.w9r = void 0),
+        (this.l9r = void 0),
+        (this._9r = void 0),
+        (this.u9r = void 0),
+        (this.c9r = void 0),
+        (this.m9r = void 0),
         (this.cz = void 0),
-        this.b9r?.EndTask(),
-        (this.b9r = void 0),
-        (this.q9r = void 0),
-        !(this.B9r = void 0)
+        this.C9r?.EndTask(),
+        (this.C9r = void 0),
+        (this.g9r = void 0),
+        !(this.d9r = void 0)
       );
     }
-    N9r() {
-      this.A9r ||
-        ((this.A9r = UE.NewObject(UE.TraceLineElement.StaticClass())),
-        (this.A9r.bIsSingle = !0),
-        (this.A9r.bIgnoreSelf = !0),
-        this.A9r.SetTraceTypeQuery(
+    p9r() {
+      this.l9r ||
+        ((this.l9r = UE.NewObject(UE.TraceLineElement.StaticClass())),
+        (this.l9r.bIsSingle = !0),
+        (this.l9r.bIgnoreSelf = !0),
+        this.l9r.SetTraceTypeQuery(
           QueryTypeDefine_1.KuroTraceTypeQuery.Visible,
         )),
-        (this.A9r.WorldContextObject = this.Hte.Owner);
+        (this.l9r.WorldContextObject = this.Hte.Owner);
     }
     OnEnterAimShoot() {
       !this.Lie.HasTag(1441683476) ||
@@ -117,69 +117,69 @@ let CharacterLevelShootComponent =
         LevelAimLineController_1.LevelAimLineController.StopEffect());
     }
     OnTick(t) {
-      this.dce && this.O9r();
+      this.dce && this.v9r();
     }
     GetEndPointPosition(t, e) {
       return (
-        e.Multiply(this.R9r, this.w9r), t.Addition(this.w9r, this.w9r), this.w9r
+        e.Multiply(this.h9r, this.m9r), t.Addition(this.m9r, this.m9r), this.m9r
       );
     }
-    k9r() {
+    M9r() {
       return CharacterLevelShootComponent_1.Mz.length < 1
         ? Vector_1.Vector.Create()
         : CharacterLevelShootComponent_1.Mz.pop();
     }
-    F9r(t) {
+    E9r(t) {
       t.Set(0, 0, 0), CharacterLevelShootComponent_1.Mz.push(t);
     }
-    V9r() {
-      return CharacterLevelShootComponent_1.H9r.length < 1
+    S9r() {
+      return CharacterLevelShootComponent_1.y9r.length < 1
         ? new Array()
-        : CharacterLevelShootComponent_1.H9r.pop();
+        : CharacterLevelShootComponent_1.y9r.pop();
     }
-    Sz(t) {
-      for (const e of t) this.F9r(e);
-      (t.length = 0), CharacterLevelShootComponent_1.H9r.push(t);
+    Ez(t) {
+      for (const e of t) this.E9r(e);
+      (t.length = 0), CharacterLevelShootComponent_1.y9r.push(t);
     }
-    O9r() {
+    v9r() {
       var t = this.Hte.SkeletalMesh.GetSocketTransform(
           new UE.FName(BULLET_FIRE_BONE_NAME),
           0,
         ),
         e = Global_1.Global.CharacterCameraManager,
         t =
-          (this.x9r.FromUeVector(e.GetActorForwardVector()),
-          this.x9r.Multiply(CharacterLevelShootComponent_1.j9r, this.cz),
-          this.P9r.FromUeVector(e.GetCameraLocation()),
-          this.P9r.Addition(this.cz, this.P9r),
-          (this.w9r = this.GetEndPointPosition(this.P9r, this.x9r)),
+          (this.c9r.FromUeVector(e.GetActorForwardVector()),
+          this.c9r.Multiply(CharacterLevelShootComponent_1.I9r, this.cz),
+          this.u9r.FromUeVector(e.GetCameraLocation()),
+          this.u9r.Addition(this.cz, this.u9r),
+          (this.m9r = this.GetEndPointPosition(this.u9r, this.c9r)),
           TraceElementCommon_1.TraceElementCommon.SetStartLocation(
-            this.A9r,
-            this.P9r,
+            this.l9r,
+            this.u9r,
           ),
           TraceElementCommon_1.TraceElementCommon.SetEndLocation(
-            this.A9r,
-            this.w9r,
+            this.l9r,
+            this.m9r,
           ),
-          this.P9r.FromUeVector(t ? t.GetLocation() : e.GetCameraLocation()),
-          this.U9r.push(this.P9r),
+          this.u9r.FromUeVector(t ? t.GetLocation() : e.GetCameraLocation()),
+          this._9r.push(this.u9r),
           TraceElementCommon_1.TraceElementCommon.LineTrace(
-            this.A9r,
+            this.l9r,
             PROFILE_BULLECT_TRACK,
           ));
       let i = !1,
         o = !1;
       if (t)
-        for (var r = this.A9r.HitResult; 0 < r.GetHitCount(); ) {
-          var h = this.k9r(),
+        for (var r = this.l9r.HitResult; 0 < r.GetHitCount(); ) {
+          var h = this.M9r(),
             s =
               (TraceElementCommon_1.TraceElementCommon.GetImpactPoint(r, 0, h),
-              this.U9r.push(h),
-              this.U9r[this.U9r.length - 1].Subtraction(
-                this.U9r[this.U9r.length - 2],
-                this.x9r,
+              this._9r.push(h),
+              this._9r[this._9r.length - 1].Subtraction(
+                this._9r[this._9r.length - 2],
+                this.c9r,
               ),
-              this.x9r.Normalize(),
+              this.c9r.Normalize(),
               r.Actors.Get(0)),
             n =
               ModelManager_1.ModelManager.SceneInteractionModel.GetEntityByActor(
@@ -189,62 +189,62 @@ let CharacterLevelShootComponent =
             i = !0;
             break;
           }
-          var a = n.Entity.GetComponent(146);
+          var a = n.Entity.GetComponent(148);
           if (!a) {
             i = !0;
             break;
           }
-          if (this.B9r.has(n.Id)) {
-            var _ = this.B9r.get(n.Id);
+          if (this.d9r.has(n.Id)) {
+            var _ = this.d9r.get(n.Id);
             for (let t = 0; t < _.length; t += 2) {
               var l = _[t],
                 C = _[t + 1];
-              if (h.Equals(l) && this.x9r.Equals(C)) {
+              if (h.Equals(l) && this.c9r.Equals(C)) {
                 o = !0;
                 break;
               }
             }
             if (o) break;
             _.push(h);
-            var v = this.k9r();
+            var v = this.M9r();
             if (
-              (v.DeepCopy(this.x9r), _.push(v), _.length > MAX_HIT_COUNT_ON_ONE)
+              (v.DeepCopy(this.c9r), _.push(v), _.length > MAX_HIT_COUNT_ON_ONE)
             ) {
               o = !0;
               break;
             }
           } else {
-            var v = this.V9r(),
-              c = (v.push(h), this.k9r());
-            c.DeepCopy(this.x9r), v.push(c), this.B9r.set(n.Id, v);
+            var v = this.S9r(),
+              c = (v.push(h), this.M9r());
+            c.DeepCopy(this.c9r), v.push(c), this.d9r.set(n.Id, v);
           }
-          if (!a.CalculateReflectDir(this.x9r, this.x9r, s)) {
+          if (!a.CalculateReflectDir(this.c9r, this.c9r, s)) {
             i = !0;
             break;
           }
-          this.x9r.Multiply(REFLECT_START_OFFSET, this.cz),
+          this.c9r.Multiply(REFLECT_START_OFFSET, this.cz),
             h.Addition(this.cz, this.cz),
-            (this.w9r = this.GetEndPointPosition(h, this.x9r)),
+            (this.m9r = this.GetEndPointPosition(h, this.c9r)),
             TraceElementCommon_1.TraceElementCommon.SetStartLocation(
-              this.A9r,
+              this.l9r,
               this.cz,
             ),
             TraceElementCommon_1.TraceElementCommon.SetEndLocation(
-              this.A9r,
-              this.w9r,
+              this.l9r,
+              this.m9r,
             ),
             TraceElementCommon_1.TraceElementCommon.LineTrace(
-              this.A9r,
+              this.l9r,
               PROFILE_BULLECT_TRACK,
             );
         }
       let m = -1;
-      i || o || (m = this.U9r.push(this.w9r)),
-        1 < this.U9r.length
-          ? (this.U9r[1].Subtraction(this.U9r[0], this.q9r),
-            this.q9r.Normalize(),
+      i || o || (m = this._9r.push(this.m9r)),
+        1 < this._9r.length
+          ? (this._9r[1].Subtraction(this._9r[0], this.g9r),
+            this.g9r.Normalize(),
             LevelAimLineController_1.LevelAimLineController.UpdatePoints(
-              this.U9r,
+              this._9r,
               0,
             ))
           : Log_1.Log.CheckWarn() &&
@@ -253,18 +253,18 @@ let CharacterLevelShootComponent =
               37,
               "[LevelShoot]Length of SplinePoints less then 2",
             ),
-        -1 < m && m < this.U9r.length && this.U9r.splice(m, 1);
-      for (let t = 1; t < this.U9r.length; t++) this.F9r(this.U9r[t]);
-      for (const E of this.B9r.values()) this.Sz(E);
-      (this.U9r.length = 0), this.B9r.clear();
+        -1 < m && m < this._9r.length && this._9r.splice(m, 1);
+      for (let t = 1; t < this._9r.length; t++) this.E9r(this._9r[t]);
+      for (const E of this.d9r.values()) this.Ez(E);
+      (this._9r.length = 0), this.d9r.clear();
     }
   });
-(CharacterLevelShootComponent.j9r = Vector_1.Vector.ForwardVectorProxy),
+(CharacterLevelShootComponent.I9r = Vector_1.Vector.ForwardVectorProxy),
   (CharacterLevelShootComponent.Mz = new Array()),
-  (CharacterLevelShootComponent.H9r = new Array()),
+  (CharacterLevelShootComponent.y9r = new Array()),
   (CharacterLevelShootComponent = CharacterLevelShootComponent_1 =
     __decorate(
-      [(0, RegisterComponent_1.RegisterComponent)(53)],
+      [(0, RegisterComponent_1.RegisterComponent)(54)],
       CharacterLevelShootComponent,
     )),
   (exports.CharacterLevelShootComponent = CharacterLevelShootComponent);

@@ -5,8 +5,10 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.MenuScrollItemData =
       void 0);
 const UE = require("ue"),
+  Info_1 = require("../../../Core/Common/Info"),
   Log_1 = require("../../../Core/Common/Log"),
   Pool_1 = require("../../../Core/Container/Pool"),
+  KeySettingById_1 = require("../../../Core/Define/ConfigQuery/KeySettingById"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
   GameQualitySettingsManager_1 = require("../../GameQualitySettings/GameQualitySettingsManager"),
@@ -36,49 +38,52 @@ class MenuScrollItemData {
 exports.MenuScrollItemData = MenuScrollItemData;
 class MenuViewData {
   constructor() {
-    (this.Axi = 200),
-      (this.Pxi = 100),
-      (this.xxi = 0),
-      (this.wxi = 0),
+    (this.Awi = 200),
+      (this.Pwi = 100),
+      (this.xwi = 0),
+      (this.wwi = 0),
       (this.MenuViewDataCurMainType = 0),
       (this.MenuViewDataLastSubType = 0);
   }
   set MenuViewDataCurMainType(e) {
-    this.xxi = e;
+    (this.xwi = e),
+      EventSystem_1.EventSystem.Emit(
+        EventDefine_1.EEventName.OnSelectMenuMainType,
+      );
   }
   get MenuViewDataCurMainType() {
-    return this.xxi;
+    return this.xwi;
   }
   set MenuViewDataLastSubType(e) {
-    this.wxi = e;
+    this.wwi = e;
   }
   get MenuViewDataLastSubType() {
-    return this.wxi;
+    return this.wwi;
   }
   get MenuViewDataMainInterval() {
-    return this.Axi;
+    return this.Awi;
   }
   get MenuViewDataSubInterval() {
-    return this.Pxi;
+    return this.Pwi;
   }
 }
 exports.MenuViewData = MenuViewData;
 class MenuView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.Bxi = []),
-      (this.bxi = []),
-      (this.qxi = void 0),
-      (this.Gxi = new MenuViewData()),
-      (this.cpt = void 0),
+      (this.Bwi = []),
+      (this.bwi = []),
+      (this.qwi = void 0),
+      (this.Gwi = new MenuViewData()),
+      (this.Ivt = void 0),
       (this.xqe = void 0),
-      (this.Nxi = void 0),
-      (this.Oxi = void 0),
+      (this.Nwi = void 0),
+      (this.Owi = void 0),
       (this.a7 = () => new MenuScrollItemData()),
-      (this.kxi = () => {
-        this.Fxi();
+      (this.kwi = () => {
+        this.Fwi();
       }),
-      (this.Vxi = () => {
+      (this.Vwi = () => {
         var e;
         (GameQualitySettingsManager_1.GameQualitySettingsManager.IsAndroidPlatform() ||
           GameQualitySettingsManager_1.GameQualitySettingsManager.IsIosPlatform()) &&
@@ -89,19 +94,77 @@ class MenuView extends UiViewBase_1.UiViewBase {
             ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
               "PictureConfigOverload",
             ),
-          this.Hxi(e.Percentage, e.BarColor),
-          this.jxi(e.Desc));
+          this.Hwi(e.Percentage, e.BarColor),
+          this.jwi(e.Desc));
       }),
-      (this.Wxi = (e, t, i) => {
+      (this.ksa = (t) => {
+        if (t.length < 2)
+          Log_1.Log.CheckError() &&
+            Log_1.Log.Error("Guide", 65, "引导配置MenuView时参数不足", [
+              "ForTabType应有2个参数，但是实际只有",
+              t.length,
+            ]);
+        else {
+          var i,
+            n,
+            r = Number(t[1]);
+          let e = 0;
+          for ([i, n] of this.Bwi.entries())
+            if (n === r) {
+              e = i;
+              break;
+            }
+          var t = this.Ivt.GetTabItemByIndex(e);
+          if (t)
+            return (
+              this.Ivt.ScrollToToggleByIndex(e), [(t = t.GetRootItem()), t]
+            );
+          Log_1.Log.CheckError() &&
+            Log_1.Log.Error("Guide", 65, "引导配置MenuView时，未找到指定页签", [
+              "targetIndex",
+              e,
+            ]);
+        }
+      }),
+      (this.Fsa = (e) => {
+        if (e.length < 2)
+          Log_1.Log.CheckError() &&
+            Log_1.Log.Error("Guide", 65, "引导配置MenuView时参数不足", [
+              "ForKeySetting应有2个参数，但是实际只有",
+              e.length,
+            ]);
+        else {
+          var e = Number(e[1]),
+            t = KeySettingById_1.configKeySettingById.GetConfig(e),
+            i = this.Owi.GetGuideItemByKeySettingId(e, !1);
+          if (t) {
+            if (i) return [i, i];
+          } else
+            Log_1.Log.CheckError() &&
+              Log_1.Log.Error(
+                "Guide",
+                65,
+                "引导配置MenuView时找不到key setting",
+                ["key setting id", e],
+              );
+        }
+      }),
+      (this.Nsa = new Map([
+        ["TabType", this.ksa],
+        ["KeySetting", this.Fsa],
+      ])),
+      (this.Wwi = (e, t, i) => {
         return new MenuScrollSettingContainerItem_1.MenuScrollSettingContainerItem();
       }),
-      (this.dVe = (e, t) => {
+      (this.R6e = (e, t) => {
         return new CommonTabItem_1.CommonTabItem();
       }),
-      (this.Kxi = (e) => {
-        var e = this.Bxi[e],
+      (this.Kwi = (e) => {
+        Log_1.Log.CheckError() &&
+          Log_1.Log.Error("TowerDefense", 65, "OnClickedItem");
+        var e = this.Bwi[e],
           t =
-            ((this.Gxi.MenuViewDataCurMainType = e),
+            ((this.Gwi.MenuViewDataCurMainType = e),
             ConfigManager_1.ConfigManager.MenuBaseConfig.GetMainTypeConfigById(
               e,
             )),
@@ -109,9 +172,7 @@ class MenuView extends UiViewBase_1.UiViewBase {
           n = this.GetItem(4);
         if (t) {
           let e = t.TabPanelType;
-          switch (
-            ModelManager_1.ModelManager.PlatformModel.SourcePlatformType
-          ) {
+          switch (Info_1.Info.PlatformType) {
             case 3:
               e = t.PcTabPanelType;
               break;
@@ -123,10 +184,10 @@ class MenuView extends UiViewBase_1.UiViewBase {
           }
           switch (e) {
             case 1:
-              this.Qxi(), i.SetUIActive(!0), n.SetUIActive(!1);
+              this.Qwi(), i.SetUIActive(!0), n.SetUIActive(!1);
               break;
             case 2:
-              this.Xxi(), i.SetUIActive(!1), n.SetUIActive(!0);
+              this.Xwi(), i.SetUIActive(!1), n.SetUIActive(!0);
               break;
             default:
               i.SetUIActive(!1), n.SetUIActive(!1);
@@ -134,14 +195,14 @@ class MenuView extends UiViewBase_1.UiViewBase {
         } else i.SetUIActive(!1), n.SetUIActive(!1);
       }),
       (this.yqe = (e) => {
-        (e = this.Bxi[e]),
+        (e = this.Bwi[e]),
           (e = MenuController_1.MenuController.GetTargetMainInfo(e));
         return new CommonTabData_1.CommonTabData(
           e.MainIcon,
           new CommonTabTitleData_1.CommonTabTitleData(e.MainName),
         );
       }),
-      (this.$xi = () => {
+      (this.$wi = () => {
         this.xqe.UnBindLateUpdate();
       }),
       (this.$Ge = () => {
@@ -167,6 +228,9 @@ class MenuView extends UiViewBase_1.UiViewBase {
             : UiManager_1.UiManager.CloseView("MenuView");
       });
   }
+  get MenuViewDataExternal() {
+    return this.Gwi;
+  }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
       [0, UE.UIDynScrollViewComponent],
@@ -178,157 +242,174 @@ class MenuView extends UiViewBase_1.UiViewBase {
     ];
   }
   OnBeforeDestroy() {
-    this.cpt && (this.cpt.Destroy(), (this.cpt = void 0)),
-      this.Nxi && this.Nxi.Clear(),
-      this.bxi && (this.bxi.length = 0),
+    this.Ivt && (this.Ivt.Destroy(), (this.Ivt = void 0)),
+      this.Nwi && this.Nwi.Clear(),
+      this.bwi && (this.bwi.length = 0),
       this.xqe && (this.xqe.ClearChildren(), (this.xqe = void 0)),
-      this.qxi && (this.qxi = void 0);
+      this.qwi && (this.qwi = void 0);
     var e = ModelManager_1.ModelManager.MenuModel;
     e.IsEdited &&
-      (MenuController_1.MenuController.ReportSettingMenuLogEvent(),
+      (e.SaveLocalConfig(),
+      MenuController_1.MenuController.ReportSettingMenuLogEvent(),
       (e.IsEdited = !1));
   }
   async OnBeforeStartAsync() {
     MenuController_1.MenuController.RefreshCurrentSetting(),
-      (this.qxi =
+      (this.qwi =
         new MenuScrollSettingContainerDynItem_1.MenuScrollSettingContainerDynItem()),
       (this.xqe = new DynScrollView_1.DynamicScrollView(
         this.GetUIDynScrollViewComponent(0),
         this.GetItem(2),
-        this.qxi,
-        this.Wxi,
+        this.qwi,
+        this.Wwi,
       )),
       await this.xqe.Init(),
-      (this.Nxi = new Pool_1.Pool(CAPACITY, this.a7)),
-      await this.Yxi();
+      (this.Nwi = new Pool_1.Pool(CAPACITY, this.a7)),
+      await this.Ywi();
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.TextLanguageChange,
-      this.kxi,
+      this.kwi,
     ),
       (GameQualitySettingsManager_1.GameQualitySettingsManager.IsAndroidPlatform() ||
         GameQualitySettingsManager_1.GameQualitySettingsManager.IsIosPlatform()) &&
         EventSystem_1.EventSystem.Add(
           EventDefine_1.EEventName.ConfigLoadChange,
-          this.Vxi,
+          this.Vwi,
         );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.TextLanguageChange,
-      this.kxi,
+      this.kwi,
     ),
       (GameQualitySettingsManager_1.GameQualitySettingsManager.IsAndroidPlatform() ||
         GameQualitySettingsManager_1.GameQualitySettingsManager.IsIosPlatform()) &&
         EventSystem_1.EventSystem.Remove(
           EventDefine_1.EEventName.ConfigLoadChange,
-          this.Vxi,
+          this.Vwi,
         );
   }
   OnStart() {
-    this.cpt.SelectToggleByIndex(0, !0);
+    this.Ivt.SelectToggleByIndex(0, !0);
   }
-  async Yxi() {
-    this.Bxi = MenuController_1.MenuController.GetMainTypeList();
+  GetGuideUiItemAndUiItemForShowEx(e) {
+    var t;
+    if (!(e.length < 1))
+      return (t = this.Nsa.get(e[0]))
+        ? t(e)
+        : void (
+            Log_1.Log.CheckError() &&
+            Log_1.Log.Error(
+              "Guide",
+              65,
+              "引导配置MenuView，Extra键值与代码不匹配",
+              ["配置中的值", e[0]],
+            )
+          );
+    Log_1.Log.CheckError() &&
+      Log_1.Log.Error("Guide", 65, "引导配置MenuView时，必须要有Extra参数");
+  }
+  async Ywi() {
+    this.Bwi = MenuController_1.MenuController.GetMainTypeList();
     var e = new CommonTabComponentData_1.CommonTabComponentData(
-      this.dVe,
-      this.Kxi,
+      this.R6e,
+      this.Kwi,
       this.yqe,
     );
-    (this.cpt = new TabComponentWithCaptionItem_1.TabComponentWithCaptionItem(
+    (this.Ivt = new TabComponentWithCaptionItem_1.TabComponentWithCaptionItem(
       this.GetItem(1),
       e,
       this.$Ge,
     )),
-      await this.cpt.RefreshTabItemByLengthAsync(this.Bxi.length);
+      await this.Ivt.RefreshTabItemByLengthAsync(this.Bwi.length);
   }
-  Qxi() {
-    this.Fxi();
+  Qwi() {
+    this.Fwi();
   }
-  Xxi() {
-    var e = ModelManager_1.ModelManager.PlatformModel;
-    let t = 0;
-    e.IsInKeyBoard() ? (t = 1) : e.IsInGamepad() && (t = 2),
-      this.Oxi
-        ? this.Oxi.Refresh(t)
-        : ((this.Oxi =
+  Xwi() {
+    let e = 0;
+    Info_1.Info.IsInKeyBoard() ? (e = 1) : Info_1.Info.IsInGamepad() && (e = 2),
+      this.Owi
+        ? this.Owi.Refresh(e)
+        : ((this.Owi =
             new PcAndGamepadKeySettingPanel_1.PcAndGamepadKeySettingPanel()),
-          this.Oxi.CreateThenShowByResourceIdAsync(
+          this.Owi.CreateThenShowByResourceIdAsync(
             "UiItem_HandleSet",
             this.GetItem(4),
           ).then(
             () => {
-              this.Oxi.Refresh(t);
+              this.Owi.Refresh(e);
             },
             () => {},
           ));
   }
-  Fxi() {
+  Fwi() {
     var e = MenuController_1.MenuController.GetTargetBaseConfigData(
-      this.Gxi.MenuViewDataCurMainType,
+      this.Gwi.MenuViewDataCurMainType,
     );
-    2 === this.Gxi.MenuViewDataCurMainType &&
+    2 === this.Gwi.MenuViewDataCurMainType &&
     (GameQualitySettingsManager_1.GameQualitySettingsManager.IsAndroidPlatform() ||
       GameQualitySettingsManager_1.GameQualitySettingsManager.IsIosPlatform())
-      ? (this.GetItem(3)?.SetUIActive(!0), this.Vxi())
+      ? (this.GetItem(3)?.SetUIActive(!0), this.Vwi())
       : this.GetItem(3)?.SetUIActive(!1),
-      (this.Gxi.MenuViewDataLastSubType = 0),
-      this.Jxi(),
-      this.zxi(e);
+      (this.Gwi.MenuViewDataLastSubType = 0),
+      this.Jwi(),
+      this.zwi(e);
   }
-  jxi(e) {
+  jwi(e) {
     var t = this.GetItem(3)?.GetAttachUIChildren().Get(1);
     LguiUtil_1.LguiUtil.SetLocalTextNew(t, e);
   }
-  Hxi(e, t) {
+  Hwi(e, t) {
     var i = this.GetItem(3),
       n = i?.GetAttachUIChildren().Get(3);
     if (n) {
-      var a = n.GetAttachUIChildren(),
+      var r = n.GetAttachUIChildren(),
         n = i?.GetAttachUIChildren().Get(4);
       if (n) {
-        var r = n.Width,
+        var a = n.Width,
           o = [0, 0, 0, 0, 0];
-        if (100 <= e) for (let e = 0; e < a.Num(); e++) o[e] = r;
+        if (100 <= e) for (let e = 0; e < r.Num(); e++) o[e] = a;
         else if (80 <= e) {
-          for (let e = 0; e < a.Num() - 1; e++) o[e] = r;
-          o[4] = r * ((5 * (e - 80)) / 100);
+          for (let e = 0; e < r.Num() - 1; e++) o[e] = a;
+          o[4] = a * ((5 * (e - 80)) / 100);
         } else if (60 <= e) {
-          for (let e = 0; e < a.Num() - 2; e++) o[e] = r;
-          o[3] = r * ((5 * (e - 60)) / 100);
+          for (let e = 0; e < r.Num() - 2; e++) o[e] = a;
+          o[3] = a * ((5 * (e - 60)) / 100);
         } else if (40 <= e) {
-          for (let e = 0; e < a.Num() - 3; e++) o[e] = r;
-          o[2] = r * ((5 * (e - 40)) / 100);
+          for (let e = 0; e < r.Num() - 3; e++) o[e] = a;
+          o[2] = a * ((5 * (e - 40)) / 100);
         } else if (20 <= e) {
-          for (let e = 0; e < a.Num() - 4; e++) o[e] = r;
-          o[1] = r * ((5 * (e - 20)) / 100);
-        } else o[0] = r * ((5 * e) / 100);
-        for (let e = 0; e < a.Num(); e++) {
-          var s = a.Get(e);
+          for (let e = 0; e < r.Num() - 4; e++) o[e] = a;
+          o[1] = a * ((5 * (e - 20)) / 100);
+        } else o[0] = a * ((5 * e) / 100);
+        for (let e = 0; e < r.Num(); e++) {
+          var s = r.Get(e);
           s.SetWidth(o[e]), this.SetSpriteByPath(t, s, !1);
         }
       }
     }
   }
-  Jxi() {
-    for (const e of this.bxi) this.Nxi.Put(e);
-    this.bxi = [];
+  Jwi() {
+    for (const e of this.bwi) this.Nwi.Put(e);
+    this.bwi = [];
   }
-  Zxi(e, t) {
-    let i = this.Nxi.Get();
-    ((i = void 0 === i ? this.Nxi.Create() : i).Type = t),
+  Zwi(e, t) {
+    let i = this.Nwi.Get();
+    ((i = void 0 === i ? this.Nwi.Create() : i).Type = t),
       (i.Data = e),
-      this.bxi.push(i);
+      this.bwi.push(i);
   }
-  zxi(e) {
+  zwi(e) {
     for (const t of e)
       t.CheckCondition() &&
-        (t.MenuDataSubType !== this.Gxi.MenuViewDataLastSubType &&
-          ((this.Gxi.MenuViewDataLastSubType = t.MenuDataSubType),
-          this.Zxi(t, 0)),
-        this.Zxi(t, 1));
-    this.xqe.RefreshByData(this.bxi), this.xqe.BindLateUpdate(this.$xi);
+        (t.MenuDataSubType !== this.Gwi.MenuViewDataLastSubType &&
+          ((this.Gwi.MenuViewDataLastSubType = t.MenuDataSubType),
+          this.Zwi(t, 0)),
+        this.Zwi(t, 1));
+    this.xqe.RefreshByData(this.bwi), this.xqe.BindLateUpdate(this.$wi);
   }
 }
 exports.MenuView = MenuView;

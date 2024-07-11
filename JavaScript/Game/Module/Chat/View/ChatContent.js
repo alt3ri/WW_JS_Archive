@@ -17,10 +17,10 @@ const UE = require("ue"),
 class ChatContent extends ChatContentBase_1.ChatContentBase {
   constructor() {
     super(...arguments),
-      (this.WMt = void 0),
-      (this.EPe = void 0),
-      (this.KMt = () => {
-        this.QMt(), this.x9e(), this.pbn();
+      (this.oSt = void 0),
+      (this.SPe = void 0),
+      (this.rSt = () => {
+        this.nSt(), this.K7e(), this.fOn();
       });
   }
   OnRegisterComponent() {
@@ -36,54 +36,54 @@ class ChatContent extends ChatContentBase_1.ChatContentBase {
   }
   OnStart() {
     var e = this.GetItem(0);
-    (this.WMt = new PlayerHeadItem_1.PlayerHeadItem(e.GetOwner())),
-      (this.EPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem)),
+    (this.oSt = new PlayerHeadItem_1.PlayerHeadItem(e.GetOwner())),
+      (this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem)),
       this.bl(),
       this.Ore();
   }
   OnBeforeDestroy() {
-    (this.WMt = void 0), this.kre();
+    (this.oSt = void 0), this.kre();
   }
   Ore() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnChatPlayerInfoChanged,
-      this.KMt,
+      this.rSt,
     );
   }
   kre() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnChatPlayerInfoChanged,
-      this.KMt,
+      this.rSt,
     );
   }
   bl() {
-    this.QMt(), this.L4e(), this.x9e(), this.XMt(), this.pbn();
+    this.nSt(), this.Dke(), this.K7e(), this.sSt(), this.fOn();
   }
-  QMt() {
+  nSt() {
     var e = ModelManager_1.ModelManager.PersonalModel,
       t = this.ChatContentData.SenderPlayerId,
       i = e.GetPersonalInfoData();
     i && i.PlayerId === t
-      ? this.WMt.RefreshByRoleIdUseCard(e.GetHeadPhotoId())
+      ? this.oSt.RefreshByRoleIdUseCard(e.GetHeadPhotoId())
       : (i = ModelManager_1.ModelManager.ChatModel.GetChatPlayerData(t)) &&
         ((e = i?.GetPlayerIcon())
-          ? this.WMt.RefreshByRoleIdUseCard(e)
-          : this.WMt.RefreshByPlayerId(t, !0));
+          ? this.oSt.RefreshByRoleIdUseCard(e)
+          : this.oSt.RefreshByPlayerId(t, !0));
   }
-  L4e() {
+  Dke() {
     var e,
       t,
       i,
       r = this.GetItem(5);
     const s = this.GetItem(3);
-    this.ChatContentData.ContentType === Protocol_1.Aki.Protocol.U3n.nMs &&
+    this.ChatContentData.ContentType === Protocol_1.Aki.Protocol.l8n.SIs &&
       ((e = this.GetText(1)),
       (t = this.ChatContentData.Content),
       e.SetText(t),
       r.SetUIActive(!0),
       s.SetUIActive(!1)),
       this.ChatContentData.ContentType ===
-        Protocol_1.Aki.Protocol.U3n.Proto_Emoji &&
+        Protocol_1.Aki.Protocol.l8n.Proto_Emoji &&
         ((e = this.GetTexture(4)),
         (t = Number(this.ChatContentData.Content)),
         ((i = ConfigManager_1.ConfigManager.ChatConfig.GetExpressionConfig(t))
@@ -101,7 +101,7 @@ class ChatContent extends ChatContentBase_1.ChatContentBase {
             s)
         ).SetUIActive(!1));
   }
-  x9e() {
+  K7e() {
     var e = this.ChatContentData.SenderPlayerId,
       t = this.GetText(6),
       i = this.ChatContentData.ChatRoomType;
@@ -124,7 +124,7 @@ class ChatContent extends ChatContentBase_1.ChatContentBase {
       t.SetUIActive(!0);
     } else t.SetUIActive(!1);
   }
-  XMt() {
+  sSt() {
     var e = this.GetText(2),
       t = this.ChatContentData.TimeStamp,
       i = this.ChatContentData.LastTimeStamp,
@@ -159,8 +159,8 @@ class ChatContent extends ChatContentBase_1.ChatContentBase {
               ),
               e.SetUIActive(!0)));
   }
-  pbn() {
-    this.EPe?.PlayLevelSequenceByName("Start");
+  fOn() {
+    this.SPe?.PlayLevelSequenceByName("Start");
   }
 }
 exports.ChatContent = ChatContent;

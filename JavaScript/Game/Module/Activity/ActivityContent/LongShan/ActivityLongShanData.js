@@ -1,8 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ActivityLongShanData = void 0);
-const Log_1 = require("../../../../../Core/Common/Log"),
-  LongShanStageAll_1 = require("../../../../../Core/Define/ConfigQuery/LongShanStageAll"),
+const LongShanStageAll_1 = require("../../../../../Core/Define/ConfigQuery/LongShanStageAll"),
   LongShanTaskById_1 = require("../../../../../Core/Define/ConfigQuery/LongShanTaskById"),
   EventDefine_1 = require("../../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../../Common/Event/EventSystem"),
@@ -20,23 +19,18 @@ class ActivityLongShanData extends ActivityData_1.ActivityBaseData {
       this.Id,
     )) {
       this.StageIds.push(n.Id);
-      var t = e.y0s?.W0s?.find((e) => e.Ekn === n.Id);
-      t
-        ? ((t = new LongShanStageInfo_1.LongShanStageInfo(t)),
-          this.ROe.set(n.Id, t))
-        : Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Activity", 44, "龙山活动服务器数据与配表不符", [
-            "id",
-            n.Id,
-          ]);
+      var t = e.Nps?.lMs?.find((e) => e.J4n === n.Id);
+      t &&
+        ((t = new LongShanStageInfo_1.LongShanStageInfo(t)),
+        this.ROe.set(n.Id, t));
     }
   }
   UpdateStage(e) {
     for (const r of e) {
-      var t = r.Ekn,
+      var t = r.J4n,
         n = this.ROe.get(t),
         a = new LongShanStageInfo_1.LongShanStageInfo(r);
-      this.ROe.set(r.Ekn, a), n && this.OnStageInfoChange(t, n, a);
+      this.ROe.set(r.J4n, a), n && this.OnStageInfoChange(t, n, a);
     }
     EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.LongShanUpdate),
       EventSystem_1.EventSystem.Emit(
@@ -46,13 +40,13 @@ class ActivityLongShanData extends ActivityData_1.ActivityBaseData {
   }
   OnStageInfoChange(e, t, n) {
     for (var [a, r] of t.TaskInfoMap) {
-      var o = n.TaskInfoMap.get(a);
-      o && this.OnStageTaskInfoChange(a, r, o);
+      var i = n.TaskInfoMap.get(a);
+      i && this.OnStageTaskInfoChange(a, r, i);
     }
   }
   OnStageTaskInfoChange(e, t, n) {
-    !t.$0s &&
-      n.$0s &&
+    !t.sMs &&
+      n.sMs &&
       0 < (t = LongShanTaskById_1.configLongShanTaskById.GetConfig(e).JumpId) &&
       8 ===
         (n =
@@ -75,13 +69,13 @@ class ActivityLongShanData extends ActivityData_1.ActivityBaseData {
     var t,
       e = this.GetStageInfoById(e);
     return e
-      ? ((t = e.V0s.filter((e) => e.H0s).length),
-        Math.ceil((t / e.V0s.length) * 100))
+      ? ((t = e.nMs.filter((e) => e.aMs).length),
+        Math.ceil((t / e.nMs.length) * 100))
       : 0;
   }
   CheckStageRed(e) {
     e = this.GetStageInfoById(e);
-    return !!e && 0 <= e.V0s.findIndex((e) => e.$0s && !e.H0s);
+    return !!e && 0 <= e.nMs.findIndex((e) => e.sMs && !e.aMs);
   }
   CheckAnyStageRed() {
     if (this.StageIds)

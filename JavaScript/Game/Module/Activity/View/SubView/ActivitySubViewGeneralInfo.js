@@ -16,9 +16,9 @@ class ActivitySubViewGeneralInfo extends ActivitySubViewBase_1.ActivitySubViewBa
       (this.DNe = void 0),
       (this.UNe = void 0),
       (this.ANe = void 0),
-      (this.I4e = void 0),
-      (this.u2e = () => {
-        this.I4e?.(this.ActivityBaseData);
+      (this.k5e = void 0),
+      (this.DFe = () => {
+        this.k5e?.(this.ActivityBaseData);
       });
   }
   OnRegisterComponent() {
@@ -54,18 +54,18 @@ class ActivitySubViewGeneralInfo extends ActivitySubViewBase_1.ActivitySubViewBa
       i,
       e = this.ActivityBaseData.LocalConfig;
     e &&
-      (this.LNe.SetTitleByText(this.ActivityBaseData.GetTitle()),
-      (t = e.DescTheme),
-      (e = e.Desc),
-      (i = !StringUtils_1.StringUtils.IsEmpty(t)),
-      this.DNe.SetTitleVisible(i),
-      i && this.DNe.SetTitleByTextId(t),
-      this.DNe.SetContentByTextId(e),
+      ((i = e.DescTheme),
+      (t = !StringUtils_1.StringUtils.IsEmpty(i)),
+      this.LNe.SetTitleByText(this.ActivityBaseData.GetTitle()),
+      this.LNe.SetSubTitleVisible(t),
+      t && this.LNe.SetSubTitleByTextId(i),
+      (t = e.Desc),
+      this.DNe.SetContentByTextId(t),
       (i = this.ActivityBaseData.GetPreviewReward()),
       this.UNe.SetTitleByTextId("CollectActivity_reward"),
       this.UNe.InitGridLayout(this.UNe.InitCommonGridItem),
       this.UNe.RefreshItemLayout(i),
-      this.ANe.FunctionButton.BindCallback(this.u2e),
+      this.ANe.FunctionButton.BindCallback(this.DFe),
       this.ANe.FunctionButton.RefreshTextNew("CollectActivity_reward"),
       this.OnRefreshView());
   }
@@ -91,7 +91,7 @@ class ActivitySubViewGeneralInfo extends ActivitySubViewBase_1.ActivitySubViewBa
     this.ANe?.FunctionButton?.RefreshTextNew(t, i);
   }
   SetClickFunc(t) {
-    this.I4e = t;
+    this.k5e = t;
   }
   SetFunctionRedDotVisible(t) {
     this.ANe?.SetFunctionRedDotVisible(t);

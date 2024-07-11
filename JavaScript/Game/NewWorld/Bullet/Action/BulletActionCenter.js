@@ -23,116 +23,116 @@ const Log_1 = require("../../../../Core/Common/Log"),
   BulletActionUpdateLiveTime_1 = require("./BulletActionUpdateLiveTime");
 class BulletActionCenter {
   constructor() {
-    this.M4o = void 0;
+    this.f5o = void 0;
   }
   Init() {
     this.LTe();
   }
   Clear() {
-    this.M4o = void 0;
+    this.f5o = void 0;
   }
   LTe() {
-    (this.M4o = new Array(17)),
-      this.IQi(
+    (this.f5o = new Array(17)),
+      this.SXi(
         0,
         BulletActionInfo_1.BulletActionInfoSimple,
         BulletActionBase_1.BulletActionTest,
       ),
-      this.IQi(
+      this.SXi(
         1,
         BulletActionInfo_1.BulletActionInfoSimple,
         BulletActionInitBullet_1.BulletActionInitBullet,
       ),
-      this.IQi(
+      this.SXi(
         2,
         BulletActionInfo_1.BulletActionInfoSimple,
         BulletActionInitHit_1.BulletActionInitHit,
       ),
-      this.IQi(
+      this.SXi(
         3,
         BulletActionInfo_1.BulletActionInfoSimple,
         BulletActionInitMove_1.BulletActionInitMove,
       ),
-      this.IQi(
+      this.SXi(
         4,
         BulletActionInfo_1.BulletActionInfoSimple,
         BulletActionInitRender_1.BulletActionInitRender,
         !0,
       ),
-      this.IQi(
+      this.SXi(
         5,
         BulletActionInfo_1.BulletActionInfoSimple,
         BulletActionTimeScale_1.BulletActionTimeScale,
         !0,
       ),
-      this.IQi(
+      this.SXi(
         9,
         BulletActionInfo_1.BulletActionInfoSimple,
         BulletActionAfterInit_1.BulletActionAfterInit,
       ),
-      this.IQi(
+      this.SXi(
         6,
         BulletActionInfo_1.BulletActionInfoSimple,
         BulletActionInitCollision_1.BulletActionInitCollision,
       ),
-      this.IQi(
+      this.SXi(
         7,
         BulletActionInfo_1.BulletActionInfoSimple,
         BulletActionUpdateEffect_1.BulletActionUpdateEffect,
         !0,
       ),
-      this.IQi(
+      this.SXi(
         15,
         BulletActionInfo_1.BulletActionInfoSimple,
         BulletActionUpdateAttackerFrozen_1.BulletActionUpdateAttackerFrozen,
         !0,
       ),
-      this.IQi(
+      this.SXi(
         8,
         BulletActionInfo_1.BulletActionInfoSimple,
         BulletActionUpdateLiveTime_1.BulletActionUpdateLiveTime,
         !0,
       ),
-      this.IQi(
+      this.SXi(
         10,
         BulletActionInfo_1.BulletActionInfoSimple,
         BulletActionChild_1.BulletActionChild,
         !0,
       ),
-      this.IQi(
+      this.SXi(
         11,
         BulletActionInfo_1.BulletActionInfoSummonBullet,
         BulletActionSummonBullet_1.BulletActionSummonBullet,
       ),
-      this.IQi(
+      this.SXi(
         12,
         BulletActionInfo_1.BulletActionInfoSimple,
         BulletActionSummonEntity_1.BulletActionSummonEntity,
       ),
-      this.IQi(
+      this.SXi(
         13,
         BulletActionInfo_1.BulletActionInfoDestroyBullet,
         BulletActionDestroyBullet_1.BulletActionDestroyBullet,
       ),
-      this.IQi(
+      this.SXi(
         14,
         BulletActionInfo_1.BulletActionInfoAttachActor,
         BulletActionAttachActor_1.BulletActionAttachActor,
       ),
-      this.IQi(
+      this.SXi(
         16,
         BulletActionInfo_1.BulletActionInfoSimple,
         BulletActionAttachParentEffect_1.BulletActionAttachParentEffect,
         !0,
       );
   }
-  IQi(t, e, i, l = !1) {
+  SXi(t, e, i, l = !1) {
     var n;
-    this.M4o[t] ||
-      ((n = new BulletActionContainer()).Init(t, e, i, l), (this.M4o[t] = n));
+    this.f5o[t] ||
+      ((n = new BulletActionContainer()).Init(t, e, i, l), (this.f5o[t] = n));
   }
   GetBulletActionContainer(t) {
-    return this.M4o[t];
+    return this.f5o[t];
   }
   CreateBulletActionInfo(t) {
     return this.GetBulletActionContainer(t).GetActionInfo();
@@ -150,65 +150,65 @@ class BulletActionCenter {
 exports.BulletActionCenter = BulletActionCenter;
 class BulletActionContainer {
   constructor() {
-    (this.S9 = 0),
-      (this.S4o = void 0),
-      (this.E4o = void 0),
-      (this.y4o = !1),
-      (this.I4o = void 0),
-      (this.DQi = void 0),
-      (this.T4o = void 0),
-      (this.L4o = void 0),
-      (this.D4o = !1);
+    (this.E9 = 0),
+      (this.p5o = void 0),
+      (this.v5o = void 0),
+      (this.M5o = !1),
+      (this.E5o = void 0),
+      (this.TXi = void 0),
+      (this.S5o = void 0),
+      (this.y5o = void 0),
+      (this.I5o = !1);
   }
   Init(t, e, i, l = !1) {
-    (this.S9 = t),
-      (this.S4o = e),
-      (this.E4o = i),
-      (this.y4o = l),
-      (this.D4o = this.S4o === BulletActionInfo_1.BulletActionInfoSimple),
-      (this.I4o = new Array()),
-      (this.DQi = new Array());
-    (t = this.R4o()),
+    (this.E9 = t),
+      (this.p5o = e),
+      (this.v5o = i),
+      (this.M5o = l),
+      (this.I5o = this.p5o === BulletActionInfo_1.BulletActionInfoSimple),
+      (this.E5o = new Array()),
+      (this.TXi = new Array());
+    (t = this.T5o()),
       (t.IsInPool = !0),
-      this.DQi.push(t),
-      (this.T4o = new Array()),
-      (this.L4o = new Array()),
+      this.TXi.push(t),
+      (this.S5o = new Array()),
+      (this.y5o = new Array()),
       (e = this.dZ());
-    (e.IsInPool = !0), this.L4o.push(e);
+    (e.IsInPool = !0), this.y5o.push(e);
   }
   get ActionType() {
-    return this.S9;
+    return this.E9;
   }
-  R4o() {
-    var t = new this.S4o(this.S9);
-    return (t.Index = this.I4o.length), this.I4o.push(t), t;
+  T5o() {
+    var t = new this.p5o(this.E9);
+    return (t.Index = this.E5o.length), this.E5o.push(t), t;
   }
   GetActionInfo() {
     var t;
-    return this.D4o
-      ? this.DQi[0]
-      : this.DQi.length <= 0
-        ? this.R4o()
-        : (((t = this.DQi.pop()).IsInPool = !1), t);
+    return this.I5o
+      ? this.TXi[0]
+      : this.TXi.length <= 0
+        ? this.T5o()
+        : (((t = this.TXi.pop()).IsInPool = !1), t);
   }
   dZ() {
-    var t = new this.E4o(this.S9);
-    return (t.Index = this.T4o.length), this.T4o.push(t), t;
+    var t = new this.v5o(this.E9);
+    return (t.Index = this.S5o.length), this.S5o.push(t), t;
   }
   GetAction() {
     var t;
-    return this.y4o
-      ? this.L4o.length <= 0
+    return this.M5o
+      ? this.y5o.length <= 0
         ? this.dZ()
-        : (((t = this.L4o.pop()).IsInPool = !1), t)
-      : this.L4o[0];
+        : (((t = this.y5o.pop()).IsInPool = !1), t)
+      : this.y5o[0];
   }
   RecycleActionInfo(t) {
-    this.D4o ||
+    this.I5o ||
       (t.IsInPool
         ? Log_1.Log.CheckError() &&
           Log_1.Log.Error("Bullet", 18, "BulletActionInfo重复入池")
-        : (t.Clear(), (t.IsInPool = !0), this.DQi.push(this.I4o[t.Index])));
+        : (t.Clear(), (t.IsInPool = !0), this.TXi.push(this.E5o[t.Index])));
   }
   RecycleAction(t) {
     var e = t.GetActionInfo();
@@ -258,11 +258,11 @@ class BulletActionContainer {
             ));
       }
     }
-    this.y4o &&
+    this.M5o &&
       (t.IsInPool
         ? Log_1.Log.CheckError() &&
           Log_1.Log.Error("Bullet", 18, "BulletAction重复入池")
-        : ((t.IsInPool = !0), this.L4o.push(this.T4o[t.Index])));
+        : ((t.IsInPool = !0), this.y5o.push(this.S5o[t.Index])));
   }
 }
 exports.BulletActionContainer = BulletActionContainer;

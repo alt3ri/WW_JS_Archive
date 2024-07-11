@@ -8,7 +8,7 @@ const ModelManager_1 = require("../../Manager/ModelManager"),
 class LevelEventExitDungeon extends LevelGeneralBase_1.LevelEventBase {
   constructor() {
     super(...arguments),
-      (this.SDe = () => {
+      (this.EDe = () => {
         this.FinishExecute(!0);
       });
   }
@@ -23,8 +23,9 @@ class LevelEventExitDungeon extends LevelGeneralBase_1.LevelEventBase {
         this.FinishExecute(!0))
       : e.IsNeedSecondaryConfirmation
         ? InstanceDungeonController_1.InstanceDungeonController.OnClickInstanceDungeonExitButton(
-            this.SDe,
-            this.SDe,
+            this.EDe,
+            this.EDe,
+            !1,
           )
         : this.FinishExecute(!0);
   }

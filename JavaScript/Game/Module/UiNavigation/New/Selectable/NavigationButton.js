@@ -8,29 +8,29 @@ const puerts_1 = require("puerts"),
 class NavigationButton extends NavigationSelectableBase_1.NavigationSelectableBase {
   constructor() {
     super(...arguments),
-      (this.uwo = void 0),
-      (this.j7e = () => {
+      (this.lBo = void 0),
+      (this.ije = () => {
         this.OnButtonClick();
       });
   }
   OnInit() {
-    this.cwo();
+    this._Bo();
   }
   OnClear() {
-    this.mwo();
+    this.uBo();
   }
-  cwo() {
+  _Bo() {
     var t, i;
     this.NeedAddButtonClick() &&
       ((t = this.Selectable),
-      (i = (0, puerts_1.toManualReleaseDelegate)(this.j7e)),
-      (this.uwo = t.RegisterClickEvent(i)));
+      (i = (0, puerts_1.toManualReleaseDelegate)(this.ije)),
+      (this.lBo = t.RegisterClickEvent(i)));
   }
-  mwo() {
-    this.uwo &&
-      (this.Selectable.UnregisterClickEvent(this.uwo),
-      (0, puerts_1.releaseManualReleaseDelegate)(this.j7e),
-      (this.uwo = void 0));
+  uBo() {
+    this.lBo &&
+      (this.Selectable.UnregisterClickEvent(this.lBo),
+      (0, puerts_1.releaseManualReleaseDelegate)(this.ije),
+      (this.lBo = void 0));
   }
   OnButtonClick() {}
   NeedAddButtonClick() {

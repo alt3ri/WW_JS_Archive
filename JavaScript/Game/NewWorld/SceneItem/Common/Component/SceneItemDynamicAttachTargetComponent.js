@@ -82,259 +82,259 @@ exports.AttachParam = AttachParam;
 let SceneItemDynamicAttachTargetComponent = class SceneItemDynamicAttachTargetComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments),
-      (this.SIe = void 0),
+      (this.EIe = void 0),
       (this.Hte = void 0),
-      (this.Fln = !1),
-      (this.Vln = 0),
-      (this.Hln = void 0),
-      (this.Eln = void 0),
-      (this.jln = void 0),
-      (this.yln = void 0),
+      (this.Sln = !1),
+      (this.yln = 0),
       (this.Iln = void 0),
-      (this.Lln = void 0),
-      (this.Dln = (t, e, i) => {
+      (this.oln = void 0),
+      (this.Tln = void 0),
+      (this.rln = void 0),
+      (this.nln = void 0),
+      (this.aln = void 0),
+      (this.hln = (t, e, i) => {
         if (e?.Valid) {
           e = e.Entity.GetComponent(0);
-          if (this.Eln) {
-            if (this.Eln !== e?.GetPbDataId()) return;
-          } else if (this.jln && this.jln !== e?.GetCreatureDataId()) return;
-          this.Rln();
+          if (this.oln) {
+            if (this.oln !== e?.GetPbDataId()) return;
+          } else if (this.Tln && this.Tln !== e?.GetCreatureDataId()) return;
+          this.lln();
         }
       }),
-      (this.Aln = (t, e) => {
+      (this._ln = (t, e) => {
         if (e?.Valid) {
           e = e.Entity.GetComponent(0);
-          if (this.Eln) {
-            if (this.Eln !== e?.GetPbDataId()) return;
-          } else if (this.jln && this.jln !== e?.GetCreatureDataId()) return;
-          this.Uln(),
+          if (this.oln) {
+            if (this.oln !== e?.GetPbDataId()) return;
+          } else if (this.Tln && this.Tln !== e?.GetCreatureDataId()) return;
+          this.uln(),
             EventSystem_1.EventSystem.Has(
               EventDefine_1.EEventName.AddEntity,
-              this.Dln,
+              this.hln,
             ) ||
               EventSystem_1.EventSystem.Add(
                 EventDefine_1.EEventName.AddEntity,
-                this.Dln,
+                this.hln,
               );
         }
       }),
-      (this.Pln = () => {
+      (this.cln = () => {
         let t = void 0;
-        if (this.Eln)
+        if (this.oln)
           t = ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(
-            this.Eln,
+            this.oln,
           );
         else {
-          if (!this.jln) return;
-          t = ModelManager_1.ModelManager.CreatureModel.GetEntity(this.jln);
+          if (!this.Tln) return;
+          t = ModelManager_1.ModelManager.CreatureModel.GetEntity(this.Tln);
         }
         t &&
           t.Entity &&
           (EventSystem_1.EventSystem.HasWithTarget(
             t.Entity,
             EventDefine_1.EEventName.OnSceneInteractionLoadCompleted,
-            this.Pln,
+            this.cln,
           ) &&
             EventSystem_1.EventSystem.RemoveWithTarget(
               t.Entity,
               EventDefine_1.EEventName.OnSceneInteractionLoadCompleted,
-              this.Pln,
+              this.cln,
             ),
-          this.Rln());
+          this.lln());
       }),
-      (this.xln = (t) => {
-        var e = FNameUtil_1.FNameUtil.GetDynamicFName(this.Iln);
-        t && e && t.op_Equality(e) && ((t = this.Lln.GetActor(e)), this.wln(t));
+      (this.mln = (t) => {
+        var e = FNameUtil_1.FNameUtil.GetDynamicFName(this.nln);
+        t && e && t.op_Equality(e) && ((t = this.aln.GetActor(e)), this.dln(t));
       }),
-      (this.Bln = (t) => {
-        this.bln(t);
+      (this.Cln = (t) => {
+        this.gln(t);
       });
   }
   static get Dependencies() {
-    return [182, 0];
+    return [185, 0];
   }
   OnInitData(t) {
     return (
-      (this.SIe = this.Entity.GetComponent(0)),
-      (this.Hte = this.Entity.GetComponent(182)),
+      (this.EIe = this.Entity.GetComponent(0)),
+      (this.Hte = this.Entity.GetComponent(185)),
       !!this.Hte ||
         (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "SceneItem",
             40,
             "[DynamicAttachComp] Invalid ActorComp",
-            ["PbDataId:", this.SIe?.GetPbDataId()],
+            ["PbDataId:", this.EIe?.GetPbDataId()],
           ),
         !1)
     );
   }
   OnActivate() {
-    (this.Fln = !0), 0 !== this.Vln && this.qln();
+    (this.Sln = !0), 0 !== this.yln && this.fln();
   }
   OnEnd() {
     return (
-      0 !== this.Vln && this.Gln(),
+      0 !== this.yln && this.pln(),
       EventSystem_1.EventSystem.Has(
         EventDefine_1.EEventName.AddEntity,
-        this.Dln,
+        this.hln,
       ) &&
         EventSystem_1.EventSystem.Remove(
           EventDefine_1.EEventName.AddEntity,
-          this.Dln,
+          this.hln,
         ),
-      !(this.Fln = !1)
+      !(this.Sln = !1)
     );
   }
-  qln() {
-    switch (this.Vln) {
+  fln() {
+    switch (this.yln) {
       case 1:
-        this.Rln();
+        this.lln();
         break;
       case 2:
-        this.Nln();
+        this.vln();
     }
   }
-  Gln() {
-    switch (this.Vln) {
+  pln() {
+    switch (this.yln) {
       case 1:
-        this.Uln();
+        this.uln();
         break;
       case 2:
-        this.Oln();
+        this.Mln();
     }
   }
-  Rln() {
+  lln() {
     let t = void 0;
-    if (this.Eln)
+    if (this.oln)
       t = ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(
-        this.Eln,
+        this.oln,
       );
     else {
-      if (!this.jln) return;
-      t = ModelManager_1.ModelManager.CreatureModel.GetEntity(this.jln);
+      if (!this.Tln) return;
+      t = ModelManager_1.ModelManager.CreatureModel.GetEntity(this.Tln);
     }
     if (t?.IsInit)
       switch (t.Entity?.GetComponent(0)?.GetEntityType()) {
-        case Protocol_1.Aki.Protocol.HBs.Proto_SceneItem:
-          this.Wln(t);
+        case Protocol_1.Aki.Protocol.wks.Proto_SceneItem:
+          this.Lln(t);
           break;
-        case Protocol_1.Aki.Protocol.HBs.Proto_Monster:
-        case Protocol_1.Aki.Protocol.HBs.Proto_Player:
-        case Protocol_1.Aki.Protocol.HBs.Proto_Vision:
-          this.Kln(t);
+        case Protocol_1.Aki.Protocol.wks.Proto_Monster:
+        case Protocol_1.Aki.Protocol.wks.Proto_Player:
+        case Protocol_1.Aki.Protocol.wks.Proto_Vision:
+          this.Dln(t);
       }
     else
       EventSystem_1.EventSystem.Has(
         EventDefine_1.EEventName.AddEntity,
-        this.Dln,
+        this.hln,
       ) ||
         EventSystem_1.EventSystem.Add(
           EventDefine_1.EEventName.AddEntity,
-          this.Dln,
+          this.hln,
         );
   }
-  Wln(t) {
-    var e = t.Entity?.GetComponent(182);
+  Lln(t) {
+    var e = t.Entity?.GetComponent(185);
     if (e)
-      if (this.yln && !e?.GetIsSceneInteractionLoadCompleted())
+      if (this.rln && !e?.GetIsSceneInteractionLoadCompleted())
         EventSystem_1.EventSystem.HasWithTarget(
           t.Entity,
           EventDefine_1.EEventName.OnSceneInteractionLoadCompleted,
-          this.Pln,
+          this.cln,
         ) ||
           EventSystem_1.EventSystem.AddWithTarget(
             t.Entity,
             EventDefine_1.EEventName.OnSceneInteractionLoadCompleted,
-            this.Pln,
+            this.cln,
           );
       else {
         let t = void 0;
-        (t = this.yln
-          ? e.GetActorInSceneInteraction(this.yln) ?? e.Owner
+        (t = this.rln
+          ? e.GetActorInSceneInteraction(this.rln) ?? e.Owner
           : e.Owner),
-          this.wln(t),
+          this.dln(t),
           EventSystem_1.EventSystem.Has(
             EventDefine_1.EEventName.RemoveEntity,
-            this.Aln,
+            this._ln,
           ) ||
             EventSystem_1.EventSystem.Add(
               EventDefine_1.EEventName.RemoveEntity,
-              this.Aln,
+              this._ln,
             );
       }
   }
-  Kln(t) {
+  Dln(t) {
     t = t.Entity?.GetComponent(3)?.Owner;
-    this.wln(t),
+    this.dln(t),
       EventSystem_1.EventSystem.Has(
         EventDefine_1.EEventName.RemoveEntity,
-        this.Aln,
+        this._ln,
       ) ||
         EventSystem_1.EventSystem.Add(
           EventDefine_1.EEventName.RemoveEntity,
-          this.Aln,
+          this._ln,
         );
   }
-  Uln() {
+  uln() {
     let t = void 0;
-    if (this.Eln)
+    if (this.oln)
       t = ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(
-        this.Eln,
+        this.oln,
       );
     else {
-      if (!this.jln) return;
-      t = ModelManager_1.ModelManager.CreatureModel.GetEntity(this.jln);
+      if (!this.Tln) return;
+      t = ModelManager_1.ModelManager.CreatureModel.GetEntity(this.Tln);
     }
     EventSystem_1.EventSystem.Has(
       EventDefine_1.EEventName.RemoveEntity,
-      this.Aln,
+      this._ln,
     ) &&
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.RemoveEntity,
-        this.Aln,
+        this._ln,
       ),
       t?.Entity &&
         EventSystem_1.EventSystem.HasWithTarget(
           t.Entity,
           EventDefine_1.EEventName.OnSceneInteractionLoadCompleted,
-          this.Pln,
+          this.cln,
         ) &&
         EventSystem_1.EventSystem.RemoveWithTarget(
           t.Entity,
           EventDefine_1.EEventName.OnSceneInteractionLoadCompleted,
-          this.Pln,
+          this.cln,
         );
-    var e = t?.Entity?.GetComponent(182);
+    var e = t?.Entity?.GetComponent(185);
     let i = void 0;
     (i =
-      this.yln && e?.GetIsSceneInteractionLoadCompleted()
-        ? e?.GetActorInSceneInteraction(this.yln)
+      this.rln && e?.GetIsSceneInteractionLoadCompleted()
+        ? e?.GetActorInSceneInteraction(this.rln)
         : e?.Owner),
-      this.bln(i);
+      this.gln(i);
   }
-  Nln() {
+  vln() {
     var t;
-    this.Iln &&
-      (this.Lln?.IsValid() ||
-        ((this.Lln = UE.KuroRenderingRuntimeBPPluginBPLibrary.GetSubsystem(
+    this.nln &&
+      (this.aln?.IsValid() ||
+        ((this.aln = UE.KuroRenderingRuntimeBPPluginBPLibrary.GetSubsystem(
           GlobalData_1.GlobalData.World,
           UE.KuroActorSubsystem.StaticClass(),
         )),
-        this.Lln?.IsValid())) &&
-      (this.Lln.OnAddToSubsystem.Add(this.xln),
-      (t = this.Lln.GetActor(
-        FNameUtil_1.FNameUtil.GetDynamicFName(this.Iln),
+        this.aln?.IsValid())) &&
+      (this.aln.OnAddToSubsystem.Add(this.mln),
+      (t = this.aln.GetActor(
+        FNameUtil_1.FNameUtil.GetDynamicFName(this.nln),
       ))?.IsValid()) &&
-      this.wln(t);
+      this.dln(t);
   }
-  Oln() {
+  Mln() {
     var t;
-    this.Iln &&
-      (this.Lln?.IsValid() && this.Lln.OnAddToSubsystem.Remove(this.xln),
-      (t = this.Lln?.GetActor(FNameUtil_1.FNameUtil.GetDynamicFName(this.Iln))),
-      this.bln(t));
+    this.nln &&
+      (this.aln?.IsValid() && this.aln.OnAddToSubsystem.Remove(this.mln),
+      (t = this.aln?.GetActor(FNameUtil_1.FNameUtil.GetDynamicFName(this.nln))),
+      this.gln(t));
   }
-  wln(s) {
+  dln(s) {
     if (
       this.Hte?.Owner?.RootComponent?.IsValid() &&
       s?.RootComponent?.IsValid()
@@ -344,7 +344,7 @@ let SceneItemDynamicAttachTargetComponent = class SceneItemDynamicAttachTargetCo
           "SceneItem",
           40,
           "[DynamicAttachComp] AttachToTargetActor: 开始",
-          ["PbDataId", this.SIe?.GetPbDataId()],
+          ["PbDataId", this.EIe?.GetPbDataId()],
           [
             "自身坐标",
             Vector_1.Vector.Create(this.Hte.Owner.K2_GetActorLocation()),
@@ -356,51 +356,51 @@ let SceneItemDynamicAttachTargetComponent = class SceneItemDynamicAttachTargetCo
           ["目标坐标", Vector_1.Vector.Create(s.K2_GetActorLocation())],
           ["目标旋转", Rotator_1.Rotator.Create(s.K2_GetActorRotation())],
           ["目标PathName", UE.KismetSystemLibrary.GetPathName(s)],
-          ["AttachParam", this.Hln],
+          ["AttachParam", this.Iln],
         );
       var e = Vector_1.Vector.Create(Vector_1.Vector.ZeroVectorProxy),
         h = Rotator_1.Rotator.Create(Rotator_1.Rotator.ZeroRotatorProxy);
       if (
-        (0 === this.Hln.PosAttachType &&
+        (0 === this.Iln.PosAttachType &&
           e.FromUeVector(this.Hte.Owner.RootComponent.RelativeLocation),
-        0 === this.Hln.RotAttachType &&
+        0 === this.Iln.RotAttachType &&
           h.FromUeRotator(this.Hte.Owner.RootComponent.RelativeRotation),
-        (1 !== this.Hln.PosAttachType && 1 !== this.Hln.RotAttachType) ||
+        (1 !== this.Iln.PosAttachType && 1 !== this.Iln.RotAttachType) ||
           ((r = this.Hte.Owner.GetTransform().GetRelativeTransform(
             s.GetTransform(),
           )),
-          1 === this.Hln.PosAttachType && e.FromUeVector(r.GetLocation()),
-          1 === this.Hln.RotAttachType && h.FromUeRotator(r.Rotator())),
-        3 === this.Hln.PosAttachType || 3 === this.Hln.RotAttachType)
+          1 === this.Iln.PosAttachType && e.FromUeVector(r.GetLocation()),
+          1 === this.Iln.RotAttachType && h.FromUeRotator(r.Rotator())),
+        3 === this.Iln.PosAttachType || 3 === this.Iln.RotAttachType)
       ) {
-        var r = this.SIe.GetPbEntityInitData()?.Transform,
-          r = r ? this.kln(r) : this.SIe.GetTransform();
+        var r = this.EIe.GetPbEntityInitData()?.Transform,
+          r = r ? this.Eln(r) : this.EIe.GetTransform();
         let i = void 0;
-        if (2 === this.Vln) {
+        if (2 === this.yln) {
           var a = (0, puerts_1.$ref)(void 0);
-          this.Lln.GetActorOriginalTransform(
-            FNameUtil_1.FNameUtil.GetDynamicFName(this.Iln),
+          this.aln.GetActorOriginalTransform(
+            FNameUtil_1.FNameUtil.GetDynamicFName(this.nln),
             a,
           ),
             (i = (0, puerts_1.$unref)(a));
-        } else if (1 === this.Vln) {
+        } else if (1 === this.yln) {
           let t = void 0;
-          this.Eln
+          this.oln
             ? (t =
                 ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(
-                  this.Eln,
+                  this.oln,
                 ))
-            : this.jln &&
+            : this.Tln &&
               (t = ModelManager_1.ModelManager.CreatureModel.GetEntity(
-                this.jln,
+                this.Tln,
               ));
           var a = t.Entity,
             o = a?.GetComponent(1),
             a = a?.GetComponent(0),
             n = a?.GetPbEntityInitData()?.Transform,
-            n = n ? this.kln(n) : a.GetTransform();
+            n = n ? this.Eln(n) : a.GetTransform();
           let e =
-            this.yln?.length &&
+            this.rln?.length &&
             o instanceof SceneItemActorComponent_1.SceneItemActorComponent
               ? o?.GetActorInSceneInteractionOriginalRelTransform(s)
               : void 0;
@@ -414,33 +414,33 @@ let SceneItemDynamicAttachTargetComponent = class SceneItemDynamicAttachTargetCo
               "SceneItem",
               40,
               "[SceneItemAttachTargetComponent] 目标初始坐标获取失败，使用自身初始坐标代替",
-              ["PbDataId:", this.SIe?.GetPbDataId()],
+              ["PbDataId:", this.EIe?.GetPbDataId()],
             ),
           (i = r));
         a = r.GetRelativeTransform(i);
-        3 === this.Hln.PosAttachType && e.FromUeVector(a.GetLocation()),
-          3 === this.Hln.RotAttachType && h.FromUeRotator(a.Rotator());
+        3 === this.Iln.PosAttachType && e.FromUeVector(a.GetLocation()),
+          3 === this.Iln.RotAttachType && h.FromUeRotator(a.Rotator());
       }
       MathUtils_1.MathUtils.CommonTempVector.FromConfigVector(
-        this.Hln.PosAttachOffset,
+        this.Iln.PosAttachOffset,
       ),
         e.AdditionEqual(MathUtils_1.MathUtils.CommonTempVector),
-        h.AdditionEqual(this.Hln.RotAttachOffset),
+        h.AdditionEqual(this.Iln.RotAttachOffset),
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "SceneItem",
             40,
             "[DynamicAttachComp] AttachToTargetActor: 计算相对关系",
-            ["PbDataId", this.SIe?.GetPbDataId()],
+            ["PbDataId", this.EIe?.GetPbDataId()],
             ["相对坐标", e],
             ["相对旋转", h],
           ),
         this.Hte.Owner.RootComponent.SetAbsolute(
-          this.Hln.PosAbsolute,
-          this.Hln.RotAbsolute,
+          this.Iln.PosAbsolute,
+          this.Iln.RotAbsolute,
           !0,
         );
-      let t = this.Hln.AttachSocketName;
+      let t = this.Iln.AttachSocketName;
       t &&
         !FNameUtil_1.FNameUtil.IsEmpty(t) &&
         s.RootComponent.DoesSocketExist(t) &&
@@ -459,13 +459,13 @@ let SceneItemDynamicAttachTargetComponent = class SceneItemDynamicAttachTargetCo
             void 0,
             !1,
           )),
-        s.OnDestroyed.Add(this.Bln),
+        s.OnDestroyed.Add(this.Cln),
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "SceneItem",
             40,
             "[DynamicAttachComp] AttachToTargetActor: 完成",
-            ["PbDataId", this.SIe?.GetPbDataId()],
+            ["PbDataId", this.EIe?.GetPbDataId()],
             [
               "自身坐标",
               Vector_1.Vector.Create(this.Hte.Owner.K2_GetActorLocation()),
@@ -495,17 +495,17 @@ let SceneItemDynamicAttachTargetComponent = class SceneItemDynamicAttachTargetCo
           "SceneItem",
           40,
           "[DynamicAttachComp] AttachToTargetActor Failed",
-          ["PbDataId", this.SIe?.GetPbDataId()],
+          ["PbDataId", this.EIe?.GetPbDataId()],
           ["SelfActorValid", !!this.Hte?.Owner?.RootComponent?.IsValid()],
           ["TargetActorValid", s?.RootComponent?.IsValid()],
         );
   }
-  bln(t) {
+  gln(t) {
     this.Hte?.Owner?.IsValid() &&
       (this.Hte.Owner.K2_DetachFromActor(1, 1, 1),
-      t?.OnDestroyed.Remove(this.Bln));
+      t?.OnDestroyed.Remove(this.Cln));
   }
-  kln(t) {
+  Eln(t) {
     var e = new UE.Transform();
     return (
       e.SetLocation(new UE.Vector(t.Pos.X ?? 0, t.Pos.Y ?? 0, t.Pos.Z ?? 0)),
@@ -521,17 +521,17 @@ let SceneItemDynamicAttachTargetComponent = class SceneItemDynamicAttachTargetCo
     );
   }
   IsRegTarget() {
-    return 0 !== this.Vln;
+    return 0 !== this.yln;
   }
   RegEntityTarget(t, e, i, s) {
-    return 0 !== this.Vln || this.Entity.IsEnd || !t
+    return 0 !== this.yln || this.Entity.IsEnd || !t
       ? (Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "SceneItem",
             40,
             "[RegEntityTarget] 注册Attach失败",
-            ["PbDataId", this.SIe?.GetPbDataId()],
-            ["CurrentRegTargetType", this.Vln],
+            ["PbDataId", this.EIe?.GetPbDataId()],
+            ["CurrentRegTargetType", this.yln],
             ["CurrentEntityIsEnd", this.Entity.IsEnd],
             ["TargetPbDataId", t],
             ["Reason", s],
@@ -542,30 +542,30 @@ let SceneItemDynamicAttachTargetComponent = class SceneItemDynamicAttachTargetCo
             "SceneItem",
             40,
             "[RegEntityTarget] 注册Attach成功",
-            ["PbDataId", this.SIe?.GetPbDataId()],
-            ["CurrentRegTargetType", this.Vln],
+            ["PbDataId", this.EIe?.GetPbDataId()],
+            ["CurrentRegTargetType", this.yln],
             ["CurrentEntityIsEnd", this.Entity.IsEnd],
             ["TargetPbDataId", t],
             ["Reason", s],
           ),
-        (this.Vln = 1),
-        (this.Eln = t),
-        (this.jln = void 0),
-        (this.yln = e),
-        this.Hln || (this.Hln = new AttachParam()),
-        this.Hln.From(i),
-        this.Fln && this.qln(),
+        (this.yln = 1),
+        (this.oln = t),
+        (this.Tln = void 0),
+        (this.rln = e),
+        this.Iln || (this.Iln = new AttachParam()),
+        this.Iln.From(i),
+        this.Sln && this.fln(),
         !0);
   }
   RegEntityTargetByCreatureDataId(t, e, i, s) {
-    return 0 !== this.Vln || this.Entity.IsEnd || !t
+    return 0 !== this.yln || this.Entity.IsEnd || !t
       ? (Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "SceneItem",
             40,
             "[RegEntityTarget] 注册Attach失败",
-            ["PbDataId", this.SIe?.GetPbDataId()],
-            ["CurrentRegTargetType", this.Vln],
+            ["PbDataId", this.EIe?.GetPbDataId()],
+            ["CurrentRegTargetType", this.yln],
             ["CurrentEntityIsEnd", this.Entity.IsEnd],
             ["TargetCreatureDataId", t],
             ["Reason", s],
@@ -576,47 +576,47 @@ let SceneItemDynamicAttachTargetComponent = class SceneItemDynamicAttachTargetCo
             "SceneItem",
             40,
             "[RegEntityTarget] 注册Attach成功",
-            ["PbDataId", this.SIe?.GetPbDataId()],
-            ["CurrentRegTargetType", this.Vln],
+            ["PbDataId", this.EIe?.GetPbDataId()],
+            ["CurrentRegTargetType", this.yln],
             ["CurrentEntityIsEnd", this.Entity.IsEnd],
             ["TargetCreatureDataId", t],
             ["Reason", s],
           ),
-        (this.Vln = 1),
-        (this.jln = t),
-        (this.Eln = void 0),
-        (this.yln = e),
-        this.Hln || (this.Hln = new AttachParam()),
-        this.Hln.From(i),
-        this.Fln && this.qln(),
+        (this.yln = 1),
+        (this.Tln = t),
+        (this.oln = void 0),
+        (this.rln = e),
+        this.Iln || (this.Iln = new AttachParam()),
+        this.Iln.From(i),
+        this.Sln && this.fln(),
         !0);
   }
   RegRefActorTarget(t, e, i) {
-    return 0 === this.Vln && !this.Entity.IsEnd && t && t.length
+    return 0 === this.yln && !this.Entity.IsEnd && t && t.length
       ? (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "SceneItem",
             40,
             "[RegEntityTarget] 注册Attach成功",
-            ["PbDataId", this.SIe?.GetPbDataId()],
-            ["CurrentRegTargetType", this.Vln],
+            ["PbDataId", this.EIe?.GetPbDataId()],
+            ["CurrentRegTargetType", this.yln],
             ["CurrentEntityIsEnd", this.Entity.IsEnd],
             ["TargetActorRef", t],
             ["Reason", i],
           ),
-        (this.Vln = 2),
-        (this.Iln = t),
-        this.Hln || (this.Hln = new AttachParam()),
-        this.Hln.From(e),
-        this.Fln && this.qln(),
+        (this.yln = 2),
+        (this.nln = t),
+        this.Iln || (this.Iln = new AttachParam()),
+        this.Iln.From(e),
+        this.Sln && this.fln(),
         !0)
       : (Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "SceneItem",
             40,
             "[RegEntityTarget] 注册Attach失败",
-            ["PbDataId", this.SIe?.GetPbDataId()],
-            ["CurrentRegTargetType", this.Vln],
+            ["PbDataId", this.EIe?.GetPbDataId()],
+            ["CurrentRegTargetType", this.yln],
             ["CurrentEntityIsEnd", this.Entity.IsEnd],
             ["TargetActorRef", t],
             ["Reason", i],
@@ -624,14 +624,14 @@ let SceneItemDynamicAttachTargetComponent = class SceneItemDynamicAttachTargetCo
         !1);
   }
   UnRegTarget(t) {
-    return 0 === this.Vln || this.Entity.IsEnd
+    return 0 === this.yln || this.Entity.IsEnd
       ? (Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "SceneItem",
             40,
             "[RegEntityTarget] 反注册Attach失败",
-            ["PbDataId", this.SIe?.GetPbDataId()],
-            ["CurrentRegTargetType", this.Vln],
+            ["PbDataId", this.EIe?.GetPbDataId()],
+            ["CurrentRegTargetType", this.yln],
             ["CurrentEntityIsEnd", this.Entity.IsEnd],
             ["Reason", t],
           ),
@@ -641,74 +641,74 @@ let SceneItemDynamicAttachTargetComponent = class SceneItemDynamicAttachTargetCo
             "SceneItem",
             40,
             "[RegEntityTarget] 反注册Attach成功",
-            ["PbDataId", this.SIe?.GetPbDataId()],
-            ["CurrentRegTargetType", this.Vln],
+            ["PbDataId", this.EIe?.GetPbDataId()],
+            ["CurrentRegTargetType", this.yln],
             ["CurrentEntityIsEnd", this.Entity.IsEnd],
             ["Reason", t],
           ),
-        this.Gln(),
+        this.pln(),
         EventSystem_1.EventSystem.Has(
           EventDefine_1.EEventName.AddEntity,
-          this.Dln,
+          this.hln,
         ) &&
           EventSystem_1.EventSystem.Remove(
             EventDefine_1.EEventName.AddEntity,
-            this.Dln,
+            this.hln,
           ),
-        (this.Vln = 0),
-        this.Hln && this.Hln.Reset(),
-        (this.Eln = void 0),
-        (this.jln = void 0),
-        (this.yln = void 0),
-        !(this.Iln = void 0));
+        (this.yln = 0),
+        this.Iln && this.Iln.Reset(),
+        (this.oln = void 0),
+        (this.Tln = void 0),
+        (this.rln = void 0),
+        !(this.nln = void 0));
   }
   RequestAttachRefActor(t, e, i) {
     var s;
     this.Hte?.Owner?.IsValid() &&
-      (((s = Protocol_1.Aki.Protocol.Cds.create()).rkn =
+      (((s = Protocol_1.Aki.Protocol._gs.create()).P4n =
         this.Hte.CreatureData.GetCreatureDataId()),
-      (s.EFn = Protocol_1.Aki.Protocol._Gs.Proto_AttachTargetActorPath),
-      (s.s3n = "LFn"),
-      (s.LFn = t),
-      (s.MFn = Protocol_1.Aki.Protocol.VBs.create()),
-      (s.MFn.X = e.X),
-      (s.MFn.Y = e.Y),
-      (s.MFn.Z = e.Z),
-      (s.SFn = Protocol_1.Aki.Protocol.iws.create()),
-      (s.SFn.Pitch = i.Pitch),
-      (s.SFn.Yaw = i.Yaw),
-      (s.SFn.Roll = i.Roll),
-      Net_1.Net.Call(5903, s, () => {}));
+      (s.J5n = Protocol_1.Aki.Protocol.z3s.Proto_AttachTargetActorPath),
+      (s.b6n = "t6n"),
+      (s.t6n = t),
+      (s.$5n = Protocol_1.Aki.Protocol.Pks.create()),
+      (s.$5n.X = e.X),
+      (s.$5n.Y = e.Y),
+      (s.$5n.Z = e.Z),
+      (s.Y5n = Protocol_1.Aki.Protocol.S2s.create()),
+      (s.Y5n.Pitch = i.Pitch),
+      (s.Y5n.Yaw = i.Yaw),
+      (s.Y5n.Roll = i.Roll),
+      Net_1.Net.Call(10081, s, () => {}));
   }
   RequestAttachEntity(t, e, i, s) {
     var h;
     this.Hte?.Owner?.IsValid() &&
-      (((h = Protocol_1.Aki.Protocol.Cds.create()).rkn =
+      (((h = Protocol_1.Aki.Protocol._gs.create()).P4n =
         this.Hte.CreatureData.GetCreatureDataId()),
-      (h.EFn = Protocol_1.Aki.Protocol._Gs.Proto_AttachTargetEntity),
-      (h.s3n = "IFn"),
-      (h.IFn = Protocol_1.Aki.Protocol.uGs.create()),
-      (h.IFn.yFn = t),
-      (h.IFn.TFn = e ?? ""),
-      (h.MFn = Protocol_1.Aki.Protocol.VBs.create()),
-      (h.MFn.X = i.X),
-      (h.MFn.Y = i.Y),
-      (h.MFn.Z = i.Z),
-      (h.SFn = Protocol_1.Aki.Protocol.iws.create()),
-      (h.SFn.Pitch = s.Pitch),
-      (h.SFn.Yaw = s.Yaw),
-      (h.SFn.Roll = s.Roll),
-      Net_1.Net.Call(5903, h, () => {}));
+      (h.J5n = Protocol_1.Aki.Protocol.z3s.Proto_AttachTargetEntity),
+      (h.b6n = "Z5n"),
+      (h.Z5n = Protocol_1.Aki.Protocol.Z3s.create()),
+      (h.Z5n.z5n = t),
+      (h.Z5n.e6n = e ?? ""),
+      (h.$5n = Protocol_1.Aki.Protocol.Pks.create()),
+      (h.$5n.X = i.X),
+      (h.$5n.Y = i.Y),
+      (h.$5n.Z = i.Z),
+      (h.Y5n = Protocol_1.Aki.Protocol.S2s.create()),
+      (h.Y5n.Pitch = s.Pitch),
+      (h.Y5n.Yaw = s.Yaw),
+      (h.Y5n.Roll = s.Roll),
+      Net_1.Net.Call(10081, h, () => {}));
   }
   RequestDetach() {
-    var t = Protocol_1.Aki.Protocol.Cds.create();
-    (t.rkn = this.Hte.CreatureData.GetCreatureDataId()),
-      (t.EFn = Protocol_1.Aki.Protocol._Gs.Proto_AttachTargetNone),
-      Net_1.Net.Call(5903, t, () => {});
+    var t = Protocol_1.Aki.Protocol._gs.create();
+    (t.P4n = this.Hte.CreatureData.GetCreatureDataId()),
+      (t.J5n = Protocol_1.Aki.Protocol.z3s.Proto_AttachTargetNone),
+      Net_1.Net.Call(10081, t, () => {});
   }
 };
 (SceneItemDynamicAttachTargetComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(110)],
+  [(0, RegisterComponent_1.RegisterComponent)(112)],
   SceneItemDynamicAttachTargetComponent,
 )),
   (exports.SceneItemDynamicAttachTargetComponent =

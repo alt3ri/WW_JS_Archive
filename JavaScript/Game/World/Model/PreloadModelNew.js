@@ -20,13 +20,13 @@ class PreloadModelNew extends ModelBase_1.ModelBase {
       (this.PreCreateEffect = new PreCreateEffect_1.PreCreateEffect()),
       (this.CommonAssetElement = new PreloadDefine_1.CommonAssetElement()),
       (this.PreloadAssetMap = new Map()),
-      (this.wMr = new Map()),
-      (this.BMr = new Map()),
-      (this.PMr = void 0),
+      (this.AEr = new Map()),
+      (this.PEr = new Map()),
+      (this.REr = void 0),
       (this.LoadingNeedWaitEntitySet = new Set());
   }
   get HoldPreloadObject() {
-    return this.PMr;
+    return this.REr;
   }
   OnInit() {
     return (
@@ -44,7 +44,7 @@ class PreloadModelNew extends ModelBase_1.ModelBase {
       (this.BulletJsonExportPath = this.JsonExportRootPath + "BulletInfo/"),
       (this.StateMachineJsonExportPath =
         this.JsonExportRootPath + "EntityFsm/"),
-      (this.PMr = UE.NewObject(
+      (this.REr = UE.NewObject(
         UE.HoldPreloadObject.StaticClass(),
         GlobalData_1.GlobalData.GameInstance,
       )),
@@ -55,12 +55,12 @@ class PreloadModelNew extends ModelBase_1.ModelBase {
   }
   OnClear() {
     return (
-      this.PMr.Clear(),
-      this.PMr?.IsValid() && this.PMr.Clear(),
-      (this.PMr = void 0),
+      this.REr.Clear(),
+      this.REr?.IsValid() && this.REr.Clear(),
+      (this.REr = void 0),
       this.PreCreateEffect.UnregisterTick(),
       this.PreCreateEffect.Clear(),
-      this.BMr.clear(),
+      this.PEr.clear(),
       !0
     );
   }
@@ -81,23 +81,23 @@ class PreloadModelNew extends ModelBase_1.ModelBase {
   }
   ClearPreloadResource() {
     this.PreloadAssetMap.clear(),
-      this.PMr.Clear(),
+      this.REr.Clear(),
       this.LoadingNeedWaitEntitySet.clear();
   }
   AddEntityAsset(t, e) {
-    return !this.wMr.has(t) && (this.wMr.set(t, e), !0);
+    return !this.AEr.has(t) && (this.AEr.set(t, e), !0);
   }
   HasEntityAsset(t) {
-    return this.wMr.has(t);
+    return this.AEr.has(t);
   }
   GetEntityAssetElement(t) {
-    return this.wMr.get(t);
+    return this.AEr.get(t);
   }
   RemoveEntityAsset(t) {
-    return this.wMr.delete(t);
+    return this.AEr.delete(t);
   }
   ClearEntityAsset() {
-    this.wMr.clear();
+    this.AEr.clear();
   }
   AddNeedWaitEntity(t) {
     this.LoadingNeedWaitEntitySet.add(t);
@@ -106,20 +106,20 @@ class PreloadModelNew extends ModelBase_1.ModelBase {
     this.LoadingNeedWaitEntitySet.delete(t);
   }
   AddCommonSkill(t, e, i) {
-    return this.BMr.has(t)
+    return this.PEr.has(t)
       ? (Log_1.Log.CheckError() &&
           Log_1.Log.Error("Preload", 3, "[预加载] 重复添加技能", [
             "SkillId",
             t,
           ]),
         !1)
-      : (this.BMr.set(t, [e, i]), !0);
+      : (this.PEr.set(t, [e, i]), !0);
   }
   IsCommonSkill(t) {
-    return this.BMr.has(t);
+    return this.PEr.has(t);
   }
   GetCommonSkill(t) {
-    return this.BMr.get(t);
+    return this.PEr.get(t);
   }
 }
 exports.PreloadModelNew = PreloadModelNew;

@@ -11,28 +11,28 @@ class FrequencyMonitor {
   constructor(e, o, r, ...t) {
     (this.Ql = e),
       (this.t6 = o),
-      (this.ECr = r),
-      (this.qAt = void 0),
-      (this.yCr = new Queue_1.Queue()),
-      (this.qAt = t);
+      (this.vgr = r),
+      (this.OPt = void 0),
+      (this.Mgr = new Queue_1.Queue()),
+      (this.OPt = t);
   }
   Execute() {
     if (Info_1.Info.IsBuildDevelopmentOrDebug) {
       for (
-        this.yCr.Push(Time_1.Time.NowSeconds);
-        !this.yCr.Empty && Time_1.Time.NowSeconds - this.yCr.Front > this.Ql;
+        this.Mgr.Push(Time_1.Time.NowSeconds);
+        !this.Mgr.Empty && Time_1.Time.NowSeconds - this.Mgr.Front > this.Ql;
 
       )
-        this.yCr.Pop();
-      if (this.yCr.Size > this.t6) {
+        this.Mgr.Pop();
+      if (this.Mgr.Size > this.t6) {
         let e = [
-          ["msg", this.ECr],
+          ["msg", this.vgr],
           ["检查时间", this.Ql],
           ["检查次数", this.t6],
-          ["当前次数", this.yCr.Size],
+          ["当前次数", this.Mgr.Size],
           ["联机", ModelManager_1.ModelManager.GameModeModel.IsMulti],
         ];
-        this.qAt && (e = e.concat(this.qAt)),
+        this.OPt && (e = e.concat(this.OPt)),
           Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
               "FrequencyMonitor",

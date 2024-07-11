@@ -4,33 +4,33 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const ConfigManager_1 = require("../../Manager/ConfigManager");
 class CalabashInstance {
   constructor() {
-    (this.w0t = 0),
+    (this.Wft = 0),
       (this.UQ = 10),
-      (this.B0t = 0),
-      (this.b0t = 0),
-      (this.q0t = new Map()),
-      (this.G0t = new Map()),
-      (this.N0t = new Set());
+      (this.Kft = 0),
+      (this.Qft = 0),
+      (this.Xft = new Map()),
+      (this.$ft = new Map()),
+      (this.Yft = new Set());
   }
   SetBaseInfo(e) {
-    (this.CalabashCurrentLevel = e.r3n),
-      (this.CalabashCurrentExp = e.k3n),
+    (this.CalabashCurrentLevel = e.P6n),
+      (this.CalabashCurrentExp = e.M8n),
       (this.CalabashMaxLevel =
         ConfigManager_1.ConfigManager.CalabashConfig.GetCalabashMaxLevel()),
-      (this.IdentifyGuaranteeCount = e.WSs),
-      this.SetUnlockCalabashDevelopRewards(e.jSs);
+      (this.IdentifyGuaranteeCount = e.uLs),
+      this.SetUnlockCalabashDevelopRewards(e._Ls);
   }
   SetConfigInfo(e) {
-    for (const s of Object.keys(e.XSs)) {
+    for (const s of Object.keys(e.mLs)) {
       var t = Number.parseInt(s);
-      this.q0t.set(t, e.XSs[s]);
+      this.Xft.set(t, e.mLs[s]);
     }
   }
   set CalabashCurrentLevel(e) {
-    this.w0t = e;
+    this.Wft = e;
   }
   get CalabashCurrentLevel() {
-    return this.w0t;
+    return this.Wft;
   }
   set CalabashMaxLevel(e) {
     this.UQ = e;
@@ -39,36 +39,36 @@ class CalabashInstance {
     return this.UQ;
   }
   set CalabashCurrentExp(e) {
-    this.B0t = e;
+    this.Kft = e;
   }
   get CalabashCurrentExp() {
-    return this.B0t;
+    return this.Kft;
   }
   set IdentifyGuaranteeCount(e) {
-    this.b0t = e;
+    this.Qft = e;
   }
   get IdentifyGuaranteeCount() {
-    return this.b0t;
+    return this.Qft;
   }
   SetUnlockCalabashDevelopRewards(e) {
-    this.G0t.clear();
-    for (const t of e.values()) this.G0t.set(t.iMs, t.$Ss);
+    this.$ft.clear();
+    for (const t of e.values()) this.$ft.set(t.vIs, t.hLs);
   }
   SetUnlockCalabashDevelopReward(e) {
-    this.G0t.set(e.iMs, e.$Ss);
+    this.$ft.set(e.vIs, e.hLs);
   }
   GetUnlockCalabashDevelopRewards() {
-    return this.G0t;
+    return this.$ft;
   }
   SetRewardedLevelsSet(e) {
-    this.N0t.clear();
-    for (const t of e) this.N0t.add(t);
+    this.Yft.clear();
+    for (const t of e) this.Yft.add(t);
   }
   IsRewardedByLevel(e) {
-    return this.N0t.has(e);
+    return this.Yft.has(e);
   }
   GetCatchGainByLevel(e) {
-    return this.q0t.get(e);
+    return this.Xft.get(e);
   }
 }
 exports.CalabashInstance = CalabashInstance;

@@ -8,62 +8,50 @@ const UE = require("ue"),
   MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
-  ModelManager_1 = require("../../../Manager/ModelManager"),
   LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer"),
   LguiUtil_1 = require("../../Util/LguiUtil"),
   BattleChildView_1 = require("./BattleChildView/BattleChildView");
-var EAttributeId = Protocol_1.Aki.Protocol.KBs;
+var EAttributeId = Protocol_1.Aki.Protocol.Bks;
 const LOW_HP_PERCENT = 0.2;
 class RoleStateView extends BattleChildView_1.BattleChildView {
   constructor() {
     super(...arguments),
-      (this.wnt = void 0),
+      (this.Wst = void 0),
       (this.E0 = void 0),
       (this.$te = void 0),
-      (this.Yht = void 0),
-      (this.ect = void 0),
-      (this.Xot = -1),
-      (this.xlt = 0),
-      (this.wlt = 0),
-      (this.Blt = -1),
-      (this.qot = 0),
-      (this.tct = void 0),
-      (this.ict = new UE.Margin()),
-      (this.oct = 0),
-      (this.rct = void 0),
-      (this.nct = !1),
-      (this.ZQe = (t) => {
+      (this.l1t = void 0),
+      (this.cmt = void 0),
+      (this.snt = -1),
+      (this.j1t = 0),
+      (this.W1t = 0),
+      (this.K1t = -1),
+      (this.Xrt = 0),
+      (this.mmt = void 0),
+      (this.dmt = new UE.Margin()),
+      (this.Cmt = 0),
+      (this.gmt = void 0),
+      (this.fmt = !1),
+      (this.u$e = (t) => {
         t === this.E0 && this.RefreshHpAndShield(!0);
       }),
-      (this.YKe = (t) => {
+      (this.hXe = (t) => {
         t === this.E0 &&
           (this.RefreshHpAndShield(!0), this.SetNiagaraActive(!0));
       }),
       (this.m2 = (t) => {
-        t === this.E0 && this.sct();
+        t === this.E0 && this.pmt();
       }),
-      (this.act = () => {
-        this.sct(), this.RefreshHpAndShield();
+      (this.vmt = () => {
+        this.pmt(), this.RefreshHpAndShield();
       }),
-      (this.sct = () => {
-        if (this.IsValid()) {
-          var t = this.GetText(2);
-          if (2 === this.wnt.RoleConfig?.RoleType) t.SetText("");
-          else {
-            var i = this.wnt.CreatureRoleId,
-              i = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(i);
-            if (i?.IsTrialRole()) {
-              const e = i.GetLevelData().GetLevel();
-              void LguiUtil_1.LguiUtil.SetLocalText(t, "LevelShow", e);
-            } else {
-              i = this.$te;
-              if (i) {
-                const e = i.GetCurrentValue(EAttributeId.Proto_Lv);
-                LguiUtil_1.LguiUtil.SetLocalText(t, "LevelShow", e);
-              } else t.SetText("");
-            }
-          }
-        }
+      (this.pmt = () => {
+        var t, i;
+        this.IsValid() &&
+          ((t = this.GetText(2)),
+          2 !== this.Wst.RoleConfig?.RoleType && (i = this.$te)
+            ? ((i = i.GetCurrentValue(EAttributeId.Proto_Lv)),
+              LguiUtil_1.LguiUtil.SetLocalText(t, "LevelShow", i))
+            : t.SetText(""));
       });
   }
   OnRegisterComponent() {
@@ -81,14 +69,14 @@ class RoleStateView extends BattleChildView_1.BattleChildView {
   }
   Initialize(t) {
     super.Initialize(t),
-      (this.qot = CommonParamById_1.configCommonParamById.GetIntConfig(
+      (this.Xrt = CommonParamById_1.configCommonParamById.GetIntConfig(
         "PlayerHPAttenuateBufferSpeed",
       )),
-      (this.tct = this.GetItem(8)
+      (this.mmt = this.GetItem(8)
         .GetOwner()
         .GetComponentByClass(UE.LGUICanvas.StaticClass())),
-      (this.oct = this.GetText(1).GetWidth()),
-      (this.rct = new LevelSequencePlayer_1.LevelSequencePlayer(
+      (this.Cmt = this.GetText(1).GetWidth()),
+      (this.gmt = new LevelSequencePlayer_1.LevelSequencePlayer(
         this.GetSprite(5),
       )),
       this.Ore();
@@ -101,19 +89,19 @@ class RoleStateView extends BattleChildView_1.BattleChildView {
   }
   Refresh(t) {
     t
-      ? ((this.wnt = t),
+      ? ((this.Wst = t),
         (this.E0 = t?.EntityHandle?.Id),
         (this.$te = t.AttributeComponent),
-        (this.Yht = t?.EntityHandle?.Entity?.GetComponent(64)),
+        (this.l1t = t?.EntityHandle?.Entity?.GetComponent(66)),
         this.RefreshRoleState())
-      : ((this.wnt = void 0),
+      : ((this.Wst = void 0),
         (this.E0 = void 0),
         (this.$te = void 0),
-        (this.Yht = void 0),
-        this.hct());
+        (this.l1t = void 0),
+        this.Mmt());
   }
   IsValid() {
-    return void 0 !== this.wnt?.EntityHandle;
+    return void 0 !== this.Wst?.EntityHandle;
   }
   GetEntityId() {
     return this.E0;
@@ -121,11 +109,11 @@ class RoleStateView extends BattleChildView_1.BattleChildView {
   Ore() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.BattleUiHealthChanged,
-      this.YKe,
+      this.hXe,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.BattleUiShieldChanged,
-        this.ZQe,
+        this.u$e,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.BattleUiLevelChanged,
@@ -133,17 +121,17 @@ class RoleStateView extends BattleChildView_1.BattleChildView {
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.TextLanguageChange,
-        this.act,
+        this.vmt,
       );
   }
   kre() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.BattleUiHealthChanged,
-      this.YKe,
+      this.hXe,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.BattleUiShieldChanged,
-        this.ZQe,
+        this.u$e,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.BattleUiLevelChanged,
@@ -151,40 +139,40 @@ class RoleStateView extends BattleChildView_1.BattleChildView {
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.TextLanguageChange,
-        this.act,
+        this.vmt,
       );
   }
   Tick(t) {
-    this.Qut(t);
+    this.nmt(t);
   }
-  hct() {
-    TimerSystem_1.TimerSystem.Has(this.ect) &&
-      TimerSystem_1.TimerSystem.Remove(this.ect),
-      this.Hrt(),
-      (this.ect = void 0),
+  Mmt() {
+    TimerSystem_1.TimerSystem.Has(this.cmt) &&
+      TimerSystem_1.TimerSystem.Remove(this.cmt),
+      this.ist(),
+      (this.cmt = void 0),
       this.IsShowOrShowing && this.Hide();
   }
-  Qut(t) {
+  nmt(t) {
     var i;
-    -1 === this.Blt ||
-      (this.Blt >= this.qot && this.Hrt(), this.xlt >= this.wlt) ||
-      ((i = this.Blt / this.qot),
-      (i = MathUtils_1.MathUtils.Lerp(this.wlt, this.xlt, i)),
-      this.Xrt(i),
-      (this.Blt = this.Blt + t));
+    -1 === this.K1t ||
+      (this.K1t >= this.Xrt && this.ist(), this.j1t >= this.W1t) ||
+      ((i = this.K1t / this.Xrt),
+      (i = MathUtils_1.MathUtils.Lerp(this.W1t, this.j1t, i)),
+      this.ast(i),
+      (this.K1t = this.K1t + t));
   }
   SetNiagaraActive(t) {
     var i = this.GetUiNiagara(6);
     i.SetUIActive(t),
       t
-        ? (i.SetNiagaraVarFloat("Dissolve", this.Xot), i.ActivateSystem(!0))
+        ? (i.SetNiagaraVarFloat("Dissolve", this.snt), i.ActivateSystem(!0))
         : i.DeactivateSystem();
   }
   RefreshRoleState() {
     this.IsValid() &&
-      (this.Hrt(),
+      (this.ist(),
       this.RefreshHpAndShield(),
-      this.sct(),
+      this.pmt(),
       this.IsShowOrShowing || this.Show());
   }
   RefreshHpAndShield(t = !1) {
@@ -192,59 +180,59 @@ class RoleStateView extends BattleChildView_1.BattleChildView {
     this.IsValid() &&
       (i = this.$te) &&
       ((h = i.GetCurrentValue(EAttributeId.Proto_Life)),
-      (i = i.GetCurrentValue(EAttributeId.Tkn)),
-      (s = this.Yht.ShieldTotal),
+      (i = i.GetCurrentValue(EAttributeId.e5n)),
+      (s = this.l1t.ShieldTotal),
       (e = h / i),
       (s = Math.min(s / i, 1)),
       (h = Math.ceil(h) + "/" + Math.ceil(i)),
-      (this.ict.Right = -(1 - e) * this.oct),
-      this.tct.SetRectClipOffset(this.ict),
+      (this.dmt.Right = -(1 - e) * this.Cmt),
+      this.mmt.SetRectClipOffset(this.dmt),
       this.GetText(1).SetText(h),
       this.GetText(7).SetText(h),
-      this.int(e),
-      this.ont(s),
-      t ? this.rnt() : this.Hrt(),
-      (this.Xot = e));
+      this.Cst(e),
+      this.gst(s),
+      t ? this.fst() : this.ist(),
+      (this.snt = e));
   }
-  rnt() {
+  fst() {
     var t,
       i = this.$te;
     i &&
       ((i =
         i.GetCurrentValue(EAttributeId.Proto_Life) /
-        i.GetCurrentValue(EAttributeId.Tkn)),
-      (t = this.Xot) <= i || ((this.xlt = i), (this.wlt = t), (this.Blt = 0)));
+        i.GetCurrentValue(EAttributeId.e5n)),
+      (t = this.snt) <= i || ((this.j1t = i), (this.W1t = t), (this.K1t = 0)));
   }
-  Xrt(t) {
+  ast(t) {
     var i = this.GetSprite(4);
     i.SetFillAmount(t), i.SetUIActive(!0);
   }
-  Hrt() {
+  ist() {
     this.GetSprite(4).SetUIActive(!1),
-      (this.xlt = 0),
-      (this.wlt = 0),
-      (this.Blt = -1);
+      (this.j1t = 0),
+      (this.W1t = 0),
+      (this.K1t = -1);
   }
-  int(t) {
-    this.lct(t);
+  Cst(t) {
+    this.Emt(t);
     var i = this.GetSprite(3),
       e = this.GetSprite(0);
     i.bIsUIActive && i.SetFillAmount(t), e.bIsUIActive && e.SetFillAmount(t);
   }
-  lct(t) {
+  Emt(t) {
     var i = this.GetSprite(3),
       e = this.GetSprite(0);
     t <= LOW_HP_PERCENT
       ? (i.SetUIActive(!0), e.SetUIActive(!1))
       : (i.SetUIActive(!1), e.SetUIActive(!0));
   }
-  ont(t) {
+  gst(t) {
     var i = this.GetSprite(5),
       e = 0 < t;
     i.SetUIActive(e),
-      this.nct !== e &&
-        (this.nct = e) &&
-        this.rct.PlayLevelSequenceByName("Start"),
+      this.fmt !== e &&
+        (this.fmt = e) &&
+        this.gmt.PlayLevelSequenceByName("Start"),
       e && i.SetFillAmount(t);
   }
 }

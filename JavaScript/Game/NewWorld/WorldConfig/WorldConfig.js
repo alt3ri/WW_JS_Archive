@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.WorldConfig = void 0);
 const puerts_1 = require("puerts"),
   UE = require("ue"),
+  Log_1 = require("../../../Core/Common/Log"),
   LockOnConfigById_1 = require("../../../Core/Define/ConfigQuery/LockOnConfigById"),
   ConfigBase_1 = require("../../../Core/Framework/ConfigBase"),
   ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem"),
@@ -21,31 +22,35 @@ const puerts_1 = require("puerts"),
     "/Game/Aki/Data/Fight/DT_CommonHitEffect.DT_CommonHitEffect",
   CAUGHT_DATA_PATH = "/Game/Aki/Data/Fight/DT_CaughtInfo.DT_CaughtInfo",
   CHARACTERFIGHTINFO_DATA_PATH =
-    "/Game/Aki/Data/Fight/DT_CharacterFightInfo.DT_CharacterFightInfo";
+    "/Game/Aki/Data/Fight/DT_CharacterFightInfo.DT_CharacterFightInfo",
+  QTE_TAG_DATA_PATH = "/Game/Aki/Data/Fight/DT_QteTag.DT_QteTag";
 class WorldConfig extends ConfigBase_1.ConfigBase {
   constructor() {
     super(...arguments),
-      (this.tsr = void 0),
-      (this.isr = void 0),
-      (this.osr = void 0),
-      (this.rsr = void 0),
-      (this.nsr = void 0),
-      (this.ssr = void 0),
-      (this.asr = void 0),
-      (this.hsr = void 0),
-      (this.lsr = void 0),
-      (this._sr = void 0);
+      (this.zsr = void 0),
+      (this.Zsr = void 0),
+      (this.ear = void 0),
+      (this.tar = void 0),
+      (this.iar = void 0),
+      (this.oar = void 0),
+      (this.rar = void 0),
+      (this.nar = void 0),
+      (this.sar = void 0),
+      (this.aar = void 0),
+      (this.har = void 0),
+      (this.Yqn = void 0),
+      (this.Jqn = void 0);
   }
   OnInit() {
-    this.usr = new Map();
+    this.har = new Map();
     var i = UE.DataTableUtil_C.LoadAllSkillMontages(
       GlobalData_1.GlobalData.World,
     );
     for (let t = 0; t < i.Num(); ++t) {
       var e = i.Get(t);
       if (0 !== e.CharacterPath.length) {
-        let t = this.usr.get(e.CharacterPath);
-        t || ((t = new Map()), this.usr.set(e.CharacterPath, t)),
+        let t = this.har.get(e.CharacterPath);
+        t || ((t = new Map()), this.har.set(e.CharacterPath, t)),
           0 < e.CommonAnim.ToAssetPathName().length &&
           "None" !== e.CommonAnim.ToAssetPathName()
             ? t.set(e.MontageName, e.CommonAnim)
@@ -60,130 +65,159 @@ class WorldConfig extends ConfigBase_1.ConfigBase {
     return LockOnConfigById_1.configLockOnConfigById.GetConfig(t);
   }
   GetRoleCommonSkillInfo() {
-    if (!this.tsr) {
-      this.tsr = ResourceSystem_1.ResourceSystem.GetLoadedAsset(
+    if (!this.zsr) {
+      this.zsr = ResourceSystem_1.ResourceSystem.GetLoadedAsset(
         ROLE_COMMON_SKILLINFO_PATH,
         UE.DataTable,
       );
       var t = (0, puerts_1.$ref)(void 0),
         i =
-          (UE.DataTableFunctionLibrary.GetDataTableRowNames(this.tsr, t),
+          (UE.DataTableFunctionLibrary.GetDataTableRowNames(this.zsr, t),
           (0, puerts_1.$unref)(t));
-      this.isr = new Array();
+      this.Zsr = new Array();
       for (let t = 0; t < i.Num(); t++) {
         var e = i.Get(t);
-        this.isr.push(e.toString());
+        this.Zsr.push(e.toString());
       }
     }
-    return this.tsr;
+    return this.zsr;
   }
   GetRoleCommonSkillRowNames() {
-    return this.isr || this.GetRoleCommonSkillInfo(), this.isr;
+    return this.Zsr || this.GetRoleCommonSkillInfo(), this.Zsr;
   }
   GetMonsterCommonSkillInfo() {
-    if (!this.osr) {
-      this.osr = ResourceSystem_1.ResourceSystem.GetLoadedAsset(
+    if (!this.ear) {
+      this.ear = ResourceSystem_1.ResourceSystem.GetLoadedAsset(
         MOMSTER_COMMON_SKILLINFO_PATH,
         UE.DataTable,
       );
       var t = (0, puerts_1.$ref)(void 0),
         i =
-          (UE.DataTableFunctionLibrary.GetDataTableRowNames(this.osr, t),
+          (UE.DataTableFunctionLibrary.GetDataTableRowNames(this.ear, t),
           (0, puerts_1.$unref)(t));
-      this.rsr = new Array();
+      this.tar = new Array();
       for (let t = 0; t < i.Num(); t++) {
         var e = i.Get(t);
-        this.rsr.push(e.toString());
+        this.tar.push(e.toString());
       }
     }
-    return this.osr;
+    return this.ear;
   }
   GetMonsterCommonSkillRowNames() {
-    return this.rsr || this.GetMonsterCommonSkillInfo(), this.rsr;
+    return this.tar || this.GetMonsterCommonSkillInfo(), this.tar;
   }
   GetVisionCommonSkillInfo() {
-    if (!this.nsr) {
-      this.nsr = ResourceSystem_1.ResourceSystem.GetLoadedAsset(
+    if (!this.iar) {
+      this.iar = ResourceSystem_1.ResourceSystem.GetLoadedAsset(
         VISION_COMMON_SKILLINFO_PATH,
         UE.DataTable,
       );
       var t = (0, puerts_1.$ref)(void 0),
         i =
-          (UE.DataTableFunctionLibrary.GetDataTableRowNames(this.nsr, t),
+          (UE.DataTableFunctionLibrary.GetDataTableRowNames(this.iar, t),
           (0, puerts_1.$unref)(t));
-      this.ssr = new Array();
+      this.oar = new Array();
       for (let t = 0; t < i.Num(); t++) {
         var e = i.Get(t);
-        this.ssr.push(e.toString());
+        this.oar.push(e.toString());
       }
     }
-    return this.nsr;
+    return this.iar;
   }
   GetVisionCommonSkillRowNames() {
-    return this.ssr || this.GetVisionCommonSkillInfo(), this.ssr;
+    return this.oar || this.GetVisionCommonSkillInfo(), this.oar;
   }
   GetCaughtDataInfo() {
     return (
-      this.lsr ||
-        (this.lsr = ResourceSystem_1.ResourceSystem.GetLoadedAsset(
+      this.sar ||
+        (this.sar = ResourceSystem_1.ResourceSystem.GetLoadedAsset(
           CAUGHT_DATA_PATH,
           UE.DataTable,
         )),
-      this.lsr
+      this.sar
     );
   }
   GetCommonBulletData() {
     return (
-      this.asr ||
-        (this.asr = ResourceSystem_1.ResourceSystem.GetLoadedAsset(
+      this.rar ||
+        (this.rar = ResourceSystem_1.ResourceSystem.GetLoadedAsset(
           COMMON_BULLET_PATH,
           UE.DataTable,
         )),
-      this.asr
+      this.rar
     );
   }
   GetCommonHitEffectData() {
     return (
-      this.hsr ||
-        (this.hsr = ResourceSystem_1.ResourceSystem.GetLoadedAsset(
+      this.nar ||
+        (this.nar = ResourceSystem_1.ResourceSystem.GetLoadedAsset(
           COMMON_HIT_EFFECT_PATH,
           UE.DataTable,
         )),
-      this.hsr
+      this.nar
     );
   }
   GetSkillMontage(t, i) {
-    if (this.usr) {
-      t = this.usr.get(t);
+    if (this.har) {
+      t = this.har.get(t);
       if (t) return t.get(i);
     }
   }
   GetMontageMap(t) {
-    if (this.usr) return this.usr.get(t);
+    if (this.har) return this.har.get(t);
   }
   GetCharacterFightInfo(t) {
     return (
-      this._sr ||
-        (this._sr = ResourceSystem_1.ResourceSystem.GetLoadedAsset(
+      this.aar ||
+        (this.aar = ResourceSystem_1.ResourceSystem.GetLoadedAsset(
           CHARACTERFIGHTINFO_DATA_PATH,
           UE.DataTable,
         )),
-      DataTableUtil_1.DataTableUtil.GetDataTableRow(this._sr, t)
+      DataTableUtil_1.DataTableUtil.GetDataTableRow(this.aar, t)
     );
   }
   ClearCommonSkillData() {
-    (this.tsr = void 0),
-      (this.osr = void 0),
-      (this.asr = void 0),
-      (this.nsr = void 0),
-      (this.lsr = void 0),
-      (this._sr = void 0);
+    (this.zsr = void 0),
+      (this.ear = void 0),
+      (this.rar = void 0),
+      (this.iar = void 0),
+      (this.sar = void 0),
+      (this.aar = void 0);
   }
   GetRoleConfig(t) {
     return ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(t);
   }
   OnClear() {
     return this.ClearCommonSkillData(), !0;
+  }
+  GetQteTagDataTable() {
+    if (!this.Yqn) {
+      this.Yqn = ResourceSystem_1.ResourceSystem.GetLoadedAsset(
+        QTE_TAG_DATA_PATH,
+        UE.DataTable,
+      );
+      var t = (0, puerts_1.$ref)(void 0),
+        i =
+          (UE.DataTableFunctionLibrary.GetDataTableRowNames(this.Yqn, t),
+          (0, puerts_1.$unref)(t));
+      this.Jqn = new Map();
+      for (let t = 0; t < i.Num(); t++) {
+        var e = i.Get(t).toString(),
+          o = DataTableUtil_1.DataTableUtil.GetDataTableRow(this.Yqn, e);
+        "None" !== o.QteTag.TagName &&
+          (this.Jqn.has(o.QteTag.TagId)
+            ? Log_1.Log.CheckError() &&
+              Log_1.Log.Error("Config", 29, "DT_QteTag重复注册QTE标签", [
+                "tag",
+                o.QteTag.TagName,
+              ])
+            : this.Jqn.set(o.QteTag.TagId, e));
+      }
+    }
+    return this.Yqn;
+  }
+  GetQteTagDataMap() {
+    return this.Jqn || this.GetQteTagDataTable(), this.Jqn;
   }
 }
 exports.WorldConfig = WorldConfig;

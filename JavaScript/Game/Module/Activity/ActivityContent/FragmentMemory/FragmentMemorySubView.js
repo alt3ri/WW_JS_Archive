@@ -29,9 +29,9 @@ class FragmentMemorySubView extends ActivitySubViewBase_1.ActivitySubViewBase {
       (this.DNe = void 0),
       (this.UNe = void 0),
       (this.ANe = void 0),
-      (this.pUn = void 0),
-      (this.vUn = void 0),
-      (this.MUn = () => {
+      (this.YPn = void 0),
+      (this.JPn = void 0),
+      (this.zPn = () => {
         if (this.ActivityBaseData.GetPreGuideQuestFinishState()) {
           var e =
             ConfigManager_1.ConfigManager.FragmentMemoryConfig.GetPhotoMemoryActivityById(
@@ -59,7 +59,7 @@ class FragmentMemorySubView extends ActivitySubViewBase_1.ActivitySubViewBase {
               1,
             );
       }),
-      (this.SUn = () => {
+      (this.ZPn = () => {
         const e =
           ConfigManager_1.ConfigManager.FragmentMemoryConfig.GetPhotoMemoryActivityById(
             this.ActivityBaseData.Id,
@@ -100,20 +100,21 @@ class FragmentMemorySubView extends ActivitySubViewBase_1.ActivitySubViewBase {
         this.UNe.CreateThenShowByActorAsync(i.GetOwner()),
         this.ANe.CreateThenShowByActorAsync(r.GetOwner()),
       ]),
-      (this.pUn = new ButtonItem_1.ButtonItem(this.GetItem(4))),
-      (this.vUn = new ButtonItem_1.ButtonItem(this.GetItem(5))),
-      this.pUn.SetFunction(this.MUn),
-      this.vUn.SetFunction(this.SUn);
+      this.UNe.InitGridLayout(this.UNe.InitCommonGridItem),
+      (this.YPn = new ButtonItem_1.ButtonItem(this.GetItem(4))),
+      (this.JPn = new ButtonItem_1.ButtonItem(this.GetItem(5))),
+      this.YPn.SetFunction(this.zPn),
+      this.JPn.SetFunction(this.ZPn);
   }
   OnSequenceClose(e) {}
   OnStart() {}
   OnBeforeShow() {
-    this.x6e(), this.Jwn();
+    this.K8e(), this.kGn();
   }
   OnBeforeHide() {
     (ModelManager_1.ModelManager.FragmentMemoryModel.ActivitySubViewTryPlayAnimation =
       ""),
-      this.ILn();
+      this._Dn();
   }
   OnRefreshView() {
     this.ActivityBaseData.LocalConfig &&
@@ -123,15 +124,15 @@ class FragmentMemorySubView extends ActivitySubViewBase_1.ActivitySubViewBase {
       this.VNe(),
       this._Oe(),
       this.ZGe(),
-      this.$wn(),
-      this.Ywn(),
-      this.Jwn(),
+      this.OGn(),
+      this.NGn(),
+      this.kGn(),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.RefreshCommonActivityRedDot,
         this.ActivityBaseData.Id,
       ));
   }
-  Jwn() {
+  kGn() {
     StringUtils_1.StringUtils.IsEmpty(
       ModelManager_1.ModelManager.FragmentMemoryModel
         .ActivitySubViewTryPlayAnimation,
@@ -147,11 +148,11 @@ class FragmentMemorySubView extends ActivitySubViewBase_1.ActivitySubViewBase {
         (ModelManager_1.ModelManager.FragmentMemoryModel.ActivitySubViewTryPlayAnimation =
           ""));
   }
-  x6e() {
-    this.pUn?.UnBindRedDot(), this.pUn?.BindRedDot("FragmentMemoryEntrance");
+  K8e() {
+    this.YPn?.UnBindRedDot(), this.YPn?.BindRedDot("FragmentMemoryEntrance");
   }
-  ILn() {
-    this.pUn?.UnBindRedDot();
+  _Dn() {
+    this.YPn?.UnBindRedDot();
   }
   _Oe() {
     var e = this.ActivityBaseData.IsUnLock();
@@ -165,7 +166,7 @@ class FragmentMemorySubView extends ActivitySubViewBase_1.ActivitySubViewBase {
   }
   ZGe() {
     var e = this.ActivityBaseData.IsUnLock();
-    this.pUn.SetActive(e), this.vUn.SetActive(e);
+    this.YPn.SetActive(e), this.JPn.SetActive(e);
   }
   mGe() {
     this.LNe.SetTitleByText(this.ActivityBaseData.GetTitle());
@@ -180,14 +181,13 @@ class FragmentMemorySubView extends ActivitySubViewBase_1.ActivitySubViewBase {
       t = e.DescTheme,
       e = e.Desc,
       i = !StringUtils_1.StringUtils.IsEmpty(t);
-    this.DNe.SetTitleVisible(i),
-      i && this.DNe.SetTitleByTextId(t),
+    this.LNe.SetSubTitleVisible(i),
+      i && this.LNe.SetSubTitleByTextId(t),
       this.DNe.SetContentByTextId(e);
   }
   jqe() {
     var e = this.ActivityBaseData.GetPreviewReward();
     this.UNe.SetTitleByTextId("FragmentMemoryCollectReward"),
-      this.UNe.InitGridLayout(this.UNe.InitCommonGridItem),
       this.UNe.RefreshItemLayout(e);
   }
   VNe() {
@@ -196,14 +196,14 @@ class FragmentMemorySubView extends ActivitySubViewBase_1.ActivitySubViewBase {
     );
     this.ANe.FunctionButton.SetText(e);
   }
-  $wn() {
+  OGn() {
     var e = this.ActivityBaseData.IsUnLock();
-    this.pUn?.SetActive(e);
+    this.YPn?.SetActive(e);
   }
-  Ywn() {
+  NGn() {
     var e = this.ActivityBaseData.GetPreGuideQuestFinishState(),
       t = this.ActivityBaseData.IsUnLock();
-    this.vUn?.SetActive(t && e);
+    this.JPn?.SetActive(t && e);
   }
 }
 exports.FragmentMemorySubView = FragmentMemorySubView;

@@ -14,7 +14,8 @@ class CommonExchangeView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
       (this.WGe = void 0),
-      (this.dbt = void 0),
+      (this.fqt = void 0),
+      (this.yQs = void 0),
       (this.KGe = (e) => {
         var t =
           ConfigManager_1.ConfigManager.TextConfig.GetTextContentIdById(
@@ -25,30 +26,30 @@ class CommonExchangeView extends UiTickViewBase_1.UiTickViewBase {
       (this.QGe = (e) => {
         this.bl(e);
       }),
-      (this.PCi = () => {
+      (this.Pgi = () => {
         this.CloseMe();
       }),
       (this.SetMaxValue = () => {
         this.WGe.SelectMax();
       }),
-      (this.m6t = () => {
+      (this.m8t = () => {
         var e,
-          t = this.xCi();
+          t = this.xgi();
         t?.ConfirmCallBack &&
           ((e = this.WGe.GetSelectNumber()),
           t?.ConfirmCallBack(t.GetDestItemId(), e)),
           t.ConfirmNoClose || this.CloseMe();
       }),
-      (this.wCi = () => {
-        var e = this.xCi()?.CancelCallBack;
+      (this.wgi = () => {
+        var e = this.xgi()?.CancelCallBack;
         e && e(), this.CloseMe();
       });
   }
-  xCi() {
-    return this.OpenParam;
+  xgi() {
+    return this.OpenParam.ExchangeData;
   }
-  BCi() {
-    return this.xCi().GetDestItemId();
+  Bgi() {
+    return this.xgi().GetDestItemId();
   }
   OnRegisterComponent() {
     (this.ComponentRegisterInfos = [
@@ -69,20 +70,21 @@ class CommonExchangeView extends UiTickViewBase_1.UiTickViewBase {
       [14, UE.UIItem],
     ]),
       (this.BtnBindInfo = [
-        [7, this.wCi],
-        [8, this.m6t],
+        [7, this.wgi],
+        [8, this.m8t],
       ]);
   }
   async OnBeforeStartAsync() {
-    this.xCi().ShowPayGold &&
-      ((this.dbt = new CommonCurrencyItem_1.CommonCurrencyItem()),
-      await this.dbt.CreateThenShowByResourceIdAsync(
-        "UIItem_CommonCurrencyItem",
-      ));
+    (this.yQs = this.OpenParam),
+      this.xgi().ShowPayGold &&
+        ((this.fqt = new CommonCurrencyItem_1.CommonCurrencyItem()),
+        await this.fqt.CreateThenShowByResourceIdAsync(
+          "UIItem_CommonCurrencyItem",
+        ));
   }
   OnStart() {
-    this.ChildPopView?.PopItem.OverrideBackBtnCallBack(this.wCi);
-    var e = this.xCi();
+    this.ChildPopView?.PopItem.OverrideBackBtnCallBack(this.wgi);
+    var e = this.xgi();
     LguiUtil_1.LguiUtil.SetLocalText(
       this.GetText(0),
       ItemExchangeDefine_1.EXCHANGE_TITLE,
@@ -92,30 +94,31 @@ class CommonExchangeView extends UiTickViewBase_1.UiTickViewBase {
       this.SetItemIcon(this.GetTexture(2), e.GetDestItemId()),
       this.SetItemIcon(this.GetTexture(5), e.GetSrcItemId()),
       this.rNe(),
-      this.bCi();
+      0 < this.yQs.StartSliderValue &&
+        this.WGe?.ChangeValue(this.yQs.StartSliderValue),
+      this.bgi();
   }
   OnBeforeShow() {
     var e;
-    this.xCi().ShowPayGold &&
-      (this.dbt
+    this.xgi().ShowPayGold &&
+      (this.fqt
         ?.GetRootItem()
         .SetUIParent(this.ChildPopView?.PopItem?.GetCostParent()),
       (e = ModelManager_1.ModelManager.PlayerInfoModel.GetPlayerMoney(
         ItemDefines_1.EItemId.PayGold,
       )),
-      this.dbt.RefreshTemp(ItemDefines_1.EItemId.PayGold, e.toString()),
-      this.dbt.SetPayShopButtonActive(),
-      this.dbt.SetBeforeButtonFunction(this.PCi),
-      this.dbt.SetToPayShopFunction());
+      this.fqt.RefreshTemp(ItemDefines_1.EItemId.PayGold, e.toString()),
+      this.fqt.RefreshAddButtonActive(),
+      this.fqt.SetBeforeButtonFunction(this.Pgi),
+      this.fqt.SetToPayShopFunction()),
+      this.ChildPopView?.PopItem.SetCurrencyItemList(this.yQs.ShowCurrencyList);
   }
   rNe() {
     (this.WGe = new NumberSelectComponent_1.NumberSelectComponent(
       this.GetItem(13),
     )),
       this.WGe.SetLimitMaxValueForce(ItemExchangeDefine_1.EXCHANGE_MAX_COUNT);
-    var e = ModelManager_1.ModelManager.ItemExchangeModel.GetMaxExChangeTime(
-        this.BCi(),
-      ),
+    var e = this.yQs.MaxExchangeTime,
       t = {
         MaxNumber: e,
         GetExchangeTableText: this.KGe,
@@ -126,39 +129,36 @@ class CommonExchangeView extends UiTickViewBase_1.UiTickViewBase {
       this.WGe.SetAddReduceButtonActive(!0),
       this.WGe.SetAddReduceButtonInteractive(1 < e);
   }
-  bCi() {
-    var e = ModelManager_1.ModelManager.ItemExchangeModel.GetMaxExChangeTime(
-      this.BCi(),
-    );
+  bgi() {
+    var e = this.yQs.MaxExchangeTime;
     this.GetInteractionGroup(10).SetInteractable(0 < e);
   }
   bl(e) {
-    var t = this.xCi(),
-      i = this.BCi(),
-      i = ModelManager_1.ModelManager.ItemExchangeModel.GetCurExchangeInfo(
-        i,
-        e,
-      ),
-      t =
+    var t = this.xgi(),
+      i = this.Bgi(),
+      s = this.yQs.GetConsumeCount(i, e),
+      i =
         (this.GetText(3).SetText(t.GetSrcName()),
         LguiUtil_1.LguiUtil.SetLocalText(
           this.GetText(11),
           ItemExchangeDefine_1.EXCHANGE_COUNT_DESCRIBE2,
-          i.ConsumeCount,
+          s,
         ),
-        this.GetText(4).SetText(t.GetDestName()),
+        this.yQs.GetGainCount(i, e)),
+      t =
+        (this.GetText(4).SetText(t.GetDestName()),
         LguiUtil_1.LguiUtil.SetLocalText(
           this.GetText(12),
           ItemExchangeDefine_1.EXCHANGE_COUNT_DESCRIBE2,
-          i.GainCount,
+          i,
         ),
         this.GetText(6)),
-      s = this.xCi().GetSrcItemId(),
-      i = i.ConsumeCount * e,
-      e =
-        (t.SetText(i.toString()),
-        ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(s));
-    t.SetChangeColor(e < i, t.changeColor), this.GetItem(14).SetUIActive(e < i);
+      i = this.yQs.GetConsumeTotalCount(s, e),
+      s = (t.SetText(i.toString()), this.yQs.OwnSrcItemNum);
+    t.SetChangeColor(s < i, t.changeColor), this.GetItem(14).SetUIActive(s < i);
+  }
+  OnBeforeDestroy() {
+    this.fqt?.Destroy();
   }
 }
 exports.CommonExchangeView = CommonExchangeView;

@@ -11,42 +11,42 @@ class SortViewData {
 exports.SortViewData = SortViewData;
 class SortResultData {
   constructor() {
-    (this.Mne = 0), (this.cRt = void 0), (this.mRt = void 0), (this.dRt = !1);
+    (this.Mne = 0), (this.gUt = void 0), (this.fUt = void 0), (this.pUt = !1);
   }
   SetConfigId(t) {
     this.Mne = t;
   }
   SetSelectBaseSort(t) {
-    this.cRt = t;
+    this.gUt = t;
   }
   SetSelectAttributeSort(t) {
-    this.mRt = t;
+    this.fUt = t;
   }
   GetSelectBaseSort() {
-    return this.cRt;
+    return this.gUt;
   }
   GetSelectAttributeSort() {
-    return this.mRt;
+    return this.fUt;
   }
   SetIsAscending(t) {
-    this.dRt = t;
+    this.pUt = t;
   }
   GetIsAscending() {
-    return this.dRt;
+    return this.pUt;
   }
   GetAllSelectRuleSet() {
     var t = new Set(),
       e = ConfigManager_1.ConfigManager.SortConfig.GetSortConfig(this.Mne);
     for (const r of e.FrontSortList) t.add(r);
-    if ((t.add(this.cRt[0]), this.mRt))
-      for (const s of this.mRt.keys()) t.add(s);
+    if ((t.add(this.gUt[0]), this.fUt))
+      for (const s of this.fUt.keys()) t.add(s);
     for (const i of e.LastSortList) t.add(i);
     return t;
   }
   ShowAllSortContent() {
     var t = new StringBuilder_1.StringBuilder();
-    if ((t.Append(this.cRt[1]), t.Append(","), this.mRt))
-      for (const e of this.mRt.values()) t.Append(e), t.Append(",");
+    if ((t.Append(this.gUt[1]), t.Append(","), this.fUt))
+      for (const e of this.fUt.values()) t.Append(e), t.Append(",");
     return t.RemoveLast(1), t.ToString();
   }
 }

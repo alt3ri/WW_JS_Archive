@@ -12,30 +12,27 @@ class TsTaskPatrolStateReset extends TsTaskAbortImmediatelyBase_1.default {
     var o,
       a = e.AiController;
     a
-      ? (BlackboardController_1.BlackboardController.GetStringValueByEntity(
-          a.CharAiDesignComp.Entity.Id,
-          BehaviorTreeDefines_1.BehaviorTreeDefines.BehaviorTreeStateName,
-        )?.endsWith(this.SplineId.toString()) ||
-          ((o = BehaviorTreeDefines_1.BehaviorTreeDefines.GetPatrolStateName(
-            this.SplineId,
-          )),
-          BlackboardController_1.BlackboardController.SetStringValueByEntity(
-            a.CharAiDesignComp.Entity.Id,
-            BehaviorTreeDefines_1.BehaviorTreeDefines.BehaviorTreeStateName,
-            o,
-          ),
-          BlackboardController_1.BlackboardController.RemoveValueByEntity(
+      ? ((o =
+          BlackboardController_1.BlackboardController.GetStringValueByEntity(
             a.CharAiDesignComp.Entity.Id,
             BehaviorTreeDefines_1.BehaviorTreeDefines
-              .PatrolFinishSegmentIndexName,
-          )),
-        this.FinishExecute(!0))
-      : (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("BehaviorTree", 6, "错误的Controller类型", [
-            "Type",
-            e.GetClass().GetName(),
-          ]),
-        this.FinishExecute(!1));
+              .BehaviorTreePatrolStateName,
+          ))?.endsWith(this.SplineId.toString()) &&
+          o !== BehaviorTreeDefines_1.BehaviorTreeDefines.PatrolFinishName) ||
+        ((o = BehaviorTreeDefines_1.BehaviorTreeDefines.GetPatrolStateName(
+          this.SplineId,
+        )),
+        BlackboardController_1.BlackboardController.SetStringValueByEntity(
+          a.CharAiDesignComp.Entity.Id,
+          BehaviorTreeDefines_1.BehaviorTreeDefines.BehaviorTreePatrolStateName,
+          o,
+        ))
+      : Log_1.Log.CheckError() &&
+        Log_1.Log.Error("BehaviorTree", 6, "错误的Controller类型", [
+          "Type",
+          e.GetClass().GetName(),
+        ]),
+      this.FinishExecute(!0);
   }
 }
 exports.default = TsTaskPatrolStateReset;

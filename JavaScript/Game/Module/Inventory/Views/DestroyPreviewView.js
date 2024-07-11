@@ -2,11 +2,11 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.DestroyPreviewView = void 0);
 const UE = require("ue"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
   ButtonItem_1 = require("../../Common/Button/ButtonItem"),
   LoopScrollView_1 = require("../../Util/ScrollView/LoopScrollView"),
   DestroyPreviewGrid_1 = require("./DestroyPreviewGrid"),
-  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   GRID_SIZE = 210,
   GRID_NORMAL_WIDTH_SIZE = 630,
   GRID_NORMAL_HEIGHT_SIZE = 525,
@@ -22,13 +22,13 @@ const UE = require("ue"),
 class DestroyPreviewView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.Nci = void 0),
-      (this.Oci = void 0),
-      (this.kci = []),
-      (this.Fci = void 0),
-      (this.Vci = void 0),
-      (this.Hci = !1),
-      (this.jci = () => {
+      (this.Nmi = void 0),
+      (this.Omi = void 0),
+      (this.kmi = []),
+      (this.Fmi = void 0),
+      (this.Vmi = void 0),
+      (this.Hmi = !1),
+      (this.jmi = () => {
         return new DestroyPreviewGrid_1.DestroyPreviewGrid();
       });
   }
@@ -48,50 +48,50 @@ class DestroyPreviewView extends UiViewBase_1.UiViewBase {
       i = this.OpenParam;
     i &&
       ((e = this.GetLoopScrollViewComponent(0)),
-      (this.Nci = new LoopScrollView_1.LoopScrollView(
+      (this.Nmi = new LoopScrollView_1.LoopScrollView(
         e,
         this.GetItem(2).GetOwner(),
-        this.jci,
+        this.jmi,
       )),
-      await this.Nci.RefreshByDataAsync(i.OriginList),
-      this.Wci(i.OriginList.length, e),
-      (this.kci = i.OriginList),
+      await this.Nmi.RefreshByDataAsync(i.OriginList),
+      this.Wmi(i.OriginList.length, e),
+      (this.kmi = i.OriginList),
       (e = this.GetLoopScrollViewComponent(1)),
-      (this.Oci = new LoopScrollView_1.LoopScrollView(
+      (this.Omi = new LoopScrollView_1.LoopScrollView(
         e,
         this.GetItem(2).GetOwner(),
-        this.jci,
+        this.jmi,
       )),
       (t = 0 === i.ResultList.length),
       this.GetText(3).SetUIActive(t),
       e.RootUIComp.SetUIActive(!t),
       t ||
-        (await this.Oci.RefreshByDataAsync(i.ResultList),
-        this.Wci(i.ResultList.length, e)),
-      (this.Hci = !t),
-      (this.Fci = new ButtonItem_1.ButtonItem(this.GetItem(4))),
-      this.Fci.SetFunction(() => {
+        (await this.Omi.RefreshByDataAsync(i.ResultList),
+        this.Wmi(i.ResultList.length, e)),
+      (this.Hmi = !t),
+      (this.Fmi = new ButtonItem_1.ButtonItem(this.GetItem(4))),
+      this.Fmi.SetFunction(() => {
         this.CloseMe();
       }),
-      (this.Vci = new ButtonItem_1.ButtonItem(this.GetItem(5))),
-      this.Vci.SetFunction(() => {
-        this.Kci(), this.CloseMe();
+      (this.Vmi = new ButtonItem_1.ButtonItem(this.GetItem(5))),
+      this.Vmi.SetFunction(() => {
+        this.Kmi(), this.CloseMe();
       }));
   }
   OnAfterShow() {
-    this.Hci && this.UiViewSequence.PlaySequence("Notice");
+    this.Hmi && this.UiViewSequence.PlaySequence("Notice");
   }
-  Wci(e, t) {
+  Wmi(e, t) {
     let i = GRID_NORMAL_WIDTH_SIZE,
       o = GRID_NORMAL_HEIGHT_SIZE;
     e < layoutSize.length && ((i = layoutSize[e][0]), (o = layoutSize[e][1])),
       t.RootUIComp.SetWidth(i),
       t.RootUIComp.SetHeight(o);
   }
-  Kci() {
+  Kmi() {
     var e = [];
-    for (const i of this.kci) {
-      var t = { G3n: i[0].ItemId, Q5n: i[0].IncId, I5n: i[1] };
+    for (const i of this.kmi) {
+      var t = { f8n: i[0].ItemId, L9n: i[0].IncId, o9n: i[1] };
       e.push(t);
     }
     ControllerHolder_1.ControllerHolder.InventoryController.ItemDestructRequest(

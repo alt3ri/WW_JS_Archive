@@ -13,8 +13,8 @@ class ScenePlayerData {
     (this.j8 = 0),
       (this.UAe = void 0),
       (this.ControlCreatureDataId = 0),
-      (this.Npr = !1),
-      (this.Opr = void 0),
+      (this.bvr = !1),
+      (this.qvr = void 0),
       (this.j8 = e),
       (this.UAe = Vector_1.Vector.Create());
   }
@@ -22,11 +22,11 @@ class ScenePlayerData {
     (this.j8 = 0),
       (this.UAe = void 0),
       (this.ControlCreatureDataId = 0),
-      this.Opr && TimerSystem_1.TimerSystem.Remove(this.Opr);
+      this.qvr && TimerSystem_1.TimerSystem.Remove(this.qvr);
   }
   SetTimerStart() {
-    this.Opr ||
-      (this.Opr = TimerSystem_1.TimerSystem.Forever(() => {
+    this.qvr ||
+      (this.qvr = TimerSystem_1.TimerSystem.Forever(() => {
         this.SetLocation();
       }, TIME_INTERVAL));
   }
@@ -34,13 +34,17 @@ class ScenePlayerData {
     return this.j8;
   }
   SetRemoteSceneLoading(e) {
-    this.Npr = e;
+    this.bvr = e;
   }
   IsRemoteSceneLoading() {
-    return this.Npr;
+    return this.bvr;
   }
   SetLocation() {
-    var e = this.ControlCreatureDataId;
+    var e = ModelManager_1.ModelManager.SceneTeamModel.GetTeamPlayerData(
+      this.j8,
+    )
+      ?.GetCurrentGroup()
+      ?.GetCurrentRole()?.CreatureDataId;
     e &&
       ((e =
         ModelManager_1.ModelManager.CreatureModel.GetEntity(

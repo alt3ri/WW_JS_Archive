@@ -7,10 +7,14 @@ const Log_1 = require("../../../Core/Common/Log"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
   ModelManager_1 = require("../../Manager/ModelManager"),
   TsInteractionUtils_1 = require("../../Module/Interaction/TsInteractionUtils"),
+  LevelLoadingController_1 = require("../../Module/LevelLoading/LevelLoadingController"),
   LevelGeneralBase_1 = require("../LevelGeneralBase"),
+  OpenSystemActivity_1 = require("./OpenSystem/OpenSystemActivity"),
+  OpenSystemChasingMoonMain_1 = require("./OpenSystem/OpenSystemChasingMoonMain"),
   OpenSystemConfrimBox_1 = require("./OpenSystem/OpenSystemConfrimBox"),
   OpenSystemContributionLevel_1 = require("./OpenSystem/OpenSystemContributionLevel"),
   OpenSystemCook_1 = require("./OpenSystem/OpenSystemCook"),
+  OpenSystemDigitalScreen_1 = require("./OpenSystem/OpenSystemDigitalScreen"),
   OpenSystemExploreLevel_1 = require("./OpenSystem/OpenSystemExploreLevel"),
   OpenSystemExpostulation_1 = require("./OpenSystem/OpenSystemExpostulation"),
   OpenSystemFeed_1 = require("./OpenSystem/OpenSystemFeed"),
@@ -22,9 +26,11 @@ const Log_1 = require("../../../Core/Common/Log"),
   OpenSystemInstanceFailure_1 = require("./OpenSystem/OpenSystemInstanceFailure"),
   OpenSystemLordGym_1 = require("./OpenSystem/OpenSystemLordGym"),
   OpenSystemMingSuTi_1 = require("./OpenSystem/OpenSystemMingSuTi"),
+  OpenSystemPhotographView_1 = require("./OpenSystem/OpenSystemPhotographView"),
   OpenSystemRegionQuest_1 = require("./OpenSystem/OpenSystemRegionQuest"),
   OpenSystemRogueAbilitySelect_1 = require("./OpenSystem/OpenSystemRogueAbilitySelect"),
   OpenSystemRoguelikeActivity_1 = require("./OpenSystem/OpenSystemRoguelikeActivity"),
+  OpenSystemRogueSettlement_1 = require("./OpenSystem/OpenSystemRogueSettlement"),
   OpenSystemRogueShop_1 = require("./OpenSystem/OpenSystemRogueShop"),
   OpenSystemRoleDescription_1 = require("./OpenSystem/OpenSystemRoleDescription"),
   OpenSystemShopView_1 = require("./OpenSystem/OpenSystemShopView"),
@@ -132,6 +138,26 @@ class LevelEventOpenSystem extends LevelGeneralBase_1.LevelEventBase {
       this.KDe.set(
         "ConfirmBox",
         new OpenSystemConfrimBox_1.OpenSystemConfrimBox(this),
+      ),
+      this.KDe.set(
+        "ActivityIntroduce",
+        new OpenSystemActivity_1.OpenSystemActivity(this),
+      ),
+      this.KDe.set(
+        "Photograph",
+        new OpenSystemPhotographView_1.OpenSystemPhotographView(this),
+      ),
+      this.KDe.set(
+        "RogueSettlement",
+        new OpenSystemRogueSettlement_1.OpenSystemRogueSettlement(this),
+      ),
+      this.KDe.set(
+        "DigitalScreen",
+        new OpenSystemDigitalScreen_1.OpenSystemDigitalScreen(this),
+      ),
+      this.KDe.set(
+        "ChasingMoonMain",
+        new OpenSystemChasingMoonMain_1.OpenSystemChasingMoonMain(this),
       );
   }
   OnReset() {
@@ -144,7 +170,7 @@ class LevelEventOpenSystem extends LevelGeneralBase_1.LevelEventBase {
         this.QDe,
       );
   }
-  async Bbn(t, n) {
+  async n2n(t, n) {
     var s = this.KDe.get(t.SystemType);
     if (s)
       if (ModelManager_1.ModelManager.GameModeModel.WorldDoneAndLoadingClosed) {
@@ -154,7 +180,7 @@ class LevelEventOpenSystem extends LevelGeneralBase_1.LevelEventBase {
         if (
           (o?.EntityId &&
             i &&
-            (EntitySystem_1.EntitySystem.GetComponent(o.EntityId, 178)
+            (EntitySystem_1.EntitySystem.GetComponent(o.EntityId, 181)
               ?.CanInteraction ||
               (TsInteractionUtils_1.TsInteractionUtils.RegisterWaitOpenViewName(
                 i,
@@ -193,6 +219,7 @@ class LevelEventOpenSystem extends LevelGeneralBase_1.LevelEventBase {
                 ),
               e &&
                 TsInteractionUtils_1.TsInteractionUtils.ClearCurrentOpenViewName(),
+              LevelLoadingController_1.LevelLoadingController.CloseLoading(0),
               void this.FinishExecute(!0)
             );
         }
@@ -209,6 +236,9 @@ class LevelEventOpenSystem extends LevelGeneralBase_1.LevelEventBase {
                     ),
                   e &&
                     TsInteractionUtils_1.TsInteractionUtils.ClearCurrentOpenViewName(),
+                  LevelLoadingController_1.LevelLoadingController.CloseLoading(
+                    0,
+                  ),
                   this.FinishExecute(!0))
                 : EventSystem_1.EventSystem.Add(
                     EventDefine_1.EEventName.CloseView,
@@ -223,6 +253,7 @@ class LevelEventOpenSystem extends LevelGeneralBase_1.LevelEventBase {
                 ),
               e &&
                 TsInteractionUtils_1.TsInteractionUtils.ClearCurrentOpenViewName(),
+              LevelLoadingController_1.LevelLoadingController.CloseLoading(0),
               this.FinishExecute(!0));
       } else
         Log_1.Log.CheckInfo() &&
@@ -245,17 +276,22 @@ class LevelEventOpenSystem extends LevelGeneralBase_1.LevelEventBase {
   }
   ExecuteNew(e, t) {
     e
-      ? this.Bbn(e, t)
+      ? this.n2n(e, t)
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error("LevelEvent", 37, "[LevelEventOpenSystem]参数类型出错");
   }
-  XDe(e, t, n) {
-    var s = n?.EntityId;
-    s &&
-      (s = EntitySystem_1.EntitySystem.Get(s)?.GetComponent(168)) &&
-      (t = t.GetViewName(e, n)) &&
-      (TsInteractionUtils_1.TsInteractionUtils.RegisterOpenViewName(t),
-      s.SetUiOpenPerformance(t, e.BoardId));
+  XDe(t, n, s) {
+    n = n.GetViewName(t, s);
+    if (n)
+      if ("Photograph" === t.SystemType)
+        TsInteractionUtils_1.TsInteractionUtils.RegisterOpenViewName(n);
+      else {
+        let e = void 0;
+        s = s?.EntityId;
+        (e = s ? EntitySystem_1.EntitySystem.Get(s)?.GetComponent(171) : e) &&
+          (TsInteractionUtils_1.TsInteractionUtils.RegisterOpenViewName(n),
+          e.SetUiOpenPerformance(n, t.BoardId));
+      }
   }
 }
 exports.LevelEventOpenSystem = LevelEventOpenSystem;

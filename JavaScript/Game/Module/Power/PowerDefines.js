@@ -13,18 +13,18 @@ var EPowerShopType;
     (t[(t.BuyWithItem = 7)] = "BuyWithItem");
 })((EPowerShopType = exports.EPowerShopType || (exports.EPowerShopType = {})));
 class PowerConfirmBoxData {
-  constructor(t = 2, o = 0) {
+  constructor(t = 2, e = 0) {
     (this.ConfirmCallback = void 0),
       (this.CancelCallback = void 0),
       (this.Type = t),
-      (this.PowerRequired = o);
+      (this.PowerRequired = e);
   }
 }
 exports.PowerConfirmBoxData = PowerConfirmBoxData;
 class PowerItemInfo {
   constructor(t) {
     (this.ItemName = ""),
-      (this.Cio = 0),
+      (this.uoo = 0),
       (this.StackValue = 0),
       (this.RenewValue = 0),
       (this.CostValue = 0),
@@ -35,21 +35,20 @@ class PowerItemInfo {
       (this.ItemId = t);
   }
   set ItemId(t) {
-    (this.Cio = t),
-      this.Cio <= PowerConst.MaxVirtualItemId
+    (this.uoo = t),
+      this.uoo <= PowerConst.MaxVirtualItemId
         ? (this.ShopId = EPowerShopType.BuyWithMoney)
         : (this.ShopId = EPowerShopType.BuyWithItem);
   }
   get ItemId() {
-    return this.Cio;
+    return this.uoo;
   }
 }
 exports.PowerItemInfo = PowerItemInfo;
 class PowerConst {
   constructor() {}
 }
-((exports.PowerConst = PowerConst).MaxVirtualItemId = 2e3),
-  (PowerConst.SingCube = 10800);
+(exports.PowerConst = PowerConst).MaxVirtualItemId = 2e3;
 class PowerViewData extends UiPopViewData_1.UiPopViewData {
   constructor() {
     super(...arguments), (this.IsMultipleView = !0);

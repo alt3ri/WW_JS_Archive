@@ -18,7 +18,8 @@ const Log_1 = require("../../../Core/Common/Log"),
   UiLayerType_1 = require("../../Ui/Define/UiLayerType"),
   InputDistributeController_1 = require("../../Ui/InputDistribute/InputDistributeController"),
   UiManager_1 = require("../../Ui/UiManager"),
-  WaitEntityTask_1 = require("../../World/Define/WaitEntityTask");
+  WaitEntityTask_1 = require("../../World/Define/WaitEntityTask"),
+  FlowController_1 = require("../Plot/Flow/FlowController");
 class TsInteractionUtils {
   static GetInteractionConfig(e) {
     return DataTableUtil_1.DataTableUtil.GetDataTableRowFromName(8, e);
@@ -37,16 +38,16 @@ class TsInteractionUtils {
         t.CreatureData.GetCreatureDataId(),
         r,
         (e) => {
-          t?.HandleInteractResponse(e.lkn, e.hMs);
+          t?.HandleInteractResponse(e.O4n, e.IIs);
         },
         i.GetCreatureDataId(),
       ));
   }
   static HandleInteractionOptionNew(t, n) {
-    if (this.q1i)
+    if (this.q_i)
       n.OnInteractActionEnd && n.OnInteractActionEnd(),
-        Log_1.Log.CheckWarn() &&
-          Log_1.Log.Warn(
+        Log_1.Log.CheckDebug() &&
+          Log_1.Log.Debug(
             "Interaction",
             37,
             "当前正在等待交互协议返回，无法继续发送交互请求",
@@ -59,30 +60,30 @@ class TsInteractionUtils {
         ),
         3 !== t.OptionType &&
           Global_1.Global.BaseCharacter.CharacterActorComponent?.Entity?.GetComponent(
-            57,
+            59,
           )?.CollectSampleAndSend(!0),
-        t.OptionType)
+        t.DelayRemove ? 3 : t.OptionType)
       ) {
         case 0:
-          (this.q1i = !0), n.HandleInteractRequest();
+          (this.q_i = !0), n.HandleInteractRequest();
           var e = t.InstanceId - 1;
           LevelGeneralNetworks_1.LevelGeneralNetworks.RequestEntityInteractOption(
             n.CreatureData.GetCreatureDataId(),
             e,
             (e) => {
-              (this.q1i = !1), n?.HandleInteractResponse(e.lkn, e.hMs);
+              (this.q_i = !1), n?.HandleInteractResponse(e.O4n, e.IIs);
             },
           );
           break;
         case 1:
-          (this.q1i = !0),
+          (this.q_i = !0),
             n.HandleInteractRequest(),
             LevelGeneralNetworks_1.LevelGeneralNetworks.RequestEntityDynamicInteractOption(
               n.CreatureData.GetCreatureDataId(),
               t.Guid,
               (e) => {
-                (this.q1i = !1),
-                  n?.HandleInteractResponse(e.lkn, e.hMs),
+                (this.q_i = !1),
+                  n?.HandleInteractResponse(e.O4n, e.IIs),
                   t &&
                     EventSystem_1.EventSystem.Emit(
                       EventDefine_1.EEventName.DynamicInteractServerResponse,
@@ -92,22 +93,29 @@ class TsInteractionUtils {
             );
           break;
         case 2:
-          (this.q1i = !0),
+          (this.q_i = !0),
             n.HandleInteractRequest(),
             LevelGeneralNetworks_1.LevelGeneralNetworks.RequestEntityRandomInteractOption(
               n.CreatureData.GetCreatureDataId(),
               t.RandomOptionIndex,
               (e) => {
-                (this.q1i = !1), n?.HandleInteractResponse(e.lkn, e.hMs);
+                (this.q_i = !1), n?.HandleInteractResponse(e.O4n, e.IIs);
               },
             );
           break;
         case 3:
-          if ("Flow" === t.Type.Type)
-            Log_1.Log.CheckError() &&
-              Log_1.Log.Error("Plot", 18, "交互触发剧情必须由服务端下发"),
+          if ("Flow" === t.Type.Type) {
+            var e = t.Type,
+              i = LevelGeneralContextDefine_1.EntityContext.Create(n.EntityId);
+            e &&
+              FlowController_1.FlowController.StartFlow(
+                e.Flow.FlowListName,
+                e.Flow.FlowId,
+                e.Flow.StateId,
+                i,
+              ),
               n?.OnInteractActionEnd && n.OnInteractActionEnd();
-          else if ("Actions" === t.Type.Type) {
+          } else if ("Actions" === t.Type.Type) {
             n?.HandleInteractClientAction();
             let e = t.Context;
             (e = e
@@ -132,7 +140,7 @@ class TsInteractionUtils {
       }
   }
   static IsInteractHintViewOpened() {
-    return TsInteractionUtils.G1i;
+    return TsInteractionUtils.G_i;
   }
   static get IsInteractWaitOpenViewName() {
     return void 0 !== this.WaitOpenViewName;
@@ -160,7 +168,7 @@ class TsInteractionUtils {
       return !0;
     if (this.WaitOpenViewName)
       return (
-        UiManager_1.UiManager.IsViewShow(this.WaitOpenViewName) && this.N1i(),
+        UiManager_1.UiManager.IsViewShow(this.WaitOpenViewName) && this.N_i(),
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Interaction",
@@ -170,7 +178,7 @@ class TsInteractionUtils {
           ),
         !1
       );
-    (TsInteractionUtils.G1i = !0),
+    (TsInteractionUtils.G_i = !0),
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "Interaction",
@@ -179,15 +187,15 @@ class TsInteractionUtils {
         );
     var e = await UiManager_1.UiManager.OpenViewAsync("InteractionHintView");
     return (
-      (TsInteractionUtils.G1i = void 0 !== e),
+      (TsInteractionUtils.G_i = void 0 !== e),
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "Interaction",
           8,
           "[InteractionDebug]尝试打开交互界面，完成打开交互界面",
-          ["bSuccess", TsInteractionUtils.G1i],
+          ["bSuccess", TsInteractionUtils.G_i],
         ),
-      TsInteractionUtils.G1i
+      TsInteractionUtils.G_i
     );
   }
   static CloseInteractHintView() {
@@ -203,7 +211,7 @@ class TsInteractionUtils {
             )
           : UiManager_1.UiManager.CloseViewAsync("InteractionHintView").then(
               () => {
-                (TsInteractionUtils.G1i = !1),
+                (TsInteractionUtils.G_i = !1),
                   Log_1.Log.CheckDebug() &&
                     Log_1.Log.Debug(
                       "Interaction",
@@ -228,7 +236,7 @@ class TsInteractionUtils {
         (this.WaitOpenViewName ||
           EventSystem_1.EventSystem.Add(
             EventDefine_1.EEventName.OnViewDone,
-            this.O1i,
+            this.O_i,
           ),
         (this.WaitOpenViewName = e),
         InputDistributeController_1.InputDistributeController.RefreshInputTag(),
@@ -236,7 +244,7 @@ class TsInteractionUtils {
           this.WaitOpenViewName === e &&
             (Log_1.Log.CheckWarn() &&
               Log_1.Log.Warn("Interaction", 37, "等待界面打开超时"),
-            this.N1i());
+            this.N_i());
         }, 1e4))
       : Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn("Interaction", 37, "等待打开的界面为 Undefined");
@@ -246,7 +254,7 @@ class TsInteractionUtils {
       EventDefine_1.EEventName.OnStartLoadingState,
       this.hMe,
     ),
-      (this.q1i = !1);
+      (this.q_i = !1);
   }
   static Clear() {
     EventSystem_1.EventSystem.Remove(
@@ -256,33 +264,33 @@ class TsInteractionUtils {
       this.ClearCurrentOpenViewName();
   }
   static RegisterOpenViewName(e) {
-    this.k1i ||
+    this.k_i ||
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.CloseView,
         this.$Ge,
       ),
-      (this.k1i = e);
+      (this.k_i = e);
   }
   static ClearCurrentOpenViewName() {
-    this.k1i &&
-      ((this.k1i = void 0),
+    this.k_i &&
+      ((this.k_i = void 0),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.CloseView,
         this.$Ge,
       ));
   }
   static GetCurrentOpenViewName() {
-    return this.k1i;
+    return this.k_i;
   }
   static IsInteractionOpenView() {
-    return void 0 !== this.k1i;
+    return void 0 !== this.k_i;
   }
-  static N1i() {
+  static N_i() {
     (this.WaitOpenViewName = void 0),
       InputDistributeController_1.InputDistributeController.RefreshInputTag(),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnViewDone,
-        TsInteractionUtils.O1i,
+        TsInteractionUtils.O_i,
       );
   }
   static UpdateInteractHintView() {
@@ -297,7 +305,7 @@ class TsInteractionUtils {
         if (t) {
           t = ModelManager_1.ModelManager.CreatureModel.GetEntity(a);
           if (t) {
-            t = t.Entity.GetComponent(178);
+            t = t.Entity.GetComponent(181);
             if (t) {
               t = t.GetInteractController();
               if (t) {
@@ -332,10 +340,10 @@ class TsInteractionUtils {
                     ControllerHolder_1.ControllerHolder.LevelGeneralController.ExecuteActionsByServerNotify(
                       i.Actions,
                       e,
-                      r.aFn,
-                      r.Ykn,
-                      r.hFn,
-                      r.Wms,
+                      r.q5n,
+                      r.T5n,
+                      r.G5n,
+                      r.avs,
                     );
                   }
                 else
@@ -386,7 +394,7 @@ class TsInteractionUtils {
       r,
       a =
         LevelGeneralContextUtil_1.LevelGeneralContextUtil.CreateByServerContext(
-          e?.Hms,
+          e?.nvs,
         );
     a
       ? (t = (n =
@@ -409,10 +417,10 @@ class TsInteractionUtils {
             ControllerHolder_1.ControllerHolder.LevelGeneralController.ExecuteActionsByServerNotify(
               t.Type.Actions,
               a,
-              e.aFn,
-              e.Ykn,
-              e.hFn,
-              e.Wms,
+              e.q5n,
+              e.T5n,
+              e.G5n,
+              e.avs,
             ))
         : Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
@@ -425,24 +433,24 @@ class TsInteractionUtils {
   }
 }
 (exports.TsInteractionUtils = TsInteractionUtils),
-  ((_a = TsInteractionUtils).k1i = void 0),
-  (TsInteractionUtils.q1i = !1),
-  (TsInteractionUtils.G1i = !1),
+  ((_a = TsInteractionUtils).k_i = void 0),
+  (TsInteractionUtils.q_i = !1),
+  (TsInteractionUtils.G_i = !1),
   (TsInteractionUtils.WaitOpenViewName = void 0),
   (TsInteractionUtils.IsWaitForInteractOpenViewDone = !1),
-  (TsInteractionUtils.O1i = (e, t) => {
-    e === TsInteractionUtils.WaitOpenViewName && TsInteractionUtils.N1i();
+  (TsInteractionUtils.O_i = (e, t) => {
+    e === TsInteractionUtils.WaitOpenViewName && TsInteractionUtils.N_i();
   }),
   (TsInteractionUtils.$Ge = (e) => {
-    e === TsInteractionUtils.k1i &&
-      ((_a.k1i = void 0),
+    e === TsInteractionUtils.k_i &&
+      ((_a.k_i = void 0),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.CloseView,
         _a.$Ge,
       ));
   }),
   (TsInteractionUtils.hMe = () => {
-    _a.WaitOpenViewName && _a.O1i(_a.WaitOpenViewName, void 0),
-      _a.k1i && _a.$Ge(_a.k1i);
+    _a.WaitOpenViewName && _a.O_i(_a.WaitOpenViewName, void 0),
+      _a.k_i && _a.$Ge(_a.k_i);
   });
 //# sourceMappingURL=TsInteractionUtils.js.map

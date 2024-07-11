@@ -3,21 +3,21 @@ var CharacterAbilityComponent_1,
   __decorate =
     (this && this.__decorate) ||
     function (t, e, i, r) {
-      var o,
-        n = arguments.length,
-        a =
-          n < 3
+      var a,
+        o = arguments.length,
+        n =
+          o < 3
             ? e
             : null === r
               ? (r = Object.getOwnPropertyDescriptor(e, i))
               : r;
       if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
-        a = Reflect.decorate(t, e, i, r);
+        n = Reflect.decorate(t, e, i, r);
       else
         for (var s = t.length - 1; 0 <= s; s--)
-          (o = t[s]) &&
-            (a = (n < 3 ? o(a) : 3 < n ? o(e, i, a) : o(e, i)) || a);
-      return 3 < n && a && Object.defineProperty(e, i, a), a;
+          (a = t[s]) &&
+            (n = (o < 3 ? a(n) : 3 < o ? a(e, i, n) : a(e, i)) || n);
+      return 3 < o && n && Object.defineProperty(e, i, n), n;
     };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharacterAbilityComponent =
@@ -29,30 +29,64 @@ const UE = require("ue"),
   Log_1 = require("../../../../../../Core/Common/Log"),
   Protocol_1 = require("../../../../../../Core/Define/Net/Protocol"),
   EntityComponent_1 = require("../../../../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../../../../Core/Entity/RegisterComponent"),
   GameplayTagUtils_1 = require("../../../../../../Core/Utils/GameplayTagUtils"),
   MathUtils_1 = require("../../../../../../Core/Utils/MathUtils"),
-  CharacterNameDefines_1 = require("../../CharacterNameDefines"),
-  RegisterComponent_1 = require("../../../../../../Core/Entity/RegisterComponent");
+  CharacterNameDefines_1 = require("../../CharacterNameDefines");
 (exports.DEFAULT_SOURCE_SKILL_LEVEL = 1),
   (exports.DEFAULT_SOURCE_SKILL_LEVEL_NOT_FOUND = -1),
-  (exports.EBuffApplyType = Protocol_1.Aki.Protocol.CGs);
+  (exports.EBuffApplyType = Protocol_1.Aki.Protocol.oFs);
 let CharacterAbilityComponent =
   (CharacterAbilityComponent_1 = class CharacterAbilityComponent extends (
     EntityComponent_1.EntityComponent
   ) {
     constructor() {
       super(...arguments),
-        (this.nXt = void 0),
-        (this.tqr = void 0),
+        (this.n$t = void 0),
+        (this.Pbr = void 0),
         (this.Xte = void 0),
-        (this.iqr = "");
+        (this.xbr = ""),
+        (this.gVs = void 0),
+        (this.GameplayEventCallbacks = new Map()),
+        (this.pVs = (t) => {
+          var e = t?.TagId;
+          if (void 0 !== e) {
+            t = this.GameplayEventCallbacks.get(e);
+            if (t) {
+              var i = GameplayTagUtils_1.GameplayTagUtils.GetNameByTagId(e);
+              for (const r of [...t])
+                try {
+                  r(e);
+                } catch (t) {
+                  t instanceof Error
+                    ? Log_1.Log.CheckError() &&
+                      Log_1.Log.ErrorWithStack(
+                        "Event",
+                        29,
+                        "gameplayEvent事件回调执行异常",
+                        t,
+                        ["gameplayEvent", i],
+                        ["error", t.message],
+                      )
+                    : Log_1.Log.CheckError() &&
+                      Log_1.Log.Error(
+                        "Event",
+                        29,
+                        "gameplayEvent事件回调执行异常",
+                        ["gameplayEvent", i],
+                        ["error", t],
+                      );
+                }
+            }
+          }
+        });
     }
     OnStart() {
       if (
-        ((this.nXt = this.Entity.GetComponent(3)),
-        this.nXt.Actor.TryAddTsAbilitySystemComponent(),
-        (this.tqr = this.nXt.Actor.AbilitySystemComponent),
-        !this.tqr.IsValid())
+        ((this.n$t = this.Entity.GetComponent(3)),
+        this.n$t.Actor.TryAddTsAbilitySystemComponent(),
+        (this.Pbr = this.n$t.Actor.AbilitySystemComponent),
+        !this.Pbr.IsValid())
       )
         return (
           Log_1.Log.CheckError() &&
@@ -63,69 +97,111 @@ let CharacterAbilityComponent =
             ),
           !1
         );
-      this.tqr.SetComponentTickEnabled(!1);
+      this.Pbr.SetComponentTickEnabled(!1);
       var t = CharacterNameDefines_1.CharacterNameDefines.ABP_BASE;
       return (
-        this.nXt.Actor.Mesh.GetLinkedAnimGraphInstanceByTag(t) && this.oqr(t),
+        this.n$t.Actor.Mesh.GetLinkedAnimGraphInstanceByTag(t) && this.wbr(t),
         this.InitClass(),
-        (this.Xte = this.Entity.CheckGetComponent(185)),
+        (this.Xte = this.Entity.CheckGetComponent(188)),
+        (this.gVs = this.CreateGameplayEventTask(this.pVs)),
         !0
       );
     }
+    OnEnd() {
+      return this.gVs && this.gVs.EndTask(), !0;
+    }
     OnClear() {
       return (
-        this.tqr &&
-          (this.tqr.K2_DestroyComponent(this.tqr), (this.tqr = void 0)),
+        this.Pbr &&
+          (this.Pbr.K2_DestroyComponent(this.Pbr), (this.Pbr = void 0)),
         !0
       );
     }
     OnTick(t) {
-      this.tqr.KuroTickComponentOutside(
+      this.Pbr.KuroTickComponentOutside(
         t *
           MathUtils_1.MathUtils.MillisecondToSecond *
-          this.nXt.Actor.CustomTimeDilation,
+          this.n$t.Actor.CustomTimeDilation,
       );
     }
-    oqr(t) {
-      this.tqr.BP_InitAbilityActorInfo(t);
+    wbr(t) {
+      this.Pbr.BP_InitAbilityActorInfo(t);
     }
     AddPerformanceTag(t) {
-      (this.iqr = t),
+      (this.xbr = t),
         this.Xte.AddTag(GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(t));
     }
     ClearLastPerformanceTag() {
-      this.iqr &&
+      this.xbr &&
         this.Xte.RemoveTag(
-          GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(this.iqr),
+          GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(this.xbr),
         );
     }
     SendGameplayEventToActor(t, e = void 0) {
       UE.AbilitySystemBlueprintLibrary.SendGameplayEventToActor(
-        this.nXt.Actor,
+        this.n$t.Actor,
         t,
-        e || CharacterAbilityComponent_1.rqr,
+        e || CharacterAbilityComponent_1.Bbr,
       );
     }
     TryActivateAbilityByClass(t, e = !0) {
-      return this.tqr.TryActivateAbilityByClass(t, e);
+      return this.Pbr.TryActivateAbilityByClass(t, e);
     }
     GetCurrentWaitAndPlayedMontageCorrespondingGa() {
-      return this.tqr.LocalAnimMontageInfo.AnimatingAbility;
+      return this.Pbr.LocalAnimMontageInfo.AnimatingAbility;
     }
     GetAbility(t) {
-      return this.tqr.GetAbility(t);
+      return this.Pbr.GetAbility(t);
     }
     ClearAbility(t) {
-      this.tqr.RemoveAbility(t);
+      this.Pbr.RemoveAbility(t);
     }
     InitClass() {
-      CharacterAbilityComponent_1.nqr ||
-        ((CharacterAbilityComponent_1.rqr = new UE.GameplayEventData()),
-        (CharacterAbilityComponent_1.nqr = !0));
+      CharacterAbilityComponent_1.bbr ||
+        ((CharacterAbilityComponent_1.Bbr = new UE.GameplayEventData()),
+        (CharacterAbilityComponent_1.bbr = !0));
+    }
+    CreateGameplayEventTask(t) {
+      var e = UE.AsyncTaskWaitGameplayEvent.ListenForGameplayEvent(this.Pbr);
+      return e.EventReceived.Add(t), e;
+    }
+    AddGameplayEventListener(e, i) {
+      if (void 0 !== e && i) {
+        let t = this.GameplayEventCallbacks.get(e);
+        t || this.GameplayEventCallbacks.set(e, (t = new Set())),
+          t.has(i)
+            ? Log_1.Log.CheckWarn() &&
+              Log_1.Log.Warn(
+                "Character",
+                29,
+                "重复添加回调函数",
+                [
+                  "gameplayEvent",
+                  GameplayTagUtils_1.GameplayTagUtils.GetNameByTagId(e),
+                ],
+                ["callbackName", i.name],
+              )
+            : t.add(i);
+      } else
+        Log_1.Log.CheckError() &&
+          Log_1.Log.Error(
+            "Character",
+            29,
+            "回调函数添加失败",
+            [
+              "gameplayEvent",
+              GameplayTagUtils_1.GameplayTagUtils.GetNameByTagId(e),
+            ],
+            ["callbackName", i?.name],
+          );
+    }
+    RemoveGameplayEventListener(t, e) {
+      t = this.GameplayEventCallbacks.get(t);
+      t && t.delete(e);
     }
   });
-(CharacterAbilityComponent.rqr = void 0),
-  (CharacterAbilityComponent.nqr = !1),
+(CharacterAbilityComponent.Bbr = void 0),
+  (CharacterAbilityComponent.bbr = !1),
   (CharacterAbilityComponent = CharacterAbilityComponent_1 =
     __decorate(
       [(0, RegisterComponent_1.RegisterComponent)(17)],

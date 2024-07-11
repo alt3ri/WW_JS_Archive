@@ -17,12 +17,12 @@ const UE = require("ue"),
 class RoleGenderChangeView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.EPe = void 0),
-      (this.elo = () => {
+      (this.SPe = void 0),
+      (this.Ylo = () => {
         ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
           "GenderTransferSuccess",
         ),
-          this.Plo(!1),
+          this.D1o(!1),
           this.CloseMe();
       }),
       (this.OnClickCancel = () => {
@@ -31,7 +31,7 @@ class RoleGenderChangeView extends UiViewBase_1.UiViewBase {
       (this.OnClickConfirm = () => {
         var e;
         Global_1.Global.BaseCharacter?.CharacterActorComponent.Entity.GetComponent(
-          185,
+          188,
         )?.HasTag(1996802261)
           ? (ScrollingTipsController_1.ScrollingTipsController.ShowTipsByText(
               ConfigManager_1.ConfigManager.TextConfig.GetTextById(
@@ -39,7 +39,7 @@ class RoleGenderChangeView extends UiViewBase_1.UiViewBase {
               ),
             ),
             this.CloseMe())
-          : (this.Plo(!0),
+          : (this.D1o(!0),
             (e =
               ConfigManager_1.ConfigManager.RoleConfig.GetRoleGenderSwitchDelayTime()),
             LguiUtil_1.LguiUtil.SetLocalText(
@@ -48,7 +48,7 @@ class RoleGenderChangeView extends UiViewBase_1.UiViewBase {
             ),
             this.PlayArrowSequence(),
             TimerSystem_1.TimerSystem.Delay(() => {
-              this.xlo();
+              this.R1o();
             }, e));
       });
   }
@@ -70,7 +70,7 @@ class RoleGenderChangeView extends UiViewBase_1.UiViewBase {
   OnStart() {
     var e = ModelManager_1.ModelManager.RoleModel.GetCurSelectMainRoleId();
     if (e) {
-      (this.EPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem)),
+      (this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem)),
         this.StopArrowSequence();
       var n = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(e),
         t = ModelManager_1.ModelManager.WorldLevelModel.Sex,
@@ -103,23 +103,23 @@ class RoleGenderChangeView extends UiViewBase_1.UiViewBase {
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnRoleChangeEnd,
-      this.elo,
+      this.Ylo,
     );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnRoleChangeEnd,
-      this.elo,
+      this.Ylo,
     );
   }
   OnBeforeDestroy() {}
   PlayArrowSequence() {
-    this.EPe && this.EPe.PlayLevelSequenceByName("Arrow");
+    this.SPe && this.SPe.PlayLevelSequenceByName("Arrow");
   }
   StopArrowSequence() {
-    this.EPe && this.EPe.StopSequenceByKey("Arrow");
+    this.SPe && this.SPe.StopSequenceByKey("Arrow");
   }
-  xlo() {
+  R1o() {
     var e =
       ModelManager_1.ModelManager.WorldLevelModel.Sex ===
       LoginDefine_1.ELoginSex.Boy
@@ -128,7 +128,7 @@ class RoleGenderChangeView extends UiViewBase_1.UiViewBase {
     MainRoleController_1.MainRoleController.SendRoleSexChangeRequest(e),
       this.StopArrowSequence();
   }
-  Plo(e) {
+  D1o(e) {
     this.GetButton(2).SetSelfInteractive(!e),
       this.GetButton(3).SetSelfInteractive(!e),
       this.ChildPopView?.SetCloseBtnInteractive(!e);

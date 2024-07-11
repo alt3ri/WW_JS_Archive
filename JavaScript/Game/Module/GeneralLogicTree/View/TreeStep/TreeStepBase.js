@@ -14,7 +14,7 @@ class TreeStepBase extends UiComponentsAction_1.UiComponentsAction {
       (this.DistanceTextComp = void 0),
       (this.TreeIncId = BigInt(0)),
       (this.Config = void 0),
-      (this.bct = () => {
+      (this.Qmt = () => {
         var t =
           GeneralLogicTreeController_1.GeneralLogicTreeController.GetTitleText(
             this.TreeIncId,
@@ -76,7 +76,7 @@ class TreeStepBase extends UiComponentsAction_1.UiComponentsAction {
   }
   OnStart() {
     (this.DescribeTextComp = this.GetText(0)),
-      this.DescribeTextComp.OnSelfLanguageChange.Bind(this.bct),
+      this.DescribeTextComp.OnSelfLanguageChange.Bind(this.Qmt),
       (this.DistanceTextComp = this.GetText(1)),
       this.DistanceTextComp.SetUIActive(!0);
   }
@@ -92,7 +92,7 @@ class TreeStepBase extends UiComponentsAction_1.UiComponentsAction {
     );
   }
   UpdateStepInfo() {
-    var t = this.bct();
+    var t = this.Qmt();
     return this.UpdateDistanceText(), t;
   }
   OnStepDescribeUpdate(t) {}

@@ -24,31 +24,31 @@ const UE = require("ue"),
 class RoleVisionTabView extends UiTabViewBase_1.UiTabViewBase {
   constructor() {
     super(...arguments),
-      (this.L8i = void 0),
-      (this.udo = !1),
-      (this.cdo = !1),
-      (this.mdo = !1),
-      (this.P8i = -1),
-      (this.x8i = -1),
-      (this.ddo = 0),
+      (this.T9i = void 0),
+      (this.hCo = !1),
+      (this.lCo = !1),
+      (this._Co = !1),
+      (this.A9i = -1),
+      (this.P9i = -1),
+      (this.uCo = 0),
       (this.Uqe = 0),
-      (this.F8i = INVALIDINDEX),
-      (this.Cdo = void 0),
-      (this.plo = void 0),
-      (this.w8i = new Array()),
-      (this.$8i = new Array()),
-      (this.q8i = 0),
-      (this.gdo = !1),
-      (this.fdo = () => {
-        this.pdo = !1;
+      (this.k9i = INVALIDINDEX),
+      (this.cCo = void 0),
+      (this.d1o = void 0),
+      (this.x9i = new Array()),
+      (this.X9i = new Array()),
+      (this.b9i = 0),
+      (this.mCo = !1),
+      (this.dCo = () => {
+        this.CCo = !1;
       }),
-      (this.vdo = () => {
-        this.$8t();
+      (this.gCo = () => {
+        this.$9t();
       }),
-      (this.pdo = !1),
+      (this.CCo = !1),
       (this.OnChangeRole = (i) => {
         this.Og(),
-          (this.pdo = !0),
+          (this.CCo = !0),
           this.PlayMontageStart(!0),
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.RefreshVisionEquipRedPoint,
@@ -56,33 +56,33 @@ class RoleVisionTabView extends UiTabViewBase_1.UiTabViewBase {
           );
       }),
       (this.RefreshPhantom = () => {
-        var t = this.plo?.GetCurSelectRoleData(),
+        var t = this.d1o?.GetCurSelectRoleData(),
           e =
             ModelManager_1.ModelManager.PhantomBattleModel.GetCurrentViewShowPhantomList(
               t,
             ),
-          s = this.w8i.length;
+          s = this.x9i.length;
         for (let i = 0; i < s; i++) {
           var h = e.length > i ? e[i] : void 0;
-          this.w8i[i].UpdateItem(h), this.$8i[i].Refresh(h, t.IsTrialRole());
+          this.x9i[i].UpdateItem(h), this.X9i[i].Refresh(h, t.IsTrialRole());
         }
-        this.Tqt();
+        this.RGt();
       }),
       (this.OnEquipError = () => {
-        this.T9i();
+        this.I7i();
       }),
       (this.OnClickFailVision = (i) => {
-        this.Mdo() && this.T9i();
+        this.fCo() && this.I7i();
       }),
       (this.OnClickVision = (i) => {
         var t;
-        this.Mdo() &&
-          (this.T9i(),
-          (t = this.plo.GetCurSelectRoleData()).IsTrialRole()
+        this.fCo() &&
+          (this.I7i(),
+          (t = this.d1o.GetCurSelectRoleData()).IsTrialRole()
             ? ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
                 "RolePhantomTrialTips",
               )
-            : ((this.q8i = i),
+            : ((this.b9i = i),
               (ModelManager_1.ModelManager.PhantomBattleModel.CurrentEquipmentSelectIndex =
                 i),
               (i =
@@ -92,9 +92,9 @@ class RoleVisionTabView extends UiTabViewBase_1.UiTabViewBase {
                 )),
               (ModelManager_1.ModelManager.PhantomBattleModel.CurrentSelectUniqueId =
                 i),
-              this.Sdo(!0),
-              this.c7i(),
-              this.T9i(),
+              this.pCo(!0),
+              this.uHi(),
+              this.I7i(),
               AudioSystem_1.AudioSystem.PostEvent("ui_vision_item_click"),
               UiManager_1.UiManager.OpenView(
                 "VisionEquipmentView",
@@ -103,26 +103,26 @@ class RoleVisionTabView extends UiTabViewBase_1.UiTabViewBase {
               this.UiViewSequence.PlaySequencePurely("HideView")));
       }),
       (this.OnPointerDownCallBack = (i) => {
-        if (this.Mdo()) {
+        if (this.fCo()) {
           this.GetItem(7).SetRaycastTarget(!0);
-          var t = this.$8i.length;
-          for (let i = 0; i < t; i++) this.$8i[i].StartClickCheckTimer();
-          this.F8i = INVALIDINDEX;
+          var t = this.X9i.length;
+          for (let i = 0; i < t; i++) this.X9i[i].StartClickCheckTimer();
+          this.k9i = INVALIDINDEX;
         }
       }),
       (this.OnBeginDrag = (i) => {
-        this.F8i = i;
-        var t = this.plo.GetCurSelectRoleData().IsTrialRole();
+        this.k9i = i;
+        var t = this.d1o.GetCurSelectRoleData().IsTrialRole();
         if (!t) {
-          this.$8i.forEach((i) => {
+          this.X9i.forEach((i) => {
             i.StartDragState();
           });
-          var e = this.$8i.length;
+          var e = this.X9i.length;
           for (let i = 0; i < e; i++)
             ModelManager_1.ModelManager.PhantomBattleModel.CheckIfCurrentDragIndex(
-              this.$8i[i].GetCurrentIndex(),
-            ) && this.$8i[i].SetDragItemHierarchyMax();
-          this.$8i[i].SetItemToPointerPosition(),
+              this.X9i[i].GetCurrentIndex(),
+            ) && this.X9i[i].SetDragItemHierarchyMax();
+          this.X9i[i].SetItemToPointerPosition(),
             AudioSystem_1.AudioSystem.PostEvent("ui_vision_item_drag");
         }
       }),
@@ -134,15 +134,15 @@ class RoleVisionTabView extends UiTabViewBase_1.UiTabViewBase {
               i,
               t,
             )),
-            (t = this.plo.GetCurSelectRoleData()),
+            (t = this.d1o.GetCurSelectRoleData()),
             (s =
               ModelManager_1.ModelManager.PhantomBattleModel.GetBattleDataById(
                 t.GetRoleId(),
               ).GetIncrIdList()),
-            this.$9i(e, !0),
-            this.$9i(i, !0),
-            this.Y9i(e, !0),
-            this.Y9i(i, !0),
+            this.X7i(e, !0),
+            this.X7i(i, !0),
+            this.$7i(e, !0),
+            this.$7i(i, !0),
             ControllerHolder_1.ControllerHolder.PhantomBattleController.SendPhantomPutOnRequest(
               s[e],
               t.GetRoleId(),
@@ -150,32 +150,32 @@ class RoleVisionTabView extends UiTabViewBase_1.UiTabViewBase {
               e,
               !0,
             ))
-          : (this.T9i(),
+          : (this.I7i(),
             AudioSystem_1.AudioSystem.PostEvent("ui_vision_item_drop"));
       }),
-      (this.J9i = (i, t, e) => {
+      (this.Y7i = (i, t, e) => {
         e
           ? (UiLayer_1.UiLayer.SetShowMaskLayer("OnEquipVision", !0),
-            (this.udo = !1),
+            (this.hCo = !1),
             (this.Uqe = 0),
-            (e = this.$8i[t].GetAnimationTargetPos()),
-            this.$8i[i].SetDragComponentToTargetPositionParam(e),
-            (e = this.$8i[i].GetAnimationTargetPos()),
-            this.$8i[t].SetDragComponentToTargetPositionParam(e),
-            (this.P8i = i),
-            (this.x8i = t),
-            this.$9i(this.P8i, !0),
-            this.$9i(this.x8i, !0),
-            this.Y9i(this.P8i, !0),
-            this.Y9i(this.x8i, !0),
-            (this.udo = !0),
+            (e = this.X9i[t].GetAnimationTargetPos()),
+            this.X9i[i].SetDragComponentToTargetPositionParam(e),
+            (e = this.X9i[i].GetAnimationTargetPos()),
+            this.X9i[t].SetDragComponentToTargetPositionParam(e),
+            (this.A9i = i),
+            (this.P9i = t),
+            this.X7i(this.A9i, !0),
+            this.X7i(this.P9i, !0),
+            this.$7i(this.A9i, !0),
+            this.$7i(this.P9i, !0),
+            (this.hCo = !0),
             AudioSystem_1.AudioSystem.PostEvent("ui_vision_equip_on"))
           : this.RefreshPhantom();
       }),
-      (this.Sdo = (i) => {
+      (this.pCo = (i) => {
         i &&
           (UiSceneManager_1.UiSceneManager.HideRoleSystemRoleActor(),
-          (this.gdo = !0));
+          (this.mCo = !0));
       });
   }
   OnRegisterComponent() {
@@ -190,7 +190,7 @@ class RoleVisionTabView extends UiTabViewBase_1.UiTabViewBase {
       [7, UE.UIItem],
       [8, UE.UIText],
     ]),
-      (this.BtnBindInfo = [[6, this.vdo]]);
+      (this.BtnBindInfo = [[6, this.gCo]]);
   }
   AddEventListener() {
     EventSystem_1.EventSystem.Add(
@@ -199,7 +199,7 @@ class RoleVisionTabView extends UiTabViewBase_1.UiTabViewBase {
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.PhantomEquipWithSourceAndTargetPos,
-        this.J9i,
+        this.Y7i,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.PhantomPersonalSkillActive,
@@ -211,7 +211,7 @@ class RoleVisionTabView extends UiTabViewBase_1.UiTabViewBase {
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.ResetRoleFlag,
-        this.fdo,
+        this.dCo,
       );
   }
   RemoveEventListener() {
@@ -221,7 +221,7 @@ class RoleVisionTabView extends UiTabViewBase_1.UiTabViewBase {
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.PhantomEquipWithSourceAndTargetPos,
-        this.J9i,
+        this.Y7i,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.PhantomPersonalSkillActive,
@@ -233,42 +233,46 @@ class RoleVisionTabView extends UiTabViewBase_1.UiTabViewBase {
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.ResetRoleFlag,
-        this.fdo,
+        this.dCo,
       );
   }
-  async $8t() {
-    await ControllerHolder_1.ControllerHolder.PhantomBattleController.OpenPhantomBattleFetterView(),
-      this.Sdo(!0);
+  async $9t() {
+    var i = this.d1o.GetCurSelectRoleId();
+    await ControllerHolder_1.ControllerHolder.PhantomBattleController.OpenPhantomBattleFetterView(
+      0,
+      i,
+    ),
+      this.pCo(!0);
   }
   async OnBeforeStartAsync() {
-    (this.plo = this.ExtraParams),
-      void 0 === this.plo
+    (this.d1o = this.ExtraParams),
+      void 0 === this.d1o
         ? Log_1.Log.CheckError() &&
           Log_1.Log.Error("Role", 59, "RoleViewAgent为空", [
             "界面名称",
             "RoleVisionTabView",
           ])
-        : ((this.Cdo = new RoleVisionInfoPanel_1.RoleVisionInfoPanel(
+        : ((this.cCo = new RoleVisionInfoPanel_1.RoleVisionInfoPanel(
             this.GetItem(5),
           )),
-          await this.Cdo.Init(),
-          await this.Edo());
+          await this.cCo.Init(),
+          await this.vCo());
   }
   OnStart() {
     this.GetItem(7).SetUIActive(!0),
       this.GetItem(7).SetRaycastTarget(!1),
-      this.Cdo.SetActive(!0),
-      this.Cdo.SetConfirmButtonCall(() => {
-        this.OnClickVision(this.q8i);
+      this.cCo.SetActive(!0),
+      this.cCo.SetConfirmButtonCall(() => {
+        this.OnClickVision(this.b9i);
       }),
       this.GetButton(6).RootUIComp.SetUIActive(!0),
-      (this.ddo =
+      (this.uCo =
         ConfigManager_1.ConfigManager.PhantomBattleConfig.GetVisionDragCurveTime());
   }
-  async Edo() {
+  async vCo() {
     for (let i = 0; i <= 4; i++) {
-      var t = this.plo.GetCurSelectRoleId();
-      this.w8i.push(
+      var t = this.d1o.GetCurSelectRoleId();
+      this.x9i.push(
         new RoleVisionDragHeadItem_1.RoleVisionDragHeadItem(
           this.GetItem(i),
           0 + i,
@@ -277,24 +281,24 @@ class RoleVisionTabView extends UiTabViewBase_1.UiTabViewBase {
         ),
       );
     }
-    await Promise.all([...this.w8i.map(async (i) => i.Init())]),
-      this.w8i.forEach((i) => {
+    await Promise.all([...this.x9i.map(async (i) => i.Init())]),
+      this.x9i.forEach((i) => {
         var t = new VisionCommonDragItem_1.VisionCommonDragItem(
           i.GetRootItem(),
           i.GetDragComponent(),
           this.GetItem(7),
           i.GetCurrentIndex(),
         );
-        this.$8i.push(t),
+        this.X9i.push(t),
           t.SetOnDragAnimationStartFunction(i.OnDragItemDragBegin),
           t.SetOnDragAnimationEndFunction(i.OnDragItemDragEnd),
           t.SetOnOverlayCallBack(i.OnOverlay),
           t.SetOnUnOverlayCallBack(i.OnUnOverlay);
       }),
-      this.$8i.forEach((i) => {
+      this.X9i.forEach((i) => {
         i.SetOnClickCallBack(this.OnClickVision),
           i.SetOnClickFailCallBack(this.OnClickFailVision),
-          i.SetDragCheckItem(this.$8i),
+          i.SetDragCheckItem(this.X9i),
           i.SetDragSuccessCallBack(this.OnDragEndCallBack),
           i.SetPointerDownCallBack(this.OnPointerDownCallBack),
           i.SetOnBeginDragCall(this.OnBeginDrag);
@@ -305,22 +309,22 @@ class RoleVisionTabView extends UiTabViewBase_1.UiTabViewBase {
   }
   OnBeforeShow() {
     ModelManager_1.ModelManager.PhantomBattleModel.ClearCurrentDragIndex(),
-      this.pdo
+      this.CCo
         ? (UiSceneManager_1.UiSceneManager.ShowRoleSystemRoleActor(),
           this.PlayMontageStart(!0),
-          (this.pdo = !1))
-        : this.gdo
+          (this.CCo = !1))
+        : this.mCo
           ? (UiSceneManager_1.UiSceneManager.ShowRoleSystemRoleActor(),
             this.PlayMontageStart(!0),
-            (this.gdo = !1))
+            (this.mCo = !1))
           : this.PlayMontageStart(),
-      (this.q8i = 0),
+      (this.b9i = 0),
       this.Og(),
-      this.ydo(),
-      this.c7i(),
-      (this.F8i = INVALIDINDEX),
-      this.T9i();
-    var i = this.plo.GetCurSelectRoleId();
+      this.MCo(),
+      this.uHi(),
+      (this.k9i = INVALIDINDEX),
+      this.I7i();
+    var i = this.d1o.GetCurSelectRoleId();
     EventSystem_1.EventSystem.Emit(
       EventDefine_1.EEventName.RefreshVisionEquipRedPoint,
       i,
@@ -328,17 +332,17 @@ class RoleVisionTabView extends UiTabViewBase_1.UiTabViewBase {
   }
   Og() {
     this.RefreshPhantom();
-    var i = this.plo.GetCurSelectRoleData(),
+    var i = this.d1o.GetCurSelectRoleData(),
       t = i.IsTrialRole();
     ControllerHolder_1.ControllerHolder.PhantomBattleController.ChangeRoleEvent(
       i.GetDataId(),
     ),
-      this.Cdo.RefreshView(this.plo),
+      this.cCo.RefreshView(this.d1o),
       this.GetButton(6).RootUIComp.SetUIActive(!t),
-      this.Tqt();
+      this.RGt();
   }
-  Tqt() {
-    var i = this.plo.GetCurSelectRoleData();
+  RGt() {
+    var i = this.d1o.GetCurSelectRoleData();
     let t = 0,
       e = 0;
     (e = i?.IsTrialRole()
@@ -351,7 +355,7 @@ class RoleVisionTabView extends UiTabViewBase_1.UiTabViewBase {
           ModelManager_1.ModelManager.PhantomBattleModel.GetRoleCurrentPhantomCost(
             i.GetRoleId(),
           )),
-        this.d7i())),
+        this.mHi())),
       this.GetText(8).SetText(
         StringUtils_1.StringUtils.Format("{0}/{1}", t.toString(), e.toString()),
       );
@@ -361,124 +365,124 @@ class RoleVisionTabView extends UiTabViewBase_1.UiTabViewBase {
       i,
     );
   }
-  d7i() {
+  mHi() {
     return ModelManager_1.ModelManager.PhantomBattleModel.GetMaxCost();
   }
   OnBeforeHide() {
     UiLayer_1.UiLayer.SetShowMaskLayer("playBackToStartPositionAnimation", !1),
       UiLayer_1.UiLayer.SetShowMaskLayer("OnEquipVision", !1);
   }
-  ydo() {
-    var t = this.w8i.length;
-    for (let i = 0; i < t; i++) this.w8i[i].SetToggleState(2);
+  MCo() {
+    var t = this.x9i.length;
+    for (let i = 0; i < t; i++) this.x9i[i].SetToggleState(2);
   }
-  c7i() {
-    var t = this.w8i.length;
-    for (let i = 0; i < t; i++) this.w8i[i].SetToggleState(0);
+  uHi() {
+    var t = this.x9i.length;
+    for (let i = 0; i < t; i++) this.x9i[i].SetToggleState(0);
   }
-  $9i(i, t) {
-    0 <= i && this.$8i[i].SetMovingState(t);
+  X7i(i, t) {
+    0 <= i && this.X9i[i].SetMovingState(t);
   }
-  Y9i(i, t) {
-    0 <= i && this.w8i[i].SetAnimationState(t);
+  $7i(i, t) {
+    0 <= i && this.x9i[i].SetAnimationState(t);
   }
   OnTickUiTabViewBase(i) {
-    this.Ido(i), this.Tdo(i);
+    this.ECo(i), this.SCo(i);
   }
-  Tdo(t) {
-    if (this.udo) {
+  SCo(t) {
+    if (this.hCo) {
       this.Uqe += t;
-      let i = this.Uqe / this.ddo;
+      let i = this.Uqe / this.uCo;
       1 <= i && (i = 1),
-        this.$8i[this.P8i].TickDoCeaseAnimation(i),
-        this.$8i[this.x8i].TickDoCeaseAnimation(i),
-        1 <= i && (this.t7i(), (this.udo = !1));
+        this.X9i[this.A9i].TickDoCeaseAnimation(i),
+        this.X9i[this.P9i].TickDoCeaseAnimation(i),
+        1 <= i && (this.eHi(), (this.hCo = !1));
     }
   }
-  Ido(t) {
-    if (this.cdo) {
+  ECo(t) {
+    if (this.lCo) {
       this.Uqe += t;
-      let i = this.Uqe / this.ddo;
+      let i = this.Uqe / this.uCo;
       1 <= i && (i = 1),
-        this.$8i[this.F8i].TickDoCeaseAnimation(i),
-        1 <= i && (this.W9i(this.F8i), (this.cdo = !1));
+        this.X9i[this.k9i].TickDoCeaseAnimation(i),
+        1 <= i && (this.j7i(this.k9i), (this.lCo = !1));
     }
   }
-  Mdo() {
-    return !(this.udo || this.cdo || this.mdo);
+  fCo() {
+    return !(this.hCo || this.lCo || this._Co);
   }
-  async t7i() {
-    (this.mdo = !0),
-      this.$9i(this.P8i, !1),
-      this.$9i(this.x8i, !1),
-      await this.I7i(this.P8i),
-      this.Y9i(this.P8i, !1),
-      this.Y9i(this.x8i, !1),
-      await this.T9i(!1),
+  async eHi() {
+    (this._Co = !0),
+      this.X7i(this.A9i, !1),
+      this.X7i(this.P9i, !1),
+      await this.yHi(this.A9i),
+      this.$7i(this.A9i, !1),
+      this.$7i(this.P9i, !1),
+      await this.I7i(!1),
       this.RefreshPhantom(),
-      (this.mdo = !1),
+      (this._Co = !1),
       UiLayer_1.UiLayer.SetShowMaskLayer("OnEquipVision", !1),
-      (this.F8i = INVALIDINDEX);
+      (this.k9i = INVALIDINDEX);
   }
-  async W9i(i) {
-    (this.x8i = i),
-      (this.mdo = !0),
-      this.$9i(this.P8i, !1),
-      this.$9i(this.x8i, !1),
-      await this.I7i(i),
-      this.Y9i(this.P8i, !1),
-      this.Y9i(this.x8i, !1),
-      this.T9i(!1),
-      (this.mdo = !1),
-      this.L8i.SetResult(!0),
-      (this.F8i = INVALIDINDEX);
+  async j7i(i) {
+    (this.P9i = i),
+      (this._Co = !0),
+      this.X7i(this.A9i, !1),
+      this.X7i(this.P9i, !1),
+      await this.yHi(i),
+      this.$7i(this.A9i, !1),
+      this.$7i(this.P9i, !1),
+      this.I7i(!1),
+      (this._Co = !1),
+      this.T9i.SetResult(!0),
+      (this.k9i = INVALIDINDEX);
   }
-  async I7i(i) {
-    this.$8i[i].SetToTargetParentAndSetStretch(
-      this.w8i[this.x8i].GetRootItem(),
+  async yHi(i) {
+    this.X9i[i].SetToTargetParentAndSetStretch(
+      this.x9i[this.P9i].GetRootItem(),
     ),
-      this.$8i[this.x8i].SetToTargetParentAndSetStretch(
-        this.w8i[i].GetRootItem(),
+      this.X9i[this.P9i].SetToTargetParentAndSetStretch(
+        this.x9i[i].GetRootItem(),
       ),
-      this.$8i[i].DoCeaseSequence(),
-      this.x8i !== i &&
-        this.$8i[this.x8i].GetCurrentData() &&
-        this.$8i[this.x8i].DoCeaseSequence(),
-      await this.$8i[i].GetCeaseAnimationPromise()?.Promise;
+      this.X9i[i].DoCeaseSequence(),
+      this.P9i !== i &&
+        this.X9i[this.P9i].GetCurrentData() &&
+        this.X9i[this.P9i].DoCeaseSequence(),
+      await this.X9i[i].GetCeaseAnimationPromise()?.Promise;
   }
-  async T9i(i = !0) {
-    var t = this.plo.GetCurSelectRoleData().IsTrialRole();
+  async I7i(i = !0) {
+    var t = this.d1o.GetCurSelectRoleData().IsTrialRole();
     i &&
       !t &&
-      this.F8i !== INVALIDINDEX &&
+      this.k9i !== INVALIDINDEX &&
       (UiLayer_1.UiLayer.SetShowMaskLayer(
         "playBackToStartPositionAnimation",
         !0,
       ),
-      (this.cdo = !0),
+      (this.lCo = !0),
       (this.Uqe = 0),
-      (this.L8i = new CustomPromise_1.CustomPromise()),
-      (i = this.$8i[this.F8i].GetAnimationTargetPos()),
-      this.$8i[this.F8i].SetDragComponentToTargetPositionParam(i),
-      this.$9i(this.F8i, !0),
-      await this.L8i.Promise,
+      (this.T9i = new CustomPromise_1.CustomPromise()),
+      (i = this.X9i[this.k9i].GetAnimationTargetPos()),
+      this.X9i[this.k9i].SetDragComponentToTargetPositionParam(i),
+      this.X7i(this.k9i, !0),
+      await this.T9i.Promise,
       UiLayer_1.UiLayer.SetShowMaskLayer(
         "playBackToStartPositionAnimation",
         !1,
       )),
       this.GetItem(7).SetRaycastTarget(!1),
-      this.$8i.forEach((i) => {
+      this.X9i.forEach((i) => {
         i.ResetPosition();
       }),
-      this.w8i.forEach((i) => {
+      this.x9i.forEach((i) => {
         i.ResetPosition();
       }),
-      (this.P8i = -1),
-      (this.x8i = -1);
+      (this.A9i = -1),
+      (this.P9i = -1);
   }
-  Ldo(i) {
-    if (this.Mdo() && 0 <= i) {
-      i = this.w8i[i]?.GetDragComponent()?.RootUIComp;
+  yCo(i) {
+    if (this.fCo() && 0 <= i) {
+      i = this.x9i[i]?.GetDragComponent()?.RootUIComp;
       if (i) return [i, i];
     }
   }
@@ -486,20 +490,20 @@ class RoleVisionTabView extends UiTabViewBase_1.UiTabViewBase {
     if (1 === i.length) {
       if ("Equipped" === i[0])
         return (
-          (t = this.plo.GetCurSelectRoleData()),
+          (t = this.d1o.GetCurSelectRoleData()),
           (t =
             ModelManager_1.ModelManager.PhantomBattleModel.GetCurrentViewShowPhantomList(
               t,
             ).findIndex((i) => i)),
-          this.Ldo(t)
+          this.yCo(t)
         );
-      if ("First" === i[0]) return this.Ldo(0);
-      var t = this.Cdo?.GetTxtItemByIndex(Number(i[0]));
+      if ("First" === i[0]) return this.yCo(0);
+      var t = this.cCo?.GetTxtItemByIndex(Number(i[0]));
       if (t) return [t, t];
     }
   }
   OnBeforeDestroy() {
-    this.udo = !1;
+    this.hCo = !1;
   }
 }
 exports.RoleVisionTabView = RoleVisionTabView;

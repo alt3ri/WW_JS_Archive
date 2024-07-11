@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TrackedMark = void 0);
 const puerts_1 = require("puerts"),
   UE = require("ue"),
+  Info_1 = require("../../../../Core/Common/Info"),
   Log_1 = require("../../../../Core/Common/Log"),
   CommonDefine_1 = require("../../../../Core/Define/CommonDefine"),
   CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById"),
@@ -23,7 +24,6 @@ const puerts_1 = require("puerts"),
   GeneralLogicTreeUtil_1 = require("../../GeneralLogicTree/GeneralLogicTreeUtil"),
   MapDefine_1 = require("../../Map/MapDefine"),
   MapUtil_1 = require("../../Map/MapUtil"),
-  PlatformController_1 = require("../../Platform/PlatformController"),
   LguiUtil_1 = require("../../Util/LguiUtil"),
   BattleUiControl_1 = require("../BattleUiControl"),
   CENTER_Y = 62.5,
@@ -47,156 +47,157 @@ class TrackedMark extends UiPanelBase_1.UiPanelBase {
   constructor(t) {
     super(),
       (this.TrackTarget = void 0),
-      (this.ndt = !1),
-      (this.sdt = !1),
-      (this.vnt = ""),
-      (this.uXe = 0),
-      (this.cXe = 0),
-      (this._Xe = (0, puerts_1.$ref)(void 0)),
-      (this.pXe = Vector2D_1.Vector2D.Create(1, -1)),
-      (this._ct = 0),
-      (this.adt = 0),
-      (this.hdt = 0),
-      (this.ldt = 0),
-      (this._dt = void 0),
-      (this.udt = !1),
-      (this.mXe = void 0),
-      (this.p$e = void 0),
-      (this.cdt = void 0),
-      (this.mdt = !1),
-      (this.cie = void 0),
-      (this.ddt = 0),
-      (this.Cdt = -1),
+      (this.IsSubTrack = !1),
+      (this.pCt = !1),
+      (this.xst = ""),
+      (this.y$e = 0),
+      (this.I$e = 0),
+      (this.ScreenPositionRef = (0, puerts_1.$ref)(void 0)),
+      (this.PointTransport = Vector2D_1.Vector2D.Create(1, -1)),
+      (this.MarkHideDis = 0),
+      (this.vCt = 0),
+      (this.MCt = 0),
+      (this.ECt = 0),
+      (this.SCt = void 0),
+      (this.IsInTrackRange = !1),
+      (this.TempTrackPosition = void 0),
+      (this.ScreenPosition = void 0),
+      (this.LastScreenPosition = void 0),
+      (this.InRange = !1),
+      (this.TempRotator = void 0),
+      (this.LCt = 0),
+      (this.DCt = -1),
       (this.ShouldShowTrackMark = !0),
-      (this.gdt = void 0),
-      (this.fdt = 0),
-      (this.pdt = !1),
-      (this.vdt = !1),
-      (this.Mdt = void 0),
-      (this.Sdt = void 0),
-      (this.Edt = void 0),
-      (this.ydt = void 0),
-      (this.Idt = !1),
-      (this.Tdt = -0),
-      (this.Ldt = -0),
-      (this.Ddt = -0),
-      (this.Rdt = -0),
-      (this.Udt = !1),
-      (this.Adt = !1),
-      (this.Pdt = !1),
-      (this.xdt = !1),
-      (this.wdt = 0),
-      (this.Bdt = 0),
-      (this.bdt = 0),
-      (this.qdt = 0),
-      (this.jat = () => {
+      (this.RCt = void 0),
+      (this.UCt = 0),
+      (this.ACt = !1),
+      (this.PCt = !1),
+      (this.xCt = void 0),
+      (this.DirectionComp = void 0),
+      (this.BCt = void 0),
+      (this.bCt = void 0),
+      (this.NiagaraNeedActivateNextTick = !1),
+      (this.GCt = -0),
+      (this.NCt = -0),
+      (this.CurShowTime = -0),
+      (this.kCt = -0),
+      (this.FCt = !1),
+      (this.IsForceHideDirection = !1),
+      (this.HCt = !1),
+      (this.jCt = !1),
+      (this.WCt = 0),
+      (this.KCt = 0),
+      (this.QCt = 0),
+      (this.XCt = 0),
+      (this.ilt = () => {
         var t = MapUtil_1.MapUtil.GetTrackPositionByTrackTarget(
           this.TrackTarget,
           !0,
         );
         t && BattleUiControl_1.BattleUiControl.FocusToTargetLocation(t);
       }),
-      (this.lut = (t) => {
-        "Start" === t && (this.vdt = !1);
+      (this.Tct = (t) => {
+        "Start" === t && (this.PCt = !1);
       }),
-      (this.Gdt = (t) => {
-        t !== Protocol_1.Aki.Protocol.NCs.Proto_BtTypeQuest ||
-          this.udt ||
-          this.Ndt();
+      (this.$Ct = (t) => {
+        t !== Protocol_1.Aki.Protocol.tps.Proto_BtTypeQuest ||
+          this.IsInTrackRange ||
+          this.YCt();
       }),
-      (this.Odt = (t, i, e) => {
+      (this.JCt = (t, i, e) => {
         6 === t.Type &&
-          t.BtType === Protocol_1.Aki.Protocol.NCs.Proto_BtTypeQuest &&
-          this.Ndt();
+          t.BtType === Protocol_1.Aki.Protocol.tps.Proto_BtTypeQuest &&
+          this.YCt();
       }),
-      (this.kdt = (t) => {
+      (this.zCt = (t) => {
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Map",
             40,
             "[TrackedMark] [疑难杂症] 播放点声源特效",
-            ["MarkId", this.hdt],
+            ["MarkId", this.MCt],
             ["EffectDuration", t],
-            ["TrackType", this.wdt],
+            ["TrackType", this.WCt],
             ["UIActiveSelf", this.RootItem?.IsUIActiveSelf()],
           ),
-          1 !== this.wdt ||
+          1 !== this.WCt ||
             t <= 0 ||
             (this.RootItem.IsUIActiveSelf() &&
-              (this.Fdt(),
-              (this.Tdt = t / CommonDefine_1.MILLIONSECOND_PER_SECOND),
-              (this.Ldt = 0),
-              (this.Idt = !0)));
+              (this.ZCt(),
+              (this.GCt = t / CommonDefine_1.MILLIONSECOND_PER_SECOND),
+              (this.NCt = 0),
+              (this.NiagaraNeedActivateNextTick = !0)));
       }),
-      (this.Ndt = () => {
+      (this.YCt = () => {
         var t;
-        this.gdt &&
-          ((t = this.gdt.GetCurrentSequence()),
-          this.xdt
-            ? ("Start" !== t && this.gdt.PlayLevelSequenceByName("Start"),
-              this.gdt.StopCurrentSequence(!0, !0))
+        this.RCt &&
+          ((t = this.RCt.GetCurrentSequence()),
+          this.jCt
+            ? ("Start" !== t && this.RCt.PlayLevelSequenceByName("Start"),
+              this.RCt.StopCurrentSequence(!0, !0))
             : "Start" !== t &&
-              this.Edt.bIsUIActive &&
-              ((this.Ddt = 0), this.gdt.PlayLevelSequenceByName("Start")));
+              this.BCt.bIsUIActive &&
+              ((this.CurShowTime = 0),
+              this.RCt.PlayLevelSequenceByName("Start")));
       }),
-      (this.Vdt = (t, i, e, s, h) => {
-        t === this.ldt &&
-          s === this.hdt &&
-          ((this.udt = h), this.Edt?.SetUIActive(!h));
+      (this.egt = (t, i, e, s, h) => {
+        t === this.ECt &&
+          s === this.MCt &&
+          ((this.IsInTrackRange = h), this.BCt?.SetUIActive(!h));
       }),
       GlobalData_1.GlobalData.World &&
-        ((this.ldt = t.TrackSource),
-        (this.vnt = t.IconPath),
-        (this.adt = t.ShowGroupId),
-        (this.hdt = t.Id),
-        (this._ct = t.TrackHideDis),
+        ((this.ECt = t.TrackSource),
+        (this.xst = t.IconPath),
+        (this.vCt = t.ShowGroupId),
+        (this.MCt = t.Id),
+        (this.MarkHideDis = t.TrackHideDis),
         (this.TrackTarget = t.TrackTarget),
-        (this.udt = t.IsInTrackRange ?? !1),
-        (this.pdt = t.AutoHideTrack ?? !1),
-        (this.Rdt =
+        (this.IsInTrackRange = t.IsInTrackRange ?? !1),
+        (this.ACt = t.AutoHideTrack ?? !1),
+        (this.kCt =
           CommonParamById_1.configCommonParamById.GetIntConfig(
             "QuestMarkTrackStayTime",
           ) ?? 10),
-        (this.fdt = t.Offset?.Z ?? 0),
-        (this.Tdt = 0),
-        (this.Ldt = 0),
-        (this.Idt = !1),
-        (this.ndt = t.IsSubTrack ?? !1),
-        (this.wdt = t.TrackType ?? 0),
-        1 === this.wdt
-          ? ((this.Udt = !0),
-            (this.Adt = !0),
-            (this.xdt = !0),
-            (this.Pdt = !0),
+        (this.UCt = t.Offset?.Z ?? 0),
+        (this.GCt = 0),
+        (this.NCt = 0),
+        (this.NiagaraNeedActivateNextTick = !1),
+        (this.IsSubTrack = t.IsSubTrack ?? !1),
+        (this.WCt = t.TrackType ?? 0),
+        1 === this.WCt
+          ? ((this.FCt = !0),
+            (this.IsForceHideDirection = !0),
+            (this.jCt = !0),
+            (this.HCt = !0),
             (t = ModelManager_1.ModelManager.CreatureModel.GetEntityById(
-              this.hdt,
-            )?.Entity?.GetComponent(144)),
-            (this.Bdt =
+              this.MCt,
+            )?.Entity?.GetComponent(146)),
+            (this.KCt =
               (t?.AudioPointNearRadius ?? 0) * MapDefine_1.FLOAT_0_01),
-            (this.bdt =
+            (this.QCt =
               (t?.AudioPointMiddleRadius ?? 0) * MapDefine_1.FLOAT_0_01),
-            (this.qdt = (t?.AudioPointFarRadius ?? 0) * MapDefine_1.FLOAT_0_01))
-          : ((this.Udt = !1),
-            (this.Adt = !1),
-            (this.xdt = !1),
-            (this.Pdt = !1)),
-        (this.mXe = Vector_1.Vector.Create()),
-        (this.p$e = Vector2D_1.Vector2D.Create()),
-        (this.cdt = Vector2D_1.Vector2D.Create()),
-        (this.cie = Rotator_1.Rotator.Create()),
+            (this.XCt = (t?.AudioPointFarRadius ?? 0) * MapDefine_1.FLOAT_0_01))
+          : ((this.FCt = !1),
+            (this.IsForceHideDirection = !1),
+            (this.jCt = !1),
+            (this.HCt = !1)),
+        (this.TempTrackPosition = Vector_1.Vector.Create()),
+        (this.ScreenPosition = Vector2D_1.Vector2D.Create()),
+        (this.LastScreenPosition = Vector2D_1.Vector2D.Create()),
+        (this.TempRotator = Rotator_1.Rotator.Create()),
         (t = UiLayer_1.UiLayer.UiRootItem),
-        (this.uXe = Math.min(MAX_A, ((t?.GetWidth() ?? 0) - MARGIN_A) / 2)),
-        (this.cXe = Math.min(MAX_B, ((t?.GetHeight() ?? 0) - MARGIN_B) / 2)),
+        (this.y$e = Math.min(MAX_A, ((t?.GetWidth() ?? 0) - MARGIN_A) / 2)),
+        (this.I$e = Math.min(MAX_B, ((t?.GetHeight() ?? 0) - MARGIN_B) / 2)),
         EventSystem_1.EventSystem.Add(
           EventDefine_1.EEventName.TaskRangeTrackStateChange,
-          this.Vdt,
+          this.egt,
         ));
   }
-  Initialize(t, i) {
-    this.CreateThenShowByResourceIdAsync(t, i, !0);
+  Initialize(t) {
+    this.CreateThenShowByResourceIdAsync("UiItem_Mark_Prefab", t, !0);
   }
   CreateMark() {
-    (this.vdt = !0), this.Ndt();
+    (this.PCt = !0), this.YCt();
   }
   OnRegisterComponent() {
     (this.ComponentRegisterInfos = [
@@ -208,90 +209,92 @@ class TrackedMark extends UiPanelBase_1.UiPanelBase {
       [5, UE.UINiagara],
       [6, UE.UIItem],
     ]),
-      (this.BtnBindInfo = [[3, this.jat]]);
+      (this.BtnBindInfo = [[3, this.ilt]]);
   }
   OnStart() {
-    (this.Mdt = this.GetItem(4)),
-      (this.Sdt = this.GetItem(2)),
-      (this.Edt = this.GetItem(6)),
-      this.Mdt.SetUIActive(!this.udt && !this.Udt),
-      this.Sdt.SetUIActive(!this.udt && !this.Adt),
-      this.Edt.SetUIActive(!1),
-      (this.gdt = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem)),
-      this.gdt.BindSequenceCloseEvent(this.lut),
-      (this.ydt = this.GetUiNiagara(5)),
-      this.ydt.SetUIActive(!1),
-      this.vnt && this.SetSpriteByPath(this.vnt, this.GetSprite(0), !1),
-      this.Edt.SetUIActive(!this.udt && !this.Pdt),
-      5 === this.ldt &&
+    (this.xCt = this.GetItem(4)),
+      (this.DirectionComp = this.GetItem(2)),
+      (this.BCt = this.GetItem(6)),
+      this.xCt.SetUIActive(!this.IsInTrackRange && !this.FCt),
+      this.DirectionComp.SetUIActive(
+        !this.IsInTrackRange && !this.IsForceHideDirection,
+      ),
+      this.BCt.SetUIActive(!1),
+      (this.RCt = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem)),
+      this.RCt.BindSequenceCloseEvent(this.Tct),
+      (this.bCt = this.GetUiNiagara(5)),
+      this.bCt.SetUIActive(!1),
+      this.xst && this.SetSpriteByPath(this.xst, this.GetSprite(0), !1),
+      this.BCt.SetUIActive(!this.IsInTrackRange && !this.HCt),
+      5 === this.ECt &&
         this.RootItem?.SetHierarchyIndex(QUEST_TRACK_MARK_INDEX),
       this.CreateMark(),
       this.OnUiShow();
   }
   OnBeforeDestroy() {
     (this.TrackTarget = void 0),
-      (this.pXe = void 0),
-      this.gdt?.Clear(),
-      (this.gdt = void 0),
-      TimerSystem_1.TimerSystem.Has(this._dt) &&
-        TimerSystem_1.TimerSystem.Remove(this._dt),
+      (this.PointTransport = void 0),
+      this.RCt?.Clear(),
+      (this.RCt = void 0),
+      TimerSystem_1.TimerSystem.Has(this.SCt) &&
+        TimerSystem_1.TimerSystem.Remove(this.SCt),
       EventSystem_1.EventSystem.Has(
         EventDefine_1.EEventName.TaskRangeTrackStateChange,
-        this.Vdt,
+        this.egt,
       ) &&
         EventSystem_1.EventSystem.Remove(
           EventDefine_1.EEventName.TaskRangeTrackStateChange,
-          this.Vdt,
+          this.egt,
         ),
       EventSystem_1.EventSystem.Has(
         EventDefine_1.EEventName.OnLogicTreeNodeStatusChange,
-        this.Odt,
+        this.JCt,
       ) &&
         EventSystem_1.EventSystem.Remove(
           EventDefine_1.EEventName.OnLogicTreeNodeStatusChange,
-          this.Odt,
+          this.JCt,
         ),
       EventSystem_1.EventSystem.Has(
         EventDefine_1.EEventName.OnLogicTreeTrackUpdate,
-        this.Gdt,
+        this.$Ct,
       ) &&
         EventSystem_1.EventSystem.Remove(
           EventDefine_1.EEventName.OnLogicTreeTrackUpdate,
-          this.Gdt,
+          this.$Ct,
         );
   }
   OnUiShow() {
     var t;
-    1 === this.wdt &&
-      (t = ModelManager_1.ModelManager.CreatureModel.GetEntityById(this.hdt)) &&
+    1 === this.WCt &&
+      (t = ModelManager_1.ModelManager.CreatureModel.GetEntityById(this.MCt)) &&
       !EventSystem_1.EventSystem.HasWithTarget(
         t.Entity,
         EventDefine_1.EEventName.PlaySoundTrackEffect,
-        this.kdt,
+        this.zCt,
       ) &&
       EventSystem_1.EventSystem.AddWithTarget(
         t.Entity,
         EventDefine_1.EEventName.PlaySoundTrackEffect,
-        this.kdt,
+        this.zCt,
       ),
-      (this._dt = TimerSystem_1.TimerSystem.Delay(this.Ndt, DELAY_TIME)),
+      (this.SCt = TimerSystem_1.TimerSystem.Delay(this.YCt, DELAY_TIME)),
       EventSystem_1.EventSystem.Has(
         EventDefine_1.EEventName.OnLogicTreeNodeStatusChange,
-        this.Odt,
+        this.JCt,
       ) ||
         EventSystem_1.EventSystem.Add(
           EventDefine_1.EEventName.OnLogicTreeNodeStatusChange,
-          this.Odt,
+          this.JCt,
         ),
       EventSystem_1.EventSystem.Has(
         EventDefine_1.EEventName.OnLogicTreeTrackUpdate,
-        this.Gdt,
+        this.$Ct,
       ) ||
         EventSystem_1.EventSystem.Add(
           EventDefine_1.EEventName.OnLogicTreeTrackUpdate,
-          this.Gdt,
+          this.$Ct,
         ),
-      this.ndt
+      this.IsSubTrack
         ? this.RootItem?.SetRelativeScale3D(
             new UE.Vector(SUB_SCALE, SUB_SCALE, SUB_SCALE),
           )
@@ -299,40 +302,40 @@ class TrackedMark extends UiPanelBase_1.UiPanelBase {
   }
   OnUiHide() {
     var t;
-    1 === this.wdt &&
-      (t = ModelManager_1.ModelManager.CreatureModel.GetEntityById(this.hdt)) &&
+    1 === this.WCt &&
+      (t = ModelManager_1.ModelManager.CreatureModel.GetEntityById(this.MCt)) &&
       EventSystem_1.EventSystem.HasWithTarget(
         t.Entity,
         EventDefine_1.EEventName.PlaySoundTrackEffect,
-        this.kdt,
+        this.zCt,
       ) &&
       EventSystem_1.EventSystem.RemoveWithTarget(
         t.Entity,
         EventDefine_1.EEventName.PlaySoundTrackEffect,
-        this.kdt,
+        this.zCt,
       ),
       EventSystem_1.EventSystem.Has(
         EventDefine_1.EEventName.OnLogicTreeNodeStatusChange,
-        this.Odt,
+        this.JCt,
       ) &&
         EventSystem_1.EventSystem.Remove(
           EventDefine_1.EEventName.OnLogicTreeNodeStatusChange,
-          this.Odt,
+          this.JCt,
         ),
       EventSystem_1.EventSystem.Has(
         EventDefine_1.EEventName.OnLogicTreeTrackUpdate,
-        this.Gdt,
+        this.$Ct,
       ) &&
         EventSystem_1.EventSystem.Remove(
           EventDefine_1.EEventName.OnLogicTreeTrackUpdate,
-          this.Gdt,
+          this.$Ct,
         );
   }
   UpdateTrackTarget(t) {
     this.TrackTarget = t;
   }
   SetVisibleByOccupied(t) {
-    this.sdt = t;
+    this.pCt = t;
   }
   UpdateTrackDistance() {
     var t = GeneralLogicTreeUtil_1.GeneralLogicTreeUtil.GetPlayerLocation();
@@ -340,13 +343,15 @@ class TrackedMark extends UiPanelBase_1.UiPanelBase {
       (MapUtil_1.MapUtil.GetTrackPositionByTrackTarget(
         this.TrackTarget,
         !0,
-        this.mXe,
+        this.TempTrackPosition,
       ),
-      this.fdt && (this.mXe.Z += this.fdt),
-      (t = Vector_1.Vector.Distance(t, this.mXe) * MapDefine_1.FLOAT_0_01),
-      (this.ddt = t),
+      this.UCt && (this.TempTrackPosition.Z += this.UCt),
+      (t =
+        Vector_1.Vector.Distance(t, this.TempTrackPosition) *
+        MapDefine_1.FLOAT_0_01),
+      (this.LCt = t),
       ModelManager_1.ModelManager.TrackModel.UpdateGroupMinDistance(
-        this.adt,
+        this.vCt,
         t,
       ));
   }
@@ -355,25 +360,25 @@ class TrackedMark extends UiPanelBase_1.UiPanelBase {
     GlobalData_1.GlobalData.World
       ? UiLayer_1.UiLayer.UiRootItem
         ? this.RootItem &&
-          ((this.Ddt += t / CommonDefine_1.MILLIONSECOND_PER_SECOND),
-          this.Hdt()
-            ? (i = this.ddt) < this._ct && !this.vdt
-              ? (this.RootItem.SetUIActive(!1), 1 === this.wdt && this.Fdt())
+          ((this.CurShowTime += t / CommonDefine_1.MILLIONSECOND_PER_SECOND),
+          this.tgt()
+            ? (i = this.LCt) < this.MarkHideDis && !this.PCt
+              ? (this.RootItem.SetUIActive(!1), 1 === this.WCt && this.ZCt())
               : (this.RootItem.SetUIActive(!0),
-                this.jdt(t),
-                !this.mdt || this.udt || this.Udt
-                  ? this.Mdt.SetUIActive(!1)
+                this.UpdatePositionAndRotation(t),
+                !this.InRange || this.IsInTrackRange || this.FCt
+                  ? this.xCt.SetUIActive(!1)
                   : ((i = Math.round(i)),
-                    this.Cdt !== i &&
-                      ((this.Cdt = i),
+                    this.DCt !== i &&
+                      ((this.DCt = i),
                       LguiUtil_1.LguiUtil.SetLocalTextNew(
                         this.GetText(1),
                         "Text_Meter_Text",
-                        this.Cdt.toString(),
+                        this.DCt.toString(),
                       )),
-                    this.Mdt.SetUIActive(!0)),
-                1 === this.wdt && this.Wdt(t),
-                this.Edt.SetUIActive(!this.udt && !this.Pdt))
+                    this.xCt.SetUIActive(!0)),
+                1 === this.WCt && this.ogt(t),
+                this.BCt.SetUIActive(!this.IsInTrackRange && !this.HCt))
             : this.RootItem.SetUIActive(!1))
         : Log_1.Log.CheckError() &&
           Log_1.Log.Error(
@@ -388,42 +393,51 @@ class TrackedMark extends UiPanelBase_1.UiPanelBase {
           "【疑难杂症】标记固定在屏幕中心，GameWorld为空",
         );
   }
-  jdt(t) {
+  UpdatePositionAndRotation(t) {
     var i,
       e = Global_1.Global.CharacterController,
-      s = this.mXe.ToUeVector(),
-      h = UE.GameplayStatics.ProjectWorldToScreen(e, s, this._Xe),
+      s = this.TempTrackPosition.ToUeVector(),
+      h = UE.GameplayStatics.ProjectWorldToScreen(e, s, this.ScreenPositionRef),
       s =
         (h ||
           (((s = (i =
             ModelManager_1.ModelManager.CameraModel
               .CameraTransform).InverseTransformPositionNoScale(s)).X = -s.X),
           (i = i.TransformPositionNoScale(s)),
-          UE.GameplayStatics.ProjectWorldToScreen(e, i, this._Xe)),
-        (0, puerts_1.$unref)(this._Xe));
-    this.p$e.Set(s.X, s.Y),
-      (this.cdt.Equals(this.p$e, 1) && !this.Idt) ||
-        (this.cdt.DeepCopy(this.p$e),
+          UE.GameplayStatics.ProjectWorldToScreen(
+            e,
+            i,
+            this.ScreenPositionRef,
+          )),
+        (0, puerts_1.$unref)(this.ScreenPositionRef));
+    this.ScreenPosition.Set(s.X, s.Y),
+      (this.LastScreenPosition.Equals(this.ScreenPosition, 1) &&
+        !this.NiagaraNeedActivateNextTick) ||
+        (this.LastScreenPosition.DeepCopy(this.ScreenPosition),
         (e = ModelManager_1.ModelManager.BattleUiModel),
-        PlatformController_1.PlatformController.IsMobile() ||
-          e.UpdateViewPortSize(),
-        this.p$e
-          .MultiplyEqual(e.ScreenPositionScale)
+        Info_1.Info.IsInTouch() || e.UpdateViewPortSize(),
+        this.ScreenPosition.MultiplyEqual(e.ScreenPositionScale)
           .AdditionEqual(e.ScreenPositionOffset)
-          .MultiplyEqual(this.pXe),
-        (this.mdt = this.PXe(this.p$e, h)),
-        (i = this.p$e.AdditionEqual(center)),
+          .MultiplyEqual(this.PointTransport),
+        (this.InRange = this.ClampToEllipse(this.ScreenPosition, h)),
+        (i = this.ScreenPosition.AdditionEqual(center)),
         this.RootItem.SetAnchorOffset(i.ToUeVector2D()),
-        this.mdt || this.udt || this.Adt
-          ? this.Sdt.SetUIActive(!1)
-          : (this.cie.Reset(),
-            (this.cie.Yaw = Math.atan2(this.p$e.Y, this.p$e.X) * RAD_2_DEG),
-            this.Sdt.SetUIRelativeRotation(this.cie.ToUeRotator()),
-            this.Sdt.SetUIActive(!0)),
-        this.mdt || 1 !== this.wdt
-          ? this.ydt.SetNiagaraVarFloat(VARNAME_WAVE_ROTATION, 0.25)
-          : ((s = Math.atan2(this.p$e.Y, this.p$e.X) / (2 * Math.PI)),
-            this.ydt.SetNiagaraVarFloat(VARNAME_WAVE_ROTATION, s)));
+        this.InRange || this.IsInTrackRange || this.IsForceHideDirection
+          ? this.DirectionComp.SetUIActive(!1)
+          : (this.TempRotator.Reset(),
+            (this.TempRotator.Yaw =
+              Math.atan2(this.ScreenPosition.Y, this.ScreenPosition.X) *
+              RAD_2_DEG),
+            this.DirectionComp.SetUIRelativeRotation(
+              this.TempRotator.ToUeRotator(),
+            ),
+            this.DirectionComp.SetUIActive(!0)),
+        this.InRange || 1 !== this.WCt
+          ? this.bCt.SetNiagaraVarFloat(VARNAME_WAVE_ROTATION, 0.25)
+          : ((s =
+              Math.atan2(this.ScreenPosition.Y, this.ScreenPosition.X) /
+              (2 * Math.PI)),
+            this.bCt.SetNiagaraVarFloat(VARNAME_WAVE_ROTATION, s)));
   }
   MoveTowards(t, i, e) {
     var s = i.X - t.X,
@@ -436,13 +450,13 @@ class TrackedMark extends UiPanelBase_1.UiPanelBase {
       t.Y + s * Math.sin(i),
     );
   }
-  Hdt() {
-    if (this.sdt) return !1;
-    if (this.pdt && this.Ddt > this.Rdt) return !1;
+  tgt() {
+    if (this.pCt) return !1;
+    if (this.ACt && this.CurShowTime > this.kCt) return !1;
     if (
       !ModelManager_1.ModelManager.TrackModel.CanShowInGroup(
-        this.adt,
-        this.ddt,
+        this.vCt,
+        this.LCt,
       ) ||
       !this.ShouldShowTrackMark
     )
@@ -456,15 +470,15 @@ class TrackedMark extends UiPanelBase_1.UiPanelBase {
       return !1;
     return ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance()
       ? !ModelManager_1.ModelManager.GameModeModel.IsMulti &&
-          (ModelManager_1.ModelManager.TrackModel.IsTracking(2, this.hdt) ||
-            ModelManager_1.ModelManager.TrackModel.IsTracking(4, this.hdt))
-      : ModelManager_1.ModelManager.TrackModel.IsTracking(this.ldt, this.hdt);
+          (ModelManager_1.ModelManager.TrackModel.IsTracking(2, this.MCt) ||
+            ModelManager_1.ModelManager.TrackModel.IsTracking(4, this.MCt))
+      : ModelManager_1.ModelManager.TrackModel.IsTracking(this.ECt, this.MCt);
   }
-  PXe(t, i) {
+  ClampToEllipse(t, i) {
     var e = t.X,
       s = t.Y,
-      h = this.uXe,
-      r = this.cXe;
+      h = this.y$e,
+      r = this.I$e;
     return (
       !!(i && (e * e) / (h * h) + (s * s) / (r * r) <= 1) ||
       ((i = (h * r) / Math.sqrt(r * r * e * e + h * h * s * s)),
@@ -472,43 +486,43 @@ class TrackedMark extends UiPanelBase_1.UiPanelBase {
       !1)
     );
   }
-  Wdt(t) {
-    1 === this.wdt &&
-      (this.ydt.IsUIActiveSelf() || this.Idt) &&
-      (this.Idt &&
-        ((this.Idt = !1),
-        this.ydt.SetNiagaraVarFloat(VARNAME_WAVE_CYCLE_TIME, this.Tdt),
-        this.ddt <= this.Bdt
-          ? (this.ydt.SetNiagaraVarFloat(VARNAME_WAVE_NUM_SCALE, 1),
-            this.ydt.SetNiagaraVarLinearColor(
+  ogt(t) {
+    1 === this.WCt &&
+      (this.bCt.IsUIActiveSelf() || this.NiagaraNeedActivateNextTick) &&
+      (this.NiagaraNeedActivateNextTick &&
+        ((this.NiagaraNeedActivateNextTick = !1),
+        this.bCt.SetNiagaraVarFloat(VARNAME_WAVE_CYCLE_TIME, this.GCt),
+        this.LCt <= this.KCt
+          ? (this.bCt.SetNiagaraVarFloat(VARNAME_WAVE_NUM_SCALE, 1),
+            this.bCt.SetNiagaraVarLinearColor(
               VARNAME_WAVE_COLOR,
               new UE.LinearColor(UE.Color.FromHex(WAVE_COLOR_NEAR)),
             ))
-          : this.ddt > this.Bdt && this.ddt <= this.bdt
-            ? (this.ydt.SetNiagaraVarFloat(VARNAME_WAVE_NUM_SCALE, 2 / 3),
-              this.ydt.SetNiagaraVarLinearColor(
+          : this.LCt > this.KCt && this.LCt <= this.QCt
+            ? (this.bCt.SetNiagaraVarFloat(VARNAME_WAVE_NUM_SCALE, 2 / 3),
+              this.bCt.SetNiagaraVarLinearColor(
                 VARNAME_WAVE_COLOR,
                 new UE.LinearColor(UE.Color.FromHex(WAVE_COLOR_MIDDLE)),
               ))
-            : this.ddt > this.bdt &&
-              this.ddt <= this.qdt &&
-              (this.ydt.SetNiagaraVarFloat(VARNAME_WAVE_NUM_SCALE, 1 / 3),
-              this.ydt.SetNiagaraVarLinearColor(
+            : this.LCt > this.QCt &&
+              this.LCt <= this.XCt &&
+              (this.bCt.SetNiagaraVarFloat(VARNAME_WAVE_NUM_SCALE, 1 / 3),
+              this.bCt.SetNiagaraVarLinearColor(
                 VARNAME_WAVE_COLOR,
                 new UE.LinearColor(UE.Color.FromHex(WAVE_COLOR_FAR)),
               )),
-        this.ydt.SetNiagaraUIActive(!0, !1),
-        this.ydt.ActivateSystem(!1)),
-      this.Ldt >= this.Tdt
-        ? this.Fdt()
-        : (this.Ldt += t / CommonDefine_1.MILLIONSECOND_PER_SECOND));
+        this.bCt.SetNiagaraUIActive(!0, !1),
+        this.bCt.ActivateSystem(!1)),
+      this.NCt >= this.GCt
+        ? this.ZCt()
+        : (this.NCt += t / CommonDefine_1.MILLIONSECOND_PER_SECOND));
   }
-  Fdt() {
-    this.ydt.SetNiagaraUIActive(!1, !0),
-      this.ydt.DeactivateSystem(),
-      (this.Tdt = 0),
-      (this.Ldt = 0),
-      (this.Idt = !1);
+  ZCt() {
+    this.bCt.SetNiagaraUIActive(!1, !0),
+      this.bCt.DeactivateSystem(),
+      (this.GCt = 0),
+      (this.NCt = 0),
+      (this.NiagaraNeedActivateNextTick = !1);
   }
 }
 exports.TrackedMark = TrackedMark;

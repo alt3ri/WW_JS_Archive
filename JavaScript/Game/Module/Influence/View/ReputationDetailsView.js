@@ -15,27 +15,27 @@ class ReputationDetailsView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
       (this.Pe = void 0),
-      (this.bni = void 0),
+      (this.qsi = void 0),
       (this.Lo = void 0),
-      (this.gpt = () => {
+      (this.Rvt = () => {
         this.CloseMe();
       }),
-      (this.qni = () => {
+      (this.Gsi = () => {
         var e = this.Lo.ReputationItem;
         UiManager_1.UiManager.OpenView("ReputationTips", e);
       }),
-      (this.Gni = () => {
+      (this.Nsi = () => {
         InfluenceReputationController_1.InfluenceReputationController.RequestInfluenceReward(
           this.Pe.InfluenceId,
         );
       }),
-      (this.Nni = () => {
+      (this.Osi = () => {
         UiManager_1.UiManager.OpenView(
           "ReputationRewardsView",
           this.Pe.InfluenceId,
         );
       }),
-      (this.Oni = () => {
+      (this.ksi = () => {
         this.RefreshView();
       });
   }
@@ -54,17 +54,17 @@ class ReputationDetailsView extends UiViewBase_1.UiViewBase {
       [6, UE.UISprite],
     ]),
       (this.BtnBindInfo = [
-        [0, this.gpt],
-        [1, this.qni],
-        [2, this.Gni],
-        [4, this.Nni],
+        [0, this.Rvt],
+        [1, this.Gsi],
+        [2, this.Nsi],
+        [4, this.Osi],
       ]);
   }
   OnBeforeCreate() {
     this.Pe = this.OpenParam;
   }
   OnStart() {
-    this.bni = new InfluenceRewardItem_1.InfluenceRewardItem(this.GetItem(10));
+    this.qsi = new InfluenceRewardItem_1.InfluenceRewardItem(this.GetItem(10));
   }
   OnAfterShow() {
     (this.Lo = ConfigManager_1.ConfigManager.InfluenceConfig.GetInfluenceConfig(
@@ -76,17 +76,17 @@ class ReputationDetailsView extends UiViewBase_1.UiViewBase {
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.ReceiveReputationReward,
-      this.Oni,
+      this.ksi,
     );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.ReceiveReputationReward,
-      this.Oni,
+      this.ksi,
     );
   }
   OnBeforeDestroy() {
-    this.bni.Destroy(), (this.bni = void 0);
+    this.qsi.Destroy(), (this.qsi = void 0);
   }
   RefreshView() {
     var e =
@@ -120,7 +120,7 @@ class ReputationDetailsView extends UiViewBase_1.UiViewBase {
       this.SetTextureByPath(this.Lo.Logo, this.GetTexture(5));
   }
   sqe(e, t) {
-    this.bni.UpdateItem(e, t), t && this.bni.SetAllReceivedTitle();
+    this.qsi.UpdateItem(e, t), t && this.qsi.SetAllReceivedTitle();
   }
 }
 exports.ReputationDetailsView = ReputationDetailsView;

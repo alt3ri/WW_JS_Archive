@@ -9,34 +9,34 @@ const EventDefine_1 = require("../../../../../../Common/Event/EventDefine"),
 class ConvertShieldAttribute extends ExtraEffectBase_1.BuffEffect {
   constructor() {
     super(...arguments),
-      (this.xQo = void 0),
-      (this.wQo = 0),
+      (this.UXo = void 0),
+      (this.AXo = 0),
       (this.ine =
         CharacterAttributeTypes_1.EAttributeId.Proto_EAttributeType_None),
-      (this.BQo = 0),
-      (this.bQo = 0),
-      (this.qQo = 0),
-      (this.GQo = 0),
-      (this.NQo = 0),
-      (this.VKo = void 0),
-      (this.ZQe = (t) => {
-        this.OQo(), this.kQo();
+      (this.PXo = 0),
+      (this.xXo = 0),
+      (this.wXo = 0),
+      (this.BXo = 0),
+      (this.bXo = 0),
+      (this.OQo = void 0),
+      (this.u$e = (t) => {
+        this.qXo(), this.GXo();
       });
   }
   InitParameters(t) {
     var i = t.ExtraEffectParameters;
-    (this.xQo = Number(i[0])),
-      (this.wQo = Number(i[1])),
+    (this.UXo = Number(i[0])),
+      (this.AXo = Number(i[1])),
       (this.ine = Number(i[2])),
-      (this.BQo = Number(i[3])),
-      (this.bQo = Number(i[4])),
-      (this.qQo = Number(i[5])),
-      (this.GQo = AbilityUtils_1.AbilityUtils.GetLevelValue(
+      (this.PXo = Number(i[3])),
+      (this.xXo = Number(i[4])),
+      (this.wXo = Number(i[5])),
+      (this.BXo = AbilityUtils_1.AbilityUtils.GetLevelValue(
         t.ExtraEffectGrowParameters1,
         this.Level,
         0,
       )),
-      (this.NQo = AbilityUtils_1.AbilityUtils.GetLevelValue(
+      (this.bXo = AbilityUtils_1.AbilityUtils.GetLevelValue(
         t.ExtraEffectGrowParameters2,
         this.Level,
         0,
@@ -47,57 +47,57 @@ class ConvertShieldAttribute extends ExtraEffectBase_1.BuffEffect {
     EventSystem_1.EventSystem.AddWithTarget(
       this.OwnerEntity,
       EventDefine_1.EEventName.CharShieldChange,
-      this.ZQe,
+      this.u$e,
     ),
-      this.kQo();
+      this.GXo();
   }
-  kQo() {
-    var e = this.xQo ? this.InstigatorEntity?.Entity : this.OwnerEntity;
+  GXo() {
+    var e = this.UXo ? this.InstigatorEntity?.Entity : this.OwnerEntity;
     if (e) {
       var s,
-        e = e.CheckGetComponent(64),
-        h = this.OwnerEntity?.CheckGetComponent(156),
-        e = e?.GetShieldValue(this.wQo) ?? 0;
-      let t = e >= this.bQo,
+        e = e.CheckGetComponent(66),
+        h = this.OwnerEntity?.CheckGetComponent(158),
+        e = e?.GetShieldValue(this.AXo) ?? 0;
+      let t = e >= this.xXo,
         i = e;
-      0 < this.qQo && (i = Math.min(i, this.qQo));
+      0 < this.wXo && (i = Math.min(i, this.wXo));
       e =
         (i =
-          0 < this.BQo &&
-          ((s = h?.GetCurrentValue(this.BQo) ?? 0),
+          0 < this.PXo &&
+          ((s = h?.GetCurrentValue(this.PXo) ?? 0),
           (t =
-            e >= s * this.bQo * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND),
-          0 < this.qQo)
+            e >= s * this.xXo * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND),
+          0 < this.wXo)
             ? Math.min(
                 e,
-                s * this.qQo * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND,
+                s * this.wXo * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND,
               )
             : i) *
-          this.NQo *
+          this.bXo *
           CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND +
-        this.GQo;
+        this.BXo;
       t &&
         0 !== e &&
-        (this.VKo = h?.AddModifier(this.ine ?? 0, { Type: 0, Value1: e }));
+        (this.OQo = h?.AddModifier(this.ine ?? 0, { Type: 0, Value1: e }));
     }
   }
-  OQo() {
-    this.VKo &&
-      (this.xQo ? this.InstigatorEntity?.Entity : this.OwnerEntity) &&
-      (this.OwnerEntity?.CheckGetComponent(156)?.RemoveModifier(
+  qXo() {
+    this.OQo &&
+      (this.UXo ? this.InstigatorEntity?.Entity : this.OwnerEntity) &&
+      (this.OwnerEntity?.CheckGetComponent(158)?.RemoveModifier(
         this.ine ?? 0,
-        this.VKo,
+        this.OQo,
       ),
-      (this.VKo = void 0));
+      (this.OQo = void 0));
   }
   OnRemoved() {
     this.OwnerEntity &&
       EventSystem_1.EventSystem.RemoveWithTarget(
         this.OwnerEntity,
         EventDefine_1.EEventName.CharShieldChange,
-        this.ZQe,
+        this.u$e,
       ),
-      this.OQo();
+      this.qXo();
   }
 }
 exports.ConvertShieldAttribute = ConvertShieldAttribute;

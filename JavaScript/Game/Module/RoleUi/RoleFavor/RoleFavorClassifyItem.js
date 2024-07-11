@@ -20,11 +20,11 @@ class RoleFavorClassifyItem extends UiPanelBase_1.UiPanelBase {
   constructor(e, t) {
     super(),
       (this.ContentGenericLayout = void 0),
-      (this.C1o = []),
-      (this.g1o = () => {
-        this.C1o = this.f1o();
+      (this.u_o = []),
+      (this.c_o = () => {
+        this.u_o = this.m_o();
       }),
-      (this.p1o = e),
+      (this.d_o = e),
       this.CreateThenShowByActor(t.GetOwner());
   }
   OnRegisterComponent() {
@@ -35,29 +35,25 @@ class RoleFavorClassifyItem extends UiPanelBase_1.UiPanelBase {
   }
   OnStart() {
     var e = this.GetText(1);
-    LguiUtil_1.LguiUtil.SetLocalText(e, this.p1o.TitleTableId),
-      this.g1o(),
+    LguiUtil_1.LguiUtil.SetLocalText(e, this.d_o.TitleTableId),
+      this.c_o(),
       (this.ContentGenericLayout = new GenericLayoutNew_1.GenericLayoutNew(
         this.GetVerticalLayout(0),
         exports.initContentItem,
       )),
-      this.ContentGenericLayout.RebuildLayoutByDataNew(this.C1o);
+      this.ContentGenericLayout.RebuildLayoutByDataNew(this.u_o);
   }
   OnBeforeDestroy() {
-    this.ContentGenericLayout &&
-      (this.ContentGenericLayout.ClearChildren(),
-      (this.ContentGenericLayout = void 0)),
-      (this.p1o = void 0),
-      (this.C1o = []);
+    (this.d_o = void 0), (this.u_o = []);
   }
-  f1o() {
-    if (RoleFavorUtil_1.RoleFavorUtil.IsRoleInfo(this.p1o)) return this.v1o();
+  m_o() {
+    if (RoleFavorUtil_1.RoleFavorUtil.IsRoleInfo(this.d_o)) return this.C_o();
     var t = [],
-      i = this.p1o.RoleId,
-      r = this.p1o.TypeParam,
-      a = this.p1o.FavorTabType;
+      i = this.d_o.RoleId,
+      r = this.d_o.TypeParam,
+      a = this.d_o.FavorTabType;
     let o = void 0;
-    switch (this.p1o.FavorTabType) {
+    switch (this.d_o.FavorTabType) {
       case 2:
         o = ConfigManager_1.ConfigManager.MotionConfig.GetRoleMotionByType(
           i,
@@ -78,22 +74,22 @@ class RoleFavorClassifyItem extends UiPanelBase_1.UiPanelBase {
           r,
         );
     }
-    var s = o.length;
-    for (let e = 0; e < s; e++) {
-      var n = o[e],
-        n = new RoleFavorDefine_1.ContentItemData(a, i, n, r);
-      t.push(n);
+    var n = o.length;
+    for (let e = 0; e < n; e++) {
+      var s = o[e],
+        s = new RoleFavorDefine_1.ContentItemData(a, i, s, r);
+      t.push(s);
     }
     return t;
   }
-  v1o() {
+  C_o() {
     var e = [],
-      t = this.M1o(1),
-      i = this.M1o(2);
+      t = this.g_o(1),
+      i = this.g_o(2);
     return e.push(t, i), e;
   }
-  M1o(e) {
-    var t = this.p1o.RoleId,
+  g_o(e) {
+    var t = this.d_o.RoleId,
       i =
         ConfigManager_1.ConfigManager.RoleFavorConfig.GetFavorRoleInfoConfig(t);
     return new RoleFavorDefine_1.ContentItemData(1, t, i, e);

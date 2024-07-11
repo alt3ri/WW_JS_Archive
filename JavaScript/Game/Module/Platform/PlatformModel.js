@@ -4,7 +4,6 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const UE = require("ue"),
   AudioSystem_1 = require("../../../Core/Audio/AudioSystem"),
   Info_1 = require("../../../Core/Common/Info"),
-  Log_1 = require("../../../Core/Common/Log"),
   Protocol_1 = require("../../../Core/Define/Net/Protocol"),
   ModelBase_1 = require("../../../Core/Framework/ModelBase"),
   NetworkDefine_1 = require("../../../Launcher/NetworkDefine"),
@@ -15,216 +14,114 @@ const UE = require("ue"),
 class PlatformModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
-      (this.hQi = 0),
-      (this.lQi = 0),
-      (this._Qi = 0),
-      (this.IsGmLockGamepad = !1),
-      (this.uQi = !1);
-  }
-  get PlatformType() {
-    return this.hQi;
+      (this.CMa = (e, t) => {
+        this.iga(),
+          this.rga(),
+          EventSystem_1.EventSystem.Emit(
+            EventDefine_1.EEventName.InputControllerChange,
+            e,
+            t,
+          );
+      }),
+      (this.gMa = (e, t) => {
+        EventSystem_1.EventSystem.Emit(
+          EventDefine_1.EEventName.ShowTypeChange,
+          e,
+          t,
+        );
+      }),
+      (this.fMa = (e, t) => {
+        EventSystem_1.EventSystem.Emit(
+          EventDefine_1.EEventName.InputControllerMainTypeChange,
+          e,
+          t,
+        );
+      });
   }
   OnInit() {
-    return this.RefreshPlatformType(), this.mQi(), !0;
+    return (
+      Info_1.Info.SetInputTypeChangeFunc(this.CMa),
+      Info_1.Info.SetShowTypeChangeFunc(this.gMa),
+      Info_1.Info.SetInputMainTypeChangeFunc(this.fMa),
+      this.iga(),
+      this.rga(),
+      !0
+    );
   }
-  mQi() {
-    (this.uQi =
-      UE.KismetSystemLibrary.GetCommandLine()?.includes("-CloudGame") ?? !1),
-      this.uQi &&
-        (this.SwitchInputControllerType(2), Log_1.Log.CheckInfo()) &&
-        Log_1.Log.Info("Platform", 17, "初始化云游戏");
+  OnClear() {
+    return (
+      Info_1.Info.ClearInputTypeChangeFunc(),
+      Info_1.Info.ClearShowTypeChangeFunc(),
+      Info_1.Info.ClearInputMainTypeChangeFunc(),
+      !0
+    );
   }
-  RefreshPlatformType() {
-    let e = 0;
-    switch (this.GetPlatformName()) {
-      case "IOS":
-        e = 1;
-        break;
-      case "Android":
-        e = 2;
-        break;
-      case "Windows":
-        e = 3;
-        break;
-      case "Mac":
-        e = 4;
-        break;
-      case "Linux":
-        e = 5;
-        break;
-      case "XboxOne":
-        e = 6;
-        break;
-      case "PS4":
-        e = 7;
-    }
-    var t = PlatformDefine_1.inputControllerMap.get(e);
-    this.SwitchInputControllerType(t, e);
-  }
-  SwitchInputControllerType(e, t = void 0) {
-    if (!this.IsGmLockGamepad)
-      if ((this.dQi(e), t)) this.CQi(t);
-      else
-        for (var [r, o] of PlatformDefine_1.inputControllerMap)
-          if (o === e) {
-            this.CQi(r);
-            break;
-          }
-  }
-  dQi(t) {
-    if (
-      (0 === t &&
-        2 === this._Qi &&
-        Log_1.Log.CheckError() &&
-        Log_1.Log.Error(
-          "Platform",
-          8,
-          "[PlatformDebug]从Touch输入方式切换成了键鼠的输入方式",
-          ["lastInputController", this._Qi],
-          ["inputController", t],
-        ),
-      this._Qi !== t)
-    ) {
-      var r = this._Qi;
-      switch (
-        ((this._Qi = t),
-        EventSystem_1.EventSystem.Emit(
-          EventDefine_1.EEventName.InputControllerChange,
-          r,
-          this._Qi,
-        ),
-        t)
-      ) {
-        case 1:
-          AudioSystem_1.AudioSystem.SetState(
-            "input_controller_type",
-            "gamepad",
-          );
-          break;
-        case 0:
-          AudioSystem_1.AudioSystem.SetState(
+  iga() {
+    Info_1.Info.IsInGamepad()
+      ? AudioSystem_1.AudioSystem.SetState("input_controller_type", "gamepad")
+      : Info_1.Info.IsInKeyBoard()
+        ? AudioSystem_1.AudioSystem.SetState(
             "input_controller_type",
             "Keyboard",
-          );
-          break;
-        default:
-          AudioSystem_1.AudioSystem.SetState("input_controller_type", "touch");
-      }
-      Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info(
-          "Platform",
-          17,
-          "设置输入方式",
-          ["lastInputController", r],
-          ["InputController", this._Qi],
-        );
-      let e = 0;
-      switch (t) {
-        case 0:
-          e = 1;
-          break;
-        case 1:
-          e = 2;
-          break;
-        case 2:
-          e = 3;
-      }
-      r = LguiEventSystemManager_1.LguiEventSystemManager.LguiEventSystemActor;
-      r?.IsValid() && r.SetCurrentInputKeyType(e);
-    }
+          )
+        : AudioSystem_1.AudioSystem.SetState("input_controller_type", "touch");
   }
-  CQi(e) {
-    var t, r;
-    this.PlatformType !== e &&
-      ((t = this.lQi),
-      (r = this.PlatformType),
-      (this.hQi = e),
-      (this.lQi = PlatformDefine_1.operationMap.get(e)),
-      Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info(
-          "Platform",
-          17,
-          "设置平台类型",
-          ["PlatformType", this.PlatformType],
-          ["OperationType", this.lQi],
-        ),
-      EventSystem_1.EventSystem.Emit(
-        EventDefine_1.EEventName.OnPlatformChanged,
-        this.PlatformType,
-        t,
-        this.lQi,
-        r,
-      ));
+  rga() {
+    let e = 0;
+    Info_1.Info.IsInKeyBoard()
+      ? (e = 1)
+      : Info_1.Info.IsInGamepad()
+        ? (e = 2)
+        : Info_1.Info.IsInTouch() && (e = 3);
+    var t =
+      LguiEventSystemManager_1.LguiEventSystemManager.LguiEventSystemActor;
+    t?.IsValid() && t.SetCurrentInputKeyType(e);
   }
-  OnPressAnyKey(e) {
-    this.IsMobile() ||
-      (UE.KismetInputLibrary.Key_IsGamepadKey(e)
-        ? this.RefreshPlatformByDevice() || this.SwitchInputControllerType(1, 6)
-        : UE.KismetInputLibrary.Key_IsKeyboardKey(e) ||
-            UE.KismetInputLibrary.Key_IsMouseButton(e)
-          ? this.SwitchInputControllerType(0)
-          : this.SwitchInputControllerType(2));
-  }
-  RefreshPlatformByDevice() {
-    var e = this.GetCurrentDeviceControllerPlatform();
-    return 0 !== e && (this.SwitchInputControllerType(1, e), !0);
-  }
-  GetCurrentDeviceControllerPlatform() {
+  bfa() {
     var t = UE.RawInputFunctionLibrary.GetRegisteredDevices();
-    if (t)
+    if (t && 0 !== t.Num()) {
       for (let e = 0; e < t.Num(); e++) {
         var r = t.Get(e),
           r = r.VendorID + "_" + r.ProductID,
           r = PlatformDefine_1.deviceIdMap.get(r);
         if (r) return r;
       }
-    return 0;
+      return 2;
+    }
   }
-  IsPc() {
-    return (
-      3 === this.PlatformType ||
-      4 === this.PlatformType ||
-      5 === this.PlatformType
-    );
+  OnPressAnyKey(e) {
+    Info_1.Info.IsMobilePlatform() ||
+      (UE.KismetInputLibrary.Key_IsGamepadKey(e)
+        ? this.RefreshPlatformByDevice("PressAnyKey") ||
+          Info_1.Info.SwitchInputControllerType(2, "PressAnyKey")
+        : UE.KismetInputLibrary.Key_IsKeyboardKey(e) ||
+            UE.KismetInputLibrary.Key_IsMouseButton(e)
+          ? Info_1.Info.SwitchInputControllerType(1, "PressAnyKey")
+          : Info_1.Info.SwitchInputControllerType(5, "PressAnyKey"));
   }
-  IsMobile() {
-    return 1 === this.PlatformType || 2 === this.PlatformType;
-  }
-  IsGamepad() {
-    return 6 === this.PlatformType || 7 === this.PlatformType;
-  }
-  IsMobileSource() {
-    return Info_1.Info.IsMobile();
-  }
-  get SourcePlatformType() {
-    return Info_1.Info.PlatformType;
-  }
-  get OperationType() {
-    return this.lQi;
-  }
-  get InputController() {
-    return this._Qi;
+  RefreshPlatformByDevice(e) {
+    if (Info_1.Info.IsPs5Platform())
+      return Info_1.Info.SwitchInputControllerType(4, e), !0;
+    if (Info_1.Info.IsPcPlatform()) {
+      var t = this.bfa();
+      if (t) return Info_1.Info.SwitchInputControllerType(t, e), !0;
+    }
+    return !1;
   }
   GetPlatformName() {
     return UE.GameplayStatics.GetPlatformName();
   }
-  IsInGamepad() {
-    return 1 === this._Qi;
-  }
-  IsInKeyBoard() {
-    return 0 === this._Qi;
-  }
   GetNetStatus() {
-    return this.IsMobile()
+    return Info_1.Info.IsMobilePlatform()
       ? UE.MobilePatchingLibrary.HasActiveWiFiConnection()
-        ? Protocol_1.Aki.Protocol.D2s.Proto_Wifi
+        ? Protocol_1.Aki.Protocol.gNs.Proto_Wifi
         : UE.KuroLauncherLibrary.GetNetworkConnectionType() ===
             NetworkDefine_1.ENetworkType.Cell
-          ? Protocol_1.Aki.Protocol.D2s.Proto_Stream
-          : Protocol_1.Aki.Protocol.D2s.Proto_Other
-      : this.IsPc()
-        ? Protocol_1.Aki.Protocol.D2s.Proto_Wired
-        : Protocol_1.Aki.Protocol.D2s.Proto_Other;
+          ? Protocol_1.Aki.Protocol.gNs.Proto_Stream
+          : Protocol_1.Aki.Protocol.gNs.Proto_Other
+      : Info_1.Info.IsPcOrGamepadPlatform()
+        ? Protocol_1.Aki.Protocol.gNs.Proto_Wired
+        : Protocol_1.Aki.Protocol.gNs.Proto_Other;
   }
   IsKeyFromGamepadKey(e) {
     return (

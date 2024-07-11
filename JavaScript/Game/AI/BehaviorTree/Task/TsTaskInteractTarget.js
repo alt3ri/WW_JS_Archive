@@ -40,7 +40,7 @@ class TsTaskInteractTarget extends TsTaskAbortImmediatelyBase_1.default {
           this.TsBlackboardKey,
         ))) &&
         (e = WorldFunctionLibrary_1.default.GetDynamicEntity(e))
-        ? ((this.AnimComp = i.CharActorComp.Entity.GetComponent(160)),
+        ? ((this.AnimComp = i.CharActorComp.Entity.GetComponent(162)),
           this.ExecuteInteractTarget(e, i.CharActorComp))
         : this.FinishExecute(!1)
       : (Log_1.Log.CheckError() &&
@@ -55,7 +55,7 @@ class TsTaskInteractTarget extends TsTaskAbortImmediatelyBase_1.default {
       e = CharacterController_1.CharacterController.GetActorComponent(r);
     let i = e.ActorLocation,
       s = e.ActorRotation;
-    e = r.Entity.GetComponent(91);
+    e = r.Entity.GetComponent(93);
     e?.IsInit &&
       ((r = e.GetInteractPosition()) && (i = r),
       (r = e.GetInteractRotator()) && (s = r),

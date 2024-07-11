@@ -9,16 +9,16 @@ const UE = require("ue"),
   PublicUtil_1 = require("../../../../Common/PublicUtil"),
   GlobalData_1 = require("../../../../GlobalData"),
   ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
   LevelSequencePlayer_1 = require("../../../Common/LevelSequencePlayer"),
   LguiUtil_1 = require("../../../Util/LguiUtil"),
-  BattleUiDefine_1 = require("../../BattleUiDefine"),
-  BuffItem_1 = require("../BuffItem"),
+  BuffItemContainer_1 = require("../BuffItemContainer"),
   HpBufferStateMachine_1 = require("../HeadState/HpBufferStateMachine"),
   RageBufferStateMachine_1 = require("../HeadState/RageBufferStateMachine"),
   VisibleAnimMachine_1 = require("../State/VisibleAnimMachine"),
   BossStateViewBase_1 = require("./BossStateViewBase"),
   FallDownPercentMachine_1 = require("./FallDownPercentMachine");
-var EAttributeId = Protocol_1.Aki.Protocol.KBs;
+var EAttributeId = Protocol_1.Aki.Protocol.Bks;
 const rgbSplitProgress = new UE.FName("RGBSplit_Progress"),
   FALL_DOWN_DISAPPEAR_PERCENT = 0.9,
   FALL_DOWN_DISAPPEAR_TAIL_COUNT_FACTOR = 10,
@@ -30,103 +30,101 @@ const rgbSplitProgress = new UE.FName("RGBSplit_Progress"),
 class CommonBossStateView extends BossStateViewBase_1.BossStateViewBase {
   constructor() {
     super(...arguments),
-      (this.EPe = void 0),
-      (this.jot = void 0),
-      (this.Wot = void 0),
-      (this.Kot = void 0),
-      (this.Qot = -0),
-      (this.Xot = 1),
-      (this.$ot = 1),
-      (this.Yot = !1),
-      (this.Jot = new Map()),
-      (this.zot = []),
-      (this.Zot = []),
-      (this.ert = new HpBufferStateMachine_1.HpBufferStateMachine()),
-      (this.trt = new FallDownPercentMachine_1.FallDownPercentMachine()),
-      (this.irt = new RageBufferStateMachine_1.RageBufferStateMachine()),
-      (this.ort = void 0),
-      (this.rrt = -1),
-      (this.nrt = -0),
-      (this.srt = 0),
-      (this.art = 0),
-      (this.hrt = !1),
-      (this.lrt = !1),
-      (this._rt = !1),
-      (this.urt = !0),
-      (this.crt = !0),
-      (this.mrt = !1),
-      (this.drt = !1),
-      (this.Crt = 0),
-      (this.grt = 0),
-      (this.frt = !1),
+      (this.SPe = void 0),
+      (this.int = void 0),
+      (this.ont = void 0),
+      (this.rnt = void 0),
+      (this.nnt = -0),
+      (this.snt = 1),
+      (this.ant = 1),
+      (this.hnt = !1),
+      (this.okn = new BuffItemContainer_1.BuffItemContainer()),
+      (this.cnt = new HpBufferStateMachine_1.HpBufferStateMachine()),
+      (this.mnt = new FallDownPercentMachine_1.FallDownPercentMachine()),
+      (this.dnt = new RageBufferStateMachine_1.RageBufferStateMachine()),
+      (this.Cnt = void 0),
+      (this.gnt = -1),
+      (this.fnt = -0),
+      (this.pnt = 0),
+      (this.vnt = 0),
+      (this.Mnt = !1),
+      (this.Ent = !1),
+      (this.Snt = !1),
+      (this.ynt = !0),
+      (this.Tnt = !0),
+      (this.Lnt = !1),
+      (this.Dnt = !1),
+      (this.Rnt = 0),
+      (this.Unt = 0),
+      (this.Ant = !1),
       (this.OnBossHeathChanged = (t, i, s) => {
-        this.prt(!0);
+        this.Pnt(!0);
       }),
       (this.OnBossMaxHealthChanged = (t, i, s) => {
-        this.prt();
+        this.Pnt();
       }),
       (this.OnVulnerabilityActivated = (t, i) => {
-        this.drt = i;
+        this.Dnt = i;
         var s = this.GetSprite(21);
         s.SetUIActive(i),
-          this.drt
+          this.Dnt
             ? (([i] = this.GetHpAndShieldPercent()),
               s.SetFillAmount(i),
-              this.jot.Play())
-            : this.jot.Stop();
+              this.int.Play())
+            : this.int.Stop();
       }),
       (this.OnLevelChanged = (t, i, s) => {
-        this.vrt();
+        this.xnt();
       }),
-      (this.Mrt = (t) => {
+      (this.wnt = (t) => {
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("Battle", 18, "狂暴条刷新", ["visible", t]),
           this.GetItem(11).SetUIActive(t),
           t && this.GetItem(11).SetAlpha(1);
       }),
-      (this.Srt = (t) => {
+      (this.Bnt = (t) => {
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("Battle", 18, "播放狂暴条动画", ["visible", t]),
-          t ? this.Ert(27) : this.Ert(30);
+          t ? this.bnt(27) : this.bnt(30);
       }),
-      (this.yrt = (t) => {
+      (this.qnt = (t) => {
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("Battle", 18, "停止狂暴条动画", ["visible", t]),
-          t ? this.Irt(27) : this.Irt(30);
+          t ? this.Gnt(27) : this.Gnt(30);
       }),
-      (this.Trt = (t, i, s) => {
+      (this.Nnt = (t, i, s) => {
         var e;
         t <= i
-          ? this.Lrt()
+          ? this.Ont()
           : ((e = this.GetSprite(20)).SetUIActive(!0),
-            e.SetStretchRight(this.art * (1 - t)),
-            e.SetStretchLeft(this.art * i),
-            s && this.Ert(28));
+            e.SetStretchRight(this.vnt * (1 - t)),
+            e.SetStretchLeft(this.vnt * i),
+            s && this.bnt(28));
       }),
-      (this.Drt = (t, i) => {
+      (this.knt = (t, i) => {
         var s;
         t <= i
-          ? this.Rrt()
+          ? this.Fnt()
           : ((s = this.GetItem(22)).SetUIActive(!0),
-            s.SetStretchRight(this.art * (1 - t)),
-            s.SetStretchLeft(this.art * i),
+            s.SetStretchRight(this.vnt * (1 - t)),
+            s.SetStretchLeft(this.vnt * i),
             this.GetUiNiagara(23).ActivateSystem(!0),
-            this.Ert(26));
+            this.bnt(26));
       }),
-      (this.Urt = () => {
-        this.Ert(31);
+      (this.Vnt = () => {
+        this.bnt(31);
       }),
-      (this.Art = new Map()),
-      (this.Prt = (t) => {
+      (this.Hnt = new Map()),
+      (this.jnt = (t) => {
         t || this.Hide();
       }),
-      (this.xrt = (t) => {
+      (this.Wnt = (t) => {
         t
-          ? this.EPe.PlaySequencePurely("ShowView")
-          : this.EPe.PlaySequencePurely("CloseView");
+          ? this.SPe.PlaySequencePurely("ShowView")
+          : this.SPe.PlaySequencePurely("CloseView");
       }),
-      (this.wrt = (t) => {
-        this.EPe.StopCurrentSequence();
+      (this.Knt = (t) => {
+        this.SPe.StopCurrentSequence();
       });
   }
   OnRegisterComponent() {
@@ -164,219 +162,173 @@ class CommonBossStateView extends BossStateViewBase_1.BossStateViewBase {
       [30, UE.UIItem],
       [31, UE.UIItem],
     ]),
-      (this.nrt =
+      (this.fnt =
         CommonParamById_1.configCommonParamById.GetIntConfig(
           "HitEffectDuration",
         ));
   }
   OnStart() {
-    (this.EPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem)),
-      this.Brt(),
-      (this.Qot =
+    (this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem)),
+      this.Qnt(),
+      (this.nnt =
         CommonParamById_1.configCommonParamById.GetIntConfig(
           "HitLargeBufferPercent",
         ) / 1e4),
-      (this.Wot = new VisibleAnimMachine_1.VisibleAnimMachine()),
-      this.Wot.InitCallback(this.Prt, this.xrt, this.wrt),
-      this.Wot.InitVisible(!1),
-      (this.Kot = new VisibleAnimMachine_1.VisibleAnimMachine()),
-      this.Kot.InitCallback(this.Mrt, this.Srt, this.yrt);
+      (this.ont = new VisibleAnimMachine_1.VisibleAnimMachine()),
+      this.ont.InitCallback(this.jnt, this.Wnt, this.Knt),
+      this.ont.InitVisible(!1),
+      (this.rnt = new VisibleAnimMachine_1.VisibleAnimMachine()),
+      this.rnt.InitCallback(this.wnt, this.Bnt, this.qnt),
+      this.okn.Init(this.GetItem(13));
   }
   OnBeforeDestroy() {
-    this.EPe.Clear(),
-      (this.EPe = void 0),
-      this.Wot.Reset(),
-      (this.Wot = void 0),
-      this.Kot.Reset(),
-      (this.Kot = void 0);
+    this.SPe.Clear(),
+      (this.SPe = void 0),
+      this.ont.Reset(),
+      (this.ont = void 0),
+      this.rnt.Reset(),
+      (this.rnt = void 0);
   }
   OnActivate() {
     super.OnActivate(),
-      (this.lrt = this.HasFallDownTag),
-      (this.hrt = this.GetItem(11).bIsUIActive),
-      (this.crt = this.GetItem(2).bIsUIActive),
-      (this._rt = this.GetSprite(18).bIsUIActive),
-      this.Kot.InitVisible(this.hrt),
-      this.vrt(),
-      this.brt(),
-      this.qrt(),
-      this.prt(),
-      this.Grt(),
-      this.Nrt(),
-      this.Ort(),
-      this.krt(),
-      this.Frt(),
-      this.Vrt(),
-      this.irt.SetUpdateCallback(this.Trt, this.Drt, this.Urt),
-      this.Wot.SetVisible(!0, SHOW_VIEW_ANIM_TIME);
+      (this.Ent = this.HasFallDownTag),
+      (this.Mnt = this.GetItem(11).bIsUIActive),
+      (this.Tnt = this.GetItem(2).bIsUIActive),
+      (this.Snt = this.GetSprite(18).bIsUIActive),
+      this.rnt.InitVisible(this.Mnt),
+      this.xnt(),
+      this.Xnt(),
+      this.$nt(),
+      this.Pnt(),
+      this.Ynt(),
+      this.Jnt(),
+      this.znt(),
+      this.Znt(),
+      this.est(),
+      this.tst(),
+      this.dnt.SetUpdateCallback(this.Nnt, this.knt, this.Vnt),
+      this.ont.SetVisible(!0, SHOW_VIEW_ANIM_TIME);
   }
   OnDeactivate() {
     super.OnDeactivate(),
-      this.Hrt(),
-      this.Lrt(),
-      this.Rrt(),
-      this.irt.Reset(),
-      this.jrt(),
-      this.Wrt(),
-      (this.lrt = !1),
-      this.Kot?.Reset();
+      this.ist(),
+      this.Ont(),
+      this.Fnt(),
+      this.dnt.Reset(),
+      this.ost(),
+      this.okn.ClearAll(),
+      (this.Ent = !1),
+      this.rnt?.Reset();
   }
   Initialize(t) {
     super.Initialize(t);
     t = this.GetSprite(21);
-    (this.jot = t
+    (this.int = t
       .GetOwner()
       .GetComponentByClass(UE.LGUIPlayTweenComponent.StaticClass())),
-      (this.srt = this.GetItem(8).GetParentAsUIItem().GetWidth()),
-      (this.art = this.GetSprite(20).GetParentAsUIItem().GetWidth()),
+      (this.pnt = this.GetItem(8).GetParentAsUIItem().GetWidth()),
+      (this.vnt = this.GetSprite(20).GetParentAsUIItem().GetWidth()),
       ResourceSystem_1.ResourceSystem.LoadAsync(
         "/LGUI/MPC_UIShader.MPC_UIShader",
         UE.MaterialParameterCollection,
         (t) => {
-          this.ort = t;
+          this.Cnt = t;
         },
         103,
       ),
-      (this.lrt = this.HasFallDownTag);
+      (this.Ent = this.HasFallDownTag);
   }
   OnBossShieldChanged(t) {
-    this.prt(!0);
+    this.Pnt(!0);
   }
   OnFallDownVisibleChanged(t) {
     t
       ? (Log_1.Log.CheckInfo() && Log_1.Log.Info("Battle", 18, "进入倒地状态"),
-        this.irt.GetHit(0, this.$ot),
-        this.Krt(),
-        this.Qrt(!0))
+        this.dnt.GetHit(0, this.ant),
+        this.nst(),
+        this.sst(!0))
       : (Log_1.Log.CheckInfo() && Log_1.Log.Info("Battle", 18, "退入倒地状态"),
-        this.Qrt(!1));
+        this.sst(!1));
   }
   OnBossHardnessChanged(t) {
-    this.krt();
+    this.Znt();
   }
   OnBossLanguageChange() {
-    this.brt();
+    this.Xnt();
   }
   OnBossStateChange() {
-    this.Nrt(!0), this.Ort();
+    this.Jnt(!0), this.znt();
   }
-  Tick(i) {
-    var t;
-    this.frt &&
-      ((t = this.ert.UpdatePercent(i)) < 0
-        ? this.Hrt()
-        : t <= 1 && this.Xrt(t)),
-      this.irt.Update(i),
-      this.Krt(i),
-      this.rrt > this.nrt && (this.$rt(0), (this.rrt = -1)),
-      0 <= this.rrt && (this.rrt += i);
-    for (const e of this.Jot.values()) e.Tick(i);
-    for (let t = this.zot.length - 1; 0 <= t; t--) {
-      var s = this.zot[t];
-      s.TickHiding(i) || (this.zot.splice(t, 1), this.Zot.push(s));
-    }
-    super.Tick(i);
+  Tick(t) {
+    var i;
+    this.Ant &&
+      ((i = this.cnt.UpdatePercent(t)) < 0
+        ? this.ist()
+        : i <= 1 && this.ast(i)),
+      this.dnt.Update(t),
+      this.nst(t),
+      this.gnt > this.fnt && (this.hst(0), (this.gnt = -1)),
+      0 <= this.gnt && (this.gnt += t),
+      this.okn.Tick(t),
+      super.Tick(t);
   }
   ChangeBuff(t, i, s) {
-    i ? this.Yrt(t, s, !0) : this.Jrt(s, !0);
+    i ? this.okn.AddBuffByCue(t, s, !0) : this.okn.RemoveBuffByCue(t, s, !0);
   }
-  Yrt(i, s, e = !1) {
-    if (!this.Jot.has(s)) {
-      let t = this.zrt();
-      (t = t || this.Zrt()), this.ent(t, i, s, e);
-    }
-  }
-  Zrt() {
-    var t = this.GetItem(13);
-    return new BuffItem_1.BuffItem(t);
-  }
-  ent(t, i, s, e = !1) {
-    var h = this.Jot.size,
-      r = this.GetEntity().CheckGetComponent(157)?.GetBuffByHandle(s);
-    t.Activate(i, r, e),
-      t.GetRootItem().SetHierarchyIndex(h),
-      this.Jot.set(s, t);
-  }
-  Jrt(t, i = !1) {
-    var s = this.tnt(t);
-    s &&
-      (this.Jot.delete(t),
-      (i
-        ? (s.DeactivateWithCloseAnim(), this.zot)
-        : (s.Deactivate(), this.Zot)
-      ).push(s));
-  }
-  zrt() {
-    var t;
-    if (!(this.Zot.length < 1))
-      return (t = this.Zot[0]), this.Zot.splice(0, 1), t;
-  }
-  tnt(t) {
-    return this.Jot.get(t);
-  }
-  Wrt() {
-    for (const t of this.Jot.values()) t.DestroyCompatible();
-    this.Jot.clear();
-    for (const i of this.zot) i.Deactivate(), i.DestroyCompatible();
-    this.zot.length = 0;
-    for (const s of this.Zot) s.DestroyCompatible();
-    this.Zot.length = 0;
-  }
-  prt(t = !1) {
+  Pnt(t = !1) {
     var [i, s] = this.GetHpAndShieldPercent();
-    this.int(i), this.ont(s), t ? this.rnt(i) : this.Hrt(), (this.Xot = i);
+    this.Cst(i), this.gst(s), t ? this.fst(i) : this.ist(), (this.snt = i);
   }
-  rnt(t) {
+  fst(t) {
     var i;
-    t < this.Xot &&
-      ((i = this.ert.IsOriginState()),
-      this.ert.GetHit(t, this.Xot),
-      i && !this.ert.IsOriginState() && this.Xrt(this.Xot),
-      (this.frt = !0),
-      this.Xot - t < this.Qot
-        ? this.Ert(25)
-        : (this.Ert(26), (this.rrt = 0), this.$rt(1)));
+    t < this.snt &&
+      ((i = this.cnt.IsOriginState()),
+      this.cnt.GetHit(t, this.snt),
+      i && !this.cnt.IsOriginState() && this.ast(this.snt),
+      (this.Ant = !0),
+      this.snt - t < this.nnt
+        ? this.bnt(25)
+        : (this.bnt(26), (this.gnt = 0), this.hst(1)));
   }
-  $rt(t) {
-    this.ort &&
+  hst(t) {
+    this.Cnt &&
       UE.KismetMaterialLibrary.SetScalarParameterValue(
         GlobalData_1.GlobalData.GameInstance.GetWorld(),
-        this.ort,
+        this.Cnt,
         rgbSplitProgress,
         t,
       );
   }
-  Hrt() {
-    this.GetItem(8).SetUIActive(!1), this.ert.Reset(), (this.frt = !1);
+  ist() {
+    this.GetItem(8).SetUIActive(!1), this.cnt.Reset(), (this.Ant = !1);
   }
-  int(t) {
+  Cst(t) {
     this.GetSprite(7).SetFillAmount(t),
-      this.drt && this.GetSprite(21).SetFillAmount(t);
+      this.Dnt && this.GetSprite(21).SetFillAmount(t);
   }
-  Xrt(t) {
-    var i = this.srt * this.Xot,
-      t = this.srt * t,
+  ast(t) {
+    var i = this.pnt * this.snt,
+      t = this.pnt * t,
       i = t - i,
-      t = t - (this.srt + i) / 2,
+      t = t - (this.pnt + i) / 2,
       s = this.GetItem(8);
     s.SetAnchorOffsetX(t),
       s.SetWidth(i),
       s.SetUIActive(!0),
       this.GetSprite(9).SetAnchorOffsetX(-t);
   }
-  ont(t) {
+  gst(t) {
     var i = this.GetSprite(10);
     0 < t ? (i.SetFillAmount(t), i.SetUIActive(!0)) : i.SetUIActive(!1);
   }
-  Vrt() {
-    if ((this.Wrt(), this.IsValid()))
-      for (const i of this.GetEntity().GetComponent(19).GetAllCurrentCueRef()) {
-        var t = i.CueConfig;
-        t.CueType === BattleUiDefine_1.UI_EFFECT_CUE_TYPE &&
-          this.Yrt(t, i.ActiveHandleId);
-      }
+  tst() {
+    var t = this.GetEntityId();
+    void 0 === t
+      ? this.okn.ClearAll()
+      : ((t = ModelManager_1.ModelManager.CharacterModel?.GetHandle(t)),
+        this.okn.RefreshBuff(t));
   }
-  vrt() {
+  xnt() {
     var t, i;
     this.IsValid() &&
       (t = this.GetText(0)) &&
@@ -388,7 +340,7 @@ class CommonBossStateView extends BossStateViewBase_1.BossStateViewBase {
           : ((i = this.GetCurrentAttributeValueById(EAttributeId.Proto_Lv)),
             LguiUtil_1.LguiUtil.SetLocalText(t, "LevelShow", i)));
   }
-  qrt() {
+  $nt() {
     var t, i;
     this.IsValid() &&
       ((i = this.GetCurrentAttributeValueById(EAttributeId.Proto_Lv)),
@@ -398,7 +350,7 @@ class CommonBossStateView extends BossStateViewBase_1.BossStateViewBase {
       t.SetColor(i),
       this.GetText(1).SetColor(i));
   }
-  brt() {
+  Xnt() {
     var t, i, s;
     this.IsValid() &&
       ((t = PublicUtil_1.PublicUtil.GetConfigTextByKey(
@@ -410,119 +362,119 @@ class CommonBossStateView extends BossStateViewBase_1.BossStateViewBase {
       (s = this.GetText(1))) &&
       s.SetText(t + i);
   }
-  Ort() {
-    var t = this.lrt || this.urt;
-    this.hrt !== t && ((this.hrt = t), this.Kot.SetVisible(t, TOUGH_ANIM_TIME));
+  znt() {
+    var t = this.Ent || this.ynt;
+    this.Mnt !== t && ((this.Mnt = t), this.rnt.SetVisible(t, TOUGH_ANIM_TIME));
   }
-  krt() {
+  Znt() {
     var t;
     this.IsValid() &&
       this.HardnessAttributeId === EAttributeId.Proto_Rage &&
       ((t =
         this.GetCurrentAttributeValueById(this.HardnessAttributeId) /
         this.GetCurrentAttributeValueById(this.MaxHardnessAttributeId)),
-      this.nnt(t),
-      this.snt(t),
-      (this.$ot = t));
+      this.pst(t),
+      this.vst(t),
+      (this.ant = t));
   }
-  nnt(t) {
-    this.GetSprite(4).SetFillAmount(t), this.irt.GetHit(t, this.$ot);
+  pst(t) {
+    this.GetSprite(4).SetFillAmount(t), this.dnt.GetHit(t, this.ant);
   }
-  snt(t) {
+  vst(t) {
     t < 1
-      ? (this.Yot = !1)
-      : this.Yot ||
-        (this.urt
-          ? ((this.mrt = !1),
-            (this.Yot = !0),
+      ? (this.hnt = !1)
+      : this.hnt ||
+        (this.ynt
+          ? ((this.Lnt = !1),
+            (this.hnt = !0),
             (t = this.GetUiNiagara(12)).IsUIActiveSelf()
               ? t.ActivateSystem(!0)
               : t.SetUIActive(!0),
-            this.Frt())
-          : (this.mrt = !0));
+            this.est())
+          : (this.Lnt = !0));
   }
-  jrt() {
+  ost() {
     var t = this.GetUiNiagara(12);
     t.IsUIActiveSelf() && t.SetUIActive(!1);
   }
-  Nrt(t = !1) {
-    this.ant(),
-      this.crt !== this.urt &&
-        ((this.crt = this.urt),
-        this.GetSprite(4).SetUIActive(this.crt),
-        t || (this.crt && this.mrt)) &&
-        this.krt();
+  Jnt(t = !1) {
+    this.Mst(),
+      this.Tnt !== this.ynt &&
+        ((this.Tnt = this.ynt),
+        this.GetSprite(4).SetUIActive(this.Tnt),
+        t || (this.Tnt && this.Lnt)) &&
+        this.Znt();
   }
-  ant() {
-    this.lrt || this.HardnessAttributeId !== EAttributeId.Proto_Rage
-      ? (this.urt = !1)
-      : (this.urt = !0);
+  Mst() {
+    this.Ent || this.HardnessAttributeId !== EAttributeId.Proto_Rage
+      ? (this.ynt = !1)
+      : (this.ynt = !0);
   }
-  Lrt() {
+  Ont() {
     this.GetSprite(20).SetUIActive(!1);
   }
-  Rrt() {
+  Fnt() {
     this.GetItem(22).SetUIActive(!1);
   }
-  Frt() {}
-  Qrt(t) {
-    (this.lrt = t), this.Grt(), this.Nrt(!t), this.Ort();
+  est() {}
+  sst(t) {
+    (this.Ent = t), this.Ynt(), this.Jnt(!t), this.znt();
   }
-  Grt() {
-    this.lrt !== this._rt &&
-      ((this._rt = this.lrt),
-      this.GetSprite(18).SetUIActive(this._rt),
-      this._rt ? this.Ert(29) : this.Irt(29));
+  Ynt() {
+    this.Ent !== this.Snt &&
+      ((this.Snt = this.Ent),
+      this.GetSprite(18).SetUIActive(this.Snt),
+      this.Snt ? this.bnt(29) : this.Gnt(29));
   }
-  Krt(t = 0) {
-    if (this.lrt) {
+  nst(t = 0) {
+    if (this.Ent) {
       var i = this.GetCurrentAttributeValueById(fallDownAttributeId),
         s = this.GetCurrentAttributeValueById(fallDownMaxAttributeId),
         i =
-          (this.trt.SetTargetPercent(1 - i / s),
-          0 < t && this.trt.Update(t),
-          this.trt.GetCurPercent());
+          (this.mnt.SetTargetPercent(1 - i / s),
+          0 < t && this.mnt.Update(t),
+          this.mnt.GetCurPercent());
       if (0 <= i && i <= 1) {
         s = this.GetSprite(18);
-        this.Crt || (this.Crt = this.GetItem(17).GetWidth()),
-          s.SetStretchRight(this.Crt * i);
+        this.Rnt || (this.Rnt = this.GetItem(17).GetWidth()),
+          s.SetStretchRight(this.Rnt * i);
         let t = 1;
         i > FALL_DOWN_DISAPPEAR_PERCENT &&
           (t = (1 - i) * FALL_DOWN_DISAPPEAR_TAIL_COUNT_FACTOR),
-          this.grt !== t &&
-            ((this.grt = t),
+          this.Unt !== t &&
+            ((this.Unt = t),
             this.GetUiNiagara(19).SetNiagaraVarFloat("Count", t));
       }
     }
   }
-  Brt() {
-    this.hnt(25),
-      this.hnt(26),
-      this.hnt(27),
-      this.hnt(28),
-      this.hnt(29),
-      this.hnt(30),
-      this.hnt(31);
+  Qnt() {
+    this.Est(25),
+      this.Est(26),
+      this.Est(27),
+      this.Est(28),
+      this.Est(29),
+      this.Est(30),
+      this.Est(31);
   }
-  hnt(t) {
+  Est(t) {
     var i = [],
       s = this.GetItem(t)
         .GetOwner()
         .K2_GetComponentsByClass(UE.LGUIPlayTweenComponent.StaticClass()),
       e = s.Num();
     for (let t = 0; t < e; t++) i.push(s.Get(t));
-    this.Art.set(t, i);
+    this.Hnt.set(t, i);
   }
-  Ert(t) {
-    t = this.Art.get(t);
+  bnt(t) {
+    t = this.Hnt.get(t);
     if (t) for (const i of t) i.Play();
   }
-  Irt(t) {
-    t = this.Art.get(t);
+  Gnt(t) {
+    t = this.Hnt.get(t);
     if (t) for (const i of t) i.Stop();
   }
   HideWithAnim() {
-    this.Wot.SetVisible(!1, CLOSE_VIEW_ANIM_TIME);
+    this.ont.SetVisible(!1, CLOSE_VIEW_ANIM_TIME);
   }
   GetResourceId() {
     return "UiItem_BossState_Prefab";

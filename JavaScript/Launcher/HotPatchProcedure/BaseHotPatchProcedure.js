@@ -18,17 +18,17 @@ const puerts_1 = require("puerts"),
   DEFAULT_CONFIG_TRY_COUNT = 3;
 class BaseHotPatchProcedure {
   constructor(e, t) {
-    (this.QSr = !1),
-      (this.XSr = void 0),
-      (this.$Sr = void 0),
+    (this.jSr = !1),
+      (this.WSr = void 0),
+      (this.KSr = void 0),
       (this.ViewMgr = void 0),
-      (this.$Sr = e),
+      (this.KSr = e),
       (this.ViewMgr = t);
   }
   async Start() {
     return (
       await this.ViewMgr.ShowInfo(!1, "StartHotFix"),
-      (this.XSr = UE.KuroLauncherLibrary.GetAppVersion()),
+      (this.WSr = UE.KuroLauncherLibrary.GetAppVersion()),
       !0
     );
   }
@@ -37,7 +37,7 @@ class BaseHotPatchProcedure {
     let o = !1;
     return (
       await (0, ProcedureUtil_1.whetherRepeatDoOnFailedAsync)(
-        async () => ({ Success: (o = await this.YSr()) }),
+        async () => ({ Success: (o = await this.QSr()) }),
         async (e, t) => {
           return (await this.ViewMgr.ShowDialog(
             !0,
@@ -65,7 +65,7 @@ class BaseHotPatchProcedure {
   async IsAppVersionChange() {
     return (
       await this.ViewMgr.ShowInfo(!1, "CheckAppUpdate"),
-      !(this.XSr === RemoteConfig_1.RemoteInfo.Config.PackageVersion)
+      !(this.WSr === RemoteConfig_1.RemoteInfo.Config.PackageVersion)
     );
   }
   async UpdateResource(e, ...t) {
@@ -443,7 +443,7 @@ class BaseHotPatchProcedure {
       !0
     );
   }
-  async YSr() {
+  async QSr() {
     var e = UE.BlueprintPathsLibrary.ProjectConfigDir() + "Kuro/RConfig.ini",
       r = (0, puerts_1.$ref)(void 0),
       a = (0, puerts_1.$ref)(void 0);
@@ -457,10 +457,10 @@ class BaseHotPatchProcedure {
           (0, puerts_1.$unref)(a),
         ));
     else {
-      var i = `${BaseConfigController_1.BaseConfigController.GetMixUri()}/${this.$Sr.GetPlatform()}/config.json`;
+      var i = `${BaseConfigController_1.BaseConfigController.GetMixUri()}/${this.KSr.GetPlatform()}/config.json`;
       UrlPrefixDownload_1.UrlPrefixSelector.Init(),
-        this.QSr ||
-          (UrlPrefixDownload_1.UrlPrefixSelector.Reset(), (this.QSr = !0));
+        this.jSr ||
+          (UrlPrefixDownload_1.UrlPrefixSelector.Reset(), (this.jSr = !0));
       let t = !1,
         o = void 0;
       (e = UrlPrefixDownload_1.UrlPrefixSelector.GetAllPrefixList()),

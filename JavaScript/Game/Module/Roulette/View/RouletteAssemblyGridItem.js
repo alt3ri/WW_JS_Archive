@@ -20,7 +20,9 @@ class RouletteAssemblyGridItem extends LoopScrollMediumItemGrid_1.LoopScrollMedi
     switch ((i && (s.SortIndex = e.RelativeIndex), e.GridType)) {
       case 0:
         var o = e;
-        (s.SpriteIconPath = o.IconPath), (s.BottomTextId = o.Name);
+        (s.SpriteIconPath = o.IconPath),
+          (s.BottomTextId = o.Name),
+          (s.IsNewVisible = o.HasRedDot);
         break;
       case 1:
         o = e;
@@ -38,6 +40,11 @@ class RouletteAssemblyGridItem extends LoopScrollMediumItemGrid_1.LoopScrollMedi
         o && ((o = o.GetConfig()), (s.BuffIconType = o.ItemBuffType));
     }
     this.Apply(s), (this.Data.Index = r), this.SetSelected(t);
+  }
+  RefreshRedDot() {
+    var e;
+    0 === this.Data.GridType &&
+      ((e = this.Data), this.SetNewVisible(e.HasRedDot));
   }
   OnSelected(e) {
     this.GetItemGridExtendToggle().SetToggleState(1, e);

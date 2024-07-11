@@ -11,11 +11,11 @@ const LanguageSystem_1 = require("../../../../Core/Common/LanguageSystem"),
   DropDownLogicBase_1 = require("./DropDownLogicBase");
 class LanguageLogic extends DropDownLogicBase_1.DropDownLogicBase {
   constructor() {
-    super(...arguments), (this._Ai = new Map());
+    super(...arguments), (this._Pi = new Map());
   }
   GetDropDownDataList() {
     var o = [];
-    this._Ai.clear();
+    this._Pi.clear();
     const r = new Map();
     var e = MenuController_1.MenuController.GetTargetConfig(51);
     for (const t of MenuTool_1.MenuTool.GetLanguageDefineData()) {
@@ -36,7 +36,7 @@ class LanguageLogic extends DropDownLogicBase_1.DropDownLogicBase {
       (e = r.get(e.LanguageType)), (o = r.get(o.LanguageType));
       return void 0 === e || void 0 === o ? 0 : e - o;
     });
-    for (let e = 0; e < o.length; e++) this._Ai.set(o[e].LanguageType, e);
+    for (let e = 0; e < o.length; e++) this._Pi.set(o[e].LanguageType, e);
     return o;
   }
   GetDataTextId(e, o) {
@@ -53,7 +53,6 @@ class LanguageLogic extends DropDownLogicBase_1.DropDownLogicBase {
         e.LanguageType,
       ),
       MenuController_1.MenuController.DoConfigFunction(o.MenuDataFunctionId),
-      MenuController_1.MenuController.SaveLocalConfig(),
       (ModelManager_1.ModelManager.MenuModel.IsEdited = !0),
       Log_1.Log.CheckInfo()) &&
       Log_1.Log.Info(
@@ -66,7 +65,7 @@ class LanguageLogic extends DropDownLogicBase_1.DropDownLogicBase {
   }
   GetDefaultIndex(e) {
     e = MenuController_1.MenuController.GetTargetConfig(e.MenuDataFunctionId);
-    return this._Ai.get(e) ?? 0;
+    return this._Pi.get(e) ?? 0;
   }
 }
 exports.LanguageLogic = LanguageLogic;

@@ -5,19 +5,19 @@ const ModelBase_1 = require("../../../../Core/Framework/ModelBase"),
   TimeOfDayDefine_1 = require("../../TimeOfDay/TimeOfDayDefine");
 class InfoDisplayModel extends ModelBase_1.ModelBase {
   constructor() {
-    super(...arguments), (this.kni = 0), (this.Fni = "");
+    super(...arguments), (this.Fsi = 0), (this.Vsi = "");
   }
   CurrentInformationId() {
-    return this.kni;
+    return this.Fsi;
   }
   SetCurrentOpenInformationId(e) {
-    this.kni = e;
+    this.Fsi = e;
   }
   CurrentCurrentInformationTexture() {
-    return this.Fni;
+    return this.Vsi;
   }
   SetCurrentOpenInformationTexture(e) {
-    this.Fni = e;
+    this.Vsi = e;
   }
   static ConvertToHourMinuteString(e) {
     var r = Math.floor(e / TimeOfDayDefine_1.TOD_SECOND_PER_MINUTE),

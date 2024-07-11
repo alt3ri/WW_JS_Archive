@@ -36,8 +36,8 @@ class MailLinkButton extends UiPanelBase_1.UiPanelBase {
   constructor(i) {
     super(),
       (this.ClickDelegate = void 0),
-      (this.VCt = void 0),
-      (this.Kyt = () => {
+      (this.e0t = void 0),
+      (this.eTt = () => {
         this?.ClickDelegate();
       }),
       this.CreateThenShowByActor(i.GetOwner());
@@ -56,10 +56,10 @@ class MailLinkButton extends UiPanelBase_1.UiPanelBase {
       (this.BtnBindInfo = []);
   }
   OnStart() {
-    (this.VCt = this.RootActor.GetComponentByClass(
+    (this.e0t = this.RootActor.GetComponentByClass(
       UE.UIButtonComponent.StaticClass(),
     )),
-      this.VCt.OnClickCallBack.Bind(this.Kyt);
+      this.e0t.OnClickCallBack.Bind(this.eTt);
   }
   OnBeforeDestroy() {
     this.ClickDelegate = void 0;
@@ -129,18 +129,18 @@ class MailBoxView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
       (this.SelectedMailData = void 0),
-      (this.KEi = 0),
-      (this.QEi = void 0),
+      (this.Kyi = 0),
+      (this.Qyi = void 0),
       (this.BSi = void 0),
-      (this.XEi = void 0),
-      (this.$Ei = void 0),
-      (this.YEi = void 0),
-      (this.JEi = void 0),
-      (this.zEi = 1),
-      (this.ZEi = void 0),
-      (this.eyi = void 0),
-      (this.tyi = void 0),
-      (this.iyi = void 0),
+      (this.Xyi = void 0),
+      (this.$yi = void 0),
+      (this.Yyi = void 0),
+      (this.Jyi = void 0),
+      (this.zyi = 1),
+      (this.Zyi = void 0),
+      (this.eIi = void 0),
+      (this.tIi = void 0),
+      (this.iIi = void 0),
       (this.qSi = (i, t) => {
         let e = void 0;
         switch (t) {
@@ -161,9 +161,9 @@ class MailBoxView extends UiViewBase_1.UiViewBase {
       (this.DeleteAllExhaustedMail = () => {
         var i = new ConfirmBoxDefine_1.ConfirmBoxDataNew(49);
         i.FunctionMap.set(2, () => {
-          var i = this.JEi,
+          var i = this.Jyi,
             t = [];
-          if (2 === this.zEi)
+          if (2 === this.zyi)
             for (const e of i)
               e.GetWasScanned() &&
                 2 !== e.GetAttachmentStatus() &&
@@ -185,13 +185,13 @@ class MailBoxView extends UiViewBase_1.UiViewBase {
           Log_1.Log.Info("Mail", 28, "邮件界面：一键领取");
         var i = ModelManager_1.ModelManager.MailModel.GetMailList(),
           t = [],
-          e = 2 === this.zEi ? 2 : 1;
+          e = 2 === this.zyi ? 2 : 1;
         for (const s of i)
           2 === s.GetAttachmentStatus() && s.Level >= e && t.push(s.Id);
         if (0 < t.length)
           MailController_1.MailController.RequestPickAttachment(t, 1);
         else {
-          switch (this.zEi) {
+          switch (this.zyi) {
             case 1:
               ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
                 "MailClearAllAttachment",
@@ -207,24 +207,25 @@ class MailBoxView extends UiViewBase_1.UiViewBase {
         }
       }),
       (this.GSi = (i) => new MailDropDownTitle_1.MailDropDownTitle(i)),
-      (this.oyi = (i) =>
+      (this.oIi = (i) =>
         ModelManager_1.ModelManager.MailModel.GetMailFilterConfigData(i)),
-      (this.ryi = (t, i) => {
-        var e = this.JEi.findIndex((i) => i.Id === t);
-        this.XEi.GetScrollItemFromIndex(e).Update(this.JEi[e], e),
+      (this.rIi = (t, i) => {
+        var e = this.Jyi.findIndex((i) => i.Id === t);
+        this.Xyi.GetScrollItemFromIndex(e).Update(this.Jyi[e], e),
           ModelManager_1.ModelManager.MailModel.SetCurrentSelectMailId(t),
+          this.SelectedMailData && this.LIi(this.SelectedMailData),
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info("Mail", 28, "邮件界面：选择邮件", ["mailId", t]);
       }),
-      (this.nyi = (i) => {
+      (this.nIi = (i) => {
         var t;
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("Mail", 28, "邮件界面：CallBackPickMailView领取附件"),
           this.SelectedMailData &&
             (t = this.BSi.GetDropDownItemObject(this.BSi.GetSelectedIndex())) &&
-            (this.syi(t),
-            this.ayi(this.JEi, this.KEi),
-            this.hyi(this.KEi, this.SelectedMailData),
+            (this.sIi(t),
+            this.aIi(this.Jyi, this.Kyi),
+            this.hIi(this.Kyi, this.SelectedMailData),
             Log_1.Log.CheckInfo()) &&
             Log_1.Log.Info(
               "Mail",
@@ -232,7 +233,7 @@ class MailBoxView extends UiViewBase_1.UiViewBase {
               "邮件界面：CallBackPickMailView领取附件Finish",
             );
       }),
-      (this.lyi = (i) => {
+      (this.lIi = (i) => {
         var t;
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
@@ -245,11 +246,11 @@ class MailBoxView extends UiViewBase_1.UiViewBase {
               (t = this.BSi.GetDropDownItemObject(
                 this.BSi.GetSelectedIndex(),
               )) &&
-                ((i = 1 < i.length ? 0 : this.KEi),
-                this.syi(t, i),
-                this.ayi(this.JEi, this.KEi),
-                (this.SelectedMailData = this.JEi[this.KEi]),
-                this.hyi(this.KEi, this.SelectedMailData),
+                ((i = 1 < i.length ? 0 : this.Kyi),
+                this.sIi(t, i),
+                this.aIi(this.Jyi, this.Kyi),
+                (this.SelectedMailData = this.Jyi[this.Kyi]),
+                this.hIi(this.Kyi, this.SelectedMailData),
                 Log_1.Log.CheckInfo()) &&
                 Log_1.Log.Info(
                   "Mail",
@@ -263,7 +264,7 @@ class MailBoxView extends UiViewBase_1.UiViewBase {
                 "邮件界面：CallBackDeleteMailView没有选择邮件,没有选择邮件的时候但是却删除了邮件",
               );
       }),
-      (this._yi = () => {
+      (this._Ii = () => {
         var i;
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
@@ -276,10 +277,10 @@ class MailBoxView extends UiViewBase_1.UiViewBase {
               (i = this.BSi.GetDropDownItemObject(
                 this.BSi.GetSelectedIndex(),
               )) &&
-                (this.syi(i),
-                this.ayi(this.JEi, this.KEi),
-                (this.SelectedMailData = this.JEi[this.KEi]),
-                this.hyi(this.KEi, this.SelectedMailData),
+                (this.sIi(i),
+                this.aIi(this.Jyi, this.Kyi),
+                (this.SelectedMailData = this.Jyi[this.Kyi]),
+                this.hIi(this.Kyi, this.SelectedMailData),
                 Log_1.Log.CheckInfo()) &&
                 Log_1.Log.Info(
                   "Mail",
@@ -293,7 +294,7 @@ class MailBoxView extends UiViewBase_1.UiViewBase {
                 "邮件界面：CallBackPassivelyDeleteMailView没有选择邮件",
               );
       }),
-      (this.uyi = () => {
+      (this.uIi = () => {
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "Mail",
@@ -303,17 +304,17 @@ class MailBoxView extends UiViewBase_1.UiViewBase {
         var i = this.BSi.GetDropDownItemObject(this.BSi.GetSelectedIndex());
         i &&
           (this.BSi.RefreshAllDropDownItem(),
-          this.syi(i),
-          this.ayi(this.JEi, this.KEi),
+          this.sIi(i),
+          this.aIi(this.Jyi, this.Kyi),
           Log_1.Log.CheckInfo()) &&
           Log_1.Log.Info(
             "Mail",
             28,
             "邮件界面：CallBackAddMailView,添加新邮件结束",
-            ["CurrentMailDataList", this.JEi],
+            ["CurrentMailDataList", this.Jyi],
           );
       }),
-      (this.cyi = () => {
+      (this.cIi = () => {
         var i,
           t = this.SelectedMailData.GetSubContentJumpId(),
           t =
@@ -326,45 +327,51 @@ class MailBoxView extends UiViewBase_1.UiViewBase {
               ? ""
               : this.SelectedMailData.GetSubTitle());
         this.SelectedMailData.IsQuestionMail()
-          ? this.myi(
+          ? this.mIi(
               this.SelectedMailData.GetQuestionUrl(),
               t,
               this.SelectedMailData.GetUseDefaultBrowser(),
+              this.SelectedMailData.GetIfLandscape(),
             )
           : ((i = this.SelectedMailData.GetSubUrl()),
             StringUtils_1.StringUtils.IsEmpty(i) ||
-              this.myi(i, t, this.SelectedMailData.GetUseDefaultBrowser()));
+              this.mIi(
+                i,
+                t,
+                this.SelectedMailData.GetUseDefaultBrowser(),
+                this.SelectedMailData.GetIfLandscape(),
+              ));
       }),
-      (this.I4t = () => {
+      (this.I5t = () => {
         UiManager_1.UiManager.CloseView("MailBoxView");
       }),
-      (this.dyi = (i, t) => {
-        (this.zEi = t),
-          (this.JEi = this.BSi.GetDropDownItemObject(i).GetFilteredMailList()),
+      (this.dIi = (i, t) => {
+        (this.zyi = t),
+          (this.Jyi = this.BSi.GetDropDownItemObject(i).GetFilteredMailList()),
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "Mail",
               28,
               "邮件界面：选择下拉item OnSelectDropItem",
               ["index", i],
-              ["this.CurrentMailDataList.length", this.JEi?.length],
+              ["this.CurrentMailDataList.length", this.Jyi?.length],
             ),
-          (this.KEi = 0),
-          this.ayi(this.JEi, DEFAULT_MAIL_INDEX);
+          (this.Kyi = 0),
+          this.aIi(this.Jyi, DEFAULT_MAIL_INDEX);
       }),
-      (this.Cyi = () => this.KEi ?? 0),
-      (this.hyi = (i, t) => {
+      (this.CIi = () => this.Kyi ?? 0),
+      (this.hIi = (i, t) => {
         i < 0 ||
-          i >= this.JEi.length ||
+          i >= this.Jyi.length ||
           !t ||
-          (this.XEi.GetScrollItemFromIndex(this.KEi)?.OnDeselected(!0),
+          (this.Xyi.GetScrollItemFromIndex(this.Kyi)?.OnDeselected(!0),
           (this.SelectedMailData = t),
-          (this.KEi = i),
-          this.gyi(t),
+          (this.Kyi = i),
+          this.gIi(t),
           MailController_1.MailController.SelectedMail(t),
           t.SetWasScanned(1));
       }),
-      (this.fyi = () => {
+      (this.fIi = () => {
         var i;
         this.SelectedMailData &&
           (2 === this.SelectedMailData.GetAttachmentStatus()
@@ -420,115 +427,115 @@ class MailBoxView extends UiViewBase_1.UiViewBase {
       this.GSi,
     )),
       await this.BSi.Init(),
-      await this.pyi();
+      await this.pIi();
   }
   OnStart() {
-    this.vyi(),
-      this.Myi(),
-      this.Syi(),
-      this.Eyi(),
-      this.yyi(),
-      (this.eyi = new ButtonAndTextItem_1.ButtonAndTextItem(this.GetItem(5))),
-      this.eyi.BindCallback(this.DeleteAllExhaustedMail),
-      this.eyi.RefreshText("DeleteReadedMail"),
-      (this.tyi = new ButtonAndTextItem_1.ButtonAndTextItem(this.GetItem(4))),
-      this.tyi.BindCallback(this.PickAllAccessibleAttachment),
-      this.tyi.RefreshText("GetAllItem"),
-      (this.iyi = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem));
+    this.vIi(),
+      this.MIi(),
+      this.EIi(),
+      this.SIi(),
+      this.yIi(),
+      (this.eIi = new ButtonAndTextItem_1.ButtonAndTextItem(this.GetItem(5))),
+      this.eIi.BindCallback(this.DeleteAllExhaustedMail),
+      this.eIi.RefreshText("DeleteReadedMail"),
+      (this.tIi = new ButtonAndTextItem_1.ButtonAndTextItem(this.GetItem(4))),
+      this.tIi.BindCallback(this.PickAllAccessibleAttachment),
+      this.tIi.RefreshText("GetAllItem"),
+      (this.iIi = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem));
     var i = ConfigManager_1.ConfigManager.MailConfig.GetFilterTypeList();
-    this.BSi.InitScroll(i, this.oyi),
+    this.BSi.InitScroll(i, this.oIi),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("Mail", 28, "邮件界面：OnStartFinish");
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.SelectedMail,
-      this.ryi,
+      this.rIi,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.PickingAttachment,
-        this.nyi,
+        this.nIi,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.DeletingMail,
-        this.lyi,
+        this.lIi,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.DeletingMailPassively,
-        this._yi,
+        this._Ii,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.AddingNewMail,
-        this.uyi,
+        this.uIi,
       );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.SelectedMail,
-      this.ryi,
+      this.rIi,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.PickingAttachment,
-        this.nyi,
+        this.nIi,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.DeletingMail,
-        this.lyi,
+        this.lIi,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.DeletingMailPassively,
-        this._yi,
+        this._Ii,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.AddingNewMail,
-        this.uyi,
+        this.uIi,
       );
   }
   OnBeforeDestroy() {
-    this?.QEi.Destroy(),
+    this?.Qyi.Destroy(),
       this?.BSi.Destroy(),
-      this?.$Ei.Destroy(),
-      this.XEi.ClearChildren(),
-      this.iyi.Clear();
+      this?.$yi.Destroy(),
+      this.Xyi.ClearChildren(),
+      this.iIi.Clear();
   }
-  vyi() {
-    (this.QEi = new PopupCaptionItem_1.PopupCaptionItem(this.GetItem(0))),
-      this.QEi.SetHelpBtnActive(!1),
-      this.QEi.SetCloseBtnActive(!0),
-      this.QEi.SetCloseCallBack(this.I4t),
-      this.QEi.SetTitle(
+  vIi() {
+    (this.Qyi = new PopupCaptionItem_1.PopupCaptionItem(this.GetItem(0))),
+      this.Qyi.SetHelpBtnActive(!1),
+      this.Qyi.SetCloseBtnActive(!0),
+      this.Qyi.SetCloseCallBack(this.I5t),
+      this.Qyi.SetTitle(
         ConfigManager_1.ConfigManager.TextConfig.GetTextById("Mail"),
       );
   }
-  Eyi() {
-    this.BSi.SetOnSelectCall(this.dyi);
+  SIi() {
+    this.BSi.SetOnSelectCall(this.dIi);
   }
-  async pyi() {
-    (this.XEi = new DynScrollView_1.DynamicScrollView(
+  async pIi() {
+    (this.Xyi = new DynScrollView_1.DynamicScrollView(
       this.GetUIDynScrollViewComponent(2),
       this.GetItem(3),
       new MailDynamicScrollItemNew_1.MailDynamicScrollItemNew(),
       (i, t, e) => {
         var s = new MailScrollItemNew_1.MailScrollItemNew();
         return (
-          s.BindSelectCall(this.hyi),
-          s.BindGetSelectedIndexFunction(this.Cyi),
+          s.BindSelectCall(this.hIi),
+          s.BindGetSelectedIndexFunction(this.CIi),
           s
         );
       },
     )),
-      await this.XEi.Init();
+      await this.Xyi.Init();
   }
-  Myi() {
-    (this.$Ei = new MailLinkButton(this.GetItem(14))),
-      (this.$Ei.ClickDelegate = this.cyi);
+  MIi() {
+    (this.$yi = new MailLinkButton(this.GetItem(14))),
+      (this.$yi.ClickDelegate = this.cIi);
   }
-  yyi() {
-    (this.ZEi = new ButtonAndTextItem_1.ButtonAndTextItem(this.GetItem(18))),
-      this.ZEi.BindCallback(this.fyi);
+  yIi() {
+    (this.Zyi = new ButtonAndTextItem_1.ButtonAndTextItem(this.GetItem(18))),
+      this.Zyi.BindCallback(this.fIi);
   }
-  Syi() {
-    this.YEi = new LoopScrollView_1.LoopScrollView(
+  EIi() {
+    this.Yyi = new LoopScrollView_1.LoopScrollView(
       this.GetLoopScrollViewComponent(16),
       this.GetItem(17).GetOwner(),
       () => {
@@ -537,13 +544,13 @@ class MailBoxView extends UiViewBase_1.UiViewBase {
       },
     );
   }
-  Iyi() {
-    this.XEi.GetScrollItemFromIndex(this.KEi)?.OnDeselected(!0),
-      (this.KEi = -1);
+  IIi() {
+    this.Xyi.GetScrollItemFromIndex(this.Kyi)?.OnDeselected(!0),
+      (this.Kyi = -1);
   }
-  ayi(i, t = 0) {
-    this.Iyi(),
-      (this.KEi = t),
+  aIi(i, t = 0) {
+    this.IIi(),
+      (this.Kyi = t),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Mail",
@@ -552,27 +559,27 @@ class MailBoxView extends UiViewBase_1.UiViewBase {
           ["selectedIndex", t],
           ["mailList长度", i?.length],
         ),
-      this.XEi.RefreshByData(i),
+      this.Xyi.RefreshByData(i),
       0 < i.length
         ? (this.GetItem(20).SetUIActive(!0),
           this.GetItem(21).SetUIActive(!1),
-          this.tyi.SetActive(!0),
-          this.eyi.SetActive(1 === this.zEi),
-          this.Tyi(i[t], t))
+          this.tIi.SetActive(!0),
+          this.eIi.SetActive(1 === this.zyi),
+          this.TIi(i[t], t))
         : (this.GetItem(20).SetUIActive(!1),
           this.GetItem(21).SetUIActive(!0),
-          this.tyi.SetActive(!1),
-          this.eyi.SetActive(!1),
-          (this.KEi = 0));
+          this.tIi.SetActive(!1),
+          this.eIi.SetActive(!1),
+          (this.Kyi = 0));
   }
-  async Tyi(i, t) {
-    await this.XEi.ScrollToItemIndex(t);
-    var e = this.XEi.GetScrollItemFromIndex(t);
+  async TIi(i, t) {
+    await this.Xyi.ScrollToItemIndex(t);
+    var e = this.Xyi.GetScrollItemFromIndex(t);
     e && !e.IsInit
       ? (e.SelectTrigger = !0)
-      : (e?.OnSelected(!0), this.hyi(t, i));
+      : (e?.OnSelected(!0), this.hIi(t, i));
   }
-  Lyi(i) {
+  LIi(i) {
     var t, e;
     2 === i.GetMailLevel()
       ? LguiUtil_1.LguiUtil.SetLocalText(this.GetText(11), "ForeverValid")
@@ -609,20 +616,20 @@ class MailBoxView extends UiViewBase_1.UiViewBase {
                   "AutoDeleteInOneMinute",
                 )));
   }
-  Dyi(i) {
+  DIi(i) {
     const t = [];
     i.GetAttachmentInfo().forEach((i) => {
-      t.push([{ IncId: 0, ItemId: i.Ekn }, i.I5n]);
+      t.push([{ IncId: 0, ItemId: i.J4n }, i.o9n]);
     }),
-      this.YEi.ReloadData(t),
+      this.Yyi.ReloadData(t),
       this.GetItem(15).SetUIActive(0 < t.length);
   }
-  Ryi(i) {
+  RIi(i) {
     2 === i.GetAttachmentStatus()
-      ? this.ZEi.RefreshText("GetText")
-      : this.ZEi.RefreshText("DeleteText");
+      ? this.Zyi.RefreshText("GetText")
+      : this.Zyi.RefreshText("DeleteText");
   }
-  gyi(i) {
+  gIi(i) {
     var t;
     this.GetText(7).SetText(i.Title),
       this.GetText(13).SetText(i.GetText()),
@@ -631,29 +638,29 @@ class MailBoxView extends UiViewBase_1.UiViewBase {
       this.GetText(9).SetText(TimeUtil_1.TimeUtil.DateFormatString(i.Time)),
       StringUtils_1.StringUtils.IsBlank(i.GetSubUrl()) ||
       StringUtils_1.StringUtils.IsEmpty(i.GetSubUrl())
-        ? this.$Ei.GetRootItem().SetUIActive(!1)
-        : (this.$Ei.GetRootItem().SetUIActive(!0),
-          this.$Ei.SetTitle(i.GetSubText()),
+        ? this.$yi.GetRootItem().SetUIActive(!1)
+        : (this.$yi.GetRootItem().SetUIActive(!0),
+          this.$yi.SetTitle(i.GetSubText()),
           (t = i.GetSubTextColor()),
-          this.$Ei.SetColor(t)),
-      this.Lyi(i),
-      this.Dyi(i),
-      this.Ryi(i),
+          this.$yi.SetColor(t)),
+      this.LIi(i),
+      this.DIi(i),
+      this.RIi(i),
       this.GetItem(6).SetUIActive(2 === i.GetMailLevel()),
-      this.iyi.StopSequenceByKey("Switch", !1, !0),
-      this.iyi.PlayLevelSequenceByName("Switch");
+      this.iIi.StopSequenceByKey("Switch", !1, !0),
+      this.iIi.PlayLevelSequenceByName("Switch");
   }
-  syi(i, t = 0) {
-    (this.JEi = i.GetFilteredMailList()),
-      (this.KEi = this.JEi.findIndex((i) => i.Id === this.SelectedMailData.Id)),
-      (this.KEi = -1 === this.KEi ? t : this.KEi),
-      (this.KEi = MathUtils_1.MathUtils.Clamp(
-        this.KEi,
+  sIi(i, t = 0) {
+    (this.Jyi = i.GetFilteredMailList()),
+      (this.Kyi = this.Jyi.findIndex((i) => i.Id === this.SelectedMailData.Id)),
+      (this.Kyi = -1 === this.Kyi ? t : this.Kyi),
+      (this.Kyi = MathUtils_1.MathUtils.Clamp(
+        this.Kyi,
         0,
-        Math.max(0, this.JEi.length - 1),
+        Math.max(0, this.Jyi.length - 1),
       ));
   }
-  myi(i, t = "", e = !1) {
+  mIi(i, t = "", e = !1, s = !0) {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "Mail",
@@ -661,12 +668,14 @@ class MailBoxView extends UiViewBase_1.UiViewBase {
         "邮件界面：OpenUrl",
         ["link", i],
         ["title", t],
+        ["forceUseDefaultBrowser", e],
+        ["ifLandscape", s],
       ),
       !e && ControllerHolder_1.ControllerHolder.KuroSdkController.CanUseSdk()
         ? ControllerHolder_1.ControllerHolder.KuroSdkController.SdkOpenUrlWnd(
             t,
             i,
-            !0,
+            s,
             !1,
           )
         : ModelManager_1.ModelManager.MailModel.OpenWebBrowser(i);

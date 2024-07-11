@@ -29,34 +29,34 @@ const Log_1 = require("../../../../Core/Common/Log"),
   CharacterTagContainer_1 = require("../../Character/Common/Component/Abilities/CharacterTagContainer");
 class TagSwitchedTask {
   constructor() {
-    (this.Xir = 0), (this.B7 = void 0), (this.Xte = void 0);
+    (this.Qor = 0), (this.B7 = void 0), (this.Xte = void 0);
   }
   StartTask(t, a, e, i) {
-    this.Xir = t;
+    this.Qor = t;
     (this.B7 = (t, e) => {
       a(t, e);
     }),
       (this.Xte = e),
-      this.Xte?.AddTagAddOrRemoveListener(this.Xir, this.B7);
+      this.Xte?.AddTagAddOrRemoveListener(this.Qor, this.B7);
   }
   EndTask() {
-    this.Xte?.RemoveTagAddOrRemoveListener(this.Xir, this.B7);
+    this.Xte?.RemoveTagAddOrRemoveListener(this.Qor, this.B7);
   }
 }
 class TagChangedTask {
   constructor() {
-    (this.Xir = 0), (this.B7 = void 0), (this.Xte = void 0);
+    (this.Qor = 0), (this.B7 = void 0), (this.Xte = void 0);
   }
   StartTask(t, e, a) {
-    this.Xir = t;
+    this.Qor = t;
     (this.B7 = (t) => {
       e(t);
     }),
       (this.Xte = a),
-      this.Xte?.AddTagChangedListener(this.Xir, this.B7);
+      this.Xte?.AddTagChangedListener(this.Qor, this.B7);
   }
   EndTask() {
-    this.Xte?.RemoveTagChangedListener(this.Xir, this.B7);
+    this.Xte?.RemoveTagChangedListener(this.Qor, this.B7);
   }
 }
 let BaseTagComponent = class BaseTagComponent extends EntityComponent_1.EntityComponent {
@@ -112,39 +112,24 @@ let BaseTagComponent = class BaseTagComponent extends EntityComponent_1.EntityCo
   AddTag(t) {
     void 0 !== t && this.TagContainer.AddExactTag(1, t);
   }
-  AddTagById(t) {
-    this.AddTag(t);
-  }
   RemoveTag(t) {
     return (
       void 0 !== t &&
       (this.TagContainer.RemoveTag(1, t), this.TagContainer.RemoveTag(4, t), !0)
     );
   }
-  RemoveTagById(t) {
-    return this.RemoveTag(t);
-  }
   HasTag(t) {
     return this.TagContainer.ContainsTag(t);
-  }
-  ContainsTagById(t) {
-    return this.HasTag(t);
   }
   HasAnyTag(t) {
     for (const e of t) if (this.HasTag(e)) return !0;
     return !1;
   }
-  ContainsAnyTag(t) {
-    return this.HasAnyTag(t);
-  }
   HasAllTag(t) {
     for (const e of t) if (!this.HasTag(e)) return !1;
     return !0;
   }
-  ContainsAllTag(t) {
-    return this.HasAllTag(t);
-  }
-  GetTagCountById(t) {
+  GetTagCount(t) {
     return void 0 === t ? 0 : this.TagContainer.GetTagCount(t);
   }
   ListenForTagAddOrRemove(t, e, a) {
@@ -247,11 +232,11 @@ let BaseTagComponent = class BaseTagComponent extends EntityComponent_1.EntityCo
           a,
           e,
         ),
-      this.Entity.GetComponent(187)?.OnTagChanged(t));
+      this.Entity.GetComponent(192)?.OnTagChanged(t));
   }
 };
 (BaseTagComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(185)],
+  [(0, RegisterComponent_1.RegisterComponent)(188)],
   BaseTagComponent,
 )),
   (exports.BaseTagComponent = BaseTagComponent);

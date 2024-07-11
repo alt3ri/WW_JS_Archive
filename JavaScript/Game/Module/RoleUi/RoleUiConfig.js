@@ -27,7 +27,7 @@ const CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParam
   RoleDefine_1 = require("./RoleDefine");
 class RoleConfig extends ConfigBase_1.ConfigBase {
   constructor() {
-    super(...arguments), (this.kmo = new Map());
+    super(...arguments), (this.Gdo = new Map());
   }
   GetRoleName(e) {
     return MultiTextLang_1.configMultiTextLang.GetLocalTextNew(e);
@@ -40,13 +40,20 @@ class RoleConfig extends ConfigBase_1.ConfigBase {
   GetRoleResonanceGrowthDescribe(e) {
     return MultiTextLang_1.configMultiTextLang.GetLocalTextNew(e);
   }
-  GetRoleConfig(o) {
+  GetRoleConfig(e) {
+    e = this.GetBaseRoleId(e);
+    return RoleInfoById_1.configRoleInfoById.GetConfig(e);
+  }
+  GetBaseRoleId(o) {
     let r = o;
-    if (o > RoleDefine_1.ROBOT_DATA_MIN_ID) {
+    if (this.IsTrialRole(o)) {
       let e = this.GetTrialRoleConfigByGroupId(o);
-      (e = e || this.GetTrialRoleConfig(o)), (r = e.ParentId);
+      (e = e || this.GetTrialRoleConfig(o)), (r = e?.ParentId ?? 0);
     }
-    return RoleInfoById_1.configRoleInfoById.GetConfig(r);
+    return r;
+  }
+  IsTrialRole(e) {
+    return e > RoleDefine_1.ROBOT_DATA_MIN_ID;
   }
   GetRoleHeadIcon(e, o = !1) {
     e = this.GetRoleConfig(e);
@@ -185,8 +192,14 @@ class RoleConfig extends ConfigBase_1.ConfigBase {
   }
   GetAllRoleTagList() {
     const o = [];
+    var e = this.GetAllRoleTagConfig();
+    const r = [];
     return (
-      this.GetAllRoleTagConfig().forEach((e) => {
+      e.forEach((e) => {
+        r.push(e);
+      }),
+      r.sort((e, o) => e.SortId - o.SortId),
+      r.forEach((e) => {
         o.push(e.Id);
       }),
       o
@@ -196,7 +209,7 @@ class RoleConfig extends ConfigBase_1.ConfigBase {
     return RoleTagAll_1.configRoleTagAll.GetConfigList();
   }
   OnClear() {
-    return this.kmo.clear(), !0;
+    return this.Gdo.clear(), !0;
   }
 }
 exports.RoleConfig = RoleConfig;

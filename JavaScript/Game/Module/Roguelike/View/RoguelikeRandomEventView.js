@@ -9,37 +9,45 @@ const UE = require("ue"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
-  UiComponentsAction_1 = require("../../../Ui/Base/UiComponentsAction"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
   UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
   UiManager_1 = require("../../../Ui/UiManager"),
+  UiCameraManager_1 = require("../../UiCamera/UiCameraManager"),
   LguiUtil_1 = require("../../Util/LguiUtil"),
   RoguelikeDefine_1 = require("../Define/RoguelikeDefine"),
+  RogueSelectResult_1 = require("../Define/RogueSelectResult"),
   RoguelikeController_1 = require("../RoguelikeController");
-class RoguelikeRandomEventItem extends UiComponentsAction_1.UiComponentsAction {
+class RoguelikeRandomEventItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
       (this.Data = void 0),
-      (this.OnClickEvent = () => {
+      (this.OnSelectHandle = void 0),
+      (this.OnClickEvent = (e) => {
         (ModelManager_1.ModelManager.RoguelikeModel.CurrentRogueGainEntry =
-          this.Data),
-          RoguelikeController_1.RoguelikeController.RogueChooseDataResultRequest(
-            7,
-          );
+          1 === e ? this.Data : void 0),
+          this.OnSelectHandle && this.OnSelectHandle(this, e);
       });
   }
   OnRegisterComponent() {
-    (this.ComponentRegisterInfos = [
-      [0, UE.UIButtonComponent],
+    this.ComponentRegisterInfos = [
+      [0, UE.UIExtendToggle],
       [1, UE.UIText],
       [2, UE.UIText],
-    ]),
-      (this.BtnBindInfo = [[0, this.OnClickEvent]]);
+    ];
   }
   OnStart() {
-    this.Refresh(this.Data);
+    this.GetExtendToggle(0).OnStateChange.Clear(),
+      this.GetExtendToggle(0).OnStateChange.Add(this.OnClickEvent),
+      this.Refresh(this.Data);
   }
   SetButtonState(e) {
-    this.GetButton(0).SetSelfInteractive(e);
+    this.GetExtendToggle(0).SetSelfInteractive(e);
+  }
+  SetToggleState(e) {
+    this.GetExtendToggle(0).SetToggleState(e ? 1 : 0, !1);
+  }
+  GetToggleState() {
+    return this.GetExtendToggle(0).GetToggleState();
   }
   Refresh(e) {
     this.Data = e;
@@ -62,58 +70,85 @@ class RoguelikeRandomEventView extends UiViewBase_1.UiViewBase {
       (this.EventItemList = []),
       (this.EventActorList = []),
       (this.DelayShowTimerId = void 0),
-      (this.RoguelikeChooseDataResult = (e, i, t, o) => {
-        var r =
+      (this.LastSelectItem = void 0),
+      (this.Nfa = !1),
+      (this.OnBtnConfirm = () => {
+        RoguelikeController_1.RoguelikeController.RogueChooseDataResultRequest(
+          7,
+        );
+      }),
+      (this.RoguelikeChooseDataResult = (e, i, t, s, r) => {
+        const o =
           ModelManager_1.ModelManager.RoguelikeModel?.GetRoguelikeChooseDataById(
             this.OpenParam.Index,
           );
-        o === r?.Index && this.UpdateEventList(r, !1);
+        s === o?.Index &&
+          RoguelikeController_1.RoguelikeController.CreateCloseViewCallBack(
+            r,
+            () => {
+              var e = new RogueSelectResult_1.RogueSelectResult(
+                ModelManager_1.ModelManager.RoguelikeModel.RogueInfo?.PhantomEntry,
+                i,
+                void 0,
+                !1,
+              );
+              (e.CallBack = () => {
+                this.UpdateEventList(o, !1);
+              }),
+                0 < e.GetNewUnlockAffixEntry().size
+                  ? UiManager_1.UiManager.OpenView("CommonSelectResultView", e)
+                  : this.Yho(() => {
+                      this.UpdateEventList(o, !1);
+                    }) ||
+                    this.Nfa ||
+                    this.UpdateEventList(o, !1);
+            },
+          )?.();
       }),
-      (this.Zao = () => {
-        var e =
-          ModelManager_1.ModelManager.RoguelikeModel?.GetRoguelikeChooseDataById(
-            Protocol_1.Aki.Protocol._3s.Proto_EventRoleBuffBindId,
-          );
-        void 0 === e ||
-          e.IsSelect ||
-          e.Layer !==
-            ModelManager_1.ModelManager.RoguelikeModel?.CurRoomCount ||
-          UiManager_1.UiManager.OpenView("RoleBuffSelectView", e);
+      (this.OnSelectHandle = (e, i) => {
+        void 0 !== this.LastSelectItem &&
+          this.LastSelectItem !== e &&
+          1 === i &&
+          this.LastSelectItem.SetToggleState(!1),
+          (this.LastSelectItem = e);
+        let t = !1;
+        this.EventItemList.forEach((e) => {
+          1 === e.GetToggleState() && (t = !0);
+        }),
+          this.GetButton(2).SetSelfInteractive(t);
       });
   }
   OnRegisterComponent() {
-    this.ComponentRegisterInfos = [
+    (this.ComponentRegisterInfos = [
       [0, UE.UIItem],
       [1, UE.UIItem],
-    ];
+      [2, UE.UIButtonComponent],
+    ]),
+      (this.BtnBindInfo = [[2, this.OnBtnConfirm]]);
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.RoguelikeChooseDataResult,
       this.RoguelikeChooseDataResult,
-    ),
-      EventSystem_1.EventSystem.Add(
-        EventDefine_1.EEventName.RoguelikeChooseDataNotify,
-        this.Zao,
-      );
+    );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.RoguelikeChooseDataResult,
       this.RoguelikeChooseDataResult,
-    ),
-      EventSystem_1.EventSystem.Remove(
-        EventDefine_1.EEventName.RoguelikeChooseDataNotify,
-        this.Zao,
-      );
+    );
   }
   OnBeforeShow() {
-    this.GetItem(0).SetUIActive(!1);
-    var e =
+    this.GetItem(0).SetUIActive(!1),
+      this.GetButton(2).RootUIComp.SetUIActive(!1),
+      this.GetButton(2).SetSelfInteractive(!1);
+    const e =
       ModelManager_1.ModelManager.RoguelikeModel?.GetRoguelikeChooseDataById(
         this.OpenParam.Index,
       );
-    this.UpdateEventList(e);
+    this.Yho(() => {
+      this.UpdateEventList(e);
+    }) || this.UpdateEventList(e);
   }
   OnBeforeDestroy() {
     this.EventItemList.forEach((e) => {
@@ -124,40 +159,48 @@ class RoguelikeRandomEventView extends UiViewBase_1.UiViewBase {
       (this.EventItemList.length = 0),
       (this.EventActorList.length = 0);
   }
-  UpdateEventList(o, e = !0) {
-    var i = () => {
-        var t,
-          e = 1 !== RoguelikeController_1.RoguelikeController.CurrentStateId;
+  UpdateEventList(r, e = !0) {
+    var i = async () => {
+        var e = 1 !== RoguelikeController_1.RoguelikeController.CurrentStateId;
         if (
           ((RoguelikeController_1.RoguelikeController.CurrentFlowId = -1),
           (RoguelikeController_1.RoguelikeController.CurrentStateId = -1),
           (RoguelikeController_1.RoguelikeController.CurrentFlowListName = ""),
-          0 !== o.RogueGainEntryList.length)
+          0 !== r.RogueGainEntryList.length)
         ) {
           let i = !1;
-          for (let e = 0; e < o.RogueGainEntryList.length; e++)
+          var t,
+            s = [];
+          for (let e = 0; e < r.RogueGainEntryList.length; e++)
             this.EventItemList[e]
               ? (this.EventActorList[e].SetUIActive(!0),
-                this.EventItemList[e].Refresh(o.RogueGainEntryList[e]))
+                this.EventItemList[e].Refresh(r.RogueGainEntryList[e]))
               : (this.EventActorList[e] ||
                   ((t = LguiUtil_1.LguiUtil.CopyItem(
                     this.GetItem(1),
                     this.GetItem(0),
                   )),
                   this.EventActorList.push(t)),
-                ((t = new RoguelikeRandomEventItem()).Data =
-                  o.RogueGainEntryList[e]),
-                t
-                  .CreateThenShowByActorAsync(this.EventActorList[e].GetOwner())
-                  .then(() => {
-                    this.EventItemList[e].Refresh(o.RogueGainEntryList[e]),
-                      this.EventActorList[e].SetUIActive(!0);
-                  }),
+                ((t = new RoguelikeRandomEventItem()).OnSelectHandle =
+                  this.OnSelectHandle),
+                (t.Data = r.RogueGainEntryList[e]),
+                s.push(
+                  t
+                    .CreateThenShowByActorAsync(
+                      this.EventActorList[e].GetOwner(),
+                    )
+                    .then(() => {
+                      this.EventItemList[e].Refresh(r.RogueGainEntryList[e]),
+                        this.EventActorList[e].SetUIActive(!0);
+                    }),
+                ),
                 this.EventItemList.push(t)),
-              (i = i || o.RogueGainEntryList[e].IsSelect);
-          this.GetItem(1).SetUIActive(!1);
+              (i = i || r.RogueGainEntryList[e].IsSelect);
+          await Promise.all(s),
+            this.GetButton(2).RootUIComp.SetUIActive(!0),
+            this.GetItem(1).SetUIActive(!1);
           for (
-            let e = o.RogueGainEntryList.length;
+            let e = r.RogueGainEntryList.length;
             e < this.EventActorList.length;
             e++
           )
@@ -170,26 +213,28 @@ class RoguelikeRandomEventView extends UiViewBase_1.UiViewBase {
               ? (void 0 !== this.DelayShowTimerId &&
                   TimerSystem_1.TimerSystem.Remove(this.DelayShowTimerId),
                 (this.DelayShowTimerId = TimerSystem_1.TimerSystem.Delay(() => {
-                  this.GetItem(0).SetUIActive(!0);
+                  this.GetButton(2).RootUIComp.SetUIActive(!0),
+                    this.GetItem(0).SetUIActive(!0);
                 }, 1e3)))
-              : this.GetItem(0).SetUIActive(!0);
+              : (this.GetButton(2).RootUIComp.SetUIActive(!0),
+                this.GetItem(0).SetUIActive(!0));
         }
       },
       t =
         ConfigManager_1.ConfigManager.RoguelikeConfig?.GetRogueEventConfigById(
-          o.EventId,
+          r.EventId,
         ),
-      r = 0 === o.RogueGainEntryList.length;
-    this.GetItem(0).SetUIActive(!1),
-      r && !StringUtils_1.StringUtils.IsEmpty(t?.FlowListName)
-        ? ((r = { ViewName: this.Info?.Name, Position: 2 }),
-          RoguelikeController_1.RoguelikeController.StartFlowForView(
-            o.Index,
-            t.FlowListName,
-            t.FlowId,
-            t.StateId,
-            r,
-          ))
+      s = 0 === r.RogueGainEntryList.length;
+    this.GetButton(2).RootUIComp.SetUIActive(!1),
+      this.GetItem(0).SetUIActive(!1),
+      s && !StringUtils_1.StringUtils.IsEmpty(t?.FlowListName)
+        ? ((RoguelikeController_1.RoguelikeController.CurrentFlowId = -1),
+          (RoguelikeController_1.RoguelikeController.CurrentStateId = -1),
+          (RoguelikeController_1.RoguelikeController.CurrentFlowListName = ""),
+          (this.Nfa = !0),
+          this.CloseMe((e) => {
+            e && UiCameraManager_1.UiCameraManager.Get().Exit();
+          }))
         : (StringUtils_1.StringUtils.IsEmpty(t?.FlowListName) ||
             (RoguelikeController_1.RoguelikeController.CurrentFlowListName ===
               t?.FlowListName &&
@@ -198,16 +243,30 @@ class RoguelikeRandomEventView extends UiViewBase_1.UiViewBase {
               RoguelikeController_1.RoguelikeController.CurrentFlowId ===
                 t?.FlowId) ||
             !e ||
-            ((r = { ViewName: this.Info?.Name, Position: 2 }),
+            ((s = { ViewName: this.Info?.Name, Position: 2 }),
             RoguelikeController_1.RoguelikeController.StartFlowForView(
-              o.Index,
+              r.Index,
               t.FlowListName,
               t.FlowId,
               t.StateId,
-              r,
+              s,
             ),
             1 !== t?.StateId)) &&
           i();
+  }
+  Yho(e) {
+    var i =
+      ModelManager_1.ModelManager.RoguelikeModel?.GetRoguelikeChooseDataById(
+        Protocol_1.Aki.Protocol.Z6s.Proto_EventRoleBuffBindId,
+      );
+    return (
+      void 0 !== i &&
+      !i.IsSelect &&
+      i.Layer === ModelManager_1.ModelManager.RoguelikeModel?.CurRoomCount &&
+      ((i.CallBack = e),
+      UiManager_1.UiManager.OpenView("RoleBuffSelectView", i),
+      !0)
+    );
   }
 }
 exports.RoguelikeRandomEventView = RoguelikeRandomEventView;

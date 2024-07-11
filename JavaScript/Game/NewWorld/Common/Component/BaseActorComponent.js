@@ -3,19 +3,19 @@ var __decorate =
   (this && this.__decorate) ||
   function (t, i, e, s) {
     var o,
-      h = arguments.length,
-      r =
-        h < 3
+      r = arguments.length,
+      h =
+        r < 3
           ? i
           : null === s
             ? (s = Object.getOwnPropertyDescriptor(i, e))
             : s;
     if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
-      r = Reflect.decorate(t, i, e, s);
+      h = Reflect.decorate(t, i, e, s);
     else
       for (var n = t.length - 1; 0 <= n; n--)
-        (o = t[n]) && (r = (h < 3 ? o(r) : 3 < h ? o(i, e, r) : o(i, e)) || r);
-    return 3 < h && r && Object.defineProperty(i, e, r), r;
+        (o = t[n]) && (h = (r < 3 ? o(h) : 3 < r ? o(i, e, h) : o(i, e)) || h);
+    return 3 < r && h && Object.defineProperty(i, e, h), h;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BaseActorComponent = exports.DisableEntityHandle = void 0);
@@ -36,7 +36,7 @@ const Log_1 = require("../../../../Core/Common/Log"),
   ModelManager_1 = require("../../../Manager/ModelManager");
 class DisableEntityHandle {
   constructor(t) {
-    (this.S9 = t), (this.vW = 0), (this.DW = new Map());
+    (this.E9 = t), (this.vW = 0), (this.DW = new Map());
   }
   get Empty() {
     return 0 === this.DW.size;
@@ -69,7 +69,7 @@ class DisableEntityHandle {
             "Entity",
             1,
             "激活句柄不存在",
-            ["Type", this.S9],
+            ["Type", this.E9],
             ["ConstructorName", i],
             ["handle", t],
           ),
@@ -84,7 +84,7 @@ class DisableEntityHandle {
       e = new Array();
     let s = "";
     for ([t, i] of this.DW)
-      e.push(`${s}{Type:${this.S9},Handle:${t},Reason:${i}}`), (s = " ");
+      e.push(`${s}{Type:${this.E9},Handle:${t},Reason:${i}}`), (s = " ");
     return e.join("");
   }
 }
@@ -92,6 +92,7 @@ exports.DisableEntityHandle = DisableEntityHandle;
 let BaseActorComponent = class BaseActorComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments),
+      (this.MoveComp = void 0),
       (this.ActorInternal = void 0),
       (this.CachedActorTransform = void 0),
       (this.CachedActorLocation = Vector_1.Vector.Create()),
@@ -112,25 +113,23 @@ let BaseActorComponent = class BaseActorComponent extends EntityComponent_1.Enti
       (this.IsChangingLocation = !1),
       (this.CreatureDataInternal = void 0),
       (this.DebugMovementComp = void 0),
-      (this.onn = !0),
-      (this.rnn = !0),
+      (this.Nrn = !0),
+      (this.Orn = !0),
       (this.IsInSequenceBinding = !1),
       (this.DisableActorHandle = void 0),
       (this.DisableCollisionHandle = void 0),
-      (this.DisableTickHandle = void 0),
-      (this.nnn = void 0),
-      (this.snn = void 0),
-      (this.ann = void 0),
-      (this.hnn = void 0),
-      (this.lnn = void 0),
-      (this._nn = void 0),
+      (this.krn = void 0),
+      (this.Frn = void 0),
+      (this.Vrn = void 0),
+      (this.Hrn = void 0),
+      (this.jrn = void 0),
       (this.LastActorLocation = Vector_1.Vector.Create());
   }
   get IsAutonomousProxy() {
-    return this.onn;
+    return this.Nrn;
   }
   get IsMoveAutonomousProxy() {
-    return this.rnn;
+    return this.Orn;
   }
   OnCreate() {
     return (
@@ -140,7 +139,6 @@ let BaseActorComponent = class BaseActorComponent extends EntityComponent_1.Enti
       (this.DisableCollisionHandle = new DisableEntityHandle(
         "SetActorEnableCollision",
       )),
-      (this.DisableTickHandle = new DisableEntityHandle("SetActorTickEnabled")),
       this.AddUnResetProperty(
         "DisableActorHandle",
         "DisableCollisionHandle",
@@ -157,19 +155,23 @@ let BaseActorComponent = class BaseActorComponent extends EntityComponent_1.Enti
       !0
     );
   }
-  OnActivate() {
-    this.ActorInternal.Kuro_SetRole(this.rnn ? 2 : 1),
-      this.LastActorLocation.DeepCopy(this.ActorLocationProxy);
+  OnStart() {
+    return (this.MoveComp = this.Entity.GetComponent(37)), !0;
   }
-  OnAfterTick(t) {
-    this.LastActorLocation.DeepCopy(this.ActorLocationProxy);
+  OnActivate() {
+    this.ActorInternal.Kuro_SetRole(this.Orn ? 2 : 1),
+      this.LastActorLocation.DeepCopy(this.ActorLocationProxy),
+      this.ActorInternal.SetActorHiddenInGame(!this.DisableActorHandle.Empty),
+      this.ActorInternal.SetActorEnableCollision(
+        this.DisableCollisionHandle.Empty,
+      );
   }
   SetAutonomous(t, i = void 0) {
-    (this.onn = t),
+    (this.Nrn = t),
       this.SetMoveAutonomous(void 0 === i ? t : i, "切换逻辑主控");
   }
   SetMoveAutonomous(t, i = 0) {
-    (this.rnn = t), this.ActorInternal?.Kuro_SetRole(this.rnn ? 2 : 1);
+    (this.Orn = t), this.ActorInternal?.Kuro_SetRole(this.Orn ? 2 : 1);
   }
   InitCreatureData() {
     return (
@@ -245,14 +247,14 @@ let BaseActorComponent = class BaseActorComponent extends EntityComponent_1.Enti
       : (this.CachedLocationTime < Time_1.Time.Frame &&
           this.ActorInternal?.IsValid() &&
           ((this.CachedLocationTime = Time_1.Time.Frame),
-          this.unn(!0),
+          this.Krn(!0),
           this.CachedActorLocation.FromUeVector(
             this.ActorInternal.K2_GetActorLocation(),
           ),
-          this.unn(!1)),
+          this.Krn(!1)),
         this.CachedActorLocation);
   }
-  unn(t) {
+  Krn(t) {
     GlobalData_1.GlobalData.IsPlayInEditor &&
       (Object.defineProperty(this.CachedActorLocation.Tuple, "0", {
         writable: t,
@@ -390,7 +392,7 @@ let BaseActorComponent = class BaseActorComponent extends EntityComponent_1.Enti
         (s = this.ActorInternal.K2_KuroTeleportTo(t, i)),
         (this.IsChangingLocation = !1),
         this.DebugMovementComp) &&
-        this.DebugMovementComp.MarkDebugRecord(e + ".TeleportTo", 1),
+        this.DebugMovementComp.MarkDebugRecord(e + ".TeleportTo", 1, !0),
       this.ResetLocationCachedTime(),
       this.OnTeleport(),
       CycleCounter_1.CycleCounter.Stop("TS_TeleportTo"),
@@ -418,12 +420,12 @@ let BaseActorComponent = class BaseActorComponent extends EntityComponent_1.Enti
         ((s = this.ActorInternal.K2_KuroSetActorRotation(t, e, !1)),
         this.DebugMovementComp) &&
         this.DebugMovementComp.MarkDebugRecord(i + ".SetActorRotation", 1),
-      this.cnn(),
+      this.Qrn(),
       CycleCounter_1.CycleCounter.Stop("TS_SetActorRotation"),
       s
     );
   }
-  cnn() {
+  Qrn() {
     (this.CachedTransformTime = 0),
       (this.CachedRotationTime = 0),
       (this.CachedUpTime = 0),
@@ -482,7 +484,7 @@ let BaseActorComponent = class BaseActorComponent extends EntityComponent_1.Enti
     return MathUtils_1.MathUtils.IsValidVector(o)
       ? (this.CachedDesiredActorLocation.FromUeVector(t.GetLocation()),
         this.ActorLocationProxy.Equals(this.CachedDesiredActorLocation)
-          ? (s = this.SetActorRotation(t.GetRotation().Rotator()))
+          ? (s = this.SetActorRotation(t.GetRotation().Rotator(), i, e))
           : ((this.IsChangingLocation = !0),
             (s = this.ActorInternal.K2_SetActorTransform(t, e, void 0, !0)),
             (this.IsChangingLocation = !1)),
@@ -518,13 +520,13 @@ let BaseActorComponent = class BaseActorComponent extends EntityComponent_1.Enti
     this.ActorInternal.K2_AddActorWorldRotation(t, e, void 0, !1),
       this.DebugMovementComp &&
         this.DebugMovementComp.MarkDebugRecord(i + ".AddActorWorldRotation", 1),
-      this.cnn();
+      this.Qrn();
   }
   AddActorLocalRotation(t, i = "unknown", e = !1) {
     this.ActorInternal.K2_AddActorLocalRotation(t, e, void 0, !1),
       this.DebugMovementComp &&
         this.DebugMovementComp.MarkDebugRecord(i + ".AddActorLocalRotation", 1),
-      this.cnn();
+      this.Qrn();
   }
   ResetTransformCachedTime() {
     (this.CachedTransformTime = 0),
@@ -544,15 +546,12 @@ let BaseActorComponent = class BaseActorComponent extends EntityComponent_1.Enti
   }
   OnSetActorActive(t, i) {
     t
-      ? (this.EnableActor(this.hnn),
-        this.EnableCollision(this.lnn),
-        this.EnableTick(this._nn),
-        (this.hnn = void 0),
-        (this.lnn = void 0),
-        (this._nn = void 0))
-      : ((this.hnn = this.DisableActor(i)),
-        (this.lnn = this.DisableCollision(i)),
-        (this._nn = this.DisableTick(i)));
+      ? (this.EnableActor(this.Hrn),
+        this.EnableCollision(this.jrn),
+        (this.Hrn = void 0),
+        (this.jrn = void 0))
+      : ((this.Hrn = this.DisableActor(i)),
+        (this.jrn = this.DisableCollision(i)));
   }
   SetSequenceBinding(t) {
     this.IsInSequenceBinding = t;
@@ -563,7 +562,8 @@ let BaseActorComponent = class BaseActorComponent extends EntityComponent_1.Enti
   DisableActor(t) {
     var i = this.DisableActorHandle.Disable(t, this.constructor.name);
     return (
-      Log_1.Log.CheckInfo() &&
+      ModelManager_1.ModelManager.CreatureModel.EnableEntityLog &&
+        Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Entity",
           3,
@@ -587,7 +587,8 @@ let BaseActorComponent = class BaseActorComponent extends EntityComponent_1.Enti
   DisableCollision(t) {
     var i = this.DisableCollisionHandle.Disable(t, this.constructor.name);
     return (
-      Log_1.Log.CheckInfo() &&
+      ModelManager_1.ModelManager.CreatureModel.EnableEntityLog &&
+        Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Entity",
           3,
@@ -603,17 +604,9 @@ let BaseActorComponent = class BaseActorComponent extends EntityComponent_1.Enti
       i
     );
   }
-  DisableTick(t) {
-    t = this.DisableTickHandle.Disable(t, this.constructor.name);
-    return (
-      this.ActorInternal?.IsValid() &&
-        this.ActorInternal.IsActorTickEnabled() &&
-        this.ActorInternal.SetActorTickEnabled(!1),
-      t
-    );
-  }
   EnableActor(t) {
-    Log_1.Log.CheckInfo() &&
+    ModelManager_1.ModelManager.CreatureModel.EnableEntityLog &&
+      Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "Entity",
         3,
@@ -637,7 +630,7 @@ let BaseActorComponent = class BaseActorComponent extends EntityComponent_1.Enti
             t,
           );
       };
-      this.Entity.GetComponent(99)
+      this.Entity.GetComponent(101)
         ? TimerSystem_1.TimerSystem.Next(() => {
             this.ActorInternal?.IsValid() && i();
           })
@@ -646,7 +639,8 @@ let BaseActorComponent = class BaseActorComponent extends EntityComponent_1.Enti
     return t;
   }
   EnableCollision(t) {
-    Log_1.Log.CheckInfo() &&
+    ModelManager_1.ModelManager.CreatureModel.EnableEntityLog &&
+      Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "Entity",
         3,
@@ -667,17 +661,6 @@ let BaseActorComponent = class BaseActorComponent extends EntityComponent_1.Enti
       t
     );
   }
-  EnableTick(t) {
-    t = this.DisableTickHandle.Enable(t, this.constructor.name);
-    return (
-      t &&
-        this.ActorInternal?.IsValid() &&
-        this.ActorInternal.IsActorTickEnabled() !==
-          this.DisableTickHandle.Empty &&
-        this.ActorInternal.SetActorTickEnabled(this.DisableTickHandle.Empty),
-      t
-    );
-  }
   DumpDisableActorInfo() {
     return this.DisableActorHandle.DumpDisableInfo();
   }
@@ -685,32 +668,35 @@ let BaseActorComponent = class BaseActorComponent extends EntityComponent_1.Enti
     return this.DisableCollisionHandle.DumpDisableInfo();
   }
   DumpDisableTickInfo() {
-    return this.DisableTickHandle.DumpDisableInfo();
+    var t = this.Entity.GetComponent(98);
+    return t ? t.DumpDisableTickInfo() : "";
   }
   SetActorVisible(t, i) {
     t
-      ? this.nnn && (this.EnableActor(this.nnn), (this.nnn = void 0))
-      : this.nnn || (this.nnn = this.DisableActor(i));
+      ? this.krn && (this.EnableActor(this.krn), (this.krn = void 0))
+      : this.krn || (this.krn = this.DisableActor(i));
   }
   SetCollisionEnable(t, i) {
     t
-      ? this.snn && (this.EnableCollision(this.snn), (this.snn = void 0))
-      : this.snn || (this.snn = this.DisableCollision(i));
+      ? this.Frn && (this.EnableCollision(this.Frn), (this.Frn = void 0))
+      : this.Frn || (this.Frn = this.DisableCollision(i));
   }
   SetTickEnable(t, i) {
     t
-      ? this.ann && (this.EnableTick(this.ann), (this.ann = void 0))
-      : this.ann || (this.ann = this.DisableTick(i));
+      ? this.Vrn &&
+        (this.Entity.GetComponent(98)?.EnableTickWithLog(this.Vrn, i),
+        (this.Vrn = void 0))
+      : this.Vrn ||
+        (this.Vrn = this.Entity.GetComponent(98)?.DisableTickWithLog(i));
   }
   OnClear() {
     return (
-      this.unn(!0),
+      this.Krn(!0),
       this.CreatureDataInternal &&
         (this.CreatureDataInternal.Reset(),
         (this.CreatureDataInternal = void 0)),
       this.DisableActorHandle.Clear(),
       this.DisableCollisionHandle.Clear(),
-      this.DisableTickHandle.Clear(),
       this.ResetAllCachedTime(),
       !0
     );

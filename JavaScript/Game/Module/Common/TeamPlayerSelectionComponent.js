@@ -7,8 +7,8 @@ const UE = require("ue"),
 class TeamPlayerSelectionComponent extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
-      (this.zke = void 0),
-      (this.KBt = void 0),
+      (this.dFe = void 0),
+      (this.$bt = void 0),
       (this.IsSet = !1),
       this.CreateThenShowByActor(e.GetOwner());
   }
@@ -19,22 +19,22 @@ class TeamPlayerSelectionComponent extends UiPanelBase_1.UiPanelBase {
     ];
   }
   OnBeforeDestroy() {
-    (this.zke = void 0), (this.KBt = void 0), (this.IsSet = !1);
+    (this.dFe = void 0), (this.$bt = void 0), (this.IsSet = !1);
   }
   SetRoleId(e) {
-    this.zke = e;
+    this.dFe = e;
   }
   SetTeamNumber(e) {
-    this.KBt = e;
+    this.$bt = e;
   }
   RefreshItem() {
     var e = this.GetTexture(0),
       i = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(
-        this.zke,
+        this.dFe,
       ).RoleHeadIconBig,
       i = (this.SetTextureByPath(i, e), this.GetSprite(1)),
       e = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
-        `SP_Online${this.KBt}PIcon`,
+        `SP_Online${this.$bt}PIcon`,
       );
     this.SetSpriteByPath(e, i, !1), (this.IsSet = !0);
   }

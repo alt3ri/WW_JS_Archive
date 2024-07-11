@@ -7,7 +7,7 @@ class CommonAttributeItem extends UiPanelBase_1.UiPanelBase {
   constructor(t) {
     super(),
       (this.Pe = void 0),
-      (this.r7e = () => !!this.Pe.DetailText),
+      (this.pHe = () => !!this.Pe.DetailText),
       (this.ToggleEvent = (t) => {
         t = 1 === t;
         this.GetText(5).SetUIActive(t), this.GetItem(7).SetUIActive(t);
@@ -32,7 +32,7 @@ class CommonAttributeItem extends UiPanelBase_1.UiPanelBase {
     t.RootUIComp.SetUIActive(!0),
       this.GetItem(7).SetUIActive(!1),
       t.CanExecuteChange.Unbind(),
-      t.CanExecuteChange.Bind(this.r7e);
+      t.CanExecuteChange.Bind(this.pHe);
   }
   ShowTemp(t) {
     (this.Pe = t).AttrNameText && this.GetText(1).SetText(t.AttrNameText),

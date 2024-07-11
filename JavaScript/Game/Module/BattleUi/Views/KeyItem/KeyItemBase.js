@@ -16,27 +16,28 @@ class KeyItemBase extends UiPanelBase_1.UiPanelBase {
     super(),
       (this.ActionName = void 0),
       (this.AxisName = void 0),
-      (this.u_t = void 0),
-      (this.HSe = void 0),
+      (this.Lut = void 0),
+      (this.HEe = void 0),
+      (this.KeyTexturePath = void 0),
       (this.IsEnable = !1),
       (this.IsGray = !1),
-      (this.dKe = () => {
+      (this.XBo = () => {
         StringUtils_1.StringUtils.IsEmpty(this.ActionName)
           ? StringUtils_1.StringUtils.IsEmpty(this.AxisName) ||
             this.RefreshAxis(this.AxisName)
           : this.RefreshAction(this.ActionName);
       }),
-      (this.c_t = (t) => {
+      (this.Dut = (t) => {
         StringUtils_1.StringUtils.IsEmpty(this.ActionName) ||
           this.ActionName !== t ||
           this.RefreshAction(this.ActionName);
       }),
-      (this.m_t = (t) => {
+      (this.Rut = (t) => {
         StringUtils_1.StringUtils.IsEmpty(this.AxisName) ||
           this.AxisName !== t ||
           this.RefreshAxis(this.AxisName);
       }),
-      (this.d_t = (t, i) => {
+      (this.Uut = (t, i) => {
         this.OnInputAction(t, i);
       });
   }
@@ -44,25 +45,26 @@ class KeyItemBase extends UiPanelBase_1.UiPanelBase {
     this.Ore();
   }
   OnBeforeDestroyImplement() {
-    this.UnBindAction(), this.kre();
+    this.UnBindAction(), this.kre(), this.Reset();
   }
   Reset() {
-    (this.u_t = void 0),
-      (this.HSe = void 0),
+    (this.Lut = void 0),
+      (this.HEe = void 0),
       (this.ActionName = void 0),
-      (this.AxisName = void 0);
+      (this.AxisName = void 0),
+      (this.KeyTexturePath = void 0);
   }
   SetCustomKeyName(t) {
-    this.u_t = t;
+    this.Lut = t;
   }
   RefreshAction(t) {
     if (
       (this.UnBindAction(),
       (this.ActionName = t),
       (this.AxisName = void 0),
-      this.u_t)
+      this.Lut)
     )
-      this.RefreshKey(InputSettings_1.InputSettings.GetKey(this.u_t));
+      this.RefreshKey(InputSettings_1.InputSettings.GetKey(this.Lut));
     else {
       t = InputSettingsManager_1.InputSettingsManager.GetActionBinding(
         this.ActionName,
@@ -96,8 +98,8 @@ class KeyItemBase extends UiPanelBase_1.UiPanelBase {
     this.UnBindAction(),
       (this.AxisName = t),
       (this.ActionName = void 0),
-      this.u_t
-        ? this.RefreshKey(InputSettings_1.InputSettings.GetKey(this.u_t))
+      this.Lut
+        ? this.RefreshKey(InputSettings_1.InputSettings.GetKey(this.Lut))
         : (t = InputSettingsManager_1.InputSettingsManager.GetAxisBinding(t)) &&
           (t = t.GetCurrentPlatformKey()) &&
           this.RefreshKey(t.GetKey());
@@ -106,51 +108,51 @@ class KeyItemBase extends UiPanelBase_1.UiPanelBase {
     StringUtils_1.StringUtils.IsEmpty(this.ActionName) ||
       InputDistributeController_1.InputDistributeController.BindAction(
         this.ActionName,
-        this.d_t,
+        this.Uut,
       );
   }
   UnBindAction() {
     StringUtils_1.StringUtils.IsEmpty(this.ActionName) ||
       InputDistributeController_1.InputDistributeController.UnBindAction(
         this.ActionName,
-        this.d_t,
+        this.Uut,
       );
   }
   Ore() {
     EventSystem_1.EventSystem.Add(
-      EventDefine_1.EEventName.OnPlatformChanged,
-      this.dKe,
+      EventDefine_1.EEventName.InputControllerChange,
+      this.XBo,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnActionKeyChanged,
-        this.c_t,
+        this.Dut,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnAxisKeyChanged,
-        this.m_t,
+        this.Rut,
       );
   }
   kre() {
     EventSystem_1.EventSystem.Remove(
-      EventDefine_1.EEventName.OnPlatformChanged,
-      this.dKe,
+      EventDefine_1.EEventName.InputControllerChange,
+      this.XBo,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnActionKeyChanged,
-        this.c_t,
+        this.Dut,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnAxisKeyChanged,
-        this.m_t,
+        this.Rut,
       );
   }
   OnInputAction(t, i) {}
   RefreshKey(t) {
     var i = t.GetKeyName();
-    this.HSe !== i &&
+    this.HEe !== i &&
       ((t = t.GetKeyIconPath()),
-      Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info(
+      Log_1.Log.CheckDebug() &&
+        Log_1.Log.Debug(
           "Battle",
           8,
           "[KeyItem]设置按键图片",
@@ -158,8 +160,8 @@ class KeyItemBase extends UiPanelBase_1.UiPanelBase {
           ["keyName", i],
           ["keyTexturePath", t],
         ),
-      StringUtils_1.StringUtils.IsEmpty(t) ? this.SetKeyText(i) : this.C_t(t),
-      (this.HSe = i));
+      StringUtils_1.StringUtils.IsEmpty(t) ? this.SetKeyText(i) : this.Aut(t),
+      (this.HEe = i));
   }
   RefreshKeyByName(t) {
     t = InputSettings_1.InputSettings.GetKey(t);
@@ -181,15 +183,17 @@ class KeyItemBase extends UiPanelBase_1.UiPanelBase {
           ? e.SetUIActive(!1)
           : (LguiUtil_1.LguiUtil.SetLocalText(e, t, ...i), e.SetUIActive(!0)));
   }
-  C_t(t) {
+  Aut(t) {
     this.GetKeyText()?.SetUIActive(!1);
     const i = this.GetKeyTexture();
     i &&
       (i.SetUIActive(!1),
       StringUtils_1.StringUtils.IsEmpty(t) ||
+        ((this.KeyTexturePath = t),
         this.SetTextureByPath(t, i, void 0, () => {
-          i.SetSizeFromTexture(), i.SetUIActive(!0);
-        }));
+          this.KeyTexturePath === t &&
+            (i.SetSizeFromTexture(), i.SetUIActive(!0));
+        })));
   }
   SetEnable(t, i = !1) {
     (this.IsEnable === t && !i) ||

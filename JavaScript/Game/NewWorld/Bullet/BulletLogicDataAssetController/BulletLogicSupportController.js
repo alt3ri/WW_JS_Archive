@@ -14,7 +14,7 @@ const UE = require("ue"),
   DRAW_TIME = 5;
 class BulletLogicSupportController extends BulletLogicController_1.BulletLogicController {
   constructor(t, e) {
-    super(t, e), (this.uoe = void 0), (this.Y9o = void 0), (this.J9o = void 0);
+    super(t, e), (this.uoe = void 0), (this.Q7o = void 0), (this.X7o = void 0);
   }
   OnInit() {
     this.koe(),
@@ -23,8 +23,8 @@ class BulletLogicSupportController extends BulletLogicController_1.BulletLogicCo
       );
   }
   koe() {
-    (this.Y9o = new UE.Transform()),
-      (this.J9o = Vector_1.Vector.Create(0, 0, 0)),
+    (this.Q7o = new UE.Transform()),
+      (this.X7o = Vector_1.Vector.Create(0, 0, 0)),
       (this.uoe = UE.NewObject(UE.TraceLineElement.StaticClass())),
       (this.uoe.bIsSingle = !0),
       (this.uoe.bIgnoreSelf = !0),
@@ -47,7 +47,7 @@ class BulletLogicSupportController extends BulletLogicController_1.BulletLogicCo
       ObjectUtils_1.ObjectUtils.SoftObjectReferenceValid(
         this.LogicController.Effect,
       ) &&
-        ((t = this.z9o(t)),
+        ((t = this.$7o(t)),
         BulletStaticFunction_1.BulletStaticFunction.PlayBulletEffect(
           GlobalData_1.GlobalData.World,
           this.LogicController.Effect.ToAssetPathName(),
@@ -56,9 +56,9 @@ class BulletLogicSupportController extends BulletLogicController_1.BulletLogicCo
           "[BulletLogicSupportController.BulletLogicAction] " + e.BulletRowName,
         )));
   }
-  z9o(t) {
-    var e = this.Bullet.GetComponent(152),
-      i = t.GetComponent(152).Owner,
+  $7o(t) {
+    var e = this.Bullet.GetComponent(154),
+      i = t.GetComponent(154).Owner,
       t = UE.KismetMathLibrary.TransformLocation(
         i.GetTransform(),
         t.Data.Base.CenterOffset.ToUeVector(),
@@ -71,7 +71,7 @@ class BulletLogicSupportController extends BulletLogicController_1.BulletLogicCo
       (this.uoe.WorldContextObject = i),
       TraceElementCommon_1.TraceElementCommon.SetStartLocation(this.uoe, t),
       TraceElementCommon_1.TraceElementCommon.SetEndLocation(this.uoe, o);
-    let r = this.Y9o;
+    let r = this.Q7o;
     (t = TraceElementCommon_1.TraceElementCommon.LineTrace(
       this.uoe,
       PROFILE_KEY,
@@ -82,10 +82,10 @@ class BulletLogicSupportController extends BulletLogicController_1.BulletLogicCo
         ? (TraceElementCommon_1.TraceElementCommon.GetImpactPoint(
             o,
             0,
-            this.J9o,
+            this.X7o,
           ),
           r.SetRotation(e.ActorRotation.Quaternion()),
-          r.SetTranslation(this.J9o.ToUeVector()),
+          r.SetTranslation(this.X7o.ToUeVector()),
           r.SetScale3D(Vector_1.Vector.OneVector))
         : (r = i.GetTransform()),
       (this.uoe.WorldContextObject = void 0),

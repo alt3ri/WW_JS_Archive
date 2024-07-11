@@ -7,8 +7,8 @@ const UE = require("ue"),
 class QuestHintView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.WFt = () => {
-        this.Ero();
+      (this.K3t = () => {
+        this.pno();
       });
   }
   OnRegisterComponent() {
@@ -20,18 +20,18 @@ class QuestHintView extends UiViewBase_1.UiViewBase {
     ];
   }
   OnStart() {
-    this.UiViewSequence.AddSequenceFinishEvent("PopUp", this.WFt);
+    this.UiViewSequence.AddSequenceFinishEvent("PopUp", this.K3t);
   }
   OnAfterShow() {
-    this.ibi(), this.UiViewSequence.PlaySequence("PopUp");
+    this.iqi(), this.UiViewSequence.PlaySequence("PopUp");
   }
-  Ero() {
+  pno() {
     UiManager_1.UiManager.CloseView("QuestHintView");
   }
-  ibi() {
-    this.yro(!1), this.RootItem.SetAnchorOffsetX(0);
+  iqi() {
+    this.vno(!1), this.RootItem.SetAnchorOffsetX(0);
   }
-  yro(e) {
+  vno(e) {
     this.GetText(3).SetUIActive(e), this.GetSprite(2).SetUIActive(e);
   }
 }

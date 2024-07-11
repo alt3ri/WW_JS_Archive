@@ -13,7 +13,7 @@ const Log_1 = require("../../../../../../../Core/Common/Log"),
   };
 class ExtraEffectLevelBuff extends ExtraEffectBase_1.BuffEffect {
   constructor() {
-    super(...arguments), (this.IQo = void 0);
+    super(...arguments), (this.EXo = void 0);
   }
   InitParameters(e) {
     var t = e.ExtraEffectParameters[0],
@@ -30,7 +30,7 @@ class ExtraEffectLevelBuff extends ExtraEffectBase_1.BuffEffect {
       ),
       f = levelBuffClassMap[t];
     f
-      ? (this.IQo = new f(this.OwnerEntity, this.BuffId, l, s, e))
+      ? (this.EXo = new f(this.OwnerEntity, this.BuffId, l, s, e))
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Level",
@@ -41,17 +41,17 @@ class ExtraEffectLevelBuff extends ExtraEffectBase_1.BuffEffect {
         );
   }
   OnCreated() {
-    this.IQo?.OnCreated();
+    this.EXo?.OnCreated();
   }
   OnExecute() {}
   OnRemoved(e) {
-    this.IQo?.OnRemoved(e);
+    this.EXo?.OnRemoved(e);
   }
   OnStackIncreased(e, t) {
-    this.IQo?.OnStackChanged(e, t, !1);
+    this.EXo?.OnStackChanged(e, t, !1);
   }
   OnStackDecreased(e, t, l) {
-    this.IQo?.OnStackChanged(e, t, l);
+    this.EXo?.OnStackChanged(e, t, l);
   }
 }
 exports.ExtraEffectLevelBuff = ExtraEffectLevelBuff;

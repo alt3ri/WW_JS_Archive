@@ -71,6 +71,22 @@ class Vector2Op {
   static Equal(t, r) {
     return Math.abs(t.X - r.X) < 1e-4 && Math.abs(t.Y - r.Y) < 1e-4;
   }
+  static Intersect(t, r, e, c) {
+    var s = r.X - t.X,
+      r = r.Y - t.Y,
+      a = c.X - e.X,
+      c = c.Y - e.Y,
+      o = -a * r + s * c;
+    return (
+      0 != o &&
+      ((r = (-r * (t.X - e.X) + s * (t.Y - e.Y)) / o),
+      (s = (a * (t.Y - e.Y) - c * (t.X - e.X)) / o),
+      0 <= r) &&
+      r <= 1 &&
+      0 <= s &&
+      s <= 1
+    );
+  }
 }
 (exports.Vector2Op = Vector2Op),
   ((_a = Vector2Op).One = _a.New(1, 1)),
@@ -100,6 +116,9 @@ class RectOp {
   static RoundS(t) {
     return Vector2Op.RoundS(t.Min), Vector2Op.RoundS(t.Max), t;
   }
+  static Equal(t, r) {
+    return Vector2Op.Equal(t.Min, r.Min) && Vector2Op.Equal(t.Max, r.Max);
+  }
   static Clone(t) {
     return { Min: Vector2Op.Clone(t.Min), Max: Vector2Op.Clone(t.Max) };
   }
@@ -122,6 +141,33 @@ class RectOp {
   }
   static Contains(t, r) {
     return t.Min.X <= r.X && r.X < t.Max.X && t.Min.Y <= r.Y && r.Y < t.Max.Y;
+  }
+  static IntersectLine(t, r, e) {
+    var c = t.Min,
+      t = t.Max,
+      s = c,
+      a = { X: t.X, Y: c.Y },
+      o = t,
+      c = { X: c.X, Y: t.Y };
+    return (
+      Vector2Op.Intersect(r, e, s, a) ||
+      Vector2Op.Intersect(r, e, a, o) ||
+      Vector2Op.Intersect(r, e, o, c) ||
+      Vector2Op.Intersect(r, e, c, s)
+    );
+  }
+  static IntersectOrIncludeLine(t, r, e) {
+    var c, s, a;
+    return (
+      !(!RectOp.Contains(t, r) && !RectOp.Contains(t, e)) ||
+      ((a = t.Min),
+      (s = { X: (t = t.Max).X, Y: (c = a).Y }),
+      (t = { X: a.X, Y: (a = t).Y }),
+      Vector2Op.Intersect(r, e, c, s)) ||
+      Vector2Op.Intersect(r, e, s, a) ||
+      Vector2Op.Intersect(r, e, a, t) ||
+      Vector2Op.Intersect(r, e, t, c)
+    );
   }
 }
 function toVector3R(t) {
@@ -146,6 +192,13 @@ function toVectorInfo(t) {
 class Vector3Op {
   static New(t, r, e) {
     return { X: t, Y: r, Z: e };
+  }
+  static Format(t) {
+    return t
+      ? void 0 === t.X || void 0 === t.Y || void 0 === t.Z
+        ? Vector3Op.New(t.X ?? 0, t.Y ?? 0, t.Z ?? 0)
+        : t
+      : Vector3Op.Zero;
   }
   static Add(t, r) {
     return {
@@ -190,6 +243,12 @@ class Vector3Op {
       s = e / r,
       a = t.Y / e;
     return { X: (t.X / e) * s, Y: a * s, Z: c / r };
+  }
+  static Abs(t) {
+    return { X: Math.abs(t.X), Y: Math.abs(t.Y), Z: Math.abs(t.Z) };
+  }
+  static IsZero(t) {
+    return !t.X && !t.Y && !t.Z;
   }
 }
 (exports.Vector3Op = Vector3Op),

@@ -12,7 +12,7 @@ const StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
 class NavigationGroupNextComponent extends HotKeyComponent_1.HotKeyComponent {
   constructor() {
     super(...arguments),
-      (this.Ubo = (t) => {
+      (this.Lqo = (t) => {
         3 === t &&
           UiNavigationNewController_1.UiNavigationNewController.JumpNavigationGroupByTag(
             this.GetHotKeyConfig().BindButtonTag,
@@ -26,17 +26,17 @@ class NavigationGroupNextComponent extends HotKeyComponent_1.HotKeyComponent {
   }
   OnStartInputAxis(t) {
     UiNavigationJoystickInput_1.UiNavigationJoystickInput.RegisterLeftJoystickFunction(
-      this.Ubo,
+      this.Lqo,
     );
   }
   OnFinishInputAxis(t) {
     UiNavigationJoystickInput_1.UiNavigationJoystickInput.UnRegisterLeftJoystickFunction(
-      this.Ubo,
+      this.Lqo,
     );
   }
   OnClear() {
     UiNavigationJoystickInput_1.UiNavigationJoystickInput.UnRegisterLeftJoystickFunction(
-      this.Ubo,
+      this.Lqo,
     );
   }
   OnRefreshSelfHotKeyState(i) {
@@ -61,7 +61,7 @@ exports.NavigationGroupNextComponent = NavigationGroupNextComponent;
 class NavigationGroupPrevComponent extends HotKeyComponent_1.HotKeyComponent {
   constructor() {
     super(...arguments),
-      (this.Abo = (t) => {
+      (this.Dqo = (t) => {
         2 === t &&
           UiNavigationNewController_1.UiNavigationNewController.JumpNavigationGroup(
             6,
@@ -75,17 +75,17 @@ class NavigationGroupPrevComponent extends HotKeyComponent_1.HotKeyComponent {
   }
   OnStartInputAxis(t) {
     UiNavigationJoystickInput_1.UiNavigationJoystickInput.RegisterLeftJoystickFunction(
-      this.Abo,
+      this.Dqo,
     );
   }
   OnFinishInputAxis(t) {
     UiNavigationJoystickInput_1.UiNavigationJoystickInput.UnRegisterLeftJoystickFunction(
-      this.Abo,
+      this.Dqo,
     );
   }
   OnClear() {
     UiNavigationJoystickInput_1.UiNavigationJoystickInput.UnRegisterLeftJoystickFunction(
-      this.Abo,
+      this.Dqo,
     );
   }
   OnRefreshSelfHotKeyState(t) {

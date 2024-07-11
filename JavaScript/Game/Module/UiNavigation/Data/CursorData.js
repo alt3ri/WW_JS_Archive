@@ -16,216 +16,210 @@ const UE = require("ue"),
   ALLOW_MOVE_TICK_LIMIT = 1e3;
 class Cursor {
   constructor() {
-    (this.GPo = void 0),
-      (this.NPo = void 0),
-      (this.OPo = void 0),
-      (this.kPo = void 0),
-      (this.FPo = void 0),
-      (this.VPo = LguiResourceManager_1.LguiResourceManager.InvalidId),
-      (this.HPo = 0),
-      (this.jPo = !1),
-      (this.WPo = !0),
-      (this.KPo = !1),
+    (this.Bxo = void 0),
+      (this.bxo = void 0),
+      (this.qxo = void 0),
+      (this.Gxo = void 0),
+      (this.Nxo = void 0),
+      (this.Oxo = LguiResourceManager_1.LguiResourceManager.InvalidId),
+      (this.kxo = 0),
+      (this.Fxo = !1),
+      (this.Vxo = !0),
+      (this.Hxo = !1),
       (this.IsMoveInstantly = !1),
-      (this.QPo = 0),
-      (this.XPo = void 0),
-      (this.$Po = !1),
-      (this.YPo = 0);
+      (this.jxo = 0),
+      (this.Wxo = void 0),
+      (this.Kxo = !1),
+      (this.Qxo = 0);
   }
-  JPo() {
-    (this.GPo && this.GPo.IsValid()) ||
-      (this.VPo === LguiResourceManager_1.LguiResourceManager.InvalidId &&
-        (this.VPo =
+  Xxo() {
+    (this.Bxo && this.Bxo.IsValid()) ||
+      (this.Oxo === LguiResourceManager_1.LguiResourceManager.InvalidId &&
+        (this.Oxo =
           LguiResourceManager_1.LguiResourceManager.LoadPrefabByResourceId(
             "UiItem_Cursor_Prefab",
             UiLayer_1.UiLayer.GetLayerRootUiItem(UiLayerType_1.ELayerType.Pool),
             (i) => {
-              (this.VPo = LguiResourceManager_1.LguiResourceManager.InvalidId),
+              (this.Oxo = LguiResourceManager_1.LguiResourceManager.InvalidId),
                 LguiUtil_1.LguiUtil.SetActorIsPermanent(i, !0, !0),
-                (this.GPo = i.GetComponentByClass(UE.UIItem.StaticClass())),
-                (this.NPo = this.GPo.UIChildren.Get(0)),
-                this.NPo.SetUIActive(!1);
+                (this.Bxo = i.GetComponentByClass(UE.UIItem.StaticClass())),
+                (this.bxo = this.Bxo.UIChildren.Get(0)),
+                this.bxo.SetUIActive(!1);
             },
           )));
   }
   RefreshUseItem() {
     var i;
-    (this.OPo && this.OPo.IsValid()) ||
-      (this.JPo(),
-      this.GPo?.IsValid() &&
-        (this.NPo?.IsValid()
+    (this.qxo && this.qxo.IsValid()) ||
+      (this.Xxo(),
+      this.Bxo?.IsValid() &&
+        (this.bxo?.IsValid()
           ? (Log_1.Log.CheckDebug() &&
               Log_1.Log.Debug("UiNavigation", 11, "拷贝一份新的光标"),
-            (this.OPo = LguiUtil_1.LguiUtil.CopyItem(this.NPo, this.GPo)),
+            (this.qxo = LguiUtil_1.LguiUtil.CopyItem(this.bxo, this.Bxo)),
             LguiUtil_1.LguiUtil.SetActorIsPermanent(
-              this.OPo.GetOwner(),
+              this.qxo.GetOwner(),
               !0,
               !0,
             ),
-            this.OPo.SetUIParent(
+            this.qxo.SetUIParent(
               UiLayer_1.UiLayer.GetLayerRootUiItem(
                 UiLayerType_1.ELayerType.Float,
               ),
             ),
-            (this.$Po = this.OPo.IsUIActiveSelf()),
-            (i = void 0 !== this.kPo),
-            this.zPo(i),
+            (this.Kxo = this.qxo.IsUIActiveSelf()),
+            (i = void 0 !== this.Gxo),
+            this.$xo(i),
             Cursor.kRe.Set(0, 0, 0))
           : Log_1.Log.CheckError() &&
             Log_1.Log.Error("UiNavigation", 11, "光标原始节点出现问题")));
   }
-  ZPo() {
-    var i = this.kPo.K2_GetComponentLocation();
-    Cursor.exo.Set(i.X + Cursor.txo, 0, i.Z + Cursor.ixo),
-      Cursor.oxo.DeepCopy(Cursor.exo),
-      Cursor.kRe.DeepCopy(Cursor.exo),
-      this.OPo.GetOwner().K2_SetActorLocation(
-        Cursor.exo.ToUeVector(),
-        !1,
-        void 0,
-        !1,
-      );
+  Yxo() {
+    var i = this.Gxo.K2_GetComponentLocation();
+    Cursor.Jxo.Set(i.X + Cursor.zxo, 0, i.Z + Cursor.Zxo),
+      Cursor.ewo.DeepCopy(Cursor.Jxo),
+      Cursor.kRe.DeepCopy(Cursor.Jxo),
+      this.qxo
+        .GetOwner()
+        .K2_SetActorLocation(Cursor.Jxo.ToUeVector(), !1, void 0, !1);
   }
   SetFollowItem(i) {
-    (this.FPo = i),
-      (this.kPo = i?.RootUIComp),
-      (this.HPo = 0),
-      (this.QPo = 0),
-      (Cursor.iqn = 0),
-      (Cursor.rqn = 0),
+    (this.Nxo = i),
+      (this.Gxo = i?.RootUIComp),
+      (this.kxo = 0),
+      (this.jxo = 0),
+      (Cursor.s2n = 0),
+      (Cursor.a2n = 0),
       i
-        ? ((this.jPo = !0),
-          (this.WPo = i.Cursor.Switch),
-          this.rxo(),
-          this.zPo(!0),
-          this.nxo())
-        : this.zPo(!1);
+        ? ((this.Fxo = !0),
+          (this.Vxo = i.Cursor.Switch),
+          this.two(),
+          this.$xo(!0),
+          this.iwo())
+        : this.$xo(!1);
   }
   RepeatMove() {
-    (this.jPo = !0), (this.QPo = 0);
+    (this.Fxo = !0), (this.jxo = 0);
   }
-  rxo() {
+  two() {
     var i,
       t,
       s,
       r,
-      e = this.kPo.GetWidth(),
-      h = this.kPo.GetHeight();
-    (Cursor.iqn === e && Cursor.rqn === h) ||
-      ((i = this.kPo.GetPivot()),
-      (r = this.FPo.GetCursorOffset()),
-      (t = this.FPo.GetBoundOffset()),
+      e = this.Gxo.GetWidth(),
+      h = this.Gxo.GetHeight();
+    (Cursor.s2n === e && Cursor.a2n === h) ||
+      ((i = this.Gxo.GetPivot()),
+      (r = this.Nxo.GetCursorOffset()),
+      (t = this.Nxo.GetBoundOffset()),
       (s = r.X - MathUtils_1.MathUtils.Clamp(i.X, 0, 1)),
       (r = r.Y - MathUtils_1.MathUtils.Clamp(i.Y, 0, 1)),
-      (Cursor.txo = s * e + t.X),
-      (Cursor.ixo = r * h + t.Y),
-      (Cursor.iqn = e),
-      (Cursor.rqn = h));
+      (Cursor.zxo = s * e + t.X),
+      (Cursor.Zxo = r * h + t.Y),
+      (Cursor.s2n = e),
+      (Cursor.a2n = h));
   }
   SetIsUseMouse(i) {
     var t;
-    this.KPo !== i &&
-      ((this.KPo = i),
-      (t = !!this.kPo && this.kPo.bIsUIActive),
-      this.zPo(t),
+    this.Hxo !== i &&
+      ((this.Hxo = i),
+      (t = !!this.Gxo && this.Gxo.bIsUIActive),
+      this.$xo(t),
       Log_1.Log.CheckInfo()) &&
       Log_1.Log.Info("UiNavigation", 11, "[InputChange]使用鼠标标记发生变更!", [
         "使用鼠标",
         i,
       ]);
   }
-  nxo() {
-    this.IsMoveInstantly && ((this.IsMoveInstantly = !1), this.ZPo());
+  iwo() {
+    this.IsMoveInstantly && ((this.IsMoveInstantly = !1), this.Yxo());
   }
-  sxo() {
+  owo() {
     return !(
       !UiManager_1.UiManager.IsInited ||
-      (this.RefreshUseItem(), !this.GPo) ||
-      !this.kPo?.IsValid() ||
-      (this.FPo
-        ? !this.jPo
+      (this.RefreshUseItem(), !this.Bxo) ||
+      !this.Gxo?.IsValid() ||
+      (this.Nxo
+        ? !this.Fxo
         : (Log_1.Log.CheckError() &&
             Log_1.Log.Error("UiNavigation", 11, "光标, 找不到导航对象"),
           1))
     );
   }
-  axo() {
-    var i = this.kPo.K2_GetComponentLocation(),
-      t = this.kPo.K2_GetComponentScale();
-    Cursor.exo.Set(i.X + Cursor.txo * t.X, 0, i.Z + Cursor.ixo * t.Z),
-      Vector_1.Vector.Lerp(Cursor.kRe, Cursor.exo, this.HPo, Cursor.oxo),
-      (this.HPo += SPEED),
-      Vector_1.Vector.PointsAreSame(Cursor.oxo, Cursor.exo) &&
-        (Cursor.oxo.DeepCopy(Cursor.exo), this.hxo()),
-      Cursor.kRe.DeepCopy(Cursor.oxo),
-      this.OPo.GetOwner().K2_SetActorLocation(
-        Cursor.oxo.ToUeVector(),
-        !1,
-        void 0,
-        !1,
-      ),
-      this.rxo();
+  rwo() {
+    var i = this.Gxo.K2_GetComponentLocation(),
+      t = this.Gxo.K2_GetComponentScale();
+    Cursor.Jxo.Set(i.X + Cursor.zxo * t.X, 0, i.Z + Cursor.Zxo * t.Z),
+      Vector_1.Vector.Lerp(Cursor.kRe, Cursor.Jxo, this.kxo, Cursor.ewo),
+      (this.kxo += SPEED),
+      Vector_1.Vector.PointsAreSame(Cursor.ewo, Cursor.Jxo) &&
+        (Cursor.ewo.DeepCopy(Cursor.Jxo), this.nwo()),
+      Cursor.kRe.DeepCopy(Cursor.ewo),
+      this.qxo
+        .GetOwner()
+        .K2_SetActorLocation(Cursor.ewo.ToUeVector(), !1, void 0, !1),
+      this.two();
   }
   Tick(i) {
-    this.sxo() && (this.axo(), this.lxo(i));
+    this.owo() && (this.rwo(), this.swo(i));
   }
   Clear() {
-    LguiResourceManager_1.LguiResourceManager.CancelLoadPrefab(this.VPo),
-      this.GPo?.IsValid() && ActorSystem_1.ActorSystem.Put(this.GPo.GetOwner()),
-      this.OPo?.IsValid() && ActorSystem_1.ActorSystem.Put(this.OPo.GetOwner()),
-      this._xo(),
-      (this.VPo = LguiResourceManager_1.LguiResourceManager.InvalidId),
-      (this.YPo = 0),
-      (this.GPo = void 0),
-      (this.NPo = void 0),
-      (this.OPo = void 0),
-      (this.kPo = void 0),
-      (this.FPo = void 0),
-      (this.jPo = !1),
-      (this.HPo = 0);
+    LguiResourceManager_1.LguiResourceManager.CancelLoadPrefab(this.Oxo),
+      this.Bxo?.IsValid() && ActorSystem_1.ActorSystem.Put(this.Bxo.GetOwner()),
+      this.qxo?.IsValid() && ActorSystem_1.ActorSystem.Put(this.qxo.GetOwner()),
+      this.awo(),
+      (this.Oxo = LguiResourceManager_1.LguiResourceManager.InvalidId),
+      (this.Qxo = 0),
+      (this.Bxo = void 0),
+      (this.bxo = void 0),
+      (this.qxo = void 0),
+      (this.Gxo = void 0),
+      (this.Nxo = void 0),
+      (this.Fxo = !1),
+      (this.kxo = 0);
   }
-  hxo() {
-    this.QPo <= 0 && (this.QPo = ALLOW_MOVE_TICK_LIMIT);
+  nwo() {
+    this.jxo <= 0 && (this.jxo = ALLOW_MOVE_TICK_LIMIT);
   }
-  lxo(i) {
-    this.QPo <= 0 || ((this.QPo -= i), this.QPo <= 0 && (this.jPo = !1));
+  swo(i) {
+    this.jxo <= 0 || ((this.jxo -= i), this.jxo <= 0 && (this.Fxo = !1));
   }
-  zPo(i) {
-    this.OPo &&
-      this.OPo.IsValid() &&
-      ((i = i && this.WPo && !this.KPo), this.$Po !== i) &&
-      (this._xo(), (this.$Po = i) ? this.uxo() : this.cxo(i));
+  $xo(i) {
+    this.qxo &&
+      this.qxo.IsValid() &&
+      ((i = i && this.Vxo && !this.Hxo), this.Kxo !== i) &&
+      (this.awo(), (this.Kxo = i) ? this.hwo() : this.lwo(i));
   }
-  cxo(i) {
-    this.OPo.SetUIActive(i),
+  lwo(i) {
+    this.qxo.SetUIActive(i),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("UiNavigation", 11, "[InputChange]鼠标显隐发生变更!", [
           "active",
-          this.$Po,
+          this.Kxo,
         ]);
   }
-  uxo() {
-    0 === this.YPo
-      ? this.cxo(!0)
-      : (this.cxo(!1),
-        (this.XPo = TimerSystem_1.TimerSystem.Delay(() => {
-          (this.XPo = void 0), this.cxo(!0);
-        }, this.YPo)),
-        (this.YPo = 0));
+  hwo() {
+    0 === this.Qxo
+      ? this.lwo(!0)
+      : (this.lwo(!1),
+        (this.Wxo = TimerSystem_1.TimerSystem.Delay(() => {
+          (this.Wxo = void 0), this.lwo(!0);
+        }, this.Qxo)),
+        (this.Qxo = 0));
   }
-  _xo() {
-    this.XPo &&
-      (TimerSystem_1.TimerSystem.Remove(this.XPo), (this.XPo = void 0));
+  awo() {
+    this.Wxo &&
+      (TimerSystem_1.TimerSystem.Remove(this.Wxo), (this.Wxo = void 0));
   }
   SetCursorActiveDelayTime(i) {
-    this.YPo = i;
+    this.Qxo = i;
   }
 }
 ((exports.Cursor = Cursor).kRe = Vector_1.Vector.Create()),
-  (Cursor.exo = Vector_1.Vector.Create()),
-  (Cursor.txo = 0),
-  (Cursor.ixo = 0),
-  (Cursor.oxo = Vector_1.Vector.Create()),
-  (Cursor.iqn = 0),
-  (Cursor.rqn = 0);
+  (Cursor.Jxo = Vector_1.Vector.Create()),
+  (Cursor.zxo = 0),
+  (Cursor.Zxo = 0),
+  (Cursor.ewo = Vector_1.Vector.Create()),
+  (Cursor.s2n = 0),
+  (Cursor.a2n = 0);
 //# sourceMappingURL=CursorData.js.map

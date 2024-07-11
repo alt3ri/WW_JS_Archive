@@ -48,28 +48,28 @@ let SceneItemLevitateMagnetComponent =
         (this.Config = void 0),
         (this.Hte = void 0),
         (this.Gce = void 0),
-        (this.C1n = void 0),
-        (this.hpn = void 0),
+        (this.Xln = void 0),
+        (this.Ffn = void 0),
         (this.Lie = void 0),
-        (this.lpn = void 0),
-        (this.Uxr = -1),
-        (this.bMr = void 0),
-        (this._pn = void 0),
+        (this.Vfn = void 0),
+        (this.sxr = -1),
+        (this.xEr = void 0),
+        (this.Hfn = void 0),
         (this.Hme = (0, puerts_1.$ref)(void 0)),
-        (this.upn = 0),
-        (this.cpn = void 0),
-        (this.Frr = Vector_1.Vector.Create()),
-        (this.pIn = (e) => {
+        (this.jfn = 0),
+        (this.Wfn = void 0),
+        (this.Nnr = Vector_1.Vector.Create()),
+        (this.GTn = (e) => {
           e.Attacker.Id ===
             Global_1.Global.BaseCharacter?.CharacterActorComponent?.Entity.Id &&
             LevelGamePlayController_1.LevelGamePlayController.MultiplayerLimitTypeCheck(
-              this._pn,
+              this.Hfn,
             );
         }),
-        (this.M1n = (e) => {
+        (this.Zln = (e) => {
           if (!this.Gce.IsMoving && this.Hte?.IsAutonomousProxy) {
             if (ModelManager_1.ModelManager.GameModeModel.IsMulti)
-              switch (this._pn) {
+              switch (this.Hfn) {
                 case 2:
                   return;
                 case 0:
@@ -88,19 +88,19 @@ let SceneItemLevitateMagnetComponent =
               o = Vector_1.Vector.Create();
             this.Hte.ActorLocationProxy.Subtraction(s, o),
               o.Normalize(),
-              this.hpn?.Valid &&
-                (([s, i, n] = this.hpn.GetNextMoveTargetOnHit(o)), s) &&
+              this.Ffn?.Valid &&
+                (([s, i, n] = this.Ffn.GetNextMoveTargetOnHit(o)), s) &&
                 ((s =
                   Vector_1.Vector.Dist2D(i, this.Hte.ActorLocationProxy) /
                   this.Config.MoveSpeed),
                 this.Gce.AddMoveTarget(
                   new SceneItemMoveComponent_1.MoveTarget(i, s),
                 ),
-                (this.lpn = n),
-                this.Enable(this.Uxr, "SceneItemLevitateMagnetComponent.OnHit"),
-                this.hpn.RemoveMagnetTipsTag(),
+                (this.Vfn = n),
+                this.Enable(this.sxr, "SceneItemLevitateMagnetComponent.OnHit"),
+                this.Ffn.RemoveMagnetTipsTag(),
                 this.Lie.RemoveTag(-1063846162),
-                this.mpn(o));
+                this.Kfn(o));
           }
         }),
         (this.gIe = (e, t) => {
@@ -108,33 +108,33 @@ let SceneItemLevitateMagnetComponent =
             (EventSystem_1.EventSystem.RemoveWithTarget(
               this,
               EventDefine_1.EEventName.OnSceneItemHitByHitData,
-              this.M1n,
+              this.Zln,
             ),
             EventSystem_1.EventSystem.RemoveWithTarget(
               this.Entity,
               EventDefine_1.EEventName.OnSceneItemEntityHitAlways,
-              this.pIn,
+              this.GTn,
             ));
         }),
-        (this.dpn = () => {
-          (this.bMr = UE.NewObject(UE.TraceBoxElement.StaticClass())),
-            (this.bMr.WorldContextObject = this.Hte.Owner),
-            (this.bMr.bIsSingle = !0),
-            (this.bMr.bIgnoreSelf = !0),
-            this.bMr.AddObjectTypeQuery(
+        (this.Qfn = () => {
+          (this.xEr = UE.NewObject(UE.TraceBoxElement.StaticClass())),
+            (this.xEr.WorldContextObject = this.Hte.Owner),
+            (this.xEr.bIsSingle = !0),
+            (this.xEr.bIgnoreSelf = !0),
+            this.xEr.AddObjectTypeQuery(
               QueryTypeDefine_1.KuroObjectTypeQuery.WorldStatic,
             ),
-            this.bMr.AddObjectTypeQuery(
+            this.xEr.AddObjectTypeQuery(
               QueryTypeDefine_1.KuroObjectTypeQuery.WorldDynamic,
             ),
-            this.bMr.AddObjectTypeQuery(
+            this.xEr.AddObjectTypeQuery(
               QueryTypeDefine_1.KuroObjectTypeQuery.PawnMonster,
             ),
-            this.bMr.AddObjectTypeQuery(
+            this.xEr.AddObjectTypeQuery(
               QueryTypeDefine_1.KuroObjectTypeQuery.Destructible,
             ),
-            (this.bMr.DrawTime = 0.5),
-            (this.cpn =
+            (this.xEr.DrawTime = 0.5),
+            (this.Wfn =
               SceneInteractionManager_1.SceneInteractionManager.Get().GetMainCollisionActor(
                 this.Hte.GetSceneInteractionLevelHandleId(),
               ));
@@ -143,27 +143,27 @@ let SceneItemLevitateMagnetComponent =
               this.Hte.GetSceneInteractionLevelHandleId(),
             );
           for (let e = 0; e < t.Num(); e++)
-            this.bMr.ActorsToIgnore.Add(t.Get(e));
-          this.upn =
-            this.cpn.K2_GetActorLocation().Z - this.Hte.ActorLocationProxy.Z;
+            this.xEr.ActorsToIgnore.Add(t.Get(e));
+          this.jfn =
+            this.Wfn.K2_GetActorLocation().Z - this.Hte.ActorLocationProxy.Z;
           var e = Vector_1.Vector.Create(),
             e =
-              (this.Hte?.ActorUpProxy.Multiply(this.upn, e),
-              (this.Frr = Vector_1.Vector.Create(this.Hte?.ActorLocationProxy)),
-              this.Frr.AdditionEqual(e),
+              (this.Hte?.ActorUpProxy.Multiply(this.jfn, e),
+              (this.Nnr = Vector_1.Vector.Create(this.Hte?.ActorLocationProxy)),
+              this.Nnr.AdditionEqual(e),
               this.Hte.ActorRotation);
           this.Hte.SetActorRotation(Rotator_1.Rotator.ZeroRotator),
-            this.cpn.GetActorBounds(!1, void 0, this.Hme),
+            this.Wfn.GetActorBounds(!1, void 0, this.Hme),
             TraceElementCommon_1.TraceElementCommon.SetBoxHalfSize(
-              this.bMr,
+              this.xEr,
               (0, puerts_1.$unref)(this.Hme),
             ),
             TraceElementCommon_1.TraceElementCommon.SetStartLocation(
-              this.bMr,
-              this.Frr,
+              this.xEr,
+              this.Nnr,
             ),
             TraceElementCommon_1.TraceElementCommon.SetBoxOrientation(
-              this.bMr,
+              this.xEr,
               e,
             ),
             this.Hte.SetActorRotation(e);
@@ -173,16 +173,16 @@ let SceneItemLevitateMagnetComponent =
       e = e.GetParam(SceneItemLevitateMagnetComponent_1)[0];
       this.Config = e;
       e = this.Entity.GetComponent(0).GetBaseInfo();
-      return (this._pn = e?.OnlineInteractType), !0;
+      return (this.Hfn = e?.OnlineInteractType), !0;
     }
     OnStart() {
       return (
-        (this.Hte = this.Entity.GetComponent(182)),
-        (this.Gce = this.Entity.GetComponent(113)),
-        (this.C1n = this.Entity.GetComponent(138)),
-        this.C1n.RegisterComponent(this),
-        (this.hpn = this.Entity.GetComponent(122)),
-        (this.Lie = this.Entity.GetComponent(177)),
+        (this.Hte = this.Entity.GetComponent(185)),
+        (this.Gce = this.Entity.GetComponent(115)),
+        (this.Xln = this.Entity.GetComponent(140)),
+        this.Xln.RegisterComponent(this),
+        (this.Ffn = this.Entity.GetComponent(124)),
+        (this.Lie = this.Entity.GetComponent(180)),
         this.Lie.AddTag(-1063846162),
         this.Lie.ContainsTag(
           GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(-709838471),
@@ -190,12 +190,12 @@ let SceneItemLevitateMagnetComponent =
           (EventSystem_1.EventSystem.AddWithTarget(
             this,
             EventDefine_1.EEventName.OnSceneItemHitByHitData,
-            this.M1n,
+            this.Zln,
           ),
           EventSystem_1.EventSystem.AddWithTarget(
             this.Entity,
             EventDefine_1.EEventName.OnSceneItemEntityHitAlways,
-            this.pIn,
+            this.GTn,
           )),
         EventSystem_1.EventSystem.AddWithTarget(
           this.Entity,
@@ -205,9 +205,9 @@ let SceneItemLevitateMagnetComponent =
         EventSystem_1.EventSystem.AddWithTarget(
           this.Entity,
           EventDefine_1.EEventName.OnSceneInteractionLoadCompleted,
-          this.dpn,
+          this.Qfn,
         ),
-        (this.Uxr = this.Disable("[SceneItemHitMoveComp]初始化关闭Tick")),
+        (this.sxr = this.Disable("[SceneItemHitMoveComp]初始化关闭Tick")),
         !0
       );
     }
@@ -216,22 +216,22 @@ let SceneItemLevitateMagnetComponent =
         EventSystem_1.EventSystem.HasWithTarget(
           this,
           EventDefine_1.EEventName.OnSceneItemHitByHitData,
-          this.M1n,
+          this.Zln,
         ) &&
           EventSystem_1.EventSystem.RemoveWithTarget(
             this,
             EventDefine_1.EEventName.OnSceneItemHitByHitData,
-            this.M1n,
+            this.Zln,
           ),
         EventSystem_1.EventSystem.HasWithTarget(
           this.Entity,
           EventDefine_1.EEventName.OnSceneItemEntityHitAlways,
-          this.pIn,
+          this.GTn,
         ) &&
           EventSystem_1.EventSystem.RemoveWithTarget(
             this.Entity,
             EventDefine_1.EEventName.OnSceneItemEntityHitAlways,
-            this.pIn,
+            this.GTn,
           ),
         EventSystem_1.EventSystem.RemoveWithTarget(
           this.Entity,
@@ -241,24 +241,24 @@ let SceneItemLevitateMagnetComponent =
         EventSystem_1.EventSystem.HasWithTarget(
           this.Entity,
           EventDefine_1.EEventName.OnSceneInteractionLoadCompleted,
-          this.dpn,
+          this.Qfn,
         ) &&
           EventSystem_1.EventSystem.RemoveWithTarget(
             this.Entity,
             EventDefine_1.EEventName.OnSceneInteractionLoadCompleted,
-            this.dpn,
+            this.Qfn,
           ),
         !0
       );
     }
     OnTick(e) {
       this.Gce.IsMoving ||
-        ((this.Uxr = this.Disable("[SceneItemHitMoveComp]运动结束关闭Tick")),
-        this.hpn?.Valid && this.hpn.OnMove(this.lpn),
-        this.Cpn(),
+        ((this.sxr = this.Disable("[SceneItemHitMoveComp]运动结束关闭Tick")),
+        this.Ffn?.Valid && this.Ffn.OnMove(this.Vfn),
+        this.Xfn(),
         this.Lie.AddTag(-1063846162));
     }
-    mpn(e) {
+    Kfn(e) {
       var t = Vector_1.Vector.Create(e),
         i = Vector_1.Vector.Create(this.Hte.ActorUpProxy),
         n = (i.Normalize(), Vector_1.Vector.Create());
@@ -285,7 +285,7 @@ let SceneItemLevitateMagnetComponent =
         if (s > COS_45) return void this.Lie.AddTag(o.TagId);
       }
     }
-    Cpn() {
+    Xfn() {
       this.Lie.RemoveTag(503743627),
         this.Lie.RemoveTag(1594082526),
         this.Lie.RemoveTag(1996023206),
@@ -293,32 +293,32 @@ let SceneItemLevitateMagnetComponent =
     }
     UpdateBoxTrace(e, t) {
       var i;
-      this.bMr &&
+      this.xEr &&
         ((i =
           SceneInteractionManager_1.SceneInteractionManager.Get().GetMainCollisionActor(
             this.Hte.GetSceneInteractionLevelHandleId(),
           )),
         (e = Vector_1.Vector.Create(e.GetBlockLocationByIndex(t))),
         (t = Vector_1.Vector.Create()),
-        this.Hte?.ActorUpProxy.Multiply(this.upn, t),
+        this.Hte?.ActorUpProxy.Multiply(this.jfn, t),
         e?.AdditionEqual(t),
         (t = Rotator_1.Rotator.Create(this.Hte.ActorRotation)),
         this.Hte.SetActorRotation(Rotator_1.Rotator.ZeroRotator),
         i.GetActorBounds(!1, void 0, this.Hme),
         TraceElementCommon_1.TraceElementCommon.SetBoxHalfSize(
-          this.bMr,
+          this.xEr,
           (0, puerts_1.$unref)(this.Hme),
         ),
-        TraceElementCommon_1.TraceElementCommon.SetStartLocation(this.bMr, e),
-        TraceElementCommon_1.TraceElementCommon.SetBoxOrientation(this.bMr, t),
+        TraceElementCommon_1.TraceElementCommon.SetStartLocation(this.xEr, e),
+        TraceElementCommon_1.TraceElementCommon.SetBoxOrientation(this.xEr, t),
         this.Hte.SetActorRotation(t.ToUeRotator()),
-        (this.Frr = Vector_1.Vector.Create(this.cpn.K2_GetActorLocation())));
+        (this.Nnr = Vector_1.Vector.Create(this.Wfn.K2_GetActorLocation())));
     }
     StartBoxTrace(e) {
-      if (!this.bMr) return !1;
+      if (!this.xEr) return !1;
       SceneItemLevitateMagnetComponent_1.TraceDebug &&
-        this.bMr.SetDrawDebugTrace(2);
-      var t = Vector_1.Vector.Create(this.Frr),
+        this.xEr.SetDrawDebugTrace(2);
+      var t = Vector_1.Vector.Create(this.Nnr),
         e = Vector_1.Vector.Create(e),
         e = (e.SubtractionEqual(t), Vector_1.Vector.Create(e)),
         i = Vector_1.Vector.Create(this.Hte.ActorUpProxy),
@@ -328,9 +328,9 @@ let SceneItemLevitateMagnetComponent =
           (i.Multiply(s, n), e.SubtractionEqual(n), Vector_1.Vector.Create(t));
       return (
         i.AdditionEqual(e),
-        TraceElementCommon_1.TraceElementCommon.SetEndLocation(this.bMr, i),
+        TraceElementCommon_1.TraceElementCommon.SetEndLocation(this.xEr, i),
         TraceElementCommon_1.TraceElementCommon.BoxTrace(
-          this.bMr,
+          this.xEr,
           "[SceneItemLevitateMagnetComponent.StartBoxTrace]",
         )
       );
@@ -339,7 +339,7 @@ let SceneItemLevitateMagnetComponent =
 (SceneItemLevitateMagnetComponent.TraceDebug = !1),
   (SceneItemLevitateMagnetComponent = SceneItemLevitateMagnetComponent_1 =
     __decorate(
-      [(0, RegisterComponent_1.RegisterComponent)(139)],
+      [(0, RegisterComponent_1.RegisterComponent)(141)],
       SceneItemLevitateMagnetComponent,
     )),
   (exports.SceneItemLevitateMagnetComponent = SceneItemLevitateMagnetComponent);

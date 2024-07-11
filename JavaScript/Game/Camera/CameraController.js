@@ -22,6 +22,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const puerts_1 = require("puerts"),
   UE = require("ue"),
   ActorSystem_1 = require("../../Core/Actor/ActorSystem"),
+  Info_1 = require("../../Core/Common/Info"),
   Log_1 = require("../../Core/Common/Log"),
   Time_1 = require("../../Core/Common/Time"),
   ControllerBase_1 = require("../../Core/Framework/ControllerBase"),
@@ -134,14 +135,15 @@ class CameraController extends ControllerBase_1.ControllerBase {
             this.Model.CameraLocation.ToUeVector(),
             this.Model.CameraRotator.ToUeRotator(),
           )
-        : this.GetPlayerController()?.SetAudioListenerOverride(
+        : (a = t?.ActorLocation) &&
+          this.GetPlayerController()?.SetAudioListenerOverride(
             void 0,
-            t?.ActorLocation,
+            a,
             this.Model.CameraRotator.ToUeRotator(),
           ),
       this.UpdateCameraDitherRadius());
   }
-  static EnterCameraMode(e, t = 0, a = 0, r = 0, i = () => {}) {
+  static EnterCameraMode(e, t = 0, a = 0, r = 0, i = () => {}, s = !1) {
     return 0 === e
       ? (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
@@ -160,6 +162,7 @@ class CameraController extends ControllerBase_1.ControllerBase {
                 ["CurrentMode", this.Model.CameraMode],
                 ["NewMode", e],
               ),
+            s && i && i(),
             !1)
           : this.uhe(e, t, a, r, i));
   }
@@ -316,7 +319,7 @@ class CameraController extends ControllerBase_1.ControllerBase {
       i && this.PlayForceFeedbackFromCameraShake(e));
   }
   static PlayForceFeedbackFromCameraShake(e) {
-    ModelManager_1.ModelManager.PlatformModel?.IsGamepad() &&
+    Info_1.Info.IsInGamepad() &&
       e?.IsChildOf(UE.BP_CameraShakeAndForceFeedback_C.StaticClass()) &&
       (e = UE.KuroStaticLibrary.GetDefaultObject(e).ForceFeedbackEffect) &&
       Global_1.Global.CharacterController &&

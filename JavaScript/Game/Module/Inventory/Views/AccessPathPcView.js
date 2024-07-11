@@ -5,13 +5,14 @@ const UE = require("ue"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
   UiManager_1 = require("../../../Ui/UiManager"),
-  AccessPathPcButton_1 = require("./AccessPathPcButton");
+  AccessPathPcButton_1 = require("./AccessPathPcButton"),
+  Info_1 = require("../../../../Core/Common/Info");
 class AccessPathPcView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.xci = []),
-      (this.wci = () => {}),
-      (this.Bci = () => {
+      (this.xmi = []),
+      (this.wmi = () => {}),
+      (this.Bmi = () => {
         UiManager_1.UiManager.CloseView("AccessPathPcView");
       });
   }
@@ -38,66 +39,66 @@ class AccessPathPcView extends UiViewBase_1.UiViewBase {
       [18, UE.UIItem],
     ]),
       (this.BtnBindInfo = [
-        [1, this.wci],
-        [2, this.Bci],
+        [1, this.wmi],
+        [2, this.Bmi],
       ]);
   }
   OnStart() {
-    this.bci(), this.qci(), this.AddEvents();
+    this.bmi(), this.qmi(), this.AddEvents();
   }
   OnBeforeDestroy() {
-    for (const t of this.xci) t.Destroy();
-    (this.xci.length = 0), this.RemoveEvents();
+    for (const t of this.xmi) t.Destroy();
+    (this.xmi.length = 0), this.RemoveEvents();
   }
   AddEvents() {}
   RemoveEvents() {}
-  qci() {
+  qmi() {
     var t = ModelManager_1.ModelManager.InventoryModel.GetSelectedItemData()
         .GetItemDataBase()
         .GetItemAccess(),
       e = this.GetItem(0);
     for (const i of t) {
       var s = new AccessPathPcButton_1.AccessPathPcButton(e, i);
-      this.xci.push(s);
+      this.xmi.push(s);
     }
   }
-  bci() {
-    var t = ModelManager_1.ModelManager.PlatformModel.IsPc();
-    this.Gci(t);
+  bmi() {
+    var t = Info_1.Info.IsInKeyBoard();
+    this.Gmi(t);
   }
-  Gci(t) {
+  Gmi(t) {
     var e = this.GetSprite(3),
       s = this.GetItem(4),
       i = this.GetSprite(5),
-      h = this.GetItem(6),
-      r = this.GetSprite(7),
+      r = this.GetItem(6),
+      h = this.GetSprite(7),
       a = this.GetItem(8),
-      c = this.GetSprite(9),
-      o = this.GetItem(10),
-      U = this.GetSprite(11),
-      n = this.GetItem(12),
+      o = this.GetSprite(9),
+      c = this.GetItem(10),
+      n = this.GetSprite(11),
+      U = this.GetItem(12),
       E = this.GetSprite(13),
       u = this.GetItem(14),
       _ = this.GetSprite(15),
-      M = this.GetItem(16),
-      P = this.GetSprite(17),
-      v = this.GetItem(18);
+      P = this.GetItem(16),
+      v = this.GetSprite(17),
+      M = this.GetItem(18);
     e.SetUIActive(t),
       s.SetUIActive(!t),
       i.SetUIActive(t),
-      h.SetUIActive(!t),
-      r.SetUIActive(t),
+      r.SetUIActive(!t),
+      h.SetUIActive(t),
       a.SetUIActive(!t),
-      c.SetUIActive(t),
-      o.SetUIActive(!t),
-      U.SetUIActive(t),
-      n.SetUIActive(!t),
+      o.SetUIActive(t),
+      c.SetUIActive(!t),
+      n.SetUIActive(t),
+      U.SetUIActive(!t),
       E.SetUIActive(t),
       u.SetUIActive(!t),
       _.SetUIActive(t),
-      M.SetUIActive(!t),
-      P.SetUIActive(t),
-      v.SetUIActive(!t);
+      P.SetUIActive(!t),
+      v.SetUIActive(t),
+      M.SetUIActive(!t);
   }
 }
 exports.AccessPathPcView = AccessPathPcView;

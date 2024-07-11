@@ -18,8 +18,8 @@ class ActivityCollectionData extends ActivityData_1.ActivityBaseData {
       (this.TaskIdToQuestIdMap = new Map()),
       (this.QuestStateMap = new Map()),
       (this.MNe = new Map()),
-      (this.SNe = -1),
-      (this.ENe = (t, e) => {
+      (this.ENe = -1),
+      (this.SNe = (t, e) => {
         var i = this.QuestStateMap.get(t.Id),
           r = this.QuestStateMap.get(e.Id),
           [, , i] = this.yNe(i.QuestState, i.ClaimedReward),
@@ -29,23 +29,23 @@ class ActivityCollectionData extends ActivityData_1.ActivityBaseData {
   }
   PhraseEx(t) {
     this.RefreshRewardData(), this.GetTotalProgress();
-    t = t.M0s?.XCs;
+    t = t.Gps?._ps;
     if (t)
       for (const o of t) {
         var e,
-          i = this.MNe.get(o.QCs),
-          r = this.TaskIdToQuestIdMap.get(o.QCs),
+          i = this.MNe.get(o.lps),
+          r = this.TaskIdToQuestIdMap.get(o.lps),
           a = this.QuestStateMap.get(r);
         a &&
           i &&
-          ((e = o.ckn === Protocol_1.Aki.Protocol.vBs.Proto_GatherTakeReward),
+          ((e = o.F4n === Protocol_1.Aki.Protocol.sks.Proto_GatherTakeReward),
           ([e, r] =
             ((a.ClaimedReward = e),
             this.QuestStateMap.set(r, a),
             this.yNe(a.QuestState, a.ClaimedReward))),
           (i.RewardState = e),
           (i.RewardButtonText = r),
-          this.MNe.set(o.QCs, i));
+          this.MNe.set(o.lps, i));
       }
     (ActivityCollectionController_1.ActivityCollectionController.CurrentActivityId =
       this.Id),
@@ -64,17 +64,18 @@ class ActivityCollectionData extends ActivityData_1.ActivityBaseData {
     return !1;
   }
   IsHasNewQuestRedDot() {
-    for (var [t] of this.QuestStateMap.entries())
-      if (
-        ModelManager_1.ModelManager.ActivityModel.GetActivityCacheData(
-          this.Id,
-          0,
-          t,
-          0,
-          0,
+    for (var [t, e] of this.QuestStateMap.entries())
+      if (3 !== e.QuestState && 0 !== e.QuestState)
+        if (
+          ModelManager_1.ModelManager.ActivityModel.GetActivityCacheData(
+            this.Id,
+            0,
+            t,
+            0,
+            0,
+          )
         )
-      )
-        return !0;
+          return !0;
     return !1;
   }
   NeedSelfControlFirstRedPoint() {
@@ -85,7 +86,7 @@ class ActivityCollectionData extends ActivityData_1.ActivityBaseData {
       this.RefreshRewardData(),
       {
         DataPageList: [
-          { DataList: Array.from(this.MNe.values()).sort(this.ENe) },
+          { DataList: Array.from(this.MNe.values()).sort(this.SNe) },
         ],
       }
     );
@@ -112,11 +113,11 @@ class ActivityCollectionData extends ActivityData_1.ActivityBaseData {
   GetTotalProgress() {
     var t;
     return (
-      -1 === this.SNe &&
+      -1 === this.ENe &&
         ((t =
           ConfigManager_1.ConfigManager.ActivityCollectionConfig.GetAllActivityCollectionConfig()),
-        (this.SNe = t.length)),
-      this.SNe
+        (this.ENe = t.length)),
+      this.ENe
     );
   }
   RefreshRewardData() {

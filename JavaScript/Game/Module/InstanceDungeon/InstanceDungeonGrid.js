@@ -13,18 +13,18 @@ class InstanceDungeonGrid extends UiPanelBase_1.UiPanelBase {
   constructor(e, i) {
     super(),
       (this.NUe = 0),
-      (this.sli = (e) => {}),
+      (this.s1i = (e) => {}),
       (this.kqe = (e) => {
-        1 === e && this.sli(this.NUe);
+        1 === e && this.s1i(this.NUe);
       }),
       (this.NUe = e),
       this.CreateThenShowByActor(i.GetOwner());
   }
   get ClickCallback() {
-    return this.sli;
+    return this.s1i;
   }
   set ClickCallback(e) {
-    this.sli = e;
+    this.s1i = e;
   }
   OnRegisterComponent() {
     (this.ComponentRegisterInfos = [

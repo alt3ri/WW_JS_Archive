@@ -40,42 +40,42 @@ let SceneItemResetSelfPositionComponent =
       super(...arguments),
         (this.Lo = void 0),
         (this.Hte = void 0),
-        (this.HMn = 0),
+        (this.EMn = 0),
         (this.j6 = 0),
-        (this.jMn = !0),
-        (this.WMn = void 0),
-        (this.KMn = !1),
+        (this.SMn = !0),
+        (this.yMn = void 0),
+        (this.IMn = !1),
         (this.TDe = void 0),
         (this.LDe = void 0),
-        (this.QMn = (e, t) => {
+        (this.TMn = (e, t) => {
           this.Hte.IsMoveAutonomousProxy &&
-            ((!this.XMn(e) && "BeDropping" !== e) ||
-              this.KMn ||
-              (this.$Mn(
+            ((!this.LMn(e) && "BeDropping" !== e) ||
+              this.IMn ||
+              (this.DMn(
                 "[SceneItemResetSelfPositionComponent] 结束被当前主控移动，停止检查距离Tick",
               ),
-              this.YMn()),
-            "BeDrawing" === t && this.JMn(),
+              this.RMn()),
+            "BeDrawing" === t && this.UMn(),
             this.Lo?.IsDisableResetPosAfterThrow &&
-              this.XMn(t) &&
-              (this.$Mn(
+              this.LMn(t) &&
+              (this.DMn(
                 "[SceneItemResetSelfPositionComponent] 被控物配置丢出时停止检测",
               ),
-              (this.KMn = !0)),
+              (this.IMn = !0)),
             this.Lo?.IsResetPosAfterThrow &&
               "BeDropping" === t &&
               (void 0 !== this.TDe &&
                 (TimerSystem_1.TimerSystem.Remove(this.TDe),
                 (this.TDe = void 0)),
               (this.TDe = TimerSystem_1.TimerSystem.Delay(() => {
-                (this.TDe = void 0), this.zMn("ResetPositionTip2");
+                (this.TDe = void 0), this.AMn("ResetPositionTip2");
               }, FIX_DELAY * TimeUtil_1.TimeUtil.InverseMillisecond))),
             void 0 !== this.Lo?.ResetPosDelayTime) &&
             "BeCastingFree" === t &&
             (void 0 !== this.TDe &&
               (TimerSystem_1.TimerSystem.Remove(this.TDe), (this.TDe = void 0)),
             (this.TDe = TimerSystem_1.TimerSystem.Delay(() => {
-              (this.TDe = void 0), this.zMn(void 0);
+              (this.TDe = void 0), this.AMn(void 0);
             }, this.Lo.ResetPosDelayTime * TimeUtil_1.TimeUtil.InverseMillisecond)));
         });
     }
@@ -83,22 +83,22 @@ let SceneItemResetSelfPositionComponent =
       e = e.GetParam(SceneItemResetSelfPositionComponent_1)[0];
       return (
         (this.Lo = e),
-        (this.HMn = this.Lo.ResetRadius * this.Lo.ResetRadius),
+        (this.EMn = this.Lo.ResetRadius * this.Lo.ResetRadius),
         (this.j6 = TICK_CHECK_INTERVAL),
         !0
       );
     }
     OnStart() {
       return (
-        (this.Hte = this.Entity.CheckGetComponent(182)),
-        this.Entity.CheckGetComponent(140)
-          ? (this.$Mn(
+        (this.Hte = this.Entity.CheckGetComponent(185)),
+        this.Entity.CheckGetComponent(142)
+          ? (this.DMn(
               "[SceneItemResetSelfPositionComponent] 初始关闭检查距离Tick",
             ),
             EventSystem_1.EventSystem.AddWithTarget(
               this.Entity,
               EventDefine_1.EEventName.OnManipulatableItemStateModified,
-              this.QMn,
+              this.TMn,
             ),
             !0)
           : (Log_1.Log.CheckError() &&
@@ -113,7 +113,7 @@ let SceneItemResetSelfPositionComponent =
     }
     OnActivate() {
       this.LDe = TimerSystem_1.TimerSystem.Forever(() => {
-        this.YMn();
+        this.RMn();
       }, this.j6);
     }
     OnEnd() {
@@ -121,44 +121,44 @@ let SceneItemResetSelfPositionComponent =
         EventSystem_1.EventSystem.HasWithTarget(
           this.Entity,
           EventDefine_1.EEventName.OnManipulatableItemStateModified,
-          this.QMn,
+          this.TMn,
         ) &&
           EventSystem_1.EventSystem.RemoveWithTarget(
             this.Entity,
             EventDefine_1.EEventName.OnManipulatableItemStateModified,
-            this.QMn,
+            this.TMn,
           ),
         void 0 !== this.LDe &&
           (TimerSystem_1.TimerSystem.Remove(this.LDe), (this.LDe = void 0)),
         !0
       );
     }
-    JMn() {
-      this.ZMn() || this.LDe?.Resume();
+    UMn() {
+      this.PMn() || this.LDe?.Resume();
     }
-    $Mn(e) {
-      this.ZMn() && this.LDe?.Pause();
+    DMn(e) {
+      this.PMn() && this.LDe?.Pause();
     }
-    ZMn() {
+    PMn() {
       return !this.LDe?.IsPause() ?? !1;
     }
-    YMn() {
-      var e = this.jMn;
-      !this.eSn() && e && this.zMn(void 0);
+    RMn() {
+      var e = this.SMn;
+      !this.xMn() && e && this.AMn(void 0);
     }
-    eSn() {
+    xMn() {
       var e,
         t = this.Hte.ActorLocationProxy;
       return (
-        t !== this.WMn &&
-          ((this.WMn = Vector_1.Vector.Create(t)),
+        t !== this.yMn &&
+          ((this.yMn = Vector_1.Vector.Create(t)),
           (e = this.Hte.CreatureData.GetInitLocation())) &&
           ((e = Vector_1.Vector.Create(e)),
-          (this.jMn = Vector_1.Vector.DistSquared(e, t) <= this.HMn)),
-        this.jMn
+          (this.SMn = Vector_1.Vector.DistSquared(e, t) <= this.EMn)),
+        this.SMn
       );
     }
-    zMn(e) {
+    AMn(e) {
       void 0 !== this.TDe &&
         (TimerSystem_1.TimerSystem.Remove(this.TDe), (this.TDe = void 0)),
         LevelGamePlayController_1.LevelGamePlayController.OnManipulatableItemExitAreaInternal(
@@ -168,7 +168,7 @@ let SceneItemResetSelfPositionComponent =
           !0,
         );
     }
-    XMn(e) {
+    LMn(e) {
       return (
         "BeCastingToTarget" === e ||
         "BeCastingToOutlet" === e ||
@@ -178,7 +178,7 @@ let SceneItemResetSelfPositionComponent =
   });
 (SceneItemResetSelfPositionComponent = SceneItemResetSelfPositionComponent_1 =
   __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(149)],
+    [(0, RegisterComponent_1.RegisterComponent)(151)],
     SceneItemResetSelfPositionComponent,
   )),
   (exports.SceneItemResetSelfPositionComponent =

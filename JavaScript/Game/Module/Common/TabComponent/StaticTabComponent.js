@@ -10,22 +10,22 @@ class StaticTabComponent extends UiPanelBase_1.UiPanelBase {
       (this.ToggleCallBack = i),
       (this.eGe = void 0),
       (this.NOe = CommonDefine_1.INVALID_VALUE),
-      (this.gRt = void 0),
-      (this.Z3e = (t, i) => {
+      (this.MUt = void 0),
+      (this.C5e = (t, i) => {
         t = this.ProxyCreate(t, i);
         return (
           (t.GridIndex = i),
           t.InitTabItem(),
-          t.SetSelectedCallBack(this.cLt),
-          t.SetCanExecuteChange(this.T7e),
+          t.SetSelectedCallBack(this.gDt),
+          t.SetCanExecuteChange(this.Lke),
           { Key: i, Value: t }
         );
       }),
-      (this.cLt = (t) => {
-        this.xBt(), (this.NOe = t), this.ToggleCallBack(t);
+      (this.gDt = (t) => {
+        this.bbt(), (this.NOe = t), this.ToggleCallBack(t);
       }),
-      (this.T7e = (t, i) =>
-        !(this.NOe === t && !i) && (!this.gRt || this.gRt(t)));
+      (this.Lke = (t, i) =>
+        !(this.NOe === t && !i) && (!this.MUt || this.MUt(t)));
   }
   Init(t) {
     this.RegistTabItem(t);
@@ -35,7 +35,7 @@ class StaticTabComponent extends UiPanelBase_1.UiPanelBase {
     var e = i.length;
     for (let t = 0; t < e; t++) {
       var s = i[t],
-        s = this.Z3e(s, t);
+        s = this.C5e(s, t);
       this.eGe.push(s);
     }
     this.NOe = 0;
@@ -45,7 +45,7 @@ class StaticTabComponent extends UiPanelBase_1.UiPanelBase {
       e = ((this.eGe = new Array()), i.Num());
     for (let t = 0; t < e; t++) {
       var s = i.Get(t),
-        s = this.Z3e(s, t);
+        s = this.C5e(s, t);
       this.eGe.push(s);
     }
     this.NOe = 0;
@@ -57,7 +57,7 @@ class StaticTabComponent extends UiPanelBase_1.UiPanelBase {
       }),
       (this.eGe = []));
   }
-  xBt() {
+  bbt() {
     var t;
     this.NOe !== CommonDefine_1.INVALID_VALUE &&
       (t = this.eGe[this.NOe]) &&
@@ -77,7 +77,7 @@ class StaticTabComponent extends UiPanelBase_1.UiPanelBase {
     return this.NOe;
   }
   SetCanChange(t) {
-    this.gRt = t;
+    this.MUt = t;
   }
 }
 exports.StaticTabComponent = StaticTabComponent;

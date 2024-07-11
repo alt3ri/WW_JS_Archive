@@ -33,13 +33,13 @@ class BuffEffectBase {
     );
   }
   get InstigatorBuffComponent() {
-    return this.InstigatorEntity?.Entity?.CheckGetComponent(157);
+    return this.InstigatorEntity?.Entity?.CheckGetComponent(159);
   }
   get OpponentEntity() {
     return EntitySystem_1.EntitySystem.Get(this.OpponentEntityId);
   }
   get OpponentBuffComponent() {
-    return this.OpponentEntity?.CheckGetComponent(157);
+    return this.OpponentEntity?.CheckGetComponent(159);
   }
   get OwnerEntity() {
     return this.OwnerBuffComponent?.GetEntity();
@@ -60,7 +60,7 @@ class BuffEffectBase {
   IsPlayerBuff() {
     return (0, RegisterComponent_1.isComponentInstance)(
       this.OwnerBuffComponent,
-      180,
+      183,
     );
   }
   CheckLoop() {
@@ -71,17 +71,17 @@ class BuffEffectBase {
     switch (this.RequireAndLimits.CheckType) {
       case 0:
         for (const e of this.RequireAndLimits.Requirements)
-          if (!this.iQo(e, t)) return !1;
+          if (!this.ZQo(e, t)) return !1;
         return !0;
       case 1:
         for (const r of this.RequireAndLimits.Requirements)
-          if (this.iQo(r, t)) return !0;
+          if (this.ZQo(r, t)) return !0;
         return !1;
       default:
         return !0;
     }
   }
-  iQo(t, e) {
+  ZQo(t, e) {
     switch (t.Type) {
       case 1:
         return (
@@ -95,7 +95,7 @@ class BuffEffectBase {
         );
       case 3:
         return t.RequireInterval.CheckActiveness(
-          this.oQo(t.RequireTargetType).GetAttributeComponent(),
+          this.eXo(t.RequireTargetType).GetAttributeComponent(),
         );
       case 4:
         return (
@@ -117,7 +117,7 @@ class BuffEffectBase {
         );
       case 9:
         return (
-          this.oQo(t.RequireTargetType)
+          this.eXo(t.RequireTargetType)
             .GetTagComponent()
             ?.HasAnyTag(t.RequireTagContainer) === t.IsExist
         );
@@ -134,13 +134,13 @@ class BuffEffectBase {
       case 12:
         return t.DamageGenres.includes(e.DamageGenre ?? -1);
       case 13:
-        var r = this.oQo(t.RequireTargetType)
+        var r = this.eXo(t.RequireTargetType)
           ?.GetEntity()
           ?.GetComponent(0)
           ?.GetMonsterMatchType();
         return Number.isInteger(r) && t.MonsterGenres.includes(r);
       case 14:
-        r = this.oQo(t.RequireTargetType);
+        r = this.eXo(t.RequireTargetType);
         return (
           (r &&
             r.GetBuffTotalStackById(t.BuffId) >= t.MinStack &&
@@ -150,11 +150,11 @@ class BuffEffectBase {
       case 15:
         return (
           PhantomUtil_1.PhantomUtil.GetSummonedEntity(
-            this.oQo(t.RequireTargetType).GetEntity(),
+            this.eXo(t.RequireTargetType).GetEntity(),
             t.SummonType,
             t.SummonIndex,
           )
-            ?.Entity?.CheckGetComponent(185)
+            ?.Entity?.CheckGetComponent(188)
             ?.HasAnyTag(t.RequireTagContainer) === t.IsExist
         );
       case 16:
@@ -164,7 +164,7 @@ class BuffEffectBase {
     }
     return !0;
   }
-  oQo(t) {
+  eXo(t) {
     switch (t) {
       case 0:
         return this.OwnerBuffComponent;

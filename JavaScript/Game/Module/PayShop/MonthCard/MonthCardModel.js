@@ -16,7 +16,7 @@ const Time_1 = require("../../../../Core/Common/Time"),
 class MonthCardModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
-      (this.$ki = -1),
+      (this.$2i = -1),
       (this.CanShowDailyRewardView = !1),
       (this.ServerOnceReward = void 0),
       (this.ServerDailyReward = void 0),
@@ -42,10 +42,6 @@ class MonthCardModel extends ModelBase_1.ModelBase {
           "MonthCardDailyItemCount",
         ),
       ]),
-      (this.NextShowPayButtonRedDotTime = LocalStorage_1.LocalStorage.GetPlayer(
-        LocalStorageDefine_1.ELocalStoragePlayerKey.MonthCardNextShowRedDotTime,
-        void 0,
-      )),
       (this.RedDotRefreshType =
         CommonParamById_1.configCommonParamById.GetIntConfig(
           "MonthCardRedDotRefreshTime",
@@ -54,43 +50,54 @@ class MonthCardModel extends ModelBase_1.ModelBase {
     );
   }
   GetRemainDays() {
-    return this.$ki;
+    return this.$2i;
   }
   SetRemainDays(e) {
-    this.$ki = e;
+    this.$2i = e;
   }
   GetRemainDayText(e) {
-    var t = ModelManager_1.ModelManager.MonthCardModel.GetRemainDays();
-    if (t < 0) return "";
-    if (0 === t) {
-      const o = ConfigManager_1.ConfigManager.TextConfig.GetTextById(
+    var o = ModelManager_1.ModelManager.MonthCardModel.GetRemainDays();
+    if (o < 0) return "";
+    if (0 === o) {
+      const t = ConfigManager_1.ConfigManager.TextConfig.GetTextById(
         "MonthCardLeftTimeText_2",
       );
       return e
-        ? StringUtils_1.StringUtils.Format(o, `<color=#${e}>1</color>`)
-        : StringUtils_1.StringUtils.Format(o, "1");
+        ? StringUtils_1.StringUtils.Format(t, `<color=#${e}>1</color>`)
+        : StringUtils_1.StringUtils.Format(t, "1");
     }
-    const o = ConfigManager_1.ConfigManager.TextConfig.GetTextById(
+    const t = ConfigManager_1.ConfigManager.TextConfig.GetTextById(
       "MonthCardLeftTimeText_1",
     );
     return e
       ? StringUtils_1.StringUtils.Format(
-          o,
-          `<color=#${e}>${t.toString()}</color>`,
+          t,
+          `<color=#${e}>${o.toString()}</color>`,
         )
-      : StringUtils_1.StringUtils.Format(o, t.toString());
+      : StringUtils_1.StringUtils.Format(t, o.toString());
   }
   IsRemainDayInMaxLimit() {
     var e =
       CommonParamById_1.configCommonParamById.GetIntConfig("MonthCardMaxDays");
     return this.GetRemainDays() <= e;
   }
-  GetPayButtonRedDotState() {
-    var e;
-    return (
-      !this.NextShowPayButtonRedDotTime ||
-      ((e = Time_1.Time.ServerTimeStamp), this.NextShowPayButtonRedDotTime < e)
+  CheckMonthCardIfCanBuy() {
+    var e = ModelManager_1.ModelManager.MonthCardModel.GetRemainDays();
+    return !(
+      CommonParamById_1.configCommonParamById.GetIntConfig("MonthCardMaxDays") <
+      e
     );
+  }
+  GetPayButtonRedDotState() {
+    this.NextShowPayButtonRedDotTime ||
+      (this.NextShowPayButtonRedDotTime =
+        LocalStorage_1.LocalStorage.GetPlayer(
+          LocalStorageDefine_1.ELocalStoragePlayerKey
+            .MonthCardNextShowRedDotTime,
+          void 0,
+        ) ?? 0);
+    var e = Time_1.Time.ServerTimeStamp;
+    return this.NextShowPayButtonRedDotTime < e;
   }
   RefreshNextShowPayButtonRedDotTime() {
     var e;
@@ -98,7 +105,13 @@ class MonthCardModel extends ModelBase_1.ModelBase {
       ? ((e = new Date(Time_1.Time.ServerTimeStamp)).setMonth(e.getMonth() + 1),
         e.setDate(1),
         e.setHours(4, 0, 0, 0),
-        (this.NextShowPayButtonRedDotTime = e.getTime()))
+        this.NextShowPayButtonRedDotTime !== e.getTime() &&
+          ((this.NextShowPayButtonRedDotTime = e.getTime()),
+          LocalStorage_1.LocalStorage.SetPlayer(
+            LocalStorageDefine_1.ELocalStoragePlayerKey
+              .MonthCardNextShowRedDotTime,
+            e.getTime(),
+          )))
       : 2 === this.RedDotRefreshType &&
         ((e = new Date(Time_1.Time.ServerTimeStamp)).setHours(4, 0, 0, 0),
         (e =
@@ -106,19 +119,17 @@ class MonthCardModel extends ModelBase_1.ModelBase {
           (8 - e.getDay()) *
             CommonDefine_1.SECOND_PER_DAY *
             CommonDefine_1.MILLIONSECOND_PER_SECOND),
-        (this.NextShowPayButtonRedDotTime = e)),
-      EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.PayShopGoodsBuy);
-  }
-  OnClear() {
-    return (
-      this.NextShowPayButtonRedDotTime &&
+        this.NextShowPayButtonRedDotTime !== e) &&
+        ((this.NextShowPayButtonRedDotTime = e),
         LocalStorage_1.LocalStorage.SetPlayer(
           LocalStorageDefine_1.ELocalStoragePlayerKey
             .MonthCardNextShowRedDotTime,
-          this.NextShowPayButtonRedDotTime,
-        ),
-      !(this.CanShowDailyRewardView = !1)
-    );
+          e,
+        )),
+      EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.PayShopGoodsBuy);
+  }
+  OnClear() {
+    return !(this.CanShowDailyRewardView = !1);
   }
 }
 exports.MonthCardModel = MonthCardModel;

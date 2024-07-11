@@ -29,15 +29,15 @@ let SceneItemPropertyComponent = class SceneItemPropertyComponent extends Entity
   constructor() {
     super(...arguments),
       (this.Xte = void 0),
-      (this.J1n = void 0),
-      (this.z1n = 0),
-      (this.Z1n = !1),
-      (this.Ioo = !1),
-      (this.e_n = (t, e) => {
+      (this.A1n = void 0),
+      (this.P1n = 0),
+      (this.x1n = !1),
+      (this.Ero = !1),
+      (this.w1n = (t, e) => {
         t.includes(-662723379)
           ? TimerSystem_1.TimerSystem.Next(() => {
-              this.Xte?.AddTag(this.z1n),
-                (this.Z1n = !0),
+              this.Xte?.AddTag(this.P1n),
+                (this.x1n = !0),
                 EventSystem_1.EventSystem.EmitWithTarget(
                   this.Entity,
                   EventDefine_1.EEventName.OnSceneItemLockPropChange,
@@ -46,8 +46,8 @@ let SceneItemPropertyComponent = class SceneItemPropertyComponent extends Entity
             })
           : e.includes(-662723379) &&
             TimerSystem_1.TimerSystem.Next(() => {
-              this.Xte?.RemoveTag(this.z1n),
-                (this.Z1n = !1),
+              this.Xte?.RemoveTag(this.P1n),
+                (this.x1n = !1),
                 EventSystem_1.EventSystem.EmitWithTarget(
                   this.Entity,
                   EventDefine_1.EEventName.OnSceneItemLockPropChange,
@@ -57,16 +57,16 @@ let SceneItemPropertyComponent = class SceneItemPropertyComponent extends Entity
       });
   }
   get IsMoving() {
-    return this.Ioo;
+    return this.Ero;
   }
   set IsMoving(t) {
-    this.Ioo !== t &&
-      ((this.Ioo = t)
+    this.Ero !== t &&
+      ((this.Ero = t)
         ? (this.Xte?.AddTag(197059111), this.Xte?.RemoveTag(-1443491052))
         : (this.Xte?.AddTag(-1443491052), this.Xte?.RemoveTag(197059111)));
   }
   get IsLocked() {
-    return this.Z1n;
+    return this.x1n;
   }
   OnStart() {
     var t = this.Entity?.GetComponent(0);
@@ -77,15 +77,15 @@ let SceneItemPropertyComponent = class SceneItemPropertyComponent extends Entity
           t.ComponentsData,
           "EntityStateComponent",
         )),
-        (this.J1n = t?.LockConfig),
-        this.J1n) &&
-        ((this.Xte = this.Entity?.GetComponent(177)),
+        (this.A1n = t?.LockConfig),
+        this.A1n) &&
+        ((this.Xte = this.Entity?.GetComponent(180)),
         EventSystem_1.EventSystem.AddWithTarget(
           this.Entity,
           EventDefine_1.EEventName.OnLevelTagChanged,
-          this.e_n,
+          this.w1n,
         ),
-        this.t_n()),
+        this.B1n()),
       !0
     );
   }
@@ -94,38 +94,38 @@ let SceneItemPropertyComponent = class SceneItemPropertyComponent extends Entity
       EventSystem_1.EventSystem.HasWithTarget(
         this.Entity,
         EventDefine_1.EEventName.OnLevelTagChanged,
-        this.e_n,
+        this.w1n,
       ) &&
         EventSystem_1.EventSystem.RemoveWithTarget(
           this.Entity,
           EventDefine_1.EEventName.OnLevelTagChanged,
-          this.e_n,
+          this.w1n,
         ),
       !0
     );
   }
-  t_n() {
-    if (this.J1n) {
-      switch (this.J1n?.LockType) {
+  B1n() {
+    if (this.A1n) {
+      switch (this.A1n?.LockType) {
         case "Program":
-          this.z1n = -2073998558;
+          this.P1n = -2073998558;
           break;
         case "Blackstone":
-          this.z1n = 1023182128;
+          this.P1n = 1023182128;
           break;
         case "Holovision":
-          this.z1n = 1479110609;
+          this.P1n = 1479110609;
           break;
         default:
-          this.z1n = -1900469744;
+          this.P1n = -1900469744;
       }
-      (this.Z1n = !1),
+      (this.x1n = !1),
         this.Xte.HasTag(-662723379) &&
-          ((this.Z1n = !0), this.Xte.AddTag(this.z1n));
+          ((this.x1n = !0), this.Xte.AddTag(this.P1n));
     }
   }
   RemoveLockPerformanceTagLocal() {
-    this.J1n && this.z1n && this.Xte.RemoveTag(this.z1n);
+    this.A1n && this.P1n && this.Xte.RemoveTag(this.P1n);
   }
   SetIsBeingTargeted(t) {
     t
@@ -134,7 +134,7 @@ let SceneItemPropertyComponent = class SceneItemPropertyComponent extends Entity
   }
 };
 (SceneItemPropertyComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(115)],
+  [(0, RegisterComponent_1.RegisterComponent)(117)],
   SceneItemPropertyComponent,
 )),
   (exports.SceneItemPropertyComponent = SceneItemPropertyComponent);

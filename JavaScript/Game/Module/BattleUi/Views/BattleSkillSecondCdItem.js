@@ -12,10 +12,10 @@ class BattleSkillSecondCdItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
       (this.Xy = 0),
-      (this.sit = void 0),
-      (this.zet = void 0),
-      (this.Zet = 0),
-      (this.ett = 0);
+      (this.Mot = void 0),
+      (this.uit = void 0),
+      (this.cit = 0),
+      (this.mit = 0);
   }
   SetIndex(i) {
     this.Xy = i;
@@ -24,75 +24,75 @@ class BattleSkillSecondCdItem extends UiPanelBase_1.UiPanelBase {
     this.ComponentRegisterInfos = [[0, UE.UISprite]];
   }
   OnStart() {
-    (this.zet = this.GetSprite(0)),
+    (this.uit = this.GetSprite(0)),
       this.RootItem?.SetUIRelativeRotation(new UE.Rotator(0, 90 * this.Xy, 0));
   }
   RefreshSkillCoolDown(i) {
-    (this.sit = i),
-      this.sit
-        ? (this.xtt() && this.wtt()) ||
-          (this.Btt() && this.btt()) ||
-          (this.sit.IsMultiStageSkill() && this.ait()) ||
-          this.qtt()
-        : this.hit();
+    (this.Mot = i),
+      this.Mot
+        ? (this.Kit() && this.Qit()) ||
+          (this.Xit() && this.$it()) ||
+          (this.Mot.IsMultiStageSkill() && this.Eot()) ||
+          this.Yit()
+        : this.Sot();
   }
   Tick(i) {
-    this.Ptt(i);
+    this.Wit(i);
   }
-  Ott(i, t) {
-    i <= (this.Zet = 0)
-      ? this.hit()
-      : ((this.Zet = i), (this.ett = t), this.IsShowOrShowing || this.Show());
+  Zit(i, t) {
+    i <= (this.cit = 0)
+      ? this.Sot()
+      : ((this.cit = i), (this.mit = t), this.IsShowOrShowing || this.Show());
   }
-  hit() {
-    this.IsShowOrShowing && this.Hide(), (this.Zet = 0);
+  Sot() {
+    this.IsShowOrShowing && this.Hide(), (this.cit = 0);
   }
-  Ptt(i) {
-    this.Zet <= 0 ||
-      this.ett <= 0 ||
-      !this.zet ||
+  Wit(i) {
+    this.cit <= 0 ||
+      this.mit <= 0 ||
+      !this.uit ||
       SkillCdController_1.SkillCdController.IsPause() ||
       Time_1.Time.TimeDilation <= 0 ||
-      ((this.Zet -=
+      ((this.cit -=
         i * Time_1.Time.TimeDilation * TimeUtil_1.TimeUtil.Millisecond),
-      this.Zet < 0
-        ? ((this.Zet = 0), this.zet.SetFillAmount(0), this.hit())
-        : ((i = this.Zet / this.ett),
+      this.cit < 0
+        ? ((this.cit = 0), this.uit.SetFillAmount(0), this.Sot())
+        : ((i = this.cit / this.mit),
           (i = AMOUNT_START + i * AMOUNT_SCALE),
-          this.zet.SetFillAmount(i)));
+          this.uit.SetFillAmount(i)));
   }
-  xtt() {
-    return 7 === this.sit?.GetButtonType() && this.sit.IsSkillInItemUseBuffCd();
+  Kit() {
+    return 7 === this.Mot?.GetButtonType() && this.Mot.IsSkillInItemUseBuffCd();
   }
-  wtt() {
-    var [i, t] = this.sit.GetEquippedItemUsingBuffCd();
-    return 0 < i && (this.Ott(i, t), !0);
+  Qit() {
+    var [i, t] = this.Mot.GetEquippedItemUsingBuffCd();
+    return 0 < i && (this.Zit(i, t), !0);
   }
-  Btt() {
+  Xit() {
     return (
-      7 === this.sit?.GetButtonType() && this.sit.IsSkillInItemUseSkillCd()
+      7 === this.Mot?.GetButtonType() && this.Mot.IsSkillInItemUseSkillCd()
     );
   }
-  btt() {
-    var [i, t] = this.sit.GetEquippedItemUsingSkillCd();
-    return 0 < i && (this.Ott(i, t), !0);
+  $it() {
+    var [i, t] = this.Mot.GetEquippedItemUsingSkillCd();
+    return 0 < i && (this.Zit(i, t), !0);
   }
-  ait() {
+  Eot() {
     var i,
-      t = this.sit.GetMultiSkillInfo();
+      t = this.Mot.GetMultiSkillInfo();
     return !(
       !t ||
       0 === t.NextSkillId ||
       ((i = t.RemainingStartTime),
       (t = t.StartTime),
-      0 < i ? this.Ott(i, t) : this.hit(),
+      0 < i ? this.Zit(i, t) : this.Sot(),
       0)
     );
   }
-  qtt() {
+  Yit() {
     var i,
-      t = this.sit.GetGroupSkillCdInfo();
-    t && ((i = t.CurRemainingCd), (t = t.CurMaxCd), this.Ott(i, t));
+      t = this.Mot.GetGroupSkillCdInfo();
+    t && ((i = t.CurRemainingCd), (t = t.CurMaxCd), this.Zit(i, t));
   }
 }
 exports.BattleSkillSecondCdItem = BattleSkillSecondCdItem;

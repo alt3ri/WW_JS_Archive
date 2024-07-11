@@ -8,7 +8,7 @@ const StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
 class ClickBtnInsideComponent extends HotKeyComponent_1.HotKeyComponent {
   constructor() {
     super(...arguments),
-      (this.Q4s = (t) => {
+      (this.JHs = (t) => {
         (this.IsAxisAllDirection() ||
           (2 === t && this.IsAxisReverse()) ||
           (3 === t && this.IsAxisPositive())) &&
@@ -24,12 +24,12 @@ class ClickBtnInsideComponent extends HotKeyComponent_1.HotKeyComponent {
   }
   OnStartInputAxis(t) {
     UiNavigationJoystickInput_1.UiNavigationJoystickInput.RegisterLeftJoystickFunction(
-      this.Q4s,
+      this.JHs,
     );
   }
   OnFinishInputAxis(t) {
     UiNavigationJoystickInput_1.UiNavigationJoystickInput.UnRegisterLeftJoystickFunction(
-      this.Q4s,
+      this.JHs,
     );
   }
   OnRefreshHotKeyText(i) {

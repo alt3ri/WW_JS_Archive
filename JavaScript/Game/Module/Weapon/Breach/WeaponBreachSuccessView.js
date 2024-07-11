@@ -13,11 +13,11 @@ class WeaponBreachSuccessView extends UiViewBase_1.UiViewBase {
     super(...arguments),
       (this.StarLayout = void 0),
       (this.SuccessStarItem = void 0),
-      (this.ANo = 0),
-      (this.sAt = () => {
+      (this.DOo = 0),
+      (this.vke = () => {
         return new StarItem_1.StarItem();
       }),
-      (this.xUt = () => {
+      (this.qAt = () => {
         UiManager_1.UiManager.IsViewShow(this.Info.Name) && this.CloseMe();
       });
   }
@@ -28,17 +28,17 @@ class WeaponBreachSuccessView extends UiViewBase_1.UiViewBase {
       [2, UE.UIText],
       [3, UE.UIText],
     ]),
-      (this.BtnBindInfo = [[1, this.xUt]]);
+      (this.BtnBindInfo = [[1, this.qAt]]);
   }
   async OnBeforeStartAsync() {
-    this.ANo = this.OpenParam;
+    this.DOo = this.OpenParam;
     var e = ModelManager_1.ModelManager.WeaponModel.GetWeaponDataByIncId(
-        this.ANo,
+        this.DOo,
       ),
       t =
         ((this.StarLayout = new GenericLayout_1.GenericLayout(
           this.GetHorizontalLayout(0),
-          this.sAt,
+          this.vke,
         )),
         e.GetWeaponConfig()),
       t = t.BreachId,

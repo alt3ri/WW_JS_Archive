@@ -13,7 +13,7 @@ class SkipTaskManager {
       UiManager_1.UiManager.CloseHistoryRingView(e);
   }
   static CheckContainLimitViewName(e) {
-    return this.Iyo.has(e);
+    return this.EIo.has(e);
   }
   static RunByConfigId(a) {
     var i =
@@ -47,8 +47,8 @@ class SkipTaskManager {
                 n,
               )
             );
-        let e = this.Tyo(r);
-        (e = e || this.Lyo(r))
+        let e = this.SIo(r);
+        (e = e || this.yIo(r))
           ? e.Run(i.Val1, i.Val2, i.Val3)
           : Log_1.Log.CheckError() &&
             Log_1.Log.Error(
@@ -68,17 +68,17 @@ class SkipTaskManager {
         );
   }
   static Run(e, ...a) {
-    let i = this.Tyo(e);
-    (i = i || this.Lyo(e))?.Run(...a);
+    let i = this.SIo(e);
+    (i = i || this.yIo(e))?.Run(...a);
   }
   static async AsyncRun(e, ...a) {
-    let i = this.Tyo(e);
-    if ((i = i || this.Lyo(e))) return i.AsyncRun(...a);
+    let i = this.SIo(e);
+    if ((i = i || this.yIo(e))) return i.AsyncRun(...a);
   }
-  static Lyo(e) {
+  static yIo(e) {
     if (!(e < 0)) {
       var a = SkipInterfaceDefine_1.skipClassMap.get(e);
-      if (a) return (a = new a()), this.Dyo.set(e, a), a.Initialize(), a;
+      if (a) return (a = new a()), this.IIo.set(e, a), a.Initialize(), a;
       Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "SkipInterface",
@@ -88,20 +88,20 @@ class SkipTaskManager {
         );
     }
   }
-  static Tyo(e) {
-    return this.Dyo.get(e);
+  static SIo(e) {
+    return this.IIo.get(e);
   }
   static Stop(e) {
-    e = this.Dyo.get(e);
+    e = this.IIo.get(e);
     e && e.GetIsRunning() && e.Stop();
   }
   static Clear() {
-    for (const e of this.Dyo.values()) e.Destroy();
-    this.Dyo.clear(),
+    for (const e of this.IIo.values()) e.Destroy();
+    this.IIo.clear(),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("SkipInterface", 17, "[Clear] 清理所有跳转任务");
   }
 }
-((exports.SkipTaskManager = SkipTaskManager).Dyo = new Map()),
-  (SkipTaskManager.Iyo = new Set(["RoleRootView", "CalabashRootView"]));
+((exports.SkipTaskManager = SkipTaskManager).IIo = new Map()),
+  (SkipTaskManager.EIo = new Set(["RoleRootView", "CalabashRootView"]));
 //# sourceMappingURL=SkipTaskManager.js.map

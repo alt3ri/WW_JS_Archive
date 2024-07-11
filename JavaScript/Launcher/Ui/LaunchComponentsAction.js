@@ -6,7 +6,7 @@ const UE = require("ue"),
   LaunchUtil_1 = require("./LaunchUtil");
 class LaunchComponentsAction {
   constructor() {
-    (this.FEr = !1),
+    (this.Nyr = !1),
       (this.RootItem = void 0),
       (this.RootActor = void 0),
       (this.LW = void 0),
@@ -16,18 +16,18 @@ class LaunchComponentsAction {
   OnStart() {}
   OnBeforeDestroy() {}
   SetRootActorLaunchComponentsAction(t) {
-    this.VEr(t), this.HEr(), this.jEr(), this.OnStart();
+    this.Oyr(t), this.kyr(), this.Fyr(), this.OnStart();
   }
-  VEr(t) {
+  Oyr(t) {
     (this.RootActor = t),
       (this.RootItem = t.GetComponentByClass(UE.UIItem.StaticClass()));
   }
-  HEr() {
+  kyr() {
     this.SequencePlayer = new HotFixSequencePlayer_1.HotFixSequencePlayer(
       this.RootItem,
     );
   }
-  jEr() {
+  Fyr() {
     (this.LW = this.RootActor.GetComponentByClass(
       UE.LGUIComponentsRegistry.StaticClass(),
     )),
@@ -37,29 +37,29 @@ class LaunchComponentsAction {
     return this.ElementMap.get(t);
   }
   GetItem(t) {
-    t = this.WEr(t);
+    t = this.Vyr(t);
     if (t) return t.GetComponentByClass(UE.UIItem.StaticClass());
   }
   GetTexture(t) {
-    t = this.WEr(t);
+    t = this.Vyr(t);
     if (t) return t.GetComponentByClass(UE.UITexture.StaticClass());
   }
   GetText(t) {
-    t = this.WEr(t);
+    t = this.Vyr(t);
     if (t) return t.GetComponentByClass(UE.UIText.StaticClass());
   }
   GetButton(t) {
-    t = this.WEr(t);
+    t = this.Vyr(t);
     if (t) return t.GetComponentByClass(UE.UIButtonComponent.StaticClass());
   }
-  WEr(t) {
+  Vyr(t) {
     if (!(t >= this.LW.Components.Num())) return this.LW.Components.Get(t);
   }
   SetActive(t) {
     this.RootItem?.IsValid() && this.RootItem.SetUIActive(t);
   }
   AttachElement(t, e) {
-    var i = this.WEr(t);
+    var i = this.Vyr(t);
     if (i)
       return (
         (e = new e()).SetRootActorLaunchComponentsAction(i),
@@ -84,15 +84,15 @@ class LaunchComponentsAction {
   }
   DestroyTemp() {
     return (
-      !this.FEr &&
-      (this.OnBeforeDestroy(), this.KEr(), this.QEr(), (this.FEr = !0))
+      !this.Nyr &&
+      (this.OnBeforeDestroy(), this.Hyr(), this.jyr(), (this.Nyr = !0))
     );
   }
-  KEr() {
+  Hyr() {
     for (var [, t] of this.ElementMap) t.Destroy();
     this.ElementMap.clear();
   }
-  QEr() {
+  jyr() {
     this.SequencePlayer?.ClearSequence();
   }
   Destroy() {

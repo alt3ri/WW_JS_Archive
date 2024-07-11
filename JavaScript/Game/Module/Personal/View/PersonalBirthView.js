@@ -19,83 +19,83 @@ const UE = require("ue"),
 class PersonalBirthView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
-      (this.P4i = void 0),
-      (this.x4i = void 0),
-      (this.w4i = void 0),
-      (this.B4i = void 0),
-      (this.b4i = [1, 3, 5, 7, 8, 10, 12]),
-      (this.q4i = 31),
-      (this.G4i = 30),
-      (this.N4i = 29),
-      (this.O4i = !1),
-      (this.k4i = !1),
-      (this.m7t = () => {
-        var i =
+      (this.A5i = void 0),
+      (this.P5i = void 0),
+      (this.x5i = void 0),
+      (this.w5i = void 0),
+      (this.B5i = [1, 3, 5, 7, 8, 10, 12]),
+      (this.b5i = 31),
+      (this.q5i = 30),
+      (this.G5i = 29),
+      (this.N5i = !1),
+      (this.O5i = !1),
+      (this.mHt = () => {
+        var t =
           ConfigManager_1.ConfigManager.TextConfig.GetTextById(
             "SetBirthSuccess",
           );
-        ScrollingTipsController_1.ScrollingTipsController.ShowTipsByText(i),
+        ScrollingTipsController_1.ScrollingTipsController.ShowTipsByText(t),
           this.CloseMe();
       }),
       (this.OnLeftButtonClicked = () => {
         this.CloseMe();
       }),
       (this.OnRightButtonClicked = () => {
-        var i;
+        var t;
         this.IsSetBirth()
           ? this.CloseMe()
-          : ((i = new ConfirmBoxDefine_1.ConfirmBoxDataNew(
+          : ((t = new ConfirmBoxDefine_1.ConfirmBoxDataNew(
               109,
             )).FunctionMap.set(2, () => {
               PersonalController_1.PersonalController.SendBirthdayInitRequest(
-                100 * this.w4i + this.B4i,
+                100 * this.x5i + this.w5i,
               );
             }),
             ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
-              i,
+              t,
             ));
       }),
       (this.OnMonthButtonClick = () => {
         this.IsSetBirth() ||
           (this.GetButton(10).OnPointDownCallBack.Unbind(),
-          this.F4i(),
-          (this.O4i = !0));
+          this.k5i(),
+          (this.N5i = !0));
       }),
       (this.OnDayButtonClick = () => {
         this.IsSetBirth() ||
-          (this.O4i &&
+          (this.N5i &&
             (this.GetButton(11).OnPointDownCallBack.Unbind(),
-            this.V4i(),
-            (this.k4i = !0)));
+            this.F5i(),
+            (this.O5i = !0)));
       }),
       (this.CloseClick = () => {
         this.CloseMe();
       }),
-      (this.H4i = (i, t, e) => {
-        i = new PersonalBirthAttachItem_1.PersonalBirthAttachItem(i);
-        return i.BindOnSelected(this.j4i), i;
+      (this.V5i = (t, i, e) => {
+        t = new PersonalBirthAttachItem_1.PersonalBirthAttachItem(t);
+        return t.BindOnSelected(this.H5i), t;
       }),
-      (this.j4i = (i) => {
-        (this.w4i = i),
-          this.GetText(6).SetText(String(i)),
-          this.k4i &&
-            (void 0 !== this.B4i &&
+      (this.H5i = (t) => {
+        (this.x5i = t),
+          this.GetText(6).SetText(String(t)),
+          this.O5i &&
+            (void 0 !== this.w5i &&
               (this.GetButton(5).SetSelfInteractive(!0),
               this.GetInteractionGroup(14).SetInteractable(!0),
-              (this.B4i = 1),
-              this.GetText(7).SetText(String(this.B4i))),
-            this.V4i());
+              (this.w5i = 1),
+              this.GetText(7).SetText(String(this.w5i))),
+            this.F5i());
       }),
-      (this.W4i = (i, t, e) => {
-        i = new PersonalBirthAttachItem_1.PersonalBirthAttachItem(i);
-        return i.BindOnSelected(this.K4i), i;
+      (this.j5i = (t, i, e) => {
+        t = new PersonalBirthAttachItem_1.PersonalBirthAttachItem(t);
+        return t.BindOnSelected(this.W5i), t;
       }),
-      (this.K4i = (i) => {
-        (this.B4i = i),
-          void 0 !== this.w4i &&
+      (this.W5i = (t) => {
+        (this.w5i = t),
+          void 0 !== this.x5i &&
             (this.GetButton(5).SetSelfInteractive(!0),
             this.GetInteractionGroup(14).SetInteractable(!0)),
-          this.GetText(7).SetText(String(i));
+          this.GetText(7).SetText(String(t));
       });
   }
   OnRegisterComponent() {
@@ -124,40 +124,43 @@ class PersonalBirthView extends UiTickViewBase_1.UiTickViewBase {
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnBirthChange,
-      this.m7t,
+      this.mHt,
     );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnBirthChange,
-      this.m7t,
+      this.mHt,
     );
   }
   IsSetBirth() {
-    var i = ModelManager_1.ModelManager.PersonalModel.GetBirthday();
-    return !(!i || 0 === i);
+    var t = ModelManager_1.ModelManager.PersonalModel.GetBirthday();
+    return !(!t || 0 === t);
   }
   OnStart() {
     LguiUtil_1.LguiUtil.SetLocalText(this.GetText(8), "AcquireCancel"),
-      LguiUtil_1.LguiUtil.SetLocalText(this.GetText(9), "AcquireConfirm");
-    var i = this.GetText(6),
-      t = (i.SetUIActive(!0), this.GetText(7)),
+      LguiUtil_1.LguiUtil.SetLocalTextNew(
+        this.GetText(9),
+        "PrefabTextItem_1541715829_Text",
+      );
+    var t = this.GetText(6),
+      i = (t.SetUIActive(!0), this.GetText(7)),
       e =
-        (t.SetUIActive(!0),
+        (i.SetUIActive(!0),
         this.IsSetBirth()
           ? ((r = ModelManager_1.ModelManager.PersonalModel.GetBirthday()),
             (e = Math.floor(r / 100)),
             (r = r % 100),
-            i.SetText(String(e)),
-            t.SetText(String(r)),
+            t.SetText(String(e)),
+            i.SetText(String(r)),
             this.GetButton(5).SetSelfInteractive(!0),
             this.GetInteractionGroup(14).SetInteractable(!0),
             LguiUtil_1.LguiUtil.SetLocalText(
               this.GetText(12),
               "BirthIsSetCanNotChange",
             ))
-          : (i.SetText("--"),
-            t.SetText("--"),
+          : (t.SetText("--"),
+            i.SetText("--"),
             this.GetButton(5).SetSelfInteractive(!1),
             this.GetInteractionGroup(14).SetInteractable(!1),
             LguiUtil_1.LguiUtil.SetLocalText(
@@ -170,45 +173,45 @@ class PersonalBirthView extends UiTickViewBase_1.UiTickViewBase {
       r = e ? 1 : 0;
     this.GetExtendToggle(13)?.SetToggleState(r);
   }
-  F4i() {
-    var i = this.GetItem(0),
-      t = this.GetItem(1),
+  k5i() {
+    var t = this.GetItem(0),
+      i = this.GetItem(1),
       e =
-        ((this.P4i = new CircleAttachView_1.CircleAttachView(i.GetOwner())),
-        this.P4i.CreateItems(t.GetOwner(), SHOW_GAP, this.H4i, 1),
+        ((this.A5i = new CircleAttachView_1.CircleAttachView(t.GetOwner())),
+        this.A5i.CreateItems(i.GetOwner(), SHOW_GAP, this.V5i, 1),
         []);
-    for (let i = 1; i <= MONTH_COUNT; i++) e.push(i);
-    this.P4i.ReloadView(e.length, e), t.SetUIActive(!1);
+    for (let t = 1; t <= MONTH_COUNT; t++) e.push(t);
+    this.A5i.ReloadView(e.length, e), i.SetUIActive(!1);
   }
-  V4i() {
-    var i = this.GetItem(2),
-      t = this.GetItem(3),
+  F5i() {
+    var t = this.GetItem(2),
+      i = this.GetItem(3),
       e =
-        (this.x4i ||
-          ((this.x4i = new CircleAttachView_1.CircleAttachView(i.GetOwner())),
-          this.x4i.CreateItems(t.GetOwner(), SHOW_GAP, this.W4i, 1)),
-        this.Q4i(this.w4i)),
+        (this.P5i ||
+          ((this.P5i = new CircleAttachView_1.CircleAttachView(t.GetOwner())),
+          this.P5i.CreateItems(i.GetOwner(), SHOW_GAP, this.j5i, 1)),
+        this.K5i(this.x5i)),
       r = [];
-    for (let i = 1; i <= e; i++) r.push(i);
-    this.x4i.ReloadView(r.length, r), t.SetUIActive(!1);
+    for (let t = 1; t <= e; t++) r.push(t);
+    this.P5i.ReloadView(r.length, r), i.SetUIActive(!1);
   }
-  Q4i(t) {
-    if (2 === t) return this.N4i;
-    var e = this.b4i.length;
-    for (let i = 0; i < e; i++) if (this.b4i[i] === t) return this.q4i;
-    return this.G4i;
+  K5i(i) {
+    if (2 === i) return this.G5i;
+    var e = this.B5i.length;
+    for (let t = 0; t < e; t++) if (this.B5i[t] === i) return this.b5i;
+    return this.q5i;
   }
-  OnTick(i) {
-    super.OnTick(i);
+  OnTick(t) {
+    super.OnTick(t);
   }
   OnAfterShow() {}
   OnBeforeHide() {
-    var i = 1 === this.GetExtendToggle(13)?.GetToggleState();
-    i !== ModelManager_1.ModelManager.PersonalModel.GetBirthdayDisplay() &&
-      PersonalController_1.PersonalController.SendBirthdayShowSetRequest(i);
+    var t = 1 === this.GetExtendToggle(13)?.GetToggleState();
+    t !== ModelManager_1.ModelManager.PersonalModel.GetBirthdayDisplay() &&
+      PersonalController_1.PersonalController.SendBirthdayShowSetRequest(t);
   }
   OnBeforeDestroy() {
-    this.P4i?.Clear(), this.x4i?.Clear();
+    this.A5i?.Clear(), this.P5i?.Clear();
   }
 }
 exports.PersonalBirthView = PersonalBirthView;

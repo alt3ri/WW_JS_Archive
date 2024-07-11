@@ -330,11 +330,13 @@ class LevelGeneralController extends ControllerBase_1.ControllerBase {
   }
   static HandleActionsFailure(e, t, n, i) {
     var r = this.PUe.get(e);
-    if (r)
+    if (r) {
       for (; 0 < r.length; ) {
         var o = r.pop();
         EventTempData.Release(o);
       }
+      this.PUe.delete(e);
+    }
     var s,
       l = this.wUe.get(e),
       a =

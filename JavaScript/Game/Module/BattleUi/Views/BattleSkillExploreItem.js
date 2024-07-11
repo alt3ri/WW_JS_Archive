@@ -11,10 +11,10 @@ const UE = require("ue"),
 class BattleSkillExploreItem extends BattleSkillItem_1.BattleSkillItem {
   constructor() {
     super(...arguments),
-      (this.qet = void 0),
-      (this.Oet = void 0),
-      (this.ket = (e, t) => {
-        this.IsLongPress || (this.qet.GetOwner() === t && (this.Oet = e));
+      (this.Jtt = void 0),
+      (this.ztt = void 0),
+      (this.Ztt = (e, t) => {
+        this.IsLongPress || (this.Jtt.GetOwner() === t && (this.ztt = e));
       }),
       (this.OnTouch = (e, t) => {
         var i;
@@ -24,30 +24,30 @@ class BattleSkillExploreItem extends BattleSkillItem_1.BattleSkillItem {
             TouchFingerManager_1.TouchFingerManager.GetTouchFingerData(
               e,
             )?.GetPointerEventData()?.pressComponent) &&
-            i.GetOwner() === this.qet.GetOwner() &&
-            (this.Oet = e));
+            i.GetOwner() === this.Jtt.GetOwner() &&
+            (this.ztt = e));
       });
   }
   GetPointEventButton() {
-    return this.qet;
+    return this.Jtt;
   }
   OnRegisterComponent() {
     super.OnRegisterComponent(),
       this.ComponentRegisterInfos.push([12, UE.UIButtonComponent]);
   }
   Initialize(e) {
-    (this.qet = this.GetButton(12)),
+    (this.Jtt = this.GetButton(12)),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.GuideTouchIdInject,
-        this.ket,
+        this.Ztt,
       ),
       super.Initialize(e);
   }
   Reset() {
-    (this.qet = void 0),
+    (this.Jtt = void 0),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.GuideTouchIdInject,
-        this.ket,
+        this.Ztt,
       ),
       super.Reset();
   }
@@ -68,9 +68,9 @@ class BattleSkillExploreItem extends BattleSkillItem_1.BattleSkillItem {
   OnLongPressButton() {
     super.OnLongPressButton(),
       (ModelManager_1.ModelManager.BattleUiModel.IsLongPressExploreButton = !0),
-      void 0 !== this.Oet &&
-        (UiManager_1.UiManager.OpenView("PhantomExploreView", this.Oet),
-        (this.Oet = void 0));
+      void 0 !== this.ztt &&
+        (UiManager_1.UiManager.OpenView("PhantomExploreView", this.ztt),
+        (this.ztt = void 0));
   }
 }
 exports.BattleSkillExploreItem = BattleSkillExploreItem;

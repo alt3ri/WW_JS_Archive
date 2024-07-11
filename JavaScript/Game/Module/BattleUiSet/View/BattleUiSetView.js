@@ -18,120 +18,120 @@ const UE = require("ue"),
 class BattleUiSetView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
-      (this.oCt = void 0),
+      (this.Cgt = void 0),
       (this.SelectedPanelItem = void 0),
-      (this.rCt = new Set()),
-      (this.nCt = 0),
-      (this.wit = new UE.Vector()),
-      (this.sCt = void 0),
-      (this.aCt = void 0),
+      (this.ggt = new Set()),
+      (this.fgt = 0),
+      (this.Xot = new UE.Vector()),
+      (this.pgt = void 0),
+      (this.vgt = void 0),
       (this.OnTouch = (i, e) => {
         var e = e.TouchType,
           t = Number(i);
         switch (e) {
           case 0:
-            this.hCt(!0, t);
+            this.Mgt(!0, t);
             break;
           case 1:
-            this.hCt(!1, t);
+            this.Mgt(!1, t);
             break;
           case 2:
-            this.lCt(t);
+            this.Egt(t);
         }
       }),
-      (this._Ct = () => {
-        this.nCt = 2;
+      (this.Sgt = () => {
+        this.fgt = 2;
       }),
-      (this.uCt = () => {
-        this.nCt = 0;
+      (this.ygt = () => {
+        this.fgt = 0;
       }),
-      (this.cCt = () => {
-        this.nCt = 1;
+      (this.Igt = () => {
+        this.fgt = 1;
       }),
-      (this.mCt = () => {
-        this.nCt = 0;
+      (this.Tgt = () => {
+        this.fgt = 0;
       }),
-      (this.dCt = () => {
-        this.nCt = 3;
+      (this.Lgt = () => {
+        this.fgt = 3;
       }),
-      (this.CCt = () => {
-        this.nCt = 0;
+      (this.Dgt = () => {
+        this.fgt = 0;
       }),
-      (this.gCt = () => {
-        this.nCt = 4;
+      (this.Rgt = () => {
+        this.fgt = 4;
       }),
-      (this.fCt = () => {
-        this.nCt = 0;
+      (this.Ugt = () => {
+        this.fgt = 0;
       }),
-      (this.pCt = (i) => {
+      (this.Agt = (i) => {
         var e = i.GetLocalPointInPlane(),
           t = i.dragComponent.GetOwner().GetUIItem().GetDisplayName(),
           s = this.GetItem(11);
         if (t === s.GetDisplayName()) {
-          if (this.sCt) {
+          if (this.pgt) {
             (t = i.dragComponent.GetOwner().GetActorScale3D()),
-              (s = e.X - this.sCt.X),
-              (i = e.Y - this.sCt.Y);
+              (s = e.X - this.pgt.X),
+              (i = e.Y - this.pgt.Y);
             if (0 == s || 0 == i) return;
-            (this.aCt.X += s * t.X),
-              (this.aCt.Y += i * t.Y),
-              this.SetRelativeLocation(this.aCt);
+            (this.vgt.X += s * t.X),
+              (this.vgt.Y += i * t.Y),
+              this.SetRelativeLocation(this.vgt);
           }
-          this.sCt = e;
+          this.pgt = e;
         }
       }),
-      (this.vCt = () => {
-        this.sCt = void 0;
+      (this.Pgt = () => {
+        this.pgt = void 0;
       }),
-      (this.MCt = () => {
-        this.sCt = void 0;
+      (this.xgt = () => {
+        this.pgt = void 0;
       }),
-      (this.SCt = (i) => {
+      (this.wgt = (i) => {
         this.SelectedPanelItem && this.SelectedPanelItem.SetSelected(!1);
-        var e = this.oCt.GetPanelItem(i);
-        (this.SelectedPanelItem = e) && (e.SetSelected(!0), this.ECt(i)),
-          this.yCt(e),
-          this.rCt.add(e),
+        var e = this.Cgt.GetPanelItem(i);
+        (this.SelectedPanelItem = e) && (e.SetSelected(!0), this.Bgt(i)),
+          this.bgt(e),
+          this.ggt.add(e),
           e.ApplyTopIndex(),
-          this.oCt.RefreshHierarchyIndex();
+          this.Cgt.RefreshHierarchyIndex();
       }),
-      (this.ICt = (i) => {
-        this.TCt(i);
+      (this.qgt = (i) => {
+        this.Ggt(i);
       }),
-      (this.LCt = (i) => {
+      (this.Ngt = (i) => {
         var e =
           ModelManager_1.ModelManager.BattleUiSetModel.SelectedPanelItemData;
         this.SelectedPanelItem &&
           e &&
           e.CanEdit &&
           ((e.EditAlpha = i),
-          (this.wit.X = i),
-          (this.wit.Y = i),
-          (this.wit.Z = i),
+          (this.Xot.X = i),
+          (this.Xot.Y = i),
+          (this.Xot.Z = i),
           this.SelectedPanelItem.GetRootItem().SetUIItemAlpha(i));
       }),
-      (this.DCt = () => {
+      (this.Ogt = () => {
         var i = new ConfirmBoxDefine_1.ConfirmBoxDataNew(105);
         i.FunctionMap.set(2, () => {
-          this.oCt.ResetAllPanelItem();
+          this.Cgt.ResetAllPanelItem();
           var i = ModelManager_1.ModelManager.BattleUiSetModel;
-          this.RCt(i.SelectedPanelItemData), i.ResetSettings();
+          this.kgt(i.SelectedPanelItemData), i.ResetSettings();
         }),
           ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
             i,
           );
       }),
-      (this.UCt = () => {
-        for (const e of this.rCt) {
+      (this.Fgt = () => {
+        for (const e of this.ggt) {
           var i = e.PanelItemData;
           if (!i || i.IsCheckOverlap) {
             var i = e.GetRootItem();
-            if (this.oCt.IsAnyItemOverlap(i))
+            if (this.Cgt.IsAnyItemOverlap(i))
               return (
                 (i = new ConfirmBoxDefine_1.ConfirmBoxDataNew(
                   103,
                 )).FunctionMap.set(2, () => {
-                  this.oCt.SavePanelItem(),
+                  this.Cgt.SavePanelItem(),
                     ModelManager_1.ModelManager.BattleUiSetModel.SaveSettings(),
                     UiManager_1.UiManager.CloseView("BattleUiSetView");
                 }),
@@ -141,13 +141,13 @@ class BattleUiSetView extends UiTickViewBase_1.UiTickViewBase {
               );
           }
         }
-        this.oCt.SavePanelItem(),
+        this.Cgt.SavePanelItem(),
           ModelManager_1.ModelManager.BattleUiSetModel.SaveSettings(),
           UiManager_1.UiManager.CloseView("BattleUiSetView");
       }),
-      (this.ACt = () => {
+      (this.Vgt = () => {
         var i;
-        this.PCt()
+        this.Hgt()
           ? ((i = new ConfirmBoxDefine_1.ConfirmBoxDataNew(
               104,
             )).FunctionMap.set(1, () => {
@@ -182,40 +182,40 @@ class BattleUiSetView extends UiTickViewBase_1.UiTickViewBase {
       [12, UE.UIItem],
     ]),
       (this.BtnBindInfo = [
-        [7, this.DCt],
-        [8, this.UCt],
-        [9, this.ACt],
+        [7, this.Ogt],
+        [8, this.Fgt],
+        [9, this.Vgt],
       ]);
   }
   OnBeforeDestroy() {
     (this.SelectedPanelItem = void 0),
-      this.rCt.clear(),
-      this.oCt?.Destroy(),
-      (this.oCt = void 0);
+      this.ggt.clear(),
+      this.Cgt?.Destroy(),
+      (this.Cgt = void 0);
   }
   OnAddEventListener() {
-    this.GetSlider(2).OnValueChangeCb.Bind(this.ICt),
-      this.GetSlider(1).OnValueChangeCb.Bind(this.LCt);
+    this.GetSlider(2).OnValueChangeCb.Bind(this.qgt),
+      this.GetSlider(1).OnValueChangeCb.Bind(this.Ngt);
     var i = this.GetButton(3),
       i =
-        (i.OnPointDownCallBack.Bind(this._Ct),
-        i.OnPointUpCallBack.Bind(this.uCt),
+        (i.OnPointDownCallBack.Bind(this.Sgt),
+        i.OnPointUpCallBack.Bind(this.ygt),
         this.GetButton(4)),
       i =
-        (i.OnPointDownCallBack.Bind(this.cCt),
-        i.OnPointUpCallBack.Bind(this.mCt),
+        (i.OnPointDownCallBack.Bind(this.Igt),
+        i.OnPointUpCallBack.Bind(this.Tgt),
         this.GetButton(6)),
       i =
-        (i.OnPointDownCallBack.Bind(this.dCt),
-        i.OnPointUpCallBack.Bind(this.CCt),
+        (i.OnPointDownCallBack.Bind(this.Lgt),
+        i.OnPointUpCallBack.Bind(this.Dgt),
         this.GetButton(5)),
       i =
-        (i.OnPointDownCallBack.Bind(this.gCt),
-        i.OnPointUpCallBack.Bind(this.fCt),
+        (i.OnPointDownCallBack.Bind(this.Rgt),
+        i.OnPointUpCallBack.Bind(this.Ugt),
         this.GetDraggable(10));
-    i.OnPointerBeginDragCallBack.Bind(this.vCt),
-      i.OnPointerDragCallBack.Bind(this.pCt),
-      i.OnPointerEndDragCallBack.Bind(this.MCt),
+    i.OnPointerBeginDragCallBack.Bind(this.Pgt),
+      i.OnPointerDragCallBack.Bind(this.Agt),
+      i.OnPointerEndDragCallBack.Bind(this.xgt),
       InputDistributeController_1.InputDistributeController.BindTouches(
         [
           InputMappingsDefine_1.touchIdMappings.Touch1,
@@ -233,7 +233,7 @@ class BattleUiSetView extends UiTickViewBase_1.UiTickViewBase {
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnSelectedEditPanelItem,
-        this.SCt,
+        this.wgt,
       );
   }
   OnRemoveEventListener() {
@@ -276,10 +276,10 @@ class BattleUiSetView extends UiTickViewBase_1.UiTickViewBase {
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnSelectedEditPanelItem,
-        this.SCt,
+        this.wgt,
       );
   }
-  hCt(i, e) {
+  Mgt(i, e) {
     e = TouchFingerManager_1.TouchFingerManager.GetTouchFingerData(e);
     e &&
       (i
@@ -288,7 +288,7 @@ class BattleUiSetView extends UiTickViewBase_1.UiTickViewBase {
             e,
           ));
   }
-  lCt(i) {
+  Egt(i) {
     var e,
       t,
       s = ModelManager_1.ModelManager.BattleUiSetModel,
@@ -314,17 +314,17 @@ class BattleUiSetView extends UiTickViewBase_1.UiTickViewBase {
       (e = (n = this.GetSlider(2)).MinValue),
       (s = n.MaxValue),
       (t = MathUtils_1.MathUtils.Clamp(t, e, s)),
-      this.TCt(t),
+      this.Ggt(t),
       n.SetValue(t));
   }
   OnTick(i) {
-    if ((super.OnTick(i), 0 !== this.nCt)) {
+    if ((super.OnTick(i), 0 !== this.fgt)) {
       i = ModelManager_1.ModelManager.BattleUiSetModel.SelectedPanelItemData;
       if (i && i.CanEdit) {
-        var e = this.oCt.GetPanelItem(i);
+        var e = this.Cgt.GetPanelItem(i);
         if (e) {
           var t = e.GetRelativeLocation();
-          switch (this.nCt) {
+          switch (this.fgt) {
             case 1:
               t.Y++, e.SetRelativeLocation(t);
               break;
@@ -359,7 +359,7 @@ class BattleUiSetView extends UiTickViewBase_1.UiTickViewBase {
     var e = this.GetItem(11);
     this.ClampBound(i), e.SetUIRelativeLocation(i);
   }
-  yCt(i) {
+  bgt(i) {
     var e;
     i &&
       ((i = i.GetRootItem()),
@@ -373,29 +373,29 @@ class BattleUiSetView extends UiTickViewBase_1.UiTickViewBase {
       e.SetStretchBottom(0),
       e.SetUIActive(!0));
   }
-  TCt(i) {
+  Ggt(i) {
     var e = ModelManager_1.ModelManager.BattleUiSetModel.SelectedPanelItemData;
     this.SelectedPanelItem &&
       e &&
       e.CanEdit &&
       ((e.EditSize = i),
-      (this.wit.X = i),
-      (this.wit.Y = i),
-      (this.wit.Z = i),
-      this.SelectedPanelItem.GetRootItem().SetUIItemScale(this.wit));
+      (this.Xot.X = i),
+      (this.Xot.Y = i),
+      (this.Xot.Z = i),
+      this.SelectedPanelItem.GetRootItem().SetUIItemScale(this.Xot));
   }
   OnStart() {
-    (this.aCt = this.GetItem(11).RelativeLocation),
-      (this.oCt = new EditMobileBattleView_1.EditMobileBattleView(
+    (this.vgt = this.GetItem(11).RelativeLocation),
+      (this.Cgt = new EditMobileBattleView_1.EditMobileBattleView(
         this.GetItem(0),
       ));
   }
-  PCt() {
+  Hgt() {
     for (const i of ModelManager_1.ModelManager.BattleUiSetModel.GetPanelItemDataMap().values())
       if (i.IsEdited()) return !0;
     return !1;
   }
-  ECt(i) {
+  Bgt(i) {
     var e, t;
     i &&
       ((e = this.GetSlider(2)),
@@ -403,7 +403,7 @@ class BattleUiSetView extends UiTickViewBase_1.UiTickViewBase {
       e.SetValue(i.EditSize),
       t.SetValue(i.EditAlpha));
   }
-  RCt(i) {
+  kgt(i) {
     var e, t;
     i &&
       ((e = this.GetSlider(2)),

@@ -4,6 +4,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const UE = require("ue"),
   BackgroundCardById_1 = require("../../../../Core/Define/ConfigQuery/BackgroundCardById"),
   Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
@@ -11,6 +12,7 @@ const UE = require("ue"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   UiManager_1 = require("../../../Ui/UiManager"),
   ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine"),
+  EditFormationDefine_1 = require("../../EditFormation/EditFormationDefine"),
   FriendController_1 = require("../../Friend/FriendController"),
   GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract"),
   LguiUtil_1 = require("../../Util/LguiUtil"),
@@ -18,53 +20,48 @@ const UE = require("ue"),
 class OnlineTeamItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
-      (this.dNi = void 0),
-      (this.CNi = !1),
-      (this.gNi = () => {
-        if (this.dNi.IsSelf) {
-          let e = void 0;
-          (e = ModelManager_1.ModelManager.OnlineModel.GetIsMyTeam()
-            ? new ConfirmBoxDefine_1.ConfirmBoxDataNew(100)
-            : new ConfirmBoxDefine_1.ConfirmBoxDataNew(78)).FunctionMap.set(
-            2,
-            () => {
-              OnlineController_1.OnlineController.LeaveWorldTeamRequest(
-                this.dNi.PlayerId,
-              );
-            },
-          ),
-            ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
-              e,
-            );
-        } else {
-          FriendController_1.FriendController.RequestFriendApplyAddSend(
-            this.dNi.PlayerId,
-            Protocol_1.Aki.Protocol.wks.Proto_RecentlyTeam,
-          ),
-            (this.CNi = !0);
-          var e = this.GetText(19),
-            i = this.GetInteractionGroup(15);
-          LguiUtil_1.LguiUtil.SetLocalText(e, "HaveApplyFriend"),
-            i.SetInteractable(!1);
-        }
+      (this.dOi = void 0),
+      (this.COi = !1),
+      (this.gOi = () => {
+        FriendController_1.FriendController.RequestFriendApplyAddSend(
+          this.dOi.PlayerId,
+          Protocol_1.Aki.Protocol.S5s.Proto_RecentlyTeam,
+        ),
+          (this.COi = !0);
       }),
-      (this.fNi = () => {
+      (this.DSi = () => {
+        let e = void 0;
+        (e = ModelManager_1.ModelManager.OnlineModel.GetIsMyTeam()
+          ? new ConfirmBoxDefine_1.ConfirmBoxDataNew(100)
+          : new ConfirmBoxDefine_1.ConfirmBoxDataNew(78)).FunctionMap.set(
+          2,
+          () => {
+            OnlineController_1.OnlineController.LeaveWorldTeamRequest(
+              this.dOi.PlayerId,
+            );
+          },
+        ),
+          ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
+            e,
+          );
+      }),
+      (this.fOi = () => {
         var e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(79);
         e.FunctionMap.set(2, () => {
           OnlineController_1.OnlineController.KickWorldTeamRequest(
-            this.dNi.PlayerId,
+            this.dOi.PlayerId,
           );
         }),
           ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
             e,
           );
       }),
-      (this.PGi = () => {
-        (ModelManager_1.ModelManager.OnlineModel.CachePlayerData = this.dNi),
+      (this.PNi = () => {
+        (ModelManager_1.ModelManager.OnlineModel.CachePlayerData = this.dOi),
           UiManager_1.UiManager.OpenView("OnlineProcessView");
       }),
-      (this.WJe = (e, i) => {
-        this.dNi.PlayerId === e && this.pNi(i);
+      (this.oZe = (e, i) => {
+        this.dOi.PlayerId === e && this.pOi(i);
       });
   }
   OnRegisterComponent() {
@@ -76,20 +73,20 @@ class OnlineTeamItem extends GridProxyAbstract_1.GridProxyAbstract {
       [7, UE.UIText],
       [13, UE.UIItem],
       [14, UE.UIButtonComponent],
-      [15, UE.UIInteractionGroup],
+      [15, UE.UIButtonComponent],
       [16, UE.UIButtonComponent],
       [17, UE.UISprite],
       [18, UE.UIItem],
-      [19, UE.UIText],
-      [20, UE.UISprite],
-      [22, UE.UITexture],
-      [21, UE.UIItem],
-      [23, UE.UIButtonComponent],
+      [19, UE.UISprite],
+      [21, UE.UITexture],
+      [20, UE.UIItem],
+      [22, UE.UIButtonComponent],
     ]),
       (this.BtnBindInfo = [
-        [14, this.gNi],
-        [16, this.fNi],
-        [23, this.PGi],
+        [14, this.gOi],
+        [16, this.fOi],
+        [22, this.PNi],
+        [15, this.DSi],
       ]);
   }
   OnStart() {
@@ -100,119 +97,102 @@ class OnlineTeamItem extends GridProxyAbstract_1.GridProxyAbstract {
   AddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnRefreshPlayerPing,
-      this.WJe,
+      this.oZe,
     );
   }
   RemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnRefreshPlayerPing,
-      this.WJe,
+      this.oZe,
     );
   }
   OnBeforeDestroy() {
     this.RemoveEventListener();
   }
   Refresh(e, i, r) {
-    this.GetButton(23).RootUIComp.SetRaycastTarget(
+    this.GetButton(22).RootUIComp.SetRaycastTarget(
       e.PlayerId !== ModelManager_1.ModelManager.FunctionModel.PlayerId,
-    ),
-      (this.dNi = e);
-    let n = !1,
-      t = void 0,
-      o = !1;
-    (o = e.IsSelf
-      ? ((n = !1), (t = "ExitWorld"), !0)
+    );
+    let t = !1,
+      n = !1,
+      o = !1,
+      a = !1;
+    (this.dOi = e).IsSelf
+      ? (o = !0)
       : ModelManager_1.ModelManager.FriendModel.IsMyFriend(e.PlayerId)
-        ? ((t = this.CNi
-            ? ((n = ModelManager_1.ModelManager.OnlineModel.GetIsMyTeam()),
-              "HaveApplyFriend")
-            : ((n = ModelManager_1.ModelManager.OnlineModel.GetIsMyTeam()),
-              "IsMyFriend")),
-          !1)
-        : ((n = ModelManager_1.ModelManager.OnlineModel.GetIsMyTeam()),
-          (t = "ApplyFriend"),
-          !0)),
-      this.GetButton(16).RootUIComp.SetUIActive(n),
-      this.GetButton(14).RootUIComp.SetUIActive(o),
-      this.GetText(1).SetUIActive(!o);
-    var a = o ? 19 : 1,
-      a =
-        (LguiUtil_1.LguiUtil.SetLocalText(this.GetText(a), t),
-        ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(e.HeadId)
-          ?.RoleHeadIconBig),
-      a =
-        (a && this.SetTextureByPath(a, this.GetTexture(3)),
+        ? this.COi
+          ? (t = ModelManager_1.ModelManager.OnlineModel.GetIsMyTeam())
+          : ((t = ModelManager_1.ModelManager.OnlineModel.GetIsMyTeam()),
+            (a = !0))
+        : ((t = ModelManager_1.ModelManager.OnlineModel.GetIsMyTeam()),
+          (n = !0)),
+      this.GetButton(16).RootUIComp.SetUIActive(t),
+      this.GetButton(14).RootUIComp.SetUIActive(n),
+      this.GetButton(15).RootUIComp.SetUIActive(o),
+      this.GetText(1).SetUIActive(a);
+    var s = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(
+        e.HeadId,
+      )?.RoleHeadIconBig,
+      s =
+        (s && this.SetTextureByPath(s, this.GetTexture(3)),
         ModelManager_1.ModelManager.FriendModel.IsMyFriend(e.PlayerId)),
-      s = this.GetText(0),
-      a =
-        (a &&
+      l = this.GetText(0),
+      s =
+        (s &&
         void 0 !==
-          (a = ModelManager_1.ModelManager.FriendModel.GetFriendById(
+          (s = ModelManager_1.ModelManager.FriendModel.GetFriendById(
             e.PlayerId,
           )?.FriendRemark) &&
-        "" !== a
-          ? LguiUtil_1.LguiUtil.SetLocalText(s, "NameMark", a)
-          : s.SetText(e.Name),
+        "" !== s
+          ? LguiUtil_1.LguiUtil.SetLocalText(l, "NameMark", s)
+          : l.SetText(e.Name),
         this.GetText(2).SetText("Lv." + e.Level),
-        this.GetText(7)),
+        this.GetText(7));
+    e.Signature && "" !== e.Signature
+      ? s.SetText(e.Signature)
+      : LguiUtil_1.LguiUtil.SetLocalText(s, "DefaultSign"),
+      this.GetItem(20).SetUIActive(!0);
+    let _ = void 0;
+    _ =
+      e.PlayerId === ModelManager_1.ModelManager.CreatureModel.GetPlayerId()
+        ? EditFormationDefine_1.SELF_ONLINE_INDEX
+        : EditFormationDefine_1.OTHER_ONLINE_INDEX;
+    var l = this.GetSprite(17),
+      s = StringUtils_1.StringUtils.Format(_, this.dOi.PlayerNumber.toString()),
+      s = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(s),
       s =
-        (e.Signature && "" !== e.Signature
-          ? a.SetText(e.Signature)
-          : LguiUtil_1.LguiUtil.SetLocalText(a, "DefaultSign"),
-        this.GetItem(21).SetUIActive(!0),
-        this.GetSprite(17)),
-      a =
-        (1 === this.dNi.PlayerNumber
-          ? (s.SetUIActive(!0),
-            (a =
-              ConfigManager_1.ConfigManager.UiResourceConfig?.GetResourcePath(
-                "SP_Online1PIcon",
-              )),
-            this.SetSpriteByPath(a, s, !1))
-          : 2 === this.dNi.PlayerNumber
-            ? (s.SetUIActive(!0),
-              (a =
-                ConfigManager_1.ConfigManager.UiResourceConfig?.GetResourcePath(
-                  "SP_Online2PIcon",
-                )),
-              this.SetSpriteByPath(a, s, !1))
-            : 3 === this.dNi.PlayerNumber
-              ? (s.SetUIActive(!0),
-                (a =
-                  ConfigManager_1.ConfigManager.UiResourceConfig?.GetResourcePath(
-                    "SP_Online3PIcon",
-                  )),
-                this.SetSpriteByPath(a, s, !1))
-              : s.SetUIActive(!1),
-        this.pNi(e.PingState),
-        e.PlayerDetails.zgs);
-    0 < a &&
-      ((s = BackgroundCardById_1.configBackgroundCardById.GetConfig(a)),
-      this.SetTextureByPath(s.LongCardPath, this.GetTexture(22)));
+        (s
+          ? (l.SetUIActive(!0), this.SetSpriteByPath(s, l, !1))
+          : l.SetUIActive(!1),
+        this.pOi(e.PingState),
+        e.PlayerDetails.CSs);
+    0 < s &&
+      ((l = BackgroundCardById_1.configBackgroundCardById.GetConfig(s)),
+      this.SetTextureByPath(l.LongCardPath, this.GetTexture(21)));
   }
-  pNi(e) {
+  pOi(e) {
     var i,
-      r = this.GetSprite(20);
+      r = this.GetSprite(19);
     r.SetUIActive(!0),
-      e === Protocol_1.Aki.Protocol.oFs.Proto_UNKNOWN
+      e === Protocol_1.Aki.Protocol.Y8s.Proto_UNKNOWN
         ? ((i =
             ConfigManager_1.ConfigManager.UiResourceConfig?.GetResourcePath(
               "SP_SignalUnknown",
             )),
           this.SetSpriteByPath(i, r, !1))
-        : e === Protocol_1.Aki.Protocol.oFs.Proto_GREAT
+        : e === Protocol_1.Aki.Protocol.Y8s.Proto_GREAT
           ? ((i =
               ConfigManager_1.ConfigManager.UiResourceConfig?.GetResourcePath(
                 "SP_SignalGreat",
               )),
             this.SetSpriteByPath(i, r, !1))
-          : e === Protocol_1.Aki.Protocol.oFs.Proto_GOOD
+          : e === Protocol_1.Aki.Protocol.Y8s.Proto_GOOD
             ? ((i =
                 ConfigManager_1.ConfigManager.UiResourceConfig?.GetResourcePath(
                   "SP_SignalGood",
                 )),
               this.SetSpriteByPath(i, r, !1))
-            : e === Protocol_1.Aki.Protocol.oFs.Proto_POOR &&
+            : e === Protocol_1.Aki.Protocol.Y8s.Proto_POOR &&
               ((i =
                 ConfigManager_1.ConfigManager.UiResourceConfig?.GetResourcePath(
                   "SP_SignalPoor",

@@ -5,21 +5,21 @@ const HotKeyItem_1 = require("./HotKeyItem"),
   HotKeyTypeCreator_1 = require("./HotKeyType/HotKeyTypeCreator");
 class SingleHotKeyItem extends HotKeyItem_1.HotKeyItem {
   constructor() {
-    super(...arguments), (this.kbo = void 0);
+    super(...arguments), (this.Gqo = void 0);
   }
   async OnBeforeStartAsync() {
     var e = this.OpenParam;
-    this.kbo = await HotKeyTypeCreator_1.HotKeyTypeCreator.CreateHotKeyType(
+    this.Gqo = await HotKeyTypeCreator_1.HotKeyTypeCreator.CreateHotKeyType(
       this.GetRootActor(),
       e,
       !1,
     );
   }
   OnClear() {
-    this.kbo.Clear();
+    this.Gqo.Clear();
   }
   GetHotKeyComponentArray() {
-    return this.kbo ? this.kbo.GetHotKeyComponents() : [];
+    return this.Gqo ? this.Gqo.GetHotKeyComponents() : [];
   }
 }
 exports.SingleHotKeyItem = SingleHotKeyItem;

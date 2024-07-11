@@ -13,8 +13,8 @@ const UE = require("ue"),
 class BulletActorPool {
   static Get(t) {
     let e = void 0;
-    if (this.Q5o.has(t))
-      for (var o = this.Q5o.get(t); !e && 0 < o.length; )
+    if (this.jVo.has(t))
+      for (var o = this.jVo.get(t); !e && 0 < o.length; )
         (e = o.pop())?.IsValid() || (e = void 0);
     return (
       e ||
@@ -48,19 +48,19 @@ class BulletActorPool {
         !o.RelativeScale3D.op_Equality(Vector_1.Vector.OneVector) &&
         Log_1.Log.CheckError() &&
         Log_1.Log.Error("Bullet", 18, "bullet collisionComp scale invalid");
-    let l = this.Q5o.get(e);
-    l || ((l = []), this.Q5o.set(e, l)),
+    let l = this.jVo.get(e);
+    l || ((l = []), this.jVo.set(e, l)),
       l.length > SIZE_POOL ? ActorSystem_1.ActorSystem.Put(t) : l.push(t);
   }
   static Preload() {
-    this.X5o(0, UE.BoxComponent.StaticClass()),
-      this.X5o(1, UE.SphereComponent.StaticClass()),
-      this.X5o(3, UE.BoxComponent.StaticClass()),
-      this.X5o(4, void 0);
+    this.WVo(0, UE.BoxComponent.StaticClass()),
+      this.WVo(1, UE.SphereComponent.StaticClass()),
+      this.WVo(3, UE.BoxComponent.StaticClass()),
+      this.WVo(4, void 0);
   }
-  static X5o(t, e) {
-    let o = this.Q5o.get(t);
-    o || ((o = []), this.Q5o.set(t, o));
+  static WVo(t, e) {
+    let o = this.jVo.get(t);
+    o || ((o = []), this.jVo.set(t, o));
     for (let t = o.length; t < PRE_ADD_COUNT; t++) {
       var l,
         s = ActorSystem_1.ActorSystem.Get(
@@ -102,10 +102,10 @@ class BulletActorPool {
     }
   }
   static Clear() {
-    for (var [, t] of this.Q5o)
+    for (var [, t] of this.jVo)
       for (const e of t) ActorSystem_1.ActorSystem.Put(e);
-    this.Q5o.clear();
+    this.jVo.clear();
   }
 }
-(exports.BulletActorPool = BulletActorPool).Q5o = new Map();
+(exports.BulletActorPool = BulletActorPool).jVo = new Map();
 //# sourceMappingURL=BulletActorPool.js.map

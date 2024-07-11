@@ -20,8 +20,8 @@ class ItemHintItem extends ListSliderControl_1.SliderItem {
       (this.CurSequencePlayer = void 0),
       (this.LevelSequencePlayer = void 0),
       (this.Data = void 0),
-      (this.zCi = void 0),
-      (this.WFt = (e) => {
+      (this.zgi = void 0),
+      (this.K3t = (e) => {
         "Start" === e
           ? this.FinishPlayStart()
           : "Move" === e
@@ -41,7 +41,7 @@ class ItemHintItem extends ListSliderControl_1.SliderItem {
     (this.LevelSequencePlayer = new LevelSequencePlayer_1.LevelSequencePlayer(
       this.RootItem,
     )),
-      this.LevelSequencePlayer.BindSequenceCloseEvent(this.WFt);
+      this.LevelSequencePlayer.BindSequenceCloseEvent(this.K3t);
   }
   OnBeforeDestroy() {
     this.LevelSequencePlayer &&
@@ -73,7 +73,7 @@ class ItemHintItem extends ListSliderControl_1.SliderItem {
       this.GetText(1).SetColor(e),
       this.GetText(3).SetColor(e),
       this.GetText(2).SetColor(e),
-      (this.zCi = t.QualityId)),
+      (this.zgi = t.QualityId)),
       (this.CurSequencePlayer = void 0),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("ItemHint", 11, "ItemHintItem InitData", [
@@ -84,10 +84,10 @@ class ItemHintItem extends ListSliderControl_1.SliderItem {
   PlayStart() {
     this.LevelSequencePlayer.PlayLevelSequenceByName("Start"),
       (this.CurSequencePlayer = "Start"),
-      this.ZCi();
+      this.Zgi();
   }
-  ZCi() {
-    this.zCi && this.zCi >= AUDIO_EFFECT_RARE_LEVEL
+  Zgi() {
+    this.zgi && this.zgi >= AUDIO_EFFECT_RARE_LEVEL
       ? !ItemController_1.ItemController.LastItemHintAudioPlayedTime ||
         Time_1.Time.Now -
           ItemController_1.ItemController.LastItemHintAudioPlayedTime >

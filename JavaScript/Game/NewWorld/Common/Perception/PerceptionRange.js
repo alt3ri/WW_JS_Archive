@@ -6,45 +6,45 @@ const cpp_1 = require("cpp"),
   Vector_1 = require("../../../../Core/Utils/Math/Vector");
 class PerceptionRange {
   constructor() {
-    (this.$ir = void 0),
+    (this.Xor = void 0),
       (this.w_e = void 0),
-      (this.Yir = void 0),
-      (this.Jir = void 0),
-      (this.U7o = Vector_1.Vector.Create()),
-      (this.zir = 0),
-      (this.Zir = void 0),
-      (this.eor = (i) => {
-        return !!this.$ir && this.$ir(i);
+      (this.$or = void 0),
+      (this.Yor = void 0),
+      (this.LHo = Vector_1.Vector.Create()),
+      (this.Jor = 0),
+      (this.zor = void 0),
+      (this.Zor = (i) => {
+        return !!this.Xor && this.Xor(i);
       }),
-      (this.tor = (i) => {
-        this.Zir && this.Zir.add(i.Id), this.w_e && this.w_e(i);
+      (this.err = (i) => {
+        this.zor && this.zor.add(i.Id), this.w_e && this.w_e(i);
       }),
-      (this.ior = (i) => {
-        this.Zir && this.Zir.delete(i.Id), this.Yir && this.Yir(i);
+      (this.trr = (i) => {
+        this.zor && this.zor.delete(i.Id), this.$or && this.$or(i);
       }),
-      (this.oor = () => (
-        this.Jir && this.U7o.DeepCopy(this.Jir()), this.U7o.ToUeVector()
+      (this.irr = () => (
+        this.Yor && this.LHo.DeepCopy(this.Yor()), this.LHo.ToUeVector()
       ));
   }
   InitStatic(i, t, s, o = !1, h = void 0, e = void 0, r = void 0) {
-    0 !== this.zir
+    0 !== this.Jor
       ? Log_1.Log.CheckError() &&
         Log_1.Log.Error("Perception", 37, "重复初始化静态感知范围")
       : o || e || r
-        ? (o && (this.Zir = new Set()),
-          (this.$ir = h),
+        ? (o && (this.zor = new Set()),
+          (this.Xor = h),
           (this.w_e = e),
-          (this.Yir = r),
-          (this.zir = cpp_1.FKuroPerceptionInterface.AddStaticPerceptionRange(
+          (this.$or = r),
+          (this.Jor = cpp_1.FKuroPerceptionInterface.AddStaticPerceptionRange(
             i.ToUeVector(),
             t,
             s,
             this,
-            this.$ir ? this.eor : void 0,
-            this.w_e ? this.tor : void 0,
-            this.Yir ? this.ior : void 0,
+            this.Xor ? this.Zor : void 0,
+            this.w_e ? this.err : void 0,
+            this.$or ? this.trr : void 0,
           )),
-          0 === this.zir &&
+          0 === this.Jor &&
             Log_1.Log.CheckError() &&
             Log_1.Log.Error("Perception", 37, "初始化静态感知范围失败"))
         : Log_1.Log.CheckError() &&
@@ -59,26 +59,26 @@ class PerceptionRange {
             37,
             "初始化动态感知范围时，感知范围大小非法",
           )
-        : 0 !== this.zir
+        : 0 !== this.Jor
           ? Log_1.Log.CheckError() &&
             Log_1.Log.Error("Perception", 37, "重复初始化动态感知范围")
           : c || o || h
-            ? ((this.Jir = r),
-              (this.$ir = e),
+            ? ((this.Yor = r),
+              (this.Xor = e),
               (this.w_e = o),
-              (this.Yir = h),
-              (this.zir =
+              (this.$or = h),
+              (this.Jor =
                 cpp_1.FKuroPerceptionInterface.AddDynamicPerceptionRange(
                   i,
                   t,
                   s,
                   this,
-                  this.oor,
-                  this.$ir ? this.eor : void 0,
-                  this.w_e ? this.tor : void 0,
-                  this.Yir ? this.ior : void 0,
+                  this.irr,
+                  this.Xor ? this.Zor : void 0,
+                  this.w_e ? this.err : void 0,
+                  this.$or ? this.trr : void 0,
                 )),
-              0 === this.zir &&
+              0 === this.Jor &&
                 Log_1.Log.CheckError() &&
                 Log_1.Log.Error("Perception", 37, "初始化动态感知范围失败"))
             : Log_1.Log.CheckError() &&
@@ -91,18 +91,18 @@ class PerceptionRange {
         );
   }
   Clear() {
-    (this.$ir = void 0),
+    (this.Xor = void 0),
       (this.w_e = void 0),
-      (this.Yir = void 0),
-      (this.Jir = void 0),
-      this.U7o.Reset(),
-      (this.Zir = void 0),
-      0 !== this.zir &&
-        (cpp_1.FKuroPerceptionInterface.RemovePerceptionRange(this.zir),
-        (this.zir = 0));
+      (this.$or = void 0),
+      (this.Yor = void 0),
+      this.LHo.Reset(),
+      (this.zor = void 0),
+      0 !== this.Jor &&
+        (cpp_1.FKuroPerceptionInterface.RemovePerceptionRange(this.Jor),
+        (this.Jor = 0));
   }
   UpdateRange(i) {
-    0 !== this.zir &&
+    0 !== this.Jor &&
       (i <= 0
         ? Log_1.Log.CheckError() &&
           Log_1.Log.Error(
@@ -110,7 +110,7 @@ class PerceptionRange {
             37,
             "更新动态感知范围大小时，感知范围大小非法",
           )
-        : cpp_1.FKuroPerceptionInterface.UpdatePerceptionRange(this.zir, i));
+        : cpp_1.FKuroPerceptionInterface.UpdatePerceptionRange(this.Jor, i));
   }
 }
 exports.PerceptionRange = PerceptionRange;

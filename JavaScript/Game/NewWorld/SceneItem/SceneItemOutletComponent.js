@@ -44,14 +44,14 @@ let SceneItemOutletComponent =
     constructor() {
       super(...arguments),
         (this.Config = void 0),
-        (this.nXt = void 0),
-        (this.eMn = void 0),
-        (this.tMn = -1),
-        (this.iMn = new Map()),
-        (this.oMn = void 0),
-        (this.rMn = void 0),
+        (this.n$t = void 0),
+        (this.xvn = void 0),
+        (this.wvn = -1),
+        (this.Bvn = new Map()),
+        (this.bvn = void 0),
+        (this.qvn = void 0),
         (this.gIe = (t, e) => {
-          const n = this.Entity.GetComponent(177);
+          const n = this.Entity.GetComponent(180);
           Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug("SceneItem", 32, "[底座] 状态改变", [
               "State",
@@ -77,18 +77,18 @@ let SceneItemOutletComponent =
     GetSocketLocation(t) {
       var e = this.GetSocketLocationOffset(t),
         t = FNameUtil_1.FNameUtil.GetDynamicFName(this.GetSocketName(t)),
-        t = t ? this.nXt.GetSocketTransform(t) : this.nXt.ActorTransform;
+        t = t ? this.n$t.GetSocketTransform(t) : this.n$t.ActorTransform;
       return e.FromUeVector(t.TransformPosition(e.ToUeVector())), e;
     }
     GetSocketLocationOffset(t) {
       switch (this.Config.Config.Type) {
         case IComponent_1.EItemFoundation.CategoryMatching:
-          var e = this.nMn(t)?.Animation?.MatchPos;
+          var e = this.Gvn(t)?.Animation?.MatchPos;
           return Vector_1.Vector.Create(e?.X ?? 0, e?.Y ?? 0, e?.Z ?? 0);
         case IComponent_1.EItemFoundation.BuildingBlock:
         case IComponent_1.EItemFoundation.PulseDevice:
-          var [e, n] = this.oMn.CalcJigsawSocketLocation();
-          return (this.rMn = n), e ?? Vector_1.Vector.ZeroVectorProxy;
+          var [e, n] = this.bvn.CalcJigsawSocketLocation();
+          return (this.qvn = n), e ?? Vector_1.Vector.ZeroVectorProxy;
         default:
           return Vector_1.Vector.ZeroVectorProxy;
       }
@@ -98,7 +98,7 @@ let SceneItemOutletComponent =
         this.Config.Config.Type ===
         IComponent_1.EItemFoundation.CategoryMatching
       )
-        return this.nMn(t)?.Animation?.MatchReferenceKey;
+        return this.Gvn(t)?.Animation?.MatchReferenceKey;
     }
     GetIsNeedAttach() {
       return (
@@ -113,7 +113,7 @@ let SceneItemOutletComponent =
         case IComponent_1.EItemFoundation.BuildingBlock:
         case IComponent_1.EItemFoundation.PulseDevice:
           return Vector_1.Vector.Create(
-            this.oMn.GetBlockLocationByIndex(this.rMn),
+            this.bvn.GetBlockLocationByIndex(this.qvn),
           );
         default:
           return;
@@ -125,8 +125,8 @@ let SceneItemOutletComponent =
           break;
         case IComponent_1.EItemFoundation.BuildingBlock:
         case IComponent_1.EItemFoundation.PulseDevice:
-          var e = t.GetComponent(122);
-          this.oMn.AimBlockByIndex(this.rMn, e);
+          var e = t.GetComponent(124);
+          this.bvn.AimBlockByIndex(this.qvn, e);
       }
     }
     GetIsIllegal(t) {
@@ -135,8 +135,8 @@ let SceneItemOutletComponent =
           return !1;
         case IComponent_1.EItemFoundation.BuildingBlock:
         case IComponent_1.EItemFoundation.PulseDevice:
-          var e = t.GetComponent(122);
-          return this.oMn.CheckJigsawBlockIllegal(e, this.rMn);
+          var e = t.GetComponent(124);
+          return this.bvn.CheckJigsawBlockIllegal(e, this.qvn);
         default:
           return !1;
       }
@@ -147,28 +147,28 @@ let SceneItemOutletComponent =
           return !0;
         case IComponent_1.EItemFoundation.BuildingBlock:
         case IComponent_1.EItemFoundation.PulseDevice:
-          var n = t.GetComponent(122);
-          return this.oMn.CheckJigsawBlockCorrect(n, e ?? this.rMn);
+          var n = t.GetComponent(124);
+          return this.bvn.CheckJigsawBlockCorrect(n, e ?? this.qvn);
         default:
           return !0;
       }
     }
     GetMatchSequence(t) {
-      t = this.nMn(t);
+      t = this.Gvn(t);
       if (t) return t.Animation.MatchSequence;
     }
     GetMismatchSequence(t) {
-      t = this.nMn(t);
+      t = this.Gvn(t);
       if (t) return t.Callback.DischargeSequence;
     }
     GetMatchSequenceOffset(t) {
-      t = this.nMn(t)?.Animation.MatchSequenceOffset;
+      t = this.Gvn(t)?.Animation.MatchSequenceOffset;
       return Vector_1.Vector.Create(t?.X ?? 0, t?.Y ?? 0, t?.Z ?? 0);
     }
     GetSocketRotator(t) {
       var e = this.GetSocketRotatorOffset(t),
         t = FNameUtil_1.FNameUtil.GetDynamicFName(this.GetSocketName(t)),
-        t = t ? this.nXt.GetSocketTransform(t) : this.nXt.ActorTransform;
+        t = t ? this.n$t.GetSocketTransform(t) : this.n$t.ActorTransform;
       return Rotator_1.Rotator.Create(
         t.TransformRotation(e.Quaternion().ToUeQuat()).Rotator(),
       );
@@ -176,90 +176,87 @@ let SceneItemOutletComponent =
     GetSocketRotatorOffset(t) {
       switch (this.Config.Config.Type) {
         case IComponent_1.EItemFoundation.CategoryMatching:
-          var e = this.nMn(t).Animation.MatchRot;
+          var e = this.Gvn(t).Animation.MatchRot;
           return Rotator_1.Rotator.Create(e.Y ?? 0, e.Z ?? 0, e.X ?? 0);
         case IComponent_1.EItemFoundation.BuildingBlock:
         case IComponent_1.EItemFoundation.PulseDevice:
-          e = t.GetComponent(122);
+          e = t.GetComponent(124);
           return Rotator_1.Rotator.Create(0, -e.Rotation, 0);
         default:
           return Rotator_1.Rotator.ZeroRotatorProxy;
       }
     }
-    nMn(t) {
-      if (t?.Valid) {
-        let e = void 0;
-        if ((e = this.sMn(this.tMn))) return e;
-        var n = t.GetComponent(177),
-          r = t.GetComponent(0).GetBaseInfo();
+    Gvn(e) {
+      if (e?.Valid) {
+        let t = void 0;
+        if ((t = this.Nvn(this.wvn))) return t;
+        var n = e.GetComponent(180),
+          r = e.GetComponent(0).GetBaseInfo();
         if (r) {
-          let t = 0;
-          for (const o of this.iMn) {
+          for (const o of this.Bvn)
             if ((0, IUtil_1.isEntitiyMatch)(o[0], r.Category)) {
               if (!o[0].State?.State) {
-                (e = o[1]), (this.tMn = t);
+                (t = o[1]), (this.wvn = -1);
                 break;
               }
               if (n.ContainsTagByName(o[0].State.State)) {
-                (e = o[1]), (this.tMn = t);
+                (t = o[1]), (this.wvn = -1);
                 break;
               }
             }
-            ++t;
-          }
-          return e;
+          return t;
         }
       }
     }
-    sMn(e) {
-      if (!(void 0 === e || e < 0 || e >= this.iMn.size)) {
-        var n = this.iMn.values();
+    Nvn(e) {
+      if (!(void 0 === e || e < 0 || e >= this.Bvn.size)) {
+        var n = this.Bvn.values();
         let t = e;
-        for (; 0 < --t; ) n.next();
+        for (; 0 <= --t; ) n.next();
         return n.next().value;
       }
     }
     get EntityInSocket() {
-      return this.eMn;
+      return this.xvn;
     }
     set EntityInSocket(t) {
-      this.eMn = t;
+      this.xvn = t;
     }
     set MatchCfgIndex(t) {
-      this.tMn = void 0 === t ? -1 : t;
+      this.wvn = t ?? -1;
     }
     get MatchCfgIndex() {
-      return this.tMn;
+      return this.wvn;
     }
     OnInitData(t) {
       t = t.GetParam(SceneItemOutletComponent_1)[0];
       if (
-        ((this.nXt = this.Entity.GetComponent(182)),
+        ((this.n$t = this.Entity.GetComponent(185)),
         (this.Config = t),
         this.Config.Config.Type ===
           IComponent_1.EItemFoundation.CategoryMatching)
       )
         for (const n of this.Config.Config.MatchingConfigs) {
           var e = n.Condition.EntityMatch;
-          this.iMn.set(e, n);
+          this.Bvn.set(e, n);
         }
       return (
-        (this.eMn = void 0),
-        (this.tMn = 0),
-        this.Entity.GetComponent(106).SetLogicRange(
+        (this.xvn = void 0),
+        (this.wvn = -1),
+        this.Entity.GetComponent(108).SetLogicRange(
           ConfigManager_1.ConfigManager.ManipulateConfig.SearchRange,
         ),
         !0
       );
     }
     OnStart() {
-      this.nXt.Owner.Tags.Add(SCENE_ITEM_OUTLET_TAG),
+      this.n$t.Owner.Tags.Add(SCENE_ITEM_OUTLET_TAG),
         EventSystem_1.EventSystem.AddWithTarget(
           this.Entity,
           EventDefine_1.EEventName.OnLevelTagChanged,
           this.gIe,
         );
-      var t = this.Entity.GetComponent(177);
+      var t = this.Entity.GetComponent(180);
       return (
         t.HasTag(-662723379) || t.HasTag(-709838471)
           ? t.AddTag(-1381638598)
@@ -273,7 +270,7 @@ let SceneItemOutletComponent =
           IComponent_1.EItemFoundation.BuildingBlock &&
           this.Config.Config.Type !==
             IComponent_1.EItemFoundation.PulseDevice) ||
-        ((this.oMn = this.Entity.GetComponent(121)), this.oMn)
+        ((this.bvn = this.Entity.GetComponent(123)), this.bvn)
       );
     }
     OnEnd() {
@@ -295,19 +292,19 @@ let SceneItemOutletComponent =
         return !0;
       var e = t?.GetComponent(0)?.GetBaseInfo();
       if (e)
-        for (const o of this.iMn)
+        for (const o of this.Bvn)
           if ((0, IUtil_1.isEntitiyMatch)(o[0], e.Category)) {
             if (!(n = o[1]).Condition.SelfState) return !0;
             var n = GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(
                 n.Condition.SelfState,
               ),
-              r = this.Entity.GetComponent(177);
+              r = this.Entity.GetComponent(180);
             if (r && r.HasTag(n)) return !0;
           }
       return !1;
     }
     ChangeSilentTag() {
-      var t = this.Entity.GetComponent(177);
+      var t = this.Entity.GetComponent(180);
       t.HasTag(-1381638598) &&
         (t.RemoveTag(-1381638598), t.AddTag(-1603486396)),
         Log_1.Log.CheckDebug() &&
@@ -321,7 +318,7 @@ let SceneItemOutletComponent =
         ?.ItemFoundation;
     }
     IsLockOrSlient() {
-      var t = this.Entity.GetComponent(177);
+      var t = this.Entity.GetComponent(180);
       return t.HasTag(-662723379) || t.HasTag(-709838471);
     }
     MultiplayerLimitTypeCheck() {
@@ -334,10 +331,10 @@ let SceneItemOutletComponent =
     CanSetNewItem() {
       switch (this.Config.Config.Type) {
         case IComponent_1.EItemFoundation.CategoryMatching:
-          return void 0 === this.eMn;
+          return void 0 === this.xvn;
         case IComponent_1.EItemFoundation.BuildingBlock:
         case IComponent_1.EItemFoundation.PulseDevice:
-          return this.oMn.HasEmptySocket();
+          return this.bvn.HasEmptySocket();
         default:
           return !1;
       }
@@ -348,27 +345,37 @@ let SceneItemOutletComponent =
           break;
         case IComponent_1.EItemFoundation.BuildingBlock:
         case IComponent_1.EItemFoundation.PulseDevice:
-          var e = t.GetComponent(122);
-          this.oMn.OnPutDownItem(e, this.rMn, this.Config.Config.Type);
+          var e = t.GetComponent(124);
+          this.bvn.OnPutDownItem(e, this.qvn, this.Config.Config.Type);
       }
     }
     OnPickUpItem(t) {
-      switch (this.Config.Config.Type) {
+      switch (
+        (Log_1.Log.CheckInfo() &&
+          Log_1.Log.Info(
+            "Character",
+            32,
+            "[CharacterManipulateComp] OnPickUpItem",
+            ["PbDataId", t.GetComponent(0)?.GetPbDataId()],
+            ["Type", this.Config.Config.Type],
+          ),
+        this.Config.Config.Type)
+      ) {
         case IComponent_1.EItemFoundation.CategoryMatching:
           break;
         case IComponent_1.EItemFoundation.BuildingBlock:
         case IComponent_1.EItemFoundation.PulseDevice:
-          var e = t.GetComponent(122);
-          this.oMn.OnPickUpItem(e, this.Config.Config.Type);
+          var e = t.GetComponent(124);
+          this.bvn.OnPickUpItem(e, this.Config.Config.Type);
       }
     }
     GetCurrentChooseIndex() {
-      return this.rMn;
+      return this.qvn;
     }
   });
 (SceneItemOutletComponent = SceneItemOutletComponent_1 =
   __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(145)],
+    [(0, RegisterComponent_1.RegisterComponent)(147)],
     SceneItemOutletComponent,
   )),
   (exports.SceneItemOutletComponent = SceneItemOutletComponent);

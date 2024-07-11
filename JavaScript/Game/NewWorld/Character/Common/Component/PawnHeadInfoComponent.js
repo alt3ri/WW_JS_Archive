@@ -39,53 +39,49 @@ let PawnHeadInfoComponent = class PawnHeadInfoComponent extends EntityComponent_
   constructor() {
     super(...arguments),
       (this.Hte = void 0),
-      (this.zJr = void 0),
-      (this.ZJr = void 0),
-      (this.ezr = void 0),
-      (this.tzr = void 0),
-      (this.hir = void 0),
-      (this.izr = !1),
-      (this.ozr = !1),
+      (this.xJr = void 0),
+      (this.wJr = void 0),
+      (this.BJr = void 0),
+      (this.bJr = void 0),
+      (this.hor = void 0),
+      (this.qJr = !1),
+      (this.GJr = !1),
+      (this.Jia = !0),
       (this.e8 = 0),
-      (this.rzr = !1),
-      (this.I6s = () => {
-        Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("HudUnit", 51, "开始角色头顶组件初始化", [
-            "PbDataId",
-            this.Hte?.CreatureData.GetPbDataId(),
-          ]),
-          EventSystem_1.EventSystem.RemoveWithTarget(
-            this.Entity,
-            EventDefine_1.EEventName.CharBornFinished,
-            this.I6s,
-          ),
-          this.T6s();
+      (this.NJr = !1),
+      (this.j$s = () => {
+        EventSystem_1.EventSystem.RemoveWithTarget(
+          this.Entity,
+          EventDefine_1.EEventName.CharBornFinished,
+          this.j$s,
+        ),
+          this.W$s();
       }),
-      (this.nzr = () => {
-        this.szr(), this.azr();
+      (this.OJr = () => {
+        this.kJr(), this.FJr();
       }),
       (this.OnEntityWasRecentlyRenderedOnScreenChange = (t) => {
-        if (this.hzr() === Protocol_1.Aki.Protocol.HBs.Proto_SceneItem) {
+        if (this.VJr() === Protocol_1.Aki.Protocol.wks.Proto_SceneItem) {
           var e = this.Hte;
           if (
             !e ||
             0 === e.PrefabRadius ||
             e.CurLevelPrefabShowActor?.IsA(UE.TsEffectActor_C.StaticClass())
           )
-            return void this.hir?.OnNpcWasRecentlyRenderedOnScreenChange(!0);
+            return void this.hor?.OnNpcWasRecentlyRenderedOnScreenChange(!0);
         }
-        this.hir?.OnNpcWasRecentlyRenderedOnScreenChange(t);
+        this.hor?.OnNpcWasRecentlyRenderedOnScreenChange(t);
       }),
-      (this.jJe = (t, e) => {
-        this.lzr();
+      (this.iZe = (t, e) => {
+        this.HJr();
       }),
-      (this._zr = () => {
-        this.hir?.SetRootItemState(!1);
+      (this.jJr = () => {
+        this.hor?.SetRootItemState(!1);
       }),
-      (this.uzr = () => {
-        if (this.hir)
-          if (this.ezr) {
-            var e = this.ezr.GetInteractController();
+      (this.WJr = () => {
+        if (this.hor)
+          if (this.BJr) {
+            var e = this.BJr.GetInteractController();
             if (e) {
               e = e.Options.find(
                 (t) =>
@@ -114,7 +110,7 @@ let PawnHeadInfoComponent = class PawnHeadInfoComponent extends EntityComponent_
                         );
                     n &&
                       n.BtType ===
-                        Protocol_1.Aki.Protocol.NCs.Proto_BtTypeQuest &&
+                        Protocol_1.Aki.Protocol.tps.Proto_BtTypeQuest &&
                       (o = ModelManager_1.ModelManager.QuestNewModel.GetQuest(
                         i.TreeConfigId,
                       )) &&
@@ -123,10 +119,10 @@ let PawnHeadInfoComponent = class PawnHeadInfoComponent extends EntityComponent_
                       o.ContainTag(0) &&
                       (t = n.GetTrackIconId());
                 }
-                this.hir.SetNpcQuest(t);
-              } else this.hir.SetNpcQuest();
+                this.hor.SetNpcQuest(t);
+              } else this.hor.SetNpcQuest();
             }
-          } else this.hir.SetNpcQuest();
+          } else this.hor.SetNpcQuest();
       });
   }
   static get Dependencies() {
@@ -134,141 +130,144 @@ let PawnHeadInfoComponent = class PawnHeadInfoComponent extends EntityComponent_
   }
   OnStart() {
     return (
-      (this.zJr = this.Entity.GetComponent(102)),
+      (this.xJr = this.Entity.GetComponent(104)),
       (this.Hte = this.Entity.GetComponent(1)),
-      (this.ZJr = this.Entity.GetComponent(104)),
-      (this.ezr = this.Entity.GetComponent(178)),
-      (this.tzr = Vector_1.Vector.Create()),
+      (this.wJr = this.Entity.GetComponent(106)),
+      (this.BJr = this.Entity.GetComponent(181)),
+      (this.bJr = Vector_1.Vector.Create()),
       this.pie(),
       this.Hte instanceof CharacterActorComponent_1.CharacterActorComponent
         ? EventSystem_1.EventSystem.AddWithTarget(
             this.Entity,
             EventDefine_1.EEventName.CharBornFinished,
-            this.I6s,
+            this.j$s,
           )
-        : this.T6s(),
+        : this.W$s(),
       !0
     );
   }
   pie() {
     var t = this.Hte.CreatureData;
-    t && ((t = t.GetBaseInfo()), (this.ozr = t?.IsShowNameOnHead ?? !1));
+    t && ((t = t.GetBaseInfo()), (this.GJr = t?.IsShowNameOnHead ?? !1));
   }
-  T6s() {
-    this.zJr?.GetMessageId()
-      ? this.azr()
-      : (this.rzr = EventSystem_1.EventSystem.AddWithTarget(
+  W$s() {
+    this.xJr?.GetMessageId()
+      ? this.FJr()
+      : (this.NJr = EventSystem_1.EventSystem.AddWithTarget(
           this.Entity,
           EventDefine_1.EEventName.EnterPresentationInitRange,
-          this.nzr,
+          this.OJr,
         ));
   }
-  azr() {
+  FJr() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.TextLanguageChange,
-      this.jJe,
+      this.iZe,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.DisActiveBattleView,
-        this._zr,
+        this.jJr,
       ),
       this.CreateCharacterIconComponentView();
   }
-  szr() {
-    this.rzr &&
-      ((this.rzr = !1),
+  kJr() {
+    this.NJr &&
+      ((this.NJr = !1),
       EventSystem_1.EventSystem.RemoveWithTarget(
         this.Entity,
         EventDefine_1.EEventName.EnterPresentationInitRange,
-        this.nzr,
+        this.OJr,
       ));
   }
   OnEnd() {
     return (
-      this.szr(),
-      this.hir &&
+      this.kJr(),
+      this.hor &&
         (EventSystem_1.EventSystem.Remove(
           EventDefine_1.EEventName.TextLanguageChange,
-          this.jJe,
+          this.iZe,
         ),
         EventSystem_1.EventSystem.Remove(
           EventDefine_1.EEventName.DisActiveBattleView,
-          this._zr,
+          this.jJr,
         ),
-        this.hir.Destroy()),
+        this.hor.Destroy()),
       !0
     );
   }
   CreateCharacterIconComponentView() {
-    (this.hir = new NpcIconComponent_1.NpcIconComponent(this)),
-      this.hir.AddNpcIconAsync(this.zJr?.GetMessageId()).then(() => {
-        this.czr();
+    Log_1.Log.CheckInfo() &&
+      Log_1.Log.Info("HudUnit", 51, "开始角色头顶组件初始化", [
+        "PbDataId",
+        this.Hte?.CreatureData.GetPbDataId(),
+      ]),
+      (this.hor = new NpcIconComponent_1.NpcIconComponent(this)),
+      this.hor.AddNpcIconAsync(this.xJr?.GetMessageId()).then(() => {
+        this.KJr();
       });
     var t = this.Entity.GetComponent(0).GetPbDataId();
-    this.hir.SetEntityPbDataId(t);
+    this.hor.SetEntityPbDataId(t);
   }
-  czr() {
+  KJr() {
     this.SetCharacterIconLocation(),
-      this.lzr(),
+      this.HJr(),
       this.SetCharacterSecondName(),
-      this.hir.SetNpcQuest();
+      this.hor.SetNpcQuest();
   }
   SetCharacterIconLocation() {
-    this.hir?.SetCharacterIconLocation();
+    this.hor?.SetCharacterIconLocation();
   }
-  lzr() {
-    var t = this.zJr?.PawnName;
-    this.hir?.SetCharacterName(t);
+  HJr() {
+    var t = this.xJr?.PawnName;
+    this.hor?.SetCharacterName(t);
   }
   SetCharacterSecondName() {
-    this.hir?.SetCharacterSecondName();
+    this.hor?.SetCharacterSecondName();
   }
   OnEnable() {
-    this.hir?.SetHeadItemState(!0);
+    this.hor?.SetHeadItemState(!0);
   }
   OnDisable() {
-    this.hir?.SetHeadItemState(!1);
+    this.hor?.SetHeadItemState(!1);
   }
-  hzr() {
+  VJr() {
     return this.Entity.GetComponent(0).GetEntityType();
   }
   OnTick(t) {
     super.OnTick(t),
       (this.e8 += t),
       this.e8 > CHECK_QUEST_ICON_INTERVAL &&
-        ((this.e8 -= CHECK_QUEST_ICON_INTERVAL), this.uzr());
+        ((this.e8 -= CHECK_QUEST_ICON_INTERVAL), this.WJr());
   }
   SetDialogueText(t, e = -1, i = !1) {
     t =
       ModelManager_1.ModelManager.PlotModel.PlotTextReplacer.Replace(t, !0) ??
       "";
-    this.hir?.SetDialogueText(t, e, i);
+    this.hor?.SetDialogueText(t, e, i);
   }
   HideDialogueText() {
-    this.hir?.HideDialogueText();
+    this.hor?.HideDialogueText();
   }
   GetSelfLocation() {
     return this.Hte.ActorLocationProxy;
   }
   GetAttachToMeshComponent() {
-    return this.hzr() === Protocol_1.Aki.Protocol.HBs.Proto_SceneItem
+    return this.VJr() === Protocol_1.Aki.Protocol.wks.Proto_SceneItem
       ? this.Hte.GetStaticMeshComponent()
       : this.Hte.SkeletalMesh;
   }
   GetAttachToSocketName() {
     return (
-      this.zJr?.GetHeadStateSocketName() ??
+      this.xJr?.GetHeadStateSocketName() ??
       ConfigManager_1.ConfigManager.NpcIconConfig.GetNpcIconSocketName()
     );
   }
   GetAttachToLocation(t) {
     var e,
-      i,
-      n = this.Hte;
-    n
-      ? ((e = this.Hte.SkeletalMesh.K2_GetComponentToWorld().GetLocation()),
-        (i = n.ActorLocationProxy),
-        t.Set(i.X, i.Y, i.Z + n.HalfHeight),
+      i = this.Hte;
+    i
+      ? ((e = i.SkeletalMesh.K2_GetComponentLocation()),
+        t.Set(e.X, e.Y, e.Z + 2 * i.HalfHeight),
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "HudUnit",
@@ -276,30 +275,31 @@ let PawnHeadInfoComponent = class PawnHeadInfoComponent extends EntityComponent_
             "获取根头顶组件位置",
             ["PbDataId", this.Hte?.CreatureData.GetPbDataId()],
             ["RootLocation", t],
-            ["ActorLocation", i],
+            ["ActorLocation", i.ActorLocationProxy],
             ["MeshLocation", e],
           ))
       : t.FromUeVector(this.Hte.SkeletalMesh.K2_GetComponentLocation());
   }
   GetAddOffsetZ() {
-    return this.zJr?.GetHeadStateOffset() ?? 0;
+    return this.xJr?.GetHeadStateOffset() ?? 0;
   }
   IsShowNameInfo() {
-    return this.ozr;
+    return this.GJr;
   }
   IsShowQuestInfo() {
-    return this.izr;
+    return this.qJr;
   }
   IsDialogTextActive() {
-    return this.hir?.IsDialogueTextActive() ?? !1;
+    return this.hor?.IsDialogueTextActive() ?? !1;
   }
   CanTick() {
     return (
-      !!this.ZJr &&
-      (!ModelManager_1.ModelManager.PlotModel.IsInHighLevelPlot() &&
+      !!this.wJr &&
+      (this.Jia &&
+      !ModelManager_1.ModelManager.PlotModel.IsInHighLevelPlot() &&
       UiModel_1.UiModel.IsInMainView
-        ? (this.hir?.SetRootItemState(!0), !0)
-        : (this.hir?.SetRootItemState(!1), !1))
+        ? (this.hor?.SetRootItemState(!0), !0)
+        : (this.hor?.SetRootItemState(!1), !1))
     );
   }
   IsInHeadItemShowRange(t, e, i) {
@@ -309,19 +309,22 @@ let PawnHeadInfoComponent = class PawnHeadInfoComponent extends EntityComponent_
       var o = GeneralLogicTreeUtil_1.GeneralLogicTreeUtil.GetPlayerLocation();
       if (o)
         return (
-          this.tzr.DeepCopy(this.GetSelfLocation()),
-          Vector_1.Vector.DistSquared(o, this.tzr) <
+          this.bJr.DeepCopy(this.GetSelfLocation()),
+          Vector_1.Vector.DistSquared(o, this.bJr) <
             n.TrackHideDis * n.TrackHideDis * 100 * 100
         );
     }
     return t < e && i < t;
   }
   GetRootItemState() {
-    return !!this.hir?.GetRootItemState();
+    return !!this.hor?.GetRootItemState();
+  }
+  EnableHeadInfo(t) {
+    this.Jia !== t && (this.Jia = t);
   }
 };
 (PawnHeadInfoComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(70)],
+  [(0, RegisterComponent_1.RegisterComponent)(72)],
   PawnHeadInfoComponent,
 )),
   (exports.PawnHeadInfoComponent = PawnHeadInfoComponent);

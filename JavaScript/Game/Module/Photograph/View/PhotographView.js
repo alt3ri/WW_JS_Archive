@@ -4,6 +4,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const puerts_1 = require("puerts"),
   UE = require("ue"),
   AudioSystem_1 = require("../../../../Core/Audio/AudioSystem"),
+  Info_1 = require("../../../../Core/Common/Info"),
   Log_1 = require("../../../../Core/Common/Log"),
   CommonDefine_1 = require("../../../../Core/Define/CommonDefine"),
   CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById"),
@@ -15,6 +16,7 @@ const puerts_1 = require("puerts"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
   Global_1 = require("../../../Global"),
+  GlobalData_1 = require("../../../GlobalData"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase"),
   UiTimeDilation_1 = require("../../../Ui/Base/UiTimeDilation"),
@@ -33,35 +35,31 @@ const puerts_1 = require("puerts"),
 class PhotographView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
-      (this.SKi = void 0),
-      (this.EKi = 0),
-      (this.yKi = 0),
-      (this.IKi = void 0),
-      (this.TKi = 0),
-      (this.LKi = void 0),
-      (this.v$e = new UE.Vector2D(0, 0)),
-      (this.DKi = new UE.Vector2D(0, 0)),
-      (this.pXe = new UE.Vector2D(1, -1)),
-      (this.RKi = new UE.Vector2D(0, 0)),
-      (this.UKi = new UE.Vector2D(0, 0)),
-      (this.AKi = new UE.Vector2D(0, 0)),
-      (this.bNi = (t, e) => {
-        0 !== e && this.PKi(!0);
+      (this.vQi = void 0),
+      (this.MQi = 0),
+      (this.EQi = 0),
+      (this.SQi = void 0),
+      (this.yQi = 0),
+      (this.IQi = void 0),
+      (this.PYe = new UE.Vector2D(0, 0)),
+      (this.TQi = new UE.Vector2D(0, 0)),
+      (this.A$e = new UE.Vector2D(1, -1)),
+      (this.LQi = new UE.Vector2D(0, 0)),
+      (this.DQi = new UE.Vector2D(0, 0)),
+      (this.RQi = new UE.Vector2D(0, 0)),
+      (this.bOi = (t, e) => {
+        0 !== e && this.UQi(!0);
       }),
-      (this.O6i = (t) => {
-        0 !== t.scrollAxisValue && (this.PKi(!0), this.xKi(t.scrollAxisValue));
+      (this.N8i = (t) => {
+        0 !== t.scrollAxisValue && (this.UQi(!0), this.AQi(t.scrollAxisValue));
       }),
-      (this.k6i = (t, e) => {
-        0 !== e &&
-          ModelManager_1.ModelManager.PlatformModel.IsGamepad() &&
-          this.xKi(-e);
+      (this.O8i = (t, e) => {
+        0 !== e && Info_1.Info.IsInGamepad() && this.AQi(-e);
       }),
-      (this.F6i = (t, e) => {
-        0 !== e &&
-          ModelManager_1.ModelManager.PlatformModel.IsGamepad() &&
-          this.xKi(-e);
+      (this.k8i = (t, e) => {
+        0 !== e && Info_1.Info.IsInGamepad() && this.AQi(-e);
       }),
-      (this.wKi = (t, e) => {
+      (this.PQi = (t, e) => {
         1 === e &&
           PhotographController_1.PhotographController.ScreenShot({
             ScreenShot: !0,
@@ -71,53 +69,53 @@ class PhotographView extends UiTickViewBase_1.UiTickViewBase {
             FragmentMemory: void 0,
           });
       }),
-      (this.pbt = (t, e) => {
-        this.PKi(!0);
+      (this.Eqt = (t, e) => {
+        this.UQi(!0);
         (e = e.TouchType), (t = Number(t));
-        2 === e && this.lCt(t);
+        2 === e && this.Egt(t);
       }),
-      (this.BKi = (t) => {
-        this.bKi(!t);
+      (this.xQi = (t) => {
+        this.wQi(!t);
       }),
-      (this.cCt = () => {
+      (this.Igt = () => {
         1 === PhotographController_1.PhotographController.CameraCaptureType
           ? (ModelManager_1.ModelManager.PhotographModel.UpValue = -1)
           : (ModelManager_1.ModelManager.PhotographModel.UpValue = 1),
-          this.PKi(!0);
+          this.UQi(!0);
       }),
-      (this.mCt = () => {
-        (ModelManager_1.ModelManager.PhotographModel.UpValue = 0), this.PKi(!0);
+      (this.Tgt = () => {
+        (ModelManager_1.ModelManager.PhotographModel.UpValue = 0), this.UQi(!0);
       }),
-      (this._Ct = () => {
+      (this.Sgt = () => {
         1 === PhotographController_1.PhotographController.CameraCaptureType
           ? (ModelManager_1.ModelManager.PhotographModel.UpValue = 1)
           : (ModelManager_1.ModelManager.PhotographModel.UpValue = -1),
-          this.PKi(!0);
+          this.UQi(!0);
       }),
-      (this.uCt = () => {
-        (ModelManager_1.ModelManager.PhotographModel.UpValue = 0), this.PKi(!0);
+      (this.ygt = () => {
+        (ModelManager_1.ModelManager.PhotographModel.UpValue = 0), this.UQi(!0);
       }),
-      (this.dCt = () => {
+      (this.Lgt = () => {
         1 === PhotographController_1.PhotographController.CameraCaptureType
           ? (ModelManager_1.ModelManager.PhotographModel.RightValue = 1)
           : (ModelManager_1.ModelManager.PhotographModel.RightValue = -1),
-          this.PKi(!0);
+          this.UQi(!0);
       }),
-      (this.CCt = () => {
+      (this.Dgt = () => {
         (ModelManager_1.ModelManager.PhotographModel.RightValue = 0),
-          this.PKi(!0);
+          this.UQi(!0);
       }),
-      (this.gCt = () => {
+      (this.Rgt = () => {
         1 === PhotographController_1.PhotographController.CameraCaptureType
           ? (ModelManager_1.ModelManager.PhotographModel.RightValue = -1)
           : (ModelManager_1.ModelManager.PhotographModel.RightValue = 1),
-          this.PKi(!0);
+          this.UQi(!0);
       }),
-      (this.fCt = () => {
+      (this.Ugt = () => {
         (ModelManager_1.ModelManager.PhotographModel.RightValue = 0),
-          this.PKi(!0);
+          this.UQi(!0);
       }),
-      (this.qKi = (t, e = 0) => {
+      (this.BQi = (t, e = 0) => {
         var i;
         1 === PhotographController_1.PhotographController.CameraCaptureType
           ? PhotographController_1.PhotographController.MinFov &&
@@ -138,80 +136,80 @@ class PhotographView extends UiTickViewBase_1.UiTickViewBase {
               PhotographDefine_1.MIN_FOV,
             )),
             PhotographController_1.PhotographController.SetFov(i)),
-          this.PKi(!0);
+          this.UQi(!0);
       }),
-      (this.GKi = (t) => {
+      (this.bQi = (t) => {
         if (
-          (this.PKi(!0),
+          (this.UQi(!0),
           !(1 < TouchFingerManager_1.TouchFingerManager.GetTouchFingerCount()))
         ) {
           t = t.pointerPosition;
-          if (this.IKi) {
+          if (this.SQi) {
             var e =
               ModelManager_1.ModelManager.PhotographModel.GetPhotographerStructure();
             if (!e) return;
-            var i = (t.Y - this.IKi.Y) * this.TKi,
-              o = (this.IKi.X - t.X) * this.TKi;
+            var i = (t.Y - this.SQi.Y) * this.yQi,
+              o = (this.SQi.X - t.X) * this.yQi;
             e.AddCameraArmPitchInput(i),
               e.AddPhotographerYawInput(-o),
               e.AddCameraArmYawInput(-o);
           }
-          this.IKi = t;
+          this.SQi = t;
         }
       }),
-      (this.vCt = () => {
-        this.PKi(!0);
+      (this.Pgt = () => {
+        this.UQi(!0);
       }),
-      (this.MCt = () => {
-        this.PKi(!0), (this.IKi = void 0);
+      (this.xgt = () => {
+        this.UQi(!0), (this.SQi = void 0);
       }),
-      (this.NKi = () => {
-        this.PKi(!0),
-          this.OKi(),
-          (this.SKi = TimerSystem_1.TimerSystem.Forever(
-            this.kKi,
+      (this.qQi = () => {
+        this.UQi(!0),
+          this.GQi(),
+          (this.vQi = TimerSystem_1.TimerSystem.Forever(
+            this.NQi,
             CHANGE_FOV_INTERVAL,
           ));
       }),
-      (this.FKi = () => {
-        this.PKi(!0), this.OKi();
+      (this.OQi = () => {
+        this.UQi(!0), this.GQi();
       }),
-      (this.VKi = () => {
-        this.PKi(!0),
-          this.OKi(),
-          (this.SKi = TimerSystem_1.TimerSystem.Forever(
-            this.HKi,
+      (this.kQi = () => {
+        this.UQi(!0),
+          this.GQi(),
+          (this.vQi = TimerSystem_1.TimerSystem.Forever(
+            this.FQi,
             CHANGE_FOV_INTERVAL,
           ));
       }),
-      (this.jKi = () => {
-        this.PKi(!0), this.OKi();
+      (this.VQi = () => {
+        this.UQi(!0), this.GQi();
       }),
-      (this.kKi = () => {
-        this.PKi(!0), this.xKi(1);
+      (this.NQi = () => {
+        this.UQi(!0), this.AQi(1);
       }),
-      (this.HKi = () => {
-        this.PKi(!0), this.xKi(-1);
+      (this.FQi = () => {
+        this.UQi(!0), this.AQi(-1);
       }),
-      (this.WKi = () => {
-        this.PKi(!0), this.xKi(1);
+      (this.HQi = () => {
+        this.UQi(!0), this.AQi(1);
       }),
-      (this.KKi = () => {
-        this.PKi(!0), this.xKi(-1);
+      (this.jQi = () => {
+        this.UQi(!0), this.AQi(-1);
       }),
-      (this.QKi = () => {
-        this.PKi(!0), UiManager_1.UiManager.OpenView("PhotographSetupView", 1);
+      (this.WQi = () => {
+        this.UQi(!0), UiManager_1.UiManager.OpenView("PhotographSetupView", 1);
       }),
-      (this.IPi = () => {
-        this.PKi(!0),
+      (this.Ixi = () => {
+        this.UQi(!0),
           PhotographController_1.PhotographController.ResetCamera(),
           this.GetSlider(10).SetValue(PhotographDefine_1.DEFAULT_FOV, !1);
       }),
-      (this.XKi = () => {
-        this.PKi(!0),
+      (this.KQi = () => {
+        this.UQi(!0),
           UiManager_1.UiManager.IsViewOpen("PhotographSetupView") &&
             UiManager_1.UiManager.CloseView("PhotographSetupView"),
-          Net_1.Net.Send(15240, Protocol_1.Aki.Protocol.lXn.create()),
+          Net_1.Net.Send(2709, Protocol_1.Aki.Protocol.rZn.create()),
           PhotographController_1.PhotographController.ScreenShot({
             ScreenShot: !0,
             IsHiddenBattleView: !1,
@@ -220,32 +218,32 @@ class PhotographView extends UiTickViewBase_1.UiTickViewBase {
             FragmentMemory: void 0,
           });
       }),
-      (this.$Ki = () => {
+      (this.QQi = () => {
         PhotographController_1.PhotographController.ClosePhotograph();
       }),
-      (this.YKi = () => {
+      (this.XQi = () => {
         this.UiViewSequence.PlaySequence("ShowChanging"),
           this.UiViewSequence.PlaySequence("Loop"),
           AudioSystem_1.AudioSystem.PostEvent("play_ui_camera_task");
       }),
-      (this.JKi = (t, e) => {
-        t = this.LKi.GetInfoItemByDesc(t);
+      (this.$Qi = (t, e) => {
+        t = this.IQi.GetInfoItemByDesc(t);
         t &&
-          (this.zKi(t, e), !e) &&
+          (this.YQi(t, e), !e) &&
           PhotographController_1.PhotographController.IsLastChecked &&
           (this.UiViewSequence.StopSequenceByKey("Loop"),
           this.UiViewSequence.SequencePlayReverseByKey("ShowChanging", !1));
       }),
-      (this.MKe = () => {
+      (this.xQe = () => {
         var t = Global_1.Global.CharacterController,
           e = (0, puerts_1.$ref)(void 0),
           i = (0, puerts_1.$ref)(void 0),
           t = (t.GetViewportSize(e, i), (0, puerts_1.$unref)(e)),
           e = (0, puerts_1.$unref)(i),
-          i = (this.v$e.Set(t, e), UiLayer_1.UiLayer.UiRootItem);
+          i = (this.PYe.Set(t, e), UiLayer_1.UiLayer.UiRootItem);
         i &&
-          (this.UKi.Set(i.GetWidth(), i.GetHeight()),
-          this.DKi.Set(0.5 * -i.GetWidth(), 0.5 * -i.GetHeight()));
+          (this.DQi.Set(i.GetWidth(), i.GetHeight()),
+          this.TQi.Set(0.5 * -i.GetWidth(), 0.5 * -i.GetHeight()));
       });
   }
   OnRegisterComponent() {
@@ -270,24 +268,27 @@ class PhotographView extends UiTickViewBase_1.UiTickViewBase {
       [17, UE.UIItem],
     ]),
       (this.BtnBindInfo = [
-        [4, this.WKi],
-        [5, this.KKi],
-        [7, this.IPi],
-        [8, this.XKi],
-        [9, this.$Ki],
-        [14, this.QKi],
+        [4, this.HQi],
+        [5, this.jQi],
+        [7, this.Ixi],
+        [8, this.KQi],
+        [9, this.QQi],
+        [14, this.WQi],
       ]);
   }
   OnStart() {
-    var t =
-      ModelManager_1.ModelManager.SceneTeamModel?.GetCurrentEntity?.Entity;
-    t?.Valid && t.GetComponent(99)?.SetLodBias(PhotographDefine_1.MAX_LOD_BIAS);
-  }
-  OnAfterDestroy() {
+    GlobalData_1.GlobalData.BpEventManager.OnEnterPhotograph.Broadcast();
     var t =
       ModelManager_1.ModelManager.SceneTeamModel?.GetCurrentEntity?.Entity;
     t?.Valid &&
-      t.GetComponent(99)?.SetLodBias(PhotographDefine_1.DEFAULT_LOD_BIAS);
+      t.GetComponent(101)?.SetLodBias(PhotographDefine_1.MAX_LOD_BIAS);
+  }
+  OnAfterDestroy() {
+    GlobalData_1.GlobalData.BpEventManager.OnExitPhotograph.Broadcast();
+    var t =
+      ModelManager_1.ModelManager.SceneTeamModel?.GetCurrentEntity?.Entity;
+    t?.Valid &&
+      t.GetComponent(101)?.SetLodBias(PhotographDefine_1.DEFAULT_LOD_BIAS);
   }
   OnAddEventListener() {
     var t = this.GetButton(0),
@@ -298,80 +299,80 @@ class PhotographView extends UiTickViewBase_1.UiTickViewBase {
       h = this.GetButton(4),
       n = this.GetButton(5),
       s = this.GetDraggable(13);
-    t.OnPointDownCallBack.Bind(this.cCt),
-      t.OnPointUpCallBack.Bind(this.mCt),
-      t.OnPointCancelCallBack.Bind(this.mCt),
-      e.OnPointDownCallBack.Bind(this._Ct),
-      e.OnPointUpCallBack.Bind(this.uCt),
-      e.OnPointCancelCallBack.Bind(this.uCt),
-      i.OnPointDownCallBack.Bind(this.dCt),
-      i.OnPointUpCallBack.Bind(this.CCt),
-      i.OnPointCancelCallBack.Bind(this.CCt),
-      o.OnPointDownCallBack.Bind(this.gCt),
-      o.OnPointUpCallBack.Bind(this.fCt),
-      o.OnPointCancelCallBack.Bind(this.fCt),
-      h.OnPointDownCallBack.Bind(this.NKi),
-      h.OnPointUpCallBack.Bind(this.FKi),
-      n.OnPointDownCallBack.Bind(this.VKi),
-      n.OnPointUpCallBack.Bind(this.jKi),
-      r.OnValueChangeCb.Bind(this.qKi),
-      s.OnPointerDragCallBack.Bind(this.GKi),
-      s.OnPointerBeginDragCallBack.Bind(this.vCt),
-      s.OnPointerEndDragCallBack.Bind(this.MCt),
-      s.OnPointerDownCallBack.Bind(this.vCt),
-      s.OnPointerUpCallBack.Bind(this.MCt),
-      s.OnPointerScrollCallBack.Bind(this.O6i),
+    t.OnPointDownCallBack.Bind(this.Igt),
+      t.OnPointUpCallBack.Bind(this.Tgt),
+      t.OnPointCancelCallBack.Bind(this.Tgt),
+      e.OnPointDownCallBack.Bind(this.Sgt),
+      e.OnPointUpCallBack.Bind(this.ygt),
+      e.OnPointCancelCallBack.Bind(this.ygt),
+      i.OnPointDownCallBack.Bind(this.Lgt),
+      i.OnPointUpCallBack.Bind(this.Dgt),
+      i.OnPointCancelCallBack.Bind(this.Dgt),
+      o.OnPointDownCallBack.Bind(this.Rgt),
+      o.OnPointUpCallBack.Bind(this.Ugt),
+      o.OnPointCancelCallBack.Bind(this.Ugt),
+      h.OnPointDownCallBack.Bind(this.qQi),
+      h.OnPointUpCallBack.Bind(this.OQi),
+      n.OnPointDownCallBack.Bind(this.kQi),
+      n.OnPointUpCallBack.Bind(this.VQi),
+      r.OnValueChangeCb.Bind(this.BQi),
+      s.OnPointerDragCallBack.Bind(this.bQi),
+      s.OnPointerBeginDragCallBack.Bind(this.Pgt),
+      s.OnPointerEndDragCallBack.Bind(this.xgt),
+      s.OnPointerDownCallBack.Bind(this.Pgt),
+      s.OnPointerUpCallBack.Bind(this.xgt),
+      s.OnPointerScrollCallBack.Bind(this.N8i),
       InputDistributeController_1.InputDistributeController.BindAxis(
         InputMappingsDefine_1.axisMappings.UiMoveForward,
-        this.bNi,
+        this.bOi,
       ),
       InputDistributeController_1.InputDistributeController.BindAxis(
         InputMappingsDefine_1.axisMappings.UiMoveRight,
-        this.bNi,
+        this.bOi,
       ),
       InputDistributeController_1.InputDistributeController.BindAxis(
         InputMappingsDefine_1.axisMappings.UiLookUp,
-        this.bNi,
+        this.bOi,
       ),
       InputDistributeController_1.InputDistributeController.BindAxis(
         InputMappingsDefine_1.axisMappings.UiTurn,
-        this.bNi,
+        this.bOi,
       ),
       InputDistributeController_1.InputDistributeController.BindAction(
         InputMappingsDefine_1.actionMappings.拍照,
-        this.wKi,
+        this.PQi,
       ),
       InputDistributeController_1.InputDistributeController.BindAxis(
         InputMappingsDefine_1.axisMappings.UiIncrease,
-        this.k6i,
+        this.O8i,
       ),
       InputDistributeController_1.InputDistributeController.BindAxis(
         InputMappingsDefine_1.axisMappings.UiReduce,
-        this.F6i,
+        this.k8i,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnPhotographSetUpViewVisibleChanged,
-        this.BKi,
+        this.xQi,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnEntityCameraSearchGreat,
-        this.YKi,
+        this.XQi,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnEntityCameraOneSituationChanged,
-        this.JKi,
+        this.$Qi,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.SetImageQuality,
-        this.MKe,
+        this.xQe,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.SetResolution,
-        this.MKe,
+        this.xQe,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.SetDisplayMode,
-        this.MKe,
+        this.xQe,
       );
   }
   OnRemoveEventListener() {
@@ -404,61 +405,61 @@ class PhotographView extends UiTickViewBase_1.UiTickViewBase {
       s.OnPointerScrollCallBack.Unbind(),
       InputDistributeController_1.InputDistributeController.UnBindAxis(
         InputMappingsDefine_1.axisMappings.UiMoveForward,
-        this.bNi,
+        this.bOi,
       ),
       InputDistributeController_1.InputDistributeController.UnBindAxis(
         InputMappingsDefine_1.axisMappings.UiMoveRight,
-        this.bNi,
+        this.bOi,
       ),
       InputDistributeController_1.InputDistributeController.UnBindAxis(
         InputMappingsDefine_1.axisMappings.UiLookUp,
-        this.bNi,
+        this.bOi,
       ),
       InputDistributeController_1.InputDistributeController.UnBindAxis(
         InputMappingsDefine_1.axisMappings.UiTurn,
-        this.bNi,
+        this.bOi,
       ),
       InputDistributeController_1.InputDistributeController.UnBindAction(
         InputMappingsDefine_1.actionMappings.拍照,
-        this.wKi,
+        this.PQi,
       ),
       InputDistributeController_1.InputDistributeController.UnBindAxis(
         InputMappingsDefine_1.axisMappings.UiIncrease,
-        this.k6i,
+        this.O8i,
       ),
       InputDistributeController_1.InputDistributeController.UnBindAxis(
         InputMappingsDefine_1.axisMappings.UiReduce,
-        this.F6i,
+        this.k8i,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnPhotographSetUpViewVisibleChanged,
-        this.BKi,
+        this.xQi,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnEntityCameraSearchGreat,
-        this.YKi,
+        this.XQi,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnEntityCameraOneSituationChanged,
-        this.JKi,
+        this.$Qi,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.SetImageQuality,
-        this.MKe,
+        this.xQe,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.SetResolution,
-        this.MKe,
+        this.xQe,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.SetDisplayMode,
-        this.MKe,
+        this.xQe,
       );
   }
   OnAfterTick(t) {
     super.OnAfterTick(t),
       1 === PhotographController_1.PhotographController.CameraCaptureType &&
-        this.eai();
+        this.ehi();
   }
   OnBeforeCreate() {
     PhotographController_1.PhotographController.InitPhotographRelativeContent();
@@ -470,7 +471,7 @@ class PhotographView extends UiTickViewBase_1.UiTickViewBase {
       o =
         ModelManager_1.ModelManager.PhotographModel.GetPhotographerStructure();
     o &&
-      (this.PKi(!0),
+      (this.UQi(!0),
       (t = Global_1.Global.BaseCharacter) &&
         PhotographController_1.PhotographController.GetFightCameraActor() &&
         1 === PhotographController_1.PhotographController.CameraCaptureType &&
@@ -490,7 +491,7 @@ class PhotographView extends UiTickViewBase_1.UiTickViewBase {
           InputMappingsDefine_1.touchIdMappings.Touch1,
           InputMappingsDefine_1.touchIdMappings.Touch2,
         ],
-        this.pbt,
+        this.Eqt,
       ),
       AudioSystem_1.AudioSystem.SetState("game_state", "normal"),
       UiTimeDilation_1.UiTimeDilation.SetGameTimeDilation({
@@ -499,31 +500,25 @@ class PhotographView extends UiTickViewBase_1.UiTickViewBase {
         DebugName: "PhotographView",
         Reason: "Photograph",
       }),
-      this.ZKi());
+      this.JQi());
   }
   OnAfterHide() {
-    UiTimeDilation_1.UiTimeDilation.SetGameTimeDilation({
-      ViewId: this.GetViewId(),
-      TimeDilation: 0,
-      DebugName: "PhotographView",
-      Reason: "Photograph",
-    }),
-      InputDistributeController_1.InputDistributeController.UnBindTouches(
-        [
-          InputMappingsDefine_1.touchIdMappings.Touch1,
-          InputMappingsDefine_1.touchIdMappings.Touch2,
-        ],
-        this.pbt,
-      );
+    InputDistributeController_1.InputDistributeController.UnBindTouches(
+      [
+        InputMappingsDefine_1.touchIdMappings.Touch1,
+        InputMappingsDefine_1.touchIdMappings.Touch2,
+      ],
+      this.Eqt,
+    );
   }
-  ZKi() {
+  JQi() {
     var t;
     1 === PhotographController_1.PhotographController.CameraCaptureType &&
       (this.SetEntityCameraVisibility(!0),
       (t = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity),
       ModelManager_1.ModelManager.PhotographModel.SetEntityEnable(t, !1));
   }
-  lCt(t) {
+  Egt(t) {
     if (
       ModelManager_1.ModelManager.PhotographModel.GetPhotographerStructure()
     ) {
@@ -550,58 +545,60 @@ class PhotographView extends UiTickViewBase_1.UiTickViewBase {
             -1,
             1,
           )),
-          this.xKi(e));
+          this.AQi(e));
       }
     }
   }
   OnTick(t) {
     super.OnTick(t),
-      ModelManager_1.ModelManager.PlatformModel.IsMobile() &&
-        ((this.yKi += t), this.yKi >= this.EKi) &&
-        this.PKi(!1);
+      Info_1.Info.IsInTouch() &&
+        ((this.EQi += t), this.EQi >= this.MQi) &&
+        this.UQi(!1);
   }
-  PKi(t) {
-    t && (this.yKi = 0);
+  UQi(t) {
+    t && (this.EQi = 0);
     var e = this.GetItem(11);
     1 === PhotographController_1.PhotographController.CameraCaptureType
       ? (e.SetUIActive(!0),
         this.GetButton(14).RootUIComp.SetUIActive(!1),
         this.GetButton(7).RootUIComp.SetUIActive(!1))
-      : e.IsUIActiveSelf() !== t && e.SetUIActive(t);
+      : 2 === PhotographController_1.PhotographController.CameraCaptureType
+        ? (e.SetUIActive(!0), this.GetButton(14).RootUIComp.SetUIActive(!1))
+        : e.IsUIActiveSelf() !== t && e.SetUIActive(t);
   }
-  bKi(t) {
+  wQi(t) {
     this.GetItem(12).SetUIActive(t),
       this.GetButton(9).RootUIComp.SetUIActive(t);
   }
-  OKi() {
-    TimerSystem_1.TimerSystem.Has(this.SKi) &&
-      TimerSystem_1.TimerSystem.Remove(this.SKi);
+  GQi() {
+    TimerSystem_1.TimerSystem.Has(this.vQi) &&
+      TimerSystem_1.TimerSystem.Remove(this.vQi);
   }
   async OnBeforeStartAsync() {
-    (this.LKi = new PhotographEntityPanel_1.PhotographEntityPanel()),
-      await this.LKi.CreateByActorAsync(this.GetItem(15).GetOwner()),
-      this.eQi(),
-      this.LKi.SetActive(!1),
-      (this.EKi = CommonParamById_1.configCommonParamById.GetIntConfig(
+    (this.IQi = new PhotographEntityPanel_1.PhotographEntityPanel()),
+      await this.IQi.CreateByActorAsync(this.GetItem(15).GetOwner()),
+      this.zQi(),
+      this.IQi.SetActive(!1),
+      (this.MQi = CommonParamById_1.configCommonParamById.GetIntConfig(
         "PhotoDeltaHideDelay",
       )),
-      (this.TKi =
+      (this.yQi =
         CommonParamById_1.configCommonParamById.GetIntConfig(
           "ControlCameraRate",
         ) / CommonDefine_1.PERCENTAGE_FACTOR),
-      this.tQi(),
+      this.ZQi(),
       UiLayer_1.UiLayer.SetLayerActive(UiLayerType_1.ELayerType.HUD, !1),
-      this.MKe();
+      this.xQe();
   }
   OnBeforeDestroy() {
-    this.OKi(),
-      this.LKi.Destroy(),
-      (this.LKi = void 0),
-      this.RKi.Set(0, 0),
+    this.GQi(),
+      this.IQi.Destroy(),
+      (this.IQi = void 0),
+      this.LQi.Set(0, 0),
       UiCameraManager_1.UiCameraManager.Clear(),
       UiLayer_1.UiLayer.SetLayerActive(UiLayerType_1.ELayerType.HUD, !0);
   }
-  tQi() {
+  ZQi() {
     var t,
       e,
       i,
@@ -619,7 +616,7 @@ class PhotographView extends UiTickViewBase_1.UiTickViewBase {
         o.SetMinValue(e, !1, !1),
         o.SetMaxValue(t, !1, !1),
         o.SetValue((i = (t - e) / 2 + e), !0),
-        this.qKi(i),
+        this.BQi(i),
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "Photo",
@@ -632,7 +629,7 @@ class PhotographView extends UiTickViewBase_1.UiTickViewBase {
             ["min", e],
           ));
   }
-  xKi(t) {
+  AQi(t) {
     var e = this.GetSlider(10),
       t = e.GetValue() + t;
     e.SetValue(t, !0);
@@ -643,81 +640,80 @@ class PhotographView extends UiTickViewBase_1.UiTickViewBase {
         ? this.GetItem(17).SetUIActive(!0)
         : this.GetItem(17).SetUIActive(!1);
   }
-  eQi() {
-    PhotographController_1.PhotographController.UpdateMission();
+  zQi() {
     var t = 1 === PhotographController_1.PhotographController.CameraCaptureType;
-    this.LKi.SetActive(t), t && this.iQi();
+    this.IQi.SetActive(t), t && this.eXi();
   }
-  iQi() {
+  eXi() {
     var t = PhotographController_1.PhotographController.Missions?.length;
-    if (!t || t <= 0) this.LKi.SetInfoPanelVisible(!1);
+    if (!t || t <= 0) this.IQi.SetInfoPanelVisible(!1);
     else {
-      this.LKi.SetInfoPanelVisible(!0);
+      this.IQi.SetInfoPanelVisible(!0);
       var e = [];
       for (const o of PhotographController_1.PhotographController.Missions) {
         var i = { Text: o.Description, IsFinish: o.IsFinished };
         e.push(i);
       }
-      this.LKi.Refresh(e);
+      this.IQi.Refresh(e);
     }
   }
-  zKi(t, e) {
+  YQi(t, e) {
     t.RefreshFinishState(e),
       !e &&
         this.UiViewSequence?.HasSequenceNameInPlaying("Loop") &&
         this.UiViewSequence.StopSequenceByKey("Loop", !1, !0);
   }
-  oQi(t) {
+  tXi(t) {
     return t
-      .op_Multiply(this.UKi)
-      .op_Division(this.v$e)
-      .op_Addition(this.DKi)
-      .op_Multiply(this.pXe);
+      .op_Multiply(this.DQi)
+      .op_Division(this.PYe)
+      .op_Addition(this.TQi)
+      .op_Multiply(this.A$e);
   }
-  eai() {
+  ehi() {
     var r = [],
       t =
-        PhotographController_1.PhotographController.BehaviorNode
+        PhotographController_1.PhotographController.GetNowBehaviorNode()
           ?.TakeTargetArray;
     if (t && !(t.length <= 0))
-      for (const M of t) {
+      for (const P of t) {
         var h = PhotographController_1.PhotographController.GetAllCheckPoints(
-          M.EntityId,
+          P.EntityId,
         );
         if (h && !(h.length <= 0)) {
           let e = "RequiredPointsCenter";
           var n = PhotographController_1.PhotographController.GetPointType(
-            M.EntityId,
+            P.EntityId,
           );
           switch ((e = n ? n.Type : e)) {
             case "EntityZero":
               var s =
                 PhotographController_1.PhotographController.GetCheckEntityPosition(
-                  M.EntityId,
+                  P.EntityId,
                 );
               if (!s) continue;
               s = PhotographController_1.PhotographController.GetPosition2D(s);
               if (
                 !s ||
                 !PhotographController_1.PhotographController.GetEntityFinishSituation(
-                  M.EntityId,
+                  P.EntityId,
                 )
               ) {
                 r.push({
-                  Id: M.EntityId.toString(),
-                  Vector: this.AKi,
+                  Id: P.EntityId.toString(),
+                  Vector: this.RQi,
                   NotShow: !0,
                 });
                 continue;
               }
-              s = this.oQi(s);
-              r.push({ Id: M.EntityId.toString(), Vector: s, NotShow: !1 });
+              s = this.tXi(s);
+              r.push({ Id: P.EntityId.toString(), Vector: s, NotShow: !1 });
               continue;
             case "CustomPoints":
               var a = n.Points,
                 _ =
                   PhotographController_1.PhotographController.GetCheckEntityPosition(
-                    M.EntityId,
+                    P.EntityId,
                   );
               if (!_) continue;
               for (let t = 0; t < a.length; t++) {
@@ -731,17 +727,17 @@ class PhotographView extends UiTickViewBase_1.UiTickViewBase {
                     );
                 p &&
                 PhotographController_1.PhotographController.GetEntityFinishSituation(
-                  M.EntityId,
+                  P.EntityId,
                 )
-                  ? ((g = this.oQi(p)),
+                  ? ((g = this.tXi(p)),
                     r.push({
-                      Id: M.EntityId.toString() + t.toString(),
+                      Id: P.EntityId.toString() + t.toString(),
                       Vector: g,
                       NotShow: !1,
                     }))
                   : r.push({
-                      Id: M.EntityId.toString() + t.toString(),
-                      Vector: this.AKi,
+                      Id: P.EntityId.toString() + t.toString(),
+                      Vector: this.RQi,
                       NotShow: !0,
                     });
               }
@@ -750,19 +746,19 @@ class PhotographView extends UiTickViewBase_1.UiTickViewBase {
           var u = h.length;
           let i = !0,
             o = !1;
-          this.RKi.Set(0, 0);
+          this.LQi.Set(0, 0);
           for (let t = 0; t < h.length; t++) {
             var C = h[t],
               D =
                 (PhotographController_1.PhotographController.GetEntityFinishSituation(
-                  M.EntityId,
+                  P.EntityId,
                 ) || (o = !0),
                 PhotographController_1.PhotographController.GetPosition2D(C));
             D
-              ? ((D = this.oQi(D)),
+              ? ((D = this.tXi(D)),
                 "RequiredPoints" === e
                   ? (r.push({
-                      Id: M.EntityId.toString() + t.toString(),
+                      Id: P.EntityId.toString() + t.toString(),
                       Vector: D,
                       NotShow:
                         !PhotographController_1.PhotographController.CheckInUi(
@@ -773,27 +769,27 @@ class PhotographView extends UiTickViewBase_1.UiTickViewBase {
                         ),
                     }),
                     (i = !1))
-                  : (this.RKi = this.RKi.op_Addition(D)))
+                  : (this.LQi = this.LQi.op_Addition(D)))
               : "RequiredPoints" === e
                 ? r.push({
-                    Id: M.EntityId.toString() + t.toString(),
-                    Vector: this.AKi,
+                    Id: P.EntityId.toString() + t.toString(),
+                    Vector: this.RQi,
                     NotShow: !0,
                   })
                 : r.push({
-                    Id: M.EntityId.toString(),
-                    Vector: this.AKi,
+                    Id: P.EntityId.toString(),
+                    Vector: this.RQi,
                     NotShow: !0,
                   });
           }
           i &&
-            ((this.RKi.X = this.RKi.X / u),
-            (this.RKi.Y = this.RKi.Y / u),
-            (u = { Id: M.EntityId.toString(), Vector: this.RKi, NotShow: o }),
+            ((this.LQi.X = this.LQi.X / u),
+            (this.LQi.Y = this.LQi.Y / u),
+            (u = { Id: P.EntityId.toString(), Vector: this.LQi, NotShow: o }),
             r.push(u));
         }
       }
-    this.LKi.UpdateIcons(r);
+    this.IQi.UpdateIcons(r);
   }
 }
 exports.PhotographView = PhotographView;

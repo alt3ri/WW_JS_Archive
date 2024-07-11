@@ -6,22 +6,22 @@ const ModelBase_1 = require("../../../Core/Framework/ModelBase"),
   WeatherActor_1 = require("./WeatherActor");
 class WeatherModel extends ModelBase_1.ModelBase {
   constructor() {
-    super(...arguments), (this.Heo = 0);
+    super(...arguments), (this.Oto = 0);
   }
   get CurrentWeatherId() {
-    return this.Heo;
+    return this.Oto;
   }
   GetCurrentWeatherType() {
     return ConfigManager_1.ConfigManager.WeatherModuleConfig.GetWeatherType(
-      this.Heo,
+      this.Oto,
     );
   }
   SetCurrentWeatherId(e) {
-    this.Heo = e;
+    this.Oto = e;
   }
   static GetWorldWeatherActor() {
-    return this.zOo;
+    return this.$ko;
   }
 }
-(exports.WeatherModel = WeatherModel).zOo = new WeatherActor_1.WeatherActor();
+(exports.WeatherModel = WeatherModel).$ko = new WeatherActor_1.WeatherActor();
 //# sourceMappingURL=WeatherModel.js.map

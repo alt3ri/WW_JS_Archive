@@ -22,37 +22,28 @@ class MailData extends ScrollViewDataBase_1.ScrollViewDataBase {
       (this.ValidTime = 0),
       (this.FinishValidTime = 0),
       (this.AttachmentInfos = []),
-      (this.OriginalDeadlineTimeStamp = 0),
-      (this.FinishedDeadlineTimeStamp = 0),
-      (this.pEi = 0),
-      (this.vEi = 0),
-      (this.MEi = ""),
-      (this.SEi = ""),
-      (this.EEi = 0),
-      (this.yEi = ""),
-      (this.IEi = 0),
-      (this.TEi = ""),
-      (this.LEi = ""),
-      (this.DEi = ""),
-      (this.REi = !1),
-      (this.UEi = !1),
-      (this.AEi = !1),
-      (this.PEi = "");
-  }
-  UpdateValidTimeWhenReadMail() {
-    0 !== this.FinishTime
-      ? (this.FinishedDeadlineTimeStamp =
-          this.FinishValidTime + this.FinishTime)
-      : (this.FinishedDeadlineTimeStamp =
-          Date.parse(new Date().toString()) / 1e3 + this.FinishValidTime),
-      Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Mail", 28, "邮件详情：邮件完成", ["this.Id", this.Id]);
+      (this.ReadTime = 0),
+      (this.pyi = 0),
+      (this.vyi = 0),
+      (this.Myi = ""),
+      (this.Eyi = ""),
+      (this.Syi = 0),
+      (this.yyi = ""),
+      (this.Iyi = 0),
+      (this.Tyi = ""),
+      (this.Lyi = ""),
+      (this.Dyi = ""),
+      (this.Ryi = !1),
+      (this.Uyi = !1),
+      (this.Ayi = !1),
+      (this.Pyi = ""),
+      (this.zHs = !0);
   }
   GetAttachmentStatus() {
-    return this.pEi;
+    return this.pyi;
   }
   SetAttachmentStatus(t) {
-    (this.pEi = t),
+    (this.pyi = t),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Mail",
@@ -63,10 +54,10 @@ class MailData extends ScrollViewDataBase_1.ScrollViewDataBase {
         );
   }
   GetWasScanned() {
-    return 1 === this.vEi;
+    return 1 === this.vyi;
   }
   SetWasScanned(t) {
-    (this.vEi = 1 === t ? t : 0),
+    (this.vyi = 1 === t ? t : 0),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Mail",
@@ -87,66 +78,73 @@ class MailData extends ScrollViewDataBase_1.ScrollViewDataBase {
   }
   SetText(t) {
     t = (this.Content = t).split("@&&");
-    (this.MEi = t[0]), 1 < t.length && this.xEi(t[1]);
+    (this.Myi = t[0]), 1 < t.length && this.xyi(t[1]);
   }
-  xEi(t) {
-    (this.yEi = "FFFFFFFF"),
-      (this.EEi = 0),
-      (this.IEi = 0),
-      (this.DEi = ""),
-      (this.REi = !1),
-      (this.TEi = ""),
-      (this.SEi = "");
+  xyi(t) {
+    (this.yyi = "FFFFFFFF"),
+      (this.Syi = 0),
+      (this.Iyi = 0),
+      (this.Dyi = ""),
+      (this.Ryi = !1),
+      (this.Tyi = ""),
+      (this.Eyi = "");
     var e = t.split(",");
     for (let t = 0; t < e.length; t++)
       e[t].includes("iconId=")
-        ? (this.EEi = Number(e[t].replace("iconId=", "")))
+        ? (this.Syi = Number(e[t].replace("iconId=", "")))
         : e[t].includes("color=#")
-          ? (this.yEi = e[t].replace("color=#", ""))
+          ? (this.yyi = e[t].replace("color=#", ""))
           : e[t].includes("jumpId=")
-            ? (this.IEi = Number(e[t].replace("jumpId=", "")))
+            ? (this.Iyi = Number(e[t].replace("jumpId=", "")))
             : e[t].includes("url=")
-              ? (this.DEi = e[t].replace("url=", ""))
+              ? (this.Dyi = e[t].replace("url=", ""))
               : e[t].includes("showNewMail")
-                ? (this.UEi = !0)
+                ? (this.Uyi = !0)
                 : e[t].includes("useDefaultBrowser")
-                  ? (this.AEi = !0)
+                  ? (this.Ayi = !0)
                   : e[t].includes("isWenjuanxing=")
-                    ? (this.REi =
+                    ? (this.Ryi =
                         1 === Number(e[t].replace("isWenjuanxing=", "")))
                     : e[t].includes("wenjuanId=")
-                      ? (this.TEi = e[t].replace("wenjuanId=", ""))
+                      ? (this.Tyi = e[t].replace("wenjuanId=", ""))
                       : e[t].includes("wenjuanTitle=")
-                        ? (this.LEi = e[t].replace("wenjuanTitle=", ""))
+                        ? (this.Lyi = e[t].replace("wenjuanTitle=", ""))
                         : e[t].includes("subTitle=")
-                          ? (this.LEi = e[t].replace("subTitle=", ""))
+                          ? (this.Lyi = e[t].replace("subTitle=", ""))
                           : e[t].includes("wenjuanPass=")
-                            ? (this.PEi = e[t].replace("wenjuanPass=", ""))
-                            : (this.SEi = this.SEi.concat(e[t]));
+                            ? (this.Pyi = e[t].replace("wenjuanPass=", ""))
+                            : e[t].includes("is_orientation=")
+                              ? (this.zHs =
+                                  "landscape" ===
+                                  e[t].replace("is_orientation=", ""))
+                              : (this.Eyi = this.Eyi.concat(e[t]));
+  }
+  GetIfLandscape() {
+    return this.zHs;
   }
   GetUseDefaultBrowser() {
-    return this.AEi;
+    return this.Ayi;
   }
   GetIfShowNewMail() {
-    return this.UEi;
+    return this.Uyi;
   }
   GetText() {
-    return this.MEi;
+    return this.Myi;
   }
   GetSubText() {
-    return this.SEi;
+    return this.Eyi;
   }
   GetQuestionPass() {
-    return this.PEi;
+    return this.Pyi;
   }
   GetSubTextIconId() {
-    return this.EEi;
+    return this.Syi;
   }
   GetSubTextColor() {
-    return this.yEi;
+    return this.yyi;
   }
   IsQuestionMail() {
-    return this.REi;
+    return this.Ryi;
   }
   GetQuestionUrl() {
     var t = ModelManager_1.ModelManager.LoginModel,
@@ -155,7 +153,7 @@ class MailData extends ScrollViewDataBase_1.ScrollViewDataBase {
           "mail_question_key",
         ),
       e =
-        this.TEi +
+        this.Tyi +
         ModelManager_1.ModelManager.PlayerInfoModel.GetId()?.toString() +
         ";" +
         t.GetServerId()?.toString() +
@@ -166,18 +164,18 @@ class MailData extends ScrollViewDataBase_1.ScrollViewDataBase {
           LanguageSystem_1.LanguageSystem.PackageLanguage,
         ).QuestionnaireId;
     return (
-      `${this.DEi}?sojumpparm=${ModelManager_1.ModelManager.PlayerInfoModel.GetId()?.toString()};${t.GetServerId()?.toString()}&parmsign=${e}&langv=` +
+      `${this.Dyi}?sojumpparm=${ModelManager_1.ModelManager.PlayerInfoModel.GetId()?.toString()};${t.GetServerId()?.toString()}&parmsign=${e}&langv=` +
       i
     );
   }
   GetSubUrl() {
-    return this.DEi;
+    return this.Dyi;
   }
   GetSubTitle() {
-    return this.LEi;
+    return this.Lyi;
   }
   GetSubContentJumpId() {
-    return this.IEi;
+    return this.Iyi;
   }
   GetSender() {
     return this.Sender;
@@ -186,10 +184,12 @@ class MailData extends ScrollViewDataBase_1.ScrollViewDataBase {
     return this.AttachmentInfos;
   }
   GetOriginalDeadlineTimeStamp() {
-    return this.OriginalDeadlineTimeStamp;
+    return this.GetReceiveTime() + this.ValidTime;
   }
   GetFinishedDeadlineTimeStamp() {
-    return this.FinishedDeadlineTimeStamp;
+    return 0 < this.ReadTime
+      ? this.ReadTime + this.FinishValidTime
+      : this.GetOriginalDeadlineTimeStamp();
   }
 }
 exports.MailData = MailData;

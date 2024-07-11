@@ -252,14 +252,14 @@ const Log_1 = require("../Common/Log"),
       "/Game/Aki/Character/BaseCharacter/StateMachine/BP_FSM_ConditionCheckState.BP_FSM_ConditionCheckState_C",
     BP_FSM_ConditionTag_C:
       "/Game/Aki/Character/BaseCharacter/StateMachine/BP_FSM_ConditionTag.BP_FSM_ConditionTag_C",
-    BP_SM_ConditionLeaveFight_C:
-      "/Game/Aki/Character/BaseCharacter/StateMachine/BP_SM_ConditionLeaveFight.BP_SM_ConditionLeaveFight_C",
     BP_SM_ConditionTimer_C:
       "/Game/Aki/Character/BaseCharacter/StateMachine/BP_SM_ConditionTimer.BP_SM_ConditionTimer_C",
     TsEffectActor_C:
       "/Game/Aki/TypeScript/Game/Effect/TsEffectActor.TsEffectActor_C",
     BPI_EffectInterface_C:
       "/Game/Aki/Render/RuntimeBP/Effect/BPI_EffectInterface.BPI_EffectInterface_C",
+    BPI_SceneBp_C:
+      "/Game/Aki/Render/RuntimeBP/Scene/Interface/BPI_SceneBp.BPI_SceneBp_C",
     BP_FSM_Node_C:
       "/Game/Aki/Character/BaseCharacter/StateMachine/BP_FSM_Node.BP_FSM_Node_C",
     BP_SM_ActionAddBuff_C:
@@ -322,6 +322,8 @@ const Log_1 = require("../Common/Log"),
       "/Game/Aki/Character/BaseCharacter/StateMachine/BP_SM_BindStatePartPanelVisible.BP_SM_BindStatePartPanelVisible_C",
     BP_SM_BindStateSkillCounter_C:
       "/Game/Aki/Character/BaseCharacter/StateMachine/BP_SM_BindStateSkillCounter.BP_SM_BindStateSkillCounter_C",
+    BP_SM_BindStateDelaySuicide_C:
+      "/Game/Aki/Character/BaseCharacter/StateMachine/BP_SM_BindStateDelaySuicide.BP_SM_BindStateDelaySuicide_C",
     BP_SM_BindStateCollisionChannel_C:
       "/Game/Aki/Character/BaseCharacter/StateMachine/BP_SM_BindStateCollisionChannel.BP_SM_BindStateCollisionChannel_C",
     BP_SM_BindStateDisableCollision_C:
@@ -411,6 +413,8 @@ const Log_1 = require("../Common/Log"),
       "/Game/Aki/Character/BaseSeqCharacter/BP_BaseRole_Seq_V2.BP_BaseRole_Seq_V2_C",
     BP_KuroDestructibleActor_C:
       "/Game/Aki/Render/RuntimeBP/Scene/Destructible/BP_KuroDestructibleActor.BP_KuroDestructibleActor_C",
+    BP_SkillTrackCurve_C:
+      "/Game/Aki/Character/Role/FemaleM/Zhezhi/Data/BP_SkillTrackCurve.BP_SkillTrackCurve_C",
     CommonEffectMoveSpline2_C:
       "/Game/Aki/AI/AIMoveSplineCount/CommonEffectMoveSpline2.CommonEffectMoveSpline2_C",
     Audio_Multi_Base_C:
@@ -477,6 +481,14 @@ const Log_1 = require("../Common/Log"),
       "/Game/Aki/TypeScript/Game/NewWorld/Character/SimpleNpc/Blueprint/PD_HolographicEffect.PD_HolographicEffect_C",
     BP_NPCMaterialController_C:
       "/Game/Aki/TypeScript/Game/NewWorld/Character/SimpleNpc/Blueprint/BP_NPCMaterialController.BP_NPCMaterialController_C",
+    SkillTriggerBase_C:
+      "/Game/Aki/TypeScript/Game/NewWorld/Character/Common/Component/Skill/SkillTrigger/SkillTriggerBase.SkillTriggerBase_C",
+    SkillTriggerGameplayTag_C:
+      "/Game/Aki/TypeScript/Game/NewWorld/Character/Common/Component/Skill/SkillTrigger/SkillTriggerGameplayTag.SkillTriggerGameplayTag_C",
+    BP_FollowShooterConfig_C:
+      "/Game/Aki/Data/Fight/FollowShooter/BP_FollowShooterConfig.BP_FollowShooterConfig_C",
+    WBP_UILoading_C:
+      "/Game/Aki/UI/Module/Loading/View/WBP_UILoading.WBP_UILoading_C",
   },
   structDefined = {
     SBulletDataMain:
@@ -661,6 +673,8 @@ const Log_1 = require("../Common/Log"),
       "/Game/Aki/Character/Role/Common/Data/Structure/SFootstepAkAudioEvent.SFootstepAkAudioEvent",
     SKuroInteractionLimbsConfig:
       "/Game/Aki/Render/RuntimeBP/Interaction/SKuroInteractionLimbsConfig.SKuroInteractionLimbsConfig",
+    SVarRefContext:
+      "/Game/Aki/Data/NPC/LevelAiBtTree/SVarRefContext.SVarRefContext",
   },
   enumDefined = {
     EExitClimb: "/Game/Aki/Character/BaseCharacter/EExitClimb.EExitClimb",

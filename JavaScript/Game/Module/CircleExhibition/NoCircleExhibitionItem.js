@@ -8,14 +8,14 @@ class NoCircleExhibitionItem extends AutoAttachExhibitionItem_1.AutoAttachExhibi
     super(...arguments), (this.MoveCircleState = !1);
   }
   OnInit() {
-    this.vWe(), this.UEt();
+    this.PKe(), this.kyt();
   }
-  UEt() {
+  kyt() {
     this.Index < this.DataLength
       ? (this.ShowItemIndex = this.Index)
       : (this.ShowItemIndex = this.Index - this.ShowItemNum);
   }
-  vWe() {
+  PKe() {
     var t, i;
     this.ExhibitionView &&
       ((t = Math.floor(this.ShowItemNum / 2)),
@@ -31,16 +31,16 @@ class NoCircleExhibitionItem extends AutoAttachExhibitionItem_1.AutoAttachExhibi
     let i = 0;
     (this.MoveCircleState = !1),
       0 === this.CurrentDirection
-        ? ((i = this.Actor.GetAnchorOffsetX() + t), this.AEt(i))
-        : ((i = this.Actor.GetAnchorOffsetY() + t), this.PEt(i));
+        ? ((i = this.Actor.GetAnchorOffsetX() + t), this.Fyt(i))
+        : ((i = this.Actor.GetAnchorOffsetY() + t), this.Vyt(i));
     t = 0 <= this.ShowItemIndex && this.ShowItemIndex < this.DataLength;
     this.Actor.SetActive(t);
   }
-  AEt(t) {
+  Fyt(t) {
     let i = t;
-    if (this.xEt(i)) {
-      if (!this.wEt(i)) {
-        for (; !this.wEt(i); )
+    if (this.Hyt(i)) {
+      if (!this.jyt(i)) {
+        for (; !this.jyt(i); )
           (i +=
             (this.FullSizeX + this.InitGap) * Math.ceil(this.ShowItemNum + 1)),
             (this.ShowItemIndex = this.ShowItemIndex + (this.ShowItemNum + 1));
@@ -49,7 +49,7 @@ class NoCircleExhibitionItem extends AutoAttachExhibitionItem_1.AutoAttachExhibi
           (this.MoveCircleState = !0);
       }
     } else {
-      for (; !this.xEt(i); )
+      for (; !this.Hyt(i); )
         (i -=
           (this.FullSizeX + this.InitGap) * Math.ceil(this.ShowItemNum + 1)),
           (this.ShowItemIndex = this.ShowItemIndex - (this.ShowItemNum + 1));
@@ -59,11 +59,11 @@ class NoCircleExhibitionItem extends AutoAttachExhibitionItem_1.AutoAttachExhibi
     }
     this.Actor.SetAnchorOffsetX(i);
   }
-  PEt(t) {
+  Vyt(t) {
     let i = t;
-    if (this.BEt(i)) {
-      if (!this.bEt(i)) {
-        for (; !this.bEt(i); )
+    if (this.Wyt(i)) {
+      if (!this.Kyt(i)) {
+        for (; !this.Kyt(i); )
           (i +=
             (this.FullSizeY + this.InitGap) * Math.ceil(this.ShowItemNum + 1)),
             (this.ShowItemIndex = this.ShowItemIndex - (this.ShowItemNum + 1));
@@ -72,7 +72,7 @@ class NoCircleExhibitionItem extends AutoAttachExhibitionItem_1.AutoAttachExhibi
           (this.MoveCircleState = !0);
       }
     } else {
-      for (; !this.BEt(i); )
+      for (; !this.Wyt(i); )
         (i -=
           (this.FullSizeY + this.InitGap) * Math.ceil(this.ShowItemNum + 1)),
           (this.ShowItemIndex = this.ShowItemIndex + (this.ShowItemNum + 1));
@@ -82,25 +82,25 @@ class NoCircleExhibitionItem extends AutoAttachExhibitionItem_1.AutoAttachExhibi
     }
     this.Actor.SetAnchorOffsetY(i);
   }
-  xEt(t) {
+  Hyt(t) {
     return !(
       (this.FullSizeX + this.InitGap) * Math.ceil((this.ShowItemNum + 1) / 2) <
       t
     );
   }
-  wEt(t) {
+  jyt(t) {
     return !(
       t <
       -(this.FullSizeX + this.InitGap) * Math.ceil(this.ShowItemNum / 2)
     );
   }
-  BEt(t) {
+  Wyt(t) {
     return !(
       (this.FullSizeY + this.InitGap) * Math.ceil((this.ShowItemNum + 1) / 2) <
       t
     );
   }
-  bEt(t) {
+  Kyt(t) {
     return !(
       t <
       -(this.FullSizeY + this.InitGap) * Math.ceil(this.ShowItemNum / 2)

@@ -22,18 +22,18 @@ const UE = require("ue"),
 class GiftPackageDetailsView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.i3i = void 0),
+      (this.i4i = void 0),
       (this.Data = void 0),
       (this.Goods = void 0),
       (this.GoodsData = void 0),
       (this.ResellTimerId = void 0),
-      (this.l3i = ItemDefines_1.EItemFunctionType.ManualOpenGift),
-      (this._3i = void 0),
+      (this.l4i = ItemDefines_1.EItemFunctionType.ManualOpenGift),
+      (this._4i = void 0),
       (this.xe = void 0),
-      (this.PUt = () => {
+      (this.bAt = () => {
         this.CloseMe();
       }),
-      (this.xUt = () => {
+      (this.qAt = () => {
         var e;
         this.IsEnoughMoney() && this.GoodsData.IfPayGift()
           ? (ControllerHolder_1.ControllerHolder.PayGiftController.SendPayGiftRequest(
@@ -60,10 +60,10 @@ class GiftPackageDetailsView extends UiViewBase_1.UiViewBase {
                     e,
                   )));
       }),
-      (this.PCi = () => {
+      (this.Pgi = () => {
         this.CloseMe();
       }),
-      (this.PFi = () => {
+      (this.P3i = () => {
         this.RemoveResellTimer();
         var e,
           i = this.Goods.GetExchangePopViewResellText();
@@ -78,7 +78,7 @@ class GiftPackageDetailsView extends UiViewBase_1.UiViewBase {
                 StringUtils_1.StringUtils.IsEmpty(i) ||
                   this.GetText(8).ShowTextNew(i),
                 (this.ResellTimerId = TimerSystem_1.RealTimeTimerSystem.Delay(
-                  this.PFi,
+                  this.P3i,
                   e[2] * CommonDefine_1.MILLIONSECOND_PER_SECOND,
                 )))
             : StringUtils_1.StringUtils.IsEmpty(i)
@@ -111,8 +111,8 @@ class GiftPackageDetailsView extends UiViewBase_1.UiViewBase {
       [7, UE.UIItem],
     ]),
       (this.BtnBindInfo = [
-        [4, this.PUt],
-        [5, this.xUt],
+        [4, this.bAt],
+        [5, this.qAt],
       ]);
   }
   OnBeforeCreate() {
@@ -129,7 +129,7 @@ class GiftPackageDetailsView extends UiViewBase_1.UiViewBase {
     for ([e, i] of s.Parameters) {
       var r = ItemDefines_1.EItemFunctionType[e];
       if (!StringUtils_1.StringUtils.IsEmpty(r)) {
-        (this.l3i = e), (this.xe = i);
+        (this.l4i = e), (this.xe = i);
         break;
       }
     }
@@ -141,54 +141,54 @@ class GiftPackageDetailsView extends UiViewBase_1.UiViewBase {
           "检查道具ID的参数（Parameters）字段 是否 表示为正确的指向道具id的参数",
           ["道具ID", this.GoodsData.ItemId],
         )),
-      (this.i3i = new PayShopItem_1.PayShopItem()),
-      this.i3i.SetRootActorLoadInfo(t.ShopItemResource),
-      this.AddChild(this.i3i);
+      (this.i4i = new PayShopItem_1.PayShopItem()),
+      this.i4i.SetRootActorLoadInfo(t.ShopItemResource),
+      this.AddChild(this.i4i);
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.PayShopGoodsBuy,
-      this.PUt,
+      this.bAt,
     );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.PayShopGoodsBuy,
-      this.PUt,
+      this.bAt,
     );
   }
   OnStart() {
     var e;
     this.xe &&
       ((e = this.GetItem(1)),
-      this.l3i === ItemDefines_1.EItemFunctionType.AutoOpenMonthCard
-        ? (this._3i =
+      this.l4i === ItemDefines_1.EItemFunctionType.AutoOpenMonthCard
+        ? (this._4i =
             new GiftPackageMonthlyCardItem_1.GiftPackageMonthlyCardItem(
               this.xe,
               e,
             ))
-        : (this.l3i !== ItemDefines_1.EItemFunctionType.AutoOpenGift &&
-            this.l3i !== ItemDefines_1.EItemFunctionType.ManualOpenGift) ||
-          (this._3i = new GiftPackageSupplyPackItem_1.GiftPackageSupplyPackItem(
+        : (this.l4i !== ItemDefines_1.EItemFunctionType.AutoOpenGift &&
+            this.l4i !== ItemDefines_1.EItemFunctionType.ManualOpenGift) ||
+          (this._4i = new GiftPackageSupplyPackItem_1.GiftPackageSupplyPackItem(
             this.xe,
             e,
             this.Goods,
           )),
-      this.i3i.GetRootItem().SetUIParent(this.GetItem(0), !1));
+      this.i4i.GetRootItem().SetUIParent(this.GetItem(0), !1));
   }
   OnBeforeShow() {
-    this.i3i.HidePackageViewElement(),
-      this.Wwn(),
-      this.i3i.Refresh(this.Goods, !1, 0),
+    this.i4i.HidePackageViewElement(),
+      this.BGn(),
+      this.i4i.Refresh(this.Goods, !1, 0),
       this.SetInteractionGroup(),
-      this.PFi(),
-      this.vIt();
+      this.P3i(),
+      this.ITt();
   }
-  Wwn() {
+  BGn() {
     var e = ConfigManager_1.ConfigManager.PayShopConfig.GetMonthCardShopId();
-    this.Goods?.GetGoodsId() === e && this.i3i.SetLeftTimeTextShowState(!0);
+    this.Goods?.GetGoodsId() === e && this.i4i.SetLeftTimeTextShowState(!0);
   }
-  async vIt() {
+  async ITt() {
     var e;
     this.Goods.IsDirect() ||
       (0 !== this.GoodsData.GetNowPrice() &&
@@ -198,11 +198,11 @@ class GiftPackageDetailsView extends UiViewBase_1.UiViewBase {
         this.ChildPopView?.PopItem.GetCurrencyComponent()
           .GetCurrencyItemList()
           .forEach((e) => {
-            e.SetBeforeButtonFunction(this.PCi), e.SetToPayShopFunction();
+            e.SetBeforeButtonFunction(this.Pgi), e.SetToPayShopFunction();
           })));
   }
   OnBeforeDestroy() {
-    this._3i && this._3i.Destroy(), this.RemoveResellTimer();
+    this._4i && this._4i.Destroy(), this.RemoveResellTimer();
   }
   RemoveResellTimer() {
     void 0 !== this.ResellTimerId &&

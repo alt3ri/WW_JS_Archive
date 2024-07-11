@@ -24,18 +24,18 @@ class PerformanceManager {
       PerformanceManager.Ao,
     );
   }
-  static P3i() {
-    PerformanceManager.l4i = TickSystem_1.TickSystem.Add(
+  static A4i() {
+    PerformanceManager.h5i = TickSystem_1.TickSystem.Add(
       this.Tick,
       "PerformanceManager.Tick",
       2,
       !0,
     ).Id;
   }
-  static _4i() {
-    PerformanceManager.l4i &&
-      (TickSystem_1.TickSystem.Remove(PerformanceManager.l4i),
-      (PerformanceManager.l4i = void 0));
+  static l5i() {
+    PerformanceManager.h5i &&
+      (TickSystem_1.TickSystem.Remove(PerformanceManager.h5i),
+      (PerformanceManager.h5i = void 0));
   }
   static Destroy() {
     EventSystem_1.EventSystem.Remove(
@@ -47,17 +47,17 @@ class PerformanceManager {
         PerformanceController_1.PerformanceController.SetHandle(void 0, void 0),
         PerformanceModel_1.PerformanceModel.Clear());
   }
-  static u4i(e) {
+  static _5i(e) {
     ThinkingAnalyticsReporter_1.ThinkingAnalyticsReporter.Report("c4", e);
   }
   static ke() {
     return cpp_1.KuroTime.GetMilliseconds64();
   }
 }
-((exports.PerformanceManager = PerformanceManager).c4i = 0),
-  (PerformanceManager.m4i = void 0),
-  (PerformanceManager.d4i = 0),
-  (PerformanceManager.l4i = void 0),
+((exports.PerformanceManager = PerformanceManager).u5i = 0),
+  (PerformanceManager.c5i = void 0),
+  (PerformanceManager.m5i = 0),
+  (PerformanceManager.h5i = void 0),
   (PerformanceManager.Ao = () => {
     Info_1.Info.IsBuildDevelopmentOrDebug
       ? (PerformanceController_1.PerformanceController.SetOpen(
@@ -65,15 +65,15 @@ class PerformanceManager {
         ),
         PerformanceConfig_1.IS_OPEN
           ? (PerformanceController_1.PerformanceController.SetHandle(
-              PerformanceManager.C4i,
-              PerformanceManager.C4i,
+              PerformanceManager.d5i,
+              PerformanceManager.d5i,
             ),
-            PerformanceManager.P3i())
+            PerformanceManager.A4i())
           : (PerformanceController_1.PerformanceController.SetHandle(
               void 0,
               void 0,
             ),
-            PerformanceManager._4i()))
+            PerformanceManager.l5i()))
       : PerformanceController_1.PerformanceController.SetOpen(!1);
   }),
   (PerformanceManager.Tick = (e) => {
@@ -81,15 +81,15 @@ class PerformanceManager {
       PerformanceModel_1.PerformanceModel.Clear();
     else if (
       (PerformanceController_1.PerformanceController.CollectionEngineInfo(),
-      (PerformanceManager.c4i += e),
-      !(PerformanceManager.c4i < PerformanceConfig_1.COLLECTION_INTERVAL_TIME))
+      (PerformanceManager.u5i += e),
+      !(PerformanceManager.u5i < PerformanceConfig_1.COLLECTION_INTERVAL_TIME))
     ) {
       var r,
         e = PerformanceController_1.PerformanceController.StartMonitor(
           "PerformanceManager.Tick",
         ),
         a =
-          ((PerformanceManager.c4i = 0),
+          ((PerformanceManager.u5i = 0),
           PerformanceController_1.PerformanceController.CollectionLLMInfo(),
           new PerformanceCollectionData_1.PerformanceCollectionData()),
         n = PerformanceManager.ke(),
@@ -105,7 +105,7 @@ class PerformanceManager {
           a.MaxInfo && (a.PlayerId = a.MaxInfo.PlayerId),
           o.push(a));
       var c = { Data: o };
-      PerformanceManager.u4i(JSON.stringify(c)),
+      PerformanceManager._5i(JSON.stringify(c)),
         Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "Performance",
@@ -118,13 +118,13 @@ class PerformanceManager {
         PerformanceModel_1.PerformanceModel.Clear();
     }
   }),
-  (PerformanceManager.C4i = () => {
+  (PerformanceManager.d5i = () => {
     var e, r;
     return (
-      PerformanceManager.m4i ||
-        (PerformanceManager.m4i = new GamePlayerInfo_1.GamePlayerInfo()),
-      PerformanceManager.d4i !== Time_1.Time.Frame &&
-        (((e = PerformanceManager.m4i).PlayerId =
+      PerformanceManager.c5i ||
+        (PerformanceManager.c5i = new GamePlayerInfo_1.GamePlayerInfo()),
+      PerformanceManager.m5i !== Time_1.Time.Frame &&
+        (((e = PerformanceManager.c5i).PlayerId =
           ModelManager_1.ModelManager.PlayerInfoModel.GetId()),
         Global_1.Global.BaseCharacter
           ? ((r =
@@ -133,7 +133,7 @@ class PerformanceManager {
             (e.PlayerPosition = r.X + "," + r.Y + "," + r.Z),
             (r =
               ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity?.Entity?.GetComponent(
-                158,
+                160,
               )),
             (e.IsFight = !!r && r.IsInFightState()))
           : ((e.PlayerPosition = "undefined"), (e.IsFight = !1)),
@@ -144,8 +144,8 @@ class PerformanceManager {
         (e.EntityCount =
           ModelManager_1.ModelManager.CreatureModel.GetAllEntities().length),
         (e.ActorCount = UE.KuroStaticLibrary.GetActorCount()),
-        (PerformanceManager.d4i = Time_1.Time.Frame)),
-      PerformanceManager.m4i
+        (PerformanceManager.m5i = Time_1.Time.Frame)),
+      PerformanceManager.c5i
     );
   });
 //# sourceMappingURL=PerformanceManager.js.map

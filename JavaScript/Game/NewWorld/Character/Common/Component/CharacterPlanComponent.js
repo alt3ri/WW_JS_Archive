@@ -13,8 +13,8 @@ var __decorate =
     if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       s = Reflect.decorate(e, t, i, r);
     else
-      for (var a = e.length - 1; 0 <= a; a--)
-        (o = e[a]) && (s = (n < 3 ? o(s) : 3 < n ? o(t, i, s) : o(t, i)) || s);
+      for (var h = e.length - 1; 0 <= h; h--)
+        (o = e[h]) && (s = (n < 3 ? o(s) : 3 < n ? o(t, i, s) : o(t, i)) || s);
     return 3 < n && s && Object.defineProperty(t, i, s), s;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
@@ -35,51 +35,51 @@ const Log_1 = require("../../../../../Core/Common/Log"),
 let CharacterPlanComponent = class CharacterPlanComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments),
-      (this.zht = void 0),
+      (this.u1t = void 0),
       (this.ConfigId = 0),
-      (this.Jjr = void 0),
-      (this.zjr = void 0),
-      (this.Zjr = void 0),
-      (this.eWr = void 0),
-      (this.qAt = void 0),
-      (this.tWr = !0),
-      (this.iWr = !0),
-      (this.oWr = !1),
-      (this.Uxr = void 0),
+      (this.Pjr = void 0),
+      (this.xjr = void 0),
+      (this.wjr = void 0),
+      (this.Bjr = void 0),
+      (this.OPt = void 0),
+      (this.bjr = !0),
+      (this.qjr = !0),
+      (this.Gjr = !1),
+      (this.sxr = void 0),
       (this.DisableAiHandle = void 0),
-      (this.VFr = new Map());
+      (this.EFr = new Map());
   }
   get PlanInstance() {
-    return this.zjr;
+    return this.xjr;
   }
   get WorldState() {
-    return this.Zjr;
+    return this.wjr;
   }
   get WorldStateProxy() {
-    return this.eWr;
+    return this.Bjr;
   }
   set WorldStateProxy(e) {
-    this.eWr = e;
+    this.Bjr = e;
   }
   get Paused() {
-    return this.oWr;
+    return this.Gjr;
   }
   OnInitData() {
-    (this.zht = this.Entity.GetComponent(0)),
-      (this.ConfigId = this.zht.GetPbDataId());
-    var e = this.zht.GetPbEntityInitData();
-    if (!e?.ComponentsData) return !(this.tWr = !1);
+    (this.u1t = this.Entity.GetComponent(0)),
+      (this.ConfigId = this.u1t.GetPbDataId());
+    var e = this.u1t.GetPbEntityInitData();
+    if (!e?.ComponentsData) return !(this.bjr = !1);
     if (
-      ((this.qAt = (0, IComponent_1.getComponent)(
+      ((this.OPt = (0, IComponent_1.getComponent)(
         e.ComponentsData,
         "LevelAiComponent",
       )),
-      !this.qAt)
+      !this.OPt)
     )
-      return !(this.tWr = !1);
+      return !(this.bjr = !1);
     BehaviorTreeDefines_1.BehaviorTreeDefines.UseLevelAiBehaviorTree &&
-      (this.tWr = !1),
-      (this.Zjr = new LevelAiWorldState_1.LevelAiWorldState()),
+      (this.bjr = !1),
+      (this.wjr = new LevelAiWorldState_1.LevelAiWorldState()),
       (this.DisableAiHandle = new BaseActorComponent_1.DisableEntityHandle(
         "SetLevelAiDisableInGame",
       ));
@@ -95,7 +95,7 @@ let CharacterPlanComponent = class CharacterPlanComponent extends EntityComponen
                 i.Name,
                 t,
               )
-            : this.Zjr.SetIntWorldState(i.Name, t));
+            : this.wjr.SetIntWorldState(i.Name, t));
     else
       Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn(
@@ -107,18 +107,18 @@ let CharacterPlanComponent = class CharacterPlanComponent extends EntityComponen
     return !0;
   }
   OnStart() {
-    if (this.tWr) {
-      (this.zjr = new LevelAiPlanInstance_1.LevelAiPlanInstance()),
-        this.zjr.Initialize(this),
-        (this.Jjr = new LevelAi_1.LevelAi());
+    if (this.bjr && this.OPt?.States) {
+      (this.xjr = new LevelAiPlanInstance_1.LevelAiPlanInstance()),
+        this.xjr.Initialize(this),
+        (this.Pjr = new LevelAi_1.LevelAi());
       let e = 1;
-      for (const t of this.qAt.States) {
+      for (const t of this.OPt.States) {
         switch (t.Behaviour.Type) {
           case "Actions":
-            this.rWr(t, e);
+            this.Njr(t, e);
             break;
           case "Spline":
-            this.nWr(t, e);
+            this.Ojr(t, e);
         }
         e++;
       }
@@ -126,27 +126,27 @@ let CharacterPlanComponent = class CharacterPlanComponent extends EntityComponen
     return !0;
   }
   OnActivate() {
-    this.tWr &&
-      this.Entity.GetComponent(37)?.InLevelAiControl() &&
+    this.bjr &&
+      this.Entity.GetComponent(38)?.InLevelAiControl() &&
       this.StartLevelAi();
   }
   OnTick(e) {
-    this.tWr && this.iWr && this.zjr.Tick(e);
+    this.bjr && this.qjr && this.xjr.Tick(e);
   }
   OnEnd() {
-    return this.tWr && this.zjr.Stop(), !0;
+    return this.bjr && this.xjr.Stop(), !0;
   }
   StartLevelAi() {
-    this.tWr && (this.zjr.Start(), (this.iWr = !0));
+    this.bjr && (this.xjr.Start(), (this.qjr = !0));
   }
   StopLevelAi() {
-    this.tWr && (this.zjr.Stop(), (this.iWr = !1));
+    this.bjr && (this.xjr.Stop(), (this.qjr = !1));
   }
   Pause(e) {
     var t;
     return (
-      !!this.tWr &&
-      (this.VFr.has(e)
+      !!this.bjr &&
+      (this.EFr.has(e)
         ? (Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
               "LevelAi",
@@ -158,28 +158,28 @@ let CharacterPlanComponent = class CharacterPlanComponent extends EntityComponen
             ),
           !1)
         : ((t = this.DisableAiHandle.Disable(e, this.constructor.name)),
-          this.VFr.set(e, t),
-          void 0 === this.Uxr &&
-            ((this.oWr = !0),
-            (this.iWr = !1),
-            this.zjr.Pause(),
-            (this.Uxr = this.Disable("[CharacterPlanComponent.PauseAi]"))),
+          this.EFr.set(e, t),
+          void 0 === this.sxr &&
+            ((this.Gjr = !0),
+            (this.qjr = !1),
+            this.xjr.Pause(),
+            (this.sxr = this.Disable("[CharacterPlanComponent.PauseAi]"))),
           !0))
     );
   }
   Resume(e) {
     var t;
     return !(
-      !this.tWr ||
-      ((t = this.VFr.get(e)),
-      this.VFr.delete(e)
+      !this.bjr ||
+      ((t = this.EFr.get(e)),
+      this.EFr.delete(e)
         ? !this.DisableAiHandle.Enable(t, this.constructor.name) ||
           (this.DisableAiHandle.Empty &&
-            ((this.oWr = !1),
-            (this.iWr = !0),
-            this.zjr.Resume(),
-            this.Enable(this.Uxr, "CharacterPlanComponent.Resume"),
-            (this.Uxr = void 0)),
+            ((this.Gjr = !1),
+            (this.qjr = !0),
+            this.xjr.Resume(),
+            this.Enable(this.sxr, "CharacterPlanComponent.Resume"),
+            (this.sxr = void 0)),
           0)
         : (Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug(
@@ -194,13 +194,13 @@ let CharacterPlanComponent = class CharacterPlanComponent extends EntityComponen
     );
   }
   GetCreatureDataComponent() {
-    return this.zht;
+    return this.u1t;
   }
   GetCurrentLevelAiAsset() {
-    return this.Jjr;
+    return this.Pjr;
   }
   FindPlanInstanceBy(e) {
-    if (this.zjr && e(this.zjr)) return this.zjr;
+    if (this.xjr && e(this.xjr)) return this.xjr;
   }
   FindActiveTaskInfo(t) {
     let i = void 0;
@@ -216,38 +216,38 @@ let CharacterPlanComponent = class CharacterPlanComponent extends EntityComponen
     );
     if (e && i.PlanInstance === e) return i;
   }
-  rWr(e, t) {
+  Njr(e, t) {
     if ("Actions" === e.Behaviour.Type) {
       var i = LevelAiRegistry_1.LevelAiRegistry.Instance(),
         r = new LevelAiNodeBehaviourActions_1.LevelAiNodeBehaviourActions();
-      r.Serialize(this, this.zht, "状态" + t),
+      r.Serialize(this, this.u1t, "状态" + t),
         (r.Actions = e.Behaviour.Actions);
       for (const n of e.Condition.Conditions) {
         var o = new (i.FindDecoratorCtor(n.Type))();
-        o.Serialize(this, this.zht, "状态" + t, n), r.Decorators.push(o);
+        o.Serialize(this, this.u1t, "状态" + t, n), r.Decorators.push(o);
       }
-      (r.Cost = t), this.Jjr.StartNodes.push(r);
+      (r.Cost = t), this.Pjr.StartNodes.push(r);
     }
   }
-  nWr(e, t) {
+  Ojr(e, t) {
     if (
       "Spline" === e.Behaviour.Type &&
       void 0 !== e.Behaviour.SplineEntityId
     ) {
       var i = LevelAiRegistry_1.LevelAiRegistry.Instance(),
         r = new LevelAiNodeBehaviourSpline_1.LevelAiNodeBehaviourSpline();
-      r.Serialize(this, this.zht, "状态" + t),
+      r.Serialize(this, this.u1t, "状态" + t),
         (r.SplineId = e.Behaviour.SplineEntityId);
       for (const n of e.Condition.Conditions) {
         var o = new (i.FindDecoratorCtor(n.Type))();
-        o.Serialize(this, this.zht, "状态" + t, n), r.Decorators.push(o);
+        o.Serialize(this, this.u1t, "状态" + t, n), r.Decorators.push(o);
       }
-      (r.Cost = t), this.Jjr.StartNodes.push(r);
+      (r.Cost = t), this.Pjr.StartNodes.push(r);
     }
   }
 };
 (CharacterPlanComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(62)],
+  [(0, RegisterComponent_1.RegisterComponent)(64)],
   CharacterPlanComponent,
 )),
   (exports.CharacterPlanComponent = CharacterPlanComponent);

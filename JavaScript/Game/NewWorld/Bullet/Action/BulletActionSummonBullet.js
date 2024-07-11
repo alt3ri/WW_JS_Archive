@@ -8,20 +8,20 @@ const TimeUtil_1 = require("../../../Common/TimeUtil"),
   BulletActionBase_1 = require("./BulletActionBase");
 class BulletActionSummonBullet extends BulletActionBase_1.BulletActionBase {
   constructor() {
-    super(...arguments), (this.ChildInfo = void 0), (this.U4o = void 0);
+    super(...arguments), (this.ChildInfo = void 0), (this.L5o = void 0);
   }
   OnExecute() {
     var t;
     (this.ChildInfo = this.BulletInfo.ChildInfo),
       this.ChildInfo &&
-        ((this.U4o = this.BulletInfo.BulletDataMain.Children),
-        (t = this.ActionInfo).IsStayInCharacter ? this.k5o(t) : this.F5o(t));
+        ((this.L5o = this.BulletInfo.BulletDataMain.Children),
+        (t = this.ActionInfo).IsStayInCharacter ? this.GVo(t) : this.NVo(t));
   }
   Clear() {
-    super.Clear(), (this.ChildInfo = void 0), (this.U4o = void 0);
+    super.Clear(), (this.ChildInfo = void 0), (this.L5o = void 0);
   }
-  F5o(e) {
-    var l = this.U4o,
+  NVo(e) {
+    var l = this.L5o,
       i = l.length;
     let s = void 0;
     for (let t = 0; t < i; ++t)
@@ -74,10 +74,10 @@ class BulletActionSummonBullet extends BulletActionBase_1.BulletActionBase {
         }
       }
   }
-  k5o(e) {
-    var l = this.U4o.length;
+  GVo(e) {
+    var l = this.L5o.length;
     for (let t = 0; t < l; ++t) {
-      var i = this.U4o[t],
+      var i = this.L5o[t],
         s = t;
       if (
         5 === i.Condition &&

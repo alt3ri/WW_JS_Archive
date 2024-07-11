@@ -53,26 +53,26 @@ let AnimalPerformComponent =
     constructor() {
       super(...arguments),
         (this.Hte = void 0),
-        (this.dbr = void 0),
-        (this.Cbr = void 0),
-        (this.gbr = !1),
-        (this.fbr = Vector_1.Vector.Create()),
-        (this.pbr = -1),
-        (this.vbr = !1),
-        (this.TBr = void 0),
-        (this.Mbr = !1),
+        (this.jBr = void 0),
+        (this.WBr = void 0),
+        (this.KBr = !1),
+        (this.QBr = Vector_1.Vector.Create()),
+        (this.XBr = -1),
+        (this.$Br = !1),
+        (this.tBr = void 0),
+        (this.YBr = !1),
         (this.PendingDestroy = !0),
-        (this.Sbr = (t, e) => {
+        (this.JBr = (t, e) => {
           e &&
             EventSystem_1.EventSystem.Emit(
               EventDefine_1.EEventName.OnAnimalDying,
               this.Entity,
             );
         }),
-        (this.Ebr = (t, e) => {
+        (this.zBr = (t, e) => {
           e &&
             (this.PendingDestroy
-              ? (this.Cbr.AddTag(GAMEPLAY_TAG_INVISIBILITY),
+              ? (this.WBr.AddTag(GAMEPLAY_TAG_INVISIBILITY),
                 this.Hte.Actor.CapsuleComponent.SetCollisionProfileName(
                   CharacterNameDefines_1.CharacterNameDefines.VANISH_PAWN,
                 ),
@@ -88,31 +88,31 @@ let AnimalPerformComponent =
                   this.Entity,
                 ));
         }),
-        (this.ybr = (t, e) => {
-          var i = this.TBr.get(t);
+        (this.ZBr = (t, e) => {
+          var i = this.tBr.get(t);
           i &&
             (e
-              ? (this.Ibr(i),
+              ? (this.ebr(i),
                 t === GAMEPLAY_TAG_DISAPPEAR &&
-                  (this.Cbr.AddTag(GAMEPLAY_TAG_INVISIBILITY),
+                  (this.WBr.AddTag(GAMEPLAY_TAG_INVISIBILITY),
                   this.Hte.Actor.CapsuleComponent.SetCollisionProfileName(
                     CharacterNameDefines_1.CharacterNameDefines.VANISH_PAWN,
                   )))
-              : (this.Tbr(),
+              : (this.tbr(),
                 t === GAMEPLAY_TAG_DISAPPEAR &&
-                  (this.Cbr.RemoveTag(GAMEPLAY_TAG_INVISIBILITY),
+                  (this.WBr.RemoveTag(GAMEPLAY_TAG_INVISIBILITY),
                   this.Hte.Actor.CapsuleComponent.SetCollisionProfileName(
                     CharacterNameDefines_1.CharacterNameDefines.PAWN,
                   ))));
         }),
-        (this.k$e = () => {
+        (this.zYe = () => {
           this.Entity.GetComponent(0).GetEntityType() !==
-            Protocol_1.Aki.Protocol.HBs.Proto_Monster &&
+            Protocol_1.Aki.Protocol.wks.Proto_Monster &&
             (ModelManager_1.ModelManager.GameModeModel.IsMulti
-              ? (this.Hte.SetAutonomous(!0), this.Lbr())
-              : this.Dbr());
+              ? (this.Hte.SetAutonomous(!0), this.ibr())
+              : this.obr());
         }),
-        (this.Rbr = (e) => {
+        (this.rbr = (e) => {
           if (e.BulletDataMain.Base.DamageId !== BigInt(0)) {
             let t = !1;
             var e = e.Attacker,
@@ -120,36 +120,36 @@ let AnimalPerformComponent =
             (t =
               i?.IsRole() ||
               i?.IsVision() ||
-              ((i = e.GetComponent(47)) &&
+              ((i = e.GetComponent(48)) &&
                 EntitySystem_1.EntitySystem.Get(i.RoleId)
                   ?.GetComponent(0)
                   ?.IsRole())
                 ? !0
-                : t) && this.Cbr.AddTag(GAMEPLAY_TAG_ON_HIT);
+                : t) && this.WBr.AddTag(GAMEPLAY_TAG_ON_HIT);
           }
         }),
-        (this.Abr = (t) => {
+        (this.nbr = (t) => {
           !t?.Valid ||
             t.Id === this.Entity.Id ||
             ((t = t.GetComponent(3).ActorLocationProxy),
-            this.Hte.ActorLocationProxy.Subtraction(t, this.fbr),
-            this.fbr.Size() > ALERT_RANGE) ||
-            this.Cbr.AddTag(GAMEPLAY_TAG_ALERT);
+            this.Hte.ActorLocationProxy.Subtraction(t, this.QBr),
+            this.QBr.Size() > ALERT_RANGE) ||
+            this.WBr.AddTag(GAMEPLAY_TAG_ALERT);
         }),
-        (this.Ubr = (t, e, i) => {
-          !this.Pbr(e) ||
-            this.Cbr.HasTag(GAMEPLAY_TAG_BLUR) ||
-            this.Cbr.AddTag(GAMEPLAY_TAG_BLUR);
+        (this.sbr = (t, e, i) => {
+          !this.abr(e) ||
+            this.WBr.HasTag(GAMEPLAY_TAG_BLUR) ||
+            this.WBr.AddTag(GAMEPLAY_TAG_BLUR);
         }),
-        (this.xbr = (t, e, i, s) => {
-          this.Pbr(e) &&
-            this.Cbr.HasTag(GAMEPLAY_TAG_BLUR) &&
-            this.Cbr.RemoveTag(GAMEPLAY_TAG_BLUR);
+        (this.hbr = (t, e, i, s) => {
+          this.abr(e) &&
+            this.WBr.HasTag(GAMEPLAY_TAG_BLUR) &&
+            this.WBr.RemoveTag(GAMEPLAY_TAG_BLUR);
         });
     }
     HandlePendingDestroy() {
       this.PendingDestroy
-        ? this.Entity.GetComponent(185).AddTag(-1000614969)
+        ? this.Entity.GetComponent(188).AddTag(-1000614969)
         : EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.DelayRemoveEntityFinished,
             this.Entity,
@@ -158,7 +158,7 @@ let AnimalPerformComponent =
     OnInitData(t) {
       t = t.GetParam(AnimalPerformComponent_1)[0];
       return (
-        (this.gbr = (t || void 0)?.IsStare ?? !1), (this.TBr = new Map()), !0
+        (this.KBr = (t || void 0)?.IsStare ?? !1), (this.tBr = new Map()), !0
       );
     }
     OnStart() {
@@ -172,7 +172,7 @@ let AnimalPerformComponent =
             ),
           !1
         );
-      if (((this.AnimComp = this.Entity.GetComponent(160)), !this.AnimComp))
+      if (((this.AnimComp = this.Entity.GetComponent(162)), !this.AnimComp))
         return (
           Log_1.Log.CheckError() &&
             Log_1.Log.Error(
@@ -185,7 +185,7 @@ let AnimalPerformComponent =
             ),
           !1
         );
-      this.AnimComp.EnableSightDirect = this.gbr;
+      this.AnimComp.EnableSightDirect = this.KBr;
       var t = this.AnimComp.MainAnimInstance;
       if (t) {
         var e = t.材质配置,
@@ -194,7 +194,7 @@ let AnimalPerformComponent =
           var s,
             r = e.GetKey(t);
           r.TagName.includes("动物.")
-            ? ((s = e.Get(r)), this.TBr.set(r.TagId, s.ToAssetPathName()))
+            ? ((s = e.Get(r)), this.tBr.set(r.TagId, s.ToAssetPathName()))
             : Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "Animal",
@@ -206,7 +206,7 @@ let AnimalPerformComponent =
               );
         }
       }
-      if (((this.dbr = this.Entity.GetComponent(104)), !this.dbr))
+      if (((this.jBr = this.Entity.GetComponent(106)), !this.jBr))
         return (
           Log_1.Log.CheckError() &&
             Log_1.Log.Error(
@@ -220,9 +220,9 @@ let AnimalPerformComponent =
           !1
         );
       if (
-        (this.dbr.SetSightRange(DEFAULT_SIGHT_RANGE),
-        (this.Cbr = this.Entity.GetComponent(185)),
-        !this.Cbr)
+        (this.jBr.SetSightRange(DEFAULT_SIGHT_RANGE),
+        (this.WBr = this.Entity.GetComponent(188)),
+        !this.WBr)
       )
         return (
           Log_1.Log.CheckError() &&
@@ -236,51 +236,51 @@ let AnimalPerformComponent =
             ),
           !1
         );
-      for (const n of this.TBr)
-        this.Cbr.AddTagAddOrRemoveListener(n[0], this.ybr);
+      for (const n of this.tBr)
+        this.WBr.AddTagAddOrRemoveListener(n[0], this.ZBr);
       return (
-        this.Cbr.AddTagAddOrRemoveListener(-1000614969, this.Ebr),
-        this.Cbr.AddTagAddOrRemoveListener(1008164187, this.Sbr),
+        this.WBr.AddTagAddOrRemoveListener(-1000614969, this.zBr),
+        this.WBr.AddTagAddOrRemoveListener(1008164187, this.JBr),
         this.Ore(),
         !0
       );
     }
     OnActivate() {
       this.Entity.GetComponent(0).GetEntityType() !==
-        Protocol_1.Aki.Protocol.HBs.Proto_Monster &&
+        Protocol_1.Aki.Protocol.wks.Proto_Monster &&
         ModelManager_1.ModelManager.GameModeModel.IsMulti &&
-        (this.Hte.SetAutonomous(!0), this.Lbr());
+        (this.Hte.SetAutonomous(!0), this.ibr());
     }
     OnTick(t) {
-      this.gbr &&
-        (this.dbr.IsInSightRange && this.wbr()
-          ? this.Bbr(Global_1.Global.BaseCharacter.CharacterActorComponent)
-          : this.Bbr(void 0));
+      this.KBr &&
+        (this.jBr.IsInSightRange && this.lbr()
+          ? this._br(Global_1.Global.BaseCharacter.CharacterActorComponent)
+          : this._br(void 0));
     }
-    wbr() {
+    lbr() {
       var t = Global_1.Global.BaseCharacter.CharacterActorComponent,
         t =
-          (this.fbr.FromUeVector(t.ActorLocationProxy),
-          this.fbr.SubtractionEqual(this.Hte.ActorLocationProxy),
-          (this.fbr.Z = 0),
-          this.fbr.Normalize(),
+          (this.QBr.FromUeVector(t.ActorLocationProxy),
+          this.QBr.SubtractionEqual(this.Hte.ActorLocationProxy),
+          (this.QBr.Z = 0),
+          this.QBr.Normalize(),
           MathUtils_1.MathUtils.GetAngleByVectorDot(
-            this.fbr,
+            this.QBr,
             this.Hte.ActorForwardProxy,
           ));
       return t <= SIGHT_OPEN_DEGREE;
     }
-    Bbr(t) {
-      this.gbr && this.AnimComp.SetSightTargetItem(t);
+    _br(t) {
+      this.KBr && this.AnimComp.SetSightTargetItem(t);
     }
     OnEnd() {
-      this.Dbr(), this.kre();
-      for (const t of this.TBr)
-        this.Cbr.RemoveTagAddOrRemoveListener(t[0], this.ybr);
-      return this.Cbr.RemoveTagAddOrRemoveListener(1008164187, this.Sbr), !0;
+      this.obr(), this.kre();
+      for (const t of this.tBr)
+        this.WBr.RemoveTagAddOrRemoveListener(t[0], this.ZBr);
+      return this.WBr.RemoveTagAddOrRemoveListener(1008164187, this.JBr), !0;
     }
-    Ibr(t) {
-      -1 < this.pbr && this.Tbr(),
+    ebr(t) {
+      -1 < this.XBr && this.tbr(),
         ResourceSystem_1.ResourceSystem.LoadAsync(
           t,
           UE.PD_CharacterControllerData_C,
@@ -289,23 +289,23 @@ let AnimalPerformComponent =
               this &&
               this.Hte &&
               this.Hte.Actor?.IsValid() &&
-              (this.pbr =
+              (this.XBr =
                 this.Hte.Actor.CharRenderingComponent.AddMaterialControllerData(
                   t,
                 ));
           },
         );
     }
-    Tbr() {
-      -1 < this.pbr &&
+    tbr() {
+      -1 < this.XBr &&
         this.Hte.Actor.CharRenderingComponent.RemoveMaterialControllerData(
-          this.pbr,
+          this.XBr,
         ),
-        (this.pbr = -1);
+        (this.XBr = -1);
     }
-    Lbr() {
+    ibr() {
       var t;
-      this.Mbr ||
+      this.YBr ||
         (this.Hte?.Valid &&
           this.Hte.Actor?.IsValid() &&
           UE.KuroStaticLibrary.IsObjectClassByName(
@@ -313,14 +313,14 @@ let AnimalPerformComponent =
             CharacterNameDefines_1.CharacterNameDefines.BP_COMMONPET,
           ) &&
           ((t = this.Hte.Actor.BlurCollision).OnComponentBeginOverlap.Add(
-            this.Ubr,
+            this.sbr,
           ),
-          t.OnComponentEndOverlap.Add(this.xbr),
-          (this.Mbr = !0)));
+          t.OnComponentEndOverlap.Add(this.hbr),
+          (this.YBr = !0)));
     }
-    Dbr() {
+    obr() {
       var t;
-      this.Mbr &&
+      this.YBr &&
         this.Hte?.Valid &&
         this.Hte.Actor?.IsValid() &&
         UE.KuroStaticLibrary.IsObjectClassByName(
@@ -328,10 +328,10 @@ let AnimalPerformComponent =
           CharacterNameDefines_1.CharacterNameDefines.BP_COMMONPET,
         ) &&
         ((t = this.Hte.Actor.BlurCollision).OnComponentBeginOverlap.Remove(
-          this.Ubr,
+          this.sbr,
         ),
-        t.OnComponentEndOverlap.Remove(this.xbr),
-        (this.Mbr = !1));
+        t.OnComponentEndOverlap.Remove(this.hbr),
+        (this.YBr = !1));
     }
     SetUiOpenPerformance(t, e) {
       var i = this.Entity.GetComponent(14);
@@ -349,7 +349,7 @@ let AnimalPerformComponent =
     InitFeedingAnimalConfig(t, e) {
       this.Entity.GetComponent(14).GetState(7).InitFeedingAnimalConfig(t, e);
     }
-    Pbr(t) {
+    abr(t) {
       var t = ActorUtils_1.ActorUtils.GetEntityByActor(t, !1);
       return !(
         !t?.Valid ||
@@ -359,43 +359,43 @@ let AnimalPerformComponent =
       );
     }
     Ore() {
-      this.vbr ||
+      this.$Br ||
         (EventSystem_1.EventSystem.AddWithTarget(
           this.Entity,
           EventDefine_1.EEventName.BulletHitSpecialCharacter,
-          this.Rbr,
+          this.rbr,
         ),
         EventSystem_1.EventSystem.Add(
           EventDefine_1.EEventName.ChangeModeFinish,
-          this.k$e,
+          this.zYe,
         ),
         EventSystem_1.EventSystem.Add(
           EventDefine_1.EEventName.OnAnimalDying,
-          this.Abr,
+          this.nbr,
         ),
-        (this.vbr = !0));
+        (this.$Br = !0));
     }
     kre() {
-      this.vbr &&
+      this.$Br &&
         (EventSystem_1.EventSystem.RemoveWithTarget(
           this.Entity,
           EventDefine_1.EEventName.BulletHitSpecialCharacter,
-          this.Rbr,
+          this.rbr,
         ),
         EventSystem_1.EventSystem.Remove(
           EventDefine_1.EEventName.ChangeModeFinish,
-          this.k$e,
+          this.zYe,
         ),
         EventSystem_1.EventSystem.Remove(
           EventDefine_1.EEventName.OnAnimalDying,
-          this.Abr,
+          this.nbr,
         ),
-        (this.vbr = !1));
+        (this.$Br = !1));
     }
   });
 (AnimalPerformComponent = AnimalPerformComponent_1 =
   __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(154)],
+    [(0, RegisterComponent_1.RegisterComponent)(156)],
     AnimalPerformComponent,
   )),
   (exports.AnimalPerformComponent = AnimalPerformComponent);

@@ -18,65 +18,65 @@ const Log_1 = require("../../../Core/Common/Log"),
   ACTIVITYFORCECLOSETIME = -1;
 class ActivityBaseData {
   constructor() {
-    (this.T2e = 0),
-      (this.c3e = void 0),
-      (this.m3e = -0),
-      (this.d3e = -0),
-      (this.U2e = -0),
-      (this.A2e = -0),
-      (this.C3e = !1),
-      (this.g3e = !1),
-      (this.f3e = 0),
-      (this.p3e = new Array()),
-      (this.v3e = 0),
-      (this.M3e = ""),
+    (this.FFe = 0),
+      (this.R4e = void 0),
+      (this.U4e = -0),
+      (this.EndShowTimeInternal = -0),
+      (this.WFe = -0),
+      (this.EndOpenTimeInternal = -0),
+      (this.P4e = !1),
+      (this.x4e = !1),
+      (this.w4e = 0),
+      (this.B4e = new Array()),
+      (this.b4e = 0),
+      (this.q4e = ""),
       (this.LocalConfig = void 0);
   }
   get Id() {
-    return this.T2e;
+    return this.FFe;
   }
   GetCacheKey() {
-    return this.M3e;
+    return this.q4e;
   }
   get Type() {
-    return this.c3e;
+    return this.R4e;
   }
   get Sort() {
-    return this.f3e;
+    return this.w4e;
   }
   get BeginShowTime() {
-    return this.m3e;
+    return this.U4e;
   }
   get EndShowTime() {
-    return this.d3e;
+    return this.EndShowTimeInternal;
   }
   get BeginOpenTime() {
-    return this.U2e;
+    return this.WFe;
   }
   get EndOpenTime() {
-    return this.A2e;
+    return this.EndOpenTimeInternal;
   }
   get RedPointShowState() {
     return !!(
       this.CheckIfInShowTime() &&
-      (this.g3e || (this.C3e && this.GetExDataRedPointShowState()))
+      (this.x4e || (this.P4e && this.GetExDataRedPointShowState()))
     );
   }
   get ConditionGroupId() {
-    return this.v3e;
+    return this.b4e;
   }
   CheckIfInShowTime() {
-    return this.CheckIfInTimeInterval(this.m3e, this.d3e);
+    return this.CheckIfInTimeInterval(this.U4e, this.EndShowTimeInternal);
   }
   CheckIfClose() {
     return (
-      (this.U2e === ACTIVITYFORCECLOSETIME &&
-        this.A2e === ACTIVITYFORCECLOSETIME) ||
+      (this.WFe === ACTIVITYFORCECLOSETIME &&
+        this.EndOpenTimeInternal === ACTIVITYFORCECLOSETIME) ||
       !this.CheckIfInOpenTime()
     );
   }
   CheckIfInOpenTime() {
-    return this.CheckIfInTimeInterval(this.U2e, this.A2e);
+    return this.CheckIfInTimeInterval(this.WFe, this.EndOpenTimeInternal);
   }
   CheckIfInTimeInterval(t, e) {
     return (
@@ -110,26 +110,26 @@ class ActivityBaseData {
     return this.LocalConfig.HelpId;
   }
   IsUnLock() {
-    return !!this.C3e;
+    return !!this.P4e;
   }
   GetPreGuideQuestFinishState() {
-    var e = this.p3e,
+    var e = this.B4e,
       i = e.length;
     for (let t = 0; t < i; t++)
       if (
         ModelManager_1.ModelManager.QuestNewModel.GetQuestState(e[t]) <
-        Protocol_1.Aki.Protocol.kMs.Proto_Finish
+        Protocol_1.Aki.Protocol.tTs.Proto_Finish
       )
         return !1;
-    return !!this.C3e;
+    return !!this.P4e;
   }
   GetUnFinishPreGuideQuestId() {
-    var e = this.p3e,
+    var e = this.B4e,
       i = e.length;
     for (let t = 0; t < i; t++)
       if (
         ModelManager_1.ModelManager.QuestNewModel.GetQuestState(e[t]) <
-        Protocol_1.Aki.Protocol.kMs.Proto_Finish
+        Protocol_1.Aki.Protocol.tTs.Proto_Finish
       )
         return e[t];
     return 0;
@@ -137,7 +137,7 @@ class ActivityBaseData {
   GetPreShowGuideQuestName() {
     var e = new StringBuilder_1.StringBuilder(),
       i = new Array(),
-      r = this.p3e;
+      r = this.B4e;
     let s = r.length;
     for (let t = 0; t < s; t++)
       ModelManager_1.ModelManager.QuestNewModel.CheckQuestFinished(r[0]) ||
@@ -152,70 +152,74 @@ class ActivityBaseData {
     return e.ToString();
   }
   GetIfFirstOpen() {
-    return this.g3e;
+    return this.x4e;
   }
   SetFirstOpenFalse() {
-    this.g3e &&
-      ((this.g3e = !1),
+    this.x4e &&
+      ((this.x4e = !1),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.RefreshCommonActivityRedDot,
-        this.T2e,
+        this.FFe,
       ));
   }
   GetExDataRedPointShowState() {
     return !1;
   }
   ForceClose() {
-    (this.U2e = ACTIVITYFORCECLOSETIME),
-      (this.A2e = ACTIVITYFORCECLOSETIME),
-      (this.m3e = ACTIVITYFORCECLOSETIME),
-      (this.d3e = ACTIVITYFORCECLOSETIME),
+    (this.WFe = ACTIVITYFORCECLOSETIME),
+      (this.EndOpenTimeInternal = ACTIVITYFORCECLOSETIME),
+      (this.U4e = ACTIVITYFORCECLOSETIME),
+      (this.EndShowTimeInternal = ACTIVITYFORCECLOSETIME),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.RefreshCommonActivityRedDot,
-        this.T2e,
+        this.FFe,
       );
   }
   Phrase(t) {
-    (this.T2e = t.Ekn),
-      (this.c3e = t.Ikn),
-      (this.m3e = Number(MathUtils_1.MathUtils.LongToBigInt(t.l0s))),
-      (this.d3e = Number(MathUtils_1.MathUtils.LongToBigInt(t._0s))),
-      (this.U2e = Number(MathUtils_1.MathUtils.LongToBigInt(t.a0s))),
-      (this.A2e = Number(MathUtils_1.MathUtils.LongToBigInt(t.h0s))),
-      (this.C3e = t.m3n),
-      (this.g3e = t.c0s),
+    (this.FFe = t.J4n),
+      (this.R4e = t.Z4n),
+      (this.U4e = Number(MathUtils_1.MathUtils.LongToBigInt(t.Tps))),
+      (this.EndShowTimeInternal = Number(
+        MathUtils_1.MathUtils.LongToBigInt(t.Lps),
+      )),
+      (this.WFe = Number(MathUtils_1.MathUtils.LongToBigInt(t.yps))),
+      (this.EndOpenTimeInternal = Number(
+        MathUtils_1.MathUtils.LongToBigInt(t.Ips),
+      )),
+      (this.P4e = t.G6n),
+      (this.x4e = t.Dps),
       (this.LocalConfig =
         ConfigManager_1.ConfigManager.ActivityConfig.GetActivityConfig(
-          this.T2e,
+          this.FFe,
         )),
-      (this.v3e = this.LocalConfig.PreConditionGroupId),
-      (this.f3e = this.LocalConfig.Sort),
-      (this.p3e = this.LocalConfig.PreShowGuideQuest),
+      (this.b4e = this.LocalConfig.PreConditionGroupId),
+      (this.w4e = this.LocalConfig.Sort),
+      (this.B4e = this.LocalConfig.PreShowGuideQuest),
       ModelManager_1.ModelManager.QuestNewModel.SetActivityQuestData(
-        this.T2e,
-        this.p3e,
+        this.FFe,
+        this.B4e,
       );
     var e = new StringBuilder_1.StringBuilder();
-    e.Append(t.Ekn),
+    e.Append(t.J4n),
       e.Append("_"),
-      e.Append(this.U2e),
-      (this.M3e = e.ToString()),
+      e.Append(this.WFe),
+      (this.q4e = e.ToString()),
       this.PhraseEx(t),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Activity",
           38,
           "活动数据刷新",
-          ["Id", this.T2e],
-          ["Type", this.c3e],
-          ["IsUnlock", this.C3e],
-          ["ShowTime", [this.m3e, this.d3e]],
-          ["OpenTime", [this.U2e, this.A2e]],
+          ["Id", this.FFe],
+          ["Type", this.R4e],
+          ["IsUnlock", this.P4e],
+          ["ShowTime", [this.U4e, this.EndShowTimeInternal]],
+          ["OpenTime", [this.WFe, this.EndOpenTimeInternal]],
           ["HasRedDot", this.RedPointShowState],
         ),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.RefreshCommonActivityRedDot,
-        this.T2e,
+        this.FFe,
       );
   }
   PhraseEx(t) {}

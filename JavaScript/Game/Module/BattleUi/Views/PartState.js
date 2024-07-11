@@ -16,22 +16,22 @@ class PartState extends BattleVisibleChildView_1.BattleVisibleChildView {
   constructor(t, i) {
     super(),
       (this.Jh = void 0),
-      (this.Nut = void 0),
-      (this.gXe = void 0),
-      (this.olt = void 0),
-      (this.Out = (0, puerts_1.$ref)(void 0)),
+      (this.Yct = void 0),
+      (this.R$e = void 0),
+      (this.g1t = void 0),
+      (this.Jct = (0, puerts_1.$ref)(void 0)),
       (this.tfe = void 0),
-      (this.kut = !1),
-      (this.Xot = -0),
-      (this.xlt = -0),
-      (this.wlt = -0),
-      (this.Blt = -1),
-      (this.Fut = -0),
-      (this.Flt = new HpBufferStateMachine_1.HpBufferStateMachine()),
-      (this.srt = 0),
-      (this.Vut = (t, i) => {
-        var e = this.Nut.Life;
-        this.SetVisible(2, 0 < e), this.Hut(!0);
+      (this.zct = !1),
+      (this.snt = -0),
+      (this.j1t = -0),
+      (this.W1t = -0),
+      (this.K1t = -1),
+      (this.Zct = -0),
+      (this.Z1t = new HpBufferStateMachine_1.HpBufferStateMachine()),
+      (this.pnt = 0),
+      (this.emt = (t, i) => {
+        var e = this.Yct.Life;
+        this.SetVisible(2, 0 < e), this.tmt(!0);
       });
     var e = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
       "UiItem_PartState_Prefab",
@@ -52,7 +52,7 @@ class PartState extends BattleVisibleChildView_1.BattleVisibleChildView {
     ];
   }
   OnStart() {
-    this.srt = this.GetSprite(2).GetParentAsUIItem().GetWidth();
+    this.pnt = this.GetSprite(2).GetParentAsUIItem().GetWidth();
   }
   OnBeforeDestroy() {
     this.ResetPartState();
@@ -60,144 +60,144 @@ class PartState extends BattleVisibleChildView_1.BattleVisibleChildView {
   InitializePartState(t, i) {
     this.RootItem?.IsValid() &&
       ((this.Jh = t),
-      (this.Nut = i),
-      (this.gXe = Global_1.Global.CharacterController),
-      (this.olt = i.PartSocketName),
+      (this.Yct = i),
+      (this.R$e = Global_1.Global.CharacterController),
+      (this.g1t = i.PartSocketName),
       (t = this.Jh.GetComponent(3).Actor),
       (this.tfe = t.Mesh),
       this.InitChildType(15),
-      this.jut(),
-      this.kut
-        ? (this.Hut(),
+      this.imt(),
+      this.zct
+        ? (this.tmt(),
           this.RefreshPosition(),
           this.ShowBattleVisibleChildView(),
           this.Ore())
         : this.HideBattleVisibleChildView());
   }
-  jut() {
+  imt() {
     this.Jh
       ? this.tfe
-        ? this.tfe.DoesSocketExist(this.olt)
-          ? (this.kut = !0)
-          : ((this.kut = !1),
+        ? this.tfe.DoesSocketExist(this.g1t)
+          ? (this.zct = !0)
+          : ((this.zct = !1),
             Log_1.Log.CheckWarn() &&
               Log_1.Log.Warn(
                 "Battle",
                 18,
                 "怪物部位血条非法：不存在SocketName",
-                ["", this.olt],
+                ["", this.g1t],
               ))
-        : ((this.kut = !1),
+        : ((this.zct = !1),
           Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
               "Battle",
               18,
               "怪物部位血条非法：不存在SkeletalMesh",
             ))
-      : ((this.kut = !1),
+      : ((this.zct = !1),
         Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn("Battle", 18, "怪物部位血条非法：不存在Entity"));
   }
   ResetPartState() {
-    this.kut && (this.kre(), this.Hrt()),
+    this.zct && (this.kre(), this.ist()),
       (this.Jh = void 0),
-      (this.Nut = void 0),
-      (this.gXe = void 0),
+      (this.Yct = void 0),
+      (this.R$e = void 0),
       (this.tfe = void 0),
-      (this.Xot = void 0),
-      (this.kut = !1);
+      (this.snt = void 0),
+      (this.zct = !1);
   }
   Ore() {
     EventSystem_1.EventSystem.HasWithTarget(
       this.Jh,
       EventDefine_1.EEventName.CharPartDamage,
-      this.Vut,
+      this.emt,
     ) ||
       EventSystem_1.EventSystem.AddWithTarget(
         this.Jh,
         EventDefine_1.EEventName.CharPartDamage,
-        this.Vut,
+        this.emt,
       );
   }
   kre() {
     EventSystem_1.EventSystem.RemoveWithTarget(
       this.Jh,
       EventDefine_1.EEventName.CharPartDamage,
-      this.Vut,
+      this.emt,
     );
   }
-  Hut(t = !1) {
+  tmt(t = !1) {
     var i,
       e,
       s = this.GetSprite(0);
     s &&
-      ((i = this.Nut.Life),
-      (e = this.Nut.LifeMax),
+      ((i = this.Yct.Life),
+      (e = this.Yct.LifeMax),
       s.SetFillAmount((s = i / e)),
       t
-        ? (void 0 === this.Xot && (this.Xot = s), this.rnt(s))
-        : (this.Hrt(), (this.Xot = s)));
+        ? (void 0 === this.snt && (this.snt = s), this.fst(s))
+        : (this.ist(), (this.snt = s)));
   }
-  rnt(t) {
+  fst(t) {
     var i = t,
-      e = this.Xot,
-      s = this.Flt.IsOriginState();
+      e = this.snt,
+      s = this.Z1t.IsOriginState();
     e <= i
-      ? s && (this.Xot = t)
-      : (this.Flt.GetHit(i, e),
-        (this.xlt = i),
-        (this.wlt = e),
-        (this.Xot = t),
-        (this.Blt = 0),
-        s && !this.Flt.IsOriginState() && this.Wut(e));
+      ? s && (this.snt = t)
+      : (this.Z1t.GetHit(i, e),
+        (this.j1t = i),
+        (this.W1t = e),
+        (this.snt = t),
+        (this.K1t = 0),
+        s && !this.Z1t.IsOriginState() && this.omt(e));
   }
-  Wut(t) {
-    this.Xrt(t);
+  omt(t) {
+    this.ast(t);
   }
-  Hrt() {
-    (this.xlt = 0),
-      (this.wlt = 0),
-      (this.Blt = -1),
-      this.Flt.Reset(),
+  ist() {
+    (this.j1t = 0),
+      (this.W1t = 0),
+      (this.K1t = -1),
+      this.Z1t.Reset(),
       this.GetSprite(1).SetUIActive(!1);
   }
-  h1t(t) {
-    Math.abs(this.Fut - t) < PERCENT_TOLERATION ||
-      (t ? this.Kut(t) : this.Kut(this.Xot), (this.Fut = t));
+  M_t(t) {
+    Math.abs(this.Zct - t) < PERCENT_TOLERATION ||
+      (t ? this.rmt(t) : this.rmt(this.snt), (this.Zct = t));
   }
-  Kut(t) {
-    this.Xrt(t);
+  rmt(t) {
+    this.ast(t);
   }
-  Xrt(t) {
+  ast(t) {
     var i = this.GetSprite(1),
       i =
         (i.SetFillAmount(t),
         i.IsUIActiveSelf() || i.SetUIActive(!0),
         this.GetSprite(2));
-    i.SetStretchLeft(this.srt * this.Xot - 2),
-      i.SetStretchRight(this.srt * (1 - t) - 2);
+    i.SetStretchLeft(this.pnt * this.snt - 2),
+      i.SetStretchRight(this.pnt * (1 - t) - 2);
   }
   RefreshPosition() {
     var t, i;
-    this.kut &&
+    this.zct &&
       (i = UiLayer_1.UiLayer.UiRootItem) &&
-      ((t = this.tfe.GetSocketLocation(this.olt)),
-      UE.GameplayStatics.ProjectWorldToScreen(this.gXe, t, this.Out, !1)
-        ? ((t = (0, puerts_1.$unref)(this.Out)),
+      ((t = this.tfe.GetSocketLocation(this.g1t)),
+      UE.GameplayStatics.ProjectWorldToScreen(this.R$e, t, this.Jct, !1)
+        ? ((t = (0, puerts_1.$unref)(this.Jct)),
           (i = i.GetCanvasScaler().ConvertPositionFromViewportToLGUICanvas(t)),
           this.RootItem.SetAnchorOffset(i),
           this.SetVisible(1, !0))
         : this.SetVisible(1, !1));
   }
   Tick(t) {
-    this.kut && (this.RefreshPosition(), this.Qut(t));
+    this.zct && (this.RefreshPosition(), this.nmt(t));
   }
-  Qut(t) {
+  nmt(t) {
     var i;
-    -1 === this.Blt ||
-      ((i = this.Flt.UpdatePercent(t)) < 0 ? this.Hrt() : this.h1t(i),
-      this.xlt >= this.wlt) ||
-      (this.Blt = this.Blt + t);
+    -1 === this.K1t ||
+      ((i = this.Z1t.UpdatePercent(t)) < 0 ? this.ist() : this.M_t(i),
+      this.j1t >= this.W1t) ||
+      (this.K1t = this.K1t + t);
   }
 }
 exports.PartState = PartState;

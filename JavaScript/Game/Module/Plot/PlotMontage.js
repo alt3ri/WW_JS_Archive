@@ -11,7 +11,7 @@ const UE = require("ue"),
   MONTAGE_BLEND_OUT_TIME = 0.5;
 class PlotMontage {
   constructor() {
-    (this.tYi = new Map()), (this.iYi = new Map());
+    (this.ZYi = new Map()), (this.eJi = new Map());
   }
   StartPlayMontage(e) {
     var t;
@@ -24,13 +24,13 @@ class PlotMontage {
           : ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(
               e.EntityId,
             ))?.IsInit &&
-      this.oYi(t, e.ActionMontage.Path);
+      this.tJi(t, e.ActionMontage.Path);
   }
-  oYi(t, r, a = !1) {
+  tJi(t, r, a = !1) {
     var e;
     t &&
       !StringUtils_1.StringUtils.IsEmpty(r) &&
-      ((e = this.tYi.get(r))
+      ((e = this.ZYi.get(r))
         ? this.Fc(t, e, a)
         : ResourceSystem_1.ResourceSystem.LoadAsync(r, UE.AnimMontage, (e) => {
             ObjectUtils_1.ObjectUtils.IsValid(e) ||
@@ -39,16 +39,16 @@ class PlotMontage {
                   "path",
                   r,
                 ])),
-              this.tYi.set(r, e),
+              this.ZYi.set(r, e),
               this.Fc(t, e, a);
           }));
   }
   Fc(e, t, r) {
     var a,
       s,
-      i = e.Entity.GetComponent(160)?.MainAnimInstance;
+      i = e.Entity.GetComponent(162)?.MainAnimInstance;
     ObjectUtils_1.ObjectUtils.IsValid(i) &&
-      ((s = this.iYi.get(e)),
+      ((s = this.eJi.get(e)),
       (a =
         ObjectUtils_1.ObjectUtils.IsValid(s) && i.Montage_IsPlaying(s)
           ? i.Montage_GetCurrentSection(s)
@@ -69,7 +69,7 @@ class PlotMontage {
         s,
         t,
       ),
-      this.iYi.set(e, t),
+      this.eJi.set(e, t),
       Log_1.Log.CheckDebug()) &&
       Log_1.Log.Debug(
         "Plot",
@@ -80,8 +80,8 @@ class PlotMontage {
       );
   }
   StopAllMontage(e = !0) {
-    for (var [t, r] of this.iYi) {
-      var a = t?.Entity?.GetComponent(160)?.MainAnimInstance;
+    for (var [t, r] of this.eJi) {
+      var a = t?.Entity?.GetComponent(162)?.MainAnimInstance;
       ObjectUtils_1.ObjectUtils.IsValid(a) &&
       ObjectUtils_1.ObjectUtils.IsValid(r) &&
       a.Montage_IsPlaying(r)
@@ -92,9 +92,9 @@ class PlotMontage {
               CharacterNameDefines_1.CharacterNameDefines.END_SECTION,
               r,
             )
-        : this.iYi.delete(t);
+        : this.eJi.delete(t);
     }
-    e && (this.iYi.clear(), this.tYi.clear());
+    e && (this.eJi.clear(), this.ZYi.clear());
   }
 }
 exports.PlotMontage = PlotMontage;

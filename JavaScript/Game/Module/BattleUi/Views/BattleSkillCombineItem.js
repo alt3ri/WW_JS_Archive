@@ -10,10 +10,10 @@ const UE = require("ue"),
 class BattleSkillCombineItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this.Uet = void 0),
-      (this.Aet = void 0),
-      (this.Pet = 0),
-      (this.xet = void 0);
+      (this.jtt = void 0),
+      (this.Wtt = void 0),
+      (this.Ktt = 0),
+      (this.Qtt = void 0);
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -23,9 +23,9 @@ class BattleSkillCombineItem extends UiPanelBase_1.UiPanelBase {
   }
   async OnBeforeStartAsync() {
     var e = this.GetItem(0);
-    (this.xet = new CommonKeyItem_1.CommonKeyItem()),
-      await this.xet.CreateThenShowByActorAsync(e.GetOwner()),
-      this.xet.RefreshAction(InputMappingsDefine_1.actionMappings.组合主键);
+    (this.Qtt = new CommonKeyItem_1.CommonKeyItem()),
+      await this.Qtt.CreateThenShowByActorAsync(e.GetOwner()),
+      this.Qtt.RefreshAction(InputMappingsDefine_1.actionMappings.组合主键);
   }
   OnStart() {
     this.GetUiNiagara(1).SetNiagaraUIActive(!1, !1);
@@ -36,36 +36,36 @@ class BattleSkillCombineItem extends UiPanelBase_1.UiPanelBase {
       : this.IsShowOrShowing && this.Hide();
   }
   OnBeforeDestroy() {
-    this.wet();
+    this.Xtt();
   }
   RefreshDynamicEffect(e) {
-    e = this.Bet(e);
-    this.Uet !== e &&
-      ((this.Uet = e),
-      this.Uet
-        ? this.Uet === this.Aet
-          ? this.bet(!0)
-          : ((this.Aet = this.Uet),
-            this.wet(),
-            (this.Pet = ResourceSystem_1.ResourceSystem.LoadAsync(
-              this.Aet,
+    e = this.$tt(e);
+    this.jtt !== e &&
+      ((this.jtt = e),
+      this.jtt
+        ? this.jtt === this.Wtt
+          ? this.Ytt(!0)
+          : ((this.Wtt = this.jtt),
+            this.Xtt(),
+            (this.Ktt = ResourceSystem_1.ResourceSystem.LoadAsync(
+              this.Wtt,
               UE.NiagaraSystem,
               (e) => {
                 var t;
                 e?.IsValid() &&
                   (t = this.GetUiNiagara(1)) &&
-                  (t.SetNiagaraSystem(e), this.Aet === this.Uet) &&
-                  this.bet(!0);
+                  (t.SetNiagaraSystem(e), this.Wtt === this.jtt) &&
+                  this.Ytt(!0);
               },
             )))
-        : this.bet(!1));
+        : this.Ytt(!1));
   }
-  wet() {
-    this.Pet &&
-      (ResourceSystem_1.ResourceSystem.CancelAsyncLoad(this.Pet),
-      (this.Pet = void 0));
+  Xtt() {
+    this.Ktt &&
+      (ResourceSystem_1.ResourceSystem.CancelAsyncLoad(this.Ktt),
+      (this.Ktt = void 0));
   }
-  Bet(e) {
+  $tt(e) {
     if (e) {
       e = e.GetDynamicEffectConfig();
       if (e) {
@@ -74,7 +74,7 @@ class BattleSkillCombineItem extends UiPanelBase_1.UiPanelBase {
       }
     }
   }
-  bet(e) {
+  Ytt(e) {
     var t = this.GetUiNiagara(1);
     t &&
       (e

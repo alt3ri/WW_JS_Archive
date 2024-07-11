@@ -2,11 +2,13 @@
 Object.defineProperty(exports, "__esModule", { value: !0 });
 const puerts_1 = require("puerts"),
   UE = require("ue"),
+  Info_1 = require("../../../../Core/Common/Info"),
   Log_1 = require("../../../../Core/Common/Log"),
   GameplayTagUtils_1 = require("../../../../Core/Utils/GameplayTagUtils"),
   TsBaseCharacter_1 = require("../../../Character/TsBaseCharacter"),
   SkeletalMeshEffectContext_1 = require("../../../Effect/EffectContext/SkeletalMeshEffectContext"),
   EffectSystem_1 = require("../../../Effect/EffectSystem"),
+  TsEffectActor_1 = require("../../../Effect/TsEffectActor"),
   GlobalData_1 = require("../../../GlobalData"),
   UiEffectAnsContext_1 = require("../../../Module/UiModel/UiModelComponent/Common/UiModelAns/UiAnimNotifyStateContext/UiEffectAnsContext"),
   RenderConfig_1 = require("../../Config/RenderConfig");
@@ -32,6 +34,7 @@ class AnimNotifyStateEffect extends UE.KuroEffectMakerANS {
       (this.RecycleWhenEnd = !1),
       (this.AlwaysLoop = !1),
       (this.PlayOnEnd = !1),
+      (this.SyncEventTimeToEffectTime = !1),
       (this.WithOutTag = void 0),
       (this.ParamsMap = new Map()),
       (this.IsInited = !1),
@@ -61,6 +64,13 @@ class AnimNotifyStateEffect extends UE.KuroEffectMakerANS {
           this.Rotation,
           this.Scale,
           this.PlayOnEnd,
+          (t, e) => {
+            EffectSystem_1.EffectSystem.IsValid(e) &&
+              this.ParamsMap.has(t) &&
+              (this.SyncEventTimeToEffectTime &&
+                EffectSystem_1.EffectSystem.FreezeHandle(e, !0, !0),
+              (this.ParamsMap.get(t).EffectHandle = e));
+          },
         );
         let t = void 0;
         (t =
@@ -68,9 +78,15 @@ class AnimNotifyStateEffect extends UE.KuroEffectMakerANS {
           s.Model.CheckGetComponent(6))).AddAns("UiEffectAnsContext", f),
           this.ParamsMap.set(e, new AnimNotifyStateEffectParams(void 0, f));
       }
-      return !0;
+    } else if (!this.PlayOnEnd) {
+      if (this.ParamsMap.has(e)) return !1;
+      s = this.SpawnEffectInternal(e, t);
+      if (!s) return !1;
+      this.SyncEventTimeToEffectTime &&
+        EffectSystem_1.EffectSystem.FreezeHandle(s, !0, !0),
+        this.ParamsMap.set(e, new AnimNotifyStateEffectParams(s, void 0));
     }
-    return !!this.PlayOnEnd || this.SpawnEffectInternal(e, t);
+    return !0;
   }
   SpawnEffectInternal(t, e) {
     var i = t.GetOwner();
@@ -85,7 +101,7 @@ class AnimNotifyStateEffect extends UE.KuroEffectMakerANS {
             ["outer", t.GetOwner()?.GetName()],
             ["animation", e?.GetName()],
           ),
-        !1
+        0
       );
     i = t.GetOwner();
     let s = void 0,
@@ -103,37 +119,37 @@ class AnimNotifyStateEffect extends UE.KuroEffectMakerANS {
         (s.CreateFromType = 1),
         i?.ActorHasTag(AnimNotifyStateEffect.TagFlagNoNiagara) &&
           (s.PlayFlag |= 1),
-        3);
-    return (
-      i instanceof TsBaseCharacter_1.default &&
-        i.CharacterActorComponent?.Entity?.GetComponent(33) &&
+        Info_1.Info.IsGameRunning() ? 3 : 0);
+    GlobalData_1.GlobalData.IsUiSceneOpen ||
+    i.Tags.Contains(RenderConfig_1.RenderConfig.UIName)
+      ? (f = 1)
+      : ((i instanceof TsBaseCharacter_1.default &&
+          i.CharacterActorComponent?.Entity?.GetComponent(33)) ||
+          (i instanceof TsEffectActor_1.default && 0 === i.GetEffectType())) &&
         (f = 0),
-      (GlobalData_1.GlobalData.IsUiSceneOpen ||
-        i.Tags.Contains(RenderConfig_1.RenderConfig.UIName)) &&
-        (f = 1),
-      EffectSystem_1.EffectSystem.InitializeWithPreview(!1),
-      !this.ParamsMap.has(t) &&
-        !(
-          !(e = EffectSystem_1.EffectSystem.SpawnEffect(
-            i,
-            new UE.Transform(),
-            this.EffectDataAssetRef.ToAssetPathName(),
-            "[AnimNotifyStateEffect.SpawnEffectInternal]",
-            s,
-            f,
-            (t) => {
-              EffectSystem_1.EffectSystem.SetEffectNotRecord(t, !0);
-            },
-          )) ||
-          !EffectSystem_1.EffectSystem.IsValid(e) ||
-          (this.AttachEffectToSkill(i, e),
-          this.AttachEffectToWeapon(t, i, e),
-          this.SetupTransform(EffectSystem_1.EffectSystem.GetEffectActor(e), t),
-          EffectSystem_1.EffectSystem.ForceCheckPendingInit(e),
-          this.ParamsMap.set(t, new AnimNotifyStateEffectParams(e, void 0)),
-          0)
-        )
+      EffectSystem_1.EffectSystem.InitializeWithPreview(!1);
+    e = this.EffectDataAssetRef.ToAssetPathName();
+    let r = void 0;
+    i instanceof TsBaseCharacter_1.default &&
+      (r = i.CharacterActorComponent?.GetReplaceEffect(e));
+    e = EffectSystem_1.EffectSystem.SpawnEffect(
+      i,
+      new UE.Transform(),
+      r || e,
+      "[AnimNotifyStateEffect.SpawnEffectInternal]",
+      s,
+      f,
+      (t) => {
+        EffectSystem_1.EffectSystem.SetEffectNotRecord(t, !0);
+      },
     );
+    return e && EffectSystem_1.EffectSystem.IsValid(e)
+      ? (this.AttachEffectToSkill(i, e),
+        this.AttachEffectToWeapon(t, i, e),
+        this.SetupTransform(EffectSystem_1.EffectSystem.GetEffectActor(e), t),
+        EffectSystem_1.EffectSystem.ForceCheckPendingInit(e),
+        e)
+      : 0;
   }
   AttachEffectToSkill(e, i) {
     if (e instanceof TsBaseCharacter_1.default) {
@@ -160,7 +176,7 @@ class AnimNotifyStateEffect extends UE.KuroEffectMakerANS {
   }
   AttachEffectToWeapon(t, e, i) {
     if (this.IsWeaponEffect && e instanceof TsBaseCharacter_1.default) {
-      e = e.CharacterActorComponent?.Entity?.GetComponent(69);
+      e = e.CharacterActorComponent?.Entity?.GetComponent(71);
       if (e?.Valid)
         for (const s of e.GetWeaponMesh().CharacterWeapons)
           s.Mesh === t && s.AddBuffEffect(i);
@@ -172,62 +188,88 @@ class AnimNotifyStateEffect extends UE.KuroEffectMakerANS {
       this.AttachLocationOnly &&
       this.SocketName !== AnimNotifyStateEffect.NameNone
     ) {
-      var s = this.ParamsMap.get(t)?.EffectHandle;
-      if (!s || !EffectSystem_1.EffectSystem.IsValid(s)) return !0;
-      (s = EffectSystem_1.EffectSystem.GetEffectActor(s)),
-        (t = t.GetSocketTransform(this.SocketName, 0));
-      s.K2_SetActorLocation(t.TransformPosition(this.Location), !1, void 0, !1);
+      var s = this.ParamsMap.get(t);
+      if (!s) return !1;
+      s = s.EffectHandle;
+      if (!s || !EffectSystem_1.EffectSystem.IsValid(s)) return !1;
+      var s = EffectSystem_1.EffectSystem.GetEffectActor(s),
+        f = t.GetSocketTransform(this.SocketName, 0);
+      s.K2_SetActorLocation(f.TransformPosition(this.Location), !1, void 0, !1);
+    }
+    if (this.SyncEventTimeToEffectTime) {
+      s = this.ParamsMap.get(t);
+      if (!s) return !1;
+      f = s.EffectHandle;
+      if (!f || !EffectSystem_1.EffectSystem.IsValid(f)) return !1;
+      EffectSystem_1.EffectSystem.IsHandleFreeze(f) &&
+        EffectSystem_1.EffectSystem.HandleSeekToTime(
+          f,
+          this.CurrentTimeLength,
+          !1,
+          !0,
+        ) &&
+        EffectSystem_1.EffectSystem.FreezeHandle(f, !1, !0);
     }
     return !0;
   }
   K2_NotifyEnd(t, e) {
-    var i = t.GetOwner(),
-      s = this.ParamsMap.get(t);
-    if (!s) return !1;
+    var i = t.GetOwner();
     if (
-      (this.ParamsMap.delete(t),
       i?.IsA(UE.TsUiSceneRoleActor_C.StaticClass()) ||
-        i?.IsA(UE.TsSkeletalObserver_C.StaticClass()))
+      i?.IsA(UE.TsSkeletalObserver_C.StaticClass())
     ) {
-      if (!s.UiEffectAnsContext)
-        return (
-          Log_1.Log.CheckError() &&
-            Log_1.Log.Error(
-              "RenderEffect",
-              44,
-              "AnimNotifyStateEffect未成对，UiEffectAnsContext为空",
-            ),
-          !1
-        );
-      i?.IsA(UE.TsUiSceneRoleActor_C.StaticClass());
-      var f = i.Model;
-      f &&
-        f
-          .CheckGetComponent(6)
-          .ReduceAns("UiEffectAnsContext", s.UiEffectAnsContext);
+      const f = this.ParamsMap.get(t);
+      if (f && f.UiEffectAnsContext) {
+        i?.IsA(UE.TsUiSceneRoleActor_C.StaticClass());
+        var s = i.Model;
+        if (s)
+          return (
+            s
+              .CheckGetComponent(6)
+              .ReduceAns("UiEffectAnsContext", f.UiEffectAnsContext),
+            this.ParamsMap.delete(t),
+            !0
+          );
+        Log_1.Log.CheckError() &&
+          Log_1.Log.Error(
+            "RenderEffect",
+            26,
+            "AnimNotifyStateEffect未成对，model为空",
+          );
+      } else
+        Log_1.Log.CheckError() &&
+          Log_1.Log.Error(
+            "RenderEffect",
+            44,
+            "AnimNotifyStateEffect未成对，UiEffectAnsContext为空",
+          );
+      return !1;
     }
     if (
       this.PlayOnEnd &&
       i instanceof TsBaseCharacter_1.default &&
-      !i.CharacterActorComponent?.Entity?.GetComponent(185)?.HasAnyTag(
+      !i.CharacterActorComponent?.Entity?.GetComponent(188)?.HasAnyTag(
         GameplayTagUtils_1.GameplayTagUtils.ConvertFromUeContainer(
           this.WithOutTag,
         ),
       )
     )
-      return (f = this.SpawnEffectInternal(t, e)), this.ParamsMap.delete(t), f;
+      return 0 !== this.SpawnEffectInternal(t, e);
+    const f = this.ParamsMap.get(t);
     return (
-      s.EffectHandle &&
+      !!f &&
+      (this.ParamsMap.delete(t),
+      f.EffectHandle &&
         EffectSystem_1.EffectSystem.StopEffectById(
-          s.EffectHandle,
+          f.EffectHandle,
           `[动画:${e.GetName()}，AnimNotifyStateEffect.K2_NotifyEnd]`,
           this.FasterStop,
         ),
-      !0
+      !0)
     );
   }
   GameplayTagsCheck(t) {
-    var e = t.CharacterActorComponent?.Entity?.GetComponent(185);
+    var e = t.CharacterActorComponent?.Entity?.GetComponent(188);
     if (e) {
       var i = this.PlayNeedTags.Num();
       if (this.NeedAnyTag) {
@@ -240,8 +282,8 @@ class AnimNotifyStateEffect extends UE.KuroEffectMakerANS {
       }
       for (let t = 0; t < i; t++) {
         var r = this.PlayNeedTags.GetKey(t),
-          a = this.PlayNeedTags.Get(r);
-        if (e.HasTag(r.TagId) !== a) return !1;
+          n = this.PlayNeedTags.Get(r);
+        if (e.HasTag(r.TagId) !== n) return !1;
       }
     }
     return !0;

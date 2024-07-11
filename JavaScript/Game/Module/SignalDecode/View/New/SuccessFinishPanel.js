@@ -13,10 +13,10 @@ class SuccessFinishPanel extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
       (this.LevelSequencePlayer = void 0),
-      (this.wvo = () => {
+      (this.AMo = () => {
         var e = ModelManager_1.ModelManager.SignalDecodeModel.CurrentGameplayId;
         GeneralLogicTreeController_1.GeneralLogicTreeController.RequestFinishUiGameplay(
-          Protocol_1.Aki.Protocol.dqs.Proto_MorseCode,
+          Protocol_1.Aki.Protocol.t3s.Proto_MorseCode,
           e.toString(),
         ),
           UiManager_1.UiManager.CloseView("SignalDecodeView");
@@ -27,7 +27,7 @@ class SuccessFinishPanel extends UiPanelBase_1.UiPanelBase {
       [0, UE.UIButtonComponent],
       [1, UE.UIText],
     ]),
-      (this.BtnBindInfo = [[0, this.wvo]]);
+      (this.BtnBindInfo = [[0, this.AMo]]);
   }
   OnStart() {
     this.LevelSequencePlayer = new LevelSequencePlayer_1.LevelSequencePlayer(

@@ -10,8 +10,8 @@ class SelectablePropMediumItemGrid extends LoopScrollMediumItemGrid_1.LoopScroll
   constructor() {
     super(...arguments),
       (this.SelectablePropData = void 0),
-      (this.$wt = void 0),
-      (this.Ywt = () => {
+      (this.zBt = void 0),
+      (this.ZBt = () => {
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.OnSelectItemAdd,
           this.SelectablePropData.ItemId,
@@ -32,16 +32,16 @@ class SelectablePropMediumItemGrid extends LoopScrollMediumItemGrid_1.LoopScroll
     this.RefreshUi(this.SelectablePropData), super.SetSelected(e, t);
   }
   OnStart() {
-    this.GetItemGridExtendToggle().FocusListenerDelegate.Bind(this.Ywt);
+    this.GetItemGridExtendToggle().FocusListenerDelegate.Bind(this.ZBt);
   }
   OnBeforeDestroy() {
     this.GetItemGridExtendToggle().FocusListenerDelegate.Unbind(),
-      (this.$wt = void 0);
+      (this.zBt = void 0);
   }
   OnRefresh(e, t, i) {
     (this.SelectablePropData = e),
       this.SetSelected(0 < e.SelectedCount, !0),
-      this.$wt && this.$wt(this);
+      this.zBt && this.zBt(this);
   }
   RefreshUi(e) {
     this.SelectablePropData = e;
@@ -121,7 +121,7 @@ class SelectablePropMediumItemGrid extends LoopScrollMediumItemGrid_1.LoopScroll
     }
   }
   BindAfterApply(e) {
-    this.$wt = e;
+    this.zBt = e;
   }
 }
 exports.SelectablePropMediumItemGrid = SelectablePropMediumItemGrid;

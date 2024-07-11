@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.Config =
+    exports.serverInfoList =
     exports.checkVersionIsLatest =
     exports.EDITOR_VERSION =
       void 0);
@@ -17,8 +18,8 @@ function checkVersionIsLatest(e, t = exports.EDITOR_VERSION) {
     var r = e.split("."),
       i = t.split(".");
     for (let e = 0; e < r.length; e++) {
-      var o = parseInt(r[e]);
-      if (parseInt(i[e]) < o) return !0;
+      var n = parseInt(r[e]);
+      if (parseInt(i[e]) < n) return !0;
     }
   }
   return !1;
@@ -44,16 +45,24 @@ const GAME_CLIENT_GM_PORT_OFFSET = 11,
     FixLevelPlayAoiProxy: [],
     IsSimulateGameCommandService: !1,
     EditorLaunchMode: IEditor_1.EEditorLaunchMode.PIE,
+    PackageServerType: IEditor_1.EPackageServerType.Package,
     IsEnableAutoJump: !1,
     IsShowFilterPreset: !0,
     IsShowFormalText: !1,
-    TidTextExportType: "Formal",
+    TidTextExportType: "Desc",
     PlannedBranch: "development",
     AutoCaptureTree: [],
     IsShowFullDateCheckError: !1,
     IsEnableBtStateConflictCheck: !1,
     IsEnableSetPlotModeCheck: !0,
     IsEnableOnlineChainCheck: !1,
+    IsEnableRepetitiveOccupyCheck: !1,
+    IsEnableFunctionalEntitiesOccupyCheck: !1,
+    IsEnableChangeEntityStateCheck: !1,
+    IsEnableSetTimeLockStateCheck: !1,
+    IsEnableEntityExternalReferenceCheck: !1,
+    IsEnableSameOccupationInQuestCheck: !1,
+    IsEnableDifferentOccupationUnderParallelSelectNodeCheck: !1,
   };
 let clusterRecords = void 0;
 function getClusterTimestamp() {
@@ -69,6 +78,15 @@ function getClusterTimestamp() {
     clusterRecords.Timestamp
   );
 }
+exports.serverInfoList = [
+  { Ip: "10.0.7.6", Name: "final1.1周包服" },
+  { Ip: "10.0.7.14", Name: "final1.2周包服" },
+  { Ip: "10.0.7.80", Name: "branch_1.1公共服" },
+  { Ip: "10.0.7.77", Name: "branch_1.2公共服" },
+  { Ip: "127.0.0.1", Name: "本地服" },
+  { Ip: "10.0.61.42", Name: "雷涛", IsTest: !0 },
+  { Ip: "10.0.70.231", Name: "黄俊集", IsTest: !0 },
+];
 class Config extends JsonConfig_1.JsonConfig {
   constructor() {
     if (
@@ -85,6 +103,12 @@ class Config extends JsonConfig_1.JsonConfig {
   }
   static get Instance() {
     return void 0 === this.m && (this.m = new Config()), this.m;
+  }
+  static get PackageServerPort() {
+    return Config.Instance.Get("PackageServerType") ===
+      IEditor_1.EPackageServerType.Package
+      ? Config.DefaultPackageServerPort
+      : Config.Instance.PieServerPort;
   }
   static get PieServerClusterName() {
     return `PIE_${(0, Util_1.getWorkspaceBranch)()}_` + getClusterTimestamp();
@@ -148,20 +172,37 @@ class Config extends JsonConfig_1.JsonConfig {
     for (const t of (0, Util_1.readJsonObj)(e).ConnectionGroups)
       if (!(0, Util_1.isPortInUse)(t.EditorPort)) return t;
   }
-  static sOn(e) {
+  static Tkn(e) {
     e.PlannedBranch = (0, BranchDefine_1.getDefaultPlannedBranch)();
   }
   static t() {
     var e = (0, Util_1.deepCopyData)(config);
-    return Config.sOn(e), e;
+    return Config.Tkn(e), e;
   }
   get NetworkAddress() {
-    return this.p || (this.p = (0, Util_1.getNetWorkAddress)()), this.p;
+    return (
+      void 0 === this.p && (this.p = (0, Util_1.getNetWorkAddress)() ?? ""),
+      this.p
+    );
+  }
+  get NetworkAddressMd5() {
+    return (
+      void 0 === this.jaa &&
+        (this.jaa = (0, Util_1.getMd5)(this.NetworkAddress)),
+      this.jaa
+    );
   }
   get MacAddress() {
     return (
       this.VirtualMacAddress ||
-      (this.u || (this.u = (0, Util_1.getMacAddress)()), this.u)
+      (void 0 === this.Waa && (this.Waa = (0, Util_1.getMacAddress)()),
+      this.Waa)
+    );
+  }
+  get MacAddressMd5() {
+    return (
+      void 0 === this.Qaa && (this.Qaa = (0, Util_1.getMd5)(this.MacAddress)),
+      this.Qaa
     );
   }
   get EditorCommandPort() {
@@ -177,17 +218,20 @@ class Config extends JsonConfig_1.JsonConfig {
     return this.o.GameServerConfig;
   }
   get GameCommandServicePort() {
-    return (0, Util_1.isRuntimePlatform)()
-      ? Config.GameCommandRuntimePort
-      : this.Get("IsSimulateGameCommandService")
-        ? Config.GameCommandServiceSimulatePort
-        : (0, Util_1.isInPie)() && Config.IsPkgRunning
-          ? this.Get("EditorLaunchMode") === IEditor_1.EEditorLaunchMode.PIE
-            ? this.GameClientGmPort
-            : Config.PkgCommandServicePort
-          : (0, Util_1.isInPie)()
-            ? this.GameClientGmPort
-            : Config.PkgCommandServicePort;
+    var e = this.Get("EditorLaunchMode");
+    return e === IEditor_1.EEditorLaunchMode.Attach
+      ? Config.DefaultServerPort
+      : (0, Util_1.isRuntimePlatform)()
+        ? Config.GameCommandRuntimePort
+        : this.Get("IsSimulateGameCommandService")
+          ? Config.GameCommandServiceSimulatePort
+          : (0, Util_1.isInPie)() && Config.IsPkgRunning
+            ? e === IEditor_1.EEditorLaunchMode.PIE
+              ? this.GameClientGmPort
+              : Config.PkgCommandServicePort
+            : (0, Util_1.isInPie)()
+              ? this.GameClientGmPort
+              : Config.PkgCommandServicePort;
   }
   get PieServerPort() {
     return (
@@ -199,16 +243,36 @@ class Config extends JsonConfig_1.JsonConfig {
       ? Config.PackageServerPort
       : this.PieServerPort;
   }
+  get LocalGameLoginPort() {
+    var e = Config.Instance.GameServerConfig;
+    return void 0 !== e?.LocalGameServerLoginPort
+      ? e.LocalGameServerLoginPort
+      : 5500;
+  }
+  get PlannedBranch() {
+    var e;
+    return (!Config.IsStartWithCliServer && !(0, Util_1.isNodeJsPlatform)()) ||
+      (0, BranchDefine_1.isInDevelopmentBranch)()
+      ? ((e = this.Get("PlannedBranch")),
+        (0, BranchDefine_1.isPlannedBranch)(e) ||
+          this.Set(
+            "PlannedBranch",
+            (0, BranchDefine_1.getDefaultPlannedBranch)(),
+          ),
+        this.Get("PlannedBranch"))
+      : "development";
+  }
 }
 ((exports.Config = Config).FlowListPrefix = (0, Init_1.isUe5)()
   ? "流程_"
   : "剧情_"),
   (Config.IsStartWithCliServer = !1),
   (Config.IsPkgRunning = !1),
+  (Config.IsServerAttaching = !1),
   (Config.EditorCommandServiceSimulatePort = (0, Init_1.isUe5)() ? 8997 : 8998),
   (Config.GameCommandServiceSimulatePort = (0, Init_1.isUe5)() ? 8999 : 9e3),
   (Config.GameCommandServicePort = 9001),
   (Config.GameCommandRuntimePort = 9021),
   (Config.DefaultServerPort = 9500),
-  (Config.PackageServerPort = 9600);
+  (Config.DefaultPackageServerPort = 9600);
 //# sourceMappingURL=Config.js.map

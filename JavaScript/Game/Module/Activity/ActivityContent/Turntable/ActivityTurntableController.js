@@ -17,16 +17,16 @@ const Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
 class ActivityTurntableController extends ActivityControllerBase_1.ActivityControllerBase {
   constructor() {
     super(...arguments),
-      (this.DEe = (t, r) => {
+      (this.DSe = (t, r) => {
         ModelManager_1.ModelManager.ActivityModel.GetCurrentActivitiesByType(
-          Protocol_1.Aki.Protocol.gBs.Proto_TurnTableActivity,
+          Protocol_1.Aki.Protocol.oks.Proto_TurnTableActivity,
         ).forEach((e) => {
           e.OnQuestStateChange(t, r);
         });
       }),
-      (this.qmi = (t, r) => {
+      (this.qdi = (t, r) => {
         ModelManager_1.ModelManager.ActivityModel.GetCurrentActivitiesByType(
-          Protocol_1.Aki.Protocol.gBs.Proto_TurnTableActivity,
+          Protocol_1.Aki.Protocol.oks.Proto_TurnTableActivity,
         ).forEach((e) => {
           e.OnCommonItemCountAnyChange(t, r);
         });
@@ -37,21 +37,21 @@ class ActivityTurntableController extends ActivityControllerBase_1.ActivityContr
   OnAddEvents() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnQuestStateChange,
-      this.DEe,
+      this.DSe,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnCommonItemCountAnyChange,
-        this.qmi,
+        this.qdi,
       );
   }
   OnRemoveEvents() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnQuestStateChange,
-      this.DEe,
+      this.DSe,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnCommonItemCountAnyChange,
-        this.qmi,
+        this.qdi,
       );
   }
   OnOpenView(e) {}
@@ -74,26 +74,26 @@ class ActivityTurntableController extends ActivityControllerBase_1.ActivityContr
     return !1;
   }
   static RequestTurntableRun(a) {
-    var e = new Protocol_1.Aki.Protocol.Kds();
-    (e.YFn = a),
-      Net_1.Net.Call(17105, e, (e) => {
+    var e = new Protocol_1.Aki.Protocol.Zgs();
+    (e.T6n = a),
+      Net_1.Net.Call(28109, e, (e) => {
         if (e) {
-          e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys &&
+          e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs &&
             ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-              e.lkn,
-              13280,
+              e.O4n,
+              16171,
             );
           var t = ModelManager_1.ModelManager.ActivityModel.GetActivityById(a);
           if (t) {
             var r = [];
-            for (const i of Object.keys(e.Vms)) {
-              var n = [{ IncId: 0, ItemId: Number.parseInt(i) }, e.Vms[i]];
+            for (const i of Object.keys(e.rvs)) {
+              var n = [{ IncId: 0, ItemId: Number.parseInt(i) }, e.rvs[i]];
               r.push(n);
             }
-            t.SetRunResult(e.t3n, r),
+            t.SetRunResult(e.R6n, r),
               EventSystem_1.EventSystem.Emit(
                 EventDefine_1.EEventName.TurntableStartRun,
-                e.t3n,
+                e.R6n,
               ),
               EventSystem_1.EventSystem.Emit(
                 EventDefine_1.EEventName.RefreshCommonActivityRedDot,

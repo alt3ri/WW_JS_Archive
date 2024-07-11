@@ -5,25 +5,25 @@ const UE = require("ue"),
   ModelBase_1 = require("../../../Core/Framework/ModelBase");
 class AoiModel extends ModelBase_1.ModelBase {
   constructor() {
-    super(...arguments), (this.hvr = void 0), (this.lvr = void 0);
+    super(...arguments), (this.nMr = void 0), (this.sMr = void 0);
   }
   get MinCoordinate() {
-    return this.hvr;
+    return this.nMr;
   }
   set MinCoordinate(e) {
-    this.hvr = e;
+    this.nMr = e;
   }
   get MaxCoordinate() {
-    return this.lvr;
+    return this.sMr;
   }
   set MaxCoordinate(e) {
-    this.lvr = e;
+    this.sMr = e;
   }
   OnInit() {
-    return (this.hvr = new UE.Vector()), (this.lvr = new UE.Vector()), !0;
+    return (this.nMr = new UE.Vector()), (this.sMr = new UE.Vector()), !0;
   }
   OnClear() {
-    return (this.hvr = void 0), !(this.lvr = void 0);
+    return (this.nMr = void 0), !(this.sMr = void 0);
   }
   OnLeaveLevel() {
     return !0;

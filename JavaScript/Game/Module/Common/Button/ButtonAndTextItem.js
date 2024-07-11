@@ -7,9 +7,9 @@ const UE = require("ue"),
 class ButtonAndTextItem extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
-      (this.yVe = void 0),
-      (this.Kyt = () => {
-        this.yVe && this.yVe();
+      (this.G6e = void 0),
+      (this.eTt = () => {
+        this.G6e && this.G6e();
       }),
       this.CreateThenShowByActor(e.GetOwner());
   }
@@ -18,7 +18,7 @@ class ButtonAndTextItem extends UiPanelBase_1.UiPanelBase {
       [0, UE.UIButtonComponent],
       [1, UE.UIText],
     ]),
-      (this.BtnBindInfo = [[0, this.Kyt]]);
+      (this.BtnBindInfo = [[0, this.eTt]]);
   }
   RefreshText(e, ...t) {
     LguiUtil_1.LguiUtil.SetLocalText(this.GetText(1), e, t);
@@ -36,7 +36,7 @@ class ButtonAndTextItem extends UiPanelBase_1.UiPanelBase {
     this.GetButton(0).SetSelfInteractive(e);
   }
   BindCallback(e) {
-    this.yVe || (this.yVe = e);
+    this.G6e || (this.G6e = e);
   }
 }
 exports.ButtonAndTextItem = ButtonAndTextItem;

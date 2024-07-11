@@ -1,85 +1,84 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InputCombinationAxisBinding = void 0);
-const ModelManager_1 = require("../../Manager/ModelManager"),
+const Info_1 = require("../../../Core/Common/Info"),
   InputSettings_1 = require("../InputSettings");
 class InputCombinationAxisBinding {
   constructor() {
     (this.Mne = 0),
-      (this.hSe = new Map()),
-      (this.lSe = new Map()),
-      (this.uSe = new Map()),
-      (this.sSe = void 0),
+      (this.hEe = new Map()),
+      (this.lEe = new Map()),
+      (this.uEe = new Map()),
+      (this.sEe = void 0),
       (this.Lo = void 0),
-      (this.aSe = 0),
-      (this.mSe = void 0);
+      (this.aEe = 0),
+      (this.mEe = void 0);
   }
   Initialize(t) {
     (this.Mne = t.Id),
-      (this.sSe = t.AxisName),
+      (this.sEe = t.AxisName),
       (this.Lo = t),
-      (this.aSe = this.Lo.AxisType),
-      (this.mSe = this.Lo.SecondaryKeyScaleMap);
-    for (var [i, s] of t.PcKeyMap) this.uSe.set(i, s);
-    for (var [e, r] of t.GamepadKeyMap) this.uSe.set(e, r);
-    this.dSe();
+      (this.aEe = this.Lo.AxisType),
+      (this.mEe = this.Lo.SecondaryKeyScaleMap);
+    for (var [i, s] of t.PcKeyMap) this.uEe.set(i, s);
+    for (var [e, o] of t.GamepadKeyMap) this.uEe.set(e, o);
+    this.dEe();
   }
   Clear() {
-    (this.hSe = void 0),
-      (this.lSe = void 0),
-      (this.uSe = void 0),
-      (this.sSe = void 0),
-      (this.aSe = 0),
+    (this.hEe = void 0),
+      (this.lEe = void 0),
+      (this.uEe = void 0),
+      (this.sEe = void 0),
+      (this.aEe = 0),
       (this.Lo = void 0);
   }
-  dSe() {
-    this.hSe.clear(), this.lSe.clear();
-    for (var [t, i] of this.uSe) {
+  dEe() {
+    this.hEe.clear(), this.lEe.clear();
+    for (var [t, i] of this.uEe) {
       var s = InputSettings_1.InputSettings.GetKey(i);
       s &&
-        ((s.IsKeyboardKey || s.IsMouseButton) && this.hSe.set(t, i),
+        ((s.IsKeyboardKey || s.IsMouseButton) && this.hEe.set(t, i),
         s.IsGamepadKey) &&
-        this.lSe.set(t, i);
+        this.lEe.set(t, i);
     }
   }
   GetAxisName() {
-    return this.sSe;
+    return this.sEe;
   }
   GetCombinationAxisKeyMap() {
-    return InputSettings_1.InputSettings.GetCombinationAxisKeyMap(this.sSe);
+    return InputSettings_1.InputSettings.GetCombinationAxisKeyMap(this.sEe);
   }
   HasKeyboardCombinationAxis() {
-    return !!this.hSe && 0 < this.hSe.size;
+    return !!this.hEe && 0 < this.hEe.size;
   }
   HasGamepadCombinationAxis() {
-    return !!this.lSe && 0 < this.lSe.size;
+    return !!this.lEe && 0 < this.lEe.size;
   }
   GetAxisMappingType() {
-    return this.aSe;
+    return this.aEe;
   }
   GetSourceAxisValue(t) {
-    return this.mSe.get(t);
+    return this.mEe.get(t);
   }
   GetConfigId() {
     return this.Mne;
   }
   GetPcKeyNameMap(t) {
-    for (var [i, s] of this.hSe) t.set(i, s);
+    for (var [i, s] of this.hEe) t.set(i, s);
   }
   GetGamepadKeyNameMap(t) {
-    for (var [i, s] of this.lSe) t.set(i, s);
+    for (var [i, s] of this.lEe) t.set(i, s);
   }
   GetKeyMap(t) {
-    for (var [i, s] of this.uSe) t.set(i, s);
+    for (var [i, s] of this.uEe) t.set(i, s);
   }
   GetCurrentPlatformKeyNameMap(t) {
-    var i = ModelManager_1.ModelManager.PlatformModel;
-    i.IsPc()
+    Info_1.Info.IsInKeyBoard()
       ? this.GetPcKeyNameMap(t)
-      : i.IsGamepad() && this.GetGamepadKeyNameMap(t);
+      : Info_1.Info.IsInGamepad() && this.GetGamepadKeyNameMap(t);
   }
   HasKey(t, i) {
-    return this.uSe.get(t) === i;
+    return this.uEe.get(t) === i;
   }
 }
 exports.InputCombinationAxisBinding = InputCombinationAxisBinding;

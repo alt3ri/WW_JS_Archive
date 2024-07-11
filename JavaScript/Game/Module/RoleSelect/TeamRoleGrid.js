@@ -28,28 +28,32 @@ class TeamRoleGrid extends LoopScrollMediumItemGrid_1.LoopScrollMediumItemGrid {
       ).RecommendRole),
       (s = M.includes(e.GetRoleId())));
     var M = {
-      Type: 2,
-      ItemConfigId: t,
-      IsTrialRoleVisible: n,
-      BottomTextId: "Text_LevelShow_Text",
-      BottomTextParameter: [a.GetLevel()],
-      Index: 0 < d ? d : void 0,
-      HighlightIndex: i,
-      ElementId: e.GetRoleConfig().ElementId,
-      IsShowCost: ModelManager_1.ModelManager.TowerModel.IsOpenFloorFormation(),
-      Data: e,
-      IsDisable: l,
-      IsRecommendVisible: s,
-    };
-    this.Apply(M),
-      e.IsTrialRole()
-        ? this.SetLevelAndLock()
-        : ((n =
-            !e ||
-            !ModelManager_1.ModelManager.EditBattleTeamModel.CanAddRoleToEditTeam(
-              t,
-            )),
-          this.SetLevelAndLock(void 0, n));
+        Type: 2,
+        ItemConfigId: t,
+        IsTrialRoleVisible: n,
+        BottomTextId: "Text_LevelShow_Text",
+        BottomTextParameter: [a.GetLevel()],
+        Index: 0 < d ? d : void 0,
+        HighlightIndex: i,
+        ElementId: e.GetRoleConfig().ElementId,
+        IsShowCost:
+          ModelManager_1.ModelManager.TowerModel.IsOpenFloorFormation(),
+        Data: e,
+        IsDisable: l,
+        IsRecommendVisible: s,
+      },
+      a =
+        (this.Apply(M),
+        e.IsTrialRole()
+          ? this.SetLevelAndLock()
+          : ((n =
+              !e ||
+              !ModelManager_1.ModelManager.EditBattleTeamModel.CanAddRoleToEditTeam(
+                t,
+              )),
+            this.SetLevelAndLock(void 0, n)),
+        ModelManager_1.ModelManager.RoleSelectModel.SelectedRoleSet.has(t));
+    this.SetSelected(a, !0);
   }
   OnForceSelected() {
     this.SetSelected(!0, !0);

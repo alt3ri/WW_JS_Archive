@@ -9,9 +9,9 @@ const UE = require("ue"),
 class GiftPackageMonthlyCardItem extends UiPanelBase_1.UiPanelBase {
   constructor(e, t) {
     super(),
-      (this.u3i = void 0),
-      (this.e2i = void 0),
-      (this.c3i = e),
+      (this.u4i = void 0),
+      (this.eFi = void 0),
+      (this.c4i = e),
       this.CreateThenShowByResourceIdAsync("UiItem_GiftPackageMonthlyCard", t);
   }
   OnRegisterComponent() {
@@ -22,12 +22,12 @@ class GiftPackageMonthlyCardItem extends UiPanelBase_1.UiPanelBase {
     ];
   }
   OnStart() {
-    (this.u3i = new GiftPackageItem_1.GiftPackageItem()),
-      this.u3i.Initialize(this.GetItem(0)),
-      this.u3i.SetBelongViewName("GiftPackageDetailsView"),
-      (this.e2i = new GiftPackageItem_1.GiftPackageItem()),
-      this.e2i.Initialize(this.GetItem(1)),
-      this.u3i.SetBelongViewName("GiftPackageDetailsView"),
+    (this.u4i = new GiftPackageItem_1.GiftPackageItem()),
+      this.u4i.Initialize(this.GetItem(0)),
+      this.u4i.SetBelongViewName("GiftPackageDetailsView"),
+      (this.eFi = new GiftPackageItem_1.GiftPackageItem()),
+      this.eFi.Initialize(this.GetItem(1)),
+      this.u4i.SetBelongViewName("GiftPackageDetailsView"),
       this.InitDailyRewardItem(),
       this.Refresh();
   }
@@ -38,16 +38,16 @@ class GiftPackageMonthlyCardItem extends UiPanelBase_1.UiPanelBase {
       t = CommonParamById_1.configCommonParamById.GetIntConfig(
         "MonthCardDailyItemCount",
       );
-    this.e2i.UpdateItem(e, t);
+    this.eFi.UpdateItem(e, t);
   }
   Update(e) {
-    (this.c3i = e), this.Refresh();
+    (this.c4i = e), this.Refresh();
   }
   Refresh() {
     var e;
     this.InAsyncLoading() ||
-      ((e = ConfigManager_1.ConfigManager.MonthCardConfig.GetConfig(this.c3i)),
-      this.u3i.UpdateItem(e.ItemId, e.Count));
+      ((e = ConfigManager_1.ConfigManager.MonthCardConfig.GetConfig(this.c4i)),
+      this.u4i.UpdateItem(e.ItemId, e.Count));
   }
 }
 exports.GiftPackageMonthlyCardItem = GiftPackageMonthlyCardItem;

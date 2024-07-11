@@ -9,9 +9,9 @@ class Stat {
   constructor(t, r) {
     (this.Name = t),
       (this.Desc = r),
-      (this.S9 = 1),
+      (this.E9 = 1),
       (this.ac = 0),
-      (this.E9 = -1);
+      (this.S9 = -1);
   }
   static get Enable() {
     return CycleCounter_1.CycleCounter.IsEnabled;
@@ -30,9 +30,9 @@ class Stat {
         Log_1.Log.Warn("Stat", 31, "名字过长", ["name", r]),
       (o = r.substring(0, Stat.I9)));
     var s = new Stat(o, e);
-    switch (((s.S9 = t), (s.ac = 2), t)) {
+    switch (((s.E9 = t), (s.ac = 2), t)) {
       case 1:
-        s.E9 = UE.KuroJsStatsLibrary.CreateCycleCounter(o, e, a);
+        s.S9 = UE.KuroJsStatsLibrary.CreateCycleCounter(o, e, a);
         break;
       case 2:
         UE.KuroJsStatsLibrary.CreateSimpleSeconds(o, e, a, !0);

@@ -16,30 +16,30 @@ const UE = require("ue"),
 class BossRushMainView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.upt = []),
+      (this.yvt = []),
       (this.TabViewComponent = void 0),
       (this.TabComponent = void 0),
-      (this.q8i = 0),
-      (this.nPr = (e) => {
-        this.TabComponent?.SelectToggleByIndex(this.sPr(e));
+      (this.b9i = 0),
+      (this.hyn = (e) => {
+        this.TabComponent?.SelectToggleByIndex(this.lyn(e));
       }),
       (this.fqe = (e, t) => {
         return new CommonTabItem_1.CommonTabItem();
       }),
       (this.pqe = (e) => {
-        this.q8i = e;
-        var t = this.upt[e],
+        this.b9i = e;
+        var t = this.yvt[e],
           i = t.ChildViewName,
           e = this.TabComponent.GetTabItemByIndex(e);
         this.TabViewComponent.ToggleCallBack(t, i, e);
       }),
       (this.yqe = (e) => new CommonTabData_1.CommonTabData("", void 0)),
-      (this.W9t = () => {
+      (this.W7t = () => {
         var e;
-        0 !== this.q8i
-          ? ((e = this.upt[this.q8i - 1].ChildViewName),
+        0 !== this.b9i
+          ? ((e = this.yvt[this.b9i - 1].ChildViewName),
             (ModelManager_1.ModelManager.BossRushModel.PlayBackAnimation = !0),
-            this.nPr(e))
+            this.hyn(e))
           : this.CloseMe();
       });
   }
@@ -52,11 +52,11 @@ class BossRushMainView extends UiViewBase_1.UiViewBase {
   async OnBeforeStartAsync() {
     (ModelManager_1.ModelManager.BossRushModel.CurrentSelectActivityId =
       this.OpenParam),
-      (this.upt =
+      (this.yvt =
         ConfigManager_1.ConfigManager.DynamicTabConfig.GetViewTabList(
           "BossRushMainView",
         )),
-      await this.aPr(),
+      await this._yn(),
       (this.TabViewComponent = new TabViewComponent_1.TabViewComponent(
         this.GetItem(1),
       ));
@@ -64,19 +64,19 @@ class BossRushMainView extends UiViewBase_1.UiViewBase {
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.RequestChangeBossRushView,
-      this.nPr,
+      this.hyn,
     );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.RequestChangeBossRushView,
-      this.nPr,
+      this.hyn,
     );
   }
   OnStart() {
-    this.TabComponent.SelectToggleByIndex(0, !0);
+    this.TabComponent?.SelectToggleByIndex(this.lyn("BossRushSelectView"), !0);
   }
-  async aPr() {
+  async _yn() {
     var e = new CommonTabComponentData_1.CommonTabComponentData(
       this.fqe,
       this.pqe,
@@ -86,7 +86,7 @@ class BossRushMainView extends UiViewBase_1.UiViewBase {
       new TabComponentWithCaptionItem_1.TabComponentWithCaptionItem(
         this.GetItem(0),
         e,
-        this.W9t,
+        this.W7t,
       )),
       this.TabComponent.SetScrollViewVisible(!1),
       (this.TabComponent.NeedCaptionSwitchWithToggle = !1),
@@ -96,14 +96,11 @@ class BossRushMainView extends UiViewBase_1.UiViewBase {
           "Activity_100805001_Title",
         ),
       ),
-      await this.TabComponent.RefreshTabItemByLengthAsync(this.upt.length);
+      await this.TabComponent.RefreshTabItemByLengthAsync(this.yvt.length);
   }
-  OnBeforeShow() {
-    this.TabComponent?.SelectToggleByIndex(this.sPr("BossRushSelectView"), !0);
-  }
-  sPr(t) {
-    for (let e = 0; e < this.upt.length; e++)
-      if (this.upt[e].ChildViewName === t) return e;
+  lyn(t) {
+    for (let e = 0; e < this.yvt.length; e++)
+      if (this.yvt[e].ChildViewName === t) return e;
     return 0;
   }
 }

@@ -10,12 +10,12 @@ const UE = require("ue"),
 class AimUnit extends HudUnitBase_1.HudUnitBase {
   constructor() {
     super(...arguments),
-      (this.Tei = 0),
-      (this.Lei = !1),
-      (this.Dei = void 0),
-      (this.Rei = !1),
-      (this.EPe = void 0),
-      (this.Uei = void 0);
+      (this.Tti = 0),
+      (this.Lti = !1),
+      (this.Dti = void 0),
+      (this.Rti = !1),
+      (this.SPe = void 0),
+      (this.Uti = void 0);
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -34,7 +34,7 @@ class AimUnit extends HudUnitBase_1.HudUnitBase {
     ];
   }
   OnStart() {
-    (this.Dei = [
+    (this.Dti = [
       this.GetSprite(1),
       this.GetSprite(2),
       this.GetSprite(3),
@@ -47,100 +47,100 @@ class AimUnit extends HudUnitBase_1.HudUnitBase {
       this.GetSprite(10),
       this.GetSprite(11),
     ]),
-      (this.EPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem));
+      (this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem));
   }
   OnBeforeDestroy() {
-    this.EPe?.Clear(), (this.EPe = void 0), this.Aei();
+    this.SPe?.Clear(), (this.SPe = void 0), this.Ati();
   }
   SetTargetVisible(t, i) {
-    (this.Lei = t),
-      this.Aei(),
-      i || t || !this.GetActive() || 0 === this.Tei
-        ? (t && (this.EPe.StopCurrentSequence(), this.GetItem(0).SetAlpha(1)),
+    (this.Lti = t),
+      this.Ati(),
+      i || t || !this.GetActive() || 0 === this.Tti
+        ? (t && (this.SPe.StopCurrentSequence(), this.GetItem(0).SetAlpha(1)),
           this.SetVisible(t))
         : this.SetAimStatus(0);
   }
   GetTargetVisible() {
-    return this.Lei;
+    return this.Lti;
   }
   SetAimStatus(t) {
-    if (this.Tei !== t) {
+    if (this.Tti !== t) {
       switch (t) {
         case 0:
-          this.Pei();
+          this.Pti();
           break;
         case 1:
-          this.xei();
+          this.xti();
           break;
         case 2:
-          this.wei();
+          this.wti();
           break;
         case 3:
-          this.Bei();
+          this.Bti();
       }
-      this.Tei = t;
+      this.Tti = t;
     }
   }
-  xei() {
-    this.bei(!1),
-      this.qei(!1),
-      3 === this.Tei
-        ? this.Gei("Change", !0)
-        : 0 === this.Tei && this.Gei("Start1");
+  xti() {
+    this.bti(!1),
+      this.qti(!1),
+      3 === this.Tti
+        ? this.Gti("Change", !0)
+        : 0 === this.Tti && this.Gti("Start1");
   }
-  wei() {
-    this.bei(!0),
-      this.qei(!1),
-      3 === this.Tei
-        ? this.Gei("Change", !0)
-        : 0 === this.Tei && this.Gei("Start1");
+  wti() {
+    this.bti(!0),
+      this.qti(!1),
+      3 === this.Tti
+        ? this.Gti("Change", !0)
+        : 0 === this.Tti && this.Gti("Start1");
   }
-  Bei() {
-    this.bei(!0),
-      this.qei(!0),
-      2 === this.Tei || 1 === this.Tei
-        ? this.Gei("Change")
-        : 0 === this.Tei && this.Gei("Start2");
+  Bti() {
+    this.bti(!0),
+      this.qti(!0),
+      2 === this.Tti || 1 === this.Tti
+        ? this.Gti("Change")
+        : 0 === this.Tti && this.Gti("Start2");
   }
-  Pei() {
-    this.Gei("close"), this.Nei();
+  Pti() {
+    this.Gti("close"), this.Nti();
   }
-  Gei(t, i = !1) {
-    this.Aei(),
-      this.EPe.StopCurrentSequence(),
-      this.EPe.PlaySequencePurely(t, !1, i);
+  Gti(t, i = !1) {
+    this.Ati(),
+      this.SPe.StopCurrentSequence(),
+      this.SPe.PlaySequencePurely(t, !1, i);
   }
   SetActive(t) {
-    (t && !this.Lei) || super.SetActive(t);
+    (t && !this.Lti) || super.SetActive(t);
   }
-  Nei() {
-    this.Uei = TimerSystem_1.TimerSystem.Delay(() => {
-      this.SetActive(!1), (this.Uei = void 0);
+  Nti() {
+    this.Uti = TimerSystem_1.TimerSystem.Delay(() => {
+      this.SetActive(!1), (this.Uti = void 0);
     }, CLOSE_ANIM_TIME);
   }
-  Aei() {
-    this.Uei &&
-      (TimerSystem_1.TimerSystem.Remove(this.Uei), (this.Uei = void 0));
+  Ati() {
+    this.Uti &&
+      (TimerSystem_1.TimerSystem.Remove(this.Uti), (this.Uti = void 0));
   }
-  bei(t) {
-    if (void 0 === this.Rei || this.Rei !== t) {
-      this.Rei = t;
-      var i = this.Rei ? AimUnit.Oei : AimUnit.kei;
-      for (const s of this.Dei) s.SetColor(i);
+  bti(t) {
+    if (void 0 === this.Rti || this.Rti !== t) {
+      this.Rti = t;
+      var i = this.Rti ? AimUnit.Oti : AimUnit.kti;
+      for (const s of this.Dti) s.SetColor(i);
     }
   }
-  qei(t) {
+  qti(t) {
     this.GetSprite(6).SetAlpha(t ? 0 : 1),
       this.GetSprite(7).SetAlpha(t ? 0 : 1),
       this.GetSprite(8).SetAlpha(t ? 1 : 0),
       this.GetSprite(9).SetAlpha(t ? 1 : 0);
   }
 }
-((exports.AimUnit = AimUnit).kei = new UE.Color(
+((exports.AimUnit = AimUnit).kti = new UE.Color(
   MAX_BYTE,
   MAX_BYTE,
   MAX_BYTE,
   MAX_BYTE,
 )),
-  (AimUnit.Oei = new UE.Color(MAX_BYTE, 0, 0, MAX_BYTE));
+  (AimUnit.Oti = new UE.Color(MAX_BYTE, 0, 0, MAX_BYTE));
 //# sourceMappingURL=ArmUnit.js.map

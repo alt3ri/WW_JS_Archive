@@ -8,8 +8,8 @@ const UE = require("ue"),
 class RewardExploreScore extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this.F7e = void 0),
-      (this.yPr = void 0),
+      (this.ZHe = void 0),
+      (this.Lyn = void 0),
       (this.VOe = () => {
         return new ScoreItem();
       });
@@ -21,20 +21,20 @@ class RewardExploreScore extends UiPanelBase_1.UiPanelBase {
     ];
   }
   async OnBeforeStartAsync() {
-    (this.yPr = new NewRecordItem()),
-      await this.yPr.CreateByActorAsync(this.GetItem(1).GetOwner()),
-      this.yPr.SetActive(!0);
+    (this.Lyn = new NewRecordItem()),
+      await this.Lyn.CreateByActorAsync(this.GetItem(1).GetOwner()),
+      this.Lyn.SetActive(!0);
   }
   OnStart() {
     var e = this.GetScrollViewWithScrollbar(0);
-    this.F7e = new GenericLayout_1.GenericLayout(
+    this.ZHe = new GenericLayout_1.GenericLayout(
       e.GetContent().GetComponentByClass(UE.UILayoutBase.StaticClass()),
       this.VOe,
     );
   }
   OnBeforeDestroy() {}
   Refresh(e) {
-    this.F7e?.RefreshByData(e.TargetReached), this.yPr?.Refresh(e);
+    this.ZHe?.RefreshByData(e.TargetReached), this.Lyn?.Refresh(e);
   }
 }
 exports.RewardExploreScore = RewardExploreScore;
@@ -58,9 +58,9 @@ class ScoreItem extends UiPanelBase_1.UiPanelBase {
       (this.BtnBindInfo = []);
   }
   Refresh(e, t, s) {
-    this.C4e(e), this.Pqe(e);
+    this.P5e(e), this.Pqe(e);
   }
-  C4e(e) {
+  P5e(e) {
     LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(1), e.DescriptionTextId);
   }
   Pqe(e) {
@@ -77,15 +77,15 @@ class NewRecordItem extends UiPanelBase_1.UiPanelBase {
       (this.BtnBindInfo = []);
   }
   Refresh(e) {
-    this.mGe(e), this.IPr(e), this.D0i(e.IfNewRecord);
+    this.mGe(e), this.Dyn(e), this.Dfi(e.IfNewRecord);
   }
   mGe(e) {
     LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(0), e.RecordTextId);
   }
-  IPr(e) {
+  Dyn(e) {
     this.GetText(1)?.SetText(e.FullScore.toString());
   }
-  D0i(e) {
+  Dfi(e) {
     this.GetItem(2)?.SetUIActive(e);
   }
 }

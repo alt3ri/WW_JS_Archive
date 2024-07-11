@@ -16,7 +16,7 @@ class ActivityLongShanController extends ActivityControllerBase_1.ActivityContro
   constructor() {
     super(...arguments),
       (this.TOe = (e) => {
-        ActivityLongShanController.GetActivityData().UpdateStage(e.W0s);
+        ActivityLongShanController.GetActivityData().UpdateStage(e.lMs);
       });
   }
   OnGetIsOpeningActivityRelativeView() {
@@ -31,7 +31,7 @@ class ActivityLongShanController extends ActivityControllerBase_1.ActivityContro
   }
   OnCreateActivityData(e) {
     return (
-      (ActivityLongShanController.LOe = e.Ekn),
+      (ActivityLongShanController.LOe = e.J4n),
       new ActivityLongShanData_1.ActivityLongShanData()
     );
   }
@@ -39,10 +39,10 @@ class ActivityLongShanController extends ActivityControllerBase_1.ActivityContro
     return (ActivityLongShanController.DOe = []), !0;
   }
   OnRegisterNetEvent() {
-    Net_1.Net.Register(28238, this.TOe);
+    Net_1.Net.Register(23733, this.TOe);
   }
   OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(28238);
+    Net_1.Net.UnRegister(23733);
   }
   static GetActivityData() {
     return ModelManager_1.ModelManager.ActivityModel.GetActivityById(
@@ -63,8 +63,8 @@ class ActivityLongShanController extends ActivityControllerBase_1.ActivityContro
     var e;
     this.DOe.includes(t) ||
       (this.DOe.push(t),
-      ((e = Protocol_1.Aki.Protocol.Eds.create()).XFn = [t]),
-      Net_1.Net.Call(18553, e, (e) => {
+      ((e = Protocol_1.Aki.Protocol.fgs.create()).I6n = [t]),
+      Net_1.Net.Call(14336, e, (e) => {
         e && this.DOe.splice(this.DOe.indexOf(t), 1);
       }));
   }

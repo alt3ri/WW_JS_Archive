@@ -7,7 +7,7 @@ const UE = require("ue"),
   InputMultiKeyItemGroup_1 = require("../../../Common/InputKey/InputMultiKeyItemGroup");
 class SpecialEnergyBarKeyItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
-    super(...arguments), (this.xet = void 0), (this.Lo = void 0);
+    super(...arguments), (this.Qtt = void 0), (this.Lo = void 0);
   }
   SetConfig(e) {
     this.Lo = e;
@@ -16,8 +16,8 @@ class SpecialEnergyBarKeyItem extends UiPanelBase_1.UiPanelBase {
     this.ComponentRegisterInfos = [[0, UE.UIItem]];
   }
   async OnBeforeStartAsync() {
-    (this.xet = new InputMultiKeyItemGroup_1.InputMultiKeyItemGroup()),
-      await this.xet.CreateByActorAsync(this.GetItem(0).GetOwner());
+    (this.Qtt = new InputMultiKeyItemGroup_1.InputMultiKeyItemGroup()),
+      await this.Qtt.CreateByActorAsync(this.GetItem(0).GetOwner());
   }
   OnStart() {
     var e = this.Lo.KeyInfoList,
@@ -37,13 +37,13 @@ class SpecialEnergyBarKeyItem extends UiPanelBase_1.UiPanelBase {
           i = "";
       }
     t = {
-      SingleActionOrAxisKeyItem: this.dmt(t),
-      DoubleActionOrAxisKeyItem: e ? this.dmt(e) : void 0,
+      SingleActionOrAxisKeyItem: this.Ldt(t),
+      DoubleActionOrAxisKeyItem: e ? this.Ldt(e) : void 0,
       LinkString: i,
     };
-    this.xet?.Refresh(t), this.xet?.SetActive(!0);
+    this.Qtt?.Refresh(t), this.Qtt?.SetActive(!0);
   }
-  dmt(e) {
+  Ldt(e) {
     var t = 1 === e.Action;
     return {
       ActionOrAxisName: InputEnums_1.EInputAction[e.ActionType],
@@ -52,7 +52,7 @@ class SpecialEnergyBarKeyItem extends UiPanelBase_1.UiPanelBase {
     };
   }
   RefreshKeyEnable(e, t) {
-    this.xet?.SetEnable(e, t);
+    this.Qtt?.SetEnable(e, t);
   }
 }
 exports.SpecialEnergyBarKeyItem = SpecialEnergyBarKeyItem;

@@ -7,11 +7,11 @@ const EventDefine_1 = require("../../../../../../Common/Event/EventDefine"),
   ExtraEffectBase_1 = require("./ExtraEffectBase");
 class ExtraEffectBehaviorControl extends ExtraEffectBase_1.BuffEffect {
   constructor() {
-    super(...arguments), (this.rQo = 0), (this.dce = !1);
+    super(...arguments), (this.tXo = 0), (this.dce = !1);
   }
   InitParameters(t) {
     t = t.ExtraEffectParameters;
-    this.rQo = Number(t[0] ?? 0);
+    this.tXo = Number(t[0] ?? 0);
   }
   OnCreated() {
     this.TryExecute({}, this.OwnerBuffComponent) ||
@@ -23,7 +23,7 @@ class ExtraEffectBehaviorControl extends ExtraEffectBase_1.BuffEffect {
       ));
   }
   OnRemoved() {
-    this.dce && (this.nQo(!1), 1 === this.rQo) && this.sQo(!1);
+    this.dce && (this.iXo(!1), 1 === this.tXo) && this.oXo(!1);
   }
   OnExecute() {
     this.dce = !0;
@@ -31,9 +31,9 @@ class ExtraEffectBehaviorControl extends ExtraEffectBase_1.BuffEffect {
     for (const e of this.OwnerEffectManager.FilterById(10))
       e !== this &&
         this.OwnerBuffComponent.RemoveBuffByHandle(e.ActiveHandleId, -1, t);
-    this.nQo(!0), 1 === this.rQo && this.sQo(!0);
+    this.iXo(!0), 1 === this.tXo && this.oXo(!0);
   }
-  nQo(t) {
+  iXo(t) {
     EventSystem_1.EventSystem.EmitWithTarget(
       this.OwnerEntity,
       EventDefine_1.EEventName.AiTauntAddOrRemove,
@@ -42,7 +42,7 @@ class ExtraEffectBehaviorControl extends ExtraEffectBase_1.BuffEffect {
       this.ActiveHandleId,
     );
   }
-  sQo(t) {
+  oXo(t) {
     t
       ? BlackboardController_1.BlackboardController.SetEntityIdByEntity(
           this.OwnerEntity.Id,

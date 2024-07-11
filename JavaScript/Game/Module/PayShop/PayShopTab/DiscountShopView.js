@@ -23,12 +23,12 @@ class DiscountShopView extends UiTabViewBase_1.UiTabViewBase {
       (this.LoopScrollView = void 0),
       (this.CurrentShopId = 0),
       (this.TDe = void 0),
-      (this.tFi = (e, t, i) => {
+      (this.t3i = (e, t, i) => {
         this.CurrentShopId === t &&
           this.CurrentSelectTabId === i &&
           this.LoopScrollView.RefreshAllGridProxies();
       }),
-      (this.iFi = (e) => {
+      (this.i3i = (e) => {
         this.RefreshLoopScroll(this.CurrentSelectTabId);
       }),
       (this.InitItem = () => {
@@ -67,21 +67,21 @@ class DiscountShopView extends UiTabViewBase_1.UiTabViewBase {
   AddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.GoodsSoldOut,
-      this.iFi,
+      this.i3i,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.RefreshGoods,
-        this.tFi,
+        this.t3i,
       );
   }
   RemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.GoodsSoldOut,
-      this.iFi,
+      this.i3i,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.RefreshGoods,
-        this.tFi,
+        this.t3i,
       );
   }
   OnStart() {
@@ -138,7 +138,7 @@ class DiscountShopView extends UiTabViewBase_1.UiTabViewBase {
     }
     this.GetText(5).SetUIActive(!1),
       this.UpdateTabs(e),
-      this.Tit(),
+      this.kot(),
       this.OnDiscountShopAfterShow(),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("Shop", 11, "PayShop:TabView 界面AfterShow", [
@@ -147,16 +147,16 @@ class DiscountShopView extends UiTabViewBase_1.UiTabViewBase {
         ]);
   }
   OnDiscountShopAfterShow() {}
-  Tit() {
+  kot() {
     this.TDe = TimerSystem_1.TimerSystem.Forever(() => {
-      this.oFi();
+      this.o3i();
     }, TIMEGAP);
   }
-  p7e() {
+  xHe() {
     void 0 !== this.TDe &&
       (TimerSystem_1.TimerSystem.Remove(this.TDe), (this.TDe = void 0));
   }
-  oFi() {
+  o3i() {
     EventSystem_1.EventSystem.Emit(
       EventDefine_1.EEventName.DiscountShopTimerRefresh,
     );
@@ -192,7 +192,7 @@ class DiscountShopView extends UiTabViewBase_1.UiTabViewBase {
     "number" != typeof e && this.RefreshLoopScroll(this.CurrentSelectTabId);
   }
   OnHideUiTabViewBase(e) {
-    this.p7e();
+    this.xHe();
   }
   OnBeforeDestroy() {
     this.TabGroup.Destroy(), this.LoopScrollView.ClearGridProxies();

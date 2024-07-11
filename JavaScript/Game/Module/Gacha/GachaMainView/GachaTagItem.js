@@ -14,7 +14,7 @@ class GachaTagItem extends GridProxyAbstract_1.GridProxyAbstract {
       (this.Data = void 0),
       (this.SelectCallback = void 0),
       (this.CanExecuteChange = void 0),
-      (this.ujt = () => {
+      (this.uWt = () => {
         this.SelectCallback?.(this.GridIndex);
       });
   }
@@ -31,7 +31,7 @@ class GachaTagItem extends GridProxyAbstract_1.GridProxyAbstract {
       [5, UE.UISprite],
       [6, UE.UIText],
     ]),
-      (this.BtnBindInfo = [[3, this.ujt]]);
+      (this.BtnBindInfo = [[3, this.uWt]]);
   }
   OnStart() {
     this.GetExtendToggle(3).CanExecuteChange.Bind(

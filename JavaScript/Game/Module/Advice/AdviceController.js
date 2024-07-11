@@ -34,15 +34,15 @@ class AdviceController extends ControllerBase_1.ControllerBase {
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnItemUse,
-        this.k6e,
+        this.e9e,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OriginWorldLevelUp,
-        AdviceController.F6e,
+        AdviceController.t9e,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnPlayerLevelChanged,
-        this.Cke,
+        this.x2e,
       );
   }
   static OnRemoveEvents() {
@@ -52,28 +52,28 @@ class AdviceController extends ControllerBase_1.ControllerBase {
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnItemUse,
-        this.k6e,
+        this.e9e,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OriginWorldLevelUp,
-        AdviceController.F6e,
+        AdviceController.t9e,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnPlayerLevelChanged,
-        this.Cke,
+        this.x2e,
       );
   }
   static OnRegisterNetEvent() {
-    Net_1.Net.Register(19692, AdviceController.V6e),
-      Net_1.Net.Register(14456, AdviceController.H6e),
-      Net_1.Net.Register(3560, AdviceController.j6e),
-      Net_1.Net.Register(17909, AdviceController.W6e);
+    Net_1.Net.Register(18749, AdviceController.i9e),
+      Net_1.Net.Register(24290, AdviceController.o9e),
+      Net_1.Net.Register(20612, AdviceController.r9e),
+      Net_1.Net.Register(23305, AdviceController.n9e);
   }
   static OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(19692),
-      Net_1.Net.UnRegister(14456),
-      Net_1.Net.UnRegister(17909),
-      Net_1.Net.UnRegister(3560);
+    Net_1.Net.UnRegister(18749),
+      Net_1.Net.UnRegister(24290),
+      Net_1.Net.UnRegister(23305),
+      Net_1.Net.UnRegister(20612);
   }
   static OpenAdviceConjunctionSelectView() {
     var e = ModelManager_1.ModelManager.AdviceModel;
@@ -127,10 +127,10 @@ class AdviceController extends ControllerBase_1.ControllerBase {
       UiManager_1.UiManager.OpenView("AdviceView");
   }
   static async OpenAdviceInfoView(e) {
-    if (AdviceController.K6e()) return !1;
+    if (AdviceController.s9e()) return !1;
     {
       ModelManager_1.ModelManager.AdviceModel.SetCurrentEntityId(e),
-        this.Q6e(e);
+        this.a9e(e);
       var e = await UiManager_1.UiManager.OpenViewAsync("AdviceInfoView"),
         r =
           (EventSystem_1.EventSystem.Emit(
@@ -168,9 +168,9 @@ class AdviceController extends ControllerBase_1.ControllerBase {
       );
     }
   }
-  static K6e() {
+  static s9e() {
     var e = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
-    if (e?.Valid && e.Entity.GetComponent(185).HasTag(1996802261))
+    if (e?.Valid && e.Entity.GetComponent(188).HasTag(1996802261))
       return (
         ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
           "BattleCannotOpenAdvice",
@@ -179,27 +179,27 @@ class AdviceController extends ControllerBase_1.ControllerBase {
       );
     return !1;
   }
-  static Q6e(e) {
+  static a9e(e) {
     var r = EntitySystem_1.EntitySystem.Get(e);
     0 < r.GetComponent(0).GetAdviceInfo().GetAdviceData().GetAdviceMotionId() &&
       ModelManager_1.ModelManager.AdviceModel.GetAdviceMotionActor(
         e,
       ).PlayMotion(e),
-      r.GetComponent(127)?.DoInteract();
+      r.GetComponent(129)?.DoInteract();
   }
   static RequestCreateAdvice(e, r, t, o) {
-    const n = new Protocol_1.Aki.Protocol.kjn();
-    (n.M3n = { X: e.X, Y: e.Y, Z: e.Z }),
-      (n.S3n = { Pitch: r.Pitch, Yaw: r.Yaw, Roll: r.Roll }),
-      (n.E3n = new Array()),
+    const n = new Protocol_1.Aki.Protocol.xXn();
+    (n.e8n = { X: e.X, Y: e.Y, Z: e.Z }),
+      (n.t8n = { Pitch: r.Pitch, Yaw: r.Yaw, Roll: r.Roll }),
+      (n.i8n = new Array()),
       t.forEach((e) => {
-        n.E3n.push(e.ConvertToPb());
+        n.i8n.push(e.ConvertToPb());
       }),
-      Net_1.Net.Call(7233, n, (e) => {
-        e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys
+      Net_1.Net.Call(12390, n, (e) => {
+        e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs
           ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-              e.lkn,
-              19506,
+              e.O4n,
+              17280,
             )
           : (o && o(),
             ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
@@ -209,42 +209,42 @@ class AdviceController extends ControllerBase_1.ControllerBase {
       });
   }
   static RequestModifyAdvice(r, t) {
-    const o = new Protocol_1.Aki.Protocol.Fjn();
-    (o.Ekn = r),
-      (o.E3n = new Array()),
+    const o = new Protocol_1.Aki.Protocol.BXn();
+    (o.J4n = r),
+      (o.i8n = new Array()),
       t.forEach((e) => {
-        o.E3n.push(e.ConvertToPb());
+        o.i8n.push(e.ConvertToPb());
       }),
-      Net_1.Net.Call(6623, o, (e) => {
-        e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys
+      Net_1.Net.Call(16671, o, (e) => {
+        e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs
           ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-              e.lkn,
-              1471,
+              e.O4n,
+              11813,
             )
           : ModelManager_1.ModelManager.AdviceModel.OnModifyAdvice(r, t);
       });
   }
   static RequestDeleteAdvice(r) {
-    var e = new Protocol_1.Aki.Protocol.$jn();
-    (e.Ekn = r),
-      Net_1.Net.Call(8923, e, (e) => {
-        e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys
+    var e = new Protocol_1.Aki.Protocol.GXn();
+    (e.J4n = r),
+      Net_1.Net.Call(2326, e, (e) => {
+        e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs
           ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-              e.lkn,
-              4695,
+              e.O4n,
+              4275,
             )
           : ModelManager_1.ModelManager.AdviceModel.OnDeleteAdvice(r);
       });
   }
   static RequestVote(e, r, t) {
-    var o = new Protocol_1.Aki.Protocol.jjn();
-    (o.Ekn = e),
-      (o.Ikn = t),
-      Net_1.Net.Call(4749, o, (e) => {
-        e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys
+    var o = new Protocol_1.Aki.Protocol.kXn();
+    (o.J4n = e),
+      (o.Z4n = t),
+      Net_1.Net.Call(14822, o, (e) => {
+        e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs
           ? (ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-              e.lkn,
-              22770,
+              e.O4n,
+              24579,
             ),
             EventSystem_1.EventSystem.Emit(
               EventDefine_1.EEventName.OnAdviceVoteNotify,
@@ -253,15 +253,15 @@ class AdviceController extends ControllerBase_1.ControllerBase {
       });
   }
   static RequestSetAdviceShowState(e) {
-    const r = new Protocol_1.Aki.Protocol.wjn();
-    (r.zkn = e),
-      Net_1.Net.Call(10091, r, (e) => {
-        e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys
+    const r = new Protocol_1.Aki.Protocol.LXn();
+    (r.D5n = e),
+      Net_1.Net.Call(8003, r, (e) => {
+        e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs
           ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-              e.lkn,
-              12012,
+              e.O4n,
+              28178,
             )
-          : ModelManager_1.ModelManager.AdviceModel.SetAdviceShowSetting(r.zkn);
+          : ModelManager_1.ModelManager.AdviceModel.SetAdviceShowSetting(r.D5n);
       });
   }
   static CheckInInValidArea() {
@@ -317,14 +317,14 @@ class AdviceController extends ControllerBase_1.ControllerBase {
     var a = n.HitResult.GetHitCount();
     for (let e = 0; e < a; ++e) {
       var i = n.HitResult.Actors.Get(e);
-      if (!this.X6e(i))
+      if (!this.h9e(i))
         return (
           ModelManager_1.ModelManager.TraceElementModel.ClearActorTrace(), !1
         );
     }
     return ModelManager_1.ModelManager.TraceElementModel.ClearActorTrace(), !0;
   }
-  static X6e(e) {
+  static h9e(e) {
     if (
       e &&
       UE.KuroStaticLibrary.IsImplementInterface(
@@ -341,15 +341,15 @@ class AdviceController extends ControllerBase_1.ControllerBase {
     return !t?.Valid;
   }
 }
-((exports.AdviceController = AdviceController).F6e = () => {
+((exports.AdviceController = AdviceController).t9e = () => {
   UiManager_1.UiManager.IsViewShow("AdviceInfoView") &&
     UiManager_1.UiManager.CloseView("AdviceInfoView");
 }),
-  (AdviceController.Cke = (e, r, t, o, n, a, i) => {
+  (AdviceController.x2e = (e, r, t, o, n, a, i) => {
     UiManager_1.UiManager.IsViewShow("AdviceInfoView") &&
       UiManager_1.UiManager.CloseView("AdviceInfoView");
   }),
-  (AdviceController.k6e = (e, r) => {
+  (AdviceController.e9e = (e, r) => {
     var e = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfig(e);
     0 < e.Parameters.size &&
       void 0 !== (e = e.Parameters.get(exports.INFO_ADVICE_ITEM_TYPE)) &&
@@ -357,36 +357,36 @@ class AdviceController extends ControllerBase_1.ControllerBase {
       AdviceController.OpenAdviceCreateView();
   }),
   (AdviceController.RequestAdviceData = () => {
-    var e = new Protocol_1.Aki.Protocol.qjn();
-    Net_1.Net.Call(2962, e, (e) => {
-      e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys
+    var e = new Protocol_1.Aki.Protocol.PXn();
+    Net_1.Net.Call(18510, e, (e) => {
+      e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs
         ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-            e.lkn,
-            28578,
+            e.O4n,
+            2992,
           )
         : ModelManager_1.ModelManager.AdviceModel.PhraseAdviceData(e);
     });
   }),
-  (AdviceController.V6e = (e) => {
-    var r = MathUtils_1.MathUtils.LongToBigInt(e.Ekn),
+  (AdviceController.i9e = (e) => {
+    var r = MathUtils_1.MathUtils.LongToBigInt(e.J4n),
       r = Number(r),
       r = EntitySystem_1.EntitySystem.Get(r);
-    r && r.GetComponent(0).GetAdviceInfo().PhraseContent(e.E3n);
+    r && r.GetComponent(0).GetAdviceInfo().PhraseContent(e.i8n);
   }),
-  (AdviceController.H6e = (e) => {
-    var r = MathUtils_1.MathUtils.LongToNumber(e.Ekn),
+  (AdviceController.o9e = (e) => {
+    var r = MathUtils_1.MathUtils.LongToNumber(e.J4n),
       r = ModelManager_1.ModelManager.CreatureModel.GetEntity(r);
     r?.Valid &&
-      ((r = r.Entity.GetComponent(0)).GetAdviceInfo().PhraseVote(e.Tgs),
+      ((r = r.Entity.GetComponent(0)).GetAdviceInfo().PhraseVote(e.VMs),
       ModelManager_1.ModelManager.AdviceModel.OnAdviceVoteUpdate(
         r.GetAdviceInfo().GetAdviceData().GetAdviceBigId(),
         e,
       ));
   }),
-  (AdviceController.j6e = (e) => {
+  (AdviceController.r9e = (e) => {
     ModelManager_1.ModelManager.AdviceModel.OnAdviceUpdateNotify(e);
   }),
-  (AdviceController.W6e = (e) => {
-    ModelManager_1.ModelManager.AdviceModel.SetAdviceShowSetting(e.zkn);
+  (AdviceController.n9e = (e) => {
+    ModelManager_1.ModelManager.AdviceModel.SetAdviceShowSetting(e.D5n);
   });
 //# sourceMappingURL=AdviceController.js.map

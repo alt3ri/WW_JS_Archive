@@ -2,65 +2,65 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.WeaponModel = void 0);
 const Log_1 = require("../../../Core/Common/Log"),
+  ConfigCommon_1 = require("../../../Core/Config/ConfigCommon"),
   ModelBase_1 = require("../../../Core/Framework/ModelBase"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
   ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../Manager/ModelManager"),
   ItemDefines_1 = require("../Item/Data/ItemDefines"),
   WeaponDefine_1 = require("./WeaponDefine"),
-  WeaponInstance_1 = require("./WeaponInstance"),
-  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
-  ConfigCommon_1 = require("../../../Core/Config/ConfigCommon");
+  WeaponInstance_1 = require("./WeaponInstance");
 class WeaponModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
-      (this.UOo = new Map()),
-      (this.AOo = new Map()),
-      (this.POo = 0),
+      (this.Lko = new Map()),
+      (this.Dko = new Map()),
+      (this.Rko = 0),
       (this.BlueprintWeaponBreachLevel = 0),
-      (this.xOo = (e, t) => t.QualityId - e.QualityId);
+      (this.Uko = (e, t) => t.QualityId - e.QualityId);
   }
   AddWeaponData(e) {
     var e = this.CreateWeaponInstance(e),
       t = e.GetIncId(),
-      n = (this.UOo.set(t, e), e.HasRole());
+      n = (this.Lko.set(t, e), e.HasRole());
     n &&
-      ((n = e.GetRoleId()), this.AOo.set(n, t), Log_1.Log.CheckInfo()) &&
+      ((n = e.GetRoleId()), this.Dko.set(n, t), Log_1.Log.CheckInfo()) &&
       Log_1.Log.Info("Role", 44, "武器设置", ["roleId", n], ["incId", t]);
   }
   RemoveWeaponData(e) {
-    var t = this.UOo.get(e);
+    var t = this.Lko.get(e);
     t &&
-      (t.HasRole() && ((t = t.GetRoleId()), this.AOo.delete(t)),
-      this.UOo.delete(e));
+      (t.HasRole() && ((t = t.GetRoleId()), this.Dko.delete(t)),
+      this.Lko.delete(e));
   }
   CreateWeaponInstance(e) {
     var t = new WeaponInstance_1.WeaponInstance();
     return t.SetWeaponItem(e), t;
   }
   SetWeaponLevelData(e, t, n) {
-    e = this.UOo.get(e);
+    e = this.Lko.get(e);
     e && (e.SetExp(t), e.SetLevel(n));
   }
   SetWeaponBreachData(e, t) {
-    e = this.UOo.get(e);
+    e = this.Lko.get(e);
     e && e.SetBreachLevel(t);
   }
   SetWeaponResonanceData(e, t) {
-    e = this.UOo.get(e);
+    e = this.Lko.get(e);
     e && e.SetResonanceLevel(t);
   }
   GetWeaponLevelById(e) {
-    e = this.UOo.get(e);
+    e = this.Lko.get(e);
     return e ? e.GetLevel() : 0;
   }
   GetWeaponDataByRoleDataId(e, t = !0) {
     var t = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(e, t);
     return t.IsTrialRole() || t.IsOnlineRole()
       ? t.GetWeaponData()
-      : (t = this.AOo.get(e))
-        ? this.UOo.get(t)
+      : (t = this.Dko.get(e))
+        ? this.Lko.get(t)
         : void (
             Log_1.Log.CheckError() &&
             Log_1.Log.Error("Role", 59, "获取不到武器数据", ["roleDataId", e])
@@ -71,8 +71,8 @@ class WeaponModel extends ModelBase_1.ModelBase {
     return t
       ? t.IsTrialRole()
         ? t.GetWeaponData().GetItemId()
-        : (t = this.AOo.get(e))
-          ? this.UOo.get(t)?.GetItemId()
+        : (t = this.Dko.get(e))
+          ? this.Lko.get(t)?.GetItemId()
           : void (
               Log_1.Log.CheckError() &&
               Log_1.Log.Error("Role", 59, "获取不到武器数据", ["roleDataId", e])
@@ -81,22 +81,22 @@ class WeaponModel extends ModelBase_1.ModelBase {
           .InitWeaponItemId;
   }
   GetWeaponDataByIncId(e) {
-    return this.UOo.get(e);
+    return this.Lko.get(e);
   }
   WeaponRoleLoadEquip(e) {
-    for (const r of e.sort((e, t) => e.DVn - t.DVn)) {
-      var t = r.DVn,
-        n = r.AVn;
+    for (const r of e.sort((e, t) => e.ojn - t.ojn)) {
+      var t = r.ojn,
+        n = r.njn;
       this.ChangeWeaponEquip(n, t);
     }
     EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.EquipWeapon);
   }
   WeaponLevelUpResponse(e) {
-    this.SetWeaponLevelData(e.Ykn, e.RVn, e.UVn),
+    this.SetWeaponLevelData(e.T5n, e.ajn, e.sjn),
       EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.WeaponLevelUp),
-      this.qNo(e.Vms);
+      this.wOo(e.rvs);
   }
-  qNo(e) {
+  wOo(e) {
     var t = [];
     for (const r of Object.keys(e)) {
       var n = [{ IncId: 0, ItemId: Number.parseInt(r) }, e[r]];
@@ -108,14 +108,14 @@ class WeaponModel extends ModelBase_1.ModelBase {
     );
   }
   ChangeWeaponEquip(e, t) {
-    var n = this.UOo.get(e),
+    var n = this.Lko.get(e),
       r = n.GetRoleId();
     0 < r &&
-      (this.AOo.set(r, 0), Log_1.Log.CheckInfo()) &&
+      (this.Dko.set(r, 0), Log_1.Log.CheckInfo()) &&
       Log_1.Log.Info("Role", 44, "武器设置", ["lastRoleId", r], ["incId", 0]),
       n.SetRoleId(t),
       0 < t &&
-        (this.AOo.set(t, e), Log_1.Log.CheckInfo()) &&
+        (this.Dko.set(t, e), Log_1.Log.CheckInfo()) &&
         Log_1.Log.Info("Role", 44, "武器设置", ["roleId", t], ["incId", e]);
   }
   GetCurveValue(e, t, n, r) {
@@ -157,7 +157,7 @@ class WeaponModel extends ModelBase_1.ModelBase {
       n = ConfigCommon_1.ConfigCommon.ToList(
         ConfigManager_1.ConfigManager.ItemConfig.GetConfigListByItemType(4),
       );
-    n.sort(this.xOo);
+    n.sort(this.Uko);
     let r = e;
     for (const i of n) {
       var o,
@@ -212,10 +212,10 @@ class WeaponModel extends ModelBase_1.ModelBase {
     return r;
   }
   GetCurSelectViewName() {
-    return this.POo;
+    return this.Rko;
   }
   SetCurSelectViewName(e) {
-    this.POo = e;
+    this.Rko = e;
   }
   IsWeaponUsedByUncommonRole(e) {
     e = ModelManager_1.ModelManager.WeaponModel.GetWeaponDataByIncId(e);

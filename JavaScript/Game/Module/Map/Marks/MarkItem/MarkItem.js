@@ -13,69 +13,69 @@ const Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
 class MarkItem {
   constructor(t, e, i, s = 1) {
     (this.MapType = 2),
-      (this.kLi = 1),
+      (this.kDi = 1),
       (this.ShowPriority = 0),
       (this.IsDestroy = !1),
       (this.IsIgnoreScaleShow = !1),
       (this.ConfigScale = 1),
-      (this.FLi = void 0),
+      (this.FDi = void 0),
       (this.WorldPositionVector = void 0),
-      (this.VLi = !1),
+      (this.VDi = !1),
       (this.GridId = 0),
       (this.MapId = 0),
       (this.NeedPlayShowOrHideSeq = void 0),
-      (this.h9s = 1),
-      (this.HLi = () => {
-        this.VLi = !0;
+      (this.pta = 1),
+      (this.HDi = () => {
+        this.VDi = !0;
       }),
-      (this.jLi = () => {
-        this.VLi = !1;
+      (this.jDi = () => {
+        this.VDi = !1;
       }),
-      (this.WLi = !1),
-      (this.KLi = !1),
+      (this.WDi = !1),
+      (this.KDi = !1),
       (this.TrackTarget = void 0),
       (this.TrackSourceInner = 2),
-      (this.QLi = void 0),
+      (this.QDi = void 0),
       (this.InnerView = void 0),
-      (this.UBt = ""),
+      (this.xbt = ""),
       (this.IsOutOfBound = !1),
-      (this.XLi = !1),
+      (this.XDi = !1),
       (this.IsCanShowViewFinally = !1),
       (this.MapType = e),
-      (this.kLi = i),
-      (this.QLi = t),
+      (this.kDi = i),
+      (this.QDi = t),
       (this.TrackSourceInner = s),
       (this.IsOutOfBound = !1),
       (this.IsInAoiRange = !1),
-      (this.FLi = Vector_1.Vector.Create()),
+      (this.FDi = Vector_1.Vector.Create()),
       (this.WorldPositionVector = Vector_1.Vector.Create()),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.TeleportStart,
-        this.HLi,
+        this.HDi,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.TeleportComplete,
-        this.jLi,
+        this.jDi,
       );
   }
   get LogicWorldScale() {
-    return this.h9s;
+    return this.pta;
   }
   set LogicWorldScale(t) {
-    this.h9s = t;
+    this.pta = t;
   }
   get MarkScale() {
-    return this.kLi;
+    return this.kDi;
   }
   get UiPosition() {
     return this.WorldPosition
-      ? MapUtil_1.MapUtil.WorldPosition2UiPosition(this.WorldPosition, this.FLi)
+      ? MapUtil_1.MapUtil.WorldPosition2UiPosition(this.WorldPosition, this.FDi)
       : Vector_1.Vector.ZeroVectorProxy;
   }
   get IsViewCreate() {
     return !!this.InnerView && this.InnerView.IsShowOrShowing;
   }
-  $Li(t, e) {
+  $Di(t, e) {
     (e = e.Tuple), (t = t.Tuple);
     return Math.pow(t[0] - e[0], 2) + Math.pow(t[1] - e[1], 2);
   }
@@ -83,33 +83,16 @@ class MarkItem {
     2 !== this.MapType &&
       this.TrackTarget instanceof Vector2D_1.Vector2D &&
       ((t = GeneralLogicTreeUtil_1.GeneralLogicTreeUtil.GetPlayerLocation()),
-      this.$Li(t, this.TrackTarget) *
+      this.$Di(t, this.TrackTarget) *
         MapDefine_1.FLOAT_0_01 *
         MapDefine_1.FLOAT_0_01 <
         3600) &&
-      !this.VLi &&
+      !this.VDi &&
       ((t = MapUtil_1.MapUtil.WorldPosition2UiPosition(
         Vector_1.Vector.Create(this.TrackTarget.X, this.TrackTarget.Y, 0),
       )),
       (t = MapController_1.MapController.GetMarkPosition(t.X, -t.Y))
-        ? ((t = Vector_1.Vector.Create(t.X, -t.Y, t.Z)),
-          (t = MapUtil_1.MapUtil.UiPosition2WorldPosition(t, t)),
-          (this.TrackTarget = t),
-          MapController_1.MapController.UpdateCustomMapMarkPosition(
-            this.MarkId,
-            t.Z * MapDefine_1.FLOAT_0_01,
-          ),
-          (t = Vector_1.Vector.Create()),
-          this.TrackTarget.Multiply(MapDefine_1.FLOAT_0_01, t),
-          ModelManager_1.ModelManager.MapModel.UpdateCustomMarkInfo(
-            this.MarkId,
-            t,
-          ),
-          ModelManager_1.ModelManager.TrackModel.UpdateTrackData(
-            this.TrackSourceInner,
-            this.MarkId,
-            this.TrackTarget,
-          ))
+        ? this.UpdateCustomMapMarkPosition(t)
         : (this.TrackTarget = Vector_1.Vector.Create(
             this.TrackTarget.X,
             this.TrackTarget.Y,
@@ -123,6 +106,23 @@ class MarkItem {
       this.WorldPositionVector,
       t,
     );
+  }
+  UpdateCustomMapMarkPosition(t) {
+    var e;
+    9 === this.MarkType &&
+      ((e = Vector_1.Vector.Create(t.X, -t.Y, t.Z)),
+      (t = Vector_1.Vector.Create(t.X, t.Y, t.Z)),
+      (e = MapUtil_1.MapUtil.UiPosition2WorldPosition(e)),
+      (this.TrackTarget = e),
+      MapController_1.MapController.UpdateCustomMapMarkPosition(this.MarkId, t),
+      (e = Vector_1.Vector.Create()),
+      this.TrackTarget.Multiply(MapDefine_1.FLOAT_0_01, e),
+      ModelManager_1.ModelManager.MapModel.UpdateCustomMarkInfo(this.MarkId, e),
+      ModelManager_1.ModelManager.TrackModel.UpdateTrackData(
+        this.TrackSourceInner,
+        this.MarkId,
+        this.TrackTarget,
+      ));
   }
   SetTrackData(t) {
     this.TrackTarget = t;
@@ -139,44 +139,49 @@ class MarkItem {
   Destroy() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.TeleportStart,
-      this.HLi,
+      this.HDi,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.TeleportComplete,
-        this.jLi,
+        this.jDi,
       ),
       (this.IsDestroy = !0),
       this.OnDestroy(),
       this.ClearView(!0),
-      (this.QLi = void 0);
+      (this.QDi = void 0);
   }
   get IsInAoiRange() {
-    return this.WLi;
+    return this.WDi;
   }
   set IsInAoiRange(t) {
-    (this.WLi = t) ? this.YLi() : this.ClearView();
+    (this.WDi = t) ? this.YDi() : this.ClearView();
   }
-  YLi() {
+  YDi() {
     this.View ||
       (this.IsCanShowView &&
         (this.IsTracked || this.IsInAoiRange) &&
-        (this.OnCreateView(), this.InnerView?.InitializeMarkItemViewAsync()));
+        (this.OnCreateView(),
+        this.InnerView && (this.InnerView.EnableActorPoolReleaseLog = !1),
+        this.InnerView?.InitializeMarkItemViewAsync()));
   }
   ClearView(t = !1) {
     !this.InnerView ||
       (!t && (this.IsTracked || this.IsInAoiRange)) ||
-      (this.InnerView.Destroy(), (this.InnerView = void 0));
+      (this.InnerView.IsHideOrHiding ||
+        this.InnerView.IsDestroyOrDestroying ||
+        this.InnerView.Destroy(),
+      (this.InnerView = void 0));
   }
   get TrackSource() {
     return this.TrackSourceInner;
   }
   get IsTracked() {
-    return this.KLi;
+    return this.KDi;
   }
   set IsTracked(t) {
-    var e = this.KLi;
-    (this.KLi = t) && this.YLi(),
-      e !== this.KLi && (t ? this.OnStartTrack() : this.OnEndTrack());
+    var e = this.KDi;
+    (this.KDi = t) && this.YDi(),
+      e !== this.KDi && (t ? this.OnStartTrack() : this.OnEndTrack());
   }
   UpdateTrackState() {
     (this.IsCanShowView = this.CheckCanShowView()),
@@ -195,16 +200,16 @@ class MarkItem {
   OnUpdate(t) {}
   OnDestroy() {}
   get ViewRoot() {
-    return this.QLi;
+    return this.QDi;
   }
   get View() {
     return this.InnerView;
   }
   get IconPath() {
-    return this.UBt;
+    return this.xbt;
   }
   set IconPath(t) {
-    this.UBt !== t && (this.UBt = t);
+    this.xbt !== t && (this.xbt = t);
   }
   SetSelected(t) {
     this.InnerView && (this.View.IsSelected = t);
@@ -221,20 +226,20 @@ class MarkItem {
   SetConfigScale(t) {
     this.ConfigScale = t;
   }
-  get JLi() {
+  get JDi() {
     return ModelManager_1.ModelManager.MapModel.GetMarkForceVisible(
       this.MarkType,
       this.MarkId,
     );
   }
   get IsCanShowViewIntermediately() {
-    return this.XLi && this.JLi;
+    return this.XDi && this.JDi;
   }
   get IsCanShowView() {
     return this.IsCanShowViewIntermediately || this.IsCanShowViewFinally;
   }
   set IsCanShowView(t) {
-    this.XLi && !t && (this.XLi = t), (this.XLi = t) && this.JLi && this.YLi();
+    (this.XDi = t) && this.JDi && this.YDi();
   }
   CheckCanShowView() {
     return 2 === this.MapType;

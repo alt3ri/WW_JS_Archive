@@ -38,7 +38,7 @@ class BulletBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
         -1
       );
     var i = t.GetEntityNoBlueprint()?.GetComponent(33);
-    let u = i?.GetSkill(Number(l))?.CombatMessageId;
+    let u = i?.GetLoadingSkill(Number(l))?.CombatMessageId;
     if (!u && i?.Entity?.Id) {
       var n = EntitySystem_1.EntitySystem.GetComponent(
         i?.Entity?.Id,
@@ -48,13 +48,13 @@ class BulletBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
         const t =
           ModelManager_1.ModelManager.CreatureModel.GetEntity(n)?.Entity;
         n = t?.GetComponent(33);
-        u = n?.GetSkill(Number(l))?.CombatMessageId;
+        u = n?.GetLoadingSkill(Number(l))?.CombatMessageId;
       } else {
         n = PhantomUtil_1.PhantomUtil.GetSummonedEntity(
           i?.Entity,
-          Protocol_1.Aki.Protocol.Oqs.Proto_ESummonTypeConcomitantCustom,
+          Protocol_1.Aki.Protocol.Summon.L3s.Proto_ESummonTypeConcomitantCustom,
         )?.Entity?.GetComponent(33);
-        u = n?.GetSkill(Number(l))?.CombatMessageId;
+        u = n?.GetLoadingSkill(Number(l))?.CombatMessageId;
       }
     }
     i = BulletController_1.BulletController.CreateBulletCustomTarget(
@@ -68,13 +68,19 @@ class BulletBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
   }
   static GetBulletActorById(t) {
     t = EntitySystem_1.EntitySystem.Get(t);
-    if (t?.Valid) return t.GetComponent(152).Owner;
+    if (t?.Valid) return t.GetComponent(154).Owner;
   }
   static DestroyBullet(t, e) {
     return BulletController_1.BulletController.DestroyBullet(t, e), !0;
   }
   static DestroyAllBullet(t = !1) {
     BulletController_1.BulletController.DestroyAllBullet(t);
+  }
+  static DestroySpecifiedBullet(t, e, r = !1, l = 0) {
+    BulletController_1.BulletController.DestroySpecifiedBullet(t, e, r, l);
+  }
+  static GetSpecifiedBulletCount(t, e) {
+    return BulletController_1.BulletController.GetSpecifiedBulletCount(t, e);
   }
   static GetCharacterLaunchedBulletIds(t) {
     t = ModelManager_1.ModelManager.BulletModel.GetBulletSetByAttacker(t);

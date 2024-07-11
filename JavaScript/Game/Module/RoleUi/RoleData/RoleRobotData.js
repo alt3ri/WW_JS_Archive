@@ -11,12 +11,12 @@ const ConfigCommon_1 = require("../../../../Core/Config/ConfigCommon"),
   RoleDataBase_1 = require("./RoleDataBase");
 class RoleRobotData extends RoleDataBase_1.RoleDataBase {
   constructor(a) {
-    super(a), (this.h1o = void 0), this.SetDefaultData();
+    super(a), (this.r_o = void 0), this.SetDefaultData();
   }
   SetDefaultData() {
-    this.l1o(), this._1o(), this.u1o(), this.c1o(), this.m1o();
+    this.n_o(), this.s_o(), this.a_o(), this.h_o(), this.l_o();
   }
-  l1o() {
+  n_o() {
     var a = ConfigManager_1.ConfigManager.RoleConfig.GetTrialRoleConfig(
         this.Id,
       ),
@@ -30,14 +30,14 @@ class RoleRobotData extends RoleDataBase_1.RoleDataBase {
         break;
       }
   }
-  _1o() {
+  s_o() {
     var a = ConfigManager_1.ConfigManager.RoleConfig.GetTrialRoleConfig(
         this.Id,
       ),
       e = this.GetSkillData(),
       t = this.GetRoleConfig().SkillId;
     for (const l of e.GetSkillList()) {
-      var r = this.d1o(l.Id),
+      var r = this.__o(l.Id),
         r = r < a.UnlockSkillLevel ? r : a.UnlockSkillLevel,
         o =
           ConfigManager_1.ConfigManager.RoleSkillConfig.GetSkillTreeNodeByGroupIdAndSkillId(
@@ -63,7 +63,7 @@ class RoleRobotData extends RoleDataBase_1.RoleDataBase {
     }
     0 < n.length && e.SetSkillNodeStateData(n);
   }
-  d1o(a) {
+  __o(a) {
     (a = ConfigCommon_1.ConfigCommon.ToList(
       ConfigManager_1.ConfigManager.RoleSkillConfig.GetSkillLevelConfigList(a),
     )),
@@ -71,21 +71,21 @@ class RoleRobotData extends RoleDataBase_1.RoleDataBase {
       (a = a[a.length - 1]);
     return a.SkillId;
   }
-  u1o() {
+  a_o() {
     var a = ConfigManager_1.ConfigManager.RoleConfig.GetTrialRoleConfig(
       this.Id,
     );
     this.GetResonanceData().SetResonantChainGroupIndex(a.ResonanceLevel);
   }
-  c1o() {
+  h_o() {
     var a = ConfigManager_1.ConfigManager.RoleConfig.GetTrialRoleConfig(
       this.Id,
     );
-    (this.h1o = new WeaponTrialData_1.WeaponTrialData()),
-      this.h1o.SetTrialId(a.TrailWeapon),
-      this.h1o.SetRoleId(this.Id);
+    (this.r_o = new WeaponTrialData_1.WeaponTrialData()),
+      this.r_o.SetTrialId(a.TrailWeapon),
+      this.r_o.SetRoleId(this.Id);
   }
-  m1o() {
+  l_o() {
     var t = this.GetPhantomData(),
       r =
         (t.SetIsTrial(!0),
@@ -153,7 +153,7 @@ class RoleRobotData extends RoleDataBase_1.RoleDataBase {
     return !1;
   }
   GetWeaponData() {
-    return this.h1o;
+    return this.r_o;
   }
   IsOnlineRole() {
     return !1;

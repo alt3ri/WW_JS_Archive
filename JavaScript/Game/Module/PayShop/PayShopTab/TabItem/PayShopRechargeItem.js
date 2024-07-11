@@ -15,11 +15,11 @@ class PayShopRechargeItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
       (this.Pe = void 0),
-      (this.gFi = void 0),
-      (this.YFi = !1),
-      (this.JFi = 0),
-      (this.zFi = !1),
-      (this.ZFi = 0),
+      (this.g3i = void 0),
+      (this.Y3i = !1),
+      (this.J3i = 0),
+      (this.z3i = !1),
+      (this.Z3i = 0),
       (this.jbe = () => {
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("Shop", 11, "PayShop:ShopItem 点击充值", [
@@ -30,10 +30,10 @@ class PayShopRechargeItem extends GridProxyAbstract_1.GridProxyAbstract {
             this.Pe.PayItemId,
           );
       }),
-      (this.YOi = () => {
+      (this.zki = () => {
         this.Refresh(this.Pe, !1, 0);
       }),
-      (this.UEe = (t) => {
+      (this.USe = (t) => {
         t.PayItemId === this.Pe.PayItemId &&
           ((this.Pe.CanSpecialBonus = !1),
           this.Refresh(this.Pe, !1, 0),
@@ -47,8 +47,8 @@ class PayShopRechargeItem extends GridProxyAbstract_1.GridProxyAbstract {
             ["道具数量", t.ItemCount],
           );
       }),
-      (this.RFi = () => {
-        this.Pe && (this.e3i(), this.t3i());
+      (this.R3i = () => {
+        this.Pe && (this.e4i(), this.t4i());
       });
   }
   OnRegisterComponent() {
@@ -64,44 +64,44 @@ class PayShopRechargeItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
   SetRaycastState(t) {
     this.RootItem.SetRaycastTarget(t),
-      this.gFi.GetRootItem().SetRaycastTarget(t);
+      this.g3i.GetRootItem().SetRaycastTarget(t);
   }
   SetDownPriceShowState(t) {
-    this.gFi.SetDownPriceShowState(t);
+    this.g3i.SetDownPriceShowState(t);
   }
   OnStart() {
-    (this.gFi = new PayShopItemBase_1.PayShopItemBase(this.GetItem(0))),
-      this.gFi.Init(),
-      (this.YFi = this.GetItem(1).bIsUIActive),
-      (this.zFi = this.GetItem(3).bIsUIActive),
+    (this.g3i = new PayShopItemBase_1.PayShopItemBase(this.GetItem(0))),
+      this.g3i.Init(),
+      (this.Y3i = this.GetItem(1).bIsUIActive),
+      (this.z3i = this.GetItem(3).bIsUIActive),
       this.dde();
   }
   dde() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.DiscountShopTimerRefresh,
-      this.RFi,
+      this.R3i,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnPayItemSuccess,
-        this.UEe,
+        this.USe,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnQueryProductInfo,
-        this.YOi,
+        this.zki,
       );
   }
   Cde() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.DiscountShopTimerRefresh,
-      this.RFi,
+      this.R3i,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnPayItemSuccess,
-        this.UEe,
+        this.USe,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnQueryProductInfo,
-        this.YOi,
+        this.zki,
       );
   }
   OnBeforeDestroy() {
@@ -110,38 +110,38 @@ class PayShopRechargeItem extends GridProxyAbstract_1.GridProxyAbstract {
   Refresh(t, e, i) {
     t instanceof PayShopGoods_1.PayShopGoods ||
       ((this.Pe = t),
-      this.gFi.Refresh(
+      this.g3i.Refresh(
         ModelManager_1.ModelManager.PayItemModel.ConvertPayItemDataToPayShopItemBaseSt(
           t,
         ),
         e,
         i,
       ),
-      this.e3i(),
-      this.t3i());
+      this.e4i(),
+      this.t4i());
   }
-  e3i() {
+  e4i() {
     let t = !1,
       e = 0;
     0 < this.Pe.BonusItemCount &&
       !this.Pe.CanSpecialBonus &&
       ((t = !0), (e = this.Pe.BonusItemCount)),
-      this.YFi !== t && ((this.YFi = t), this.GetItem(1).SetUIActive(t)),
-      this.JFi !== e &&
-        ((this.JFi = e),
+      this.Y3i !== t && ((this.Y3i = t), this.GetItem(1).SetUIActive(t)),
+      this.J3i !== e &&
+        ((this.J3i = e),
         LguiUtil_1.LguiUtil.SetLocalText(
           this.GetText(2),
           "DefaultBonus",
           this.Pe.BonusItemCount,
         ));
   }
-  t3i() {
+  t4i() {
     let t = !1,
       e = 0;
     this.Pe.CanSpecialBonus && ((t = !0), (e = this.Pe.SpecialBonusItemCount)),
-      this.zFi !== t && ((this.zFi = t), this.GetItem(3).SetUIActive(t)),
-      this.ZFi !== e &&
-        ((this.ZFi = e),
+      this.z3i !== t && ((this.z3i = t), this.GetItem(3).SetUIActive(t)),
+      this.Z3i !== e &&
+        ((this.Z3i = e),
         LguiUtil_1.LguiUtil.SetLocalText(
           this.GetText(4),
           "FirstBonus2",

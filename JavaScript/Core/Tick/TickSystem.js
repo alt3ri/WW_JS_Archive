@@ -1,17 +1,20 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TickSystem = exports.Ticker = void 0);
-const puerts_1 = require("puerts"),
+const cpp_1 = require("cpp"),
+  puerts_1 = require("puerts"),
   UE = require("ue"),
   Log_1 = require("../Common/Log"),
   Stats_1 = require("../Common/Stats"),
   Time_1 = require("../Common/Time"),
+  PerfSight_1 = require("../PerfSight/PerfSight"),
   SECOND_TO_MILLISECOND = 1e3;
 class Ticker {
-  constructor(t, i, s, e, r = 0, c = !1) {
+  constructor(t, i, e, s, r = 0, c = !1) {
     (this.Id = t),
       (this.Handle = i),
-      (this.Group = s),
+      (this.Group = e),
+      (this.Name = s),
       (this.TickIntervalMs = r),
       (this.TickEvenPaused = c),
       (this.Count = 0),
@@ -43,26 +46,26 @@ class TickSystem {
   static Has(t) {
     return 0 < t && this.gJ.has(t);
   }
-  static Add(t, i, s = 0, r = !1) {
+  static Add(t, i, e = 0, r = !1) {
     if (t) {
       var c = ++this.o6,
-        i = new Ticker(c, t, s, i, 0, r);
+        i = new Ticker(c, t, e, i, 0, r);
       this.gJ.set(c, i);
-      let e = this.fJ.get(s);
+      let s = this.fJ.get(e);
       return (
-        e
-          ? e.add(i)
-          : ((e = new Set()).add(i),
-            this.fJ.set(s, e),
+        s
+          ? s.add(i)
+          : ((s = new Set()).add(i),
+            this.fJ.set(e, s),
             this.pJ.set(
-              s,
+              e,
               (r = (t) => {
                 var i = t * SECOND_TO_MILLISECOND;
-                for (const s of e)
-                  (this.IsPaused && !s.TickEvenPaused) || this.vJ(s, i);
+                for (const e of s)
+                  (this.IsPaused && !e.TickEvenPaused) || this.vJ(e, i);
               }),
             ),
-            this.CJ.AddTick(s, (0, puerts_1.toManualReleaseDelegate)(r))),
+            this.CJ.AddTick(e, (0, puerts_1.toManualReleaseDelegate)(r))),
         i
       );
     }
@@ -78,15 +81,15 @@ class TickSystem {
         !1
       );
     this.gJ.delete(t);
-    var s = this.fJ.get(i.Group);
-    return s
-      ? (s.delete(i),
-        0 === s.size &&
+    var e = this.fJ.get(i.Group);
+    return e
+      ? (e.delete(i),
+        0 === e.size &&
           (this.fJ.delete(i.Group),
-          (s = this.pJ.get(i.Group)),
+          (e = this.pJ.get(i.Group)),
           this.pJ.delete(i.Group),
           this.CJ.RemoveTick(i.Group),
-          (0, puerts_1.releaseManualReleaseDelegate)(s)),
+          (0, puerts_1.releaseManualReleaseDelegate)(e)),
         !0)
       : (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
@@ -114,15 +117,16 @@ class TickSystem {
           Log_1.Log.Error("Tick", 1, "编号不存在", ["id", t]),
         !1);
   }
-  static vJ(i, s) {
+  static vJ(i, e) {
     if (!i.Pause) {
-      let t = s;
+      let t = e;
       if (0 < i.TickIntervalMs) {
-        if (((i.CoolDown += s), i.CoolDown < i.TickIntervalMs)) return;
-        s = i.CoolDown % i.TickIntervalMs;
-        (t = i.CoolDown - s), (i.CoolDown = s);
+        if (((i.CoolDown += e), i.CoolDown < i.TickIntervalMs)) return;
+        e = i.CoolDown % i.TickIntervalMs;
+        (t = i.CoolDown - e), (i.CoolDown = e);
       }
       i.Count += 1;
+      e = cpp_1.KuroTime.GetMilliseconds64();
       try {
         i.Handle(t);
       } catch (t) {
@@ -145,6 +149,23 @@ class TickSystem {
               ["error", t],
             );
       }
+      e = cpp_1.KuroTime.GetMilliseconds64() - e;
+      PerfSight_1.PerfSight.IsEnable &&
+        0 === i.Group &&
+        ("Core" === i.Name
+          ? PerfSight_1.PerfSight.PostValueF1(
+              "CustomPerformance",
+              "[PrePhysics]TickSystem.Core",
+              e,
+              Time_1.Time.Frame,
+            )
+          : "Game" === i.Name &&
+            PerfSight_1.PerfSight.PostValueF1(
+              "CustomPerformance",
+              "[PrePhysics]TickSystem.Game",
+              e,
+              Time_1.Time.Frame,
+            ));
     }
   }
   static AddTickPrerequisite(t, i) {

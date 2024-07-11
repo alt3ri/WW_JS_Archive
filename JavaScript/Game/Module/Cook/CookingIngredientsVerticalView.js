@@ -24,16 +24,16 @@ const UE = require("ue"),
   CookProficiencyView_1 = require("./View/CookProficiencyView");
 class MaterialSelectionCacheData {
   static SetMaterialSelectIndex(e) {
-    MaterialSelectionCacheData.lqt = e;
+    MaterialSelectionCacheData.cGt = e;
   }
   static GetMaterialSelectIndex() {
-    return MaterialSelectionCacheData.lqt;
+    return MaterialSelectionCacheData.cGt;
   }
   static SetMaterialUseNum(e) {
-    MaterialSelectionCacheData._qt = e;
+    MaterialSelectionCacheData.mGt = e;
   }
   static GetMaterialUseNum() {
-    return MaterialSelectionCacheData._qt;
+    return MaterialSelectionCacheData.mGt;
   }
   static CheckCanSelected(e) {
     return (
@@ -44,14 +44,14 @@ class MaterialSelectionCacheData {
 }
 (MaterialSelectionCacheData.TmpSelectedMaterialData = void 0),
   (MaterialSelectionCacheData.MaterialTypeNum = 0),
-  (MaterialSelectionCacheData.lqt = 0),
-  (MaterialSelectionCacheData._qt = 0);
+  (MaterialSelectionCacheData.cGt = 0),
+  (MaterialSelectionCacheData.mGt = 0);
 class SvInfo extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this.cqt = void 0),
-      (this.dqt = void 0),
-      (this.Cqt = (e, t, i) => {
+      (this.CGt = void 0),
+      (this.fGt = void 0),
+      (this.pGt = (e, t, i) => {
         t = new CookItemView_1.MachiningClueItem(t);
         return t.Update(e.IsUnlock, e.ContentText), { Key: i, Value: t };
       });
@@ -68,9 +68,9 @@ class SvInfo extends UiPanelBase_1.UiPanelBase {
       (this.BtnBindInfo = []);
   }
   OnStart() {
-    (this.cqt = new GenericLayoutNew_1.GenericLayoutNew(
+    (this.CGt = new GenericLayoutNew_1.GenericLayoutNew(
       this.GetVerticalLayout(6),
-      this.Cqt,
+      this.pGt,
     )),
       this.GetText(3).SetUIActive(!1),
       this.dde(),
@@ -78,10 +78,7 @@ class SvInfo extends UiPanelBase_1.UiPanelBase {
       this.GetText(3).SetUIActive(!0);
   }
   OnBeforeDestroy() {
-    this.cqt.ClearChildren(),
-      (this.cqt = void 0),
-      (this.dqt = void 0),
-      this.Cde();
+    (this.CGt = void 0), (this.fGt = void 0), this.Cde();
   }
   dde() {}
   Cde() {}
@@ -91,11 +88,11 @@ class SvInfo extends UiPanelBase_1.UiPanelBase {
   }
   RefreshCooking(e, t) {
     var i;
-    this.gqt(e) &&
-      (this.dqt &&
-        this.dqt.ItemId !== e.ItemId &&
+    this.vGt(e) &&
+      (this.fGt &&
+        this.fGt.ItemId !== e.ItemId &&
         (ModelManager_1.ModelManager.CookModel.CurrentCookRoleId = void 0),
-      (this.dqt = e),
+      (this.fGt = e),
       (i = ConfigManager_1.ConfigManager.CookConfig.GetCookFormulaById(
         e.ItemId,
       )),
@@ -107,12 +104,12 @@ class SvInfo extends UiPanelBase_1.UiPanelBase {
         : ConfigManager_1.ConfigManager.CookConfig.GetLocalText(
             i.FoodBackground,
           )),
-      this.cqt.SetActive(!1),
+      this.CGt.SetActive(!1),
       this.GetText(3).SetUIActive(!0),
       this.GetText(3).SetText(e),
       this.GetText(5).SetText(i));
   }
-  gqt(e) {
+  vGt(e) {
     return (
       !!e ||
       (Log_1.Log.CheckError() &&
@@ -121,8 +118,8 @@ class SvInfo extends UiPanelBase_1.UiPanelBase {
     );
   }
   RefreshMachining(e) {
-    if (this.gqt(e)) {
-      (this.dqt = e), this.cqt.SetActive(!0);
+    if (this.vGt(e)) {
+      (this.fGt = e), this.CGt.SetActive(!0);
       var t = ConfigManager_1.ConfigManager.CookConfig.GetCookProcessedById(
           e.ItemId,
         ),
@@ -147,33 +144,33 @@ class SvInfo extends UiPanelBase_1.UiPanelBase {
             )),
             r.push({ IsUnlock: !1, ContentText: s }));
       }
-      this.cqt.RebuildLayoutByDataNew(r);
+      this.CGt.RebuildLayoutByDataNew(r);
     }
   }
 }
 class CookingIngredientsVerticalView extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this.fqt = void 0),
+      (this.MGt = void 0),
       (this.ItemData = void 0),
       (this.WGe = void 0),
       (this.t6 = 1),
       (this.ShowMaterialItemRemoveControl = !1),
-      (this.pqt = void 0),
-      (this.mqt = void 0),
-      (this.vqt = !1),
-      (this.Mqt = 0),
-      (this.Sqt = void 0),
+      (this.EGt = void 0),
+      (this.gGt = void 0),
+      (this.SGt = !1),
+      (this.yGt = 0),
+      (this.IGt = void 0),
       (this.OnChangeMaterialSelectionDelegate = void 0),
-      (this.Eqt = () => {
+      (this.TGt = () => {
         var e = new ManufactureMaterialItem_1.ManufactureMaterialItem();
         return (
           e.BindOnCanExecuteChange(() => !1),
           e.BindOnExtendToggleClicked((e) => {
             e = e.Data;
-            e.m3n
+            e.G6n
               ? ControllerHolder_1.ControllerHolder.ItemController.OpenItemTipsByItemId(
-                  e.G3n,
+                  e.f8n,
                 )
               : ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
                   "ItemSelectCookUnlockTip",
@@ -182,15 +179,16 @@ class CookingIngredientsVerticalView extends UiPanelBase_1.UiPanelBase {
           e
         );
       }),
-      (this._9e = () => {
+      (this.I7e = () => {
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.OpenCookRole,
           this.ItemData.ItemId,
         );
       }),
-      (this.yqt = (e) => {
+      (this.LGt = (e) => {
+        var t;
         (this.t6 = e),
-          this.Iqt(),
+          this.DGt(),
           LguiUtil_1.LguiUtil.SetLocalTextNew(
             this.GetText(10),
             "Text_ItemSelectCookQuantityTip_text",
@@ -198,7 +196,14 @@ class CookingIngredientsVerticalView extends UiPanelBase_1.UiPanelBase {
           ),
           this.ItemData &&
             0 === this.ItemData.MainType &&
-            this.RefreshProficiency(this.ItemData, this.t6);
+            this.RefreshProficiency(this.ItemData, this.t6),
+          this.ItemData &&
+            ((t = CookController_1.CookController.GetMaxCreateCount(
+              this.ItemData.ItemId,
+              this.ItemData.MainType,
+            )),
+            this.WGe.SetAddButtonInteractive(e < t),
+            this.WGe.SetReduceButtonInteractive(1 < e));
       });
   }
   get CurrentSetCount() {
@@ -232,16 +237,16 @@ class CookingIngredientsVerticalView extends UiPanelBase_1.UiPanelBase {
       (this.BtnBindInfo = []);
   }
   async OnBeforeStartAsync() {
-    (this.pqt = new GenericScrollViewNew_1.GenericScrollViewNew(
+    (this.EGt = new GenericScrollViewNew_1.GenericScrollViewNew(
       this.GetScrollViewWithScrollbar(19),
-      this.Eqt,
+      this.TGt,
     )),
-      (this.fqt = new SvInfo()),
-      await this.fqt.CreateByActorAsync(this.GetItem(0).GetOwner()),
-      this.fqt.SetActive(!0),
-      (this.mqt = new CookProficiencyView_1.ProficiencyView()),
-      await this.mqt.CreateThenShowByActorAsync(this.GetItem(26).GetOwner()),
-      this.mqt.BindChangeRoleClick(this._9e);
+      (this.MGt = new SvInfo()),
+      await this.MGt.CreateByActorAsync(this.GetItem(0).GetOwner()),
+      this.MGt.SetActive(!0),
+      (this.gGt = new CookProficiencyView_1.ProficiencyView()),
+      await this.gGt.CreateThenShowByActorAsync(this.GetItem(26).GetOwner()),
+      this.gGt.BindChangeRoleClick(this.I7e);
   }
   OnStart() {
     this.GetItem(18).SetUIActive(!1),
@@ -254,15 +259,16 @@ class CookingIngredientsVerticalView extends UiPanelBase_1.UiPanelBase {
     var e = this.GetItem(8),
       e =
         ((this.WGe = new NumberSelectComponent_1.NumberSelectComponent(e)),
-        { MaxNumber: 0, ValueChangeFunction: this.yqt });
+        { MaxNumber: 0, ValueChangeFunction: this.LGt });
     this.WGe.Init(e),
       this.WGe.SetUiActive(!0),
       this.WGe.SetNumberSelectTipsVisible(!1),
+      this.WGe.SetAddReduceButtonActive(!0),
       this.GetText(12).SetUIActive(!1),
-      (this.Sqt = new MediumItemGrid_1.MediumItemGrid()),
-      this.Sqt.Initialize(this.GetItem(21).GetOwner()),
-      this.Sqt.BindOnCanExecuteChange(() => !1),
-      this.Sqt.BindOnExtendToggleClicked((e) => {
+      (this.IGt = new MediumItemGrid_1.MediumItemGrid()),
+      this.IGt.Initialize(this.GetItem(21).GetOwner()),
+      this.IGt.BindOnCanExecuteChange(() => !1),
+      this.IGt.BindOnExtendToggleClicked((e) => {
         e = e.Data;
         ControllerHolder_1.ControllerHolder.ItemController.OpenItemTipsByItemId(
           e,
@@ -270,11 +276,11 @@ class CookingIngredientsVerticalView extends UiPanelBase_1.UiPanelBase {
       });
   }
   OnBeforeDestroy() {
-    (this.fqt = void 0),
-      (this.pqt = void 0),
+    (this.MGt = void 0),
+      (this.EGt = void 0),
       (this.OnChangeMaterialSelectionDelegate = void 0);
   }
-  gqt(e) {
+  vGt(e) {
     return (
       !!e ||
       (Log_1.Log.CheckError() &&
@@ -282,34 +288,34 @@ class CookingIngredientsVerticalView extends UiPanelBase_1.UiPanelBase {
       !1)
     );
   }
-  EIi(t) {
-    if (this.gqt(t)) {
+  STi(t) {
+    if (this.vGt(t)) {
       let e = ModelManager_1.ModelManager.CookModel.CurrentCookRoleId;
       e ||
         ((e = ModelManager_1.ModelManager.CookModel.GetCookRoleId(t.ItemId)),
         (ModelManager_1.ModelManager.CookModel.CurrentCookRoleId = e)),
-        this.mqt.SetRoleTexture(e, t.ItemId);
+        this.gGt.SetRoleTexture(e, t.ItemId);
     }
   }
-  Iqt() {
-    this.Tqt(this.vqt, this.Mqt * this.t6);
-    var e = this.pqt?.GetScrollItemList();
+  DGt() {
+    this.RGt(this.SGt, this.yGt * this.t6);
+    var e = this.EGt?.GetScrollItemList();
     if (e) for (const t of e) t.SetTimes(this.t6);
   }
-  Lqt(e, t) {
+  UGt(e, t) {
     var i = ConfigManager_1.ConfigManager.TextConfig.GetTextById(e);
     switch (t) {
       case 0:
-        this.fqt.SetTypeName(), this.mqt.SetTypeContent(i);
+        this.MGt.SetTypeName(), this.gGt.SetTypeContent(i);
         break;
       case 1:
-        this.fqt.SetTypeName(i), this.mqt.SetTypeContent();
+        this.MGt.SetTypeName(i), this.gGt.SetTypeContent();
         break;
       default:
-        this.fqt.SetTypeName(), this.mqt.SetTypeContent();
+        this.MGt.SetTypeName(), this.gGt.SetTypeContent();
     }
   }
-  Dqt(e) {
+  AGt(e) {
     e.ExistEndTime <= 0
       ? (this.GetItem(24).SetUIActive(!1), this.WGe.ResetLimitMaxValue())
       : (this.GetItem(24).SetUIActive(!0),
@@ -318,7 +324,7 @@ class CookingIngredientsVerticalView extends UiPanelBase_1.UiPanelBase {
         )),
         this.GetText(25).SetText(e.CountDownText));
   }
-  Rqt(t) {
+  PGt(t) {
     if (void 0 === t || t.LimitTotalCount <= 0)
       this.GetItem(3).SetUIActive(!1), this.WGe.ResetLimitMaxValue();
     else {
@@ -339,7 +345,7 @@ class CookingIngredientsVerticalView extends UiPanelBase_1.UiPanelBase {
         );
     }
   }
-  Tqt(e, t) {
+  RGt(e, t) {
     var i;
     this.GetText(12).GetParentAsUIItem().SetUIActive(e),
       e &&
@@ -365,32 +371,32 @@ class CookingIngredientsVerticalView extends UiPanelBase_1.UiPanelBase {
       ),
       r = i.Proficiency,
       i = i.MaxProficiencyCount;
-    this.mqt.SetExpNum(e.CookCount, r, i, t), this.EIi(e);
+    this.gGt.SetExpNum(e.CookCount, r, i, t), this.STi(e);
   }
-  Uqt(e) {
+  xGt(e) {
     let t = !1,
       i = 0;
     e = e.filter(
       (e) =>
-        e.G3n !== CookController_1.CookController.CookCoinId ||
-        ((t = !0), (i = e.k4n), !1),
+        e.f8n !== CookController_1.CookController.CookCoinId ||
+        ((t = !0), (i = e.MVn), !1),
     );
     return [t, i, e];
   }
   OnSecondTimerRefresh() {
-    this.ItemData && 0 === this.ItemData.MainType && this.Dqt(this.ItemData);
+    this.ItemData && 0 === this.ItemData.MainType && this.AGt(this.ItemData);
   }
   RefreshCooking(e) {
     var t;
     e &&
       ((this.ItemData = e),
       (this.t6 = 1),
-      this.WGe.SetUiActive(e.IsUnLock),
+      this.WGe.SetUiActive((t = e).IsUnLock),
       this.GetItem(9).SetUIActive(e.IsUnLock),
-      this.fqt.RefreshCooking(e, this.t6),
+      this.MGt.RefreshCooking(t, this.t6),
       this.GetItem(26).SetUIActive(!0),
-      this.RefreshProficiency(e, this.t6),
-      this.Lqt("Dishes", 0),
+      this.RefreshProficiency(t, this.t6),
+      this.UGt("Dishes", 0),
       e.IsUnLock
         ? (this.GetItem(20).SetUIActive(!1),
           this.GetItem(18).SetUIActive(!0),
@@ -398,20 +404,22 @@ class CookingIngredientsVerticalView extends UiPanelBase_1.UiPanelBase {
             this.ItemData.ItemId,
             0,
           )),
-          ([this.vqt, this.Mqt, t] = this.Uqt(t)),
-          this.pqt.RefreshByData(t, () => {
-            this.Iqt();
+          ([this.SGt, this.yGt, t] = this.xGt(t)),
+          this.EGt.RefreshByData(t, () => {
+            this.DGt();
           }),
           this.WGe.SetUiActive(!0),
           this.GetItem(9).SetUIActive(!0),
-          this.Dqt(e),
-          this.Rqt(e),
+          this.AGt(e),
+          this.PGt(e),
           (t = CookController_1.CookController.GetMaxCreateCount(
             this.ItemData.ItemId,
             ModelManager_1.ModelManager.CookModel.CurrentCookListType,
           )),
-          this.WGe.Refresh(t))
-        : (this.Rqt(),
+          this.WGe.Refresh(t),
+          this.WGe.SetAddReduceButtonActive(!0),
+          this.WGe.SetReduceButtonInteractive(!1))
+        : (this.PGt(),
           this.GetItem(20).SetUIActive(!0),
           this.GetItem(18).SetUIActive(!1),
           (e = ConfigManager_1.ConfigManager.CookConfig.GetCookFormulaById(
@@ -428,15 +436,15 @@ class CookingIngredientsVerticalView extends UiPanelBase_1.UiPanelBase {
               IsProhibit: !0,
               IsOmitBottomText: !0,
             }),
-            this.Sqt.Apply(e))));
+            this.IGt.Apply(e))));
   }
   RefreshMachining(t) {
     if (t) {
       this.GetItem(20).SetUIActive(!1),
         this.GetItem(18).SetUIActive(!0),
         (this.ItemData = t),
-        this.Lqt("Accessory", 1),
-        this.fqt.RefreshMachining(t),
+        this.UGt("Accessory", 1),
+        this.MGt.RefreshMachining(t),
         this.GetItem(26).SetUIActive(!1),
         (MaterialSelectionCacheData.TmpSelectedMaterialData = []),
         (this.ShowMaterialItemRemoveControl = !1);
@@ -445,12 +453,12 @@ class CookingIngredientsVerticalView extends UiPanelBase_1.UiPanelBase {
         this.ItemData.MainType,
       );
       ModelManager_1.ModelManager.CookModel.CreateTmpMachiningItemList(t),
-        this.pqt.RefreshByData(t, () => {
-          this.Iqt();
+        this.EGt.RefreshByData(t, () => {
+          this.DGt();
         });
       let e = !0;
       for (const i of t)
-        if (!i.m3n) {
+        if (!i.G6n) {
           e = !1;
           break;
         }
@@ -463,6 +471,8 @@ class CookingIngredientsVerticalView extends UiPanelBase_1.UiPanelBase {
           )),
           this.WGe.ResetLimitMaxValue(),
           this.WGe.Refresh(t),
+          this.WGe.SetAddReduceButtonActive(!0),
+          this.WGe.SetReduceButtonInteractive(!1),
           this.GetItem(24).SetUIActive(!1),
           this.GetItem(3).SetUIActive(!1));
     }

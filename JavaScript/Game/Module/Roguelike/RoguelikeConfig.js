@@ -12,6 +12,7 @@ const ElementLevelByLevel_1 = require("../../../Core/Define/ConfigQuery/ElementL
   RoguePokemonById_1 = require("../../../Core/Define/ConfigQuery/RoguePokemonById"),
   RoguePopularEntrieArgBySeasonIdAndInstId_1 = require("../../../Core/Define/ConfigQuery/RoguePopularEntrieArgBySeasonIdAndInstId"),
   RogueQualityConfigById_1 = require("../../../Core/Define/ConfigQuery/RogueQualityConfigById"),
+  RogueRoomShowConfigById_1 = require("../../../Core/Define/ConfigQuery/RogueRoomShowConfigById"),
   RogueRoomTypeById_1 = require("../../../Core/Define/ConfigQuery/RogueRoomTypeById"),
   RogueSeasonAll_1 = require("../../../Core/Define/ConfigQuery/RogueSeasonAll"),
   RogueSeasonById_1 = require("../../../Core/Define/ConfigQuery/RogueSeasonById"),
@@ -97,6 +98,9 @@ class RoguelikeConfig extends ConfigBase_1.ConfigBase {
       e,
       o,
     );
+  }
+  GetRogueRoomShowConfig(e) {
+    return RogueRoomShowConfigById_1.configRogueRoomShowConfigById.GetConfig(e);
   }
 }
 exports.RoguelikeConfig = RoguelikeConfig;

@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SkipTaskEnterEntrance = void 0);
-const ModelManager_1 = require("../../../Manager/ModelManager"),
+const ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
   UiManager_1 = require("../../../Ui/UiManager"),
   InstanceDungeonEntranceController_1 = require("../../InstanceDungeon/InstanceDungeonEntranceController"),
   WorldMapController_1 = require("../../WorldMap/WorldMapController"),
-  SkipTask_1 = require("./SkipTask"),
-  ControllerHolder_1 = require("../../../Manager/ControllerHolder");
+  SkipTask_1 = require("./SkipTask");
 class SkipTaskEnterEntrance extends SkipTask_1.SkipTask {
   OnRun(e, o, a) {
     e = Number(e);

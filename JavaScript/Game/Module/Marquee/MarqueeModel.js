@@ -7,7 +7,8 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.MarqueeContent =
     exports.MarqueeDataEx =
       void 0);
-const Json_1 = require("../../../Core/Common/Json"),
+const Info_1 = require("../../../Core/Common/Info"),
+  Json_1 = require("../../../Core/Common/Json"),
   LanguageSystem_1 = require("../../../Core/Common/LanguageSystem"),
   ModelBase_1 = require("../../../Core/Framework/ModelBase"),
   TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
@@ -15,7 +16,6 @@ const Json_1 = require("../../../Core/Common/Json"),
   LocalStorageDefine_1 = require("../../Common/LocalStorageDefine"),
   TimeUtil_1 = require("../../Common/TimeUtil"),
   ControllerHolder_1 = require("../../Manager/ControllerHolder"),
-  ModelManager_1 = require("../../Manager/ModelManager"),
   MARQUEEPLATFORMPC = 1,
   MARQUEEPLATFORMIOS = 2,
   MARQUEEPLATFORMANDROID = 3;
@@ -94,10 +94,9 @@ class MarqueeData {
       return !1;
     let t = MARQUEEPLATFORMPC;
     return (
-      2 === ModelManager_1.ModelManager.PlatformModel.PlatformType
+      2 === Info_1.Info.PlatformType
         ? (t = MARQUEEPLATFORMIOS)
-        : 1 === ModelManager_1.ModelManager.PlatformModel.PlatformType &&
-          (t = MARQUEEPLATFORMANDROID),
+        : 1 === Info_1.Info.PlatformType && (t = MARQUEEPLATFORMANDROID),
       !(this.Platform && 0 < this.Platform.length && !this.Platform.includes(t))
     );
   }
@@ -118,29 +117,29 @@ exports.MarqueeStorageData = MarqueeStorageData;
 class MarqueeModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
-      (this.$Ui = void 0),
-      (this.YUi = new Array()),
-      (this.JUi = new Map());
+      (this.$Ai = void 0),
+      (this.YAi = new Array()),
+      (this.JAi = new Map());
   }
   static get TimerId() {
-    return MarqueeModel.zUi;
+    return MarqueeModel.zAi;
   }
   static set TimerId(e) {
-    MarqueeModel.zUi = e;
+    MarqueeModel.zAi = e;
   }
   get CurMarquee() {
-    return this.$Ui;
+    return this.$Ai;
   }
   set CurMarquee(e) {
-    this.$Ui = e;
+    this.$Ai = e;
   }
   get MarqueeQueue() {
-    return this.YUi;
+    return this.YAi;
   }
   OnClear() {
     return (
       this.RemoveAllMarqueeData(),
-      this.JUi.clear(),
+      this.JAi.clear(),
       void 0 !== MarqueeModel.TimerId &&
         (TimerSystem_1.TimerSystem.Remove(MarqueeModel.TimerId),
         (MarqueeModel.TimerId = void 0)),
@@ -148,7 +147,7 @@ class MarqueeModel extends ModelBase_1.ModelBase {
     );
   }
   InitMarqueeStorageDataMap() {
-    this.JUi =
+    this.JAi =
       LocalStorage_1.LocalStorage.GetPlayer(
         LocalStorageDefine_1.ELocalStoragePlayerKey.MarqueeScrollingMap,
       ) ?? new Map();
@@ -160,14 +159,14 @@ class MarqueeModel extends ModelBase_1.ModelBase {
         var t = this.GetScrollingTime(r);
         if (!(t >= r.ScrollTimes)) {
           let t = -1;
-          for (let e = 0; e < this.YUi.length; e++)
-            this.YUi[e].Id === r.Id && (t = e);
+          for (let e = 0; e < this.YAi.length; e++)
+            this.YAi[e].Id === r.Id && (t = e);
           0 <= t
-            ? ((this.YUi[t] = r), 0 === t && (this.$Ui = r))
-            : this.YUi.push(r),
-            this.ZUi(r),
+            ? ((this.YAi[t] = r), 0 === t && (this.$Ai = r))
+            : this.YAi.push(r),
+            this.ZAi(r),
             this.CleanMarqueeStorageDataMap(e),
-            this.eAi();
+            this.ePi();
         }
       }
     }
@@ -175,57 +174,57 @@ class MarqueeModel extends ModelBase_1.ModelBase {
   CleanMarqueeStorageDataMap(e) {
     var t,
       r,
-      a = new Array();
-    for ([t, r] of this.JUi) r.EndTime <= e && a.push(t);
-    for (const i of a) this.JUi.delete(i);
+      i = new Array();
+    for ([t, r] of this.JAi) r.EndTime <= e && i.push(t);
+    for (const s of i) this.JAi.delete(s);
   }
   UpdateMarqueeStorageDataByDate(e) {
     let t = this.GetMarqueeStorageData(e);
-    (t = t || this.ZUi(e)).ScrollingTime++, this.eAi();
+    (t = t || this.ZAi(e)).ScrollingTime++, this.ePi();
   }
   GetScrollingTime(e) {
     return this.GetMarqueeStorageData(e)?.ScrollingTime ?? 0;
   }
   GetMarqueeStorageData(e) {
-    return this.JUi.get(e.Id);
+    return this.JAi.get(e.Id);
   }
-  ZUi(e) {
+  ZAi(e) {
     let t = this.GetMarqueeStorageData(e);
     return (
       t
         ? (t.EndTime = e.EndTime)
-        : ((t = new MarqueeStorageData(e.EndTime)), this.JUi.set(e.Id, t)),
+        : ((t = new MarqueeStorageData(e.EndTime)), this.JAi.set(e.Id, t)),
       t
     );
   }
-  eAi() {
+  ePi() {
     LocalStorage_1.LocalStorage.SetPlayer(
       LocalStorageDefine_1.ELocalStoragePlayerKey.MarqueeScrollingMap,
-      this.JUi,
+      this.JAi,
     );
   }
   PeekMarqueeData() {
-    if (this.YUi && !(this.YUi.length <= 0)) return this.YUi[0];
+    if (this.YAi && !(this.YAi.length <= 0)) return this.YAi[0];
   }
   GetNextMarquee() {
-    if (this.YUi && !(this.YUi.length <= 1)) return this.YUi[1];
+    if (this.YAi && !(this.YAi.length <= 1)) return this.YAi[1];
   }
   RemoveMarqueeData(t) {
-    for (let e = 0; e < this.YUi.length; e++) {
-      var r = this.YUi[e];
-      if (r.Id === t) return this.YUi.splice(e, 1), r;
+    for (let e = 0; e < this.YAi.length; e++) {
+      var r = this.YAi[e];
+      if (r.Id === t) return this.YAi.splice(e, 1), r;
     }
   }
   RemoveAllMarqueeData() {
-    (this.$Ui = void 0), (this.YUi = new Array());
+    (this.$Ai = void 0), (this.YAi = new Array());
   }
   SortMarqueeQueue() {
-    this.YUi?.sort((e, t) => e.BeginTime - t.BeginTime);
+    this.YAi?.sort((e, t) => e.BeginTime - t.BeginTime);
   }
   GetMarqueeDataLeftTime(e) {
     let t = Number(e.EndTime) - TimeUtil_1.TimeUtil.GetServerTime();
     return (t = t <= 0 ? 1 : t);
   }
 }
-(exports.MarqueeModel = MarqueeModel).zUi = void 0;
+(exports.MarqueeModel = MarqueeModel).zAi = void 0;
 //# sourceMappingURL=MarqueeModel.js.map

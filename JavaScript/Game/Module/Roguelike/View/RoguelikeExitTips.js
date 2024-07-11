@@ -5,19 +5,26 @@ const UE = require("ue"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
   UiManager_1 = require("../../../Ui/UiManager"),
+  ActivityRogueController_1 = require("../../Activity/ActivityContent/RougeActivity/ActivityRogueController"),
   LguiUtil_1 = require("../../Util/LguiUtil"),
   RoguelikeController_1 = require("../RoguelikeController");
 class RoguelikeExitTips extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.Kao = () => {
+      (this.Vho = () => {
         UiManager_1.UiManager.CloseView(this.Info.Name, (e) => {
           RoguelikeController_1.RoguelikeController.RoguelikeResultRequest(0);
         });
       }),
-      (this.Qao = () => {
+      (this.Hho = () => {
         UiManager_1.UiManager.CloseView(this.Info.Name, (e) => {
-          RoguelikeController_1.RoguelikeController.RoguelikeQuitRequest();
+          var i =
+            ActivityRogueController_1.ActivityRogueController.GetCurrentActivityData();
+          void 0 === i || 0 === i.GetRogueActivityState()
+            ? RoguelikeController_1.RoguelikeController.RoguelikeQuitRequest()
+            : RoguelikeController_1.RoguelikeController.RoguelikeResultRequest(
+                0,
+              );
         });
       });
   }
@@ -28,8 +35,8 @@ class RoguelikeExitTips extends UiViewBase_1.UiViewBase {
       [2, UE.UIButtonComponent],
     ]),
       (this.BtnBindInfo = [
-        [1, this.Kao],
-        [2, this.Qao],
+        [1, this.Vho],
+        [2, this.Hho],
       ]);
   }
   OnStart() {

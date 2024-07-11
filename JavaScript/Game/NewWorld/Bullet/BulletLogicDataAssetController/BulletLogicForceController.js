@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BulletLogicForceController = void 0);
-const GameplayTagUtils_1 = require("../../../../Core/Utils/GameplayTagUtils"),
+const CommonDefine_1 = require("../../../../Core/Define/CommonDefine"),
+  GameplayTagUtils_1 = require("../../../../Core/Utils/GameplayTagUtils"),
   Vector_1 = require("../../../../Core/Utils/Math/Vector"),
   CharacterUnifiedStateTypes_1 = require("../../Character/Common/Component/Abilities/CharacterUnifiedStateTypes"),
   CustomMovementDefine_1 = require("../../Character/Common/Component/Move/CustomMovementDefine"),
@@ -16,96 +17,103 @@ const GameplayTagUtils_1 = require("../../../../Core/Utils/GameplayTagUtils"),
 class BulletLogicForceController extends BulletLogicController_1.BulletLogicController {
   constructor(t, i) {
     super(t, i),
-      (this.v9o = !1),
-      (this.M9o = void 0),
-      (this.S9o = !1),
-      (this.E9o = new Set()),
-      (this.y9o = new Set()),
-      (this.I9o = Vector_1.Vector.Create()),
-      (this.u9o = t),
-      (this._9o = i.GetBulletInfo()),
-      (this.T9o = i.GetComponent(152)),
-      (this.L9o = new Map()),
-      (this.D9o = new Map()),
+      (this.g7o = !1),
+      (this.f7o = void 0),
+      (this.p7o = !1),
+      (this.v7o = new Set()),
+      (this.M7o = new Set()),
+      (this.E7o = Vector_1.Vector.Create()),
+      (this.h7o = t),
+      (this.a7o = i.GetBulletInfo()),
+      (this.S7o = i.GetComponent(154)),
+      (this.y7o = new Map()),
+      (this.I7o = new Map()),
       (this.NeedTick = !0),
-      (this.v9o = this.u9o.ConstantForce),
-      (this.S9o = this.u9o.IsLaunching),
-      (this.R9o = 0 < this.LogicController.WorkHaveTag.GameplayTags.Num());
+      (this.g7o = this.h7o.ConstantForce),
+      (this.p7o = this.h7o.IsLaunching),
+      (this.T7o = 0 < this.LogicController.WorkHaveTag.GameplayTags.Num()),
+      (this.DSa = this.LogicController.ImmuneStopDuration);
   }
   OnInit() {
-    this.U9o();
+    this.L7o();
   }
-  U9o() {
-    this.v9o &&
-      ((this.M9o = Vector_1.Vector.Create(
-        this.u9o.TowardsBullet
-          ? this.T9o.ActorUpProxy
+  L7o() {
+    this.g7o &&
+      ((this.f7o = Vector_1.Vector.Create(
+        this.h7o.TowardsBullet
+          ? this.S7o.ActorUpProxy
           : Vector_1.Vector.UpVector,
       )),
-      this.M9o.MultiplyEqual(this.u9o.ForceBase));
+      this.f7o.MultiplyEqual(this.h7o.ForceBase));
   }
   Update(t) {
-    super.Update(t), this.A9o();
+    super.Update(t), this.D7o();
   }
   BulletLogicAction() {
-    this.u9o.ConstantForce && this.A9o();
+    this.h7o.ConstantForce && this.D7o();
   }
-  A9o() {
+  D7o() {
     var t,
       i,
       e = GameplayTagUtils_1.GameplayTagUtils.ConvertFromUeContainer(
         this.LogicController.WorkHaveTag,
       );
-    if (this.v9o) {
-      this.S9o ||
-        ((t = this.E9o),
-        (this.E9o = this.y9o),
-        (this.y9o = t),
-        this.E9o.clear());
-      for ([i] of this._9o.CollisionInfo.CharacterEntityMap)
-        !i || (this.R9o && !i.GetComponent(185).HasAnyTag(e)) || this.P9o(i);
+    if (this.g7o) {
+      this.p7o ||
+        ((t = this.v7o),
+        (this.v7o = this.M7o),
+        (this.M7o = t),
+        this.v7o.clear());
+      for ([i] of this.a7o.CollisionInfo.CharacterEntityMap)
+        !i || (this.T7o && !i.GetComponent(188).HasAnyTag(e)) || this.R7o(i);
     } else
-      for (var [s] of this._9o.CollisionInfo.CharacterEntityMap)
-        !s || (this.R9o && !s.GetComponent(185).HasAnyTag(e)) || this.x9o(s);
+      for (var [s] of this.a7o.CollisionInfo.CharacterEntityMap)
+        !s || (this.T7o && !s.GetComponent(188).HasAnyTag(e)) || this.U7o(s);
   }
-  x9o(t) {
+  U7o(t) {
     var i,
       e,
       s,
-      h = t.GetComponent(161);
+      h = t.GetComponent(163);
     !h?.Valid ||
-      h.CharacterWeight > this.u9o.LimitWeight ||
+      h.CharacterWeight > this.h7o.LimitWeight ||
       ((s = t.GetComponent(3).ActorLocationProxy),
-      (i = Vector_1.Vector.Dist(this.T9o.ActorLocationProxy, s)) >
-        this.u9o.OuterRadius) ||
-      i < this.u9o.InnerRadius ||
-      this.u9o.OuterRadius <= 0 ||
-      ((e = Math.max(MIN_WEIGHT, h.CharacterWeight) - WEIGHT_COEFFICIENT),
-      (i =
+      (e = Vector_1.Vector.Dist(this.S7o.ActorLocationProxy, s)) >
+        this.h7o.OuterRadius) ||
+      e < this.h7o.InnerRadius ||
+      this.h7o.OuterRadius <= 0 ||
+      ((i = Math.max(MIN_WEIGHT, h.CharacterWeight) - WEIGHT_COEFFICIENT),
+      (e =
         ((Math.exp(
           -(
-            (i / this.u9o.OuterRadius) *
-            this.u9o.ForceDampingRatio *
+            (e / this.h7o.OuterRadius) *
+            this.h7o.ForceDampingRatio *
             FORCE_DAMPING_RATIO
           ),
         ) *
-          this.u9o.ForceBase *
+          this.h7o.ForceBase *
           FORCE_RATIO) /
-          (e * e)) *
+          (i * i)) *
         LENGTH_CONVERSION),
-      (e = Vector_1.Vector.Create(this.T9o.ActorLocation)).SubtractionEqual(s),
-      e.Normalize(TOLERANCE),
-      e.MultiplyEqual(i),
-      (s = this.L9o.get(t)),
-      (s = h.SetAddMoveWorld(e.ToUeVector(), MOVE_TIME, void 0, s)),
-      this.L9o.set(t, s));
+      (i = Vector_1.Vector.Create(this.S7o.ActorLocation)).SubtractionEqual(s),
+      i.Normalize(TOLERANCE),
+      i.MultiplyEqual(e),
+      (s = this.y7o.get(t)),
+      (s = h.SetAddMoveWorld(i.ToUeVector(), MOVE_TIME, void 0, s)),
+      this.y7o.set(t, s),
+      0 < this.DSa &&
+        (e = t.GetComponent(52)) &&
+        !e.IsImmuneTimeScaleEffect() &&
+        e.AddImmuneTimeScaleEffectTimer(
+          this.DSa * CommonDefine_1.MILLIONSECOND_PER_SECOND,
+        ));
   }
-  P9o(s) {
-    var h = s.GetComponent(158),
-      o = s.GetComponent(161);
+  R7o(s) {
+    var h = s.GetComponent(160),
+      o = s.GetComponent(163);
     if (h?.Valid && o?.Valid) {
       let i = CustomMovementDefine_1.CUSTOM_MOVEMENTMODE_GLIDE;
-      if (this.S9o)
+      if (this.p7o)
         (h.PositionState ===
           CharacterUnifiedStateTypes_1.ECharPositionState.Air &&
           h.MoveState === CharacterUnifiedStateTypes_1.ECharMoveState.Other) ||
@@ -113,57 +121,57 @@ class BulletLogicForceController extends BulletLogicController_1.BulletLogicCont
           (i = void 0);
       else {
         if (h.MoveState !== CharacterUnifiedStateTypes_1.ECharMoveState.Glide)
-          return void this.E9o.add(s);
-        this.y9o.has(s) && o.SetForceSpeed(Vector_1.Vector.ZeroVectorProxy);
+          return void this.v7o.add(s);
+        this.M7o.has(s) && o.SetForceSpeed(Vector_1.Vector.ZeroVectorProxy);
       }
-      let e = this.L9o.get(s);
+      let e = this.y7o.get(s);
       var h = s.GetComponent(3),
         h =
-          this.T9o.ActorLocationProxy.Z +
-          this._9o.Size.Z -
+          this.S7o.ActorLocationProxy.Z +
+          this.a7o.Size.Z -
           h.ActorLocation.Z -
           h.ScaledHalfHeight;
-      if (this.u9o.HaveTopArea && h < this.u9o.TopAreaHeight)
+      if (this.h7o.HaveTopArea && h < this.h7o.TopAreaHeight)
         0 < h &&
-          (this.I9o.Set(0, 0, -o.CharacterMovement.Velocity.Z),
+          (this.E7o.Set(0, 0, -o.CharacterMovement.Velocity.Z),
           (e = o.SetAddMoveWorld(
-            this.I9o.ToUeVector(),
+            this.E7o.ToUeVector(),
             MOVE_TIME,
-            this.u9o.ContinueTimeCurve ?? void 0,
+            this.h7o.ContinueTimeCurve ?? void 0,
             e,
           )),
-          this.L9o.set(s, e));
+          this.y7o.set(s, e));
       else {
         let t = 0;
-        this.u9o.TowardsBullet
-          ? ((t = this.u9o.ContinueTime),
-            this.I9o.Set(0, 0, 230),
-            (h = this.u9o.IsResetOnLast
-              ? BulletLogicForceController.w9o.get(this.u9o.Group)
-              : this.D9o.get(s)),
-            (h = o.SetAddMoveWorld(this.I9o.ToUeVector(), t, void 0, h, i)),
-            this.u9o.IsResetOnLast
-              ? BulletLogicForceController.w9o.set(this.u9o.Group, h)
-              : this.D9o.set(s, h))
+        this.h7o.TowardsBullet
+          ? ((t = this.h7o.ContinueTime),
+            this.E7o.Set(0, 0, 230),
+            (h = this.h7o.IsResetOnLast
+              ? BulletLogicForceController.A7o.get(this.h7o.Group)
+              : this.I7o.get(s)),
+            (h = o.SetAddMoveWorld(this.E7o.ToUeVector(), t, void 0, h, i)),
+            this.h7o.IsResetOnLast
+              ? BulletLogicForceController.A7o.set(this.h7o.Group, h)
+              : this.I7o.set(s, h))
           : (t = MOVE_TIME),
-          (e = this.u9o.IsResetOnLast
-            ? BulletLogicForceController.B9o.get(this.u9o.Group)
-            : this.L9o.get(s)),
+          (e = this.h7o.IsResetOnLast
+            ? BulletLogicForceController.P7o.get(this.h7o.Group)
+            : this.y7o.get(s)),
           (e = o.SetAddMoveWorld(
-            this.M9o.ToUeVector(),
+            this.f7o.ToUeVector(),
             t,
-            this.u9o.ContinueTimeCurve ?? void 0,
+            this.h7o.ContinueTimeCurve ?? void 0,
             e,
             i,
           )),
-          this.u9o.IsResetOnLast
-            ? BulletLogicForceController.B9o.set(this.u9o.Group, e)
-            : this.L9o.set(s, e);
+          this.h7o.IsResetOnLast
+            ? BulletLogicForceController.P7o.set(this.h7o.Group, e)
+            : this.y7o.set(s, e);
       }
     }
   }
 }
-((exports.BulletLogicForceController = BulletLogicForceController).B9o =
+((exports.BulletLogicForceController = BulletLogicForceController).P7o =
   new Map()),
-  (BulletLogicForceController.w9o = new Map());
+  (BulletLogicForceController.A7o = new Map());
 //# sourceMappingURL=BulletLogicForceController.js.map

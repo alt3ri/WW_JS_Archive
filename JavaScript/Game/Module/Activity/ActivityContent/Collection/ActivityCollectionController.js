@@ -14,29 +14,31 @@ const Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
 class ActivityCollectionController extends ActivityControllerBase_1.ActivityControllerBase {
   constructor() {
     super(...arguments),
-      (this.DEe = (e, t) => {
+      (this.DSe = (e, t) => {
         var o,
           i,
-          r = ActivityCollectionController.vNe();
-        r &&
-          (i = r.QuestStateMap.get(e)) &&
-          (([o] = r.GetCurrentProgress()),
-          (t = t) !== Protocol_1.Aki.Protocol.kMs.Proto_Delete) &&
-          ((i.QuestState = t),
-          r.QuestStateMap.set(e, i),
-          ModelManager_1.ModelManager.ActivityModel.SaveActivityData(
-            r.Id,
-            e,
-            0,
-            0,
-            t === Protocol_1.Aki.Protocol.kMs.Gms ? 1 : 0,
-          ),
-          ([i] = r.GetCurrentProgress()),
+          r,
+          n = ActivityCollectionController.vNe();
+        n &&
+          (r = n.QuestStateMap.get(e)) &&
+          (([o] = n.GetCurrentProgress()),
+          (i = ModelManager_1.ModelManager.QuestNewModel.GetQuestState(e)),
+          ([r] =
+            ((r.QuestState = i),
+            n.QuestStateMap.set(e, r),
+            ModelManager_1.ModelManager.ActivityModel.SaveActivityData(
+              n.Id,
+              e,
+              0,
+              0,
+              2 === i ? 1 : 0,
+            ),
+            n.GetCurrentProgress())),
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.RefreshCommonActivityRedDot,
             ActivityCollectionController.CurrentActivityId,
           ),
-          i !== o) &&
+          r !== o) &&
           ActivityController_1.ActivityController.OpenActivityById(
             ActivityCollectionController.CurrentActivityId,
           );
@@ -58,13 +60,13 @@ class ActivityCollectionController extends ActivityControllerBase_1.ActivityCont
   OnAddEvents() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnQuestStateChange,
-      this.DEe,
+      this.DSe,
     );
   }
   OnRemoveEvents() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnQuestStateChange,
-      this.DEe,
+      this.DSe,
     );
   }
   OnRegisterNetEvent() {}
@@ -75,14 +77,14 @@ class ActivityCollectionController extends ActivityControllerBase_1.ActivityCont
     );
   }
   static RequestCollectionQuestReward(e) {
-    var t = new Protocol_1.Aki.Protocol.oes();
-    (t.o3n = e),
-      Net_1.Net.Call(13506, t, (e) => {
+    var t = new Protocol_1.Aki.Protocol.zrs();
+    (t.B6n = e),
+      Net_1.Net.Call(15524, t, (e) => {
         e &&
-          e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys &&
+          e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs &&
           ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-            e.lkn,
-            5125,
+            e.O4n,
+            28676,
           );
       });
   }

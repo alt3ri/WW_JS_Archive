@@ -25,45 +25,45 @@ class BattlePassModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
       (this.IsRequiringViewData = !1),
-      (this.IOi = !1),
+      (this.Lki = !1),
       (this.IncreasedLevelToShow = 0),
-      (this.TOi = void 0),
-      (this.LOi = 0),
-      (this.DOi = !0),
-      (this.TVs = !1),
-      (this.ROi = 0),
-      (this.UOi = 0),
-      (this.AOi = GIFT_ID),
-      (this.POi = 0),
-      (this.xOi = 0),
+      (this.Dki = void 0),
+      (this.Rki = 0),
+      (this.Uki = !0),
+      (this.MZs = void 0),
+      (this.Aki = 0),
+      (this.Pki = 0),
+      (this.xki = GIFT_ID),
+      (this.wki = 0),
+      (this.Bki = 0),
       (this.RewardDataList = []),
       (this.BattlePassId = 0),
       (this.UQ = 0),
       (this.StageLevelList = []),
-      (this.wOi = 0),
-      (this.BOi = 0),
-      (this.bOi = 0),
-      (this.qOi = Protocol_1.Aki.Protocol.B2s.Proto_NoPaid),
-      (this.GOi = 0),
-      (this.NOi = 0),
-      (this.OOi = 0),
-      (this.kOi = 0),
+      (this.bki = 0),
+      (this.qki = 0),
+      (this.Gki = 0),
+      (this.Nki = Protocol_1.Aki.Protocol.yNs.Proto_NoPaid),
+      (this.Oki = 0),
+      (this.kki = 0),
+      (this.Fki = 0),
+      (this.Vki = 0),
       (this.BattlePassTaskMap = new Map());
   }
   GetInTimeRange() {
-    return this.IOi;
+    return this.Lki;
   }
   SetInTimeRange(t) {
-    this.IOi = t;
+    this.Lki = t;
   }
   GetDayEndTime() {
-    return this.POi;
+    return this.wki;
   }
   GetWeekEndTime() {
-    return this.xOi;
+    return this.Bki;
   }
   GetGiftId() {
-    return this.AOi;
+    return this.xki;
   }
   get PrimaryItemId() {
     return CommonParamById_1.configCommonParamById.GetIntArrayConfig(
@@ -76,26 +76,26 @@ class BattlePassModel extends ModelBase_1.ModelBase {
     )[0];
   }
   get HadEnter() {
-    return this.DOi;
+    return this.Uki;
   }
   set HadEnter(t) {
-    this.DOi !== t &&
-      ((this.DOi = t),
+    this.Uki !== t &&
+      ((this.Uki = t),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.BattlePassHadEnterUpdate,
       ));
   }
   GetWeaponDataList() {
-    if (!this.TOi) {
-      this.TOi = [];
+    if (!this.Dki) {
+      this.Dki = [];
       for (const e of CommonParamById_1.configCommonParamById.GetIntArrayConfig(
         "BattlePassUnlockWeapons",
       )) {
         var t = new WeaponTrialData_1.WeaponTrialData();
-        t.SetTrialId(e), this.TOi.push(t);
+        t.SetTrialId(e), this.Dki.push(t);
       }
     }
-    return this.TOi;
+    return this.Dki;
   }
   GetRewardData(t) {
     var e = this.RewardDataList[t - 1];
@@ -104,23 +104,35 @@ class BattlePassModel extends ModelBase_1.ModelBase {
       Log_1.Log.Warn("Temp", 11, "战令奖励数据 没有这个等级的", ["level", t]);
   }
   set PayButtonRedDotState(t) {
-    this.TVs !== t &&
-      ((this.TVs = t),
+    this.MZs !== t &&
+      ((this.MZs = t),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.BattlePassHadEnterUpdate,
+      ),
+      LocalStorage_1.LocalStorage.SetPlayer(
+        LocalStorageDefine_1.ELocalStoragePlayerKey.BattlePassPayButton,
+        this.MZs,
       ));
   }
   get PayButtonRedDotState() {
-    return this.TVs;
+    return (
+      void 0 === this.MZs &&
+        (this.MZs =
+          LocalStorage_1.LocalStorage.GetPlayer(
+            LocalStorageDefine_1.ELocalStoragePlayerKey.BattlePassPayButton,
+            !0,
+          ) ?? !0),
+      this.MZs
+    );
   }
   GetMaxLevel() {
     return this.UQ;
   }
   IsLevelMax() {
-    return this.wOi >= this.UQ;
+    return this.bki >= this.UQ;
   }
   IsWeekMax() {
-    return this.WeekExp >= this.OOi;
+    return this.WeekExp >= this.Fki;
   }
   GetNextStageLevel(t) {
     if (void 0 === t) return 0;
@@ -155,20 +167,20 @@ class BattlePassModel extends ModelBase_1.ModelBase {
         for ([s, i] of l.PayReward) {
           var h = new BattlePassRewardGridItem_1.BattlePassRewardItem(s, i);
           this.BattlePassLevel >= l.Level &&
-            this.qOi !== Protocol_1.Aki.Protocol.B2s.Proto_NoPaid &&
+            this.Nki !== Protocol_1.Aki.Protocol.yNs.Proto_NoPaid &&
             (h.ItemType = 1),
             o.PayRewardItem.push(h);
         }
         l.IsMilestone && this.StageLevelList.push(l.Level),
           this.RewardDataList.push(o);
       }
-    (this.OOi = e.WeekExpLimit), (this.kOi = e.LevelUpExp), this.FOi();
+    (this.Fki = e.WeekExpLimit), (this.Vki = e.LevelUpExp), this.Hki();
   }
-  FOi() {
-    (this.UOi = this.kOi * (this.UQ - this.wOi) - this.LevelExp),
-      (this.ROi = this.OOi - this.WeekExp);
+  Hki() {
+    (this.Pki = this.Vki * (this.UQ - this.bki) - this.LevelExp),
+      (this.Aki = this.Fki - this.WeekExp);
   }
-  VOi(t) {
+  jki(t) {
     let e = 0,
       a = 0;
     for (const s of t) {
@@ -178,16 +190,16 @@ class BattlePassModel extends ModelBase_1.ModelBase {
     return [e, a];
   }
   TryRequestTaskList(t) {
-    var [e, a] = this.VOi(t),
-      e = e - Math.max(0, a - this.ROi);
-    this.IsLevelMax() || e > this.UOi
+    var [e, a] = this.jki(t),
+      e = e - Math.max(0, a - this.Aki);
+    this.IsLevelMax() || e > this.Pki
       ? (ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
           "BattlePassExpMax",
         ),
         BattlePassController_1.BattlePassController.RequestBattlePassTaskTake(
           t,
         ))
-      : a > this.ROi
+      : a > this.Aki
         ? ((e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(
             this.IsWeekMax() ? 91 : 178,
           )).FunctionMap.set(2, () => {
@@ -207,17 +219,17 @@ class BattlePassModel extends ModelBase_1.ModelBase {
   }
   UpdateBattlePassRewardDataFromResponse(t) {
     if (void 0 !== t && 0 !== t.length)
-      for (const e of t) this.TakeReward(e.Ikn, e.r3n, e.G3n);
+      for (const e of t) this.TakeReward(e.Z4n, e.P6n, e.f8n);
   }
   UpdateRewardDataWithTargetLevel(e) {
-    for (let t = 1; t <= e; t++) this.HOi(t);
+    for (let t = 1; t <= e; t++) this.Wki(t);
   }
-  HOi(t, e = !1) {
+  Wki(t, e = !1) {
     t = this.RewardDataList[t - 1];
     if (t) {
       for (const a of t.FreeRewardItem)
         (0 !== a.ItemType && !e) || (a.ItemType = 1);
-      if (this.PayType !== Protocol_1.Aki.Protocol.B2s.Proto_NoPaid)
+      if (this.PayType !== Protocol_1.Aki.Protocol.yNs.Proto_NoPaid)
         for (const r of t.PayRewardItem)
           (0 !== r.ItemType && !e) || (r.ItemType = 1);
     }
@@ -226,7 +238,7 @@ class BattlePassModel extends ModelBase_1.ModelBase {
     e = this.GetRewardData(e);
     let r = void 0;
     (r =
-      t === Protocol_1.Aki.Protocol.b2s.Proto_Free
+      t === Protocol_1.Aki.Protocol.ENs.Proto_Free
         ? e.GetFreeRewardItem(a)
         : e.GetPayRewardItem(a)).ItemType = 2;
   }
@@ -238,111 +250,95 @@ class BattlePassModel extends ModelBase_1.ModelBase {
       );
   }
   set BattlePassLevel(t) {
-    this.wOi = t;
+    this.bki = t;
   }
   get BattlePassLevel() {
-    return this.wOi;
+    return this.bki;
   }
   set WeekExp(t) {
-    this.BOi = t;
+    this.qki = t;
   }
   get WeekExp() {
-    return this.BOi;
+    return this.qki;
   }
   set LevelExp(t) {
-    this.bOi = t;
+    this.Gki = t;
   }
   get LevelExp() {
-    return this.bOi;
+    return this.Gki;
   }
   set PayType(t) {
-    this.qOi = t;
+    this.Nki = t;
   }
   get PayType() {
-    return this.qOi;
+    return this.Nki;
   }
   GetBattlePassStartTime() {
-    return this.GOi;
+    return this.Oki;
   }
   GetBattlePassEndTime() {
-    return this.NOi;
+    return this.kki;
   }
   InBattlePassInWarningTime() {
-    return TimeUtil_1.TimeUtil.GetServerTime() > this.LOi;
+    return TimeUtil_1.TimeUtil.GetServerTime() > this.Rki;
   }
-  jOi(t) {
-    this.GOi = Number(MathUtils_1.MathUtils.LongToBigInt(t));
+  Kki(t) {
+    this.Oki = Number(MathUtils_1.MathUtils.LongToBigInt(t));
   }
-  WOi(t) {
-    (this.NOi = Number(MathUtils_1.MathUtils.LongToBigInt(t))),
-      (this.LOi =
-        this.NOi -
+  Qki(t) {
+    (this.kki = Number(MathUtils_1.MathUtils.LongToBigInt(t))),
+      (this.Rki =
+        this.kki -
         3600 *
           CommonParamById_1.configCommonParamById.GetIntConfig(
             "BattlePassSettleBugTime",
           ));
   }
   SetDayEndTime(t) {
-    this.POi = Number(MathUtils_1.MathUtils.LongToBigInt(t));
+    this.wki = Number(MathUtils_1.MathUtils.LongToBigInt(t));
   }
   SetWeekEndTime(t) {
-    this.xOi = Number(MathUtils_1.MathUtils.LongToBigInt(t));
+    this.Bki = Number(MathUtils_1.MathUtils.LongToBigInt(t));
   }
   GetMaxWeekExp() {
-    return this.OOi;
+    return this.Fki;
   }
   GetMaxLevelExp() {
-    return this.kOi;
+    return this.Vki;
   }
   GetPassPayBtnKey() {
-    switch (this.qOi) {
-      case Protocol_1.Aki.Protocol.B2s.Proto_NoPaid:
+    switch (this.Nki) {
+      case Protocol_1.Aki.Protocol.yNs.Proto_NoPaid:
         return "Text_BattlePassBuyButton1_Text";
-      case Protocol_1.Aki.Protocol.B2s.Proto_Paid:
+      case Protocol_1.Aki.Protocol.yNs.Proto_Paid:
         return "Text_BattlePassBuyButton2_Text";
-      case Protocol_1.Aki.Protocol.B2s.Proto_Advanced:
+      case Protocol_1.Aki.Protocol.yNs.Proto_Advanced:
         return "Text_BattlePassBuyButton3_Text";
       default:
         return "";
     }
   }
   OnInit() {
-    return (
-      (this.DOi = !0),
-      (this.TVs = LocalStorage_1.LocalStorage.GetPlayer(
-        LocalStorageDefine_1.ELocalStoragePlayerKey.BattlePassPayButton,
-        !0,
-      )),
-      !0
-    );
-  }
-  OnClear() {
-    return (
-      LocalStorage_1.LocalStorage.SetPlayer(
-        LocalStorageDefine_1.ELocalStoragePlayerKey.BattlePassPayButton,
-        this.TVs,
-      ),
-      !0
-    );
+    return (this.Uki = !0);
   }
   GetBattlePassRemainTime() {
-    return TimeUtil_1.TimeUtil.CalculateHourGapBetweenNow(this.NOi, !0);
+    return TimeUtil_1.TimeUtil.CalculateHourGapBetweenNow(this.kki, !0);
   }
   GetBattlePassRemainTimeSecond() {
     var t =
       TimeUtil_1.TimeUtil.GetServerTimeStamp() /
       TimeUtil_1.TimeUtil.InverseMillisecond;
-    return this.NOi - t;
+    return this.kki - t;
   }
   GetTargetLevelRewardList(e, t) {
     t.length = 0;
     var a,
-      r = this.wOi,
+      r = this.bki,
       s = new Map();
     for (let t = r + 1; t <= e; t++) {
       var i = this.GetRewardData(t);
       if (i)
-        for (const h of this.qOi === Protocol_1.Aki.Protocol.B2s.Proto_NoPaid
+        for (const h of this.Nki === Protocol_1.Aki.Protocol.yNs.Proto_NoPaid
           ? i.FreeRewardItem
           : i.FreeRewardItem.concat(i.PayRewardItem)) {
           var o = h.Item[0].ItemId,
@@ -416,7 +412,7 @@ class BattlePassModel extends ModelBase_1.ModelBase {
     return !1;
   }
   CheckHasTaskWaitTakeWithType(t) {
-    if (this.wOi !== this.UQ)
+    if (this.bki !== this.UQ)
       for (var [, e] of this.BattlePassTaskMap)
         if (t === e.UpdateType && 3 === e.TaskState) return !0;
     return !1;
@@ -428,39 +424,39 @@ class BattlePassModel extends ModelBase_1.ModelBase {
       s = this.BattlePassTaskMap,
       i = new BattlePassTaskLoopItem_1.BattlePassTaskData(),
       o =
-        ((i.TaskId = t.Ekn),
+        ((i.TaskId = t.J4n),
         ConfigManager_1.ConfigManager.BattlePassConfig.GetBattlePassTask(
-          t.Ekn,
+          t.J4n,
         ));
     for ([e, a] of o.TaskReward) {
       var n = [{ IncId: 0, ItemId: e }, a];
       e === r && (i.Exp += a), i.RewardItemList.push(n);
     }
-    (i.CurrentProgress = t.k0s ?? 0),
-      (i.TargetProgress = t.s3n ?? 0),
+    (i.CurrentProgress = t.iMs ?? 0),
+      (i.TargetProgress = t.b6n ?? 0),
       (i.UpdateType = o.UpdateType),
-      t.$0s
-        ? t.H0s
+      t.sMs
+        ? t.aMs
           ? (i.TaskState = 2)
           : (i.TaskState = 3)
         : (i.TaskState = 1),
-      s.set(t.Ekn, i);
+      s.set(t.J4n, i);
   }
   SetDataFromBattlePassResponse(t) {
-    var e = t.wfs;
-    (this.IOi = e.Lfs ?? !1),
-      this.IOi &&
-        ((this.HadEnter = e.Ufs),
-        (this.BattlePassId = e.Ekn),
-        (this.PayType = e.Dfs),
-        (this.BattlePassLevel = e.r3n),
-        (this.LevelExp = e.k3n),
-        (this.WeekExp = e.Rfs),
-        this.WOi(e.jCs),
-        this.jOi(e.HCs),
+    var e = t.XSs;
+    (this.Lki = e.$Ss ?? !1),
+      this.Lki &&
+        ((this.HadEnter = e.QSs),
+        (this.BattlePassId = e.J4n),
+        (this.PayType = e.jSs),
+        (this.BattlePassLevel = e.P6n),
+        (this.LevelExp = e.M8n),
+        (this.WeekExp = e.HSs),
+        this.Qki(e.sps),
+        this.Kki(e.nps),
         this.InitBattlePassConfigData(),
-        this.UpdateBattlePassRewardDataFromResponse(t.wfs.Afs ?? void 0),
-        e.Ufs || (this.PayButtonRedDotState = !0),
+        this.UpdateBattlePassRewardDataFromResponse(t.XSs.WSs ?? void 0),
+        e.QSs || (this.PayButtonRedDotState = !0),
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.ReceiveBattlePassDataEvent,
         ));
@@ -485,19 +481,19 @@ class BattlePassModel extends ModelBase_1.ModelBase {
       (this.BattlePassLevel = t),
       (this.LevelExp = e),
       (this.WeekExp = a),
-      this.FOi(),
+      this.Hki(),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.ReceiveBattlePassDataEvent,
       );
   }
   UpdateRewardDataFromBattlePassTakeAllRewardResponse(t) {
-    for (const e of t.Afs) this.TakeReward(e.Ikn, e.r3n, e.G3n);
+    for (const e of t.WSs) this.TakeReward(e.Z4n, e.P6n, e.f8n);
     EventSystem_1.EventSystem.Emit(
       EventDefine_1.EEventName.ReceiveBattlePassDataEvent,
     );
   }
   UpdateRewardDataFormFreeToPay() {
-    for (let t = 1; t <= this.wOi; t++) {
+    for (let t = 1; t <= this.bki; t++) {
       var e = this.GetRewardData(t);
       if (e) for (const a of e.PayRewardItem) a.ItemType = 1;
     }
@@ -549,16 +545,16 @@ class BattlePassModel extends ModelBase_1.ModelBase {
       ? this.GetInTimeRange()
         ? t === this.PrimaryItemId
           ? ModelManager_1.ModelManager.BattlePassModel.PayType !==
-            Protocol_1.Aki.Protocol.B2s.Proto_NoPaid
+            Protocol_1.Aki.Protocol.yNs.Proto_NoPaid
             ? 151
             : ModelManager_1.ModelManager.BattlePassModel.InBattlePassInWarningTime()
               ? 152
               : 153
           : ModelManager_1.ModelManager.BattlePassModel.PayType ===
-              Protocol_1.Aki.Protocol.B2s.Proto_Advanced
+              Protocol_1.Aki.Protocol.yNs.Proto_Advanced
             ? 155
             : ModelManager_1.ModelManager.BattlePassModel.PayType ===
-                Protocol_1.Aki.Protocol.B2s.Proto_Paid
+                Protocol_1.Aki.Protocol.yNs.Proto_Paid
               ? 154
               : ModelManager_1.ModelManager.BattlePassModel.InBattlePassInWarningTime()
                 ? 159

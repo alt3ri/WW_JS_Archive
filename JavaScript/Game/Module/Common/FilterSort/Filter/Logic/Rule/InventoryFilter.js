@@ -8,10 +8,10 @@ const ConfigManager_1 = require("../../../../../../Manager/ConfigManager"),
 class InventoryFilter extends CommonFilter_1.CommonFilter {
   constructor() {
     super(...arguments),
-      (this.KTt = (i) => {
+      (this.YLt = (i) => {
         return i.GetQuality();
       }),
-      (this.QTt = (i) => {
+      (this.JLt = (i) => {
         var t = i.GetConfigId();
         if (
           2 ===
@@ -27,7 +27,7 @@ class InventoryFilter extends CommonFilter_1.CommonFilter {
               : void 0
           );
       }),
-      (this.XTt = (i) => {
+      (this.zLt = (i) => {
         var t = i.GetConfigId();
         if (
           3 ===
@@ -45,20 +45,20 @@ class InventoryFilter extends CommonFilter_1.CommonFilter {
               : void 0
           );
       }),
-      (this.$Tt = (i) => {
+      (this.ZLt = (i) => {
         var t = i.GetSelectOn(),
           i = 1 === i.GetItemOperationType();
         return t && i;
       });
   }
   OnInitFilterMap() {
-    this.FilterMap.set(22, this.KTt),
-      this.FilterMap.set(2, this.QTt),
-      this.FilterMap.set(3, this.XTt),
-      this.FilterMap.set(18, this.XTt),
-      this.FilterMap.set(19, this.XTt),
-      this.FilterMap.set(20, this.XTt),
-      this.FilterMap.set(21, this.XTt),
+    this.FilterMap.set(22, this.YLt),
+      this.FilterMap.set(2, this.JLt),
+      this.FilterMap.set(3, this.zLt),
+      this.FilterMap.set(18, this.zLt),
+      this.FilterMap.set(19, this.zLt),
+      this.FilterMap.set(20, this.zLt),
+      this.FilterMap.set(21, this.zLt),
       this.FilterMap.set(
         14,
         VisionDestroyFilterLogic_1.VisionDestroyFilterLogic.GetPhantomRarity,
@@ -83,7 +83,7 @@ class InventoryFilter extends CommonFilter_1.CommonFilter {
       );
   }
   DefaultFilterList() {
-    return [this.$Tt];
+    return [this.ZLt];
   }
 }
 exports.InventoryFilter = InventoryFilter;

@@ -31,8 +31,8 @@ class SignalDeviceView extends UiViewBase_1.UiViewBase {
       (this.pPe = void 0),
       (this.vPe = void 0),
       (this.MPe = void 0),
-      (this.SPe = void 0),
       (this.EPe = void 0),
+      (this.SPe = void 0),
       (this.Lo = void 0),
       (this.yPe = []),
       (this.IPe = []),
@@ -78,7 +78,7 @@ class SignalDeviceView extends UiViewBase_1.UiViewBase {
         this.UPe(e, i, t, n, o),
           e
             ? (this.Lo[n].Color === IAction_1.EPieceColorType.White &&
-                ((e = (t ? this.SPe : this.pPe).GetRootItem()),
+                ((e = (t ? this.EPe : this.pPe).GetRootItem()),
                 (e = LguiUtil_1.LguiUtil.CopyItem(e, this.yPe[n])),
                 (s = t
                   ? SignalLineItem_1.LinkingLineItem.Create(4)
@@ -94,7 +94,7 @@ class SignalDeviceView extends UiViewBase_1.UiViewBase {
                 (s = this.IPe[i].IsFromDot),
                 Math.abs(e - n) === 2 * SignalDeviceModel_1.ROWNUM ||
                 2 === Math.abs(e - n)
-                  ? ((r = (s || o ? this.SPe : this.pPe).GetRootItem()),
+                  ? ((r = (s || o ? this.EPe : this.pPe).GetRootItem()),
                     (t = LguiUtil_1.LguiUtil.CopyItem(r, this.yPe[i])),
                     (r = SignalLineItem_1.LinkingLineItem.Create(4)),
                     this.IPe[i].ResetStraightLineData(t, r, n))
@@ -185,14 +185,14 @@ class SignalDeviceView extends UiViewBase_1.UiViewBase {
   }
   async OnCreateAsync() {
     (this.WAe = new LinkingDotItem_1.LinkingDotItem()),
-      (this.SPe = SignalLineItem_1.LinkingLineItem.Create(4)),
+      (this.EPe = SignalLineItem_1.LinkingLineItem.Create(4)),
       (this.pPe = SignalLineItem_1.LinkingLineItem.Create(3)),
       (this.fPe = SignalLineItem_1.LinkingLineItem.Create(2)),
       (this.MPe = SignalLineItem_1.LinkingLineItem.Create(1)),
       (this.vPe = SignalLineItem_1.LinkingLineItem.Create(0)),
       await Promise.all([
         this.WAe.CreateThenShowByResourceIdAsync("UiItem_LinkingDot"),
-        this.SPe.CreateThenShowByResourceIdAsync("UiItem_LinkLineA"),
+        this.EPe.CreateThenShowByResourceIdAsync("UiItem_LinkLineA"),
         this.pPe.CreateThenShowByResourceIdAsync("UiItem_LinkLineB"),
         this.fPe.CreateThenShowByResourceIdAsync("UiItem_LinkLineC"),
         this.MPe.CreateThenShowByResourceIdAsync("UiItem_LinkLineE"),
@@ -200,7 +200,7 @@ class SignalDeviceView extends UiViewBase_1.UiViewBase {
       ]);
   }
   OnStart() {
-    this.EPe = new LevelSequencePlayer_1.LevelSequencePlayer(
+    this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(
       this.GetRootItem(),
     );
     const i = new LinkingEmptyToggle_1.LinkingEmptyToggle();
@@ -308,7 +308,7 @@ class SignalDeviceView extends UiViewBase_1.UiViewBase {
   async xPe(e) {
     e &&
       ((e = new CustomPromise_1.CustomPromise()),
-      await this.EPe.PlaySequenceAsync("Complete", e));
+      await this.SPe.PlaySequenceAsync("Complete", e));
   }
 }
 exports.SignalDeviceView = SignalDeviceView;

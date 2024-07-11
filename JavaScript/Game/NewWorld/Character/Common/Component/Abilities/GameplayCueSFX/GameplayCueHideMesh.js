@@ -5,12 +5,12 @@ const UE = require("ue"),
   GameplayCueBase_1 = require("./GameplayCueBase");
 class GameplayCueHideMesh extends GameplayCueBase_1.GameplayCueBase {
   OnCreate() {
-    this.JXo(!0);
+    this.X$o(!0);
   }
   OnDestroy() {
-    this.JXo(!1);
+    this.X$o(!1);
   }
-  JXo(s) {
+  X$o(s) {
     var a = this.ActorInternal.K2_GetComponentsByClass(
       UE.MeshComponent.StaticClass(),
     );

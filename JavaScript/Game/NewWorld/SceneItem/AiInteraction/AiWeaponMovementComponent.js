@@ -13,8 +13,8 @@ var __decorate =
     if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
       n = Reflect.decorate(t, e, i, r);
     else
-      for (var a = t.length - 1; 0 <= a; a--)
-        (o = t[a]) && (n = (s < 3 ? o(n) : 3 < s ? o(e, i, n) : o(e, i)) || n);
+      for (var _ = t.length - 1; 0 <= _; _--)
+        (o = t[_]) && (n = (s < 3 ? o(n) : 3 < s ? o(e, i, n) : o(e, i)) || n);
     return 3 < s && n && Object.defineProperty(e, i, n), n;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
@@ -41,35 +41,28 @@ let AiWeaponMovementComponent = class AiWeaponMovementComponent extends EntityCo
   constructor() {
     super(...arguments),
       (this.Hte = void 0),
-      (this.SIe = void 0),
+      (this.EIe = void 0),
       (this.EnableMovement = void 0),
-      (this.lln = 1),
-      (this._ln = -0),
-      (this.Cji = void 0);
+      (this.jhn = 1),
+      (this.Whn = -0),
+      (this.mWi = void 0);
   }
   OnInitData() {
-    (this.SIe = this.Entity.GetComponent(0)), (this._ln = 0.01);
-    var t = this.SIe.GetPbEntityInitData(),
+    (this.EIe = this.Entity.GetComponent(0)), (this.Whn = 0.01);
+    var t = this.EIe.GetPbEntityInitData(),
       t = (0, IComponent_1.getComponent)(t.ComponentsData, "WeaponComponent");
     return (
       t?.WeaponId &&
         ((t = ModelManager_1.ModelManager.AiWeaponModel.GetStaticWeaponConfig(
           t.WeaponId,
         )),
-        (this._ln = t.Mass)),
+        (this.Whn = t.Mass)),
       (this.EnableMovement = !0),
-      !(this.lln = 0)
+      !(this.jhn = 0)
     );
   }
   OnStart() {
-    return (
-      (this.Hte = this.Entity.GetComponent(182)),
-      ModelManager_1.ModelManager.GameModeModel.IsMulti ||
-        this.Entity.GetComponent(142)?.TryDisable(
-          "[AiWeaponMovementComponent.OnStart]",
-        ),
-      !0
-    );
+    return (this.Hte = this.Entity.GetComponent(185)), !0;
   }
   OnTick(t) {
     this.EnableMovement && this.UpdateMovement(t);
@@ -77,7 +70,7 @@ let AiWeaponMovementComponent = class AiWeaponMovementComponent extends EntityCo
   UpdateMovement(t) {
     switch (
       (this.Hte.SetActorLocation(this.Hte.StaticMesh.K2_GetComponentLocation()),
-      this.lln)
+      this.jhn)
     ) {
       case 0:
         this.UpdateItemBorn(t);
@@ -92,35 +85,35 @@ let AiWeaponMovementComponent = class AiWeaponMovementComponent extends EntityCo
   UpdateItemBorn(t) {
     var e = MathUtils_1.MathUtils.CommonTempVector;
     e.FromConfigVector(
-      this.SIe.GetInitLinearVelocity() ?? Vector_1.Vector.ZeroVector,
+      this.EIe.GetInitLinearVelocity() ?? Vector_1.Vector.ZeroVector,
     ),
-      e.IsNearlyZero() ? (this.lln = 2) : (this.uln(), (this.lln = 1));
+      e.IsNearlyZero() ? (this.jhn = 2) : (this.Khn(), (this.jhn = 1));
   }
   UpdateItemFall(t) {
-    (this.cln() || this.mln() || this.dln()) &&
-      ((this.lln = 2),
-      this.Cln(),
+    (this.Qhn() || this.Xhn() || this.$hn()) &&
+      ((this.jhn = 2),
+      this.Yhn(),
       ModelManager_1.ModelManager.GameModeModel.IsMulti ||
-        this.Entity.GetComponent(142)?.ForceSendPendingMoveInfos());
+        this.Entity.GetComponent(144)?.CollectSampleAndSend(!0));
   }
   UpdateItemStay(t) {
     this.EnableMovement = !1;
   }
-  uln() {
+  Khn() {
     var t,
       e = this.Hte.StaticMesh,
       i =
         (e.SetCollisionProfileName(COLLISION_PROFILE_NAME),
         e.SetCollisionEnabled(2),
         e.SetSimulatePhysics(!0),
-        0 <= this._ln &&
-          e.SetMassOverrideInKg(FNameUtil_1.FNameUtil.NONE, this._ln, !0),
+        0 <= this.Whn &&
+          e.SetMassOverrideInKg(FNameUtil_1.FNameUtil.NONE, this.Whn, !0),
         e.SetEnableGravity(!0),
         e.SetConstraintMode(6),
         e.SetUseCCD(!0),
         MathUtils_1.MathUtils.CommonTempVector);
     i.FromConfigVector(
-      this.SIe.GetInitLinearVelocity() ?? Vector_1.Vector.ZeroVector,
+      this.EIe.GetInitLinearVelocity() ?? Vector_1.Vector.ZeroVector,
     ),
       i.SizeSquared2D() <= GROUND_MAX_XY_VEL_SQUARED &&
         ((t = Vector_1.Vector.Create()),
@@ -130,7 +123,7 @@ let AiWeaponMovementComponent = class AiWeaponMovementComponent extends EntityCo
         i.AdditionEqual(t)),
       e.SetPhysicsLinearVelocity(i.ToUeVector());
   }
-  Cln() {
+  Yhn() {
     var t = this.Hte.StaticMesh;
     t.SetCollisionEnabled(0),
       t.SetSimulatePhysics(!1),
@@ -140,41 +133,41 @@ let AiWeaponMovementComponent = class AiWeaponMovementComponent extends EntityCo
       t.SetConstraintMode(0),
       t.SetUseCCD(!1);
   }
-  gln() {
-    this.Cji || (this.Cji = UE.NewObject(UE.TraceLineElement.StaticClass())),
-      (this.Cji.WorldContextObject = GlobalData_1.GlobalData.World),
-      (this.Cji.bIsSingle = !0),
-      (this.Cji.bIgnoreSelf = !0),
-      this.Cji.SetTraceTypeQuery(QueryTypeDefine_1.KuroTraceTypeQuery.Water),
-      this.Cji.SetDrawDebugTrace(2),
-      (this.Cji.DrawTime = 5),
+  Jhn() {
+    this.mWi || (this.mWi = UE.NewObject(UE.TraceLineElement.StaticClass())),
+      (this.mWi.WorldContextObject = GlobalData_1.GlobalData.World),
+      (this.mWi.bIsSingle = !0),
+      (this.mWi.bIgnoreSelf = !0),
+      this.mWi.SetTraceTypeQuery(QueryTypeDefine_1.KuroTraceTypeQuery.Water),
+      this.mWi.SetDrawDebugTrace(2),
+      (this.mWi.DrawTime = 5),
       TraceElementCommon_1.TraceElementCommon.SetTraceColor(
-        this.Cji,
+        this.mWi,
         ColorUtils_1.ColorUtils.LinearGreen,
       ),
       TraceElementCommon_1.TraceElementCommon.SetTraceHitColor(
-        this.Cji,
+        this.mWi,
         ColorUtils_1.ColorUtils.LinearRed,
       );
   }
-  fln(t) {
-    this.gln();
+  zhn(t) {
+    this.Jhn();
     var e = this.Hte.ActorLocationProxy,
       e =
-        (this.Cji.SetStartLocation(e.X, e.Y, e.Z),
-        this.Cji.SetEndLocation(e.X, e.Y, e.Z + t),
+        (this.mWi.SetStartLocation(e.X, e.Y, e.Z),
+        this.mWi.SetEndLocation(e.X, e.Y, e.Z + t),
         TraceElementCommon_1.TraceElementCommon.LineTrace(
-          this.Cji,
+          this.mWi,
           "AiWeaponMovementComponent.TraceHitWater",
         )),
-      t = e && !!this.Cji.HitResult?.bBlockingHit;
-    return this.Cji.ClearCacheData(), t;
+      t = e && !!this.mWi.HitResult?.bBlockingHit;
+    return this.mWi.ClearCacheData(), t;
   }
-  cln() {
+  Qhn() {
     var t;
     return (
       !(0 < this.Hte.StaticMesh.GetComponentVelocity().Z) &&
-      ((t = (t = this.SIe.GetInitLocation())
+      ((t = (t = this.EIe.GetInitLocation())
         ? this.Hte.ActorLocationProxy.Z - t.Z
         : 0),
       Math.abs(t) > MAX_DROP_HEIGHT ||
@@ -185,7 +178,7 @@ let AiWeaponMovementComponent = class AiWeaponMovementComponent extends EntityCo
         Math.abs(t) > MAX_DROP_HEIGHT))
     );
   }
-  mln() {
+  Xhn() {
     var t = this.Hte.StaticMesh.GetComponentVelocity();
     return (
       t.Z <= 0 &&
@@ -193,15 +186,15 @@ let AiWeaponMovementComponent = class AiWeaponMovementComponent extends EntityCo
       t.SizeSquared2D() <= GROUND_MAX_XY_VEL_SQUARED
     );
   }
-  dln() {
+  $hn() {
     return !!(
       this.Hte.StaticMesh.GetComponentVelocity().Z <= 0 &&
-      this.fln(-ON_WATER_MAX_DIST)
+      this.zhn(-ON_WATER_MAX_DIST)
     );
   }
 };
 (AiWeaponMovementComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(108)],
+  [(0, RegisterComponent_1.RegisterComponent)(110)],
   AiWeaponMovementComponent,
 )),
   (exports.AiWeaponMovementComponent = AiWeaponMovementComponent);

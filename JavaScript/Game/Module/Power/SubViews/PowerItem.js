@@ -7,15 +7,15 @@ const UE = require("ue"),
 class PowerItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor(t) {
     super(),
-      (this.Hio = void 0),
-      (this.wIt = void 0),
-      (this.x4e = (t) => {
-        1 === t && this.wIt(this.Hio);
+      (this.Ooo = void 0),
+      (this.NTt = void 0),
+      (this.Bke = (t) => {
+        1 === t && this.NTt(this.Ooo);
       }),
       this.CreateThenShowByActor(t.GetOwner());
   }
   Refresh(t, s, i) {
-    (this.Hio = t),
+    (this.Ooo = t),
       this.GetText(10).SetText(t.StackValue.toString()),
       t.CostValue > t.StackValue &&
         this.GetText(10).SetColor(coinNotEnoughColor),
@@ -25,7 +25,7 @@ class PowerItem extends GridProxyAbstract_1.GridProxyAbstract {
       this.SetItemIcon(this.GetTexture(3), t.ItemId);
   }
   SetClickCallback(t) {
-    this.wIt = t;
+    this.NTt = t;
   }
   OnRegisterComponent() {
     (this.ComponentRegisterInfos = [
@@ -41,7 +41,7 @@ class PowerItem extends GridProxyAbstract_1.GridProxyAbstract {
       [9, UE.UIItem],
       [10, UE.UIText],
     ]),
-      (this.BtnBindInfo = [[0, this.x4e]]);
+      (this.BtnBindInfo = [[0, this.Bke]]);
   }
   SetIntoToggleGroup(t) {
     this.GetExtendToggle(0).SetToggleGroup(t.GetOwner());

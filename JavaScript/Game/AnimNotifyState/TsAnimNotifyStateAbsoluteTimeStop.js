@@ -12,59 +12,76 @@ class TsAnimNotifyStateAbsoluteTimeStop extends UE.KuroAnimNotifyState {
     super(...arguments),
       (this.副本计时停止 = !1),
       (this.角色战斗机制停止 = !0),
-      (this.怪物战斗机制停止 = !0);
+      (this.怪物战斗机制停止 = !0),
+      (this.是否冻结移动效果 = !0);
   }
-  K2_NotifyBegin(e, t, r) {
-    var o = e.GetOwner();
-    if (!(o instanceof TsBaseCharacter_1.default)) return !1;
+  K2_NotifyBegin(e, t, o) {
+    var r = e.GetOwner();
+    if (!(r instanceof TsBaseCharacter_1.default)) return !1;
     if (ModelManager_1.ModelManager.GameModeModel?.IsMulti) return !1;
-    var e = o.CharacterActorComponent?.Entity,
-      a = e?.GetComponent(162);
-    if (!e || !a) return !1;
-    a.ResetTimeScale();
-    var s,
-      i,
+    var e = r.CharacterActorComponent?.Entity,
+      s = e?.GetComponent(164);
+    if (!e || !s) return !1;
+    s.AddDelayLock("ANS AbsoluteTimeStop Role");
+    var i,
+      a,
       l = e.GetComponent(0);
-    for (const n of ModelManager_1.ModelManager.CreatureModel.GetAllEntities())
-      n.IsInit &&
-        n.Entity.Active &&
-        ((s = n.Entity.GetComponent(3)?.Actor),
-        (i = n.Entity.GetComponent(0).GetSummonerId()),
-        s) &&
-        s !== o &&
-        i !== l?.GetCreatureDataId() &&
-        (n.Entity?.GetComponent(107)?.AddPauseLock(
+    for (const u of ModelManager_1.ModelManager.CreatureModel.GetAllEntities())
+      u.IsInit &&
+        u.Entity.Active &&
+        ((i = u.Entity.GetComponent(3)?.Actor),
+        (a = u.Entity.GetComponent(0).GetSummonerId()),
+        i) &&
+        i !== r &&
+        a !== l?.GetCreatureDataId() &&
+        (u.Entity.GetComponent(109)?.AddPauseLock(
           "ANS AbsoluteTimeStop monster",
         ),
-        BulletUtil_1.BulletUtil.FrozenCharacterBullet(n.Id),
-        a.TimeStopEntitySet.add(n));
-    e = Protocol_1.Aki.Protocol.XNn.create();
+        this.是否冻结移动效果 &&
+          u.Entity.GetComponent(37)?.AddPauseLock(
+            "ANS AbsoluteTimeStop monster",
+          ),
+        BulletUtil_1.BulletUtil.FrozenCharacterBullet(u.Id),
+        s.TimeStopEntitySet.add(u));
+    e = Protocol_1.Aki.Protocol.I4n.create();
     return (
-      (e.Mkn = !0),
-      (e.Skn = r * TimeUtil_1.TimeUtil.InverseMillisecond),
-      CombatMessage_1.CombatNet.Call(7807, o.CharacterActorComponent.Entity, e),
+      (e.$4n = !0),
+      (e.Y4n = o * TimeUtil_1.TimeUtil.InverseMillisecond),
+      CombatMessage_1.CombatNet.Call(
+        28342,
+        r.CharacterActorComponent.Entity,
+        e,
+      ),
       !0
     );
   }
   K2_NotifyEnd(e, t) {
     e = e?.GetOwner();
     if (!(e instanceof TsBaseCharacter_1.default)) return !1;
-    if (ModelManager_1.ModelManager.GameModeModel?.IsMulti) return !1;
     if (e.CharacterActorComponent?.Entity?.Valid) {
-      var r = e.CharacterActorComponent.Entity.GetComponent(162);
-      for (const o of r.TimeStopEntitySet)
-        o.Valid &&
-          (o.Entity?.GetComponent(107)?.RemovePauseLock(
+      var o = e.CharacterActorComponent.Entity.GetComponent(164);
+      o.RemoveDelayLock("ANS AbsoluteTimeStop Role");
+      for (const r of o.TimeStopEntitySet)
+        r.Valid &&
+          (r.Entity.GetComponent(109)?.RemovePauseLock(
             "ANS AbsoluteTimeStop monster",
           ),
-          BulletUtil_1.BulletUtil.UnFrozenCharacterBullet(o.Id));
-      r.TimeStopEntitySet.clear();
+          this.是否冻结移动效果 &&
+            r.Entity.GetComponent(37)?.RemovePauseLock(
+              "ANS AbsoluteTimeStop monster",
+            ),
+          BulletUtil_1.BulletUtil.UnFrozenCharacterBullet(r.Id));
+      o.TimeStopEntitySet.clear();
     }
-    r = Protocol_1.Aki.Protocol.XNn.create();
+    o = Protocol_1.Aki.Protocol.I4n.create();
     return (
-      (r.Mkn = !1),
-      (r.Skn = 0),
-      CombatMessage_1.CombatNet.Call(7807, e.CharacterActorComponent.Entity, r),
+      (o.$4n = !1),
+      (o.Y4n = 0),
+      CombatMessage_1.CombatNet.Call(
+        28342,
+        e.CharacterActorComponent.Entity,
+        o,
+      ),
       !0
     );
   }

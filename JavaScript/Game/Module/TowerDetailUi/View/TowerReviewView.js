@@ -10,11 +10,11 @@ const UE = require("ue"),
 class TowerReviewView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.KLo = void 0),
-      (this.sBi = () => {
+      (this.HDo = void 0),
+      (this.sbi = () => {
         return new TowerReviewItem_1.TowerReviewItem();
       }),
-      (this._Do = () => {
+      (this.aRo = () => {
         ModelManager_1.ModelManager.TowerModel.ClearHandleData(),
           this.CloseMe();
       });
@@ -25,17 +25,17 @@ class TowerReviewView extends UiViewBase_1.UiViewBase {
       [1, UE.UIVerticalLayout],
       [2, UE.UIText],
     ]),
-      (this.BtnBindInfo = [[0, this._Do]]);
+      (this.BtnBindInfo = [[0, this.aRo]]);
   }
   OnStart() {
-    (this.KLo = new GenericLayout_1.GenericLayout(
+    (this.HDo = new GenericLayout_1.GenericLayout(
       this.GetVerticalLayout(1),
-      this.sBi,
+      this.sbi,
     )),
       this.Og();
   }
   OnBeforeDestroy() {
-    this.KLo = void 0;
+    this.HDo = void 0;
   }
   Og() {
     var e = TowerData_1.VARIATION_RISK_DIFFICULTY,
@@ -44,7 +44,7 @@ class TowerReviewView extends UiViewBase_1.UiViewBase {
         !0,
       );
     r &&
-      (this.KLo.RefreshByData(r),
+      (this.HDo.RefreshByData(r),
       this.GetText(2).SetText(
         ModelManager_1.ModelManager.TowerModel.GetDifficultyMaxStars(e, !0) +
           "/" +

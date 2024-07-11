@@ -14,19 +14,21 @@ const UE = require("ue"),
   UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase"),
   InputManager_1 = require("../../../Ui/Input/InputManager"),
   UiManager_1 = require("../../../Ui/UiManager"),
+  BackToGameDefine_1 = require("../../Login/BackToGameDefine"),
   LguiUtil_1 = require("../../Util/LguiUtil"),
   LoadingShowData_1 = require("../Data/LoadingShowData"),
   LoadingDefine_1 = require("../LoadingDefine");
 class LoadingView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
-      (this.Upi = 0),
-      (this.Api = void 0),
-      (this.Ppi = void 0),
-      (this.xpi = void 0),
-      (this.wpi = !1),
-      (this.Bpi = () => {
-        this.bpi();
+      (this.Uvi = 0),
+      (this.Avi = void 0),
+      (this.Pvi = void 0),
+      (this.xvi = void 0),
+      (this.wvi = !1),
+      (this.Isa = void 0),
+      (this.Bvi = () => {
+        this.bvi();
       });
   }
   OnRegisterComponent() {
@@ -40,7 +42,7 @@ class LoadingView extends UiTickViewBase_1.UiTickViewBase {
       [6, UE.UISprite],
       [7, UE.UILayoutBase],
     ]),
-      (this.BtnBindInfo = [[4, this.Bpi]]);
+      (this.BtnBindInfo = [[4, this.Bvi]]);
   }
   OnStartImplementImplement() {
     InputManager_1.InputManager.SetShowCursor(!0),
@@ -51,33 +53,44 @@ class LoadingView extends UiTickViewBase_1.UiTickViewBase {
         Log_1.Log.Info("Audio", 57, "[Game.Loading] Loading 音乐播放");
   }
   OnStart() {
-    (this.Ppi = this.GetTexture(0)),
-      (this.xpi = this.GetText(5)),
-      (this.Api = new LoadingShowData_1.LoadingShowData()),
-      this.Api.Initialize(),
+    var e;
+    (this.Pvi = this.GetTexture(0)),
+      (this.xvi = this.GetText(5)),
+      (this.Avi = new LoadingShowData_1.LoadingShowData()),
+      this.Avi.Initialize(),
       this.RootItem?.SetAlpha(1),
-      this.qpi(),
-      this.bpi(),
-      this.Gpi(),
-      this.Npi(),
-      HotFixSceneManager_1.HotFixSceneManager.StopHotPatchBgm();
+      this.qvi(),
+      this.bvi(),
+      this.Gvi(),
+      this.Nvi(),
+      HotFixSceneManager_1.HotFixSceneManager.StopHotPatchBgm(),
+      ModelManager_1.ModelManager.LoginModel.HasBackToGameData() &&
+        ((e = ModelManager_1.ModelManager.LoginModel.GetBackToGameData()),
+        (this.Isa = new BackToGameDefine_1.BackToGameLoadingViewData()),
+        (this.Isa.LoadingWidget = e.LoadingWidget),
+        this.Isa.RebootFinished(),
+        ModelManager_1.ModelManager.LoginModel.RemoveBackToGameData());
   }
   OnAfterShow() {
-    this.Opi();
+    this.Ovi(), this.Isa && this.GetRootItem().SetUIActive(!1);
   }
   OnTick(e) {
     e /= TimeUtil_1.TimeUtil.InverseMillisecond;
-    this.kpi(e),
-      (this.Upi += e),
-      this.Upi >= ModelManager_1.ModelManager.LoadingModel.TipTime &&
-        this.bpi();
+    this.kvi(e),
+      (this.Uvi += e),
+      this.Uvi >= ModelManager_1.ModelManager.LoadingModel.TipTime &&
+        this.bvi();
   }
-  kpi(e) {
+  kvi(e) {
     var i = ModelManager_1.ModelManager.LoadingModel,
       t = i.CurrentProgress + i.Speed * i.SpeedRate * e,
       t = Math.min(t, i.NextProgress),
       e = (i.CurrentProgress = t) / MathCommon_1.MathCommon.ProgressTotalValue;
-    for (this.Ppi.SetFillAmount(e), this.Qbe(t); i.ReachHandleQueue.Size; ) {
+    for (
+      this.Pvi.SetFillAmount(e), this.Qbe(t), this.Isa?.SetProgress(e);
+      i.ReachHandleQueue.Size;
+
+    ) {
       var a = i.ReachHandleQueue.Front;
       if (a[0] > t) break;
       i.ReachHandleQueue.Pop(),
@@ -85,46 +98,57 @@ class LoadingView extends UiTickViewBase_1.UiTickViewBase {
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("Loading", 17, "TickProgress", ["progress", t]);
     }
-    !this.wpi &&
+    !this.wvi &&
       t >= MathCommon_1.MathCommon.ProgressTotalValue &&
-      ((this.wpi = !0), UiManager_1.UiManager.CloseView(this.Info.Name));
+      ((this.wvi = !0),
+      UiManager_1.UiManager.CloseView(this.Info.Name),
+      this.Isa?.Close(),
+      (this.Isa = void 0));
   }
-  qpi() {
+  qvi() {
     var e = ConfigManager_1.ConfigManager.LoadingConfig.GetBroadcastImageConfig(
-      this.Api.GetImageId(),
+      this.Avi.GetImageId(),
     );
-    this.SetTextureByPath(e.Image, this.GetTexture(3), this.Info.Name);
+    ModelManager_1.ModelManager.LoadingModel.SetLoadingTexturePath(e.Image),
+      this.SetTextureByPath(e.Image, this.GetTexture(3), this.Info.Name);
   }
-  Gpi() {
+  Gvi() {
     var e = ConfigManager_1.ConfigManager.LoadingConfig.GetBroadcastImageConfig(
-      this.Api.GetImageId(),
+      this.Avi.GetImageId(),
     );
     this.SetSpriteByPath(e.Icon, this.GetSprite(6), !0, this.Info.Name);
   }
-  Opi() {
+  Ovi() {
     const e = this.GetLayoutBase(7);
     e?.GetRootComponent()?.SetAlpha(0),
       e?.OnLateUpdate.Bind(() => {
         e?.OnLateUpdate.Unbind(), e?.GetRootComponent()?.SetAlpha(1);
       });
   }
-  bpi() {
-    this.Upi = 0;
-    var e = this.Api.GetNextTip();
+  bvi() {
+    this.Uvi = 0;
+    var e = this.Avi.GetNextTip();
     e &&
       (LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(1), e.TipsText),
-      LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(2), e.Title));
+      LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(2), e.Title),
+      ModelManager_1.ModelManager.LoadingModel.SetLoadingTitle(
+        this.GetText(2).GetText(),
+      ),
+      ModelManager_1.ModelManager.LoadingModel.SetLoadingTips(
+        this.GetText(1).GetText(),
+      ));
   }
-  Npi() {
+  Nvi() {
     var e =
       ModelManager_1.ModelManager.LoadingModel.CurrentProgress /
       MathCommon_1.MathCommon.ProgressTotalValue;
-    this.Ppi.SetFillAmount(e),
-      this.Qbe(ModelManager_1.ModelManager.LoadingModel.CurrentProgress);
+    this.Pvi.SetFillAmount(e),
+      this.Qbe(ModelManager_1.ModelManager.LoadingModel.CurrentProgress),
+      this.Isa?.SetProgress(e);
   }
   Qbe(e) {
     e = Math.round(e);
-    this.xpi.SetText(e.toString());
+    this.xvi.SetText(e.toString());
   }
   OnBeforeDestroyImplement() {
     AudioSystem_1.AudioSystem.ExecuteAction(LoadingDefine_1.MUSIC_EVENT, 0),
@@ -147,6 +171,9 @@ class LoadingView extends UiTickViewBase_1.UiTickViewBase {
               "loadingModel.ReachHandleQueue.Size",
               e.ReachHandleQueue.Size,
             ]);
+  }
+  OnAfterDestroy() {
+    this.Isa?.Close();
   }
 }
 exports.LoadingView = LoadingView;

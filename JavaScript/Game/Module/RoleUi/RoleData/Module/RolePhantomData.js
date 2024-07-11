@@ -9,9 +9,9 @@ class RolePhantomData extends RoleModuleDataBase_1.RoleModuleDataBase {
   constructor() {
     super(...arguments),
       (this.PhantomMap = new Map()),
-      (this.H0i = !1),
+      (this.Hfi = !1),
       (this.NQ = new Map()),
-      (this.e1o = new Array());
+      (this.Y1o = new Array());
   }
   RefreshPhantom(t, a) {
     this.PhantomMap.set(t, a);
@@ -20,13 +20,13 @@ class RolePhantomData extends RoleModuleDataBase_1.RoleModuleDataBase {
     return this.PhantomMap.get(t);
   }
   SetIsTrial(t) {
-    this.H0i = t;
+    this.Hfi = t;
   }
   SetDataMap(t, a) {
     this.NQ.set(t, a);
   }
   GetDataMap() {
-    if (!this.H0i) {
+    if (!this.Hfi) {
       var e = ModelManager_1.ModelManager.PhantomBattleModel.GetBattleDataById(
         this.RoleId,
       ).GetIncrIdList();
@@ -47,7 +47,7 @@ class RolePhantomData extends RoleModuleDataBase_1.RoleModuleDataBase {
   }
   GetMainProp() {
     var t;
-    return this.H0i
+    return this.Hfi
       ? this.NQ.get(0)
       : ((t = ModelManager_1.ModelManager.PhantomBattleModel.GetBattleDataById(
           this.RoleId,
@@ -74,22 +74,22 @@ class RolePhantomData extends RoleModuleDataBase_1.RoleModuleDataBase {
     );
   }
   GetPhantomFetterMap() {
-    var t = this.t1o();
+    var t = this.J1o();
     return ConfigManager_1.ConfigManager.PhantomBattleConfig.GetFetterMapResultBySuitMap(
       t,
     );
   }
   GetPhantomFettersList() {
-    var t = this.t1o();
+    var t = this.J1o();
     return (
-      (this.e1o =
+      (this.Y1o =
         ConfigManager_1.ConfigManager.PhantomBattleConfig.GetFetterResultBySuitMap(
           t,
         )),
-      this.e1o
+      this.Y1o
     );
   }
-  t1o() {
+  J1o() {
     var t = this.GetDataMap();
     const e = new Array();
     return (
@@ -100,7 +100,7 @@ class RolePhantomData extends RoleModuleDataBase_1.RoleModuleDataBase {
     );
   }
   ClearPhantomFettersList() {
-    this.e1o.length = 0;
+    this.Y1o.length = 0;
   }
 }
 exports.RolePhantomData = RolePhantomData;

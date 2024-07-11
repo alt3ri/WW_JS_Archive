@@ -12,9 +12,9 @@ const UE = require("ue"),
 class RoleAttrListScrollItem extends UiPanelBase_1.UiPanelBase {
   constructor(e, i) {
     super(),
-      (this.EPe = void 0),
+      (this.SPe = void 0),
       (this.Pe = void 0),
-      (this.r7e = () => {
+      (this.pHe = () => {
         return !!ConfigManager_1.ConfigManager.PropertyIndexConfig.GetPropertyIndexInfo(
           this.Pe.Id,
         ).Dec;
@@ -24,10 +24,10 @@ class RoleAttrListScrollItem extends UiPanelBase_1.UiPanelBase {
           this.GetText(8).SetUIActive(e),
           this.GetItem(7).SetUIActive(e),
           (e = e ? "Show" : "Hide");
-        this.EPe &&
-          (this.EPe.StopCurrentSequence(), this.EPe.PlayLevelSequenceByName(e));
+        this.SPe &&
+          (this.SPe.StopCurrentSequence(), this.SPe.PlayLevelSequenceByName(e));
       }),
-      (this.S9 = i),
+      (this.E9 = i),
       this.CreateThenShowByActor(e.GetOwner());
   }
   OnRegisterComponent() {
@@ -48,12 +48,12 @@ class RoleAttrListScrollItem extends UiPanelBase_1.UiPanelBase {
     var e = this.GetExtendToggle(0);
     e.RootUIComp.SetUIActive(!0),
       e.CanExecuteChange.Unbind(),
-      e.CanExecuteChange.Bind(this.r7e),
-      (this.EPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem)),
+      e.CanExecuteChange.Bind(this.pHe),
+      (this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem)),
       this.GetItem(7).SetUIActive(!1);
   }
   OnBeforeDestroy() {
-    this.EPe && (this.EPe.Clear(), (this.EPe = void 0));
+    this.SPe && (this.SPe.Clear(), (this.SPe = void 0));
   }
   ShowTemp(e, i) {
     this.GetSprite(1).useChangeColor = i % 2 == 1;
@@ -86,7 +86,7 @@ class RoleAttrListScrollItem extends UiPanelBase_1.UiPanelBase {
           e.Id === RoleDefine_1.STRENGTH_MAX_ID
             ? (e.BaseValue + e.AddValue) / 100
             : e.BaseValue + e.AddValue),
-      1 === this.S9
+      1 === this.E9
         ? ((s = e.BaseValue + e.AddValue),
           (t = e.Id === RoleDefine_1.STRENGTH_MAX_ID ? s / 100 : s),
           this.GetText(4).SetText(

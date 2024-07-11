@@ -16,7 +16,7 @@ class RoleVisionAttribute extends UiPanelBase_1.UiPanelBase {
     super(),
       (this.AttributeScroller = void 0),
       (this.wqe = void 0),
-      (this.Bdo = () => {
+      (this.PCo = () => {
         return new RoleVisionAttributeItem();
       }),
       (this.wqe = e);
@@ -33,7 +33,7 @@ class RoleVisionAttribute extends UiPanelBase_1.UiPanelBase {
   OnStart() {
     this.AttributeScroller = new GenericLayout_1.GenericLayout(
       this.GetVerticalLayout(0),
-      this.Bdo,
+      this.PCo,
       this.GetItem(1).GetOwner(),
     );
   }
@@ -88,9 +88,9 @@ class RoleVisionAttributeItem extends UiPanelBase_1.UiPanelBase {
           this.GetText(0).ShowTextNew(t.Name),
           this.GetItem(2).SetUIActive(2 === e.Data.AttributeType),
           this.GetText(3).SetUIActive(2 === e.Data.AttributeType),
-          this.npt(e.Data));
+          this.fvt(e.Data));
   }
-  npt(e) {
+  fvt(e) {
     4 === e.AttributeType || 1 === e.AttributeType || 3 === e.AttributeType
       ? this.GetText(1).SetText(
           ModelManager_1.ModelManager.AttributeModel.GetFormatAttributeValueString(

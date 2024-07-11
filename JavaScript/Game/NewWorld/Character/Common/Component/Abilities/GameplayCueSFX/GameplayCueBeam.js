@@ -8,48 +8,48 @@ const Log_1 = require("../../../../../../../Core/Common/Log"),
 class GameplayCueBeam extends GameplayCueBase_1.GameplayCueBase {
   constructor() {
     super(...arguments),
-      (this.MXo = void 0),
-      (this.SXo = void 0),
-      (this.EXo = void 0);
+      (this.f$o = void 0),
+      (this.p$o = void 0),
+      (this.v$o = void 0);
   }
   OnInit() {
-    this.SXo = new Array();
+    this.p$o = new Array();
     var s = this.CueConfig.Socket.split("#");
     for (let e = 0, t = s?.length; e < t; e++)
-      this.SXo.push(FNameUtil_1.FNameUtil.GetDynamicFName(s[e]));
-    (this.MXo = this.Entity.CheckGetComponent(157)
+      this.p$o.push(FNameUtil_1.FNameUtil.GetDynamicFName(s[e]));
+    (this.f$o = this.Entity.CheckGetComponent(159)
       ?.GetBuffByHandle(this.ActiveHandleId)
       ?.GetInstigator()
       .CheckGetComponent(3)?.Actor),
-      this.MXo ||
+      this.f$o ||
         (Log_1.Log.CheckError() &&
           Log_1.Log.Error("Battle", 29, "无法获取Buff特效连线创建者")),
-      this.MXo === this.ActorInternal &&
+      this.f$o === this.ActorInternal &&
         Log_1.Log.CheckError() &&
         Log_1.Log.Error("Battle", 29, "Buff特效连线两端不能是同一个人");
   }
   OnTick(e) {
     let t = !1;
-    (this.MXo.bHidden || this.ActorInternal.bHidden) && (t = !0),
-      this.EXo.GetOwner().SetActorHiddenInGame(t);
-    var s = this.SXo[0]
-        ? this.MXo.Mesh.GetSocketLocation(this.SXo[0])
-        : this.MXo.K2_GetActorLocation(),
-      i = this.SXo[1]
-        ? this.ActorInternal.Mesh.GetSocketLocation(this.SXo[1])
+    (this.f$o.bHidden || this.ActorInternal.bHidden) && (t = !0),
+      this.v$o.GetOwner().SetActorHiddenInGame(t);
+    var s = this.p$o[0]
+        ? this.f$o.Mesh.GetSocketLocation(this.p$o[0])
+        : this.f$o.K2_GetActorLocation(),
+      i = this.p$o[1]
+        ? this.ActorInternal.Mesh.GetSocketLocation(this.p$o[1])
         : this.ActorInternal.K2_GetActorLocation();
-    GameplayCueController_1.GameplayCueController.TickBeam(this.EXo, [s, i], e);
+    GameplayCueController_1.GameplayCueController.TickBeam(this.v$o, [s, i], e);
   }
   OnCreate() {
-    this.EXo =
+    this.v$o =
       GameplayCueController_1.GameplayCueController.SpawnGameplayCueBeam(
-        this.MXo,
+        this.f$o,
         this.CueConfig.Path,
       );
   }
   OnDestroy() {
     GameplayCueController_1.GameplayCueController.DestroyGameplayCueBeam(
-      this.EXo,
+      this.v$o,
     );
   }
 }

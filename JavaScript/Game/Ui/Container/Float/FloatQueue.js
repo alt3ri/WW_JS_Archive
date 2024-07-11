@@ -4,28 +4,28 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const UiManager_1 = require("../../UiManager");
 class FloatViewQueue {
   constructor() {
-    this.Eur = new Array();
+    this.vcr = new Array();
   }
   Push(e, t, r) {
-    this.Eur.push({ ViewBase: e, Priority: t, OnlyShowInMain: r }),
-      this.Eur.sort((e, t) => t.Priority - e.Priority);
+    this.vcr.push({ ViewBase: e, Priority: t, OnlyShowInMain: r }),
+      this.vcr.sort((e, t) => t.Priority - e.Priority);
   }
   Pop(r) {
-    for (let e = 0, t = this.Eur.length; e < t; ++e) {
-      var i = this.Eur[e];
-      if (!i.OnlyShowInMain || r) return this.yur(i), i;
+    for (let e = 0, t = this.vcr.length; e < t; ++e) {
+      var i = this.vcr[e];
+      if (!i.OnlyShowInMain || r) return this.Mcr(i), i;
     }
   }
-  yur(e) {
-    e = this.Eur.indexOf(e);
-    return !(e < 0 || (this.Eur.splice(e, 1), 0));
+  Mcr(e) {
+    e = this.vcr.indexOf(e);
+    return !(e < 0 || (this.vcr.splice(e, 1), 0));
   }
   Delete(r, i) {
-    for (let e = 0, t = this.Eur.length; e < t; ++e) {
-      var s = this.Eur[e];
+    for (let e = 0, t = this.vcr.length; e < t; ++e) {
+      var s = this.vcr[e];
       if (!(s.ViewBase.Info.Name !== r || (i && s.ViewBase.GetViewId() !== i)))
         return (
-          this.yur(s),
+          this.Mcr(s),
           UiManager_1.UiManager.RemoveView(s.ViewBase.GetViewId()),
           !0
         );
@@ -33,19 +33,19 @@ class FloatViewQueue {
     return !1;
   }
   Has(r) {
-    for (let e = 0, t = this.Eur.length; e < t; ++e)
-      if (this.Eur[e].ViewBase.Info.Name === r) return !0;
+    for (let e = 0, t = this.vcr.length; e < t; ++e)
+      if (this.vcr[e].ViewBase.Info.Name === r) return !0;
     return !1;
   }
   Clear() {
-    for (let e = this.Eur.length - 1; 0 <= e; --e) {
-      var t = this.Eur[e].ViewBase;
+    for (let e = this.vcr.length - 1; 0 <= e; --e) {
+      var t = this.vcr[e].ViewBase;
       t.Info.IsPermanent ||
-        (this.Eur.pop(), UiManager_1.UiManager.RemoveView(t.GetViewId()));
+        (this.vcr.pop(), UiManager_1.UiManager.RemoveView(t.GetViewId()));
     }
   }
   get Size() {
-    return this.Eur.length;
+    return this.vcr.length;
   }
 }
 exports.FloatViewQueue = FloatViewQueue;

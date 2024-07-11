@@ -50,6 +50,7 @@ class ControllerHolder {}
   (ControllerHolder.CameraController = void 0),
   (ControllerHolder.CreatureController = void 0),
   (ControllerHolder.AoiController = void 0),
+  (ControllerHolder.AceAntiCheatController = void 0),
   (ControllerHolder.PreloadController = void 0),
   (ControllerHolder.PreloadControllerNew = void 0),
   (ControllerHolder.WorldController = void 0),
@@ -74,7 +75,6 @@ class ControllerHolder {}
   (ControllerHolder.CursorController = void 0),
   (ControllerHolder.BuffItemControl = void 0),
   (ControllerHolder.MarqueeController = void 0),
-  (ControllerHolder.ProtocolMonitorController = void 0),
   (ControllerHolder.TrackController = void 0),
   (ControllerHolder.MenuController = void 0),
   (ControllerHolder.RenderModuleController = void 0),
@@ -171,6 +171,7 @@ class ControllerHolder {}
   (ControllerHolder.CdKeyInputController = void 0),
   (ControllerHolder.ItemDeliverController = void 0),
   (ControllerHolder.DynamicFlowController = void 0),
+  (ControllerHolder.PerformGroupStateController = void 0),
   (ControllerHolder.GamepadController = void 0),
   (ControllerHolder.FastJsObjectController = void 0),
   (ControllerHolder.SoundAreaPlayTipsController = void 0),
@@ -180,8 +181,11 @@ class ControllerHolder {}
   (ControllerHolder.PayGiftController = void 0),
   (ControllerHolder.MultiInteractionActorController = void 0),
   (ControllerHolder.KuroPerformanceController = void 0),
+  (ControllerHolder.MoonChasingController = void 0),
   (ControllerHolder.SceneItemMoveController = void 0),
   (ControllerHolder.CrashCollectionController = void 0),
   (ControllerHolder.PerfSightController = void 0),
-  (ControllerHolder.LogController = void 0);
+  (ControllerHolder.LogController = void 0),
+  (ControllerHolder.BpActorController = void 0),
+  (ControllerHolder.PlayerVelocityController = void 0);
 //# sourceMappingURL=ControllerHolder.js.map

@@ -5,21 +5,21 @@ const CustomPromise_1 = require("../../../Core/Common/CustomPromise"),
   ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem");
 class LoadAsyncPromise {
   constructor(e, s, t = 100) {
-    (this.ZAo = ResourceSystem_1.ResourceSystem.InvalidId),
-      (this.ePo = new CustomPromise_1.CustomPromise()),
-      this.tPo(e, s, t);
+    (this.YPo = ResourceSystem_1.ResourceSystem.InvalidId),
+      (this.JPo = new CustomPromise_1.CustomPromise()),
+      this.zPo(e, s, t);
   }
   get CustomPromise() {
-    return this.ePo;
+    return this.JPo;
   }
   get Promise() {
     return this.CustomPromise?.Promise;
   }
   get HandleId() {
-    return this.ZAo;
+    return this.YPo;
   }
-  tPo(e, s, t = 100) {
-    this.ZAo = ResourceSystem_1.ResourceSystem.LoadAsync(
+  zPo(e, s, t = 100) {
+    this.YPo = ResourceSystem_1.ResourceSystem.LoadAsync(
       e,
       s,
       (e, s) => {

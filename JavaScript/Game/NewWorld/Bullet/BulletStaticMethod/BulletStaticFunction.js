@@ -20,7 +20,7 @@ const puerts_1 = require("puerts"),
   collisionColor = new UE.LinearColor(255, 80, 77, 1),
   DRAW_SECTOR_ANGLE_PERIOD = 30;
 class BulletStaticFunction {
-  static CreateMultipleBoxToFan(e, i, o, s, r, l) {
+  static CreateMultipleBoxToFan(e, i, o, s, l, r) {
     let a = void 0;
     a =
       o < MathCommon_1.MathCommon.FlatAngle
@@ -34,44 +34,44 @@ class BulletStaticFunction {
         (t.AdditionEqual(Vector_1.Vector.Create(s)),
         c.SetLocation(t.ToUeVector()),
         e.AddComponentByClass(UE.BoxComponent.StaticClass(), !1, c, !1)),
-      h =
+      u =
         ((t.LineThickness = 5),
         t.SetBoxExtent(Vector_1.Vector.OneVector, !1),
-        t.SetCollisionProfileName(r),
-        l.add(t),
+        t.SetCollisionProfileName(l),
+        r.add(t),
         Vector_1.Vector.Create(0, 0, 0));
     for (let t = 0; t < a / 2; ++t) {
-      h.FromUeVector(Vector_1.Vector.ForwardVectorProxy),
-        h.RotateAngleAxis(_, Vector_1.Vector.UpVectorProxy, h),
-        h.MultiplyEqual(i / 2),
-        h.AdditionEqual(Vector_1.Vector.Create(s)),
-        c.SetLocation(h.ToUeVector()),
-        h.Reset(),
+      u.FromUeVector(Vector_1.Vector.ForwardVectorProxy),
+        u.RotateAngleAxis(_, Vector_1.Vector.UpVectorProxy, u),
+        u.MultiplyEqual(i / 2),
+        u.AdditionEqual(Vector_1.Vector.Create(s)),
+        c.SetLocation(u.ToUeVector()),
+        u.Reset(),
         (n.Yaw = _),
         c.SetRotation(n.Quaternion());
-      var u = e.AddComponentByClass(UE.BoxComponent.StaticClass(), !1, c, !1);
-      (u.LineThickness = 5),
-        u.SetBoxExtent(Vector_1.Vector.OneVector, !1),
-        u.SetCollisionProfileName(r),
+      var h = e.AddComponentByClass(UE.BoxComponent.StaticClass(), !1, c, !1);
+      (h.LineThickness = 5),
+        h.SetBoxExtent(Vector_1.Vector.OneVector, !1),
+        h.SetCollisionProfileName(l),
         (_ += o / a),
-        l.add(u);
+        r.add(h);
     }
     _ = -o / a;
     for (let t = 0; t < a / 2; ++t) {
-      h.FromUeVector(Vector_1.Vector.ForwardVectorProxy),
-        h.RotateAngleAxis(_, Vector_1.Vector.UpVectorProxy, h),
-        h.MultiplyEqual(i / 2),
-        h.AdditionEqual(Vector_1.Vector.Create(s)),
-        c.SetLocation(h.ToUeVector()),
-        h.Reset(),
+      u.FromUeVector(Vector_1.Vector.ForwardVectorProxy),
+        u.RotateAngleAxis(_, Vector_1.Vector.UpVectorProxy, u),
+        u.MultiplyEqual(i / 2),
+        u.AdditionEqual(Vector_1.Vector.Create(s)),
+        c.SetLocation(u.ToUeVector()),
+        u.Reset(),
         (n.Yaw = _),
         c.SetRotation(n.Quaternion());
       var f = e.AddComponentByClass(UE.BoxComponent.StaticClass(), !1, c, !1);
       (f.LineThickness = 5),
         f.SetBoxExtent(Vector_1.Vector.OneVector, !1),
-        f.SetCollisionProfileName(r),
+        f.SetCollisionProfileName(l),
         (_ -= o / a),
-        l.add(f);
+        r.add(f);
     }
     return t;
   }
@@ -130,99 +130,122 @@ class BulletStaticFunction {
         collisionColor,
       ));
   }
-  static DebugDrawSector(t, e, i, o, s, r, l) {
-    o.RotateVector(Vector_1.Vector.UpVectorProxy, this.f7o),
-      this.f7o.Multiply(t, this.p7o),
-      this.f7o.Multiply(-t, this.v7o),
-      s.Addition(this.p7o, this.f7o),
-      s.Addition(this.v7o, this.Tz),
+  static DebugDrawRingWithRotation(t, e, i, o, s) {
+    var l;
+    i <= 0 ||
+      ((l = s.RotateVector(new UE.Vector(0, 0, t)).op_Addition(o.ToUeVector())),
+      (s = s.RotateVector(new UE.Vector(0, 0, -t)).op_Addition(o.ToUeVector())),
+      0 < e &&
+        UE.KismetSystemLibrary.DrawDebugCylinder(
+          GlobalData_1.GlobalData.GameInstance,
+          l,
+          s,
+          e,
+          32,
+          collisionColor,
+        ),
+      UE.KismetSystemLibrary.DrawDebugCylinder(
+        GlobalData_1.GlobalData.GameInstance,
+        l,
+        s,
+        i,
+        32,
+        collisionColor,
+      ));
+  }
+  static DebugDrawSector(t, e, i, o, s, l, r) {
+    o.RotateVector(Vector_1.Vector.UpVectorProxy, this.dHo),
+      this.dHo.Multiply(t, this.CHo),
+      this.dHo.Multiply(-t, this.gHo),
+      s.Addition(this.CHo, this.dHo),
+      s.Addition(this.gHo, this.Tz),
       UE.KismetSystemLibrary.DrawDebugLine(
         GlobalData_1.GlobalData.GameInstance,
-        this.f7o.ToUeVector(),
+        this.dHo.ToUeVector(),
         this.Tz.ToUeVector(),
-        r ?? collisionColor,
-        l,
+        l ?? collisionColor,
+        r,
       );
     var a = i * MathUtils_1.MathUtils.DegToRad * 0.5,
       c =
-        (this.M7o.Set(Math.cos(a) * e, Math.sin(a) * e, 0),
-        o.RotateVector(this.M7o, this.S7o),
-        this.S7o.AdditionEqual(s),
-        this.E7o.FromUeVector(this.S7o),
-        this.S7o.AdditionEqual(this.p7o),
-        this.E7o.AdditionEqual(this.v7o),
+        (this.fHo.Set(Math.cos(a) * e, Math.sin(a) * e, 0),
+        o.RotateVector(this.fHo, this.pHo),
+        this.pHo.AdditionEqual(s),
+        this.vHo.FromUeVector(this.pHo),
+        this.pHo.AdditionEqual(this.CHo),
+        this.vHo.AdditionEqual(this.gHo),
         UE.KismetSystemLibrary.DrawDebugLine(
           GlobalData_1.GlobalData.GameInstance,
-          this.f7o.ToUeVector(),
-          this.S7o.ToUeVector(),
-          r ?? collisionColor,
-          l,
+          this.dHo.ToUeVector(),
+          this.pHo.ToUeVector(),
+          l ?? collisionColor,
+          r,
         ),
         UE.KismetSystemLibrary.DrawDebugLine(
           GlobalData_1.GlobalData.GameInstance,
           this.Tz.ToUeVector(),
-          this.E7o.ToUeVector(),
-          r ?? collisionColor,
-          l,
+          this.vHo.ToUeVector(),
+          l ?? collisionColor,
+          r,
         ),
-        this.M7o.Set(Math.cos(-a) * e, Math.sin(-a) * e, 0),
-        o.RotateVector(this.M7o, this.S7o),
-        this.S7o.AdditionEqual(s),
-        this.E7o.FromUeVector(this.S7o),
-        this.S7o.AdditionEqual(this.p7o),
-        this.E7o.AdditionEqual(this.v7o),
+        this.fHo.Set(Math.cos(-a) * e, Math.sin(-a) * e, 0),
+        o.RotateVector(this.fHo, this.pHo),
+        this.pHo.AdditionEqual(s),
+        this.vHo.FromUeVector(this.pHo),
+        this.pHo.AdditionEqual(this.CHo),
+        this.vHo.AdditionEqual(this.gHo),
         UE.KismetSystemLibrary.DrawDebugLine(
           GlobalData_1.GlobalData.GameInstance,
-          this.S7o.ToUeVector(),
-          this.E7o.ToUeVector(),
-          r ?? collisionColor,
-          l,
+          this.pHo.ToUeVector(),
+          this.vHo.ToUeVector(),
+          l ?? collisionColor,
+          r,
         ),
         UE.KismetSystemLibrary.DrawDebugLine(
           GlobalData_1.GlobalData.GameInstance,
-          this.f7o.ToUeVector(),
-          this.S7o.ToUeVector(),
-          r ?? collisionColor,
-          l,
+          this.dHo.ToUeVector(),
+          this.pHo.ToUeVector(),
+          l ?? collisionColor,
+          r,
         ),
         UE.KismetSystemLibrary.DrawDebugLine(
           GlobalData_1.GlobalData.GameInstance,
           this.Tz.ToUeVector(),
-          this.E7o.ToUeVector(),
-          r ?? collisionColor,
-          l,
+          this.vHo.ToUeVector(),
+          l ?? collisionColor,
+          r,
         ),
         Math.max(Math.ceil(i / DRAW_SECTOR_ANGLE_PERIOD), 2)),
       n = (i / c) * MathUtils_1.MathUtils.DegToRad;
     for (let t = 1; t <= c; ++t) {
-      this.f7o.FromUeVector(this.S7o), this.Tz.FromUeVector(this.E7o);
+      this.dHo.FromUeVector(this.pHo), this.Tz.FromUeVector(this.vHo);
       var _ = -a + n * t;
-      this.M7o.Set(Math.cos(_) * e, Math.sin(_) * e, 0),
-        o.RotateVector(this.M7o, this.S7o),
-        this.S7o.AdditionEqual(s),
-        this.E7o.FromUeVector(this.S7o),
-        this.S7o.AdditionEqual(this.p7o),
-        this.E7o.AdditionEqual(this.v7o),
+      this.fHo.Set(Math.cos(_) * e, Math.sin(_) * e, 0),
+        o.RotateVector(this.fHo, this.pHo),
+        this.pHo.AdditionEqual(s),
+        this.vHo.FromUeVector(this.pHo),
+        this.pHo.AdditionEqual(this.CHo),
+        this.vHo.AdditionEqual(this.gHo),
         UE.KismetSystemLibrary.DrawDebugLine(
           GlobalData_1.GlobalData.GameInstance,
-          this.S7o.ToUeVector(),
-          this.E7o.ToUeVector(),
-          r ?? collisionColor,
-          l,
+          this.pHo.ToUeVector(),
+          this.vHo.ToUeVector(),
+          l ?? collisionColor,
+          r,
         ),
         UE.KismetSystemLibrary.DrawDebugLine(
           GlobalData_1.GlobalData.GameInstance,
-          this.f7o.ToUeVector(),
-          this.S7o.ToUeVector(),
-          r ?? collisionColor,
-          l,
+          this.dHo.ToUeVector(),
+          this.pHo.ToUeVector(),
+          l ?? collisionColor,
+          r,
         ),
         UE.KismetSystemLibrary.DrawDebugLine(
           GlobalData_1.GlobalData.GameInstance,
           this.Tz.ToUeVector(),
-          this.E7o.ToUeVector(),
-          r ?? collisionColor,
-          l,
+          this.vHo.ToUeVector(),
+          l ?? collisionColor,
+          r,
         );
     }
   }
@@ -254,20 +277,24 @@ class BulletStaticFunction {
       ));
   }
   static PlayBulletEffect(t, e, i, o, s) {
-    let r = void 0;
-    (0, RegisterComponent_1.isComponentInstance)(o.AttackerAudioComponent, 170)
-      ? (((l = new EffectAudioContext_1.EffectAudioContext()).FromPrimaryRole =
+    let l = void 0;
+    (0, RegisterComponent_1.isComponentInstance)(o.AttackerAudioComponent, 173)
+      ? (((a = new EffectAudioContext_1.EffectAudioContext()).FromPrimaryRole =
           "p1" === o.AttackerAudioComponent.Priority.State),
-        (l.EntityId = o.Attacker ? o.Attacker.Id : void 0),
-        (l.SourceObject = o.AttackerActorComp.Owner),
-        (r = l))
+        (a.EntityId = o.Attacker ? o.Attacker.Id : void 0),
+        (a.SourceObject = o.AttackerActorComp.Owner),
+        (l = a))
       : o.AttackerActorComp?.Valid &&
-        (((r = new EffectContext_1.EffectContext(
+        (((l = new EffectContext_1.EffectContext(
           o.Attacker ? o.Attacker.Id : void 0,
         )).EntityId = o.Attacker ? o.Attacker.Id : void 0),
-        (r.SourceObject = o.AttackerActorComp.Owner));
-    var l = EffectSystem_1.EffectSystem.SpawnEffect(t, i, e, s, r, 0);
-    return l;
+        (l.SourceObject = o.AttackerActorComp.Owner));
+    let r = void 0;
+    var a = o.BulletInitParams.Owner.GetComponent(3),
+      o =
+        (a && (r = a.GetReplaceEffect(e)),
+        EffectSystem_1.EffectSystem.SpawnEffect(t, i, r || e, s, l, 0));
+    return o;
   }
   static DestroyEffect(t, e = !0) {
     var i;
@@ -313,14 +340,14 @@ class BulletStaticFunction {
         Log_1.Log.Debug("Bullet", 21, "接收父子弹特效为空");
   }
 }
-((exports.BulletStaticFunction = BulletStaticFunction).p7o =
+((exports.BulletStaticFunction = BulletStaticFunction).CHo =
   Vector_1.Vector.Create()),
-  (BulletStaticFunction.v7o = Vector_1.Vector.Create()),
-  (BulletStaticFunction.f7o = Vector_1.Vector.Create()),
+  (BulletStaticFunction.gHo = Vector_1.Vector.Create()),
+  (BulletStaticFunction.dHo = Vector_1.Vector.Create()),
   (BulletStaticFunction.Tz = Vector_1.Vector.Create()),
-  (BulletStaticFunction.M7o = Vector_1.Vector.Create()),
-  (BulletStaticFunction.S7o = Vector_1.Vector.Create()),
-  (BulletStaticFunction.E7o = Vector_1.Vector.Create());
+  (BulletStaticFunction.fHo = Vector_1.Vector.Create()),
+  (BulletStaticFunction.pHo = Vector_1.Vector.Create()),
+  (BulletStaticFunction.vHo = Vector_1.Vector.Create());
 class HitStaticFunction {
   static PlayHitAudio(t, e, i, o) {
     5 === t &&
@@ -336,25 +363,27 @@ class HitStaticFunction {
           );
         },
       })),
-      AudioSystem_1.AudioSystem.PostEvent(i, e));
+      AudioSystem_1.AudioSystem.PostEvent(i, e),
+      Log_1.Log.CheckDebug()) &&
+      Log_1.Log.Debug("Audio", 21, "播放子弹命中音效", ["Event", i]);
   }
   static CreateEffectContext(e, i = void 0) {
     if (e) {
       var o,
-        s = e.GetComponent(42),
-        r = e.GetComponent(1);
+        s = e.GetComponent(43),
+        l = e.GetComponent(1);
       let t = void 0;
       return (
-        (0, RegisterComponent_1.isComponentInstance)(s, 170)
+        (0, RegisterComponent_1.isComponentInstance)(s, 173)
           ? (((o =
               new EffectAudioContext_1.EffectAudioContext()).FromPrimaryRole =
               i ?? "p1" === s.Priority.State),
-            (o.SourceObject = r.Owner),
-            ((t = o).SourceObject = r?.Owner),
+            (o.SourceObject = l.Owner),
+            ((t = o).SourceObject = l?.Owner),
             (t.EntityId = e.Id))
-          : r?.Valid &&
+          : l?.Valid &&
             (((t = new EffectContext_1.EffectContext()).SourceObject =
-              r?.Owner),
+              l?.Owner),
             (t.EntityId = e.Id)),
         t
       );

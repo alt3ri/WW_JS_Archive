@@ -3,15 +3,15 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.Switcher = void 0);
 class Switcher {
   constructor(t, s = void 0) {
-    (this.E$o = new Set()), (this.ICr = t), (this.TCr = s);
+    (this.vYo = new Set()), (this.Egr = t), (this.Sgr = s);
   }
   get Active() {
-    return 0 < this.E$o.size !== this.ICr;
+    return 0 < this.vYo.size !== this.Egr;
   }
   SetActive(t, s) {
     var i = this.Active;
-    this.ICr !== s ? this.E$o.add(t) : this.E$o.delete(t),
-      i !== this.Active && this.TCr && this.TCr(this.Active);
+    this.Egr !== s ? this.vYo.add(t) : this.vYo.delete(t),
+      i !== this.Active && this.Sgr && this.Sgr(this.Active);
   }
 }
 exports.Switcher = Switcher;

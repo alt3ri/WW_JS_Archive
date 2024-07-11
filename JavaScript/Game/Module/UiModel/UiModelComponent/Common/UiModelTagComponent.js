@@ -28,39 +28,39 @@ let UiModelTagComponent = class UiModelTagComponent extends UiModelComponentBase
   constructor() {
     super(...arguments),
       (this.Xte = new UiTagComponent_1.UiTagComponent()),
-      (this.SBr = void 0),
+      (this.Jwr = void 0),
       (this.OnAnsBegin = (e) => {
         this.AddTagById(e.TagId);
       }),
       (this.OnAnsEnd = (e) => {
         this.ReduceTagById(e.TagId);
       }),
-      (this.xBr = (e, t) => {
+      (this.hBr = (e, t) => {
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.ShowRoleElementChangePreviewEffect,
           t,
         );
       }),
-      (this.wBr = (e, t) => {
+      (this.lBr = (e, t) => {
         var n = this.Owner.CheckGetComponent(17);
         t ? n?.PlayLightSequence() : n?.StopLightSequence();
       });
   }
   OnInit() {
-    this.SBr = this.Owner.CheckGetComponent(6);
+    this.Jwr = this.Owner.CheckGetComponent(6);
   }
   OnStart() {
-    this.SBr?.RegisterAnsTrigger(
+    this.Jwr?.RegisterAnsTrigger(
       "UiTagAnsContext",
       this.OnAnsBegin,
       this.OnAnsEnd,
     ),
-      this.Xte.AddListener(348713373, this.xBr),
-      this.Xte.AddListener(-1371920538, this.wBr);
+      this.Xte.AddListener(348713373, this.hBr),
+      this.Xte.AddListener(-1371920538, this.lBr);
   }
   OnEnd() {
-    this.Xte.RemoveListener(348713373, this.xBr),
-      this.Xte.RemoveListener(-1371920538, this.wBr);
+    this.Xte.RemoveListener(348713373, this.hBr),
+      this.Xte.RemoveListener(-1371920538, this.lBr);
   }
   OnClear() {
     this.Xte.RemoveAllTag();

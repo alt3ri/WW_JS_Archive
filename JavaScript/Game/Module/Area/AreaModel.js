@@ -13,50 +13,50 @@ const Log_1 = require("../../../Core/Common/Log"),
 class AreaModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
-      (this.fje = void 0),
-      (this.pje = ""),
-      (this.vje = new Map()),
-      (this.Mje = new Map()),
-      (this.Sje = new Map()),
-      (this.Eje = 0);
+      (this.UWe = void 0),
+      (this.AWe = ""),
+      (this.PWe = new Map()),
+      (this.xWe = new Map()),
+      (this.wWe = new Map()),
+      (this.BWe = 0);
   }
   OnInit() {
     return (
       this.SetAreaInfo(1),
-      (this.Eje =
+      (this.BWe =
         CommonParamById_1.configCommonParamById.GetIntConfig("AreaTipsShowCd")),
       !0
     );
   }
   OnClear() {
-    return this.Mje.clear(), this.vje.clear(), this.Sje.clear(), !0;
+    return this.xWe.clear(), this.PWe.clear(), this.wWe.clear(), !0;
   }
   get AreaName() {
-    if (this.fje)
+    if (this.UWe)
       return ConfigManager_1.ConfigManager.AreaConfig.GetAreaLocalName(
-        this.fje.Title,
+        this.UWe.Title,
       );
   }
   get AreaHintName() {
-    if (this.fje) {
-      if (this.pje)
+    if (this.UWe) {
+      if (this.AWe)
         return ConfigManager_1.ConfigManager.AreaConfig.GetAreaLocalName(
-          this.pje,
+          this.AWe,
         );
       Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Area",
           7,
           "[区域.xlsx]当前需要显示的区域提示没有配置对应文本",
-          ["区域id", this.fje.AreaId],
+          ["区域id", this.UWe.AreaId],
         );
     }
   }
   get AreaInfo() {
-    return this.fje;
+    return this.UWe;
   }
   get AllAreas() {
-    return this.vje;
+    return this.PWe;
   }
   GetCurrentAreaId(e) {
     if (void 0 === e) return this.AreaInfo.AreaId;
@@ -68,50 +68,50 @@ class AreaModel extends ModelBase_1.ModelBase {
   }
   SetAreaInfo(e) {
     0 !== e &&
-      (this.fje = ConfigManager_1.ConfigManager.AreaConfig.GetAreaInfo(e));
+      (this.UWe = ConfigManager_1.ConfigManager.AreaConfig.GetAreaInfo(e));
   }
   SetAreaName(e, r = !1) {
     var t;
     0 !== e &&
-      ((this.fje = ConfigManager_1.ConfigManager.AreaConfig.GetAreaInfo(e)),
-      this.fje.Tips &&
-        ((this.pje = this.fje.Title),
-        void 0 === (t = this.Sje.get(e)) ||
+      ((this.UWe = ConfigManager_1.ConfigManager.AreaConfig.GetAreaInfo(e)),
+      this.UWe.Tips &&
+        ((this.AWe = this.UWe.Title),
+        void 0 === (t = this.wWe.get(e)) ||
           r ||
-          Time_1.Time.Now - t > this.Eje) &&
+          Time_1.Time.Now - t > this.BWe) &&
         (UiManager_1.UiManager.IsViewOpen("AreaView")
           ? EventSystem_1.EventSystem.Emit(
               EventDefine_1.EEventName.UpdateAreaView,
             )
           : UiManager_1.UiManager.OpenView("AreaView"),
-        this.Sje.set(e, Time_1.Time.Now)),
+        this.wWe.set(e, Time_1.Time.Now)),
       EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.ChangeArea));
   }
   AddArea(e, r) {
-    this.vje.has(e) || this.vje.set(e, r);
+    this.PWe.has(e) || this.PWe.set(e, r);
   }
   RemoveArea(e) {
-    this.vje.delete(e);
+    this.PWe.delete(e);
   }
   GetAreaState(e) {
-    return this.Mje.get(e);
+    return this.xWe.get(e);
   }
   ToggleAreaState(e, r) {
-    var t = this.vje.get(e);
-    this.Mje.get(e) !== r && (this.Mje.set(e, r), t?.ToggleArea(r));
+    var t = this.PWe.get(e);
+    this.xWe.get(e) !== r && (this.xWe.set(e, r), t?.ToggleArea(r));
   }
   InitAreaStates(e) {
-    for (const r of e) this.Mje.set(r.wFn, r.ckn);
+    for (const r of e) this.xWe.set(r.l6n, r.F4n);
     e = ModelManager_1.ModelManager.PlayerInfoModel.GetNumberPropById(6);
     e && this.SetAreaInfo(e);
   }
   GetAreaCountryId() {
-    if (this.fje) {
-      if (0 !== this.fje.CountryId) return this.fje.CountryId;
+    if (this.UWe) {
+      if (0 !== this.UWe.CountryId) return this.UWe.CountryId;
       Log_1.Log.CheckError() &&
         Log_1.Log.Error("Area", 11, "[区域.xlsx]当前区域没有配置所属国家id", [
           "区域id",
-          this.fje.AreaId,
+          this.UWe.AreaId,
         ]);
     } else
       Log_1.Log.CheckError() && Log_1.Log.Error("Area", 11, "区域数据为空");
@@ -128,7 +128,7 @@ class AreaModel extends ModelBase_1.ModelBase {
       r = CommonParamById_1.configCommonParamById.GetIntConfig(
         "MidDangerLevelOffset",
       ),
-      i = this.fje.WorldMonsterLevelMax.get(
+      i = this.UWe.WorldMonsterLevelMax.get(
         ModelManager_1.ModelManager.WorldLevelModel.CurWorldLevel,
       );
     if (i) {

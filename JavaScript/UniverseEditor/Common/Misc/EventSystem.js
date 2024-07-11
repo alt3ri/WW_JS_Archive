@@ -37,11 +37,11 @@ class EventDispatcher {
 exports.EventDispatcher = EventDispatcher;
 const editorEventDefine = {
   RestartEditor: () => {},
+  OpenEditorForEditorObject: (e, t) => {},
   SaveCsvEditor: (e) => {},
   ResetTestEditor: () => {},
-  NavToEntity: (e, t, s = 0) => {},
   AsyncCheckResult: (e) => {},
-  SelectEntityDatas: (e, t) => {},
+  SelectEntityDatas: (e, t, s) => {},
   ClearEntityAddRecords: () => {},
   RefreshActorPreviewTag: () => {},
   DelaySelectionChanged: () => {},
@@ -55,6 +55,7 @@ const tabEventDefine = {
   NavToBtReferenceEntity: (e, t, s) => {},
   SearchEntity: (e, t) => {},
   SaveEditor: (e, t) => {},
+  ActiveSideBar: (e) => {},
 };
 class TabEventDispatcher extends EventDispatcher {}
 exports.TabEventDispatcher = TabEventDispatcher;

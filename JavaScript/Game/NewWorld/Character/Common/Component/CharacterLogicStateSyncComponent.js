@@ -4,18 +4,18 @@ var __decorate =
   function (t, e, i, o) {
     var s,
       r = arguments.length,
-      n =
+      a =
         r < 3
           ? e
           : null === o
             ? (o = Object.getOwnPropertyDescriptor(e, i))
             : o;
     if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
-      n = Reflect.decorate(t, e, i, o);
+      a = Reflect.decorate(t, e, i, o);
     else
-      for (var a = t.length - 1; 0 <= a; a--)
-        (s = t[a]) && (n = (r < 3 ? s(n) : 3 < r ? s(e, i, n) : s(e, i)) || n);
-    return 3 < r && n && Object.defineProperty(e, i, n), n;
+      for (var h = t.length - 1; 0 <= h; h--)
+        (s = t[h]) && (a = (r < 3 ? s(a) : 3 < r ? s(e, i, a) : s(e, i)) || a);
+    return 3 < r && a && Object.defineProperty(e, i, a), a;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharacterLogicStateSyncComponent = void 0);
@@ -26,42 +26,42 @@ const Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
   EventSystem_1 = require("../../../../Common/Event/EventSystem"),
   CombatMessage_1 = require("../../../../Module/CombatMessage/CombatMessage"),
   CombatMessageController_1 = require("../../../../Module/CombatMessage/CombatMessageController"),
-  CombatDebugController_1 = require("../../../../Utils/CombatDebugController");
+  CombatLog_1 = require("../../../../Utils/CombatLog");
 let CharacterLogicStateSyncComponent = class CharacterLogicStateSyncComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments),
       (this.Hte = void 0),
-      (this.W5r = void 0),
-      (this.W9r = void 0),
-      (this.K9r = []),
-      (this.Q9r = []),
+      (this.I5r = void 0),
+      (this.T9r = void 0),
+      (this.L9r = []),
+      (this.D9r = []),
       (this.Inited = !1),
       (this.OnSwitchControl = (t) => {
-        t && !this.Inited && (this.X9r(), (this.Inited = !0));
+        t && !this.Inited && (this.R9r(), (this.Inited = !0));
       }),
-      (this.$9r = () => {
+      (this.U9r = () => {
         if (this.Hte.IsMoveAutonomousProxy) {
           var t,
-            i = this.W5r;
+            i = this.I5r;
           if (i) {
             let e = !1;
-            (this.K9r[0] = i.PositionState),
-              (this.K9r[1] = i.MoveState),
-              (this.K9r[2] = i.DirectionState),
-              (this.K9r[3] = i.PositionSubState);
-            for (let t = 0; t < this.K9r.length; ++t)
-              if (this.K9r[t] !== this.Q9r[t]) {
+            (this.L9r[0] = i.PositionState),
+              (this.L9r[1] = i.MoveState),
+              (this.L9r[2] = i.DirectionState),
+              (this.L9r[3] = i.PositionSubState);
+            for (let t = 0; t < this.L9r.length; ++t)
+              if (this.L9r[t] !== this.D9r[t]) {
                 e = !0;
                 break;
               }
             e &&
-              (((t = Protocol_1.Aki.Protocol.oNn.create()).f9n =
-                Protocol_1.Aki.Protocol.zvs.create()),
-              (this.Q9r[0] = t.f9n.k9n = i.PositionState),
-              (this.Q9r[1] = t.f9n.F9n = i.MoveState),
-              (this.Q9r[2] = t.f9n.V9n = i.DirectionState),
-              (this.Q9r[3] = t.f9n.H9n = i.PositionSubState),
-              CombatMessage_1.CombatNet.Call(3108, this.Entity, t, () => {}));
+              (((t = Protocol_1.Aki.Protocol.B3n.create()).Xjn =
+                Protocol_1.Aki.Protocol.Cys.create()),
+              (this.D9r[0] = t.Xjn.fWn = i.PositionState),
+              (this.D9r[1] = t.Xjn.pWn = i.MoveState),
+              (this.D9r[2] = t.Xjn.vWn = i.DirectionState),
+              (this.D9r[3] = t.Xjn.MWn = i.PositionSubState),
+              CombatMessage_1.CombatNet.Call(10937, this.Entity, t, () => {}));
           }
         }
       });
@@ -69,7 +69,7 @@ let CharacterLogicStateSyncComponent = class CharacterLogicStateSyncComponent ex
   OnStart() {
     return (
       (this.Hte = this.Entity.CheckGetComponent(3)),
-      (this.W5r = this.Entity.CheckGetComponent(158)),
+      (this.I5r = this.Entity.CheckGetComponent(160)),
       EventSystem_1.EventSystem.AddWithTarget(
         this.Entity,
         EventDefine_1.EEventName.CharSwitchControl,
@@ -81,18 +81,18 @@ let CharacterLogicStateSyncComponent = class CharacterLogicStateSyncComponent ex
   OnActivate() {
     CombatMessageController_1.CombatMessageController.RegisterAfterTick(
       this,
-      this.$9r,
+      this.U9r,
     );
     var t = this.Entity.GetComponent(0);
-    (this.W9r = t.ComponentDataMap.get("zvs")?.zvs),
+    (this.T9r = t.ComponentDataMap.get("Cys")?.Cys),
       this.Hte.IsAutonomousProxy
-        ? (this.X9r(), (this.Inited = !0))
-        : this.W9r && this.Y9r(this.W9r),
-      (this.K9r[0] = this.W5r.PositionState),
-      (this.K9r[1] = this.W5r.MoveState),
-      (this.K9r[2] = this.W5r.DirectionState),
-      (this.K9r[3] = this.W5r.PositionSubState);
-    for (let t = 0; t < this.K9r.length; t++) this.Q9r[t] = this.K9r[t];
+        ? (this.R9r(), (this.Inited = !0))
+        : this.T9r && this.A9r(this.T9r),
+      (this.L9r[0] = this.I5r.PositionState),
+      (this.L9r[1] = this.I5r.MoveState),
+      (this.L9r[2] = this.I5r.DirectionState),
+      (this.L9r[3] = this.I5r.PositionSubState);
+    for (let t = 0; t < this.L9r.length; t++) this.D9r[t] = this.L9r[t];
     return !0;
   }
   OnEnd() {
@@ -108,70 +108,68 @@ let CharacterLogicStateSyncComponent = class CharacterLogicStateSyncComponent ex
       !0
     );
   }
-  X9r() {
-    var t = Protocol_1.Aki.Protocol.rNn.create();
-    (t.j9n = Protocol_1.Aki.Protocol.zvs.create()),
-      (t.j9n.k9n = this.W5r.PositionState),
-      (t.j9n.F9n = this.W5r.MoveState),
-      (t.j9n.V9n = this.W5r.DirectionState),
-      (t.j9n.H9n = this.W5r.PositionSubState),
-      CombatMessage_1.CombatNet.Call(22734, this.Entity, t, () => {});
+  R9r() {
+    var t = Protocol_1.Aki.Protocol.P3n.create();
+    (t.SWn = Protocol_1.Aki.Protocol.Cys.create()),
+      (t.SWn.fWn = this.I5r.PositionState),
+      (t.SWn.pWn = this.I5r.MoveState),
+      (t.SWn.vWn = this.I5r.DirectionState),
+      (t.SWn.MWn = this.I5r.PositionSubState),
+      CombatMessage_1.CombatNet.Call(27805, this.Entity, t, () => {});
   }
-  Y9r(t) {
-    this.J9r(0, t.k9n),
-      this.J9r(1, t.F9n),
-      this.J9r(2, t.V9n),
-      this.J9r(3, t.H9n),
-      CombatDebugController_1.CombatDebugController.CombatInfo(
-        "LogicState",
-        this.Entity,
-        "初始化逻辑状态",
-        ["states", [t.k9n, t.F9n, t.V9n, t.H9n]],
-      ),
+  A9r(t) {
+    this.P9r(0, t.fWn),
+      this.P9r(1, t.pWn),
+      this.P9r(2, t.vWn),
+      this.P9r(3, t.MWn),
+      CombatLog_1.CombatLog.Info("LogicState", this.Entity, "初始化逻辑状态", [
+        "states",
+        [t.fWn, t.pWn, t.vWn, t.MWn],
+      ]),
       (this.Inited = !0);
   }
-  J9r(t, e) {
+  P9r(t, e) {
     switch (t) {
       case 0:
-        this.W5r.SetPositionStateHandle(e);
+        this.I5r.SetPositionStateHandle(e);
         break;
       case 1:
-        this.W5r.SetMoveStateHandle(e);
+        this.I5r.SetMoveStateHandle(e);
         break;
       case 2:
-        this.W5r.SetDirectionStateHandle(e);
+        this.I5r.SetDirectionStateHandle(e);
         break;
       case 3:
-        this.W5r.SetPositionSubStateHandle(e);
+        this.I5r.SetPositionSubStateHandle(e);
     }
   }
   static LogicStateInitNotify(t, e) {
-    t?.GetComponent(54)?.Y9r(e.j9n);
+    t?.GetComponent(55)?.A9r(e.SWn);
   }
   static SwitchLogicStateNotify(t, e) {
     t?.GetComponent(3)?.IsMoveAutonomousProxy ||
-      ((t = t?.GetComponent(54)) &&
-        e.f9n &&
-        (t.J9r(0, e.f9n.k9n),
-        t.J9r(1, e.f9n.F9n),
-        t.J9r(2, e.f9n.V9n),
-        t.J9r(3, e.f9n.H9n)));
+      ((t = t?.GetComponent(55)) &&
+        e.Xjn &&
+        (t.P9r(0, e.Xjn.fWn),
+        t.P9r(1, e.Xjn.pWn),
+        t.P9r(2, e.Xjn.vWn),
+        t.P9r(3, e.Xjn.MWn)));
   }
 };
 __decorate(
-  [CombatMessage_1.CombatNet.SyncHandle("zOn")],
+  [CombatMessage_1.CombatNet.SyncHandle("DFn")],
   CharacterLogicStateSyncComponent,
   "LogicStateInitNotify",
   null,
 ),
   __decorate(
-    [CombatMessage_1.CombatNet.SyncHandle("ZOn")],
+    [CombatMessage_1.CombatNet.SyncHandle("AFn")],
     CharacterLogicStateSyncComponent,
     "SwitchLogicStateNotify",
     null,
   ),
   (CharacterLogicStateSyncComponent = __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(54)],
+    [(0, RegisterComponent_1.RegisterComponent)(55)],
     CharacterLogicStateSyncComponent,
   )),
   (exports.CharacterLogicStateSyncComponent = CharacterLogicStateSyncComponent);

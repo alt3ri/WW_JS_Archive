@@ -10,12 +10,12 @@ const UE = require("ue"),
 class InputMultiKeyItemGroup extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this.CUt = void 0),
-      (this.gUt = void 0),
+      (this.vAt = void 0),
+      (this.MAt = void 0),
       (this.vq = !1),
-      (this.fUt = void 0),
-      (this.dKe = (e, t, i, s) => {
-        e !== s && this.fUt && this.pUt(this.fUt);
+      (this.EAt = void 0),
+      (this.XBo = () => {
+        this.EAt && this.SAt(this.EAt);
       });
   }
   OnRegisterComponent() {
@@ -26,46 +26,46 @@ class InputMultiKeyItemGroup extends UiPanelBase_1.UiPanelBase {
     ];
   }
   async OnBeforeStartAsync() {
-    (this.CUt = new InputMultiKeyItem_1.InputMultiKeyItem(!1)),
-      (this.gUt = new InputMultiKeyItem_1.InputMultiKeyItem(!1)),
+    (this.vAt = new InputMultiKeyItem_1.InputMultiKeyItem(!1)),
+      (this.MAt = new InputMultiKeyItem_1.InputMultiKeyItem(!1)),
       await Promise.all([
-        this.CUt.CreateThenShowByActorAsync(this.GetItem(1).GetOwner(), !0),
-        this.gUt.CreateThenShowByActorAsync(this.GetItem(2).GetOwner(), !0),
+        this.vAt.CreateThenShowByActorAsync(this.GetItem(1).GetOwner(), !0),
+        this.MAt.CreateThenShowByActorAsync(this.GetItem(2).GetOwner(), !0),
       ]);
   }
   OnStart() {}
   OnBeforeDestroy() {
-    (this.CUt = void 0), (this.CUt = void 0);
+    (this.vAt = void 0), (this.vAt = void 0);
   }
   OnBeforeShow() {
     EventSystem_1.EventSystem.Add(
-      EventDefine_1.EEventName.OnPlatformChanged,
-      this.dKe,
+      EventDefine_1.EEventName.InputControllerChange,
+      this.XBo,
     ),
-      this.fUt && this.pUt(this.fUt);
+      this.EAt && this.SAt(this.EAt);
   }
   OnAfterHide() {
     EventSystem_1.EventSystem.Remove(
-      EventDefine_1.EEventName.OnPlatformChanged,
-      this.dKe,
+      EventDefine_1.EEventName.InputControllerChange,
+      this.XBo,
     );
   }
   Refresh(e) {
-    (this.fUt = e), this.pUt(e);
+    (this.EAt = e), this.SAt(e);
   }
-  pUt(e) {
+  SAt(e) {
     var t = e.SingleActionOrAxisKeyItem,
       i = e.DoubleActionOrAxisKeyItem,
       e = e.LinkString,
       s = this.GetText(0);
-    this.CUt?.RefreshByActionOrAxis(t),
-      this.CUt?.SetActive(!0),
+    this.vAt?.RefreshByActionOrAxis(t),
+      this.vAt?.SetActive(!0),
       i
-        ? (this.gUt?.RefreshByActionOrAxis(i),
-          this.gUt?.SetActive(!0),
+        ? (this.MAt?.RefreshByActionOrAxis(i),
+          this.MAt?.SetActive(!0),
           s.SetText(e ?? "/"),
           s.SetUIActive(!0))
-        : (this.gUt?.SetActive(!1), s.SetUIActive(!1));
+        : (this.MAt?.SetActive(!1), s.SetUIActive(!1));
   }
   SetEnable(e, t = !1) {
     (this.vq === e && !t) ||

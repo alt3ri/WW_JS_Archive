@@ -15,21 +15,21 @@ const UE = require("ue"),
 class AdviceSortWordSelectView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.Y7e = void 0),
-      (this.R7e = void 0),
-      (this.U7e = !1),
-      (this.A7e = 0),
-      (this.J7e = !1),
-      (this.x7e = 0),
-      (this.w7e = (e, i, t) => {
+      (this.hje = void 0),
+      (this.kHe = void 0),
+      (this.FHe = !1),
+      (this.VHe = 0),
+      (this.lje = !1),
+      (this.jHe = 0),
+      (this.WHe = (e, i, t) => {
         i = new AdviceWordTypeItem_1.AdviceWordTypeItem(i);
         return i.UpdateItem(e), { Key: t, Value: i };
       }),
-      (this.B7e = (e, i, t) => {
+      (this.KHe = (e, i, t) => {
         i = new AdviceWordItem_1.AdviceWordItem(i);
         return i.UpdateItem(e), { Key: t, Value: i };
       }),
-      (this._Fe = () => {
+      (this.L3e = () => {
         var e = ModelManager_1.ModelManager.AdviceModel;
         e.CurrentWordMap.set(e.CurrentSelectWordIndex, e.PreSelectSortWordId),
           this.CloseMe(),
@@ -37,34 +37,34 @@ class AdviceSortWordSelectView extends UiViewBase_1.UiViewBase {
             EventDefine_1.EEventName.OnSelectAdviceWord,
           );
       }),
-      (this.J9e = () => {
+      (this.uHe = () => {
         this.CloseMe();
       }),
-      (this.b7e = () => {
+      (this.QHe = () => {
         var e =
           ConfigManager_1.ConfigManager.AdviceConfig.GetAdviceWordTypeConfigs();
         const i = new Array();
         e.forEach((e) => {
           i.push(e.Id);
         }),
-          this.Y7e.RefreshByData(i),
-          this.q7e(),
-          (this.x7e = 0),
-          this.Y7e.UnBindLateUpdate(),
-          (this.J7e = !0),
-          this.Y7e.BindLateUpdate(this.z7e);
+          this.hje.RefreshByData(i),
+          this.XHe(),
+          (this.jHe = 0),
+          this.hje.UnBindLateUpdate(),
+          (this.lje = !0),
+          this.hje.BindLateUpdate(this._je);
       }),
-      (this.z7e = (e) => {
+      (this._je = (e) => {
         var i;
-        this.J7e &&
-          this.x7e >= WAITUPDATECOUNT &&
-          ((this.J7e = !1),
-          (i = this.N7e()),
+        this.lje &&
+          this.jHe >= WAITUPDATECOUNT &&
+          ((this.lje = !1),
+          (i = this.YHe()),
           this.GetScrollViewWithScrollbar(0).SetScrollProgress(i),
-          this.Y7e.UnBindLateUpdate()),
-          this.x7e++;
+          this.hje.UnBindLateUpdate()),
+          this.jHe++;
       }),
-      (this.q7e = () => {
+      (this.XHe = () => {
         var e = ModelManager_1.ModelManager.AdviceModel.PreSelectSortTypeId,
           e =
             ConfigManager_1.ConfigManager.AdviceConfig.GetAdviceWordConfigsByType(
@@ -74,24 +74,24 @@ class AdviceSortWordSelectView extends UiViewBase_1.UiViewBase {
         e.forEach((e) => {
           i.push(e.Id);
         }),
-          this.R7e.RefreshByData(i),
-          (this.A7e = 0),
-          this.R7e.UnBindLateUpdate(),
-          (this.U7e = !0),
-          this.R7e.BindLateUpdate(this.O7e);
+          this.kHe.RefreshByData(i),
+          (this.VHe = 0),
+          this.kHe.UnBindLateUpdate(),
+          (this.FHe = !0),
+          this.kHe.BindLateUpdate(this.JHe);
       }),
-      (this.O7e = (e) => {
+      (this.JHe = (e) => {
         var i;
-        this.U7e &&
-          this.A7e >= WAITUPDATECOUNT &&
-          ((this.U7e = !1),
-          (i = this.k7e()),
+        this.FHe &&
+          this.VHe >= WAITUPDATECOUNT &&
+          ((this.FHe = !1),
+          (i = this.zHe()),
           this.GetScrollViewWithScrollbar(2).SetScrollProgress(i)),
-          this.A7e >= WAITUPDATECOUNT + 1 &&
-            ((i = this.k7e()),
+          this.VHe >= WAITUPDATECOUNT + 1 &&
+            ((i = this.zHe()),
             this.GetScrollScrollbar(6).SetValue(i),
-            this.R7e.UnBindLateUpdate()),
-          this.A7e++;
+            this.kHe.UnBindLateUpdate()),
+          this.VHe++;
       });
   }
   OnRegisterComponent() {
@@ -106,21 +106,21 @@ class AdviceSortWordSelectView extends UiViewBase_1.UiViewBase {
       [7, UE.UIText],
     ]),
       (this.BtnBindInfo = [
-        [4, this.J9e],
-        [5, this._Fe],
+        [4, this.uHe],
+        [5, this.L3e],
       ]);
   }
   OnStart() {
-    (this.Y7e = new GenericScrollView_1.GenericScrollView(
+    (this.hje = new GenericScrollView_1.GenericScrollView(
       this.GetScrollViewWithScrollbar(0),
-      this.w7e,
+      this.WHe,
     )),
-      (this.R7e = new GenericScrollView_1.GenericScrollView(
+      (this.kHe = new GenericScrollView_1.GenericScrollView(
         this.GetScrollViewWithScrollbar(2),
-        this.B7e,
+        this.KHe,
       ));
     var e,
-      i = this.R7e.TempOriginalItem;
+      i = this.kHe.TempOriginalItem;
     i &&
       (e = (i = i.GetOwner()).GetComponentByClass(
         UE.UIButtonComponent.StaticClass(),
@@ -130,25 +130,25 @@ class AdviceSortWordSelectView extends UiViewBase_1.UiViewBase {
         ModelManager_1.ModelManager.AdviceModel.CurrentSelectSortTypeId),
       (ModelManager_1.ModelManager.AdviceModel.PreSelectSortWordId =
         ModelManager_1.ModelManager.AdviceModel.CurrentSelectSortWordId),
-      this.b7e(),
+      this.QHe(),
       this.mGe();
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnClickAdviceSort,
-      this.q7e,
+      this.XHe,
     );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnClickAdviceSort,
-      this.q7e,
+      this.XHe,
     );
   }
   mGe() {
     LguiUtil_1.LguiUtil.SetLocalText(this.GetText(7), "AdviceSelectWord");
   }
-  N7e() {
+  YHe() {
     var i =
       ConfigManager_1.ConfigManager.AdviceConfig.GetAdviceWordTypeConfigs();
     let t = 0;
@@ -161,7 +161,7 @@ class AdviceSortWordSelectView extends UiViewBase_1.UiViewBase {
       }
     return t / (i.length - 1);
   }
-  k7e() {
+  zHe() {
     var e = ModelManager_1.ModelManager.AdviceModel.PreSelectSortTypeId,
       i =
         ConfigManager_1.ConfigManager.AdviceConfig.GetAdviceWordConfigsByType(
@@ -178,8 +178,8 @@ class AdviceSortWordSelectView extends UiViewBase_1.UiViewBase {
     return t / (i.length - 1);
   }
   OnBeforeDestroy() {
-    this.Y7e && (this.Y7e.ClearChildren(), (this.Y7e = void 0)),
-      this.R7e && (this.R7e.ClearChildren(), (this.R7e = void 0));
+    this.hje && (this.hje.ClearChildren(), (this.hje = void 0)),
+      this.kHe && (this.kHe.ClearChildren(), (this.kHe = void 0));
   }
 }
 exports.AdviceSortWordSelectView = AdviceSortWordSelectView;

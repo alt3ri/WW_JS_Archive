@@ -16,32 +16,32 @@ const UE = require("ue"),
 class ForgingIngredientsView extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this.STi = void 0),
-      (this.JNt = void 0),
-      (this.TIi = () => {
-        this.RefreshTips(this.STi);
+      (this.ELi = void 0),
+      (this.zOt = void 0),
+      (this.TTi = () => {
+        this.RefreshTips(this.ELi);
       }),
-      (this.ETi = () => {
-        this.JNt.RefreshHelpRole();
+      (this.SLi = () => {
+        this.zOt.RefreshHelpRole();
       }),
-      (this.nNt = () => {
+      (this.sOt = () => {
         this.GetButton(3).IsSelfInteractive
-          ? this.STi.IsUnlock
+          ? this.ELi.IsUnlock
             ? CommonManager_1.CommonManager.SendManufacture(
-                this.STi.ItemId,
-                this.JNt.GetManufactureCount(),
+                this.ELi.ItemId,
+                this.zOt.GetManufactureCount(),
               )
             : ForgingController_1.ForgingController.SendForgeFormulaUnlockRequest(
-                this.STi.ItemId,
+                this.ELi.ItemId,
               )
           : ForgingController_1.ForgingController.PlayForgingFailDisplay(() => {
               ForgingController_1.ForgingController.PlayForgingLoopDisplay();
             });
       }),
-      (this._9e = () => {
+      (this.I7e = () => {
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.OpenHelpRole,
-          this.STi.ItemId,
+          this.ELi.ItemId,
         );
       });
   }
@@ -56,55 +56,55 @@ class ForgingIngredientsView extends UiPanelBase_1.UiPanelBase {
       [6, UE.UIItem],
       [7, UE.UIText],
     ]),
-      (this.BtnBindInfo = [[3, this.nNt]]);
+      (this.BtnBindInfo = [[3, this.sOt]]);
   }
   dde() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.CloseHelpRole,
-      this.ETi,
+      this.SLi,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.ForgingSuccess,
-        this.TIi,
+        this.TTi,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.ForgingFail,
-        this.TIi,
+        this.TTi,
       );
   }
   Cde() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.CloseHelpRole,
-      this.ETi,
+      this.SLi,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.ForgingSuccess,
-        this.TIi,
+        this.TTi,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.ForgingFail,
-        this.TIi,
+        this.TTi,
       );
   }
   async OnBeforeStartAsync() {
-    (this.JNt =
+    (this.zOt =
       new ForgingIngredientsVerticalView_1.ForgingIngredientsVerticalView()),
-      await this.JNt.CreateByActorAsync(this.GetItem(4).GetOwner()),
-      this.JNt.SetActive(!0);
+      await this.zOt.CreateByActorAsync(this.GetItem(4).GetOwner()),
+      this.zOt.SetActive(!0);
   }
   OnStart() {
     this.dde(),
-      this.JNt.BindChangeClickCall(this._9e),
+      this.zOt.BindChangeClickCall(this.I7e),
       this.GetButton(3).SetCanClickWhenDisable(!0);
   }
   OnBeforeDestroy() {
-    this.Cde(), this.JNt.Destroy();
+    this.Cde(), this.zOt.Destroy();
   }
   OnSecondTimerRefresh() {
-    this.STi && this.JNt?.OnSecondTimerRefresh();
+    this.ELi && this.zOt?.OnSecondTimerRefresh();
   }
   RefreshTips(e) {
-    this.STi = e;
+    this.ELi = e;
     var e = ConfigManager_1.ConfigManager.ForgingConfig.GetForgeFormulaById(
         e.ItemId,
       ),
@@ -117,30 +117,30 @@ class ForgingIngredientsView extends UiPanelBase_1.UiPanelBase {
           e.ItemId,
         ));
     LguiUtil_1.LguiUtil.SetLocalText(this.GetText(1), "Have", t),
-      this.JNt.RefreshForging(this.STi),
-      this.ZNt();
+      this.zOt.RefreshForging(this.ELi),
+      this.ekt();
   }
-  ZNt() {
+  ekt() {
     let e = !0;
     var t = ModelManager_1.ModelManager.ForgingModel,
-      i = t.CheckUnlock(this.STi),
-      n = t.CheckCoinEnough(this.STi.ItemId),
-      r = t.CheckLimitCount(this.STi);
+      i = t.CheckUnlock(this.ELi),
+      n = t.CheckCoinEnough(this.ELi.ItemId),
+      r = t.CheckLimitCount(this.ELi);
     let s = "";
     i
       ? ((s =
           ConfigManager_1.ConfigManager.TextConfig.GetTextById("WeaponMaking")),
-        (e = t.CheckMaterialEnough(this.STi.ItemId)),
+        (e = t.CheckMaterialEnough(this.ELi.ItemId)),
         this.GetItem(2).SetUIActive(!0))
       : ((s =
           ConfigManager_1.ConfigManager.TextConfig.GetTextById("UnlockWeapon")),
         this.GetItem(2).SetUIActive(!1)),
       this.GetText(5).SetText(s),
-      this.GetText(7).SetText(this.tOt(i, e, n, r)),
+      this.GetText(7).SetText(this.ikt(i, e, n, r)),
       this.GetItem(6).SetUIActive(!(i && e && r)),
       this.GetButton(3).RootUIComp.SetUIActive(i && e && r);
   }
-  tOt(e, t, i, n) {
+  ikt(e, t, i, n) {
     return e
       ? t
         ? n

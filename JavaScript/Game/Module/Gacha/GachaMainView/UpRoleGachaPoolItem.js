@@ -6,7 +6,7 @@ const UE = require("ue"),
   RoleDescribeComponent_1 = require("./RoleDescribeComponent");
 class UpRoleGachaPoolItem extends GachaPoolItem_1.GachaPoolItem {
   constructor() {
-    super(...arguments), (this.mjt = void 0);
+    super(...arguments), (this.mWt = void 0);
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -17,13 +17,13 @@ class UpRoleGachaPoolItem extends GachaPoolItem_1.GachaPoolItem {
     ];
   }
   async OnBeforeStartAsync() {
-    (this.mjt = new RoleDescribeComponent_1.RoleDescribeComponent()),
-      await this.mjt.CreateThenShowByActorAsync(this.GetItem(1).GetOwner());
+    (this.mWt = new RoleDescribeComponent_1.RoleDescribeComponent()),
+      await this.mWt.CreateThenShowByActorAsync(this.GetItem(1).GetOwner());
   }
   Refresh() {
     if (this.GachaViewInfo) {
       var e = this.GachaViewInfo.ShowIdList[0];
-      this.mjt.Update(e, 6 !== this.GachaType);
+      this.mWt.Update(e, 6 !== this.GachaType);
       const t = this.GetTexture(0);
       this.SetTextureByPath(
         this.GachaViewInfo.ContentTexturePath,
@@ -45,6 +45,9 @@ class UpRoleGachaPoolItem extends GachaPoolItem_1.GachaPoolItem {
         },
       );
     }
+  }
+  SetDescUiActive(e) {
+    this.mWt.SetUiActive(e);
   }
 }
 exports.UpRoleGachaPoolItem = UpRoleGachaPoolItem;

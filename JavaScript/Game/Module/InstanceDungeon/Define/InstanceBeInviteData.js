@@ -5,7 +5,7 @@ const InstanceDungeonById_1 = require("../../../../Core/Define/ConfigQuery/Insta
   MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang");
 class InstanceBeInviteData {
   constructor() {
-    (this.j8 = 0), (this.NUe = 0), (this.he = ""), (this.Ssi = 0);
+    (this.j8 = 0), (this.NUe = 0), (this.he = ""), (this.Eai = 0);
   }
   SetPlayerId(e) {
     this.j8 = e;
@@ -26,10 +26,10 @@ class InstanceBeInviteData {
     return this.he;
   }
   SetLimitTimestamp(e) {
-    this.Ssi = e;
+    this.Eai = e;
   }
   GetLimitTimestamp() {
-    return this.Ssi;
+    return this.Eai;
   }
   GetInstanceName() {
     var e = InstanceDungeonById_1.configInstanceDungeonById.GetConfig(this.NUe);

@@ -12,34 +12,34 @@ const UE = require("ue"),
 class PromptForFloatLineView extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this.Q$t = void 0),
-      (this.X$t = void 0),
-      (this.EPe = void 0),
+      (this.QYt = void 0),
+      (this.XYt = void 0),
+      (this.SPe = void 0),
       (this.ParamHub = void 0),
-      (this.Wht = 0),
+      (this.r1t = 0),
       (this.e8 = 0),
-      (this.$$t = void 0);
+      (this.$Yt = void 0);
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [[0, UE.UIText]];
   }
   OnStart() {
-    (this.EPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem)),
-      (this.Q$t = this.GetText(0)
+    (this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem)),
+      (this.QYt = this.GetText(0)
         .GetOwner()
         .GetComponentByClass(UE.UIEffectTextAnimation.StaticClass())),
-      (this.X$t = this.GetText(0)
+      (this.XYt = this.GetText(0)
         .GetOwner()
         .GetComponentByClass(UE.LGUIPlayTweenComponent.StaticClass())),
-      this.Q$t?.SetSelectorOffset(1);
+      this.QYt?.SetSelectorOffset(1);
   }
   OnBeforeShow() {
     var i = ConfigManager_1.ConfigManager.GenericPromptConfig,
       t = this.ParamHub.TypeId,
       i = i.GetPromptTypeMainTextColor(t);
-    i && this.Y$t(i),
-      this.Q$t?.SetSelectorOffset(1),
-      this.X$t &&
+    i && this.YYt(i),
+      this.QYt?.SetSelectorOffset(1),
+      this.XYt &&
         ((i =
           0.5 *
           (t
@@ -49,36 +49,36 @@ class PromptForFloatLineView extends UiPanelBase_1.UiPanelBase {
               )
           ).Duration),
         (t =
-          this.X$t.GetPlayTween().duration > i
+          this.XYt.GetPlayTween().duration > i
             ? i
-            : this.X$t.GetPlayTween().duration),
-        (this.X$t.GetPlayTween().duration = t),
-        this.X$t?.Play());
+            : this.XYt.GetPlayTween().duration),
+        (this.XYt.GetPlayTween().duration = t),
+        this.XYt?.Play());
   }
   async OnShowAsyncImplementImplement() {
     var i = new CustomPromise_1.CustomPromise();
-    await this.EPe?.PlaySequenceAsync("Start", i);
+    await this.SPe?.PlaySequenceAsync("Start", i);
   }
   async OnBeforeHideAsync() {
-    this.Wht = 0;
+    this.r1t = 0;
     var i = new CustomPromise_1.CustomPromise();
-    await this.EPe?.PlaySequenceAsync("Close", i);
+    await this.SPe?.PlaySequenceAsync("Close", i);
   }
   OnAfterHide() {
-    this.$$t?.(this);
+    this.$Yt?.(this);
   }
-  Y$t(i) {
+  YYt(i) {
     var t = this.GetText(0)
       .GetOwner()
       .GetComponentByClass(UE.UIEffectOutline.StaticClass());
     t ? t.SetOutlineColor(i) : this.GetText(0).SetColor(i);
   }
-  J$t(i, ...t) {
+  JYt(i, ...t) {
     var e = this.GetText(0);
     this.ParamHub.PromptId,
       LguiUtil_1.LguiUtil.SetLocalTextNew(e, i.TextKey, ...t);
   }
-  z$t() {
+  zYt() {
     var i = ConfigManager_1.ConfigManager.GenericPromptConfig,
       t = this.ParamHub,
       e = t.MainTextParams ?? [];
@@ -86,9 +86,9 @@ class PromptForFloatLineView extends UiPanelBase_1.UiPanelBase {
     (s = t.PromptId
       ? s ?? i.GetPromptMainTextObj(t.PromptId)
       : s ?? i.GetPromptTypeMainTextObj(t.TypeId)),
-      e?.length || this.J$t(s),
+      e?.length || this.JYt(s),
       s || t.PromptId || !e?.length
-        ? this.J$t(s, ...e)
+        ? this.JYt(s, ...e)
         : StringUtils_1.StringUtils.IsEmpty(e[0]) ||
           this.GetText(0).SetText(e[0]);
   }
@@ -96,26 +96,26 @@ class PromptForFloatLineView extends UiPanelBase_1.UiPanelBase {
     this.ParamHub = i;
     i = ConfigManager_1.ConfigManager.GenericPromptConfig;
     (this.e8 = 0),
-      (this.Wht = TimeUtil_1.TimeUtil.SetTimeMillisecond(
+      (this.r1t = TimeUtil_1.TimeUtil.SetTimeMillisecond(
         i.GetPromptTypeInfo(this.ParamHub.TypeId).Duration,
       )),
-      this.Z$t();
+      this.ZYt();
   }
-  Z$t() {
-    this.z$t(), this.RootItem.SetAsLastHierarchy();
+  ZYt() {
+    this.zYt(), this.RootItem.SetAsLastHierarchy();
   }
   SetHideCallback(i) {
-    this.$$t = i;
+    this.$Yt = i;
   }
   ShowView() {
     if (this.IsShowOrShowing)
-      return void 0 !== this.EPe?.GetCurrentSequence()
-        ? void this.EPe.ReplaySequenceByKey("Start")
-        : void this.EPe.PlaySequencePurely("Start");
+      return void 0 !== this.SPe?.GetCurrentSequence()
+        ? void this.SPe.ReplaySequenceByKey("Start")
+        : void this.SPe.PlaySequencePurely("Start");
     this.SetActive(!0);
   }
   Tick(i) {
-    this.Wht <= 0 || ((this.e8 += i), this.e8 > this.Wht && this.SetActive(!1));
+    this.r1t <= 0 || ((this.e8 += i), this.e8 > this.r1t && this.SetActive(!1));
   }
 }
 exports.PromptForFloatLineView = PromptForFloatLineView;

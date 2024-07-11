@@ -13,11 +13,11 @@ class BattlePassTaskTabItem extends UiPanelBase_1.UiPanelBase {
       (this.ScrollViewDelegate = void 0),
       (this.GridIndex = 0),
       (this.DisplayIndex = 0),
-      (this.QFe = ""),
+      (this.l4e = ""),
       (this.SelectedCallBack = void 0),
       (this.OnCanExecuteChange = void 0),
-      (this.T7e = () => this.OnCanExecuteChange?.(this.GridIndex) ?? !0),
-      (this.x4e = (t) => {
+      (this.Lke = () => this.OnCanExecuteChange?.(this.GridIndex) ?? !0),
+      (this.Bke = (t) => {
         1 === t && this.SelectedCallBack?.(this.GridIndex);
       });
   }
@@ -28,10 +28,10 @@ class BattlePassTaskTabItem extends UiPanelBase_1.UiPanelBase {
       [2, UE.UIExtendToggle],
       [3, UE.UIItem],
     ]),
-      (this.BtnBindInfo = [[2, this.x4e]]);
+      (this.BtnBindInfo = [[2, this.Bke]]);
   }
   OnStart() {
-    this.GetExtendToggle(2).CanExecuteChange.Bind(this.T7e);
+    this.GetExtendToggle(2).CanExecuteChange.Bind(this.Lke);
   }
   SetForceSwitch(t, e = !1) {
     this.GetExtendToggle(2).SetToggleState(t, e),
@@ -60,7 +60,7 @@ class BattlePassTaskTabItem extends UiPanelBase_1.UiPanelBase {
     let i = s.GetBattlePassEndTime();
     switch (t) {
       case 0:
-        (this.QFe = "BattlePassAlwaysTaskTab"),
+        (this.l4e = "BattlePassAlwaysTaskTab"),
           LguiUtil_1.LguiUtil.SetLocalTextNew(
             e,
             "Text_BattlePassAwalsTask_Text",
@@ -69,12 +69,12 @@ class BattlePassTaskTabItem extends UiPanelBase_1.UiPanelBase {
       case 1:
         (i = Math.min(i, s.GetDayEndTime())),
           LguiUtil_1.LguiUtil.SetLocalText(e, "BattlePassDayTask"),
-          (this.QFe = "BattlePassDayTaskTab");
+          (this.l4e = "BattlePassDayTaskTab");
         break;
       case 2:
         (i = Math.min(i, s.GetWeekEndTime())),
           LguiUtil_1.LguiUtil.SetLocalText(e, "BattlePassWeekTask"),
-          (this.QFe = "BattlePassWeekTaskTab");
+          (this.l4e = "BattlePassWeekTaskTab");
     }
     var t = this.GetText(1),
       a = TimeUtil_1.TimeUtil.CalculateHourGapBetweenNow(i, !0),
@@ -97,21 +97,21 @@ class BattlePassTaskTabItem extends UiPanelBase_1.UiPanelBase {
             t,
             "Text_BattlePassRefreshTime3_Text",
           ),
-      this.x6e();
+      this.K8e();
   }
-  x6e() {
-    this.QFe &&
+  K8e() {
+    this.l4e &&
       RedDotController_1.RedDotController.BindRedDot(
-        this.QFe,
+        this.l4e,
         this.GetItem(3),
         void 0,
         0,
       );
   }
   UnBindRedDot() {
-    this.QFe &&
-      (RedDotController_1.RedDotController.UnBindRedDot(this.QFe),
-      (this.QFe = void 0));
+    this.l4e &&
+      (RedDotController_1.RedDotController.UnBindRedDot(this.l4e),
+      (this.l4e = void 0));
   }
 }
 exports.BattlePassTaskTabItem = BattlePassTaskTabItem;

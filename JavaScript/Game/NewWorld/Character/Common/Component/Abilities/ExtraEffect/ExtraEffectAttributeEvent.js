@@ -14,16 +14,19 @@ class AttributeEventEffects extends ExtraEffectBase_1.BuffEffect {
       (this.GoalType = 0),
       (this.Ids = void 0),
       (this.Times = void 0),
-      (this.$Ko = void 0),
-      (this.YKo = void 0),
-      (this.JKo = !1),
-      (this.xat = !1),
-      (this.zKo = new Array()),
-      (this.ZKo = 0),
-      (this.mEo = (t, i, e) => {
-        var s = this.xat;
-        (this.xat = this.$Ko.CheckListenActiveness(i, this.YKo)),
-          s !== this.xat && this.TryExecute({}, this.OwnerBuffComponent);
+      (this.KQo = void 0),
+      (this.QQo = void 0),
+      (this.XQo = !1),
+      (this.jht = !1),
+      (this.$Qo = new Array()),
+      (this.YQo = 0),
+      (this._yo = (t, i, e) => {
+        var s = this.jht;
+        (this.jht = this.KQo.CheckListenActiveness(i, this.QQo)),
+          s !== this.jht &&
+            (this.jht
+              ? this.TryExecute({}, this.OwnerBuffComponent)
+              : this.zQo());
       });
   }
   InitParameters(t) {
@@ -35,7 +38,7 @@ class AttributeEventEffects extends ExtraEffectBase_1.BuffEffect {
       r = 1 === Number(i[1]),
       e = AbilityUtils_1.AbilityUtils.GetLevelValue(e, s, -1),
       t = AbilityUtils_1.AbilityUtils.GetLevelValue(t, s, -1);
-    (this.$Ko = new CharacterAttributeIntervalCheck_1.AttributeIntervalCheck(
+    (this.KQo = new CharacterAttributeIntervalCheck_1.AttributeIntervalCheck(
       h,
       e,
       t,
@@ -43,28 +46,28 @@ class AttributeEventEffects extends ExtraEffectBase_1.BuffEffect {
     )),
       (this.GoalType = Number(i[2])),
       (this.Ids = i[3].split("#").map((t) => BigInt(t))),
-      (this.JKo = 1 === Number(i[4] ?? 0)),
-      1 === Number(i[5] ?? 0) ? (this.ZKo = 2) : (this.ZKo = 0),
+      (this.XQo = 1 === Number(i[4] ?? 0)),
+      1 === Number(i[5] ?? 0) ? (this.YQo = 2) : (this.YQo = 0),
       1 === Number(i[6] ?? 0) ? (this.TargetType = 2) : (this.TargetType = 0);
   }
   OnCreated() {
-    var t = this.eQo();
+    var t = this.JQo();
     t
-      ? ((this.YKo = t.GetComponent(156)),
-        this.$Ko.IsPerTenThousand && void 0 === this.$Ko.MaxAttributeId
+      ? ((this.QQo = t.GetComponent(158)),
+        this.KQo.IsPerTenThousand && void 0 === this.KQo.MaxAttributeId
           ? Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Character",
               20,
               "Buff额外效果6 监听属性变化到特定区间，基于相对最大值的万分比，但是监听的属性没有对应的最大值属性，该效果无效",
               ["buff Id", this.BuffId],
-              ["属性Id", this.$Ko.ListenAttributeId],
+              ["属性Id", this.KQo.ListenAttributeId],
             )
-          : ((t = this.YKo.GetCurrentValue(this.$Ko.ListenAttributeId)),
-            this.mEo(this.$Ko.ListenAttributeId, t, t),
-            this.YKo.AddListener(
-              this.$Ko.ListenAttributeId,
-              this.mEo,
+          : ((t = this.QQo.GetCurrentValue(this.KQo.ListenAttributeId)),
+            this._yo(this.KQo.ListenAttributeId, t, t),
+            this.QQo.AddListener(
+              this.KQo.ListenAttributeId,
+              this._yo,
               "ExtraEffectAttributeEvent",
             )))
       : Log_1.Log.CheckError() &&
@@ -83,17 +86,17 @@ class AttributeEventEffects extends ExtraEffectBase_1.BuffEffect {
             "owner name",
             this.OwnerBuffComponent?.GetActorComponent()?.Actor?.GetName(),
           ],
-          ["listen type", this.ZKo],
+          ["listen type", this.YQo],
         );
   }
   OnRemoved() {
-    this.YKo?.RemoveListener(this.$Ko.ListenAttributeId, this.mEo);
+    this.QQo?.RemoveListener(this.KQo.ListenAttributeId, this._yo);
   }
   CheckExecutable() {
     return !!this.OwnerBuffComponent?.HasBuffAuthority();
   }
   OnExecute() {
-    if (this.xat)
+    if (this.jht)
       switch (this.GoalType) {
         case 1:
           this.ExecuteAddBullet();
@@ -101,26 +104,25 @@ class AttributeEventEffects extends ExtraEffectBase_1.BuffEffect {
         case 0:
           this.ExecuteAddBuffs();
       }
-    else this.tQo();
   }
-  eQo() {
-    return 2 !== this.ZKo ? this.OwnerEntity : this.InstigatorEntity?.Entity;
+  JQo() {
+    return 2 !== this.YQo ? this.OwnerEntity : this.InstigatorEntity?.Entity;
   }
   GetEffectTarget() {
     return 2 !== this.TargetType
       ? this.OwnerBuffComponent
       : this.InstigatorBuffComponent;
   }
-  tQo() {
+  zQo() {
     if (0 === this.GoalType) {
-      if (this.JKo)
-        for (const t of this.zKo)
+      if (this.XQo)
+        for (const t of this.$Qo)
           this.GetEffectTarget()?.RemoveBuffByHandle(
             t,
             -1,
             `因为其它buff属性监听额外效果而移除（前置buff Id=${this.BuffId}, handle=${this.ActiveHandleId}）`,
           );
-      this.zKo.length = 0;
+      this.$Qo.length = 0;
     }
   }
   ExecuteAddBuffs() {
@@ -141,7 +143,7 @@ class AttributeEventEffects extends ExtraEffectBase_1.BuffEffect {
             ServerId: this.ServerId,
             Reason: `因为其它buff额外效果而添加（前置buff Id=${this.BuffId}, handle=${this.ActiveHandleId}）`,
           });
-        this.JKo && 0 < e && this.zKo.push(e);
+        this.XQo && 0 < e && this.$Qo.push(e);
       }
   }
   ExecuteAddBullet() {

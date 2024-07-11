@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LevelPlayController = void 0);
 const Log_1 = require("../../../Core/Common/Log"),
   Protocol_1 = require("../../../Core/Define/Net/Protocol"),
-  ControllerBase_1 = require("../../../Core/Framework/ControllerBase"),
   Net_1 = require("../../../Core/Net/Net"),
   MathUtils_1 = require("../../../Core/Utils/MathUtils"),
   LevelGeneralContextDefine_1 = require("../../LevelGamePlay/LevelGeneralContextDefine"),
@@ -12,36 +11,46 @@ const Log_1 = require("../../../Core/Common/Log"),
   ModelManager_1 = require("../../Manager/ModelManager"),
   ActivityDoubleRewardController_1 = require("../Activity/ActivityContent/DoubleReward/ActivityDoubleRewardController"),
   ConfirmBoxDefine_1 = require("../ConfirmBox/ConfirmBoxDefine"),
+  ControllerWithAssistantBase_1 = require("../GeneralLogicTree/ControllerAssistant/ControllerWithAssistantBase"),
   GeneralLogicTreeUtil_1 = require("../GeneralLogicTree/GeneralLogicTreeUtil"),
   MapController_1 = require("../Map/Controller/MapController"),
   PowerController_1 = require("../Power/PowerController"),
+  GuideLineAssistant_1 = require("../QuestNew/Controller/GuideLineAssistant"),
   ScrollingTipsController_1 = require("../ScrollingTips/ScrollingTipsController"),
   LevelPlayDefine_1 = require("./LevelPlayDefine"),
-  INTERVAL_TIME = 1e3;
-class LevelPlayController extends ControllerBase_1.ControllerBase {
-  static OnInit() {
-    return this.qfi(), !0;
+  INTERVAL_TIME = 1e3,
+  assistantMap = { [0]: void 0 };
+class LevelPlayController extends ControllerWithAssistantBase_1.ControllerWithAssistantBase {
+  static OnRegisterNetEvent() {
+    super.OnRegisterNetEvent(),
+      Net_1.Net.Register(19570, LevelPlayController.Opi),
+      Net_1.Net.Register(7673, LevelPlayController.kpi),
+      Net_1.Net.Register(22798, LevelPlayController.Fpi),
+      Net_1.Net.Register(24251, LevelPlayController.Vpi),
+      Net_1.Net.Register(6286, LevelPlayController.Hpi),
+      Net_1.Net.Register(26054, LevelPlayController.jpi);
   }
-  static OnClear() {
-    return this.Gfi(), !0;
+  static OnUnRegisterNetEvent() {
+    super.OnRegisterNetEvent(),
+      Net_1.Net.UnRegister(19570),
+      Net_1.Net.UnRegister(7673),
+      Net_1.Net.UnRegister(22798),
+      Net_1.Net.UnRegister(24251),
+      Net_1.Net.UnRegister(6286),
+      Net_1.Net.UnRegister(26054);
   }
-  static qfi() {
-    Net_1.Net.Register(9061, LevelPlayController.Nfi),
-      Net_1.Net.Register(25069, LevelPlayController.Ofi),
-      Net_1.Net.Register(29337, LevelPlayController.kfi),
-      Net_1.Net.Register(18070, LevelPlayController.Ffi),
-      Net_1.Net.Register(3462, LevelPlayController.Vfi),
-      Net_1.Net.Register(26610, LevelPlayController.Hfi);
+  static RegisterAssistant() {
+    this.AddAssistant(
+      0,
+      new GuideLineAssistant_1.GuideLineAssistant(
+        Protocol_1.Aki.Protocol.tps.Proto_BtTypeLevelPlay,
+      ),
+    );
   }
-  static Gfi() {
-    Net_1.Net.UnRegister(9061),
-      Net_1.Net.UnRegister(25069),
-      Net_1.Net.UnRegister(29337),
-      Net_1.Net.UnRegister(18070),
-      Net_1.Net.UnRegister(3462),
-      Net_1.Net.UnRegister(26610);
+  static cYt(e) {
+    if (this.Assistants) return this.Assistants.get(e);
   }
-  static jfi() {
+  static Wpi() {
     const o = GeneralLogicTreeUtil_1.GeneralLogicTreeUtil.GetPlayerLocation();
     if (o) {
       var e = ModelManager_1.ModelManager.LevelPlayModel,
@@ -72,7 +81,7 @@ class LevelPlayController extends ControllerBase_1.ControllerBase {
       }
     }
   }
-  static Wfi(e) {
+  static Kpi(e) {
     ModelManager_1.ModelManager.TrackModel.IsTracking(4, e) &&
       MapController_1.MapController.RequestTrackMapMark(10, e, !1);
   }
@@ -92,12 +101,13 @@ class LevelPlayController extends ControllerBase_1.ControllerBase {
             );
           if (r && r.Cost) {
             const a = r.Cost.get(5);
-            if (LevelPlayController.Kfi(a)) {
+            if (LevelPlayController.Qpi(a)) {
               r = new ConfirmBoxDefine_1.ConfirmBoxDataNew(64);
               if (
-                (r.SetTextArgs(a.toString()),
+                ((r.ShowPowerItem = !0),
+                r.SetTextArgs(a.toString()),
                 r.FunctionMap.set(2, () => {
-                  LevelPlayController.Kfi(a) &&
+                  LevelPlayController.Qpi(a) &&
                     LevelPlayController.RequestReceiveReward(e, o);
                 }),
                 (r.DestroyFunction = () => {
@@ -132,64 +142,70 @@ class LevelPlayController extends ControllerBase_1.ControllerBase {
     }
   }
   static RequestReceiveReward(e, l) {
-    e = Protocol_1.Aki.Protocol.Qts.create({
-      rkn: MathUtils_1.MathUtils.NumberToLong(e),
+    e = Protocol_1.Aki.Protocol.Hns.create({
+      P4n: MathUtils_1.MathUtils.NumberToLong(e),
     });
-    Net_1.Net.Call(14578, e, (e) => {
-      e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys
+    Net_1.Net.Call(9614, e, (e) => {
+      e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs
         ? ((e = ConfigManager_1.ConfigManager.ErrorCodeConfig.GetTextByErrorId(
-            e.lkn,
+            e.O4n,
           )),
           ScrollingTipsController_1.ScrollingTipsController.ShowTipsByText(e))
         : l.UpdateCanGetReward(!1);
     });
   }
-  static Kfi(e) {
+  static Qpi(e) {
+    var l;
     return (
       !!ModelManager_1.ModelManager.PowerModel.IsPowerEnough(e) ||
-      ((e = ConfigManager_1.ConfigManager.TextConfig.GetTextById(
+      ((l = ConfigManager_1.ConfigManager.TextConfig.GetTextById(
         "ReceiveLevelPlayPowerNotEnough",
       )),
-      ScrollingTipsController_1.ScrollingTipsController.ShowTipsByText(e),
-      PowerController_1.PowerController.OpenPowerView(),
+      ScrollingTipsController_1.ScrollingTipsController.ShowTipsByText(l),
+      PowerController_1.PowerController.OpenPowerView(
+        2,
+        ModelManager_1.ModelManager.PowerModel.GetCurrentNeedPower(e),
+      ),
       !1)
     );
   }
 }
 ((exports.LevelPlayController = LevelPlayController).e8 = 0),
   (LevelPlayController.OnTick = (e) => {
-    (LevelPlayController.e8 += e),
+    ModelManager_1.ModelManager.GeneralLogicTreeModel.IsWakeUp &&
+      ((LevelPlayController.e8 += e),
       LevelPlayController.e8 >= INTERVAL_TIME &&
-        ((LevelPlayController.e8 -= INTERVAL_TIME), LevelPlayController.jfi());
+        ((LevelPlayController.e8 -= INTERVAL_TIME), LevelPlayController.Wpi()),
+      LevelPlayController.cYt(0)?.Tick(e));
   }),
-  (LevelPlayController.Nfi = (e) => {
-    for (const r of e.iAs) {
+  (LevelPlayController.Opi = (e) => {
+    for (const r of e.Sxs) {
       var l =
         ModelManager_1.ModelManager.LevelPlayModel.SafeCreateLevelPlayInfo(
-          r.Ekn,
+          r.J4n,
         );
-      l.UpdateState(r.ckn),
-        l.UpdateFirstPass(r.Wys),
-        l.UpdateRefreshTime(r.eAs),
+      l.UpdateState(r.F4n),
+        l.UpdateFirstPass(r.uDs),
+        l.UpdateRefreshTime(r.pxs),
         l.IsClose &&
           void 0 !== l.MarkConfig &&
           0 < l.MarkConfig.MarkId &&
-          LevelPlayController.Wfi(l.MarkConfig.MarkId),
+          LevelPlayController.Kpi(l.MarkConfig.MarkId),
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "SceneGameplay",
             19,
             "下发已开启的玩法",
-            ["玩法id", r.Ekn],
-            ["玩法状态", LevelPlayDefine_1.levelPlayStatusLogString[r.ckn]],
-            ["是否首通", r.Wys],
-            ["开启时间", r.eAs],
+            ["玩法id", r.J4n],
+            ["玩法状态", LevelPlayDefine_1.levelPlayStatusLogString[r.F4n]],
+            ["是否首通", r.uDs],
+            ["开启时间", r.pxs],
           );
     }
   }),
-  (LevelPlayController.Ofi = (e) => {
+  (LevelPlayController.kpi = (e) => {
     var l,
-      e = e.Ekn,
+      e = e.J4n,
       r =
         ModelManager_1.ModelManager.LevelPlayModel.GetProcessingLevelPlayInfo(
           e,
@@ -224,14 +240,14 @@ class LevelPlayController extends ControllerBase_1.ControllerBase {
           e,
         ]);
   }),
-  (LevelPlayController.kfi = (e) => {
-    var l = e.Ekn;
-    switch (e.ckn) {
+  (LevelPlayController.Fpi = (e) => {
+    var l = e.J4n;
+    switch (e.F4n) {
       case 1:
       case 2:
         ModelManager_1.ModelManager.LevelPlayModel.SafeCreateLevelPlayInfo(
           l,
-        ).UpdateState(e.ckn);
+        ).UpdateState(e.F4n);
         break;
       case 0:
         var r = ModelManager_1.ModelManager.LevelPlayModel.GetLevelPlayInfo(l);
@@ -239,7 +255,7 @@ class LevelPlayController extends ControllerBase_1.ControllerBase {
           (ModelManager_1.ModelManager.LevelPlayModel.LevelPlayClose(r),
           r.MarkConfig) &&
           0 < r.MarkConfig.MarkId &&
-          LevelPlayController.Wfi(r.MarkConfig.MarkId);
+          LevelPlayController.Kpi(r.MarkConfig.MarkId);
         break;
       case 3:
         ModelManager_1.ModelManager.LevelPlayModel.LevelPlayFinish(l);
@@ -250,19 +266,19 @@ class LevelPlayController extends ControllerBase_1.ControllerBase {
         19,
         "玩法状态改变",
         ["玩法id", l],
-        ["玩法状态", LevelPlayDefine_1.levelPlayStatusLogString[e.ckn]],
+        ["玩法状态", LevelPlayDefine_1.levelPlayStatusLogString[e.F4n]],
       );
   }),
-  (LevelPlayController.Vfi = (e) => {
-    var l = e.Ekn;
+  (LevelPlayController.Hpi = (e) => {
+    var l = e.J4n;
     let r =
       ModelManager_1.ModelManager.LevelPlayModel.GetProcessingLevelPlayInfo(l);
     (r =
       r ||
       ModelManager_1.ModelManager.LevelPlayModel.EnterLevelPlayRange(
         l,
-      )).UpdateState(e.ckn),
-      r.UpdateCanGetReward(e.ZDs);
+      )).UpdateState(e.F4n),
+      r.UpdateCanGetReward(e.vxs);
     e = r.LevelPlayEnterAction;
     r.CanExecOpenAction &&
       e &&
@@ -280,24 +296,24 @@ class LevelPlayController extends ControllerBase_1.ControllerBase {
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("SceneGameplay", 19, "玩法进入", ["id", l]);
   }),
-  (LevelPlayController.Hfi = (e) => {
-    e = e.Ekn;
+  (LevelPlayController.jpi = (e) => {
+    e = e.J4n;
     ModelManager_1.ModelManager.LevelPlayModel.LeaveLevelPlayRange(e),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("SceneGameplay", 19, "玩法离开", ["id", e]);
   }),
-  (LevelPlayController.Ffi = (e) => {
-    var l = e.Ekn;
+  (LevelPlayController.Vpi = (e) => {
+    var l = e.J4n;
     ModelManager_1.ModelManager.LevelPlayModel.SafeCreateLevelPlayInfo(
       l,
-    ).UpdateRefreshTime(e.Kys),
+    ).UpdateRefreshTime(e.cDs),
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "SceneGameplay",
           19,
           "玩法开启时间更新",
           ["id", l],
-          ["OpenTime", e.Kys],
+          ["OpenTime", e.cDs],
         );
   });
 //# sourceMappingURL=LevelPlayController.js.map

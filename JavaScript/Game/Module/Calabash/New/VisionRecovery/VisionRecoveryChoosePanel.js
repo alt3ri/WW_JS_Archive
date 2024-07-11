@@ -17,28 +17,28 @@ class VisionRecoveryChoosePanel extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
       (this.UiViewSequence = void 0),
-      (this.Upt = void 0),
-      (this.Apt = void 0),
-      (this.hft = void 0),
-      (this.aft = void 0),
-      (this.Ppt = void 0),
-      (this.xpt = void 0),
+      (this.Fvt = void 0),
+      (this.Vvt = void 0),
+      (this.Mpt = void 0),
+      (this.vpt = void 0),
+      (this.Hvt = void 0),
+      (this.jvt = void 0),
       (this.OnClickMask = () => {
         this.GetItem(3).SetUIActive(!1),
           this.GetButton(2).RootUIComp.SetUIActive(!1);
       }),
       (this.OnClickCloseBtn = () => {
-        this.Ppt ? this.Ppt() : this.SetActive(!1);
+        this.Hvt ? this.Hvt() : this.SetActive(!1);
       }),
-      (this.wpt = (e, t) => {
+      (this.Wvt = (e, t) => {
         e = ItemTipsUtilTool_1.ItemTipsComponentUtilTool.GetTipsDataById(e, t);
-        (e.CanClickLockButton = this.Bpt),
-          this.Apt.Refresh(e),
+        (e.CanClickLockButton = this.Kvt),
+          this.Vvt.Refresh(e),
           this.GetItem(3).SetUIActive(!0),
           this.GetButton(2).RootUIComp.SetUIActive(!0);
       }),
-      (this.Bpt = (t) => {
-        var i = this.Upt.GetCurrentSelectedData(),
+      (this.Kvt = (t) => {
+        var i = this.Fvt.GetCurrentSelectedData(),
           s = i?.length;
         for (let e = 0; e < s; e++)
           if (i[e].IncId === t)
@@ -50,8 +50,8 @@ class VisionRecoveryChoosePanel extends UiPanelBase_1.UiPanelBase {
             );
         return !0;
       }),
-      (this.bpt = (e) => {
-        this.Upt.UpdateByDataList(e), this.xpt && this.xpt(e);
+      (this.Qvt = (e) => {
+        this.Fvt.UpdateByDataList(e), this.jvt && this.jvt(e);
       });
   }
   OnRegisterComponent() {
@@ -74,17 +74,17 @@ class VisionRecoveryChoosePanel extends UiPanelBase_1.UiPanelBase {
       this.AddUiBehavior(this.UiViewSequence);
   }
   async OnBeforeStartAsync() {
-    (this.Apt = new ItemTipsComponent_1.ItemTipsComponent()),
-      await this.Apt.CreateByActorAsync(this.GetItem(3).GetOwner());
+    (this.Vvt = new ItemTipsComponent_1.ItemTipsComponentContentComponent()),
+      await this.Vvt.CreateByActorAsync(this.GetItem(3).GetOwner());
   }
   OnStart() {
-    (this.Upt = new CommonItemSelectView_1.CommonItemSelectView(
+    (this.Fvt = new CommonItemSelectView_1.CommonItemSelectView(
       this.GetItem(0),
     )),
-      (this.hft = new SortEntrance_1.SortEntrance(this.GetItem(5), this.bpt)),
-      (this.aft = new FilterEntrance_1.FilterEntrance(
+      (this.Mpt = new SortEntrance_1.SortEntrance(this.GetItem(5), this.Qvt)),
+      (this.vpt = new FilterEntrance_1.FilterEntrance(
         this.GetItem(4),
-        this.bpt,
+        this.Qvt,
       ));
   }
   OnAfterShow() {
@@ -93,18 +93,18 @@ class VisionRecoveryChoosePanel extends UiPanelBase_1.UiPanelBase {
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnSelectItemAdd,
-      this.wpt,
+      this.Wvt,
     );
   }
   RefreshUi(e) {
-    this.Upt.UpdateSelectableComponent(
+    this.Fvt.UpdateSelectableComponent(
       e.SelectableComponentType,
       e.ItemDataBaseList,
       e.SelectedDataList,
       e.SelectableComponentData,
       e.ExpData,
     ),
-      this.hft.SetSortToggleState(e.InitSortToggleState),
+      this.Mpt.SetSortToggleState(e.InitSortToggleState),
       this.UpdateFilterComponent(e.UseWayId, e.ItemDataBaseList);
   }
   UpdateFilterComponent(e, t) {
@@ -118,17 +118,17 @@ class VisionRecoveryChoosePanel extends UiPanelBase_1.UiPanelBase {
       (n = ConfigManager_1.ConfigManager.FilterConfig.GetFilterId(e))) &&
       0 < n &&
       (s = !0),
-      this.hft.GetRootItem().SetUIActive(i),
-      this.aft.GetRootItem().SetUIActive(s),
+      this.Mpt.GetRootItem().SetUIActive(i),
+      this.vpt.GetRootItem().SetUIActive(s),
       i || s
-        ? (i && this.hft.UpdateData(e, t), s && this.aft.UpdateData(e, t))
-        : this.Upt.UpdateByDataList(t);
+        ? (i && this.Mpt.UpdateData(e, t), s && this.vpt.UpdateData(e, t))
+        : this.Fvt.UpdateByDataList(t);
   }
   BindClickCloseCallBack(e) {
-    this.Ppt = e;
+    this.Hvt = e;
   }
   BindFilterSortRefresh(e) {
-    this.xpt = e;
+    this.jvt = e;
   }
   OnBeforeHide() {
     this.OnRemoveEventListener();
@@ -136,11 +136,11 @@ class VisionRecoveryChoosePanel extends UiPanelBase_1.UiPanelBase {
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnSelectItemAdd,
-      this.wpt,
+      this.Wvt,
     );
   }
   OnBeforeDestroy() {
-    this.Upt.Destroy(), this.Apt.Destroy();
+    this.Fvt.Destroy(), this.Vvt.Destroy();
   }
 }
 exports.VisionRecoveryChoosePanel = VisionRecoveryChoosePanel;

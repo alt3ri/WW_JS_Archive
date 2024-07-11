@@ -8,41 +8,41 @@ const Vector_1 = require("../../../../Core/Utils/Math/Vector"),
 class SceneItemManipulablePrecastState extends SceneItemManipulableBaseState_1.SceneItemManipulableBaseState {
   constructor(e) {
     super(e),
-      (this.nCt = 0),
-      (this.Rnr = ""),
-      (this.Unr = void 0),
-      (this.Anr = Vector_1.Vector.Create()),
+      (this.fgt = 0),
+      (this.Tsr = ""),
+      (this.Lsr = void 0),
+      (this.Dsr = Vector_1.Vector.Create()),
       (this.StateType = "BePrecasting");
   }
   SetDirection(e) {
-    this.nCt = e;
+    this.fgt = e;
   }
   OnEnter() {
-    this.Rnr =
+    this.Tsr =
       ConfigManager_1.ConfigManager.ManipulateConfig.ManipulatePrecastLines[
-        this.nCt
+        this.fgt
       ];
   }
   OnTick(e) {
     this.Timer += 1e3 * e;
     var e = ConfigManager_1.ConfigManager.ManipulateConfig.GetPrecastLineValue(
-        this.Rnr,
+        this.Tsr,
         this.Timer / ConfigManager_1.ConfigManager.ManipulateConfig.PrecastTime,
       ),
       t = Vector_1.Vector.Create(),
       a = Vector_1.Vector.Create(),
-      i = this.soi();
+      i = this.ari();
     return (
-      this.Pnr(),
-      this.Unr.Multiply(e.X, t),
-      this.Anr.Multiply(e.Z, a),
+      this.Rsr(),
+      this.Lsr.Multiply(e.X, t),
+      this.Dsr.Multiply(e.Z, a),
       a.AdditionEqual(t),
       a.AdditionEqual(i),
       this.SceneItem.ActorComp.SetActorLocation(a.ToUeVector()),
       !0
     );
   }
-  soi() {
+  ari() {
     var e =
         Global_1.Global.BaseCharacter.CharacterActorComponent.ActorTransform,
       t = this.SceneItem.UsingAssistantHoldOffset
@@ -51,13 +51,13 @@ class SceneItemManipulablePrecastState extends SceneItemManipulableBaseState_1.S
       e = e.TransformPositionNoScale(t);
     return Vector_1.Vector.Create(e);
   }
-  Pnr() {
+  Rsr() {
     var e = Vector_1.Vector.Create();
-    (this.Unr =
+    (this.Lsr =
       Global_1.Global.BaseCharacter?.CharacterActorComponent?.ActorForwardProxy),
-      this.Unr.CrossProduct(Vector_1.Vector.UpVectorProxy, e),
-      e.CrossProduct(this.Unr, this.Anr),
-      this.Anr.Normalize();
+      this.Lsr.CrossProduct(Vector_1.Vector.UpVectorProxy, e),
+      e.CrossProduct(this.Lsr, this.Dsr),
+      this.Dsr.Normalize();
   }
 }
 exports.SceneItemManipulablePrecastState = SceneItemManipulablePrecastState;

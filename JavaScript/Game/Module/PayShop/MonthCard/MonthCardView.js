@@ -17,19 +17,19 @@ const UE = require("ue"),
 class MonthCardView extends UiTabViewBase_1.UiTabViewBase {
   constructor() {
     super(...arguments),
-      (this.zki = void 0),
-      (this.Zki = void 0),
-      (this.e2i = void 0),
-      (this.t2i = !1),
-      (this.YOi = () => {
-        this.i2i();
+      (this.z2i = void 0),
+      (this.Z2i = void 0),
+      (this.eFi = void 0),
+      (this.tFi = !1),
+      (this.zki = () => {
+        this.iFi();
       }),
-      (this.YZe = () => {
+      (this.dtt = () => {
         HelpController_1.HelpController.OpenHelpById(MONTH_CARD_HELP_ID);
       }),
-      (this.o2i = () => {
+      (this.oFi = () => {
         var e;
-        this.t2i &&
+        this.tFi &&
           ((e = ModelManager_1.ModelManager.PayGiftModel.GetPayShopGoodsById(
             PayShopDefine_1.MONTH_CARD_SHOP_ID,
           )),
@@ -37,8 +37,8 @@ class MonthCardView extends UiTabViewBase_1.UiTabViewBase {
             e.GetGoodsData().Id,
           ));
       }),
-      (this.r2i = () => {
-        this.n2i(), this.s2i();
+      (this.rFi = () => {
+        this.nFi(), this.sFi();
       });
   }
   OnRegisterComponent() {
@@ -54,17 +54,17 @@ class MonthCardView extends UiTabViewBase_1.UiTabViewBase {
       [8, UE.UIItem],
       [9, UE.UIText],
     ]),
-      (this.BtnBindInfo = [[2, this.YZe]]);
+      (this.BtnBindInfo = [[2, this.dtt]]);
   }
   async OnBeforeStartAsync() {
     await ControllerHolder_1.ControllerHolder.PayGiftController.SendPayGiftInfoRequestAsync(),
       await ControllerHolder_1.ControllerHolder.MonthCardController.RequestMonthCardData(),
-      (this.Zki = new GetItemPanel()),
-      await this.Zki.CreateByActorAsync(this.GetItem(5).GetOwner()),
-      this.AddChild(this.Zki),
-      (this.e2i = new GetItemPanel()),
-      await this.e2i.CreateByActorAsync(this.GetItem(6).GetOwner()),
-      this.AddChild(this.e2i);
+      (this.Z2i = new GetItemPanel()),
+      await this.Z2i.CreateByActorAsync(this.GetItem(5).GetOwner()),
+      this.AddChild(this.Z2i),
+      (this.eFi = new GetItemPanel()),
+      await this.eFi.CreateByActorAsync(this.GetItem(6).GetOwner()),
+      this.AddChild(this.eFi);
   }
   OnStart() {
     var e = new Array(),
@@ -78,46 +78,46 @@ class MonthCardView extends UiTabViewBase_1.UiTabViewBase {
         ControllerHolder_1.ControllerHolder.KuroSdkController.QueryProductByProductId(
           e,
         ),
-        (this.zki = new ButtonAndTextItem_1.ButtonAndTextItem(this.GetItem(4))),
-        this.zki.BindCallback(this.o2i),
+        (this.z2i = new ButtonAndTextItem_1.ButtonAndTextItem(this.GetItem(4))),
+        this.z2i.BindCallback(this.oFi),
         ModelManager_1.ModelManager.MonthCardModel.LocalOnceReward),
       e = ModelManager_1.ModelManager.MonthCardModel.LocalDailyReward;
-    this.Zki.Refresh(t[0].ItemId, t[1]),
-      this.e2i.Refresh(e[0].ItemId, e[1]),
-      this.r2i(),
-      this.i2i(),
+    this.Z2i.Refresh(t[0].ItemId, t[1]),
+      this.eFi.Refresh(e[0].ItemId, e[1]),
+      this.rFi(),
+      this.iFi(),
       this.GetText(9).ShowTextNew("MonthCardDes_1"),
       this.GetTabBehavior(UiTabSequence_1.UiTabSequence)
         ?.GetLevelSequencePlayer()
         .PlayLevelSequenceByName("Loop");
   }
-  i2i() {
+  iFi() {
     var e = ModelManager_1.ModelManager.PayGiftModel.GetPayShopGoodsById(
       PayShopDefine_1.MONTH_CARD_SHOP_ID,
     );
     this.GetText(3).SetText(e.GetDirectPriceText());
   }
   OnBeforeDestroy() {
-    this.zki?.Destroy(), (this.zki = void 0);
+    this.z2i?.Destroy(), (this.z2i = void 0);
   }
   AddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.ReceiveMonthCardDataEvent,
-      this.r2i,
+      this.rFi,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnQueryProductInfo,
-        this.YOi,
+        this.zki,
       );
   }
   RemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.ReceiveMonthCardDataEvent,
-      this.r2i,
+      this.rFi,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnQueryProductInfo,
-        this.YOi,
+        this.zki,
       );
   }
   OnAfterShow() {
@@ -126,7 +126,7 @@ class MonthCardView extends UiTabViewBase_1.UiTabViewBase {
       .PlayLevelSequenceByName("Start"),
       ModelManager_1.ModelManager.MonthCardModel.RefreshNextShowPayButtonRedDotTime();
   }
-  n2i() {
+  nFi() {
     var e = 0 <= ModelManager_1.ModelManager.MonthCardModel.GetRemainDays();
     this.GetItem(0).SetUIActive(e),
       this.GetText(1).SetUIActive(e),
@@ -135,19 +135,19 @@ class MonthCardView extends UiTabViewBase_1.UiTabViewBase {
           ModelManager_1.ModelManager.MonthCardModel.GetRemainDayText("ec7172"),
         );
   }
-  s2i() {
+  sFi() {
     var e = ModelManager_1.ModelManager.MonthCardModel.IsRemainDayInMaxLimit(),
       t = this.GetItem(8),
       i = this.GetItem(7);
     e
-      ? ((this.t2i = !0),
-        this.zki.RefreshEnable(!0),
-        this.zki.SetActive(!0),
+      ? ((this.tFi = !0),
+        this.z2i.RefreshEnable(!0),
+        this.z2i.SetActive(!0),
         i.SetUIActive(!0),
         t.SetUIActive(!1))
-      : ((this.t2i = !1),
-        this.zki.RefreshEnable(!1),
-        this.zki.SetActive(!1),
+      : ((this.tFi = !1),
+        this.z2i.RefreshEnable(!1),
+        this.z2i.SetActive(!1),
         i.SetUIActive(!1),
         t.SetUIActive(!0));
   }
@@ -156,11 +156,11 @@ exports.MonthCardView = MonthCardView;
 class GetItemPanel extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this.gIt = 0),
-      (this.a2i = () => {
-        0 !== this.gIt &&
+      (this.ETt = 0),
+      (this.aFi = () => {
+        0 !== this.ETt &&
           ControllerHolder_1.ControllerHolder.ItemController.OpenItemTipsByItemId(
-            this.gIt,
+            this.ETt,
           );
       });
   }
@@ -170,13 +170,13 @@ class GetItemPanel extends UiPanelBase_1.UiPanelBase {
       [1, UE.UITexture],
       [2, UE.UIText],
     ]),
-      (this.BtnBindInfo = [[0, this.a2i]]);
+      (this.BtnBindInfo = [[0, this.aFi]]);
   }
   OnStart() {
     this.GetTexture(1).SetUIActive(!1);
   }
   Refresh(e, t) {
-    this.gIt = e;
+    this.ETt = e;
     const i = this.GetTexture(1);
     this.SetItemIcon(i, e, void 0, () => {
       i.SetUIActive(!0);

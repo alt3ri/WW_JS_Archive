@@ -30,52 +30,52 @@ const puerts_1 = require("puerts"),
 class PlotTransitionView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.Q$t = void 0),
-      (this.X$t = void 0),
-      (this.Uzi = void 0),
-      (this.Azi = void 0),
-      (this.Pzi = void 0),
-      (this.xzi = void 0),
+      (this.QYt = void 0),
+      (this.XYt = void 0),
+      (this.LZi = void 0),
+      (this.DZi = void 0),
+      (this.RZi = void 0),
+      (this.UZi = void 0),
       (this.zNe = 0),
-      (this.wzi = void 0),
+      (this.AZi = void 0),
       (this.B7 = void 0),
-      (this.czi = new AudioController_1.PlayResult()),
-      (this.Bzi = 0),
-      (this.bzi = 0),
+      (this.lZi = new AudioController_1.PlayResult()),
+      (this.PZi = 0),
+      (this.xZi = 0),
       (this.W1e = 0),
-      (this.qzi = 1),
-      (this.Gzi = 1),
-      (this.unt = 0),
-      (this.Nzi = void 0),
-      (this.Ozi = void 0),
-      (this.kzi = void 0),
-      (this.Fzi = void 0),
-      (this.Vzi = () => {
+      (this.wZi = 1),
+      (this.BZi = 1),
+      (this.Ist = 0),
+      (this.bZi = void 0),
+      (this.qZi = void 0),
+      (this.GZi = void 0),
+      (this.NZi = void 0),
+      (this.OZi = () => {
         var i;
-        4 !== this.Bzi &&
-          3 !== this.Bzi &&
+        4 !== this.PZi &&
+          3 !== this.PZi &&
           ((i =
             this.zNe ||
             ModelManager_1.ModelManager.PlotModel.PlotGlobalConfig
               .EndWaitTimeCenterText),
-          this.Hzi(i));
+          this.kZi(i));
       }),
-      (this.jzi = () => {
-        if (4 === this.Bzi || 3 === this.Bzi) {
+      (this.FZi = () => {
+        if (4 === this.PZi || 3 === this.PZi) {
           let i =
             ModelManager_1.ModelManager.PlotModel.PlotGlobalConfig
               .EndWaitTimeCenterText;
           0 < this.W1e &&
-            ((this.Q$t.GetSelector().lineByLine = !1),
-            this.Wzi(!1, this.W1e),
+            ((this.QYt.GetSelector().lineByLine = !1),
+            this.VZi(!1, this.W1e),
             (i = this.W1e)),
-            this.Hzi(i);
+            this.kZi(i);
         }
       }),
-      (this.Kzi = () => {
+      (this.HZi = () => {
         this.B7 = void 0;
       }),
-      (this.Qzi = () => {
+      (this.jZi = () => {
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Plot",
@@ -85,15 +85,15 @@ class PlotTransitionView extends UiViewBase_1.UiViewBase {
         var i,
           t,
           e = ModelManager_1.ModelManager.PlotModel.CenterText;
-        (this.wzi = e).Text &&
+        (this.AZi = e).Text &&
           ((i = ModelManager_1.ModelManager.PlotModel.PlotTextReplacer.Replace(
             e.Text,
           )),
           (t = this.GetText(0)).SetText(i),
           t.SetUIActive(!0),
-          this.Xzi(),
-          this.$zi(),
-          this.Yzi(i.length)),
+          this.WZi(),
+          this.KZi(),
+          this.QZi(i.length)),
           e.Config?.BgImageId &&
             ((t =
               ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
@@ -106,23 +106,25 @@ class PlotTransitionView extends UiViewBase_1.UiViewBase {
             })),
           ModelManager_1.ModelManager.GameModeModel.UseShowCenterText
             ? ((this.zNe = 999),
-              this.Jzi(),
+              this.XZi(),
               this.GetTexture(2).SetUIActive(!0),
               (this.B7 = e.Callback),
-              this.ExecuteCallBack())
+              e.Config && e.Config.TotalTime
+                ? ((this.zNe = e.Config.TotalTime), this.OZi())
+                : this.ExecuteCallBack())
             : (this.GetButton(3)
                 .GetRootComponent()
                 .SetUIActive(e.Config?.IsManualNext ?? !1),
               this.ExecuteCallBack(),
               (this.B7 = e.Callback),
               e.AutoClose &&
-                (this.zNe || (this.zNe = e.Config?.TotalTime), this.Vzi()),
-              this.wzi.AudioId ? this.Jzi() : this.Szi(),
-              this.yzi()),
+                (this.zNe || (this.zNe = e.Config?.TotalTime), this.OZi()),
+              this.AZi.AudioId ? this.XZi() : this.pZi(),
+              this.MZi()),
           ModelManager_1.ModelManager.PlotModel.CenterText.Clear();
       }),
-      (this.zzi = () => {
-        void 0 === this.xzi && this.Ozi && ((this.Ozi = void 0), this.Zzi());
+      (this.$Zi = () => {
+        void 0 === this.UZi && this.qZi && ((this.qZi = void 0), this.YZi());
       });
   }
   OnRegisterComponent() {
@@ -134,37 +136,32 @@ class PlotTransitionView extends UiViewBase_1.UiViewBase {
       [4, UE.UIItem],
       [5, UE.UIItem],
     ]),
-      (this.BtnBindInfo = [[3, this.zzi]]);
+      (this.BtnBindInfo = [[3, this.$Zi]]);
   }
   OnStart() {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug("Plot", 46, "PlotTransitionView:OnStart"),
-      (this.X$t = this.GetText(0)
+      (this.XYt = this.GetText(0)
         .GetOwner()
         .GetComponentByClass(UE.LGUIPlayTweenComponent.StaticClass())),
-      (this.Uzi = this.GetTexture(1)
+      (this.LZi = this.GetTexture(1)
         .GetOwner()
         .GetComponentByClass(UE.LGUIPlayTweenComponent.StaticClass())),
-      (this.Q$t = this.GetText(0)
+      (this.QYt = this.GetText(0)
         .GetOwner()
         .GetComponentByClass(UE.UIEffectTextAnimation.StaticClass())),
-      (this.kzi = (0, puerts_1.toManualReleaseDelegate)(this.jzi)),
-      (this.Fzi = this.X$t.GetPlayTween().RegisterOnComplete(this.kzi)),
+      (this.GZi = (0, puerts_1.toManualReleaseDelegate)(this.FZi)),
+      (this.NZi = this.XYt.GetPlayTween().RegisterOnComplete(this.GZi)),
       this.GetTexture(2).SetUIActive(!1),
-      (ModelManager_1.ModelManager.TeleportModel.IsTeleport ||
-      ModelManager_1.ModelManager.GameModeModel.UseShowCenterText ||
-      ModelManager_1.ModelManager.GameModeModel.PlayTravelMp4
-        ? (Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info(
-              "Plot",
-              46,
-              "PlotTransitionView:FadeLoading子界面开启",
-            ),
-          this.GetItem(5).SetUIActive(!0),
+      (ModelManager_1.ModelManager.GameModeModel.UseShowCenterText
+        ? (this.GetItem(5).SetUIActive(!0),
           this.GetButton(3).GetRootComponent())
-        : (Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info("Plot", 46, "PlotTransitionView:字幕子界面开启"),
-          this.GetItem(5))
+        : ModelManager_1.ModelManager.TeleportModel.IsTeleport ||
+            ModelManager_1.ModelManager.GameModeModel.PlayTravelMp4
+          ? (this.GetItem(5).SetUIActive(!0),
+            this.GetButton(3).GetRootComponent().SetUIActive(!1),
+            this.GetText(0))
+          : this.GetItem(5)
       ).SetUIActive(!1);
   }
   async OnPlayingStartSequenceAsync() {
@@ -179,11 +176,11 @@ class PlotTransitionView extends UiViewBase_1.UiViewBase {
     var i;
     this.B7 && ((i = this.B7), (this.B7 = void 0), i());
   }
-  Hzi(i) {
-    void 0 !== this.Azi && TimerSystem_1.TimerSystem.Remove(this.Azi),
-      (this.Azi = TimerSystem_1.TimerSystem.Delay(() => {
-        (this.Azi = void 0),
-          this.eZi(),
+  kZi(i) {
+    void 0 !== this.DZi && TimerSystem_1.TimerSystem.Remove(this.DZi),
+      (this.DZi = TimerSystem_1.TimerSystem.Delay(() => {
+        (this.DZi = void 0),
+          this.JZi(),
           this.GetText(0).SetUIActive(!1),
           this.GetTexture(2).SetUIActive(!1),
           this.ExecuteCallBack();
@@ -192,34 +189,34 @@ class PlotTransitionView extends UiViewBase_1.UiViewBase {
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnPlotTransitionRemoveCallback,
-      this.Kzi,
+      this.HZi,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.UpdatePlotCenterText,
-        this.Qzi,
+        this.jZi,
       );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnPlotTransitionRemoveCallback,
-      this.Kzi,
+      this.HZi,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.UpdatePlotCenterText,
-        this.Qzi,
+        this.jZi,
       );
   }
-  Szi() {
-    if (this.wzi.UniversalTone) {
-      var i = this.wzi.UniversalTone.TimberId,
-        t = this.wzi.UniversalTone.UniversalToneId;
+  pZi() {
+    if (this.AZi.UniversalTone) {
+      var i = this.AZi.UniversalTone.TimberId,
+        t = this.AZi.UniversalTone.UniversalToneId;
       if (i && t) {
         var e =
           InterjectionByTimberIdAndUniversalToneId_1.configInterjectionByTimberIdAndUniversalToneId.GetConfig(
             i,
             t,
           );
-        if (e) return void this.Ezi(e);
+        if (e) return void this.vZi(e);
       }
       Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn(
@@ -231,17 +228,17 @@ class PlotTransitionView extends UiViewBase_1.UiViewBase {
         );
     }
   }
-  Ezi(i) {
+  vZi(i) {
     AudioController_1.AudioController.PostEventByUi(
       i.AkEvent,
-      this.czi,
+      this.lZi,
       PLAY_FLAG,
     );
   }
-  yzi() {
+  MZi() {
     var i,
       t,
-      e = this.wzi.TalkAkEvent;
+      e = this.AZi.TalkAkEvent;
     e &&
       (i = (0, AudioSystem_1.parseAudioEventPath)(e.AkEvent)) &&
       (e.Type === IAction_1.EPostAkEvent.Global
@@ -261,40 +258,40 @@ class PlotTransitionView extends UiViewBase_1.UiViewBase {
               ])));
   }
   OnBeforeDestroy() {
-    this.X$t.GetPlayTween().UnregisterOnComplete(this.Fzi),
-      (0, puerts_1.releaseManualReleaseDelegate)(this.jzi),
-      (this.kzi = void 0) !== this.Azi &&
-        (TimerSystem_1.TimerSystem.Remove(this.Azi), (this.Azi = void 0)),
-      void 0 !== this.Pzi &&
-        (TimerSystem_1.TimerSystem.Remove(this.Pzi), (this.Pzi = void 0)),
-      void 0 !== this.Ozi &&
-        (TimerSystem_1.TimerSystem.Remove(this.Ozi), (this.Ozi = void 0)),
+    this.XYt.GetPlayTween().UnregisterOnComplete(this.NZi),
+      (0, puerts_1.releaseManualReleaseDelegate)(this.FZi),
+      (this.GZi = void 0) !== this.DZi &&
+        (TimerSystem_1.TimerSystem.Remove(this.DZi), (this.DZi = void 0)),
+      void 0 !== this.RZi &&
+        (TimerSystem_1.TimerSystem.Remove(this.RZi), (this.RZi = void 0)),
+      void 0 !== this.qZi &&
+        (TimerSystem_1.TimerSystem.Remove(this.qZi), (this.qZi = void 0)),
       this.ExecuteCallBack(),
-      (this.wzi = void 0),
-      (this.Nzi = void 0);
+      (this.AZi = void 0),
+      (this.bZi = void 0);
   }
-  Wzi(i, t) {
-    var e = this.X$t.GetPlayTween();
-    (e.from = i ? 1 : 0), (e.to = i ? 0 : 1), (e.duration = t), this.X$t.Play();
+  VZi(i, t) {
+    var e = this.XYt.GetPlayTween();
+    (e.from = i ? 1 : 0), (e.to = i ? 0 : 1), (e.duration = t), this.XYt.Play();
   }
-  tZi(i) {
-    var t = this.X$t.GetPlayTween()?.GetTweener();
-    t && (i ? (t.Pause(), this.iZi(!0)) : (t.Resume(), this.iZi(!1)));
+  zZi(i) {
+    var t = this.XYt.GetPlayTween()?.GetTweener();
+    t && (i ? (t.Pause(), this.ZZi(!0)) : (t.Resume(), this.ZZi(!1)));
   }
-  oZi(i, t) {
-    var e = this.Uzi.GetPlayTween();
+  eeo(i, t) {
+    var e = this.LZi.GetPlayTween();
     (e.from = i ? this.GetTexture(1).GetAlpha() : 0),
       (e.to = i ? 0 : 1),
       (e.duration = t),
-      this.Uzi.Play();
+      this.LZi.Play();
   }
-  Jzi() {
-    var i = StringUtils_1.StringUtils.IsEmpty(this.wzi.AudioId)
+  XZi() {
+    var i = StringUtils_1.StringUtils.IsEmpty(this.AZi.AudioId)
       ? void 0
-      : PlotAudioById_1.configPlotAudioById.GetConfig(this.wzi.AudioId);
-    i && this.rZi(i);
+      : PlotAudioById_1.configPlotAudioById.GetConfig(this.AZi.AudioId);
+    i && this.teo(i);
   }
-  rZi(i) {
+  teo(i) {
     var t =
         ExternalSourceSettingById_1.configExternalSourceSettingById.GetConfig(
           i.ExternalSourceSetting,
@@ -307,25 +304,25 @@ class PlotTransitionView extends UiViewBase_1.UiViewBase {
       t.AudioEventPath,
       i,
       t.ExternalSrcName,
-      this.czi,
+      this.lZi,
       void 0,
       PLAY_FLAG,
     );
   }
-  iZi(i) {
+  ZZi(i) {
     if (this.PlayEventResult)
       if (i)
-        for (const t of this.czi.PlayingIds)
+        for (const t of this.lZi.PlayingIds)
           AudioController_1.AudioController.PauseAudioByPlayId(t);
       else
-        for (const e of this.czi.PlayingIds)
+        for (const e of this.lZi.PlayingIds)
           AudioController_1.AudioController.ResumeAudioByPlayId(e);
   }
-  eZi() {
-    AudioController_1.AudioController.StopEvent(this.czi);
+  JZi() {
+    AudioController_1.AudioController.StopEvent(this.lZi);
   }
-  Xzi() {
-    var i = this.wzi,
+  WZi() {
+    var i = this.AZi,
       t = this.GetText(0),
       e = i.Config?.TextStyle?.TextAlign,
       e =
@@ -346,8 +343,8 @@ class PlotTransitionView extends UiViewBase_1.UiViewBase {
       t.SetAnchorOffsetX(0),
       t.SetAnchorOffsetY(0);
   }
-  $zi() {
-    var t = this.wzi.Config?.TextStyle?.FontSize;
+  KZi() {
+    var t = this.AZi.Config?.TextStyle?.FontSize;
     if (t) {
       var e = this.GetText(0);
       let i = -1;
@@ -366,101 +363,101 @@ class PlotTransitionView extends UiViewBase_1.UiViewBase {
         0 < i && e.SetFontSize(i);
     }
   }
-  Yzi(i) {
-    var t = this.wzi,
+  QZi(i) {
+    var t = this.AZi,
       e = t.Config?.TextStyle?.ShowAnim;
     if (e) {
-      (this.zNe = void 0), this.Q$t.SetSelectorOffset(1);
+      (this.zNe = void 0), this.QYt.SetSelectorOffset(1);
       var s = t.Config?.IsMulLine ?? !1,
-        o = this.Q$t.GetSelector();
+        h = this.QYt.GetSelector();
       if (
-        ((o.lineByLine = s && e.Type === IAction_1.ECenterTextShowAnim.FadeOut),
-        (o.flipDirection = !o.lineByLine),
-        o.SetRange(
+        ((h.lineByLine = s && e.Type === IAction_1.ECenterTextShowAnim.FadeOut),
+        (h.flipDirection = !h.lineByLine),
+        h.SetRange(
           e.Type === IAction_1.ECenterTextShowAnim.FadeOut
             ? FADEOUTRANGE
             : TYPEWRITERRANGE,
         ),
         s && e.Type === IAction_1.ECenterTextShowAnim.TypeWriter)
       ) {
-        this.Bzi = 3;
-        var o =
+        this.PZi = 3;
+        var h =
             0 < e.TextCountPerSecond
               ? e.TextCountPerSecond
               : ModelManager_1.ModelManager.PlotModel.PlotGlobalConfig
                   .TextAnimSpeedSeq,
-          r = (this.Wzi(!0, i / o), this.nZi());
-        (this.unt = o),
+          r = (this.VZi(!0, i / h), this.ieo());
+        (this.Ist = h),
           1 < r &&
-            ((this.qzi = 1),
-            (this.bzi = this.Nzi.Get(this.qzi - 1) / this.unt),
-            (this.Gzi = r),
-            this.sZi());
+            ((this.wZi = 1),
+            (this.xZi = this.bZi.Get(this.wZi - 1) / this.Ist),
+            (this.BZi = r),
+            this.oeo());
       } else if (s && e.Type === IAction_1.ECenterTextShowAnim.FadeOut) {
-        this.Q$t.SetSelectorOffset(0), (this.Bzi = 4);
-        (o = e.FadeInTime), (r = this.nZi());
-        this.Wzi(!1, o * r),
+        this.QYt.SetSelectorOffset(0), (this.PZi = 4);
+        (h = e.FadeInTime), (r = this.ieo());
+        this.VZi(!1, h * r),
           1 < r &&
-            ((this.qzi = 1),
-            (this.bzi = o),
+            ((this.wZi = 1),
+            (this.xZi = h),
             (this.W1e = e.FadeOutTime),
-            (this.Gzi = r),
-            this.sZi());
+            (this.BZi = r),
+            this.oeo());
       } else if (e.Type === IAction_1.ECenterTextShowAnim.TypeWriter) {
-        this.Bzi = 1;
+        this.PZi = 1;
         (s =
           i /
           (0 < e.TextCountPerSecond
             ? e.TextCountPerSecond
             : ModelManager_1.ModelManager.PlotModel.PlotGlobalConfig
                 .TextAnimSpeedSeq)),
-          (o = (this.Wzi(!0, s), t.Config?.TotalTime ?? 0));
-        this.zNe = o + s;
+          (h = (this.VZi(!0, s), t.Config?.TotalTime ?? 0));
+        this.zNe = h + s;
       } else if (e.Type === IAction_1.ECenterTextShowAnim.FadeOut) {
-        this.Bzi = 2;
+        this.PZi = 2;
         r = e.FadeInTime;
-        const h = e.FadeOutTime;
-        this.Wzi(!0, r);
+        const o = e.FadeOutTime;
+        this.VZi(!0, r);
         i = t.Config?.TotalTime ?? 0;
-        (this.Pzi = TimerSystem_1.TimerSystem.Delay(
+        (this.RZi = TimerSystem_1.TimerSystem.Delay(
           () => {
-            this.Wzi(!1, h), (this.Pzi = void 0);
+            this.VZi(!1, o), (this.RZi = void 0);
           },
           TimeUtil_1.TimeUtil.SetTimeMillisecond(r + i),
         )),
-          (this.zNe = r + i + h);
-      } else this.Q$t.SetSelectorOffset(0);
-    } else this.Q$t.SetSelectorOffset(0);
+          (this.zNe = r + i + o);
+      } else this.QYt.SetSelectorOffset(0);
+    } else this.QYt.SetSelectorOffset(0);
   }
-  sZi() {
-    this.qzi >= this.Gzi ||
-      (this.Pzi = TimerSystem_1.TimerSystem.Delay(() => {
-        this.tZi(!0), (this.Pzi = void 0), this.aZi();
-      }, TimeUtil_1.TimeUtil.SetTimeMillisecond(this.bzi)));
+  oeo() {
+    this.wZi >= this.BZi ||
+      (this.RZi = TimerSystem_1.TimerSystem.Delay(() => {
+        this.zZi(!0), (this.RZi = void 0), this.reo();
+      }, TimeUtil_1.TimeUtil.SetTimeMillisecond(this.xZi)));
   }
-  aZi() {
-    this.Ozi = TimerSystem_1.TimerSystem.Delay(() => {
-      (this.Ozi = void 0), this.Zzi();
+  reo() {
+    this.qZi = TimerSystem_1.TimerSystem.Delay(() => {
+      (this.qZi = void 0), this.YZi();
     }, TimeUtil_1.TimeUtil.SetTimeMillisecond(ModelManager_1.ModelManager.PlotModel.PlotGlobalConfig.EndWaitTimeCenterText));
   }
-  Zzi() {
-    this.tZi(!1),
-      (this.qzi = this.qzi + 1),
-      3 === this.Bzi && (this.bzi = this.Nzi.Get(this.qzi - 1) / this.unt),
-      this.sZi();
+  YZi() {
+    this.zZi(!1),
+      (this.wZi = this.wZi + 1),
+      3 === this.PZi && (this.xZi = this.bZi.Get(this.wZi - 1) / this.Ist),
+      this.oeo();
   }
-  nZi() {
-    if (!this.Nzi) {
+  ieo() {
+    if (!this.bZi) {
       var i = this.GetText(0),
         t = (0, puerts_1.$ref)(void 0);
-      i.GetTextLineNumArray(t), (this.Nzi = (0, puerts_1.$unref)(t));
-      for (let i = 0; i < this.Nzi.Num(); i++) {
-        var e = this.Nzi.Get(i);
+      i.GetTextLineNumArray(t), (this.bZi = (0, puerts_1.$unref)(t));
+      for (let i = 0; i < this.bZi.Num(); i++) {
+        var e = this.bZi.Get(i);
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("Temp", 36, "LineNumArray", ["element", e]);
       }
     }
-    return this.Nzi.Num();
+    return this.bZi.Num();
   }
   FadeInScreen(i, t) {
     this.GetButton(3).GetRootComponent().SetUIActive(!1);
@@ -469,12 +466,12 @@ class PlotTransitionView extends UiViewBase_1.UiViewBase {
       : 1;
     i?.ScreenType === IAction_1.EFadeInScreenShowType.White &&
       this.GetTexture(1).SetColor(ColorUtils_1.ColorUtils.ColorWhile),
-      this.oZi(!1, e),
+      this.eeo(!1, e),
       this.ExecuteCallBack(),
       (this.B7 = t),
-      void 0 !== this.xzi && TimerSystem_1.TimerSystem.Remove(this.xzi),
-      (this.xzi = TimerSystem_1.TimerSystem.Delay(() => {
-        this.ExecuteCallBack(), (this.xzi = void 0);
+      void 0 !== this.UZi && TimerSystem_1.TimerSystem.Remove(this.UZi),
+      (this.UZi = TimerSystem_1.TimerSystem.Delay(() => {
+        this.ExecuteCallBack(), (this.UZi = void 0);
       }, TimeUtil_1.TimeUtil.SetTimeMillisecond(e)));
   }
   FadeOutScreen(i, t) {
@@ -482,12 +479,12 @@ class PlotTransitionView extends UiViewBase_1.UiViewBase {
     i = i?.Ease?.Duration
       ? MathUtils_1.MathUtils.Clamp(i.Ease.Duration, 0, FADEMAXTIME)
       : 1;
-    this.oZi(!0, i),
+    this.eeo(!0, i),
       this.ExecuteCallBack(),
       (this.B7 = t),
-      void 0 !== this.xzi && TimerSystem_1.TimerSystem.Remove(this.xzi),
-      (this.xzi = TimerSystem_1.TimerSystem.Delay(() => {
-        this.ExecuteCallBack(), (this.xzi = void 0);
+      void 0 !== this.UZi && TimerSystem_1.TimerSystem.Remove(this.UZi),
+      (this.UZi = TimerSystem_1.TimerSystem.Delay(() => {
+        this.ExecuteCallBack(), (this.UZi = void 0);
       }, TimeUtil_1.TimeUtil.SetTimeMillisecond(i)));
   }
 }

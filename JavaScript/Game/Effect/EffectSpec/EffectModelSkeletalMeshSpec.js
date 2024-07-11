@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.EffectModelSkeletalMeshSpec = void 0);
 const UE = require("ue"),
   Info_1 = require("../../../Core/Common/Info"),
+  Log_1 = require("../../../Core/Common/Log"),
   TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
   MathUtils_1 = require("../../../Core/Utils/MathUtils"),
   GlobalData_1 = require("../../GlobalData"),
@@ -58,16 +59,16 @@ class EffectModelSkeletalMeshSpec extends EffectSpec_1.EffectSpec {
     var t,
       i,
       s = this.tfe,
-      h = this.ife;
+      e = this.ife;
     return !(
       !s ||
-      !h ||
-      ((h = this.Handle.GetSureEffectActor()),
+      !e ||
+      ((e = this.Handle.GetSureEffectActor()),
       (t = (t = this.Handle.Parent)
         ? t.GetEffectSpec()?.GetSceneComponent()
-        : h.K2_GetRootComponent()),
+        : e.K2_GetRootComponent()),
       (i = EffectModelHelper_1.EffectModelHelper.AddSceneComponent(
-        h,
+        e,
         UE.SkeletalMeshComponent.StaticClass(),
         t,
         void 0,
@@ -82,13 +83,14 @@ class EffectModelSkeletalMeshSpec extends EffectSpec_1.EffectSpec {
       this.EffectModel.EnableCollision
         ? i.SetCollisionProfileName(RenderConfig_1.RenderConfig.PhysicsActor)
         : i.SetCollisionEnabled(0),
-      h.FinishAddComponent(
+      e.FinishAddComponent(
         i,
         void 0 !== t,
         MathUtils_1.MathUtils.DefaultTransform,
       ),
       i.SetVisibility(!1),
       (this.SkeletalMeshComponent = i),
+      this.Handle?.IsFreeze && this.OnEnterFreeze(),
       (this.t0e = this.SkeletalMeshComponent.IsComponentTickEnabled()),
       this.SkeletalMeshComponent.SetComponentTickEnabled(!1),
       this.SkeletalMeshComponent.SetExcludeFromLightAttachmentGroup(!0),
@@ -156,7 +158,10 @@ class EffectModelSkeletalMeshSpec extends EffectSpec_1.EffectSpec {
         this.ife,
         this.EffectModel.Looping,
       ),
-      this.r0e(!0));
+      this.r0e(!0),
+      0 === this.GetHandle().GetEffectType()
+        ? this.SkeletalMeshComponent.SetRenderInBurst(!0)
+        : this.SkeletalMeshComponent.SetRenderInBurst(!1));
   }
   OnEnd() {
     return this.SkeletalMeshComponent && this.SkeletalMeshComponent.Stop(), !0;
@@ -170,6 +175,34 @@ class EffectModelSkeletalMeshSpec extends EffectSpec_1.EffectSpec {
           TimerSystem_1.TimerSystem.Next(() => {
             this.TickHideState();
           })));
+  }
+  OnEnterFreeze() {
+    this.SkeletalMeshComponent &&
+      (Log_1.Log.CheckDebug() &&
+        Log_1.Log.Debug(
+          "RenderEffect",
+          37,
+          "[EffectModelSkeletalMeshSpec]OnEnterFreeze",
+          ["handleId", this.Handle?.Id],
+        ),
+      this.SkeletalMeshComponent.SetKuroOnlyTickOutside(!0));
+  }
+  OnExitFreeze() {
+    this.SkeletalMeshComponent &&
+      (Log_1.Log.CheckDebug() &&
+        Log_1.Log.Debug(
+          "RenderEffect",
+          37,
+          "[EffectModelSkeletalMeshSpec]OnExitFreeze",
+          ["handleId", this.Handle?.Id],
+        ),
+      this.SkeletalMeshComponent.SetKuroOnlyTickOutside(!1),
+      this.SkeletalMeshComponent.SetComponentTickEnabled(!0));
+  }
+  OnSeekTime(t) {
+    this.SkeletalMeshComponent &&
+      this.Handle?.IsFreeze &&
+      this.SkeletalMeshComponent.KuroTickComponentOutside(t);
   }
 }
 exports.EffectModelSkeletalMeshSpec = EffectModelSkeletalMeshSpec;

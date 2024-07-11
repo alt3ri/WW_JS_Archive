@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FormationPanel = void 0);
 const UE = require("ue"),
+  Info_1 = require("../../../../../Core/Common/Info"),
   Log_1 = require("../../../../../Core/Common/Log"),
   Stats_1 = require("../../../../../Core/Common/Stats"),
   EventDefine_1 = require("../../../../Common/Event/EventDefine"),
@@ -13,104 +14,94 @@ const UE = require("ue"),
 class FormationPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
   constructor() {
     super(...arguments),
-      (this.TJe = []),
-      (this.LJe = !1),
-      (this.DJe = !1),
-      (this.RJe = 0),
-      (this.UJe = []),
-      (this.AJe = (e, t) => {
-        this.UJe.push([e, t]);
+      (this.Gze = []),
+      (this.Nze = !1),
+      (this.Oze = !1),
+      (this.kze = 0),
+      (this.Fze = []),
+      (this.Vze = (e, t) => {
+        this.Fze.push([e, t]);
       }),
-      (this.PJe = () => {
-        if (!(this.UJe.length <= 0)) {
+      (this.Hze = () => {
+        if (!(this.Fze.length <= 0)) {
           var e = this.GetOperationType();
-          for (const t of this.UJe)
-            2 === e ? this.xJe(t[0], t[1]) : 1 === e && this.wJe(t[0], t[1]);
-          for (const i of this.TJe) i.FormationIns && i.RefreshQteActive();
-          this.UJe.length = 0;
+          for (const t of this.Fze)
+            2 === e ? this.jze(t[0], t[1]) : 1 === e && this.Wze(t[0], t[1]);
+          for (const i of this.Gze) i.FormationIns && i.RefreshQteActive();
+          this.Fze.length = 0;
         }
       }),
-      (this.tje = () => {
-        this.BJe(), (this.UJe.length = 0);
+      (this.mWe = () => {
+        this.Kze(), (this.Fze.length = 0);
       }),
-      (this.qJe = (e, t) => {
-        t = this.GJe(t);
+      (this.Xze = (e, t) => {
+        t = this.$ze(t);
         t && t.ActivateConcertoChangeEffect(0, 0);
       }),
-      (this.NJe = (e) => {
-        e = this.GJe(e.Id);
+      (this.Yze = (e) => {
+        e = this.$ze(e.Id);
         e && e.CureRole();
       }),
-      (this.OJe = (e) => {
-        e = this.GJe(e);
+      (this.Jze = (e) => {
+        e = this.$ze(e);
         e && e.RefreshRoleHealthPercent();
       }),
-      (this.kJe = () => {
-        for (const e of this.TJe) e.RefreshTimeRate();
+      (this.zze = () => {
+        for (const e of this.Gze) e.RefreshTimeRate();
       }),
-      (this.mKe = (e, t, i) => {
-        e = this.FJe(e);
+      (this.TQe = (e, t, i) => {
+        e = this.Zze(e);
         e && e.LevelUp(i);
       }),
-      (this.fKe = (e) => {
+      (this.UQe = (e) => {
         for (const i of e) {
-          var t = this.GJe(i);
+          var t = this.$ze(i);
           t && t.PlayReviveSequence();
         }
       }),
       (this.zpe = (e, t) => {
-        t = this.GJe(t.Id);
+        t = this.$ze(t.Id);
         t && t.ClearRoleData();
       }),
-      (this.VJe = () => {
-        for (const e of this.TJe) e.RefreshRoleName();
+      (this.eZe = () => {
+        for (const e of this.Gze) e.RefreshRoleName();
       }),
-      (this.HJe = () => {
-        for (const e of this.TJe) e && e.RefreshRoleHealthPercent();
+      (this.tZe = () => {
+        for (const e of this.Gze) e && e.RefreshRoleHealthPercent();
       }),
-      (this.tYe = (e) => {
-        for (const t of this.TJe) {
+      (this.mJe = (e) => {
+        for (const t of this.Gze) {
           if (!t) return;
           t.RefreshConcertoResponseModule(e);
         }
       }),
-      (this.jJe = () => {
-        for (const e of this.TJe) e.RefreshRoleName();
+      (this.iZe = () => {
+        for (const e of this.Gze) e.RefreshRoleName();
       }),
-      (this.WJe = (e, t) => {
-        for (const i of this.TJe)
+      (this.oZe = (e, t) => {
+        for (const i of this.Gze)
           i &&
             i.FormationIns?.GetPlayerId() === e &&
             i.RefreshPlayerPingState(t);
       }),
-      (this.KJe = () => {
-        for (const e of this.TJe)
+      (this.rZe = () => {
+        for (const e of this.Gze)
           !e || e.FormationIns?.IsMyRole() || e.RefreshOnlineItem();
       }),
-      (this.dKe = (e, t, i) => {
-        this.SetVisible(
-          5,
-          ModelManager_1.ModelManager.PlatformModel.IsGamepad() === this.DJe,
-        );
+      (this.XBo = () => {
+        this.SetVisible(5, Info_1.Info.IsInGamepad() === this.Oze);
       });
   }
   async InitializeAsync() {
-    await this.BJe(),
-      this.SetVisible(
-        5,
-        ModelManager_1.ModelManager.PlatformModel.IsGamepad() === this.DJe,
-      );
+    await this.Kze(),
+      this.SetVisible(5, Info_1.Info.IsInGamepad() === this.Oze);
   }
   SetIsGamepad() {
-    (this.DJe = !0),
-      this.SetVisible(
-        5,
-        ModelManager_1.ModelManager.PlatformModel.IsGamepad() === this.DJe,
-      );
+    (this.Oze = !0), this.SetVisible(5, Info_1.Info.IsInGamepad() === this.Oze);
   }
   Reset() {
-    for (const e of this.TJe) e.Refresh(void 0);
-    (this.TJe.length = 0), super.Reset();
+    for (const e of this.Gze) e.Refresh(void 0);
+    (this.Gze.length = 0), super.Reset();
   }
   OnRegisterComponent() {
     var e = this.GetOperationType();
@@ -129,23 +120,23 @@ class FormationPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
         ]);
   }
   OnTickBattleChildViewPanel(e) {
-    if (this.Visible) for (const t of this.TJe) t.OnTick(e);
+    if (this.Visible) for (const t of this.Gze) t.OnTick(e);
   }
   OnShowBattleChildViewPanel() {
-    for (const e of this.TJe) e.RefreshCoolDownOnShow();
+    for (const e of this.Gze) e.RefreshCoolDownOnShow();
   }
-  async QJe(e, t) {
+  async nZe(e, t) {
     e = await this.NewStaticChildViewAsync(e, FormationItem_1.FormationItem);
-    e.SetActive(!1), this.TJe.push(e);
+    e.SetActive(!1), this.Gze.push(e);
   }
-  async BJe() {
-    if (!this.LJe) {
+  async Kze() {
+    if (!this.Nze) {
       if (
-        ((this.LJe = !0),
-        await this.XJe(),
+        ((this.Nze = !0),
+        await this.sZe(),
         3 !== ModelManager_1.ModelManager.SceneTeamModel.CurrentGroupType)
       ) {
-        this.RJe =
+        this.kze =
           ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity?.Id;
         var i = 2 === this.GetOperationType(),
           s = ModelManager_1.ModelManager.FunctionModel.IsOpen(10036);
@@ -154,11 +145,11 @@ class FormationPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
           var n,
             h,
             o,
-            a,
-            _ = this.TJe[t];
-          _ &&
+            _,
+            a = this.Gze[t];
+          a &&
             (t++,
-            _.RefreshConcertoResponseModule(s),
+            a.RefreshConcertoResponseModule(s),
             (o =
               ModelManager_1.ModelManager.BattleUiModel.FormationPanelData?.GetItemData(
                 e,
@@ -170,23 +161,23 @@ class FormationPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
             o && !n
               ? ((h = o.RoleId),
                 (o = o.PlayerId),
-                (a =
+                (_ =
                   ModelManager_1.ModelManager.OnlineModel.GetWorldTeamPlayerFightInfo(
                     o,
                   )?.CurRoleId),
-                _.RefreshOtherSceneRole(h, o, h === a))
+                a.RefreshOtherSceneRole(h, o, h === _))
               : i
-                ? (_.Refresh(n), _.RefreshSelectedRole())
+                ? (a.Refresh(n), a.RefreshSelectedRole())
                 : n && n.IsMyRole() && n.IsControl()
                   ? t--
-                  : _.Refresh(n));
+                  : a.Refresh(n));
         }
       }
-      this.LJe = !1;
+      this.Nze = !1;
     }
   }
-  async XJe() {
-    if (0 === this.TJe.length)
+  async sZe() {
+    if (0 === this.Gze.length)
       switch (this.GetOperationType()) {
         case 2:
           var e = this.GetItem(0).GetOwner(),
@@ -194,61 +185,64 @@ class FormationPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
             i = this.GetItem(2).GetOwner(),
             s = this.GetItem(3).GetOwner();
           await Promise.all([
-            this.QJe(e, 1),
-            this.QJe(t, 2),
-            this.QJe(i, 3),
-            this.QJe(s, 4),
+            this.nZe(e, 1),
+            this.nZe(t, 2),
+            this.nZe(i, 3),
+            this.nZe(s, 4),
           ]);
           break;
         case 1:
           (e = this.GetItem(0).GetOwner()),
             (t = this.GetItem(1).GetOwner()),
             (i = this.GetItem(2).GetOwner());
-          await Promise.all([this.QJe(e, 1), this.QJe(t, 2), this.QJe(i, 3)]);
+          await Promise.all([this.nZe(e, 1), this.nZe(t, 2), this.nZe(i, 3)]);
       }
   }
-  FJe(e) {
-    for (const t of this.TJe) if (t.FormationIns?.GetConfigId === e) return t;
+  Zze(e) {
+    for (const t of this.Gze) if (t.FormationIns?.GetConfigId === e) return t;
   }
-  GJe(e) {
-    for (const t of this.TJe) if (t.EntityId === e) return t;
+  $ze(e) {
+    for (const t of this.Gze) if (t.EntityId === e) return t;
+  }
+  GetFormationItemList() {
+    return this.Gze;
   }
   AddEvents() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.BattleUiCurRoleDataChanged,
-      this.AJe,
+      this.Vze,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.BattleUiCurRoleDataChangedNextTick,
-        this.PJe,
+        this.Hze,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.BattleUiAllRoleDataChanged,
-        this.tje,
+        this.mWe,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.CharExecuteMultiQte,
-        this.qJe,
+        this.Xze,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.FormationPanelUIShowRoleHeal,
-        this.NJe,
+        this.Yze,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.CharOnRoleDead,
-        this.OJe,
+        this.Jze,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.TriggerUiTimeDilation,
-        this.kJe,
+        this.zze,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnFormationPlayLevelUp,
-        this.mKe,
+        this.TQe,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnFormationPlayRevive,
-        this.fKe,
+        this.UQe,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.RemoveEntity,
@@ -256,69 +250,69 @@ class FormationPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.RoleRefreshName,
-        this.VJe,
+        this.eZe,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnRefreshRoleHp,
-        this.HJe,
+        this.tZe,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnConcertoResponseOpen,
-        this.tYe,
+        this.mJe,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.TextLanguageChange,
-        this.jJe,
+        this.iZe,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnRefreshPlayerPing,
-        this.WJe,
+        this.oZe,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnOtherChangeRole,
-        this.KJe,
+        this.rZe,
       ),
       EventSystem_1.EventSystem.Add(
-        EventDefine_1.EEventName.OnPlatformChanged,
-        this.dKe,
+        EventDefine_1.EEventName.InputControllerChange,
+        this.XBo,
       );
   }
   RemoveEvents() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.BattleUiCurRoleDataChanged,
-      this.AJe,
+      this.Vze,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.BattleUiCurRoleDataChangedNextTick,
-        this.PJe,
+        this.Hze,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.BattleUiAllRoleDataChanged,
-        this.tje,
+        this.mWe,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.CharExecuteMultiQte,
-        this.qJe,
+        this.Xze,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.FormationPanelUIShowRoleHeal,
-        this.NJe,
+        this.Yze,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.CharOnRoleDead,
-        this.OJe,
+        this.Jze,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.TriggerUiTimeDilation,
-        this.kJe,
+        this.zze,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnFormationPlayLevelUp,
-        this.mKe,
+        this.TQe,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnFormationPlayRevive,
-        this.fKe,
+        this.UQe,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.RemoveEntity,
@@ -326,37 +320,37 @@ class FormationPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.RoleRefreshName,
-        this.VJe,
+        this.eZe,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnRefreshRoleHp,
-        this.HJe,
+        this.tZe,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnConcertoResponseOpen,
-        this.tYe,
+        this.mJe,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.TextLanguageChange,
-        this.jJe,
+        this.iZe,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnRefreshPlayerPing,
-        this.WJe,
+        this.oZe,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnOtherChangeRole,
-        this.KJe,
+        this.rZe,
       ),
       EventSystem_1.EventSystem.Remove(
-        EventDefine_1.EEventName.OnPlatformChanged,
-        this.dKe,
+        EventDefine_1.EEventName.InputControllerChange,
+        this.XBo,
       );
   }
-  xJe(e, t) {
+  jze(e, t) {
     var i = ModelManager_1.ModelManager.BattleUiModel.GetRoleData(e),
-      s = this.GJe(this.RJe),
-      e = ((this.RJe = e), this.GJe(this.RJe));
+      s = this.$ze(this.kze),
+      e = ((this.kze = e), this.$ze(this.kze));
     s && s.RefreshSelectedRole(),
       e &&
         (e.RefreshSelectedRole(),
@@ -365,12 +359,12 @@ class FormationPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
         i.GameplayTagComponent.HasTag(-1732116741) &&
         e.ActivateConcertoChangeEffect(i.ElementType, s.ElementType);
   }
-  wJe(e, t) {
+  Wze(e, t) {
     var i = ModelManager_1.ModelManager.BattleUiModel.GetRoleData(t),
       s = ModelManager_1.ModelManager.BattleUiModel.GetRoleData(e);
-    (this.RJe = e),
-      this.RJe &&
-        ((e = this.GJe(this.RJe))
+    (this.kze = e),
+      this.kze &&
+        ((e = this.$ze(this.kze))
           ? (e.Refresh(
               ModelManager_1.ModelManager.SceneTeamModel?.GetTeamItem(t, {
                 ParamType: 1,
@@ -384,13 +378,13 @@ class FormationPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
             Log_1.Log.Warn("Battle", 18, "角色上场时找不到之前的头像"));
   }
   RefreshOnDelayShow() {
-    this.$Je();
+    this.aZe();
   }
-  $Je() {
+  aZe() {
     if (ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity)
-      for (const e of this.TJe) e.ResetAllConcertoNiagara();
+      for (const e of this.Gze) e.ResetAllConcertoNiagara();
   }
 }
-((exports.FormationPanel = FormationPanel).aYe = void 0),
-  (FormationPanel.RKe = void 0);
+((exports.FormationPanel = FormationPanel).vJe = void 0),
+  (FormationPanel.kQe = void 0);
 //# sourceMappingURL=FormationPanel.js.map

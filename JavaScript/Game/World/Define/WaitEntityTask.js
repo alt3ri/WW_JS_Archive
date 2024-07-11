@@ -12,49 +12,49 @@ const Log_1 = require("../../../Core/Common/Log"),
 class WaitEntityTask {
   constructor(t) {
     (this.SetAsyncLoadingTimeLimit = t),
-      (this.$pr = void 0),
-      (this.Ypr = new Set()),
+      (this.Kvr = void 0),
+      (this.Qvr = new Set()),
       (this.WaitType = void 0),
-      (this.Jpr = void 0),
+      (this.Xvr = void 0),
       (this.BOe = 0),
-      (this.zpr = !1),
-      (this.kpr = void 0),
+      (this.$vr = !1),
+      (this.Gvr = void 0),
       (this.OnAddEntity = (t, i) => {
         "CreatureDataId" === this.WaitType
-          ? this.Ypr.delete(t)
-          : "PbDataId" === this.WaitType && this.Ypr.delete(i),
-          0 < this.Ypr.size ||
+          ? this.Qvr.delete(t)
+          : "PbDataId" === this.WaitType && this.Qvr.delete(i),
+          0 < this.Qvr.size ||
             (this.SetAsyncLoadingTimeLimit &&
               ResourceSystem_1.ResourceSystem.SetLoadModeInGame(
                 GlobalData_1.GlobalData.World,
                 "WaitEntityTask",
               ),
-            this.Neo(!this.zpr));
+            this.Bto(!this.$vr));
       }),
       (this.OnRemoveEntity = (t, i) => {
         if ("CreatureDataId" === this.WaitType) {
-          if (!this.Ypr.has(t)) return;
-          this.Ypr.delete(t);
+          if (!this.Qvr.has(t)) return;
+          this.Qvr.delete(t);
         } else if ("PbDataId" === this.WaitType) {
-          if (!this.Ypr.has(i)) return;
-          this.Ypr.delete(i);
+          if (!this.Qvr.has(i)) return;
+          this.Qvr.delete(i);
         }
-        (this.zpr = !0),
-          this.Ypr.size ||
+        (this.$vr = !0),
+          this.Qvr.size ||
             (this.SetAsyncLoadingTimeLimit &&
               ResourceSystem_1.ResourceSystem.SetLoadModeInGame(
                 GlobalData_1.GlobalData.World,
                 "WaitEntityTask",
               ),
-            this.Neo(!1));
+            this.Bto(!1));
       });
   }
   AddEntities(i, t, s = WAIT_TIME, e = !0, a = !1) {
-    if (Array.isArray(i)) for (const r of i) this.Zpr(r), this.Ypr.add(r);
-    else this.Zpr(i), this.Ypr.add(i);
+    if (Array.isArray(i)) for (const r of i) this.Yvr(r), this.Qvr.add(r);
+    else this.Yvr(i), this.Qvr.add(i);
     if (
-      ((this.kpr = t),
-      (this.Jpr =
+      ((this.Gvr = t),
+      (this.Xvr =
         0 <= s
           ? TimerSystem_1.TimerSystem.Delay((t) => {
               this.SetAsyncLoadingTimeLimit &&
@@ -71,31 +71,31 @@ class WaitEntityTask {
                       ["Id类型", "CreatureDataId"],
                       ["实体列表", JSON.stringify(i)],
                     )
-                  : this.Neo(void 0);
+                  : this.Bto(void 0);
             }, s)
           : void 0),
       Array.isArray(i))
     )
-      for (const o of i) this.Xpr(o, e);
-    else this.Xpr(i, e);
-    if (this.$pr) {
-      for (const h of this.$pr) this.Xpr(h, e);
-      this.$pr = void 0;
+      for (const o of i) this.Wvr(o, e);
+    else this.Wvr(i, e);
+    if (this.Kvr) {
+      for (const h of this.Kvr) this.Wvr(h, e);
+      this.Kvr = void 0;
     }
-    0 < this.Ypr.size
+    0 < this.Qvr.size
       ? this.SetAsyncLoadingTimeLimit &&
         ResourceSystem_1.ResourceSystem.SetLoadModeInLoading(
           GlobalData_1.GlobalData.World,
           "WaitEntityTask",
         )
-      : this.Neo(!0);
+      : this.Bto(!0);
   }
   AddEntitiesWithPbDataId(i, t, s = WAIT_TIME, e = !0, a = !1) {
-    if (Array.isArray(i)) for (const r of i) this.Ypr.add(r);
-    else this.Ypr.add(i);
+    if (Array.isArray(i)) for (const r of i) this.Qvr.add(r);
+    else this.Qvr.add(i);
     if (
-      ((this.kpr = t),
-      (this.Jpr =
+      ((this.Gvr = t),
+      (this.Xvr =
         0 <= s
           ? TimerSystem_1.TimerSystem.Delay((t) => {
               this.SetAsyncLoadingTimeLimit &&
@@ -112,22 +112,22 @@ class WaitEntityTask {
                       ["Id类型", "PbDataId"],
                       ["实体列表", JSON.stringify(i)],
                     )
-                  : this.Neo(!1);
+                  : this.Bto(!1);
             }, s)
           : void 0),
       Array.isArray(i))
     )
-      for (const o of i) this.Xpr(o, e);
-    else this.Xpr(i, e);
-    0 < this.Ypr.size
+      for (const o of i) this.Wvr(o, e);
+    else this.Wvr(i, e);
+    0 < this.Qvr.size
       ? this.SetAsyncLoadingTimeLimit &&
         ResourceSystem_1.ResourceSystem.SetLoadModeInLoading(
           GlobalData_1.GlobalData.World,
           "WaitEntityTask",
         )
-      : this.Neo(!0);
+      : this.Bto(!0);
   }
-  Xpr(t, i = !0) {
+  Wvr(t, i = !0) {
     let s = void 0;
     !(s =
       "PbDataId" === this.WaitType
@@ -140,7 +140,7 @@ class WaitEntityTask {
             "WaitEntityTask期望监听的实体未创建或已死亡",
             ["EntityId", t],
           ),
-        this.Ypr.delete(t))
+        this.Qvr.delete(t))
       : s &&
         (s.IsInit
           ? (Log_1.Log.CheckDebug() &&
@@ -150,16 +150,16 @@ class WaitEntityTask {
                 "WaitEntityTask期望监听的实体已创建",
                 ["EntityId", t],
               ),
-            this.Ypr.delete(t))
+            this.Qvr.delete(t))
           : (s.Priority < 101 && (s.Priority = 101),
             CharacterController_1.CharacterController.SortItem(s)));
   }
-  Neo(t) {
-    void 0 !== this.Jpr &&
-      (TimerSystem_1.TimerSystem.Remove(this.Jpr), (this.Jpr = void 0)),
-      this.Ypr.clear(),
+  Bto(t) {
+    void 0 !== this.Xvr &&
+      (TimerSystem_1.TimerSystem.Remove(this.Xvr), (this.Xvr = void 0)),
+      this.Qvr.clear(),
       WaitEntityTaskController_1.WaitEntityTaskController.RemoveTask(this.BOe),
-      this.kpr(t);
+      this.Gvr(t);
   }
   static Create(t, i, s = !1, e = WAIT_TIME, a = !0, r = !1) {
     s = new WaitEntityTask(s);
@@ -180,22 +180,22 @@ class WaitEntityTask {
     );
   }
   Cancel() {
-    void 0 !== this.Jpr &&
-      (TimerSystem_1.TimerSystem.Remove(this.Jpr), (this.Jpr = void 0)),
-      this.Ypr.clear(),
+    void 0 !== this.Xvr &&
+      (TimerSystem_1.TimerSystem.Remove(this.Xvr), (this.Xvr = void 0)),
+      this.Qvr.clear(),
       WaitEntityTaskController_1.WaitEntityTaskController.RemoveTask(this.BOe);
   }
-  Zpr(t) {
+  Yvr(t) {
     t = ModelManager_1.ModelManager.CreatureModel.GetEntity(t);
     if (t && t.Entity.GetComponent(1)?.IsAutonomousProxy && t) {
       var i = t.Entity.GetComponent(0)?.CustomServerEntityIds;
       if (i) {
-        this.$pr || (this.$pr = new Set());
-        for (const s of i) this.$pr.add(s), this.Ypr.add(s);
+        this.Kvr || (this.Kvr = new Set());
+        for (const s of i) this.Kvr.add(s), this.Qvr.add(s);
       }
       i = t.Entity.GetComponent(0)?.GetSummonerId();
       i &&
-        (this.$pr || (this.$pr = new Set()), this.$pr.add(i), this.Ypr.add(i));
+        (this.Kvr || (this.Kvr = new Set()), this.Kvr.add(i), this.Qvr.add(i));
     }
   }
 }

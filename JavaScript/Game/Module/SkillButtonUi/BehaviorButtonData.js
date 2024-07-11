@@ -37,15 +37,15 @@ class BehaviorButtonData {
       i && this.RefreshIsVisible(i, e);
   }
   RefreshIsVisible(t, s) {
-    if (0 < this.VisibleTagId && this.gSo(t, this.VisibleTagId))
+    if (0 < this.VisibleTagId && this.mSo(t, this.VisibleTagId))
       this.IsVisible = !0;
     else if (101 !== this.ButtonType || s?.IsAim) {
       for (const i of this.HiddenTagIds)
-        if (this.gSo(t, i)) return void (this.IsVisible = !1);
+        if (this.mSo(t, i)) return void (this.IsVisible = !1);
       this.IsVisible = !0;
     } else this.IsVisible = !1;
   }
-  gSo(t, s) {
+  mSo(t, s) {
     return !!t && t.HasTag(s);
   }
 }

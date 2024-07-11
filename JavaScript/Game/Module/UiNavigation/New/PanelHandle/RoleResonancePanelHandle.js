@@ -4,10 +4,10 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const SpecialPanelHandleBase_1 = require("./SpecialPanelHandleBase");
 class RoleResonancePanelHandle extends SpecialPanelHandleBase_1.SpecialPanelHandleBase {
   constructor() {
-    super(...arguments), (this.GroupName = ""), (this.hwo = void 0);
+    super(...arguments), (this.GroupName = ""), (this.sBo = void 0);
   }
   OnGetSuitableNavigationListenerList(e) {
-    return this.hwo ? [this.hwo] : [];
+    return this.sBo ? [this.sBo] : [];
   }
   SetToggleSelectByGroupName(e) {
     var s = this.GetNavigationGroup(e);
@@ -26,7 +26,7 @@ class RoleResonancePanelHandle extends SpecialPanelHandleBase_1.SpecialPanelHand
     }
   }
   SetDefaultNavigationListener(e) {
-    this.hwo = e;
+    this.sBo = e;
   }
 }
 exports.RoleResonancePanelHandle = RoleResonancePanelHandle;

@@ -29,11 +29,11 @@ const UE = require("ue"),
 class TimeOfDaySecondCircleAttachItem extends AutoAttachItem_1.AutoAttachItem {
   constructor() {
     super(...arguments),
-      (this.osi = void 0),
-      (this._it = Rotator_1.Rotator.Create()),
-      (this.rsi = new UE.Vector(ANIMAL_SCALE, ANIMAL_SCALE, ANIMAL_SCALE)),
-      (this.yTo = () => {
-        void 0 !== this.osi &&
+      (this.rai = void 0),
+      (this.Iot = Rotator_1.Rotator.Create()),
+      (this.nai = new UE.Vector(ANIMAL_SCALE, ANIMAL_SCALE, ANIMAL_SCALE)),
+      (this.MLo = () => {
+        void 0 !== this.rai &&
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.ClickTimeItem,
             this,
@@ -56,35 +56,35 @@ class TimeOfDaySecondCircleAttachItem extends AutoAttachItem_1.AutoAttachItem {
       [
         3,
         () => {
-          this.yTo();
+          this.MLo();
         },
       ],
     ];
   }
   OnRefreshItem(E) {
-    (this.osi = E),
+    (this.rai = E),
       this.GetItem(6).SetUIActive(void 0 === E),
       this.GetItem(7).SetUIActive(void 0 !== E),
-      this.$8e(),
-      this.Cni(),
+      this.l7e(),
+      this.gsi(),
       this.OnMoveItem();
   }
-  $8e() {
+  l7e() {
     var E;
-    this.osi &&
-      (this.GetText(2).SetText(this.osi.ShowName),
+    this.rai &&
+      (this.GetText(2).SetText(this.rai.ShowName),
       (E = TimeOfDayModel_1.TodDayTime.ConvertToHourMinuteString(
-        this.osi.SetTime,
+        this.rai.SetTime,
       )),
       this.GetText(1).SetText(E));
   }
-  Cni() {
-    if (this.osi) {
-      let E = this.osi.SetTime / TimeOfDayDefine_1.TOD_SECOND_PER_HOUR;
+  gsi() {
+    if (this.rai) {
+      let E = this.rai.SetTime / TimeOfDayDefine_1.TOD_SECOND_PER_HOUR;
       E > MIDDLE_TIME && (E -= MIDDLE_TIME);
       var t = FULL_ANGLE - ONE_HOUR_ANGLE * E,
         R = this.GetItem(0);
-      (this._it.Yaw = t), R.SetUIRelativeRotation(this._it.ToUeRotator());
+      (this.Iot.Yaw = t), R.SetUIRelativeRotation(this.Iot.ToUeRotator());
     }
   }
   OnMoveItem() {
@@ -146,12 +146,12 @@ class TimeOfDaySecondCircleAttachItem extends AutoAttachItem_1.AutoAttachItem {
             (E = MathUtils_1.MathUtils.Lerp(1, ANIMAL_SCALE, 10 * e)),
             (t = new UE.Vector(E, E, E)),
             this.RootItem.SetUIItemScale(t))
-        : R.X !== this.rsi.X && this.RootItem.SetUIItemScale(this.rsi);
+        : R.X !== this.nai.X && this.RootItem.SetUIItemScale(this.nai);
   }
   OnUnSelect() {}
   OnSelect() {
     (ModelManager_1.ModelManager.TimeOfDayModel.CurrentSelectTimeItemSt =
-      this.osi),
+      this.rai),
       EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.OnSelectTimeItem);
   }
 }

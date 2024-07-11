@@ -11,14 +11,14 @@ const UE = require("ue"),
 class CommonItemDropGrid extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
-      (this.RIt = 0),
+      (this.wTt = 0),
       (this.Mne = 0),
       (this.Count = 0),
-      (this.$0t = void 0),
-      (this.Wgt = void 0),
-      (this.Xgt = void 0),
-      (this.UIt = () => {
-        this.Wgt && this.Wgt(this);
+      (this.apt = void 0),
+      (this.oft = void 0),
+      (this.sft = void 0),
+      (this.BTt = () => {
+        this.oft && this.oft(this);
       });
   }
   Initialize(t) {
@@ -30,40 +30,40 @@ class CommonItemDropGrid extends GridProxyAbstract_1.GridProxyAbstract {
       [1, UE.UIItem],
       [2, UE.UINiagara],
     ]),
-      (this.BtnBindInfo = [[0, this.UIt]]);
+      (this.BtnBindInfo = [[0, this.BTt]]);
   }
   Refresh(t, i, e) {
     var s;
     t && (s = t[0]) && this.RefreshByItemInfo(s.ItemId, t[1], s.IncId);
   }
   RefreshByItemInfo(t, i, e) {
-    (this.RIt = e),
+    (this.wTt = e),
       (this.Mne = t),
       (this.Count = i),
-      (this.$0t =
+      (this.apt =
         ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
           this.Mne,
         )),
-      this.$0t &&
+      this.apt &&
         ((t = {
           Type: 4,
           Data: [t, e],
           ItemConfigId: this.Mne,
           BottomText: 0 < i ? "" + i : "",
         }),
-        this.Xgt.Apply(t),
-        this.AIt(this.$0t.QualityId));
+        this.sft.Apply(t),
+        this.bTt(this.apt.QualityId));
   }
   async AsyncRefreshByItemInfo(t, i, e) {
     if (
-      ((this.RIt = e),
+      ((this.wTt = e),
       (this.Mne = t),
       (this.Count = i),
-      (this.$0t =
+      (this.apt =
         ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
           this.Mne,
         )),
-      this.$0t)
+      this.apt)
     ) {
       const s = new CustomPromise_1.CustomPromise();
       t = {
@@ -72,14 +72,14 @@ class CommonItemDropGrid extends GridProxyAbstract_1.GridProxyAbstract {
         ItemConfigId: this.Mne,
         BottomText: 0 < i ? "" + i : "",
       };
-      this.Xgt.Apply(t),
-        this.AIt(this.$0t.QualityId, () => {
+      this.sft.Apply(t),
+        this.bTt(this.apt.QualityId, () => {
           s.SetResult();
         }),
         await s.Promise;
     }
   }
-  AIt(t, i) {
+  bTt(t, i) {
     var t =
       ConfigManager_1.ConfigManager.InventoryConfig.GetItemQualityConfig(t);
     t &&
@@ -90,23 +90,23 @@ class CommonItemDropGrid extends GridProxyAbstract_1.GridProxyAbstract {
         }));
   }
   Clear() {
-    (this.$0t = void 0), (this.Wgt = void 0);
+    (this.apt = void 0), (this.oft = void 0);
   }
   OnStart() {
-    (this.Xgt = new SmallItemGrid_1.SmallItemGrid()),
-      this.Xgt.Initialize(this.GetItem(1).GetOwner());
+    (this.sft = new SmallItemGrid_1.SmallItemGrid()),
+      this.sft.Initialize(this.GetItem(1).GetOwner());
   }
   GetUniqueId() {
-    return this.RIt;
+    return this.wTt;
   }
   GetConfigId() {
     return this.Mne;
   }
   GetItemConfig() {
-    return this.$0t;
+    return this.apt;
   }
   BindOnClicked(t) {
-    this.Wgt = t;
+    this.oft = t;
   }
 }
 exports.CommonItemDropGrid = CommonItemDropGrid;

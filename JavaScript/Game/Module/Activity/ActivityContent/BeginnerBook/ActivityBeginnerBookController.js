@@ -25,7 +25,7 @@ class ActivityBeginnerBookController extends ActivityControllerBase_1.ActivityCo
   }
   OnCreateActivityData(e) {
     return (
-      (this.sNe = e.Ekn),
+      (this.sNe = e.J4n),
       new ActivityBeginnerBookData_1.ActivityBeginnerBookData()
     );
   }
@@ -33,13 +33,13 @@ class ActivityBeginnerBookController extends ActivityControllerBase_1.ActivityCo
     const i = ModelManager_1.ModelManager.ActivityModel.GetActivityById(
       this.sNe,
     );
-    var e = Protocol_1.Aki.Protocol.Ros.create(),
+    var e = Protocol_1.Aki.Protocol.Ihs.create(),
       e =
-        ((e.XFn = i.AllBeginnerTargetList),
-        await Net_1.Net.CallAsync(13629, e));
-    for (const r of e.RPs)
-      i.UnLockBeginnerMap.set(r.IPs, r.TPs),
-        i.FinishBeginnerMap.set(r.IPs, r.LPs);
+        ((e.I6n = i.AllBeginnerTargetList),
+        await Net_1.Net.CallAsync(27134, e));
+    for (const r of e.Kbs)
+      i.UnLockBeginnerMap.set(r.Hbs, r.jbs),
+        i.FinishBeginnerMap.set(r.Hbs, r.Wbs);
     i.AllBeginnerTargetList.sort((e, r) => {
       var t = i.FinishBeginnerMap.get(e) ? 1 : 0,
         o = i.FinishBeginnerMap.get(r) ? 1 : 0;

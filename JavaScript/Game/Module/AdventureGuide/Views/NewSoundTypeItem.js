@@ -5,18 +5,17 @@ const UE = require("ue"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
   ActivityDoubleRewardController_1 = require("../../Activity/ActivityContent/DoubleReward/ActivityDoubleRewardController"),
   GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract"),
-  LguiUtil_1 = require("../../Util/LguiUtil"),
-  AdventureDefine_1 = require("../AdventureDefine");
+  LguiUtil_1 = require("../../Util/LguiUtil");
 class NewSoundTypeItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
-      (this.E6e = AdventureDefine_1.EDungeonType.Mat),
-      (this.y6e = void 0),
-      (this.A4e = void 0),
-      (this.R4e = void 0),
-      (this.d4e = () => !this.A4e || this.A4e(this.E6e)),
-      (this.I6e = (t) => {
-        1 === t && this.y6e(this.E6e, this.R4e);
+      (this.q8e = 4),
+      (this.G8e = void 0),
+      (this.W5e = void 0),
+      (this.H5e = void 0),
+      (this.A5e = () => !this.W5e || this.W5e(this.q8e)),
+      (this.N8e = (t) => {
+        1 === t && this.G8e(this.q8e, this.H5e);
       });
   }
   OnRegisterComponent() {
@@ -27,29 +26,29 @@ class NewSoundTypeItem extends GridProxyAbstract_1.GridProxyAbstract {
       [3, UE.UIExtendToggle],
       [4, UE.UIItem],
     ]),
-      (this.BtnBindInfo = [[3, this.I6e]]);
+      (this.BtnBindInfo = [[3, this.N8e]]);
   }
   OnStart() {
-    (this.R4e = this.GetExtendToggle(3)),
-      this.R4e?.CanExecuteChange.Bind(this.d4e);
+    (this.H5e = this.GetExtendToggle(3)),
+      this.H5e?.CanExecuteChange.Bind(this.A5e);
   }
   BindOnToggleFunc(t) {
-    this.y6e = t;
+    this.G8e = t;
   }
   BindCanToggleExecuteChange(t) {
-    this.A4e = t;
+    this.W5e = t;
   }
-  Refresh(t, e, i) {
-    this.E6e = t;
-    var r =
+  Refresh(t, i, e) {
+    this.q8e = t;
+    var s =
         ConfigManager_1.ConfigManager.AdventureModuleConfig.GetSecondaryGuideDataConf(
-          this.E6e,
+          this.q8e,
         ),
-      s = this.GetText(1),
-      s = (LguiUtil_1.LguiUtil.SetLocalTextNew(s, r.Text), this.GetText(2));
-    LguiUtil_1.LguiUtil.SetLocalTextNew(s, r.SubText),
-      this.SetSpriteByPath(r.Icon, this.GetSprite(0), !1),
-      this.R4e.SetToggleState(0, !1),
+      r = this.GetText(1),
+      r = (LguiUtil_1.LguiUtil.SetLocalTextNew(r, s.Text), this.GetText(2));
+    LguiUtil_1.LguiUtil.SetLocalTextNew(r, s.SubText),
+      this.SetSpriteByPath(s.Icon, this.GetSprite(0), !1),
+      this.H5e.SetToggleState(0, !1),
       this.GetItem(4).SetUIActive(
         void 0 !==
           ActivityDoubleRewardController_1.ActivityDoubleRewardController.GetAdventureUpActivity(
@@ -62,7 +61,7 @@ class NewSoundTypeItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
   SetSelectToggle(t = 1) {
     this.GetExtendToggle(3).SetToggleStateForce(t, !1, !0),
-      this.y6e(this.E6e, this.R4e);
+      this.G8e(this.q8e, this.H5e);
   }
   GetSelfToggle() {
     return this.GetExtendToggle(3);

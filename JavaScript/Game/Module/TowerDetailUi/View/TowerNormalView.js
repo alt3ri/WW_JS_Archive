@@ -20,34 +20,34 @@ const UE = require("ue"),
 class TowerNormalView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.jLo = void 0),
-      (this.WLo = void 0),
-      (this.KLo = void 0),
-      (this.QLo = !1),
-      (this.XLo = !0),
-      (this.uTt = void 0),
-      (this.EPe = void 0),
-      (this.$Lo = 1),
+      (this.FDo = void 0),
+      (this.VDo = void 0),
+      (this.HDo = void 0),
+      (this.jDo = !1),
+      (this.WDo = !0),
+      (this.gLt = void 0),
+      (this.SPe = void 0),
+      (this.KDo = 1),
       (this.sGe = () => {
         return new TowerAreaItem_1.TowerAreaItem();
       }),
-      (this.YLo = (e) => {
+      (this.QDo = (e) => {
         1 === e &&
-          (this.EPe.StopCurrentSequence(),
-          this.EPe.PlaySequencePurely("Switch"),
-          (this.XLo = !0),
-          this.WLo.SetToggleState(0),
-          this.JLo(TowerData_1.LOW_RISK_DIFFICULTY));
+          (this.SPe.StopCurrentSequence(),
+          this.SPe.PlaySequencePurely("Switch"),
+          (this.WDo = !0),
+          this.VDo.SetToggleState(0),
+          this.XDo(TowerData_1.LOW_RISK_DIFFICULTY));
       }),
-      (this.zLo = (e) => {
+      (this.$Do = (e) => {
         1 === e &&
-          (this.EPe.StopCurrentSequence(),
-          this.EPe.PlaySequencePurely("Switch"),
-          (this.XLo = !1),
-          this.jLo.SetToggleState(0),
-          this.JLo(TowerData_1.HIGH_RISK_DIFFICULTY));
+          (this.SPe.StopCurrentSequence(),
+          this.SPe.PlaySequencePurely("Switch"),
+          (this.WDo = !1),
+          this.FDo.SetToggleState(0),
+          this.XDo(TowerData_1.HIGH_RISK_DIFFICULTY));
       }),
-      (this.ZLo = () => {
+      (this.YDo = () => {
         1 ===
           ModelManager_1.ModelManager.TowerModel?.GetDifficultyRewardProgress(
             ModelManager_1.ModelManager.TowerModel.CurrentSelectDifficulties,
@@ -59,18 +59,18 @@ class TowerNormalView extends UiViewBase_1.UiViewBase {
             this.AddChildViewById(t);
           });
       }),
-      (this.eDo = () => {
+      (this.JDo = () => {
         UiManager_1.UiManager.GetViewByName("TowerVariationView")
           ? this.CloseMe()
           : UiManager_1.UiManager.OpenViewAsync("TowerVariationView");
       }),
-      (this.tDo = () => {
+      (this.zDo = () => {
         ControllerHolder_1.ControllerHolder.PayShopController.OpenPayShopViewWithTab(
           5,
           0,
         );
       }),
-      (this.iDo = () => {
+      (this.ZDo = () => {
         var e =
           ModelManager_1.ModelManager.TowerModel?.GetDifficultyRewardProgress(
             ModelManager_1.ModelManager.TowerModel.CurrentSelectDifficulties,
@@ -104,12 +104,12 @@ class TowerNormalView extends UiViewBase_1.UiViewBase {
       [16, UE.UIItem],
     ]),
       (this.BtnBindInfo = [
-        [2, this.ZLo],
-        [3, this.eDo],
-        [10, this.tDo],
+        [2, this.YDo],
+        [3, this.JDo],
+        [10, this.zDo],
       ]);
   }
-  async oDo() {
+  async eRo() {
     UiManager_1.UiManager.GetViewByName("TowerVariationView") &&
       (await UiManager_1.UiManager.CloseViewAsync("TowerVariationView")),
       this.CloseMe();
@@ -117,41 +117,41 @@ class TowerNormalView extends UiViewBase_1.UiViewBase {
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnTowerRewardReceived,
-      this.iDo,
+      this.ZDo,
     );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnTowerRewardReceived,
-      this.iDo,
+      this.ZDo,
     );
   }
   OnStart() {
-    (this.EPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem)),
-      (this.KLo = new GenericLayout_1.GenericLayout(
+    (this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem)),
+      (this.HDo = new GenericLayout_1.GenericLayout(
         this.GetHorizontalLayout(1),
         this.sGe,
       )),
-      (this.jLo = this.GetExtendToggle(4)),
-      (this.WLo = this.GetExtendToggle(5)),
-      this.jLo.OnStateChange.Add(this.YLo),
-      this.WLo.OnStateChange.Add(this.zLo),
-      (this.QLo = ModelManager_1.ModelManager.TowerModel.GetDifficultyIsClear(
+      (this.FDo = this.GetExtendToggle(4)),
+      (this.VDo = this.GetExtendToggle(5)),
+      this.FDo.OnStateChange.Add(this.QDo),
+      this.VDo.OnStateChange.Add(this.$Do),
+      (this.jDo = ModelManager_1.ModelManager.TowerModel.GetDifficultyIsClear(
         TowerData_1.LOW_RISK_DIFFICULTY,
       )),
-      (this.QLo
-        ? ((this.XLo = !1),
-          this.JLo(TowerData_1.HIGH_RISK_DIFFICULTY),
-          this.WLo)
-        : ((this.XLo = !0), this.JLo(TowerData_1.LOW_RISK_DIFFICULTY), this.jLo)
+      (this.jDo
+        ? ((this.WDo = !1),
+          this.XDo(TowerData_1.HIGH_RISK_DIFFICULTY),
+          this.VDo)
+        : ((this.WDo = !0), this.XDo(TowerData_1.LOW_RISK_DIFFICULTY), this.FDo)
       ).SetToggleState(1),
-      this.GetItem(7).SetUIActive(this.QLo),
+      this.GetItem(7).SetUIActive(this.jDo),
       this.GetItem(8).SetUIActive(
         ModelManager_1.ModelManager.TowerModel.GetDifficultyIsClear(
           TowerData_1.HIGH_RISK_DIFFICULTY,
         ),
       ),
-      (this.uTt = new TowerTitleItem_1.TowerTitleItem(this.GetItem(0), () => {
+      (this.gLt = new TowerTitleItem_1.TowerTitleItem(this.GetItem(0), () => {
         var e;
         ModelManager_1.ModelManager.TowerModel.CheckInTower()
           ? ((e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(
@@ -162,12 +162,12 @@ class TowerNormalView extends UiViewBase_1.UiViewBase {
             ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
               e,
             ))
-          : this.oDo();
+          : this.eRo();
       })),
-      this.uTt.RefreshText("InstanceDungeonTitle_31_CommonText"),
+      this.gLt.RefreshText("InstanceDungeonTitle_31_CommonText"),
       (ModelManager_1.ModelManager.TowerModel.CurrentTowerLock =
-        !this.XLo && !this.QLo),
-      this.iDo();
+        !this.WDo && !this.jDo),
+      this.ZDo();
   }
   OnBeforeShow() {
     RedDotController_1.RedDotController.BindRedDot(
@@ -193,13 +193,13 @@ class TowerNormalView extends UiViewBase_1.UiViewBase {
         3,
       ),
       (ModelManager_1.ModelManager.TowerModel.CurrentSelectDifficulties =
-        this.$Lo),
+        this.KDo),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.RedDotTowerReward,
       ),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.RedDotTowerRewardByDifficulties,
-        this.$Lo,
+        this.KDo,
       ),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.RedDotTowerRewardByDifficulties,
@@ -208,12 +208,12 @@ class TowerNormalView extends UiViewBase_1.UiViewBase {
   }
   OnBeforeDestroy() {
     InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.RestoreDungeonEntranceEntity(),
-      this.KLo && (this.KLo = void 0),
-      (this.jLo = void 0),
-      (this.WLo = void 0),
-      this.uTt?.Destroy(),
-      this.EPe?.Clear(),
-      (this.EPe = void 0),
+      this.HDo && (this.HDo = void 0),
+      (this.FDo = void 0),
+      (this.VDo = void 0),
+      this.gLt?.Destroy(),
+      this.SPe?.Clear(),
+      (this.SPe = void 0),
       InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.RestoreDungeonEntranceEntity();
   }
   OnAfterHide() {
@@ -237,23 +237,23 @@ class TowerNormalView extends UiViewBase_1.UiViewBase {
         3,
       );
   }
-  JLo(e) {
+  XDo(e) {
     (ModelManager_1.ModelManager.TowerModel.CurrentSelectDifficulties = e),
-      (this.$Lo = e),
+      (this.KDo = e),
       (ModelManager_1.ModelManager.TowerModel.CurrentTowerLock =
-        !this.XLo && !this.QLo),
-      this.KLo.RefreshByData(
+        !this.WDo && !this.jDo),
+      this.HDo.RefreshByData(
         ModelManager_1.ModelManager.TowerModel.GetDifficultyAllAreaFirstFloor(
           e,
         ),
       ),
-      this.iDo(),
+      this.ZDo(),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.RedDotTowerReward,
       ),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.RedDotTowerRewardByDifficulties,
-        this.$Lo,
+        this.KDo,
       ),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.RedDotTowerRewardByDifficulties,

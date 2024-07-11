@@ -22,18 +22,18 @@ class MemoryDetailView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
       (this.lqe = void 0),
-      (this.ITo = void 0),
-      (this.QUn = void 0),
-      (this.XUn = []),
-      (this.$Un = []),
-      (this.p8t = void 0),
-      (this.EPe = void 0),
-      (this.Yao = () => {
+      (this.ELo = void 0),
+      (this.Twn = void 0),
+      (this.Lwn = []),
+      (this.Dwn = []),
+      (this.p9t = void 0),
+      (this.SPe = void 0),
+      (this.Qho = () => {
         const t =
           ModelManager_1.ModelManager.FragmentMemoryModel.GetTopicDataById(
-            this.QUn.Id,
+            this.Twn.Id,
           );
-        this.EPe?.PlaySequencePurely("HideView"),
+        this.SPe?.PlaySequencePurely("HideView"),
           UiLayer_1.UiLayer.SetShowMaskLayer(FRAGMENTMEMORYMASK, !0),
           TimerSystem_1.TimerSystem.Delay(() => {
             ModelManager_1.ModelManager.FragmentMemoryModel.MemoryFragmentMainViewTryPlayAnimation =
@@ -44,36 +44,36 @@ class MemoryDetailView extends UiViewBase_1.UiViewBase {
               UiLayer_1.UiLayer.SetShowMaskLayer(FRAGMENTMEMORYMASK, !1);
           }, HIDEVIEWDELAY);
       }),
-      (this.YUn = (e) => {
+      (this.Uwn = (e) => {
         let t = !1;
-        for (const i of this.XUn)
+        for (const i of this.Lwn)
           if (i.Id === e) {
-            (this.QUn = i), (t = !0);
+            (this.Twn = i), (t = !0);
             break;
           }
-        t || (this.QUn = void 0),
-          this.EPe?.PlayLevelSequenceByName("SwitchOut");
+        t || (this.Twn = void 0),
+          this.SPe?.PlayLevelSequenceByName("SwitchOut");
       }),
-      (this.JUn = (t) => {
+      (this.Awn = (t) => {
         let i = 0;
-        for (let e = 0; e < this.$Un.length; e++)
-          if (this.$Un[e] === t) {
+        for (let e = 0; e < this.Dwn.length; e++)
+          if (this.Dwn[e] === t) {
             i = e;
             break;
           }
-        this.ITo?.AttachToIndex(i, !1);
+        this.ELo?.AttachToIndex(i, !1);
       }),
-      (this.zUn = () => {
-        this.Yao();
+      (this.Rwn = () => {
+        this.Qho();
       }),
-      (this.iIn = (e) => {
+      (this.yTn = (e) => {
         "SwitchOut" === e &&
-          (this.Og(), this.EPe?.PlayLevelSequenceByName("SwitchIn"));
+          (this.Og(), this.SPe?.PlayLevelSequenceByName("SwitchIn"));
       }),
-      (this.DTo = (e, t, i) => {
+      (this.ILo = (e, t, i) => {
         return new MemoryDetailAttachItem_1.MemoryDetailAttachItem(e);
       }),
-      (this.i2e = () => {
+      (this.pFe = () => {
         this.CloseMe();
       });
   }
@@ -94,96 +94,96 @@ class MemoryDetailView extends UiViewBase_1.UiViewBase {
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnFragmentTopicSelect,
-      this.YUn,
+      this.Uwn,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnFragmentTopicClick,
-        this.JUn,
+        this.Awn,
       );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnFragmentTopicSelect,
-      this.YUn,
+      this.Uwn,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnFragmentTopicClick,
-        this.JUn,
+        this.Awn,
       );
   }
   OnStart() {
-    (this.p8t = new ButtonItem_1.ButtonItem(this.GetItem(3))),
-      this.p8t.SetFunction(this.zUn),
+    (this.p9t = new ButtonItem_1.ButtonItem(this.GetItem(3))),
+      this.p9t.SetFunction(this.Rwn),
       (this.lqe = new PopupCaptionItem_1.PopupCaptionItem(this.GetItem(0))),
-      this.lqe.SetCloseCallBack(this.i2e),
+      this.lqe.SetCloseCallBack(this.pFe),
       this.lqe.SetHelpBtnActive(!0);
     var e = this.GetItem(1),
       t = this.GetItem(6);
-    (this.ITo = new NoCircleAttachView_1.NoCircleAttachView(e.GetOwner())),
-      this.ITo?.SetControllerItem(t),
-      this.ITo.CreateItems(this.GetItem(2).GetOwner(), 0, this.DTo, 1),
+    (this.ELo = new NoCircleAttachView_1.NoCircleAttachView(e.GetOwner())),
+      this.ELo?.SetControllerItem(t),
+      this.ELo.CreateItems(this.GetItem(2).GetOwner(), 0, this.ILo, 1),
       this.GetItem(2).SetUIActive(!1),
-      (this.EPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem)),
-      this.EPe.BindSequenceCloseEvent(this.iIn);
+      (this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem)),
+      this.SPe.BindSequenceCloseEvent(this.yTn);
   }
   OnBeforeShow() {
     if (
-      ((this.XUn =
+      ((this.Lwn =
         ModelManager_1.ModelManager.FragmentMemoryModel.GetAllFragmentTopic()),
       this.OpenParam)
     ) {
       var e = this.OpenParam;
-      for (const t of this.XUn)
+      for (const t of this.Lwn)
         if (t.Id === e) {
-          this.QUn = t;
+          this.Twn = t;
           break;
         }
-    } else this.QUn = this.XUn[0];
-    this.Og(), this.ZUn(), this.UiBlurBehaviour?.ChangeNeedBlurState(!1);
+    } else this.Twn = this.Lwn[0];
+    this.Og(), this.xwn(), this.UiBlurBehaviour?.ChangeNeedBlurState(!1);
   }
-  ZUn() {
-    this.$Un = [];
-    for (const t of this.XUn) this.$Un.push(t.Id);
-    this.$Un.push(-1), this.ITo?.ReloadView(this.$Un.length, this.$Un);
-    var e = this.$Un.indexOf(this.QUn.Id);
-    this.ITo?.AttachToIndex(e, !0);
+  xwn() {
+    this.Dwn = [];
+    for (const t of this.Lwn) this.Dwn.push(t.Id);
+    this.Dwn.push(-1), this.ELo?.ReloadView(this.Dwn.length, this.Dwn);
+    var e = this.Dwn.indexOf(this.Twn.Id);
+    this.ELo?.AttachToIndex(e, !0);
   }
   Og() {
-    this.ZGe(), this.D6i(), this.exn(), this.BNe(), this.PWt(), this.cGn();
+    this.ZGe(), this.L8i(), this.Pwn(), this.BNe(), this.PKt(), this.fNn();
   }
   BNe() {
-    this.p8t?.UnBindRedDot(),
-      this.QUn && this.p8t?.BindRedDot("FragmentMemoryTopic", this.QUn.Id);
+    this.p9t?.UnBindRedDot(),
+      this.Twn && this.p9t?.BindRedDot("FragmentMemoryTopic", this.Twn.Id);
   }
-  txn() {
+  wwn() {
     return ModelManager_1.ModelManager.FragmentMemoryModel.GetTopicUnlockState(
-      this.QUn.Id,
+      this.Twn.Id,
     );
   }
   ZGe() {
-    void 0 !== this.QUn && this.p8t?.SetActive(this.txn());
+    void 0 !== this.Twn && this.p9t?.SetActive(this.wwn());
   }
-  D6i() {
-    this.QUn && this.GetItem(4)?.SetUIActive(!this.txn());
+  L8i() {
+    this.Twn && this.GetItem(4)?.SetUIActive(!this.wwn());
   }
-  exn() {
+  Pwn() {
     var e;
-    void 0 === this.QUn ||
-      this.txn() ||
+    void 0 === this.Twn ||
+      this.wwn() ||
       ((e =
         ModelManager_1.ModelManager.FragmentMemoryModel.GetUnlockConditionText(
-          this.QUn.Id,
+          this.Twn.Id,
         )),
       LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(5), e));
   }
-  PWt() {
-    var e = void 0 !== this.QUn;
+  PKt() {
+    var e = void 0 !== this.Twn;
     this.GetItem(7)?.SetUIActive(e), this.GetItem(8)?.SetUIActive(!e);
   }
-  cGn() {
+  fNn() {
     var e;
-    void 0 !== this.QUn &&
-      ((e = this.QUn.TopicTexture),
+    void 0 !== this.Twn &&
+      ((e = this.Twn.TopicTexture),
       this.SetTextureByPath(e, this.GetTexture(9)));
   }
   OnBeforeHide() {

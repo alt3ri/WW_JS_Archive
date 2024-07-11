@@ -13,7 +13,7 @@ class GenericPromptFloatTipsBase extends UiTickViewBase_1.UiTickViewBase {
       (this.TickDuration = 0),
       (this.TickTime = 0),
       (this.Data = void 0),
-      (this.CYt = void 0);
+      (this.CJt = void 0);
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -23,7 +23,7 @@ class GenericPromptFloatTipsBase extends UiTickViewBase_1.UiTickViewBase {
   }
   OnBeforeCreate() {
     (this.Data = this.OpenParam),
-      (this.CYt =
+      (this.CJt =
         ConfigManager_1.ConfigManager.GenericPromptConfig.GetPromptTypeInfo(
           this.Data.TypeId,
         ));
@@ -31,7 +31,7 @@ class GenericPromptFloatTipsBase extends UiTickViewBase_1.UiTickViewBase {
   OnStart() {
     var i = this.Data.MainTextParams ?? [],
       i = (this.SetMainText(...i), this.Data.ExtraTextParams ?? []);
-    this.SetExtraText(...i), this.gYt(), this.nYt();
+    this.SetExtraText(...i), this.gJt(), this.nJt();
   }
   SetMainText(...i) {
     var t = this.GetText(0);
@@ -46,9 +46,9 @@ class GenericPromptFloatTipsBase extends UiTickViewBase_1.UiTickViewBase {
             ...i,
           ),
           t.SetUIActive(!0))
-        : StringUtils_1.StringUtils.IsBlank(this.CYt.GeneralText)
+        : StringUtils_1.StringUtils.IsBlank(this.CJt.GeneralText)
           ? t.SetUIActive(!1)
-          : (LguiUtil_1.LguiUtil.SetLocalTextNew(t, this.CYt.GeneralText, ...i),
+          : (LguiUtil_1.LguiUtil.SetLocalTextNew(t, this.CJt.GeneralText, ...i),
             t.SetUIActive(!0));
   }
   SetExtraText(...i) {
@@ -62,26 +62,26 @@ class GenericPromptFloatTipsBase extends UiTickViewBase_1.UiTickViewBase {
             ...i,
           ),
           t.SetUIActive(!0))
-        : StringUtils_1.StringUtils.IsBlank(this.CYt.GeneralExtraText)
+        : StringUtils_1.StringUtils.IsBlank(this.CJt.GeneralExtraText)
           ? t.SetUIActive(!1)
           : (LguiUtil_1.LguiUtil.SetLocalTextNew(
               t,
-              this.CYt.GeneralExtraText,
+              this.CJt.GeneralExtraText,
               ...i,
             ),
             t.SetUIActive(!0));
   }
-  gYt() {
+  gJt() {
     var i;
     this.Data.PromptId &&
       ((i = ConfigManager_1.ConfigManager.GenericPromptConfig.GetPromptInfo(
         this.Data.PromptId,
       )),
       (this.TickDuration = i.Duration)),
-      0 === this.TickDuration && (this.TickDuration = this.CYt.Duration),
+      0 === this.TickDuration && (this.TickDuration = this.CJt.Duration),
       0 === this.TickDuration && (this.TickTime = CommonDefine_1.INVALID_VALUE);
   }
-  nYt() {
+  nJt() {
     var i;
     this.Data.TypeId &&
       0 !==

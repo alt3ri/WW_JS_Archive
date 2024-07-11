@@ -12,16 +12,16 @@ class QuestChapterItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
       (this.QuestList = void 0),
-      (this.pro = 0),
-      (this.vro = void 0);
+      (this.dno = 0),
+      (this.Cno = void 0);
   }
   Init(t, e, i, s, r) {
     this.CreateThenShowByActor(t.GetOwner()),
       t.SetActive(!0),
-      (this.vro = r),
+      (this.Cno = r),
       (this.QuestList = []),
       this.UpdateItem(e, i, s),
-      this.Mro();
+      this.gno();
   }
   OnRegisterComponent() {
     (this.ComponentRegisterInfos = [
@@ -42,7 +42,7 @@ class QuestChapterItem extends UiPanelBase_1.UiPanelBase {
     if (this.QuestList) for (const e of this.QuestList) e.OnTick(t);
   }
   UpdateItem(t, i, s) {
-    this.pro = t;
+    this.dno = t;
     var r,
       t =
         ConfigManager_1.ConfigManager.QuestNewConfig.GetQuestMainTypeConfig(i);
@@ -58,7 +58,7 @@ class QuestChapterItem extends UiPanelBase_1.UiPanelBase {
               this.GetItem(2),
               this.GetItem(2).GetParentAsUIItem(),
             )),
-            (t = new QuestItem_1.QuestItem(this.vro)).SetRootActor(
+            (t = new QuestItem_1.QuestItem(this.Cno)).SetRootActor(
               r.GetOwner(),
               !0,
             ),
@@ -70,14 +70,14 @@ class QuestChapterItem extends UiPanelBase_1.UiPanelBase {
     this.QuestList.forEach((t, e) => {
       t.SetActiveItem(e < s.length);
     }),
-      this.Sro();
+      this.fno();
   }
   FindByQuestId(e) {
     return this.QuestList.find((t) => t.QuestId === e);
   }
-  Sro() {
+  fno() {
     var t = ConfigManager_1.ConfigManager.QuestNewConfig.GetChapterConfig(
-        this.pro,
+        this.dno,
       ),
       e =
         MultiTextLang_1.configMultiTextLang.GetLocalTextNew(t.ChapterName) ??
@@ -88,7 +88,7 @@ class QuestChapterItem extends UiPanelBase_1.UiPanelBase {
       t = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(t.SectionNum);
     LguiUtil_1.LguiUtil.SetLocalText(this.GetText(1), "QuestChapterText", e, t);
   }
-  Mro() {
+  gno() {
     var t = this.GetExtendToggle(4);
     t.SetToggleState(1),
       t.OnStateChange.Add((t) => {

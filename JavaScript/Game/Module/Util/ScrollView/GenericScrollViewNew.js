@@ -6,114 +6,114 @@ const puerts_1 = require("puerts"),
   GenericLayout_1 = require("../Layout/GenericLayout");
 class GenericScrollViewNew {
   constructor(t, e, i = void 0) {
-    (this.CGo = void 0),
-      (this.E_i = void 0),
-      (this.CGo = t),
-      (this.E_i = new GenericLayout_1.GenericLayout(
-        this.CGo.GetContent().GetComponentByClass(
-          UE.UILayoutBase.StaticClass(),
-        ),
+    (this.cNo = void 0),
+      (this.Sui = void 0),
+      (this.cNo = t),
+      (this.Sui = new GenericLayout_1.GenericLayout(
+        this.cNo
+          .GetContent()
+          .GetComponentByClass(UE.UILayoutBase.StaticClass()),
         e,
         i,
       )),
-      (this.E_i.AnimControllerComponent = t
+      (this.Sui.AnimControllerComponent = t
         ?.GetOwner()
         .GetComponentByClass(UE.UIInturnAnimController.StaticClass()));
   }
   get IsExpand() {
-    return this.CGo.Horizontal
-      ? this.CGo.RootUIComp.Width < this.CGo.ContentUIItem.Width
-      : this.CGo.RootUIComp.Height < this.CGo.ContentUIItem.Height;
+    return this.cNo.Horizontal
+      ? this.cNo.RootUIComp.Width < this.cNo.ContentUIItem.Width
+      : this.cNo.RootUIComp.Height < this.cNo.ContentUIItem.Height;
   }
   get ContentItem() {
-    return this.CGo.ContentUIItem;
+    return this.cNo.ContentUIItem;
   }
   get ScrollWidth() {
-    return this.CGo.RootUIComp.Width ?? 0;
+    return this.cNo.RootUIComp.Width ?? 0;
   }
   RefreshByData(t, e, i = !1) {
-    this.E_i.RefreshByData(t, e, i);
+    this.Sui.RefreshByData(t, e, i);
   }
   async RefreshByDataAsync(t, e = !1) {
-    await this.E_i.RefreshByDataAsync(t, e);
+    await this.Sui.RefreshByDataAsync(t, e);
   }
   SetHorizontalScrollEnable(t) {
-    this.CGo.SetHorizontal(t);
+    this.cNo.SetHorizontal(t);
   }
   SetVerticalScrollEnable(t) {
-    this.CGo.SetVertical(t);
+    this.cNo.SetVertical(t);
   }
   GetItemByIndex(t) {
-    return this.E_i.GetItemByIndex(t);
+    return this.Sui.GetItemByIndex(t);
   }
   GetScrollItemByIndex(t) {
-    return this.E_i.GetLayoutItemByIndex(t);
+    return this.Sui.GetLayoutItemByIndex(t);
   }
   GetScrollItemByKey(t) {
-    return this.E_i.GetLayoutItemByKey(t);
+    return this.Sui.GetLayoutItemByKey(t);
   }
   GetScrollItemMap() {
-    return this.E_i.GetLayoutItemMap();
+    return this.Sui.GetLayoutItemMap();
   }
   GetScrollItemList() {
-    return this.E_i.GetLayoutItemList();
+    return this.Sui.GetLayoutItemList();
   }
   ScrollTo(t) {
-    this.CGo.ScrollTo(t);
+    this.cNo.ScrollTo(t);
   }
   ScrollToLeft(t) {
-    t = this.E_i.GetItemByKey(t);
-    this.CGo.ScrollToLeft(
+    t = this.Sui.GetItemByKey(t);
+    this.cNo.ScrollToLeft(
       (0, puerts_1.$ref)(
-        new UE.Vector2D(this.CGo.ContentUIItem.RelativeLocation),
+        new UE.Vector2D(this.cNo.ContentUIItem.RelativeLocation),
       ),
       t,
     );
   }
   ScrollToRight(t) {
-    t = this.E_i.GetItemByKey(t);
-    this.CGo.ScrollToRight(
+    t = this.Sui.GetItemByKey(t);
+    this.cNo.ScrollToRight(
       (0, puerts_1.$ref)(
-        new UE.Vector2D(this.CGo.ContentUIItem.RelativeLocation),
+        new UE.Vector2D(this.cNo.ContentUIItem.RelativeLocation),
       ),
       t,
     );
   }
   ScrollToTop(t) {
-    t = this.E_i.GetItemByKey(t);
-    this.CGo.ScrollToTop(
+    t = this.Sui.GetItemByKey(t);
+    this.cNo.ScrollToTop(
       (0, puerts_1.$ref)(
-        new UE.Vector2D(this.CGo.ContentUIItem.RelativeLocation),
+        new UE.Vector2D(this.cNo.ContentUIItem.RelativeLocation),
       ),
       t,
     );
   }
   ScrollToBottom(t) {
-    t = this.E_i.GetItemByKey(t);
-    this.CGo.ScrollToBottom(
+    t = this.Sui.GetItemByKey(t);
+    this.cNo.ScrollToBottom(
       (0, puerts_1.$ref)(
-        new UE.Vector2D(this.CGo.ContentUIItem.RelativeLocation),
+        new UE.Vector2D(this.cNo.ContentUIItem.RelativeLocation),
       ),
       t,
     );
   }
   SetActive(t) {
-    this.CGo.RootUIComp.SetUIActive(t);
+    this.cNo.RootUIComp.SetUIActive(t);
   }
   BindScrollValueChange(t) {
-    this.CGo.OnScrollValueChange.Bind(t);
+    this.cNo.OnScrollValueChange.Bind(t);
   }
   UnBindScrollValueChange() {
-    this.CGo.OnScrollValueChange.Unbind();
+    this.cNo.OnScrollValueChange.Unbind();
   }
   BindLateUpdate(t) {
-    this.E_i.BindLateUpdate(t);
+    this.Sui.BindLateUpdate(t);
   }
   UnBindLateUpdate() {
-    this.E_i.UnBindLateUpdate();
+    this.Sui.UnBindLateUpdate();
   }
   GetGenericLayout() {
-    return this.E_i;
+    return this.Sui;
   }
 }
 exports.GenericScrollViewNew = GenericScrollViewNew;

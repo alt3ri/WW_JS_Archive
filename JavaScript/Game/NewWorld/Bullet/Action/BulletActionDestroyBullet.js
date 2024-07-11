@@ -8,6 +8,7 @@ const UE = require("ue"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
   ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../Manager/ModelManager"),
   BulletController_1 = require("../BulletController"),
   BulletCollisionUtil_1 = require("../BulletStaticMethod/BulletCollisionUtil"),
   BulletHitCountUtil_1 = require("../BulletStaticMethod/BulletHitCountUtil"),
@@ -29,25 +30,33 @@ class BulletActionDestroyBullet extends BulletActionBase_1.BulletActionBase {
               ["BulletId", this.BulletInfo.BulletRowName],
               ["EntityId", this.BulletInfo.BulletEntityId],
             )),
-      1 === t.DestroyReason && this.x4o(),
+      1 === t.DestroyReason && this.U5o(),
       this.BulletInfo.AttackerHandle?.Valid &&
         this.BulletInfo.AttackerActorComp?.Actor &&
-        (this.B4o(), this.b4o()),
-      this.G4o(),
-      this.N4o(),
+        (this.P5o(), this.x5o()),
+      this.B5o(),
+      this.b5o(),
       this.BulletInfo.NeedNotifyChildrenWhenDestroy &&
         this.BulletInfo.ChildEntityIds)
     )
-      for (const e of this.BulletInfo.ChildEntityIds)
-        BulletController_1.BulletController.DestroyBullet(e, !1, 1);
-    for (const l of this.BulletInfo.CollisionInfo.LastArrayHitActorData)
-      l.IsValidHit &&
+      for (const o of this.BulletInfo.ChildEntityIds)
+        BulletController_1.BulletController.DestroyBullet(o, !1, 1);
+    var e,
+      l,
+      t = this.BulletInfo.CollisionInfo;
+    for ([e, l] of t.HitTimeScaleEntityMap.entries()) {
+      var i = ModelManager_1.ModelManager.CharacterModel?.GetHandle(e);
+      i?.Valid && i.Entity.GetComponent(109)?.RemoveTimeScale(l);
+    }
+    t.HitTimeScaleEntityMap.clear();
+    for (const r of t.LastArrayHitActorData)
+      r.IsValidHit &&
         BulletCollisionUtil_1.BulletCollisionUtil.EntityLeave(
           this.BulletInfo,
-          l,
+          r,
         );
   }
-  x4o() {
+  U5o() {
     BulletHitCountUtil_1.BulletHitCountUtil.CheckHitCountTotal(
       this.BulletInfo,
     ) &&
@@ -58,7 +67,7 @@ class BulletActionDestroyBullet extends BulletActionBase_1.BulletActionBase {
       ),
       this.BulletInfo.ChildInfo?.SetIsNumberNotEnough(!0));
   }
-  b4o() {
+  x5o() {
     var t, e;
     this.BulletInfo.AttackerActorComp?.Actor?.IsValid() &&
       ((t =
@@ -79,7 +88,7 @@ class BulletActionDestroyBullet extends BulletActionBase_1.BulletActionBase {
         e,
       ));
   }
-  N4o() {
+  b5o() {
     var t = this.BulletInfo.BulletDataMain;
     0 === this.BulletInfo.SummonServerEntityId ||
       t.Summon.EntityId <= 0 ||
@@ -90,23 +99,23 @@ class BulletActionDestroyBullet extends BulletActionBase_1.BulletActionBase {
         this.BulletInfo.SummonServerEntityId,
       );
   }
-  B4o() {
+  P5o() {
     var e = this.BulletInfo.ChildInfo,
       l = this.BulletInfo.BulletDataMain.Children,
       i = l.length;
     for (let t = 0; t < i; ++t) {
       var o,
-        s = l[t];
-      ((4 === s.Condition && this.BulletInfo.IsTimeNotEnough) ||
-        (3 === s.Condition && e.IsNumberNotEnough) ||
-        (0 === s.Condition && e.IsActiveSummonChildBullet)) &&
-        ((o = Number(s.RowName)),
+        r = l[t];
+      ((4 === r.Condition && this.BulletInfo.IsTimeNotEnough) ||
+        (3 === r.Condition && e.IsNumberNotEnough) ||
+        (0 === r.Condition && e.IsActiveSummonChildBullet)) &&
+        ((o = Number(r.RowName)),
         isNaN(o) ||
           !o ||
-          s.Num < 1 ||
+          r.Num < 1 ||
           ((o = BulletController_1.BulletController.CreateBulletCustomTarget(
             this.BulletInfo.AttackerActorComp.Actor,
-            s.RowName.toString(),
+            r.RowName.toString(),
             this.BulletInfo.ActorComponent.ActorTransform,
             {
               SkillId: this.BulletInfo.BulletInitParams.SkillId,
@@ -122,7 +131,7 @@ class BulletActionDestroyBullet extends BulletActionBase_1.BulletActionBase {
             )));
     }
   }
-  G4o() {
+  B5o() {
     this.BulletInfo.IsDestroyByCharSkillEnd &&
       BulletStaticFunction_1.BulletStaticFunction.SpawnHitEffect(
         this.BulletInfo,
@@ -141,9 +150,9 @@ class BulletActionDestroyBullet extends BulletActionBase_1.BulletActionBase {
       );
   }
 }
-((exports.BulletActionDestroyBullet = BulletActionDestroyBullet).w4o = void 0),
-  (BulletActionDestroyBullet.q4o = void 0),
-  (BulletActionDestroyBullet.k4o = void 0),
-  (BulletActionDestroyBullet.F4o = void 0),
-  (BulletActionDestroyBullet.O4o = void 0);
+((exports.BulletActionDestroyBullet = BulletActionDestroyBullet).A5o = void 0),
+  (BulletActionDestroyBullet.w5o = void 0),
+  (BulletActionDestroyBullet.G5o = void 0),
+  (BulletActionDestroyBullet.N5o = void 0),
+  (BulletActionDestroyBullet.q5o = void 0);
 //# sourceMappingURL=BulletActionDestroyBullet.js.map

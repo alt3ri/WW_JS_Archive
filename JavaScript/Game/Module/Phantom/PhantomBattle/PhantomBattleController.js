@@ -27,19 +27,19 @@ class PhantomBattleController extends UiControllerBase_1.UiControllerBase {
   static OnAddEvents() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnAddPhantomItem,
-      PhantomBattleController.K5i,
+      PhantomBattleController.WVi,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnResponsePhantomItem,
-        PhantomBattleController.Q5i,
+        PhantomBattleController.KVi,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnRemovePhantomItem,
-        PhantomBattleController.Nmi,
+        PhantomBattleController.Ndi,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnEquipPhantomItem,
-        PhantomBattleController.X5i,
+        PhantomBattleController.QVi,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.ActiveBattleView,
@@ -49,19 +49,19 @@ class PhantomBattleController extends UiControllerBase_1.UiControllerBase {
   static OnRemoveEvents() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnAddPhantomItem,
-      PhantomBattleController.K5i,
+      PhantomBattleController.WVi,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnResponsePhantomItem,
-        PhantomBattleController.Q5i,
+        PhantomBattleController.KVi,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnRemovePhantomItem,
-        PhantomBattleController.Nmi,
+        PhantomBattleController.Ndi,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnEquipPhantomItem,
-        PhantomBattleController.X5i,
+        PhantomBattleController.QVi,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.ActiveBattleView,
@@ -74,52 +74,52 @@ class PhantomBattleController extends UiControllerBase_1.UiControllerBase {
     );
   }
   static OnRegisterNetEvent() {
-    Net_1.Net.Register(17245, this.$5i),
-      Net_1.Net.Register(17514, this.Y5i),
-      Net_1.Net.Register(24491, this.J5i),
-      Net_1.Net.Register(6200, this.z5i),
-      Net_1.Net.Register(1381, this.Z5i),
-      Net_1.Net.Register(22263, this.eVi);
+    Net_1.Net.Register(11790, this.XVi),
+      Net_1.Net.Register(5640, this.$Vi),
+      Net_1.Net.Register(1101, this.YVi),
+      Net_1.Net.Register(23766, this.JVi),
+      Net_1.Net.Register(16404, this.zVi),
+      Net_1.Net.Register(14861, this.ZVi);
   }
   static OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(17245),
-      Net_1.Net.UnRegister(17514),
-      Net_1.Net.UnRegister(24491),
-      Net_1.Net.UnRegister(6200),
-      Net_1.Net.UnRegister(1381),
-      Net_1.Net.UnRegister(22263);
+    Net_1.Net.UnRegister(11790),
+      Net_1.Net.UnRegister(5640),
+      Net_1.Net.UnRegister(1101),
+      Net_1.Net.UnRegister(23766),
+      Net_1.Net.UnRegister(16404),
+      Net_1.Net.UnRegister(14861);
   }
   static SendPhantomLevelUpRequest(n, e) {
-    var t = new Protocol_1.Aki.Protocol.cns();
-    (t.Ykn = n), (t.m8n = e);
+    var t = new Protocol_1.Aki.Protocol.hls();
+    (t.T5n = n), (t.K7n = e);
     const r =
       ModelManager_1.ModelManager.PhantomBattleModel.CreatePhantomLevelCacheData(
         n,
       );
-    Net_1.Net.Call(16951, Protocol_1.Aki.Protocol.cns.create(t), (e) => {
+    Net_1.Net.Call(25228, Protocol_1.Aki.Protocol.hls.create(t), (e) => {
       var t,
         o = ModelManager_1.ModelManager.PhantomBattleModel;
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("Phantom", 28, "9903_返回请求幻象升级!!!!"),
-        e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys
+        e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs
           ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-              e.lkn,
-              19137,
+              e.O4n,
+              14366,
             )
           : (o.ResetLevelUpItemData(),
             (t = PhantomBattleController.GetPhantomItemDataByUniqueId(
-              e.aLs.Q5n,
+              e.LPs.L9n,
             ))
-              ? (t.SetData(e.aLs),
+              ? (t.SetData(e.LPs),
                 Log_1.Log.CheckDebug() &&
                   Log_1.Log.Debug(
                     "Phantom",
                     28,
                     "幻象升级返回",
-                    ["升级幻象", e.aLs.Q5n],
-                    ["升级等级", e.aLs.fDs],
+                    ["升级幻象", e.LPs.L9n],
+                    ["升级等级", e.LPs.qws],
                   ),
-                o.PhantomLevelUpReceiveItem(e.Vms),
+                o.PhantomLevelUpReceiveItem(e.rvs),
                 o.CachePhantomLevelUpData(r),
                 EventSystem_1.EventSystem.Emit(
                   EventDefine_1.EEventName.PhantomLevelUp,
@@ -154,7 +154,7 @@ class PhantomBattleController extends UiControllerBase_1.UiControllerBase {
   static SendPhantomPutOnRequest(e, t, n, r = -1, a = !1) {
     if (
       ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity.Entity.GetComponent(
-        185,
+        188,
       ).HasTag(-1720844833)
     )
       ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
@@ -191,7 +191,8 @@ class PhantomBattleController extends UiControllerBase_1.UiControllerBase {
           (o = PhantomUtil_1.PhantomUtil.GetSummonedEntity(
             _,
             Number(
-              Protocol_1.Aki.Protocol.Oqs.Proto_ESummonTypeConcomitantVision,
+              Protocol_1.Aki.Protocol.Summon.L3s
+                .Proto_ESummonTypeConcomitantVision,
             ),
           ));
         if ((e = o && o.Entity.Active ? !0 : e))
@@ -210,23 +211,23 @@ class PhantomBattleController extends UiControllerBase_1.UiControllerBase {
           )
         : (Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug("Phantom", 28, "9907_主动角色幻象装备信息"),
-          ((s = new Protocol_1.Aki.Protocol.Cns()).Ykn = e),
-          (s.l3n = t),
-          (s.M3n = n),
-          Net_1.Net.Call(11256, Protocol_1.Aki.Protocol.Cns.create(s), (e) => {
+          ((s = new Protocol_1.Aki.Protocol.uls()).T5n = e),
+          (s.O6n = t),
+          (s.e8n = n),
+          Net_1.Net.Call(20544, Protocol_1.Aki.Protocol.uls.create(s), (e) => {
             if (
               (Log_1.Log.CheckDebug() &&
                 Log_1.Log.Debug("Phantom", 28, "9908_返回角色幻象装备信息!!!!"),
-              e.lkn === Protocol_1.Aki.Protocol.lkn.Sys)
+              e.O4n === Protocol_1.Aki.Protocol.O4n.NRs)
             ) {
-              var t = e.nUs;
+              var t = e.IBs;
               if (t) {
                 for (const o of t)
                   ModelManager_1.ModelManager.PhantomBattleModel.UpdateRoleEquipmentData(
                     o,
                   ),
                     ModelManager_1.ModelManager.PhantomBattleModel.UpdateFetterList(
-                      o.l3n,
+                      o.O6n,
                     );
                 EventSystem_1.EventSystem.Emit(
                   EventDefine_1.EEventName.PhantomEquip,
@@ -242,8 +243,8 @@ class PhantomBattleController extends UiControllerBase_1.UiControllerBase {
                   Log_1.Log.Error("Phantom", 28, "角色幻象装备数据异常");
             } else
               ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-                e.lkn,
-                29831,
+                e.O4n,
+                2751,
               ),
                 EventSystem_1.EventSystem.Emit(
                   EventDefine_1.EEventName.PhantomEquipError,
@@ -254,12 +255,12 @@ class PhantomBattleController extends UiControllerBase_1.UiControllerBase {
   static SendPhantomRecommendRequest(e, t = void 0) {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug("Phantom", 28, "10012_请求推荐角色幻象");
-    var o = new Protocol_1.Aki.Protocol.Sns();
-    (o.l3n = e),
-      Net_1.Net.Call(5401, Protocol_1.Aki.Protocol.Sns.create(o), (e) => {
+    var o = new Protocol_1.Aki.Protocol.fls();
+    (o.O6n = e),
+      Net_1.Net.Call(26481, Protocol_1.Aki.Protocol.fls.create(o), (e) => {
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("Phantom", 28, "10012_推荐角色幻象请求返回"),
-          e.lkn === Protocol_1.Aki.Protocol.lkn.Sys
+          e.O4n === Protocol_1.Aki.Protocol.O4n.NRs
             ? (ModelManager_1.ModelManager.PhantomBattleModel.SetPhantomRecommendData(
                 e,
               ),
@@ -267,8 +268,8 @@ class PhantomBattleController extends UiControllerBase_1.UiControllerBase {
                 EventDefine_1.EEventName.PhantomRecommendResponse,
               ))
             : ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-                e.lkn,
-                18868,
+                e.O4n,
+                5904,
               ),
           t?.();
       });
@@ -278,7 +279,7 @@ class PhantomBattleController extends UiControllerBase_1.UiControllerBase {
       (Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("Phantom", 28, "10014_角色幻象一键装配请求!!!!"),
       ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity.Entity.GetComponent(
-        185,
+        188,
       ).HasTag(-1720844833))
     )
       ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
@@ -292,7 +293,8 @@ class PhantomBattleController extends UiControllerBase_1.UiControllerBase {
         n = PhantomUtil_1.PhantomUtil.GetSummonedEntity(
           n,
           Number(
-            Protocol_1.Aki.Protocol.Oqs.Proto_ESummonTypeConcomitantVision,
+            Protocol_1.Aki.Protocol.Summon.L3s
+              .Proto_ESummonTypeConcomitantVision,
           ),
         );
       (e = n && n.Entity.Active ? !0 : e)
@@ -300,9 +302,9 @@ class PhantomBattleController extends UiControllerBase_1.UiControllerBase {
             "VisionSkilling",
           )
         : RoleController_1.RoleController.CheckCharacterInBattleTagAndShowTips() ||
-          (((n = new Protocol_1.Aki.Protocol.yns()).l3n = t),
-          (n.c8n = o),
-          Net_1.Net.Call(27277, Protocol_1.Aki.Protocol.yns.create(n), (e) => {
+          (((n = new Protocol_1.Aki.Protocol.pls()).O6n = t),
+          (n.W7n = o),
+          Net_1.Net.Call(16752, Protocol_1.Aki.Protocol.pls.create(n), (e) => {
             if (
               (Log_1.Log.CheckDebug() &&
                 Log_1.Log.Debug(
@@ -310,16 +312,16 @@ class PhantomBattleController extends UiControllerBase_1.UiControllerBase {
                   28,
                   "10014_角色幻象一键装配返回!!!!",
                 ),
-              e.lkn === Protocol_1.Aki.Protocol.lkn.Sys)
+              e.O4n === Protocol_1.Aki.Protocol.O4n.NRs)
             ) {
-              var t = e.nUs;
+              var t = e.IBs;
               if (t) {
                 for (const o of t)
                   ModelManager_1.ModelManager.PhantomBattleModel.UpdateRoleEquipmentData(
                     o,
                   ),
                     ModelManager_1.ModelManager.PhantomBattleModel.UpdateFetterList(
-                      o.l3n,
+                      o.O6n,
                     );
                 EventSystem_1.EventSystem.Emit(
                   EventDefine_1.EEventName.PhantomEquip,
@@ -335,8 +337,8 @@ class PhantomBattleController extends UiControllerBase_1.UiControllerBase {
                   Log_1.Log.Error("Phantom", 28, "角色幻象装备数据异常!!!!");
             } else
               ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-                e.lkn,
-                3122,
+                e.O4n,
+                15002,
               );
           }));
     }
@@ -347,18 +349,18 @@ class PhantomBattleController extends UiControllerBase_1.UiControllerBase {
       ? EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.PhantomEquipError,
         )
-      : (((o = new Protocol_1.Aki.Protocol.Rns()).Q5n = e),
-        (o.I5n = t),
+      : (((o = new Protocol_1.Aki.Protocol.yls()).L9n = e),
+        (o.o9n = t),
         (t = this.GetPhantomItemDataByUniqueId(e).GetPhantomSubProp()),
-        (o = await Net_1.Net.CallAsync(22784, o)).lkn !==
-        Protocol_1.Aki.Protocol.lkn.Sys
+        (o = await Net_1.Net.CallAsync(11386, o)).O4n !==
+        Protocol_1.Aki.Protocol.O4n.NRs
           ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-              o.lkn,
-              7060,
+              o.O4n,
+              16095,
             )
           : (PhantomBattleController.GetPhantomItemDataByUniqueId(
-              o.aLs.Q5n,
-            ).SetData(o.aLs),
+              o.LPs.L9n,
+            ).SetData(o.LPs),
             EventSystem_1.EventSystem.Emit(
               EventDefine_1.EEventName.OnVisionIdentify,
             ),
@@ -375,7 +377,7 @@ class PhantomBattleController extends UiControllerBase_1.UiControllerBase {
   static PhantomSkinChangeRequest(t, o, n) {
     if (
       ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity.Entity.GetComponent(
-        185,
+        188,
       ).HasTag(-1720844833)
     )
       ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
@@ -391,7 +393,8 @@ class PhantomBattleController extends UiControllerBase_1.UiControllerBase {
         r = PhantomUtil_1.PhantomUtil.GetSummonedEntity(
           r,
           Number(
-            Protocol_1.Aki.Protocol.Oqs.Proto_ESummonTypeConcomitantVision,
+            Protocol_1.Aki.Protocol.Summon.L3s
+              .Proto_ESummonTypeConcomitantVision,
           ),
         );
       (e = r && r.Entity.Active ? !0 : e)
@@ -399,14 +402,14 @@ class PhantomBattleController extends UiControllerBase_1.UiControllerBase {
             "VisionSkilling",
           )
         : RoleController_1.RoleController.CheckCharacterInBattleTagAndShowTips() ||
-          (((r = new Protocol_1.Aki.Protocol.Uns()).Q5n = t),
-          (r.u8n = o),
-          (r.d8n = n),
-          Net_1.Net.Call(21024, r, (e) => {
-            e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys
+          (((r = new Protocol_1.Aki.Protocol.Rls()).L9n = t),
+          (r.j7n = o),
+          (r.Q7n = n),
+          Net_1.Net.Call(11315, r, (e) => {
+            e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs
               ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-                  e.lkn,
-                  18569,
+                  e.O4n,
+                  28708,
                 )
               : ((e =
                   PhantomBattleController.GetPhantomItemDataByUniqueId(
@@ -455,19 +458,19 @@ class PhantomBattleController extends UiControllerBase_1.UiControllerBase {
         Log_1.Log.Debug("AdventureGuide", 28, "手动探测怪物", ["探测Id", t]),
         ModelManager_1.ModelManager.AdventureGuideModel.SetFromManualDetect(!0),
         ControllerHolder_1.ControllerHolder.AdventureGuideController.RequestForDetection(
-          Protocol_1.Aki.Protocol.d3n.Proto_NormalMonster,
+          Protocol_1.Aki.Protocol.X6n.Proto_NormalMonster,
           e,
           t,
         );
     }
   }
-  static async OpenPhantomBattleFetterView(e = 0) {
+  static async OpenPhantomBattleFetterView(e, t) {
     await HandBookController_1.HandBookController.SendIllustratedInfoRequestAsync(
       [1],
     ),
-      UiManager_1.UiManager.OpenView("PhantomBattleFettersView", e);
+      UiManager_1.UiManager.OpenView("PhantomBattleFettersView", [e, t]);
   }
-  static tVi() {
+  static e6i() {
     UiManager_1.UiManager.IsViewShow("VisionNewQualityView") ||
       !UiManager_1.UiManager.IsViewShow("BattleView") ||
       ModelManager_1.ModelManager.SundryModel.IsBlockTips ||
@@ -476,7 +479,7 @@ class PhantomBattleController extends UiControllerBase_1.UiControllerBase {
         ModelManager_1.ModelManager.PhantomBattleModel.QualityUnlockTipsList.shift(),
       );
   }
-  static iVi() {
+  static t6i() {
     UiManager_1.UiManager.IsViewShow("CalabashUnlockItemView") ||
       !UiManager_1.UiManager.IsViewShow("BattleView") ||
       ModelManager_1.ModelManager.SundryModel.IsBlockTips ||
@@ -599,26 +602,24 @@ class PhantomBattleController extends UiControllerBase_1.UiControllerBase {
 }
 (exports.PhantomBattleController = PhantomBattleController),
   ((_a = PhantomBattleController).InitData = () => {}),
-  (PhantomBattleController.Q5i = (e) => {
-    Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("Phantom", 8, "新增幻象物品", ["phantomItem", e]),
+  (PhantomBattleController.KVi = (e) => {
+    Log_1.Log.CheckDebug() &&
+      Log_1.Log.Debug("Phantom", 8, "新增幻象物品", ["phantomItem", e]),
       ModelManager_1.ModelManager.PhantomBattleModel.NewPhantomBattleData(e);
   }),
-  (PhantomBattleController.K5i = (e) => {
-    Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("Phantom", 8, "新增幻象物品", ["phantomItem", e]),
+  (PhantomBattleController.WVi = (e) => {
+    Log_1.Log.CheckDebug() &&
+      Log_1.Log.Debug("Phantom", 8, "新增幻象物品", ["phantomItem", e]),
       ModelManager_1.ModelManager.PhantomBattleModel.NewPhantomBattleData(e);
   }),
-  (PhantomBattleController.Nmi = (e) => {
-    Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("Phantom", 8, "删除幻象物品", ["uniqueIdList", e]);
+  (PhantomBattleController.Ndi = (e) => {
     for (const t of e)
       ModelManager_1.ModelManager.PhantomBattleModel.RemovePhantomBattleData(t);
   }),
-  (PhantomBattleController.X5i = (e) => {
-    for (const t of e.uDs)
+  (PhantomBattleController.QVi = (e) => {
+    for (const t of e.Pws)
       ModelManager_1.ModelManager.PhantomBattleModel.UpdateRoleEquipmentData(t);
-    for (const o of e.cDs)
+    for (const o of e.Uws)
       ModelManager_1.ModelManager.PhantomBattleModel.UpdateRoleEquipmentPropData(
         o,
       );
@@ -627,24 +628,24 @@ class PhantomBattleController extends UiControllerBase_1.UiControllerBase {
   (PhantomBattleController.ChangeRoleEvent = (e) => {
     ModelManager_1.ModelManager.PhantomBattleModel.UpdateFetterList(e);
   }),
-  (PhantomBattleController.J5i = (e) => {
-    e.cDs.forEach((e) => {
+  (PhantomBattleController.YVi = (e) => {
+    e.Uws.forEach((e) => {
       ModelManager_1.ModelManager.PhantomBattleModel.GetBattleDataById(
-        e.l3n,
+        e.O6n,
       ).Phrase(e);
     }),
       EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.OnRolePropUpdate);
   }),
-  (PhantomBattleController.z5i = (e) => {
-    ModelManager_1.ModelManager.PhantomBattleModel.SetMaxCost(e.dDs);
+  (PhantomBattleController.JVi = (e) => {
+    ModelManager_1.ModelManager.PhantomBattleModel.SetMaxCost(e.wws);
   }),
-  (PhantomBattleController.eVi = (e) => {
-    0 < e.lUs.length
+  (PhantomBattleController.ZVi = (e) => {
+    0 < e.DBs.length
       ? (ModelManager_1.ModelManager.PhantomBattleModel.CacheNewQualityData(e),
         TimerSystem_1.TimerSystem.Delay(() => {
-          _a.tVi();
+          _a.e6i();
         }, ConfigManager_1.ConfigManager.CalabashConfig.DelayTime))
-      : (e._Us.forEach((e) => {
+      : (e.ABs.forEach((e) => {
           var t =
               ConfigManager_1.ConfigManager.PhantomBattleConfig.GetPhantomItemById(
                 e,
@@ -655,10 +656,10 @@ class PhantomBattleController extends UiControllerBase_1.UiControllerBase {
             [e, o, t],
           );
         }),
-        _a.iVi());
+        _a.t6i());
   }),
-  (PhantomBattleController.Z5i = (e) => {
-    e = e.hUs;
+  (PhantomBattleController.zVi = (e) => {
+    e = e.RBs;
     ModelManager_1.ModelManager.PhantomBattleModel.ConcatUnlockSkinList(e);
     for (const t of e)
       ModelManager_1.ModelManager.NewFlagModel.AddNewFlag(
@@ -670,17 +671,17 @@ class PhantomBattleController extends UiControllerBase_1.UiControllerBase {
         ),
         ModelManager_1.ModelManager.PhantomBattleModel.CacheNewSkinData(t);
     TimerSystem_1.TimerSystem.Delay(() => {
-      _a.tVi();
+      _a.e6i();
     }, ConfigManager_1.ConfigManager.CalabashConfig.DelayTime);
   }),
-  (PhantomBattleController.$5i = (e) => {
+  (PhantomBattleController.XVi = (e) => {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug(
         "Phantom",
         28,
         "9906_服务端主动推送所有角色装备的幻象信息!!!!",
       );
-    e = e.uDs;
+    e = e.Pws;
     if (e) {
       for (const t of e)
         ModelManager_1.ModelManager.PhantomBattleModel.UpdateRoleEquipmentData(
@@ -691,9 +692,9 @@ class PhantomBattleController extends UiControllerBase_1.UiControllerBase {
       Log_1.Log.CheckError() &&
         Log_1.Log.Error("Phantom", 28, "没有角色装备过幻象!!!!");
   }),
-  (PhantomBattleController.Y5i = (e) => {
-    e.aLs.forEach((e) => {
-      PhantomBattleController.GetPhantomItemDataByUniqueId(e.Q5n).UpdateData(e);
+  (PhantomBattleController.$Vi = (e) => {
+    e.LPs.forEach((e) => {
+      PhantomBattleController.GetPhantomItemDataByUniqueId(e.L9n).UpdateData(e);
     }),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnPhantomItemUpdate,
@@ -702,9 +703,9 @@ class PhantomBattleController extends UiControllerBase_1.UiControllerBase {
   (PhantomBattleController.JDe = () => {
     0 <
       ModelManager_1.ModelManager.PhantomBattleModel.QualityUnlockTipsList
-        .length && _a.tVi(),
+        .length && _a.e6i(),
       0 <
         ModelManager_1.ModelManager.CalabashModel.CalabashUnlockTipsList
-          .length && _a.iVi();
+          .length && _a.t6i();
   });
 //# sourceMappingURL=PhantomBattleController.js.map

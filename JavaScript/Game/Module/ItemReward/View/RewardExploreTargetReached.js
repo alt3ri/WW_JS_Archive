@@ -17,12 +17,12 @@ class RewardExploreTargetReached extends UiPanelBase_1.UiPanelBase {
       (this.BtnBindInfo = []);
   }
   Refresh(e) {
-    this.R0i(e.IsReached), this.U0i(e.DescriptionTextId, e.Target);
+    this.Rfi(e.IsReached), this.Ufi(e.DescriptionTextId, e.Target);
   }
-  R0i(e) {
+  Rfi(e) {
     this.GetSprite(0).SetUIActive(e);
   }
-  U0i(e, t) {
+  Ufi(e, t) {
     var i = this.GetText(1);
     StringUtils_1.StringUtils.IsEmpty(e)
       ? i.SetUIActive(!1)

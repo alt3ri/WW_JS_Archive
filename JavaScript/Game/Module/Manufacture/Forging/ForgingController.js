@@ -42,52 +42,52 @@ class ForgingController extends UiControllerBase_1.UiControllerBase {
   static OnAddEvents() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.ActiveRole,
-      ForgingController.Qyi,
+      ForgingController.QIi,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.SwitchViewType,
-        ForgingController.Xyi,
+        ForgingController.XIi,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnLoadingNetDataDone,
-        ForgingController.bbt,
+        ForgingController.Nqt,
       );
   }
   static OnRemoveEvents() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.ActiveRole,
-      ForgingController.Qyi,
+      ForgingController.QIi,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.SwitchViewType,
-        ForgingController.Xyi,
+        ForgingController.XIi,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnLoadingNetDataDone,
-        ForgingController.bbt,
+        ForgingController.Nqt,
       );
   }
   static RegisterCurrentInteractionEntity() {
-    this.Yyi =
+    this.YIi =
       ModelManager_1.ModelManager.InteractionModel.CurrentInteractEntityId;
   }
   static ClearCurrentInteractionEntityDisplay() {
-    this.Yyi && (this.ClearForgingDisplay(), (this.Yyi = void 0));
+    this.YIi && (this.ClearForgingDisplay(), (this.YIi = void 0));
   }
-  static tTi(e) {
-    ModelManager_1.ModelManager.ForgingModel.UpdateForgingDataList(e.JLs),
+  static tLi(e) {
+    ModelManager_1.ModelManager.ForgingModel.UpdateForgingDataList(e.gUs),
       ModelManager_1.ModelManager.ForgingModel.UpdateForgingByServerConfig(
-        e.JLs,
+        e.gUs,
       );
   }
   static OnRegisterNetEvent() {
-    Net_1.Net.Register(14670, (e) => {
+    Net_1.Net.Register(17584, (e) => {
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("Forging", 50, "10270_服务端主动推送锻造数据更新");
       var r = ModelManager_1.ModelManager.ForgingModel;
       let o = !1;
-      for (const i of e.JLs) {
-        var t = i.Ekn,
+      for (const i of e.gUs) {
+        var t = i.J4n,
           n = r.GetForgingDataById(t);
         !n ||
           n.IsUnlock ||
@@ -105,36 +105,36 @@ class ForgingController extends UiControllerBase_1.UiControllerBase {
     });
   }
   static OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(14670);
+    Net_1.Net.UnRegister(17584);
   }
   static SendForgeInfoRequest() {
     var e;
-    ForgingController.iTi
+    ForgingController.iLi
       ? Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "Forging",
           50,
           "已经请求过10266_锻造系统相关数据，等待返回",
         )
-      : ((ForgingController.iTi = !0),
+      : ((ForgingController.iLi = !0),
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("Forging", 50, "10266_客户端请求锻造系统相关数据"),
-        (e = new Protocol_1.Aki.Protocol.nZn()),
-        Net_1.Net.Call(1698, Protocol_1.Aki.Protocol.nZn.create(e), (e) => {
+        (e = new Protocol_1.Aki.Protocol.Zis()),
+        Net_1.Net.Call(26386, Protocol_1.Aki.Protocol.Zis.create(e), (e) => {
           Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug("Forging", 50, "10266_返回请求锻造系统相关数据"),
-            (ForgingController.iTi = !1),
-            e.Kms === Protocol_1.Aki.Protocol.lkn.Sys
+            (ForgingController.iLi = !1),
+            e.hvs === Protocol_1.Aki.Protocol.O4n.NRs
               ? (ModelManager_1.ModelManager.ForgingModel.SaveLimitRefreshTime(
-                  e.rLs,
+                  e.EPs,
                 ),
-                ForgingController.tTi(e),
+                ForgingController.tLi(e),
                 EventSystem_1.EventSystem.Emit(
                   EventDefine_1.EEventName.GetForgingData,
                 ))
               : (ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-                  e.Kms,
-                  19727,
+                  e.hvs,
+                  23886,
                   void 0,
                   !0,
                   !1,
@@ -150,14 +150,14 @@ class ForgingController extends UiControllerBase_1.UiControllerBase {
         50,
         "10266_客户端请求锻造系统相关数据(异步刷新)",
       );
-    var e = new Protocol_1.Aki.Protocol.nZn(),
-      e = await Net_1.Net.CallAsync(1698, e);
-    e.Kms === Protocol_1.Aki.Protocol.lkn.Sys
-      ? (ModelManager_1.ModelManager.ForgingModel.SaveLimitRefreshTime(e.rLs),
-        ForgingController.tTi(e))
+    var e = new Protocol_1.Aki.Protocol.Zis(),
+      e = await Net_1.Net.CallAsync(26386, e);
+    e.hvs === Protocol_1.Aki.Protocol.O4n.NRs
+      ? (ModelManager_1.ModelManager.ForgingModel.SaveLimitRefreshTime(e.EPs),
+        ForgingController.tLi(e))
       : (ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-          e.Kms,
-          19727,
+          e.hvs,
+          23886,
           void 0,
           !0,
           !1,
@@ -166,42 +166,47 @@ class ForgingController extends UiControllerBase_1.UiControllerBase {
           UiManager_1.UiManager.CloseView("ForgingRootView"));
   }
   static SendForgeItemRequest(e, r, o) {
-    var t = new Protocol_1.Aki.Protocol.aZn();
-    (t.Ekn = e),
-      (t.l3n = r),
-      (t.I5n = o),
-      (t.N4n =
+    var t = new Protocol_1.Aki.Protocol.trs();
+    (t.J4n = e),
+      (t.O6n = r),
+      (t.o9n = o),
+      (t.vVn =
         ModelManager_1.ModelManager.ForgingModel.CurrentInteractCreatureDataLongId),
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("Forging", 50, "10268_请求锻造道具"),
-      Net_1.Net.Call(1959, Protocol_1.Aki.Protocol.aZn.create(t), (e) => {
+      Net_1.Net.Call(25759, Protocol_1.Aki.Protocol.trs.create(t), (e) => {
         if (
           (Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug("Forging", 50, "10268_请求锻造道具返回"),
-          e.Kms === Protocol_1.Aki.Protocol.lkn.Sys)
+          e.hvs === Protocol_1.Aki.Protocol.O4n.NRs)
         ) {
           var r = ModelManager_1.ModelManager.ForgingModel.GetForgingDataById(
-              e.Ekn,
+              e.J4n,
             ),
-            r = (r && (r.LastRoleId = e.l3n), e.QTs);
-          0 !== e.YTs.length && r.push(...e.YTs);
+            r = (r && (r.LastRoleId = e.O6n), e.dPs);
+          0 !== e.CPs.length && r.push(...e.CPs);
           const n = [];
           for (const i of r) {
-            var o = i.G3n;
-            for (let e = 0; e < (i.k4n ?? 1); e++) {
+            var o = i.f8n;
+            for (let e = 0; e < (i.MVn ?? 1); e++) {
               var t = new RewardItemData_1.RewardItemData(o, 1);
               n.push(t);
             }
           }
           ForgingController.PlayForgingWorkingDisplay(() => {
-            ForgingController.oTi(SUCCESS_AUDIO_ID),
+            ForgingController.oLi(SUCCESS_AUDIO_ID),
               ForgingController.PlayForgingLoopDisplay(),
               ItemRewardController_1.ItemRewardController.OpenCompositeRewardView(
                 2003,
                 !0,
                 n,
               );
-          }),
+          }) ||
+            ItemRewardController_1.ItemRewardController.OpenCompositeRewardView(
+              2003,
+              !0,
+              n,
+            ),
             ModelManager_1.ModelManager.ForgingModel.UpdateForgingItemList(r),
             EventSystem_1.EventSystem.Emit(
               EventDefine_1.EEventName.ForgingSuccess,
@@ -209,19 +214,19 @@ class ForgingController extends UiControllerBase_1.UiControllerBase {
         } else
           EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.ForgingFail),
             ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-              e.Kms,
-              20092,
+              e.hvs,
+              29173,
             );
       });
   }
   static SendForgeFormulaUnlockRequest(o) {
-    var e = new Protocol_1.Aki.Protocol._Zn();
-    (e.Ekn = o),
-      Net_1.Net.Call(14873, Protocol_1.Aki.Protocol._Zn.create(e), (e) => {
+    var e = new Protocol_1.Aki.Protocol.ors();
+    (e.J4n = o),
+      Net_1.Net.Call(3572, Protocol_1.Aki.Protocol.ors.create(e), (e) => {
         var r;
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("Forging", 50, "10271_请求解锁配方返回"),
-          e.Kms === Protocol_1.Aki.Protocol.lkn.Sys
+          e.hvs === Protocol_1.Aki.Protocol.O4n.NRs
             ? ((r =
                 ConfigManager_1.ConfigManager.ForgingConfig.GetForgeFormulaById(
                   o,
@@ -237,8 +242,8 @@ class ForgingController extends UiControllerBase_1.UiControllerBase {
                 EventDefine_1.EEventName.UpdateForgingFormula,
               ))
             : ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-                e.Kms,
-                16551,
+                e.hvs,
+                23541,
               );
       });
   }
@@ -256,12 +261,12 @@ class ForgingController extends UiControllerBase_1.UiControllerBase {
   }
   static GetMaxCreateCount(e) {
     e = ConfigManager_1.ConfigManager.ForgingConfig.GetForgeFormulaById(e);
-    return ForgingController.kbt(
+    return ForgingController.Hqt(
       e.ConsumeItems,
       CommonParamById_1.configCommonParamById.GetIntConfig("MaxForgingCount"),
     );
   }
-  static kbt(e, r) {
+  static Hqt(e, r) {
     let o = r;
     for (const i of e) {
       var t = i.Count,
@@ -348,37 +353,40 @@ class ForgingController extends UiControllerBase_1.UiControllerBase {
   static PlayForgingEnterDisplay(e) {
     this.ClearForgingDisplay();
     var r,
-      o = this.Fbt();
+      o = this.jqt();
     o &&
       ((r = ModelManager_1.ModelManager.ComposeModel.ComposeEnterFlow),
       ForgingController.PlayForgingFlow(r),
-      ForgingController.oTi(ENTER_AUDIO_ID),
+      ForgingController.oLi(ENTER_AUDIO_ID),
       o.AddTag(-234527092),
-      (this.tIi = e),
-      (this.rTi = TimerSystem_1.TimerSystem.Delay(() => {
-        this.tIi && this.tIi();
+      (this.tTi = e),
+      (this.rLi = TimerSystem_1.TimerSystem.Delay(() => {
+        this.tTi && this.tTi();
       }, ForgingDefine_1.FORGING_ENTER_SEQUENCE_TIME_LENGTH)));
   }
   static PlayForgingLoopDisplay() {
     this.ClearForgingDisplay();
-    var e = this.Fbt();
+    var e = this.jqt();
     e && e.AddTag(236686531);
   }
   static PlayForgingWorkingDisplay(e) {
     this.ClearForgingDisplay();
-    var r = this.Fbt();
-    r &&
-      (EventSystem_1.EventSystem.Emit(
-        EventDefine_1.EEventName.OnBeginPlayForgingWorkingDisplay,
-      ),
+    var r = this.jqt();
+    if (!r) return !1;
+    EventSystem_1.EventSystem.Emit(
+      EventDefine_1.EEventName.OnBeginPlayForgingWorkingDisplay,
+    );
+    return (
       r.AddTag(686058684),
-      (this.oIi = e),
-      (this.rTi = TimerSystem_1.TimerSystem.Delay(() => {
+      (this.oTi = e),
+      (this.rLi = TimerSystem_1.TimerSystem.Delay(() => {
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.OnPlayForgingWorkingDisplayFinished,
         ),
-          this.oIi && this.oIi();
-      }, ForgingDefine_1.FORGING_WORKING_SEQUENCE_TIME_LENGTH)));
+          this.oTi && this.oTi();
+      }, ForgingDefine_1.FORGING_WORKING_SEQUENCE_TIME_LENGTH)),
+      !0
+    );
   }
   static PlayForgingFlow(e, r = 2) {
     e &&
@@ -399,7 +407,7 @@ class ForgingController extends UiControllerBase_1.UiControllerBase {
         r,
       ));
   }
-  static oTi(e, r) {
+  static oLi(e, r) {
     var o = ConfigManager_1.ConfigManager.AudioConfig.GetAudioPath(e);
     o &&
       (AudioController_1.AudioController.PostEventByUi(o.Path, r),
@@ -407,52 +415,52 @@ class ForgingController extends UiControllerBase_1.UiControllerBase {
       Log_1.Log.Debug("Forging", 8, "播放锻造台音频", ["audioId", e]);
   }
   static PlayLeaveForgingAudio() {
-    this.oTi(LEAVE_AUDIO_ID);
+    this.oLi(LEAVE_AUDIO_ID);
   }
   static PlayForgingFailDisplay(e) {
     this.ClearForgingDisplay();
     var r,
-      o = this.Fbt();
+      o = this.jqt();
     o &&
       ((r = ModelManager_1.ModelManager.ComposeModel.ComposeFailFlow),
       ForgingController.PlayForgingFlow(r),
       o.AddTag(-269686894),
-      (this.rIi = e),
-      (this.rTi = TimerSystem_1.TimerSystem.Delay(() => {
-        this.rIi && this.rIi();
+      (this.rTi = e),
+      (this.rLi = TimerSystem_1.TimerSystem.Delay(() => {
+        this.rTi && this.rTi();
       }, ForgingDefine_1.FORGING_FAIL_SEQUENCE_TIME_LENGTH)));
   }
   static ClearForgingDisplay() {
-    var e = this.Fbt();
+    var e = this.jqt();
     e &&
       (e.RemoveTag(-269686894),
       e.RemoveTag(686058684),
       e.RemoveTag(236686531),
       e.RemoveTag(-234527092)),
-      this.rTi &&
-        TimerSystem_1.TimerSystem.Has(this.rTi) &&
-        (TimerSystem_1.TimerSystem.Remove(this.rTi), (this.rTi = void 0));
+      this.rLi &&
+        TimerSystem_1.TimerSystem.Has(this.rLi) &&
+        (TimerSystem_1.TimerSystem.Remove(this.rLi), (this.rLi = void 0));
   }
-  static Fbt() {
+  static jqt() {
     var e =
       ModelManager_1.ModelManager.InteractionModel.CurrentInteractEntityId;
     if (e) {
       e = EntitySystem_1.EntitySystem.Get(e);
-      if (e) return e.GetComponent(177);
+      if (e) return e.GetComponent(180);
     }
   }
 }
 (exports.ForgingController = ForgingController),
-  ((_a = ForgingController).rTi = void 0),
-  (ForgingController.tIi = void 0),
-  (ForgingController.oIi = void 0),
-  (ForgingController.rIi = void 0),
-  (ForgingController.Yyi = 0),
-  (ForgingController.bbt = () => {
+  ((_a = ForgingController).rLi = void 0),
+  (ForgingController.tTi = void 0),
+  (ForgingController.oTi = void 0),
+  (ForgingController.rTi = void 0),
+  (ForgingController.YIi = 0),
+  (ForgingController.Nqt = () => {
     ModelManager_1.ModelManager.ForgingModel.CreateForgingDataList(),
       _a.SendForgeInfoRequest();
   }),
-  (ForgingController.Xyi = (e) => {
+  (ForgingController.XIi = (e) => {
     if (2 === CommonManager_1.CommonManager.GetCurrentSystem())
       switch (e) {
         case 0:
@@ -462,8 +470,8 @@ class ForgingController extends UiControllerBase_1.UiControllerBase {
           ModelManager_1.ModelManager.ForgingModel.CurrentForgingViewType = 2;
       }
   }),
-  (ForgingController.Qyi = () => {
+  (ForgingController.QIi = () => {
     ModelManager_1.ModelManager.ForgingModel.UpdateHelpRoleItemDataList();
   }),
-  (ForgingController.iTi = !1);
+  (ForgingController.iLi = !1);
 //# sourceMappingURL=ForgingController.js.map

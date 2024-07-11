@@ -6,20 +6,20 @@ const UE = require("ue"),
   AiStateMachineState_1 = require("./AiStateMachineState");
 class AiStateMachineStateBoneVisible extends AiStateMachineState_1.AiStateMachineState {
   constructor() {
-    super(...arguments), (this.Ene = void 0), (this.yne = !1);
+    super(...arguments), (this.Sne = void 0), (this.yne = !1);
   }
   OnInit(t) {
     return (
-      (this.Ene = new UE.FName(t.BindBoneVisible.BoneName)),
+      (this.Sne = new UE.FName(t.BindBoneVisible.BoneName)),
       (this.yne = t.BindBoneVisible.Visible),
       !0
     );
   }
   OnActivate() {
-    this.Node.AnimationComponent.HideBone(this.Ene, !this.yne, !1);
+    this.Node.AnimationComponent.HideBone(this.Sne, !this.yne, !1);
   }
   OnDeactivate() {
-    this.Node.AnimationComponent.HideBone(this.Ene, this.yne, !1);
+    this.Node.AnimationComponent.HideBone(this.Sne, this.yne, !1);
   }
   ToString(t, e = 0) {
     (0, AiStateMachine_1.appendDepthSpace)(t, e);

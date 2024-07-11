@@ -2,17 +2,56 @@
 var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CrashCollectionController = void 0);
-const UE = require("ue"),
+const Stats_1 = require("../../Core/Common/Stats"),
   ControllerBase_1 = require("../../Core/Framework/ControllerBase"),
+  GameBudgetInterfaceController_1 = require("../../Core/GameBudgetAllocator/GameBudgetInterfaceController"),
+  EventDefine_1 = require("../Common/Event/EventDefine"),
+  EventSystem_1 = require("../Common/Event/EventSystem"),
+  GameQualitySettingsManager_1 = require("../GameQualitySettings/GameQualitySettingsManager"),
   GlobalData_1 = require("../GlobalData"),
   ControllerHolder_1 = require("../Manager/ControllerHolder"),
-  EventSystem_1 = require("../Common/Event/EventSystem"),
-  EventDefine_1 = require("../Common/Event/EventDefine"),
   ModelManager_1 = require("../Manager/ModelManager"),
-  GameQualitySettingsManager_1 = require("../GameQualitySettings/GameQualitySettingsManager"),
-  Stats_1 = require("../../Core/Common/Stats"),
-  FNameUtil_1 = require("../../Core/Utils/FNameUtil");
+  FormationDataController_1 = require("../Module/Abilities/FormationDataController");
 class CrashCollectionController extends ControllerBase_1.ControllerBase {
+  static $Ia() {
+    if (Stats_1.Stat.Enable)
+      return FormationDataController_1.FormationDataController.GlobalIsInFight
+        ? this.XIa
+        : this.YIa;
+  }
+  static JIa() {
+    if (Stats_1.Stat.Enable)
+      return GameBudgetInterfaceController_1.GameBudgetInterfaceController
+        .IsInFight
+        ? this.zIa
+        : this.ZIa;
+  }
+  static eTa() {
+    if (Stats_1.Stat.Enable)
+      return ModelManager_1.ModelManager.PlotModel?.IsInPlot
+        ? this.tTa
+        : this.iTa;
+  }
+  static rTa() {
+    if (Stats_1.Stat.Enable)
+      return GameBudgetInterfaceController_1.GameBudgetInterfaceController
+        .IsInPlot
+        ? this.oTa
+        : this.nTa;
+  }
+  static wya(t, e) {
+    Stats_1.Stat.Enable &&
+      ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity?.PbDataId;
+  }
+  static Bya(t, e) {
+    Stats_1.Stat.Enable;
+  }
+  static bya(t) {
+    Stats_1.Stat.Enable;
+  }
+  static qya(t) {
+    Stats_1.Stat.Enable;
+  }
   static OnInit() {
     return this.sCe(), super.OnInit();
   }
@@ -26,11 +65,11 @@ class CrashCollectionController extends ControllerBase_1.ControllerBase {
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.LoginSuccess,
-        this.gEe,
+        this.gSe,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.ReConnectSuccess,
-        this.gEe,
+        this.gSe,
       );
   }
   static aCe() {
@@ -40,78 +79,54 @@ class CrashCollectionController extends ControllerBase_1.ControllerBase {
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.LoginSuccess,
-        this.gEe,
+        this.gSe,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.ReConnectSuccess,
-        this.gEe,
+        this.gSe,
       );
   }
-  static OnTick(e) {
+  static OnTick(t) {
     this.lCe();
   }
   static lCe() {
+    this.$Ia(), this.JIa(), this.eTa(), this.rTa();
     this._Ce(), this.uCe(), this.cCe(), this.mCe(), this.dCe();
   }
   static _Ce() {
-    var e,
-      t =
+    var t,
+      e =
         ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity?.Entity?.GetComponent(
           3,
         );
-    t?.Valid &&
-      ((e = t.ActorLocationProxy),
-      (t = t.ActorRotationProxy),
-      UE.CrashSightProxy.SetCustomDataByFName(this.fCe, e.ToString()),
-      UE.CrashSightProxy.SetCustomDataByFName(this.pCe, t.ToString()));
+    e?.Valid &&
+      ((t = e.ActorLocationProxy), (e = e.ActorRotationProxy), this.wya(t, e));
   }
   static uCe() {
-    var e,
-      t = ControllerHolder_1.ControllerHolder.CameraController;
-    t &&
-      ((e = t.CameraLocation),
-      (t = t.CameraRotator),
-      UE.CrashSightProxy.SetCustomDataByFName(this.MCe, e.ToString()),
-      UE.CrashSightProxy.SetCustomDataByFName(this.SCe, t.ToString()));
+    var t,
+      e = ControllerHolder_1.ControllerHolder.CameraController;
+    e && ((t = e.CameraLocation), (e = e.CameraRotator), this.Bya(t, e));
   }
-  static ECe() {
-    var e = ModelManager_1.ModelManager.TimeOfDayModel;
-    e &&
-      ((e = e.GameTime.HourMinuteString),
-      UE.CrashSightProxy.SetCustomDataByFName(this.ICe, e));
+  static SCe() {
+    ModelManager_1.ModelManager.TimeOfDayModel;
   }
   static cCe() {
-    var e = GameQualitySettingsManager_1.GameQualitySettingsManager.Get()
+    var t = GameQualitySettingsManager_1.GameQualitySettingsManager.Get()
       .GetCurrentQualityInfo()
       .GetGameQualitySettingLevel();
-    UE.CrashSightProxy.SetCustomDataByFName(this.LCe, e.toString());
+    this.qya(t);
   }
   static mCe() {
-    var e = ModelManager_1.ModelManager.QuestNewModel;
-    e &&
-      (e = e.GetQuestsByType(1)) &&
-      0 !== e.length &&
-      ((e = e
-        .filter((e) => e.IsProgressing)
-        .map((e) => e.Id)
-        .join(", ")),
-      UE.CrashSightProxy.SetCustomDataByFName(this.RCe, e));
+    var t = ModelManager_1.ModelManager.QuestNewModel;
+    t && (t = t.GetQuestsByType(1)) && t.length;
   }
   static dCe() {
+    var t;
     GlobalData_1.GlobalData.World?.IsValid() &&
-      UE.CrashSightProxy.SetCustomDataByFName(
-        this.ACe,
-        GlobalData_1.GlobalData.World.GetName(),
-      );
+      ((t = GlobalData_1.GlobalData.World.GetName()), this.bya(t));
   }
-  static Bwn() {
-    var e = ModelManager_1.ModelManager.LoginModel.GetReconnectHost(),
-      t = ModelManager_1.ModelManager.LoginModel.GetReconnectPort();
-    UE.CrashSightProxy.SetCustomDataByFName(this.qwn, e + ":" + t);
-  }
-  static RecordHttpInfo(e) {
-    UE.CrashSightProxy.SetCustomDataByFName(this.Own, e);
-  }
+  static EGn() {}
+  static RecordHttpInfo(t) {}
 }
 (exports.CrashCollectionController = CrashCollectionController),
   ((_a = CrashCollectionController).MJ = void 0),
@@ -121,32 +136,20 @@ class CrashCollectionController extends ControllerBase_1.ControllerBase {
   (CrashCollectionController.DCe = void 0),
   (CrashCollectionController.UCe = void 0),
   (CrashCollectionController.yCe = void 0),
-  (CrashCollectionController.bwn = void 0),
-  (CrashCollectionController.Gwn = void 0),
-  (CrashCollectionController.fCe =
-    FNameUtil_1.FNameUtil.GetDynamicFName("ActorLocation")),
-  (CrashCollectionController.pCe =
-    FNameUtil_1.FNameUtil.GetDynamicFName("ActorRotation")),
-  (CrashCollectionController.MCe =
-    FNameUtil_1.FNameUtil.GetDynamicFName("CameraLocation")),
-  (CrashCollectionController.SCe =
-    FNameUtil_1.FNameUtil.GetDynamicFName("CameraRotation")),
-  (CrashCollectionController.ICe =
-    FNameUtil_1.FNameUtil.GetDynamicFName("TODTime")),
-  (CrashCollectionController.LCe =
-    FNameUtil_1.FNameUtil.GetDynamicFName("QualityLevel")),
-  (CrashCollectionController.RCe =
-    FNameUtil_1.FNameUtil.GetDynamicFName("QuestIds")),
-  (CrashCollectionController.ACe =
-    FNameUtil_1.FNameUtil.GetDynamicFName("World")),
-  (CrashCollectionController.qwn =
-    FNameUtil_1.FNameUtil.GetDynamicFName("GateWay")),
-  (CrashCollectionController.Own =
-    FNameUtil_1.FNameUtil.GetDynamicFName("HttpInfo")),
+  (CrashCollectionController.yGn = void 0),
+  (CrashCollectionController.TGn = void 0),
+  (CrashCollectionController.XIa = void 0),
+  (CrashCollectionController.YIa = void 0),
+  (CrashCollectionController.tTa = void 0),
+  (CrashCollectionController.iTa = void 0),
+  (CrashCollectionController.zIa = void 0),
+  (CrashCollectionController.ZIa = void 0),
+  (CrashCollectionController.oTa = void 0),
+  (CrashCollectionController.nTa = void 0),
   (CrashCollectionController.hCe = () => {
-    _a.ECe();
+    _a.SCe();
   }),
-  (CrashCollectionController.gEe = () => {
-    _a.Bwn();
+  (CrashCollectionController.gSe = () => {
+    _a.EGn();
   });
 //# sourceMappingURL=CrashCollectionController.js.map

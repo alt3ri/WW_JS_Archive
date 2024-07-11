@@ -6,7 +6,6 @@ const UE = require("ue"),
   GuideFocusNewByGuideId_1 = require("../../../Core/Define/ConfigQuery/GuideFocusNewByGuideId"),
   GuideGroupAll_1 = require("../../../Core/Define/ConfigQuery/GuideGroupAll"),
   GuideGroupById_1 = require("../../../Core/Define/ConfigQuery/GuideGroupById"),
-  GuideStepAll_1 = require("../../../Core/Define/ConfigQuery/GuideStepAll"),
   GuideStepById_1 = require("../../../Core/Define/ConfigQuery/GuideStepById"),
   GuideTipsByGuideId_1 = require("../../../Core/Define/ConfigQuery/GuideTipsByGuideId"),
   GuideTutorialAll_1 = require("../../../Core/Define/ConfigQuery/GuideTutorialAll"),
@@ -17,15 +16,7 @@ const UE = require("ue"),
   ControllerHolder_1 = require("../../Manager/ControllerHolder");
 class GuideConfig extends ConfigBase_1.ConfigBase {
   constructor() {
-    super(...arguments), (this.fYt = new UE.Vector(0, 0, 0));
-  }
-  pYt(e) {
-    switch (e) {
-      case 1:
-        return 2;
-      case 2:
-        return 0;
-    }
+    super(...arguments), (this.fJt = new UE.Vector(0, 0, 0));
   }
   OnInit() {
     return !0;
@@ -67,12 +58,6 @@ class GuideConfig extends ConfigBase_1.ConfigBase {
       "guide_top_middle_offset",
     );
   }
-  GetAllGuides(e) {
-    const r = this.pYt(e);
-    return GuideStepAll_1.configGuideStepAll
-      .GetConfigList()
-      .filter((e) => "T" === e.Controller[r]);
-  }
   GetAllGroup() {
     return GuideGroupAll_1.configGuideGroupAll.GetConfigList();
   }
@@ -101,7 +86,7 @@ class GuideConfig extends ConfigBase_1.ConfigBase {
     var e = CommonParamById_1.configCommonParamById.GetIntConfig(
       "GuideFocusTextOffsetY",
     );
-    return (this.fYt.Z = e), this.fYt;
+    return (this.fJt.Z = e), this.fJt;
   }
 }
 ((exports.GuideConfig = GuideConfig).GmMuteTutorial = !1),

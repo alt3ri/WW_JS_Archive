@@ -116,8 +116,7 @@ class AnimNotifyAddMeshMaterialControllerData extends UE.KuroAnimNotifyState {
           GlobalData_1.GlobalData.IsUiSceneOpen) &&
           --r.CharRenderingComponent.IsUiUpdate,
         r.RenderActor &&
-          (r.CharRenderingComponent.ResetAllRenderingState(),
-          r.RenderActor.K2_DestroyActor()),
+          (r.CharRenderingComponent.Destroy(), r.RenderActor.K2_DestroyActor()),
         this.HideMeshAfterPlay) &&
         t.SetHiddenInGame(!0),
       !0)

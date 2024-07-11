@@ -19,75 +19,89 @@ const UE = require("ue"),
 class AoiController extends ControllerBase_1.ControllerBase {
   static OnInit() {
     return (
-      Net_1.Net.Register(23307, AoiController.egr),
-      Net_1.Net.Register(23556, AoiController.tgr),
-      Net_1.Net.Register(15061, AoiController.igr),
-      Net_1.Net.Register(28076, AoiController.ogr),
-      Net_1.Net.Register(8100, AoiController.rgr),
-      Net_1.Net.Register(11465, AoiController.ngr),
-      Net_1.Net.Register(14725, AoiController.sgr),
+      Net_1.Net.Register(5905, AoiController.Jgr),
+      Net_1.Net.Register(28605, AoiController.zgr),
+      Net_1.Net.Register(16692, AoiController.Zgr),
+      Net_1.Net.Register(17140, AoiController.e0r),
+      Net_1.Net.Register(17282, AoiController.t0r),
+      Net_1.Net.Register(22720, AoiController.i0r),
+      Net_1.Net.Register(20522, AoiController.o0r),
       !0
     );
   }
   static OnClear() {
     return (
-      Net_1.Net.UnRegister(23307),
-      Net_1.Net.UnRegister(23556),
-      Net_1.Net.UnRegister(15061),
-      Net_1.Net.UnRegister(28076),
-      Net_1.Net.UnRegister(8100),
-      Net_1.Net.UnRegister(11465),
-      Net_1.Net.UnRegister(14725),
+      Net_1.Net.UnRegister(5905),
+      Net_1.Net.UnRegister(28605),
+      Net_1.Net.UnRegister(16692),
+      Net_1.Net.UnRegister(17140),
+      Net_1.Net.UnRegister(17282),
+      Net_1.Net.UnRegister(22720),
+      Net_1.Net.UnRegister(20522),
       !0
     );
   }
-  static agr(e, o) {
-    var r = new Array();
-    for (const l of e) {
-      var t = MathUtils_1.MathUtils.LongToNumber(l.Ekn);
-      ControllerHolder_1.ControllerHolder.CreatureController.CheckDelayRemove(
-        t,
-        l.mVn,
-        l.R5n,
-      ),
-        ControllerHolder_1.ControllerHolder.CreatureController.CheckPendingRemove(
-          t,
-          l.mVn,
-          l.R5n,
-        ),
-        ModelManager_1.ModelManager.CreatureModel.RemoveCreaturePendingSet.has(
-          t,
+  static r0r(e, o, r) {
+    let t = 0;
+    if (
+      (0 === r.CallbackCount ? (r.IsFinished = !1) : (t = r.UserData),
+      t >= e.length)
+    )
+      r.IsFinished = !0;
+    else {
+      e = e[t];
+      if (((r.UserData = ++t), e)) {
+        var l = MathUtils_1.MathUtils.LongToNumber(e.J4n);
+        if (
+          (ControllerHolder_1.ControllerHolder.CreatureController.CheckDelayRemove(
+            l,
+            e.jHn,
+            e._9n,
+          ),
+          ControllerHolder_1.ControllerHolder.CreatureController.CheckPendingRemove(
+            l,
+            e.jHn,
+            e._9n,
+          ),
+          ModelManager_1.ModelManager.CreatureModel.RemoveCreaturePendingSet.has(
+            l,
+          ))
         )
-          ? ModelManager_1.ModelManager.CreatureModel.RemoveRemoveCreaturePending(
-              t,
-            )
-          : ModelManager_1.ModelManager.CreatureModel.RemovePreCreature(t)
-            ? (Log_1.Log.CheckInfo() &&
-                Log_1.Log.Info(
-                  "World",
-                  3,
-                  "[AoiController.AddEntityPb]更新先行创建实体的信息。",
-                  ["CreatureDataId", t],
-                ),
-              ModelManager_1.ModelManager.CreatureModel.GetEntity(t)
-                .Entity.GetComponent(0)
-                .SetPbDataByProtocol(l))
-            : (t =
-                ControllerHolder_1.ControllerHolder.CreatureController.CreateEntity(
-                  l,
-                ))?.Valid && r.push(t);
+          ModelManager_1.ModelManager.CreatureModel.RemoveRemoveCreaturePending(
+            l,
+          );
+        else if (
+          ModelManager_1.ModelManager.CreatureModel.RemovePreCreature(l)
+        ) {
+          Log_1.Log.CheckInfo() &&
+            Log_1.Log.Info(
+              "World",
+              3,
+              "[AoiController.AddEntityPb]更新先行创建实体的信息。",
+              ["CreatureDataId", l],
+            );
+          const i = ModelManager_1.ModelManager.CreatureModel.GetEntity(l);
+          void i.Entity.GetComponent(0).SetPbDataByProtocol(e);
+        } else {
+          const i =
+            ControllerHolder_1.ControllerHolder.CreatureController.CreateEntity(
+              e,
+              "AOI",
+            );
+          i?.Valid &&
+            ModelManager_1.ModelManager.GameModeModel.MapDone &&
+            (ControllerHolder_1.ControllerHolder.CreatureController.LoadEntityAsync(
+              i,
+            ),
+            AoiController.AddMonsterSizeTag(i));
+        }
+      } else r.IsFinished = !0;
     }
-    if (ModelManager_1.ModelManager.GameModeModel.MapDone)
-      for (const i of r)
-        ControllerHolder_1.ControllerHolder.CreatureController.LoadEntityAsync(
-          i,
-        ),
-          AoiController.AddMonsterSizeTag(i);
   }
-  static lgr(e, o, r, t) {
+  static s0r(e, o, r, t) {
     var o = 0.5 * o,
-      l = new UE.Vector(e.PTs + o, e.UTs + o, 0.5 * (e.xTs + e.wTs)),
-      o = new UE.Vector(o, o, 0.5 * (e.xTs - e.wTs)),
+      l = new UE.Vector(e.XAs + o, e.YAs + o, 0.5 * (e.zAs + e.JAs)),
+      o = new UE.Vector(o, o, 0.5 * (e.zAs - e.JAs)),
       e = new UE.Rotator(0, 0, 0),
       t = t ? new UE.LinearColor(1, 0, 0, 1) : new UE.LinearColor(0, 1, 0, 1),
       r = r / CommonDefine_1.MILLIONSECOND_PER_SECOND;
@@ -102,18 +116,18 @@ class AoiController extends ControllerBase_1.ControllerBase {
     );
   }
   static StopDrawDebugVoxel() {
-    void 0 !== this._gr &&
-      (TimerSystem_1.TimerSystem.Has(this._gr) &&
-        TimerSystem_1.TimerSystem.Remove(this._gr),
-      (this._gr = void 0)),
-      void 0 !== this.ugr &&
-        (TimerSystem_1.TimerSystem.Has(this.ugr) &&
-          TimerSystem_1.TimerSystem.Remove(this.ugr),
-        (this.ugr = void 0));
+    void 0 !== this.a0r &&
+      (TimerSystem_1.TimerSystem.Has(this.a0r) &&
+        TimerSystem_1.TimerSystem.Remove(this.a0r),
+      (this.a0r = void 0)),
+      void 0 !== this.h0r &&
+        (TimerSystem_1.TimerSystem.Has(this.h0r) &&
+          TimerSystem_1.TimerSystem.Remove(this.h0r),
+        (this.h0r = void 0));
   }
   static AddMonsterSizeTag(e) {
     var o = e.Entity?.GetComponent(0)?.GetMonsterComponent()?.FightConfigId;
-    const r = e.Entity?.GetComponent(185);
+    const r = e.Entity?.GetComponent(188);
     o &&
       r?.Valid &&
       (e = MonsterBattleConfById_1.configMonsterBattleConfById?.GetConfig(o)) &&
@@ -126,65 +140,65 @@ class AoiController extends ControllerBase_1.ControllerBase {
   }
 }
 (exports.AoiController = AoiController),
-  ((_a = AoiController).egr = (e) => {
-    for (const r of e.sfs) {
+  ((_a = AoiController).Jgr = (e) => {
+    for (const r of e.ySs) {
       var o = MathUtils_1.MathUtils.LongToNumber(r);
       ControllerHolder_1.ControllerHolder.CreatureController.RemoveEntity(
         o,
         "LeaveAoiNotify",
-        Protocol_1.Aki.Protocol.WBs.Proto_RemoveTypeForce,
+        Protocol_1.Aki.Protocol.bks.Proto_RemoveTypeForce,
       );
     }
   }),
-  (AoiController.tgr = (e) => {
-    for (const r of e.PMs) {
-      var o = MathUtils_1.MathUtils.LongToNumber(r.rkn);
+  (AoiController.zgr = (e) => {
+    for (const r of e.WIs) {
+      var o = MathUtils_1.MathUtils.LongToNumber(r.P4n);
       ControllerHolder_1.ControllerHolder.CreatureController.RemoveEntity(
         o,
         "RemoveEntityAoiNotify",
-        r.Ikn,
+        r.Z4n,
       );
     }
   }),
-  (AoiController.igr = (e) => {
-    (ModelManager_1.ModelManager.AoiModel.MinCoordinate.X = e.kys),
-      (ModelManager_1.ModelManager.AoiModel.MinCoordinate.Y = e.Fys),
-      (ModelManager_1.ModelManager.AoiModel.MaxCoordinate.X = e.Nys),
-      (ModelManager_1.ModelManager.AoiModel.MaxCoordinate.Y = e.Vys);
+  (AoiController.Zgr = (e) => {
+    (ModelManager_1.ModelManager.AoiModel.MinCoordinate.X = e.oDs),
+      (ModelManager_1.ModelManager.AoiModel.MinCoordinate.Y = e.sDs),
+      (ModelManager_1.ModelManager.AoiModel.MaxCoordinate.X = e.nDs),
+      (ModelManager_1.ModelManager.AoiModel.MaxCoordinate.Y = e.aDs);
   }),
-  (AoiController.ogr = (e) => {
-    AoiController.agr(e.AMs, e.y9n);
+  (AoiController.e0r = (e, o) => {
+    AoiController.r0r(e.jIs, e.eWn, o);
   }),
-  (AoiController.rgr = (e) => {
-    for (const r of e.PMs) {
-      var o = MathUtils_1.MathUtils.LongToNumber(r.rkn);
+  (AoiController.t0r = (e) => {
+    for (const r of e.WIs) {
+      var o = MathUtils_1.MathUtils.LongToNumber(r.P4n);
       ControllerHolder_1.ControllerHolder.CreatureController.RemoveEntity(
         o,
         "EntityRemoveNotify",
-        r.Ikn,
+        r.Z4n,
       );
     }
   }),
-  (AoiController.ugr = void 0),
-  (AoiController._gr = void 0),
-  (AoiController.sgr = (e) => {
+  (AoiController.h0r = void 0),
+  (AoiController.a0r = void 0),
+  (AoiController.o0r = (e) => {
     var o = TimerSystem_1.TimerSystem.Forever(() => {
-      _a.lgr(e.DTs, e.LTs, 2e3, e.ATs);
+      _a.s0r(e.KAs, e.jAs, 2e3, e.QAs);
     }, 2e3);
     o &&
-      (void 0 !== _a._gr &&
-        TimerSystem_1.TimerSystem.Has(_a._gr) &&
-        TimerSystem_1.TimerSystem.Remove(_a._gr),
-      (_a._gr = o));
+      (void 0 !== _a.a0r &&
+        TimerSystem_1.TimerSystem.Has(_a.a0r) &&
+        TimerSystem_1.TimerSystem.Remove(_a.a0r),
+      (_a.a0r = o));
   }),
-  (AoiController.ngr = (o) => {
+  (AoiController.i0r = (o) => {
     var e = TimerSystem_1.TimerSystem.Forever(() => {
-      for (const e of o.RTs) _a.lgr(e, o.LTs, 2e3);
+      for (const e of o.WAs) _a.s0r(e, o.jAs, 2e3);
     }, 2e3);
     e &&
-      (void 0 !== _a.ugr &&
-        TimerSystem_1.TimerSystem.Has(_a.ugr) &&
-        TimerSystem_1.TimerSystem.Remove(_a.ugr),
-      (_a.ugr = e));
+      (void 0 !== _a.h0r &&
+        TimerSystem_1.TimerSystem.Has(_a.h0r) &&
+        TimerSystem_1.TimerSystem.Remove(_a.h0r),
+      (_a.h0r = e));
   });
 //# sourceMappingURL=AoiController.js.map

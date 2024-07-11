@@ -2,13 +2,13 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PayShopExchangeEntryView = void 0);
 const UE = require("ue"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   UiTabViewBase_1 = require("../../../Ui/Base/UiTabViewBase"),
   GenericScrollView_1 = require("../../Util/ScrollView/GenericScrollView"),
   LoopScrollView_1 = require("../../Util/ScrollView/LoopScrollView"),
   PayShopGiftItem_1 = require("./TabItem/PayShopGiftItem"),
-  PayShopSecondTabItem_1 = require("./TabItem/PayShopSecondTabItem"),
-  ControllerHolder_1 = require("../../../Manager/ControllerHolder");
+  PayShopSecondTabItem_1 = require("./TabItem/PayShopSecondTabItem");
 class PayShopExchangeEntryView extends UiTabViewBase_1.UiTabViewBase {
   constructor() {
     super(...arguments),
@@ -17,13 +17,13 @@ class PayShopExchangeEntryView extends UiTabViewBase_1.UiTabViewBase {
       (this.CurrentTabId = 0),
       (this.PayShopGoodsList = []),
       (this.PayShopGoodsMap = new Map()),
-      (this.Z3e = (e, i, t) => {
+      (this.C5e = (e, i, t) => {
         i = new PayShopSecondTabItem_1.PayShopSecondTabItem(i);
         return (
-          i.SetName(4, e), i.SetToggleFunction(this.sFi), { Key: e, Value: i }
+          i.SetName(4, e), i.SetToggleFunction(this.s3i), { Key: e, Value: i }
         );
       }),
-      (this.sFi = (e) => {
+      (this.s3i = (e) => {
         this.CurrentTabId &&
           this.TabLayout.GetScrollItemByKey(this.CurrentTabId).SetToggleState(
             !1,
@@ -34,14 +34,14 @@ class PayShopExchangeEntryView extends UiTabViewBase_1.UiTabViewBase {
       }),
       (this.sGe = () => {
         var e = new PayShopGiftItem_1.PayShopGiftItem(0);
-        return e.SetToggleFunction(this.aFi), e;
+        return e.SetToggleFunction(this.a3i), e;
       }),
-      (this.aFi = (e) => {
+      (this.a3i = (e) => {
         ControllerHolder_1.ControllerHolder.PayShopController.OpenExchangePopView(
           e,
         );
       }),
-      (this.hFi = (e) => this.PayShopGoodsList[e]);
+      (this.h3i = (e) => this.PayShopGoodsList[e]);
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -53,7 +53,7 @@ class PayShopExchangeEntryView extends UiTabViewBase_1.UiTabViewBase {
   OnStart() {
     this.TabLayout = new GenericScrollView_1.GenericScrollView(
       this.GetScrollViewWithScrollbar(0),
-      this.Z3e,
+      this.C5e,
     );
     var e = this.GetItem(2);
     this.LoopScrollView = new LoopScrollView_1.LoopScrollView(
@@ -81,7 +81,7 @@ class PayShopExchangeEntryView extends UiTabViewBase_1.UiTabViewBase {
         this.CurrentTabId,
       )),
       this.LoopScrollView.ReloadProxyData(
-        this.hFi,
+        this.h3i,
         this.PayShopGoodsList.length,
         !1,
       );

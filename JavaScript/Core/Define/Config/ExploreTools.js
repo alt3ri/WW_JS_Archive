@@ -60,6 +60,9 @@ class ExploreTools {
       (t) => this.authorization(t)?.value(),
     );
   }
+  get SummonConfigId() {
+    return this.summonconfigid();
+  }
   __init(t, i) {
     return (this.z7 = t), (this.J7 = i), this;
   }
@@ -152,6 +155,10 @@ class ExploreTools {
   authorizationLength() {
     var t = this.J7.__offset(this.z7, 32);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
+  }
+  summonconfigid() {
+    var t = this.J7.__offset(this.z7, 34);
+    return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
 }
 exports.ExploreTools = ExploreTools;

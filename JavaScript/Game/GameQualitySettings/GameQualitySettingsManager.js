@@ -14,7 +14,7 @@ const puerts_1 = require("puerts"),
   LocalStorageDefine_1 = require("../Common/LocalStorageDefine"),
   GlobalData_1 = require("../GlobalData"),
   ModelManager_1 = require("../Manager/ModelManager"),
-  GameQualityData_1 = require("./GameQualityData"),
+  PerfSightController_1 = require("../PerfSight/PerfSightController"),
   GameQualityInfo_1 = require("./GameQualityInfo"),
   GameQualityRenderParameters_1 = require("./GameQualityRenderParameters"),
   HD_SCREEN_WIDTH = 2e3,
@@ -43,22 +43,22 @@ class LevelRenderSettingsManager {
       void 0 !==
       ModelManager_1.ModelManager.GameModeModel.InstanceDungeon.RenderSettings
     )
-      for (const e of ModelManager_1.ModelManager.GameModeModel.InstanceDungeon.RenderSettings.keys()) {
+      for (const a of ModelManager_1.ModelManager.GameModeModel.InstanceDungeon.RenderSettings.keys()) {
         var t =
             ModelManager_1.ModelManager.GameModeModel.InstanceDungeon.RenderSettings.get(
-              e,
+              a,
             ),
-          i = LevelRenderSettingsManager.Ove.get(e);
+          e = LevelRenderSettingsManager.Ove.get(a);
         UE.KismetSystemLibrary.ExecuteConsoleCommand(
           GlobalData_1.GlobalData.World,
-          i + " " + t,
+          e + " " + t,
         ),
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "Render",
               60,
               "进入特殊副本-调整渲染参数",
-              ["设置", i],
+              ["设置", e],
               ["为", t],
             );
       }
@@ -68,19 +68,19 @@ class LevelRenderSettingsManager {
       void 0 !==
       ModelManager_1.ModelManager.GameModeModel.InstanceDungeon.RenderSettings
     )
-      for (const e of ModelManager_1.ModelManager.GameModeModel.InstanceDungeon.RenderSettings.keys()) {
-        var t = LevelRenderSettingsManager.kve.get(e),
-          i = LevelRenderSettingsManager.Ove.get(e);
+      for (const a of ModelManager_1.ModelManager.GameModeModel.InstanceDungeon.RenderSettings.keys()) {
+        var t = LevelRenderSettingsManager.kve.get(a),
+          e = LevelRenderSettingsManager.Ove.get(a);
         UE.KismetSystemLibrary.ExecuteConsoleCommand(
           GlobalData_1.GlobalData.World,
-          i + " " + t,
+          e + " " + t,
         ),
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "Render",
               60,
               "退出特殊副本-调整渲染参数",
-              ["设置", i],
+              ["设置", e],
               ["为", t],
             );
       }
@@ -98,14 +98,13 @@ class GameQualitySettingsManager {
       (this.Wve = void 0),
       (this.Kve = 2),
       (this.Qve = void 0),
-      (this.Xve = void 0),
       (this.$ve = !1),
       (this.Yve = !1),
       (this.Jve = void 0),
       (this.zve = [30, 45, 60, 120]),
       (this.Zve = [30, 60]),
       (this.eMe = [24, 30, 45, 60]),
-      (this.tMe = [0, 0, 5, 10]),
+      (this.tMe = [0, 5, 10, 15]),
       (this.iMe = [0, 0, 3, 6]),
       (this.oMe = [0, 0, 2500, 5e3]),
       (this.rMe = [0, 0, 1500, 3e3]),
@@ -275,14 +274,16 @@ class GameQualitySettingsManager {
                 GlobalData_1.GlobalData.World,
                 "r.FogVisibilityCulling.Enable 0",
               )),
-            LevelRenderSettingsManager.Get().SetLevelRenderSettings()),
+            LevelRenderSettingsManager.Get().SetLevelRenderSettings(),
+            UE.LandscapeProxy.SetKuroLandscapeFOVFactor(0)),
           this.Qve.ApplySceneAo();
       }),
       (this.uMe = () => {
         ModelManager_1.ModelManager.GameModeModel.UseWorldPartition ||
           (Log_1.Log.CheckInfo() &&
             Log_1.Log.Info("Render", 60, "退出副本-调整渲染参数"),
-          LevelRenderSettingsManager.Get().RevertLevelRenderSetting());
+          LevelRenderSettingsManager.Get().RevertLevelRenderSetting(),
+          UE.LandscapeProxy.SetKuroLandscapeFOVFactor(-1));
       }),
       (this.cMe = () => {
         GameQualitySettingsManager.IsFoldingScreen() &&
@@ -325,23 +326,23 @@ class GameQualitySettingsManager {
       );
   }
   GetFrameIndexByList(t) {
-    var i = UE.GameplayStatics.GetPlatformName();
+    var e = UE.GameplayStatics.GetPlatformName();
     return (
-      "IOS" === i ? this.Zve : "Android" === i ? this.eMe : this.zve
+      "IOS" === e ? this.Zve : "Android" === e ? this.eMe : this.zve
     ).indexOf(t);
   }
   GetFrameByList(t) {
-    var i = UE.GameplayStatics.GetPlatformName();
-    if ("IOS" === i) {
-      const e = MathUtils_1.MathUtils.Clamp(t, 0, this.Zve.length - 1);
-      return this.Zve[e];
+    var e = UE.GameplayStatics.GetPlatformName();
+    if ("IOS" === e) {
+      const a = MathUtils_1.MathUtils.Clamp(t, 0, this.Zve.length - 1);
+      return this.Zve[a];
     }
-    if ("Android" === i) {
-      const e = MathUtils_1.MathUtils.Clamp(t, 0, this.eMe.length - 1);
-      return this.eMe[e];
+    if ("Android" === e) {
+      const a = MathUtils_1.MathUtils.Clamp(t, 0, this.eMe.length - 1);
+      return this.eMe[a];
     }
-    const e = MathUtils_1.MathUtils.Clamp(t, 0, this.zve.length - 1);
-    return this.zve[e];
+    const a = MathUtils_1.MathUtils.Clamp(t, 0, this.zve.length - 1);
+    return this.zve[a];
   }
   GetMaxRoleShadowNum() {
     var t = this.Qve.GetGameQualitySettingLevel();
@@ -361,16 +362,16 @@ class GameQualitySettingsManager {
   }
   GetDefaultScreenResolution() {
     if (!this.jve) {
-      var i = this.GetResolutionList();
-      if (i.length) {
-        let t = i[0];
+      var e = this.GetResolutionList();
+      if (e.length) {
+        let t = e[0];
         if (
           !GameQualitySettingsManager.IsUltraGpuDevice() &&
           (t.X > HD_SCREEN_WIDTH || t.Y > HD_SCREEN_HEIGHT)
         )
-          for (const e of i)
-            if (e.X < HD_SCREEN_WIDTH && e.Y < HD_SCREEN_HEIGHT) {
-              t = e;
+          for (const a of e)
+            if (a.X < HD_SCREEN_WIDTH && a.Y < HD_SCREEN_HEIGHT) {
+              t = a;
               break;
             }
         this.jve = t;
@@ -387,8 +388,8 @@ class GameQualitySettingsManager {
     return this.jve;
   }
   GetResolutionByList(t) {
-    var i = this.GetResolutionList();
-    return i[MathUtils_1.MathUtils.Clamp(t, 0, i.length - 1)];
+    var e = this.GetResolutionList();
+    return e[MathUtils_1.MathUtils.Clamp(t, 0, e.length - 1)];
   }
   GetResolutionList() {
     if (!this.Hve.length) {
@@ -396,14 +397,16 @@ class GameQualitySettingsManager {
         ((this.Vve = (0, puerts_1.$ref)(UE.NewArray(UE.IntPoint))),
         UE.KismetSystemLibrary.GetSupportedFullscreenResolutions(this.Vve))
       ) {
-        var i = (0, puerts_1.$unref)(this.Vve);
-        for (let t = i.Num() - 1; 0 <= t; --t) {
-          var e = i.Get(t);
-          e && this.Hve.push(e);
+        var e = (0, puerts_1.$unref)(this.Vve);
+        for (let t = e.Num() - 1; 0 <= t; --t) {
+          var a = e.Get(t);
+          a && this.Hve.push(a),
+            Log_1.Log.CheckDebug() &&
+              Log_1.Log.Debug("Menu", 8, "", ["resolution", a]);
         }
       }
       this.Hve.length
-        ? this.Hve.sort((t, i) => (t.X === i.X ? i.Y - t.Y : i.X - t.X))
+        ? this.Hve.sort((t, e) => (t.X === e.X ? e.Y - t.Y : e.X - t.X))
         : (this.Hve.push(
             UE.GameUserSettings.GetGameUserSettings().GetDesktopResolution(),
           ),
@@ -413,12 +416,15 @@ class GameQualitySettingsManager {
     return this.Hve;
   }
   GetResolutionIndexByList(t) {
-    let i = 0;
-    for (const e of this.GetResolutionList()) {
-      if (e.op_Equality(t)) return i;
-      ++i;
+    let e = 0;
+    for (const a of this.GetResolutionList()) {
+      if (a.op_Equality(t)) return e;
+      ++e;
     }
     return -1;
+  }
+  static IsPS5Platform() {
+    return "PS5" === UE.GameplayStatics.GetPlatformName();
   }
   static IsPcPlatform() {
     return (
@@ -430,14 +436,14 @@ class GameQualitySettingsManager {
       31 === this.mMe || 32 === this.mMe || 33 === this.mMe || 34 === this.mMe
     );
   }
-  static IsIosAndAndroidHighDevice() {
-    return (
-      23 === this.mMe || 24 === this.mMe || 33 === this.mMe || 34 === this.mMe
-    );
-  }
   static IsAndroidPlatform() {
     return (
       21 === this.mMe || 22 === this.mMe || 23 === this.mMe || 24 === this.mMe
+    );
+  }
+  static IsIosAndAndroidHighDevice() {
+    return (
+      23 === this.mMe || 24 === this.mMe || 33 === this.mMe || 34 === this.mMe
     );
   }
   static IsAndroidPlatformNotLow() {
@@ -478,8 +484,22 @@ class GameQualitySettingsManager {
           Log_1.Log.Error("Render", 41, "GameQualitySettingsManager尚未初始化"),
         !1);
   }
+  static IsAMDGoodDevice() {
+    return this.VendorName
+      ? "AMD" === GameQualitySettingsManager.VendorName &&
+          1500 < GameQualitySettingsManager.DeviceScore
+      : (Log_1.Log.CheckError() &&
+          Log_1.Log.Error("Render", 41, "GameQualitySettingsManager尚未初始化"),
+        !1);
+  }
+  static IsFrameRate120Device() {
+    return !(!this.IsDlssGpuDevice() && !this.IsAMDGoodDevice());
+  }
   static IsMetalFxDevice() {
     return UE.KuroRenderingRuntimeBPPluginBPLibrary.IsSupportsMetalFx();
+  }
+  static IsPWSDKDevice() {
+    return this.IsAndroidPlatform(), !1;
   }
   static IsMaliNewSocOrXclipse() {
     return !!(
@@ -509,6 +529,9 @@ class GameQualitySettingsManager {
         Log_1.Log.Info("Render", 60, "折叠屏适配", ["ScreenRatio", t]),
       !0)
     );
+  }
+  static IsLowMemoryDevice() {
+    return this.DevicePhysicalGbRam <= 4;
   }
   static Get() {
     return this.Me;
@@ -550,15 +573,15 @@ class GameQualitySettingsManager {
                 ? (this.mMe = 23)
                 : (this.mMe = 22),
             GameQualitySettingsManager.IsHuaweiNewPhone() ||
-            GameQualitySettingsManager.IsMaliNewSocOrXclipse()
-              ? UE.KismetSystemLibrary.ExecuteConsoleCommand(
-                  GlobalData_1.GlobalData.World,
-                  "r.Mobile.UseClusteredDeferredShading -1",
-                )
-              : UE.KismetSystemLibrary.ExecuteConsoleCommand(
-                  GlobalData_1.GlobalData.World,
-                  "r.HZBOcclusion 2",
-                ))
+              GameQualitySettingsManager.IsMaliNewSocOrXclipse() ||
+              UE.KismetSystemLibrary.ExecuteConsoleCommand(
+                GlobalData_1.GlobalData.World,
+                "r.HZBOcclusion 2",
+              ),
+            UE.KismetSystemLibrary.ExecuteConsoleCommand(
+              GlobalData_1.GlobalData.World,
+              "r.Mobile.UseClusteredDeferredShading -1",
+            ))
           : "XboxOne" === t
             ? (this.mMe = 35)
             : "PS4" === t
@@ -596,7 +619,10 @@ class GameQualitySettingsManager {
           ["platform", t],
         ),
       (this.Me = new GameQualitySettingsManager()),
-      this.Me.AU());
+      this.Me.AU()),
+      EventSystem_1.EventSystem.Emit(
+        EventDefine_1.EEventName.AfterGameQualitySettingsManagerInitialize,
+      );
   }
   GetCurrentQualityInfo() {
     return this.Qve;
@@ -611,9 +637,9 @@ class GameQualitySettingsManager {
     );
   }
   CMe(t) {
-    var i = GameQualitySettingsManager.IsPcPlatform(),
-      e = new GameQualityInfo_1.GameQualityInfo();
-    e.Initialize(
+    var e = GameQualitySettingsManager.IsPcPlatform(),
+      a = new GameQualityInfo_1.GameQualityInfo();
+    a.Initialize(
       t.QualityType,
       t.FPS,
       t.ShadowQuality,
@@ -636,7 +662,7 @@ class GameQualitySettingsManager {
       1,
       0,
       1,
-      !i || GameQualitySettingsManager.IsDlssGpuDevice() ? 0 : 1,
+      !e || GameQualitySettingsManager.IsDlssGpuDevice() ? 0 : 1,
       1,
       2,
       1,
@@ -657,7 +683,7 @@ class GameQualitySettingsManager {
       0,
       1,
       1,
-      1,
+      0,
       50,
       0,
       0.3,
@@ -666,153 +692,21 @@ class GameQualitySettingsManager {
       1,
       0,
       0,
+      0,
+      0,
     ),
-      this.Wve.set(t.QualityType, e),
+      this.Wve.set(t.QualityType, a),
       1 === t.DefaultQuality && (this.Kve = t.QualityType);
   }
-  InitQualityInfoBySavedQualityData() {
-    var t = this.jve,
-      i = t.X,
-      t = t.Y;
-    (this.Qve = new GameQualityInfo_1.GameQualityInfo()),
-      this.Qve.Initialize(
-        this.Xve.KeyQualityLevel,
-        this.Xve.KeyCustomFrameRate ?? 30,
-        this.Xve.KeyNewShadowQuality ?? 2,
-        this.Xve.KeyNiagaraQuality ?? 1,
-        this.Xve.KeyImageDetail ?? 2,
-        this.Xve.KeyAntiAliasing ?? 1,
-        this.Xve.KeySceneAo ?? 1,
-        this.Xve.KeyVolumeFog ?? 1,
-        this.Xve.KeyVolumeLight ?? 1,
-        this.Xve.KeyMotionBlur ?? 1,
-        this.Xve.KeyStreamLevel ?? 1,
-        this.Xve.KeyPcVsync ?? 0,
-        this.Xve.KeyMobileResolution ?? 0.85,
-        this.Xve.KeySuperResolution ?? 2,
-        new UE.IntPoint(
-          this.Xve.KeyPcResolutionWidth ?? i,
-          this.Xve.KeyPcResolutionHeight ?? t,
-        ),
-        this.Xve.KeyPcWindowMode ?? 1,
-        this.Xve.KeyBrightness ?? 0,
-        this.Xve.KeyNvidiaSuperSamplingEnable ??
-          (GameQualitySettingsManager.IsDlssGpuDevice() ? 1 : 0),
-        this.Xve.KeyNvidiaSuperSamplingFrameGenerate ?? 1,
-        this.Xve.KeyNvidiaSuperSamplingMode ?? 1,
-        this.Xve.KeyNvidiaSuperSamplingSharpness ?? 0,
-        this.Xve.KeyNvidiaReflex ?? 1,
-        this.Xve.KeyFsrEnable ??
-          (GameQualitySettingsManager.IsDlssGpuDevice() ? 0 : 1),
-        this.Xve.KeyXessEnable ?? 1,
-        this.Xve.KeyXessQuality ?? 2,
-        this.Xve.KeyMetalFxEnable ?? 1,
-        this.Xve.KeyIrxEnable ?? 1,
-        this.Xve.KeyBloomEnable ?? 1,
-        this.Xve.KeyNpcDensity ?? 1,
-        this.Xve.HorizontalViewSensitivity ?? 1,
-        this.Xve.VerticalViewSensitivity ?? 1,
-        this.Xve.AimHorizontalViewSensitivity ?? 1,
-        this.Xve.AimVerticalViewSensitivity ?? 1,
-        this.Xve.CameraShakeStrength ?? 1,
-        this.Xve.MobileHorizontalViewSensitivity ?? 1,
-        this.Xve.MobileVerticalViewSensitivity ?? 1,
-        this.Xve.MobileAimHorizontalViewSensitivity ?? 1,
-        this.Xve.MobileAimVerticalViewSensitivity ?? 1,
-        this.Xve.MobileCameraShakeStrength ?? 1,
-        this.Xve.CommonSpringArmLength ?? 0,
-        this.Xve.FightSpringArmLength ?? 0,
-        this.Xve.IsResetFocusEnable ?? 1,
-        this.Xve.IsSidestepCameraEnable ?? 1,
-        this.Xve.IsSoftLockCameraEnable ?? 1,
-        this.Xve.JoystickShakeStrength ?? 50,
-        this.Xve.JoystickShakeType ?? 0,
-        this.Xve.WalkOrRunRate ?? 50,
-        this.Xve.JoystickMode ?? 0,
-        this.Xve.IsAutoSwitchSkillButtonMode ?? 0,
-        this.Xve.AimAssistEnable ?? 0,
-        this.Xve.HorizontalViewRevert ?? 0,
-        this.Xve.VerticalViewRevert ?? 0,
-      );
-  }
-  SaveCurrentQualityInfoToQualityData() {
-    (this.Xve.KeyQualityLevel = this.Qve.GetGameQualitySettingLevel()),
-      (this.Xve.KeyCustomFrameRate = this.Qve.GetFrameRate()),
-      (this.Xve.KeyNewShadowQuality = this.Qve.ShadowQuality),
-      (this.Xve.KeyNiagaraQuality = this.Qve.NiagaraQuality),
-      (this.Xve.KeyImageDetail = this.Qve.ImageDetail),
-      (this.Xve.KeyBrightness = this.Qve.Brightness),
-      (this.Xve.KeyAntiAliasing = this.Qve.AntiAliasing),
-      (this.Xve.KeySceneAo = this.Qve.SceneAo),
-      (this.Xve.KeyVolumeFog = this.Qve.VolumeFog),
-      (this.Xve.KeyVolumeLight = this.Qve.VolumeLight),
-      (this.Xve.KeyMotionBlur = this.Qve.MotionBlur),
-      (this.Xve.KeyStreamLevel = this.Qve.StreamLevel),
-      (this.Xve.KeyPcVsync = this.Qve.PcVsync),
-      (this.Xve.KeyMobileResolution = this.Qve.MobileResolution),
-      (this.Xve.KeySuperResolution = this.Qve.SuperResolution),
-      (this.Xve.KeyPcResolutionWidth = this.Qve.PcScreenResolution.X),
-      (this.Xve.KeyPcResolutionHeight = this.Qve.PcScreenResolution.Y),
-      (this.Xve.KeyPcWindowMode = this.Qve.PcFullScreenMode),
-      (this.Xve.KeyNvidiaSuperSamplingEnable =
-        this.Qve.NvidiaSuperSamplingEnable),
-      (this.Xve.KeyNvidiaSuperSamplingFrameGenerate =
-        this.Qve.NvidiaSuperSamplingFrameGenerate),
-      (this.Xve.KeyNvidiaSuperSamplingMode = this.Qve.NvidiaSuperSamplingMode),
-      (this.Xve.KeyNvidiaSuperSamplingSharpness =
-        this.Qve.NvidiaSuperSamplingSharpness),
-      (this.Xve.KeyNvidiaReflex = this.Qve.NvidiaReflex),
-      (this.Xve.KeyFsrEnable = this.Qve.FsrEnable),
-      (this.Xve.KeyXessEnable = this.Qve.XessEnable),
-      (this.Xve.KeyXessQuality = this.Qve.XessQuality),
-      (this.Xve.KeyMetalFxEnable = this.Qve.MetalFxEnable),
-      (this.Xve.KeyIrxEnable = this.Qve.IrxEnable),
-      (this.Xve.KeyBloomEnable = this.Qve.BloomEnable),
-      (this.Xve.KeyNpcDensity = this.Qve.NpcDensity),
-      (this.Xve.HorizontalViewSensitivity = this.Qve.HorizontalViewSensitivity),
-      (this.Xve.VerticalViewSensitivity = this.Qve.VerticalViewSensitivity),
-      (this.Xve.AimHorizontalViewSensitivity =
-        this.Qve.AimHorizontalViewSensitivity),
-      (this.Xve.AimVerticalViewSensitivity =
-        this.Qve.AimVerticalViewSensitivity),
-      (this.Xve.CameraShakeStrength = this.Qve.CameraShakeStrength),
-      (this.Xve.MobileHorizontalViewSensitivity =
-        this.Qve.MobileHorizontalViewSensitivity),
-      (this.Xve.MobileVerticalViewSensitivity =
-        this.Qve.MobileVerticalViewSensitivity),
-      (this.Xve.MobileAimHorizontalViewSensitivity =
-        this.Qve.MobileAimHorizontalViewSensitivity),
-      (this.Xve.MobileAimVerticalViewSensitivity =
-        this.Qve.MobileAimVerticalViewSensitivity),
-      (this.Xve.MobileCameraShakeStrength = this.Qve.MobileCameraShakeStrength),
-      (this.Xve.CommonSpringArmLength = this.Qve.CommonSpringArmLength),
-      (this.Xve.FightSpringArmLength = this.Qve.FightSpringArmLength),
-      (this.Xve.IsResetFocusEnable = this.Qve.IsResetFocusEnable),
-      (this.Xve.IsSidestepCameraEnable = this.Qve.IsSidestepCameraEnable),
-      (this.Xve.IsSoftLockCameraEnable = this.Qve.IsSoftLockCameraEnable),
-      (this.Xve.JoystickShakeStrength = this.Qve.JoystickShakeStrength),
-      (this.Xve.JoystickShakeType = this.Qve.JoystickShakeType),
-      (this.Xve.WalkOrRunRate = this.Qve.WalkOrRunRate),
-      (this.Xve.JoystickMode = this.Qve.JoystickMode),
-      (this.Xve.IsAutoSwitchSkillButtonMode =
-        this.Qve.IsAutoSwitchSkillButtonMode),
-      (this.Xve.AimAssistEnable = this.Qve.AimAssistEnable),
-      (this.Xve.HorizontalViewRevert = this.Qve.HorizontalViewRevert),
-      (this.Xve.VerticalViewRevert = this.Qve.VerticalViewRevert),
-      LocalStorage_1.LocalStorage.SetGlobal(
-        LocalStorageDefine_1.ELocalStorageGlobalKey.GameQualitySetting,
-        this.Xve,
-      );
-  }
   ApplyQualityInfoToCurrentQualityInfo(t) {
-    t && ((this.Qve = t), this.SaveCurrentQualityInfoToQualityData()),
+    t && ((this.Qve = t), this.Qve.Save()),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("Render", 8, "开始设置图像配置到引擎"),
       this.lMe();
   }
   GetGameQualityLoadInfo() {
     var t = this.Qve.GetQualitySettingScore(),
-      i = (100 * t) / GameQualitySettingsManager.DeviceScore;
+      e = (100 * t) / GameQualitySettingsManager.DeviceScore;
     return (
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
@@ -821,51 +715,52 @@ class GameQualitySettingsManager {
           "图像配置负载信息",
           ["SettingScore", t],
           ["DeviceScore", GameQualitySettingsManager.DeviceScore],
-          ["LoadPercentage", i],
+          ["LoadPercentage", e],
         ),
-      80 < (i = MathUtils_1.MathUtils.Clamp(i, 0, 100))
+      80 < (e = MathUtils_1.MathUtils.Clamp(e, 0, 100))
         ? {
             Desc: SEETING_LOAD_OVER,
-            Percentage: i,
+            Percentage: e,
             BarColor: SEETING_LOAD_OVER_COLOR,
           }
-        : 60 < i
+        : 60 < e
           ? {
               Desc: SEETING_LOAD_LAGGY,
-              Percentage: i,
+              Percentage: e,
               BarColor: SEETING_LOAD_LAGGY_COLOR,
             }
           : {
               Desc: SEETING_LOAD_FLUID,
-              Percentage: i,
+              Percentage: e,
               BarColor: SEETING_LOAD_FLUID_COLOR,
             }
     );
   }
   lMe(t) {
-    var i, e, a;
+    var e, a, i;
     0 <
     UE.KuroRenderingRuntimeBPPluginBPLibrary.GetCVarFloat(
       "r.Kuro.Movie.EnableCGMovieRendering",
     )
       ? Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("Render", 12, "当前在movie 渲染模式下不应用配置")
-      : ((i = GameQualitySettingsManager.IsPcPlatform())
-          ? ((a = UE.GameUserSettings.GetGameUserSettings()),
-            (e = this.Qve.GetGameQualitySettingLevel()),
-            a &&
-              (a.SetGameQualitySettingLevel(e),
-              this.Qve.ApplyPcVsync(),
-              a.ApplySettings(!0)))
-          : ((e = UE.GameUserSettings.GetGameUserSettings()),
-            (a = this.Qve.GetGameQualitySettingLevel()),
-            e && e.SetMobileGameQualitySettingLevel(a)),
+      : ((e = this.Qve.GetGameQualitySettingLevel()),
+        PerfSightController_1.PerfSightController.IsEnable &&
+          UE.PerfSightHelper.PostEvent(800, e.toString()),
+        (a = GameQualitySettingsManager.IsPcPlatform())
+          ? (i = UE.GameUserSettings.GetGameUserSettings()) &&
+            (i.SetGameQualitySettingLevel(e),
+            this.Qve.ApplyPcVsync(),
+            i.ApplySettings(!0))
+          : (i = UE.GameUserSettings.GetGameUserSettings()) &&
+            i.SetMobileGameQualitySettingLevel(e),
         this.Qve.ApplyFrameRate(),
         this.Qve.ApplyShadowQuality(),
         this.Qve.ApplyNiagaraQuality(),
         this.Qve.ApplyImageDetail(),
         this.Qve.ApplyAntiAliasing(),
         this.Qve.ApplySceneAo(),
+        this.Qve.ApplySceneLightQuality(),
         this.Qve.ApplyVolumeFog(),
         this.Qve.ApplyVolumeLight(),
         this.Qve.ApplyMotionBlur(),
@@ -882,6 +777,7 @@ class GameQualitySettingsManager {
         this.Qve.ApplyAimAssistEnable(),
         this.Qve.ApplyHorizontalViewRevert(),
         this.Qve.ApplyVerticalViewRevert(),
+        this.Qve.ApplyKeyboardLockEnemyMode(),
         this.Qve.ApplyFsrEnable(),
         this.Qve.ApplyXessEnable(),
         this.Qve.ApplyXessQuality(),
@@ -890,8 +786,10 @@ class GameQualitySettingsManager {
         this.Qve.ApplyBloomEnable(),
         this.Qve.ApplyScreenResolution(),
         this.Qve.ApplyNpcDensity(),
+        this.Qve.ApplyGamepadLockEnemyMode(),
+        this.Qve.ApplyEnemyHitDisplayMode(),
         this.Yve || (this.Qve.ApplyBrightness(), (this.Yve = !0)),
-        i &&
+        a &&
           (this.Qve.ApplyNvidiaSuperSamplingEnable(),
           this.Qve.ApplyNvidiaSuperSamplingFrameGenerate(),
           this.Qve.ApplyNvidiaSuperSamplingMode(),
@@ -912,23 +810,21 @@ class GameQualitySettingsManager {
         this.Qve.ApplyFrameTimeParams());
   }
   AU() {
-    this.GetDefaultScreenResolution(),
-      (this.Xve = LocalStorage_1.LocalStorage.GetGlobal(
-        LocalStorageDefine_1.ELocalStorageGlobalKey.GameQualitySetting,
-      )),
-      (this.Wve = new Map());
+    this.GetDefaultScreenResolution(), (this.Wve = new Map());
     var t = GameQualitySettingsManager.mMe;
-    for (const i of DeviceRenderFeatureByDeviceId_1.configDeviceRenderFeatureByDeviceId.GetConfigList(
+    for (const e of DeviceRenderFeatureByDeviceId_1.configDeviceRenderFeatureByDeviceId.GetConfigList(
       t,
     ))
-      this.CMe(i);
+      this.CMe(e);
     Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("Render", 12, "", ["初始化画质配置: ", t.toString()]),
-      void 0 === this.Xve || 3 < this.Xve.KeyQualityLevel
-        ? ((this.Xve = new GameQualityData_1.GameQualityData()),
-          (this.Qve = this.GetQualityInfoByType(this.Kve)),
-          this.SaveCurrentQualityInfoToQualityData())
-        : this.InitQualityInfoBySavedQualityData(),
+      Log_1.Log.Info("Render", 12, "", ["初始化画质配置: ", t.toString()]);
+    t = LocalStorage_1.LocalStorage.GetGlobal(
+      LocalStorageDefine_1.ELocalStorageGlobalKey.GameQualityLevel,
+    );
+    void 0 === t || 3 < t
+      ? ((this.Qve = this.GetQualityInfoByType(this.Kve)), this.Qve.Save())
+      : (this.Qve = new GameQualityInfo_1.GameQualityInfo()),
+      this.Qve.Load(this.jve),
       this.fMe(),
       this.cMe(),
       (this.$ve = !1),

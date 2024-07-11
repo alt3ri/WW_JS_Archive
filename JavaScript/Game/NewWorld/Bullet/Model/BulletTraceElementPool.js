@@ -10,15 +10,15 @@ const puerts_1 = require("puerts"),
   ColorUtils_1 = require("../../../Utils/ColorUtils");
 class BulletTraceElementPool {
   static GetTraceBoxElement(e, t, r) {
-    return this.UHo(UE.TraceBoxElement.StaticClass(), this.AHo, e, t, r);
+    return this.Ljo(UE.TraceBoxElement.StaticClass(), this.Djo, e, t, r);
   }
   static GetTraceLineElement(e, t, r) {
-    return this.UHo(UE.TraceLineElement.StaticClass(), this.PHo, e, t, r);
+    return this.Ljo(UE.TraceLineElement.StaticClass(), this.Rjo, e, t, r);
   }
   static GetTraceSphereElement(e, t, r) {
-    return this.UHo(UE.TraceSphereElement.StaticClass(), this.xHo, e, t, r);
+    return this.Ljo(UE.TraceSphereElement.StaticClass(), this.Ujo, e, t, r);
   }
-  static UHo(e, t, r, l, a) {
+  static Ljo(e, t, r, l, a) {
     if (0 < t.length) {
       const n = t.pop();
       var t = UE.NewArray(UE.BuiltinByte),
@@ -44,7 +44,7 @@ class BulletTraceElementPool {
         n
       );
     }
-    const n = this.wHo(e, r, a);
+    const n = this.Ajo(e, r, a);
     return (
       Info_1.Info.IsBuildDevelopmentOrDebug &&
         ((t = ModelManager_1.ModelManager.BulletModel.ShowBulletTrace(l)),
@@ -62,15 +62,15 @@ class BulletTraceElementPool {
     );
   }
   static RecycleTraceBoxElement(e) {
-    e && (e.ClearCacheData(), this.AHo.push(e));
+    e && (e.ClearCacheData(), this.Djo.push(e));
   }
   static RecycleTraceLineElement(e) {
-    e && (e.ClearCacheData(), this.PHo.push(e));
+    e && (e.ClearCacheData(), this.Rjo.push(e));
   }
   static RecycleTraceSphereElement(e) {
-    e && (e.ClearCacheData(), this.xHo.push(e));
+    e && (e.ClearCacheData(), this.Ujo.push(e));
   }
-  static wHo(e, r, l, t = !1) {
+  static Ajo(e, r, l, t = !1) {
     var a = UE.NewObject(e);
     a.WorldContextObject = GlobalData_1.GlobalData.World;
     for (let e = 0, t = r.Num(); e < t; e++) {
@@ -91,10 +91,10 @@ class BulletTraceElementPool {
     );
   }
   static Clear() {
-    (this.AHo.length = 0), (this.PHo.length = 0), (this.xHo.length = 0);
+    (this.Djo.length = 0), (this.Rjo.length = 0), (this.Ujo.length = 0);
   }
 }
-((exports.BulletTraceElementPool = BulletTraceElementPool).AHo = new Array()),
-  (BulletTraceElementPool.PHo = new Array()),
-  (BulletTraceElementPool.xHo = new Array());
+((exports.BulletTraceElementPool = BulletTraceElementPool).Djo = new Array()),
+  (BulletTraceElementPool.Rjo = new Array()),
+  (BulletTraceElementPool.Ujo = new Array());
 //# sourceMappingURL=BulletTraceElementPool.js.map

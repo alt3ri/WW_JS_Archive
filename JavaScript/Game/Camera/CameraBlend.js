@@ -193,7 +193,7 @@ class CameraBlend {
           if (4 === this.CurrentSpringBlendState) return i;
         }
       else if (this.tae && (this.rae || this.oae))
-        this.Sae(2, this.tae ? this.Wse : i);
+        this.Eae(2, this.tae ? this.Wse : i);
       else if (this.tae) {
         if (
           (this.sae &&
@@ -211,7 +211,7 @@ class CameraBlend {
         )
           return (this.hae = !0), this.Wse;
         if (4 === this.CurrentSpringBlendState) return i;
-      } else this.Sae(4, this.tae ? this.Wse : i);
+      } else this.Eae(4, this.tae ? this.Wse : i);
       if (
         (this.tae
           ? this.sae &&
@@ -236,7 +236,7 @@ class CameraBlend {
               ["this.IsHitLeft", this.oae],
               ["this.IsHitRight", this.rae],
             ),
-        this.tae || this.Eae(i),
+        this.tae || this.Sae(i),
         this.tae && !this.bse.ContainsTag(-1150819426))
       ) {
         var t = this.Fse.HitResult.Components.Get(0),
@@ -250,7 +250,7 @@ class CameraBlend {
         if (((this.eae = t), s || h)) {
           if (!this.Zse && h) {
             var [t, s] = this.bse?.CharacterEntityHandle.Entity.GetComponent(
-              52,
+              53,
             )?.GetCameraInput() ?? [0, 0];
             if (
               !(
@@ -274,7 +274,7 @@ class CameraBlend {
     }
     return this.tae ? this.Wse : i;
   }
-  Eae(t) {
+  Sae(t) {
     this._ae.DeepCopy(t),
       this.uae.DeepCopy(t),
       (this._ae.Z += TRACE_START_HEIGHT),
@@ -530,7 +530,7 @@ class CameraBlend {
       t > this.fae.Size() ? (this.ResetBlendData(), 0) : t
     );
   }
-  Sae(t, i) {
+  Eae(t, i) {
     switch (((this.NextSpringBlendState = t), this.NextSpringBlendState)) {
       case 2:
         if (

@@ -46,65 +46,74 @@ class RangeCheck {
         r.ComponentsData,
         "RangeComponent",
       )?.Shape,
-      o = new SRange();
+      a = new SRange();
     switch (
-      ((o.RangeComponentShape = t), RangeCheck.RangeMap.set(e, o), t?.Type)
+      ((a.RangeComponentShape = t), RangeCheck.RangeMap.set(e, a), t?.Type)
     ) {
       case "Sphere":
-        var a = t.Center,
+        var o = t.Center,
           n = r.Transform.Pos;
-        (o.TargetPosition = Vector_1.Vector.Create(
-          n.X + (a?.X ?? 0),
-          n.Y + (a?.Y ?? 0),
-          n.Z + (a?.Z ?? 0),
+        (a.TargetPosition = Vector_1.Vector.Create(
+          n.X + (o?.X ?? 0),
+          n.Y + (o?.Y ?? 0),
+          n.Z + (o?.Z ?? 0),
         )),
-          (o.Radius = t.Radius);
+          (a.Radius = t.Radius);
         break;
       case "Box":
         var n = r.Transform.Pos,
-          a = r.Transform.Rot,
+          o = r.Transform.Rot,
           i = t.Center,
-          s = t.Size,
-          h = t.Rotator,
-          a = Rotator_1.Rotator.Create(
-            a?.Y ?? 0 + (h?.Y ?? 0),
-            a?.Z ?? 0 + (h?.Z ?? 0),
-            a?.X ?? 0 + (h?.X ?? 0),
+          h = t.Size,
+          c = t.Rotator,
+          o = Rotator_1.Rotator.Create(
+            o?.Y ?? 0 + (c?.Y ?? 0),
+            o?.Z ?? 0 + (c?.Z ?? 0),
+            o?.X ?? 0 + (c?.X ?? 0),
           ).Quaternion(),
-          h = Vector_1.Vector.Create(
+          c = Vector_1.Vector.Create(
             n.X + (i?.X ?? 0),
             n.Y + (i?.Y ?? 0),
             n.Z + (i?.Z ?? 0),
           ),
-          n = Transform_1.Transform.Create(a, h, Vector_1.Vector.OneVector),
+          n = Transform_1.Transform.Create(o, c, Vector_1.Vector.OneVector),
           i = Vector_1.Vector.Create(),
-          a = Vector_1.Vector.Create(s.X, -s.Y, -s.Z),
-          h =
-            (n.TransformPosition(a, i),
-            o.VecLB.Set(i.X, i.Y, i.Z),
-            a.Set(-s.X, -s.Y, -s.Z),
-            n.TransformPosition(a, i),
-            o.VecRB.Set(i.X, i.Y, i.Z),
-            a.Set(s.X, s.Y, -s.Z),
-            n.TransformPosition(a, i),
-            o.VecLF.Set(i.X, i.Y, i.Z),
-            a.Set(-s.X, s.Y, -s.Z),
-            n.TransformPosition(a, i),
-            o.VecRF.Set(i.X, i.Y, i.Z),
-            a.Set(-s.X, s.Y, s.Z),
-            n.TransformPosition(a, i),
+          o = Vector_1.Vector.Create(h.X, -h.Y, -h.Z),
+          c =
+            (n.TransformPosition(o, i),
+            a.VecLB.Set(i.X, i.Y, i.Z),
+            o.Set(-h.X, -h.Y, -h.Z),
+            n.TransformPosition(o, i),
+            a.VecRB.Set(i.X, i.Y, i.Z),
+            o.Set(h.X, h.Y, -h.Z),
+            n.TransformPosition(o, i),
+            a.VecLF.Set(i.X, i.Y, i.Z),
+            o.Set(-h.X, h.Y, -h.Z),
+            n.TransformPosition(o, i),
+            a.VecRF.Set(i.X, i.Y, i.Z),
+            o.Set(-h.X, h.Y, h.Z),
+            n.TransformPosition(o, i),
             i.Z),
-          s = (a.Set(-s.X, s.Y, -s.Z), n.TransformPosition(a, i), i.Z);
-        (o.High = h), (o.Low = s);
+          h = (o.Set(-h.X, h.Y, -h.Z), n.TransformPosition(o, i), i.Z);
+        (a.High = c), (a.Low = h);
     }
     return (
-      RangeCheck.RangeMap.set(e, o),
+      RangeCheck.RangeMap.set(e, a),
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("Controller", 46, "EntityRange创建成功", [
           "entityData",
           r,
         ]),
       !0
+    );
+  }
+  MapCheckReached() {
+    let t = void 0;
+    return (
+      RangeCheck.RangeMap?.forEach((e, r) => {
+        this.CheckReached(r) && (t = r);
+      }),
+      t
     );
   }
   CheckReached(e) {
@@ -117,36 +126,41 @@ class RangeCheck {
       return !1;
     var t = RangeCheck.RangeMap.get(e);
     if (!t) return !1;
-    let o = !1;
+    let a = !1;
     switch (t.RangeComponentShape.Type) {
       case "Sphere":
         t.TargetPosition &&
-          (o =
+          (a =
             Vector_1.Vector.Distance(this.PlayerPosition, t.TargetPosition) <
             t.Radius);
         break;
       case "Box":
-        o = this.Xqo(t);
+        a = this.WGo(t);
     }
-    return o;
+    return a;
   }
-  Xqo(e) {
-    var r, t, o, a;
+  WGo(e) {
+    var r, t, a, o;
     return (
       !!e &&
       !!(r = this.PlayerPosition) &&
       !(e.High < r.Z || e.Low > r.Z) &&
       ((t = e.VecLB),
-      (o = e.VecRB),
-      (a = e.VecLF),
+      (a = e.VecRB),
+      (o = e.VecLF),
       (e = e.VecRF),
-      !!(t && o && a && e)) &&
-      0 <= this.$qo(r, t, o) * this.$qo(r, e, a) &&
-      0 <= this.$qo(r, o, e) * this.$qo(r, a, t)
+      !!(t && a && o && e)) &&
+      0 <= this.KGo(r, t, a) * this.KGo(r, e, o) &&
+      0 <= this.KGo(r, a, e) * this.KGo(r, o, t)
     );
   }
-  $qo(e, r, t) {
+  KGo(e, r, t) {
     return (t.X - r.X) * (e.Y - r.Y) - (e.X - r.X) * (t.Y - r.Y);
+  }
+  Remove(e) {
+    RangeCheck.RangeMap &&
+      RangeCheck.RangeMap.get(e) &&
+      RangeCheck.RangeMap.delete(e);
   }
 }
 (exports.RangeCheck = RangeCheck).RangeMap = void 0;

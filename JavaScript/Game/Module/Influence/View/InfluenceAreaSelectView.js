@@ -14,16 +14,16 @@ const UE = require("ue"),
 class InfluenceAreaSelectView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.Yri = void 0),
-      (this.Jri = void 0),
-      (this.zri = 0),
-      (this.gpt = () => {
+      (this.Yni = void 0),
+      (this.Jni = void 0),
+      (this.zni = 0),
+      (this.Rvt = () => {
         this.CloseMe();
       }),
-      (this.xUt = () => {
+      (this.qAt = () => {
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.RefreshInfluencePanel,
-          this.zri,
+          this.zni,
         ),
           this.CloseMe();
       }),
@@ -31,13 +31,13 @@ class InfluenceAreaSelectView extends UiViewBase_1.UiViewBase {
         t = new AreaButtonItem(t);
         return (
           t.UpdateItem(e.Id),
-          t.SetToggleFunction(this.U4e),
-          t.SetCanExecuteChange(this.T7e),
+          t.SetToggleFunction(this.j5e),
+          t.SetCanExecuteChange(this.Lke),
           { Key: e.Id, Value: t }
         );
       }),
-      (this.U4e = (e) => {
-        this.zri && this.Zri(this.zri).SetToggleState(0, !1), (this.zri = e);
+      (this.j5e = (e) => {
+        this.zni && this.Zni(this.zni).SetToggleState(0, !1), (this.zni = e);
         var t = this.GetText(3),
           i = this.GetText(4),
           s =
@@ -57,7 +57,7 @@ class InfluenceAreaSelectView extends UiViewBase_1.UiViewBase {
             LguiUtil_1.LguiUtil.SetLocalText(i, "AreaLockContent"),
             n.SetInteractable(!1));
       }),
-      (this.T7e = (e) => this.zri !== e);
+      (this.Lke = (e) => this.zni !== e);
   }
   OnRegisterComponent() {
     (this.ComponentRegisterInfos = [
@@ -70,48 +70,48 @@ class InfluenceAreaSelectView extends UiViewBase_1.UiViewBase {
       [6, UE.UIInteractionGroup],
     ]),
       (this.BtnBindInfo = [
-        [0, this.gpt],
-        [5, this.xUt],
+        [0, this.Rvt],
+        [5, this.qAt],
       ]);
   }
   OnStart() {
-    this.Yri = new GenericLayoutNew_1.GenericLayoutNew(
+    this.Yni = new GenericLayoutNew_1.GenericLayoutNew(
       this.GetGridLayout(1),
       this.sGe,
     );
     var e = ConfigManager_1.ConfigManager.InfluenceConfig.GetCountryList();
-    this.Yri.RebuildLayoutByDataNew(e),
-      (this.Jri = new AreaButtonItem(this.GetItem(2))),
-      this.Jri.UpdateItem(InfluenceReputationDefine_1.NO_COUNTRY_ID),
-      this.Jri.SetToggleFunction(this.U4e),
-      this.Jri.SetCanExecuteChange(this.T7e);
+    this.Yni.RebuildLayoutByDataNew(e),
+      (this.Jni = new AreaButtonItem(this.GetItem(2))),
+      this.Jni.UpdateItem(InfluenceReputationDefine_1.NO_COUNTRY_ID),
+      this.Jni.SetToggleFunction(this.j5e),
+      this.Jni.SetCanExecuteChange(this.Lke);
   }
-  Zri(e) {
-    e = this.Yri.GetLayoutItemByKey(e);
-    return e || this.Jri;
+  Zni(e) {
+    e = this.Yni.GetLayoutItemByKey(e);
+    return e || this.Jni;
   }
   OnAfterShow() {
     var e = this.OpenParam;
-    this.Zri(e).SetToggleState(1, !0);
+    this.Zni(e).SetToggleState(1, !0);
   }
   OnBeforeDestroy() {
-    this.Yri.ClearChildren(),
-      (this.Yri = void 0),
-      this.Jri.Destroy(),
-      (this.Jri = void 0);
+    this.Yni.ClearChildren(),
+      (this.Yni = void 0),
+      this.Jni.Destroy(),
+      (this.Jni = void 0);
   }
 }
 exports.InfluenceAreaSelectView = InfluenceAreaSelectView;
 class AreaButtonItem extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
-      (this.U4e = void 0),
-      (this.OBt = void 0),
-      (this.z4t = 0),
-      (this.x4e = (e) => {
-        1 === e && this.U4e(this.z4t);
+      (this.j5e = void 0),
+      (this.Vbt = void 0),
+      (this.z5t = 0),
+      (this.Bke = (e) => {
+        1 === e && this.j5e(this.z5t);
       }),
-      (this.T7e = () => !this.OBt || this.OBt(this.z4t)),
+      (this.Lke = () => !this.Vbt || this.Vbt(this.z5t)),
       this.CreateThenShowByActor(e.GetOwner());
   }
   OnRegisterComponent() {
@@ -121,23 +121,23 @@ class AreaButtonItem extends UiPanelBase_1.UiPanelBase {
       [2, UE.UIItem],
       [3, UE.UIItem],
     ]),
-      (this.BtnBindInfo = [[1, this.x4e]]);
+      (this.BtnBindInfo = [[1, this.Bke]]);
   }
   OnStart() {
-    this.GetExtendToggle(1).CanExecuteChange.Bind(this.T7e);
+    this.GetExtendToggle(1).CanExecuteChange.Bind(this.Lke);
   }
   OnBeforeDestroy() {
     this.GetExtendToggle(1).CanExecuteChange.Unbind();
   }
-  eni(e) {
+  esi(e) {
     var t =
       ModelManager_1.ModelManager.InfluenceReputationModel.HasRedDotInCurrentCountry(
-        this.z4t,
+        this.z5t,
       );
     this.GetItem(3).SetUIActive(t && e);
   }
   UpdateItem(e) {
-    this.z4t = e;
+    this.z5t = e;
     var t = ConfigManager_1.ConfigManager.InfluenceConfig.GetCountryConfig(e),
       e =
         ModelManager_1.ModelManager.InfluenceReputationModel.IsCountryUnLock(e),
@@ -146,13 +146,13 @@ class AreaButtonItem extends UiPanelBase_1.UiPanelBase {
     i.SetUIActive(e),
       s.SetUIActive(!e),
       e && this.SetTextureByPath(t.Logo, i),
-      this.eni(e);
+      this.esi(e);
   }
   SetToggleFunction(e) {
-    this.U4e = e;
+    this.j5e = e;
   }
   SetCanExecuteChange(e) {
-    this.OBt = e;
+    this.Vbt = e;
   }
   SetToggleState(e, t) {
     this.GetExtendToggle(1).SetToggleStateForce(e, t);

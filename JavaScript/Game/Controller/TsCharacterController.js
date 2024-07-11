@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TsCharacterController = void 0);
 const puerts_1 = require("puerts"),
   UE = require("ue"),
+  Info_1 = require("../../Core/Common/Info"),
   Log_1 = require("../../Core/Common/Log"),
   Vector2D_1 = require("../../Core/Utils/Math/Vector2D"),
   CameraController_1 = require("../Camera/CameraController"),
@@ -11,19 +12,26 @@ const puerts_1 = require("puerts"),
   InputMappingsDefine_1 = require("../Ui/InputDistribute/InputMappingsDefine"),
   UiLayer_1 = require("../Ui/UiLayer"),
   TsBasePlayerController_1 = require("./TsBasePlayerController"),
+  TsPureUiKeyHandle_1 = require("./TsPureUiKeyHandle"),
   LEFT_BARACKET_NAME = new UE.FName("LeftBracket"),
   RIGHT_BARACKET_NAME = new UE.FName("RightBracket");
 class TsCharacterController extends TsBasePlayerController_1.TsBasePlayerController {
   constructor() {
     super(...arguments),
       (this.CursorInputVector = void 0),
-      (this.MoveInputVector = void 0);
+      (this.MoveInputVector = void 0),
+      (this.TsUiKeyHandle = void 0);
   }
   ReceiveBeginPlay() {
     super.ReceiveBeginPlay(),
       (this.ChangeRotationOnPossess = !1),
       (this.bShowMouseCursor = !0),
       UE.KuroInputFunctionLibrary.ApplyInputMode(this);
+  }
+  ReceiveDestroyed() {
+    super.ReceiveDestroyed(),
+      this.TsUiKeyHandle &&
+        (this.TsUiKeyHandle.Reset(), (this.TsUiKeyHandle = void 0));
   }
   ReceivePossess(e) {
     super.ReceivePossess(e), CameraController_1.CameraController.OnPossess(e);
@@ -61,21 +69,26 @@ class TsCharacterController extends TsBasePlayerController_1.TsBasePlayerControl
   }
   BindKeyHandle() {
     super.BindKeyHandle(),
-      this.AddKeyBinding(
-        new UE.InputChord(new UE.Key(LEFT_BARACKET_NAME), !1, !1, !1, !1),
-        1,
-        this,
-        new UE.FName(this.OnSetUiRootDeactivate.name),
-      ),
-      this.AddKeyBinding(
-        new UE.InputChord(new UE.Key(RIGHT_BARACKET_NAME), !1, !1, !1, !1),
-        1,
-        this,
-        new UE.FName(this.OnSetUiRootActive.name),
-      );
+      Info_1.Info.UseFastInputCallback
+        ? (this.TsUiKeyHandle ||
+            ((this.TsUiKeyHandle = new TsPureUiKeyHandle_1.TsPureUiKeyHandle()),
+            this.TsUiKeyHandle.Initialize(this)),
+          this.TsUiKeyHandle.BindKey())
+        : (this.AddKeyBinding(
+            new UE.InputChord(new UE.Key(LEFT_BARACKET_NAME), !1, !1, !1, !1),
+            1,
+            this,
+            new UE.FName(this.OnSetUiRootDeactivate.name),
+          ),
+          this.AddKeyBinding(
+            new UE.InputChord(new UE.Key(RIGHT_BARACKET_NAME), !1, !1, !1, !1),
+            1,
+            this,
+            new UE.FName(this.OnSetUiRootActive.name),
+          ));
   }
-  OnInputAxis(e, r) {
-    super.OnInputAxis(e, r),
+  OnInputAxis(e, r, t = !1) {
+    super.OnInputAxis(e, r, t),
       e === InputMappingsDefine_1.axisMappings.LookUp &&
         (this.CursorInputVector.Y = r),
       e === InputMappingsDefine_1.axisMappings.Turn &&

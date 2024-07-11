@@ -17,17 +17,17 @@ class ActivityRunItem extends UiPanelBase_1.UiPanelBase {
       (this.GridIndex = 0),
       (this.DisplayIndex = 0),
       (this.bOe = void 0),
-      (this.D2e = 0),
-      (this.V2e = (e) => {
-        e === this.D2e && this.H2e();
+      (this.HFe = 0),
+      (this.r3e = (e) => {
+        e === this.HFe && this.n3e();
       }),
       (this.JGe = () => {
         return new CommonItemSmallItemGrid_1.CommonItemSmallItemGrid();
       }),
-      (this.j2e = () => {
+      (this.s3e = () => {
         var e = ModelManager_1.ModelManager.ActivityRunModel.GetActivityRunData(
           ModelManager_1.ModelManager.ActivityRunModel.CurrentSelectChallengeId,
-        ).GetScoreIndex(this.D2e);
+        ).GetScoreIndex(this.HFe);
         ActivityRunController_1.ActivityRunController.RequestTakeChallengeReward(
           ModelManager_1.ModelManager.ActivityRunModel.CurrentSelectChallengeId,
           e,
@@ -44,7 +44,7 @@ class ActivityRunItem extends UiPanelBase_1.UiPanelBase {
       [4, UE.UIButtonComponent],
       [5, UE.UIItem],
     ]),
-      (this.BtnBindInfo = [[4, this.j2e]]);
+      (this.BtnBindInfo = [[4, this.s3e]]);
   }
   OnStart() {
     var e = this.GetScrollViewWithScrollbar(1);
@@ -56,41 +56,41 @@ class ActivityRunItem extends UiPanelBase_1.UiPanelBase {
   AddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnGetRunActivityReward,
-      this.V2e,
+      this.r3e,
     );
   }
   RemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnGetRunActivityReward,
-      this.V2e,
+      this.r3e,
     );
   }
   OnSelected(e) {}
   OnDeselected(e) {}
   Refresh(e, t, i) {
-    (this.D2e = e), this.mGe(), this.jqe(), this.H2e();
+    (this.HFe = e), this.mGe(), this.jqe(), this.n3e();
   }
   Clear() {}
   mGe() {
     LguiUtil_1.LguiUtil.SetLocalText(
       this.GetText(0),
       "ActivityRunPointNeed",
-      this.D2e.toString(),
+      this.HFe.toString(),
     );
   }
   jqe() {
     var e = ModelManager_1.ModelManager.ActivityRunModel.GetActivityRunData(
         ModelManager_1.ModelManager.ActivityRunModel.CurrentSelectChallengeId,
       ),
-      t = e.GetScoreIndex(this.D2e),
+      t = e.GetScoreIndex(this.HFe),
       e = e.GetScoreIndexPreviewItem(t);
     this.bOe.RefreshByData(e);
   }
-  H2e() {
+  n3e() {
     var e = ModelManager_1.ModelManager.ActivityRunModel.GetActivityRunData(
         ModelManager_1.ModelManager.ActivityRunModel.CurrentSelectChallengeId,
       ),
-      e = e.GetScoreIndexCannotGetReward(e.GetScoreIndex(this.D2e));
+      e = e.GetScoreIndexCannotGetReward(e.GetScoreIndex(this.HFe));
     this.GetText(2).SetUIActive(!1),
       this.GetButton(4).RootUIComp.SetUIActive(!1),
       this.GetItem(5).SetUIActive(!1),

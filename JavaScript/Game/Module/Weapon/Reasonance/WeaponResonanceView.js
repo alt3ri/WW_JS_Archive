@@ -24,47 +24,47 @@ const UE = require("ue"),
 class WeaponResonanceView extends UiTabViewBase_1.UiTabViewBase {
   constructor() {
     super(...arguments),
-      (this.Nlo = !1),
-      (this.p8t = void 0),
-      (this.tOo = void 0),
-      (this.ANo = 0),
-      (this.Nki = void 0),
-      (this.Oki = void 0),
-      (this.iOo = (e, i) => {
+      (this.B1o = !1),
+      (this.p9t = void 0),
+      (this.zOo = void 0),
+      (this.DOo = 0),
+      (this.N2i = void 0),
+      (this.O2i = void 0),
+      (this.ZOo = (e, i) => {
         var t;
-        e === this.ANo &&
-          ((this.Nki = UiSceneManager_1.UiSceneManager.GetWeaponObserver()),
-          (this.Oki =
+        e === this.DOo &&
+          ((this.N2i = UiSceneManager_1.UiSceneManager.GetWeaponObserver()),
+          (this.O2i =
             UiSceneManager_1.UiSceneManager.GetWeaponScabbardObserver()),
           WeaponController_1.WeaponController.PlayWeaponRenderingMaterial(
             "WeaponResonanceUpMaterialController",
-            this.Nki,
-            this.Oki,
+            this.N2i,
+            this.O2i,
           ),
-          (t = this.Nki.Model),
+          (t = this.N2i.Model),
           UiModelUtil_1.UiModelUtil.PlayEffectOnRoot(
             t,
             "WeaponResonanceUpEffect",
           ),
-          this.tOo.ClearSelectData(),
-          this.sct(),
+          this.zOo.ClearSelectData(),
+          this.pmt(),
           (t = { WeaponIncId: e, LastLevel: i }),
           UiManager_1.UiManager.OpenView("WeaponResonanceSuccessView", t));
       }),
-      (this.TGt = () =>
+      (this.LNt = () =>
         ModelManager_1.ModelManager.WeaponModel.GetResonanceMaterialList(
-          this.ANo,
+          this.DOo,
         )),
-      (this.QNo = () => {
-        this.sct();
+      (this.jOo = () => {
+        this.pmt();
       }),
-      (this.oOo = () => {
-        const t = this.tOo.GetCurrentSelectedData();
+      (this.eko = () => {
+        const t = this.zOo.GetCurrentSelectedData();
         if (t)
-          if (this.Nlo) {
+          if (this.B1o) {
             var i =
               ModelManager_1.ModelManager.WeaponModel.GetWeaponDataByIncId(
-                this.ANo,
+                this.DOo,
               );
             let e = 21;
             var n = t.IncId,
@@ -95,13 +95,13 @@ class WeaponResonanceView extends UiTabViewBase_1.UiTabViewBase {
                       ).Name,
                     ),
               n = r.GetWeaponName(i.GetWeaponConfig().WeaponName),
-              r = this.rOo();
+              r = this.tko();
             const a = i.GetIncId();
             i = new ConfirmBoxDefine_1.ConfirmBoxDataNew(e);
             i.SetTextArgs(o, n, r.toString()),
               i.FunctionMap.set(2, () => {
                 var e = [],
-                  i = { Ykn: t.IncId, I5n: 1, G3n: t.ItemId };
+                  i = { T5n: t.IncId, o9n: 1, f8n: t.ItemId };
                 e.push(i),
                   WeaponController_1.WeaponController.SendPbResonUpRequest(
                     a,
@@ -140,40 +140,40 @@ class WeaponResonanceView extends UiTabViewBase_1.UiTabViewBase {
     ];
   }
   OnStart() {
-    (this.ANo = this.ExtraParams),
-      (this.p8t = new ButtonItem_1.ButtonItem(this.GetItem(6))),
-      this.p8t.SetFunction(this.oOo),
-      this.nOo(),
-      this.sOo();
+    (this.DOo = this.ExtraParams),
+      (this.p9t = new ButtonItem_1.ButtonItem(this.GetItem(6))),
+      this.p9t.SetFunction(this.eko),
+      this.iko(),
+      this.oko();
   }
   AddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.WeaponResonanceSuccess,
-      this.iOo,
+      this.ZOo,
     );
   }
   RemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.WeaponResonanceSuccess,
-      this.iOo,
+      this.ZOo,
     );
   }
-  nOo() {
-    (this.tOo = new SingleItemSelect_1.SingleItemSelect()),
-      this.tOo.Init(this.GetItem(5)),
-      this.tOo.SetUseWayId(28),
-      this.tOo.SetInitSortToggleState(!0),
-      this.tOo.SetGetItemListFunction(this.TGt),
-      this.tOo.SetItemSelectChangeCallBack(this.QNo);
+  iko() {
+    (this.zOo = new SingleItemSelect_1.SingleItemSelect()),
+      this.zOo.Init(this.GetItem(5)),
+      this.zOo.SetUseWayId(28),
+      this.zOo.SetInitSortToggleState(!0),
+      this.zOo.SetGetItemListFunction(this.LNt),
+      this.zOo.SetItemSelectChangeCallBack(this.jOo);
   }
-  sOo() {
+  oko() {
     this.SetItemIcon(this.GetTexture(7), ItemDefines_1.EItemId.Gold);
   }
-  aOo(e, i) {
+  rko(e, i) {
     let t = 0;
-    this.tOo.GetCurrentSelectedData() &&
+    this.zOo.GetCurrentSelectedData() &&
       ((n = ModelManager_1.ModelManager.WeaponModel.GetWeaponDataByIncId(
-        this.ANo,
+        this.DOo,
       ).GetWeaponConfig()),
       (t = ModelManager_1.ModelManager.WeaponModel.GetResonanceNeedMoney(
         n.ResonId,
@@ -184,23 +184,23 @@ class WeaponResonanceView extends UiTabViewBase_1.UiTabViewBase {
       ItemDefines_1.EItemId.Gold,
     );
     this.GetText(8).SetText(t.toString()),
-      (this.Nlo = n >= t),
-      (this.GetText(8).useChangeColor = !this.Nlo);
+      (this.B1o = n >= t),
+      (this.GetText(8).useChangeColor = !this.B1o);
   }
-  sct() {
+  pmt() {
     var e = ModelManager_1.ModelManager.WeaponModel.GetWeaponDataByIncId(
-        this.ANo,
+        this.DOo,
       ),
       i = e.GetWeaponConfig(),
       e = e.GetResonanceLevel(),
-      t = this.rOo(),
+      t = this.tko(),
       n = e === i.ResonLevelLimit,
       r =
         (this.GetItem(3).SetUIActive(!n),
         this.GetText(1).SetUIActive(!n),
         this.GetItem(10).SetUIActive(!n),
         this.GetItem(4).SetUIActive(!n),
-        this.p8t.GetRootItem().SetUIActive(!n),
+        this.p9t.GetRootItem().SetUIActive(!n),
         this.GetItem(9).SetUIActive(n),
         LguiUtil_1.LguiUtil.SetLocalText(
           this.GetText(0),
@@ -218,7 +218,7 @@ class WeaponResonanceView extends UiTabViewBase_1.UiTabViewBase {
         "WeaponResonanceLevelText",
         t,
       ),
-        this.aOo(e, t);
+        this.rko(e, t);
       var a = ModelManager_1.ModelManager.WeaponModel.GetWeaponConfigDescParams(
           i,
           t,
@@ -252,11 +252,11 @@ class WeaponResonanceView extends UiTabViewBase_1.UiTabViewBase {
       this.Refresh();
   }
   Refresh() {
-    this.RefreshName(), this.sct();
+    this.RefreshName(), this.pmt();
   }
   RefreshName() {
     var e = ModelManager_1.ModelManager.WeaponModel.GetWeaponDataByIncId(
-        this.ANo,
+        this.DOo,
       ),
       i = e.GetWeaponConfig(),
       t = i.WeaponName,
@@ -279,12 +279,12 @@ class WeaponResonanceView extends UiTabViewBase_1.UiTabViewBase {
         ),
       );
   }
-  rOo() {
+  tko() {
     var e = ModelManager_1.ModelManager.WeaponModel.GetWeaponDataByIncId(
-        this.ANo,
+        this.DOo,
       ),
       i = e.GetResonanceLevel(),
-      t = this.tOo.GetCurrentSelectedData();
+      t = this.zOo.GetCurrentSelectedData();
     return t && 0 !== t.IncId
       ? ((t =
           ModelManager_1.ModelManager.WeaponModel.GetWeaponDataByIncId(

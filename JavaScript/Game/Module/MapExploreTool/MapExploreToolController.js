@@ -41,12 +41,12 @@ class MapExploreToolController extends UiControllerBase_1.UiControllerBase {
           (t.Rot = a.ActorRotationProxy),
           (t.SkillId = e),
           (t.PhantomSkillId = r),
-          this.SUi(t)
+          this.EAi(t)
             ? (ModelManager_1.ModelManager.MapExploreToolModel.SetCharExploreSkillBusy(
                 !0,
               ),
-              this.EUi(t, (o) => {
-                this.yUi(t, o);
+              this.SAi(t, (o) => {
+                this.yAi(t, o);
               }))
             : (Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info(
@@ -55,20 +55,20 @@ class MapExploreToolController extends UiControllerBase_1.UiControllerBase {
                   "[MapExploreTool] 客户端检测未通过",
                   ["UsingInfo", t],
                 ),
-              this.IUi(t, !1));
+              this.IAi(t, !1));
       }
     }
   }
-  static TUi(e) {
+  static TAi(e) {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info("Phantom", 40, "[MapExploreTool] 请求正式使用探索工具", [
         "UsingInfo",
         e,
       ]),
-      this.LUi(e, !0, (o) => {
+      this.LAi(e, !0, (o) => {
         o &&
         ModelManager_1.ModelManager.MapExploreToolModel.IsRespMeanSuccess(e, o)
-          ? (this.$xn(e, "ExploreDeploySuccess"), this.DUi(e, o))
+          ? (this.UBn(e, "ExploreDeploySuccess"), this.DAi(e, o))
           : (Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "Phantom",
@@ -77,17 +77,17 @@ class MapExploreToolController extends UiControllerBase_1.UiControllerBase {
                 ["UsingInfo", e],
                 ["Response", o],
               ),
-            this.IUi(e, !1));
+            this.IAi(e, !1));
       });
   }
-  static IUi(o, e) {
+  static IAi(o, e) {
     ModelManager_1.ModelManager.MapExploreToolModel.SetCharExploreSkillBusy(!1),
       e ||
         ModelManager_1.ModelManager.CreatureModel.GetEntityById(o.CharId)
-          ?.Entity?.GetComponent(186)
+          ?.Entity?.GetComponent(190)
           ?.ModifyCdTime([o.SkillId], 0, -1);
   }
-  static SUi(o) {
+  static EAi(o) {
     var e, r, a;
     return ModelManager_1.ModelManager.MapExploreToolModel.GetCharExploreSkillBusy()
       ? (Log_1.Log.CheckInfo() &&
@@ -101,12 +101,12 @@ class MapExploreToolController extends UiControllerBase_1.UiControllerBase {
       : ((a = (r = ModelManager_1.ModelManager.CreatureModel.GetEntityById(
           o.CharId,
         ))?.Entity?.GetComponent(3)),
-        (e = r?.Entity?.GetComponent(158)),
+        (e = r?.Entity?.GetComponent(160)),
         r && a && e
           ? a.IsAutonomousProxy
             ? e.PositionState !==
               CharacterUnifiedStateTypes_1.ECharPositionState.Ground
-              ? (this.RUi(o, "ExploreStateError"),
+              ? (this.RAi(o, "ExploreStateError"),
                 Log_1.Log.CheckInfo() &&
                   Log_1.Log.Info("Phantom", 40, "[MapExploreTool] 非贴地使用", [
                     "UsingInfo",
@@ -119,9 +119,9 @@ class MapExploreToolController extends UiControllerBase_1.UiControllerBase {
                   ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(
                     r,
                   ))?.InstType !==
-                  Protocol_1.Aki.Protocol.sOs.Proto_BigWorldInstance ||
+                  Protocol_1.Aki.Protocol.XFs.Proto_BigWorldInstance ||
                 13 !== a?.InstSubType
-                  ? (this.RUi(o, "ExplorePositionError"),
+                  ? (this.RAi(o, "ExplorePositionError"),
                     Log_1.Log.CheckInfo() &&
                       Log_1.Log.Info(
                         "Phantom",
@@ -130,8 +130,8 @@ class MapExploreToolController extends UiControllerBase_1.UiControllerBase {
                         ["UsingInfo", o],
                       ),
                     !1)
-                  : 1010 !== o.PhantomSkillId || this.UUi(o))
-            : (this.RUi(o, "OnylHostUse"),
+                  : 1010 !== o.PhantomSkillId || this.UAi(o))
+            : (this.RAi(o, "OnylHostUse"),
               Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info("Phantom", 40, "[MapExploreTool] 非主控使用", [
                   "UsingInfo",
@@ -145,13 +145,13 @@ class MapExploreToolController extends UiControllerBase_1.UiControllerBase {
               ]),
             !1));
   }
-  static UUi(o) {
+  static UAi(o) {
     return !(
       1010 !== o.PhantomSkillId ||
       (ModelManager_1.ModelManager.LevelFuncFlagModel.GetFuncFlagEnable(0)
         ? ModelManager_1.ModelManager.MapModel.IsInMapPolygon(o.Pos)
-          ? !this.AUi(o.Pos) &&
-            (this.RUi(o, "ExplorePositionError"),
+          ? !this.AAi(o.Pos) &&
+            (this.RAi(o, "ExplorePositionError"),
             Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "Phantom",
@@ -160,7 +160,7 @@ class MapExploreToolController extends UiControllerBase_1.UiControllerBase {
                 ["UsingInfo", o],
               ),
             1)
-          : (this.RUi(o, "ExplorePositionError"),
+          : (this.RAi(o, "ExplorePositionError"),
             Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "Phantom",
@@ -169,7 +169,7 @@ class MapExploreToolController extends UiControllerBase_1.UiControllerBase {
                 ["UsingInfo", o],
               ),
             1)
-        : (this.RUi(o, "ExploreTeleporterBan"),
+        : (this.RAi(o, "ExploreTeleporterBan"),
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "Phantom",
@@ -180,7 +180,7 @@ class MapExploreToolController extends UiControllerBase_1.UiControllerBase {
           1))
     );
   }
-  static AUi(o) {
+  static AAi(o) {
     var e = ModelManager_1.ModelManager.TraceElementModel.GetCapsuleTrace();
     if (!e) return !1;
     (e.WorldContextObject = GlobalData_1.GlobalData.World),
@@ -200,21 +200,21 @@ class MapExploreToolController extends UiControllerBase_1.UiControllerBase {
       ModelManager_1.ModelManager.TraceElementModel.ClearCapsuleTrace(), !o
     );
   }
-  static EUi(o, e) {
-    this.LUi(o, !1, e);
+  static SAi(o, e) {
+    this.LAi(o, !1, e);
   }
-  static yUi(o, e) {
+  static yAi(o, e) {
     if (e) {
-      var r = this.PUi(o, e),
-        a = this.xUi(o, e);
+      var r = this.PAi(o, e),
+        a = this.xAi(o, e);
       if (
         ModelManager_1.ModelManager.MapExploreToolModel.IsRespMeanCheckPass(
           o,
           e,
         )
       )
-        return void (a || this.TUi(o));
-      if (1011 === o.PhantomSkillId) if (this.wUi(o, e)) return;
+        return void (a || this.TAi(o));
+      if (1011 === o.PhantomSkillId) if (this.wAi(o, e)) return;
       r ||
         a ||
         (Log_1.Log.CheckWarn() &&
@@ -234,12 +234,12 @@ class MapExploreToolController extends UiControllerBase_1.UiControllerBase {
         ["UsingInfo", o],
         ["Response", e],
       ),
-      this.IUi(o, !1);
+      this.IAi(o, !1);
   }
-  static wUi(o, e) {
+  static wAi(o, e) {
     return (
       1011 === o.PhantomSkillId &&
-      e?.Kms === Protocol_1.Aki.Protocol.lkn.Proto_ErrSkillIsEffect &&
+      e?.hvs === Protocol_1.Aki.Protocol.O4n.Proto_ErrSkillIsEffect &&
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Phantom",
@@ -248,11 +248,11 @@ class MapExploreToolController extends UiControllerBase_1.UiControllerBase {
           ["UsingInfo", o],
           ["Response", e],
         ),
-      this.DUi(o),
+      this.DAi(o),
       !0)
     );
   }
-  static DUi(o, e) {
+  static DAi(o, e) {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info("Phantom", 40, "[MapExploreTool] 探索工具使用成功", [
         "UsingInfo",
@@ -263,9 +263,9 @@ class MapExploreToolController extends UiControllerBase_1.UiControllerBase {
         o,
         e,
       ),
-      this.IUi(o, !0);
+      this.IAi(o, !0);
   }
-  static xUi(r, o) {
+  static xAi(r, o) {
     var a = ModelManager_1.ModelManager.MapExploreToolModel.GetRespConfirmBoxId(
       r,
       o,
@@ -317,10 +317,10 @@ class MapExploreToolController extends UiControllerBase_1.UiControllerBase {
     }
     return (
       t.FunctionMap.set(1, () => {
-        this.IUi(r, !1);
+        this.IAi(r, !1);
       }),
       t.FunctionMap.set(2, () => {
-        this.TUi(r);
+        this.TAi(r);
       }),
       ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
         t,
@@ -328,7 +328,7 @@ class MapExploreToolController extends UiControllerBase_1.UiControllerBase {
       !0
     );
   }
-  static PUi(o, e) {
+  static PAi(o, e) {
     var r = ModelManager_1.ModelManager.MapExploreToolModel.GetRespTipsId(o, e);
     return (
       !!r &&
@@ -341,11 +341,11 @@ class MapExploreToolController extends UiControllerBase_1.UiControllerBase {
           ["Response", e],
           ["PromptId", r],
         ),
-      this.RUi(o, r),
+      this.RAi(o, r),
       !0)
     );
   }
-  static RUi(o, e) {
+  static RAi(o, e) {
     var r = [];
     switch (e) {
       case "ExploreActivating":
@@ -389,7 +389,7 @@ class MapExploreToolController extends UiControllerBase_1.UiControllerBase {
       r,
     );
   }
-  static $xn(o, e) {
+  static UBn(o, e) {
     var r = [];
     if ("ExploreDeploySuccess" === e) {
       o = ConfigManager_1.ConfigManager.RouletteConfig.GetNameByPhantomSkillId(
@@ -411,13 +411,13 @@ class MapExploreToolController extends UiControllerBase_1.UiControllerBase {
       r,
     );
   }
-  static LUi(o, e, r) {
-    var a = Protocol_1.Aki.Protocol.SJn.create();
-    (a.M3n = o.Pos),
-      (a.S3n = o.Rot),
-      (a.vkn = o.PhantomSkillId),
-      (a.$6n = e),
-      Net_1.Net.Call(22248, a, r);
+  static LAi(o, e, r) {
+    var a = Protocol_1.Aki.Protocol.Cts.create();
+    (a.e8n = o.Pos),
+      (a.t8n = o.Rot),
+      (a.X4n = o.PhantomSkillId),
+      (a.D7n = e),
+      Net_1.Net.Call(17233, a, r);
   }
 }
 exports.MapExploreToolController = MapExploreToolController;

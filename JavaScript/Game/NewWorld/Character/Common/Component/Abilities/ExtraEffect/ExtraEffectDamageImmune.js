@@ -4,16 +4,16 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const ExtraEffectBase_1 = require("./ExtraEffectBase");
 class DamageImmune extends ExtraEffectBase_1.BuffEffect {
   constructor() {
-    super(...arguments), (this.yQo = new Array(7));
+    super(...arguments), (this.MXo = new Array(7));
   }
   InitParameters(e) {
     for (const r of e.ExtraEffectParameters) {
       var t = Number(r);
-      this.yQo[t] = !0;
+      this.MXo[t] = !0;
     }
   }
   OnExecute(e) {
-    return this.yQo[e.DamageData.Element];
+    return this.MXo[e.DamageData.Element];
   }
   static ApplyEffects(e, t, r) {
     var s = r.Attacker.OwnerBuffComponent;

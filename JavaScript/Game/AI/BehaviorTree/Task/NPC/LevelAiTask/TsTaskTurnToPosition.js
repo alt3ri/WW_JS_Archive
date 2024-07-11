@@ -4,6 +4,7 @@ const UE = require("ue"),
   Log_1 = require("../../../../../../Core/Common/Log"),
   Vector_1 = require("../../../../../../Core/Utils/Math/Vector"),
   GlobalData_1 = require("../../../../../GlobalData"),
+  GravityUtils_1 = require("../../../../../Utils/GravityUtils"),
   AiContollerLibrary_1 = require("../../../../Controller/AiContollerLibrary"),
   TsTaskAbortImmediatelyBase_1 = require("../../TsTaskAbortImmediatelyBase"),
   TOLERANCE = 3;
@@ -36,7 +37,7 @@ class TsTaskTurnToPosition extends TsTaskAbortImmediatelyBase_1.default {
       ? ((s = (e = e.CharAiDesignComp.Entity).GetComponent(0)),
         e?.Valid
           ? ((this.Character = e.GetComponent(3)),
-            (e = e.GetComponent(36)?.CharacterMovement)?.IsValid()
+            (e = e.GetComponent(37)?.CharacterMovement)?.IsValid()
               ? ((this.MovementMode = e.MovementMode),
                 (e.MovementMode = 1),
                 AiContollerLibrary_1.AiControllerLibrary.TurnToTarget(
@@ -44,26 +45,32 @@ class TsTaskTurnToPosition extends TsTaskAbortImmediatelyBase_1.default {
                   this.TsTargetPos,
                   this.TsTurnSpeed,
                 ))
-              : this.FinishExecute(!0))
+              : (Log_1.Log.CheckError() &&
+                  Log_1.Log.Error(
+                    "LevelAi",
+                    51,
+                    "[TsTaskTurnToPosition]无效的CharacterMovement",
+                    ["PbDataId", s.GetPbDataId()],
+                  ),
+                this.FinishExecute(!0)))
           : (Log_1.Log.CheckError() &&
               Log_1.Log.Error("LevelAi", 30, "执行转向动作时实体不存在:", [
                 "PbDataId",
                 s.GetPbDataId(),
               ]),
-            this.FinishExecute(!1)))
+            this.FinishExecute(!0)))
       : (Log_1.Log.CheckError() &&
           Log_1.Log.Error("BehaviorTree", 6, "错误的Controller类型", [
             "Type",
             t.GetClass().GetName(),
           ]),
-        this.FinishExecute(!1));
+        this.FinishExecute(!0));
   }
   ReceiveTickAI(t, i, s) {
-    this.Character.InputRotatorProxy.Equals(
-      this.Character.ActorRotationProxy,
-      TOLERANCE,
-    ) &&
-      ((this.Character.Entity.GetComponent(36).CharacterMovement.MovementMode =
+    GravityUtils_1.GravityUtils.GetAngleOffsetFromCurrentToInputAbs(
+      this.Character,
+    ) < TOLERANCE &&
+      ((this.Character.Entity.GetComponent(37).CharacterMovement.MovementMode =
         this.MovementMode),
       this.Finish(!0));
   }

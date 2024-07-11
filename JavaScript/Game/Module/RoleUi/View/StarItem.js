@@ -6,7 +6,7 @@ const UE = require("ue"),
   GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract");
 class StarItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
-    super(...arguments), (this.EPe = void 0);
+    super(...arguments), (this.SPe = void 0);
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -18,7 +18,7 @@ class StarItem extends GridProxyAbstract_1.GridProxyAbstract {
     ];
   }
   OnStart() {
-    (this.EPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem)),
+    (this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem)),
       this.SetImgStarLoopItemActive(!1);
   }
   SetActive(t) {
@@ -45,12 +45,12 @@ class StarItem extends GridProxyAbstract_1.GridProxyAbstract {
     this.GetItem(4).SetUIActive(t);
   }
   PlayAutoLoopSequence() {
-    this.EPe?.PlayLevelSequenceByName("AutoLoop");
+    this.SPe?.PlayLevelSequenceByName("AutoLoop");
   }
   PlayActiveSequence() {
     this.SetImgStarOnActive(!0),
       this.SetImgStarOffActive(!1),
-      this.EPe?.PlayLevelSequenceByName("Active");
+      this.SPe?.PlayLevelSequenceByName("Active");
   }
 }
 exports.StarItem = StarItem;

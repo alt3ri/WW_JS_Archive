@@ -14,18 +14,18 @@ const UE = require("ue"),
 class PhantomBattleFettersObtainView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.$Vi = void 0),
-      (this.YVi = void 0),
-      (this.JVi = (e, t, i) => {
+      (this.X6i = void 0),
+      (this.$6i = void 0),
+      (this.Y6i = (e, t, i) => {
         t = new PhantomBattleItemView_1.PhantomFettersObtainItem(t);
         return (
           t.Init(),
           t.Update(e),
-          t.BindOnItemButtonClickedCallback(this.zVi),
+          t.BindOnItemButtonClickedCallback(this.J6i),
           { Key: i, Value: t }
         );
       }),
-      (this.zVi = (e) => {
+      (this.J6i = (e) => {
         ControllerHolder_1.ControllerHolder.AdventureGuideController.JumpToTargetView(
           "MonsterDetectView",
           ConfigManager_1.ConfigManager.CalabashConfig.GetCalabashDevelopRewardByMonsterId(
@@ -33,10 +33,10 @@ class PhantomBattleFettersObtainView extends UiViewBase_1.UiViewBase {
           )?.MonsterProbeId,
         );
       }),
-      (this.mIt = () => {
+      (this.m2e = () => {
         var e;
         (ModelManager_1.ModelManager.PhantomBattleModel.CurrentSelectedFetter =
-          this.$Vi),
+          this.X6i),
           this.CloseMe(),
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.VisionFilterMonster,
@@ -58,21 +58,21 @@ class PhantomBattleFettersObtainView extends UiViewBase_1.UiViewBase {
       [0, UE.UIScrollViewWithScrollbarComponent],
       [1, UE.UIButtonComponent],
     ]),
-      (this.BtnBindInfo = [[1, this.mIt]]);
+      (this.BtnBindInfo = [[1, this.m2e]]);
   }
   OnStart() {
     var e = this.OpenParam;
-    (this.YVi = new GenericScrollView_1.GenericScrollView(
+    (this.$6i = new GenericScrollView_1.GenericScrollView(
       this.GetScrollViewWithScrollbar(0),
-      this.JVi,
+      this.Y6i,
     )),
       this.ShowFettersObtainView(e);
   }
   ShowFettersObtainView(e) {
-    this.SetActive(!0), (this.$Vi = e);
+    this.SetActive(!0), (this.X6i = e);
   }
   OnBeforeDestroy() {
-    this.YVi.ClearChildren();
+    this.$6i.ClearChildren();
   }
 }
 exports.PhantomBattleFettersObtainView = PhantomBattleFettersObtainView;

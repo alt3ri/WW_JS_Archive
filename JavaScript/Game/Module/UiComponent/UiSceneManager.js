@@ -23,8 +23,8 @@ class UiSceneManager {
     GlobalData_1.GlobalData.SetUiState(0),
       (UiSceneManager.CurUiSceneName = ""),
       EventSystem_1.EventSystem.Add(
-        EventDefine_1.EEventName.ResetModuleByResetToBattleView,
-        UiSceneManager.vji,
+        EventDefine_1.EEventName.ResetModuleAfterResetToBattleView,
+        UiSceneManager.fWi,
       );
   }
   static OpenUiScene(e, a) {
@@ -76,12 +76,12 @@ class UiSceneManager {
     UiSceneManager.ForceCloseUiScene();
   }
   static ForceCloseUiScene() {
-    this.vPo();
+    this.gxo();
   }
   static ForceCloseUiSceneImmediately() {
-    this.vPo();
+    this.gxo();
   }
-  static vPo() {
+  static gxo() {
     var e, a;
     StringUtils_1.StringUtils.IsEmpty(UiSceneManager.CurUiSceneName) ||
       ((UiSceneManager.CurUiSceneName = ""),
@@ -177,7 +177,7 @@ class UiSceneManager {
             ))
           : GlobalData_1.GlobalData.SetUiState(r));
   }
-  static MPo(e) {
+  static fxo(e) {
     if (GlobalData_1.GlobalData.World)
       return SkeletalObserverManager_1.SkeletalObserverManager.NewSkeletalObserver(
         e,
@@ -189,158 +189,158 @@ class UiSceneManager {
         "SpawnSkeletalObserverHandle failed, GlobalData.World is null",
       );
   }
-  static InitWeaponObserver() {
-    var e = UiSceneManager.MPo(3);
-    return this.SPo.Push(e), e;
+  static InitWeaponObserver(e = !1) {
+    (e = e ? 4 : 3), (e = UiSceneManager.fxo(e));
+    return this.pxo.Push(e), e;
   }
   static GetWeaponObserver() {
-    if (!this.SPo.Empty) return this.SPo.Peek();
-    Log_1.Log.CheckError() &&
-      Log_1.Log.Error("UiSceneManager", 17, "[WeaponObserverStack]为空");
+    if (!this.pxo.Empty) return this.pxo.Peek();
+    Log_1.Log.CheckWarn() &&
+      Log_1.Log.Warn("UiSceneManager", 17, "[WeaponObserverStack]为空");
   }
   static DestroyWeaponObserver(e) {
-    this.SPo.Empty ||
-      (this.SPo.Delete(e),
+    this.pxo.Empty ||
+      (this.pxo.Delete(e),
       SkeletalObserverManager_1.SkeletalObserverManager.DestroySkeletalObserver(
         e,
       ));
   }
   static DestroyAllWeaponObserver() {
-    for (; !this.SPo.Empty; ) {
-      var e = this.SPo.Pop();
+    for (; !this.pxo.Empty; ) {
+      var e = this.pxo.Pop();
       this.DestroyWeaponObserver(e);
     }
   }
   static InitWeaponScabbardObserver() {
-    var e = UiSceneManager.MPo(3);
-    return this.EPo.Push(e), e;
+    var e = UiSceneManager.fxo(3);
+    return this.vxo.Push(e), e;
   }
   static GetWeaponScabbardObserver() {
-    if (!this.EPo.Empty) return this.EPo.Peek();
-    Log_1.Log.CheckError() &&
-      Log_1.Log.Error("UiSceneManager", 17, "[WeaponScabbardStack]为空");
+    if (!this.vxo.Empty) return this.vxo.Peek();
+    Log_1.Log.CheckWarn() &&
+      Log_1.Log.Warn("UiSceneManager", 17, "[WeaponScabbardStack]为空");
   }
   static DestroyWeaponScabbardObserver(e) {
-    this.EPo.Empty ||
-      (this.EPo.Delete(e),
+    this.vxo.Empty ||
+      (this.vxo.Delete(e),
       SkeletalObserverManager_1.SkeletalObserverManager.DestroySkeletalObserver(
         e,
       ));
   }
   static DestroyAllWeaponScabbardObserver() {
-    for (; !this.EPo.Empty; ) {
-      var e = this.EPo.Pop();
+    for (; !this.vxo.Empty; ) {
+      var e = this.vxo.Pop();
       this.DestroyWeaponScabbardObserver(e);
     }
   }
   static InitPhantomObserver() {
-    void 0 !== UiSceneManager.yPo
+    void 0 !== UiSceneManager.Mxo
       ? Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn("UiSceneManager", 17, "[PhantomObserver]重复初始化")
-      : (UiSceneManager.yPo = UiSceneManager.MPo(6));
+      : (UiSceneManager.Mxo = UiSceneManager.fxo(7));
   }
   static GetPhantomObserver() {
-    if (UiSceneManager.yPo) return UiSceneManager.yPo;
-    Log_1.Log.CheckError() &&
-      Log_1.Log.Error("UiSceneManager", 17, "[PhantomObserver]未初始化");
+    if (UiSceneManager.Mxo) return UiSceneManager.Mxo;
+    Log_1.Log.CheckWarn() &&
+      Log_1.Log.Warn("UiSceneManager", 17, "[PhantomObserver]未初始化");
   }
   static DestroyPhantomObserver() {
-    UiSceneManager.yPo &&
+    UiSceneManager.Mxo &&
       (SkeletalObserverManager_1.SkeletalObserverManager.DestroySkeletalObserver(
-        UiSceneManager.yPo,
+        UiSceneManager.Mxo,
       ),
-      (UiSceneManager.yPo = void 0));
+      (UiSceneManager.Mxo = void 0));
   }
   static InitHandBookObserver() {
-    void 0 !== UiSceneManager.IPo
+    void 0 !== UiSceneManager.Exo
       ? Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn("UiSceneManager", 17, "[HandBookObserver]重复初始化")
-      : (UiSceneManager.IPo = UiSceneManager.MPo(6));
+      : (UiSceneManager.Exo = UiSceneManager.fxo(7));
   }
   static GetHandBookObserver() {
-    if (UiSceneManager.IPo) return UiSceneManager.IPo;
-    Log_1.Log.CheckError() &&
-      Log_1.Log.Error("UiSceneManager", 17, "[HandBookObserver]未初始化");
+    if (UiSceneManager.Exo) return UiSceneManager.Exo;
+    Log_1.Log.CheckWarn() &&
+      Log_1.Log.Warn("UiSceneManager", 17, "[HandBookObserver]未初始化");
   }
   static DestroyHandBookObserver() {
-    UiSceneManager.IPo &&
+    UiSceneManager.Exo &&
       (SkeletalObserverManager_1.SkeletalObserverManager.DestroySkeletalObserver(
-        UiSceneManager.IPo,
+        UiSceneManager.Exo,
       ),
-      (UiSceneManager.IPo = void 0));
+      (UiSceneManager.Exo = void 0));
   }
   static InitRoleSystemRoleActor(e) {
-    var a = this.TPo.Peek(),
+    var a = this.Sxo.Peek(),
       a =
         (a && a.SetMoveOutActor(),
         UiSceneRoleActorManager_1.UiSceneRoleActorManager.CreateUiSceneRoleActor(
           e,
         ));
-    return this.TPo.Push(a), a;
+    return this.Sxo.Push(a), a;
   }
   static GetRoleSystemRoleActor() {
-    if (!this.TPo.Empty) return UiSceneManager.TPo.Peek();
-    Log_1.Log.CheckError() &&
-      Log_1.Log.Error("UiSceneManager", 17, "[RoleSystemActorStack]为空");
+    if (!this.Sxo.Empty) return UiSceneManager.Sxo.Peek();
+    Log_1.Log.CheckWarn() &&
+      Log_1.Log.Warn("UiSceneManager", 17, "[RoleSystemActorStack]为空");
   }
   static HasRoleSystemRoleActor() {
-    return !this.TPo.Empty;
+    return !this.Sxo.Empty;
   }
   static HideRoleSystemRoleActor() {
     var e;
-    this.TPo.Empty ||
-      ((e = UiSceneManager.TPo.Peek().Model),
+    this.Sxo.Empty ||
+      ((e = UiSceneManager.Sxo.Peek().Model),
       UiModelUtil_1.UiModelUtil.SetVisible(e, !1));
   }
   static ShowRoleSystemRoleActor() {
     var e;
-    this.TPo.Empty ||
-      ((e = UiSceneManager.TPo.Peek().Model),
+    this.Sxo.Empty ||
+      ((e = UiSceneManager.Sxo.Peek().Model),
       UiModelUtil_1.UiModelUtil.SetVisible(e, !0));
   }
   static DestroyRoleSystemRoleActor(e) {
     let a = !1;
     if (
-      (this.TPo.Empty ||
-        (UiSceneManager.TPo.Delete(e),
+      (this.Sxo.Empty ||
+        (UiSceneManager.Sxo.Delete(e),
         (e = e.GetRoleActorIndex()),
         (a =
           UiSceneRoleActorManager_1.UiSceneRoleActorManager.DestroyUiSceneRoleActor(
             e,
           ))),
-      !this.TPo.Empty)
+      !this.Sxo.Empty)
     ) {
-      const e = UiSceneManager.TPo.Peek();
+      const e = UiSceneManager.Sxo.Peek();
       e.SetMoveInActor();
     }
     return a;
   }
   static DestroyAllRoleSystemRoleActor() {
-    for (; !this.TPo.Empty; ) {
-      var e = this.TPo.Pop().GetRoleActorIndex();
+    for (; !this.Sxo.Empty; ) {
+      var e = this.Sxo.Pop().GetRoleActorIndex();
       UiSceneRoleActorManager_1.UiSceneRoleActorManager.DestroyUiSceneRoleActor(
         e,
       );
     }
   }
   static InitGachaItemObserver() {
-    void 0 !== UiSceneManager.MWt
+    void 0 !== UiSceneManager.MKt
       ? Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn("UiSceneManager", 17, "[GachaItemObserver]重复初始化")
-      : (UiSceneManager.MWt = UiSceneManager.MPo(3));
+      : (UiSceneManager.MKt = UiSceneManager.fxo(3));
   }
   static GetGachaItemObserver() {
-    var e = UiSceneManager.MWt;
+    var e = UiSceneManager.MKt;
     if (e) return e;
-    Log_1.Log.CheckError() &&
-      Log_1.Log.Error("UiSceneManager", 17, "[GachaItemObserver]未初始化");
+    Log_1.Log.CheckWarn() &&
+      Log_1.Log.Warn("UiSceneManager", 17, "[GachaItemObserver]未初始化");
   }
   static DestroyGachaItemObserver() {
-    UiSceneManager.MWt &&
+    UiSceneManager.MKt &&
       (SkeletalObserverManager_1.SkeletalObserverManager.DestroySkeletalObserver(
-        UiSceneManager.MWt,
+        UiSceneManager.MKt,
       ),
-      (UiSceneManager.MWt = void 0));
+      (UiSceneManager.MKt = void 0));
   }
   static CreateHandBookVision(e) {
     var e = ActorSystem_1.ActorSystem.Get(e, new UE.Transform(), void 0),
@@ -353,11 +353,11 @@ class UiSceneManager {
     var t = a.K2_GetActorLocation(),
       a = a.K2_GetActorRotation();
     e.K2_SetActorLocationAndRotation(t, a, !1, void 0, !1),
-      this.LPo && this.DestroyHandBookVision(),
-      (this.LPo = e);
+      this.yxo && this.DestroyHandBookVision(),
+      (this.yxo = e);
   }
   static GetHandBookVision() {
-    return this.LPo;
+    return this.yxo;
   }
   static GetHandBookCaseActor() {
     return UE.KuroCollectActorComponent.GetActorWithTag(
@@ -366,32 +366,32 @@ class UiSceneManager {
     );
   }
   static DestroyHandBookVision() {
-    this.LPo &&
-      (this.LPo.PlayEnd(),
-      ActorSystem_1.ActorSystem.Put(this.LPo),
-      (this.LPo = void 0));
+    this.yxo &&
+      (this.yxo.PlayEnd(),
+      ActorSystem_1.ActorSystem.Put(this.yxo),
+      (this.yxo = void 0));
   }
   static InitVisionSkeletalHandle() {
-    void 0 !== UiSceneManager.i7i
-      ? Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Phantom", 17, "[VisionSkeletalHandle]重复初始化")
-      : (UiSceneManager.i7i = UiSceneManager.MPo(6));
+    void 0 !== UiSceneManager.tHi
+      ? Log_1.Log.CheckWarn() &&
+        Log_1.Log.Warn("Phantom", 17, "[VisionSkeletalHandle]重复初始化")
+      : (UiSceneManager.tHi = UiSceneManager.fxo(7));
   }
   static HasVisionSkeletalHandle() {
-    return void 0 !== UiSceneManager.i7i;
+    return void 0 !== UiSceneManager.tHi;
   }
   static GetVisionSkeletalHandle() {
-    var e = UiSceneManager.i7i;
+    var e = UiSceneManager.tHi;
     if (e) return e;
-    Log_1.Log.CheckError() &&
-      Log_1.Log.Error("UiSceneManager", 17, "[VisionSkeletalHandle]未初始化");
+    Log_1.Log.CheckWarn() &&
+      Log_1.Log.Warn("UiSceneManager", 17, "[VisionSkeletalHandle]未初始化");
   }
   static DestroyVisionSkeletalHandle() {
-    UiSceneManager.i7i &&
+    UiSceneManager.tHi &&
       (SkeletalObserverManager_1.SkeletalObserverManager.DestroySkeletalObserver(
-        UiSceneManager.i7i,
+        UiSceneManager.tHi,
       ),
-      (UiSceneManager.i7i = void 0));
+      (UiSceneManager.tHi = void 0));
   }
   static AddUiShowRoomShowActor(e, a) {
     var r = UE.KuroCollectActorComponent.GetActorWithTag(
@@ -412,7 +412,7 @@ class UiSceneManager {
     UiSceneManager.OpenUiScene(e, () => {
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("Role", 44, "3D UI场景加载成功！"),
-        this.DPo(),
+        this.Ixo(),
         a.SetResult(void 0);
     }) || a.SetResult(void 0),
       await a.Promise;
@@ -420,25 +420,25 @@ class UiSceneManager {
   static ExitScene() {
     UiSceneManager.CloseUiScene();
   }
-  static DPo() {
+  static Ixo() {
     GlobalData_1.GlobalData.World &&
       (CameraController_1.CameraController.ExitCameraMode(2, 0, 2, 0),
       CameraController_1.CameraController.EnterCameraMode(2, 0, 2, 0));
   }
   static SetUiStartSequenceFrame(e) {
-    0 === this.RPo && (this.RPo = e);
+    0 === this.Txo && (this.Txo = e);
   }
   static SetUiEndSequenceFrame(e) {
-    0 === this.UPo && (this.UPo = e);
+    0 === this.Lxo && (this.Lxo = e);
   }
   static ClearUiSequenceFrame() {
-    (this.RPo = 0), (this.UPo = 0);
+    (this.Txo = 0), (this.Lxo = 0);
   }
   static GetUiStartSequenceFrame() {
-    return this.RPo;
+    return this.Txo;
   }
   static GetUiEndSequenceFrame() {
-    return this.UPo;
+    return this.Lxo;
   }
   static HideObserver(e, a) {
     e &&
@@ -465,17 +465,17 @@ class UiSceneManager {
 }
 ((exports.UiSceneManager = UiSceneManager).CurUiSceneName = ""),
   (UiSceneManager.LoadSuccessFunction = void 0),
-  (UiSceneManager.vji = () => {
+  (UiSceneManager.fWi = () => {
     UiSceneManager.ForceCloseUiSceneImmediately();
   }),
-  (UiSceneManager.SPo = new Stack_1.Stack()),
-  (UiSceneManager.EPo = new Stack_1.Stack()),
-  (UiSceneManager.yPo = void 0),
-  (UiSceneManager.IPo = void 0),
-  (UiSceneManager.TPo = new Stack_1.Stack()),
-  (UiSceneManager.MWt = void 0),
-  (UiSceneManager.LPo = void 0),
-  (UiSceneManager.i7i = void 0),
-  (UiSceneManager.RPo = 0),
-  (UiSceneManager.UPo = 0);
+  (UiSceneManager.pxo = new Stack_1.Stack()),
+  (UiSceneManager.vxo = new Stack_1.Stack()),
+  (UiSceneManager.Mxo = void 0),
+  (UiSceneManager.Exo = void 0),
+  (UiSceneManager.Sxo = new Stack_1.Stack()),
+  (UiSceneManager.MKt = void 0),
+  (UiSceneManager.yxo = void 0),
+  (UiSceneManager.tHi = void 0),
+  (UiSceneManager.Txo = 0),
+  (UiSceneManager.Lxo = 0);
 //# sourceMappingURL=UiSceneManager.js.map

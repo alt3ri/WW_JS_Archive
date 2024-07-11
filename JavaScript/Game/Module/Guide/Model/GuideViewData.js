@@ -5,91 +5,91 @@ const Log_1 = require("../../../../Core/Common/Log"),
   ConfigManager_1 = require("../../../Manager/ConfigManager");
 class GuideStepViewData {
   constructor(t) {
-    (this._Jt = !0),
+    (this._zt = !0),
       (this.xqe = void 0),
-      (this.OKt = void 0),
-      (this.uJt = void 0),
-      (this.cJt = void 0),
+      (this.OQt = void 0),
+      (this.uzt = void 0),
+      (this.czt = void 0),
       (this.IsAttachToBattleView = !1),
-      (this.mJt = void 0),
-      (this.dJt = void 0),
-      (this.OKt = t);
+      (this.mzt = void 0),
+      (this.dzt = void 0),
+      (this.OQt = t);
   }
   get ViewConf() {
-    switch (this.OKt.Config.ContentType) {
+    switch (this.OQt.Config.ContentType) {
       case 4:
-        this.uJt = ConfigManager_1.ConfigManager.GuideConfig.GetGuideFocus(
-          this.OKt.Id,
+        this.uzt = ConfigManager_1.ConfigManager.GuideConfig.GetGuideFocus(
+          this.OQt.Id,
         );
         break;
       case 1:
-        this.uJt = ConfigManager_1.ConfigManager.GuideConfig.GetGuideTips(
-          this.OKt.Id,
+        this.uzt = ConfigManager_1.ConfigManager.GuideConfig.GetGuideTips(
+          this.OQt.Id,
         );
         break;
       case 3:
-        this.uJt = ConfigManager_1.ConfigManager.GuideConfig.GetGuideTutorial(
-          this.OKt.Id,
+        this.uzt = ConfigManager_1.ConfigManager.GuideConfig.GetGuideTutorial(
+          this.OQt.Id,
         );
     }
     return (
-      this.uJt ||
+      this.uzt ||
         (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Guide",
             17,
             "引导步骤id找不到引导类型数据, 清检查配置",
-            ["this.Owner!.Id", this.OKt.Id],
+            ["this.Owner!.Id", this.OQt.Id],
           )),
-      this.uJt
+      this.uzt
     );
   }
   GetAttachedUiItem() {
-    return this.mJt;
+    return this.mzt;
   }
   ResetAttachedUiItem() {
-    this.mJt = void 0;
+    this.mzt = void 0;
   }
   GetAttachedUiItemForShow() {
-    return this.dJt ?? this.mJt;
+    return this.dzt ?? this.mzt;
   }
   SetAttachedUiItem(t) {
-    4 !== this.OKt.Config.ContentType
+    4 !== this.OQt.Config.ContentType
       ? Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Guide",
           17,
-          `引导步骤 ${this.OKt.Id} 的界面类型不是聚焦引导, 无法添加依附的Ui节点`,
+          `引导步骤 ${this.OQt.Id} 的界面类型不是聚焦引导, 无法添加依附的Ui节点`,
         )
-      : (this.mJt = t);
+      : (this.mzt = t);
   }
   SetAttachedUiItemForShow(t) {
-    4 !== this.OKt.Config.ContentType
+    4 !== this.OQt.Config.ContentType
       ? Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Guide",
           17,
-          `引导步骤 ${this.OKt.Id} 的界面类型不是聚焦引导, 无法添加依附的Ui节点(显示用)`,
+          `引导步骤 ${this.OQt.Id} 的界面类型不是聚焦引导, 无法添加依附的Ui节点(显示用)`,
         )
-      : (this.dJt = t);
+      : (this.dzt = t);
   }
   TryLockScrollView(t) {
-    (this.xqe = t), (this._Jt = this.xqe.GetEnable()), this.xqe.SetEnable(!1);
+    (this.xqe = t), (this._zt = this.xqe.GetEnable()), this.xqe.SetEnable(!1);
   }
   TryUnLockScrollView() {
-    this.xqe && this.xqe.SetEnable(this._Jt);
+    this.xqe && this.xqe.SetEnable(this._zt);
   }
   GetAttachedView() {
-    return this.cJt;
+    return this.czt;
   }
   SetAttachedView(t) {
-    this.cJt = t;
+    this.czt = t;
   }
   Clear() {
     this.TryUnLockScrollView(),
-      (this.cJt = void 0),
-      (this.mJt = void 0),
-      (this.dJt = void 0),
+      (this.czt = void 0),
+      (this.mzt = void 0),
+      (this.dzt = void 0),
       (this.xqe = void 0);
   }
 }

@@ -52,7 +52,7 @@ class MapUtil {
             r,
             o,
           ),
-          o?.Equality(Vector_1.Vector.ZeroVectorProxy) && this.qLi(r, o, i),
+          o?.Equality(Vector_1.Vector.ZeroVectorProxy) && this.qDi(r, o, i),
           o ?? Vector_1.Vector.ZeroVectorProxy
         );
       GeneralLogicTreeController_1.GeneralLogicTreeController.GetEntityPos(
@@ -63,7 +63,7 @@ class MapUtil {
     }
     return o;
   }
-  static qLi(e, r, t = !0) {
+  static qDi(e, r, t = !0) {
     (t = t
       ? ModelManager_1.ModelManager.GameModeModel?.MapId
       : MapDefine_1.BIG_WORLD_MAP_ID),

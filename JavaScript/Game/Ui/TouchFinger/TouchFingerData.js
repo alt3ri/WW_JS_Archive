@@ -5,44 +5,44 @@ const UE = require("ue"),
   LguiEventSystemManager_1 = require("../LguiEventSystem/LguiEventSystemManager");
 class TouchFingerData {
   constructor(t) {
-    (this.Hmr = void 0),
-      (this.jmr = void 0),
-      (this.Wmr = !1),
-      (this.Rbn = BigInt(0)),
-      (this.Kmr = t);
+    (this.Fdr = void 0),
+      (this.Vdr = void 0),
+      (this.Hdr = !1),
+      (this.AOn = BigInt(0)),
+      (this.jdr = t);
   }
   StartTouch(t) {
-    (this.Hmr = t), (this.jmr = t), (this.Wmr = !0);
+    (this.Fdr = t), (this.Vdr = t), (this.Hdr = !0);
   }
   EndTouch() {
-    (this.Hmr = void 0), (this.jmr = void 0), (this.Wmr = !1);
+    (this.Fdr = void 0), (this.Vdr = void 0), (this.Hdr = !1);
   }
   MoveTouch(t) {
-    this.Rbn !== UE.KismetSystemLibrary.GetFrameCount() &&
-      ((this.jmr = this.Hmr),
-      (this.Rbn = UE.KismetSystemLibrary.GetFrameCount())),
-      (this.Hmr = t);
+    this.AOn !== UE.KismetSystemLibrary.GetFrameCount() &&
+      ((this.Vdr = this.Fdr),
+      (this.AOn = UE.KismetSystemLibrary.GetFrameCount())),
+      (this.Fdr = t);
   }
   GetFingerIndex() {
-    return this.Kmr;
+    return this.jdr;
   }
   GetTouchPosition() {
-    return this.Hmr;
+    return this.Fdr;
   }
   GetLastTouchPosition() {
-    return this.jmr;
+    return this.Vdr;
   }
   IsInTouch() {
-    return this.Wmr;
+    return this.Hdr;
   }
   IsTouchEmpty() {
     return !LguiEventSystemManager_1.LguiEventSystemManager.IsPressComponentIsValid(
-      this.Kmr,
+      this.jdr,
     );
   }
   GetPointerEventData() {
     return LguiEventSystemManager_1.LguiEventSystemManager.GetPointerEventData(
-      this.Kmr,
+      this.jdr,
     );
   }
   IsTouchComponentContainTag(t) {

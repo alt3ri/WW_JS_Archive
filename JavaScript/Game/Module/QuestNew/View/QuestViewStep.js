@@ -8,14 +8,14 @@ const ue_1 = require("ue"),
 class QuestViewStep extends TreeStepBase_1.TreeStepBase {
   constructor() {
     super(...arguments),
-      (this.But = void 0),
-      (this.but = []),
-      (this.cno = new Map());
+      (this.Kct = void 0),
+      (this.Qct = []),
+      (this.hso = new Map());
   }
   Dispose() {
-    if ((super.Dispose(), this.but)) {
-      for (const e of this.but) e.Dispose();
-      this.but = void 0;
+    if ((super.Dispose(), this.Qct)) {
+      for (const e of this.Qct) e.Dispose();
+      this.Qct = void 0;
     }
   }
   OnRegisterComponent() {
@@ -30,25 +30,25 @@ class QuestViewStep extends TreeStepBase_1.TreeStepBase {
       this.GetItem(4)?.SetUIActive(!0);
     var e = this.GetItem(2),
       t = new QuestViewChildStep_1.QuestViewChildStep();
-    t.SetRootActor(e.GetOwner(), !0), this.but.push(t);
+    t.SetRootActor(e.GetOwner(), !0), this.Qct.push(t);
   }
   Update(e, t) {
-    (this.But = t),
-      this.But
+    (this.Kct = t),
+      this.Kct
         ? (this.SetActive(!0),
-          (t = this.UpdateData(e, this.But.MainTitle)),
+          (t = this.UpdateData(e, this.Kct.MainTitle)),
           this.GetItem(3)?.SetUIActive(t),
-          (e = this.qut()),
+          (e = this.Xct()),
           this.GetItem(4)?.SetUIActive(t || e))
         : this.SetActive(!1);
   }
-  qut() {
+  Xct() {
     const s = this.GetItem(2);
     if (!s) return !1;
-    const h = this.But;
+    const h = this.Kct;
     if (!h || !h.SubTitles)
       return (
-        this.but.forEach((e) => {
+        this.Qct.forEach((e) => {
           e.SetActive(!1);
         }),
         !1
@@ -56,12 +56,12 @@ class QuestViewStep extends TreeStepBase_1.TreeStepBase {
     let r = 0,
       u = s.GetHierarchyIndex();
     return (
-      this.cno.clear(),
+      this.hso.clear(),
       h.SubTitles.forEach((e) => {
         let t = void 0;
         var i;
-        this.but.length > r
-          ? (t = this.but[r])
+        this.Qct.length > r
+          ? (t = this.Qct[r])
           : ((i = LguiUtil_1.LguiUtil.CopyItem(
               s,
               s.GetParentAsUIItem(),
@@ -70,14 +70,14 @@ class QuestViewStep extends TreeStepBase_1.TreeStepBase {
               i.GetOwner(),
               !0,
             ),
-            this.but.push(t)),
+            this.Qct.push(t)),
           t.UpdateData(this.TreeIncId, e),
-          this.cno.set(r, t.UpdateDescribeSuccess),
+          this.hso.set(r, t.UpdateDescribeSuccess),
           r++;
       }),
-      this.but.forEach((e, t) => {
+      this.Qct.forEach((e, t) => {
         var i = t < h.SubTitles.length,
-          t = this.cno.get(t) ?? !1;
+          t = this.hso.get(t) ?? !1;
         e.SetActive(i && t);
       }),
       !0

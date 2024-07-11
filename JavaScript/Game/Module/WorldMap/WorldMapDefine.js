@@ -72,21 +72,21 @@ class PriorityHierarchyIndexNode {
 }
 class MarkPriority2HierarchyIndexHelper {
   constructor() {
-    this.fFo = [];
+    this.d3o = [];
   }
-  pFo(e, r = 0) {
+  C3o(e, r = 0) {
     let t = 0;
     return (t = 11 === e ? 3e3 : r);
   }
   AddMarkItem(e, r) {
-    var t = this.pFo(e, r),
-      a = this.fFo.length;
+    var t = this.C3o(e, r),
+      a = this.d3o.length;
     let o = 0;
-    if (0 === a) this.fFo.push(new PriorityHierarchyIndexNode(t));
+    if (0 === a) this.d3o.push(new PriorityHierarchyIndexNode(t));
     else {
       let r = -1;
       for (let e = 0; e < a; ++e) {
-        var n = this.fFo[e],
+        var n = this.d3o[e],
           i = n.Priority;
         if (!(i < t)) {
           if (i === t) {
@@ -101,18 +101,18 @@ class MarkPriority2HierarchyIndexHelper {
           break;
         }
       }
-      0 <= r && this.fFo.splice(r, 0, new PriorityHierarchyIndexNode(t));
+      0 <= r && this.d3o.splice(r, 0, new PriorityHierarchyIndexNode(t));
     }
     return o;
   }
   RemoveMarkItem(e, r) {
-    const t = this.pFo(e, r);
-    this.fFo
+    const t = this.C3o(e, r);
+    this.d3o
       .filter((e) => e.Priority === t)
       .every((e) => (0 < e.MaxHierarchyIndex && --e.MaxHierarchyIndex, !0));
   }
   ClearData() {
-    this.fFo.length = 0;
+    this.d3o.length = 0;
   }
 }
 exports.MarkPriority2HierarchyIndexHelper = MarkPriority2HierarchyIndexHelper;

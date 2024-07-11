@@ -12,65 +12,65 @@ const ConfigManager_1 = require("../../../Manager/ConfigManager"),
   WeaponItemData_1 = require("../../Inventory/ItemData/WeaponItemData");
 class SingleItemSelect {
   constructor() {
-    (this.KNo = void 0),
-      (this.Jwt = void 0),
-      (this.TGt = void 0),
-      (this.QNo = void 0),
-      (this.XNo =
+    (this.HOo = void 0),
+      (this.ebt = void 0),
+      (this.LNt = void 0),
+      (this.jOo = void 0),
+      (this.WOo =
         new CommonItemSelectView_1.CommonItemSelectViewOpenViewData()),
-      (this.$No = new SelectableComponent_1.SelectableComponentData()),
-      (this.YNo = 0),
-      (this.e6i = 0),
-      (this.JNo = !1),
+      (this.KOo = new SelectableComponent_1.SelectableComponentData()),
+      (this.QOo = 0),
+      (this.Z6i = 0),
+      (this.XOo = !1),
       (this.OpenItemSelectView = () => {
         var t = [];
-        this.KNo && t.push(this.KNo),
-          (this.XNo.ItemDataBaseList = this.TGt()),
-          (this.XNo.SelectedDataList = t),
-          (this.XNo.UseWayId = this.e6i),
-          (this.XNo.InitSortToggleState = this.JNo),
-          0 === this.YNo
+        this.HOo && t.push(this.HOo),
+          (this.WOo.ItemDataBaseList = this.LNt()),
+          (this.WOo.SelectedDataList = t),
+          (this.WOo.UseWayId = this.Z6i),
+          (this.WOo.InitSortToggleState = this.XOo),
+          0 === this.QOo
             ? UiManager_1.UiManager.OpenView(
                 "CommonItemSelectViewRight",
-                this.XNo,
+                this.WOo,
               )
             : UiManager_1.UiManager.OpenView(
                 "CommonItemSelectViewLeft",
-                this.XNo,
+                this.WOo,
               );
       }),
-      (this.zNo = (t, e) => {
-        0 < t?.length ? (this.KNo = t[0]) : (this.KNo = void 0), this.ZNo();
+      (this.$Oo = (t, e) => {
+        0 < t?.length ? (this.HOo = t[0]) : (this.HOo = void 0), this.YOo();
       }),
-      (this.eOo = (t, e, i, a) =>
-        !(this.KNo && e === this.KNo.IncId && i === this.KNo.ItemId && 0 < a));
+      (this.JOo = (t, e, i, a) =>
+        !(this.HOo && e === this.HOo.IncId && i === this.HOo.ItemId && 0 < a));
   }
   Init(t, e = 0) {
-    (this.Jwt = new MediumItemGrid_1.MediumItemGrid()),
-      this.Jwt.Initialize(t.GetOwner());
-    this.Jwt.Apply({ Type: 1 }),
-      (this.YNo = e),
-      this.Jwt.BindEmptySlotButtonCallback(this.OpenItemSelectView),
-      this.Jwt.BindReduceButtonCallback(this.OpenItemSelectView),
-      this.Jwt.BindOnExtendToggleStateChanged(this.OpenItemSelectView),
-      this.Jwt.SetReduceButton(void 0),
-      (this.$No.IsSingleSelected = !0),
-      (this.$No.OnChangeSelectedFunction = this.zNo),
-      (this.$No.CheckIfCanAddFunction = this.eOo),
-      (this.XNo.SelectableComponentData = this.$No);
+    (this.ebt = new MediumItemGrid_1.MediumItemGrid()),
+      this.ebt.Initialize(t.GetOwner());
+    this.ebt.Apply({ Type: 1 }),
+      (this.QOo = e),
+      this.ebt.BindEmptySlotButtonCallback(this.OpenItemSelectView),
+      this.ebt.BindReduceButtonCallback(this.OpenItemSelectView),
+      this.ebt.BindOnExtendToggleStateChanged(this.OpenItemSelectView),
+      this.ebt.SetReduceButton(void 0),
+      (this.KOo.IsSingleSelected = !0),
+      (this.KOo.OnChangeSelectedFunction = this.$Oo),
+      (this.KOo.CheckIfCanAddFunction = this.JOo),
+      (this.WOo.SelectableComponentData = this.KOo);
   }
   SetUseWayId(t) {
-    this.e6i = t;
+    this.Z6i = t;
   }
   SetInitSortToggleState(t) {
-    this.JNo = t;
+    this.XOo = t;
   }
-  ZNo() {
-    if (void 0 === this.KNo)
-      this.Jwt.SetSelected(!1), this.Jwt.Apply({ Type: 1 });
+  YOo() {
+    if (void 0 === this.HOo)
+      this.ebt.SetSelected(!1), this.ebt.Apply({ Type: 1 });
     else {
-      var e = this.KNo.IncId,
-        i = this.KNo.ItemId,
+      var e = this.HOo.IncId,
+        i = this.HOo.ItemId,
         a = ModelManager_1.ModelManager.InventoryModel;
       let t = a.GetAttributeItemData(e);
       var s,
@@ -103,23 +103,23 @@ class SingleItemSelect {
               )).GetLevel()),
             (a.Level = h.GetResonanceLevel()),
             (a.BottomTextParameter = [i])))
-        : (a.BottomText = this.KNo.SelectedCount.toString()),
-        this.Jwt.Apply(a),
-        this.Jwt.SetSelected(!0);
+        : (a.BottomText = this.HOo.SelectedCount.toString()),
+        this.ebt.Apply(a),
+        this.ebt.SetSelected(!0);
     }
-    this.QNo(this.KNo);
+    this.jOo(this.HOo);
   }
   ClearSelectData() {
-    (this.KNo = void 0), this.ZNo();
+    (this.HOo = void 0), this.YOo();
   }
   SetItemSelectChangeCallBack(t) {
-    this.QNo = t;
+    this.jOo = t;
   }
   SetGetItemListFunction(t) {
-    this.TGt = t;
+    this.LNt = t;
   }
   GetCurrentSelectedData() {
-    return this.KNo;
+    return this.HOo;
   }
 }
 exports.SingleItemSelect = SingleItemSelect;

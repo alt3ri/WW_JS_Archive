@@ -32,6 +32,9 @@ class Teleporter {
   get AfterNetworkAction() {
     return this.afternetworkaction();
   }
+  get ShowWorldMap() {
+    return this.showworldmap();
+  }
   __init(t, r) {
     return (this.z7 = t), (this.J7 = r), this;
   }
@@ -76,6 +79,10 @@ class Teleporter {
   afternetworkaction() {
     var t = this.J7.__offset(this.z7, 20);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
+  }
+  showworldmap() {
+    var t = this.J7.__offset(this.z7, 22);
+    return !!t && !!this.J7.readInt8(this.z7 + t);
   }
 }
 exports.Teleporter = Teleporter;

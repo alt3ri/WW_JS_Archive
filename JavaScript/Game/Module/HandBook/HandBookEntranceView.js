@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.HandBookEntranceView = void 0);
 const UE = require("ue"),
+  ConfigCommon_1 = require("../../../Core/Config/ConfigCommon"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
   ConfigManager_1 = require("../../Manager/ConfigManager"),
@@ -11,14 +12,13 @@ const UE = require("ue"),
   LguiUtil_1 = require("../Util/LguiUtil"),
   GenericScrollView_1 = require("../Util/ScrollView/GenericScrollView"),
   HandBookController_1 = require("./HandBookController"),
-  HandBookEntranceItem_1 = require("./HandBookEntranceItem"),
-  ConfigCommon_1 = require("../../../Core/Config/ConfigCommon");
+  HandBookEntranceItem_1 = require("./HandBookEntranceItem");
 class HandBookEntranceView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.bZt = []),
+      (this.bei = []),
       (this.xqe = void 0),
-      (this.qZt = []),
+      (this.qei = []),
       (this.lqe = void 0),
       (this.OnHandBookDataInit = () => {
         this.InitVerticalLayout();
@@ -33,29 +33,29 @@ class HandBookEntranceView extends UiViewBase_1.UiViewBase {
           HandBookController_1.HandBookController.SendIllustratedRedDotRequest();
       }),
       (this.OnHandBookRedDotUpdate = () => {
-        var t = this.qZt.length;
-        for (let e = 0; e < t; e++) this.qZt[e].RefreshRedDot();
+        var t = this.qei.length;
+        for (let e = 0; e < t; e++) this.qei[e].RefreshRedDot();
       }),
       (this.InitVerticalLayout = () => {
         var e = ConfigCommon_1.ConfigCommon.ToList(
           ConfigManager_1.ConfigManager.HandBookConfig.GetHandBookEntranceConfigList(),
         );
-        e.sort(this.aZt),
-          (this.bZt = e),
+        e.sort(this.aei),
+          (this.bei = e),
           this.xqe ||
             (this.xqe = new GenericScrollView_1.GenericScrollView(
               this.GetScrollViewWithScrollbar(2),
               this.sGe,
             )),
           this.xqe.ClearChildren(),
-          this.xqe.RefreshByData(this.bZt);
+          this.xqe.RefreshByData(this.bei);
       }),
       (this.sGe = (e, t, i) => {
         t = new HandBookEntranceItem_1.HandBookEntranceItem(t);
-        return t.Refresh(e, !1, i), this.qZt.push(t), { Key: i, Value: t };
+        return t.Refresh(e, !1, i), this.qei.push(t), { Key: i, Value: t };
       }),
-      (this.aZt = (e, t) => e.Id - t.Id),
-      (this.JSt = () => {
+      (this.aei = (e, t) => e.Id - t.Id),
+      (this.lyt = () => {
         UiManager_1.UiManager.CloseView("HandBookEntranceView");
       });
   }
@@ -115,15 +115,15 @@ class HandBookEntranceView extends UiViewBase_1.UiViewBase {
           "HandBookEntrance",
         );
     (this.lqe = new PopupCaptionItem_1.PopupCaptionItem(this.GetItem(0))),
-      this.lqe.SetCloseCallBack(this.JSt),
+      this.lqe.SetCloseCallBack(this.lyt),
       this.lqe.SetTitleLocalText(t),
       this.lqe.SetTitleIcon(e);
   }
   OnBeforeDestroy() {
     this.RemoveEvents(),
       this.xqe && (this.xqe.ClearChildren(), (this.xqe = void 0)),
-      (this.bZt = []),
-      (this.qZt = []);
+      (this.bei = []),
+      (this.qei = []);
   }
 }
 exports.HandBookEntranceView = HandBookEntranceView;

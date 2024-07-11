@@ -19,46 +19,46 @@ class BrightnessView extends UiViewBase_1.UiViewBase {
     super(...arguments),
       (this.MenuDataIns = void 0),
       (this.IsConfirm = !1),
-      (this.ewi = 0),
-      (this.twi = 0),
-      (this.iwi = void 0),
-      (this.Oxt = void 0),
-      (this.owi = void 0),
-      (this.rwi = () => {
+      (this.eBi = 0),
+      (this.tBi = 0),
+      (this.iBi = void 0),
+      (this.Vwt = void 0),
+      (this.oBi = void 0),
+      (this.rBi = () => {
         var t = this.GetSlider(2).GetValue() - STEP;
-        this.nwi(t);
+        this.nBi(t);
       }),
       (this._o = () => {
         var t = this.GetSlider(2).GetValue() + STEP;
-        this.nwi(t);
+        this.nBi(t);
       }),
-      (this.mIt = () => {
+      (this.m2e = () => {
         this.CloseMe();
       }),
-      (this.swi = () => {
+      (this.sBi = () => {
         ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
           "AdjustBrighness",
         ),
           (this.IsConfirm = !0),
-          this.mIt();
+          this.m2e();
       }),
-      (this.awi = (t) => {
+      (this.aBi = (t) => {
         let i = 2.2;
-        t < 0 && (i = MathUtils_1.MathUtils.Lerp(1.5, 2.2, (t + 1) / this.ewi)),
-          0 < t && (i = MathUtils_1.MathUtils.Lerp(2.2, 3.5, t / this.ewi)),
+        t < 0 && (i = MathUtils_1.MathUtils.Lerp(1.5, 2.2, (t + 1) / this.eBi)),
+          0 < t && (i = MathUtils_1.MathUtils.Lerp(2.2, 3.5, t / this.eBi)),
           UE.KismetMaterialLibrary.SetScalarParameterValue(
             GlobalData_1.GlobalData.World,
             RenderDataManager_1.RenderDataManager.Get().GetUiShowBrightnessMaterialParameterCollection(),
             RenderConfig_1.RenderConfig.UIShowBrightness,
             i,
           ),
-          this.nwi(t, !1);
+          this.nBi(t, !1);
       }),
-      (this.hwi = () => {
+      (this.hBi = () => {
         var t = this.MenuDataIns.MenuDataSliderDefault,
           t = MenuTool_1.FunctionItemViewTool.GetSliderPosition(
             this.MenuDataIns.MenuDataSliderRange,
-            t * this.ewi,
+            t * this.eBi,
             this.MenuDataIns.MenuDataSliderDigits,
           );
         this.GetSlider(2).SetValue(t, !0);
@@ -76,12 +76,12 @@ class BrightnessView extends UiViewBase_1.UiViewBase {
       [7, UE.UIButtonComponent],
     ]),
       (this.BtnBindInfo = [
-        [0, this.swi],
-        [1, this.hwi],
-        [2, this.awi],
+        [0, this.sBi],
+        [1, this.hBi],
+        [2, this.aBi],
       ]);
   }
-  nwi(t, i = !0) {
+  nBi(t, i = !0) {
     100 <= t
       ? this.GetButton(7).SetSelfInteractive(!1)
       : t <= 0
@@ -92,21 +92,21 @@ class BrightnessView extends UiViewBase_1.UiViewBase {
   }
   OnStart() {
     this.ChildPopView?.PopItem.OverrideBackBtnCallBack(() => {
-      this.mIt();
+      this.m2e();
     }),
-      (this.iwi = this.OpenParam),
-      (this.MenuDataIns = this.iwi[0]);
+      (this.iBi = this.OpenParam),
+      (this.MenuDataIns = this.iBi[0]);
     var t = this.MenuDataIns.MenuDataSliderRange[0],
       i = this.MenuDataIns.MenuDataSliderRange[1],
       t =
-        ((this.ewi = 0.5 * Math.abs(i - t)),
-        (this.twi =
+        ((this.eBi = 0.5 * Math.abs(i - t)),
+        (this.tBi =
           MenuController_1.MenuController.GetTargetConfig(
             this.MenuDataIns.MenuDataFunctionId,
-          ) * this.ewi),
-        this.iwi[1](this.MenuDataIns.MenuDataFunctionId, this.twi / this.ewi),
+          ) * this.eBi),
+        this.iBi[1](this.MenuDataIns.MenuDataFunctionId, this.tBi / this.eBi),
         MathUtils_1.MathUtils.RangeClamp(
-          this.twi,
+          this.tBi,
           t,
           i,
           SLIDER_MIN_VALUE,
@@ -116,15 +116,15 @@ class BrightnessView extends UiViewBase_1.UiViewBase {
     i.SetMaxValue(SLIDER_MAX_VALUE, !0, !1),
       i.SetMinValue(SLIDER_MIN_VALUE, !0, !1),
       i.SetValue(t, !0),
-      (this.Oxt = new LongPressButtonItem_1.LongPressButtonItem(
+      (this.Vwt = new LongPressButtonItem_1.LongPressButtonItem(
         this.GetButton(7),
         1,
         this._o,
       )),
-      (this.owi = new LongPressButtonItem_1.LongPressButtonItem(
+      (this.oBi = new LongPressButtonItem_1.LongPressButtonItem(
         this.GetButton(6),
         1,
-        this.rwi,
+        this.rBi,
       ));
   }
   OnBeforeDestroy() {
@@ -138,14 +138,14 @@ class BrightnessView extends UiViewBase_1.UiViewBase {
         t,
         i,
       );
-    this.IsConfirm && this.twi !== s
-      ? (this.iwi[1](this.MenuDataIns.MenuDataFunctionId, s / this.ewi),
+    this.IsConfirm && this.tBi !== s
+      ? (this.iBi[1](this.MenuDataIns.MenuDataFunctionId, s / this.eBi),
         (this.IsConfirm = !1))
-      : this.iwi[1](this.MenuDataIns.MenuDataFunctionId, this.twi / this.ewi),
-      this.Oxt?.Clear(),
-      this.owi?.Clear(),
-      (this.Oxt = void 0),
-      (this.owi = void 0);
+      : this.iBi[1](this.MenuDataIns.MenuDataFunctionId, this.tBi / this.eBi),
+      this.Vwt?.Clear(),
+      this.oBi?.Clear(),
+      (this.Vwt = void 0),
+      (this.oBi = void 0);
   }
 }
 exports.BrightnessView = BrightnessView;

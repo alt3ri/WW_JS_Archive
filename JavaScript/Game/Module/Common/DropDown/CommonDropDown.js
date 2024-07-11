@@ -17,48 +17,48 @@ class CommonDropDown extends UiPanelBase_1.UiPanelBase {
       (this.CreateDropDownItem = i),
       (this.CreateTitleItem = s),
       (this.eGe = void 0),
-      (this.uft = void 0),
-      (this.oTt = CommonDefine_1.INVALID_VALUE),
-      (this.rTt = void 0),
-      (this.nTt = void 0),
-      (this.sTt = 2),
-      (this.aTt = !1),
-      (this.hTt = Transform_1.Transform.Create()),
-      (this.lTt = Vector_1.Vector.Create()),
-      (this._Tt = void 0),
-      (this.uTt = void 0),
-      (this.RPr = void 0),
-      (this.j7e = () => {
+      (this.ypt = void 0),
+      (this.hLt = CommonDefine_1.INVALID_VALUE),
+      (this.lLt = void 0),
+      (this._Lt = void 0),
+      (this.uLt = 2),
+      (this.cLt = !1),
+      (this.mLt = Transform_1.Transform.Create()),
+      (this.dLt = Vector_1.Vector.Create()),
+      (this.CLt = void 0),
+      (this.gLt = void 0),
+      (this.rPr = void 0),
+      (this.ije = () => {
         var t = this.GetItem(1);
         t.bIsUIActive
-          ? this.dTt()
-          : (t.SetUIActive(!0), (this.aTt = !0), this.CTt().finally(void 0));
+          ? this.vLt()
+          : (t.SetUIActive(!0), (this.cLt = !0), this.MLt().finally(void 0));
       }),
       (this.sGe = (t, i, s) => {
-        (i = this.CreateDropDownItem(i, t)), (t = this._Tt(t));
+        (i = this.CreateDropDownItem(i, t)), (t = this.CLt(t));
         return (
           i.ShowDropDownItemBase(t, s),
-          i.SetToggleFunction(this.gTt),
-          i.SetCanExecuteFunction(this.fTt),
+          i.SetToggleFunction(this.ELt),
+          i.SetCanExecuteFunction(this.SLt),
           { Key: s, Value: i }
         );
       }),
-      (this.gTt = (t) => {
-        var i = this.oTt;
-        (this.oTt = t),
-          this.pTt(i),
-          this.vTt(),
-          this.nTt?.(this.oTt, this.uft[this.oTt]);
+      (this.ELt = (t) => {
+        var i = this.hLt;
+        (this.hLt = t),
+          this.yLt(i),
+          this.ILt(),
+          this._Lt?.(this.hLt, this.ypt[this.hLt]);
       }),
-      (this.fTt = (t) => this.oTt !== t),
-      (this.dTt = () => {
-        this.GetItem(1).SetUIActive(!1), this.MTt();
+      (this.SLt = (t) => this.hLt !== t),
+      (this.vLt = () => {
+        this.GetItem(1).SetUIActive(!1), this.TLt();
       }),
-      (this.yTt = () => {
+      (this.RLt = () => {
         var t, i, s;
-        this.aTt &&
-          (0 !== this.sTt &&
-          (1 === this.sTt ||
+        this.cLt &&
+          (0 !== this.uLt &&
+          (1 === this.uLt ||
             ((t = (s = this.GetButton(0).RootUIComp).GetRootCanvas()),
             (i = UiLayer_1.UiLayer.GetLayerRootUiItem(
               UiLayerType_1.ELayerType.Pop,
@@ -66,19 +66,19 @@ class CommonDropDown extends UiPanelBase_1.UiPanelBase {
             (i = Transform_1.Transform.Create(
               i.K2_GetComponentToWorld().Inverse(),
             )),
-            this.hTt.FromUeTransform(this.RPr),
-            this.hTt.ComposeTransforms(i, this.hTt),
+            this.mLt.FromUeTransform(this.rPr),
+            this.mLt.ComposeTransforms(i, this.mLt),
             (i =
               s.GetLocalSpaceBottom() - this.eGe.GetRootUiItem().GetHeight()),
-            this.hTt.TransformPosition(
+            this.mLt.TransformPosition(
               Vector_1.Vector.Create(0, i, 0),
-              this.lTt,
+              this.dLt,
             ),
             (s = t.GetClipRectMin()),
-            this.lTt.Y < s[0].Y))
-            ? this.ITt()
-            : this.TTt(),
-          (this.aTt = !1));
+            this.dLt.Y < s.Y))
+            ? this.ULt()
+            : this.ALt(),
+          (this.cLt = !1));
       });
   }
   async Init() {
@@ -94,7 +94,7 @@ class CommonDropDown extends UiPanelBase_1.UiPanelBase {
       [3, UE.UIItem],
       [4, UE.UIItem],
     ]),
-      (this.BtnBindInfo = [[0, this.j7e]]);
+      (this.BtnBindInfo = [[0, this.ije]]);
   }
   OnStart() {
     (this.eGe = new GenericLayoutNew_1.GenericLayoutNew(
@@ -102,48 +102,48 @@ class CommonDropDown extends UiPanelBase_1.UiPanelBase {
       this.sGe,
       this.GetItem(3),
     )),
-      this.eGe.BindLateUpdate(this.yTt),
+      this.eGe.BindLateUpdate(this.RLt),
       this.GetItem(1).SetUIActive(!1),
-      (this.uTt = this.CreateTitleItem(this.GetItem(4)));
+      (this.gLt = this.CreateTitleItem(this.GetItem(4)));
   }
   OnBeforeDestroy() {
-    this.eGe.UnBindLateUpdate(), this.rTt?.Destroy(), this.uTt.Destroy();
+    this.eGe.UnBindLateUpdate(), this.lLt?.Destroy(), this.gLt.Destroy();
   }
   InitScroll(t, i, s = 0) {
-    (this.uft = t),
-      (this._Tt = i),
+    (this.ypt = t),
+      (this.CLt = i),
       this.eGe.RebuildLayoutByDataNew(t),
       this.SetSelectedIndex(s);
   }
-  async CTt() {
-    this.rTt ||
-      ((this.rTt = new DynamicMaskButton_1.DynamicMaskButton()),
-      this.rTt.SetButtonFunction(this.dTt),
-      await this.rTt.Init()),
-      (this.RPr = this.RootActor.RootComponent.K2_GetComponentToWorld()),
-      this.rTt.SetAttachChildItem(this.RootItem),
-      this.rTt.SetActive(!0);
+  async MLt() {
+    this.lLt ||
+      ((this.lLt = new DynamicMaskButton_1.DynamicMaskButton()),
+      this.lLt.SetButtonFunction(this.vLt),
+      await this.lLt.Init()),
+      (this.rPr = this.RootActor.RootComponent.K2_GetComponentToWorld()),
+      this.lLt.SetAttachChildItem(this.RootItem),
+      this.lLt.SetActive(!0);
   }
-  MTt() {
-    this.rTt && (this.rTt.ResetItemParent(), this.rTt.SetActive(!1));
+  TLt() {
+    this.lLt && (this.lLt.ResetItemParent(), this.lLt.SetActive(!1));
   }
-  pTt(t) {
+  yLt(t) {
     t !== CommonDefine_1.INVALID_VALUE &&
       this.eGe.GetLayoutItemByKey(t).SetToggle(!1);
   }
-  vTt() {
-    var t = this._Tt(this.uft[this.oTt]),
-      i = this.eGe.GetLayoutItemByIndex(this.oTt);
-    this.uTt.ShowTemp(t, i), this.dTt();
+  ILt() {
+    var t = this.CLt(this.ypt[this.hLt]),
+      i = this.eGe.GetLayoutItemByIndex(this.hLt);
+    this.gLt.ShowTemp(t, i), this.vLt();
   }
-  TTt() {
+  ALt() {
     var t = this.GetItem(1);
     t.SetAnchorVAlign(3),
       t.SetPivot(new UE.Vector2D(0.5, 1)),
       t.SetAnchorOffsetX(0),
       t.SetAnchorOffsetY(0);
   }
-  ITt() {
+  ULt() {
     var t = this.GetItem(1);
     t.SetAnchorVAlign(1),
       t.SetPivot(new UE.Vector2D(0.5, 0)),
@@ -154,13 +154,13 @@ class CommonDropDown extends UiPanelBase_1.UiPanelBase {
     this.eGe.GetLayoutItemByKey(t).SetToggle(!0);
   }
   GetSelectedIndex() {
-    return this.oTt;
+    return this.hLt;
   }
   SetShowType(t) {
-    this.sTt !== t && ((this.sTt = t), (this.aTt = !0));
+    this.uLt !== t && ((this.uLt = t), (this.cLt = !0));
   }
   SetOnSelectCall(t) {
-    this.nTt = t;
+    this._Lt = t;
   }
   GetDropDownItemObject(t) {
     return this.eGe.GetLayoutItemByIndex(t);
@@ -169,9 +169,9 @@ class CommonDropDown extends UiPanelBase_1.UiPanelBase {
     return this.eGe.GetLayoutItemList();
   }
   RefreshAllDropDownItem() {
-    var t = this._Tt(this.uft[this.oTt]),
-      i = this.eGe.GetLayoutItemByIndex(this.oTt);
-    this.uTt.ShowTemp(t, i), this.eGe.RebuildLayoutByDataNew(this.uft);
+    var t = this.CLt(this.ypt[this.hLt]),
+      i = this.eGe.GetLayoutItemByIndex(this.hLt);
+    this.gLt.ShowTemp(t, i), this.eGe.RebuildLayoutByDataNew(this.ypt);
   }
 }
 exports.CommonDropDown = CommonDropDown;

@@ -11,7 +11,7 @@ class HelpController extends UiControllerBase_1.UiControllerBase {
   static OnInit() {
     return (
       UE.UIExtendButtonComponent.SetDelegateForHelpClick(
-        (0, puerts_1.toManualReleaseDelegate)(HelpController._ei),
+        (0, puerts_1.toManualReleaseDelegate)(HelpController._ti),
       ),
       !0
     );
@@ -25,27 +25,27 @@ class HelpController extends UiControllerBase_1.UiControllerBase {
           UiManager_1.UiManager.OpenView(
             "HelpView",
             this.HelpGroupId,
-            this.uei,
+            this.uti,
           );
           break;
         case 1:
           UiManager_1.UiManager.OpenView(
             "HelpGuideView",
             this.HelpGroupId,
-            this.uei,
+            this.uti,
           );
       }
   }
   static OnClear() {
-    return (0, puerts_1.releaseManualReleaseDelegate)(HelpController._ei), !0;
+    return (0, puerts_1.releaseManualReleaseDelegate)(HelpController._ti), !0;
   }
 }
 (exports.HelpController = HelpController),
   ((_a = HelpController).HelpGroupId = void 0),
-  (HelpController._ei = (e) => {
+  (HelpController._ti = (e) => {
     HelpController.OpenHelpById(e);
   }),
-  (HelpController.uei = (e) => {
+  (HelpController.uti = (e) => {
     e && (_a.HelpGroupId = void 0);
   });
 //# sourceMappingURL=HelpController.js.map

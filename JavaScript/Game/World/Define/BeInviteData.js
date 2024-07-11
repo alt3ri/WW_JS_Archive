@@ -6,9 +6,9 @@ class BeInviteData {
     (this.j8 = 0),
       (this.he = ""),
       (this.zz = ""),
-      (this.Ssi = 0),
-      (this.zfr = ""),
-      (this.Zfr = void 0);
+      (this.Eai = 0),
+      (this.Ypr = ""),
+      (this.Jpr = void 0);
   }
   SetPlayerId(t) {
     this.j8 = t;
@@ -29,22 +29,22 @@ class BeInviteData {
     return this.zz;
   }
   SetLimitTimestamp(t) {
-    this.Ssi = t;
+    this.Eai = t;
   }
   GetLimitTimestamp() {
-    return this.Ssi;
+    return this.Eai;
   }
   SetToken(t) {
-    this.zfr = t;
+    this.Ypr = t;
   }
   GetToken() {
-    return this.zfr;
+    return this.Ypr;
   }
   SetGameplayTagHash(t) {
-    this.Zfr = t;
+    this.Jpr = t;
   }
   GetGameplayTagHash() {
-    return this.Zfr;
+    return this.Jpr;
   }
 }
 exports.BeInviteData = BeInviteData;

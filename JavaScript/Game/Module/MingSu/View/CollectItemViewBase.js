@@ -11,25 +11,25 @@ class CollectItemViewBase extends UiViewBase_1.UiViewBase {
       (this.PoolConfigId = 0),
       (this.CollectItemConfigId = 0),
       (this.CurrentShowLevel = 0),
-      (this._Ar = () => {
+      (this.OAr = () => {
         this.OnUpdateDragonPoolView();
       }),
-      (this.uAr = () => {
+      (this.kAr = () => {
         this.OnSubmitItemLevelUp();
       }),
-      (this.kDn = () => {
+      (this.QUn = () => {
         this.OnSubmitItemLevelMax();
       }),
-      (this.YBn = () => {
+      (this.vGn = () => {
         this.OnLevelMaxSequenceFinished();
       }),
-      (this.Hwn = () => {
+      (this.xGn = () => {
         this.OnLevelUpSequenceFinished();
       }),
-      (this.FDn = () => {
+      (this.XUn = () => {
         this.OnSubmitItemLevelUpSequencePlayFail();
       }),
-      (this.qmi = (e, t) => {
+      (this.qdi = (e, t) => {
         e === this.CollectItemConfigId && this.OnCollectItemCountChanged(t);
       }),
       (this.$Ge = (e) => {
@@ -48,19 +48,19 @@ class CollectItemViewBase extends UiViewBase_1.UiViewBase {
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnAntiqueShopUpgradeSequencePlayFail,
-        this.FDn,
+        this.XUn,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.UpdateDragonPoolView,
-        this._Ar,
+        this.OAr,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnAntiqueShopLevelMaxSequenceFinished,
-        this.YBn,
+        this.vGn,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnAntiqueShopUpgradeSequenceFinished,
-        this.Hwn,
+        this.xGn,
       ),
       (ModelManager_1.ModelManager.MingSuModel.CurrentInteractCreatureDataLongId =
         ModelManager_1.ModelManager.InteractionModel.InteractCreatureDataLongId),
@@ -73,48 +73,48 @@ class CollectItemViewBase extends UiViewBase_1.UiViewBase {
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnAntiqueShopUpgradeSequencePlayFail,
-        this.FDn,
+        this.XUn,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.UpdateDragonPoolView,
-        this._Ar,
+        this.OAr,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnAntiqueShopLevelMaxSequenceFinished,
-        this.YBn,
+        this.vGn,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnAntiqueShopUpgradeSequenceFinished,
-        this.Hwn,
+        this.xGn,
       ),
       this.OnEnded();
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnSubmitItemLevelUp,
-      this.uAr,
+      this.kAr,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnSubmitItemLevelMax,
-        this.kDn,
+        this.QUn,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnCommonItemCountAnyChange,
-        this.qmi,
+        this.qdi,
       );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnSubmitItemLevelUp,
-      this.uAr,
+      this.kAr,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnSubmitItemLevelMax,
-        this.kDn,
+        this.QUn,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnCommonItemCountAnyChange,
-        this.qmi,
+        this.qdi,
       );
   }
   OnBegined() {}

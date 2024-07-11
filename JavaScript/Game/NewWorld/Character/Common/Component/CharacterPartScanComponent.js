@@ -28,21 +28,21 @@ const UE = require("ue"),
 let CharacterPartScanComponent = class CharacterPartScanComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments),
-      (this.Ajr = void 0),
-      (this.nXt = void 0),
-      (this.Ujr = void 0);
+      (this.ljr = void 0),
+      (this.n$t = void 0),
+      (this._jr = void 0);
   }
   OnInit() {
     return (
-      (this.Ajr = this.Entity.GetComponent(58)),
-      (this.nXt = this.Entity.GetComponent(3)),
-      (this.Ujr = this.nXt.Actor.CharRenderingComponent),
+      (this.ljr = this.Entity.GetComponent(60)),
+      (this.n$t = this.Entity.GetComponent(3)),
+      (this._jr = this.n$t.Actor.CharRenderingComponent),
       !0
     );
   }
   ShowScanEffect() {
-    if (this.Ajr.IsMultiPart)
-      for (const e of this.Ajr.Parts) {
+    if (this.ljr.IsMultiPart)
+      for (const e of this.ljr.Parts) {
         var t;
         e?.ScanEffect &&
           "None" !== e?.ScanEffect &&
@@ -56,7 +56,7 @@ let CharacterPartScanComponent = class CharacterPartScanComponent extends Entity
           EffectSystem_1.EffectSystem.IsValid(t)) &&
           (t = EffectSystem_1.EffectSystem.GetEffectActor(t))?.IsValid() &&
           t.K2_AttachToComponent(
-            this.nXt.Actor.Mesh,
+            this.n$t.Actor.Mesh,
             e.ScanEffectSocketName,
             0,
             0,
@@ -64,14 +64,14 @@ let CharacterPartScanComponent = class CharacterPartScanComponent extends Entity
             !1,
           ),
           e.ScanMaterialEffect &&
-            this.Ujr &&
-            this.Ujr.CheckInit() &&
-            this.Ujr.AddMaterialControllerData(e.ScanMaterialEffect);
+            this._jr &&
+            this._jr.CheckInit() &&
+            this._jr.AddMaterialControllerData(e.ScanMaterialEffect);
       }
   }
 };
 (CharacterPartScanComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(59)],
+  [(0, RegisterComponent_1.RegisterComponent)(61)],
   CharacterPartScanComponent,
 )),
   (exports.CharacterPartScanComponent = CharacterPartScanComponent);

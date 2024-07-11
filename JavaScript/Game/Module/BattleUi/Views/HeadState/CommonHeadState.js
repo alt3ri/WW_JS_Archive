@@ -3,33 +3,32 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CommonHeadState = void 0);
 const UE = require("ue"),
   ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
   LguiUtil_1 = require("../../../Util/LguiUtil"),
-  BattleUiDefine_1 = require("../../BattleUiDefine"),
-  BuffItem_1 = require("../BuffItem"),
+  BuffItemContainer_1 = require("../BuffItemContainer"),
   HeadStateViewBase_1 = require("./HeadStateViewBase");
 class CommonHeadState extends HeadStateViewBase_1.HeadStateViewBase {
   constructor() {
     super(...arguments),
-      (this.Jot = new Map()),
-      (this.zot = []),
-      (this.Zot = []),
-      (this.srt = 0),
+      (this.okn = new BuffItemContainer_1.BuffItemContainer()),
+      (this.pnt = 0),
       (this.OnAddOrRemoveBuff = (t, e, i, s) => {
         this.HeadStateData.GetEntityId() === t &&
-          e.CueType === BattleUiDefine_1.UI_EFFECT_CUE_TYPE &&
-          (i ? this.Yrt(e, s, !0) : this.Jrt(s, !0));
+          (i
+            ? this.okn.AddBuffByCue(e, s, !0)
+            : this.okn.RemoveBuffByCue(e, s, !0));
       }),
       (this.OnShieldChanged = (t) => {
         this.RefreshHpAndShield(!1);
       }),
       (this.OnChangeTeam = () => {
-        this.Lht();
+        this.Olt();
       }),
       (this.OnLevelChanged = (t, e, i) => {
-        this.Lht();
+        this.Olt();
       }),
       (this.OnRoleLevelChange = (t, e, i) => {
-        this.Lht();
+        this.Olt();
       });
   }
   OnRegisterComponent() {
@@ -46,135 +45,89 @@ class CommonHeadState extends HeadStateViewBase_1.HeadStateViewBase {
   ActiveBattleHeadState(t) {
     super.ActiveBattleHeadState(t),
       this.RefreshHpAndShield(),
-      this.Lht(),
-      this.Dht(),
-      this.Rht(),
-      this.Uht(),
-      this.Vrt(),
-      this.Aht();
+      this.Olt(),
+      this.klt(),
+      this.Flt(),
+      this.Vlt(),
+      this.tst(),
+      this.Hlt();
   }
   OnStart() {
-    this.srt = this.GetSprite(2).GetParentAsUIItem().GetWidth();
+    (this.pnt = this.GetSprite(2).GetParentAsUIItem().GetWidth()),
+      this.okn.Init(this.GetItem(5));
   }
   ResetBattleHeadState() {
-    this.Wrt(), super.ResetBattleHeadState();
+    this.okn.ClearAll(), super.ResetBattleHeadState();
   }
   GetResourceId() {
     return "UiItem_LittleMonsterState_Prefab";
   }
   OnRefresh(t, e, i) {
-    super.OnRefresh(t, e, i), this.Dht(), this.Rht(), this.Uht(), this.Pht(i);
+    super.OnRefresh(t, e, i), this.klt(), this.Flt(), this.Vlt(), this.jlt(i);
   }
-  Yrt(e, i, s = !1) {
-    if (!this.Jot.has(i)) {
-      let t = this.zrt();
-      (t = t || this.Zrt()), this.ent(t, e, i, s);
-    }
-  }
-  Zrt() {
-    var t = this.GetItem(5);
-    return new BuffItem_1.BuffItem(t);
-  }
-  ent(t, e, i, s = !1) {
-    var h = this.Jot.size,
-      r = this.HeadStateData.GetBuff(i);
-    t.Activate(e, r, s),
-      t.GetRootItem().SetHierarchyIndex(h),
-      this.Jot.set(i, t);
-  }
-  Jrt(t, e = !1) {
-    var i = this.tnt(t);
-    i &&
-      (this.Jot.delete(t),
-      (e
-        ? (i.DeactivateWithCloseAnim(), this.zot)
-        : (i.Deactivate(), this.Zot)
-      ).push(i));
-  }
-  zrt() {
+  tst() {
     var t;
-    if (!(this.Zot.length < 1))
-      return (t = this.Zot[0]), this.Zot.splice(0, 1), t;
+    this.HeadStateData
+      ? ((t = ModelManager_1.ModelManager.CharacterModel?.GetHandle(
+          this.HeadStateData.GetEntityId(),
+        )),
+        this.okn.RefreshBuff(t))
+      : this.okn.ClearAll();
   }
-  tnt(t) {
-    return this.Jot.get(t);
-  }
-  Wrt() {
-    for (const t of this.Jot.values()) t.Destroy();
-    this.Jot.clear();
-    for (const e of this.zot) e.Deactivate(), e.Destroy();
-    this.zot.length = 0;
-    for (const i of this.Zot) i.Destroy();
-    this.Zot.length = 0;
-  }
-  Vrt() {
-    if ((this.Wrt(), this.HeadStateData))
-      for (const e of this.HeadStateData.GetAllCurrentCueRef()) {
-        var t = e.CueConfig;
-        t.CueType === BattleUiDefine_1.UI_EFFECT_CUE_TYPE &&
-          this.Yrt(t, e.ActiveHandleId);
-      }
-  }
-  Aht() {
+  Hlt() {
     var t = this.GetHpColor();
     t && ((t = UE.Color.FromHex(t)), this.GetSprite(0).SetColor(t));
   }
-  Dht() {
+  klt() {
     var t = this.IsDetailVisible();
     this.GetItem(4).SetUIActive(t);
   }
-  Rht() {
+  Flt() {
     var t = this.IsLevelTextVisible();
     this.GetText(3).SetUIActive(t);
   }
-  Uht() {
+  Vlt() {
     var t = this.IsBuffVisible();
     this.GetItem(5).SetUIActive(t);
   }
-  Pht(e) {
-    if (this.IsBuffVisible()) {
-      for (const t of this.Jot.values()) t.Tick(e);
-      for (let t = this.zot.length - 1; 0 <= t; t--) {
-        var i = this.zot[t];
-        i.TickHiding(e) || (this.zot.splice(t, 1), this.Zot.push(i));
-      }
-    }
+  jlt(t) {
+    this.IsBuffVisible() && this.okn.Tick(t);
   }
   RefreshHpAndShield(t = !1) {
     var [e, i] = this.GetHpAndShieldPercent();
-    this.int(e),
-      this.ont(i),
+    this.Cst(e),
+      this.gst(i),
       t ? this.PlayBarAnimation(e) : this.StopBarLerpAnimation();
   }
   OnBeginBarAnimation(t) {
-    this.Xrt(t);
+    this.ast(t);
   }
   StopBarLerpAnimation() {
     super.StopBarLerpAnimation(), this.GetSprite(1).SetUIActive(!1);
   }
   OnLerpBarBufferPercent(t) {
-    this.Xrt(t);
+    this.ast(t);
   }
-  int(t) {
+  Cst(t) {
     this.GetSprite(0).SetFillAmount(t);
   }
-  Xrt(t) {
+  ast(t) {
     var e = this.GetSprite(1),
       e =
         (e.SetFillAmount(t),
         e.IsUIActiveSelf() || e.SetUIActive(!0),
         this.GetSprite(2));
-    e.SetStretchLeft(this.srt * this.CurrentBarPercent - 2),
-      e.SetStretchRight(this.srt * (1 - t) - 2);
+    e.SetStretchLeft(this.pnt * this.CurrentBarPercent - 2),
+      e.SetStretchRight(this.pnt * (1 - t) - 2);
   }
-  ont(t) {
+  gst(t) {
     var e = this.GetSprite(6);
     0 < t ? (e.SetFillAmount(t), e.SetUIActive(!0)) : e.SetUIActive(!1);
   }
   OnHealthChanged(t) {
     this.HeadStateData.GetEntityId() === t && this.RefreshHpAndShield(!0);
   }
-  Lht() {
+  Olt() {
     var t, e, i;
     this.HeadStateData &&
       ((t = this.GetLevel()),

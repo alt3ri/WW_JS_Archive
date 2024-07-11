@@ -10,37 +10,37 @@ const UE = require("ue"),
 class RoleExpItemGridComponent extends UiPanelBase_1.UiPanelBase {
   constructor(t, e, i, s, h, o, r = void 0) {
     super(),
-      (this.Blo = t),
-      (this.U_o = e),
-      (this.A_o = i),
-      (this.P_o = s),
-      (this.x_o = h),
-      (this.w_o = o),
+      (this.A1o = t),
+      (this.Tuo = e),
+      (this.Luo = i),
+      (this.Duo = s),
+      (this.Ruo = h),
+      (this.Uuo = o),
       (this.BelongView = r),
       (this.ScrollView = void 0),
-      (this.uft = void 0),
-      (this.qlo = 0),
-      (this.Glo = 0),
-      (this.i3e = void 0),
-      (this.B_o = 0),
-      (this.Nlo = !1),
+      (this.ypt = void 0),
+      (this.x1o = 0),
+      (this.w1o = 0),
+      (this.p4e = void 0),
+      (this.Auo = 0),
+      (this.B1o = !1),
       (this.sGe = () => {
         var t =
           new RoleLevelUpCostMediumItemGrid_1.RoleLevelUpCostMediumItemGrid();
         return (
-          t.BindLongPress(1, this.OCt),
+          t.BindLongPress(1, this.Jgt),
           t.BindOnCanExecuteChange(() => !1),
-          t.BindReduceLongPress(this.b_o),
+          t.BindReduceLongPress(this.Puo),
           t
         );
       }),
-      (this.OCt = (t, e, i) => {
+      (this.Jgt = (t, e, i) => {
         i = i.ItemId;
-        (t || this.x_o(i)) && this.A_o(i);
+        (t || this.Ruo(i)) && this.Luo(i);
       }),
-      (this.b_o = (t, e, i) => {
+      (this.Puo = (t, e, i) => {
         i = i.ItemId;
-        this.w_o(i) && this.P_o(i);
+        this.Uuo(i) && this.Duo(i);
       });
   }
   OnRegisterComponent() {
@@ -55,11 +55,11 @@ class RoleExpItemGridComponent extends UiPanelBase_1.UiPanelBase {
       [12, UE.UIItem],
       [15, UE.UIText],
     ]),
-      (this.BtnBindInfo = [[3, this.U_o]]);
+      (this.BtnBindInfo = [[3, this.Tuo]]);
   }
   OnStart() {
-    (this.i3e = new ButtonItem_1.ButtonItem(this.GetItem(11))),
-      this.i3e.SetFunction(this.Blo);
+    (this.p4e = new ButtonItem_1.ButtonItem(this.GetItem(11))),
+      this.p4e.SetFunction(this.A1o);
     var t = this.GetScrollViewWithScrollbar(5);
     this.ScrollView = new GenericScrollViewNew_1.GenericScrollViewNew(
       t,
@@ -70,34 +70,34 @@ class RoleExpItemGridComponent extends UiPanelBase_1.UiPanelBase {
     this.UpdateByDataList(t), this.UpdateMoney(e, i);
   }
   UpdateByDataList(t) {
-    (this.uft = t),
-      this.ScrollView.RefreshByData(this.uft),
+    (this.ypt = t),
+      this.ScrollView.RefreshByData(this.ypt),
       this.UpdateAutoButtonState();
   }
   UpdateMoney(t, e) {
-    (this.qlo = t),
-      (this.Glo = e),
-      this.SetItemIcon(this.GetTexture(7), this.qlo);
+    (this.x1o = t),
+      (this.w1o = e),
+      this.SetItemIcon(this.GetTexture(7), this.x1o);
     (t = this.GetText(8)),
-      t.SetText(this.Glo.toString()),
+      t.SetText(this.w1o.toString()),
       (e = ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
-        this.qlo,
+        this.x1o,
       ));
-    (this.Nlo = e >= this.Glo), (t.useChangeColor = !this.Nlo);
+    (this.B1o = e >= this.w1o), (t.useChangeColor = !this.B1o);
   }
   GetIsMoneyEnough() {
-    return this.Nlo;
+    return this.B1o;
   }
   UpdateAutoButtonState() {
-    for (const t of this.uft)
-      if (0 < t.SelectedCount) return void (this.B_o = 1);
-    this.B_o = 0;
+    for (const t of this.ypt)
+      if (0 < t.SelectedCount) return void (this.Auo = 1);
+    this.Auo = 0;
   }
   GetAutoButtonState() {
-    return this.B_o;
+    return this.Auo;
   }
   GetDataList() {
-    return this.uft;
+    return this.ypt;
   }
   SetMaxItemActive(t) {
     this.GetItem(12).SetUIActive(t);
@@ -106,12 +106,12 @@ class RoleExpItemGridComponent extends UiPanelBase_1.UiPanelBase {
     this.GetItem(13).SetUIActive(t);
   }
   SetButtonItemActive(t) {
-    this.i3e.SetActive(t);
+    this.p4e.SetActive(t);
   }
   SetMaxText(t) {}
   SetLockText(t) {}
   SetButtonItemText(t) {
-    this.i3e.SetLocalText(t);
+    this.p4e.SetLocalText(t);
   }
   SetAutoButtonText(t) {
     this.GetText(15).ShowTextNew(t);

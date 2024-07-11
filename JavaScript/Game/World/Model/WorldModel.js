@@ -14,57 +14,57 @@ const Queue_1 = require("../../../Core/Container/Queue"),
   (exports.MOBILE_CSM_DISTANCE_OUTCAVE = 8e3);
 class WorldEnvironmentInfo {
   constructor() {
-    (this.S9 = DEFAULT_ENVIRONMENTTYPE),
-      (this.FMr = ""),
-      (this.VMr = ""),
+    (this.E9 = DEFAULT_ENVIRONMENTTYPE),
+      (this.NEr = ""),
+      (this.OEr = ""),
       (this.un = 6),
-      (this.RGn = 1);
+      (this.bNn = 1);
   }
   get DataLayerType() {
-    return this.FMr;
+    return this.NEr;
   }
   get SubDataLayerType() {
-    return this.VMr;
+    return this.OEr;
   }
   get LoadType() {
     return this.un;
   }
   get CaveMode() {
-    return this.RGn;
+    return this.bNn;
   }
   IsEqual(e) {
-    return this.S9 === e;
+    return this.E9 === e;
   }
   IsEnCloseEnvironment() {
-    return 0 === this.S9 || 1 === this.S9;
+    return 0 === this.E9 || 1 === this.E9;
   }
   get EnvType() {
-    return this.S9;
+    return this.E9;
   }
   SetInfo(e) {
     switch (e.EnvType) {
       case 0:
-        (this.FMr = "DataLayerRuntime_EncloseSpace"),
-          (this.VMr = "DataLayerRuntime_EncloseSpaceSub"),
-          (this.RGn = 2);
+        (this.NEr = "DataLayerRuntime_EncloseSpace"),
+          (this.OEr = "DataLayerRuntime_EncloseSpaceSub"),
+          (this.bNn = 2);
         break;
       case 2:
-        (this.FMr = "DataLayerRuntime_EncloseSpace"),
-          (this.VMr = "DataLayerRuntime_EncloseSpaceSub"),
-          (this.RGn = 3);
+        (this.NEr = "DataLayerRuntime_EncloseSpace"),
+          (this.OEr = "DataLayerRuntime_EncloseSpaceSub"),
+          (this.bNn = 3);
         break;
       case 1:
-        (this.FMr = "DataLayerRuntime_EncloseSpaceRoom"),
-          (this.VMr = "DataLayerRuntime_EncloseSpaceSubRoom"),
-          (this.RGn = 2);
+        (this.NEr = "DataLayerRuntime_EncloseSpaceRoom"),
+          (this.OEr = "DataLayerRuntime_EncloseSpaceSubRoom"),
+          (this.bNn = 2);
         break;
       default:
-        this.RGn = 1;
+        this.bNn = 1;
     }
-    (this.un = e.StreamingType), (this.S9 = e.EnvType);
+    (this.un = e.StreamingType), (this.E9 = e.EnvType);
   }
   ResetInfo() {
-    this.S9 = DEFAULT_ENVIRONMENTTYPE;
+    this.E9 = DEFAULT_ENVIRONMENTTYPE;
   }
 }
 exports.WorldEnvironmentInfo = WorldEnvironmentInfo;
@@ -72,63 +72,63 @@ class WorldModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
       (this.TickIntervalSchedulers = new Array()),
-      (this.HMr = void 0),
-      (this.b4e = !1),
-      (this.jMr = !1),
+      (this.kEr = void 0),
+      (this.$5e = !1),
+      (this.FEr = !1),
       (this.ChangeSchedulerLastType = 0),
       (this.ChangeSchedulerDeltaFrameCount = 0),
       (this.CurrentSchedulerDelta = 0),
-      (this.WMr = new Map()),
+      (this.VEr = new Map()),
       (this.DestroyActorQueue = new Queue_1.Queue()),
       (this.ActorsToIgnoreSet = new Set()),
       (this.CurEnvironmentInfo = new WorldEnvironmentInfo()),
       (this.IsEnableEnvironmentDetecting = !0);
   }
   get ControlPlayerLastLocation() {
-    return ModelManager_1.ModelManager.WorldModel.HMr;
+    return ModelManager_1.ModelManager.WorldModel.kEr;
   }
   set ControlPlayerLastLocation(e) {
-    this.HMr = e;
+    this.kEr = e;
   }
   get WorldStateMap() {
-    return this.WMr;
+    return this.VEr;
   }
   set WorldStateMap(e) {
-    this.WMr = e;
+    this.VEr = e;
   }
   UpdateWorldState(e) {
     for (const r of Object.keys(e)) {
       var t = e[r],
-        s = Number(MathUtils_1.MathUtils.LongToBigInt(t.BMs));
+        s = Number(MathUtils_1.MathUtils.LongToBigInt(t.JIs));
       switch (r) {
         case "DefaultState":
         case "NpcWorldState":
-          this.WMr.set(r, s);
+          this.VEr.set(r, s);
       }
     }
   }
   GetMapDone() {
-    return this.jMr;
+    return this.FEr;
   }
   SetMapDone(e) {
-    this.jMr = e;
+    this.FEr = e;
   }
   GetWorldDone() {
-    return this.b4e;
+    return this.$5e;
   }
   SetWorldDone(e) {
-    this.b4e = e;
+    this.$5e = e;
   }
   static AddTsSimpleInteractItem(e) {
-    let t = this.KMr.get(e.TypeId);
-    t || ((t = new Set()), this.KMr.set(e.TypeId, t)), t.add(e);
+    let t = this.HEr.get(e.TypeId);
+    t || ((t = new Set()), this.HEr.set(e.TypeId, t)), t.add(e);
   }
   static RemoveTsSimpleInteractItem(e) {
-    var t = this.KMr.get(e.TypeId);
+    var t = this.HEr.get(e.TypeId);
     t && t.delete(e);
   }
   static GetTsSimpleInteractItemById(e) {
-    return this.KMr.get(e);
+    return this.HEr.get(e);
   }
   AddDestroyActor(e, t, s) {
     s?.IsValid() && this.DestroyActorQueue.Push([e, t, s]);
@@ -170,5 +170,5 @@ class WorldModel extends ModelBase_1.ModelBase {
   }
 }
 ((exports.WorldModel = WorldModel).IsStandalone = !1),
-  (WorldModel.KMr = new Map());
+  (WorldModel.HEr = new Map());
 //# sourceMappingURL=WorldModel.js.map

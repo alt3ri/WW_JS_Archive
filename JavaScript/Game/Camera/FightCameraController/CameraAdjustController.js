@@ -101,7 +101,6 @@ class CameraAdjustController extends CameraControllerBase_1.CameraControllerBase
         this.ile ||
         this.nle) &&
       (this.Camera.CameraAutoController.EnableForce(this),
-      this.ResetBreakModifyInfo(),
       (this.nle = !0),
       (this.tle = !0),
       (this.hle = 0),

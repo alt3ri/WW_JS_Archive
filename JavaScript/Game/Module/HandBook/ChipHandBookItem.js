@@ -5,156 +5,237 @@ const UE = require("ue"),
   MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang"),
   ConfigManager_1 = require("../../Manager/ConfigManager"),
   ModelManager_1 = require("../../Manager/ModelManager"),
-  SmallItemGrid_1 = require("../Common/SmallItemGrid/SmallItemGrid"),
-  GridProxyAbstract_1 = require("../Util/Grid/GridProxyAbstract"),
-  GenericLayoutNew_1 = require("../Util/Layout/GenericLayoutNew"),
-  ChipHandBookChildItem_1 = require("./ChipHandBookChildItem");
-class ChipHandBookItem extends GridProxyAbstract_1.GridProxyAbstract {
+  UiPanelBase_1 = require("../../Ui/Base/UiPanelBase"),
+  SmallItemGrid_1 = require("../Common/SmallItemGrid/SmallItemGrid");
+class ChipHandBookItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this.kzt = void 0),
-      (this.Gzt = void 0),
-      (this.Fzt = void 0),
-      (this.Vzt = void 0),
-      (this.Hzt = []),
-      (this.jzt = []),
-      (this.Xgt = void 0),
-      (this.Wzt = (t, i, e) => {
-        i = new ChipHandBookChildItem_1.ChipHandBookChildItem(i);
-        return (
-          i.Refresh(t, !1, 0),
-          i.BindToggleCallback(this.Kzt),
-          this.jzt.push(i),
-          { Key: e, Value: i }
-        );
-      }),
-      (this.Kzt = (t) => {
-        this.Fzt && this.Fzt(t);
-      }),
-      (this.Ozt = (t) => {
-        var t = 1 === t,
-          i = this.CheckIsCanShowChildList();
-        this.GetItem(1).SetUIActive(i && t),
-          this.GetItem(2).SetUIActive(!t && i),
-          this.GetItem(6).SetUIActive(t && i),
-          this.GetItem(8).SetUIActive(!i),
-          this.Gzt && t && this.Gzt(this);
-      });
+      (this.YQn = void 0),
+      (this.JQn = void 0),
+      (this.GZt = void 0),
+      (this.FZt = void 0);
   }
-  Initialize(t) {
-    t && this.SetRootActor(t.GetOwner(), !0);
+  async Init(t) {
+    await super.CreateByActorAsync(t.GetOwner(), void 0, !0), await this.WZt();
+  }
+  async WZt() {
+    (this.YQn = new HandBookChipToggleItem()),
+      this.AddChild(this.YQn),
+      (this.JQn = new HandBookChipDesItem()),
+      this.AddChild(this.JQn);
+    var t = this.GetItem(0),
+      i = (t.SetUIActive(!1), this.GetItem(1));
+    i.SetUIActive(!1),
+      await Promise.all([
+        this.YQn.CreateByActorAsync(t.GetOwner()),
+        this.JQn.CreateByActorAsync(i.GetOwner()),
+      ]),
+      this.YQn.BindToggleCallback(this.GZt),
+      this.JQn.BindChildToggleCallback(this.FZt);
+  }
+  GetUsingItem(t) {
+    return (
+      t.HandBookChipConfigId ? this.GetItem(1) : this.GetItem(0)
+    ).GetOwner();
+  }
+  ClearItem() {
+    this.Destroy();
   }
   OnRegisterComponent() {
-    (this.ComponentsRegisterInfo = [
+    this.ComponentRegisterInfos = [
       [0, UE.UIItem],
       [1, UE.UIItem],
-      [2, UE.UIItem],
-      [3, UE.UIText],
-      [4, UE.UIVerticalLayout],
-      [5, UE.UIExtendToggle],
-      [6, UE.UIItem],
-      [7, UE.UIItem],
-      [8, UE.UIItem],
-    ]),
-      (this.BtnBindInfo = [[5, this.Ozt]]);
+    ];
   }
-  OnStart() {
-    (this.Xgt = new SmallItemGrid_1.SmallItemGrid()),
-      this.Xgt.Initialize(this.GetItem(0).GetOwner());
-  }
-  Refresh(t, i, e) {
-    var s = (this.kzt = t).Config.Id,
-      s =
-        ConfigManager_1.ConfigManager.HandBookConfig.GetChipHandBookConfigList(
-          s,
-        ),
-      s =
-        ((this.Hzt = s),
-        { Type: 4, Data: t, IconPath: t.Icon, QualityId: t.QualityId }),
-      t =
-        (this.Xgt.Apply(s),
-        this.Xgt.BindOnCanExecuteChange(() => !1),
-        (this.jzt = []),
-        (this.Vzt = new GenericLayoutNew_1.GenericLayoutNew(
-          this.GetVerticalLayout(4),
-          this.Wzt,
-        )),
-        this.Vzt.RebuildLayoutByDataNew(this.Hzt),
-        this.CheckIsCanShowChildList());
-    this.GetText(3).SetText(
-      t
-        ? this.kzt.Title
-        : MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
-            "Text_Unknown_Text",
-          ),
-    ),
-      this.GetItem(6).SetUIActive(!1),
-      this.RefreshNewState(),
-      this.GetItem(8).SetUIActive(!t),
-      this.GetItem(1).SetUIActive(!1),
-      this.GetItem(2).SetUIActive(t);
+  Update(t, i) {
+    this.JQn?.SetUiActive(!1),
+      this.YQn?.SetUiActive(!1),
+      t.HandBookChipConfigId
+        ? (this.JQn?.SetUiActive(!0),
+          this.JQn?.Refresh(t.HandBookChipConfigId, t.IsShowContent))
+        : t.HandBookCommonItemData &&
+          (this.YQn?.SetUiActive(!0),
+          this.YQn?.Refresh(t.HandBookCommonItemData, t.IsShowContent));
   }
   RefreshNewState() {
-    var i = this.Hzt.length;
-    let e = !1;
-    for (let t = 0; t < i; t++) {
-      var s = this.Hzt[t],
-        s = ModelManager_1.ModelManager.HandBookModel.GetHandBookInfo(6, s.Id);
-      if (!(void 0 === s) && !s.IsRead) {
-        e = !0;
-        break;
-      }
-    }
-    this.GetItem(7).SetUIActive(e);
+    this.YQn?.RefreshNewState(), this.JQn?.RefreshNewState();
   }
   BindChildToggleCallback(t) {
-    this.Fzt = t;
+    this.FZt = t;
   }
   BindToggleCallback(t) {
-    this.Gzt = t;
+    this.GZt = t;
   }
-  SelectFirstChildItem() {
-    0 !== this.jzt.length &&
-      (this.CheckIsCanShowChildList() &&
-        (this.GetItem(1).SetUIActive(!0),
-        this.GetItem(2).SetUIActive(!1),
-        this.GetItem(6).SetUIActive(!0),
-        this.GetExtendToggle(5).SetToggleState(1)),
-      this.ResetChildToggleState(),
-      this.jzt[0].SetToggleStateForce(1));
+}
+exports.ChipHandBookItem = ChipHandBookItem;
+class HandBookChipToggleItem extends UiPanelBase_1.UiPanelBase {
+  constructor() {
+    super(...arguments),
+      (this.GZt = void 0),
+      (this.sft = void 0),
+      (this.kZt = void 0),
+      (this.OZt = (t) => {
+        var i,
+          s,
+          t = 1 === t;
+        t &&
+          ((i = this.kZt.Config),
+          (s = this.CheckIsCanShowChildList(i.Id)),
+          this.GetItem(1).SetUIActive(s && !0),
+          this.GetItem(6).SetUIActive(!1),
+          this.GetItem(4).SetUIActive(!s),
+          this.GZt) &&
+          t &&
+          this.GZt(i.Id);
+      });
   }
-  CheckIsCanShowChildList() {
-    var i = this.jzt.length;
+  OnRegisterComponent() {
+    (this.ComponentRegisterInfos = [
+      [0, UE.UIItem],
+      [1, UE.UIItem],
+      [2, UE.UIText],
+      [3, UE.UIItem],
+      [4, UE.UIItem],
+      [5, UE.UIExtendToggle],
+      [6, UE.UIItem],
+    ]),
+      (this.BtnBindInfo = [[5, this.OZt]]);
+  }
+  OnStart() {
+    (this.sft = new SmallItemGrid_1.SmallItemGrid()),
+      this.sft.Initialize(this.GetItem(0).GetOwner());
+  }
+  Refresh(t, i) {
+    var s = (this.kZt = t).Config,
+      t = { Type: 4, Data: t, IconPath: t.Icon, QualityId: t.QualityId },
+      t =
+        (this.sft.Apply(t),
+        this.sft.BindOnCanExecuteChange(() => !1),
+        this.CheckIsCanShowChildList(s.Id)),
+      t =
+        (this.GetText(2).SetText(
+          t
+            ? this.kZt.Title
+            : MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
+                "Text_Unknown_Text",
+              ),
+        ),
+        this.GetItem(4).SetUIActive(!t),
+        this.GetItem(1).SetUIActive(t && i),
+        this.GetItem(6).SetUIActive(t && !i),
+        this.CheckNewState(s.Id));
+    this.GetItem(3).SetUIActive(t),
+      this.GetExtendToggle(5).SetToggleState(i ? 1 : 0, !1);
+  }
+  CheckIsCanShowChildList(t) {
+    var i =
+        ConfigManager_1.ConfigManager.HandBookConfig.GetChipHandBookConfigList(
+          t,
+        ),
+      s = i?.length ?? 0;
     let e = !1;
-    for (let t = 0; t < i; t++) {
-      var s = this.jzt[t].GetData();
-      if (ModelManager_1.ModelManager.HandBookModel.GetHandBookInfo(6, s.Id)) {
+    for (let t = 0; t < s; t++) {
+      var h = i[t];
+      if (ModelManager_1.ModelManager.HandBookModel.GetHandBookInfo(6, h.Id)) {
         e = !0;
         break;
       }
     }
     return e;
   }
-  ResetChildToggleState() {
-    var i = this.jzt.length;
-    for (let t = 0; t < i; t++) this.jzt[t].SetToggleStateForce(0);
+  CheckNewState(t) {
+    var i =
+        ConfigManager_1.ConfigManager.HandBookConfig.GetChipHandBookConfigList(
+          t,
+        ),
+      s = i?.length ?? 0;
+    let e = !1;
+    for (let t = 0; t < s; t++) {
+      var h = i[t],
+        h = ModelManager_1.ModelManager.HandBookModel.GetHandBookInfo(6, h.Id);
+      if (!(void 0 === h) && !h.IsRead) {
+        e = !0;
+        break;
+      }
+    }
+    return e;
   }
-  SetToggleStateForce(t, i = 0) {
-    this.GetExtendToggle(5).SetToggleState(t), this.Ozt(t);
+  RefreshNewState() {
+    var t;
+    this.kZt &&
+      ((t = this.kZt.Config),
+      (t = this.CheckNewState(t.Id)),
+      this.GetItem(3).SetUIActive(t));
   }
-  GetChildItemList() {
-    return this.jzt;
-  }
-  OnClearComponentsData() {
-    (this.kzt = void 0),
-      (this.Gzt = void 0),
-      (this.Fzt = void 0),
-      this.Vzt && (this.Vzt.ClearChildren(), (this.Vzt = void 0)),
-      (this.Hzt = []),
-      (this.jzt = []),
-      this.Xgt.ClearComponentsData(),
-      (this.Xgt = void 0);
+  BindToggleCallback(t) {
+    this.GZt = t;
   }
 }
-exports.ChipHandBookItem = ChipHandBookItem;
+class HandBookChipDesItem extends UiPanelBase_1.UiPanelBase {
+  constructor() {
+    super(...arguments),
+      (this.FZt = void 0),
+      (this.zQn = void 0),
+      (this.Rjt = !1),
+      (this.H5e = void 0),
+      (this.OZt = (t) => {
+        this.FZt && 1 === t && this.FZt(this.zQn, this.H5e);
+      });
+  }
+  OnRegisterComponent() {
+    (this.ComponentRegisterInfos = [
+      [1, UE.UIItem],
+      [3, UE.UIText],
+      [2, UE.UIText],
+      [4, UE.UIItem],
+      [5, UE.UIItem],
+      [0, UE.UIExtendToggle],
+    ]),
+      (this.BtnBindInfo = [[0, this.OZt]]);
+  }
+  OnStart() {
+    this.H5e = this.GetExtendToggle(0);
+  }
+  Refresh(t, i) {
+    var t =
+        ConfigManager_1.ConfigManager.HandBookConfig.GetChipHandBookConfig(t),
+      s =
+        ((this.zQn = t),
+        ModelManager_1.ModelManager.HandBookModel.GetHandBookInfo(6, t.Id)),
+      t =
+        ((this.Rjt = void 0 === s),
+        this.GetItem(1).SetUIActive(this.Rjt),
+        this.GetText(2).SetUIActive(!this.Rjt),
+        ConfigManager_1.ConfigManager.InfoDisplayModuleConfig.GetInfoDisplayTitle(
+          t.Id,
+        )),
+      t =
+        (this.GetText(2).SetText(t),
+        this.GetText(3).SetText(
+          MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
+            "Text_Unknown_Text",
+          ),
+        ),
+        this.GetItem(4)),
+      e = this.GetItem(5),
+      s = void 0 !== s && !s.IsRead;
+    e.SetUIActive(this.Rjt),
+      this.Rjt ? t.SetUIActive(!1) : t.SetUIActive(s),
+      i && this.H5e?.SetToggleState(1, !0);
+  }
+  BindChildToggleCallback(t) {
+    this.FZt = t;
+  }
+  RefreshNewState() {
+    var t;
+    this.zQn &&
+      ((t =
+        void 0 !==
+          (t = ModelManager_1.ModelManager.HandBookModel.GetHandBookInfo(
+            6,
+            this.zQn.Id,
+          )) && !t.IsRead),
+      this.GetItem(4).SetUIActive(t));
+  }
+}
 //# sourceMappingURL=ChipHandBookItem.js.map

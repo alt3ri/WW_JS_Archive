@@ -2,11 +2,13 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LinkingDotItem = void 0);
 const UE = require("ue"),
+  CustomPromise_1 = require("../../../../Core/Common/CustomPromise"),
   IAction_1 = require("../../../../UniverseEditor/Interface/IAction"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
+  LevelSequencePlayer_1 = require("../../../Module/Common/LevelSequencePlayer"),
   UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
 class LinkingDotItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
@@ -19,19 +21,41 @@ class LinkingDotItem extends UiPanelBase_1.UiPanelBase {
       (this.NAe = void 0),
       (this.OAe = void 0),
       (this.kAe = void 0),
-      (this.FAe = (t, i, e, n, o) => {});
+      (this.fea = void 0),
+      (this.pea = void 0),
+      (this.oda = void 0),
+      (this.SPe = void 0),
+      (this.FAe = (i, t, e, n, o) => {});
   }
   OnRegisterComponent() {
-    this.ComponentRegisterInfos = [
-      [0, UE.UISprite],
-      [1, UE.UISprite],
-      [2, UE.UISprite],
-      [3, UE.UISprite],
-      [6, UE.UISprite],
-      [5, UE.UISprite],
-      [4, UE.UIItem],
-      [7, UE.UIItem],
-    ];
+    var i = 1 === ModelManager_1.ModelManager.SignalDeviceModel.ViewType;
+    this.ComponentRegisterInfos = i
+      ? [
+          [0, UE.UISprite],
+          [1, UE.UISprite],
+          [2, UE.UISprite],
+          [3, UE.UISprite],
+          [6, UE.UISprite],
+          [5, UE.UISprite],
+          [4, UE.UIItem],
+          [7, UE.UIItem],
+          [8, UE.UISprite],
+          [9, UE.UISprite],
+          [10, UE.UISprite],
+          [11, UE.UISprite],
+          [12, UE.UIItem],
+          [13, UE.UIExtendToggle],
+        ]
+      : [
+          [0, UE.UISprite],
+          [1, UE.UISprite],
+          [2, UE.UISprite],
+          [3, UE.UISprite],
+          [6, UE.UISprite],
+          [5, UE.UISprite],
+          [4, UE.UIItem],
+          [7, UE.UIItem],
+        ];
   }
   OnStart() {
     (this.wAe = this.GetSprite(0)),
@@ -49,6 +73,16 @@ class LinkingDotItem extends UiPanelBase_1.UiPanelBase {
       this.GAe.SetUIActive(!1),
       this.NAe.SetUIActive(!1),
       this.kAe.SetUIActive(!1),
+      1 === ModelManager_1.ModelManager.SignalDeviceModel.ViewType &&
+        ((this.fea = this.GetSprite(9)),
+        (this.pea = this.GetSprite(8)),
+        (this.oda = this.GetSprite(10)),
+        this.fea.SetUIActive(!1),
+        this.pea.SetUIActive(!1),
+        this.oda.SetUIActive(!1),
+        (this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(
+          this.GetRootItem(),
+        ))),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnSignalDeviceLinking,
         this.FAe,
@@ -60,47 +94,90 @@ class LinkingDotItem extends UiPanelBase_1.UiPanelBase {
       this.FAe,
     );
   }
-  InitIcon(t) {
-    var i = LinkingDotItem.VAe.get(t),
-      e = LinkingDotItem.HAe.get(t),
-      n = LinkingDotItem.ColorRayIconMap.get(t),
-      o = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(i),
-      o =
-        (this.SetSpriteByPath(o, this.wAe, !1),
-        ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
-          i + "Light",
-        )),
-      i =
-        (this.SetSpriteByPath(o, this.BAe, !1),
-        ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(e)),
-      o =
-        (this.SetSpriteByPath(i, this.qAe, !1),
+  InitIcon(i) {
+    var t = 1 === ModelManager_1.ModelManager.SignalDeviceModel.ViewType;
+    let e = LinkingDotItem.VAe.get(i),
+      n = e + "Light",
+      o = LinkingDotItem.HAe.get(i),
+      s = LinkingDotItem.ColorRayIconMap.get(i);
+    t && ((e += "CM"), (n += "CM"), (o += "CM"), (s += "CM"));
+    var h = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(e),
+      h =
+        (this.SetSpriteByPath(h, this.wAe, !1),
         ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(n)),
-      e =
-        (this.SetSpriteByPath(o, this.GAe, !1), LinkingDotItem.ColorMap.get(t)),
-      i =
-        (this.NAe.SetColor(UE.Color.FromHex(e)),
-        LinkingDotItem.FxColorMap.get(t));
-    this.kAe.SetColor(UE.Color.FromHex(i)), this.SetLight(!1);
+      h =
+        (this.SetSpriteByPath(h, this.BAe, !1),
+        ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(o)),
+      h =
+        (this.SetSpriteByPath(h, this.qAe, !1),
+        ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(s)),
+      h =
+        (this.SetSpriteByPath(h, this.GAe, !1), LinkingDotItem.ColorMap.get(i)),
+      h =
+        (this.NAe.SetColor(UE.Color.FromHex(h)),
+        LinkingDotItem.FxColorMap.get(i));
+    this.kAe.SetColor(UE.Color.FromHex(h)),
+      t &&
+        ((h = LinkingDotItem.vea.get(i)),
+        (t = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(h)),
+        this.SetSpriteByPath(t, this.fea, !1),
+        (h = LinkingDotItem.nda.get(i)),
+        (t = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(h)),
+        this.SetSpriteByPath(t, this.oda, !1),
+        (h = LinkingDotItem.CmColorMap.get(i)),
+        this.pea.SetColor(UE.Color.FromHex(h)),
+        (t = LinkingDotItem.CmAnimColorMap.get(i)),
+        this.GetSprite(11)?.SetColor(UE.Color.FromHex(t)),
+        this.GetSprite(11)?.SetUIActive(!1),
+        this.GetItem(12)?.SetColor(UE.Color.FromHex(t))),
+      this.SetLight(!1),
+      this.ResetIcon();
   }
-  ResetIcon() {
-    this.SetLight(!1);
+  async ResetIcon() {
+    var i;
+    1 === ModelManager_1.ModelManager.SignalDeviceModel.ViewType
+      ? (this.oda.SetUIActive(!1),
+        this.GetSprite(11)?.SetUIActive(!1),
+        (i = new CustomPromise_1.CustomPromise()),
+        await this.SPe.PlaySequenceAsync("PressUp", i),
+        (this.GetExtendToggle(13).AllowEventBubbleUp = !0))
+      : this.SetLight(!1);
   }
-  SetLight(t) {
-    this.wAe.SetUIActive(!t),
-      this.BAe.SetUIActive(t),
-      this.bAe.SetUIActive(!t),
-      this.qAe.SetUIActive(t),
-      t || this.SetFxBoost(!1);
+  async OnPressed(i) {
+    var t, e;
+    1 === ModelManager_1.ModelManager.SignalDeviceModel.ViewType
+      ? (this.oda.SetUIActive(!0),
+        (t = i ? "PressDown" : "PressUp"),
+        (e = new CustomPromise_1.CustomPromise()),
+        await this.SPe.PlaySequenceAsync(t, e))
+      : this.SetLight(i);
   }
-  SetFxBoost(t) {
-    this.kAe.SetUIActive(t);
+  async OnLinked() {
+    var i;
+    1 === ModelManager_1.ModelManager.SignalDeviceModel.ViewType
+      ? (this.oda.SetUIActive(!0),
+        this.GetSprite(11)?.SetUIActive(!0),
+        (i = new CustomPromise_1.CustomPromise()),
+        await this.SPe.PlaySequenceAsync("Activate", i),
+        (this.GetExtendToggle(13).AllowEventBubbleUp = !1))
+      : this.SetLight(!0);
   }
-  RotateLine(t, i = 0) {
-    this.GAe.SetUIActive(t), this.NAe.SetUIActive(t);
-    (t = ModelManager_1.ModelManager.SignalDeviceModel.RotateMap.get(i)),
-      (i = ModelManager_1.ModelManager.SignalDeviceModel.CacheRotator);
-    (i.Yaw = t + 90), this.OAe.SetUIRelativeRotation(i.ToUeRotator());
+  SetLight(i) {
+    this.wAe.SetUIActive(!i),
+      this.BAe.SetUIActive(i),
+      this.bAe.SetUIActive(!i),
+      this.qAe.SetUIActive(i),
+      i || this.SetFxBoost(!1);
+  }
+  SetFxBoost(i) {
+    1 !== ModelManager_1.ModelManager.SignalDeviceModel.ViewType &&
+      this.kAe.SetUIActive(i);
+  }
+  RotateLine(i, t = 0) {
+    this.GAe.SetUIActive(i), this.NAe.SetUIActive(i);
+    (i = ModelManager_1.ModelManager.SignalDeviceModel.RotateMap.get(t)),
+      (t = ModelManager_1.ModelManager.SignalDeviceModel.CacheRotator);
+    (t.Yaw = i + 90), this.OAe.SetUIRelativeRotation(t.ToUeRotator());
   }
 }
 ((exports.LinkingDotItem = LinkingDotItem).VAe = new Map([
@@ -121,11 +198,35 @@ class LinkingDotItem extends UiPanelBase_1.UiPanelBase {
     [IAction_1.EPieceColorType.Red, "SP_LineRed"],
     [IAction_1.EPieceColorType.Yellow, "SP_LineYellow"],
   ])),
+  (LinkingDotItem.vea = new Map([
+    [IAction_1.EPieceColorType.Blue, "SP_AnimLineBlue"],
+    [IAction_1.EPieceColorType.Green, "SP_AnimLineGreen"],
+    [IAction_1.EPieceColorType.Red, "SP_AnimLineRed"],
+    [IAction_1.EPieceColorType.Yellow, "SP_AnimLineYellow"],
+  ])),
+  (LinkingDotItem.nda = new Map([
+    [IAction_1.EPieceColorType.Blue, "SP_AnimDotBlue"],
+    [IAction_1.EPieceColorType.Green, "SP_AnimDotGreen"],
+    [IAction_1.EPieceColorType.Red, "SP_AnimDotRed"],
+    [IAction_1.EPieceColorType.Yellow, "SP_AnimDotYellow"],
+  ])),
   (LinkingDotItem.ColorMap = new Map([
     [IAction_1.EPieceColorType.Blue, "3B82B9FF"],
     [IAction_1.EPieceColorType.Green, "64945FFF"],
     [IAction_1.EPieceColorType.Red, "B93B3CFF"],
     [IAction_1.EPieceColorType.Yellow, "B9823BFF"],
+  ])),
+  (LinkingDotItem.CmColorMap = new Map([
+    [IAction_1.EPieceColorType.Blue, "5CA1FF88"],
+    [IAction_1.EPieceColorType.Green, "96FF5C88"],
+    [IAction_1.EPieceColorType.Red, "FFA15C88"],
+    [IAction_1.EPieceColorType.Yellow, "FFB85C88"],
+  ])),
+  (LinkingDotItem.CmAnimColorMap = new Map([
+    [IAction_1.EPieceColorType.Blue, "00FBE7FF"],
+    [IAction_1.EPieceColorType.Green, "DFFF55FF"],
+    [IAction_1.EPieceColorType.Red, "FFA73FFF"],
+    [IAction_1.EPieceColorType.Yellow, "FAE56CFF"],
   ])),
   (LinkingDotItem.FxColorMap = new Map([
     [IAction_1.EPieceColorType.Blue, "41AEFBFF"],

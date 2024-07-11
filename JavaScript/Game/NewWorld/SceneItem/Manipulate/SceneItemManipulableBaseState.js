@@ -7,7 +7,7 @@ class SceneItemManipulableBaseState {
   constructor(t) {
     (this.SceneItem = void 0),
       (this.PropComp = void 0),
-      (this.xrr = void 0),
+      (this.Unr = void 0),
       (this.StateType = "Reset"),
       (this.EnterCallback = void 0),
       (this.ExitCallback = void 0),
@@ -36,11 +36,11 @@ class SceneItemManipulableBaseState {
   End() {}
   StartCameraShake(t) {
     var i = Global_1.Global.CharacterCameraManager;
-    i?.IsValid() && t?.IsValid() && (this.xrr = i.StartMatineeCameraShake(t));
+    i?.IsValid() && t?.IsValid() && (this.Unr = i.StartMatineeCameraShake(t));
   }
   StopCameraShake() {
     var t = Global_1.Global.CharacterCameraManager;
-    t?.IsValid() && this.xrr?.IsValid() && t.StopCameraShake(this.xrr);
+    t?.IsValid() && this.Unr?.IsValid() && t.StopCameraShake(this.Unr);
   }
   OpenPhysicsSplit() {
     this.UeActorComp?.IsValid() &&

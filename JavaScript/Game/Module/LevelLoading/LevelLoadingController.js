@@ -49,42 +49,42 @@ class LevelLoadingController extends ControllerBase_1.ControllerBase {
     return (
       (LevelLoadingController.CameraFade =
         new CameraFadeLoading_1.CameraFadeLoading()),
-      (LevelLoadingController.U$t = []),
+      (LevelLoadingController.UYt = []),
       !0
     );
   }
   static OnClear() {
     return (
       (LevelLoadingController.CameraFade = void 0),
-      !(LevelLoadingController.U$t = void 0)
+      !(LevelLoadingController.UYt = void 0)
     );
   }
   static OnTick(e) {
     if (
-      LevelLoadingController.U$t &&
-      0 !== LevelLoadingController.U$t.length &&
-      !LevelLoadingController.bze
+      LevelLoadingController.UYt &&
+      0 !== LevelLoadingController.UYt.length &&
+      !LevelLoadingController.QZe
     )
       switch (
-        ((LevelLoadingController.bze = LevelLoadingController.U$t[0]),
-        LevelLoadingController.bze.ProcessType)
+        ((LevelLoadingController.QZe = LevelLoadingController.UYt[0]),
+        LevelLoadingController.QZe.ProcessType)
       ) {
         case 0:
-          LevelLoadingController.hfi(
-            LevelLoadingController.bze.Reason,
-            LevelLoadingController.bze.Perform,
-            ...LevelLoadingController.bze.Params,
-          ).finally(LevelLoadingController.bze.Callback);
+          LevelLoadingController.hpi(
+            LevelLoadingController.QZe.Reason,
+            LevelLoadingController.QZe.Perform,
+            ...LevelLoadingController.QZe.Params,
+          ).finally(LevelLoadingController.QZe.Callback);
           break;
         case 1:
-          LevelLoadingController.lfi(
-            LevelLoadingController.bze.Reason,
-            LevelLoadingController.bze.Duration,
-          ).finally(LevelLoadingController.bze.Callback);
+          LevelLoadingController.lpi(
+            LevelLoadingController.QZe.Reason,
+            LevelLoadingController.QZe.Duration,
+          ).finally(LevelLoadingController.QZe.Callback);
       }
   }
   static OpenLoading(e, o, a, ...n) {
-    LevelLoadingController.U$t.push(
+    LevelLoadingController.UYt.push(
       new OpenLoadingProcess(
         e,
         o,
@@ -96,7 +96,7 @@ class LevelLoadingController extends ControllerBase_1.ControllerBase {
     );
   }
   static CloseLoading(e, o, a) {
-    LevelLoadingController.U$t.push(
+    LevelLoadingController.UYt.push(
       new CloseLoadingProcess(
         e,
         () => {
@@ -108,7 +108,7 @@ class LevelLoadingController extends ControllerBase_1.ControllerBase {
   }
   static async WaitOpenLoading(e, o, ...a) {
     const n = new CustomPromise_1.CustomPromise();
-    LevelLoadingController.U$t.push(
+    LevelLoadingController.UYt.push(
       new OpenLoadingProcess(
         e,
         o,
@@ -122,7 +122,7 @@ class LevelLoadingController extends ControllerBase_1.ControllerBase {
   }
   static async WaitCloseLoading(e, o) {
     const a = new CustomPromise_1.CustomPromise();
-    LevelLoadingController.U$t.push(
+    LevelLoadingController.UYt.push(
       new CloseLoadingProcess(
         e,
         () => {
@@ -133,7 +133,7 @@ class LevelLoadingController extends ControllerBase_1.ControllerBase {
     ),
       await a.Promise;
   }
-  static async hfi(e, o, ...a) {
+  static async hpi(e, o, ...a) {
     var n = ModelManager_1.ModelManager.LevelLoadingModel,
       r = n.GetPerformByReason(e);
     if (void 0 === r) {
@@ -149,20 +149,20 @@ class LevelLoadingController extends ControllerBase_1.ControllerBase {
             "perfrom",
             o,
           ]),
-        !LevelLoadingController._fi(o))
+        !LevelLoadingController._pi(o))
       )
         switch (o) {
           case 1:
-            await this.ufi();
+            await this.upi();
             break;
           case 2:
-            await this.cfi();
+            await this.cpi();
             break;
           case 3:
-            await this.mfi(...a);
+            await this.mpi(...a);
             break;
           case 0:
-            await this.dfi();
+            await this.Cpi();
         }
       ControllerHolder_1.ControllerHolder.WorldController.ManuallyGarbageCollection(
         4,
@@ -175,35 +175,35 @@ class LevelLoadingController extends ControllerBase_1.ControllerBase {
     }
     return !0;
   }
-  static async ufi() {
+  static async upi() {
     const e = new CustomPromise_1.CustomPromise();
     LoadingController_1.LoadingController.OpenLoadingView(void 0, () => {
       e.SetResult(!0), WorldMapController_1.WorldMapController.CloseWorldMap();
     }),
       await e.Promise;
   }
-  static async cfi() {
+  static async cpi() {
     const e = new CustomPromise_1.CustomPromise();
     LoadingController_1.LoadingController.OpenFadeLoadingView(() => {
       e.SetResult(!0), WorldMapController_1.WorldMapController.CloseWorldMap();
     }),
       await e.Promise;
   }
-  static async mfi(e, o, a, n, r) {
+  static async mpi(e, o, a, n, r) {
     const i = new CustomPromise_1.CustomPromise();
     this.CameraFade.EnterInterlude(e, a, n, r, o, () => {
       i.SetResult(!0);
     }),
       await i.Promise;
   }
-  static async dfi() {
+  static async Cpi() {
     const e = new CustomPromise_1.CustomPromise();
     LoadingController_1.LoadingController.OpenVideoCenterView(() => {
       e.SetResult(!0), WorldMapController_1.WorldMapController.CloseWorldMap();
     }),
       await e.Promise;
   }
-  static _fi(e) {
+  static _pi(e) {
     let o = !1;
     switch (e) {
       case 1:
@@ -220,14 +220,14 @@ class LevelLoadingController extends ControllerBase_1.ControllerBase {
     }
     return o;
   }
-  static async lfi(e, o) {
+  static async lpi(e, o) {
     var a = ModelManager_1.ModelManager.LevelLoadingModel,
       n = a.GetPerformByReason(e);
     a.RemoveLoadingReason(e),
       a.CheckCanDoClose(n) &&
         (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("Loading", 19, "LevelLoading:关闭流程开始"),
-        await LevelLoadingController.Cfi(n, o),
+        await LevelLoadingController.gpi(n, o),
         a.CheckLoadingPerformsEmpty() &&
           (a.SetLoadingState(!1), 16 === e) &&
           EventSystem_1.EventSystem.Emit(
@@ -236,13 +236,13 @@ class LevelLoadingController extends ControllerBase_1.ControllerBase {
         Log_1.Log.CheckInfo()) &&
         Log_1.Log.Info("Loading", 19, "LevelLoading:关闭流程结束");
   }
-  static async Cfi(e, o) {
-    if (LevelLoadingController._fi(e))
+  static async gpi(e, o) {
+    if (LevelLoadingController._pi(e))
       switch (e) {
         case 1:
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info("Loading", 19, "LevelLoading:关闭Loading界面(开始)"),
-            await this.gfi(),
+            await this.fpi(),
             Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "Loading",
@@ -253,7 +253,7 @@ class LevelLoadingController extends ControllerBase_1.ControllerBase {
         case 2:
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info("Loading", 19, "LevelLoading:关闭黑幕Loading(开始)"),
-            await this.ffi(),
+            await this.ppi(),
             Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "Loading",
@@ -264,7 +264,7 @@ class LevelLoadingController extends ControllerBase_1.ControllerBase {
         case 3:
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info("Loading", 19, "LevelLoading:相机淡出(开始)"),
-            await this.pfi(o),
+            await this.vpi(o),
             Log_1.Log.CheckInfo() &&
               Log_1.Log.Info("Loading", 19, "LevelLoading:相机淡出(完成)");
           break;
@@ -275,7 +275,7 @@ class LevelLoadingController extends ControllerBase_1.ControllerBase {
               19,
               "LevelLoading:关闭黑底白字Loading(开始)",
             ),
-            await this.vfi(),
+            await this.Mpi(),
             Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "Loading",
@@ -284,24 +284,24 @@ class LevelLoadingController extends ControllerBase_1.ControllerBase {
               );
       }
   }
-  static async gfi() {
+  static async fpi() {
     await LoadingController_1.LoadingController.CloseLoadingView();
   }
-  static async ffi() {
+  static async ppi() {
     const e = new CustomPromise_1.CustomPromise();
     LoadingController_1.LoadingController.CloseFadeLoadingView(() => {
       e.SetResult(!0);
     }),
       await e.Promise;
   }
-  static async pfi(e) {
+  static async vpi(e) {
     const o = new CustomPromise_1.CustomPromise();
     this.CameraFade.ExitInterlude(e, () => {
       o.SetResult(!0);
     }),
       await o.Promise;
   }
-  static async vfi() {
+  static async Mpi() {
     const e = new CustomPromise_1.CustomPromise();
     LoadingController_1.LoadingController.CloseVideoCenterView(() => {
       e.SetResult(!0);
@@ -319,9 +319,9 @@ class LevelLoadingController extends ControllerBase_1.ControllerBase {
 ((exports.LevelLoadingController =
   LevelLoadingController).IsTickEvenPausedInternal = !0),
   (LevelLoadingController.CameraFade = void 0),
-  (LevelLoadingController.U$t = void 0),
-  (LevelLoadingController.bze = void 0),
+  (LevelLoadingController.UYt = void 0),
+  (LevelLoadingController.QZe = void 0),
   (LevelLoadingController.HDe = () => {
-    LevelLoadingController.U$t.shift(), (LevelLoadingController.bze = void 0);
+    LevelLoadingController.UYt.shift(), (LevelLoadingController.QZe = void 0);
   });
 //# sourceMappingURL=LevelLoadingController.js.map

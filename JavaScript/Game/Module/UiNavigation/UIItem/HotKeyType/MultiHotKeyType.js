@@ -9,8 +9,8 @@ class MultiHotKeyType extends HotKeyTypeBase_1.HotKeyTypeBase {
   constructor() {
     super(...arguments),
       (this.Layout = void 0),
-      (this.bbo = []),
-      (this.qbo = (e, t, s) => {
+      (this.xqo = []),
+      (this.wqo = (e, t, s) => {
         return {
           Key: e,
           Value: HotKeyItemFactory_1.HotKeyItemFactory.CreateHotKeyComponent(
@@ -30,18 +30,18 @@ class MultiHotKeyType extends HotKeyTypeBase_1.HotKeyTypeBase {
   async OnBeforeStartAsync() {
     this.Layout = new GenericLayoutNew_1.GenericLayoutNew(
       this.GetLayoutBase(1),
-      this.qbo,
+      this.wqo,
       this.GetItem(0),
     );
     var e = this.OpenParam;
     this.Layout.RebuildLayoutByDataNew(e),
-      (this.bbo = await Promise.all(this.Layout.GetLayoutItemList()));
+      (this.xqo = await Promise.all(this.Layout.GetLayoutItemList()));
   }
   OnClear() {
-    for (const e of this.bbo) e.Clear();
+    for (const e of this.xqo) e.Clear();
   }
   GetHotKeyComponents() {
-    return this.bbo;
+    return this.xqo;
   }
   KeyItemNotifySetActive(e) {
     let t = !1;

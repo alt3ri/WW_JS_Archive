@@ -16,8 +16,8 @@ const UE = require("ue"),
 class InfoDisplayCircleAttachItem extends AutoAttachItem_1.AutoAttachItem {
   constructor() {
     super(...arguments),
-      (this.osi = ""),
-      (this.rsi = new UE.Vector(ANIMAL_SCALE, ANIMAL_SCALE, ANIMAL_SCALE));
+      (this.rai = ""),
+      (this.nai = new UE.Vector(ANIMAL_SCALE, ANIMAL_SCALE, ANIMAL_SCALE));
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -34,7 +34,7 @@ class InfoDisplayCircleAttachItem extends AutoAttachItem_1.AutoAttachItem {
     ];
   }
   OnRefreshItem(t) {
-    (this.osi = t), this.Aqe(), this.GetRootItem().SetHierarchyIndex(0);
+    (this.rai = t), this.Aqe(), this.GetRootItem().SetHierarchyIndex(0);
   }
   OnMoveItem() {
     var t,
@@ -52,10 +52,10 @@ class InfoDisplayCircleAttachItem extends AutoAttachItem_1.AutoAttachItem {
             (e = new UE.Vector(t, t, t)),
             this.RootItem.SetUIItemScale(e)),
         this.GetRootItem().SetHierarchyIndex(FRONT_HIERACHY))
-      : i.X !== this.rsi.X && this.RootItem.SetUIItemScale(this.rsi);
+      : i.X !== this.nai.X && this.RootItem.SetUIItemScale(this.nai);
   }
   Aqe() {
-    "" !== this.osi && this.SetTextureByPath(this.osi, this.GetTexture(1));
+    "" !== this.rai && this.SetTextureByPath(this.rai, this.GetTexture(1));
   }
   OnSelect() {}
   OnUnSelect() {}
@@ -63,7 +63,7 @@ class InfoDisplayCircleAttachItem extends AutoAttachItem_1.AutoAttachItem {
     var t = this.GetCurrentMovePercentage();
     t >= LEFT_RANGE && t <= RIGHT_RANGE
       ? (ModelManager_1.ModelManager.InfoDisplayModel.SetCurrentOpenInformationTexture(
-          this.osi,
+          this.rai,
         ),
         InfoDisplayController_1.InfoDisplayController.OpenInfoDisplayImgView())
       : EventSystem_1.EventSystem.Emit(

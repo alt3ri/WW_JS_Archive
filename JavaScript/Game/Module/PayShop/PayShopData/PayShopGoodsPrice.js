@@ -7,9 +7,9 @@ class PayShopGoodsPrice {
     (this.Id = 0), (this.Count = 0), (this.PromotionCount = 0);
   }
   Phrase(s) {
-    (this.Id = s.Ekn ?? 0),
-      (this.Count = s.I5n ?? 0),
-      (this.PromotionCount = s.WPs ?? 0);
+    (this.Id = s.J4n ?? 0),
+      (this.Count = s.o9n ?? 0),
+      (this.PromotionCount = s.uBs ?? 0);
   }
   GetDiscount() {
     return Math.ceil(

@@ -26,7 +26,7 @@ class BaseConfigController {
       );
     if (
       ((0, ProcedureUtil_1.randomArray)(r),
-      !(r = await BaseConfigController.rSr(r, e)))
+      !(r = await BaseConfigController.tSr(r, e)))
     )
       return LauncherLog_1.LauncherLog.Error("获取CDN数据失败，异常流程"), !1;
     e = (0, puerts_1.$ref)(void 0);
@@ -44,14 +44,14 @@ class BaseConfigController {
       !0
     );
   }
-  static async rSr(t, o) {
+  static async tSr(t, o) {
     let i = void 0;
     if (0 !== t.length)
       return (
         await (0, ProcedureUtil_1.whetherRepeatDoOnFailedAsync)(
           async () => {
             for (const r of t) {
-              var e = BaseConfigController.Tvi(r);
+              var e = BaseConfigController.TMi(r);
               if (
                 200 ===
                 (i = await (0, UrlPrefixHttpRequest_1.httpRequest)(e)).Code
@@ -113,6 +113,10 @@ class BaseConfigController {
   static GetGmIsOpen() {
     var e = BaseConfigController.GetCdnReturnConfigInfo();
     return !!e && e.GmOpen;
+  }
+  static IsUseThreadCheck() {
+    var e = BaseConfigController.GetCdnReturnConfigInfo();
+    return !!e && e.AsyncCheck;
   }
   static GetIosAuditFirstDownloadTip() {
     var e = BaseConfigController.GetCdnReturnConfigInfo();
@@ -197,7 +201,7 @@ class BaseConfigController {
     const s = BaseConfigModel_1.BaseConfigModel.BaseConfig.get(e)?.trim();
     return s || "";
   }
-  static Tvi(e) {
+  static TMi(e) {
     var r = BaseConfigController.GetPackageConfigOrDefault("Stream"),
       t =
         "Editor" === UE.KuroLauncherLibrary.GetPlatform()
@@ -211,7 +215,7 @@ class BaseConfigController {
           ? BaseDefine_1.SDKON
           : BaseDefine_1.SDKOFF,
       a = UE.KuroLauncherLibrary.GetAppInternalUseType(),
-      n = this.nSr(),
+      n = this.iSr(),
       r =
         (LauncherLog_1.LauncherLog.Info(
           "包构建参数",
@@ -226,7 +230,7 @@ class BaseConfigController {
       t = e + `/${r}/index.json`;
     return LauncherLog_1.LauncherLog.Info("创建的cdn1地址", ["newHttp", t]), t;
   }
-  static nSr() {
+  static iSr() {
     return UE.KuroLauncherLibrary.GetAppVersion();
   }
   static GetPackageConfigOrDefault(e, r = void 0) {
@@ -235,7 +239,7 @@ class BaseConfigController {
         UE.BlueprintPathsLibrary.ProjectConfigDir() +
         "/Package/ParamsConfig.ini"),
       (BaseConfigModel_1.BaseConfigModel.ParamsConfigInited =
-        BaseConfigController.sSr(t)),
+        BaseConfigController.oSr(t)),
       BaseConfigModel_1.BaseConfigModel.ParamsConfigInited ||
         LauncherLog_1.LauncherLog.Error("找不到ParamsConfig文件!"),
       BaseConfigController.UpdatePackageConfig(!1));
@@ -248,11 +252,11 @@ class BaseConfigController {
       ((r =
         UE.BlueprintPathsLibrary.ProjectContentDir() +
         "/Aki/ConfigDB/PackageParams.txt"),
-      BaseConfigController.sSr(r),
+      BaseConfigController.oSr(r),
       (r = BaseConfigController.GetPackageConfigOrDefault("JSDebugId")),
       LauncherLog_1.LauncherLog.SetJsDebugId(r));
   }
-  static sSr(e) {
+  static oSr(e) {
     var r = UE.KuroStaticLibrary.LoadFileToStringArray(e);
     for (let e = 0; e < r.Num(); ++e) {
       var t = r.Get(e),

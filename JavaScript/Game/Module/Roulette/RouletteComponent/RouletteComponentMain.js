@@ -5,10 +5,46 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.RouletteComponentMain =
       void 0);
 const AudioSystem_1 = require("../../../../Core/Audio/AudioSystem"),
+  Info_1 = require("../../../../Core/Common/Info"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiManager_1 = require("../../../Ui/UiManager"),
   RouletteDefine_1 = require("../Data/RouletteDefine"),
+  RouletteGridForbiddenSettings_1 = require("../RouletteGrid/RouletteGridForbiddenSettings"),
   RouletteComponent_1 = require("./RouletteComponent");
 class RouletteComponentMain extends RouletteComponent_1.RouletteComponentBase {
+  constructor() {
+    super(...arguments), (this.jMa = !0);
+  }
+  OnStart() {
+    var e;
+    super.OnStart(),
+      Info_1.Info.IsInGamepad() &&
+        ((e =
+          ModelManager_1.ModelManager.RouletteModel.GetRouletteSelectConfig()),
+        (this.jMa = 1 === e));
+  }
+  GamepadReturnEmptyGrid() {
+    var e, t, o;
+    this.CurrentEquipGridIndex !== this.CurrentGridIndex &&
+      ((e = this.RouletteGridList[this.CurrentEquipGridIndex]),
+      0 === (o = (t = this.RouletteGridList[this.CurrentGridIndex]).Data).State
+        ? (RouletteGridForbiddenSettings_1.RouletteGridForbiddenSettings.TipsForbiddenState(
+            o.GridType,
+            o.Id,
+          ),
+          (this.CurrentGridIndex = -1))
+        : (0 === o.Id && 2 !== o.GridType) ||
+          (e?.SetGridEquipped(!1),
+          t?.SetGridEquipped(!0),
+          (this.CurrentEquipGridIndex = this.CurrentGridIndex),
+          this.CloseRouletteMain(),
+          this.jMa) ||
+          this.GetCurrentGrid()?.SelectOnGrid(!0)),
+      (this.IsEmptyChoose = !0);
+  }
+  OnEmitCurrentGridSelectOn() {
+    this.jMa && this.GetCurrentGrid()?.SelectOnGrid(!0);
+  }
   IsCurrentEquippedId(e) {
     switch (e.GridType) {
       case 0:
@@ -28,7 +64,7 @@ class RouletteComponentMain extends RouletteComponent_1.RouletteComponentBase {
       e && AudioSystem_1.AudioSystem.PostEvent("play_ui_float_spl_roulette");
   }
   RefreshCurrentShowName() {
-    var e = 2 === this.InputControllerType,
+    var e = Info_1.Info.IsInTouch(),
       t = this.GetCurrentGrid()?.Data?.Name;
     t
       ? (this.SetNameVisible(!0), this.RefreshName(t))
@@ -36,35 +72,19 @@ class RouletteComponentMain extends RouletteComponent_1.RouletteComponentBase {
         e && this.RefreshName(RouletteDefine_1.ROULETTE_TEXT_EMPTY));
   }
   RefreshTips() {
-    var e = 2 === this.InputControllerType,
+    var e = Info_1.Info.IsInTouch(),
       t = this.IsEmptyChoose,
-      i = 1 !== this.GetCurrentGrid()?.Data.State,
-      t = this.GetRefreshTips(t || i);
+      o = 1 !== this.GetCurrentGrid()?.Data.State,
+      t = this.GetRefreshTips(t || o);
     this.RefreshTipsByText(t, !e);
   }
   GetRefreshTips(e) {}
+  CloseRouletteMain() {
+    UiManager_1.UiManager.CloseView("PhantomExploreView");
+  }
 }
 class RouletteComponentMainExplore extends (exports.RouletteComponentMain =
   RouletteComponentMain) {
-  RefreshCurrentGridIndex(e) {
-    this.AreaIndex = e;
-    e = this.AreaIndexToGridIndex.get(this.AreaIndex);
-    void 0 !== e
-      ? (this.CurrentGridIndex = e)
-      : 1 === this.InputControllerType
-        ? this.Dgo()
-        : (this.CurrentGridIndex = -1);
-  }
-  Dgo() {
-    var e, t, i;
-    this.CurrentEquipGridIndex !== this.CurrentGridIndex &&
-      ((e = this.RouletteGridList[this.CurrentEquipGridIndex]),
-      0 !== (i = (t = this.RouletteGridList[this.CurrentGridIndex]).Data).Id ||
-        2 === i.GridType) &&
-      (e?.SetGridEquipped(!1),
-      t?.SetGridEquipped(!0),
-      (this.CurrentEquipGridIndex = this.CurrentGridIndex));
-  }
   GetRouletteInfoMap() {
     return RouletteComponent_1.exploreRouletteMap;
   }
@@ -79,30 +99,23 @@ class RouletteComponentMainExplore extends (exports.RouletteComponentMain =
   }
   GetRefreshTips(e) {
     let t = void 0;
-    switch (this.InputControllerType) {
-      case 2:
-        t = e
-          ? "Text_ProbeToolFunctionNotice3_Text"
-          : "Text_ExploreToolsSwitchMobile_Text";
-        break;
-      case 0:
-        t = e ? void 0 : "Text_ExploreToolsSwitchPC_Text";
-        break;
-      case 1:
-        var i = 1 !== this.GetCurrentGrid()?.Data.State,
-          i =
-            void 0 !== this.CurrentGridIndex &&
-            -1 !== this.CurrentGridIndex &&
-            !i;
-        t = i ? "Text_ExploreToolsSwitchPC_Text" : void 0;
-    }
-    return this.SetTipsActive(void 0 !== t), t;
-  }
-  OnEmitCurrentGridSelectOn(e) {
-    ModelManager_1.ModelManager.PlatformModel?.IsInGamepad() && e
-      ? -1 !== this.CurrentGridIndex &&
-        this.RouletteGridList[this.CurrentEquipGridIndex]?.SelectOnGrid(!0)
-      : this.GetCurrentGrid()?.SelectOnGrid(!0);
+    return (
+      Info_1.Info.IsInTouch()
+        ? (t = e
+            ? "Text_ProbeToolFunctionNotice3_Text"
+            : "Text_ExploreToolsSwitchMobile_Text")
+        : Info_1.Info.IsInKeyBoard()
+          ? (t = e ? void 0 : "Text_ExploreToolsSwitchPC_Text")
+          : Info_1.Info.IsInGamepad() &&
+            ((e = 1 !== this.GetCurrentGrid()?.Data.State),
+            (e =
+              void 0 !== this.CurrentGridIndex &&
+              -1 !== this.CurrentGridIndex &&
+              !e),
+            (t = e ? "Text_ExploreToolsSwitchPC_Text" : void 0)),
+      this.SetTipsActive(void 0 !== t),
+      t
+    );
   }
 }
 exports.RouletteComponentMainExplore = RouletteComponentMainExplore;

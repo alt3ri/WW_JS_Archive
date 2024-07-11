@@ -6,67 +6,67 @@ const Log_1 = require("../../../Core/Common/Log"),
   MINIMAL_SPEED = 1e4;
 class TodTimeAdjustingAnimation {
   constructor(i, t, s, h) {
-    (this.uTo = 0),
+    (this.hLo = 0),
       (this.RJ = 0),
-      (this.cTo = 0),
-      (this.mTo = 0),
-      (this.dTo = 0),
-      (this.CTo = -1),
-      (this.gTo = -1),
-      (this.fTo = 0),
-      (this.pTo = 0),
-      (this.vTo = 0),
-      (this.uTo = i),
+      (this.lLo = 0),
+      (this._Lo = 0),
+      (this.uLo = 0),
+      (this.cLo = -1),
+      (this.mLo = -1),
+      (this.dLo = 0),
+      (this.CLo = 0),
+      (this.gLo = 0),
+      (this.hLo = i),
       (this.RJ = t),
-      (this.MTo = s),
-      (this.STo = h);
+      (this.fLo = s),
+      (this.pLo = h);
   }
   get IsPlaying() {
-    return 0 <= this.CTo;
+    return 0 <= this.cLo;
   }
   get IsFinished() {
-    return !!this.IsPlaying && this.CTo >= this.gTo;
+    return !!this.IsPlaying && this.cLo >= this.mLo;
   }
   $ne() {
-    this.Stop(), this.STo();
+    this.Stop(), this.pLo();
   }
   Play(i, t) {
-    this.Stop(), (this.CTo = i), (this.gTo = t);
-    i = this.uTo / this.RJ;
-    this.fTo = Math.abs(this.ETo() - 0.5 * this.RJ * i * i);
+    this.Stop(), (this.cLo = i), (this.mLo = t);
+    i = this.hLo / this.RJ;
+    this.dLo = Math.abs(this.vLo() - 0.5 * this.RJ * i * i);
   }
-  ETo() {
-    return this.gTo - this.CTo;
+  vLo() {
+    return this.mLo - this.cLo;
   }
   Tick(i) {
     this.IsPlaying &&
       (this.IsFinished
         ? this.$ne()
         : ((i = i / TimeOfDayDefine_1.TOD_MILLIONSECOND_PER_SECOND),
-          (this.mTo = this.mTo + i),
-          this.dTo >= this.fTo
-            ? ((this.pTo += i),
-              (this.cTo = this.vTo - this.pTo * this.RJ),
-              this.cTo <= MINIMAL_SPEED && (this.cTo = MINIMAL_SPEED))
-            : ((this.cTo = this.mTo * this.RJ),
-              this.cTo >= this.uTo &&
-                ((this.cTo = this.uTo), (this.vTo = this.uTo)),
-              (this.vTo = this.cTo)),
-          (i = i * this.cTo),
-          (this.dTo += i),
-          (this.CTo += i),
-          this.IsFinished && (this.CTo = this.gTo),
-          this.MTo(this.CTo)));
+          (this._Lo = this._Lo + i),
+          this.uLo >= this.dLo
+            ? ((this.CLo += i),
+              (this.lLo = this.gLo - this.CLo * this.RJ),
+              this.lLo <= MINIMAL_SPEED && (this.lLo = MINIMAL_SPEED))
+            : ((this.lLo = this._Lo * this.RJ),
+              this.lLo >= this.hLo &&
+                ((this.lLo = this.hLo), (this.gLo = this.hLo)),
+              (this.gLo = this.lLo)),
+          (i = i * this.lLo),
+          (this.uLo += i),
+          (this.cLo += i),
+          this.IsFinished && (this.cLo = this.mLo),
+          this.fLo(this.cLo)));
   }
   Stop() {
-    (this.cTo = 0),
-      (this.mTo = 0),
-      (this.CTo = -1),
-      (this.gTo = -1),
-      (this.pTo = 0),
-      (this.dTo = 0),
-      (this.fTo = 0),
-      (this.vTo = 0);
+    (this.lLo = 0),
+      (this._Lo = 0),
+      (this.cLo = -1),
+      (this.mLo = -1),
+      (this.CLo = 0),
+      (this.uLo = 0),
+      (this.dLo = 0),
+      (this.gLo = 0);
   }
   DebugPrint() {
     Log_1.Log.CheckWarn() &&
@@ -74,10 +74,10 @@ class TodTimeAdjustingAnimation {
         "TimeOfDay",
         17,
         "TodTimeAdjustingAnimation",
-        ["this.MaxV", this.uTo],
+        ["this.MaxV", this.hLo],
         ["this.A", this.RJ],
-        ["this.StartSecond", this.CTo],
-        ["this.ToSecond", this.gTo],
+        ["this.StartSecond", this.cLo],
+        ["this.ToSecond", this.mLo],
       );
   }
 }

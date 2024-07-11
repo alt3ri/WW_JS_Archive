@@ -14,7 +14,7 @@ const Log_1 = require("../../../Core/Common/Log"),
 class BattleLogicController extends ControllerBase_1.ControllerBase {
   static ExecuteEntityLivingStatusNotify(e) {
     const o = ModelManager_1.ModelManager.CreatureModel.GetEntity(
-      MathUtils_1.MathUtils.LongToNumber(e.Ekn),
+      MathUtils_1.MathUtils.LongToNumber(e.J4n),
     );
     switch (
       (o?.Valid ||
@@ -23,16 +23,16 @@ class BattleLogicController extends ControllerBase_1.ControllerBase {
             "World",
             20,
             "[CreatureController.EntityLivingStatusNotify] EntityLivingStatusNotify失败, Entity无效或不存在。",
-            ["CreatureDataId", e.Ekn],
+            ["CreatureDataId", e.J4n],
           )),
-      e.Rvs)
+      e.HEs)
     ) {
-      case Protocol_1.Aki.Protocol.Rvs.Proto_Dead: {
-        this.mgr(o);
+      case Protocol_1.Aki.Protocol.HEs.Proto_Dead: {
+        this._0r(o);
         let t = !1;
-        e.BEs.forEach((e) => {
-          e.qEs &&
-            e.aFn === ModelManager_1.ModelManager.PlayerInfoModel.GetId() &&
+        e.eRs.forEach((e) => {
+          e.tRs &&
+            e.q5n === ModelManager_1.ModelManager.PlayerInfoModel.GetId() &&
             (o.Entity.Disable(
               "[BattleLogicController.BattleLogicController] 被收服的Entity先隐藏",
             ),
@@ -44,29 +44,30 @@ class BattleLogicController extends ControllerBase_1.ControllerBase {
             EventSystem_1.EventSystem.EmitWithTarget(
               o,
               EventDefine_1.EEventName.CharOnRoleDeadTargetSelf,
-            ),
-            EventSystem_1.EventSystem.Emit(
-              EventDefine_1.EEventName.OnCharDeathLogicBegin,
-              o.Id,
             ));
         }),
           t || o?.Entity?.GetComponent(15)?.ExecuteDeath();
         break;
       }
-      case Protocol_1.Aki.Protocol.Rvs.Proto_Alive:
-        this.fgr(o);
+      case Protocol_1.Aki.Protocol.HEs.Proto_Alive:
+        this.d0r(o);
     }
   }
-  static fgr(e) {
-    e?.Entity?.GetComponent(172)?.ExecuteReviveRemote();
+  static d0r(e) {
+    e?.Valid &&
+      (e.IsInit
+        ? e?.Entity?.GetComponent(175)?.ExecuteRevive()
+        : e.Entity?.GetComponent(0)?.SetLivingStatus(
+            Protocol_1.Aki.Protocol.HEs.Proto_Alive,
+          ));
   }
-  static mgr(e) {
+  static _0r(e) {
     e = e.Entity.GetComponent(1)?.Owner;
     GlobalData_1.GlobalData.BpEventManager.当有角色死亡时.Broadcast(e);
   }
 }
-((exports.BattleLogicController = BattleLogicController).cgr = void 0),
-  (BattleLogicController.dgr = void 0),
-  (BattleLogicController.Cgr = void 0),
-  (BattleLogicController.ggr = void 0);
+((exports.BattleLogicController = BattleLogicController).l0r = void 0),
+  (BattleLogicController.u0r = void 0),
+  (BattleLogicController.c0r = void 0),
+  (BattleLogicController.m0r = void 0);
 //# sourceMappingURL=BattleLogicController.js.map

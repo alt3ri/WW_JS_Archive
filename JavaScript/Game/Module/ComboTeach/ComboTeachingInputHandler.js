@@ -53,6 +53,7 @@ class ComboTeachingInputHandler {
     );
   }
   HandleInputAxis(e, n) {}
+  ClearInputAxis(e) {}
   PreProcessInput(e, n) {}
   PostProcessInput(e, n) {}
 }

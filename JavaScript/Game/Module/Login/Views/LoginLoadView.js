@@ -7,8 +7,8 @@ const UE = require("ue"),
 class LoginLoadView extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
-      (this.xpi = void 0),
-      (this.FMi = void 0),
+      (this.xvi = void 0),
+      (this.FEi = void 0),
       this.CreateThenShowByActor(e);
   }
   OnRegisterComponent() {
@@ -19,19 +19,19 @@ class LoginLoadView extends UiPanelBase_1.UiPanelBase {
     ];
   }
   OnStart() {
-    (this.xpi = this.GetText(1)), (this.FMi = this.GetText(2));
+    (this.xvi = this.GetText(1)), (this.FEi = this.GetText(2));
   }
   SetDownLoadTipsTextActive(e) {
-    this.FMi.SetUIActive(e);
+    this.FEi.SetUIActive(e);
   }
   SetDownLoadTipsText(e) {
-    LguiUtil_1.LguiUtil.SetLocalText(this.FMi, e);
+    LguiUtil_1.LguiUtil.SetLocalText(this.FEi, e);
   }
   SetProgressSprite(e) {
     this.GetSprite(0).SetFillAmount(e);
   }
   SetProgressText(e, ...i) {
-    LguiUtil_1.LguiUtil.SetLocalText(this.xpi, e, i);
+    LguiUtil_1.LguiUtil.SetLocalText(this.xvi, e, i);
   }
 }
 exports.LoginLoadView = LoginLoadView;

@@ -4,10 +4,10 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const Log_1 = require("../../../../Core/Common/Log");
 class UiModelBase {
   constructor() {
-    (this.Id = 0), (this.bPo = new Array());
+    (this.Id = 0), (this.xxo = new Array());
   }
   GetComponent(o) {
-    return this.bPo[o];
+    return this.xxo[o];
   }
   CheckGetComponent(o) {
     var t = this.GetComponent(o);
@@ -37,9 +37,9 @@ class UiModelBase {
           ["componentName", o.name],
         );
     else {
-      if (t >= this.bPo.length)
-        for (let o = this.bPo.length; o <= t; o++) this.bPo.push(void 0);
-      this.bPo[t]
+      if (t >= this.xxo.length)
+        for (let o = this.xxo.length; o <= t; o++) this.xxo.push(void 0);
+      this.xxo[t]
         ? Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "UiComponent",
@@ -48,23 +48,23 @@ class UiModelBase {
             ["uiModelName", this.constructor.name],
             ["componentName", o.name],
           )
-        : ((o = new o()).Create(this), (this.bPo[t] = o));
+        : ((o = new o()).Create(this), (this.xxo[t] = o));
     }
   }
   Init() {
-    for (const o of this.bPo) o?.Init();
+    for (const o of this.xxo) o?.Init();
   }
   Start() {
-    for (const o of this.bPo) o?.Start();
+    for (const o of this.xxo) o?.Start();
   }
   Tick(o) {
-    for (const t of this.bPo) t && t.NeedTick && t.Tick(o);
+    for (const t of this.xxo) t && t.NeedTick && t.Tick(o);
   }
   End() {
-    for (const o of this.bPo) o?.End();
+    for (const o of this.xxo) o?.End();
   }
   Clear() {
-    for (const o of this.bPo) o?.Clear();
+    for (const o of this.xxo) o?.Clear();
   }
 }
 exports.UiModelBase = UiModelBase;

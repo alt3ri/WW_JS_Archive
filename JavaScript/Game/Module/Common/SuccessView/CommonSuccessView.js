@@ -11,13 +11,13 @@ class CommonSuccessView extends UiViewBase_1.UiViewBase {
     super(...arguments),
       (this.Pe = void 0),
       (this.TimerId = void 0),
-      (this.gpt = () => {
+      (this.Rvt = () => {
         this.Pe.GetNeedDelay() || this.$Oe();
       });
   }
   OnBeforeCreate() {
     (this.Pe = this.OpenParam ?? new CommonSuccessData_1.CommonSuccessData()),
-      this.IBt();
+      this.Dbt();
   }
   OnRegisterComponent() {
     (this.ComponentRegisterInfos = [
@@ -27,31 +27,31 @@ class CommonSuccessView extends UiViewBase_1.UiViewBase {
       [3, UE.UIButtonComponent],
       [4, UE.UIItem],
     ]),
-      (this.BtnBindInfo = [[3, this.gpt]]);
+      (this.BtnBindInfo = [[3, this.Rvt]]);
   }
   OnAfterPlayStartSequence() {
-    this.UiViewSequence.PlaySequencePurely("Xunhuan"), this.TBt();
+    this.UiViewSequence.PlaySequencePurely("Xunhuan"), this.Rbt();
   }
   OnAfterShow() {
-    this.LBt(), this.DBt(), this.RBt();
+    this.Ubt(), this.Abt(), this.Pbt();
   }
-  IBt() {
+  Dbt() {
     var i = this.Pe.GetAudioPath();
     i && this.SetAudioEvent(i);
   }
-  LBt() {
+  Ubt() {
     var i,
       e = this.Pe.GetTitleText();
     e && ((i = this.GetText(0)), LguiUtil_1.LguiUtil.SetLocalText(i, e));
   }
-  DBt() {
+  Abt() {
     var i = this.Pe.GetSubTitleText(),
       e = this.GetText(1);
     i
       ? (e.SetUIActive(!0), LguiUtil_1.LguiUtil.SetLocalText(e, i))
       : e.SetUIActive(!1);
   }
-  RBt() {
+  Pbt() {
     var i,
       e = this.Pe.GetClickText();
     e &&
@@ -59,11 +59,11 @@ class CommonSuccessView extends UiViewBase_1.UiViewBase {
       (i = this.GetText(2)),
       LguiUtil_1.LguiUtil.SetLocalText(i, e));
   }
-  TBt() {
+  Rbt() {
     this.Pe.GetNeedDelay() &&
       (this.TimerId = TimerSystem_1.TimerSystem.Delay(() => {
         this.$Oe();
-      }, CommonSuccessView.tBt));
+      }, CommonSuccessView.rbt));
   }
   $Oe() {
     var i = this.Pe.GetClickFunction();
@@ -74,5 +74,5 @@ class CommonSuccessView extends UiViewBase_1.UiViewBase {
       (TimerSystem_1.TimerSystem.Remove(this.TimerId), (this.TimerId = void 0));
   }
 }
-(exports.CommonSuccessView = CommonSuccessView).tBt = 1500;
+(exports.CommonSuccessView = CommonSuccessView).rbt = 1500;
 //# sourceMappingURL=CommonSuccessView.js.map

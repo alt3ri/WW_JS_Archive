@@ -5,11 +5,11 @@ const Log_1 = require("../../../../../../../../Core/Common/Log"),
   LevelBuffBase_1 = require("./LevelBuffBase");
 class LevelBuffSetWalkableFloorAngle extends LevelBuffBase_1.LevelBuffBase {
   constructor() {
-    super(...arguments), (this.lXo = 0);
+    super(...arguments), (this.s$o = 0);
   }
   OnCreated() {
-    var e = this.Entity.CheckGetComponent(161).CharacterMovement,
-      l = ((this.lXo = e.WalkableFloorAngle), Number(this.Params[0]));
+    var e = this.Entity.CheckGetComponent(163).CharacterMovement,
+      l = ((this.s$o = e.WalkableFloorAngle), Number(this.Params[0]));
     l
       ? e.SetWalkableFloorAngle(l)
       : Log_1.Log.CheckError() &&
@@ -21,8 +21,8 @@ class LevelBuffSetWalkableFloorAngle extends LevelBuffBase_1.LevelBuffBase {
         );
   }
   OnRemoved(e) {
-    this.Entity.CheckGetComponent(161).CharacterMovement.SetWalkableFloorAngle(
-      this.lXo,
+    this.Entity.CheckGetComponent(163).CharacterMovement.SetWalkableFloorAngle(
+      this.s$o,
     );
   }
 }

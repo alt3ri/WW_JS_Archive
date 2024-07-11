@@ -1,306 +1,296 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.Formula = void 0);
-const Info_1 = require("../../../Core/Common/Info"),
-  Log_1 = require("../../../Core/Common/Log");
+const Log_1 = require("../../../Core/Common/Log"),
+  Macro_1 = require("../../../Core/Preprocessor/Macro");
 class Lexer {
-  constructor(t) {
-    (this.LCr = t), (this.cC = 0);
+  constructor(r) {
+    (this.ygr = r), (this.cC = 0);
   }
   Tokenize() {
-    for (var t = []; this.cC < this.LCr.length; ) {
-      var r = this.LCr[this.cC];
-      if (/\d/.test(r)) t.push(this.DCr());
-      else if (/[a-zA-Z]/.test(r)) t.push(this.RCr());
-      else if (/['"`]/.test(r)) t.push(this.UCr());
-      else if (/\+|-|\*|\/|%|>|<|=|!|&|\|/.test(r)) t.push(this.ACr());
+    for (var r = []; this.cC < this.ygr.length; ) {
+      var e = this.ygr[this.cC];
+      if (/\d/.test(e)) r.push(this.Igr());
+      else if (/[a-zA-Z]/.test(e)) r.push(this.Tgr());
+      else if (/['"`]/.test(e)) r.push(this.Lgr());
+      else if (/\+|-|\*|\/|%|>|<|=|!|&|\|/.test(e)) r.push(this.Dgr());
       else {
-        if ("," === r) t.push({ TokenType: 5, TokenString: "," });
-        else if ("(" === r) t.push({ TokenType: 6, TokenString: "(" });
-        else if (")" === r) t.push({ TokenType: 7, TokenString: ")" });
-        else if ("[" === r) t.push({ TokenType: 8, TokenString: "[" });
-        else if ("]" === r) t.push({ TokenType: 9, TokenString: "]" });
-        else if (!/\s/.test(r)) throw new Error("Invalid character: " + r);
+        if ("," === e) r.push({ TokenType: 5, TokenString: "," });
+        else if ("(" === e) r.push({ TokenType: 6, TokenString: "(" });
+        else if (")" === e) r.push({ TokenType: 7, TokenString: ")" });
+        else if ("[" === e) r.push({ TokenType: 8, TokenString: "[" });
+        else if ("]" === e) r.push({ TokenType: 9, TokenString: "]" });
+        else if (!/\s/.test(e)) throw new Error("Invalid character: " + e);
         this.cC++;
       }
     }
-    return t.push({ TokenType: 10, TokenString: "" }), t;
+    return r.push({ TokenType: 10, TokenString: "" }), r;
   }
-  DCr() {
-    let t = "";
-    for (; this.cC < this.LCr.length && /\d/.test(this.LCr[this.cC]); )
-      (t += this.LCr[this.cC]), this.cC++;
-    if ("." === this.LCr[this.cC])
+  Igr() {
+    let r = "";
+    for (; this.cC < this.ygr.length && /\d/.test(this.ygr[this.cC]); )
+      (r += this.ygr[this.cC]), this.cC++;
+    if ("." === this.ygr[this.cC])
       for (
-        t += ".", this.cC++;
-        this.cC < this.LCr.length && /\d/.test(this.LCr[this.cC]);
+        r += ".", this.cC++;
+        this.cC < this.ygr.length && /\d/.test(this.ygr[this.cC]);
 
       )
-        (t += this.LCr[this.cC]), this.cC++;
-    return { TokenType: 0, TokenString: t };
+        (r += this.ygr[this.cC]), this.cC++;
+    return { TokenType: 0, TokenString: r };
   }
-  RCr() {
-    let t = "";
-    for (; this.cC < this.LCr.length && /[a-zA-Z0-9]/.test(this.LCr[this.cC]); )
-      t += this.LCr[this.cC++];
-    return "TRUE" === t || "FALSE" === t
-      ? { TokenType: 1, TokenString: t.toLowerCase() }
-      : "AND" === t
-        ? { TokenType: 4, TokenString: "&&" }
-        : "OR" === t
-          ? { TokenType: 4, TokenString: "||" }
-          : "XOR" === t
-            ? { TokenType: 4, TokenString: "!=" }
-            : "NOT" === t
-              ? { TokenType: 4, TokenString: "!" }
-              : { TokenType: 3, TokenString: t };
-  }
-  UCr() {
-    var t = this.LCr[this.cC++];
+  Tgr() {
     let r = "";
-    for (; this.cC < this.LCr.length; ) {
-      var e = this.LCr[this.cC++];
-      if (e === t) return { TokenType: 2, TokenString: r };
-      r += e;
-    }
-    throw new Error("Invalid string: " + r);
+    for (; this.cC < this.ygr.length && /[a-zA-Z0-9]/.test(this.ygr[this.cC]); )
+      r += this.ygr[this.cC++];
+    return "TRUE" === r || "FALSE" === r
+      ? { TokenType: 1, TokenString: r.toLowerCase() }
+      : "AND" === r
+        ? { TokenType: 4, TokenString: "&&" }
+        : "OR" === r
+          ? { TokenType: 4, TokenString: "||" }
+          : "XOR" === r
+            ? { TokenType: 4, TokenString: "!=" }
+            : "NOT" === r
+              ? { TokenType: 4, TokenString: "!" }
+              : { TokenType: 3, TokenString: r };
   }
-  ACr() {
-    let t = "";
+  Lgr() {
+    var r = this.ygr[this.cC++];
+    let e = "";
+    for (; this.cC < this.ygr.length; ) {
+      var t = this.ygr[this.cC++];
+      if (t === r) return { TokenType: 2, TokenString: e };
+      e += t;
+    }
+    throw new Error("Invalid string: " + e);
+  }
+  Dgr() {
+    let r = "";
     for (
       ;
-      this.cC < this.LCr.length &&
-      /\+|-|\*|\/|%|>|<|=|!|&|\|/.test(this.LCr[this.cC]);
+      this.cC < this.ygr.length &&
+      /\+|-|\*|\/|%|>|<|=|!|&|\|/.test(this.ygr[this.cC]);
 
     )
-      (t += this.LCr[this.cC]), this.cC++;
-    return { TokenType: 4, TokenString: t };
+      (r += this.ygr[this.cC]), this.cC++;
+    return { TokenType: 4, TokenString: r };
   }
 }
 class Parser {
-  constructor(t) {
-    (this.xCr = t), (this.PCr = ""), (this.cC = 0);
+  constructor(r) {
+    (this.Ugr = r), (this.Rgr = ""), (this.cC = 0);
   }
-  Parse(t) {
-    this.PCr = t;
-    var r = this.wCr();
-    if (this.cC !== this.xCr.length - 1)
-      throw new Error("Unexpected token when parsing expression " + t);
+  Parse(r) {
+    this.Rgr = r;
+    var e = this.Agr();
+    if (this.cC !== this.Ugr.length - 1)
+      throw new Error("Unexpected token when parsing expression " + r);
+    return e;
+  }
+  Agr() {
+    return this.Pgr();
+  }
+  Pgr() {
+    let r = this.xgr();
+    for (; this.wgr("||"); ) {
+      var e = this.Bgr().TokenString,
+        t = this.xgr();
+      r = { NodeType: 5, Operator: e, Args: [r, t] };
+    }
     return r;
   }
-  wCr() {
-    return this.BCr();
-  }
-  BCr() {
-    let t = this.bCr();
-    for (; this.qCr("||"); ) {
-      var r = this.GCr().TokenString,
-        e = this.bCr();
-      t = { NodeType: 5, Operator: r, Args: [t, e] };
+  xgr() {
+    let r = this.bgr();
+    for (; this.wgr("&&"); ) {
+      var e = this.Bgr().TokenString,
+        t = this.bgr();
+      r = { NodeType: 5, Operator: e, Args: [r, t] };
     }
-    return t;
+    return r;
   }
-  bCr() {
-    let t = this.NCr();
-    for (; this.qCr("&&"); ) {
-      var r = this.GCr().TokenString,
-        e = this.NCr();
-      t = { NodeType: 5, Operator: r, Args: [t, e] };
+  bgr() {
+    let r = this.qgr();
+    for (; this.wgr("==", "!="); ) {
+      var e = this.Bgr().TokenString,
+        t = this.qgr();
+      r = { NodeType: 5, Operator: e, Args: [r, t] };
     }
-    return t;
+    return r;
   }
-  NCr() {
-    let t = this.OCr();
-    for (; this.qCr("==", "!="); ) {
-      var r = this.GCr().TokenString,
-        e = this.OCr();
-      t = { NodeType: 5, Operator: r, Args: [t, e] };
+  qgr() {
+    let r = this.Ggr();
+    for (; this.wgr(">", ">=", "<", "<="); ) {
+      var e = this.Bgr().TokenString,
+        t = this.Ggr();
+      r = { NodeType: 5, Operator: e, Args: [r, t] };
     }
-    return t;
+    return r;
   }
-  OCr() {
-    let t = this.kCr();
-    for (; this.qCr(">", ">=", "<", "<="); ) {
-      var r = this.GCr().TokenString,
-        e = this.kCr();
-      t = { NodeType: 5, Operator: r, Args: [t, e] };
+  Ggr() {
+    let r = this.Ngr();
+    for (; this.wgr("+", "-"); ) {
+      var e = this.Bgr().TokenString,
+        t = this.Ngr();
+      r = { NodeType: 5, Operator: e, Args: [r, t] };
     }
-    return t;
+    return r;
   }
-  kCr() {
-    let t = this.FCr();
-    for (; this.qCr("+", "-"); ) {
-      var r = this.GCr().TokenString,
-        e = this.FCr();
-      t = { NodeType: 5, Operator: r, Args: [t, e] };
+  Ngr() {
+    let r = this.Ogr();
+    for (; this.wgr("*", "/", "%"); ) {
+      var e = this.Bgr().TokenString,
+        t = this.Ogr();
+      r = { NodeType: 5, Operator: e, Args: [r, t] };
     }
-    return t;
+    return r;
   }
-  FCr() {
-    let t = this.VCr();
-    for (; this.qCr("*", "/", "%"); ) {
-      var r = this.GCr().TokenString,
-        e = this.VCr();
-      t = { NodeType: 5, Operator: r, Args: [t, e] };
-    }
-    return t;
+  Ogr() {
+    return this.wgr("+", "-", "!")
+      ? { NodeType: 6, Operator: this.Bgr().TokenString, Args: [this.Ogr()] }
+      : this.kgr();
   }
-  VCr() {
-    return this.qCr("+", "-", "!")
-      ? { NodeType: 6, Operator: this.GCr().TokenString, Args: [this.VCr()] }
-      : this.HCr();
-  }
-  HCr() {
-    var r = this.jCr();
-    if (0 === r.TokenType)
+  kgr() {
+    var e = this.Fgr();
+    if (0 === e.TokenType)
       return (
-        this.WCr(),
-        r.TokenString.includes(".")
-          ? { NodeType: 0, Value: parseFloat(r.TokenString) }
-          : 10 < r.TokenString.length
-            ? { NodeType: 0, Value: BigInt(r.TokenString) }
-            : { NodeType: 0, Value: parseInt(r.TokenString) }
+        this.Vgr(),
+        e.TokenString.includes(".")
+          ? { NodeType: 0, Value: parseFloat(e.TokenString) }
+          : 10 < e.TokenString.length
+            ? { NodeType: 0, Value: BigInt(e.TokenString) }
+            : { NodeType: 0, Value: parseInt(e.TokenString) }
       );
-    if (1 === r.TokenType)
-      return this.WCr(), { NodeType: 1, Value: "true" === r.TokenString };
-    if (2 === r.TokenType)
-      return this.WCr(), { NodeType: 2, Value: r.TokenString };
-    if (3 === r.TokenType) {
-      var e = r.TokenString;
-      if ((this.WCr(), this.KCr(6))) return this.QCr(e);
-      let t = { NodeType: 4, Value: e };
-      for (; this.KCr(8); ) {
-        var i = this.wCr();
-        this.XCr(
+    if (1 === e.TokenType)
+      return this.Vgr(), { NodeType: 1, Value: "true" === e.TokenString };
+    if (2 === e.TokenType)
+      return this.Vgr(), { NodeType: 2, Value: e.TokenString };
+    if (3 === e.TokenType) {
+      var t = e.TokenString;
+      if ((this.Vgr(), this.Hgr(6))) return this.jgr(t);
+      let r = { NodeType: 4, Value: t };
+      for (; this.Hgr(8); ) {
+        var i = this.Agr();
+        this.Wgr(
           9,
-          "Expected ']' after array when parsing expression " + this.PCr,
+          "Expected ']' after array when parsing expression " + this.Rgr,
         ),
-          (t = { NodeType: 9, Value: t, Index: i });
+          (r = { NodeType: 9, Value: r, Index: i });
       }
-      return t;
+      return r;
     }
-    if (this.KCr(6))
+    if (this.Hgr(6))
       return (
-        (e = this.wCr()),
-        this.XCr(7, "Expected ')' after expression when parsing " + this.PCr),
-        { NodeType: 8, Value: e }
+        (t = this.Agr()),
+        this.Wgr(7, "Expected ')' after expression when parsing " + this.Rgr),
+        { NodeType: 8, Value: t }
       );
-    if (this.KCr(8)) return this.$Cr();
-    throw new Error(r.TokenString + " when parsing expression " + this.PCr);
+    if (this.Hgr(8)) return this.Kgr();
+    throw new Error(e.TokenString + " when parsing expression " + this.Rgr);
   }
-  QCr(t) {
-    var r = [];
-    if (!this.Ii(7)) for (; r.push(this.wCr()), this.KCr(5); );
+  jgr(r) {
+    var e = [];
+    if (!this.Ii(7)) for (; e.push(this.Agr()), this.Hgr(5); );
     return (
-      this.XCr(
+      this.Wgr(
         7,
-        "Expected ')' after arguments when parsing expression " + this.PCr,
+        "Expected ')' after arguments when parsing expression " + this.Rgr,
       ),
-      { NodeType: 7, Value: t, Args: r }
+      { NodeType: 7, Value: r, Args: e }
     );
   }
-  $Cr() {
-    var t = [];
-    if (!this.Ii(9)) for (; t.push(this.wCr()), this.KCr(5); );
-    this.XCr(9, "Expected ']' after array when parsing expression " + this.PCr);
-    let r = { NodeType: 3, Value: t };
-    for (; this.KCr(8); ) {
-      var e = this.wCr();
-      this.XCr(
+  Kgr() {
+    var r = [];
+    if (!this.Ii(9)) for (; r.push(this.Agr()), this.Hgr(5); );
+    this.Wgr(9, "Expected ']' after array when parsing expression " + this.Rgr);
+    let e = { NodeType: 3, Value: r };
+    for (; this.Hgr(8); ) {
+      var t = this.Agr();
+      this.Wgr(
         9,
-        "Expected ']' after array when parsing expression " + this.PCr,
+        "Expected ']' after array when parsing expression " + this.Rgr,
       ),
-        (r = { NodeType: 9, Value: r, Index: e });
+        (e = { NodeType: 9, Value: e, Index: t });
     }
-    return r;
+    return e;
   }
-  KCr(...t) {
-    for (const r of t) if (this.Ii(r)) return this.WCr(), !0;
+  Hgr(...r) {
+    for (const e of r) if (this.Ii(e)) return this.Vgr(), !0;
     return !1;
   }
-  qCr(...t) {
-    for (const r of t)
-      if (this.Ii(4) && this.jCr().TokenString === r) return this.WCr(), !0;
+  wgr(...r) {
+    for (const e of r)
+      if (this.Ii(4) && this.Fgr().TokenString === e) return this.Vgr(), !0;
     return !1;
   }
-  XCr(t, r) {
-    if (!this.Ii(t)) throw new Error(r);
-    this.WCr();
+  Wgr(r, e) {
+    if (!this.Ii(r)) throw new Error(e);
+    this.Vgr();
   }
-  Ii(t) {
-    return !this.YCr() && this.jCr().TokenType === t;
+  Ii(r) {
+    return !this.Qgr() && this.Fgr().TokenType === r;
   }
-  WCr() {
-    return this.YCr() || this.cC++, this.GCr();
+  Vgr() {
+    return this.Qgr() || this.cC++, this.Bgr();
   }
-  YCr() {
-    return 10 === this.jCr().TokenType;
+  Qgr() {
+    return 10 === this.Fgr().TokenType;
   }
-  jCr() {
-    return this.xCr[this.cC];
+  Fgr() {
+    return this.Ugr[this.cC];
   }
-  GCr() {
-    return this.xCr[this.cC - 1];
+  Bgr() {
+    return this.Ugr[this.cC - 1];
   }
 }
 class Formula {
-  constructor(t) {
-    (this.JCr = void 0),
-      (this.PCr = ""),
+  constructor(r) {
+    (this.Xgr = void 0),
+      (this.Rgr = ""),
       (this.Params = void 0),
-      (this.nLt = void 0),
-      (this.zCr = new Map()),
-      (this.ujn = ""),
-      (this.cjn = new Set()),
-      (this.PCr = t);
-    var r = new Lexer(t).Tokenize(),
-      r = new Parser(r);
-    (this.JCr = r.Parse(t)), (this.Params = void 0);
+      (this.lDt = void 0),
+      (this.$gr = new Map()),
+      (this.jQn = ""),
+      (this.WQn = new Set()),
+      (this.Rgr = r);
+    var e = new Lexer(r).Tokenize(),
+      e = new Parser(e);
+    (this.Xgr = e.Parse(r)), (this.Params = void 0);
   }
-  SetBuiltinFunctions(t) {
-    this.zCr.clear();
-    for (var [r, e] of t) this.zCr.set(r, e);
+  SetBuiltinFunctions(r) {
+    this.$gr.clear();
+    for (var [e, t] of r) this.$gr.set(e, t);
     return this;
   }
-  AddBuiltinFunction(t, r) {
-    return this.zCr.set(t, r), this;
+  AddBuiltinFunction(r, e) {
+    return this.$gr.set(r, e), this;
   }
-  SetDefaultParams(t) {
-    return (this.Params = { ...t }), this;
+  SetDefaultParams(r) {
+    return (this.Params = { ...r }), this;
   }
-  ZCr(r) {
-    switch (r.NodeType) {
+  Ygr(e) {
+    switch (e.NodeType) {
       case 0:
       case 1:
       case 2:
-        return r.Value;
+        return e.Value;
       case 3:
-        return r.Value.map((t) => this.ZCr(t));
+        return e.Value.map((r) => this.Ygr(r));
       case 4:
-        var t = this.Params?.[r.Value] ?? this.nLt?.[r.Value];
-        if (void 0 === t) throw new Error("Undefined variable: " + r.Value);
-        return (
-          Info_1.Info.IsBuildDevelopmentOrDebug &&
-            !this.cjn.has(r.Value) &&
-            (this.cjn.add(r.Value),
-            (this.ujn += "\n" + this.GetFormulaString(r) + "=" + String(t))),
-          t
-        );
+        var r = this.Params?.[e.Value] ?? this.lDt?.[e.Value];
+        if (void 0 === r) throw new Error("Undefined variable: " + e.Value);
+        return r;
       case 9:
-        t = this.ZCr(r.Value);
-        if (void 0 === t || !Array.isArray(t))
+        r = this.Ygr(e.Value);
+        if (void 0 === r || !Array.isArray(r))
           throw new Error("Variable is not a valid array");
-        var e = this.ZCr(r.Index);
-        if (void 0 === e || "number" != typeof e || e < 0 || e >= t.length)
-          throw new Error("Invalid array index: " + String(e));
-        return (
-          Info_1.Info.IsBuildDevelopmentOrDebug &&
-            (this.ujn += "\n" + this.GetFormulaString(r) + "=" + String(t[e])),
-          t[e]
-        );
+        var t = this.Ygr(e.Index);
+        if (void 0 === t || "number" != typeof t || t < 0 || t >= r.length)
+          throw new Error("Invalid array index: " + String(t));
+        return r[t];
       case 6:
-        var i = this.ZCr(r.Args[0]);
-        switch (r.Operator) {
+        var i = this.Ygr(e.Args[0]);
+        switch (e.Operator) {
           case "+":
             return +i;
           case "-":
@@ -308,13 +298,13 @@ class Formula {
           case "!":
             return !i;
           default:
-            throw new Error("Invalid unary operator: " + r.Operator);
+            throw new Error("Invalid unary operator: " + e.Operator);
         }
       case 5:
-        var s = this.ZCr(r.Args[0]),
-          n = this.ZCr(r.Args[1]);
+        var s = this.Ygr(e.Args[0]),
+          n = this.Ygr(e.Args[1]);
         try {
-          switch (r.Operator) {
+          switch (e.Operator) {
             case "+":
               return s + n;
             case "-":
@@ -340,89 +330,79 @@ class Formula {
             case "||":
               return s || n;
             default:
-              throw new Error("Invalid binary operator: " + r.Operator);
+              throw new Error("Invalid binary operator: " + e.Operator);
           }
-        } catch (t) {
-          throw new Error(`Invalid operation: ${s} ${r.Operator} ` + n);
+        } catch (r) {
+          throw new Error(`Invalid operation: ${s} ${e.Operator} ` + n);
         }
       case 7:
-        (t = r.Args.map((t) => this.ZCr(t))),
-          (e = this.zCr.get(r.Value)?.(...t));
-        return (
-          Info_1.Info.IsBuildDevelopmentOrDebug &&
-            (this.ujn += "\n" + this.GetFormulaString(r) + "=" + String(e)),
-          e
-        );
+        r = e.Args.map((r) => this.Ygr(r));
+        return this.$gr.get(e.Value)?.(...r);
       case 8:
-        return this.ZCr(r.Value);
+        return this.Ygr(e.Value);
       default:
-        throw new Error("Invalid node type: " + r.NodeType);
+        throw new Error("Invalid node type: " + e.NodeType);
     }
   }
-  Evaluate(t) {
-    Info_1.Info.IsBuildDevelopmentOrDebug &&
-      ((this.ujn = ""), this.cjn.clear()),
-      (this.nLt = t);
-    let r = void 0;
+  Evaluate(r) {
+    this.lDt = r;
+    let e = void 0;
     try {
-      (r = this.ZCr(this.JCr)),
-        Info_1.Info.IsBuildDevelopmentOrDebug && (this.ujn = this.ujn?.trim());
-    } catch (t) {
-      (r = void 0),
-        t instanceof Error
-          ? (Log_1.Log.CheckError() &&
-              Log_1.Log.ErrorWithStack(
-                "Event",
-                20,
-                "Trigger条件解析异常",
-                t,
-                ["formula", this.PCr],
-                ["error", t.message],
-              ),
-            Info_1.Info.IsBuildDevelopmentOrDebug && (this.ujn = t.message))
-          : (Log_1.Log.CheckError() &&
-              Log_1.Log.Error(
-                "Event",
-                20,
-                "Trigger条件解析异常",
-                ["formula", this.PCr],
-                ["error", t],
-              ),
-            Info_1.Info.IsBuildDevelopmentOrDebug && (this.ujn = String(t)));
+      e = this.Ygr(this.Xgr);
+    } catch (r) {
+      (e = void 0),
+        r instanceof Error
+          ? Log_1.Log.CheckError() &&
+            Log_1.Log.ErrorWithStack(
+              "Event",
+              20,
+              "Trigger条件解析异常",
+              r,
+              ["formula", this.Rgr],
+              ["error", r.message],
+            )
+          : Log_1.Log.CheckError() &&
+            Log_1.Log.Error(
+              "Event",
+              20,
+              "Trigger条件解析异常",
+              ["formula", this.Rgr],
+              ["error", r],
+            );
     } finally {
-      this.nLt = void 0;
+      this.lDt = void 0;
     }
-    return r;
+    return e;
   }
-  GetFormulaString(t) {
-    switch (t.NodeType) {
+  GetFormulaString(r) {
+    switch (r.NodeType) {
       case 0:
       case 1:
       case 2:
-        return t.Value.toString();
+        return r.Value.toString();
       case 3:
-        return `[${t.Value.map((t) => this.GetFormulaString(t)).join(",")}]`;
+        return `[${r.Value.map((r) => this.GetFormulaString(r)).join(",")}]`;
       case 4:
-        return t.Value;
+        return r.Value;
       case 9:
-        return `${this.GetFormulaString(t.Value)}[${this.GetFormulaString(t.Index)}]`;
+        return `${this.GetFormulaString(r.Value)}[${this.GetFormulaString(r.Index)}]`;
       case 6:
-        return `${t.Operator}(${this.GetFormulaString(t.Args[0])})`;
+        return `${r.Operator}(${this.GetFormulaString(r.Args[0])})`;
       case 5:
         return (
-          `${this.GetFormulaString(t.Args[0])} ${t.Operator} ` +
-          this.GetFormulaString(t.Args[1])
+          `${this.GetFormulaString(r.Args[0])} ${r.Operator} ` +
+          this.GetFormulaString(r.Args[1])
         );
       case 7:
-        return `${t.Value}(${t.Args.map((t) => this.GetFormulaString(t)).join(",")})`;
+        return `${r.Value}(${r.Args.map((r) => this.GetFormulaString(r)).join(",")})`;
       case 8:
-        return `(${this.GetFormulaString(t.Value)})`;
+        return `(${this.GetFormulaString(r.Value)})`;
       default:
         return "";
     }
   }
   GetLastResult() {
-    return this.ujn;
+    return this.jQn;
   }
 }
 exports.Formula = Formula;

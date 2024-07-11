@@ -4,20 +4,20 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const UE = require("ue"),
   Log_1 = require("../../../../Core/Common/Log"),
   Time_1 = require("../../../../Core/Common/Time"),
+  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
   PublicUtil_1 = require("../../../Common/PublicUtil"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
-  UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase"),
-  StringUtils_1 = require("../../../../Core/Utils/StringUtils");
+  UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase");
 class NewMissionTips extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
-      (this.dro = ""),
-      (this.Cro = ""),
+      (this._no = ""),
+      (this.uno = ""),
       (this.mNe = 5),
-      (this.gro = !1),
-      (this.fro = () => {
-        var i = PublicUtil_1.PublicUtil.GetConfigTextByKey(this.Cro);
+      (this.cno = !1),
+      (this.mno = () => {
+        var i = PublicUtil_1.PublicUtil.GetConfigTextByKey(this.uno);
         this.GetText(0)?.SetText(i);
       });
   }
@@ -32,11 +32,11 @@ class NewMissionTips extends UiTickViewBase_1.UiTickViewBase {
     var i = this.OpenParam,
       e = ModelManager_1.ModelManager.QuestNewModel.GetQuest(i);
     e
-      ? ((this.dro =
+      ? ((this._no =
           ConfigManager_1.ConfigManager.QuestNewConfig.GetQuestTypeMark(
             e.QuestMarkId,
           ) ?? ""),
-        (this.Cro = e.QuestNameTid),
+        (this.uno = e.QuestNameTid),
         (this.mNe =
           ConfigManager_1.ConfigManager.QuestNewConfig.GetNewTipsShowTime(
             e.Type,
@@ -54,17 +54,17 @@ class NewMissionTips extends UiTickViewBase_1.UiTickViewBase {
     var i = this.GetSprite(1),
       i =
         (i &&
-          !StringUtils_1.StringUtils.IsBlank(this.dro) &&
-          (this.SetSpriteByPath(this.dro, i, !1), i.SetUIActive(!0)),
+          !StringUtils_1.StringUtils.IsBlank(this._no) &&
+          (this.SetSpriteByPath(this._no, i, !1), i.SetUIActive(!0)),
         this.GetText(0));
-    i.OnSelfLanguageChange.Bind(this.fro), this.fro(), i.SetUIActive(!0);
+    i.OnSelfLanguageChange.Bind(this.mno), this.mno(), i.SetUIActive(!0);
   }
   OnTick(i) {
     (this.mNe = Math.max(this.mNe - (i / 1e3) * Time_1.Time.TimeDilation, 0)),
-      this.mNe <= 0 && !this.gro && this.$Oe();
+      this.mNe <= 0 && !this.cno && this.$Oe();
   }
   $Oe() {
-    (this.gro = !0), this.CloseMe();
+    (this.cno = !0), this.CloseMe();
   }
 }
 exports.NewMissionTips = NewMissionTips;

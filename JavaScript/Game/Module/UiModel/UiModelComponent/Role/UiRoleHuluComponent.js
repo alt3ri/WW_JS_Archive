@@ -33,24 +33,24 @@ const CommonParamById_1 = require("../../../../../Core/Define/ConfigCommon/Commo
 let UiRoleHuluComponent = class UiRoleHuluComponent extends UiModelComponentBase_1.UiModelComponentBase {
   constructor() {
     super(...arguments),
-      (this.Qwr = void 0),
-      (this.GBr = void 0),
-      (this.nXt = void 0),
-      (this.SBr = void 0),
-      (this.NBr = void 0),
-      (this.olt = CharacterNameDefines_1.CharacterNameDefines.HULU_SOCKET_NAME),
-      (this._ti = 0),
-      (this.$wr = (e) => {
-        e || 2 !== this._ti || this.SetActive(!1);
+      (this.ywr = void 0),
+      (this.mBr = void 0),
+      (this.n$t = void 0),
+      (this.Jwr = void 0),
+      (this.dBr = void 0),
+      (this.g1t = CharacterNameDefines_1.CharacterNameDefines.HULU_SOCKET_NAME),
+      (this._ii = 0),
+      (this.Twr = (e) => {
+        e || 2 !== this._ii || this.SetActive(!1);
       }),
-      (this.OBr = () => {
+      (this.CBr = () => {
         this.Refresh();
       }),
-      (this.Jwr = (e) => {
-        this.NBr?.Model?.CheckGetComponent(0)?.SetDitherEffect(e);
+      (this.Dwr = (e) => {
+        this.dBr?.Model?.CheckGetComponent(0)?.SetDitherEffect(e);
       }),
       (this.OnRoleMeshLoadComplete = () => {
-        this.kBr();
+        this.gBr();
       }),
       (this.OnAnsBegin = (e) => {
         this.SetActive(!0),
@@ -59,17 +59,17 @@ let UiRoleHuluComponent = class UiRoleHuluComponent extends UiModelComponentBase
         e && this.AttachHuluToRole(e);
       }),
       (this.OnAnsEnd = (e) => {
-        this.NBr?.Model?.CheckGetComponent(9)?.StopRotate(), this.SetActive(!1);
+        this.dBr?.Model?.CheckGetComponent(9)?.StopRotate(), this.SetActive(!1);
       });
   }
   OnInit() {
-    (this.GBr = this.Owner.CheckGetComponent(11)),
-      (this.Qwr = this.Owner.CheckGetComponent(0)),
-      (this.nXt = this.Owner.CheckGetComponent(1)),
-      (this.SBr = this.Owner.CheckGetComponent(6)),
-      (this.NBr =
+    (this.mBr = this.Owner.CheckGetComponent(11)),
+      (this.ywr = this.Owner.CheckGetComponent(0)),
+      (this.n$t = this.Owner.CheckGetComponent(1)),
+      (this.Jwr = this.Owner.CheckGetComponent(6)),
+      (this.dBr =
         SkeletalObserverManager_1.SkeletalObserverManager.NewSkeletalObserver(
-          4,
+          5,
         )),
       this.SetActive(!1);
   }
@@ -82,19 +82,19 @@ let UiRoleHuluComponent = class UiRoleHuluComponent extends UiModelComponentBase
       EventSystem_1.EventSystem.AddWithTarget(
         this.Owner,
         EventDefine_1.EEventName.OnUiModelRoleConfigIdChange,
-        this.OBr,
+        this.CBr,
       ),
       EventSystem_1.EventSystem.AddWithTarget(
         this.Owner,
         EventDefine_1.EEventName.OnUiModelVisibleChange,
-        this.$wr,
+        this.Twr,
       ),
       EventSystem_1.EventSystem.AddWithTarget(
         this.Owner,
         EventDefine_1.EEventName.OnUiModelSetDitherEffect,
-        this.Jwr,
+        this.Dwr,
       ),
-      this.SBr?.RegisterAnsTrigger(
+      this.Jwr?.RegisterAnsTrigger(
         "UiCalabashAnsContext",
         this.OnAnsBegin,
         this.OnAnsEnd,
@@ -109,60 +109,60 @@ let UiRoleHuluComponent = class UiRoleHuluComponent extends UiModelComponentBase
       EventSystem_1.EventSystem.RemoveWithTarget(
         this.Owner,
         EventDefine_1.EEventName.OnUiModelRoleConfigIdChange,
-        this.OBr,
+        this.CBr,
       ),
       EventSystem_1.EventSystem.RemoveWithTarget(
         this.Owner,
         EventDefine_1.EEventName.OnUiModelVisibleChange,
-        this.$wr,
+        this.Twr,
       ),
       EventSystem_1.EventSystem.RemoveWithTarget(
         this.Owner,
         EventDefine_1.EEventName.OnUiModelSetDitherEffect,
-        this.Jwr,
+        this.Dwr,
       ),
       SkeletalObserverManager_1.SkeletalObserverManager.DestroySkeletalObserver(
-        this.NBr,
+        this.dBr,
       );
   }
   GetHuluHandle() {
-    return this.NBr;
+    return this.dBr;
   }
   Refresh() {
-    var e = this.GBr.RoleConfigId,
+    var e = this.mBr.RoleConfigId,
       e =
         ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(e).PartyId *
           HULU_PARTY_ID +
         HULU_BASE_ID +
         1;
-    this.NBr.Model.CheckGetComponent(2)?.LoadModelByModelId(e);
+    this.dBr.Model.CheckGetComponent(2)?.LoadModelByModelId(e);
   }
   SetActive(e) {
-    (e && 2 === this._ti) ||
-      (!e && 1 === this._ti) ||
-      (this.NBr?.Model?.CheckGetComponent(0)?.SetVisible(e),
-      (this._ti = e ? 2 : 1));
+    (e && 2 === this._ii) ||
+      (!e && 1 === this._ii) ||
+      (this.dBr?.Model?.CheckGetComponent(0)?.SetVisible(e),
+      (this._ii = e ? 2 : 1));
   }
   StartHuluRotate() {
     var e, t;
-    this.NBr &&
+    this.dBr &&
       ((e =
         CommonParamById_1.configCommonParamById.GetIntConfig(
           "hulu_rotate_time",
         )),
-      (t = this.NBr?.Model?.CheckGetComponent(9))?.SetRotateParam(e, 2, !1),
+      (t = this.dBr?.Model?.CheckGetComponent(9))?.SetRotateParam(e, 2, !1),
       t?.StartRotate());
   }
   AttachHuluToRole(e = CharacterNameDefines_1.CharacterNameDefines.HULU_CASE) {
-    (this.olt = e), this.kBr();
+    (this.g1t = e), this.gBr();
   }
-  kBr() {
+  gBr() {
     var e, t;
-    2 === this.Qwr.GetModelLoadState() &&
-      ((e = this.nXt.MainMeshComponent),
-      (t = this.NBr?.Model?.CheckGetComponent(1))?.Actor?.K2_AttachToComponent(
+    2 === this.ywr.GetModelLoadState() &&
+      ((e = this.n$t.MainMeshComponent),
+      (t = this.dBr?.Model?.CheckGetComponent(1))?.Actor?.K2_AttachToComponent(
         e,
-        this.olt,
+        this.g1t,
         0,
         0,
         0,

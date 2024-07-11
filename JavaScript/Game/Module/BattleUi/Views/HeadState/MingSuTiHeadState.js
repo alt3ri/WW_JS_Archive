@@ -5,7 +5,7 @@ const UE = require("ue"),
   HeadStateViewBase_1 = require("./HeadStateViewBase");
 class MingSuTiHeadState extends HeadStateViewBase_1.HeadStateViewBase {
   constructor() {
-    super(...arguments), (this.g1t = void 0), (this.f1t = 0);
+    super(...arguments), (this.R_t = void 0), (this.U_t = 0);
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -36,7 +36,7 @@ class MingSuTiHeadState extends HeadStateViewBase_1.HeadStateViewBase {
     return "UiItem_MingsutiState_Prefab";
   }
   OnStart() {
-    this.g1t = [
+    this.R_t = [
       this.GetSprite(1),
       this.GetSprite(2),
       this.GetSprite(3),
@@ -60,35 +60,35 @@ class MingSuTiHeadState extends HeadStateViewBase_1.HeadStateViewBase {
     ];
   }
   ActiveBattleHeadState(t) {
-    super.ActiveBattleHeadState(t), this.Cnt(), this.Aht(), this.p1t();
+    super.ActiveBattleHeadState(t), this.Rst(), this.Hlt(), this.A_t();
   }
   OnHealthChanged(t) {
-    this.HeadStateData.GetEntityId() === t && this.Cnt();
+    this.HeadStateData.GetEntityId() === t && this.Rst();
   }
-  v1t(t) {
-    return this.g1t[t];
+  P_t(t) {
+    return this.R_t[t];
   }
-  Cnt() {
+  Rst() {
     var [i, e] = this.GetHpAndMaxHp();
-    if (this.f1t !== i) {
-      this.f1t = i;
+    if (this.U_t !== i) {
+      this.U_t = i;
       for (let t = 0; t < Math.floor(e); t++) {
-        var s = this.v1t(t);
+        var s = this.P_t(t);
         s && t < i !== s.bIsUIActive && s.SetUIActive(t < i);
       }
     }
   }
-  p1t() {
-    for (let t = this.GetMaxHp(); t < this.g1t.length; t++) {
-      var i = this.v1t(t);
+  A_t() {
+    for (let t = this.GetMaxHp(); t < this.R_t.length; t++) {
+      var i = this.P_t(t);
       i && i.GetParentAsUIItem().SetUIActive(!1);
     }
   }
-  Aht() {
+  Hlt() {
     var t = this.GetHpColor();
     if (t) {
       var i = UE.Color.FromHex(t);
-      for (const e of this.g1t) e.SetColor(i);
+      for (const e of this.R_t) e.SetColor(i);
     }
   }
 }

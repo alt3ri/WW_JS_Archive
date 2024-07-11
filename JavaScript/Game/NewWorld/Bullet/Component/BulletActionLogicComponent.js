@@ -60,105 +60,105 @@ const Log_1 = require("../../../../Core/Common/Log"),
 let BulletActionLogicComponent = class BulletActionLogicComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments),
-      (this._9o = void 0),
-      (this.tbr = void 0),
-      (this.ibr = void 0),
-      (this.obr = void 0),
-      (this.rbr = void 0),
-      (this.nbr = void 0),
-      (this.sbr = void 0),
-      (this.abr = void 0),
-      (this.hbr = void 0),
-      (this.lbr = !1),
-      (this._br = !1);
+      (this.a7o = void 0),
+      (this.PBr = void 0),
+      (this.xBr = void 0),
+      (this.wBr = void 0),
+      (this.BBr = void 0),
+      (this.bBr = void 0),
+      (this.qBr = void 0),
+      (this.GBr = void 0),
+      (this.NBr = void 0),
+      (this.OBr = !1),
+      (this.kBr = !1);
   }
   get ObstaclesDetect() {
-    return this.lbr;
+    return this.OBr;
   }
   OnStart() {
-    (this._9o = this.Entity.GetBulletInfo()),
-      ((this._9o.ActionLogicComponent = this).tbr = this._9o.BulletDataMain),
-      (this._br =
-        this.tbr.Base.ContinuesCollision &&
-        (0 < this.tbr.Base.Interval || 0 < this.tbr.Base.CollisionActiveDelay));
-    var t = this.tbr.Execution.GbDataList;
+    (this.a7o = this.Entity.GetBulletInfo()),
+      ((this.a7o.ActionLogicComponent = this).PBr = this.a7o.BulletDataMain),
+      (this.kBr =
+        this.PBr.Base.ContinuesCollision &&
+        (0 < this.PBr.Base.Interval || 0 < this.PBr.Base.CollisionActiveDelay));
+    var t = this.PBr.Execution.GbDataList;
     if (t && 0 < t.length)
       for (const o of t) {
-        var e = this.ubr(o);
+        var e = this.FBr(o);
         0 === o.ExecuteStage
-          ? (this.ibr || (this.ibr = []), this.ibr.push(e))
+          ? (this.xBr || (this.xBr = []), this.xBr.push(e))
           : 2 === o.ExecuteStage
-            ? (this.rbr || (this.rbr = []), this.rbr.push(e))
+            ? (this.BBr || (this.BBr = []), this.BBr.push(e))
             : 1 === o.ExecuteStage
-              ? (this.obr || (this.obr = []), this.obr.push(e))
+              ? (this.wBr || (this.wBr = []), this.wBr.push(e))
               : 3 === o.ExecuteStage
-                ? (this.nbr || (this.nbr = []), this.nbr.push(e))
+                ? (this.bBr || (this.bBr = []), this.bBr.push(e))
                 : 4 === o.ExecuteStage
-                  ? (this.sbr || (this.sbr = []), this.sbr.push(e))
+                  ? (this.qBr || (this.qBr = []), this.qBr.push(e))
                   : 5 === o.ExecuteStage &&
-                    (this.abr || (this.abr = []), this.abr.push(e)),
-          e.NeedTick && (this.hbr || (this.hbr = []), this.hbr.push(e));
+                    (this.GBr || (this.GBr = []), this.GBr.push(e)),
+          e.NeedTick && (this.NBr || (this.NBr = []), this.NBr.push(e));
       }
     return !0;
   }
   OnAfterInit() {
-    if (this.ibr) for (const t of this.ibr) t.OnInit(), t.BulletLogicAction();
-    if (this.rbr) for (const e of this.rbr) e.OnInit();
-    if (this.obr) for (const o of this.obr) o.OnInit();
-    if (this.nbr) for (const i of this.nbr) i.OnInit();
-    if (this.sbr) for (const l of this.sbr) l.OnInit();
-    if (this.abr) for (const a of this.abr) a.OnInit();
+    if (this.xBr) for (const t of this.xBr) t.OnInit(), t.BulletLogicAction();
+    if (this.BBr) for (const e of this.BBr) e.OnInit();
+    if (this.wBr) for (const o of this.wBr) o.OnInit();
+    if (this.bBr) for (const i of this.bBr) i.OnInit();
+    if (this.qBr) for (const l of this.qBr) l.OnInit();
+    if (this.GBr) for (const a of this.GBr) a.OnInit();
   }
   OnTick(t) {
-    if (this._9o.IsInit) {
-      if (this._br && this._9o.CollisionInfo.HaveCharacterInBullet && this.obr)
-        for (const e of this.obr) e.BulletLogicAction();
-      if (!this._9o.NeedDestroy && this.hbr)
-        for (const o of this.hbr) o.Tick(t);
+    if (this.a7o.IsInit) {
+      if (this.kBr && this.a7o.CollisionInfo.HaveCharacterInBullet && this.wBr)
+        for (const e of this.wBr) e.BulletLogicAction();
+      if (!this.a7o.NeedDestroy && this.NBr)
+        for (const o of this.NBr) o.Tick(t);
     }
   }
   OnEnd() {
-    if (this.ibr) for (const t of this.ibr) t.OnBulletDestroy();
-    if (this.obr) for (const e of this.obr) e.OnBulletDestroy();
-    if (this.rbr) for (const o of this.rbr) o.OnBulletDestroy();
-    if (this.nbr) for (const i of this.nbr) i.OnBulletDestroy();
-    if (this.sbr) for (const l of this.sbr) l.OnBulletDestroy();
-    if (this.abr) for (const a of this.abr) a.OnBulletDestroy();
-    return !(this.lbr = !1);
+    if (this.xBr) for (const t of this.xBr) t.OnBulletDestroy();
+    if (this.wBr) for (const e of this.wBr) e.OnBulletDestroy();
+    if (this.BBr) for (const o of this.BBr) o.OnBulletDestroy();
+    if (this.bBr) for (const i of this.bBr) i.OnBulletDestroy();
+    if (this.qBr) for (const l of this.qBr) l.OnBulletDestroy();
+    if (this.GBr) for (const a of this.GBr) a.OnBulletDestroy();
+    return !(this.OBr = !1);
   }
   ActionDestroy() {
-    if (this.rbr) for (const t of this.rbr) t.BulletLogicAction();
+    if (this.BBr) for (const t of this.BBr) t.BulletLogicAction();
   }
   ActionHit(t) {
-    if (this._9o.IsInit && !this._br && this.obr)
-      for (const e of this.obr) e.BulletLogicAction(t);
+    if (this.a7o.IsInit && !this.kBr && this.wBr)
+      for (const e of this.wBr) e.BulletLogicAction(t);
   }
   ActionHitObstacles(t) {
-    if (this._9o.IsInit && this.obr)
-      for (const e of this.obr) e.BulletLogicActionOnHitObstacles(t);
+    if (this.a7o.IsInit && this.wBr)
+      for (const e of this.wBr) e.BulletLogicActionOnHitObstacles(t);
   }
   ActionRebound(t) {
-    if (this.nbr) for (const e of this.nbr) e.BulletLogicAction(t);
+    if (this.bBr) for (const e of this.bBr) e.BulletLogicAction(t);
   }
   ActionSupport(t) {
     if (
-      ((!this.sbr || this.sbr?.length <= 0) &&
+      ((!this.qBr || this.qBr?.length <= 0) &&
         Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Bullet",
           21,
           "与子弹碰撞, 执行Support",
-          ["This.Id", this._9o.BulletRowName],
-          ["this.OnSupportController.Len", this.sbr?.length],
+          ["This.Id", this.a7o.BulletRowName],
+          ["this.OnSupportController.Len", this.qBr?.length],
         ),
-      this.sbr)
+      this.qBr)
     )
-      for (const e of this.sbr) e.BulletLogicAction(t);
+      for (const e of this.qBr) e.BulletLogicAction(t);
   }
   ActionTickMovement(t) {
-    if (this.abr) for (const e of this.abr) e.BulletLogicAction(t);
+    if (this.GBr) for (const e of this.GBr) e.BulletLogicAction(t);
   }
-  ubr(t) {
+  FBr(t) {
     return t instanceof LogicDataCreateBullet_1.default
       ? new BulletLogicCreateBulletController_1.BulletLogicCreateBulletController(
           t,
@@ -175,7 +175,7 @@ let BulletActionLogicComponent = class BulletActionLogicComponent extends Entity
               this.Entity,
             )
           : t instanceof LogicDataSpeedReduce_1.default
-            ? ((this.lbr = !0),
+            ? ((this.OBr = !0),
               new BulletLogicSpeedReduceController_1.BulletLogicSpeedReduceController(
                 t,
                 this.Entity,

@@ -15,13 +15,13 @@ const Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
 class TreeExpressAssistant extends ControllerAssistantBase_1.ControllerAssistantBase {
   constructor() {
     super(...arguments),
-      (this.Vze = (e, t) => {
+      (this.eet = (e, t) => {
         e &&
           e.BtType &&
           e.TreeIncId &&
           this.ApplyOccupyTreeExpression(e.BtType, e.TreeIncId, e.ShowByCustom);
       }),
-      (this.a$t = (e) => {
+      (this.aYt = (e) => {
         e &&
           e.BtType &&
           e.TreeIncId &&
@@ -32,21 +32,21 @@ class TreeExpressAssistant extends ControllerAssistantBase_1.ControllerAssistant
   OnAddEvents() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.GeneralLogicTreeStartShowTrackText,
-      this.Vze,
+      this.eet,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.GeneralLogicTreeUpdateShowTrackText,
-        this.a$t,
+        this.aYt,
       );
   }
   OnRemoveEvents() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.GeneralLogicTreeStartShowTrackText,
-      this.Vze,
+      this.eet,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.GeneralLogicTreeUpdateShowTrackText,
-        this.a$t,
+        this.aYt,
       );
   }
   IsShowNodeStatus(e) {
@@ -105,9 +105,9 @@ class TreeExpressAssistant extends ControllerAssistantBase_1.ControllerAssistant
             r.QuestScheduleType.EntityId,
           );
           s &&
-            (s = s.Entity.GetComponent(156)) &&
-            ((n = s.GetCurrentValue(Protocol_1.Aki.Protocol.KBs.Proto_Life)),
-            (s = s.GetCurrentValue(Protocol_1.Aki.Protocol.KBs.Tkn)),
+            (s = s.Entity.GetComponent(158)) &&
+            ((n = s.GetCurrentValue(Protocol_1.Aki.Protocol.Bks.Proto_Life)),
+            (s = s.GetCurrentValue(Protocol_1.Aki.Protocol.Bks.e5n)),
             (n = Math.floor((n / s) * ONE_HUNDRED)),
             (a = (a = PublicUtil_1.PublicUtil.GetConfigTextByKey(
               r.TidTitle,
@@ -129,7 +129,7 @@ class TreeExpressAssistant extends ControllerAssistantBase_1.ControllerAssistant
         }
         case IQuest_1.EQuestScheduleType.Score:
           a = PublicUtil_1.PublicUtil.GetConfigTextByKey(r.TidTitle);
-          n = this.lOn(
+          n = this.Ukn(
             ModelManager_1.ModelManager.ScoreModel.GetCurrentScore()?.toString(),
           );
           a = (a = a.replace("{currentScore}", "" + n)).replace(
@@ -151,7 +151,7 @@ class TreeExpressAssistant extends ControllerAssistantBase_1.ControllerAssistant
               "Float" !== n &&
               "String" !== n &&
               "Boolean" !== n) ||
-              ((n = this.h$t(s, o.Var)),
+              ((n = this.hYt(s, o.Var)),
               (a = (a = PublicUtil_1.PublicUtil.GetConfigTextByKey(
                 r.TidTitle,
               )).replace("{q_count}", n))));
@@ -164,11 +164,11 @@ class TreeExpressAssistant extends ControllerAssistantBase_1.ControllerAssistant
           s &&
             ((o = r.QuestScheduleType.Vars),
             (a = PublicUtil_1.PublicUtil.GetConfigTextByKey(r.TidTitle)),
-            (a = this.l$t(s, a, o)));
+            (a = this.lYt(s, a, o)));
       }
     return a;
   }
-  lOn(t) {
+  Ukn(t) {
     let r = "";
     if (t)
       for (let e = 0; e < t.length; e++) {
@@ -180,33 +180,33 @@ class TreeExpressAssistant extends ControllerAssistantBase_1.ControllerAssistant
       }
     return r;
   }
-  l$t(e, t, r) {
+  lYt(e, t, r) {
     if (r && 0 !== r.length)
       for (const s of r) {
         var a;
         ("Self" !== s.Source && "Other" !== s.Source) ||
-          ((a = this.h$t(e, s)),
+          ((a = this.hYt(e, s)),
           void 0 !== s && (t = t.replace(`{${s.Name}}`, a)));
       }
     return t;
   }
-  h$t(e, t) {
+  hYt(e, t) {
     var r = t.Source,
       a = t.Type;
     if ("Constant" === r) return String(t.Value);
     if ("Self" === r || "Other" === r) {
       var s = e.GetTreeVarByKey(t.Name);
       if (void 0 === s) return "";
-      if (s.xMs === (0, IVar_1.getVarConfigIndex)(a))
+      if (s.XIs === (0, IVar_1.getVarConfigIndex)(a))
         switch (a) {
           case "Boolean":
-            return String(s.bMs);
+            return String(s.YIs);
           case "Int":
-            return String(MathUtils_1.MathUtils.LongToNumber(s.BMs));
+            return String(MathUtils_1.MathUtils.LongToNumber(s.JIs));
           case "Float":
-            return String(s.GMs);
+            return String(s.ZIs);
           case "String":
-            return s.qMs ?? "";
+            return s.zIs ?? "";
         }
     }
     return "";
@@ -233,18 +233,18 @@ class TreeExpressAssistant extends ControllerAssistantBase_1.ControllerAssistant
         o = PublicUtil_1.PublicUtil.GetConfigTextByKey(i);
         n = s.GetCustomTrackText(o);
     }
-    return (n = n && this.l$t(e, n, a)) ?? "";
+    return (n = n && this.lYt(e, n, a)) ?? "";
   }
   ApplyOccupyTreeExpression(e, t, r) {
     switch (e) {
-      case Protocol_1.Aki.Protocol.NCs.Proto_BtTypeQuest:
+      case Protocol_1.Aki.Protocol.tps.Proto_BtTypeQuest:
         break;
-      case Protocol_1.Aki.Protocol.NCs.Proto_BtTypeInst:
-      case Protocol_1.Aki.Protocol.NCs.Proto_BtTypeLevelPlay:
-        r && this._$t(t);
+      case Protocol_1.Aki.Protocol.tps.Proto_BtTypeInst:
+      case Protocol_1.Aki.Protocol.tps.Proto_BtTypeLevelPlay:
+        r && this._Yt(t);
     }
   }
-  _$t(e) {
+  _Yt(e) {
     ModelManager_1.ModelManager.GeneralLogicTreeModel.ApplyExpressionOccupation(
       e,
     );

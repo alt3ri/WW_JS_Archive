@@ -11,7 +11,7 @@ class FlowActionSetEntityVisible extends FlowActionServerAction_1.FlowActionServ
   constructor() {
     super(...arguments),
       (this.Task = void 0),
-      (this.QXi = (t) => {
+      (this.W$i = (t) => {
         this.Task = void 0;
         var e = this.ActionInfo.Params,
           o =
@@ -61,7 +61,7 @@ class FlowActionSetEntityVisible extends FlowActionServerAction_1.FlowActionServ
           ? (this.RequestServerAction(!1), this.FinishExecute(!0))
           : (this.Task = WaitEntityTask_1.WaitEntityTask.CreateWithPbDataId(
               e.EntityIds,
-              this.QXi,
+              this.W$i,
               !0,
               FlowActionUtils_1.WAIT_ENTITY_TIME,
               e.Visible,

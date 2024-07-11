@@ -30,11 +30,11 @@ class NoCircleExhibitionView extends AutoAttachExhibitionView_1.AutoAttachExhibi
       this.AttachToIndex(0, 0);
   }
   MoveItems(t) {
-    if (0 === t) this.qEt();
+    if (0 === t) this.Qyt();
     else {
       var i = this.ReCalculateOffset(t);
       if (0 === Math.abs(i) && this.VelocityMoveState) this.CurrentVelocity = 0;
-      else if (this.GEt(i))
+      else if (this.Xyt(i))
         for (let t = 0; t < this.Items.length; t++) {
           var e = this.Items[t],
             s =
@@ -48,7 +48,7 @@ class NoCircleExhibitionView extends AutoAttachExhibitionView_1.AutoAttachExhibi
         }
     }
   }
-  qEt() {
+  Qyt() {
     if (!this.CurrentSelectState)
       for (let t = 0; t < this.Items.length; t++) {
         var i = this.Items[t],
@@ -60,9 +60,9 @@ class NoCircleExhibitionView extends AutoAttachExhibitionView_1.AutoAttachExhibi
       }
   }
   ReCalculateOffset(t) {
-    return this.AWe(t);
+    return this.VKe(t);
   }
-  AWe(t) {
+  VKe(t) {
     let i = 0 < t ? 0 : this.DataLength - 1;
     0 !== this.CurrentDirection && (i = 0 < t ? this.DataLength - 1 : 0);
     var e = this.GetShowIndexItem(i);
@@ -74,14 +74,14 @@ class NoCircleExhibitionView extends AutoAttachExhibitionView_1.AutoAttachExhibi
     if ((0 !== this.CurrentDirection && (h = s - t), 0 < t)) {
       if (h < 0) return t;
     } else if (0 < h) return t;
-    return this.BWe(t, s);
+    return this.KKe(t, s);
   }
-  BWe(t, i) {
+  KKe(t, i) {
     let e = 0,
       s = 0;
     0 < t ? i < 0 && (s = 0 - i) : 0 < i && (s = 0 - i);
     var h = t - (e = 0 + s),
-      r = this.bWe(t, i),
+      r = this.QKe(t, i),
       h = e + h * r,
       r = i + h;
     return (e =
@@ -97,7 +97,7 @@ class NoCircleExhibitionView extends AutoAttachExhibitionView_1.AutoAttachExhibi
             : -1 * (this.BoundDistance + i)
           : h);
   }
-  bWe(t, i) {
+  QKe(t, i) {
     if (this.BoundDistance <= 0) return 0;
     let e = 1;
     return (
@@ -113,9 +113,9 @@ class NoCircleExhibitionView extends AutoAttachExhibitionView_1.AutoAttachExhibi
     );
   }
   FindAutoAttachItem() {
-    return this.RWe();
+    return this.kKe();
   }
-  RWe() {
+  kKe() {
     let e = void 0,
       s = 1e7;
     for (let i = 0; i < this.Items.length; i++) {
@@ -152,10 +152,10 @@ class NoCircleExhibitionView extends AutoAttachExhibitionView_1.AutoAttachExhibi
       this.GetShowIndexItem(i)
     );
   }
-  GEt(t) {
-    return 0 === this.CurrentDirection ? this.NEt(t) : this.OEt(t);
+  Xyt(t) {
+    return 0 === this.CurrentDirection ? this.$yt(t) : this.Yyt(t);
   }
-  NEt(i) {
+  $yt(i) {
     let e = void 0;
     for (let t = 0; t < this.Items.length - 1; t++)
       if (0 === this.Items[t].ShowItemIndex) {
@@ -179,7 +179,7 @@ class NoCircleExhibitionView extends AutoAttachExhibitionView_1.AutoAttachExhibi
             return !1;
     return !0;
   }
-  OEt(t) {
+  Yyt(t) {
     return !0;
   }
 }

@@ -7,8 +7,8 @@ const UE = require("ue"),
 class EditFormationTabItem extends CommonTabItemBase_1.CommonTabItemBase {
   constructor() {
     super(...arguments),
-      (this.QFe = void 0),
-      (this.x4e = (t) => {
+      (this.l4e = void 0),
+      (this.Bke = (t) => {
         1 === t && this.SelectedCallBack(this.GridIndex);
       }),
       (this.RefreshTransition = () => {
@@ -24,7 +24,7 @@ class EditFormationTabItem extends CommonTabItemBase_1.CommonTabItemBase {
       [3, UE.UIExtendToggleSpriteTransition],
       [4, UE.UIItem],
     ]),
-      (this.BtnBindInfo = [[1, this.x4e]]);
+      (this.BtnBindInfo = [[1, this.Bke]]);
   }
   OnStart() {
     super.OnStart(),
@@ -56,8 +56,8 @@ class EditFormationTabItem extends CommonTabItemBase_1.CommonTabItemBase {
     return this.GetExtendToggle(1);
   }
   BindRedDot(t, e = 0) {
-    (this.QFe = t),
-      this.QFe &&
+    (this.l4e = t),
+      this.l4e &&
         RedDotController_1.RedDotController.BindRedDot(
           t,
           this.GetItem(2),
@@ -66,9 +66,9 @@ class EditFormationTabItem extends CommonTabItemBase_1.CommonTabItemBase {
         );
   }
   UnBindRedDot() {
-    this.QFe &&
-      (RedDotController_1.RedDotController.UnBindRedDot(this.QFe),
-      (this.QFe = void 0));
+    this.l4e &&
+      (RedDotController_1.RedDotController.UnBindRedDot(this.l4e),
+      (this.l4e = void 0));
   }
 }
 exports.EditFormationTabItem = EditFormationTabItem;

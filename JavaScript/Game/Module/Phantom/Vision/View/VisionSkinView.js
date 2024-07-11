@@ -19,55 +19,55 @@ class VisionSkinView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
       (this.lqe = void 0),
-      (this.lHi = -1),
-      (this.Vli = -1),
-      (this.YHi = 0),
-      (this.K6s = 0),
-      (this.JHi = void 0),
-      (this.zHi = void 0),
-      (this.ZHi = !1),
-      (this.i7i = void 0),
-      (this.eji = void 0),
-      (this.tji = 0),
-      (this.iji = () => {
-        (this.ZHi = !this.ZHi), this.GetItem(2).SetUIActive(this.ZHi);
+      (this.aji = -1),
+      (this.V1i = -1),
+      (this.Xji = 0),
+      (this.$Xs = 0),
+      (this.$ji = void 0),
+      (this.Yji = void 0),
+      (this.Jji = !1),
+      (this.tHi = void 0),
+      (this.zji = void 0),
+      (this.Zji = 0),
+      (this.eWi = () => {
+        (this.Jji = !this.Jji), this.GetItem(2).SetUIActive(this.Jji);
       }),
-      (this.oji = () => {
+      (this.tWi = () => {
         var i =
           ConfigManager_1.ConfigManager.PhantomBattleConfig.GetPhantomItemById(
-            this.YHi,
+            this.Xji,
           );
         ControllerHolder_1.ControllerHolder.PhantomBattleController.PhantomSkinChangeRequest(
-          this.lHi,
-          0 < i?.ParentMonsterId ? this.YHi : 0,
-          this.ZHi,
+          this.aji,
+          0 < i?.ParentMonsterId ? this.Xji : 0,
+          this.Jji,
         ),
-          this.E7i();
+          this.EHi();
       }),
       (this.Awe = () => {
         this.CloseMe();
       }),
-      (this.rji = () => {
+      (this.iWi = () => {
         ControllerHolder_1.ControllerHolder.ItemController.OpenItemTipsByItemId(
-          this.YHi,
+          this.Xji,
         );
       }),
-      (this.nji = () => {
+      (this.oWi = () => {
         var i = new VisionSkinItem_1.VisionSkinItem();
         return (
-          i.SetClickToggleEvent(this.f9i),
-          i.BindCanToggleExecuteChange(this.Eft),
+          i.SetClickToggleEvent(this.g7i),
+          i.BindCanToggleExecuteChange(this.Bpt),
           i
         );
       }),
-      (this.f9i = (i, t) => {
-        this.eji?.SetToggleStateForce(0), (this.eji = t);
+      (this.g7i = (i, t) => {
+        this.zji?.SetToggleStateForce(0), (this.zji = t);
         var t =
             ConfigManager_1.ConfigManager.PhantomBattleConfig.GetPhantomItemById(
               i,
             ),
           e =
-            (this.sji(
+            (this.rWi(
               !!t.ParentMonsterId &&
                 !ModelManager_1.ModelManager.PhantomBattleModel.GetSkinIsUnlock(
                   i,
@@ -75,26 +75,26 @@ class VisionSkinView extends UiViewBase_1.UiViewBase {
             ),
             t.MonsterName);
         LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(5), e),
-          this.tji ? this.aji(i !== this.tji) : this.aji(!!t.ParentMonsterId),
-          this.u9i(i);
+          this.Zji ? this.nWi(i !== this.Zji) : this.nWi(!!t.ParentMonsterId),
+          this._7i(i);
       }),
-      (this.Eft = (i) => this.YHi !== i),
-      (this.hji = () => {
+      (this.Bpt = (i) => this.Xji !== i),
+      (this.sWi = () => {
         var t =
           ModelManager_1.ModelManager.PhantomBattleModel.GetMonsterSkinListByMonsterId(
-            this.Vli,
+            this.V1i,
           );
         if (t) {
-          this.tji =
+          this.Zji =
             ControllerHolder_1.ControllerHolder.PhantomBattleController.GetPhantomItemDataByUniqueId(
-              this.lHi,
+              this.aji,
             ).SkinId;
           let i = 0;
-          -1 === (i = this.tji ? t.indexOf(this.tji) : 0) && (i = 0),
-            this.zHi?.SetCurrentEquipmentVisible(!1),
-            (this.zHi = this.JHi?.UnsafeGetGridProxy(i)),
-            this.zHi?.SetCurrentEquipmentVisible(!0),
-            this.aji(!1);
+          -1 === (i = this.Zji ? t.indexOf(this.Zji) : 0) && (i = 0),
+            this.Yji?.SetCurrentEquipmentVisible(!1),
+            (this.Yji = this.$ji?.UnsafeGetGridProxy(i)),
+            this.Yji?.SetCurrentEquipmentVisible(!0),
+            this.nWi(!1);
         }
       });
   }
@@ -112,24 +112,24 @@ class VisionSkinView extends UiViewBase_1.UiViewBase {
       [9, UE.UIButtonComponent],
     ]),
       (this.BtnBindInfo = [
-        [1, this.iji],
-        [4, this.oji],
-        [9, this.rji],
+        [1, this.eWi],
+        [4, this.tWi],
+        [9, this.iWi],
       ]);
   }
   OnStart() {
-    (this.ZHi = !1),
+    (this.Jji = !1),
       this.GetItem(2).SetUIActive(!1),
-      (this.i7i = UiSceneManager_1.UiSceneManager.GetVisionSkeletalHandle()),
-      (this.lHi = this.OpenParam);
+      (this.tHi = UiSceneManager_1.UiSceneManager.GetVisionSkeletalHandle()),
+      (this.aji = this.OpenParam);
     var i,
       t,
       e =
         ControllerHolder_1.ControllerHolder.PhantomBattleController.GetPhantomItemDataByUniqueId(
-          this.lHi,
+          this.aji,
         );
     e &&
-      ((this.Vli = e.GetConfig()?.MonsterId),
+      ((this.V1i = e.GetConfig()?.MonsterId),
       (this.lqe = new PopupCaptionItem_1.PopupCaptionItem(this.GetItem(0))),
       this.lqe.SetCloseCallBack(this.Awe),
       this.lqe.SetTitleByTextIdAndArgNew("VisionSkinTitleText"),
@@ -143,86 +143,86 @@ class VisionSkinView extends UiViewBase_1.UiViewBase {
         t,
       ),
       LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(5), i),
-      (this.JHi = new LoopScrollView_1.LoopScrollView(
+      (this.$ji = new LoopScrollView_1.LoopScrollView(
         this.GetLoopScrollViewComponent(6),
         this.GetItem(7).GetOwner(),
-        this.nji,
+        this.oWi,
       )),
-      (this.tji = e.SkinId));
+      (this.Zji = e.SkinId));
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnVisionSkinEquip,
-      this.hji,
+      this.sWi,
     );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnVisionSkinEquip,
-      this.hji,
+      this.sWi,
     );
   }
   OnBeforeShow() {
     const t =
       ModelManager_1.ModelManager.PhantomBattleModel.GetMonsterSkinListByMonsterId(
-        this.Vli,
+        this.V1i,
       );
     if (t) {
       let i = 0;
-      -1 === (i = this.tji ? t.indexOf(this.tji) : 0) && (i = 0),
-        this.JHi?.RefreshByData(t, !1, () => {
-          this.JHi?.SelectGridProxy(i),
-            (this.zHi = this.JHi?.UnsafeGetGridProxy(i)),
-            (this.eji = this.zHi?.GetItemGridExtendToggle()),
-            this.zHi?.SetCurrentEquipmentVisible(!0),
-            (this.YHi = t[i]),
-            (this.K6s = this.YHi);
+      -1 === (i = this.Zji ? t.indexOf(this.Zji) : 0) && (i = 0),
+        this.$ji?.RefreshByData(t, !1, () => {
+          this.$ji?.SelectGridProxy(i),
+            (this.Yji = this.$ji?.UnsafeGetGridProxy(i)),
+            (this.zji = this.Yji?.GetItemGridExtendToggle()),
+            this.Yji?.SetCurrentEquipmentVisible(!0),
+            (this.Xji = t[i]),
+            (this.$Xs = this.Xji);
         }),
-        this.sji(!1),
-        this.aji(!1);
+        this.rWi(!1),
+        this.nWi(!1);
     }
   }
-  u9i(i) {
-    this.YHi === i
-      ? this.E7i()
-      : (this.y7i(),
+  _7i(i) {
+    this.Xji === i
+      ? this.EHi()
+      : (this.SHi(),
         ControllerHolder_1.ControllerHolder.PhantomBattleController.SetMeshShow(
           i,
           () => {
-            this.E7i();
+            this.EHi();
           },
-          this.i7i,
+          this.tHi,
           !1,
         ),
-        (this.YHi = i));
+        (this.Xji = i));
   }
-  E7i() {
+  EHi() {
     var i;
-    this.i7i &&
-      ((i = this.i7i.Model),
+    this.tHi &&
+      ((i = this.tHi.Model),
       UiModelUtil_1.UiModelUtil.PlayEffectOnRoot(i, "VisionLevelUpEffect"),
       UiModelUtil_1.UiModelUtil.SetRenderingMaterial(
         i,
         "VisionStepupController",
       ));
   }
-  y7i() {
+  SHi() {
     UiSceneManager_1.UiSceneManager.HasVisionSkeletalHandle() ||
       UiSceneManager_1.UiSceneManager.InitVisionSkeletalHandle(),
-      (this.i7i = UiSceneManager_1.UiSceneManager.GetVisionSkeletalHandle());
+      (this.tHi = UiSceneManager_1.UiSceneManager.GetVisionSkeletalHandle());
   }
-  sji(i) {
+  rWi(i) {
     this.GetItem(8)?.SetUIActive(i),
       this.GetButton(9)?.RootUIComp.SetUIActive(i),
       this.GetButton(4)?.RootUIComp.SetUIActive(!i);
   }
-  aji(i) {
+  nWi(i) {
     this.GetButton(4)?.SetSelfInteractive(i);
   }
   OnAfterDestroy() {
     EventSystem_1.EventSystem.Emit(
       EventDefine_1.EEventName.VisionSkinViewClose,
-      this.YHi !== this.K6s,
+      this.Xji !== this.$Xs,
     );
   }
 }

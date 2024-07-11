@@ -11,7 +11,7 @@ class ConsumeItem extends GridProxyAbstract_1.GridProxyAbstract {
       (this.BelongView = s),
       (this.Data = void 0),
       (this.ButtonFunction = void 0),
-      (this.j7e = () => {
+      (this.ije = () => {
         this.ButtonFunction &&
           this.ButtonFunction(this.Data?.IncId, this.Data?.ItemId);
       }),
@@ -30,7 +30,7 @@ class ConsumeItem extends GridProxyAbstract_1.GridProxyAbstract {
       [8, UE.UIText],
       [9, UE.UIButtonComponent],
     ]),
-      (this.BtnBindInfo = [[9, this.j7e]]);
+      (this.BtnBindInfo = [[9, this.ije]]);
   }
   SetIconState() {
     var t = ModelManager_1.ModelManager.InventoryModel.GetItemDataBase(

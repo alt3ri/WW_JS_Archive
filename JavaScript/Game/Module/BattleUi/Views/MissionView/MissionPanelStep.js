@@ -2,49 +2,50 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MissionPanelStep = void 0);
 const ue_1 = require("ue"),
+  CustomPromise_1 = require("../../../../../Core/Common/CustomPromise"),
+  Log_1 = require("../../../../../Core/Common/Log"),
+  StringUtils_1 = require("../../../../../Core/Utils/StringUtils"),
+  IQuest_1 = require("../../../../../UniverseEditor/Interface/IQuest"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  PublicUtil_1 = require("../../../../Common/PublicUtil"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  LevelSequencePlayer_1 = require("../../../Common/LevelSequencePlayer"),
   GeneralLogicTreeDefine_1 = require("../../../GeneralLogicTree/Define/GeneralLogicTreeDefine"),
   TreeStepBase_1 = require("../../../GeneralLogicTree/View/TreeStep/TreeStepBase"),
   LguiUtil_1 = require("../../../Util/LguiUtil"),
-  MissionPanelChildStep_1 = require("./MissionPanelChildStep"),
-  ModelManager_1 = require("../../../../Manager/ModelManager"),
-  LevelSequencePlayer_1 = require("../../../Common/LevelSequencePlayer"),
-  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
-  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
-  CustomPromise_1 = require("../../../../../Core/Common/CustomPromise"),
-  PublicUtil_1 = require("../../../../Common/PublicUtil"),
-  StringUtils_1 = require("../../../../../Core/Utils/StringUtils"),
-  IQuest_1 = require("../../../../../UniverseEditor/Interface/IQuest");
+  MissionPanelChildStep_1 = require("./MissionPanelChildStep");
 class MissionPanelStep extends TreeStepBase_1.TreeStepBase {
   constructor() {
     super(...arguments),
-      (this.But = void 0),
-      (this.but = []),
+      (this.Kct = void 0),
+      (this.Qct = []),
       (this.TitleSequencePlayer = void 0),
-      (this.G_t = 0),
-      (this.gAn = void 0),
+      (this.Zut = 0),
+      (this.Sxn = void 0),
       (this.PlayStartSequence = (e, i, t) => {
         return (
-          (this.G_t = e),
-          this.Kbn(i, t),
-          this.fAn()
+          (this.Zut = e),
+          this.KOn(i, t),
+          this.Exn()
             ? (this.TitleSequencePlayer.StopCurrentSequence(!0, !0),
               this.TitleSequencePlayer.PlayLevelSequenceByName("Start"),
               "Disabled" !==
                 ModelManager_1.ModelManager.AutoRunModel.GetAutoRunMode() &&
                 this.TitleSequencePlayer.StopCurrentSequence(!0, !0),
               !1)
-            : (this.SetUiActive(!0), this.pAn(this.G_t))
+            : (this.SetUiActive(!0), this.yxn(this.Zut))
         );
       }),
-      (this.hut = () => {
-        this.G_t &&
+      (this.Ict = () => {
+        this.Zut &&
           (EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.MissionPanelProcessEnd,
-            this.G_t,
+            this.Zut,
           ),
-          (this.G_t = 0));
+          (this.Zut = 0));
       }),
-      (this.ZPt = (e) => {
+      (this.owt = (e) => {
         switch (e) {
           case "Start":
             this.SetUiActive(!0);
@@ -57,10 +58,10 @@ class MissionPanelStep extends TreeStepBase_1.TreeStepBase {
             );
         }
       }),
-      (this.aut = (e) => {
+      (this.yct = (e) => {
         switch (e) {
           case "Start":
-            this.pAn(this.G_t);
+            this.yxn(this.Zut);
             break;
           case "Close":
           case "Finish":
@@ -68,7 +69,7 @@ class MissionPanelStep extends TreeStepBase_1.TreeStepBase {
               EventDefine_1.EEventName.MissionPanelStepTitleAnimEnd,
               this.TreeIncId,
             ),
-              this.gAn ? this.gAn() : this.hut();
+              this.Sxn ? this.Sxn() : this.Ict();
         }
       });
   }
@@ -84,20 +85,20 @@ class MissionPanelStep extends TreeStepBase_1.TreeStepBase {
         (e.SetUIActive(!0),
         (this.TitleSequencePlayer =
           new LevelSequencePlayer_1.LevelSequencePlayer(e)),
-        this.TitleSequencePlayer.BindSequenceStartEvent(this.ZPt),
-        this.TitleSequencePlayer.BindSequenceCloseEvent(this.aut),
+        this.TitleSequencePlayer.BindSequenceStartEvent(this.owt),
+        this.TitleSequencePlayer.BindSequenceCloseEvent(this.yct),
         this.GetItem(2)),
       i = new MissionPanelChildStep_1.MissionPanelChildStep();
-    i.SetRootActor(e.GetOwner(), !0), this.but.push(i), e?.SetUIActive(!1);
+    i.SetRootActor(e.GetOwner(), !0), this.Qct.push(i), e?.SetUIActive(!1);
   }
   Dispose() {
-    if ((super.Dispose(), this.but)) for (const e of this.but) e.Dispose();
+    if ((super.Dispose(), this.Qct)) for (const e of this.Qct) e.Dispose();
     this.TitleSequencePlayer?.Clear(), (this.TitleSequencePlayer = void 0);
   }
   PlayCloseSequence(e) {
-    if (!this.fAn()) return e(), !0;
-    (this.gAn = e), this.TitleSequencePlayer.StopCurrentSequence(!0, !0);
-    (e = this.j4s() ? "Finish" : "Close"),
+    if (!this.Exn()) return e(), !0;
+    (this.Sxn = e), this.TitleSequencePlayer.StopCurrentSequence(!0, !0);
+    (e = this.$Hs() ? "Finish" : "Close"),
       this.TitleSequencePlayer.PlayLevelSequenceByName(e),
       (e =
         "Disabled" !==
@@ -112,96 +113,112 @@ class MissionPanelStep extends TreeStepBase_1.TreeStepBase {
     this.TitleSequencePlayer.GetCurrentSequence() &&
       this.TitleSequencePlayer.ResumeSequence();
   }
-  async ExecuteSequenceOnUpdate(e, i, t) {
-    this.G_t = e;
-    var s = this.But,
-      r = i.TrackTextConfig;
+  async ExecuteSequenceOnUpdate(i, t, s) {
+    this.Zut = i;
+    var r = this.Kct,
+      n = t.TrackTextConfig;
     if (
-      (0, GeneralLogicTreeDefine_1.CheckMainTitleSame)(s.MainTitle, r.MainTitle)
+      (0, GeneralLogicTreeDefine_1.checkMainTitleSame)(r.MainTitle, n.MainTitle)
     )
       return (
-        await this.Qbn(0, s.SubTitles),
-        t(),
-        this.Kbn(i.TreeIncId, r),
-        this.pAn(this.G_t)
+        await this.QOn(0, r.SubTitles),
+        s(),
+        this.KOn(t.TreeIncId, n),
+        this.yxn(this.Zut)
       );
-    await this.Qbn(0, s.SubTitles);
-    s = PublicUtil_1.PublicUtil.GetConfigTextByKey(s.MainTitle?.TidTitle ?? "");
-    if (!StringUtils_1.StringUtils.IsBlank(s)) {
-      const h = new CustomPromise_1.CustomPromise();
-      this.PlayCloseSequence(() => {
-        h.SetResult(!0);
-      }),
-        await h.Promise;
+    {
+      await this.QOn(0, r.SubTitles);
+      r = r.MainTitle;
+      let e = void 0;
+      if (
+        (r &&
+          (StringUtils_1.StringUtils.IsBlank(r.TidTitle)
+            ? Log_1.Log.CheckError() &&
+              Log_1.Log.Error(
+                "Quest",
+                19,
+                "找不到任务主标题文本配置",
+                ["treeConfigId", t.TreeConfigId],
+                ["nextMainTitle", t.TrackTextConfig?.MainTitle],
+              )
+            : (e = PublicUtil_1.PublicUtil.GetConfigTextByKey(r.TidTitle))),
+        e && !StringUtils_1.StringUtils.IsBlank(e))
+      ) {
+        const h = new CustomPromise_1.CustomPromise();
+        this.PlayCloseSequence(() => {
+          h.SetResult(!0);
+        }),
+          await h.Promise;
+      }
+      return s(), this.PlayStartSequence(i, t.TreeIncId, n);
     }
-    return t(), this.PlayStartSequence(e, i.TreeIncId, r);
   }
-  pAn(i) {
-    this.qut();
-    var t = this.But?.SubTitles;
-    if (!t?.length) return this.hut(), !0;
-    for (let e = 0; e < t.length; e++) this.but[e].PlayStartSequence(i);
+  yxn(i) {
+    this.Xct();
+    var t = this.Kct?.SubTitles;
+    if (!t?.length) return this.Ict(), !0;
+    for (let e = 0; e < t.length; e++) this.Qct[e].PlayStartSequence(i);
     return !1;
   }
-  async Qbn(t, s) {
+  async QOn(t, s) {
     if (s?.length) {
       let i = 0;
       const r = new CustomPromise_1.CustomPromise();
       for (let e = 0; e < s.length; e++)
-        this.but[e].PlayCloseSequence(t, () => {
+        this.Qct[e].PlayCloseSequence(t, () => {
           ++i === s.length && r.SetResult(!0);
         });
       await r.Promise;
     }
   }
   Update(e, i) {
-    this.Kbn(e, i), this.qut();
+    this.KOn(e, i), this.Xct();
   }
-  Kbn(e, i) {
-    (this.But = i), this.UpdateData(e, this.But?.MainTitle);
+  KOn(e, i) {
+    (this.Kct = i), this.UpdateData(e, this.Kct?.MainTitle);
   }
-  qut() {
+  Xct() {
     const r = this.GetItem(2);
     if (r) {
-      const t = this.But;
+      const t = this.Kct;
       if (t && t.SubTitles) {
         let s = 0;
         t.SubTitles.forEach((e) => {
           let i = void 0;
           var t;
-          this.but.length > s
-            ? (i = this.but[s])
+          this.Qct.length > s
+            ? (i = this.Qct[s])
             : ((t = LguiUtil_1.LguiUtil.CopyItem(r, r.GetParentAsUIItem())),
               (i =
                 new MissionPanelChildStep_1.MissionPanelChildStep()).SetRootActor(
                 t.GetOwner(),
                 !0,
               ),
-              this.but.push(i)),
+              this.Qct.push(i)),
             i.UpdateData(this.TreeIncId, e),
             s++;
         }),
-          this.but.forEach((e, i) => {
+          this.Qct.forEach((e, i) => {
             e.DisableUi(i < t.SubTitles.length);
           });
       } else
-        this.but.forEach((e, i) => {
+        this.Qct.forEach((e, i) => {
           e.DisableUi(!1);
         });
     }
   }
-  fAn() {
+  Exn() {
     var e;
     return (
-      void 0 !== this.But?.MainTitle &&
+      void 0 !== this.Kct?.MainTitle &&
       ((e = PublicUtil_1.PublicUtil.GetConfigTextByKey(
-        this.But?.MainTitle.TidTitle,
+        this.Kct?.MainTitle.TidTitle,
       )),
       !StringUtils_1.StringUtils.IsBlank(e))
     );
   }
-  j4s() {
-    var e = this.But?.MainTitle?.QuestScheduleType;
+  $Hs() {
+    var e = this.Kct?.MainTitle?.QuestScheduleType;
     if (e && e.Type === IQuest_1.EQuestScheduleType.ChildQuestCompleted) {
       var i = ModelManager_1.ModelManager.GeneralLogicTreeModel.GetBehaviorTree(
         this.TreeIncId,

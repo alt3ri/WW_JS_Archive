@@ -43,10 +43,11 @@ class JankStatisticsCycle {
   (JankStatisticsCycle.T3i = 0);
 class OperationsPerformance {
   static Init() {
-    EventSystem_1.EventSystem.Add(
-      EventDefine_1.EEventName.WorldDone,
-      OperationsPerformance.Ao,
-    ),
+    PerformanceConfig_1.OPERATIONS_IS_OPEM &&
+      (EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.WorldDone,
+        OperationsPerformance.Ao,
+      ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.TeleportComplete,
         OperationsPerformance.Ao,
@@ -65,7 +66,7 @@ class OperationsPerformance {
       (OperationsPerformance.R3i = ue_1.KuroStaticLibrary.GetTotalMemoryGB()),
       (OperationsPerformance.U3i =
         ue_1.KuroStaticLibrary.GetAvailableVirtualGB()),
-      (OperationsPerformance.A3i = ue_1.KuroStaticLibrary.GetBatteryLevel());
+      (OperationsPerformance.A3i = ue_1.KuroStaticLibrary.GetBatteryLevel()));
   }
   static P3i() {
     TickSystem_1.TickSystem.Add(this.Tick, "OperationsPerformance.Tick", 2, !0);
@@ -371,7 +372,7 @@ class OperationsPerformance {
         (OperationsPerformance.G3i =
           new CollectionDataInfo_1.CollectionDataInfo()),
         OperationsPerformance.P3i(),
-        UE.ThinkingAnalytics.ToggleSampleCPUFrequency(!0, 1),
+        UE.ThinkingAnalytics.ToggleSampleCPUFrequency(!0, 5),
         Log_1.Log.CheckWarn()) &&
         Log_1.Log.Warn("Performance", 10, "OperationsPerformance.Open", [
           "OperationsPerformance.IsOpen",
@@ -430,7 +431,7 @@ class OperationsPerformance {
       (OperationsPerformance.e4i =
         ModelManager_1.ModelManager.TimeOfDayModel.GameTime.HourMinuteString),
       OperationsPerformance.W3i(),
-      UE.ThinkingAnalytics.ToggleSampleCPUFrequency(!0, 1));
+      UE.ThinkingAnalytics.ToggleSampleCPUFrequency(!0, 5));
   }),
   (OperationsPerformance.i4i = (e) => {
     OperationsPerformance.x3i();

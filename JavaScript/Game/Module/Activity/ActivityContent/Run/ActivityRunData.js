@@ -12,24 +12,24 @@ const Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
   ACTIVITYSELECTCACHEKEY = -256;
 class ActivityRun extends ActivityData_1.ActivityBaseData {
   constructor() {
-    super(...arguments), (this.y2e = new Map()), (this.I2e = new Array());
+    super(...arguments), (this.OFe = new Map()), (this.kFe = new Array());
   }
   PhraseEx(i) {
-    (this.I2e = new Array()),
-      i.d0s.WCs.forEach((t) => {
+    (this.kFe = new Array()),
+      i.Aps.aps.forEach((t) => {
         var e =
           ModelManager_1.ModelManager.ActivityRunModel.CreateActivityRunData(
-            i.Ekn,
-            t._3n,
+            i.J4n,
+            t.W6n,
           );
-        e.Phrase(t), this.I2e.push(e), this.y2e.set(t._3n, i.Ekn);
+        e.Phrase(t), this.kFe.push(e), this.OFe.set(t.W6n, i.J4n);
       });
   }
   GetChallengeActivityId(t) {
-    return this.y2e.get(t);
+    return this.OFe.get(t);
   }
   GetChallengeDataArray() {
-    return this.I2e;
+    return this.kFe;
   }
   SetActivityContentIndex(t) {
     ModelManager_1.ModelManager.ActivityModel.SaveActivityData(
@@ -50,17 +50,17 @@ class ActivityRun extends ActivityData_1.ActivityBaseData {
     );
   }
   GetExDataRedPointShowState() {
-    var e = this.I2e.length;
-    for (let t = 0; t < e; t++) if (this.I2e[t].GetRedPoint()) return !0;
+    var e = this.kFe.length;
+    for (let t = 0; t < e; t++) if (this.kFe[t].GetRedPoint()) return !0;
     return !1;
   }
   NeedSelfControlFirstRedPoint() {
     return !1;
   }
   IfAllFinish() {
-    var e = this.I2e.length;
+    var e = this.kFe.length;
     for (let t = 0; t < e; t++)
-      if (!this.I2e[t].GetIfRewardAllFinished()) return !1;
+      if (!this.kFe[t].GetIfRewardAllFinished()) return !1;
     return !0;
   }
 }
@@ -68,19 +68,19 @@ exports.ActivityRun = ActivityRun;
 class ActivityRunData extends ActivityData_1.ActivityExData {
   constructor() {
     super(...arguments),
-      (this.T2e = 0),
-      (this.L2e = new Array()),
+      (this.FFe = 0),
+      (this.VFe = new Array()),
       (this.xte = 0),
       (this.pne = 0),
-      (this.D2e = 0),
+      (this.HFe = 0),
       (this.Cce = -0),
-      (this.R2e = !1),
-      (this.U2e = -0),
-      (this.A2e = -0),
-      (this.P2e = void 0);
+      (this.jFe = !1),
+      (this.WFe = -0),
+      (this.KFe = -0),
+      (this.QFe = void 0);
   }
   get Id() {
-    return this.T2e;
+    return this.FFe;
   }
   GetMaxScore() {
     return this.xte;
@@ -91,29 +91,29 @@ class ActivityRunData extends ActivityData_1.ActivityExData {
   GetRedPoint() {
     return !(
       !this.GetIsShow() ||
-      (!this.GetChallengeNewLocalRedPoint() && !this.x2e())
+      (!this.GetChallengeNewLocalRedPoint() && !this.XFe())
     );
   }
   GetScoreArray() {
     const e = new Array();
     return (
-      this.P2e.forEach((t) => {
+      this.QFe.forEach((t) => {
         e.push(t[0]);
       }),
       e
     );
   }
   GetScoreIndexScore(t) {
-    t = this.P2e.get(t);
+    t = this.QFe.get(t);
     return t ? t[0] : 0;
   }
   GetScoreIndexPreviewItem(e) {
-    var i = Array.from(this.P2e.keys()),
+    var i = Array.from(this.QFe.keys()),
       r = i.length;
     let n = 0;
     for (let t = 0; t < r; t++)
       if (i[t] === e) {
-        var s = this.P2e.get(i[t]);
+        var s = this.QFe.get(i[t]);
         n = s[1];
         break;
       }
@@ -130,57 +130,57 @@ class ActivityRunData extends ActivityData_1.ActivityExData {
     return a;
   }
   GetScoreIndex(e) {
-    var i = Array.from(this.P2e.keys()).length;
-    for (let t = 0; t < i; t++) if (e === this.P2e.get(t)?.[0]) return t;
+    var i = Array.from(this.QFe.keys()).length;
+    for (let t = 0; t < i; t++) if (e === this.QFe.get(t)?.[0]) return t;
     return 0;
   }
   GetScoreIndexCannotGetReward(t) {
     var e,
-      i = Array.from(this.P2e.keys());
+      i = Array.from(this.QFe.keys());
     let r = 0;
     return (
-      this.P2e.get(t) && ((e = this.P2e.get(t)), (r = e[0])),
-      this.xte >= r ? (this.L2e.includes(i[t]) ? 2 : 1) : 0
+      this.QFe.get(t) && ((e = this.QFe.get(t)), (r = e[0])),
+      this.xte >= r ? (this.VFe.includes(i[t]) ? 2 : 1) : 0
     );
   }
-  x2e() {
-    var e = Array.from(this.P2e.keys()).length;
+  XFe() {
+    var e = Array.from(this.QFe.keys()).length;
     for (let t = 0; t < e; t++)
       if (1 === this.GetScoreIndexCannotGetReward(t)) return !0;
     return !1;
   }
   GetIfRewardAllFinished() {
-    var e = Array.from(this.P2e.keys()).length;
+    var e = Array.from(this.QFe.keys()).length;
     for (let t = 0; t < e; t++)
       if (2 !== this.GetScoreIndexCannotGetReward(t)) return !1;
     return !0;
   }
   GetTitle() {
     return ConfigManager_1.ConfigManager.ActivityRunConfig.GetActivityRunTitle(
-      this.T2e,
+      this.FFe,
     );
   }
   GetMarkId() {
     return ConfigManager_1.ConfigManager.ActivityRunConfig.GetActivityRunMarkId(
-      this.T2e,
+      this.FFe,
     );
   }
   GetBackgroundTexturePath() {
     return ConfigManager_1.ConfigManager.ActivityRunConfig.GetActivityRunTexture(
-      this.T2e,
+      this.FFe,
     );
   }
   SetChallengeLocalRedPointState(t) {
     ModelManager_1.ModelManager.ActivityModel.SaveActivityData(
       this.ActivityId,
-      this.T2e,
+      this.FFe,
       0,
       0,
       t ? 1 : 0,
     ),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.RefreshRunActivityRedDot,
-        this.T2e,
+        this.FFe,
       ),
       this.RefreshActivityRedPoint();
   }
@@ -190,30 +190,30 @@ class ActivityRunData extends ActivityData_1.ActivityExData {
       ModelManager_1.ModelManager.ActivityModel.GetActivityCacheData(
         this.ActivityId,
         1,
-        this.T2e,
+        this.FFe,
         0,
         0,
       )
     );
   }
   GetIsShow() {
-    return !(!this.R2e || !this.CheckIfInShowTime());
+    return !(!this.jFe || !this.CheckIfInShowTime());
   }
   SetIsOpen(t) {
-    this.R2e = t;
+    this.jFe = t;
   }
   get BeginOpenTime() {
-    return this.U2e;
+    return this.WFe;
   }
   get EndOpenTime() {
-    return this.A2e;
+    return this.KFe;
   }
   OnGetScoreReward(t) {
-    this.L2e.includes(t) ||
-      (this.L2e.push(t),
+    this.VFe.includes(t) ||
+      (this.VFe.push(t),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.RefreshRunActivityRedDot,
-        this.T2e,
+        this.FFe,
       ),
       this.RefreshActivityRedPoint());
   }
@@ -226,37 +226,37 @@ class ActivityRunData extends ActivityData_1.ActivityExData {
     );
   }
   OnChallengeEnd(t) {
-    (this.D2e = t.J0s),
-      (this.Cce = t.Skn),
-      this.D2e > this.xte && (this.xte = this.D2e),
+    (this.HFe = t.mMs),
+      (this.Cce = t.Y4n),
+      this.HFe > this.xte && (this.xte = this.HFe),
       (this.Cce < this.pne || 0 === this.pne) && (this.pne = this.Cce),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.RefreshRunActivityRedDot,
-        this.T2e,
+        this.FFe,
       ),
       this.RefreshActivityRedPoint();
   }
   Phrase(t) {
-    t instanceof Protocol_1.Aki.Protocol.KNs
-      ? ((this.T2e = t._3n),
-        (this.L2e = []),
-        t.PPs.forEach((t) => {
-          this.L2e.push(t);
+    t instanceof Protocol_1.Aki.Protocol.q6s
+      ? ((this.FFe = t.W6n),
+        (this.VFe = []),
+        t.Ybs.forEach((t) => {
+          this.VFe.push(t);
         }),
-        (this.xte = t.DPs),
-        (this.pne = t.APs))
-      : t instanceof Protocol_1.Aki.Protocol.fBs &&
-        ((this.T2e = t._3n),
-        (this.U2e = Number(MathUtils_1.MathUtils.LongToBigInt(t.HCs))),
-        (this.A2e = Number(MathUtils_1.MathUtils.LongToBigInt(t.jCs)))),
-      this.P2e ||
-        (this.P2e =
+        (this.xte = t.Qbs),
+        (this.pne = t.Xbs))
+      : t instanceof Protocol_1.Aki.Protocol.nks &&
+        ((this.FFe = t.W6n),
+        (this.WFe = Number(MathUtils_1.MathUtils.LongToBigInt(t.nps))),
+        (this.KFe = Number(MathUtils_1.MathUtils.LongToBigInt(t.sps)))),
+      this.QFe ||
+        (this.QFe =
           ConfigManager_1.ConfigManager.ActivityRunConfig.GetActivityRunScoreMap(
-            this.T2e,
+            this.FFe,
           )),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.RefreshRunActivityRedDot,
-        this.T2e,
+        this.FFe,
       ),
       this.RefreshActivityRedPoint();
   }

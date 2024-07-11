@@ -14,15 +14,15 @@ class PhantomAttrItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
       (this.AffixEntry = void 0),
-      (this.Mhi = void 0),
-      (this.hao = void 0),
-      (this.EPe = void 0),
-      (this.jhi = () => {
+      (this.Mli = void 0),
+      (this.rho = void 0),
+      (this.SPe = void 0),
+      (this.jli = () => {
         return new ElementItem_1.ElementItem();
       });
   }
   Update(e) {
-    (this.AffixEntry = e), this.PWt();
+    (this.AffixEntry = e), this.PKt();
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -38,23 +38,23 @@ class PhantomAttrItem extends GridProxyAbstract_1.GridProxyAbstract {
     ];
   }
   OnStart() {
-    this.EPe = new LevelSequencePlayer_1.LevelSequencePlayer(
+    this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(
       this.GetRootItem(),
     );
   }
   Refresh(e, t, i) {
     this.Update(e);
   }
-  PWt() {
-    this.lao(), this._ao(), this.o3e(), this.OPt();
+  PKt() {
+    this.nho(), this.sho(), this.v4e(), this.Hxt();
   }
-  lao() {
+  nho() {
     var e = ModelManager_1.ModelManager.RoguelikeModel.RogueInfo.GetIsUnlock(
       this.AffixEntry,
     );
     this.GetSprite(3).SetUIActive(e), this.GetSprite(4).SetUIActive(!e);
   }
-  _ao() {
+  sho() {
     var e,
       t,
       i,
@@ -87,7 +87,7 @@ class PhantomAttrItem extends GridProxyAbstract_1.GridProxyAbstract {
             ...r.AffixDescParam,
           )));
   }
-  o3e() {
+  v4e() {
     var e = this.GetText(0),
       e = e.GetTextRenderSize().X < e.Width,
       t = this.GetHorizontalLayout(1).GetRootComponent().GetParentAsUIItem(),
@@ -99,25 +99,25 @@ class PhantomAttrItem extends GridProxyAbstract_1.GridProxyAbstract {
     r.SetTargetActor(s),
       t.SetUIActive(e),
       i.SetUIActive(!e),
-      void 0 === this.Mhi &&
-        (this.Mhi = new GenericLayout_1.GenericLayout(
+      void 0 === this.Mli &&
+        (this.Mli = new GenericLayout_1.GenericLayout(
           this.GetHorizontalLayout(1),
-          this.jhi,
+          this.jli,
           void 0,
         )),
-      void 0 === this.hao &&
-        (this.hao = new GenericLayout_1.GenericLayout(
+      void 0 === this.rho &&
+        (this.rho = new GenericLayout_1.GenericLayout(
           this.GetHorizontalLayout(8),
-          this.jhi,
+          this.jli,
           this.GetItem(2)?.GetOwner(),
         ));
   }
-  OPt() {
+  Hxt() {
     var e = this.AffixEntry.GetSortElementInfoArrayByCount();
-    this.Mhi?.RefreshByData(e), this.hao?.RefreshByData(e);
+    this.Mli?.RefreshByData(e), this.rho?.RefreshByData(e);
   }
   PlayComplete() {
-    this.EPe.PlayLevelSequenceByName(RoguelikeDefine_1.COMPLETE);
+    this.SPe.PlayLevelSequenceByName(RoguelikeDefine_1.COMPLETE);
   }
 }
 exports.PhantomAttrItem = PhantomAttrItem;

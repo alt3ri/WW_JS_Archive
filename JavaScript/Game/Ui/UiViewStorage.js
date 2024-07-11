@@ -9,13 +9,13 @@ class UiTsInfo {
 }
 class UiViewStorage {
   static GetUiTsInfo(e) {
-    return UiViewStorage.uCr.get(e);
+    return UiViewStorage.hgr.get(e);
   }
   static RegisterUiTsInfo(e) {
     for (const r of e) {
       var o = r[0];
       try {
-        UiViewStorage.uCr.set(o, {
+        UiViewStorage.hgr.set(o, {
           Ctor: r[1],
           ResourceId: r[2],
           SourceType: r[3] ?? 0,
@@ -44,5 +44,5 @@ class UiViewStorage {
     }
   }
 }
-(exports.UiViewStorage = UiViewStorage).uCr = new Map();
+(exports.UiViewStorage = UiViewStorage).hgr = new Map();
 //# sourceMappingURL=UiViewStorage.js.map

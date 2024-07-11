@@ -16,25 +16,25 @@ const UE = require("ue"),
 class DailyActivityRewardPanel extends UiPanelBase_1.UiPanelBase {
   constructor(t) {
     super(),
-      (this.DFe = void 0),
-      (this.ekt = void 0),
+      (this.H3e = void 0),
+      (this.t2t = void 0),
       (this.qte = 0),
       (this.BY = 0),
-      (this.tkt = 0),
-      (this.ikt = 0),
-      (this.okt = !1),
-      (this.rkt = -0),
-      (this.nkt = []),
-      (this.skt = []),
-      (this.akt = 0),
-      (this.hkt = 0),
-      (this.lkt = 0),
-      (this._kt = 0),
-      (this.ukt = 0),
-      (this.ckt = (t) => {
+      (this.i2t = 0),
+      (this.o2t = 0),
+      (this.r2t = !1),
+      (this.n2t = -0),
+      (this.s2t = []),
+      (this.a2t = []),
+      (this.h2t = 0),
+      (this.l2t = 0),
+      (this._2t = 0),
+      (this.u2t = 0),
+      (this.c2t = 0),
+      (this.m2t = (t) => {
         for (const i of t) this.sqe(i);
       }),
-      (this.mkt = () => {
+      (this.d2t = () => {
         var t = this.GetSprite(2),
           i = this.GetItem(1),
           s = this.GetItem(5),
@@ -59,100 +59,100 @@ class DailyActivityRewardPanel extends UiPanelBase_1.UiPanelBase {
     ];
   }
   OnStart() {
-    this.DFe = new GenericLayout_1.GenericLayout(
+    this.H3e = new GenericLayout_1.GenericLayout(
       this.GetHorizontalLayout(3),
-      this.mkt,
+      this.d2t,
     );
     var t = this.GetItem(0);
-    (this.hkt = t.GetWidth()),
-      (this.ekt = this.GetItem(0)),
+    (this.l2t = t.GetWidth()),
+      (this.t2t = this.GetItem(0)),
       this.AddEventListener();
   }
   OnBeforeDestroy() {
-    (this.ekt = void 0), (this.nkt = void 0), this.RemoveEventListener();
+    (this.t2t = void 0), (this.s2t = void 0), this.RemoveEventListener();
   }
   AddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.DailyActivityRewardTake,
-      this.ckt,
+      this.m2t,
     );
   }
   RemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.DailyActivityRewardTake,
-      this.ckt,
+      this.m2t,
     );
   }
   Init() {
     var t = ModelManager_1.ModelManager.DailyActivityModel,
       i = t.DailyActivityGoalMap,
       s = ((this.qte = t.ActivityValue), (this.BY = t.ActivityMaxValue), []);
-    this.akt = 0;
-    for (const e of i.values()) 2 !== e.State && this.akt++, s.push(e.Id);
-    (this.ukt = s.length),
-      this.ukt <= 0 ||
-        ((this.skt = s),
-        this.DFe.RefreshByData(s),
+    this.h2t = 0;
+    for (const e of i.values()) 2 !== e.State && this.h2t++, s.push(e.Id);
+    (this.c2t = s.length),
+      this.c2t <= 0 ||
+        ((this.a2t = s),
+        this.H3e.RefreshByData(s),
         this.GetSprite(2).SetUIActive(!1),
         this.GetSprite(6).SetUIActive(!1),
-        (this.lkt = REWARD_WIDTH),
-        (this._kt = (this.hkt - this.lkt * (this.ukt - 1)) / this.ukt),
-        this.dkt(this.qte / this.BY));
+        (this._2t = REWARD_WIDTH),
+        (this.u2t = (this.l2t - this._2t * (this.c2t - 1)) / this.c2t),
+        this.C2t(this.qte / this.BY));
   }
   GetRewardItemByIndex(t) {
-    return this.DFe.GetItemByIndex(t);
+    return this.H3e.GetItemByIndex(t);
   }
-  Ckt() {
+  g2t() {
     let t = 0;
-    for (const i of this.DFe.GetLayoutItemList())
+    for (const i of this.H3e.GetLayoutItemList())
       i.RefreshSelf(), 2 !== i.DailyActiveState && t++;
-    this.akt = t;
+    this.h2t = t;
   }
   sqe(t) {
-    t = this.skt.indexOf(t);
-    t < 0 || this.DFe.GetLayoutItemList()[t].RefreshSelf();
+    t = this.a2t.indexOf(t);
+    t < 0 || this.H3e.GetLayoutItemList()[t].RefreshSelf();
   }
-  gkt(t) {
+  f2t(t) {
     var i;
-    0 !== this.nkt.length &&
-      (i = this.nkt[0])[0] <= t &&
-      (this.sqe(i[1]), this.nkt.shift(), this.akt++);
+    0 !== this.s2t.length &&
+      (i = this.s2t[0])[0] <= t &&
+      (this.sqe(i[1]), this.s2t.shift(), this.h2t++);
   }
   OnTickRefresh(t) {
-    this.okt &&
-      ((this.rkt += t * TimeUtil_1.TimeUtil.Millisecond),
-      (t = MathUtils_1.MathUtils.Clamp(this.rkt / PROGRESS_ANIMATE_TIME, 0, 1)),
-      (this.qte = MathUtils_1.MathUtils.Lerp(this.ikt, this.tkt, t)),
+    this.r2t &&
+      ((this.n2t += t * TimeUtil_1.TimeUtil.Millisecond),
+      (t = MathUtils_1.MathUtils.Clamp(this.n2t / PROGRESS_ANIMATE_TIME, 0, 1)),
+      (this.qte = MathUtils_1.MathUtils.Lerp(this.o2t, this.i2t, t)),
       (t = MathUtils_1.MathUtils.Clamp(this.qte / this.BY, 0, 1)),
-      this.gkt(this.qte),
-      this.dkt(t),
-      this.qte === this.tkt) &&
-      this.fkt();
+      this.f2t(this.qte),
+      this.C2t(t),
+      this.qte === this.i2t) &&
+      this.p2t();
   }
-  dkt(t) {
-    var i = Math.min(this.akt, this.ukt - 1) * this.lkt,
-      t = this._kt * this.ukt * Math.min(t, 1),
-      i = this.hkt - i - t;
-    this.ekt.SetStretchRight(i);
+  C2t(t) {
+    var i = Math.min(this.h2t, this.c2t - 1) * this._2t,
+      t = this.u2t * this.c2t * Math.min(t, 1),
+      i = this.l2t - i - t;
+    this.t2t.SetStretchRight(i);
   }
-  pkt(t) {
-    (this.tkt = t), (this.ikt = this.qte), (this.rkt = 0), (this.okt = !0);
+  v2t(t) {
+    (this.i2t = t), (this.o2t = this.qte), (this.n2t = 0), (this.r2t = !0);
   }
-  fkt() {
-    (this.okt = !1), (this.qte = this.tkt);
-    var t = MathUtils_1.MathUtils.Clamp(this.tkt / this.BY, 0, 1);
-    this.Ckt(), this.dkt(t);
+  p2t() {
+    (this.r2t = !1), (this.qte = this.i2t);
+    var t = MathUtils_1.MathUtils.Clamp(this.i2t / this.BY, 0, 1);
+    this.g2t(), this.C2t(t);
   }
   RefreshProgressBarDynamic(s) {
     var t;
     s <= this.qte ||
-      (this.okt && this.fkt(),
+      (this.r2t && this.p2t(),
       (t = ModelManager_1.ModelManager.DailyActivityModel.DailyActivityGoalMap),
-      (this.nkt = []),
+      (this.s2t = []),
       t.forEach((t, i) => {
-        this.qte < t.Goal && t.Goal <= s && this.nkt.push([t.Goal, i]);
+        this.qte < t.Goal && t.Goal <= s && this.s2t.push([t.Goal, i]);
       }),
-      this.pkt(s));
+      this.v2t(s));
   }
 }
 exports.DailyActivityRewardPanel = DailyActivityRewardPanel;

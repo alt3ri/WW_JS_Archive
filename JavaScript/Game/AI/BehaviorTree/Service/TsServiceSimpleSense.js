@@ -24,7 +24,7 @@ class TsServiceSimpleSense extends UE.BTService_BlueprintBase {
           e = e.CharActorComp;
           if (e) {
             var e = e.Entity,
-              l = e.GetComponent(106);
+              l = e.GetComponent(108);
             if (l) {
               this.IsInit ||
                 ((this.IsInit = !0),

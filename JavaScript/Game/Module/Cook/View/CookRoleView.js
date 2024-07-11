@@ -12,34 +12,34 @@ const UE = require("ue"),
 class CookRoleView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.sGt = void 0),
-      (this.aGt = void 0),
-      (this.gIt = 0),
-      (this.hGt = 0),
-      (this.z9e = () => {
+      (this.hNt = void 0),
+      (this.lNt = void 0),
+      (this.ETt = 0),
+      (this._Nt = 0),
+      (this.cHe = () => {
         var e = new CookRoleItem_1.CookRoleItem();
-        return e.BindOnClickedCallback(this.lGt), e;
+        return e.BindOnClickedCallback(this.Tke), e;
       }),
-      (this._Gt = () => {
-        (this.aGt =
+      (this.uNt = () => {
+        (this.lNt =
           ModelManager_1.ModelManager.CookModel.GetCookRoleItemDataList(
-            this.gIt,
+            this.ETt,
           )),
-          this.sGt.ReloadData(this.aGt),
-          this.uGt();
+          this.hNt.ReloadData(this.lNt),
+          this.cNt();
       }),
-      (this.lGt = (e) => {
-        this.hGt = e;
+      (this.Tke = (e) => {
+        this._Nt = e;
         let t = 0;
         for (
-          this.sGt.DeselectCurrentGridProxy();
-          t < this.aGt.length && e !== this.aGt[t].RoleId;
+          this.hNt.DeselectCurrentGridProxy();
+          t < this.lNt.length && e !== this.lNt[t].RoleId;
           t++
         );
-        this.sGt.SelectGridProxy(t), this.sGt.RefreshGridProxy(t);
+        this.hNt.SelectGridProxy(t), this.hNt.RefreshGridProxy(t);
       }),
-      (this.dIt = () => {
-        (ModelManager_1.ModelManager.CookModel.CurrentCookRoleId = this.hGt),
+      (this.Mke = () => {
+        (ModelManager_1.ModelManager.CookModel.CurrentCookRoleId = this._Nt),
           this.CloseMe(),
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.CloseCookRole,
@@ -53,16 +53,16 @@ class CookRoleView extends UiViewBase_1.UiViewBase {
       [2, UE.UIButtonComponent],
       [3, UE.UIText],
     ]),
-      (this.BtnBindInfo = [[2, this.dIt]]);
+      (this.BtnBindInfo = [[2, this.Mke]]);
   }
   OnBeforeDestroy() {
-    this.sGt && (this.sGt.ClearGridProxies(), (this.sGt = void 0));
+    this.hNt && (this.hNt.ClearGridProxies(), (this.hNt = void 0));
   }
   OnStart() {
-    (this.sGt = new LoopScrollView_1.LoopScrollView(
+    (this.hNt = new LoopScrollView_1.LoopScrollView(
       this.GetLoopScrollViewComponent(0),
       this.GetItem(1).GetOwner(),
-      this.z9e,
+      this.cHe,
     )),
       LguiUtil_1.LguiUtil.SetLocalText(
         this.GetText(3),
@@ -80,18 +80,18 @@ class CookRoleView extends UiViewBase_1.UiViewBase {
   ShowView(e) {
     this.SetActive(!0),
       (ModelManager_1.ModelManager.CookModel.CurrentCookViewType = 2),
-      (this.gIt = e),
-      (this.hGt = ModelManager_1.ModelManager.CookModel.CurrentCookRoleId),
-      this._Gt();
+      (this.ETt = e),
+      (this._Nt = ModelManager_1.ModelManager.CookModel.CurrentCookRoleId),
+      this.uNt();
   }
-  uGt() {
+  cNt() {
     let e = 0;
     for (
-      this.sGt.DeselectCurrentGridProxy();
-      e < this.aGt.length && this.hGt !== this.aGt[e].RoleId;
+      this.hNt.DeselectCurrentGridProxy();
+      e < this.lNt.length && this._Nt !== this.lNt[e].RoleId;
       e++
     );
-    this.sGt.ScrollToGridIndex(e), this.sGt.SelectGridProxy(e);
+    this.hNt.ScrollToGridIndex(e), this.hNt.SelectGridProxy(e);
   }
 }
 exports.CookRoleView = CookRoleView;

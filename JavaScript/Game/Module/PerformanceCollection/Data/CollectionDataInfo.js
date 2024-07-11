@@ -4,58 +4,42 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const Log_1 = require("../../../../Core/Common/Log");
 class CollectionDataInfo {
   constructor() {
-    (this.p3i = void 0),
-      (this.v3i = void 0),
-      (this.M3i = void 0),
-      (this.S3i = void 0);
+    (this.Fke = 0), (this.p4i = 0), (this.v4i = 0), (this.M4i = 0);
   }
   get MaxValue() {
     return (
-      void 0 === this.p3i &&
-        Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Performance", 10, "尚未有数据，无法获取MaxValue"),
-      this.p3i
+      0 === this.v4i &&
+        Log_1.Log.CheckDebug() &&
+        Log_1.Log.Debug("Performance", 31, "尚未有数据，MaxValue无效"),
+      this.Fke
     );
   }
   get LastValue() {
     return (
-      void 0 === this.S3i &&
-        Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Performance", 10, "尚未有数据，无法获取LastValue"),
-      this.S3i
+      0 === this.v4i &&
+        Log_1.Log.CheckDebug() &&
+        Log_1.Log.Debug("Performance", 31, "尚未有数据，LastValue无效"),
+      this.M4i
     );
   }
   get Count() {
-    return (
-      void 0 === this.M3i &&
-        Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Performance", 10, "尚未有数据，无法获取Count"),
-      this.M3i
-    );
+    return this.v4i;
   }
-  AddValue(o) {
-    void 0 === o
-      ? Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Performance", 10, "AddValue 的值不能为undefined ！")
-      : (void 0 === this.M3i
-          ? ((this.M3i = 1), (this.v3i = o), (this.p3i = o))
-          : ((this.M3i += 1),
-            (this.v3i += o),
-            (this.p3i = this.p3i > o ? this.p3i : o)),
-        (this.S3i = o));
+  AddValue(t) {
+    0 === this.v4i
+      ? ((this.v4i = 1), (this.p4i = t), (this.Fke = t))
+      : ((this.v4i += 1), (this.p4i += t), (this.Fke = Math.max(this.Fke, t))),
+      (this.M4i = t);
   }
-  GetAvg(o = void 0) {
-    return void 0 === this.M3i
-      ? (Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("Performance", 10, "尚未有数据，无法获取平均值"),
-        o || void 0)
-      : this.v3i / this.M3i;
+  GetAvg(t) {
+    return 0 === this.v4i
+      ? (Log_1.Log.CheckDebug() &&
+          Log_1.Log.Debug("Performance", 31, "尚未有数据，平均值无效"),
+        t)
+      : this.p4i / this.v4i;
   }
   Clear() {
-    (this.p3i = void 0),
-      (this.v3i = void 0),
-      (this.M3i = void 0),
-      (this.S3i = void 0);
+    (this.Fke = 0), (this.p4i = 0), (this.v4i = 0), (this.M4i = 0);
   }
 }
 exports.CollectionDataInfo = CollectionDataInfo;

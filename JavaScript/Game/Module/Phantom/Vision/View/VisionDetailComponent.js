@@ -11,12 +11,12 @@ const UE = require("ue"),
 class VisionDetailComponent extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
-      (this.j6i = !1),
-      (this.zke = 0),
-      (this.W6i = void 0),
+      (this.H8i = !1),
+      (this.dFe = 0),
+      (this.j8i = void 0),
       (this.wqe = void 0),
-      (this.K6i = void 0),
-      (this.Q6i = void 0),
+      (this.W8i = void 0),
+      (this.K8i = void 0),
       (this.OnClickMainItem = () => {}),
       (this.wqe = e);
   }
@@ -30,53 +30,53 @@ class VisionDetailComponent extends UiPanelBase_1.UiPanelBase {
     ];
   }
   async OnBeforeStartAsync() {
-    (this.Q6i = new VisionDetailInfoComponent_1.VisionDetailInfoComponent(
+    (this.K8i = new VisionDetailInfoComponent_1.VisionDetailInfoComponent(
       this.GetItem(1),
     )),
-      await this.Q6i.Init();
+      await this.K8i.Init();
   }
   OnStart() {
-    (this.K6i = new VisionDetailUnderComponent_1.VisionDetailUnderComponent(
+    (this.W8i = new VisionDetailUnderComponent_1.VisionDetailUnderComponent(
       this.GetItem(0),
     )),
-      this.Q6i.SetClickCallBack(this.OnClickMainItem);
+      this.K8i.SetClickCallBack(this.OnClickMainItem);
   }
   GetTxtItemByIndex(e) {
-    return this.Q6i?.GetTxtItemByIndex(e);
+    return this.K8i?.GetTxtItemByIndex(e);
   }
   SetUnderLeftButtonText(e) {
-    this.K6i.RefreshLeftButtonText(e);
+    this.W8i.RefreshLeftButtonText(e);
   }
   Update(e, t, i = !1) {
-    (this.W6i = e),
-      (this.zke = t),
-      (this.j6i = i),
-      this.X6i(),
-      this.K6i.Update(e);
+    (this.j8i = e),
+      (this.dFe = t),
+      (this.H8i = i),
+      this.Q8i(),
+      this.W8i.Update(e);
   }
-  X6i() {
-    var e = this.j6i ? 1 : 0,
+  Q8i() {
+    var e = this.H8i ? 1 : 0,
       e = ModelManager_1.ModelManager.PhantomBattleModel.GetIfSimpleState(e);
     const t = new VisionDetailInfoComponent_1.VisionDetailInfoComponentData();
-    t.DataBase = this.W6i;
+    t.DataBase = this.j8i;
     let i = -1;
-    this.j6i ||
+    this.H8i ||
       (i =
         ModelManager_1.ModelManager.PhantomBattleModel
           .CurrentEquipmentSelectIndex);
-    var s = this.W6i.GetPreviewShowFetterList(i, this.zke),
-      n = this.W6i.IfEquipSameNameMonsterOnRole(i, this.zke, this.W6i);
+    var s = this.j8i.GetPreviewShowFetterList(i, this.dFe),
+      n = this.j8i.IfEquipSameNameMonsterOnRole(i, this.dFe, this.j8i);
     let o = !1;
-    var r = ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(this.zke)
+    var r = ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(this.dFe)
       .GetPhantomData()
       .GetDataByIndex(0);
-    (r && r?.GetIncrId() === this.W6i.GetUniqueId()) || (o = !0),
+    (r && r?.GetIncrId() === this.j8i.GetUniqueId()) || (o = !0),
       VisionDetailDescComponent_1.VisionDetailDesc.ConvertVisionSkillDescToDescData(
-        this.W6i.GetNormalSkillConfig(),
-        this.W6i.GetPhantomLevel(),
+        this.j8i.GetNormalSkillConfig(),
+        this.j8i.GetPhantomLevel(),
         0 === i || -1 === i,
         o,
-        this.W6i.GetQuality(),
+        this.j8i.GetQuality(),
       ).forEach((e) => {
         t.AddDescData(e);
       }),
@@ -85,15 +85,16 @@ class VisionDetailComponent extends UiPanelBase_1.UiPanelBase {
         n,
         () => {
           ControllerHolder_1.ControllerHolder.PhantomBattleController.OpenPhantomBattleFetterView(
-            this.W6i.GetFetterGroupId(),
+            this.j8i.GetFetterGroupId(),
+            this.dFe,
           );
         },
       ).forEach((e) => {
         t.AddDescData(e);
       }),
-      this.j6i &&
+      this.H8i &&
         t.DescData?.forEach((e) => {
-          (e.AnimationState = !1), (e.CompareState = this.j6i);
+          (e.AnimationState = !1), (e.CompareState = this.H8i);
         }),
       n &&
         VisionDetailDescComponent_1.VisionDetailDesc.CreateSameMonsterTips().forEach(
@@ -101,17 +102,17 @@ class VisionDetailComponent extends UiPanelBase_1.UiPanelBase {
             t.AddDescData(e);
           },
         ),
-      this.Q6i.Refresh(t, this.j6i, e),
-      this.Q6i.SetActive(!0);
+      this.K8i.Refresh(t, this.H8i, e),
+      this.K8i.SetActive(!0);
   }
   SetButtonPanelShowState(e) {
-    this.K6i.SetActive(e);
+    this.W8i.SetActive(e);
   }
   RefreshViewByCompareState(e) {
-    this.K6i.RefreshViewByCompareState(e);
+    this.W8i.RefreshViewByCompareState(e);
   }
   GetDetailUnderComponent() {
-    return this.K6i;
+    return this.W8i;
   }
 }
 exports.VisionDetailComponent = VisionDetailComponent;

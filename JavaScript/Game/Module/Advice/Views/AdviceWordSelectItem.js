@@ -10,14 +10,14 @@ const UE = require("ue"),
 class AdviceWordSelectItem extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
-      (this.X7e = 0),
-      (this.S9 = 0),
-      (this.aHe = () => {
+      (this.sje = 0),
+      (this.E9 = 0),
+      (this.vje = () => {
         this.Og();
       }),
       (this.jbe = () => {
         (ModelManager_1.ModelManager.AdviceModel.CurrentPreSelectWordId =
-          this.X7e),
+          this.sje),
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.OnClickAdviceWord,
           );
@@ -35,41 +35,41 @@ class AdviceWordSelectItem extends UiPanelBase_1.UiPanelBase {
   OnStart() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnClickAdviceWord,
-      this.aHe,
+      this.vje,
     );
   }
   Update(e, t) {
-    (this.X7e = e), (this.S9 = t), this.Og(), this.hke();
+    (this.sje = e), (this.E9 = t), this.Og(), this.T2e();
   }
-  W9e() {
+  nHe() {
     var e = this.GetExtendToggle(0).ToggleState;
-    this.X7e === ModelManager_1.ModelManager.AdviceModel.CurrentPreSelectWordId
+    this.sje === ModelManager_1.ModelManager.AdviceModel.CurrentPreSelectWordId
       ? 1 !== e && this.GetExtendToggle(0).SetToggleStateForce(1, !1)
       : 0 !== e && this.GetExtendToggle(0).SetToggleStateForce(0, !1);
   }
-  hke() {
-    if (0 === this.S9) {
+  T2e() {
+    if (0 === this.E9) {
       let e = ConfigManager_1.ConfigManager.AdviceConfig.GetAdviceSentenceText(
-        this.X7e,
+        this.sje,
       );
       (e = e.replace("{}", "_")), this.GetText(1).SetText(e);
     } else {
       var e =
         ConfigManager_1.ConfigManager.AdviceConfig.GetAdviceConjunctionText(
-          this.X7e,
+          this.sje,
         );
       this.GetText(1).SetText(e);
     }
   }
   Og() {
     var e =
-      this.X7e === ModelManager_1.ModelManager.AdviceModel.CurrentSelectWordId;
-    this.GetItem(2).SetUIActive(e), this.W9e();
+      this.sje === ModelManager_1.ModelManager.AdviceModel.CurrentSelectWordId;
+    this.GetItem(2).SetUIActive(e), this.nHe();
   }
   OnBeforeDestroy() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnClickAdviceWord,
-      this.aHe,
+      this.vje,
     );
   }
 }

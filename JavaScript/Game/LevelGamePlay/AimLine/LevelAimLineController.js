@@ -173,19 +173,19 @@ class LevelAimLineController extends ControllerBase_1.ControllerBase {
       (this.cye = this.mye),
       (this.mye = []),
       this.Cye.filter((e) => !this.gye.includes(e)).forEach((e) => {
-        e?.Valid && e.Entity.GetComponent(115).SetIsBeingTargeted(!1);
+        e?.Valid && e.Entity.GetComponent(117).SetIsBeingTargeted(!1);
       }),
       this.gye
         .filter((e) => !this.Cye.includes(e))
         .forEach((e) => {
-          e?.Valid && e.Entity.GetComponent(115).SetIsBeingTargeted(!0);
+          e?.Valid && e.Entity.GetComponent(117).SetIsBeingTargeted(!0);
         }),
       (this.Cye = this.gye),
       (this.gye = []);
   }
   static lye() {
     this.Cye.forEach((e) => {
-      e?.Valid && e.Entity.GetComponent(115).SetIsBeingTargeted(!1);
+      e?.Valid && e.Entity.GetComponent(117).SetIsBeingTargeted(!1);
     }),
       this.cye.forEach((e) => {
         ItemMaterialManager_1.ItemMaterialManager.DisableActorData(
@@ -214,7 +214,7 @@ class LevelAimLineController extends ControllerBase_1.ControllerBase {
             ModelManager_1.ModelManager.SceneInteractionModel.GetEntityByActor(
               t,
             )) &&
-          t.Entity.GetComponent(138)?.Valid &&
+          t.Entity.GetComponent(140)?.Valid &&
           !_a.gye.includes(t) &&
           _a.gye.push(t);
   }),

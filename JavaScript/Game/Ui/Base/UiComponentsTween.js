@@ -5,23 +5,23 @@ const UE = require("ue"),
   Log_1 = require("../../../Core/Common/Log");
 class UiComponentsTween {
   constructor(t) {
-    (this.G1r = void 0), (this.N1r = void 0), (this.DIt = t);
+    (this.B_r = void 0), (this.b_r = void 0), (this.xTt = t);
   }
-  O1r(t = !1) {
-    var e = this.G1r.Time,
-      s = this.G1r.TargetAlpha,
+  q_r(t = !1) {
+    var e = this.B_r.Time,
+      s = this.B_r.TargetAlpha,
       i = t ? s : 1,
       o = t ? 1 : s;
-    for (const r of this.N1r) r.PlayUIItemAlphaTween(i, o, e);
-    var s = this.G1r.TargetSize,
+    for (const r of this.b_r) r.PlayUIItemAlphaTween(i, o, e);
+    var s = this.B_r.TargetSize,
       n = t ? s : 1,
       h = t ? 1 : s;
-    for (const a of this.N1r) a.PlayUIItemScaleTween(n, h, e);
+    for (const a of this.b_r) a.PlayUIItemScaleTween(n, h, e);
   }
   CollectUnSafeItem() {
-    if (!this.N1r) {
-      let s = !(this.N1r = []);
-      var i = this.DIt.GetAttachUIChildren();
+    if (!this.b_r) {
+      let s = !(this.b_r = []);
+      var i = this.xTt.GetAttachUIChildren();
       for (let t = 0, e = i.Num(); t < e; ++t) {
         var o = i.Get(t);
         if (!s)
@@ -29,14 +29,14 @@ class UiComponentsTween {
             s = !0;
             continue;
           }
-        this.N1r.push(o);
+        this.b_r.push(o);
       }
-      s || ((this.N1r.length = 0), this.N1r.push(this.DIt));
+      s || ((this.b_r.length = 0), this.b_r.push(this.xTt));
     }
   }
   SetUiComponentsTweenData(t) {
     t &&
-      (this.G1r = new UiComponentsTweenData(
+      (this.B_r = new UiComponentsTweenData(
         t.GetTweenAlpha(),
         t.GetTweenSize(),
         t.GetTweenTime(),
@@ -46,13 +46,13 @@ class UiComponentsTween {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug("UiCore", 11, "关卡序列:播放界面间的Tween"),
       this.CollectUnSafeItem(),
-      this.O1r();
+      this.q_r();
   }
   PlayCloseTween() {
-    this.O1r(!0);
+    this.q_r(!0);
   }
   Destroy() {
-    (this.G1r = void 0), (this.DIt = void 0), (this.N1r = []);
+    (this.B_r = void 0), (this.xTt = void 0), (this.b_r = []);
   }
 }
 exports.UiComponentsTween = UiComponentsTween;

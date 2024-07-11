@@ -24,39 +24,39 @@ const UE = require("ue"),
 class ComboTeachingView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
-      (this.xyt = void 0),
-      (this.wyt = 0),
-      (this.Byt = 0),
-      (this.byt = void 0),
-      (this.qyt = new Map()),
-      (this.Gyt = []),
-      (this.Nyt = !1),
-      (this.Oyt = !1),
-      (this.kyt = 0),
+      (this.HIt = void 0),
+      (this.jIt = 0),
+      (this.WIt = 0),
+      (this.KIt = void 0),
+      (this.QIt = new Map()),
+      (this.XIt = []),
+      (this.$It = !1),
+      (this.YIt = !1),
+      (this.JIt = 0),
       (this.OnPress = (e, t) => {
-        this.Gyt[this.Byt]?.OnPress(e, t);
+        this.XIt[this.WIt]?.OnPress(e, t);
       }),
       (this.OnRelease = (e, t) => {
-        this.Gyt[this.Byt]?.OnRelease(e, t);
+        this.XIt[this.WIt]?.OnRelease(e, t);
       }),
       (this.OnHold = (e, t) => {
-        this.Gyt[this.Byt]?.OnHold(e, t);
+        this.XIt[this.WIt]?.OnHold(e, t);
       }),
       (this.OnNodeEnd = (e, t) => {
         const i = this.GetItem(0);
         (ModelManager_1.ModelManager.ComboTeachingModel.IsEmit = !0),
           t
-            ? ((t = this.Gyt[this.Byt + 1]),
-              e.Refresh(this.Byt + 1),
+            ? ((t = this.XIt[this.WIt + 1]),
+              e.Refresh(this.WIt + 1),
               t
-                ? ((this.Byt = this.Byt + 1),
+                ? ((this.WIt = this.WIt + 1),
                   this.PlayMoveLeftTweenAnimation(),
-                  t.Refresh(this.Byt))
-                : ((this.Byt = this.Byt + 1),
-                  0 < this.byt.NextRoleGuideID
+                  t.Refresh(this.WIt))
+                : ((this.WIt = this.WIt + 1),
+                  0 < this.KIt.NextRoleGuideID
                     ? 0 ===
                       ConfigManager_1.ConfigManager.ComboTeachingConfig.GetComboTeachingConfig(
-                        this.byt.NextRoleGuideID,
+                        this.KIt.NextRoleGuideID,
                       ).KeyID.length
                       ? TimerSystem_1.TimerSystem.Delay(() => {
                           (ModelManager_1.ModelManager.ComboTeachingModel.IsClose =
@@ -70,7 +70,7 @@ class ComboTeachingView extends UiTickViewBase_1.UiTickViewBase {
                               (this.CloseMe(),
                               UiManager_1.UiManager.OpenView(
                                 "ComboTeachingView",
-                                this.byt.NextRoleGuideID,
+                                this.KIt.NextRoleGuideID,
                               ));
                         }, 200)
                       : ((ModelManager_1.ModelManager.ComboTeachingModel.IsClose =
@@ -82,10 +82,10 @@ class ComboTeachingView extends UiTickViewBase_1.UiTickViewBase {
                           (this.CloseMe(),
                           UiManager_1.UiManager.OpenView(
                             "ComboTeachingView",
-                            this.byt.NextRoleGuideID,
+                            this.KIt.NextRoleGuideID,
                           )))
-                    : this.Nyt ||
-                      ((this.Nyt = !0),
+                    : this.$It ||
+                      ((this.$It = !0),
                       (ModelManager_1.ModelManager.ComboTeachingModel.UseSkillId = 0),
                       (ModelManager_1.ModelManager.ComboTeachingModel.UseSkillTime = 0),
                       (ModelManager_1.ModelManager.ComboTeachingModel.HitSkillId = 0),
@@ -128,9 +128,9 @@ class ComboTeachingView extends UiTickViewBase_1.UiTickViewBase {
                       }))))
             : (e.PlayFailAnimation(),
               this.OnRemoveEventListener(),
-              (this.Oyt = !0),
+              (this.YIt = !0),
               TimerSystem_1.TimerSystem.Delay(() => {
-                UE.LGUIBPLibrary.AnchorOffsetXTo(i, this.kyt, 0, 0, 0),
+                UE.LGUIBPLibrary.AnchorOffsetXTo(i, this.JIt, 0, 0, 0),
                   (ModelManager_1.ModelManager.ComboTeachingModel.UseSkillId = 0),
                   (ModelManager_1.ModelManager.ComboTeachingModel.UseSkillTime = 0),
                   (ModelManager_1.ModelManager.ComboTeachingModel.HitSkillId = 0),
@@ -138,7 +138,7 @@ class ComboTeachingView extends UiTickViewBase_1.UiTickViewBase {
                     !1),
                   (ModelManager_1.ModelManager.ComboTeachingModel.PreNextAttr =
                     !1),
-                  (this.Byt = 0),
+                  (this.WIt = 0),
                   (ModelManager_1.ModelManager.ComboTeachingModel.IsClose = !0),
                   EventSystem_1.EventSystem.Emit(
                     EventDefine_1.EEventName.ComboTeachingCloseGuide,
@@ -155,19 +155,19 @@ class ComboTeachingView extends UiTickViewBase_1.UiTickViewBase {
               }, 1e3));
       }),
       (this.OnCharUseSkill = (e, t, i) => {
-        if (!this.Nyt) {
+        if (!this.$It) {
           e = EntitySystem_1.EntitySystem.Get(e);
           if (e)
             if (
               e.GetComponent(0)?.GetEntityType() !==
-              Protocol_1.Aki.Protocol.HBs.Proto_Player
+              Protocol_1.Aki.Protocol.wks.Proto_Player
             )
               return;
           (ModelManager_1.ModelManager.ComboTeachingModel.IsEmit = !1),
             (ModelManager_1.ModelManager.ComboTeachingModel.UseSkillId = t),
             (ModelManager_1.ModelManager.ComboTeachingModel.PreNextAttr = !1),
             (ModelManager_1.ModelManager.ComboTeachingModel.NextAttr = !1),
-            this.Gyt[this.Byt]?.OnUseSkill(t);
+            this.XIt[this.WIt]?.OnUseSkill(t);
         }
       }),
       (this.OnCharEndSkill = (e, t) => {
@@ -175,24 +175,24 @@ class ComboTeachingView extends UiTickViewBase_1.UiTickViewBase {
         if (
           e &&
           e.GetComponent(0)?.GetEntityType() !==
-            Protocol_1.Aki.Protocol.HBs.Proto_Player
+            Protocol_1.Aki.Protocol.wks.Proto_Player
         )
           return;
         (ModelManager_1.ModelManager.ComboTeachingModel.UseSkillId = 0),
           (ModelManager_1.ModelManager.ComboTeachingModel.UseSkillTime = 0);
       }),
       (this.OnNextAttrChanged = (e, t) => {
-        this.Nyt ||
+        this.$It ||
           ((ModelManager_1.ModelManager.ComboTeachingModel.NextAttr = t),
           (ModelManager_1.ModelManager.ComboTeachingModel.NextAttrSkillId = e));
       }),
       (this.OnHit = (e) => {
         var t;
-        this.Nyt ||
+        this.$It ||
           ((t = e.Attacker.GetComponent(33)),
           (ModelManager_1.ModelManager.ComboTeachingModel.HitSkillId =
             t?.CurrentSkill?.SkillId ?? 0),
-          this.Gyt[this.Byt]?.OnBulletHit(e));
+          this.XIt[this.WIt]?.OnBulletHit(e));
       }),
       (this.OnOpenLoading = () => {
         this.CloseMe();
@@ -207,31 +207,31 @@ class ComboTeachingView extends UiTickViewBase_1.UiTickViewBase {
     ];
   }
   OnStart() {
-    (this.Byt = 0),
-      this.qyt.set("普攻", [
+    (this.WIt = 0),
+      this.QIt.set("普攻", [
         "战斗状态.输入限制.禁止攻击",
         "功能.功能制作.隐藏按钮功能.隐藏普攻按键",
       ]),
-      this.qyt.set("技能", [
+      this.QIt.set("技能", [
         "战斗状态.输入限制.禁止技能",
         "功能.功能制作.隐藏按钮功能.隐藏技能按键",
       ]),
-      this.qyt.set("大招", [
+      this.QIt.set("大招", [
         "战斗状态.输入限制.禁止大招",
         "功能.功能制作.隐藏按钮功能.隐藏大招按键",
       ]),
-      this.qyt.set("跳跃", [
+      this.QIt.set("跳跃", [
         "战斗状态.输入限制.禁止跳跃",
         "功能.功能制作.隐藏按钮功能.隐藏跳跃按键",
       ]),
-      this.qyt.set("瞄准", ["战斗状态.输入限制.禁止瞄准开镜"]),
-      this.qyt.set("幻象", [
+      this.QIt.set("瞄准", ["战斗状态.输入限制.禁止瞄准开镜"]),
+      this.QIt.set("幻象", [
         "战斗状态.输入限制.禁止幻象1",
         "战斗状态.输入限制.禁止幻象2",
         "功能.功能制作.隐藏按钮功能.隐藏探索幻象按键",
         "功能.功能制作.隐藏按钮功能.隐藏攻击幻象按键",
       ]),
-      this.qyt.set("闪避", [
+      this.QIt.set("闪避", [
         "战斗状态.输入限制.禁止闪避",
         "功能.功能制作.隐藏按钮功能.隐藏冲刺按键",
       ]),
@@ -278,7 +278,7 @@ class ComboTeachingView extends UiTickViewBase_1.UiTickViewBase {
       );
   }
   OnRemoveEventListener() {
-    this.Oyt ||
+    this.YIt ||
       (EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.ComboTeachingPress,
         this.OnPress,
@@ -314,7 +314,7 @@ class ComboTeachingView extends UiTickViewBase_1.UiTickViewBase {
   }
   OnBeforeDestroy() {
     if (
-      (InputController_1.InputController.RemoveInputHandler(this.xyt),
+      (InputController_1.InputController.RemoveInputHandler(this.HIt),
       void 0 === Global_1.Global.BaseCharacter)
     )
       (ModelManager_1.ModelManager.ComboTeachingModel.AddBuffList.length = 0),
@@ -322,7 +322,7 @@ class ComboTeachingView extends UiTickViewBase_1.UiTickViewBase {
     else {
       var e = Global_1.Global.BaseCharacter.GetEntityIdNoBlueprint(),
         e = EntitySystem_1.EntitySystem.Get(e);
-      const t = e?.GetComponent(185),
+      const t = e?.GetComponent(188),
         i =
           (ModelManager_1.ModelManager.ComboTeachingModel.AddTagList.forEach(
             (e) => {
@@ -332,7 +332,7 @@ class ComboTeachingView extends UiTickViewBase_1.UiTickViewBase {
             },
           ),
           (ModelManager_1.ModelManager.ComboTeachingModel.AddTagList.length = 0),
-          e?.GetComponent(157));
+          e?.GetComponent(159));
       ModelManager_1.ModelManager.ComboTeachingModel.AddBuffList.forEach(
         (e) => {
           i?.GetBuffTotalStackById(BigInt(e)) &&
@@ -344,22 +344,22 @@ class ComboTeachingView extends UiTickViewBase_1.UiTickViewBase {
     }
   }
   RefreshComboList(e) {
-    (this.Byt = 0),
-      (this.wyt = e),
-      (this.byt =
+    (this.WIt = 0),
+      (this.jIt = e),
+      (this.KIt =
         ConfigManager_1.ConfigManager.ComboTeachingConfig.GetComboTeachingConfig(
-          this.wyt,
+          this.jIt,
         ));
     (e = Global_1.Global.BaseCharacter.GetEntityIdNoBlueprint()),
       (e = EntitySystem_1.EntitySystem.Get(e));
-    const t = e?.GetComponent(185),
-      i = e?.GetComponent(157);
+    const t = e?.GetComponent(188),
+      i = e?.GetComponent(159);
     ModelManager_1.ModelManager.ComboTeachingModel.AddTagList.forEach((e) => {
       t?.RemoveTag(GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(e));
     }),
       (ModelManager_1.ModelManager.ComboTeachingModel.AddTagList.length = 0),
-      this.qyt.forEach((e, t) => {
-        this.byt.InputEnums.includes(t) ||
+      this.QIt.forEach((e, t) => {
+        this.KIt.InputEnums.includes(t) ||
           ModelManager_1.ModelManager.ComboTeachingModel.AddTagList.push(...e);
       }),
       ModelManager_1.ModelManager.ComboTeachingModel.AddTagList.forEach((e) => {
@@ -374,7 +374,7 @@ class ComboTeachingView extends UiTickViewBase_1.UiTickViewBase {
         },
       ),
       (ModelManager_1.ModelManager.ComboTeachingModel.AddBuffList.length = 0),
-      this.byt.AddBuffID.forEach((e) => {
+      this.KIt.AddBuffID.forEach((e) => {
         ModelManager_1.ModelManager.ComboTeachingModel.AddBuffList.push(e);
       }),
       ModelManager_1.ModelManager.ComboTeachingModel.AddBuffList.forEach(
@@ -385,52 +385,52 @@ class ComboTeachingView extends UiTickViewBase_1.UiTickViewBase {
           });
         },
       ),
-      this.byt.guideID.forEach((e, t) => {
+      this.KIt.guideID.forEach((e, t) => {
         GuideController_1.GuideController.TryStartGuide(e);
       }),
       this.GetItem(3).SetUIActive(!0);
-    for (let e = 0; e < this.byt.CommandID.length; e++)
-      if (this.Gyt.length > e)
-        (this.Gyt[e].CurConfig = this.byt), this.Gyt[e].Refresh(this.Byt);
+    for (let e = 0; e < this.KIt.CommandID.length; e++)
+      if (this.XIt.length > e)
+        (this.XIt[e].CurConfig = this.KIt), this.XIt[e].Refresh(this.WIt);
       else {
         var n = LguiUtil_1.LguiUtil.CopyItem(this.GetItem(3), this.GetItem(0));
-        const a = new ComboTeachingNode_1.ComboTeachingNode(e, this.byt);
+        const a = new ComboTeachingNode_1.ComboTeachingNode(e, this.KIt);
         a.CreateThenShowByActorAsync(n.GetOwner()).then(() => {
-          a.Refresh(this.Byt);
+          a.Refresh(this.WIt);
         }),
-          this.Gyt.push(a);
+          this.XIt.push(a);
       }
-    var e = this.GetItem(3).GetWidth() + 220 * (this.Gyt.length - 1),
+    var e = this.GetItem(3).GetWidth() + 220 * (this.XIt.length - 1),
       s = this.GetItem(0).GetParentAsUIItem().GetWidth();
     s < e &&
-      ((this.kyt = (e - s) / 2), this.GetItem(0).SetAnchorOffsetX(this.kyt)),
+      ((this.JIt = (e - s) / 2), this.GetItem(0).SetAnchorOffsetX(this.JIt)),
       this.GetItem(3).SetUIActive(!1),
       LguiUtil_1.LguiUtil.SetLocalTextNew(
         this.GetText(1),
-        this.byt.DescriptionTitle,
+        this.KIt.DescriptionTitle,
       ),
       LguiUtil_1.LguiUtil.SetLocalTextNew(
         this.GetText(2),
-        this.byt.DescriptionContent,
+        this.KIt.DescriptionContent,
       );
   }
   InitComboInputHandler() {
-    (this.xyt = new ComboTeachingInputHandler_1.ComboTeachingInputHandler()),
-      InputController_1.InputController.AddInputHandler(this.xyt);
+    (this.HIt = new ComboTeachingInputHandler_1.ComboTeachingInputHandler()),
+      InputController_1.InputController.AddInputHandler(this.HIt);
   }
   PlayMoveLeftTweenAnimation(e) {
     var t = this.GetItem(0);
     let i = !1,
       n = 0;
-    for (let e = 0; e < this.byt.KeyID.length; e++)
-      if ((0 < this.byt.KeyID[e].length && n++, 1 < n)) {
+    for (let e = 0; e < this.KIt.KeyID.length; e++)
+      if ((0 < this.KIt.KeyID[e].length && n++, 1 < n)) {
         i = !0;
         break;
       }
     i
       ? ((t = UE.LGUIBPLibrary.AnchorOffsetXTo(
           t,
-          -100 * this.Byt + this.kyt,
+          -100 * this.WIt + this.JIt,
           0.25,
           0,
           14,
@@ -450,11 +450,11 @@ class ComboTeachingView extends UiTickViewBase_1.UiTickViewBase {
         (ModelManager_1.ModelManager.ComboTeachingModel.BeforeJumpTime = 0),
       Global_1.Global.BaseCharacter &&
         ((t = Global_1.Global.BaseCharacter.GetEntityIdNoBlueprint()),
-        (EntitySystem_1.EntitySystem.Get(t)?.GetComponent(161)).IsJump) &&
+        (EntitySystem_1.EntitySystem.Get(t)?.GetComponent(163)).IsJump) &&
         0 === ModelManager_1.ModelManager.ComboTeachingModel.BeforeJumpTime &&
         (ModelManager_1.ModelManager.ComboTeachingModel.BeforeJumpTime =
           BEFORE_JUMP_TIME),
-      this.Gyt[this.Byt]?.OnTick(e);
+      this.XIt[this.WIt]?.OnTick(e);
   }
 }
 exports.ComboTeachingView = ComboTeachingView;

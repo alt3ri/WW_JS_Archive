@@ -7,26 +7,26 @@ const ConfigManager_1 = require("../../../../Manager/ConfigManager"),
 class SelectablePropDataUtil {
   static get TickMaxTime() {
     return (
-      this.Dwt ||
-        (this.Dwt =
+      this.ABt ||
+        (this.ABt =
           ConfigManager_1.ConfigManager.CommonConfig.GetSelectablePropItemTickMaxTime()),
-      this.Dwt
+      this.ABt
     );
   }
   static get TickMinTime() {
     return (
-      this.Rwt ||
-        (this.Rwt =
+      this.PBt ||
+        (this.PBt =
           ConfigManager_1.ConfigManager.CommonConfig.GetSelectablePropItemTickMinTime()),
-      this.Rwt
+      this.PBt
     );
   }
   static get TickInternalTime() {
     return (
-      this.Uwt ||
-        (this.Uwt =
+      this.xBt ||
+        (this.xBt =
           ConfigManager_1.ConfigManager.CommonConfig.GetSelectablePropItemTickIntervalTime()),
-      this.Uwt
+      this.xBt
     );
   }
   static GetSelectablePropData(e) {

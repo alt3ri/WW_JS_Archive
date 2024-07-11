@@ -1,4 +1,5 @@
 "use strict";
+var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CreatureController = void 0);
 const UE = require("ue"),
@@ -15,7 +16,6 @@ const UE = require("ue"),
   ControllerBase_1 = require("../../../Core/Framework/ControllerBase"),
   Net_1 = require("../../../Core/Net/Net"),
   ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem"),
-  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
   Rotator_1 = require("../../../Core/Utils/Math/Rotator"),
   Vector_1 = require("../../../Core/Utils/Math/Vector"),
   MathUtils_1 = require("../../../Core/Utils/MathUtils"),
@@ -48,6 +48,7 @@ const UE = require("ue"),
   ScenePlayerData_1 = require("../Define/ScenePlayerData"),
   WaitEntityPreloadTask_1 = require("../Define/WaitEntityPreloadTask"),
   WaitEntityTask_1 = require("../Define/WaitEntityTask"),
+  WaitEntityToLoadTask_1 = require("../Define/WaitEntityToLoadTask"),
   AsyncTask_1 = require("../Task/AsyncTask"),
   TaskSystem_1 = require("../Task/TaskSystem"),
   WorldGlobal_1 = require("../WorldGlobal"),
@@ -58,72 +59,72 @@ const UE = require("ue"),
   idDefaultValue = -1n,
   increment = 2n,
   playerBit = 20n,
-  unitMax = 4294967295n,
-  ENTITY_REMOVE_DELAY = 3e3;
+  unitMax = 4294967295n;
 class CreatureController extends ControllerBase_1.ControllerBase {
   static OnInit() {
     WorldGlobal_1.WorldGlobal.Initialize();
     var e =
       GameQualitySettingsManager_1.GameQualitySettingsManager.Get().GetCurrentQualityInfo();
     return (
-      (this.wVs = e.NpcDensity),
+      (this.jQs = e.NpcDensity),
       !!Global_1.Global.WorldEntityHelper.Initialize() &&
-        (Net_1.Net.Register(13045, CreatureController.Bgr),
-        Net_1.Net.Register(4012, CreatureController.bgr),
-        Net_1.Net.Register(2161, CreatureController.qgr),
-        Net_1.Net.Register(11583, CreatureController.EntityOnLandedNotify),
-        Net_1.Net.Register(9029, CreatureController.Ggr),
-        Net_1.Net.Register(21114, CreatureController.JoinSceneNotify),
-        Net_1.Net.Register(7810, CreatureController.AfterJoinSceneNotify),
-        Net_1.Net.Register(14829, CreatureController.Ngr),
-        Net_1.Net.Register(2776, CreatureController.Ogr),
-        Net_1.Net.Register(3279, CreatureController.kgr),
-        Net_1.Net.Register(19150, CreatureController.Fgr),
-        Net_1.Net.Register(27325, CreatureController.Vgr),
-        Net_1.Net.Register(28227, CreatureController.Hgr),
-        Net_1.Net.Register(14565, CreatureController.jgr),
-        Net_1.Net.Register(11305, CreatureController.Wgr),
-        Net_1.Net.Register(1276, CreatureController.Kgr),
-        Net_1.Net.Register(3198, CreatureController.Qgr),
-        Net_1.Net.Register(24297, this.SwitchBattleModeNotify),
-        Net_1.Net.Register(3791, this.BattleLogNotify),
-        Net_1.Net.Register(15443, this.Xgr),
-        Net_1.Net.Register(16069, this.eIn),
-        Net_1.Net.Register(3492, this.$gr),
-        Net_1.Net.Register(6951, this.SceneLoadingTimeOutNotify),
-        Net_1.Net.Register(8101, CreatureController.Ygr),
-        Net_1.Net.Register(17082, CreatureController.Jgr),
-        Net_1.Net.Register(28687, CreatureController.zgr),
-        Net_1.Net.Register(29095, CreatureController.Zgr),
+        (Net_1.Net.Register(4296, CreatureController.P0r),
+        Net_1.Net.Register(20929, CreatureController.x0r),
+        Net_1.Net.Register(2429, CreatureController.w0r),
+        Net_1.Net.Register(27474, CreatureController.EntityOnLandedNotify),
+        Net_1.Net.Register(6803, CreatureController.B0r),
+        Net_1.Net.Register(26318, CreatureController.JoinSceneNotify),
+        Net_1.Net.Register(27982, CreatureController.AfterJoinSceneNotify),
+        Net_1.Net.Register(15958, CreatureController.b0r),
+        Net_1.Net.Register(4585, CreatureController.q0r),
+        Net_1.Net.Register(8506, CreatureController.G0r),
+        Net_1.Net.Register(12911, CreatureController.N0r),
+        Net_1.Net.Register(21432, CreatureController.O0r),
+        Net_1.Net.Register(6231, CreatureController.k0r),
+        Net_1.Net.Register(27695, CreatureController.F0r),
+        Net_1.Net.Register(8842, CreatureController.V0r),
+        Net_1.Net.Register(28477, CreatureController.H0r),
+        Net_1.Net.Register(9072, CreatureController.j0r),
+        Net_1.Net.Register(17131, this.SwitchBattleModeNotify),
+        Net_1.Net.Register(29868, this.BattleLogNotify),
+        Net_1.Net.Register(16797, this.W0r),
+        Net_1.Net.Register(8047, this.STn),
+        Net_1.Net.Register(28892, this.K0r),
+        Net_1.Net.Register(3884, this.SceneLoadingTimeOutNotify),
+        Net_1.Net.Register(18217, CreatureController.Q0r),
+        Net_1.Net.Register(4861, CreatureController.X0r),
+        Net_1.Net.Register(15944, CreatureController.$0r),
+        Net_1.Net.Register(22282, CreatureController.Y0r),
         Net_1.Net.Register(
-          22153,
+          18332,
           FormationAttributeController_1.FormationAttributeController
             .FormationAttrNotify,
         ),
         Net_1.Net.Register(
-          7876,
+          9592,
           FormationAttributeController_1.FormationAttributeController
             .TimeCheckNotify,
         ),
-        Net_1.Net.Register(6999, CreatureController.e0r),
-        Net_1.Net.Register(20353, CreatureController.t0r),
-        Net_1.Net.Register(23399, CreatureController.i0r),
+        Net_1.Net.Register(23120, CreatureController.J0r),
+        Net_1.Net.Register(17617, CreatureController.z0r),
+        Net_1.Net.Register(25417, CreatureController.Z0r),
         EventSystem_1.EventSystem.Add(
           EventDefine_1.EEventName.EntityOnLandedPush,
           CreatureController.EntityOnLandedPush,
         ),
         EventSystem_1.EventSystem.Add(
           EventDefine_1.EEventName.DelayRemoveEntityFinished,
-          CreatureController.o0r,
+          CreatureController.efr,
         ),
         EventSystem_1.EventSystem.Add(
           EventDefine_1.EEventName.TeleportComplete,
-          CreatureController.r0r,
+          CreatureController.tfr,
         ),
         EventSystem_1.EventSystem.Add(
           EventDefine_1.EEventName.CreateEntityFail,
           CreatureController.OnCreateEntityFail,
         ),
+        this.dva.OnInit(),
         !0)
     );
   }
@@ -131,46 +132,47 @@ class CreatureController extends ControllerBase_1.ControllerBase {
     return (
       WorldGlobal_1.WorldGlobal.Clear(),
       !!Global_1.Global.WorldEntityHelper.Clear() &&
-        (Net_1.Net.UnRegister(13045),
-        Net_1.Net.UnRegister(4012),
-        Net_1.Net.UnRegister(2161),
-        Net_1.Net.UnRegister(11583),
-        Net_1.Net.UnRegister(9029),
-        Net_1.Net.UnRegister(21114),
-        Net_1.Net.UnRegister(7810),
-        Net_1.Net.UnRegister(19150),
-        Net_1.Net.UnRegister(14829),
-        Net_1.Net.UnRegister(2776),
-        Net_1.Net.UnRegister(27325),
-        Net_1.Net.UnRegister(28227),
-        Net_1.Net.UnRegister(14565),
-        Net_1.Net.UnRegister(11305),
-        Net_1.Net.UnRegister(1276),
-        Net_1.Net.UnRegister(3198),
-        Net_1.Net.UnRegister(24297),
-        Net_1.Net.UnRegister(15443),
-        Net_1.Net.UnRegister(16069),
-        Net_1.Net.UnRegister(6951),
-        Net_1.Net.UnRegister(8101),
-        Net_1.Net.UnRegister(3492),
-        Net_1.Net.UnRegister(17082),
-        Net_1.Net.UnRegister(29095),
-        Net_1.Net.UnRegister(22153),
-        Net_1.Net.UnRegister(6999),
-        Net_1.Net.UnRegister(20353),
-        Net_1.Net.UnRegister(23399),
+        (Net_1.Net.UnRegister(4296),
+        Net_1.Net.UnRegister(20929),
+        Net_1.Net.UnRegister(2429),
+        Net_1.Net.UnRegister(27474),
+        Net_1.Net.UnRegister(6803),
+        Net_1.Net.UnRegister(26318),
+        Net_1.Net.UnRegister(27982),
+        Net_1.Net.UnRegister(12911),
+        Net_1.Net.UnRegister(15958),
+        Net_1.Net.UnRegister(4585),
+        Net_1.Net.UnRegister(21432),
+        Net_1.Net.UnRegister(6231),
+        Net_1.Net.UnRegister(27695),
+        Net_1.Net.UnRegister(8842),
+        Net_1.Net.UnRegister(28477),
+        Net_1.Net.UnRegister(9072),
+        Net_1.Net.UnRegister(17131),
+        Net_1.Net.UnRegister(16797),
+        Net_1.Net.UnRegister(8047),
+        Net_1.Net.UnRegister(3884),
+        Net_1.Net.UnRegister(18217),
+        Net_1.Net.UnRegister(28892),
+        Net_1.Net.UnRegister(4861),
+        Net_1.Net.UnRegister(22282),
+        Net_1.Net.UnRegister(18332),
+        Net_1.Net.UnRegister(23120),
+        Net_1.Net.UnRegister(17617),
+        Net_1.Net.UnRegister(25417),
         EventSystem_1.EventSystem.Remove(
           EventDefine_1.EEventName.EntityOnLandedPush,
           CreatureController.EntityOnLandedPush,
         ),
         EventSystem_1.EventSystem.Remove(
           EventDefine_1.EEventName.TeleportComplete,
-          CreatureController.r0r,
+          CreatureController.tfr,
         ),
         EventSystem_1.EventSystem.Remove(
           EventDefine_1.EEventName.CreateEntityFail,
           CreatureController.OnCreateEntityFail,
         ),
+        this.dva.OnClear(),
         !0)
     );
   }
@@ -178,20 +180,20 @@ class CreatureController extends ControllerBase_1.ControllerBase {
     for (const r of ModelManager_1.ModelManager.CreatureModel.GetAllEntities())
       r?.Valid && this.LoadEntityAsync(r);
   }
-  static n0r(r) {
-    var e = MathUtils_1.MathUtils.LongToNumber(r.rkn),
+  static ifr(r) {
+    var e = MathUtils_1.MathUtils.LongToNumber(r.P4n),
       t = ModelManager_1.ModelManager.CreatureModel.GetEntity(e);
     if (t?.Valid)
       if (t.IsInit) {
-        var o = t.Entity.GetComponent(157);
+        var o = t.Entity.GetComponent(159);
         if (o)
-          for (const a of r.xys)
+          for (const a of r.zRs)
             o.AddBuffWithServerId(
-              MathUtils_1.MathUtils.LongToBigInt(a.JFn),
-              a.r3n,
-              a.QVn,
-              a.$Vn,
-              "服务端通知添加系统buff, serverId=" + a.$Vn,
+              MathUtils_1.MathUtils.LongToBigInt(a.L6n),
+              a.P6n,
+              a.Ijn,
+              a.Tjn,
+              "服务端通知添加系统buff, serverId=" + a.Tjn,
             );
         else
           Log_1.Log.CheckError() &&
@@ -199,10 +201,10 @@ class CreatureController extends ControllerBase_1.ControllerBase {
               "World",
               20,
               "[CreatureController.AddSysBuffNotify] 添加Buff失败, Entity没有BuffComponent。",
-              ["CreatureDataId", r.rkn],
+              ["CreatureDataId", r.P4n],
               [
                 "buff列表",
-                r.xys?.map((e) => MathUtils_1.MathUtils.LongToBigInt(e.JFn)),
+                r.zRs?.map((e) => MathUtils_1.MathUtils.LongToBigInt(e.L6n)),
               ],
             );
       } else {
@@ -212,7 +214,7 @@ class CreatureController extends ControllerBase_1.ControllerBase {
             (Log_1.Log.CheckError() &&
               Log_1.Log.Error("World", 20, "WaitEntityTask 失败", [
                 "CreatureDataId",
-                r.rkn,
+                r.P4n,
               ]));
         });
       }
@@ -225,7 +227,7 @@ class CreatureController extends ControllerBase_1.ControllerBase {
           ["CreatureDataId", e],
           [
             "buff列表",
-            r.xys.map((e) => MathUtils_1.MathUtils.LongToBigInt(e.JFn)).join(),
+            r.zRs.map((e) => MathUtils_1.MathUtils.LongToBigInt(e.L6n)).join(),
           ],
         );
   }
@@ -272,43 +274,44 @@ class CreatureController extends ControllerBase_1.ControllerBase {
   static RemoveEntity(
     e,
     r,
-    t = Protocol_1.Aki.Protocol.WBs.Proto_RemoveTypeForce,
+    t = Protocol_1.Aki.Protocol.bks.Proto_RemoveTypeForce,
   ) {
     var o = ModelManager_1.ModelManager.CreatureModel.RemoveDensityItem(e);
     if (o) {
       if (!o.EntityHandle)
         return (
-          o.DensityLevel <= this.wVs &&
+          o.DensityLevel <= this.jQs &&
             Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Entity",
               6,
               "[实体生命周期:删除实体] DensityLevel和创建情况不匹配",
-              ["CurrentLevel", this.wVs],
+              ["CurrentLevel", this.jQs],
               ["SelfLevel", o.DensityLevel],
               ["CreatureDataId", o.CreatureDataId],
             ),
           !0
         );
-      o.DensityLevel > this.wVs &&
+      o.DensityLevel > this.jQs &&
         Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Entity",
           6,
           "[实体生命周期:删除实体] DensityLevel和创建情况不匹配2",
-          ["CurrentLevel", this.wVs],
+          ["CurrentLevel", this.jQs],
           ["SelfLevel", o.DensityLevel],
           ["CreatureDataId", o.CreatureDataId],
         );
     }
-    return this.a0r(e, r, t);
+    return this.rfr(e, r, t);
   }
-  static a0r(e, r, t) {
+  static rfr(e, r, t) {
     var o,
       a = ModelManager_1.ModelManager.CreatureModel.GetEntity(e);
     return a
       ? ((o = a.Entity.GetComponent(1)),
-        Log_1.Log.CheckInfo() &&
+        ModelManager_1.ModelManager.CreatureModel.EnableEntityLog &&
+          Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "Entity",
             3,
@@ -322,7 +325,7 @@ class CreatureController extends ControllerBase_1.ControllerBase {
         PreloadDefine_1.PreloadSetting.UseNewPreload
           ? PreloadControllerNew_1.PreloadControllerNew.RemoveEntity(e)
           : PreloadController_1.PreloadController.RemovePreloadEntity(e),
-        this.bVs(a, e, t, r))
+        this.WQs(a, e, t, r))
       : (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Entity",
@@ -334,39 +337,42 @@ class CreatureController extends ControllerBase_1.ControllerBase {
           ),
         !1);
   }
-  static bVs(e, r, t, o) {
+  static WQs(e, r, t, o) {
     var a = ModelManager_1.ModelManager.CreatureModel;
     if (!e.Valid)
       return a.RemoveEntity(r, "RemoveEntityInternal handle.Valid=false");
     var l = e.Entity.GetComponent(0),
-      n = (l.SetRemoveState(!0), e.Entity.GetComponent(1)?.Owner);
+      n =
+        (l.SetRemoveState(!0),
+        this.dva.RemoveEntity(e),
+        e.Entity.GetComponent(1)?.Owner);
     if ((CreatureController.NotifyRemoveEntity(t, e, n), !e.IsInit))
       return (
         CreatureController.DestroyEntity(
           e,
-          t !== Protocol_1.Aki.Protocol.WBs.Proto_RemoveTypeResetByModeChange,
+          t !== Protocol_1.Aki.Protocol.bks.Proto_RemoveTypeResetByModeChange,
         ),
         a.RemoveEntity(r, "RemoveEntityInternal handle.IsInit=false")
       );
     if (
-      l.GetEntityType() !== Protocol_1.Aki.Protocol.HBs.Proto_Custom &&
+      l.GetEntityType() !== Protocol_1.Aki.Protocol.wks.Proto_Custom &&
       !n?.IsValid()
     )
       return (
         CreatureController.DestroyEntity(
           e,
-          t !== Protocol_1.Aki.Protocol.WBs.Proto_RemoveTypeResetByModeChange,
+          t !== Protocol_1.Aki.Protocol.bks.Proto_RemoveTypeResetByModeChange,
         ),
         a.RemoveEntity(r, "RemoveEntityInternal actor?.IsValid()=false")
       );
-    let i = t === Protocol_1.Aki.Protocol.WBs.Proto_RemoveTypeForce;
+    let i = t === Protocol_1.Aki.Protocol.bks.Proto_RemoveTypeForce;
     if (
       (i =
         i ||
-        (t === Protocol_1.Aki.Protocol.WBs.Proto_RemoveTypeNormal &&
-          l.GetEntityType() !== Protocol_1.Aki.Protocol.HBs.Proto_Npc &&
-          l.GetEntityType() !== Protocol_1.Aki.Protocol.HBs.Proto_SceneItem &&
-          l.GetEntityType() !== Protocol_1.Aki.Protocol.HBs.Proto_Animal &&
+        (t === Protocol_1.Aki.Protocol.bks.Proto_RemoveTypeNormal &&
+          l.GetEntityType() !== Protocol_1.Aki.Protocol.wks.Proto_Npc &&
+          l.GetEntityType() !== Protocol_1.Aki.Protocol.wks.Proto_SceneItem &&
+          l.GetEntityType() !== Protocol_1.Aki.Protocol.wks.Proto_Animal &&
           (i = !0),
         e.Entity.Active)
           ? i
@@ -376,13 +382,14 @@ class CreatureController extends ControllerBase_1.ControllerBase {
         CreatureController.DestroyEntity(e),
         a.RemoveEntity(r, "RemoveEntityInternal forceRemove=true")
       );
-    if (t === Protocol_1.Aki.Protocol.WBs.Proto_RemoveTypeResetByModeChange)
+    if (t === Protocol_1.Aki.Protocol.bks.Proto_RemoveTypeResetByModeChange)
       return (
         CreatureController.DestroyEntity(e, !1),
         a.RemoveEntity(r, "RemoveEntityInternal RemoveTypeResetByModeChange")
       );
     if (
-      (Log_1.Log.CheckInfo() &&
+      (ModelManager_1.ModelManager.CreatureModel.EnableEntityLog &&
+        Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Entity",
           3,
@@ -393,42 +400,28 @@ class CreatureController extends ControllerBase_1.ControllerBase {
           ["RemoveType", t],
         ),
       this.AddDelayRemoveEntity(r, e),
-      l.GetEntityType() === Protocol_1.Aki.Protocol.HBs.Proto_Npc)
-    ) {
-      if (!e.Entity.GetComponent(2).PendingToDestroy())
-        return (
-          EventSystem_1.EventSystem.Emit(
-            EventDefine_1.EEventName.DelayRemoveEntityFinished,
-            e.Entity,
-          ),
-          !0
-        );
-      TimerSystem_1.TimerSystem.Delay(() => {
-        EventSystem_1.EventSystem.Emit(
-          EventDefine_1.EEventName.DelayRemoveEntityFinished,
-          e.Entity,
-        );
-      }, ENTITY_REMOVE_DELAY);
+      l.GetEntityType() === Protocol_1.Aki.Protocol.wks.Proto_Npc)
+    )
+      e.Entity.GetComponent(170).HandlePendingDestroy();
+    else {
+      if (l.GetEntityType() === Protocol_1.Aki.Protocol.wks.Proto_Animal) {
+        n = e.Entity.GetComponent(156);
+        if (!n?.PendingDestroy)
+          return (
+            EventSystem_1.EventSystem.Emit(
+              EventDefine_1.EEventName.DelayRemoveEntityFinished,
+              e.Entity,
+            ),
+            !0
+          );
+        n.HandlePendingDestroy();
+      }
+      t === Protocol_1.Aki.Protocol.bks.Proto_RemoveTypeDrop
+        ? (a = e.Entity.GetComponent(135)) && a.DestroyWithEffect()
+        : l.GetEntityType() === Protocol_1.Aki.Protocol.wks.Proto_SceneItem &&
+          e.Entity.GetComponent(119).HandleDestroyState();
     }
-    if (l.GetEntityType() === Protocol_1.Aki.Protocol.HBs.Proto_Animal) {
-      n = e.Entity.GetComponent(154);
-      if (!n?.PendingDestroy)
-        return (
-          EventSystem_1.EventSystem.Emit(
-            EventDefine_1.EEventName.DelayRemoveEntityFinished,
-            e.Entity,
-          ),
-          !0
-        );
-      n.HandlePendingDestroy();
-    }
-    return (
-      t === Protocol_1.Aki.Protocol.WBs.Proto_RemoveTypeDrop
-        ? (a = e.Entity.GetComponent(133)) && a.DestroyWithEffect()
-        : l.GetEntityType() === Protocol_1.Aki.Protocol.HBs.Proto_SceneItem &&
-          e.Entity.GetComponent(117).HandleDestroyState(),
-      !0
-    );
+    return !0;
   }
   static SummonRequest(e, r, t, o, a, l = 0) {
     var n,
@@ -459,24 +452,24 @@ class CreatureController extends ControllerBase_1.ControllerBase {
             .GetCreatureDataId()),
           (i = CreatureController.GenUniqueId()),
           0 < l
-            ? (((_ = Protocol_1.Aki.Protocol.wls.create()).N7n = this.l0r(
+            ? (((_ = Protocol_1.Aki.Protocol.Lcs.create()).pKn = this.sfr(
                 e,
                 r,
                 t,
                 a,
                 i,
               )),
-              (_.k7n = MathUtils_1.MathUtils.NumberToLong(n)),
-              (_.o8n = l),
+              (_.vKn = MathUtils_1.MathUtils.NumberToLong(n)),
+              (_.G7n = l),
               CreatureController.Summon2RequestInternal(_, i, o))
-            : (((l = Protocol_1.Aki.Protocol.Pls.create()).N7n = this.l0r(
+            : (((l = Protocol_1.Aki.Protocol.Ics.create()).pKn = this.sfr(
                 e,
                 r,
                 t,
                 a,
                 i,
               )),
-              (l.k7n = MathUtils_1.MathUtils.NumberToLong(n)),
+              (l.vKn = MathUtils_1.MathUtils.NumberToLong(n)),
               CreatureController.SummonRequestInternal(l, i)),
           i
         );
@@ -496,68 +489,68 @@ class CreatureController extends ControllerBase_1.ControllerBase {
           ["BlueprintType", C.BlueprintType],
         );
   }
-  static l0r(e, r, t, o, a) {
-    var l = Protocol_1.Aki.Protocol._Os.create(),
+  static sfr(e, r, t, o, a) {
+    var l = Protocol_1.Aki.Protocol.ZFs.create(),
       e =
-        ((l.vkn = e),
-        (l.d4n = r),
-        (l.M3n = t.GetLocation()),
-        Protocol_1.Aki.Protocol.iws.create()),
+        ((l.X4n = e),
+        (l.X8n = r),
+        (l.e8n = t.GetLocation()),
+        Protocol_1.Aki.Protocol.S2s.create()),
       r = t.Rotator();
     return (
       (e.Pitch = r.Pitch),
       (e.Roll = r.Roll),
       (e.Yaw = r.Yaw),
-      (l.S3n = e),
-      (l.F7n = o),
-      (l.V7n = MathUtils_1.MathUtils.NumberToLong(a)),
+      (l.t8n = e),
+      (l.MKn = o),
+      (l.SKn = MathUtils_1.MathUtils.NumberToLong(a)),
       l
     );
   }
   static async SummonRequestInternal(e, r) {
-    e = await Net_1.Net.CallAsync(26232, e);
+    e = await Net_1.Net.CallAsync(7769, e);
     return (
-      e.lkn === Protocol_1.Aki.Protocol.lkn.Sys ||
+      e.O4n === Protocol_1.Aki.Protocol.O4n.NRs ||
       (ModelManager_1.ModelManager.CreatureModel.RemovePreCreature(r),
       CreatureController.RemoveEntity(r, "SummonRequestInternal"),
       ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-        e.lkn,
-        17406,
+        e.O4n,
+        22908,
       ),
       !1)
     );
   }
   static async Summon2RequestInternal(e, r, t) {
-    e = await Net_1.Net.CallAsync(23539, e);
-    return e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys
+    e = await Net_1.Net.CallAsync(23067, e);
+    return e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs
       ? (ModelManager_1.ModelManager.CreatureModel.RemovePreCreature(r),
         CreatureController.RemoveEntity(r, "Summon2RequestInternal"),
         ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-          e.lkn,
-          12118,
+          e.O4n,
+          20847,
         ),
         !1)
       : (EntitySystem_1.EntitySystem.Get(t)
           .GetComponent(0)
-          .SetSummonsVersion(e.o8n),
+          .SetSummonsVersion(e.G7n),
         !0);
   }
   static async RemoveSummonEntityRequest(e, r, t) {
-    var o = Protocol_1.Aki.Protocol.nls.create(),
+    var o = Protocol_1.Aki.Protocol.Zus.create(),
       t =
-        ((o.H7n = [
+        ((o.EKn = [
           ModelManager_1.ModelManager.CreatureModel.GetServerEntityId(t),
         ]),
-        (o.j7n = Protocol_1.Aki.Protocol.WBs.Proto_RemoveTypeForce),
-        (o.vkn = e),
-        (o._7n =
+        (o.yKn = Protocol_1.Aki.Protocol.bks.Proto_RemoveTypeForce),
+        (o.X4n = e),
+        (o.FWn =
           ModelManager_1.ModelManager.CreatureModel.GetServerEntityId(r)),
-        await Net_1.Net.CallAsync(17190, o));
+        await Net_1.Net.CallAsync(27868, o));
     return (
-      t.X5n === Protocol_1.Aki.Protocol.lkn.Sys ||
+      t.A9n === Protocol_1.Aki.Protocol.O4n.NRs ||
       (ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-        t.X5n,
-        1119,
+        t.A9n,
+        29969,
       ),
       !1)
     );
@@ -566,22 +559,22 @@ class CreatureController extends ControllerBase_1.ControllerBase {
     var o = ModelManager_1.ModelManager.CreatureModel.GetEntity(t)
         ?.Entity?.GetComponent(0)
         .GetEntityType(),
-      a = Protocol_1.Aki.Protocol.nls.create(),
+      a = Protocol_1.Aki.Protocol.Zus.create(),
       t =
-        ((a.H7n = [MathUtils_1.MathUtils.NumberToLong(t)]),
-        (a.j7n =
-          o && o === Protocol_1.Aki.Protocol.HBs.Proto_SceneItem
-            ? Protocol_1.Aki.Protocol.WBs.Proto_RemoveTypeNormal
-            : Protocol_1.Aki.Protocol.WBs.Proto_RemoveTypeForce),
-        (a.vkn = e),
-        (a._7n =
+        ((a.EKn = [MathUtils_1.MathUtils.NumberToLong(t)]),
+        (a.yKn =
+          o && o === Protocol_1.Aki.Protocol.wks.Proto_SceneItem
+            ? Protocol_1.Aki.Protocol.bks.Proto_RemoveTypeNormal
+            : Protocol_1.Aki.Protocol.bks.Proto_RemoveTypeForce),
+        (a.X4n = e),
+        (a.FWn =
           ModelManager_1.ModelManager.CreatureModel.GetServerEntityId(r)),
-        await Net_1.Net.CallAsync(17190, a));
+        await Net_1.Net.CallAsync(27868, a));
     return (
-      t.X5n === Protocol_1.Aki.Protocol.lkn.Sys ||
+      t.A9n === Protocol_1.Aki.Protocol.O4n.NRs ||
       (ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-        t.X5n,
-        1119,
+        t.A9n,
+        29969,
       ),
       !1)
     );
@@ -598,18 +591,18 @@ class CreatureController extends ControllerBase_1.ControllerBase {
           ),
         !1)
       : (t = ModelManager_1.ModelManager.CreatureModel.GetCreatureDataId(e))
-        ? (((o = Protocol_1.Aki.Protocol.als.create()).Ekn =
+        ? (((o = Protocol_1.Aki.Protocol.tcs.create()).J4n =
             MathUtils_1.MathUtils.NumberToLong(t)),
-          (o.aFn = r),
+          (o.q5n = r),
           !(
-            !(r = await Net_1.Net.CallAsync(25741, o)) ||
-            (r.Sys
+            !(r = await Net_1.Net.CallAsync(22317, o)) ||
+            (r.NRs
               ? (o = ModelManager_1.ModelManager.CreatureModel.GetEntity(t))
-                ? (o.Entity.GetComponent(0).SetPlayerId(r.aFn),
+                ? (o.Entity.GetComponent(0).SetPlayerId(r.q5n),
                   o.IsInit &&
                     ((r =
                       ModelManager_1.ModelManager.CreatureModel.GetPlayerId() ===
-                      r.aFn),
+                      r.q5n),
                     o.Entity.GetComponent(1).SetAutonomous(r)),
                   0)
                 : (Log_1.Log.CheckError() &&
@@ -646,77 +639,77 @@ class CreatureController extends ControllerBase_1.ControllerBase {
       r.IsBoss &&
       EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.SpawnBoss, e);
   }
-  static _0r(e) {
-    var r = Protocol_1.Aki.Protocol.lls.create();
-    (r.Ekn = MathUtils_1.MathUtils.NumberToLong(e)),
-      Net_1.Net.Call(1608, r, () => {});
+  static afr(e) {
+    var r = Protocol_1.Aki.Protocol.rcs.create();
+    (r.J4n = MathUtils_1.MathUtils.NumberToLong(e)),
+      Net_1.Net.Call(9433, r, () => {});
   }
   static async SceneLoadingFinishRequest(e) {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info("World", 5, "世界加载完成", ["SceneId", e]);
-    var r = new Protocol_1.Aki.Protocol.Y1s(),
-      e = ((r.W7n = e), await Net_1.Net.CallAsync(1718, r));
-    e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys &&
+    var r = new Protocol_1.Aki.Protocol.jds(),
+      e = ((r.IKn = e), await Net_1.Net.CallAsync(16245, r));
+    e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs &&
       (ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-        e.lkn,
-        19553,
+        e.O4n,
+        18942,
       ),
       (ModelManager_1.ModelManager.SceneTeamModel.ChangingRole = !1));
   }
   static AnimalDieRequest(e, r) {
-    var t = Protocol_1.Aki.Protocol.vYn.create();
-    (t.rkn = MathUtils_1.MathUtils.NumberToLong(e)),
-      (t.M3n = Protocol_1.Aki.Protocol.VBs.create()),
-      (t.M3n.X = r.X),
-      (t.M3n.Y = r.Y),
-      (t.M3n.Z = r.Z),
-      Net_1.Net.Call(3579, t, (e) => {
+    var t = Protocol_1.Aki.Protocol.ces.create();
+    (t.P4n = MathUtils_1.MathUtils.NumberToLong(e)),
+      (t.e8n = Protocol_1.Aki.Protocol.Pks.create()),
+      (t.e8n.X = r.X),
+      (t.e8n.Y = r.Y),
+      (t.e8n.Z = r.Z),
+      Net_1.Net.Call(3807, t, (e) => {
         e &&
-          e.lkn !== Protocol_1.Aki.Protocol.lkn.Proto_ErrAnimalEntityNotExist &&
-          e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys &&
+          e.O4n !== Protocol_1.Aki.Protocol.O4n.Proto_ErrAnimalEntityNotExist &&
+          e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs &&
           ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-            e.lkn,
-            17948,
+            e.O4n,
+            19807,
           );
       });
   }
   static AnimalDropItemRequest(e) {
-    var r = Protocol_1.Aki.Protocol.yYn.create();
-    (r.rkn = MathUtils_1.MathUtils.NumberToLong(e)),
-      Net_1.Net.Call(11033, r, (e) => {
+    var r = Protocol_1.Aki.Protocol.fes.create();
+    (r.P4n = MathUtils_1.MathUtils.NumberToLong(e)),
+      Net_1.Net.Call(23098, r, (e) => {
         e &&
-          e.lkn !== Protocol_1.Aki.Protocol.lkn.Proto_ErrAnimalEntityNotExist &&
-          e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys &&
+          e.O4n !== Protocol_1.Aki.Protocol.O4n.Proto_ErrAnimalEntityNotExist &&
+          e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs &&
           ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-            e.lkn,
-            28456,
+            e.O4n,
+            20198,
           );
       });
   }
   static AnimalDestroyRequest(e) {
-    var r = Protocol_1.Aki.Protocol.SYn.create();
-    (r.rkn = MathUtils_1.MathUtils.NumberToLong(e)),
-      Net_1.Net.Call(10012, r, (e) => {
+    var r = Protocol_1.Aki.Protocol.Ces.create();
+    (r.P4n = MathUtils_1.MathUtils.NumberToLong(e)),
+      Net_1.Net.Call(18988, r, (e) => {
         e &&
-          e.lkn !== Protocol_1.Aki.Protocol.lkn.Proto_ErrAnimalEntityNotExist &&
-          e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys &&
+          e.O4n !== Protocol_1.Aki.Protocol.O4n.Proto_ErrAnimalEntityNotExist &&
+          e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs &&
           ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-            e.lkn,
-            7352,
+            e.O4n,
+            17938,
           );
       });
   }
   static LandingDamageRequest(e, r, t) {
-    var o = Protocol_1.Aki.Protocol.Ezn.create();
-    (o.rkn = MathUtils_1.MathUtils.NumberToLong(e)),
-      (o.K7n = r),
-      (o.Q7n = t),
-      Net_1.Net.Call(25622, o, (e) => {
+    var o = Protocol_1.Aki.Protocol.gis.create();
+    (o.P4n = MathUtils_1.MathUtils.NumberToLong(e)),
+      (o.TKn = r),
+      (o.LKn = t),
+      Net_1.Net.Call(28127, o, (e) => {
         e &&
-          e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys &&
+          e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs &&
           ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-            e.lkn,
-            15532,
+            e.O4n,
+            13273,
           );
       });
   }
@@ -750,11 +743,11 @@ class CreatureController extends ControllerBase_1.ControllerBase {
   }
   static async HardnessModeChangedRequest(e, r) {
     var e = ModelManager_1.ModelManager.CreatureModel.GetCreatureDataId(e),
-      t = Protocol_1.Aki.Protocol.Rls.create();
+      t = Protocol_1.Aki.Protocol.Scs.create();
     return (
-      (t.rkn = MathUtils_1.MathUtils.NumberToLong(e)),
-      (t.l7n = r),
-      await Net_1.Net.CallAsync(6504, t),
+      (t.P4n = MathUtils_1.MathUtils.NumberToLong(e)),
+      (t.kWn = r),
+      await Net_1.Net.CallAsync(23608, t),
       new Promise((e) => {
         e(!0);
       })
@@ -773,7 +766,7 @@ class CreatureController extends ControllerBase_1.ControllerBase {
         : (this.xe = e & unitMax)
       : (this.xe = idDefaultValue);
   }
-  static async u0r(t) {
+  static async hfr(t) {
     var o = ModelManager_1.ModelManager.CreatureModel,
       a = ModelManager_1.ModelManager.GameModeModel;
     if (a.HasGameModeData)
@@ -790,7 +783,7 @@ class CreatureController extends ControllerBase_1.ControllerBase {
           3,
           "[CreatureController.JoinSceneNotify] JoinSceneNotify",
         ),
-        (Net_1.Net.IsConsumeNotifyPaused = !0),
+        Net_1.Net.PauseAllCallback(),
         await ModelManager_1.ModelManager.LoginModel.WaitLoginPromise(),
         LevelSequencePlayer_1.LevelSequencePlayer.SetBanned(!0),
         EventSystem_1.EventSystem.Emit(
@@ -803,10 +796,10 @@ class CreatureController extends ControllerBase_1.ControllerBase {
             3,
             "[CreatureController.JoinSceneNotify] 场景清理完成",
           ),
-        (Net_1.Net.IsConsumeNotifyPaused = !1),
+        Net_1.Net.ResumeAllCallback(),
         (a.LoadingPhase = 2);
-      var l = t.fys,
-        e = (a.JoinSceneInfo = l).Rkn;
+      var l = t.qRs,
+        e = (a.JoinSceneInfo = l).n5n;
       if (
         ((o.LeavingLevel = !1),
         Log_1.Log.CheckInfo() &&
@@ -819,12 +812,12 @@ class CreatureController extends ControllerBase_1.ControllerBase {
         o.SetIsLoadingScene(!0),
         ControllerHolder_1.ControllerHolder.GameModeController.SetGameModeData(
           e,
-          l.w6n,
+          l.m7n,
         ))
       )
         if (
           (CreatureController.ResumeId(
-            MathUtils_1.MathUtils.LongToBigInt(t.vys),
+            MathUtils_1.MathUtils.LongToBigInt(t.GRs),
           ),
           o.SetInstanceId(e),
           (ModelManager_1.ModelManager.InstanceDungeonEntranceModel.InstanceId =
@@ -836,69 +829,82 @@ class CreatureController extends ControllerBase_1.ControllerBase {
         ) {
           PublicUtil_1.PublicUtil.RegisterEditorLocalConfig(),
             o.InitDynamicEntityDataConfig(),
-            o.SetWorldOwner(l.qps),
-            o.SetSceneId(l.W7n);
-          (t = l.tys),
+            o.SetWorldOwner(l.zys),
+            o.SetSceneId(l.IKn);
+          (t = l.MRs),
             (t =
-              (CreatureController.c0r(t.Hys),
+              (CreatureController.lfr(t.lDs),
               ModelManager_1.ModelManager.BlackboardModel.SetWorldBlackboardByProtocol(
-                l.Yps,
+                l.cIs,
               ),
               ModelManager_1.ModelManager.CombatMessageModel.SetLastMessageId(
-                MathUtils_1.MathUtils.LongToBigInt(l._ys),
+                MathUtils_1.MathUtils.LongToBigInt(l.ARs),
               ),
               (Global_1.Global.BaseCharacter = void 0),
-              l.ZEs));
+              l.vRs));
           FormationDataController_1.FormationDataController.RefreshPlayerEntities(
             t,
           );
           let e = void 0,
             r = void 0;
-          if (t)
-            for (const u of t) {
-              var n = u.aFn,
-                i = new ScenePlayerData_1.ScenePlayerData(n),
-                _ = (i.SetTimerStart(), []),
-                C = u.afs,
-                s = u.Y4n;
-              for (const g of u.HEs) {
-                var d = new SceneTeamData_1.SceneTeamRole();
-                (d.CreatureDataId = MathUtils_1.MathUtils.LongToNumber(g.rkn)),
-                  (d.RoleId = g.l3n),
-                  _.push(d),
-                  d.RoleId === s && i.ControlRole(d.CreatureDataId);
+          if (t) {
+            var n = new Array();
+            for (const g of t) {
+              var i = g.q5n,
+                _ = new ScenePlayerData_1.ScenePlayerData(i),
+                C = (_.SetTimerStart(), g.RVn),
+                s = new Array();
+              for (const y of g.CRs) {
+                var d = [];
+                for (const c of y.lRs) {
+                  var u = new SceneTeamData_1.SceneTeamRole();
+                  (u.CreatureDataId = MathUtils_1.MathUtils.LongToNumber(
+                    c.P4n,
+                  )),
+                    (u.RoleId = c.O6n),
+                    d.push(u),
+                    u.RoleId === C && _.ControlRole(u.CreatureDataId);
+                }
+                s.push({
+                  GroupType: y.ISs,
+                  GroupRoleList: d,
+                  CurrentRoleId: y.RVn,
+                  LivingState:
+                    ControllerHolder_1.ControllerHolder.SceneTeamController.GetLivingSate(
+                      y.HEs,
+                    ),
+                  IsRetain: y.dRs,
+                });
               }
-              o.AddScenePlayerData(u.aFn, i),
-                u.aFn === ModelManager_1.ModelManager.PlayerInfoModel.GetId() &&
+              n.push({ PlayerId: i, CurrentGroupType: g.ISs, Groups: s }),
+                o.AddScenePlayerData(g.q5n, _),
+                g.q5n === ModelManager_1.ModelManager.PlayerInfoModel.GetId() &&
                   (CharacterBuffController_1.default.SetHandlePrefix(
-                    u.VEs,
-                    u.$Es,
+                    g.aRs,
+                    g.hRs,
                   ),
-                  (e = u.$kn),
-                  (r = u.D3n)),
-                ModelManager_1.ModelManager.SceneTeamModel.UpdateGroup({
-                  PlayerId: n,
-                  GroupType: C,
-                  GroupRoleList: _,
-                  CurrentRoleId: s,
-                }),
-                ModelManager_1.ModelManager.SceneTeamModel.SwitchGroup(n, C);
+                  (e = g.y5n),
+                  (r = g.a8n));
             }
+            ModelManager_1.ModelManager.SceneTeamModel.UpdateAllPlayerData(n);
+          }
           ModelManager_1.ModelManager.OnlineModel.ResetContinuingChallengeConfirmState(),
             a.SetBornInfo(e, r),
             TimeOfDayController_1.TimeOfDayController.SyncSceneTime(
-              l.rys.fVn,
-              l.rys.pVn,
-              l.rys.Cys,
+              l.ERs.XHn,
+              l.ERs.$Hn,
+              l.ERs.bRs,
             ),
             EventSystem_1.EventSystem.Emit(
               EventDefine_1.EEventName.InitArea,
-              l.sys,
+              l.TRs,
             ),
-            o.SetRestoreEntityId(l.ays),
+            o.SetRestoreEntityId(l.LRs),
             ControllerHolder_1.ControllerHolder.GameAudioController.UpdateAudioState(
-              l.hfs,
+              l.TSs,
             ),
+            (ModelManager_1.ModelManager.BulletModel.SceneBulletOwnerId =
+              MathUtils_1.MathUtils.LongToNumber(l.$ra)),
             await ControllerHolder_1.ControllerHolder.GameModeController.Load(
               ModelManager_1.ModelManager.GameModeModel.JoinSceneInfo,
             );
@@ -958,7 +964,7 @@ class CreatureController extends ControllerBase_1.ControllerBase {
                   e &&
                     ModelManager_1.ModelManager.GameModeModel.MapDone &&
                     CreatureController.CreateEntityFromPending(
-                      Protocol_1.Aki.Protocol.jBs.Proto_Normal,
+                      Protocol_1.Aki.Protocol.xks.Proto_Normal,
                     ),
                   r.SetResult(e);
               },
@@ -970,7 +976,7 @@ class CreatureController extends ControllerBase_1.ControllerBase {
         TaskSystem_1.TaskSystem.Run());
     }
   }
-  static c0r(e) {
+  static lfr(e) {
     for (const r of e) this.CreateEntity(r);
   }
   static NotifyScenePlayerChanged() {
@@ -983,17 +989,18 @@ class CreatureController extends ControllerBase_1.ControllerBase {
   static CreateEntity(e, r = "Default") {
     var t,
       o,
-      a = MathUtils_1.MathUtils.LongToNumber(e.Ekn),
-      l = e.cVn;
+      a = MathUtils_1.MathUtils.LongToNumber(e.J4n),
+      l = e.HHn;
     if (
-      l === Protocol_1.Aki.Protocol.HBs.Proto_Npc &&
+      l === Protocol_1.Aki.Protocol.wks.Proto_Npc &&
       ModelManager_1.ModelManager.CreatureModel.GetOrAddDensityItem(a, e)
-        .DensityLevel > this.wVs
+        .DensityLevel > this.jQs
     )
       return (
-        (t = e.mVn),
-        (o = e.R5n),
+        (t = e.jHn),
+        (o = e._9n),
         void (
+          ModelManager_1.ModelManager.CreatureModel.EnableEntityLog &&
           Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "Entity",
@@ -1007,17 +1014,18 @@ class CreatureController extends ControllerBase_1.ControllerBase {
           )
         )
       );
-    return this.qVs(a, e, r);
+    return this.KQs(a, e, r);
   }
-  static qVs(r, t, o) {
+  static KQs(r, t, o) {
     var a = ModelManager_1.ModelManager.CreatureModel,
-      l = t.mVn,
-      n = t.R5n,
-      i = t.ivs,
-      _ = t.cVn,
-      C = t.d4n;
+      l = t.jHn,
+      n = t._9n,
+      i = t.pEs,
+      _ = t.HHn,
+      C = t.X8n;
     if (
-      (Log_1.Log.CheckInfo() &&
+      (ModelManager_1.ModelManager.CreatureModel.EnableEntityLog &&
+        Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Entity",
           3,
@@ -1046,13 +1054,13 @@ class CreatureController extends ControllerBase_1.ControllerBase {
       s.Init(t);
       let e = void 0;
       switch (_) {
-        case Protocol_1.Aki.Protocol.HBs.Proto_Monster:
-        case Protocol_1.Aki.Protocol.HBs.Proto_Animal:
-        case Protocol_1.Aki.Protocol.HBs.Proto_Npc:
-        case Protocol_1.Aki.Protocol.HBs.Proto_SceneItem:
-        case Protocol_1.Aki.Protocol.HBs.Proto_Custom:
-        case Protocol_1.Aki.Protocol.HBs.Proto_Vision:
-        case Protocol_1.Aki.Protocol.HBs.Proto_Player:
+        case Protocol_1.Aki.Protocol.wks.Proto_Monster:
+        case Protocol_1.Aki.Protocol.wks.Proto_Animal:
+        case Protocol_1.Aki.Protocol.wks.Proto_Npc:
+        case Protocol_1.Aki.Protocol.wks.Proto_SceneItem:
+        case Protocol_1.Aki.Protocol.wks.Proto_Custom:
+        case Protocol_1.Aki.Protocol.wks.Proto_Vision:
+        case Protocol_1.Aki.Protocol.wks.Proto_Player:
           e = Global_1.Global.WorldEntityHelper.CreateWorldEntity(s);
           break;
         default:
@@ -1085,7 +1093,8 @@ class CreatureController extends ControllerBase_1.ControllerBase {
             a.AddOwnerEntityInfo(r),
             (o = e.Entity.GetComponent(0)),
             a.CheckSetPrefabEntity(e),
-            Log_1.Log.CheckInfo() &&
+            ModelManager_1.ModelManager.CreatureModel.EnableEntityLog &&
+              Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "Entity",
                 3,
@@ -1147,127 +1156,97 @@ class CreatureController extends ControllerBase_1.ControllerBase {
         );
   }
   static DestroyEntity(e, r = !0) {
-    var t, o;
+    var t, o, a;
     e?.Valid &&
-      ((o = (t = e.Entity).GetComponent(0)),
-      Log_1.Log.CheckInfo() &&
+      ((t = (a = e.Entity).GetComponent(0)),
+      ModelManager_1.ModelManager.CreatureModel.EnableEntityLog &&
+        Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Entity",
           3,
           "[实体生命周期:删除实体] DestroyEntity开始",
-          ["CreatureDataId", o.GetCreatureDataId()],
+          ["CreatureDataId", t.GetCreatureDataId()],
           ["EntityId", e.Id],
           ["PendingRemove", r],
         ),
-      (t = t.GetComponent(1)?.Owner)?.IsValid() &&
-        Global_1.Global.BaseCharacter === t &&
+      (o = a.GetComponent(1)?.Owner)?.IsValid() &&
+        Global_1.Global.BaseCharacter === o &&
         Global_1.Global.CharacterController &&
         (Global_1.Global.CharacterController.UnPossess(),
         (Global_1.Global.BaseCharacter = void 0)),
-      t?.IsValid() &&
-        (t instanceof TsBaseCharacter_1.default && t.CharacterActorComponent
-          ? (t.CharacterActorComponent.DisableCollision(
+      a
+        .GetComponent(98)
+        ?.DisableTickWithLog("[CreatureController.DestroyEntity]"),
+      o?.IsValid() &&
+        (o instanceof TsBaseCharacter_1.default && o.CharacterActorComponent
+          ? (o.CharacterActorComponent.DisableCollision(
               "[CreatureController.DestroyEntity]",
             ),
-            t.CharacterActorComponent.DisableTick(
-              "[CreatureController.DestroyEntity]",
-            ),
-            t.CharacterActorComponent.DisableActor(
+            o.CharacterActorComponent.DisableActor(
               "[CreatureController.DestroyEntity]",
             ))
-          : (t.SetActorEnableCollision(!1),
-            t.SetActorTickEnabled(!1),
-            t.SetActorHiddenInGame(!0))),
+          : o instanceof UE.BP_BaseItem_C
+            ? a?.Disable("DestroyEntity")
+            : (o.SetActorEnableCollision(!1),
+              o.SetActorTickEnabled(!1),
+              o.SetActorHiddenInGame(!0))),
       r
         ? ModelManager_1.ModelManager.CreatureModel.AddPendingRemoveEntity(
-            o.GetCreatureDataId(),
+            t.GetCreatureDataId(),
             e,
           )
-        : ((r = o.GetCreatureDataId()),
+        : ((a = t.GetCreatureDataId()),
           Global_1.Global.WorldEntityHelper
-            ? ((o = Global_1.Global.WorldEntityHelper.Destroy(e))
+            ? ((r = Global_1.Global.WorldEntityHelper.Destroy(e))
                 ? ModelManager_1.ModelManager.WorldModel.AddDestroyActor(
-                    r,
+                    a,
                     e.Id,
-                    t,
+                    o,
                   )
                 : ControllerHolder_1.ControllerHolder.WorldController.DestroyEntityActor(
-                    r,
+                    a,
                     e.Id,
-                    t,
+                    o,
                     !1,
                   ),
-              Log_1.Log.CheckInfo() &&
+              ModelManager_1.ModelManager.CreatureModel.EnableEntityLog &&
+                Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info(
                   "Entity",
                   3,
                   "[实体生命周期:删除实体] DestroyEntity结束",
-                  ["CreatureDataId", r],
+                  ["CreatureDataId", a],
                   ["EntityId", e.Id],
-                  ["EntitySystem.DestroyEntity结果", o],
+                  ["EntitySystem.DestroyEntity结果", r],
                 ))
             : Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "Entity",
                 3,
                 "[实体生命周期:删除实体] WorldEntityHelper不存在，删除实体失败。",
-                ["CreatureDataId", r],
+                ["CreatureDataId", a],
                 ["EntityId", e.Id],
               )));
   }
   static LoadEntityAsync(t, o) {
-    if (t?.Valid) {
-      const a = t.Entity.GetComponent(0);
-      if (a.GetRemoveState()) o?.(3);
-      else if (t.IsInit) o?.(2);
+    var e = this.Cva(t, o);
+    e &&
+      this.dva.QueueToInvoke(
+        t,
+        (e, r) => {
+          r ? this.ufr(t, o) && this.cfr(t, o) : o?.(e);
+        },
+        e.GetCreatureDataId(),
+        e.GetPbDataId(),
+      );
+  }
+  static Cva(e, r) {
+    if (e?.Valid) {
+      var t = e.Entity.GetComponent(0);
+      if (t.GetRemoveState()) r?.(3);
       else {
-        let r = void 0;
-        ModelManager_1.ModelManager.PreloadModel.UseEntityProfilerInternal &&
-          (r = new LogProfiler_1.LogProfiler(
-            "预加载实体Profiler:" + a.GetCreatureDataId(),
-          )).Start();
-        const l = (e) => {
-          Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info(
-              "Preload",
-              3,
-              "预加载实体:结束",
-              ["CreatureDataId", a.GetCreatureDataId()],
-              ["PbDataId", a.GetPbDataId()],
-              ["是否成功", 2 === e],
-              ["预加载结果", e],
-            ),
-            ModelManager_1.ModelManager.PreloadModel
-              .UseEntityProfilerInternal &&
-              (r.Stop(), Log_1.Log.CheckInfo()) &&
-              Log_1.Log.Info("Preload", 3, r.ToString()),
-            !t?.Valid || a.GetRemoveState()
-              ? o?.(3)
-              : this.d0r(t, o) && this.C0r(t, o);
-        };
-        if (PreloadDefine_1.PreloadSetting.UseNewPreload) {
-          if (a.GetPreloadFinished()) return void l(2);
-          if (a.GetLoading())
-            return void ModelManager_1.ModelManager.PreloadModelNew.GetEntityAssetElement(
-              a.GetCreatureDataId(),
-            )?.AddCallback(l);
-        } else if (a.GetLoading()) return;
-        a.SetLoading(!0),
-          Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info(
-              "Preload",
-              3,
-              "预加载实体:开始",
-              ["CreatureDataId", a.GetCreatureDataId()],
-              ["PbDataId", a.GetPbDataId()],
-              ["Reason", "CreatureController.LoadEntityAsync"],
-            ),
-          PreloadDefine_1.PreloadSetting.UseNewPreload
-            ? PreloadControllerNew_1.PreloadControllerNew.PreloadEntity(t, r, l)
-            : PreloadController_1.PreloadController.PreloadEntity(t, r, (e) => {
-                e = e ? 2 : 1;
-                l(e);
-              });
+        if (!e.IsInit) return t;
+        r?.(2);
       }
     } else
       Log_1.Log.CheckError() &&
@@ -1276,9 +1255,63 @@ class CreatureController extends ControllerBase_1.ControllerBase {
           3,
           "[实体生命周期:创建实体] entity.Valid=false，创建实体失败。",
         ),
-        o?.(1);
+        r?.(1);
   }
-  static d0r(a, l) {
+  static gva(t, o, e) {
+    let a = void 0;
+    if (!e || (a = this.Cva(t, o))) {
+      const l = (a = a || t.Entity.GetComponent(0));
+      let r = void 0;
+      ModelManager_1.ModelManager.PreloadModel.UseEntityProfilerInternal &&
+        (r = new LogProfiler_1.LogProfiler(
+          "预加载实体Profiler:" + l.GetCreatureDataId(),
+        )).Start();
+      const n = (e) => {
+        Log_1.Log.CheckInfo() &&
+          Log_1.Log.Info(
+            "Preload",
+            3,
+            "预加载实体:结束",
+            ["CreatureDataId", l.GetCreatureDataId()],
+            ["PbDataId", l.GetPbDataId()],
+            ["是否成功", 2 === e],
+            ["预加载结果", e],
+          ),
+          ModelManager_1.ModelManager.PreloadModel.UseEntityProfilerInternal &&
+            (r.Stop(), Log_1.Log.CheckInfo()) &&
+            Log_1.Log.Info("Preload", 3, r.ToString()),
+          !t?.Valid || l.GetRemoveState() ? o?.(3) : o?.(e, !0);
+      };
+      if (PreloadDefine_1.PreloadSetting.UseNewPreload) {
+        if (l.GetPreloadFinished()) return n(2), !0;
+        if (l.GetLoading())
+          return (
+            ModelManager_1.ModelManager.PreloadModelNew.GetEntityAssetElement(
+              l.GetCreatureDataId(),
+            )?.AddCallback(n),
+            !0
+          );
+      } else if (l.GetLoading()) return !1;
+      l.SetLoading(!0),
+        Log_1.Log.CheckInfo() &&
+          Log_1.Log.Info(
+            "Preload",
+            3,
+            "预加载实体:开始",
+            ["CreatureDataId", l.GetCreatureDataId()],
+            ["PbDataId", l.GetPbDataId()],
+            ["Reason", "CreatureController.LoadEntityAsync"],
+          ),
+        PreloadDefine_1.PreloadSetting.UseNewPreload
+          ? PreloadControllerNew_1.PreloadControllerNew.PreloadEntity(t, r, n)
+          : PreloadController_1.PreloadController.PreloadEntity(t, r, (e) => {
+              e = e ? 2 : 1;
+              n(e);
+            });
+    }
+    return !0;
+  }
+  static ufr(a, l) {
     const n = a.Entity.GetComponent(0).GetDependenceEntities();
     return (
       !n?.length ||
@@ -1309,14 +1342,14 @@ class CreatureController extends ControllerBase_1.ControllerBase {
                   2 & e.Entity.Flag ||
                     CharacterController_1.CharacterController.SortItem(e));
             }
-            this.C0r(a, l);
+            this.cfr(a, l);
           }
         }
       }),
       !1)
     );
   }
-  static C0r(r, t) {
+  static cfr(r, t) {
     if (r?.Valid) {
       const o = r.Entity.GetComponent(0);
       o.GetRemoveState()
@@ -1327,14 +1360,14 @@ class CreatureController extends ControllerBase_1.ControllerBase {
               e
                 ? o.GetRemoveState()
                   ? t?.(3)
-                  : CreatureController.g0r(r, (e) => {
+                  : CreatureController.mfr(r, (e) => {
                       e
                         ? o.GetRemoveState()
                           ? t?.(3)
                           : (CharacterController_1.CharacterController.ActivateEntity(
                               r,
                             ),
-                            CreatureController.f0r(r) ? t?.(2) : t?.(1))
+                            CreatureController.dfr(r) ? t?.(2) : t?.(1))
                         : t?.(1);
                     })
                 : t?.(1);
@@ -1342,19 +1375,20 @@ class CreatureController extends ControllerBase_1.ControllerBase {
           );
     } else t?.(3);
   }
-  static g0r(n, i) {
+  static mfr(n, i) {
     if (GlobalData_1.GlobalData.Networking()) {
       const _ = n.Entity.GetComponent(0);
       switch (_.GetEntityType()) {
-        case Protocol_1.Aki.Protocol.HBs.Proto_Custom:
-        case Protocol_1.Aki.Protocol.HBs.Proto_SceneItem:
-        case Protocol_1.Aki.Protocol.HBs.Proto_Animal:
+        case Protocol_1.Aki.Protocol.wks.Proto_Custom:
+        case Protocol_1.Aki.Protocol.wks.Proto_SceneItem:
+        case Protocol_1.Aki.Protocol.wks.Proto_Animal:
           return void (i && i(!0));
       }
-      var e = Protocol_1.Aki.Protocol.CYn.create();
+      var e = Protocol_1.Aki.Protocol.les.create();
       const C = _.GetCreatureDataId();
-      (e.rkn = MathUtils_1.MathUtils.NumberToLong(C)),
-        Log_1.Log.CheckInfo() &&
+      (e.P4n = MathUtils_1.MathUtils.NumberToLong(C)),
+        ModelManager_1.ModelManager.CreatureModel.EnableEntityLog &&
+          Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "Entity",
             3,
@@ -1363,14 +1397,14 @@ class CreatureController extends ControllerBase_1.ControllerBase {
             ["PbDataId", _.GetPbDataId()],
             ["EntityId", n.Id],
           ),
-        Net_1.Net.Call(29051, e, (e) => {
+        Net_1.Net.Call(14690, e, (e) => {
           let r = !1;
           if (e)
-            if (e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys)
+            if (e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs)
               (r = !0),
                 ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-                  e.lkn,
-                  25559,
+                  e.O4n,
+                  28302,
                   void 0,
                   !1,
                   !0,
@@ -1378,14 +1412,18 @@ class CreatureController extends ControllerBase_1.ControllerBase {
             else {
               CreatureController.SetEntityEnable(
                 n.Entity,
-                e.d4n,
+                e.X8n,
                 "EntityActiveResponse",
               );
-              var t = WorldGlobal_1.WorldGlobal.ToUeVector(e.M3n),
-                o = WorldGlobal_1.WorldGlobal.ToUeRotator(e.S3n);
-              n.Entity.GetComponent(1).SetActorLocationAndRotation(t, o);
-              for (const l of e.Dvs) {
-                var a = l.Mqs;
+              var t = WorldGlobal_1.WorldGlobal.ToUeVector(e.e8n),
+                o = WorldGlobal_1.WorldGlobal.ToUeRotator(e.t8n);
+              n.Entity.GetComponent(1).SetActorLocationAndRotation(
+                t,
+                o,
+                "ActivateEntityRequest",
+              );
+              for (const l of e.jEs) {
+                var a = l.h3s;
                 _.ComponentDataMap.set(a, l);
               }
             }
@@ -1410,7 +1448,8 @@ class CreatureController extends ControllerBase_1.ControllerBase {
                   ["EntityConfigType", _.GetEntityConfigType()],
                   ["PbDataId", _.GetPbDataId()],
                 ),
-              Log_1.Log.CheckInfo() &&
+              ModelManager_1.ModelManager.CreatureModel.EnableEntityLog &&
+                Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info(
                   "Entity",
                   3,
@@ -1423,11 +1462,12 @@ class CreatureController extends ControllerBase_1.ControllerBase {
         });
     } else i && i(!0);
   }
-  static f0r(e) {
+  static dfr(e) {
     var r = e.Entity.GetComponent(0),
       t = (r.SetLoading(!1), e.Entity.GetComponent(1)?.Owner);
-    return r.GetEntityType() === Protocol_1.Aki.Protocol.HBs.Proto_Custom || t
-      ? (Log_1.Log.CheckInfo() &&
+    return r.GetEntityType() === Protocol_1.Aki.Protocol.wks.Proto_Custom || t
+      ? (ModelManager_1.ModelManager.CreatureModel.EnableEntityLog &&
+          Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "Entity",
             3,
@@ -1443,7 +1483,7 @@ class CreatureController extends ControllerBase_1.ControllerBase {
           "CreatureController.AfterEntityActivate",
         ),
         CreatureController.NotifyAddEntity(
-          Protocol_1.Aki.Protocol.jBs.Proto_Normal,
+          Protocol_1.Aki.Protocol.xks.Proto_Normal,
           e,
           t,
         ) &&
@@ -1585,7 +1625,7 @@ class CreatureController extends ControllerBase_1.ControllerBase {
     for (const o of ModelManager_1.ModelManager.CreatureModel.GetAllEntities())
       o.IsInit &&
         o.Entity.GetComponent(0).GetOwnerId() === e &&
-        (t = o.Entity.GetComponent(92)) &&
+        (t = o.Entity.GetComponent(94)) &&
         t.ChangeLockTag(r);
   }
   static ChangeLockTagByTeleportPbDataId(e, r) {
@@ -1593,7 +1633,7 @@ class CreatureController extends ControllerBase_1.ControllerBase {
     for (const o of ModelManager_1.ModelManager.CreatureModel.GetAllEntities())
       o.IsInit &&
         o.Entity.GetComponent(0).GetPbDataId() === e &&
-        (t = o.Entity.GetComponent(92)) &&
+        (t = o.Entity.GetComponent(94)) &&
         t.ChangeLockTag(r);
   }
   static LoadActorByPbModelConfig(e, r) {
@@ -1637,7 +1677,7 @@ class CreatureController extends ControllerBase_1.ControllerBase {
     let a = o.GetEntityWithDelayRemoveContainer(e);
     return (
       !!(a =
-        a || r !== Protocol_1.Aki.Protocol.USs.r3n
+        a || r !== Protocol_1.Aki.Protocol.YTs.P6n
           ? a
           : o.DelayRemoveContainer.GetEntityByPbDataId(t))?.Valid &&
       (o.RemoveDelayRemoveEntity(a.CreatureDataId),
@@ -1650,7 +1690,7 @@ class CreatureController extends ControllerBase_1.ControllerBase {
     let a = o.GetPendingRemoveEntity(e);
     return (
       !!(a =
-        a || r !== Protocol_1.Aki.Protocol.USs.r3n
+        a || r !== Protocol_1.Aki.Protocol.YTs.P6n
           ? a
           : o.GetPendingRemoveEntityByPbDataId(t))?.Valid &&
       (o.RemovePendingRemoveEntity(a.CreatureDataId),
@@ -1661,33 +1701,33 @@ class CreatureController extends ControllerBase_1.ControllerBase {
   static EntityLogicToEntityType(e) {
     switch (e) {
       case "Item":
-        return Protocol_1.Aki.Protocol.HBs.Proto_SceneItem;
+        return Protocol_1.Aki.Protocol.wks.Proto_SceneItem;
       case "Npc":
-        return Protocol_1.Aki.Protocol.HBs.Proto_Npc;
+        return Protocol_1.Aki.Protocol.wks.Proto_Npc;
       case "Monster":
-        return Protocol_1.Aki.Protocol.HBs.Proto_Monster;
+        return Protocol_1.Aki.Protocol.wks.Proto_Monster;
       case "Vision":
-        return Protocol_1.Aki.Protocol.HBs.Proto_Vision;
+        return Protocol_1.Aki.Protocol.wks.Proto_Vision;
       default:
-        return Protocol_1.Aki.Protocol.HBs.Proto_Custom;
+        return Protocol_1.Aki.Protocol.wks.Proto_Custom;
     }
   }
   static async SwitchBigWorldRequest(e, r) {
-    var t = Protocol_1.Aki.Protocol.V1s.create(),
-      e = ((t.vFn = e), (t.Pkn = r), await Net_1.Net.CallAsync(7170, t));
+    var t = Protocol_1.Aki.Protocol.Gds.create(),
+      e = ((t.X5n = e), (t.a5n = r), await Net_1.Net.CallAsync(25068, t));
     return !!e;
   }
   static MonsterBoomRequest(e, r) {
     CombatMessage_1.CombatNet.Call(
-      29345,
+      4289,
       e,
-      Protocol_1.Aki.Protocol.SNn.create({ $7n: r }),
+      Protocol_1.Aki.Protocol.Y3n.create({ DKn: r }),
     );
   }
   static ParseTravelConfig(e, r, t) {
     var o = new SeamlessTravelDefine_1.SeamlessTravelContext();
     switch (e) {
-      case Protocol_1.Aki.Protocol.wkn.Proto_PlayEffect:
+      case Protocol_1.Aki.Protocol.l5n.Proto_PlayEffect:
         (o.EffectPath = r),
           SeamlessTravelController_1.SeamlessTravelController.EnableSeamlessTravel(
             Global_1.Global.BaseCharacter,
@@ -1695,13 +1735,13 @@ class CreatureController extends ControllerBase_1.ControllerBase {
             o,
           );
         break;
-      case Protocol_1.Aki.Protocol.wkn.Proto_PlayMp4:
+      case Protocol_1.Aki.Protocol.l5n.Proto_PlayMp4:
         ControllerHolder_1.ControllerHolder.GameModeController.SetTravelMp4(
           !0,
           r,
         );
         break;
-      case Protocol_1.Aki.Protocol.wkn.Proto_CenterText:
+      case Protocol_1.Aki.Protocol.l5n.Proto_CenterText:
         (ModelManager_1.ModelManager.GameModeModel.ShowCenterTextFlow = t),
           (ModelManager_1.ModelManager.GameModeModel.UseShowCenterText = !0);
     }
@@ -1739,13 +1779,13 @@ class CreatureController extends ControllerBase_1.ControllerBase {
                 a,
               )),
           ModelManager_1.ModelManager.CreatureModel.DisableLock.delete(e.Id),
-          o && CreatureController.p0r(e, r)));
+          o && CreatureController.Cfr(e, r)));
   }
   static SetActorVisible(e, r, t, o, a, l = !1) {
     var n, i;
     e?.Valid &&
       ((n = e.GetComponent(1)),
-      (i = e.GetComponent(89)),
+      (i = e.GetComponent(91)),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Entity",
@@ -1760,12 +1800,12 @@ class CreatureController extends ControllerBase_1.ControllerBase {
       i?.SetIsInGame(r),
       this.SetActorMovable(e, o, a),
       l) &&
-      CreatureController.v0r(e, r);
+      CreatureController.gfr(e, r);
   }
   static SetActorMovable(e, r, t) {
     var o,
-      a = e.GetComponent(98),
-      l = e.GetComponent(99);
+      a = e.GetComponent(100),
+      l = e.GetComponent(101);
     a &&
       l &&
       !r !=
@@ -1785,35 +1825,35 @@ class CreatureController extends ControllerBase_1.ControllerBase {
             o,
           )));
   }
-  static p0r(e, r) {
+  static Cfr(e, r) {
     var t = e.GetComponent(0),
-      o = Protocol_1.Aki.Protocol.tNn.create();
-    (o.Ekn = MathUtils_1.MathUtils.NumberToLong(t.GetCreatureDataId())),
-      (o.d4n = r),
-      CombatMessage_1.CombatNet.Call(18320, e, o, () => {});
+      o = Protocol_1.Aki.Protocol.R3n.create();
+    (o.J4n = MathUtils_1.MathUtils.NumberToLong(t.GetCreatureDataId())),
+      (o.X8n = r),
+      CombatMessage_1.CombatNet.Call(12630, e, o, () => {});
   }
-  static v0r(e, r) {
+  static gfr(e, r) {
     var t, o;
     ModelManager_1.ModelManager.GameModeModel.IsMulti &&
       ((t = e.GetComponent(0)),
-      ((o = Protocol_1.Aki.Protocol.NNn.create()).Ekn =
+      ((o = Protocol_1.Aki.Protocol.d4n.create()).J4n =
         MathUtils_1.MathUtils.NumberToLong(t.GetCreatureDataId())),
-      (o.C4n = r),
-      CombatMessage_1.CombatNet.Call(12326, e, o, () => {}));
+      (o.$8n = r),
+      CombatMessage_1.CombatNet.Call(8538, e, o, () => {}));
   }
   static RefreshDensityLevel() {
     var e =
       GameQualitySettingsManager_1.GameQualitySettingsManager.Get().GetCurrentQualityInfo()
         .NpcDensity;
-    if (this.wVs !== e) {
+    if (this.jQs !== e) {
       for (
         var r, t, o, a = ModelManager_1.ModelManager.CreatureModel;
-        this.wVs < e;
+        this.jQs < e;
 
       ) {
-        ++this.wVs;
-        for ([r, t] of a.GetDensityLevelGroup(this.wVs)) {
-          var l = this.qVs(r, t.EntityData, "Density");
+        ++this.jQs;
+        for ([r, t] of a.GetDensityLevelGroup(this.jQs)) {
+          var l = this.KQs(r, t.EntityData, "Density");
           l &&
             (ControllerHolder_1.ControllerHolder.CreatureController.LoadEntityAsync(
               l,
@@ -1821,54 +1861,55 @@ class CreatureController extends ControllerBase_1.ControllerBase {
             AoiController_1.AoiController.AddMonsterSizeTag(l));
         }
       }
-      for (; this.wVs > e; ) {
-        for ([o] of a.GetDensityLevelGroup(this.wVs))
-          this.a0r(
+      for (; this.jQs > e; ) {
+        for ([o] of a.GetDensityLevelGroup(this.jQs))
+          this.rfr(
             o,
             "DensityLevelChanged",
-            Protocol_1.Aki.Protocol.WBs.Proto_RemoveTypeForce,
+            Protocol_1.Aki.Protocol.bks.Proto_RemoveTypeForce,
           );
-        --this.wVs;
+        --this.jQs;
       }
     }
   }
 }
-((exports.CreatureController = CreatureController).xe = idDefaultValue),
-  (CreatureController.s0r = void 0),
-  (CreatureController.h0r = void 0),
-  (CreatureController.wVs = 2),
-  (CreatureController.M0r = []),
-  (CreatureController.Vgr = (e) => {
+(exports.CreatureController = CreatureController),
+  ((_a = CreatureController).xe = idDefaultValue),
+  (CreatureController.ofr = void 0),
+  (CreatureController.nfr = void 0),
+  (CreatureController.jQs = 2),
+  (CreatureController.ffr = []),
+  (CreatureController.O0r = (e) => {
     ModelManager_1.ModelManager.GameModeModel.IsTeleport
-      ? CreatureController.M0r.push(e)
-      : CreatureController.n0r(e);
+      ? CreatureController.ffr.push(e)
+      : CreatureController.ifr(e);
   }),
-  (CreatureController.r0r = () => {
-    for (const e of CreatureController.M0r) CreatureController.n0r(e);
-    CreatureController.M0r = [];
+  (CreatureController.tfr = () => {
+    for (const e of CreatureController.ffr) CreatureController.ifr(e);
+    CreatureController.ffr = [];
   }),
-  (CreatureController.Hgr = (e) => {
+  (CreatureController.k0r = (e) => {
     var r = ModelManager_1.ModelManager.CreatureModel.GetEntity(
-      MathUtils_1.MathUtils.LongToNumber(e.rkn),
+      MathUtils_1.MathUtils.LongToNumber(e.P4n),
     );
     if (r?.Valid) {
-      var t = r.Entity.GetComponent(157);
+      var t = r.Entity.GetComponent(159);
       t ||
         (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "World",
             20,
             "[CreatureController.UpdateSysBuffNotify] 更新Buff失败, Entity没有AbilityComponent。",
-            ["CreatureDataId", e.rkn],
+            ["CreatureDataId", e.P4n],
           ));
-      for (const l of e.xys) {
-        var o = MathUtils_1.MathUtils.LongToBigInt(l.JFn),
-          a = l.$Vn;
+      for (const l of e.zRs) {
+        var o = MathUtils_1.MathUtils.LongToBigInt(l.L6n),
+          a = l.Tjn;
         t?.RemoveBuffByServerIdLocal(a, "刷新系统buff, serverId=" + a),
           t?.AddBuffWithServerId(
             o,
-            l.r3n,
-            l.QVn,
+            l.P6n,
+            l.Ijn,
             a,
             "刷新系统buff, serverId=" + a,
           );
@@ -1879,15 +1920,15 @@ class CreatureController extends ControllerBase_1.ControllerBase {
           "World",
           20,
           "[CreatureController.UpdateSysBuffNotify] 更新Buff失败, Entity无效或不存在。",
-          ["CreatureDataId", e.rkn],
+          ["CreatureDataId", e.P4n],
         );
   }),
-  (CreatureController.jgr = (e) => {
+  (CreatureController.F0r = (e) => {
     var r = ModelManager_1.ModelManager.CreatureModel.GetEntity(
-      MathUtils_1.MathUtils.LongToNumber(e.rkn),
+      MathUtils_1.MathUtils.LongToNumber(e.P4n),
     );
     if (r?.Valid) {
-      var t = r.Entity.GetComponent(157);
+      var t = r.Entity.GetComponent(159);
       if (
         (t ||
           (Log_1.Log.CheckError() &&
@@ -1895,11 +1936,11 @@ class CreatureController extends ControllerBase_1.ControllerBase {
               "World",
               20,
               "[CreatureController.RemoveSysBuffNotify] 移除Buff失败, Entity没有AbilityComponent。",
-              ["CreatureDataId", e.rkn],
+              ["CreatureDataId", e.P4n],
             )),
         r.IsInit)
       )
-        for (const o of e.j4n)
+        for (const o of e.IVn)
           t?.RemoveBuffByServerIdLocal(o, "服务端移除系统buff, serverId=" + o);
     } else
       Log_1.Log.CheckError() &&
@@ -1907,18 +1948,18 @@ class CreatureController extends ControllerBase_1.ControllerBase {
           "World",
           20,
           "[CreatureController.RemoveSysBuffNotify] 移除Buff失败, Entity无效或不存在。",
-          ["CreatureDataId", e.rkn],
+          ["CreatureDataId", e.P4n],
         );
   }),
-  (CreatureController.Wgr = (e) => {
+  (CreatureController.V0r = (e) => {
     BattleLogicController_1.BattleLogicController.ExecuteEntityLivingStatusNotify(
       e,
     );
   }),
-  (CreatureController.Qgr = (e) => {
-    for (const o of e.Eys) {
+  (CreatureController.j0r = (e) => {
+    for (const o of e.FRs) {
       var r = ModelManager_1.ModelManager.CreatureModel.GetEntity(
-        MathUtils_1.MathUtils.LongToNumber(o.Ekn),
+        MathUtils_1.MathUtils.LongToNumber(o.J4n),
       );
       if (!r?.Valid)
         return void (
@@ -1927,33 +1968,33 @@ class CreatureController extends ControllerBase_1.ControllerBase {
             "World",
             20,
             "[CreatureController.MonsterAttributeArrayNotify] 更新Monster属性失败, Entity无效或不存在。",
-            ["CreatureDataId", o.Ekn],
+            ["CreatureDataId", o.J4n],
           )
         );
-      var t = r.Entity.GetComponent(156);
+      var t = r.Entity.GetComponent(158);
       if (t)
-        for (const a of Object.keys(o.dfs)) t.SetBaseValue(Number(a), o.dfs[a]);
+        for (const a of Object.keys(o.PSs)) t.SetBaseValue(Number(a), o.PSs[a]);
     }
   }),
-  (CreatureController.bgr = (e) => {
-    var r = MathUtils_1.MathUtils.LongToNumber(e.rkn),
+  (CreatureController.x0r = (e) => {
+    var r = MathUtils_1.MathUtils.LongToNumber(e.P4n),
       r = ModelManager_1.ModelManager.CreatureModel.GetEntity(r),
-      t = MathUtils_1.MathUtils.LongToNumber(e.CFn);
-    r.Entity.GetComponent(34)?.SetVisionSkillInformationList(e.Wps, t),
+      t = MathUtils_1.MathUtils.LongToNumber(e.j5n);
+    r.Entity.GetComponent(35)?.SetVisionSkillInformationList(e.hIs, t),
       (r.Entity.GetComponent(0).VisionSkillServerEntityId = t),
       EventSystem_1.EventSystem.EmitWithTarget(
         r,
         EventDefine_1.EEventName.EntityVisionSkillChanged,
       );
   }),
-  (CreatureController.qgr = (e) => {
+  (CreatureController.w0r = (e) => {
     var r,
-      t = MathUtils_1.MathUtils.LongToNumber(e.Ekn),
+      t = MathUtils_1.MathUtils.LongToNumber(e.J4n),
       o = ModelManager_1.ModelManager.CreatureModel.GetEntity(t);
     o
       ? ((r = o.Entity.GetComponent(0)),
-        e.aFn && r.SetPlayerId(e.aFn),
-        e.aFn === ModelManager_1.ModelManager.CreatureModel.GetPlayerId() &&
+        e.q5n && r.SetPlayerId(e.q5n),
+        e.q5n === ModelManager_1.ModelManager.CreatureModel.GetPlayerId() &&
           ((r = o.Entity.GetComponent(3).Actor)
             ? r.Kuro_SetRole(2)
             : Log_1.Log.CheckError() &&
@@ -1973,11 +2014,11 @@ class CreatureController extends ControllerBase_1.ControllerBase {
   }),
   (CreatureController.EntityOnLandedPush = (e) => {
     e = ModelManager_1.ModelManager.CreatureModel.GetCreatureDataId(e.Id);
-    CreatureController._0r(e);
+    CreatureController.afr(e);
   }),
   (CreatureController.EntityOnLandedNotify = (e) => {
     var r,
-      e = MathUtils_1.MathUtils.LongToNumber(e.Ekn);
+      e = MathUtils_1.MathUtils.LongToNumber(e.J4n);
     ModelManager_1.ModelManager.CreatureModel.ExistEntity(e)
       ? (r = ModelManager_1.ModelManager.CreatureModel.GetEntity(e))?.Valid &&
         EventSystem_1.EventSystem.EmitWithTarget(
@@ -1992,82 +2033,84 @@ class CreatureController extends ControllerBase_1.ControllerBase {
           ["CreatureDataId", e],
         );
   }),
-  (CreatureController.Bgr = (e) => {
-    var r, t, o;
-    ModelManager_1.ModelManager.GameModeModel.HasGameModeData
-      ? ((ModelManager_1.ModelManager.GameModeModel.HasGameModeData = !1),
-        (ModelManager_1.ModelManager.GameModeModel.JoinSceneInfo = void 0),
-        (r = e.aFn),
-        (t = ModelManager_1.ModelManager.CreatureModel.GetPlayerId()),
-        (o = e.Bkn),
-        Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info(
-            "World",
-            17,
-            "[CreatureController.LeaveSceneNotify] LeaveSceneNotify",
-            ["leavePlayerId", r],
-            ["myPlayerId]", t],
-            ["option", o],
-          ),
-        r === t
-          ? ModelManager_1.ModelManager.CreatureModel.GetIsLoadingScene()
-            ? Log_1.Log.CheckWarn() &&
+  (CreatureController.P0r = (e) => {
+    var r = ModelManager_1.ModelManager.CreatureModel.GetPlayerId(),
+      t = e.h5n,
+      o = e.q5n;
+    Log_1.Log.CheckInfo() &&
+      Log_1.Log.Info(
+        "World",
+        17,
+        "[CreatureController.LeaveSceneNotify] LeaveSceneNotify",
+        ["leavePlayerId", o],
+        ["myPlayerId]", r],
+        ["option", t],
+      ),
+      o !== r
+        ? (ModelManager_1.ModelManager.CreatureModel.RemoveScenePlayerData(o),
+          CreatureController.NotifyScenePlayerChanged(),
+          EventSystem_1.EventSystem.Emit(
+            EventDefine_1.EEventName.ScenePlayerLeaveScene,
+            e.q5n,
+          ))
+        : ModelManager_1.ModelManager.GameModeModel.HasGameModeData
+          ? ((ModelManager_1.ModelManager.GameModeModel.HasGameModeData = !1),
+            (ModelManager_1.ModelManager.GameModeModel.JoinSceneInfo = void 0),
+            o === r &&
+              (ModelManager_1.ModelManager.CreatureModel.GetIsLoadingScene()
+                ? Log_1.Log.CheckWarn() &&
+                  Log_1.Log.Warn(
+                    "World",
+                    17,
+                    "[CreatureController.LeaveSceneNotify] 场景加载中",
+                  )
+                : (ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance() &&
+                    EventSystem_1.EventSystem.Emit(
+                      EventDefine_1.EEventName.LeaveInstanceDungeon,
+                    ),
+                  t &&
+                    CreatureController.ParseTravelConfig(
+                      e.h5n.l5n,
+                      e.h5n.d5n,
+                      e.h5n.m5n,
+                    ),
+                  ModelManager_1.ModelManager.SeamlessTravelModel
+                    .IsSeamlessTravel
+                    ? SeamlessTravelController_1.SeamlessTravelController.PreLeaveLevel()
+                    : ModelManager_1.ModelManager.GameModeModel
+                        .UseShowCenterText ||
+                      BlackScreenController_1.BlackScreenController.AddBlackScreen(
+                        "None",
+                        "LeaveScene",
+                      ),
+                  EventSystem_1.EventSystem.Emit(
+                    EventDefine_1.EEventName.DoLeaveLevel,
+                  ),
+                  ModelManager_1.ModelManager.SeamlessTravelModel
+                    .IsSeamlessTravel &&
+                    SeamlessTravelController_1.SeamlessTravelController.PostLeaveLevel())))
+          : (Log_1.Log.CheckWarn() &&
+              Log_1.Log.Warn(
+                "World",
+                3,
+                "不存在场景数据，服务器下发LeaveSceneNotify流程有问题",
+              ),
+            Log_1.Log.CheckWarn() &&
               Log_1.Log.Warn(
                 "World",
                 17,
-                "[CreatureController.LeaveSceneNotify] 场景加载中",
-              )
-            : (ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance() &&
-                EventSystem_1.EventSystem.Emit(
-                  EventDefine_1.EEventName.LeaveInstanceDungeon,
-                ),
-              o &&
-                CreatureController.ParseTravelConfig(
-                  e.Bkn.wkn,
-                  e.Bkn.Nkn,
-                  e.Bkn.Okn,
-                ),
-              ModelManager_1.ModelManager.SeamlessTravelModel.IsSeamlessTravel
-                ? SeamlessTravelController_1.SeamlessTravelController.PreLeaveLevel()
-                : ModelManager_1.ModelManager.GameModeModel.UseShowCenterText ||
-                  BlackScreenController_1.BlackScreenController.AddBlackScreen(
-                    "None",
-                    "LeaveScene",
-                  ),
-              EventSystem_1.EventSystem.Emit(
-                EventDefine_1.EEventName.DoLeaveLevel,
-              ),
-              ModelManager_1.ModelManager.SeamlessTravelModel
-                .IsSeamlessTravel &&
-                SeamlessTravelController_1.SeamlessTravelController.PostLeaveLevel())
-          : (ModelManager_1.ModelManager.CreatureModel.RemoveScenePlayerData(r),
-            CreatureController.NotifyScenePlayerChanged(),
-            EventSystem_1.EventSystem.Emit(
-              EventDefine_1.EEventName.ScenePlayerLeaveScene,
-              e.aFn,
-            )))
-      : (Log_1.Log.CheckWarn() &&
-          Log_1.Log.Warn(
-            "World",
-            3,
-            "不存在场景数据，服务器下发LeaveSceneNotify流程有问题",
-          ),
-        Log_1.Log.CheckWarn() &&
-          Log_1.Log.Warn(
-            "World",
-            17,
-            "[CreatureController.LeaveSceneNotify] 副本Id不存在",
-          ));
+                "[CreatureController.LeaveSceneNotify] 副本Id不存在",
+              ));
   }),
-  (CreatureController.e0r = (e) => {
+  (CreatureController.J0r = (e) => {
     var r;
-    e.gys &&
-      (e = e.aFn) !==
+    e.BRs &&
+      (e = e.q5n) !==
         (r = ModelManager_1.ModelManager.CreatureModel).GetPlayerId() &&
       r.GetScenePlayerData(e)?.SetRemoteSceneLoading(!0);
   }),
-  (CreatureController.t0r = (e) => {
-    const r = e.aFn;
+  (CreatureController.z0r = (e) => {
+    const r = e.q5n;
     e = ModelManager_1.ModelManager.CreatureModel;
     if (r !== e.GetPlayerId()) {
       e = e.GetScenePlayerData(r);
@@ -2108,19 +2151,19 @@ class CreatureController extends ControllerBase_1.ControllerBase {
           ]);
     }
   }),
-  (CreatureController.i0r = (e) => {
-    e = e.H3n;
+  (CreatureController.Z0r = (e) => {
+    e = e.y8n;
     HotFixUtils_1.HotFixUtils.EvalScript(e);
   }),
   (CreatureController.SceneLoadingTimeOutNotify = (e) => {
     Log_1.Log.CheckInfo() && Log_1.Log.Info("World", 5, "世界加载超时");
   }),
-  (CreatureController.Jgr = (e) => {
-    var r = MathUtils_1.MathUtils.LongToNumber(e.rkn),
+  (CreatureController.X0r = (e) => {
+    var r = MathUtils_1.MathUtils.LongToNumber(e.P4n),
       t = ModelManager_1.ModelManager.CreatureModel.GetEntity(r);
     t
-      ? ((t = t.Entity.GetComponent(185))?.AddTag(1008164187),
-        e.aFn !== ModelManager_1.ModelManager.CreatureModel.GetPlayerId() &&
+      ? ((t = t.Entity.GetComponent(188))?.AddTag(1008164187),
+        e.q5n !== ModelManager_1.ModelManager.CreatureModel.GetPlayerId() &&
           (t?.AddTag(1961456719), t?.AddTag(1800978500)))
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
@@ -2130,12 +2173,12 @@ class CreatureController extends ControllerBase_1.ControllerBase {
           ["CreatureDataId", r],
         );
   }),
-  (CreatureController.Ggr = (e) => {
-    var r = MathUtils_1.MathUtils.LongToNumber(e.rkn),
+  (CreatureController.B0r = (e) => {
+    var r = MathUtils_1.MathUtils.LongToNumber(e.P4n),
       t = ModelManager_1.ModelManager.CreatureModel.GetEntity(r);
     t
-      ? (t.Entity.GetComponent(0).SetHardnessModeId(e.l7n),
-        (t = t.Entity.GetComponent(51)).SetHardnessModeId(e.l7n),
+      ? (t.Entity.GetComponent(0).SetHardnessModeId(e.kWn),
+        (t = t.Entity.GetComponent(52)).SetHardnessModeId(e.kWn),
         t.RefreshHardnessModeConfig())
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
@@ -2146,7 +2189,7 @@ class CreatureController extends ControllerBase_1.ControllerBase {
         );
   }),
   (CreatureController.JoinSceneNotify = (e) => {
-    CreatureController.u0r(e);
+    CreatureController.hfr(e);
   }),
   (CreatureController.AfterJoinSceneNotify = () => {
     Log_1.Log.CheckInfo() &&
@@ -2166,11 +2209,11 @@ class CreatureController extends ControllerBase_1.ControllerBase {
             "未下发场景数据,就下发了AfterJoinSceneNotify，服务器流程有问题",
           );
   }),
-  (CreatureController.Ngr = (e) => {
+  (CreatureController.b0r = (e) => {
     let r = void 0,
       t = void 0;
-    if (e.fIs && -1 !== e.fIs) {
-      var o = ModelManager_1.ModelManager.CreatureModel.GetEntityData(e.fIs);
+    if (e.qDs && -1 !== e.qDs) {
+      var o = ModelManager_1.ModelManager.CreatureModel.GetEntityData(e.qDs);
       if (!o)
         return void (
           Log_1.Log.CheckError() &&
@@ -2178,7 +2221,7 @@ class CreatureController extends ControllerBase_1.ControllerBase {
             "World",
             3,
             "[CreatureController.SceneSubLevelsChangedNotify] 要传送的TeleportEntityId不存在。",
-            ["TeleportEntityId", e.fIs],
+            ["TeleportEntityId", e.qDs],
           )
         );
       var a = o.Transform.Pos,
@@ -2192,8 +2235,8 @@ class CreatureController extends ControllerBase_1.ControllerBase {
     const i = new Array();
     if (ModelManager_1.ModelManager.GameModeModel.SubLevelMap)
       for (var [_] of ModelManager_1.ModelManager.GameModeModel.SubLevelMap)
-        (e.CIs.includes(_) ? n : l).push(_);
-    for (const s of e.CIs) n.includes(s) || i.push(s);
+        (e.bDs.includes(_) ? n : l).push(_);
+    for (const s of e.bDs) n.includes(s) || i.push(s);
     const C = ModelManager_1.ModelManager.AutoRunModel;
     C.IsInAfterRunningState() &&
       C.ShouldTpAfterSkip &&
@@ -2219,14 +2262,14 @@ class CreatureController extends ControllerBase_1.ControllerBase {
         },
       );
   }),
-  (CreatureController.Ogr = (e) => {
-    CreatureController.LoadOrUnloadSubLevel(e.vIs);
+  (CreatureController.q0r = (e) => {
+    CreatureController.LoadOrUnloadSubLevel(e.GDs);
   }),
-  (CreatureController.kgr = (e) => {
+  (CreatureController.G0r = (e) => {
     let r = void 0,
       t = void 0;
-    if (e.rkn && -1 !== e.rkn) {
-      var o = ModelManager_1.ModelManager.CreatureModel.GetEntityData(e.rkn);
+    if (e.P4n && -1 !== e.P4n) {
+      var o = ModelManager_1.ModelManager.CreatureModel.GetEntityData(e.P4n);
       if (!o)
         return void (
           Log_1.Log.CheckError() &&
@@ -2234,7 +2277,7 @@ class CreatureController extends ControllerBase_1.ControllerBase {
             "World",
             30,
             "[CreatureController.SceneChangeDataLayerNotify] 要传送的EntityId不存在。",
-            ["TeleportEntityId", e.rkn],
+            ["TeleportEntityId", e.P4n],
           )
         );
       var a = o.Transform.Pos,
@@ -2245,11 +2288,11 @@ class CreatureController extends ControllerBase_1.ControllerBase {
     }
     const l = new Array(),
       n = new Array();
-    for (const C of e.MIs) {
+    for (const C of e.kDs) {
       var i = DataLayerById_1.configDataLayerById.GetConfig(C);
       l.push(i.DataLayer);
     }
-    for (const s of e.pIs) {
+    for (const s of e.ODs) {
       var _ = DataLayerById_1.configDataLayerById.GetConfig(s);
       n.push(_.DataLayer);
     }
@@ -2271,22 +2314,28 @@ class CreatureController extends ControllerBase_1.ControllerBase {
       },
     );
   }),
-  (CreatureController.Fgr = (e) => {
-    var e = e.pys,
-      r = e.aFn,
-      t = new ScenePlayerData_1.ScenePlayerData(r),
-      o = (t.SetTimerStart(), t.SetRemoteSceneLoading(!0), e.Y4n);
-    for (const a of e.HEs)
-      a.l3n === o && t.ControlRole(MathUtils_1.MathUtils.LongToNumber(a.rkn));
-    ModelManager_1.ModelManager.CreatureModel.AddScenePlayerData(r, t),
+  (CreatureController.N0r = (e) => {
+    var r = e.ORs,
+      e = r.q5n,
+      t = new ScenePlayerData_1.ScenePlayerData(e),
+      o = (t.SetTimerStart(), t.SetRemoteSceneLoading(!0), r.RVn);
+    for (const a of r.CRs)
+      if (a.ISs === r.ISs)
+        for (const l of a.lRs)
+          l.O6n === o &&
+            t.ControlRole(MathUtils_1.MathUtils.LongToNumber(l.P4n));
+    ModelManager_1.ModelManager.CreatureModel.AddScenePlayerData(e, t),
       CreatureController.NotifyScenePlayerChanged(),
       ModelManager_1.ModelManager.OnlineModel.SetContinuingChallengeConfirmState(
-        r,
+        e,
         2,
       );
   }),
-  (CreatureController.Kgr = (e) => {
-    e = MathUtils_1.MathUtils.LongToNumber(e.Ekn);
+  (CreatureController.dva = new WaitEntityToLoadTask_1.WaitEntityToLoadTask(
+    _a.gva.bind(_a),
+  )),
+  (CreatureController.H0r = (e) => {
+    e = MathUtils_1.MathUtils.LongToNumber(e.J4n);
     ModelManager_1.ModelManager.CreatureModel.GetEntity(e)?.Valid ||
       (Log_1.Log.CheckError() &&
         Log_1.Log.Error(
@@ -2297,26 +2346,26 @@ class CreatureController extends ControllerBase_1.ControllerBase {
         ));
   }),
   (CreatureController.SwitchBattleModeNotify = (e) => {
-    for (const r of e.rTs)
+    for (const r of e.EAs)
       BattleSetting_1.BattleSetting.ReceiveSetModuleNetworkState(r, !0);
-    for (const t of e.iTs)
+    for (const t of e.SAs)
       BattleSetting_1.BattleSetting.ReceiveSetModuleNetworkState(t, !1);
   }),
   (CreatureController.BattleLogNotify = (e) => {
     Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("Battle", 20, "Server Log", ["log", e.oTs]);
+      Log_1.Log.Info("Battle", 20, "Server Log", ["log", e.yAs]);
   }),
-  (CreatureController.Xgr = (e) => {
+  (CreatureController.W0r = (e) => {
     ControllerHolder_1.ControllerHolder.GameModeController.Change(e).catch(
       () => {},
     );
   }),
-  (CreatureController.eIn = (e) => {
+  (CreatureController.STn = (e) => {
     ModelManager_1.ModelManager.GameModeModel.ChangeSceneModeEndNotifyPromise.SetResult(
       !0,
     );
   }),
-  (CreatureController.o0r = (e) => {
+  (CreatureController.efr = (e) => {
     var r, t;
     GlobalData_1.GlobalData.World?.IsValid() &&
       e?.Valid &&
@@ -2329,7 +2378,7 @@ class CreatureController extends ControllerBase_1.ControllerBase {
           : CreatureController.RemoveEntity(
               e,
               "DoDelayRemoveEntityFinished",
-              Protocol_1.Aki.Protocol.WBs.Proto_RemoveTypeForce,
+              Protocol_1.Aki.Protocol.bks.Proto_RemoveTypeForce,
             )
         : Log_1.Log.CheckError() &&
           Log_1.Log.Error(
@@ -2339,11 +2388,11 @@ class CreatureController extends ControllerBase_1.ControllerBase {
             ["CreatureDataId", e],
           ));
   }),
-  (CreatureController.Ygr = (e) => {
-    ModelManager_1.ModelManager.CreatureModel.SetRestoreEntityId(e.ays);
+  (CreatureController.Q0r = (e) => {
+    ModelManager_1.ModelManager.CreatureModel.SetRestoreEntityId(e.LRs);
   }),
-  (CreatureController.$gr = (e) => {
-    var r = e.XMs,
+  (CreatureController.K0r = (e) => {
+    var r = e.uTs,
       t = ModelManager_1.ModelManager.CreatureModel;
     for (const l of Object.keys(r)) {
       var o = Number(l),
@@ -2351,17 +2400,17 @@ class CreatureController extends ControllerBase_1.ControllerBase {
       t.RecordEntitySilenceState(o, a);
     }
   }),
-  (CreatureController.zgr = (e) => {
-    ModelManager_1.ModelManager.WorldModel.UpdateWorldState(e.SUs),
+  (CreatureController.$0r = (e) => {
+    ModelManager_1.ModelManager.WorldModel.UpdateWorldState(e.NBs),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnReceivePlayerVar,
       );
   }),
-  (CreatureController.Zgr = (e) => {
-    var r = MathUtils_1.MathUtils.LongToNumber(e._7n);
+  (CreatureController.Y0r = (e) => {
+    var r = MathUtils_1.MathUtils.LongToNumber(e.FWn);
     ModelManager_1.ModelManager.CreatureModel.GetEntity(r).Entity.GetComponent(
       0,
-    ).SummonEntityIds = e.Lys.map((e) => MathUtils_1.MathUtils.LongToNumber(e));
+    ).SummonEntityIds = e.jRs.map((e) => MathUtils_1.MathUtils.LongToNumber(e));
   }),
   (CreatureController.OnCreateEntityFail = (e) => {
     ModelManager_1.ModelManager.CreatureModel.RemoveEntity(

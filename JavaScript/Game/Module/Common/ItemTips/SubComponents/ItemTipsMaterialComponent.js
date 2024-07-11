@@ -12,7 +12,7 @@ class TipsMaterialComponent extends ItemTipsBaseSubComponent_1.TipsBaseSubCompon
   constructor(i) {
     super(i),
       (this.Pe = void 0),
-      (this.LPt = void 0),
+      (this.Axt = void 0),
       this.CreateThenShowByResourceIdAsync("UiItem_TipsMaterial", i);
   }
   OnRegisterComponent() {
@@ -30,7 +30,7 @@ class TipsMaterialComponent extends ItemTipsBaseSubComponent_1.TipsBaseSubCompon
   }
   OnStart() {
     var i = this.GetItem(6);
-    this.LPt = new ItemTipsGetWay_1.TipsGetWayPanel(i);
+    this.Axt = new ItemTipsGetWay_1.TipsGetWayPanel(i);
   }
   OnBeforeDestroy() {
     this.Pe &&
@@ -60,8 +60,8 @@ class TipsMaterialComponent extends ItemTipsBaseSubComponent_1.TipsBaseSubCompon
               i.TxtDescription,
             ),
           this.GetText(5).SetUIActive(e),
-          this.DPt(i.GetWayData),
-          this.RPt(i.LimitTimeTxt),
+          this.Pxt(i.GetWayData),
+          this.xxt(i.LimitTimeTxt),
           ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
             i.ConfigId,
             !0,
@@ -74,10 +74,10 @@ class TipsMaterialComponent extends ItemTipsBaseSubComponent_1.TipsBaseSubCompon
       ModelManager_1.ModelManager.ItemTipsModel.SetCurrentItemTipsData(i),
       this.InAsyncLoading() ? this.OperationMap.set("Refresh", e) : e();
   }
-  DPt(i) {
-    this.GetItem(6).SetUIActive(0 !== i.length), i && this.LPt.Refresh(i);
+  Pxt(i) {
+    this.GetItem(6).SetUIActive(0 !== i.length), i && this.Axt.Refresh(i);
   }
-  RPt(i) {
+  xxt(i) {
     this.GetItem(7).SetUIActive(void 0 !== i), i && this.GetText(8).SetText(i);
   }
   SetPanelNumVisible(i) {

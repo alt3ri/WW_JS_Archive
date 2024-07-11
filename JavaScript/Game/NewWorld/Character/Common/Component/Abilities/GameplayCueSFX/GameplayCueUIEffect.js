@@ -8,13 +8,13 @@ class GameplayCueUIEffect extends GameplayCueBase_1.GameplayCueBase {
   OnInit() {}
   OnTick(e) {}
   OnCreate() {
-    this.p$o(!0);
+    this.CYo(!0);
   }
   OnDestroy() {
-    this.p$o(!1);
+    this.CYo(!1);
   }
-  p$o(e) {
-    var t = this.v$o(this.CueConfig.CueType);
+  CYo(e) {
+    var t = this.gYo(this.CueConfig.CueType);
     t &&
       EventSystem_1.EventSystem.Emit(
         t,
@@ -24,9 +24,10 @@ class GameplayCueUIEffect extends GameplayCueBase_1.GameplayCueBase {
         this.ActiveHandleId,
       );
   }
-  v$o(e) {
+  gYo(e) {
     switch (e) {
       case 2:
+      case 14:
         return EventDefine_1.EEventName.CharOnBuffAddUITexture;
       case 4:
         return EventDefine_1.EEventName.CharOnBuffAddUIPrefab;

@@ -4,9 +4,11 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AndroidBackController = void 0);
 const puerts_1 = require("puerts"),
   UE = require("ue"),
+  Info_1 = require("../../../Core/Common/Info"),
   Log_1 = require("../../../Core/Common/Log"),
   ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem"),
   GlobalData_1 = require("../../GlobalData"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../Manager/ModelManager"),
   UiControllerBase_1 = require("../../Ui/Base/UiControllerBase"),
   UiLayerType_1 = require("../../Ui/Define/UiLayerType"),
@@ -15,29 +17,24 @@ const puerts_1 = require("puerts"),
   LguiEventSystemManager_1 = require("../../Ui/LguiEventSystem/LguiEventSystemManager"),
   UiLayer_1 = require("../../Ui/UiLayer"),
   UiManager_1 = require("../../Ui/UiManager"),
-  LguiUtil_1 = require("../Util/LguiUtil"),
-  ControllerHolder_1 = require("../../Manager/ControllerHolder");
+  LguiUtil_1 = require("../Util/LguiUtil");
 class AndroidBackController extends UiControllerBase_1.UiControllerBase {
   static OnInit() {
-    return (
-      ModelManager_1.ModelManager.PlatformModel.IsMobile() &&
-        (this.IsLogOpen = !0),
-      !0
-    );
+    return Info_1.Info.IsMobilePlatform() && (this.IsLogOpen = !0), !0;
   }
   static OnAddEvents() {
     InputDistributeController_1.InputDistributeController.BindKey(
       InputMappingsDefine_1.keyMappings.AndroidBack,
-      this.mHe,
+      this.Tje,
     );
   }
   static OnRemoveEvents() {
     InputDistributeController_1.InputDistributeController.UnBindKey(
       InputMappingsDefine_1.keyMappings.AndroidBack,
-      this.mHe,
+      this.Tje,
     );
   }
-  static dHe() {
+  static Lje() {
     UiManager_1.UiManager.IsViewOpen("LoginView")
       ? (AndroidBackController.IsLogOpen &&
           Log_1.Log.CheckInfo() &&
@@ -60,7 +57,7 @@ class AndroidBackController extends UiControllerBase_1.UiControllerBase {
           Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("AndroidBack", 11, "不在主界面");
   }
-  static CHe(e) {
+  static Dje(e) {
     var r =
       LguiEventSystemManager_1.LguiEventSystemManager.LguiEventSystemActor;
     r && r.SimulateClickButton(0, e.RootUIComp, e.ClickPivot);
@@ -70,26 +67,26 @@ class AndroidBackController extends UiControllerBase_1.UiControllerBase {
   }
   static GmTestAndroidBack() {
     var e, r;
-    this.gHe
-      ? this.fHe()
+    this.Rje
+      ? this.Uje()
       : ((e = ResourceSystem_1.ResourceSystem.Load(
           "/Game/Aki/UI/UIResources/Common/Prefabs/UiItem_BackBtn1.UiItem_BackBtn1",
           UE.PrefabAsset,
         )),
-        (this.gHe = UE.LGUIBPLibrary.LoadPrefabWithAsset(
+        (this.Rje = UE.LGUIBPLibrary.LoadPrefabWithAsset(
           GlobalData_1.GlobalData.World,
           e,
           UiLayer_1.UiLayer.GetLayerRootUiItem(UiLayerType_1.ELayerType.Debug),
         )),
-        (e = this.gHe.GetComponentByClass(
+        (e = this.Rje.GetComponentByClass(
           UE.UIItem.StaticClass(),
         )).SetDisplayName("GmTestAndroidBack"),
         e.SetAnchorAlign(2, 2),
         e.SetAnchorOffset(new UE.Vector2D(0, 0)),
-        (e = this.gHe.GetComponentByClass(UE.UIButtonComponent.StaticClass())),
-        (r = this.gHe.GetComponentByClass(
+        (e = this.Rje.GetComponentByClass(UE.UIButtonComponent.StaticClass())),
+        (r = this.Rje.GetComponentByClass(
           UE.UIAndroidBackComponent.StaticClass(),
-        )) && this.gHe.K2_DestroyComponent(r),
+        )) && this.Rje.K2_DestroyComponent(r),
         e.OnClickCallBack.Bind(() => {
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info("AndroidBack", 11, "安卓返回点击"),
@@ -102,26 +99,26 @@ class AndroidBackController extends UiControllerBase_1.UiControllerBase {
               !1,
             );
         }),
-        LguiUtil_1.LguiUtil.SetActorIsPermanent(this.gHe, !0, !0));
+        LguiUtil_1.LguiUtil.SetActorIsPermanent(this.Rje, !0, !0));
   }
-  static fHe() {
-    this.gHe
-      .GetComponentByClass(UE.UIButtonComponent.StaticClass())
-      .OnClickCallBack.Unbind(),
-      this.gHe.K2_DestroyActor(),
-      (this.gHe = void 0);
+  static Uje() {
+    this.Rje.GetComponentByClass(
+      UE.UIButtonComponent.StaticClass(),
+    ).OnClickCallBack.Unbind(),
+      this.Rje.K2_DestroyActor(),
+      (this.Rje = void 0);
   }
 }
 (exports.AndroidBackController = AndroidBackController),
   ((_a = AndroidBackController).IsLogOpen = !1),
-  (AndroidBackController.mHe = (e, r) => {
+  (AndroidBackController.Tje = (e, r) => {
     var i;
     0 !== r &&
       (AndroidBackController.IsLogOpen &&
         Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("AndroidBack", 11, "安卓返回键触发"),
       UE.UIAndroidBackComponent.GetActiveAndroidBackComponentSize() <= 0
-        ? _a.dHe()
+        ? _a.Lje()
         : ((r = UE.UIAndroidBackComponent.GetTopActiveAndroidBack()),
           AndroidBackController.IsLogOpen &&
             ((i = (0, puerts_1.$ref)("")),
@@ -135,7 +132,7 @@ class AndroidBackController extends UiControllerBase_1.UiControllerBase {
               "按钮的节点路径",
               (0, puerts_1.$unref)(i),
             ]),
-          _a.CHe(r)));
+          _a.Dje(r)));
   }),
-  (AndroidBackController.gHe = void 0);
+  (AndroidBackController.Rje = void 0);
 //# sourceMappingURL=AndroidBackController.js.map

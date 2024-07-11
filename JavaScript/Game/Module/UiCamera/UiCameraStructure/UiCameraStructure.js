@@ -6,14 +6,14 @@ const Log_1 = require("../../../../Core/Common/Log"),
   MathUtils_1 = require("../../../../Core/Utils/MathUtils");
 class UiCameraStructure {
   constructor() {
-    (this.iUo = void 0),
+    (this.ZUo = void 0),
       (this.CameraActor = void 0),
       (this.SpringArmComponent = void 0),
       (this.OwnActor = void 0);
   }
   Initialize(t) {
-    (this.iUo = t),
-      (this.CameraActor = this.iUo.GetCameraActor()),
+    (this.ZUo = t),
+      (this.CameraActor = this.ZUo.GetCameraActor()),
       (this.OwnActor = this.OnSpawnStructureActor()),
       (this.SpringArmComponent = this.OnSetSpringArmComponent()),
       this.OnInitialize();

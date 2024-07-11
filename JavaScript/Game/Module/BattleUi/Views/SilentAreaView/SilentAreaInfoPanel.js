@@ -10,15 +10,15 @@ const UE = require("ue"),
 class SilentAreaInfoPanel extends BattleChildView_1.BattleChildView {
   constructor() {
     super(...arguments),
-      (this.Pct = !1),
-      (this.xct = void 0),
+      (this.Hmt = !1),
+      (this.jmt = void 0),
       (this.TDe = void 0),
-      (this.EPe = void 0),
+      (this.SPe = void 0),
       (this.e4 = []),
       (this.EndShow = () => {
         this.TDe && TimerSystem_1.TimerSystem.Remove(this.TDe),
-          this.EPe.StopCurrentSequence(),
-          this.EPe?.PlayLevelSequenceByName("Close");
+          this.SPe?.StopCurrentSequence(),
+          this.SPe?.PlayLevelSequenceByName("Close");
       });
   }
   Initialize(e) {
@@ -38,27 +38,27 @@ class SilentAreaInfoPanel extends BattleChildView_1.BattleChildView {
   OnStart() {
     this.RootItem?.SetAnchorOffsetX(0),
       this.RootItem?.SetAnchorOffsetY(0),
-      (this.EPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem)),
-      this.EPe.BindSequenceCloseEvent((e) => {
+      (this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem)),
+      this.SPe.BindSequenceCloseEvent((e) => {
         "Close" === e && this.SetActive(!1);
       });
   }
   CreateAndShow(e, t, i) {
-    this.Pct
-      ? (this.UpdateInfo(i), this.SetActive(!0), this.wct())
+    this.Hmt
+      ? (this.UpdateInfo(i), this.SetActive(!0), this.Wmt())
       : this.NewByResourceId(t, e).finally(() => {
-          (this.Pct = !0), this.UpdateInfo(i), this.wct();
+          (this.Hmt = !0), this.UpdateInfo(i), this.Wmt();
         });
   }
   OnShowBattleChildView() {
-    this.EPe.StopCurrentSequence(), this.EPe.PlaySequencePurely("Start");
+    this.SPe.StopCurrentSequence(), this.SPe.PlaySequencePurely("Start");
   }
   UpdateInfo(e) {
-    (this.xct = e), this.Pct && this.Bct();
+    (this.jmt = e), this.Hmt && this.Kmt();
   }
-  Bct() {
-    if (this.xct) {
-      const h = this.xct.ShowInfo.InformationConfig;
+  Kmt() {
+    if (this.jmt) {
+      const h = this.jmt.ShowInfo.InformationConfig;
       for (let t = 0; t < h.length; t++) {
         var i,
           s = h[t];
@@ -80,7 +80,7 @@ class SilentAreaInfoPanel extends BattleChildView_1.BattleChildView {
       });
     }
   }
-  wct() {
+  Wmt() {
     this.TDe = TimerSystem_1.TimerSystem.Delay(this.EndShow, 8e3);
   }
 }

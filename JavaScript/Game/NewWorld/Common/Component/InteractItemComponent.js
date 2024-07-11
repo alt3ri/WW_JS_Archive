@@ -28,7 +28,7 @@ let InteractItemComponent = class InteractItemComponent extends EntityComponent_
   constructor() {
     super(...arguments),
       (this.cC = void 0),
-      (this.Cnn = void 0),
+      (this.Yrn = void 0),
       (this.IsInit = !1);
   }
   OnStart() {
@@ -42,7 +42,7 @@ let InteractItemComponent = class InteractItemComponent extends EntityComponent_
         )) &&
           0 < t.Num() &&
           (this.cC = t.Get(0)),
-        (this.Cnn = e.GetComponentByClass(UE.ArrowComponent.StaticClass())),
+        (this.Yrn = e.GetComponentByClass(UE.ArrowComponent.StaticClass())),
         (this.IsInit = !0)),
       !0
     );
@@ -51,11 +51,11 @@ let InteractItemComponent = class InteractItemComponent extends EntityComponent_
     if (this.cC) return this.cC.K2_GetComponentLocation();
   }
   GetInteractRotator() {
-    if (this.Cnn) return this.Cnn.K2_GetComponentRotation();
+    if (this.Yrn) return this.Yrn.K2_GetComponentRotation();
   }
 };
 (InteractItemComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(91)],
+  [(0, RegisterComponent_1.RegisterComponent)(93)],
   InteractItemComponent,
 )),
   (exports.InteractItemComponent = InteractItemComponent);

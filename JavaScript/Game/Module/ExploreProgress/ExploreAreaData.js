@@ -6,58 +6,56 @@ const ConfigManager_1 = require("../../Manager/ConfigManager"),
 class ExploreAreaData {
   constructor() {
     (this.AreaId = 0),
-      (this.V5t = 0),
-      (this.H5t = new Map()),
-      (this.j5t = []),
-      (this.W5t = ""),
-      (this.K5t = 0);
+      (this.VVt = 0),
+      (this.HVt = new Map()),
+      (this.jVt = []),
+      (this.WVt = ""),
+      (this.KVt = 0);
   }
   Initialize(t) {
     (this.AreaId = t.AreaId),
-      (this.W5t = t.Title),
-      (this.K5t = t.SortIndex),
-      (this.V5t = 0);
+      (this.WVt = t.Title),
+      (this.KVt = t.SortIndex),
+      (this.VVt = 0);
   }
   Clear() {
-    (this.AreaId = 0), (this.V5t = 0), this.H5t.clear();
+    (this.AreaId = 0), (this.VVt = 0), this.HVt.clear();
   }
   AddExploreAreaItemData(t) {
     var e,
       r = t.ExploreType;
-    this.H5t.has(r) ||
+    this.HVt.has(r) ||
       ((e = new ExploreAreaItemData_1.ExploreAreaItemData()).Initialize(t),
-      this.H5t.set(r, e),
-      this.j5t.push(e));
+      this.HVt.set(r, e),
+      this.jVt.push(e));
   }
   SortExploreAreaItemDataList() {
-    this.j5t.sort((t, e) => {
-      var r = t.SortIndex,
-        a = e.SortIndex;
-      return r !== a ? r - a : t.ExploreProgressId - e.ExploreProgressId;
+    this.jVt.sort((t, e) => {
+      return t.ExploreProgressId - e.ExploreProgressId;
     });
   }
   Refresh(t) {
-    this.V5t = t.lLs;
+    this.VVt = t.DPs;
     var e = ConfigManager_1.ConfigManager.ExploreProgressConfig;
-    for (const a of t.e5n) {
-      var r = e.GetExploreProgressConfigById(a._Ls).ExploreType;
-      this.H5t.get(r)?.Refresh(a);
+    for (const a of t.wVn) {
+      var r = e.GetExploreProgressConfigById(a.APs).ExploreType;
+      this.HVt.get(r)?.Refresh(a);
     }
   }
   GetExploreAreaItemData(t) {
-    return this.H5t.get(t);
+    return this.HVt.get(t);
   }
   GetAllExploreAreaItemData() {
-    return this.j5t;
+    return this.jVt;
   }
   GetProgress() {
-    return this.V5t;
+    return this.VVt;
   }
   GetNameId() {
-    return this.W5t;
+    return this.WVt;
   }
   GetSortIndex() {
-    return this.K5t;
+    return this.KVt;
   }
 }
 exports.ExploreAreaData = ExploreAreaData;

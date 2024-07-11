@@ -9,7 +9,7 @@ const CommonDefine_1 = require("../../../Core/Define/CommonDefine"),
   LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelEventWaitTime extends LevelGeneralBase_1.LevelEventBase {
   constructor() {
-    super(...arguments), (this.oUe = -0), (this.VLn = !1);
+    super(...arguments), (this.oUe = -0), (this.yRn = !1);
   }
   ExecuteInGm(e, t) {
     this.FinishExecute(!0);
@@ -21,7 +21,7 @@ class LevelEventWaitTime extends LevelGeneralBase_1.LevelEventBase {
   ExecuteNew(e, t) {
     (this.oUe = e.Time * CommonDefine_1.MILLIONSECOND_PER_SECOND),
       e.BanInput &&
-        ((this.VLn = !0),
+        ((this.yRn = !0),
         (ModelManager_1.ModelManager.GeneralLogicTreeModel.DisableInput = !0),
         ControllerHolder_1.ControllerHolder.InputDistributeController.RefreshInputTag()),
       EventSystem_1.EventSystem.Emit(
@@ -29,25 +29,25 @@ class LevelEventWaitTime extends LevelGeneralBase_1.LevelEventBase {
         "LevelEventWait",
       ),
       this.oUe ||
-        (this.VLn &&
+        (this.yRn &&
           ((ModelManager_1.ModelManager.GeneralLogicTreeModel.DisableInput =
             !1),
           ControllerHolder_1.ControllerHolder.InputDistributeController.RefreshInputTag(),
-          (this.VLn = !1)),
+          (this.yRn = !1)),
         this.FinishExecute(!1));
   }
   OnTick(e) {
     (this.oUe -= e),
       this.oUe < 0 &&
-        (this.VLn &&
+        (this.yRn &&
           ((ModelManager_1.ModelManager.GeneralLogicTreeModel.DisableInput =
             !1),
           ControllerHolder_1.ControllerHolder.InputDistributeController.RefreshInputTag(),
-          (this.VLn = !1)),
+          (this.yRn = !1)),
         this.FinishExecute(!0));
   }
   OnReset() {
-    (this.VLn = !1), (this.oUe = 0);
+    (this.yRn = !1), (this.oUe = 0);
   }
 }
 exports.LevelEventWaitTime = LevelEventWaitTime;

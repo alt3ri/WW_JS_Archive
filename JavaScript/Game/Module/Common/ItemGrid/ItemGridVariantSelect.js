@@ -10,11 +10,11 @@ class ItemGridVariantSelect extends ItemGridAbstract_1.ItemGridAbstract {
       (this.IsItemGridVariantOne = !0),
       (this.IsItemGrid = !0),
       (this.IsItemGridVariantSelect = !0),
-      (this.aAt = void 0),
-      (this.hAt = void 0),
-      (this.lAt = void 0),
-      (this.Xpt = () => {
-        this.aAt?.();
+      (this._Pt = void 0),
+      (this.uPt = void 0),
+      (this.cPt = void 0),
+      (this.sMt = () => {
+        this._Pt?.();
       });
   }
   RefreshItemShowState(t) {
@@ -39,7 +39,7 @@ class ItemGridVariantSelect extends ItemGridAbstract_1.ItemGridAbstract {
     return this.GetButton(5);
   }
   SetAddButtonCallBack(t) {
-    this.aAt = t;
+    this._Pt = t;
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -54,19 +54,19 @@ class ItemGridVariantSelect extends ItemGridAbstract_1.ItemGridAbstract {
       [
         5,
         () => {
-          this.Xpt();
+          this.sMt();
         },
       ],
       [
         4,
         () => {
-          this.hAt?.();
+          this.uPt?.();
         },
       ],
     ];
   }
   OnStart() {
-    (this.lAt = new ItemGridVariantOne_1.ItemGridVariantOne(
+    (this.cPt = new ItemGridVariantOne_1.ItemGridVariantOne(
       this.GetItem(0).GetOwner(),
       this,
       this.GetBelongView(),
@@ -74,61 +74,61 @@ class ItemGridVariantSelect extends ItemGridAbstract_1.ItemGridAbstract {
       this.RefreshReduceButtonShowState(!1);
   }
   RefreshQualitySprite() {
-    this.lAt.RefreshQualitySprite();
+    this.cPt.RefreshQualitySprite();
   }
   RefreshTextureIcon() {
-    this.lAt.RefreshTextureIcon();
+    this.cPt.RefreshTextureIcon();
   }
   RefreshTextDown(t, e) {
-    this.lAt.RefreshTextDown(t, e);
+    this.cPt.RefreshTextDown(t, e);
   }
   RefreshTextDownByTextId(t, e, ...i) {
-    this.lAt.RefreshTextDownByTextId(t, e, ...i);
+    this.cPt.RefreshTextDownByTextId(t, e, ...i);
   }
   SetReduceClickEvent(t) {
-    this.hAt = t;
+    this.uPt = t;
   }
   SetToggleClickEvent(t) {
-    this.lAt.SetToggleClickEvent(t);
+    this.cPt.SetToggleClickEvent(t);
   }
   SetToggleClickStateEvent(t) {
-    this.lAt.SetToggleClickStateEvent(t);
+    this.cPt.SetToggleClickStateEvent(t);
   }
   BindRedPointWithKeyAndId(t, e) {
-    this.lAt.BindRedPointWithKeyAndId(t, e);
+    this.cPt.BindRedPointWithKeyAndId(t, e);
   }
   RefreshCdPanel(t, e, i) {
-    this.lAt.RefreshCdPanel(t, e, i);
+    this.cPt.RefreshCdPanel(t, e, i);
   }
   RefreshDarkSprite(t) {
-    this.lAt.RefreshDarkSprite(t);
+    this.cPt.RefreshDarkSprite(t);
   }
   RefreshLockSprite(t) {
-    this.lAt.RefreshLockSprite(t);
+    this.cPt.RefreshLockSprite(t);
   }
   RefreshStar(t) {
-    this.lAt.RefreshStar(t);
+    this.cPt.RefreshStar(t);
   }
   RefreshRecoverSprite(t) {
-    this.lAt.RefreshRecoverSprite(t);
+    this.cPt.RefreshRecoverSprite(t);
   }
   RefreshRightDownLockSprite(t) {
-    this.lAt.RefreshRightDownLockSprite(t);
+    this.cPt.RefreshRightDownLockSprite(t);
   }
   RefreshUpgradePanel(t, e) {
-    this.lAt.RefreshUpgradePanel(t, e);
+    this.cPt.RefreshUpgradePanel(t, e);
   }
   GetClickToggle() {
-    return this.lAt.GetClickToggle();
+    return this.cPt.GetClickToggle();
   }
   GetDownText() {
-    return this.lAt.GetDownText();
+    return this.cPt.GetDownText();
   }
   GetConfigId() {
     return this.GetItemId();
   }
   OnBeforeDestroy() {
-    this.lAt.Destroy();
+    this.cPt.Destroy();
   }
 }
 exports.ItemGridVariantSelect = ItemGridVariantSelect;

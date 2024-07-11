@@ -42,6 +42,7 @@ const UE = require("ue"),
   ModelManager_1 = require("../../../../Manager/ModelManager"),
   CharacterNameDefines_1 = require("../CharacterNameDefines"),
   CharacterUnifiedStateTypes_1 = require("./Abilities/CharacterUnifiedStateTypes"),
+  VoxelUtils_1 = require("../../../../Utils/VoxelUtils"),
   PROFILE_KEY = "CharacterFootEffectComponent_FootTrace",
   FOOTPRINT_SPAWN_DURATION = 200,
   FOOTPRINT_SPAWN_MIN_DISTANCE_SQUARED = 500,
@@ -58,29 +59,29 @@ let CharacterFootEffectComponent =
       super(...arguments),
         (this.oRe = void 0),
         (this.Hte = void 0),
-        (this.j5r = void 0),
-        (this.W5r = void 0),
-        (this.K5r = !1),
-        (this.Q5r = !1),
-        (this.X5r = !1),
-        (this.$5r = void 0),
+        (this.y5r = void 0),
+        (this.I5r = void 0),
+        (this.T5r = !1),
+        (this.L5r = !1),
+        (this.D5r = !1),
+        (this.R5r = void 0),
         (this._ae = Vector_1.Vector.Create()),
         (this.uae = Vector_1.Vector.Create()),
-        (this.Y5r = !1),
-        (this.J5r = !1),
-        (this.z5r = Vector_1.Vector.Create()),
-        (this.Z5r = Vector_1.Vector.Create()),
-        (this.TIn = Vector_1.Vector.Create()),
+        (this.U5r = !1),
+        (this.A5r = !1),
+        (this.P5r = Vector_1.Vector.Create()),
+        (this.x5r = Vector_1.Vector.Create()),
+        (this.kTn = Vector_1.Vector.Create()),
         (this.Lz = Vector_1.Vector.Create()),
         (this.Tz = Vector_1.Vector.Create()),
-        (this.M7o = Vector_1.Vector.Create()),
+        (this.fHo = Vector_1.Vector.Create()),
         (this.Gue = Rotator_1.Rotator.Create()),
-        (this.eVr = new Map()),
-        (this.tVr = 0),
-        (this.iVr = Vector_1.Vector.Create());
+        (this.w5r = new Map()),
+        (this.B5r = 0),
+        (this.b5r = Vector_1.Vector.Create());
     }
     static get Dependencies() {
-      return [3, 42, 160, 158, 0];
+      return [3, 43, 162, 160, 0];
     }
     OnInit(t) {
       return super.OnInit(t), !0;
@@ -89,50 +90,50 @@ let CharacterFootEffectComponent =
       super.OnStart();
       var t = this.Entity.GetComponent(3);
       if (!t?.Valid) return !1;
-      var e = this.Entity.GetComponent(160);
+      var e = this.Entity.GetComponent(162);
       if (!e?.Valid) return !1;
-      var i = this.Entity.GetComponent(42);
+      var i = this.Entity.GetComponent(43);
       if (!i?.Valid) return !1;
       if (!this.Entity.GetComponent(0)?.Valid) return !1;
-      var r = this.Entity.GetComponent(158);
+      var r = this.Entity.GetComponent(160);
       if (!r?.Valid) return !1;
       (this.Hte = t),
         (this.oRe = e),
-        (this.j5r = i),
-        (this.W5r = r),
-        (this.$5r = UE.NewObject(UE.TraceSphereElement.StaticClass())),
-        (this.$5r.bIsSingle = !0),
-        (this.$5r.bTraceComplex = !1),
-        (this.$5r.bIgnoreSelf = !0),
-        (this.$5r.WorldContextObject = this.Hte.Actor),
-        (this.$5r.Radius = 10),
-        this.$5r.SetTraceTypeQuery(
+        (this.y5r = i),
+        (this.I5r = r),
+        (this.R5r = UE.NewObject(UE.TraceSphereElement.StaticClass())),
+        (this.R5r.bIsSingle = !0),
+        (this.R5r.bTraceComplex = !1),
+        (this.R5r.bIgnoreSelf = !0),
+        (this.R5r.WorldContextObject = this.Hte.Actor),
+        (this.R5r.Radius = 10),
+        this.R5r.SetTraceTypeQuery(
           QueryTypeDefine_1.KuroTraceTypeQuery.IkGround,
         );
       t = DataTableUtil_1.DataTableUtil.GetAllDataTableRow(6);
       if (!t) return !1;
-      for (const o of t) this.eVr.set(o.SurfaceType, o.Effect);
+      for (const o of t) this.w5r.set(o.SurfaceType, o.Effect);
       return !0;
     }
     OnEnd() {
       return (
         (this.oRe = void 0),
         (this.Hte = void 0),
-        (this.j5r = void 0),
-        this.$5r?.Dispose(),
-        (this.$5r = void 0),
-        (this.Y5r = !1),
-        (this.K5r = !1),
-        (this.J5r = !1),
-        (this.Q5r = !1),
-        this.eVr.clear(),
+        (this.y5r = void 0),
+        this.R5r?.Dispose(),
+        (this.R5r = void 0),
+        (this.U5r = !1),
+        (this.T5r = !1),
+        (this.A5r = !1),
+        (this.L5r = !1),
+        this.w5r.clear(),
         !0
       );
     }
     OnTick(t) {
-      this.oVr(), this.rVr(), this.nVr(), this.aVr();
+      this.q5r(), this.G5r(), this.N5r(), this.k5r();
     }
-    oVr() {
+    q5r() {
       var t;
       UE.KuroStaticLibrary.IsObjectClassByName(
         this.oRe.MainAnimInstance,
@@ -141,21 +142,21 @@ let CharacterFootEffectComponent =
         ? ((t = this.oRe.MainAnimInstance.GetCurveValue(
             CharacterFootEffectComponent_1.FootstepCurveName,
           )) < -0.5
-            ? this.K5r
-              ? (this.X5r = !1)
-              : ((this.K5r = !0), (this.X5r = !0))
-            : (this.K5r = !1),
+            ? this.T5r
+              ? (this.D5r = !1)
+              : ((this.T5r = !0), (this.D5r = !0))
+            : (this.T5r = !1),
           0.5 < t
-            ? this.Q5r
-              ? (this.X5r = !1)
-              : ((this.Q5r = !0), (this.X5r = !0))
-            : (this.Q5r = !1))
-        : ((this.K5r = !1), (this.Q5r = !1), (this.X5r = !1));
+            ? this.L5r
+              ? (this.D5r = !1)
+              : ((this.L5r = !0), (this.D5r = !0))
+            : (this.L5r = !1))
+        : ((this.T5r = !1), (this.L5r = !1), (this.D5r = !1));
     }
-    LIn(t, e) {
+    FTn(t, e) {
       this._ae.FromUeVector(this.Hte.Actor.Mesh.GetSocketLocation(t)),
         this.Hte.ActorUpProxy.Multiply(
-          this.W5r.MoveState ===
+          this.I5r.MoveState ===
             CharacterUnifiedStateTypes_1.ECharMoveState.Sprint
             ? -SPRINT_FOOTEFFECT_DETECT_HEIGHT
             : -NORMAL_FOOTEFFECT_DETECT_HEIGHT,
@@ -163,21 +164,21 @@ let CharacterFootEffectComponent =
         ),
         this.uae.AdditionEqual(this._ae),
         TraceElementCommon_1.TraceElementCommon.SetStartLocation(
-          this.$5r,
+          this.R5r,
           this._ae,
         ),
         TraceElementCommon_1.TraceElementCommon.SetEndLocation(
-          this.$5r,
+          this.R5r,
           this.uae,
         );
       t = TraceElementCommon_1.TraceElementCommon.SphereTrace(
-        this.$5r,
+        this.R5r,
         PROFILE_KEY,
       );
       return (
         t
           ? TraceElementCommon_1.TraceElementCommon.GetHitLocation(
-              this.$5r.HitResult,
+              this.R5r.HitResult,
               0,
               e,
             )
@@ -193,34 +194,34 @@ let CharacterFootEffectComponent =
         t
       );
     }
-    rVr() {
+    G5r() {
       this.Hte?.Actor.Mesh?.IsValid() &&
-        (this.K5r && this.X5r
-          ? (this.Y5r = this.LIn(
+        (this.T5r && this.D5r
+          ? (this.U5r = this.FTn(
               CharacterFootEffectComponent_1.LeftFootSocketName,
-              this.z5r,
+              this.P5r,
             ))
-          : (this.Y5r = !1),
-        this.Q5r && this.X5r
-          ? (this.J5r = this.LIn(
+          : (this.U5r = !1),
+        this.L5r && this.D5r
+          ? (this.A5r = this.FTn(
               CharacterFootEffectComponent_1.RightFootSocketName,
-              this.Z5r,
+              this.x5r,
             ))
-          : (this.J5r = !1));
+          : (this.A5r = !1));
     }
-    nVr() {
-      this.K5r &&
-        this.X5r &&
-        this.Y5r &&
-        this.hVr(this.z5r, this.$5r?.HitResult),
-        this.Q5r &&
-          this.X5r &&
-          this.J5r &&
-          this.hVr(this.Z5r, this.$5r?.HitResult);
+    N5r() {
+      this.T5r &&
+        this.D5r &&
+        this.U5r &&
+        this.F5r(this.P5r, this.R5r?.HitResult),
+        this.L5r &&
+          this.D5r &&
+          this.A5r &&
+          this.F5r(this.x5r, this.R5r?.HitResult);
     }
-    hVr(i, r) {
+    F5r(i, r) {
       if (r?.IsValid()) {
-        var o = this.W5r.MoveState;
+        var o = this.I5r.MoveState;
         if (
           o === CharacterUnifiedStateTypes_1.ECharMoveState.Sprint ||
           r?.bBlockingHit
@@ -231,9 +232,9 @@ let CharacterFootEffectComponent =
             (EventSystem_1.EventSystem.Emit(
               EventDefine_1.EEventName.OnCharFootOnTheGround,
             ),
-            (0, RegisterComponent_1.isComponentInstance)(this.j5r, 170))
+            (0, RegisterComponent_1.isComponentInstance)(this.y5r, 173))
           ) {
-            var h = this.j5r?.GetAkComponent();
+            var h = this.y5r?.GetAkComponent();
             if (h?.IsValid()) {
               let t = !1;
               (t =
@@ -245,15 +246,15 @@ let CharacterFootEffectComponent =
                   ))?.IsValid() && "WaterLightLand" === r.GetName())
                   ? !0
                   : t)
-                ? (this.j5r.FootstepTexture.State = "WaterSurface")
+                ? (this.y5r.FootstepTexture.State = "WaterSurface")
                 : ((s = i.ToUeVector()),
-                  (r = UE.KuroVoxelSystem.GetVoxelInfoAtPos(
+                  (r = VoxelUtils_1.VoxelUtils.GetVoxelInfo(
                     GlobalData_1.GlobalData.World,
                     s,
                   )).MtlID === MATERIAL_ID_WAT || r.MtlID === MATERIAL_ID_SHR
-                    ? (this.j5r.FootstepTexture.State = "DirtSurface")
+                    ? (this.y5r.FootstepTexture.State = "DirtSurface")
                     : ((i = UE.KuroVoxelSystem.GetMtlNameByID(r.MtlID)),
-                      (this.j5r.FootstepTexture.State = i)));
+                      (this.y5r.FootstepTexture.State = i)));
               let e = "play_footstep_run";
               o === CharacterUnifiedStateTypes_1.ECharMoveState.Walk ||
               o === CharacterUnifiedStateTypes_1.ECharMoveState.WalkStop
@@ -272,19 +273,19 @@ let CharacterFootEffectComponent =
       GameQualitySettingsManager_1.GameQualitySettingsManager.Get()
         .GetCurrentQualityInfo()
         .GetGameQualitySettingLevel() <= 1 ||
-        (this.K5r && this.X5r && this.Y5r && this.DIn(this.$5r?.HitResult),
-        this.Q5r && this.X5r && this.J5r && this.DIn(this.$5r?.HitResult));
+        (this.T5r && this.D5r && this.U5r && this.VTn(this.R5r?.HitResult),
+        this.L5r && this.D5r && this.A5r && this.VTn(this.R5r?.HitResult));
     }
-    DIn(t) {
+    VTn(t) {
       var e, i, r;
       !t?.bBlockingHit ||
-        Time_1.Time.Now - this.tVr < FOOTPRINT_SPAWN_DURATION ||
-        ((e = this.TIn),
+        Time_1.Time.Now - this.B5r < FOOTPRINT_SPAWN_DURATION ||
+        ((e = this.kTn),
         TraceElementCommon_1.TraceElementCommon.GetHitLocation(t, 0, e),
-        Vector_1.Vector.DistSquared(e, this.iVr) <
+        Vector_1.Vector.DistSquared(e, this.b5r) <
           FOOTPRINT_SPAWN_MIN_DISTANCE_SQUARED) ||
         ((i = t.PhysMaterials?.Get(0)),
-        (r = void 0) !== (r = this.eVr.get(i.SurfaceType)?.ToAssetPathName()) &&
+        (r = void 0) !== (r = this.w5r.get(i.SurfaceType)?.ToAssetPathName()) &&
           (this.Hte.ActorForwardProxy.Multiply(
             FOOTPRINT_FORWARD_OFFSET,
             this.Lz,
@@ -294,8 +295,8 @@ let CharacterFootEffectComponent =
             0,
             this.Tz,
           ),
-          Vector_1.Vector.VectorPlaneProject(this.Lz, this.Tz, this.M7o),
-          this.M7o.AdditionEqual(e),
+          Vector_1.Vector.VectorPlaneProject(this.Lz, this.Tz, this.fHo),
+          this.fHo.AdditionEqual(e),
           MathUtils_1.MathUtils.LookRotationUpFirst(
             this.Hte.ActorForwardProxy,
             this.Tz,
@@ -305,54 +306,54 @@ let CharacterFootEffectComponent =
             GlobalData_1.GlobalData.World,
             new UE.Transform(
               this.Gue.ToUeRotator(),
-              this.M7o.ToUeVector(),
+              this.fHo.ToUeVector(),
               Vector_1.Vector.OneVectorProxy.ToUeVector(),
             ),
             r,
             "[SceneCharacterFootprintEffect.SpawnEffect]",
           ),
-          (this.tVr = Time_1.Time.Now),
-          this.iVr.DeepCopy(e)));
+          (this.B5r = Time_1.Time.Now),
+          this.b5r.DeepCopy(e)));
     }
     TriggerFootprint(t) {
-      if (!(Time_1.Time.Now - this.tVr < FOOTPRINT_SPAWN_DURATION)) {
+      if (!(Time_1.Time.Now - this.B5r < FOOTPRINT_SPAWN_DURATION)) {
         if (t) {
           if (
-            !this.LIn(
+            !this.FTn(
               CharacterFootEffectComponent_1.LeftFootSocketName,
-              this.TIn,
+              this.kTn,
             )
           )
             return;
         } else if (
-          !this.LIn(
+          !this.FTn(
             CharacterFootEffectComponent_1.RightFootSocketName,
-            this.TIn,
+            this.kTn,
           )
         )
           return;
-        t = this.$5r?.HitResult;
-        t && this.DIn(t);
+        t = this.R5r?.HitResult;
+        t && this.VTn(t);
       }
     }
-    aVr() {
+    k5r() {
       !ModelManager_1.ModelManager.TeleportModel.IsTeleport &&
         this.Hte.EnableVoxelDetection &&
-        (this.K5r && this.X5r && this.Y5r
+        (this.T5r && this.D5r && this.U5r
           ? ControllerHolder_1.ControllerHolder.WorldController.EnvironmentInfoUpdate(
-              this.z5r.ToUeVector(),
+              this.P5r.ToUeVector(),
               this.Hte.IsRoleAndCtrlByMe,
             )
-          : this.Q5r && this.X5r && this.J5r
+          : this.L5r && this.D5r && this.A5r
             ? ControllerHolder_1.ControllerHolder.WorldController.EnvironmentInfoUpdate(
-                this.Z5r.ToUeVector(),
+                this.x5r.ToUeVector(),
                 this.Hte.IsRoleAndCtrlByMe,
               )
             : this.Hte &&
-              this.W5r &&
-              this.W5r.MoveState !==
+              this.I5r &&
+              this.I5r.MoveState !==
                 CharacterUnifiedStateTypes_1.ECharMoveState.Other &&
-              this.W5r.MoveState !==
+              this.I5r.MoveState !==
                 CharacterUnifiedStateTypes_1.ECharMoveState.Stand &&
               ControllerHolder_1.ControllerHolder.WorldController.EnvironmentInfoUpdate(
                 this.Hte.ActorLocation,
@@ -369,7 +370,7 @@ let CharacterFootEffectComponent =
   )),
   (CharacterFootEffectComponent = CharacterFootEffectComponent_1 =
     __decorate(
-      [(0, RegisterComponent_1.RegisterComponent)(48)],
+      [(0, RegisterComponent_1.RegisterComponent)(49)],
       CharacterFootEffectComponent,
     )),
   (exports.CharacterFootEffectComponent = CharacterFootEffectComponent);

@@ -20,39 +20,39 @@ class HandBookController extends UiControllerBase_1.UiControllerBase {
   static SetMonsterMeshShow(e, t) {}
   static SetAnimalMeshShow(e, t) {}
   static ClearEffect() {
-    this.UZt &&
+    this.Uei &&
       (EffectSystem_1.EffectSystem.StopEffectById(
-        this.UZt,
+        this.Uei,
         "[HandBookController.ClearEffect] StopEffect",
         !1,
       ),
-      (this.UZt = 0));
+      (this.Uei = 0));
   }
   static OnRegisterNetEvent() {
-    Net_1.Net.Register(1235, (e) => {
+    Net_1.Net.Register(10246, (e) => {
       var t = ModelManager_1.ModelManager.HandBookModel.GetClientHandBookType(
-        e.Ikn,
-        e.NRs.qRs,
+        e.Z4n,
+        e.nws.tws,
       );
-      HandBookController.CheckConfigIsLegal(t, e.NRs.Ekn) &&
+      HandBookController.CheckConfigIsLegal(t, e.nws.J4n) &&
         (ModelManager_1.ModelManager.HandBookModel.UpdateHandBookActiveStateMap(
-          e.Ikn,
-          e.NRs,
+          e.Z4n,
+          e.nws,
         ),
-        e.FRs) &&
-        this.AZt(e.Ikn, e.NRs);
+        e.sws) &&
+        this.Aei(e.Z4n, e.nws);
     });
   }
-  static AZt(e, t) {
+  static Aei(e, t) {
     let a = "";
-    e === Protocol_1.Aki.Protocol.Hks.Proto_Photograph &&
+    e === Protocol_1.Aki.Protocol.x5s.Proto_Photograph &&
       ((e = ConfigManager_1.ConfigManager.HandBookConfig.GetPlotHandBookConfig(
-        t.Ekn,
+        t.J4n,
       )),
       (a = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(e.Name) ?? "")),
       a.length;
   }
-  static PZt(e) {
+  static Pei(e) {
     var t = [],
       a = [],
       o = [],
@@ -95,91 +95,91 @@ class HandBookController extends UiControllerBase_1.UiControllerBase {
     UiManager_1.UiManager.OpenView("PhotoSaveView", i);
   }
   static SendIllustratedRedDotRequest() {
-    var e = Protocol_1.Aki.Protocol.fes.create();
-    Net_1.Net.Call(23335, e, (e) => {
+    var e = Protocol_1.Aki.Protocol.uos.create();
+    Net_1.Net.Call(13883, e, (e) => {
       e &&
-        ModelManager_1.ModelManager.HandBookModel.InitHandBookRedDotList(e.ORs);
+        ModelManager_1.ModelManager.HandBookModel.InitHandBookRedDotList(e.rws);
     });
   }
   static async SendIllustratedInfoRequestAsync(e) {
-    var t = Protocol_1.Aki.Protocol.pes.create(),
+    var t = Protocol_1.Aki.Protocol.mos.create(),
       a =
-        ((t.B5n =
+        ((t.m9n =
           ModelManager_1.ModelManager.HandBookModel.GetServerHandBookTypeList(
             e,
           )),
-        await Net_1.Net.CallAsync(8040, t));
+        await Net_1.Net.CallAsync(20573, t));
     if (a) {
       ModelManager_1.ModelManager.HandBookModel.ClearHandBookActiveStateMap();
-      var o = a.kRs.length;
+      var o = a.ows.length;
       for (let e = 0; e < o; e++) {
-        var r = a.kRs[e];
+        var r = a.ows[e];
         ModelManager_1.ModelManager.HandBookModel.InitHandBookActiveStateMap(
-          r.Ikn,
-          r.GRs,
+          r.Z4n,
+          r.iws,
         );
       }
       await Promise.resolve();
     }
   }
   static SendIllustratedInfoRequest(e) {
-    var t = Protocol_1.Aki.Protocol.pes.create();
-    (t.B5n =
+    var t = Protocol_1.Aki.Protocol.mos.create();
+    (t.m9n =
       ModelManager_1.ModelManager.HandBookModel.GetServerHandBookTypeList(e)),
-      Net_1.Net.Call(8040, t, (t) => {
+      Net_1.Net.Call(20573, t, (t) => {
         if (t) {
           ModelManager_1.ModelManager.HandBookModel.ClearHandBookActiveStateMap();
-          var a = t.kRs.length;
+          var a = t.ows.length;
           for (let e = 0; e < a; e++) {
-            var o = t.kRs[e];
+            var o = t.ows[e];
             ModelManager_1.ModelManager.HandBookModel.InitHandBookActiveStateMap(
-              o.Ikn,
-              o.GRs,
+              o.Z4n,
+              o.iws,
             );
           }
         }
       });
   }
   static SendIllustratedReadRequest(t, e) {
-    const a = Protocol_1.Aki.Protocol.Ies.create();
-    (a.Ikn =
+    const a = Protocol_1.Aki.Protocol.pos.create();
+    (a.Z4n =
       ModelManager_1.ModelManager.HandBookModel.GetServerHandBookType(t)),
-      (a.Ekn = e),
-      Net_1.Net.Call(11349, a, (e) => {
+      (a.J4n = e),
+      Net_1.Net.Call(17178, a, (e) => {
         e &&
-          (e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys
+          (e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs
             ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-                e.lkn,
-                7305,
-                e.Fms,
+                e.O4n,
+                14319,
+                e.ivs,
               )
-            : ModelManager_1.ModelManager.HandBookModel.UpdateRedDot(t, a.Ekn));
+            : ModelManager_1.ModelManager.HandBookModel.UpdateRedDot(t, a.J4n));
       });
   }
   static SendIllustratedUnlockRequest(t, e) {
-    const a = Protocol_1.Aki.Protocol.Ses.create();
-    (a.Ikn =
+    const a = Protocol_1.Aki.Protocol.gos.create();
+    (a.Z4n =
       ModelManager_1.ModelManager.HandBookModel.GetServerHandBookType(t)),
-      (a.Ekn = e),
-      Net_1.Net.Call(17285, a, (e) => {
+      (a.J4n = e),
+      Net_1.Net.Call(25354, a, (e) => {
         e &&
-          (e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys
+          (e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs
             ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-                e.lkn,
-                14283,
-                e.Fms,
+                e.O4n,
+                15013,
+                e.ivs,
               )
             : (ModelManager_1.ModelManager.HandBookModel.UpdateHandBookActiveStateMap(
-                a.Ikn,
-                e.NRs,
+                a.Z4n,
+                e.nws,
               ),
-              this.AZt(a.Ikn, e.NRs),
+              this.Aei(a.Z4n, e.nws),
               2 === t &&
                 ((e =
                   ConfigManager_1.ConfigManager.HandBookConfig.GetGeographyHandBookConfig(
-                    e.NRs.Ekn,
+                    e.nws.J4n,
                   )),
-                this.PZt(e))));
+                this.Pei(e))));
       });
   }
   static GetCollectProgress(e) {
@@ -257,16 +257,16 @@ class HandBookController extends UiControllerBase_1.UiControllerBase {
   static OnAddEvents() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.PlayerSenseTargetEnter,
-      this.xZt,
+      this.xei,
     );
   }
   static OnRemoveEvents() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.PlayerSenseTargetEnter,
-      this.xZt,
+      this.xei,
     );
   }
-  static wZt(e) {
+  static wei(e) {
     e =
       ConfigManager_1.ConfigManager.HandBookConfig.GetAnimalHandBookConfigByMeshId(
         e,
@@ -276,13 +276,13 @@ class HandBookController extends UiControllerBase_1.UiControllerBase {
     );
   }
 }
-((exports.HandBookController = HandBookController).UZt = 0),
-  (HandBookController.xZt = (e) => {
+((exports.HandBookController = HandBookController).Uei = 0),
+  (HandBookController.xei = (e) => {
     var e = EntitySystem_1.EntitySystem.Get(e);
     e &&
       (e = e.GetComponent(0)) &&
-      e.GetEntityType() === Protocol_1.Aki.Protocol.HBs.Proto_Animal &&
-      ((e = e.GetModelId()), HandBookController.wZt(e)) &&
+      e.GetEntityType() === Protocol_1.Aki.Protocol.wks.Proto_Animal &&
+      ((e = e.GetModelId()), HandBookController.wei(e)) &&
       HandBookController.SendIllustratedUnlockRequest(4, e);
   });
 //# sourceMappingURL=HandBookController.js.map

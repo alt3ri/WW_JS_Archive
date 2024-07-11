@@ -53,22 +53,22 @@ class LevelEventSettlementDungeon extends LevelGeneralBase_1.LevelEventBase {
                 .CurrentInstanceIsFinish;
           if (n && !l) this.FinishExecute(!0);
           else {
-            var n =
+            const i =
               ModelManager_1.ModelManager.InstanceDungeonEntranceModel.GetInstancePowerCost(
                 r,
               );
-            if (0 === n) this.FinishExecute(!0);
+            if (0 === i) this.FinishExecute(!0);
             else {
-              const i = ModelManager_1.ModelManager.PowerModel.IsPowerEnough(n);
-              i
-                ? (((l = new ConfirmBoxDefine_1.ConfirmBoxDataNew(
+              const t = ModelManager_1.ModelManager.PowerModel.IsPowerEnough(i);
+              t
+                ? (((n = new ConfirmBoxDefine_1.ConfirmBoxDataNew(
                     64,
                   )).ShowPowerItem = !0),
-                  l.SetTextArgs(n.toString()),
-                  l.FunctionMap.set(1, () => {}),
-                  l.FunctionMap.set(2, () => {
+                  n.SetTextArgs(i.toString()),
+                  n.FunctionMap.set(1, () => {}),
+                  n.FunctionMap.set(2, () => {
                     var e;
-                    i
+                    t
                       ? InstanceDungeonController_1.InstanceDungeonController.GetInstExchangeRewardRequest()
                       : ((e =
                           ConfigManager_1.ConfigManager.TextConfig.GetTextById(
@@ -77,19 +77,24 @@ class LevelEventSettlementDungeon extends LevelGeneralBase_1.LevelEventBase {
                         ScrollingTipsController_1.ScrollingTipsController.ShowTipsByText(
                           e,
                         ),
-                        PowerController_1.PowerController.OpenPowerView());
+                        PowerController_1.PowerController.OpenPowerView(
+                          2,
+                          ModelManager_1.ModelManager.PowerModel.GetCurrentNeedPower(
+                            i,
+                          ),
+                        ));
                   }),
-                  (n =
+                  (l =
                     ActivityDoubleRewardController_1.ActivityDoubleRewardController.GetDungeonUpActivity(
                       ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(
                         r,
                       ).CustomTypes,
                     )) &&
-                    0 < n.LeftUpCount &&
-                    (l.Tip = n.GetFullTip()),
+                    0 < l.LeftUpCount &&
+                    (n.Tip = l.GetFullTip()),
                   this.FinishExecute(!0),
                   ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
-                    l,
+                    n,
                   ))
                 : ((r = ConfigManager_1.ConfigManager.TextConfig.GetTextById(
                     "ReceiveLevelPlayPowerNotEnough",
@@ -97,7 +102,12 @@ class LevelEventSettlementDungeon extends LevelGeneralBase_1.LevelEventBase {
                   ScrollingTipsController_1.ScrollingTipsController.ShowTipsByText(
                     r,
                   ),
-                  PowerController_1.PowerController.OpenPowerView(),
+                  PowerController_1.PowerController.OpenPowerView(
+                    2,
+                    ModelManager_1.ModelManager.PowerModel.GetCurrentNeedPower(
+                      i,
+                    ),
+                  ),
                   this.FinishExecute(!0));
             }
           }

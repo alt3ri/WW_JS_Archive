@@ -43,13 +43,13 @@ exports.PropertyTimeCounter = PropertyTimeCounter;
 class CharPropertyModifier extends CharRenderBase_1.CharRenderBase {
   constructor() {
     super(...arguments),
-      (this.Aar = void 0),
-      (this.Par = void 0),
-      (this.xar = 0),
-      (this.war = void 0);
+      (this.Uhr = void 0),
+      (this.Ahr = void 0),
+      (this.Phr = 0),
+      (this.xhr = void 0);
   }
   Start() {
-    (this.xar = 0), (this.Par = new Map()), (this.war = []);
+    (this.Phr = 0), (this.Ahr = new Map()), (this.xhr = []);
     var t = this.RenderComponent.GetComponent(
       RenderConfig_1.RenderConfig.IdMaterialContainer,
     );
@@ -61,7 +61,7 @@ class CharPropertyModifier extends CharRenderBase_1.CharRenderBase {
           "材质属性编辑器初始化失败，不存在CharMaterialContainer",
           ["Actor", this.GetRenderingComponent().GetOwner().GetName()],
         )
-      : ((this.Aar = t), this.OnInitSuccess());
+      : ((this.Uhr = t), this.OnInitSuccess());
   }
   UpdateCurveData(t, i) {
     var e;
@@ -87,31 +87,31 @@ class CharPropertyModifier extends CharRenderBase_1.CharRenderBase {
   }
   Update() {
     var t = this.GetDeltaTime();
-    for (const i of this.Par.values()) this.UpdateCurveData(t, i);
-    for (const e of this.Par.values())
-      e.Counter >= e.WholeTime && this.war.push(e.Id);
-    if (0 < this.war.length) {
-      for (const r of this.war) this.Par.delete(r);
-      this.war = [];
+    for (const i of this.Ahr.values()) this.UpdateCurveData(t, i);
+    for (const e of this.Ahr.values())
+      e.Counter >= e.WholeTime && this.xhr.push(e.Id);
+    if (0 < this.xhr.length) {
+      for (const r of this.xhr) this.Ahr.delete(r);
+      this.xhr = [];
     }
   }
   SetPropertyFloat(t, i, e, r, s) {
-    return void 0 !== this.Aar && (this.Aar.SetFloat(r, s, t, i, e), !0);
+    return void 0 !== this.Uhr && (this.Uhr.SetFloat(r, s, t, i, e), !0);
   }
   SetPropertyColor(t, i, e, r, s) {
-    return void 0 !== this.Aar && (this.Aar.SetColor(r, s, t, i, e), !0);
+    return void 0 !== this.Uhr && (this.Uhr.SetColor(r, s, t, i, e), !0);
   }
   SetPropertyLinearFloat(t, i, e, r, s, o = -1) {
-    if (void 0 !== this.Aar) {
+    if (void 0 !== this.Uhr) {
       if (!(o < 0))
         return (
           (o = RenderUtil_1.RenderUtil.GetFloat(s.FloatData, o)),
-          this.Aar.SetFloat(r, o, t, i, e),
+          this.Uhr.SetFloat(r, o, t, i, e),
           !0
         );
-      this.xar++,
+      this.Phr++,
         (o = new PropertyTimeCounter()).Init(
-          this.xar,
+          this.Phr,
           t,
           i,
           e,
@@ -121,21 +121,21 @@ class CharPropertyModifier extends CharRenderBase_1.CharRenderBase {
           s.Time,
           0,
         ),
-        this.Par.set(this.xar, o);
+        this.Ahr.set(this.Phr, o);
     }
     return !1;
   }
   SetPropertyLinearColor(t, i, e, r, s, o = -1) {
-    if (void 0 !== this.Aar) {
+    if (void 0 !== this.Uhr) {
       if (!(o < 0))
         return (
           (o = RenderUtil_1.RenderUtil.GetColor(s.LinearColor, o)),
-          this.Aar.SetColor(r, o, t, i, e),
+          this.Uhr.SetColor(r, o, t, i, e),
           !0
         );
-      this.xar++,
+      this.Phr++,
         (o = new PropertyTimeCounter()).Init(
-          this.xar,
+          this.Phr,
           t,
           i,
           e,
@@ -145,7 +145,7 @@ class CharPropertyModifier extends CharRenderBase_1.CharRenderBase {
           s.Time,
           1,
         ),
-        this.Par.set(this.xar, o);
+        this.Ahr.set(this.Phr, o);
     }
     return !1;
   }

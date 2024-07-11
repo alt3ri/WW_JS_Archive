@@ -26,14 +26,14 @@ const UE = require("ue"),
   RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent");
 let CharacterThrowComponent = class CharacterThrowComponent extends EntityComponent_1.EntityComponent {
   constructor() {
-    super(...arguments), (this.wKr = void 0);
+    super(...arguments), (this.mKr = void 0);
   }
   get ProjectilePathTracer() {
-    return this.wKr;
+    return this.mKr;
   }
   OnStart() {
     return (
-      (this.wKr = ActorSystem_1.ActorSystem.Get(
+      (this.mKr = ActorSystem_1.ActorSystem.Get(
         UE.BP_KuroProjectilePathTracer_C.StaticClass(),
         MathUtils_1.MathUtils.DefaultTransform,
       )),
@@ -41,14 +41,14 @@ let CharacterThrowComponent = class CharacterThrowComponent extends EntityCompon
     );
   }
   SetPredictProjectileInfo(t, e, r, o) {
-    this.wKr.SetPredictProjectileInfo(t, e, r, o);
+    this.mKr.SetPredictProjectileInfo(t, e, r, o);
   }
   SetVisible(t) {
-    this.wKr.SetVisible(t);
+    this.mKr.SetVisible(t);
   }
 };
 (CharacterThrowComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(67)],
+  [(0, RegisterComponent_1.RegisterComponent)(69)],
   CharacterThrowComponent,
 )),
   (exports.CharacterThrowComponent = CharacterThrowComponent);

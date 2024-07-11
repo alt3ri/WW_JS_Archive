@@ -48,24 +48,24 @@ class AnsContextTrigger {
 let UiModelAnsControllerComponent = class UiModelAnsControllerComponent extends UiModelComponentBase_1.UiModelComponentBase {
   constructor() {
     super(...arguments),
-      (this.mBr = new Map()),
-      (this.dBr = new Map()),
-      (this.CBr = new AnsContextSet()),
-      (this.gBr = new AnsContextSet());
+      (this.Hwr = new Map()),
+      (this.jwr = new Map()),
+      (this.Wwr = new AnsContextSet()),
+      (this.Kwr = new AnsContextSet());
   }
   OnInit() {
     this.NeedTick = !0;
   }
   RegisterAnsTrigger(e, t, o) {
-    this.dBr.set(e, new AnsContextTrigger(t, o));
+    this.jwr.set(e, new AnsContextTrigger(t, o));
   }
   AddAns(e, t) {
-    let o = this.mBr.get(e),
-      n = (o || ((o = new AnsContextSet()), this.mBr.set(e, o)), o.Has(t));
-    n || (o.Add(t), (n = t)), this.fBr(n), n.ExistCount++;
+    let o = this.Hwr.get(e),
+      n = (o || ((o = new AnsContextSet()), this.Hwr.set(e, o)), o.Has(t));
+    n || (o.Add(t), (n = t)), this.Qwr(n), n.ExistCount++;
   }
   ReduceAns(e, t) {
-    var e = this.mBr.get(e);
+    var e = this.Hwr.get(e);
     e
       ? (e = e.Has(t))
         ? (t = e.ExistCount) <= 0
@@ -74,35 +74,35 @@ let UiModelAnsControllerComponent = class UiModelAnsControllerComponent extends 
               "AnsCount",
               t,
             ])
-          : (this.fBr(e), e.ExistCount--)
+          : (this.Qwr(e), e.ExistCount--)
         : Log_1.Log.CheckError() &&
           Log_1.Log.Error("Character", 44, "Ans不成对,查找不到对应的AnsContext")
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error("Character", 44, "Ans不成对,Set不存在");
   }
-  fBr(e) {
-    this.gBr.Has(e) || (this.gBr.Add(e), (e.CacheCount = e.ExistCount));
+  Qwr(e) {
+    this.Kwr.Has(e) || (this.Kwr.Add(e), (e.CacheCount = e.ExistCount));
   }
   Tick(e) {
-    var t = this.CBr.AnsContextSet;
+    var t = this.Wwr.AnsContextSet;
     if (0 < t.size) {
       for (const i of t) {
         var o,
           n = i.CacheCount,
           s = i.ExistCount;
         0 === n && 0 < s
-          ? (o = this.dBr.get(i.constructor.name)) && o.OnBegin(i)
+          ? (o = this.jwr.get(i.constructor.name)) && o.OnBegin(i)
           : 0 < n &&
             0 === s &&
-            (o = this.dBr.get(i.constructor.name)) &&
+            (o = this.jwr.get(i.constructor.name)) &&
             o.OnEnd(i);
       }
-      this.CBr.Clear();
+      this.Wwr.Clear();
     }
-    t = this.gBr.AnsContextSet;
+    t = this.Kwr.AnsContextSet;
     if (0 < t.size) {
-      for (const r of t) this.CBr.Add(r);
-      this.gBr.Clear();
+      for (const r of t) this.Wwr.Add(r);
+      this.Kwr.Clear();
     }
   }
 };

@@ -128,7 +128,7 @@ class EffectModelGhostSpec extends EffectSpec_1.EffectSpec {
   OnCanStop() {
     return !this.n0e || 0 === this.n0e.length;
   }
-  yAr() {
+  XAr() {
     for (const e of this.n0e)
       for (const t of e[0])
         t.PoseComponent.K2_DestroyComponent(t.PoseComponent);
@@ -138,7 +138,7 @@ class EffectModelGhostSpec extends EffectSpec_1.EffectSpec {
     this.s0e.clear(), this.a0e.clear(), (this.h0e = void 0);
   }
   OnStop(e, t) {
-    t && this.yAr();
+    t && this.XAr();
   }
   m0e() {
     var e = [];

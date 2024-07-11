@@ -53,7 +53,6 @@ class ConfigManager extends ConfigManagerBase_1.ConfigManagerBase {}
   (ConfigManager.BuffItemConfig = void 0),
   (ConfigManager.WorldConfig = void 0),
   (ConfigManager.PlayerInfoConfig = void 0),
-  (ConfigManager.ProtocolMonitorConfig = void 0),
   (ConfigManager.SwimConfig = void 0),
   (ConfigManager.RedDotConfig = void 0),
   (ConfigManager.MenuBaseConfig = void 0),
@@ -105,6 +104,7 @@ class ConfigManager extends ConfigManagerBase_1.ConfigManagerBase {}
   (ConfigManager.ActivityConfig = void 0),
   (ConfigManager.ActivityUniversalConfig = void 0),
   (ConfigManager.ActivityRogueConfig = void 0),
+  (ConfigManager.ActivityRoleGiveConfig = void 0),
   (ConfigManager.ActivityRunConfig = void 0),
   (ConfigManager.ActivityCollectionConfig = void 0),
   (ConfigManager.ActivityTowerGuideConfig = void 0),
@@ -113,6 +113,7 @@ class ConfigManager extends ConfigManagerBase_1.ConfigManagerBase {}
   (ConfigManager.ActivityRoleGuideConfig = void 0),
   (ConfigManager.ActivityTimePointRewardConfig = void 0),
   (ConfigManager.ActivityDailyAdventureConfig = void 0),
+  (ConfigManager.ActivityMoonChasingConfig = void 0),
   (ConfigManager.ActivityTurntableConfig = void 0),
   (ConfigManager.WeaponComponentConfig = void 0),
   (ConfigManager.ItemRewardConfig = void 0),
@@ -143,5 +144,13 @@ class ConfigManager extends ConfigManagerBase_1.ConfigManagerBase {}
   (ConfigManager.FragmentMemoryConfig = void 0),
   (ConfigManager.PlatformConfig = void 0),
   (ConfigManager.CollectItemConfig = void 0),
-  (ConfigManager.BossRushConfig = void 0);
+  (ConfigManager.BossRushConfig = void 0),
+  (ConfigManager.BusinessConfig = void 0),
+  (ConfigManager.BuildingConfig = void 0),
+  (ConfigManager.TaskConfig = void 0),
+  (ConfigManager.MoonChasingRewardConfig = void 0),
+  (ConfigManager.MoonChasingHandbookConfig = void 0),
+  (ConfigManager.MoonChasingMemoryConfig = void 0),
+  (ConfigManager.ActivityRecallConfig = void 0),
+  (ConfigManager.ViewHotKeyConfig = void 0);
 //# sourceMappingURL=ConfigManager.js.map

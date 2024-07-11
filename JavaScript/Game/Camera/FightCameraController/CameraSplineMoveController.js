@@ -103,7 +103,8 @@ class CameraSplineMoveController extends CameraControllerBase_1.CameraController
             i + this.YawAngle,
             0,
           ),
-      (this.Camera.IsModifiedArmRotation = !0));
+      (this.Camera.IsModifiedArmRotationPitch = !0),
+      (this.Camera.IsModifiedArmRotationYaw = !0));
   }
 }
 exports.CameraSplineMoveController = CameraSplineMoveController;

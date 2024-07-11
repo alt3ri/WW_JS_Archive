@@ -46,7 +46,7 @@ class LockValue extends ExtraEffectBase_1.BuffEffect {
         (this.Percent = Number(t.ExtraEffectParameters[2]));
   }
   OnCreated() {
-    this.OwnerEntity?.CheckGetComponent(155)?.AddStateAttributeLock(
+    this.OwnerEntity?.CheckGetComponent(157)?.AddStateAttributeLock(
       this.ActiveHandleId,
       this.AttributeId,
       this.Percent,
@@ -55,7 +55,7 @@ class LockValue extends ExtraEffectBase_1.BuffEffect {
   }
   OnExecute() {}
   OnRemoved() {
-    this.OwnerEntity?.CheckGetComponent(155)?.RemoveStateAttributeLock(
+    this.OwnerEntity?.CheckGetComponent(157)?.RemoveStateAttributeLock(
       this.ActiveHandleId,
       this.AttributeId,
     );
@@ -86,7 +86,7 @@ class LockUpperBound extends ExtraEffectBase_1.BuffEffect {
         (this.Percent = Number(t.ExtraEffectParameters[2]));
   }
   OnCreated() {
-    this.OwnerEntity?.CheckGetComponent(155)?.AddIntervalLock(
+    this.OwnerEntity?.CheckGetComponent(157)?.AddIntervalLock(
       0,
       this.ActiveHandleId,
       this.AttributeId,
@@ -96,7 +96,7 @@ class LockUpperBound extends ExtraEffectBase_1.BuffEffect {
   }
   OnExecute() {}
   OnRemoved() {
-    this.OwnerEntity?.CheckGetComponent(155)?.RemoveIntervalLock(
+    this.OwnerEntity?.CheckGetComponent(157)?.RemoveIntervalLock(
       0,
       this.ActiveHandleId,
       this.AttributeId,
@@ -128,7 +128,7 @@ class LockLowerBound extends ExtraEffectBase_1.BuffEffect {
         (this.Percent = Number(t.ExtraEffectParameters[2]));
   }
   OnCreated() {
-    this.OwnerEntity?.CheckGetComponent(155)?.AddIntervalLock(
+    this.OwnerEntity?.CheckGetComponent(157)?.AddIntervalLock(
       1,
       this.ActiveHandleId,
       this.AttributeId,
@@ -138,7 +138,7 @@ class LockLowerBound extends ExtraEffectBase_1.BuffEffect {
   }
   OnExecute() {}
   OnRemoved() {
-    this.OwnerEntity?.CheckGetComponent(155)?.RemoveIntervalLock(
+    this.OwnerEntity?.CheckGetComponent(157)?.RemoveIntervalLock(
       1,
       this.ActiveHandleId,
       this.AttributeId,
@@ -163,19 +163,19 @@ class TimeScaleEffect extends ExtraEffectBase_1.BuffEffect {
       (this.CurveId = this.CurveId % 1 == 0 ? this.CurveId : -1);
   }
   OnCreated() {
-    this.LQo();
+    this.yXo();
   }
   OnExecute() {}
   OnRemoved() {
-    (this.Active = !1), this.DQo(), (this.CurveDt = void 0);
+    (this.Active = !1), this.IXo(), (this.CurveDt = void 0);
   }
   StartTimeScaleEffect() {
-    this.LQo();
+    this.yXo();
   }
   StopTimeScaleEffect() {
-    this.DQo();
+    this.IXo();
   }
-  LQo() {
+  yXo() {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug(
         "Bullet",
@@ -185,7 +185,7 @@ class TimeScaleEffect extends ExtraEffectBase_1.BuffEffect {
         ["this.CurveId", this.CurveId],
       ),
       -1 === this.CurveId || this.CurveDt
-        ? this.RQo()
+        ? this.TXo()
         : (Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug("Bullet", 36, "AddTimeScaleLoad", [
               "this.CurveId",
@@ -196,13 +196,13 @@ class TimeScaleEffect extends ExtraEffectBase_1.BuffEffect {
             UE.DataTable,
             (t) => {
               this.Active
-                ? ((this.CurveDt = t), this.RQo())
+                ? ((this.CurveDt = t), this.TXo())
                 : Log_1.Log.CheckDebug() &&
                   Log_1.Log.Debug("Bullet", 36, "TimeScaleHasRemoved");
             },
           ));
   }
-  RQo() {
+  TXo() {
     var t = this.CurveDt
       ? DataTableUtil_1.DataTableUtil.GetDataTableRow(
           this.CurveDt,
@@ -225,7 +225,7 @@ class TimeScaleEffect extends ExtraEffectBase_1.BuffEffect {
           ["curve?.时间膨胀变化曲线", t?.时间膨胀变化曲线],
         );
   }
-  DQo() {
+  IXo() {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug("Bullet", 36, "RemoveTimeScaleByBuff", [
         "this.ActiveHandleId",
@@ -324,7 +324,7 @@ class AddBuffToVision extends ExtraEffectBase_1.BuffEffect {
         (e ||
           (Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn("Bullet", 36, "没有父Buff的上下文信息")),
-        t?.GetComponent(157));
+        t?.GetComponent(159));
     if (s)
       for (const i of this.BuffIds)
         s.AddBuff(i, {
@@ -340,7 +340,7 @@ class AddBuffToVision extends ExtraEffectBase_1.BuffEffect {
     var t = PhantomUtil_1.PhantomUtil.GetSummonedEntity(
       this.OwnerEntity,
       this.SummonType,
-    )?.Entity?.GetComponent(157);
+    )?.Entity?.GetComponent(159);
     if (t)
       for (const e of this.BuffIds)
         t.RemoveBuff(e, -1, `召唤者的buff${this.BuffId}移除`);
@@ -356,7 +356,7 @@ class ModifyToughReduce extends ExtraEffectBase_1.BuffEffect {
       (this.ModifyRate = Number(t.ExtraEffectParameters[0] ?? 0));
   }
   OnCreated() {
-    var t = this.OwnerEntity?.CheckGetComponent(155);
+    var t = this.OwnerEntity?.CheckGetComponent(157);
     t &&
       (this.ModifierHandle = t.AddModifier(
         CharacterAttributeTypes_1.EAttributeId.Proto_ToughReduce,
@@ -365,7 +365,7 @@ class ModifyToughReduce extends ExtraEffectBase_1.BuffEffect {
   }
   OnExecute() {}
   OnRemoved() {
-    var t = this.OwnerEntity?.CheckGetComponent(155);
+    var t = this.OwnerEntity?.CheckGetComponent(157);
     t &&
       t.RemoveModifier(
         CharacterAttributeTypes_1.EAttributeId.Proto_ToughReduce,

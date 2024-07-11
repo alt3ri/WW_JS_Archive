@@ -58,7 +58,7 @@ class GenericPromptController extends UiControllerBase_1.UiControllerBase {
           ["Id", e],
         );
   }
-  static ShowPromptByItsType(e, r, t, n, o, i, a) {
+  static ShowPromptByItsType(e, r, t, n, o, i, a, s) {
     i = {
       TypeId: e,
       PromptId: i,
@@ -67,6 +67,7 @@ class GenericPromptController extends UiControllerBase_1.UiControllerBase {
       MainTextParams: n,
       ExtraTextParams: o,
       CloseCallback: a,
+      ...s,
     };
     9 === e
       ? ModelManager_1.ModelManager.GenericPromptModel.ApplyPromptParamHub(i)
@@ -88,25 +89,25 @@ class GenericPromptController extends UiControllerBase_1.UiControllerBase {
   static OnAddEvents() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.UiManagerInit,
-      this.H$t,
+      this.HYt,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.AfterLoadMap,
-        this.H$t,
+        this.HYt,
       );
   }
   static OnRemoveEvents() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.UiManagerInit,
-      this.H$t,
+      this.HYt,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.AfterLoadMap,
-        this.H$t,
+        this.HYt,
       );
   }
 }
-(exports.GenericPromptController = GenericPromptController).H$t = () => {
+(exports.GenericPromptController = GenericPromptController).HYt = () => {
   UiManager_1.UiManager.IsViewOpen("GenericPromptView") ||
     UiManager_1.UiManager.OpenView("GenericPromptView");
 };

@@ -17,9 +17,9 @@ const UE = require("ue"),
 class RoleFavorTabView extends UiTabViewBase_1.UiTabViewBase {
   constructor() {
     super(...arguments),
-      (this.plo = void 0),
+      (this.d1o = void 0),
       (this.bl = () => {
-        var e = this.plo.GetCurSelectRoleId(),
+        var e = this.d1o.GetCurSelectRoleId(),
           i = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(e),
           e = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(e),
           r = ConfigManager_1.ConfigManager.RoleConfig.GetRoleName(e.Name),
@@ -51,14 +51,14 @@ class RoleFavorTabView extends UiTabViewBase_1.UiTabViewBase {
           this.BNe();
       }),
       (this.BNe = () => {
-        var e = this.plo.GetCurSelectRoleData().GetFavorData();
+        var e = this.d1o.GetCurSelectRoleData().GetFavorData();
         this.GetItem(7).SetUIActive(e.IsFavorItemCanUnlock(1)),
           this.GetItem(8).SetUIActive(e.IsFavorItemCanUnlock(0)),
           this.GetItem(9).SetUIActive(e.IsFavorItemCanUnlock(2)),
           this.GetItem(10).SetUIActive(e.IsFavorItemCanUnlock(3));
       }),
       (this.OnClickExperienceButton = () => {
-        var e = this.plo.GetCurSelectRoleId(),
+        var e = this.d1o.GetCurSelectRoleId(),
           i =
             ConfigManager_1.ConfigManager.RoleFavorConfig.GetFavorRoleInfoConfig(
               e,
@@ -78,7 +78,7 @@ class RoleFavorTabView extends UiTabViewBase_1.UiTabViewBase {
         var e = this.BuildContentItemData(0, 1);
         e.Config
           ? UiManager_1.UiManager.OpenView("RoleFavorInfoView", e)
-          : ((e = this.plo.GetCurSelectRoleId()),
+          : ((e = this.d1o.GetCurSelectRoleId()),
             Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "Role",
@@ -91,7 +91,7 @@ class RoleFavorTabView extends UiTabViewBase_1.UiTabViewBase {
         var e = this.BuildContentItemData(2, 1);
         e.Config
           ? UiManager_1.UiManager.OpenView("RoleFavorInfoView", e)
-          : ((e = this.plo.GetCurSelectRoleId()),
+          : ((e = this.d1o.GetCurSelectRoleId()),
             Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "Role",
@@ -104,7 +104,7 @@ class RoleFavorTabView extends UiTabViewBase_1.UiTabViewBase {
         var e = this.BuildContentItemData(3, void 0);
         e.Config
           ? UiManager_1.UiManager.OpenView("RoleFavorInfoView", e)
-          : ((e = this.plo.GetCurSelectRoleId()),
+          : ((e = this.d1o.GetCurSelectRoleId()),
             Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "Role",
@@ -156,8 +156,8 @@ class RoleFavorTabView extends UiTabViewBase_1.UiTabViewBase {
       );
   }
   OnStart() {
-    (this.plo = this.ExtraParams),
-      void 0 === this.plo
+    (this.d1o = this.ExtraParams),
+      void 0 === this.d1o
         ? Log_1.Log.CheckError() &&
           Log_1.Log.Error("Role", 59, "RoleViewAgent为空", [
             "界面名称",
@@ -167,21 +167,21 @@ class RoleFavorTabView extends UiTabViewBase_1.UiTabViewBase {
   }
   OnBeforeShow() {
     this.PlayMontageStart(), this.BNe();
-    var e = this.L_o();
+    var e = this.Suo();
     e && e.Montage_Stop(0), this.bl();
   }
   PlayMontageStart() {
     RoleController_1.RoleController.PlayRoleMontage(13);
   }
-  D_o() {
+  yuo() {
     var e = UiSceneManager_1.UiSceneManager.GetRoleSystemRoleActor();
     if (e) {
       e = e.Model?.CheckGetComponent(1)?.MainMeshComponent;
       if (e) return e;
     }
   }
-  L_o() {
-    var e = this.D_o();
+  Suo() {
+    var e = this.yuo();
     if (e)
       return e
         .GetAnimInstance()
@@ -190,12 +190,12 @@ class RoleFavorTabView extends UiTabViewBase_1.UiTabViewBase {
         );
   }
   BuildContentItemData(e, i) {
-    var r = this.plo.GetCurSelectRoleId(),
+    var r = this.d1o.GetCurSelectRoleId(),
       t = this.GetConfigByFavorTabType(e);
     return new RoleFavorDefine_1.ContentItemData(e, r, t, i);
   }
   GetConfigByFavorTabType(e) {
-    var i = this.plo.GetCurSelectRoleId();
+    var i = this.d1o.GetCurSelectRoleId();
     let r = void 0;
     switch (e) {
       case 2:

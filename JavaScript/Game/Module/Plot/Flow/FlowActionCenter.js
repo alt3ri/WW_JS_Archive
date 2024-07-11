@@ -43,183 +43,183 @@ const ControllerAssistantBase_1 = require("../../GeneralLogicTree/ControllerAssi
   FlowActionWait_1 = require("../FlowActions/FlowActionWait");
 class FlowActionCenter extends ControllerAssistantBase_1.ControllerAssistantBase {
   constructor() {
-    super(...arguments), (this.yQi = new Map());
+    super(...arguments), (this.EXi = new Map());
   }
   OnInit() {
     this.LTe();
   }
   OnDestroy() {
-    this.yQi?.clear();
+    this.EXi?.clear();
   }
   LTe() {
-    this.IQi("ShowTalk", FlowActionShowTalk_1.FlowActionShowTalk),
-      this.IQi("ChangeState", FlowActionChangeState_1.FlowActionChangeState),
-      this.IQi("FinishState", FlowActionFinishState_1.FlowActionFinishState),
-      this.IQi("JumpTalk", FlowActionJumpTalk_1.FlowActionJumpTalk),
-      this.IQi("FinishTalk", FlowActionFinishTalk_1.FlowActionFinishTalk),
-      this.IQi(
+    this.SXi("ShowTalk", FlowActionShowTalk_1.FlowActionShowTalk),
+      this.SXi("ChangeState", FlowActionChangeState_1.FlowActionChangeState),
+      this.SXi("FinishState", FlowActionFinishState_1.FlowActionFinishState),
+      this.SXi("JumpTalk", FlowActionJumpTalk_1.FlowActionJumpTalk),
+      this.SXi("FinishTalk", FlowActionFinishTalk_1.FlowActionFinishTalk),
+      this.SXi(
         "PlaySequenceData",
         FlowActionPlaySequenceData_1.FlowActionPlaySequenceData,
       ),
-      this.IQi("SetPlotMode", FlowActionSetPlotMode_1.FlowActionSetPlotMode),
-      this.IQi(
+      this.SXi("SetPlotMode", FlowActionSetPlotMode_1.FlowActionSetPlotMode),
+      this.SXi(
         "ShowCenterText",
         FlowActionShowCenterText_1.FlowActionShowCenterText,
       ),
-      this.IQi(
+      this.SXi(
         "SetHeadIconVisible",
         FlowActionSetHeadIconVisible_1.FlowActionSetHeadIconVisible,
       ),
-      this.IQi("Wait", FlowActionWait_1.FlowActionWait),
-      this.IQi("PlayMovie", FlowActionPlayMovie_1.FlowActionPlayMovie),
-      this.IQi(
+      this.SXi("Wait", FlowActionWait_1.FlowActionWait),
+      this.SXi("PlayMovie", FlowActionPlayMovie_1.FlowActionPlayMovie),
+      this.SXi(
         "ChangeInteractOptionText",
         FlowActionChangeInteractOptionText_1.FlowActionChangeInteractOptionText,
         !0,
       ),
-      this.IQi("FadeInScreen", FlowActionFadeInScreen_1.FlowActionFadeInScreen),
-      this.IQi(
+      this.SXi("FadeInScreen", FlowActionFadeInScreen_1.FlowActionFadeInScreen),
+      this.SXi(
         "FadeOutScreen",
         FlowActionFadeOutScreen_1.FlowActionFadeOutScreen,
       ),
-      this.IQi(
+      this.SXi(
         "BeginFlowTemplate",
         FlowActionBeginFlowTemplate_1.FlowActionBeginFlowTemplate,
       ),
-      this.IQi(
+      this.SXi(
         "SetFlowTemplate",
         FlowActionSetFlowTemplate_1.FlowActionSetFlowTemplate,
       ),
-      this.IQi(
+      this.SXi(
         "CloseFlowTemplate",
         FlowActionCloseFlowTemplate_1.FlowActionCloseFlowTemplate,
       ),
-      this.IQi("SetPlayerPos", FlowActionSetPlayerPos_1.FlowActionSetPlayerPos),
-      this.IQi("AwakeEntity", FlowActionAwakeEntity_1.FlowActionAwakeEntity),
-      this.IQi(
+      this.SXi("SetPlayerPos", FlowActionSetPlayerPos_1.FlowActionSetPlayerPos),
+      this.SXi("AwakeEntity", FlowActionAwakeEntity_1.FlowActionAwakeEntity),
+      this.SXi(
         "DestroyEntity",
         FlowActionDestroyEntity_1.FlowActionDestroyEntity,
       ),
-      this.IQi(
+      this.SXi(
         "PlayerLookAt",
         FlowActionLevelSyncAction_1.FlowActionLevelSyncAction,
         !0,
       ),
-      this.IQi(
+      this.SXi(
         "PostAkEvent",
         FlowActionLevelSyncAction_1.FlowActionLevelSyncAction,
         !0,
       ),
-      this.IQi("CameraLookAt", FlowActionCameraLookAt_1.FlowActionCameraLookAt),
-      this.IQi(
+      this.SXi("CameraLookAt", FlowActionCameraLookAt_1.FlowActionCameraLookAt),
+      this.SXi(
         "PlayBubble",
         FlowActionLevelSyncAction_1.FlowActionLevelSyncAction,
         !0,
       ),
-      this.IQi(
+      this.SXi(
         "AddPlayBubble",
         FlowActionAddPlayBubble_1.FlowActionAddPlayBubble,
         !0,
       ),
-      this.IQi(
+      this.SXi(
         "SetCameraAnim",
         FlowActionSetCameraAnim_1.FlowActionSetCameraAnim,
         !0,
       ),
-      this.IQi(
+      this.SXi(
         "TakePlotPhoto",
         FlowActionTakePlotPhoto_1.FlowActionTakePlotPhoto,
       ),
-      this.IQi("SetTime", FlowActionSetTime_1.FlowActionSetTime, !0),
-      this.IQi(
+      this.SXi("SetTime", FlowActionSetTime_1.FlowActionSetTime, !0),
+      this.SXi(
         "HideByRangeInFlow",
         FlowActionHideByRangeInFlow_1.FlowActionHideByRangeInFlow,
         !0,
       ),
-      this.IQi(
+      this.SXi(
         "ChangeActorTalker",
         FlowActionChangeActorTalker_1.FlowActionChangeActorTalker,
         !0,
       ),
-      this.IQi("SetWeather", FlowActionServerAction_1.FlowActionServerAction),
-      this.IQi(
+      this.SXi("SetWeather", FlowActionServerAction_1.FlowActionServerAction),
+      this.SXi(
         "SetTimeLockState",
         FlowActionLockTodTime_1.FlowActionLockTodTime,
         !0,
       ),
-      this.IQi(
+      this.SXi(
         "SetWeatherLockState",
         FlowActionServerAction_1.FlowActionServerAction,
       ),
-      this.IQi(
+      this.SXi(
         "PromptQuestChapterUI",
         FlowActionOpenQuestChapterView_1.FlowActionOpenQuestChapterView,
       ),
-      this.IQi(
+      this.SXi(
         "OpenSystemBoard",
         FlowActionOpenSystemBoard_1.FlowActionOpenSystemBoard,
       ),
-      this.IQi(
+      this.SXi(
         "ChangeEntityState",
         FlowActionChangeEntityState_1.FlowActionChangeEntityState,
       ),
-      this.IQi(
+      this.SXi(
         "UnlockEntity",
         FlowActionUnlockEntity_1.FlowActionUnlockEntity,
         !0,
       ),
-      this.IQi(
+      this.SXi(
         "AdjustPlayerCamera",
         FlowActionLevelSyncAction_1.FlowActionLevelSyncAction,
         !0,
       ),
-      this.IQi(
+      this.SXi(
         "RestorePlayerCameraAdjustment",
         FlowActionLevelSyncAction_1.FlowActionLevelSyncAction,
         !0,
       ),
-      this.IQi(
+      this.SXi(
         "ChangeEntityPrefabPerformance",
         FlowActionChangeEntityPerformanceState_1.FlowActionChangeEntityPerformanceState,
         !0,
       ),
-      this.IQi(
+      this.SXi(
         "ChangeSelfEntityState",
         FlowActionChangeEntitySelfState_1.FlowActionChangeEntitySelfState,
         !0,
       ),
-      this.IQi(
+      this.SXi(
         "SetEntityVisible",
         FlowActionSetEntityVisible_1.FlowActionSetEntityVisible,
       ),
-      this.IQi(
+      this.SXi(
         "ChangePhantomFormation",
         FlowActionChangeFormation_1.FlowActionChangeFormation,
       ),
-      this.IQi(
+      this.SXi(
         "RestorePhantomFormation",
         FlowActionChangeFormation_1.FlowActionChangeFormation,
       ),
-      this.IQi(
+      this.SXi(
         "AddTrialCharacter",
         FlowActionChangeFormation_1.FlowActionChangeFormation,
       ),
-      this.IQi(
+      this.SXi(
         "RemoveTrialCharacter",
         FlowActionChangeFormation_1.FlowActionChangeFormation,
       ),
-      this.IQi(
+      this.SXi(
         "SwitchSubLevels",
         FlowActionSwitchSubLevels_1.FlowActionSwitchSubLevels,
       );
   }
-  IQi(t, o, e = !1) {
+  SXi(t, o, e = !1) {
     var i;
-    this.yQi.has(t) ||
-      ((i = new FlowAction()).Init(t, o, e), this.yQi.set(t, i));
+    this.EXi.has(t) ||
+      ((i = new FlowAction()).Init(t, o, e), this.EXi.set(t, i));
   }
   GetFlowAction(t) {
-    return this.yQi.get(t);
+    return this.EXi.get(t);
   }
 }
 exports.FlowActionCenter = FlowActionCenter;
@@ -243,10 +243,10 @@ class FlowAction {
     return (t.Type = this.Type), t;
   }
   GetAction() {
-    var t = this.TQi();
+    var t = this.yXi();
     return (t.Owner = this), t;
   }
-  TQi() {
+  yXi() {
     return this.IsAutoFinish
       ? this.ActionInstanceList[0]
       : this.ActionInstanceList.length <= 0

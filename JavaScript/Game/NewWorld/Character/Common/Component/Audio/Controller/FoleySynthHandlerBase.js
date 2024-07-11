@@ -58,7 +58,7 @@ class FoleySynthHandlerBase {
   }
   OnInit(t) {}
   Tick(t) {
-    this.IsActive && this.I$o(t);
+    this.IsActive && this.EYo(t);
   }
   SetActive(t) {
     this.IsActive = t;
@@ -66,12 +66,12 @@ class FoleySynthHandlerBase {
   Clear() {
     (this.ActorComp = void 0), (this.AkComp = void 0), (this.UeAkComp = void 0);
   }
-  I$o(t) {
+  EYo(t) {
     t *= MathUtils_1.MathUtils.MillisecondToSecond;
     this.IsDebug && (this.DebugTime += t),
       0 === this.RecordTickCount
-        ? (this.T$o(), ++this.RecordTickCount)
-        : (this.L$o(t),
+        ? (this.SYo(), ++this.RecordTickCount)
+        : (this.yYo(t),
           this.RecordTickCount > this.RecordCount + this.RecordErrorFlag &&
             this.OnParseBoneSpeedForAudio(),
           ++this.RecordTickCount,
@@ -79,14 +79,14 @@ class FoleySynthHandlerBase {
             ((this.RecordTickCount = this.RecordCount),
             (this.RecordErrorFlag = 0)));
   }
-  T$o() {
+  SYo() {
     for (let t = 0; t < this.FoleySynthModelConfigs.length; ++t) {
       var i = this.FoleySynthModelConfigs[t],
         i = this.ActorComp.Actor.Mesh.GetSocketTransform(i.BoneName, 2);
       this.PreModelBoneComponentLocations[t].DeepCopy(i.GetTranslation());
     }
   }
-  L$o(i) {
+  yYo(i) {
     this.RecordIndex = (this.RecordIndex + 1) % this.RecordCount;
     var s = this.GetPreRecordIndex(1);
     for (let t = 0; t < this.FoleySynthModelConfigs.length; ++t) {
@@ -97,7 +97,7 @@ class FoleySynthHandlerBase {
           this.TempBoneLocation.SubtractionEqual(
             this.ActorComp.ActorLocationProxy,
           ),
-          this.D$o(
+          this.IYo(
             this.TempBoneLocation,
             this.PreModelBoneComponentLocations[t],
             i,
@@ -115,7 +115,7 @@ class FoleySynthHandlerBase {
     }
   }
   OnParseBoneSpeedForAudio() {}
-  D$o(t, i, s) {
+  IYo(t, i, s) {
     this.TempVector.DeepCopy(t),
       this.TempVector.SubtractionEqual(i),
       this.TempVector.DivisionEqual(s);

@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RedDotRoguelikeShop = void 0);
 const EventDefine_1 = require("../../../Common/Event/EventDefine"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
+  ActivityRogueController_1 = require("../../../Module/Activity/ActivityContent/RougeActivity/ActivityRogueController"),
   RedDotBase_1 = require("../../RedDotBase");
 class RedDotRoguelikeShop extends RedDotBase_1.RedDotBase {
   OnGetEvents() {
@@ -16,7 +17,10 @@ class RedDotRoguelikeShop extends RedDotBase_1.RedDotBase {
     ];
   }
   OnCheck() {
-    return ModelManager_1.ModelManager.RoguelikeModel.CheckRoguelikeShopRedDot();
+    return (
+      ActivityRogueController_1.ActivityRogueController.RefreshActivityRedDot(),
+      ModelManager_1.ModelManager.RoguelikeModel.CheckRoguelikeShopRedDot()
+    );
   }
 }
 exports.RedDotRoguelikeShop = RedDotRoguelikeShop;

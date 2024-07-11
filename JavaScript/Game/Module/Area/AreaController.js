@@ -16,11 +16,11 @@ const Log_1 = require("../../../Core/Common/Log"),
 class AreaController extends UiControllerBase_1.UiControllerBase {
   static OnInit() {
     return (
-      AreaController.cje ||
-        ((AreaController.cje = new AreaAudio_1.AreaAudio()),
-        AreaController.cje.Init()),
-      AreaController.mje ||
-        (AreaController.mje = new AreaAtmosphere_1.AreaAtmosphere()),
+      AreaController.IWe ||
+        ((AreaController.IWe = new AreaAudio_1.AreaAudio()),
+        AreaController.IWe.Init()),
+      AreaController.TWe ||
+        (AreaController.TWe = new AreaAtmosphere_1.AreaAtmosphere()),
       this.RegisterNetEvent(),
       this.RegisterEvents(),
       !0
@@ -28,33 +28,33 @@ class AreaController extends UiControllerBase_1.UiControllerBase {
   }
   static OnClear() {
     return (
-      AreaController.cje && AreaController.cje.Destroy(),
-      AreaController.mje && AreaController.mje.Destroy(),
+      AreaController.IWe && AreaController.IWe.Destroy(),
+      AreaController.TWe && AreaController.TWe.Destroy(),
       this.UnRegisterNetEvent(),
       this.UnRegisterEvents(),
       !0
     );
   }
   static OnTick(e) {
-    AreaController.mje && AreaController.mje.OnTick(e);
+    AreaController.TWe && AreaController.TWe.OnTick(e);
   }
   static RegisterNetEvent() {
-    Net_1.Net.Register(28768, this.dje);
+    Net_1.Net.Register(5057, this.LWe);
   }
   static UnRegisterNetEvent() {
-    Net_1.Net.UnRegister(28768);
+    Net_1.Net.UnRegister(5057);
   }
   static RegisterEvents() {
-    EventSystem_1.EventSystem.Add(EventDefine_1.EEventName.InitArea, this.Cje);
+    EventSystem_1.EventSystem.Add(EventDefine_1.EEventName.InitArea, this.DWe);
   }
   static UnRegisterEvents() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.InitArea,
-      this.Cje,
+      this.DWe,
     );
   }
   static BeginOverlap(e, r = !1) {
-    if (e === this.gje())
+    if (e === this.RWe())
       (ModelManager_1.ModelManager.AreaModel.AreaInfo &&
         ModelManager_1.ModelManager.AreaModel.AreaInfo.AreaId === e) ||
         ModelManager_1.ModelManager.AreaModel.SetAreaInfo(e),
@@ -62,44 +62,44 @@ class AreaController extends UiControllerBase_1.UiControllerBase {
           ? ModelManager_1.ModelManager.AreaModel.SetAreaName(e, !0)
           : EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.ChangeArea);
     else {
-      r = Protocol_1.Aki.Protocol.tWn.create({ Ekn: e });
-      const o = this.gje();
-      Net_1.Net.Call(19485, r, (e) => {
+      r = Protocol_1.Aki.Protocol.XXn.create({ J4n: e });
+      const o = this.RWe();
+      Net_1.Net.Call(14209, r, (e) => {
         e &&
-          (e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys
+          (e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs
             ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-                e.lkn,
-                11769,
+                e.O4n,
+                9225,
               )
             : ModelManager_1.ModelManager.AreaModel.AreaInfo?.AreaId !==
-                e.Ekn &&
+                e.J4n &&
               (Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info(
                   "Area",
                   7,
                   "[AreaController.BeginOverlap] 进入区域",
                   ["CurArea", o],
-                  ["EnterArea", e.Ekn],
+                  ["EnterArea", e.J4n],
                 ),
-              ModelManager_1.ModelManager.AreaModel.SetAreaName(e.Ekn)));
+              ModelManager_1.ModelManager.AreaModel.SetAreaName(e.J4n)));
       });
     }
   }
   static EndOverlap(r) {
     if (0 !== r && 1 !== r) {
       const o = ConfigManager_1.ConfigManager.AreaConfig.GetParentAreaId(
-        this.gje(),
+        this.RWe(),
       );
       var e;
       1 !== o &&
-        o !== this.gje() &&
-        ((e = Protocol_1.Aki.Protocol.tWn.create({ Ekn: o })),
-        Net_1.Net.Call(19485, e, (e) => {
+        o !== this.RWe() &&
+        ((e = Protocol_1.Aki.Protocol.XXn.create({ J4n: o })),
+        Net_1.Net.Call(14209, e, (e) => {
           e &&
-            (e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys
+            (e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs
               ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-                  e.lkn,
-                  11769,
+                  e.O4n,
+                  9225,
                 )
               : (ModelManager_1.ModelManager.AreaModel.SetAreaInfo(o),
                 EventSystem_1.EventSystem.Emit(
@@ -117,15 +117,15 @@ class AreaController extends UiControllerBase_1.UiControllerBase {
     }
   }
   static RequestChangeAreaState(e, r) {}
-  static gje() {
+  static RWe() {
     return ModelManager_1.ModelManager.PlayerInfoModel.GetNumberPropById(6);
   }
 }
-((exports.AreaController = AreaController).Cje = (e) => {
+((exports.AreaController = AreaController).DWe = (e) => {
   ModelManager_1.ModelManager.AreaModel.InitAreaStates(e),
     UnopenedAreaController_1.UnopenedAreaController.AreaCheckInit(e);
 }),
-  (AreaController.dje = (e) => {
+  (AreaController.LWe = (e) => {
     e ||
       (Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn(
@@ -134,8 +134,8 @@ class AreaController extends UiControllerBase_1.UiControllerBase {
           "[AreaController.AreaStatesChangeNotify] Notify Info Error",
         )),
       ModelManager_1.ModelManager.AreaModel.ToggleAreaState(
-        e.uys.wFn,
-        e.uys.ckn,
+        e.PRs.l6n,
+        e.PRs.F4n,
       ),
       UnopenedAreaController_1.UnopenedAreaController.AreaCheckStatesChange(e);
   });

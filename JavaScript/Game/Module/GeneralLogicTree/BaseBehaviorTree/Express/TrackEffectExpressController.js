@@ -17,102 +17,102 @@ const UE = require("ue"),
   OFFSET_Z = 1e3;
 class TrackEffectExpressController {
   constructor(t) {
-    (this.OKt = void 0),
-      (this.kKt = void 0),
+    (this.OQt = void 0),
+      (this.kQt = void 0),
       (this.OnBattleViewActive = () => {
-        if (this.kKt) for (var [, t] of this.kKt) t.OnBattleViewActive();
+        if (this.kQt) for (var [, t] of this.kQt) t.OnBattleViewActive();
       }),
       (this.OnBattleViewHide = () => {
-        if (this.kKt) for (var [, t] of this.kKt) t.OnBattleViewHide();
+        if (this.kQt) for (var [, t] of this.kQt) t.OnBattleViewHide();
       }),
-      (this.OKt = t),
-      (this.kKt = new Map());
+      (this.OQt = t),
+      (this.kQt = new Map());
   }
   Clear() {
-    if (this.kKt) {
-      for (var [, t] of this.kKt) t.Destroy();
-      this.kKt.clear();
+    if (this.kQt) {
+      for (var [, t] of this.kQt) t.Destroy();
+      this.kQt.clear();
     }
-    this.OKt = void 0;
+    this.OQt = void 0;
   }
   EnableTrack(t) {
-    if (this.kKt) for (var [, e] of this.kKt) t ? e.Start() : e.End();
+    if (this.kQt) for (var [, e] of this.kQt) t ? e.Start() : e.End();
   }
   NodeTrackEffectStart(t, e, i) {
-    t = this.FKt(t, e);
+    t = this.FQt(t, e);
     i && t.Start();
   }
   NodeTrackEffectEnd(t) {
-    this.GetNodeTrackMarkCreator(t)?.End(), this.kKt.delete(t);
+    this.GetNodeTrackMarkCreator(t)?.End(), this.kQt.delete(t);
   }
-  FKt(t, e) {
+  FQt(t, e) {
     var i = this.GetNodeTrackMarkCreator(t);
     return (
-      i || ((i = new NodeTrackEffect(this.OKt, t, e)), this.kKt.set(t, i), i)
+      i || ((i = new NodeTrackEffect(this.OQt, t, e)), this.kQt.set(t, i), i)
     );
   }
   GetNodeTrackMarkCreator(t) {
-    return this.kKt.get(t);
+    return this.kQt.get(t);
   }
   UpdateTrackEffectExpression(t, e) {
-    e === Protocol_1.Aki.Protocol.N2s.Proto_Destroy &&
-      (this.GetNodeTrackMarkCreator(t)?.Destroy(), this.kKt.delete(t));
+    e === Protocol_1.Aki.Protocol.DNs.Proto_Destroy &&
+      (this.GetNodeTrackMarkCreator(t)?.Destroy(), this.kQt.delete(t));
   }
   OnBtApplyExpressionOccupation(t) {
-    if (!t) for (var [, e] of this.kKt) e.OnExpressOccupied();
+    if (!t) for (var [, e] of this.kQt) e.OnExpressOccupied();
   }
   OnBtReleaseExpressionOccupation(t) {
-    if (!t) for (var [, e] of this.kKt) e.OnExpressOccupationRelease();
+    if (!t) for (var [, e] of this.kQt) e.OnExpressOccupationRelease();
   }
 }
 exports.TrackEffectExpressController = TrackEffectExpressController;
 class NodeTrackEffect {
   constructor(t, e, i) {
-    (this.OKt = void 0),
-      (this.b_t = 0),
-      (this.VKt = 0),
-      (this.HKt = 0),
-      (this.jKt = 0),
-      (this.WKt = 0),
+    (this.OQt = void 0),
+      (this.Jut = 0),
+      (this.VQt = 0),
+      (this.HQt = 0),
+      (this.jQt = 0),
+      (this.WQt = 0),
       (this.Wse = void 0),
       (this.j3 = void 0),
-      (this.KKt = 0),
-      (this.QKt = !1),
-      (this.sdt = !1),
+      (this.KQt = 0),
+      (this.QQt = !1),
+      (this.pCt = !1),
       (this.OnBattleViewActive = () => {
-        var t = this.OKt.GetTrackDistance(this.b_t);
-        (this.QKt = t < this.jKt),
-          this.XKt(this.VKt, !this.QKt),
-          this.XKt(this.HKt, this.QKt),
+        var t = this.OQt.GetTrackDistance(this.Jut);
+        (this.QQt = t < this.jQt),
+          this.XQt(this.VQt, !this.QQt),
+          this.XQt(this.HQt, this.QQt),
           this.j3 && this.j3.IsPause() && this.j3.Resume();
       }),
       (this.OnBattleViewHide = () => {
-        this.Mct(), this.j3 && !this.j3.IsPause() && this.j3.Pause();
+        this.xmt(), this.j3 && !this.j3.IsPause() && this.j3.Pause();
       }),
-      (this.$Kt = () => {
+      (this.$Qt = () => {
         var t;
-        this.sdt || (t = this.OKt.GetTrackDistance(this.b_t)) <= 0
-          ? this.Mct()
-          : (!this.QKt &&
-              t < this.jKt &&
-              ((this.QKt = !0), this.XKt(this.VKt, !1), this.XKt(this.HKt, !0)),
-            this.QKt &&
-              t >= this.WKt &&
-              ((this.QKt = !1),
-              this.XKt(this.VKt, !0),
-              this.XKt(this.HKt, !1)));
+        this.pCt || (t = this.OQt.GetTrackDistance(this.Jut)) <= 0
+          ? this.xmt()
+          : (!this.QQt &&
+              t < this.jQt &&
+              ((this.QQt = !0), this.XQt(this.VQt, !1), this.XQt(this.HQt, !0)),
+            this.QQt &&
+              t >= this.WQt &&
+              ((this.QQt = !1),
+              this.XQt(this.VQt, !0),
+              this.XQt(this.HQt, !1)));
       }),
-      NodeTrackEffect.uoe || NodeTrackEffect.gct(),
-      (this.b_t = e),
-      (this.OKt = t),
-      (this.jKt = i.EnterRange),
-      (this.WKt = i.LeaveRange),
+      NodeTrackEffect.uoe || NodeTrackEffect.Rmt(),
+      (this.Jut = e),
+      (this.OQt = t),
+      (this.jQt = i.EnterRange),
+      (this.WQt = i.LeaveRange),
       (this.Wse = Vector_1.Vector.Create());
   }
   Destroy() {
-    this.End(), (this.OKt = void 0);
+    this.End(), (this.OQt = void 0);
   }
-  static gct() {
+  static Rmt() {
     var t = UE.NewObject(UE.TraceLineElement.StaticClass());
     (t.WorldContextObject = GlobalData_1.GlobalData.World),
       (t.bIsSingle = !0),
@@ -120,7 +120,7 @@ class NodeTrackEffect {
       (NodeTrackEffect.uoe = t);
   }
   Start() {
-    (this.QKt = void 0), (this.KKt = 0);
+    (this.QQt = void 0), (this.KQt = 0);
     var t,
       e,
       i =
@@ -143,38 +143,38 @@ class NodeTrackEffect {
               "trackEffectType",
               "ShortLightBeam",
             ])
-          : (e = this.OKt.GetNodeTrackPosition(this.b_t))
-            ? ((this.VKt = this.vct("LongLightBeam", i, e)),
-              (this.HKt = this.vct("ShortLightBeam", t, e)))
+          : (e = this.OQt.GetNodeTrackPosition(this.Jut))
+            ? ((this.VQt = this.Pmt("LongLightBeam", i, e)),
+              (this.HQt = this.Pmt("ShortLightBeam", t, e)))
             : Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "GeneralLogicTree",
                 19,
                 "找不到追踪位置",
                 ["trackEffectType", "ShortLightBeam"],
-                ["nodeId", this.b_t],
+                ["nodeId", this.Jut],
               ));
   }
   End() {
     TimerSystem_1.TimerSystem.Has(this.j3) &&
       TimerSystem_1.TimerSystem.Remove(this.j3),
       (this.j3 = void 0),
-      EffectSystem_1.EffectSystem.IsValid(this.VKt) &&
+      EffectSystem_1.EffectSystem.IsValid(this.VQt) &&
         EffectSystem_1.EffectSystem.StopEffectById(
-          this.VKt,
+          this.VQt,
           "[TrackEffectExpress.End]",
           !0,
         ),
-      (this.VKt = 0),
-      EffectSystem_1.EffectSystem.IsValid(this.HKt) &&
+      (this.VQt = 0),
+      EffectSystem_1.EffectSystem.IsValid(this.HQt) &&
         EffectSystem_1.EffectSystem.StopEffectById(
-          this.HKt,
+          this.HQt,
           "[TrackEffectExpress.End]",
           !0,
         ),
-      (this.HKt = 0);
+      (this.HQt = 0);
   }
-  vct(i, t, e) {
+  Pmt(i, t, e) {
     var s = NodeTrackEffect.uoe,
       e =
         (TraceElementCommon_1.TraceElementCommon.SetStartLocation(s, e),
@@ -198,36 +198,36 @@ class NodeTrackEffect {
           3,
           void 0,
           (t, e) => {
-            5 === t && this.YKt(i, e ?? 0);
+            5 === t && this.YQt(i, e ?? 0);
           },
         ));
     return e;
   }
-  YKt(t, e) {
+  YQt(t, e) {
     EffectSystem_1.EffectSystem.RegisterCustomCheckOwnerFunc(
       e,
-      () => void 0 !== this.OKt,
+      () => void 0 !== this.OQt,
     );
-    var i = this.OKt.GetTrackDistance(this.b_t),
+    var i = this.OQt.GetTrackDistance(this.Jut),
       i =
-        ((this.QKt = i < this.jKt),
-        "LongLightBeam" === t ? !this.QKt : this.QKt);
-    this.XKt(e, i),
-      this.KKt++,
-      2 === this.KKt &&
-        (this.j3 = TimerSystem_1.TimerSystem.Forever(this.$Kt, 1e3));
+        ((this.QQt = i < this.jQt),
+        "LongLightBeam" === t ? !this.QQt : this.QQt);
+    this.XQt(e, i),
+      this.KQt++,
+      2 === this.KQt &&
+        (this.j3 = TimerSystem_1.TimerSystem.Forever(this.$Qt, 1e3));
   }
-  Mct() {
-    this.XKt(this.VKt, !1), this.XKt(this.HKt, !1);
+  xmt() {
+    this.XQt(this.VQt, !1), this.XQt(this.HQt, !1);
   }
-  XKt(t, e) {
+  XQt(t, e) {
     EffectSystem_1.EffectSystem.GetEffectActor(t)?.SetActorHiddenInGame(!e);
   }
   OnExpressOccupied() {
-    this.sdt = !0;
+    this.pCt = !0;
   }
   OnExpressOccupationRelease() {
-    this.sdt = !1;
+    this.pCt = !1;
   }
 }
 NodeTrackEffect.uoe = void 0;

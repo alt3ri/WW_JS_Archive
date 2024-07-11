@@ -9,9 +9,9 @@ const UE = require("ue"),
 class ItemTipsWithButtonComponent extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this.gPt = void 0),
-      (this.fPt = void 0),
-      (this.pPt = (t, e, i) => {
+      (this.vQs = void 0),
+      (this.Mxt = void 0),
+      (this.Sxt = (t, e, i) => {
         e = new ButtonItem_1.ButtonItem(e);
         return (
           e.SetFunction(t.Function),
@@ -28,44 +28,44 @@ class ItemTipsWithButtonComponent extends UiPanelBase_1.UiPanelBase {
     ];
   }
   async OnBeforeStartAsync() {
-    (this.gPt = new ItemTipsComponent_1.ItemTipsComponent()),
-      await this.gPt.CreateByActorAsync(this.GetItem(0).GetOwner());
+    (this.vQs = new ItemTipsComponent_1.ItemTipsComponentContentComponent()),
+      await this.vQs.CreateByActorAsync(this.GetItem(0).GetOwner());
   }
   OnStart() {
-    this.fPt = new GenericLayoutNew_1.GenericLayoutNew(
+    this.Mxt = new GenericLayoutNew_1.GenericLayoutNew(
       this.GetHorizontalLayout(1),
-      this.pPt,
+      this.Sxt,
     );
   }
   OnBeforeDestroy() {
-    this.gPt.Destroy(), this.fPt.ClearChildren();
+    this.vQs.Destroy(), this.Mxt.ClearChildren();
   }
   RefreshTips(t) {
-    this.gPt.Refresh(t);
+    this.vQs.Refresh(t);
   }
   RefreshButton(t) {
-    this.fPt.RebuildLayoutByDataNew(t);
+    this.Mxt.RebuildLayoutByDataNew(t);
   }
   ClearButtonList() {
-    this.fPt.RebuildLayoutByDataNew([]);
+    this.Mxt.RebuildLayoutByDataNew([]);
   }
   SetButtonTextByIndex(t, e, i) {
-    this.fPt.GetLayoutItemMap().get(t)?.SetLocalText(e, i);
+    this.Mxt.GetLayoutItemMap().get(t)?.SetLocalText(e, i);
   }
   SetButtonEnableByIndex(t, e) {
-    this.fPt.GetLayoutItemMap().get(t)?.SetEnableClick(e);
+    this.Mxt.GetLayoutItemMap().get(t)?.SetEnableClick(e);
   }
   SetButtonPanelVisible(t) {
     this.GetHorizontalLayout(1).RootUIComp.SetUIActive(t);
   }
   SetButtonRedDotVisible(t, e) {
-    this.fPt.GetLayoutItemMap().get(t)?.SetRedDotVisible(e);
+    this.Mxt.GetLayoutItemMap().get(t)?.SetRedDotVisible(e);
   }
   SetVisible(t) {
     this.SetActive(t);
   }
   SetTipsComponentLockButton(t) {
-    this.gPt.SetTipsComponentLockButton(t);
+    this.vQs.SetTipsComponentLockButton(t);
   }
 }
 exports.ItemTipsWithButtonComponent = ItemTipsWithButtonComponent;

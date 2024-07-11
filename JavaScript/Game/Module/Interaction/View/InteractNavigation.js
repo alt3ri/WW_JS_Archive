@@ -5,10 +5,10 @@ const Log_1 = require("../../../../Core/Common/Log"),
   InputEnums_1 = require("../../../Input/InputEnums");
 class InteractNavigation {
   constructor(t, s, h) {
-    (this.F1i = 0),
-      (this.V1i = 0),
-      (this.H1i = 0),
-      (t < (this.j1i = 0) || s < 0) &&
+    (this.F_i = 0),
+      (this.V_i = 0),
+      (this.H_i = 0),
+      (t < (this.j_i = 0) || s < 0) &&
         Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Interaction",
@@ -17,56 +17,56 @@ class InteractNavigation {
           ["lookUpThreshold", t],
           ["zoomThreshold", s],
         ),
-      (this.W1i = t),
-      (this.K1i = s),
-      (this.Q1i = h);
+      (this.W_i = t),
+      (this.K_i = s),
+      (this.Q_i = h);
   }
   get Index() {
-    return this.V1i;
+    return this.V_i;
   }
   set Index(t) {
-    this.V1i = t;
+    this.V_i = t;
   }
   get TotalNum() {
-    return this.F1i;
+    return this.F_i;
   }
   UpdateValue(t, s, h = void 0) {
     var i,
-      e = this.V1i;
+      e = this.V_i;
     return (
-      void 0 !== this.V1i
+      void 0 !== this.V_i
         ? t === InputEnums_1.EInputAxis.LookUp
-          ? (this.H1i * s < 0 && (this.H1i = 0),
-            (this.H1i += s),
-            Math.abs(this.H1i) >= this.W1i &&
+          ? (this.H_i * s < 0 && (this.H_i = 0),
+            (this.H_i += s),
+            Math.abs(this.H_i) >= this.W_i &&
               ((i =
-                (0 < s ? 1 : -1) * Math.floor(Math.abs(this.H1i / this.W1i))),
-              (this.H1i -= this.W1i * i),
-              (this.V1i += i)))
+                (0 < s ? 1 : -1) * Math.floor(Math.abs(this.H_i / this.W_i))),
+              (this.H_i -= this.W_i * i),
+              (this.V_i += i)))
           : t === InputEnums_1.EInputAxis.Zoom &&
-            (this.j1i * (i = -s) < 0 && (this.j1i = 0),
-            (this.j1i += i),
-            Math.abs(this.j1i) >= this.K1i) &&
-            ((t = (0 < i ? 1 : -1) * Math.floor(Math.abs(this.j1i / this.K1i))),
-            (this.j1i -= this.K1i * t),
-            (this.V1i += t))
-        : (this.V1i = 0),
-      this.X1i(h),
-      this.V1i !== e
+            (this.j_i * (i = -s) < 0 && (this.j_i = 0),
+            (this.j_i += i),
+            Math.abs(this.j_i) >= this.K_i) &&
+            ((t = (0 < i ? 1 : -1) * Math.floor(Math.abs(this.j_i / this.K_i))),
+            (this.j_i -= this.K_i * t),
+            (this.V_i += t))
+        : (this.V_i = 0),
+      this.X_i(h),
+      this.V_i !== e
     );
   }
   UpdateIndex(t) {
-    var s = this.V1i;
-    return this.X1i(t), this.V1i !== s;
+    var s = this.V_i;
+    return this.X_i(t), this.V_i !== s;
   }
-  X1i(t) {
-    t && (this.F1i = t),
-      this.F1i &&
-        (this.V1i < 0 || this.V1i >= this.F1i) &&
-        (this.Q1i
-          ? ((this.V1i = this.V1i % this.F1i),
-            this.V1i < 0 && (this.V1i = this.F1i + this.V1i))
-          : (this.V1i = Math.max(0, Math.min(this.V1i, this.F1i - 1))));
+  X_i(t) {
+    t && (this.F_i = t),
+      this.F_i &&
+        (this.V_i < 0 || this.V_i >= this.F_i) &&
+        (this.Q_i
+          ? ((this.V_i = this.V_i % this.F_i),
+            this.V_i < 0 && (this.V_i = this.F_i + this.V_i))
+          : (this.V_i = Math.max(0, Math.min(this.V_i, this.F_i - 1))));
   }
 }
 exports.InteractNavigation = InteractNavigation;

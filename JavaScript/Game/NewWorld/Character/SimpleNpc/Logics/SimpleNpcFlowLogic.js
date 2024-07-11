@@ -12,74 +12,74 @@ const UE = require("ue"),
   STOP_MONTAGE_BLEND_OUT_TIME = 0.3;
 class SimpleNpcFlowLogic {
   constructor(t) {
-    (this.sir = void 0),
-      (this.air = void 0),
-      (this.hir = void 0),
-      (this.lir = void 0),
-      (this._ir = 0),
+    (this.sor = void 0),
+      (this.aor = void 0),
+      (this.hor = void 0),
+      (this.lor = void 0),
+      (this._or = 0),
       (this.hBe = !1),
-      (this.uir = void 0),
-      (this.cir = void 0),
-      (this.mir = void 0),
-      (this.Cir = void 0),
-      (this.sir = t),
-      (this.Cir = t.K2_GetActorLocation());
+      (this.uor = void 0),
+      (this.cor = void 0),
+      (this.mor = void 0),
+      (this.dor = void 0),
+      (this.sor = t),
+      (this.dor = t.K2_GetActorLocation());
   }
   StartFlowLogic() {
-    (this.air = this.sir.GetComponentByClass(
+    (this.aor = this.sor.GetComponentByClass(
       UE.SimpleNpcFlowComponent_C.StaticClass(),
     )),
-      this.air &&
-        0 < this.air.FlowList?.Num() &&
-        ((this.lir = new SimpleNpcMultiplyLogic_1.SimpleNpcMultiplyLogic(
-          this.air,
+      this.aor &&
+        0 < this.aor.FlowList?.Num() &&
+        ((this.lor = new SimpleNpcMultiplyLogic_1.SimpleNpcMultiplyLogic(
+          this.aor,
         )),
-        this.gir(),
-        this.fir());
+        this.Cor(),
+        this.gor());
   }
-  gir() {
-    var t = this.air.CheckRange;
-    (this.cir = t.LowerBound.Value * t.LowerBound.Value),
-      (this.mir = t.UpperBound.Value * t.UpperBound.Value);
+  Cor() {
+    var t = this.aor.CheckRange;
+    (this.cor = t.LowerBound.Value * t.LowerBound.Value),
+      (this.mor = t.UpperBound.Value * t.UpperBound.Value);
   }
   async AddHeadView() {
     if (
-      !this.hir &&
+      !this.hor &&
       ConfigManager_1.ConfigManager.NpcIconConfig &&
-      this.sir?.Mesh
+      this.sor?.Mesh
     ) {
       let t = 1500;
-      var i = (t = this.air ? this.air.CheckRange.UpperBound.Value : t) + 500;
-      (this.hir = new NpcIconComponent_1.NpcIconComponent(this)),
-        this.hir.SetupCheckRange(i * i),
-        await this.hir.AddNpcIconAsync(void 0),
-        this.hir.SetCharacterIconLocation(),
-        this.hir.SetHeadInfoNameState(!1),
-        this.hir.HideDialogueText();
+      var i = (t = this.aor ? this.aor.CheckRange.UpperBound.Value : t) + 500;
+      (this.hor = new NpcIconComponent_1.NpcIconComponent(this)),
+        this.hor.SetupCheckRange(i * i),
+        await this.hor.AddNpcIconAsync(void 0),
+        this.hor.SetCharacterIconLocation(),
+        this.hor.SetHeadInfoNameState(!1),
+        this.hor.HideDialogueText();
     }
   }
   ShowDialog(t, i) {
-    this.hir?.SetDialogueText(t, i);
+    this.hor?.SetDialogueText(t, i);
   }
   HideDialog() {
-    this.hir?.HideDialogueText();
+    this.hor?.HideDialogueText();
   }
   TryPlayMontage(t) {
-    if (this.sir.Mesh && 1 !== this.sir.Mesh.AnimationMode) {
-      const i = this.sir.Mesh.AnimScriptInstance;
+    if (this.sor.Mesh && 1 !== this.sor.Mesh.AnimationMode) {
+      const i = this.sor.Mesh.AnimScriptInstance;
       i &&
-        (t = this.pir(t)) &&
+        (t = this.por(t)) &&
         ResourceSystem_1.ResourceSystem.LoadAsync(t, UE.AnimMontage, (t) => {
           ObjectUtils_1.ObjectUtils.IsValid(t) &&
             i &&
-            ((this._ir = t.SequenceLength), i.Montage_Play(t));
+            ((this._or = t.SequenceLength), i.Montage_Play(t));
         });
     }
     return !1;
   }
-  vir() {
-    if (!this.uir) {
-      var i = this.sir.Mesh.AnimScriptInstance;
+  vor() {
+    if (!this.uor) {
+      var i = this.sor.Mesh.AnimScriptInstance;
       if (i) {
         i = UE.KismetSystemLibrary.GetPathName(i);
         if (i) {
@@ -88,70 +88,70 @@ class SimpleNpcFlowLogic {
           i = new Array();
           i.push(t),
             i.push("/Montage"),
-            (this.uir = i.join(StringUtils_1.EMPTY_STRING));
+            (this.uor = i.join(StringUtils_1.EMPTY_STRING));
         }
       }
     }
   }
-  pir(t) {
+  por(t) {
     return !t || t.includes("/")
       ? t
-      : (this.vir(), this.uir ? this.uir + `/${t}.` + t : void 0);
+      : (this.vor(), this.uor ? this.uor + `/${t}.` + t : void 0);
   }
   Tick(t) {
-    0 < this._ir && ((this._ir -= t), this._ir < 0) && this.StopMontage(),
-      this.lir && (this.fir(), this.lir.Tick(t));
+    0 < this._or && ((this._or -= t), this._or < 0) && this.StopMontage(),
+      this.lor && (this.gor(), this.lor.Tick(t));
   }
   StopMontage() {
     var t;
-    (this._ir = 0),
-      this.sir &&
-        this.sir.Mesh &&
-        1 !== this.sir.Mesh.AnimationMode &&
-        (t = this.sir.Mesh.AnimScriptInstance) &&
+    (this._or = 0),
+      this.sor &&
+        this.sor.Mesh &&
+        1 !== this.sor.Mesh.AnimationMode &&
+        (t = this.sor.Mesh.AnimScriptInstance) &&
         t.IsAnyMontagePlaying() &&
         t.Montage_Stop(STOP_MONTAGE_BLEND_OUT_TIME);
   }
-  fir() {
+  gor() {
     var t = Global_1.Global.BaseCharacter;
     t &&
       ((t = t.CharacterActorComponent.ActorLocation),
-      (t = UE.Vector.DistSquared2D(t, this.Cir)) < this.cir
+      (t = UE.Vector.DistSquared2D(t, this.dor)) < this.cor
         ? (this.hBe ||
-            (this.lir.IsPlaying || this.sir.IsHiding
-              ? (this.lir.IsPause = !1)
-              : this.lir.StartFlow()),
+            (this.lor.IsPlaying || this.sor.IsHiding
+              ? (this.lor.IsPause = !1)
+              : this.lor.StartFlow()),
           (this.hBe = !0))
-        : t < this.mir
-          ? ((this.hBe = !1), (this.lir.IsPause = !0))
+        : t < this.mor
+          ? ((this.hBe = !1), (this.lor.IsPause = !0))
           : ((this.hBe = !1),
-            (this.lir.IsPause = !0),
-            this.lir.IsPlaying && this.lir.StopFlow()));
+            (this.lor.IsPause = !0),
+            this.lor.IsPlaying && this.lor.StopFlow()));
   }
   FilterFlowWorldState(t) {
-    this.lir?.FilterFlowWorldState(t);
+    this.lor?.FilterFlowWorldState(t);
   }
   ForceStopFlow() {
-    (this.hBe = !1), this.lir?.IsPlaying && this.lir.StopFlow();
+    (this.hBe = !1), this.lor?.IsPlaying && this.lor.StopFlow();
   }
   Dispose() {
-    (this.sir = void 0),
-      (this.air = void 0),
-      (this.lir = void 0),
-      this.hir?.Destroy();
+    (this.sor = void 0),
+      (this.aor = void 0),
+      (this.lor = void 0),
+      this.hor?.Destroy();
   }
   GetSelfLocation() {
-    return this.sir.SelfLocationProxy;
+    return this.sor.SelfLocationProxy;
   }
   GetAttachToMeshComponent() {
-    return this.sir.Mesh;
+    return this.sor.Mesh;
   }
   GetAttachToSocketName() {
     return ConfigManager_1.ConfigManager.NpcIconConfig.GetNpcIconSocketName();
   }
   GetAttachToLocation(t) {
-    var i = this.sir.CapsuleCollision.CapsuleHalfHeight,
-      s = this.sir.SelfLocationProxy;
+    var i = this.sor.CapsuleCollision.CapsuleHalfHeight,
+      s = this.sor.SelfLocationProxy;
     t.Set(s.X, s.Y, s.Z + i);
   }
   GetAddOffsetZ() {

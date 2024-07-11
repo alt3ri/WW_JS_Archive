@@ -12,7 +12,7 @@ const UE = require("ue"),
   EffectSystem_1 = require("../../../Effect/EffectSystem"),
   GlobalData_1 = require("../../../GlobalData"),
   CharacterUnifiedStateTypes_1 = require("../../../NewWorld/Character/Common/Component/Abilities/CharacterUnifiedStateTypes"),
-  CombatDebugController_1 = require("../../../Utils/CombatDebugController"),
+  CombatLog_1 = require("../../../Utils/CombatLog"),
   AiStateMachine_1 = require("../AiStateMachine"),
   AiStateMachineTask_1 = require("./AiStateMachineTask"),
   BLINK_TIME = 1e3,
@@ -93,7 +93,7 @@ class AiStateMachineTaskLeaveFight extends AiStateMachineTask_1.AiStateMachineTa
                 1 === t
                   ? this.$ne(!0)
                   : (this.Yne(r),
-                    CombatDebugController_1.CombatDebugController.CombatWarn(
+                    CombatLog_1.CombatLog.Warn(
                       "StateMachineNew",
                       this.Node.Entity,
                       "脱战复位未找到路，瞬移移动回初始点",
@@ -103,7 +103,7 @@ class AiStateMachineTaskLeaveFight extends AiStateMachineTask_1.AiStateMachineTa
             },
             h =
               (this.Node.MoveComponent.MoveAlongPath(s),
-              r.Entity.CheckGetComponent(89));
+              r.Entity.CheckGetComponent(91));
           if (h.Valid)
             switch (this.Hne) {
               case 1:
@@ -181,7 +181,7 @@ class AiStateMachineTaskLeaveFight extends AiStateMachineTask_1.AiStateMachineTa
           GlobalData_1.GlobalData.World,
           MathUtils_1.MathUtils.DefaultTransform,
           this.Wne,
-          "[TsTaskWander.BlinkMoveBegin] hideEffect",
+          "[AiStateMachineTaskLeaveFight.BlinkMoveBegin] hideEffect",
           new EffectContext_1.EffectContext(e.Entity.Id),
         )),
         (t = EffectSystem_1.EffectSystem.GetEffectActor(t))
@@ -254,7 +254,7 @@ class AiStateMachineTaskLeaveFight extends AiStateMachineTask_1.AiStateMachineTa
           GlobalData_1.GlobalData.World,
           MathUtils_1.MathUtils.DefaultTransform,
           this.jne,
-          "[TsTaskWander.BlinkMoveTick] showEffect",
+          "[AiStateMachineTaskLeaveFight.BlinkMoveTick] showEffect",
           new EffectContext_1.EffectContext(e.Entity.Id),
         )),
         (t = EffectSystem_1.EffectSystem.GetEffectActor(t))

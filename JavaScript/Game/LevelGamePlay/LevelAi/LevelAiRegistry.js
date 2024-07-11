@@ -17,7 +17,7 @@ const LevelAiDecoratorCheckInTodTimeSpan_1 = require("./Decorators/LevelAiDecora
   LevelAiTaskTurnTo_1 = require("./Tasks/LevelAiTaskTurnTo");
 class LevelAiRegistry {
   constructor() {
-    (this.ETe = new Map()), (this.yTe = new Map());
+    (this.STe = new Map()), (this.yTe = new Map());
   }
   static Instance() {
     return (
@@ -31,15 +31,15 @@ class LevelAiRegistry {
     this.VZ(), this.HZ();
   }
   VZ() {
-    this.ETe.set("Log", LevelAiTaskLog_1.LevelAiTaskLog),
-      this.ETe.set("SetVar", LevelAiTaskSetVar_1.LevelAiTaskSetVar),
-      this.ETe.set(
+    this.STe.set("Log", LevelAiTaskLog_1.LevelAiTaskLog),
+      this.STe.set("SetVar", LevelAiTaskSetVar_1.LevelAiTaskSetVar),
+      this.STe.set(
         "PlayRegisteredMontage",
         LevelAiTaskPlayMontage_1.LevelAiTaskPlayMontage,
       ),
-      this.ETe.set("PlayBubble", LevelAiTaskPlayBubble_1.LevelAiTaskPlayBubble),
-      this.ETe.set("EntityLookAt", LevelAiTaskTurnTo_1.LevelAiTaskTurnTo),
-      this.ETe.set(
+      this.STe.set("PlayBubble", LevelAiTaskPlayBubble_1.LevelAiTaskPlayBubble),
+      this.STe.set("EntityLookAt", LevelAiTaskTurnTo_1.LevelAiTaskTurnTo),
+      this.STe.set(
         "NpcLeisureInteract",
         LevelAiTaskLeisureInteract_1.LevelAiTaskLeisureInteract,
       );
@@ -79,7 +79,7 @@ class LevelAiRegistry {
       );
   }
   FindTaskCtor(e) {
-    return this.ETe.get(e);
+    return this.STe.get(e);
   }
   FindDecoratorCtor(e) {
     return this.yTe.get(e);

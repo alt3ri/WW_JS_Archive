@@ -18,7 +18,7 @@ class ActivityTurntableData extends ActivityData_1.ActivityBaseData {
       (this.RoundIdList = []),
       (this.TurntableCostConfigId = 0),
       (this.TurntableCostCount = 0),
-      (this.WIn = []),
+      (this._Ln = []),
       (this.OnCommonItemCountAnyChange = (t, e) => {
         t === this.TurntableCostConfigId &&
           EventSystem_1.EventSystem.Emit(
@@ -26,7 +26,7 @@ class ActivityTurntableData extends ActivityData_1.ActivityBaseData {
             this.Id,
           );
       }),
-      (this.ENe = (t, e) => {
+      (this.SNe = (t, e) => {
         var i = t.IsSpecial ? 1 : 0,
           s = e.IsSpecial ? 1 : 0;
         return i == s ? t.Id - e.Id : s - i;
@@ -62,13 +62,13 @@ class ActivityTurntableData extends ActivityData_1.ActivityBaseData {
         ConfigManager_1.ConfigManager.ActivityTurntableConfig.GetTurntableAwardsByActivityId(
           this.Id,
         )),
-        (t = t.I0s);
+        (t = t.Fps);
       if (t) {
         var r,
           n,
-          a = t.q0s,
-          h = t.G0s,
-          o = t.O0s,
+          a = t.Zps,
+          h = t.eMs,
+          o = t.tMs,
           u = new Map();
         for (const M of s) {
           var f,
@@ -102,7 +102,7 @@ class ActivityTurntableData extends ActivityData_1.ActivityBaseData {
           }
         }
         for ([r, n] of u.entries()) {
-          n.sort(this.ENe);
+          n.sort(this.SNe);
           var d = [];
           for (const g of n) d.push(g.Id);
           this.RoundRewardIdMap.set(r, d), this.RoundIdList.push(r);
@@ -270,10 +270,10 @@ class ActivityTurntableData extends ActivityData_1.ActivityBaseData {
         const i = this.AllRewardInfo.get(s);
         i.IsClaimed = !0;
       }
-    this.WIn = e;
+    this._Ln = e;
   }
   GetRunResult() {
-    return this.WIn;
+    return this._Ln;
   }
 }
 exports.ActivityTurntableData = ActivityTurntableData;

@@ -4,6 +4,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const ModelManager_1 = require("../../../../Manager/ModelManager"),
   UiControllerBase_1 = require("../../../../Ui/Base/UiControllerBase"),
   RoleController_1 = require("../../../RoleUi/RoleController"),
+  SkipTaskManager_1 = require("../../../SkipInterface/SkipTaskManager"),
   WorldMapController_1 = require("../../../WorldMap/WorldMapController");
 class DailyAdventureTaskController extends UiControllerBase_1.UiControllerBase {
   static TrackTaskByType(e, r) {
@@ -11,27 +12,33 @@ class DailyAdventureTaskController extends UiControllerBase_1.UiControllerBase {
       case 1:
         break;
       case 2:
-        var o = [];
-        for (const a of r) o.push(Number(a));
-        DailyAdventureTaskController.dOe(o);
+        var a = [];
+        for (const o of r) a.push(Number(o));
+        DailyAdventureTaskController.dOe(a);
         break;
       case 3: {
         let e = "DailyActivityTabView";
         r && 1 <= r.length && (e = r[0]), DailyAdventureTaskController.COe(e);
         break;
       }
+      case 4:
+        var l = Number(r[0]);
+        DailyAdventureTaskController.Ona(l);
     }
   }
   static dOe(e) {
     let r = 0;
     1 < e.length &&
-      ((o = ModelManager_1.ModelManager.MapModel.IsConfigMarkIdUnlock(e[0])),
-      (r = o ? e[0] : e[1]));
-    var o = { MarkId: r, MarkType: 0, OpenAreaId: 0 };
-    WorldMapController_1.WorldMapController.OpenView(2, !1, o);
+      ((a = ModelManager_1.ModelManager.MapModel.IsConfigMarkIdUnlock(e[0])),
+      (r = a ? e[0] : e[1]));
+    var a = { MarkId: r, MarkType: 0, OpenAreaId: 0 };
+    WorldMapController_1.WorldMapController.OpenView(2, !1, a);
   }
   static COe(e) {
     RoleController_1.RoleController.OpenRoleMainView(0, 0, [], e);
+  }
+  static Ona(e) {
+    SkipTaskManager_1.SkipTaskManager.RunByConfigId(e);
   }
 }
 exports.DailyAdventureTaskController = DailyAdventureTaskController;

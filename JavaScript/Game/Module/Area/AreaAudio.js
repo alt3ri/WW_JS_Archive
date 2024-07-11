@@ -20,16 +20,16 @@ const AudioSystem_1 = require("../../../Core/Audio/AudioSystem"),
   };
 class AreaAudio {
   constructor() {
-    (this.GHe = ""),
-      (this.NHe = !1),
-      (this.OHe = !1),
-      (this.kHe = !1),
-      (this.FHe = "none"),
-      (this.VHe = 0),
-      (this.HHe = "none"),
-      (this.jHe = new Set()),
-      (this.WHe = new Set()),
-      (this.KHe = -1),
+    (this.$je = ""),
+      (this.Yje = !1),
+      (this.Jje = !1),
+      (this.zje = !1),
+      (this.Zje = "none"),
+      (this.eWe = 0),
+      (this.tWe = "none"),
+      (this.iWe = new Set()),
+      (this.oWe = new Set()),
+      (this.rWe = -1),
       (this.AreaChanged = () => {
         var t;
         0 < ModelManager_1.ModelManager.AreaModel.AreaInfo.WuYinQuID
@@ -37,79 +37,79 @@ class AreaAudio {
               ModelManager_1.ModelManager.LevelPlayModel.GetProcessingLevelPlayInfo(
                 ModelManager_1.ModelManager.AreaModel.AreaInfo.WuYinQuID,
               )),
-            (this.HHe = t ? (t.IsFinish ? "purified" : "unpurified") : "none"))
-          : (this.HHe = "none"),
-          this.QHe() || this.XHe();
+            (this.tWe = t ? (t.IsFinish ? "purified" : "unpurified") : "none"))
+          : (this.tWe = "none"),
+          this.nWe() || this.sWe();
       }),
       (this.yK = (t) => {
         Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("Audio", 28, "[BGM]战斗状态变化", [
+          Log_1.Log.Info("Audio", 56, "[BGM]战斗状态变化", [
             "isGameInBattle",
             t,
           ]),
-          (this.NHe = t),
-          this.NHe ||
-            ((this.OHe = !1), (this.VHe = 0), (this.KHe = -1), (this.GHe = "")),
-          this.QHe() || this.$He();
+          (this.Yje = t),
+          this.Yje ||
+            ((this.Jje = !1), (this.eWe = 0), (this.rWe = -1), (this.$je = "")),
+          this.nWe() || this.aWe();
       }),
-      (this.YHe = () => {
-        this.QHe();
+      (this.hWe = () => {
+        this.nWe();
       }),
-      (this.JHe = (t) => {
-        this.WHe.add(t),
+      (this.lWe = (t) => {
+        this.oWe.add(t),
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "Audio",
               4,
               "[BGM]仇恨添加OnAggroAdd：",
               ["entityId", t],
-              ["AggroSetSize", this.WHe.size],
+              ["AggroSetSize", this.oWe.size],
             ),
-          this.zHe(),
-          this.QHe() || this.ZHe();
+          this._We(),
+          this.nWe() || this.uWe();
       }),
-      (this.eje = (t) => {
-        this.WHe.delete(t),
+      (this.cWe = (t) => {
+        this.oWe.delete(t),
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "Audio",
               4,
               "[BGM]仇恨删除OnAggroRemoved：",
               ["entityId", t],
-              ["AggroSetSize", this.WHe.size],
+              ["AggroSetSize", this.oWe.size],
             );
       }),
-      (this.tje = () => {
-        this.ije();
+      (this.mWe = () => {
+        this.dWe();
       }),
       (this.OnRemoveEntity = (t, e) => {
-        this.jHe.has(e.Id) &&
-          (this.jHe.delete(e.Id),
+        this.iWe.has(e.Id) &&
+          (this.iWe.delete(e.Id),
           EventSystem_1.EventSystem.RemoveWithTarget(
             e.Entity,
             EventDefine_1.EEventName.CharDamage,
-            this.oje,
+            this.CWe,
           ));
       }),
-      (this.oje = (t, e, i, s, _, o, n) => {
+      (this.CWe = (t, e, i, s, _, o, n) => {
         0 === s.CalculateType &&
-          this.rje(e.Id) &&
-          this.NHe &&
-          (this.OHe ||
-            ((this.OHe = !0),
+          this.gWe(e.Id) &&
+          this.Yje &&
+          (this.Jje ||
+            ((this.Jje = !0),
             Log_1.Log.CheckInfo() &&
-              Log_1.Log.Info("Audio", 28, "[BGM]触发:战斗中首次造成伤害"),
-            this.QHe()) ||
-            this.nje());
+              Log_1.Log.Info("Audio", 56, "[BGM]触发:战斗中首次造成伤害"),
+            this.nWe()) ||
+            this.fWe());
       }),
-      (this.sje = (t, e) => {
-        this.rje(t) &&
+      (this.pWe = (t, e) => {
+        this.gWe(t) &&
           e.Id === Global_1.Global.BaseCharacter?.GetEntityIdNoBlueprint() &&
-          (this.VHe++,
-          this.NHe ||
-            ("perceived" !== this.FHe &&
+          (this.eWe++,
+          this.Yje ||
+            ("perceived" !== this.Zje &&
               ((t = EntitySystem_1.EntitySystem.Get(t))
-                ? (this.aje(t),
+                ? (this.vWe(t),
                   Log_1.Log.CheckInfo() &&
                     Log_1.Log.Info(
                       "Audio",
@@ -117,28 +117,28 @@ class AreaAudio {
                       "[BGM]触发:非战斗状态被感知",
                       ["感知者", t.GetComponent(3).Actor.GetName()],
                       ["被感知者", e.GetComponent(3).Actor.GetName()],
-                      ["当前感知数量", this.VHe],
+                      ["当前感知数量", this.eWe],
                     ),
-                  this.QHe() || (this.nje(), this.ZHe()))
+                  this.nWe() || (this.fWe(), this.uWe()))
                 : Log_1.Log.CheckInfo() &&
                   Log_1.Log.Info(
                     "Audio",
-                    28,
+                    56,
                     "[BGM]感知增加，但没有获取到实体",
                     ["感知者实体ID", e.Id],
                   ))));
       }),
-      (this.hje = (t, e) => {
-        this.rje(t) &&
+      (this.MWe = (t, e) => {
+        this.gWe(t) &&
           e.Id === Global_1.Global.BaseCharacter.GetEntityIdNoBlueprint() &&
-          (this.VHe--,
-          this.NHe ||
-            (this.VHe <= 0 &&
-              "perceived" === this.FHe &&
-              ((this.VHe = 0),
+          (this.eWe--,
+          this.Yje ||
+            (this.eWe <= 0 &&
+              "perceived" === this.Zje &&
+              ((this.eWe = 0),
               Log_1.Log.CheckInfo() &&
-                Log_1.Log.Info("Audio", 28, "[BGM]触发:感知消失"),
-              this.QHe() || (this.nje(), this.ZHe()))));
+                Log_1.Log.Info("Audio", 56, "[BGM]触发:感知消失"),
+              this.nWe() || (this.fWe(), this.uWe()))));
       });
   }
   Init() {
@@ -147,130 +147,130 @@ class AreaAudio {
   Destroy() {
     this.Cde();
   }
-  XHe() {
-    "unpurified" === this.HHe
+  sWe() {
+    "unpurified" === this.tWe
       ? (AudioSystem_1.AudioSystem.SetState("wuyinqu_type", "unpurified"),
         Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("Audio", 28, "[BGM]切换无音区: 进入无音区，未净化"))
-      : "purified" === this.HHe
+          Log_1.Log.Info("Audio", 56, "[BGM]切换无音区: 进入无音区，未净化"))
+      : "purified" === this.tWe
         ? (AudioSystem_1.AudioSystem.SetState("wuyinqu_type", "purified"),
           Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info("Audio", 28, "[BGM]切换无音区: 进入无音区，已净化"))
+            Log_1.Log.Info("Audio", 56, "[BGM]切换无音区: 进入无音区，已净化"))
         : (AudioSystem_1.AudioSystem.SetState("wuyinqu_type", "none"),
           Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info("Audio", 28, "[BGM]切换无音区: 未处在无音区"));
+            Log_1.Log.Info("Audio", 56, "[BGM]切换无音区: 未处在无音区"));
   }
-  $He() {
-    this.NHe
-      ? (this.nje(), this.ZHe(), this.lje())
+  aWe() {
+    this.Yje
+      ? (this.fWe(), this.uWe(), this.EWe())
       : TimerSystem_1.TimerSystem.Delay(() => {
-          this.NHe
+          this.Yje
             ? Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "Audio",
-                28,
+                56,
                 "[BGM]离开战斗但脱战时间过短，已忽略本次脱战",
               )
-            : (this.lje(), this.nje(), this.ZHe());
+            : (this.EWe(), this.fWe(), this.uWe());
         }, LEAVE_BATTLE_DELAY_MS);
   }
-  nje() {
-    this.NHe
-      ? this.OHe && "battle_strong" !== this.FHe
-        ? ((this.FHe = "battle_strong"),
+  fWe() {
+    this.Yje
+      ? this.Jje && "battle_strong" !== this.Zje
+        ? ((this.Zje = "battle_strong"),
           AudioSystem_1.AudioSystem.SetState(
             "battle_music_state",
             "battle_strong",
           ),
           Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info("Audio", 28, "[BGM]切换玩家状态: 进入战斗造成伤害", [
+            Log_1.Log.Info("Audio", 56, "[BGM]切换玩家状态: 进入战斗造成伤害", [
               "BGM",
-              this.zHe(),
+              this._We(),
             ]))
-        : "battle_in" !== this.FHe &&
-          ((this.FHe = "battle_in"),
+        : "battle_in" !== this.Zje &&
+          ((this.Zje = "battle_in"),
           AudioSystem_1.AudioSystem.SetState("battle_music_state", "battle_in"),
           Log_1.Log.CheckInfo()) &&
-          Log_1.Log.Info("Audio", 28, "[BGM]切换玩家状态: 进入战斗未造成伤害", [
+          Log_1.Log.Info("Audio", 56, "[BGM]切换玩家状态: 进入战斗未造成伤害", [
             "BGM",
-            this.zHe(),
+            this._We(),
           ])
-      : 0 < this.VHe && "perceived" !== this.FHe
-        ? ((this.FHe = "perceived"),
+      : 0 < this.eWe && "perceived" !== this.Zje
+        ? ((this.Zje = "perceived"),
           AudioSystem_1.AudioSystem.SetState("battle_music_state", "perceived"),
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "Audio",
-              28,
+              56,
               "[BGM]切换玩家状态: 未进入战斗但被感知",
-              ["BGM", this.zHe()],
+              ["BGM", this._We()],
             ))
-        : "none" !== this.FHe &&
-          ((this.FHe = "none"),
+        : "none" !== this.Zje &&
+          ((this.Zje = "none"),
           AudioSystem_1.AudioSystem.SetState("battle_music_state", "none"),
           Log_1.Log.CheckInfo()) &&
-          Log_1.Log.Info("Audio", 28, "[BGM]切换玩家状态: 未遇敌", [
+          Log_1.Log.Info("Audio", 56, "[BGM]切换玩家状态: 未遇敌", [
             "BGM",
-            this.zHe(),
+            this._We(),
           ]);
   }
-  QHe() {
+  nWe() {
     return ModelManager_1.ModelManager.PlotModel.KeepBgAudio
-      ? ((this.kHe = !0),
+      ? ((this.zje = !0),
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "Audio",
-            28,
+            56,
             "[BGM]提示: 剧情期间保持原背景音乐，跳过切换",
           ),
         !0)
-      : !!this.kHe &&
-          ((this.kHe = !1),
+      : !!this.zje &&
+          ((this.zje = !1),
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "Audio",
-              28,
+              56,
               "[BGM] 提示: 由于先前被剧情保持了场景音乐，准备更新所有音乐状态",
             ),
-          this.XHe(),
-          this.$He(),
+          this.sWe(),
+          this.aWe(),
           !0);
   }
-  lje() {
-    this.NHe
+  EWe() {
+    this.Yje
       ? (AudioSystem_1.AudioSystem.SetState("music_group", "battle"),
         Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("Audio", 28, "[BGM]切换战斗状态:战斗"))
+          Log_1.Log.Info("Audio", 56, "[BGM]切换战斗状态:战斗"))
       : (AudioSystem_1.AudioSystem.SetState("music_group", "field"),
         Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("Audio", 28, "[BGM]切换战斗状态:非战斗"));
+          Log_1.Log.Info("Audio", 56, "[BGM]切换战斗状态:非战斗"));
   }
-  ZHe() {
-    var t = this.zHe();
+  uWe() {
+    var t = this._We();
     AudioSystem_1.AudioSystem.SetState("monster_type", t),
       Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Audio", 28, "[BGM]切换敌人类型状态:", ["敌人类型", t]);
+        Log_1.Log.Info("Audio", 56, "[BGM]切换敌人类型状态:", ["敌人类型", t]);
   }
-  zHe() {
-    return "none" === this.FHe
+  _We() {
+    return "none" === this.Zje
       ? monsterTypeList[0]
-      : (this.WHe.forEach((t) => {
+      : (this.oWe.forEach((t) => {
           t = EntitySystem_1.EntitySystem.Get(t);
-          t?.Valid && this.aje(t);
+          t?.Valid && this.vWe(t);
         }),
-        "" !== this.GHe
+        "" !== this.$je
           ? (Log_1.Log.CheckInfo() &&
-              Log_1.Log.Info("Audio", 28, "[BGM]播放MonsterTag包含BGM:", [
+              Log_1.Log.Info("Audio", 56, "[BGM]播放MonsterTag包含BGM:", [
                 "MonsterTag",
-                this.GHe,
+                this.$je,
               ]),
-            this.GHe)
-          : (Log_1.Log.CheckInfo() &&
-              Log_1.Log.Info("Audio", 28, "[BGM]获取最高敌人等级:", [
+            this.$je)
+          : (Log_1.Log.CheckDebug() &&
+              Log_1.Log.Debug("Audio", 56, "[BGM]获取最高敌人等级:", [
                 "敌人等级",
-                this.KHe,
+                this.rWe,
               ]),
-            monsterTypeList[this.KHe + 1]));
+            monsterTypeList[this.rWe + 1]));
   }
   dde() {
     EventSystem_1.EventSystem.Add(
@@ -287,27 +287,27 @@ class AreaAudio {
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnAiSenseEntityEnter,
-        this.sje,
+        this.pWe,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnAiSenseEntityLeave,
-        this.hje,
+        this.MWe,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnUpdateSceneTeam,
-        this.tje,
+        this.mWe,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnAggroAdd,
-        this.JHe,
+        this.lWe,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnAggroRemoved,
-        this.eje,
+        this.cWe,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.PlotNetworkEnd,
-        this.YHe,
+        this.hWe,
       );
   }
   Cde() {
@@ -325,58 +325,58 @@ class AreaAudio {
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnAiSenseEntityEnter,
-        this.sje,
+        this.pWe,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnAiSenseEntityLeave,
-        this.hje,
+        this.MWe,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnUpdateSceneTeam,
-        this.tje,
+        this.mWe,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnAggroAdd,
-        this.JHe,
+        this.lWe,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnAggroRemoved,
-        this.eje,
+        this.cWe,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.PlotNetworkEnd,
-        this.YHe,
+        this.hWe,
       );
   }
-  ije() {
-    this._je(), this.jHe.clear(), this.WHe.clear(), this.uje();
+  dWe() {
+    this.SWe(), this.iWe.clear(), this.oWe.clear(), this.yWe();
   }
-  uje() {
+  yWe() {
     for (const t of ModelManager_1.ModelManager.SceneTeamModel.GetTeamEntities(
       !0,
     ))
-      this.jHe.add(t.Id),
+      this.iWe.add(t.Id),
         EventSystem_1.EventSystem.AddWithTarget(
           t.Entity,
           EventDefine_1.EEventName.CharDamage,
-          this.oje,
+          this.CWe,
         );
   }
-  _je() {
-    if (0 < this.jHe.size) {
-      for (const e of this.jHe) {
+  SWe() {
+    if (0 < this.iWe.size) {
+      for (const e of this.iWe) {
         var t = ModelManager_1.ModelManager.CharacterModel.GetHandle(e);
         t?.Valid &&
           EventSystem_1.EventSystem.RemoveWithTarget(
             t.Entity,
             EventDefine_1.EEventName.CharDamage,
-            this.oje,
+            this.CWe,
           );
       }
-      this.jHe.clear();
+      this.iWe.clear();
     }
   }
-  rje(t) {
+  gWe(t) {
     t = EntitySystem_1.EntitySystem.Get(t);
     return (
       !!t &&
@@ -384,27 +384,27 @@ class AreaAudio {
         t.GetComponent(3)?.CreatureData?.GetBaseInfo()?.Category.MainType
     );
   }
-  aje(t) {
+  vWe(t) {
     var e,
       i = t.GetComponent(3)?.CreatureData;
-    i.GetLivingStatus() !== Protocol_1.Aki.Protocol.Rvs.Proto_Dead &&
+    i.GetLivingStatus() !== Protocol_1.Aki.Protocol.HEs.Proto_Dead &&
       ((e = i.GetAttributeComponent()).FightMusic &&
-        ((this.GHe = e.FightMusic), Log_1.Log.CheckInfo()) &&
+        ((this.$je = e.FightMusic), Log_1.Log.CheckInfo()) &&
         Log_1.Log.Info(
           "Audio",
-          28,
+          56,
           "[BGM]设置怪物配置BGM：",
-          ["MonsterTag", this.GHe],
+          ["MonsterTag", this.$je],
           ["SourceEntity", t.Id],
           ["SourceEntityName", t.GetComponent(3).Actor.GetName()],
         ),
-      (e = i.GetBaseInfo()).Category.MonsterMatchType > this.KHe) &&
-      ((this.KHe = e.Category.MonsterMatchType), Log_1.Log.CheckInfo()) &&
+      (e = i.GetBaseInfo()).Category.MonsterMatchType > this.rWe) &&
+      ((this.rWe = e.Category.MonsterMatchType), Log_1.Log.CheckInfo()) &&
       Log_1.Log.Info(
         "Audio",
-        28,
+        56,
         "[BGM]刷新怪物最高等级：",
-        ["MaxLevel", this.KHe],
+        ["MaxLevel", this.rWe],
         ["SourceEntity", t.Id],
         ["SourceEntityName", t.GetComponent(3).Actor.GetName()],
       );

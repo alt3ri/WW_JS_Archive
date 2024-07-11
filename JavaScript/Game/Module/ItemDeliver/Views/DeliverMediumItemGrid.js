@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.DeliverMediumItemGrid = void 0);
-const LoopScrollMediumItemGrid_1 = require("../../Common/MediumItemGrid/LoopScrollMediumItemGrid"),
-  ControllerHolder_1 = require("../../../Manager/ControllerHolder");
+const ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  LoopScrollMediumItemGrid_1 = require("../../Common/MediumItemGrid/LoopScrollMediumItemGrid");
 class DeliverMediumItemGrid extends LoopScrollMediumItemGrid_1.LoopScrollMediumItemGrid {
   OnRefresh(e, o, r) {
     var t, i, l;

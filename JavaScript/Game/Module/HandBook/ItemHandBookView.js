@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ItemHandBookView = void 0);
-const MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang"),
+const ConfigCommon_1 = require("../../../Core/Config/ConfigCommon"),
+  MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
   ConfigManager_1 = require("../../Manager/ConfigManager"),
@@ -13,21 +14,20 @@ const MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang"
   HandBookBaseView_1 = require("./HandBookBaseView"),
   HandBookCommonItem_1 = require("./HandBookCommonItem"),
   HandBookController_1 = require("./HandBookController"),
-  HandBookDefine_1 = require("./HandBookDefine"),
-  ConfigCommon_1 = require("../../../Core/Config/ConfigCommon");
+  HandBookDefine_1 = require("./HandBookDefine");
 class ItemHandBookView extends HandBookBaseView_1.HandBookBaseView {
   constructor() {
     super(...arguments),
-      (this.ZZt = []),
-      (this.Bzt = []),
+      (this.Zei = []),
+      (this.BZt = []),
       (this.Refresh = () => {
         this.RefreshScrollView(this.GetFirstPageType());
       }),
       (this.OnHandBookRead = (e, t) => {
         if (5 === e) {
-          var n = this.Bzt.length;
+          var n = this.BZt.length;
           for (let e = 0; e < n; e++) {
-            var o = this.Bzt[e];
+            var o = this.BZt[e];
             if (o.GetData().Config.Id === t) {
               o.SetNewFlagVisible(!1);
               break;
@@ -36,13 +36,13 @@ class ItemHandBookView extends HandBookBaseView_1.HandBookBaseView {
         }
       }),
       (this.TabToggleCallBack = (e) => {
-        e = this.ZZt[e].Id;
+        e = this.Zei[e].Id;
         this.RefreshScrollView(e);
       }),
       (this.InitHandBookCommonItem = () => {
         var e = new HandBookCommonItem_1.HandBookCommonItem();
         return (
-          this.Bzt.push(e),
+          this.BZt.push(e),
           e.BindOnExtendToggleStateChanged(this.OnToggleClick),
           e
         );
@@ -63,7 +63,7 @@ class ItemHandBookView extends HandBookBaseView_1.HandBookBaseView {
       (this.TabItemProxyCreate = (e, t) => {
         return new CommonTabItem_1.CommonTabItem();
       }),
-      (this.aZt = (e, t) => e.Id - t.Id);
+      (this.aei = (e, t) => e.Id - t.Id);
   }
   OnStart() {
     this.SetDefaultState(),
@@ -174,17 +174,17 @@ class ItemHandBookView extends HandBookBaseView_1.HandBookBaseView {
     }
   }
   GetFirstPageType() {
-    if (0 !== this.ZZt.length) return this.ZZt[0].Id;
+    if (0 !== this.Zei.length) return this.Zei[0].Id;
   }
   RefreshTabComponent() {
-    (this.ZZt = ConfigCommon_1.ConfigCommon.ToList(
+    (this.Zei = ConfigCommon_1.ConfigCommon.ToList(
       ConfigManager_1.ConfigManager.HandBookConfig.GetItemHandBookTypeConfigList(),
     )),
-      this.ZZt.sort(this.aZt);
-    var t = this.ZZt.length,
+      this.Zei.sort(this.aei);
+    var t = this.Zei.length,
       n = [];
     for (let e = 0; e < t; e++) {
-      var o = this.ZZt[e];
+      var o = this.Zei[e];
       n.push(new CommonTabData_1.CommonTabData(o.Icon, void 0));
     }
     this.InitTabComponent(n), this.SetTabToggleCallBack(this.TabToggleCallBack);
@@ -217,14 +217,14 @@ class ItemHandBookView extends HandBookBaseView_1.HandBookBaseView {
       var o = new CommonTabItemBase_1.CommonTabItemData();
       (o.Index = e),
         (o.RedDotName = "ItemHandBook"),
-        (o.RedDotUid = this.ZZt[e].Id),
+        (o.RedDotUid = this.Zei[e].Id),
         (o.Data = this.TabList[e]),
         n.push(o);
     }
     return n;
   }
   OnBeforeDestroy() {
-    (this.ZZt = []), (this.Bzt = []);
+    (this.Zei = []), (this.BZt = []);
   }
 }
 exports.ItemHandBookView = ItemHandBookView;

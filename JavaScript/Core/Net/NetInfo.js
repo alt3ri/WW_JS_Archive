@@ -1,14 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.NetInfo = void 0);
-const Log_1 = require("../Common/Log");
+const PerfSight_1 = require("../PerfSight/PerfSight");
 class NetInfo {
-  static SetCallback(t) {
-    NetInfo.B7 &&
-      Log_1.Log.CheckError() &&
-      Log_1.Log.Error("Net", 55, "重复设置NetInfo.Callback"),
-      (NetInfo.B7 = t);
-  }
   static get RttMs() {
     return NetInfo.iY;
   }
@@ -16,8 +10,9 @@ class NetInfo {
     t < NetInfo.iY
       ? (NetInfo.iY = t)
       : (NetInfo.iY = 0.9 * NetInfo.iY + 0.1 * t),
-      this.B7 && this.B7(t);
+      PerfSight_1.PerfSight.IsEnable &&
+        PerfSight_1.PerfSight.PostNetworkLatency(t);
   }
 }
-((exports.NetInfo = NetInfo).iY = 0), (NetInfo.B7 = void 0);
+(exports.NetInfo = NetInfo).iY = 0;
 //# sourceMappingURL=NetInfo.js.map

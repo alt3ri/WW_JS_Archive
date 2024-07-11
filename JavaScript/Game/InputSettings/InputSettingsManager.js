@@ -2,56 +2,85 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InputSettingsManager = void 0);
 const Log_1 = require("../../Core/Common/Log"),
+  TimerSystem_1 = require("../../Core/Timer/TimerSystem"),
   StringUtils_1 = require("../../Core/Utils/StringUtils"),
   LocalStorage_1 = require("../Common/LocalStorage"),
   LocalStorageDefine_1 = require("../Common/LocalStorageDefine"),
   ConfigManager_1 = require("../Manager/ConfigManager"),
+  InputMappingsDefine_1 = require("../Ui/InputDistribute/InputMappingsDefine"),
   InputSettings_1 = require("./InputSettings"),
   InputActionMapping_1 = require("./Maping/InputActionMapping"),
   InputAxisMapping_1 = require("./Maping/InputAxisMapping"),
   InputCombinationActionMapping_1 = require("./Maping/InputCombinationActionMapping"),
   InputCombinationAxisMapping_1 = require("./Maping/InputCombinationAxisMapping"),
-  InputMappingsDefine_1 = require("../Ui/InputDistribute/InputMappingsDefine");
+  CHECK_COMBINATIONACTIONKEYMAP_SAVE_INTERVAL = 1e4;
 class InputSettingsManager {
   static Initialize() {
-    (this.qSe = new InputActionMapping_1.InputActionMapping()),
-      this.qSe.Initialize(),
-      (this.GSe = new InputAxisMapping_1.InputAxisMapping()),
-      this.GSe.Initialize(),
-      (this.NSe =
+    (this.qEe = new InputActionMapping_1.InputActionMapping()),
+      this.qEe.Initialize(),
+      (this.GEe = new InputAxisMapping_1.InputAxisMapping()),
+      this.GEe.Initialize(),
+      (this.NEe =
         new InputCombinationActionMapping_1.InputCombinationActionMapping()),
-      (this.OSe =
+      (this.OEe =
         new InputCombinationAxisMapping_1.InputCombinationAxisMapping()),
-      this.OSe.Initialize(),
+      this.OEe.Initialize(),
       this.RefreshAllActionKeys(),
       this.RefreshAllAxisKeys(),
       this.RefreshCombinationActionKeys();
   }
   static Clear() {
-    this.qSe.Clear(),
-      (this.qSe = void 0),
-      this.GSe.Clear(),
-      (this.GSe = void 0),
-      this.NSe.Clear(),
-      (this.NSe = void 0),
-      this.OSe.Clear(),
-      (this.OSe = void 0);
+    this.Nkn(),
+      this.kkn(),
+      this.qEe.Clear(),
+      (this.qEe = void 0),
+      this.GEe.Clear(),
+      (this.GEe = void 0),
+      this.NEe.Clear(),
+      (this.NEe = void 0),
+      this.OEe.Clear(),
+      (this.OEe = void 0);
   }
-  static get SVs() {
+  static get CheckUseFrenchKeyboard() {
     return (
       "French" === InputSettings_1.InputSettings.GetKeyboardPrimaryLangId()
     );
   }
-  static P9s(t) {
+  static Tia(t) {
     return (
       t === InputMappingsDefine_1.actionMappings.地图 ||
       t === InputMappingsDefine_1.actionMappings.聊天
     );
   }
+  static AIa(i, n) {
+    var e = InputSettings_1.InputSettings.GetActionMappings(n);
+    if (e && e.Num() <= 0) {
+      let t = [];
+      t = InputSettingsManager.CheckUseFrenchKeyboard
+        ? i.FrancePcKeys
+        : i.PcKeys;
+      const o = i.GamepadKeys,
+        r = t.concat(o);
+      void InputSettingsManager.SetActionKeys(n, r);
+    } else {
+      var a = [];
+      for (let t = 0, i = e.Num(); t < i; t++) {
+        var s = e.Get(t).Key.KeyName.toString();
+        InputSettings_1.InputSettings.GetKey(s)?.IsKeyboardKey && a.push(s);
+      }
+      const o = i.GamepadKeys,
+        r = a.concat(o);
+      InputSettingsManager.SetActionKeys(n, r);
+    }
+  }
   static RefreshAllActionKeys(i = !1) {
     for (const s of ConfigManager_1.ConfigManager.InputSettingsConfig.GetAllActionMappingConfig()) {
       var n = s.ActionName;
-      if (!i && !InputSettingsManager.P9s(n)) {
+      if (!i) {
+        if (InputSettingsManager.Tia(n)) {
+          InputSettingsManager.AIa(s, n);
+          continue;
+        }
         var e = InputSettings_1.InputSettings.GetActionMappings(n);
         if (0 < e.Num()) {
           InputSettingsManager.RefreshActionKeys(n, e);
@@ -59,18 +88,20 @@ class InputSettingsManager {
         }
       }
       let t = [];
-      t = InputSettingsManager.SVs ? s.FrancePcKeys : s.PcKeys;
+      t = InputSettingsManager.CheckUseFrenchKeyboard
+        ? s.FrancePcKeys
+        : s.PcKeys;
       var e = s.GamepadKeys,
         a = t.concat(e);
       InputSettingsManager.SetActionKeys(n, a);
     }
   }
   static ClearAllKeys() {
-    this.qSe?.ClearAllActionKeys(), this.GSe?.ClearAllAxisKeys();
+    this.qEe?.ClearAllActionKeys(), this.GEe?.ClearAllAxisKeys();
   }
   static RefreshAllAxisKeys(i = !1) {
-    for (const c of ConfigManager_1.ConfigManager.InputSettingsConfig.GetAllAxisMappingConfig()) {
-      var n = c.AxisName;
+    for (const p of ConfigManager_1.ConfigManager.InputSettingsConfig.GetAllAxisMappingConfig()) {
+      var n = p.AxisName;
       if (!i) {
         var e = InputSettings_1.InputSettings.GetAxisMappings(n);
         if (0 < e.Num()) {
@@ -79,12 +110,14 @@ class InputSettingsManager {
         }
       }
       let t = new Map();
-      t = InputSettingsManager.SVs ? c.FrancePcKeys : c.PcKeys;
+      t = InputSettingsManager.CheckUseFrenchKeyboard
+        ? p.FrancePcKeys
+        : p.PcKeys;
       var a,
         s,
         o,
         r,
-        e = c.GamepadKeys,
+        e = p.GamepadKeys,
         g = new Map();
       for ([a, s] of t) g.set(a, s);
       for ([o, r] of e) g.set(o, r);
@@ -92,10 +125,10 @@ class InputSettingsManager {
     }
   }
   static GetActionBinding(t) {
-    return this.qSe.GetActionBinding(t);
+    return this.qEe.GetActionBinding(t);
   }
   static GetActionBindingByConfigId(t) {
-    return this.qSe.GetActionBindingByConfigId(t);
+    return this.qEe.GetActionBindingByConfigId(t);
   }
   static CheckGetActionKeyIconPath(t) {
     var i = t.GetCurrentPlatformKey();
@@ -118,27 +151,27 @@ class InputSettingsManager {
         );
   }
   static GetActionBindingByActionMappingType(t) {
-    return this.qSe.GetActionBindingByActionMappingType(t);
+    return this.qEe.GetActionBindingByActionMappingType(t);
   }
   static SetActionKeys(t, i) {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info("InputSettings", 8, "设置Action按键", ["actionName", t]),
-      this.qSe.SetKeys(t, i);
+      this.qEe.SetKeys(t, i);
   }
   static RefreshActionKeys(t, i) {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info("InputSettings", 8, "刷新Action按键", ["actionName", t]),
-      this.qSe.RefreshKeysByActionMappings(t, i);
+      this.qEe.RefreshKeysByActionMappings(t, i);
   }
   static AddActionKeys(t, i) {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info("InputSettings", 8, "添加Action按键", ["actionName", t]),
-      this.qSe.AddKeys(t, i);
+      this.qEe.AddKeys(t, i);
   }
   static RemoveActionKeys(t, i) {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info("InputSettings", 8, "删除按键", ["actionName", t]),
-      this.qSe.RemoveKeys(t, i);
+      this.qEe.RemoveKeys(t, i);
   }
   static RemoveActionKeysByCondition(t, i) {
     Log_1.Log.CheckInfo() &&
@@ -146,13 +179,13 @@ class InputSettingsManager {
         "actionName",
         t,
       ]),
-      this.qSe.RemoveKeysByCondition(t, i);
+      this.qEe.RemoveKeysByCondition(t, i);
   }
   static GetAxisBinding(t) {
-    return this.GSe.GetAxisBinding(t);
+    return this.GEe.GetAxisBinding(t);
   }
   static GetAxisBindingByAxisMappingType(t) {
-    return this.GSe.GetAxisBindingByAxisMappingType(t);
+    return this.GEe.GetAxisBindingByAxisMappingType(t);
   }
   static CheckGetAxisKeyIconPath(t) {
     var i = t.GetCurrentPlatformKey();
@@ -175,29 +208,29 @@ class InputSettingsManager {
         );
   }
   static ContainAxisKeyByType(t, i) {
-    for (const n of this.GSe.GetAxisBindingByAxisMappingType(t))
+    for (const n of this.GEe.GetAxisBindingByAxisMappingType(t))
       if (n.HasKey(i)) return { IsContain: !0, ContainAxisBinding: n };
     return { IsContain: !1, ContainAxisBinding: void 0 };
   }
   static SetAxisKeys(t, i) {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info("InputSettings", 8, "设置Axis按键", ["axisName", t]),
-      this.GSe.SetKeys(t, i);
+      this.GEe.SetKeys(t, i);
   }
   static RefreshAxisKeys(t, i) {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info("InputSettings", 8, "刷新Axis按键", ["axisName", t]),
-      this.GSe.RefreshKeys(t, i);
+      this.GEe.RefreshKeys(t, i);
   }
   static AddAxisKeys(t, i) {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info("InputSettings", 8, "添加Action按键", ["actionName", t]),
-      this.GSe.AddKeys(t, i);
+      this.GEe.AddKeys(t, i);
   }
   static RemoveAxisKeys(t, i) {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info("InputSettings", 8, "删除按键", ["actionName", t]),
-      this.GSe.RemoveKeys(t, i);
+      this.GEe.RemoveKeys(t, i);
   }
   static RemoveAxisKeysByCondition(t, i) {
     Log_1.Log.CheckInfo() &&
@@ -205,7 +238,7 @@ class InputSettingsManager {
         "actionName",
         t,
       ]),
-      this.GSe.RemoveKeysByCondition(t, i);
+      this.GEe.RemoveKeysByCondition(t, i);
   }
   static RefreshCombinationActionKeys(t = !1) {
     this.ClearCombinationActionKeyMap();
@@ -213,48 +246,41 @@ class InputSettingsManager {
       LocalStorageDefine_1.ELocalStorageGlobalKey.CombineAction,
       void 0,
     );
-    if ((i && (this.kSe = i), this.kSe && 0 < this.kSe.size && !t))
-      for (var [n, e] of this.kSe) for (const c of e) this.FSe(n, c[0], c[1]);
+    if ((i && (this.kEe = i), this.kEe && 0 < this.kEe.size && !t))
+      for (var [n, e] of this.kEe) for (const p of e) this.FEe(n, p[0], p[1]);
     else {
-      this.kSe.clear(),
-        LocalStorage_1.LocalStorage.SetGlobal(
-          LocalStorageDefine_1.ELocalStorageGlobalKey.CombineAction,
-          this.kSe,
-        );
+      this.kEe.clear(), this.Fkn();
       i =
         ConfigManager_1.ConfigManager.InputSettingsConfig.GetAllCombinationActionConfig();
       if (i)
-        for (const p of i) {
+        for (const c of i) {
           var a,
             s,
             o,
             r,
-            g = p.ActionName;
-          for ([a, s] of p.PcKeys) this.AddCombinationActionKeyMap(g, a, s);
-          for ([o, r] of p.GamepadKeys)
+            g = c.ActionName;
+          for ([a, s] of c.PcKeys) this.AddCombinationActionKeyMap(g, a, s);
+          for ([o, r] of c.GamepadKeys)
             this.AddCombinationActionKeyMap(g, o, r);
         }
     }
   }
   static ClearCombinationActionKeyMap() {
-    this.NSe?.Clear(), this.kSe.clear();
+    this.NEe?.Clear(), this.kEe.clear();
   }
   static AddCombinationActionKeyMap(t, i, n) {
-    this.FSe(t, i, n);
-    var e = this.kSe.get(t),
+    this.FEe(t, i, n);
+    var e = this.kEe.get(t),
       a = [i, n];
     if (e) {
       for (var [s, o] of e) if (s === i && o === n) return;
       e.push(a);
-    } else this.kSe.set(t, [a]);
-    LocalStorage_1.LocalStorage.SetGlobal(
-      LocalStorageDefine_1.ELocalStorageGlobalKey.CombineAction,
-      this.kSe,
-    );
+    } else this.kEe.set(t, [a]);
+    this.Fkn();
   }
-  static FSe(t, i, n) {
+  static FEe(t, i, n) {
     let e = this.GetCombinationActionBindingByActionName(t);
-    (e = e || this.NSe?.NewCombinationActionBinding(t, 0)) &&
+    (e = e || this.NEe?.NewCombinationActionBinding(t, 0)) &&
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "InputSettings",
@@ -264,7 +290,7 @@ class InputSettingsManager {
           ["mainKeyName", i],
           ["secondaryKeyName", n],
         ),
-      this.NSe?.AddKey(e, i, n),
+      this.NEe?.AddKey(e, i, n),
       InputSettings_1.InputSettings.NewInputCombinationActionKey(
         e.GetActionName(),
         i,
@@ -273,8 +299,8 @@ class InputSettingsManager {
       this.PrintCurrentCombinationActionBinding(t));
   }
   static RemoveCombinationActionKeyMap(t, i, n) {
-    this.VSe(t, i, n);
-    var e = this.kSe.get(t);
+    this.VEe(t, i, n);
+    var e = this.kEe.get(t);
     if (e) {
       var a = [];
       for (let t = 0; t < e.length; t++) {
@@ -282,15 +308,11 @@ class InputSettingsManager {
         s[0] === i && s[1] === n && a.push(t);
       }
       for (const o of a) e.splice(o, 1);
-      e.length <= 0 && this.kSe.delete(t);
-    } else this.kSe.delete(t);
-    LocalStorage_1.LocalStorage.SetGlobal(
-      LocalStorageDefine_1.ELocalStorageGlobalKey.CombineAction,
-      this.kSe,
-    ),
-      this.PrintCurrentCombinationActionBinding(t);
+      e.length <= 0 && this.kEe.delete(t);
+    } else this.kEe.delete(t);
+    this.Fkn(), this.PrintCurrentCombinationActionBinding(t);
   }
-  static VSe(t, i, n) {
+  static VEe(t, i, n) {
     t = this.GetCombinationActionBindingByActionName(t);
     t &&
       (Log_1.Log.CheckInfo() &&
@@ -302,7 +324,7 @@ class InputSettingsManager {
           ["RemoveMainKey", i],
           ["RemoveSecondaryKeyName", n],
         ),
-      this.NSe?.RemoveKey(t, i, n),
+      this.NEe?.RemoveKey(t, i, n),
       InputSettings_1.InputSettings.RemoveCombinationActionMapping(
         t.GetActionName(),
         i,
@@ -313,7 +335,7 @@ class InputSettingsManager {
     var n = new Map(),
       e = new Map(),
       a = new Map(),
-      t = this.NSe?.GetCombinationActionBindingByActionName(t);
+      t = this.NEe?.GetCombinationActionBindingByActionName(t);
     t?.GetKeyMap(n),
       t?.GetPcKeyNameMap(e),
       t?.GetGamepadKeyNameMap(a),
@@ -330,29 +352,29 @@ class InputSettingsManager {
         );
   }
   static GetCombinationActionBindingByKeyName(t, i) {
-    return this.NSe.GetCombinationActionBindingByKeyName(t, i);
+    return this.NEe.GetCombinationActionBindingByKeyName(t, i);
   }
   static GetCombinationActionBindingByActionName(t) {
-    return this.NSe.GetCombinationActionBindingByActionName(t);
+    return this.NEe.GetCombinationActionBindingByActionName(t);
   }
   static IsCombinationActionMainKey(t) {
-    return this.NSe.IsMainKey(t);
+    return this.NEe.IsMainKey(t);
   }
   static IsCombinationAction(t, i) {
     t = this.GetCombinationActionBindingByKeyName(t, i);
     return !(!t || t.size <= 0);
   }
   static GetCombinationAxisBindingByKeyName(t, i) {
-    return this.OSe.GetCombinationAxisBindingByKeyName(t, i);
+    return this.OEe.GetCombinationAxisBindingByKeyName(t, i);
   }
   static GetCombinationAxisBindingMapByMainKeyName(t) {
-    return this.OSe.GetCombinationAxisBindingMapByMainKeyName(t);
+    return this.OEe.GetCombinationAxisBindingMapByMainKeyName(t);
   }
   static GetCombinationAxisBindingByActionName(t) {
-    return this.OSe.GetCombinationAxisBindingByActionName(t);
+    return this.OEe.GetCombinationAxisBindingByActionName(t);
   }
   static IsCombinationAxisMainKey(t) {
-    return this.OSe.IsMainKey(t);
+    return this.OEe.IsMainKey(t);
   }
   static IsCombinationAxis(t, i) {
     t = this.GetCombinationAxisBindingByKeyName(t, i);
@@ -388,11 +410,39 @@ class InputSettingsManager {
     }
     return !1;
   }
+  static Fkn() {
+    (this.Vkn = !0), this.Hkn();
+  }
+  static Hkn() {
+    this.jkn() ||
+      (this.Wkn = TimerSystem_1.TimerSystem.Delay(() => {
+        this.kkn() && this.Nkn();
+      }, CHECK_COMBINATIONACTIONKEYMAP_SAVE_INTERVAL));
+  }
+  static Nkn() {
+    void 0 !== this.Wkn &&
+      (TimerSystem_1.TimerSystem.Remove(this.Wkn), (this.Wkn = void 0));
+  }
+  static jkn() {
+    return void 0 !== this.Wkn;
+  }
+  static kkn() {
+    return !(
+      !this.Vkn ||
+      (LocalStorage_1.LocalStorage.SetGlobal(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.CombineAction,
+        this.kEe,
+      ),
+      (this.Vkn = !1))
+    );
+  }
 }
-((exports.InputSettingsManager = InputSettingsManager).qSe = void 0),
-  (InputSettingsManager.GSe = void 0),
-  (InputSettingsManager.NSe = void 0),
-  (InputSettingsManager.OSe = void 0),
-  (InputSettingsManager.kSe = new Map()),
+((exports.InputSettingsManager = InputSettingsManager).qEe = void 0),
+  (InputSettingsManager.GEe = void 0),
+  (InputSettingsManager.NEe = void 0),
+  (InputSettingsManager.OEe = void 0),
+  (InputSettingsManager.kEe = new Map()),
+  (InputSettingsManager.Vkn = void 0),
+  (InputSettingsManager.Wkn = void 0),
   (InputSettingsManager.SkipGlobalSdkCheck = !1);
 //# sourceMappingURL=InputSettingsManager.js.map

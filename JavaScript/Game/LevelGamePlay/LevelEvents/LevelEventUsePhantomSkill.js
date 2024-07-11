@@ -30,7 +30,7 @@ class LevelEventUsePhantomSkill extends LevelGeneralBase_1.LevelEventBase {
           e.BlackboardRot.Value.Z ?? 0,
         );
       }
-      a.Entity.GetComponent(185).AddTag(
+      a.Entity.GetComponent(188).AddTag(
         GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(e.SkillType),
       );
     }

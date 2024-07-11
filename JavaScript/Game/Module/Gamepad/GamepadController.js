@@ -2,25 +2,25 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GamepadController = void 0);
 const UE = require("ue"),
+  Info_1 = require("../../../Core/Common/Info"),
   CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById"),
   ControllerBase_1 = require("../../../Core/Framework/ControllerBase"),
   ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem"),
-  Global_1 = require("../../Global"),
-  ModelManager_1 = require("../../Manager/ModelManager");
+  Global_1 = require("../../Global");
 class GamepadController extends ControllerBase_1.ControllerBase {
   static OnInit() {
     return (
-      this.XWt.push(
+      this.XKt.push(
         CommonParamById_1.configCommonParamById.GetStringConfig(
           "FKHitForceFeedbackPath",
         ),
       ),
-      this.XWt.push(
+      this.XKt.push(
         CommonParamById_1.configCommonParamById.GetStringConfig(
           "LightHitForceFeedbackPath",
         ),
       ),
-      this.XWt.push(
+      this.XKt.push(
         CommonParamById_1.configCommonParamById.GetStringConfig(
           "HeavyHitForceFeedbackPath",
         ),
@@ -29,19 +29,19 @@ class GamepadController extends ControllerBase_1.ControllerBase {
     );
   }
   static PlayForceFeedbackByHit(e) {
-    var r;
-    ModelManager_1.ModelManager.PlatformModel?.IsGamepad() &&
-      ((r = this.$Wt[e])
+    var o;
+    Info_1.Info.IsInGamepad() &&
+      ((o = this.$Kt[e])
         ? Global_1.Global.CharacterController.PlayKuroForceFeedback(
-            r,
+            o,
             void 0,
             !1,
             !1,
             !1,
           )
-        : ((r = this.XWt[e]),
+        : ((o = this.XKt[e]),
           ResourceSystem_1.ResourceSystem.LoadAsync(
-            r,
+            o,
             UE.KuroForceFeedbackEffect,
             (e) => {
               e &&
@@ -56,6 +56,6 @@ class GamepadController extends ControllerBase_1.ControllerBase {
           )));
   }
 }
-((exports.GamepadController = GamepadController).XWt = []),
-  (GamepadController.$Wt = []);
+((exports.GamepadController = GamepadController).XKt = []),
+  (GamepadController.$Kt = []);
 //# sourceMappingURL=GamepadController.js.map

@@ -6,10 +6,10 @@ const UE = require("ue"),
 class ChatExpressionGroupItem extends UiPanelBase_1.UiPanelBase {
   constructor(s) {
     super(),
-      (this.Q9e = 0),
-      (this.x$e = void 0),
-      (this.YMt = (s) => {
-        1 === s && this.x$e && this.x$e(this.Q9e);
+      (this.aHe = 0),
+      (this.jYe = void 0),
+      (this.hSt = (s) => {
+        1 === s && this.jYe && this.jYe(this.aHe);
       }),
       this.CreateThenShowByActor(s);
   }
@@ -18,10 +18,10 @@ class ChatExpressionGroupItem extends UiPanelBase_1.UiPanelBase {
       [0, UE.UITexture],
       [1, UE.UIExtendToggle],
     ]),
-      (this.BtnBindInfo = [[1, this.YMt]]);
+      (this.BtnBindInfo = [[1, this.hSt]]);
   }
   Refresh(s) {
-    this.Q9e = s.Id;
+    this.aHe = s.Id;
     s = s.GroupTexturePath;
     const e = this.GetTexture(0);
     e.SetUIActive(!1),
@@ -33,7 +33,7 @@ class ChatExpressionGroupItem extends UiPanelBase_1.UiPanelBase {
     this.GetExtendToggle(1).SetToggleState(s, e);
   }
   BindOnClicked(s) {
-    this.x$e = s;
+    this.jYe = s;
   }
 }
 exports.ChatExpressionGroupItem = ChatExpressionGroupItem;

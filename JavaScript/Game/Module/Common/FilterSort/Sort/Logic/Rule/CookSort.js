@@ -5,12 +5,12 @@ const CommonSort_1 = require("./CommonSort");
 class CookSort extends CommonSort_1.CommonSort {
   constructor() {
     super(...arguments),
-      (this.$Lt = (t, s, r) => {
+      (this.ZDt = (t, s, r) => {
         return t.SubType !== s.SubType
           ? (s.SubType - t.SubType) * (r ? -1 : 1)
           : 0;
       }),
-      (this.XLt = (t, s, r) => {
+      (this.zDt = (t, s, r) => {
         var o;
         return s.IsUnLock !== t.IsUnLock
           ? ((o = s.IsUnLock ? 1 : -1), r ? o : -o)
@@ -18,7 +18,7 @@ class CookSort extends CommonSort_1.CommonSort {
             ? ((o = s.IsCook - t.IsCook), r ? o : -o)
             : 0;
       }),
-      (this.YLt = (t, s, r) => {
+      (this.eRt = (t, s, r) => {
         let o = 0;
         return (
           t.IsUnLock === s.IsUnLock
@@ -29,21 +29,21 @@ class CookSort extends CommonSort_1.CommonSort {
           (o = r ? o : -1 * o)
         );
       }),
-      (this.VLt = (t, s, r) => {
+      (this.KDt = (t, s, r) => {
         return t.Quality !== s.Quality
           ? (s.Quality - t.Quality) * (r ? -1 : 1)
           : 0;
       }),
-      (this.JLt = (t, s, r) => {
+      (this.tRt = (t, s, r) => {
         return t.ItemId !== s.ItemId ? t.ItemId - s.ItemId : 0;
       });
   }
   OnInitSortMap() {
-    this.SortMap.set(1, this.$Lt),
-      this.SortMap.set(2, this.YLt),
-      this.SortMap.set(3, this.VLt),
-      this.SortMap.set(4, this.JLt),
-      this.SortMap.set(5, this.XLt);
+    this.SortMap.set(1, this.ZDt),
+      this.SortMap.set(2, this.eRt),
+      this.SortMap.set(3, this.KDt),
+      this.SortMap.set(4, this.tRt),
+      this.SortMap.set(5, this.zDt);
   }
 }
 exports.CookSort = CookSort;

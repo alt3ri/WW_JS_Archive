@@ -16,26 +16,26 @@ exports.initFavorExpItem = initFavorExpItem;
 class RoleFavorHintView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
-      (this.O1o = []),
-      (this.k1o = void 0),
-      (this.F1o = 0),
-      (this.V1o = (e) => {
+      (this.b_o = []),
+      (this.q_o = void 0),
+      (this.G_o = 0),
+      (this.N_o = (e) => {
         var t,
-          i = this.H1o(e),
+          i = this.O_o(e),
           r = i.length;
         for (let e = 0; e < r; e++) {
           var s = i[e];
-          this.O1o.push(s);
+          this.b_o.push(s);
         }
-        this.k1o.ClearChildren(),
-          this.k1o.RebuildLayoutByDataNew(this.O1o),
-          (this.F1o = this.O1o.length);
-        for ([, t] of this.k1o.GetLayoutItemMap())
-          t.SetSequenceFinishCallBack(this.q1o);
+        this.q_o.ClearChildren(),
+          this.q_o.RebuildLayoutByDataNew(this.b_o),
+          (this.G_o = this.b_o.length);
+        for ([, t] of this.q_o.GetLayoutItemMap())
+          t.SetSequenceFinishCallBack(this.x_o);
       }),
-      (this.q1o = () => {
-        (this.F1o = this.F1o - 1),
-          0 === this.F1o &&
+      (this.x_o = () => {
+        (this.G_o = this.G_o - 1),
+          0 === this.G_o &&
             UiManager_1.UiManager.CloseView("RoleFavorHintView");
       });
   }
@@ -46,30 +46,30 @@ class RoleFavorHintView extends UiTickViewBase_1.UiTickViewBase {
     ];
   }
   OnStart() {
-    (this.O1o = this.OpenParam),
-      (this.O1o = this.H1o(this.O1o)),
-      (this.k1o = new GenericLayoutNew_1.GenericLayoutNew(
+    (this.b_o = this.OpenParam),
+      (this.b_o = this.O_o(this.b_o)),
+      (this.q_o = new GenericLayoutNew_1.GenericLayoutNew(
         this.GetVerticalLayout(1),
         exports.initFavorExpItem,
       )),
-      this.k1o.RebuildLayoutByDataNew(this.O1o),
-      (this.F1o = this.O1o.length);
-    for (var [, e] of this.k1o.GetLayoutItemMap())
-      e.SetSequenceFinishCallBack(this.q1o);
+      this.q_o.RebuildLayoutByDataNew(this.b_o),
+      (this.G_o = this.b_o.length);
+    for (var [, e] of this.q_o.GetLayoutItemMap())
+      e.SetSequenceFinishCallBack(this.x_o);
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.UpdateRoleFavorHintView,
-      this.V1o,
+      this.N_o,
     );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.UpdateRoleFavorHintView,
-      this.V1o,
+      this.N_o,
     );
   }
-  H1o(n) {
+  O_o(n) {
     if (
       ModelManager_1.ModelManager.EditFormationModel.GetCurrentFormationData
     ) {
@@ -109,9 +109,9 @@ class RoleFavorHintView extends UiTickViewBase_1.UiTickViewBase {
     return n;
   }
   OnBeforeDestroy() {
-    (this.O1o = []),
-      this.k1o && (this.k1o.ClearChildren(), (this.k1o = void 0)),
-      (this.F1o = 0);
+    (this.b_o = []),
+      this.q_o && (this.q_o.ClearChildren(), (this.q_o = void 0)),
+      (this.G_o = 0);
   }
 }
 exports.RoleFavorHintView = RoleFavorHintView;

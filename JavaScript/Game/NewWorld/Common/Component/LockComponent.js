@@ -25,37 +25,37 @@ const Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
 let LockComponent = class LockComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments),
-      (this.Snn = void 0),
-      (this.zht = void 0),
-      (this.Enn = 0);
+      (this.inn = void 0),
+      (this.u1t = void 0),
+      (this.onn = 0);
   }
   OnStart() {
-    (this.Snn = this.Entity.GetComponent(177)),
-      (this.zht = this.Entity.GetComponent(0));
-    var t = this.zht.GetEntityEnterComponentState();
+    (this.inn = this.Entity.GetComponent(180)),
+      (this.u1t = this.Entity.GetComponent(0));
+    var t = this.u1t.GetEntityEnterComponentState();
     if (void 0 !== t)
       switch (t) {
-        case Protocol_1.Aki.Protocol.qqs.Proto_NotUnlock:
-          this.Enn = -421801185;
+        case Protocol_1.Aki.Protocol.I3s.Proto_NotUnlock:
+          this.onn = -421801185;
           break;
-        case Protocol_1.Aki.Protocol.qqs.Proto_Unlockable:
-          this.Enn = 1960897308;
+        case Protocol_1.Aki.Protocol.I3s.Proto_Unlockable:
+          this.onn = 1960897308;
           break;
-        case Protocol_1.Aki.Protocol.qqs.Proto_Unlocked:
-          this.Enn = 1196894179;
+        case Protocol_1.Aki.Protocol.I3s.Proto_Unlocked:
+          this.onn = 1196894179;
           break;
         default:
-          this.Enn = -421801185;
+          this.onn = -421801185;
       }
-    return this.Enn || (this.Enn = -421801185), this.Snn.AddTag(this.Enn), !0;
+    return this.onn || (this.onn = -421801185), this.inn.AddTag(this.onn), !0;
   }
   ChangeLockTag(t) {
-    var e = this.Enn;
-    (this.Enn = t), this.Snn.ChangeLocalLevelTag(this.Enn, e);
+    var e = this.onn;
+    (this.onn = t), this.inn.ChangeLocalLevelTag(this.onn, e);
   }
 };
 (LockComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(92)],
+  [(0, RegisterComponent_1.RegisterComponent)(94)],
   LockComponent,
 )),
   (exports.LockComponent = LockComponent);

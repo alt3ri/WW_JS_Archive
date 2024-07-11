@@ -14,7 +14,7 @@ class FlowActionUnlockEntity extends FlowActionBase_1.FlowActionBase {
         var e =
           ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(
             t,
-          )?.Entity?.GetComponent(115);
+          )?.Entity?.GetComponent(117);
         e
           ? e.RemoveLockPerformanceTagLocal()
           : Log_1.Log.CheckWarn() &&

@@ -28,7 +28,7 @@ class RolePreviewDescribeTabView extends UiTabViewBase_1.UiTabViewBase {
     ];
   }
   OnStart() {
-    this.rdt(), this.PlayMontageStart();
+    this.gCt(), this.PlayMontageStart();
   }
   OnBeforeDestroy() {
     (this.CharacterVoiceTitleText = void 0),
@@ -36,7 +36,7 @@ class RolePreviewDescribeTabView extends UiTabViewBase_1.UiTabViewBase {
       (this.AttributeIconTexture = void 0),
       (this.AttributeText = void 0);
   }
-  rdt() {
+  gCt() {
     var e,
       i = ModelManager_1.ModelManager.RoleModel.GetCurSelectMainRoleInstance(),
       i = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(i.GetRoleId());

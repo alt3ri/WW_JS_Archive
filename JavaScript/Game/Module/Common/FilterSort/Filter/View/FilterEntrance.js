@@ -14,25 +14,25 @@ class FilterEntrance extends UiPanelBase_1.UiPanelBase {
   constructor(t, e) {
     super(),
       (this.UpdateDataListFunction = e),
-      (this.rLt = void 0),
-      (this.uft = []),
-      (this.nLt = []),
-      (this.sLt = void 0),
+      (this.hDt = void 0),
+      (this.ypt = []),
+      (this.lDt = []),
+      (this._Dt = void 0),
       (this.Mne = 0),
-      (this.aLt = () => {
-        var t = new FilterViewData_1.FilterViewData(this.Mne, this.cIt);
+      (this.uDt = () => {
+        var t = new FilterViewData_1.FilterViewData(this.Mne, this.vTt);
         FilterSortController_1.FilterSortController.OpenFilterView(t);
       }),
-      (this.cIt = () => {
-        this.C4e(), this.Ift(!1);
+      (this.vTt = () => {
+        this.P5e(), this.qpt(!1);
       }),
       (this.gPe = () => {
         ModelManager_1.ModelManager.FilterModel.ClearData(this.Mne),
           this.GetItem(1).SetUIActive(!1),
-          this.Ift(!1);
+          this.qpt(!1);
       }),
-      (this.hLt = (t) => {
-        this.Mne === t && (this.Ift(!0), this.C4e());
+      (this.cDt = (t) => {
+        this.Mne === t && (this.qpt(!0), this.P5e());
       }),
       this.CreateThenShowByActor(t.GetOwner());
   }
@@ -44,7 +44,7 @@ class FilterEntrance extends UiPanelBase_1.UiPanelBase {
       [3, UE.UIButtonComponent],
     ]),
       (this.BtnBindInfo = [
-        [0, this.aLt],
+        [0, this.uDt],
         [3, this.gPe],
       ]);
   }
@@ -58,69 +58,69 @@ class FilterEntrance extends UiPanelBase_1.UiPanelBase {
   AddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnFilterDataUpdate,
-      this.hLt,
+      this.cDt,
     );
   }
   RemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnFilterDataUpdate,
-      this.hLt,
+      this.cDt,
     );
   }
-  C4e() {
-    var t = this.rLt.ShowAllFilterContent(),
+  P5e() {
+    var t = this.hDt.ShowAllFilterContent(),
       e = this.GetItem(1);
     StringUtils_1.StringUtils.IsBlank(t)
       ? e.SetUIActive(!1)
       : (e.SetUIActive(!0), this.GetText(2).SetText(t));
   }
-  Ift(t) {
+  qpt(t) {
     var e = ConfigManager_1.ConfigManager.FilterConfig.GetFilterConfig(
         this.Mne,
       ),
       i = e.DataType,
-      s = this.rLt.GetSelectRuleData(),
+      s = this.hDt.GetSelectRuleData(),
       i = ModelManager_1.ModelManager.FilterModel.GetFilterList(
-        this.uft,
+        this.ypt,
         i,
         e.IsSupportSelectAll,
         s,
       ),
-      e = ConfigManager_1.ConfigManager.SortConfig.GetSortId(this.sLt),
+      e = ConfigManager_1.ConfigManager.SortConfig.GetSortId(this._Dt),
       s = ModelManager_1.ModelManager.SortModel.GetSortResultData(e);
     s &&
-      ModelManager_1.ModelManager.SortModel.SortDataList(i, e, s, ...this.nLt),
+      ModelManager_1.ModelManager.SortModel.SortDataList(i, e, s, ...this.lDt),
       this.UpdateDataListFunction?.(i, t, 0);
   }
-  lLt(t) {
-    (this.sLt = t),
+  mDt(t) {
+    (this._Dt = t),
       (this.Mne = ConfigManager_1.ConfigManager.FilterConfig.GetFilterId(t));
   }
-  _Lt() {
-    (this.rLt = ModelManager_1.ModelManager.FilterModel.GetFilterResultData(
+  dDt() {
+    (this.hDt = ModelManager_1.ModelManager.FilterModel.GetFilterResultData(
       this.Mne,
     )),
-      this.rLt ||
-        ((this.rLt = new FilterViewData_1.FilterResultData()),
-        this.rLt.SetConfigId(this.Mne),
+      this.hDt ||
+        ((this.hDt = new FilterViewData_1.FilterResultData()),
+        this.hDt.SetConfigId(this.Mne),
         ModelManager_1.ModelManager.FilterModel.SetFilterResultData(
           this.Mne,
-          this.rLt,
+          this.hDt,
         ));
   }
-  uLt() {
+  CDt() {
     this.SetActive(0 < this.Mne);
   }
   UpdateData(t, e, ...i) {
-    this.lLt(t),
-      this.uLt(),
+    this.mDt(t),
+      this.CDt(),
       this.Mne <= 0 ||
-        ((this.uft = e),
-        (this.nLt = i),
-        this._Lt(),
-        this.C4e(),
-        0 === ConfigManager_1.ConfigManager.SortConfig.GetSortId(this.sLt) &&
-          this.Ift(!0));
+        ((this.ypt = e),
+        (this.lDt = i),
+        this.dDt(),
+        this.P5e(),
+        0 === ConfigManager_1.ConfigManager.SortConfig.GetSortId(this._Dt) &&
+          this.qpt(!0));
   }
 }
 exports.FilterEntrance = FilterEntrance;

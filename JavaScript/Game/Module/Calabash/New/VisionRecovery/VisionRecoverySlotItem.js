@@ -7,17 +7,17 @@ const UE = require("ue"),
 class VisionRecoverySlotItem extends UiPanelBase_1.UiPanelBase {
   constructor(i, s = !0) {
     super(),
-      (this.Wpt = void 0),
-      (this.Kpt = void 0),
-      (this.Qpt = !1),
-      (this.Xpt = () => {
-        this.Kpt && this.Kpt(!0, this.Wpt);
+      (this.oMt = void 0),
+      (this.rMt = void 0),
+      (this.nMt = !1),
+      (this.sMt = () => {
+        this.rMt && this.rMt(!0, this.oMt);
       }),
-      (this.$pt = () => {
-        this.Kpt && this.Kpt(!1, this.Wpt);
+      (this.aMt = () => {
+        this.rMt && this.rMt(!1, this.oMt);
       }),
-      (this.Kpt = i),
-      (this.Qpt = s);
+      (this.rMt = i),
+      (this.nMt = s);
   }
   OnRegisterComponent() {
     (this.ComponentRegisterInfos = [
@@ -29,17 +29,17 @@ class VisionRecoverySlotItem extends UiPanelBase_1.UiPanelBase {
       [5, UE.UIButtonComponent],
     ]),
       (this.BtnBindInfo = [
-        [4, this.Xpt],
-        [5, this.$pt],
+        [4, this.sMt],
+        [5, this.aMt],
       ]);
   }
   OnStart() {
-    this.RefreshUi(this.Wpt);
-    var i = void 0 !== this.Kpt;
+    this.RefreshUi(this.oMt);
+    var i = void 0 !== this.rMt;
     this.GetUiSpriteTransition(0).SetEnable(i);
   }
   RefreshUi(i) {
-    void 0 === (this.Wpt = i) ? this.RefreshEmpty() : this.RefreshByData(i);
+    void 0 === (this.oMt = i) ? this.RefreshEmpty() : this.RefreshByData(i);
   }
   RefreshEmpty() {
     this.GetItem(1).SetUIActive(!0),
@@ -64,7 +64,7 @@ class VisionRecoverySlotItem extends UiPanelBase_1.UiPanelBase {
     this.SetTextureByPath(e.IconMiddle, s, void 0, () => {
       s.SetUIActive(!0),
         this.GetItem(1).SetUIActive(!1),
-        this.GetButton(5).RootUIComp.SetUIActive(this.Qpt);
+        this.GetButton(5).RootUIComp.SetUIActive(this.nMt);
     });
   }
 }

@@ -4,105 +4,108 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const LevelSequencePlayer_1 = require("../../Module/Common/LevelSequencePlayer");
 class UiSequencePlayer {
   constructor(e) {
-    (this.a_r = new Map()),
-      (this.EPe = void 0),
-      (this.WPt = void 0),
-      (this.KPt = void 0),
-      (this.WFt = (t) => {
-        this.a_r.set(t, 2),
-          this.WPt?.forEach((e) => {
+    (this.rur = new Map()),
+      (this.SPe = void 0),
+      (this.$xt = void 0),
+      (this.Yxt = void 0),
+      (this.K3t = (t) => {
+        this.rur.set(t, 2),
+          this.$xt?.forEach((e) => {
             e(t);
           });
       }),
-      (this.h_r = (t) => {
-        this.a_r.set(t, 1),
-          this.KPt?.forEach((e) => {
+      (this.nur = (t) => {
+        this.rur.set(t, 1),
+          this.Yxt?.forEach((e) => {
             e(t);
           });
       }),
-      (this.EPe = new LevelSequencePlayer_1.LevelSequencePlayer(e)),
-      this.EPe.BindSequenceCloseEvent(this.WFt),
-      this.EPe.BindSequenceStartEvent(this.h_r);
+      (this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(e)),
+      this.SPe.BindSequenceCloseEvent(this.K3t),
+      this.SPe.BindSequenceStartEvent(this.nur);
   }
-  l_r(e) {
-    this.a_r.delete(e);
+  sur(e) {
+    this.rur.delete(e);
   }
-  __r(e) {
-    this.a_r.set(e, 0);
+  aur(e) {
+    this.rur.set(e, 0);
   }
   BindOnEndSequenceEvent(e) {
-    this.WPt || (this.WPt = new Array()), this.WPt.push(e);
+    this.$xt || (this.$xt = new Array()), this.$xt.push(e);
   }
   BindOnStartSequenceEvent(e) {
-    this.KPt || (this.KPt = new Array()), this.KPt.push(e);
+    this.Yxt || (this.Yxt = new Array()), this.Yxt.push(e);
   }
   IsInSequence() {
     let t = !1;
-    var i = Array.from(this.a_r.keys()),
+    var i = Array.from(this.rur.keys()),
       s = i.length;
     for (let e = 0; e < s; e++)
-      if (2 !== this.a_r.get(i[e])) {
+      if (2 !== this.rur.get(i[e])) {
         t = !0;
         break;
       }
     return t;
   }
   IsSequenceInPlaying(e) {
-    return !!this.a_r.has(e) && 1 === this.a_r.get(e);
+    return !!this.rur.has(e) && 1 === this.rur.get(e);
   }
   IsSequenceFinish(e) {
-    return !this.a_r.has(e) || 2 === this.a_r.get(e);
+    return !this.rur.has(e) || 2 === this.rur.get(e);
   }
   IsStartSequenceFinish(e) {
-    return !this.a_r.has(e) || 0 < this.a_r.get(e);
+    return !this.rur.has(e) || 0 < this.rur.get(e);
   }
   GetCurrentSequence() {
-    return this.EPe.GetCurrentSequence();
+    return this.SPe.GetCurrentSequence();
   }
   PlaySequencePurely(e, t = !1, i = !1) {
-    this.EPe.PlaySequencePurely(e, t, i);
+    this.SPe.PlaySequencePurely(e, t, i);
   }
   StopPrevSequence(e, t = !1) {
-    var i = this.EPe.GetCurrentSequence();
-    this.EPe.StopCurrentSequence(e, t), this.l_r(i);
+    var i = this.SPe.GetCurrentSequence();
+    this.SPe.StopCurrentSequence(e, t), this.sur(i);
   }
   StopCurrentSequenceByName(e, t, i = !1) {
-    var s = this.EPe.GetCurrentSequence();
-    s === e && (this.EPe.StopCurrentSequence(t, i), this.l_r(s));
+    var s = this.SPe.GetCurrentSequence();
+    s === e && (this.SPe.StopCurrentSequence(t, i), this.sur(s));
   }
   PlaySequence(e, t = !1) {
-    this.u_r(), this.__r(e), this.EPe.PlayLevelSequenceByName(e, t);
+    this.hur(), this.aur(e), this.SPe.PlayLevelSequenceByName(e, t);
   }
   async PlaySequenceAsync(e, t, i = !1, s = !1) {
-    this.u_r(), this.__r(e), await this.EPe.PlaySequenceAsync(e, t, i, s);
+    this.hur(), this.aur(e), await this.SPe.PlaySequenceAsync(e, t, i, s);
   }
   ReplaySequence(e) {
-    this.EPe.ReplaySequenceByKey(e);
+    this.SPe.ReplaySequenceByKey(e);
   }
-  u_r() {
+  hur() {
     var e;
-    this.IsInSequence() && ((e = Array.from(this.a_r.keys())[0]), this.l_r(e));
+    this.IsInSequence() && ((e = Array.from(this.rur.keys())[0]), this.sur(e));
   }
   StopSequenceByKey(e, t = !1, i = !1) {
-    this.EPe.StopSequenceByKey(e, t, i);
+    this.SPe.StopSequenceByKey(e, t, i);
   }
   SequencePlayReverseByKey(e, t) {
-    this.EPe.PlaySequencePurely(e, t, !0);
+    this.SPe.PlaySequencePurely(e, t, !0);
   }
   PauseSequence() {
-    this.EPe.PauseSequence();
+    this.SPe.PauseSequence();
   }
   ResumeSequence() {
-    this.EPe.ResumeSequence();
+    this.SPe.ResumeSequence();
+  }
+  ChangePlaybackDirection(e) {
+    this.SPe.ChangePlaybackDirection(e);
   }
   SetActorTag(e, t, i) {
-    this.EPe.SetActorTag(e, t, i);
+    this.SPe.SetActorTag(e, t, i);
   }
   SetRelativeTransform(e, t) {
-    this.EPe.SetRelativeTransform(e, t);
+    this.SPe.SetRelativeTransform(e, t);
   }
   Clear() {
-    this.EPe.Clear(), (this.EPe = void 0);
+    this.SPe.Clear(), (this.SPe = void 0);
   }
 }
 exports.UiSequencePlayer = UiSequencePlayer;

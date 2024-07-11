@@ -5,48 +5,48 @@ const ConfigManager_1 = require("../../../Manager/ConfigManager");
 class CommonSuccessData {
   constructor() {
     (this.HGe = ""),
-      (this.MBt = ""),
-      (this.SBt = ""),
-      (this.EBt = void 0),
-      (this.Jmt = ""),
-      (this.yBt = !0);
+      (this.ybt = ""),
+      (this.Ibt = ""),
+      (this.Tbt = void 0),
+      (this.lCt = ""),
+      (this.Lbt = !0);
   }
   SetTitleText(t) {
     this.HGe = t;
   }
   SetSubTitleText(t) {
-    this.MBt = t;
+    this.ybt = t;
   }
   SetClickText(t) {
-    this.SBt = t;
+    this.Ibt = t;
   }
   GetTitleText() {
     return this.HGe;
   }
   GetSubTitleText() {
-    return this.MBt;
+    return this.ybt;
   }
   GetClickText() {
-    return this.SBt;
+    return this.Ibt;
   }
   SetClickFunction(t) {
-    this.EBt = t;
+    this.Tbt = t;
   }
   GetClickFunction() {
-    return this.EBt;
+    return this.Tbt;
   }
   SetAudioId(t) {
     t = ConfigManager_1.ConfigManager.AudioConfig.GetAudioPath(t);
-    this.Jmt = t.Path;
+    this.lCt = t.Path;
   }
   GetAudioPath() {
-    return this.Jmt;
+    return this.lCt;
   }
   SetNeedDelay(t) {
-    this.yBt = t;
+    this.Lbt = t;
   }
   GetNeedDelay() {
-    return this.yBt;
+    return this.Lbt;
   }
 }
 exports.CommonSuccessData = CommonSuccessData;

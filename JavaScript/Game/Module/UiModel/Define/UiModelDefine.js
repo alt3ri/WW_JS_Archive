@@ -78,18 +78,30 @@ const TsSkeletalObserver_1 = require("../../SkeletalObserver/TsSkeletalObserver"
       UiWeaponDataComponent_1.UiWeaponDataComponent,
       UiWeaponBreachDaComponent_1.UiWeaponBreachDaComponent,
     ]),
-    4: new UiModelCreateData_1.UiModelCreateData(3, 1, 4, [
+    4: new UiModelCreateData_1.UiModelCreateData(1, 1, 4, [
+      UiModelDataComponent_1.UiModelDataComponent,
+      UiModelActorComponent_1.UiModelActorComponent,
+      UiModelLoadComponent_1.UiModelLoadComponent,
+      UiModelLoadingIconComponent_1.UiModelLoadingIconComponent,
+      UiModelEffectComponent_1.UiModelEffectComponent,
+      UiModelRenderingMaterialComponent_1.UiModelRenderingMaterialComponent,
+      UiModelAnsControllerComponent_1.UiModelAnsControllerComponent,
+      UiModelRotateComponent_1.UiModelRotateComponent,
+      UiWeaponDataComponent_1.UiWeaponDataComponent,
+      UiWeaponBreachDaComponent_1.UiWeaponBreachDaComponent,
+    ]),
+    5: new UiModelCreateData_1.UiModelCreateData(3, 1, 5, [
       UiModelDataComponent_1.UiModelDataComponent,
       UiModelActorComponent_1.UiModelActorComponent,
       UiModelLoadComponent_1.UiModelLoadComponent,
       UiModelRotateComponent_1.UiModelRotateComponent,
       UiModelRenderingMaterialComponent_1.UiModelRenderingMaterialComponent,
     ]),
-    5: new UiModelCreateData_1.UiModelCreateData(2, 1, 5, [
+    6: new UiModelCreateData_1.UiModelCreateData(2, 1, 6, [
       UiModelDataComponent_1.UiModelDataComponent,
       UiModelActorComponent_1.UiModelActorComponent,
     ]),
-    6: new UiModelCreateData_1.UiModelCreateData(2, 1, 6, [
+    7: new UiModelCreateData_1.UiModelCreateData(2, 1, 7, [
       UiModelDataComponent_1.UiModelDataComponent,
       UiModelActorComponent_1.UiModelActorComponent,
       UiModelLoadComponent_1.UiModelLoadComponent,
@@ -99,7 +111,7 @@ const TsSkeletalObserver_1 = require("../../SkeletalObserver/TsSkeletalObserver"
       UiModelAnimationComponent_1.UiModelAnimationComponent,
       UiModelAnsControllerComponent_1.UiModelAnsControllerComponent,
     ]),
-    7: new UiModelCreateData_1.UiModelCreateData(0, 0, 7, [
+    8: new UiModelCreateData_1.UiModelCreateData(0, 0, 8, [
       UiModelDataComponent_1.UiModelDataComponent,
       UiModelActorComponent_1.UiModelActorComponent,
       UiModelEffectComponent_1.UiModelEffectComponent,

@@ -7,7 +7,7 @@ const Queue_1 = require("../../../../../Core/Container/Queue"),
   ModelManager_1 = require("../../../../Manager/ModelManager");
 class SimpleNpcLoadController extends ControllerBase_1.ControllerBase {
   static OnInit() {
-    return (this.Mir = new Queue_1.Queue(256)), !0;
+    return (this.Mor = new Queue_1.Queue(256)), !0;
   }
   static OnLeaveLevel() {
     return !0;
@@ -15,14 +15,14 @@ class SimpleNpcLoadController extends ControllerBase_1.ControllerBase {
   static OnTick(e) {
     var r;
     ModelManager_1.ModelManager.GameModeModel.WorldDone &&
-      0 !== this.Mir.Size &&
-      ((r = this.Mir.Pop()), ObjectUtils_1.ObjectUtils.IsValid(r)) &&
+      0 !== this.Mor.Size &&
+      ((r = this.Mor.Pop()), ObjectUtils_1.ObjectUtils.IsValid(r)) &&
       r.Mesh &&
       (r.LoadModelByDA() && r.SetDefaultCollision(), r.StartFlowLogic());
   }
   static AddSimpleNpc(e) {
-    this.Mir && this.Mir.Push(e);
+    this.Mor && this.Mor.Push(e);
   }
 }
-(exports.SimpleNpcLoadController = SimpleNpcLoadController).Mir = void 0;
+(exports.SimpleNpcLoadController = SimpleNpcLoadController).Mor = void 0;
 //# sourceMappingURL=SimpleNpcLoadController.js.map

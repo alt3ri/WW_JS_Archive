@@ -19,44 +19,44 @@ const UE = require("ue"),
 class ExploreLevelView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
-      (this.f5t = void 0),
-      (this.R5t = void 0),
+      (this.fVt = void 0),
+      (this.RVt = void 0),
       (this.bOe = void 0),
-      (this.U5t = void 0),
-      (this.mTn = 0),
-      (this.CTn = 0),
-      (this.gTn = 0),
-      (this.fTn = 0),
-      (this.vTn = 0),
-      (this.pTn = 0),
-      (this.MTn = 0),
-      (this.ETn = !1),
-      (this.aRn = !1),
-      (this.JSt = () => {
+      (this.UVt = void 0),
+      (this.MHs = 0),
+      (this.SHs = 0),
+      (this.EHs = 0),
+      (this.yHs = 0),
+      (this.IHs = 0),
+      (this.THs = 0),
+      (this.LHs = 0),
+      (this.DHs = !1),
+      (this.AHs = !1),
+      (this.lyt = () => {
         UiManager_1.UiManager.CloseView("ExploreLevelView");
       }),
-      (this.A5t = () => {}),
-      (this.P5t = () => {
-        this.w5t();
-        var e = this.f5t.GetExploreScore(),
-          t = this.R5t.GetMaxExploreScore();
-        t < 0 ? this.x5t() : this.STn(this.mTn, this.CTn, e, t);
+      (this.AVt = () => {}),
+      (this.PVt = () => {
+        this.wVt();
+        var e = this.fVt.GetExploreScore(),
+          t = this.RVt.GetMaxExploreScore();
+        t < 0 ? this.xVt() : this.UHs(this.MHs, this.SHs, e, t);
       }),
-      (this.B5t = () => {
-        (this.f5t =
+      (this.BVt = () => {
+        (this.fVt =
           ModelManager_1.ModelManager.ExploreLevelModel.GetCurrentCountryExploreLevelData()),
-          (this.R5t = this.f5t.GetCurrentExploreLevelRewardData());
-        var e = this.f5t.GetExploreScore(),
-          t = this.R5t.GetMaxExploreScore();
-        t < 0 ? this.x5t() : this.STn(this.mTn, this.CTn, e, t);
+          (this.RVt = this.fVt.GetCurrentExploreLevelRewardData());
+        var e = this.fVt.GetExploreScore(),
+          t = this.RVt.GetMaxExploreScore();
+        t < 0 ? this.xVt() : this.UHs(this.MHs, this.SHs, e, t);
       }),
-      (this.UKe = (e, t) => {
-        "ExploreLevelRewardView" === e && this.hRn(!0);
+      (this.FQe = (e, t) => {
+        "ExploreLevelRewardView" === e && this.RHs(!0);
       }),
       (this.$Ge = (e, t) => {
-        "ExploreLevelRewardView" === e && this.hRn(!1);
+        "ExploreLevelRewardView" === e && this.RHs(!1);
       }),
-      (this.g5t = (e, t, i) => {
+      (this.gVt = (e, t, i) => {
         var s = new CommonItemSmallItemGrid_1.CommonItemSmallItemGrid();
         return (
           s.Initialize(t.GetOwner()),
@@ -64,11 +64,11 @@ class ExploreLevelView extends UiTickViewBase_1.UiTickViewBase {
           { Key: i, Value: s }
         );
       }),
-      (this.q5t = () => {
+      (this.qVt = () => {
         var e = new ExploreLevelItem_1.ExploreLevelItem();
-        return e.BindOnClickedReceiveButton(this.C5t), e;
+        return e.BindOnClickedReceiveButton(this.CVt), e;
       }),
-      (this.C5t = (e) => {
+      (this.CVt = (e) => {
         var t = e.AreaId,
           i = e.Progress;
         ExploreLevelController_1.ExploreLevelController.ExploreScoreRewardRequest(
@@ -79,16 +79,16 @@ class ExploreLevelView extends UiTickViewBase_1.UiTickViewBase {
             e.CountryId,
             () => {
               e.GetIsReceived() ||
-                ((this.mTn = this.f5t.GetExploreScore()),
-                (this.CTn = this.R5t.GetMaxExploreScore()),
-                this.lRn());
+                ((this.MHs = this.fVt.GetExploreScore()),
+                (this.SHs = this.RVt.GetMaxExploreScore()),
+                this.xHs());
             },
           );
       }),
-      (this.G5t = () => {
+      (this.GVt = () => {
         UiManager_1.UiManager.OpenView(
           "ExploreLevelPreviewView",
-          this.f5t,
+          this.fVt,
           (e, t) => {
             e && this.AddChildViewById(t);
           },
@@ -114,51 +114,51 @@ class ExploreLevelView extends UiTickViewBase_1.UiTickViewBase {
       [14, UE.UINiagara],
     ]),
       (this.BtnBindInfo = [
-        [6, this.G5t],
-        [10, this.JSt],
+        [6, this.GVt],
+        [10, this.lyt],
       ]);
   }
   async OnBeforeStartAsync() {
-    (this.f5t =
+    (this.fVt =
       ModelManager_1.ModelManager.ExploreLevelModel.GetCurrentCountryExploreLevelData()),
-      (this.R5t = this.f5t.GetCurrentExploreLevelRewardData()),
+      (this.RVt = this.fVt.GetCurrentExploreLevelRewardData()),
       await Promise.all([
         ExploreProgressController_1.ExploreProgressController.AllExploreProgressAsyncRequest(),
         ExploreLevelController_1.ExploreLevelController.CountryExploreScoreInfoAsyncRequest(
-          this.f5t.GetCountryId(),
+          this.fVt.GetCountryId(),
         ),
       ]);
   }
   OnStart() {
     (this.bOe = new GenericScrollView_1.GenericScrollView(
       this.GetScrollViewWithScrollbar(5),
-      this.g5t,
+      this.gVt,
     )),
-      (this.U5t = new LoopScrollView_1.LoopScrollView(
+      (this.UVt = new LoopScrollView_1.LoopScrollView(
         this.GetLoopScrollViewComponent(8),
         this.GetItem(9).GetOwner(),
-        this.q5t,
+        this.qVt,
       )),
-      this.b5t(),
-      this.x5t(),
-      this.w5t();
+      this.bVt(),
+      this.xVt(),
+      this.wVt();
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnExploreScoreRewardResponse,
-      this.A5t,
+      this.AVt,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnCountryExploreScoreInfoResponse,
-        this.P5t,
+        this.PVt,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnExploreLevelNotify,
-        this.B5t,
+        this.BVt,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OpenView,
-        this.UKe,
+        this.FQe,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.CloseView,
@@ -168,19 +168,19 @@ class ExploreLevelView extends UiTickViewBase_1.UiTickViewBase {
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnExploreScoreRewardResponse,
-      this.A5t,
+      this.AVt,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnCountryExploreScoreInfoResponse,
-        this.P5t,
+        this.PVt,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnExploreLevelNotify,
-        this.B5t,
+        this.BVt,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OpenView,
-        this.UKe,
+        this.FQe,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.CloseView,
@@ -190,70 +190,70 @@ class ExploreLevelView extends UiTickViewBase_1.UiTickViewBase {
   OnBeforeDestroy() {
     this.bOe.ClearChildren(),
       (this.bOe = void 0),
-      this.U5t.ClearGridProxies(),
-      (this.U5t = void 0),
-      (this.f5t = void 0);
+      this.UVt.ClearGridProxies(),
+      (this.UVt = void 0),
+      (this.fVt = void 0);
   }
   OnTick(e) {
-    if (this.ETn && !this.aRn)
-      if (this.vTn < this.gTn) {
+    if (this.DHs && !this.AHs)
+      if (this.IHs < this.EHs) {
         const t = MathUtils_1.MathUtils.Lerp(
-          this.gTn,
-          this.fTn,
-          this.MTn / PLAY_PROGRESS_BAR_TIME,
+          this.EHs,
+          this.yHs,
+          this.LHs / PLAY_PROGRESS_BAR_TIME,
         );
-        this.TTn(t, this.fTn),
-          t >= this.fTn && this.STn(0, this.pTn, this.vTn, this.pTn),
-          void (this.MTn += e);
+        this.PHs(t, this.yHs),
+          t >= this.yHs && this.UHs(0, this.THs, this.IHs, this.THs),
+          void (this.LHs += e);
       } else {
         const t = MathUtils_1.MathUtils.Lerp(
-          this.gTn,
-          this.vTn,
-          this.MTn / PLAY_PROGRESS_BAR_TIME,
+          this.EHs,
+          this.IHs,
+          this.LHs / PLAY_PROGRESS_BAR_TIME,
         );
-        this.TTn(t, this.pTn),
-          this.MTn >= PLAY_PROGRESS_BAR_TIME
-            ? (this.b5t(), this.x5t(), this.LTn())
-            : (this.MTn += e);
+        this.PHs(t, this.THs),
+          this.LHs >= PLAY_PROGRESS_BAR_TIME
+            ? (this.bVt(), this.xVt(), this.BHs())
+            : (this.LHs += e);
       }
   }
-  STn(e, t, i, s) {
-    (this.gTn = e),
-      (this.fTn = t),
-      (this.vTn = i),
-      (this.pTn = s),
-      (this.MTn = 0),
-      (this.ETn = !0);
+  UHs(e, t, i, s) {
+    (this.EHs = e),
+      (this.yHs = t),
+      (this.IHs = i),
+      (this.THs = s),
+      (this.LHs = 0),
+      (this.DHs = !0);
   }
-  hRn(e) {
-    this.aRn = e;
+  RHs(e) {
+    this.AHs = e;
   }
-  LTn() {
-    (this.ETn = !1), (this.MTn = 0);
+  BHs() {
+    (this.DHs = !1), (this.LHs = 0);
   }
-  lRn() {
+  xHs() {
     var e = this.GetUiNiagara(14);
     e.IsUIActiveSelf() ? e.ActivateSystem(!0) : e.SetUIActive(!0);
   }
-  b5t() {
-    this.Lht(), this.k5t(), this.F5t();
+  bVt() {
+    this.Olt(), this.kVt(), this.FVt();
   }
-  Lht() {
-    var e = this.R5t.GetScoreNameId();
+  Olt() {
+    var e = this.RVt.GetScoreNameId();
     LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(12), e);
   }
-  k5t() {
-    var e = this.R5t.GetScoreTexturePath(),
+  kVt() {
+    var e = this.RVt.GetScoreTexturePath(),
       t = this.GetTexture(1);
     this.SetTextureByPath(e, t);
   }
-  x5t() {
+  xVt() {
     var e,
-      t = this.R5t.GetMaxExploreScore();
+      t = this.RVt.GetMaxExploreScore();
     t <= 0
       ? this.GetItem(11)?.SetUIActive(!1)
-      : ((e = this.f5t.GetExploreScore()),
-        this.TTn(e, t),
+      : ((e = this.fVt.GetExploreScore()),
+        this.PHs(e, t),
         this.SetTextureByPath(
           ModelManager_1.ModelManager.ExploreLevelModel
             .ExploreScoreItemTexturePath,
@@ -261,13 +261,13 @@ class ExploreLevelView extends UiTickViewBase_1.UiTickViewBase {
         ),
         this.GetItem(11)?.SetUIActive(!0));
   }
-  TTn(e, t) {
+  PHs(e, t) {
     (e = Math.floor(Math.min(t, e))), (t = Math.floor(t));
     this.GetSprite(2).SetFillAmount(e / t),
       this.GetText(4).SetText(e + "/" + t);
   }
-  F5t() {
-    var e = this.f5t.GetExploreLevelRewardData(this.R5t.GetExploreLevel() + 1);
+  FVt() {
+    var e = this.fVt.GetExploreLevelRewardData(this.RVt.GetExploreLevel() + 1);
     if (e) {
       var e = e.GetDropItemNumMap(),
         t = [];
@@ -278,8 +278,8 @@ class ExploreLevelView extends UiTickViewBase_1.UiTickViewBase {
         this.bOe.SetActive(!1),
         this.GetItem(13).SetUIActive(!0);
   }
-  w5t() {
-    var e = this.f5t.GetVisibleExploreScoreDataList();
+  wVt() {
+    var e = this.fVt.GetVisibleExploreScoreDataList();
     e.sort((e, t) => {
       var i = e.GetIsReceived() ? 1 : 0,
         s = t.GetIsReceived() ? 1 : 0;
@@ -292,7 +292,7 @@ class ExploreLevelView extends UiTickViewBase_1.UiTickViewBase {
             ? i - s
             : 0;
     }),
-      this.U5t.ReloadData(e);
+      this.UVt.ReloadData(e);
   }
 }
 exports.ExploreLevelView = ExploreLevelView;

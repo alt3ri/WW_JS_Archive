@@ -42,9 +42,10 @@ const UE = require("ue"),
   CharacterUnifiedStateTypes_1 = require("./Abilities/CharacterUnifiedStateTypes"),
   BaseMoveComponent_1 = require("./BaseMoveComponent"),
   CustomMovementDefine_1 = require("./Move/CustomMovementDefine");
-var EAttributeId = Protocol_1.Aki.Protocol.KBs;
+var EAttributeId = Protocol_1.Aki.Protocol.Bks;
 const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
   FormationAttributeController_1 = require("../../../../Module/Abilities/FormationAttributeController"),
+  GravityUtils_1 = require("../../../../Utils/GravityUtils"),
   WhirlpoolPoint_1 = require("./Move/WhirlpoolPoint"),
   MIN_MOVE_SPEED = 20,
   GLIDING_CONTROL_OFFSET = 0.3,
@@ -86,8 +87,8 @@ let CharacterMoveComponent =
         (this.AirInertiaHandler = 0),
         (this.CanResponseInputTasks = new Array()),
         (this.TryGlideTime = 0),
-        (this.qHr = new WhirlpoolPoint_1.WhirlpoolPoint()),
-        (this.GHr = 0),
+        (this.gHr = new WhirlpoolPoint_1.WhirlpoolPoint()),
+        (this.fHr = 0),
         (this.GroundedFrame = 0),
         (this.OnLand = () => {
           (this.GroundedTimeUe = UE.GameplayStatics.GetTimeSeconds(
@@ -110,7 +111,7 @@ let CharacterMoveComponent =
               this.ActorComp.IsRoleAndCtrlByMe) &&
               e === CharacterUnifiedStateTypes_1.ECharPositionState.Ground &&
               this.PlayerMotionRequest(
-                Protocol_1.Aki.Protocol.n3s.Proto_BeLand,
+                Protocol_1.Aki.Protocol.Q6s.Proto_BeLand,
               ),
             e)
           ) {
@@ -156,61 +157,66 @@ let CharacterMoveComponent =
                   ));
           }
         }),
-        (this.OnStateInherit = (t, e, i) => {
-          var s;
+        (this.OnStateInherit = (t, e) => {
+          var i;
           t?.Valid &&
-            (s = t.GetComponent(161))?.Valid &&
-            (this.CharacterMovement.ConsumeInputVector(),
+            (i = t.GetComponent(163))?.Valid &&
+            (this.SetGravityDirect(i.GravityDirect),
+            this.CharacterMovement.ConsumeInputVector(),
             this.CharacterMovement.AddInputVector(
-              s.CharacterMovement.GetLastInputVector(),
+              i.CharacterMovement.GetLastInputVector(),
               !0,
             ),
-            this.ActorComp.SetInputDirect(s.ActorComp.InputDirectProxy),
-            this.ActorComp.SetInputRotator(s.ActorComp.InputRotator),
-            this.ActorComp.SetOverrideTurnSpeed(s.ActorComp.OverrideTurnSpeed),
-            (this.HasMoveInput = s.HasMoveInput),
+            this.ActorComp.SetInputDirect(i.ActorComp.InputDirectProxy),
+            this.ActorComp.SetInputFacing(i.ActorComp.InputFacingProxy),
+            this.ActorComp.SetOverrideTurnSpeed(i.ActorComp.OverrideTurnSpeed),
+            (this.HasMoveInput = i.HasMoveInput),
             (this.CharacterMovement.LastUpdateVelocity =
-              s.GetLastUpdateVelocity()),
+              i.GetLastUpdateVelocity()),
             this.ActorComp.ResetCachedVelocityTime(),
-            0 !== e ||
-              i ||
-              ((this.IsMoving = s.IsMoving),
+            e ||
+              ((this.IsMoving = i.IsMoving),
               CharacterMoveComponent_1.TempVelocity.DeepCopy(
-                s.ActorComp.ActorVelocityProxy,
+                i.ActorComp.ActorVelocityProxy,
               ),
               (e = CharacterMoveComponent_1.TempVelocity.SizeSquared()) >
                 SQUARE_MAX_INHERIT_SPEED &&
                 CharacterMoveComponent_1.TempVelocity.MultiplyEqual(
                   Math.sqrt(SQUARE_MAX_INHERIT_SPEED / e),
                 ),
-              this.Entity.GetComponent(185)?.HasTag(-1423251824) ||
+              this.Entity.GetComponent(188)?.HasTag(-1423251824) ||
                 (this.ForceSpeed.DeepCopy(
                   CharacterMoveComponent_1.TempVelocity,
                 ),
-                (this.Speed = this.ForceSpeed.Size2D()),
+                (this.Speed = Math.sqrt(
+                  GravityUtils_1.GravityUtils.GetPlanarSizeSquared2D(
+                    this.ActorComp,
+                    this.ForceSpeed,
+                  ),
+                )),
                 (this.CharacterMovement.Velocity =
                   this.ForceSpeed.ToUeVector())),
-              s.ActorComp.Actor.BasedMovement.MovementBase ||
+              i.ActorComp.Actor.BasedMovement.MovementBase ||
                 (this.ActorComp.Actor.BasedMovement.MovementBase = void 0),
-              (i = t.GetComponent(185)),
-              0 === s.CharacterMovement.MovementMode || i?.HasTag(-2100129479)
+              (e = t.GetComponent(188)),
+              0 === i.CharacterMovement.MovementMode || e?.HasTag(-2100129479)
                 ? this.CharacterMovement.SetMovementMode(1, 0)
-                : 5 !== s.CharacterMovement.MovementMode &&
+                : 5 !== i.CharacterMovement.MovementMode &&
                   this.CharacterMovement.SetMovementMode(
-                    s.CharacterMovement.MovementMode,
-                    s.CharacterMovement.CustomMovementMode,
+                    i.CharacterMovement.MovementMode,
+                    i.CharacterMovement.CustomMovementMode,
                   ),
-              (e = this.ActorComp.Actor.CharacterMovement.CurrentFloor),
-              (t = s.ActorComp.Actor.CharacterMovement.CurrentFloor),
-              (e.bBlockingHit = t.bBlockingHit),
-              (e.bLineTrace = t.bLineTrace),
-              (e.bWalkableFloor = t.bWalkableFloor),
-              (e.FloorDist = t.FloorDist),
-              (e.HitResult = t.HitResult),
-              (e.LineDist = t.LineDist),
+              (t = this.ActorComp.Actor.CharacterMovement.CurrentFloor),
+              (e = i.ActorComp.Actor.CharacterMovement.CurrentFloor),
+              (t.bBlockingHit = e.bBlockingHit),
+              (t.bLineTrace = e.bLineTrace),
+              (t.bWalkableFloor = e.bWalkableFloor),
+              (t.FloorDist = e.FloorDist),
+              (t.HitResult = e.HitResult),
+              (t.LineDist = e.LineDist),
               UE.KuroStaticLibrary.SetBaseAndSaveBaseLocation(
                 this.CharacterMovement,
-                s.CharacterMovement.GetMovementBase(),
+                i.CharacterMovement.GetMovementBase(),
               )));
         }),
         (this.OnSprintTag = (t, e) => {
@@ -218,29 +224,29 @@ let CharacterMoveComponent =
             switch (t) {
               case 24802177:
                 this.PlayerMotionRequest(
-                  Protocol_1.Aki.Protocol.n3s.Proto_Spurt,
+                  Protocol_1.Aki.Protocol.Q6s.Proto_Spurt,
                 );
                 break;
               case -268378154:
                 this.PlayerMotionRequest(
-                  Protocol_1.Aki.Protocol.n3s.Proto_Pullback,
+                  Protocol_1.Aki.Protocol.Q6s.Proto_Pullback,
                 );
                 break;
               case 1965311544:
                 this.PlayerMotionRequest(
-                  Protocol_1.Aki.Protocol.n3s.Proto_AirSprint,
+                  Protocol_1.Aki.Protocol.Q6s.Proto_AirSprint,
                 );
                 break;
               case -2042325985:
                 this.PlayerMotionRequest(
-                  Protocol_1.Aki.Protocol.n3s.Proto_BackFlip,
+                  Protocol_1.Aki.Protocol.Q6s.Proto_BackFlip,
                 );
             }
         }),
         (this.SlideTrans = void 0),
         (this.OnSpeedRatioAttributeChanged = (t, e, i) => {
           var s = this.UnifiedStateComponent?.MoveState,
-            h = this.Entity.GetComponent(161);
+            h = this.Entity.GetComponent(163);
           h?.Valid && h.ResetMaxSpeed(s);
         }),
         (this.OnResponseInputTagsChanged = (t, e) => {
@@ -306,23 +312,23 @@ let CharacterMoveComponent =
       return this.CurrentMovementSettings.FastSwimSpeed;
     }
     SetOverrideMaxFallingSpeed(t) {
-      this.GHr = t;
+      this.fHr = t;
     }
     ResetOverrideMaxFallingSpeed() {
-      this.GHr = 0;
+      this.fHr = 0;
     }
     SetMaxSpeed(t) {
-      let e = this.AttributeComponent?.GetCurrentValue(EAttributeId.R4n);
+      let e = this.AttributeComponent?.GetCurrentValue(EAttributeId._Vn);
       (!e || e <= 0) && (e = CharacterAttributeTypes_1.PER_TEN_THOUSAND),
         (e /= CharacterAttributeTypes_1.PER_TEN_THOUSAND);
       var i = this.CharacterMovement.MovementMode;
       5 === i
         ? (this.CharacterMovement.MaxFlySpeed = t * e)
         : (this.CharacterMovement.MaxWalkSpeed =
-            3 === i ? (0 < this.GHr ? this.GHr : t) * e : t * e),
+            3 === i ? (0 < this.fHr ? this.fHr : t) * e : t * e),
         this.ActorComp?.IsRoleAndCtrlByMe &&
-          Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info(
+          Log_1.Log.CheckDebug() &&
+          Log_1.Log.Debug(
             "Movement",
             6,
             "SetMaxSpeed",
@@ -343,6 +349,7 @@ let CharacterMoveComponent =
     }
     OnClear() {
       return (
+        super.OnClear(),
         this.JumpDelayTimer &&
           TimerSystem_1.TimerSystem.Remove(this.JumpDelayTimer),
         CharacterMoveComponent_1.TempVelocity.Reset(),
@@ -351,7 +358,7 @@ let CharacterMoveComponent =
       );
     }
     OnInit() {
-      return !0;
+      return super.OnInit();
     }
     OnStart() {
       (this.AccelerationLerpCurve =
@@ -369,18 +376,28 @@ let CharacterMoveComponent =
       (this.IsHidden = !1),
         (this.ActorComp = t),
         (this.CharacterMovement = t.Actor.CharacterMovement),
+        this.GravityDirectInternal.FromUeVector(
+          this.CharacterMovement.Kuro_GetGravityDirect(),
+        ),
+        (this.IsStandardGravityInternal =
+          Math.abs(this.GravityDirectInternal.Z + 1) <
+          MathUtils_1.MathUtils.SmallNumber),
+        this.IsStandardGravityInternal &&
+          this.GravityDirectInternal.Set(0, 0, -1),
+        this.GravityDirectInternal.UnaryNegation(this.GravityUpInternal),
         (this.CharacterMovement.GravityScale = 2),
         (this.CharacterMovement.bRotationFollowBaseMovement = !0),
         this.CharacterMovement.SetWalkableFloorAngle(MAX_WALK_FLOOR_ANGLE),
-        (this.AnimComp = this.Entity.GetComponent(160)),
-        (this.GlideComp = this.Entity.GetComponent(50)),
-        (this.SwimComp = this.Entity.GetComponent(66)),
-        (this.AttributeComponent = this.Entity.GetComponent(156)),
-        (this.TagComponent = this.Entity.GetComponent(185)),
+        (this.CharacterMovement.bEnablePhysicsInteraction = !1),
+        (this.AnimComp = this.Entity.GetComponent(162)),
+        (this.GlideComp = this.Entity.GetComponent(51)),
+        (this.SwimComp = this.Entity.GetComponent(68)),
+        (this.AttributeComponent = this.Entity.GetComponent(158)),
+        (this.TagComponent = this.Entity.GetComponent(188)),
         (this.DeathComponent = this.Entity.GetComponent(15)),
-        (this.UnifiedStateComponent = this.Entity.GetComponent(89)),
+        (this.UnifiedStateComponent = this.Entity.GetComponent(91)),
         (this.SkillComp = this.Entity.GetComponent(33)),
-        (this.TimeScaleComp = this.Entity.GetComponent(107)),
+        (this.TimeScaleComp = this.Entity.GetComponent(109)),
         (this.CapsuleOffset = Vector_1.Vector.Create(
           0,
           0,
@@ -432,7 +449,7 @@ let CharacterMoveComponent =
         (this.IsStopInternal = !1),
         this.InitBaseState(),
         this.AttributeComponent?.AddListener(
-          EAttributeId.R4n,
+          EAttributeId._Vn,
           this.OnSpeedRatioAttributeChanged,
         ),
         (this.CannotResponseInputCount = 0);
@@ -495,7 +512,7 @@ let CharacterMoveComponent =
           this.OnStateInherit,
         ),
         this.AttributeComponent?.RemoveListener(
-          EAttributeId.R4n,
+          EAttributeId._Vn,
           this.OnSpeedRatioAttributeChanged,
         );
       for (const t of this.CanResponseInputTasks) t.EndTask();
@@ -537,7 +554,7 @@ let CharacterMoveComponent =
         !(i < MathUtils_1.MathUtils.SmallNumber) &&
         (super.OnTick(i), this.ActorComp) &&
         this.DeathComponent &&
-        (this.qHr.GetEnable() || !this.DeathComponent.IsDead()) &&
+        (this.gHr.GetEnable() || !this.DeathComponent.IsDead()) &&
         ((this.CharHeightAboveGround = -1),
         (this.DeltaTimeSeconds = i * MathUtils_1.MathUtils.MillisecondToSecond),
         this.MoveController?.UpdateMove(this.DeltaTimeSeconds),
@@ -550,7 +567,12 @@ let CharacterMoveComponent =
         if (
           (this.IsStopInternal
             ? (this.Speed = 0)
-            : (this.Speed = this.ActorComp.ActorVelocityProxy.Size2D()),
+            : (this.Speed = Math.sqrt(
+                GravityUtils_1.GravityUtils.GetPlanarSizeSquared2D(
+                  this.ActorComp,
+                  this.ActorComp.ActorVelocityProxy,
+                ),
+              )),
           (this.IsMoving = this.Speed > MIN_MOVE_SPEED),
           this.ActorComp.IsMoveAutonomousProxy)
         ) {
@@ -561,7 +583,7 @@ let CharacterMoveComponent =
               this.UnifiedStateComponent.MoveState ===
                 CharacterUnifiedStateTypes_1.ECharMoveState.Other &&
               !this.AnimComp.HasKuroRootMotion &&
-              ((h = Math.max(this.FallingHorizontalMaxSpeed, this.GHr)),
+              ((h = Math.max(this.FallingHorizontalMaxSpeed, this.fHr)),
               this.Speed > h * OVER_VELOCITY_PERCENT) &&
               (CharacterMoveComponent_1.TempVelocity.DeepCopy(
                 this.ActorComp.ActorVelocityProxy,
@@ -596,9 +618,9 @@ let CharacterMoveComponent =
               (e ||= s !== this.ActorComp.ActorRotationProxy.Pitch),
               this.CacheVar())
             : (this.HasMoveInput = !1),
-            this.qHr.GetEnable()
-              ? ((e = this.NHr()),
-                this.qHr.OnTick(
+            this.gHr.GetEnable()
+              ? ((e = this.pHr()),
+                this.gHr.OnTick(
                   this.DeltaTimeSeconds *
                     (this.TimeScaleComp?.CurrentTimeScale ?? 1),
                 ) || this.EndWhirlpool())
@@ -608,11 +630,12 @@ let CharacterMoveComponent =
                 this.UpdateAddMoveOffset() && (e = !0)),
             h && e && this.AnimComp.SetModelBuffer(t, i),
             this.OnTickGravityScale(),
-            this.ActorComp.SetInputRotatorByNumber(
-              this.ActorComp.InputRotator.Pitch,
-              this.ActorComp.InputRotator.Yaw + this.DeltaBaseMovementYaw,
-              this.ActorComp.InputRotator.Roll,
-            ),
+            this.HasBaseMovement &&
+              (this.DeltaBaseMovementQuat.RotateVector(
+                this.ActorComp.InputFacingProxy,
+                this.TmpVector,
+              ),
+              this.ActorComp.SetInputFacing(this.TmpVector)),
             ModelManager_1.ModelManager.SundryModel.SceneCheckOn &&
               this.PrintAnimInstanceMovementInfo(),
             this.UpdateMoveChain(),
@@ -679,7 +702,7 @@ let CharacterMoveComponent =
         this.ActorComp.ResetCachedVelocityTime());
     }
     OnJump() {
-      var t = this.Entity.GetComponent(160);
+      var t = this.Entity.GetComponent(162);
       t.Valid && t.MainAnimInstance && t.MainAnimInstance.Montage_Stop(0),
         (this.JumpFrameCount = JUMP_FRAME_COUNT),
         this.AnimComp.OnJump();
@@ -697,7 +720,7 @@ let CharacterMoveComponent =
             this.OnJump(),
             e &&
               this.PlayerMotionRequest(
-                Protocol_1.Aki.Protocol.n3s.Proto_MotionJump,
+                Protocol_1.Aki.Protocol.Q6s.Proto_MotionJump,
               );
         else {
           if (t === CharacterUnifiedStateTypes_1.ECharPositionState.Air) {
@@ -713,8 +736,9 @@ let CharacterMoveComponent =
     }
     CheckInHit() {
       return !(
-        !this.TagComponent?.HasTag(-1503953470) &&
-        !this.TagComponent?.HasTag(-2044964178)
+        !this.TagComponent ||
+        (!this.TagComponent.HasTag(-1503953470) &&
+          !this.TagComponent.HasTag(-2044964178))
       );
     }
     JumpPressInAir() {
@@ -767,7 +791,7 @@ let CharacterMoveComponent =
               this.OnJump(),
               this.CharacterMovement.SetMovementMode(3),
               this.PlayerMotionRequest(
-                Protocol_1.Aki.Protocol.n3s.Proto_MotionJump,
+                Protocol_1.Aki.Protocol.Q6s.Proto_MotionJump,
               ),
               0))
       );
@@ -809,7 +833,7 @@ let CharacterMoveComponent =
           CharacterMoveComponent_1.TempVelocity.ToUeVector()),
         this.OnJump(),
         t.OnJump(),
-        this.PlayerMotionRequest(Protocol_1.Aki.Protocol.n3s.Proto_MotionJump),
+        this.PlayerMotionRequest(Protocol_1.Aki.Protocol.Q6s.Proto_MotionJump),
         !0)
       );
     }
@@ -894,20 +918,20 @@ let CharacterMoveComponent =
       r = "Movement.SmoothCharacterRotationByValue",
     ) {
       this.LockedRotation ||
-        ((this.TempRotator.Pitch = t),
-        (this.TempRotator.Yaw = e),
-        (this.TempRotator.Roll = i),
+        ((this.TmpRotator.Pitch = t),
+        (this.TmpRotator.Yaw = e),
+        (this.TmpRotator.Roll = i),
         (t = this.ActorComp.ActorRotationProxy),
-        this.TempRotator.Equals(t)) ||
+        this.TmpRotator.Equals(t)) ||
         (MathUtils_1.MathUtils.RotatorInterpConstantTo(
           t,
-          this.TempRotator,
+          this.TmpRotator,
           h,
           s,
-          this.TempRotator,
+          this.TmpRotator,
         ),
         this.ActorComp.SetActorRotationWithPriority(
-          this.TempRotator.ToUeRotator(),
+          this.TmpRotator.ToUeRotator(),
           r,
           0,
           !1,
@@ -921,7 +945,7 @@ let CharacterMoveComponent =
           this.UnifiedStateComponent.MoveState !==
             CharacterUnifiedStateTypes_1.ECharMoveState.Slide) ||
         this.SmoothCharacterRotation(
-          this.ActorComp.InputRotator,
+          this.ActorComp.InputRotatorProxy,
           TsBaseRoleConfig_1.tsBaseRoleConfig.SmoothCharacterRotationSpeed,
           this.DeltaTimeSeconds,
           !1,
@@ -1001,7 +1025,7 @@ let CharacterMoveComponent =
         if (!t?.GetSitDownState())
           if (this.ActorComp.OverrideTurnSpeed)
             this.SmoothCharacterRotation(
-              this.ActorComp.InputRotator,
+              this.ActorComp.InputRotatorProxy,
               this.ActorComp.OverrideTurnSpeed,
               this.DeltaTimeSeconds,
               !1,
@@ -1068,16 +1092,16 @@ let CharacterMoveComponent =
             (this.CurrentChainLengthSquared = t));
     }
     PlayerMotionRequest(t) {
-      var e = Protocol_1.Aki.Protocol.Fns.create();
-      (e.y3n = t), Net_1.Net.Call(16502, e, () => {});
+      var e = Protocol_1.Aki.Protocol.Gls.create();
+      (e.r8n = t), Net_1.Net.Call(29291, e, () => {});
     }
-    NHr() {
+    pHr() {
       var t,
-        e = this.qHr.GetAlpha();
+        e = this.gHr.GetAlpha();
       return !(
         1 < e ||
         ((t = CharacterMoveComponent_1.VelocityAdditionDestination),
-        Vector_1.Vector.Lerp(this.qHr.BeginLocation, this.qHr.ToLocation, e, t),
+        Vector_1.Vector.Lerp(this.gHr.BeginLocation, this.gHr.ToLocation, e, t),
         this.ActorComp.SetActorLocation(t.ToUeVector(), "移动.被吸引", !1),
         0)
       );
@@ -1085,33 +1109,33 @@ let CharacterMoveComponent =
     BeginWhirlpool(t, e, i, s, h = -1, r = 0) {
       var a = this.CharacterMovement;
       (a.GravityScale = 0),
-        this.Entity.GetComponent(158).SetMoveState(
+        this.Entity.GetComponent(160).SetMoveState(
           CharacterUnifiedStateTypes_1.ECharMoveState.KnockUp,
         ),
         a.SetMovementMode(3),
         this.SetForceFallingSpeed(Vector_1.Vector.ZeroVector, 31862857),
-        this.qHr.Begin(t, e, i, s, h, r);
+        this.gHr.Begin(t, e, i, s, h, r);
     }
     EndWhirlpool() {
-      (this.CharacterMovement.GravityScale = 2), this.qHr.OnEnd();
+      (this.CharacterMovement.GravityScale = 2), this.gHr.OnEnd();
     }
     GetWhirlpoolEnable() {
-      return this.qHr.GetEnable();
+      return this.gHr.GetEnable();
     }
     GetWhirlpoolId() {
-      return this.qHr.GetId();
+      return this.gHr.GetId();
     }
     CompareWhirlpoolPriority(t) {
-      return t < this.qHr.GetMoveTime();
+      return t < this.gHr.GetMoveTime();
     }
     UpdateWhirlpoolLocation(t) {
-      this.qHr.UpdateLocation(t);
+      this.gHr.UpdateLocation(t);
     }
   });
 (CharacterMoveComponent.TempVelocity = Vector_1.Vector.Create()),
   (CharacterMoveComponent = CharacterMoveComponent_1 =
     __decorate(
-      [(0, RegisterComponent_1.RegisterComponent)(161)],
+      [(0, RegisterComponent_1.RegisterComponent)(163)],
       CharacterMoveComponent,
     )),
   (exports.CharacterMoveComponent = CharacterMoveComponent);

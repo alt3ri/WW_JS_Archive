@@ -7,9 +7,9 @@ const UE = require("ue"),
 class TowerUnlockView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.gDo = !1),
-      (this.ACt = () => {
-        this.gDo && this.CloseMe();
+      (this.mRo = !1),
+      (this.Vgt = () => {
+        this.mRo && this.CloseMe();
       });
   }
   OnRegisterComponent() {
@@ -17,7 +17,7 @@ class TowerUnlockView extends UiViewBase_1.UiViewBase {
       [0, UE.UIButtonComponent],
       [1, UE.UIText],
     ]),
-      (this.BtnBindInfo = [[0, this.ACt]]);
+      (this.BtnBindInfo = [[0, this.Vgt]]);
   }
   OnStart() {
     var e =
@@ -27,7 +27,7 @@ class TowerUnlockView extends UiViewBase_1.UiViewBase {
     this.GetText(1)?.SetText(e);
   }
   OnAfterPlayStartSequence() {
-    this.gDo = !0;
+    this.mRo = !0;
   }
 }
 exports.TowerUnlockView = TowerUnlockView;

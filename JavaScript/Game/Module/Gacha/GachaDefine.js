@@ -56,7 +56,7 @@ const UiPopViewData_1 = require("../../Ui/Define/UiPopViewData");
   (exports.textKeyMap = { [0]: "Role", 1: "Weapon" });
 class GachaRecord {
   constructor() {
-    (this.u5n = void 0), (this.f5n = 0), (this.RuleGroupId = 0);
+    (this.WVn = void 0), (this.JVn = 0), (this.RuleGroupId = 0);
   }
 }
 exports.GachaRecord = GachaRecord;

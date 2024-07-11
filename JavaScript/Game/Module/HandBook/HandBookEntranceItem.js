@@ -11,9 +11,9 @@ const UE = require("ue"),
 class HandBookEntranceItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor(e) {
     super(),
-      (this.BZt = void 0),
-      (this.EPt = () => {
-        switch (this.BZt.Id) {
+      (this.Bei = void 0),
+      (this.Lxt = () => {
+        switch (this.Bei.Id) {
           case 0:
             UiManager_1.UiManager.OpenView("MonsterHandBookView");
             break;
@@ -45,7 +45,7 @@ class HandBookEntranceItem extends GridProxyAbstract_1.GridProxyAbstract {
             Log_1.Log.CheckError() &&
               Log_1.Log.Error("HandBook", 5, "没有找到图鉴入口类型，请检查", [
                 "this.HandBookEntrance.Id",
-                this.BZt.Id,
+                this.Bei.Id,
               ]);
         }
       }),
@@ -59,24 +59,24 @@ class HandBookEntranceItem extends GridProxyAbstract_1.GridProxyAbstract {
       [3, UE.UIButtonComponent],
       [4, UE.UIItem],
     ]),
-      (this.BtnBindInfo = [[3, this.EPt]]);
+      (this.BtnBindInfo = [[3, this.Lxt]]);
   }
   OnStart() {}
   Refresh(e, a, r) {
-    (this.BZt = e),
-      this.GetText(0).ShowTextNew(this.BZt.Name),
+    (this.Bei = e),
+      this.GetText(0).ShowTextNew(this.Bei.Name),
       this.SetTextureByPath(e.Texture, this.GetTexture(1)),
       this.RefreshRedDot(),
       this.RefreshCollectProgress();
   }
   RefreshRedDot() {
-    var e = ModelManager_1.ModelManager.HandBookModel.IsShowRedDot(this.BZt.Id),
+    var e = ModelManager_1.ModelManager.HandBookModel.IsShowRedDot(this.Bei.Id),
       a = this.GetItem(4);
     a && a.SetUIActive(e);
   }
   RefreshCollectProgress() {
     var e = HandBookController_1.HandBookController.GetCollectProgress(
-      this.BZt.Id,
+      this.Bei.Id,
     );
     LguiUtil_1.LguiUtil.SetLocalText(
       this.GetText(2),

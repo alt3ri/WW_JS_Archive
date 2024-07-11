@@ -13,11 +13,11 @@ class SelectableExpData {
       (this.CurrentMaxLevel = 0),
       (this.LimitLevel = 0),
       (this.FrontExp = 0),
-      (this.vwt = !1),
-      (this.Mwt = 0),
+      (this.SBt = !1),
+      (this.yBt = 0),
       (this.MaxExpCacheMap = new Map()),
       (this.GetMaxExpFunction = void 0),
-      (this.Swt = !1);
+      (this.IBt = !1);
   }
   static PhraseData(t) {
     var e = new SelectableExpData();
@@ -34,20 +34,20 @@ class SelectableExpData {
       (this.CurrentMaxLevel = e),
       (this.CurrentExp = i),
       (this.LimitLevel = s),
-      (this.Swt = h),
+      (this.IBt = h),
       this.CurrentLevel === this.CurrentMaxLevel
         ? (this.CurrentMaxExp = this.StageMaxExp(this.CurrentLevel - 1))
         : (this.CurrentMaxExp = this.StageMaxExp(this.CurrentLevel));
   }
   UpdateExp(t) {
-    return !((this.IsInMax() && t > this.FrontExp) || (this.FPt(t), 0));
+    return !((this.IsInMax() && t > this.FrontExp) || (this.Wxt(t), 0));
   }
-  FPt(t) {
+  Wxt(t) {
     var e;
     (this.FrontExp = t),
-      (this.Mwt = t),
-      (this.vwt = this.CurrentExp + t >= this.CurrentMaxExp),
-      this.vwt
+      (this.yBt = t),
+      (this.SBt = this.CurrentExp + t >= this.CurrentMaxExp),
+      this.SBt
         ? ((e = this.CurrentExp + t - this.CurrentMaxExp),
           this.UpdateNextExp(e, this.CurrentLevel + 1))
         : ((e = (this.CurrentExp + t) / this.CurrentMaxExp),
@@ -83,7 +83,7 @@ class SelectableExpData {
     return (e = e || this.GetMaxExpFunction(t));
   }
   GetMaxExp(t) {
-    return this.Swt ? this.AddUpMaxExp(t) : this.StageMaxExp(t);
+    return this.IBt ? this.AddUpMaxExp(t) : this.StageMaxExp(t);
   }
   AddUpMaxExp(e) {
     let i = 0;
@@ -95,11 +95,11 @@ class SelectableExpData {
   }
   GetOverExp() {
     var t = this.GetExpDistanceToMax(),
-      t = this.Mwt - t;
+      t = this.yBt - t;
     return 0 < t ? t : 0;
   }
   GetIsAddUp() {
-    return this.Swt;
+    return this.IBt;
   }
   SetMaxExpFunction(t) {
     this.GetMaxExpFunction = t;
@@ -128,7 +128,7 @@ class SelectableExpData {
     return this.ArrivedExp;
   }
   GetCurrentAddExp() {
-    return this.Mwt;
+    return this.yBt;
   }
   GetArrivedLevel() {
     return this.ArrivedLevel;
@@ -137,7 +137,7 @@ class SelectableExpData {
     return this.ArrivedFillAmount;
   }
   GetIfNext() {
-    return this.vwt;
+    return this.SBt;
   }
 }
 exports.SelectableExpData = SelectableExpData;

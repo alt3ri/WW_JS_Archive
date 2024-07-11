@@ -1,21 +1,21 @@
 "use strict";
 var __decorate =
   (this && this.__decorate) ||
-  function (e, a, t, r) {
-    var o,
-      i = arguments.length,
-      u =
-        i < 3
-          ? a
-          : null === r
-            ? (r = Object.getOwnPropertyDescriptor(a, t))
-            : r;
+  function (e, t, a, i) {
+    var r,
+      s = arguments.length,
+      o =
+        s < 3
+          ? t
+          : null === i
+            ? (i = Object.getOwnPropertyDescriptor(t, a))
+            : i;
     if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
-      u = Reflect.decorate(e, a, t, r);
+      o = Reflect.decorate(e, t, a, i);
     else
-      for (var l = e.length - 1; 0 <= l; l--)
-        (o = e[l]) && (u = (i < 3 ? o(u) : 3 < i ? o(a, t, u) : o(a, t)) || u);
-    return 3 < i && u && Object.defineProperty(a, t, u), u;
+      for (var u = e.length - 1; 0 <= u; u--)
+        (r = e[u]) && (o = (s < 3 ? r(o) : 3 < s ? r(t, a, o) : r(t, a)) || o);
+    return 3 < s && o && Object.defineProperty(t, a, o), o;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharacterGameplayCueComponent = void 0);
@@ -44,15 +44,23 @@ const Log_1 = require("../../../../../../Core/Common/Log"),
 let CharacterGameplayCueComponent = class CharacterGameplayCueComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments),
-      (this.nXt = void 0),
-      (this.Qbr = void 0),
-      (this.WKo = new Map()),
-      (this.oGr = new Set());
+      (this.n$t = void 0),
+      (this.ybr = void 0),
+      (this.m1t = void 0),
+      (this._kn = void 0),
+      (this.VQo = new Map()),
+      (this.wqr = new Set()),
+      (this.Vna = new Map()),
+      (this.Hna = new Map()),
+      (this.jna = new Map()),
+      (this.Wna = new Map());
   }
   OnStart() {
     return (
-      (this.nXt = this.Entity.CheckGetComponent(3)),
-      (this.Qbr = this.Entity.CheckGetComponent(107)),
+      (this.n$t = this.Entity.CheckGetComponent(3)),
+      (this.ybr = this.Entity.CheckGetComponent(109)),
+      (this.m1t = this.Entity.CheckGetComponent(159)),
+      (this._kn = this.Entity.GetComponent(174)),
       !0
     );
   }
@@ -67,98 +75,166 @@ let CharacterGameplayCueComponent = class CharacterGameplayCueComponent extends 
     this.SetHidden(!0);
   }
   OnTick(e) {
-    var a = e * TimeUtil_1.TimeUtil.Millisecond;
-    for (const t of this.GetAllCurrentCueRef()) t.Tick(a);
+    var t = e * TimeUtil_1.TimeUtil.Millisecond;
+    for (const a of this.GetAllCurrentCueRef()) a.Tick(t);
   }
-  OnChangeTimeDilation(a) {
-    for (const e of this.GetAllCurrentCueRef()) e.ChangeTimeDilation(a);
-    this.oGr.forEach((e) => {
+  OnChangeTimeDilation(t) {
+    for (const e of this.GetAllCurrentCueRef()) e.ChangeTimeDilation(t);
+    this.wqr.forEach((e) => {
       EffectSystem_1.EffectSystem.IsValid(e)
         ? EffectSystem_1.EffectSystem.SetTimeScale(
             e,
-            this.Qbr.CurrentTimeScale * a,
+            this.ybr.CurrentTimeScale * t,
           )
-        : this.oGr.delete(e);
+        : this.wqr.delete(e);
     });
   }
-  CreateGameplayCue(e, a = {}) {
-    a.Sync && this.w6s(e.Id);
-    let t = !0;
-    var r = a.Buff,
-      o = (r && (t = r.IsInstantBuff()), this.rGr(e, t));
-    if (o)
-      return o.Spawn({
-        Entity: this.Entity,
-        CueConfig: e,
-        Actor: this.nXt.Actor,
-        CueComp: this,
-        Buff: r,
-        BeginCallback: a.BeginCallback,
-        EndCallback: a.EndCallback,
-      });
+  CreateGameplayCue(e, t = {}) {
+    var a = t.Buff,
+      i = a?.IsInstantBuff() ?? !0,
+      i = this.Bqr(e, i);
+    if (i)
+      return (
+        (i = i.Spawn({
+          CueConfig: e,
+          Entity: this.Entity,
+          Actor: this.n$t.Actor,
+          CueComp: this,
+          Buff: a,
+          BeginCallback: t.BeginCallback,
+          EndCallback: t.EndCallback,
+        })),
+        t.Sync && this.GXs(e.Id),
+        i
+      );
   }
-  CreateGameplayCueByBuff(e) {
-    var a = e.Config.GameplayCueIds,
-      t = e.Handle;
-    if (a)
-      for (const o of a) {
-        if (this.WKo.get(t)?.get(o)) return;
-        var r = GameplayCueById_1.configGameplayCueById.GetConfig(o);
-        if (!r)
-          return void (
-            Log_1.Log.CheckError() &&
+  CreateGameplayCueByBuff(i) {
+    const r = i.Handle;
+    this.jna.has(r) ||
+      this.VQo.has(r) ||
+      i.Config.GameplayCueIds?.forEach((t) => {
+        var a = GameplayCueById_1.configGameplayCueById.GetConfig(t);
+        if (a) {
+          let e = this.Vna.get(t);
+          (e =
+            !e && this.x$s(a, i)
+              ? this.CreateGameplayCue(a, { Buff: i })
+              : e) &&
+            !i.IsInstantBuff() &&
+            (this.P$s(r, t, e), this.Qna(r, t, e));
+        } else
+          Log_1.Log.CheckError() &&
             Log_1.Log.Error("Battle", 29, "无法找到Cue配置！", [
               "cueConfigId:",
-              o,
-            ])
-          );
-        (r = this.CreateGameplayCue(r, { Buff: e })),
-          !e.IsInstantBuff() && r && this.nGr(t, o, r);
-      }
+              t,
+            ]);
+      });
   }
   AddEffectToSet(e) {
-    this.oGr.add(e),
+    this.wqr.add(e),
       EffectSystem_1.EffectSystem.AddFinishCallback(e, (e) => {
-        this.oGr.delete(e);
+        this.wqr.delete(e);
       }),
       EffectSystem_1.EffectSystem.SetTimeScale(
         e,
-        this.Qbr.CurrentTimeScale * this.Entity.TimeDilation,
+        this.ybr.CurrentTimeScale * this.Entity.TimeDilation,
       ),
       this.Active ||
         EffectSystem_1.EffectSystem.GetEffectActor(e).SetActorHiddenInGame(!0);
   }
   *GetAllCurrentCueRef() {
-    for (const e of this.WKo.values()) for (const a of e.values()) yield a;
+    for (const e of this.VQo.values()) for (const t of e.values()) yield t;
+    for (const a of this.Vna.values()) yield a;
   }
-  DestroyGameplayCue(e) {
-    var a = e.Config.GameplayCueIds,
-      t = e.Handle;
-    if (a)
-      for (const o of a) {
-        var r = this.WKo.get(t)?.get(o);
-        if (!r) return;
-        r.Destroy();
-        r = this.WKo.get(t);
-        r && (r.delete(o), r.size <= 0) && this.WKo.delete(t);
-      }
+  DestroyGameplayCueByBuff(e) {
+    const t = e.Handle;
+    this.jna.delete(t),
+      e.Config.GameplayCueIds?.forEach((e) => {
+        this.Kna(t, e), this.$na(t, e);
+      });
   }
-  OnAnyBuffInhibitionChanged(e, a) {
-    e = this.WKo.get(e);
-    if (e) for (const t of e.values()) a ? t.Destroy() : t.Create();
+  OnAnyBuffInhibitionChanged(e, t) {
+    this.VQo.get(e)?.forEach((e) => {
+      t ? e.Destroy() : e.Create();
+    }),
+      this.jna.get(e)?.forEach((e) => {
+        var t = this.Hna.get(e),
+          t = Array.from(t),
+          a = t.every((e) => {
+            return this.GetBuffByHandleId(e)?.IsActive();
+          }),
+          t = t.every((e) => {
+            return !this.GetBuffByHandleId(e)?.IsActive();
+          }),
+          e = this.Vna.get(e);
+        a && !e?.IsActive ? e?.Create() : t && e?.IsActive && e?.Destroy();
+      });
   }
-  SetHidden(a) {
-    for (const e of this.GetAllCurrentCueRef()) a ? e.Disable() : e.Enable();
-    this.oGr.forEach((e) => {
+  SetHidden(t) {
+    for (const e of this.GetAllCurrentCueRef()) t ? e.Disable() : e.Enable();
+    this.wqr.forEach((e) => {
       EffectSystem_1.EffectSystem.IsValid(e)
-        ? EffectSystem_1.EffectSystem.GetEffectActor(e).SetActorHiddenInGame(a)
-        : this.oGr.delete(e);
+        ? EffectSystem_1.EffectSystem.GetEffectActor(e).SetActorHiddenInGame(t)
+        : this.wqr.delete(e);
     });
   }
-  nGr(e, a, t) {
-    this.WKo.has(e) || this.WKo.set(e, new Map()), this.WKo.get(e).set(a, t);
+  P$s(e, t, a) {
+    0 !== a.CueConfig.CueType &&
+      (this.VQo.has(e) || this.VQo.set(e, new Map()),
+      this.VQo.get(e).set(t, a));
   }
-  rGr(e, a) {
+  Qna(t, a, e) {
+    if (0 === e.CueConfig.CueType) {
+      this.Vna.set(a, e);
+      {
+        let e = this.Hna.get(a);
+        e || ((e = new Set()), this.Hna.set(a, e)), e.add(t);
+      }
+      {
+        let e = this.jna.get(t);
+        e || ((e = new Set()), this.jna.set(t, e)), e.add(a);
+      }
+      0 < e.CueConfig.Group &&
+        ((t = this.Wna.get(e.CueConfig.Group))
+          ? t.CueConfig.Priority <= e.CueConfig.Priority &&
+            t !== e &&
+            (this.$na(t.ActiveHandleId, t.CueConfig.Id),
+            this.Wna.set(e.CueConfig.Group, e))
+          : this.Wna.set(e.CueConfig.Group, e));
+    }
+  }
+  Kna(e, t) {
+    var a = this.VQo.get(e)?.get(t);
+    a &&
+      (a.Destroy(), (a = this.VQo.get(e))) &&
+      (a.delete(t), a.size <= 0) &&
+      this.VQo.delete(e);
+  }
+  $na(e, t) {
+    var a,
+      i = this.Vna.get(t);
+    i &&
+      (a = this.Hna.get(t)) &&
+      (a.delete(e), a.size <= 0) &&
+      (this.Hna.delete(t),
+      this.Vna.delete(t),
+      0 < i.CueConfig.Group && this.Wna.delete(i.CueConfig.Group),
+      i.Destroy());
+  }
+  x$s(e, t) {
+    return (
+      !!t.IsInstantBuff() ||
+      0 !== e.CueType ||
+      e.Group <= 0 ||
+      !(t = this.Wna.get(e.Group)) ||
+      t.CueConfig.Priority <= e.Priority
+    );
+  }
+  GetBuffByHandleId(e) {
+    let t = this.m1t.GetBuffByHandle(e);
+    return (t = t || this._kn?.GetFormationBuffComp()?.GetBuffByHandle(e));
+  }
+  Bqr(e, t) {
     switch (e.CueType) {
       case 0:
         return e.bSoftFollow
@@ -168,17 +244,18 @@ let CharacterGameplayCueComponent = class CharacterGameplayCueComponent extends 
         return GameplayCueMaterial_1.GameplayCueMaterial;
       case 4:
       case 2:
-        return a ? void 0 : GameplayCueUIEffect_1.GameplayCueUIEffect;
+      case 14:
+        return t ? void 0 : GameplayCueUIEffect_1.GameplayCueUIEffect;
       case 5:
         return GameplayCueUIEffect_1.GameplayCueUIEffect;
       case 3:
         return GameplayCueMoveSpline_1.GameplayCueMoveSpline;
       case 6:
-        return a ? void 0 : GameplayCueBeam_1.GameplayCueBeam;
+        return t ? void 0 : GameplayCueBeam_1.GameplayCueBeam;
       case 7:
-        return a ? void 0 : GameplayCueHookUp_1.GameplayCueHookUp;
+        return t ? void 0 : GameplayCueHookUp_1.GameplayCueHookUp;
       case 8:
-        return a ? void 0 : GameplayCueFixHook_1.GameplayCueFixHook;
+        return t ? void 0 : GameplayCueFixHook_1.GameplayCueFixHook;
       case 9:
         return GameplayCueCameraEffect_1.GameplayCueCameraEffect;
       case 10:
@@ -193,20 +270,20 @@ let CharacterGameplayCueComponent = class CharacterGameplayCueComponent extends 
         return;
     }
   }
-  w6s(e) {
-    var a = Protocol_1.Aki.Protocol.R6s.create();
-    (a.A6s = MathUtils_1.MathUtils.BigIntToLong(e)),
-      CombatMessage_1.CombatNet.Call(16292, this.Entity, a, () => {});
+  GXs(e) {
+    var t = Protocol_1.Aki.Protocol.RXs.create();
+    (t.DXs = MathUtils_1.MathUtils.BigIntToLong(e)),
+      CombatMessage_1.CombatNet.Call(4881, this.Entity, t, () => {});
   }
-  static GameplayCueNotify(e, a) {
+  static GameplayCueNotify(e, t) {
     (e = e?.GetComponent(19)),
-      (a = MathUtils_1.MathUtils.LongToBigInt(a.A6s)),
-      (a = GameplayCueById_1.configGameplayCueById.GetConfig(a));
-    a && e?.CreateGameplayCue(a);
+      (t = MathUtils_1.MathUtils.LongToBigInt(t.DXs)),
+      (t = GameplayCueById_1.configGameplayCueById.GetConfig(t));
+    t && e?.CreateGameplayCue(t);
   }
 };
 __decorate(
-  [CombatMessage_1.CombatNet.Listen("L6s", !1)],
+  [CombatMessage_1.CombatNet.SyncHandle("LXs")],
   CharacterGameplayCueComponent,
   "GameplayCueNotify",
   null,

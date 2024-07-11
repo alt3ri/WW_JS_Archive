@@ -32,15 +32,15 @@ class MoveTriggerController extends ControllerBase_1.ControllerBase {
   }
   static nye() {
     MoveTriggerController.ClearController(),
-      (MoveTriggerController.Mbi = ActorSystem_1.ActorSystem.Get(
+      (MoveTriggerController.Mqi = ActorSystem_1.ActorSystem.Get(
         UE.KuroMoveTriggerController.StaticClass(),
         MathUtils_1.MathUtils.DefaultTransform,
       )),
-      MoveTriggerController.Mbi &&
+      MoveTriggerController.Mqi &&
         (UE.KuroMoveTriggerController.RegisterController(
-          MoveTriggerController.Mbi,
+          MoveTriggerController.Mqi,
         ),
-        MoveTriggerController.Mbi.Callback.Add((r) => {
+        MoveTriggerController.Mqi.Callback.Add((r) => {
           for (let e = 0; e < r.Num(); ++e) {
             var t = r.Get(e);
             if (
@@ -49,7 +49,7 @@ class MoveTriggerController extends ControllerBase_1.ControllerBase {
             ) {
               var o = t.Actor?.CharacterActorComponent?.Entity;
               if (o?.Valid && 0 === t.Area) {
-                const l = o.GetComponent(66);
+                const l = o.GetComponent(68);
                 t.EnterOverlap
                   ? l?.Valid &&
                     (l.InSwimTriggerCount++, l.LogSwimTriggerCount())
@@ -66,17 +66,17 @@ class MoveTriggerController extends ControllerBase_1.ControllerBase {
             }
           }
         }),
-        MoveTriggerController.Mbi.InitAllTriggers());
+        MoveTriggerController.Mqi.InitAllTriggers());
   }
   static LeaveLevel() {
     return MoveTriggerController.ClearController(), !0;
   }
   static ClearController() {
-    MoveTriggerController.Mbi &&
-      ActorSystem_1.ActorSystem.Put(MoveTriggerController.Mbi),
+    MoveTriggerController.Mqi &&
+      ActorSystem_1.ActorSystem.Put(MoveTriggerController.Mqi),
       UE.KuroMoveTriggerController.UnRegisterController(),
-      (MoveTriggerController.Mbi = void 0);
+      (MoveTriggerController.Mqi = void 0);
   }
 }
-(exports.MoveTriggerController = MoveTriggerController).Mbi = void 0;
+(exports.MoveTriggerController = MoveTriggerController).Mqi = void 0;
 //# sourceMappingURL=KuroMoveTriggerController.js.map

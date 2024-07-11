@@ -30,17 +30,17 @@ class CharMaterialSlot {
       (this.MaterialPartType = 0),
       (this.SlotType = 0),
       (this.MaterialDirty = !1),
-      (this.Uhr = !1),
-      (this.Ahr = !1),
-      (this.Phr = !1);
+      (this.Llr = !1),
+      (this.Dlr = !1),
+      (this.Rlr = !1);
   }
   Init(t, i, s) {
     (this.SlotName = i),
       (this.MaterialIndex = t),
       (this.SectionIndex = RenderConfig_1.INVALID_SECTION_INDEX),
-      (this.Uhr = !1),
-      (this.Ahr = !1),
-      (this.Phr = !1),
+      (this.Llr = !1),
+      (this.Dlr = !1),
+      (this.Rlr = !1),
       (this.IsStarScar = i === STAR_SCAR_SLOT_NAME),
       (this.SlotType = RenderConfig_1.RenderConfig.GetMaterialSlotType(i)),
       (this.MaterialPartType =
@@ -66,8 +66,8 @@ class CharMaterialSlot {
   UpdateMaterialParam() {
     if (this.IsDynamicMaterialValid()) {
       var t = this.DynamicMaterial;
-      if (this.Uhr) {
-        this.Uhr = !1;
+      if (this.Llr) {
+        this.Llr = !1;
         for (const E of this.FloatParamMap.keys()) {
           var i,
             s = this.FloatParamMap.get(E);
@@ -77,8 +77,8 @@ class CharMaterialSlot {
             t.SetScalarParameterValue(i, s[TARGET_INDEX]));
         }
       }
-      if (this.Ahr) {
-        this.Ahr = !1;
+      if (this.Dlr) {
+        this.Dlr = !1;
         for (const o of this.VectorParamMap.keys()) {
           var h,
             e = this.VectorParamMap.get(o);
@@ -94,8 +94,8 @@ class CharMaterialSlot {
             t.SetVectorParameterValue(h, e));
         }
       }
-      if (this.Phr) {
-        this.Phr = !1;
+      if (this.Rlr) {
+        this.Rlr = !1;
         for (const _ of this.TextureParamMap.keys()) {
           var r = this.TextureParamMap.get(_),
             a = r[TARGET_INDEX];
@@ -113,16 +113,18 @@ class CharMaterialSlot {
   }
   RevertReplaceMaterial(i) {
     var s = new Array();
+    let h = !1;
     for (let t = 0; t < this.ReplaceMaterialArray.length; t++)
-      this.ReplaceMaterialArray[t] !== i &&
-        s.push(this.ReplaceMaterialArray[t]);
-    (this.ReplaceMaterialArray = s), (this.MaterialDirty = !0);
+      this.ReplaceMaterialArray[t] !== i
+        ? s.push(this.ReplaceMaterialArray[t])
+        : (h = !0);
+    return (this.ReplaceMaterialArray = s), (this.MaterialDirty = !0), h;
   }
   SetFloat(t, i) {
     var s;
     this.IsDynamicMaterialValid() &&
       ((s = t.toString()),
-      (this.Uhr = !0),
+      (this.Llr = !0),
       this.FloatParamMap.has(s)
         ? (this.FloatParamMap.get(s)[TARGET_INDEX] = i)
         : this.FloatParamMap.set(s, [
@@ -134,14 +136,14 @@ class CharMaterialSlot {
   RevertFloat(t) {
     this.IsDynamicMaterialValid() &&
       this.FloatParamMap.has(t) &&
-      ((this.Uhr = !0),
+      ((this.Llr = !0),
       ((t = this.FloatParamMap.get(t))[TARGET_INDEX] = t[ORIGINAL_INDEX]));
   }
   SetColor(t, i) {
     var s, h;
     this.IsDynamicMaterialValid() &&
       ((s = t.toString()),
-      (this.Ahr = !0),
+      (this.Dlr = !0),
       ((h = new ColorTempContainer()).ColorR = i.R),
       (h.ColorG = i.G),
       (h.ColorB = i.B),
@@ -158,14 +160,14 @@ class CharMaterialSlot {
   RevertColor(t) {
     this.IsDynamicMaterialValid() &&
       this.VectorParamMap.has(t) &&
-      ((this.Ahr = !0),
+      ((this.Dlr = !0),
       ((t = this.VectorParamMap.get(t))[TARGET_INDEX] = t[ORIGINAL_INDEX]));
   }
   SetTexture(t, i) {
     var s;
     this.IsDynamicMaterialValid() &&
       ((s = t.toString()),
-      (this.Phr = !0),
+      (this.Rlr = !0),
       this.TextureParamMap.has(s)
         ? (this.TextureParamMap.get(s)[TARGET_INDEX] = i)
         : this.TextureParamMap.set(s, [
@@ -177,7 +179,7 @@ class CharMaterialSlot {
   RevertTexture(t) {
     this.IsDynamicMaterialValid() &&
       this.TextureParamMap.has(t) &&
-      ((this.Phr = !0),
+      ((this.Rlr = !0),
       ((t = this.TextureParamMap.get(t))[TARGET_INDEX] = t[ORIGINAL_INDEX]));
   }
   RevertProperty(t) {

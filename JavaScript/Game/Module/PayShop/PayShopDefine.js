@@ -1,8 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.recommendTabView =
-    exports.payShopTabView =
-    exports.hideInPayShopViewTabType =
+    exports.payShopViewTabType =
     exports.payShopUpdateTypeTextId =
     exports.LORD_GYM_TAB_INDEX =
     exports.MONTH_CARD_HELP_ID =
@@ -28,14 +27,6 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     3: "RemainNoInMonth",
     4: "RemainNo",
   }),
-  (exports.hideInPayShopViewTabType = [7]),
-  (exports.payShopTabView = {
-    [1]: "PayShopRecommendView",
-    3: "PayPackageShopView",
-    4: "PayShopExchangeEntryView",
-    5: "PayItemTabView",
-    7: "RogueShopTabView",
-    6: "PayShopExchangeEntryView",
-  }),
+  (exports.payShopViewTabType = [1, 3, 4, 5, 6]),
   (exports.recommendTabView = { [2]: "MonthCardView" });
 //# sourceMappingURL=PayShopDefine.js.map

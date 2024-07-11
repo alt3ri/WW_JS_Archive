@@ -7,15 +7,15 @@ const UE = require("ue"),
 class DurabilityDamageHeadState extends HeadStateViewBase_1.HeadStateViewBase {
   constructor() {
     super(...arguments),
-      (this.xht = -0),
-      (this.wht = !1),
-      (this.EPe = void 0),
-      (this.Bht = (t) => {
-        this.bht(this.qht(), !0);
+      (this.Wlt = -0),
+      (this.Klt = !1),
+      (this.SPe = void 0),
+      (this.Qlt = (t) => {
+        this.Xlt(this.$lt(), !0);
       }),
-      (this.Ght = () => {
+      (this.Ylt = () => {
         var t = this.GetUiNiagara(5);
-        this.wht &&
+        this.Klt &&
           t &&
           !t.NiagaraComponent?.IsActive() &&
           (t.SetNiagaraUIActive(!0, !0), t.ActivateSystem(!0));
@@ -43,64 +43,64 @@ class DurabilityDamageHeadState extends HeadStateViewBase_1.HeadStateViewBase {
       this.GetSprite(4).SetUIActive(!1),
       this.GetUiNiagara(5).SetNiagaraUIActive(!1, !0),
       this.GetUiNiagara(6).SetNiagaraUIActive(!1, !0),
-      (this.wht = !1),
-      (this.xht = this.GetSprite(2).GetParentAsUIItem().GetWidth()),
+      (this.Klt = !1),
+      (this.Wlt = this.GetSprite(2).GetParentAsUIItem().GetWidth()),
       t.OriginalHp
         ? ((this.CurrentBarPercent = t.OriginalHp / this.GetMaxHp()),
-          this.Nht(this.CurrentBarPercent))
-        : this.Nht(1),
-      this.bht(this.qht(), !0);
+          this.Jlt(this.CurrentBarPercent))
+        : this.Jlt(1),
+      this.Xlt(this.$lt(), !0);
   }
   OnStart() {
-    this.EPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem);
+    this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem);
   }
   BindCallback() {
     super.BindCallback(),
-      this.HeadStateData.BindOnSceneItemDurabilityChange(this.Bht),
-      this.HeadStateData.BindOnSceneItemEntityHit(this.Ght);
+      this.HeadStateData.BindOnSceneItemDurabilityChange(this.Qlt),
+      this.HeadStateData.BindOnSceneItemEntityHit(this.Ylt);
   }
-  bht(t, e = !1) {
+  Xlt(t, e = !1) {
     var i;
     t <= 0
-      ? ((i = 0 < this.CurrentBarPercent), this.Nht(t), this.Oht(i))
+      ? ((i = 0 < this.CurrentBarPercent), this.Jlt(t), this.zlt(i))
       : e
-        ? (this.kht(t),
+        ? (this.Zlt(t),
           this.PlayBarAnimation(t),
-          this.EPe?.StopCurrentSequence(!0, !0),
-          this.EPe?.PlayLevelSequenceByName("Increase"))
-        : this.Nht(t),
+          this.SPe?.StopCurrentSequence(!0, !0),
+          this.SPe?.PlayLevelSequenceByName("Increase"))
+        : this.Jlt(t),
       this.HeadStateData?.SetOriginalHp(this.GetHp());
   }
   StopBarLerpAnimation() {
     super.StopBarLerpAnimation(),
       this.GetSprite(1).SetUIActive(!1),
-      this.EPe?.StopSequenceByKey("Increase", !0, !0);
+      this.SPe?.StopSequenceByKey("Increase", !0, !0);
   }
   OnLerpBarBufferPercent(t) {
-    this.Fht(t);
+    this.e1t(t);
   }
-  Nht(t) {
-    this.kht(t), this.Fht(t), this.StopBarLerpAnimation();
+  Jlt(t) {
+    this.Zlt(t), this.e1t(t), this.StopBarLerpAnimation();
   }
-  kht(t) {
+  Zlt(t) {
     var e = 1 - t,
       i = this.GetSprite(1),
       s = this.GetSprite(2);
     i.SetFillAmount(e),
-      s.SetStretchRight(this.xht * t - 2),
+      s.SetStretchRight(this.Wlt * t - 2),
       i.IsUIActiveSelf() || i.SetUIActive(!0);
   }
-  Fht(t) {
+  e1t(t) {
     var t = 1 - t,
       e = this.GetSprite(1),
       i = this.GetSprite(2),
       s = this.GetSprite(3);
-    i.SetStretchLeft(this.xht * t - 2),
+    i.SetStretchLeft(this.Wlt * t - 2),
       s.SetFillAmount(t),
       e.IsUIActiveSelf() || e.SetUIActive(!0),
       s.IsUIActiveSelf() || s.SetUIActive(!0);
   }
-  Oht(t) {
+  zlt(t) {
     7 === this.HeadStateType
       ? (t && this.GetUiNiagara(6).SetNiagaraUIActive(!0, !0),
         this.GetSprite(0).SetUIActive(!1),
@@ -109,9 +109,9 @@ class DurabilityDamageHeadState extends HeadStateViewBase_1.HeadStateViewBase {
         this.GetSprite(4).SetUIActive(!1))
       : 8 === this.HeadStateType &&
         ((t = this.GetSprite(4)).IsUIActiveSelf() || t.SetUIActive(!0),
-        (this.wht = !0));
+        (this.Klt = !0));
   }
-  qht() {
+  $lt() {
     return this.GetHp() / this.GetMaxHp();
   }
   GetMaxHp() {

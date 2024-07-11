@@ -22,45 +22,45 @@ class LordGymController extends ControllerBase_1.ControllerBase {
     return this.OnUnRegisterNetEvent(), this.OnRemoveEvents(), !0;
   }
   static OnRegisterNetEvent() {
-    Net_1.Net.Register(12594, this.PSi), Net_1.Net.Register(28727, this.xSi);
+    Net_1.Net.Register(4958, this.PSi), Net_1.Net.Register(23225, this.xSi);
   }
   static OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(12594), Net_1.Net.UnRegister(28727);
+    Net_1.Net.UnRegister(4958), Net_1.Net.UnRegister(23225);
   }
   static OnAddEvents() {
-    EventSystem_1.EventSystem.Add(EventDefine_1.EEventName.WorldDone, this.b4e);
+    EventSystem_1.EventSystem.Add(EventDefine_1.EEventName.WorldDone, this.$5e);
   }
   static OnRemoveEvents() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.WorldDone,
-      this.b4e,
+      this.$5e,
     );
   }
   static async LordGymInfoRequest() {
-    var e = Protocol_1.Aki.Protocol.Lis.create({}),
-      e = await Net_1.Net.CallAsync(9653, e);
+    var e = Protocol_1.Aki.Protocol.Ess.create({}),
+      e = await Net_1.Net.CallAsync(16420, e);
     if (
-      (0 < e.pAs?.length &&
-        ((ModelManager_1.ModelManager.LordGymModel.UnLockLordGym = e.pAs),
+      (0 < e.Oxs?.length &&
+        ((ModelManager_1.ModelManager.LordGymModel.UnLockLordGym = e.Oxs),
         ModelManager_1.ModelManager.LordGymModel.UnLockLordGym.sort(
           (e, r) => e - r,
         )),
-      e.MAs?.length &&
-        (ModelManager_1.ModelManager.LordGymModel.ReadLoadGymIds = e.MAs),
-      0 < e.SAs?.length)
+      e.kxs?.length &&
+        (ModelManager_1.ModelManager.LordGymModel.ReadLoadGymIds = e.kxs),
+      0 < e.Nxs?.length)
     )
-      for (const r of e.SAs)
-        ModelManager_1.ModelManager.LordGymModel.LordGymRecord.set(r.b6n, r);
+      for (const r of e.Nxs)
+        ModelManager_1.ModelManager.LordGymModel.LordGymRecord.set(r.d7n, r);
   }
   static async LordGymBeginRequest(e) {
-    var r = Protocol_1.Aki.Protocol.Ais.create(),
-      e = ((r.b6n = e), await Net_1.Net.CallAsync(29694, r));
+    var r = Protocol_1.Aki.Protocol.Tss.create(),
+      e = ((r.d7n = e), await Net_1.Net.CallAsync(27353, r));
     return !(
       !e ||
-      (e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys &&
+      (e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs &&
         (ErrorCodeController_1.ErrorCodeController.OpenErrorCodeTipView(
-          e.lkn,
-          29694,
+          e.O4n,
+          27353,
         ),
         1))
     );
@@ -78,31 +78,31 @@ class LordGymController extends ControllerBase_1.ControllerBase {
   }
   static async ReadLordGym(e) {
     ModelManager_1.ModelManager.LordGymModel.ReadLordGym(e);
-    var r = Protocol_1.Aki.Protocol.Uis.create();
-    (r.b6n = e), await Net_1.Net.CallAsync(29379, r);
+    var r = Protocol_1.Aki.Protocol.Rss.create();
+    (r.d7n = e), await Net_1.Net.CallAsync(16495, r);
   }
 }
 (exports.LordGymController = LordGymController),
-  ((_a = LordGymController).b4e = () => {
+  ((_a = LordGymController).$5e = () => {
     _a.LordGymInfoRequest();
   }),
   (LordGymController.PSi = (e) => {
-    ModelManager_1.ModelManager.LordGymModel.FirstUnLockLordGym = e.pAs;
+    ModelManager_1.ModelManager.LordGymModel.FirstUnLockLordGym = e.Oxs;
   }),
   (LordGymController.xSi = (r) => {
     if (
       (ModelManager_1.ModelManager.LordGymModel.LordGymRecord.set(
-        r.TAs.b6n,
-        r.TAs,
+        r.Hxs.d7n,
+        r.Hxs,
       ),
-      r.QRs)
+      r.dws)
     ) {
       var e = [];
-      for (const n of r.LAs) {
+      for (const n of r.jxs) {
         var t = new RewardItemData_1.RewardItemData(
-          n.G3n,
-          n.I5n,
-          0 !== n.yAs ? n.yAs : void 0,
+          n.f8n,
+          n.o9n,
+          0 !== n.Vxs ? n.Vxs : void 0,
         );
         e.push(t);
       }
@@ -114,12 +114,12 @@ class LordGymController extends ControllerBase_1.ControllerBase {
         },
         a = {
           TitleTextId: "LordGym_TimeTitle",
-          Record: TimeUtil_1.TimeUtil.GetTimeString(r.TAs.EAs),
-          IsNewRecord: r.IAs,
+          Record: TimeUtil_1.TimeUtil.GetTimeString(r.Hxs.Fxs),
+          IsNewRecord: r.$xs,
         };
       ItemRewardController_1.ItemRewardController.OpenExploreRewardView(
         ItemRewardDefine_1.LORD_GYM_RESULT,
-        r.QRs,
+        r.dws,
         e,
         a,
         void 0,
@@ -128,7 +128,7 @@ class LordGymController extends ControllerBase_1.ControllerBase {
         void 0,
         () => {
           var e = ModelManager_1.ModelManager.LordGymModel.GetNextGymId(
-            r.TAs.b6n,
+            r.Hxs.d7n,
           );
           e &&
             !ModelManager_1.ModelManager.LordGymModel.GetLordGymHasRead(e) &&

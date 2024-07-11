@@ -14,6 +14,7 @@ const UE = require("ue"),
   ModelManager_1 = require("../../Manager/ModelManager"),
   KuroSdkData_1 = require("../KuroSdkData"),
   PlatformSdkBase_1 = require("./PlatformSdkBase"),
+  cpp_1 = require("cpp"),
   WEBVIEWCD = 5e3;
 class WindowsSdkRedPointSt extends Json_1.JsonObjBase {
   constructor() {
@@ -93,8 +94,8 @@ class PlatformSdkWindowsGlobal extends PlatformSdkBase_1.PlatformSdkBase {
   }
   OnInit() {
     (this.CurrentDid = ue_1.KuroSDKManager.GetBasicInfo().DeviceId),
-      UE.CrashSightProxy.SetCustomData("SdkDeviceId", this.CurrentDid),
-      UE.CrashSightProxy.SetCustomData("SdkChannelId", this.GetChannelId());
+      cpp_1.FCrashSightProxy.SetCustomData("SdkDeviceId", this.CurrentDid),
+      cpp_1.FCrashSightProxy.SetCustomData("SdkChannelId", this.GetChannelId());
   }
   BindSpecialEvent() {
     ue_1.KuroSDKManager.Get().AnnounceInitDelegate.Clear(),
@@ -158,7 +159,7 @@ class PlatformSdkWindowsGlobal extends PlatformSdkBase_1.PlatformSdkBase {
     var o;
     ControllerHolder_1.ControllerHolder.KuroSdkController.CanUseSdk() &&
       ((o = KuroSdkData_1.KuroSdkControllerTool.GetSdkPayRoleInfo()),
-      (o = this.qEe(e, o)),
+      (o = this.qSe(e, o)),
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "KuroSdk",
@@ -169,7 +170,7 @@ class PlatformSdkWindowsGlobal extends PlatformSdkBase_1.PlatformSdkBase {
         ),
       ue_1.KuroSDKManager.KuroSDKEvent(8, o));
   }
-  qEe(e, o) {
+  qSe(e, o) {
     var t = new KuroSdkData_1.PayInfoWindowsGlobal(),
       o =
         ((t.roleId = o.roleId.toString()),
@@ -202,7 +203,7 @@ class PlatformSdkWindowsGlobal extends PlatformSdkBase_1.PlatformSdkBase {
     var e;
     Log_1.Log.CheckInfo() && Log_1.Log.Info("KuroSdk", 28, "上报选择角色"),
       ControllerHolder_1.ControllerHolder.KuroSdkController.CanUseSdk() &&
-        ((e = this.ZEe()), ue_1.KuroSDKManager.KuroSDKEvent(2, e));
+        ((e = this.ZSe()), ue_1.KuroSDKManager.KuroSDKEvent(2, e));
   }
   SdkCreateRole() {
     var e;
@@ -214,9 +215,9 @@ class PlatformSdkWindowsGlobal extends PlatformSdkBase_1.PlatformSdkBase {
     var e;
     Log_1.Log.CheckInfo() && Log_1.Log.Info("KuroSdk", 28, "上报角色升级"),
       ControllerHolder_1.ControllerHolder.KuroSdkController.CanUseSdk() &&
-        ((e = this.ZEe()), ue_1.KuroSDKManager.KuroSDKEvent(4, e));
+        ((e = this.ZSe()), ue_1.KuroSDKManager.KuroSDKEvent(4, e));
   }
-  IEe() {
+  ISe() {
     return ModelManager_1.ModelManager.PlayerInfoModel.GetId()
       ? ModelManager_1.ModelManager.PlayerInfoModel.GetId().toString()
       : ModelManager_1.ModelManager.LoginModel.GetCreatePlayerId()
@@ -227,7 +228,7 @@ class PlatformSdkWindowsGlobal extends PlatformSdkBase_1.PlatformSdkBase {
     var e = ModelManager_1.ModelManager.LoginModel,
       o = new KuroSdkData_1.RoleInfoWindows(),
       e =
-        ((o.roleId = this.IEe()),
+        ((o.roleId = this.ISe()),
         (o.roleName = e.GetPlayerName() ? e.GetPlayerName() : ""),
         (o.serverId = e.GetServerId() ? e.GetServerId() : ""),
         (o.serverName = e.GetServerName() ? e.GetServerName() : ""),
@@ -247,12 +248,12 @@ class PlatformSdkWindowsGlobal extends PlatformSdkBase_1.PlatformSdkBase {
       e
     );
   }
-  ZEe() {
+  ZSe() {
     var e = ModelManager_1.ModelManager.FunctionModel,
       o = ModelManager_1.ModelManager.LoginModel,
       t = new KuroSdkData_1.RoleInfoWindows(),
       o =
-        ((t.roleId = this.IEe()),
+        ((t.roleId = this.ISe()),
         (t.roleName = e.GetPlayerName() ? e.GetPlayerName() : ""),
         (t.serverId = o.GetServerId() ? o.GetServerId() : ""),
         (t.serverName = o.GetServerName() ? o.GetServerName() : ""),
@@ -312,13 +313,19 @@ class PlatformSdkWindowsGlobal extends PlatformSdkBase_1.PlatformSdkBase {
   }
   SetFont() {
     var e = new KuroSdkData_1.SetFontParamWindows(),
-      e =
-        ((e.name = "文鼎方新书H7GBK_H"),
-        (e.path =
+      o = ModelManager_1.ModelManager.KuroSdkModel.GetCurrentFontName(),
+      o =
+        ((e.name = o),
+        ModelManager_1.ModelManager.KuroSdkModel.GetDeviceFontAsset()),
+      o =
+        ((e.path =
           UE.BlueprintPathsLibrary.RootDir() +
-          "Client/Binaries/Win64/ThirdParty/KrPcSdk_Global/H7GBKHeavy.TTF"),
+          "Client/Binaries/Win64/ThirdParty/KrPcSdk_Global/" +
+          o),
         Json_1.Json.Stringify(e) ?? "");
-    ue_1.KuroSDKManager.SetFont(e);
+    Log_1.Log.CheckInfo() &&
+      Log_1.Log.Info("KuroSdk", 28, "SetFont", ["data", o]),
+      ue_1.KuroSDKManager.SetFont(o);
   }
   GetChannelId() {
     return ue_1.KuroSDKManager.GetSdkParams("channel_id");

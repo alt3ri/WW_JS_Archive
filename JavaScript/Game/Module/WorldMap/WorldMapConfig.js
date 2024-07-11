@@ -15,6 +15,9 @@ class WorldMapConfig extends ConfigBase_1.ConfigBase {
   GetCommonValue(e) {
     return CommonParamById_1.configCommonParamById.GetIntConfig(e) ?? 0;
   }
+  GetCommonIntArray(e) {
+    return CommonParamById_1.configCommonParamById.GetIntArrayConfig(e);
+  }
   GetCustomMarks() {
     return CustomMarkAll_1.configCustomMarkAll.GetConfigList();
   }

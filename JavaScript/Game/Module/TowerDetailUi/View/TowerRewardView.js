@@ -11,11 +11,11 @@ const UE = require("ue"),
 class TowerRewardView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.u6e = void 0),
-      (this.sBi = () => {
+      (this.T8e = void 0),
+      (this.sbi = () => {
         return new TowerRewardItem_1.TowerRewardItem();
       }),
-      (this.dDo = () => {
+      (this.uRo = () => {
         this.Og();
       });
   }
@@ -26,29 +26,31 @@ class TowerRewardView extends UiViewBase_1.UiViewBase {
     ];
   }
   OnStart() {
-    (this.u6e = new GenericScrollViewNew_1.GenericScrollViewNew(
+    (this.T8e = new GenericScrollViewNew_1.GenericScrollViewNew(
       this.GetScrollViewWithScrollbar(0),
-      this.sBi,
+      this.sbi,
     )),
       this.Og();
   }
   OnBeforeDestroy() {
-    this.u6e = void 0;
+    this.T8e = void 0;
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnTowerRewardReceived,
-      this.dDo,
+      this.uRo,
     );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnTowerRewardReceived,
-      this.dDo,
+      this.uRo,
     );
   }
   Og() {
-    var e = ModelManager_1.ModelManager.TowerModel.CurrentSelectDifficulties,
+    var e =
+        this.OpenParam ??
+        ModelManager_1.ModelManager.TowerModel.CurrentSelectDifficulties,
       r = ModelManager_1.ModelManager.TowerModel.GetDifficultyReward(e);
     r &&
       (r.sort((e, r) => {
@@ -56,7 +58,7 @@ class TowerRewardView extends UiViewBase_1.UiViewBase {
           i = r.IsReceived ? 1 : 0;
         return t != i ? t - i : e.Index - r.Index;
       }),
-      this.u6e.RefreshByData(r),
+      this.T8e.RefreshByData(r),
       this.GetText(1).SetText(
         ModelManager_1.ModelManager.TowerModel.GetDifficultyMaxStars(e) +
           "/" +

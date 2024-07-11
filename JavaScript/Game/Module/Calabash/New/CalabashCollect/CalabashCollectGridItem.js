@@ -13,7 +13,7 @@ class CalabashCollectGridItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
       (this.Pe = void 0),
-      (this.sft = void 0),
+      (this.ppt = void 0),
       (this.$be = void 0),
       (this.CanToggleChange = void 0),
       (this.OnToggleClick = void 0),
@@ -41,9 +41,9 @@ class CalabashCollectGridItem extends GridProxyAbstract_1.GridProxyAbstract {
     this.GetExtendToggle(0)?.CanExecuteChange.Bind(
       () => !this.CanToggleChange || this.CanToggleChange(this.GridIndex),
     ),
-      (this.sft = new PhantomBattleFettersViewItem_1.VisionDetailMonsterItem()),
-      await this.sft?.CreateThenShowByActorAsync(this.GetItem(1).GetOwner()),
-      this.sft.SetToggleInteractive(!1),
+      (this.ppt = new PhantomBattleFettersViewItem_1.VisionDetailMonsterItem()),
+      await this.ppt?.CreateThenShowByActorAsync(this.GetItem(1).GetOwner()),
+      this.ppt.SetToggleInteractive(!1),
       (this.$be = new GenericLayout_1.GenericLayout(
         this.GetHorizontalLayout(4),
         this.zbe,
@@ -66,7 +66,7 @@ class CalabashCollectGridItem extends GridProxyAbstract_1.GridProxyAbstract {
             s,
           ).MonsterNumber),
         this.GetText(2)?.SetText(s + "???")),
-      this.sft.Refresh(
+      this.ppt.Refresh(
         new PhantomBattleFettersViewItem_1.VisionDetailMonsterItemData(
           t.DevelopRewardData.MonsterId,
           r,

@@ -27,66 +27,69 @@ const UE = require("ue"),
 class CalabashCollectTabView extends UiTabViewBase_1.UiTabViewBase {
   constructor() {
     super(...arguments),
-      (this.aft = void 0),
-      (this.hft = void 0),
-      (this.lft = void 0),
-      (this._ft = void 0),
-      (this.uft = void 0),
-      (this.cft = void 0),
-      (this.mft = void 0),
-      (this.Cft = 0),
-      (this.gft = 0),
-      (this.fft = ResourceSystem_1.ResourceSystem.InvalidId),
-      (this.aGn =
+      (this.vpt = void 0),
+      (this.Mpt = void 0),
+      (this.Ept = void 0),
+      (this.Spt = void 0),
+      (this.ypt = void 0),
+      (this.Ipt = void 0),
+      (this.Tpt = void 0),
+      (this.Dpt = 0),
+      (this.Rpt = 0),
+      (this.Upt = ResourceSystem_1.ResourceSystem.InvalidId),
+      (this.mNn =
         UiModelResourcesManager_1.UiModelResourcesManager.StreamingInvalidValue),
-      (this.pft = !1),
-      (this.EPe = void 0),
-      (this.vft = () => {
+      (this.Apt = !1),
+      (this.SPe = void 0),
+      (this.Ppt = () => {
         ModelManager_1.ModelManager.CalabashModel.GetIfSimpleState()
-          ? this.lft.PlayDetailShowSequence()
-          : this.lft.PlayDetailHideSequence();
+          ? this.Ept.PlayDetailShowSequence()
+          : this.Ept.PlayDetailHideSequence();
       }),
-      (this.Mft = () => {
-        this.Sft();
+      (this.xpt = () => {
+        this.wpt();
       }),
       (this.w7 = () => {
         var e = new CalabashCollectGridItem_1.CalabashCollectGridItem();
-        return (e.OnToggleClick = this.I6e), (e.CanToggleChange = this.Eft), e;
+        return (e.OnToggleClick = this.N8e), (e.CanToggleChange = this.Bpt), e;
       }),
-      (this.I6e = (e) => {
-        this._ft.SelectGridProxy(e), this.yft();
+      (this.N8e = (e) => {
+        this.Spt.SelectGridProxy(e), this.bpt();
       }),
-      (this.Eft = (e) => this._ft?.GetSelectedGridIndex() !== e),
-      (this.Ift = (e) => {
-        (this.uft = e), this._ft.RefreshByData(this.uft, !1, this.Tft, !0);
+      (this.Bpt = (e) => this.Spt?.GetSelectedGridIndex() !== e),
+      (this.qpt = (e, i, t) => {
+        (this.ypt = e),
+          this.Spt.RefreshByData(this.ypt, !1, this.Gpt, !0),
+          this.ypt.length <= 0 ||
+            (1 === t && (this.Rpt = this.ypt[0].DevelopRewardData.MonsterId));
       }),
-      (this.Tft = () => {
+      (this.Gpt = () => {
         let i = 0,
           e =
-            (0 < this.Cft
-              ? ((i = this.Cft), (this.Cft = 0))
-              : 0 < this.gft && (i = this.gft),
+            (0 < this.Dpt
+              ? ((i = this.Dpt), (this.Dpt = 0))
+              : 0 < this.Rpt && (i = this.Rpt),
             0);
         0 < i &&
-          (e = this.uft.findIndex((e) => e.DevelopRewardData.MonsterId === i)),
+          (e = this.ypt.findIndex((e) => e.DevelopRewardData.MonsterId === i)),
           (e = Math.max(0, e)),
-          this._ft.SelectGridProxy(e),
-          this._ft.ScrollToGridIndex(e),
-          this.yft();
+          this.Spt.SelectGridProxy(e),
+          this.Spt.ScrollToGridIndex(e),
+          this.bpt();
       }),
-      (this.Lft = () => {
-        if (this.pft)
+      (this.Npt = () => {
+        if (this.Apt)
           Log_1.Log.CheckError() &&
             Log_1.Log.Error("Calabash", 44, "重复进入声骸图鉴的内部界面");
         else {
-          (this.pft = !0), this.EPe?.PlayLevelSequenceByName("Enter", !0);
+          (this.Apt = !0), this.SPe?.PlayLevelSequenceByName("Enter", !0);
           const i =
             UiCameraManager_1.UiCameraManager.Get().GetUiCameraComponent(
               UiCameraControlRotationComponent_1.UiCameraControlRotationComponent,
             );
           var e =
             ConfigManager_1.ConfigManager.CalabashConfig.GetCalabashDevelopRewardByMonsterId(
-              this.gft,
+              this.Rpt,
             );
           const t =
             ConfigManager_1.ConfigManager.MonsterInfoConfig.GetMonsterBodyTypeConfig(
@@ -104,29 +107,29 @@ class CalabashCollectTabView extends UiTabViewBase_1.UiTabViewBase {
                 );
             },
           ),
-            (this.cft.CanPitchInput = !0),
+            (this.Ipt.CanPitchInput = !0),
             EventSystem_1.EventSystem.Emit(
               EventDefine_1.EEventName.CalabashEnterInternalView,
             );
         }
       }),
-      (this.Dft = (e, i) => {
-        this.lft.UpdateSkinInfo(e),
-          (this.gft = e),
-          this.Rft(),
+      (this.Opt = (e, i) => {
+        this.Ept.UpdateSkinInfo(e),
+          (this.Rpt = e),
+          this.kpt(),
           this.GetItem(6)?.SetUIActive(i),
-          i || this.Uft();
+          i || this.Fpt();
       }),
-      (this.Sft = () => {
-        if (this.pft) {
-          (this.pft = !1), this.EPe?.PlayLevelSequenceByName("Back", !0);
+      (this.wpt = () => {
+        if (this.Apt) {
+          (this.Apt = !1), this.SPe?.PlayLevelSequenceByName("Back", !0);
           const t =
             UiCameraManager_1.UiCameraManager.Get().GetUiCameraComponent(
               UiCameraControlRotationComponent_1.UiCameraControlRotationComponent,
             );
           var e =
             ConfigManager_1.ConfigManager.CalabashConfig.GetCalabashDevelopRewardByMonsterId(
-              this.gft,
+              this.Rpt,
             );
           const a =
             ConfigManager_1.ConfigManager.MonsterInfoConfig.GetMonsterBodyTypeConfig(
@@ -145,7 +148,7 @@ class CalabashCollectTabView extends UiTabViewBase_1.UiTabViewBase {
                 t.StartFade(a.MoveForwardDuration, e, !0, !0, !0, !0));
             },
           ),
-            (this.cft.CanPitchInput = !1),
+            (this.Ipt.CanPitchInput = !1),
             EventSystem_1.EventSystem.Emit(
               EventDefine_1.EEventName.CalabashQuitInternalView,
             );
@@ -167,107 +170,106 @@ class CalabashCollectTabView extends UiTabViewBase_1.UiTabViewBase {
       [8, UE.UIItem],
       [9, UE.UIButtonComponent],
     ]),
-      (this.BtnBindInfo = [[9, this.Mft]]);
+      (this.BtnBindInfo = [[9, this.xpt]]);
   }
   AddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.ChangeCalabashCollectSimplyState,
-      this.vft,
+      this.Ppt,
     );
   }
   RemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.ChangeCalabashCollectSimplyState,
-      this.vft,
+      this.Ppt,
     );
   }
   async OnBeforeStartAsync() {
-    (this.pft = !1),
-      (this.EPe = new LevelSequencePlayer_1.LevelSequencePlayer(
+    (this.Apt = !1),
+      (this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(
         this.GetRootItem(),
       )),
-      (this.cft = new VisionCameraInputItem_1.VisionCameraInputItem()),
-      await this.cft.OnlyCreateByActorAsync(this.GetItem(7).GetOwner()),
-      this.AddChild(this.cft),
-      (this._ft = new LoopScrollView_1.LoopScrollView(
+      (this.Ipt = new VisionCameraInputItem_1.VisionCameraInputItem()),
+      await this.Ipt.OnlyCreateByActorAsync(this.GetItem(7).GetOwner()),
+      this.AddChild(this.Ipt),
+      (this.Spt = new LoopScrollView_1.LoopScrollView(
         this.GetLoopScrollViewComponent(0),
         this.GetItem(1).GetOwner(),
         this.w7,
         !0,
       )),
-      (this.mft = new RoleModelLoadingItem_1.RoleModelLoadingItem()),
-      await this.mft
-        .CreateThenShowByResourceIdAsync(
-          "UiItem_Loading_Prefab",
-          UiLayer_1.UiLayer.GetLayerRootUiItem(UiLayerType_1.ELayerType.Pop),
-        )
-        .finally(() => {
-          this.mft.SetLoadingActive(!1);
-        }),
-      (this.aft = new FilterEntrance_1.FilterEntrance(
+      (this.Tpt = new RoleModelLoadingItem_1.RoleModelLoadingItem()),
+      await this.Tpt.CreateThenShowByResourceIdAsync(
+        "UiItem_Loading_Prefab",
+        UiLayer_1.UiLayer.GetLayerRootUiItem(UiLayerType_1.ELayerType.Pop),
+      ).finally(() => {
+        this.Tpt.SetLoadingActive(!1);
+      }),
+      (this.vpt = new FilterEntrance_1.FilterEntrance(
         this.GetItem(2),
-        this.Ift,
+        this.qpt,
       )),
-      (this.hft = new SortEntrance_1.SortEntrance(this.GetItem(3), this.Ift));
+      (this.Mpt = new SortEntrance_1.SortEntrance(this.GetItem(3), this.qpt));
     var e = this.ExtraParams;
-    0 < e && (this.Cft = e),
-      this.Aft(),
-      (this.lft = new CalabashCollectDetailItem_1.CalabashCollectDetailItem()),
-      (this.lft.OnLookOverBtnClick = this.Lft),
-      (this.lft.OnMonsterSkinBtnClickCallBack = this.Dft),
-      await this.lft.CreateThenShowByActorAsync(this.GetItem(4).GetOwner());
+    0 < e && (this.Dpt = e),
+      this.Vpt(),
+      (this.Ept = new CalabashCollectDetailItem_1.CalabashCollectDetailItem()),
+      (this.Ept.OnLookOverBtnClick = this.Npt),
+      (this.Ept.OnMonsterSkinBtnClickCallBack = this.Opt),
+      await this.Ept.CreateThenShowByActorAsync(this.GetItem(4).GetOwner());
   }
   OnBeforeShow() {
-    this.aft.UpdateData(
+    this.vpt.UpdateData(
       15,
       ModelManager_1.ModelManager.CalabashModel.GetCalabashDevelopRewardSortData(),
     ),
-      this.hft.UpdateData(
+      this.Mpt.UpdateData(
         15,
         ModelManager_1.ModelManager.CalabashModel.GetCalabashDevelopRewardSortData(),
       ),
-      this.lft.RefreshDetailState();
+      this.Ept.RefreshDetailState(),
+      this.GetButton(9).RootUIComp.SetActive(this.Apt);
   }
   OnBeforeHide() {
-    (this.Cft = this.gft), this.mft.SetLoadingActive(!1), this.Pft();
+    (this.Dpt = this.Rpt), this.Tpt.SetLoadingActive(!1), this.Hpt();
   }
   OnBeforeDestroy() {
-    this.Rft(), this.mft.Destroy();
+    this.kpt(), this.Tpt.Destroy();
   }
-  yft() {
-    var e = this._ft.GetSelectedGridIndex(),
-      e = this.uft[e];
-    this.lft.Update(e),
-      (this.gft = e.DevelopRewardData.MonsterId),
-      this.Rft(),
+  bpt() {
+    var e = this.Spt.GetSelectedGridIndex(),
+      e = this.ypt[e];
+    this.Ept.Update(e),
+      (this.Rpt = e.DevelopRewardData.MonsterId),
+      this.kpt(),
       e.UnlockData
-        ? (this.GetItem(6)?.SetUIActive(!1), this.Uft())
+        ? (this.GetItem(6)?.SetUIActive(!1), this.Fpt())
         : this.GetItem(6)?.SetUIActive(!0);
   }
-  Uft() {
+  Fpt() {
     if (
-      this.fft !== ResourceSystem_1.ResourceSystem.InvalidId ||
+      this.Upt !== ResourceSystem_1.ResourceSystem.InvalidId ||
       void 0 !== UiSceneManager_1.UiSceneManager.GetHandBookVision()
     )
       Log_1.Log.CheckError() &&
         Log_1.Log.Error("Calabash", 44, "声骸模型重复加载");
     else {
-      this.mft.SetLoadingActive(!0);
-      const i = this.gft;
+      this.Tpt.SetLoadingActive(!0);
+      const i = this.Rpt;
       var e =
         ConfigManager_1.ConfigManager.CalabashConfig.GetCalabashDevelopRewardByMonsterId(
           i,
         );
-      this.fft = ResourceSystem_1.ResourceSystem.LoadAsync(
+      this.Upt = ResourceSystem_1.ResourceSystem.LoadAsync(
         e.HandBookBp + "_C",
         UE.Class,
         (e) => {
-          this.xft(i, e);
+          this.jpt(i, e);
         },
       );
     }
   }
-  xft(e, i) {
+  jpt(e, i) {
     UiSceneManager_1.UiSceneManager.CreateHandBookVision(i);
     var i = UiSceneManager_1.UiSceneManager.GetHandBookVision(),
       t = (i.SetActorHiddenInGame(!0), UE.NewArray(UE.SkeletalMesh)),
@@ -284,16 +286,16 @@ class CalabashCollectTabView extends UiTabViewBase_1.UiTabViewBase {
         var o = r.Get(e);
         o.SetForcedLodModel(1), a.Add(o.StaticMesh);
       }
-    this.aGn =
+    this.mNn =
       UiModelResourcesManager_1.UiModelResourcesManager.LoadMeshesComponentsBundleStreaming(
         t,
         a,
         () => {
-          this.Bft(e);
+          this.Kpt(e);
         },
       );
   }
-  Bft(e) {
+  Kpt(e) {
     var i = UiCameraManager_1.UiCameraManager.Get().GetUiCameraComponent(
         UiCameraControlRotationComponent_1.UiCameraControlRotationComponent,
       ),
@@ -314,32 +316,32 @@ class CalabashCollectTabView extends UiTabViewBase_1.UiTabViewBase {
           i.SetArmLength(t.CameraArmLength),
           t.SetActorHiddenInGame(!1),
           t.PlayStart(),
-          this.mft.SetLoadingActive(!1))
+          this.Tpt.SetLoadingActive(!1))
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error("Calabash", 44, "声骸模型为空");
   }
-  Rft() {
-    this.fft !== ResourceSystem_1.ResourceSystem.InvalidId &&
-      (ResourceSystem_1.ResourceSystem.CancelAsyncLoad(this.fft),
-      (this.fft = ResourceSystem_1.ResourceSystem.InvalidId)),
-      this.aGn !==
+  kpt() {
+    this.Upt !== ResourceSystem_1.ResourceSystem.InvalidId &&
+      (ResourceSystem_1.ResourceSystem.CancelAsyncLoad(this.Upt),
+      (this.Upt = ResourceSystem_1.ResourceSystem.InvalidId)),
+      this.mNn !==
         UiModelResourcesManager_1.UiModelResourcesManager
           .StreamingInvalidValue &&
         (UiModelResourcesManager_1.UiModelResourcesManager.ReleaseMeshesComponentsBundleStreaming(
-          this.aGn,
+          this.mNn,
         ),
-        (this.aGn =
+        (this.mNn =
           UiModelResourcesManager_1.UiModelResourcesManager.StreamingInvalidValue)),
       UiSceneManager_1.UiSceneManager.GetHandBookVision() &&
         UiSceneManager_1.UiSceneManager.DestroyHandBookVision();
   }
-  Aft() {
+  Vpt() {
     var e = ModelManager_1.ModelManager.CalabashModel.GetCalabashAllSchedule(),
       i = ModelManager_1.ModelManager.CalabashModel.GetCalabashOwnSchedule();
     this.GetText(5)?.SetText(i + "/" + e);
   }
-  Pft() {
-    (this.gft = 0), this._ft?.DeselectCurrentGridProxy(), this.Rft();
+  Hpt() {
+    (this.Rpt = 0), this.Spt?.DeselectCurrentGridProxy(), this.kpt();
   }
 }
 exports.CalabashCollectTabView = CalabashCollectTabView;

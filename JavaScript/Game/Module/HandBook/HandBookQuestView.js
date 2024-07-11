@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.HandBookQuestView = void 0);
 const UE = require("ue"),
+  Info_1 = require("../../../Core/Common/Info"),
   Time_1 = require("../../../Core/Common/Time"),
   CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
@@ -23,46 +24,52 @@ class HandBookQuestView extends UiViewBase_1.UiViewBase {
     super(...arguments),
       (this.RoleRootUiCameraHandleData = void 0),
       (this.GenericScroll = void 0),
-      (this.KVe = void 0),
-      (this.mUn = []),
-      (this.cpt = void 0),
-      (this._Ve = 0),
-      (this.upt = void 0),
-      (this.cVe = void 0),
-      (this.Zzt = void 0),
+      (this.s8e = void 0),
+      (this.WPn = []),
+      (this.Ivt = void 0),
+      (this.I6e = 0),
+      (this.yvt = void 0),
+      (this.L6e = void 0),
+      (this.ZZt = void 0),
       (this.Refresh = () => {
         this.RefreshLoopScrollView(), this.RefreshCollectText();
       }),
-      (this.dVe = (t, e) => {
+      (this.R6e = (t, e) => {
         return new CommonTabItem_1.CommonTabItem();
       }),
       (this.pqe = (t) => {
-        (this.cVe = Time_1.Time.Now), (this._Ve = t), this.Refresh();
+        (this.L6e = Time_1.Time.Now),
+          (this.I6e = t),
+          this.Refresh(),
+          this.GetScrollViewWithScrollbar(1)
+            .GetContent()
+            .GetComponentByClass(UE.UIInturnAnimController.StaticClass())
+            .Play();
       }),
       (this.yqe = (t) => {
-        t = this.upt[t];
+        t = this.yvt[t];
         return new CommonTabData_1.CommonTabData(
           t.Icon,
           new CommonTabTitleData_1.CommonTabTitleData(t.Name),
         );
       }),
       (this.CanToggleChange = () =>
-        !!ModelManager_1.ModelManager.PlatformModel.IsGamepad() ||
-        !this.cVe ||
-        Time_1.Time.Now - this.cVe >= this.Zzt),
-      (this.dUn = () => {
+        !!Info_1.Info.IsInGamepad() ||
+        !this.L6e ||
+        Time_1.Time.Now - this.L6e >= this.ZZt),
+      (this.KPn = () => {
         var t = new HandBookQuestItem_1.HandBookQuestItem();
-        return this.mUn.push(t), t;
+        return this.WPn.push(t), t;
       }),
-      (this.aZt = (t, e) => t.Id - e.Id),
-      (this.JSt = () => {
+      (this.aei = (t, e) => t.Id - e.Id),
+      (this.lyt = () => {
         this.CloseMe();
       }),
       (this.OnHandBookRead = (t, e) => {
-        if (t === this.upt[this._Ve].Type) {
-          var i = this.mUn.length;
+        if (t === this.yvt[this.I6e].Type) {
+          var i = this.WPn.length;
           for (let t = 0; t < i; t++) {
-            var o = this.mUn[t].GetChildItemList(),
+            var o = this.WPn[t].GetChildItemList(),
               n = o.length;
             for (let t = 0; t < n; t++) {
               var s = o[t];
@@ -72,13 +79,9 @@ class HandBookQuestView extends UiViewBase_1.UiViewBase {
         }
       }),
       (this.OnPhotoSelect = (t) => {
-        for (const i of this.mUn)
-          for (const o of i.GetChildItemList()) {
-            var e = o.GetTog();
-            o.GetData()?.ConfigId === t
-              ? e.SetToggleStateForce(1, !1, !0)
-              : e.SetToggleStateForce(0, !1, !0);
-          }
+        for (const e of this.WPn)
+          for (const i of e.GetChildItemList())
+            i.GetTog().SetToggleStateForce(0, !1, !0);
       });
   }
   OnRegisterComponent() {
@@ -91,10 +94,10 @@ class HandBookQuestView extends UiViewBase_1.UiViewBase {
     ];
   }
   async OnBeforeStartAsync() {
-    this.CUn(), await this.InitCommonTabTitle();
+    this.QPn(), await this.InitCommonTabTitle();
   }
   OnStart() {
-    this.cpt?.SetHelpButtonShowState(!1), this.Refresh(), this.AddEvent();
+    this.Ivt?.SetHelpButtonShowState(!1), this.Refresh(), this.AddEvent();
   }
   AddEvent() {
     EventSystem_1.EventSystem.Add(
@@ -134,43 +137,43 @@ class HandBookQuestView extends UiViewBase_1.UiViewBase {
   }
   OnBeforeShow() {
     let t = !0;
-    for (const i of this.mUn)
+    for (const i of this.WPn)
       for (const o of i.GetChildItemList()) {
         var e = o.GetTog();
         t && o.GetIsUnlock()
           ? (e.SetToggleStateForce(1, !1, !0), (t = !1))
           : e.SetToggleStateForce(0, !1, !0);
       }
-    this.cpt.SelectToggleByIndex(this._Ve);
+    this.Ivt.SelectToggleByIndex(this.I6e);
   }
   async InitCommonTabTitle() {
-    this.Zzt = CommonParamById_1.configCommonParamById.GetIntConfig(
+    this.ZZt = CommonParamById_1.configCommonParamById.GetIntConfig(
       "panel_interval_time",
     );
     var t = new CommonTabComponentData_1.CommonTabComponentData(
-        this.dVe,
+        this.R6e,
         this.pqe,
         this.yqe,
       ),
       t =
-        ((this.cpt =
+        ((this.Ivt =
           new TabComponentWithCaptionItem_1.TabComponentWithCaptionItem(
             this.GetItem(0),
             t,
-            this.JSt,
+            this.lyt,
           )),
-        this.cpt.SetCanChange(this.CanToggleChange),
-        this.upt.length),
-      t = this.cpt.CreateTabItemDataByLength(t);
-    await this.cpt.RefreshTabItemAsync(t);
+        this.Ivt.SetCanChange(this.CanToggleChange),
+        this.yvt.length),
+      t = this.Ivt.CreateTabItemDataByLength(t);
+    await this.Ivt.RefreshTabItemAsync(t);
   }
   RefreshLoopScrollView() {
-    this.KVe ||
-      (this.KVe =
+    this.s8e ||
+      (this.s8e =
         ConfigManager_1.ConfigManager.HandBookConfig.GetPlotTypeConfigList());
     var e = [],
-      t = this.upt[this._Ve].Type;
-    for (const s of this.KVe)
+      t = this.yvt[this.I6e].Type;
+    for (const s of this.s8e)
       if (s.Type === t) {
         var i =
           ConfigManager_1.ConfigManager.HandBookConfig.GetPlotHandBookConfigByType(
@@ -178,22 +181,22 @@ class HandBookQuestView extends UiViewBase_1.UiViewBase {
           );
         if (i) {
           let t = !0;
-          for (const a of i) {
+          for (const r of i) {
             var o = ModelManager_1.ModelManager.HandBookModel.GetHandBookInfo(
               s.Type,
-              a.Id,
+              r.Id,
             );
             t = void 0 === o && t;
           }
           t || e.push(s);
         }
       }
-    e.sort(this.aZt);
+    e.sort(this.aei);
     var n = this.GetScrollViewWithScrollbar(1);
     this.GenericScroll ||
       (this.GenericScroll = new GenericScrollViewNew_1.GenericScrollViewNew(
         n,
-        this.dUn,
+        this.KPn,
         this.GetItem(3).GetOwner(),
       )),
       e.length <= 0
@@ -207,7 +210,7 @@ class HandBookQuestView extends UiViewBase_1.UiViewBase {
   }
   RefreshCollectText() {
     var t = HandBookController_1.HandBookController.GetCollectProgress(
-      this.upt[this._Ve].Type,
+      this.yvt[this.I6e].Type,
     );
     LguiUtil_1.LguiUtil.SetLocalText(this.GetText(2), "RoleExp", t[0], t[1]),
       this.GetText(2)?.SetUIActive(!1);
@@ -215,12 +218,12 @@ class HandBookQuestView extends UiViewBase_1.UiViewBase {
   OnBeforeDestroy() {
     (this.RoleRootUiCameraHandleData = void 0),
       (this.GenericScroll = void 0),
-      (this.KVe = []),
-      (this.mUn = []),
+      (this.s8e = []),
+      (this.WPn = []),
       this.RemoveEvent();
   }
-  CUn() {
-    this.upt = ConfigManager_1.ConfigManager.HandBookConfig.GetQuestTabList();
+  QPn() {
+    this.yvt = ConfigManager_1.ConfigManager.HandBookConfig.GetQuestTabList();
   }
 }
 exports.HandBookQuestView = HandBookQuestView;

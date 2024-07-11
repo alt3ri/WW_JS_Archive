@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PlatformSdkIosGlobal = void 0);
-const UE = require("ue"),
+const cpp_1 = require("cpp"),
+  UE = require("ue"),
   ue_1 = require("ue"),
   Json_1 = require("../../../Core/Common/Json"),
   Log_1 = require("../../../Core/Common/Log"),
@@ -29,7 +30,7 @@ class ISdkCustomerService extends Json_1.JsonObjBase {
 class PlatformSdkIosGlobal extends PlatformSdkBase_1.PlatformSdkBase {
   constructor() {
     super(...arguments),
-      (this.JEe = void 0),
+      (this.JSe = void 0),
       (this.AnnounceRedPointCallBack = (e) => {
         e.includes("showRed") && (e.includes("1") || e.includes("YES"))
           ? ControllerHolder_1.ControllerHolder.KuroSdkController.SetPostWebViewRedPointState(
@@ -60,10 +61,10 @@ class PlatformSdkIosGlobal extends PlatformSdkBase_1.PlatformSdkBase {
   }
   OnInit() {
     (this.CurrentDid = ue_1.KuroSDKManager.GetBasicInfo().DeviceId),
-      UE.CrashSightProxy.SetCustomData("SdkDeviceId", this.CurrentDid),
-      UE.CrashSightProxy.SetCustomData("Sdkidfv", this.YEe()),
-      UE.CrashSightProxy.SetCustomData("SdkJyId", this.GetJyDid()),
-      UE.CrashSightProxy.SetCustomData("SdkChannelId", this.GetChannelId());
+      cpp_1.FCrashSightProxy.SetCustomData("SdkDeviceId", this.CurrentDid),
+      cpp_1.FCrashSightProxy.SetCustomData("Sdkidfv", this.YSe()),
+      cpp_1.FCrashSightProxy.SetCustomData("SdkJyId", this.GetJyDid()),
+      cpp_1.FCrashSightProxy.SetCustomData("SdkChannelId", this.GetChannelId());
   }
   BindSpecialEvent() {
     ue_1.KuroSDKManager.Get().AnnounceRedPointDelegate.Clear(),
@@ -93,15 +94,15 @@ class PlatformSdkIosGlobal extends PlatformSdkBase_1.PlatformSdkBase {
       ue_1.KuroSDKManager.OpenCustomerService(e);
   }
   GetChannelId() {
-    var e = this.zEe();
+    var e = this.zSe();
     return e?.channelId
       ? (Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("KuroSdk", 28, "channel_id", ["userInfo", e]),
         e?.channelId)
       : "";
   }
-  YEe() {
-    var e = this.zEe();
+  YSe() {
+    var e = this.zSe();
     return e?.idfv
       ? (Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("KuroSdk", 28, "idfv", ["userInfo", e]),
@@ -109,20 +110,20 @@ class PlatformSdkIosGlobal extends PlatformSdkBase_1.PlatformSdkBase {
       : "";
   }
   GetJyDid() {
-    var e = this.zEe();
+    var e = this.zSe();
     return e?.jyDeviceId
       ? (Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("KuroSdk", 28, "jyDeviceId", ["userInfo", e]),
         e?.jyDeviceId)
       : "";
   }
-  zEe() {
+  zSe() {
     var e;
     return (
-      void 0 === this.JEe &&
+      void 0 === this.JSe &&
         ((e = ue_1.KuroSDKManager.GetSdkParams("")),
-        (this.JEe = Json_1.Json.Parse(e))),
-      this.JEe
+        (this.JSe = Json_1.Json.Parse(e))),
+      this.JSe
     );
   }
   QueryProduct(r, e) {
@@ -176,8 +177,8 @@ class PlatformSdkIosGlobal extends PlatformSdkBase_1.PlatformSdkBase {
     super.OnGetSharePlatform(e);
   }
   SdkPay(e) {
-    var r = this.bEe(),
-      r = this.qEe(e, r);
+    var r = this.bSe(),
+      r = this.qSe(e, r);
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug(
         "KuroSdk",
@@ -188,18 +189,18 @@ class PlatformSdkIosGlobal extends PlatformSdkBase_1.PlatformSdkBase {
       ),
       ue_1.KuroSDKManager.KuroSDKEvent(8, r);
   }
-  IEe() {
+  ISe() {
     return ModelManager_1.ModelManager.PlayerInfoModel.GetId()
       ? ModelManager_1.ModelManager.PlayerInfoModel.GetId().toString()
       : ModelManager_1.ModelManager.LoginModel.GetCreatePlayerId()
         ? ModelManager_1.ModelManager.LoginModel.GetCreatePlayerId().toString()
         : "";
   }
-  bEe() {
+  bSe() {
     var e = ModelManager_1.ModelManager.FunctionModel,
       r = ModelManager_1.ModelManager.LoginModel;
     return {
-      roleId: this.IEe(),
+      roleId: this.ISe(),
       roleName: e.GetPlayerName() ? e.GetPlayerName() : "",
       roleLevel: e.GetPlayerLevel() ? e.GetPlayerLevel().toString() : "1",
       serverId: r.GetServerId() ? r.GetServerId() : "",
@@ -210,7 +211,7 @@ class PlatformSdkIosGlobal extends PlatformSdkBase_1.PlatformSdkBase {
       setBalanceLevelTwo: 0,
     };
   }
-  qEe(e, r) {
+  qSe(e, r) {
     var o = new KuroSdkData_1.PayInfoIosGlobal();
     return (
       (o.RoleId = r.roleId.toString()),
@@ -241,7 +242,10 @@ class PlatformSdkIosGlobal extends PlatformSdkBase_1.PlatformSdkBase {
       UE.KuroSDKStaticLibrary.Share(r, e);
   }
   SetFont() {
-    ue_1.KuroSDKManager.SetFont("ARFangXinShuH7GBK-HV.ttf");
+    var e = ModelManager_1.ModelManager.KuroSdkModel.GetDeviceFontAsset();
+    Log_1.Log.CheckInfo() &&
+      Log_1.Log.Info("KuroSdk", 28, "SetFont", ["fontPath", e]),
+      ue_1.KuroSDKManager.SetFont(e);
   }
   OnShareResult(e, r, o) {
     Log_1.Log.CheckInfo() &&

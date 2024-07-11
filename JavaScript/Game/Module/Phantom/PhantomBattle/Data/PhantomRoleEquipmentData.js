@@ -8,54 +8,54 @@ const CommonParamById_1 = require("../../../../../Core/Define/ConfigCommon/Commo
   ControllerHolder_1 = require("../../../../Manager/ControllerHolder");
 class PhantomRoleEquipmentData {
   constructor() {
-    (this.zke = 0), (this.O5i = [0, 0, 0, 0, 0]), (this.k5i = void 0);
+    (this.dFe = 0), (this.NVi = [0, 0, 0, 0, 0]), (this.OVi = void 0);
   }
   Phrase(t) {
-    t instanceof Protocol_1.Aki.Protocol.iNs
-      ? ((this.zke = t.l3n), (this.O5i = t.c8n))
-      : t instanceof Protocol_1.Aki.Protocol.rNs && (this.k5i = t);
+    t instanceof Protocol_1.Aki.Protocol.j5s
+      ? ((this.dFe = t.O6n), (this.NVi = t.W7n))
+      : t instanceof Protocol_1.Aki.Protocol.W5s && (this.OVi = t);
   }
   GetRoleId() {
-    return this.zke;
+    return this.dFe;
   }
   RemoveIncrIdLocal(t) {
-    0 < t && 0 <= (t = this.O5i.indexOf(t)) && (this.O5i[t] = 0);
+    0 < t && 0 <= (t = this.NVi.indexOf(t)) && (this.NVi[t] = 0);
   }
   GetIncrIdList() {
-    return this.O5i;
+    return this.NVi;
   }
   GetPropData() {
-    return this.k5i;
+    return this.OVi;
   }
   CheckPhantomIsMain(t) {
-    return 0 < this.O5i.length && this.O5i[0] === t;
+    return 0 < this.NVi.length && this.NVi[0] === t;
   }
   CheckPhantomIsSub(t) {
-    return 0 < this.O5i.length && this.O5i[0] !== t && this.O5i.includes(t);
+    return 0 < this.NVi.length && this.NVi[0] !== t && this.NVi.includes(t);
   }
   CheckMonsterIsEquip(r) {
-    var e = this.O5i.length;
+    var e = this.NVi.length;
     for (let t = 0; t < e; t++) {
       var o =
         ControllerHolder_1.ControllerHolder.PhantomBattleController.GetPhantomItemDataByUniqueId(
-          this.O5i[t],
+          this.NVi[t],
         );
       if (o && o.GetMonsterId() === r) return !0;
     }
     return !1;
   }
   GetPhantomIndex(r) {
-    var e = this.O5i.length;
-    for (let t = 0; t < e; t++) if (this.O5i[t] === r) return t;
+    var e = this.NVi.length;
+    for (let t = 0; t < e; t++) if (this.NVi[t] === r) return t;
     return -1;
   }
   GetIndexPhantomId(t) {
-    return this.O5i.length > t ? this.O5i[t] : 0;
+    return this.NVi.length > t ? this.NVi[t] : 0;
   }
   GetSumEquipLevel() {
     let r = 0;
     return (
-      this.O5i.forEach((t) => {
+      this.NVi.forEach((t) => {
         t =
           ControllerHolder_1.ControllerHolder.PhantomBattleController.GetPhantomItemDataByUniqueId(
             t,
@@ -66,11 +66,11 @@ class PhantomRoleEquipmentData {
     );
   }
   GetAverageEquipLevel() {
-    var t = this.O5i.length;
+    var t = this.NVi.length;
     return t <= 0 ? 0 : this.GetSumEquipLevel() / t;
   }
   GetPhantomOperationState(t, r) {
-    t = this.O5i[t];
+    t = this.NVi[t];
     return 0 === t ? 1 : t === r ? 0 : 2;
   }
   GetCombinationActiveNum(t) {
@@ -126,12 +126,12 @@ class PhantomRoleEquipmentData {
     var r = new Array();
     const e = new Map(),
       o =
-        (this.k5i?.hDs.forEach((t) => {
-          e.set(t.Ckn, t.gkn);
+        (this.OVi?.Rws.forEach((t) => {
+          e.set(t.j4n, t.W4n);
         }),
         new Map());
-    this.k5i?.lDs.forEach((t) => {
-      o.set(t.Ckn, t.gkn), e.has(t.Ckn) || e.set(t.Ckn, 0);
+    this.OVi?.Dws.forEach((t) => {
+      o.set(t.j4n, t.W4n), e.has(t.j4n) || e.set(t.j4n, 0);
     });
     var i = Array.from(e.keys()),
       n = i.length;
@@ -154,10 +154,10 @@ class PhantomRoleEquipmentData {
     return r;
   }
   CheckHasEmpty() {
-    return this.O5i && 0 <= this.O5i.findIndex((t) => 0 === t);
+    return this.NVi && 0 <= this.NVi.findIndex((t) => 0 === t);
   }
   GetEquippedNum() {
-    return this.O5i ? this.O5i.filter((t) => 0 < t).length : 0;
+    return this.NVi ? this.NVi.filter((t) => 0 < t).length : 0;
   }
 }
 exports.PhantomRoleEquipmentData = PhantomRoleEquipmentData;

@@ -8,14 +8,14 @@ const UE = require("ue"),
 class ButtonAndSpriteItem extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
-      (this.yVe = void 0),
+      (this.G6e = void 0),
       (this.RefreshAllTransitionSprite = () => {
         var e,
           t = this.GetUiSpriteTransition(2);
         t && (e = this.GetSprite(1)) && t.SetAllTransitionSprite(e.GetSprite());
       }),
-      (this.Kyt = () => {
-        this.yVe && this.yVe();
+      (this.eTt = () => {
+        this.G6e && this.G6e();
       }),
       this.CreateThenShowByActor(e.GetOwner());
   }
@@ -25,7 +25,7 @@ class ButtonAndSpriteItem extends UiPanelBase_1.UiPanelBase {
       [1, UE.UISprite],
       [2, UE.UISpriteTransition],
     ]),
-      (this.BtnBindInfo = [[0, this.Kyt]]);
+      (this.BtnBindInfo = [[0, this.eTt]]);
   }
   RefreshSprite(e) {
     e = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(e);
@@ -43,7 +43,7 @@ class ButtonAndSpriteItem extends UiPanelBase_1.UiPanelBase {
     this.GetButton(0).SetSelfInteractive(e);
   }
   BindCallback(e) {
-    this.yVe = e;
+    this.G6e = e;
   }
 }
 exports.ButtonAndSpriteItem = ButtonAndSpriteItem;

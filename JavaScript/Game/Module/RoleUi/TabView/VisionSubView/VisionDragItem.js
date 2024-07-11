@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.VisionDragItem = void 0);
 const UE = require("ue"),
   CustomPromise_1 = require("../../../../../Core/Common/CustomPromise"),
+  Info_1 = require("../../../../../Core/Common/Info"),
   Log_1 = require("../../../../../Core/Common/Log"),
   Time_1 = require("../../../../../Core/Common/Time"),
   TickSystem_1 = require("../../../../../Core/Tick/TickSystem"),
@@ -21,60 +22,60 @@ class VisionDragItem extends UiPanelBase_1.UiPanelBase {
   constructor(t, i, s, e, h) {
     super(),
       (this.CeaseAnimationPromise = void 0),
-      (this.Zdo = void 0),
-      (this.ngo = void 0),
-      (this.sgo = void 0),
+      (this.YCo = void 0),
+      (this.i0o = void 0),
+      (this.o0o = void 0),
       (this.Xy = -1),
-      (this.Y6i = void 0),
-      (this.eCo = void 0),
+      (this.$8i = void 0),
+      (this.JCo = void 0),
       (this.OnOverlayCallBack = void 0),
       (this.OnUnOverlayCallBack = void 0),
       (this.ClickFunction = void 0),
       (this.ClickFailFunction = void 0),
-      (this.aCo = void 0),
-      (this.SCo = new Vector2D_1.Vector2D(0, 0)),
-      (this.ECo = new Vector2D_1.Vector2D(0, 0)),
-      (this.EPe = void 0),
-      (this.DCo = void 0),
-      (this.ago = void 0),
-      (this.RCo = void 0),
-      (this.LEt = TickSystem_1.TickSystem.InvalidId),
-      (this.gCo = TickSystem_1.TickSystem.InvalidId),
-      (this.uCo = void 0),
-      (this.yCo = new Array()),
+      (this.rgo = void 0),
+      (this.pgo = new Vector2D_1.Vector2D(0, 0)),
+      (this.vgo = new Vector2D_1.Vector2D(0, 0)),
+      (this.SPe = void 0),
+      (this.Igo = void 0),
+      (this.r0o = void 0),
+      (this.Tgo = void 0),
+      (this.Gyt = TickSystem_1.TickSystem.InvalidId),
+      (this.mgo = TickSystem_1.TickSystem.InvalidId),
+      (this.hgo = void 0),
+      (this.Mgo = new Array()),
       (this.Uqe = 0),
-      (this.pCo = void 0),
-      (this._Co = void 0),
-      (this.hCo = void 0),
-      (this.lCo = void 0),
-      (this.ACo = void 0),
-      (this.fCo = Vector_1.Vector.Create()),
-      (this.hgo = Vector_1.Vector.Create()),
-      (this.xCo = void 0),
-      (this.TCo = !1),
-      (this.mCo = !1),
-      (this.cCo = !1),
-      (this.cVe = 0),
-      (this.dCo = !1),
-      (this.ICo = !1),
-      (this.PCo = void 0),
+      (this.Cgo = void 0),
+      (this.ago = void 0),
+      (this.ngo = void 0),
+      (this.sgo = void 0),
+      (this.Dgo = void 0),
+      (this.dgo = Vector_1.Vector.Create()),
+      (this.n0o = Vector_1.Vector.Create()),
+      (this.Ugo = void 0),
+      (this.Sgo = !1),
+      (this._go = !1),
+      (this.lgo = !1),
+      (this.L6e = 0),
+      (this.ugo = !1),
+      (this.Ego = !1),
+      (this.Rgo = void 0),
       (this.wqe = void 0),
-      (this.vCo = 0),
-      (this.MCo = 0),
-      (this.LCo = 0),
-      (this.WFt = (t) => {
+      (this.ggo = 0),
+      (this.fgo = 0),
+      (this.ygo = 0),
+      (this.K3t = (t) => {
         "Cease" === t &&
           (this.CeaseAnimationPromise.SetResult(!0),
-          this.lCo?.(this.GetCurrentIndex()));
+          this.sgo?.(this.GetCurrentIndex()));
       }),
       (this.OnDragBegin = (t) => {
         ModelManager_1.ModelManager.PhantomBattleModel.CheckIfCurrentDragIndex(
           this.Xy,
         ) &&
-          ((this.hgo.X = this.Zdo.RootUIComp.GetAnchorOffsetX()),
-          (this.hgo.Y = this.Zdo.RootUIComp.GetAnchorOffsetY()),
-          (this.yCo = []),
-          (this.mCo = !0),
+          ((this.n0o.X = this.YCo.RootUIComp.GetAnchorOffsetX()),
+          (this.n0o.Y = this.YCo.RootUIComp.GetAnchorOffsetY()),
+          (this.Mgo = []),
+          (this._go = !0),
           this.OnBeginDrag());
       }),
       (this.OnPointerDown = (t) => {
@@ -83,28 +84,28 @@ class VisionDragItem extends UiPanelBase_1.UiPanelBase {
             ModelManager_1.ModelManager.PhantomBattleModel.SetCurrentDragIndex(
               this.Xy,
             ),
-          (this.cCo = !1),
+          (this.lgo = !1),
           (this.Uqe = 0),
-          (this.dCo = !1),
-          (this.mCo = !1),
+          (this.ugo = !1),
+          (this._go = !1),
           (this.CeaseAnimationPromise = void 0),
-          (this.uCo = void 0),
-          (this.CCo = !1),
-          (this.LEt = TickSystem_1.TickSystem.Add(
+          (this.hgo = void 0),
+          (this.cgo = !1),
+          (this.Gyt = TickSystem_1.TickSystem.Add(
             () => {
-              this.VCo(), (this.Uqe += Time_1.Time.DeltaTime);
+              this.Ogo(), (this.Uqe += Time_1.Time.DeltaTime);
             },
             "DragTick",
             0,
             !0,
           ).Id),
-          this.Y6i) &&
-          this.eCo?.(this.GetCurrentIndex());
+          this.$8i) &&
+          this.JCo?.(this.GetCurrentIndex());
       }),
       (this.OnPointUp = (t) => {
         var i;
-        this.jCo(),
-          this.WCo(),
+        this.Fgo(),
+          this.Vgo(),
           Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug("UiCommon", 28, "OnPointUp", [
               "OnPointUp",
@@ -114,11 +115,11 @@ class VisionDragItem extends UiPanelBase_1.UiPanelBase {
             this.Xy,
           ) &&
             (ModelManager_1.ModelManager.PhantomBattleModel.ClearCurrentDragIndex(),
-            this.Y6i
+            this.$8i
               ? (Log_1.Log.CheckDebug() &&
                   Log_1.Log.Debug("UiCommon", 28, "OnPointUp", [
                     "this.IfBeginDrag",
-                    this.CCo,
+                    this.cgo,
                   ]),
                 (i = this.Uqe < CLICKTIME),
                 Log_1.Log.CheckDebug() &&
@@ -126,37 +127,37 @@ class VisionDragItem extends UiPanelBase_1.UiPanelBase {
                     "timeState",
                     i,
                   ]),
-                this.CCo || this.QCo())
-              : this.XCo() && this.QCo(!0));
+                this.cgo || this.jgo())
+              : this.Wgo() && this.jgo(!0));
       }),
-      (this.CCo = !1),
+      (this.cgo = !1),
       (this.OnDragEnd = (t) => {
-        this.Y6i &&
-          this.mCo &&
-          (this.Uqe < CLICKTIME ? this.QCo() : this._Co?.(this, this.yCo),
-          (this.mCo = !1));
+        this.$8i &&
+          this._go &&
+          (this.Uqe < CLICKTIME ? this.jgo() : this.ago?.(this, this.Mgo),
+          (this._go = !1));
       }),
-      (this.pCt = (t) => {
+      (this.Agt = (t) => {
         ModelManager_1.ModelManager.PhantomBattleModel.CheckIfCurrentDragIndex(
           this.Xy,
         ) &&
-          this.Y6i &&
-          ((this.uCo = t), this.Uqe < CLICKTIME || this.TickCheckDrag());
+          this.$8i &&
+          ((this.hgo = t), this.Uqe < CLICKTIME || this.TickCheckDrag());
       }),
-      (this.Zdo = i),
-      (this.xCo = this.Zdo.GetOwner().GetComponentByClass(
+      (this.YCo = i),
+      (this.Ugo = this.YCo.GetOwner().GetComponentByClass(
         UE.UIItem.StaticClass(),
       )),
-      (this.ngo = s),
-      (this.sgo = e),
+      (this.i0o = s),
+      (this.o0o = e),
       (this.Xy = h),
-      (this.ACo = t),
-      (this.EPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.xCo)),
-      this.EPe.BindSequenceCloseEvent(this.WFt),
+      (this.Dgo = t),
+      (this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.Ugo)),
+      this.SPe.BindSequenceCloseEvent(this.K3t),
       (this.wqe = t),
-      (this.PCo = Vector2D_1.Vector2D.Create(0, 0).ToUeVector2D()),
-      (this.vCo = t.Width),
-      (this.MCo = t.Width);
+      (this.Rgo = Vector2D_1.Vector2D.Create(0, 0).ToUeVector2D()),
+      (this.ggo = t.Width),
+      (this.fgo = t.Width);
   }
   Init() {
     this.CreateThenShowByActor(this.wqe.GetOwner());
@@ -165,19 +166,19 @@ class VisionDragItem extends UiPanelBase_1.UiPanelBase {
     this.GetDragRoot().SetAsLastHierarchy();
   }
   GetDragRoot() {
-    return this.xCo;
+    return this.Ugo;
   }
   SetDragCheckItem(t) {
-    this.pCo = t;
+    this.Cgo = t;
   }
   SetDraggingParent(t) {
-    this.ago = t;
+    this.r0o = t;
   }
   SetOnDragAnimationStartFunction(t) {
-    this.hCo = t;
+    this.ngo = t;
   }
   SetOnDragAnimationEndFunction(t) {
-    this.lCo = t;
+    this.sgo = t;
   }
   SetOnClickCallBack(t) {
     this.ClickFunction = t;
@@ -186,79 +187,79 @@ class VisionDragItem extends UiPanelBase_1.UiPanelBase {
     this.ClickFailFunction = t;
   }
   SetOnBeginDragCall(t) {
-    this.aCo = t;
+    this.rgo = t;
   }
-  QCo(t = !1) {
-    return t || this.XCo()
+  jgo(t = !1) {
+    return t || this.Wgo()
       ? (this.ClickFunction?.(this.Xy),
-        (this.cVe = TimeUtil_1.TimeUtil.GetServerTime()),
-        (this.cCo = !0))
-      : ((this.cCo = !1), this.ClickFailFunction?.(this.Xy), !1);
+        (this.L6e = TimeUtil_1.TimeUtil.GetServerTime()),
+        (this.lgo = !0))
+      : ((this.lgo = !1), this.ClickFailFunction?.(this.Xy), !1);
   }
   CheckAndGetCurrentClickState() {
-    return this.cCo;
+    return this.lgo;
   }
   SetDragSuccessCallBack(t) {
-    this._Co = t;
+    this.ago = t;
   }
   GetAnimationTargetPos() {
-    return this.RCo;
+    return this.Tgo;
   }
   ClearStayingItem() {
-    this.yCo = [];
+    this.Mgo = [];
   }
   GetStayingItem() {
-    return this.yCo;
+    return this.Mgo;
   }
   DoDragSequence() {
     this.TickCheckDrag(),
-      this.EPe.PlayLevelSequenceByName("Drag"),
-      (this.ICo = !0),
-      this.hCo?.(this.GetCurrentIndex());
+      this.SPe.PlayLevelSequenceByName("Drag"),
+      (this.Ego = !0),
+      this.ngo?.(this.GetCurrentIndex());
   }
   DoCeaseSequence() {
-    (this.ICo = !1),
+    (this.Ego = !1),
       (this.CeaseAnimationPromise = new CustomPromise_1.CustomPromise()),
-      this.EPe.PlayLevelSequenceByName("Cease");
+      this.SPe.PlayLevelSequenceByName("Cease");
   }
-  zCo() {
-    this.ICo &&
-      (this.EPe.PlayLevelSequenceByName("Fail"),
-      this.lCo?.(this.GetCurrentIndex()));
+  $go() {
+    this.Ego &&
+      (this.SPe.PlayLevelSequenceByName("Fail"),
+      this.sgo?.(this.GetCurrentIndex()));
   }
   ResetPositionThenStartDragState() {
     this.ResetPosition(), this.StartDragState();
   }
   CacheStartDragPosition() {
-    this.Zdo.RootUIComp.SetAnchorAlign(2, 2);
-    var t = this.Zdo.RootUIComp.GetLGUISpaceAbsolutePosition(),
+    this.YCo.RootUIComp.SetAnchorAlign(2, 2);
+    var t = this.YCo.RootUIComp.GetLGUISpaceAbsolutePosition(),
       i =
-        (this.Zdo.RootUIComp.SetUIParent(this.ago, !0),
-        this.Zdo.RootUIComp.SetLGUISpaceAbsolutePosition(t),
-        this.Zdo.RootUIComp.GetLGUISpaceAbsolutePosition()),
+        (this.YCo.RootUIComp.SetUIParent(this.r0o, !0),
+        this.YCo.RootUIComp.SetLGUISpaceAbsolutePosition(t),
+        this.YCo.RootUIComp.GetLGUISpaceAbsolutePosition()),
       i =
-        ((this.DCo = new Vector2D_1.Vector2D(i.X, i.Y)),
-        (this.RCo = new Vector2D_1.Vector2D(t.X, t.Y)),
-        this.JCo(),
+        ((this.Igo = new Vector2D_1.Vector2D(i.X, i.Y)),
+        (this.Tgo = new Vector2D_1.Vector2D(t.X, t.Y)),
+        this.Xgo(),
         new UE.Vector(1, 1, 1));
-    this.Zdo.RootUIComp.SetUIItemScale(i);
+    this.YCo.RootUIComp.SetUIItemScale(i);
   }
   StartDragState() {
-    (this.TCo = !0), this.Zdo.RootUIComp.SetAnchorAlign(2, 2);
-    var t = this.Zdo.RootUIComp.GetLGUISpaceAbsolutePosition();
-    this.Zdo.RootUIComp.SetUIParent(this.ago, !0),
-      this.Zdo.RootUIComp.SetLGUISpaceAbsolutePosition(t),
-      (this.LCo = 0);
+    (this.Sgo = !0), this.YCo.RootUIComp.SetAnchorAlign(2, 2);
+    var t = this.YCo.RootUIComp.GetLGUISpaceAbsolutePosition();
+    this.YCo.RootUIComp.SetUIParent(this.r0o, !0),
+      this.YCo.RootUIComp.SetLGUISpaceAbsolutePosition(t),
+      (this.ygo = 0);
   }
   SetItemToSourceSize() {
-    this.Zdo.RootUIComp.SetWidth(this.vCo),
-      this.Zdo.RootUIComp.SetHeight(this.MCo);
+    this.YCo.RootUIComp.SetWidth(this.ggo),
+      this.YCo.RootUIComp.SetHeight(this.fgo);
   }
   StartClickCheckTimer() {
-    this.WCo(),
-      (this.gCo = TickSystem_1.TickSystem.Add(
+    this.Vgo(),
+      (this.mgo = TickSystem_1.TickSystem.Add(
         () => {
-          0 === this.lgo() && (this.OnPointUp(void 0), this.WCo());
+          0 === this.s0o() && (this.OnPointUp(void 0), this.Vgo());
         },
         "DragTick",
         0,
@@ -266,9 +267,9 @@ class VisionDragItem extends UiPanelBase_1.UiPanelBase {
       ).Id);
   }
   SetPointerDownCallBack(t) {
-    this.eCo = t;
+    this.JCo = t;
   }
-  YCo() {
+  Qgo() {
     var t =
         LguiEventSystemManager_1.LguiEventSystemManager.IsPressComponentIsValid(
           0,
@@ -280,17 +281,17 @@ class VisionDragItem extends UiPanelBase_1.UiPanelBase {
     let s = 0;
     return t && s++, i && s++, s;
   }
-  VCo() {
-    2 <= this.YCo() || 0 === this.YCo()
-      ? this.jCo()
+  Ogo() {
+    2 <= this.Qgo() || 0 === this.Qgo()
+      ? this.Fgo()
       : this.Uqe >= CLICKTIME &&
-        (this.jCo(), this.Y6i) &&
-        (this.dCo || (this.DoDragSequence(), (this.dCo = !0)),
-        this.aCo && this.aCo(this.Xy),
-        this.uCo) &&
-        this.pCt(this.uCo);
+        (this.Fgo(), this.$8i) &&
+        (this.ugo || (this.DoDragSequence(), (this.ugo = !0)),
+        this.rgo && this.rgo(this.Xy),
+        this.hgo) &&
+        this.Agt(this.hgo);
   }
-  lgo() {
+  s0o() {
     var t =
         LguiEventSystemManager_1.LguiEventSystemManager.IsPressComponentIsValid(
           0,
@@ -303,58 +304,58 @@ class VisionDragItem extends UiPanelBase_1.UiPanelBase {
     return t && s++, i && s++, s;
   }
   SetToTargetParentAndSetStretch(t) {
-    this.Zdo.RootUIComp.SetAnchorAlign(4, 4),
-      this.Zdo.RootUIComp.SetUIParent(t, !0),
-      this.Zdo.RootUIComp.SetVerticalStretch(this.PCo),
-      this.Zdo.RootUIComp.SetHorizontalStretch(this.PCo);
+    this.YCo.RootUIComp.SetAnchorAlign(4, 4),
+      this.YCo.RootUIComp.SetUIParent(t, !0),
+      this.YCo.RootUIComp.SetVerticalStretch(this.Rgo),
+      this.YCo.RootUIComp.SetHorizontalStretch(this.Rgo);
   }
   SetToNormalParent() {
-    this.SetToTargetParentAndSetStretch(this.ACo);
+    this.SetToTargetParentAndSetStretch(this.Dgo);
   }
   ResetPosition() {
-    this.ICo && this.zCo(),
-      (this.ICo = !1),
-      this.TCo &&
-        (this._go(),
-        this.DCo && this.Zdo.RootUIComp.SetAnchorOffset(this.PCo),
-        (this.TCo = !1));
+    this.Ego && this.$go(),
+      (this.Ego = !1),
+      this.Sgo &&
+        (this.a0o(),
+        this.Igo && this.YCo.RootUIComp.SetAnchorOffset(this.Rgo),
+        (this.Sgo = !1));
   }
-  _go() {
-    this.JCo();
+  a0o() {
+    this.Xgo();
   }
-  JCo() {
-    this.Zdo.RootUIComp.SetAnchorAlign(4, 4),
-      this.Zdo.RootUIComp.SetUIParent(this.ACo, !0);
+  Xgo() {
+    this.YCo.RootUIComp.SetAnchorAlign(4, 4),
+      this.YCo.RootUIComp.SetUIParent(this.Dgo, !0);
     var t = new UE.Vector(1, 1, 1);
-    this.Zdo.RootUIComp.SetUIItemScale(t),
-      this.Zdo.RootUIComp.SetHorizontalStretch(this.PCo),
-      this.Zdo.RootUIComp.SetVerticalStretch(this.PCo);
+    this.YCo.RootUIComp.SetUIItemScale(t),
+      this.YCo.RootUIComp.SetHorizontalStretch(this.Rgo),
+      this.YCo.RootUIComp.SetVerticalStretch(this.Rgo);
   }
-  XCo() {
-    return this.Uqe < CLICKTIME && this.KCo();
+  Wgo() {
+    return this.Uqe < CLICKTIME && this.Hgo();
   }
-  KCo() {
+  Hgo() {
     return (
-      !!ModelManager_1.ModelManager.PlatformModel.IsInGamepad() ||
-      TimeUtil_1.TimeUtil.GetServerTime() - this.cVe > CLICKCALLGAP
+      !!Info_1.Info.IsInGamepad() ||
+      TimeUtil_1.TimeUtil.GetServerTime() - this.L6e > CLICKCALLGAP
     );
   }
   OnBeginDrag() {
-    this.CCo = !0;
+    this.cgo = !0;
   }
-  WCo() {
-    this.gCo !== TickSystem_1.TickSystem.InvalidId &&
-      (TickSystem_1.TickSystem.Remove(this.gCo),
-      (this.gCo = TickSystem_1.TickSystem.InvalidId));
+  Vgo() {
+    this.mgo !== TickSystem_1.TickSystem.InvalidId &&
+      (TickSystem_1.TickSystem.Remove(this.mgo),
+      (this.mgo = TickSystem_1.TickSystem.InvalidId));
   }
-  jCo() {
-    this.LEt !== TickSystem_1.TickSystem.InvalidId &&
-      (TickSystem_1.TickSystem.Remove(this.LEt),
-      (this.LEt = TickSystem_1.TickSystem.InvalidId));
+  Fgo() {
+    this.Gyt !== TickSystem_1.TickSystem.InvalidId &&
+      (TickSystem_1.TickSystem.Remove(this.Gyt),
+      (this.Gyt = TickSystem_1.TickSystem.InvalidId));
   }
   SetItemToPointerPosition() {
     var t, i, s;
-    this.TCo &&
+    this.Sgo &&
       ((s =
         LguiEventSystemManager_1.LguiEventSystemManager.GetPointerEventData(
           0,
@@ -367,36 +368,36 @@ class VisionDragItem extends UiPanelBase_1.UiPanelBase {
         ConfigManager_1.ConfigManager.PhantomBattleConfig.GetVisionScrollerOffsetYDir()),
       (i = s.X + i),
       (s = s.Z + t),
-      (this.fCo.X === i && this.fCo.Y === s) ||
-        ((this.fCo.X = i),
-        (this.fCo.Y = s),
-        this.Zdo.RootUIComp.SetAnchorOffsetX(this.fCo.X),
-        this.Zdo.RootUIComp.SetAnchorOffsetY(this.fCo.Y)));
+      (this.dgo.X === i && this.dgo.Y === s) ||
+        ((this.dgo.X = i),
+        (this.dgo.Y = s),
+        this.YCo.RootUIComp.SetAnchorOffsetX(this.dgo.X),
+        this.YCo.RootUIComp.SetAnchorOffsetY(this.dgo.Y)));
   }
   TickCheckDrag() {
-    this.LCo <= MOVEPARENTDELAYTIME
-      ? this.LCo++
-      : (this.SetItemToPointerPosition(), this.ZCo());
+    this.ygo <= MOVEPARENTDELAYTIME
+      ? this.ygo++
+      : (this.SetItemToPointerPosition(), this.Ygo());
   }
   GetMiddlePosition() {
     return [
-      this.Zdo.RootUIComp.GetLGUISpaceCenterAbsolutePosition().X,
-      this.Zdo.RootUIComp.GetLGUISpaceCenterAbsolutePosition().Y,
+      this.YCo.RootUIComp.GetLGUISpaceCenterAbsolutePosition().X,
+      this.YCo.RootUIComp.GetLGUISpaceCenterAbsolutePosition().Y,
     ];
   }
-  ZCo() {
+  Ygo() {
     const i = new Array();
-    this.pCo?.forEach((t) => {
+    this.Cgo?.forEach((t) => {
       t.CheckIfSelfItem(this.Xy) ||
-        (t.CheckOverlap(this.tgo(), this.igo()) && i.push(t));
+        (t.CheckOverlap(this.zgo(), this.Zgo()) && i.push(t));
     }),
-      this.yCo.forEach((t) => {
+      this.Mgo.forEach((t) => {
         i.includes(t) || t.OnUnOverlay();
       }),
       i.forEach((t) => {
-        this.yCo.includes(t) || t.OnOverlay();
+        this.Mgo.includes(t) || t.OnOverlay();
       }),
-      (this.yCo = i);
+      (this.Mgo = i);
   }
   CheckIfSelfItem(t) {
     return t === this.Xy;
@@ -405,10 +406,10 @@ class VisionDragItem extends UiPanelBase_1.UiPanelBase {
     return this.Xy;
   }
   Refresh(t) {
-    (this.Y6i = t), this.Kbe(t), this.Pqt(t);
+    (this.$8i = t), this.Kbe(t), this.BGt(t);
   }
   GetCurrentData() {
-    return this.Y6i;
+    return this.$8i;
   }
   OnUnOverlay() {
     this.OnUnOverlayCallBack?.();
@@ -421,36 +422,36 @@ class VisionDragItem extends UiPanelBase_1.UiPanelBase {
       t = t.Y,
       e = i.X,
       i = i.Y,
-      h = this.tgo().X,
-      r = this.tgo().Y,
-      a = this.igo().X,
-      n = this.igo().Y;
+      h = this.zgo().X,
+      r = this.zgo().Y,
+      a = this.Zgo().X,
+      n = this.Zgo().Y;
     return s < r && h < t && e < n && a < i;
   }
   Kbe(t) {
-    this.sgo.SetUIActive(void 0 !== t),
+    this.o0o.SetUIActive(void 0 !== t),
       t &&
         ((t = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
           t.GetConfigId(!0),
         )),
-        this.SetTextureByPath(t.IconMiddle, this.sgo, "VisionEquipmentView"));
+        this.SetTextureByPath(t.IconMiddle, this.o0o, "VisionEquipmentView"));
   }
-  Pqt(t) {
-    this.ngo.SetUIActive(void 0 !== t);
+  BGt(t) {
+    this.i0o.SetUIActive(void 0 !== t);
   }
-  tgo() {
-    var t = this.Zdo.RootUIComp,
-      i = this.vCo / 2,
+  zgo() {
+    var t = this.YCo.RootUIComp,
+      i = this.ggo / 2,
       s = t.GetLGUISpaceCenterAbsolutePosition().X - i,
       t = t.GetLGUISpaceCenterAbsolutePosition().X + i;
-    return (this.SCo.X = s), (this.SCo.Y = t), this.SCo;
+    return (this.pgo.X = s), (this.pgo.Y = t), this.pgo;
   }
-  igo() {
-    var t = this.Zdo.RootUIComp,
-      i = this.MCo / 2,
+  Zgo() {
+    var t = this.YCo.RootUIComp,
+      i = this.fgo / 2,
       s = t.GetLGUISpaceCenterAbsolutePosition().Y - i,
       t = t.GetLGUISpaceCenterAbsolutePosition().Y + i;
-    return (this.ECo.X = s), (this.ECo.Y = t), this.ECo;
+    return (this.vgo.X = s), (this.vgo.Y = t), this.vgo;
   }
 }
 exports.VisionDragItem = VisionDragItem;

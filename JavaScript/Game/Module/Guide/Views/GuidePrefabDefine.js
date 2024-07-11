@@ -1,6 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
-  (exports.setPrefabText = exports.predefPrefabSetting = void 0);
+  (exports.setPrefabText =
+    exports.predefPrefabSetting =
+    exports.NEW_TAG =
+      void 0);
 const UE = require("ue"),
   StringBuilder_1 = require("../../../../Core/Utils/StringBuilder"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
@@ -10,27 +13,27 @@ function setPrefabText(e, t) {
   var r = new StringBuilder_1.StringBuilder();
   const o = [];
   let i = [];
-  const n = [];
+  const s = [];
   let a = 0;
   for (let e = 0; e < t.length; ) {
-    var s = t.indexOf("[", e);
-    if (-1 === s) {
+    var n = t.indexOf("[", e);
+    if (-1 === n) {
       r.Append(t.substring(e, t.length));
       break;
     }
-    r.Append(t.substring(e, s));
-    var l = t.indexOf("]", s);
-    if (!(s < l)) {
-      r.Append(t.substring(s + 1, t.length));
+    r.Append(t.substring(e, n));
+    var l = t.indexOf("]", n);
+    if (!(n < l)) {
+      r.Append(t.substring(n + 1, t.length));
       break;
     }
-    s = t.substring(s + 1, l).split(",");
-    if (0 < s.length) {
-      o.push({ PrefabKey: s[0], Args: s });
-      var u = exports.predefPrefabSetting.get(s[0]);
+    n = t.substring(n + 1, l).split(",");
+    if (0 < n.length) {
+      o.push({ PrefabKey: n[0], Args: n });
+      var u = exports.predefPrefabSetting.get(n[0]);
       if (u) {
-        var c = u.GetPrefabPathFunc(s);
-        n.push(c.length), (i = i.concat(c)), (e = l + 1);
+        var c = u.GetPrefabPathFunc(n);
+        s.push(c.length), (i = i.concat(c)), (e = l + 1);
         for (let e = 0; e < c.length; e++)
           r.Append("<snidx="), r.Append(a), r.Append("/>"), a++;
       }
@@ -40,30 +43,32 @@ function setPrefabText(e, t) {
     let a = 0;
     o.forEach((e, t, r) => {
       var o = exports.predefPrefabSetting.get(e.PrefabKey);
-      o?.Callback && o.Callback(i.slice(a, a + n[t]), e.Args), (a += n[t]);
+      o?.Callback && o.Callback(i.slice(a, a + s[t]), e.Args), (a += s[t]);
     });
   });
 }
-(exports.predefPrefabSetting = new Map([
-  [
-    "FightConcertoStateGuide",
-    {
-      GetPrefabPathFunc: () => {
-        const r = [];
-        return (
+(exports.NEW_TAG = "New:"),
+  (exports.predefPrefabSetting = new Map([
+    [
+      "FightConcertoStateGuide",
+      {
+        GetPrefabPathFunc: () => {
+          const r = [];
+          return (
+            ModelManager_1.ModelManager.SceneTeamModel.GetTeamEntities(
+              !0,
+            ).forEach((e, t) => {
+              r.push(
+                "/Game/Aki/UI/UIResources/UiFight/Prefabs/FightConcertoState.FightConcertoState",
+              );
+            }),
+            r
+          );
+        },
+        Callback: (o, e) => {
           ModelManager_1.ModelManager.SceneTeamModel.GetTeamEntities(
             !0,
           ).forEach((e, t) => {
-            r.push(
-              "/Game/Aki/UI/UIResources/UiFight/Prefabs/FightConcertoState.FightConcertoState",
-            );
-          }),
-          r
-        );
-      },
-      Callback: (o, e) => {
-        ModelManager_1.ModelManager.SceneTeamModel.GetTeamEntities(!0).forEach(
-          (e, t) => {
             if (t < o.length) {
               const r = new ConcertoResponseItem_1.ConcertoResponseItem();
               r.CreateByActorAsync(o[t]).then(() => {
@@ -75,11 +80,10 @@ function setPrefabText(e, t) {
                     .SetUIActive(!0);
               });
             }
-          },
-        );
+          });
+        },
       },
-    },
-  ],
-])),
+    ],
+  ])),
   (exports.setPrefabText = setPrefabText);
 //# sourceMappingURL=GuidePrefabDefine.js.map

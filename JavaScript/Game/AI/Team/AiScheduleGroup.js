@@ -116,12 +116,12 @@ class AiScheduleGroup {
             e.AllocationPeriodic.Min,
             e.AllocationPeriodic.Max,
           )),
-        this.Sse());
-    AiScheduleGroup.Ese.clear(),
+        this.Ese());
+    AiScheduleGroup.Sse.clear(),
       AiScheduleGroup.yse.clear(),
       this.Ise(e, t),
       this.Tse(r),
-      AiScheduleGroup.Ese.clear(),
+      AiScheduleGroup.Sse.clear(),
       AiScheduleGroup.yse.clear();
   }
   Ise(t, r) {
@@ -133,7 +133,7 @@ class AiScheduleGroup {
         Math.atan2(h.Y - t.Y, h.X - t.X) * MathUtils_1.MathUtils.RadToDeg - r;
       for (; 180 < e; ) e -= 360;
       for (; 180 < -e; ) e += 360;
-      AiScheduleGroup.Ese.set(o, e);
+      AiScheduleGroup.Sse.set(o, e);
       h = Vector_1.Vector.DistSquared2D(h, t);
       h > i && (i = h),
         AiScheduleGroup.yse.set(o, h),
@@ -167,8 +167,8 @@ class AiScheduleGroup {
     }
     if (0 < AiScheduleGroup.Lse.size) {
       for (const S of AiScheduleGroup.Lse) {
-        Log_1.Log.CheckError() &&
-          Log_1.Log.Error(
+        Log_1.Log.CheckWarn() &&
+          Log_1.Log.Warn(
             "AI",
             6,
             "NotDistributeAi",
@@ -207,7 +207,7 @@ class AiScheduleGroup {
         for (const c of i) {
           var o = AiAndScore.Get();
           (o.Ai = c),
-            (o.Score = AiScheduleGroup.Ese.get(c)),
+            (o.Score = AiScheduleGroup.Sse.get(c)),
             AiScheduleGroup.Dse.push(o);
         }
         AiScheduleGroup.Dse.sort(AiAndScore.Compare);
@@ -318,7 +318,7 @@ class AiScheduleGroup {
         var i = this.mse.get(h);
         !i ||
           Time_1.Time.WorldTime <= i.NextUpdateCenterTime ||
-          (e || ([e, t] = this.Sse()),
+          (e || ([e, t] = this.Ese()),
           (i.NextUpdateCenterTime =
             Time_1.Time.WorldTime +
             MathUtils_1.MathUtils.GetRandomRange(
@@ -341,7 +341,7 @@ class AiScheduleGroup {
     AiScheduleGroup.Pse.splice(0, AiScheduleGroup.Pse.length);
     for (const l of this.dse) {
       var t = this.mse.get(l);
-      if (l.CharActorComp.Entity.CheckGetComponent(185).HasTag(-1503953470))
+      if (l.CharActorComp.Entity.CheckGetComponent(188).HasTag(-1503953470))
         if (t.NextScheduleTimeBeAttack) {
           if (t.NextScheduleTimeBeAttack < Time_1.Time.WorldTime) {
             AiScheduleGroup.Pse.push(l);
@@ -357,11 +357,11 @@ class AiScheduleGroup {
       else t.NextScheduleTimeBeAttack = void 0;
       t.HasAttack
         ? t.NextScheduleTimeAttack < Time_1.Time.WorldTime &&
-          !l.CharActorComp.Entity.CheckGetComponent(185).HasTag(-1371021686) &&
+          !l.CharActorComp.Entity.CheckGetComponent(188).HasTag(-1371021686) &&
           AiScheduleGroup.Pse.push(l)
         : t.NextScheduleTimeNoAttack < Time_1.Time.WorldTime
           ? AiScheduleGroup.Pse.push(l)
-          : l.CharActorComp.Entity.CheckGetComponent(185).HasTag(-1371021686) &&
+          : l.CharActorComp.Entity.CheckGetComponent(188).HasTag(-1371021686) &&
             ((t.HasAttack = !0),
             BlackboardController_1.BlackboardController.RemoveValueByEntity(
               l.CharAiDesignComp.Entity.Id,
@@ -373,7 +373,7 @@ class AiScheduleGroup {
       this.mse.size - this.dse.size,
     );
     if (0 < r) {
-      var [i, o] = this.Sse();
+      var [i, o] = this.Ese();
       let e = 0;
       for (const _ of this.fse) {
         var h = this.cse.AiTeamAttacks[e];
@@ -493,9 +493,9 @@ class AiScheduleGroup {
         this.dse.add(i.Ai));
     }
   }
-  Sse() {
+  Ese() {
     var e = this.Target.Entity.CheckGetComponent(3),
-      t = this.Target.Entity.CheckGetComponent(52),
+      t = this.Target.Entity.CheckGetComponent(53),
       t =
         t?.Valid && t.CharacterController
           ? t.CharacterController.K2_GetActorRotation().Yaw
@@ -504,7 +504,7 @@ class AiScheduleGroup {
   }
 }
 ((exports.AiScheduleGroup = AiScheduleGroup).Dse = new Array()),
-  (AiScheduleGroup.Ese = new Map()),
+  (AiScheduleGroup.Sse = new Map()),
   (AiScheduleGroup.yse = new Map()),
   (AiScheduleGroup.Lse = new Set()),
   (AiScheduleGroup.Pse = new Array());

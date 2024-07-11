@@ -42,7 +42,11 @@ function createQuestObj(s) {
   }
 }
 exports.createQuestObj = createQuestObj;
-class MainQuest extends Quest_1.Quest {}
+class MainQuest extends Quest_1.Quest {
+  SetUpBehaviorTree(e) {
+    super.SetUpBehaviorTree(e), e.SetMapMarkResident(!0);
+  }
+}
 exports.MainQuest = MainQuest;
 class BranchQuest extends Quest_1.Quest {}
 exports.BranchQuest = BranchQuest;

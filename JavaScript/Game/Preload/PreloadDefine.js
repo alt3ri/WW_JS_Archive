@@ -33,30 +33,30 @@ class AssetRecord {
       (this.Others = new Array());
   }
   AddActorClass(t) {
-    return !!this.csr(t) && (this.ActorClass.push(t), !0);
+    return !!this.lar(t) && (this.ActorClass.push(t), !0);
   }
   AddAnimation(t) {
-    this.csr(t) && this.Animations.push(t);
+    this.lar(t) && this.Animations.push(t);
   }
   AddEffect(t) {
-    return !!this.csr(t) && (this.Effects.push(t), !0);
+    return !!this.lar(t) && (this.Effects.push(t), !0);
   }
   AddAudio(t) {
-    this.csr(t) && this.Audios.push(t);
+    this.lar(t) && this.Audios.push(t);
   }
   AddMesh(t) {
-    this.csr(t) && this.Meshes.push(t);
+    this.lar(t) && this.Meshes.push(t);
   }
   AddMaterial(t) {
-    this.csr(t) && this.Materials.push(t);
+    this.lar(t) && this.Materials.push(t);
   }
   AddAnimationBlueprint(t) {
-    this.csr(t) && this.AnimationBlueprints.push(t);
+    this.lar(t) && this.AnimationBlueprints.push(t);
   }
   AddOther(t) {
-    this.csr(t) && this.Others.push(t);
+    this.lar(t) && this.Others.push(t);
   }
-  csr(t) {
+  lar(t) {
     return !(
       !t?.length ||
       (t.startsWith(FORBID_PATH)
@@ -296,12 +296,12 @@ class SkillAssetManager {
   constructor(t) {
     (this.FightAssetManager = t),
       (this.SkillAssetMap = new Map()),
-      (this.msr = void 0);
+      (this._ar = void 0);
   }
   AddSkill(e, t) {
     return (
-      void 0 === this.msr &&
-        (this.msr = UE.NewObject(
+      void 0 === this._ar &&
+        (this._ar = UE.NewObject(
           UE.HoldPreloadObject.StaticClass(),
           GlobalData_1.GlobalData.GameInstance,
         )),
@@ -316,7 +316,7 @@ class SkillAssetManager {
           ? (this.SkillAssetMap.set(e, t),
             (t.AddObjectCallback = (t, s) => {
               3 !== this.FightAssetManager.EntityAssetElement.LoadState &&
-                this.msr.AddEntityAsset(e, t);
+                this._ar.AddEntityAsset(e, t);
             }),
             !0)
           : (Log_1.Log.CheckError() &&
@@ -332,7 +332,7 @@ class SkillAssetManager {
   RemoveSkill(t) {
     return (
       !!this.SkillAssetMap.get(t) &&
-      (this.SkillAssetMap.delete(t), this.msr?.RemoveEntityAssets(t), !0)
+      (this.SkillAssetMap.delete(t), this._ar?.RemoveEntityAssets(t), !0)
     );
   }
   GetSkill(t) {
@@ -340,7 +340,7 @@ class SkillAssetManager {
     if (t) return t;
   }
   Clear() {
-    this.SkillAssetMap.clear(), this.msr?.Clear();
+    this.SkillAssetMap.clear(), this._ar?.Clear();
   }
 }
 exports.SkillAssetManager = SkillAssetManager;
@@ -350,17 +350,17 @@ class BulletAssetManager {
       (this.BulletMapping = new Map()),
       (this.IndexMapping = new Map()),
       (this.BulletAssetMap = new Map()),
-      (this.msr = void 0),
-      (this.jSe = -1),
-      (this.msr = UE.NewObject(
+      (this._ar = void 0),
+      (this.jEe = -1),
+      (this._ar = UE.NewObject(
         UE.HoldPreloadObject.StaticClass(),
         GlobalData_1.GlobalData.GameInstance,
       ));
   }
   AddBullet(t, s) {
     if (
-      (void 0 === this.msr &&
-        (this.msr = UE.NewObject(
+      (void 0 === this._ar &&
+        (this._ar = UE.NewObject(
           UE.HoldPreloadObject.StaticClass(),
           GlobalData_1.GlobalData.GameInstance,
         )),
@@ -382,14 +382,14 @@ class BulletAssetManager {
           ),
         !1
       );
-    const e = ++this.jSe;
+    const e = ++this.jEe;
     return (
       this.BulletMapping.set(t, e),
       this.IndexMapping.set(e, t),
       this.BulletAssetMap.set(e, s),
       (s.AddObjectCallback = (t, s) => {
         3 !== this.FightAssetManager.EntityAssetElement.LoadState &&
-          this.msr.AddEntityAsset(e, t);
+          this._ar.AddEntityAsset(e, t);
       }),
       !0
     );
@@ -405,16 +405,16 @@ class BulletAssetManager {
       (this.IndexMapping.delete(s),
       this.BulletMapping.delete(t),
       this.BulletAssetMap.delete(s),
-      this.msr?.RemoveEntityAssets(s),
+      this._ar?.RemoveEntityAssets(s),
       !0)
     );
   }
   Clear() {
-    (this.jSe = -1),
+    (this.jEe = -1),
       this.BulletMapping.clear(),
       this.IndexMapping.clear(),
       this.BulletAssetMap.clear(),
-      this.msr?.Clear();
+      this._ar?.Clear();
   }
 }
 exports.BulletAssetManager = BulletAssetManager;
@@ -424,17 +424,17 @@ class StateMachineAssetManager {
       (this.StateMachineMapping = new Map()),
       (this.IndexMapping = new Map()),
       (this.StateMachineAssetMap = new Map()),
-      (this.msr = void 0),
-      (this.jSe = -1),
-      (this.msr = UE.NewObject(
+      (this._ar = void 0),
+      (this.jEe = -1),
+      (this._ar = UE.NewObject(
         UE.HoldPreloadObject.StaticClass(),
         GlobalData_1.GlobalData.GameInstance,
       ));
   }
   AddStateMachine(t, s) {
     if (
-      (void 0 === this.msr &&
-        (this.msr = UE.NewObject(
+      (void 0 === this._ar &&
+        (this._ar = UE.NewObject(
           UE.HoldPreloadObject.StaticClass(),
           GlobalData_1.GlobalData.GameInstance,
         )),
@@ -456,14 +456,14 @@ class StateMachineAssetManager {
           ),
         !1
       );
-    const e = ++this.jSe;
+    const e = ++this.jEe;
     return (
       this.StateMachineMapping.set(t, e),
       this.IndexMapping.set(e, t),
       this.StateMachineAssetMap.set(e, s),
       (s.AddObjectCallback = (t, s) => {
         3 !== this.FightAssetManager.EntityAssetElement.LoadState &&
-          this.msr.AddEntityAsset(e, t);
+          this._ar.AddEntityAsset(e, t);
       }),
       !0
     );
@@ -479,16 +479,16 @@ class StateMachineAssetManager {
       (this.IndexMapping.delete(s),
       this.StateMachineMapping.delete(t),
       this.StateMachineAssetMap.delete(s),
-      this.msr?.RemoveEntityAssets(s),
+      this._ar?.RemoveEntityAssets(s),
       !0)
     );
   }
   Clear() {
-    (this.jSe = -1),
+    (this.jEe = -1),
       this.StateMachineMapping.clear(),
       this.IndexMapping.clear(),
       this.StateMachineAssetMap.clear(),
-      this.msr?.Clear();
+      this._ar?.Clear();
   }
 }
 exports.StateMachineAssetManager = StateMachineAssetManager;
@@ -515,9 +515,9 @@ class EntityAssetElement {
       (this.CreatureDataComponent = void 0),
       (this.Callbacks = void 0),
       (this.LoadPriority = 100),
-      (this.dsr = 0),
-      (this.Csr = !1),
-      (this.gsr = void 0),
+      (this.uar = 0),
+      (this.car = !1),
+      (this.mar = void 0),
       (this.IsDestroy = !1),
       (this.EntityHandle = t),
       (this.CreatureDataComponent = t.Entity.GetComponent(0)),
@@ -530,25 +530,25 @@ class EntityAssetElement {
         (this.LoadPriority = 101);
   }
   get LoadState() {
-    return this.dsr;
+    return this.uar;
   }
   set LoadState(t) {
-    this.dsr = t;
+    this.uar = t;
   }
   get CollectMinorAsset() {
-    return this.Csr;
+    return this.car;
   }
   set CollectMinorAsset(t) {
-    this.Csr = t;
+    this.car = t;
   }
   get Entity() {
     return this.EntityHandle?.Entity;
   }
   get BlueprintClassPath() {
-    return this.gsr;
+    return this.mar;
   }
   set BlueprintClassPath(t) {
-    this.gsr = t;
+    this.mar = t;
   }
   AddCallback(t) {
     t &&
@@ -569,12 +569,12 @@ class EntityAssetElement {
       this.Entity.Id,
     ),
       this.FightAssetManager.Clear(),
-      (this.gsr = void 0),
+      (this.mar = void 0),
       (this.EntityHandle = void 0),
       (this.CreatureDataComponent = void 0),
-      (this.Csr = !1),
+      (this.car = !1),
       (this.Callbacks = void 0),
-      (this.dsr = 0),
+      (this.uar = 0),
       (this.IsDestroy = !0);
   }
   PrintDebugInfo() {}
@@ -582,12 +582,12 @@ class EntityAssetElement {
 exports.EntityAssetElement = EntityAssetElement;
 class PreloadSetting {
   static get UseNewPreload() {
-    return PreloadSetting.fsr;
+    return PreloadSetting.dar;
   }
   static SetUseNewPreload(t) {
-    PreloadSetting.fsr = t;
+    PreloadSetting.dar = t;
   }
 }
 ((exports.PreloadSetting = PreloadSetting).Default = new PreloadSetting()),
-  (PreloadSetting.fsr = !1);
+  (PreloadSetting.dar = !1);
 //# sourceMappingURL=PreloadDefine.js.map

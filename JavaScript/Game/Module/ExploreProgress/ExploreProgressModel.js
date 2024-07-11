@@ -10,9 +10,9 @@ const Log_1 = require("../../../Core/Common/Log"),
 class ExploreProgressModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
-      (this.Y5t = new Map()),
-      (this.Q5t = new Map()),
-      (this.J5t = []),
+      (this.YVt = new Map()),
+      (this.QVt = new Map()),
+      (this.JVt = []),
       (this.SelectedCountryId = 0),
       (this.SelectedAreaId = 0);
   }
@@ -25,12 +25,12 @@ class ExploreProgressModel extends ModelBase_1.ModelBase {
   InitializeExploreAreaData() {
     var e = ConfigManager_1.ConfigManager.InfluenceConfig.GetCountryList(),
       r = ConfigManager_1.ConfigManager.AreaConfig;
-    this.J5t.length = 0;
+    this.JVt.length = 0;
     for (const i of e) {
       var o = new ExploreCountryData_1.ExploreCountryData(),
         t =
           (o.Initialize(i),
-          this.Y5t.set(i.Id, o),
+          this.YVt.set(i.Id, o),
           r.GetAreaConfigByCountryAndLevel(
             i.Id,
             ExploreProgressDefine_1.AREA_LEVEL,
@@ -38,7 +38,7 @@ class ExploreProgressModel extends ModelBase_1.ModelBase {
       for (const n of t) {
         var s = n.AreaId,
           a = o.AddExploreAreaData(n);
-        this.Q5t.set(s, a), this.J5t.push(s);
+        this.QVt.set(s, a), this.JVt.push(s);
       }
     }
   }
@@ -74,22 +74,22 @@ class ExploreProgressModel extends ModelBase_1.ModelBase {
           ));
   }
   ClearExploreAreaData() {
-    this.Y5t.clear(), this.Q5t.clear(), (this.J5t.length = 0);
+    this.YVt.clear(), this.QVt.clear(), (this.JVt.length = 0);
   }
   RefreshExploreAreaData(e) {
-    this.Q5t.get(e.wFn)?.Refresh(e);
+    this.QVt.get(e.l6n)?.Refresh(e);
   }
   GetExploreCountryData(e) {
-    return this.Y5t.get(e);
+    return this.YVt.get(e);
   }
   GetExploreAreaData(e) {
-    return this.Q5t.get(e);
+    return this.QVt.get(e);
   }
   GetExploreCountryDataMap() {
-    return this.Y5t;
+    return this.YVt;
   }
   GetAllAreaIdList() {
-    return this.J5t;
+    return this.JVt;
   }
 }
 exports.ExploreProgressModel = ExploreProgressModel;

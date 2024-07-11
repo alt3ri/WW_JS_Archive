@@ -6,8 +6,8 @@ const UE = require("ue"),
 class BattleSkillNumItem extends UiPanelBase_1.UiPanelBase {
   constructor(t) {
     super(),
-      (this.rit = -1),
-      (this.nit = new Map()),
+      (this.pot = -1),
+      (this.vot = new Map()),
       this.CreateByResourceIdAsync("UiItem_BattleSkillNumItem", t);
   }
   OnRegisterComponent() {
@@ -17,20 +17,20 @@ class BattleSkillNumItem extends UiPanelBase_1.UiPanelBase {
     ];
   }
   OnStart() {
-    for (const t of this.nit.values()) t();
+    for (const t of this.vot.values()) t();
   }
   SetComponentActive(t) {
     var e = () => {
       this.SetActive(t);
     };
-    this.InAsyncLoading() ? this.nit.set("SetActive", e) : e();
+    this.InAsyncLoading() ? this.vot.set("SetActive", e) : e();
   }
   SetTotalCount(t) {}
   SetRemainingCount(t) {
     var e = () => {
-      this.rit !== t && (this.GetText(1).SetText(t.toString()), (this.rit = t));
+      this.pot !== t && (this.GetText(1).SetText(t.toString()), (this.pot = t));
     };
-    this.InAsyncLoading() ? this.nit.set("SetRemainingCount", e) : e();
+    this.InAsyncLoading() ? this.vot.set("SetRemainingCount", e) : e();
   }
   RefreshCountType(t) {}
   RefreshTotalCount(t) {}

@@ -52,8 +52,8 @@ class AchievementDetailView extends UiViewBase_1.UiViewBase {
             this.GetText(10).SetText(e.GetAchievementCategoryProgress()),
             this.vqe(),
             this.Mqe(),
-            this.Sqe(),
-            this.Eqe();
+            this.Eqe(),
+            this.Sqe();
         }
       }),
       (this.yqe = (e) => {
@@ -76,7 +76,7 @@ class AchievementDetailView extends UiViewBase_1.UiViewBase {
           (ModelManager_1.ModelManager.AchievementModel.AchievementSearchState =
             !StringUtils_1.StringUtils.IsEmpty(e)),
           this.Mqe(),
-          this.Eqe(),
+          this.Sqe(),
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.OnGetAchievementSearchTextChange,
           );
@@ -90,8 +90,8 @@ class AchievementDetailView extends UiViewBase_1.UiViewBase {
             StringUtils_1.EMPTY_STRING),
           e !==
             ModelManager_1.ModelManager.AchievementModel
-              .AchievementSearchState && (this.Mqe(), this.Sqe()),
-          this.Eqe(),
+              .AchievementSearchState && (this.Mqe(), this.Eqe()),
+          this.Sqe(),
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.OnGetAchievementSearchTextChange,
           );
@@ -208,12 +208,12 @@ class AchievementDetailView extends UiViewBase_1.UiViewBase {
   vqe() {
     this.dqe?.ResetSearch(!0);
   }
-  Sqe() {
+  Eqe() {
     var e = ModelManager_1.ModelManager.AchievementModel,
       e = e.GetAchievementCategoryGroups(e.CurrentSelectCategory.GetId());
     this.gqe.RefreshByData(e);
   }
-  Eqe() {
+  Sqe() {
     var e = ModelManager_1.ModelManager.AchievementModel.AchievementSearchState,
       t = ModelManager_1.ModelManager.AchievementModel.GetSearchResultIfNull();
     this.GetItem(2).SetUIActive(e && !t);

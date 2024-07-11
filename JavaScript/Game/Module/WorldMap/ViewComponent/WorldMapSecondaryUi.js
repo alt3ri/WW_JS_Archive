@@ -12,24 +12,24 @@ class WorldMapSecondaryUi extends UiPanelBase_1.UiPanelBase {
     super(...arguments),
       (this.InnerPointerIsInView = !1),
       (this.UiBgItem = void 0),
-      (this._Fo = void 0),
-      (this.uFo = void 0),
-      (this.WFt = (e) => {
-        "Close" === e && this.mIt();
+      (this.a3o = void 0),
+      (this.h3o = void 0),
+      (this.K3t = (e) => {
+        "Close" === e && this.m2e();
       }),
       (this.Close = (e, t = !0) => {
-        (this.uFo = e),
-          t ? this.EPe.PlayLevelSequenceByName("Close") : this.mIt();
+        (this.h3o = e),
+          t ? this.SPe.PlayLevelSequenceByName("Close") : this.m2e();
       });
   }
-  get EPe() {
+  get SPe() {
     var e;
     return (
-      this._Fo ||
+      this.a3o ||
         ((e = this.UiBgItem?.GetRootItem() ?? this.GetRootItem()),
-        (this._Fo = new LevelSequencePlayer_1.LevelSequencePlayer(e)),
-        this._Fo.BindSequenceCloseEvent(this.WFt)),
-      this._Fo
+        (this.a3o = new LevelSequencePlayer_1.LevelSequencePlayer(e)),
+        this.a3o.BindSequenceCloseEvent(this.K3t)),
+      this.a3o
     );
   }
   OnBeforeCreate() {
@@ -39,8 +39,8 @@ class WorldMapSecondaryUi extends UiPanelBase_1.UiPanelBase {
   OnBeforeDestroyImplementImplement() {}
   OnBeforeDestroyImplement() {
     this.OnBeforeDestroyImplementImplement(),
-      this._Fo?.Clear(),
-      (this._Fo = void 0);
+      this.a3o?.Clear(),
+      (this.a3o = void 0);
   }
   async OnBeforeStartAsync() {
     var e;
@@ -58,13 +58,13 @@ class WorldMapSecondaryUi extends UiPanelBase_1.UiPanelBase {
       this.UiBgItem.OverrideBackBtnCallBack(this.Close),
       this.AddChild(this.UiBgItem));
   }
-  mIt() {
+  m2e() {
     this.SetActive(!1),
       this.OnCloseWorldMapSecondaryUi(),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.WorldMapSecondaryUiClosed,
       ),
-      this.uFo && this.uFo();
+      this.h3o && this.h3o();
   }
   get PointerIsInView() {
     return this.InnerPointerIsInView;
@@ -73,7 +73,7 @@ class WorldMapSecondaryUi extends UiPanelBase_1.UiPanelBase {
     this.RootItem.SetAlpha(1),
       this.SetActive(!0),
       this.OnShowWorldMapSecondaryUi(...e),
-      this.EPe.PlayLevelSequenceByName("Start"),
+      this.SPe.PlayLevelSequenceByName("Start"),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.WorldMapSecondaryUiOpened,
       );

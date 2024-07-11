@@ -8,38 +8,38 @@ const UE = require("ue"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
   UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
   LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer");
-var EAttributeId = Protocol_1.Aki.Protocol.KBs;
+var EAttributeId = Protocol_1.Aki.Protocol.Bks;
 const MediumItemGrid_1 = require("../../Common/MediumItemGrid/MediumItemGrid"),
   ANIMATION_LENGTH = 200,
   LOW_HP_PERCENT = 0.2;
 class BuffTargetRoleItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this.kgt = void 0),
-      (this.Fgt = -1),
-      (this.Vgt = 0),
-      (this.Hgt = -0),
-      (this.jgt = !1),
-      (this.Wgt = void 0),
-      (this.Kgt = 0),
-      (this.Qgt = void 0),
-      (this.Xgt = void 0),
-      (this.EPe = void 0),
-      (this.$gt = void 0),
-      (this.Ygt = !1),
-      (this.Jgt = !1),
-      (this.zgt = () => {
-        this.Wgt && this.Wgt(this);
+      (this.z0t = void 0),
+      (this.Z0t = -1),
+      (this.eft = 0),
+      (this.tft = -0),
+      (this.ift = !1),
+      (this.oft = void 0),
+      (this.rft = 0),
+      (this.nft = void 0),
+      (this.sft = void 0),
+      (this.SPe = void 0),
+      (this.aft = void 0),
+      (this.hft = !1),
+      (this.lft = !1),
+      (this._ft = () => {
+        this.oft && this.oft(this);
       }),
-      (this.Zgt = (t, i, e) => {
+      (this.uft = (t, i, e) => {
         var s;
         i !== e &&
-          this.kgt &&
-          ((s = this.kgt.Entity.GetComponent(156).GetCurrentValue(
-            EAttributeId.Tkn,
+          this.z0t &&
+          ((s = this.z0t.Entity.GetComponent(158).GetCurrentValue(
+            EAttributeId.e5n,
           )),
-          this.kgt.SetCurrentAttribute(i),
-          this.e0t(e, i, s));
+          this.z0t.SetCurrentAttribute(i),
+          this.cft(e, i, s));
       });
   }
   Initialize(t) {
@@ -58,34 +58,34 @@ class BuffTargetRoleItem extends UiPanelBase_1.UiPanelBase {
       [7, UE.UIButtonComponent],
       [9, UE.UINiagara],
     ]),
-      (this.BtnBindInfo = [[7, this.zgt]]);
+      (this.BtnBindInfo = [[7, this._ft]]);
   }
   OnStart() {
-    (this.Xgt = new MediumItemGrid_1.MediumItemGrid()),
-      this.Xgt.Initialize(this.GetItem(0).GetOwner()),
-      (this.EPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem)),
-      (this.$gt = this.GetUiNiagara(9)),
-      this.$gt.SetUIActive(!1);
+    (this.sft = new MediumItemGrid_1.MediumItemGrid()),
+      this.sft.Initialize(this.GetItem(0).GetOwner()),
+      (this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem)),
+      (this.aft = this.GetUiNiagara(9)),
+      this.aft.SetUIActive(!1);
   }
   OnBeforeDestroy() {
-    (this.Xgt = void 0),
-      (this.Xgt = void 0),
-      this.EPe?.Clear(),
+    (this.sft = void 0),
+      (this.sft = void 0),
+      this.SPe?.Clear(),
       this.ResetBuffTargetRoleItem(),
-      this.t0t(),
-      (this.$gt = void 0);
+      this.mft(),
+      (this.aft = void 0);
   }
   ResetBuffTargetRoleItem() {
-    (this.kgt = void 0), (this.Ygt = !1), this.tXe();
+    (this.z0t = void 0), (this.hft = !1), this.m$e();
   }
   Tick(t) {
-    this.jgt &&
-      (this.Hgt > ANIMATION_LENGTH
-        ? this.i0t()
-        : (this.o0t(), (this.Hgt += t)));
+    this.ift &&
+      (this.tft > ANIMATION_LENGTH
+        ? this.dft()
+        : (this.Cft(), (this.tft += t)));
   }
   RefreshBuffTargetRoleItem(t) {
-    var i = (this.kgt = t).RoleConfigId,
+    var i = (this.z0t = t).RoleConfigId,
       e = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(i),
       s = t.RoleLevel,
       h = Math.floor(t.CurrentAttribute),
@@ -97,32 +97,32 @@ class BuffTargetRoleItem extends UiPanelBase_1.UiPanelBase {
         BottomTextParameter: [s],
         ElementId: e.ElementId,
       };
-    this.Xgt.Apply(i),
+    this.sft.Apply(i),
       this.SetCurrentValueBarPercent(h / t),
-      this.r0t(h, t),
+      this.gft(h, t),
       this.SetPreviewValueBarVisible(!1),
       this.SetAnimationValueBarVisible(!1),
-      this.n0t(!1),
+      this.fft(!1),
       this.SetSelected(!1),
       this.SetNoneRole(!1),
-      this.eXe();
+      this.c$e();
   }
   RemoveRole() {
-    this.SetNoneRole(!0), this.tXe(), (this.kgt = void 0);
+    this.SetNoneRole(!0), this.m$e(), (this.z0t = void 0);
   }
-  eXe() {
-    this.kgt &&
-      this.kgt.Entity.GetComponent(156).AddListener(
+  c$e() {
+    this.z0t &&
+      this.z0t.Entity.GetComponent(158).AddListener(
         EAttributeId.Proto_Life,
-        this.Zgt,
+        this.uft,
         "Life.BuffTargetRoleItem",
       );
   }
-  tXe() {
-    this.kgt &&
-      this.kgt.Entity.GetComponent(156).RemoveListener(
+  m$e() {
+    this.z0t &&
+      this.z0t.Entity.GetComponent(158).RemoveListener(
         EAttributeId.Proto_Life,
-        this.Zgt,
+        this.uft,
       );
   }
   RefreshPreviewUseItem(t, i, e) {
@@ -132,13 +132,13 @@ class BuffTargetRoleItem extends UiPanelBase_1.UiPanelBase {
       this.SetPreviewValueBarPercent(s / i),
       this.SetPreviewValueBarVisible(0 < e),
       this.SetAddValueText(Math.floor(h)),
-      this.n0t(0 < e),
+      this.fft(0 < e),
       this.SetPreviewValueText(Math.floor(s), Math.floor(i));
   }
   ResetPreviewUseItem() {
-    var t = this.kgt.CurrentAttribute,
-      i = this.kgt.MaxAttribute;
-    this.SetPreviewValueBarVisible(!1), this.n0t(!1), this.r0t(t, i);
+    var t = this.z0t.CurrentAttribute,
+      i = this.z0t.MaxAttribute;
+    this.SetPreviewValueBarVisible(!1), this.fft(!1), this.gft(t, i);
   }
   SetCurrentValueBarPercent(t) {
     var i = this.GetSprite(4);
@@ -153,7 +153,7 @@ class BuffTargetRoleItem extends UiPanelBase_1.UiPanelBase {
   SetAnimationValueBarPercent(t) {
     this.GetSprite(3).SetFillAmount(t);
   }
-  s0t(t) {
+  pft(t) {
     var i = this.GetSprite(3);
     i.SetChangeColor(t <= LOW_HP_PERCENT, i.changeColor);
   }
@@ -163,10 +163,10 @@ class BuffTargetRoleItem extends UiPanelBase_1.UiPanelBase {
   SetAddValueText(t) {
     this.GetText(1).SetText("+" + t);
   }
-  n0t(t) {
+  fft(t) {
     this.GetText(1).SetUIActive(t);
   }
-  r0t(t, i) {
+  gft(t, i) {
     var e = this.GetText(2);
     t <= 0
       ? e.SetText(`<color=#ff0000ff>${Math.ceil(t)}</color>/` + Math.ceil(i))
@@ -177,14 +177,14 @@ class BuffTargetRoleItem extends UiPanelBase_1.UiPanelBase {
   }
   SetSelected(t) {
     t
-      ? (this.Xgt.SetSelected(!0), this.EPe.PlayLevelSequenceByName("Selected"))
+      ? (this.sft.SetSelected(!0), this.SPe.PlayLevelSequenceByName("Selected"))
       : (this.ResetPreviewUseItem(),
         this.SetAnimationValueBarVisible(!1),
-        this.Xgt.SetSelected(!1)),
-      (this.Jgt = t);
+        this.sft.SetSelected(!1)),
+      (this.lft = t);
   }
   IsSelected() {
-    return this.Jgt;
+    return this.lft;
   }
   SetNoneRole(t) {
     var i = this.GetItem(8),
@@ -192,30 +192,30 @@ class BuffTargetRoleItem extends UiPanelBase_1.UiPanelBase {
     i.SetUIActive(t), e.SetUIActive(!t);
   }
   GetUseBuffItemRoleData() {
-    return this.kgt;
+    return this.z0t;
   }
   BindOnClickedBuffTargetRoleItem(t) {
-    this.Wgt = t;
+    this.oft = t;
   }
-  a0t() {
+  vft() {
     const t = () => {
-      this.$gt.SetUIActive(!0), this.$gt.ActivateSystem(!0);
+      this.aft.SetUIActive(!0), this.aft.ActivateSystem(!0);
     };
     var i;
-    this.Ygt
+    this.hft
       ? t()
       : ((i =
           ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
             "Niagara_BuffTreat",
           )),
-        this.SetNiagaraSystemByPath(i, this.$gt, () => {
-          (this.Ygt = !0), t();
+        this.SetNiagaraSystemByPath(i, this.aft, () => {
+          (this.hft = !0), t();
         }));
   }
-  t0t() {
-    this.$gt.DeactivateSystem(), this.$gt.SetUIActive(!1);
+  mft() {
+    this.aft.DeactivateSystem(), this.aft.SetUIActive(!1);
   }
-  e0t(t, i, e) {
+  cft(t, i, e) {
     t !== i &&
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
@@ -224,34 +224,34 @@ class BuffTargetRoleItem extends UiPanelBase_1.UiPanelBase {
           `播放属性进度条动画，currentAttribute：${t},targetAttribute:${i},maxAttribute:` +
             e,
         ),
-      this.jgt || (this.Fgt = t),
-      this.a0t(),
-      (this.Vgt = i),
-      (this.Kgt = e),
-      (this.Hgt = 0),
-      (this.jgt = !0),
+      this.ift || (this.Z0t = t),
+      this.vft(),
+      (this.eft = i),
+      (this.rft = e),
+      (this.tft = 0),
+      (this.ift = !0),
       this.SetAnimationValueBarVisible(!0),
-      this.s0t(this.Fgt / this.Kgt),
+      this.pft(this.Z0t / this.rft),
       this.ResetPreviewUseItem(),
-      this.EPe.PlayLevelSequenceByName("Reply"));
+      this.SPe.PlayLevelSequenceByName("Reply"));
   }
-  i0t() {
-    (this.jgt = !1), (this.Hgt = -1);
-    var t = this.kgt.CurrentAttribute,
-      i = this.kgt.MaxAttribute,
-      e = this.kgt.GetAddAttribute();
-    this.s0t(t / i),
+  dft() {
+    (this.ift = !1), (this.tft = -1);
+    var t = this.z0t.CurrentAttribute,
+      i = this.z0t.MaxAttribute,
+      e = this.z0t.GetAddAttribute();
+    this.pft(t / i),
       this.RefreshPreviewUseItem(t, i, e),
       this.SetAnimationValueBarVisible(!1),
-      this.Qgt && this.Qgt();
+      this.nft && this.nft();
   }
   BindOnUseItemAnimationFinished(t) {
-    this.Qgt = t;
+    this.nft = t;
   }
-  o0t() {
-    var t = Math.min(this.Hgt / ANIMATION_LENGTH, 1);
-    (this.Fgt = MathUtils_1.MathUtils.Lerp(this.Fgt, this.Vgt, t)),
-      this.SetAnimationValueBarPercent(this.Fgt / this.Kgt);
+  Cft() {
+    var t = Math.min(this.tft / ANIMATION_LENGTH, 1);
+    (this.Z0t = MathUtils_1.MathUtils.Lerp(this.Z0t, this.eft, t)),
+      this.SetAnimationValueBarPercent(this.Z0t / this.rft);
   }
 }
 exports.BuffTargetRoleItem = BuffTargetRoleItem;

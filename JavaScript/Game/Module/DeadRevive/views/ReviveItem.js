@@ -12,41 +12,41 @@ const UE = require("ue"),
 class ReviveItem extends UiPanelBase_1.UiPanelBase {
   constructor(i) {
     super(),
-      (this.gIt = void 0),
-      (this.wIt = (i) => {
+      (this.ETt = void 0),
+      (this.NTt = (i) => {
         ControllerHolder_1.ControllerHolder.ItemController.OpenItemTipsByItemId(
           i,
         );
       }),
-      (this.R4e = void 0),
+      (this.H5e = void 0),
       (this.j3 = void 0),
-      (this.q2t = -1),
-      (this.Rgt = 1),
+      (this.GFt = -1),
+      (this.k0t = 1),
       (this.ToggleClick = (i) => {
-        this.wIt && 1 === i && this.wIt(this.gIt);
+        this.NTt && 1 === i && this.NTt(this.ETt);
       }),
       (this.TDe = () => {
-        this.q2t <= 0
+        this.GFt <= 0
           ? (void 0 !== this.j3 && TimerSystem_1.TimerSystem.Remove(this.j3),
             (this.j3 = void 0),
             UiManager_1.UiManager.IsViewShow("UseReviveItemView") &&
               this.GetItem(14).SetUIActive(!1))
           : (this.GetText(15).SetText(
-              TimeUtil_1.TimeUtil.GetCoolDown(this.q2t),
+              TimeUtil_1.TimeUtil.GetCoolDown(this.GFt),
             ),
-            this.GetSprite(16).SetFillAmount(this.q2t / this.Rgt),
-            (this.q2t -=
+            this.GetSprite(16).SetFillAmount(this.GFt / this.k0t),
+            (this.GFt -=
               TimerSystem_1.MIN_TIME /
               CommonDefine_1.MILLIONSECOND_PER_SECOND));
       }),
       this.CreateThenShowByActor(i.GetOwner());
   }
   ShowReviveItem(i, e) {
-    (this.gIt = i),
-      this.SetItemIcon(this.GetTexture(1), this.gIt),
+    (this.ETt = i),
+      this.SetItemIcon(this.GetTexture(1), this.ETt),
       this.GetText(4).SetText("x" + e),
-      this.SetItemQualityIcon(this.GetSprite(2), this.gIt),
-      this.G2t();
+      this.SetItemQualityIcon(this.GetSprite(2), this.ETt),
+      this.NFt();
   }
   OnRegisterComponent() {
     (this.ComponentRegisterInfos = [
@@ -61,29 +61,29 @@ class ReviveItem extends UiPanelBase_1.UiPanelBase {
       (this.BtnBindInfo = [[9, this.ToggleClick]]);
   }
   OnStart() {
-    this.R4e = this.GetExtendToggle(9);
+    this.H5e = this.GetExtendToggle(9);
   }
   OnBeforeDestroy() {
-    (this.gIt = void 0),
-      (this.R4e = void 0) !== this.j3 &&
+    (this.ETt = void 0),
+      (this.H5e = void 0) !== this.j3 &&
         TimerSystem_1.TimerSystem.Remove(this.j3),
       (this.j3 = void 0),
-      (this.q2t = -1),
-      (this.Rgt = 1);
+      (this.GFt = -1),
+      (this.k0t = 1);
   }
-  G2t() {
+  NFt() {
     var i = ModelManager_1.ModelManager.BuffItemModel.GetBuffItemRemainCdTime(
-      this.gIt,
+      this.ETt,
     );
     i <= 0 ||
-      ((this.q2t = i),
-      (this.Rgt =
+      ((this.GFt = i),
+      (this.k0t =
         ModelManager_1.ModelManager.BuffItemModel.GetBuffItemTotalCdTime(
-          this.gIt,
+          this.ETt,
         )),
       this.GetItem(14).SetUIActive(!0),
-      this.GetText(15).SetText(TimeUtil_1.TimeUtil.GetCoolDown(this.q2t)),
-      this.GetSprite(16).SetFillAmount(this.q2t / this.Rgt),
+      this.GetText(15).SetText(TimeUtil_1.TimeUtil.GetCoolDown(this.GFt)),
+      this.GetSprite(16).SetFillAmount(this.GFt / this.k0t),
       void 0 !== this.j3 && TimerSystem_1.TimerSystem.Remove(this.j3),
       (this.j3 = TimerSystem_1.TimerSystem.Forever(
         this.TDe,
@@ -91,10 +91,10 @@ class ReviveItem extends UiPanelBase_1.UiPanelBase {
       )));
   }
   SetToggleState(i, e = !0) {
-    this.R4e.SetToggleState(i ? 1 : 0, e);
+    this.H5e.SetToggleState(i ? 1 : 0, e);
   }
   BindClickCallback(i) {
-    this.wIt = i;
+    this.NTt = i;
   }
 }
 exports.ReviveItem = ReviveItem;

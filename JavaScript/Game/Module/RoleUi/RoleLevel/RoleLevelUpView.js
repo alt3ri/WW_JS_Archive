@@ -35,18 +35,18 @@ class RoleLevelUpView extends UiViewBase_1.UiViewBase {
     super(...arguments),
       (this.AttributeLayout = void 0),
       (this.RoleInstance = void 0),
-      (this.tuo = void 0),
-      (this.uft = void 0),
-      (this.SHi = new SelectableExpData_1.SelectableExpData()),
-      (this.gHi = void 0),
-      (this.iuo = void 0),
-      (this.C5i = void 0),
+      (this.Juo = void 0),
+      (this.ypt = void 0),
+      (this.vji = new SelectableExpData_1.SelectableExpData()),
+      (this.dji = void 0),
+      (this.zuo = void 0),
+      (this.dVi = void 0),
       (this.lqe = void 0),
       (this.CloseClick = () => {
         UiManager_1.UiManager.CloseView("RoleLevelUpView");
       }),
       (this.OnClickItemAdd = (t) => {
-        var i = this.uft;
+        var i = this.ypt;
         for (let e = i.length - 1; 0 <= e; e--) {
           var r = i[e];
           if (r.ItemId === t) {
@@ -54,17 +54,17 @@ class RoleLevelUpView extends UiViewBase_1.UiViewBase {
               ? ControllerHolder_1.ControllerHolder.ItemController.OpenItemTipsByItemId(
                   t,
                 )
-              : this.ouo()
+              : this.Zuo()
                 ? ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
                     "WeaponAddExpTipsText",
                   )
-                : r.Count > r.SelectedCount && (r.SelectedCount++, this.xHi());
+                : r.Count > r.SelectedCount && (r.SelectedCount++, this.Aji());
             break;
           }
         }
       }),
       (this.OnClickItemReduce = (t) => {
-        var i = this.uft;
+        var i = this.ypt;
         for (let e = i.length - 1; 0 <= e; e--) {
           var r = i[e];
           if (r.ItemId === t) {
@@ -72,11 +72,11 @@ class RoleLevelUpView extends UiViewBase_1.UiViewBase {
             break;
           }
         }
-        this.xHi();
+        this.Aji();
       }),
-      (this.wHi = () => {
-        var e = this.tuo.GetAutoButtonState(),
-          t = this.uft;
+      (this.Pji = () => {
+        var e = this.Juo.GetAutoButtonState(),
+          t = this.ypt;
         if (0 === e) {
           let e = !1;
           for (const r of t)
@@ -88,49 +88,49 @@ class RoleLevelUpView extends UiViewBase_1.UiViewBase {
             return void ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
               "RoleNoMaterial",
             );
-          var i = this.SHi.GetExpDistanceToMax();
+          var i = this.vji.GetExpDistanceToMax();
           ModelManager_1.ModelManager.WeaponModel.AutoAddExpItemEx(
             i,
             t,
-            this.ruo,
+            this.eco,
           ),
-            this.xHi();
+            this.Aji();
         } else if (1 === e) for (const o of t) o.SelectedCount = 0;
-        this.xHi();
+        this.Aji();
       }),
-      (this.x_o = (t) => {
-        var i = this.uft;
+      (this.Ruo = (t) => {
+        var i = this.ypt;
         for (let e = i.length - 1; 0 <= e; e--) {
           var r = i[e];
           if (
             r.ItemId === t &&
             0 < r.Count &&
             r.SelectedCount < r.Count &&
-            !this.ouo()
+            !this.Zuo()
           )
             return !0;
         }
         return !1;
       }),
-      (this.w_o = (t) => {
-        var i = this.uft;
+      (this.Uuo = (t) => {
+        var i = this.ypt;
         for (let e = i.length - 1; 0 <= e; e--) {
           var r = i[e];
           if (r.ItemId === t && r.SelectedCount <= 0) return !1;
         }
         return !0;
       }),
-      (this.ruo = (e) =>
+      (this.eco = (e) =>
         ModelManager_1.ModelManager.RoleModel.GetRoleExpItemExp(e.ItemId)),
-      (this.Flo = () => {
+      (this.G1o = () => {
         return new AttributeItem_1.AttributeItem();
       }),
-      (this.nuo = () => {
-        this.InitExp(), this.ResetDataList(), this.xHi();
+      (this.tco = () => {
+        this.InitExp(), this.ResetDataList(), this.Aji();
       }),
-      (this.suo = () => {
+      (this.ico = () => {
         var e = [];
-        for (const r of this.iuo) {
+        for (const r of this.zuo) {
           var t = r[0],
             i = r[1],
             i = new RewardItemData_1.RewardItemData(t.ItemId, i, t.IncId);
@@ -139,12 +139,12 @@ class RoleLevelUpView extends UiViewBase_1.UiViewBase {
         ItemRewardController_1.ItemRewardController.OpenCommonRewardView(
           1010,
           e,
-          this.auo,
+          this.oco,
         );
       }),
-      (this.huo = () => {
+      (this.rco = () => {
         var e = [];
-        for (const r of this.iuo) {
+        for (const r of this.zuo) {
           var t = r[0],
             i = r[1],
             i = new RewardItemData_1.RewardItemData(t.ItemId, i, t.IncId);
@@ -153,31 +153,31 @@ class RoleLevelUpView extends UiViewBase_1.UiViewBase {
         ItemRewardController_1.ItemRewardController.OpenCommonRewardView(
           1010,
           e,
-          this.luo,
+          this.nco,
         );
       }),
-      (this.NHi = (e) =>
+      (this.qji = (e) =>
         ModelManager_1.ModelManager.RoleModel.GetRoleLevelUpExp(
           this.RoleInstance.GetRoleId(),
           e + 1,
         )),
-      (this.auo = () => {
+      (this.oco = () => {
         UiManager_1.UiManager.CloseView("RoleLevelUpView");
       }),
-      (this.luo = () => {
+      (this.nco = () => {
         RoleController_1.RoleController.SendRoleBreakThroughViewRequest(
           this.RoleInstance.GetRoleId(),
           this.Info.Name,
         );
       }),
-      (this._uo = () => {
-        this.uuo(), this.gHi.PlayExpTween(this.SHi);
+      (this.sco = () => {
+        this.aco(), this.dji.PlayExpTween(this.vji);
       }),
-      (this.cuo = (e) => {
-        this.iuo = e;
+      (this.hco = (e) => {
+        this.zuo = e;
       }),
-      (this.UHi = () => {
-        var e = this.uft;
+      (this.Dji = () => {
+        var e = this.ypt;
         let t = !1;
         for (const r of e)
           if (0 < r.SelectedCount) {
@@ -185,17 +185,17 @@ class RoleLevelUpView extends UiViewBase_1.UiViewBase {
             break;
           }
         if (t)
-          if (this.tuo.GetIsMoneyEnough()) {
+          if (this.Juo.GetIsMoneyEnough()) {
             const o = new Array();
             e.forEach((e) => {
               var t;
               0 < e.SelectedCount &&
-                (((t = new RoleDefine_1.ArrayIntInt()).Ckn = e.ItemId),
-                (t.gkn = e.SelectedCount),
+                (((t = new RoleDefine_1.ArrayIntInt()).j4n = e.ItemId),
+                (t.W4n = e.SelectedCount),
                 o.push(t));
             });
             var i,
-              e = this.SHi.GetOverExp();
+              e = this.vji.GetOverExp();
             0 < e &&
             0 <
               (e =
@@ -208,7 +208,7 @@ class RoleLevelUpView extends UiViewBase_1.UiViewBase {
                     this.RoleInstance.GetRoleId(),
                     o,
                     () => {
-                      UiRoleUtils_1.UiRoleUtils.PlayRoleLevelUpEffect(this.C5i);
+                      UiRoleUtils_1.UiRoleUtils.PlayRoleLevelUpEffect(this.dVi);
                     },
                   );
                 }),
@@ -219,7 +219,7 @@ class RoleLevelUpView extends UiViewBase_1.UiViewBase {
                   this.RoleInstance.GetRoleId(),
                   o,
                   () => {
-                    UiRoleUtils_1.UiRoleUtils.PlayRoleLevelUpEffect(this.C5i);
+                    UiRoleUtils_1.UiRoleUtils.PlayRoleLevelUpEffect(this.dVi);
                   },
                 );
           } else
@@ -236,8 +236,8 @@ class RoleLevelUpView extends UiViewBase_1.UiViewBase {
       }),
       (this.UpdateAttributeItemValue = (e) => {
         var t = e.GetAttributeId(),
-          i = this.SHi.GetArrivedLevel(),
-          r = this.SHi.GetCurrentLevel(),
+          i = this.vji.GetArrivedLevel(),
+          r = this.vji.GetCurrentLevel(),
           o = this.RoleInstance.GetLevelData().GetBreachLevel(),
           s = ModelManager_1.ModelManager.RoleModel.GetAttributeByLevel(
             this.RoleInstance.GetRoleId(),
@@ -272,7 +272,7 @@ class RoleLevelUpView extends UiViewBase_1.UiViewBase {
     ];
   }
   OnStart() {
-    this.C5i = UiSceneManager_1.UiSceneManager.GetRoleSystemRoleActor();
+    this.dVi = UiSceneManager_1.UiSceneManager.GetRoleSystemRoleActor();
   }
   async OnBeforeStartAsync() {
     var e = this.OpenParam;
@@ -286,24 +286,24 @@ class RoleLevelUpView extends UiViewBase_1.UiViewBase {
           ])
         : ((this.AttributeLayout = new GenericLayout_1.GenericLayout(
             this.GetGridLayout(2),
-            this.Flo,
+            this.G1o,
           )),
-          (this.tuo = new RoleExpItemGridComponent_1.RoleExpItemGridComponent(
-            this.UHi,
-            this.wHi,
+          (this.Juo = new RoleExpItemGridComponent_1.RoleExpItemGridComponent(
+            this.Dji,
+            this.Pji,
             this.OnClickItemAdd,
             this.OnClickItemReduce,
-            this.x_o,
-            this.w_o,
+            this.Ruo,
+            this.Uuo,
             "RoleLevelUpView",
           )),
-          await this.tuo.CreateThenShowByActorAsync(this.GetItem(1).GetOwner()),
-          this.tuo.SetButtonItemText("RoleLevelUp"),
-          this.SHi.SetMaxExpFunction(this.NHi),
-          (this.gHi = new ExpComponent_1.ExpComponent(this.GetItem(0), !1)),
-          this.gHi.Init(),
-          this.gHi.BindPlayCompleteCallBack(this.nuo),
-          this.gHi.SetLevelFormatText("LevelNumber"),
+          await this.Juo.CreateThenShowByActorAsync(this.GetItem(1).GetOwner()),
+          this.Juo.SetButtonItemText("RoleLevelUp"),
+          this.vji.SetMaxExpFunction(this.qji),
+          (this.dji = new ExpComponent_1.ExpComponent(this.GetItem(0), !1)),
+          this.dji.Init(),
+          this.dji.BindPlayCompleteCallBack(this.tco),
+          this.dji.SetLevelFormatText("LevelNumber"),
           (this.lqe = new PopupCaptionItem_1.PopupCaptionItem(this.GetItem(4))),
           this.lqe.SetCurrencyItemList([ItemDefines_1.EItemId.Gold]),
           this.lqe.SetCloseCallBack(this.CloseClick),
@@ -319,8 +319,8 @@ class RoleLevelUpView extends UiViewBase_1.UiViewBase {
   OnHandleReleaseScene() {
     UiSceneManager_1.UiSceneManager.HideRoleSystemRoleActor();
   }
-  muo() {
-    this.uft = [];
+  lco() {
+    this.ypt = [];
     for (const t of ModelManager_1.ModelManager.RoleModel.GetRoleCostExpList()) {
       var e = {
         IncId: 0,
@@ -330,28 +330,31 @@ class RoleLevelUpView extends UiViewBase_1.UiViewBase {
         ),
         SelectedCount: 0,
       };
-      this.uft.push(e);
+      this.ypt.push(e);
     }
-    this.tuo.Update(this.uft, ItemDefines_1.EItemId.Gold, 0);
+    this.Juo.Update(this.ypt, ItemDefines_1.EItemId.Gold, 0);
   }
-  xHi() {
+  Aji() {
     let t = 0;
-    var e = this.uft,
+    var e = this.ypt,
       e =
-        (this.tuo.UpdateByDataList(e),
+        (this.Juo.UpdateByDataList(e),
         e.forEach((e) => {
-          t += this.ruo(e) * e.SelectedCount;
+          t += this.eco(e) * e.SelectedCount;
         }),
-        this.SHi.UpdateExp(t),
-        this.gHi.Update(this.SHi),
-        ModelManager_1.ModelManager.RoleModel.GetMoneyToLevelUp(t));
-    this.tuo.UpdateMoney(ItemDefines_1.EItemId.Gold, e),
+        this.vji.UpdateExp(t),
+        this.dji.Update(this.vji),
+        this.vji.GetExpDistanceToMax()),
+      e = ModelManager_1.ModelManager.RoleModel.GetMoneyToLevelUp(
+        Math.min(e, t),
+      );
+    this.Juo.UpdateMoney(ItemDefines_1.EItemId.Gold, e),
       0 < t
-        ? this.tuo.SetAutoButtonText("PrefabTextItem_3035508725_Text")
-        : this.tuo.SetAutoButtonText("PrefabTextItem_744293929_Text"),
-      this.jlo();
+        ? this.Juo.SetAutoButtonText("PrefabTextItem_3035508725_Text")
+        : this.Juo.SetAutoButtonText("PrefabTextItem_744293929_Text"),
+      this.k1o();
   }
-  duo(e, t) {
+  _co(e, t) {
     var i = this.AttributeLayout.GetLayoutItemList(),
       r = [],
       o = this.RoleInstance.GetLevelData(),
@@ -385,9 +388,9 @@ class RoleLevelUpView extends UiViewBase_1.UiViewBase {
     return r;
   }
   async AU() {
-    this.muo(), await this.Cuo(), this.InitExp();
+    this.lco(), await this.uco(), this.InitExp();
   }
-  async Cuo() {
+  async uco() {
     var t = CommonParamById_1.configCommonParamById.GetIntArrayConfig(
         "RoleAttributeDisplay3",
       ),
@@ -408,20 +411,20 @@ class RoleLevelUpView extends UiViewBase_1.UiViewBase {
     await this.AttributeLayout.RefreshByDataAsync(i);
   }
   InitExp() {
-    this.UpdateExpData(), this.gHi.UpdateInitState(this.SHi);
+    this.UpdateExpData(), this.dji.UpdateInitState(this.vji);
   }
   Cl() {
-    this.jlo(), this.UpdateButtonState(), this.xHi();
+    this.k1o(), this.UpdateButtonState(), this.Aji();
   }
   ResetDataList() {
-    for (const e of this.uft)
+    for (const e of this.ypt)
       (e.SelectedCount = 0),
         (e.Count =
           ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
             e.ItemId,
           ));
   }
-  jlo() {
+  k1o() {
     for (const e of this.AttributeLayout.GetLayoutItemList())
       this.UpdateAttributeItemValue(e);
   }
@@ -431,36 +434,36 @@ class RoleLevelUpView extends UiViewBase_1.UiViewBase {
       i = e.GetCurrentMaxLevel(),
       r = e.GetExp(),
       e = e.GetRoleMaxLevel();
-    this.SHi.UpdateComponent(t, i, r, e);
+    this.vji.UpdateComponent(t, i, r, e);
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.RoleInfoUpdate,
-      this._uo,
+      this.sco,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.RoleLevelUpReceiveItem,
-        this.cuo,
+        this.hco,
       );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.RoleInfoUpdate,
-      this._uo,
+      this.sco,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.RoleLevelUpReceiveItem,
-        this.cuo,
+        this.hco,
       );
   }
-  uuo() {
-    var t = this.SHi.GetCurrentLevel(),
+  aco() {
+    var t = this.vji.GetCurrentLevel(),
       i = this.RoleInstance.GetLevelData(),
       r = i.GetLevel();
     if (r !== t) {
-      this.jlo();
-      var o = this.iuo && 0 < this.iuo.length,
-        s = this.duo(t, r);
+      this.k1o();
+      var o = this.zuo && 0 < this.zuo.length,
+        s = this._co(t, r);
       let e = void 0;
       i.GetRoleIsMaxLevel()
         ? ((e = {
@@ -471,7 +474,7 @@ class RoleLevelUpView extends UiViewBase_1.UiViewBase {
               IsMaxLevel: !0,
             },
             AttributeInfo: s,
-          }).ClickFunction = o ? this.suo : this.auo)
+          }).ClickFunction = o ? this.ico : this.oco)
         : i.GetRoleNeedBreakUp()
           ? ((e = {
               LevelInfo: {
@@ -482,7 +485,7 @@ class RoleLevelUpView extends UiViewBase_1.UiViewBase {
               },
               ClickText: "Text_TurnToRoleBreach_Text",
               AttributeInfo: s,
-            }).ClickFunction = o ? this.huo : this.luo)
+            }).ClickFunction = o ? this.rco : this.nco)
           : (e = {
               LevelInfo: {
                 PreUpgradeLv: t,
@@ -503,12 +506,12 @@ class RoleLevelUpView extends UiViewBase_1.UiViewBase {
           }, i));
     }
   }
-  ouo() {
-    var e = this.SHi.GetArrivedLevel();
+  Zuo() {
+    var e = this.vji.GetArrivedLevel();
     return this.RoleInstance.GetLevelData().GetCurrentMaxLevel() <= e;
   }
   GetGuideUiItemAndUiItemForShowEx(e) {
-    var t = this.tuo?.GetGenericScrollView()?.GetGenericLayout();
+    var t = this.Juo?.GetGenericScrollView()?.GetGenericLayout();
     if (t) {
       t = t.GetLayoutItemByIndex(Number(e[1]));
       if (t) {
@@ -519,7 +522,7 @@ class RoleLevelUpView extends UiViewBase_1.UiViewBase {
   }
   UpdateButtonState() {
     var e = this.RoleInstance.GetLevelData().GetRoleIsMaxLevel();
-    this.tuo.SetMaxItemActive(e), this.tuo.SetButtonItemActive(!e);
+    this.Juo.SetMaxItemActive(e), this.Juo.SetButtonItemActive(!e);
   }
 }
 exports.RoleLevelUpView = RoleLevelUpView;

@@ -11,6 +11,7 @@ const puerts_1 = require("puerts"),
   GlobalData_1 = require("../../../GlobalData"),
   CharacterUnifiedStateTypes_1 = require("../../../NewWorld/Character/Common/Component/Abilities/CharacterUnifiedStateTypes"),
   ColorUtils_1 = require("../../../Utils/ColorUtils"),
+  GravityUtils_1 = require("../../../Utils/GravityUtils"),
   BlackboardController_1 = require("../../../World/Controller/BlackboardController"),
   AiContollerLibrary_1 = require("../../Controller/AiContollerLibrary"),
   TsAiController_1 = require("../../Controller/TsAiController"),
@@ -251,11 +252,11 @@ class TsTaskBigAnimalEscape extends TsTaskAbortImmediatelyBase_1.default {
     t.AiController && this.ActorComp?.Valid
       ? Time_1.Time.WorldTime > this.EscapeEndTime
         ? this.Finish(!0)
-        : ((t = this.ActorComp.Entity.GetComponent(89)),
+        : ((t = this.ActorComp.Entity.GetComponent(91)),
           (e = Vector_1.Vector.Create(
             this.MovePath[this.CurrentMoveIndex],
           )).SubtractionEqual(this.ActorComp.ActorLocationProxy),
-          (e.Z = 0),
+          GravityUtils_1.GravityUtils.ConvertToPlanarVector(this.ActorComp, e),
           (r = e.SizeSquared()),
           e.Normalize(),
           (h = MathUtils_1.MathUtils.GetAngleByVectorDot(

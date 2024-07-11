@@ -12,16 +12,16 @@ class NoviceJourneyItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
       (this.kh = new Map()),
-      (this.Mke = 0),
+      (this.G2e = 0),
       (this.sOe = []),
       (this.Lo = void 0),
       (this.CNe = void 0),
       (this.hOe = () => {
-        if (1 === this.Mke)
+        if (1 === this.G2e)
           ScrollingTipsController_1.ScrollingTipsController.ShowTipsByTextId(
             "NewbieCourse_LevelTips",
           );
-        else if (2 === this.Mke) {
+        else if (2 === this.G2e) {
           ActivityManager_1.ActivityManager.GetActivityController(
             this.CNe.Type,
           ).RequestReward(this.Lo.Id);
@@ -29,7 +29,7 @@ class NoviceJourneyItem extends GridProxyAbstract_1.GridProxyAbstract {
         }
       }),
       (this.aOe = (t) => {
-        2 !== this.Mke
+        2 !== this.G2e
           ? ((t = t.Data),
             ControllerHolder_1.ControllerHolder.ItemController.OpenItemTipsByItemId(
               t.ItemId,
@@ -38,14 +38,14 @@ class NoviceJourneyItem extends GridProxyAbstract_1.GridProxyAbstract {
               this.CNe.Type,
             ).RequestReward(this.Lo.Id);
       }),
-      (this.Ske = () => {
+      (this.N2e = () => {
         this.GetItem(5).SetUIActive(!1),
           this.GetItem(7).SetUIActive(!1),
           this.GetItem(4).SetUIActive(!1),
           this.GetItem(8).SetUIActive(!1);
         for (const t of this.sOe) t.SetLockVisible(!0);
       }),
-      (this.Eke = () => {
+      (this.O2e = () => {
         this.GetItem(5).SetUIActive(!0),
           this.GetItem(7).SetUIActive(!0),
           this.GetItem(4).SetUIActive(!1),
@@ -53,7 +53,7 @@ class NoviceJourneyItem extends GridProxyAbstract_1.GridProxyAbstract {
           this.GetText(6).SetText(this.Lo.Id.toString());
         for (const t of this.sOe) t.SetReceivableVisible(!0);
       }),
-      (this.yke = () => {
+      (this.k2e = () => {
         this.GetItem(5).SetUIActive(!1),
           this.GetItem(7).SetUIActive(!1),
           this.GetItem(4).SetUIActive(!0),
@@ -88,9 +88,9 @@ class NoviceJourneyItem extends GridProxyAbstract_1.GridProxyAbstract {
     await Promise.all(s);
   }
   OnStart() {
-    this.kh.set(1, this.Ske),
-      this.kh.set(2, this.Eke),
-      this.kh.set(3, this.yke);
+    this.kh.set(1, this.N2e),
+      this.kh.set(2, this.O2e),
+      this.kh.set(3, this.k2e);
   }
   OnBeforeDestroy() {
     for (const t of this.sOe) this.AddChild(t);
@@ -111,8 +111,8 @@ class NoviceJourneyItem extends GridProxyAbstract_1.GridProxyAbstract {
     this.RefreshCurrentState();
   }
   RefreshCurrentState() {
-    (this.Mke = this.CNe.GetRewardStateByLevel(this.Lo.Id)),
-      this.kh.get(this.Mke)();
+    (this.G2e = this.CNe.GetRewardStateByLevel(this.Lo.Id)),
+      this.kh.get(this.G2e)();
   }
   GetKey(t, i) {
     return this.Lo.Id;

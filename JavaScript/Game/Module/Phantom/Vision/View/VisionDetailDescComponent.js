@@ -35,7 +35,7 @@ class VisionDetailDesc {
       (this.SkillConfig = void 0),
       (this.Level = 0),
       (this.FetterGroupId = 0),
-      (this.$6i = !0),
+      (this.X8i = !0),
       (this.DoNotNeedCheckSimplyState = !1),
       (this.NeedSimplyStateChangeAnimation = !1),
       (this.AnimationState = !0),
@@ -45,10 +45,10 @@ class VisionDetailDesc {
       (this.CompareState = !1);
   }
   SetNeedCheckChangeColor(t) {
-    this.$6i = t;
+    this.X8i = t;
   }
   GetNeedCheckChangeColor() {
-    return this.$6i;
+    return this.X8i;
   }
   static CreateEmptySkillDescData() {
     var t = new Array(),
@@ -160,23 +160,23 @@ class VisionDetailDescComponent extends UiPanelBase_1.UiPanelBase {
   constructor(t) {
     super(),
       (this.wqe = void 0),
-      (this.Y6i = void 0),
-      (this.J6i = void 0),
-      (this.z6i = void 0),
-      (this.Z6i = !1),
-      (this.e8i = () => {
-        this.Z6i &&
+      (this.$8i = void 0),
+      (this.Y8i = void 0),
+      (this.J8i = void 0),
+      (this.z8i = !1),
+      (this.Z8i = () => {
+        this.z8i &&
           this.GetScrollViewWithScrollbar(0)?.ScrollTo(this.GetItem(2));
       }),
-      (this.t8i = () => {
-        this.Y6i &&
-          (this.Y6i.forEach((t) => {
+      (this.e9i = () => {
+        this.$8i &&
+          (this.$8i.forEach((t) => {
             t.NeedSimplyStateChangeAnimation = !0;
           }),
-          this.Refresh(this.Y6i, !0));
+          this.Refresh(this.$8i, !0));
       }),
-      (this.i8i = () => {
-        this.Z6i = !1;
+      (this.t9i = () => {
+        this.z8i = !1;
       }),
       (this.wqe = t);
   }
@@ -192,46 +192,46 @@ class VisionDetailDescComponent extends UiPanelBase_1.UiPanelBase {
     ];
   }
   async OnBeforeStartAsync() {
-    (this.J6i = new VisionDetailDescItem(this.GetItem(1))),
-      await this.J6i.Init(),
-      this.J6i.SetActive(!0),
-      (this.z6i = new VisionDetailDescItem(this.GetItem(2))),
-      await this.z6i.Init(),
-      this.z6i.SetActive(!0),
-      this.GetVerticalLayout(3)?.OnRebuildLayoutDelegate.Bind(this.e8i);
+    (this.Y8i = new VisionDetailDescItem(this.GetItem(1))),
+      await this.Y8i.Init(),
+      this.Y8i.SetActive(!0),
+      (this.J8i = new VisionDetailDescItem(this.GetItem(2))),
+      await this.J8i.Init(),
+      this.J8i.SetActive(!0),
+      this.GetVerticalLayout(3)?.OnRebuildLayoutDelegate.Bind(this.Z8i);
   }
   OnStart() {
-    this.mEe();
+    this.mSe();
   }
   GetTxtItemByIndex(t) {
     return 0 === t
       ? this.GetItem(1)
       : 1 === t
-        ? ((this.Z6i = !0), this.GetItem(2))
+        ? ((this.z8i = !0), this.GetItem(2))
         : void 0;
   }
-  mEe() {
+  mSe() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.ChangeVisionSimplyState,
-      this.t8i,
+      this.e9i,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.GuideGroupFinished,
-        this.i8i,
+        this.t9i,
       );
   }
-  dEe() {
+  dSe() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.ChangeVisionSimplyState,
-      this.t8i,
+      this.e9i,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.GuideGroupFinished,
-        this.i8i,
+        this.t9i,
       );
   }
   Refresh(t, i = 0) {
-    this.Y6i = t;
+    this.$8i = t;
     const e = new Array(),
       s = new Array();
     t.forEach((t) => {
@@ -242,14 +242,14 @@ class VisionDetailDescComponent extends UiPanelBase_1.UiPanelBase {
           t.EquipSameMonster) &&
           s.push(t);
     }),
-      this.J6i?.Update(e),
-      this.z6i?.Update(s),
+      this.Y8i?.Update(e),
+      this.J8i?.Update(s),
       t.forEach((t) => {
         t.NeedSimplyStateChangeAnimation = !1;
       });
   }
   OnBeforeDestroy() {
-    this.dEe();
+    this.dSe();
   }
 }
 exports.VisionDetailDescComponent = VisionDetailDescComponent;
@@ -261,7 +261,7 @@ class VisionDetailDescItem extends UiPanelBase_1.UiPanelBase {
       (this.Pe = void 0),
       (this.eGe = void 0),
       (this.sGe = () => new VisionDetailDescContentItem()),
-      (this.o8i = () => {
+      (this.i9i = () => {
         this.Pe && this.Pe.JumpCallBack && this.Pe.JumpCallBack();
       }),
       (this.wqe = t);
@@ -282,7 +282,7 @@ class VisionDetailDescItem extends UiPanelBase_1.UiPanelBase {
       [7, UE.UIVerticalLayout],
       [8, UE.UIItem],
     ]),
-      (this.BtnBindInfo = [[1, this.o8i]]);
+      (this.BtnBindInfo = [[1, this.i9i]]);
   }
   OnStart() {
     (this.eGe = new GenericLayout_1.GenericLayout(
@@ -307,10 +307,10 @@ class VisionDetailDescItem extends UiPanelBase_1.UiPanelBase {
     }),
       (this.Pe = i) &&
         (this.mGe(i),
-        this.r8i(i),
-        this.bPt(i),
-        this.qPt(i),
-        this.NPt(i),
+        this.o9i(i),
+        this.Oxt(i),
+        this.kxt(i),
+        this.Vxt(i),
         this.Pqe(e));
   }
   Pqe(t) {
@@ -319,32 +319,32 @@ class VisionDetailDescItem extends UiPanelBase_1.UiPanelBase {
   mGe(t) {
     this.GetText(0).SetText(t.Title);
   }
-  r8i(t) {
+  o9i(t) {
     this.GetButton(1).RootUIComp.SetUIActive(
       void 0 !== t.JumpCallBack && !t.CompareState,
     );
   }
-  bPt(t) {
+  Oxt(t) {
     this.GetItem(2).SetUIActive(t.EmptyState),
       t.EmptyState && this.GetItem(8).SetUIActive(0 === t.TitleType);
   }
-  NPt(t) {
+  Vxt(t) {
     this.GetText(5).SetText(t.EmptyText);
   }
-  qPt(t) {
+  kxt(t) {
     this.GetItem(4).SetUIActive(t.TitleItemShowState);
   }
 }
 class VisionDetailDescContentItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this.EPe = void 0),
-      (this.n8i = !0),
+      (this.SPe = void 0),
+      (this.r9i = !0),
       (this.ScrollViewDelegate = void 0),
       (this.GridIndex = 0),
       (this.DisplayIndex = 0),
       (this.CurrentData = void 0),
-      (this.PPt = void 0),
+      (this.bxt = void 0),
       (this.Pe = void 0);
   }
   Refresh(t, i, e) {
@@ -375,35 +375,35 @@ class VisionDetailDescContentItem extends UiPanelBase_1.UiPanelBase {
     ];
   }
   async OnBeforeStartAsync() {
-    (this.PPt = new VisionFetterSuitItem_1.VisionFetterSuitItem(
+    (this.bxt = new VisionFetterSuitItem_1.VisionFetterSuitItem(
       this.GetItem(5),
     )),
-      await this.PPt.Init(),
-      this.PPt.SetActive(!0),
+      await this.bxt.Init(),
+      this.bxt.SetActive(!0),
       this.SetUiActive(!0);
   }
   OnStart() {
-    this.EPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.GetItem(7));
+    this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.GetItem(7));
   }
   Update(t) {
     (this.Pe = t),
       this.Pe &&
-        (this.s8i(t),
-        this.a8i(t),
-        this.L4e(t),
-        this.OPt(t),
-        this.h8i(t),
-        this.l8i(t),
-        this._8i(t));
+        (this.n9i(t),
+        this.s9i(t),
+        this.Dke(t),
+        this.Hxt(t),
+        this.a9i(t),
+        this.h9i(t),
+        this.l9i(t));
   }
-  _8i(t) {
+  l9i(t) {
     t.NeedSimplyStateChangeAnimation &&
       t.AnimationState &&
-      (this.EPe.StopSequenceByKey("Switch", !1, !0),
-      this.EPe.PlayLevelSequenceByName("Switch"));
+      (this.SPe.StopSequenceByKey("Switch", !1, !0),
+      this.SPe.PlayLevelSequenceByName("Switch"));
   }
-  l8i(e) {
-    if (this.n8i && e.AnimationState) {
+  h9i(e) {
+    if (this.r9i && e.AnimationState) {
       let t = void 0,
         i = !1;
       e.GreenActiveState &&
@@ -411,31 +411,31 @@ class VisionDetailDescContentItem extends UiPanelBase_1.UiPanelBase {
         0 < e.FetterId &&
         ((t = "Choose"), (i = !0)),
         0 < e.FetterId && !i && e.FetterData.ActiveState && (t = "Activate");
-      var s = this.EPe.GetCurrentSequence();
-      void 0 !== s && t !== s && this.EPe.StopSequenceByKey(s, !1, !0),
+      var s = this.SPe.GetCurrentSequence();
+      void 0 !== s && t !== s && this.SPe.StopSequenceByKey(s, !1, !0),
         void 0 !== t &&
           (t !== s
-            ? this.EPe.PlayLevelSequenceByName(t)
-            : this.EPe.ReplaySequenceByKey(t)),
+            ? this.SPe.PlayLevelSequenceByName(t)
+            : this.SPe.ReplaySequenceByKey(t)),
         this.GetItem(10)?.SetUIActive(e.EquipSameMonster && void 0 === t);
     } else this.GetItem(10)?.SetUIActive(e.EquipSameMonster);
   }
-  a8i(t) {
+  s9i(t) {
     this.GetItem(0).SetUIActive(t.NeedActiveState || t.EquipSameMonster);
   }
-  s8i(t) {
+  n9i(t) {
     t.NeedActiveState
       ? this.GetItem(2).SetUIActive(t.GreenActiveState)
       : t.EquipSameMonster && this.GetItem(2).SetUIActive(!1);
   }
-  h8i(t) {
+  a9i(t) {
     (t.GreenActiveState && !t.NewState && 0 < t.FetterId) ||
     t.EquipSameMonster ||
     (t.GreenActiveState && t.SkillConfig)
       ? this.GetItem(1).SetUIActive(!1)
       : this.GetItem(1).SetUIActive(!0);
   }
-  OPt(i) {
+  Hxt(i) {
     if (0 < i.FetterId) {
       this.GetItem(5).SetUIActive(!0);
       var e =
@@ -443,7 +443,7 @@ class VisionDetailDescContentItem extends UiPanelBase_1.UiPanelBase {
             i.FetterGroupId,
           ),
         e =
-          (this.PPt.Update(e),
+          (this.bxt.Update(e),
           i.FetterData.ActiveFetterGroupNum > i.FetterData.NeedActiveNum
             ? i.FetterData.NeedActiveNum
             : i.FetterData.ActiveFetterGroupNum),
@@ -458,7 +458,7 @@ class VisionDetailDescContentItem extends UiPanelBase_1.UiPanelBase {
         this.GetText(9).SetColor(UE.Color.FromHex(t));
     } else this.GetItem(5).SetUIActive(!1);
   }
-  L4e(i) {
+  Dke(i) {
     if (!i.EquipSameMonster || 0 < i.FetterId) {
       let t =
         ModelManager_1.ModelManager.PhantomBattleModel.GetIfSimpleState(1);
@@ -527,7 +527,7 @@ class VisionDetailDescContentItem extends UiPanelBase_1.UiPanelBase {
         LguiUtil_1.LguiUtil.SetLocalTextNew(e, "SameVisionNoCountValue");
   }
   OnBeforeHide() {
-    this.EPe.StopCurrentSequence();
+    this.SPe.StopCurrentSequence();
   }
 }
 //# sourceMappingURL=VisionDetailDescComponent.js.map

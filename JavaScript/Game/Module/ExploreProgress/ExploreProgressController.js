@@ -14,9 +14,9 @@ class ExploreProgressController extends UiControllerBase_1.UiControllerBase {
       r =
         (e.InitializeExploreAreaData(),
         e.InitializeCurrentCountryIdAndAreaId(),
-        new Protocol_1.Aki.Protocol.oJn()),
+        new Protocol_1.Aki.Protocol.zes()),
       e =
-        ((r.i5n = e.GetAllAreaIdList()),
+        ((r.qVn = e.GetAllAreaIdList()),
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "ExploreProgress",
@@ -24,11 +24,11 @@ class ExploreProgressController extends UiControllerBase_1.UiControllerBase {
             "客户端请求区域探索度ExploreProgressRequest",
             ["request", r],
           ),
-        await Net_1.Net.CallAsync(12864, r));
-    this.$5t(e);
+        await Net_1.Net.CallAsync(21059, r));
+    this.$Vt(e);
   }
 }
-(exports.ExploreProgressController = ExploreProgressController).$5t = (e) => {
+(exports.ExploreProgressController = ExploreProgressController).$Vt = (e) => {
   Log_1.Log.CheckInfo() &&
     Log_1.Log.Info(
       "ExploreProgress",
@@ -37,7 +37,7 @@ class ExploreProgressController extends UiControllerBase_1.UiControllerBase {
       ["response", e],
     );
   var r = ModelManager_1.ModelManager.ExploreProgressModel;
-  for (const o of e.uLs) r.RefreshExploreAreaData(o);
+  for (const o of e.PPs) r.RefreshExploreAreaData(o);
   EventSystem_1.EventSystem.Emit(
     EventDefine_1.EEventName.OnExploreProgressResponse,
   );

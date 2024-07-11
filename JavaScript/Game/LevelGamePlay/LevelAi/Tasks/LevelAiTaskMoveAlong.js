@@ -12,7 +12,7 @@ class LevelAiTaskMoveAlong extends LevelAiTask_1.LevelAiTask {
   ExecuteTask() {
     var e;
     return (
-      (this.Gce = this.CreatureDataComponent.Entity.GetComponent(36)),
+      (this.Gce = this.CreatureDataComponent.Entity.GetComponent(37)),
       this.Gce
         ? ((e = {
             Points: this.PathPoint,

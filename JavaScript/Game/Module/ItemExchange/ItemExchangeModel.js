@@ -23,20 +23,20 @@ class ExchangeSimulation {
 exports.ExchangeSimulation = ExchangeSimulation;
 class ItemExchangeModel extends ModelBase_1.ModelBase {
   constructor() {
-    super(...arguments), (this.DCi = void 0);
+    super(...arguments), (this.Dgi = void 0);
   }
   OnInit() {
-    return (this.DCi = new Map()), !0;
+    return (this.Dgi = new Map()), !0;
   }
   OnClear() {
-    return !(this.DCi = void 0);
+    return !(this.Dgi = void 0);
   }
   InitItemExchangeTimeInfo(e) {
-    for (const t of e) this.DCi.set(t.G3n, t);
+    for (const t of e) this.Dgi.set(t.f8n, t);
   }
   GetExchangeInfo(e) {
     return (
-      this.DCi.get(e) ||
+      this.Dgi.get(e) ||
         (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "ItemExchange",
@@ -44,15 +44,15 @@ class ItemExchangeModel extends ModelBase_1.ModelBase {
             "前后端版本可能不一致, 当前兑换的道具并没有后端配置!",
             ["itemId", e],
           )),
-      this.DCi.get(e)
+      this.Dgi.get(e)
     );
   }
   GetExChangeTime(e) {
-    return this.DCi.get(e)?.S5n ?? 0;
+    return this.Dgi.get(e)?.t9n ?? 0;
   }
   AddExchangeTime(e, t) {
-    e = this.DCi.get(e);
-    e && ((e.E5n += t), (e.S5n += t));
+    e = this.Dgi.get(e);
+    e && ((e.i9n += t), (e.t9n += t));
   }
   CalculateConsume(i, e = 0, s = 0, h = !1) {
     let g = e;
@@ -76,7 +76,7 @@ class ItemExchangeModel extends ModelBase_1.ModelBase {
           break;
         }
       }
-      var l = this.RCi(i);
+      var l = this.Rgi(i);
       let a = 0,
         n = 0,
         o = 0;
@@ -102,10 +102,10 @@ class ItemExchangeModel extends ModelBase_1.ModelBase {
       );
     }
   }
-  RCi(e) {
+  Rgi(e) {
     var e = this.GetExchangeInfo(e),
-      t = 0 < e.JDs ? e.JDs - e.E5n : ItemExchangeDefine_1.MAX_COUNT,
-      e = 0 < e.YDs ? e.YDs - e.S5n : ItemExchangeDefine_1.MAX_COUNT;
+      t = 0 < e.gxs ? e.gxs - e.i9n : ItemExchangeDefine_1.MAX_COUNT,
+      e = 0 < e.Cxs ? e.Cxs - e.t9n : ItemExchangeDefine_1.MAX_COUNT;
     return Math.min(t, e);
   }
   GetCurExchangeInfo(e, t = 0) {
@@ -127,11 +127,11 @@ class ItemExchangeModel extends ModelBase_1.ModelBase {
   CheckIsMaxExChangeTime(e, t = 0) {
     e = this.GetExchangeInfo(e);
     return (
-      (0 < e.JDs && e.E5n + t >= e.JDs) || (0 < e.YDs && e.S5n + t >= e.YDs)
+      (0 < e.gxs && e.i9n + t >= e.gxs) || (0 < e.Cxs && e.t9n + t >= e.Cxs)
     );
   }
   GetMaxExChangeTime(e) {
-    var t = this.RCi(e);
+    var t = this.Rgi(e);
     return this.CalculateConsume(e, 0, t)?.ExChangeTime ?? 0;
   }
 }

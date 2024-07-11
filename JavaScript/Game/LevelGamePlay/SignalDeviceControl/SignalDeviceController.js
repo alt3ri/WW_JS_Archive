@@ -8,7 +8,14 @@ const IAction_1 = require("../../../UniverseEditor/Interface/IAction"),
 class SignalDeviceController extends UiControllerBase_1.UiControllerBase {
   static OpenGameplay(e, a) {
     ModelManager_1.ModelManager.SignalDeviceModel.InitData(e),
+      (ModelManager_1.ModelManager.SignalDeviceModel.ViewType = 0),
       UiManager_1.UiManager.OpenView("SignalDeviceView", e),
+      (this.HDe = a);
+  }
+  static OpenGameplayChasingMoon(e, a) {
+    ModelManager_1.ModelManager.SignalDeviceModel.InitData(e),
+      (ModelManager_1.ModelManager.SignalDeviceModel.ViewType = 1),
+      UiManager_1.UiManager.OpenView("SignalDeviceChasingMoonView", e),
       (this.HDe = a);
   }
   static OnDotPressed(e, a) {
@@ -27,7 +34,10 @@ class SignalDeviceController extends UiControllerBase_1.UiControllerBase {
     ModelManager_1.ModelManager.SignalDeviceModel.ResetData();
   }
   static CallFinishCallback() {
-    this.HDe && this.HDe();
+    this.HDe && this.HDe(),
+      1 === ModelManager_1.ModelManager.SignalDeviceModel.ViewType
+        ? UiManager_1.UiManager.CloseView("SignalDeviceChasingMoonView")
+        : UiManager_1.UiManager.CloseView("SignalDeviceView");
   }
 }
 (exports.SignalDeviceController = SignalDeviceController).HDe = void 0;

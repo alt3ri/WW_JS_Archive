@@ -22,18 +22,18 @@ class AdviceInfoView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
       (this.IRe = void 0),
-      (this.S8e = void 0),
-      (this.o9e = void 0),
-      (this.r9e = !1),
-      (this.i7e = void 0),
-      (this.o7e = () => {
-        this.y9e();
+      (this.b9e = void 0),
+      (this.f7e = void 0),
+      (this.p7e = !1),
+      (this.gHe = void 0),
+      (this.fHe = () => {
+        this.G7e();
       }),
-      (this.n9e = (e, t) => {
-        (this.r9e = t) && this.CloseMe();
+      (this.v7e = (e, t) => {
+        (this.p7e = t) && this.CloseMe();
       }),
-      (this.r7e = () => !0),
-      (this.n7e = () => {
+      (this.pHe = () => !0),
+      (this.vHe = () => {
         var e = ModelManager_1.ModelManager.AdviceModel.GetCurrentEntityId(),
           e = EntitySystem_1.EntitySystem.Get(e)
             ?.GetComponent(0)
@@ -48,10 +48,10 @@ class AdviceInfoView extends UiViewBase_1.UiViewBase {
           AdviceController_1.AdviceController.RequestVote(
             e,
             t,
-            Protocol_1.Aki.Protocol.$Bs.Proto_Cancel,
+            Protocol_1.Aki.Protocol.Uks.Proto_Cancel,
           ));
       }),
-      (this.s7e = () => {
+      (this.MHe = () => {
         var e = ModelManager_1.ModelManager.AdviceModel.GetCurrentEntityId(),
           e = EntitySystem_1.EntitySystem.Get(e)
             ?.GetComponent(0)
@@ -66,28 +66,28 @@ class AdviceInfoView extends UiViewBase_1.UiViewBase {
             ? AdviceController_1.AdviceController.RequestVote(
                 e,
                 t,
-                Protocol_1.Aki.Protocol.$Bs.Proto_Cancel,
+                Protocol_1.Aki.Protocol.Uks.Proto_Cancel,
               )
             : AdviceController_1.AdviceController.RequestVote(
                 e,
                 t,
-                Protocol_1.Aki.Protocol.$Bs.Proto_Up,
+                Protocol_1.Aki.Protocol.Uks.Proto_Up,
               );
       }),
-      (this.a7e = () => {
-        this.h7e();
+      (this.EHe = () => {
+        this.SHe();
       }),
-      (this.l7e = () => {
-        this._7e(), this.u7e();
+      (this.yHe = () => {
+        this.IHe(), this.THe();
       }),
-      (this.c7e = () => {
-        this.m7e(), this.d7e(), this.C7e();
+      (this.LHe = () => {
+        this.DHe(), this.RHe(), this.UHe();
       }),
-      (this.g7e = (e) => {
+      (this.AHe = (e) => {
         UiConfig_1.UiConfig.TryGetViewInfo(e.Info.Name).Type ===
           UiLayerType_1.ELayerType.Normal && this.CloseMe();
       }),
-      (this.f7e = () => {
+      (this.PHe = () => {
         this.CloseMe();
       });
   }
@@ -104,8 +104,8 @@ class AdviceInfoView extends UiViewBase_1.UiViewBase {
       [8, UE.UIText],
     ]),
       (this.BtnBindInfo = [
-        [6, this.n7e],
-        [7, this.s7e],
+        [6, this.vHe],
+        [7, this.MHe],
       ]);
   }
   OnStart() {
@@ -113,80 +113,80 @@ class AdviceInfoView extends UiViewBase_1.UiViewBase {
     this.GetExtendToggle(6).SetToggleGroup(void 0);
     var e = this.GetExtendToggle(7);
     e.CanExecuteChange.Unbind(),
-      e.CanExecuteChange.Bind(this.r7e),
+      e.CanExecuteChange.Bind(this.pHe),
       e.SetToggleGroup(void 0),
       this.GetText(8).SetUIActive(!1),
-      this.y9e();
+      this.G7e();
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnAdviceEntityNotify,
-      this.l7e,
+      this.yHe,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnAdviceVoteNotify,
-        this.l7e,
+        this.yHe,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.CreateViewInstance,
-        this.g7e,
+        this.AHe,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.UiSceneStartLoad,
-        this.f7e,
+        this.PHe,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnChangeRole,
-        this.o7e,
+        this.fHe,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.RefreshAdviceInfoView,
-        this.a7e,
+        this.EHe,
       );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnChangeRole,
-      this.o7e,
+      this.fHe,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnAdviceEntityNotify,
-        this.l7e,
+        this.yHe,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnAdviceVoteNotify,
-        this.l7e,
+        this.yHe,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.CreateViewInstance,
-        this.g7e,
+        this.AHe,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.UiSceneStartLoad,
-        this.f7e,
+        this.PHe,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.RefreshAdviceInfoView,
-        this.a7e,
+        this.EHe,
       );
   }
-  y9e() {
+  G7e() {
     var e,
       t = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
     t.Valid &&
-      ((e = t.Entity.GetComponent(185)),
-      (this.r9e = e.HasTag(1996802261)),
-      this.I9e(),
-      this.r9e ? this.CloseMe() : this.T9e(t));
+      ((e = t.Entity.GetComponent(188)),
+      (this.p7e = e.HasTag(1996802261)),
+      this.N7e(),
+      this.p7e ? this.CloseMe() : this.O7e(t));
   }
-  T9e(e) {
-    e = e.Entity.GetComponent(185);
-    this.o9e = e.ListenForTagAddOrRemove(1996802261, this.n9e);
+  O7e(e) {
+    e = e.Entity.GetComponent(188);
+    this.f7e = e.ListenForTagAddOrRemove(1996802261, this.v7e);
   }
-  I9e() {
-    this.o9e?.EndTask(), (this.o9e = void 0);
+  N7e() {
+    this.f7e?.EndTask(), (this.f7e = void 0);
   }
-  _7e() {
+  IHe() {
     var e = ModelManager_1.ModelManager.AdviceModel.GetUpVoteIds(),
       t = ModelManager_1.ModelManager.AdviceModel.GetCurrentEntityAdviceData()
         .GetAdviceData()
@@ -196,41 +196,41 @@ class AdviceInfoView extends UiViewBase_1.UiViewBase {
       : this.GetExtendToggle(7).SetToggleStateForce(0, !1);
   }
   OnAfterShow() {
-    this.h7e();
+    this.SHe();
   }
-  h7e() {
-    this.CFe(),
-      (this.i7e = void 0),
+  SHe() {
+    this.P3e(),
+      (this.gHe = void 0),
       ModelManager_1.ModelManager.InteractionModel.SetInteractionHintDisable(
         !0,
       ),
-      (this.S8e =
+      (this.b9e =
         ModelManager_1.ModelManager.AdviceModel.GetCurrentEntityAdviceData().GetAdviceData()),
       this.Og();
   }
-  CFe() {
-    this.p7e(),
+  P3e() {
+    this.xHe(),
       void 0 === this.IRe &&
-        (this.IRe = TimerSystem_1.TimerSystem.Forever(this.c7e, CHECKTIMEGAP));
+        (this.IRe = TimerSystem_1.TimerSystem.Forever(this.LHe, CHECKTIMEGAP));
   }
-  p7e() {
+  xHe() {
     void 0 !== this.IRe &&
       (TimerSystem_1.TimerSystem.Remove(this.IRe), (this.IRe = void 0));
   }
-  m7e() {
+  DHe() {
     var e;
-    this.i7e ||
+    this.gHe ||
       ((e = Vector_1.Vector.Create()).DeepCopy(
         Global_1.Global.BaseCharacter.CharacterActorComponent
           .ActorLocationProxy,
       ),
-      (this.i7e = e));
+      (this.gHe = e));
   }
   Og() {
-    this.u7e(), this.hke(), this.v7e(), this._7e(), this.x9e();
+    this.THe(), this.T2e(), this.wHe(), this.IHe(), this.K7e();
   }
-  u7e() {
-    var e = this.S8e.GetVote(),
+  THe() {
+    var e = this.b9e.GetVote(),
       e =
         (this.GetText(5).SetText(e.toString()),
         e >= ConfigManager_1.ConfigManager.AdviceConfig.GetAdviceHighNum()
@@ -239,43 +239,43 @@ class AdviceInfoView extends UiViewBase_1.UiViewBase {
       e = UE.Color.FromHex(e);
     this.GetText(5).SetColor(e);
   }
-  hke() {
-    var e = this.S8e.GetAdviceShowText();
+  T2e() {
+    var e = this.b9e.GetAdviceShowText();
     this.GetText(4).SetText(e);
   }
-  x9e() {
+  K7e() {
     var e =
       ModelManager_1.ModelManager.AdviceModel.GetCurrentEntityAdviceData().GetPlayerName();
     this.GetText(2).SetText(e);
   }
-  v7e() {
+  wHe() {
     var e;
-    0 < this.S8e.GetAdviceExpressionId()
+    0 < this.b9e.GetAdviceExpressionId()
       ? (this.GetTexture(1).SetUIActive(!0),
         (e = ConfigManager_1.ConfigManager.ChatConfig.GetExpressionConfig(
-          this.S8e.GetAdviceExpressionId(),
+          this.b9e.GetAdviceExpressionId(),
         )),
         this.SetTextureByPath(e.ExpressionTexturePath, this.GetTexture(1)))
       : this.GetTexture(1).SetUIActive(!1);
   }
-  C7e() {
+  UHe() {
     var e;
     ModelManager_1.ModelManager.InteractionModel.IsHideInteractHint &&
       ((e =
         Global_1.Global.BaseCharacter.CharacterActorComponent
           .ActorLocationProxy),
-      (this.M7e(e.X, this.i7e.X, ROLEMOVERAGE) &&
-        this.M7e(e.Y, this.i7e.Y, ROLEMOVERAGE) &&
-        this.M7e(e.Z, this.i7e.Z, ROLEMOVERAGE)) ||
+      (this.BHe(e.X, this.gHe.X, ROLEMOVERAGE) &&
+        this.BHe(e.Y, this.gHe.Y, ROLEMOVERAGE) &&
+        this.BHe(e.Z, this.gHe.Z, ROLEMOVERAGE)) ||
         ModelManager_1.ModelManager.InteractionModel.SetInteractionHintDisable(
           !1,
         ));
   }
-  M7e(e, t, i) {
+  BHe(e, t, i) {
     e = Math.ceil(e) - Math.ceil(t);
     return e < i && -1 * i < e;
   }
-  d7e() {
+  RHe() {
     var e,
       t,
       i = ModelManager_1.ModelManager.AdviceModel.GetCurrentEntityId(),
@@ -294,8 +294,8 @@ class AdviceInfoView extends UiViewBase_1.UiViewBase {
       this.CloseMe();
   }
   OnBeforeDestroy() {
-    this.p7e(),
-      this.I9e(),
+    this.xHe(),
+      this.N7e(),
       ModelManager_1.ModelManager.InteractionModel.SetInteractionHintDisable(
         !1,
       );

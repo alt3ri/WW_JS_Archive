@@ -5,25 +5,25 @@ const ModelBase_1 = require("../../../Core/Framework/ModelBase"),
   ModelManager_1 = require("../../Manager/ModelManager");
 class SubLevelLoadingModel extends ModelBase_1.ModelBase {
   constructor() {
-    super(...arguments), (this.Uyo = 0), (this.Ayo = !1);
+    super(...arguments), (this.LIo = 0), (this.DIo = !1);
   }
   get ScreenEffect() {
-    return this.Uyo;
+    return this.LIo;
   }
   set ScreenEffect(e) {
-    this.Uyo = e;
+    this.LIo = e;
   }
   get LoadSubLeveling() {
-    return this.Ayo;
+    return this.DIo;
   }
   set LoadSubLeveling(e) {
-    this.Ayo = e;
+    this.DIo = e;
   }
   OnClear() {
     return (
-      (this.Uyo = 0),
+      (this.LIo = 0),
       (ModelManager_1.ModelManager.LoadingModel.ScreenEffect = 0),
-      !(this.Ayo = !1)
+      !(this.DIo = !1)
     );
   }
 }

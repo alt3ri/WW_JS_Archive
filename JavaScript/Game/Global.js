@@ -46,13 +46,13 @@ class Global {
   }
   static get PawnOrSpectator() {
     return (
-      (Global.SMe && Global.MMe.IsValid()) ||
+      (Global.EMe && Global.MMe.IsValid()) ||
         (GlobalData_1.GlobalData.GameInstance &&
-          (Global.SMe = UE.GameplayStatics.GetPlayerPawn(
+          (Global.EMe = UE.GameplayStatics.GetPlayerPawn(
             GlobalData_1.GlobalData.World,
             0,
           ))),
-      Global.SMe
+      Global.EMe
     );
   }
   static get WorldEntityHelper() {
@@ -73,7 +73,7 @@ class Global {
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.BeforeLoadMap,
-        Global.EMe,
+        Global.SMe,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.AfterLoadMap,
@@ -84,7 +84,7 @@ class Global {
 ((exports.Global = Global).pMe = void 0),
   (Global.vMe = void 0),
   (Global.MMe = void 0),
-  (Global.SMe = void 0),
+  (Global.EMe = void 0),
   (Global.WorldEntityHelperInner = void 0),
   (Global.xie = () => {
     GlobalData_1.GlobalData.GameInstance &&
@@ -100,16 +100,16 @@ class Global {
         GlobalData_1.GlobalData.World,
         0,
       )),
-      (Global.SMe = UE.GameplayStatics.GetPlayerPawn(
+      (Global.EMe = UE.GameplayStatics.GetPlayerPawn(
         GlobalData_1.GlobalData.World,
         0,
       )));
   }),
-  (Global.EMe = () => {
+  (Global.SMe = () => {
     (Global.vMe = void 0),
       (Global.pMe = void 0),
       (Global.MMe = void 0),
-      (Global.SMe = void 0);
+      (Global.EMe = void 0);
   }),
   (Global.yMe = () => {
     (Global.vMe = UE.GameplayStatics.GetPlayerController(
@@ -120,7 +120,7 @@ class Global {
         GlobalData_1.GlobalData.World,
         0,
       )),
-      (Global.SMe = UE.GameplayStatics.GetPlayerPawn(
+      (Global.EMe = UE.GameplayStatics.GetPlayerPawn(
         GlobalData_1.GlobalData.World,
         0,
       ));

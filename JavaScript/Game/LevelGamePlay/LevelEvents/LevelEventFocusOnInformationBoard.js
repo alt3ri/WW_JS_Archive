@@ -8,7 +8,7 @@ class LevelEventFocusOnInformationBoard extends LevelGeneralBase_1.LevelEventBas
   Execute(e, a) {
     var r = Global_1.Global.BaseCharacter;
     r &&
-      r.CharacterActorComponent.Entity.CheckGetComponent(158).SetDirectionState(
+      r.CharacterActorComponent.Entity.CheckGetComponent(160).SetDirectionState(
         CharacterUnifiedStateTypes_1.ECharDirectionState.AimDirection,
       );
   }

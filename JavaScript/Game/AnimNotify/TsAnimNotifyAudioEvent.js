@@ -7,7 +7,7 @@ class TsAnimNotifyAudioEvent extends UE.KuroAnimNotify {
   constructor() {
     super(...arguments),
       (this.AudioEvent = void 0),
-      (this.SocketName = new UE.FName("None")),
+      (this.SocketName = void 0),
       (this.Follow = !0);
   }
   GetNotifyName() {
@@ -37,8 +37,8 @@ class TsAnimNotifyAudioEvent extends UE.KuroAnimNotify {
       (this.Follow
         ? (o = this.GetAkComponent(o, this.SocketName))?.IsValid() &&
           ((o = AudioSystem_1.AudioSystem.PostEvent(e, o)),
-          Log_1.Log.CheckInfo()) &&
-          Log_1.Log.Info(
+          Log_1.Log.CheckDebug()) &&
+          Log_1.Log.Debug(
             "Audio",
             57,
             "[Game.AnimNotify] PostEvent",
@@ -49,8 +49,8 @@ class TsAnimNotifyAudioEvent extends UE.KuroAnimNotify {
           )
         : ((o = t.GetSocketTransform(this.SocketName)),
           (t = AudioSystem_1.AudioSystem.PostEvent(e, o)),
-          Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info(
+          Log_1.Log.CheckDebug() &&
+            Log_1.Log.Debug(
               "Audio",
               57,
               "[Game.AnimNotify] PostEvent",
@@ -63,7 +63,7 @@ class TsAnimNotifyAudioEvent extends UE.KuroAnimNotify {
   GetAkComponent(e, t) {
     let i = void 0;
     if (e.IsA(UE.TsBaseCharacter_C.StaticClass())) {
-      var o = e.CharacterActorComponent?.Entity?.GetComponent(42);
+      var o = e.CharacterActorComponent?.Entity?.GetComponent(43);
       if (!o?.Valid) return;
       i = o.GetAkComponent(t);
     } else

@@ -21,7 +21,7 @@ class Application {
       Log_1.Log.Debug("Core", 42, "Application.Destroy OnEditorPreEndPIE"),
       Application.gU &&
         (Application.A6.clear(),
-        Application.FTn.clear(),
+        Application.PLn.clear(),
         (0, puerts_1.releaseManualReleaseDelegate)(Application.R6),
         (0, puerts_1.releaseManualReleaseDelegate)(Application.U6),
         UE.KuroApplicationLibrary.UnBind(),
@@ -35,10 +35,10 @@ class Application {
     Application.A6.has(i) && Application.A6.get(i).delete(p);
   }
   static AddEditorPreEndPIEHandler(i) {
-    Application.FTn.add(i);
+    Application.PLn.add(i);
   }
   static RemoveEditorPreEndPIEHandler(i) {
-    Application.FTn.delete(i);
+    Application.PLn.delete(i);
   }
   static IsPublicationApp() {
     return (
@@ -49,7 +49,7 @@ class Application {
   }
 }
 ((exports.Application = Application).A6 = new Map()),
-  (Application.FTn = new Set()),
+  (Application.PLn = new Set()),
   (Application.gU = !1),
   (Application.R6 = (i) => {
     var p = i;
@@ -61,7 +61,7 @@ class Application {
       Log_1.Log.Debug("Core", 31, "ApplicationLifeTime: " + i);
   }),
   (Application.U6 = (i) => {
-    Application.FTn.forEach((i) => {
+    Application.PLn.forEach((i) => {
       i();
     }),
       Log_1.Log.CheckDebug() &&

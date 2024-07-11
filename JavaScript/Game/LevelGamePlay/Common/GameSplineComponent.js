@@ -91,7 +91,11 @@ class GameSplineComponent {
               this.GetWorldLocationAtSplinePoint(t),
             )),
             this.Option.Points[t]),
-          s = ((i.MoveState = e.MoveState), (i.MoveSpeed = e.MoveSpeed), e),
+          s =
+            ((i.MoveState = e.MoveState),
+            (i.MoveSpeed = e.MoveSpeed),
+            (i.CharPositionState = e.CharPositionState),
+            e),
           s =
             (s &&
               ((i.IsIgnorePoint = s.IgnorePoint ?? !1),
@@ -147,7 +151,11 @@ class GameSplineComponent {
               this.GetWorldLocationAtSplinePoint(t),
             )),
             this.Option.Points[t]),
-          s = ((i.MoveState = e.MoveState), (i.MoveSpeed = e.MoveSpeed), e),
+          s =
+            ((i.MoveState = e.MoveState),
+            (i.MoveSpeed = e.MoveSpeed),
+            (i.CharPositionState = e.CharPositionState),
+            e),
           s =
             (s &&
               ((i.IsIgnorePoint = s.IgnorePoint ?? !1),

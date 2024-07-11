@@ -7,10 +7,10 @@ const UE = require("ue"),
 class FunctionOpenView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.I4t = () => {
+      (this.I5t = () => {
         var e =
           ModelManager_1.ModelManager.FunctionModel.PopNewOpenFunctionList();
-        e ? this.W8t(e) : this.CloseMe();
+        e ? this.W9t(e) : this.CloseMe();
       });
   }
   OnRegisterComponent() {
@@ -21,7 +21,7 @@ class FunctionOpenView extends UiViewBase_1.UiViewBase {
       [3, UE.UIButtonComponent],
       [4, UE.UIItem],
     ]),
-      (this.BtnBindInfo = [[3, this.I4t]]);
+      (this.BtnBindInfo = [[3, this.I5t]]);
   }
   OnStart() {
     ModelManager_1.ModelManager.PlotModel.IsInHighLevelPlot() &&
@@ -32,7 +32,7 @@ class FunctionOpenView extends UiViewBase_1.UiViewBase {
   OnAfterShow() {
     this.UiViewSequence.PlaySequence("Show", !0);
   }
-  W8t(e) {
+  W9t(e) {
     this.UiViewSequence.PlaySequence("Show", !0), this.nOe(e);
   }
   nOe(e) {

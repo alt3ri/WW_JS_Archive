@@ -9,6 +9,7 @@ const puerts_1 = require("puerts"),
   EventDefine_1 = require("./Event/EventDefine"),
   EventSystem_1 = require("./Event/EventSystem"),
   LocalStorageDefine_1 = require("./LocalStorageDefine"),
+  Info_1 = require("../../Core/Common/Info"),
   DBPATH = "LocalStorage/LocalStorage",
   DBSUFFIX = ".db",
   TABLENAME = "LocalStorage",
@@ -17,6 +18,7 @@ const puerts_1 = require("puerts"),
   USE_THREAD = !0,
   SQLITE_ERR = -1,
   SQLITE_NO_DATA = 1,
+  CHECK_COMPLEX_THRESHOLD = 600,
   USE_JOURNAL_MODE = 2;
 function getJournalMode(e) {
   switch (e) {
@@ -39,109 +41,109 @@ class LocalStorage {
   static Destroy() {
     (LocalStorage.j8 = void 0), LocalStorage.Cde();
   }
-  static GetGlobal(e, t = void 0) {
+  static GetGlobal(e, a = void 0) {
     e = LocalStorage.gde(e);
     if (e) {
       var e = LocalStorage.fde(e);
-      if (e[0]) return (e = e[1]) ? LocalStorage.pde(e) : t;
+      if (e[0]) return (e = e[1]) ? LocalStorage.pde(e) : a;
     }
   }
-  static SetGlobal(e, t) {
-    e = LocalStorage.gde(e);
+  static SetGlobal(e, a) {
+    var t = LocalStorage.gde(e);
     return (
-      !!e &&
-      (null == t
+      !!t &&
+      (null == a
         ? (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "LocalStorage",
               31,
               "value值非法",
-              ["keyName", e],
-              ["value", t],
+              ["keyName", t],
+              ["value", a],
             ),
           !1)
-        : !!(t = LocalStorage.O8(t)) && LocalStorage.vde(e, t))
+        : !!(e = LocalStorage.xkn(e, a)) && LocalStorage.vde(t, e))
     );
   }
   static DeleteGlobal(e) {
     e = LocalStorage.gde(e);
     return !!e && LocalStorage.Mde(e);
   }
-  static GetPlayer(e, t = void 0) {
-    e = LocalStorage.Sde(e);
+  static GetPlayer(e, a = void 0) {
+    e = LocalStorage.Ede(e);
     if (e) {
       var e = LocalStorage.fde(e);
-      if (e[0]) return (e = e[1]) ? LocalStorage.pde(e) : t;
+      if (e[0]) return (e = e[1]) ? LocalStorage.pde(e) : a;
     }
   }
-  static SetPlayer(e, t) {
-    e = LocalStorage.Sde(e);
+  static SetPlayer(e, a) {
+    var t = LocalStorage.Ede(e);
     return (
-      !!e &&
-      (null == t
+      !!t &&
+      (null == a
         ? (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "LocalStorage",
               31,
               "value值非法",
-              ["keyName", e],
-              ["value", t],
+              ["keyName", t],
+              ["value", a],
             ),
           !1)
-        : !!(t = LocalStorage.O8(t)) && LocalStorage.vde(e, t))
+        : !!(e = LocalStorage.Pkn(e, a)) && LocalStorage.vde(t, e))
     );
   }
   static DeletePlayer(e) {
-    e = LocalStorage.Sde(e);
+    e = LocalStorage.Ede(e);
     return !!e && LocalStorage.Mde(e);
   }
   static cde() {
     var e;
-    LocalStorage.Ede ||
+    LocalStorage.Sde ||
       ((e = UE.KismetSystemLibrary.GetProjectSavedDirectory()),
-      (LocalStorage.Ede = e + DBPATH + DBSUFFIX));
+      (LocalStorage.Sde = e + DBPATH + DBSUFFIX));
   }
   static mde() {
-    let t = LocalStorage.Ede,
-      a = UE.KuroSqliteLibrary.OpenCreateDB(t, USE_THREAD);
-    if (!a) {
+    let a = LocalStorage.Sde,
+      t = UE.KuroSqliteLibrary.OpenCreateDB(a, USE_THREAD);
+    if (!t) {
       Log_1.Log.CheckError() &&
-        Log_1.Log.Error("LocalStorage", 31, "打开DB失败！", ["dbFilePath", t]);
+        Log_1.Log.Error("LocalStorage", 31, "打开DB失败！", ["dbFilePath", a]);
       for (let e = 2; e <= DBNUM; e++) {
         var r = UE.KismetSystemLibrary.GetProjectSavedDirectory();
         if (
-          ((t = r + DBPATH + e + DBSUFFIX),
-          (a = UE.KuroSqliteLibrary.OpenCreateDB(t, USE_THREAD)))
+          ((a = r + DBPATH + e + DBSUFFIX),
+          (t = UE.KuroSqliteLibrary.OpenCreateDB(a, USE_THREAD)))
         ) {
-          LocalStorage.Ede = t;
+          LocalStorage.Sde = a;
           break;
         }
       }
-      if (!a)
+      if (!t)
         return (
           Log_1.Log.CheckError() &&
             Log_1.Log.Error("LocalStorage", 31, "创建10次DB都失败！", [
               "dbFilePath",
-              t,
+              a,
             ]),
           !1
         );
     }
     return (
-      UE.KuroSqliteLibrary.Execute(t, getJournalMode(USE_JOURNAL_MODE)),
-      (a = LocalStorage.Ide())
+      UE.KuroSqliteLibrary.Execute(a, getJournalMode(USE_JOURNAL_MODE)),
+      (t = LocalStorage.Ide())
     );
   }
   static Ide() {
-    var e = LocalStorage.Ede,
-      t = `create table if not exists ${TABLENAME}(key text primary key not null , value text not null)`,
-      e = UE.KuroSqliteLibrary.Execute(e, t);
+    var e = LocalStorage.Sde,
+      a = `create table if not exists ${TABLENAME}(key text primary key not null , value text not null)`,
+      e = UE.KuroSqliteLibrary.Execute(e, a);
     return (
       e ||
         (Log_1.Log.CheckError() &&
           Log_1.Log.Error("LocalStorage", 31, "创建Table失败！", [
             "command",
-            t,
+            a,
           ])),
       e
     );
@@ -155,27 +157,27 @@ class LocalStorage {
       );
       return [!0, r];
     }
-    var t = LocalStorage.Ede,
+    var a = LocalStorage.Sde,
       e = `SELECT value FROM ${TABLENAME} WHERE key ='${e}'`,
-      a = (0, puerts_1.$ref)(void 0),
-      t = UE.KuroSqliteLibrary.QueryValue(t, e, a);
-    if (t === SQLITE_ERR) return [!1, void 0];
-    if (t === SQLITE_NO_DATA) return [!0, void 0];
-    const r = (0, puerts_1.$unref)(a);
+      t = (0, puerts_1.$ref)(void 0),
+      a = UE.KuroSqliteLibrary.QueryValue(a, e, t);
+    if (a === SQLITE_ERR) return [!1, void 0];
+    if (a === SQLITE_NO_DATA) return [!0, void 0];
+    const r = (0, puerts_1.$unref)(t);
     return [!0, r];
   }
-  static vde(e, t) {
-    var a, r;
+  static vde(e, a) {
+    var t, r;
     return ISUSEDB
-      ? ((a = LocalStorage.Ede),
-        (r = `insert into ${TABLENAME} (key,value) values('${e}' , '${t}') on CONFLICT(key) do update set value = '${t}'`),
+      ? ((t = LocalStorage.Sde),
+        (r = `insert into ${TABLENAME} (key,value) values('${e}' , '${a}') on CONFLICT(key) do update set value = '${a}'`),
         USE_THREAD
-          ? (UE.KuroSqliteLibrary.ExecuteAsync(a, r), !0)
-          : UE.KuroSqliteLibrary.Execute(a, r))
+          ? (UE.KuroSqliteLibrary.ExecuteAsync(t, r), !0)
+          : UE.KuroSqliteLibrary.Execute(t, r))
       : (UE.KuroRenderingRuntimeBPPluginBPLibrary.SetString(
           GlobalData_1.GlobalData.World,
           e,
-          t,
+          a,
         ),
         UE.KuroRenderingRuntimeBPPluginBPLibrary.Save(
           GlobalData_1.GlobalData.World,
@@ -183,14 +185,14 @@ class LocalStorage {
         !0);
   }
   static Mde(e) {
-    var t;
+    var a;
     return (
       !ISUSEDB ||
-      ((t = LocalStorage.Ede),
+      ((a = LocalStorage.Sde),
       (e = `delete from ${TABLENAME} where key = '${e}'`),
       USE_THREAD
-        ? (UE.KuroSqliteLibrary.ExecuteAsync(t, e), !0)
-        : UE.KuroSqliteLibrary.Execute(t, e))
+        ? (UE.KuroSqliteLibrary.ExecuteAsync(a, e), !0)
+        : UE.KuroSqliteLibrary.Execute(a, e))
     );
   }
   static dde() {
@@ -210,26 +212,26 @@ class LocalStorage {
       Log_1.Log.CheckError() &&
         Log_1.Log.Error("LocalStorage", 31, "key值非法", ["key", e]);
     else {
-      var t = LocalStorageDefine_1.ELocalStorageGlobalKey[e];
-      if (t) return t;
+      var a = LocalStorageDefine_1.ELocalStorageGlobalKey[e];
+      if (a) return a;
       Log_1.Log.CheckError() &&
         Log_1.Log.Error("LocalStorage", 31, "keyName值非法", ["key", e]);
     }
   }
-  static Sde(e) {
+  static Ede(e) {
     if (null == e)
       Log_1.Log.CheckError() &&
         Log_1.Log.Error("LocalStorage", 31, "key值非法", ["key", e]);
     else {
-      var t = LocalStorageDefine_1.ELocalStoragePlayerKey[e];
-      if (t) {
-        if (LocalStorage.j8) return t + "_" + LocalStorage.j8;
+      var a = LocalStorageDefine_1.ELocalStoragePlayerKey[e];
+      if (a) {
+        if (LocalStorage.j8) return a + "_" + LocalStorage.j8;
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "LocalStorage",
             31,
             "尚未获取到playerId，无法操作Player相关的存储值！",
-            ["keyName", t],
+            ["keyName", a],
           );
       } else
         Log_1.Log.CheckError() &&
@@ -238,13 +240,47 @@ class LocalStorage {
             31,
             "keyName值非法！",
             ["key", e],
-            ["keyName", t],
+            ["keyName", a],
           );
     }
   }
-  static O8(t) {
+  static xkn(e, a) {
+    return LocalStorage.Bkn(
+      LocalStorageDefine_1.ELocalStorageGlobalKey[e],
+      a,
+      LocalStorage.wkn.includes(e),
+    );
+  }
+  static Pkn(e, a) {
+    return LocalStorage.Bkn(
+      LocalStorageDefine_1.ELocalStoragePlayerKey[e],
+      a,
+      LocalStorage.bkn.includes(e),
+    );
+  }
+  static Bkn(e, a, t) {
+    a = LocalStorage.O8(a);
+    return (
+      t ||
+        Info_1.Info.IsBuildShipping ||
+        ((t = a?.length ?? 0),
+        (t = LocalStorage.qkn + t) >= CHECK_COMPLEX_THRESHOLD &&
+          Log_1.Log.CheckWarn() &&
+          Log_1.Log.Warn(
+            "LocalStorage",
+            64,
+            "[存储对象复杂度检查]->存储对象疑似属性过多,请考虑拆分对象",
+            ["存储Key", e],
+            ["对象复杂度", t],
+            ["存储对象", a],
+          )),
+      a
+    );
+  }
+  static O8(a) {
+    LocalStorage.qkn = 0;
     try {
-      return JSON.stringify(t, LocalStorage.Dde);
+      return JSON.stringify(a, LocalStorage.Dde);
     } catch (e) {
       e instanceof Error
         ? Log_1.Log.CheckError() &&
@@ -253,7 +289,7 @@ class LocalStorage {
             31,
             "序列化异常",
             e,
-            ["value", t],
+            ["value", a],
             ["error", e.message],
           )
         : Log_1.Log.CheckError() &&
@@ -261,14 +297,14 @@ class LocalStorage {
             "LocalStorage",
             31,
             "序列化异常",
-            ["value", t],
+            ["value", a],
             ["error", e],
           );
     }
   }
-  static pde(t) {
+  static pde(a) {
     try {
-      return JSON.parse(t, LocalStorage.Rde);
+      return JSON.parse(a, LocalStorage.Rde);
     } catch (e) {
       e instanceof Error
         ? Log_1.Log.CheckError() &&
@@ -277,7 +313,7 @@ class LocalStorage {
             31,
             "反序列化异常",
             e,
-            ["text", t],
+            ["text", a],
             ["error", e.message],
           )
         : Log_1.Log.CheckError() &&
@@ -285,13 +321,13 @@ class LocalStorage {
             "LocalStorage",
             31,
             "反序列化异常",
-            ["text", t],
+            ["text", a],
             ["error", e],
           );
     }
   }
 }
-((exports.LocalStorage = LocalStorage).Ede = void 0),
+((exports.LocalStorage = LocalStorage).Sde = void 0),
   (LocalStorage.j8 = void 0),
   (LocalStorage.yde = void 0),
   (LocalStorage.Tde = void 0),
@@ -301,32 +337,40 @@ class LocalStorage {
         EventDefine_1.EEventName.LocalStorageInitPlayerId,
       );
   }),
-  (LocalStorage.Dde = (e, t) => {
-    if (void 0 === t) return "___undefined___";
-    if (Number.isNaN(t)) return "___NaN___";
-    if (t === 1 / 0) return "___Infinity___";
-    if (t === -1 / 0) return "___-Infinity___";
-    if (null === t) return null;
-    switch (typeof t) {
+  (LocalStorage.qkn = 0),
+  (LocalStorage.wkn = [
+    LocalStorageDefine_1.ELocalStorageGlobalKey.MenuData,
+    LocalStorageDefine_1.ELocalStorageGlobalKey.CombineAction,
+  ]),
+  (LocalStorage.bkn = [
+    LocalStorageDefine_1.ELocalStoragePlayerKey.GetItemConfigListSaveKey,
+  ]),
+  (LocalStorage.Dde = (e, a) => {
+    if ((++LocalStorage.qkn, void 0 === a)) return "___undefined___";
+    if (Number.isNaN(a)) return "___NaN___";
+    if (a === 1 / 0) return "___Infinity___";
+    if (a === -1 / 0) return "___-Infinity___";
+    if (null === a) return null;
+    switch (typeof a) {
       case "boolean":
-        return t ? "___1B___" : "___0B___";
+        return a ? "___1B___" : "___0B___";
       case "bigint":
-        return t + "___BI___";
+        return a + "___BI___";
       case "object":
-        return t instanceof Map
-          ? { ___MetaType___: "___Map___", Content: Array.from(t.entries()) }
-          : t instanceof Set
-            ? { ___MetaType___: "___Set___", Content: Array.from(t.values()) }
-            : t;
+        return a instanceof Map
+          ? { ___MetaType___: "___Map___", Content: Array.from(a.entries()) }
+          : a instanceof Set
+            ? { ___MetaType___: "___Set___", Content: Array.from(a.values()) }
+            : a;
       default:
-        return t;
+        return a;
     }
   }),
-  (LocalStorage.Rde = (e, t) => {
-    if (null == t) return t;
-    switch (typeof t) {
+  (LocalStorage.Rde = (e, a) => {
+    if (null == a) return a;
+    switch (typeof a) {
       case "string":
-        switch (t) {
+        switch (a) {
           case "___undefined___":
             return;
           case "___NaN___":
@@ -337,23 +381,23 @@ class LocalStorage {
             return -1 / 0;
           default:
             {
-              let e = t;
+              let e = a;
               if ("___1B___" === e) return !0;
               if ("___0B___" === e) return !1;
               if (e.endsWith("___BI___"))
                 return (e = e.replace("___BI___", "")), BigInt(e);
             }
-            return t;
+            return a;
         }
       case "object":
-        var a = t;
-        if (a?.___MetaType___) {
-          if ("___Map___" === a.___MetaType___) return new Map(a.Content);
-          if ("___Set___" === a.___MetaType___) return new Set(a.Content);
+        var t = a;
+        if (t?.___MetaType___) {
+          if ("___Map___" === t.___MetaType___) return new Map(t.Content);
+          if ("___Set___" === t.___MetaType___) return new Set(t.Content);
         }
-        return t;
+        return a;
       default:
-        return t;
+        return a;
     }
   });
 //# sourceMappingURL=LocalStorage.js.map

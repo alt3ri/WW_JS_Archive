@@ -10,7 +10,7 @@ class LevelConditionCheckEntityLocked extends LevelGeneralBase_1.LevelConditionB
     for (const a of n.Entities) {
       var t = ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(a);
       if (!t?.Valid) return !1;
-      t = t.Entity.GetComponent(177);
+      t = t.Entity.GetComponent(180);
       if (!t) return !1;
       if (t.HasTag(-662723379)) {
         if (!n.IsLocked) return !1;

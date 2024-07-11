@@ -17,7 +17,7 @@ class ActivitySubViewTurntableLock extends ActivitySubViewBase_1.ActivitySubView
       (this.DNe = void 0),
       (this.UNe = void 0),
       (this.ANe = void 0),
-      (this.u2e = () => {
+      (this.DFe = () => {
         var i;
         this.ActivityBaseData.GetPreGuideQuestFinishState() ||
           ((i = this.ActivityBaseData.GetUnFinishPreGuideQuestId()),
@@ -59,27 +59,27 @@ class ActivitySubViewTurntableLock extends ActivitySubViewBase_1.ActivitySubView
       t,
       e = this.ActivityBaseData.LocalConfig;
     e &&
-      (this.LNe.SetTitleByText(this.ActivityBaseData.GetTitle()),
-      (i = e.DescTheme),
-      (e = e.Desc),
-      (t = !StringUtils_1.StringUtils.IsEmpty(i)),
-      this.DNe.SetTitleVisible(t),
-      t && this.DNe.SetTitleByTextId(i),
-      this.DNe.SetContentByTextId(e),
+      ((t = e.DescTheme),
+      (i = !StringUtils_1.StringUtils.IsEmpty(t)),
+      this.LNe.SetTitleByText(this.ActivityBaseData.GetTitle()),
+      this.LNe.SetSubTitleVisible(i),
+      i && this.LNe.SetSubTitleByTextId(t),
+      (i = e.Desc),
+      this.DNe.SetContentByTextId(i),
       (t = this.ActivityBaseData.GetPreviewReward()),
       this.UNe.SetTitleByTextId("CollectActivity_reward"),
       this.UNe.InitGridLayout(this.UNe.InitCommonGridItem),
       this.UNe.RefreshItemLayout(t),
-      this.ANe.FunctionButton?.BindCallback(this.u2e),
+      this.ANe.FunctionButton?.BindCallback(this.DFe),
       this.ANe.FunctionButton.RefreshText("CollectActivity_Button_ahead"));
   }
   OnRefreshView() {
-    this.FNe(), this.Xke(), this.BNe();
+    this.FNe(), this._Fe(), this.BNe();
   }
   OnTimer(i) {
     this.FNe();
   }
-  Xke() {
+  _Fe() {
     var i = this.ActivityBaseData.IsUnLock();
     this.ANe.FunctionButton?.SetUiActive(i),
       this.ANe.SetPanelConditionVisible(!i),

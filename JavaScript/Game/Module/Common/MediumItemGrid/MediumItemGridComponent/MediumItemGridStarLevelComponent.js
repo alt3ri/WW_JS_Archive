@@ -6,7 +6,7 @@ const UE = require("ue"),
   MediumItemGridComponent_1 = require("./MediumItemGridComponent");
 class MediumItemGridStarLevelComponent extends MediumItemGridComponent_1.MediumItemGridComponent {
   constructor() {
-    super(...arguments), (this.Uxt = void 0), (this.Axt = []), (this.Pxt = 0);
+    super(...arguments), (this.xwt = void 0), (this.wwt = []), (this.Bwt = 0);
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -15,31 +15,31 @@ class MediumItemGridStarLevelComponent extends MediumItemGridComponent_1.MediumI
     ];
   }
   OnActivate() {
-    (this.Uxt = this.GetItem(0)), this.GetSprite(1).SetUIActive(!1);
+    (this.xwt = this.GetItem(0)), this.GetSprite(1).SetUIActive(!1);
   }
   OnDeactivate() {
-    (this.Axt.length = 0), (this.Uxt = void 0);
+    (this.wwt.length = 0), (this.xwt = void 0);
   }
   GetResourceId() {
     return "UiItem_ItemTagStar";
   }
   OnRefresh(t) {
-    if (this.Pxt !== t) {
-      this.Pxt = t;
+    if (this.Bwt !== t) {
+      this.Bwt = t;
       var i = this.GetSprite(1).GetOwner();
-      this.xxt();
+      this.bwt();
       for (let e = 0; e < t; e++) {
-        let t = this.Axt[e];
+        let t = this.wwt[e];
         t?.IsValid() ||
-          ((t = LguiUtil_1.LguiUtil.DuplicateActor(i, this.Uxt)),
-          this.Axt.push(t)),
+          ((t = LguiUtil_1.LguiUtil.DuplicateActor(i, this.xwt)),
+          this.wwt.push(t)),
           t?.GetUIItem()?.SetUIActive(!0);
       }
     }
     this.SetActive(!0);
   }
-  xxt() {
-    for (const t of this.Axt) t?.GetUIItem()?.SetUIActive(!1);
+  bwt() {
+    for (const t of this.wwt) t?.GetUIItem()?.SetUIActive(!1);
   }
 }
 exports.MediumItemGridStarLevelComponent = MediumItemGridStarLevelComponent;

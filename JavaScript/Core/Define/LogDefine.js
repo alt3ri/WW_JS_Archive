@@ -66,5 +66,8 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     61: ["XY", !0],
     62: ["LC", !0],
     63: ["CYK", !0],
+    64: ["LRX", !0],
+    65: ["WZ", !0],
+    66: ["JLY", !0],
   });
 //# sourceMappingURL=LogDefine.js.map

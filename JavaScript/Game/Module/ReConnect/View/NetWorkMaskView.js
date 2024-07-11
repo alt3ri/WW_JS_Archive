@@ -17,41 +17,41 @@ const UE = require("ue"),
 class NetWorkMaskView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
-      (this.Kno = 0),
+      (this.Vso = 0),
       (this.oUe = 0),
-      (this.Qno = 0),
-      (this.tBt = 0),
-      (this.Xno = () => {
+      (this.Hso = 0),
+      (this.rbt = 0),
+      (this.jso = () => {
         ControllerHolder_1.ControllerHolder.ReConnectController.Logout(
           ReconnectDefine_1.ELogoutReason.NetWorkMaskViewBackBtn,
         );
       }),
-      (this.$no = () => {}),
-      (this.Yno = () => {
+      (this.Wso = () => {}),
+      (this.Kso = () => {
         UiManager_1.UiManager.CloseView("NetWorkMaskView");
       }),
-      (this.Jno = () => {
-        this.zno();
+      (this.Qso = () => {
+        this.Xso();
       });
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.ReConnectSuccess,
-      this.Yno,
+      this.Kso,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.ReConnectFail,
-        this.Jno,
+        this.Qso,
       );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.ReConnectSuccess,
-      this.Yno,
+      this.Kso,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.ReConnectFail,
-        this.Jno,
+        this.Qso,
       );
   }
   OnRegisterComponent() {
@@ -62,29 +62,29 @@ class NetWorkMaskView extends UiTickViewBase_1.UiTickViewBase {
     ];
   }
   OnStart() {
-    (this.oUe = 0), (this.Kno = 0);
+    (this.oUe = 0), (this.Vso = 0);
     var e = ModelManager_1.ModelManager.ReConnectModel.IsRpcEmpty(),
       i =
         CommonParamById_1.configCommonParamById.GetIntConfig(
           "network_mask_time",
         );
-    (this.tBt = e ? 100 : i ?? 100), this.GetItem(0).SetUIActive(!1);
+    (this.rbt = e ? 100 : i ?? 100), this.GetItem(0).SetUIActive(!1);
   }
   OnBeforeDestroy() {
-    this.Zno();
+    this.$so();
   }
-  Zno() {
-    this.Qno &&
+  $so() {
+    this.Hso &&
       (ControllerHolder_1.ControllerHolder.ConfirmBoxController.CloseNetWorkConfirmBoxView(
-        this.Qno,
+        this.Hso,
       ),
-      (this.Qno = void 0));
+      (this.Hso = void 0));
   }
-  eso(e) {
-    this.tBt < 0 ||
-      Net_1.Net.IsConsumeNotifyPaused ||
-      ((this.tBt -= e),
-      this.tBt < 0 &&
+  Yso(e) {
+    this.rbt < 0 ||
+      Net_1.Net.IsCallbackPaused() ||
+      ((this.rbt -= e),
+      this.rbt < 0 &&
         (this.GetItem(0).SetUIActive(!0),
         0 <
           (e =
@@ -100,25 +100,25 @@ class NetWorkMaskView extends UiTickViewBase_1.UiTickViewBase {
     (this.oUe += e),
       1e3 < this.oUe &&
         ((this.oUe -= 1e3), this.GetText(1).IsUIActiveSelf()) &&
-        (this.Kno++,
-        this.Kno >= ReconnectDefine_1.ellipsis.length && (this.Kno = 0),
+        (this.Vso++,
+        this.Vso >= ReconnectDefine_1.ellipsis.length && (this.Vso = 0),
         LguiUtil_1.LguiUtil.SetLocalText(
           this.GetText(1),
           "ReconnectingInfo",
-          ReconnectDefine_1.ellipsis[this.Kno],
+          ReconnectDefine_1.ellipsis[this.Vso],
         )),
-      this.eso(e);
+      this.Yso(e);
   }
-  zno() {
+  Xso() {
     var e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(30);
-    e.FunctionMap.set(0, this.$no),
-      e.FunctionMap.set(1, this.Xno),
-      e.FunctionMap.set(2, this.$no),
+    e.FunctionMap.set(0, this.Wso),
+      e.FunctionMap.set(1, this.jso),
+      e.FunctionMap.set(2, this.Wso),
       (e.IsEscViewTriggerCallBack = !1),
       ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowNetWorkConfirmBoxView(
         e,
         (e, i) => {
-          this.Qno = i;
+          this.Hso = i;
         },
       );
   }

@@ -9,7 +9,7 @@ const UE = require("ue"),
 class InstanceDungeonGuideView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.ACt = () => {
+      (this.Vgt = () => {
         this.CloseMe();
       });
   }
@@ -25,7 +25,7 @@ class InstanceDungeonGuideView extends UiViewBase_1.UiViewBase {
       [7, UE.UIItem],
       [8, UE.UIItem],
     ]),
-      (this.BtnBindInfo = [[6, this.ACt]]);
+      (this.BtnBindInfo = [[6, this.Vgt]]);
   }
   OnStart() {
     this.GetButton(4).RootUIComp.SetUIActive(!1),
@@ -33,9 +33,9 @@ class InstanceDungeonGuideView extends UiViewBase_1.UiViewBase {
       this.GetItem(5).SetUIActive(!1),
       this.GetItem(8).SetUIActive(!1),
       this.GetItem(2).SetUIActive(!1),
-      this._li();
+      this._1i();
   }
-  _li() {
+  _1i() {
     var e =
       ModelManager_1.ModelManager.InstanceDungeonGuideModel.GetCurrentInstanceDungeonGuideValue();
     !e ||

@@ -56,7 +56,7 @@ class RoguelikeMemoryRewardItem extends GridProxyAbstract_1.GridProxyAbstract {
           RoguelikeDefine_1.COLLECT_SCORE_ID,
         ) >= e.Config.Point,
       o =
-        (r && !e.SeasonReward?.qms
+        (r && !e.SeasonReward?.Jfs
           ? this.GetButton(4).SetActive(!0)
           : this.GetButton(4).SetActive(!1),
         this.GridItem.SetActive(!0),
@@ -124,18 +124,18 @@ class RoguelikeMemoryPlaceView extends UiViewBase_1.UiViewBase {
       this.CaptionItem.SetHelpBtnActive(!1),
       (this.SeasonData = this.OpenParam);
     var i = ConfigManager_1.ConfigManager.RoguelikeConfig.GetRogueSeasonReward(
-        this.SeasonData.F8n,
+        this.SeasonData.MHn,
       ),
       t = [];
     for (let e = 0; e < i.length; e++) {
       var r = i[e],
         o = new RoguelikeMemoryRewardItemData();
-      (o.SeasonReward = this.SeasonData.Yws[e]), (o.Config = r), t.push(o);
+      (o.SeasonReward = this.SeasonData.Cqs[e]), (o.Config = r), t.push(o);
     }
     this.LoopScrollView.ReloadData(t), this.UpdateView();
   }
   UpdateView() {
-    var e = this.SeasonData.Yws.length,
+    var e = this.SeasonData.Cqs.length,
       i = ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
         RoguelikeDefine_1.COLLECT_SCORE_ID,
       ),
@@ -153,7 +153,7 @@ class RoguelikeMemoryPlaceView extends UiViewBase_1.UiViewBase {
           t.PointItemMaxCount,
         ),
         ConfigManager_1.ConfigManager.RoguelikeConfig.GetRogueSeasonConfigById(
-          this.SeasonData.F8n,
+          this.SeasonData.MHn,
         ));
     let r = 0,
       o = 0;
@@ -168,9 +168,9 @@ class RoguelikeMemoryPlaceView extends UiViewBase_1.UiViewBase {
       o,
     );
     (i = ConfigManager_1.ConfigManager.RoguelikeConfig.GetRogueTokenBySeasonId(
-      this.SeasonData.F8n,
+      this.SeasonData.MHn,
     ).length),
-      (t = this.SeasonData.Xws.length);
+      (t = this.SeasonData.mqs.length);
     LguiUtil_1.LguiUtil.SetLocalTextNew(
       this.GetText(6),
       "Rogue_MemoryPlace_Progress",

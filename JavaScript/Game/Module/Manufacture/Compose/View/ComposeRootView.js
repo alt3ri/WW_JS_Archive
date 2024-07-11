@@ -30,51 +30,54 @@ const UE = require("ue"),
 class ComposeRootView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.UIi = 0),
-      (this.AIi = 0),
-      (this.PIi = 0),
-      (this.xIi = void 0),
-      (this.wIi = void 0),
-      (this.BIi = void 0),
-      (this.pGt = void 0),
-      (this.vGt = void 0),
-      (this.aIi = []),
-      (this.hIi = []),
-      (this.lIi = []),
-      (this.SGt = void 0),
-      (this.bIi = !1),
-      (this.c4s = !1),
-      (this.m5s = void 0),
-      (this.qIi = () => {
-        this.yGt(),
-          this.vGt.UpdateData(20, this.TGt()),
-          this.pGt.SetActive(!0),
-          this.pGt.UpdateData(20, this.TGt()),
-          this.GIi(),
-          this.Qqt(),
-          this.LGt();
+      (this.UTi = 0),
+      (this.ATi = 0),
+      (this.PTi = 0),
+      (this.xTi = void 0),
+      (this.wTi = void 0),
+      (this.BTi = void 0),
+      (this.vNt = void 0),
+      (this.MNt = void 0),
+      (this.aTi = []),
+      (this.hTi = []),
+      (this.lTi = []),
+      (this.SNt = void 0),
+      (this.bTi = !1),
+      (this.zVs = !1),
+      (this.qjs = void 0),
+      (this.qTi = () => {
+        this.INt(),
+          (this.bTi = !0),
+          this.MNt.SetResultDataDirty(),
+          this.MNt.UpdateData(20, this.LNt()),
+          this.vNt.SetActive(!0),
+          this.vNt.UpdateData(20, this.LNt()),
+          (this.bTi = !1),
+          this.GTi(),
+          this.YGt(),
+          this.DNt();
         var e = CommonManager_1.CommonManager.GetComposeMaxLevel(),
           t = CommonManager_1.CommonManager.GetCurrentRewardLevel();
-        this.SGt.ShowLevel(t, e), this.Dqt();
+        this.SNt.ShowLevel(t, e), this.AGt();
       }),
       (this.GOe = void 0),
-      (this.wGt = () => {
-        this.Dqt(),
-          this.xIi.OnSecondTimerRefresh(),
-          this.BGt()
+      (this.BNt = () => {
+        this.AGt(),
+          this.xTi.OnSecondTimerRefresh(),
+          this.bNt()
             ? ComposeController_1.ComposeController.SendSynthesisInfoRequestAsync().then(
                 () => {
-                  this.NIi();
+                  this.NTi();
                 },
               )
-            : this.GGt() &&
+            : this.NNt() &&
               ComposeController_1.ComposeController.SendSynthesisInfoRequestAsync().then(
                 () => {
-                  (this.bIi = !1), this.OIi();
+                  (this.bTi = !1), this.OTi();
                 },
               );
       }),
-      (this.kIi = () => {
+      (this.kTi = () => {
         this.ChildPopView?.PlaySequenceAsync(
           "Close",
           new CustomPromise_1.CustomPromise(),
@@ -90,15 +93,14 @@ class ComposeRootView extends UiViewBase_1.UiViewBase {
       }),
       (this.jwe = (e) => {
         "OnBlackScreen" === e &&
-          (this.ChildPopView?.PlayLevelSequenceByName("Start"),
-          this.m5s?.SetResult(),
-          this.ChildPopView?.PopItem.SetActive(!0),
+          (this.ChildPopView?.PlayLevelSequenceByName("BlackScreenShow"),
+          this.qjs?.IsPending() && this.qjs.SetResult(),
           ComposeController_1.ComposeController.PlayCompositeEnterDisplay(
-            this.VIi,
+            this.VTi,
           ),
-          (this.c4s = !0));
+          (this.zVs = !0));
       }),
-      (this.VIi = () => {
+      (this.VTi = () => {
         UiManager_1.UiManager.IsViewShow("ComposeRootView") &&
           ComposeController_1.ComposeController.PlayCompositeLoopDisplay();
       }),
@@ -113,39 +115,39 @@ class ComposeRootView extends UiViewBase_1.UiViewBase {
           (e = ModelManager_1.ModelManager.ComposeModel.ComposeSuccessFlow),
           ComposeController_1.ComposeController.PlayCompositeFlow(e));
       }),
-      (this.z9e = () => {
+      (this.cHe = () => {
         var e = new ComposeMediumItemGrid_1.ComposeMediumItemGrid();
-        return e.BindOnExtendToggleStateChanged(this.HIi), e;
+        return e.BindOnExtendToggleStateChanged(this.HTi), e;
       }),
-      (this.HIi = (e) => {
+      (this.HTi = (e) => {
         var t = e.Data;
         let i = 0;
-        switch ((this.BIi.DeselectCurrentGridProxy(), t.MainType)) {
+        switch ((this.BTi.DeselectCurrentGridProxy(), t.MainType)) {
           case 1:
-            (this.UIi = this.aIi.indexOf(t)), (i = this.UIi);
+            (this.UTi = this.aTi.indexOf(t)), (i = this.UTi);
             break;
           case 2:
-            (this.AIi = this.hIi.indexOf(t)), (i = this.AIi);
+            (this.ATi = this.hTi.indexOf(t)), (i = this.ATi);
             break;
           case 3:
-            (this.PIi = this.lIi.indexOf(t)), (i = this.PIi);
+            (this.PTi = this.lTi.indexOf(t)), (i = this.PTi);
         }
-        this.BIi.IsGridDisplaying(i) &&
+        this.BTi.IsGridDisplaying(i) &&
           (t.IsNew &&
             (ModelManager_1.ModelManager.NewFlagModel.RemoveNewFlag(
               LocalStorageDefine_1.ELocalStoragePlayerKey.ComposeLevelKey,
               t.ItemId,
             ),
             (t.IsNew = !1)),
-          this.BIi.SelectGridProxy(i),
-          this.BIi.RefreshGridProxy(i),
-          this.xIi.RefreshTips(t));
+          this.BTi.SelectGridProxy(i),
+          this.BTi.RefreshGridProxy(i),
+          this.xTi.RefreshTips(t));
       }),
-      (this.PGt = () => {
+      (this.xNt = () => {
         var e = new MainTypeItem_1.MainTypeItem();
-        return e.SetMainTypeCallback(this.xGt), e;
+        return e.SetMainTypeCallback(this.wNt), e;
       }),
-      (this.xGt = (e) => {
+      (this.wNt = (e) => {
         if (
           ModelManager_1.ModelManager.ComposeModel.CurrentComposeListType !== e
         )
@@ -155,46 +157,48 @@ class ComposeRootView extends UiViewBase_1.UiViewBase {
                 EventSystem_1.EventSystem.Emit(
                   EventDefine_1.EEventName.SwitchComposeType,
                 ),
-                this.GIi(),
-                this.OIi(),
-                this.LGt();
+                this.GTi(),
+                this.OTi(),
+                this.DNt();
               break;
             case 2:
               (ModelManager_1.ModelManager.ComposeModel.CurrentComposeListType = 2),
                 EventSystem_1.EventSystem.Emit(
                   EventDefine_1.EEventName.SwitchComposeType,
                 ),
-                this.GIi(),
-                this.OIi(),
-                this.LGt();
+                this.GTi(),
+                this.OTi(),
+                this.DNt();
               break;
             case 3:
               (ModelManager_1.ModelManager.ComposeModel.CurrentComposeListType = 3),
                 EventSystem_1.EventSystem.Emit(
                   EventDefine_1.EEventName.SwitchComposeType,
                 ),
-                this.GIi(),
-                this.OIi(),
-                this.LGt();
+                this.GTi(),
+                this.OTi(),
+                this.DNt();
           }
       }),
-      (this.OIi = () => {
+      (this.OTi = () => {
         switch (
           ModelManager_1.ModelManager.ComposeModel.CurrentComposeListType
         ) {
           case 1:
-            this.pGt.UpdateData(20, this.TGt()),
-              this.vGt.UpdateData(20, this.TGt());
+            this.vNt.UpdateData(20, this.LNt()),
+              this.MNt.SetResultDataDirty(),
+              this.MNt.UpdateData(20, this.LNt());
             break;
           case 2:
-            this.pGt.UpdateData(22, this.TGt()),
-              this.vGt.UpdateData(22, this.TGt());
+            this.vNt.UpdateData(22, this.LNt()),
+              this.MNt.SetResultDataDirty(),
+              this.MNt.UpdateData(22, this.LNt());
             break;
           case 3:
-            this.vGt.UpdateData(23, this.TGt());
+            this.MNt.SetResultDataDirty(), this.MNt.UpdateData(23, this.LNt());
         }
       }),
-      (this.kGt = (e) => {
+      (this.FNt = (e) => {
         var t = e.filter((e) => {
           return (
             e.ExistStartTime <= 0 ||
@@ -205,48 +209,48 @@ class ComposeRootView extends UiViewBase_1.UiViewBase {
           ModelManager_1.ModelManager.ComposeModel.CurrentComposeListType
         ) {
           case 1:
-            (this.UIi = this.bIi ? this.UIi : 0), (this.aIi = t);
+            (this.UTi = this.bTi ? this.UTi : 0), (this.aTi = t);
             break;
           case 2:
-            (this.AIi = this.bIi ? this.AIi : 0), (this.hIi = t);
+            (this.ATi = this.bTi ? this.ATi : 0), (this.hTi = t);
             break;
           case 3:
-            (this.PIi = this.bIi ? this.PIi : 0), (this.lIi = t);
+            (this.PTi = this.bTi ? this.PTi : 0), (this.lTi = t);
         }
-        this.BIi.DeselectCurrentGridProxy(),
-          this.HGt(),
+        this.BTi.DeselectCurrentGridProxy(),
+          this.jNt(),
           0 === t.length
-            ? (this.GetItem(8).SetUIActive(!0), this.xIi.SetActive(!1))
+            ? (this.GetItem(8).SetUIActive(!0), this.xTi.SetActive(!1))
             : (this.GetItem(8).SetUIActive(!1),
-              this.xIi.SetActive(!0),
-              this.jIi(!this.bIi));
+              this.xTi.SetActive(!0),
+              this.jTi(!this.bTi));
       }),
-      (this.NIi = () => {
-        (this.bIi = !0), this.OIi(), (this.bIi = !1);
+      (this.NTi = () => {
+        (this.bTi = !0), this.OTi(), (this.bTi = !1);
       }),
-      (this.HGt = () => {
+      (this.jNt = () => {
         switch (
           ModelManager_1.ModelManager.ComposeModel.CurrentComposeListType
         ) {
           case 1:
-            this.BIi.RefreshByData(this.aIi);
+            this.BTi.RefreshByData(this.aTi);
             break;
           case 2:
-            this.BIi.RefreshByData(this.hIi);
+            this.BTi.RefreshByData(this.hTi);
             break;
           case 3:
-            this.BIi.RefreshByData(this.lIi);
+            this.BTi.RefreshByData(this.lTi);
         }
       }),
-      (this.WIi = (e) => {
+      (this.WTi = (e) => {
         (ModelManager_1.ModelManager.ComposeModel.CurrentComposeViewType = 2),
           UiManager_1.UiManager.OpenView("ComposeLevelView");
       }),
-      (this.KIi = (e) => {
+      (this.KTi = (e) => {
         (ModelManager_1.ModelManager.ComposeModel.CurrentComposeViewType = 1),
           UiManager_1.UiManager.OpenView("ManufactureHelpRoleView", e);
       }),
-      (this.LGt = () => {
+      (this.DNt = () => {
         switch (
           (this.ChildPopView?.PopItem.SetTitleVisible(!0),
           ModelManager_1.ModelManager.ComposeModel.CurrentComposeListType)
@@ -291,151 +295,161 @@ class ComposeRootView extends UiViewBase_1.UiViewBase {
       [12, UE.UIItem],
       [13, UE.UIText],
     ]),
-      (this.BtnBindInfo = [[5, this.WIi]]);
+      (this.BtnBindInfo = [[5, this.WTi]]);
   }
   async OnBeforeStartAsync() {
-    (this.xIi = new ComposeIngredientsView_1.ComposeIngredientsView()),
-      (this.wIi = new GenericLayout_1.GenericLayout(
+    (this.xTi = new ComposeIngredientsView_1.ComposeIngredientsView()),
+      (this.wTi = new GenericLayout_1.GenericLayout(
         this.GetHorizontalLayout(0),
-        this.PGt,
+        this.xNt,
       )),
       await Promise.all([
-        this.wIi.RefreshByDataAsync([1, 2, 3]),
-        this.xIi.CreateByActorAsync(this.GetItem(4).GetOwner()),
+        this.wTi.RefreshByDataAsync([1, 2, 3]),
+        this.xTi.CreateByActorAsync(this.GetItem(4).GetOwner()),
+        ComposeController_1.ComposeController.SendSynthesisInfoRequestAsync(),
       ]),
-      this.xIi.SetActive(!0);
+      this.xTi.SetActive(!0);
   }
   OnStart() {
-    (this.pGt = new FilterEntrance_1.FilterEntrance(this.GetItem(3), this.kGt)),
-      this.pGt.SetActive(!1),
-      (this.vGt = new SortEntrance_1.SortEntrance(this.GetItem(10), this.kGt)),
-      this.vGt.SetSortToggleState(!0),
-      (this.BIi = new LoopScrollView_1.LoopScrollView(
+    (this.vNt = new FilterEntrance_1.FilterEntrance(this.GetItem(3), this.FNt)),
+      this.vNt.SetActive(!1),
+      (this.MNt = new SortEntrance_1.SortEntrance(this.GetItem(10), this.FNt)),
+      this.MNt.SetSortToggleState(!0),
+      (this.BTi = new LoopScrollView_1.LoopScrollView(
         this.GetLoopScrollViewComponent(2),
         this.GetLoopScrollViewComponent(2).TemplateGrid,
-        this.z9e,
+        this.cHe,
       )),
       LguiUtil_1.LguiUtil.SetLocalText(
         this.GetText(9),
         "ComposeLevelButtonText",
       ),
-      (this.SGt = new StarLevelComponent_1.StarLevelComponent(
+      (this.SNt = new StarLevelComponent_1.StarLevelComponent(
         this.GetHorizontalLayout(11),
       )),
       CommonManager_1.CommonManager.SetCurrentSystem(1),
-      ComposeController_1.ComposeController.SendSynthesisInfoRequest(),
       ComposeController_1.ComposeController.RegisterCurrentInteractionEntity(),
-      (this.m5s = new CustomPromise_1.CustomPromise()),
+      (this.qjs = new CustomPromise_1.CustomPromise()),
       (ModelManager_1.ModelManager.ComposeModel.CurrentInteractCreatureDataLongId =
         ModelManager_1.ModelManager.InteractionModel.InteractCreatureDataLongId),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnExecuteUiCameraSequenceEvent,
         this.jwe,
-      );
+      ),
+      void 0 ===
+        ModelManager_1.ModelManager.InteractionModel.CurrentInteractEntityId &&
+        (Log_1.Log.CheckInfo() &&
+          Log_1.Log.Info(
+            "Compose",
+            8,
+            "[LevelEventOpenSystem] 打开合成界面时找不到交互对象，直接关闭界面",
+          ),
+        this.CloseMe());
   }
   OnBeforeShow() {
-    this.qIi(), this.ChildPopView?.PopItem.SetMaskResponsibleState(!1);
+    this.qTi(), this.ChildPopView?.PopItem.SetMaskResponsibleState(!1);
   }
   async OnBeforeShowAsyncImplement() {
     UiCameraAnimationManager_1.UiCameraAnimationManager.IsPlayingBlendInSequence() &&
-      this.m5s &&
-      (await this.m5s.Promise);
+      this.qjs &&
+      (await this.qjs.Promise);
   }
   OnAfterShow() {
-    this.YGt();
+    this.JNt(), (this.qjs = void 0);
   }
   OnBeforeDestroy() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnExecuteUiCameraSequenceEvent,
       this.jwe,
     ),
-      this.wIi.ClearChildren(),
-      this.BIi.ClearGridProxies(),
-      this.SGt.Clear(),
-      ModelManager_1.ModelManager.NewFlagModel.SaveNewFlagConfig(
-        LocalStorageDefine_1.ELocalStoragePlayerKey.ComposeLevelKey,
-      ),
+      this.wTi.ClearChildren(),
+      this.BTi.ClearGridProxies(),
+      this.SNt.Clear();
+    var e = ModelManager_1.ModelManager.ComposeModel;
+    ModelManager_1.ModelManager.NewFlagModel.SaveNewFlagConfig(
+      LocalStorageDefine_1.ELocalStoragePlayerKey.ComposeLevelKey,
+    ),
       ComposeController_1.ComposeController.PlayLeaveCompositeAudio(),
       ComposeController_1.ComposeController.ClearCurrentInteractionEntityDisplay(),
-      ModelManager_1.ModelManager.ComposeModel.ClearComposeRoleItemDataList(),
+      e.ClearComposeRoleItemDataList(),
+      (e.CurrentComposeRoleId = 0),
+      (e.CurrentComposeListType = 1),
       RedDotController_1.RedDotController.UnBindRedDot(
         "ComposeReagentProduction",
       ),
-      (this.m5s = void 0);
+      (this.qjs = void 0);
   }
-  YGt() {
+  JNt() {
     var e,
       t = this.ChildPopView.PopItem;
     t &&
-      !this.c4s &&
+      !this.zVs &&
       ((e =
         !UiCameraAnimationManager_1.UiCameraAnimationManager.IsPlayingBlendInSequence()),
       t.GetActive() !== e) &&
       t.SetActive(e);
   }
-  yGt() {
+  INt() {
     ModelManager_1.ModelManager.ComposeModel.CurrentComposeViewType = 0;
-    var t = this.wIi.GetLayoutItemList();
+    var t = this.wTi.GetLayoutItemList();
     let i = !1;
+    var s = ModelManager_1.ModelManager.ComposeModel.CurrentComposeListType;
     for (let e = 0; e < t.length; e++) {
-      var s = t[e];
-      0 < this.JGt(s.GetMainType()).length || e === t.length - 1
-        ? (s.SetUiActive(!0),
-          i ||
-            (this.wIi.SelectGridProxy(s.GridIndex),
-            (ModelManager_1.ModelManager.ComposeModel.CurrentComposeListType =
-              s.GetMainType()),
-            (i = !0)))
-        : s.SetUiActive(!1);
+      var r = t[e],
+        o = r.GetMainType();
+      0 < this.zNt(s).length || e === t.length - 1
+        ? (r.SetUiActive(!0),
+          s !== o || i || (this.wTi.SelectGridProxy(r.GridIndex), (i = !0)))
+        : r.SetUiActive(!1);
     }
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.GetComposeData,
-      this.qIi,
+      this.qTi,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OpenHelpRole,
-        this.KIi,
+        this.KTi,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.ComposeSuccess,
-        this.NIi,
+        this.NTi,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.ComposeFail,
-        this.NIi,
+        this.NTi,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnBeginPlayCompositeWorkingDisplay,
-        this.kIi,
+        this.kTi,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.CloseView,
         this.$Ge,
       ),
-      (this.GOe = TimerSystem_1.TimerSystem.Forever(this.wGt, TIMERGAP));
+      (this.GOe = TimerSystem_1.TimerSystem.Forever(this.BNt, TIMERGAP));
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.GetComposeData,
-      this.qIi,
+      this.qTi,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.ComposeSuccess,
-        this.NIi,
+        this.NTi,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.ComposeFail,
-        this.NIi,
+        this.NTi,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OpenHelpRole,
-        this.KIi,
+        this.KTi,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnBeginPlayCompositeWorkingDisplay,
-        this.kIi,
+        this.kTi,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.CloseView,
@@ -445,20 +459,20 @@ class ComposeRootView extends UiViewBase_1.UiViewBase {
         TimerSystem_1.TimerSystem.Has(this.GOe) &&
         (TimerSystem_1.TimerSystem.Remove(this.GOe), (this.GOe = void 0));
   }
-  Dqt() {
+  AGt() {
     var e = ModelManager_1.ModelManager.ComposeModel.GetRefreshLimitTime();
     e
       ? (this.GetItem(12).SetUIActive(!0),
         LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(13), "RefreshTime", e))
       : this.GetItem(12).SetUIActive(!1);
   }
-  BGt() {
+  bNt() {
     return (
       ModelManager_1.ModelManager.ComposeModel.GetRefreshLimitTimeValue() <= 0
     );
   }
-  GGt() {
-    var e = this.TGt();
+  NNt() {
+    var e = this.LNt();
     if (e)
       for (const t of e)
         if (
@@ -468,32 +482,32 @@ class ComposeRootView extends UiViewBase_1.UiViewBase {
           return !0;
     return !1;
   }
-  jIi(e = !1) {
+  jTi(e = !1) {
     let t = 0;
     switch (ModelManager_1.ModelManager.ComposeModel.CurrentComposeListType) {
       case 1:
-        (t = this.UIi), this.xIi.RefreshTips(this.aIi[t]);
+        (t = this.UTi), this.xTi.RefreshTips(this.aTi[t]);
         break;
       case 2:
-        (t = this.AIi), this.xIi.RefreshTips(this.hIi[t]);
+        (t = this.ATi), this.xTi.RefreshTips(this.hTi[t]);
         break;
       case 3:
-        (t = this.PIi), this.xIi.RefreshTips(this.lIi[t]);
+        (t = this.PTi), this.xTi.RefreshTips(this.lTi[t]);
     }
-    this.BIi.DeselectCurrentGridProxy(),
-      e && this.BIi.ScrollToGridIndex(t),
-      this.BIi.SelectGridProxy(t);
+    this.BTi.DeselectCurrentGridProxy(),
+      e && this.BTi.ScrollToGridIndex(t),
+      this.BTi.SelectGridProxy(t);
   }
-  GIi() {
+  GTi() {
     this.GetButton(5)
       .GetOwner()
       .GetUIItem()
       .SetUIActive(
         1 === ModelManager_1.ModelManager.ComposeModel.CurrentComposeListType,
       ),
-      this.QIi();
+      this.QTi();
   }
-  QIi() {
+  QTi() {
     var e;
     1 === ModelManager_1.ModelManager.ComposeModel.CurrentComposeListType &&
       ((e = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
@@ -501,7 +515,7 @@ class ComposeRootView extends UiViewBase_1.UiViewBase {
       )),
       this.SetSpriteByPath(e, this.GetSprite(6), !1));
   }
-  JGt(e) {
+  zNt(e) {
     let t = void 0;
     switch (e) {
       case 1:
@@ -519,12 +533,12 @@ class ComposeRootView extends UiViewBase_1.UiViewBase {
     }
     return t;
   }
-  TGt() {
-    return this.JGt(
+  LNt() {
+    return this.zNt(
       ModelManager_1.ModelManager.ComposeModel.CurrentComposeListType,
     );
   }
-  Qqt() {
+  YGt() {
     RedDotController_1.RedDotController.BindRedDot(
       "ComposeReagentProduction",
       this.GetItem(7),
@@ -532,10 +546,10 @@ class ComposeRootView extends UiViewBase_1.UiViewBase {
   }
   GetGuideUiItemAndUiItemForShowEx(e) {
     var t;
-    if (this.BIi?.DataInited)
+    if (this.BTi?.DataInited)
       return (
         (t = Number(e[0])),
-        (t = this.BIi.GetGridByDisplayIndex(t))
+        (t = this.BTi.GetGridByDisplayIndex(t))
           ? [t, t]
           : void (
               Log_1.Log.CheckError() &&

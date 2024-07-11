@@ -19,6 +19,7 @@ const UE = require("ue"),
   PerformanceComponent_1 = require("../Common/Component/PerformanceComponent"),
   PostProcessBridgeComponent_1 = require("../Common/Component/PostProcessBridgeComponent"),
   SplineMoveComponent_1 = require("../Common/Component/SplineMoveComponent"),
+  SubMeshComponent_1 = require("../Common/Component/SubMeshComponent"),
   UeActorTickManageComponent_1 = require("../Common/Component/UeActorTickManageComponent"),
   UeComponentTickManageComponent_1 = require("../Common/Component/UeComponentTickManageComponent"),
   UeMovementTickManageComponent_1 = require("../Common/Component/UeMovementTickManageComponent"),
@@ -30,6 +31,7 @@ const UE = require("ue"),
   PawnSensoryComponent_1 = require("../Pawn/Component/PawnSensoryComponent"),
   PawnSensoryInfoComponent_1 = require("../Pawn/Component/PawnSensoryInfoComponent"),
   AiWeaponMovementComponent_1 = require("../SceneItem/AiInteraction/AiWeaponMovementComponent"),
+  CollectComponent_1 = require("../SceneItem/CollectComponent"),
   EffectAreaComponent_1 = require("../SceneItem/Common/Component/EffectAreaComponent"),
   SceneItemAttachTargetComponent_1 = require("../SceneItem/Common/Component/SceneItemAttachTargetComponent"),
   SceneItemDebugComponent_1 = require("../SceneItem/Common/Component/SceneItemDebugComponent"),
@@ -149,17 +151,23 @@ const UE = require("ue"),
   ScanComponent_1 = require("./Common/Component/ScanComponent"),
   CharacterSkillCdComponent_1 = require("./Common/Component/Skill/CharacterSkillCdComponent"),
   CharacterSkillComponent_1 = require("./Common/Component/Skill/CharacterSkillComponent"),
+  CharacterSkillTriggerComponent_1 = require("./Common/Component/Skill/CharacterSkillTriggerComponent"),
+  VisionSkillComponent_1 = require("./Common/Component/Skill/VisionSkillComponent"),
   CharacterVisionComponent_1 = require("./Common/Component/Vision/CharacterVisionComponent"),
   CreateEntityData_1 = require("./CreateEntityData"),
+  ClientTriggerComponent_1 = require("./Custom/Components/ClientTriggerComponent"),
   DungeonEntranceComponent_1 = require("./Custom/Components/DungeonEntranceComponent"),
   GrapplingHookPointComponent_1 = require("./Custom/Components/GrapplingHookPointComponent"),
   RangeComponent_1 = require("./Custom/Components/RangeComponent"),
+  SafetyLocationComponent_1 = require("./Custom/Components/SafetyLocationComponent"),
   TriggerComponent_1 = require("./Custom/Components/TriggerComponent"),
+  FollowShooterComponent_1 = require("./Monster/Component/FollowShooterComponent"),
   MonsterFlowComponent_1 = require("./Monster/Component/MonsterFlowComponent"),
   ExecutionComponent_1 = require("./Monster/Entity/Component/ExecutionComponent"),
   MonsterBehaviorComponent_1 = require("./Monster/Entity/Component/MonsterBehaviorComponent"),
   MonsterDeathComponent_1 = require("./Monster/Entity/Component/MonsterDeathComponent"),
   MonsterFrozenComponent_1 = require("./Monster/Entity/Component/MonsterFrozenComponent"),
+  CommonNpcPerformComponent_1 = require("./Npc/Component/CommonNpcPerformComponent"),
   NpcFlowComponent_1 = require("./Npc/Component/NpcFlowComponent"),
   NpcPasserbyComponent_1 = require("./Npc/Component/NpcPasserbyComponent"),
   NpcPerformComponent_1 = require("./Npc/Component/NpcPerformComponent"),
@@ -190,70 +198,70 @@ const UE = require("ue"),
 exports.USE_ENTITY_POOL = !0;
 class WorldEntityHelper {
   static Initialize() {
-    return this.Oir(), this.kir(), this.Fir(), !0;
+    return this.Nor(), this.Oor(), this.kor(), !0;
   }
   static Clear() {
     return (
-      this.ComponentPriority.clear(), this.Vir.clear(), this.Hir.clear(), !0
+      this.ComponentPriority.clear(), this.For.clear(), this.Vor.clear(), !0
     );
   }
   static CreateWorldEntity(e) {
     var n = e.EntityData;
     let o = -1n,
       t = void 0;
-    switch (n.cVn) {
-      case Protocol_1.Aki.Protocol.HBs.Proto_Monster:
+    switch (n.HHn) {
+      case Protocol_1.Aki.Protocol.wks.Proto_Monster:
         if (
           ((e.Priority = MONSTER_PRIORITY), this.GetMonsterComponentRecord(e))
         )
           break;
         return;
-      case Protocol_1.Aki.Protocol.HBs.Proto_Player:
+      case Protocol_1.Aki.Protocol.wks.Proto_Player:
         if (((e.Priority = ROLE_PRIORITY), this.GetRoleComponentRecord(e)))
           break;
         return;
-      case Protocol_1.Aki.Protocol.HBs.Proto_Vision:
+      case Protocol_1.Aki.Protocol.wks.Proto_Vision:
         if (((e.Priority = VISION_PRIORITY), this.GetVisionComponentRecord(e)))
           break;
         return;
-      case Protocol_1.Aki.Protocol.HBs.Proto_Animal:
+      case Protocol_1.Aki.Protocol.wks.Proto_Animal:
         if (((e.Priority = OTHER_PRIORITY), this.GetAnimalComponentRecord(e)))
           break;
         return;
-      case Protocol_1.Aki.Protocol.HBs.Proto_Custom:
+      case Protocol_1.Aki.Protocol.wks.Proto_Custom:
         if (((e.Priority = OTHER_PRIORITY), this.GetCustomComponentRecord(e)))
           break;
         return;
-      case Protocol_1.Aki.Protocol.HBs.Proto_Npc:
-        switch (((e.Priority = NPC_PRIORITY), n.bvs || 0)) {
+      case Protocol_1.Aki.Protocol.wks.Proto_Npc:
+        switch (((e.Priority = NPC_PRIORITY), n.JEs || 0)) {
           case 1:
-            this.jir &&
+            this.Hor &&
               ((t = CharacterController_1.CharacterController.SpawnEntity(
-                this.jir,
+                this.Hor,
               )),
-              (o = this.jir));
+              (o = this.Hor));
             break;
           case 2:
-            this.Wir &&
+            this.jor &&
               ((t = CharacterController_1.CharacterController.SpawnEntity(
-                this.Wir,
+                this.jor,
               )),
-              (o = this.Wir));
+              (o = this.jor));
             break;
           default:
-            this.Kir &&
+            this.Wor &&
               ((t = CharacterController_1.CharacterController.SpawnEntity(
-                this.Kir,
+                this.Wor,
               )),
-              (o = this.Kir));
+              (o = this.Wor));
         }
-        if (t) (e.ComponentsKey = o), this.Qir(e);
+        if (t) (e.ComponentsKey = o), this.Kor(e);
         else {
           if (!this.GetNpcComponentRecord(e)) return;
           o = e.ComponentsKey;
         }
         break;
-      case Protocol_1.Aki.Protocol.HBs.Proto_SceneItem:
+      case Protocol_1.Aki.Protocol.wks.Proto_SceneItem:
         if (
           ((e.Priority = OTHER_PRIORITY), this.GetSceneItemComponentRecord(e))
         )
@@ -282,13 +290,13 @@ class WorldEntityHelper {
       if (n.IsNpc())
         switch (n.GetSubEntityType()) {
           case 1:
-            this.jir = n.GetComponentKey();
+            this.Hor = n.GetComponentKey();
             break;
           case 2:
-            this.Wir = n.GetComponentKey();
+            this.jor = n.GetComponentKey();
             break;
           default:
-            this.Kir = n.GetComponentKey();
+            this.Wor = n.GetComponentKey();
         }
       return CharacterController_1.CharacterController.DestroyToLru(e)
         ? !0
@@ -402,6 +410,12 @@ class WorldEntityHelper {
       )
     )
       return !1;
+    if (
+      !e.AddComponent(
+        CharacterSkillTriggerComponent_1.CharacterSkillTriggerComponent,
+      )
+    )
+      return !1;
     if (!e.AddComponent(CharacterAiComponent_1.CharacterAiComponent)) return !1;
     if (!e.AddComponent(CharacterFollowComponent_1.CharacterFollowComponent))
       return !1;
@@ -492,6 +506,8 @@ class WorldEntityHelper {
     return !(
       (CreateEntityData_1.CreateEntityData.IsRobot(e) &&
         !e.AddComponent(PawnHeadInfoComponent_1.PawnHeadInfoComponent)) ||
+      (CreateEntityData_1.CreateEntityData.IsFollowShooter(e) &&
+        !e.AddComponent(FollowShooterComponent_1.FollowShooterComponent)) ||
       !e.AddComponent(PawnInfoManageComponent_1.PawnInfoManageComponent) ||
       !e.AddComponent(PawnHeadInfoComponent_1.PawnHeadInfoComponent) ||
       !e.AddComponent(MonsterFlowComponent_1.MonsterFlowComponent) ||
@@ -579,6 +595,12 @@ class WorldEntityHelper {
     )
       return !1;
     if (!e.AddComponent(CharacterSkillCdComponent_1.CharacterSkillCdComponent))
+      return !1;
+    if (
+      !e.AddComponent(
+        CharacterSkillTriggerComponent_1.CharacterSkillTriggerComponent,
+      )
+    )
       return !1;
     if (!e.AddComponent(RoleDeathComponent_1.RoleDeathComponent)) return !1;
     if (!e.AddComponent(RoleEnergyComponent_1.RoleEnergyComponent)) return !1;
@@ -699,30 +721,32 @@ class WorldEntityHelper {
         UE.TsCharacterDebugComponent_C.StaticClass(),
       );
     }
-    return (
-      !!e.AddComponent(CharacterAiComponent_1.CharacterAiComponent) &&
-      !!e.AddComponent(RoleAudioComponent_1.RoleAudioComponent) &&
-      !!(
-        e.AddComponent(
+    if (e.AddComponent(CharacterAiComponent_1.CharacterAiComponent))
+      return (
+        !!e.AddComponent(RoleAudioComponent_1.RoleAudioComponent) &&
+        !!e.AddComponent(
           RoleLocationSafetyComponent_1.RoleLocationSafetyComponent,
         ) &&
-        e.AddComponent(CharacterVisionComponent_1.CharacterVisionComponent) &&
-        e.AddComponent(
-          CharacterPhysicsAssetComponent_1.CharacterPhysicsAssetComponent,
+        !!(
+          e.AddComponent(CharacterVisionComponent_1.CharacterVisionComponent) &&
+          e.AddComponent(
+            CharacterPhysicsAssetComponent_1.CharacterPhysicsAssetComponent,
+          ) &&
+          e.AddComponent(
+            CharacterFootEffectComponent_1.CharacterFootEffectComponent,
+          ) &&
+          e.AddComponent(
+            CharacterSkinDamageComponent_1.CharacterSkinDamageComponent,
+          ) &&
+          e.AddComponent(
+            CharacterCombatMessageComponent_1.CharacterCombatMessageComponent,
+          ) &&
+          e.AddComponent(RolePreloadComponent_1.RolePreloadComponent) &&
+          e.AddComponent(SubMeshComponent_1.SubMeshComponent)
         ) &&
-        e.AddComponent(
-          CharacterFootEffectComponent_1.CharacterFootEffectComponent,
-        ) &&
-        e.AddComponent(
-          CharacterSkinDamageComponent_1.CharacterSkinDamageComponent,
-        ) &&
-        e.AddComponent(
-          CharacterCombatMessageComponent_1.CharacterCombatMessageComponent,
-        ) &&
-        e.AddComponent(RolePreloadComponent_1.RolePreloadComponent)
-      ) &&
-      (e.RegisterToGameBudgetController = !0)
-    );
+        (e.RegisterToGameBudgetController = !0)
+      );
+    return !1;
   }
   static GetVisionComponentRecord(e) {
     if (!e.AddComponent(CreatureDataComponent_1.CreatureDataComponent))
@@ -809,7 +833,12 @@ class WorldEntityHelper {
       )
     )
       return !1;
-    if (!e.AddComponent(CharacterSkillComponent_1.CharacterSkillComponent))
+    if (!e.AddComponent(VisionSkillComponent_1.VisionSkillComponent)) return !1;
+    if (
+      !e.AddComponent(
+        CharacterSkillTriggerComponent_1.CharacterSkillTriggerComponent,
+      )
+    )
       return !1;
     if (
       !e.AddComponent(
@@ -963,8 +992,8 @@ class WorldEntityHelper {
     if (!e.AddComponent(PawnSensoryInfoComponent_1.PawnSensoryInfoComponent))
       return !1;
     if (!e.AddComponent(LevelTagComponent_1.LevelTagComponent)) return !1;
-    for (const r of o)
-      switch (r) {
+    for (const m of o)
+      switch (m) {
         case "RangeComponent":
           var t = (0, IComponent_1.getComponent)(n, "RangeComponent");
           if (!t) return !1;
@@ -976,6 +1005,22 @@ class WorldEntityHelper {
           if (!t) return !1;
           if (!e.AddComponent(TriggerComponent_1.TriggerComponent)) return !1;
           e.SetParam(TriggerComponent_1.TriggerComponent, t);
+          break;
+        case "LocationSafetyComponent":
+          var r = (0, IComponent_1.getComponent)(n, "LocationSafetyComponent");
+          if (!r) return !1;
+          if (
+            !e.AddComponent(SafetyLocationComponent_1.SafetyLocationComponent)
+          )
+            return !1;
+          e.SetParam(SafetyLocationComponent_1.SafetyLocationComponent, r);
+          break;
+        case "ClientTriggerComponent":
+          r = (0, IComponent_1.getComponent)(n, "ClientTriggerComponent");
+          if (!r) return !1;
+          if (!e.AddComponent(ClientTriggerComponent_1.ClientTriggerComponent))
+            return !1;
+          e.SetParam(ClientTriggerComponent_1.ClientTriggerComponent, r);
       }
     return (e.RegisterToGameBudgetController = !0);
   }
@@ -990,8 +1035,8 @@ class WorldEntityHelper {
         if (n)
           if (n.ComponentsData) {
             var n = e.EntityData,
-              n = n.bvs || 0,
-              o = this.Vir.get(n);
+              n = n.JEs || 0,
+              o = this.For.get(n);
             if (!o)
               return (
                 Log_1.Log.CheckError() &&
@@ -1061,8 +1106,8 @@ class WorldEntityHelper {
       if (!t) break;
       (t = t.EntityType), (t = IEntity_1.componentsByEntityAki[t]);
       if (!t) break;
-      for (const C of t) {
-        var r = e[C];
+      for (const a of t) {
+        var r = e[a];
         if (!r)
           return (
             Log_1.Log.CheckError() &&
@@ -1072,19 +1117,19 @@ class WorldEntityHelper {
                 "初始化SceneItemEntity找不到对应的prefab配置",
                 ["CreatureDataId", n.CreatureDataId],
                 ["PbDataId", n.PbDataId],
-                ["componentType", C],
+                ["componentType", a],
               ),
             !1
           );
         if (!r.Disabled) {
-          var m = this.Hir.get(C);
+          var m = this.Vor.get(a);
           if (m) {
             for (const i of m)
               if (!n.HasComponent(i)) {
                 if (!n.AddComponent(i)) return !1;
                 n.SetParam(i, r);
               }
-            switch (C) {
+            switch (a) {
               case "AdsorbComponent":
               case "FollowTrackComponent":
                 n.EnableMovement = !0;
@@ -1094,12 +1139,12 @@ class WorldEntityHelper {
       }
     } while (0);
     if (o?.ComponentsData) {
-      var a = (0, IComponent_1.getComponent)(
+      var C = (0, IComponent_1.getComponent)(
         o.ComponentsData,
         "InteractComponent",
       );
       if (
-        a &&
+        C &&
         !n.AddComponent(PawnInteractNewComponent_1.PawnInteractNewComponent)
       )
         return !1;
@@ -1114,9 +1159,9 @@ class WorldEntityHelper {
       return !1;
     if (!n.AddComponent(InteractItemComponent_1.InteractItemComponent))
       return !1;
-    a = CreateEntityData_1.CreateEntityData.GetBaseInfo(n);
+    C = CreateEntityData_1.CreateEntityData.GetBaseInfo(n);
     if (
-      a?.IsShowNameOnHead &&
+      C?.IsShowNameOnHead &&
       !n.HasComponent(PawnHeadInfoComponent_1.PawnHeadInfoComponent) &&
       !n.AddComponent(PawnHeadInfoComponent_1.PawnHeadInfoComponent)
     )
@@ -1128,9 +1173,9 @@ class WorldEntityHelper {
       return !1;
     if (o) {
       let e = !1;
-      a = (0, IComponent_1.getComponent)(o.ComponentsData, "WeaponComponent");
+      C = (0, IComponent_1.getComponent)(o.ComponentsData, "WeaponComponent");
       if (
-        a?.WeaponId &&
+        C?.WeaponId &&
         ((e = !0),
         !n.AddComponent(AiWeaponMovementComponent_1.AiWeaponMovementComponent))
       )
@@ -1146,7 +1191,7 @@ class WorldEntityHelper {
       }
     }
     return !(
-      (n.ComponentDataMap.get("Yvs") &&
+      (n.ComponentDataMap.get("dys") &&
         !n.AddComponent(
           SceneItemDropItemComponent_1.SceneItemDropItemComponent,
         )) ||
@@ -1156,14 +1201,14 @@ class WorldEntityHelper {
         ))
     );
   }
-  static Qir(e) {
+  static Kor(e) {
     GlobalData_1.GlobalData.IsPlayInEditor &&
       e.SetParam(
         UeComponentTickManageComponent_1.UeComponentTickManageComponent,
         UE.TsCharacterDebugComponent_C.StaticClass(),
       );
   }
-  static Oir() {
+  static Nor() {
     this.ComponentPriority.set(
       CharacterActorComponent_1.CharacterActorComponent,
       CharacterComponentPriorityDefine_1.ACTOR_TICK_PRIORITY,
@@ -1221,18 +1266,19 @@ class WorldEntityHelper {
         CharacterComponentPriorityDefine_1.UE_OTHER_COMPONENT_TICK_PRIORITY,
       );
   }
-  static kir() {
-    this.Vir.set(0, [
+  static Oor() {
+    this.For.set(0, [
       CharacterActorComponent_1.CharacterActorComponent,
       ActorDebugMovementComponent_1.ActorDebugMovementComponent,
       PawnSensoryInfoComponent_1.PawnSensoryInfoComponent,
       BaseUnifiedStateComponent_1.BaseUnifiedStateComponent,
       NpcMoveComponent_1.NpcMoveComponent,
+      CharacterPatrolComponent_1.CharacterPatrolComponent,
       CharacterAnimationComponent_1.CharacterAnimationComponent,
       CharacterAnimationSyncComponent_1.CharacterAnimationSyncComponent,
       LevelTagComponent_1.LevelTagComponent,
       PawnSensoryComponent_1.PawnSensoryComponent,
-      NpcPerformComponent_1.NpcPerformComponent,
+      CommonNpcPerformComponent_1.CommonNpcPerformComponent,
       PawnInteractNewComponent_1.PawnInteractNewComponent,
       PawnPerceptionComponent_1.PawnPerceptionComponent,
       PawnInfoManageComponent_1.PawnInfoManageComponent,
@@ -1246,11 +1292,11 @@ class WorldEntityHelper {
       CharacterAudioComponent_1.CharacterAudioComponent,
       ScanComponent_1.ScanComponent,
     ]),
-      this.Vir.set(1, [
+      this.For.set(1, [
         SimpleNpcActorComponent_1.SimpleNpcActorComponent,
         SimpleNpcAnimationComponent_1.SimpleNpcAnimationComponent,
         PawnSensoryInfoComponent_1.PawnSensoryInfoComponent,
-        NpcPerformComponent_1.NpcPerformComponent,
+        CommonNpcPerformComponent_1.CommonNpcPerformComponent,
         PawnPerceptionComponent_1.PawnPerceptionComponent,
         PawnInfoManageComponent_1.PawnInfoManageComponent,
         PawnHeadInfoComponent_1.PawnHeadInfoComponent,
@@ -1259,10 +1305,11 @@ class WorldEntityHelper {
         UeActorTickManageComponent_1.UeActorTickManageComponent,
         ScanComponent_1.ScanComponent,
       ]),
-      this.Vir.set(2, [
+      this.For.set(2, [
         CharacterActorComponent_1.CharacterActorComponent,
         BaseUnifiedStateComponent_1.BaseUnifiedStateComponent,
         NpcMoveComponent_1.NpcMoveComponent,
+        NpcPerformComponent_1.NpcPerformComponent,
         CharacterAnimationComponent_1.CharacterAnimationComponent,
         NpcPasserbyComponent_1.NpcPasserbyComponent,
         UeSkeletalTickManageComponent_1.UeSkeletalTickManageComponent,
@@ -1270,180 +1317,189 @@ class WorldEntityHelper {
         UeActorTickManageComponent_1.UeActorTickManageComponent,
       ]);
   }
-  static Fir() {
-    this.Hir.set("TreasureBoxComponent", [
+  static kor() {
+    this.Vor.set("TreasureBoxComponent", [
       GamePlayTreasureBoxComponent_1.SceneItemTreasureBoxComponent,
     ]),
-      this.Hir.set("TeleControl2", [
+      this.Vor.set("TeleControl2", [
         SceneItemHitComponent_1.SceneItemHitComponent,
         SceneItemManipulatableComponent_1.SceneItemManipulatableComponent,
         SceneItemMovementSyncComponent_1.SceneItemMovementSyncComponent,
         SceneItemDynamicAttachTargetComponent_1.SceneItemDynamicAttachTargetComponent,
       ]),
-      this.Hir.set("ItemFoundation2", [
+      this.Vor.set("ItemFoundation2", [
         SceneItemOutletComponent_1.SceneItemOutletComponent,
       ]),
-      this.Hir.set("DestructibleItem", [
+      this.Vor.set("DestructibleItem", [
         SceneItemHitComponent_1.SceneItemHitComponent,
         DurablityComponent_1.DurabilityComponent,
         SceneItemDamageComponent_1.SceneItemDamageComponent,
       ]),
-      this.Hir.set("AdsorbComponent", [
+      this.Vor.set("AdsorbComponent", [
         PawnAdsorbComponent_1.PawnAdsorbComponent,
       ]),
-      this.Hir.set("RangeComponent", [RangeComponent_1.RangeComponent]),
-      this.Hir.set("TriggerComponent", [TriggerComponent_1.TriggerComponent]),
-      this.Hir.set("TrampleComponent", [
+      this.Vor.set("RangeComponent", [RangeComponent_1.RangeComponent]),
+      this.Vor.set("TriggerComponent", [TriggerComponent_1.TriggerComponent]),
+      this.Vor.set("TrampleComponent", [
         SceneItemGravityComponent_1.SceneItemGravityComponent,
       ]),
-      this.Hir.set("TargetGearComponent", [
+      this.Vor.set("TargetGearComponent", [
         SceneItemMoveComponent_1.SceneItemMoveComponent,
         SceneItemHitComponent_1.SceneItemHitComponent,
         GamePlayHitGearComponent_1.GamePlayHitGearComponent,
         SceneItemMovementSyncComponent_1.SceneItemMovementSyncComponent,
       ]),
-      this.Hir.set("LiftComponent", [
+      this.Vor.set("LiftComponent", [
         GamePlayElevatorComponent_1.GamePlayElevatorComponent,
       ]),
-      this.Hir.set("ConveyorBeltComponent", [
+      this.Vor.set("ConveyorBeltComponent", [
         SceneItemConveyorBeltComponent_1.SceneItemConveyorBeltComponent,
       ]),
-      this.Hir.set("FollowTrackComponent", [
+      this.Vor.set("FollowTrackComponent", [
         SceneItemTrackGuideComponent_1.SceneItemTrackGuideComponent,
       ]),
-      this.Hir.set("NearbyTrackingComponent", [
+      this.Vor.set("NearbyTrackingComponent", [
         SceneItemNearbyTrackingComponent_1.SceneItemNearbyTrackingComponent,
       ]),
-      this.Hir.set("SkyboxComponent", [
+      this.Vor.set("SkyboxComponent", [
         PostProcessBridgeComponent_1.PostProcessBridgeComponent,
       ]),
-      this.Hir.set("DungeonEntryComponent", [
+      this.Vor.set("DungeonEntryComponent", [
         DungeonEntranceComponent_1.DungeonEntranceComponent,
       ]),
-      this.Hir.set("BuffProducerComponent", [
+      this.Vor.set("BuffProducerComponent", [
         SceneItemBuffProducerComponent_1.SceneItemBuffProducerComponent,
       ]),
-      this.Hir.set("BuffConsumerComponent", [
+      this.Vor.set("BuffConsumerComponent", [
         SceneItemHitComponent_1.SceneItemHitComponent,
         SceneItemBuffConsumerComponent_1.SceneItemBuffConsumerComponent,
       ]),
-      this.Hir.set("ResetEntitiesPosComponent", [
+      this.Vor.set("ResetEntitiesPosComponent", [
         SceneItemResetPositionComponent_1.SceneItemResetPositionComponent,
       ]),
-      this.Hir.set("RotatorComponent2", [
+      this.Vor.set("RotatorComponent2", [
         SceneItemRotatorComponent_1.SceneItemRotatorComponent,
       ]),
-      this.Hir.set("VisionItemComponent", [
+      this.Vor.set("VisionItemComponent", [
         SceneItemCaptureComponent_1.SceneItemCaptureComponent,
       ]),
-      this.Hir.set("GuideLineCreatorComponent", [
+      this.Vor.set("GuideLineCreatorComponent", [
         SceneItemGuidePathComponent_1.SceneItemGuidePathComponent,
       ]),
-      this.Hir.set("SceneItemMovementComponent", [
+      this.Vor.set("SceneItemMovementComponent", [
         SceneItemMoveComponent_1.SceneItemMoveComponent,
         SceneItemMovementSyncComponent_1.SceneItemMovementSyncComponent,
       ]),
-      this.Hir.set("AdviseItemComponent", [
+      this.Vor.set("AdviseItemComponent", [
         SceneItemAdviceComponent_1.SceneItemAdviceComponent,
       ]),
-      this.Hir.set("EntityStateAudioComponent", [
+      this.Vor.set("EntityStateAudioComponent", [
         SceneItemStateAudioComponent_1.SceneItemStateAudioComponent,
       ]),
-      this.Hir.set("InteractAudioComponent", [
+      this.Vor.set("InteractAudioComponent", [
         SceneItemInteractAudioComponent_1.SceneItemInteractAudioComponent,
       ]),
-      this.Hir.set("TimelineTrackControlComponent", [
+      this.Vor.set("TimelineTrackControlComponent", [
         SceneItemTimeTrackControlComponent_1.SceneItemTimeTrackControlComponent,
       ]),
-      this.Hir.set("SceneActorRefComponent", [
+      this.Vor.set("SceneActorRefComponent", [
         SceneItemReferenceComponent_1.SceneItemReferenceComponent,
       ]),
-      this.Hir.set("AttachTargetComponent", [
-        SceneItemMovementSyncComponent_1.SceneItemMovementSyncComponent,
+      this.Vor.set("AttachTargetComponent", [
         SceneItemAttachTargetComponent_1.SceneItemAttachTargetComponent,
       ]),
-      this.Hir.set("ReboundComponent", [
+      this.Vor.set("ReboundComponent", [
         SceneItemReboundComponent_1.SceneItemReboundComponent,
       ]),
-      this.Hir.set("TurntableControlComponent", [
+      this.Vor.set("TurntableControlComponent", [
         SceneItemTurntableControllerComponent_1.SceneItemTurntableControllerComponent,
       ]),
-      this.Hir.set("JigsawFoundation", [
+      this.Vor.set("JigsawFoundation", [
         SceneItemJigsawBaseComponent_1.SceneItemJigsawBaseComponent,
         SceneItemMultiInteractionActorComponent_1.SceneItemMultiInteractionActorComponent,
       ]),
-      this.Hir.set("JigsawItem", [
+      this.Vor.set("JigsawItem", [
         SceneItemJigsawItemComponent_1.SceneItemJigsawItemComponent,
         SceneItemMultiInteractionActorComponent_1.SceneItemMultiInteractionActorComponent,
       ]),
-      this.Hir.set("SceneBulletComponent", [
+      this.Vor.set("SceneBulletComponent", [
         SceneBulletComponent_1.SceneBulletComponent,
       ]),
-      this.Hir.set("LevitateMagnetComponent", [
+      this.Vor.set("LevitateMagnetComponent", [
         SceneItemHitComponent_1.SceneItemHitComponent,
         SceneItemMoveComponent_1.SceneItemMoveComponent,
         SceneItemLevitateMagnetComponent_1.SceneItemLevitateMagnetComponent,
         SceneItemMovementSyncComponent_1.SceneItemMovementSyncComponent,
       ]),
-      this.Hir.set("AiAlertNotifyComponent", [
+      this.Vor.set("AiAlertNotifyComponent", [
         SmartObjectComponent_1.SmartObjectComponent,
       ]),
-      this.Hir.set("MonsterGachaItemComponent", [
+      this.Vor.set("MonsterGachaItemComponent", [
         SceneItemMonsterGachaItemComponent_1.SceneItemMonsterGachaItemComponent,
       ]),
-      this.Hir.set("ProgressBarControlComponent", [
+      this.Vor.set("ProgressBarControlComponent", [
         SceneItemProgressControlComponent_1.SceneItemProgressControlComponent,
       ]),
-      this.Hir.set("ExploreSkillInteractComponent", [
+      this.Vor.set("ExploreSkillInteractComponent", [
         SceneItemExploreInteractComponent_1.SceneItemExploreInteractComponent,
       ]),
-      this.Hir.set("HookLockPoint", [
+      this.Vor.set("HookLockPoint", [
         GrapplingHookPointComponent_1.GrapplingHookPointComponent,
         SceneItemDynamicAttachTargetComponent_1.SceneItemDynamicAttachTargetComponent,
       ]),
-      this.Hir.set("FanComponent", [
+      this.Vor.set("FanComponent", [
         SceneItemFanComponent_1.SceneItemFanComponent,
         SceneItemHitComponent_1.SceneItemHitComponent,
         PawnInteractNewComponent_1.PawnInteractNewComponent,
         RangeComponent_1.RangeComponent,
       ]),
-      this.Hir.set("ResetSelfPosComponent", [
+      this.Vor.set("ResetSelfPosComponent", [
         SceneItemResetSelfPositionComponent_1.SceneItemResetSelfPositionComponent,
       ]),
-      this.Hir.set("TimeStopComponent", [
+      this.Vor.set("TimeStopComponent", [
         SceneItemTimeStopMachineComponent_1.SceneItemTimeStopMachineComponent,
       ]),
-      this.Hir.set("BeamCastComponent", [
+      this.Vor.set("BeamCastComponent", [
         SceneItemBeamCastComponent_1.SceneItemBeamCastComponent,
         RangeComponent_1.RangeComponent,
       ]),
-      this.Hir.set("BeamReceiveComponent", [
+      this.Vor.set("BeamReceiveComponent", [
         SceneItemBeamReceiveComponent_1.SceneItemBeamReceiveComponent,
       ]),
-      this.Hir.set("PortalComponent", [
+      this.Vor.set("PortalComponent", [
         SceneItemPortalComponent_1.SceneItemPortalComponent,
       ]),
-      this.Hir.set("BubbleComponent", [
+      this.Vor.set("BubbleComponent", [
         CharacterFlowComponent_1.CharacterFlowComponent,
         PawnHeadInfoComponent_1.PawnHeadInfoComponent,
       ]),
-      this.Hir.set("PasserbyNpcSpawnComponent", [
+      this.Vor.set("PasserbyNpcSpawnComponent", [
         PasserbyGeneratorComponent_1.PasserbyGeneratorComponent,
       ]),
-      this.Hir.set("EffectAreaComponent", [
+      this.Vor.set("EffectAreaComponent", [
         EffectAreaComponent_1.EffectAreaComponent,
       ]),
-      this.Hir.set("PhysicsConstraintComponent", [
+      this.Vor.set("PhysicsConstraintComponent", [
         SceneItemHitComponent_1.SceneItemHitComponent,
         SceneItemPhysicalAttachComponent_1.SceneItemPhysicalAttachComponent,
-      ]);
+      ]),
+      this.Vor.set("HitComponent", [
+        SceneItemHitComponent_1.SceneItemHitComponent,
+      ]),
+      this.Vor.set("ClientTriggerComponent", [
+        ClientTriggerComponent_1.ClientTriggerComponent,
+      ]),
+      this.Vor.set("LocationSafetyComponent", [
+        SafetyLocationComponent_1.SafetyLocationComponent,
+      ]),
+      this.Vor.set("CollectComponent", [CollectComponent_1.CollectComponent]);
   }
 }
-((exports.WorldEntityHelper = WorldEntityHelper).jir = 0n),
-  (WorldEntityHelper.Kir = 0n),
-  (WorldEntityHelper.Wir = 0n),
-  (WorldEntityHelper.Vir = new Map()),
+((exports.WorldEntityHelper = WorldEntityHelper).Hor = 0n),
+  (WorldEntityHelper.Wor = 0n),
+  (WorldEntityHelper.jor = 0n),
+  (WorldEntityHelper.For = new Map()),
   (WorldEntityHelper.ComponentPriority = new Map()),
-  (WorldEntityHelper.Hir = new Map()),
+  (WorldEntityHelper.Vor = new Map()),
   (Global_1.Global.WorldEntityHelper = WorldEntityHelper);
 //# sourceMappingURL=WorldEntityHelper.js.map

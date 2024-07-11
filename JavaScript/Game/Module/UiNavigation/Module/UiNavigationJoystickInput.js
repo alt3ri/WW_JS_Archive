@@ -14,129 +14,129 @@ class UiNavigationJoystickInput {
       s = ModelManager_1.ModelManager.InputDistributeModel.GetAxisValue(
         InputMappingsDefine_1.axisMappings.NavigationLeftRight,
       ),
-      n = this.yxo(s),
-      a = this.yxo(t);
-    if (!n || !a || this.f_t) {
-      if (this.f_t) {
-        this.Ixo(s, t);
-        (n = this.Txo(s)), (a = this.Txo(t));
-        if (n && a) return (this.f_t = !1), this.Lxo(), void this.Dxo();
+      n = this.Mwo(s),
+      a = this.Mwo(t);
+    if (!n || !a || this.wut) {
+      if (this.wut) {
+        this.Ewo(s, t);
+        (n = this.Swo(s)), (a = this.Swo(t));
+        if (n && a) return (this.wut = !1), this.ywo(), void this.Iwo();
       }
-      this.Rxo(s, t),
-        this.Uxo(i),
-        (this.Axo = s),
-        (this.Pxo = t),
-        (this.f_t = !0);
+      this.Lwo(s, t),
+        this.Dwo(i),
+        (this.Rwo = s),
+        (this.Uwo = t),
+        (this.wut = !0);
     }
   }
-  static Rxo(i, t) {
+  static Lwo(i, t) {
     this.cz.Set(i, t, 0);
     i = Vector_1.Vector.GetAngleByVector2D(this.cz);
     -143 <= i && i < -37
-      ? this.xxo(InputMappingsDefine_1.actionMappings.Ui方向下)
+      ? this.Awo(InputMappingsDefine_1.actionMappings.Ui方向下)
       : -37 <= i && i < 37
-        ? this.xxo(InputMappingsDefine_1.actionMappings.Ui方向右)
+        ? this.Awo(InputMappingsDefine_1.actionMappings.Ui方向右)
         : 37 <= i && i < 143
-          ? this.xxo(InputMappingsDefine_1.actionMappings.Ui方向上)
-          : this.xxo(InputMappingsDefine_1.actionMappings.Ui方向左);
+          ? this.Awo(InputMappingsDefine_1.actionMappings.Ui方向上)
+          : this.Awo(InputMappingsDefine_1.actionMappings.Ui方向左);
   }
-  static yxo(i) {
-    return Math.abs(i) < this.wxo;
+  static Mwo(i) {
+    return Math.abs(i) < this.Pwo;
   }
-  static Txo(i) {
-    return Math.abs(i) < this.Bxo;
+  static Swo(i) {
+    return Math.abs(i) < this.xwo;
   }
-  static xxo(i) {
-    i !== this.nCt &&
-      ((this.nCt = i),
-      (this.bxo = !1),
-      (this.qxo = 0),
-      (this.Gxo = this.Nxo),
-      (this.Oxo = 1),
+  static Awo(i) {
+    i !== this.fgt &&
+      ((this.fgt = i),
+      (this.wwo = !1),
+      (this.Bwo = 0),
+      (this.bwo = this.qwo),
+      (this.Gwo = 1),
       UiNavigationLogic_1.UiNavigationLogic.ExecuteInputNavigation(
-        this.nCt,
+        this.fgt,
         0,
       ));
   }
-  static Dxo() {
-    var i = this.nCt;
+  static Iwo() {
+    var i = this.fgt;
     StringUtils_1.StringUtils.IsBlank(i) ||
-      ((this.nCt = ""),
-      (this.qxo = 0),
-      (this.Axo = 0),
-      (this.Pxo = 0),
-      (this.bxo = !1),
+      ((this.fgt = ""),
+      (this.Bwo = 0),
+      (this.Rwo = 0),
+      (this.Uwo = 0),
+      (this.wwo = !1),
       UiNavigationLogic_1.UiNavigationLogic.ExecuteInputNavigation(i, 1));
   }
-  static Uxo(i) {
-    StringUtils_1.StringUtils.IsBlank(this.nCt) ||
-      ((this.qxo += i),
-      0 === this.Oxo
-        ? this.qxo > this.kxo &&
-          ((this.qxo -= this.kxo),
-          (this.Gxo = this.Fxo),
-          (this.Oxo = 1),
+  static Dwo(i) {
+    StringUtils_1.StringUtils.IsBlank(this.fgt) ||
+      ((this.Bwo += i),
+      0 === this.Gwo
+        ? this.Bwo > this.Nwo &&
+          ((this.Bwo -= this.Nwo),
+          (this.bwo = this.Owo),
+          (this.Gwo = 1),
           UiNavigationLogic_1.UiNavigationLogic.ExecuteInputNavigation(
-            this.nCt,
+            this.fgt,
             0,
           ))
-        : 1 === this.Oxo &&
-          this.qxo > this.Gxo &&
-          ((this.qxo -= this.Gxo),
-          (this.Oxo = 0),
+        : 1 === this.Gwo &&
+          this.Bwo > this.bwo &&
+          ((this.Bwo -= this.bwo),
+          (this.Gwo = 0),
           UiNavigationLogic_1.UiNavigationLogic.ExecuteInputNavigation(
-            this.nCt,
+            this.fgt,
             1,
           )));
   }
-  static Ixo(i, t) {
+  static Ewo(i, t) {
     let s = 0,
       n = 0;
     (n =
-      this.nCt === InputMappingsDefine_1.actionMappings.Ui方向右 ||
-      this.nCt === InputMappingsDefine_1.actionMappings.Ui方向上
-        ? ((s = this.Axo - i), this.Pxo - t)
-        : ((s = i - this.Axo), t - this.Pxo)),
-      (s > this.Vxo || n > this.Vxo) && (this.bxo = !0);
+      this.fgt === InputMappingsDefine_1.actionMappings.Ui方向右 ||
+      this.fgt === InputMappingsDefine_1.actionMappings.Ui方向上
+        ? ((s = this.Rwo - i), this.Uwo - t)
+        : ((s = i - this.Rwo), t - this.Uwo)),
+      (s > this.kwo || n > this.kwo) && (this.wwo = !0);
   }
-  static Lxo() {
-    if (this.bxo) {
-      if (StringUtils_1.StringUtils.IsBlank(this.nCt)) return;
-      var i = this.Hxo.get(this.nCt);
-      for (const s of this.jxo) {
+  static ywo() {
+    if (this.wwo) {
+      if (StringUtils_1.StringUtils.IsBlank(this.fgt)) return;
+      var i = this.Fwo.get(this.fgt);
+      for (const s of this.Vwo) {
         var t = s[0];
         s[1] || t(i);
       }
     }
-    for (const n of this.jxo) this.jxo.set(n[0], !1);
+    for (const n of this.Vwo) this.Vwo.set(n[0], !1);
   }
   static RegisterLeftJoystickFunction(i) {
-    this.jxo.set(i, this.f_t);
+    this.Vwo.set(i, this.wut);
   }
   static UnRegisterLeftJoystickFunction(i) {
-    this.jxo.delete(i);
+    this.Vwo.delete(i);
   }
 }
-((exports.UiNavigationJoystickInput = UiNavigationJoystickInput).wxo = 0.6),
-  (UiNavigationJoystickInput.Bxo = 0.2),
-  (UiNavigationJoystickInput.Vxo = 0.3),
-  (UiNavigationJoystickInput.nCt = ""),
-  (UiNavigationJoystickInput.Nxo = 500),
-  (UiNavigationJoystickInput.Fxo = 100),
-  (UiNavigationJoystickInput.kxo = 100),
-  (UiNavigationJoystickInput.Gxo = 0),
-  (UiNavigationJoystickInput.qxo = 0),
-  (UiNavigationJoystickInput.Oxo = void 0),
+((exports.UiNavigationJoystickInput = UiNavigationJoystickInput).Pwo = 0.6),
+  (UiNavigationJoystickInput.xwo = 0.2),
+  (UiNavigationJoystickInput.kwo = 0.3),
+  (UiNavigationJoystickInput.fgt = ""),
+  (UiNavigationJoystickInput.qwo = 500),
+  (UiNavigationJoystickInput.Owo = 100),
+  (UiNavigationJoystickInput.Nwo = 100),
+  (UiNavigationJoystickInput.bwo = 0),
+  (UiNavigationJoystickInput.Bwo = 0),
+  (UiNavigationJoystickInput.Gwo = void 0),
   (UiNavigationJoystickInput.cz = Vector_1.Vector.Create()),
-  (UiNavigationJoystickInput.f_t = !1),
-  (UiNavigationJoystickInput.Hxo = new Map([
+  (UiNavigationJoystickInput.wut = !1),
+  (UiNavigationJoystickInput.Fwo = new Map([
     [InputMappingsDefine_1.actionMappings.Ui方向下, 0],
     [InputMappingsDefine_1.actionMappings.Ui方向右, 3],
     [InputMappingsDefine_1.actionMappings.Ui方向上, 1],
     [InputMappingsDefine_1.actionMappings.Ui方向左, 2],
   ])),
-  (UiNavigationJoystickInput.jxo = new Map()),
-  (UiNavigationJoystickInput.Axo = 0),
-  (UiNavigationJoystickInput.Pxo = 0),
-  (UiNavigationJoystickInput.bxo = !1);
+  (UiNavigationJoystickInput.Vwo = new Map()),
+  (UiNavigationJoystickInput.Rwo = 0),
+  (UiNavigationJoystickInput.Uwo = 0),
+  (UiNavigationJoystickInput.wwo = !1);
 //# sourceMappingURL=UiNavigationJoystickInput.js.map

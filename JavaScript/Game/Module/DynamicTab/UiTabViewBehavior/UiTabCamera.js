@@ -10,7 +10,7 @@ class UiTabCamera extends UiTabViewBehavior_1.UiTabViewBehavior {
   constructor() {
     super(...arguments),
       (this.TabData = void 0),
-      (this.HFt = (e) => {
+      (this.j3t = (e) => {
         DynamicTabCamera_1.DynamicTabCamera.OnPlayCameraAnimationFinished(e);
       });
   }
@@ -42,13 +42,13 @@ class UiTabCamera extends UiTabViewBehavior_1.UiTabViewBehavior {
   Ore() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnPlayCameraAnimationFinish,
-      this.HFt,
+      this.j3t,
     );
   }
   kre() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnPlayCameraAnimationFinish,
-      this.HFt,
+      this.j3t,
     );
   }
 }

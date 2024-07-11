@@ -18,7 +18,7 @@ var ELoginShowType;
 class LoginAgeTipView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.BMi = () => {
+      (this.BEi = () => {
         UiLayer_1.UiLayer.SetShowNormalMaskLayer(!1),
           UiManager_1.UiManager.CloseView("LoginAgeTipView");
       });
@@ -31,16 +31,16 @@ class LoginAgeTipView extends UiViewBase_1.UiViewBase {
       [3, UE.UIButtonComponent],
       [4, UE.UIText],
     ]),
-      (this.BtnBindInfo = [[3, this.BMi]]);
+      (this.BtnBindInfo = [[3, this.BEi]]);
   }
   OnStart() {
     this.ChildPopView?.PopItem.OverrideBackBtnCallBack(() => {
-      this.BMi();
+      this.BEi();
     });
     var e = this.OpenParam;
-    this.bMi(e), this.qMi(e);
+    this.bEi(e), this.qEi(e);
   }
-  bMi(e) {
+  bEi(e) {
     switch (e) {
       case ELoginShowType.AgeTip:
         this.GetText(0).SetUIActive(!0),
@@ -51,7 +51,7 @@ class LoginAgeTipView extends UiViewBase_1.UiViewBase {
       case ELoginShowType.UserAgreement:
       case ELoginShowType.PrivacyAgreement:
       case ELoginShowType.ChildPrivacyAgreement:
-        this.GMi(
+        this.GEi(
           ConfigManager_1.ConfigManager.TextConfig.GetTextById(
             ELoginShowType[e],
           ),
@@ -59,10 +59,10 @@ class LoginAgeTipView extends UiViewBase_1.UiViewBase {
         break;
       case ELoginShowType.LoginNotice:
         ModelManager_1.ModelManager.LoginModel.LoginNotice &&
-          this.GMi(ModelManager_1.ModelManager.LoginModel.LoginNotice.content);
+          this.GEi(ModelManager_1.ModelManager.LoginModel.LoginNotice.content);
     }
   }
-  GMi(e) {
+  GEi(e) {
     let i = e;
     for (let e = 0; e < 3; e++) {
       var a = i.indexOf("\n", 6e3);
@@ -77,7 +77,7 @@ class LoginAgeTipView extends UiViewBase_1.UiViewBase {
         (i = i.substr(a + 1));
     }
   }
-  qMi(e) {
+  qEi(e) {
     let i = void 0;
     switch (e) {
       case ELoginShowType.AgeTip:

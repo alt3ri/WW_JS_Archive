@@ -25,7 +25,7 @@ class CombatMessageBuffer {
       (this.DesiredBuffer = 0),
       (this.Buffer = 0),
       (this.LastNotifyExecuteTime = 0),
-      (this.cyt = new Queue_1.Queue());
+      (this.yIt = new Queue_1.Queue());
   }
   get TimelineOffset() {
     return this.TimelineOffsetBase + this.Buffer;
@@ -36,10 +36,10 @@ class CombatMessageBuffer {
   Push(e, t, o, s) {
     var i,
       r,
-      a = t?.GetComponent(44);
+      a = t?.GetComponent(45);
     a
       ? e
-        ? (i = o.h4n)
+        ? (i = o.V8n)
           ? ((r = t?.GetComponent(0)),
             this.RecordMessageTime(i, r.GetPbDataId()),
             (r = i + this.TimelineOffset),
@@ -73,24 +73,24 @@ class CombatMessageBuffer {
     var s = Time_1.Time.NowSeconds,
       i =
         (o ||
-          (this.cyt.Push([e, s]),
-          this.cyt.Size >= TIME_BUFFER_SIZE && this.cyt.Pop()),
-        this.myt(),
+          (this.yIt.Push([e, s]),
+          this.yIt.Size >= TIME_BUFFER_SIZE && this.yIt.Pop()),
+        this.IIt(),
         e + this.TimelineOffset);
     i > this.LastNotifyExecuteTime && (this.LastNotifyExecuteTime = i),
       this.ReportMoveDataReceiveInfo(s - e, t, o);
   }
-  myt() {
-    if (0 !== this.cyt.Size) {
-      let e = this.cyt.Size - 1;
-      var i = this.cyt.Get(e);
+  IIt() {
+    if (0 !== this.yIt.Size) {
+      let e = this.yIt.Size - 1;
+      var i = this.yIt.Get(e);
       let t = i[1] - i[0],
         o = t;
       var r = i[0];
       let s = 0;
       for (; 0 < e; e--) {
         s++;
-        var [a, _] = this.cyt.Get(e);
+        var [a, _] = this.yIt.Get(e);
         if (
           s > TIME_BUFFER_CHECK_TIME_MAX &&
           r - a > TIME_BUFFER_CHECK_COUNT_MIN
@@ -107,10 +107,10 @@ class CombatMessageBuffer {
               ModelManager_1.ModelManager.CombatMessageModel
                 .MoveSyncUdpSendInterval)
           : (this.DesiredBuffer = i * BUFFER_TIME_RATE + FIX_BUFFER_TIME),
-        this.dyt(0);
+        this.TIt(0);
     }
   }
-  dyt(e = 0) {
+  TIt(e = 0) {
     this.DesiredBuffer < this.Buffer
       ? (this.Buffer = Math.max(this.DesiredBuffer, this.Buffer - e))
       : this.RemainBufferTime > e
@@ -118,7 +118,7 @@ class CombatMessageBuffer {
         : (this.Buffer = this.DesiredBuffer);
   }
   OnTick(e) {
-    this.dyt(e * TIME_OFFSET_LERP_RATE);
+    this.TIt(e * TIME_OFFSET_LERP_RATE);
   }
   ReportMoveDataReceiveInfo(e, t, o) {
     (t = {
@@ -145,14 +145,19 @@ class CombatMessageModel extends ModelBase_1.ModelBase {
       (this.MoveSyncUdpMode = !0),
       (this.MoveSyncUdpSendInterval = 0.03),
       (this.MoveSyncUdpFullSampling = !1),
-      (this.Cyt = 0),
+      (this.CombatMessageSendPackMode = !0),
+      (this.CombatMessageSendInterval = 0.04),
+      (this.CombatMessageSendIntervalMulti = 0.03),
+      (this.CombatMessageSendPendingTime = 0),
+      (this.LIt = 0),
       (this.CombatMessageBufferMap = new Map()),
       (this.CombatMessageBufferMapByEntity = new Map()),
       (this.NeedPushMove = !1),
       (this.MoveSyncSet = new Set()),
       (this.AnyEntityInFight = !1),
-      (this.MessagePack = Protocol_1.Aki.Protocol.CombatMessage.nXn.create()),
-      (this.gyt = new Map());
+      (this.AnyHateChange = !1),
+      (this.MessagePack = Protocol_1.Aki.Protocol.CombatMessage.Zzn.create()),
+      (this.DIt = new Map());
   }
   OnLeaveLevel() {
     return !(this.AnyEntityInFight = !1);
@@ -168,7 +173,7 @@ class CombatMessageModel extends ModelBase_1.ModelBase {
   }
   GenMessageId() {
     var e = BigInt(ModelManager_1.ModelManager.CreatureModel.GetPlayerId());
-    return BigInt(++this.Cyt) | (e << MathUtils_1.intBit);
+    return BigInt(++this.LIt) | (e << MathUtils_1.intBit);
   }
   SetLastMessageId(e) {
     var t = Number(e & MESSAGE_ID_MASK),
@@ -186,8 +191,8 @@ class CombatMessageModel extends ModelBase_1.ModelBase {
               ModelManager_1.ModelManager.CreatureModel.GetPlayerId(),
             ],
           ),
-        (this.Cyt = 0))
-      : (this.Cyt = t);
+        (this.LIt = 0))
+      : (this.LIt = t);
   }
   GetMessageBuffer(t) {
     if (0 !== t) {
@@ -209,54 +214,54 @@ class CombatMessageModel extends ModelBase_1.ModelBase {
   }
   CreateMontageContext(e, t) {
     var o = this.GenMessageId(),
-      s = Protocol_1.Aki.Protocol.CombatMessage.HGs.create();
+      s = Protocol_1.Aki.Protocol.CombatMessage.xFs.create();
     return (
-      (s.v4n = Protocol_1.Aki.Protocol.v4n.create({
-        vkn: e,
-        M4n: t,
-        S4n: MathUtils_1.MathUtils.BigIntToLong(o),
+      (s.Z8n = Protocol_1.Aki.Protocol.Z8n.create({
+        X4n: e,
+        eVn: t,
+        tVn: MathUtils_1.MathUtils.BigIntToLong(o),
       })),
       this.SetCombatContext(o, s),
       o
     );
   }
   SetCombatContext(e, t) {
-    e && this.gyt.set(e, t);
+    e && this.DIt.set(e, t);
   }
   RemoveCombatContext(e) {
-    this.gyt.delete(e);
+    this.DIt.delete(e);
   }
   GetCombatContext(e) {
-    if (e) return this.gyt.get(e);
+    if (e) return this.DIt.get(e);
   }
   DebugCombatContext(e) {
     var t, o, s;
     e
-      ? (t = this.gyt.get(e))
-        ? t.pEs
-          ? ((o = t.pEs.zMs),
+      ? (t = this.DIt.get(e))
+        ? t.OLs
+          ? ((o = t.OLs.fTs),
             Log_1.Log.CheckDebug() &&
               Log_1.Log.Debug(
                 "Battle",
                 51,
                 "Buff Context",
                 ["BuffId", o],
-                ["ContextId", t.pEs.S4n],
+                ["ContextId", t.OLs.tVn],
               ))
-          : t.MEs
-            ? ((o = t.MEs.E4n),
+          : t.kLs
+            ? ((o = t.kLs.iVn),
               Log_1.Log.CheckDebug() &&
                 Log_1.Log.Debug(
                   "Battle",
                   51,
                   "Bullet Context",
-                  ["BulletId", o?.y4n],
-                  ["PlayerId", o?.aFn],
-                  ["ContextId", t.MEs.S4n],
+                  ["BulletId", o?.rVn],
+                  ["PlayerId", o?.q5n],
+                  ["ContextId", t.kLs.tVn],
                 ))
-            : t.v4n
-              ? ((o = t.v4n.vkn),
-                (s = t.v4n.M4n),
+            : t.Z8n
+              ? ((o = t.Z8n.X4n),
+                (s = t.Z8n.eVn),
                 Log_1.Log.CheckDebug() &&
                   Log_1.Log.Debug(
                     "Battle",
@@ -264,20 +269,20 @@ class CombatMessageModel extends ModelBase_1.ModelBase {
                     "Montage Context",
                     ["SkillId", o],
                     ["MontageId", s],
-                    ["ContextId", t.v4n.S4n],
+                    ["ContextId", t.Z8n.tVn],
                   ))
-              : t.vEs
-                ? ((o = t.vEs.vkn),
+              : t.GLs
+                ? ((o = t.GLs.X4n),
                   Log_1.Log.CheckDebug() &&
                     Log_1.Log.Debug(
                       "Battle",
                       51,
                       "Skill Context",
                       ["SkillId", o],
-                      ["ContextId", t.vEs.S4n],
+                      ["ContextId", t.GLs.tVn],
                     ))
-                : t.fEs
-                  ? ((s = t.fEs.ukn),
+                : t.qLs
+                  ? ((s = t.qLs.k4n),
                     Log_1.Log.CheckDebug() &&
                       Log_1.Log.Debug(
                         "Battle",

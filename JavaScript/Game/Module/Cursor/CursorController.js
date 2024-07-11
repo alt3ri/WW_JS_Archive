@@ -7,13 +7,12 @@ const UE = require("ue"),
   FNameUtil_1 = require("../../../Core/Utils/FNameUtil"),
   Global_1 = require("../../Global"),
   GlobalData_1 = require("../../GlobalData"),
-  ModelManager_1 = require("../../Manager/ModelManager"),
   UiControllerBase_1 = require("../../Ui/Base/UiControllerBase");
 class CursorController extends UiControllerBase_1.UiControllerBase {
   static Init() {
     return super.Init(), !0;
   }
-  static DOt(o) {
+  static Rkt(o) {
     var r = Global_1.Global.CharacterController;
     r && (r.CurrentMouseCursor = o ? 16 : 1);
   }
@@ -38,7 +37,7 @@ class CursorController extends UiControllerBase_1.UiControllerBase {
     if (
       (Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("UiCommon", 28, "SetWindowCursorStyle"),
-      ModelManager_1.ModelManager.PlatformModel.IsPc())
+      Info_1.Info.IsInKeyBoard())
     ) {
       let o = void 0,
         r = void 0,
@@ -65,6 +64,6 @@ class CursorController extends UiControllerBase_1.UiControllerBase {
   }
 }
 (exports.CursorController = CursorController).CursorEnterExit = (o) => {
-  CursorController.DOt(o);
+  CursorController.Rkt(o);
 };
 //# sourceMappingURL=CursorController.js.map

@@ -8,14 +8,14 @@ const EventDefine_1 = require("../../../../Common/Event/EventDefine"),
 class ShowUiBehaviorNode extends ChildQuestNodeBase_1.ChildQuestNodeBase {
   constructor() {
     super(...arguments),
-      (this.yXt = !1),
-      (this.IXt = void 0),
-      (this.TXt = !1),
-      (this.yze = () => {
-        this.yXt || this.SubmitNode();
+      (this.y$t = !1),
+      (this.I$t = void 0),
+      (this.T$t = !1),
+      (this.bZe = () => {
+        this.y$t || this.SubmitNode();
       }),
       (this.OnAfterSubmit = (e) => {
-        this.yXt = !1;
+        this.y$t = !1;
       });
   }
   get CorrelativeEntities() {}
@@ -23,38 +23,38 @@ class ShowUiBehaviorNode extends ChildQuestNodeBase_1.ChildQuestNodeBase {
     return (
       !!super.OnCreate(e) &&
       "ShowUi" === (e = e.Condition).Type &&
-      ((this.IXt = e.UiType), (this.TXt = e.KeepUiOpen), !0)
+      ((this.I$t = e.UiType), (this.T$t = e.KeepUiOpen), !0)
     );
   }
   OnDestroy() {
-    super.OnDestroy(), (this.IXt = void 0), (this.TXt = !1);
+    super.OnDestroy(), (this.I$t = void 0), (this.T$t = !1);
   }
   OnNodeActive() {
     super.OnNodeActive(),
-      this.TXt &&
-        "RogueAbilitySelect" === this.IXt.Type &&
+      this.T$t &&
+        "RogueAbilitySelect" === this.I$t.Type &&
         RoguelikeController_1.RoguelikeController.OpenBuffSelectViewByIdAsync(
-          this.IXt.BindId,
+          this.I$t.BindId,
         );
   }
   AddEventsOnChildQuestStart() {
     super.AddEventsOnChildQuestStart(),
-      "All" === this.IXt.Type &&
+      "All" === this.I$t.Type &&
         EventSystem_1.EventSystem.Add(
           EventDefine_1.EEventName.ActiveBattleView,
-          this.yze,
+          this.bZe,
         );
   }
   RemoveEventsOnChildQuestEnd() {
     super.RemoveEventsOnChildQuestEnd(),
-      "All" === this.IXt.Type &&
+      "All" === this.I$t.Type &&
         EventSystem_1.EventSystem.Remove(
           EventDefine_1.EEventName.ActiveBattleView,
-          this.yze,
+          this.bZe,
         );
   }
   OnBeforeSubmit() {
-    this.yXt = !0;
+    this.y$t = !0;
   }
 }
 exports.ShowUiBehaviorNode = ShowUiBehaviorNode;

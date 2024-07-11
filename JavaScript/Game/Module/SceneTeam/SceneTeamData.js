@@ -5,6 +5,8 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.SceneTeamRole =
       void 0);
 const Log_1 = require("../../../Core/Common/Log"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
   ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../Manager/ModelManager"),
   WaitEntityTask_1 = require("../../World/Define/WaitEntityTask");
@@ -16,148 +18,184 @@ class SceneTeamRole {
 exports.SceneTeamRole = SceneTeamRole;
 class SceneTeamPlayer {
   constructor() {
-    (this.j8 = 0), (this.Wyn = void 0), (this.Ffo = new Map());
+    (this.j8 = 0), (this.hTn = void 0), (this.Npo = new Map());
   }
-  static Create(t) {
-    var e = new SceneTeamPlayer();
-    return (e.j8 = t), e;
+  static Create(e) {
+    var t = new SceneTeamPlayer();
+    return (t.j8 = e), t;
   }
   Clear() {
-    this.Wyn = void 0;
-    for (const t of this.Ffo.values()) t.Clear();
-    this.Ffo.clear();
-  }
-  ResetServerGroupData() {
-    var t = [];
-    for (const e of this.Ffo.keys()) 0 <= e && t.push(e);
-    for (const r of t) this.Ffo.get(r)?.Clear(), this.Ffo.delete(r);
+    this.hTn = void 0;
+    for (const e of this.Npo.values()) e.Clear();
+    this.Npo.clear();
   }
   GetCurrentGroupType() {
-    return this.Wyn;
+    return this.hTn;
   }
   GetCurrentGroup() {
-    if (this.Wyn) return this.Ffo.get(this.Wyn);
+    if (this.hTn) return this.Npo.get(this.hTn);
+  }
+  GetGroup(e) {
+    return this.Npo.get(e);
   }
   GetGroupList() {
-    var t = [];
-    for (const e of this.Ffo.values()) t.push(e);
-    return t;
+    var e = [];
+    for (const t of this.Npo.values()) e.push(t);
+    return e;
   }
-  SwitchGroup(t) {
-    this.Wyn = t;
+  SwitchGroup(e) {
+    this.hTn = e;
   }
-  UpdateGroup(t, e, r, o = !1) {
-    let s = this.Ffo.get(t);
-    s || ((s = SceneTeamGroup.Create(this.j8, t)), this.Ffo.set(t, s)),
-      s.Update(e, r, o);
+  UpdateGroup(e, t, r, i, s, o) {
+    let n = this.Npo.get(e);
+    n || ((n = SceneTeamGroup.Create(this.j8, e)), this.Npo.set(e, n)),
+      n.Update(t, r, i, s, o);
+  }
+  RefreshEntityVisible() {
+    for (const e of this.Npo.values()) e.RefreshEntityVisible();
   }
 }
 exports.SceneTeamPlayer = SceneTeamPlayer;
 class SceneTeamGroup {
   constructor() {
     (this.j8 = 0),
-      (this.Vfo = 0),
-      (this.Kho = new Array()),
-      (this.Hfo = void 0),
+      (this.Opo = 0),
+      (this.Vlo = new Array()),
+      (this.kpo = void 0),
+      (this.IsFixedLocation = !1),
       (this.IsRetain = !1),
-      (this.Wfo = void 0);
+      (this.y7s = 0),
+      (this.Vpo = void 0);
   }
-  static Create(t, e) {
+  static Create(e, t) {
     var r = new SceneTeamGroup();
-    return (r.j8 = t), (r.Vfo = e), r;
+    return (r.j8 = e), (r.Opo = t), r;
   }
   Clear() {
-    (this.Vfo = 0),
-      this.Kho.splice(0, this.Kho.length),
+    (this.Opo = 0),
+      this.Vlo.splice(0, this.Vlo.length),
       (this.IsRetain = !1),
-      (this.Hfo = void 0),
-      (this.Wfo = void 0);
+      (this.y7s = 0),
+      (this.kpo = void 0),
+      (this.Vpo = void 0);
   }
   GetGroupType() {
-    return this.Vfo;
+    return this.Opo;
   }
   GetRoleList() {
-    var t = [];
-    for (const e of this.Kho) t.push(e);
-    return t;
+    var e = [];
+    for (const t of this.Vlo) e.push(t);
+    return e;
   }
   GetCurrentRole() {
-    return this.Hfo;
+    return this.kpo;
   }
-  SetCurrentRole(t) {
-    for (const e of this.Kho) e.CreatureDataId === t && (this.Hfo = e);
+  SetCurrentRole(e) {
+    for (const t of this.Vlo) t.CreatureDataId === e && (this.kpo = t);
   }
-  Update(t, e, i = !1) {
+  GetLivingState() {
+    return this.y7s;
+  }
+  UpdateLivingState(e) {
+    var t,
+      r = this.y7s;
+    r !== (this.y7s = e) &&
+      ((t =
+        this.j8 === ModelManager_1.ModelManager.CreatureModel.GetPlayerId()),
+      EventSystem_1.EventSystem.Emit(
+        EventDefine_1.EEventName.OnTeamLivingStateChange,
+        t,
+        this.Opo,
+        e,
+        r,
+      ));
+  }
+  Update(e, t, r, i, s) {
     if (
-      (this.Kho.splice(0, this.Kho.length),
-      (this.Hfo = void 0),
-      this.Wfo?.Cancel(),
-      (this.Wfo = void 0),
-      !(t.length <= 0))
+      (this.Vlo.splice(0, this.Vlo.length),
+      (this.kpo = void 0),
+      this.Vpo?.Cancel(),
+      (this.Vpo = void 0),
+      this.UpdateLivingState(r),
+      !(e.length <= 0))
     ) {
-      this.IsRetain = i;
-      var r = [];
-      const a = new Map();
-      for (const s of t) {
-        var o = s.CreatureDataId;
-        this.Kho.push(s),
-          s.RoleId === e && (this.Hfo = s),
-          0 < o && (r.push(o), a.set(o, s));
-      }
-      r.length <= 0 ||
-        (this.Wfo = WaitEntityTask_1.WaitEntityTask.Create(
-          r,
-          () => {
-            for (var [t, e] of a) {
-              var r,
-                o =
-                  ModelManager_1.ModelManager.CreatureModel.GetEntity(
-                    t,
-                  )?.Entity;
-              o
-                ? ((r = this.Kfo(e, o, i)),
-                  ControllerHolder_1.ControllerHolder.CreatureController.SetEntityEnable(
-                    o,
-                    r,
-                    "Formation UpdateGroup",
-                  ),
-                  e === this.Hfo || r || o.CheckGetComponent(81)?.SetTeamTag(2))
-                : Log_1.Log.CheckWarn() &&
-                  Log_1.Log.Warn(
-                    "Formation",
-                    49,
-                    "更新编队实体显隐时无法获取",
-                    ["CreatureDataId", t],
-                  );
-            }
-            var s;
-            i &&
-              (s = this.Hfo?.CreatureDataId) &&
-              ModelManager_1.ModelManager.CreatureModel.GetEntity(s)
-                ?.Entity?.GetComponent(81)
-                ?.OutOfControl();
-          },
-          !0,
-          -1,
-        ));
+      (this.IsFixedLocation = i), (this.IsRetain = s);
+      for (const o of e) this.Vlo.push(o), o.RoleId === t && (this.kpo = o);
     }
   }
-  Kfo(t, e, r) {
-    return (
-      !ModelManager_1.ModelManager.PlotModel.InSeamlessFormation &&
-      !(
-        !(e = e.GetComponent(15)) ||
-        e.IsDead() ||
-        (this.j8 !== ModelManager_1.ModelManager.PlayerInfoModel.GetId()
-          ? ((e = ModelManager_1.ModelManager.CreatureModel.GetScenePlayerData(
+  RefreshEntityVisible() {
+    const s = [];
+    for (const t of this.Vlo) {
+      var e = t.CreatureDataId;
+      0 < e && s.push(e);
+    }
+    s.length <= 0 ||
+      (this.Vpo = WaitEntityTask_1.WaitEntityTask.Create(
+        s,
+        () => {
+          for (const i of s) {
+            var e,
+              t =
+                ModelManager_1.ModelManager.CreatureModel.GetEntity(i)?.Entity;
+            t
+              ? ((e = this.Hpo(i, t)),
+                ControllerHolder_1.ControllerHolder.CreatureController.SetEntityEnable(
+                  t,
+                  e,
+                  "SceneTeamData.RefreshEntityVisible",
+                ),
+                t.Active || t?.CheckGetComponent(83).SetTeamTag(2))
+              : Log_1.Log.CheckWarn() &&
+                Log_1.Log.Warn("Formation", 49, "更新编队实体显隐时无法获取", [
+                  "CreatureDataId",
+                  i,
+                ]);
+          }
+          var r;
+          this.IsRetain &&
+            (r = this.kpo?.CreatureDataId) &&
+            ModelManager_1.ModelManager.CreatureModel.GetEntity(r)
+              ?.Entity?.GetComponent(83)
+              ?.OutOfControl();
+        },
+        !0,
+        -1,
+      ));
+  }
+  Hpo(e, t) {
+    if (!ModelManager_1.ModelManager.PlotModel.InSeamlessFormation) {
+      t = t.GetComponent(15);
+      if (t && !t.IsDead()) {
+        if (this.j8 !== ModelManager_1.ModelManager.PlayerInfoModel.GetId()) {
+          const r =
+            ModelManager_1.ModelManager.CreatureModel.GetScenePlayerData(
               this.j8,
-            )?.IsRemoteSceneLoading()),
-            t !== this.Hfo || e)
-          : t.CreatureDataId !==
-              ModelManager_1.ModelManager.SceneTeamModel?.GetCurrentTeamItem?.GetCreatureDataId() &&
-            (!r || t !== this.Hfo))
-      )
-    );
+            );
+          t = r?.IsRemoteSceneLoading();
+          return e === this.kpo?.CreatureDataId && !t;
+        }
+        const r = ModelManager_1.ModelManager.SceneTeamModel?.GetTeamPlayerData(
+          this.j8,
+        );
+        if (r) {
+          if (e === r.GetCurrentGroup()?.GetCurrentRole()?.CreatureDataId)
+            return !0;
+          if (
+            e ===
+            ModelManager_1.ModelManager.SceneTeamModel?.GetCurrentTeamItem?.GetCreatureDataId()
+          )
+            return !0;
+          for (const i of r.GetGroupList())
+            if (i.IsRetain && e === i.kpo?.CreatureDataId) return !0;
+        } else
+          Log_1.Log.CheckWarn() &&
+            Log_1.Log.Warn("SceneTeam", 49, "更新实体显隐时不存在玩家", [
+              "PlayerId",
+              this.j8,
+            ]);
+      }
+    }
+    return !1;
   }
 }
 exports.SceneTeamGroup = SceneTeamGroup;

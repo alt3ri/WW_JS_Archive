@@ -21,7 +21,7 @@ class LevelAiTaskSetItemCollision extends LevelAiTask_1.LevelAiTask {
       (r =
         t &&
         (t = ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(t))
-          ? t.Entity.GetComponent(182)
+          ? t.Entity.GetComponent(185)
           : e)
     ) {
       var t = (0, puerts_1.$ref)(void 0),
@@ -39,14 +39,14 @@ class LevelAiTaskSetItemCollision extends LevelAiTask_1.LevelAiTask {
   }
   VTe() {
     var e,
-      s = this.ItemEntity.Entity.GetComponent(182);
+      s = this.ItemEntity.Entity.GetComponent(185);
     s &&
       ((e = this.CreatureDataComponent.Entity.GetComponent(2)),
       this.HTe(s, !1),
       e.Actor.CapsuleComponent.SetCollisionResponseToChannel(2, 2));
   }
   FTe() {
-    var e = this.ItemEntity.Entity.GetComponent(182);
+    var e = this.ItemEntity.Entity.GetComponent(185);
     e &&
       (this.HTe(e, !0),
       this.CreatureDataComponent.Entity.GetComponent(

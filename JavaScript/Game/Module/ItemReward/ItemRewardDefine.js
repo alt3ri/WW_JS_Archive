@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
-  (exports.BOSS_RUSH_FAIL =
+  (exports.TRACK_MOON_PHASE_REWARD =
+    exports.BOSS_RUSH_FAIL =
     exports.BOSS_RUSH_SUCCESS =
     exports.ROLE_TRIAL_ERROR_RESULT =
     exports.MOWING_ERROR_RESULT =
@@ -38,5 +39,6 @@ class ReachTargetData {
   (exports.MOWING_ERROR_RESULT = 3012),
   (exports.ROLE_TRIAL_ERROR_RESULT = 3014),
   (exports.BOSS_RUSH_SUCCESS = 3016),
-  (exports.BOSS_RUSH_FAIL = 3015);
+  (exports.BOSS_RUSH_FAIL = 3015),
+  (exports.TRACK_MOON_PHASE_REWARD = 25001);
 //# sourceMappingURL=ItemRewardDefine.js.map

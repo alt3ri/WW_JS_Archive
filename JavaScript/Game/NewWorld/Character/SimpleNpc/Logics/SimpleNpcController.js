@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SimpleNpcController = void 0);
-const Log_1 = require("../../../../../Core/Common/Log"),
+const Info_1 = require("../../../../../Core/Common/Info"),
+  Log_1 = require("../../../../../Core/Common/Log"),
   ControllerBase_1 = require("../../../../../Core/Framework/ControllerBase"),
   Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
   MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
@@ -18,8 +19,8 @@ const Log_1 = require("../../../../../Core/Common/Log"),
   DITHER_MIN = 0,
   MILLISECOND_TO_SECOND = 0.001;
 class SimpleNpcController extends ControllerBase_1.ControllerBase {
-  static get wtr() {
-    return 0 < this.Btr.size;
+  static get wir() {
+    return 0 < this.Bir.size;
   }
   static OnInit() {
     return (
@@ -35,7 +36,7 @@ class SimpleNpcController extends ControllerBase_1.ControllerBase {
   static OnAddEvents() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnReceivePlayerVar,
-      SimpleNpcController.btr,
+      SimpleNpcController.bir,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.WeatherChange,
@@ -43,7 +44,7 @@ class SimpleNpcController extends ControllerBase_1.ControllerBase {
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.SetImageQuality,
-        SimpleNpcController.qtr,
+        SimpleNpcController.qir,
       );
   }
   static OnRemoveEvents() {
@@ -53,105 +54,105 @@ class SimpleNpcController extends ControllerBase_1.ControllerBase {
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.SetImageQuality,
-        SimpleNpcController.qtr,
+        SimpleNpcController.qir,
       );
   }
   static OnLeaveLevel() {
     return (
-      this.Gtr.clear(), this.Ntr.clear(), this.Otr.clear(), this.ktr.clear(), !0
+      this.Gir.clear(), this.Nir.clear(), this.Oir.clear(), this.kir.clear(), !0
     );
   }
   static Add(t) {
-    this.Gtr.add(t);
+    this.Gir.add(t);
     var e = Global_1.Global.BaseCharacter;
-    e && this.Ftr(t, e.CharacterActorComponent.ActorLocationProxy, !1),
+    e && this.Fir(t, e.CharacterActorComponent.ActorLocationProxy, !1),
       this.CheckNpcShowState(t, !0),
-      this.Vtr(t);
+      this.Vir(t);
   }
   static Remove(t) {
-    this.Gtr.delete(t),
-      this.Ntr.delete(t),
-      this.Otr.delete(t),
-      this.ktr.delete(t);
+    this.Gir.delete(t),
+      this.Nir.delete(t),
+      this.Oir.delete(t),
+      this.kir.delete(t);
   }
   static SetClearOutState(t, e) {
     let i = !1;
     if (
-      (e && !this.Btr.has(t)
-        ? (this.Btr.add(t), (i = !0))
-        : !e && this.Btr.has(t) && (this.Btr.delete(t), (i = !0)),
+      (e && !this.Bir.has(t)
+        ? (this.Bir.add(t), (i = !0))
+        : !e && this.Bir.has(t) && (this.Bir.delete(t), (i = !0)),
       i)
     )
-      for (const r of this.Ntr)
-        this.CheckNpcShowState(r, !0, !1), r.ChangeLogicRangeState(!1);
+      for (const o of this.Nir)
+        this.CheckNpcShowState(o, !0, !1), o.ChangeLogicRangeState(!1);
   }
   static OnTick(t) {
-    this.Htr(t), this.jtr(t);
+    this.Hir(t), this.jir(t);
   }
   static GetSimpleNpcListByRange(t) {
     var e = new Array(),
       i = Global_1.Global.BaseCharacter;
     if (i) {
-      var r = t * t,
-        o = i.CharacterActorComponent.ActorLocationProxy;
-      for (const a of this.Gtr) {
-        var s = a.SelfLocationProxy;
-        r < Vector_1.Vector.DistSquared(o, s) || e.push(a);
+      var o = t * t,
+        r = i.CharacterActorComponent.ActorLocationProxy;
+      for (const n of this.Gir) {
+        var s = n.SelfLocationProxy;
+        o < Vector_1.Vector.DistSquared(r, s) || e.push(n);
       }
     }
     return e;
   }
-  static Wtr() {
-    ModelManager_1.ModelManager.PlatformModel.IsPc()
-      ? (this.Ktr = PC_CHECK_RANGE_SQUARED)
-      : (this.Ktr = MOBILE_CHECK_RANGE_SQUARED),
-      this.Qtr();
+  static Wir() {
+    Info_1.Info.IsPcOrGamepadPlatform()
+      ? (this.Kir = PC_CHECK_RANGE_SQUARED)
+      : (this.Kir = MOBILE_CHECK_RANGE_SQUARED),
+      this.Qir();
   }
   static UpdateDistanceLogic() {
     var t = Global_1.Global.BaseCharacter;
     if (t) {
-      this.gU || (this.Wtr(), (this.gU = !0));
+      this.gU || (this.Wir(), (this.gU = !0));
       var e = t.CharacterActorComponent.ActorLocationProxy;
-      for (const i of this.Gtr) this.Ftr(i, e);
+      for (const i of this.Gir) this.Fir(i, e);
     }
   }
-  static Ftr(t, e, i = !0) {
-    var r;
+  static Fir(t, e, i = !0) {
+    var o;
     t.IsNotUnload &&
-      ((r = t.SelfLocationProxy),
-      (e = Vector_1.Vector.DistSquared(e, r)) > this.Ktr
-        ? this.Xtr(t, !1, i)
-        : this.Xtr(t, !0, i),
+      ((o = t.SelfLocationProxy),
+      (e = Vector_1.Vector.DistSquared(e, o)) > this.Kir
+        ? this.Xir(t, !1, i)
+        : this.Xir(t, !0, i),
       (t.TempDistanceSquared = e));
   }
-  static Xtr(t, e, i = !0) {
-    var r = t.IsInLogicRange;
+  static Xir(t, e, i = !0) {
+    var o = t.IsInLogicRange;
     t.ChangeLogicRangeState(e),
-      r !== e &&
+      o !== e &&
         (t.SetTickEnabled(e),
         t.SetMainShadowEnabled(e),
-        !r && e
-          ? (this.Ntr.add(t), i && this.CheckNpcShowState(t, !1))
-          : r && !e && this.Ntr.delete(t));
+        !o && e
+          ? (this.Nir.add(t), i && this.CheckNpcShowState(t, !1))
+          : o && !e && this.Nir.delete(t));
   }
-  static $tr(t) {
+  static $ir(t) {
     (t.CurDither = DITHER_MIN),
       (t.IsNotUnload = !0),
       t.SetDitherEffect(DITHER_MIN, 1),
-      this.Otr.add(t),
-      this.ktr.delete(t);
+      this.Oir.add(t),
+      this.kir.delete(t);
   }
-  static Ytr(t) {
+  static Yir(t) {
     (t.CurDither = DITHER_MAX),
       (t.IsNotUnload = !1),
       t.SetDitherEffect(DITHER_MAX, 1),
-      this.ktr.add(t),
-      this.Otr.delete(t);
+      this.kir.add(t),
+      this.Oir.delete(t);
   }
-  static Htr(e) {
-    if (!(this.Otr.size <= 0)) {
+  static Hir(e) {
+    if (!(this.Oir.size <= 0)) {
       let t = void 0;
-      for (const i of this.Otr)
+      for (const i of this.Oir)
         (i.CurDither += DITHER_STEP * e * MILLISECOND_TO_SECOND),
           (i.CurDither = MathUtils_1.MathUtils.Clamp(
             i.CurDither,
@@ -161,13 +162,13 @@ class SimpleNpcController extends ControllerBase_1.ControllerBase {
           i.SetDitherEffect(i.CurDither, 1),
           MathUtils_1.MathUtils.IsNearlyEqual(i.CurDither, DITHER_MAX) &&
             (t = void 0 === t ? [] : t).push(i);
-      if (void 0 !== t) for (const r of t) this.Otr.delete(r);
+      if (void 0 !== t) for (const o of t) this.Oir.delete(o);
     }
   }
-  static jtr(e) {
-    if (!(this.ktr.size <= 0)) {
+  static jir(e) {
+    if (!(this.kir.size <= 0)) {
       let t = void 0;
-      for (const i of this.ktr)
+      for (const i of this.kir)
         (i.CurDither -= DITHER_STEP * e * MILLISECOND_TO_SECOND),
           (i.CurDither = MathUtils_1.MathUtils.Clamp(
             i.CurDither,
@@ -177,30 +178,30 @@ class SimpleNpcController extends ControllerBase_1.ControllerBase {
           i.SetDitherEffect(i.CurDither, 1),
           MathUtils_1.MathUtils.IsNearlyEqual(i.CurDither, DITHER_MIN) &&
             (t = void 0 === t ? [] : t).push(i);
-      if (void 0 !== t) for (const r of t) this.ktr.delete(r);
+      if (void 0 !== t) for (const o of t) this.kir.delete(o);
     }
   }
-  static Jtr(t, e) {
+  static Jir(t, e) {
     (t.CurDither = e ? DITHER_MAX : DITHER_MIN),
       (t.IsNotUnload = e),
       t.SetDitherEffect(t.CurDither, 1),
-      this.Otr.delete(t),
-      this.ktr.delete(t);
+      this.Oir.delete(t),
+      this.kir.delete(t);
   }
   static CheckNpcShowState(t, e, i = !0) {
-    var r = !this.wtr && this.ztr(t);
-    (r && !t.IsLodShow) ||
+    var o = !this.wir && this.zir(t);
+    (o && !t.IsLodShow) ||
       (i
         ? e
-          ? r
-            ? this.$tr(t)
-            : this.Jtr(t, r)
-          : t.IsNotUnload && !r
-            ? this.Ytr(t)
-            : !t.IsNotUnload && r && this.$tr(t)
-        : this.Jtr(t, r));
+          ? o
+            ? this.$ir(t)
+            : this.Jir(t, o)
+          : t.IsNotUnload && !o
+            ? this.Yir(t)
+            : !t.IsNotUnload && o && this.$ir(t)
+        : this.Jir(t, o));
   }
-  static ztr(t) {
+  static zir(t) {
     var e = ModelManager_1.ModelManager.WeatherModel;
     if (!e) return !0;
     let i = !0;
@@ -222,36 +223,36 @@ class SimpleNpcController extends ControllerBase_1.ControllerBase {
     }
     return i;
   }
-  static Ztr() {
-    for (const t of this.Gtr)
+  static Zir() {
+    for (const t of this.Gir)
       t.FilterFlowWorldState(
         ModelManager_1.ModelManager.WorldModel.WorldStateMap,
       );
   }
-  static Qtr() {
-    for (const t of this.Gtr) this.Vtr(t);
+  static Qir() {
+    for (const t of this.Gir) this.Vir(t);
   }
-  static Vtr(t) {
+  static Vir(t) {
     t.IsLodShow
-      ? t.IsNotUnload || this.$tr(t)
-      : t.IsNotUnload && (this.Ytr(t), t.ChangeLogicRangeState(!1));
+      ? t.IsNotUnload || this.$ir(t)
+      : t.IsNotUnload && (this.Yir(t), t.ChangeLogicRangeState(!1));
   }
 }
-((exports.SimpleNpcController = SimpleNpcController).Gtr = new Set()),
-  (SimpleNpcController.Ntr = new Set()),
-  (SimpleNpcController.Otr = new Set()),
-  (SimpleNpcController.ktr = new Set()),
-  (SimpleNpcController.Btr = new Set()),
-  (SimpleNpcController.Ktr = 0),
+((exports.SimpleNpcController = SimpleNpcController).Gir = new Set()),
+  (SimpleNpcController.Nir = new Set()),
+  (SimpleNpcController.Oir = new Set()),
+  (SimpleNpcController.kir = new Set()),
+  (SimpleNpcController.Bir = new Set()),
+  (SimpleNpcController.Kir = 0),
   (SimpleNpcController.gU = !1),
   (SimpleNpcController.dIe = () => {
-    for (const t of SimpleNpcController.Ntr)
+    for (const t of SimpleNpcController.Nir)
       SimpleNpcController.CheckNpcShowState(t, !1);
   }),
-  (SimpleNpcController.btr = () => {
-    SimpleNpcController.Ztr();
+  (SimpleNpcController.bir = () => {
+    SimpleNpcController.Zir();
   }),
-  (SimpleNpcController.qtr = () => {
-    SimpleNpcController.Qtr();
+  (SimpleNpcController.qir = () => {
+    SimpleNpcController.Qir();
   });
 //# sourceMappingURL=SimpleNpcController.js.map

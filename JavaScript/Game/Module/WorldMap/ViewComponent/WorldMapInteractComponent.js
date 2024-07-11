@@ -22,105 +22,105 @@ const UE = require("ue"),
 class WorldMapInteractComponent extends WorldMapComponentBase_1.WorldMapComponentBase {
   constructor(t, e) {
     super(t),
-      (this.T2o = !1),
-      (this.L2o = !1),
-      (this.D2o = -0),
-      (this.R2o = !1),
-      (this.U2o = !1),
-      (this.A2o = !1),
-      (this.P2o = ""),
-      (this.x2o = Vector2D_1.Vector2D.Create()),
-      (this.w2o = void 0),
-      (this.B2o = void 0),
-      (this.b2o = -0),
-      (this.q2o = void 0),
-      (this.G2o = void 0),
-      (this.FCo = (t) => {
-        (this.T2o = !1),
+      (this.SFo = !1),
+      (this.yFo = !1),
+      (this.IFo = -0),
+      (this.TFo = !1),
+      (this.LFo = !1),
+      (this.DFo = !1),
+      (this.RFo = ""),
+      (this.UFo = Vector2D_1.Vector2D.Create()),
+      (this.AFo = void 0),
+      (this.PFo = void 0),
+      (this.xFo = -0),
+      (this.wFo = void 0),
+      (this.BFo = void 0),
+      (this.Ngo = (t) => {
+        (this.SFo = !1),
           t &&
             !this.IsMultiFingerControl &&
-            this.N2o(t.pointerPosition) &&
-            ((t = this.O2o(t.pointerPosition.X, t.pointerPosition.Y)),
-            this.w2o.DeepCopy(t),
-            (this.b2o = Time_1.Time.NowSeconds),
+            this.bFo(t.pointerPosition) &&
+            ((t = this.qFo(t.pointerPosition.X, t.pointerPosition.Y)),
+            this.AFo.DeepCopy(t),
+            (this.xFo = Time_1.Time.NowSeconds),
             EventSystem_1.EventSystem.Emit(
               EventDefine_1.EEventName.WorldMapPointerDown,
             ));
       }),
-      (this.aWe = (t) => {
+      (this.vKe = (t) => {
         var e;
-        !t || this.IsMultiFingerControl || 1 < this.q2o.size
-          ? ((this.T2o = !1), this.B2o.Reset())
-          : ((this.T2o = !0),
-            (t = this.O2o(t.pointerPosition.X, t.pointerPosition.Y)),
+        !t || this.IsMultiFingerControl || 1 < this.wFo.size
+          ? ((this.SFo = !1), this.PFo.Reset())
+          : ((this.SFo = !0),
+            (t = this.qFo(t.pointerPosition.X, t.pointerPosition.Y)),
             (0 ===
               (e = Vector2D_1.Vector2D.Create(t.X, t.Y).SubtractionEqual(
-                this.w2o,
+                this.AFo,
               )).X &&
               0 === e.Y) ||
-              (this.B2o.DeepCopy(e),
-              this.w2o.DeepCopy(t),
+              (this.PFo.DeepCopy(e),
+              this.AFo.DeepCopy(t),
               EventSystem_1.EventSystem.Emit(
                 EventDefine_1.EEventName.WorldMapPointerDrag,
-                this.B2o,
+                this.PFo,
               )));
       }),
-      (this.k2o = (t) => {
+      (this.GFo = (t) => {
         var e = Time_1.Time.NowSeconds;
-        this.IsMultiFingerControl || e - this.D2o < MULTI_TOUCH_DELAY_TIME
+        this.IsMultiFingerControl || e - this.IFo < MULTI_TOUCH_DELAY_TIME
           ? Log_1.Log.CheckInfo() &&
             Log_1.Log.Info("Map", 19, "正在进行双指缩放")
-          : this.N2o(t.pointerPosition)
-            ? this.T2o
-              ? ((this.T2o = !1), this.F2o())
+          : this.bFo(t.pointerPosition)
+            ? this.SFo
+              ? ((this.SFo = !1), this.NFo())
               : EventSystem_1.EventSystem.Emit(
                   EventDefine_1.EEventName.WorldMapPointerUp,
                   t,
                 )
-            : (this.T2o = !1);
+            : (this.SFo = !1);
       }),
-      (this.pbt = (t, e) => {
+      (this.Eqt = (t, e) => {
         var i = e.TouchType,
           s = Number(t);
         switch (i) {
           case 0:
-            this.hCt(!0, s, e);
+            this.Mgt(!0, s, e);
             break;
           case 1:
-            this.hCt(!1, s);
+            this.Mgt(!1, s);
         }
       }),
-      (this.V2o = (t) => {
+      (this.OFo = (t) => {
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.WorldMapWheelAxisInput,
           t.scrollAxisValue * SCALE_STEP,
           5,
         );
       }),
-      (this.H2o = (t) => {
+      (this.kFo = (t) => {
         t
-          ? ((this.U2o = !0),
-            (this.A2o = !1),
+          ? ((this.LFo = !0),
+            (this.DFo = !1),
             EventSystem_1.EventSystem.Emit(
               EventDefine_1.EEventName.WorldMapJoystickMoveForward,
-              -this.G2o.GamePadMoveSpeed * t,
+              -this.BFo.GamePadMoveSpeed * t,
             ))
-          : (this.U2o = !1);
+          : (this.LFo = !1);
       }),
-      (this.j2o = (t) => {
+      (this.FFo = (t) => {
         t
-          ? ((this.R2o = !0),
-            (this.A2o = !1),
+          ? ((this.TFo = !0),
+            (this.DFo = !1),
             EventSystem_1.EventSystem.Emit(
               EventDefine_1.EEventName.WorldMapJoystickMoveRight,
-              -this.G2o.GamePadMoveSpeed * t,
+              -this.BFo.GamePadMoveSpeed * t,
             ))
-          : (this.R2o = !1);
+          : (this.TFo = !1);
       }),
-      (this.W2o = (t, e) => {
+      (this.VFo = (t, e) => {
         0 === e
-          ? this.P2o === t && (this.P2o = "")
-          : ((this.P2o = t),
+          ? this.RFo === t && (this.RFo = "")
+          : ((this.RFo = t),
             EventSystem_1.EventSystem.Emit(
               EventDefine_1.EEventName.WorldMapHandleTriggerAxisInput,
               SCALE_STEP * e,
@@ -131,41 +131,41 @@ class WorldMapInteractComponent extends WorldMapComponentBase_1.WorldMapComponen
       .GetRootActor()
       .GetComponentByClass(UE.UIDraggableComponent.StaticClass());
     ObjectUtils_1.ObjectUtils.IsValid(t) &&
-      ((this.q2o = new Map()),
-      t.OnPointerDownCallBack.Bind(this.FCo),
-      t.OnPointerDragCallBack.Bind(this.aWe),
-      t.OnPointerUpCallBack.Bind(this.k2o),
-      t.OnPointerScrollCallBack.Bind(this.V2o),
-      (this.B2o = Vector2D_1.Vector2D.Create()),
-      (this.w2o = Vector2D_1.Vector2D.Create()),
-      (this.G2o = e));
+      ((this.wFo = new Map()),
+      t.OnPointerDownCallBack.Bind(this.Ngo),
+      t.OnPointerDragCallBack.Bind(this.vKe),
+      t.OnPointerUpCallBack.Bind(this.GFo),
+      t.OnPointerScrollCallBack.Bind(this.OFo),
+      (this.PFo = Vector2D_1.Vector2D.Create()),
+      (this.AFo = Vector2D_1.Vector2D.Create()),
+      (this.BFo = e));
   }
   get IsJoystickMoving() {
-    return this.R2o || this.U2o;
+    return this.TFo || this.LFo;
   }
   get IsJoystickFocus() {
-    return this.A2o;
+    return this.DFo;
   }
   SetJoystickFocus(t) {
-    this.A2o = t;
+    this.DFo = t;
   }
   get IsJoystickZoom() {
-    return "" !== this.P2o;
+    return "" !== this.RFo;
   }
   get MultiTouchOriginCenter() {
-    return this.x2o;
+    return this.UFo;
   }
   get IsDragging() {
-    return this.T2o;
+    return this.SFo;
   }
   get IsMultiFingerControl() {
-    return this.L2o;
+    return this.yFo;
   }
   set IsMultiFingerControl(t) {
-    t === this.L2o ||
-      (!t && 0 < this.q2o.size) ||
-      ((this.L2o = t), this.L2o) ||
-      (this.D2o = Time_1.Time.NowSeconds);
+    t === this.yFo ||
+      (!t && 0 < this.wFo.size) ||
+      ((this.yFo = t), this.yFo) ||
+      (this.IFo = Time_1.Time.NowSeconds);
   }
   AddEventListener() {
     InputDistributeController_1.InputDistributeController.BindTouches(
@@ -173,19 +173,19 @@ class WorldMapInteractComponent extends WorldMapComponentBase_1.WorldMapComponen
         InputMappingsDefine_1.touchIdMappings.Touch1,
         InputMappingsDefine_1.touchIdMappings.Touch2,
       ],
-      this.pbt,
+      this.Eqt,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.NavigationTriggerMapForward,
-        this.H2o,
+        this.kFo,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.NavigationTriggerMapRight,
-        this.j2o,
+        this.FFo,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.NavigationTriggerMapZoom,
-        this.W2o,
+        this.VFo,
       );
   }
   RemoveEventListener() {
@@ -194,27 +194,27 @@ class WorldMapInteractComponent extends WorldMapComponentBase_1.WorldMapComponen
         InputMappingsDefine_1.touchIdMappings.Touch1,
         InputMappingsDefine_1.touchIdMappings.Touch2,
       ],
-      this.pbt,
+      this.Eqt,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.NavigationTriggerMapForward,
-        this.H2o,
+        this.kFo,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.NavigationTriggerMapRight,
-        this.j2o,
+        this.FFo,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.NavigationTriggerMapZoom,
-        this.W2o,
+        this.VFo,
       );
   }
   OnDestroy() {
-    super.OnDestroy(), (this.w2o = void 0), (this.B2o = void 0);
+    super.OnDestroy(), (this.AFo = void 0), (this.PFo = void 0);
   }
   CheckTouch() {
-    var t = this.q2o.get(TouchFingerDefine_1.EFingerIndex.One),
-      e = this.q2o.get(TouchFingerDefine_1.EFingerIndex.Two);
+    var t = this.wFo.get(TouchFingerDefine_1.EFingerIndex.One),
+      e = this.wFo.get(TouchFingerDefine_1.EFingerIndex.Two);
     if (
       ((this.IsMultiFingerControl = void 0 !== t && void 0 !== e),
       this.IsMultiFingerControl)
@@ -235,40 +235,40 @@ class WorldMapInteractComponent extends WorldMapComponentBase_1.WorldMapComponen
       }
     }
   }
-  F2o() {
-    if (0 !== this.B2o.X || 0 !== this.B2o.Y) {
-      var e = Time_1.Time.NowSeconds - this.b2o;
-      let t = ((2 * this.B2o.Size()) / (e * e)) * e;
+  NFo() {
+    if (0 !== this.PFo.X || 0 !== this.PFo.Y) {
+      var e = Time_1.Time.NowSeconds - this.xFo;
+      let t = ((2 * this.PFo.Size()) / (e * e)) * e;
       var e = WorldMapUtil_1.WorldMapUtil.GetViewportSizeByPool(),
         e =
           (e.IsNearlyZero() ||
             (t = MathCommon_1.MathCommon.Clamp(t, 0, e.Size())),
-          this.B2o.Normalize(0));
+          this.PFo.Normalize(0));
       e &&
         ((e = Vector2D_1.Vector2D.Create()),
-        this.B2o.Multiply(t, e),
+        this.PFo.Multiply(t, e),
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.WorldMapDragInertia,
           e,
         )),
-        this.B2o.Reset();
+        this.PFo.Reset();
     }
   }
-  hCt(t, e, i) {
+  Mgt(t, e, i) {
     t
       ? LguiEventSystemManager_1.LguiEventSystemManager.IsPressComponentIsValid(
           e,
-        ) && this.q2o.set(e, i)
-      : this.q2o.delete(e),
-      this.x2o.Reset(),
-      this.q2o.forEach((t) => {
+        ) && this.wFo.set(e, i)
+      : this.wFo.delete(e),
+      this.UFo.Reset(),
+      this.wFo.forEach((t) => {
         t = Vector2D_1.Vector2D.Create(t.TouchPosition.X, t.TouchPosition.Y);
-        this.x2o.AdditionEqual(t);
+        this.UFo.AdditionEqual(t);
       }),
-      0 < this.q2o.size && this.x2o.DivisionEqual(this.q2o.size);
+      0 < this.wFo.size && this.UFo.DivisionEqual(this.wFo.size);
   }
-  N2o(t) {
-    t = this.O2o(t.X, t.Y);
+  bFo(t) {
+    t = this.qFo(t.X, t.Y);
     return !(
       t.X < 0 ||
       t.X > this.ViewportSize.X ||
@@ -276,7 +276,7 @@ class WorldMapInteractComponent extends WorldMapComponentBase_1.WorldMapComponen
       t.Y > this.ViewportSize.Y
     );
   }
-  O2o(t, e) {
+  qFo(t, e) {
     t = Vector2D_1.Vector2D.Create(t, e);
     return (
       t.FromUeVector2D(

@@ -24,11 +24,11 @@ function packageToString(t) {
       (t[(t.Connected = 2)] = "Connected");
   })((EConnectStatus = EConnectStatus || {}));
 class Stcp {
-  constructor(t, e, i, s) {
+  constructor(t, e, s, i) {
     (this.Name = t),
-      (this.uOn = e),
-      (this.x5 = i),
-      (this.IsServer = s),
+      (this.Jkn = e),
+      (this.x5 = s),
+      (this.IsServer = i),
       (this.S5 = []),
       (this.W3 = []),
       (this.E5 = 0),
@@ -39,7 +39,7 @@ class Stcp {
       (this.w5 = EConnectStatus.Disconnected),
       (this.M5 = 0),
       (this.Verbose = !1),
-      s || (this.M5 = Stcp.F5());
+      i || (this.M5 = Stcp.F5());
   }
   static F5() {
     return Stcp.P5++, Stcp.P5;
@@ -61,19 +61,19 @@ class Stcp {
     this.IsServer ||
       (0 !== this.S5.length &&
         ((t = { Type: EPackage.Connect, ConnectId: this.M5 }),
-        this.uOn.Send(t),
+        this.Jkn.Send(t),
         (this.w5 = EConnectStatus.Connecting)));
   }
   k5() {
     var t;
     this.IsServer ||
-      ((t = { Type: EPackage.Connect, ConnectId: this.M5 }), this.uOn.Send(t));
+      ((t = { Type: EPackage.Connect, ConnectId: this.M5 }), this.Jkn.Send(t));
   }
   b5() {
     var t;
     (0 === this.S5.length && !this.L5) ||
       ((t = this.O5()),
-      this.uOn.Send(t),
+      this.Jkn.Send(t),
       0 === this.S5.length && (this.L5 = !1),
       this.A5(this.Name + " send " + packageToString(t)));
   }
@@ -99,7 +99,7 @@ class Stcp {
   }
   U5(t) {
     t = { Type: EPackage.ConnectAck, ConnectId: t };
-    this.uOn.Send(t);
+    this.Jkn.Send(t);
   }
   B5(t) {
     if (t.Type !== EPackage.Message)
@@ -164,7 +164,7 @@ class Stcp {
   }
   X5() {
     if (this.W3.length >= Stcp.MaxSeqId) return !1;
-    var t = this.uOn.Recv();
+    var t = this.Jkn.Recv();
     if (!t) return !1;
     if (0 < this.N5) this.N5--;
     else
@@ -191,14 +191,14 @@ class Stcp {
   }
   async RecvAsync(n = -1) {
     return new Promise((e, t) => {
-      let i = void 0;
-      const s = setInterval(() => {
+      let s = void 0;
+      const i = setInterval(() => {
         var t = this.W3.shift();
-        t?.Payload && (i && clearTimeout(i), clearInterval(s), e(t.Payload));
+        t?.Payload && (s && clearTimeout(s), clearInterval(i), e(t.Payload));
       }, 1);
       0 <= n &&
-        (i = setTimeout(() => {
-          clearInterval(s), e(void 0);
+        (s = setTimeout(() => {
+          clearInterval(i), e(void 0);
         }, n));
     });
   }
@@ -216,45 +216,45 @@ class Stcp {
   (Stcp.MaxSeqId = 256),
   (Stcp.P5 = 0);
 class RpcServer {
-  constructor(t, e, i) {
-    (this.G3 = t), (this.Y5 = e), (this.x5 = i);
+  constructor(t, e, s) {
+    (this.G3 = t), (this.Y5 = e), (this.x5 = s);
   }
   Update() {
     var e = this.G3.Recv();
     if (e) {
-      const s = e;
-      e = this.Y5[s.Name];
+      const i = e;
+      e = this.Y5[i.Name];
       if (e) {
         var t,
-          i = void 0;
+          s = void 0;
         try {
-          (i = e(...s.Args)) instanceof Promise
-            ? i
+          (s = e(...i.Args)) instanceof Promise
+            ? s
                 .then((t) => {
-                  t = { Id: s.Id, Result: t };
+                  t = { Id: i.Id, Result: t };
                   this.G3.Send(t);
                 })
                 .catch((t) => {
                   t = {
-                    Id: s.Id,
+                    Id: i.Id,
                     Result: void 0,
                     Error: t.message + " " + t.stack,
                   };
                   this.G3.Send(t);
                 })
-            : ((t = { Id: s.Id, Result: i }), this.G3.Send(t));
+            : ((t = { Id: i.Id, Result: s }), this.G3.Send(t));
         } catch (t) {
-          e = { Id: s.Id, Result: void 0, Error: t.message + " " + t.stack };
+          e = { Id: i.Id, Result: void 0, Error: t.message + " " + t.stack };
           this.G3.Send(e);
         }
       } else
-        this.x5.Error(`RpcServer: function ${s.Name} not found`),
-          (i = {
-            Id: s.Id,
+        this.x5.Error(`RpcServer: function ${i.Name} not found`),
+          (s = {
+            Id: i.Id,
             Result: void 0,
-            Error: `RpcServer: function ${s.Name} not found`,
+            Error: `RpcServer: function ${i.Name} not found`,
           }),
-          this.G3.Send(i);
+          this.G3.Send(s);
     }
   }
   Start() {
@@ -280,7 +280,7 @@ const gameRpcServiceConfig = {
     RemoveBuffFromPlayer: (t) => {},
     PlayerHasBuff: (t) => !1,
     MoveTo: async (t, e) => {},
-    FaceTo: async (t, e, i) => {},
+    FaceTo: async (t, e, s) => {},
     NormalAttack: () => {},
     UseRoleSkill: () => {},
     UsePhantomSkill: () => {},
@@ -312,6 +312,9 @@ const gameRpcServiceConfig = {
     GetEntityRotation: (t) => {},
     GetRuntimeActorName: (t) => "",
     IsRuntimeActorVisible: (t) => !1,
+    CreateOrUpdateTipsActor: (t, e, s) => {},
+    DestroyTipsActor: (t) => {},
+    GetTipsActorTransform: (t) => {},
   },
   unitTestRpcServiceConfig = {
     Add: (t, e) => 0,

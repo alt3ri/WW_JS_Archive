@@ -13,14 +13,14 @@ class CommonConditionFilterComponent extends UiNavigationView_1.UiNavigationView
       (this.ConditionFunction = e),
       (this.Layout = void 0),
       (this.LevelSequencePlayer = void 0),
-      (this.WIt = () => {
+      (this.YTt = () => {
         UiLayer_1.UiLayer.SetShowMaskLayer(
           "CommonConditionFilterComponent",
           !0,
         ),
           this.LevelSequencePlayer.PlayLevelSequenceByName("hide");
       }),
-      (this.KIt = (i) => {
+      (this.JTt = (i) => {
         "hide" === i &&
           (this.SetActive(!1),
           UiLayer_1.UiLayer.SetShowMaskLayer(
@@ -30,9 +30,9 @@ class CommonConditionFilterComponent extends UiNavigationView_1.UiNavigationView
       }),
       (this.sGe = (i, e, t) => {
         e = new CommonConditionFilterItem_1.CommonConditionFilterItem(e, i);
-        return e.SetToggleFunction(this.U4e), { Key: t, Value: e };
+        return e.SetToggleFunction(this.j5e), { Key: t, Value: e };
       }),
-      (this.U4e = (i, e) => {
+      (this.j5e = (i, e) => {
         this.ResetComponent(),
           this.SetActive(!1),
           this.ConditionFunction && this.ConditionFunction(i, e);
@@ -45,7 +45,7 @@ class CommonConditionFilterComponent extends UiNavigationView_1.UiNavigationView
       [1, UE.UIItem],
       [2, UE.UIVerticalLayout],
     ]),
-      (this.BtnBindInfo = [[0, this.WIt]]);
+      (this.BtnBindInfo = [[0, this.YTt]]);
   }
   OnStart() {
     (this.Layout = new GenericLayoutNew_1.GenericLayoutNew(
@@ -55,7 +55,7 @@ class CommonConditionFilterComponent extends UiNavigationView_1.UiNavigationView
       (this.LevelSequencePlayer = new LevelSequencePlayer_1.LevelSequencePlayer(
         this.RootItem,
       )),
-      this.LevelSequencePlayer.BindSequenceCloseEvent(this.KIt);
+      this.LevelSequencePlayer.BindSequenceCloseEvent(this.JTt);
   }
   RefreshQualityList(i) {
     this.Layout.RebuildLayoutByDataNew(i),

@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleWeaponTabView = void 0);
 const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
@@ -10,32 +11,32 @@ const UE = require("ue"),
   UiSceneManager_1 = require("../../UiComponent/UiSceneManager"),
   WeaponController_1 = require("../../Weapon/WeaponController"),
   WeaponDetailTipsComponent_1 = require("../../Weapon/WeaponDetailTipsComponent"),
-  RoleController_1 = require("../RoleController"),
-  Log_1 = require("../../../../Core/Common/Log");
+  RoleController_1 = require("../RoleController");
 class RoleWeaponTabView extends UiTabViewBase_1.UiTabViewBase {
   constructor() {
     super(...arguments),
-      (this.plo = void 0),
-      (this.Ddo = void 0),
-      (this.fdo = () => {
-        this.pdo = !1;
+      (this.d1o = void 0),
+      (this.ICo = void 0),
+      (this.dCo = () => {
+        this.CCo = !1;
       }),
-      (this.Rdo = (e) => {
+      (this.TCo = (e) => {
+        e = { RoleId: this.d1o.GetCurSelectRoleId(), WeaponIncId: e };
         UiManager_1.UiManager.OpenView("WeaponReplaceView", e);
       }),
-      (this.Udo = (e) => {
+      (this.LCo = (e) => {
         e = { WeaponIncId: e, IsFromRoleRootView: !0 };
         UiManager_1.UiManager.OpenView("WeaponRootView", e),
           WeaponController_1.WeaponController.RoleFadeIn(
             UiSceneManager_1.UiSceneManager.GetRoleSystemRoleActor(),
           );
       }),
-      (this.Ado = (e, t) => {
-        this.Ddo.UpdateWeaponLock(t);
+      (this.DCo = (e, t) => {
+        this.ICo.UpdateWeaponLock(t);
       }),
-      (this.pdo = !1),
-      (this.Pdo = () => {
-        (this.pdo = !0), this.PlayMontageStart(!0), this.xdo();
+      (this.CCo = !1),
+      (this.RCo = () => {
+        (this.CCo = !0), this.PlayMontageStart(!0), this.UCo();
       });
   }
   OnRegisterComponent() {
@@ -43,64 +44,64 @@ class RoleWeaponTabView extends UiTabViewBase_1.UiTabViewBase {
   }
   async OnBeforeStartAsync() {
     var e = this.GetItem(0);
-    (this.Ddo = new WeaponDetailTipsComponent_1.WeaponDetailTipsComponent()),
-      await this.Ddo.CreateThenShowByActorAsync(e.GetOwner());
+    (this.ICo = new WeaponDetailTipsComponent_1.WeaponDetailTipsComponent()),
+      await this.ICo.CreateThenShowByActorAsync(e.GetOwner());
   }
   OnStart() {
-    (this.plo = this.ExtraParams),
-      void 0 === this.plo
+    (this.d1o = this.ExtraParams),
+      void 0 === this.d1o
         ? Log_1.Log.CheckError() &&
           Log_1.Log.Error("Role", 59, "RoleViewAgent为空", [
             "界面名称",
             "RoleWeaponTabView",
           ])
-        : (this.Ddo.SetCanShowEquip(!1),
-          this.Ddo.SetReplaceFunction(this.Rdo),
-          this.Ddo.SetCultureFunction(this.Udo));
+        : (this.ICo.SetCanShowEquip(!1),
+          this.ICo.SetReplaceFunction(this.TCo),
+          this.ICo.SetCultureFunction(this.LCo));
   }
   AddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnItemLock,
-      this.Ado,
+      this.DCo,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.RoleSystemChangeRole,
-        this.Pdo,
+        this.RCo,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.ResetRoleFlag,
-        this.fdo,
+        this.dCo,
       );
   }
   RemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnItemLock,
-      this.Ado,
+      this.DCo,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.RoleSystemChangeRole,
-        this.Pdo,
+        this.RCo,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.ResetRoleFlag,
-        this.fdo,
+        this.dCo,
       );
   }
   OnBeforeShow() {
     ModelManager_1.ModelManager.WeaponModel.SetCurSelectViewName(1),
-      this.pdo
-        ? (this.PlayMontageStart(!0), (this.pdo = !1))
+      this.CCo
+        ? (this.PlayMontageStart(!0), (this.CCo = !1))
         : this.PlayMontageStart(!1),
-      this.xdo();
+      this.UCo();
   }
   OnBeforeDestroy() {
-    this.Ddo && (this.Ddo.Destroy(), (this.Ddo = void 0));
+    this.ICo && (this.ICo.Destroy(), (this.ICo = void 0));
   }
   PlayMontageStart(e = !1) {
     RoleController_1.RoleController.PlayRoleMontage(6, e);
   }
-  xdo() {
-    var e = this.plo.GetCurSelectRoleData(),
+  UCo() {
+    var e = this.d1o.GetCurSelectRoleData(),
       t = ModelManager_1.ModelManager.WeaponModel.GetWeaponDataByRoleDataId(
         e.GetDataId(),
       );
@@ -110,10 +111,10 @@ class RoleWeaponTabView extends UiTabViewBase_1.UiTabViewBase {
           "roleId",
           e.GetDataId(),
         ])
-      : this.Ddo.UpdateComponent(t);
+      : this.ICo.UpdateComponent(t);
   }
   GetGuideUiItemAndUiItemForShowEx(e) {
-    return this.Ddo.GetGuideUiItemAndUiItemForShowEx(e);
+    return this.ICo.GetGuideUiItemAndUiItemForShowEx(e);
   }
 }
 exports.RoleWeaponTabView = RoleWeaponTabView;

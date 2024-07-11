@@ -11,7 +11,7 @@ const UE = require("ue"),
   ResourceUpdate_1 = require("./ResourceUpdate");
 class LanguageUpdateViewAgent {
   constructor() {
-    this.gyr = void 0;
+    this.mIr = void 0;
   }
   async ShowNotEnoughSpaceConfirmation(e) {
     return new Promise((e) => {
@@ -19,10 +19,10 @@ class LanguageUpdateViewAgent {
     });
   }
   UpdatePatchProgress(e, t, a, i) {
-    this.gyr && this.gyr.UpdatePatchProgress(e, t, a, i);
+    this.mIr && this.mIr.UpdatePatchProgress(e, t, a, i);
   }
   SetImplement(e) {
-    this.gyr = e;
+    this.mIr = e;
   }
 }
 class LanguageUpdater {
@@ -44,7 +44,7 @@ class LanguageUpdater {
   }
   Delete(e) {
     var t = this.VersionMisc.GetMountFilePath(),
-      t = (LanguageUpdater.fyr(t), this.VersionMisc.ReadPatchFileInfoList());
+      t = (LanguageUpdater.dIr(t), this.VersionMisc.ReadPatchFileInfoList());
     for (const i of t) {
       var a = i.SavePath + ".pak";
       UE.KuroPakMountStatic.UnmountPak(a),
@@ -52,10 +52,10 @@ class LanguageUpdater {
           "UnMountPak in LanguageUpdater.Delete()",
           ["path", a],
         ),
-        LanguageUpdater.fyr(i.SavePath + ".pak"),
-        LanguageUpdater.fyr(i.SavePath + ".sig"),
-        LanguageUpdater.fyr(i.SavePath + ".utoc"),
-        LanguageUpdater.fyr(i.SavePath + ".ucas");
+        LanguageUpdater.dIr(i.SavePath + ".pak"),
+        LanguageUpdater.dIr(i.SavePath + ".sig"),
+        LanguageUpdater.dIr(i.SavePath + ".utoc"),
+        LanguageUpdater.dIr(i.SavePath + ".ucas");
     }
     this.VersionMisc.DeleteSavedVersion(e),
       this.CalculateDownloadStatus(),
@@ -144,7 +144,7 @@ class LanguageUpdater {
       ? ((this.Status = 2), (this.IsDownloading = !1))
       : 0 < e && e !== t && (this.Status = 1);
   }
-  static fyr(e) {
+  static dIr(e) {
     var t;
     LauncherLog_1.LauncherLog.Info("SafeDeleteFile", ["path", e]),
       UE.BlueprintPathsLibrary.FileExists(e) &&
@@ -159,11 +159,11 @@ class LanguageUpdater {
 exports.LanguageUpdater = LanguageUpdater;
 class LanguageUpdateManager {
   static Init(e) {
-    if (!this.E_e) {
+    if (!this.S_e) {
       var t,
         a = new AppPathMisc_1.AppPathMisc();
       for (const i of LauncherLanguageLib_1.LauncherLanguageLib.GetAllLanguageDefines())
-        this.pyr.has(i.AudioCode) ||
+        this.CIr.has(i.AudioCode) ||
           (((t = new LanguageUpdater()).LanguageCode = i.AudioCode),
           (t.Downloader = new UrlPrefixDownload_1.UrlPrefixDownload()),
           (t.VersionMisc = new AppVersionMisc_1.LanguageVersionMisc(
@@ -175,29 +175,29 @@ class LanguageUpdateManager {
             t.VersionMisc,
             a,
           )),
-          this.pyr.set(t.LanguageCode, t),
+          this.CIr.set(t.LanguageCode, t),
           t.Init(e),
-          this.vyr.push(i.LanguageType));
-      this.E_e = !0;
+          this.gIr.push(i.LanguageType));
+      this.S_e = !0;
     }
   }
   static GetAllLanguageTypeForAudio() {
-    return this.vyr;
+    return this.gIr;
   }
   static GetAllLanguagesVersionMisc() {
     var e,
       t = [];
-    for ([, e] of this.pyr) t.push(e.VersionMisc);
+    for ([, e] of this.CIr) t.push(e.VersionMisc);
     return t;
   }
   static GetUpdater(e) {
-    return this.pyr.get(e);
+    return this.CIr.get(e);
   }
   static StopAllDownload() {
-    for (var [, e] of LanguageUpdateManager.pyr) e.Pause();
+    for (var [, e] of LanguageUpdateManager.CIr) e.Pause();
   }
 }
-((exports.LanguageUpdateManager = LanguageUpdateManager).E_e = !1),
-  (LanguageUpdateManager.pyr = new Map()),
-  (LanguageUpdateManager.vyr = []);
+((exports.LanguageUpdateManager = LanguageUpdateManager).S_e = !1),
+  (LanguageUpdateManager.CIr = new Map()),
+  (LanguageUpdateManager.gIr = []);
 //# sourceMappingURL=LanguageUpdateManager.js.map

@@ -2,41 +2,13 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PowerConfig = void 0);
 const CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById"),
-  ItemInfoById_1 = require("../../../Core/Define/ConfigQuery/ItemInfoById"),
   ConfigBase_1 = require("../../../Core/Framework/ConfigBase"),
   PowerDefines_1 = require("./PowerDefines");
 class PowerConfig extends ConfigBase_1.ConfigBase {
   constructor() {
-    super(...arguments), (this.hio = new Array()), (this.lio = new Set());
+    super(...arguments), (this.noo = new Set());
   }
-  get PowerItemInfoList() {
-    return this.hio;
-  }
-  OnInit() {
-    var e = this._io(),
-      r = new Array();
-    for (const i of e.keys()) {
-      var o = ItemInfoById_1.configItemInfoById.GetConfig(i);
-      o && r.push(o);
-    }
-    for (const s of r) {
-      var n = new PowerDefines_1.PowerItemInfo(s.Id);
-      (n.ItemName = s.Name),
-        (n.IsHideWhenZero = Boolean(e.get(n.ItemId))),
-        this.hio.push(n);
-    }
-    const t = Array.from(e.keys());
-    return (
-      this.hio.sort((e, r) => {
-        return t.indexOf(e.ItemId) - t.indexOf(r.ItemId);
-      }),
-      !0
-    );
-  }
-  GetPowerItemInfos(e) {
-    for (const r of this.hio) if (r.ItemId === e) return r;
-  }
-  _io() {
+  GetConfSortRule() {
     var e = new Map();
     for (const n of CommonParamById_1.configCommonParamById
       .GetStringConfig("energy_sort")
@@ -67,14 +39,42 @@ class PowerConfig extends ConfigBase_1.ConfigBase {
       "renew_energy_timespan",
     );
   }
+  GetOverPowerLimit() {
+    return (
+      CommonParamById_1.configCommonParamById.GetIntConfig(
+        "store_energy_limit",
+      ) ?? 0
+    );
+  }
+  GetOverPowerRecoverTimeSpan() {
+    return (
+      CommonParamById_1.configCommonParamById.GetIntConfig(
+        "store_energy_timespan",
+      ) ?? 0
+    );
+  }
+  GetSingleTimeExchangePowerLimit() {
+    return (
+      CommonParamById_1.configCommonParamById.GetIntConfig(
+        "single_time_get_max",
+      ) ?? 0
+    );
+  }
+  GetPowerCurrencyIds() {
+    return (
+      CommonParamById_1.configCommonParamById.GetIntArrayConfig(
+        "PowerTipsIdArray",
+      ) ?? [0]
+    );
+  }
   GetPowerShopIds() {
-    if (0 === this.lio.size)
+    if (0 === this.noo.size)
       for (const r in PowerDefines_1.EPowerShopType) {
         var e = Number(r);
         if (isNaN(e)) break;
-        this.lio.add(e);
+        this.noo.add(e);
       }
-    return this.lio;
+    return this.noo;
   }
 }
 exports.PowerConfig = PowerConfig;

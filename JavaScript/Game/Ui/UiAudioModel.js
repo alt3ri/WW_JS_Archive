@@ -6,19 +6,19 @@ const AudioController_1 = require("../../Core/Audio/AudioController"),
   Log_1 = require("../../Core/Common/Log");
 class UiAudioModel {
   static AddAudioStateData(o) {
-    this.hdr.add(o);
+    this.nCr.add(o);
   }
   static RemoveAudioStateData(o) {
-    return this.hdr.delete(o);
+    return this.nCr.delete(o);
   }
-  static ldr() {
+  static sCr() {
     let o = 0;
-    for (const e of this.hdr.values()) o < e.Level && (o = e.Level);
+    for (const e of this.nCr.values()) o < e.Level && (o = e.Level);
     return o;
   }
-  static _dr() {
+  static aCr() {
     let o = 0;
-    for (const e of this.hdr.values()) o = o + e.Alpha - o * e.Alpha;
+    for (const e of this.nCr.values()) o = o + e.Alpha - o * e.Alpha;
     return o;
   }
   static SetRTPCLevelOpening(o) {
@@ -44,7 +44,7 @@ class UiAudioModel {
         ]);
   }
   static CalculateRTPCValueAndApply() {
-    var o = this.ldr(),
+    var o = this.sCr(),
       e =
         (AudioController_1.AudioController.SetRTPCValue(
           o,
@@ -52,7 +52,7 @@ class UiAudioModel {
           void 0,
           500,
         ),
-        this._dr()),
+        this.aCr()),
       i =
         (AudioController_1.AudioController.SetRTPCValue(
           e,
@@ -60,8 +60,8 @@ class UiAudioModel {
           void 0,
           500,
         ),
-        o - this.udr);
-    (this.udr = o),
+        o - this.hCr);
+    (this.hCr = o),
       AudioController_1.AudioController.SetRTPCValue(
         i,
         AudioDefine_1.RTPC_COVER_LEVEL_DELTA,
@@ -77,5 +77,5 @@ class UiAudioModel {
         );
   }
 }
-((exports.UiAudioModel = UiAudioModel).hdr = new Set()), (UiAudioModel.udr = 0);
+((exports.UiAudioModel = UiAudioModel).nCr = new Set()), (UiAudioModel.hCr = 0);
 //# sourceMappingURL=UiAudioModel.js.map

@@ -12,12 +12,12 @@ class RoleLevelUpSuccessEffectView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
       (this.Pe = void 0),
-      (this.z_o = void 0),
+      (this.Xuo = void 0),
       (this.nqe = () => {
         var e = this.Pe.ClickFunction;
         e && e(), this.CloseMe();
       }),
-      (this.Z_o = () => {
+      (this.$uo = () => {
         return new SuccessDescriptionItem();
       });
   }
@@ -43,41 +43,41 @@ class RoleLevelUpSuccessEffectView extends UiViewBase_1.UiViewBase {
           38,
           "RoleLevelUpSuccessEffectView 打开失败,未传入界面数据",
         )
-      : ((this.Pe = this.OpenParam), this.IBt());
+      : ((this.Pe = this.OpenParam), this.Dbt());
   }
   OnStart() {
     var e = this.GetItem(1);
-    this.z_o = new LoopScrollView_1.LoopScrollView(
+    this.Xuo = new LoopScrollView_1.LoopScrollView(
       this.GetLoopScrollViewComponent(0),
       e.GetOwner(),
-      this.Z_o,
+      this.$uo,
     );
   }
   OnBeforeShow() {
-    this.ILt(), this.euo(), this.C_o();
+    this.RDt(), this.Yuo(), this.uuo();
   }
   OnBeforeDestroy() {
-    this.z_o && (this.z_o.ClearGridProxies(), (this.z_o = void 0));
+    this.Xuo && (this.Xuo.ClearGridProxies(), (this.Xuo = void 0));
   }
-  IBt() {
+  Dbt() {
     var e = this.Pe.AudioId;
     e &&
       ((e = ConfigManager_1.ConfigManager.AudioConfig.GetAudioPath(e).Path),
       this.SetAudioEvent(e));
   }
-  C_o() {
+  uuo() {
     var e = this.Pe.ClickText ?? "Text_BackToView_Text";
     this.GetText(3).ShowTextNew(e);
   }
-  ILt() {
+  RDt() {
     var e = this.Pe.Title ?? "Text_ActivedSucceed_Text";
     this.GetText(2).ShowTextNew(e);
   }
-  euo() {
+  Yuo() {
     var e;
-    this.z_o &&
+    this.Xuo &&
       (void 0 !== (e = this.Pe.TextList)
-        ? this.z_o.ReloadData(e)
+        ? this.Xuo.ReloadData(e)
         : this.GetLoopScrollViewComponent(0).RootUIComp.SetUIActive(!1));
   }
 }

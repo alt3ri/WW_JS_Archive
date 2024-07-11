@@ -13,10 +13,10 @@ const UE = require("ue"),
 class TowerApplyFloorDataView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.oLo = () => {
+      (this.eDo = () => {
         this.CloseMe();
       }),
-      (this.nNt = () => {
+      (this.sOt = () => {
         TowerController_1.TowerController.TowerApplyFloorDataRequest(!0),
           this.CloseMe();
       });
@@ -35,14 +35,14 @@ class TowerApplyFloorDataView extends UiViewBase_1.UiViewBase {
       [9, UE.UIItem],
     ]),
       (this.BtnBindInfo = [
-        [6, this.oLo],
-        [7, this.nNt],
+        [6, this.eDo],
+        [7, this.sOt],
       ]);
   }
   OnStart() {
-    this.h7e();
+    this.SHe();
   }
-  h7e() {
+  SHe() {
     var r = ModelManager_1.ModelManager.TowerModel.CurrentNotConfirmedFloor;
     if (r) {
       var o = ModelManager_1.ModelManager.TowerModel.GetFloorData(r.TowerId),
@@ -57,7 +57,7 @@ class TowerApplyFloorDataView extends UiViewBase_1.UiViewBase {
       var s = this.GetItem(9),
         l = this.GetItem(4),
         n = [];
-      for (const T of r.Formation) n.push(T.l3n);
+      for (const T of r.Formation) n.push(T.O6n);
       for (const h of n) {
         var _ = LguiUtil_1.LguiUtil.CopyItem(s, l);
         const M = new TowerRoleComplexItem_1.TowerRoleComplexItem();
@@ -67,7 +67,7 @@ class TowerApplyFloorDataView extends UiViewBase_1.UiViewBase {
       }
       var g = this.GetItem(2),
         w = [];
-      for (const f of o.Formation) w.push(f.l3n);
+      for (const f of o.Formation) w.push(f.O6n);
       for (const p of w) {
         var U = LguiUtil_1.LguiUtil.CopyItem(s, g);
         const x = new TowerRoleComplexItem_1.TowerRoleComplexItem();

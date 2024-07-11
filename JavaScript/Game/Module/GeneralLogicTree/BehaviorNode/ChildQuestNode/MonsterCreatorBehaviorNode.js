@@ -7,53 +7,53 @@ const EventDefine_1 = require("../../../../Common/Event/EventDefine"),
 class MonsterCreatorBehaviorNode extends ChildQuestNodeBase_1.ChildQuestNodeBase {
   constructor() {
     super(...arguments),
-      (this.YQt = 0),
-      (this.JQt = 0),
-      (this.PQt = []),
-      (this.zQt = !1),
-      (this.ZQt = void 0);
+      (this.YXt = 0),
+      (this.JXt = 0),
+      (this.PXt = []),
+      (this.zXt = !1),
+      (this.ZXt = void 0);
   }
   get CorrelativeEntities() {
-    return this.PQt;
+    return this.PXt;
   }
   OnCreate(e) {
     if (!super.OnCreate(e)) return !1;
     e = e.Condition;
     if ("MonsterCreator" !== e.Type || !e.MonsterCreatorEntityIds) return !1;
-    (this.TrackTextRuleInner = 1), (this.PQt = []);
-    for (const t of e.MonsterCreatorEntityIds) this.PQt.push(t);
+    (this.TrackTextRuleInner = 1), (this.PXt = []);
+    for (const t of e.MonsterCreatorEntityIds) this.PXt.push(t);
     return (
-      (this.zQt = e.ShowMonsterMergedHpBar ?? !1),
-      (this.ZQt = e.TidMonsterGroupName),
-      !(this.YQt = 0)
+      (this.zXt = e.ShowMonsterMergedHpBar ?? !1),
+      (this.ZXt = e.TidMonsterGroupName),
+      !(this.YXt = 0)
     );
   }
   OnUpdateProgress(e) {
-    if (!e.Wfs) return !1;
-    (this.YQt = 0), (this.JQt = e.Wfs.evs);
-    for (const t of e.Wfs.ovs)
-      (this.YQt += t.svs.length),
+    if (!e.lEs) return !1;
+    (this.YXt = 0), (this.JXt = e.lEs.fEs);
+    for (const t of e.lEs.SEs)
+      (this.YXt += t.yEs.length),
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.GeneralLogicTreeEntityKilled,
           this.NodeId,
-          t.svs,
+          t.yEs,
         );
     return !0;
   }
   GetProgress() {
-    return this.YQt.toString();
+    return this.YXt.toString();
   }
   GetProgressMax() {
-    return this.JQt.toString();
+    return this.JXt.toString();
   }
   GetShowMonsterMergedHpBar() {
-    return this.zQt;
+    return this.zXt;
   }
   GetTidMonsterGroupName() {
-    return this.ZQt;
+    return this.ZXt;
   }
   GetTest() {
-    return this.PQt;
+    return this.PXt;
   }
 }
 exports.MonsterCreatorBehaviorNode = MonsterCreatorBehaviorNode;

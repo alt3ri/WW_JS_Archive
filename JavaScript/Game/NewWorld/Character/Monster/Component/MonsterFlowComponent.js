@@ -23,12 +23,12 @@ const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponen
   CharacterFlowComponent_1 = require("../../Common/Component/Flow/CharacterFlowComponent");
 let MonsterFlowComponent = class MonsterFlowComponent extends CharacterFlowComponent_1.CharacterFlowComponent {
   constructor() {
-    super(...arguments), (this.Htn = void 0), (this.W5r = void 0);
+    super(...arguments), (this.Stn = void 0), (this.I5r = void 0);
   }
   OnStart() {
     return (
-      (this.W5r = this.Entity.GetComponent(158)),
-      (this.Htn = this.Entity.GetComponent(106)),
+      (this.I5r = this.Entity.GetComponent(160)),
+      (this.Stn = this.Entity.GetComponent(108)),
       super.OnStart(),
       !0
     );
@@ -36,7 +36,7 @@ let MonsterFlowComponent = class MonsterFlowComponent extends CharacterFlowCompo
   InitFlowLogicRange(e, t) {
     return (
       !!super.InitFlowLogicRange(e, t) &&
-      (this.Htn?.SetLogicRange(
+      (this.Stn?.SetLogicRange(
         t ?? CharacterFlowComponent_1.DEFAULT_BUBBLE_LEAVE_RANGE,
       ),
       !0)
@@ -45,14 +45,14 @@ let MonsterFlowComponent = class MonsterFlowComponent extends CharacterFlowCompo
   CheckCondition() {
     return (
       !!super.CheckCondition() &&
-      !!this.Htn &&
-      ((this.Htn.IsInLogicRange && !this.W5r.IsInFightState()) ||
+      !!this.Stn &&
+      ((this.Stn.IsInLogicRange && !this.I5r.IsInFightState()) ||
         (this.ForceStopFlow(), !1))
     );
   }
 };
 (MonsterFlowComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(164)],
+  [(0, RegisterComponent_1.RegisterComponent)(166)],
   MonsterFlowComponent,
 )),
   (exports.MonsterFlowComponent = MonsterFlowComponent);

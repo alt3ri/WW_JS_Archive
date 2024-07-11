@@ -6,7 +6,7 @@ const UE = require("ue"),
   GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract");
 class TowerBuffShowItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
-    super(), (this.lLo = 0);
+    super(), (this.sDo = 0);
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -15,16 +15,16 @@ class TowerBuffShowItem extends GridProxyAbstract_1.GridProxyAbstract {
     ];
   }
   Refresh(e, r, t) {
-    (this.lLo = Number(e)), this.Og();
+    (this.sDo = Number(e)), this.Og();
   }
   Og() {
     var e = ConfigManager_1.ConfigManager.TowerClimbConfig.GetTowerBuffDesc(
-        this.lLo,
+        this.sDo,
       ),
       e =
         (this.GetText(1).SetText(e),
         ConfigManager_1.ConfigManager.TowerClimbConfig.GetTowerBuffIcon(
-          this.lLo,
+          this.sDo,
         ));
     this.SetTextureByPath(e, this.GetTexture(0)),
       this.GetTexture(0)?.SetUIActive(!0);

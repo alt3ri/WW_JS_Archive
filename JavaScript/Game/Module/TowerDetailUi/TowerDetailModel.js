@@ -11,14 +11,14 @@ class TowerDetailModel extends ModelBase_1.ModelBase {
       (this.SwitchButtonIndex = 0),
       (this.SwitchData = new Array()),
       (this.IQ = new Map()),
-      (this.WTo = new Map());
+      (this.VLo = new Map());
   }
   AddSwitchData(e, t) {
     var s = new TowerDetailData_1.TowerSwitchData();
     (s.Index = e),
       (s.Name = t),
       this.IQ.set(s, new Array()),
-      this.WTo.set(s, new Array()),
+      this.VLo.set(s, new Array()),
       this.SwitchData.push(s);
   }
   AddBuff(t, e, s, r) {
@@ -39,15 +39,15 @@ class TowerDetailModel extends ModelBase_1.ModelBase {
       (a.MonsterInfos = e),
       (a.Priority = r),
       this.SwitchData.forEach((e) => {
-        e.Index === t && this.WTo.get(e).push(a);
+        e.Index === t && this.VLo.get(e).push(a);
       });
   }
   GetMonsters(e) {
-    return this.WTo.get(e);
+    return this.VLo.get(e);
   }
   Reset() {
     (this.IQ = new Map()),
-      (this.WTo = new Map()),
+      (this.VLo = new Map()),
       (this.SwitchData = new Array());
   }
 }

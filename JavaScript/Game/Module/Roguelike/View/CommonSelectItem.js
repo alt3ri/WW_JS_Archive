@@ -10,7 +10,7 @@ const UE = require("ue"),
   LguiUtil_1 = require("../../Util/LguiUtil");
 class CommonElementItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
-    super(...arguments), (this.Vyt = 0);
+    super(...arguments), (this.ZIt = 0);
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -22,11 +22,11 @@ class CommonElementItem extends GridProxyAbstract_1.GridProxyAbstract {
     this.Update(t), this.RefreshPanel();
   }
   Update(t) {
-    this.Vyt = t;
+    this.ZIt = t;
   }
   RefreshPanel() {
     var t,
-      e = ConfigManager_1.ConfigManager.CommonConfig.GetElementConfig(this.Vyt);
+      e = ConfigManager_1.ConfigManager.CommonConfig.GetElementConfig(this.ZIt);
     e &&
       ((t = UE.Color.FromHex(e.ElementColor)),
       this.GetSprite(0).SetColor(t),
@@ -38,13 +38,13 @@ class CommonSelectItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
       (this.RogueGainEntry = void 0),
-      (this.jso = void 0),
-      (this.E_i = void 0),
+      (this.kao = void 0),
+      (this.Sui = void 0),
       (this.ClickCallBack = void 0),
-      (this.Wso = () => {
+      (this.Fao = () => {
         return new CommonElementItem();
       }),
-      (this.Kso = (t) => {
+      (this.Vao = (t) => {
         this.ClickCallBack?.(1 === t ? this : void 0);
       });
   }
@@ -52,24 +52,24 @@ class CommonSelectItem extends GridProxyAbstract_1.GridProxyAbstract {
     this.ClickCallBack = t;
   }
   OnStart() {
-    this.E_i = new GenericLayout_1.GenericLayout(
+    this.Sui = new GenericLayout_1.GenericLayout(
       this.GetHorizontalLayout(3),
-      this.Wso,
+      this.Fao,
     );
   }
   Refresh(t, e, i) {
     this.Update(t);
   }
   Update(t) {
-    t.RoguelikeGainDataType === Protocol_1.Aki.Protocol.u3s.Proto_CommonBuff &&
+    t.RoguelikeGainDataType === Protocol_1.Aki.Protocol.e8s.Proto_CommonBuff &&
       ((this.RogueGainEntry = t), this.Fq());
   }
   Fq() {
     var t = this.RogueGainEntry.GetSortElementInfoArrayByCount();
     t.length <= 0 ||
-      ((this.jso = t[0]),
-      (t = new Array(this.jso.Count).fill(this.jso.ElementId)),
-      this.E_i?.RefreshByDataAsync(t).then(() => {
+      ((this.kao = t[0]),
+      (t = new Array(this.kao.Count).fill(this.kao.ElementId)),
+      this.Sui?.RefreshByDataAsync(t).then(() => {
         this.RefreshPanel();
       }));
   }
@@ -89,15 +89,15 @@ class CommonSelectItem extends GridProxyAbstract_1.GridProxyAbstract {
       [8, UE.UIItem],
       [9, UE.UIItem],
     ]),
-      (this.BtnBindInfo = [[5, this.Kso]]);
+      (this.BtnBindInfo = [[5, this.Vao]]);
   }
   IsSelect() {
     return 1 === this.GetExtendToggle(5).GetToggleState();
   }
   RefreshPanel() {
-    this.RogueGainEntry && (this.eOt(), this.Qso());
+    this.RogueGainEntry && (this.tkt(), this.Hao());
   }
-  eOt() {
+  tkt() {
     this.GetItem(6).SetUIActive(this.RogueGainEntry.IsNew);
     var t,
       e = ConfigManager_1.ConfigManager.RoguelikeConfig.GetRogueBuffConfig(
@@ -121,9 +121,9 @@ class CommonSelectItem extends GridProxyAbstract_1.GridProxyAbstract {
       this.GetItem(9).SetUIActive(5 === e.Quality),
       this.GetItem(8).SetUIActive(6 === e.Quality));
   }
-  Qso() {
-    var t = new Array(this.jso.Count).fill(this.jso.ElementId);
-    this.E_i?.RefreshByDataAsync(t);
+  Hao() {
+    var t = new Array(this.kao.Count).fill(this.kao.ElementId);
+    this.Sui?.RefreshByDataAsync(t);
   }
 }
 exports.CommonSelectItem = CommonSelectItem;

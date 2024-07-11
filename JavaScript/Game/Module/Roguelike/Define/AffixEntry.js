@@ -6,11 +6,11 @@ const ConfigManager_1 = require("../../../Manager/ConfigManager"),
   RoguelikeDefine_1 = require("./RoguelikeDefine");
 class AffixEntry {
   constructor(e) {
-    (this.Id = e.Ekn ?? void 0),
-      (this.IsUnlock = e.m3n ?? void 0),
+    (this.Id = e.J4n ?? void 0),
+      (this.IsUnlock = e.G6n ?? void 0),
       (this.ElementDict = new Map());
-    for (const n of Object.keys(e.aws ?? {})) {
-      var r = e.aws[n] ?? 0;
+    for (const n of Object.keys(e.L2s ?? {})) {
+      var r = e.L2s[n] ?? 0;
       r && this.ElementDict.set(Number(n), r);
     }
   }

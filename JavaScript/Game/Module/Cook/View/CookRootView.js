@@ -32,91 +32,93 @@ const UE = require("ue"),
 class CookRootView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.cGt = 0),
-      (this.mGt = 0),
-      (this.dGt = void 0),
-      (this.CGt = void 0),
-      (this.gGt = new Array()),
-      (this.Ybt = new Array()),
-      (this.fGt = void 0),
-      (this.pGt = void 0),
-      (this.vGt = void 0),
-      (this.MGt = !1),
-      (this.SGt = void 0),
-      (this.m5s = void 0),
-      (this.c4s = !1),
-      (this.EGt = () => {
-        this.yGt(),
-          this.IGt(),
-          this.pGt.UpdateData(19, this.TGt()),
-          this.vGt.UpdateData(19, this.TGt()),
-          this.Qqt();
+      (this.mNt = 0),
+      (this.dNt = 0),
+      (this.CNt = void 0),
+      (this.gNt = void 0),
+      (this.fNt = new Array()),
+      (this.Zqt = new Array()),
+      (this.pNt = void 0),
+      (this.vNt = void 0),
+      (this.MNt = void 0),
+      (this.ENt = !1),
+      (this.SNt = void 0),
+      (this.qjs = void 0),
+      (this.zVs = !1),
+      (this.yNt = () => {
+        this.INt(),
+          this.TNt(),
+          this.vNt.UpdateData(19, this.LNt()),
+          this.MNt.SetResultDataDirty(),
+          this.MNt.UpdateData(19, this.LNt()),
+          this.YGt();
         var e = ModelManager_1.ModelManager.CookModel.GetCookerMaxLevel(),
           t =
             ModelManager_1.ModelManager.CookModel.GetCookerInfo().CookingLevel;
-        this.SGt.ShowLevel(t, e), this.LGt(), this.Dqt();
+        this.SNt.ShowLevel(t, e), this.AGt();
       }),
-      (this.DGt = (e) => {
-        this.RGt(e);
+      (this.RNt = (e) => {
+        this.UNt(e);
       }),
-      (this.UGt = () => {
-        this.AGt();
+      (this.ANt = () => {
+        this.PNt();
       }),
       (this.GOe = void 0),
-      (this.PGt = () => {
+      (this.xNt = () => {
         var e = new MainTypeItem();
-        return e.SetMainTypeCallback(this.xGt), e;
+        return e.SetMainTypeCallback(this.wNt), e;
       }),
-      (this.wGt = () => {
-        this.Dqt(),
-          this.fGt?.OnSecondTimerRefresh(),
-          this.BGt() || this.bGt()
+      (this.BNt = () => {
+        this.AGt(),
+          this.pNt?.OnSecondTimerRefresh(),
+          this.bNt() || this.qNt()
             ? CookController_1.CookController.SendCookingDataRequestAsync().then(
                 (e) => {
-                  e && this.qGt();
+                  e && this.GNt();
                 },
               )
-            : this.GGt() &&
+            : this.NNt() &&
               CookController_1.CookController.SendCookingDataRequestAsync().then(
                 (e) => {
-                  e && this.pGt.UpdateData(19, this.TGt());
+                  e && this.vNt.UpdateData(19, this.LNt());
                 },
               );
       }),
-      (this.z9e = () => {
+      (this.cHe = () => {
         var e = new CookMediumItemGrid_1.CookMediumItemGrid();
-        return e.BindOnExtendToggleStateChanged(this.NGt), e;
+        return e.BindOnExtendToggleStateChanged(this.ONt), e;
       }),
       (this.jwe = (e) => {
         "OnBlackScreen" === e &&
-          (this.ChildPopView?.PlayLevelSequenceByName("Start"),
-          this.m5s?.SetResult(),
-          this.ChildPopView?.PopItem.SetActive(!0),
-          (this.c4s = !0));
+          (this.ChildPopView?.PlayLevelSequenceByName("BlackScreenShow"),
+          this.qjs?.IsPending() && this.qjs.SetResult(),
+          (this.zVs = !0));
       }),
-      (this.bpt = (e, t) => {
-        this.CGt.DeselectCurrentGridProxy(!1), (this.cGt = 0), this.kGt(e);
+      (this.Qvt = (e, t) => {
+        this.gNt.DeselectCurrentGridProxy(!1), (this.mNt = 0), this.FNt(e);
       }),
-      (this.FGt = (e, t) => {
-        this.kGt(e);
+      (this.VNt = (e, t) => {
+        this.FNt(e);
       }),
-      (this.qGt = () => {
+      (this.GNt = () => {
         0 === ModelManager_1.ModelManager.CookModel.CurrentCookListType
-          ? (this.pGt.UpdateData(19, this.TGt()),
-            this.vGt.UpdateData(19, this.TGt()))
-          : (this.pGt.UpdateData(27, this.TGt()),
-            this.vGt.UpdateData(27, this.TGt()));
+          ? (this.vNt.UpdateData(19, this.LNt()),
+            this.MNt.SetResultDataDirty(),
+            this.MNt.UpdateData(19, this.LNt()))
+          : (this.vNt.UpdateData(27, this.LNt()),
+            this.MNt.SetResultDataDirty(),
+            this.MNt.UpdateData(27, this.LNt()));
       }),
-      (this.VGt = (e = !0) => {
-        this.HGt(), this.fGt.RefreshTipsWithSavedData(), this.jGt(e);
+      (this.HNt = (e = !0) => {
+        this.jNt(), this.pNt.RefreshTipsWithSavedData(), this.WNt(e);
       }),
-      (this.HGt = () => {
-        this.CGt.DeselectCurrentGridProxy(),
+      (this.jNt = () => {
+        this.gNt.DeselectCurrentGridProxy(),
           0 === ModelManager_1.ModelManager.CookModel.CurrentCookListType
-            ? this.CGt.RefreshByData(this.gGt)
-            : this.CGt.RefreshByData(this.Ybt);
+            ? this.gNt.RefreshByData(this.fNt)
+            : this.gNt.RefreshByData(this.Zqt);
       }),
-      (this.WGt = () => {
+      (this.KNt = () => {
         this.ChildPopView?.PlaySequenceAsync(
           "Close",
           new CustomPromise_1.CustomPromise(),
@@ -126,7 +128,7 @@ class CookRootView extends UiViewBase_1.UiViewBase {
           this.ChildPopView?.PopItem.SetActive(!1);
         });
       }),
-      (this.QGt = () => {
+      (this.XNt = () => {
         this.ChildPopView?.PopItem.SetUiActive(!1);
       }),
       (this.$Ge = (e) => {
@@ -134,13 +136,16 @@ class CookRootView extends UiViewBase_1.UiViewBase {
           (this.ChildPopView?.PopItem.SetActive(!0),
           this.ChildPopView?.PlayLevelSequenceByName("Start"));
       }),
-      (this.$Gt = () => {
+      (this.Msa = () => {
+        this.pNt.RefreshCooking();
+      }),
+      (this.YNt = () => {
         CookController_1.CookController.IsPlayingSuccessDisplay
           ? CookController_1.CookController.SkipCookSuccessDisplay()
           : CookController_1.CookController.IsPlayingFailDisplay &&
             CookController_1.CookController.SkipCookFailDisplay();
       }),
-      (this.xGt = (e) => {
+      (this.wNt = (e) => {
         ModelManager_1.ModelManager.CookModel.CurrentCookListType !== e &&
           (0 === e
             ? ((ModelManager_1.ModelManager.CookModel.CurrentCookListType = 0),
@@ -148,41 +153,41 @@ class CookRootView extends UiViewBase_1.UiViewBase {
                 EventDefine_1.EEventName.SwitchCookType,
               ),
               this.GetItem(3).SetUIActive(!0),
-              (this.MGt = !0))
+              (this.ENt = !0))
             : ((ModelManager_1.ModelManager.CookModel.CurrentCookListType = 1),
               EventSystem_1.EventSystem.Emit(
                 EventDefine_1.EEventName.SwitchCookType,
               ),
-              (this.MGt = !0),
+              (this.ENt = !0),
               this.GetItem(3).SetUIActive(!1)),
-          this.qGt(),
-          this.LGt(),
-          (this.MGt = !1));
+          this.GNt(),
+          this.DNt(),
+          (this.ENt = !1));
       }),
-      (this.NGt = (e) => {
+      (this.ONt = (e) => {
         let t = 0;
         var i,
           e = e.Data;
-        this.CGt.DeselectCurrentGridProxy(),
+        this.gNt.DeselectCurrentGridProxy(),
           0 === e.MainType
-            ? ((this.cGt = this.gGt.indexOf((i = e))),
-              (t = this.cGt),
-              this.fGt.RefreshTips(i))
-            : ((this.mGt = this.Ybt.indexOf((i = e))),
-              (t = this.mGt),
-              this.fGt.RefreshTips(i)),
-          this.CGt.IsGridDisplaying(t) &&
+            ? ((this.mNt = this.fNt.indexOf((i = e))),
+              (t = this.mNt),
+              this.pNt.RefreshTips(i))
+            : ((this.dNt = this.Zqt.indexOf((i = e))),
+              (t = this.dNt),
+              this.pNt.RefreshTips(i)),
+          this.gNt.IsGridDisplaying(t) &&
             (e.IsNew &&
-              !this.MGt &&
+              !this.ENt &&
               (ModelManager_1.ModelManager.NewFlagModel.RemoveNewFlag(
                 LocalStorageDefine_1.ELocalStoragePlayerKey.CookerLevelKey,
                 e.ItemId,
               ),
               (e.IsNew = !1)),
-            this.CGt.SelectGridProxy(t),
-            this.CGt.RefreshGridProxy(t),
-            this.LGt(),
-            (this.MGt = !1));
+            this.gNt.SelectGridProxy(t),
+            this.gNt.RefreshGridProxy(t),
+            this.DNt(),
+            (this.ENt = !1));
       });
   }
   OnRegisterComponent() {
@@ -202,91 +207,107 @@ class CookRootView extends UiViewBase_1.UiViewBase {
       [12, UE.UIItem],
       [13, UE.UIText],
     ]),
-      (this.BtnBindInfo = [[5, this.UGt]]);
+      (this.BtnBindInfo = [[5, this.ANt]]);
   }
   async OnBeforeStartAsync() {
-    (this.fGt = new CookingIngredientsView_1.CookingIngredientsView()),
-      (this.dGt = new GenericLayout_1.GenericLayout(
+    (this.pNt = new CookingIngredientsView_1.CookingIngredientsView()),
+      (this.CNt = new GenericLayout_1.GenericLayout(
         this.GetHorizontalLayout(0),
-        this.PGt,
+        this.xNt,
       )),
       await Promise.all([
-        this.fGt.CreateByActorAsync(this.GetItem(4).GetOwner()),
-        this.dGt.RefreshByDataAsync([0, 1]),
+        this.pNt.CreateByActorAsync(this.GetItem(4).GetOwner()),
+        this.CNt.RefreshByDataAsync([0, 1]),
+        CookController_1.CookController.SendCookingDataRequestAsync(),
       ]);
   }
   OnStart() {
-    (this.CGt = new LoopScrollView_1.LoopScrollView(
+    (this.gNt = new LoopScrollView_1.LoopScrollView(
       this.GetLoopScrollViewComponent(2),
       this.GetLoopScrollViewComponent(2).TemplateGrid,
-      this.z9e,
+      this.cHe,
     )),
-      (this.pGt = new FilterEntrance_1.FilterEntrance(
+      (this.vNt = new FilterEntrance_1.FilterEntrance(
         this.GetItem(3),
-        this.bpt,
+        this.Qvt,
       )),
-      (this.vGt = new SortEntrance_1.SortEntrance(this.GetItem(10), this.FGt)),
-      this.vGt.SetSortToggleState(!0),
+      (this.MNt = new SortEntrance_1.SortEntrance(this.GetItem(10), this.VNt)),
+      this.MNt.SetSortToggleState(!0),
       LguiUtil_1.LguiUtil.SetLocalText(this.GetText(9), "CookLevelButtonText"),
-      (this.SGt = new StarLevelComponent_1.StarLevelComponent(
+      (this.SNt = new StarLevelComponent_1.StarLevelComponent(
         this.GetHorizontalLayout(11),
       )),
-      CookController_1.CookController.SendCookingDataRequest(),
-      (this.m5s = new CustomPromise_1.CustomPromise()),
-      (ModelManager_1.ModelManager.CookModel.CurrentInteractCreatureDataLongId =
-        ModelManager_1.ModelManager.InteractionModel.InteractCreatureDataLongId),
+      void 0 ===
+        ModelManager_1.ModelManager.InteractionModel.CurrentInteractEntityId &&
+        (Log_1.Log.CheckInfo() &&
+          Log_1.Log.Info(
+            "Cook",
+            8,
+            "[LevelEventOpenSystem] 打开烹饪界面时找不到交互对象，直接关闭界面",
+          ),
+        this.CloseMe()),
+      (this.qjs = new CustomPromise_1.CustomPromise());
+    var e = ModelManager_1.ModelManager.CookModel;
+    (e.CurrentInteractCreatureDataLongId =
+      ModelManager_1.ModelManager.InteractionModel.InteractCreatureDataLongId),
+      (e.CurrentCookListType = 0),
+      this.yNt(),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnExecuteUiCameraSequenceEvent,
         this.jwe,
+      ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.CloseCookRole,
+        this.Msa,
       );
   }
   OnBeforeShow() {
-    this.EGt(), this.ChildPopView?.PopItem.SetMaskResponsibleState(!1);
+    this.ChildPopView?.PopItem.SetMaskResponsibleState(!1);
   }
   async OnBeforeShowAsyncImplement() {
     UiCameraAnimationManager_1.UiCameraAnimationManager.IsPlayingBlendInSequence() &&
-      this.m5s &&
-      (await this.m5s.Promise);
+      this.qjs &&
+      (await this.qjs.Promise);
   }
   OnAfterShow() {
-    this.YGt();
+    this.JNt(), (this.qjs = void 0);
   }
-  YGt() {
+  JNt() {
     var e,
       t = this.ChildPopView.PopItem;
     t &&
-      !this.c4s &&
+      !this.zVs &&
       ((e =
         !UiCameraAnimationManager_1.UiCameraAnimationManager.IsPlayingBlendInSequence()),
       t.GetActive() !== e) &&
       t.SetActive(e);
   }
   OnAfterPlayStartSequence() {
-    var e = this.cGt;
-    this.CGt.DeselectCurrentGridProxy(),
-      this.CGt.ScrollToGridIndex(e),
-      this.CGt.SelectGridProxy(e);
+    var e = this.mNt;
+    this.gNt.DeselectCurrentGridProxy(),
+      this.gNt.ScrollToGridIndex(e),
+      this.gNt.SelectGridProxy(e);
   }
-  yGt() {
+  INt() {
     ModelManager_1.ModelManager.CookModel.CurrentCookViewType = 0;
-    var t = this.dGt.GetLayoutItemList();
+    var t = this.CNt.GetLayoutItemList();
     let i = !1;
     for (let e = 0; e < t.length; e++) {
       var s = t[e];
-      0 < this.JGt(s.GetMainType()).length || e === t.length - 1
+      0 < this.zNt(s.GetMainType()).length || e === t.length - 1
         ? (s.SetUiActive(!0),
           i ||
-            (this.dGt.SelectGridProxy(s.GridIndex),
+            (this.CNt.SelectGridProxy(s.GridIndex),
             (ModelManager_1.ModelManager.CookModel.CurrentCookListType =
               s.GetMainType()),
             (i = !0)))
         : s.SetUiActive(!1);
     }
   }
-  RGt(e) {
+  UNt(e) {
     UiManager_1.UiManager.OpenView("CookRoleView", e);
   }
-  AGt() {
+  PNt() {
     UiManager_1.UiManager.OpenView("CookLevelView");
   }
   OnAfterHide() {
@@ -297,43 +318,43 @@ class CookRootView extends UiViewBase_1.UiViewBase {
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.UpdateFormula,
-      this.qGt,
+      this.GNt,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.CookSuccess,
-        this.VGt,
+        this.HNt,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.CookFail,
-        this.VGt,
+        this.HNt,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.MachiningSuccess,
-        this.VGt,
+        this.HNt,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.MachiningStudyFail,
-        this.VGt,
+        this.HNt,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.GetCookData,
-        this.EGt,
+        this.yNt,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OpenCookRole,
-        this.DGt,
+        this.RNt,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OpenCookLevel,
-        this.UGt,
+        this.ANt,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnBeginPlayCookSuccessDisplay,
-        this.WGt,
+        this.KNt,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnBeginPlayCookFailDisplay,
-        this.QGt,
+        this.XNt,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.CloseView,
@@ -341,54 +362,54 @@ class CookRootView extends UiViewBase_1.UiViewBase {
       ),
       InputDistributeController_1.InputDistributeController.BindAction(
         InputMappingsDefine_1.actionMappings.Ui左键点击,
-        this.$Gt,
+        this.YNt,
       ),
       InputDistributeController_1.InputDistributeController.BindTouch(
         TouchFingerDefine_1.EFingerIndex.One,
-        this.$Gt,
+        this.YNt,
       ),
-      (this.GOe = TimerSystem_1.TimerSystem.Forever(this.wGt, TIMERGAP));
+      (this.GOe = TimerSystem_1.TimerSystem.Forever(this.BNt, TIMERGAP));
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.UpdateFormula,
-      this.qGt,
+      this.GNt,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.CookSuccess,
-        this.VGt,
+        this.HNt,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.CookFail,
-        this.VGt,
+        this.HNt,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.MachiningSuccess,
-        this.VGt,
+        this.HNt,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.MachiningStudyFail,
-        this.VGt,
+        this.HNt,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.GetCookData,
-        this.EGt,
+        this.yNt,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OpenCookRole,
-        this.DGt,
+        this.RNt,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OpenCookLevel,
-        this.UGt,
+        this.ANt,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnBeginPlayCookSuccessDisplay,
-        this.WGt,
+        this.KNt,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnBeginPlayCookFailDisplay,
-        this.QGt,
+        this.XNt,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.CloseView,
@@ -396,34 +417,34 @@ class CookRootView extends UiViewBase_1.UiViewBase {
       ),
       InputDistributeController_1.InputDistributeController.UnBindAction(
         InputMappingsDefine_1.actionMappings.Ui左键点击,
-        this.$Gt,
+        this.YNt,
       ),
       InputDistributeController_1.InputDistributeController.UnBindTouch(
         TouchFingerDefine_1.EFingerIndex.One,
-        this.$Gt,
+        this.YNt,
       ),
       this.GOe &&
         TimerSystem_1.TimerSystem.Has(this.GOe) &&
         (TimerSystem_1.TimerSystem.Remove(this.GOe), (this.GOe = void 0));
   }
-  Dqt() {
+  AGt() {
     var e = ModelManager_1.ModelManager.CookModel.GetRefreshLimitTime();
     e
       ? (this.GetItem(12).SetUIActive(!0),
         LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(13), "RefreshTime", e))
       : this.GetItem(12).SetUIActive(!1);
   }
-  BGt() {
+  bNt() {
     return (
       ModelManager_1.ModelManager.CookModel.GetRefreshLimitTimeValue() <= 0
     );
   }
-  bGt() {
+  qNt() {
     return ModelManager_1.ModelManager.CookModel.CheckHasItemTimeoutStateChangedCore();
   }
-  GGt() {
+  NNt() {
     if (0 === ModelManager_1.ModelManager.CookModel.CurrentCookListType)
-      for (const e of this.TGt())
+      for (const e of this.LNt())
         if (
           0 < e.ExistEndTime &&
           !TimeUtil_1.TimeUtil.IsInTimeSpan(e.ExistStartTime, e.ExistEndTime)
@@ -431,38 +452,38 @@ class CookRootView extends UiViewBase_1.UiViewBase {
           return !0;
     return !1;
   }
-  IGt() {
+  TNt() {
     var e =
       ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
         "SP_CookLevel",
       );
     this.SetSpriteByPath(e, this.GetSprite(6), !1);
   }
-  Qqt() {
+  YGt() {
     var e = this.GetItem(7);
     RedDotController_1.RedDotController.BindRedDot("CookerLevel", e);
   }
   DisableRedDot() {
     RedDotController_1.RedDotController.UnBindRedDot("CookerLevel");
   }
-  kGt(e) {
+  FNt(e) {
     0 === ModelManager_1.ModelManager.CookModel.CurrentCookListType
-      ? ((this.gGt = e),
-        (this.gGt = this.gGt.filter(
+      ? ((this.fNt = e),
+        (this.fNt = this.fNt.filter(
           (e) =>
             e.IsUnLock ||
             e.ExistEndTime <= 0 ||
             TimeUtil_1.TimeUtil.IsInTimeSpan(e.ExistStartTime, e.ExistEndTime),
         )))
-      : (this.Ybt = e),
-      this.HGt(),
+      : (this.Zqt = e),
+      this.jNt(),
       0 === e.length
-        ? (this.GetItem(8).SetUIActive(!0), this.fGt.SetUiActive(!1))
+        ? (this.GetItem(8).SetUIActive(!0), this.pNt.SetUiActive(!1))
         : (this.GetItem(8).SetUIActive(!1),
-          this.fGt.SetUiActive(!0),
-          this.jGt(!0));
+          this.pNt.SetUiActive(!0),
+          this.WNt(!0));
   }
-  LGt() {
+  DNt() {
     switch (
       (this.ChildPopView?.PopItem.SetTitleVisible(!0),
       ModelManager_1.ModelManager.CookModel.CurrentCookListType)
@@ -482,52 +503,56 @@ class CookRootView extends UiViewBase_1.UiViewBase {
         );
     }
   }
-  JGt(e) {
+  zNt(e) {
     return 0 === e
       ? ModelManager_1.ModelManager.CookModel.GetCookingDataList()
       : ModelManager_1.ModelManager.CookModel.GetMachiningDataList();
   }
-  TGt() {
-    return this.JGt(ModelManager_1.ModelManager.CookModel.CurrentCookListType);
+  LNt() {
+    return this.zNt(ModelManager_1.ModelManager.CookModel.CurrentCookListType);
   }
-  jGt(e = !1) {
+  WNt(e = !1) {
     let t = 0;
     0 === ModelManager_1.ModelManager.CookModel.CurrentCookListType
-      ? ((t = this.cGt), this.fGt.RefreshTips(this.gGt[t]))
-      : ((t = this.mGt), this.fGt.RefreshTips(this.Ybt[t])),
-      this.CGt.DeselectCurrentGridProxy(),
-      e && this.CGt.ScrollToGridIndex(t),
-      this.CGt.SelectGridProxy(t);
+      ? ((t = this.mNt), this.pNt.RefreshTips(this.fNt[t]))
+      : ((t = this.dNt), this.pNt.RefreshTips(this.Zqt[t])),
+      this.gNt.DeselectCurrentGridProxy(),
+      e && this.gNt.ScrollToGridIndex(t),
+      this.gNt.SelectGridProxy(t);
   }
   OnBeforeDestroy() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnExecuteUiCameraSequenceEvent,
       this.jwe,
     ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.CloseCookRole,
+        this.Msa,
+      ),
       CookController_1.CookController.ClearCookDisplay(),
       this.DisableRedDot(),
-      this.CGt && (this.CGt.ClearGridProxies(), (this.CGt = void 0)),
-      this.pGt && (this.pGt.Destroy(), (this.pGt = void 0)),
-      this.vGt && this.vGt.Destroy(),
-      this.dGt && (this.dGt.ClearChildren(), (this.dGt = void 0)),
-      this.SGt.Clear();
+      this.gNt && (this.gNt.ClearGridProxies(), (this.gNt = void 0)),
+      this.vNt && (this.vNt.Destroy(), (this.vNt = void 0)),
+      this.MNt && this.MNt.Destroy(),
+      this.CNt && (this.CNt.ClearChildren(), (this.CNt = void 0)),
+      this.SNt.Clear();
     var e = ModelManager_1.ModelManager.CookModel;
     (e.CurrentCookRoleId = void 0),
       e.ClearCookRoleItemDataList(),
-      (this.m5s = void 0);
+      (this.qjs = void 0);
   }
   GetGuideUiItemAndUiItemForShowEx(e) {
     var t = this.GetGuideUiItem(e[0]);
     if (t) return [t, t];
     t = Number(e[0]);
-    if (this.CGt?.DataInited) {
+    if (this.gNt?.DataInited) {
       if (0 !== t) {
-        t = this.CGt.GetGridAndScrollToByJudge(t, (e, t) => {
+        t = this.gNt.GetGridAndScrollToByJudge(t, (e, t) => {
           return 0 === t.MainType && 6e4 === t.SubType && e === t.DataId;
         });
         if (t) return [t, t];
       } else {
-        t = this.CGt.GetGridByDisplayIndex(0);
+        t = this.gNt.GetGridByDisplayIndex(0);
         if (t) return [t, t];
       }
       Log_1.Log.CheckError() &&
@@ -542,7 +567,7 @@ exports.CookRootView = CookRootView;
 class MainTypeItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this.zGt = void 0),
+      (this.ZNt = void 0),
       (this.OnClickedCallback = void 0),
       (this.ScrollViewDelegate = void 0),
       (this.GridIndex = 0),
@@ -557,10 +582,10 @@ class MainTypeItem extends UiPanelBase_1.UiPanelBase {
       });
   }
   Refresh(e, t, i) {
-    this.zGt = e;
+    this.ZNt = e;
     let s = "";
     (s =
-      0 === this.zGt
+      0 === this.ZNt
         ? ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
             "SP_Cooking",
           )
@@ -572,7 +597,7 @@ class MainTypeItem extends UiPanelBase_1.UiPanelBase {
   Clear() {}
   OnSelected(e) {
     this.GetExtendToggle(1).SetToggleState(1, e),
-      this.OnClickedCallback?.(this.zGt);
+      this.OnClickedCallback?.(this.ZNt);
   }
   OnDeselected(e) {
     this.GetExtendToggle(1).SetToggleState(0, !1);
@@ -588,7 +613,7 @@ class MainTypeItem extends UiPanelBase_1.UiPanelBase {
       (this.BtnBindInfo = [[1, this.OnItemButtonClicked]]);
   }
   GetMainType() {
-    return this.zGt;
+    return this.ZNt;
   }
   SetMainTypeCallback(e) {
     this.OnClickedCallback = e;

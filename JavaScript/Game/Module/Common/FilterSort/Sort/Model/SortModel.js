@@ -6,23 +6,23 @@ const ModelBase_1 = require("../../../../../../Core/Framework/ModelBase"),
 class SortModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
-      (this._Rt = new Map()),
-      (this.uRt = new SortLogic_1.SortLogic());
+      (this.dUt = new Map()),
+      (this.CUt = new SortLogic_1.SortLogic());
   }
   SetSortResultData(t, e) {
-    this._Rt.set(t, e);
+    this.dUt.set(t, e);
   }
   DeleteSortResultData(t) {
-    this._Rt.delete(t);
+    this.dUt.delete(t);
   }
   GetSortResultData(t) {
-    return this._Rt.get(t);
+    return this.dUt.get(t);
   }
   SortDataList(t, e, o, ...r) {
-    this.uRt.SortDataList(t, e, o, ...r);
+    this.CUt.SortDataList(t, e, o, ...r);
   }
   SortDataByData(t, e, o, r) {
-    this.uRt.SortDataByData(t, e, o, r);
+    this.CUt.SortDataByData(t, e, o, r);
   }
 }
 exports.SortModel = SortModel;

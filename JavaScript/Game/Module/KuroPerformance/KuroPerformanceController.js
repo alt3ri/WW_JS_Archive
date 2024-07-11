@@ -8,10 +8,9 @@ const puerts_1 = require("puerts"),
   ControllerBase_1 = require("../../../Core/Framework/ControllerBase"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
-  TimeUtil_1 = require("../../Common/TimeUtil"),
   GameQualitySettingsManager_1 = require("../../GameQualitySettings/GameQualitySettingsManager"),
   BOOST_SWITCH = !1,
-  TEMPERATURE_SWITCH = !0,
+  TEMPERATURE_SWITCH = !1,
   BOOST_TIME = 1e4;
 class KuroPerformanceController extends ControllerBase_1.ControllerBase {
   static OnInit() {
@@ -22,13 +21,13 @@ class KuroPerformanceController extends ControllerBase_1.ControllerBase {
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.SettingFrameRateChanged,
-        this.z0i,
+        this.zfi,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.ChangePerformanceLimitMode,
-        this.Z0i,
+        this.Zfi,
       ),
-      (this.dqo = (0, puerts_1.toManualReleaseDelegate)(this.Rqn)),
+      (this.uGo = (0, puerts_1.toManualReleaseDelegate)(this.w2n)),
       !0
     );
   }
@@ -40,34 +39,34 @@ class KuroPerformanceController extends ControllerBase_1.ControllerBase {
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.SettingFrameRateChanged,
-        this.z0i,
+        this.zfi,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.ChangePerformanceLimitMode,
-        this.Z0i,
+        this.Zfi,
       ),
-      (0, puerts_1.releaseManualReleaseDelegate)(this.Rqn),
+      (0, puerts_1.releaseManualReleaseDelegate)(this.w2n),
       !0
     );
   }
   static OnTick(e) {
-    (this.V2t += e),
-      this.V2t > BOOST_TIME &&
-        ((this.V2t = 0), this.xEn(), this.wEn(e), 0 < this.JIn.size) &&
-        this.BEn(!0);
+    (this.HFt += e),
+      this.HFt > BOOST_TIME &&
+        ((this.HFt = 0), this.Nyn(), 0 < this.gLn.size) &&
+        this.kyn(!0);
   }
   static Open(e) {
     var r, t;
     return BOOST_SWITCH
-      ? ((r = ++this.zIn),
-        this.JIn.set(r, e),
-        1 < this.JIn.size ||
+      ? ((r = ++this.fLn),
+        this.gLn.set(r, e),
+        1 < this.gLn.size ||
           ((t = GameQualitySettingsManager_1.GameQualitySettingsManager.Get()
             .GetCurrentQualityInfo()
             .GetFrameRate()),
           UE.KuroPerformanceBPLibrary.SetTargetFPS(t),
           UE.KuroPerformanceBPLibrary.PredictWorkload(200, 0),
-          this.BEn(!0),
+          this.kyn(!0),
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "Performance",
@@ -82,12 +81,12 @@ class KuroPerformanceController extends ControllerBase_1.ControllerBase {
   static Close(e) {
     var r;
     BOOST_SWITCH &&
-      ((r = this.JIn.get(e))
-        ? (this.JIn.delete(e),
-          0 < this.JIn.size ||
+      ((r = this.gLn.get(e))
+        ? (this.gLn.delete(e),
+          0 < this.gLn.size ||
             (UE.KuroPerformanceBPLibrary.SetTargetFPS(0),
             UE.KuroPerformanceBPLibrary.PredictWorkload(0, 0),
-            this.BEn(!1),
+            this.kyn(!1),
             Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "Performance",
@@ -102,18 +101,11 @@ class KuroPerformanceController extends ControllerBase_1.ControllerBase {
             e,
           ]));
   }
-  static xEn() {
+  static Nyn() {
     TEMPERATURE_SWITCH &&
-      UE.KuroPerformanceBPLibrary.GetCurrentTemperatureData(this.dqo);
+      UE.KuroPerformanceBPLibrary.GetCurrentTemperatureData(this.uGo);
   }
-  static wEn(e) {
-    Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("Performance", 29, "KuroPerformanceController.GetFps", [
-        "FPS",
-        (1 / (e * TimeUtil_1.TimeUtil.Millisecond)).toFixed(2),
-      ]);
-  }
-  static BEn(e) {
+  static kyn(e) {
     UE.KuroPerformanceBPLibrary.BoostCPU(e ? 100 : 0, BOOST_TIME) &&
       e &&
       Log_1.Log.CheckInfo() &&
@@ -121,23 +113,23 @@ class KuroPerformanceController extends ControllerBase_1.ControllerBase {
   }
 }
 (exports.KuroPerformanceController = KuroPerformanceController),
-  ((_a = KuroPerformanceController).V2t = 0),
-  (KuroPerformanceController.zIn = 0),
-  (KuroPerformanceController.JIn = new Map()),
-  (KuroPerformanceController.ZIn = 0),
-  (KuroPerformanceController.eTn = 0),
-  (KuroPerformanceController.xqn = !1),
-  (KuroPerformanceController.dqo = void 0),
+  ((_a = KuroPerformanceController).HFt = 0),
+  (KuroPerformanceController.fLn = 0),
+  (KuroPerformanceController.gLn = new Map()),
+  (KuroPerformanceController.pLn = 0),
+  (KuroPerformanceController.vLn = 0),
+  (KuroPerformanceController.b2n = !1),
+  (KuroPerformanceController.uGo = void 0),
   (KuroPerformanceController.Zpe = (e) => {
-    e ? (_a.ZIn = _a.Open("Battle")) : _a.Close(_a.ZIn);
+    e ? (_a.pLn = _a.Open("Battle")) : _a.Close(_a.pLn);
   }),
-  (KuroPerformanceController.z0i = (e) => {
-    0 < _a.JIn.size && UE.KuroPerformanceBPLibrary.SetTargetFPS(e);
+  (KuroPerformanceController.zfi = (e) => {
+    0 < _a.gLn.size && UE.KuroPerformanceBPLibrary.SetTargetFPS(e);
   }),
-  (KuroPerformanceController.Z0i = (e, r) => {
-    e && !r ? (_a.eTn = _a.Open("PerformanceLimitMode")) : _a.Close(_a.eTn);
+  (KuroPerformanceController.Zfi = (e, r) => {
+    e && !r ? (_a.vLn = _a.Open("PerformanceLimitMode")) : _a.Close(_a.vLn);
   }),
-  (KuroPerformanceController.Rqn = (e, r, t) => {
+  (KuroPerformanceController.w2n = (e, r, t) => {
     if (e) {
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
@@ -150,11 +142,11 @@ class KuroPerformanceController extends ControllerBase_1.ControllerBase {
       (e =
         GameQualitySettingsManager_1.GameQualitySettingsManager.Get().GetCurrentQualityInfo()),
         (r = e.GetFrameRate());
-      if (t < 5) 30 <= r && ((_a.xqn = !0), e.SetFrameRateTemploary(30));
-      else if (t < 10) 45 <= r && ((_a.xqn = !0), e.SetFrameRateTemploary(45));
+      if (t < 5) 30 <= r && ((_a.b2n = !0), e.SetFrameRateTemploary(30));
+      else if (t < 10) 45 <= r && ((_a.b2n = !0), e.SetFrameRateTemploary(45));
       else {
-        if (!_a.xqn) return;
-        (_a.xqn = !1), e.CancelFrameRateTemploary();
+        if (!_a.b2n) return;
+        (_a.b2n = !1), e.CancelFrameRateTemploary();
       }
       e.ApplyFrameRate();
     }

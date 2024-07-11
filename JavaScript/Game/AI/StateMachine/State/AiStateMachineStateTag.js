@@ -1,7 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AiStateMachineStateTag = void 0);
-const CombatDebugController_1 = require("../../../Utils/CombatDebugController"),
+const CombatLog_1 = require("../../../Utils/CombatLog"),
   AiStateMachine_1 = require("../AiStateMachine"),
   AiStateMachineState_1 = require("./AiStateMachineState");
 class AiStateMachineStateTag extends AiStateMachineState_1.AiStateMachineState {
@@ -28,7 +28,7 @@ class AiStateMachineStateTag extends AiStateMachineState_1.AiStateMachineState {
           i.TagId === this.TagId &&
           ((i.TagHandle = this.TagHandle), (e = !0));
     this.TagHandle ||
-      CombatDebugController_1.CombatDebugController.CombatError(
+      CombatLog_1.CombatLog.Error(
         "StateMachineNew",
         this.Node.Entity,
         "AiStateMachineStateTag移除Tag失败，TagHandle不存在",

@@ -14,7 +14,7 @@ class RoguelikeSkillDetail extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
       (this.Data = void 0),
-      (this.Dho = () => {
+      (this.Ilo = () => {
         var e =
             ModelManager_1.ModelManager.InventoryModel?.GetItemCountByConfigId(
               RoguelikeDefine_1.SKILL_POINT_ID,
@@ -68,7 +68,7 @@ class RoguelikeSkillDetail extends UiPanelBase_1.UiPanelBase {
       [15, UE.UIText],
       [16, UE.UIItem],
     ]),
-      (this.BtnBindInfo = [[9, this.Dho]]);
+      (this.BtnBindInfo = [[9, this.Ilo]]);
   }
   OnStart() {}
   Refresh(e) {

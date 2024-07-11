@@ -24,20 +24,20 @@ class PanelQteResultHandler {
   }
   kUe(e, t) {
     let o = void 0;
-    if ((o = 0 === e.Target ? t.GetSourceEntity() : this.TNi())) {
+    if ((o = 0 === e.Target ? t.GetSourceEntity() : this.TOi())) {
       let r = void 0,
         a = void 0;
       var l = e.AddTags,
         n = l.Num();
       for (let e = 0; e < n; e++) {
         var i = l.Get(e);
-        (r = r ?? o.GetComponent(185)).AddTag(i.TagId);
+        (r = r ?? o.GetComponent(188)).AddTag(i.TagId);
       }
       var s = e.RemoveTags,
         v = s.Num();
       for (let e = 0; e < v; e++) {
         var _ = s.Get(e);
-        (r = r ?? o.GetComponent(185)).RemoveTag(_.TagId);
+        (r = r ?? o.GetComponent(188)).RemoveTag(_.TagId);
       }
       var d = e.AddBuffs,
         c = d.Num();
@@ -47,7 +47,7 @@ class PanelQteResultHandler {
         if (f)
           for (let e = 0; e < c; e++) {
             var g = d.Get(e);
-            (a = a ?? o.GetComponent(157)).AddBuff(g, {
+            (a = a ?? o.GetComponent(159)).AddBuff(g, {
               InstigatorId: f,
               Reason: "界面QTE结算时添加",
               PreMessageId: u,
@@ -58,21 +58,21 @@ class PanelQteResultHandler {
         T = M.Num();
       for (let e = 0; e < T; e++) {
         var m = M.Get(e);
-        this.LNi(m, t, o);
+        this.LOi(m, t, o);
       }
     }
   }
-  LNi(e, r, a) {
+  LOi(e, r, a) {
     switch (e) {
       case 0:
-        var t = a.GetComponent(157);
+        var t = a.GetComponent(159);
         t && t.RemoveBuffByEffectType(36, "界面QTE解除冰冻buff");
         break;
       case 1:
-        this.DNi();
+        this.DOi();
     }
   }
-  DNi() {
+  DOi() {
     var e = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentTeamItem;
     if (0 === e?.CanGoDown(!0)) {
       var a = ModelManager_1.ModelManager.SceneTeamModel.GetTeamItems(),
@@ -89,7 +89,7 @@ class PanelQteResultHandler {
       }
     }
   }
-  TNi() {
+  TOi() {
     var e = Global_1.Global.BaseCharacter;
     if (e?.IsValid()) return e.CharacterActorComponent?.Entity;
   }

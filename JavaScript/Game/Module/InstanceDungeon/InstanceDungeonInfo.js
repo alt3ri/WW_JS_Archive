@@ -10,82 +10,87 @@ class InstanceDungeonInfo extends LogicTreeContainer_1.LogicTreeContainer {
   constructor(e) {
     super(),
       (this.IsInteractValid = !0),
-      (this.uli = 0),
-      (this.cli = ""),
-      (this.mli = 0),
-      (this.dli = 0),
-      (this.Cli = 0),
-      (this.gli = void 0),
-      (this.fli = void 0),
-      (this.pli = 0),
-      (this.vli = 0),
-      (this.Mli = void 0),
-      (this.Sli = void 0),
-      (this.Eli = 0),
-      (this.uli = e);
+      (this.u1i = 0),
+      (this.c1i = ""),
+      (this.m1i = 0),
+      (this.d1i = 0),
+      (this.C1i = 0),
+      (this.g1i = void 0),
+      (this.f1i = void 0),
+      (this.p1i = 0),
+      (this.v1i = 0),
+      (this.M1i = void 0),
+      (this.E1i = void 0),
+      (this.aca = void 0),
+      (this.S1i = 0),
+      (this.u1i = e);
   }
   get Id() {
-    return this.uli;
+    return this.u1i;
   }
   get Name() {
-    return this.cli;
+    return this.c1i;
   }
   get LevelPlayEntityId() {
-    return this.mli;
+    return this.m1i;
   }
   get MapId() {
-    return this.dli;
+    return this.d1i;
   }
   get InstanceId() {
-    return this.Cli;
+    return this.C1i;
   }
   get TrackConfig() {
-    return this.gli;
+    return this.g1i;
   }
   get RewardConfig() {
-    return this.fli;
+    return this.f1i;
   }
   get RewardId() {
-    return this.pli;
+    return this.p1i;
   }
   get RewardEntityId() {
-    return this.vli;
+    return this.v1i;
   }
   get AfterGetRewardAction() {
-    return this.Mli;
+    return this.M1i;
   }
   get LevelPlayOpenAction() {
-    return this.Sli;
+    return this.E1i;
+  }
+  get FinishEscAction() {
+    return this.aca;
   }
   get SubType() {
-    return this.Eli;
+    return this.S1i;
   }
   InitConfig() {
     var e = ModelManager_1.ModelManager.LevelPlayModel.GetLevelPlayConfig(
-      this.uli,
+      this.u1i,
     );
     if (e) {
-      this.dli = e.LevelId;
+      this.d1i = e.LevelId;
       var t = ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(
         ModelManager_1.ModelManager.CreatureModel.GetInstanceId(),
       );
       if (t)
         switch (
-          ((this.mli = e.LevelPlayEntityId),
-          (this.Cli = e.InstanceId),
-          (this.cli = PublicUtil_1.PublicUtil.GetConfigTextByKey(e.TidName)),
-          (this.gli = e.LevelPlayTrack),
-          (this.Sli = e.LevelPlayOpenActions),
-          (this.Eli = t.InstSubType),
+          ((this.m1i = e.LevelPlayEntityId),
+          (this.C1i = e.InstanceId),
+          (this.c1i = PublicUtil_1.PublicUtil.GetConfigTextByKey(e.TidName)),
+          (this.g1i = e.LevelPlayTrack),
+          (this.E1i = e.LevelPlayOpenActions),
+          (this.aca = e.EscActionsAfterDungeonCompletion),
+          (this.S1i = t.InstSubType),
           e.LevelPlayRewardConfig.Type)
         ) {
           case "Interact":
-            (this.pli = e.LevelPlayRewardConfig.RewardId),
-              (this.vli = e.LevelPlayRewardConfig.RewardEntityId),
-              (this.Mli = e.LevelPlayRewardConfig.RewardCompleteActions);
+            (this.p1i = e.LevelPlayRewardConfig.RewardId),
+              (this.v1i = e.LevelPlayRewardConfig.RewardEntityId),
+              (this.M1i = e.LevelPlayRewardConfig.RewardCompleteActions);
             break;
           case "Automatic":
-            this.pli = e.LevelPlayRewardConfig.RewardId;
+            this.p1i = e.LevelPlayRewardConfig.RewardId;
         }
       else
         Log_1.Log.CheckError() &&
@@ -93,24 +98,24 @@ class InstanceDungeonInfo extends LogicTreeContainer_1.LogicTreeContainer {
             "InstanceDungeon",
             19,
             "创建副本时找不到副本配置",
-            ["副本id", this.dli],
-            ["玩法id", this.uli],
+            ["副本id", this.d1i],
+            ["玩法id", this.u1i],
           );
     } else
       Log_1.Log.CheckError() &&
         Log_1.Log.Error("SceneGameplay", 19, "创建玩法时找不到玩法配置", [
           "玩法id",
-          this.uli,
+          this.u1i,
         ]);
   }
   GetInstanceDungeonConfig() {
     return ModelManager_1.ModelManager.LevelPlayModel.GetLevelPlayConfig(
-      this.uli,
+      this.u1i,
     );
   }
   GetInstanceDungeonNodeConfig(e) {
     return ModelManager_1.ModelManager.LevelPlayModel.GetLevelPlayNodeConfig(
-      this.uli,
+      this.u1i,
       e,
     );
   }

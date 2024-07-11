@@ -6,14 +6,15 @@ const UE = require("ue"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   FriendController_1 = require("../../Friend/FriendController"),
   GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract"),
-  LguiUtil_1 = require("../../Util/LguiUtil");
+  LguiUtil_1 = require("../../Util/LguiUtil"),
+  ChatDefine_1 = require("../ChatDefine");
 class SelectedFriendItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
-      (this.sSt = void 0),
-      (this.Wgt = void 0),
-      (this.MEt = () => {
-        this.Wgt && this.Wgt(this.sSt.PlayerId);
+      (this.pSt = void 0),
+      (this.oft = void 0),
+      (this.xyt = () => {
+        this.oft && this.oft(this.pSt.PlayerId);
       });
   }
   OnRegisterComponent() {
@@ -26,53 +27,53 @@ class SelectedFriendItem extends GridProxyAbstract_1.GridProxyAbstract {
       [5, UE.UIText],
       [6, UE.UIItem],
     ]),
-      (this.BtnBindInfo = [[0, this.MEt]]);
+      (this.BtnBindInfo = [[0, this.xyt]]);
   }
   BindOnClicked(e) {
-    this.Wgt = e;
+    this.oft = e;
   }
   OnBeforeDestroy() {
-    this.Wgt = void 0;
+    this.oft = void 0;
   }
   Refresh(e, i, t) {
-    (this.sSt = ModelManager_1.ModelManager.FriendModel.GetFriendById(e)),
-      this.sSt && (this.SEt(), this.C4e(), this.sct(), this.EEt(), this.yEt());
+    (this.pSt = ModelManager_1.ModelManager.FriendModel.GetFriendById(e)),
+      this.pSt && (this.Zke(), this.P5e(), this.pmt(), this.wyt(), this.Byt());
   }
-  SEt() {
-    var e = this.sSt.PlayerHeadPhoto,
+  Zke() {
+    var e = this.pSt.PlayerHeadPhoto,
       i = ConfigManager_1.ConfigManager.RoleConfig.GetRoleHeadIcon(e),
       t = this.GetTexture(1);
     this.SetRoleIcon(i, t, e);
   }
-  C4e() {
+  P5e() {
     var e = this.GetText(2),
-      i = this.GetText(3),
-      t = this.sSt.FriendRemark;
-    e.SetText(this.sSt.PlayerName),
-      t
-        ? (i.SetText(this.sSt.FriendRemark), i.SetUIActive(!0))
-        : i.SetUIActive(!1);
+      i = (this.GetText(3)?.SetUIActive(!1), this.pSt.FriendRemark);
+    i
+      ? (e.SetText(this.pSt.FriendRemark),
+        e?.SetColor(ChatDefine_1.playerMarkNameColor))
+      : (e.SetText(this.pSt.PlayerName),
+        e?.SetColor(ChatDefine_1.playerRealNameColor));
   }
-  sct() {
-    var e = this.sSt.PlayerLevel,
+  pmt() {
+    var e = this.pSt.PlayerLevel,
       i = this.GetText(5);
     LguiUtil_1.LguiUtil.SetLocalText(i, "LevelShow", e);
   }
-  EEt() {
-    var e = this.sSt.PlayerIsOnline,
+  wyt() {
+    var e = this.pSt.PlayerIsOnline,
       i = this.GetText(4),
       t = e ? "00D67E" : "D64600",
       t = UE.Color.FromHex(t);
     i.SetColor(t),
       e
         ? LguiUtil_1.LguiUtil.SetLocalText(i, "FriendOnline")
-        : 0 === this.sSt.PlayerLastOfflineTime
+        : 0 === this.pSt.PlayerLastOfflineTime
           ? i.SetText("")
-          : ((t = this.sSt.GetOfflineDay()),
+          : ((t = this.pSt.GetOfflineDay()),
             (e = FriendController_1.FriendController.GetOfflineTimeString(t)),
             LguiUtil_1.LguiUtil.SetLocalText(i, e, t));
   }
-  yEt() {
+  Byt() {
     this.GetItem(6).SetUIActive(!1);
   }
 }

@@ -8,16 +8,16 @@ const ModelBase_1 = require("../../../Core/Framework/ModelBase"),
 class TrackModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
-      (this.SDo = void 0),
-      (this.EDo = void 0),
-      (this.yDo = void 0),
+      (this.pRo = void 0),
+      (this.vRo = void 0),
+      (this.MRo = void 0),
       (this.DefaultTrackHideDis = 0);
   }
   OnInit() {
     return (
-      (this.SDo = new Map()),
-      (this.EDo = new Map()),
-      (this.yDo = new Map()),
+      (this.pRo = new Map()),
+      (this.vRo = new Map()),
+      (this.MRo = new Map()),
       (this.DefaultTrackHideDis = parseInt(
         ConfigManager_1.ConfigManager.QuestNewConfig.GetGlobalConfig(
           "TrackMarkHideDis",
@@ -28,9 +28,9 @@ class TrackModel extends ModelBase_1.ModelBase {
   }
   OnClear() {
     return (
-      this.SDo && (this.SDo.clear(), (this.SDo = void 0)),
-      this.EDo && (this.EDo.clear(), (this.EDo = void 0)),
-      this.yDo && (this.yDo.clear(), (this.yDo = void 0)),
+      this.pRo && (this.pRo.clear(), (this.pRo = void 0)),
+      this.vRo && (this.vRo.clear(), (this.vRo = void 0)),
+      this.MRo && (this.MRo.clear(), (this.MRo = void 0)),
       !0
     );
   }
@@ -39,38 +39,38 @@ class TrackModel extends ModelBase_1.ModelBase {
   }
   AddTrackData(e) {
     let t = this.GetTracksByType(e.TrackSource);
-    t || ((t = new Map()), this.SDo.set(e.TrackSource, t)),
+    t || ((t = new Map()), this.pRo.set(e.TrackSource, t)),
       e.TrackHideDis || (e.TrackHideDis = this.DefaultTrackHideDis),
       t.set(e.Id, e),
-      this.IDo(e);
+      this.ERo(e);
   }
   RemoveTrackData(e, t) {
     var i,
       e = this.GetTracksByType(e);
-    e && ((i = e.get(t)), e.delete(t), this.TDo(i));
+    e && ((i = e.get(t)), e.delete(t), this.SRo(i));
   }
   ClearTrackData() {
-    this.SDo.clear(),
-      this.EDo.clear(),
+    this.pRo.clear(),
+      this.vRo.clear(),
       EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.ClearTrackMark);
   }
-  IDo(t) {
+  ERo(t) {
     if (t && void 0 !== t.ShowGroupId) {
-      let e = this.EDo.get(t.ShowGroupId);
+      let e = this.vRo.get(t.ShowGroupId);
       (e = e || new Map()).set(t.Id, t);
     }
   }
-  TDo(e) {
+  SRo(e) {
     var t;
     e &&
       void 0 !== e.ShowGroupId &&
-      (t = this.EDo.get(e.ShowGroupId)) &&
+      (t = this.vRo.get(e.ShowGroupId)) &&
       t.delete(e.Id);
   }
   IsTargetTracking(e) {
     let t = void 0,
       i = void 0;
-    for (var [r, s] of this.SDo)
+    for (var [r, s] of this.pRo)
       for (var [, a] of s)
         a.TrackTarget === e &&
           (t || ((t = r), (i = a)), r > t) &&
@@ -93,7 +93,7 @@ class TrackModel extends ModelBase_1.ModelBase {
       ));
   }
   GetTracksByType(e) {
-    return this.SDo.get(e);
+    return this.pRo.get(e);
   }
   IsTracking(e, t) {
     return (
@@ -105,13 +105,13 @@ class TrackModel extends ModelBase_1.ModelBase {
   }
   UpdateGroupMinDistance(e, t) {
     var i;
-    this.yDo && e && (!(i = this.yDo.get(e)) || t <= i) && this.yDo.set(e, t);
+    this.MRo && e && (!(i = this.MRo.get(e)) || t <= i) && this.MRo.set(e, t);
   }
   CanShowInGroup(e, t) {
-    return !this.yDo || !e || !(e = this.yDo.get(e)) || t <= e;
+    return !this.MRo || !e || !(e = this.MRo.get(e)) || t <= e;
   }
   ClearGroupMinDistance() {
-    this.yDo?.clear();
+    this.MRo?.clear();
   }
 }
 exports.TrackModel = TrackModel;

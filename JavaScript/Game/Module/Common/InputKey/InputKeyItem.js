@@ -13,42 +13,42 @@ const UE = require("ue"),
 class InputKeyItem extends UiPanelBase_1.UiPanelBase {
   constructor(t) {
     super(),
-      (this.HSe = void 0),
-      (this.jRt = void 0),
-      (this.g_t = void 0),
-      (this.WRt = void 0),
-      (this.KRt = !1),
-      (this.QRt = !1),
-      (this.XRt = !1),
-      (this.$Rt = !1),
-      (this.YRt = void 0),
-      (this.ott = void 0),
-      (this.JRt = 0),
+      (this.HEe = void 0),
+      (this.XUt = void 0),
+      (this.xut = void 0),
+      (this.$Ut = void 0),
+      (this.YUt = !1),
+      (this.JUt = !1),
+      (this.zUt = !1),
+      (this.ZUt = !1),
+      (this.eAt = void 0),
+      (this.git = void 0),
+      (this.tAt = 0),
       (this.vq = !1),
-      (this.zRt = void 0),
-      (this.ZRt = !1),
+      (this.iAt = void 0),
+      (this.oAt = !1),
       (this.UniqueId = void 0),
-      (this.eUt = (t, i) => {
-        this.ZRt ||
-          !this.g_t ||
-          this.g_t <= 0 ||
-          (this.HSe &&
-            ((i = i.KeyName.toString()), this.HSe === i) &&
+      (this.rAt = (t, i) => {
+        this.oAt ||
+          !this.xut ||
+          this.xut <= 0 ||
+          (this.HEe &&
+            ((i = i.KeyName.toString()), this.HEe === i) &&
             (t
-              ? this.WRt && 0 < this.WRt
-                ? (this.zRt = TimerSystem_1.TimerSystem.Delay(() => {
-                    this.tUt();
-                  }, this.WRt))
-                : this.tUt()
-              : this.iUt()));
+              ? this.$Ut && 0 < this.$Ut
+                ? (this.iAt = TimerSystem_1.TimerSystem.Delay(() => {
+                    this.nAt();
+                  }, this.$Ut))
+                : this.nAt()
+              : this.sAt()));
       }),
-      (this.oUt = () => {
+      (this.aAt = () => {
         var t;
-        !this.g_t ||
-          this.g_t <= 0 ||
-          ((t = this.JRt / this.g_t),
+        !this.xut ||
+          this.xut <= 0 ||
+          ((t = this.tAt / this.xut),
           this.SetLongPressPercent(t),
-          (this.JRt += TimerSystem_1.MIN_TIME));
+          (this.tAt += TimerSystem_1.MIN_TIME));
       }),
       (this.UniqueId = t);
   }
@@ -60,74 +60,81 @@ class InputKeyItem extends UiPanelBase_1.UiPanelBase {
       [3, UE.UIItem],
       [4, UE.UIText],
       [5, UE.UITexture],
+      [6, UE.UITexture],
+      [7, UE.UITexture],
     ];
   }
   async OnBeforeStartAsync() {
-    (this.YRt = new PcAndGamepadProgressBar_1.PcAndGamepadProgressBar()),
-      await this.YRt.Init(this.GetItem(3), this.GetItem(2));
+    (this.eAt = new PcAndGamepadProgressBar_1.PcAndGamepadProgressBar()),
+      await this.eAt.Init(this.GetItem(3), this.GetItem(2));
   }
   OnBeforeShow() {
     EventSystem_1.EventSystem.Has(
       EventDefine_1.EEventName.OnInputAnyKey,
-      this.eUt,
+      this.rAt,
     ) ||
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnInputAnyKey,
-        this.eUt,
+        this.rAt,
       );
   }
   OnAfterHide() {
     EventSystem_1.EventSystem.Has(
       EventDefine_1.EEventName.OnInputAnyKey,
-      this.eUt,
+      this.rAt,
     ) &&
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnInputAnyKey,
-        this.eUt,
+        this.rAt,
       );
   }
   OnBeforeDestroy() {
-    (this.YRt = void 0), this.DeactivateLongPress();
+    (this.eAt = void 0), this.DeactivateLongPress();
   }
-  tUt() {
-    this.KRt && this.rUt(),
-      this.SetLongPressProgressVisible(this.KRt),
-      this.SetTextArrowVisible(this.XRt);
+  nAt() {
+    this.YUt && this.hAt(),
+      this.SetLongPressProgressVisible(this.YUt),
+      this.SetTextArrowVisible(this.zUt);
   }
-  iUt() {
+  sAt() {
     this.DeactivateLongPress(),
-      this.SetLongPressProgressVisible(this.QRt),
-      this.SetTextArrowVisible(this.$Rt);
+      this.SetLongPressProgressVisible(this.JUt),
+      this.SetTextArrowVisible(this.ZUt);
   }
-  nUt() {
-    this.zRt &&
-      TimerSystem_1.TimerSystem.Has(this.zRt) &&
-      TimerSystem_1.TimerSystem.Remove(this.zRt);
+  lAt() {
+    this.iAt &&
+      TimerSystem_1.TimerSystem.Has(this.iAt) &&
+      TimerSystem_1.TimerSystem.Remove(this.iAt);
   }
   Refresh(t) {
-    (this.HSe = t.KeyName),
-      (this.ZRt = !0 === t.IsLongPressDisable),
-      (this.g_t = t.LongPressTime),
-      (this.WRt = t.DelayPressTime),
-      (this.KRt = !0 === t.IsShowLongPressWhenPress),
-      (this.QRt = !0 === t.IsShowLongPressWhenRelease),
-      (this.XRt = !0 === t.IsShowTextArrowWhenPress),
-      (this.$Rt = !0 === t.IsShowTextArrowWhenRelease);
+    (this.HEe = t.KeyName),
+      (this.oAt = !0 === t.IsLongPressDisable),
+      (this.xut = t.LongPressTime),
+      (this.$Ut = t.DelayPressTime),
+      (this.YUt = !0 === t.IsShowLongPressWhenPress),
+      (this.JUt = !0 === t.IsShowLongPressWhenRelease),
+      (this.zUt = !0 === t.IsShowTextArrowWhenPress),
+      (this.ZUt = !0 === t.IsShowTextArrowWhenRelease);
     var i = !0 === t.IsLongPressProcessVisible,
-      e = !0 === t.IsTextArrowVisible,
+      s = !0 === t.IsTextArrowVisible,
+      e = !0 === t.IsUpArrowVisible,
+      h = !0 === t.IsDownArrowVisible,
       t = t.DescriptionId;
-    this.SetKeyTexture(this.HSe),
-      this.SetTextArrowVisible(e),
+    this.SetKeyTexture(this.HEe),
+      this.SetTextArrowVisible(s),
+      this.SetUpArrowVisible(e),
+      this.SetDownArrowVisible(h),
       this.SetDescription(t),
       this.DeactivateLongPress(),
-      i ? this.SetLongPressPercent(0) : this.SetLongPressProgressVisible(i);
+      this.SetLongPressProgressVisible(i),
+      i && this.SetLongPressPercent(0);
   }
   SetLongPressDisable(t) {
-    this.ZRt = t;
+    this.oAt = t;
   }
   SetKeyTexture(t) {
-    if (this.jRt !== t) {
-      this.jRt = t;
+    if (this.XUt !== t) {
+      this.XUt = t;
       t = InputSettings_1.InputSettings.GetKeyIconPath(t);
       const i = this.GetTexture(0);
       t
@@ -138,16 +145,22 @@ class InputKeyItem extends UiPanelBase_1.UiPanelBase {
     }
   }
   SetLongPressTime(t) {
-    this.g_t = t;
+    this.xut = t;
   }
   SetLongPressPercent(t) {
-    this.YRt?.SetProgressPercent(t);
+    this.eAt?.SetPercent(Math.min(t, 1));
   }
   SetLongPressProgressVisible(t) {
-    this.YRt?.SetProgressVisible(t);
+    this.eAt?.SetProgressVisible(t);
   }
   SetTextArrowVisible(t) {
     this.GetTexture(5)?.SetUIActive(t);
+  }
+  SetUpArrowVisible(t) {
+    this.GetTexture(6)?.SetUIActive(t);
+  }
+  SetDownArrowVisible(t) {
+    this.GetTexture(7)?.SetUIActive(t);
   }
   SetDescription(t) {
     var i = this.GetText(4);
@@ -155,19 +168,24 @@ class InputKeyItem extends UiPanelBase_1.UiPanelBase {
       ? (LguiUtil_1.LguiUtil.SetLocalTextNew(i, t), i?.SetUIActive(!0))
       : i?.SetUIActive(!1);
   }
-  rUt() {
-    (this.JRt = 0),
-      (this.ott = TimerSystem_1.TimerSystem.Forever(
-        this.oUt,
+  hAt() {
+    (this.tAt = 0),
+      (this.git = TimerSystem_1.TimerSystem.Forever(
+        this.aAt,
         TimerSystem_1.MIN_TIME,
       ));
   }
   DeactivateLongPress() {
-    this.ott &&
-      TimerSystem_1.TimerSystem.Has(this.ott) &&
-      (TimerSystem_1.TimerSystem.Remove(this.ott), (this.ott = void 0)),
-      (this.JRt = 0),
-      this.nUt();
+    this.git &&
+      TimerSystem_1.TimerSystem.Has(this.git) &&
+      (TimerSystem_1.TimerSystem.Remove(this.git), (this.git = void 0)),
+      (this.tAt = 0),
+      this.lAt();
+  }
+  ResetLongPress() {
+    this.DeactivateLongPress(),
+      this.SetLongPressPercent(0),
+      this.SetLongPressProgressVisible(!1);
   }
   SetEnable(t, i = !1) {
     (this.vq === t && !i) ||

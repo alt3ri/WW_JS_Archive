@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: !0 });
 const puerts_1 = require("puerts"),
   UE = require("ue"),
+  ActorSystem_1 = require("../../../../Core/Actor/ActorSystem"),
   Log_1 = require("../../../../Core/Common/Log"),
   QueryTypeDefine_1 = require("../../../../Core/Define/QueryTypeDefine"),
   Vector_1 = require("../../../../Core/Utils/Math/Vector"),
@@ -14,8 +15,6 @@ class SceneCharacterInteraction {
   constructor() {
     (this.OwnerCharacter = void 0),
       (this.SwimComponent = void 0),
-      (this.IsInGrassRange = !1),
-      (this.IsInWaterRange = !1),
       (this.GrassInteractionStrength = 0),
       (this.ActorLocation = void 0),
       (this.TsActorLocation = void 0),
@@ -23,6 +22,8 @@ class SceneCharacterInteraction {
       (this.ActorSpeed = void 0),
       (this.Config = void 0),
       (this.WaterEffect = void 0),
+      (this.GrassInteractionActor = void 0),
+      (this.GrassInteractionComponent = void 0),
       (this.CapsuleHalfHeight = 0),
       (this.IsEnable = !1),
       (this.IsInWaterOrOnMaterial = !1),
@@ -33,7 +34,6 @@ class SceneCharacterInteraction {
       (this.UpdateWaterStateInternalPc = 0.15),
       (this.UpdateWaterStateInternalScale = 1),
       (this.UpdateWaterStateCounter = 0),
-      (this.IsInGrass = !1),
       (this.TempVector = void 0);
   }
   SetInWater() {
@@ -99,28 +99,7 @@ class SceneCharacterInteraction {
                     this.WaterHeight,
                   )
               : this.WaterEffect.SetStateNone(this.ActorSpeed)),
-          this.WaterEffect.Tick()),
-        t &&
-          this.Config?.自动草集群 &&
-          UE.KuroVoxelSystem.IsVoxelSystemInitialized(
-            GlobalData_1.GlobalData.GameInstance.GetWorld(),
-          ) &&
-          (UE.KuroVoxelSystem.GetVoxelInfoAtPos(
-            GlobalData_1.GlobalData.GameInstance.GetWorld(),
-            this.ActorLocation,
-          ).MtlID === SceneCharacterInteraction.t1r
-            ? this.IsInGrass ||
-              (UE.KuroRenderingRuntimeBPPluginBPLibrary.AddAdditionalClusteredStuff(
-                GlobalData_1.GlobalData.World,
-                this.Config.草集群特效,
-              ),
-              (this.IsInGrass = !0))
-            : this.IsInGrass &&
-              (UE.KuroRenderingRuntimeBPPluginBPLibrary.RemoveAdditionalClusteredStuff(
-                GlobalData_1.GlobalData.World,
-                this.Config.草集群特效,
-              ),
-              (this.IsInGrass = !1)));
+          this.WaterEffect.Tick());
     }
   }
   Init() {
@@ -131,23 +110,49 @@ class SceneCharacterInteraction {
         new SceneCharacterWaterEffect_1.SceneCharacterWaterEffect()),
       (this.WaterEffect.Config = this.Config.水特效),
       this.WaterEffect.Start(this.OwnerCharacter),
-      this.WaterEffect.Enable()),
-      (this.IsInGrassRange = !1),
-      (this.IsInWaterRange = !1),
-      (this.GrassInteractionStrength = 0),
-      (this.IsEnable = !1),
-      (this.TempVector = Vector_1.Vector.Create()),
-      (this.ActorSpeed = Vector_1.Vector.Create()),
-      this.OwnerCharacter &&
-        ((this.ActorLocation = this.OwnerCharacter.K2_GetActorLocation()),
-        (this.TsActorLocation = Vector_1.Vector.Create(this.ActorLocation)),
-        (this.TsPreviousActorLocation = Vector_1.Vector.Create(
-          this.ActorLocation,
-        ))),
-      1 ===
+      this.WaterEffect.Enable());
+    var t =
+        1 ===
         UE.KuroRenderingRuntimeBPPluginBPLibrary.GetWorldFeatureLevel(
           this.OwnerCharacter,
-        ) && (this.UpdateWaterStateInternal = this.UpdateWaterStateInternalPc),
+        ),
+      i =
+        ((this.GrassInteractionStrength = 0),
+        (this.IsEnable = !1),
+        (this.TempVector = Vector_1.Vector.Create()),
+        (this.ActorSpeed = Vector_1.Vector.Create()),
+        this.OwnerCharacter &&
+          ((this.ActorLocation = this.OwnerCharacter.K2_GetActorLocation()),
+          (this.TsActorLocation = Vector_1.Vector.Create(this.ActorLocation)),
+          (this.TsPreviousActorLocation = Vector_1.Vector.Create(
+            this.ActorLocation,
+          ))),
+        this.Config.植被交互相对位置);
+    (i.Z = i.Z - this.CapsuleHalfHeight),
+      this.OwnerCharacter &&
+        t &&
+        this.Config.启用植被交互 &&
+        ((this.GrassInteractionActor = ActorSystem_1.ActorSystem.Get(
+          UE.Actor.StaticClass(),
+          void 0,
+        )),
+        (this.GrassInteractionComponent =
+          this.GrassInteractionActor.AddComponentByClass(
+            UE.KuroGrassInteractionSphereComponent.StaticClass(),
+            !1,
+            new UE.Transform(i),
+            !1,
+          )),
+        this.GrassInteractionActor.K2_AttachToActor(
+          this.OwnerCharacter,
+          void 0,
+          0,
+          0,
+          0,
+          !1,
+        ),
+        (this.GrassInteractionComponent.Radius = this.Config.植被交互半径)),
+      t && (this.UpdateWaterStateInternal = this.UpdateWaterStateInternalPc),
       (this.UpdateWaterStateInternal *= this.UpdateWaterStateInternalScale);
   }
   Enable() {
@@ -159,8 +164,10 @@ class SceneCharacterInteraction {
       SceneCharacterInteraction.koe(),
       (this.IsEnable = !0),
       (this.SwimComponent =
-        this.OwnerCharacter.CharacterActorComponent?.Entity?.GetComponent(66)),
-      this.OwnerCharacter.CapsuleComponent && this.CheckInWater(0);
+        this.OwnerCharacter.CharacterActorComponent?.Entity?.GetComponent(68)),
+      this.OwnerCharacter.CapsuleComponent && this.CheckInWater(0),
+      this.GrassInteractionComponent &&
+        (this.GrassInteractionComponent.bEnabled = !0);
   }
   Disable() {
     Log_1.Log.CheckInfo() &&
@@ -170,13 +177,19 @@ class SceneCharacterInteraction {
       ]),
       (this.IsEnable = !1),
       this.ClearInWaterOrOnMaterialState(),
-      this.WaterEffect && this.WaterEffect.Disable();
+      this.WaterEffect && this.WaterEffect.Disable(),
+      this.GrassInteractionComponent &&
+        (this.GrassInteractionComponent.bEnabled = !1);
   }
   GetEnabled() {
     return this.IsEnable;
   }
   Destroy() {
-    this.Disable();
+    this.Disable(),
+      this.GrassInteractionActor &&
+        ((this.GrassInteractionComponent = void 0),
+        ActorSystem_1.ActorSystem.Put(this.GrassInteractionActor),
+        (this.GrassInteractionActor = void 0));
   }
   ClearInWaterOrOnMaterialState() {
     (this.IsInWaterOrOnMaterial = !1), (this.PhysicalMaterial = void 0);
@@ -202,22 +215,22 @@ class SceneCharacterInteraction {
         t,
         ColorUtils_1.ColorUtils.LinearRed,
       ),
-      t.SetDrawDebugTrace(this.i1r ? 2 : 0),
-      (SceneCharacterInteraction.Nnr = t);
+      t.SetDrawDebugTrace(this.Z1r ? 2 : 0),
+      (SceneCharacterInteraction.bsr = t);
   }
   static SetTraceDebug(t) {
-    SceneCharacterInteraction.Nnr.SetDrawDebugTrace(t ? 2 : 0);
+    SceneCharacterInteraction.bsr.SetDrawDebugTrace(t ? 2 : 0);
   }
   CheckInWater(t) {
     if (this.Config?.启用水面交互) {
-      SceneCharacterInteraction.Nnr || SceneCharacterInteraction.koe();
+      SceneCharacterInteraction.bsr || SceneCharacterInteraction.koe();
       var i = this.OwnerCharacter.CapsuleComponent,
         e = i.K2_GetComponentLocation(),
         s = e.op_Addition(new UE.Vector(0, 0, i.CapsuleHalfHeight)),
         e = e.op_Addition(
           new UE.Vector(0, 0, -i.CapsuleHalfHeight - this.Config.射线向下延长),
         ),
-        i = SceneCharacterInteraction.Nnr,
+        i = SceneCharacterInteraction.bsr,
         s =
           (TraceElementCommon_1.TraceElementCommon.SetStartLocation(i, s),
           TraceElementCommon_1.TraceElementCommon.SetEndLocation(i, e),
@@ -241,14 +254,14 @@ class SceneCharacterInteraction {
               )),
               void this.SetInWater()
             );
-          var a = h.Components.Get(i);
+          var o = h.Components.Get(i);
           let t = void 0;
           if (
             (t =
-              a instanceof UE.LandscapeHeightfieldCollisionComponent
+              o instanceof UE.LandscapeHeightfieldCollisionComponent
                 ? h.PhysMaterials.Get(i)
                 : UE.KuroRenderingRuntimeBPPluginBPLibrary.GetComponentPhysicalMaterial(
-                    a,
+                    o,
                   )) &&
             this.WaterEffect.IsMaterialInUse(t)
           )
@@ -274,8 +287,7 @@ class SceneCharacterInteraction {
           : this.ClearInWaterOrOnMaterialState());
   }
 }
-(SceneCharacterInteraction.t1r = 2),
-  (SceneCharacterInteraction.Nnr = void 0),
-  (SceneCharacterInteraction.i1r = !1),
+(SceneCharacterInteraction.bsr = void 0),
+  (SceneCharacterInteraction.Z1r = !1),
   (exports.default = SceneCharacterInteraction);
 //# sourceMappingURL=SceneCharacterInteraction.js.map

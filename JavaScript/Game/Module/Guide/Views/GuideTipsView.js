@@ -18,19 +18,19 @@ class GuideTipsView extends GuideBaseView_1.GuideBaseView {
   constructor() {
     super(...arguments),
       (this.Lo = void 0),
-      (this.ZBt = void 0),
-      (this.gzt = !0),
-      (this.a4s = void 0),
-      (this.fzt = (e) => {
+      (this.iqt = void 0),
+      (this.gZt = !0),
+      (this.QVs = void 0),
+      (this.fZt = (e) => {
         InputDistributeController_1.InputDistributeController.RefreshInputTag(),
           e &&
             !UiManager_1.UiManager.IsViewShow("GmView") &&
             UiManager_1.UiManager.IsViewShow("BattleView") &&
             this.GuideStepInfo.Config.TimeScale < 1 &&
             (e = Global_1.Global.CharacterController) &&
-            ((e.bShowMouseCursor = !1), this.h4s());
+            ((e.bShowMouseCursor = !1), this.$Vs());
       }),
-      (this.mzt = (e, i) => {
+      (this.mZt = (e, i) => {
         (e &&
           (this.CombineInputMap.set(e, i), !this.IsAllCombineInputPass())) ||
           (this.UnbindInput(this.Lo.InputEnums, this.Lo.InputEnums),
@@ -58,13 +58,13 @@ class GuideTipsView extends GuideBaseView_1.GuideBaseView {
   OnGuideBaseViewAddEvent() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnShowMouseCursor,
-      this.fzt,
+      this.fZt,
     );
   }
   OnGuideBaseViewRemoveEvent() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnShowMouseCursor,
-      this.fzt,
+      this.fZt,
     );
   }
   OnGuideBaseViewAfterHide() {
@@ -74,7 +74,7 @@ class GuideTipsView extends GuideBaseView_1.GuideBaseView {
   }
   OnBeforeGuideBaseViewCreate() {
     (this.Lo = this.GuideStepInfo.ViewData.ViewConf),
-      this.BindInput(this.Lo.InputEnums, this.Lo.InputEnums, this.mzt);
+      this.BindInput(this.Lo.InputEnums, this.Lo.InputEnums, this.mZt);
   }
   OnGuideBaseViewStart() {
     var e = this.GetText(2);
@@ -91,18 +91,18 @@ class GuideTipsView extends GuideBaseView_1.GuideBaseView {
   OnGuideViewAfterShow() {
     var e = this.GetItem(3);
     this.TotalDuration
-      ? ((this.ZBt = new GuideCountDownItem_1.GuideCountDownItem(
+      ? ((this.iqt = new GuideCountDownItem_1.GuideCountDownItem(
           this.TotalDuration,
         )),
-        this.ZBt.Init(e))
+        this.iqt.Init(e))
       : e.SetUIActive(!1),
-      this.BindInput(this.Lo.InputEnums, this.Lo.InputEnums, this.mzt);
+      this.BindInput(this.Lo.InputEnums, this.Lo.InputEnums, this.mZt);
   }
   async OnBeforeHideAsync() {
     var e = this.GetItem(3);
     this.UiViewSequence.StopSequenceByKey("Start"),
       e.SetUIActive(!1),
-      this.l4s(),
+      this.XVs(),
       this.IsFinished &&
         !this.TimeTicker &&
         (this.GetItem(1).SetUIActive(!0),
@@ -116,31 +116,31 @@ class GuideTipsView extends GuideBaseView_1.GuideBaseView {
         0,
       ) &&
       !this.HasConflictView();
-    this.IsBusy || i === this.gzt || ((this.gzt = i), this.SetActive(i));
+    this.IsBusy || i === this.gZt || ((this.gZt = i), this.SetActive(i));
   }
   OnAfterPlayStartSequence() {
     this.Lo.UseLoopAnim
       ? this.UiViewSequence.PlaySequence("AutoLoop1")
       : this.UiViewSequence.StopSequenceByKey("AutoLoop1");
   }
-  h4s() {
+  $Vs() {
     var e = Global_1.Global.CharacterController;
-    this.a4s ||
-      UE.KuroInputFunctionLibrary.HasInputModeReply(this.a4s) ||
-      (this.a4s = UE.KuroInputFunctionLibrary.SetGameOnlyInputMode(
+    this.QVs ||
+      UE.KuroInputFunctionLibrary.HasInputModeReply(this.QVs) ||
+      (this.QVs = UE.KuroInputFunctionLibrary.SetGameOnlyInputMode(
         e,
         "GuideTipsView设置输入模式",
       ));
   }
-  l4s() {
+  XVs() {
     var e;
-    this.a4s &&
+    this.QVs &&
       ((e = Global_1.Global.CharacterController),
-      UE.KuroInputFunctionLibrary.ReplyInputMode(e, this.a4s),
-      (this.a4s = void 0));
+      UE.KuroInputFunctionLibrary.ReplyInputMode(e, this.QVs),
+      (this.QVs = void 0));
   }
   OnDurationChange(e) {
-    this.ZBt && this.ZBt.OnDurationChange(e);
+    this.iqt && this.iqt.OnDurationChange(e);
   }
 }
 exports.GuideTipsView = GuideTipsView;

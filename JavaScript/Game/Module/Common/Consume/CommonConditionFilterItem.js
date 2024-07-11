@@ -8,7 +8,7 @@ class CommonConditionFilterItem extends UiPanelBase_1.UiPanelBase {
     super(),
       (this.QualityInfo = e),
       (this.ToggleFunction = void 0),
-      (this.x4e = (t) => {
+      (this.Bke = (t) => {
         this.ToggleFunction &&
           this.ToggleFunction(
             this.QualityInfo.Id,
@@ -22,7 +22,7 @@ class CommonConditionFilterItem extends UiPanelBase_1.UiPanelBase {
       [0, UE.UIExtendToggle],
       [1, UE.UIText],
     ]),
-      (this.BtnBindInfo = [[0, this.x4e]]);
+      (this.BtnBindInfo = [[0, this.Bke]]);
   }
   OnStart() {
     this.GetText(1).ShowTextNew(this.QualityInfo.ConsumeFilterText);

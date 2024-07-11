@@ -17,84 +17,84 @@ class CharDecalShadow extends CharRenderBase_1.CharRenderBase {
     super(...arguments),
       (this.DecalShadowEnabled = !1),
       (this.RealtimeShadowEnabled = !0),
-      (this.tar = void 0),
+      (this.thr = void 0),
       (this.Lo = void 0),
-      (this.iar = new Map()),
-      (this.oar = void 0),
-      (this.rar = void 0),
-      (this.nar = void 0),
-      (this.sar = 1),
-      (this.aar = new UE.FName("Opacity"));
+      (this.ihr = new Map()),
+      (this.ohr = void 0),
+      (this.rhr = void 0),
+      (this.nhr = void 0),
+      (this.shr = 1),
+      (this.ahr = new UE.FName("Opacity"));
   }
   static OnSetDecalShadowEnabled(t) {
-    if (0 < t) for (const e of CharDecalShadow.har) e.EnableDecalShadow();
-    else for (const i of CharDecalShadow.har) i.DisableDecalShadow();
+    if (0 < t) for (const e of CharDecalShadow.hhr) e.EnableDecalShadow();
+    else for (const i of CharDecalShadow.hhr) i.DisableDecalShadow();
   }
   Start() {
-    (this.tar = this.GetRenderingComponent().GetOwner()),
+    (this.thr = this.GetRenderingComponent().GetOwner()),
       (this.Lo = this.GetRenderingComponent().DecalShadowConfig),
       this.Lo ||
         (this.Lo =
           RenderDataManager_1.RenderDataManager.Get().GetGlobalDecalShadowConfig()),
       this.Lo &&
-        (this.lar(),
-        CharDecalShadow.har.add(this),
-        CharDecalShadow._ar ||
+        (this.lhr(),
+        CharDecalShadow.hhr.add(this),
+        CharDecalShadow._hr ||
           (EventSystem_1.EventSystem.Add(
             EventDefine_1.EEventName.SetDecalShadowEnabled,
             CharDecalShadow.OnSetDecalShadowEnabled,
           ),
-          (CharDecalShadow._ar = !0)),
+          (CharDecalShadow._hr = !0)),
         this.OnInitSuccess());
   }
   Destroy() {
-    this.oar?.K2_DestroyActor(), CharDecalShadow.har.delete(this);
+    this.ohr?.K2_DestroyActor(), CharDecalShadow.hhr.delete(this);
   }
-  lar() {
-    var e = this.tar.K2_GetComponentsByClass(
+  lhr() {
+    var e = this.thr.K2_GetComponentsByClass(
         UE.PrimitiveComponent.StaticClass(),
       ),
       i = e.Num();
     for (let t = 0; t < i; t++) {
       var h = e.Get(t);
-      h.CastShadow && this.iar.set(h.GetName(), h);
+      h.CastShadow && this.ihr.set(h.GetName(), h);
     }
   }
   AddPrimitiveComponent(t, e) {
     e.CastShadow &&
       (this.RemovePrimitiveComponent(t),
-      this.iar.set(t, e),
+      this.ihr.set(t, e),
       this.RealtimeShadowEnabled || (e.CastShadow = !1));
   }
   RemovePrimitiveComponent(t) {
-    var e = this.iar.get(t);
-    e && ((e.CastShadow = !0), this.iar.delete(t));
+    var e = this.ihr.get(t);
+    e && ((e.CastShadow = !0), this.ihr.delete(t));
   }
   EnableDecalShadow() {
     var t, e, i;
     this.DecalShadowEnabled ||
       ((t = this.Lo) &&
-        ((i = (e = this.tar).GetComponentByClass(
+        ((i = (e = this.thr).GetComponentByClass(
           UE.CapsuleComponent.StaticClass(),
         ))
-          ? (this.oar
-              ? (this.rar.SetVisibility(!0),
+          ? (this.ohr
+              ? (this.rhr.SetVisibility(!0),
                 Info_1.Info.IsGameRunning() ||
-                  this.uar(t, i.CapsuleRadius, i.CapsuleHalfHeight))
-              : ((this.oar = ActorSystem_1.ActorSystem.Spawn(
+                  this.uhr(t, i.CapsuleRadius, i.CapsuleHalfHeight))
+              : ((this.ohr = ActorSystem_1.ActorSystem.Spawn(
                   UE.Actor.StaticClass(),
                   void 0,
-                  this.tar,
+                  this.thr,
                 )),
-                (this.rar = this.oar.AddComponentByClass(
+                (this.rhr = this.ohr.AddComponentByClass(
                   UE.DecalComponent.StaticClass(),
                   !1,
                   void 0,
                   !1,
                 )),
                 ControllerHolder_1.ControllerHolder.AttachToActorController.AttachToActor(
-                  this.oar,
-                  this.tar,
+                  this.ohr,
+                  this.thr,
                   2,
                   "CharDecalShadow.EnableDecalShadow",
                   void 0,
@@ -103,19 +103,19 @@ class CharDecalShadow extends CharRenderBase_1.CharRenderBase {
                   0,
                   !1,
                 ),
-                this.oar.K2_SetActorRotation(
+                this.ohr.K2_SetActorRotation(
                   UE.Rotator.MakeFromEuler(new UE.Vector(0, -90, 0)),
                   !0,
                 ),
-                this.oar.K2_SetActorRelativeLocation(
+                this.ohr.K2_SetActorRelativeLocation(
                   new UE.Vector(0, 0, -i.CapsuleHalfHeight),
                   !1,
                   void 0,
                   !0,
                 ),
-                this.uar(t, i.CapsuleRadius, i.CapsuleHalfHeight)),
+                this.uhr(t, i.CapsuleRadius, i.CapsuleHalfHeight)),
             (this.DecalShadowEnabled = !0),
-            this.SetDecalShadowOpacity(this.sar))
+            this.SetDecalShadowOpacity(this.shr))
           : Log_1.Log.CheckError() &&
             Log_1.Log.Error("Render", 26, "Decal Shadow找不到胶囊体", [
               "Actor: ",
@@ -124,55 +124,56 @@ class CharDecalShadow extends CharRenderBase_1.CharRenderBase {
   }
   DisableDecalShadow() {
     this.DecalShadowEnabled &&
-      (this.rar?.SetVisibility(!1),
+      (this.rhr?.SetVisibility(!1),
       (this.DecalShadowEnabled = !1),
-      this.SetDecalShadowOpacity(this.sar));
+      this.SetDecalShadowOpacity(this.shr));
   }
   EnableRealtimeShadow() {
     if (!this.RealtimeShadowEnabled) {
-      for (const t of this.iar.values()) t.SetCastShadow(!0);
+      for (const t of this.ihr.values()) t.SetCastShadow(!0);
       (this.RealtimeShadowEnabled = !0),
-        this.SetRealtimeShadowOpacity(this.sar);
+        this.SetRealtimeShadowOpacity(this.shr);
     }
   }
   DisableRealtimeShadow() {
     if (this.RealtimeShadowEnabled) {
-      for (const t of this.iar.values()) t.SetCastShadow(!1);
+      for (const t of this.ihr.values()) t.SetCastShadow(!1);
       (this.RealtimeShadowEnabled = !1),
-        this.SetRealtimeShadowOpacity(this.sar);
+        this.SetRealtimeShadowOpacity(this.shr);
     }
   }
   DisableAllShadow() {
     this.DisableDecalShadow(), this.DisableRealtimeShadow();
   }
   SetDecalShadowOpacity(t) {
-    (this.sar = t),
+    (this.shr = t),
       this.DecalShadowEnabled &&
         (t < MathUtils_1.MathUtils.KindaSmallNumber
-          ? this.rar.SetVisibility(!1)
-          : (this.rar.SetVisibility(!0),
-            this.nar.SetScalarParameterValue(this.aar, t)));
+          ? this.rhr.SetVisibility(!1)
+          : (this.rhr.SetVisibility(!0),
+            this.nhr.SetScalarParameterValue(this.ahr, t)));
   }
   SetRealtimeShadowOpacity(t) {
     if (
-      ((this.sar = t),
+      ((this.shr = t),
       this.RealtimeShadowEnabled &&
         3 == this.GetRenderingComponent().RenderType)
     ) {
-      var e = t > CharDecalShadow.car;
-      for (const i of this.iar.values()) i.SetCastShadow(e);
+      var e = t > CharDecalShadow.chr;
+      for (const i of this.ihr.values()) i.SetCastShadow(e);
     }
   }
-  uar(t, e, i) {
-    (this.rar.ZFadingFactor = t.ZDistanceFadeFactor),
-      (this.rar.ZFadingPower = t.ZDistanceFadePower),
-      (this.nar = UE.KismetMaterialLibrary.CreateDynamicMaterialInstance(
-        this.rar,
+  uhr(t, e, i) {
+    (this.rhr.ZFadingFactor = t.ZDistanceFadeFactor),
+      (this.rhr.ZFadingPower = t.ZDistanceFadePower),
+      (this.nhr = UE.KismetMaterialLibrary.CreateDynamicMaterialInstance(
+        this.rhr,
         t.DecalShadowMaterial,
       )),
-      this.rar.SetDecalMaterial(this.nar);
-    (e *= t.DecalBoxScaleHori), (i *= t.DecalBoxScaleVerti);
-    this.rar.SetWorldScale3D(new UE.Vector(i, e, e));
+      this.rhr.SetDecalMaterial(this.nhr);
+    var h = 25 * t.DecalBoxScaleHori,
+      i = i * t.DecalBoxScaleVerti;
+    this.rhr.SetWorldScale3D(new UE.Vector(i, h, h));
   }
   GetStatName() {
     return "CharDecalShadow";
@@ -181,7 +182,7 @@ class CharDecalShadow extends CharRenderBase_1.CharRenderBase {
     return RenderConfig_1.RenderConfig.IdDecalShadow;
   }
 }
-((exports.CharDecalShadow = CharDecalShadow)._ar = !1),
-  (CharDecalShadow.har = new Set()),
-  (CharDecalShadow.car = 0.2);
+((exports.CharDecalShadow = CharDecalShadow)._hr = !1),
+  (CharDecalShadow.hhr = new Set()),
+  (CharDecalShadow.chr = 0.2);
 //# sourceMappingURL=CharDecalShadow.js.map

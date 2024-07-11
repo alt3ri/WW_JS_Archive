@@ -16,14 +16,15 @@ class CharMaterialContainer extends CharRenderBase_1.CharRenderBase {
   constructor() {
     super(...arguments),
       (this.AllBodyInfoList = void 0),
-      (this.ihr = ""),
+      (this.Zhr = ""),
+      (this.Gna = new Array()),
       (this.xW = void 0);
   }
   Awake(e) {
     super.Awake(e);
     e = this.RenderComponent.GetOwner();
     if (e?.IsValid()) {
-      (this.ihr = e.GetName()), (this.AllBodyInfoList = new Map());
+      (this.Zhr = e.GetName()), (this.AllBodyInfoList = new Map());
       var t = e.K2_GetComponentsByClass(UE.SkeletalMeshComponent.StaticClass()),
         o = t.Num();
       Log_1.Log.CheckInfo() &&
@@ -31,7 +32,7 @@ class CharMaterialContainer extends CharRenderBase_1.CharRenderBase {
           "RenderCharacter",
           41,
           "CharMaterialContainer.Awake",
-          ["Actor", this.ihr],
+          ["Actor", this.Zhr],
           ["skeletalCompsNum", o],
         );
       let r = !1;
@@ -49,7 +50,7 @@ class CharMaterialContainer extends CharRenderBase_1.CharRenderBase {
                       "RenderCharacter",
                       14,
                       "材质容器部位初始化失败",
-                      ["Actor", this.ihr],
+                      ["Actor", this.Zhr],
                       ["部位名称", n],
                     )))
               : Log_1.Log.CheckWarn() &&
@@ -57,7 +58,7 @@ class CharMaterialContainer extends CharRenderBase_1.CharRenderBase {
                   "RenderCharacter",
                   41,
                   "资产的SkeletalMeshComponent的SkeletalMesh为空",
-                  ["Actor", this.ihr],
+                  ["Actor", this.Zhr],
                   ["SkeletalName", n],
                 ))
           : Log_1.Log.CheckError() &&
@@ -65,7 +66,7 @@ class CharMaterialContainer extends CharRenderBase_1.CharRenderBase {
               "RenderCharacter",
               41,
               "材质容器初始化失败，组件不可用",
-              ["Actor", this.ihr],
+              ["Actor", this.Zhr],
             );
       }
       this.OnInitSuccess(),
@@ -75,9 +76,9 @@ class CharMaterialContainer extends CharRenderBase_1.CharRenderBase {
               "RenderCharacter",
               14,
               "无Mesh类型材质控制器初始化",
-              ["Actor", this.ihr],
+              ["Actor", this.Zhr],
             ));
-      this.ihr;
+      this.Zhr;
       this.xW = void 0;
     } else
       Log_1.Log.CheckError() &&
@@ -95,13 +96,14 @@ class CharMaterialContainer extends CharRenderBase_1.CharRenderBase {
                   "RenderCharacter",
                   41,
                   "AddSkeletalMeshComponent",
-                  ["Actor", this.ihr],
+                  ["Actor", this.Zhr],
                   ["SkeletalName", r],
+                  ["SkeletalComponent", e.SkeletalMesh.GetName()],
                   ["isHidden", o],
                 ),
               o && e.SetHiddenInGame(!1),
               (n = new CharBodyInfo_1.CharBodyInfo()).Init(
-                this.ihr,
+                this.Zhr,
                 r,
                 e,
                 t,
@@ -115,7 +117,7 @@ class CharMaterialContainer extends CharRenderBase_1.CharRenderBase {
                   "RenderCharacter",
                   14,
                   "外部传入的SkeletalMeshComponent的SkeletalMesh为空",
-                  ["Actor", this.ihr],
+                  ["Actor", this.Zhr],
                   ["SkeletalName", r],
                 ),
               !1)
@@ -124,7 +126,7 @@ class CharMaterialContainer extends CharRenderBase_1.CharRenderBase {
                 "RenderCharacter",
                 41,
                 "外部传入的SkeletalMeshComponent的Owner为空",
-                ["Actor", this.ihr],
+                ["Actor", this.Zhr],
               ),
             !1)
         : (Log_1.Log.CheckError() &&
@@ -132,13 +134,13 @@ class CharMaterialContainer extends CharRenderBase_1.CharRenderBase {
               "RenderCharacter",
               14,
               "外部传入了空的SkeletalMeshComponent",
-              ["Actor", this.ihr],
+              ["Actor", this.Zhr],
             ),
           !1)
       : (Log_1.Log.CheckError() &&
           Log_1.Log.Error("RenderCharacter", 14, "角色骨骼名称错误", [
             "Actor",
-            this.ihr,
+            this.Zhr,
           ]),
         !1);
   }
@@ -287,27 +289,27 @@ class CharMaterialContainer extends CharRenderBase_1.CharRenderBase {
   StateEnter(e) {
     var r = e.DataCache;
     0 === r.MaterialModifyType
-      ? (r.UseRim && this.ohr(e),
-        r.UseDissolve && this.rhr(e),
-        r.UseOutline && this.nhr(e),
-        r.UseColor && this.shr(e),
-        r.UseTextureSample && this.ahr(e),
-        r.UseMotionOffset && this.hhr(e),
-        r.UseDitherEffect && this.lhr(e))
-      : 1 === r.MaterialModifyType && this._hr(e);
+      ? (r.UseRim && this.elr(e),
+        r.UseDissolve && this.tlr(e),
+        r.UseOutline && this.ilr(e),
+        r.UseColor && this.olr(e),
+        r.UseTextureSample && this.rlr(e),
+        r.UseMotionOffset && this.nlr(e),
+        r.UseDitherEffect && this.slr(e))
+      : 1 === r.MaterialModifyType && this.alr(e);
   }
   StateUpdate(e) {
     var r = e.DataCache;
     0 === r.MaterialModifyType
-      ? (r.UseRim && this.uhr(e),
-        r.UseDissolve && this.chr(e),
-        r.UseOutline && this.mhr(e),
-        r.UseColor && this.dhr(e),
-        r.UseTextureSample && this.Chr(e),
-        r.UseMotionOffset && this.ghr(e),
-        r.UseDitherEffect && this.fhr(e),
-        r.UseCustomMaterialEffect && this.phr(e))
-      : 1 === r.MaterialModifyType && this.vhr(e);
+      ? (r.UseRim && this.hlr(e),
+        r.UseDissolve && this.llr(e),
+        r.UseOutline && this._lr(e),
+        r.UseColor && this.ulr(e),
+        r.UseTextureSample && this.clr(e),
+        r.UseMotionOffset && this.mlr(e),
+        r.UseDitherEffect && this.dlr(e),
+        r.UseCustomMaterialEffect && this.Clr(e))
+      : 1 === r.MaterialModifyType && this.glr(e);
   }
   StateRevert(e) {
     var r = e.DataCache;
@@ -317,21 +319,21 @@ class CharMaterialContainer extends CharRenderBase_1.CharRenderBase {
           "RenderCharacter",
           14,
           "已经执行过Revert逻辑",
-          ["Actor", this.ihr],
+          ["Actor", this.Zhr],
           ["DataAsset", r.DataName],
         );
     else if (
       ((e.HasReverted = !0),
       0 === r.MaterialModifyType
-        ? (r.UseRim && this.Mhr(e),
-          r.UseDissolve && this.Shr(e),
-          r.UseOutline && this.Ehr(e),
-          r.UseColor && this.yhr(e),
-          r.UseTextureSample && this.Ihr(e),
-          r.UseMotionOffset && this.Thr(e),
-          r.UseDitherEffect && this.Lhr(e),
-          r.UseCustomMaterialEffect && this.Dhr(e))
-        : 1 === r.MaterialModifyType && this.Rhr(e),
+        ? (r.UseRim && this.flr(e),
+          r.UseDissolve && this.plr(e),
+          r.UseOutline && this.vlr(e),
+          r.UseColor && this.Mlr(e),
+          r.UseTextureSample && this.Elr(e),
+          r.UseMotionOffset && this.Slr(e),
+          r.UseDitherEffect && this.ylr(e),
+          r.UseCustomMaterialEffect && this.Ilr(e))
+        : 1 === r.MaterialModifyType && this.Tlr(e),
       r.HiddenAfterEffect)
     ) {
       Log_1.Log.CheckDebug() &&
@@ -345,7 +347,7 @@ class CharMaterialContainer extends CharRenderBase_1.CharRenderBase {
       }
     }
   }
-  _hr(r) {
+  alr(r) {
     var t = r.DataCache;
     if (t.ReplaceMaterialInterface)
       if (
@@ -356,17 +358,11 @@ class CharMaterialContainer extends CharRenderBase_1.CharRenderBase {
           )),
         r.ReplaceMaterial)
       ) {
-        Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug(
-            "RenderCharacter",
-            41,
-            "材质替换",
-            ["替换材质名称", t.DataName],
-            ["是否永久性的", !t.RevertMaterial],
-          );
+        this.Gna.length = 0;
         for (const e of r.SpecifiedMaterialIndexMap.keys()) {
           var o = r.SpecifiedMaterialIndexMap.get(e),
             n = this.AllBodyInfoList.get(e);
+          this.Gna.push(e);
           for (let e = 0; e < o.length; e++) {
             var i = n.MaterialSlotList[o[e]];
             t.RevertMaterial
@@ -374,6 +370,17 @@ class CharMaterialContainer extends CharRenderBase_1.CharRenderBase {
               : i.SetDynamicMaterial(r.ReplaceMaterial);
           }
         }
+        Log_1.Log.CheckInfo() &&
+          Log_1.Log.Info(
+            "RenderCharacter",
+            41,
+            "材质替换",
+            ["Actor", this.Zhr],
+            ["替换材质名称", t.DataName],
+            ["材质名称", r.ReplaceMaterial?.GetName()],
+            ["是否永久性的", !t.RevertMaterial],
+            ["body array", this.Gna.join()],
+          );
       } else
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
@@ -389,7 +396,7 @@ class CharMaterialContainer extends CharRenderBase_1.CharRenderBase {
           t.DataName,
         ]);
   }
-  vhr(e) {
+  glr(e) {
     var r = e.DataCache;
     if (r.UseParameterModify) {
       var t = e.ReplaceMaterial,
@@ -412,18 +419,32 @@ class CharMaterialContainer extends CharRenderBase_1.CharRenderBase {
         }
     }
   }
-  Rhr(r) {
-    if (r.DataCache.RevertMaterial) {
-      for (const e of r.SpecifiedMaterialIndexMap.keys()) {
-        var t = r.SpecifiedMaterialIndexMap.get(e),
-          o = this.AllBodyInfoList.get(e);
-        for (let e = 0; e < t.length; e++)
-          o.MaterialSlotList[t[e]].RevertReplaceMaterial(r.ReplaceMaterial);
+  Tlr(t) {
+    var e = t.DataCache;
+    if (e.RevertMaterial) {
+      let r = !1;
+      for (const i of t.SpecifiedMaterialIndexMap.keys()) {
+        var o = t.SpecifiedMaterialIndexMap.get(i),
+          n = this.AllBodyInfoList.get(i);
+        for (let e = 0; e < o.length; e++)
+          n.MaterialSlotList[o[e]].RevertReplaceMaterial(t.ReplaceMaterial) ||
+            (r = !0);
       }
-      r.ReplaceMaterial = void 0;
+      Log_1.Log.CheckInfo() &&
+        Log_1.Log.Info(
+          "RenderCharacter",
+          41,
+          "材质替换Revert",
+          ["Actor", this.Zhr],
+          ["替换材质名称", e.DataName],
+          ["材质名称", t.ReplaceMaterial?.GetName()],
+          ["是否永久性的", !e.RevertMaterial],
+          ["MaterialMiss", r],
+        ),
+        (t.ReplaceMaterial = void 0);
     }
   }
-  ohr(e) {
+  elr(e) {
     var r = e.SelectedAllParts;
     for (const i of e.SpecifiedMaterialIndexMap.keys()) {
       var t = e.SpecifiedMaterialIndexMap.get(i),
@@ -437,7 +458,7 @@ class CharMaterialContainer extends CharRenderBase_1.CharRenderBase {
         }
     }
   }
-  uhr(e) {
+  hlr(e) {
     var r = e.DataCache,
       t = e.InterpolateFactor,
       o = RenderUtil_1.RenderUtil.GetFloatFromGroup(r.RimRange, t),
@@ -457,7 +478,7 @@ class CharMaterialContainer extends CharRenderBase_1.CharRenderBase {
       }
     }
   }
-  Mhr(e) {
+  flr(e) {
     var r = e.SelectedAllParts;
     for (const i of e.SpecifiedMaterialIndexMap.keys()) {
       var t = e.SpecifiedMaterialIndexMap.get(i),
@@ -477,7 +498,7 @@ class CharMaterialContainer extends CharRenderBase_1.CharRenderBase {
       }
     }
   }
-  rhr(e) {
+  tlr(e) {
     var r = e.SelectedAllParts;
     for (const i of e.SpecifiedMaterialIndexMap.keys()) {
       var t = e.SpecifiedMaterialIndexMap.get(i),
@@ -491,7 +512,7 @@ class CharMaterialContainer extends CharRenderBase_1.CharRenderBase {
         }
     }
   }
-  chr(e) {
+  llr(e) {
     var r = e.DataCache,
       t = e.InterpolateFactor,
       o = RenderUtil_1.RenderUtil.GetFloatFromGroup(r.DissolveProgress, t),
@@ -518,7 +539,7 @@ class CharMaterialContainer extends CharRenderBase_1.CharRenderBase {
       }
     }
   }
-  Shr(e) {
+  plr(e) {
     var r = e.SelectedAllParts;
     for (const i of e.SpecifiedMaterialIndexMap.keys()) {
       var t = e.SpecifiedMaterialIndexMap.get(i),
@@ -538,7 +559,7 @@ class CharMaterialContainer extends CharRenderBase_1.CharRenderBase {
       }
     }
   }
-  nhr(e) {
+  ilr(e) {
     if (e.DataCache.UseOuterOutlineEffect) {
       var r = e.SelectedAllParts;
       for (const i of e.SpecifiedMaterialIndexMap.keys()) {
@@ -554,7 +575,7 @@ class CharMaterialContainer extends CharRenderBase_1.CharRenderBase {
       }
     }
   }
-  mhr(e) {
+  _lr(e) {
     var r = e.DataCache,
       t = e.InterpolateFactor,
       o = RenderUtil_1.RenderUtil.GetFloatFromGroup(r.OutlineWidth, t),
@@ -572,7 +593,7 @@ class CharMaterialContainer extends CharRenderBase_1.CharRenderBase {
       }
     }
   }
-  Ehr(e) {
+  vlr(e) {
     var r = e.SelectedAllParts;
     for (const i of e.SpecifiedMaterialIndexMap.keys()) {
       var t = e.SpecifiedMaterialIndexMap.get(i),
@@ -590,7 +611,7 @@ class CharMaterialContainer extends CharRenderBase_1.CharRenderBase {
       }
     }
   }
-  shr(e) {
+  olr(e) {
     var r = e.SelectedAllParts;
     for (const i of e.SpecifiedMaterialIndexMap.keys()) {
       var t = e.SpecifiedMaterialIndexMap.get(i),
@@ -604,7 +625,7 @@ class CharMaterialContainer extends CharRenderBase_1.CharRenderBase {
         }
     }
   }
-  dhr(e) {
+  ulr(e) {
     var r = e.DataCache;
     if (r.UseColor) {
       var t = e.InterpolateFactor,
@@ -630,7 +651,7 @@ class CharMaterialContainer extends CharRenderBase_1.CharRenderBase {
       }
     }
   }
-  yhr(e) {
+  Mlr(e) {
     var r = e.SelectedAllParts;
     for (const i of e.SpecifiedMaterialIndexMap.keys()) {
       var t = e.SpecifiedMaterialIndexMap.get(i),
@@ -650,7 +671,7 @@ class CharMaterialContainer extends CharRenderBase_1.CharRenderBase {
       }
     }
   }
-  ahr(e) {
+  rlr(e) {
     var r = e.SelectedAllParts;
     for (const i of e.SpecifiedMaterialIndexMap.keys()) {
       var t = e.SpecifiedMaterialIndexMap.get(i),
@@ -664,7 +685,7 @@ class CharMaterialContainer extends CharRenderBase_1.CharRenderBase {
         }
     }
   }
-  Chr(e) {
+  clr(e) {
     var r = e.DataCache,
       t = e.InterpolateFactor,
       o = RenderUtil_1.RenderUtil.GetColorFromGroup(r.TextureScaleAndOffset, t),
@@ -700,7 +721,7 @@ class CharMaterialContainer extends CharRenderBase_1.CharRenderBase {
       }
     }
   }
-  Ihr(e) {
+  Elr(e) {
     var r = e.SelectedAllParts;
     for (const i of e.SpecifiedMaterialIndexMap.keys()) {
       var t = e.SpecifiedMaterialIndexMap.get(i),
@@ -724,7 +745,7 @@ class CharMaterialContainer extends CharRenderBase_1.CharRenderBase {
       }
     }
   }
-  hhr(e) {
+  nlr(e) {
     for (const t of e.SpecifiedMaterialIndexMap.keys()) {
       var r = this.AllBodyInfoList.get(t);
       if (r.SkeletalComp?.IsValid()) {
@@ -738,7 +759,7 @@ class CharMaterialContainer extends CharRenderBase_1.CharRenderBase {
       }
     }
   }
-  ghr(e) {
+  mlr(e) {
     var r = e.DataCache;
     if (e.TargetSkeletalMesh) {
       var t = e.InterpolateFactor,
@@ -774,7 +795,7 @@ class CharMaterialContainer extends CharRenderBase_1.CharRenderBase {
       }
     }
   }
-  Thr(e) {
+  Slr(e) {
     for (const n of e.SpecifiedMaterialIndexMap.keys()) {
       var r = e.SpecifiedMaterialIndexMap.get(n),
         t = this.AllBodyInfoList.get(n);
@@ -786,7 +807,7 @@ class CharMaterialContainer extends CharRenderBase_1.CharRenderBase {
       }
     }
   }
-  lhr(e) {
+  slr(e) {
     var r = e.SelectedAllParts;
     for (const i of e.SpecifiedMaterialIndexMap.keys()) {
       var t = e.SpecifiedMaterialIndexMap.get(i),
@@ -800,7 +821,7 @@ class CharMaterialContainer extends CharRenderBase_1.CharRenderBase {
         }
     }
   }
-  fhr(e) {
+  dlr(e) {
     var r = e.DataCache,
       t = e.InterpolateFactor,
       o = RenderUtil_1.RenderUtil.GetFloatFromGroup(r.DitherValue, t);
@@ -814,7 +835,7 @@ class CharMaterialContainer extends CharRenderBase_1.CharRenderBase {
       }
     }
   }
-  Lhr(e) {
+  ylr(e) {
     var r = e.SelectedAllParts;
     for (const i of e.SpecifiedMaterialIndexMap.keys()) {
       var t = e.SpecifiedMaterialIndexMap.get(i),
@@ -830,7 +851,7 @@ class CharMaterialContainer extends CharRenderBase_1.CharRenderBase {
       }
     }
   }
-  phr(e) {
+  Clr(e) {
     var r = e.DataCache,
       t = e.InterpolateFactor;
     for (const d of e.SpecifiedMaterialIndexMap.keys()) {
@@ -865,7 +886,7 @@ class CharMaterialContainer extends CharRenderBase_1.CharRenderBase {
       }
     }
   }
-  Dhr(e) {
+  Ilr(e) {
     var r = e.DataCache;
     for (const i of e.SpecifiedMaterialIndexMap.keys()) {
       var t = e.SpecifiedMaterialIndexMap.get(i),

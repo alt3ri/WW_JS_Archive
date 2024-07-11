@@ -8,7 +8,7 @@ const UE = require("ue"),
   MarkItemView_1 = require("./MarkItemView");
 class ConfigMarkItemView extends MarkItemView_1.MarkItemView {
   constructor(e) {
-    super(e), (this.dDi = void 0), (this.CDi = void 0);
+    super(e), (this.dRi = void 0), (this.CRi = void 0);
   }
   OnInitialize() {
     super.OnInitialize(),
@@ -18,25 +18,25 @@ class ConfigMarkItemView extends MarkItemView_1.MarkItemView {
           this.Holder.UiPosition.Y,
         ).ToUeVector2D(!0),
       ),
-      (this.CDi = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem));
+      (this.CRi = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem));
   }
   OnIconPathChanged(e) {
     var t = this.GetSprite(1);
     this.GetSprite(1).SetUIActive(!0), this.LoadIcon(t, e);
   }
   async PlayUnlockSequence() {
-    if ((await this.LoadingPromise, !this.dDi)) {
+    if ((await this.LoadingPromise, !this.dRi)) {
       var t = await this.LoadPrefabAsync(
         ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
           "UiItem_Mark_Prefab_Effect",
         ),
         this.RootItem,
       );
-      this.dDi = t.GetComponentByClass(UE.UIItem.StaticClass());
+      this.dRi = t.GetComponentByClass(UE.UIItem.StaticClass());
       let e = t.GetComponentByClass(UE.UINiagara.StaticClass());
       (e =
         e ||
-        this.dDi
+        this.dRi
           .GetAttachUIChild(0)
           ?.GetOwner()
           ?.GetComponentByClass(UE.UINiagara.StaticClass())) &&
@@ -44,11 +44,11 @@ class ConfigMarkItemView extends MarkItemView_1.MarkItemView {
           ? (e.bAdaptPosAndSizeChanged = !1)
           : (e.bAdaptPosAndSizeChanged = !0));
     }
-    this.CDi.PlayLevelSequenceByName("Start");
+    this.CRi.PlayLevelSequenceByName("Start");
   }
   OnBeforeDestroy() {
-    this.dDi &&
-      UE.LGUIBPLibrary.DestroyActorWithHierarchy(this.dDi.GetOwner(), !0),
+    this.dRi &&
+      UE.LGUIBPLibrary.DestroyActorWithHierarchy(this.dRi.GetOwner(), !0),
       super.OnBeforeDestroy();
   }
 }

@@ -5,6 +5,7 @@ const puerts_1 = require("puerts"),
   UE = require("ue"),
   AudioController_1 = require("../../../Core/Audio/AudioController"),
   CustomPromise_1 = require("../../../Core/Common/CustomPromise"),
+  Info_1 = require("../../../Core/Common/Info"),
   Log_1 = require("../../../Core/Common/Log"),
   Time_1 = require("../../../Core/Common/Time"),
   Queue_1 = require("../../../Core/Container/Queue"),
@@ -42,7 +43,8 @@ const puerts_1 = require("puerts"),
   UiCameraAnimationManager_1 = require("../UiCameraAnimation/UiCameraAnimationManager"),
   UiSceneManager_1 = require("../UiComponent/UiSceneManager"),
   RoleListComponent_1 = require("./Component/RoleListComponent"),
-  RoleDefine_1 = require("./RoleDefine");
+  RoleDefine_1 = require("./RoleDefine"),
+  RenderUtil_1 = require("../../Render/Utils/RenderUtil");
 class OperationParam {
   constructor(e, t) {
     (this.OperationType = e), (this.Param = t);
@@ -54,85 +56,85 @@ class RoleRootView extends UiViewBase_1.UiViewBase {
       (this.RoleListComponent = void 0),
       (this.TabViewComponent = void 0),
       (this.TabComponent = void 0),
-      (this.pco = void 0),
+      (this.dmo = void 0),
       (this.TabDataList = []),
-      (this.Fho = 0),
+      (this.Nlo = 0),
       (this.RoleRootUiCameraHandleData = void 0),
-      (this._Ve = 0),
-      (this.hco = void 0),
-      (this.R7t = void 0),
-      (this.lco = 0),
-      (this.cVe = void 0),
-      (this._co = !0),
-      (this.m5i = new Map()),
-      (this.uco = new Map()),
-      (this.A6i = !1),
-      (this.P6i = void 0),
-      (this.plo = void 0),
-      (this.cco = new Queue_1.Queue()),
-      (this.pHt = !1),
-      (this.NLn = !0),
+      (this.I6e = 0),
+      (this.rmo = void 0),
+      (this.RHt = void 0),
+      (this.nmo = 0),
+      (this.L6e = void 0),
+      (this.smo = !0),
+      (this.cVi = new Map()),
+      (this.amo = new Map()),
+      (this.U8i = !1),
+      (this.A8i = void 0),
+      (this.d1o = void 0),
+      (this.hmo = new Queue_1.Queue()),
+      (this.pjt = !1),
+      (this.RDn = !0),
       (this.OnRoleSelect = () => {
         var e;
-        this.RHt
-          ? ((e = new OperationParam(2)), this.cco.Push(e))
-          : (this.UHt(),
+        this.Rjt
+          ? ((e = new OperationParam(2)), this.hmo.Push(e))
+          : (this.Ujt(),
             this.OnRoleSelectAsync().finally(() => {
-              this.O0t();
+              this.Jft();
             }));
       }),
       (this.OnSelectRoleTabOutside = (e) => {
-        this.UHt(),
+        this.Ujt(),
           this.SelectRoleTabOutSide(e).finally(() => {
-            this.O0t();
+            this.Jft();
           });
       }),
       (this.CanToggleChange = (e) => {
         var t;
         return (
-          !!ModelManager_1.ModelManager.PlatformModel.IsGamepad() ||
+          !!Info_1.Info.IsInGamepad() ||
           ((t = CommonParamById_1.configCommonParamById.GetIntConfig(
             "panel_interval_time",
           )),
-          !this.cVe) ||
-          Time_1.Time.Now - this.cVe >= t
+          !this.L6e) ||
+          Time_1.Time.Now - this.L6e >= t
         );
       }),
-      (this.dVe = (e, t) => {
+      (this.R6e = (e, t) => {
         return new RoleTabItem_1.RoleTabItem();
       }),
       (this.pqe = (e) => {
-        this.lco++, (this.cVe = Time_1.Time.Now);
+        this.nmo++, (this.L6e = Time_1.Time.Now);
         var t = this.TabDataList[e],
           i = t.ChildViewName,
           s = this.TabComponent.GetTabItemByIndex(e);
-        this.TabViewComponent.ToggleCallBack(t, i, s, this.plo),
-          (this._Ve = e),
-          (this.hco = i),
-          this.mco(e, this.lco),
-          (this.A6i = this.x6i());
+        this.TabViewComponent.ToggleCallBack(t, i, s, this.d1o),
+          (this.I6e = e),
+          (this.rmo = i),
+          this.lmo(e, this.nmo),
+          (this.U8i = this.P8i());
       }),
-      (this.G6i = (e) => {
+      (this.q8i = (e) => {
         0 !== e &&
-          this.A6i &&
-          ModelManager_1.ModelManager.PlatformModel.IsGamepad() &&
-          this.P6i.AddPitchInput(-e);
+          this.U8i &&
+          Info_1.Info.IsInGamepad() &&
+          this.A8i.AddPitchInput(-e);
       }),
-      (this.N6i = (e) => {
+      (this.G8i = (e) => {
         0 !== e &&
-          this.A6i &&
-          ModelManager_1.ModelManager.PlatformModel.IsGamepad() &&
-          this.P6i.AddYawInput(e);
+          this.U8i &&
+          Info_1.Info.IsInGamepad() &&
+          this.A8i.AddYawInput(e);
       }),
-      (this.wDn = (e, t) => {
+      (this.PUn = (e, t) => {
         0 !== t &&
-          this.A6i &&
-          ModelManager_1.ModelManager.PlatformModel.IsGamepad() &&
-          this.P6i.AddZoomInput(t);
+          this.U8i &&
+          Info_1.Info.IsInGamepad() &&
+          this.A8i.AddZoomInput(t);
       }),
-      (this.dco = () => {
+      (this._mo = () => {
         var e;
-        this.A6i &&
+        this.U8i &&
           (e =
             UiCameraAnimationManager_1.UiCameraAnimationManager.GetLastHandleData()) &&
           UiCameraAnimationManager_1.UiCameraAnimationManager.PushCameraHandleByHandleName(
@@ -142,8 +144,8 @@ class RoleRootView extends UiViewBase_1.UiViewBase {
             "1001",
           );
       }),
-      (this.pbt = (e, t) => {
-        this.A6i && 2 === t.TouchType && this.lCt();
+      (this.Eqt = (e, t) => {
+        this.U8i && 2 === t.TouchType && this.Egt();
       }),
       (this.yqe = (e) => {
         e = this.TabDataList[e];
@@ -156,57 +158,57 @@ class RoleRootView extends UiViewBase_1.UiViewBase {
         this.CloseMe();
       }),
       (this.OnInternalViewQuit = () => {
-        (this.plo.RoleViewState = 0), this.u5i(), this.TabComponent.ShowItem();
+        (this.d1o.RoleViewState = 0), this._Vi(), this.TabComponent.ShowItem();
       }),
       (this.OnInternalViewEnter = () => {
-        (this.plo.RoleViewState = 1), this.Cco(), this.TabComponent.HideItem();
+        (this.d1o.RoleViewState = 1), this.umo(), this.TabComponent.HideItem();
       }),
       (this.RoleListClick = () => {
-        UiManager_1.UiManager.OpenView("RoleSelectionView", this.plo);
+        UiManager_1.UiManager.OpenView("RoleSelectionView", this.d1o);
       }),
-      (this.w6i = void 0),
-      (this.B6i = (e) => {
-        this.A6i && (this.w6i = e.GetLocalPointInPlane());
+      (this.x8i = void 0),
+      (this.w8i = (e) => {
+        this.U8i && (this.x8i = e.GetLocalPointInPlane());
       }),
-      (this.b6i = (e) => {
+      (this.B8i = (e) => {
         var t;
-        !this.A6i ||
+        !this.U8i ||
         1 < TouchFingerManager_1.TouchFingerManager.GetTouchFingerCount() ||
         InputSettings_1.InputSettings.IsInputKeyDown("RightMouseButton")
-          ? (this.w6i = void 0)
-          : ((t = this.w6i),
-            (this.w6i = e.GetLocalPointInPlane()),
+          ? (this.x8i = void 0)
+          : ((t = this.x8i),
+            (this.x8i = e.GetLocalPointInPlane()),
             t &&
-              ((e = this.w6i.X - t.X),
-              (t = this.w6i.Y - t.Y),
-              0 != e && this.P6i.AddYawInput(e),
+              ((e = this.x8i.X - t.X),
+              (t = this.x8i.Y - t.Y),
+              0 != e && this.A8i.AddYawInput(e),
               0 != t) &&
-              this.P6i.AddPitchInput(t));
+              this.A8i.AddPitchInput(t));
       }),
-      (this.q6i = (e) => {
-        this.A6i && (this.w6i = void 0);
+      (this.b8i = (e) => {
+        this.U8i && (this.x8i = void 0);
       }),
-      (this.O6i = (e) => {
-        this.A6i &&
+      (this.N8i = (e) => {
+        this.U8i &&
           0 !== e.scrollAxisValue &&
-          this.P6i.AddZoomInput(-e.scrollAxisValue);
+          this.A8i.AddZoomInput(-e.scrollAxisValue);
       }),
-      (this.gco = () => {
-        (this.A6i = !1), this.P6i?.PauseTick();
+      (this.cmo = () => {
+        (this.U8i = !1), this.A8i?.PauseTick();
       }),
-      (this.fco = () => {
+      (this.mmo = () => {
         var e,
           t = UiCameraManager_1.UiCameraManager.Get(),
           t =
-            ((this.P6i = t.AddUiCameraComponent(
+            ((this.A8i = t.AddUiCameraComponent(
               UiCameraControlRotationComponent_1.UiCameraControlRotationComponent,
               !1,
             )),
             ConfigManager_1.ConfigManager.UiRoleCameraConfig.GetDefaultRoleCameraConfig());
-        this.P6i.InitDataByConfig(t),
-          (this.A6i = this.x6i()),
-          this.A6i &&
-            ((e = (t = this.pco).K2_GetActorLocation()),
+        this.A8i.InitDataByConfig(t),
+          (this.U8i = this.P8i()),
+          this.U8i &&
+            ((e = (t = this.dmo).K2_GetActorLocation()),
             (t = (t.Model?.CheckGetComponent(11)).RoleConfigId),
             (t =
               ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(
@@ -216,41 +218,41 @@ class RoleRootView extends UiViewBase_1.UiViewBase {
               ConfigManager_1.ConfigManager.UiRoleCameraConfig.GetRoleCameraOffsetConfig(
                 t,
               )),
-            this.P6i.UpdateData(
+            this.A8i.UpdateData(
               e,
               t.镜头浮动最大高度,
               t.镜头浮动最低高度,
               t.镜头浮动最长臂长,
               t.镜头浮动最短臂长,
             ),
-            this.P6i.Activate(),
-            this.P6i.ResumeTick());
+            this.A8i.Activate(),
+            this.A8i.ResumeTick());
       }),
-      (this.vco = (e) => {
+      (this.Cmo = (e) => {
         this.GetItem(2).SetUIActive(e);
       }),
-      (this.Mco = (e) => {
+      (this.gmo = (e) => {
         this.UiViewSequence.PlaySequencePurely(e ? "hide" : "show");
       }),
-      (this.Sco = () => {
+      (this.fmo = () => {
         var e;
-        this._co &&
+        this.smo &&
           ((e = UiSceneManager_1.UiSceneManager.GetUiStartSequenceFrame()),
           (e = new UE.FrameNumber(e)),
           (e = new UE.FrameTime(e, 0)),
           (e = new UE.MovieSceneSequencePlaybackParams(e, 0, "", 0, 1)),
-          this.R7t.SetPlaybackPosition(e));
+          this.RHt.SetPlaybackPosition(e));
       });
   }
-  get RHt() {
-    return this.pHt;
+  get Rjt() {
+    return this.pjt;
   }
-  UHt() {
-    this.pHt = !0;
+  Ujt() {
+    this.pjt = !0;
   }
-  O0t() {
-    if (((this.pHt = !1), 0 !== this.cco.Size)) {
-      var e = this.cco.Pop();
+  Jft() {
+    if (((this.pjt = !1), 0 !== this.hmo.Size)) {
+      var e = this.hmo.Pop();
       if (e)
         switch (e.OperationType) {
           case 0:
@@ -277,81 +279,82 @@ class RoleRootView extends UiViewBase_1.UiViewBase {
       (this.BtnBindInfo = [[1, this.RoleListClick]]);
   }
   async OnBeforeStartAsync() {
-    (this.plo = this.OpenParam),
-      void 0 === this.plo
+    (this.d1o = this.OpenParam),
+      void 0 === this.d1o
         ? Log_1.Log.CheckError() &&
           Log_1.Log.Error("Role", 59, "RoleViewAgent为空", [
             "界面名称",
             "RoleRootView",
           ])
-        : ((this.RoleListComponent =
+        : (RenderUtil_1.RenderUtil.BeginPSOSyncMode(),
+          (this.RoleListComponent =
             new RoleListComponent_1.RoleListComponent()),
           await this.RoleListComponent.CreateThenShowByActorAsync(
             this.GetItem(3).GetOwner(),
-            this.plo,
+            this.d1o,
           ),
           this.InitTabComponent(),
-          (this.plo.RoleViewState = 0),
-          (this.pco =
+          (this.d1o.RoleViewState = 0),
+          (this.dmo =
             UiSceneManager_1.UiSceneManager.InitRoleSystemRoleActor(1)),
           AudioController_1.AudioController.SetSwitch(
             "actor_ui_switch",
             "sys_ui",
-            this.pco,
+            this.dmo,
           ),
-          (this.hco = this.plo.GetCurSelectTabName()),
+          (this.rmo = this.d1o.GetCurSelectTabName()),
           this.RefreshRoleSystemModeUiParam());
   }
-  OLn() {
-    this.NLn &&
-      ((this.NLn = !1),
-      this.pco ||
-        (this.pco = UiSceneManager_1.UiSceneManager.InitRoleSystemRoleActor(1)),
+  ADn() {
+    this.RDn &&
+      ((this.RDn = !1),
+      this.dmo ||
+        (this.dmo = UiSceneManager_1.UiSceneManager.InitRoleSystemRoleActor(1)),
       this.LoadFloorEffect(),
-      this.pco.Model?.CheckGetComponent(1)?.SetTransformByTag("RoleCase"));
+      this.dmo.Model?.CheckGetComponent(1)?.SetTransformByTag("RoleCase"));
   }
   OnHandleLoadScene() {
-    this.OLn();
+    this.ADn();
   }
   OnBeforeShow() {
-    this.OLn(), this.RefreshRoleList();
+    this.ADn(), this.RefreshRoleList();
   }
   RefreshRoleList() {
     var e;
-    this.RHt
-      ? ((e = new OperationParam(0)), this.cco.Push(e))
-      : (this.UHt(),
+    this.Rjt
+      ? ((e = new OperationParam(0)), this.hmo.Push(e))
+      : (this.Ujt(),
         this.RefreshRoleListAsync().finally(() => {
-          this.O0t();
+          this.Jft();
         }));
   }
   async RefreshRoleListAsync() {
     UiLayer_1.UiLayer.SetShowMaskLayer("RefreshRoleListAsync", !0);
-    var e = this.plo.GetRoleIdList(),
+    var e = this.d1o.GetRoleIdList(),
       e =
         (await this.RoleListComponent.UpdateComponent(e).finally(() => {
           UiLayer_1.UiLayer.SetShowMaskLayer("RefreshRoleListAsync", !1);
         }),
-        this.plo.GetCurSelectRoleId());
+        this.d1o.GetCurSelectRoleId());
     this.RoleListComponent?.SetCurSelection(e);
   }
   RefreshTabList() {
     var e;
-    this.RHt
-      ? ((e = new OperationParam(1)), this.cco.Push(e))
-      : (this.UHt(),
+    this.Rjt
+      ? ((e = new OperationParam(1)), this.hmo.Push(e))
+      : (this.Ujt(),
         this.RefreshTabListAsync().finally(() => {
-          this.O0t();
+          this.Jft();
         }));
   }
   async RefreshTabListAsync() {
     UiLayer_1.UiLayer.SetShowMaskLayer("RefreshTabListAsync", !0);
-    var e = this.plo.GetRoleTabDataList(),
+    var e = this.d1o.GetRoleTabDataList(),
       t = this.TabDataList.toString() !== e.toString(),
       i = ((this.TabDataList = e), this.TabDataList.length),
       s = this.TabComponent.CreateTabItemDataByLength(i);
-    if (this.plo.GetRoleSystemUiParams().TabRedDot) {
-      var n = this.plo?.GetCurSelectRoleData();
+    if (this.d1o.GetRoleSystemUiParams().TabRedDot) {
+      var n = this.d1o?.GetCurSelectRoleData();
       for (let e = 0; e < i; e++) {
         var o = this.TabDataList[e].ChildViewName,
           o = this.GetRedDotName(o);
@@ -366,7 +369,7 @@ class RoleRootView extends UiViewBase_1.UiViewBase {
     ) {
       let t = 0;
       for (let e = 0; e < this.TabDataList.length; e++)
-        if (this.TabDataList[e].ChildViewName === this.hco) {
+        if (this.TabDataList[e].ChildViewName === this.rmo) {
           t = e;
           break;
         }
@@ -389,13 +392,13 @@ class RoleRootView extends UiViewBase_1.UiViewBase {
           this.UiViewSequence.PlaySequenceAsync("RoleListStart", e),
           this.TabComponent.ShowItemAsync(),
         ]),
-        (this.plo.RoleViewState = 0),
+        (this.d1o.RoleViewState = 0),
         this.TabDataList.findIndex((e) => e.ChildViewName === t));
     this.TabComponent.SelectToggleByIndex(e);
   }
   InitTabComponent() {
     var e = new CommonTabComponentData_1.CommonTabComponentData(
-      this.dVe,
+      this.R6e,
       this.pqe,
       this.yqe,
     );
@@ -405,22 +408,22 @@ class RoleRootView extends UiViewBase_1.UiViewBase {
         e,
         this.CloseClick,
       )),
-      (this.cVe = void 0),
+      (this.L6e = void 0),
       this.TabComponent.SetCanChange(this.CanToggleChange),
       (this.TabViewComponent = new TabViewComponent_1.TabViewComponent(
         this.GetItem(4),
       ));
   }
-  mco(s, e) {
+  lmo(s, e) {
     const n = this.TabDataList[s].LightSequence;
-    var t = this.m5i.get(s);
+    var t = this.cVi.get(s);
     t
-      ? (this.R7t && (this.R7t.Stop(), (this._co = !1), (this.R7t = void 0)),
+      ? (this.RHt && (this.RHt.Stop(), (this.smo = !1), (this.RHt = void 0)),
         (t = t.SequencePlayer).Play(),
-        (this._co = !0),
-        (this.R7t = t))
-      : 1 !== this.uco.get(s) &&
-        (this.uco.set(s, 1),
+        (this.smo = !0),
+        (this.RHt = t))
+      : 1 !== this.amo.get(s) &&
+        (this.amo.set(s, 1),
         ResourceSystem_1.ResourceSystem.LoadAsync(n, UE.LevelSequence, (e) => {
           var t, i;
           ObjectUtils_1.ObjectUtils.IsValid(e)
@@ -436,42 +439,42 @@ class RoleRootView extends UiViewBase_1.UiViewBase {
               ),
               ((i = (0, puerts_1.$unref)(i)).PlaybackSettings = t),
               i.SetSequence(e),
-              this.m5i.set(s, i),
-              this.R7t &&
-                (this.R7t.Stop(), (this._co = !1), (this.R7t = void 0)),
-              this._Ve === s &&
-                ((this.R7t = i.SequencePlayer),
+              this.cVi.set(s, i),
+              this.RHt &&
+                (this.RHt.Stop(), (this.smo = !1), (this.RHt = void 0)),
+              this.I6e === s &&
+                ((this.RHt = i.SequencePlayer),
                 (i.bOverrideInstanceData = !0),
                 (i.DefaultInstanceData.TransformOrigin =
                   RenderModuleController_1.RenderModuleController.GetKuroCurrentUiSceneTransform()),
-                this.R7t.Play(),
-                (this._co = !0)))
+                this.RHt.Play(),
+                (this.smo = !0)))
             : Log_1.Log.CheckError() &&
               Log_1.Log.Error("Role", 44, "加载level sequence失败:", [
                 "sequencePath",
                 n,
               ]),
-            this.uco.set(s, 0);
+            this.amo.set(s, 0);
         }));
   }
-  lCt() {
+  Egt() {
     var e;
     1 < TouchFingerManager_1.TouchFingerManager.GetTouchFingerCount() &&
       ((e = TouchFingerManager_1.TouchFingerManager.GetFingerExpandCloseValue(
         TouchFingerDefine_1.EFingerIndex.One,
         TouchFingerDefine_1.EFingerIndex.Two,
       )),
-      this.P6i.AddZoomInput(-e));
+      this.A8i.AddZoomInput(-e));
   }
   GetGuideUiItemAndUiItemForShowEx(e) {
-    if (this.RHt)
+    if (this.Rjt)
       Log_1.Log.CheckError() &&
         Log_1.Log.Error("Guide", 44, "异步操作执行过程中不能触发引导");
     else {
       if (2 === e.length && e[0] === GuideConfig_1.GuideConfig.TabTag) {
         this.TabComponent ||
           ((t = new CommonTabComponentData_1.CommonTabComponentData(
-            this.dVe,
+            this.R6e,
             this.pqe,
             this.yqe,
           )),
@@ -517,7 +520,7 @@ class RoleRootView extends UiViewBase_1.UiViewBase {
                 ModelManager_1.ModelManager.PlayerInfoModel.GetPlayerRoleId(),
             );
       const i = Number(t);
-      e = this.plo.GetRoleIdList();
+      e = this.d1o.GetRoleIdList();
       const s = e.findIndex((e) => e === i);
       if (s < 0 || s >= e.length)
         Log_1.Log.CheckError() &&
@@ -549,24 +552,24 @@ class RoleRootView extends UiViewBase_1.UiViewBase {
       }
     }
   }
-  u5i() {
+  _Vi() {
     this.UiViewSequence.PlaySequence("RoleListStart");
   }
-  Cco() {
+  umo() {
     this.UiViewSequence.PlaySequence("RoleListClose");
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.SwitchRootTabState,
-      this.vco,
+      this.Cmo,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.AttributeComponentEvent,
-        this.Mco,
+        this.gmo,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.UiRoleSequenceEndKeyFrame,
-        this.Sco,
+        this.fmo,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.SelectRoleTab,
@@ -586,57 +589,57 @@ class RoleRootView extends UiViewBase_1.UiViewBase {
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnPlayCameraAnimationStart,
-        this.gco,
+        this.cmo,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnActivateUiCameraAnimationHandle,
-        this.fco,
+        this.mmo,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.RoleSystemChangeRole,
         this.OnRoleSelect,
       );
     var e = this.GetDraggable(6);
-    e.OnPointerBeginDragCallBack.Bind(this.B6i),
-      e.OnPointerDragCallBack.Bind(this.b6i),
-      e.OnPointerEndDragCallBack.Bind(this.q6i),
-      e.OnPointerScrollCallBack.Bind(this.O6i),
+    e.OnPointerBeginDragCallBack.Bind(this.w8i),
+      e.OnPointerDragCallBack.Bind(this.B8i),
+      e.OnPointerEndDragCallBack.Bind(this.b8i),
+      e.OnPointerScrollCallBack.Bind(this.N8i),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.NavigationTriggerRoleLookUp,
-        this.G6i,
+        this.q8i,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.NavigationTriggerRoleTurn,
-        this.N6i,
+        this.G8i,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.NavigationTriggerRoleZoom,
-        this.wDn,
+        this.PUn,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.NavigationTriggerRoleReset,
-        this.dco,
+        this._mo,
       ),
       InputDistributeController_1.InputDistributeController.BindTouches(
         [
           InputMappingsDefine_1.touchIdMappings.Touch1,
           InputMappingsDefine_1.touchIdMappings.Touch2,
         ],
-        this.pbt,
+        this.Eqt,
       );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.SwitchRootTabState,
-      this.vco,
+      this.Cmo,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.AttributeComponentEvent,
-        this.Mco,
+        this.gmo,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.UiRoleSequenceEndKeyFrame,
-        this.Sco,
+        this.fmo,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.SelectRoleTab,
@@ -659,14 +662,14 @@ class RoleRootView extends UiViewBase_1.UiViewBase {
         this.OnRoleSelect,
       );
   }
-  Eco() {
+  pmo() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnPlayCameraAnimationStart,
-      this.gco,
+      this.cmo,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnActivateUiCameraAnimationHandle,
-        this.fco,
+        this.mmo,
       );
     var e = this.GetDraggable(6);
     e.OnPointerBeginDragCallBack.Unbind(),
@@ -675,29 +678,29 @@ class RoleRootView extends UiViewBase_1.UiViewBase {
       e.OnPointerScrollCallBack.Unbind(),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.NavigationTriggerRoleLookUp,
-        this.G6i,
+        this.q8i,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.NavigationTriggerRoleTurn,
-        this.N6i,
+        this.G8i,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.NavigationTriggerRoleZoom,
-        this.wDn,
+        this.PUn,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.NavigationTriggerRoleReset,
-        this.dco,
+        this._mo,
       ),
       InputDistributeController_1.InputDistributeController.UnBindTouches(
         [
           InputMappingsDefine_1.touchIdMappings.Touch1,
           InputMappingsDefine_1.touchIdMappings.Touch2,
         ],
-        this.pbt,
+        this.Eqt,
       );
   }
-  x6i() {
+  P8i() {
     if (
       UiCameraAnimationManager_1.UiCameraAnimationManager.IsPlayingAnimation()
     )
@@ -715,7 +718,7 @@ class RoleRootView extends UiViewBase_1.UiViewBase {
     this.RefreshRoleSystemModeUiParam();
   }
   RefreshRoleSystemModeUiParam() {
-    var e = this.plo.GetRoleSystemUiParams();
+    var e = this.d1o.GetRoleSystemUiParams();
     this.BindRedDot(e.RoleListButtonRedDot),
       this.SetRoleListButtonVisible(e.RoleListButton),
       this.RoleListComponent.SetRoleSystemUiParams(e);
@@ -723,7 +726,7 @@ class RoleRootView extends UiViewBase_1.UiViewBase {
   LoadFloorEffect() {
     var e = UiSceneManager_1.UiSceneManager.GetActorByTag("RoleFloorCase");
     e &&
-      (this.Fho = EffectUtil_1.EffectUtil.SpawnUiEffect(
+      (this.Nlo = EffectUtil_1.EffectUtil.SpawnUiEffect(
         "RoleSystemFloorEffect",
         "[RoleRootView.LoadFloorEffect]",
         e.GetTransform(),
@@ -763,16 +766,16 @@ class RoleRootView extends UiViewBase_1.UiViewBase {
     this.GetItem(3).SetUIActive(e);
   }
   OnBeforeHide() {
-    this.Eco(),
-      (this.A6i = !1),
-      this.R7t && ((this._co = !1), this.R7t.Stop(), (this.R7t = void 0)),
+    this.pmo(),
+      (this.U8i = !1),
+      this.RHt && ((this.smo = !1), this.RHt.Stop(), (this.RHt = void 0)),
       UiCameraManager_1.UiCameraManager.Get().DestroyUiCameraComponent(
         UiCameraControlRotationComponent_1.UiCameraControlRotationComponent,
       ),
-      (this.P6i = void 0);
+      (this.A8i = void 0);
   }
   OnHandleReleaseScene() {
-    this.kLn();
+    this.UDn();
   }
   OnAfterHide() {
     this.RoleListComponent.UnBindRedDot(),
@@ -782,22 +785,23 @@ class RoleRootView extends UiViewBase_1.UiViewBase {
     this.UnBindRedDot(),
       Log_1.Log.CheckDebug() && Log_1.Log.Debug("Role", 44, "角色界面关闭");
   }
-  kLn() {
-    this.NLn ||
-      ((this.NLn = !0),
-      EffectSystem_1.EffectSystem.IsValid(this.Fho) &&
+  UDn() {
+    this.RDn ||
+      ((this.RDn = !0),
+      EffectSystem_1.EffectSystem.IsValid(this.Nlo) &&
         EffectSystem_1.EffectSystem.StopEffectById(
-          this.Fho,
+          this.Nlo,
           "[RoleRootView.HandleReleaseScene]",
           !1,
         ),
-      UiSceneManager_1.UiSceneManager.DestroyRoleSystemRoleActor(this.pco),
-      (this.pco = void 0),
+      UiSceneManager_1.UiSceneManager.DestroyRoleSystemRoleActor(this.dmo),
+      (this.dmo = void 0),
       UiSceneManager_1.UiSceneManager.ClearUiSequenceFrame(),
-      ModelManager_1.ModelManager.WeaponModel.SetCurSelectViewName(0));
+      ModelManager_1.ModelManager.WeaponModel.SetCurSelectViewName(0),
+      RenderUtil_1.RenderUtil.EndPSOSyncMode());
   }
   OnBeforeDestroyImplement() {
-    this.kLn(),
+    this.UDn(),
       this.ClearData(),
       Log_1.Log.CheckDebug() && Log_1.Log.Debug("Role", 44, "角色界面销毁");
   }
@@ -805,17 +809,17 @@ class RoleRootView extends UiViewBase_1.UiViewBase {
     this.TabViewComponent &&
       (this.TabViewComponent.DestroyTabViewComponent(),
       (this.TabViewComponent = void 0)),
-      EffectSystem_1.EffectSystem.IsValid(this.Fho) &&
+      EffectSystem_1.EffectSystem.IsValid(this.Nlo) &&
         (EffectSystem_1.EffectSystem.StopEffectById(
-          this.Fho,
+          this.Nlo,
           "[RoleRootView.ClearData]",
           !0,
         ),
-        (this.Fho = 0));
-    for (const e of this.m5i.values()) e.SetShouldLatentDestroy(!0);
-    this.m5i.clear(),
-      (this._Ve = 0),
-      (this.lco = 0),
+        (this.Nlo = 0));
+    for (const e of this.cVi.values()) e.SetShouldLatentDestroy(!0);
+    this.cVi.clear(),
+      (this.I6e = 0),
+      (this.nmo = 0),
       UiCameraManager_1.UiCameraManager.Get().DestroyUiCameraComponent(
         UiCameraControlRotationComponent_1.UiCameraControlRotationComponent,
       );

@@ -8,9 +8,9 @@ class ItemInteractionPanelMainTypeItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
       (this.MainTypeId = 0),
-      (this.vAt = void 0),
-      (this.OCt = () => {
-        this.vAt && this.vAt(this.MainTypeId);
+      (this.SPt = void 0),
+      (this.Jgt = () => {
+        this.SPt && this.SPt(this.MainTypeId);
       });
   }
   OnRegisterComponent() {
@@ -19,7 +19,7 @@ class ItemInteractionPanelMainTypeItem extends UiPanelBase_1.UiPanelBase {
       [1, UE.UIExtendToggle],
       [2, UE.UIItem],
     ]),
-      (this.BtnBindInfo = [[1, this.OCt]]);
+      (this.BtnBindInfo = [[1, this.Jgt]]);
   }
   OnStart() {
     this.MainTypeId = this.OpenParam;
@@ -31,7 +31,7 @@ class ItemInteractionPanelMainTypeItem extends UiPanelBase_1.UiPanelBase {
       (this.SetSpriteByPath(e.Icon, this.GetSprite(0), !1), this.SetActive(!0));
   }
   OnBeforeDestroy() {
-    this.vAt = void 0;
+    this.SPt = void 0;
   }
   SetSelected(e) {
     e
@@ -42,7 +42,7 @@ class ItemInteractionPanelMainTypeItem extends UiPanelBase_1.UiPanelBase {
     this.GetItem(2)?.SetUIActive(e);
   }
   BindOnExtendToggleStateChanged(e) {
-    this.vAt = e;
+    this.SPt = e;
   }
 }
 exports.ItemInteractionPanelMainTypeItem = ItemInteractionPanelMainTypeItem;

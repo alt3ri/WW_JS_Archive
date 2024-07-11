@@ -9,19 +9,19 @@ const UE = require("ue"),
 class SortView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.VRt = void 0),
-      (this.HRt = void 0),
-      (this.ogt = void 0),
-      (this.O8e = () => {
-        this.VRt.Reset(), this.HRt.Reset();
+      (this.KUt = void 0),
+      (this.QUt = void 0),
+      (this.C0t = void 0),
+      (this.Z9e = () => {
+        this.KUt.Reset(), this.QUt.Reset();
       }),
-      (this.RLt = () => {
+      (this.xDt = () => {
         var t = ModelManager_1.ModelManager.SortModel.GetSortResultData(
-          this.ogt.ConfigId,
+          this.C0t.ConfigId,
         );
-        t.SetSelectBaseSort(this.VRt.GetTempSelect()),
-          t.SetSelectAttributeSort(this.HRt.GetTempSelectMap()),
-          this.ogt.ConfirmFunction?.(),
+        t.SetSelectBaseSort(this.KUt.GetTempSelect()),
+          t.SetSelectAttributeSort(this.QUt.GetTempSelectMap()),
+          this.C0t.ConfirmFunction?.(),
           this.CloseMe();
       });
   }
@@ -33,21 +33,21 @@ class SortView extends UiViewBase_1.UiViewBase {
       [3, UE.UIItem],
     ]),
       (this.BtnBindInfo = [
-        [0, this.O8e],
-        [1, this.RLt],
+        [0, this.Z9e],
+        [1, this.xDt],
       ]);
   }
   OnStart() {
-    (this.VRt = new BaseSortGroup_1.BaseSortGroup(this.GetItem(2))),
-      (this.HRt = new AttributeSortGroup_1.AttributeSortGroup(this.GetItem(3))),
-      (this.ogt = this.OpenParam),
-      this.LRt();
+    (this.KUt = new BaseSortGroup_1.BaseSortGroup(this.GetItem(2))),
+      (this.QUt = new AttributeSortGroup_1.AttributeSortGroup(this.GetItem(3))),
+      (this.C0t = this.OpenParam),
+      this.AUt();
   }
   OnBeforeDestroy() {
-    this.VRt.Destroy(), this.HRt.Destroy();
+    this.KUt.Destroy(), this.QUt.Destroy();
   }
-  LRt() {
-    this.VRt.Init(this.ogt.ConfigId), this.HRt.Init(this.ogt.ConfigId);
+  AUt() {
+    this.KUt.Init(this.C0t.ConfigId), this.QUt.Init(this.C0t.ConfigId);
   }
 }
 exports.SortView = SortView;

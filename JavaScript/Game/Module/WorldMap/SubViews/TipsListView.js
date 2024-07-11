@@ -6,24 +6,24 @@ const UE = require("ue"),
   GenericLayoutAdd_1 = require("../../Util/GenericLayoutAdd");
 class TipsListView {
   constructor() {
-    (this.xko = void 0),
+    (this.U2o = void 0),
       (this.OnInstanceRefresh = (t, e, i, s) => {
         var n = new InstanceDungeonCostTip();
         return n.SetRootActor(e.GetOwner(), !0), { Key: t, Value: n };
       });
   }
   Initialize(t) {
-    this.xko = new GenericLayoutAdd_1.GenericLayoutAdd(
+    this.U2o = new GenericLayoutAdd_1.GenericLayoutAdd(
       t,
       this.OnInstanceRefresh,
     );
   }
   AddItemByKey(t) {
-    var e = this.xko.GetLayoutItemByKey(t);
+    var e = this.U2o.GetLayoutItemByKey(t);
     return (
       e ||
-        (this.xko.AddItemToLayout([t]),
-        (e = this.xko.GetLayoutItemByKey(t)).SetStarVisible(!1),
+        (this.U2o.AddItemToLayout([t]),
+        (e = this.U2o.GetLayoutItemByKey(t)).SetStarVisible(!1),
         e.SetIconVisible(!1),
         e.SetLeftText(""),
         e.SetRightText("")),
@@ -31,16 +31,16 @@ class TipsListView {
     );
   }
   Clear() {
-    this.xko.ClearChildren();
+    this.U2o.ClearChildren();
   }
 }
 exports.TipsListView = TipsListView;
 class InstanceDungeonCostTip extends UiComponentsAction_1.UiComponentsAction {
   constructor() {
     super(...arguments),
-      (this.v2o = void 0),
-      (this.M2o = () => {
-        this.v2o?.();
+      (this.gFo = void 0),
+      (this.fFo = () => {
+        this.gFo?.();
       });
   }
   OnRegisterComponent() {
@@ -51,10 +51,10 @@ class InstanceDungeonCostTip extends UiComponentsAction_1.UiComponentsAction {
       [3, UE.UITexture],
       [4, UE.UISprite],
     ]),
-      (this.BtnBindInfo = [[2, this.M2o]]);
+      (this.BtnBindInfo = [[2, this.fFo]]);
   }
   SetClickHelpFunc(t) {
-    this.v2o = t;
+    this.gFo = t;
   }
   SetLeftText(t) {
     this.GetText(0).SetText(t);

@@ -104,7 +104,7 @@ class LevelEventCharacterMove extends LevelGeneralBase_1.LevelEventBase {
           ),
         !1
       );
-    var e = this.$Le.Entity.GetComponent(161);
+    var e = this.$Le.Entity.GetComponent(163);
     if (
       (e.IsMovingToLocation() && e.MoveToLocationEnd(1),
       LevelEventCharacterMove.rDe(!1),
@@ -129,7 +129,7 @@ class LevelEventCharacterMove extends LevelGeneralBase_1.LevelEventBase {
           ),
         !1
       );
-    var e = this.$Le.Entity.GetComponent(161);
+    var e = this.$Le.Entity.GetComponent(163);
     if (!this.$Le.Entity.GetComponent(0)?.IsCharacter() || !e)
       return (
         Log_1.Log.CheckError() &&
@@ -177,12 +177,12 @@ class LevelEventCharacterMove extends LevelGeneralBase_1.LevelEventBase {
       n,
       a = Global_1.Global.BaseCharacter?.GetEntityNoBlueprint();
     a?.Valid &&
-      ((t = a.GetComponent(158)),
+      ((t = a.GetComponent(160)),
       (r = a.GetComponent(33)),
       (i = a.GetComponent(3)),
-      (o = a.GetComponent(52)),
-      (n = a.GetComponent(185)),
-      (a = a.GetComponent(161)),
+      (o = a.GetComponent(53)),
+      (n = a.GetComponent(188)),
+      (a = a.GetComponent(163)),
       e
         ? (a?.StopMove(!1),
           a?.ResetMaxSpeed(t?.MoveState),

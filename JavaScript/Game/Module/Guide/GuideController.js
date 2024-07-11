@@ -11,15 +11,16 @@ const Log_1 = require("../../../Core/Common/Log"),
   ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../Manager/ModelManager"),
   UiControllerBase_1 = require("../../Ui/Base/UiControllerBase"),
-  UiManager_1 = require("../../Ui/UiManager");
+  UiManager_1 = require("../../Ui/UiManager"),
+  GuidePrefabDefine_1 = require("./Views/GuidePrefabDefine");
 class GuideController extends UiControllerBase_1.UiControllerBase {
   static OnRegisterNetEvent() {
-    Net_1.Net.Register(13151, this.vYt);
+    Net_1.Net.Register(10149, this.vJt);
   }
   static OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(13151);
+    Net_1.Net.UnRegister(10149);
   }
-  static MYt() {
+  static MJt() {
     for (const i of ConfigManager_1.ConfigManager.GuideConfig.GetAllGroup()) {
       var e,
         o,
@@ -27,44 +28,44 @@ class GuideController extends UiControllerBase_1.UiControllerBase {
       t &&
         ((e = i.Id),
         ModelManager_1.ModelManager.GuideModel.CanGroupInvoke(e)) &&
-        !GuideController.SYt.has(e) &&
+        !GuideController.EJt.has(e) &&
         ((o = new LevelConditionRegistry_1.ConditionPassCallback(
-          GuideController.EYt,
+          GuideController.SJt,
           [e],
         )),
         LevelConditionRegistry_1.LevelConditionRegistry.RegisterConditionGroup(
           t,
           o,
         ),
-        GuideController.SYt.set(e, o));
+        GuideController.EJt.set(e, o));
     }
   }
-  static yYt() {
+  static yJt() {
     for (const i of ConfigManager_1.ConfigManager.GuideConfig.GetAllGroup()) {
       var e,
         o,
         t = i.AutoOpenCondition;
       t &&
-        ((e = i.Id), (o = this.SYt.get(e))) &&
+        ((e = i.Id), (o = this.EJt.get(e))) &&
         (LevelConditionRegistry_1.LevelConditionRegistry.UnRegisterConditionGroup(
           t,
           o,
         ),
-        this.SYt.delete(e));
+        this.EJt.delete(e));
     }
   }
   static OnAddEvents() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.GuideGroupOpening,
-      this.IYt,
+      this.IJt,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.EnterGameSuccess,
-        this.TYt,
+        this.TJt,
       ),
       EventSystem_1.EventSystem.Add(
-        EventDefine_1.EEventName.OnPlatformChanged,
-        this.dKe,
+        EventDefine_1.EEventName.InputControllerChange,
+        this.XBo,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.WorldDone,
@@ -72,33 +73,33 @@ class GuideController extends UiControllerBase_1.UiControllerBase {
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.WorldDoneAndCloseLoading,
-        this.Uje,
+        this.FWe,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.ActiveBattleView,
-        this.LYt,
+        this.LJt,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnBlackFadeScreenFinish,
-        this.LYt,
+        this.LJt,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.BattleSettlementStateChanged,
-        this.LYt,
+        this.LJt,
       );
   }
   static OnRemoveEvents() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.GuideGroupOpening,
-      this.IYt,
+      this.IJt,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.EnterGameSuccess,
-        this.TYt,
+        this.TJt,
       ),
       EventSystem_1.EventSystem.Remove(
-        EventDefine_1.EEventName.OnPlatformChanged,
-        this.dKe,
+        EventDefine_1.EEventName.InputControllerChange,
+        this.XBo,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.WorldDone,
@@ -106,26 +107,26 @@ class GuideController extends UiControllerBase_1.UiControllerBase {
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.WorldDoneAndCloseLoading,
-        this.Uje,
+        this.FWe,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.ActiveBattleView,
-        this.LYt,
+        this.LJt,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnBlackFadeScreenFinish,
-        this.LYt,
+        this.LJt,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.BattleSettlementStateChanged,
-        this.LYt,
+        this.LJt,
       ),
-      this.yYt();
+      this.yJt();
   }
   static OnAddOpenViewCheckFunction() {
     UiManager_1.UiManager.AddOpenViewCheckFunction(
       "GuideTutorialView",
-      GuideController.DYt,
+      GuideController.DJt,
       "GuideController.CanOpenTutorial",
     );
   }
@@ -160,19 +161,19 @@ class GuideController extends UiControllerBase_1.UiControllerBase {
           ]);
   }
   static FinishGuide(o) {
-    var e = Protocol_1.Aki.Protocol._es.create();
-    (e.P5n = o),
-      Net_1.Net.Call(19247, e, (e) => {
-        e?.lkn !== Protocol_1.Aki.Protocol.lkn.Sys &&
+    var e = Protocol_1.Aki.Protocol.oos.create();
+    (e.c9n = o),
+      Net_1.Net.Call(11984, e, (e) => {
+        e?.O4n !== Protocol_1.Aki.Protocol.O4n.NRs &&
           Log_1.Log.CheckError() &&
           Log_1.Log.Error("Guide", 17, "引导请求服务端完成失败", ["组Id", o]),
-          GuideController.RYt(o);
+          GuideController.RJt(o);
       });
   }
   static GmCleanGuideData() {
     ModelManager_1.ModelManager.GuideModel.GmResetAllGuideGroup(),
-      GuideController.yYt(),
-      GuideController.MYt();
+      GuideController.yJt(),
+      GuideController.MJt();
   }
   static TryStartGuide(e) {
     Log_1.Log.CheckDebug() &&
@@ -188,11 +189,17 @@ class GuideController extends UiControllerBase_1.UiControllerBase {
         (this.FinishGuide(e), !0)
     );
   }
+  static TryFinishRunningGuides() {
+    for (const e of ModelManager_1.ModelManager.GuideModel.GetRunningGroupIdList())
+      Log_1.Log.CheckDebug() &&
+        Log_1.Log.Debug("Guide", 65, "停止当前引导: " + e),
+        GuideController.TryFinishGuide(e);
+  }
   static FinishGuideGm(e) {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug("Guide", 17, "引导GM命令请求完成", ["groupId", e]),
       ModelManager_1.ModelManager.GuideModel.CheckGuideInfoExist(e)
-        ? GuideController.RYt(e)
+        ? GuideController.RJt(e)
         : Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Guide",
@@ -201,9 +208,9 @@ class GuideController extends UiControllerBase_1.UiControllerBase {
             ["引导Id", e],
           );
   }
-  static RYt(e) {
+  static RJt(e) {
     ModelManager_1.ModelManager.GuideModel.FinishGroup(e),
-      GuideController.UYt(e),
+      GuideController.UJt(e),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.GuideGroupFinished,
         e,
@@ -214,29 +221,29 @@ class GuideController extends UiControllerBase_1.UiControllerBase {
       (Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("Guide", 54, "重置已完成引导", ["groupId", e]),
       ModelManager_1.ModelManager.GuideModel.ResetFinishedGuide(e),
-      GuideController.AYt(e));
+      GuideController.AJt(e));
   }
-  static AYt(e) {
+  static AJt(e) {
     var o, t;
-    GuideController.SYt.has(e) ||
+    GuideController.EJt.has(e) ||
       (ModelManager_1.ModelManager.GuideModel.CanGroupInvoke(e) &&
         (o =
           ConfigManager_1.ConfigManager.GuideConfig.GetGroup(
             e,
           ).AutoOpenCondition) &&
         ((t = new LevelConditionRegistry_1.ConditionPassCallback(
-          GuideController.EYt,
+          GuideController.SJt,
           [e],
         )),
         LevelConditionRegistry_1.LevelConditionRegistry.RegisterConditionGroup(
           o,
           t,
         ),
-        GuideController.SYt.set(e, t)));
+        GuideController.EJt.set(e, t)));
   }
-  static UYt(e) {
+  static UJt(e) {
     var o,
-      t = GuideController.SYt.get(e);
+      t = GuideController.EJt.get(e);
     t &&
       !ModelManager_1.ModelManager.GuideModel.CanGroupInvoke(e) &&
       (o =
@@ -247,57 +254,63 @@ class GuideController extends UiControllerBase_1.UiControllerBase {
         o,
         t,
       ),
-      GuideController.SYt.delete(e));
+      GuideController.EJt.delete(e));
+  }
+  static CheckAvailableWhenOnline(e) {
+    if (ModelManager_1.ModelManager.GameModeModel.IsMulti) {
+      if (1 !== e) return !0;
+    } else if (2 !== e) return !0;
+    return !1;
+  }
+  static CheckHasNewTagInHookNameForShow(e) {
+    return e.HookNameForShow.includes(GuidePrefabDefine_1.NEW_TAG);
   }
 }
-((exports.GuideController = GuideController).vYt = (e) => {
+((exports.GuideController = GuideController).vJt = (e) => {
   e
     ? (Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "Guide",
           17,
           "初始化GuideTriggerNotify发来的数据, 服务端监听的打开条件通过，主动发一个引导组下来",
-          ["groupId", e.P5n],
+          ["groupId", e.c9n],
         ),
-      (e = e.P5n),
+      (e = e.c9n),
       GuideController.TryStartGuide(e))
     : Log_1.Log.CheckError() &&
       Log_1.Log.Error("Guide", 17, "服务端发来的GuideTriggerNotify为空");
 }),
-  (GuideController.SYt = new Map()),
-  (GuideController.EYt = (e) => {
+  (GuideController.EJt = new Map()),
+  (GuideController.SJt = (e) => {
     GuideController.TryStartGuide(e[0]);
   }),
-  (GuideController.DYt = () =>
+  (GuideController.DJt = () =>
     !ModelManager_1.ModelManager.BattleUiModel.IsInBattleSettlement),
-  (GuideController.IYt = (o, t) => {
-    var e = Protocol_1.Aki.Protocol.hes.create();
-    (e.P5n = o),
-      Net_1.Net.Call(20570, e, (e) => {
-        e?.lkn !== Protocol_1.Aki.Protocol.lkn.Sys
+  (GuideController.IJt = (o, t) => {
+    var e = Protocol_1.Aki.Protocol.ios.create();
+    (e.c9n = o),
+      Net_1.Net.Call(29377, e, (e) => {
+        e?.O4n !== Protocol_1.Aki.Protocol.O4n.NRs
           ? (ModelManager_1.ModelManager.GuideModel.SwitchGroupState(o, 0),
             ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-              e.lkn,
-              24403,
-              e.Fms,
+              e.O4n,
+              4234,
+              e.ivs,
             ))
           : t || ModelManager_1.ModelManager.GuideModel.SwitchGroupState(o, 2);
       });
   }),
-  (GuideController.LYt = () => {
+  (GuideController.LJt = () => {
     ModelManager_1.ModelManager.GuideModel.ShowFailedOpenTutorialView();
   }),
   (GuideController.nye = () => {
-    ModelManager_1.ModelManager.GuideModel.EnsureCurrentDungeonId(),
-      ModelManager_1.ModelManager.GuideModel.SetLock(
-        !ModelManager_1.ModelManager.CreatureModel.IsMyWorld(),
-      );
+    ModelManager_1.ModelManager.GuideModel.EnsureCurrentDungeonId();
   }),
-  (GuideController.K8s = [20013]),
-  (GuideController.Uje = () => {
+  (GuideController.$Js = [20013]),
+  (GuideController.FWe = () => {
     var e = ModelManager_1.ModelManager.GuideModel.CurrentGroupMap;
     if (e)
-      for (const t of GuideController.K8s) {
+      for (const t of GuideController.$Js) {
         var o = e.get(t);
         o &&
           (Log_1.Log.CheckInfo() &&
@@ -311,24 +324,24 @@ class GuideController extends UiControllerBase_1.UiControllerBase {
           e.delete(t));
       }
   }),
-  (GuideController.TYt = () => {
-    var e = Protocol_1.Aki.Protocol.ses.create();
-    Net_1.Net.Call(18828, e, (e) => {
+  (GuideController.TJt = () => {
+    var e = Protocol_1.Aki.Protocol.eos.create();
+    Net_1.Net.Call(28789, e, (e) => {
       if (e) {
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("Guide", 17, "初始化GuideInfoNotify发来的数据", [
             "FinishedList",
-            e.bRs,
+            e.ZUs,
           ]);
-        for (const o of e.bRs)
+        for (const o of e.ZUs)
           ModelManager_1.ModelManager.GuideModel.FinishGroup(o);
-        GuideController.MYt();
+        GuideController.MJt();
       } else
         Log_1.Log.CheckError() &&
           Log_1.Log.Error("Guide", 17, "服务端发来的GuideInfoNotify为空");
     });
   }),
-  (GuideController.dKe = (e, o, t) => {
+  (GuideController.XBo = () => {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug("Guide", 17, "控制器类型发生变更，引导组数据重置"),
       ModelManager_1.ModelManager.GuideModel.ClearAllGroup();

@@ -10,7 +10,7 @@ class UiNavigationGlobalData {
         "标签",
         a,
       ]),
-      this.Dwo.add(a);
+      this.IBo.add(a);
   }
   static DeleteBlockListenerFocusTag(a) {
     Log_1.Log.CheckInfo() &&
@@ -18,16 +18,16 @@ class UiNavigationGlobalData {
         "标签",
         a,
       ]),
-      this.Dwo.delete(a);
+      this.IBo.delete(a);
   }
   static get IsBlockNavigation() {
     return (
-      0 < this.Dwo.size ||
+      0 < this.IBo.size ||
       ControllerHolder_1.ControllerHolder.BlackScreenController.IsBlackScreenActive()
     );
   }
   static ClearBlockListener() {
-    this.Dwo.clear();
+    this.IBo.clear();
   }
 }
 ((exports.UiNavigationGlobalData =
@@ -35,5 +35,5 @@ class UiNavigationGlobalData {
   (UiNavigationGlobalData.NeedRefreshCurrentPanel = !1),
   (UiNavigationGlobalData.IsAllowCrossNavigationGroup = !1),
   (UiNavigationGlobalData.VisionReplaceViewFindDefault = !0),
-  (UiNavigationGlobalData.Dwo = new Set());
+  (UiNavigationGlobalData.IBo = new Set());
 //# sourceMappingURL=UiNavigationGlobalData.js.map

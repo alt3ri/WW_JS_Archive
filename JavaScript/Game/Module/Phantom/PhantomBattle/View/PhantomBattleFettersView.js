@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PhantomBattleFettersView = void 0);
 const UE = require("ue"),
+  Log_1 = require("../../../../../Core/Common/Log"),
   EventDefine_1 = require("../../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../../Common/Event/EventSystem"),
   ModelManager_1 = require("../../../../Manager/ModelManager"),
@@ -12,11 +13,13 @@ const UE = require("ue"),
 class PhantomBattleFettersView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.Rpt = void 0),
-      (this.nVt = void 0),
-      (this.ZVi = () => {
+      (this.kvt = void 0),
+      (this.n6t = void 0),
+      (this.dFe = 0),
+      (this._Dt = 0),
+      (this.z6i = () => {
         ModelManager_1.ModelManager.PhantomBattleModel.CurrentSelectFetterGroupId =
-          this.Rpt.GetCurrentSelectGroupId();
+          this.kvt.GetCurrentSelectGroupId();
         var e = UiManager_1.UiManager.GetViewByName("VisionEquipmentView");
         e
           ? (UiManager_1.UiManager.CloseView(this.Info.Name),
@@ -24,13 +27,11 @@ class PhantomBattleFettersView extends UiViewBase_1.UiViewBase {
             EventSystem_1.EventSystem.Emit(
               EventDefine_1.EEventName.VisionFilterMonster,
             ))
-          : ((e =
-              ModelManager_1.ModelManager.RoleModel.GetBattleTeamFirstRoleId()),
-            UiManager_1.UiManager.CloseAndOpenView(
+          : UiManager_1.UiManager.CloseAndOpenView(
               this.Info.Name,
               "VisionEquipmentView",
-              e,
-            ));
+              this.dFe,
+            );
       });
   }
   OnRegisterComponent() {
@@ -40,24 +41,30 @@ class PhantomBattleFettersView extends UiViewBase_1.UiViewBase {
     ];
   }
   async OnBeforeStartAsync() {
-    (this.Rpt =
-      new PhantomBattleFettersViewItem_1.PhantomBattleFettersViewItem()),
-      (this.Rpt.OnFastFilter = this.ZVi),
-      await this.Rpt.CreateThenShowByActorAsync(this.GetItem(1).GetOwner()),
-      (this.nVt = new PopupCaptionItem_1.PopupCaptionItem(this.GetItem(0))),
-      this.nVt.SetCloseCallBack(() => {
-        this.CloseMe();
-      });
+    var e = this.OpenParam;
+    void 0 === e
+      ? Log_1.Log.CheckError() &&
+        Log_1.Log.Error("Phantom", 59, "PhantomBattleFettersView无效输入")
+      : ((this._Dt = e[0]),
+        (this.dFe = e[1]),
+        (this.kvt =
+          new PhantomBattleFettersViewItem_1.PhantomBattleFettersViewItem()),
+        this.kvt.SetSelectRoleId(this.dFe),
+        (this.kvt.OnFastFilter = this.z6i),
+        await this.kvt.CreateThenShowByActorAsync(this.GetItem(1).GetOwner()),
+        (this.n6t = new PopupCaptionItem_1.PopupCaptionItem(this.GetItem(0))),
+        this.n6t.SetCloseCallBack(() => {
+          this.CloseMe();
+        }));
   }
   OnBeforeShow() {
-    var e = this.OpenParam;
-    0 < e && this.Rpt.SelectByFetterId(e);
+    0 < this._Dt && this.kvt.SelectByFetterId(this._Dt);
   }
   async OnPlayingStartSequenceAsync() {
-    await this.Rpt?.PlayStartSequence();
+    await this.kvt?.PlayStartSequence();
   }
   async OnPlayingCloseSequenceAsync() {
-    await this.Rpt?.PlayHideSequence();
+    await this.kvt?.PlayHideSequence();
   }
 }
 exports.PhantomBattleFettersView = PhantomBattleFettersView;

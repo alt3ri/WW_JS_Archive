@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PlotViewHud = void 0);
 const UE = require("ue"),
+  Info_1 = require("../../../../Core/Common/Info"),
   Log_1 = require("../../../../Core/Common/Log"),
   CommonDefine_1 = require("../../../../Core/Define/CommonDefine"),
   TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
@@ -15,44 +16,44 @@ const UE = require("ue"),
 class PlotViewHud extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.vZi = void 0),
-      (this.xNi = void 0),
-      (this.yeo = !1),
-      (this.pzi = () => {
-        this.ZZi();
+      (this.geo = void 0),
+      (this.xOi = void 0),
+      (this.vto = !1),
+      (this.CZi = () => {
+        this.$eo();
       }),
-      (this.teo = () => {
-        this.WZi(),
+      (this.Jeo = () => {
+        this.Feo(),
           ControllerHolder_1.ControllerHolder.FlowController.FlowShowTalk.SubmitSubtitle(
-            this.vZi.CurrentContent,
+            this.geo.CurrentContent,
           );
       }),
-      (this.Ieo = (e) => {
-        this.yeo || this.vZi.UpdatePlotSubtitle(e);
+      (this.Mto = (e) => {
+        this.vto || this.geo.UpdatePlotSubtitle(e);
       }),
-      (this.$Zi = (e, t) => {
-        this.vZi.HandlePortraitVisible(this.RootItem, e, t);
+      (this.Weo = (e, t) => {
+        this.geo.HandlePortraitVisible(this.RootItem, e, t);
       }),
-      (this.heo = () => {
-        this.vZi.ClearPlotContent(), this.WZi();
+      (this.rto = () => {
+        this.geo.ClearPlotContent(), this.Feo();
       }),
-      (this.Teo = (e = !1) => {
-        this.yeo === e ||
+      (this.Eto = (e = !1, t = !0) => {
+        this.vto === e ||
           (!e && this.IsHideOrHiding) ||
-          ((this.yeo = e)
-            ? (this.SetUiActive(!1),
-              this.kPn(),
+          ((this.vto = e)
+            ? (t && this.SetUiActive(!1),
+              this.pbn(),
               ControllerHolder_1.ControllerHolder.FlowController.CountDownSkip(
                 !0,
               ))
-            : (this.SetUiActive(!0),
-              this.Oqn(),
+            : (t && this.SetUiActive(!0),
+              this.V2n(),
               ControllerHolder_1.ControllerHolder.FlowController.CountDownSkip(
                 !1,
               )));
       }),
-      (this.Leo = (e) => {
-        (this.OpenParam = e), this.Deo(), this.Reo(), this.Ueo();
+      (this.Sto = (e) => {
+        (this.OpenParam = e), this.yto(), this.Ito(), this.Tto();
       });
   }
   SimulateClickSubtitle() {}
@@ -74,7 +75,7 @@ class PlotViewHud extends UiViewBase_1.UiViewBase {
     var e = this.GetScrollView(8);
     e?.SetCanScroll(!1),
       e?.SetRayCastTargetForScrollView(!1),
-      (this.vZi = new PlotTextLogic_1.PlotTextCommonLogic(
+      (this.geo = new PlotTextLogic_1.PlotTextCommonLogic(
         this.GetItem(4),
         this.GetText(0),
         this.GetText(1),
@@ -82,75 +83,75 @@ class PlotViewHud extends UiViewBase_1.UiViewBase {
         this.GetItem(3),
         e,
       )),
-      this.vZi.SetPlotContentAnimFinishCallback(this.pzi),
-      this.Ueo(),
-      this.Reo(),
-      (this.yeo = !1);
+      this.geo.SetPlotContentAnimFinishCallback(this.CZi),
+      this.Tto(),
+      this.Ito(),
+      (this.vto = !1);
   }
-  ZZi() {
-    this.WZi();
+  $eo() {
+    this.Feo();
     var e =
       ModelManager_1.ModelManager.PlotModel.PlotGlobalConfig.EndWaitTimeLevelD *
       CommonDefine_1.MILLIONSECOND_PER_SECOND;
-    this.xNi = TimerSystem_1.TimerSystem.Delay(
-      this.teo,
-      this.vZi.PlayDelayTime <= e ? e : this.vZi.PlayDelayTime,
+    this.xOi = TimerSystem_1.TimerSystem.Delay(
+      this.Jeo,
+      this.geo.PlayDelayTime <= e ? e : this.geo.PlayDelayTime,
     );
   }
-  WZi() {
-    TimerSystem_1.TimerSystem.Has(this.xNi) &&
-      TimerSystem_1.TimerSystem.Remove(this.xNi),
-      (this.xNi = void 0);
+  Feo() {
+    TimerSystem_1.TimerSystem.Has(this.xOi) &&
+      TimerSystem_1.TimerSystem.Remove(this.xOi),
+      (this.xOi = void 0);
   }
   async OnPlayingCloseSequenceAsync() {
-    await this.vZi.DestroyPortraitItem();
+    await this.geo.DestroyPortraitItem();
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.UpdatePlotSubtitle,
-      this.Ieo,
+      this.Mto,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.UpdatePortraitVisible,
-        this.$Zi,
+        this.Weo,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.ClearPlotSubtitle,
-        this.heo,
+        this.rto,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.HangPlotViewHud,
-        this.Teo,
+        this.Eto,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.UpdatePlotUiParam,
-        this.Leo,
+        this.Sto,
       );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.UpdatePlotSubtitle,
-      this.Ieo,
+      this.Mto,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.UpdatePortraitVisible,
-        this.$Zi,
+        this.Weo,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.ClearPlotSubtitle,
-        this.heo,
+        this.rto,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.HangPlotViewHud,
-        this.Teo,
+        this.Eto,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.UpdatePlotUiParam,
-        this.Leo,
+        this.Sto,
       );
   }
   OnAfterPlayStartSequence() {
-    this.Deo();
+    this.yto();
   }
   OnAfterShow() {
     EventSystem_1.EventSystem.Emit(
@@ -158,7 +159,7 @@ class PlotViewHud extends UiViewBase_1.UiViewBase {
       this.Info.Name,
       !0,
     ),
-      this.Teo(ModelManager_1.ModelManager.PlotModel?.HangViewHud);
+      this.Eto(ModelManager_1.ModelManager.PlotModel?.HangViewHud, !1);
   }
   OnBeforeHide() {
     EventSystem_1.EventSystem.Emit(
@@ -166,13 +167,13 @@ class PlotViewHud extends UiViewBase_1.UiViewBase {
       this.Info.Name,
       !1,
     ),
-      this.Teo(!0);
+      this.Eto(!0, !1);
   }
   OnBeforeDestroy() {
-    this.vZi.Clear(),
+    this.geo.Clear(),
       ControllerHolder_1.ControllerHolder.FlowController.CountDownSkip(!1);
   }
-  Ueo() {
+  Tto() {
     var e,
       t = this.OpenParam;
     t &&
@@ -187,14 +188,14 @@ class PlotViewHud extends UiViewBase_1.UiViewBase {
           : e.SetUIParent(this.GetItem(5)),
       e.SetAnchorOffsetX(0));
   }
-  Reo() {
+  Ito() {
     var e;
-    ModelManager_1.ModelManager.PlatformModel?.IsMobile() ||
+    Info_1.Info.IsInTouch() ||
       ((e = this.OpenParam) &&
         e.TextWidth &&
         this.GetText(2)?.SetWidth(e.TextWidth));
   }
-  Deo() {
+  yto() {
     var e,
       t = this.OpenParam;
     t?.ViewName &&
@@ -217,18 +218,18 @@ class PlotViewHud extends UiViewBase_1.UiViewBase {
             ),
           this.CloseMe()));
   }
-  kPn() {
+  pbn() {
     ModelManager_1.ModelManager.PlotModel.CurTalkItem &&
-      (this.vZi.PauseSubtitle(), this.xNi) &&
-      this.xNi.Pause();
+      (this.geo.PauseSubtitle(), this.xOi) &&
+      this.xOi.Pause();
   }
-  Oqn() {
+  V2n() {
     ModelManager_1.ModelManager.PlotModel.CurTalkItem &&
-      (this.vZi.ResumeSubtitle(
+      (this.geo.ResumeSubtitle(
         ModelManager_1.ModelManager.PlotModel.CurTalkItem,
       ),
-      this.xNi) &&
-      this.xNi.Resume();
+      this.xOi) &&
+      this.xOi.Resume();
   }
 }
 exports.PlotViewHud = PlotViewHud;

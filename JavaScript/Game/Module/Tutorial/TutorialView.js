@@ -27,31 +27,31 @@ const UE = require("ue"),
 class TutorialView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.cpt = void 0),
-      (this.XAt = void 0),
+      (this.Ivt = void 0),
+      (this.JPt = void 0),
       (this.tPe = void 0),
       (this.dqe = void 0),
-      (this.kDo = void 0),
-      (this.FDo = void 0),
-      (this.KVe = []),
-      (this.VDo = 0),
-      (this.dqt = void 0),
-      (this.HDo = void 0),
+      (this.GRo = void 0),
+      (this.NRo = void 0),
+      (this.s8e = []),
+      (this.ORo = 0),
+      (this.fGt = void 0),
+      (this.kRo = void 0),
       (this.Mbe = (t) => {
         var t = ModelManager_1.ModelManager.TutorialModel.MakeSearchList(
             t,
-            this.kDo,
+            this.GRo,
           ),
           i = t.ItemData;
         this.GetItem(5).SetUIActive(!i.length),
-          i.length || this.jDo(),
+          i.length || this.FRo(),
           t.HasTutorial ||
-            this.kDo === TutorialDefine_1.ETutorialType.All ||
-            this.jDo(),
-          this.XAt.RefreshByData(i);
+            this.GRo === TutorialDefine_1.ETutorialType.All ||
+            this.FRo(),
+          this.JPt.RefreshByData(i);
       }),
       (this.Tqe = () => {
-        this.WDo(this.kDo), this.GetItem(4).SetUIActive(!0);
+        this.VRo(this.GRo), this.GetItem(4).SetUIActive(!0);
       }),
       (this.hPe = (t, i, e) => {
         var s = void 0;
@@ -61,23 +61,23 @@ class TutorialView extends UiViewBase_1.UiViewBase {
           { Key: e, Value: s }
         );
       }),
-      (this.dVe = (t, i) => {
+      (this.R6e = (t, i) => {
         return new CommonTabItem_1.CommonTabItem();
       }),
-      (this.WDo = (t) => {
-        (t = this.KVe[t]),
-          (this.kDo = t),
+      (this.VRo = (t) => {
+        (t = this.s8e[t]),
+          (this.GRo = t),
           this.dqe.ResetSearch(!0),
           (t =
             ModelManager_1.ModelManager.TutorialModel.GetUnlockedTutorialDataByType(
               t,
             ));
-        this.XAt.RefreshByData(t),
+        this.JPt.RefreshByData(t),
           t.length
             ? TimerSystem_1.TimerSystem.Next(() => {
-                this.XAt?.GetScrollItemFromIndex(0).OnSelected(!0);
+                this.JPt?.GetScrollItemFromIndex(0).OnSelected(!0);
               })
-            : this.jDo(),
+            : this.FRo(),
           this.GetItem(5).SetUIActive(!t.length),
           this.dqe.SetActive(!!t.length),
           this.UiViewSequence.PlaySequence("Switch"),
@@ -86,45 +86,45 @@ class TutorialView extends UiViewBase_1.UiViewBase {
           );
       }),
       (this.yqe = (t) => {
-        var i = this.KVe[t],
+        var i = this.s8e[t],
           i = TutorialDefine_1.TutorialUtils.GetTutorialTypeIconPath(i),
-          t = TutorialDefine_1.TutorialUtils.GetTutorialTypeTxt(this.KVe[t]);
+          t = TutorialDefine_1.TutorialUtils.GetTutorialTypeTxt(this.s8e[t]);
         return new CommonTabData_1.CommonTabData(
           i,
           new CommonTabTitleData_1.CommonTabTitleData(t),
         );
       }),
-      (this.KDo = (t, i, e) => {
+      (this.HRo = (t, i, e) => {
         var s = new TutorialDataItem_1.TutorialDataItem();
-        return s.InitData(t), s.SetOnToggleSelected(this.QDo), s;
+        return s.InitData(t), s.SetOnToggleSelected(this.jRo), s;
       }),
-      (this.qDn = () => {
+      (this.HUn = () => {
         var t,
           i,
           e =
             ModelManager_1.ModelManager.TutorialModel.GetUnlockedTutorialDataByType(
-              this.kDo,
+              this.GRo,
             );
         for ([t, i] of e.entries()) i.Selected = 0 === t;
-        this.XAt.RefreshByData(e);
+        this.JPt.RefreshByData(e);
       }),
-      (this.XDo = () => {
-        for (const t of this.XAt.GetScrollItemItems()) t.RefreshRed();
+      (this.WRo = () => {
+        for (const t of this.JPt.GetScrollItemItems()) t.RefreshRed();
       }),
-      (this.QDo = (t, i) => {
-        this.FDo !== i && (this.FDo?.SetToggleState(0, !1), (this.FDo = i)),
+      (this.jRo = (t, i) => {
+        this.NRo !== i && (this.NRo?.SetToggleState(0, !1), (this.NRo = i)),
           this.GetItem(5).SetUIActive(!1),
-          this.qIt(t);
+          this.FTt(t);
       }),
-      (this.$Do = () => {
-        0 < this.VDo &&
+      (this.KRo = () => {
+        0 < this.ORo &&
           (this.UiViewSequence.PlaySequence("SwitchLeft"),
-          this.YDo(this.VDo - 1));
+          this.QRo(this.ORo - 1));
       }),
-      (this.JDo = () => {
-        this.VDo < this.HDo.length - 1 &&
+      (this.XRo = () => {
+        this.ORo < this.kRo.length - 1 &&
           (this.UiViewSequence.PlaySequence("SwitchRight"),
-          this.YDo(this.VDo + 1));
+          this.QRo(this.ORo + 1));
       }),
       (this.lPe = () => {
         this.CloseMe();
@@ -150,44 +150,44 @@ class TutorialView extends UiViewBase_1.UiViewBase {
       [15, UE.UIButtonComponent],
     ]),
       (this.BtnBindInfo = [
-        [14, this.$Do],
-        [15, this.JDo],
+        [14, this.KRo],
+        [15, this.XRo],
       ]);
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.RedDotNewTutorial,
-      this.XDo,
+      this.WRo,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnTutorialUpdate,
-        this.qDn,
+        this.HUn,
       );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.RedDotNewTutorial,
-      this.XDo,
+      this.WRo,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnTutorialUpdate,
-        this.qDn,
+        this.HUn,
       );
   }
   async OnBeforeStartAsync() {
-    (this.XAt = new DynScrollView_1.DynamicScrollView(
+    (this.JPt = new DynScrollView_1.DynamicScrollView(
       this.GetUIDynScrollViewComponent(2),
       this.GetItem(3),
       new TutorialDynItem_1.TutorialDynItem(),
-      this.KDo,
+      this.HRo,
     )),
-      await this.XAt.Init();
+      await this.JPt.Init();
   }
   OnStart() {
     this.GetItem(3).SetUIActive(!1);
     for (const e in TutorialDefine_1.ETutorialType) {
       var t = Number(e);
-      isNaN(t) || this.KVe.push(t);
+      isNaN(t) || this.s8e.push(t);
     }
     this.dqe = new CommonSearchComponent_1.CommonSearchComponent(
       this.GetItem(1),
@@ -195,11 +195,11 @@ class TutorialView extends UiViewBase_1.UiViewBase {
       this.Tqe,
     );
     var i = new CommonTabComponentData_1.CommonTabComponentData(
-      this.dVe,
-      this.WDo,
+      this.R6e,
+      this.VRo,
       this.yqe,
     );
-    (this.cpt = new TabComponentWithCaptionItem_1.TabComponentWithCaptionItem(
+    (this.Ivt = new TabComponentWithCaptionItem_1.TabComponentWithCaptionItem(
       this.GetItem(0),
       i,
       this.lPe,
@@ -209,67 +209,67 @@ class TutorialView extends UiViewBase_1.UiViewBase {
         this.hPe,
         this.GetItem(13),
       )),
-      this.jDo();
+      this.FRo();
   }
-  jDo() {
-    this.GetItem(4).SetUIActive(!1), (this.dqt = void 0);
+  FRo() {
+    this.GetItem(4).SetUIActive(!1), (this.fGt = void 0);
   }
   OnBeforeShow() {
-    var i = this.KVe.length,
-      e = this.cpt.CreateTabItemDataByLength(i);
+    var i = this.s8e.length,
+      e = this.Ivt.CreateTabItemDataByLength(i);
     for (let t = 0; t < i; t++) {
-      var s = this.KVe[t];
+      var s = this.s8e[t];
       s === TutorialDefine_1.ETutorialType.All &&
         ((e[t].RedDotName = "TutorialTypeNew"), (e[t].RedDotUid = s));
     }
-    this.cpt.RefreshTabItem(e, () => {
-      this.cpt.SelectToggleByIndex(0);
+    this.Ivt.RefreshTabItem(e, () => {
+      this.Ivt.SelectToggleByIndex(0);
     });
   }
   OnAfterHide() {
-    this.XAt.ClearChildren(), this.jDo(), (this.FDo = void 0);
+    this.JPt.ClearChildren(), this.FRo(), (this.NRo = void 0);
   }
   OnBeforeDestroy() {
-    this.cpt && (this.cpt.Destroy(), (this.cpt = void 0)),
+    this.Ivt && (this.Ivt.Destroy(), (this.Ivt = void 0)),
       this.tPe && (this.tPe.ClearChildren(), (this.tPe = void 0)),
       this.dqe?.Destroy(),
-      this.XAt?.ClearChildren(),
-      (this.XAt = void 0),
-      (this.KVe = []),
+      this.JPt?.ClearChildren(),
+      (this.JPt = void 0),
+      (this.s8e = []),
       TutorialController_1.TutorialController.TryOpenAwardUiViewPending();
   }
-  qIt(t) {
+  FTt(t) {
     this.GetItem(4).SetUIActive(!0),
-      this.dqt !== t && this.UiViewSequence.PlaySequence("SwitchPage"),
-      this.dqt && (this.dqt.Selected = !1),
-      (this.dqt = t),
-      (this.dqt.Selected = !0),
-      (this.VDo = 0),
-      this.dqt.SavedData.HasRedDot &&
+      this.fGt !== t && this.UiViewSequence.PlaySequence("SwitchPage"),
+      this.fGt && (this.fGt.Selected = !1),
+      (this.fGt = t),
+      (this.fGt.Selected = !0),
+      (this.ORo = 0),
+      this.fGt.SavedData.HasRedDot &&
         TutorialController_1.TutorialController.RemoveRedDotTutorialId(
-          this.dqt.SavedData.TutorialId,
+          this.fGt.SavedData.TutorialId,
         );
     t = ConfigManager_1.ConfigManager.GuideConfig.GetGuideTutorialPageIds(
-      this.dqt.SavedData.TutorialId,
+      this.fGt.SavedData.TutorialId,
     );
-    (this.HDo = t).length <= 1
+    (this.kRo = t).length <= 1
       ? (this.GetButton(14).RootUIComp.SetUIActive(!1),
         this.GetButton(15).RootUIComp.SetUIActive(!1),
         this.GetItem(11).SetUIActive(!1))
       : (this.GetButton(14).RootUIComp.SetUIActive(!0),
         this.GetButton(15).RootUIComp.SetUIActive(!0),
         this.GetItem(11).SetUIActive(!0),
-        this.tPe.RebuildLayoutByDataNew(this.HDo)),
-      this.YDo(this.VDo);
+        this.tPe.RebuildLayoutByDataNew(this.kRo)),
+      this.QRo(this.ORo);
   }
-  YDo(t) {
-    1 < this.HDo.length &&
-      (this.tPe.GetLayoutItemByIndex(this.VDo).UpdateShow(!1),
+  QRo(t) {
+    1 < this.kRo.length &&
+      (this.tPe.GetLayoutItemByIndex(this.ORo).UpdateShow(!1),
       this.tPe.GetLayoutItemByIndex(t).UpdateShow(!0)),
-      (this.VDo = t);
+      (this.ORo = t);
     var i,
       t = ConfigManager_1.ConfigManager.GuideConfig.GetGuideTutorialPage(
-        this.HDo[t],
+        this.kRo[t],
       );
     t.Pic && ((i = this.GetTexture(6)), this.SetTextureByPath(t.Pic, i)),
       LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(7), t.Title),
@@ -277,9 +277,9 @@ class TutorialView extends UiViewBase_1.UiViewBase {
         ? this.GetItem(8).SetUIActive(!1)
         : (LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(9), t.SubTitle),
           this.GetItem(8).SetUIActive(!0)),
-      1 < this.HDo.length &&
-        (this.GetButton(14).SetSelfInteractive(0 < this.VDo),
-        this.GetButton(15).SetSelfInteractive(this.VDo < this.HDo.length - 1));
+      1 < this.kRo.length &&
+        (this.GetButton(14).SetSelfInteractive(0 < this.ORo),
+        this.GetButton(15).SetSelfInteractive(this.ORo < this.kRo.length - 1));
     let e = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(t.Content);
     (e = e.split("/n").join("")), this.GetText(10).SetText(e);
   }

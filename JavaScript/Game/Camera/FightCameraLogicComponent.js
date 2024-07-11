@@ -2,21 +2,21 @@
 var FightCameraLogicComponent_1,
   __decorate =
     (this && this.__decorate) ||
-    function (t, i, s, e) {
-      var h,
+    function (t, i, s, h) {
+      var e,
         r = arguments.length,
         a =
           r < 3
             ? i
-            : null === e
-              ? (e = Object.getOwnPropertyDescriptor(i, s))
-              : e;
+            : null === h
+              ? (h = Object.getOwnPropertyDescriptor(i, s))
+              : h;
       if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
-        a = Reflect.decorate(t, i, s, e);
+        a = Reflect.decorate(t, i, s, h);
       else
         for (var o = t.length - 1; 0 <= o; o--)
-          (h = t[o]) &&
-            (a = (r < 3 ? h(a) : 3 < r ? h(i, s, a) : h(i, s)) || a);
+          (e = t[o]) &&
+            (a = (r < 3 ? e(a) : 3 < r ? e(i, s, a) : e(i, s)) || a);
       return 3 < r && a && Object.defineProperty(i, s, a), a;
     };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
@@ -26,6 +26,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
       void 0);
 const puerts_1 = require("puerts"),
   UE = require("ue"),
+  Info_1 = require("../../Core/Common/Info"),
   Log_1 = require("../../Core/Common/Log"),
   Time_1 = require("../../Core/Common/Time"),
   CommonParamById_1 = require("../../Core/Define/ConfigCommon/CommonParamById"),
@@ -48,8 +49,8 @@ const puerts_1 = require("puerts"),
   GlobalData_1 = require("../GlobalData"),
   ModelManager_1 = require("../Manager/ModelManager"),
   PhotographController_1 = require("../Module/Photograph/PhotographController"),
-  PlatformController_1 = require("../Module/Platform/PlatformController"),
   CharacterNameDefines_1 = require("../NewWorld/Character/Common/CharacterNameDefines"),
+  CharacterLockOnComponent_1 = require("../NewWorld/Character/Common/Component/LockOn/CharacterLockOnComponent"),
   RenderUtil_1 = require("../Render/Utils/RenderUtil"),
   ColorUtils_1 = require("../Utils/ColorUtils"),
   CameraCollision_1 = require("./CameraCollision"),
@@ -188,35 +189,38 @@ let FightCameraLogicComponent =
         (this.AdditionPitchCurve = void 0),
         (this.WorldYawMin = 0),
         (this.WorldYawMax = 0),
+        (this.cPr = !1),
         (this.Character = void 0),
         (this.CharacterController = void 0),
-        (this.qPr = !1),
         (this.CharacterEntityHandle = void 0),
-        (this.GPr = void 0),
+        (this.mPr = void 0),
+        (this.gDn = !1),
+        (this.FollowShooterEntityHandle = void 0),
+        (this.FollowShooterTagComponentInternal = void 0),
         (this.TargetEntity = void 0),
-        (this.NPr = void 0),
+        (this.dPr = void 0),
         (this.TargetSocketName = void 0),
-        (this.OPr = void 0),
+        (this.CPr = void 0),
         (this.IsFollowing = !0),
         (this.ArmLocationFadeElapseTime = -0),
         (this.PlayerRotator = Rotator_1.Rotator.Create()),
         (this.PlayerLocation = Vector_1.Vector.Create()),
         (this.TargetLocation = Vector_1.Vector.Create()),
         (this.TmpArmLocation = Vector_1.Vector.Create()),
-        (this.kPr = !1),
-        (this.FPr = -0),
+        (this.gPr = !1),
+        (this.fPr = -0),
         (this.Fading = !1),
-        (this.IRo = !1),
+        (this.EUo = !1),
         (this.FadeArmRotationPitch = !1),
         (this.FadeArmRotationYaw = !1),
         (this.FadeArmRotationRoll = !1),
-        (this.VPr = !1),
-        (this.HPr = !1),
-        (this.jPr = !1),
-        (this.SRo = -0),
-        (this.yRo = void 0),
+        (this.pPr = !1),
+        (this.vPr = !1),
+        (this.MPr = !1),
+        (this.pUo = -0),
+        (this.MUo = void 0),
         (this.IsUniqueFade = !1),
-        (this.ERo = -0),
+        (this.vUo = -0),
         (this.CurrentCamera = new VirtualCamera()),
         (this.CameraLocation = Vector_1.Vector.Create()),
         (this.CameraForward = Vector_1.Vector.Create()),
@@ -262,7 +266,7 @@ let FightCameraLogicComponent =
           new CameraSpecialGameplayController_1.CameraSpecialGameplayController(
             this,
           )),
-        (this.WPr = [
+        (this.EPr = [
           this.CameraConfigController,
           this.CameraModifyController,
           this.CameraInputController,
@@ -283,18 +287,21 @@ let FightCameraLogicComponent =
         (this.CameraRotation = Rotator_1.Rotator.Create()),
         (this.IsModifiedArmLocation = !1),
         (this.IsModifiedArmLength = !1),
+        (this.IsModifiedArmOffset = !1),
         (this.IsModifiedZoomModifier = !1),
-        (this.IsModifiedArmRotation = !1),
+        (this.IsModifiedArmRotationYaw = !1),
+        (this.IsModifiedArmRotationPitch = !1),
+        (this.IsModifiedArmRotationRoll = !1),
         (this.IsModifiedCameraOffset = !1),
         (this.IsModifiedFov = !1),
-        (this.KPr = 0),
+        (this.SPr = 0),
         (this.ele = void 0),
-        (this.QPr = Vector_1.Vector.Create()),
+        (this.yPr = Vector_1.Vector.Create()),
         (this.TempVector = Vector_1.Vector.Create()),
         (this.TempVector2 = Vector_1.Vector.Create()),
         (this.TempQuat = Quat_1.Quat.Create()),
         (this.TempDesireLocation = Vector_1.Vector.Create()),
-        (this.XPr = !0),
+        (this.IPr = !0),
         (this.Initialized = !1),
         (this.CameraConfig = void 0),
         (this.DefaultConfigs = new Map()),
@@ -309,32 +316,38 @@ let FightCameraLogicComponent =
         (this.CurrentArmCenterRightEdgeMax = 0),
         (this.CurrentArmCenterUpEdgeMin = 0),
         (this.CurrentArmCenterUpEdgeMax = 0),
-        (this.Jyn = 0),
-        (this.zyn = 0),
-        (this.$Pr = 0),
-        (this.YPr = !1),
-        (this.JPr = Vector_1.Vector.Create(0, 0, 0)),
-        (this.zPr = Rotator_1.Rotator.Create(0, 0, 0)),
-        (this.fti = (0, puerts_1.$ref)(void 0)),
-        (this.ZPr = (0, puerts_1.$ref)(0)),
-        (this.exr = (0, puerts_1.$ref)(0)),
-        (this.txr = (t, i) => {
+        (this.pTn = 0),
+        (this.vTn = 0),
+        (this.TPr = 0),
+        (this.LPr = !1),
+        (this.DPr = Vector_1.Vector.Create(0, 0, 0)),
+        (this.RPr = Rotator_1.Rotator.Create(0, 0, 0)),
+        (this.fii = (0, puerts_1.$ref)(void 0)),
+        (this.UPr = (0, puerts_1.$ref)(0)),
+        (this.APr = (0, puerts_1.$ref)(0)),
+        (this.PPr = (t, i) => {
           ModelManager_1.ModelManager.CreatureModel.GetEntityById(t.Id) ===
             this.CharacterEntityHandle && (this.CharacterController = i);
         }),
-        (this.ixr = (t, i) => {
+        (this.xPr = (t, i) => {
           ModelManager_1.ModelManager.CreatureModel.GetEntityById(t.Id) ===
             this.CharacterEntityHandle && (this.CharacterController = void 0);
         }),
+        (this.mDn = (t) => {
+          this.SetFollowShooter(t);
+        }),
+        (this.dDn = () => {
+          this.SetFollowShooter(void 0);
+        }),
         (this.cae = Vector_1.Vector.Create()),
-        (this.oxr = Vector_1.Vector.Create()),
-        (this.uht = () => {
+        (this.wPr = Vector_1.Vector.Create()),
+        (this.Ilt = () => {
           this.ResetFightCameraLogic(), this.ResetInitialCameraRotation();
         }),
         (this.nye = () => {
           this.ResetFightCameraLogic(!1), this.ResetInitialCameraRotation();
         }),
-        (this.rxr = (t) => {
+        (this.BPr = (t) => {
           t || this.ResetFightCameraLogic(!1);
         });
     }
@@ -345,7 +358,7 @@ let FightCameraLogicComponent =
       return this.ele.CameraActor;
     }
     get FinalCameraDistance() {
-      return this.$Pr;
+      return this.TPr;
     }
     GetArmLengthWithSetting(t) {
       return MathUtils_1.MathUtils.Lerp(
@@ -364,16 +377,16 @@ let FightCameraLogicComponent =
     static TArrayToArray(i) {
       if (!i) return [];
       var s = [],
-        e = i.Num();
-      for (let t = 0; t < e; t++) s.push(i.Get(t));
+        h = i.Num();
+      for (let t = 0; t < h; t++) s.push(i.Get(t));
       return s;
     }
     static TMapToMap(i) {
       if (!(i.Num() < 0)) {
         var s = new Map();
         for (let t = 0; t < i.Num(); t++) {
-          var e = i.GetKey(t);
-          s.set(e, i.Get(e));
+          var h = i.GetKey(t);
+          s.set(h, i.Get(h));
         }
         return s;
       }
@@ -382,8 +395,8 @@ let FightCameraLogicComponent =
       if (!(i.Num() < 0)) {
         var s = new Map();
         for (let t = 0; t < i.Num(); t++) {
-          var e = i.GetKey(t);
-          s.set(e, CurveUtils_1.CurveUtils.CreateCurveByStruct(i.Get(e)));
+          var h = i.GetKey(t);
+          s.set(h, CurveUtils_1.CurveUtils.CreateCurveByStruct(i.Get(h)));
         }
         return s;
       }
@@ -400,23 +413,24 @@ let FightCameraLogicComponent =
     p1e(t, i) {
       this[t] = i;
     }
-    SetConfigs(t, i) {
+    SetConfigs(t, i, s) {
       if (t) {
-        for (var [s, e] of t) {
-          s = this.$.get(s);
-          this.f1e(s, e);
+        for (var [h, e] of t) {
+          h = this.$.get(h);
+          this.f1e(h, e);
         }
-        for (var [h, r] of this.$)
-          void 0 === this[r] &&
+        for (var [r, a] of this.$)
+          void 0 === this[a] &&
             (Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "Camera",
-                6,
+                58,
                 "CameraDefault缺少配置",
-                ["key", h],
-                ["value", r],
+                ["tagName", s],
+                ["key", r],
+                ["value", a],
               ),
-            this.f1e(r, 1));
+            this.f1e(a, 1));
         (0 <= this.ArmCenterForwardEdgeMin ||
           0 <= this.ArmCenterRightEdgeMin ||
           0 <= this.ArmCenterUpEdgeMin ||
@@ -424,28 +438,44 @@ let FightCameraLogicComponent =
           this.ArmCenterRightEdgeMax <= 0 ||
           this.ArmCenterUpEdgeMax <= 0) &&
           Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Camera", 6, "CameraDefault配置上下界有误");
+          Log_1.Log.Error(
+            "Camera",
+            58,
+            "CameraDefault配置上下界有误",
+            ["tagName", s],
+            ["ForwardMin", this.ArmCenterForwardEdgeMin],
+            ["RightMin", this.ArmCenterRightEdgeMin],
+            ["UpMin", this.ArmCenterUpEdgeMin],
+            ["ForwardMax", this.ArmCenterForwardEdgeMax],
+            ["RightMax", this.ArmCenterRightEdgeMax],
+            ["UpMax", this.ArmCenterUpEdgeMax],
+          );
       }
       if (i) {
-        for (var [a, o] of i) {
-          a = this.C1e.get(a);
-          this.p1e(a, o);
+        for (var [o, n] of i) {
+          o = this.C1e.get(o);
+          this.p1e(o, n);
         }
-        for (var [n, l] of this.C1e)
-          void 0 === this[l] &&
+        for (var [l, C] of this.C1e)
+          void 0 === this[C] &&
             (Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "Camera",
-                6,
+                58,
                 "CameraDefault缺少曲线配置",
-                ["key", n],
-                ["value", l],
+                ["tagName", s],
+                ["key", l],
+                ["value", C],
               ),
-            this.p1e(l, CurveUtils_1.CurveUtils.CreateCurve(0)));
+            this.p1e(C, CurveUtils_1.CurveUtils.CreateCurve(0)));
       }
     }
     ResetDefaultConfig() {
-      this.SetConfigs(this.DefaultConfigs, this.DefaultCurveConfigs);
+      this.SetConfigs(
+        this.DefaultConfigs,
+        this.DefaultCurveConfigs,
+        "DefaultConfig",
+      );
     }
     ApplyConfig() {
       (this.DesiredCamera.ArmLength = this.ArmLength),
@@ -577,9 +607,7 @@ let FightCameraLogicComponent =
     }
     LoadConfig() {
       this.ele = this.Entity.GetComponent(4);
-      var t = PlatformController_1.PlatformController.IsMobile()
-        ? MOBILE_CONFIG_PATH
-        : CONFIG_PATH;
+      var t = Info_1.Info.IsMobilePlatform() ? MOBILE_CONFIG_PATH : CONFIG_PATH;
       ResourceSystem_1.ResourceSystem.LoadAsync(
         t,
         UE.BP_FightCameraConfig_C,
@@ -635,7 +663,10 @@ let FightCameraLogicComponent =
               t.攀爬镜头曲线配置,
             ),
             this.CameraModifyController.SetSettlementModifier(t.结算镜头),
-            this.CameraCollision?.SetCameraConfig(t.基础.Get(11));
+            this.CameraCollision?.SetCameraConfig(
+              t.基础.Get(11),
+              t.基础.Get(65),
+            );
         },
       );
     }
@@ -643,8 +674,8 @@ let FightCameraLogicComponent =
       t,
       i,
       s,
-      e,
       h,
+      e,
       r,
       a = BREAK_BLEND_OUT_TIME,
       o = void 0,
@@ -657,9 +688,9 @@ let FightCameraLogicComponent =
         t,
         i,
         s,
-        e,
-        a,
         h,
+        a,
+        e,
         r,
         o,
         n,
@@ -668,8 +699,8 @@ let FightCameraLogicComponent =
         _,
       );
     }
-    ApplyCameraGuide(t, i, s, e, h, r, a) {
-      this.CameraGuideController.ApplyCameraGuide(t, i, s, e, h, r, a);
+    ApplyCameraGuide(t, i, s, h, e, r, a) {
+      this.CameraGuideController.ApplyCameraGuide(t, i, s, h, e, r, a);
     }
     ApplyCameraHook(t) {
       this.CameraHookController.ApplyCameraHook(t);
@@ -680,23 +711,23 @@ let FightCameraLogicComponent =
     ExitCameraGuide() {
       this.CameraGuideController.ExitCameraGuide();
     }
-    ApplyDepthOfField(t, i, s, e) {
-      var h = this.CameraActor?.CameraComponent?.PostProcessSettings;
-      h &&
+    ApplyDepthOfField(t, i, s, h) {
+      var e = this.CameraActor?.CameraComponent?.PostProcessSettings;
+      e &&
         (void 0 !== t &&
-          ((h.bOverride_DepthOfFieldFstop = !0), (h.DepthOfFieldFstop = t)),
+          ((e.bOverride_DepthOfFieldFstop = !0), (e.DepthOfFieldFstop = t)),
         void 0 !== i
-          ? ((h.bOverride_DepthOfFieldFocalDistance = !0),
-            (h.DepthOfFieldFocalDistance = i))
-          : ((h.bOverride_DepthOfFieldFocalDistance = !0), (this.YPr = !0)),
+          ? ((e.bOverride_DepthOfFieldFocalDistance = !0),
+            (e.DepthOfFieldFocalDistance = i))
+          : ((e.bOverride_DepthOfFieldFocalDistance = !0), (this.LPr = !0)),
         void 0 !== s &&
-          ((h.bOverride_DepthOfFieldDepthBlurAmount = !0),
-          (h.DepthOfFieldDepthBlurAmount = s)),
-        void 0 !== e) &&
-        ((h.bOverride_DepthOfFieldDepthBlurRadius = !0),
-        (h.DepthOfFieldDepthBlurRadius = e));
+          ((e.bOverride_DepthOfFieldDepthBlurAmount = !0),
+          (e.DepthOfFieldDepthBlurAmount = s)),
+        void 0 !== h) &&
+        ((e.bOverride_DepthOfFieldDepthBlurRadius = !0),
+        (e.DepthOfFieldDepthBlurRadius = h));
     }
-    ApplyRadialBlur(t, i, s, e, h, r) {
+    ApplyRadialBlur(t, i, s, h, e, r) {
       var a = this.CameraActor?.CameraComponent?.PostProcessSettings;
       a &&
         (void 0 !== t
@@ -711,13 +742,13 @@ let FightCameraLogicComponent =
           ? ((a.bOverride_KuroRadialBlurRadius = !0),
             (a.KuroRadialBlurRadius = s))
           : (a.bOverride_KuroRadialBlurRadius = !1),
-        void 0 !== e
-          ? ((a.bOverride_KuroRadialBlurHardness = !0),
-            (a.KuroRadialBlurHardness = e))
-          : (a.bOverride_KuroRadialBlurHardness = !1),
         void 0 !== h
+          ? ((a.bOverride_KuroRadialBlurHardness = !0),
+            (a.KuroRadialBlurHardness = h))
+          : (a.bOverride_KuroRadialBlurHardness = !1),
+        void 0 !== e
           ? ((a.bOverride_KuroRadialBlurPassNumber = !0),
-            (a.KuroRadialBlurPassNumber = h))
+            (a.KuroRadialBlurPassNumber = e))
           : (a.bOverride_KuroRadialBlurPassNumber = !1),
         void 0 !== r
           ? ((a.bOverride_KuroRadialBlurSampleNumber = !0),
@@ -731,7 +762,7 @@ let FightCameraLogicComponent =
         (t.bOverride_DepthOfFieldFocalDistance = !1),
         (t.bOverride_DepthOfFieldDepthBlurAmount = !1),
         (t.bOverride_DepthOfFieldDepthBlurRadius = !1)),
-        (this.YPr = !1);
+        (this.LPr = !1);
     }
     ExitRadialBlur() {
       var t = this.CameraActor?.CameraComponent?.PostProcessSettings;
@@ -743,23 +774,23 @@ let FightCameraLogicComponent =
         (t.bOverride_KuroRadialBlurPassNumber = !1),
         (t.bOverride_KuroRadialBlurSampleNumber = !1));
     }
-    ApplyCameraSpline(t, i, s, e) {
-      this.CameraSplineMoveController.ApplyCameraSpline(t, i, s, e);
+    ApplyCameraSpline(t, i, s, h) {
+      this.CameraSplineMoveController.ApplyCameraSpline(t, i, s, h);
     }
     ExitCameraSpline() {
       this.CameraSplineMoveController.EndCameraSpline();
     }
-    EnterCameraExplore(t, i, s, e, h, r, a) {
-      this.CameraRunningController.EnterCameraExplore(t, i, s, e, h, r, a);
+    EnterCameraExplore(t, i, s, h, e, r, a) {
+      this.CameraRunningController.EnterCameraExplore(t, i, s, h, e, r, a);
     }
     ExitCameraExplore(t) {
       this.CameraRunningController.ExitCameraExplore(t);
     }
     EnterSequenceDialogue(t, i = !1) {
-      this.qPr && this.CameraDialogueController.EnterSequenceDialogue(t, i);
+      this.cPr && this.CameraDialogueController.EnterSequenceDialogue(t, i);
     }
-    AdjustDialogueCamera(t, i, s, e) {
-      this.CameraDialogueController.AdjustDialogueParams(t, i, s, e);
+    AdjustDialogueCamera(t, i, s, h) {
+      this.CameraDialogueController.AdjustDialogueParams(t, i, s, h);
     }
     ExitSequenceDialogue() {
       this.CameraDialogueController.ExitSequenceDialogue();
@@ -780,7 +811,7 @@ let FightCameraLogicComponent =
     }
     SetCharacter(t) {
       (this.Character = t)
-        ? ((this.qPr = this.Character?.IsValid() ?? !1),
+        ? ((this.cPr = this.Character?.IsValid() ?? !1),
           this.CameraCollision.SetCharacter(t),
           (this.CharacterEntityHandle =
             ModelManager_1.ModelManager.CreatureModel.GetEntityById(
@@ -788,25 +819,34 @@ let FightCameraLogicComponent =
             )),
           (this.CharacterController =
             this.CharacterEntityHandle?.Entity?.GetComponent(
-              52,
+              53,
             )?.CharacterController),
-          (this.GPr = this.CharacterEntityHandle?.Entity?.GetComponent(185)),
+          (this.mPr = this.CharacterEntityHandle?.Entity?.GetComponent(188)),
           this.Character.SetDitherEffect(1, 1),
           (t =
             this.CharacterEntityHandle.Entity.GetComponent(0).GetRoleConfig()),
-          (this.KPr = t.CameraFloatHeight),
+          (this.SPr = t.CameraFloatHeight),
           (this.ContainsTag(1674960297) || this.GetUsingGoBattle()) &&
             this.ResetArmLocation(!0, this.CameraLocationFadeTime))
-        : ((this.qPr = !1),
+        : ((this.cPr = !1),
           (this.CharacterEntityHandle = void 0),
-          (this.GPr = void 0),
+          (this.mPr = void 0),
           (this.CharacterController = void 0)),
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.CameraCharacterChanged,
           this.CharacterEntityHandle,
         );
     }
-    nxr(t) {
+    SetFollowShooter(t) {
+      (this.FollowShooterEntityHandle = t),
+        this.FollowShooterEntityHandle
+          ? ((this.gDn = this.FollowShooterEntityHandle?.Valid ?? !1),
+            (this.FollowShooterTagComponentInternal =
+              this.FollowShooterEntityHandle?.Entity?.GetComponent(188)))
+          : ((this.gDn = !1),
+            (this.FollowShooterTagComponentInternal = void 0));
+    }
+    bPr(t) {
       CameraUtility_1.CameraUtility.GetSocketLocation(
         void 0,
         this.TargetSocketName,
@@ -815,7 +855,7 @@ let FightCameraLogicComponent =
       );
     }
     ResetArmLengthAndRotation(t) {
-      this.qPr &&
+      this.cPr &&
         ((this.DesiredCamera.ArmLength = this.ArmLength),
         this.SetRotation(
           CameraUtility_1.CameraUtility.GetCameraDefaultFocusUeRotator().op_Addition(
@@ -846,7 +886,7 @@ let FightCameraLogicComponent =
           (Log_1.Log.CheckError() &&
             Log_1.Log.Error("Camera", 6, "MaxArmLength is Zero"),
           (t.MaxArmLength = 1)),
-        s && this.Character && this.QRn(i.YawLimitMin, i.YawLimitMax)
+        s && this.Character && this.SPn(i.YawLimitMin, i.YawLimitMax)
           ? ((s = Math.abs(
               MathUtils_1.MathUtils.WrapAngle(
                 i.ArmRotation.Yaw -
@@ -877,33 +917,33 @@ let FightCameraLogicComponent =
             Log_1.Log.Error("Camera", 58, "ZoomModifier is Zero"),
           (t.ZoomModifier = 1));
     }
-    StartFade(t, i, s, e, h, r, a, o, n, l) {
+    StartFade(t, i, s, h, e, r, a, o, n, l) {
       (this.CurrentCamera.ArmRotation.Pitch =
         MathUtils_1.MathUtils.StandardizingPitch(
           this.CurrentCamera.ArmRotation.Pitch,
         )),
         this.CopyVirtualCamera(this.LastCamera, this.CurrentCamera, !0),
-        (this.IRo = s),
-        (this.FadeArmRotationPitch = e),
-        (this.FadeArmRotationYaw = h),
+        (this.EUo = s),
+        (this.FadeArmRotationPitch = h),
+        (this.FadeArmRotationYaw = e),
         (this.FadeArmRotationRoll = r),
-        (this.VPr = a),
-        (this.HPr = o),
-        (this.jPr = n),
+        (this.pPr = a),
+        (this.vPr = o),
+        (this.MPr = n),
         (this.Fading = !0),
-        (this.SRo = t),
-        (this.ERo = 0),
-        (this.yRo = i),
+        (this.pUo = t),
+        (this.vUo = 0),
+        (this.MUo = i),
         (this.IsUniqueFade = l),
-        0 < this.SRo &&
-          !this.yRo &&
+        0 < this.pUo &&
+          !this.MUo &&
           (Log_1.Log.CheckError() &&
             Log_1.Log.Error("Camera", 6, "No Fade Curve."),
-          (this.yRo = CurveUtils_1.CurveUtils.CreateCurve(0)));
+          (this.MUo = CurveUtils_1.CurveUtils.CreateCurve(0)));
     }
     ResetArmLocation(t, i = 0) {
       t &&
-        ((this.kPr = !0), (this.FPr = i), (this.ArmLocationFadeElapseTime = 0));
+        ((this.gPr = !0), (this.fPr = i), (this.ArmLocationFadeElapseTime = 0));
     }
     SetArmLocation(t) {
       this.IsModifiedArmLocation ||
@@ -914,12 +954,10 @@ let FightCameraLogicComponent =
       this.LoadConfig(),
         this.CameraCollision.InitTraceElements(),
         (this.CurrentCollisionSize = 0),
-        (this.Jyn = UE.KismetSystemLibrary.GetConsoleVariableFloatValue(
-          "r.LandscapeReverseLODScaleFactor",
-        )),
+        (this.pTn = -1),
         EventSystem_1.EventSystem.Add(
           EventDefine_1.EEventName.TeleportComplete,
-          this.uht,
+          this.Ilt,
         ),
         EventSystem_1.EventSystem.Add(
           EventDefine_1.EEventName.WorldDone,
@@ -927,17 +965,25 @@ let FightCameraLogicComponent =
         ),
         EventSystem_1.EventSystem.Add(
           EventDefine_1.EEventName.OnSequenceCameraStatus,
-          this.rxr,
+          this.BPr,
         ),
         EventSystem_1.EventSystem.Add(
           EventDefine_1.EEventName.CharPossessed,
-          this.txr,
+          this.PPr,
         ),
         EventSystem_1.EventSystem.Add(
           EventDefine_1.EEventName.CharUnpossessed,
-          this.ixr,
+          this.xPr,
+        ),
+        EventSystem_1.EventSystem.Add(
+          EventDefine_1.EEventName.OnPlayerFollowerCreate,
+          this.mDn,
+        ),
+        EventSystem_1.EventSystem.Add(
+          EventDefine_1.EEventName.OnPlayerFollowerDestroy,
+          this.dDn,
         );
-      for (const t of this.WPr) t.OnStart();
+      for (const t of this.EPr) t.OnStart();
       return !0;
     }
     OnEnd() {
@@ -947,7 +993,7 @@ let FightCameraLogicComponent =
         (this.ele = void 0),
         EventSystem_1.EventSystem.Remove(
           EventDefine_1.EEventName.TeleportComplete,
-          this.uht,
+          this.Ilt,
         ),
         EventSystem_1.EventSystem.Remove(
           EventDefine_1.EEventName.WorldDone,
@@ -955,57 +1001,65 @@ let FightCameraLogicComponent =
         ),
         EventSystem_1.EventSystem.Remove(
           EventDefine_1.EEventName.OnSequenceCameraStatus,
-          this.rxr,
+          this.BPr,
         ),
         EventSystem_1.EventSystem.Remove(
           EventDefine_1.EEventName.CharPossessed,
-          this.txr,
+          this.PPr,
         ),
         EventSystem_1.EventSystem.Remove(
           EventDefine_1.EEventName.CharUnpossessed,
-          this.ixr,
+          this.xPr,
+        ),
+        EventSystem_1.EventSystem.Remove(
+          EventDefine_1.EEventName.OnPlayerFollowerCreate,
+          this.mDn,
+        ),
+        EventSystem_1.EventSystem.Remove(
+          EventDefine_1.EEventName.OnPlayerFollowerDestroy,
+          this.dDn,
         );
-      for (const t of this.WPr) t.OnEnd();
+      for (const t of this.EPr) t.OnEnd();
       return !0;
     }
     OnTick(t) {
-      (this.qPr = this.Character?.IsValid() ?? !1),
+      (this.cPr = this.Character?.IsValid() ?? !1),
         this.CameraActor?.IsValid() &&
-          this.qPr &&
+          this.cPr &&
           (0 !== ModelManager_1.ModelManager.CameraModel.CameraMode
             ? (PhotographController_1.PhotographController.IsOpenPhotograph() ||
                 this.Character.SetDitherEffect(1, 1),
               this.CameraCollision?.ResetAllNpcDither())
             : ((t = t * MathUtils_1.MathUtils.MillisecondToSecond),
-              this.sxr(),
+              this.qPr(),
               this.PlayerRotator.FromUeRotator(
                 this.Character.CharacterActorComponent.ActorRotationProxy,
               ),
               this.RefreshPlayerLocation(),
-              this.axr(),
-              this.hxr(t),
-              this.lxr() &&
+              this.GPr(),
+              this.NPr(t),
+              this.OPr() &&
                 (this.DesiredCamera.ArmLength = MathUtils_1.MathUtils.Clamp(
                   this.DesiredCamera.ArmLength,
                   this.DesiredCamera.MinArmLength,
                   this.DesiredCamera.MaxArmLength,
                 )),
-              this._xr(t),
-              this.URo(),
-              this.uxr(),
-              this.PRo(t),
-              this.cxr(t),
-              (this.zyn = this.CameraActor.CameraComponent.FieldOfView),
+              this.kPr(t),
+              this.LUo(),
+              this.FPr(),
+              this.RUo(t),
+              this.VPr(t),
+              (this.vTn = this.CameraActor.CameraComponent.FieldOfView),
               (this.CameraActor.CameraComponent.FieldOfView =
                 this.CurrentCamera.Fov),
-              this.mxr(),
-              this.dxr(),
-              this.Zyn()));
+              this.HPr(),
+              this.jPr(),
+              this.MTn()));
     }
-    hxr(t) {
-      for (const i of this.WPr) i.Update(t);
+    NPr(t) {
+      for (const i of this.EPr) i.Update(t);
     }
-    lxr() {
+    OPr() {
       return !(
         this.CameraModifyController?.ModifySettings?.IsModifiedArmLength ||
         this.CameraModifyController?.ModifyArmLength ||
@@ -1016,235 +1070,38 @@ let FightCameraLogicComponent =
     GetConfigMapValue(t) {
       return String(this.$.get(t));
     }
-    gxr(t) {
-      const e = t.Name();
-      Object.entries(this.DesiredCamera).forEach(([t, i]) => {
-        var s;
-        i instanceof Vector_1.Vector
-          ? ((s = Vector_1.Vector.Create()).DeepCopy(i),
-            this.DebugDesiredCameraProps.set(t, s))
-          : i instanceof Rotator_1.Rotator
-            ? ((s = Rotator_1.Rotator.Create()).DeepCopy(i),
-              this.DebugDesiredCameraProps.set(t, s))
-            : "function" != typeof i &&
-              "object" != typeof i &&
-              this.DebugDesiredCameraProps.set(t, i);
-      }),
-        Object.entries(this.CurrentCamera).forEach(([t, i]) => {
-          var s;
-          i instanceof Vector_1.Vector
-            ? ((s = Vector_1.Vector.Create()).DeepCopy(i),
-              this.DebugCurrentCameraProps.set(t, s))
-            : i instanceof Rotator_1.Rotator
-              ? ((s = Rotator_1.Rotator.Create()).DeepCopy(i),
-                this.DebugCurrentCameraProps.set(t, s))
-              : "function" != typeof i &&
-                "object" != typeof i &&
-                this.DebugCurrentCameraProps.set(t, i);
-        }),
-        Object.entries(this).forEach(([t, i]) => {
-          var s;
-          i instanceof Vector_1.Vector
-            ? ((s = Vector_1.Vector.Create()).DeepCopy(i),
-              this.DebugLogicComponentsProps.set(t, s))
-            : i instanceof Rotator_1.Rotator
-              ? ((s = Rotator_1.Rotator.Create()).DeepCopy(i),
-                this.DebugLogicComponentsProps.set(t, s))
-              : "function" != typeof i &&
-                "object" != typeof i &&
-                this.DebugLogicComponentsProps.set(t, i);
-        }),
-        this.DebugControllersProps.has(String(e)) ||
-          this.DebugControllersProps.set(String(e), new Map()),
-        Object.entries(t).forEach(([t, i]) => {
-          var s;
-          i instanceof Vector_1.Vector
-            ? ((s = Vector_1.Vector.Create()).DeepCopy(i),
-              this.DebugControllersProps.get(String(e)).set(t, s))
-            : i instanceof Rotator_1.Rotator
-              ? ((s = Rotator_1.Rotator.Create()).DeepCopy(i),
-                this.DebugControllersProps.get(String(e)).set(t, s))
-              : "function" != typeof i &&
-                "object" != typeof i &&
-                this.DebugControllersProps.get(String(e)).set(t, i);
-        });
-    }
-    rRn() {
-      Object.entries(this.DesiredCamera).forEach(([t, i]) => {
-        var s;
-        i instanceof Vector_1.Vector
-          ? ((s = Vector_1.Vector.Create()).DeepCopy(i),
-            this.DebugDesiredCameraProps.set(t, s))
-          : i instanceof Rotator_1.Rotator
-            ? ((s = Rotator_1.Rotator.Create()).DeepCopy(i),
-              this.DebugDesiredCameraProps.set(t, s))
-            : "function" != typeof i &&
-              "object" != typeof i &&
-              this.DebugDesiredCameraProps.set(t, i);
-      }),
-        Object.entries(this.CurrentCamera).forEach(([t, i]) => {
-          var s;
-          i instanceof Vector_1.Vector
-            ? ((s = Vector_1.Vector.Create()).DeepCopy(i),
-              this.DebugCurrentCameraProps.set(t, s))
-            : i instanceof Rotator_1.Rotator
-              ? ((s = Rotator_1.Rotator.Create()).DeepCopy(i),
-                this.DebugCurrentCameraProps.set(t, s))
-              : "function" != typeof i &&
-                "object" != typeof i &&
-                this.DebugCurrentCameraProps.set(t, i);
-        }),
-        Object.entries(this).forEach(([t, i]) => {
-          var s;
-          i instanceof Vector_1.Vector
-            ? ((s = Vector_1.Vector.Create()).DeepCopy(i),
-              this.DebugLogicComponentsProps.set(t, s))
-            : i instanceof Rotator_1.Rotator
-              ? ((s = Rotator_1.Rotator.Create()).DeepCopy(i),
-                this.DebugLogicComponentsProps.set(t, s))
-              : "function" != typeof i &&
-                "object" != typeof i &&
-                this.DebugLogicComponentsProps.set(t, i);
-        });
-    }
-    DebugValueToString(t, i = 4, s = 4, e = 4) {
-      return t instanceof Vector_1.Vector
-        ? `(X=${t.X.toFixed(i)}, Y=${t.Y.toFixed(i)}, Z=${t.Z.toFixed(i)})`
-        : t instanceof Rotator_1.Rotator
-          ? `(Pitch=${(i = (t) => MathUtils_1.MathUtils.RangeClamp((t + 180) % 360, 0, 360, -180, 180).toFixed(s))(t.Pitch)}, Yaw=${i(t.Yaw)}, Roll=${i(t.Roll)})`
-          : "number" == typeof t
-            ? t.toFixed(e)
-            : String(t);
-    }
-    fxr(e) {
-      const h = e.Name(),
-        r = [],
-        a = (t, i) =>
-          (t instanceof Vector_1.Vector && i instanceof Vector_1.Vector) ||
-          (t instanceof Rotator_1.Rotator && i instanceof Rotator_1.Rotator)
-            ? !t.Equals(i, MathCommon_1.MathCommon.ThreshVectorNormalized)
-            : "number" == typeof t && "number" == typeof i
-              ? !MathUtils_1.MathUtils.IsNearlyEqual(
-                  t,
-                  i,
-                  MathCommon_1.MathCommon.ThreshVectorNormalized,
-                )
-              : "object" != typeof t && typeof t == typeof i && t !== i;
-      Object.entries(this.DesiredCamera).forEach(([t, i]) => {
-        var s = this.DebugDesiredCameraProps.get(t);
-        a(s, i) &&
-          r.push({
-            PropertyName: "DesiredCamera." + t,
-            OldValue: this.DebugValueToString(s),
-            NewValue: this.DebugValueToString(i),
-          });
-      }),
-        Object.entries(this.CurrentCamera).forEach(([t, i]) => {
-          var s = this.DebugCurrentCameraProps.get(t);
-          a(s, i) &&
-            r.push({
-              PropertyName: "CurrentCamera." + t,
-              OldValue: this.DebugValueToString(s),
-              NewValue: this.DebugValueToString(i),
-            });
-        }),
-        this.DebugLogicComponentsProps.forEach((t, i) => {
-          var s;
-          i.includes("TempVector") ||
-            i.includes("Tmp") ||
-            ((s = this[i]),
-            a(t, s) &&
-              r.push({
-                PropertyName: "FightCameraLogicComponent." + i,
-                OldValue: this.DebugValueToString(t),
-                NewValue: this.DebugValueToString(s),
-              }));
-        }),
-        this.DebugControllersProps.get(String(h))?.forEach((t, i) => {
-          var s = e[i];
-          a(t, s) &&
-            r.push({
-              PropertyName: String(h) + "." + i,
-              OldValue: this.DebugValueToString(t),
-              NewValue: this.DebugValueToString(s),
-            });
-        }),
-        0 < r.length && this.DebugControllerModifications.set(String(h), r);
-    }
-    nRn(t) {
-      const e = [],
-        h = (t, i) =>
-          (t instanceof Vector_1.Vector && i instanceof Vector_1.Vector) ||
-          (t instanceof Rotator_1.Rotator && i instanceof Rotator_1.Rotator)
-            ? !t.Equals(i, MathCommon_1.MathCommon.ThreshVectorNormalized)
-            : "number" == typeof t && "number" == typeof i
-              ? !MathUtils_1.MathUtils.IsNearlyEqual(
-                  t,
-                  i,
-                  MathCommon_1.MathCommon.ThreshVectorNormalized,
-                )
-              : "object" != typeof t && typeof t == typeof i && t !== i;
-      Object.entries(this.DesiredCamera).forEach(([t, i]) => {
-        var s = this.DebugDesiredCameraProps.get(t);
-        h(s, i) &&
-          e.push({
-            PropertyName: "DesiredCamera." + t,
-            OldValue: this.DebugValueToString(s),
-            NewValue: this.DebugValueToString(i),
-          });
-      }),
-        Object.entries(this.CurrentCamera).forEach(([t, i]) => {
-          var s = this.DebugCurrentCameraProps.get(t);
-          h(s, i) &&
-            e.push({
-              PropertyName: "CurrentCamera." + t,
-              OldValue: this.DebugValueToString(s),
-              NewValue: this.DebugValueToString(i),
-            });
-        }),
-        this.DebugLogicComponentsProps.forEach((t, i) => {
-          var s;
-          i.includes("TempVector") ||
-            i.includes("Tmp") ||
-            ((s = this[i]),
-            h(t, s) &&
-              e.push({
-                PropertyName: "FightCameraLogicComponent." + i,
-                OldValue: this.DebugValueToString(t),
-                NewValue: this.DebugValueToString(s),
-              }));
-        }),
-        0 < e.length && this.DebugControllerModifications.set(String(t), e);
-    }
-    axr() {
+    GPr() {
       (this.IsModifiedArmLocation = !1),
         (this.IsModifiedArmLength = !1),
+        (this.IsModifiedArmOffset = !1),
         (this.IsModifiedZoomModifier = !1),
-        (this.IsModifiedArmRotation = !1),
+        (this.IsModifiedArmRotationYaw = !1),
+        (this.IsModifiedArmRotationPitch = !1),
+        (this.IsModifiedArmRotationRoll = !1),
         (this.IsModifiedCameraOffset = !1),
         (this.IsModifiedFov = !1);
     }
-    pxr(t, i, s, e, h, r, a, o) {
+    XPr(t, i, s, h, e, r, a, o) {
       var n = t - i,
         a = Math.abs(n) / ((a - r) / 2),
-        r = MathUtils_1.MathUtils.Lerp(e, h, o.GetCurrentValue(a)) * s;
+        r = MathUtils_1.MathUtils.Lerp(h, e, o.GetCurrentValue(a)) * s;
       return n < 0
         ? MathUtils_1.MathUtils.Clamp(t + r, t, i)
         : MathUtils_1.MathUtils.Clamp(t - r, i, t);
     }
-    vxr(t, i, s, e, h, r, a, o) {
+    $Pr(t, i, s, h, e, r, a, o) {
       var n = t - i;
       if (n < 0) {
-        const l = MathUtils_1.MathUtils.Lerp(e, h, o.GetCurrentValue(n / r)),
+        const l = MathUtils_1.MathUtils.Lerp(h, e, o.GetCurrentValue(n / r)),
           C = l * s;
         return MathUtils_1.MathUtils.Clamp(t + C, i + r, i);
       }
-      const l = MathUtils_1.MathUtils.Lerp(e, h, o.GetCurrentValue(n / a)),
+      const l = MathUtils_1.MathUtils.Lerp(h, e, o.GetCurrentValue(n / a)),
         C = l * s;
       return MathUtils_1.MathUtils.Clamp(t - C, i, i + a);
     }
-    _xr(t) {
-      var i, s, e, h, r, a;
+    kPr(t) {
+      var i, s, h, e, r, a;
       this.IsFollowing &&
         (this.TempVector.DeepCopy(this.CameraForward),
         (this.TempVector.Z = 0),
@@ -1261,9 +1118,9 @@ let FightCameraLogicComponent =
         (a = this.PlayerLocation.DotProduct(this.TempVector2)),
         (i = this.PlayerLocation.Z),
         (s = this.TmpArmLocation.DotProduct(this.TempVector)),
-        (e = this.TmpArmLocation.DotProduct(this.TempVector2)),
-        (h = this.TmpArmLocation.Z),
-        (this.CurrentArmCenterForwardEdgeMin = this.pxr(
+        (h = this.TmpArmLocation.DotProduct(this.TempVector2)),
+        (e = this.TmpArmLocation.Z),
+        (this.CurrentArmCenterForwardEdgeMin = this.XPr(
           this.CurrentArmCenterForwardEdgeMin,
           this.ArmCenterForwardEdgeMin,
           t,
@@ -1273,7 +1130,7 @@ let FightCameraLogicComponent =
           this.ArmCenterForwardEdgeMax,
           this.ArmCenterForwardCurve,
         )),
-        (this.CurrentArmCenterForwardEdgeMax = this.pxr(
+        (this.CurrentArmCenterForwardEdgeMax = this.XPr(
           this.CurrentArmCenterForwardEdgeMax,
           this.ArmCenterForwardEdgeMax,
           t,
@@ -1283,7 +1140,7 @@ let FightCameraLogicComponent =
           this.ArmCenterForwardEdgeMax,
           this.ArmCenterForwardCurve,
         )),
-        (this.CurrentArmCenterRightEdgeMin = this.pxr(
+        (this.CurrentArmCenterRightEdgeMin = this.XPr(
           this.CurrentArmCenterRightEdgeMin,
           this.ArmCenterRightEdgeMin,
           t,
@@ -1293,7 +1150,7 @@ let FightCameraLogicComponent =
           this.ArmCenterRightEdgeMax,
           this.ArmCenterRightCurve,
         )),
-        (this.CurrentArmCenterRightEdgeMax = this.pxr(
+        (this.CurrentArmCenterRightEdgeMax = this.XPr(
           this.CurrentArmCenterRightEdgeMax,
           this.ArmCenterRightEdgeMax,
           t,
@@ -1303,7 +1160,7 @@ let FightCameraLogicComponent =
           this.ArmCenterRightEdgeMax,
           this.ArmCenterRightCurve,
         )),
-        (this.CurrentArmCenterUpEdgeMin = this.pxr(
+        (this.CurrentArmCenterUpEdgeMin = this.XPr(
           this.CurrentArmCenterUpEdgeMin,
           this.ArmCenterUpEdgeMin,
           t,
@@ -1313,7 +1170,7 @@ let FightCameraLogicComponent =
           this.ArmCenterUpEdgeMax,
           this.ArmCenterUpCurve,
         )),
-        (this.CurrentArmCenterUpEdgeMax = this.pxr(
+        (this.CurrentArmCenterUpEdgeMax = this.XPr(
           this.CurrentArmCenterUpEdgeMax,
           this.ArmCenterUpEdgeMax,
           t,
@@ -1323,7 +1180,7 @@ let FightCameraLogicComponent =
           this.ArmCenterUpEdgeMax,
           this.ArmCenterUpCurve,
         )),
-        (s = this.vxr(
+        (s = this.$Pr(
           s,
           r,
           t,
@@ -1333,8 +1190,8 @@ let FightCameraLogicComponent =
           this.CurrentArmCenterForwardEdgeMax,
           this.ArmCenterForwardCurve,
         )),
-        (e = this.vxr(
-          e,
+        (h = this.$Pr(
+          h,
           a,
           t,
           this.ArmCenterRightSpeedMin,
@@ -1343,8 +1200,8 @@ let FightCameraLogicComponent =
           this.CurrentArmCenterRightEdgeMax,
           this.ArmCenterRightCurve,
         )),
-        (h = this.vxr(
-          h,
+        (e = this.$Pr(
+          e,
           i,
           t,
           this.ArmCenterUpSpeedMin,
@@ -1354,43 +1211,43 @@ let FightCameraLogicComponent =
           this.ArmCenterUpCurve,
         )),
         this.TempVector.MultiplyEqual(s),
-        this.TempVector2.MultiplyEqual(e),
+        this.TempVector2.MultiplyEqual(h),
         this.TempVector.Addition(this.TempVector2, this.TmpArmLocation),
-        (this.TmpArmLocation.Z = h)),
+        (this.TmpArmLocation.Z = e)),
         this.IsModifiedArmLocation ||
-          (this.kPr
-            ? (this.oxr.Reset(),
+          (this.gPr
+            ? (this.wPr.Reset(),
               this.DesiredCamera.ArmLocation.Subtraction(
                 this.TmpArmLocation,
-                this.oxr,
+                this.wPr,
               ),
-              this.oxr.GetAbsMax() < CAMERA_LOCATION_NEARLY_DISTANCE
+              this.wPr.GetAbsMax() < CAMERA_LOCATION_NEARLY_DISTANCE
                 ? (this.DesiredCamera.ArmLocation.DeepCopy(this.TmpArmLocation),
-                  (this.kPr = !1))
+                  (this.gPr = !1))
                 : ((this.ArmLocationFadeElapseTime += t),
-                  (r = this.FPr - this.ArmLocationFadeElapseTime) <
+                  (r = this.fPr - this.ArmLocationFadeElapseTime) <
                   MathUtils_1.MathUtils.KindaSmallNumber
-                    ? ((this.kPr = !1),
+                    ? ((this.gPr = !1),
                       this.DesiredCamera.ArmLocation.DeepCopy(
                         this.TmpArmLocation,
                       ))
-                    : ((a = this.oxr.MultiplyEqual(-t / r)),
+                    : ((a = this.wPr.MultiplyEqual(-t / r)),
                       this.DesiredCamera.ArmLocation.AdditionEqual(a))))
             : this.DesiredCamera.ArmLocation.DeepCopy(this.TmpArmLocation));
     }
-    Mxr(t) {
+    YPr(t) {
       return MathUtils_1.MathUtils.RangeClamp(
         t,
         this.FloatUpArmLengthMax,
         this.FloatUpArmLengthMin,
         0,
-        this.KPr,
+        this.SPr,
       );
     }
-    PRo(t) {
+    RUo(t) {
       this.Fading
-        ? ((this.ERo += t),
-          this.ERo >= this.SRo
+        ? ((this.vUo += t),
+          this.vUo >= this.pUo
             ? ((this.Fading = !1),
               this.CopyVirtualCamera(this.CurrentCamera, this.DesiredCamera))
             : (this.CurrentCamera.ArmLocation.DeepCopy(
@@ -1398,14 +1255,14 @@ let FightCameraLogicComponent =
               ),
               (this.CurrentCamera.ZoomModifier =
                 this.DesiredCamera.ZoomModifier),
-              (t = this.yRo.GetCurrentValue(this.ERo / this.SRo)),
-              this.IRo && !this.IsModifiedArmLength
+              (t = this.MUo.GetCurrentValue(this.vUo / this.pUo)),
+              this.EUo && !this.IsModifiedArmLength
                 ? (this.CurrentCamera.ArmLength = MathUtils_1.MathUtils.Lerp(
                     this.LastCamera.ArmLength,
                     this.DesiredCamera.ArmLength,
                     t,
                   ))
-                : ((this.IRo = !1),
+                : ((this.EUo = !1),
                   (this.CurrentCamera.ArmLength =
                     this.DesiredCamera.ArmLength)),
               (this.CurrentCamera.MinArmLength = MathUtils_1.MathUtils.Lerp(
@@ -1458,25 +1315,25 @@ let FightCameraLogicComponent =
                 this.DesiredCamera.WorldYawMax,
                 t,
               )),
-              this.VPr
+              this.pPr
                 ? Vector_1.Vector.Lerp(
                     this.LastCamera.ArmOffset,
                     this.DesiredCamera.ArmOffset,
                     t,
                     this.CurrentCamera.ArmOffset,
                   )
-                : ((this.VPr = !1),
+                : ((this.pPr = !1),
                   this.CurrentCamera.ArmOffset.DeepCopy(
                     this.DesiredCamera.ArmOffset,
                   )),
-              this.HPr
+              this.vPr
                 ? Vector_1.Vector.Lerp(
                     this.LastCamera.CameraOffset,
                     this.DesiredCamera.CameraOffset,
                     t,
                     this.CurrentCamera.CameraOffset,
                   )
-                : ((this.HPr = !1),
+                : ((this.vPr = !1),
                   this.CurrentCamera.CameraOffset.DeepCopy(
                     this.DesiredCamera.CameraOffset,
                   )),
@@ -1507,18 +1364,18 @@ let FightCameraLogicComponent =
                     ))
                 : (this.CurrentCamera.ArmRotation.Roll =
                     this.DesiredCamera.ArmRotation.Roll),
-              this.jPr && !this.IsModifiedFov
+              this.MPr && !this.IsModifiedFov
                 ? (this.CurrentCamera.Fov = MathUtils_1.MathUtils.Lerp(
                     this.LastCamera.Fov,
                     this.DesiredCamera.Fov,
                     t,
                   ))
-                : ((this.jPr = !1),
+                : ((this.MPr = !1),
                   (this.CurrentCamera.Fov = this.DesiredCamera.Fov))))
         : this.CopyVirtualCamera(this.CurrentCamera, this.DesiredCamera);
     }
-    cxr(i) {
-      if (this.qPr) {
+    VPr(i) {
+      if (this.cPr) {
         let t = 0;
         (t =
           this.CameraModifyController.IsModified ||
@@ -1527,30 +1384,30 @@ let FightCameraLogicComponent =
             : this.GetArmLengthWithSettingAndZoom(this.CurrentCamera, !0)),
           (t += this.CameraAutoController.CurrentAutoCameraArmLengthAddition);
         var s = this.CurrentCamera.ArmRotation,
-          e =
+          h =
             (this.CameraModifyController.IsModified ||
               this.CameraModifyController.IsModifyFadeOut ||
               (s.Roll = 0),
             (t += this.CameraGuideController.CurrentCameraArmLengthAddition),
-            this.Mxr(t)),
-          h = (this.cae.DeepCopy(this.CurrentCamera.ArmLocation), this.cae),
-          e =
-            (h.AdditionEqual(
+            this.YPr(t)),
+          e = (this.cae.DeepCopy(this.CurrentCamera.ArmLocation), this.cae),
+          h =
+            (e.AdditionEqual(
               this.CameraAutoController.CurrentAutoCameraArmOffset,
             ),
-            h.AdditionEqual(this.CameraGuideController.CurrentCameraArmOffset),
-            h.AdditionEqual(this.CurrentCamera.ArmOffset),
-            (h.Z += e),
+            e.AdditionEqual(this.CameraGuideController.CurrentCameraArmOffset),
+            e.AdditionEqual(this.CurrentCamera.ArmOffset),
+            (e.Z += h),
             s.Quaternion());
-        e.RotateVector(Vector_1.Vector.ForwardVectorProxy, this.CameraForward),
-          this.CurrentCamera.ArmRotation.Vector(this.QPr),
-          this.CameraForward.Multiply(-t, this.QPr),
-          h.Addition(this.QPr, this.TempDesireLocation),
+        h.RotateVector(Vector_1.Vector.ForwardVectorProxy, this.CameraForward),
+          this.CurrentCamera.ArmRotation.Vector(this.yPr),
+          this.CameraForward.Multiply(-t, this.yPr),
+          e.Addition(this.yPr, this.TempDesireLocation),
           this.TempVector.DeepCopy(this.CurrentCamera.CameraOffset),
           void 0 !== this.CameraFocusController.AddCameraOffsetY &&
             (this.TempVector.Y += this.CameraFocusController.AddCameraOffsetY),
-          e.RotateVector(this.TempVector, this.QPr),
-          this.TempDesireLocation.AdditionEqual(this.QPr),
+          h.RotateVector(this.TempVector, this.yPr),
+          this.TempDesireLocation.AdditionEqual(this.yPr),
           this.CameraLocation.DeepCopy(
             this.CameraCollision.CheckCollision(
               this.PlayerLocation,
@@ -1575,20 +1432,21 @@ let FightCameraLogicComponent =
                 !1,
               ),
           this.CameraLocation.Subtraction(this.PlayerLocation, this.TempVector),
-          (this.$Pr = this.TempVector.Size()),
-          ModelManager_1.ModelManager?.CameraModel?.CameraDebugToolEnabled &&
-            ((e = Vector_1.Vector.Create()),
+          (this.TPr = this.TempVector.Size()),
+          Macro_1.NOT_SHIPPING_ENVIRONMENT &&
+            ModelManager_1.ModelManager?.CameraModel?.CameraDebugToolEnabled &&
+            ((h = Vector_1.Vector.Create()),
             (i = Vector_1.Vector.Create()),
-            this.CameraLocation.Subtraction(this.PlayerLocation, e),
-            h.Subtraction(this.PlayerLocation, i),
+            this.CameraLocation.Subtraction(this.PlayerLocation, h),
+            e.Subtraction(this.PlayerLocation, i),
             this.DebugDesiredCameraProps.set("Fading", this.Fading),
-            this.DebugDesiredCameraProps.set("FadeElapse", this.ERo),
+            this.DebugDesiredCameraProps.set("FadeElapse", this.vUo),
             this.DebugDesiredCameraProps.set(
               "CameraForward",
               this.CameraForward,
             ),
             this.DebugDesiredCameraProps.set("FinalArmLength", t),
-            this.DebugDesiredCameraProps.set("FinalArmLocation", h),
+            this.DebugDesiredCameraProps.set("FinalArmLocation", e),
             this.DebugDesiredCameraProps.set(
               "CollisionStartCameraLocation",
               this.TempDesireLocation,
@@ -1601,9 +1459,9 @@ let FightCameraLogicComponent =
             this.DebugDesiredCameraProps.set("ArmLocationOffsetPlayer", i),
             this.DebugDesiredCameraProps.set(
               "FinalCameraLocationOffsetPlayer",
-              e,
+              h,
             ),
-            this.DebugDesiredCameraProps.set("FinalCameraDistance", this.$Pr),
+            this.DebugDesiredCameraProps.set("FinalCameraDistance", this.TPr),
             this.DebugDesiredCameraProps.set(
               "CurrentArmCenterRightEdgeMin",
               this.CurrentArmCenterRightEdgeMin,
@@ -1636,7 +1494,7 @@ let FightCameraLogicComponent =
         Log_1.Log.CheckError() &&
           Log_1.Log.Error("Character", 23, "Character 不存在");
     }
-    URo() {
+    LUo() {
       let t = this.DesiredCamera.ArmRotation.Pitch,
         i =
           ((t = 180 < (t %= 360) ? t - 360 : t),
@@ -1652,16 +1510,16 @@ let FightCameraLogicComponent =
         ((t = Math.abs(t)),
         (i = Math.abs(this.CurrentCamera.PitchLimitMin)),
         (s = this.DesiredCamera.LookDownOffsetZ));
-      var e = MathUtils_1.MathUtils.RangeClamp(t, 0, i, 0, s);
-      this.DesiredCamera.ArmLocation.Z += e;
+      var h = MathUtils_1.MathUtils.RangeClamp(t, 0, i, 0, s);
+      this.DesiredCamera.ArmLocation.Z += h;
     }
-    uxr() {
+    FPr() {
       var s = this.CurrentCamera.YawLimitMin,
-        e = this.CurrentCamera.YawLimitMax,
-        h = (e - s) % 360;
+        h = this.CurrentCamera.YawLimitMax,
+        e = (h - s) % 360;
       if (
-        MathUtils_1.MathUtils.IsNearlyZero(h) ||
-        MathUtils_1.MathUtils.IsNearlyEqual(h, 360)
+        MathUtils_1.MathUtils.IsNearlyZero(e) ||
+        MathUtils_1.MathUtils.IsNearlyEqual(e, 360)
       )
         this.DesiredCamera.ArmRotation.Yaw = MathUtils_1.MathUtils.Clamp(
           MathUtils_1.MathUtils.WrapAngle(this.DesiredCamera.ArmRotation.Yaw),
@@ -1669,23 +1527,23 @@ let FightCameraLogicComponent =
           this.CurrentCamera.WorldYawMax,
         );
       else {
-        (h = MathUtils_1.MathUtils.WrapAngle(
+        (e = MathUtils_1.MathUtils.WrapAngle(
           this.Character.CharacterActorComponent.ActorRotationProxy.Yaw,
         )),
-          (s = MathUtils_1.MathUtils.WrapAngle(h + s)),
-          (h = MathUtils_1.MathUtils.WrapAngle(h + e)),
-          (e = MathUtils_1.MathUtils.WrapAngle(
+          (s = MathUtils_1.MathUtils.WrapAngle(e + s)),
+          (e = MathUtils_1.MathUtils.WrapAngle(e + h)),
+          (h = MathUtils_1.MathUtils.WrapAngle(
             this.DesiredCamera.ArmRotation.Yaw,
           ));
         let t = 0,
           i = 0;
-        if (s < h && (h < e || e < s))
-          (t = MathUtils_1.MathUtils.WrapAngle(0.5 * (s + h))),
-            (i = MathUtils_1.MathUtils.WrapAngle(e < t ? s : h));
+        if (s < e && (e < h || h < s))
+          (t = MathUtils_1.MathUtils.WrapAngle(0.5 * (s + e))),
+            (i = MathUtils_1.MathUtils.WrapAngle(h < t ? s : e));
         else {
-          if (!(h < s && h < e && e < s)) return;
-          (t = MathUtils_1.MathUtils.WrapAngle(0.5 * (h + s))),
-            (i = MathUtils_1.MathUtils.WrapAngle(e > t ? s : h));
+          if (!(e < s && e < h && h < s)) return;
+          (t = MathUtils_1.MathUtils.WrapAngle(0.5 * (e + s))),
+            (i = MathUtils_1.MathUtils.WrapAngle(h > t ? s : e));
         }
         this.DesiredCamera.ArmRotation.Yaw = MathUtils_1.MathUtils.Clamp(
           i,
@@ -1694,26 +1552,26 @@ let FightCameraLogicComponent =
         );
       }
     }
-    QRn(t, i) {
+    SPn(t, i) {
       return (
         !MathUtils_1.MathUtils.IsNearlyEqual(t, -MathUtils_1.PI_DEG) ||
         !MathUtils_1.MathUtils.IsNearlyEqual(i, MathUtils_1.PI_DEG)
       );
     }
     DrawCube(t, i, s) {
-      var e, h, r;
+      var h, e, r;
       t &&
         ((s = new UE.LinearColor(s, s, s, s)),
         (r = t.GetLocation()),
-        (e = new UE.Vector(10, 10, 10)),
-        (e = new UE.Vector(0.5 * e.X, 0.5 * e.Y, 0.5 * e.Z)),
-        (h = t.Rotator()),
+        (h = new UE.Vector(10, 10, 10)),
+        (h = new UE.Vector(0.5 * h.X, 0.5 * h.Y, 0.5 * h.Z)),
+        (e = t.Rotator()),
         UE.KismetSystemLibrary.DrawDebugBox(
           GlobalData_1.GlobalData.World,
           r,
-          e,
-          s,
           h,
+          s,
+          e,
           i,
           30,
         ),
@@ -1721,19 +1579,19 @@ let FightCameraLogicComponent =
           t,
           new UE.Vector(0.5, 0.5, 0.5),
         )),
-        (e = UE.KismetMathLibrary.TransformLocation(
+        (h = UE.KismetMathLibrary.TransformLocation(
           t,
           new UE.Vector(-0.5, -0.5, -0.5),
         )),
         UE.KismetSystemLibrary.DrawDebugLine(
           GlobalData_1.GlobalData.World,
           r,
-          e,
+          h,
           s,
           i,
           15,
         ),
-        (h = UE.KismetMathLibrary.TransformLocation(
+        (e = UE.KismetMathLibrary.TransformLocation(
           t,
           new UE.Vector(0.5, -0.5, 0.5),
         )),
@@ -1743,18 +1601,18 @@ let FightCameraLogicComponent =
         )),
         UE.KismetSystemLibrary.DrawDebugLine(
           GlobalData_1.GlobalData.World,
-          h,
+          e,
           r,
           s,
           i,
           15,
         ));
     }
-    sxr() {
+    qPr() {
       var t, i, s;
-      this.qPr &&
+      this.cPr &&
         (t = this.CharacterEntityHandle?.Entity?.GetComponent(29))?.Valid &&
-        (this.GPr?.HasTag(428837378)
+        (this.mPr?.HasTag(428837378)
           ? this.TargetEntity &&
             (this.CameraInputController.SetAimAssistTarget(
               this.TargetEntity,
@@ -1762,10 +1620,10 @@ let FightCameraLogicComponent =
             ),
             (this.TargetEntity = void 0),
             (this.TargetSocketName = void 0),
-            (this.NPr = void 0),
+            (this.dPr = void 0),
             t.ExitLockDirection())
           : ((i = t?.GetTargetInfo()),
-            (s = this.GPr?.HasAnyTag([-1150819426, 1260125908])),
+            (s = this.mPr?.HasAnyTag([-1150819426, 1260125908])),
             i?.ShowTarget?.Valid &&
               (s ||
                 i.LastSetTime + SHOW_TARGET_VALID_TIME >
@@ -1774,55 +1632,53 @@ let FightCameraLogicComponent =
               (this.TargetSocketName = FNameUtil_1.FNameUtil.GetDynamicFName(
                 i.SocketName,
               )),
-              (this.NPr = this.TargetEntity.Entity.GetComponent(185))),
+              (this.dPr = this.TargetEntity.Entity.GetComponent(188))),
             i?.ShowTarget?.Valid
               ? this.TargetEntity &&
-                this.Exr(t, s) &&
+                this.zPr(t, s) &&
                 ((this.TargetEntity = void 0),
                 (this.TargetSocketName = void 0),
-                (this.NPr = void 0),
+                (this.dPr = void 0),
                 t.SetShowTarget(void 0))
               : ((this.TargetEntity = void 0),
                 (this.TargetSocketName = void 0),
-                (this.NPr = void 0))));
+                (this.dPr = void 0))));
     }
-    Exr(t, i) {
+    zPr(t, i) {
       if (!this.TargetEntity.Valid || !this.TargetEntity.Entity.Active)
         return !0;
       var s = this.TargetEntity.Entity.GetComponent(1),
-        e = this.CharacterEntityHandle.Entity.GetComponent(3);
-      if (!s?.Valid || !e?.Valid) return !0;
-      if (i) this.nxr(this.TargetLocation);
+        h = this.CharacterEntityHandle.Entity.GetComponent(3);
+      if (!s?.Valid || !h?.Valid) return !0;
+      if (i) this.bPr(this.TargetLocation);
       else {
-        i = this.GPr;
+        i = this.mPr;
         if (i?.Valid) {
           if (i.HasTag(504239013)) return !0;
-          if (!this.NPr?.HasTag(-336338240)) {
-            i = this.CharacterEntityHandle.Entity.GetComponent(161);
-            if (
-              i?.Valid &&
-              i.Speed > exports.CLEAN_TARGET_SPEED_THRESHOLD &&
-              !this.GPr.HasTag(-1371021686)
-            )
-              return !0;
-          }
+          if (
+            !this.dPr?.HasAnyTag(
+              CharacterLockOnComponent_1.lockOnEnhancedTags,
+            ) &&
+            t.SpeedUpCleanTarget()
+          )
+            return !0;
         }
-        i = this.CharacterEntityHandle.Entity.GetComponent(52);
+        i = this.CharacterEntityHandle.Entity.GetComponent(53);
         if (i?.Valid && this.CameraFocusController.ShouldSoftUnlock())
           return !0;
         if (
-          (this.nxr(this.TargetLocation),
+          (this.bPr(this.TargetLocation),
           this.IsTargetLocationValid &&
             t.TraceDetectBlock(
-              e.ActorLocationProxy,
+              h.ActorLocationProxy,
               this.TargetLocation,
               s.Owner,
             ))
         )
-          if (this.OPr) {
-            if (this.OPr < Time_1.Time.Now) return !0;
-          } else this.OPr = Time_1.Time.Now + MAX_TARGET_HAS_BLOCK_TIME;
-        else this.OPr = void 0;
+          if (this.CPr) {
+            if (this.CPr < Time_1.Time.Now) return !0;
+          } else this.CPr = Time_1.Time.Now + MAX_TARGET_HAS_BLOCK_TIME;
+        else this.CPr = void 0;
       }
       return !1;
     }
@@ -1831,9 +1687,9 @@ let FightCameraLogicComponent =
     }
     RefreshPlayerLocation() {
       var t;
-      this.xXe(this.PlayerLocation),
+      this.j$e(this.PlayerLocation),
         this.ContainsTag(-648310348) &&
-          (t = this.CharacterEntityHandle?.Entity.GetComponent(47)) &&
+          (t = this.CharacterEntityHandle?.Entity.GetComponent(48)) &&
           (t = EntitySystem_1.EntitySystem.GetComponent(t.RoleId, 1)) &&
           this.CameraCollision.TraceCheckPlayerLocation(
             t.ActorLocationProxy,
@@ -1841,8 +1697,8 @@ let FightCameraLogicComponent =
             this.PlayerLocation,
           );
     }
-    xXe(t) {
-      this.CharacterEntityHandle?.Entity.GetComponent(160).GetCameraPosition(t),
+    j$e(t) {
+      this.CharacterEntityHandle?.Entity.GetComponent(162).GetCameraPosition(t),
         this.Character?.Mesh &&
           (this.TempVector.FromUeVector(
             this.Character.Mesh.GetSocketLocation(
@@ -1855,24 +1711,24 @@ let FightCameraLogicComponent =
           ),
           t.SubtractionEqual(this.TempVector2));
     }
-    CheckPositionInScreen(t, i, s, e, h) {
+    CheckPositionInScreen(t, i, s, h, e) {
       var r = Global_1.Global.CharacterController;
       return (
         !!UE.GameplayStatics.ProjectWorldToScreen(
           r,
           t.ToUeVector(),
-          this.fti,
+          this.fii,
           !1,
         ) &&
-        ((r = (0, puerts_1.$unref)(this.fti)),
-        this.GetScreenPositionIsInRange(r, i, s, e, h))
+        ((r = (0, puerts_1.$unref)(this.fii)),
+        this.GetScreenPositionIsInRange(r, i, s, h, e))
       );
     }
-    GetScreenPositionIsInRange(t, i, s, e, h) {
-      Global_1.Global.CharacterController.GetViewportSize(this.ZPr, this.exr);
-      var r = (0, puerts_1.$unref)(this.ZPr),
-        a = (0, puerts_1.$unref)(this.exr);
-      return t.X > r * i && t.X < r * s && t.Y > a * e && t.Y < a * h;
+    GetScreenPositionIsInRange(t, i, s, h, e) {
+      Global_1.Global.CharacterController.GetViewportSize(this.UPr, this.APr);
+      var r = (0, puerts_1.$unref)(this.UPr),
+        a = (0, puerts_1.$unref)(this.APr);
+      return t.X > r * i && t.X < r * s && t.Y > a * h && t.Y < a * e;
     }
     AdjustPitch(t) {
       var i = t.Size2D() + this.DefaultPitchHorizontalOffset,
@@ -1909,40 +1765,46 @@ let FightCameraLogicComponent =
         s
       );
     }
-    ContainsTag(t) {
-      return !!this.qPr && this.GPr.HasTag(t);
+    ContainsTag(t, i = !1) {
+      return (
+        !(!this.cPr || !this.mPr.HasTag(t)) ||
+        !!(i && this.gDn && this.FollowShooterTagComponentInternal.HasTag(t))
+      );
     }
-    ContainsAnyTag(t) {
-      return !!this.qPr && this.GPr.HasAnyTag(t);
+    ContainsAnyTag(t, i = !1) {
+      return (
+        !(!this.cPr || !this.mPr.HasAnyTag(t)) ||
+        !!(i && this.gDn && this.FollowShooterTagComponentInternal.HasAnyTag(t))
+      );
     }
     GetUsingGoBattle() {
       return (
-        !!this.qPr &&
-        this.CharacterEntityHandle.Entity.GetComponent(81).GoBattleSkill
+        !!this.cPr &&
+        this.CharacterEntityHandle.Entity.GetComponent(83).GoBattleSkill
       );
     }
     TargetContainsTag(t) {
-      return this.NPr?.HasTag(t) ?? !1;
+      return this.dPr?.HasTag(t) ?? !1;
     }
     SetRotationInternal(t) {
       this.CameraRotation.DeepCopy(t),
-        this.qPr &&
+        this.cPr &&
           this.CharacterController?.SetControlRotation(
             this.CameraRotation.ToUeRotator(),
           );
     }
     SetIsDitherEffectEnable(t) {
-      this.XPr = t;
+      this.IPr = t;
     }
-    mxr() {
+    HPr() {
       if (
-        this.qPr &&
+        this.cPr &&
         this.Character.CharacterActorComponent?.Active &&
         1 !== ModelManager_1.ModelManager.CameraModel.CameraMode &&
-        !this.GPr?.HasTag(-2100129479) &&
-        this.XPr
+        !this.mPr?.HasTag(-2100129479) &&
+        this.IPr
       ) {
-        this.xXe(this.PlayerLocation);
+        this.j$e(this.PlayerLocation);
         var s = Vector_1.Vector.Dist(this.PlayerLocation, this.CameraLocation);
         let t = 1;
         s < this.StartHideDistance &&
@@ -1969,35 +1831,33 @@ let FightCameraLogicComponent =
         this.Character.SetDitherEffect(s, 1);
       }
     }
-    dxr() {
+    jPr() {
       var t;
-      this.YPr &&
+      this.LPr &&
         (t = this.CameraActor?.CameraComponent?.PostProcessSettings) &&
         (t.DepthOfFieldFocalDistance = Vector_1.Vector.Dist(
           this.PlayerLocation,
           this.CameraLocation,
         ));
     }
-    Zyn() {
+    MTn() {
       var t;
-      (this.zyn < LANDSCAPE_LOD_SCALE_FOV &&
+      (this.vTn < LANDSCAPE_LOD_SCALE_FOV &&
         this.CurrentCamera.Fov < LANDSCAPE_LOD_SCALE_FOV) ||
-        (this.zyn >= LANDSCAPE_LOD_SCALE_FOV &&
+        (this.vTn >= LANDSCAPE_LOD_SCALE_FOV &&
           this.CurrentCamera.Fov >= LANDSCAPE_LOD_SCALE_FOV) ||
-        ((t = this.CurrentCamera.Fov >= LANDSCAPE_LOD_SCALE_FOV ? 0 : this.Jyn),
-        UE.KismetSystemLibrary.ExecuteConsoleCommand(
-          GlobalData_1.GlobalData.World,
-          "r.LandscapeReverseLODScaleFactor " + t,
-        ));
+        ((t = this.CurrentCamera.Fov >= LANDSCAPE_LOD_SCALE_FOV ? 0 : this.pTn),
+        UE.LandscapeProxy.SetKuroLandscapeFOVFactorByCamera(t));
     }
-    OpenFocusInputController(t, i, s, e) {
-      this.CameraFocusController.InitFocusData(t, i, s, e);
+    OpenFocusInputController(t, i, s, h) {
+      this.CameraFocusController.InitFocusData(t, i, s, h);
     }
     ResetFightCameraLogic(t = !0) {
-      this.xXe(this.PlayerLocation),
+      this.j$e(this.PlayerLocation),
         this.CurrentCamera.ArmLocation.DeepCopy(this.PlayerLocation),
         this.TmpArmLocation.DeepCopy(this.PlayerLocation),
         this.CameraCollision.ResetBlendData(),
+        this.CameraInputController.ResetCameraInput(),
         this.CameraConfigController.CheckIfInAdjustCamera() &&
           t &&
           this.RestoreCameraFromAdjust();
@@ -2005,18 +1865,18 @@ let FightCameraLogicComponent =
     PlaySettlementCamera() {
       this.SettlementCamera.PlaySettlementCamera();
     }
-    PlayCameraRotator(t, i, s, e) {
-      this.CameraRotatorController.PlayCameraRotator(t, i, s, e);
+    PlayCameraRotator(t, i, s, h) {
+      this.CameraRotatorController.PlayCameraRotator(t, i, s, h);
     }
-    PlayCameraRotatorWithCurve(t, i, s, e, h = void 0) {
+    PlayCameraRotatorWithCurve(t, i, s, h, e = void 0) {
       this.CameraRotatorController.PlayCameraRotatorWithCurve(
         t,
         i,
         s,
-        e,
+        h,
         this.CameraRotateToTargetMinAlpha,
         this.CameraRotateToTargetMaxAlpha,
-        h || this.CameraRotateToTargetCurve,
+        e || this.CameraRotateToTargetCurve,
       );
     }
     PlayCameraEulerRotator(t, i) {
@@ -2035,15 +1895,18 @@ let FightCameraLogicComponent =
       var t = this.Entity.GetComponent(3),
         i = t.ActorLocationProxy,
         t = t.ActorForwardProxy;
-      (this.JPr.X = i.X + t.X * LOOK_AT_FORWARD_DISTANCE),
-        (this.JPr.Y = i.Y + t.Y * LOOK_AT_FORWARD_DISTANCE),
-        (this.JPr.Z = i.Z + t.Z * LOOK_AT_FORWARD_DISTANCE),
+      (this.DPr.X = i.X + t.X * LOOK_AT_FORWARD_DISTANCE),
+        (this.DPr.Y = i.Y + t.Y * LOOK_AT_FORWARD_DISTANCE),
+        (this.DPr.Z = i.Z + t.Z * LOOK_AT_FORWARD_DISTANCE),
         this.PlayCameraRotatorWithCurve(
           i,
-          this.JPr,
-          this.zPr,
+          this.DPr,
+          this.RPr,
           RESET_FOCUS_ROTATION_TIME,
         );
+    }
+    ResetCameraInput() {
+      this.CameraInputController.ResetCameraInput();
     }
     EnterSpecialGameplayCamera(t) {
       return (

@@ -7,16 +7,16 @@ const EventDefine_1 = require("../../../../Common/Event/EventDefine"),
 class GuideFinishBehaviorNode extends ChildQuestNodeBase_1.ChildQuestNodeBase {
   constructor() {
     super(...arguments),
-      (this.QQt = !1),
+      (this.QXt = !1),
       (this.mDe = 0),
-      (this.XQt = (e) => {
-        this.QQt || (e === this.mDe && this.SubmitNode());
+      (this.XXt = (e) => {
+        this.QXt || (e === this.mDe && this.SubmitNode());
       }),
       (this.DDe = () => {
-        this.QQt || this.SubmitNode();
+        this.QXt || this.SubmitNode();
       }),
       (this.OnAfterSubmit = (e) => {
-        this.QQt = !1;
+        this.QXt = !1;
       });
   }
   get CorrelativeEntities() {}
@@ -34,7 +34,7 @@ class GuideFinishBehaviorNode extends ChildQuestNodeBase_1.ChildQuestNodeBase {
     super.AddEventsOnChildQuestStart(),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.GuideGroupFinished,
-        this.XQt,
+        this.XXt,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.ComboTeachingFinish,
@@ -44,11 +44,11 @@ class GuideFinishBehaviorNode extends ChildQuestNodeBase_1.ChildQuestNodeBase {
   RemoveEventsOnChildQuestEnd() {
     EventSystem_1.EventSystem.Has(
       EventDefine_1.EEventName.GuideGroupFinished,
-      this.XQt,
+      this.XXt,
     ) &&
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.GuideGroupFinished,
-        this.XQt,
+        this.XXt,
       ),
       EventSystem_1.EventSystem.Has(
         EventDefine_1.EEventName.ComboTeachingFinish,
@@ -61,7 +61,7 @@ class GuideFinishBehaviorNode extends ChildQuestNodeBase_1.ChildQuestNodeBase {
       super.RemoveEventsOnChildQuestEnd();
   }
   OnBeforeSubmit() {
-    this.QQt = !0;
+    this.QXt = !0;
   }
 }
 exports.GuideFinishBehaviorNode = GuideFinishBehaviorNode;

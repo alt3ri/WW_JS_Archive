@@ -22,14 +22,14 @@ const UE = require("ue"),
 class ShopView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
-      (this.gvo = 0),
+      (this.mMo = 0),
       (this.ShopItemScrollView = void 0),
-      (this.fvo = void 0),
-      (this.LIt = []),
-      (this.pvo = void 0),
-      (this.vvo = void 0),
-      (this.OCt = (e) => {
-        (e = e.Data), (e = this.pvo.indexOf(e));
+      (this.dMo = void 0),
+      (this.PTt = []),
+      (this.CMo = void 0),
+      (this.gMo = void 0),
+      (this.Jgt = (e) => {
+        (e = e.Data), (e = this.CMo.indexOf(e));
         this.ShopItemScrollView.DeselectCurrentGridProxy(),
           e < 0 || this.ShopItemScrollView.SelectGridProxy(e);
       }),
@@ -46,12 +46,12 @@ class ShopView extends UiTickViewBase_1.UiTickViewBase {
           (e.IsLock = t.IsLocked),
           (e.LockText = t.LockInfo),
           (e.InSellTime = t.InSellTime()),
-          (e.BuySuccessFunction = this.Mvo),
-          this.fvo.UpdatePanel(e);
+          (e.BuySuccessFunction = this.fMo),
+          this.dMo.UpdatePanel(e);
       }),
-      (this.Mvo = (e, t, i, s) => {
+      (this.fMo = (e, t, i, s) => {
         ShopController_1.ShopController.SendShopBuyRequest(
-          this.gvo,
+          this.mMo,
           s,
           i,
           t,
@@ -60,7 +60,7 @@ class ShopView extends UiTickViewBase_1.UiTickViewBase {
               t =
                 ((ModelManager_1.ModelManager.ShopModel.OpenItemInfo =
                   ModelManager_1.ModelManager.ShopModel.GetShopItemFullInfoByShopIdAndItemId(
-                    this.gvo,
+                    this.mMo,
                     ModelManager_1.ModelManager.ShopModel.OpenItemInfo.Id,
                   )),
                 ModelManager_1.ModelManager.ShopModel.OpenItemInfo);
@@ -74,22 +74,22 @@ class ShopView extends UiTickViewBase_1.UiTickViewBase {
               (e.IsLock = t.IsLocked),
               (e.LockText = t.LockInfo),
               (e.InSellTime = t.InSellTime()),
-              (e.BuySuccessFunction = this.Mvo),
-              this.fvo.UpdatePanel(e);
+              (e.BuySuccessFunction = this.fMo),
+              this.dMo.UpdatePanel(e);
           },
         );
       }),
-      (this.Svo = (e, t) => {
+      (this.pMo = (e, t) => {
         this.RefreshShopItemList(), this.UpdateCurrency();
       }),
-      (this.uio = (e) => {
-        this.gvo === e && this.RefreshShopItemList();
+      (this.aoo = (e) => {
+        this.mMo === e && this.RefreshShopItemList();
       }),
-      (this.Evo = () => {
+      (this.vMo = () => {
         this.PlaySequence("Sle", this.Mxe),
           (ModelManager_1.ModelManager.ShopModel.OpenItemInfo =
             ModelManager_1.ModelManager.ShopModel.GetShopItemFullInfoByShopIdAndItemId(
-              this.gvo,
+              this.mMo,
               ModelManager_1.ModelManager.ShopModel.OpenItemInfo.Id,
             ));
         var e = new ShopPanelData_1.ShopPanelData(),
@@ -104,24 +104,24 @@ class ShopView extends UiTickViewBase_1.UiTickViewBase {
           (e.IsLock = t.IsLocked),
           (e.LockText = t.LockInfo),
           (e.InSellTime = t.InSellTime()),
-          (e.BuySuccessFunction = this.Mvo),
-          this.fvo.UpdatePanel(e);
+          (e.BuySuccessFunction = this.fMo),
+          this.dMo.UpdatePanel(e);
       }),
-      (this.yvo = () => {
+      (this.MMo = () => {
         this.UiViewSequence.PlaySequence("UnSle");
       });
   }
   get ShopInfo() {
-    return ModelManager_1.ModelManager.ShopModel.GetShopInfo(this.gvo);
+    return ModelManager_1.ModelManager.ShopModel.GetShopInfo(this.mMo);
   }
-  get $2e() {
+  get u3e() {
     return this.ShopInfo?.UpdateTime;
   }
   get SecondsToRefresh() {
-    return this.vvo;
+    return this.gMo;
   }
   set SecondsToRefresh(e) {
-    e <= 0 && 0 < this.vvo && this.Ivo(), (this.vvo = e);
+    e <= 0 && 0 < this.gMo && this.EMo(), (this.gMo = e);
   }
   OnBeforeCreate() {
     var e = "ShopView" + (1e4 + this.OpenParam);
@@ -139,124 +139,124 @@ class ShopView extends UiTickViewBase_1.UiTickViewBase {
     ];
   }
   async OnBeforeStartAsync() {
-    (this.fvo = new ShopItemInfoDetailPanel_1.ShopItemInfoDetailPanel()),
+    (this.dMo = new ShopItemInfoDetailPanel_1.ShopItemInfoDetailPanel()),
       await Promise.all([
-        this.fvo.CreateThenShowByActorAsync(this.GetItem(5).GetOwner()),
+        this.dMo.CreateThenShowByActorAsync(this.GetItem(5).GetOwner()),
         ShopController_1.ShopController.SendShopInfoRequest(
           ModelManager_1.ModelManager.ShopModel.VersionId,
         ),
       ]);
   }
   OnStart() {
-    (this.gvo = this.OpenParam),
+    (this.mMo = this.OpenParam),
       (this.ShopItemScrollView = new LoopScrollView_1.LoopScrollView(
         this.GetLoopScrollViewComponent(4),
         this.GetItem(6).GetOwner(),
         () => {
           var e = new ShopMediumItemGrid_1.ShopMediumItemGrid();
-          return e.BindOnExtendToggleStateChanged(this.OCt), e;
+          return e.BindOnExtendToggleStateChanged(this.Jgt), e;
         },
       )),
       this.ChildPopView?.PopItem.SetMaskResponsibleState(!1),
       this.UpdateCurrency(),
       this.SetShopName(),
       this.RefreshShopItemList(!0),
-      this.Tvo(),
-      this.GetItem(1).SetUIActive(void 0 !== this.$2e && 0 < this.$2e),
+      this.SMo(),
+      this.GetItem(1).SetUIActive(void 0 !== this.u3e && 0 < this.u3e),
       (ModelManager_1.ModelManager.ShopModel.CurrentInteractCreatureDataLongId =
         ModelManager_1.ModelManager.InteractionModel.InteractCreatureDataLongId);
   }
-  Lvo(e) {
+  yMo(e) {
     let t = "";
     var i = EntitySystem_1.EntitySystem.Get(
       ModelManager_1.ModelManager.ShopModel.InteractTarget,
     );
-    i && (t = i.GetComponent(102)?.PawnName ?? ""), this.GetText(2).SetText(t);
+    i && (t = i.GetComponent(104)?.PawnName ?? ""), this.GetText(2).SetText(t);
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OpenItemInfo,
-      this.Evo,
+      this.vMo,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.CloseItemInfo,
-        this.yvo,
+        this.MMo,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.BoughtItem,
-        this.Svo,
+        this.pMo,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.ShopUpdate,
-        this.uio,
+        this.aoo,
       );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OpenItemInfo,
-      this.Evo,
+      this.vMo,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.CloseItemInfo,
-        this.yvo,
+        this.MMo,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.BoughtItem,
-        this.Svo,
+        this.pMo,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.ShopUpdate,
-        this.uio,
+        this.aoo,
       );
   }
   OnTick(e) {
-    this.Tvo();
+    this.SMo();
   }
-  Tvo() {
+  SMo() {
     var e;
-    void 0 === this.$2e || 0 === this.$2e
+    void 0 === this.u3e || 0 === this.u3e
       ? this.GetItem(1).SetUIActive(!1)
       : (e = this.FormatCountdown()) &&
         LguiUtil_1.LguiUtil.SetLocalText(this.GetText(0), "RefreshTime", e);
   }
   OnBeforeDestroy() {
-    (this.pvo.length = 0),
+    (this.CMo.length = 0),
       this.ShopItemScrollView && this.ShopItemScrollView.ClearGridProxies(),
-      this.fvo && this.fvo.Destroy();
-    for (const e of this.LIt) e.Destroy();
+      this.dMo && this.dMo.Destroy();
+    for (const e of this.PTt) e.Destroy();
     this.RootActor.OnSequencePlayEvent.Unbind();
   }
   SetShopName() {}
   UpdateCurrency() {
-    var e = ModelManager_1.ModelManager.ShopModel.GetShopConfig(this.gvo);
-    e && this.Lvo(e);
+    var e = ModelManager_1.ModelManager.ShopModel.GetShopConfig(this.mMo);
+    e && this.yMo(e);
   }
   RefreshShopItemList(i = !1) {
     var e = new AsyncTask_1.AsyncTask(
       "ShopView.RefreshShopItemList",
       async () => {
-        if (this.pvo)
-          for (let e = 0; e < this.pvo.length; e++) {
-            var t = this.pvo[e],
+        if (this.CMo)
+          for (let e = 0; e < this.CMo.length; e++) {
+            var t = this.CMo[e],
               t =
                 ModelManager_1.ModelManager.ShopModel.GetShopItemFullInfoByShopIdAndItemId(
-                  this.gvo,
+                  this.mMo,
                   t.Id,
                 );
-            t && (this.pvo[e] = t);
+            t && (this.CMo[e] = t);
           }
         else {
           var e = ModelManager_1.ModelManager.ShopModel.GetShopItemList(
-            this.gvo,
+            this.mMo,
           );
-          this.pvo = e;
+          this.CMo = e;
         }
         return (
-          await this.ShopItemScrollView.RefreshByDataAsync(this.pvo, !1),
+          await this.ShopItemScrollView.RefreshByDataAsync(this.CMo, !1),
           i &&
             (this.ShopItemScrollView.ClearSelectInfo(),
             this.ShopItemScrollView.SelectGridProxy(0, !0),
-            this.Evo()),
+            this.vMo()),
           !0
         );
       },
@@ -264,15 +264,15 @@ class ShopView extends UiTickViewBase_1.UiTickViewBase {
     TaskSystem_1.TaskSystem.AddTask(e), TaskSystem_1.TaskSystem.Run();
   }
   FormatCountdown() {
-    var e = Math.trunc(this.$2e - TimeUtil_1.TimeUtil.GetServerTime());
+    var e = Math.trunc(this.u3e - TimeUtil_1.TimeUtil.GetServerTime());
     if (!((this.SecondsToRefresh = e) <= 0))
       return ShopUtils_1.ShopUtils.FormatTime(e);
-    ShopController_1.ShopController.SendShopUpdateRequest(this.gvo);
+    ShopController_1.ShopController.SendShopUpdateRequest(this.mMo);
   }
-  Ivo() {
+  EMo() {
     var e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(36);
     e.FunctionMap.set(1, () => {
-      ShopController_1.ShopController.SendShopUpdateRequest(this.gvo);
+      ShopController_1.ShopController.SendShopUpdateRequest(this.mMo);
     }),
       ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
         e,

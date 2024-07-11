@@ -41,39 +41,39 @@ let SceneItemPhysicalAttachComponent =
       super(...arguments),
         (this.Lo = void 0),
         (this.Hte = void 0),
-        (this.d1n = void 0),
-        (this.C1n = void 0),
-        (this.g1n = void 0),
-        (this.f1n = void 0),
-        (this.p1n = void 0),
-        (this.Krr = void 0),
+        (this.Qln = void 0),
+        (this.Xln = void 0),
+        (this.$ln = void 0),
+        (this.Yln = void 0),
+        (this.Jln = void 0),
+        (this.Hnr = void 0),
         (this.zie = void 0),
-        (this.opi = void 0),
-        (this.v1n = Vector_1.Vector.Create()),
-        (this.M1n = (t) => {
-          void 0 === this.f1n && this.S1n(),
+        (this.rvi = void 0),
+        (this.zln = Vector_1.Vector.Create()),
+        (this.Zln = (t) => {
+          void 0 === this.Yln && this.e1n(),
             (this.Hte.PhysicsMode = 1),
-            this.d1n?.SetLinearDamping(0.1),
-            this.g1n || this.E1n();
+            this.Qln?.SetLinearDamping(0.1),
+            this.$ln || this.t1n();
           t = Vector_1.Vector.Create(
-            this.g1n.HitLocation.op_Subtraction(
+            this.$ln.HitLocation.op_Subtraction(
               t.Attacker.GetComponent(1).ActorLocation,
             ),
           );
           t.Normalize(),
-            t.MultiplyEqual(this.g1n.HitDirection.Size()),
-            this.d1n?.SetPhysicsLinearVelocity(t.ToUeVector());
+            t.MultiplyEqual(this.$ln.HitDirection.Size()),
+            this.Qln?.SetPhysicsLinearVelocity(t.ToUeVector());
         }),
-        (this.y1n = (t, e) => {
-          void 0 !== this.opi &&
-            EffectSystem_1.EffectSystem.IsValid(this.opi) &&
+        (this.i1n = (t, e) => {
+          void 0 !== this.rvi &&
+            EffectSystem_1.EffectSystem.IsValid(this.rvi) &&
             t.includes(-1278190765) &&
             (EffectSystem_1.EffectSystem.StopEffectById(
-              this.opi,
+              this.rvi,
               "[SceneItemPhysicalAttachComponent.StartHandleDestoryState]",
               !1,
             ),
-            (this.opi = void 0));
+            (this.rvi = void 0));
         });
     }
     OnInitData(t) {
@@ -82,62 +82,62 @@ let SceneItemPhysicalAttachComponent =
     }
     OnStart() {
       return (
-        (this.Hte = this.Entity.GetComponent(182)),
-        (this.d1n = this.Hte.Owner?.GetComponentByClass(
+        (this.Hte = this.Entity.GetComponent(185)),
+        (this.Qln = this.Hte.Owner?.GetComponentByClass(
           UE.StaticMeshComponent.StaticClass(),
         )),
-        (this.C1n = this.Entity.GetComponent(138)),
-        this.C1n.RegisterComponent(this),
-        this.mEe(),
+        (this.Xln = this.Entity.GetComponent(140)),
+        this.Xln.RegisterComponent(this),
+        this.mSe(),
         !0
       );
     }
     OnActivate() {
-      this.I1n(),
-        StringUtils_1.StringUtils.IsEmpty(this.Lo?.EffectPath) || this.T1n(),
-        this.v1n.DeepCopy(this.Hte.ActorLocationProxy);
+      this.o1n(),
+        StringUtils_1.StringUtils.IsEmpty(this.Lo?.EffectPath) || this.r1n(),
+        this.zln.DeepCopy(this.Hte.ActorLocationProxy);
     }
     OnEnd() {
-      return this.L1n(), this.dEe(), !0;
+      return this.n1n(), this.dSe(), !0;
     }
     OnTick(t) {
       var e = UE.NewArray(UE.Vector);
-      e.Add(this.p1n.K2_GetActorLocation()),
+      e.Add(this.Jln.K2_GetActorLocation()),
         e.Add(this.Hte.ActorLocation),
         this.zie?.SetSplinePoints(e, 1, !0),
-        !this.f1n?.IsValid() ||
-          10 < this.d1n.GetPhysicsLinearVelocity().Size() ||
+        !this.Yln?.IsValid() ||
+          10 < this.Qln.GetPhysicsLinearVelocity().Size() ||
           ((e = this.Hte.ActorLocationProxy),
-          10 < Vector_1.Vector.Dist(this.v1n, e)) ||
+          10 < Vector_1.Vector.Dist(this.zln, e)) ||
           ((this.Hte.PhysicsMode = 0),
-          this.f1n.K2_DestroyActor(),
-          (this.f1n = void 0));
+          this.Yln.K2_DestroyActor(),
+          (this.Yln = void 0));
     }
-    mEe() {
+    mSe() {
       EventSystem_1.EventSystem.AddWithTarget(
         this,
         EventDefine_1.EEventName.OnSceneItemHitByHitData,
-        this.M1n,
+        this.Zln,
       ),
         EventSystem_1.EventSystem.AddWithTarget(
           this.Entity,
           EventDefine_1.EEventName.OnLevelTagChanged,
-          this.y1n,
+          this.i1n,
         );
     }
-    dEe() {
+    dSe() {
       EventSystem_1.EventSystem.RemoveWithTarget(
         this,
         EventDefine_1.EEventName.OnSceneItemHitByHitData,
-        this.M1n,
+        this.Zln,
       ),
         EventSystem_1.EventSystem.RemoveWithTarget(
           this.Entity,
           EventDefine_1.EEventName.OnLevelTagChanged,
-          this.y1n,
+          this.i1n,
         );
     }
-    I1n() {
+    o1n() {
       var t,
         e = new UE.Transform();
       e.SetTranslation(this.Hte.ActorLocation),
@@ -148,16 +148,16 @@ let SceneItemPhysicalAttachComponent =
             this.Lo.AttachTarget.RelativePoint.Z ?? 0,
           )),
           e.SetTranslation(this.Hte.ActorLocation.op_Addition(t))),
-        void 0 === this.p1n &&
-          (this.p1n = ActorSystem_1.ActorSystem.Get(
+        void 0 === this.Jln &&
+          (this.Jln = ActorSystem_1.ActorSystem.Get(
             UE.BP_PhysicsAttachedBase_C.StaticClass(),
             e,
           ));
     }
-    S1n() {
+    e1n() {
       switch (
-        (void 0 === this.f1n &&
-          (this.f1n = ActorSystem_1.ActorSystem.Spawn(
+        (void 0 === this.Yln &&
+          (this.Yln = ActorSystem_1.ActorSystem.Spawn(
             UE.PhysicsConstraintActor.StaticClass(),
             void 0,
             void 0,
@@ -165,77 +165,77 @@ let SceneItemPhysicalAttachComponent =
         this.Lo.AngularLimit.Swing1Motion.Type)
       ) {
         case "ACM_Free":
-          this.f1n.ConstraintComp.SetAngularSwing1Limit(0, 0);
+          this.Yln.ConstraintComp.SetAngularSwing1Limit(0, 0);
           break;
         case "ACM_Limited":
-          this.f1n.ConstraintComp.SetAngularSwing1Limit(
+          this.Yln.ConstraintComp.SetAngularSwing1Limit(
             1,
             this.Lo.AngularLimit.Swing1Motion.LimitValue,
           );
           break;
         case "ACM_Locked":
-          this.f1n.ConstraintComp.SetAngularSwing1Limit(2, 0);
+          this.Yln.ConstraintComp.SetAngularSwing1Limit(2, 0);
       }
       switch (this.Lo.AngularLimit.Swing2Motion.Type) {
         case "ACM_Free":
-          this.f1n.ConstraintComp.SetAngularSwing2Limit(0, 0);
+          this.Yln.ConstraintComp.SetAngularSwing2Limit(0, 0);
           break;
         case "ACM_Limited":
-          this.f1n.ConstraintComp.SetAngularSwing2Limit(
+          this.Yln.ConstraintComp.SetAngularSwing2Limit(
             1,
             this.Lo.AngularLimit.Swing2Motion.LimitValue,
           );
           break;
         case "ACM_Locked":
-          this.f1n.ConstraintComp.SetAngularSwing2Limit(2, 0);
+          this.Yln.ConstraintComp.SetAngularSwing2Limit(2, 0);
       }
       switch (this.Lo.AngularLimit.TwistMotion.Type) {
         case "ACM_Free":
-          this.f1n.ConstraintComp.SetAngularTwistLimit(0, 0);
+          this.Yln.ConstraintComp.SetAngularTwistLimit(0, 0);
           break;
         case "ACM_Limited":
-          this.f1n.ConstraintComp.SetAngularTwistLimit(
+          this.Yln.ConstraintComp.SetAngularTwistLimit(
             1,
             this.Lo.AngularLimit.TwistMotion.LimitValue,
           );
           break;
         case "ACM_Locked":
-          this.f1n.ConstraintComp.SetAngularTwistLimit(2, 0);
+          this.Yln.ConstraintComp.SetAngularTwistLimit(2, 0);
       }
-      this.f1n.K2_AttachToActor(this.p1n, void 0, 2, 2, 2, !1),
-        (this.f1n.ConstraintComp.ConstraintActor1 = this.p1n),
-        (this.f1n.ConstraintComp.ConstraintActor2 = this.Hte.Owner),
-        this.f1n.ConstraintComp.SetConstrainedComponents(
-          this.p1n?.GetComponentByClass(UE.PrimitiveComponent.StaticClass()),
+      this.Yln.K2_AttachToActor(this.Jln, void 0, 2, 2, 2, !1),
+        (this.Yln.ConstraintComp.ConstraintActor1 = this.Jln),
+        (this.Yln.ConstraintComp.ConstraintActor2 = this.Hte.Owner),
+        this.Yln.ConstraintComp.SetConstrainedComponents(
+          this.Jln?.GetComponentByClass(UE.PrimitiveComponent.StaticClass()),
           void 0,
-          this.d1n,
+          this.Qln,
           void 0,
         );
     }
-    T1n() {
+    r1n() {
       var t;
-      (this.Krr = ActorSystem_1.ActorSystem.Get(
+      (this.Hnr = ActorSystem_1.ActorSystem.Get(
         UE.BP_BasePathLine_C.StaticClass(),
         MathUtils_1.MathUtils.DefaultTransform,
       )),
-        this.Krr &&
-          (this.Krr.K2_AttachToActor(this.p1n, void 0, 2, 2, 2, !1),
-          (t = UE.NewArray(UE.Vector)).Add(this.p1n.K2_GetActorLocation()),
+        this.Hnr &&
+          (this.Hnr.K2_AttachToActor(this.Jln, void 0, 2, 2, 2, !1),
+          (t = UE.NewArray(UE.Vector)).Add(this.Jln.K2_GetActorLocation()),
           t.Add(this.Hte.ActorLocation),
-          (this.zie = this.Krr.GetComponentByClass(
+          (this.zie = this.Hnr.GetComponentByClass(
             UE.SplineComponent.StaticClass(),
           )),
           this.zie.SetSplinePoints(t, 1, !0),
-          (this.opi = EffectSystem_1.EffectSystem.SpawnEffect(
+          (this.rvi = EffectSystem_1.EffectSystem.SpawnEffect(
             GlobalData_1.GlobalData.World,
             MathUtils_1.MathUtils.DefaultTransform,
             this.Lo?.EffectPath,
             "[SceneItemPhysicalAttachComponent.CreateSplineActor]",
-            new EffectContext_1.EffectContext(void 0, this.Krr),
+            new EffectContext_1.EffectContext(void 0, this.Hnr),
           )),
-          EffectSystem_1.EffectSystem.IsValid(this.opi)) &&
-          EffectSystem_1.EffectSystem.GetEffectActor(this.opi).K2_AttachToActor(
-            this.Krr,
+          EffectSystem_1.EffectSystem.IsValid(this.rvi)) &&
+          EffectSystem_1.EffectSystem.GetEffectActor(this.rvi).K2_AttachToActor(
+            this.Hnr,
             void 0,
             2,
             2,
@@ -243,19 +243,19 @@ let SceneItemPhysicalAttachComponent =
             !1,
           );
     }
-    E1n() {
-      this.g1n = this.Hte?.GetInteractionMainActor();
+    t1n() {
+      this.$ln = this.Hte?.GetInteractionMainActor();
     }
-    L1n() {
-      void 0 !== this.f1n &&
-        (ActorSystem_1.ActorSystem.Put(this.f1n), (this.f1n = void 0)),
-        void 0 !== this.p1n &&
-          (ActorSystem_1.ActorSystem.Put(this.p1n), (this.p1n = void 0));
+    n1n() {
+      void 0 !== this.Yln &&
+        (ActorSystem_1.ActorSystem.Put(this.Yln), (this.Yln = void 0)),
+        void 0 !== this.Jln &&
+          (ActorSystem_1.ActorSystem.Put(this.Jln), (this.Jln = void 0));
     }
   });
 (SceneItemPhysicalAttachComponent = SceneItemPhysicalAttachComponent_1 =
   __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(196)],
+    [(0, RegisterComponent_1.RegisterComponent)(201)],
     SceneItemPhysicalAttachComponent,
   )),
   (exports.SceneItemPhysicalAttachComponent = SceneItemPhysicalAttachComponent);

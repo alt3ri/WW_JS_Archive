@@ -10,18 +10,18 @@ const ConfigManager_1 = require("../../../Manager/ConfigManager"),
 class RoleSelectResultView extends RogueSelectResultBaseView_1.RogueSelectResultBaseView {
   constructor() {
     super(...arguments),
-      (this.Xso = void 0),
-      (this.Bho = void 0),
+      (this.jao = void 0),
+      (this.Plo = void 0),
       (this.UiPoolActorPrivate = void 0),
-      (this.bho = () => {
+      (this.xlo = () => {
         return new RoleSelectItem_1.RoleSelectItem();
       }),
       (this.OnDescModelChange = () => {
         this.Refresh();
       }),
-      (this.qho = () => {
-        var e = this.Xso.NewRogueGainEntry,
-          t = this.Xso.OldRogueGainEntry,
+      (this.wlo = () => {
+        var e = this.jao.NewRogueGainEntry,
+          t = this.jao.OldRogueGainEntry,
           i = new Set();
         if (e)
           for (const s of e.AffixEntryList)
@@ -29,7 +29,7 @@ class RoleSelectResultView extends RogueSelectResultBaseView_1.RogueSelectResult
               i.has(s.Id) ||
               i.add(s.Id);
         i.size <= 0 ||
-          ((e = this.Bho.GetLayoutItemByIndex(0)) &&
+          ((e = this.Plo.GetLayoutItemByIndex(0)) &&
             e.SetSecondColorForAttrItem(i));
       });
   }
@@ -44,10 +44,10 @@ class RoleSelectResultView extends RogueSelectResultBaseView_1.RogueSelectResult
       this.UiPoolActorPrivate.UiItem.SetUIParent(
         this.GetHorizontalLayout(3).GetRootComponent(),
       ),
-      (this.Xso = this.GetViewParam()),
-      (this.Bho = new GenericLayout_1.GenericLayout(
+      (this.jao = this.GetViewParam()),
+      (this.Plo = new GenericLayout_1.GenericLayout(
         this.GetHorizontalLayout(3),
-        this.bho,
+        this.xlo,
       ));
   }
   OnBeforeDestroy() {
@@ -57,15 +57,18 @@ class RoleSelectResultView extends RogueSelectResultBaseView_1.RogueSelectResult
         RoguelikeDefine_1.ROLE_SELECT_ITEM,
       );
   }
+  OnCloseBtnClick() {
+    this.CloseMe(this.jao?.CallBack);
+  }
   OnBeforeShow() {
     this.Refresh();
   }
   Refresh() {
-    this.Aao(), this.RefreshTitleText();
+    this.Lho(), this.RefreshTitleText();
   }
-  Aao() {
-    this.Bho.RefreshByDataAsync([this.Xso.NewRogueGainEntry]).then(() => {
-      this.qho();
+  Lho() {
+    this.Plo.RefreshByDataAsync([this.jao.NewRogueGainEntry]).then(() => {
+      this.wlo();
     });
   }
   RefreshTitleText() {

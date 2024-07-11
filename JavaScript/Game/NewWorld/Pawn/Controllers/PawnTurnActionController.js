@@ -12,9 +12,9 @@ const Log_1 = require("../../../../Core/Common/Log"),
 class PawnTurnActionController {
   constructor(t) {
     (this.Jh = void 0),
-      (this.$or = void 0),
-      (this.Yor = 1),
-      (this.Mtr = Vector_1.Vector.Create()),
+      (this.Krr = void 0),
+      (this.Qrr = 1),
+      (this.vir = Vector_1.Vector.Create()),
       (this.Hte = void 0),
       (this.Gce = void 0),
       (this.NeedTurn = !1),
@@ -23,14 +23,14 @@ class PawnTurnActionController {
       (this.OnTurnEndHandle = void 0),
       (this.OnTurnToDefaultForwardEndHandle = void 0),
       (this.OnTurnToInteractTargetEndHandle = void 0),
-      (this.Jor = () => {
+      (this.Xrr = () => {
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("Pawn", 51, "转身开始", [
             "PbDataId",
             this.Hte?.CreatureData.GetPbDataId(),
           ]);
       }),
-      (this.zor = () => {
+      (this.$rr = () => {
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("Pawn", 51, "转身结束", [
             "PbDataId",
@@ -39,71 +39,71 @@ class PawnTurnActionController {
           this.RemoveEvents(),
           this.OnTurnEndHandle && this.OnTurnEndHandle();
       }),
-      (this.Zor = () => {
+      (this.Yrr = () => {
         var t;
         this.Gce?.Valid
           ? ((t = Global_1.Global.BaseCharacter.CharacterActorComponent),
-            this.Gce.Entity.GetComponent(160).SetSightTargetItem(t),
+            this.Gce.Entity.GetComponent(162).SetSightTargetItem(t),
             this.WaitTurnEnd &&
-              (this.err(!1), this.OnTurnToInteractTargetEndHandle) &&
+              (this.Jrr(!1), this.OnTurnToInteractTargetEndHandle) &&
               this.OnTurnToInteractTargetEndHandle())
           : this.OnTurnToInteractTargetEndHandle &&
             this.OnTurnToInteractTargetEndHandle();
       }),
-      (this.trr = () => {
+      (this.zrr = () => {
         this.Gce?.Valid &&
           this.Gce.CharacterMovement?.IsValid() &&
-          this.Gce.CharacterMovement.SetMovementMode(this.Yor),
+          this.Gce.CharacterMovement.SetMovementMode(this.Qrr),
           this.OnTurnToDefaultForwardEndHandle &&
             this.OnTurnToDefaultForwardEndHandle();
       }),
       (this.Jh = t),
-      (this.Gce = t.GetComponent(36)),
+      (this.Gce = t.GetComponent(37)),
       (this.Hte = t.GetComponent(1)),
-      this.Gce?.Valid && this.Mtr.DeepCopy(this.Hte.ActorForwardProxy);
+      this.Gce?.Valid && this.vir.DeepCopy(this.Hte.ActorForwardProxy);
   }
   AddEvents() {
     EventSystem_1.EventSystem.HasWithTarget(
       this.Jh,
       EventDefine_1.EEventName.CharTurnBegin,
-      this.Jor,
+      this.Xrr,
     ) ||
       (EventSystem_1.EventSystem.AddWithTarget(
         this.Jh,
         EventDefine_1.EEventName.CharTurnBegin,
-        this.Jor,
+        this.Xrr,
       ),
       EventSystem_1.EventSystem.AddWithTarget(
         this.Jh,
         EventDefine_1.EEventName.CharTurnEnd,
-        this.zor,
+        this.$rr,
       ));
   }
   RemoveEvents() {
     EventSystem_1.EventSystem.HasWithTarget(
       this.Jh,
       EventDefine_1.EEventName.CharTurnBegin,
-      this.Jor,
+      this.Xrr,
     ) &&
       (EventSystem_1.EventSystem.RemoveWithTarget(
         this.Jh,
         EventDefine_1.EEventName.CharTurnBegin,
-        this.Jor,
+        this.Xrr,
       ),
       EventSystem_1.EventSystem.RemoveWithTarget(
         this.Jh,
         EventDefine_1.EEventName.CharTurnEnd,
-        this.zor,
+        this.$rr,
       ));
   }
   TurnToInteractTarget() {
     var t, i, s, e, o, r;
     this.NeedTurn
       ? this.Gce?.Valid
-        ? ((this.Yor = this.Gce.CharacterMovement.MovementMode),
+        ? ((this.Qrr = this.Gce.CharacterMovement.MovementMode),
           this.Gce.CharacterMovement.SetMovementMode(1),
           (t = Global_1.Global.BaseCharacter.CharacterActorComponent),
-          (i = (s = this.Gce.Entity).GetComponent(160)),
+          (i = (s = this.Gce.Entity).GetComponent(162)),
           (s = s.GetComponent(3)) &&
             ((o = Vector_1.Vector.Create(t.ActorLocationProxy)).AdditionEqual(
               this.PlayerOffset,
@@ -126,14 +126,14 @@ class PawnTurnActionController {
                     ["TurnAngleMax", TURN_ANGLE_MAX],
                   ))
               : (this.WaitTurnEnd
-                  ? this.err(!0)
+                  ? this.Jrr(!0)
                   : this.OnTurnToInteractTargetEndHandle &&
                     this.OnTurnToInteractTargetEndHandle(),
                 (r = Vector_1.Vector.Create(
                   t.ActorLocationProxy,
                 )).AdditionEqual(this.PlayerOffset),
                 AiContollerLibrary_1.AiControllerLibrary.TurnToTarget(s, r, 0),
-                (this.OnTurnEndHandle = this.Zor),
+                (this.OnTurnEndHandle = this.Yrr),
                 this.AddEvents(),
                 Log_1.Log.CheckInfo() &&
                   Log_1.Log.Info(
@@ -142,7 +142,7 @@ class PawnTurnActionController {
                     "[PawnTurnActionController.TurnToInteractTarget][交互转身] 添加转身监听事件",
                     ["PbDataID", this.Hte?.CreatureData.GetPbDataId()],
                   )),
-            (this.$or = !0)))
+            (this.Krr = !0)))
         : (Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
               "NPC",
@@ -162,11 +162,11 @@ class PawnTurnActionController {
         this.OnTurnToInteractTargetEndHandle &&
           this.OnTurnToInteractTargetEndHandle());
   }
-  err(t) {
+  Jrr(t) {
     var i,
       s = Global_1.Global.BaseCharacter?.CharacterActorComponent?.Entity;
     s &&
-      ((i = s.GetComponent(52)),
+      ((i = s.GetComponent(53)),
       t
         ? (s.GetComponent(3).SetInputDirect(Vector_1.Vector.ZeroVector),
           i.ClearMoveVectorCache(),
@@ -175,19 +175,19 @@ class PawnTurnActionController {
   }
   TurnToDefaultForward() {
     var t, i;
-    this.NeedTurn && this.$or
+    this.NeedTurn && this.Krr
       ? this.Gce?.Valid
         ? (1 !== (t = this.Gce.CharacterMovement).MovementMode &&
             t.SetMovementMode(1),
-          (t = this.Gce.Entity).GetComponent(168)?.OpenLookAt ||
-            ((i = t.GetComponent(160)) && i.SetSightTargetItem(void 0)),
+          (t = this.Gce.Entity).GetComponent(171)?.OpenLookAt ||
+            ((i = t.GetComponent(162)) && i.SetSightTargetItem(void 0)),
           (i = t.GetComponent(3)) &&
             (AiContollerLibrary_1.AiControllerLibrary.TurnToDirect(
               i,
-              this.Mtr,
+              this.vir,
               0,
             ),
-            (this.OnTurnEndHandle = this.trr),
+            (this.OnTurnEndHandle = this.zrr),
             this.AddEvents(),
             Log_1.Log.CheckInfo()) &&
             Log_1.Log.Info(
@@ -196,7 +196,7 @@ class PawnTurnActionController {
               "[PawnTurnActionController.TurnToDefaultForward][结束交互转身] 添加转身监听事件",
               ["PbDataID", this.Hte?.CreatureData.GetPbDataId()],
             ),
-          (this.$or = !1))
+          (this.Krr = !1))
         : (Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
               "NPC",

@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FlowActionDestroyEntity = void 0);
 const Log_1 = require("../../../../Core/Common/Log"),
+  IComponent_1 = require("../../../../UniverseEditor/Interface/IComponent"),
   ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   WaitEntityTask_1 = require("../../../World/Define/WaitEntityTask"),
@@ -11,7 +12,7 @@ class FlowActionDestroyEntity extends FlowActionServerAction_1.FlowActionServerA
   constructor() {
     super(...arguments),
       (this.Task = void 0),
-      (this.QXi = (t) => {
+      (this.W$i = (t) => {
         this.Task = void 0;
         var e = this.ActionInfo.Params;
         t ||
@@ -19,32 +20,41 @@ class FlowActionDestroyEntity extends FlowActionServerAction_1.FlowActionServerA
             "加载实体失败",
           );
         let o = !1;
-        for (const n of e.EntityIds) {
-          var i,
-            r =
-              ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(n);
-          r
-            ? (i = r.Entity.GetComponent(117))
-              ? (r.Entity.GetComponent(177)?.RemoveServerTagByIdLocal(
-                  -1152559349,
-                  "[SceneItemStateComponent]ForceHandleDestroyState",
-                ),
-                r.Entity.GetComponent(177)?.AddServerTagByIdLocal(
-                  -1278190765,
-                  "[SceneItemStateComponent]ForceHandleDestroyState",
-                ),
-                i.HandleDestroyState())
-              : ControllerHolder_1.ControllerHolder.CreatureController.SetEntityEnable(
-                  r.Entity,
-                  !1,
-                  "FlowActionDestroyEntity.OnEntityReady",
-                )
-            : (Log_1.Log.CheckWarn() &&
-                Log_1.Log.Warn("Plot", 27, "实体未下发，联系服务端检查配置", [
-                  "ids",
-                  n,
-                ]),
-              (o = !0));
+        for (const s of e.EntityIds) {
+          var i =
+            ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(s);
+          if (i) {
+            var r = i.Entity.GetComponent(0).GetPbEntityInitData(),
+              n = i.Entity.GetComponent(119);
+            let t = !1;
+            r &&
+              ((r = (0, IComponent_1.getComponent)(
+                r?.ComponentsData,
+                "SceneItemLifeCycleComponent",
+              )),
+              (t = Boolean(n && r?.DestroyStageConfig.PerformDuration))),
+              t
+                ? (i.Entity.GetComponent(180)?.RemoveServerTagByIdLocal(
+                    -1152559349,
+                    "[SceneItemStateComponent]ForceHandleDestroyState",
+                  ),
+                  i.Entity.GetComponent(180)?.AddServerTagByIdLocal(
+                    -1278190765,
+                    "[SceneItemStateComponent]ForceHandleDestroyState",
+                  ),
+                  n.HandleDestroyState())
+                : ControllerHolder_1.ControllerHolder.CreatureController.SetEntityEnable(
+                    i.Entity,
+                    !1,
+                    "FlowActionDestroyEntity.OnEntityReady",
+                  );
+          } else
+            Log_1.Log.CheckWarn() &&
+              Log_1.Log.Warn("Plot", 27, "实体未下发，联系服务端检查配置", [
+                "ids",
+                s,
+              ]),
+              (o = !0);
         }
         o && this.RequestServerAction(!1), this.FinishExecute(!0);
       });
@@ -70,7 +80,7 @@ class FlowActionDestroyEntity extends FlowActionServerAction_1.FlowActionServerA
           ? (this.RequestServerAction(!1), this.FinishExecute(!0))
           : (this.Task = WaitEntityTask_1.WaitEntityTask.CreateWithPbDataId(
               e.EntityIds,
-              this.QXi,
+              this.W$i,
               !0,
               FlowActionUtils_1.WAIT_ENTITY_TIME,
             ));

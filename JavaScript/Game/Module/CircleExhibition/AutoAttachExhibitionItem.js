@@ -41,7 +41,7 @@ class AutoAttachExhibitionItem {
       (this.DataLength = 0),
       (this.DragState = !1),
       (this.ExhibitionView = void 0),
-      (this.Rpt = void 0),
+      (this.kvt = void 0),
       (this.ShowItemIndex = 0),
       (this.Actor = t.GetComponentByClass(UE.UIItem.StaticClass())),
       (this.FullSizeX = this.Actor.GetWidth()),
@@ -50,7 +50,7 @@ class AutoAttachExhibitionItem {
       (this.ShowItemNum = i);
   }
   SetViewItem(t) {
-    (this.Rpt = t), this.Rpt.SetAttachItem(this);
+    (this.kvt = t), this.kvt.SetAttachItem(this);
   }
   SetActive(t) {
     this.Actor.SetUIActive(t);
@@ -71,27 +71,27 @@ class AutoAttachExhibitionItem {
     this.DragState = !0;
   }
   MoveItem(t) {
-    this.OnMoveItem(t), this.Rpt.OnMoveItem(t);
+    this.OnMoveItem(t), this.kvt.OnMoveItem(t);
   }
   OnMoveItem(t) {}
   OnMoveFromRightToLeft() {
-    this.Rpt.OnChangeDirection(1);
+    this.kvt.OnChangeDirection(1);
   }
   OnMoveFromLeftToRight() {
-    this.Rpt.OnChangeDirection(-1);
+    this.kvt.OnChangeDirection(-1);
   }
   OnMoveFromDownToUp() {
-    this.Rpt.OnChangeDirection(1);
+    this.kvt.OnChangeDirection(1);
   }
   OnMoveFromUpToDown() {
-    this.Rpt.OnChangeDirection(-1);
+    this.kvt.OnChangeDirection(-1);
   }
   RefreshItem() {
-    this.Rpt.SetShowItemIndex(this.ShowItemIndex),
-      this.Rpt.RefreshItem(this.ShowItemIndex);
+    this.kvt.SetShowItemIndex(this.ShowItemIndex),
+      this.kvt.RefreshItem(this.ShowItemIndex);
   }
   SetData(t) {
-    this.Rpt.SetData(t);
+    this.kvt.SetData(t);
   }
   OnControllerDragEnd() {
     this.DragState = !1;
@@ -112,16 +112,16 @@ class AutoAttachExhibitionItem {
       this.OnSelect());
   }
   OnSelect() {
-    this.Rpt.OnSelect();
+    this.kvt.OnSelect();
   }
   UnSelect() {
     this.SelectState && ((this.SelectState = !1), this.OnUnSelect());
   }
   OnUnSelect() {
-    this.Rpt.OnUnSelect();
+    this.kvt.OnUnSelect();
   }
   Clear() {
-    this.Rpt.Clear();
+    this.kvt.Clear();
   }
 }
 exports.AutoAttachExhibitionItem = AutoAttachExhibitionItem;

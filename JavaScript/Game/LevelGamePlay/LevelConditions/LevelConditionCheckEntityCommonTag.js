@@ -17,7 +17,7 @@ class LevelConditionCheckEntityCommonTag extends LevelGeneralBase_1.LevelConditi
     for (const i of e) {
       var o = i.Entity.GetComponent(0);
       if (o.GetPbDataId() === n)
-        if (!i.Entity.GetComponent(177)?.ContainsTagByName(a)) return !1;
+        if (!i.Entity.GetComponent(180)?.ContainsTagByName(a)) return !1;
     }
     return !0;
   }
@@ -29,7 +29,7 @@ class LevelConditionCheckEntityCommonTag extends LevelGeneralBase_1.LevelConditi
     );
     return (
       n &&
-        (n = EntitySystem_1.EntitySystem.GetComponent(n.Id, 177)) &&
+        (n = EntitySystem_1.EntitySystem.GetComponent(n.Id, 180)) &&
         (t = n.HasTag(e.TagId)),
       e.IsContain ? t : !t
     );

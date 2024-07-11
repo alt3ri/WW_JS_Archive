@@ -8,6 +8,7 @@ const Log_1 = require("../../../../Core/Common/Log"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   UiManager_1 = require("../../../Ui/UiManager"),
   ControllerWithAssistantBase_1 = require("../../GeneralLogicTree/ControllerAssistant/ControllerWithAssistantBase"),
@@ -16,89 +17,95 @@ const Log_1 = require("../../../../Core/Common/Log"),
   GuideEffectAssistant_1 = require("./GuideEffectAssistant"),
   GuideLineAssistant_1 = require("./GuideLineAssistant"),
   QuestTrackAssistant_1 = require("./QuestTrackAssistant"),
-  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   assistantMap = { [0]: void 0, 1: void 0, 2: void 0, 3: void 0 };
 class QuestNewController extends ControllerWithAssistantBase_1.ControllerWithAssistantBase {
   static OnRegisterNetEvent() {
     super.OnRegisterNetEvent(),
-      Net_1.Net.Register(1778, QuestNewController.qoo),
-      Net_1.Net.Register(10591, QuestNewController.Goo),
-      Net_1.Net.Register(10420, QuestNewController.Noo),
-      Net_1.Net.Register(5625, QuestNewController.Ooo),
-      Net_1.Net.Register(18439, QuestNewController.koo),
-      Net_1.Net.Register(27879, QuestNewController.Voo);
+      Net_1.Net.Register(27409, QuestNewController.wro),
+      Net_1.Net.Register(25266, QuestNewController.Bro),
+      Net_1.Net.Register(20913, QuestNewController.bro),
+      Net_1.Net.Register(16264, QuestNewController.qro),
+      Net_1.Net.Register(11540, QuestNewController.Gro),
+      Net_1.Net.Register(28262, QuestNewController.Nro),
+      Net_1.Net.Register(9477, QuestNewController.qSa);
   }
   static OnUnRegisterNetEvent() {
     super.OnUnRegisterNetEvent(),
-      Net_1.Net.UnRegister(1778),
-      Net_1.Net.UnRegister(10591),
-      Net_1.Net.UnRegister(10420),
-      Net_1.Net.UnRegister(5625),
-      Net_1.Net.UnRegister(18439);
+      Net_1.Net.UnRegister(27409),
+      Net_1.Net.UnRegister(25266),
+      Net_1.Net.UnRegister(20913),
+      Net_1.Net.UnRegister(16264),
+      Net_1.Net.UnRegister(11540),
+      Net_1.Net.UnRegister(9477);
   }
   static OnAddEvents() {
     super.OnAddEvents(),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.GeneralLogicTreeWakeUp,
-        QuestNewController.Hoo,
+        QuestNewController.Oro,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnQuestStateChange,
-        this.DEe,
+        this.DSe,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.ChangeArea,
-        this.joo,
+        this.kro,
       ),
       UiManager_1.UiManager.AddOpenViewCheckFunction(
         "QuestView",
-        QuestNewController.V4e,
+        QuestNewController.iVe,
         "QuestNewController.CanOpenView",
       );
   }
   static OnRemoveEvents() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.GeneralLogicTreeWakeUp,
-      QuestNewController.Hoo,
+      QuestNewController.Oro,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnQuestStateChange,
-        this.DEe,
+        this.DSe,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.ChangeArea,
-        this.joo,
+        this.kro,
       ),
       UiManager_1.UiManager.RemoveOpenViewCheckFunction(
         "QuestView",
-        QuestNewController.V4e,
+        QuestNewController.iVe,
       ),
       super.OnRemoveEvents();
   }
   static OnTick(e) {
     ModelManager_1.ModelManager.GeneralLogicTreeModel.IsWakeUp &&
-      (QuestNewController.c$t(0)?.Tick(e),
-      QuestNewController.c$t(2)?.UpdateQuestGuideEffect(e));
+      (QuestNewController.cYt(0)?.Tick(e),
+      QuestNewController.cYt(2)?.UpdateQuestGuideEffect(e));
   }
   static RegisterAssistant() {
-    this.AddAssistant(0, new GuideLineAssistant_1.GuideLineAssistant()),
+    this.AddAssistant(
+      0,
+      new GuideLineAssistant_1.GuideLineAssistant(
+        Protocol_1.Aki.Protocol.tps.Proto_BtTypeQuest,
+      ),
+    ),
       this.AddAssistant(1, new QuestTrackAssistant_1.QuestTrackAssistant()),
       this.AddAssistant(2, new GuideEffectAssistant_1.GuideEffectAssistant()),
       this.AddAssistant(3, new DailyQuestAssistant_1.DailyQuestAssistant());
   }
-  static c$t(e) {
+  static cYt(e) {
     if (this.Assistants) return this.Assistants.get(e);
   }
   static AddQuestTraceEffect(e, t, r) {
-    QuestNewController.c$t(2).AddQuestTraceEffect(e, t, r);
+    QuestNewController.cYt(2).AddQuestTraceEffect(e, t, r);
   }
   static RemoveQuestTraceEffect(e, t) {
-    QuestNewController.c$t(2).RemoveQuestTraceEffect(e, t);
+    QuestNewController.cYt(2).RemoveQuestTraceEffect(e, t);
   }
   static ClearQuestTraceEffect(e) {
-    QuestNewController.c$t(2).ClearQuestTraceEffect(e);
+    QuestNewController.cYt(2).ClearQuestTraceEffect(e);
   }
-  static Woo() {
+  static Fro() {
     let e = 0;
     var t = ModelManager_1.ModelManager.MapModel.GetCurTrackMark();
     return (e =
@@ -109,53 +116,68 @@ class QuestNewController extends ControllerWithAssistantBase_1.ControllerWithAss
         : e);
   }
   static RequestTrackQuest(e, t, r, o = 0, s) {
-    QuestNewController.c$t(1).RequestTrackQuest(e, t, r, o, s);
+    QuestNewController.cYt(1).RequestTrackQuest(e, t, r, o, s);
+  }
+  static TryTrackAndOpenWorldMap(t) {
+    var e = () => {
+      var e = {
+        MarkId:
+          ModelManager_1.ModelManager.QuestNewModel?.TryGetMapMarkIdByQuestId(
+            t,
+          ),
+        MarkType: 12,
+        OpenAreaId: 0,
+      };
+      ControllerHolder_1.ControllerHolder.WorldMapController.OpenView(2, !1, e);
+    };
+    ModelManager_1.ModelManager.QuestNewModel.IsTrackingQuest(t)
+      ? e()
+      : QuestNewController.RequestTrackQuest(t, !0, 2, 0, e);
   }
   static TryChangeTrackedQuest(e) {
-    return QuestNewController.c$t(1).TryChangeTrackedQuest(e);
+    return QuestNewController.cYt(1).TryChangeTrackedQuest(e);
   }
   static RedDotRequest(t, r) {
-    var e = Protocol_1.Aki.Protocol.Bss.create({ Xkn: t, A8n: r });
-    Net_1.Net.Call(14850, e, (e) => {
-      e.uvs !== Protocol_1.Aki.Protocol.lkn.Sys &&
+    var e = Protocol_1.Aki.Protocol.U1s.create({ I5n: t, aHn: r });
+    Net_1.Net.Call(19599, e, (e) => {
+      e.DEs !== Protocol_1.Aki.Protocol.O4n.NRs &&
         ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-          e.uvs,
-          28838,
+          e.DEs,
+          17338,
         ),
         ModelManager_1.ModelManager.QuestNewModel.SetQuestRedDot(t, 1 === r);
     });
   }
 }
 (exports.QuestNewController = QuestNewController),
-  ((_a = QuestNewController).Koo = void 0),
-  (QuestNewController.Hoo = () => {
-    QuestNewController.c$t(0).SpawnQuestGuideLine(),
-      QuestNewController.c$t(1).RefreshCurTrackQuest(),
-      QuestNewController.c$t(3).CreateMarksOnWakeUp(),
-      _a.Koo && (_a.Voo(_a.Koo), (_a.Koo = void 0));
+  ((_a = QuestNewController).Vro = void 0),
+  (QuestNewController.Oro = () => {
+    QuestNewController.cYt(1).RefreshCurTrackQuest(),
+      QuestNewController.cYt(3).CreateMarksOnWakeUp(),
+      _a.Vro && (_a.Nro(_a.Vro), (_a.Vro = void 0));
   }),
-  (QuestNewController.qoo = (e) => {
-    for (const r of e.TUs) {
+  (QuestNewController.wro = (e) => {
+    for (const r of e.HBs) {
       Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Quest", 19, "上线下发进行中的任务", ["任务id", r.Xkn]);
-      var t = ModelManager_1.ModelManager.QuestNewModel.AddQuest(r.Xkn);
-      t && t.UpdateState(r.n3n, 0);
+        Log_1.Log.Info("Quest", 19, "上线下发进行中的任务", ["任务id", r.I5n]);
+      var t = ModelManager_1.ModelManager.QuestNewModel.AddQuest(r.I5n);
+      t && t.UpdateState(r.w6n, 0);
     }
   }),
-  (QuestNewController.Goo = (e) => {
+  (QuestNewController.Bro = (e) => {
     var t,
       r,
-      o = QuestNewController.Woo(),
+      o = QuestNewController.Fro(),
       s = ModelManager_1.ModelManager.QuestNewModel;
-    for (const n of e.Xkn) {
+    for (const a of e.I5n) {
       Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Quest", 19, "下发可接任务", ["任务id", n]);
-      let e = s.GetQuest(n);
+        Log_1.Log.Info("Quest", 19, "下发可接任务", ["任务id", a]);
+      let e = s.GetQuest(a);
       e ||
-        ((t = s.GetQuestConfig(n)) &&
+        ((t = s.GetQuestConfig(a)) &&
           (t = t.AddInteractOption) &&
           (t &&
-          o !== n &&
+          o !== a &&
           ((t = ModelManager_1.ModelManager.WorldMapModel.GetEntityAreaId(
             t.EntityId,
           )),
@@ -165,115 +187,115 @@ class QuestNewController extends ControllerWithAssistantBase_1.ControllerWithAss
           t) &&
           r &&
           t !== r
-            ? s.AddCanAcceptQuest(n)
-            : (e = s.AddQuest(n))?.UpdateState(
-                Protocol_1.Aki.Protocol.kMs.WMs,
+            ? s.AddCanAcceptQuest(a)
+            : (e = s.AddQuest(a))?.UpdateState(
+                Protocol_1.Aki.Protocol.tTs.hTs,
                 0,
               )));
     }
   }),
-  (QuestNewController.joo = () => {
+  (QuestNewController.kro = () => {
     var e = ModelManager_1.ModelManager.AreaModel.GetCurrentAreaId(),
       t = ConfigManager_1.ConfigManager.AreaConfig?.GetLevelOneAreaId(e);
     if (t) {
       var r,
         o,
-        s = QuestNewController.Woo(),
-        n = ModelManager_1.ModelManager.QuestNewModel;
-      for ([r, o] of n.GetCanAcceptQuest())
+        s = QuestNewController.Fro(),
+        a = ModelManager_1.ModelManager.QuestNewModel;
+      for ([r, o] of a.GetCanAcceptQuest())
         if (o) {
-          var a = n.GetQuestConfig(r);
-          if (a) {
-            a = a.AddInteractOption;
-            if (a) {
-              a = ModelManager_1.ModelManager.WorldMapModel.GetEntityAreaId(
-                a.EntityId,
+          var n = a.GetQuestConfig(r);
+          if (n) {
+            n = n.AddInteractOption;
+            if (n) {
+              n = ModelManager_1.ModelManager.WorldMapModel.GetEntityAreaId(
+                n.EntityId,
               );
               if (
                 ConfigManager_1.ConfigManager.AreaConfig?.GetLevelOneAreaId(
-                  a,
+                  n,
                 ) === t ||
                 s === r
               ) {
-                if (n.GetQuest(r)) return;
-                n.AddQuest(r)?.UpdateState(Protocol_1.Aki.Protocol.kMs.WMs, 0);
-              } else n.RemoveQuest(r);
+                if (a.GetQuest(r)) return;
+                a.AddQuest(r)?.UpdateState(Protocol_1.Aki.Protocol.tTs.hTs, 0);
+              } else a.RemoveQuest(r);
             }
           }
         }
     }
   }),
-  (QuestNewController.Noo = (e) => {
-    for (const t of e.Xkn)
+  (QuestNewController.bro = (e) => {
+    for (const t of e.I5n)
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("Quest", 19, "下发提前显示的任务", ["任务id", t]),
         ModelManager_1.ModelManager.QuestNewModel.AddQuest(t);
   }),
-  (QuestNewController.koo = (e) => {
-    for (const t of e.Xkn)
+  (QuestNewController.Gro = (e) => {
+    for (const t of e.I5n)
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("Quest", 19, "上线下发已完成任务", ["任务id", t]),
         ModelManager_1.ModelManager.QuestNewModel.AddFinishedQuest(t);
   }),
-  (QuestNewController.Ooo = (e) => {
+  (QuestNewController.qro = (e) => {
     switch (
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Quest",
           19,
           "任务状态更新",
-          ["任务Id", e.Xkn],
-          ["StateId(0-不可接,1-可接,2-进行中,3-已完成,4-已删除)", e.ckn],
+          ["任务Id", e.I5n],
+          ["StateId(0-不可接,1-可接,2-进行中,3-已完成,4-已删除)", e.F4n],
         ),
-      e.ckn)
+      e.F4n)
     ) {
-      case Protocol_1.Aki.Protocol.kMs.Proto_InActive:
-      case Protocol_1.Aki.Protocol.kMs.WMs:
-      case Protocol_1.Aki.Protocol.kMs.Gms:
-        var t = ModelManager_1.ModelManager.QuestNewModel.AddQuest(e.Xkn);
+      case Protocol_1.Aki.Protocol.tTs.Proto_InActive:
+      case Protocol_1.Aki.Protocol.tTs.hTs:
+      case Protocol_1.Aki.Protocol.tTs.zfs:
+        var t = ModelManager_1.ModelManager.QuestNewModel.AddQuest(e.I5n);
         t
-          ? t.UpdateState(e.ckn, 1)
+          ? t.UpdateState(e.F4n, 1)
           : Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Quest",
               19,
               "任务状态更新时：任务不存在",
-              ["任务Id", e.Xkn],
-              ["StateId(0-不可接,1-可接,2-进行中,3-已完成,4-已删除)", e.ckn],
+              ["任务Id", e.I5n],
+              ["StateId(0-不可接,1-可接,2-进行中,3-已完成,4-已删除)", e.F4n],
             );
         break;
-      case Protocol_1.Aki.Protocol.kMs.Proto_Finish:
-        ModelManager_1.ModelManager.QuestNewModel.AddFinishedQuest(e.Xkn);
-        t = ModelManager_1.ModelManager.QuestNewModel.GetQuest(e.Xkn);
+      case Protocol_1.Aki.Protocol.tTs.Proto_Finish:
+        ModelManager_1.ModelManager.QuestNewModel.AddFinishedQuest(e.I5n);
+        t = ModelManager_1.ModelManager.QuestNewModel.GetQuest(e.I5n);
         t
-          ? t.UpdateState(e.ckn, 1)
+          ? t.UpdateState(e.F4n, 1)
           : Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Quest",
               19,
               "任务状态更新时：任务不存在",
-              ["任务Id", e.Xkn],
-              ["StateId(0-不可接,1-可接,2-进行中,3-已完成,4-已删除)", e.ckn],
+              ["任务Id", e.I5n],
+              ["StateId(0-不可接,1-可接,2-进行中,3-已完成,4-已删除)", e.F4n],
             );
         break;
-      case Protocol_1.Aki.Protocol.kMs.Proto_Delete:
-        t = ModelManager_1.ModelManager.QuestNewModel.GetQuest(e.Xkn);
+      case Protocol_1.Aki.Protocol.tTs.Proto_Delete:
+        t = ModelManager_1.ModelManager.QuestNewModel.GetQuest(e.I5n);
         t
-          ? (ModelManager_1.ModelManager.QuestNewModel.RemoveQuest(e.Xkn),
-            t.UpdateState(e.ckn, 1))
+          ? (ModelManager_1.ModelManager.QuestNewModel.RemoveQuest(e.I5n),
+            t.UpdateState(e.F4n, 1))
           : Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Quest",
               19,
               "任务状态更新时：任务不存在",
-              ["任务Id", e.Xkn],
-              ["StateId(0-不可接,1-可接,2-进行中,3-已完成,4-已删除)", e.ckn],
+              ["任务Id", e.I5n],
+              ["StateId(0-不可接,1-可接,2-进行中,3-已完成,4-已删除)", e.F4n],
             );
     }
   }),
-  (QuestNewController.V4e = (e) =>
+  (QuestNewController.iVe = (e) =>
     ModelManager_1.ModelManager.FunctionModel.IsOpen(10004)),
-  (QuestNewController.DEe = (e, t, r) => {
+  (QuestNewController.DSe = (e, t, r) => {
     var o = ModelManager_1.ModelManager.QuestNewModel.GetQuest(e);
     if (o) {
       o = ConfigManager_1.ConfigManager.QuestNewConfig.GetQuestTypeConfig(
@@ -281,19 +303,26 @@ class QuestNewController extends ControllerWithAssistantBase_1.ControllerWithAss
       );
       if (o && o.NeedRedDot && 1 === r)
         switch (t) {
-          case Protocol_1.Aki.Protocol.kMs.Gms:
+          case Protocol_1.Aki.Protocol.tTs.zfs:
             QuestNewController.RedDotRequest(e, 1);
             break;
-          case Protocol_1.Aki.Protocol.kMs.Proto_Finish:
-          case Protocol_1.Aki.Protocol.kMs.Proto_Delete:
+          case Protocol_1.Aki.Protocol.tTs.Proto_Finish:
+          case Protocol_1.Aki.Protocol.tTs.Proto_Delete:
             QuestNewController.RedDotRequest(e, 0);
         }
     }
   }),
-  (QuestNewController.Voo = (e) => {
+  (QuestNewController.Nro = (e) => {
     if (ModelManager_1.ModelManager.GeneralLogicTreeModel.IsWakeUp)
-      for (const t of e.Xkn)
+      for (const t of e.I5n)
         ModelManager_1.ModelManager.QuestNewModel.SetQuestRedDot(t, !0);
-    else _a.Koo = e;
+    else _a.Vro = e;
+  }),
+  (QuestNewController.qSa = (e) => {
+    for (const t of e.e2s)
+      if (2 === ModelManager_1.ModelManager.QuestNewModel?.GetQuestState(t)) {
+        _a.RequestTrackQuest(t, !0, 2, 0);
+        break;
+      }
   });
 //# sourceMappingURL=QuestController.js.map

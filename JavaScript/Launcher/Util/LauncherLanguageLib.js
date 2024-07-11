@@ -9,16 +9,8 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const UE = require("ue"),
   LauncherConfigLib_1 = require("../Define/LauncherConfigLib"),
   LauncherLog_1 = require("./LauncherLog"),
-  LauncherStorageLib_1 = require("./LauncherStorageLib");
-function objToMap(e) {
-  var a = new Map();
-  for (const L in e) {
-    var n = Number(L);
-    isNaN(n) || a.set(n, e[L]);
-  }
-  return a;
-}
-const TEXTLANGUAGE = 51,
+  LauncherStorageLib_1 = require("./LauncherStorageLib"),
+  TEXTLANGUAGE = 51,
   VOICELANGUAGE = 52,
   CHS = "zh-Hans",
   CHT = "zh-Hant",
@@ -87,11 +79,11 @@ const languageList = [
     ])),
     new Map()),
   languageCodeMap = new Map();
-for (const h of languageList)
-  languageTypeMap.set(h.LanguageType, h),
-    languageCodeMap.set(h.LanguageCode, h);
+for (const d of languageList)
+  languageTypeMap.set(d.LanguageType, d),
+    languageCodeMap.set(d.LanguageCode, d);
 class LauncherLanguageLib {
-  static set Kyr(e) {
+  static set HIr(e) {
     (LauncherLanguageLib.T8 = e),
       UE.LGUIFontData.SetAllFontCurrentCulture(
         exports.languageCultureMap.get(e),
@@ -104,10 +96,9 @@ class LauncherLanguageLib {
     if (!this.gU) {
       this.gU = !0;
       var n = LauncherStorageLib_1.LauncherStorageLib.GetGlobal(
-          LauncherStorageLib_1.ELauncherStorageGlobalKey.PlayMenuInfo,
-          "",
+          LauncherStorageLib_1.ELauncherStorageGlobalKey.MenuData,
         ),
-        L = n && "" !== n;
+        L = void 0 !== n;
       if (
         L ||
         a ||
@@ -115,7 +106,7 @@ class LauncherLanguageLib {
       ) {
         let e = void 0;
         L
-          ? (e = objToMap(JSON.parse(n)))
+          ? (e = n)
           : ((e = new Map()),
             (a =
               LauncherConfigLib_1.LauncherConfigLib.GetMenuConfigByFunctionId(
@@ -130,12 +121,12 @@ class LauncherLanguageLib {
         (n = e.get(TEXTLANGUAGE)),
           (a = LauncherLanguageLib.GetLanguageDefineByType(n)),
           (L =
-            ((LauncherLanguageLib.Kyr = a
+            ((LauncherLanguageLib.HIr = a
               ? a.LanguageCode
               : exports.ENGLISH_ISO639_1),
             e.get(VOICELANGUAGE))),
           (n = LauncherLanguageLib.GetLanguageDefineByType(L));
-        LauncherLanguageLib.Qyr = n ? n.AudioCode : exports.ENGLISH_ISO639_1;
+        LauncherLanguageLib.jIr = n ? n.AudioCode : exports.ENGLISH_ISO639_1;
       } else {
         var a = UE.KismetSystemLibrary.GetDefaultLanguage(),
           L = this.GetDefaultCulture(a),
@@ -157,10 +148,10 @@ class LauncherLanguageLib {
             ),
             LauncherLanguageLib.GetLanguageDefineByCode(n)));
         L
-          ? ((LauncherLanguageLib.Kyr = L.LanguageCode),
-            (LauncherLanguageLib.Qyr = L.AudioCode))
-          : ((LauncherLanguageLib.Kyr = exports.ENGLISH_ISO639_1),
-            (LauncherLanguageLib.Qyr = CHS_AUDIO));
+          ? ((LauncherLanguageLib.HIr = L.LanguageCode),
+            (LauncherLanguageLib.jIr = L.AudioCode))
+          : ((LauncherLanguageLib.HIr = exports.ENGLISH_ISO639_1),
+            (LauncherLanguageLib.jIr = CHS_AUDIO));
       }
     }
   }
@@ -168,7 +159,7 @@ class LauncherLanguageLib {
     return this.T8;
   }
   static GetPackageAudioLanguage() {
-    return this.Qyr;
+    return this.jIr;
   }
   static GetAllLanguageDefines() {
     return languageList;
@@ -181,6 +172,6 @@ class LauncherLanguageLib {
   }
 }
 ((exports.LauncherLanguageLib = LauncherLanguageLib).T8 = void 0),
-  (LauncherLanguageLib.Qyr = void 0),
+  (LauncherLanguageLib.jIr = void 0),
   (LauncherLanguageLib.gU = !1);
 //# sourceMappingURL=LauncherLanguageLib.js.map

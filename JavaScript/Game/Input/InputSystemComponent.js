@@ -106,6 +106,7 @@ class InputSystemComponent {
   }
   HandleHoldEvent(e, t) {}
   HandleInputAxis(e, t) {}
+  ClearInputAxis(e) {}
   PreProcessInput(e, t) {}
   PostProcessInput(e, t) {}
 }

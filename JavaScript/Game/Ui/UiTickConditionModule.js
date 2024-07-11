@@ -6,31 +6,22 @@ const Log_1 = require("../../Core/Common/Log"),
 class UiTickConditionModule {
   constructor(i) {
     (this.HDe = void 0),
-      (this.vJo = void 0),
-      (this.yJt = void 0),
-      (this.lCr = 0),
-      (this.Xje = TickSystem_1.TickSystem.InvalidId),
+      (this.gzo = void 0),
+      (this.yzt = void 0),
+      (this.sgr = 0),
+      (this.sKe = TickSystem_1.TickSystem.InvalidId),
       (this.r6 = (i) => {
-        this.yJt?.(i)
-          ? (Log_1.Log.CheckInfo() &&
-              Log_1.Log.Info(
-                "UiTickConditionModule",
-                11,
-                "条件检测成功,执行停止和完成回调",
-                ["标识", this.czo],
-              ),
-            this.HDe?.(this.lCr),
-            this.vJo?.(this.lCr),
-            this._Cr())
-          : (this.lCr += i);
+        this.yzt?.(i)
+          ? (this.HDe?.(this.sgr), this.gzo?.(this.sgr), this.agr())
+          : (this.sgr += i);
       }),
-      (this.czo = i);
+      (this.lZo = i);
   }
   StartTick(i, t, s) {
-    (this.yJt = i),
-      (this.vJo = t),
+    (this.yzt = i),
+      (this.gzo = t),
       (this.HDe = s),
-      (this.Xje = TickSystem_1.TickSystem.Add(
+      (this.sKe = TickSystem_1.TickSystem.Add(
         this.r6,
         "UiTickConditionModule",
         0,
@@ -38,27 +29,27 @@ class UiTickConditionModule {
       ).Id);
   }
   ManualStopTick() {
-    this.vJo &&
+    this.gzo &&
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "UiTickConditionModule",
           11,
           "手动停止Tick,执行停止回调",
-          ["标识", this.czo],
+          ["标识", this.lZo],
         ),
-      this.vJo?.(this.lCr),
-      this._Cr());
+      this.gzo?.(this.sgr),
+      this.agr());
   }
-  _Cr() {
-    this._gt(),
-      (this.lCr = 0),
-      (this.yJt = void 0),
-      (this.vJo = void 0),
+  agr() {
+    this.S0t(),
+      (this.sgr = 0),
+      (this.yzt = void 0),
+      (this.gzo = void 0),
       (this.HDe = void 0);
   }
-  _gt() {
-    this.Xje !== TickSystem_1.TickSystem.InvalidId &&
-      TickSystem_1.TickSystem.Remove(this.Xje);
+  S0t() {
+    this.sKe !== TickSystem_1.TickSystem.InvalidId &&
+      TickSystem_1.TickSystem.Remove(this.sKe);
   }
 }
 exports.UiTickConditionModule = UiTickConditionModule;

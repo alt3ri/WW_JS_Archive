@@ -60,8 +60,8 @@ let BaseAnimationComponent = class BaseAnimationComponent extends EntityComponen
       (this.SightTargetItemId = 0),
       (this.SightTargetPoint = void 0),
       (this.EnableSightDirectInternal = !1),
-      (this.z2r = [...xAngleLimits]),
-      (this.Z2r = [...yAngleLimits]),
+      (this.R2r = [...xAngleLimits]),
+      (this.U2r = [...yAngleLimits]),
       (this.SightDirect = Vector_1.Vector.Create()),
       (this.LookAtBlendSpaceVector2D = Vector2D_1.Vector2D.Create()),
       (this.EnableBlendSpaceLookAtInner = !1),
@@ -96,20 +96,20 @@ let BaseAnimationComponent = class BaseAnimationComponent extends EntityComponen
     return this.SpecialAnimInstanceInternal;
   }
   OnInit() {
-    return (this.z2r = [...xAngleLimits]), (this.Z2r = [...yAngleLimits]), !0;
+    return (this.R2r = [...xAngleLimits]), (this.U2r = [...yAngleLimits]), !0;
   }
   SetSightLimit(t, e) {
-    (this.z2r = [
+    (this.R2r = [
       t[0] * MathUtils_1.MathUtils.DegToRad,
       t[1] * MathUtils_1.MathUtils.DegToRad,
     ]),
-      (this.Z2r = [
+      (this.U2r = [
         e[0] * MathUtils_1.MathUtils.DegToRad,
         e[1] * MathUtils_1.MathUtils.DegToRad,
       ]);
   }
   ResetSightLimit() {
-    (this.z2r = [...xAngleLimits]), (this.Z2r = [...yAngleLimits]);
+    (this.R2r = [...xAngleLimits]), (this.U2r = [...yAngleLimits]);
   }
   SetSightTargetItem(t) {
     (this.SightTargetPoint = void 0),
@@ -154,7 +154,7 @@ let BaseAnimationComponent = class BaseAnimationComponent extends EntityComponen
       this.ActorComp?.Valid &&
       1 !== this.Mesh.AnimationMode &&
       this.ActorComp.CreatureData.GetEntityType() ===
-        Protocol_1.Aki.Protocol.HBs.Proto_Npc
+        Protocol_1.Aki.Protocol.wks.Proto_Npc
     ) {
       var t = this.MainAnimInstance;
       if (t?.IsValid()) {
@@ -184,7 +184,7 @@ let BaseAnimationComponent = class BaseAnimationComponent extends EntityComponen
     }
   }
   GetAnimInstanceFromMesh() {
-    this.cBr(),
+    this.Vwr(),
       (this.MainAnimInstanceInternal =
         this.Mesh.GetLinkedAnimGraphInstanceByTag(
           CharacterNameDefines_1.CharacterNameDefines.ABP_BASE,
@@ -202,11 +202,11 @@ let BaseAnimationComponent = class BaseAnimationComponent extends EntityComponen
       this.SpecialAnimInstanceInternal &&
         this.SpecialAnimInstanceInternal instanceof UE.KuroAnimInstance &&
         this.SpecialAnimInstanceInternal.OnComponentStart(),
-      this.eFr();
+      this.A2r();
   }
   ClampSightDirect(t, e) {
     var i = t.Z / t.Size(),
-      s = MathUtils_1.MathUtils.Clamp(Math.asin(i), this.Z2r[0], this.Z2r[1]),
+      s = MathUtils_1.MathUtils.Clamp(Math.asin(i), this.U2r[0], this.U2r[1]),
       i = Math.sin(s),
       s = Math.cos(s),
       a = t.Y,
@@ -216,15 +216,15 @@ let BaseAnimationComponent = class BaseAnimationComponent extends EntityComponen
         Math.abs(t) > MathUtils_1.MathUtils.KindaSmallNumber
           ? MathUtils_1.MathUtils.Clamp(
               Math.atan2(t, a),
-              this.z2r[0],
-              this.z2r[1],
+              this.R2r[0],
+              this.R2r[1],
             )
           : 0,
       a = Math.cos(r) * s,
       t = Math.sin(r) * s;
     (e.X = -t), (e.Y = a), (e.Z = i);
   }
-  eFr() {
+  A2r() {
     var e = this.ActorComp.Actor.K2_GetComponentsByClass(
       UE.SkeletalMeshComponent.StaticClass(),
     );
@@ -244,7 +244,7 @@ let BaseAnimationComponent = class BaseAnimationComponent extends EntityComponen
         i.OnComponentStart();
     }
   }
-  cBr() {
+  Vwr() {
     this.Actor.Mesh.GetLinkedAnimGraphInstanceByTag(
       FNameUtil_1.FNameUtil.NONE,
     ) &&
@@ -391,11 +391,6 @@ let BaseAnimationComponent = class BaseAnimationComponent extends EntityComponen
   GetAnimDefaultTickOption() {
     return this.DefaultVisibilityBasedAnimTickOption;
   }
-  ChangeAnimDefaultTickOption(t) {
-    this.DefaultVisibilityBasedAnimTickOption !== t &&
-      ((this.DefaultVisibilityBasedAnimTickOption = t),
-      this.RefreshAnimOptimization());
-  }
   StartForceDisableAnimOptimization(t, e = !0) {
     return this.ForceDisableAnimOptimizationSet.has(t)
       ? (Log_1.Log.CheckWarn() &&
@@ -424,17 +419,17 @@ let BaseAnimationComponent = class BaseAnimationComponent extends EntityComponen
       this.RefreshAnimOptimization());
   }
   RefreshAnimOptimization() {
-    var e = this.Entity.GetComponent(158)?.IsInFighting ?? !1,
-      i = 0 < this.ForceDisableAnimOptimizationSet.size,
-      s = i || e,
-      a = this.Actor.K2_GetComponentsByClass(
+    var t = this.Entity.GetComponent(160)?.IsInFighting ?? !1,
+      e = 0 < this.ForceDisableAnimOptimizationSet.size,
+      i = e || t,
+      s = this.Actor.K2_GetComponentsByClass(
         UE.SkeletalMeshComponent.StaticClass(),
-      );
-    for (let t = 0; t < a.Num(); t++) {
-      var r = a.Get(t);
-      (r.bEnableUpdateRateOptimizations = !s),
-        (r.VisibilityBasedAnimTickOption =
-          this.RefreshVisibilityBasedAnimTickOption(i, e));
+      ),
+      a = this.RefreshVisibilityBasedAnimTickOption(e, t);
+    for (let t = 0; t < s.Num(); t++) {
+      var r = s.Get(t);
+      (r.bEnableUpdateRateOptimizations = !i),
+        (r.VisibilityBasedAnimTickOption = a);
     }
   }
   RefreshVisibilityBasedAnimTickOption(t, e) {
@@ -453,7 +448,7 @@ let BaseAnimationComponent = class BaseAnimationComponent extends EntityComponen
   }
 };
 (BaseAnimationComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(35)],
+  [(0, RegisterComponent_1.RegisterComponent)(36)],
   BaseAnimationComponent,
 )),
   (exports.BaseAnimationComponent = BaseAnimationComponent);

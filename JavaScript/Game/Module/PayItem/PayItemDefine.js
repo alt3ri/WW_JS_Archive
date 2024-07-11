@@ -9,8 +9,8 @@ const PayItem_1 = require("../../../Core/Define/Config/PayItem"),
   PayShopItemBase_1 = require("../PayShop/PayShopTab/TabItem/PayShopItemBase");
 class PayItemData {
   constructor() {
-    (this.XNi = void 0),
-      (this.$Ni = 0),
+    (this.XOi = void 0),
+      (this.$Oi = 0),
       (this.Amount = ""),
       (this.ProductId = ""),
       (this.PayItemId = 0),
@@ -22,27 +22,27 @@ class PayItemData {
       (this.StageImage = "");
   }
   Phrase(t) {
-    (this.$Ni = t.xPs ?? 0),
-      (this.Amount = t.kPs),
-      (this.ProductId = t.OPs),
-      (this.PayItemId = t.Ekn ?? 0),
-      (this.ItemId = t.G3n ?? 0),
-      (this.ItemCount = t.g5n ?? 0),
-      (this.BonusItemCount = t.bPs ?? 0),
-      (this.SpecialBonusItemCount = t.BPs ?? 0),
-      (this.StageImage = t.GPs ?? ""),
+    (this.$Oi = t.Zbs ?? 0),
+      (this.Amount = t.k6n),
+      (this.ProductId = t.oBs),
+      (this.PayItemId = t.J4n ?? 0),
+      (this.ItemId = t.f8n ?? 0),
+      (this.ItemCount = t.YVn ?? 0),
+      (this.BonusItemCount = t.eBs ?? 0),
+      (this.SpecialBonusItemCount = t.tBs ?? 0),
+      (this.StageImage = t.rBs ?? ""),
       ModelManager_1.ModelManager.RechargeModel.SetRechargeInfo(
-        this.$Ni,
+        this.$Oi,
         this.Amount.toString(),
         this.ProductId,
       ),
       t instanceof PayItem_1.PayItem ||
-        (this.CanSpecialBonus = t.qPs ?? void 0),
-      (this.XNi = new PayShopItemBase_1.PayShopItemBaseSt()),
-      this.XNi.PhrasePromPayItemData(this);
+        (this.CanSpecialBonus = t.iBs ?? void 0),
+      (this.XOi = new PayShopItemBase_1.PayShopItemBaseSt()),
+      this.XOi.PhrasePromPayItemData(this);
   }
   ConvertPayItemDataToPayShopItemBaseSt() {
-    return this.XNi.Refresh(this), this.XNi;
+    return this.XOi.Refresh(this), this.XOi;
   }
   GetPayItemShowName() {
     var t = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
@@ -59,10 +59,10 @@ class PayItemData {
   }
   GetDirectPriceText() {
     var t = ModelManager_1.ModelManager.KuroSdkModel?.GetQueryProductShowPrice(
-      this.$Ni.toString(),
+      this.$Oi.toString(),
     );
     return (
-      t || ConfigManager_1.ConfigManager.PayItemConfig.GetPayShow(this.$Ni)
+      t || ConfigManager_1.ConfigManager.PayItemConfig.GetPayShow(this.$Oi)
     );
   }
 }

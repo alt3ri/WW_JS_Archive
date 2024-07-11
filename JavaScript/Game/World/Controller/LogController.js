@@ -35,43 +35,43 @@ class DebugInfo extends Json_1.JsonObjBase {
 }
 class LogController extends ControllerBase_1.ControllerBase {
   static OnInit() {
-    return Net_1.Net.Register(27316, this.oTn), !0;
+    return Net_1.Net.Register(27260, this.SLn), !0;
   }
   static OnClear() {
-    return Net_1.Net.UnRegister(27316), !0;
+    return Net_1.Net.UnRegister(27260), !0;
   }
-  static O0r(o) {
-    LogController.k0r === TickSystem_1.TickSystem.InvalidId &&
-      (LogController.k0r = TickSystem_1.TickSystem.Add(
-        LogController.F0r,
+  static qfr(o) {
+    LogController.Gfr === TickSystem_1.TickSystem.InvalidId &&
+      (LogController.Gfr = TickSystem_1.TickSystem.Add(
+        LogController.Nfr,
         "LogReportFraming",
         2,
       ).Id),
-      this.V0r.push(o);
+      this.Ofr.push(o);
   }
   static LogBattleStartPush(o, e = !1) {
     LOG_SWITCH &&
       Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug("Battle", 29, "日志上报-开始战斗日志", ["内容", o]),
-      e ? this.O0r(o) : LogReportController_1.LogReportController.LogReport(o);
+      e ? this.qfr(o) : LogReportController_1.LogReportController.LogReport(o);
   }
   static LogBattleEndPush(o, e = !1) {
     LOG_SWITCH &&
       Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug("Battle", 29, "日志上报-战斗结算日志", ["内容", o]),
-      e ? this.O0r(o) : LogReportController_1.LogReportController.LogReport(o);
+      e ? this.qfr(o) : LogReportController_1.LogReportController.LogReport(o);
   }
   static LogSingleCharacterStatusPush(o, e = !1) {
     LOG_SWITCH &&
       Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug("Battle", 29, "日志上报-单个角色日志", ["内容", o]),
-      e ? this.O0r(o) : LogReportController_1.LogReportController.LogReport(o);
+      e ? this.qfr(o) : LogReportController_1.LogReportController.LogReport(o);
   }
   static LogSingleMonsterStatusPush(o, e = !1) {
     LOG_SWITCH &&
       Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug("Battle", 29, "日志上报-单个怪物日志", ["内容", o]),
-      e ? this.O0r(o) : LogReportController_1.LogReportController.LogReport(o);
+      e ? this.qfr(o) : LogReportController_1.LogReportController.LogReport(o);
   }
   static LogCharacterDeathPush(o, e, t = !1) {
     var r,
@@ -92,7 +92,7 @@ class LogController extends ControllerBase_1.ControllerBase {
               l,
             ]),
           t
-            ? this.O0r(l)
+            ? this.qfr(l)
             : LogReportController_1.LogReportController.LogReport(l))
         : Log_1.Log.CheckError() &&
           Log_1.Log.Error(
@@ -110,7 +110,7 @@ class LogController extends ControllerBase_1.ControllerBase {
           "内容",
           o.s_reports,
         ]),
-      t ? this.O0r(o) : LogReportController_1.LogReportController.LogReport(o);
+      t ? this.qfr(o) : LogReportController_1.LogReportController.LogReport(o);
   }
   static LogMonsterSkillReportPush(o, e, t = !1) {
     (o.s_reports = Json_1.Json.Stringify(e)),
@@ -120,14 +120,14 @@ class LogController extends ControllerBase_1.ControllerBase {
           "内容",
           o.s_reports,
         ]),
-      t ? this.O0r(o) : LogReportController_1.LogReportController.LogReport(o);
+      t ? this.qfr(o) : LogReportController_1.LogReportController.LogReport(o);
   }
   static LogDoubleBallReport(o, e, t = !1) {
     (o.s_reports = Json_1.Json.Stringify(Array.from(e.values()))),
       LOG_SWITCH &&
         Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("Battle", 29, "日志上报-协奏作用日志", ["内容", o]),
-      t ? this.O0r(o) : LogReportController_1.LogReportController.LogReport(o);
+      t ? this.qfr(o) : LogReportController_1.LogReportController.LogReport(o);
   }
   static LogTriggerBuffDamagePush(o) {
     var e = new LogReportDefine_1.TriggerBuffDamageRecord();
@@ -166,7 +166,7 @@ class LogController extends ControllerBase_1.ControllerBase {
   }
   static OutputDebugInfo() {
     var o = new DebugInfo(
-      Protocol_1.Aki.Protocol.sOs[
+      Protocol_1.Aki.Protocol.XFs[
         ModelManager_1.ModelManager.GameModeModel.InstanceType
       ],
       ModelManager_1.ModelManager.OnlineModel.GetIsMyTeam(),
@@ -189,9 +189,9 @@ class LogController extends ControllerBase_1.ControllerBase {
       FormationDataController_1.FormationDataController.GetPlayerEntity(
         ModelManager_1.ModelManager.CreatureModel.GetPlayerId(),
       )
-        .GetComponent(180)
+        .GetComponent(183)
         .GetAllBuffs()
-        .map((o) => o.Id),
+        .map((o) => String(o.Id)),
       CharacterGasDebugComponent_1.CharacterGasDebugComponent.GetFormationAttributeDebugStrings()
         .replace(/\n/g, ",")
         .replace(/\s/g, ""),
@@ -211,12 +211,12 @@ class LogController extends ControllerBase_1.ControllerBase {
             t,
             r,
             l = o.Entity?.GetComponent(3),
-            a = o.Entity?.GetComponent(187);
+            a = o.Entity?.GetComponent(192);
           l &&
             a &&
             ((e = o.Entity?.GetComponent(0)),
-            (t = o.Entity?.GetComponent(185)),
-            (r = o.Entity?.GetComponent(89)),
+            (t = o.Entity?.GetComponent(188)),
+            (r = o.Entity?.GetComponent(91)),
             (g +=
               `
 ***********
@@ -239,33 +239,33 @@ Tag信息: ` +
     );
   }
   static RequestOutputDebugInfo() {
-    var o = new Protocol_1.Aki.Protocol.Debug.NXn();
-    (o.X7n = LogController.OutputDebugInfo()),
-      Net_1.Net.Call(20558, o, (o) => {
+    var o = new Protocol_1.Aki.Protocol.Debug.bZn();
+    (o.AKn = LogController.OutputDebugInfo()),
+      Net_1.Net.Call(23450, o, (o) => {
         o &&
           Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("Log", 38, "[Debug]服务器端战斗状态信息打印");
       });
   }
 }
-((exports.LogController = LogController).k0r =
+((exports.LogController = LogController).Gfr =
   TickSystem_1.TickSystem.InvalidId),
-  (LogController.V0r = new Array()),
-  (LogController.H0r = FRAMING_LOG_NUM),
-  (LogController.j0r = void 0),
-  (LogController.F0r = () => {
-    var o = LogController.H0r;
+  (LogController.Ofr = new Array()),
+  (LogController.kfr = FRAMING_LOG_NUM),
+  (LogController.Ffr = void 0),
+  (LogController.Nfr = () => {
+    var o = LogController.kfr;
     let e = 0,
-      t = LogController.V0r.shift();
+      t = LogController.Ofr.shift();
     for (; e < o && t; )
       LogReportController_1.LogReportController.LogReport(t),
         (e += 1),
-        (t = LogController.V0r.shift());
-    0 === LogController.V0r.length &&
-      (TickSystem_1.TickSystem.Remove(LogController.k0r),
-      (LogController.k0r = TickSystem_1.TickSystem.InvalidId));
+        (t = LogController.Ofr.shift());
+    0 === LogController.Ofr.length &&
+      (TickSystem_1.TickSystem.Remove(LogController.Gfr),
+      (LogController.Gfr = TickSystem_1.TickSystem.InvalidId));
   }),
-  (LogController.oTn = (o) => {
+  (LogController.SLn = (o) => {
     LogController.RequestOutputDebugInfo();
   });
 //# sourceMappingURL=LogController.js.map

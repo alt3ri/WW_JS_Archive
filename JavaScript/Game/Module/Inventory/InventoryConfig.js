@@ -26,10 +26,10 @@ const Log_1 = require("../../../Core/Common/Log"),
 class InventoryConfig extends ConfigBase_1.ConfigBase {
   constructor() {
     super(...arguments),
-      (this.Sui = new Map()),
-      (this.Eui = new Map()),
-      (this.yui = new Map()),
-      (this.$0t = new ItemConfig_1.ItemConfig());
+      (this.Eci = new Map()),
+      (this.Sci = new Map()),
+      (this.yci = new Map()),
+      (this.apt = new ItemConfig_1.ItemConfig());
   }
   GetAllMainTypeConfig() {
     return ItemMainTypeAll_1.configItemMainTypeAll.GetConfigList();
@@ -52,7 +52,7 @@ class InventoryConfig extends ConfigBase_1.ConfigBase {
       ? ((n = new ItemConfig_1.ItemConfig()),
         this.GetItemConfigDataRef(e, n),
         n)
-      : (this.GetItemConfigDataRef(e, this.$0t), this.$0t);
+      : (this.GetItemConfigDataRef(e, this.apt), this.apt);
   }
   GetItemConfigDataRef(e, n) {
     if (!n) return !1;
@@ -158,8 +158,8 @@ class InventoryConfig extends ConfigBase_1.ConfigBase {
     return ItemShowTypeById_1.configItemShowTypeById.GetConfig(e);
   }
   OnClear() {
-    return this.Sui.clear(), this.Eui.clear(), this.yui.clear(), !0;
+    return this.Eci.clear(), this.Sci.clear(), this.yci.clear(), !0;
   }
 }
-(exports.InventoryConfig = InventoryConfig).Iui = void 0;
+(exports.InventoryConfig = InventoryConfig).Ici = void 0;
 //# sourceMappingURL=InventoryConfig.js.map

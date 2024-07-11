@@ -10,7 +10,7 @@ class LordGymUnLockItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(),
       (this.bPe = void 0),
-      (this.KIt = (e) => {
+      (this.JTt = (e) => {
         "Start" === e && this.bPe.PlayLevelSequenceByName("Close"),
           "Close" === e && this.SetActive(!1);
       });
@@ -20,7 +20,7 @@ class LordGymUnLockItem extends UiPanelBase_1.UiPanelBase {
   }
   OnStart() {
     (this.bPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem)),
-      this.bPe.BindSequenceCloseEvent(this.KIt);
+      this.bPe.BindSequenceCloseEvent(this.JTt);
   }
   RefreshLord(e) {
     e = ConfigManager_1.ConfigManager.LordGymConfig.GetLordGymConfig(e);

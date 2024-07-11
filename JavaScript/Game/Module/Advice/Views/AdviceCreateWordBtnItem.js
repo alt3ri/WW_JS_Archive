@@ -10,12 +10,12 @@ const UE = require("ue"),
 class AdviceCreateWordBtnItem extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
-      (this.S9 = 0),
+      (this.E9 = 0),
       (this.Xy = 0),
       (this.YP = () => {
-        0 === this.S9
-          ? (this.b9e(), UiManager_1.UiManager.OpenView("AdviceSortWordView"))
-          : (this.w9e(), UiManager_1.UiManager.OpenView("AdviceWordView"));
+        0 === this.E9
+          ? (this.$7e(), UiManager_1.UiManager.OpenView("AdviceSortWordView"))
+          : (this.Q7e(), UiManager_1.UiManager.OpenView("AdviceWordView"));
       }),
       this.CreateThenShowByActor(e.GetOwner());
   }
@@ -27,12 +27,12 @@ class AdviceCreateWordBtnItem extends UiPanelBase_1.UiPanelBase {
       (this.BtnBindInfo = [[0, this.YP]]);
   }
   SetType(e) {
-    this.S9 = e;
+    this.E9 = e;
   }
   SetIndex(e) {
     this.Xy = e;
   }
-  b9e() {
+  $7e() {
     var e,
       i = ModelManager_1.ModelManager.AdviceModel,
       r = i.CurrentWordMap.get(this.Xy);
@@ -47,17 +47,17 @@ class AdviceCreateWordBtnItem extends UiPanelBase_1.UiPanelBase {
         (i.CurrentSelectSortWordId = -1)),
       (i.CurrentSelectWordIndex = this.Xy);
   }
-  w9e() {
+  Q7e() {
     var e = ModelManager_1.ModelManager.AdviceModel;
     (e.CurrentChangeWordType = 1),
       (e.CurrentSelectWordId = e.CurrentConjunctionId);
   }
   RefreshView() {
-    this.q9e();
+    this.Y7e();
   }
-  q9e() {
+  Y7e() {
     var e;
-    0 === this.S9
+    0 === this.E9
       ? 0 <
         (e = ModelManager_1.ModelManager.AdviceModel.CurrentWordMap.get(
           this.Xy,

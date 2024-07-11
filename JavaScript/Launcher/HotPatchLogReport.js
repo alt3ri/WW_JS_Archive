@@ -45,7 +45,7 @@ class LoginLogEventDefine {}
   (LoginLogEventDefine.EnterGame = 7);
 class HotPatchLogReport {
   static set World(t) {
-    HotPatchLogReport.HSr = t;
+    HotPatchLogReport.kSr = t;
     var o,
       t = UE.KuroRenderingRuntimeBPPluginBPLibrary.GetSubsystem(
         t,
@@ -57,38 +57,38 @@ class HotPatchLogReport {
         UE.KismetGuidLibrary.NewGuid().ToString(),
       )),
       t.SetString("LoginDeviceId", o),
-      (HotPatchLogReport.jSr = o),
+      (HotPatchLogReport.FSr = o),
       t.Save()),
       (HotPatchLogReport.Qre = `${UE.KuroLauncherLibrary.GetAppVersion()}(${BaseConfigController_1.BaseConfigController.GetPackageConfigOrDefault("Changelist")})`),
-      (HotPatchLogReport.rxi = UE.GameplayStatics.GetPlatformName());
+      (HotPatchLogReport.rwi = UE.GameplayStatics.GetPlatformName());
   }
   static get World() {
-    return HotPatchLogReport.HSr;
+    return HotPatchLogReport.kSr;
   }
   static Init() {}
-  static WSr() {
+  static VSr() {
     var t;
-    return "Android" === HotPatchLogReport.rxi ||
-      "IOS" === HotPatchLogReport.rxi
+    return "Android" === HotPatchLogReport.rwi ||
+      "IOS" === HotPatchLogReport.rwi
       ? (t = UE.KuroLauncherLibrary.GetNetworkConnectionType()) ===
         NetworkDefine_1.ENetworkType.WiFi
         ? "Wifi"
         : t === NetworkDefine_1.ENetworkType.Cell
           ? "Stream"
           : "Other"
-      : "Windows" === HotPatchLogReport.rxi ||
-          "Mac" === HotPatchLogReport.rxi ||
-          "Linux" === HotPatchLogReport.rxi
+      : "Windows" === HotPatchLogReport.rwi ||
+          "Mac" === HotPatchLogReport.rwi ||
+          "Linux" === HotPatchLogReport.rwi
         ? "Wired"
         : "Other";
   }
   static Report(t) {
     t &&
-      ((t.device_id = HotPatchLogReport.jSr),
+      ((t.device_id = HotPatchLogReport.FSr),
       (t.event_time = Math.round(new Date().getTime() / 1e3).toString()),
       (t.s_version = HotPatchLogReport.Qre),
-      (t.net_status = HotPatchLogReport.WSr()),
-      (t.client_platform = HotPatchLogReport.rxi),
+      (t.net_status = HotPatchLogReport.VSr()),
+      (t.client_platform = HotPatchLogReport.rwi),
       (t.s_client_version =
         ThinkDataLaunchReporter_1.ThinkDataLaunchReporter.ClientVersion),
       ThinkDataLaunchReporter_1.ThinkDataLaunchReporter.Report(
@@ -104,8 +104,8 @@ class HotPatchLogReport {
         HotPatchLogReport.World,
       ).toString()),
       (e.event_time = Math.round(new Date().getTime() / 1e3).toString()),
-      (e.device_id = HotPatchLogReport.jSr),
-      (e.s_tag = HotPatchLogReport.RIt),
+      (e.device_id = HotPatchLogReport.FSr),
+      (e.s_tag = HotPatchLogReport.wTt),
       (e.s_client_version =
         ThinkDataLaunchReporter_1.ThinkDataLaunchReporter.ClientVersion),
       ThinkDataLaunchReporter_1.ThinkDataLaunchReporter.Report(
@@ -119,19 +119,19 @@ class HotPatchLogReport {
       (e.s_deepvalue = t),
       (e.s_source = o),
       (e.event_time = Math.round(new Date().getTime() / 1e3).toString()),
-      (e.device_id = HotPatchLogReport.jSr),
+      (e.device_id = HotPatchLogReport.FSr),
       (e.s_client_version =
         ThinkDataLaunchReporter_1.ThinkDataLaunchReporter.ClientVersion),
-      (e.client_platform = HotPatchLogReport.rxi),
+      (e.client_platform = HotPatchLogReport.rwi),
       ThinkDataLaunchReporter_1.ThinkDataLaunchReporter.Report(
         "c" + e.event_id,
         JSON.stringify(e),
       );
   }
 }
-((exports.HotPatchLogReport = HotPatchLogReport).RIt = void 0),
-  (HotPatchLogReport.jSr = void 0),
+((exports.HotPatchLogReport = HotPatchLogReport).wTt = void 0),
+  (HotPatchLogReport.FSr = void 0),
   (HotPatchLogReport.Qre = void 0),
-  (HotPatchLogReport.rxi = void 0),
-  (HotPatchLogReport.HSr = void 0);
+  (HotPatchLogReport.rwi = void 0),
+  (HotPatchLogReport.kSr = void 0);
 //# sourceMappingURL=HotPatchLogReport.js.map

@@ -58,9 +58,10 @@ class CommonInteractOption {
       (this.IsUniqueness = !1),
       (this.UniequenessType = IAction_1.EInteractUniqueness.Closest),
       (this.OptionContentId = 0),
-      (this.SortWeight = 0);
+      (this.SortWeight = 0),
+      (this.DelayRemove = !1);
   }
-  Init(t, o, s, i, e, c, r = 0, n = 0) {
+  Init(t, o, s, i, e, c, r = 0, n = 0, h = !1) {
     (this.InstanceId = t),
       (this.Guid = o.Guid),
       (this.Type = o.Type),
@@ -73,6 +74,7 @@ class CommonInteractOption {
       (this.OptionType = c),
       (this.CustomOptionType = r),
       (this.ContentType = n),
+      (this.DelayRemove = h),
       o.UniquenessTest
         ? ((this.IsUniqueness = !0), (this.UniequenessType = o.UniquenessTest))
         : (this.IsUniqueness = !1);

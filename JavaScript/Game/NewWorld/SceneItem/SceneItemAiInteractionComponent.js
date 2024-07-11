@@ -38,12 +38,12 @@ let SceneItemAiInteractionComponent = class SceneItemAiInteractionComponent exte
       (this.OnEntityDeadEvent = void 0);
   }
   static get Dependencies() {
-    return [182];
+    return [185];
   }
   OnStart() {
     (this.LastUsedTime = -AI_USED_COLD_DOWN),
       (this.IsUsingByAi = !1),
-      this.Vmn(),
+      this.Emn(),
       (this.OnEntityDeadEvent = () => {
         this.OnEntityDead();
       });
@@ -54,7 +54,7 @@ let SceneItemAiInteractionComponent = class SceneItemAiInteractionComponent exte
         : this.Entity.Disable(
             "[SceneItemAiInteractionComponent.OnStart] visible为false",
           )),
-      (this.MoveComp = this.Entity.GetComponent(108)),
+      (this.MoveComp = this.Entity.GetComponent(110)),
       AiInteractionItemQueryManager_1.AiInteractionItemQueryManager.Get().RegisterItem(
         this.Entity,
       ),
@@ -69,7 +69,7 @@ let SceneItemAiInteractionComponent = class SceneItemAiInteractionComponent exte
       !0
     );
   }
-  Vmn() {
+  Emn() {
     (this.IsSearchByAi = !1), (this.SearchEntity = void 0);
   }
   OnEntityDead() {
@@ -78,7 +78,7 @@ let SceneItemAiInteractionComponent = class SceneItemAiInteractionComponent exte
       EventDefine_1.EEventName.CharOnRoleDeadTargetSelf,
       this.OnEntityDeadEvent,
     ),
-      this.Vmn();
+      this.Emn();
   }
   SetSearched(e) {
     this.IsSearchByAi ||
@@ -122,7 +122,7 @@ let SceneItemAiInteractionComponent = class SceneItemAiInteractionComponent exte
   }
 };
 (SceneItemAiInteractionComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(128)],
+  [(0, RegisterComponent_1.RegisterComponent)(130)],
   SceneItemAiInteractionComponent,
 )),
   (exports.SceneItemAiInteractionComponent = SceneItemAiInteractionComponent);

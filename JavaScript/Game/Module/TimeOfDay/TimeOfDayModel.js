@@ -3,27 +3,27 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TimeOfDayModel = exports.TodDayTime = void 0);
 const Log_1 = require("../../../Core/Common/Log"),
   Time_1 = require("../../../Core/Common/Time"),
+  MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang"),
   ModelBase_1 = require("../../../Core/Framework/ModelBase"),
   ConfigManager_1 = require("../../Manager/ConfigManager"),
   TimeOfDayDefine_1 = require("./TimeOfDayDefine"),
-  TimeOfDaySecondItem_1 = require("./Views/TimeOfDaySecondItem"),
-  MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang");
+  TimeOfDaySecondItem_1 = require("./Views/TimeOfDaySecondItem");
 class TodDayTime {
   constructor() {
-    this.UIo = 0;
+    this.LTo = 0;
   }
-  static get dwi() {
+  static get dBi() {
     return (
-      this.AIo ||
-        (this.AIo = ConfigManager_1.ConfigManager.TimeOfDayConfig.GetRate()),
-      this.AIo
+      this.DTo ||
+        (this.DTo = ConfigManager_1.ConfigManager.TimeOfDayConfig.GetRate()),
+      this.DTo
     );
   }
   get Second() {
-    return this.UIo;
+    return this.LTo;
   }
   set Second(e) {
-    this.UIo = TodDayTime.ConvertToOneDaySecond(e);
+    this.LTo = TodDayTime.ConvertToOneDaySecond(e);
   }
   get DayState() {
     return ConfigManager_1.ConfigManager.TimeOfDayConfig.GetDayStateByGameTimeMinute(
@@ -40,8 +40,8 @@ class TodDayTime {
     return TodDayTime.ConvertToHourMinuteString(this.Second);
   }
   static ConvertFromRealTimeSecond(e) {
-    return TodDayTime.dwi
-      ? (e * TodDayTime.dwi) / TimeOfDayDefine_1.TOD_RATE_RATIO
+    return TodDayTime.dBi
+      ? (e * TodDayTime.dBi) / TimeOfDayDefine_1.TOD_RATE_RATIO
       : (Log_1.Log.CheckError() &&
           Log_1.Log.Error("TimeOfDay", 17, "获取时间流速比错误"),
         0);
@@ -91,40 +91,40 @@ class TodDayTime {
     return !1;
   }
 }
-(exports.TodDayTime = TodDayTime).AIo = 0;
+(exports.TodDayTime = TodDayTime).DTo = 0;
 class TimeOfDayModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
-      (this.PIo = new TodDayTime()),
-      (this.xIo = 0),
-      (this.wIo = 1),
-      (this.BIo = 1),
+      (this.RTo = new TodDayTime()),
+      (this.UTo = 0),
+      (this.ATo = 1),
+      (this.PTo = 1),
       (this.FreezeTimeScale = !1),
       (this.PlayerAccount = void 0),
       (this.CurrentSelectTimeItemSt = void 0),
-      (this.bIo = 0),
-      (this.qIo = 0),
-      (this.GIo = 0),
+      (this.xTo = 0),
+      (this.wTo = 0),
+      (this.BTo = 0),
       (this.TimeRunLockState = !1),
       (this.TimeSynLockState = !1);
   }
   get GameTime() {
-    return this.PIo;
+    return this.RTo;
   }
   GetPassSceneTime() {
-    return this.GIo;
+    return this.BTo;
   }
   SetPassSceneTime(e) {
-    this.GIo = e;
+    this.BTo = e;
   }
   get OldTimeScale() {
-    return this.BIo;
+    return this.PTo;
   }
   get TimeScale() {
-    return this.wIo;
+    return this.ATo;
   }
   set TimeScale(e) {
-    this.FreezeTimeScale || e < 0 || ((this.BIo = this.wIo), (this.wIo = e));
+    this.FreezeTimeScale || e < 0 || ((this.PTo = this.ATo), (this.ATo = e));
   }
   OnInit() {
     return !0;
@@ -133,13 +133,13 @@ class TimeOfDayModel extends ModelBase_1.ModelBase {
     return !0;
   }
   CacheTimeRecords() {
-    (this.bIo = this.GameTime.Second), (this.xIo = Time_1.Time.Now);
+    (this.xTo = this.GameTime.Second), (this.UTo = Time_1.Time.Now);
   }
   CheckCanCacheRecord() {
     return (
-      0 === this.xIo ||
+      0 === this.UTo ||
       !(
-        Time_1.Time.Now - this.xIo <
+        Time_1.Time.Now - this.UTo <
         TimeOfDayDefine_1.TOD_SAVE_CD_MINUTE *
           TimeOfDayDefine_1.TOD_SECOND_PER_MINUTE *
           TimeOfDayDefine_1.TOD_MILLIONSECOND_PER_SECOND
@@ -147,17 +147,17 @@ class TimeOfDayModel extends ModelBase_1.ModelBase {
     );
   }
   IsCurrentTimePassedNormally() {
-    return 0 === this.bIo
+    return 0 === this.xTo
       ? this.GameTime.Second >=
           TimeOfDayDefine_1.TOD_SECOND_PER_DAY -
             TimeOfDayDefine_1.TOD_SAVE_CD_SECONDS
       : this.GameTime.Second < TimeOfDayDefine_1.TOD_SAVE_CD_SECONDS
-        ? this.bIo >=
+        ? this.xTo >=
             TimeOfDayDefine_1.TOD_SECOND_PER_DAY -
               TimeOfDayDefine_1.TOD_SAVE_CD_SECONDS +
-              this.GameTime.Second || this.bIo <= this.GameTime.Second
-        : 0 < this.GameTime.Second - this.bIo &&
-          this.GameTime.Second - this.bIo <
+              this.GameTime.Second || this.xTo <= this.GameTime.Second
+        : 0 < this.GameTime.Second - this.xTo &&
+          this.GameTime.Second - this.xTo <
             TimeOfDayDefine_1.TOD_SAVE_CD_SECONDS;
   }
   GetTimeOfDayShowData() {
@@ -182,13 +182,13 @@ class TimeOfDayModel extends ModelBase_1.ModelBase {
     return i;
   }
   SetCurrentDay(e) {
-    this.qIo !== e &&
+    this.wTo !== e &&
       Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug("TimeOfDay", 28, "日期调整"),
-      (this.qIo = e);
+      (this.wTo = e);
   }
   GetCurrentDay() {
-    return this.qIo;
+    return this.wTo;
   }
 }
 exports.TimeOfDayModel = TimeOfDayModel;

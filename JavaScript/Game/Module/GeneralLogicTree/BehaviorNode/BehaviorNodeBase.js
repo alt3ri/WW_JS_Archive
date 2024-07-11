@@ -47,27 +47,27 @@ class BehaviorNodeBase extends BehaviorTreeTagComponent_1.BehaviorTreeTagContain
   }
   get IsProcessing() {
     return (
-      this.Status === Protocol_1.Aki.Protocol.N2s.Lkn ||
-      this.Status === Protocol_1.Aki.Protocol.N2s.Proto_Completing
+      this.Status === Protocol_1.Aki.Protocol.DNs.t5n ||
+      this.Status === Protocol_1.Aki.Protocol.DNs.Proto_Completing
     );
   }
   get IsSuccess() {
-    return this.Status === Protocol_1.Aki.Protocol.N2s.Proto_CompletedSuccess;
+    return this.Status === Protocol_1.Aki.Protocol.DNs.Proto_CompletedSuccess;
   }
   get IsFailure() {
     return (
-      this.Status === Protocol_1.Aki.Protocol.N2s.Proto_CompletedFailed ||
-      this.Status === Protocol_1.Aki.Protocol.N2s.Proto_Destroy
+      this.Status === Protocol_1.Aki.Protocol.DNs.Proto_CompletedFailed ||
+      this.Status === Protocol_1.Aki.Protocol.DNs.Proto_Destroy
     );
   }
   Init(e, t, s, i, o) {
     (this.Blackboard = e),
       (this.InnerTreeIncId = e.TreeIncId),
       (this.InnerTreeConfigId = e.TreeConfigId),
-      (this.InnerStatus = Protocol_1.Aki.Protocol.N2s.Proto_NotActive),
+      (this.InnerStatus = Protocol_1.Aki.Protocol.DNs.Proto_NotActive),
       (this.BtType = o),
       (this.Context = this.CreateContext(void 0, this.InnerNodeId)),
-      this.OnCreate(i) && this.UpdateStatus(t, s.n3n);
+      this.OnCreate(i) && this.UpdateStatus(t, s.w6n);
   }
   Destroy() {
     this.OnDestroy(),
@@ -79,14 +79,14 @@ class BehaviorNodeBase extends BehaviorTreeTagComponent_1.BehaviorTreeTagContain
     var s = this.InnerStatus;
     if (((this.InnerStatus = t), s !== this.InnerStatus)) {
       switch (this.InnerStatus) {
-        case Protocol_1.Aki.Protocol.N2s.Lkn:
+        case Protocol_1.Aki.Protocol.DNs.t5n:
           this.OnNodeActive();
           break;
-        case Protocol_1.Aki.Protocol.N2s.Proto_CompletedSuccess:
+        case Protocol_1.Aki.Protocol.DNs.Proto_CompletedSuccess:
           this.OnNodeDeActive(!0);
           break;
-        case Protocol_1.Aki.Protocol.N2s.Proto_CompletedFailed:
-        case Protocol_1.Aki.Protocol.N2s.Proto_Destroy:
+        case Protocol_1.Aki.Protocol.DNs.Proto_CompletedFailed:
+        case Protocol_1.Aki.Protocol.DNs.Proto_Destroy:
           this.OnNodeDeActive(!1);
       }
       switch (e) {
@@ -136,7 +136,7 @@ class BehaviorNodeBase extends BehaviorTreeTagComponent_1.BehaviorTreeTagContain
   OnNodeDeActive(e) {}
   OnDestroy() {
     this.IsProcessing &&
-      this.UpdateStatus(2, Protocol_1.Aki.Protocol.N2s.Proto_Destroy);
+      this.UpdateStatus(2, Protocol_1.Aki.Protocol.DNs.Proto_Destroy);
   }
 }
 exports.BehaviorNodeBase = BehaviorNodeBase;

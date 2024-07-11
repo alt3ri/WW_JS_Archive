@@ -37,75 +37,75 @@ const UE = require("ue"),
 class SignalDecodeViewV2 extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
-      (this.qvo = void 0),
-      (this.Gvo = void 0),
-      (this.Nvo = void 0),
-      (this.Ovo = void 0),
-      (this.kvo = void 0),
-      (this.Fvo = void 0),
-      (this.Vvo = void 0),
-      (this.Hvo = void 0),
-      (this.jvo = new AudioController_1.PlayResult()),
-      (this.Wvo = new AudioController_1.PlayResult()),
-      (this.Kvo = new AudioController_1.PlayResult()),
-      (this.Qvo = new AudioController_1.PlayResult()),
-      (this.Xvo = new AudioController_1.PlayResult()),
-      (this.$vo = new AudioController_1.PlayResult()),
-      (this.Yvo = new AudioController_1.PlayResult()),
-      (this.Jvo = new AudioController_1.PlayResult()),
+      (this.wMo = void 0),
+      (this.BMo = void 0),
+      (this.bMo = void 0),
+      (this.qMo = void 0),
+      (this.GMo = void 0),
+      (this.NMo = void 0),
+      (this.OMo = void 0),
+      (this.kMo = void 0),
+      (this.FMo = new AudioController_1.PlayResult()),
+      (this.VMo = new AudioController_1.PlayResult()),
+      (this.HMo = new AudioController_1.PlayResult()),
+      (this.jMo = new AudioController_1.PlayResult()),
+      (this.WMo = new AudioController_1.PlayResult()),
+      (this.KMo = new AudioController_1.PlayResult()),
+      (this.QMo = new AudioController_1.PlayResult()),
+      (this.XMo = new AudioController_1.PlayResult()),
       (this.LevelSequencePlayer = void 0),
-      (this.Dsi = 0),
-      (this.zvo = !1),
-      (this.Zvo = !1),
-      (this.eMo = () => {
+      (this.Dai = 0),
+      (this.$Mo = !1),
+      (this.YMo = !1),
+      (this.JMo = () => {
         var e = this.GetUiNiagara(12);
-        e.SetNiagaraSystem(this.Fvo),
+        e.SetNiagaraSystem(this.NMo),
           e.SetNiagaraUIActive(!0, !1),
           e.ActivateSystem(!0);
       }),
-      (this.tMo = () => {
-        this.iMo();
+      (this.zMo = () => {
+        this.ZMo();
         var e = this.GetUiNiagara(12),
           e =
-            (e.SetNiagaraSystem(this.Fvo),
+            (e.SetNiagaraSystem(this.NMo),
             e.SetNiagaraUIActive(!1, !1),
             e.DeactivateSystem(),
             this.GetUiNiagara(11));
-        e.SetNiagaraSystem(this.kvo),
+        e.SetNiagaraSystem(this.GMo),
           e.SetNiagaraUIActive(!0, !1),
           e.ActivateSystem(!0),
-          this.Jzi(PLAYER_CATCHSUCCESS_AUDIO_EVENTNAME, this.Yvo);
+          this.XZi(PLAYER_CATCHSUCCESS_AUDIO_EVENTNAME, this.QMo);
       }),
-      (this.oMo = () => {
-        this.rMo(), (this.zvo = !0);
+      (this.eEo = () => {
+        this.tEo(), (this.$Mo = !0);
         var e = this.GetUiNiagara(12),
           e =
-            (e.SetNiagaraSystem(this.Hvo),
+            (e.SetNiagaraSystem(this.kMo),
             e.SetNiagaraUIActive(!1, !1),
             e.DeactivateSystem(),
             this.GetUiNiagara(11));
-        e.SetNiagaraSystem(this.Vvo),
+        e.SetNiagaraSystem(this.OMo),
           e.SetNiagaraUIActive(!0, !1),
           e.ActivateSystem(!0),
           TimerSystem_1.TimerSystem.Delay(() => {
-            (this.zvo = !1), this.iMo();
+            (this.$Mo = !1), this.ZMo();
           }, 1e3);
         let i = PLAYER_CATCHFAILED_AUDIO_EVENTNAME;
         3 ===
           ModelManager_1.ModelManager.SignalDecodeModel.CurrentGameplayType &&
           (i = PLAYER_CATCHFAILED2_AUDIO_EVENTNAME),
-          this.Jzi(i, this.Jvo);
+          this.XZi(i, this.XMo);
       }),
-      (this.nMo = () => {
-        this.Gvo.Hide(), this.sMo(2);
+      (this.iEo = () => {
+        this.BMo.Hide(), this.oEo(2);
       }),
-      (this.aMo = () => {
-        this.Gvo.Hide(), this.qvo.StartAgain(), this.sMo(2, !0);
+      (this.rEo = () => {
+        this.BMo.Hide(), this.wMo.StartAgain(), this.oEo(2, !0);
       }),
-      (this.aut = (e) => {
-        e === COUNTDOWN_SEQUENCENAME && this.sMo(2, !0);
+      (this.yct = (e) => {
+        e === COUNTDOWN_SEQUENCENAME && this.oEo(2, !0);
       }),
-      (this.lut = (e, i) => {
+      (this.Tct = (e, i) => {
         var t;
         e === COUNTDOWN_SEQUENCENAME &&
           ((e = this.GetText(2)),
@@ -113,28 +113,28 @@ class SignalDecodeViewV2 extends UiTickViewBase_1.UiTickViewBase {
             ? ((t =
                 ConfigManager_1.ConfigManager.TextConfig.GetTextById("Start")),
               e.SetText(t),
-              this.Jzi(COUNTDOWNEND_AUDIO_EVENTNAME, this.Wvo))
-            : (e.SetText(i), this.Jzi(COUNTDOWN_AUDIO_EVENTNAME, this.jvo)));
+              this.XZi(COUNTDOWNEND_AUDIO_EVENTNAME, this.VMo))
+            : (e.SetText(i), this.XZi(COUNTDOWN_AUDIO_EVENTNAME, this.FMo)));
       }),
-      (this.hMo = () => {
-        this.qvo.OnCatchBtnDown();
+      (this.nEo = () => {
+        this.wMo.OnCatchBtnDown();
         var e = this.GetUiNiagara(13);
         e?.SetNiagaraUIActive(!0, !1),
           e?.ActivateSystem(!0),
-          this.lMo(),
-          this.Jzi(PLAYER_CATCHDOWN_AUDIO_EVENTNAME, this.Xvo);
+          this.sEo(),
+          this.XZi(PLAYER_CATCHDOWN_AUDIO_EVENTNAME, this.WMo);
       }),
-      (this._Mo = () => {
-        this.qvo.OnCatchBtnUp(),
-          this.iMo(),
-          this.Jzi(PLAYER_CATCHUP_AUDIO_EVENTNAME, this.$vo);
+      (this.aEo = () => {
+        this.wMo.OnCatchBtnUp(),
+          this.ZMo(),
+          this.XZi(PLAYER_CATCHUP_AUDIO_EVENTNAME, this.KMo);
       }),
-      (this.uMo = () => {
-        this.sMo(3);
+      (this.hEo = () => {
+        this.oEo(3);
       }),
-      (this.ift = () => {}),
-      (this.iMo = () => {
-        this.cMo("SP_SignalPointerNor");
+      (this.dpt = () => {}),
+      (this.ZMo = () => {
+        this.lEo("SP_SignalPointerNor");
       });
   }
   OnRegisterComponent() {
@@ -159,12 +159,13 @@ class SignalDecodeViewV2 extends UiTickViewBase_1.UiTickViewBase {
       [17, UE.UINiagara],
     ]),
       (this.BtnBindInfo = [
-        [3, this.uMo],
-        [4, this.ift],
+        [3, this.hEo],
+        [4, this.dpt],
       ]);
   }
   async OnBeforeStartAsync() {
     this.GetItem(1).SetUIActive(!1), this.GetItem(0).SetUIActive(!0);
+    this.GetText(8).SetText("0%");
     var e = ModelManager_1.ModelManager.SignalDecodeModel.CurrentGameplayType;
     const i = 2 === e ? "054522" : "6b5a25";
     if (
@@ -172,8 +173,8 @@ class SignalDecodeViewV2 extends UiTickViewBase_1.UiTickViewBase {
       (this.LevelSequencePlayer = new LevelSequencePlayer_1.LevelSequencePlayer(
         this.RootItem,
       )),
-      this.LevelSequencePlayer.BindSequenceCloseEvent(this.aut),
-      this.GetText(2)?.GetOwner()?.OnSequencePlayEvent.Bind(this.lut),
+      this.LevelSequencePlayer.BindSequenceCloseEvent(this.yct),
+      this.GetText(2)?.GetOwner()?.OnSequencePlayEvent.Bind(this.Tct),
       this.GetUiNiagara(12)?.SetNiagaraUIActive(!1, !1),
       this.GetUiNiagara(11)?.SetNiagaraUIActive(!1, !1),
       3 === ModelManager_1.ModelManager.SignalDecodeModel.CurrentGameplayType)
@@ -185,18 +186,18 @@ class SignalDecodeViewV2 extends UiTickViewBase_1.UiTickViewBase {
         this.GetUiNiagara(17)?.SetNiagaraUIActive(!0, !1),
         this.GetUiNiagara(17)?.SetNiagaraVarLinearColor("Color", t);
     }
-    (this.Gvo = new PausePanel_1.PausePanel()),
-      (this.Nvo = new SuccessFinishPanel_1.SuccessFinishPanel()),
-      (this.Ovo = new FailedFinishPanel_1.FailedFinishPanel()),
-      (this.qvo = new SignalMovePanel_1.SignalMovePanel()),
+    (this.BMo = new PausePanel_1.PausePanel()),
+      (this.bMo = new SuccessFinishPanel_1.SuccessFinishPanel()),
+      (this.qMo = new FailedFinishPanel_1.FailedFinishPanel()),
+      (this.wMo = new SignalMovePanel_1.SignalMovePanel()),
       await Promise.all([
-        this.Gvo.CreateByResourceIdAsync("UiView_ComPause", this.RootItem),
-        this.Gvo.HideAsync(),
-        this.Nvo.CreateByResourceIdAsync("UiView_SignalSuccess", this.RootItem),
-        this.Nvo.HideAsync(),
-        this.Ovo.CreateByResourceIdAsync("UiView_SignalFail", this.RootItem),
-        this.Ovo.HideAsync(),
-        this.qvo.Init(this.GetItem(5), e),
+        this.BMo.CreateByResourceIdAsync("UiView_ComPause", this.RootItem),
+        this.BMo.HideAsync(),
+        this.bMo.CreateByResourceIdAsync("UiView_SignalSuccess", this.RootItem),
+        this.bMo.HideAsync(),
+        this.qMo.CreateByResourceIdAsync("UiView_SignalFail", this.RootItem),
+        this.qMo.HideAsync(),
+        this.wMo.Init(this.GetItem(5), e),
       ]);
     t = 2 === ModelManager_1.ModelManager.SignalDecodeModel.CurrentGameplayType;
     let s = t ? "NS_Fx_LGUI_Send_G_Loop" : "NS_Fx_LGUI_Send_Y_Loop",
@@ -204,13 +205,13 @@ class SignalDecodeViewV2 extends UiTickViewBase_1.UiTickViewBase {
         (3 ===
           ModelManager_1.ModelManager.SignalDecodeModel.CurrentGameplayType &&
           (s = "NS_Fx_LGUI_Send_O_Loop"),
-        (this.Fvo = await this.mMo(s)),
+        (this.NMo = await this._Eo(s)),
         t ? "NS_Fx_LGUI_Send_G_Burst" : "NS_Fx_LGUI_Send_Y_Burst");
     3 === ModelManager_1.ModelManager.SignalDecodeModel.CurrentGameplayType &&
       (_ = "NS_Fx_LGUI_Send_O_Burst"),
-      (this.kvo = await this.mMo(_));
-    this.Hvo = await this.mMo("NS_Fx_LGUI_Send_R_Loop");
-    this.Vvo = await this.mMo("NS_Fx_LGUI_Send_R_Burst");
+      (this.GMo = await this._Eo(_));
+    this.kMo = await this._Eo("NS_Fx_LGUI_Send_R_Loop");
+    this.OMo = await this._Eo("NS_Fx_LGUI_Send_R_Burst");
     e = t ? "SignalSendProcess" : "SignalReceiveProcess";
     LguiUtil_1.LguiUtil.SetLocalText(this.GetText(14), e);
     let o = t ? "SignalSendTips" : "SignalReceiveTips";
@@ -218,7 +219,7 @@ class SignalDecodeViewV2 extends UiTickViewBase_1.UiTickViewBase {
       (o = "SignalMusicTips"),
       LguiUtil_1.LguiUtil.SetLocalText(this.GetText(15), o);
   }
-  async mMo(e) {
+  async _Eo(e) {
     e = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(e);
     if (e && 0 !== e.length) {
       const i = new CustomPromise_1.CustomPromise();
@@ -232,94 +233,102 @@ class SignalDecodeViewV2 extends UiTickViewBase_1.UiTickViewBase {
   }
   OnBeforeShow() {
     var e = this.GetButton(6);
-    e.OnPointDownCallBack.Bind(this.hMo), e.OnPointUpCallBack.Bind(this._Mo);
+    e.OnPointDownCallBack.Bind(this.nEo), e.OnPointUpCallBack.Bind(this.aEo);
   }
   OnAfterShow() {
-    this.sMo(1);
+    this.oEo(1);
   }
   OnBeforeDestroy() {
-    AudioController_1.AudioController.StopEvent(this.jvo),
-      AudioController_1.AudioController.StopEvent(this.Wvo),
-      AudioController_1.AudioController.StopEvent(this.Kvo),
-      AudioController_1.AudioController.StopEvent(this.Kvo),
-      AudioController_1.AudioController.StopEvent(this.Qvo),
-      AudioController_1.AudioController.StopEvent(this.Xvo),
-      AudioController_1.AudioController.StopEvent(this.Yvo),
-      AudioController_1.AudioController.StopEvent(this.Jvo),
-      (this.Fvo = void 0),
-      (this.kvo = void 0),
-      (this.Hvo = void 0),
-      (this.Vvo = void 0);
+    this.Vfa(),
+      (this.NMo = void 0),
+      (this.GMo = void 0),
+      (this.kMo = void 0),
+      (this.OMo = void 0);
+  }
+  Vfa() {
+    AudioController_1.AudioController.StopEvent(this.FMo),
+      AudioController_1.AudioController.StopEvent(this.VMo),
+      AudioController_1.AudioController.StopEvent(this.HMo),
+      AudioController_1.AudioController.StopEvent(this.HMo),
+      AudioController_1.AudioController.StopEvent(this.jMo),
+      AudioController_1.AudioController.StopEvent(this.WMo),
+      AudioController_1.AudioController.StopEvent(this.QMo),
+      AudioController_1.AudioController.StopEvent(this.XMo);
+  }
+  Hfa() {
+    this.GetUiNiagara(13)?.SetNiagaraUIActive(!1, !1),
+      this.GetUiNiagara(12)?.SetNiagaraUIActive(!1, !1),
+      this.GetUiNiagara(11)?.SetNiagaraUIActive(!1, !1);
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnSignalCatchStart,
-      this.eMo,
+      this.JMo,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnSignalCatchSuccess,
-        this.tMo,
+        this.zMo,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnSignalCatchFailed,
-        this.oMo,
+        this.eEo,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnSignalCatchContinue,
-        this.nMo,
+        this.iEo,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnSignalCatchStartAgain,
-        this.aMo,
+        this.rEo,
       );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnSignalCatchStart,
-      this.eMo,
+      this.JMo,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnSignalCatchSuccess,
-        this.tMo,
+        this.zMo,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnSignalCatchFailed,
-        this.oMo,
+        this.eEo,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnSignalCatchContinue,
-        this.nMo,
+        this.iEo,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnSignalCatchStartAgain,
-        this.aMo,
+        this.rEo,
       );
   }
   OnTick(e) {
-    2 === this.Dsi && this.dMo(e);
+    2 === this.Dai && this.uEo(e);
   }
-  dMo(e) {
-    this.qvo.UpdateMove(e), this.CMo();
+  uEo(e) {
+    this.wMo.UpdateMove(e), this.cEo();
   }
-  CMo() {
-    var e = this.qvo.GetCompleteness(),
+  cEo() {
+    var e = this.wMo.GetCompleteness(),
       e = Math.floor(100 * e),
-      i = (this.GetText(8).SetText(e + "%"), this.qvo.GetProgress());
-    this.GetSprite(10).SetFillAmount(i), 1 <= i && this.gMo(e);
+      i = (this.GetText(8).SetText(e + "%"), this.wMo.GetProgress());
+    this.GetSprite(10).SetFillAmount(i), 1 <= i && this.mEo(e);
   }
-  gMo(i) {
-    this.Zvo ||
-      ((this.Zvo = !0),
+  mEo(i) {
+    this.YMo ||
+      ((this.YMo = !0),
       TimerSystem_1.TimerSystem.Delay(() => {
         var e =
           i >= ModelManager_1.ModelManager.SignalDecodeModel.TargetCompletion
             ? 4
             : 5;
-        this.sMo(e), (this.Zvo = !1);
+        this.oEo(e), (this.YMo = !1);
       }, 1e3));
   }
-  sMo(e, i) {
-    if (this.Dsi !== e) {
+  oEo(e, i) {
+    if (this.Dai !== e) {
       switch (e) {
         case 1:
           this.GetItem(1).SetUIActive(!1),
@@ -330,55 +339,54 @@ class SignalDecodeViewV2 extends UiTickViewBase_1.UiTickViewBase {
             );
           break;
         case 2: {
-          this.GetItem(0).SetUIActive(!1),
+          this.Hfa(),
+            this.GetItem(0).SetUIActive(!1),
             this.GetItem(1).SetUIActive(!0),
-            i && this.fMo();
+            i && this.dEo();
           let e = BG_NOISE_AUDIO_EVENTNAME;
           3 ===
             ModelManager_1.ModelManager.SignalDecodeModel.CurrentGameplayType &&
             ((e = i ? BG_BGM_AUDIO_EVENTNAME : BG_BGM_AUDIO_RESUME_EVENTNAME),
             Log_1.Log.CheckError()) &&
             Log_1.Log.Error("Audio", 19, "BGM事件", ["eventName", e]),
-            this.Jzi(e, this.Kvo);
+            this.XZi(e, this.HMo);
           break;
         }
         case 3: {
-          this.GetItem(1).SetUIActive(!1), this.Gvo.Show();
+          this.Vfa(), this.GetItem(1).SetUIActive(!1), this.BMo.Show();
           let e = BG_NOISE_STOP_AUDIO_EVENTNAME;
           3 ===
             ModelManager_1.ModelManager.SignalDecodeModel.CurrentGameplayType &&
             (e = BG_BGM_AUDIO_PAUSE_EVENTNAME),
-            this.Jzi(e, this.Qvo);
+            this.XZi(e, this.jMo);
           break;
         }
         case 4: {
-          this.GetItem(1).SetUIActive(!1), this.Nvo.Open();
+          this.Vfa(), this.GetItem(1).SetUIActive(!1), this.bMo.Open();
           let e = BG_NOISE_STOP_AUDIO_EVENTNAME;
           3 ===
             ModelManager_1.ModelManager.SignalDecodeModel.CurrentGameplayType &&
             (e = BG_BGM_STOP_AUDIO_EVENTNAME),
-            this.Jzi(e, this.Qvo);
+            this.XZi(e, this.jMo);
           break;
         }
         case 5: {
-          this.GetItem(1).SetUIActive(!1), this.Ovo.Open();
+          this.Vfa(), this.GetItem(1).SetUIActive(!1), this.qMo.Open();
           let e = BG_NOISE_STOP_AUDIO_EVENTNAME;
           3 ===
             ModelManager_1.ModelManager.SignalDecodeModel.CurrentGameplayType &&
             (e = BG_BGM_STOP_AUDIO_EVENTNAME),
-            this.Jzi(e, this.Qvo);
+            this.XZi(e, this.jMo);
           break;
         }
       }
-      this.Dsi = e;
+      this.Dai = e;
     }
   }
-  fMo() {
-    var e = this.GetItem(5),
-      i = this.GetItem(1).Width / 2;
-    e.SetAnchorOffsetX(-i);
+  dEo() {
+    this.GetItem(5).SetAnchorOffsetX(-1280);
   }
-  Jzi(e, i) {
+  XZi(e, i) {
     var t = ConfigManager_1.ConfigManager.AudioConfig.GetAudioPath(e);
     t && "" !== t.Path
       ? AudioController_1.AudioController.PostEventByUi(t.Path, i)
@@ -390,17 +398,17 @@ class SignalDecodeViewV2 extends UiTickViewBase_1.UiTickViewBase {
           ["name", e],
         );
   }
-  lMo() {
+  sEo() {
     var e =
       2 === ModelManager_1.ModelManager.SignalDecodeModel.CurrentGameplayType;
-    this.cMo(e ? "SP_SignalPointerGreen" : "SP_SignalPointerYellow");
+    this.lEo(e ? "SP_SignalPointerGreen" : "SP_SignalPointerYellow");
   }
-  rMo() {
-    this.cMo("SP_SignalPointerRed");
+  tEo() {
+    this.lEo("SP_SignalPointerRed");
   }
-  cMo(e) {
+  lEo(e) {
     var i;
-    this.zvo ||
+    this.$Mo ||
       ((i = this.GetSprite(7)),
       (e = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(e)),
       this.SetSpriteByPath(e, i, !1));

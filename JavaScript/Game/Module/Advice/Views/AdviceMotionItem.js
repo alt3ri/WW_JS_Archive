@@ -11,38 +11,38 @@ const UE = require("ue"),
 class AdviceMotionItem extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
-      (this.I7e = 0),
+      (this.NHe = 0),
       (this.kqe = () => {
-        (ModelManager_1.ModelManager.AdviceModel.PreSelectMotionId = this.I7e),
+        (ModelManager_1.ModelManager.AdviceModel.PreSelectMotionId = this.NHe),
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.OnClickAdviceMotion,
           );
       }),
-      (this.p9e = () => {
+      (this.x7e = () => {
         this.Oqe();
       }),
-      (this.T7e = () => {
+      (this.Lke = () => {
         var e,
           t,
           i =
-            this.I7e ===
+            this.NHe ===
             ModelManager_1.ModelManager.AdviceModel.PreSelectMotionId;
-        return this.I7e ===
+        return this.NHe ===
           ConfigManager_1.ConfigManager.AdviceConfig.GetAdviceMotionDefaultConfigId()
           ? !i
           : ((e = ConfigManager_1.ConfigManager.MotionConfig.GetMotionRoleId(
-              this.I7e,
+              this.NHe,
             )),
             (e =
               0 ===
                 (e = ModelManager_1.ModelManager.MotionModel.GetRoleMotionState(
                   e,
-                  this.I7e,
+                  this.NHe,
                 )) || 1 === e) &&
               ((t =
                 ConfigManager_1.ConfigManager.ComposeConfig.GetConditionInfo(
                   ConfigManager_1.ConfigManager.MotionConfig.GetMotionConfig(
-                    this.I7e,
+                    this.NHe,
                   ).CondGroupId,
                 )),
               (t = ConfigManager_1.ConfigManager.ComposeConfig.GetLocalText(
@@ -70,70 +70,70 @@ class AdviceMotionItem extends UiPanelBase_1.UiPanelBase {
   OnStart() {
     var e = this.GetExtendToggle(0);
     e.CanExecuteChange.Unbind(),
-      e.CanExecuteChange.Bind(this.T7e),
+      e.CanExecuteChange.Bind(this.Lke),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnClickAdviceMotion,
-        this.p9e,
+        this.x7e,
       );
   }
   Update(e) {
-    (this.I7e = e), this.Og();
+    (this.NHe = e), this.Og();
   }
   Og() {
-    this.j9e(), this.Aqe(), this.C4e(), this.Oqe(), this.L7e();
+    this.rHe(), this.Aqe(), this.P5e(), this.Oqe(), this.wke();
   }
-  C4e() {
+  P5e() {
     let e = "";
     (e =
-      this.I7e ===
+      this.NHe ===
       ConfigManager_1.ConfigManager.AdviceConfig.GetAdviceMotionDefaultConfigId()
         ? ConfigManager_1.ConfigManager.AdviceConfig.GetAdviceSpecialParamsContent(
-            this.I7e,
+            this.NHe,
           )
         : ConfigManager_1.ConfigManager.MotionConfig.GetMotionContent(
-            this.I7e,
+            this.NHe,
           )),
       this.GetText(1).SetText(e);
   }
   Aqe() {
     let e = "";
     (e = (
-      this.I7e ===
+      this.NHe ===
       ConfigManager_1.ConfigManager.AdviceConfig.GetAdviceMotionDefaultConfigId()
         ? ConfigManager_1.ConfigManager.AdviceConfig.GetAdviceSpecialParams(
-            this.I7e,
+            this.NHe,
           )
-        : ConfigManager_1.ConfigManager.MotionConfig.GetMotionConfig(this.I7e)
+        : ConfigManager_1.ConfigManager.MotionConfig.GetMotionConfig(this.NHe)
     ).MotionImg),
       this.SetTextureByPath(e, this.GetTexture(2));
   }
-  j9e() {
+  rHe() {
     var e =
-      this.I7e ===
+      this.NHe ===
       ModelManager_1.ModelManager.AdviceModel.CurrentSelectMotionId;
     this.GetItem(4).SetUIActive(e);
   }
   Oqe() {
     var e =
-      this.I7e === ModelManager_1.ModelManager.AdviceModel.PreSelectMotionId
+      this.NHe === ModelManager_1.ModelManager.AdviceModel.PreSelectMotionId
         ? 1
         : 0;
     this.GetExtendToggle(0).ToggleState !== e &&
       this.GetExtendToggle(0).SetToggleStateForce(e, !1);
   }
-  L7e() {
+  wke() {
     var e;
-    this.I7e ===
+    this.NHe ===
     ConfigManager_1.ConfigManager.AdviceConfig.GetAdviceMotionDefaultConfigId()
       ? (this.GetSprite(3).SetUIActive(!1), this.GetItem(5).SetUIActive(!1))
       : ((e = ConfigManager_1.ConfigManager.MotionConfig.GetMotionRoleId(
-          this.I7e,
+          this.NHe,
         )),
         (e =
           0 ===
             (e = ModelManager_1.ModelManager.MotionModel.GetRoleMotionState(
               e,
-              this.I7e,
+              this.NHe,
             )) || 1 === e),
         this.GetSprite(3).SetUIActive(e),
         this.GetItem(5).SetUIActive(e));
@@ -141,7 +141,7 @@ class AdviceMotionItem extends UiPanelBase_1.UiPanelBase {
   OnBeforeDestroy() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnClickAdviceMotion,
-      this.p9e,
+      this.x7e,
     );
   }
 }

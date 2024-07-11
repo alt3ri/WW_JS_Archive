@@ -11,17 +11,17 @@ const UE = require("ue"),
   RecorderBlueprintFunctionLibrary_1 = require("../../../../../../../Recorder/RecorderBlueprintFunctionLibrary");
 class GameplayCueHookCommonItem {
   constructor(t, e, r, o) {
-    (this.OKt = t),
-      (this.dXo = e),
+    (this.OQt = t),
+      (this.u$o = e),
       (this.TargetPosition = r),
       (this.Paths = o),
-      (this.CXo = void 0),
-      (this.gXo = 0),
+      (this.c$o = void 0),
+      (this.m$o = 0),
       (this.dce = !1);
   }
   static Spawn(t, e, r, o) {
     t = new this(t, e, r, o);
-    return (t.dce = !0), (t.CXo = t.fXo()), (t.gXo = t.pXo()), t;
+    return (t.dce = !0), (t.c$o = t.d$o()), (t.m$o = t.C$o()), t;
   }
   Destroy() {
     RecorderBlueprintFunctionLibrary_1.default.Recording &&
@@ -29,17 +29,17 @@ class GameplayCueHookCommonItem {
         this,
       ),
       (this.dce = !1),
-      ActorSystem_1.ActorSystem.Put(this.CXo),
-      EffectSystem_1.EffectSystem.IsValid(this.gXo) &&
+      ActorSystem_1.ActorSystem.Put(this.c$o),
+      EffectSystem_1.EffectSystem.IsValid(this.m$o) &&
         EffectSystem_1.EffectSystem.StopEffectById(
-          this.gXo,
+          this.m$o,
           "[GameplayCueHookCommonItem.Destroy]",
           !0,
         ),
-      this.vXo();
+      this.g$o();
   }
   static StaticSpawnHookActorRecord(t, e, r) {
-    t = ResourceSystem_1.ResourceSystem.SyncLoad(t, UE.NiagaraSystem);
+    t = ResourceSystem_1.ResourceSystem.Load(t, UE.NiagaraSystem);
     t?.IsValid() &&
       e?.IsValid() &&
       ((e = e.AddComponentByClass(
@@ -50,15 +50,15 @@ class GameplayCueHookCommonItem {
       )).SetAsset(t),
       e.SetNiagaraVariableVec3("End", r));
   }
-  fXo() {
+  d$o() {
     const r = ActorSystem_1.ActorSystem.Get(
       UE.Actor.StaticClass(),
-      this.OKt.GetTransform(),
+      this.OQt.GetTransform(),
     );
     return (
       GlobalData_1.GlobalData.IsPlayInEditor &&
         r.SetActorLabel(
-          this.OKt.GetActorLabel() + ":" + GameplayCueHookCommonItem.name,
+          this.OQt.GetActorLabel() + ":" + GameplayCueHookCommonItem.name,
         ),
       ResourceSystem_1.ResourceSystem.LoadAsync(
         this.Paths[0],
@@ -75,7 +75,7 @@ class GameplayCueHookCommonItem {
               !1,
             )).SetAsset(t),
             e.SetNiagaraVariableVec3("End", this.TargetPosition),
-            r.K2_AttachToComponent(this.OKt.Mesh, this.dXo, 2, 2, 2, !1),
+            r.K2_AttachToComponent(this.OQt.Mesh, this.u$o, 2, 2, 2, !1),
             RecorderBlueprintFunctionLibrary_1.default.Recording) &&
             RecorderBlueprintFunctionLibrary_1.default.StartRecordGameplayCueHook(
               r,
@@ -86,23 +86,23 @@ class GameplayCueHookCommonItem {
       r
     );
   }
-  pXo() {
+  C$o() {
     return EffectSystem_1.EffectSystem.SpawnEffect(
-      this.OKt,
+      this.OQt,
       new UE.Transform(this.TargetPosition),
       this.Paths[1],
       "[GameplayCueHookCommonItem.CreateBallEffect]",
-      new EffectContext_1.EffectContext(this.OKt.EntityId),
+      new EffectContext_1.EffectContext(this.OQt.EntityId),
       0,
     );
   }
-  vXo() {
+  g$o() {
     EffectSystem_1.EffectSystem.SpawnEffect(
-      this.OKt,
+      this.OQt,
       new UE.Transform(this.TargetPosition),
       this.Paths[2],
       "[GameplayCueHookCommonItem.DestroyBallEffect]",
-      new EffectContext_1.EffectContext(this.OKt.EntityId),
+      new EffectContext_1.EffectContext(this.OQt.EntityId),
       0,
     );
   }

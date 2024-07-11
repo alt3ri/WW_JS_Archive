@@ -15,15 +15,15 @@ const UE = require("ue"),
 class ActivityRunFailView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.w2e = void 0),
-      (this.B2e = void 0),
+      (this.$Fe = void 0),
+      (this.YFe = void 0),
       (this.ButtonMap = void 0),
-      (this.b2e = () => {
+      (this.JFe = () => {
         ActivityRunController_1.ActivityRunController.RequestTransToParkourChallenge(
-          this.B2e.CurrentChallengeId,
+          this.YFe.CurrentChallengeId,
         );
       }),
-      (this.q2e = () => {
+      (this.zFe = () => {
         this.CloseMe();
       });
   }
@@ -46,10 +46,10 @@ class ActivityRunFailView extends UiViewBase_1.UiViewBase {
     ];
   }
   async OnBeforeStartAsync() {
-    (this.ButtonMap = new Map()), await this.G2e();
+    (this.ButtonMap = new Map()), await this.ZFe();
   }
   OnStart() {
-    (this.B2e = this.OpenParam), this.N2e();
+    (this.YFe = this.OpenParam), this.e3e();
   }
   OnBeforeShow() {
     this.GetItem(12).SetUIActive(!1),
@@ -58,18 +58,18 @@ class ActivityRunFailView extends UiViewBase_1.UiViewBase {
       this.GetTexture(17).SetUIActive(!1),
       this.GetText(14).SetUIActive(!0),
       this.GetUiNiagara(15)?.SetUIActive(!1),
-      this.O2e();
+      this.t3e();
   }
-  O2e() {
+  t3e() {
     var t = this.GetTexture(2);
     t.SetColor(UE.Color.FromHex(FAIL_OUTLINE_COLOR)),
       this.SetTextureByPath(TARGET_ICON_PATH, t),
       this.GetText(1).ShowTextNew("GenericPromptTypes_4_GeneralText");
   }
-  async G2e() {
+  async ZFe() {
     this.GetItem(5)?.SetUIActive(!1);
-    var t = this.k2e(this.GetItem(5), 0, this.q2e),
-      i = this.k2e(this.GetItem(5), 1, this.b2e),
+    var t = this.i3e(this.GetItem(5), 0, this.zFe),
+      i = this.i3e(this.GetItem(5), 1, this.JFe),
       t = (await Promise.all([t, i]), this.ButtonMap.get(0)),
       i = this.ButtonMap.get(1);
     t.SetBtnText("Leave"),
@@ -79,16 +79,16 @@ class ActivityRunFailView extends UiViewBase_1.UiViewBase {
       ),
       i.SetBtnText("ChallengeAgain");
   }
-  F2e() {
-    TimerSystem_1.TimerSystem.Has(this.w2e) &&
-      TimerSystem_1.TimerSystem.Remove(this.w2e),
-      (this.w2e = void 0);
+  o3e() {
+    TimerSystem_1.TimerSystem.Has(this.$Fe) &&
+      TimerSystem_1.TimerSystem.Remove(this.$Fe),
+      (this.$Fe = void 0);
   }
-  N2e() {
+  e3e() {
     let t = LEAVETIME + 1;
-    this.w2e = TimerSystem_1.TimerSystem.Forever(() => {
+    this.$Fe = TimerSystem_1.TimerSystem.Forever(() => {
       t <= 0
-        ? (TimerSystem_1.TimerSystem.Remove(this.w2e), this.q2e())
+        ? (TimerSystem_1.TimerSystem.Remove(this.$Fe), this.zFe())
         : this.ButtonMap.get(0).SetFloatText(
             "InstanceDungeonLeftTimeToAutoLeave",
             (t--).toString(),
@@ -99,9 +99,9 @@ class ActivityRunFailView extends UiViewBase_1.UiViewBase {
     this.GetUiNiagara(15)?.SetUIActive(!0),
       this.GetTexture(16).SetUIActive(!0),
       this.GetTexture(17).SetUIActive(!0),
-      this.F2e();
+      this.o3e();
   }
-  async k2e(t, i, e) {
+  async i3e(t, i, e) {
     var s = this.GetItem(5),
       r = this.GetItem(4),
       s = LguiUtil_1.LguiUtil.DuplicateActor(s.GetOwner(), r),

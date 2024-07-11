@@ -21,13 +21,13 @@ class MailModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
       (this.kQ = new Map()),
-      (this.wEi = []),
-      (this.BEi = ""),
-      (this.bEi = new Set()),
-      (this.qEi = new Map()),
+      (this.wyi = []),
+      (this.Byi = ""),
+      (this.byi = new Set()),
+      (this.qyi = new Map()),
       (this.LastTimeShowNewMailTipsTime = 0),
-      (this.GEi = []),
-      (this.NEi = void 0),
+      (this.Gyi = []),
+      (this.Nyi = void 0),
       (this.MailSort = (e, t) => {
         return e.GetWasScanned() !== t.GetWasScanned()
           ? e.GetWasScanned()
@@ -47,19 +47,19 @@ class MailModel extends ModelBase_1.ModelBase {
                 : -1;
       });
   }
-  OEi(e) {
+  Oyi(e) {
     if (e.GetWasScanned() && 2 !== e.GetAttachmentStatus()) {
-      if (!this.bEi.has(e.Id))
+      if (!this.byi.has(e.Id))
         return void EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.SwitchUnfinishedFlag,
         );
-      this.bEi.delete(e.Id);
+      this.byi.delete(e.Id);
     } else {
-      if (this.bEi.has(e.Id))
+      if (this.byi.has(e.Id))
         return void EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.SwitchUnfinishedFlag,
         );
-      this.bEi.add(e.Id);
+      this.byi.add(e.Id);
     }
     EventSystem_1.EventSystem.Emit(
       EventDefine_1.EEventName.SwitchUnfinishedFlag,
@@ -67,7 +67,7 @@ class MailModel extends ModelBase_1.ModelBase {
   }
   GetRedDotCouldLightOn() {
     return (
-      0 < this.bEi.size &&
+      0 < this.byi.size &&
       ModelManager_1.ModelManager.MailModel.CheckOpenCondition()
     );
   }
@@ -85,8 +85,8 @@ class MailModel extends ModelBase_1.ModelBase {
   GetRedDotImportant() {
     if (!ModelManager_1.ModelManager.MailModel.CheckOpenCondition()) return !1;
     let e = !1;
-    if (0 < this.bEi.size)
-      for (const t of this.bEi.values())
+    if (0 < this.byi.size)
+      for (const t of this.byi.values())
         if (2 === this.GetMailInstanceById(t).GetMailLevel()) {
           e = !0;
           break;
@@ -95,7 +95,7 @@ class MailModel extends ModelBase_1.ModelBase {
   }
   GetLastPickedAttachments() {
     var e = [];
-    for (const i of this.GEi) {
+    for (const i of this.Gyi) {
       var t = [{ IncId: 0, ItemId: i.GetItemId() }, i.GetCount()];
       e.push(t);
     }
@@ -107,16 +107,16 @@ class MailModel extends ModelBase_1.ModelBase {
     for (const r of Object.keys(e)) {
       var a = this.GetMailInstanceById(r);
       a.GetAttachmentInfo().forEach((e) => {
-        var t = i.get(e.Ekn),
-          t = e.I5n + (t ?? 0);
-        i.set(e.Ekn, t);
+        var t = i.get(e.J4n),
+          t = e.o9n + (t ?? 0);
+        i.set(e.J4n, t);
       }),
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("Mail", 28, "邮件数据：领取邮件奖励", ["key", r]),
         this.SetMailStatusByStatusCode(e[r], a);
     }
     i.forEach((e, t) => {
-      this.GEi.push(new MailAttachmentData_1.MailAttachmentData(t, e, !0));
+      this.Gyi.push(new MailAttachmentData_1.MailAttachmentData(t, e, !0));
     }),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.PickingAttachment,
@@ -124,34 +124,34 @@ class MailModel extends ModelBase_1.ModelBase {
       );
   }
   ClearLastPickedAttachments() {
-    this.GEi = [];
+    this.Gyi = [];
   }
   GetCurrentSelectMailId() {
-    return this.BEi;
+    return this.Byi;
   }
   SetCurrentSelectMailId(e) {
-    this.BEi = e;
+    this.Byi = e;
   }
   OpenWebBrowser(e) {
     e && "" !== e && UE.KismetSystemLibrary.LaunchURL(e);
   }
   ReloadMailList() {
-    (this.wEi.length = 0),
+    (this.wyi.length = 0),
       this.kQ.forEach((e) => {
-        this.wEi.push(e);
+        this.wyi.push(e);
       }),
-      this.wEi.sort(this.MailSort);
+      this.wyi.sort(this.MailSort);
   }
   GetMailList() {
-    return this.wEi;
+    return this.wyi;
   }
-  kEi(e) {
+  kyi(e) {
     this.kQ.set(e.Id, e);
   }
   DeleteMail(e) {
     this.GetMailInstanceById(e) &&
-      (this.bEi.has(e) &&
-        (this.bEi.delete(e),
+      (this.byi.has(e) &&
+        (this.byi.delete(e),
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.SwitchUnfinishedFlag,
         )),
@@ -168,16 +168,16 @@ class MailModel extends ModelBase_1.ModelBase {
     this.kQ.size >= this.GetMailCapacity() &&
       Log_1.Log.CheckError() &&
       Log_1.Log.Error("Mail", 28, "后端新增邮件时超出容量！"),
-      this.FEi(e),
+      this.Fyi(e),
       t && this.ReloadMailList();
   }
   OnMailInfoSynced(e) {
-    for (const i of e.bAs) {
+    for (const i of e.Zxs) {
       ModelManager_1.ModelManager.MailModel.GetMailListLength() >=
         ModelManager_1.ModelManager.MailModel.GetMailCapacity() &&
         Log_1.Log.CheckError() &&
         Log_1.Log.Error("Mail", 28, "[MailError]MailBox is fulfilled");
-      var t = new Protocol_1.Aki.Protocol.PNs(i);
+      var t = new Protocol_1.Aki.Protocol.p6s(i);
       this.AddMail(t, !1);
     }
     this.ReloadMailList();
@@ -185,51 +185,49 @@ class MailModel extends ModelBase_1.ModelBase {
   GetMailCapacity() {
     var e;
     return (
-      this.NEi ||
+      this.Nyi ||
       ((e = ConfigManager_1.ConfigManager.MailConfig.GetMailSize())
-        ? ((this.NEi = e), this.NEi)
+        ? ((this.Nyi = e), this.Nyi)
         : 0)
     );
   }
-  VEi(e) {
+  Vyi(e) {
     (e = new Date(e * TimeUtil_1.TimeUtil.InverseMillisecond)),
       (e = TimeUtil_1.TimeUtil.DateFormat4(e));
     let t = 1;
     return (
-      this.qEi.has(e) && ((t = this.qEi.get(e)), t++),
-      this.qEi.set(e, t),
-      " " + e + " " + this.HEi(t, ID_SHOW_LENGTH)
+      this.qyi.has(e) && ((t = this.qyi.get(e)), t++),
+      this.qyi.set(e, t),
+      " " + e + " " + this.Hyi(t, ID_SHOW_LENGTH)
     );
   }
-  HEi(e, t) {
+  Hyi(e, t) {
     return (Array(t).join("0") + (e % Math.pow(10, t))).slice(-t);
   }
-  FEi(e) {
+  Fyi(e) {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info("Mail", 28, "邮件数据：创建邮件 ", [
         "mailInformation.Proto_Id",
-        e.Ekn,
+        e.J4n,
       ]);
-    var t = e.ckn,
+    var t = e.F4n,
       i = new MailInstance_1.MailData(),
       a =
         (ObjectUtils_1.ObjectUtils.CopyValue(e, i),
-        (i.Id = e.Ekn),
-        (i.ConfigId = e.R5n),
-        e.RAs);
+        (i.Id = e.J4n),
+        (i.ConfigId = e._9n),
+        e.Wxs);
     (i.Time = a.low),
-      (i.Level = e.r3n),
-      (i.Title = e.AAs),
-      i.SetText(e.H3n),
-      (i.Sender = e.PAs),
-      (i.ValidTime = e.UAs),
-      (i.FinishValidTime = e.wAs),
-      (i.AttachmentInfos = e.xAs),
-      (i.OriginalDeadlineTimeStamp = a.low + e.UAs),
-      (i.FinishedDeadlineTimeStamp =
-        0 < MathUtils_1.MathUtils.LongToNumber(e.RAs) ? e.wAs + a.low : 0),
-      this.jEi(i),
-      this.kEi(i),
+      (i.Level = e.P6n),
+      (i.Title = e.Qxs),
+      i.SetText(e.y8n),
+      (i.Sender = e.Xxs),
+      (i.ValidTime = e.Yxs),
+      (i.FinishValidTime = e.Jxs),
+      (i.AttachmentInfos = e.zxs),
+      (i.ReadTime = MathUtils_1.MathUtils.LongToNumber(e.Kxs)),
+      this.jyi(i),
+      this.kyi(i),
       this.SetMailStatusByStatusCode(t, i),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
@@ -273,10 +271,10 @@ class MailModel extends ModelBase_1.ModelBase {
       e,
     );
   }
-  jEi(e) {
+  jyi(e) {
     var t;
     (4 !== e.ConfigId && 6 !== e.ConfigId) ||
-      ((t = this.VEi(e.Time)), (e.Title = e.Title + t));
+      ((t = this.Vyi(e.Time)), (e.Title = e.Title + t));
   }
   SetMailStatusByStatusCode(e, t) {
     var i = 1 & e,
@@ -287,8 +285,7 @@ class MailModel extends ModelBase_1.ModelBase {
       : 0 < t.AttachmentInfos.length && (a = e ? 1 : 2),
       t.SetWasScanned(i),
       t.SetAttachmentStatus(a),
-      1 == i && t.UpdateValidTimeWhenReadMail(),
-      this.OEi(t),
+      this.Oyi(t),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Mail",
@@ -298,7 +295,7 @@ class MailModel extends ModelBase_1.ModelBase {
           ["id:", t.Id],
           ["scanned:", i],
           ["taken:", e],
-          ["this.UnFinishedMailSet.length", this.bEi?.size],
+          ["this.UnFinishedMailSet.length", this.byi?.size],
         );
   }
   CheckOpenCondition() {

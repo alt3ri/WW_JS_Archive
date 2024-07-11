@@ -16,17 +16,17 @@ const UE = require("ue"),
 class PlotHandBookChildItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor(e = void 0) {
     super(),
-      (this.kzt = void 0),
-      (this.LZt = 0),
-      (this.aei = (e) => {
-        const t = this.kzt.Config;
-        if (this.kzt.IsLock)
+      (this.kZt = void 0),
+      (this.Lei = 0),
+      (this.ati = (e) => {
+        const t = this.kZt.Config;
+        if (this.kZt.IsLock)
           ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
             "CurPlotHandBookLock",
           ),
             this.GetTog()?.SetToggleStateForce(0, !1, !0);
         else {
-          this.kzt.IsNew &&
+          this.kZt.IsNew &&
             HandBookController_1.HandBookController.SendIllustratedReadRequest(
               7,
               t.Id,
@@ -38,7 +38,7 @@ class PlotHandBookChildItem extends GridProxyAbstract_1.GridProxyAbstract {
               ),
             ),
             r =
-              (o.sort(this.aZt),
+              (o.sort(this.aei),
               ConfigManager_1.ConfigManager.HandBookConfig.GetPlotTypeConfig(
                 i,
               )),
@@ -81,7 +81,7 @@ class PlotHandBookChildItem extends GridProxyAbstract_1.GridProxyAbstract {
             (i.TypeText = h),
             (i.NameText = l),
             (i.HandBookType = 7),
-            (i.Index = this.LZt),
+            (i.Index = this.Lei),
             (i.TextureList = s),
             (i.DateText = g),
             (i.ConfigId = _),
@@ -90,10 +90,10 @@ class PlotHandBookChildItem extends GridProxyAbstract_1.GridProxyAbstract {
       }),
       (this.OnHandBookRead = (e, t) => {
         7 === e &&
-          t === this.kzt?.Config?.Id &&
+          t === this.kZt?.Config?.Id &&
           this.GetItem(2)?.SetUIActive(!1);
       }),
-      (this.aZt = (e, t) => e.Id - t.Id),
+      (this.aei = (e, t) => e.Id - t.Id),
       e && this.CreateThenShowByActor(e.GetOwner());
   }
   OnRegisterComponent() {
@@ -104,15 +104,15 @@ class PlotHandBookChildItem extends GridProxyAbstract_1.GridProxyAbstract {
       [3, UE.UIItem],
       [4, UE.UIExtendToggle],
     ]),
-      (this.BtnBindInfo = [[4, this.aei]]),
+      (this.BtnBindInfo = [[4, this.ati]]),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnHandBookRead,
         this.OnHandBookRead,
       );
   }
   Refresh(e, t, i) {
-    (this.kzt = e), (this.LZt = i);
-    var i = this.kzt.Config,
+    (this.kZt = e), (this.Lei = i);
+    var i = this.kZt.Config,
       o = e.IsNew,
       e = e.IsLock,
       r = ModelManager_1.ModelManager.PlayerInfoModel.GetPlayerGender();
@@ -131,17 +131,17 @@ class PlotHandBookChildItem extends GridProxyAbstract_1.GridProxyAbstract {
       EventDefine_1.EEventName.OnHandBookRead,
       this.OnHandBookRead,
     ),
-      (this.kzt = void 0),
-      (this.LZt = 0);
+      (this.kZt = void 0),
+      (this.Lei = 0);
   }
   GetTog() {
     return this.GetExtendToggle(4);
   }
   GetData() {
-    return this.kzt;
+    return this.kZt;
   }
   GetIsUnlock() {
-    return !!this.kzt && !this.kzt.IsLock;
+    return !!this.kZt && !this.kZt.IsLock;
   }
 }
 exports.PlotHandBookChildItem = PlotHandBookChildItem;

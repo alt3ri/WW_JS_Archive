@@ -5,10 +5,10 @@ const UE = require("ue"),
   UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
 class TutorialPageItem extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
-    super(), (this.jPt = void 0), (this.jPt = e);
+    super(), (this.Xxt = void 0), (this.Xxt = e);
   }
   Init() {
-    this.CreateThenShowByActor(this.jPt.GetOwner());
+    this.CreateThenShowByActor(this.Xxt.GetOwner());
   }
   OnRegisterComponent() {
     (this.ComponentRegisterInfos = [[0, UE.UIItem]]), (this.BtnBindInfo = []);

@@ -3,10 +3,10 @@ var SceneItemGravityComponent_1,
   __decorate =
     (this && this.__decorate) ||
     function (t, e, i, s) {
-      var h,
-        n = arguments.length,
+      var n,
+        h = arguments.length,
         a =
-          n < 3
+          h < 3
             ? e
             : null === s
               ? (s = Object.getOwnPropertyDescriptor(e, i))
@@ -15,9 +15,9 @@ var SceneItemGravityComponent_1,
         a = Reflect.decorate(t, e, i, s);
       else
         for (var r = t.length - 1; 0 <= r; r--)
-          (h = t[r]) &&
-            (a = (n < 3 ? h(a) : 3 < n ? h(e, i, a) : h(e, i)) || a);
-      return 3 < n && a && Object.defineProperty(e, i, a), a;
+          (n = t[r]) &&
+            (a = (h < 3 ? n(a) : 3 < h ? n(e, i, a) : n(e, i)) || a);
+      return 3 < h && a && Object.defineProperty(e, i, a), a;
     };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneItemGravityComponent = void 0);
@@ -30,6 +30,7 @@ const Log_1 = require("../../../Core/Common/Log"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
   Global_1 = require("../../Global"),
+  LevelGeneralNetworks_1 = require("../../LevelGamePlay/LevelGeneralNetworks"),
   ModelManager_1 = require("../../Manager/ModelManager"),
   CHECK_DISTANCE_INTERVAL = 100;
 let SceneItemGravityComponent =
@@ -38,50 +39,50 @@ let SceneItemGravityComponent =
   ) {
     constructor() {
       super(...arguments),
-        (this.SIe = void 0),
+        (this.EIe = void 0),
         (this.Hte = void 0),
         (this.Lie = void 0),
         (this.mBe = void 0),
-        (this.xun = void 0),
-        (this.$0n = void 0),
-        (this.Y0n = 0),
-        (this.z0n = 0),
-        (this.wOn = 0),
-        (this.tfn = void 0),
+        (this._un = void 0),
+        (this.R0n = void 0),
+        (this.U0n = 0),
+        (this.P0n = 0),
+        (this.lFn = 0),
+        (this.B0n = void 0),
         (this.nxe = 1),
-        (this.ofn = -1),
-        (this.rfn = -1),
-        (this.nfn = !1),
-        (this.sfn = void 0),
-        (this.G_n = () => {
-          this.afn();
+        (this.q0n = -1),
+        (this.G0n = -1),
+        (this.N0n = !1),
+        (this.O0n = void 0),
+        (this.g_n = () => {
+          this.k0n();
         }),
-        (this.hfn = () => {
-          this.lfn("[SceneItemGravityComponent] 锁定属性改变");
+        (this.F0n = () => {
+          this.V0n("[SceneItemGravityComponent] 锁定属性改变");
         }),
-        (this.Qnn = () => {
-          this.lfn("[SceneItemGravityComponent] 场景交互物加载完毕");
+        (this.Rnn = () => {
+          this.V0n("[SceneItemGravityComponent] 场景交互物加载完毕");
         }),
-        (this._fn = (t, e) => {
+        (this.H0n = (t, e) => {
           var e = e.Entity;
           (e?.GetComponent(3) ?? !t) ||
-            (!1 !== this.$0n.StopTeleControlMove &&
-              ((t = e?.GetComponent(140)), (e = e?.GetComponent(182)), t) &&
+            (!1 !== this.R0n.StopTeleControlMove &&
+              ((t = e?.GetComponent(142)), (e = e?.GetComponent(185)), t) &&
               e?.IsAutonomousProxy &&
               t.ForceStopDropping());
         }),
-        (this.ufn = () => {
+        (this.j0n = () => {
           var t = Global_1.Global.BaseCharacter;
           t &&
             ((t = t.GetDistanceTo(this.Hte?.Owner)),
-            this.nfn && t > this.rfn
-              ? ((this.nfn = !1),
+            this.N0n && t > this.G0n
+              ? ((this.N0n = !1),
                 ModelManager_1.ModelManager.ManipulaterModel?.RemoveShowLandTipsCount(
                   this.Entity,
                 ))
-              : !this.nfn &&
-                t < this.ofn &&
-                ((this.nfn = !0),
+              : !this.N0n &&
+                t < this.q0n &&
+                ((this.N0n = !0),
                 ModelManager_1.ModelManager.ManipulaterModel?.AddShowLandTipsCount(
                   this.Entity,
                 )));
@@ -91,60 +92,72 @@ let SceneItemGravityComponent =
       t = t.GetParam(SceneItemGravityComponent_1)[0];
       return (
         !!t &&
-        ((this.SIe = this.Entity.CheckGetComponent(0)),
-        (this.$0n = t),
-        (this.z0n =
-          this.$0n.DownTime / MathUtils_1.MathUtils.MillisecondToSecond),
-        this.$0n.ShowLandTipRadius &&
-          ((this.ofn = this.$0n.ShowLandTipRadius.EnterRadius),
-          (this.rfn = this.$0n.ShowLandTipRadius.LeaveRadius)),
+        ((this.EIe = this.Entity.CheckGetComponent(0)),
+        (this.R0n = t),
+        (this.P0n =
+          this.R0n.DownTime / MathUtils_1.MathUtils.MillisecondToSecond),
+        this.R0n.ShowLandTipRadius &&
+          ((this.q0n = this.R0n.ShowLandTipRadius.EnterRadius),
+          (this.G0n = this.R0n.ShowLandTipRadius.LeaveRadius)),
         !0)
       );
     }
     OnStart() {
       return (
-        (this.Hte = this.Entity.CheckGetComponent(182)),
-        (this.Lie = this.Entity.CheckGetComponent(177)),
-        (this.mBe = this.Entity.CheckGetComponent(117)),
-        (this.xun = this.Entity.CheckGetComponent(115)),
+        (this.Hte = this.Entity.CheckGetComponent(185)),
+        (this.Lie = this.Entity.CheckGetComponent(180)),
+        (this.mBe = this.Entity.CheckGetComponent(119)),
+        (this._un = this.Entity.CheckGetComponent(117)),
         EventSystem_1.EventSystem.HasWithTarget(
           this.Entity,
           EventDefine_1.EEventName.OnEntityInOutRangeLocal,
-          this._fn,
+          this.H0n,
         ) ||
           EventSystem_1.EventSystem.AddWithTarget(
             this.Entity,
             EventDefine_1.EEventName.OnEntityInOutRangeLocal,
-            this._fn,
+            this.H0n,
           ),
         !0
       );
     }
     OnActivate() {
       return (
-        EventSystem_1.EventSystem.AddWithTarget(
+        EventSystem_1.EventSystem.HasWithTarget(
           this.Entity,
           EventDefine_1.EEventName.OnSceneItemStateChange,
-          this.G_n,
-        ),
-        0 !== this.mBe.State && this.G_n(),
+          this.g_n,
+        )
+          ? Log_1.Log.CheckError() &&
+            Log_1.Log.Error(
+              "Temp",
+              32,
+              "SceneItemGravityComponent.OnActivate: 重复添加事件",
+              ["PbDataId", this.EIe?.GetPbDataId()],
+            )
+          : EventSystem_1.EventSystem.AddWithTarget(
+              this.Entity,
+              EventDefine_1.EEventName.OnSceneItemStateChange,
+              this.g_n,
+            ),
+        0 !== this.mBe.State && this.g_n(),
         EventSystem_1.EventSystem.AddWithTarget(
           this.Entity,
           EventDefine_1.EEventName.OnSceneItemLockPropChange,
-          this.hfn,
+          this.F0n,
         ),
         this.Hte.GetIsSceneInteractionLoadCompleted()
-          ? this.lfn(
+          ? this.V0n(
               "[SceneItemGravityComponent] OnActivate:场景交互物加载完毕",
             )
           : EventSystem_1.EventSystem.OnceWithTarget(
               this.Entity,
               EventDefine_1.EEventName.OnSceneInteractionLoadCompleted,
-              this.Qnn,
+              this.Rnn,
             ),
-        this.$0n?.ShowLandTipRadius &&
-          (this.sfn = TimerSystem_1.TimerSystem.Forever(
-            this.ufn,
+        this.R0n?.ShowLandTipRadius &&
+          (this.O0n = TimerSystem_1.TimerSystem.Forever(
+            this.j0n,
             CHECK_DISTANCE_INTERVAL,
           )),
         !0
@@ -155,138 +168,145 @@ let SceneItemGravityComponent =
         EventSystem_1.EventSystem.HasWithTarget(
           this.Entity,
           EventDefine_1.EEventName.OnEntityInOutRangeLocal,
-          this._fn,
+          this.H0n,
         ) &&
           EventSystem_1.EventSystem.RemoveWithTarget(
             this.Entity,
             EventDefine_1.EEventName.OnEntityInOutRangeLocal,
-            this._fn,
+            this.H0n,
           ),
         EventSystem_1.EventSystem.HasWithTarget(
           this.Entity,
           EventDefine_1.EEventName.OnSceneItemLockPropChange,
-          this.hfn,
+          this.F0n,
         ) &&
           EventSystem_1.EventSystem.RemoveWithTarget(
             this.Entity,
             EventDefine_1.EEventName.OnSceneItemLockPropChange,
-            this.hfn,
+            this.F0n,
           ),
         EventSystem_1.EventSystem.HasWithTarget(
           this.Entity,
           EventDefine_1.EEventName.OnSceneItemStateChange,
-          this.G_n,
+          this.g_n,
         ) &&
           EventSystem_1.EventSystem.RemoveWithTarget(
             this.Entity,
             EventDefine_1.EEventName.OnSceneItemStateChange,
-            this.G_n,
+            this.g_n,
           ),
         EventSystem_1.EventSystem.HasWithTarget(
           this.Entity,
           EventDefine_1.EEventName.OnSceneInteractionLoadCompleted,
-          this.Qnn,
+          this.Rnn,
         ) &&
           EventSystem_1.EventSystem.RemoveWithTarget(
             this.Entity,
             EventDefine_1.EEventName.OnSceneInteractionLoadCompleted,
-            this.Qnn,
+            this.Rnn,
           ),
-        void 0 !== this.sfn &&
-          (TimerSystem_1.TimerSystem.Remove(this.sfn), (this.sfn = void 0)),
+        void 0 !== this.O0n &&
+          (TimerSystem_1.TimerSystem.Remove(this.O0n), (this.O0n = void 0)),
         !0
       );
     }
     OnTick(t) {
-      this.cfn(t * this.nxe);
+      this.W0n(t * this.nxe);
     }
     OnChangeTimeDilation(t) {
-      var e = this.Entity.GetComponent(107);
-      this.nxe = e ? t * e.CurrentTimeScale : 1;
+      var e = this.Entity.GetComponent(109);
+      (this.nxe = e ? t * e.CurrentTimeScale : 1),
+        LevelGeneralNetworks_1.LevelGeneralNetworks.CheckEntityCanPushTimeDilation(
+          this.EIe.GetEntityTimeScaleModifyStrategy(),
+        ) &&
+          LevelGeneralNetworks_1.LevelGeneralNetworks.PushEntityTimeDilation(
+            this.EIe.GetCreatureDataId(),
+            this.nxe,
+          );
     }
-    afn() {
+    k0n() {
       switch (this.mBe.State) {
         case 1:
           this.ChangeTransition(!0);
           break;
         case 2:
-          this.bOn(1);
+          this._Fn(1);
           break;
         case 4:
-          this.mfn("[SceneItemGravityComponent] 重力机关处于完成态");
+          this.K0n("[SceneItemGravityComponent] 重力机关处于完成态");
           break;
         case 5:
           this.Lie?.HasTag(-709838471) &&
-            this.mfn("[SceneItemGravityComponent] 重力机关处于静默态");
+            this.K0n("[SceneItemGravityComponent] 重力机关处于静默态");
       }
     }
     ChangeTransition(t) {
-      switch (this.Y0n) {
+      switch (this.U0n) {
         case 2:
         case 0:
-          t || this.bOn(3);
+          t || this._Fn(3);
           break;
         case 3:
         case 1:
-          t && this.bOn(2);
+          t && this._Fn(2);
       }
     }
-    bOn(t) {
-      this.Y0n !== t &&
+    _Fn(t) {
+      this.U0n !== t &&
         (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "SceneItem",
             40,
             "[SceneItemGravityComponent] ChangeAnimState",
-            ["PbDataId", this.SIe?.GetPbDataId()],
-            ["FromAnimState", this.Y0n],
+            ["PbDataId", this.EIe?.GetPbDataId()],
+            ["FromAnimState", this.U0n],
             ["ToAnimState", t],
           ),
-        this.tTn(this.Y0n, t),
-        (this.Y0n = t),
-        this.cfn(0));
+        this.MLn(this.U0n, t),
+        (this.U0n = t),
+        this.W0n(0));
     }
-    cfn(t = 0) {
-      if (this.dfn())
-        if (this.Cfn())
-          switch (this.Y0n) {
+    W0n(t = 0) {
+      if (this.Q0n())
+        if (this.X0n())
+          switch (this.U0n) {
             case 0:
-              this.gfn(t);
+              this.$0n(t);
               break;
             case 1:
-              this.ffn(t);
+              this.Y0n(t);
               break;
             case 2:
-              this.pfn(t);
+              this.J0n(t);
               break;
             case 3:
-              this.vfn(t);
+              this.z0n(t);
           }
         else
-          this.mfn(
+          this.K0n(
             "[SceneItemGravityComponent] 重力机关被停用(完成态或被锁定或静默)",
           );
-      else this.mfn("[SceneItemGravityComponent] 场景交互物未初始化");
+      else this.K0n("[SceneItemGravityComponent] 场景交互物未初始化");
     }
-    gfn(t) {
-      (this.wOn = 0), this.mfn("[SceneItemGravityComponent] 到达顶部");
+    $0n(t) {
+      (this.lFn = 0), this.K0n("[SceneItemGravityComponent] 到达顶部");
     }
-    ffn(t) {
-      (this.wOn = this.z0n), this.mfn("[SceneItemGravityComponent] 到达底部");
+    Y0n(t) {
+      (this.lFn = this.P0n), this.K0n("[SceneItemGravityComponent] 到达底部");
     }
-    pfn(t) {
-      (this.wOn = MathUtils_1.MathUtils.Clamp(this.wOn - t, 0, this.z0n)),
-        this.lfn("[SceneItemGravityComponent] 上升中"),
-        this.wOn <= 0 && this.bOn(0);
+    J0n(t) {
+      (this.lFn = MathUtils_1.MathUtils.Clamp(this.lFn - t, 0, this.P0n)),
+        this.V0n("[SceneItemGravityComponent] 上升中"),
+        this.lFn <= 0 && this._Fn(0);
     }
-    vfn(t) {
-      (this.wOn = MathUtils_1.MathUtils.Clamp(this.wOn + t, 0, this.z0n)),
-        this.lfn("[SceneItemGravityComponent] 下降中");
+    z0n(t) {
+      (this.lFn = MathUtils_1.MathUtils.Clamp(this.lFn + t, 0, this.P0n)),
+        this.V0n("[SceneItemGravityComponent] 下降中");
     }
-    tTn(t, e) {
-      this.Mfn(e), this.iTn(t, e);
+    MLn(t, e) {
+      this.Z0n(e), this.ELn(t, e);
     }
-    Mfn(s) {
+    Z0n(s) {
       if (this.Lie) {
         let e = void 0,
           i = void 0;
@@ -297,27 +317,27 @@ let SceneItemGravityComponent =
               3 === s
                 ? ((i = -223738243), 232332034)
                 : ((i = 232332034), -223738243);
-            var h = this.Lie.HasTag(i),
-              n = !this.Lie.HasTag(e);
-            if (!h && !n) break;
+            var n = this.Lie.HasTag(i),
+              h = !this.Lie.HasTag(e);
+            if (!n && !h) break;
             let t = void 0;
-            h &&
+            n &&
               ((t = this.Hte.GetActiveTagSequencePlaybackProgress(
                 GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(i),
               )),
               this.Lie.RemoveTag(i)),
-              n &&
+              h &&
                 (this.Lie.AddTag(e),
                 t &&
                   t < 1 &&
-                  ((h = MathUtils_1.MathUtils.Clamp(1 - t, 0, 1)),
+                  ((n = MathUtils_1.MathUtils.Clamp(1 - t, 0, 1)),
                   this.Hte.SetActiveTagSequencePlaybackProgress(
                     GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(e),
-                    h,
+                    n,
                   )),
                 this.Hte.SetActiveTagSequenceDurationTime(
                   GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(e),
-                  this.$0n.DownTime,
+                  this.R0n.DownTime,
                 ));
             break;
           }
@@ -336,7 +356,7 @@ let SceneItemGravityComponent =
         }
       }
     }
-    iTn(i, s) {
+    ELn(i, s) {
       if (this.Lie) {
         let t = void 0,
           e = void 0;
@@ -357,30 +377,36 @@ let SceneItemGravityComponent =
           t && !this.Lie.HasTag(t) && this.Lie.AddTag(t);
       }
     }
-    dfn() {
+    Q0n() {
       return !!this.Hte?.GetIsSceneInteractionLoadCompleted();
     }
-    Cfn() {
+    X0n() {
       return !(
-        !(this.mBe && this.xun && this.Lie) ||
+        !(this.mBe && this._un && this.Lie) ||
         this.mBe.IsInState(4) ||
-        this.xun.IsLocked ||
+        this._un.IsLocked ||
         this.Lie.HasTag(-709838471)
       );
     }
-    Sfn() {
-      return void 0 === this.tfn;
+    efn() {
+      return void 0 === this.B0n;
     }
-    lfn(t) {
-      !this.Sfn() && this.Enable(this.tfn, t) && (this.tfn = void 0);
+    V0n(t) {
+      !this.efn() && this.Enable(this.B0n, t) && (this.B0n = void 0);
     }
-    mfn(t) {
-      this.Sfn() && (this.tfn = this.Disable(t));
+    K0n(t) {
+      this.efn() && (this.B0n = this.Disable(t));
+    }
+    get ActivateActions() {
+      return this.R0n?.EnterActions;
+    }
+    get DeactivateActions() {
+      return this.R0n?.ExitActions;
     }
   });
 (SceneItemGravityComponent = SceneItemGravityComponent_1 =
   __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(136)],
+    [(0, RegisterComponent_1.RegisterComponent)(138)],
     SceneItemGravityComponent,
   )),
   (exports.SceneItemGravityComponent = SceneItemGravityComponent);

@@ -13,53 +13,68 @@ const UE = require("ue"),
   ElementPanel_1 = require("./ElementPanel"),
   RoguelikeSelectSpecialItem_1 = require("./RoguelikeSelectSpecialItem"),
   RogueSelectBaseView_1 = require("./RogueSelectBaseView"),
-  TopPanel_1 = require("./TopPanel");
+  TopPanel_1 = require("./TopPanel"),
+  RogueSelectResult_1 = require("../Define/RogueSelectResult");
 class RoguelikeSelectSpecialView extends RogueSelectBaseView_1.RogueSelectBaseView {
   constructor() {
     super(...arguments),
-      (this.Bao = void 0),
-      (this.cho = void 0),
-      (this.mho = void 0),
-      (this.dho = void 0),
-      (this.Cho = void 0),
-      (this.gho = void 0),
+      (this.Aho = void 0),
+      (this.llo = void 0),
+      (this._lo = void 0),
+      (this.ulo = void 0),
+      (this.clo = void 0),
+      (this.mlo = void 0),
       (this.OnDescModelChange = () => {
-        this.Mho();
+        this.flo();
       }),
-      (this.bao = () =>
-        new RoguelikeSelectSpecialItem_1.RoguelikeSelectSpecialItem(this.qao)),
-      (this.fho = () => {
-        this.dho.UseTime >= this.dho.MaxTime ||
+      (this.Pho = () =>
+        new RoguelikeSelectSpecialItem_1.RoguelikeSelectSpecialItem(this.xho)),
+      (this.dlo = () => {
+        this.ulo.UseTime >= this.ulo.MaxTime ||
           RoguelikeController_1.RoguelikeController.RoguelikeRefreshGainRequest(
-            this.dho.Index,
+            this.ulo.Index,
           );
       }),
-      (this.nNt = () => {
+      (this.sOt = () => {
         (ModelManager_1.ModelManager.RoguelikeModel.CurrentRogueGainEntry =
-          this.mho),
+          this._lo),
           RoguelikeController_1.RoguelikeController.RogueChooseDataResultRequest(
             8,
           );
       }),
-      (this.qao = (e, i) => {
-        this.cho === e
-          ? ((this.cho = void 0),
+      (this.xho = (e, i) => {
+        this.llo === e
+          ? ((this.llo = void 0),
             e.SetSelect(!1),
-            (this.mho = void 0),
-            this.gho.Refresh(void 0))
-          : (void 0 !== this.cho && this.cho.SetSelect(!1),
-            (this.cho = e).SetSelect(!0),
-            (this.mho = i),
-            this.gho.Refresh(i)),
-          this.pho();
+            (this._lo = void 0),
+            this.mlo.Refresh(void 0))
+          : (void 0 !== this.llo && this.llo.SetSelect(!1),
+            (this.llo = e).SetSelect(!0),
+            (this._lo = i),
+            this.mlo.Refresh(i)),
+          this.Clo();
       }),
-      (this.RoguelikeChooseDataResult = (e, i, t, s) => {
+      (this.RoguelikeChooseDataResult = (e, i, t, s, o) => {
         t &&
-          s === this.dho?.Index &&
+          s === this.ulo?.Index &&
           UiManager_1.UiManager.CloseAndOpenView(
             this.Info.Name,
             "RoguelikeSpecialDetailView",
-            e,
+            [
+              e,
+              RoguelikeController_1.RoguelikeController.CreateCloseViewCallBack(
+                o,
+                () => {
+                  var e = new RogueSelectResult_1.RogueSelectResult(
+                    ModelManager_1.ModelManager.RoguelikeModel.RogueInfo?.PhantomEntry,
+                    i,
+                    void 0,
+                  );
+                  e.GetNewUnlockAffixEntry().size <= 0 ||
+                    UiManager_1.UiManager.OpenView("CommonSelectResultView", e);
+                },
+              ),
+            ],
           );
       }),
       (this.RoguelikeRefreshGain = (e) => {
@@ -69,7 +84,7 @@ class RoguelikeSelectSpecialView extends RogueSelectBaseView_1.RogueSelectBaseVi
           ModelManager_1.ModelManager.RoguelikeModel.GetRoguelikeChooseDataById(
             e,
           );
-        (this.dho = e), (this.cho = void 0), (this.mho = void 0), this.Hqe();
+        (this.ulo = e), (this.llo = void 0), (this._lo = void 0), this.Hqe();
       });
   }
   OnRegisterComponent() {
@@ -84,47 +99,47 @@ class RoguelikeSelectSpecialView extends RogueSelectBaseView_1.RogueSelectBaseVi
       [7, UE.UIText],
     ]),
       (this.BtnBindInfo = [
-        [3, this.fho],
-        [4, this.nNt],
+        [3, this.dlo],
+        [4, this.sOt],
       ]);
   }
   async OnBeforeStartAsync() {
-    (this.Cho = new TopPanel_1.TopPanel()),
-      (this.Cho.CloseCallback = this.CloseMySelf),
-      this.AddChild(this.Cho),
-      await this.Cho.CreateThenShowByActorAsync(this.GetItem(0).GetOwner()),
-      (this.gho = new ElementPanel_1.ElementPanel()),
-      await this.gho.CreateThenShowByActorAsync(this.GetItem(1).GetOwner()),
-      await this.Cho.RefreshCurrency([RoguelikeDefine_1.INSIDE_CURRENCY_ID]);
+    (this.clo = new TopPanel_1.TopPanel()),
+      (this.clo.CloseCallback = this.CloseMySelf),
+      this.AddChild(this.clo),
+      await this.clo.CreateThenShowByActorAsync(this.GetItem(0).GetOwner()),
+      (this.mlo = new ElementPanel_1.ElementPanel()),
+      await this.mlo.CreateThenShowByActorAsync(this.GetItem(1).GetOwner()),
+      await this.clo.RefreshCurrency([RoguelikeDefine_1.INSIDE_CURRENCY_ID]);
   }
   OnStart() {
-    (this.dho = this.OpenParam),
-      void 0 === this.dho
+    (this.ulo = this.OpenParam),
+      void 0 === this.ulo
         ? Log_1.Log.CheckError() &&
           Log_1.Log.Error("Roguelike", 59, "RoguelikeSelectSpecialView无效输入")
-        : ((this.Bao = new GenericLayout_1.GenericLayout(
+        : ((this.Aho = new GenericLayout_1.GenericLayout(
             this.GetHorizontalLayout(2),
-            this.bao,
+            this.Pho,
           )),
           (ModelManager_1.ModelManager.RoguelikeModel.CurrentRogueGainEntry =
             void 0),
-          (this.Cho.CloseCallback = this.CloseMySelf),
+          (this.clo.CloseCallback = this.CloseMySelf),
           this.Hqe());
   }
   Hqe() {
-    this.vho(), this.Mho(), this.pho();
+    this.glo(), this.flo(), this.Clo();
   }
-  Mho() {
-    var e = this.dho.RogueGainEntryList;
-    this.Bao.RefreshByData(e);
+  flo() {
+    var e = this.ulo.RogueGainEntryList;
+    this.Aho.RefreshByData(e);
   }
-  vho() {
-    this.gho.Refresh();
+  glo() {
+    this.mlo.Refresh();
   }
-  pho() {
+  Clo() {
     var e,
-      i = this.dho.MaxTime,
-      t = i - this.dho.UseTime,
+      i = this.ulo.MaxTime,
+      t = i - this.ulo.UseTime,
       s = this.GetText(7),
       s =
         (t <= 0
@@ -141,19 +156,19 @@ class RoguelikeSelectSpecialView extends RogueSelectBaseView_1.RogueSelectBaseVi
               i,
             ),
         this.GetButton(3).RootUIComp.SetUIActive(0 < i),
-        this.GetButton(4).SetSelfInteractive(void 0 !== this.mho),
-        this.dho.CostCurrency);
+        this.GetButton(4).SetSelfInteractive(void 0 !== this._lo),
+        this.ulo.CostCurrency);
     0 < s.length &&
       ((i = s[0]),
       (e = (s =
         ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
-          i.Ekn,
-        ) >= i.I5n)
+          i.J4n,
+        ) >= i.o9n)
         ? "RogueSpecialRefreshCost"
         : "RogueSpecialRefreshCost_Not"),
-      LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(6), e, i.I5n),
+      LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(6), e, i.o9n),
       (e = ConfigManager_1.ConfigManager.RoguelikeConfig.GetRogueCurrencyConfig(
-        i.Ekn,
+        i.J4n,
       )),
       this.SetTextureByPath(e.IconSmall, this.GetTexture(5)),
       this.GetButton(3).SetSelfInteractive(0 < t && s));

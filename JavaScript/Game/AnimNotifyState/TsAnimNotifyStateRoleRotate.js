@@ -23,9 +23,9 @@ class TsAnimNotifyStateRoleRotate extends UE.KuroAnimNotifyState {
       t = t.GetEntityNoBlueprint();
       if (!t?.Valid) return !1;
       if (this.在横板模式中禁用) {
-        if (t.GetComponent(95)?.Active) return !1;
+        if (t.GetComponent(97)?.Active) return !1;
       } else if (this.只在横板模式中生效)
-        if (!t.GetComponent(95)?.Active) return !1;
+        if (!t.GetComponent(97)?.Active) return !1;
       t = t.GetComponent(33);
       if (t?.Valid)
         return t.SetSkillRotateToTarget(this.是否自动朝向目标, !1, 0), !0;
@@ -41,9 +41,9 @@ class TsAnimNotifyStateRoleRotate extends UE.KuroAnimNotifyState {
       var r = t.CharacterActorComponent?.Entity;
       if (!r?.Valid) return !1;
       if (this.在横板模式中禁用) {
-        if (r.GetComponent(95)?.Active) return !1;
+        if (r.GetComponent(97)?.Active) return !1;
       } else if (this.只在横板模式中生效)
-        if (!r.GetComponent(95)?.Active) return !1;
+        if (!r.GetComponent(97)?.Active) return !1;
       r = r?.GetComponent(33);
       if (!r?.Valid) return !1;
       if (this.是否自动朝向目标)

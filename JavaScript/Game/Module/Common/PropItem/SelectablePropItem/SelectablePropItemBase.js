@@ -9,54 +9,54 @@ class SelectablePropItemBase extends GridProxyAbstract_1.GridProxyAbstract {
     super(),
       (this.PropData = void 0),
       (this.OnToggleClick = (e) => {}),
-      (this.Wwt = void 0),
+      (this.XBt = void 0),
       (this.ComponentType = e);
   }
   OnRegisterComponent() {
     0 === this.ComponentType
-      ? (this.Wwt = new SelectablePropTypeOne_1.SelectablePropTypeOne(
+      ? (this.XBt = new SelectablePropTypeOne_1.SelectablePropTypeOne(
           this.RootItem,
         ))
       : 1 === this.ComponentType &&
-        (this.Wwt =
+        (this.XBt =
           new SelectablePropTypeItemVariantSelect_1.SelectablePropTypeItemVariantSelect(
             this.RootItem,
           )),
-      this.Wwt.SetToggleClick(this.OnToggleClick);
+      this.XBt.SetToggleClick(this.OnToggleClick);
   }
   GetSelectItem() {
-    return this.Wwt.GetSelectItem();
+    return this.XBt.GetSelectItem();
   }
   GetReduceButton() {
-    return this.Wwt.GetReduceButton();
+    return this.XBt.GetReduceButton();
   }
   GetControlItem() {
-    return this.Wwt.GetControlItem();
+    return this.XBt.GetControlItem();
   }
   GetFinishSelectItem() {
-    return this.Wwt.GetFinishSelectItem();
+    return this.XBt.GetFinishSelectItem();
   }
   GetSelectNumberText() {
-    return this.Wwt.GetSelectNumberText();
+    return this.XBt.GetSelectNumberText();
   }
   GetSelectableToggle() {
-    return this.Wwt.GetSelectableToggle();
+    return this.XBt.GetSelectableToggle();
   }
   SetRoleIconState() {
-    this.Wwt.SetRoleIconState();
+    this.XBt.SetRoleIconState();
   }
   ShowDefaultDownText() {
-    this.Wwt instanceof
+    this.XBt instanceof
       SelectablePropTypeItemVariantSelect_1.SelectablePropTypeItemVariantSelect &&
-      this.Wwt.ShowDefaultDownText();
+      this.XBt.ShowDefaultDownText();
   }
   RefreshRightDownLockSprite(e) {
-    this.Wwt instanceof
+    this.XBt instanceof
       SelectablePropTypeItemVariantSelect_1.SelectablePropTypeItemVariantSelect &&
-      this.Wwt.RefreshRightDownLockSprite(e);
+      this.XBt.RefreshRightDownLockSprite(e);
   }
   Refresh(e, t, r) {
-    (this.PropData = e), this.Wwt.Refresh(e, t, r), this.OnRefresh(t, r);
+    (this.PropData = e), this.XBt.Refresh(e, t, r), this.OnRefresh(t, r);
   }
   OnRefresh(e, t) {}
   Clear() {}

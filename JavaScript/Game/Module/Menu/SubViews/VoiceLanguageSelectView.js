@@ -11,13 +11,13 @@ const LanguageUpdateManager_1 = require("../../../../Launcher/Update/LanguageUpd
 class VoiceLanguageSelectView extends LanguageSettingViewBase_1.LanguageSettingViewBase {
   constructor() {
     super(...arguments),
-      (this.bwi = () => {
+      (this.bBi = () => {
         this.CloseMe();
       }),
-      (this.Gwi = () => {
+      (this.GBi = () => {
         switch (this.SelectedToggle.Updater.Status) {
           case 2:
-            (this.IsConfirm = !0), this.bwi();
+            (this.IsConfirm = !0), this.bBi();
             break;
           case 0:
           case 1:
@@ -25,7 +25,7 @@ class VoiceLanguageSelectView extends LanguageSettingViewBase_1.LanguageSettingV
               MenuController_1.MenuController.GetTargetMenuData(53),
               void 0,
             ]),
-              this.bwi();
+              this.bBi();
         }
       });
   }
@@ -33,8 +33,8 @@ class VoiceLanguageSelectView extends LanguageSettingViewBase_1.LanguageSettingV
     var e =
       LanguageUpdateManager_1.LanguageUpdateManager.GetAllLanguageTypeForAudio();
     this.ScrollView.RefreshByData(e.sort((e, t) => e - t)),
-      this.CancelButton.SetFunction(this.bwi),
-      this.ConfirmButton.SetFunction(this.Gwi),
+      this.CancelButton.SetFunction(this.bBi),
+      this.ConfirmButton.SetFunction(this.GBi),
       this.ConfirmButton.SetLocalText("PowerConfirm");
   }
   CreateToggle(e, t, a) {

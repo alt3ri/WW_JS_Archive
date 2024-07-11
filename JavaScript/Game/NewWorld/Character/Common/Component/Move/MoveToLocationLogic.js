@@ -27,82 +27,89 @@ const UE = require("ue"),
   PER_TICK_MIN_MOVE_SPEED = 30;
 class MoveToLocationController {
   constructor(t, i) {
-    (this.QPn = void 0),
-      (this.$Pn = void 0),
-      (this.XPn = void 0),
+    (this.Kbn = void 0),
+      (this.Qbn = void 0),
+      (this.Xbn = void 0),
       (this.Hte = void 0),
+      (this.mBe = void 0),
+      (this.jye = Vector_1.Vector.Create()),
       (this.Hte = t.GetComponent(3)),
-      (this.$Pn = new MoveToLocation()),
-      this.$Pn.Init(t),
-      (this.XPn = i);
+      (this.mBe = t.GetComponent(91)),
+      (this.Qbn = new MoveToLocation()),
+      this.Qbn.Init(t),
+      (this.Xbn = i);
   }
   UpdateMove(t) {
-    this.XPn?.IsRunning
-      ? this.XPn?.UpdateMove(t)
-      : void 0 !== this.$Pn?.GetCurrentMoveToLocation() &&
-        this.$Pn?.UpdateMove(t);
+    this.Xbn?.IsRunning
+      ? this.Xbn?.UpdateMove(t)
+      : void 0 !== this.Qbn?.GetCurrentMoveToLocation() &&
+        this.Qbn?.UpdateMove(t);
   }
   IsMoving() {
     return (
-      this.XPn?.IsRunning || void 0 !== this.$Pn?.GetCurrentMoveToLocation()
+      this.Xbn?.IsRunning || void 0 !== this.Qbn?.GetCurrentMoveToLocation()
     );
   }
   IsMovingToLocation() {
-    return void 0 !== this.$Pn?.GetCurrentMoveToLocation();
+    return void 0 !== this.Qbn?.GetCurrentMoveToLocation();
   }
   MoveEnd(t) {
-    this.XPn?.IsRunning && this.XPn.MoveEnd(t),
-      void 0 !== this.$Pn?.GetCurrentMoveToLocation() &&
-        (this.$Pn.MoveEnd(t), (this.QPn = void 0));
+    this.Xbn?.IsRunning && this.Xbn.MoveEnd(t),
+      void 0 !== this.Qbn?.GetCurrentMoveToLocation() &&
+        (this.Qbn.MoveEnd(t), (this.Kbn = void 0));
   }
   StopMove() {
-    this.XPn?.IsRunning && this.XPn.StopMove(),
-      void 0 !== this.$Pn?.GetCurrentMoveToLocation() &&
-        (this.$Pn.StopMove(), (this.QPn = void 0));
+    this.Xbn?.IsRunning && this.Xbn.StopMove(),
+      void 0 !== this.Qbn?.GetCurrentMoveToLocation() &&
+        (this.Qbn.StopMove(), (this.Kbn = void 0));
   }
   StopMoveAlongPath() {
-    this.XPn?.StopMove();
+    this.Xbn?.StopMove();
   }
   StopMoveToLocation() {
-    this.$Pn.StopMove(), (this.QPn = void 0);
+    this.Qbn.StopMove(), (this.Kbn = void 0);
   }
   Dispose() {
-    this.XPn?.Dispose(), this.$Pn?.Dispose();
+    this.Xbn?.Dispose(), this.Qbn?.Dispose();
   }
   GetCurrentToLocation() {
-    return this.XPn?.IsRunning
-      ? this.XPn.CurrentToLocation
-      : void 0 !== this.$Pn?.GetLastMoveToLocation()
-        ? this.$Pn.GetLastMoveToLocation()
+    return this.Xbn?.IsRunning
+      ? this.Xbn.CurrentToLocation
+      : void 0 !== this.Qbn?.GetLastMoveToLocation()
+        ? this.Qbn.GetLastMoveToLocation()
         : void 0;
   }
   MoveToLocation(t, i = !0) {
     var s, o;
     return (
-      !!this.$Pn &&
+      !!this.Qbn &&
       ((s = this.Hte.ActorLocationProxy),
       (o = t.Distance ?? MoveToPointConfig.DefaultDistance),
       Vector_1.Vector.Dist2D(s, t.Position) < o ||
-        (i && this.YPn(),
+        (i && this.$bn(),
         t.CallbackList || (t.CallbackList = []),
         t.CallbackList.push((t) => {
           this.ZLe(t);
         }),
-        this.$Pn.SetMoveToLocation(t)))
+        this.Qbn.SetMoveToLocation(t)))
     );
   }
   NavigateMoveToLocation(i, t, s = !0) {
-    if (!this.$Pn) return !1;
+    if (!this.Qbn) return !1;
     2 === this.Hte?.WanderDirectionType &&
       (i.MoveState = CharacterUnifiedStateTypes_1.ECharMoveState.Walk),
-      (this.QPn = []);
+      (this.Kbn = []);
     var o = [],
       h = this.Hte.ActorLocationProxy,
       e = i.Distance ?? MoveToPointConfig.DefaultDistance;
     if (Vector_1.Vector.Dist2D(h, i.Position) < e) return !0;
+    this.jye.DeepCopy(h),
+      this.mBe?.PositionState ===
+        CharacterUnifiedStateTypes_1.ECharPositionState.Ground &&
+        (this.jye.Z -= this.Hte.HalfHeight);
     var r = AiContollerLibrary_1.AiControllerLibrary.NavigationFindPath(
       this.Hte.Owner.GetWorld(),
-      h.ToUeVector(),
+      this.jye.ToUeVector(),
       i.Position.ToUeVector(),
       o,
       !0,
@@ -120,28 +127,28 @@ class MoveToLocationController {
           ),
         !1
       );
-    if ((s && this.YPn(), 0 < o.length)) {
+    if ((s && this.$bn(), 0 < o.length)) {
       Vector_1.Vector.Dist2D(o[0], h) > e &&
-        this.QPn.push(MoveToPointConfig.GetTempMovePointConfig(o[0], i));
+        this.Kbn.push(MoveToPointConfig.GetTempMovePointConfig(o[0], i));
       for (let t = 1; t < o.length; t++)
-        this.QPn.push(MoveToPointConfig.GetTempMovePointConfig(o[t], i));
+        this.Kbn.push(MoveToPointConfig.GetTempMovePointConfig(o[t], i));
     }
-    0 < this.QPn.length
-      ? ((r = this.QPn.length - 1),
-        this.QPn[r].CallbackList || (this.QPn[r].CallbackList = []),
-        this.QPn[r].CallbackList.push((t) => {
+    0 < this.Kbn.length
+      ? ((r = this.Kbn.length - 1),
+        this.Kbn[r].CallbackList || (this.Kbn[r].CallbackList = []),
+        this.Kbn[r].CallbackList.push((t) => {
           this.ZLe(t);
         }))
-      : this.QPn.push(i);
-    for (let t = 0; t < this.QPn.length - 1; t++) {
+      : this.Kbn.push(i);
+    for (let t = 0; t < this.Kbn.length - 1; t++) {
       var a = t + 1;
-      this.QPn[t].NextMovePointConfig = this.QPn[a];
+      this.Kbn[t].NextMovePointConfig = this.Kbn[a];
     }
-    return this.$Pn.SetMoveToLocation(this.QPn[0]);
+    return this.Qbn.SetMoveToLocation(this.Kbn[0]);
   }
-  YPn() {
-    void 0 !== this.$Pn?.GetCurrentMoveToLocation() &&
-      (this.$Pn.StopMove(), Log_1.Log.CheckWarn()) &&
+  $bn() {
+    void 0 !== this.Qbn?.GetCurrentMoveToLocation() &&
+      (this.Qbn.StopMove(), Log_1.Log.CheckWarn()) &&
       Log_1.Log.Warn(
         "AI",
         43,
@@ -151,7 +158,7 @@ class MoveToLocationController {
       );
   }
   ZLe(t) {
-    this.QPn = void 0;
+    this.Kbn = void 0;
   }
 }
 (exports.MoveToLocationController = MoveToLocationController).DebugDraw = !1;
@@ -161,45 +168,45 @@ class MoveToLocation {
       (this.Hte = void 0),
       (this.oRe = void 0),
       (this.mBe = void 0),
-      (this.Fuo = Rotator_1.Rotator.Create()),
+      (this.Gco = Rotator_1.Rotator.Create()),
       (this.jye = Vector_1.Vector.Create()),
       (this.RTe = Vector_1.Vector.Create()),
-      (this.JPn = Vector_1.Vector.Create()),
-      (this.QYo = Quat_1.Quat.Create()),
+      (this.Ybn = Vector_1.Vector.Create()),
+      (this.jJo = Quat_1.Quat.Create()),
       (this.mie = 0),
-      (this.nDi = -0),
-      (this.XYo = Vector_1.Vector.Create()),
+      (this.nRi = -0),
+      (this.WJo = Vector_1.Vector.Create()),
       (this.wDe = 0),
-      (this.$Yo = Vector_1.Vector.Create(0, 0, 0)),
-      (this.zPn = Vector_1.Vector.Create(0, 0, 0)),
-      (this.ZPn = void 0),
-      (this.ewn = Vector_1.Vector.Create(0, 0, 0)),
-      (this.fYo = 0),
-      (this.pYo = 0),
-      (this.eJo = void 0),
-      (this.twn = void 0);
+      (this.KJo = Vector_1.Vector.Create(0, 0, 0)),
+      (this.Jbn = Vector_1.Vector.Create(0, 0, 0)),
+      (this.zbn = void 0),
+      (this.Zbn = Vector_1.Vector.Create(0, 0, 0)),
+      (this.dJo = 0),
+      (this.CJo = 0),
+      (this.JJo = void 0),
+      (this.tqn = void 0);
   }
   GetCurrentMoveToLocation() {
-    return this.ZPn?.Position ?? void 0;
+    return this.zbn?.Position ?? void 0;
   }
   GetLastMoveToLocation() {
-    let t = this.ZPn;
-    for (; t && t?.NextMovePointConfig; ) t = this.ZPn?.NextMovePointConfig;
+    let t = this.zbn;
+    for (; t && t?.NextMovePointConfig; ) t = this.zbn?.NextMovePointConfig;
     return t?.Position ?? void 0;
   }
   Init(t) {
     (this.Jh = t),
       (this.Hte = this.Jh.GetComponent(3)),
-      (this.mBe = this.Jh.GetComponent(89)),
-      (this.oRe = this.Jh.GetComponent(160)),
+      (this.mBe = this.Jh.GetComponent(91)),
+      (this.oRe = this.Jh.GetComponent(162)),
       (this.wDe = this.Hte.CreatureData.GetPbDataId()),
-      this.tJo();
+      this.zJo();
   }
   SetMoveToLocation(t) {
     return (
       !!t &&
       (this.ht(),
-      this.iwn(t),
+      this.iqn(t),
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "AI",
@@ -213,29 +220,29 @@ class MoveToLocation {
     );
   }
   UpdateMove(t) {
-    this.ZPn &&
+    this.zbn &&
       (MoveToLocationController.DebugDraw &&
         GlobalData_1.GlobalData.IsPlayInEditor &&
-        this.DYo(),
+        this.IJo(),
       (this.mie += t),
-      1 < this.mie && ((this.mie = 0), this.LYo()),
+      1 < this.mie && ((this.mie = 0), this.yJo()),
       this.UpdateMoveToDirection()
-        ? (!this.rwn() ||
-            (this.ZPn.ResetCondition && !this.ZPn.ResetCondition()) ||
-            this.own(t, !1),
+        ? (!this.rqn() ||
+            (this.zbn.ResetCondition && !this.zbn.ResetCondition()) ||
+            this.oqn(t, !1),
           this.MoveEnd(1))
-        : this.ZPn.ReturnTimeoutFailed &&
+        : this.zbn.ReturnTimeoutFailed &&
           t > MathCommon_1.MathCommon.KindaSmallNumber &&
-          this.xYo(t));
+          this.UJo(t));
   }
   Dispose() {
     this.StopMove();
   }
-  xYo(t) {
-    var i = this.nDi;
-    if (Math.abs(this.pYo - i) / t > PER_TICK_MIN_MOVE_SPEED || 0 === this.pYo)
-      this.fYo = this.ZPn.ReturnTimeoutFailed;
-    else if (((this.fYo -= t), this.fYo <= 0))
+  UJo(t) {
+    var i = this.nRi;
+    if (Math.abs(this.CJo - i) / t > PER_TICK_MIN_MOVE_SPEED || 0 === this.CJo)
+      this.dJo = this.zbn.ReturnTimeoutFailed;
+    else if (((this.dJo -= t), this.dJo <= 0))
       return (
         Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
@@ -244,54 +251,54 @@ class MoveToLocation {
             "检测到移动行为不符合预期,持续卡住超时,返回移动失败",
             ["PbDataId", this.wDe],
             ["EntityId", this.Jh.Id],
-            ["超时时限", this.ZPn.ReturnTimeoutFailed],
+            ["超时时限", this.zbn.ReturnTimeoutFailed],
           ),
         void this.MoveEnd(2)
       );
-    this.pYo = i;
+    this.CJo = i;
   }
   UpdateMoveToDirection() {
     var t;
     return (
-      this.oJo(),
-      !!this.rJo() ||
-        (this.XYo.Normalize(),
+      this.ezo(),
+      !!this.tzo() ||
+        (this.WJo.Normalize(),
         this.mBe &&
         this.mBe.PositionState ===
           CharacterUnifiedStateTypes_1.ECharPositionState.Climb
-          ? (this.QYo.DeepCopy(this.Hte.ActorQuatProxy),
-            this.QYo.Inverse(this.QYo),
-            this.QYo.RotateVector(this.XYo, this.XYo),
-            this.Hte.SetInputDirect(this.XYo))
-          : ((t = this.ZPn.TurnSpeed),
+          ? (this.jJo.DeepCopy(this.Hte.ActorQuatProxy),
+            this.jJo.Inverse(this.jJo),
+            this.jJo.RotateVector(this.WJo, this.WJo),
+            this.Hte.SetInputDirect(this.WJo))
+          : ((t = this.zbn.TurnSpeed),
             this.Hte.SetOverrideTurnSpeed(t),
             this.mBe &&
             this.mBe.MoveState ===
               CharacterUnifiedStateTypes_1.ECharMoveState.Walk
-              ? (this.ZPn.FaceToPosition &&
-                  (this.JPn.DeepCopy(this.ZPn.FaceToPosition),
-                  this.JPn.SubtractionEqual(this.Hte.ActorLocationProxy)),
+              ? (this.zbn.FaceToPosition &&
+                  (this.Ybn.DeepCopy(this.zbn.FaceToPosition),
+                  this.Ybn.SubtractionEqual(this.Hte.ActorLocationProxy)),
                 AiContollerLibrary_1.AiControllerLibrary.InputNearestDirection(
                   this.Hte,
-                  this.XYo,
-                  this.QYo,
+                  this.WJo,
+                  this.jJo,
                   this.RTe,
-                  this.ZPn.TurnSpeed,
-                  this.ZPn.UseNearestDirection,
-                  this.ZPn.FaceToPosition ? this.JPn : void 0,
+                  this.zbn.TurnSpeed,
+                  this.zbn.UseNearestDirection,
+                  this.zbn.FaceToPosition ? this.Ybn : void 0,
                 ))
               : (AiContollerLibrary_1.AiControllerLibrary.TurnToDirect(
                   this.Hte,
-                  this.XYo,
+                  this.WJo,
                   t,
-                  this.ZPn.IsFly,
+                  this.zbn.IsFly,
                 ),
                 this.Hte.SetInputDirect(this.Hte.ActorForwardProxy))),
         !1)
     );
   }
   StopMove() {
-    this.ZPn &&
+    this.zbn &&
       (Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "AI",
@@ -302,74 +309,74 @@ class MoveToLocation {
         ),
       this.ht(),
       this.Hte.ClearInput(),
-      this.ZPn?.Clear(),
-      (this.ZPn = void 0));
+      this.zbn?.Clear(),
+      (this.zbn = void 0));
   }
   MoveEnd(t) {
-    var i = this.ZPn?.NextMovePointConfig ?? void 0;
-    this.ZPn?.RunCallbackList(t),
+    var i = this.zbn?.NextMovePointConfig ?? void 0;
+    this.zbn?.RunCallbackList(t),
       this.ht(),
       i
-        ? this.iwn(i)
-        : (this.StopMove(), this.ZPn?.Clear(), (this.ZPn = void 0));
+        ? this.iqn(i)
+        : (this.StopMove(), this.zbn?.Clear(), (this.zbn = void 0));
   }
-  iwn(t) {
-    this.zPn.DeepCopy(this.Hte.ActorLocationProxy),
+  iqn(t) {
+    this.Jbn.DeepCopy(this.Hte.ActorLocationProxy),
       t instanceof MoveToPointConfig
-        ? (this.ZPn = t)
-        : this.ZPn
-          ? this.ZPn.DeepCopy(t)
-          : (this.ZPn = new MoveToPointConfig(t, this.ewn));
+        ? (this.zbn = t)
+        : this.zbn
+          ? this.zbn.DeepCopy(t)
+          : (this.zbn = new MoveToPointConfig(t, this.Zbn));
   }
   ht() {
-    (this.fYo = 0), (this.pYo = 0), this.zPn.Reset(), this.$Yo.Reset();
+    (this.dJo = 0), (this.CJo = 0), this.Jbn.Reset(), this.KJo.Reset();
   }
-  oJo() {
-    this.XYo.DeepCopy(this.ZPn.Position),
-      this.XYo.SubtractionEqual(this.Hte.ActorLocationProxy),
-      this.ZPn.IsFly || (this.XYo.Z = 0),
-      (this.nDi = this.XYo.Size());
+  ezo() {
+    this.WJo.DeepCopy(this.zbn.Position),
+      this.WJo.SubtractionEqual(this.Hte.ActorLocationProxy),
+      this.zbn.IsFly || (this.WJo.Z = 0),
+      (this.nRi = this.WJo.Size());
   }
-  rJo() {
-    if (this.nDi <= this.ZPn.Distance) return !0;
-    this.ZPn.Position.Subtraction(this.zPn, this.jye),
+  tzo() {
+    if (this.nRi <= this.zbn.Distance) return !0;
+    this.zbn.Position.Subtraction(this.Jbn, this.jye),
       (this.jye.Z = 0),
-      this.RTe.DeepCopy(this.XYo),
+      this.RTe.DeepCopy(this.WJo),
       (this.RTe.Z = 0);
     var t = this.RTe.DotProduct(this.jye);
     return (
       t < 0 &&
-        (this.nwn(), Log_1.Log.CheckDebug()) &&
+        (this.nqn(), Log_1.Log.CheckDebug()) &&
         Log_1.Log.Debug(
           "AI",
           43,
           "经过了目标位置",
           ["PbDataId", this.wDe],
           ["EntityId", this.Jh.Id],
-          ["distance", this.nDi],
+          ["distance", this.nRi],
           ["dotProduct", t],
         ),
       t < 0
     );
   }
-  LYo() {
+  yJo() {
     var t,
-      i = this.Jh.GetComponent(36);
+      i = this.Jh.GetComponent(37);
     i &&
-      ((t = this.ZPn.MoveSpeed),
-      this.ZPn.IsFly
+      ((t = this.zbn.MoveSpeed),
+      this.zbn.IsFly
         ? (i.CharacterMovement.SetMovementMode(5), t && i.SetMaxSpeed(t))
         : (t && i.SetMaxSpeed(t),
-          (i = this.ZPn.MoveState) &&
+          (i = this.zbn.MoveState) &&
             CharacterUnifiedStateTypes_1.legalMoveStates
               .get(this.mBe.PositionState)
               .has(i) &&
             this.mBe.SetMoveState(i)));
   }
-  nwn() {
-    this.jye.DeepCopy(this.ZPn.Position),
-      this.ZPn.IsFly || (this.jye.Z += this.Hte.HalfHeight),
-      this.$Yo.DeepCopy(this.jye),
+  nqn() {
+    this.jye.DeepCopy(this.zbn.Position),
+      this.zbn.IsFly || (this.jye.Z += this.Hte.HalfHeight),
+      this.KJo.DeepCopy(this.jye),
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "AI",
@@ -377,11 +384,11 @@ class MoveToLocation {
           "更新LastPatrolPoint",
           ["PbDataId", this.wDe],
           ["EntityId", this.Jh.Id],
-          ["LastPatrolPoint", this.$Yo],
+          ["LastPatrolPoint", this.KJo],
           ["CurrentPoint", this.Hte.ActorLocationProxy],
         );
   }
-  own(t, i) {
+  oqn(t, i) {
     var s;
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
@@ -391,23 +398,23 @@ class MoveToLocation {
         ["PbDataId", this.wDe],
         ["EntityId", this.Jh.Id],
         ["deltaSeconds", t],
-        ["LastPatrolPoint", this.$Yo],
+        ["LastPatrolPoint", this.KJo],
         ["CurrentPoint", this.Hte.ActorLocationProxy],
         [
           "Distance",
-          Vector_1.Vector.Dist2D(this.$Yo, this.Hte.ActorLocationProxy),
+          Vector_1.Vector.Dist2D(this.KJo, this.Hte.ActorLocationProxy),
         ],
       ),
       this.oRe?.MainAnimInstance?.ConsumeExtractedRootMotion(1),
       this.Hte.ClearInput(),
       this.oRe && this.Jh.GetTickInterval() <= 1
         ? ((s = this.oRe.GetMeshTransform()),
-          this.aJo(i),
+          this.rzo(i),
           this.oRe.SetModelBuffer(
             s,
             t * CommonDefine_1.MILLIONSECOND_PER_SECOND,
           ))
-        : this.aJo(i),
+        : this.rzo(i),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "AI",
@@ -418,37 +425,37 @@ class MoveToLocation {
           ["ActorLocation", this.Hte.ActorLocationProxy],
           [
             "Distance",
-            Vector_1.Vector.Dist2D(this.$Yo, this.Hte.ActorLocationProxy),
+            Vector_1.Vector.Dist2D(this.KJo, this.Hte.ActorLocationProxy),
           ],
         ),
-      this.$Yo.Set(0, 0, 0);
+      this.KJo.Set(0, 0, 0);
   }
-  aJo(t) {
-    this.ZPn.IsFly || this.hJo(this.$Yo, this.$Yo),
+  rzo(t) {
+    this.zbn.IsFly || this.nzo(this.KJo, this.KJo),
       t
-        ? (this.jye.DeepCopy(this.XYo),
-          this.jye.ToOrientationRotator(this.Fuo),
+        ? (this.jye.DeepCopy(this.WJo),
+          this.jye.ToOrientationRotator(this.Gco),
           this.Hte.SetActorLocationAndRotation(
-            this.$Yo.ToUeVector(),
-            this.Fuo.ToUeRotator(),
+            this.KJo.ToUeVector(),
+            this.Gco.ToUeRotator(),
             "拉回目标点设置坐标",
             !0,
           ))
         : this.Hte.SetActorLocation(
-            this.$Yo.ToUeVector(),
+            this.KJo.ToUeVector(),
             "拉回目标点设置坐标",
             !0,
           );
   }
-  rwn() {
+  rqn() {
     return !(
-      this.$Yo.Size() < 1 ||
-      (Vector_1.Vector.Dist2D(this.$Yo, this.Hte.ActorLocationProxy) <
-        this.ZPn.Distance + RESET_LOCATION_TOLERANCE &&
-        (this.$Yo.Set(0, 0, 0), 1))
+      this.KJo.Size() < 1 ||
+      (Vector_1.Vector.Dist2D(this.KJo, this.Hte.ActorLocationProxy) <
+        this.zbn.Distance + RESET_LOCATION_TOLERANCE &&
+        (this.KJo.Set(0, 0, 0), 1))
     );
   }
-  tJo() {
+  zJo() {
     var t = UE.NewObject(UE.TraceSphereElement.StaticClass());
     (t.bIsSingle = !1),
       (t.bIgnoreSelf = !0),
@@ -461,16 +468,16 @@ class MoveToLocation {
         t,
         ColorUtils_1.ColorUtils.LinearRed,
       ),
-      (this.eJo = t);
+      (this.JJo = t);
   }
-  hJo(t, h) {
+  nzo(t, h) {
     this.jye.DeepCopy(t), (this.jye.Z += this.Hte.HalfHeight);
     var i = this.jye,
       t =
         (this.RTe.DeepCopy(t),
         (this.RTe.Z += CharacterActorComponent_1.FIX_SPAWN_TRACE_HEIGHT),
         this.RTe),
-      s = this.eJo;
+      s = this.JJo;
     (s.WorldContextObject = this.Hte.Actor),
       (s.Radius = this.Hte.ScaledRadius),
       TraceElementCommon_1.TraceElementCommon.SetStartLocation(s, i),
@@ -521,37 +528,37 @@ class MoveToLocation {
           ),
         (r.Z += this.Hte.ScaledHalfHeight - this.Hte.ScaledRadius),
         (r.Z += FIX_LOCATION_TOLERANCE),
-        this.eJo &&
-          ((this.eJo.WorldContextObject = void 0),
-          this.eJo.ActorsToIgnore.Empty()),
+        this.JJo &&
+          ((this.JJo.WorldContextObject = void 0),
+          this.JJo.ActorsToIgnore.Empty()),
         h.DeepCopy(r),
         !0
       );
     }
     return (
-      this.eJo &&
-        ((this.eJo.WorldContextObject = void 0),
-        this.eJo.ActorsToIgnore.Empty()),
+      this.JJo &&
+        ((this.JJo.WorldContextObject = void 0),
+        this.JJo.ActorsToIgnore.Empty()),
       !1
     );
   }
-  DYo() {
-    if (this.ZPn && GlobalData_1.GlobalData.IsPlayInEditor) {
-      this.twn ||
-        (this.twn = new UE.LinearColor(
+  IJo() {
+    if (this.zbn && GlobalData_1.GlobalData.IsPlayInEditor) {
+      this.tqn ||
+        (this.tqn = new UE.LinearColor(
           0.5 < Math.random() ? 0 : 1,
           0.5 < Math.random() ? 0 : 1,
           0.5 < Math.random() ? 0 : 1,
           0,
         ));
-      let t = this.ZPn;
+      let t = this.zbn;
       for (
         UE.KismetSystemLibrary.DrawDebugSphere(
           GlobalData_1.GlobalData.World,
           this.Hte.ActorLocation,
           30,
           10,
-          this.twn,
+          this.tqn,
         );
         t;
 
@@ -562,7 +569,7 @@ class MoveToLocation {
           i.ToUeVector(),
           30,
           10,
-          this.twn,
+          this.tqn,
         ),
           (t = t.NextMovePointConfig);
       }
@@ -572,7 +579,7 @@ class MoveToLocation {
 exports.MoveToLocation = MoveToLocation;
 class MoveToPointConfig {
   constructor(t, i) {
-    (this.swn = void 0),
+    (this.sqn = void 0),
       (this.IsFly = !1),
       (this.ReturnTimeoutFailed = 0),
       (this.Distance = MoveToPointConfig.DefaultDistance),
@@ -584,8 +591,8 @@ class MoveToPointConfig {
       (this.FaceToPosition = void 0),
       (this.ResetCondition = void 0),
       (this.CallbackList = void 0),
-      (this.swn = i || Vector_1.Vector.Create()),
-      this.swn.DeepCopy(t.Position),
+      (this.sqn = i || Vector_1.Vector.Create()),
+      this.sqn.DeepCopy(t.Position),
       (this.NextMovePointConfig = t.NextMovePointConfig ?? void 0),
       (this.Distance = t.Distance ?? MoveToPointConfig.DefaultDistance),
       (this.TurnSpeed = t.TurnSpeed ?? MoveToPointConfig.DefaultTurnSpeed),
@@ -602,10 +609,10 @@ class MoveToPointConfig {
       t.ResetCondition && (this.ResetCondition = t.ResetCondition);
   }
   get Position() {
-    return this.swn;
+    return this.sqn;
   }
   DeepCopy(t) {
-    this.swn.DeepCopy(t.Position),
+    this.sqn.DeepCopy(t.Position),
       (this.Distance = t.Distance ?? MoveToPointConfig.DefaultDistance),
       (this.TurnSpeed = t.TurnSpeed ?? MoveToPointConfig.DefaultTurnSpeed),
       (this.MoveState = t.MoveState ?? void 0),

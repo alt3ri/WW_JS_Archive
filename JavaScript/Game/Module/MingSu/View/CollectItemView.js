@@ -15,34 +15,34 @@ const UE = require("ue"),
 class CollectItemView extends CollectItemViewBase_1.CollectItemViewBase {
   constructor() {
     super(...arguments),
-      (this.aAi = 0),
-      (this.NBi = void 0),
-      (this.hAr = void 0),
-      (this.KBi = !1),
-      (this.mkt = () => {
+      (this.aPi = 0),
+      (this.Nbi = void 0),
+      (this.GAr = void 0),
+      (this.Kbi = !1),
+      (this.d2t = () => {
         var e = new CollectSmallItemGrid_1.CollectSmallItemGrid();
         return (
-          e.BindOnExtendToggleRelease(this.QBi),
+          e.BindOnExtendToggleRelease(this.Qbi),
           e.BindOnCanExecuteChange(() => !1),
           e
         );
       }),
-      (this.QBi = (e) => {
+      (this.Qbi = (e) => {
         e.MediumItemGrid.IsHover &&
           ((e = e.Data),
           ControllerHolder_1.ControllerHolder.ItemController.OpenItemTipsByItemId(
             e.ItemInfo.Id,
           ));
       }),
-      (this.S5t = () => {
+      (this.EVt = () => {
         this.CurrentShowLevel--, this.bl();
       }),
-      (this.I5t = () => {
+      (this.IVt = () => {
         this.CurrentShowLevel++, this.bl();
       }),
-      (this.tWi = () => {
+      (this.ZWi = () => {
         var e, t;
-        this.KBi
+        this.Kbi
           ? Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "NPC",
@@ -74,7 +74,7 @@ class CollectItemView extends CollectItemViewBase_1.CollectItemViewBase {
                         8,
                         "[CollectionItemDisplay]提交声匣之后，等级提升会播放等级提升Sequence，IsInLevelUpDisplay设置为true",
                       ),
-                    (this.KBi = !0)),
+                    (this.Kbi = !0)),
                   Log_1.Log.CheckInfo() &&
                     Log_1.Log.Info(
                       "NPC",
@@ -94,14 +94,14 @@ class CollectItemView extends CollectItemViewBase_1.CollectItemViewBase {
                   EventSystem_1.EventSystem.Emit(
                     EventDefine_1.EEventName.OnSubmitItemFail,
                   ))
-              : this.lAr());
+              : this.NAr());
       }),
-      (this.tbi = () => {
+      (this.tqi = () => {
         ControllerHolder_1.ControllerHolder.ItemController.OpenItemTipsByItemId(
           this.CollectItemConfigId,
         );
       }),
-      (this.ACt = () => {
+      (this.Vgt = () => {
         this.CloseMe();
       });
   }
@@ -122,27 +122,27 @@ class CollectItemView extends CollectItemViewBase_1.CollectItemViewBase {
       [12, UE.UIButtonComponent],
     ]),
       (this.BtnBindInfo = [
-        [0, this.S5t],
-        [1, this.I5t],
-        [7, this.tWi],
-        [11, this.tbi],
-        [12, this.ACt],
+        [0, this.EVt],
+        [1, this.IVt],
+        [7, this.ZWi],
+        [11, this.tqi],
+        [12, this.Vgt],
       ]);
   }
   OnBegined() {
     var e = this.GetItem(5);
-    (this.NBi = new GenericLayout_1.GenericLayout(
+    (this.Nbi = new GenericLayout_1.GenericLayout(
       e.GetOwner().GetComponentByClass(UE.UILayoutBase.StaticClass()),
-      this.mkt,
+      this.d2t,
     )),
-      (this.hAr = this.GetSprite(2)),
+      (this.GAr = this.GetSprite(2)),
       this.bl();
   }
   OnEnded() {
-    (this.NBi = void 0), (this.hAr = void 0);
+    (this.Nbi = void 0), (this.GAr = void 0);
   }
   OnUpdateDragonPoolView() {
-    this.lAr();
+    this.NAr();
   }
   OnSubmitItemLevelUp() {
     this.SetActive(!1),
@@ -168,7 +168,7 @@ class CollectItemView extends CollectItemViewBase_1.CollectItemViewBase {
         8,
         "[CollectionItemDisplay]当交付等级提升Sequence播放失败时，重新显示提交道具界面",
       ),
-      (this.KBi = !1),
+      (this.Kbi = !1),
       this.SetActive(!0),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.HangPlotViewHud,
@@ -176,7 +176,7 @@ class CollectItemView extends CollectItemViewBase_1.CollectItemViewBase {
       );
   }
   OnCollectItemCountChanged(e) {
-    this.JBi();
+    this.Jbi();
   }
   OnCloseRewardView() {
     Log_1.Log.CheckInfo() &&
@@ -185,14 +185,14 @@ class CollectItemView extends CollectItemViewBase_1.CollectItemViewBase {
         8,
         "[CollectionItemDisplay]当关闭了交付奖励结算界面时，重新显示提交道具界面",
       ),
-      (this.KBi = !1),
+      (this.Kbi = !1),
       this.SetActive(!0),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.HangPlotViewHud,
         !1,
       );
   }
-  lAr() {
+  NAr() {
     var e =
         ModelManager_1.ModelManager.MingSuModel.GetTargetDragonPoolMaxLevelById(
           this.PoolConfigId,
@@ -203,15 +203,15 @@ class CollectItemView extends CollectItemViewBase_1.CollectItemViewBase {
     (this.CurrentShowLevel = Math.min(e, t + 1)), this.bl();
   }
   bl() {
-    this.obi(this.CurrentShowLevel),
-      this.rbi(),
-      this.Kgi(),
+    this.oqi(this.CurrentShowLevel),
+      this.rqi(),
+      this.K0i(),
       this.jqe(),
-      this.sbi(),
-      this.rFe(),
-      this.JBi();
+      this.sqi(),
+      this.M3e(),
+      this.Jbi();
   }
-  obi(e) {
+  oqi(e) {
     var t = this.GetText(3),
       i =
         ModelManager_1.ModelManager.MingSuModel.GetTargetDragonPoolMaxLevelById(
@@ -223,7 +223,7 @@ class CollectItemView extends CollectItemViewBase_1.CollectItemViewBase {
       (ModelManager_1.ModelManager.MingSuModel.CurrentPreviewLevel =
         this.CurrentShowLevel);
   }
-  rbi() {
+  rqi() {
     var e = this.GetButton(0),
       t = this.GetButton(1);
     (1 === this.CurrentShowLevel
@@ -237,7 +237,7 @@ class CollectItemView extends CollectItemViewBase_1.CollectItemViewBase {
         e)
     ).SetSelfInteractive(!0);
   }
-  Kgi() {
+  K0i() {
     var i = ModelManager_1.ModelManager.MingSuModel,
       s = i.GetTargetDragonPoolLevelById(this.PoolConfigId),
       h = i.GetTargetDragonPoolMaxLevelById(this.PoolConfigId),
@@ -248,31 +248,31 @@ class CollectItemView extends CollectItemViewBase_1.CollectItemViewBase {
       (this.CurrentShowLevel === s && this.CurrentShowLevel === h)
     ) {
       let e = s;
-      (this.aAi = 1), 2 === r && (this.aAi = 0), s === h && --e;
+      (this.aPi = 1), 2 === r && (this.aPi = 0), s === h && --e;
       var h = i.GetTargetDragonPoolLevelNeedCoreById(this.PoolConfigId, e);
       let t = 0;
       var r =
         (t =
           2 === r ? h : i.GetTargetDragonPoolCoreCountById(this.PoolConfigId)) /
         h;
-      this.hAr.SetFillAmount(r), o.SetText(t + "/" + h);
+      this.GAr.SetFillAmount(r), o.SetText(t + "/" + h);
     } else
       this.CurrentShowLevel <= s
-        ? ((this.aAi = 0),
+        ? ((this.aPi = 0),
           (r = i.GetTargetDragonPoolLevelNeedCoreById(
             this.PoolConfigId,
             this.CurrentShowLevel - 1,
           )),
           o.SetText(r + "/" + r),
-          this.hAr.SetFillAmount(1))
+          this.GAr.SetFillAmount(1))
         : this.CurrentShowLevel > s + 1 &&
-          ((this.aAi = 2),
+          ((this.aPi = 2),
           (h = i.GetTargetDragonPoolLevelNeedCoreById(
             this.PoolConfigId,
             this.CurrentShowLevel - 1,
           )),
           o.SetText("0/" + h),
-          this.hAr.SetFillAmount(0));
+          this.GAr.SetFillAmount(0));
   }
   jqe() {
     var e =
@@ -280,27 +280,27 @@ class CollectItemView extends CollectItemViewBase_1.CollectItemViewBase {
         this.PoolConfigId,
         this.CurrentShowLevel - 1,
       );
-    this.NBi.RefreshByData(e);
+    this.Nbi.RefreshByData(e);
   }
-  sbi() {
+  sqi() {
     var e = this.GetText(6);
     2 ===
       ModelManager_1.ModelManager.MingSuModel.GetTargetDragonPoolActiveById(
         this.PoolConfigId,
-      ) && (this.aAi = 3),
-      1 === this.aAi
+      ) && (this.aPi = 3),
+      1 === this.aPi
         ? e.SetUIActive(!1)
-        : 0 === this.aAi
+        : 0 === this.aPi
           ? (LguiUtil_1.LguiUtil.SetLocalTextNew(e, "MingSuDoneTips"),
             e.SetUIActive(!0))
-          : 2 === this.aAi
+          : 2 === this.aPi
             ? (LguiUtil_1.LguiUtil.SetLocalTextNew(e, "MingSuNotDoneTips"),
               e.SetUIActive(!0))
-            : 3 === this.aAi &&
+            : 3 === this.aPi &&
               (LguiUtil_1.LguiUtil.SetLocalTextNew(e, "MingSuDoneTips"),
               e.SetUIActive(!0));
   }
-  rFe() {
+  M3e() {
     var e = this.GetText(8),
       t =
         2 ===
@@ -317,7 +317,7 @@ class CollectItemView extends CollectItemViewBase_1.CollectItemViewBase {
           ? LguiUtil_1.LguiUtil.SetLocalText(e, "MingSuTi_Text3")
           : LguiUtil_1.LguiUtil.SetLocalText(e, "MingSuTi_Text4"));
   }
-  JBi() {
+  Jbi() {
     var e = ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
       this.CollectItemConfigId,
     );

@@ -10,8 +10,8 @@ class AdviceCreateChangeBtnItem extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
       (this.Xy = -0),
-      (this.X8e = () => {
-        this.w9e(), UiManager_1.UiManager.OpenView("AdviceWordView");
+      (this.h7e = () => {
+        this.Q7e(), UiManager_1.UiManager.OpenView("AdviceWordView");
       }),
       this.CreateThenShowByActor(e.GetOwner());
   }
@@ -21,9 +21,9 @@ class AdviceCreateChangeBtnItem extends UiPanelBase_1.UiPanelBase {
       [1, UE.UIText],
       [2, UE.UIItem],
     ]),
-      (this.BtnBindInfo = [[0, this.X8e]]);
+      (this.BtnBindInfo = [[0, this.h7e]]);
   }
-  w9e() {
+  Q7e() {
     var e = ModelManager_1.ModelManager.AdviceModel,
       i =
         ((e.CurrentChangeWordType = 0), e.CurrentSentenceWordMap.get(this.Xy));
@@ -33,9 +33,9 @@ class AdviceCreateChangeBtnItem extends UiPanelBase_1.UiPanelBase {
     this.Xy = e;
   }
   UpdateCurrentLineMode(e) {
-    this.B9e(e);
+    this.X7e(e);
   }
-  B9e(e) {
+  X7e(e) {
     0 === e
       ? LguiUtil_1.LguiUtil.SetLocalText(this.GetText(1), "ChangeOneLineWord")
       : 0 === this.Xy

@@ -18,17 +18,17 @@ class SilentAreaInfoSubItem extends UiPanelBase_1.UiPanelBase {
     });
   }
   UpdateItem(e) {
-    var t = this.Uct(e.TidTitle);
-    this.bct(e.TidContent, t ? 32 : 36);
+    var t = this.Fmt(e.TidTitle);
+    this.Qmt(e.TidContent, t ? 32 : 36);
   }
-  Uct(e) {
+  Fmt(e) {
     var t = this.GetText(0),
       e = PublicUtil_1.PublicUtil.GetConfigTextByKey(e);
     return StringUtils_1.StringUtils.IsBlank(e)
       ? (t?.GetParentAsUIItem()?.SetUIActive(!1), !1)
       : (t?.SetText(e), t?.GetParentAsUIItem()?.SetUIActive(!0), !0);
   }
-  bct(e, t) {
+  Qmt(e, t) {
     var i = this.GetText(1),
       e = PublicUtil_1.PublicUtil.GetConfigTextByKey(e);
     StringUtils_1.StringUtils.IsBlank(e)

@@ -13,8 +13,8 @@ class FunctionItem extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
       (this.FunctionId = 0),
-      (this.QFe = void 0),
-      (this.j7e = () => {
+      (this.l4e = void 0),
+      (this.ije = () => {
         this.FunctionId &&
           FunctionController_1.FunctionController.OpenFunctionRelateView(
             this.FunctionId,
@@ -33,7 +33,7 @@ class FunctionItem extends UiPanelBase_1.UiPanelBase {
       [3, UE.UISpriteTransition],
       [4, UE.UIItem],
     ]),
-      (this.BtnBindInfo = [[2, this.j7e]]);
+      (this.BtnBindInfo = [[2, this.ije]]);
   }
   UpdateItem(e) {
     this.FunctionId = e;
@@ -51,29 +51,29 @@ class FunctionItem extends UiPanelBase_1.UiPanelBase {
       },
       102,
     ),
-      this.x6e();
+      this.K8e();
   }
-  x6e() {
+  K8e() {
     var e;
     this.FunctionId &&
-      ((this.QFe =
+      ((this.l4e =
         ModelManager_1.ModelManager.FunctionModel.GetFunctionItemRedDotName(
           this.FunctionId,
         )),
       (e = this.GetItem(4)),
-      this.QFe
-        ? RedDotController_1.RedDotController.BindRedDot(this.QFe, e)
+      this.l4e
+        ? RedDotController_1.RedDotController.BindRedDot(this.l4e, e)
         : e.SetUIActive(!1));
   }
-  Dpt() {
+  Ovt() {
     var e;
-    this.QFe &&
+    this.l4e &&
       ((e = this.GetItem(4)),
-      RedDotController_1.RedDotController.UnBindGivenUi(this.QFe, e),
-      (this.QFe = void 0));
+      RedDotController_1.RedDotController.UnBindGivenUi(this.l4e, e),
+      (this.l4e = void 0));
   }
   OnBeforeDestroy() {
-    this.Dpt();
+    this.Ovt();
     var e = this.GetButton(2);
     e.OnPointEnterCallBack.Unbind(), e.OnPointExitCallBack.Unbind();
   }

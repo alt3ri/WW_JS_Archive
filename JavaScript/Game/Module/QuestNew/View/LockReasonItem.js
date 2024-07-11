@@ -12,13 +12,14 @@ const UE = require("ue"),
 class LockReasonItem extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
-      (this.cro = ""),
-      (this.mro = ""),
-      (this.Gct = BigInt(0)),
+      (this.hno = ""),
+      (this.lno = ""),
+      (this.Gfa = ""),
+      (this.$mt = BigInt(0)),
       (this.YP = () => {
         var e =
           ModelManager_1.ModelManager.GeneralLogicTreeModel.GetBehaviorTree(
-            this.Gct,
+            this.$mt,
           );
         e &&
           (EventSystem_1.EventSystem.Emit(
@@ -27,12 +28,16 @@ class LockReasonItem extends UiPanelBase_1.UiPanelBase {
           ),
           UiManager_1.UiManager.CloseView("QuestLockPreview"));
       }),
-      (this.cro = e.QuestName),
-      (this.mro =
+      (this.hno = e.QuestName),
+      (this.lno =
         ConfigManager_1.ConfigManager.QuestNewConfig.GetOccupationResourceName(
           e.ResourceName,
         )),
-      (this.Gct = e.TreeIncId);
+      (this.Gfa =
+        ConfigManager_1.ConfigManager.QuestNewConfig.GetOccupationType(
+          e.ResourceName,
+        )),
+      (this.$mt = e.TreeIncId);
   }
   OnRegisterComponent() {
     (this.ComponentRegisterInfos = [
@@ -46,12 +51,20 @@ class LockReasonItem extends UiPanelBase_1.UiPanelBase {
     this.UpdateItem();
   }
   UpdateItem() {
-    this.GetText(0)?.SetText(this.cro);
-    var e =
-      MultiTextLang_1.configMultiTextLang.GetLocalTextNew("Text_OccupiedRole") +
+    this.GetText(0)?.SetText(this.hno);
+    let e = "";
+    var t =
+      (e =
+        "Area" === this.Gfa
+          ? MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
+              "Text_OccupiedArea",
+            ) ?? ""
+          : MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
+              "Text_OccupiedRole",
+            ) ?? "") +
       ":" +
-      this.mro;
-    this.GetText(1)?.SetText(e);
+      this.lno;
+    this.GetText(1)?.SetText(t);
   }
 }
 exports.LockReasonItem = LockReasonItem;

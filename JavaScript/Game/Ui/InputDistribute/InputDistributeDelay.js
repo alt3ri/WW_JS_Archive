@@ -8,14 +8,14 @@ const Time_1 = require("../../../Core/Common/Time"),
 exports.delayInput = [InputMappingsDefine_1.actionMappings.通用交互];
 class InputDistributeDelay {
   constructor() {
-    (this.jcr = new Queue_1.Queue()), (this.Wcr = new Queue_1.Queue());
+    (this.Fmr = new Queue_1.Queue()), (this.Vmr = new Queue_1.Queue());
   }
   StartDelay(e, i) {
-    (i ? this.jcr : this.Wcr).Push(Time_1.Time.Now + e);
+    (i ? this.Fmr : this.Vmr).Push(Time_1.Time.Now + e);
   }
   IsInputActive(e) {
     let i = void 0;
-    i = e ? this.jcr : this.Wcr;
+    i = e ? this.Fmr : this.Vmr;
     for (var t = Time_1.Time.Now; 0 < i.Size; ) {
       if (t < i.Front) return i.Pop(), !0;
       i.Pop();

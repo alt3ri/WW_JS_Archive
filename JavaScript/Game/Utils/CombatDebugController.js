@@ -6,80 +6,44 @@ const cpp_1 = require("cpp"),
   Info_1 = require("../../Core/Common/Info"),
   Log_1 = require("../../Core/Common/Log"),
   Time_1 = require("../../Core/Common/Time"),
-  Protocol_1 = require("../../Core/Define/Net/Protocol"),
   EntitySystem_1 = require("../../Core/Entity/EntitySystem"),
   ControllerBase_1 = require("../../Core/Framework/ControllerBase"),
   MathUtils_1 = require("../../Core/Utils/MathUtils"),
+  ThinkDataLaunchReporter_1 = require("../../Launcher/ThinkDataReport/ThinkDataLaunchReporter"),
   ModelManager_1 = require("../Manager/ModelManager"),
-  LogSetting_1 = require("../Module/LogReport/LogSetting"),
   CombatDebugHelper_1 = require("./CombatDebug/CombatDebugHelper"),
+  CombatLog_1 = require("./CombatLog"),
   game = {},
   REFRESH_SERVER_INFO_PERIOD = 300;
 class CombatDebugController extends ControllerBase_1.ControllerBase {
   static CombatInfo(t, e, o, ...r) {
-    this.A5(0, t, e, o, r);
+    CombatLog_1.CombatLog.Info(t, e, o, ...r);
   }
-  static CombatDebug(t, e, o, ...r) {
-    Info_1.Info.IsBuildDevelopmentOrDebug && this.A5(1, t, e, o, r);
-  }
-  static CombatDebugEx(t, e, o, ...r) {
-    this.DebugCombatInfo && this.A5(1, t, e, o, r);
-  }
+  static CombatDebug(t, e, o) {}
+  static CombatDebugEx(t, e, o) {}
   static CombatWarn(t, e, o, ...r) {
-    this.A5(2, t, e, o, r);
+    CombatLog_1.CombatLog.Warn(t, e, o, ...r);
   }
   static CombatError(t, e, o, ...r) {
-    this.A5(3, t, e, o, r);
+    CombatLog_1.CombatLog.Error(t, e, o, ...r);
   }
-  static CombatErrorWithStack(t, e, o, r, ...i) {
-    r instanceof Error
-      ? this.A5(3, t, e, o, i, r)
-      : this.A5(3, t, e, o, [...i, ["error", r]]);
-  }
-  static A5(t, e, o, r, i, a) {
-    let s = 0,
-      n = "",
-      l = "";
-    "number" == typeof o
-      ? (s = o)
-      : ((_ = o?.GetComponent(0)) &&
-          ((s = _.GetCreatureDataId()),
-          (n = Protocol_1.Aki.Protocol.HBs[_.GetEntityType()])),
-        (_ = o?.GetComponent(3))?.Actor && (l = _.Actor.GetName()));
-    var _,
-      g = `[${e}][EntityId:${s}:${n}:${l}] ` + r;
-    switch (t) {
-      case 0:
-        Log_1.Log.CheckInfo() && Log_1.Log.Info("CombatInfo", 15, g, ...i);
-        break;
-      case 1:
-        Log_1.Log.CheckDebug() && Log_1.Log.Debug("CombatInfo", 15, g, ...i);
-        break;
-      case 2:
-        Log_1.Log.CheckWarn() && Log_1.Log.Warn("CombatInfo", 15, g, ...i);
-        break;
-      case 3:
-        a
-          ? Log_1.Log.CheckError() &&
-            Log_1.Log.ErrorWithStack("CombatInfo", 15, g, a, ...i)
-          : Log_1.Log.CheckError() &&
-            Log_1.Log.Error("CombatInfo", 15, g, ...i);
-    }
+  static CombatErrorWithStack(t, e, o, r, ...a) {
+    CombatLog_1.CombatLog.ErrorWithStack(t, e, o, r, ...a);
   }
   static CombatInfoMessage(t, e, o) {
-    this.DebugCombatInfo &&
-      this.cCr.get(e) &&
+    CombatLog_1.CombatLog.DebugCombatInfo &&
+      this.lgr.get(e) &&
       (o
-        ? ((o = `[Message][${t}][${e}][EntityId:${MathUtils_1.MathUtils.LongToBigInt(o.rkn)}][PlayerId:${MathUtils_1.MathUtils.LongToNumber(o.a4n)}]`),
+        ? ((o = `[Message][${t}][${e}][EntityId:${MathUtils_1.MathUtils.LongToBigInt(o.P4n)}][PlayerId:${MathUtils_1.MathUtils.LongToNumber(o.F8n)}]`),
           Log_1.Log.CheckInfo() && Log_1.Log.Info("CombatInfo", 15, o))
         : ((o = `[Message][${t}][${e}]`),
           Log_1.Log.CheckInfo() && Log_1.Log.Info("CombatInfo", 15, o)));
   }
   static CombatContextInfoMessage(t, e, o) {
-    this.DebugCombatInfo &&
-      this.cCr.get(e) &&
-      (o = o.r4n) &&
-      ((t = `[Message][${t}][${e}][EntityId:${MathUtils_1.MathUtils.LongToBigInt(o.rkn)}][PlayerId:${MathUtils_1.MathUtils.LongToNumber(o.a4n)}][MessageId:${MathUtils_1.MathUtils.LongToBigInt(o.s4n)}][PreMessageId:${MathUtils_1.MathUtils.LongToBigInt(o.n4n)}]`),
+    CombatLog_1.CombatLog.DebugCombatInfo &&
+      this.lgr.get(e) &&
+      (o = o.G8n) &&
+      ((t = `[Message][${t}][${e}][EntityId:${MathUtils_1.MathUtils.LongToBigInt(o.P4n)}][PlayerId:${MathUtils_1.MathUtils.LongToNumber(o.F8n)}][MessageId:${MathUtils_1.MathUtils.LongToBigInt(o.k8n)}][PreMessageId:${MathUtils_1.MathUtils.LongToBigInt(o.N8n)}]`),
       Log_1.Log.CheckInfo()) &&
       Log_1.Log.Info("CombatInfo", 51, t);
   }
@@ -140,13 +104,13 @@ class CombatDebugController extends ControllerBase_1.ControllerBase {
           String(error));
     }
   }
-  static mCr() {
+  static _gr() {
     var t;
     UE.ThinkingAnalytics.HasInstanceInitialized(9) ||
       ((t = new UE.CreateInstanceParam(
         9,
-        this.dCr,
-        this.CCr,
+        this.ugr,
+        this.cgr,
         UE.ThinkingAnalytics.GetMachineID(),
         ModelManager_1.ModelManager.PlayerInfoModel.GetId().toString(),
         "CombatData",
@@ -159,16 +123,19 @@ class CombatDebugController extends ControllerBase_1.ControllerBase {
         !1,
         !1,
         !0,
-        LogSetting_1.EXIT_WAIT_TIME,
-        LogSetting_1.MAX_PENDING_LOG,
-        LogSetting_1.SEND_HTTP_TIMEOUT,
+        ThinkDataLaunchReporter_1.EXIT_WAIT_TIME,
+        ThinkDataLaunchReporter_1.MAX_PENDING_LOG,
+        ThinkDataLaunchReporter_1.SEND_HTTP_TIMEOUT,
         !0,
+        ThinkDataLaunchReporter_1.CALIBRATE_INTERVAL,
+        ThinkDataLaunchReporter_1.CALIBRATE_STOP_TIMER,
       )),
       UE.ThinkingAnalytics.CreateSimpleInstance(t));
   }
   static DataReport(t, e) {
-    Info_1.Info.IsBuildDevelopmentOrDebug &&
-      (this.mCr(), cpp_1.FThinkingAnalyticsForPuerts.Track(t, e, 9));
+    ThinkDataLaunchReporter_1.ENABLE_THINKING_ANALYTICS &&
+      Info_1.Info.IsBuildDevelopmentOrDebug &&
+      (this._gr(), cpp_1.FThinkingAnalyticsForPuerts.Track(t, e, 9));
   }
   static RefreshServerDebugInfo() {
     var t;
@@ -176,47 +143,46 @@ class CombatDebugController extends ControllerBase_1.ControllerBase {
       !(t = EntitySystem_1.EntitySystem.Get(this.DebugEntityId)?.GetComponent(
         20,
       )) ||
-      Time_1.Time.Now - this.u3t < REFRESH_SERVER_INFO_PERIOD ||
-      ((this.u3t = Time_1.Time.Now), t?.ServerDebugInfoRequest());
+      Time_1.Time.Now - this.c4t < REFRESH_SERVER_INFO_PERIOD ||
+      ((this.c4t = Time_1.Time.Now), t?.ServerDebugInfoRequest());
   }
 }
 (exports.CombatDebugController = CombatDebugController),
   (CombatDebugController.DebugEntityId = 0),
-  (CombatDebugController.DebugCombatInfo = !1),
   (CombatDebugController.ScriptHelper =
     new CombatDebugHelper_1.CombatScriptHelper()),
-  (CombatDebugController.cCr = new Map([
-    ["$2n", !0],
-    ["X2n", !0],
-    ["Y2n", !0],
-    ["J2n", !0],
-    ["z2n", !0],
-    ["iNn", !0],
-    ["rNn", !0],
-    ["eNn", !0],
-    ["tNn", !0],
-    ["mNn", !0],
-    ["Z2n", !0],
-    ["FOn", !0],
-    ["VOn", !0],
-    ["HOn", !0],
-    ["jOn", !0],
-    ["WOn", !0],
-    ["YOn", !0],
-    ["ZOn", !0],
-    ["$On", !0],
-    ["XOn", !0],
-    ["l2n", !0],
-    ["KOn", !0],
-    ["i2n", !0],
-    ["zOn", !0],
-    ["K2n", !0],
-    ["lNn", !0],
-    ["_Nn", !0],
-    ["Q2n", !0],
-    ["n2n", !0],
+  (CombatDebugController.lgr = new Map([
+    ["y3n", !0],
+    ["I3n", !0],
+    ["T3n", !0],
+    ["L3n", !0],
+    ["D3n", !0],
+    ["x3n", !0],
+    ["P3n", !0],
+    ["U3n", !0],
+    ["R3n", !0],
+    ["V3n", !0],
+    ["A3n", !0],
+    ["gFn", !0],
+    ["fFn", !0],
+    ["pFn", !0],
+    ["vFn", !0],
+    ["MFn", !0],
+    ["TFn", !0],
+    ["AFn", !0],
+    ["yFn", !0],
+    ["IFn", !0],
+    ["OFn", !0],
+    ["SFn", !0],
+    ["xFn", !0],
+    ["DFn", !0],
+    ["S3n", !0],
+    ["O3n", !0],
+    ["N3n", !0],
+    ["E3n", !0],
+    ["wFn", !0],
   ])),
-  (CombatDebugController.CCr = "773a58b321b8462e8431e0b3010bb3d3"),
-  (CombatDebugController.dCr = "https://ali-sh-datareceiver.kurogame.xyz"),
-  (CombatDebugController.u3t = 0);
+  (CombatDebugController.cgr = "773a58b321b8462e8431e0b3010bb3d3"),
+  (CombatDebugController.ugr = "https://ali-sh-datareceiver.kurogame.xyz"),
+  (CombatDebugController.c4t = 0);
 //# sourceMappingURL=CombatDebugController.js.map

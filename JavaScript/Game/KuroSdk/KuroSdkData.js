@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.GlobalProductData =
     exports.SdkAgreementLinkData =
     exports.AndroidSdkAgreementData =
+    exports.GameWindowStateData =
     exports.ShareData =
     exports.SetFontParamWindows =
     exports.SetFontParamAndroid =
@@ -29,7 +30,8 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.OpenCustomerServiceParamAndroid =
     exports.InitializePostWebViewParam =
       void 0);
-const Json_1 = require("../../Core/Common/Json"),
+const Info_1 = require("../../Core/Common/Info"),
+  Json_1 = require("../../Core/Common/Json"),
   Log_1 = require("../../Core/Common/Log"),
   ModelManager_1 = require("../Manager/ModelManager");
 class InitializePostWebViewParam extends Json_1.JsonObjBase {
@@ -277,6 +279,12 @@ class ShareData extends Json_1.JsonObjBase {
   }
 }
 exports.ShareData = ShareData;
+class GameWindowStateData extends Json_1.JsonObjBase {
+  constructor() {
+    super(...arguments), (this.status = void 0);
+  }
+}
+exports.GameWindowStateData = GameWindowStateData;
 class AndroidSdkAgreementData extends Json_1.JsonObjBase {
   constructor() {
     super(...arguments),
@@ -324,7 +332,7 @@ class KuroSdkControllerTool {
     var s = ModelManager_1.ModelManager.LoginModel,
       t = new RoleInfoSdk(),
       s =
-        ((t.RoleId = this.IEe()),
+        ((t.RoleId = this.ISe()),
         (t.RoleName = s.GetPlayerName() ? s.GetPlayerName() : ""),
         (t.ServerId = s.GetServerId() ? s.GetServerId() : ""),
         (t.ServerName = s.GetServerName() ? s.GetServerName() : ""),
@@ -353,7 +361,7 @@ class KuroSdkControllerTool {
       s
     );
   }
-  static IEe() {
+  static ISe() {
     return ModelManager_1.ModelManager.PlayerInfoModel.GetId()
       ? ModelManager_1.ModelManager.PlayerInfoModel.GetId().toString()
       : ModelManager_1.ModelManager.LoginModel.GetCreatePlayerId()
@@ -365,7 +373,7 @@ class KuroSdkControllerTool {
       t = ModelManager_1.ModelManager.LoginModel,
       o = new RoleInfoSdk(),
       s =
-        ((o.RoleId = this.IEe()),
+        ((o.RoleId = this.ISe()),
         (o.RoleName = s.GetPlayerName() ? s.GetPlayerName() : ""),
         (o.ServerId = t.GetServerId() ? t.GetServerId() : ""),
         (o.ServerName = t.GetServerName() ? t.GetServerName() : ""),
@@ -395,8 +403,8 @@ class KuroSdkControllerTool {
     );
   }
   static GetPaymentInfo(s, t) {
-    var o = ModelManager_1.ModelManager.PlatformModel.PlatformType;
-    return 4 === o || 1 === o
+    var o;
+    return 4 === Info_1.Info.PlatformType || 1 === Info_1.Info.PlatformType
       ? (((o = new PayInfoMacIos()).RoleId = t.roleId.toString()),
         (o.RoleName = t.roleName.toString()),
         (o.ServerId = t.serverId.toString()),
@@ -417,16 +425,16 @@ class KuroSdkControllerTool {
         t ?? "");
   }
   static GetSdkPayProduct(s, t, o, e, r) {
-    var i = ModelManager_1.ModelManager.PlayerInfoModel.GetId()?.toString(),
-      n = ModelManager_1.ModelManager.RechargeModel.GetPayIdAmount(s);
+    var n = ModelManager_1.ModelManager.PlayerInfoModel.GetId()?.toString(),
+      i = ModelManager_1.ModelManager.RechargeModel.GetPayIdAmount(s);
     return {
       product_id:
         ModelManager_1.ModelManager.RechargeModel.GetPayIdProductId(s),
       cpOrderId: t,
-      price: n,
+      price: i,
       goodsName: o,
       goodsDesc: e,
-      extraParams: i,
+      extraParams: n,
       callbackUrl: r,
       currency: "",
     };
@@ -435,7 +443,7 @@ class KuroSdkControllerTool {
     var s = ModelManager_1.ModelManager.FunctionModel,
       t = ModelManager_1.ModelManager.LoginModel;
     return {
-      roleId: this.IEe(),
+      roleId: this.ISe(),
       roleName: s.GetPlayerName() ? s.GetPlayerName() : "",
       roleLevel: s.GetPlayerLevel() ? s.GetPlayerLevel().toString() : "1",
       serverId: t.GetServerId() ? t.GetServerId() : "",

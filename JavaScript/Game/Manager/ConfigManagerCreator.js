@@ -12,8 +12,17 @@ const AiConfig_1 = require("../AI/Common/AiConfig"),
   BossRushConfig_1 = require("../Module/Activity/ActivityContent/BossRush/BossRushConfig"),
   ActivityCollectionConfig_1 = require("../Module/Activity/ActivityContent/Collection/ActivityCollectionConfig"),
   ActivityDailyAdventureConfig_1 = require("../Module/Activity/ActivityContent/DailyAdventure/ActivityDailyAdventureConfig"),
+  ActivityMoonChasingConfig_1 = require("../Module/Activity/ActivityContent/MoonChasing/Activity/ActivityMoonChasingConfig"),
+  BuildingConfig_1 = require("../Module/Activity/ActivityContent/MoonChasing/Main/Build/BuildingConfig"),
+  BusinessConfig_1 = require("../Module/Activity/ActivityContent/MoonChasing/Main/Business/BusinessConfig"),
+  MoonChasingHandbookConfig_1 = require("../Module/Activity/ActivityContent/MoonChasing/Main/Handbook/MoonChasingHandbookConfig"),
+  MoonChasingMemoryConfig_1 = require("../Module/Activity/ActivityContent/MoonChasing/Main/Memory/MoonChasingMemoryConfig"),
+  MoonChasingRewardConfigRewardConfig_1 = require("../Module/Activity/ActivityContent/MoonChasing/Main/Reward/MoonChasingRewardConfigRewardConfig"),
+  TaskConfig_1 = require("../Module/Activity/ActivityContent/MoonChasing/Main/Task/TaskConfig"),
   ActivityNoviceJourneyConfig_1 = require("../Module/Activity/ActivityContent/NoviceJourney/ActivityNoviceJourneyConfig"),
   ActivityPhantomCollectConfig_1 = require("../Module/Activity/ActivityContent/PhantomCollect/ActivityPhantomCollectConfig"),
+  ActivityRecallConfig_1 = require("../Module/Activity/ActivityContent/Recall/ActivityRecallConfig"),
+  ActivityRoleGiveConfig_1 = require("../Module/Activity/ActivityContent/RoleGive/ActivityRoleGiveConfig"),
   ActivityRoleGuideConfig_1 = require("../Module/Activity/ActivityContent/RoleGuide/ActivityRoleGuideConfig"),
   ActivityRoleTrialConfig_1 = require("../Module/Activity/ActivityContent/RoleTrial/ActivityRoleTrialConfig"),
   ActivityRogueConfig_1 = require("../Module/Activity/ActivityContent/RougeActivity/ActivityRogueConfig"),
@@ -103,7 +112,6 @@ const AiConfig_1 = require("../AI/Common/AiConfig"),
   PlotCameraTemplateConfig_1 = require("../Module/Plot/PlotCameraTemplateConfig"),
   PlotMontageConfig_1 = require("../Module/Plot/PlotMontageConfig"),
   PowerConfig_1 = require("../Module/Power/PowerConfig"),
-  ProtocolMonitorConfig_1 = require("../Module/ProtocolMonitor/ProtocolMonitorConfig"),
   QuestConfig_1 = require("../Module/QuestNew/QuestConfig"),
   ReportConfig_1 = require("../Module/Report/ReportConfig"),
   RewardConfig_1 = require("../Module/Reward/RewardConfig"),
@@ -139,6 +147,7 @@ const AiConfig_1 = require("../AI/Common/AiConfig"),
   RedDotConfig_1 = require("../RedDot/RedDotConfig"),
   RenderModuleConfig_1 = require("../Render/Manager/RenderModuleConfig"),
   UiCommonConfig_1 = require("../Ui/Common/UiCommonConfig"),
+  ViewHotKeyConfig_1 = require("../Ui/Input/ViewHotKeyConfig"),
   InputDistributeConfig_1 = require("../Ui/InputDistribute/InputDistributeConfig"),
   BubbleConfig_1 = require("../World/Define/BubbleConfig"),
   EntityOwnerConfig_1 = require("../World/Define/EntityOwnerConfig"),
@@ -392,11 +401,6 @@ class ConfigManagerCreator {
         new PlayerInfoConfig_1.PlayerInfoConfig()),
       ConfigManager_1.ConfigManager.Add(
         ConfigManager_1.ConfigManager.PlayerInfoConfig,
-      ),
-      (ConfigManager_1.ConfigManager.ProtocolMonitorConfig =
-        new ProtocolMonitorConfig_1.ProtocolMonitorConfig()),
-      ConfigManager_1.ConfigManager.Add(
-        ConfigManager_1.ConfigManager.ProtocolMonitorConfig,
       ),
       (ConfigManager_1.ConfigManager.SwimConfig =
         new SwimConfig_1.SwimConfig()),
@@ -698,6 +702,11 @@ class ConfigManagerCreator {
       ConfigManager_1.ConfigManager.Add(
         ConfigManager_1.ConfigManager.ActivityTurntableConfig,
       ),
+      (ConfigManager_1.ConfigManager.ActivityMoonChasingConfig =
+        new ActivityMoonChasingConfig_1.ActivityMoonChasingConfig()),
+      ConfigManager_1.ConfigManager.Add(
+        ConfigManager_1.ConfigManager.ActivityMoonChasingConfig,
+      ),
       (ConfigManager_1.ConfigManager.WeaponComponentConfig =
         new WeaponComponentConfig_1.WeaponComponentConfig()),
       ConfigManager_1.ConfigManager.Add(
@@ -848,6 +857,51 @@ class ConfigManagerCreator {
       ConfigManager_1.ConfigManager.Add(
         ConfigManager_1.ConfigManager.CollectItemConfig,
       ),
+      (ConfigManager_1.ConfigManager.BusinessConfig =
+        new BusinessConfig_1.BusinessConfig()),
+      ConfigManager_1.ConfigManager.Add(
+        ConfigManager_1.ConfigManager.BusinessConfig,
+      ),
+      (ConfigManager_1.ConfigManager.BuildingConfig =
+        new BuildingConfig_1.BuildingConfig()),
+      ConfigManager_1.ConfigManager.Add(
+        ConfigManager_1.ConfigManager.BuildingConfig,
+      ),
+      (ConfigManager_1.ConfigManager.TaskConfig =
+        new TaskConfig_1.TaskConfig()),
+      ConfigManager_1.ConfigManager.Add(
+        ConfigManager_1.ConfigManager.TaskConfig,
+      ),
+      (ConfigManager_1.ConfigManager.MoonChasingRewardConfig =
+        new MoonChasingRewardConfigRewardConfig_1.MoonChasingRewardConfig()),
+      ConfigManager_1.ConfigManager.Add(
+        ConfigManager_1.ConfigManager.MoonChasingRewardConfig,
+      ),
+      (ConfigManager_1.ConfigManager.MoonChasingHandbookConfig =
+        new MoonChasingHandbookConfig_1.MoonChasingHandbookConfig()),
+      ConfigManager_1.ConfigManager.Add(
+        ConfigManager_1.ConfigManager.MoonChasingHandbookConfig,
+      ),
+      (ConfigManager_1.ConfigManager.MoonChasingMemoryConfig =
+        new MoonChasingMemoryConfig_1.MoonChasingMemoryConfig()),
+      ConfigManager_1.ConfigManager.Add(
+        ConfigManager_1.ConfigManager.MoonChasingMemoryConfig,
+      ),
+      (ConfigManager_1.ConfigManager.ActivityRecallConfig =
+        new ActivityRecallConfig_1.ActivityRecallConfig()),
+      ConfigManager_1.ConfigManager.Add(
+        ConfigManager_1.ConfigManager.ActivityRecallConfig,
+      ),
+      (ConfigManager_1.ConfigManager.ViewHotKeyConfig =
+        new ViewHotKeyConfig_1.ViewHotKeyConfig()),
+      ConfigManager_1.ConfigManager.Add(
+        ConfigManager_1.ConfigManager.ViewHotKeyConfig,
+      ),
+      (ConfigManager_1.ConfigManager.ActivityRoleGiveConfig =
+        new ActivityRoleGiveConfig_1.ActivityRoleGiveConfig()),
+      ConfigManager_1.ConfigManager.Add(
+        ConfigManager_1.ConfigManager.ActivityRoleGiveConfig,
+      ),
       ConfigManager_1.ConfigManager.Init())
     );
   }
@@ -898,7 +952,6 @@ class ConfigManagerCreator {
       (ConfigManager_1.ConfigManager.BuffItemConfig = void 0),
       (ConfigManager_1.ConfigManager.WorldConfig = void 0),
       (ConfigManager_1.ConfigManager.PlayerInfoConfig = void 0),
-      (ConfigManager_1.ConfigManager.ProtocolMonitorConfig = void 0),
       (ConfigManager_1.ConfigManager.SwimConfig = void 0),
       (ConfigManager_1.ConfigManager.RedDotConfig = void 0),
       (ConfigManager_1.ConfigManager.MenuBaseConfig = void 0),
@@ -961,7 +1014,9 @@ class ConfigManagerCreator {
       (ConfigManager_1.ConfigManager.ActivitySevenDaySignConfig = void 0),
       (ConfigManager_1.ConfigManager.PlatformConfig = void 0),
       (ConfigManager_1.ConfigManager.CollectItemConfig = void 0),
-      !(ConfigManager_1.ConfigManager.BossRushConfig = void 0)
+      (ConfigManager_1.ConfigManager.BossRushConfig = void 0),
+      (ConfigManager_1.ConfigManager.ActivityRecallConfig = void 0),
+      !(ConfigManager_1.ConfigManager.ViewHotKeyConfig = void 0)
     );
   }
 }

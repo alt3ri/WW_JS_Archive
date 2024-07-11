@@ -20,42 +20,42 @@ const CustomPromise_1 = require("../../../../Core/Common/CustomPromise"),
 class FlowActionSetPlotMode extends FlowActionBase_1.FlowActionBase {
   constructor() {
     super(...arguments),
-      (this.zXi = !1),
-      (this.ZXi = void 0),
-      (this.e$i = -1),
-      (this.t$i = 0),
-      (this.i$i = void 0),
-      (this.S4s = void 0),
-      (this.o$i = (e) => {
+      (this.Y$i = !1),
+      (this.J$i = void 0),
+      (this.z$i = -1),
+      (this.Z$i = 0),
+      (this.eYi = void 0),
+      (this.d9s = void 0),
+      (this.tYi = (e) => {
         ModelManager_1.ModelManager.InteractionModel.IsInteractionTurning &&
-        this.t$i < GUARANTEED_WAIT_TIME
-          ? (this.t$i += e)
+        this.Z$i < GUARANTEED_WAIT_TIME
+          ? (this.Z$i += e)
           : (Log_1.Log.CheckDebug() &&
               Log_1.Log.Debug("Plot", 27, "C级剧情等待交互转身-结束", [
                 "waitTime",
-                this.t$i,
+                this.Z$i,
               ]),
             ControllerHolder_1.ControllerHolder.PlotController.RemoveTick(
-              this.e$i,
+              this.z$i,
             ),
-            (this.t$i = 0),
-            (this.e$i = -1),
-            this.ZXi.SetResult(),
-            (this.ZXi = void 0));
+            (this.Z$i = 0),
+            (this.z$i = -1),
+            this.J$i.SetResult(),
+            (this.J$i = void 0));
       }),
-      (this.uht = () => {
+      (this.Ilt = () => {
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("Plot", 27, "剧情前保底传送 -结束");
-        var e = this.S4s;
-        (this.S4s = void 0), e.SetResult();
+        var e = this.d9s;
+        (this.d9s = void 0), e.SetResult();
       });
   }
   OnExecute() {
-    this.zXi = this.Context.HasAdjustCamera;
+    this.Y$i = this.Context.HasAdjustCamera;
     var e = this.ActionInfo.Params;
     ModelManager_1.ModelManager.PlotModel.PlotConfig.SetMode(e),
-      ModelManager_1.ModelManager.PlotModel.ApplyPlotConfig(this.zXi),
-      (this.i$i = e.FastFadeIn),
+      ModelManager_1.ModelManager.PlotModel.ApplyPlotConfig(this.Y$i),
+      (this.eYi = e.FastFadeIn),
       (this.Context.IsWaitRenderData = !e.NoUiEnterAnimation),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
@@ -78,21 +78,21 @@ class FlowActionSetPlotMode extends FlowActionBase_1.FlowActionBase {
           (this.Context.IsBackground = !0),
           this.FinishExecute(!0))
         : Promise.all([
-            this.r$i(),
-            this.n$i(),
-            this.s$i(),
-            this.a$i(),
-            this.E4s(),
+            this.iYi(),
+            this.oYi(),
+            this.rYi(),
+            this.nYi(),
+            this.C9s(),
           ]).finally(() => {
             this.FinishExecute(!0);
           });
   }
-  async r$i() {
+  async iYi() {
     ModelManager_1.ModelManager.PlotModel.PlotConfig.ShouldSwitchMainRole &&
       (await ModelManager_1.ModelManager.SceneTeamModel.LoadTeamPromise
         ?.Promise);
   }
-  async n$i() {
+  async oYi() {
     const t = new CustomPromise_1.CustomPromise();
     PlotController_1.PlotController.OpenCurrentPlotView((e) => {
       e ||
@@ -103,31 +103,31 @@ class FlowActionSetPlotMode extends FlowActionBase_1.FlowActionBase {
     }, this.Context.UiParam),
       await t.Promise;
   }
-  async a$i() {
-    this.i$i &&
+  async nYi() {
+    this.eYi &&
       ((ModelManager_1.ModelManager.PlotModel.IsFadeIn = !0),
       await LevelLoadingController_1.LevelLoadingController.WaitOpenLoading(
         0,
         3,
-        void 0 !== this.i$i?.Ease?.Duration
-          ? this.i$i.Ease.Duration
+        void 0 !== this.eYi?.Ease?.Duration
+          ? this.eYi.Ease.Duration
           : DEFAULT_FADE_DURATION,
-        this.i$i.ScreenType,
+        this.eYi.ScreenType,
       ));
   }
-  async s$i() {
+  async rYi() {
     "LevelC" === ModelManager_1.ModelManager.PlotModel.PlotConfig.PlotLevel &&
       ModelManager_1.ModelManager.InteractionModel.IsInteractionTurning &&
       (Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("Plot", 27, "C级剧情等待交互转身-开始"),
-      (this.ZXi = new CustomPromise_1.CustomPromise()),
-      (this.t$i = 0),
-      (this.e$i = ControllerHolder_1.ControllerHolder.PlotController.AddTick(
-        this.o$i,
+      (this.J$i = new CustomPromise_1.CustomPromise()),
+      (this.Z$i = 0),
+      (this.z$i = ControllerHolder_1.ControllerHolder.PlotController.AddTick(
+        this.tYi,
       )),
-      await this.ZXi.Promise);
+      await this.J$i.Promise);
   }
-  async E4s() {
+  async C9s() {
     var e,
       t =
         Global_1.Global.BaseCharacter?.CharacterActorComponent
@@ -146,27 +146,37 @@ class FlowActionSetPlotMode extends FlowActionBase_1.FlowActionBase {
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("Plot", 27, "剧情前保底传送 -开始"),
         e > SAFE_DISTANCE_SQAURED &&
-          ((this.S4s = new CustomPromise_1.CustomPromise()),
+          ((this.d9s = new CustomPromise_1.CustomPromise()),
           FlowNetworks_1.FlowNetworks.RequestSafeTeleport(
             this.Context.FlowIncId,
             (e) => {
               e
                 ? EventSystem_1.EventSystem.Once(
                     EventDefine_1.EEventName.TeleportComplete,
-                    this.uht,
+                    this.Ilt,
                   )
-                : this.S4s.SetResult();
+                : this.d9s.SetResult();
             },
           ),
-          await this.S4s.Promise))
+          await this.d9s.Promise))
       : Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("Plot", 27, "无剧情保底坐标点", ["curPos", t]);
   }
-  OnInterruptExecute() {}
+  OnInterruptExecute() {
+    EventSystem_1.EventSystem.Has(
+      EventDefine_1.EEventName.TeleportComplete,
+      this.Ilt,
+    ) &&
+      (EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.TeleportComplete,
+        this.Ilt,
+      ),
+      this.Ilt());
+  }
   OnBackgroundExecute() {
     var e = this.ActionInfo.Params;
     ModelManager_1.ModelManager.PlotModel.PlotConfig.SetMode(e),
-      ModelManager_1.ModelManager.PlotModel.ApplyPlotConfig(this.zXi),
+      ModelManager_1.ModelManager.PlotModel.ApplyPlotConfig(this.Y$i),
       (ModelManager_1.ModelManager.PlotModel.IsFadeIn =
         void 0 !== e.FastFadeIn),
       this.FinishExecute(!0);

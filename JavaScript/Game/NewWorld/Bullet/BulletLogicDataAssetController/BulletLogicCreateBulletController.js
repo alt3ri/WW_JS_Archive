@@ -13,10 +13,10 @@ const Time_1 = require("../../../../Core/Common/Time"),
   BulletLogicController_1 = require("./BulletLogicController");
 class BulletLogicCreateBulletController extends BulletLogicController_1.BulletLogicController {
   constructor(t, e) {
-    super(t, e), (this.u9o = void 0), (this.u9o = t);
+    super(t, e), (this.h7o = void 0), (this.h7o = t);
   }
   BulletLogicAction(e = void 0) {
-    var r = this.u9o,
+    var r = this.h7o,
       i = r.CreateBulletRowName;
     if (i !== StringUtils_1.NONE_STRING) {
       var l = this.Bullet.GetBulletInfo();
@@ -44,9 +44,9 @@ class BulletLogicCreateBulletController extends BulletLogicController_1.BulletLo
         if (i) return;
       }
       var o = this.Bullet.GetBulletInfo().ContextId,
-        e = this.c9o(r.BulletTransform, t),
+        e = this.l7o(r.BulletTransform, t),
         i = BulletController_1.BulletController.CreateBulletCustomTarget(
-          this.c9o(r.BulletOwner, t),
+          this.l7o(r.BulletOwner, t),
           i,
           e?.GetTransform() ?? MathUtils_1.MathUtils.DefaultTransform,
           {
@@ -62,17 +62,17 @@ class BulletLogicCreateBulletController extends BulletLogicController_1.BulletLo
         ((e = i.GetBulletInfo()).BulletDataMain.Render.HandOverParentEffect
           ? BulletStaticFunction_1.BulletStaticFunction.HandOverEffects(l, e)
           : ((o = r.AttachToBoneName),
-            (l = this.c9o(r.AttachToActor, t)) &&
+            (l = this.l7o(r.AttachToActor, t)) &&
               o !== StringUtils_1.NONE_STRING &&
               ((e = FNameUtil_1.FNameUtil.GetDynamicFName(o)),
-              (r = i.GetComponent(152)),
+              (r = i.GetComponent(154)),
               (o = l.Mesh),
               r.SetActorLocation(o.GetSocketLocation(e)),
               r.SetAttachToComponent(o, e, 1, 0, 0, !1),
               (r.NeedDetach = !0))));
     }
   }
-  c9o(t, e) {
+  l7o(t, e) {
     switch (t) {
       case 1:
         return this.Bullet.GetBulletInfo().AttackerActorComp.Actor;

@@ -14,19 +14,19 @@ const UE = require("ue"),
 class CalabashUnlockItemView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
-      (this.Tvt = 0),
-      (this.Lvt = void 0),
-      (this.Dvt = void 0),
-      (this.Rvt = new CustomPromise_1.CustomPromise()),
-      (this.Uvt = () => {
+      (this.GMt = 0),
+      (this.NMt = void 0),
+      (this.OMt = void 0),
+      (this.kMt = new CustomPromise_1.CustomPromise()),
+      (this.FMt = () => {
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("Calabash", 11, "跳转到鸣域终端收集页签", [
             "目标幻象Id",
-            this.Dvt.MonsterId,
+            this.OMt.MonsterId,
           ]),
           this.CloseViewOrShowNextData(),
           CalabashController_1.CalabashController.JumpToCalabashCollectTabView(
-            this.Dvt.MonsterId,
+            this.OMt.MonsterId,
           );
       });
   }
@@ -40,16 +40,16 @@ class CalabashUnlockItemView extends UiTickViewBase_1.UiTickViewBase {
       [5, UE.UIButtonComponent],
       [6, UE.UIText],
     ]),
-      (this.BtnBindInfo = [[5, this.Uvt]]);
+      (this.BtnBindInfo = [[5, this.FMt]]);
   }
   async OnBeforeStartAsync() {
     TimerSystem_1.TimerSystem.Delay(() => {
-      this.Rvt.SetResult(!0);
+      this.kMt.SetResult(!0);
     }, ConfigManager_1.ConfigManager.CalabashConfig.DelayTime),
-      await this.Rvt.Promise;
+      await this.kMt.Promise;
   }
   OnBeforeCreate() {
-    this.Lvt = this.OpenParam;
+    this.NMt = this.OpenParam;
   }
   OnStart() {
     this.GetButton(5).RootUIComp.SetRaycastTarget(
@@ -63,35 +63,35 @@ class CalabashUnlockItemView extends UiTickViewBase_1.UiTickViewBase {
     this.Og();
   }
   Refresh() {
-    (this.Lvt =
+    (this.NMt =
       ModelManager_1.ModelManager.CalabashModel.CalabashUnlockTipsList.shift()),
       this.Og();
   }
   Og() {
     var e =
         ConfigManager_1.ConfigManager.PhantomBattleConfig.GetPhantomItemById(
-          this.Lvt[0],
+          this.NMt[0],
         ),
       e =
-        ((this.Dvt =
+        ((this.OMt =
           ConfigManager_1.ConfigManager.CalabashConfig.GetCalabashDevelopRewardByMonsterId(
             e.MonsterId,
           )),
         ConfigManager_1.ConfigManager.MonsterInfoConfig.GetMonsterInfoConfig(
-          this.Dvt.MonsterInfoId,
+          this.OMt.MonsterInfoId,
         )),
       e =
-        ((this.Tvt = ConfigManager_1.ConfigManager.CalabashConfig.MaxTipCd),
+        ((this.GMt = ConfigManager_1.ConfigManager.CalabashConfig.MaxTipCd),
         this.GetText(3).ShowTextNew(e.Name),
         ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
-          this.Lvt[0],
+          this.NMt[0],
         ));
     this.SetTextureByPath(e.IconMiddle, this.GetTexture(1), this.Info?.Name),
-      this.Avt(),
+      this.VMt(),
       this.Pqe();
   }
-  Avt() {
-    var e = this.Lvt[2],
+  VMt() {
+    var e = this.NMt[2],
       e =
         ConfigManager_1.ConfigManager.InventoryConfig.GetItemQualityConfig(
           e,
@@ -101,7 +101,7 @@ class CalabashUnlockItemView extends UiTickViewBase_1.UiTickViewBase {
   Pqe() {
     var e =
       ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomInstanceByItemId(
-        this.Lvt[0],
+        this.NMt[0],
       );
     LguiUtil_1.LguiUtil.SetLocalTextNew(
       this.GetText(4),
@@ -116,8 +116,8 @@ class CalabashUnlockItemView extends UiTickViewBase_1.UiTickViewBase {
       : this.CloseMe();
   }
   OnTick(e) {
-    this.Tvt <= 0 ||
-      ((this.Tvt -= e), this.Tvt <= 0 && this.CloseViewOrShowNextData());
+    this.GMt <= 0 ||
+      ((this.GMt -= e), this.GMt <= 0 && this.CloseViewOrShowNextData());
   }
 }
 exports.CalabashUnlockItemView = CalabashUnlockItemView;

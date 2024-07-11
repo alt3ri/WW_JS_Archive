@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PlayerInputHandle = void 0);
 const UE = require("ue"),
+  Info_1 = require("../../Core/Common/Info"),
   Log_1 = require("../../Core/Common/Log"),
   Vector_1 = require("../../Core/Utils/Math/Vector"),
   EventDefine_1 = require("../Common/Event/EventDefine"),
@@ -11,30 +12,48 @@ const UE = require("ue"),
   LguiEventSystemManager_1 = require("../Ui/LguiEventSystem/LguiEventSystemManager"),
   TouchFingerManager_1 = require("../Ui/TouchFinger/TouchFingerManager"),
   CombinationActionHandle_1 = require("./CombinationActionHandle"),
-  CombinationAxisHandle_1 = require("./CombinationAxisHandle"),
-  MIN_AXIS_INPUT = 0.1;
+  CombinationAxisHandle_1 = require("./CombinationAxisHandle");
 class PlayerInputHandle {
   constructor() {
     (this.Zde = new Map()),
       (this.IsPrintKeyName = !1),
       (this.eCe = void 0),
-      (this.tCe = void 0);
+      (this.tCe = void 0),
+      (this.mIa = new Map()),
+      (this.fZt = (e) => {
+        this.mIa.clear();
+      });
   }
   Initialize() {
     (this.eCe = new CombinationActionHandle_1.CombinationActionHandle()),
-      (this.tCe = new CombinationAxisHandle_1.CombinationAxisHandle());
+      (this.tCe = new CombinationAxisHandle_1.CombinationAxisHandle()),
+      Info_1.Info.AxisInputOptimize &&
+        EventSystem_1.EventSystem.Add(
+          EventDefine_1.EEventName.OnShowMouseCursor,
+          this.fZt,
+        );
   }
   Clear() {
     this.eCe.Clear(),
       (this.eCe = void 0),
       this.tCe.Clear(),
-      (this.tCe = void 0);
+      (this.tCe = void 0),
+      Info_1.Info.AxisInputOptimize &&
+        EventSystem_1.EventSystem.Add(
+          EventDefine_1.EEventName.OnShowMouseCursor,
+          this.fZt,
+        );
   }
   Tick(e) {
-    this.tCe?.Tick(e);
+    if ((this.tCe?.Tick(e), Info_1.Info.AxisInputOptimize))
+      for (const t of this.mIa)
+        InputDistributeController_1.InputDistributeController.InputAxis(
+          t[0],
+          t[1],
+        );
   }
   InputAction(e, t, n) {
-    (ModelManager_1.ModelManager.PlatformModel?.IsMobileSource() &&
+    (Info_1.Info.IsMobilePlatform() &&
       ModelManager_1.ModelManager.PlatformModel?.IsKeyFromGamepadKey(n)) ||
       (this.iCe(n) &&
         this.eCe.CheckCombinationAction(e) &&
@@ -43,10 +62,10 @@ class PlayerInputHandle {
           t,
         ));
   }
-  InputAxis(e, t) {
-    ModelManager_1.ModelManager.PlatformModel?.IsMobileSource() ||
-      (Math.abs(t) <= MIN_AXIS_INPUT
-        ? InputDistributeController_1.InputDistributeController.InputAxis(e, 0)
+  InputAxis(e, t, n = !1) {
+    Info_1.Info.IsMobilePlatform() ||
+      (Info_1.Info.AxisInputOptimize && n
+        ? this.mIa.set(e, t)
         : InputDistributeController_1.InputDistributeController.InputAxis(
             e,
             t,
@@ -83,7 +102,7 @@ class PlayerInputHandle {
   }
   PressAnyKey(e) {
     var t;
-    (ModelManager_1.ModelManager.PlatformModel?.IsMobileSource() &&
+    (Info_1.Info.IsMobilePlatform() &&
       ModelManager_1.ModelManager.PlatformModel?.IsKeyFromGamepadKey(e)) ||
       ((t = e.KeyName.toString()),
       this.eCe.PressAnyKey(t),
@@ -100,7 +119,7 @@ class PlayerInputHandle {
   }
   ReleaseAnyKey(e) {
     var t;
-    (ModelManager_1.ModelManager.PlatformModel?.IsMobileSource() &&
+    (Info_1.Info.IsMobilePlatform() &&
       ModelManager_1.ModelManager.PlatformModel?.IsKeyFromGamepadKey(e)) ||
       ((t = e.KeyName.toString()),
       this.eCe.ReleaseAnyKey(t),
@@ -128,11 +147,11 @@ class PlayerInputHandle {
   }
   iCe(e) {
     return (
-      !!ModelManager_1.ModelManager.PlatformModel.IsGmLockGamepad ||
+      !!Info_1.Info.IsGmLockGamepad ||
       !(
-        (ModelManager_1.ModelManager.PlatformModel?.IsInGamepad() &&
+        (Info_1.Info.IsInGamepad() &&
           UE.KismetInputLibrary.Key_IsKeyboardKey(e)) ||
-        (ModelManager_1.ModelManager.PlatformModel?.IsInKeyBoard() &&
+        (Info_1.Info.IsInKeyBoard() &&
           UE.KismetInputLibrary.Key_IsGamepadKey(e))
       )
     );

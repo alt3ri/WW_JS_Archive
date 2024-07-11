@@ -12,50 +12,51 @@ const UE = require("ue"),
   InputDistributeController_1 = require("../../../../Ui/InputDistribute/InputDistributeController"),
   InputMappingsDefine_1 = require("../../../../Ui/InputDistribute/InputMappingsDefine"),
   ExecutionItem_1 = require("./ExecutionItem"),
+  Info_1 = require("../../../../../Core/Common/Info"),
   CLOSE_ANIM_TIME = 300,
   childType = 17;
 class ExecutionPanel extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this.Art = void 0),
+      (this.Hnt = void 0),
       (this.sDe = void 0),
-      (this.Jnt = void 0),
-      (this.znt = void 0),
-      (this.Znt = void 0),
-      (this.est = void 0),
-      (this.tst = !0),
-      (this.ist = () => {
-        (this.znt = void 0), this.Znt.SetResult(), (this.Znt = void 0);
+      (this.lat = void 0),
+      (this._at = void 0),
+      (this.uat = void 0),
+      (this.cat = void 0),
+      (this.mat = !0),
+      (this.dat = () => {
+        (this._at = void 0), this.uat.SetResult(), (this.uat = void 0);
       }),
       (this.bMe = (t, i) => {
-        1 === i && this.ost();
+        1 === i && this.Cat();
       }),
-      (this.ost = () => {
+      (this.Cat = () => {
         var t;
         this.sDe?.Valid
-          ? (this.Jnt?.OnInputAction(),
-            (t = this.sDe.Entity.GetComponent(103))?.IsPawnInteractive() &&
+          ? (this.lat?.OnInputAction(),
+            (t = this.sDe.Entity.GetComponent(105))?.IsPawnInteractive() &&
               t.InteractPawn())
-          : (this.tXe(), (this.sDe = void 0), this.Hide());
+          : (this.m$e(), (this.sDe = void 0), this.Hide());
       }),
-      (this.rst = () => {
-        (this.tst = this.est.GetChildVisible(childType)),
-          this.tst
+      (this.gat = () => {
+        (this.mat = this.cat.GetChildVisible(childType)),
+          this.mat
             ? this.sDe?.Valid && !this.IsShowOrShowing && this.Show()
             : this.IsHideOrHiding || this.Hide();
       }),
       (this.zpe = () => {
-        this.nst();
+        this.fat();
       });
   }
   Init(t) {
-    (this.est = ModelManager_1.ModelManager.BattleUiModel.ChildViewData),
-      (this.tst = this.est.GetChildVisible(childType)),
+    (this.cat = ModelManager_1.ModelManager.BattleUiModel.ChildViewData),
+      (this.mat = this.cat.GetChildVisible(childType)),
       this.Initialize(t);
   }
   async Initialize(t) {
     await this.CreateByResourceIdAsync("UiItem_FightSkillDeath", t, !0),
-      this.sDe?.Valid && this.tst && this.Show();
+      this.sDe?.Valid && this.mat && this.Show();
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -68,90 +69,90 @@ class ExecutionPanel extends UiPanelBase_1.UiPanelBase {
     return this.IsShowOrShowing ? this.GetItem(0) : void 0;
   }
   async OnBeforeStartAsync() {
-    await this.oZe(), this.Ore();
+    await this.fet(), this.Ore();
   }
-  async oZe() {
+  async fet() {
     var t = new ExecutionItem_1.ExecutionItem(),
       i = this.GetItem(0).GetOwner();
     return (
       await t.NewByRootActorAsync(i),
-      (this.Jnt = t).Init(this.ost),
+      (this.lat = t).Init(this.Cat),
       t.RefreshKeyByActionName(InputMappingsDefine_1.actionMappings.通用交互),
       t.RefreshSkillIconByResId("SP_IconPutDeath"),
       !0
     );
   }
   OnStart() {
-    this.hnt(1), this.hnt(2);
+    this.Est(1), this.Est(2);
   }
   OnAfterShow() {
-    this.Irt(2), this.Ert(1);
+    this.Gnt(2), this.bnt(1);
   }
   async OnBeforeHideAsync() {
-    this.Irt(1),
-      this.Znt &&
+    this.Gnt(1),
+      this.uat &&
         (Log_1.Log.CheckError() &&
           Log_1.Log.Error("Battle", 18, "重复调用隐藏"),
-        this.Znt.SetResult()),
-      (this.Znt = new CustomPromise_1.CustomPromise()),
-      (this.znt = TimerSystem_1.TimerSystem.Delay(this.ist, CLOSE_ANIM_TIME)),
-      this.Ert(2),
-      await this.Znt.Promise;
+        this.uat.SetResult()),
+      (this.uat = new CustomPromise_1.CustomPromise()),
+      (this._at = TimerSystem_1.TimerSystem.Delay(this.dat, CLOSE_ANIM_TIME)),
+      this.bnt(2),
+      await this.uat.Promise;
   }
   OnBeforeDestroy() {
-    this.znt &&
-      (TimerSystem_1.TimerSystem.Remove(this.znt),
-      (this.znt = void 0),
-      this.Znt.SetResult()),
-      this.Jnt?.Destroy(),
-      (this.Jnt = void 0),
+    this._at &&
+      (TimerSystem_1.TimerSystem.Remove(this._at),
+      (this._at = void 0),
+      this.uat.SetResult()),
+      this.lat?.Destroy(),
+      (this.lat = void 0),
       this.kre();
   }
   Ore() {
-    ModelManager_1.ModelManager.PlatformModel.IsMobile() ||
+    Info_1.Info.IsInTouch() ||
       InputDistributeController_1.InputDistributeController.BindAction(
         InputMappingsDefine_1.actionMappings.通用交互,
         this.bMe,
       ),
-      this.est.AddCallback(childType, this.rst);
+      this.cat.AddCallback(childType, this.gat);
   }
   kre() {
-    ModelManager_1.ModelManager.PlatformModel.IsMobile() ||
+    Info_1.Info.IsInTouch() ||
       InputDistributeController_1.InputDistributeController.UnBindAction(
         InputMappingsDefine_1.actionMappings.通用交互,
         this.bMe,
       ),
-      this.est.RemoveCallback(childType, this.rst);
+      this.cat.RemoveCallback(childType, this.gat);
   }
-  hnt(t) {
+  Est(t) {
     var i = [],
       e = this.GetItem(t)
         .GetOwner()
         .K2_GetComponentsByClass(UE.LGUIPlayTweenComponent.StaticClass()),
       s = e.Num();
     for (let t = 0; t < s; t++) i.push(e.Get(t));
-    this.Art || (this.Art = new Map()), this.Art.set(t, i);
+    this.Hnt || (this.Hnt = new Map()), this.Hnt.set(t, i);
   }
-  Ert(t) {
-    t = this.Art.get(t);
+  bnt(t) {
+    t = this.Hnt.get(t);
     if (t) for (const i of t) i.Play();
   }
-  Irt(t) {
-    t = this.Art.get(t);
+  Gnt(t) {
+    t = this.Hnt.get(t);
     if (t) for (const i of t) i.Stop();
   }
   ShowByEntity(t) {
     this.sDe?.Id !== t &&
       ((t = ModelManager_1.ModelManager.CreatureModel.GetEntityById(t))
-        ? (this.tXe(), (this.sDe = t), this._o())
-        : this.nst());
+        ? (this.m$e(), (this.sDe = t), this._o())
+        : this.fat());
   }
   HideByEntity(t) {
-    this.sDe?.Id === t && this.nst();
+    this.sDe?.Id === t && this.fat();
   }
   _o() {
-    this.eXe(),
-      !this.IsShowOrShowing && this.tst && this.Show(),
+    this.c$e(),
+      !this.IsShowOrShowing && this.mat && this.Show(),
       ModelManager_1.ModelManager.BattleUiModel.SetExecutionInteractEnable(!0),
       ModelManager_1.ModelManager.BattleUiModel.ChildViewData.SetChildVisible(
         7,
@@ -160,8 +161,8 @@ class ExecutionPanel extends UiPanelBase_1.UiPanelBase {
         !0,
       );
   }
-  nst() {
-    this.tXe(),
+  fat() {
+    this.m$e(),
       (this.sDe = void 0),
       this.IsHideOrHiding || this.Hide(),
       ModelManager_1.ModelManager.BattleUiModel.SetExecutionInteractEnable(!1),
@@ -172,7 +173,7 @@ class ExecutionPanel extends UiPanelBase_1.UiPanelBase {
         !0,
       );
   }
-  eXe() {
+  c$e() {
     this.sDe &&
       EventSystem_1.EventSystem.AddWithTarget(
         this.sDe,
@@ -180,7 +181,7 @@ class ExecutionPanel extends UiPanelBase_1.UiPanelBase {
         this.zpe,
       );
   }
-  tXe() {
+  m$e() {
     this.sDe &&
       EventSystem_1.EventSystem.RemoveWithTarget(
         this.sDe,

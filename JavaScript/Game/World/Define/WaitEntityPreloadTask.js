@@ -10,86 +10,86 @@ const Log_1 = require("../../../Core/Common/Log"),
 class WaitEntityPreloadTask {
   constructor(t, i) {
     (this.vJ = void 0),
-      (this.kpr = void 0),
-      (this.Fpr = 0),
-      (this.Vpr = void 0),
-      (this.Hpr = new Map()),
-      (this.jpr = new Map()),
-      (this.ZWo = new Map()),
-      (this.Wpr = void 0),
-      (this.Kpr = (i) => {
-        if (!(8 & this.Fpr)) {
+      (this.Gvr = void 0),
+      (this.Nvr = 0),
+      (this.Ovr = void 0),
+      (this.kvr = new Map()),
+      (this.Fvr = new Map()),
+      (this.YKo = new Map()),
+      (this.Vvr = void 0),
+      (this.Hvr = (i) => {
+        if (!(8 & this.Nvr)) {
           var e = i.Entity.GetComponent(0),
             s = e.GetCreatureDataId(),
             e = e.GetPbDataId(),
             i = i.Id;
           let t = !1;
-          this.Hpr.has(s) && ((t = !0), this.Hpr.delete(s)),
-            this.jpr.has(e) && ((t = !0), this.jpr.delete(e)),
-            this.ZWo.has(i) && ((t = !0), this.ZWo.delete(i)),
-            !t || this.t6 || this.Neo();
+          this.kvr.has(s) && ((t = !0), this.kvr.delete(s)),
+            this.Fvr.has(e) && ((t = !0), this.Fvr.delete(e)),
+            this.YKo.has(i) && ((t = !0), this.YKo.delete(i)),
+            !t || this.t6 || this.Bto();
         }
       }),
       (this.zpe = (t, i) => {
-        if (!(8 & this.Fpr))
-          if (i.Id === this.vJ.Id) (this.Fpr |= 4), this.Neo();
+        if (!(8 & this.Nvr))
+          if (i.Id === this.vJ.Id) (this.Nvr |= 4), this.Bto();
           else {
             var e = i.Entity.GetComponent(0),
               s = e.GetCreatureDataId(),
               e = e.GetPbDataId(),
               i = i.Id;
             let t = !1;
-            this.Hpr.has(s) &&
+            this.kvr.has(s) &&
               ((t = !0),
-              this.Hpr.delete(s),
+              this.kvr.delete(s),
               ModelManager_1.ModelManager.CreatureModel.LeavingLevel ||
                 (Log_1.Log.CheckError() &&
                   Log_1.Log.Error(
                     "Entity",
                     3,
                     "实体需要等待的实体被删了",
-                    ["CreatureDataId", this.Vpr?.GetCreatureDataId()],
+                    ["CreatureDataId", this.Ovr?.GetCreatureDataId()],
                     ["被删的实体CreatureDataId", s],
-                    ["依赖的实体列表", this.Wpr],
+                    ["依赖的实体列表", this.Vvr],
                   ))),
-              this.jpr.has(e) &&
+              this.Fvr.has(e) &&
                 ((t = !0),
-                this.jpr.delete(e),
+                this.Fvr.delete(e),
                 ModelManager_1.ModelManager.CreatureModel.LeavingLevel ||
                   (Log_1.Log.CheckError() &&
                     Log_1.Log.Error(
                       "Entity",
                       3,
                       "实体需要等待的实体被删了",
-                      ["CreatureDataId", this.Vpr?.GetCreatureDataId()],
+                      ["CreatureDataId", this.Ovr?.GetCreatureDataId()],
                       ["被删的实体PbDataId", e],
-                      ["依赖的实体列表", this.Wpr],
+                      ["依赖的实体列表", this.Vvr],
                     ))),
-              this.ZWo.has(i) &&
+              this.YKo.has(i) &&
                 ((t = !0),
-                this.ZWo.delete(i),
+                this.YKo.delete(i),
                 ModelManager_1.ModelManager.CreatureModel.LeavingLevel ||
                   (Log_1.Log.CheckError() &&
                     Log_1.Log.Error(
                       "Entity",
                       3,
                       "实体需要等待的实体被删了",
-                      ["CreatureDataId", this.Vpr?.GetCreatureDataId()],
+                      ["CreatureDataId", this.Ovr?.GetCreatureDataId()],
                       ["被删的实体EntityId", i],
-                      ["依赖的实体列表", this.Wpr],
+                      ["依赖的实体列表", this.Vvr],
                     ))),
-              t && ((this.Fpr |= 1), this.t6 || this.Neo());
+              t && ((this.Nvr |= 1), this.t6 || this.Bto());
           }
       }),
       (this.vJ = t),
-      (this.kpr = i);
+      (this.Gvr = i);
   }
   Init() {
-    (this.Vpr = this.vJ.Entity.GetComponent(0)),
-      (this.Wpr = this.Vpr.GetDependenceEntities().join()),
+    (this.Ovr = this.vJ.Entity.GetComponent(0)),
+      (this.Vvr = this.Ovr.GetDependenceEntities().join()),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.PreloadEntityFinished,
-        this.Kpr,
+        this.Hvr,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.RemoveEntity,
@@ -97,94 +97,94 @@ class WaitEntityPreloadTask {
       ),
       TimerSystem_1.TimerSystem.Delay(() => {
         !this.vJ?.Valid ||
-          8 & this.Fpr ||
-          ((this.Fpr |= 2),
+          8 & this.Nvr ||
+          ((this.Nvr |= 2),
           Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Entity",
               3,
               "等待实体超时",
-              ["CreatureDataId", this.Vpr.GetCreatureDataId()],
-              ["依赖的实体", this.Wpr],
-              ["没有预加载的实体", this.Qpr()],
+              ["CreatureDataId", this.Ovr.GetCreatureDataId()],
+              ["依赖的实体", this.Vvr],
+              ["没有预加载的实体", this.jvr()],
             ),
-          this.Neo());
+          this.Bto());
       }, WAIT_TIME),
-      this.Xpr(),
-      this.t6 || this.Neo();
+      this.Wvr(),
+      this.t6 || this.Bto();
   }
   get t6() {
-    return this.ZWo.size + this.jpr.size + this.Hpr.size;
+    return this.YKo.size + this.Fvr.size + this.kvr.size;
   }
   Clear() {
     (this.vJ = void 0),
-      this.Hpr.clear(),
-      this.jpr.clear(),
-      this.ZWo.clear(),
-      (this.Wpr = void 0),
-      (this.kpr = void 0);
+      this.kvr.clear(),
+      this.Fvr.clear(),
+      this.YKo.clear(),
+      (this.Vvr = void 0),
+      (this.Gvr = void 0);
   }
-  Xpr() {
+  Wvr() {
     var t, i, e, s, h;
-    for ([t, i] of this.Vpr.GetDependenceEntities())
+    for ([t, i] of this.Ovr.GetDependenceEntities())
       0 === i
-        ? this.Hpr.has(t)
+        ? this.kvr.has(t)
           ? Log_1.Log.CheckError() &&
             Log_1.Log.Error("Entity", 3, "重复添加依赖实体", [
               "CreatureDataId",
               t,
             ])
-          : this.Hpr.set(t, i)
+          : this.kvr.set(t, i)
         : 1 === i
-          ? this.jpr.has(t)
+          ? this.Fvr.has(t)
             ? Log_1.Log.CheckError() &&
               Log_1.Log.Error("Entity", 3, "重复添加依赖实体", ["PbDataId", t])
-            : this.jpr.set(t, i)
+            : this.Fvr.set(t, i)
           : 2 === i &&
-            (this.ZWo.has(t)
+            (this.YKo.has(t)
               ? Log_1.Log.CheckError() &&
                 Log_1.Log.Error("Entity", 3, "重复添加依赖实体", [
                   "EntityId",
                   t,
                 ])
-              : this.ZWo.set(t, i));
-    for ([e] of this.Hpr) {
+              : this.YKo.set(t, i));
+    for ([e] of this.kvr) {
       var r = ModelManager_1.ModelManager.CreatureModel.GetEntity(e);
       r?.Valid &&
         (r.Entity.GetComponent(0).GetPreloadFinished() || r?.IsInit) &&
-        this.Hpr.delete(e);
+        this.kvr.delete(e);
     }
-    for ([s] of this.jpr) {
+    for ([s] of this.Fvr) {
       var a = ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(s);
       a?.Valid &&
         (a.Entity.GetComponent(0).GetPreloadFinished() || a?.IsInit) &&
-        this.jpr.delete(s);
+        this.Fvr.delete(s);
     }
-    for ([h] of this.ZWo) {
+    for ([h] of this.YKo) {
       var o = ModelManager_1.ModelManager.CreatureModel.GetEntityById(h);
       o?.Valid &&
         (o.Entity.GetComponent(0).GetPreloadFinished() || o?.IsInit) &&
-        this.ZWo.delete(h);
+        this.YKo.delete(h);
     }
   }
-  Neo() {
+  Bto() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.PreloadEntityFinished,
-      this.Kpr,
+      this.Hvr,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.RemoveEntity,
         this.zpe,
       ),
-      (this.Fpr |= 8),
-      this.kpr(this.Fpr),
+      (this.Nvr |= 8),
+      this.Gvr(this.Nvr),
       this.Clear();
   }
-  Qpr() {
+  jvr() {
     let t = "";
-    if (this.Hpr.size) for (var [i] of this.Hpr) t += `CreatureDataId:${i},`;
-    if (this.jpr.size) for (var [e] of this.jpr) t += `PbDataId:${e},`;
-    if (this.ZWo.size) for (var [s] of this.ZWo) t += `EntityId:${s},`;
+    if (this.kvr.size) for (var [i] of this.kvr) t += `CreatureDataId:${i},`;
+    if (this.Fvr.size) for (var [e] of this.Fvr) t += `PbDataId:${e},`;
+    if (this.YKo.size) for (var [s] of this.YKo) t += `EntityId:${s},`;
     return t;
   }
   static Create(t, i) {

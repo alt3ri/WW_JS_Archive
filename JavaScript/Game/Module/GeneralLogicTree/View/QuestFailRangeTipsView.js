@@ -10,30 +10,30 @@ const UE = require("ue"),
 class QuestFailRangeTipsView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
-      (this.A$t = void 0),
-      (this.EPe = void 0),
+      (this.AYt = void 0),
+      (this.SPe = void 0),
       (this.mNe = -0);
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [[0, UE.UIText]];
   }
   OnStart() {
-    (this.A$t = this.GetText(0)),
-      (this.EPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem));
+    (this.AYt = this.GetText(0)),
+      (this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem));
     var e = this.OpenParam;
-    (this.mNe = e - TimeUtil_1.TimeUtil.GetServerTimeStamp()), this.P$t();
+    (this.mNe = e - TimeUtil_1.TimeUtil.GetServerTimeStamp()), this.PYt();
   }
   OnTick(e) {
     ModelManager_1.ModelManager.GeneralLogicTreeModel.TimeStop ||
       ((this.mNe = Math.max(this.mNe - e * Time_1.Time.TimeDilation, 0)),
-      this.P$t(),
-      "Loop" !== this.EPe.GetCurrentSequence() &&
-        this.EPe.PlayLevelSequenceByName("Loop", !1));
+      this.PYt(),
+      "Loop" !== this.SPe.GetCurrentSequence() &&
+        this.SPe.PlayLevelSequenceByName("Loop", !1));
   }
-  P$t() {
+  PYt() {
     var e = this.mNe / 1e3,
       e = Math.floor(e);
-    this.A$t.SetText(e.toString());
+    this.AYt.SetText(e.toString());
   }
 }
 exports.QuestFailRangeTipsView = QuestFailRangeTipsView;

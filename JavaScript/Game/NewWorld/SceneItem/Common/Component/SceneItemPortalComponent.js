@@ -39,20 +39,20 @@ let SceneItemPortalComponent =
   ) {
     constructor() {
       super(...arguments),
-        (this.D1n = "A"),
-        (this.R1n = INVALID_ENTITY),
+        (this.s1n = "A"),
+        (this.a1n = INVALID_ENTITY),
         (this.Hte = void 0),
         (this.PortalCapture = void 0),
         (this.wDe = 0),
-        (this.A1n = (e, t, n) => {
+        (this.h1n = (e, t, n) => {
           var r;
           t?.Valid &&
             (r = t.Entity.GetComponent(0)?.GetPbDataId()) &&
-            this.R1n === r &&
+            this.a1n === r &&
             this.PortalCapture?.IsValid() &&
-            ((r = t.Entity.GetComponent(193)) &&
+            ((r = t.Entity.GetComponent(198)) &&
               r.PortalCapture &&
-              (this.PortalCapture.SetPair(r.PortalCapture), "A" === this.D1n) &&
+              (this.PortalCapture.SetPair(r.PortalCapture), "A" === this.s1n) &&
               PortalController_1.PortalController.RegisterPair(
                 this.wDe,
                 this.PortalCapture.Plane.K2_GetComponentToWorld(),
@@ -62,30 +62,30 @@ let SceneItemPortalComponent =
               ),
             EventSystem_1.EventSystem.Has(
               EventDefine_1.EEventName.RemoveEntity,
-              this.U1n,
+              this.l1n,
             ) ||
               EventSystem_1.EventSystem.Add(
                 EventDefine_1.EEventName.RemoveEntity,
-                this.U1n,
+                this.l1n,
               ));
         }),
-        (this.U1n = (e, t) => {
+        (this.l1n = (e, t) => {
           t?.Valid &&
             (t = t.Entity.GetComponent(0)?.GetPbDataId()) &&
-            this.R1n === t &&
+            this.a1n === t &&
             (EventSystem_1.EventSystem.Has(
               EventDefine_1.EEventName.AddEntity,
-              this.A1n,
+              this.h1n,
             ) ||
               EventSystem_1.EventSystem.Add(
                 EventDefine_1.EEventName.AddEntity,
-                this.A1n,
+                this.h1n,
               ),
             this.PortalCapture?.IsValid()) &&
-            (this.PortalCapture.SetPair(void 0), "A" === this.D1n) &&
+            (this.PortalCapture.SetPair(void 0), "A" === this.s1n) &&
             PortalController_1.PortalController.UnRegisterPair(this.wDe);
         }),
-        (this.P1n = (e) => {
+        (this._1n = (e) => {
           var t = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
           if (t?.Valid) {
             var n = t.Entity.GetComponent(3);
@@ -94,9 +94,9 @@ let SceneItemPortalComponent =
             ),
               CameraController_1.CameraController.FightCamera.LogicComponent.ResetFightCameraLogic(),
               CameraController_1.CameraController.FightCamera.LogicComponent.ResetInitialCameraRotation(),
-              t.Entity.GetComponent(185).HasTag(-1371021686) &&
+              t.Entity.GetComponent(188).HasTag(-1371021686) &&
                 t.Entity.GetComponent(33).StopGroup1Skill("Portal Stop skill");
-            const r = t.Entity.GetComponent(161);
+            const r = t.Entity.GetComponent(163);
             e &&
               r &&
               TimerSystem_1.TimerSystem.Delay(() => {
@@ -113,16 +113,16 @@ let SceneItemPortalComponent =
         case "Dynamic":
           break;
         case "Static":
-          this.R1n = t.Config.LinkPortalEntityId;
+          this.a1n = t.Config.LinkPortalEntityId;
       }
       return (
-        (this.D1n = t.Config.PortalModel),
-        e.EntityData && (this.wDe = e.EntityData?.R5n),
+        (this.s1n = t.Config.PortalModel),
+        e.EntityData && (this.wDe = e.EntityData?._9n),
         !0
       );
     }
     OnStart() {
-      return (this.Hte = this.Entity.GetComponent(182)), !0;
+      return (this.Hte = this.Entity.GetComponent(185)), !0;
     }
     OnActivate() {
       var e;
@@ -143,14 +143,14 @@ let SceneItemPortalComponent =
             1,
             !1,
           ),
-          this.PortalCapture.RoleTeleport.Add(this.P1n),
+          this.PortalCapture.RoleTeleport.Add(this._1n),
           (e = ModelManager_1.ModelManager.CreatureModel?.GetEntityByPbDataId(
-            this.R1n,
+            this.a1n,
           ))?.IsInit
-            ? ((e = e.Entity.GetComponent(193)) &&
+            ? ((e = e.Entity.GetComponent(198)) &&
                 e.PortalCapture &&
                 (this.PortalCapture.SetPair(e.PortalCapture),
-                "A" === this.D1n) &&
+                "A" === this.s1n) &&
                 PortalController_1.PortalController.RegisterPair(
                   this.wDe,
                   this.PortalCapture.Plane.K2_GetComponentToWorld(),
@@ -160,15 +160,15 @@ let SceneItemPortalComponent =
                 ),
               EventSystem_1.EventSystem.Has(
                 EventDefine_1.EEventName.RemoveEntity,
-                this.U1n,
+                this.l1n,
               ) ||
                 EventSystem_1.EventSystem.Add(
                   EventDefine_1.EEventName.RemoveEntity,
-                  this.U1n,
+                  this.l1n,
                 ))
             : EventSystem_1.EventSystem.Add(
                 EventDefine_1.EEventName.AddEntity,
-                this.A1n,
+                this.h1n,
               )),
         !0
       );
@@ -177,22 +177,22 @@ let SceneItemPortalComponent =
       return (
         EventSystem_1.EventSystem.Has(
           EventDefine_1.EEventName.RemoveEntity,
-          this.U1n,
+          this.l1n,
         ) &&
           EventSystem_1.EventSystem.Remove(
             EventDefine_1.EEventName.RemoveEntity,
-            this.U1n,
+            this.l1n,
           ),
         EventSystem_1.EventSystem.Has(
           EventDefine_1.EEventName.AddEntity,
-          this.A1n,
+          this.h1n,
         ) &&
           EventSystem_1.EventSystem.Remove(
             EventDefine_1.EEventName.AddEntity,
-            this.A1n,
+            this.h1n,
           ),
         this.PortalCapture?.IsValid() &&
-          ("A" === this.D1n &&
+          ("A" === this.s1n &&
             PortalController_1.PortalController.UnRegisterPair(this.wDe),
           this.PortalCapture.SetPair(void 0),
           this.PortalCapture.K2_DetachFromActor(),
@@ -201,10 +201,13 @@ let SceneItemPortalComponent =
         !0
       );
     }
+    GetPbDataId() {
+      return this.wDe;
+    }
   });
 (SceneItemPortalComponent = SceneItemPortalComponent_1 =
   __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(193)],
+    [(0, RegisterComponent_1.RegisterComponent)(198)],
     SceneItemPortalComponent,
   )),
   (exports.SceneItemPortalComponent = SceneItemPortalComponent);

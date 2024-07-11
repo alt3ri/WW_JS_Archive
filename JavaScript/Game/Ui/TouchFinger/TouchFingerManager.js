@@ -12,14 +12,14 @@ class TouchFingerManager {
       e < TouchFingerDefine_1.EFingerIndex.Ten;
       e++
     )
-      TouchFingerManager.Qmr(e);
+      TouchFingerManager.Wdr(e);
   }
-  static Qmr(e) {
+  static Wdr(e) {
     var r = new TouchFingerData_1.TouchFingerData(e);
-    TouchFingerManager.tCt.set(e, r);
+    TouchFingerManager.mgt.set(e, r);
   }
   static GetTouchFingerData(e) {
-    return TouchFingerManager.tCt.get(e);
+    return TouchFingerManager.mgt.get(e);
   }
   static StartTouch(e, r) {
     e = TouchFingerManager.GetTouchFingerData(e);
@@ -121,6 +121,6 @@ class TouchFingerManager {
         : { X: 0, Y: 0 };
   }
 }
-((exports.TouchFingerManager = TouchFingerManager).tCt = new Map()),
+((exports.TouchFingerManager = TouchFingerManager).mgt = new Map()),
   (TouchFingerManager.CurrentTouchFingerCount = 0);
 //# sourceMappingURL=TouchFingerManager.js.map

@@ -1,5 +1,4 @@
 "use strict";
-var EDangerType, EDungeonType, EDungeonSubType;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.WORLD_LEVEL_MAX =
     exports.WORLD_LEVEL_MIN =
@@ -13,44 +12,16 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.DungeonDetectionRecord =
     exports.MonsterDetectionRecord =
     exports.AdventureTaskRecord =
-    exports.EDungeonSubType =
-    exports.EDungeonType =
-    exports.EDangerType =
-      void 0),
-  (function (e) {
-    (e[(e.Low = 1)] = "Low"),
-      (e[(e.Middle = 2)] = "Middle"),
-      (e[(e.High = 3)] = "High"),
-      (e[(e.VeryLow = 0)] = "VeryLow");
-  })((EDangerType = exports.EDangerType || (exports.EDangerType = {}))),
-  (function (e) {
-    (e[(e.Mat = 4)] = "Mat"),
-      (e[(e.Tower = 5)] = "Tower"),
-      (e[(e.Tutorial = 6)] = "Tutorial"),
-      (e[(e.Weekly = 7)] = "Weekly"),
-      (e[(e.Rouge = 18)] = "Rouge"),
-      (e[(e.Simulation = 19)] = "Simulation"),
-      (e[(e.Boss = 21)] = "Boss"),
-      (e[(e.NoSoundArea = 22)] = "NoSoundArea"),
-      (e[(e.LordGym = 61)] = "LordGym"),
-      (e[(e.SkillTeach = 62)] = "SkillTeach");
-  })((EDungeonType = exports.EDungeonType || (exports.EDungeonType = {}))),
-  (function (e) {
-    (e[(e.RoleTrail = 7)] = "RoleTrail"),
-      (e[(e.SingleTower = 8)] = "SingleTower"),
-      (e[(e.LoopTower = 9)] = "LoopTower"),
-      (e[(e.WeaponMat = 10)] = "WeaponMat"),
-      (e[(e.SkillMat = 11)] = "SkillMat"),
-      (e[(e.Roguelike = 15)] = "Roguelike"),
-      (e[(e.Mowing = 19)] = "Mowing"),
-      (e[(e.BossRush = 20)] = "BossRush");
-  })(
-    (EDungeonSubType =
-      exports.EDungeonSubType || (exports.EDungeonSubType = {})),
-  );
+      void 0);
+const AdventureTask_1 = require("../../../Core/Define/Config/AdventureTask"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol");
 class AdventureTaskRecord {
   constructor(e, t) {
-    (this.Progress = 0), (this.AdventureTaskBase = e), (this.Status = t);
+    (this.AdventureTaskBase = new AdventureTask_1.AdventureTask()),
+      (this.Status = Protocol_1.Aki.Protocol.Eks.Proto_UnFinish),
+      (this.Progress = 0),
+      (this.AdventureTaskBase = e),
+      (this.Status = t);
   }
   GetTotalNum() {
     return this.AdventureTaskBase.NeedProgress;
@@ -58,11 +29,17 @@ class AdventureTaskRecord {
 }
 exports.AdventureTaskRecord = AdventureTaskRecord;
 class DetectionRecord {
-  constructor(e, t, o) {
-    (this.IsTargeting = !1),
+  constructor(e, t, s) {
+    (this.Mat = void 0),
+      (this.IsLock = !1),
+      (this.RefreshTime = 0),
+      (this.IsTargeting = !1),
       (this.IsLock = t),
-      (this.RefreshTime = o),
-      (this.Conf = e);
+      (this.RefreshTime = s),
+      (this.Mat = e);
+  }
+  get Conf() {
+    return this.Mat;
   }
 }
 class MonsterDetectionRecord extends DetectionRecord {}
@@ -72,13 +49,13 @@ exports.DungeonDetectionRecord = DungeonDetectionRecord;
 class SilentAreaDetectionRecord extends DetectionRecord {}
 exports.SilentAreaDetectionRecord = SilentAreaDetectionRecord;
 class SoundAreaDetectionRecord {
-  constructor(e, t, o) {
+  constructor(e, t, s) {
     (this.Type = void 0),
       (this.DungeonDetectionRecord = void 0),
       (this.SilentAreaDetectionRecord = void 0),
       (this.Type = e),
       (this.DungeonDetectionRecord = t),
-      (this.SilentAreaDetectionRecord = o);
+      (this.SilentAreaDetectionRecord = s);
   }
   get Conf() {
     switch (this.Type) {

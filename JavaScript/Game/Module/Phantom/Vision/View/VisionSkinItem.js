@@ -8,24 +8,24 @@ const LocalStorageDefine_1 = require("../../../../Common/LocalStorageDefine"),
 class VisionSkinItem extends LoopScrollSmallItemGrid_1.LoopScrollSmallItemGrid {
   constructor() {
     super(...arguments),
-      (this.kHi = void 0),
-      (this.A4e = void 0),
-      (this.gIt = -1),
-      (this.c2e = () => {
-        this.kHi?.(this.gIt, this.GetItemGridExtendToggle()),
+      (this.Nji = void 0),
+      (this.W5e = void 0),
+      (this.ETt = -1),
+      (this.RFe = () => {
+        this.Nji?.(this.ETt, this.GetItemGridExtendToggle()),
           this.SetNewFlagVisible(!1),
           ModelManager_1.ModelManager.NewFlagModel.RemoveNewFlag(
             LocalStorageDefine_1.ELocalStoragePlayerKey.VisionSkin,
-            this.gIt,
+            this.ETt,
           ),
           ModelManager_1.ModelManager.NewFlagModel.SaveNewFlagConfig(
             LocalStorageDefine_1.ELocalStoragePlayerKey.VisionSkin,
           );
       }),
-      (this.d4e = () => !this.A4e || this.A4e(this.gIt));
+      (this.A5e = () => !this.W5e || this.W5e(this.ETt));
   }
   OnRefresh(e, i, t) {
-    this.gIt = e;
+    this.ETt = e;
     var o = ModelManager_1.ModelManager.NewFlagModel.HasNewFlag(
         LocalStorageDefine_1.ELocalStoragePlayerKey.VisionSkin,
         e,
@@ -48,18 +48,18 @@ class VisionSkinItem extends LoopScrollSmallItemGrid_1.LoopScrollSmallItemGrid {
     0 !== e && this.SetSelected(!1, !0);
   }
   OnStart() {
-    this.BindOnExtendToggleStateChanged(this.c2e),
-      this.GetItemGridExtendToggle()?.CanExecuteChange.Bind(this.d4e);
+    this.BindOnExtendToggleStateChanged(this.RFe),
+      this.GetItemGridExtendToggle()?.CanExecuteChange.Bind(this.A5e);
   }
   OnSelected(e) {
     1 !== this.GetItemGridExtendToggle().ToggleState &&
       this.SetSelected(!0, !0);
   }
   SetClickToggleEvent(e) {
-    this.kHi = e;
+    this.Nji = e;
   }
   BindCanToggleExecuteChange(e) {
-    this.A4e = e;
+    this.W5e = e;
   }
 }
 exports.VisionSkinItem = VisionSkinItem;

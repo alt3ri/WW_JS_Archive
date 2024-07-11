@@ -7,10 +7,10 @@ const EventDefine_1 = require("../../../../Common/Event/EventDefine"),
 class ReadMailBehaviorNode extends ChildQuestNodeBase_1.ChildQuestNodeBase {
   constructor() {
     super(...arguments),
-      (this.QQt = !1),
-      (this.SXt = 0),
-      (this.EXt = (e, t) => {
-        this.QQt || (t === this.SXt && ((this.QQt = !0), this.SubmitNode()));
+      (this.QXt = !1),
+      (this.E$t = 0),
+      (this.S$t = (e, t) => {
+        this.QXt || (t === this.E$t && ((this.QXt = !0), this.SubmitNode()));
       });
   }
   get CorrelativeEntities() {}
@@ -18,23 +18,23 @@ class ReadMailBehaviorNode extends ChildQuestNodeBase_1.ChildQuestNodeBase {
     return (
       !!super.OnCreate(e) &&
       "ReadMail" === (e = e.Condition).Type &&
-      ((this.SXt = e.MailId), !0)
+      ((this.E$t = e.MailId), !0)
     );
   }
   OnDestroy() {
-    super.OnDestroy(), (this.SXt = 0);
+    super.OnDestroy(), (this.E$t = 0);
   }
   AddEventsOnChildQuestStart() {
     super.AddEventsOnChildQuestStart(),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.SelectedMail,
-        this.EXt,
+        this.S$t,
       );
   }
   RemoveEventsOnChildQuestEnd() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.SelectedMail,
-      this.EXt,
+      this.S$t,
     ),
       super.RemoveEventsOnChildQuestEnd();
   }

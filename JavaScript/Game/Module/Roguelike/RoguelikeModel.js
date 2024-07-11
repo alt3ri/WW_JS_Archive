@@ -12,122 +12,123 @@ const Time_1 = require("../../../Core/Common/Time"),
   ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../Manager/ModelManager"),
   ActivityRogueController_1 = require("../Activity/ActivityContent/RougeActivity/ActivityRogueController"),
-  AdventureDefine_1 = require("../AdventureGuide/AdventureDefine"),
   RoguelikeChooseData_1 = require("./Define/RoguelikeChooseData"),
   RoguelikeDefine_1 = require("./Define/RoguelikeDefine");
 class RoguelikeModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
-      (this.xso = void 0),
-      (this.wso = 0),
-      (this.Bso = void 0),
-      (this.bso = 0),
-      (this.qso = 0),
-      (this.Gso = void 0),
-      (this.Nso = new StateRef_1.StateRef("game_rogue_room_type", "none")),
-      (this.Oso = void 0),
-      (this.kso = new Map()),
-      (this.Fso = new Map()),
-      (this.Vso = new Map()),
+      (this.Rao = void 0),
+      (this.Uao = 0),
+      (this.Aao = void 0),
+      (this.Pao = 0),
+      (this.xao = 0),
+      (this.wao = void 0),
+      (this.Bao = new StateRef_1.StateRef("game_rogue_room_type", "none")),
+      (this.bao = void 0),
+      (this.qao = new Map()),
+      (this.Gao = new Map()),
+      (this.Nao = new Map()),
       (this.TempCountdown = void 0),
       (this.ShowRewardList = void 0),
       (this.CurrSeasonData = void 0),
       (this.CurDungeonId = void 0),
-      (this.Hso = 0),
-      (this.SelectSkillId = 0);
+      (this.Oao = 0),
+      (this.SelectSkillId = 0),
+      (this.SelectRoleViewShowRoleList = []),
+      (this.SelectRoleViewRecommendRoleList = []);
   }
   OnInit() {
     return !0;
   }
   OnClear() {
-    return this.kso.clear(), !(this.xso = void 0);
+    return this.qao.clear(), !(this.Rao = void 0);
   }
   get EditFormationRoleList() {
-    return this.Oso;
+    return this.bao;
   }
   set EditFormationRoleList(e) {
-    this.Oso = e;
+    this.bao = e;
   }
   get CurIndex() {
-    return this.wso;
+    return this.Uao;
   }
   set CurIndex(e) {
-    this.wso = e;
+    this.Uao = e;
   }
   get CurrentRogueGainEntry() {
-    return this.Bso;
+    return this.Aao;
   }
   set CurrentRogueGainEntry(e) {
-    this.Bso = e;
+    this.Aao = e;
   }
   get RogueInfo() {
-    return this.xso;
+    return this.Rao;
   }
   set RogueInfo(e) {
-    this.xso = e;
+    this.Rao = e;
   }
   get CurRoomCount() {
-    return this.bso;
+    return this.Pao;
   }
   set CurRoomCount(e) {
-    this.bso = e;
+    this.Pao = e;
   }
   get TotalRoomCount() {
-    return this.qso;
+    return this.xao;
   }
   set TotalRoomCount(e) {
-    this.qso = e;
+    this.xao = e;
   }
   get CurRoomType() {
-    return this.Gso;
+    return this.wao;
   }
   set CurRoomType(e) {
-    this.Gso = e;
+    this.wao = e;
   }
   get CurRoomMusicState() {
-    return this.Nso.State;
+    return this.Bao.State;
   }
   set CurRoomMusicState(e) {
-    this.Nso.State = e ?? "none";
+    this.Bao.State = e ?? "none";
   }
   get RoguelikeSkillDataMap() {
-    return this.Fso;
+    return this.Gao;
   }
   get RoguelikeCurrencyDictMap() {
-    return this.Vso;
+    return this.Nao;
   }
   SetRoguelikeSkillData(e, t) {
-    this.Fso.set(e, t);
+    this.Gao.set(e, t);
   }
   SetRoguelikeCurrency(e, t) {
-    this.Vso.set(e, t);
+    this.Nao.set(e, t);
   }
   UpdateRoguelikeCurrency(e, t) {
     var o = this.GetRoguelikeCurrency(e);
-    this.Vso.set(e, o + t),
+    this.Nao.set(e, o + t),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnPlayerCurrencyChange,
         e,
       );
   }
   GetRoguelikeCurrency(e) {
-    return this.Vso.get(e) ?? 0;
+    return this.Nao.get(e) ?? 0;
   }
   UpdateDescModel(e) {
-    (this.Hso = e ? 0 : 1),
+    (this.Oao = e ? 0 : 1),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.RoguelikeDataUpdate,
       );
   }
   GetDescModel() {
-    return this.Hso;
+    return this.Oao;
   }
   SetRoguelikeChooseData(e) {
     for (const t of e)
-      this.kso.set(t.Akn, new RoguelikeChooseData_1.RoguelikeChooseData(t));
+      this.qao.set(t.r5n, new RoguelikeChooseData_1.RoguelikeChooseData(t));
   }
   GetRoguelikeChooseDataById(e) {
-    return this.kso.get(e);
+    return this.qao.get(e);
   }
   GetSortElementInfoArrayMap(e = void 0) {
     var t,
@@ -151,9 +152,10 @@ class RoguelikeModel extends ModelBase_1.ModelBase {
   }
   CheckInRoguelike() {
     return (
-      ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(
-        ModelManager_1.ModelManager.CreatureModel.GetInstanceId(),
-      )?.InstSubType === AdventureDefine_1.EDungeonSubType.Roguelike &&
+      15 ===
+        ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(
+          ModelManager_1.ModelManager.CreatureModel.GetInstanceId(),
+        )?.InstSubType &&
       ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance()
     );
   }
@@ -193,10 +195,9 @@ class RoguelikeModel extends ModelBase_1.ModelBase {
       !!(e = ModelManager_1.ModelManager.RoguelikeModel.CurrSeasonData) &&
       !!(e =
         ConfigManager_1.ConfigManager.RoguelikeConfig.GetRogueSeasonConfigById(
-          e.F8n,
+          e.MHn,
         )) &&
       ((r = r.GetRogueActivityState()),
-      ActivityRogueController_1.ActivityRogueController.RefreshActivityRedDot(),
       (t = ModelManager_1.ModelManager.PayShopModel.GetPayShopTabIdList(
         e.ShopId,
       )),
@@ -226,13 +227,39 @@ class RoguelikeModel extends ModelBase_1.ModelBase {
           0 < e.length)
     );
   }
+  GetMapNoteShowState() {
+    var e,
+      t =
+        ActivityRogueController_1.ActivityRogueController.GetCurrentActivityData();
+    return (
+      !(
+        !t ||
+        !(e = ModelManager_1.ModelManager.RoguelikeModel.CurrSeasonData) ||
+        !ConfigManager_1.ConfigManager.RoguelikeConfig.GetRogueSeasonConfigById(
+          e.MHn,
+        ) ||
+        ((e = t.GetRogueActivityState()),
+        ActivityRogueController_1.ActivityRogueController.RefreshActivityRedDot(),
+        0 !== e) ||
+        LocalStorage_1.LocalStorage.GetPlayer(
+          LocalStorageDefine_1.ELocalStoragePlayerKey.RoguelikeShopRecord,
+        )
+      ) && this.CheckIsGuideDungeonFinish()
+    );
+  }
+  RecordRoguelikeShopRedDot(e) {
+    LocalStorage_1.LocalStorage.SetPlayer(
+      LocalStorageDefine_1.ELocalStoragePlayerKey.RoguelikeShopRecord,
+      e,
+    );
+  }
   GetRoguelikeAchievementRedDot() {
     var e = ModelManager_1.ModelManager.RoguelikeModel.CurrSeasonData;
     return (
       void 0 !== e &&
       ((e =
         ConfigManager_1.ConfigManager.RoguelikeConfig.GetRogueSeasonConfigById(
-          e.F8n,
+          e.MHn,
         )),
       ModelManager_1.ModelManager.AchievementModel.GetCategoryRedPointState(
         e.Achievement,
@@ -265,7 +292,7 @@ class RoguelikeModel extends ModelBase_1.ModelBase {
       ? ConfigManager_1.ConfigManager.RoguelikeConfig?.GetRogueParamConfig(e)
       : this.CurrSeasonData
         ? ConfigManager_1.ConfigManager.RoguelikeConfig.GetRogueParamConfig(
-            this.CurrSeasonData.F8n,
+            this.CurrSeasonData.MHn,
           )
         : ConfigManager_1.ConfigManager.RoguelikeConfig.GetRogueParamConfig();
   }

@@ -9,16 +9,17 @@ const Log_1 = require("../../../Core/Common/Log"),
 class UiNavigationModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
-      (this.Lwo = new CursorData_1.Cursor()),
+      (this.yBo = new CursorData_1.Cursor()),
       (this.IsOpenLog = !1),
-      (this.Fbo = new Map()),
-      (this.Vbo = new Map()),
-      (this.Hbo = new Set()),
-      (this.jbo = void 0);
+      (this.Nqo = new Map()),
+      (this.Oqo = new Map()),
+      (this.kqo = new Set()),
+      (this.Fqo = void 0);
   }
   InputControllerModeChange() {
-    for (const t of this.Fbo.values()) for (const e of t) e.RefreshMode();
-    for (const i of this.Hbo) i.ChangeAlpha();
+    for (const t of this.Nqo.values()) for (const e of t) e.RefreshMode();
+    for (const o of this.Oqo.values()) for (const i of o) i.RefreshMode();
+    for (const r of this.kqo) r.ChangeAlpha();
   }
   OnClear() {
     return (
@@ -28,49 +29,48 @@ class UiNavigationModel extends ModelBase_1.ModelBase {
     );
   }
   SetCursorFollowItem(t) {
-    this.Lwo.SetFollowItem(t);
+    this.yBo.SetFollowItem(t);
   }
   SetIsUseMouse(t) {
-    this.Lwo.SetIsUseMouse(t);
+    this.yBo.SetIsUseMouse(t);
   }
   MarkMoveInstantly() {
-    this.Lwo.IsMoveInstantly = !0;
+    this.yBo.IsMoveInstantly = !0;
   }
   SetCursorActiveDelayTime(t) {
-    this.Lwo.SetCursorActiveDelayTime(t);
+    this.yBo.SetCursorActiveDelayTime(t);
   }
   RepeatMove() {
-    this.Lwo.RepeatMove();
+    this.yBo.RepeatMove();
   }
   ClearCursor() {
     Log_1.Log.CheckInfo() && Log_1.Log.Info("UiNavigation", 11, "清理光标"),
-      this.Lwo.Clear();
+      this.yBo.Clear();
   }
   OnLeaveLevel() {
     return this.ClearCursor(), !0;
   }
   Tick(t) {
-    this.Lwo.Tick(t);
+    this.yBo.Tick(t);
   }
   AddActionHotKeyComponent(t, e) {
-    this.Fbo.set(t, e);
+    this.Nqo.set(t, e);
   }
   GetActionHotKeyComponentSet(t) {
-    return this.Fbo.get(t);
+    return this.Nqo.get(t);
   }
   GetOrAddActionHotKeyComponentSet(t) {
-    let e = this.Fbo.get(t);
+    let e = this.Nqo.get(t);
     return e || ((e = new Set()), this.AddActionHotKeyComponent(t, e)), e;
   }
-  Wbo(t, e) {
-    var i = [];
+  Vqo(t, e) {
+    var o = [];
     InputSettingsManager_1.InputSettingsManager.GetActionBinding(
       t,
-    ).GetCurrentPlatformKeyNameList(i);
-    for (const o of i) if (e.has(o)) return !0;
-    return !1;
+    ).GetCurrentPlatformKeyNameList(o);
+    for (const i of o) if (e.has(i)) return i;
   }
-  Kbo(t) {
+  Hqo(t) {
     var e = InputSettingsManager_1.InputSettingsManager.GetActionBinding(t);
     if (e) return e.GetCurrentPlatformKeyNameList((e = [])), e;
     InputSettingsManager_1.InputSettingsManager.GetCombinationActionBindingByActionName(
@@ -78,53 +78,60 @@ class UiNavigationModel extends ModelBase_1.ModelBase {
     );
   }
   CheckKeyNameListInNavigation(t) {
-    var e = this.Kbo(t);
+    var e = this.Hqo(t);
     if (e) {
-      var i,
-        o,
+      var o,
+        i,
         r = new Set(e);
-      for ([i, o] of this.Fbo)
-        if (t !== i && this.Wbo(i, r))
-          for (const n of o)
-            if (n.IsHotKeyActive())
-              return (
-                Log_1.Log.CheckInfo() &&
-                  Log_1.Log.Info(
-                    "UiNavigation",
-                    11,
-                    "非导航输入被导航输入占用",
-                    ["非导航输入", t],
-                    ["导航输入", i],
-                  ),
-                !0
-              );
+      for ([o, i] of this.Nqo)
+        if (t !== o) {
+          var s = this.Vqo(o, r);
+          if (s)
+            for (const n of i)
+              if (
+                n.IsHotKeyActive() &&
+                "ShowOnly" !== n.GetHotKeyFunctionType()
+              )
+                return (
+                  Log_1.Log.CheckDebug() &&
+                    Log_1.Log.Debug(
+                      "UiNavigation",
+                      11,
+                      "非导航输入被导航输入占用",
+                      ["非导航输入", t],
+                      ["导航输入", o],
+                      ["交集的KeyName", s],
+                    ),
+                  !0
+                );
+        }
     }
     return !1;
   }
   AddAxisHotKeyComponent(t, e) {
-    this.Vbo.set(t, e);
+    this.Oqo.set(t, e);
   }
   GetAxisHotKeyComponentSet(t) {
-    return this.Vbo.get(t);
+    return this.Oqo.get(t);
   }
   GetOrAddAxisHotKeyComponentsSet(t) {
-    let e = this.Vbo.get(t);
+    let e = this.Oqo.get(t);
     return e || ((e = new Set()), this.AddAxisHotKeyComponent(t, e)), e;
   }
   AddPlatformListener(t) {
-    this.Hbo.add(t);
+    this.kqo.add(t);
   }
   RemovePlatformListener(t) {
-    this.Hbo.delete(t);
+    this.kqo.delete(t);
   }
   get GuideFocusListener() {
-    return this.jbo;
+    return this.Fqo;
   }
   SetGuideFocusListener(t) {
-    this.jbo = t;
+    this.Fqo = t;
   }
   ResetGuideFocusListener() {
-    this.jbo = void 0;
+    this.Fqo = void 0;
   }
 }
 exports.UiNavigationModel = UiNavigationModel;

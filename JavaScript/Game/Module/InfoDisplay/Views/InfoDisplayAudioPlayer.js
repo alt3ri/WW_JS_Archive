@@ -13,53 +13,53 @@ class InfoDisplayAudioPlayer extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
       (this.Uqe = 0),
-      (this.Hni = void 0),
-      (this.Yzt = void 0),
-      (this.$zt = 1),
+      (this.jsi = void 0),
+      (this.YZt = void 0),
+      (this.$Zt = 1),
       (this.Td = !1),
       (this.Y6 = void 0),
-      (this.jni = -0),
-      (this.Wni = ""),
-      (this.Kni = ""),
-      (this.tKe = !1),
-      (this.Qni = void 0),
-      (this.Xni = () => {
+      (this.Wsi = -0),
+      (this.Ksi = ""),
+      (this.Qsi = ""),
+      (this.mQe = !1),
+      (this.Xsi = void 0),
+      (this.$si = () => {
         var i, t;
         this.Td
-          ? this.tKe
-            ? this.$ni()
-            : this.Yni()
-          : ((i = this.Kni),
+          ? this.mQe
+            ? this.Ysi()
+            : this.Jsi()
+          : ((i = this.Qsi),
             (t = AudioController_1.AudioController.GetAudioEvent(i, !1)),
-            this.Yzt ||
-              (this.Yzt = (0, puerts_1.toManualReleaseDelegate)(this.Jni)),
+            this.YZt ||
+              (this.YZt = (0, puerts_1.toManualReleaseDelegate)(this.zsi)),
             t
-              ? (this.zni(i), (this.Td = !0), (this.tKe = !1))
+              ? (this.Zsi(i), (this.Td = !0), (this.mQe = !1))
               : AudioController_1.AudioController.LoadAndAddCallback(i, () => {
-                  this.Zni();
+                  this.eai();
                 }));
       }),
-      (this.esi = 0),
-      (this.tsi = (i) => {
-        (this.esi += i),
-          1e3 <= this.esi &&
+      (this.tai = 0),
+      (this.iai = (i) => {
+        (this.tai += i),
+          1e3 <= this.tai &&
             (this.Uqe++,
-            this.Uqe >= this.jni && (this.Uqe = this.jni),
-            (this.esi = 0)),
+            this.Uqe >= this.Wsi && (this.Uqe = this.Wsi),
+            (this.tai = 0)),
           this.Y6 &&
             this.Y6.OutputArray &&
             0 < this.Y6.OutputArray.Num() &&
-            void 0 !== this.Qni &&
-            this.Qni(this.Y6.OutputArray, i),
-          this.XMt();
+            void 0 !== this.Xsi &&
+            this.Xsi(this.Y6.OutputArray, i),
+          this.sSt();
       }),
-      (this.Jni = (i, t) => {
+      (this.zsi = (i, t) => {
         0 === i &&
           this.Td &&
           (Log_1.Log.CheckDebug() && Log_1.Log.Debug("InfoDisplay", 28, "End"),
           AudioController_1.AudioController.StopAudio(this.RootActor),
-          (i = this.Kni),
-          AudioController_1.AudioController.GetAudioEvent(i, !1) && this.zni(i),
+          (i = this.Qsi),
+          AudioController_1.AudioController.GetAudioEvent(i, !1) && this.Zsi(i),
           (this.Uqe = 0));
       });
   }
@@ -67,53 +67,53 @@ class InfoDisplayAudioPlayer extends UiPanelBase_1.UiPanelBase {
     this.CreateThenShowByActor(i);
   }
   SetShowTextComponent(i) {
-    this.Hni = i;
+    this.jsi = i;
   }
   SetSpectrumCallBack(i) {
-    this.Qni = i;
+    this.Xsi = i;
   }
   OnRegisterComponent() {
     (this.ComponentRegisterInfos = [[0, UE.UIExtendToggle]]),
-      (this.BtnBindInfo = [[0, this.Xni]]);
+      (this.BtnBindInfo = [[0, this.$si]]);
   }
-  Zni() {
-    "" !== this.Kni && this.Xni();
+  eai() {
+    "" !== this.Qsi && this.$si();
     var i = this.GetExtendToggle(0);
-    this.tKe ? i.SetToggleState(0) : i.SetToggleState(1);
+    this.mQe ? i.SetToggleState(0) : i.SetToggleState(1);
   }
-  Yni() {
-    this.tKe = !0;
-    var i = AudioController_1.AudioController.GetAudioEvent(this.Kni, !1);
+  Jsi() {
+    this.mQe = !0;
+    var i = AudioController_1.AudioController.GetAudioEvent(this.Qsi, !1);
     AudioController_1.AudioController.ExecuteActionOnEvent(
       i,
       1,
       this.RootActor,
     );
   }
-  $ni() {
-    this.tKe = !1;
-    var i = AudioController_1.AudioController.GetAudioEvent(this.Kni, !1);
+  Ysi() {
+    this.mQe = !1;
+    var i = AudioController_1.AudioController.GetAudioEvent(this.Qsi, !1);
     AudioController_1.AudioController.ExecuteActionOnEvent(
       i,
       2,
       this.RootActor,
     );
   }
-  isi() {
+  oai() {
     AudioController_1.AudioController.StopAudio(this.RootActor),
       AudioModel_1.AudioModel.DestroySpectrumActor(),
       (this.Y6 = void 0),
       (this.Uqe = 0),
-      (this.esi = 0),
-      this.XMt(),
+      (this.tai = 0),
+      this.sSt(),
       (this.Td = !1);
   }
-  zni(i) {
+  Zsi(i) {
     AudioController_1.AudioController.PlayAudioByEventPath(
       i,
       this.GetRootActor(),
-      this.$zt,
-      this.Yzt,
+      this.$Zt,
+      this.YZt,
     ),
       (this.Y6 = AudioModel_1.AudioModel.GetSpectrumActor());
     var t = this.RootActor.GetComponentByClass(UE.AkComponent.StaticClass());
@@ -122,36 +122,36 @@ class InfoDisplayAudioPlayer extends UiPanelBase_1.UiPanelBase {
         this.Y6.Ak,
         AudioController_1.AudioController.GetAudioEvent(i, !1),
       ),
-      (this.jni = AudioController_1.AudioController.GetAudioEvent(
+      (this.Wsi = AudioController_1.AudioController.GetAudioEvent(
         i,
         !1,
       ).MaximumDuration),
-      (this.Wni = InfoDisplayModel_1.InfoDisplayModel.ConvertToHourMinuteString(
-        this.jni,
+      (this.Ksi = InfoDisplayModel_1.InfoDisplayModel.ConvertToHourMinuteString(
+        this.Wsi,
       ));
   }
   OnTick(i) {
-    this.Td && !this.tKe && this.tsi(i);
+    this.Td && !this.mQe && this.iai(i);
   }
-  XMt() {
+  sSt() {
     var i = InfoDisplayModel_1.InfoDisplayModel.ConvertToHourMinuteString(
       this.Uqe,
     );
-    this.Hni.SetText(i + "/" + this.Wni);
+    this.jsi.SetText(i + "/" + this.Ksi);
   }
   Refresh(i) {
-    (this.Kni = i),
-      this.Zni(),
+    (this.Qsi = i),
+      this.eai(),
       AudioController_1.AudioController.SetState(
         AudioDefine_1.STATEGROUP,
         AudioDefine_1.STATEBACKGROUND,
       );
   }
   OnBeforeDestroy() {
-    this.isi(),
-      this.Yzt &&
-        ((0, puerts_1.releaseManualReleaseDelegate)(this.Jni),
-        (this.Yzt = void 0)),
+    this.oai(),
+      this.YZt &&
+        ((0, puerts_1.releaseManualReleaseDelegate)(this.zsi),
+        (this.YZt = void 0)),
       AudioController_1.AudioController.SetState(
         AudioDefine_1.STATEGROUP,
         AudioDefine_1.STATENORMAL,

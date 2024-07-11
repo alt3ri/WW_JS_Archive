@@ -12,7 +12,7 @@ const ue_1 = require("ue"),
 class InstanceDungeonRewardView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.Kli = void 0),
+      (this.K1i = void 0),
       (this.sGe = () => {
         return new InstanceDungeonRewardItem_1.InstanceDungeonRewardItem();
       });
@@ -25,7 +25,7 @@ class InstanceDungeonRewardView extends UiViewBase_1.UiViewBase {
     ];
   }
   OnStart() {
-    this.Kli = new GenericScrollViewNew_1.GenericScrollViewNew(
+    this.K1i = new GenericScrollViewNew_1.GenericScrollViewNew(
       this.GetScrollViewWithScrollbar(2),
       this.sGe,
     );
@@ -49,10 +49,10 @@ class InstanceDungeonRewardView extends UiViewBase_1.UiViewBase {
       a = 0;
     for (const [s, e] of r)
       i.push([s, e]), t < s && n >= s && ((t = s), (a = i.length - 1));
-    this.Kli.RefreshByData(i, () => {
-      for (const e of this.Kli.GetScrollItemList()) e.SetCurrentItem(t);
+    this.K1i.RefreshByData(i, () => {
+      for (const e of this.K1i.GetScrollItemList()) e.SetCurrentItem(t);
       TimerSystem_1.TimerSystem.Next(() => {
-        this.Kli.ScrollToTop(a);
+        this.K1i.ScrollToTop(a);
       });
     });
   }

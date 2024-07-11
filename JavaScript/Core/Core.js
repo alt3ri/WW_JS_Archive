@@ -3,7 +3,6 @@ var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.Core = void 0);
 const cpp_1 = require("cpp"),
-  EnvironmentalPerceptionController_1 = require("../Game/World/Enviroment/EnvironmentalPerceptionController"),
   ActorSystem_1 = require("./Actor/ActorSystem"),
   Application_1 = require("./Application/Application"),
   Info_1 = require("./Common/Info"),
@@ -19,6 +18,7 @@ const cpp_1 = require("cpp"),
   Net_1 = require("./Net/Net"),
   ObjectSystem_1 = require("./Object/ObjectSystem"),
   CycleCounter_1 = require("./Performance/CycleCounter"),
+  PerfSight_1 = require("./PerfSight/PerfSight"),
   TickSystem_1 = require("./Tick/TickSystem"),
   TimerSystem_1 = require("./Timer/TimerSystem");
 class Core {
@@ -34,7 +34,7 @@ class Core {
       GameBudgetInterfaceController_1.GameBudgetInterfaceController.InitializeEnvironment(
         e.GetWorld(),
       ),
-      EnvironmentalPerceptionController_1.EnvironmentalPerceptionController.InitializeEnvironment(),
+      PerfSight_1.PerfSight.Initialize(),
       Time_1.Time.Initialize(),
       Net_1.Net.Initialize(),
       TickSystem_1.TickSystem.Initialize(e),
@@ -72,17 +72,22 @@ class Core {
 }
 (exports.Core = Core),
   ((_a = Core).Y7 = new Set()),
+  (Core._Ks = 0),
   (Core.Tick = (e) => {
     if (
       (CycleCounter_1.CycleCounter.RefreshState(),
       !TickSystem_1.TickSystem.IsPaused)
     )
-      for (const r of _a.Y7) r(e);
-    var t = e / 1e3;
-    Net_1.Net.Tick(t),
-      Time_1.Time.Tick(e),
-      TimerSystem_1.TimerSystem.Tick(e),
-      TimerSystem_1.RealTimeTimerSystem.Tick(),
+      for (const i of _a.Y7) i(e);
+    var t = e / 1e3,
+      r =
+        (Net_1.Net.Tick(t),
+        Time_1.Time.Tick(e),
+        TimerSystem_1.TimerSystem.Tick(e),
+        Time_1.Time.ServerTimeStamp),
+      o = r - _a._Ks;
+    (_a._Ks = r),
+      TimerSystem_1.RealTimeTimerSystem.Tick(o),
       TickSystem_1.TickSystem.IsPaused ||
         (EffectEnvironment_1.EffectEnvironment.Tick(e, Info_1.Info.World),
         Info_1.Info.EnableForceTick && EntitySystem_1.EntitySystem.ForceTick(e),

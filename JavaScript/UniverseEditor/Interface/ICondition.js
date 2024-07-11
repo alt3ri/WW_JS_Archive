@@ -100,7 +100,8 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     (e.RoleLevel = "RoleLevel"),
       (e.WeaponLevel = "WeaponLevel"),
       (e.HasEquippedVision = "HasEquippedVision"),
-      (e.HasUpgradableVision = "HasUpgradableVision");
+      (e.HasUpgradableVision = "HasUpgradableVision"),
+      (e.DataCenter = "DataCenter");
   })(
     (EFormationRoleInfoType =
       exports.EFormationRoleInfoType || (exports.EFormationRoleInfoType = {})),

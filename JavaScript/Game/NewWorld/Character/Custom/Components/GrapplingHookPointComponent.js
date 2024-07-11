@@ -54,9 +54,9 @@ let GrapplingHookPointComponent =
         (this.ac = 3),
         (this.Hte = void 0),
         (this.YO = void 0),
-        (this.ken = !1),
-        (this.fVo = void 0),
-        (this.Fen = (t) => {
+        (this.fen = !1),
+        (this.d6o = void 0),
+        (this.pen = (t) => {
           t === HOOK_VISION_ID && (this.Lie.AddTag(1888174838), (this.ac = 0));
         });
     }
@@ -76,7 +76,7 @@ let GrapplingHookPointComponent =
       return this.Lo?.IsClimb ?? !1;
     }
     get IsInCd() {
-      return this.ken;
+      return this.fen;
     }
     get WillBeDestroyedAfterHook() {
       return this.Lo?.IsDestroyedSelf ?? !1;
@@ -94,34 +94,34 @@ let GrapplingHookPointComponent =
             RestrictionId: this.Lo.PlayerStateRestritionId,
           }),
           (this.YO = { Type: 0, Conditions: [t] })),
-        (this.Lie = this.Entity.GetComponent(177)),
+        (this.Lie = this.Entity.GetComponent(180)),
         this.Lie?.Valid && this.Lie.AddTag(-254251760),
         this.Lo.HookInteractConfig)
       )
         switch (this.Lo.HookInteractConfig.Type) {
           case "FixedPointHook":
-            this.fVo = -833935142;
+            this.d6o = -833935142;
             break;
           case "SuiGuangHook":
-            this.fVo = 561771029;
+            this.d6o = 561771029;
         }
-      else this.fVo = -833935142;
+      else this.d6o = -833935142;
       return (
         (this.RadiusSquared = MathUtils_1.MathUtils.Square(this.Radius)), !0
       );
     }
     OnStart() {
       if (
-        ((this.Hte = this.Entity.GetComponent(182)),
+        ((this.Hte = this.Entity.GetComponent(185)),
         this.Entity.GetComponent(0))
       ) {
-        GrapplingHookPointComponent_1.Ven ||
+        GrapplingHookPointComponent_1.ven ||
           (ModelManager_1.ModelManager.RouletteModel.UnlockExploreSkillDataMap.has(
             HOOK_VISION_ID,
           ) &&
-            (GrapplingHookPointComponent_1.Ven = !0));
+            (GrapplingHookPointComponent_1.ven = !0));
         let t = !1;
-        if (GrapplingHookPointComponent_1.Ven) {
+        if (GrapplingHookPointComponent_1.ven) {
           for (const e of hookPointStateTagMap.keys())
             if (this.Lie.HasTag(e)) {
               t = !0;
@@ -132,7 +132,7 @@ let GrapplingHookPointComponent =
         GrapplingHookPointComponent_1.AllPoints.push(this),
           EventSystem_1.EventSystem.Add(
             EventDefine_1.EEventName.AddExploreVisionSkill,
-            this.Fen,
+            this.pen,
           );
       }
       return !0;
@@ -143,7 +143,7 @@ let GrapplingHookPointComponent =
         0 <= t && GrapplingHookPointComponent_1.AllPoints.splice(t, 1),
         EventSystem_1.EventSystem.Remove(
           EventDefine_1.EEventName.AddExploreVisionSkill,
-          this.Fen,
+          this.pen,
         ),
         !0
       );
@@ -152,7 +152,7 @@ let GrapplingHookPointComponent =
       this.ac !== t &&
         (this.Lie.RemoveTag(hookPointStateTagMap.get(this.ac)),
         1 === this.ac &&
-          this.Entity.GetComponent(182).PlaySceneInteractionEndEffect(0),
+          this.Entity.GetComponent(185).PlaySceneInteractionEndEffect(0),
         (this.ac = t),
         this.Lie.AddTag(hookPointStateTagMap.get(this.ac)));
     }
@@ -168,9 +168,9 @@ let GrapplingHookPointComponent =
     }
     TryStartCd() {
       void 0 !== this.Lo.HookLockCd &&
-        ((this.ken = !0),
+        ((this.fen = !0),
         TimerSystem_1.TimerSystem.Delay(() => {
-          this.ken = !1;
+          this.fen = !1;
         }, this.Lo.HookLockCd * TimeUtil_1.TimeUtil.InverseMillisecond));
     }
     WasRecentlyRenderOnScreen() {
@@ -197,17 +197,17 @@ let GrapplingHookPointComponent =
       return !1;
     }
     GetTagId() {
-      return this.fVo;
+      return this.d6o;
     }
     GetHookInteractType() {
       return this.Lo.HookInteractConfig?.Type ?? "FixedPointHook";
     }
   });
 (GrapplingHookPointComponent.AllPoints = []),
-  (GrapplingHookPointComponent.Ven = !1),
+  (GrapplingHookPointComponent.ven = !1),
   (GrapplingHookPointComponent = GrapplingHookPointComponent_1 =
     __decorate(
-      [(0, RegisterComponent_1.RegisterComponent)(73)],
+      [(0, RegisterComponent_1.RegisterComponent)(75)],
       GrapplingHookPointComponent,
     )),
   (exports.GrapplingHookPointComponent = GrapplingHookPointComponent);

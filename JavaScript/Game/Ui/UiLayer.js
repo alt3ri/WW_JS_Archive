@@ -10,7 +10,8 @@ const UE = require("ue"),
   EventSystem_1 = require("../Common/Event/EventSystem"),
   GlobalData_1 = require("../GlobalData"),
   ModelManager_1 = require("../Manager/ModelManager"),
-  UiLayerType_1 = require("./Define/UiLayerType");
+  UiLayerType_1 = require("./Define/UiLayerType"),
+  Macro_1 = require("../../Core/Preprocessor/Macro");
 var EInitState;
 !(function (i) {
   (i[(i.None = 0)] = "None"),
@@ -19,27 +20,27 @@ var EInitState;
 })((EInitState = exports.EInitState || (exports.EInitState = {})));
 class UiLayer {
   static get UiRoot() {
-    return this.pdr;
+    return this.CCr;
   }
   static get UiRootItem() {
-    return this.vdr;
+    return this.gCr;
   }
   static get WorldSpaceUiRoot() {
-    return this.Mdr;
+    return this.fCr;
   }
   static get WorldSpaceUiRootItem() {
-    return this.Sdr;
+    return this.pCr;
   }
-  static async Edr(i) {
-    if (this.ydr.has(i)) {
-      var t = this.ydr.get(i);
+  static async vCr(i) {
+    if (this.MCr.has(i)) {
+      var t = this.MCr.get(i);
       if (0 < t.length && void 0 !== t[0]) return;
     }
     var t = [],
       e = this.GetLayerRootUiItem(i);
-    await this.Idr(0, e, t), this.ydr.set(i, t);
+    await this.ECr(0, e, t), this.MCr.set(i, t);
   }
-  static async Idr(i, t, e) {
+  static async ECr(i, t, e) {
     var a = await LguiUtil_1.LguiUtil.LoadPrefabByResourceIdAsync(
         "UiItem_BattleViewUnitNode_Prefab",
         t,
@@ -50,10 +51,10 @@ class UiLayer {
         Info_1.Info.IsPlayInEditor &&
           (a.SetActorLabel((a = "Unit_" + i)), r.SetDisplayName(a)),
         i + 1);
-    r !== UiLayerType_1.TIP_LAYER_UNIT_COUNT && (await this.Idr(r, t, e));
+    r !== UiLayerType_1.TIP_LAYER_UNIT_COUNT && (await this.ECr(r, t, e));
   }
   static GetFloatUnit(i, t) {
-    i = this.ydr.get(i);
+    i = this.MCr.get(i);
     if (i)
       return t >= i.length
         ? (Log_1.Log.CheckError() &&
@@ -72,7 +73,7 @@ class UiLayer {
       );
   }
   static GetLayerRootUiItem(i) {
-    var t = this.Tdr.get(i);
+    var t = this.SCr.get(i);
     if (t) return t;
     Log_1.Log.CheckError() &&
       Log_1.Log.Error(
@@ -83,7 +84,7 @@ class UiLayer {
       );
   }
   static GetBattleViewUnit(i) {
-    return this.Ldr[i];
+    return this.yCr[i];
   }
   static SetLayerActive(i, t) {
     var e = this.GetLayerRootUiItem(i);
@@ -103,30 +104,30 @@ class UiLayer {
   static async Initialize() {
     UiLayer.ZCe ||
       ((UiLayer.ZCe = !0),
-      await Promise.all([this.Ddr(), this.Rdr()]),
-      await this.Udr(),
+      await Promise.all([this.ICr(), this.TCr()]),
+      await this.LCr(),
       await Promise.all([
-        this.Adr(),
-        this.Edr(UiLayerType_1.ELayerType.BattleFloat),
-        this.Edr(UiLayerType_1.ELayerType.Float),
+        this.DCr(),
+        this.vCr(UiLayerType_1.ELayerType.BattleFloat),
+        this.vCr(UiLayerType_1.ELayerType.Float),
       ]));
   }
-  static async Ddr() {
-    this.pdr
+  static async ICr() {
+    this.CCr
       ? Log_1.Log.CheckInfo() && Log_1.Log.Info("UiCore", 1, "界面根节点已存在")
-      : ((this.pdr = await LguiUtil_1.LguiUtil.LoadPrefabByResourceIdAsync(
+      : ((this.CCr = await LguiUtil_1.LguiUtil.LoadPrefabByResourceIdAsync(
           "UiItem_Root_Prefab",
           void 0,
         )),
-        this.pdr &&
-        ((this.vdr = this.pdr.GetComponentByClass(UE.UIItem.StaticClass())),
-        this.vdr)
-          ? (this.pdr.OnDestroyed.Add(() => {
+        this.CCr &&
+        ((this.gCr = this.CCr.GetComponentByClass(UE.UIItem.StaticClass())),
+        this.gCr)
+          ? (this.CCr.OnDestroyed.Add(() => {
               Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info("UiCore", 1, "UiRoot被销毁"),
-                this.Tdr.clear(),
-                (this.pdr = void 0),
-                (this.vdr = void 0);
+                this.SCr.clear(),
+                (this.CCr = void 0),
+                (this.gCr = void 0);
             }),
             LguiUtil_1.LguiUtil.SetActorIsPermanent(this.UiRoot, !0, !1))
           : Log_1.Log.CheckError() &&
@@ -135,9 +136,9 @@ class UiLayer {
               "UiItem_Root_Prefab",
             ]));
   }
-  static async Udr() {
+  static async LCr() {
     var i = [];
-    for (const t of UiLayerType_1.LayerTypeEnumValues) i.push(this.Pdr(t));
+    for (const t of UiLayerType_1.LayerTypeEnumValues) i.push(this.RCr(t));
     await Promise.all(i).then(() => {
       let i = 0;
       for (const t of UiLayerType_1.LayerTypeEnumValues)
@@ -146,8 +147,8 @@ class UiLayer {
           this.GetLayerRootUiItem(t).SetHierarchyIndex(++i);
     });
   }
-  static async Pdr(t) {
-    if (this.Tdr.has(t))
+  static async RCr(t) {
+    if (this.SCr.has(t))
       Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn("UiLayer", 17, "重复加载UI层级", [
           "层级类型",
@@ -166,62 +167,65 @@ class UiLayer {
         case UiLayerType_1.ELayerType.NormalMask:
           i = "UiItem_LayerMask_Prefab";
       }
-      var e = await LguiUtil_1.LguiUtil.LoadPrefabByResourceIdAsync(
-          i,
-          this.vdr,
-        ),
-        a =
-          (LguiUtil_1.LguiUtil.SetActorIsPermanent(e, !0, !1),
-          this.Tdr.set(t, e.RootComponent),
-          t === UiLayerType_1.ELayerType.Pool &&
-            e.RootComponent.SetUIActive(!1),
-          UiLayerType_1.ELayerType[t]),
-        e = e.RootComponent;
-      e.SetDisplayName(a),
-        t === UiLayerType_1.ELayerType.Debug &&
+      var e,
+        a = await LguiUtil_1.LguiUtil.LoadPrefabByResourceIdAsync(i, this.gCr);
+      LguiUtil_1.LguiUtil.SetActorIsPermanent(a, !0, !1),
+        this.SCr.set(t, a.RootComponent),
+        t === UiLayerType_1.ELayerType.Pool && a.RootComponent.SetUIActive(!1),
+        Macro_1.NOT_SHIPPING_ENVIRONMENT &&
+          ((e = UiLayerType_1.ELayerType[t]),
+          (a = a.RootComponent).SetDisplayName(e),
+          t === UiLayerType_1.ELayerType.Debug) &&
           UE.LGUIManagerActor.SetDebugRootLayer(
             GlobalData_1.GlobalData.World,
-            e,
+            a,
           );
     }
   }
-  static async Adr() {
-    if (!this.Ldr) {
-      var e = UiLayer.GetLayerRootUiItem(UiLayerType_1.ELayerType.HUD),
-        a = await LguiUtil_1.LguiUtil.LoadPrefabByResourceIdAsync(
+  static async DCr() {
+    if (!this.yCr) {
+      var e,
+        a = UiLayer.GetLayerRootUiItem(UiLayerType_1.ELayerType.HUD),
+        r = await LguiUtil_1.LguiUtil.LoadPrefabByResourceIdAsync(
           "UiItem_BattleViewUnitNode_Prefab",
-          e,
+          a,
         );
-      let t = a;
-      this.Ldr = [];
+      let t = r;
+      this.yCr = [];
       for (let i = 0; i < UiLayerType_1.BATTLE_VIEW_UNIT_COUNT; i++) {
-        (t = t || LguiUtil_1.LguiUtil.DuplicateActor(a, e)),
+        (t = t || LguiUtil_1.LguiUtil.DuplicateActor(r, a)),
           LguiUtil_1.LguiUtil.SetActorIsPermanent(t, !0, !1);
-        var r,
-          o = t.RootComponent;
+        const o = t.RootComponent;
         Info_1.Info.IsPlayInEditor &&
-          ((r = "Unit_" + i), t.SetActorLabel(r), o.SetDisplayName(r)),
-          this.Ldr.push(o),
+          ((e = "Unit_" + i), t.SetActorLabel(e), o.SetDisplayName(e)),
+          this.yCr.push(o),
           (t = void 0);
       }
+      var i = await LguiUtil_1.LguiUtil.LoadPrefabByResourceIdAsync(
+        "UiItem_SafeZoneUnitNode_Prefab",
+        a,
+      );
+      LguiUtil_1.LguiUtil.SetActorIsPermanent(i, !0, !1);
+      const o = i.RootComponent;
+      this.yCr.push(o);
     }
   }
-  static async Rdr() {
-    this.Mdr
+  static async TCr() {
+    this.fCr
       ? Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("UiCore", 1, "空间界面根节点已存在")
-      : ((this.Mdr = await LguiUtil_1.LguiUtil.LoadPrefabByResourceIdAsync(
+      : ((this.fCr = await LguiUtil_1.LguiUtil.LoadPrefabByResourceIdAsync(
           "UiItem_WorldSpace_Prefab",
           void 0,
         )),
-        this.Mdr &&
-        ((this.Sdr = this.Mdr.GetComponentByClass(UE.UIItem.StaticClass())),
-        this.Mdr)
-          ? (this.Mdr.OnDestroyed.Add(() => {
+        this.fCr &&
+        ((this.pCr = this.fCr.GetComponentByClass(UE.UIItem.StaticClass())),
+        this.fCr)
+          ? (this.fCr.OnDestroyed.Add(() => {
               Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info("UiCore", 1, "WorldSpaceUiRoot被销毁"),
-                (this.Mdr = void 0),
-                (this.Sdr = void 0);
+                (this.fCr = void 0),
+                (this.pCr = void 0);
             }),
             LguiUtil_1.LguiUtil.SetActorIsPermanent(
               this.WorldSpaceUiRoot,
@@ -237,7 +241,7 @@ class UiLayer {
   static SetUiRootActive(i) {
     var t;
     this.IsForceHideUi() ||
-      ((t = UiLayer.vdr) &&
+      ((t = UiLayer.gCr) &&
         UE.KismetSystemLibrary.IsValid(t) &&
         (t.SetUIActive(i),
         EventSystem_1.EventSystem.Emit(
@@ -246,29 +250,29 @@ class UiLayer {
         )));
   }
   static IsUiActive() {
-    var i = UiLayer.vdr;
+    var i = UiLayer.gCr;
     return (
       !(!i || !UE.KismetSystemLibrary.IsValid(i)) && i.IsUIActiveInHierarchy()
     );
   }
   static ForceHideUi() {
     ModelManager_1.ModelManager.SundryModel.GmBlueprintGmIsOpen &&
-      (this.SetUiRootActive(!1), this.SetWorldUiActive(!1), (this.xdr = !0));
+      (this.SetUiRootActive(!1), this.SetWorldUiActive(!1), (this.UCr = !0));
   }
   static ForceShowUi() {
     this.IsForceHideUi() &&
-      ((this.xdr = !1), this.SetUiRootActive(!0), this.SetWorldUiActive(!0));
+      ((this.UCr = !1), this.SetUiRootActive(!0), this.SetWorldUiActive(!0));
   }
   static IsForceHideUi() {
-    return this.xdr;
+    return this.UCr;
   }
   static SetForceHideUiState(i) {
-    this.xdr = !i;
+    this.UCr = !i;
   }
   static SetWorldUiActive(i) {
     var t;
     this.IsForceHideUi() ||
-      ((t = UiLayer.Sdr) &&
+      ((t = UiLayer.pCr) &&
         UE.KismetSystemLibrary.IsValid(t) &&
         t.SetUIActive(i));
   }
@@ -276,10 +280,10 @@ class UiLayer {
     var e,
       a = UiLayer.GetLayerRootUiItem(UiLayerType_1.ELayerType.Mask);
     a &&
-      (t ? UiLayer.wdr.add(i) : UiLayer.wdr.delete(i),
-      (e = UiLayer.wdr.size),
-      Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info(
+      (t ? UiLayer.ACr.add(i) : UiLayer.ACr.delete(i),
+      (e = UiLayer.ACr.size),
+      Log_1.Log.CheckDebug() &&
+        Log_1.Log.Debug(
           "UiCore",
           17,
           "Mask遮罩",
@@ -295,31 +299,31 @@ class UiLayer {
   }
   static SetShowNormalMaskLayer(i, t = "") {
     var e;
-    (StringUtils_1.StringUtils.IsEmpty(this.Bdr) || (this.Bdr === t && !i)) &&
+    (StringUtils_1.StringUtils.IsEmpty(this.PCr) || (this.PCr === t && !i)) &&
       (e = UiLayer.GetLayerRootUiItem(UiLayerType_1.ELayerType.NormalMask)) &&
       (e?.SetRaycastTarget(i),
-      i && StringUtils_1.StringUtils.IsEmpty(this.Bdr) && t
-        ? (this.Bdr = t)
-        : i || t !== this.Bdr || (this.Bdr = ""),
+      i && StringUtils_1.StringUtils.IsEmpty(this.PCr) && t
+        ? (this.PCr = t)
+        : i || t !== this.PCr || (this.PCr = ""),
       Log_1.Log.CheckDebug()) &&
       Log_1.Log.Debug(
         "UiCore",
         17,
         "设置Normal层点击遮罩",
         ["是否显示", i],
-        ["上次来源", this.Bdr],
+        ["上次来源", this.PCr],
         ["当前来源", t],
       );
   }
 }
 ((exports.UiLayer = UiLayer).ZCe = !1),
-  (UiLayer.Bdr = ""),
-  (UiLayer.pdr = void 0),
-  (UiLayer.vdr = void 0),
-  (UiLayer.Mdr = void 0),
-  (UiLayer.Sdr = void 0),
-  (UiLayer.Ldr = void 0),
-  (UiLayer.Tdr = new Map()),
-  (UiLayer.wdr = new Set()),
-  (UiLayer.ydr = new Map());
+  (UiLayer.PCr = ""),
+  (UiLayer.CCr = void 0),
+  (UiLayer.gCr = void 0),
+  (UiLayer.fCr = void 0),
+  (UiLayer.pCr = void 0),
+  (UiLayer.yCr = void 0),
+  (UiLayer.SCr = new Map()),
+  (UiLayer.ACr = new Set()),
+  (UiLayer.MCr = new Map());
 //# sourceMappingURL=UiLayer.js.map

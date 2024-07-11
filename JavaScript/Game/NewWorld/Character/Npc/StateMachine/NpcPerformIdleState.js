@@ -22,72 +22,97 @@ const Log_1 = require("../../../../../Core/Common/Log"),
   INITIAL_IDLE_MONTAGE_CD_MAX = 10,
   IMMEDIATE_PLAY_PROBABILITY = 0.1,
   ALERT_TURN_SPEED = 2e4;
+class NpcStandbyShowInfo {
+  constructor(i) {
+    if (
+      ((this.MontagePath = void 0),
+      (this.ExpressionId = void 0),
+      (this.IsLoop = !1),
+      (this.Time = 0),
+      (this.MontagePath = i.Montage),
+      !this.MontagePath && i.RegisteredMontageId)
+    ) {
+      let t = void 0;
+      var s = i.RegisteredMontageId;
+      (t = s.IsAbp
+        ? ModelManager_1.ModelManager.PlotModel.GetAbpMontageConfig(s.MontageId)
+        : ModelManager_1.ModelManager.PlotModel.GetMontageConfig(s.MontageId)),
+        (this.MontagePath = t?.ActionMontage);
+    }
+    (this.ExpressionId = i.FaceExpressionId),
+      (this.IsLoop = !!i),
+      (this.Time = i.Time ?? 0);
+  }
+}
 class NpcPerformIdleState extends StateBase_1.StateBase {
   constructor() {
     super(...arguments),
       (this.Mne = 0),
-      (this.HZo = !1),
-      (this.jZo = -0),
-      (this.WZo = -0),
-      (this.KZo = -0),
-      (this.QZo = -0),
-      (this.XZo = !1),
-      (this.$Zo = !1),
-      (this.GTe = void 0),
-      (this.YZo = void 0),
-      (this.JZo = void 0),
-      (this.zZo = -0),
-      (this.ZZo = -0),
-      (this.eer = void 0),
-      (this.ter = IComponent_1.ENpcStandbyShowFinitelyPlayMode.Randomly),
-      (this.ier = 0),
-      (this.oer = !1),
-      (this.rer = !1),
-      (this.ner = !1),
-      (this.ser = void 0),
-      (this.aer = void 0),
-      (this.her = void 0),
-      (this.ler = !1),
-      (this.i4s = 0),
-      (this._er = !1),
-      (this.uer = void 0),
-      (this.awn = void 0),
-      (this.mer = (t, i) => {
-        t === this.YZo &&
-          (this.ser.RemoveOnMontageEnded(this.mer),
-          (this.HZo = !0),
-          (this.XZo = !1),
-          (this.YZo = void 0),
-          (this.JZo = void 0),
-          (this.oer = !1),
-          this.der(),
-          (this.Owner.Entity.GetComponent(168).AnyIdleLoopMontagePlaying = !1));
+      (this.ker = !1),
+      (this.Fer = -0),
+      (this.Ver = -0),
+      (this.Her = -0),
+      (this.jer = -0),
+      (this.dna = !1),
+      (this.Wer = !1),
+      (this.Ker = !1),
+      (this.Mma = void 0),
+      (this.Qer = void 0),
+      (this.Xer = void 0),
+      (this.$er = -0),
+      (this.Yer = -0),
+      (this.Jer = void 0),
+      (this.zer = IComponent_1.ENpcStandbyShowFinitelyPlayMode.Randomly),
+      (this.Zer = 0),
+      (this.etr = !1),
+      (this.ttr = !1),
+      (this.itr = !1),
+      (this.otr = void 0),
+      (this.rtr = void 0),
+      (this.ntr = void 0),
+      (this.atr = !1),
+      (this.htr = void 0),
+      (this.aqn = void 0),
+      (this._tr = (t, i) => {
+        t === this.Qer &&
+          (this.otr.RemoveOnMontageEnded(this._tr),
+          (this.ker = !0),
+          (this.dna = !1),
+          (this.Wer = !1),
+          (this.Qer = void 0),
+          (this.Xer = void 0),
+          (this.etr = !1),
+          this.utr(),
+          (this.Owner.Entity.GetComponent(171).AnyIdleLoopMontagePlaying = !1));
       }),
-      (this.Cer = !1),
-      (this.ger = !1),
-      (this.fer = !1),
-      (this.per = void 0),
-      (this.ver = !1),
+      (this.ctr = !1),
+      (this.mtr = !1),
+      (this.dtr = !1),
+      (this.Ctr = void 0),
+      (this.gtr = !1),
       (this.OnLoopMontageEndForTurning = (t, i) => {
-        var s = this.Owner.Entity.GetComponent(0);
+        var s = this.Owner.Entity.GetComponent(0),
+          t = t?.IsValid() ? t.GetName() : "";
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "NPC",
             51,
             "[NpcPerformIdleState.OnLoopMontageEndForTurning][交互转身] Montage播放完毕",
             ["PbDataID", s?.GetPbDataId()],
+            ["Montage", t],
           ),
-          this.ser?.RemoveOnMontageEnded(this.OnLoopMontageEndForTurning),
-          this.uer.TurnToInteractTarget();
+          this.otr?.RemoveOnMontageEnded(this.OnLoopMontageEndForTurning),
+          8 !== this.Owner.Entity.GetComponent(171)?.GetCurrentState() &&
+            this.htr.TurnToInteractTarget();
       }),
-      (this.Mer = () => {
+      (this.ftr = () => {
         this.StateMachine.Switch(2);
       }),
-      (this.Ser = () => {
+      (this.ptr = () => {
         var t, i;
-        this.XZo && this.Eer(),
-          this.Owner.Entity.GetComponent(168)?.PauseAi("StalkAlert"),
-          (this.fer = !0),
+        this.Wer && this.vtr(),
+          this.Owner.Entity.GetComponent(171)?.PauseAi("StalkAlert"),
+          (this.dtr = !0),
           Global_1.Global.BaseCharacter &&
             ((t = Global_1.Global.BaseCharacter.CharacterActorComponent),
             (i = this.Owner.Entity.GetComponent(3)),
@@ -97,38 +122,41 @@ class NpcPerformIdleState extends StateBase_1.StateBase {
               ALERT_TURN_SPEED,
             ));
       }),
-      (this.VZo = () => {
-        this.XZo && this.Eer(),
-          this.Owner.Entity.GetComponent(168)?.ResumeAi("StalkAlert"),
-          (this.fer = !1);
+      (this.Oer = () => {
+        this.Wer && this.vtr(),
+          this.Owner.Entity.GetComponent(171)?.ResumeAi("StalkAlert"),
+          (this.dtr = !1);
       }),
-      (this.xZt = () => {
-        this.XZo && this.Eer(),
-          this.Owner.Entity?.GetComponent(168)?.ResumeAi("LeaveLogicRange"),
-          (this.fer = !1);
+      (this.xei = () => {
+        this.Wer && this.vtr(),
+          this.Owner.Entity?.GetComponent(171)?.ResumeAi("LeaveLogicRange"),
+          (this.dtr = !1);
       }),
-      (this.yer = () => {
-        this.Owner.Entity?.GetComponent(168)?.PauseAi("LeaveLogicRange"),
-          (this.fer = !0);
+      (this.Mtr = () => {
+        this.Owner.Entity?.GetComponent(171)?.PauseAi("LeaveLogicRange"),
+          (this.dtr = !0);
       });
   }
   get NpcMontageController() {
-    return this.ser;
+    return this.otr;
   }
   set NpcMontageController(t) {
-    this.ser = t;
+    this.otr = t;
   }
   get NpcTurnActionController() {
-    return this.uer;
+    return this.htr;
   }
   set NpcTurnActionController(t) {
-    this.uer = t;
+    this.htr = t;
   }
   get NpcMoveComp() {
-    return this.awn;
+    return this.aqn;
   }
   set NpcMoveComp(t) {
-    this.awn = t;
+    this.aqn = t;
+  }
+  CanChangeFrom(t) {
+    return 8 !== t;
   }
   OnCreate(t) {
     if (
@@ -136,50 +164,51 @@ class NpcPerformIdleState extends StateBase_1.StateBase {
       t?.ShowOnStandby)
     )
       if (t.ShowOnStandby.Type === IComponent_1.ENpcStandbyShowMode.Loop)
-        (this.$Zo = !0), (this.GTe = t.ShowOnStandby.Montage);
+        (this.Ker = !0), (this.Mma = new NpcStandbyShowInfo(t.ShowOnStandby));
       else if (t.ShowOnStandby.Type === IComponent_1.ENpcStandbyShowMode.Sit)
-        (this.$Zo = !0),
-          (this.GTe = t.ShowOnStandby.Montage),
-          (this.aer = t.ShowOnStandby.PosEntityId);
+        (this.Ker = !0),
+          (this.Mma = new NpcStandbyShowInfo(t.ShowOnStandby)),
+          (this.rtr = t.ShowOnStandby.PosEntityId);
       else {
-        this.eer = new Array();
-        for (const i of t.ShowOnStandby.Montages) this.eer.push(i);
-        this.ter = t.ShowOnStandby.PlayMode;
+        this.Jer = new Array();
+        for (const i of t.ShowOnStandby.Montages)
+          this.Jer.push(new NpcStandbyShowInfo(i));
+        this.zer = t.ShowOnStandby.PlayMode;
         t = Math.random();
-        this.rer = t < IMMEDIATE_PLAY_PROBABILITY;
+        this.ttr = t < IMMEDIATE_PLAY_PROBABILITY;
       }
-    else this.ner = !0;
+    else this.itr = !0;
   }
   OnStart() {
-    this.Ier(),
+    this.Etr(),
       this.Ore(),
-      this.ner ||
-        this.Owner.Entity.GetComponent(168)?.IsInPlot ||
-        this.fer ||
-        this.awn?.IsMoving ||
-        (this.$Zo
-          ? ((this.ler = !0), this.Ter(this.GTe))
-          : (this.rer
-              ? (this.jZo = 0)
-              : (this.jZo = MathUtils_1.MathUtils.GetRandomRange(
+      this.itr ||
+        this.Owner.Entity.GetComponent(171)?.IsInPlot ||
+        this.dtr ||
+        this.aqn?.IsMoving ||
+        (this.Ker
+          ? this.ytr(this.Mma)
+          : (this.ttr
+              ? (this.Fer = 0)
+              : (this.Fer = MathUtils_1.MathUtils.GetRandomRange(
                   INITIAL_IDLE_MONTAGE_CD_MIN,
                   INITIAL_IDLE_MONTAGE_CD_MAX,
                 )),
-            (this.WZo = Time_1.Time.WorldTimeSeconds)));
+            (this.Ver = Time_1.Time.WorldTimeSeconds)));
   }
   OnEnter(t) {
-    var i = this.Owner.Entity.GetComponent(168);
+    var i = this.Owner.Entity.GetComponent(171);
     i?.ResumeAi("NpcPerformIdleState"),
       this.Ore(),
-      this.ner ||
-        ((this.HZo = !0), this.der(), i?.IsInPlot) ||
-        this.fer ||
-        this.ver ||
-        (this.awn?.IsMoving
-          ? this.XZo && this.Eer()
-          : this.$Zo
-            ? this.Ler(this.GTe)
-            : this.XZo &&
+      this.itr ||
+        ((this.ker = !0), this.utr(), i?.IsInPlot) ||
+        this.dtr ||
+        this.gtr ||
+        (this.aqn?.IsMoving
+          ? this.Wer && this.vtr()
+          : this.Ker
+            ? this.Itr(this.Mma)
+            : this.dna &&
               Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "NPC",
@@ -188,55 +217,55 @@ class NpcPerformIdleState extends StateBase_1.StateBase {
                 ["ConfigId", this.Mne],
               ));
   }
-  Der() {
-    return Time_1.Time.WorldTimeSeconds > this.KZo + this.QZo;
+  Ttr() {
+    return Time_1.Time.WorldTimeSeconds > this.Her + this.jer;
   }
   OnUpdate(t) {
-    this.ner ||
-      (this.Rer(), this.r4s(), this.Owner.Entity.GetComponent(168)?.IsInPlot) ||
-      this.fer ||
-      this.ver ||
-      (this.awn?.IsMoving
-        ? this.XZo && this.Eer()
-        : this.$Zo
-          ? (this.XZo && this.JZo !== this.GTe && this.Eer(),
-            !this.XZo && this.Der() && this.Ler(this.GTe))
-          : this.XZo
-            ? Time_1.Time.WorldTimeSeconds > this.ZZo + this.zZo && this.Eer()
-            : this.HZo
-              ? this.Der() && this.Ler()
-              : this.rer
-                ? this.Ter()
-                : Time_1.Time.WorldTimeSeconds > this.WZo + this.jZo &&
-                  this.Ler());
+    this.itr ||
+      (this.Ltr(), this.Owner.Entity.GetComponent(171)?.IsInPlot) ||
+      this.dtr ||
+      this.gtr ||
+      (this.aqn?.IsMoving
+        ? this.Wer && this.vtr()
+        : this.Ker
+          ? (this.Wer && this.Xer !== this.Mma.MontagePath && this.vtr(),
+            !this.dna && this.Ttr() && this.Itr(this.Mma))
+          : this.Wer
+            ? Time_1.Time.WorldTimeSeconds > this.Yer + this.$er && this.vtr()
+            : this.ker
+              ? this.Ttr() && this.Itr()
+              : this.ttr
+                ? this.ytr()
+                : Time_1.Time.WorldTimeSeconds > this.Ver + this.Fer &&
+                  this.Itr());
   }
   OnExit(t) {
-    this.XZo && this.Eer(),
+    this.Wer && this.vtr(),
       this.kre(),
-      this.Owner.Entity.GetComponent(168)?.PauseAi("NpcPerformIdleState");
+      this.Owner.Entity.GetComponent(171)?.PauseAi("NpcPerformIdleState");
   }
   OnDestroy() {
-    this.ser?.RemoveOnMontageEnded(this.mer),
-      (this.ser = void 0),
-      (this.uer = void 0),
-      (this.awn = void 0),
+    this.otr?.RemoveOnMontageEnded(this._tr),
+      (this.otr = void 0),
+      (this.htr = void 0),
+      (this.aqn = void 0),
       this.kre();
   }
-  Rer() {
+  Ltr() {
     var t, i, s, e, h, r, n;
-    this.aer &&
-      !this._er &&
-      ((this.her =
+    this.rtr &&
+      !this.atr &&
+      ((this.ntr =
         ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(
-          this.aer,
+          this.rtr,
         )),
-      this.her) &&
+      this.ntr) &&
       (t =
-        this.her.Entity.GetComponent(
-          178,
+        this.ntr.Entity.GetComponent(
+          181,
         )?.GetSubEntityInteractLogicController()) &&
       t.IsSceneInteractionLoadCompleted() &&
-      ((this._er = !0),
+      ((this.atr = !0),
       (i = this.Owner.Entity),
       t.Possess(i),
       t.IgnoreCollision(),
@@ -255,7 +284,7 @@ class NpcPerformIdleState extends StateBase_1.StateBase {
       ),
       s instanceof CharacterActorComponent_1.CharacterActorComponent &&
         s.SetInputRotator(n),
-      i?.GetComponent(98)?.Disable("NPC以坐下出生默认不移动"),
+      i?.GetComponent(100)?.Disable("NPC以坐下出生默认不移动"),
       Log_1.Log.CheckDebug()) &&
       Log_1.Log.Debug(
         "AI",
@@ -263,198 +292,187 @@ class NpcPerformIdleState extends StateBase_1.StateBase {
         "[HandleLeisureInteract] 修正坐下位置和朝向",
         ["Location", h],
         ["Rotation", n],
-        ["chairPbDataId", this.aer],
+        ["chairPbDataId", this.rtr],
         ["npcPbDataId", e],
       );
   }
-  Uer() {
-    if (this.ler) {
-      this.ler = !1;
-      var i = this.Owner.Entity.GetComponent(2);
-      let t = void 0;
-      (t =
-        1 === i.CreatureData.GetSubEntityType()
-          ? this.Owner.Entity.GetComponent(176)
-          : this.Owner.Entity.GetComponent(160)),
-        (this.i4s = 3),
-        t.StartForceDisableAnimOptimization(4);
-    }
-  }
-  r4s() {
-    if (!(this.i4s <= 0) && 0 == --this.i4s) {
-      var i = this.Owner.Entity.GetComponent(2);
-      let t = void 0;
-      (t =
-        1 === i.CreatureData.GetSubEntityType()
-          ? this.Owner.Entity.GetComponent(176)
-          : this.Owner.Entity.GetComponent(
-              160,
-            )).CancelForceDisableAnimOptimization(4);
-    }
-  }
-  Ter(i) {
-    if (!this.XZo) {
-      let t = i;
+  ytr(i) {
+    if (!this.dna) {
+      let t = i?.MontagePath,
+        s = i?.ExpressionId;
       if (t) {
         if ("Empty" === t) return;
       } else {
-        i = this.Aer();
-        if (!i || !i.Montage || "" === i.Montage || "Empty" === i.Montage)
+        i = this.Rtr();
+        if (
+          !i ||
+          !i.MontagePath ||
+          "" === i.MontagePath ||
+          "Empty" === i.MontagePath
+        )
           return;
-        (t = i.Montage), (this.zZo = i.Time);
+        (t = i.MontagePath), (s = i.ExpressionId), (this.$er = i.Time);
       }
-      const s = this.Owner.Entity.GetComponent(168);
-      (s.AnyIdleLoopMontagePlaying = !0),
-        (this.XZo = !0),
-        this.ser.LoadAsync(t, (t, i) => {
+      const e = this.Owner.Entity.GetComponent(171);
+      (e.AnyIdleLoopMontagePlaying = !0),
+        (this.dna = !0),
+        this.otr.LoadAsync(t, (t, i) => {
           this?.Owner?.Valid &&
             (t?.IsValid()
-              ? (this.ser?.PlayFromLoop(t, this.mer),
-                (this.ZZo = Time_1.Time.WorldTimeSeconds),
-                (this.YZo = t),
-                (this.JZo = i),
-                (this.XZo = !0),
-                this.Uer(),
-                (s.AnyIdleLoopMontagePlaying = !0))
-              : ((this.XZo = !1), (s.AnyIdleLoopMontagePlaying = !1)));
+              ? (this.otr?.PlayFromLoop(t, this._tr),
+                (this.Yer = Time_1.Time.WorldTimeSeconds),
+                (this.Qer = t),
+                (this.Xer = i),
+                (this.Wer = !0),
+                e.ExpressionController.ChangeFaceForExpression(t, s),
+                (e.AnyIdleLoopMontagePlaying = !0))
+              : ((this.dna = !1), (e.AnyIdleLoopMontagePlaying = !1)));
         });
     }
   }
-  Ler(i) {
-    if (!this.XZo) {
-      let t = i;
+  Itr(i) {
+    if (!this.dna) {
+      let t = i?.MontagePath,
+        s = i?.ExpressionId;
       if (t) {
         if ("Empty" === t) return;
       } else {
-        i = this.Aer();
-        if (!i || !i.Montage || "" === i.Montage || "Empty" === i.Montage)
+        i = this.Rtr();
+        if (
+          !i ||
+          !i.MontagePath ||
+          "" === i.MontagePath ||
+          "Empty" === i.MontagePath
+        )
           return;
-        (t = i.Montage), (this.zZo = i.Time);
+        (t = i.MontagePath), (s = i.ExpressionId), (this.$er = i.Time);
       }
-      (this.XZo = !0),
-        this.ser.LoadAsync(t, (t, i) => {
+      const e = this.Owner.Entity.GetComponent(171);
+      (this.dna = !0),
+        this.otr.LoadAsync(t, (t, i) => {
           this?.Owner?.Valid &&
             (t?.IsValid()
-              ? (this.ser?.Play(t, this.mer),
-                (this.ZZo = Time_1.Time.WorldTimeSeconds),
-                (this.YZo = t),
-                (this.JZo = i),
-                (this.XZo = !0))
-              : (this.XZo = !1));
+              ? (this.otr?.Play(t, this._tr),
+                (this.Yer = Time_1.Time.WorldTimeSeconds),
+                (this.Qer = t),
+                (this.Xer = i),
+                (this.Wer = !0),
+                e.ExpressionController.ChangeFaceForExpression(t, s))
+              : (this.dna = !1));
         });
     }
   }
-  Eer(t = !1) {
-    this.oer || ((this.oer = !0), this.ser?.Stop(t, this.YZo));
+  vtr(t = !1) {
+    this.etr || ((this.etr = !0), this.otr?.Stop(t, this.Qer));
   }
-  aWo() {
-    (this.oer = !0), this.ser?.ForceStop(0.1, this.YZo);
+  rKo() {
+    (this.etr = !0), this.otr?.ForceStop(0.1, this.Qer);
   }
-  Per() {
-    (this.oer = !0), this.ser?.ForceStop(0.5, this.YZo);
+  Utr() {
+    (this.etr = !0), this.otr?.ForceStop(0.5, this.Qer);
   }
-  der() {
-    (this.KZo = MathUtils_1.MathUtils.GetRandomRange(
+  utr() {
+    (this.Her = MathUtils_1.MathUtils.GetRandomRange(
       IDLE_MONTAGE_CD_MIN,
       IDLE_MONTAGE_CD_MAX,
     )),
-      (this.QZo = Time_1.Time.WorldTimeSeconds);
+      (this.jer = Time_1.Time.WorldTimeSeconds);
   }
-  Aer() {
-    if (this.eer?.length) {
-      switch (this.ter) {
+  Rtr() {
+    if (this.Jer?.length) {
+      switch (this.zer) {
         case IComponent_1.ENpcStandbyShowFinitelyPlayMode.Randomly:
-          this.ier = Math.floor(Math.random() * this.eer.length);
+          this.Zer = Math.floor(Math.random() * this.Jer.length);
           break;
         case IComponent_1.ENpcStandbyShowFinitelyPlayMode.Orderly:
-          this.ier = (this.ier + 1) % this.eer.length;
+          this.Zer = (this.Zer + 1) % this.Jer.length;
       }
-      return this.eer[this.ier];
+      return this.Jer[this.Zer];
     }
   }
-  Ier() {
+  Etr() {
     var t,
       i,
-      s = this.Owner.Entity.GetComponent(38);
+      s = this.Owner.Entity.GetComponent(39);
     s?.IsEnabled() &&
       ((t = s.AiController?.AiBase?.SubBehaviorConfigs?.get("AiSense")) &&
-        ((i = this.Owner.Entity.GetComponent(106)),
+        ((i = this.Owner.Entity.GetComponent(108)),
         (t = AiSenseById_1.configAiSenseById.GetConfig(Number(t)))) &&
         ((t = Math.max(t.SenseDistanceRange.Max, 0)),
         i.SetLogicRange(t),
-        (this.Cer = 0 < t)),
+        (this.ctr = 0 < t)),
       (i = s.AiController?.AiBase?.SubBehaviorConfigs?.get("AiAlert"))) &&
       AiAlertById_1.configAiAlertById.GetConfig(Number(i)) &&
-      (this.ger = !0);
+      (this.mtr = !0);
   }
   Ore() {
-    (this.per = this.Owner.Entity),
+    (this.Ctr = this.Owner.Entity),
       EventSystem_1.EventSystem.AddWithTarget(
         this.Owner.Entity,
         EventDefine_1.EEventName.OnInteractPlotStart,
-        this.Mer,
+        this.ftr,
       ),
-      this.Cer &&
-        this.ger &&
+      this.ctr &&
+        this.mtr &&
         (EventSystem_1.EventSystem.AddWithTarget(
           this.Owner.Entity,
           EventDefine_1.EEventName.OnStalkAlert,
-          this.Ser,
+          this.ptr,
         ),
         EventSystem_1.EventSystem.AddWithTarget(
           this.Owner.Entity,
           EventDefine_1.EEventName.OnStalkAlertLifted,
-          this.VZo,
+          this.Oer,
         )),
-      this.Cer &&
-        !this.ger &&
+      this.ctr &&
+        !this.mtr &&
         (EventSystem_1.EventSystem.AddWithTarget(
           this.Owner.Entity,
           EventDefine_1.EEventName.EnterLogicRange,
-          this.xZt,
+          this.xei,
         ),
         EventSystem_1.EventSystem.AddWithTarget(
           this.Owner.Entity,
           EventDefine_1.EEventName.LeaveLogicRange,
-          this.yer,
+          this.Mtr,
         ),
-        this.Owner.Entity.GetComponent(106)?.IsInLogicRange || this.yer());
+        this.Owner.Entity.GetComponent(108)?.IsInLogicRange || this.Mtr());
   }
   kre() {
-    this.per &&
+    this.Ctr &&
       (EventSystem_1.EventSystem.RemoveWithTarget(
-        this.per,
+        this.Ctr,
         EventDefine_1.EEventName.OnInteractPlotStart,
-        this.Mer,
+        this.ftr,
       ),
-      this.Cer &&
-        this.ger &&
+      this.ctr &&
+        this.mtr &&
         (EventSystem_1.EventSystem.RemoveWithTarget(
-          this.per,
+          this.Ctr,
           EventDefine_1.EEventName.OnStalkAlert,
-          this.Ser,
+          this.ptr,
         ),
         EventSystem_1.EventSystem.RemoveWithTarget(
-          this.per,
+          this.Ctr,
           EventDefine_1.EEventName.OnStalkAlertLifted,
-          this.VZo,
+          this.Oer,
         )),
-      this.Cer &&
+      this.ctr &&
         (EventSystem_1.EventSystem.RemoveWithTarget(
-          this.per,
+          this.Ctr,
           EventDefine_1.EEventName.EnterLogicRange,
-          this.xZt,
+          this.xei,
         ),
         EventSystem_1.EventSystem.RemoveWithTarget(
-          this.per,
+          this.Ctr,
           EventDefine_1.EEventName.LeaveLogicRange,
-          this.yer,
+          this.Mtr,
         )),
-      (this.per = void 0));
+      (this.Ctr = void 0));
   }
   OnPlayerInteractTurnActionStart() {
-    this.Owner.Entity.GetComponent(168)?.PauseAi("PlayerInteractTurnAction"),
-      (this.ver = !0);
+    this.Owner.Entity.GetComponent(171)?.PauseAi("PlayerInteractTurnAction"),
+      (this.gtr = !0);
     var t = this.Owner.Entity.GetComponent(0),
       i =
         (Log_1.Log.CheckInfo() &&
@@ -464,63 +482,63 @@ class NpcPerformIdleState extends StateBase_1.StateBase {
             "[NpcPerformIdleState.OnPlayerInteractTurnActionStart] 开始执行交互转身",
             ["PbDataID", t?.GetPbDataId()],
           ),
-        this.Owner?.Entity?.GetComponent(35));
-    i?.MainAnimInstance?.IsAnyMontagePlaying() && this.uer.NeedTurn
+        this.Owner?.Entity?.GetComponent(36));
+    i?.MainAnimInstance?.IsAnyMontagePlaying() && this.htr.NeedTurn
       ? (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "NPC",
             51,
             "[NpcPerformIdleState.OnPlayerInteractTurnActionStart][交互转身] 停止播放Montage",
             ["PbDataID", t?.GetPbDataId()],
-            ["IsIdleMontage", this.XZo],
+            ["IsIdleMontage", this.dna],
             [
               "CurrentMontage",
               i?.MainAnimInstance?.GetCurrentActiveMontage()?.GetName(),
             ],
           ),
-        this.ser?.AddOnMontageEnded(this.OnLoopMontageEndForTurning),
-        this.Per())
-      : this.uer.TurnToInteractTarget();
+        this.otr?.AddOnMontageEnded(this.OnLoopMontageEndForTurning),
+        this.Utr())
+      : this.htr.TurnToInteractTarget();
   }
   OnPlayerInteractTurnActionEnd() {
     var t = this.Owner.Entity.GetComponent(0),
-      i = this.Owner.Entity.GetComponent(35);
+      i = this.Owner.Entity.GetComponent(36);
     i.MainAnimInstance.IsAnyMontagePlaying() &&
-      this.uer.NeedTurn &&
+      this.htr.NeedTurn &&
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "NPC",
           51,
           "[NpcPerformIdleState.OnPlayerInteractTurnActionEnd][结束交互转身] 停止播放Montage",
           ["PbDataID", t?.GetPbDataId()],
-          ["IsIdleMontage", this.XZo],
+          ["IsIdleMontage", this.dna],
           [
             "CurrentMontage",
             i?.MainAnimInstance?.GetCurrentActiveMontage()?.GetName(),
           ],
         ),
-      this.Per()),
-      (this.uer.OnTurnToDefaultForwardEndHandle = () => {
+      this.Utr()),
+      (this.htr.OnTurnToDefaultForwardEndHandle = () => {
         this?.Owner?.Valid &&
-          (this.Owner.Entity.GetComponent(168)?.ResumeAi(
+          (this.Owner.Entity.GetComponent(171)?.ResumeAi(
             "PlayerInteractTurnAction",
           ),
-          (this.uer.NeedTurn = !1));
+          (this.htr.NeedTurn = !1));
       }),
-      this.uer.TurnToDefaultForward(),
-      (this.ver = !1),
-      this.der();
+      this.htr.TurnToDefaultForward(),
+      (this.gtr = !1),
+      this.utr();
   }
   OnPlayerAttack() {
-    this.fer || (this.XZo && this.aWo(), this.StateMachine.Switch(3));
+    this.dtr || (this.dna && this.rKo(), this.StateMachine.Switch(3));
   }
   OnMonsterNearby() {
     return (
-      !this.fer && (this.XZo && this.aWo(), this.StateMachine.Switch(7), !0)
+      !this.dtr && (this.dna && this.rKo(), this.StateMachine.Switch(7), !0)
     );
   }
   OnPlayerImpact() {
-    this.fer || (this.XZo && this.aWo(), this.StateMachine.Switch(4));
+    this.dtr || (this.dna && this.rKo(), this.StateMachine.Switch(4));
   }
 }
 exports.NpcPerformIdleState = NpcPerformIdleState;

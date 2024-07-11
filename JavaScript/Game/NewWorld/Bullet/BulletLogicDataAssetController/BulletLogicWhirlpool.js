@@ -8,33 +8,33 @@ const Log_1 = require("../../../../Core/Common/Log"),
 class BulletLogicWhirlpool extends BulletLogicController_1.BulletLogicController {
   constructor(t, o) {
     super(t, o),
-      (this.Z9o = 0),
-      (this._9o = void 0),
+      (this.Y7o = 0),
+      (this.a7o = void 0),
       (this.xe = 0),
-      (this.e7o = 0),
-      (this.t7o = new Set()),
+      (this.J7o = 0),
+      (this.z7o = new Set()),
       (this.NeedTick = !0),
-      (this.Z9o = t.WeightLimit),
-      (this._9o = o.GetBulletInfo()),
+      (this.Y7o = t.WeightLimit),
+      (this.a7o = o.GetBulletInfo()),
       (this.xe = WhirlpoolPoint_1.WhirlpoolPoint.GenId()),
-      (this.e7o = t.MoveTime);
+      (this.J7o = t.MoveTime);
   }
   OnInit() {}
   Update(t) {
     var o;
-    for ([o] of this._9o.CollisionInfo.CharacterEntityMap) this.t7o.add(o);
-    for (const i of this.t7o) this.i7o(i);
+    for ([o] of this.a7o.CollisionInfo.CharacterEntityMap) this.z7o.add(o);
+    for (const i of this.z7o) this.Z7o(i);
   }
-  i7o(t) {
-    var o = t?.GetComponent(161);
+  Z7o(t) {
+    var o = t?.GetComponent(163);
     !o?.Valid ||
-      this.Z9o < o.CharacterWeight ||
+      this.Y7o < o.CharacterWeight ||
       (o.GetWhirlpoolId() !== this.xe
-        ? (o.GetWhirlpoolEnable() && !o.CompareWhirlpoolPriority(this.e7o)) ||
+        ? (o.GetWhirlpoolEnable() && !o.CompareWhirlpoolPriority(this.J7o)) ||
           (o.BeginWhirlpool(
             this.xe,
-            this.e7o,
-            this._9o.ActorComponent.ActorLocationProxy,
+            this.J7o,
+            this.a7o.ActorComponent.ActorLocationProxy,
             o.ActorComp.ActorLocationProxy,
           ),
           BulletConstant_1.BulletConstant.OpenMoveLog &&
@@ -44,16 +44,16 @@ class BulletLogicWhirlpool extends BulletLogicController_1.BulletLogicController
               21,
               "添加吸附",
               ["Entity", t.Id],
-              ["ToLocation", this._9o.ActorComponent.ActorLocationProxy],
+              ["ToLocation", this.a7o.ActorComponent.ActorLocationProxy],
               ["BeginLocation", o.ActorComp.ActorLocationProxy],
             ))
         : o.UpdateWhirlpoolLocation(
-            this._9o.ActorComponent.ActorLocationProxy,
+            this.a7o.ActorComponent.ActorLocationProxy,
           ));
   }
   OnBulletDestroy() {
-    for (const o of this.t7o) {
-      var t = o?.GetComponent(161);
+    for (const o of this.z7o) {
+      var t = o?.GetComponent(163);
       t?.Valid &&
         t.GetWhirlpoolEnable() &&
         t.GetWhirlpoolId() === this.xe &&
@@ -64,11 +64,11 @@ class BulletLogicWhirlpool extends BulletLogicController_1.BulletLogicController
           21,
           "解除吸附",
           ["Entity", o.Id],
-          ["BulletLocation", this._9o.ActorComponent.ActorLocationProxy],
+          ["BulletLocation", this.a7o.ActorComponent.ActorLocationProxy],
           ["ToLocation", t.ActorComp.ActorLocationProxy],
         );
     }
-    this.t7o.clear();
+    this.z7o.clear();
   }
 }
 exports.BulletLogicWhirlpool = BulletLogicWhirlpool;

@@ -14,19 +14,19 @@ class CommonResultView extends UiViewBase_1.UiViewBase {
     super(...arguments),
       (this.ButtonMap = void 0),
       (this.ButtonItemMap = void 0),
-      (this.aBt = new Array()),
+      (this._bt = new Array()),
       (this.RewardLayout = void 0),
-      (this.hBt = void 0),
-      (this.lBt = 0),
-      (this._Bt = (t, e, i) => {
+      (this.ubt = void 0),
+      (this.cbt = 0),
+      (this.mbt = (t, e, i) => {
         e = new CommonItemSimpleGrid_1.CommonItemSimpleGrid(e.GetOwner());
         return e.RefreshItem(t[0].ItemId, t[1]), { Key: i, Value: e };
       }),
       (this.j3 = () => {
-        this.aBt.forEach((t) => {
-          t.DoTimerCallBack(this.lBt);
+        this._bt.forEach((t) => {
+          t.DoTimerCallBack(this.cbt);
         }),
-          this.lBt++,
+          this.cbt++,
           this.OnTimer();
       });
   }
@@ -51,42 +51,42 @@ class CommonResultView extends UiViewBase_1.UiViewBase {
       this.SetupButtonFormat(),
       (this.RewardLayout = new GenericLayoutNew_1.GenericLayoutNew(
         this.GetHorizontalLayout(0),
-        this._Bt,
+        this.mbt,
       )),
-      this.CFe();
+      this.P3e();
   }
   OnBeforeDestroy() {
     this.jm(),
-      this.uBt(),
+      this.dbt(),
       this.RewardLayout.ClearChildren(),
       (this.RewardLayout = void 0);
   }
   SetupButtonFormat() {}
-  cBt(t) {
+  Cbt(t) {
     var e = this.GetItem(3),
       i = this.GetItem(4),
       e = LguiUtil_1.LguiUtil.CopyItem(e, i),
       i = new CommonResultButton_1.CommonResultButton(e);
     return i.SetData(t), i;
   }
-  uBt() {
+  dbt() {
     for (const t of this.ButtonMap.values()) t.Destroy();
     this.ButtonMap.clear(), this.ButtonItemMap.clear();
   }
   RefreshButtonList(e) {
-    this.aBt.forEach((t, e) => {
+    this._bt.forEach((t, e) => {
       t.ResetData(), t.SetActive(!1);
     });
     var i,
       s = e.length,
-      r = this.aBt,
+      r = this._bt,
       o = r.length;
     for (let t = 0; t < s; t++)
       (t < o
         ? ((i = r[t]).SetData(e[t]), i)
-        : ((i = this.cBt(e[t])), this.aBt.push(i), i)
+        : ((i = this.Cbt(e[t])), this._bt.push(i), i)
       ).SetActive(!0);
-    this.aBt.forEach((t) => {
+    this._bt.forEach((t) => {
       t.DoRefreshCallBack();
     });
   }
@@ -97,14 +97,14 @@ class CommonResultView extends UiViewBase_1.UiViewBase {
     LguiUtil_1.LguiUtil.SetLocalText(this.GetText(2), t),
       this.GetText(2).SetUIActive(!0);
   }
-  CFe() {
-    this.hBt = TimerSystem_1.TimerSystem.Forever(this.j3, TIMERGAP);
+  P3e() {
+    this.ubt = TimerSystem_1.TimerSystem.Forever(this.j3, TIMERGAP);
   }
   OnTimer() {}
   jm() {
-    TimerSystem_1.TimerSystem.Has(this.hBt) &&
-      TimerSystem_1.TimerSystem.Remove(this.hBt),
-      (this.hBt = void 0);
+    TimerSystem_1.TimerSystem.Has(this.ubt) &&
+      TimerSystem_1.TimerSystem.Remove(this.ubt),
+      (this.ubt = void 0);
   }
 }
 exports.CommonResultView = CommonResultView;

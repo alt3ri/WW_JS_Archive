@@ -21,35 +21,35 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleEnergyComponent = void 0);
 const Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
   EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent");
-var EAttributeId = Protocol_1.Aki.Protocol.KBs;
+var EAttributeId = Protocol_1.Aki.Protocol.Bks;
 const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
   energyAttrIds = [EAttributeId.Proto_Energy, EAttributeId.Proto_EnergyMax];
 let RoleEnergyComponent = class RoleEnergyComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments),
-      (this.nXt = void 0),
+      (this.n$t = void 0),
       (this.$te = void 0),
-      (this.mon = (t, e, o) => {
+      (this.Qin = (t, e, o) => {
         var r = this.$te.GetCurrentValue(EAttributeId.Proto_Energy),
           n = this.$te.GetCurrentValue(EAttributeId.Proto_EnergyMax);
-        this.nXt.Actor?.CharRenderingComponent.SetStarScarEnergy(r / n);
+        this.n$t.Actor?.CharRenderingComponent.SetStarScarEnergy(r / n);
       });
   }
   OnStart() {
     return (
-      (this.nXt = this.Entity.CheckGetComponent(3)),
-      (this.$te = this.Entity.CheckGetComponent(156)),
-      this.$te.AddListeners(energyAttrIds, this.mon, "RoleEnergyComponent"),
-      this.mon(),
+      (this.n$t = this.Entity.CheckGetComponent(3)),
+      (this.$te = this.Entity.CheckGetComponent(158)),
+      this.$te.AddListeners(energyAttrIds, this.Qin, "RoleEnergyComponent"),
+      this.Qin(),
       !0
     );
   }
   OnEnd() {
-    return this.$te.RemoveListeners(energyAttrIds, this.mon), !0;
+    return this.$te.RemoveListeners(energyAttrIds, this.Qin), !0;
   }
 };
 (RoleEnergyComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(80)],
+  [(0, RegisterComponent_1.RegisterComponent)(82)],
   RoleEnergyComponent,
 )),
   (exports.RoleEnergyComponent = RoleEnergyComponent);

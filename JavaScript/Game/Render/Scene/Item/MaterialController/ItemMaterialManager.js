@@ -26,11 +26,11 @@ class ItemMaterialManager {
       (this.IsInit || this.Initialize(),
       0 < this.AllGlobalControllerInfoMap.size)
     )
-      for (const o of this.AllGlobalControllerInfoMap.keys()) {
-        var i = this.AllGlobalControllerInfoMap.get(o);
+      for (const s of this.AllGlobalControllerInfoMap.keys()) {
+        var i = this.AllGlobalControllerInfoMap.get(s);
         i?.IsValid()
           ? i.Update(e)
-          : (i.Destroy(), this.AllGlobalControllerInfoMap.delete(o));
+          : (i.Destroy(), this.AllGlobalControllerInfoMap.delete(s));
       }
     if (0 < this.AllActorControllerInfoMap.size)
       for (const n of this.AllActorControllerInfoMap.keys()) {
@@ -40,18 +40,18 @@ class ItemMaterialManager {
           : r.push(n);
       }
     for (let t = 0; t < r.length; t++) {
-      var s = r[t];
-      this.AllActorControllerInfoMap.get(s)
-        ? (this.AllActorControllerInfoMap.get(s).Destroy(),
-          this.AllActorControllerInfoMap.delete(s))
+      var o = r[t];
+      this.AllActorControllerInfoMap.get(o)
+        ? (this.AllActorControllerInfoMap.get(o).Destroy(),
+          this.AllActorControllerInfoMap.delete(o))
         : Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "RenderEffect",
             33,
             "单体交互物材质控制器队列已经没有目标控制器，卸载失败",
-            ["handle", s],
+            ["handle", o],
           ),
-        this.DataMap?.Map?.Get(s) && this.DataMap.Map.Remove(s);
+        this.DataMap?.Map?.Get(o) && this.DataMap.Map.Remove(o);
     }
     if (
       this.AllMaterialSimpleControllers &&
@@ -112,8 +112,7 @@ class ItemMaterialManager {
       if (this.AllActorControllerInfoMap.has(t))
         return (
           !!this.AllActorControllerInfoMap.get(t) &&
-          (this.AllActorControllerInfoMap.get(t).Stop(),
-          !!this.DataMap?.Map?.Get(t))
+          (this.AllActorControllerInfoMap.get(t).Stop(), !0)
         );
       Log_1.Log.CheckError() &&
         Log_1.Log.Error(
@@ -159,11 +158,11 @@ class ItemMaterialManager {
         -1
       );
     let i = 0;
-    for (const s of this.AllMaterialSimpleControllers.keys()) {
-      const a = this.AllMaterialSimpleControllers.get(s);
+    for (const o of this.AllMaterialSimpleControllers.keys()) {
+      const a = this.AllMaterialSimpleControllers.get(o);
       if (a.GetActor() === t)
         return (
-          (i = s), (a.ScalarParameterValue = e), (a.VectorParameterValue = r), i
+          (i = o), (a.ScalarParameterValue = e), (a.VectorParameterValue = r), i
         );
     }
     (this.IndexCountSimple = this.IndexCountSimple + 1),

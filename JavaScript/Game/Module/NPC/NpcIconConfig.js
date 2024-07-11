@@ -11,22 +11,22 @@ const UE = require("ue"),
 class NpcIconConfig extends ConfigBase_1.ConfigBase {
   constructor() {
     super(...arguments),
-      (this.pqi = new Map()),
-      (this.zat = void 0),
-      (this.vqi = void 0),
-      (this.Mqi = ""),
-      (this.Sqi = 0),
-      (this.Eqi = 0),
-      (this.yqi = 0),
-      (this.Iqi = 0),
-      (this.Tqi = 0),
-      (this.Lqi = 0);
+      (this.pGi = new Map()),
+      (this.ult = void 0),
+      (this.vGi = void 0),
+      (this.MGi = ""),
+      (this.EGi = 0),
+      (this.SGi = 0),
+      (this.yGi = 0),
+      (this.IGi = 0),
+      (this.TGi = 0),
+      (this.LGi = 0);
   }
   get NpcIconHeadInfoLimitMinDistanceSquared() {
-    return this.yqi;
+    return this.yGi;
   }
   get NpcIconHeadInfoLimitMaxDistanceSquared() {
-    return this.Tqi;
+    return this.TGi;
   }
   OnInit() {
     return (
@@ -37,70 +37,70 @@ class NpcIconConfig extends ConfigBase_1.ConfigBase {
   }
   GetHeadStateScaleValue(e) {
     return (
-      this.zat ||
-        (this.zat = ResourceSystem_1.ResourceSystem.GetLoadedAsset(
+      this.ult ||
+        (this.ult = ResourceSystem_1.ResourceSystem.GetLoadedAsset(
           NpcIconDefine_1.HEADSTATE_SCALE_CURVE_PATH,
           UE.CurveFloat,
         )),
-      this.zat ? this.zat.GetFloatValue(e) : 1
+      this.ult ? this.ult.GetFloatValue(e) : 1
     );
   }
   GetDialogScaleValue(e) {
     return (
-      this.vqi ||
-        (this.vqi = ResourceSystem_1.ResourceSystem.GetLoadedAsset(
+      this.vGi ||
+        (this.vGi = ResourceSystem_1.ResourceSystem.GetLoadedAsset(
           NpcIconDefine_1.DIALOG_SCALE_CURVE_PATH,
           UE.CurveFloat,
         )),
-      this.vqi ? this.vqi.GetFloatValue(e) : 1
+      this.vGi ? this.vGi.GetFloatValue(e) : 1
     );
   }
   GetNpcIconSocketName() {
     return (
-      this.Mqi ||
-        (this.Mqi =
+      this.MGi ||
+        (this.MGi =
           CommonParamById_1.configCommonParamById.GetStringConfig(
             "npcicon_socketname",
           )),
-      this.Mqi
+      this.MGi
     );
   }
   GetNpcIconLocationOffsetZ() {
     return (
-      this.Sqi ||
-        (this.Sqi = CommonParamById_1.configCommonParamById.GetIntConfig(
+      this.EGi ||
+        (this.EGi = CommonParamById_1.configCommonParamById.GetIntConfig(
           "npcicon_location_offsetz",
         )),
-      this.Sqi
+      this.EGi
     );
   }
   GetNpcIconHeadInfoLimitMinDistance() {
     return (
-      this.Eqi ||
-        ((this.Eqi = CommonParamById_1.configCommonParamById.GetIntConfig(
+      this.SGi ||
+        ((this.SGi = CommonParamById_1.configCommonParamById.GetIntConfig(
           "npc_headinfo_limit_min_distance",
         )),
-        (this.yqi = this.Eqi * this.Eqi)),
-      this.Eqi
+        (this.yGi = this.SGi * this.SGi)),
+      this.SGi
     );
   }
   GetNpcIconHeadInfoLimitMaxDistance() {
     return (
-      this.Iqi ||
-        ((this.Iqi = CommonParamById_1.configCommonParamById.GetIntConfig(
+      this.IGi ||
+        ((this.IGi = CommonParamById_1.configCommonParamById.GetIntConfig(
           "npc_headinfo_limit_max_distance",
         )),
-        (this.Tqi = this.Iqi * this.Iqi)),
-      this.Iqi
+        (this.TGi = this.IGi * this.IGi)),
+      this.IGi
     );
   }
   GetNpcIconHeadInfoNameLimitDistance() {
     return (
-      this.Lqi ||
-        (this.Lqi = CommonParamById_1.configCommonParamById.GetIntConfig(
+      this.LGi ||
+        (this.LGi = CommonParamById_1.configCommonParamById.GetIntConfig(
           "npc_headinfo_name_limit_distance",
         )),
-      this.Lqi
+      this.LGi
     );
   }
   GetNpcHeadInfo(e) {
@@ -119,14 +119,14 @@ class NpcIconConfig extends ConfigBase_1.ConfigBase {
   }
   OnClear() {
     return (
-      this.pqi.clear(),
-      (this.Mqi = void 0),
-      (this.Sqi = void 0),
-      (this.Eqi = void 0),
-      (this.Iqi = void 0),
-      (this.Lqi = void 0),
-      (this.zat = void 0),
-      !(this.vqi = void 0)
+      this.pGi.clear(),
+      (this.MGi = void 0),
+      (this.EGi = void 0),
+      (this.SGi = void 0),
+      (this.IGi = void 0),
+      (this.LGi = void 0),
+      (this.ult = void 0),
+      !(this.vGi = void 0)
     );
   }
 }

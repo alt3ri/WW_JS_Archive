@@ -17,8 +17,7 @@ const UE = require("ue"),
   InputDistributeController_1 = require("../../Ui/InputDistribute/InputDistributeController"),
   InputMappingsDefine_1 = require("../../Ui/InputDistribute/InputMappingsDefine"),
   UiLayer_1 = require("../../Ui/UiLayer"),
-  KEYBOARD_DEAD_LIMIT = 100,
-  GAMEPAD_DEAD_LIMIT = 0.3;
+  KEYBOARD_DEAD_LIMIT = 100;
 class AngleCalculator {
   static GetVectorAngle(t, i) {
     var s = Vector_1.Vector.Create(),
@@ -31,10 +30,10 @@ class AngleCalculator {
   static AngleToAreaIndex(i) {
     for (let t = 0; t < this.AngleList.length; t++) {
       var s = t + 1;
-      if (this.AngleList[t] < i && i <= this.AngleList[s])
+      if (this.AngleList[t] <= i && i < this.AngleList[s])
         return this.AngleList.length - s;
     }
-    return 0;
+    return 1;
   }
   static ConvertLguiPosToScreenPos(t, i) {
     var s = UiLayer_1.UiLayer.UiRootItem,
@@ -54,7 +53,7 @@ class AngleCalculator {
   -180, -135, -90, -45, 0, 45, 90, 135, 180,
 ];
 class RouletteInputBase {
-  constructor(t, i, s) {
+  constructor(t, i, s, e) {
     (this.ActivateOn = !1),
       (this.AreaIndex = 0),
       (this.Angle = -1),
@@ -62,7 +61,7 @@ class RouletteInputBase {
       (this.RouletteViewType = 1),
       (this.BeginPos = void 0),
       (this.ForwardVector = Vector_1.Vector.Create(0, -1, 0)),
-      (this.Ggo = () => {}),
+      (this.B0o = () => {}),
       (this.BeginPos = t),
       (this.RouletteViewType = i ?? 1);
   }
@@ -76,10 +75,10 @@ class RouletteInputBase {
     (this.AreaIndex = 0), (this.Angle = -1);
   }
   EndInput() {
-    (this.ActivateOn = !1), this.Ggo();
+    (this.ActivateOn = !1), this.B0o();
   }
   SetEndInputEvent(t) {
-    this.Ggo = t;
+    this.B0o = t;
   }
   SetIsNeedEmpty(t) {
     this.NeedEmptyChoose = t;
@@ -106,10 +105,10 @@ class RouletteInputKeyboard extends (exports.RouletteInputBase =
   RouletteInputBase) {
   constructor(t, i) {
     super(t, i),
-      (this.Ngo = Vector_1.Vector.Create()),
-      (this.Ogo = Vector_1.Vector.Create()),
-      (this.kgo = Vector_1.Vector.Create()),
-      (this.Fgo = Vector_1.Vector.Create());
+      (this.b0o = Vector_1.Vector.Create()),
+      (this.q0o = Vector_1.Vector.Create()),
+      (this.G0o = Vector_1.Vector.Create()),
+      (this.N0o = Vector_1.Vector.Create());
   }
   OnInit() {
     if (!this.BeginPos) {
@@ -117,23 +116,23 @@ class RouletteInputKeyboard extends (exports.RouletteInputBase =
       if (!t) return;
       this.BeginPos = t.GetCursorPosition() ?? Vector2D_1.Vector2D.Create();
     }
-    this.Ogo.Set(this.BeginPos.X, this.BeginPos.Y, 0),
-      this.kgo.Set(this.BeginPos.X, this.BeginPos.Y, 0),
-      this.Ngo.Set(0, 0, 0);
+    this.q0o.Set(this.BeginPos.X, this.BeginPos.Y, 0),
+      this.G0o.Set(this.BeginPos.X, this.BeginPos.Y, 0),
+      this.b0o.Set(0, 0, 0);
   }
   InputTick(t) {
     var i = Global_1.Global.CharacterController;
     i &&
       (i = i.GetCursorPosition()) &&
-      (this.Fgo.Set(i.X, i.Y, 0),
-      this.Fgo.Equals(this.kgo, 1) ||
-        (this.Fgo.Subtraction(this.Ogo, this.Ngo),
-        this.NeedEmptyChoose && this.Ngo.Size() <= KEYBOARD_DEAD_LIMIT
+      (this.N0o.Set(i.X, i.Y, 0),
+      this.N0o.Equals(this.G0o, 1) ||
+        (this.N0o.Subtraction(this.q0o, this.b0o),
+        this.NeedEmptyChoose && this.b0o.Size() <= KEYBOARD_DEAD_LIMIT
           ? (this.AreaIndex = 0)
-          : (this.kgo.Set(this.Fgo.X, this.Fgo.Y, 0),
+          : (this.G0o.Set(this.N0o.X, this.N0o.Y, 0),
             (this.Angle = AngleCalculator.GetVectorAngle(
               this.ForwardVector,
-              this.Ngo,
+              this.b0o,
             )),
             (this.AreaIndex = AngleCalculator.AngleToAreaIndex(this.Angle)))));
   }
@@ -142,19 +141,19 @@ exports.RouletteInputKeyboard = RouletteInputKeyboard;
 class RouletteInputTouch extends RouletteInputBase {
   constructor(t, i, s) {
     super(t, i, s),
-      (this.Ngo = Vector_1.Vector.Create()),
-      (this.Ogo = Vector_1.Vector.Create()),
-      (this.kgo = Vector_1.Vector.Create()),
-      (this.Fgo = Vector_1.Vector.Create()),
-      (this.Vgo = -1),
-      (this.V1t = !1),
-      (this.Vgo = s ?? -1);
+      (this.b0o = Vector_1.Vector.Create()),
+      (this.q0o = Vector_1.Vector.Create()),
+      (this.G0o = Vector_1.Vector.Create()),
+      (this.N0o = Vector_1.Vector.Create()),
+      (this.O0o = -1),
+      (this.eut = !1),
+      (this.O0o = s ?? -1);
   }
   OnInit() {
     if (!this.BeginPos) {
       var t = Global_1.Global.CharacterController;
       if (!t) return;
-      if (this.Vgo < 0)
+      if (this.O0o < 0)
         return void (
           Log_1.Log.CheckError() &&
           Log_1.Log.Error(
@@ -164,36 +163,36 @@ class RouletteInputTouch extends RouletteInputBase {
           )
         );
       (this.BeginPos =
-        t.GetTouchPosition(this.Vgo) ?? Vector2D_1.Vector2D.Create()),
+        t.GetTouchPosition(this.O0o) ?? Vector2D_1.Vector2D.Create()),
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "Phantom",
             38,
             "[轮盘界面]触屏开启信息",
-            ["TouchId", this.Vgo],
+            ["TouchId", this.O0o],
             ["Pos", this.BeginPos],
           );
     }
-    this.Ogo.Set(this.BeginPos.X, this.BeginPos.Y, 0),
-      this.kgo.Set(this.BeginPos.X, this.BeginPos.Y, 0),
-      this.Ngo.Set(0, 0, 0);
+    this.q0o.Set(this.BeginPos.X, this.BeginPos.Y, 0),
+      this.G0o.Set(this.BeginPos.X, this.BeginPos.Y, 0),
+      this.b0o.Set(0, 0, 0);
   }
   OnDestroy() {
-    this.V1t = !1;
+    this.eut = !1;
   }
   InputTick(t) {
     var i;
     0 !== this.RouletteViewType &&
       (i = Global_1.Global.CharacterController) &&
-      (!(this.Vgo < 0) && ((this.V1t = i.IsInTouch(this.Vgo)), this.V1t)
-        ? (i = i.GetTouchPosition(this.Vgo)) &&
-          (this.Fgo.Set(i.X, i.Y, 0),
-          this.Fgo.Equals(this.kgo) ||
-            (this.kgo.Set(this.Fgo.X, this.Fgo.Y, 0),
-            this.Fgo.Subtraction(this.Ogo, this.Ngo),
+      (!(this.O0o < 0) && ((this.eut = i.IsInTouch(this.O0o)), this.eut)
+        ? (i = i.GetTouchPosition(this.O0o)) &&
+          (this.N0o.Set(i.X, i.Y, 0),
+          this.N0o.Equals(this.G0o) ||
+            (this.G0o.Set(this.N0o.X, this.N0o.Y, 0),
+            this.N0o.Subtraction(this.q0o, this.b0o),
             (this.Angle = AngleCalculator.GetVectorAngle(
               this.ForwardVector,
-              this.Ngo,
+              this.b0o,
             )),
             (this.AreaIndex = AngleCalculator.AngleToAreaIndex(this.Angle))))
         : this.EndInput());
@@ -201,57 +200,59 @@ class RouletteInputTouch extends RouletteInputBase {
 }
 exports.RouletteInputTouch = RouletteInputTouch;
 class RouletteInputGamepad extends RouletteInputBase {
-  constructor(t, i) {
+  constructor(t, i, s, e) {
     super(t, i),
-      (this.Hgo = Vector_1.Vector.Create()),
-      (this.jgo = void 0),
-      (this.Wgo = (t, i) => {
+      (this.k0o = Vector_1.Vector.Create()),
+      (this.WMa = 0.4),
+      (this.F0o = void 0),
+      (this.V0o = (t, i) => {
         switch (t) {
           case InputMappingsDefine_1.axisMappings.UiMoveForward:
-            this.Hgo.Y = -i;
+            this.k0o.Y = -i;
             break;
           case InputMappingsDefine_1.axisMappings.UiScroll1:
-            this.Hgo.Y = i;
+            this.k0o.Y = i;
             break;
           case InputMappingsDefine_1.axisMappings.UiMoveRight:
           case InputMappingsDefine_1.axisMappings.UiScroll2:
-            this.Hgo.X = i;
+            this.k0o.X = i;
         }
-      });
+      }),
+      (this.WMa = e ?? this.WMa);
   }
   OnInit() {
-    this.Hgo.Set(0, 0, 0);
+    this.k0o.Set(0, 0, 0);
   }
   BindEvent() {
     0 === this.RouletteViewType
-      ? (this.jgo = [
+      ? (this.F0o = [
           InputMappingsDefine_1.axisMappings.UiMoveForward,
           InputMappingsDefine_1.axisMappings.UiMoveRight,
         ])
-      : (this.jgo = [
+      : (this.F0o = [
           InputMappingsDefine_1.axisMappings.UiScroll1,
           InputMappingsDefine_1.axisMappings.UiScroll2,
         ]),
       InputDistributeController_1.InputDistributeController.BindAxes(
-        this.jgo,
-        this.Wgo,
+        this.F0o,
+        this.V0o,
       );
   }
   UnBindEvent() {
     InputDistributeController_1.InputDistributeController.UnBindAxes(
-      this.jgo,
-      this.Wgo,
+      this.F0o,
+      this.V0o,
     );
   }
   InputTick(t) {
-    (!this.NeedEmptyChoose && 0 === this.Hgo.X && 0 === this.Hgo.Y) ||
+    (!this.NeedEmptyChoose && 0 === this.k0o.X && 0 === this.k0o.Y) ||
       (this.NeedEmptyChoose &&
-      Math.abs(this.Hgo.X) <= GAMEPAD_DEAD_LIMIT &&
-      Math.abs(this.Hgo.Y) <= GAMEPAD_DEAD_LIMIT
+      Math.abs(this.k0o.X) <= this.WMa &&
+      Math.abs(this.k0o.Y) <= this.WMa
         ? (this.AreaIndex = 0)
         : ((this.Angle = AngleCalculator.GetVectorAngle(
             this.ForwardVector,
-            this.Hgo,
+            this.k0o,
           )),
           (this.AreaIndex = AngleCalculator.AngleToAreaIndex(this.Angle))));
   }

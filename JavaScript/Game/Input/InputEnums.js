@@ -18,7 +18,8 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
       (o[(o["切换角色3"] = 12)] = "切换角色3"),
       (o[(o["锁定目标"] = 13)] = "锁定目标"),
       (o[(o["瞄准"] = 14)] = "瞄准"),
-      (o[(o["通用交互"] = 15)] = "通用交互");
+      (o[(o["通用交互"] = 15)] = "通用交互"),
+      (o[(o.MaxCount = 16)] = "MaxCount");
   })((EInputAction = exports.EInputAction || (exports.EInputAction = {}))),
   (function (o) {
     (o[(o.None = 0)] = "None"),

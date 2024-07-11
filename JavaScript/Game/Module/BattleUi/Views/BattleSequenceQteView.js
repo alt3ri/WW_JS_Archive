@@ -5,11 +5,11 @@ const UE = require("ue"),
   UiViewBase_1 = require("../../../Ui/Base/UiViewBase");
 class BattleSequenceQteView extends UiViewBase_1.UiViewBase {
   constructor() {
-    super(...arguments), (this.Ret = () => {});
+    super(...arguments), (this.Htt = () => {});
   }
   OnRegisterComponent() {
     (this.ComponentRegisterInfos = [[0, UE.UIButtonComponent]]),
-      (this.BtnBindInfo = [[0, this.Ret]]);
+      (this.BtnBindInfo = [[0, this.Htt]]);
   }
   OnAfterPlayStartSequence() {
     this.UiViewSequence.PlaySequencePurely("Huxi");

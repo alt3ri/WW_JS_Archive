@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
-  (exports.waitForServerReloadReady =
+  (exports.getPlayerPosInfo =
+    exports.waitForServerReloadReady =
     exports.isServerReloadReady =
     exports.sendPrepareReloadServer =
     exports.requestPlayerBuffOp =
@@ -17,21 +18,24 @@ const Config_1 = require("../Config"),
   Util_2 = require("./Util");
 async function requestServerResponse(e, r, t = "localhost", a) {
   if (
-    !(0, Util_2.isInPie)() &&
-    !Config_1.Config.IsPkgRunning &&
-    !(0, Util_2.isRuntimePlatform)()
+    !(
+      (0, Util_2.isInPie)() ||
+      Config_1.Config.IsPkgRunning ||
+      Config_1.Config.IsServerAttaching ||
+      (0, Util_2.isRuntimePlatform)()
+    )
   )
     return [!1, void 0];
-  let n = a;
-  let o =
-    `http://${t}:${(n = void 0 === a ? Config_1.Config.Instance.ServerPort : n)}/GameCurrStateDebug/` +
+  let o = a;
+  let n =
+    `http://${t}:${(o = void 0 === a ? Config_1.Config.Instance.ServerPort : o)}/GameCurrStateDebug/` +
     e;
   r &&
     ((t = Object.entries(r)
       .map(([e, r]) => e + "=" + r)
       .join("&")),
-    (o += "?" + t));
-  a = await (0, Util_2.doJsonHttpPost)(o);
+    (n += "?" + t));
+  a = await (0, Util_2.doJsonHttpPost)(n);
   return a ? [!0, a] : [!1, void 0];
 }
 async function requestServerData(e, r, t = "localhost", a) {
@@ -40,21 +44,21 @@ async function requestServerData(e, r, t = "localhost", a) {
     ? [!0, (0, Util_2.parse)(r.data)]
     : [!1, void 0];
 }
-async function requestServerEntityRunningData(e, r, t) {
-  var a = [];
-  for (let e = 0; e < r.length; e += 25) a.push(r.slice(e, e + 25));
+async function requestServerEntityRunningData(e, r, t, a) {
+  var o = [];
+  for (let e = 0; e < t.length; e += 25) o.push(t.slice(e, e + 25));
   var n = [];
-  for (const u of a) {
-    var o = u.join(","),
-      [i, s] = await requestServerData(
+  for (const d of o) {
+    var i = d.join(","),
+      [s, u] = await requestServerData(
         "GetEntityCurrState",
-        { playerId: e, configIdList: o, instId: -1 },
-        t,
+        { playerId: e, configIdList: i, instId: r },
+        a,
       );
-    i
-      ? s.States && 0 < s.States.length && n.push(...s.States)
+    s
+      ? u.States && 0 < u.States.length && n.push(...u.States)
       : (0, Log_1.warn)(
-          `request server entity running data failed. playerId = ${e}, entityIds = [${o}]`,
+          `request server entity running data failed. playerId = ${e}, entityIds = [${i}]`,
         );
   }
   return n;
@@ -86,6 +90,7 @@ async function requestPlayerBuffOp(e, r, t) {
 function getPortFromServerType(e) {
   if (e)
     switch (e) {
+      case "Remote":
       case "PIE":
         return Config_1.Config.Instance.PieServerPort;
       case "Package":
@@ -94,14 +99,17 @@ function getPortFromServerType(e) {
   return Config_1.Config.Instance.ServerPort;
 }
 function sendPrepareReloadServer(e) {
-  e = `http://localhost:${getPortFromServerType(e)}/GameManager/SetEntityConfigReloadState`;
-  try {
-    (0, Util_1.sendHttpRequest)("POST", e);
-  } catch (e) {
-    (0, Log_1.warn)("sendPrepareReloadServer failed: " + e);
+  if ("Remote" !== e) {
+    e = `http://localhost:${getPortFromServerType(e)}/GameManager/SetEntityConfigReloadState`;
+    try {
+      (0, Util_1.sendHttpRequest)("POST", e);
+    } catch (e) {
+      (0, Log_1.warn)("sendPrepareReloadServer failed: " + e);
+    }
   }
 }
 async function isServerReloadReady(e) {
+  if ("Remote" === e) return !1;
   e = `http://localhost:${getPortFromServerType(e)}/GameManager/GetEntityConfigReloadState`;
   try {
     var r = await (0, Util_2.doJsonHttpGet)(e);
@@ -111,11 +119,19 @@ async function isServerReloadReady(e) {
   }
 }
 async function waitForServerReloadReady(e, r = 90) {
-  for (var t = Date.now(); Date.now() - t < 1e3 * r; ) {
-    if (await isServerReloadReady(e)) return !0;
-    await (0, Async_1.delay)(1);
+  if ("Remote" !== e) {
+    for (var t = Date.now(); Date.now() - t < 1e3 * r; ) {
+      if (await isServerReloadReady(e)) return !0;
+      await (0, Async_1.delay)(1);
+    }
+    (0, Log_1.warn)("等待服务端准备重载数据超时");
   }
-  return (0, Log_1.warn)("等待服务端准备重载数据超时"), !1;
+  return !1;
+}
+async function getPlayerPosInfo(e, r) {
+  (e = e + "/GameCurrStateDebug/GetPlayerPosInfo?playerId=" + r),
+    (r = await (0, Util_2.doJsonHttpGet)(e).catch(void 0));
+  if (void 0 !== r && 0 === r.code) return (0, Util_2.parse)(r.data);
 }
 (exports.requestServerResponse = requestServerResponse),
   (exports.requestServerData = requestServerData),
@@ -126,5 +142,6 @@ async function waitForServerReloadReady(e, r = 90) {
   (exports.requestPlayerBuffOp = requestPlayerBuffOp),
   (exports.sendPrepareReloadServer = sendPrepareReloadServer),
   (exports.isServerReloadReady = isServerReloadReady),
-  (exports.waitForServerReloadReady = waitForServerReloadReady);
+  (exports.waitForServerReloadReady = waitForServerReloadReady),
+  (exports.getPlayerPosInfo = getPlayerPosInfo);
 //# sourceMappingURL=ServerRequest.js.map

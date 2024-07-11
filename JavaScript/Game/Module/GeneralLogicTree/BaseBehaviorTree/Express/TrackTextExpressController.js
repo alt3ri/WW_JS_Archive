@@ -14,22 +14,22 @@ const Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
 class TrackTextExpressController {
   constructor(e) {
     (this.Yre = void 0),
-      (this.fQt = void 0),
-      (this.pQt = void 0),
-      (this.vQt = void 0),
-      (this.MQt = void 0),
-      (this.SQt = !1),
+      (this.fXt = void 0),
+      (this.pXt = void 0),
+      (this.vXt = void 0),
+      (this.MXt = void 0),
+      (this.EXt = !1),
       (this.Yre = e),
-      (this.pQt = new GeneralLogicTreeDefine_1.TreeTrackTextExpressionInfo()),
-      (this.fQt = e.UiTrackTextInfo),
-      (this.MQt = []),
-      (this.vQt = new Map());
+      (this.pXt = new GeneralLogicTreeDefine_1.TreeTrackTextExpressionInfo()),
+      (this.fXt = e.UiTrackTextInfo),
+      (this.MXt = []),
+      (this.vXt = new Map());
   }
   Clear() {
-    this.pQt.Clear(),
-      this.fQt.Clear(),
-      (this.MQt.length = 0),
-      this.vQt.clear(),
+    this.pXt.Clear(),
+      this.fXt.Clear(),
+      (this.MXt.length = 0),
+      this.vXt.clear(),
       this.EndTextExpress();
   }
   EnableTrack(e, t = 0) {
@@ -40,25 +40,25 @@ class TrackTextExpressController {
     }
   }
   StartTextExpress(e = 0) {
-    this.vQt.set(e, !0), this.Yre.IsOccupied || this.EQt(e);
+    this.vXt.set(e, !0), this.Yre.IsOccupied || this.SXt(e);
   }
-  EQt(e) {
+  SXt(e) {
     var t;
-    this.SQt ||
+    this.EXt ||
       ((t = this.Yre.CreateShowBridge()),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.GeneralLogicTreeStartShowTrackText,
         t,
         e,
       ),
-      (this.SQt = !0));
+      (this.EXt = !0));
   }
   EndTextExpress(e = 0) {
-    2 === e ? this.vQt.clear() : this.vQt.delete(e),
-      0 === this.vQt.size && this.yQt(e);
+    2 === e ? this.vXt.clear() : this.vXt.delete(e),
+      0 === this.vXt.size && this.yXt(e);
   }
-  yQt(e) {
-    this.SQt &&
+  yXt(e) {
+    this.EXt &&
       (EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.GeneralLogicTreeEndShowTrackText,
         this.Yre.TreeIncId,
@@ -67,10 +67,10 @@ class TrackTextExpressController {
       GeneralLogicTreeController_1.GeneralLogicTreeController.TryReleaseExpressionOccupation(
         this.Yre.TreeIncId,
       ),
-      (this.SQt = !1));
+      (this.EXt = !1));
   }
   UpdateTextExpress(e) {
-    this.SQt &&
+    this.EXt &&
       !e &&
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.GeneralLogicTreeUpdateShowTrackText,
@@ -80,47 +80,47 @@ class TrackTextExpressController {
   UpdateTrackTextData(e, t) {
     if (e instanceof LogicNodeBase_1.LogicNodeBase)
       switch (t) {
-        case Protocol_1.Aki.Protocol.N2s.Lkn:
-          e.ContainTag(0) && this.IQt(e.NodeId, e.CustomUiConfig);
+        case Protocol_1.Aki.Protocol.DNs.t5n:
+          e.ContainTag(0) && this.IXt(e.NodeId, e.CustomUiConfig);
           break;
-        case Protocol_1.Aki.Protocol.N2s.Proto_CompletedSuccess:
-        case Protocol_1.Aki.Protocol.N2s.Proto_CompletedFailed:
-        case Protocol_1.Aki.Protocol.N2s.Proto_Destroy:
-          this.IQt(e.NodeId, void 0);
+        case Protocol_1.Aki.Protocol.DNs.Proto_CompletedSuccess:
+        case Protocol_1.Aki.Protocol.DNs.Proto_CompletedFailed:
+        case Protocol_1.Aki.Protocol.DNs.Proto_Destroy:
+          this.IXt(e.NodeId, void 0);
       }
-    else this.Yre.ContainTag(10) || this.TQt();
+    else this.Yre.ContainTag(11) || this.TXt();
   }
-  IQt(i, e) {
-    var t = this.MQt.findIndex((e, t) => e.SourceOfAdd === i);
+  IXt(i, e) {
+    var t = this.MXt.findIndex((e, t) => e.SourceOfAdd === i);
     if (e)
       t < 0
-        ? this.MQt.push(new GeneralLogicTreeDefine_1.BtCustomUiConfig(i, e))
-        : (this.MQt[t].CustomUiConfig = e);
+        ? this.MXt.push(new GeneralLogicTreeDefine_1.BtCustomUiConfig(i, e))
+        : (this.MXt[t].CustomUiConfig = e);
     else {
       if (t < 0) return;
-      this.MQt.splice(t, 1);
+      this.MXt.splice(t, 1);
     }
-    this.Yre.RemoveTag(10);
+    this.Yre.RemoveTag(11);
     let s = void 0;
-    0 !== this.MQt.length
-      ? (this.Yre.AddTag(10),
-        (e = this.MQt[0].CustomUiConfig),
-        this.pQt.CopyConfig(e),
+    0 !== this.MXt.length
+      ? (this.Yre.AddTag(11),
+        (e = this.MXt[0].CustomUiConfig),
+        this.pXt.CopyConfig(e),
         (s = e.TrackRadius?.TrackRadius),
-        this.fQt.Clear(),
-        this.fQt.SetMainTitle(this.pQt.MainTitle),
-        this.pQt.SubTitles?.forEach((e) => {
-          this.fQt.AddSubTitle(e);
+        this.fXt.Clear(),
+        this.fXt.SetMainTitle(this.pXt.MainTitle),
+        this.pXt.SubTitles?.forEach((e) => {
+          this.fXt.AddSubTitle(e);
         }))
-      : this.TQt(),
+      : this.TXt(),
       ModelManager_1.ModelManager.LevelPlayModel.ChangeLevelPlayTrackRange(
         this.Yre.TreeConfigId,
         s,
       );
   }
-  TQt() {
+  TXt() {
     var e, t, i;
-    this.fQt.Clear();
+    this.fXt.Clear();
     let s = 0;
     for ([e, t] of this.Yre.GetNodesByGroupId(1))
       t.ContainTag(0) &&
@@ -132,51 +132,51 @@ class TrackTextExpressController {
             ShowTracking: !0,
           },
         }),
-        this.fQt.SetMainTitle(i),
-        this.fQt.AddSubTitle(i),
+        this.fXt.SetMainTitle(i),
+        this.fXt.AddSubTitle(i),
         s++);
-    1 === s ? this.fQt.ClearSubTitle() : this.fQt.SetMainTitle(void 0);
+    1 === s ? this.fXt.ClearSubTitle() : this.fXt.SetMainTitle(void 0);
   }
   OnBtApplyExpressionOccupation(e) {
-    e || this.yQt(3);
+    e || this.yXt(3);
   }
   OnBtReleaseExpressionOccupation(e) {
-    e || (0 !== this.vQt.size && this.EQt(3));
+    e || (0 !== this.vXt.size && this.SXt(3));
   }
   OnSuspend(e, t) {
     switch (t) {
       case 1:
-        this.LQt(e, t);
+        this.LXt(e, t);
         break;
       case 2:
-        this.yQt(4);
+        this.yXt(4);
     }
   }
-  LQt(e, t) {
+  LXt(e, t) {
     e = this.Yre.GetNode(e);
     e &&
       e.ContainTag(0) &&
       e instanceof LogicNodeBase_1.LogicNodeBase &&
-      (this.fQt.Clear(), 1 === t) &&
+      (this.fXt.Clear(), 1 === t) &&
       e.SuspendTrackText &&
       !StringUtils_1.StringUtils.IsEmpty(
         PublicUtil_1.PublicUtil.GetConfigTextByKey(e.SuspendTrackText),
       ) &&
-      (this.fQt.SetMainTitle({
+      (this.fXt.SetMainTitle({
         TidTitle: e.SuspendTrackText,
         QuestScheduleType: { Type: IQuest_1.EQuestScheduleType.None },
       }),
-      this.fQt.ClearSubTitle());
+      this.fXt.ClearSubTitle());
   }
   OnCancelSuspend() {
-    this.DQt(), 0 !== this.vQt.size && this.EQt(3);
+    this.DXt(), 0 !== this.vXt.size && this.SXt(3);
   }
-  DQt() {
-    this.Yre.ContainTag(10) &&
-      (this.fQt.Clear(),
-      this.fQt.SetMainTitle(this.pQt.MainTitle),
-      this.pQt.SubTitles?.forEach((e) => {
-        this.fQt.AddSubTitle(e);
+  DXt() {
+    this.Yre.ContainTag(11) &&
+      (this.fXt.Clear(),
+      this.fXt.SetMainTitle(this.pXt.MainTitle),
+      this.pXt.SubTitles?.forEach((e) => {
+        this.fXt.AddSubTitle(e);
       }));
   }
 }

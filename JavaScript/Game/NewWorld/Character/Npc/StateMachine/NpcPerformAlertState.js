@@ -10,15 +10,15 @@ const StateBase_1 = require("../../../../../Core/Utils/StateMachine/StateBase"),
 class NpcPerformAlertState extends StateBase_1.StateBase {
   constructor() {
     super(...arguments),
-      (this.VZo = () => {
+      (this.Oer = () => {
         this.StateMachine.Switch(1);
       });
   }
   CanChangeFrom(e) {
-    var t = this.Owner.Entity.GetComponent(168);
+    var t = this.Owner.Entity.GetComponent(171);
     return (
       void 0 !==
-        this.Owner.Entity.GetComponent(38)?.AiController?.AiAlert
+        this.Owner.Entity.GetComponent(39)?.AiController?.AiAlert
           ?.AiAlertConfig &&
       1 === e &&
       !t.IsInPlot
@@ -37,14 +37,14 @@ class NpcPerformAlertState extends StateBase_1.StateBase {
       EventSystem_1.EventSystem.AddWithTarget(
         this.Owner.Entity,
         EventDefine_1.EEventName.OnStalkAlertLifted,
-        this.VZo,
+        this.Oer,
       ));
   }
   OnExit(e) {
     EventSystem_1.EventSystem.RemoveWithTarget(
       this.Owner.Entity,
       EventDefine_1.EEventName.OnStalkAlertLifted,
-      this.VZo,
+      this.Oer,
     );
   }
 }

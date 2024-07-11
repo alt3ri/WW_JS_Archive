@@ -7,10 +7,12 @@ const UE = require("ue"),
   QueryTypeDefine_1 = require("../../../../Core/Define/QueryTypeDefine"),
   Rotator_1 = require("../../../../Core/Utils/Math/Rotator"),
   Vector_1 = require("../../../../Core/Utils/Math/Vector"),
+  Vector2D_1 = require("../../../../Core/Utils/Math/Vector2D"),
   TraceElementCommon_1 = require("../../../../Core/Utils/TraceElementCommon"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
   GlobalData_1 = require("../../../GlobalData"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   ControllerWithAssistantBase_1 = require("../../GeneralLogicTree/ControllerAssistant/ControllerWithAssistantBase"),
   AreaAssistant_1 = require("./AreaAssistant"),
@@ -57,10 +59,10 @@ class LineTraceSaver {
 class MapController extends ControllerWithAssistantBase_1.ControllerWithAssistantBase {
   static OnInit() {
     var e = super.OnInit();
-    return (this.NTi = new LineTraceSaver()), e;
+    return (this.NLi = new LineTraceSaver()), e;
   }
   static OnClear() {
-    return this.NTi.OnClear(), super.OnClear();
+    return this.NLi.OnClear(), super.OnClear();
   }
   static OnAddEvents() {
     super.OnAddEvents(),
@@ -70,11 +72,11 @@ class MapController extends ControllerWithAssistantBase_1.ControllerWithAssistan
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnEnterOnlineWorld,
-        MapController.sJe,
+        MapController.pze,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnLeaveOnlineWorld,
-        MapController.hJe,
+        MapController.Mze,
       );
   }
   static OnRemoveEvents() {
@@ -84,11 +86,11 @@ class MapController extends ControllerWithAssistantBase_1.ControllerWithAssistan
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnEnterOnlineWorld,
-        MapController.sJe,
+        MapController.pze,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnLeaveOnlineWorld,
-        MapController.hJe,
+        MapController.Mze,
       ),
       super.OnRemoveEvents();
   }
@@ -97,35 +99,58 @@ class MapController extends ControllerWithAssistantBase_1.ControllerWithAssistan
       this.Assistants.set(1, new TeleportAssistant_1.TeleportAssistant()),
       this.Assistants.set(2, new AreaAssistant_1.AreaAssistant());
   }
-  static c$t(e) {
+  static cYt(e) {
     if (this.Assistants) return this.Assistants.get(e);
   }
-  static OTi() {
+  static OLi() {
     ModelManager_1.ModelManager.TrackModel.ClearTrackData(),
       ModelManager_1.ModelManager.MapModel.SetCurTrackMark(void 0);
   }
-  static async kTi() {
+  static async kLi() {
     await this.RequestMapData(),
       EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.ModelReady);
   }
   static async RequestMapData() {
     Log_1.Log.CheckDebug() && Log_1.Log.Debug("Map", 35, "开始请求地图数据"),
-      await MapController.c$t(0).RequestTrackInfo(),
-      await MapController.c$t(1).RequestTeleportData(),
-      await MapController.c$t(2).RequestUnlockedAreaInfo(),
+      await MapController.cYt(0).RequestTrackInfo(),
+      await MapController.cYt(1).RequestTeleportData(),
+      await MapController.cYt(2).RequestUnlockedAreaInfo(),
       Log_1.Log.CheckDebug() && Log_1.Log.Debug("Map", 35, "结束请求地图数据");
   }
   static GetMarkPosition(e, t) {
-    return this.NTi.GetMarkPosition(e, t);
+    return this.NLi.GetMarkPosition(e, t);
+  }
+  static GetNewCustomMarkPosition(e, t) {
+    var r,
+      a,
+      o = MapController.GetMarkPosition(e, t);
+    return !o ||
+      ((a = (r =
+        ConfigManager_1.ConfigManager.WorldMapConfig.GetCommonIntArray(
+          "MarkCollisionRange",
+        ))[0]),
+      (r = r[1]),
+      (a = o.Z >= a && o.Z <= r),
+      o && !a)
+      ? Vector2D_1.Vector2D.Create(e, -t)
+      : (a ||
+          (Log_1.Log.CheckWarn() &&
+            Log_1.Log.Warn(
+              "Map",
+              64,
+              "MapController.GetNewCustomMarkPosition()",
+              ["自定义地图标记不在有效范围 Z轴坐标:", o.Z],
+            )),
+        o);
   }
   static RequestUnlockTeleport(e) {
-    MapController.c$t(1).RequestUnlockTeleport(e);
+    MapController.cYt(1).RequestUnlockTeleport(e);
   }
   static RequestMapMarkReplace(e, t) {
-    MapController.c$t(0).RequestMapMarkReplace(e, t);
+    MapController.cYt(0).RequestMapMarkReplace(e, t);
   }
   static RequestCreateCustomMark(e, t) {
-    MapController.c$t(0).RequestCreateCustomMark(e, t);
+    MapController.cYt(0).RequestCreateCustomMark(e, t);
   }
   static RequestRemoveMapMark(e, t) {
     var r = ModelManager_1.ModelManager.MapModel.GetCurTrackMark();
@@ -133,33 +158,33 @@ class MapController extends ControllerWithAssistantBase_1.ControllerWithAssistan
       r[0] === e &&
       r[1] === t &&
       ModelManager_1.ModelManager.MapModel.SetCurTrackMark(void 0),
-      MapController.c$t(0).RequestRemoveMapMark(e, t);
+      MapController.cYt(0).RequestRemoveMapMark(e, t);
   }
   static RequestTrackMapMark(e, t, r) {
     r
       ? (void 0 ===
           (r = ModelManager_1.ModelManager.MapModel.GetCurTrackMark()) ||
           (r[0] === e && r[1] === t) ||
-          MapController.c$t(0).RequestCancelTrackMapMark(r[0], r[1]),
-        MapController.c$t(0).RequestTrackMapMark(e, t),
+          MapController.cYt(0).RequestCancelTrackMapMark(r[0], r[1]),
+        MapController.cYt(0).RequestTrackMapMark(e, t),
         ModelManager_1.ModelManager.MapModel.SetCurTrackMark([e, t]))
       : (ModelManager_1.ModelManager.MapModel.SetCurTrackMark(void 0),
-        MapController.c$t(0).RequestCancelTrackMapMark(e, t));
+        MapController.cYt(0).RequestCancelTrackMapMark(e, t));
   }
   static UpdateCustomMapMarkPosition(e, t) {
-    MapController.c$t(0).UpdateCustomMapMarkPosition(e, t);
+    MapController.cYt(0).UpdateCustomMapMarkPosition(e, t);
   }
   static RequestCreateTemporaryTeleport(e) {
-    MapController.c$t(0).RequestCreateTemporaryTeleport(e);
+    MapController.cYt(0).RequestCreateTemporaryTeleport(e);
   }
   static RequestRemoveDynamicMapMark(e) {
-    MapController.c$t(0).RequestRemoveDynamicMapMark(e);
+    MapController.cYt(0).RequestRemoveDynamicMapMark(e);
   }
   static RequestTeleportToTargetByTemporaryTeleport(e) {
     var t = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
     t?.Valid &&
       (t = t.Entity.GetComponent(3)) &&
-      MapController.c$t(0).RequestTeleportToTargetByTemporaryTeleport(
+      MapController.cYt(0).RequestTeleportToTargetByTemporaryTeleport(
         e,
         Rotator_1.Rotator.Create(t.ActorRotationProxy),
       );
@@ -173,16 +198,19 @@ class MapController extends ControllerWithAssistantBase_1.ControllerWithAssistan
         r,
       );
   }
+  static OpenMapViewAndFocusMark(e, t, r, a = !0, o = 1) {
+    MapController.cYt(0).OpenMapViewAndFocus(e, t, r, a, o);
+  }
 }
 (exports.MapController = MapController),
-  ((_a = MapController).NTi = void 0),
+  ((_a = MapController).NLi = void 0),
   (MapController.nye = () => {
-    MapController.kTi();
+    MapController.kLi();
   }),
-  (MapController.sJe = () => {
-    _a.OTi();
+  (MapController.pze = () => {
+    _a.OLi();
   }),
-  (MapController.hJe = () => {
-    _a.OTi();
+  (MapController.Mze = () => {
+    _a.OLi();
   });
 //# sourceMappingURL=MapController.js.map

@@ -25,37 +25,37 @@ class EditBattleTeamController extends UiControllerBase_1.UiControllerBase {
   static OnAddEvents() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.PrewarFormationChanged,
-      this.KFt,
+      this.Q3t,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.PrewarReadyChanged,
-        this.QFt,
+        this.X3t,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.DissolvePrewar,
-        this.XFt,
+        this.$3t,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.RoleLevelUp,
-        this.mKe,
+        this.TQe,
       );
   }
   static OnRemoveEvents() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.PrewarFormationChanged,
-      this.KFt,
+      this.Q3t,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.PrewarReadyChanged,
-        this.QFt,
+        this.X3t,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.DissolvePrewar,
-        this.XFt,
+        this.$3t,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.RoleLevelUp,
-        this.mKe,
+        this.TQe,
       );
   }
   static PlayerOpenEditBattleTeamView(e, t = !1, a = !0) {
@@ -87,8 +87,7 @@ class EditBattleTeamController extends UiControllerBase_1.UiControllerBase {
   }
   static CloseEditBattleTeamView() {
     ModelManager_1.ModelManager.EditBattleTeamModel.ResetAllRoleSlotData(),
-      UiManager_1.UiManager.IsViewShow("EditBattleTeamView") &&
-        UiManager_1.UiManager.CloseView("EditBattleTeamView");
+      UiManager_1.UiManager.CloseView("EditBattleTeamView");
   }
   static ExitEditBattleTeam(e = !0) {
     var t = ModelManager_1.ModelManager.EditBattleTeamModel;
@@ -118,22 +117,23 @@ class EditBattleTeamController extends UiControllerBase_1.UiControllerBase {
     ModelManager_1.ModelManager.EditBattleTeamModel.ResetAllRoleSlotData();
     var n = ModelManager_1.ModelManager.EditBattleTeamModel.GetAllRoleSlotData;
     for (let t = 0; t < a.length; t++) {
-      var r = a[t],
-        i = n[t],
-        o = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(r),
-        l = o.GetLevelData();
-      let e = i.GetRoleData;
+      var o = a[t],
+        r = n[t],
+        i = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(o),
+        l = i.GetLevelData();
+      let e = r.GetRoleData;
       ((e =
         e ||
         ModelManager_1.ModelManager.EditBattleTeamModel.CreateRoleDataFromRoleInstance(
-          o,
-        )).ConfigId = r),
+          i,
+        )).ConfigId = o),
         (e.Level = l.GetLevel()),
-        i.SetRoleData(e),
-        EventSystem_1.EventSystem.Emit(
-          EventDefine_1.EEventName.OnRefreshEditBattleRoleSlotData,
-        );
+        r.SetRoleData(e);
     }
+    EventSystem_1.EventSystem.Emit(
+      EventDefine_1.EEventName.OnRefreshEditBattleRoleSlotData,
+      "用RoleId设置编队时",
+    );
   }
   static RefreshMainRoleInfo() {
     ModelManager_1.ModelManager.EditBattleTeamModel.ChangeMainRoleData();
@@ -141,10 +141,10 @@ class EditBattleTeamController extends UiControllerBase_1.UiControllerBase {
 }
 ((exports.EditBattleTeamController = EditBattleTeamController).Model =
   EditBattleTeamModel_1.EditBattleTeamModel),
-  (EditBattleTeamController.KFt = () => {
+  (EditBattleTeamController.Q3t = () => {
     ModelManager_1.ModelManager.EditBattleTeamModel.RefreshAllMultiRoleData();
   }),
-  (EditBattleTeamController.QFt = (e, t) => {
+  (EditBattleTeamController.X3t = (e, t) => {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "Formation",
@@ -155,17 +155,18 @@ class EditBattleTeamController extends UiControllerBase_1.UiControllerBase {
       ),
       ModelManager_1.ModelManager.EditBattleTeamModel.SetPlayerReady(e, t);
   }),
-  (EditBattleTeamController.XFt = () => {
+  (EditBattleTeamController.$3t = () => {
     EditBattleTeamController.CloseEditBattleTeamView();
   }),
-  (EditBattleTeamController.mKe = (e, t, a) => {
-    for (const r of ModelManager_1.ModelManager.EditBattleTeamModel
+  (EditBattleTeamController.TQe = (e, t, a) => {
+    for (const o of ModelManager_1.ModelManager.EditBattleTeamModel
       .GetAllRoleSlotData) {
-      var n = r.GetRoleData;
+      var n = o.GetRoleData;
       n && n.ConfigId === e && (n.Level = a);
     }
     EventSystem_1.EventSystem.Emit(
       EventDefine_1.EEventName.OnRefreshEditBattleRoleSlotData,
+      "角色升级时",
     );
   });
 //# sourceMappingURL=EditBattleTeamController.js.map

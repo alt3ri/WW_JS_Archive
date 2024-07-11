@@ -11,16 +11,16 @@ const UE = require("ue"),
 class TowerResetView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.RLo = -1),
-      (this.Nke = void 0),
-      (this.sBi = () => {
+      (this.TDo = -1),
+      (this.tFe = void 0),
+      (this.sbi = () => {
         return new TowerResetItem_1.TowerResetItem();
       }),
-      (this.oLo = () => {
+      (this.eDo = () => {
         this.CloseMe();
       }),
-      (this.nNt = () => {
-        TowerController_1.TowerController.TowerResetRequest(this.RLo),
+      (this.sOt = () => {
+        TowerController_1.TowerController.TowerResetRequest(this.TDo),
           this.CloseMe();
       });
   }
@@ -33,27 +33,27 @@ class TowerResetView extends UiViewBase_1.UiViewBase {
       [4, UE.UIButtonComponent],
     ]),
       (this.BtnBindInfo = [
-        [3, this.oLo],
-        [4, this.nNt],
+        [3, this.eDo],
+        [4, this.sOt],
       ]);
   }
   OnStart() {
-    this.h7e();
+    this.SHe();
   }
   OnBeforeDestroy() {
-    this.Nke = void 0;
+    this.tFe = void 0;
   }
-  h7e() {
-    this.RLo = this.OpenParam;
-    var e = ModelManager_1.ModelManager.TowerModel.GetFloorData(this.RLo);
+  SHe() {
+    this.TDo = this.OpenParam;
+    var e = ModelManager_1.ModelManager.TowerModel.GetFloorData(this.TDo);
     if (e) {
-      this.Nke = new GenericLayout_1.GenericLayout(
+      this.tFe = new GenericLayout_1.GenericLayout(
         this.GetVerticalLayout(0),
-        this.sBi,
+        this.sbi,
       );
       var t = [];
-      for (const i of e.Formation) t.push(i.l3n);
-      this.Nke.RefreshByData(t);
+      for (const i of e.Formation) t.push(i.O6n);
+      this.tFe.RefreshByData(t);
       var r = ModelManager_1.ModelManager.TowerModel.GetDifficultyStars(
         e.Difficulties,
       );
@@ -63,7 +63,7 @@ class TowerResetView extends UiViewBase_1.UiViewBase {
       Log_1.Log.CheckError() &&
         Log_1.Log.Error("CycleTower", 5, "重置爬塔成绩时，无法获取到爬塔数据", [
           "TowerId: ",
-          this.RLo,
+          this.TDo,
         ]);
   }
 }

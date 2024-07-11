@@ -17,12 +17,12 @@ const UE = require("ue"),
 class HandBookQuestPlotList extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this.NAn = void 0),
-      (this.kAn = void 0),
-      (this.oPn = void 0),
-      (this.cFs = void 0),
-      (this.FAn = void 0),
-      (this.nPn = void 0),
+      (this.jxn = void 0),
+      (this.Wxn = void 0),
+      (this.GBn = void 0),
+      (this.lXn = void 0),
+      (this.Kxn = void 0),
+      (this.OBn = void 0),
       (this.OptionData = void 0);
   }
   OnRegisterComponent() {
@@ -34,27 +34,27 @@ class HandBookQuestPlotList extends UiPanelBase_1.UiPanelBase {
     ];
   }
   async Init(t) {
-    await super.CreateByActorAsync(t.GetOwner(), void 0, !0), await this.Wzt();
+    await super.CreateByActorAsync(t.GetOwner(), void 0, !0), await this.WZt();
   }
-  async Wzt() {
-    (this.NAn = new HandBookQuestPlotTalkItem()),
-      (this.kAn = new HandBookQuestPlotOption()),
-      (this.oPn = new HandBookQuestPlotNode()),
-      (this.cFs = new HandBookQuestPlotOptionTalker()),
-      this.AddChild(this.NAn),
-      this.AddChild(this.kAn);
+  async WZt() {
+    (this.jxn = new HandBookQuestPlotTalkItem()),
+      (this.Wxn = new HandBookQuestPlotOption()),
+      (this.GBn = new HandBookQuestPlotNode()),
+      (this.lXn = new HandBookQuestPlotOptionTalker()),
+      this.AddChild(this.jxn),
+      this.AddChild(this.Wxn);
     var t = this.GetItem(0),
       i = (t.SetUIActive(!1), this.GetItem(1)),
       s = (i.SetUIActive(!1), this.GetItem(2)),
       e = (s.SetUIActive(!1), this.GetItem(3));
     e.SetUIActive(!1),
       await Promise.all([
-        this.NAn.CreateByActorAsync(t.GetOwner()),
-        this.kAn.CreateByActorAsync(i.GetOwner()),
-        this.oPn.CreateByActorAsync(s.GetOwner()),
-        this.cFs.CreateByActorAsync(e.GetOwner()),
+        this.jxn.CreateByActorAsync(t.GetOwner()),
+        this.Wxn.CreateByActorAsync(i.GetOwner()),
+        this.GBn.CreateByActorAsync(s.GetOwner()),
+        this.lXn.CreateByActorAsync(e.GetOwner()),
       ]),
-      this.kAn.BindClickToggleBack(this.FAn);
+      this.Wxn.BindClickToggleBack(this.Kxn);
   }
   GetUsingItem(t) {
     return (
@@ -70,15 +70,15 @@ class HandBookQuestPlotList extends UiPanelBase_1.UiPanelBase {
   Update(t, i) {
     var s, e;
     (this.OptionData = t),
-      this.NAn?.SetUiActive(!1),
-      this.kAn?.SetUiActive(!1),
-      this.oPn?.SetUiActive(!1),
-      this.cFs?.SetUiActive(!1),
+      this.jxn?.SetUiActive(!1),
+      this.Wxn?.SetUiActive(!1),
+      this.GBn?.SetUiActive(!1),
+      this.lXn?.SetUiActive(!1),
       t.NodeText
-        ? (this.oPn?.SetUiActive(!0), this.oPn?.RefreshByNodeText(t.NodeText))
+        ? (this.GBn?.SetUiActive(!0), this.GBn?.RefreshByNodeText(t.NodeText))
         : t.TalkOption
-          ? (this.kAn?.SetUiActive(!0),
-            this.kAn.RefreshByOption(
+          ? (this.Wxn?.SetUiActive(!0),
+            this.Wxn.RefreshByOption(
               t.TalkOption,
               t.PlotId,
               t.TalkItemId,
@@ -86,45 +86,45 @@ class HandBookQuestPlotList extends UiPanelBase_1.UiPanelBase {
               t.IsChoseOption ?? !1,
             ))
           : t.OptionTalker
-            ? (this.cFs?.SetUiActive(!0),
+            ? (this.lXn?.SetUiActive(!0),
               (s = ModelManager_1.ModelManager.FunctionModel?.GetPlayerName()),
               (e =
                 MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
                   "ColonTag",
                 ) ?? ""),
-              this.cFs?.RefreshByText("" !== s ? s + e + " " : ""))
-            : (this.NAn?.SetUiActive(!0),
-              this.NAn.Refresh(t.TalkOwnerName, t.TalkText, t.PlotAudio)),
-      this.nPn && this.nPn(t.BelongToNode);
+              this.lXn?.RefreshByText("" !== s ? s + e + " " : ""))
+            : (this.jxn?.SetUiActive(!0),
+              this.jxn.Refresh(t.TalkOwnerName, t.TalkText, t.PlotAudio)),
+      this.OBn && this.OBn(t.BelongToNode);
   }
   ClearItem() {
     this.Destroy();
   }
   BindClickOptionToggleBack(t) {
-    this.FAn = t;
+    this.Kxn = t;
   }
   BindOnRefreshNode(t) {
-    this.nPn = t;
+    this.OBn = t;
   }
   GetOptionToggle() {
-    return this.kAn?.Toggle;
+    return this.Wxn?.Toggle;
   }
 }
 exports.HandBookQuestPlotList = HandBookQuestPlotList;
 class HandBookQuestPlotTalkItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this.VAn = !1),
-      (this.HAn = void 0),
-      (this.jAn = () => {
-        this.HAn &&
-          (this.VAn
+      (this.Qxn = !1),
+      (this.Xxn = void 0),
+      (this.$xn = () => {
+        this.Xxn &&
+          (this.Qxn
             ? HandBookQuestPlotTalkAudioUtil.ClearCurPlayAudio()
-            : HandBookQuestPlotTalkAudioUtil.PlayAudio(this.HAn, this.WAn),
-          (this.VAn = !this.VAn));
+            : HandBookQuestPlotTalkAudioUtil.PlayAudio(this.Xxn, this.Yxn),
+          (this.Qxn = !this.Qxn));
       }),
-      (this.WAn = () => {
-        this.GetExtendToggle(3)?.SetToggleState(0), (this.VAn = !1);
+      (this.Yxn = () => {
+        this.GetExtendToggle(3)?.SetToggleState(0), (this.Qxn = !1);
       });
   }
   OnRegisterComponent() {
@@ -134,34 +134,34 @@ class HandBookQuestPlotTalkItem extends UiPanelBase_1.UiPanelBase {
       [2, UE.UIItem],
       [3, UE.UIExtendToggle],
     ]),
-      (this.BtnBindInfo = [[3, this.jAn]]);
+      (this.BtnBindInfo = [[3, this.$xn]]);
   }
   Refresh(t, i, s) {
-    (this.HAn = s), this.GetText(0)?.SetText(t ?? "");
+    (this.Xxn = s), this.GetText(0)?.SetText(t ?? "");
     s = ModelManager_1.ModelManager.PlotModel.PlotTextReplacer.Replace(i);
     this.GetText(1)?.SetText(s ?? "");
-    const e = !!this.HAn;
+    const e = !!this.Xxn;
     this.GetItem(2)?.SetUIActive(e);
     t = this.GetExtendToggle(3);
     t?.CanExecuteChange.Bind(() => e),
-      (this.VAn =
-        e && HandBookQuestPlotTalkAudioUtil.IsPlayingAudio(this.HAn?.Id)),
-      this.VAn && HandBookQuestPlotTalkAudioUtil.ResetPlayEndCallBack(this.WAn),
-      t?.SetToggleState(this.VAn ? 1 : 0);
+      (this.Qxn =
+        e && HandBookQuestPlotTalkAudioUtil.IsPlayingAudio(this.Xxn?.Id)),
+      this.Qxn && HandBookQuestPlotTalkAudioUtil.ResetPlayEndCallBack(this.Yxn),
+      t?.SetToggleState(this.Qxn ? 1 : 0);
   }
 }
 class HandBookQuestPlotOption extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
       (this.Toggle = void 0),
-      (this.yJi = -1),
-      (this.QAn = -1),
-      (this.XAn = 0),
-      (this.$An = void 0),
-      (this.I6e = (t) => {
-        this.$An &&
+      (this.Ezi = -1),
+      (this.zxn = -1),
+      (this.Zxn = 0),
+      (this.DPn = void 0),
+      (this.N8e = (t) => {
+        this.DPn &&
           1 === t &&
-          this.$An(this.QAn, this.yJi, this.XAn, this.Toggle);
+          this.DPn(this.zxn, this.Ezi, this.Zxn, this.Toggle);
       });
   }
   OnRegisterComponent() {
@@ -174,10 +174,10 @@ class HandBookQuestPlotOption extends UiPanelBase_1.UiPanelBase {
   }
   OnStart() {
     (this.Toggle = this.GetExtendToggle(1)),
-      this.Toggle?.OnStateChange.Add(this.I6e);
+      this.Toggle?.OnStateChange.Add(this.N8e);
   }
   RefreshByOption(t, i, s, e, o) {
-    (this.QAn = i), (this.yJi = s), (this.XAn = e);
+    (this.zxn = i), (this.Ezi = s), (this.Zxn = e);
     (i = PublicUtil_1.PublicUtil.GetFlowConfigLocalText(t.TidTalkOption)),
       (s = ModelManager_1.ModelManager.PlotModel.PlotTextReplacer.Replace(i));
     this.GetText(0)?.SetText(s),
@@ -197,7 +197,7 @@ class HandBookQuestPlotOption extends UiPanelBase_1.UiPanelBase {
         this.GetItem(3)?.SetAlpha(0));
   }
   BindClickToggleBack(t) {
-    this.$An = t;
+    this.DPn = t;
   }
 }
 class HandBookQuestPlotNode extends UiPanelBase_1.UiPanelBase {
@@ -223,15 +223,15 @@ const BREAK_TIME = 1e3,
   MAX_LOAD_AUDIO_TIME = 3e3;
 class HandBookQuestPlotTalkAudioUtil {
   static PlayAudio(t, i) {
-    this.Yzt.Init((t) => {
-      this._zi(),
-        this.YAn && this.JAn(),
-        (this.zAn = i),
-        (this.YAn = TimerSystem_1.TimerSystem.Delay(() => {
-          this.JAn();
+    this.YZt.Init((t) => {
+      this.aZi(),
+        this.UPn && this.APn(),
+        (this.RPn = i),
+        (this.UPn = TimerSystem_1.TimerSystem.Delay(() => {
+          this.APn();
         }, t));
     }),
-      this.Yzt.Enable();
+      this.YZt.Enable();
     var s =
         ExternalSourceSettingById_1.configExternalSourceSettingById.GetConfig(
           t.ExternalSourceSetting,
@@ -244,49 +244,49 @@ class HandBookQuestPlotTalkAudioUtil {
       s.AudioEventPath,
       e,
       s.ExternalSrcName,
-      this.czi,
+      this.lZi,
       void 0,
       PlotTextLogic_1.PLAY_FLAG,
-      this.Yzt.AudioDelegate,
+      this.YZt.AudioDelegate,
     ),
-      (this.sPn = t.Id),
-      (this.mzi = TimerSystem_1.TimerSystem.Delay(() => {
+      (this.NBn = t.Id),
+      (this._Zi = TimerSystem_1.TimerSystem.Delay(() => {
         Log_1.Log.CheckWarn() && Log_1.Log.Warn("Plot", 5, "加载剧情音频超时"),
           this.ClearCurPlayAudio();
       }, MAX_LOAD_AUDIO_TIME));
   }
   static ClearCurPlayAudio() {
-    (this.sPn = ""),
-      this.Yzt.Disable(),
-      AudioController_1.AudioController.StopEvent(this.czi, !0, BREAK_TIME),
-      this._zi(),
-      this.JAn(!1);
+    (this.NBn = ""),
+      this.YZt.Disable(),
+      AudioController_1.AudioController.StopEvent(this.lZi, !0, BREAK_TIME),
+      this.aZi(),
+      this.APn(!1);
   }
-  static _zi() {
-    TimerSystem_1.TimerSystem.Has(this.mzi) &&
-      TimerSystem_1.TimerSystem.Remove(this.mzi),
-      (this.mzi = void 0);
+  static aZi() {
+    TimerSystem_1.TimerSystem.Has(this._Zi) &&
+      TimerSystem_1.TimerSystem.Remove(this._Zi),
+      (this._Zi = void 0);
   }
-  static JAn(t = !0) {
-    this.zAn && t && (this.zAn(), (this.zAn = void 0)),
-      TimerSystem_1.TimerSystem.Has(this.YAn) &&
-        TimerSystem_1.TimerSystem.Remove(this.YAn),
-      (this.sPn = ""),
-      (this.YAn = void 0);
+  static APn(t = !0) {
+    this.RPn && t && (this.RPn(), (this.RPn = void 0)),
+      TimerSystem_1.TimerSystem.Has(this.UPn) &&
+        TimerSystem_1.TimerSystem.Remove(this.UPn),
+      (this.NBn = ""),
+      (this.UPn = void 0);
   }
   static IsPlayingAudio(t) {
-    return this.sPn === t;
+    return this.NBn === t;
   }
   static ResetPlayEndCallBack(t) {
-    this.zAn = t;
+    this.RPn = t;
   }
 }
-((exports.HandBookQuestPlotTalkAudioUtil = HandBookQuestPlotTalkAudioUtil).czi =
+((exports.HandBookQuestPlotTalkAudioUtil = HandBookQuestPlotTalkAudioUtil).lZi =
   new AudioController_1.PlayResult()),
-  (HandBookQuestPlotTalkAudioUtil.Yzt =
+  (HandBookQuestPlotTalkAudioUtil.YZt =
     new PlotTextLogic_1.PlotAudioDelegate()),
-  (HandBookQuestPlotTalkAudioUtil.mzi = void 0),
-  (HandBookQuestPlotTalkAudioUtil.YAn = void 0),
-  (HandBookQuestPlotTalkAudioUtil.sPn = ""),
-  (HandBookQuestPlotTalkAudioUtil.zAn = void 0);
+  (HandBookQuestPlotTalkAudioUtil._Zi = void 0),
+  (HandBookQuestPlotTalkAudioUtil.UPn = void 0),
+  (HandBookQuestPlotTalkAudioUtil.NBn = ""),
+  (HandBookQuestPlotTalkAudioUtil.RPn = void 0);
 //# sourceMappingURL=HandBookQuestPlotList.js.map

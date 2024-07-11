@@ -38,7 +38,7 @@ class LevelConditionQuestStepState extends LevelGeneralBase_1.LevelConditionBase
           : t <= 2 ||
               ((t = ModelManager_1.ModelManager.QuestNewModel.GetQuest(o))
                 ? !(t = t.GetNode(a)) ||
-                  t.Status < Protocol_1.Aki.Protocol.N2s.Lkn
+                  t.Status < Protocol_1.Aki.Protocol.DNs.t5n
                 : (Log_1.Log.CheckError() &&
                     Log_1.Log.Error(
                       "Quest",

@@ -20,7 +20,7 @@ class LevelConditionCheckPlayerStateRestriction extends LevelGeneralBase_1.Level
           ),
         !1
       );
-    var a = t.Entity.GetComponent(185);
+    var a = t.Entity.GetComponent(188);
     if (!a)
       return (
         Log_1.Log.CheckWarn() &&

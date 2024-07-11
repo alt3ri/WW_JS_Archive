@@ -6,10 +6,16 @@ const Log_1 = require("../../../Core/Common/Log"),
   ModelBase_1 = require("../../../Core/Framework/ModelBase"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
+  LocalStorage_1 = require("../../Common/LocalStorage"),
+  LocalStorageDefine_1 = require("../../Common/LocalStorageDefine"),
   TimeUtil_1 = require("../../Common/TimeUtil"),
   Global_1 = require("../../Global"),
+  InputKeyDisplayData_1 = require("../../InputSettings/InputKeyDisplayData"),
+  InputSettings_1 = require("../../InputSettings/InputSettings"),
+  InputSettingsManager_1 = require("../../InputSettings/InputSettingsManager"),
   ConfigManager_1 = require("../../Manager/ConfigManager"),
   ModelManager_1 = require("../../Manager/ModelManager"),
+  InputMappingsDefine_1 = require("../../Ui/InputDistribute/InputMappingsDefine"),
   SpecialItemController_1 = require("../Item/SpecialItem/SpecialItemController"),
   LogReportController_1 = require("../LogReport/LogReportController"),
   LogReportDefine_1 = require("../LogReport/LogReportDefine"),
@@ -20,20 +26,21 @@ class RouletteModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
       (this.CurrentRouletteType = 0),
-      (this.Kgo = 0),
-      (this.Qgo = 0),
+      (this.H0o = 0),
+      (this.j0o = 0),
       (this.ExploreSkillIdList = []),
       (this.UnlockExploreSkillDataMap = new Map()),
-      (this.Xgo = (e, t) => e.SortId - t.SortId),
+      (this.W0o = (e, t) => e.SortId - t.SortId),
       (this.CurrentFunctionIdList = []),
-      (this.$go = new Map()),
+      (this.K0o = new Map()),
       (this.UnlockFunctionDataMap = new Map()),
-      (this.Ygo = (e, t) => e.SortId - t.SortId),
-      (this.Jgo = (e, t) => {
-        e = this.$go.get(e);
-        void 0 !== e && (t ? this.zgo(e) : this.ubt(e));
+      (this.Q0o = (e, t) => e.SortId - t.SortId),
+      (this.X0o = (e, t) => {
+        e = this.K0o.get(e);
+        void 0 !== e && (t ? this.$0o(e) : this.dqt(e));
       }),
-      (this.CurrentEquipItemId = 0);
+      (this.CurrentEquipItemId = 0),
+      (this.XPn = new InputKeyDisplayData_1.InputKeyDisplayData());
   }
   IsExploreRouletteOpen() {
     return ModelManager_1.ModelManager.FunctionModel.IsOpen(10026);
@@ -42,7 +49,7 @@ class RouletteModel extends ModelBase_1.ModelBase {
     return ModelManager_1.ModelManager.FunctionModel.IsOpen(10056);
   }
   OnInit() {
-    return this.Zgo(), this.AddEvents(), !0;
+    return this.Y0o(), this.AddEvents(), !0;
   }
   OnClear() {
     return this.RemoveEvents(), !0;
@@ -50,42 +57,42 @@ class RouletteModel extends ModelBase_1.ModelBase {
   AddEvents() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnFunctionOpenSet,
-      this.Jgo,
+      this.X0o,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnFunctionOpenUpdate,
-        this.Jgo,
+        this.X0o,
       );
   }
   RemoveEvents() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnFunctionOpenSet,
-      this.Jgo,
+      this.X0o,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnFunctionOpenUpdate,
-        this.Jgo,
+        this.X0o,
       );
   }
   set CurrentExploreSkillId(e) {
-    this.Kgo !== e &&
-      ((this.Qgo = this.Kgo),
-      (this.Kgo = e),
-      this.e0o(this.Kgo),
+    this.H0o !== e &&
+      ((this.j0o = this.H0o),
+      (this.H0o = e),
+      this.J0o(this.H0o),
       Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Phantom", 38, "设置新探索技能Id成功", ["Id", this.Kgo]),
+        Log_1.Log.Info("Phantom", 38, "设置新探索技能Id成功", ["Id", this.H0o]),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnChangeSelectedExploreId,
       ));
   }
   get CurrentExploreSkillId() {
-    return this.Kgo;
+    return this.H0o;
   }
-  t0o(e) {
+  z0o(e) {
     this.ExploreSkillIdList = e;
   }
   get CurrentExploreSkillIcon() {
-    if (0 !== this.Kgo)
+    if (0 !== this.H0o)
       return this.IsEquipItemSelectOn
         ? 0 === this.CurrentEquipItemId
           ? void 0
@@ -93,15 +100,15 @@ class RouletteModel extends ModelBase_1.ModelBase {
               this.CurrentEquipItemId,
             )?.Icon
         : (
-            this.UnlockExploreSkillDataMap.get(this.Kgo) ||
+            this.UnlockExploreSkillDataMap.get(this.H0o) ||
             ConfigManager_1.ConfigManager.RouletteConfig.GetExploreConfigById(
-              this.Kgo,
+              this.H0o,
             )
           ).BattleViewIcon;
   }
   GetLastSkillId() {
-    return 0 !== this.Qgo
-      ? this.Qgo
+    return 0 !== this.j0o
+      ? this.j0o
       : this.UnlockExploreSkillDataMap.keys()?.next().value;
   }
   GetExploreDataBySkillId(e) {
@@ -113,6 +120,7 @@ class RouletteModel extends ModelBase_1.ModelBase {
       ConfigManager_1.ConfigManager.RouletteConfig.GetExploreConfigById(e);
     1 === t.SkillType &&
       (this.UnlockExploreSkillDataMap.set(e, t),
+      this.TryAddRedDotItem(e),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.AddExploreVisionSkill,
         e,
@@ -128,7 +136,7 @@ class RouletteModel extends ModelBase_1.ModelBase {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info("Phantom", 38, "设置当前解锁的探索技能", ["技能列表", e]);
   }
-  i0o(e) {
+  Z0o(e) {
     var t;
     if (!(e > this.ExploreSkillIdList.length))
       return (
@@ -137,7 +145,7 @@ class RouletteModel extends ModelBase_1.ModelBase {
         t
       );
   }
-  o0o() {
+  efo() {
     const i = [];
     return (
       this.UnlockExploreSkillDataMap.forEach((e, t) => {
@@ -149,7 +157,7 @@ class RouletteModel extends ModelBase_1.ModelBase {
           (r.SortId = e.SortId),
           i.push(r);
       }),
-      i.sort(this.Xgo),
+      i.sort(this.W0o),
       i
     );
   }
@@ -171,11 +179,11 @@ class RouletteModel extends ModelBase_1.ModelBase {
     if (this.UnlockFunctionDataMap.has(e))
       return this.UnlockFunctionDataMap.get(e);
   }
-  Zgo() {
+  Y0o() {
     for (const e of ConfigManager_1.ConfigManager.RouletteConfig.GetAllFuncConfig())
-      this.$go.set(e.UnlockCondition, e.FuncId);
+      this.K0o.set(e.UnlockCondition, e.FuncId);
   }
-  r0o(e) {
+  tfo(e) {
     var t;
     if (!(e > this.CurrentFunctionIdList.length))
       return (
@@ -184,19 +192,19 @@ class RouletteModel extends ModelBase_1.ModelBase {
         t
       );
   }
-  zgo(e) {
+  $0o(e) {
     var t = ConfigManager_1.ConfigManager.RouletteConfig.GetFuncConfigById(e);
     t &&
       !this.UnlockFunctionDataMap.has(e) &&
       this.UnlockFunctionDataMap.set(e, t);
   }
-  ubt(e) {
+  dqt(e) {
     this.UnlockFunctionDataMap.has(e) &&
       (this.UnlockFunctionDataMap.delete(e),
       0 <= (e = this.CurrentFunctionIdList.indexOf(e))) &&
       (this.CurrentFunctionIdList[e] = 0);
   }
-  n0o() {
+  ifo() {
     const i = [];
     return (
       this.UnlockFunctionDataMap.forEach((e, t) => {
@@ -208,7 +216,7 @@ class RouletteModel extends ModelBase_1.ModelBase {
           (r.SortId = e.FuncMenuSequence),
           i.push(r);
       }),
-      i.sort(this.Ygo),
+      i.sort(this.Q0o),
       i
     );
   }
@@ -224,8 +232,8 @@ class RouletteModel extends ModelBase_1.ModelBase {
     return t;
   }
   SetCurrentEquipItemId(e) {
-    var t = this.a0o(),
-      e = ((this.CurrentEquipItemId = e), this.a0o());
+    var t = this.rfo(),
+      e = ((this.CurrentEquipItemId = e), this.rfo());
     e
       ? EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.OnSpecialItemUpdate,
@@ -248,57 +256,57 @@ class RouletteModel extends ModelBase_1.ModelBase {
         ? 13
         : 1;
   }
-  h0o(e) {
+  nfo(e) {
     var t = new RouletteGridData_1.RouletteData();
     return 0 !== this.CurrentEquipItemId && (t.Id = this.CurrentEquipItemId), t;
   }
-  l0o() {
+  sfo() {
     var e = [];
-    for (const o of ModelManager_1.ModelManager.InventoryModel.GetCommonItemByItemType(
+    for (const n of ModelManager_1.ModelManager.InventoryModel.GetCommonItemByItemType(
       13,
     )) {
       var t = ConfigManager_1.ConfigManager.SpecialItemConfig.GetConfig(
-        o.GetConfigId(),
+        n.GetConfigId(),
       );
       t &&
         0 === t.SpecialItemType &&
         (((t = new RouletteDefine_1.AssemblyEquipItemGridData()).Id =
-          o.GetConfigId()),
+          n.GetConfigId()),
         (t.GridType = 2),
-        (t.Name = o.GetConfig().Name),
-        (t.ItemNum = o.GetCount()),
+        (t.Name = n.GetConfig().Name),
+        (t.ItemNum = n.GetCount()),
         (t.ItemType = 13),
-        (t.SortId = o.GetSortIndex()),
-        (t.QualityId = o.GetQuality()),
+        (t.SortId = n.GetSortIndex()),
+        (t.QualityId = n.GetQuality()),
         e.push(t));
     }
     var r = CommonParamById_1.configCommonParamById.GetIntArrayConfig(
       "Roulette_EquipItem_ShowTypeList",
     );
-    for (const n of ModelManager_1.ModelManager.InventoryModel.GetCommonItemByItemType(
+    for (const o of ModelManager_1.ModelManager.InventoryModel.GetCommonItemByItemType(
       1,
     )) {
-      var i = n.GetConfig().ItemBuffType;
+      var i = o.GetConfig().ItemBuffType;
       r.includes(i) &&
         (((i = new RouletteDefine_1.AssemblyEquipItemGridData()).Id =
-          n.GetConfigId()),
+          o.GetConfigId()),
         (i.GridType = 2),
-        (i.Name = n.GetConfig().Name),
-        (i.ItemNum = n.GetCount()),
+        (i.Name = o.GetConfig().Name),
+        (i.ItemNum = o.GetCount()),
         (i.ItemType = 1),
-        (i.SortId = n.GetSortIndex()),
-        (i.QualityId = n.GetQuality()),
+        (i.SortId = o.GetSortIndex()),
+        (i.QualityId = o.GetQuality()),
         e.push(i));
     }
     return e;
   }
-  _0o() {
+  afo() {
     this.IsEquipItemSelectOn &&
       (0 === this.CurrentEquipItemId
         ? RouletteController_1.RouletteController.SetLastSkillId()
         : RouletteController_1.RouletteController.RefreshExploreSkillButton());
   }
-  a0o() {
+  rfo() {
     return (
       !!this.CurrentEquipItemId &&
       SpecialItemController_1.SpecialItemController.IsSpecialItem(
@@ -309,7 +317,11 @@ class RouletteModel extends ModelBase_1.ModelBase {
   IsExploreSkillHasNum() {
     var e;
     return this.IsEquipItemSelectOn
-      ? 1 === this.EquipItemType
+      ? 1 === this.EquipItemType ||
+          (ConfigManager_1.ConfigManager.SpecialItemConfig.GetConfig(
+            this.CurrentEquipItemId,
+          )?.NeedShowNum ??
+            !1)
       : !!(e = this.UnlockExploreSkillDataMap.get(
           this.CurrentExploreSkillId,
         )) && !!((e = e.Cost) && 0 < e.size);
@@ -380,13 +392,55 @@ class RouletteModel extends ModelBase_1.ModelBase {
       )
     );
   }
-  SaveCurrentRouletteData(e, t, r, i = !1, o) {
+  SaveRedDotItemList() {
+    ModelManager_1.ModelManager.NewFlagModel.SaveNewFlagConfig(
+      LocalStorageDefine_1.ELocalStoragePlayerKey.RouletteAssemblyItemRedDot,
+    ),
+      EventSystem_1.EventSystem.Emit(
+        EventDefine_1.EEventName.RouletteRefreshRedDot,
+      );
+  }
+  TryAddRedDotItem(e) {
+    return (
+      0 !== e &&
+      (ModelManager_1.ModelManager.NewFlagModel.AddNewFlag(
+        LocalStorageDefine_1.ELocalStoragePlayerKey.RouletteAssemblyItemRedDot,
+        e,
+      ),
+      EventSystem_1.EventSystem.Emit(
+        EventDefine_1.EEventName.RouletteRefreshRedDot,
+      ),
+      !0)
+    );
+  }
+  TryRemoveRedDotItem(e) {
+    return (
+      0 !== e &&
+      ModelManager_1.ModelManager.NewFlagModel.RemoveNewFlag(
+        LocalStorageDefine_1.ELocalStoragePlayerKey.RouletteAssemblyItemRedDot,
+        e,
+      )
+    );
+  }
+  CheckHasAnyRedDotItem() {
+    for (const e of this.UnlockExploreSkillDataMap.keys())
+      if (
+        ModelManager_1.ModelManager.NewFlagModel.HasNewFlag(
+          LocalStorageDefine_1.ELocalStoragePlayerKey
+            .RouletteAssemblyItemRedDot,
+          e,
+        )
+      )
+        return !0;
+    return !1;
+  }
+  SaveCurrentRouletteData(e, t, r, i = !1, n) {
     RouletteController_1.RouletteController.SaveRouletteDataRequest(
       e ?? this.ExploreSkillIdList,
       t ?? this.CurrentFunctionIdList,
       r ?? this.CurrentEquipItemId,
       i,
-      o,
+      n,
     );
   }
   UpdateRouletteData(i) {
@@ -394,20 +448,20 @@ class RouletteModel extends ModelBase_1.ModelBase {
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("Phantom", 38, "当前不存在保存的轮盘数据");
     else {
-      let e = i[0]?.oVn,
+      let e = i[0]?.GHn,
         t =
           ((e = e || new Array(RouletteDefine_1.ROULETTE_NUM).fill(0)),
-          this.t0o(e),
+          this.z0o(e),
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info("Phantom", 38, "探索技能列表", ["Id", e]),
-          i[0]?.nVn),
+          i[0]?.OHn),
         r =
           (void 0 === t && (t = 0),
           this.SetCurrentEquipItemId(t),
-          this._0o(),
+          this.afo(),
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info("Phantom", 38, "装配道具", ["Id", t]),
-          i[1]?.oVn);
+          i[1]?.GHn);
       (r = r || new Array(RouletteDefine_1.ROULETTE_NUM).fill(0)),
         this.SetFunctionIdList(r),
         Log_1.Log.CheckInfo() &&
@@ -426,31 +480,33 @@ class RouletteModel extends ModelBase_1.ModelBase {
       (t.Id = e?.Id),
       (t.Name = e?.Name),
       (t.State = e?.State),
+      (t.ShowIndex = e?.ShowIndex),
+      (t.ShowRedDot = e?.ShowRedDot),
       t
     );
   }
   CreateGridData(e, t) {
     switch (t) {
       case 0:
-        return this.i0o(e);
+        return this.Z0o(e);
       case 1:
-        return this.r0o(e);
+        return this.tfo(e);
       case 2:
-        return this.h0o(e);
+        return this.nfo(e);
     }
   }
   CreateAssemblyGridData() {
     var e = new Map();
-    return e.set(0, this.o0o()), e.set(1, this.n0o()), e.set(2, this.l0o()), e;
+    return e.set(0, this.efo()), e.set(1, this.ifo()), e.set(2, this.sfo()), e;
   }
   CreateTempAssemblyIdListData(e, t, r) {
     var i = new Map(),
-      o = [];
-    for (const a of e) o.push(a);
-    i.set(0, o);
-    var n = [];
-    for (const s of t) n.push(s);
-    return i.set(1, n), i.set(2, r), i;
+      n = [];
+    for (const a of e) n.push(a);
+    i.set(0, n);
+    var o = [];
+    for (const s of t) o.push(s);
+    return i.set(1, o), i.set(2, r), i;
   }
   CreateTempAssemblyData() {
     return this.CreateTempAssemblyIdListData(
@@ -466,7 +522,31 @@ class RouletteModel extends ModelBase_1.ModelBase {
       e ?? [0],
     );
   }
-  e0o(e) {
+  GetRouletteKeyRichText() {
+    var e;
+    return InputSettingsManager_1.InputSettingsManager.GetActionKeyDisplayData(
+      this.XPn,
+      InputMappingsDefine_1.actionMappings.幻象探索选择界面,
+    ) &&
+      (e = this.XPn.GetDisplayKeyNameList()) &&
+      0 !== e.length
+      ? `<texture=${InputSettings_1.InputSettings.GetKeyIconPath(e[0])}>`
+      : "";
+  }
+  GetRouletteSelectConfig() {
+    return (
+      LocalStorage_1.LocalStorage.GetGlobal(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.GamepadRouletteSelectConfig,
+      ) ?? 1
+    );
+  }
+  SaveRouletteSelectConfig(e) {
+    LocalStorage_1.LocalStorage.SetGlobal(
+      LocalStorageDefine_1.ELocalStorageGlobalKey.GamepadRouletteSelectConfig,
+      e,
+    );
+  }
+  J0o(e) {
     var t = new LogReportDefine_1.ExploreToolSwitchLogData(),
       r = ConfigManager_1.ConfigManager.RouletteConfig.GetExploreConfigById(e);
     const i = [];
@@ -481,14 +561,14 @@ class RouletteModel extends ModelBase_1.ModelBase {
   }
   SendExploreToolEquipLogData(e, t, r) {
     var i = new LogReportDefine_1.ExploreToolEquipLogData(),
-      o = ConfigManager_1.ConfigManager.RouletteConfig.GetExploreConfigById(e);
-    const n = [];
-    o.Authorization.forEach((e, t) => {
+      n = ConfigManager_1.ConfigManager.RouletteConfig.GetExploreConfigById(e);
+    const o = [];
+    n.Authorization.forEach((e, t) => {
       0 <
         ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(e) &&
-        n.push([t, e]);
+        o.push([t, e]);
     }),
-      (i.o_authorization = n),
+      (i.o_authorization = o),
       (i.i_explore_tool_id = e),
       (i.i_operation = t),
       void 0 !== r && (i.i_item_id = r),

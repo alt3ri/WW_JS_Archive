@@ -13,35 +13,35 @@ const UE = require("ue"),
 class TextInputComponent extends UiPanelBase_1.UiPanelBase {
   constructor(t, i) {
     super(),
-      (this.XUt = i),
-      (this.DUt = 0),
+      (this.zAt = i),
+      (this.PAt = 0),
       (this.j3 = CommonDefine_1.INVALID_VALUE),
-      (this.Xje = 0),
-      (this.RUt = void 0),
-      (this.vUt = void 0),
-      (this.$Ut = void 0),
-      (this.zvt = CommonInputViewDefine_1.MAX_SINGLE_LENGTH),
-      (this.Zvt = 0),
-      (this.AUt = (t) => {
-        t && 1 === this.DUt && this.ZFe(0);
+      (this.sKe = 0),
+      (this.xAt = void 0),
+      (this.yAt = void 0),
+      (this.ZAt = void 0),
+      (this._Et = CommonInputViewDefine_1.MAX_SINGLE_LENGTH),
+      (this.uEt = 0),
+      (this.BAt = (t) => {
+        t && 1 === this.PAt && this.C4e(0);
       }),
-      (this.xUt = () => {
-        var t = this.vUt.GetText(),
+      (this.qAt = () => {
+        var t = this.yAt.GetText(),
           i = StringUtils_1.StringUtils.GetStringRealCount(t);
-        i > this.zvt
-          ? (this.ZFe(2), (this.j3 = 0))
-          : 0 === i && this.XUt.IsCheckNone
-            ? (this.ZFe(1), (this.j3 = 0))
-            : i < this.Zvt
-              ? (this.ZFe(3), (this.j3 = 0))
-              : this.XUt.ConfirmFunc?.(t).then(
+        i > this._Et
+          ? (this.C4e(2), (this.j3 = 0))
+          : 0 === i && this.zAt.IsCheckNone
+            ? (this.C4e(1), (this.j3 = 0))
+            : i < this.uEt
+              ? (this.C4e(3), (this.j3 = 0))
+              : this.zAt.ConfirmFunc?.(t).then(
                   (t) => {
                     this.IsDestroyOrDestroying ||
                       (t ===
-                        Protocol_1.Aki.Protocol.lkn.Proto_ContainsDirtyWord &&
-                        this.ZFe(4),
-                      this.XUt.ResultFunc?.(
-                        t === Protocol_1.Aki.Protocol.lkn.Sys,
+                        Protocol_1.Aki.Protocol.O4n.Proto_ContainsDirtyWord &&
+                        this.C4e(4),
+                      this.zAt.ResultFunc?.(
+                        t === Protocol_1.Aki.Protocol.O4n.NRs,
                       ));
                   },
                   () => {
@@ -54,37 +54,37 @@ class TextInputComponent extends UiPanelBase_1.UiPanelBase {
                   },
                 );
       }),
-      (this.YUt = (t) => {
-        StringUtils_1.StringUtils.GetStringRealCount(t) <= this.zvt
-          ? this.ZFe(0)
-          : this.ZFe(2);
+      (this.ePt = (t) => {
+        StringUtils_1.StringUtils.GetStringRealCount(t) <= this._Et
+          ? this.C4e(0)
+          : this.C4e(2);
       }),
-      (this.wUt = () => {
+      (this.GAt = () => {
         this.GetItem(0).SetUIActive(!1),
-          this.$Ut.SetSelfInteractive(!0),
+          this.ZAt.SetSelfInteractive(!0),
           (this.j3 = CommonDefine_1.INVALID_VALUE);
       }),
-      (this.BUt = () => {
-        this.bUt("PrefabTextItem_Entertext_Text", 0);
+      (this.NAt = () => {
+        this.OAt("PrefabTextItem_Entertext_Text", 0);
       }),
-      (this.qUt = () => {
-        this.bUt(
+      (this.kAt = () => {
+        this.OAt(
           "PrefabTextItem_Textoverlength_Text",
           CommonDefine_1.INVALID_VALUE,
         ),
-          this.$Ut.SetSelfInteractive(!1);
+          this.ZAt.SetSelfInteractive(!1);
       }),
-      (this.GUt = () => {
-        this.bUt("CDKey_TooShort", 0), this.$Ut.SetSelfInteractive(!1);
+      (this.FAt = () => {
+        this.OAt("CDKey_TooShort", 0), this.ZAt.SetSelfInteractive(!1);
       }),
-      (this.NUt = () => {
-        this.bUt("PrefabTextItem_Textillegality_Text", 0);
+      (this.VAt = () => {
+        this.OAt("PrefabTextItem_Textillegality_Text", 0);
       }),
       (this.r6 = (t) => {
         this.j3 !== CommonDefine_1.INVALID_VALUE &&
           ((this.j3 += t),
           this.j3 >= CommonInputViewDefine_1.TIPS_DELAT_TIME) &&
-          this.ZFe(0);
+          this.C4e(0);
       }),
       this.CreateThenShowByActor(t.GetOwner());
   }
@@ -97,48 +97,48 @@ class TextInputComponent extends UiPanelBase_1.UiPanelBase {
       [4, UE.UIButtonComponent],
     ]),
       (this.BtnBindInfo = [
-        [2, this.AUt],
-        [4, this.xUt],
+        [2, this.BAt],
+        [4, this.qAt],
       ]);
   }
-  ZFe(t) {
-    t !== this.DUt && ((this.DUt = t), this.RUt[t]());
+  C4e(t) {
+    t !== this.PAt && ((this.PAt = t), this.xAt[t]());
   }
   OnStart() {
-    (this.RUt = {
-      [0]: this.wUt,
-      1: this.BUt,
-      2: this.qUt,
-      3: this.GUt,
-      4: this.NUt,
+    (this.xAt = {
+      [0]: this.GAt,
+      1: this.NAt,
+      2: this.kAt,
+      3: this.FAt,
+      4: this.VAt,
       5: () => {},
       6: () => {},
     }),
-      (this.$Ut = this.GetButton(4)),
-      (this.vUt = this.GetInputText(2)),
-      this.vUt.OnTextChange.Bind(this.YUt),
-      this.vUt.SetText(this.XUt.InputText, !0),
-      this.XUt.DefaultText && this.GetText(3).SetText(this.XUt.DefaultText),
-      (this.Xje = TickSystem_1.TickSystem.Add(
+      (this.ZAt = this.GetButton(4)),
+      (this.yAt = this.GetInputText(2)),
+      this.yAt.OnTextChange.Bind(this.ePt),
+      this.yAt.SetText(this.zAt.InputText, !0),
+      this.zAt.DefaultText && this.GetText(3).SetText(this.zAt.DefaultText),
+      (this.sKe = TickSystem_1.TickSystem.Add(
         this.r6,
         "TextInputComponent",
         0,
         !0,
       ).Id);
   }
-  QUt() {
-    this.vUt.OnTextChange.Unbind();
+  JAt() {
+    this.yAt.OnTextChange.Unbind();
   }
-  bUt(t, i) {
+  OAt(t, i) {
     this.GetItem(0).SetUIActive(!0);
     var e = this.GetText(1);
     LguiUtil_1.LguiUtil.SetLocalTextNew(e, t), (this.j3 = i);
   }
   OnBeforeDestroy() {
-    this.QUt(), TickSystem_1.TickSystem.Remove(this.Xje);
+    this.JAt(), TickSystem_1.TickSystem.Remove(this.sKe);
   }
   ClearText() {
-    this.vUt.SetText("");
+    this.yAt.SetText("");
   }
 }
 exports.TextInputComponent = TextInputComponent;

@@ -24,7 +24,7 @@ class TsDecoratorDistance extends UE.BTDecorator_BlueprintBase {
     if (t) {
       this.InitTsVariables();
       var t = t.CharActorComp,
-        s = t.Entity.CheckGetComponent(47);
+        s = t.Entity.CheckGetComponent(48);
       if (0 !== s.RoleId) {
         var i =
           CharacterController_1.CharacterController.GetCharacterActorComponentById(

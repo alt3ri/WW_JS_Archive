@@ -6,18 +6,18 @@ const UE = require("ue"),
   UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
 class FunctionBottomButtonItem extends UiPanelBase_1.UiPanelBase {
   constructor(t, e) {
-    super(), (this.QFe = e), this.CreateThenShowByActor(t.GetOwner());
+    super(), (this.l4e = e), this.CreateThenShowByActor(t.GetOwner());
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [[0, UE.UIItem]];
   }
   BindRedDot() {
     var t = this.GetItem(0);
-    RedDotController_1.RedDotController.BindRedDot(this.QFe, t);
+    RedDotController_1.RedDotController.BindRedDot(this.l4e, t);
   }
   UnBindRedDot() {
     var t = this.GetItem(0);
-    RedDotController_1.RedDotController.UnBindGivenUi(this.QFe, t);
+    RedDotController_1.RedDotController.UnBindGivenUi(this.l4e, t);
   }
 }
 exports.FunctionBottomButtonItem = FunctionBottomButtonItem;

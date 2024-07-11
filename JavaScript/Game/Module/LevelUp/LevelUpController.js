@@ -11,41 +11,41 @@ class LevelUpController extends UiControllerBase_1.UiControllerBase {
   static OnAddEvents() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnPlayerLevelChanged,
-      this.Cke,
+      this.x2e,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnPlayerExpChanged,
-        this.NCi,
+        this.Ngi,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnFinishLoadingState,
-        this.tpi,
+        this.ivi,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.TeleportComplete,
-        this.uht,
+        this.Ilt,
       );
   }
   static OnRemoveEvents() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnPlayerLevelChanged,
-      this.Cke,
+      this.x2e,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnPlayerExpChanged,
-        this.NCi,
+        this.Ngi,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnFinishLoadingState,
-        this.tpi,
+        this.ivi,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.TeleportComplete,
-        this.uht,
+        this.Ilt,
       );
   }
 }
-((exports.LevelUpController = LevelUpController).NCi = (e, n, t) => {
+((exports.LevelUpController = LevelUpController).Ngi = (e, n, t) => {
   var r,
     o = ModelManager_1.ModelManager.FunctionModel.GetPlayerLevel();
   o < ConfigManager_1.ConfigManager.LevelUpConfig.GetHiddenLevelUpLevel() ||
@@ -57,7 +57,7 @@ class LevelUpController extends UiControllerBase_1.UiControllerBase {
     )),
     ModelManager_1.ModelManager.LevelUpModel.SetExpChange(o, e, n, t, r));
 }),
-  (LevelUpController.Cke = (e, n, t, r, o, a, i) => {
+  (LevelUpController.x2e = (e, n, t, r, o, a, i) => {
     var s;
     KuroSdkReport_1.KuroSdkReport.OnPlayerLevelChange(n),
       n < ConfigManager_1.ConfigManager.LevelUpConfig.GetHiddenLevelUpLevel() ||
@@ -78,12 +78,12 @@ class LevelUpController extends UiControllerBase_1.UiControllerBase {
           s,
         ));
   }),
-  (LevelUpController.tpi = () => {
+  (LevelUpController.ivi = () => {
     var e = ModelManager_1.ModelManager.FunctionModel.GetPlayerLevel();
     e < ConfigManager_1.ConfigManager.LevelUpConfig.GetHiddenLevelUpLevel() ||
       ModelManager_1.ModelManager.LevelUpModel.SetShowLevelOnly(e);
   }),
-  (LevelUpController.uht = (e) => {
-    2 === e && LevelUpController.tpi();
+  (LevelUpController.Ilt = (e) => {
+    2 === e && LevelUpController.ivi();
   });
 //# sourceMappingURL=LevelUpController.js.map

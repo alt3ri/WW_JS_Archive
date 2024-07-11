@@ -11,9 +11,9 @@ class FilterItem extends UiPanelBase_1.UiPanelBase {
   constructor(t) {
     super(),
       (this.Pe = void 0),
-      (this.U4e = void 0),
-      (this.cLt = (t) => {
-        this.U4e?.(t, this.Pe.FilterId, this.Pe.Content);
+      (this.j5e = void 0),
+      (this.gDt = (t) => {
+        this.j5e?.(t, this.Pe.FilterId, this.Pe.Content);
       }),
       this.CreateThenShowByActor(t.GetOwner());
   }
@@ -25,13 +25,13 @@ class FilterItem extends UiPanelBase_1.UiPanelBase {
       [3, UE.UISprite],
       [4, UE.UIText],
     ]),
-      (this.BtnBindInfo = [[0, this.cLt]]);
+      (this.BtnBindInfo = [[0, this.gDt]]);
   }
-  mLt() {
+  fDt() {
     var t = this.Pe.Content;
     this.GetText(4).SetText(t);
   }
-  Dnt() {
+  Ost() {
     var t,
       i,
       e = this.Pe.GetIconPath(),
@@ -49,53 +49,53 @@ class FilterItem extends UiPanelBase_1.UiPanelBase {
             t.SetChangeColor(this.Pe.NeedChangeColor, t.changeColor)));
   }
   SetToggleFunction(t) {
-    this.U4e = t;
+    this.j5e = t;
   }
   SetToggleState(t) {
     t = t ? 1 : 0;
     this.GetExtendToggle(0).SetToggleState(t, !1);
   }
   ShowTemp(t, i) {
-    (this.Pe = t), this.mLt(), this.Dnt(), this.SetToggleState(i);
+    (this.Pe = t), this.fDt(), this.Ost(), this.SetToggleState(i);
   }
 }
 exports.FilterItem = FilterItem;
 class FilterGroup extends UiPanelBase_1.UiPanelBase {
   constructor(t) {
     super(),
-      (this.dLt = 0),
-      (this.CLt = 2),
-      (this.gLt = void 0),
-      (this.U4e = void 0),
-      (this.fLt = void 0),
+      (this.pDt = 0),
+      (this.vDt = 2),
+      (this.MDt = void 0),
+      (this.j5e = void 0),
+      (this.EDt = void 0),
       (this.Mne = 0),
       (this.Layout = void 0),
       (this.CurrentSelectedDataMap = void 0),
-      (this.pLt = void 0),
-      (this.vLt = (e) => {
+      (this.SDt = void 0),
+      (this.yDt = (e) => {
         if (1 === e)
           for (const i of this.Layout.GetLayoutItemMap().keys()) {
             var t = i;
-            this.gLt.set(t.FilterId, t.Content),
-              this.fLt?.(e, t.FilterId, t.Content);
+            this.MDt.set(t.FilterId, t.Content),
+              this.EDt?.(e, t.FilterId, t.Content);
           }
         else
           0 === e &&
-            (this.gLt.forEach((t, i) => {
-              this.fLt?.(e, i, t);
+            (this.MDt.forEach((t, i) => {
+              this.EDt?.(e, i, t);
             }),
             this.ResetTempFilterDataMap());
         this.RefreshGroupItem();
       }),
-      (this.MLt = (t, i, e) => {
+      (this.IDt = (t, i, e) => {
         var i = new FilterItem(i),
-          s = (i.SetToggleFunction(this.SLt), this.gLt.has(t.FilterId));
+          s = (i.SetToggleFunction(this.TDt), this.MDt.has(t.FilterId));
         return i.ShowTemp(t, s), { Key: t, Value: i };
       }),
-      (this.SLt = (t, i, e) => {
-        1 === t ? this.gLt.set(i, e) : this.gLt.delete(i),
+      (this.TDt = (t, i, e) => {
+        1 === t ? this.MDt.set(i, e) : this.MDt.delete(i),
           this.RefreshSelectAllToggleState(),
-          this.U4e?.(t, i, e);
+          this.j5e?.(t, i, e);
       }),
       this.CreateThenShowByActor(t.GetOwner());
   }
@@ -107,52 +107,52 @@ class FilterGroup extends UiPanelBase_1.UiPanelBase {
       [3, UE.UILayoutBase],
       [4, UE.UIItem],
     ]),
-      (this.BtnBindInfo = [[2, this.vLt]]);
+      (this.BtnBindInfo = [[2, this.yDt]]);
   }
   OnStart() {
     this.Layout = new GenericLayoutNew_1.GenericLayoutNew(
       this.GetLayoutBase(3),
-      this.MLt,
+      this.IDt,
       this.GetItem(4),
     );
   }
   OnBeforeDestroy() {}
   SetToggleFunction(t) {
-    this.U4e = t;
+    this.j5e = t;
   }
   SetOnSelectAllFunction(t) {
-    this.fLt = t;
+    this.EDt = t;
   }
-  ELt() {
+  LDt() {
     var t = ConfigManager_1.ConfigManager.FilterConfig.GetFilterRuleConfig(
-      this.dLt,
+      this.pDt,
     );
-    this.CLt = t.FilterType;
+    this.vDt = t.FilterType;
   }
-  yLt() {
-    this.gLt = new Map();
+  DDt() {
+    this.MDt = new Map();
     var t = ModelManager_1.ModelManager.FilterModel.GetFilterResultData(
       this.Mne,
-    ).GetSelectRuleDataById(this.CLt);
-    if (t) for (var [i, e] of t) this.gLt.set(i, e);
+    ).GetSelectRuleDataById(this.vDt);
+    if (t) for (var [i, e] of t) this.MDt.set(i, e);
   }
   AddCurrentSelectedFilterData() {
-    this.pLt.forEach((t) => {
+    this.SDt.forEach((t) => {
       var t = t.FilterId,
         i = this.CurrentSelectedDataMap?.get(t);
-      i && this.gLt.set(t, i);
+      i && this.MDt.set(t, i);
     });
   }
-  ILt() {
+  RDt() {
     var t = ConfigManager_1.ConfigManager.FilterConfig.GetFilterRuleConfig(
-      this.dLt,
+      this.pDt,
     );
     this.GetText(0).ShowTextNew(t.Title);
   }
-  TLt() {
-    this.Layout.RebuildLayoutByDataNew(this.pLt);
+  UDt() {
+    this.Layout.RebuildLayoutByDataNew(this.SDt);
   }
-  LLt() {
+  ADt() {
     var t = ConfigManager_1.ConfigManager.FilterConfig.GetFilterConfig(
       this.Mne,
     );
@@ -163,46 +163,46 @@ class FilterGroup extends UiPanelBase_1.UiPanelBase {
     ConfigManager_1.ConfigManager.FilterConfig.GetFilterConfig(this.Mne)
       .IsSupportSelectAll &&
       ((t = ConfigManager_1.ConfigManager.FilterConfig.GetFilterRuleConfig(
-        this.dLt,
+        this.pDt,
       )),
-      (t = this.gLt.size === t.IdList.length ? 1 : 0),
+      (t = this.MDt.size === t.IdList.length ? 1 : 0),
       this.GetExtendToggle(2).SetToggleState(t, !1));
   }
   SetSelectedDataMap(t) {
     this.CurrentSelectedDataMap = t;
   }
   InitFilterSetData() {
-    this.yLt(), this.AddCurrentSelectedFilterData();
+    this.DDt(), this.AddCurrentSelectedFilterData();
   }
   ShowTemp(t, i) {
-    (this.dLt = t),
+    (this.pDt = t),
       (this.Mne = i),
-      (this.pLt = ModelManager_1.ModelManager.FilterModel.GetFilterItemDataList(
-        this.dLt,
+      (this.SDt = ModelManager_1.ModelManager.FilterModel.GetFilterItemDataList(
+        this.pDt,
         this.Mne,
       )),
-      this.ELt(),
+      this.LDt(),
       this.InitFilterSetData(),
-      this.ILt(),
-      this.LLt(),
+      this.RDt(),
+      this.ADt(),
       this.RefreshSelectAllToggleState(),
-      this.TLt();
+      this.UDt();
   }
   RefreshGroupItem() {
     var t, i;
     for ([t, i] of this.Layout.GetLayoutItemMap()) {
       var e = t;
-      i.SetToggleState(this.gLt.has(e.FilterId));
+      i.SetToggleState(this.MDt.has(e.FilterId));
     }
   }
   GetTempFilterDataMap() {
-    return this.gLt;
+    return this.MDt;
   }
   ResetTempFilterDataMap() {
-    this.gLt.clear();
+    this.MDt.clear();
   }
   GetFilterType() {
-    return this.CLt;
+    return this.vDt;
   }
 }
 exports.FilterGroup = FilterGroup;

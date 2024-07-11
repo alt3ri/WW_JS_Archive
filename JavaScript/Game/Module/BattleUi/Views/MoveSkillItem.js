@@ -1,23 +1,23 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MoveSkillItem = void 0);
-const InputController_1 = require("../../../Input/InputController"),
+const Info_1 = require("../../../../Core/Common/Info"),
+  InputController_1 = require("../../../Input/InputController"),
   InputEnums_1 = require("../../../Input/InputEnums"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
-  ModelManager_1 = require("../../../Manager/ModelManager"),
   BattleSkillItem_1 = require("./BattleSkillItem");
 class MoveSkillItem extends BattleSkillItem_1.BattleSkillItem {
   constructor() {
     super(...arguments),
-      (this.f_t = !1),
-      (this.Gut = InputEnums_1.EInputAxis.None),
+      (this.wut = !1),
+      (this.$ct = InputEnums_1.EInputAxis.None),
       (this.jce = 0);
   }
   RefreshByMoveType(t, e) {
-    (this.Gut = t), (this.jce = e), this.IsShowOrShowing || this.Show();
+    (this.$ct = t), (this.jce = e), this.IsShowOrShowing || this.Show();
   }
   RefreshKeyByActionName(t) {
-    var e = ModelManager_1.ModelManager.PlatformModel.OperationType;
+    var e = Info_1.Info.OperationType;
     2 !== e ||
       (this.KeyActionName === t && this.KeyOperationType === e) ||
       (this.KeyItem &&
@@ -31,20 +31,20 @@ class MoveSkillItem extends BattleSkillItem_1.BattleSkillItem {
     this.SetSkillIcon(t);
   }
   OnSkillButtonPressed() {
-    (this.f_t = !0),
+    (this.wut = !0),
       this.ClickEffect?.Play(),
-      InputController_1.InputController.InputAxis(this.Gut, this.jce);
+      InputController_1.InputController.InputAxis(this.$ct, this.jce);
   }
   OnSkillButtonReleased() {
-    (this.f_t = !1), InputController_1.InputController.InputAxis(this.Gut, 0);
+    (this.wut = !1), InputController_1.InputController.InputAxis(this.$ct, 0);
   }
   Tick(t) {
     super.Tick(t),
-      this.f_t &&
-        InputController_1.InputController.InputAxis(this.Gut, this.jce);
+      this.wut &&
+        InputController_1.InputController.InputAxis(this.$ct, this.jce);
   }
   OnBeforeHide() {
-    this.f_t = !1;
+    this.wut = !1;
   }
   OnInputAction() {
     this.ClickEffect?.Play();

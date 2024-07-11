@@ -43,6 +43,7 @@ class BuffDefinition {
       (this.ImmuneTags = void 0),
       (this.ImmuneTagIgnores = void 0),
       (this.RemoveTagExistAny = void 0),
+      (this.BuffAction = void 0),
       (this.HasBuffEffect = !1),
       (this.HasBuffPeriodExecution = !1),
       (this.EffectInfos = []);

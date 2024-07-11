@@ -4,28 +4,28 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const TimerSystem_1 = require("../../../Core/Timer/TimerSystem");
 class TagChangeNextTickTask {
   constructor() {
-    (this.pyo = new Map()),
-      (this.vyo = void 0),
-      (this.Myo = []),
-      (this.Syo = () => {
-        if (((this.vyo = void 0), 0 < this.Myo.length))
-          for (const t of this.Myo) t(this.pyo);
-        (this.Myo.length = 0), this.pyo.clear();
+    (this.CIo = new Map()),
+      (this.gIo = void 0),
+      (this.fIo = []),
+      (this.pIo = () => {
+        if (((this.gIo = void 0), 0 < this.fIo.length))
+          for (const t of this.fIo) t(this.CIo);
+        (this.fIo.length = 0), this.CIo.clear();
       });
   }
   TagChangeWaitNextTick(t, i, s) {
-    this.pyo.set(t, i),
-      this.Myo.push(s),
-      this.vyo || (this.vyo = TimerSystem_1.TimerSystem.Next(this.Syo));
+    this.CIo.set(t, i),
+      this.fIo.push(s),
+      this.gIo || (this.gIo = TimerSystem_1.TimerSystem.Next(this.pIo));
   }
   Clear() {
-    this.vyo &&
-      TimerSystem_1.TimerSystem.Has(this.vyo) &&
-      TimerSystem_1.TimerSystem.Remove(this.vyo),
-      (this.vyo = void 0),
-      (this.Myo.length = 0),
-      this.pyo.clear(),
-      (this.Myo = void 0);
+    this.gIo &&
+      TimerSystem_1.TimerSystem.Has(this.gIo) &&
+      TimerSystem_1.TimerSystem.Remove(this.gIo),
+      (this.gIo = void 0),
+      (this.fIo.length = 0),
+      this.CIo.clear(),
+      (this.fIo = void 0);
   }
 }
 exports.TagChangeNextTickTask = TagChangeNextTickTask;

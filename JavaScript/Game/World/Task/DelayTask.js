@@ -8,17 +8,17 @@ const CustomPromise_1 = require("../../../Core/Common/CustomPromise"),
 class DelayTask extends TaskBase_1.TaskBase {
   constructor(e, s, t, r = DEFAULT_DELAY_TIME, i) {
     super(e, t, i),
-      (this.Rvt = new CustomPromise_1.CustomPromise()),
-      (this.QMr = s),
-      (this.tBt = Math.max(r, TimerSystem_1.MIN_TIME));
+      (this.kMt = new CustomPromise_1.CustomPromise()),
+      (this.jEr = s),
+      (this.rbt = Math.max(r, TimerSystem_1.MIN_TIME));
   }
   async OnRun() {
     return !(
-      (this.QMr && this.QMr()) ||
+      (this.jEr && this.jEr()) ||
       (TimerSystem_1.TimerSystem.Delay(() => {
-        this.Rvt.SetResult(!0);
-      }, this.tBt),
-      await this.Rvt.Promise,
+        this.kMt.SetResult(!0);
+      }, this.rbt),
+      await this.kMt.Promise,
       0)
     );
   }

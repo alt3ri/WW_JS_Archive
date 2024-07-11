@@ -9,11 +9,11 @@ const UE = require("ue"),
   CharacterNameDefines_1 = require("../../Character/Common/CharacterNameDefines");
 class SceneInteractionModel extends ModelBase_1.ModelBase {
   constructor() {
-    super(...arguments), (this.jnr = !1);
+    super(...arguments), (this.Fsr = !1);
   }
   GetEntityByBaseItem(e) {
-    this.jnr ||
-      ((this.jnr = !0),
+    this.Fsr ||
+      ((this.Fsr = !0),
       UE.KuroLevelPlayLibrary.RegisterBaseItemInfo(
         UE.BP_BaseItem_C.StaticClass(),
         "EntityId",
@@ -30,7 +30,7 @@ class SceneInteractionModel extends ModelBase_1.ModelBase {
       let e = t.GetOwner();
       if (void 0 === e) {
         if (r) return;
-        if (void 0 === (e = this.Wnr(t))) return;
+        if (void 0 === (e = this.Vsr(t))) return;
       }
       return UE.KuroStaticLibrary.IsObjectClassByName(
         e,
@@ -39,10 +39,10 @@ class SceneInteractionModel extends ModelBase_1.ModelBase {
         ? e
         : r
           ? void 0
-          : this.Wnr(t);
+          : this.Vsr(t);
     }
   }
-  Wnr(e) {
+  Vsr(e) {
     let t = e;
     for (
       ;

@@ -101,13 +101,13 @@ class RoguelikeAchievementView extends UiViewBase_1.UiViewBase {
       (this.OnAchievementDataWithIdNotify = (e) => {
         this.pqe(this.TabComponent.GetSelectedIndex());
       }),
-      (this.jao = () => {
+      (this.kho = () => {
         return new RoguelikeAchievementItem();
       }),
       (this.CloseClick = () => {
         UiManager_1.UiManager.CloseView(this.Info.Name);
       }),
-      (this.dVe = (e, t) => {
+      (this.R6e = (e, t) => {
         return new CommonTabItem_1.CommonTabItem();
       }),
       (this.pqe = (e) => {
@@ -134,7 +134,7 @@ class RoguelikeAchievementView extends UiViewBase_1.UiViewBase {
     if (void 0 !== e) {
       e =
         ConfigManager_1.ConfigManager.RoguelikeConfig.GetRogueSeasonConfigById(
-          e.F8n,
+          e.MHn,
         );
       if (
         ((this.AchievementGroupDataList =
@@ -152,7 +152,7 @@ class RoguelikeAchievementView extends UiViewBase_1.UiViewBase {
           );
       else {
         const n = new CommonTabComponentData_1.CommonTabComponentData(
-          this.dVe,
+          this.R6e,
           this.pqe,
           this.yqe,
         );
@@ -165,7 +165,7 @@ class RoguelikeAchievementView extends UiViewBase_1.UiViewBase {
           (this.AchievementScrollView =
             new GenericScrollViewNew_1.GenericScrollViewNew(
               this.GetScrollViewWithScrollbar(2),
-              this.jao,
+              this.kho,
             )),
           (this.TabDataList =
             ConfigManager_1.ConfigManager.DynamicTabConfig.GetViewTabList(

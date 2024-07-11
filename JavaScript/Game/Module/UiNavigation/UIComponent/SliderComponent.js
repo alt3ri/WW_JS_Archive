@@ -1,6 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
-  (exports.SliderReduceComponent =
+  (exports.SliderReduceReverseComponent =
+    exports.SliderIncreaseReverseComponent =
+    exports.SliderReduceComponent =
     exports.SliderIncreaseComponent =
     exports.SliderComponent =
       void 0);
@@ -20,8 +22,8 @@ class SliderIncreaseComponent extends (exports.SliderComponent =
   OnRelease(e) {
     this.SetValue(INTERVAL);
   }
-  OnInputAxis(e, o) {
-    o <= 0 || this.SetValue(o * INTERVAL);
+  OnInputAxis(e, n) {
+    n <= 0 || this.SetValue(n * INTERVAL);
   }
 }
 exports.SliderIncreaseComponent = SliderIncreaseComponent;
@@ -29,9 +31,27 @@ class SliderReduceComponent extends SliderComponent {
   OnRelease(e) {
     this.SetValue(-INTERVAL);
   }
-  OnInputAxis(e, o) {
-    0 <= o || this.SetValue(o * INTERVAL);
+  OnInputAxis(e, n) {
+    0 <= n || this.SetValue(n * INTERVAL);
   }
 }
 exports.SliderReduceComponent = SliderReduceComponent;
+class SliderIncreaseReverseComponent extends SliderComponent {
+  OnRelease(e) {
+    this.SetValue(INTERVAL);
+  }
+  OnInputAxis(e, n) {
+    0 <= n || this.SetValue(-n * INTERVAL);
+  }
+}
+exports.SliderIncreaseReverseComponent = SliderIncreaseReverseComponent;
+class SliderReduceReverseComponent extends SliderComponent {
+  OnRelease(e) {
+    this.SetValue(-INTERVAL);
+  }
+  OnInputAxis(e, n) {
+    n <= 0 || this.SetValue(-n * INTERVAL);
+  }
+}
+exports.SliderReduceReverseComponent = SliderReduceReverseComponent;
 //# sourceMappingURL=SliderComponent.js.map

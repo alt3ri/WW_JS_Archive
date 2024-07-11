@@ -18,12 +18,12 @@ class ConfirmBoxController extends UiControllerBase_1.UiControllerBase {
     );
   }
   static CheckIsConfirmBoxOpen() {
-    for (const o of ConfirmBoxController._bt.values())
+    for (const o of ConfirmBoxController.mqt.values())
       if (UiManager_1.UiManager.IsViewOpen(o)) return !0;
     return !1;
   }
   static CloseConfirmBoxView() {
-    for (const o of ConfirmBoxController._bt.values())
+    for (const o of ConfirmBoxController.mqt.values())
       UiManager_1.UiManager.CloseView(o);
   }
   static ShowNetWorkConfirmBoxView(o, e = void 0) {
@@ -75,10 +75,10 @@ class ConfirmBoxController extends UiControllerBase_1.UiControllerBase {
   }
   static GetUiViewName(o) {
     o = ConfigManager_1.ConfigManager.ConfirmBoxConfig.GetUiShowType(o);
-    return ConfirmBoxController._bt.get(o);
+    return ConfirmBoxController.mqt.get(o);
   }
 }
-(exports.ConfirmBoxController = ConfirmBoxController)._bt = new Map([
+(exports.ConfirmBoxController = ConfirmBoxController).mqt = new Map([
   [0, "ConfirmBoxView"],
   [1, "ConfirmBoxMiddleView"],
   [2, "ConfirmBoxMiddleWithoutItemView"],

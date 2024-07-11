@@ -10,13 +10,16 @@ const UE = require("ue"),
 class RogueInfoSpecialView extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this.Bao = void 0),
+      (this.Aho = void 0),
       (this.UiViewSequence = void 0),
-      (this.bao = () =>
-        new RoguelikeSelectSpecialItem_1.RoguelikeSelectSpecialItem(this.qao)),
-      (this.qao = (e, i) => {
+      (this.Pho = () =>
+        new RoguelikeSelectSpecialItem_1.RoguelikeSelectSpecialItem(this.xho)),
+      (this.xho = (e, i) => {
         e.SetSelect(!1),
-          UiManager_1.UiManager.OpenView("RoguelikeSpecialDetailView", i);
+          UiManager_1.UiManager.OpenView("RoguelikeSpecialDetailView", [
+            i,
+            void 0,
+          ]);
       });
   }
   OnRegisterComponent() {
@@ -27,13 +30,13 @@ class RogueInfoSpecialView extends UiPanelBase_1.UiPanelBase {
       this.AddUiBehavior(this.UiViewSequence);
   }
   OnStart() {
-    this.Bao = new GenericLayout_1.GenericLayout(
+    this.Aho = new GenericLayout_1.GenericLayout(
       this.GetHorizontalLayout(0),
-      this.bao,
+      this.Pho,
     );
   }
   Refresh(e) {
-    this.Bao.RefreshByData(e);
+    this.Aho.RefreshByData(e);
   }
 }
 exports.RogueInfoSpecialView = RogueInfoSpecialView;

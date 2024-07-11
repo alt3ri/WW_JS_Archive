@@ -26,13 +26,13 @@ class MediumItemGridVisionRoleHeadComponent extends MediumItemGridComponent_1.Me
           this.SetRoleIcon(t, r, i, void 0, () => {
             r.SetUIActive(!0);
           }),
-          this.wxt(e),
-          this.Bxt(e),
+          this.qwt(e),
+          this.Gwt(e),
           this.SetActive(!0))
         : this.SetActive(!1);
     } else this.SetActive(!1);
   }
-  wxt(i) {
+  qwt(i) {
     i = i.VisionUniqueId;
     if (
       ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomBattleData(i)
@@ -46,7 +46,7 @@ class MediumItemGridVisionRoleHeadComponent extends MediumItemGridComponent_1.Me
     }
     this.GetSprite(2).SetUIActive(!0);
   }
-  Bxt(i) {
+  Gwt(i) {
     i = i.VisionUniqueId;
     if (
       ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomBattleData(i)

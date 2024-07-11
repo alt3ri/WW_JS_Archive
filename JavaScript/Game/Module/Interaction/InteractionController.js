@@ -9,17 +9,17 @@ class InteractionController extends UiControllerBase_1.UiControllerBase {
   static OnAddEvents() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.LocalStorageInitPlayerId,
-      this.M1i,
+      this.M_i,
     );
   }
   static OnRemoveEvents() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.LocalStorageInitPlayerId,
-      this.M1i,
+      this.M_i,
     );
   }
 }
-(exports.InteractionController = InteractionController).M1i = () => {
+(exports.InteractionController = InteractionController).M_i = () => {
   var e = ModelManager_1.ModelManager.InteractionModel;
   e.LoadInteractGuideData(), e.LoadAutoInteractionGuideAppearCount();
 };

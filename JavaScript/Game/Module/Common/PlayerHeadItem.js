@@ -14,9 +14,9 @@ class PlayerHeadItem extends UiPanelBase_1.UiPanelBase {
     this.ComponentRegisterInfos = [[0, UE.UITexture]];
   }
   RefreshByPlayerId(e, r = !1) {
-    this.QMt(e, r);
+    this.nSt(e, r);
   }
-  QMt(e, r = !1) {
+  nSt(e, r = !1) {
     var a = ModelManager_1.ModelManager.PlayerInfoModel,
       s = this.GetTexture(0);
     if (a.GetId() === e)

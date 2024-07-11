@@ -2,7 +2,11 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.QuickRoleSelectView = exports.QuickRoleSelectViewData = void 0);
 const UE = require("ue"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../Common/Event/EventSystem"),
   ModelManager_1 = require("../../Manager/ModelManager"),
+  UiSequencePlayer_1 = require("../../Ui/Base/UiSequencePlayer"),
   UiViewBase_1 = require("../../Ui/Base/UiViewBase"),
   UiManager_1 = require("../../Ui/UiManager"),
   FilterSortEntrance_1 = require("../Common/FilterSort/FilterSortEntrance"),
@@ -18,8 +22,10 @@ class QuickRoleSelectViewData {
       (this.RoleList = void 0),
       (this.CanConfirm = void 0),
       (this.OnConfirm = void 0),
+      (this.OnWaitLoadingConfirm = void 0),
       (this.OnBack = void 0),
       (this.OnHideFinish = void 0),
+      (this.OnRoleSelectFull = void 0),
       (this.UseWay = i),
       (this.SelectedRoleList = e),
       (this.RoleList = t);
@@ -30,10 +36,13 @@ class QuickRoleSelectView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
       (this.Pe = void 0),
-      (this.ami = void 0),
-      (this.jho = void 0),
-      (this.Kho = void 0),
-      (this.xUt = () => {
+      (this.adi = void 0),
+      (this.Flo = void 0),
+      (this.Vlo = void 0),
+      (this.d5t = void 0),
+      (this.C5t = void 0),
+      (this.uca = void 0),
+      (this.qAt = () => {
         var e = ModelManager_1.ModelManager.RoleSelectModel.RoleIndexMap,
           t = new Array();
         for (
@@ -41,18 +50,31 @@ class QuickRoleSelectView extends UiViewBase_1.UiViewBase {
           i <= EditFormationDefine_1.EDITE_FORAMTION_MAX_NUM;
           i++
         ) {
-          var r = e.get(i);
-          r && t.push(r.GetDataId());
+          var s = e.get(i);
+          s && t.push(s.GetDataId());
         }
         var i = this.Pe?.CanConfirm;
         (i && !i(t)) ||
-          (this.Pe?.OnConfirm?.(t),
-          UiManager_1.UiManager.CloseView(this.Info.Name));
+          (this.Pe?.OnWaitLoadingConfirm
+            ? (this.E5t(),
+              this.Pe?.OnWaitLoadingConfirm(t).finally(() => {
+                this.CloseMe();
+              }))
+            : (EventSystem_1.EventSystem.Emit(
+                EventDefine_1.EEventName
+                  .TowerDefenseBeforeConfirmQuickRoleSelect,
+              ),
+              this.Pe?.OnConfirm?.(t),
+              EventSystem_1.EventSystem.Emit(
+                EventDefine_1.EEventName
+                  .TowerDefenseBeforeConfirmQuickRoleSelect,
+              ),
+              UiManager_1.UiManager.CloseView(this.Info.Name)));
       }),
-      (this.W9t = () => {
+      (this.W7t = () => {
         this.Pe?.OnBack?.(), UiManager_1.UiManager.CloseView(this.Info.Name);
       }),
-      (this.z9e = () => {
+      (this.cHe = () => {
         var i = new TeamRoleGrid_1.TeamRoleGrid();
         return (
           i.BindOnExtendToggleStateChanged(this.ToggleFunction),
@@ -63,11 +85,11 @@ class QuickRoleSelectView extends UiViewBase_1.UiViewBase {
       (this.ToggleFunction = (i) => {
         var e = ModelManager_1.ModelManager.RoleSelectModel.RoleIndexMap,
           t = ModelManager_1.ModelManager.RoleSelectModel.SelectedRoleSet,
-          r = i.Data;
+          s = i.Data;
         if (0 === i.State) {
-          for (const o of e)
-            if (o[1] === r) {
-              e.delete(o[0]), t.delete(r.GetDataId());
+          for (const r of e)
+            if (r[1] === s) {
+              e.delete(r[0]), t.delete(s.GetDataId());
               break;
             }
         } else if (1 === i.State)
@@ -77,11 +99,11 @@ class QuickRoleSelectView extends UiViewBase_1.UiViewBase {
             i++
           )
             if (!e.has(i)) {
-              e.set(i, r), t.add(r.GetDataId());
+              e.set(i, s), t.add(s.GetDataId());
               break;
             }
-        i = this.Kho.indexOf(r);
-        this.jho.RefreshGridProxy(i);
+        i = this.Vlo.indexOf(s);
+        this.Flo.RefreshGridProxy(i);
       }),
       (this.CanExecuteChange = (i, e, t) => {
         return (
@@ -89,44 +111,46 @@ class QuickRoleSelectView extends UiViewBase_1.UiViewBase {
           ((t =
             ModelManager_1.ModelManager.RoleSelectModel.RoleIndexMap.size >=
             EditFormationDefine_1.EDITE_FORAMTION_MAX_NUM) &&
-            ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
-              "EditBattleTeamRoleFull",
-            ),
+            (this.Pe?.OnRoleSelectFull
+              ? this.Pe?.OnRoleSelectFull()
+              : ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
+                  "EditBattleTeamRoleFull",
+                )),
           !t)
         );
       }),
-      (this.Qho = (i, e) => {
+      (this.Hlo = (i, e) => {
         var t = ModelManager_1.ModelManager.RoleSelectModel.RoleIndexMap,
-          r = new Array();
+          s = new Array();
         for (let i = 1; i <= EditFormationDefine_1.EDITE_FORAMTION_MAX_NUM; i++)
-          t.has(i) && r.push(t.get(i));
-        for (const h of i) r.includes(h) || r.push(h);
-        i = 0 < r.length;
+          t.has(i) && s.push(t.get(i));
+        for (const n of i) s.includes(n) || s.push(n);
+        i = 0 < s.length;
         if (
           (this.GetItem(11).SetUIActive(!i),
           this.GetButton(3).RootUIComp.SetUIActive(i),
           this.GetLoopScrollViewComponent(1).RootUIComp.SetUIActive(i),
           i)
         ) {
-          this.jho.RefreshByData(r);
-          for (const n of t.values()) {
-            var o = this.Kho.indexOf(n),
-              s = r.indexOf(n);
-            0 <= this.jho.IZt &&
-              o !== s &&
+          this.Flo.RefreshByData(s);
+          for (const a of t.values()) {
+            var r = this.Vlo.indexOf(a),
+              o = s.indexOf(a);
+            0 <= this.Flo.Iei &&
+              r !== o &&
               (ModelManager_1.ModelManager.RoleSelectModel.SelectedRoleSet.delete(
-                n.GetDataId(),
+                a.GetDataId(),
               ),
-              this.jho.UnsafeGetGridProxy(o)?.OnDeselected(!1));
+              this.Flo.UnsafeGetGridProxy(r)?.OnDeselected(!1));
           }
           for (const l of t.values()) {
-            var a = r.indexOf(l);
+            var h = s.indexOf(l);
             ModelManager_1.ModelManager.RoleSelectModel.SelectedRoleSet.add(
               l.GetDataId(),
             ),
-              this.jho.UnsafeGetGridProxy(a)?.OnForceSelected();
+              this.Flo.UnsafeGetGridProxy(h)?.OnForceSelected();
           }
-          this.Kho = r;
+          this.Vlo = s;
         }
       });
   }
@@ -142,32 +166,56 @@ class QuickRoleSelectView extends UiViewBase_1.UiViewBase {
       [9, UE.UIText],
       [10, UE.UIItem],
       [11, UE.UIItem],
+      [13, UE.UIItem],
+      [14, UE.UIItem],
     ]),
       (this.BtnBindInfo = [
-        [3, this.xUt],
-        [4, this.W9t],
+        [3, this.qAt],
+        [4, this.W7t],
       ]);
+  }
+  E5t() {
+    this.d5t ||
+      (this.GetItem(14).SetUIActive(!0),
+      (this.d5t = TimerSystem_1.TimerSystem.Delay(() => {
+        this.GetButton(4)?.RootUIComp.SetUIActive(!1),
+          this.GetItem(13)?.SetUIActive(!0),
+          this.uca?.PlaySequence("Progressing");
+      }, EditFormationDefine_1.DELAY_SHOW_LOADING))),
+      this.C5t ||
+        (this.C5t = TimerSystem_1.TimerSystem.Delay(() => {
+          UiManager_1.UiManager.ResetToBattleView();
+        }, EditFormationDefine_1.AUTO_CLOSE_EDIT_FORMATION));
   }
   OnStart() {
     (this.Pe = this.OpenParam),
-      (this.jho = new LoopScrollView_1.LoopScrollView(
+      (this.Flo = new LoopScrollView_1.LoopScrollView(
         this.GetLoopScrollViewComponent(1),
         this.GetItem(10).GetOwner(),
-        this.z9e,
-      ));
+        this.cHe,
+      )),
+      (this.uca = new UiSequencePlayer_1.UiSequencePlayer(this.GetItem(13)));
   }
   OnBeforeDestroy() {
     this.Pe?.OnHideFinish?.(),
       (this.Pe = void 0),
-      this.ami?.Destroy(),
-      (this.ami = void 0),
-      this.jho?.ClearGridProxies(),
-      (this.jho = void 0),
-      this.Kho?.splice(0, this.Kho.length),
-      (this.Kho = void 0);
+      this.adi?.Destroy(),
+      (this.adi = void 0),
+      this.Flo?.ClearGridProxies(),
+      (this.Flo = void 0),
+      this.Vlo?.splice(0, this.Vlo.length),
+      (this.Vlo = void 0),
+      this.d5t &&
+        (TimerSystem_1.TimerSystem.Has(this.d5t) &&
+          TimerSystem_1.TimerSystem.Remove(this.d5t),
+        (this.d5t = void 0)),
+      this.C5t &&
+        (TimerSystem_1.TimerSystem.Has(this.C5t) &&
+          TimerSystem_1.TimerSystem.Remove(this.C5t),
+        (this.C5t = void 0));
   }
   OnBeforeShow() {
-    this.Kho = this.Pe?.RoleList;
+    this.Vlo = this.Pe?.RoleList;
     var e = this.Pe?.SelectedRoleList,
       t =
         (ModelManager_1.ModelManager.RoleSelectModel.ClearData(),
@@ -178,22 +226,25 @@ class QuickRoleSelectView extends UiViewBase_1.UiViewBase {
         i <= EditFormationDefine_1.EDITE_FORAMTION_MAX_NUM && !(i > e.length);
         i++
       ) {
-        var r = e[i - 1];
-        for (const o of this.Kho)
-          if (o.GetDataId() === r) {
-            t.set(i, o);
+        var s = e[i - 1];
+        for (const r of this.Vlo)
+          if (r.GetDataId() === s) {
+            t.set(i, r);
             break;
           }
       }
     var i = this.GetItem(8);
-    (this.ami = new FilterSortEntrance_1.FilterSortEntrance(i, this.Qho)),
-      this.Kho.sort(
+    (this.adi = new FilterSortEntrance_1.FilterSortEntrance(i, this.Hlo)),
+      this.Vlo.sort(
         (i, e) => e.GetRoleConfig().Priority - i.GetRoleConfig().Priority,
       ),
-      this.ami.UpdateData(this.Pe.UseWay, this.Kho),
+      this.adi.UpdateData(this.Pe.UseWay, this.Vlo),
       this.GetItem(5).SetUIActive(!1),
       this.GetText(9).SetUIActive(!1),
-      LguiUtil_1.LguiUtil.SetLocalText(this.GetText(2), "ConfirmText");
+      LguiUtil_1.LguiUtil.SetLocalTextNew(
+        this.GetText(2),
+        "FastFormation_Finish",
+      );
   }
 }
 exports.QuickRoleSelectView = QuickRoleSelectView;

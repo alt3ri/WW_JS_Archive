@@ -39,9 +39,9 @@ class InteractEntity {
       (this.Hte = void 0),
       (this.EntityId = void 0),
       (this.InteractRange = -0),
-      (this.c_i = 0),
-      (this.gor = -100),
-      (this.por = -9999),
+      (this.cui = 0),
+      (this.Crr = -100),
+      (this.grr = -9999),
       (this.DirectOptionInstanceIds = []),
       (this.DirectOptionNames = []),
       (this.Jh = t),
@@ -60,11 +60,11 @@ class InteractEntity {
             Global_1.Global.BaseCharacter.CharacterActorComponent
               .ActorLocationProxy),
           (i = Vector_1.Vector.Distance(i, t)),
-          (this.c_i =
+          (this.cui =
             MathCommon_1.MathCommon.Clamp(i / this.InteractRange, 0, 1) *
-            this.gor)),
-        this.c_i)
-      : this.por;
+            this.Crr)),
+        this.cui)
+      : this.grr;
   }
   GetEntity() {
     return this.Jh;
@@ -74,19 +74,19 @@ exports.InteractEntity = InteractEntity;
 class PawnInteractController {
   constructor(t) {
     (this.Hte = void 0),
-      (this.vor = void 0),
-      (this.Mor = void 0),
-      (this.Sor = void 0),
-      (this.Eor = void 0),
-      (this.yor = void 0),
-      (this.Ior = void 0),
-      (this.Tor = ""),
-      (this.Lor = DEFAULT_INTERACT_RANGE),
-      (this.Dor = -1),
+      (this.frr = void 0),
+      (this.prr = void 0),
+      (this.vrr = void 0),
+      (this.Mrr = void 0),
+      (this.Err = void 0),
+      (this.Srr = void 0),
+      (this.yrr = ""),
+      (this.Irr = DEFAULT_INTERACT_RANGE),
+      (this.Trr = -1),
       (this.SectorRange = void 0),
       (this.LocationOffset = void 0),
-      (this.Ror = -0),
-      (this.Uor = "Option"),
+      (this.Lrr = -0),
+      (this.Drr = "Option"),
       (this.IsTurnAround = !1),
       (this.IsTurnRecoveryImmediately = !1),
       (this.IsWaitTurnComplete = !1),
@@ -95,20 +95,20 @@ class PawnInteractController {
       (this.PlayerInteractiveRange = void 0),
       (this.IsPlayerTurnAround = !1),
       (this.NUe = 0),
-      (this.Aor = 0),
-      (this.Por = 0),
+      (this.Rrr = 0),
+      (this.Urr = 0),
       (this.InteractEntity = void 0),
-      (this.wor = void 0),
-      (this.Bor = Vector_1.Vector.Create()),
-      (this.aXt = void 0),
+      (this.Arr = void 0),
+      (this.Prr = Vector_1.Vector.Create()),
+      (this.a$t = void 0),
       (this.TempDirectOptionInstances = new Array()),
       (this.PreDirectOptionInstances = new Array()),
       (this.OnInteractionUpdate = void 0),
       (this.OnInteractActionEnd = void 0),
       (this.InteractEntity = new InteractEntity(t.Entity)),
-      (this.vor = t),
+      (this.frr = t),
       (this.Hte = t.Entity.GetComponent(1)),
-      this.qor(),
+      this.wrr(),
       (this.InteractEntity.InteractRange = Math.max(
         this.InteractRange,
         this.InteractExitRange,
@@ -116,13 +116,13 @@ class PawnInteractController {
   }
   Dispose() {
     (this.Hte = void 0),
-      (this.vor = void 0),
-      (this.Mor = void 0),
-      (this.Eor = void 0),
-      (this.yor = void 0),
-      (this.Sor = void 0),
-      (this.wor = void 0),
-      (this.Ior = void 0),
+      (this.frr = void 0),
+      (this.prr = void 0),
+      (this.Mrr = void 0),
+      (this.Err = void 0),
+      (this.vrr = void 0),
+      (this.Arr = void 0),
+      (this.Srr = void 0),
       (this.PlayerInteractiveRange = void 0),
       (this.PreTalkConfigs = void 0),
       (this.SectorRange = void 0),
@@ -133,21 +133,21 @@ class PawnInteractController {
     var t = this.GetInteractiveOption();
     return this.HasDynamicOption && "Direct" === t?.DoIntactType && t.TidContent
       ? PublicUtil_1.PublicUtil.GetConfigTextByKey(t.TidContent)
-      : StringUtils_1.StringUtils.IsEmpty(this.Tor)
+      : StringUtils_1.StringUtils.IsEmpty(this.yrr)
         ? void 0
-        : PublicUtil_1.PublicUtil.GetConfigTextByKey(this.Tor);
+        : PublicUtil_1.PublicUtil.GetConfigTextByKey(this.yrr);
   }
   GetInteractType() {
-    return this.Uor;
+    return this.Drr;
   }
-  qor() {
+  wrr() {
     var t = this.Hte.CreatureData,
       i = t.GetPbEntityInitData();
     if (i) {
-      (this.Mor = new Array()),
-        (this.Eor = new Array()),
-        (this.yor = new Array()),
-        (this.Sor = new Array());
+      (this.prr = new Array()),
+        (this.Mrr = new Array()),
+        (this.Err = new Array()),
+        (this.vrr = new Array());
       var e = (0, IComponent_1.getComponent)(
         i.ComponentsData,
         "InteractComponent",
@@ -155,8 +155,8 @@ class PawnInteractController {
       if (e) {
         if (
           ((this.PreTalkConfigs = e.PreFlow),
-          e.Range && (this.Lor = e.Range),
-          e.ExitRange && (this.Dor = e.ExitRange),
+          e.Range && (this.Irr = e.Range),
+          e.ExitRange && (this.Trr = e.ExitRange),
           e.SectorRange && (this.SectorRange = e.SectorRange),
           e.SectorRangeFromPlayerToEntity)
         )
@@ -173,8 +173,8 @@ class PawnInteractController {
               e.InteractPointOffset.Y,
               e.InteractPointOffset.Z,
             )),
-          e.TidContent && (this.Tor = e.TidContent),
-          (this.Uor = e.DoIntactType),
+          e.TidContent && (this.yrr = e.TidContent),
+          (this.Drr = e.DoIntactType),
           e.TurnAroundType)
         ) {
           switch (e.TurnAroundType) {
@@ -193,13 +193,13 @@ class PawnInteractController {
               .FaceEachOtherWithRecoveryImmediately &&
             (this.IsTurnRecoveryImmediately = !0);
         }
-        (this.aXt = e.MatchRoleOption), this.Gor(e);
-      } else this.Ror = this.Lor;
-      i = t.ComponentDataMap.get("tps")?.tps;
-      this.Nor(i, e?.RandomInteract, t.GetPbDataId()),
-        this.Oor(i),
-        i && this.vor.SetServerLockInteract(i.hMs, "Init Interact Controller"),
-        this.kor();
+        (this.a$t = e.MatchRoleOption), this.Brr(e);
+      } else this.Lrr = this.Irr;
+      i = t.ComponentDataMap.get("vys")?.vys;
+      this.brr(i, e?.RandomInteract, t.GetPbDataId()),
+        this.qrr(i),
+        i && this.frr.SetServerLockInteract(i.IIs, "Init Interact Controller"),
+        this.Grr();
     } else
       Log_1.Log.CheckError() &&
         Log_1.Log.Error(
@@ -210,17 +210,17 @@ class PawnInteractController {
           ["PbDataId:", t.GetPbDataId()],
         );
   }
-  Oor(t) {
-    if (t?.sMs)
-      for (const r of t.sMs) {
+  qrr(t) {
+    if (t?.EIs)
+      for (const r of t.EIs) {
         var i = ModelManager_1.ModelManager.InteractionModel.GetDynamicConfig(
-            r.gFn,
+            r.W5n,
           ),
           e =
             LevelGeneralContextUtil_1.LevelGeneralContextUtil.CreateByServerContext(
-              r.Hms,
+              r.nvs,
             );
-        this.AddDynamicInteractOption(i, e, r.nMs, !1);
+        this.AddDynamicInteractOption(i, e, r.SIs, r.dca, !1);
       }
   }
   ClearDirectOptions() {
@@ -229,7 +229,7 @@ class PawnInteractController {
       (this.InteractEntity.DirectOptionNames.length = 0));
   }
   UpdateDirectOptions(t = !0, i = !1) {
-    if (this.Mor && this.Hte) {
+    if (this.prr && this.Hte) {
       var e = this.Hte.Owner;
       if (
         e &&
@@ -239,12 +239,12 @@ class PawnInteractController {
         (this.InteractEntity.DirectOptionNames.length = 0),
         !this.HasDynamicOption)
       ) {
-        for (const r of this.Mor)
+        for (const r of this.prr)
           r.Disabled ||
             "Direct" !== r.DoIntactType ||
             (i && "Flow" !== r.Type.Type) ||
             (1 !== r.CustomOptionType &&
-              this.For(r) &&
+              this.Nrr(r) &&
               (this.TempDirectOptionInstances.push(r),
               this.InteractEntity.DirectOptionInstanceIds.push(r.InstanceId),
               this.InteractEntity.DirectOptionNames.push(r.TidContent)));
@@ -273,13 +273,13 @@ class PawnInteractController {
       }
     }
   }
-  Nor(t, i, e) {
-    if (t && t.aMs && t.aMs.length)
+  brr(t, i, e) {
+    if (t && t.yIs && t.yIs.length)
       if (i)
-        for (const n of t.aMs) {
+        for (const n of t.yIs) {
           var r = i.Options[n].Option,
-            r = this.Vor(r, 2);
-          (r.RandomOptionIndex = n), this.Mor.push(r);
+            r = this.Orr(r, 2);
+          (r.RandomOptionIndex = n), this.prr.push(r);
         }
       else
         Log_1.Log.CheckError() &&
@@ -288,7 +288,7 @@ class PawnInteractController {
             e,
           ]);
   }
-  Gor(e) {
+  Brr(e) {
     if (
       (e.InteractIcon
         ? (this.InteractIcon = e.InteractIcon)
@@ -298,16 +298,16 @@ class PawnInteractController {
       0 < e.Options?.length)
     )
       for (let t = 0, i = e.Options.length; t < i; t++) {
-        var r = this.Vor(e.Options[t], 0);
-        this.Mor.push(r);
+        var r = this.Orr(e.Options[t], 0);
+        this.prr.push(r);
       }
   }
-  kor() {
-    this.Hor(),
-      this.jor(),
-      (this.Sor.length = 0),
+  Grr() {
+    this.krr(),
+      this.Frr(),
+      (this.vrr.length = 0),
       this.OnInteractionUpdate && this.OnInteractionUpdate(),
-      this.vor && this.vor.UpdateInteractRange();
+      this.frr && this.frr.UpdateInteractRange();
   }
   IsInSectorRange() {
     if (!this.SectorRange) return !0;
@@ -319,7 +319,7 @@ class PawnInteractController {
       var s = this.Hte.CreatureData.GetEntityType(),
         s =
           ((t =
-            s === Protocol_1.Aki.Protocol.HBs.Proto_SceneItem
+            s === Protocol_1.Aki.Protocol.wks.Proto_SceneItem
               ? this.Hte.ActorRightProxy
               : this.Hte.ActorForwardProxy),
           PawnInteractController.cz),
@@ -368,12 +368,12 @@ class PawnInteractController {
     );
   }
   IsMatchRoleOption() {
-    return !this.aXt || this.aXt?.length <= 0
+    return !this.a$t || this.a$t?.length <= 0
       ? !ModelManager_1.ModelManager.SceneTeamModel.IsPhantomTeam
-      : SceneTeamController_1.SceneTeamController.IsMatchRoleOption(this.aXt);
+      : SceneTeamController_1.SceneTeamController.IsMatchRoleOption(this.a$t);
   }
   GetInteractPoint() {
-    this.Bor.DeepCopy(this.Hte.ActorLocationProxy);
+    this.Prr.DeepCopy(this.Hte.ActorLocationProxy);
     var t = PawnInteractController.cz,
       i = this.LocationOffset;
     return (
@@ -381,76 +381,76 @@ class PawnInteractController {
         (0 === i.X && 0 === i.Y && 0 === i.Z) ||
         (0 !== i.X &&
           (this.Hte.ActorForwardProxy.Multiply(i.X, t),
-          this.Bor.AdditionEqual(t)),
+          this.Prr.AdditionEqual(t)),
         0 !== i.Y &&
           (this.Hte.ActorRightProxy.Multiply(i.Y, t),
-          this.Bor.AdditionEqual(t)),
+          this.Prr.AdditionEqual(t)),
         0 !== i.Z &&
-          (this.Hte.ActorUpProxy.Multiply(i.Z, t), this.Bor.AdditionEqual(t))),
-      this.Bor
+          (this.Hte.ActorUpProxy.Multiply(i.Z, t), this.Prr.AdditionEqual(t))),
+      this.Prr
     );
   }
-  Hor() {
-    if (((this.Ror = this.Lor), this.Mor))
-      for (const t of this.Mor) t.Range > this.Ror && (this.Ror = t.Range);
+  krr() {
+    if (((this.Lrr = this.Irr), this.prr))
+      for (const t of this.prr) t.Range > this.Lrr && (this.Lrr = t.Range);
   }
-  jor() {
-    this.Mor &&
-      0 !== this.Mor.length &&
-      ((this.Ior = this.Mor[0]), (this.wor = void 0));
+  Frr() {
+    this.prr &&
+      0 !== this.prr.length &&
+      ((this.Srr = this.prr[0]), (this.Arr = void 0));
   }
   GetInteractiveOption(i = !1) {
-    if (this.Por === Time_1.Time.Frame && this.wor) return this.wor;
+    if (this.Urr === Time_1.Time.Frame && this.Arr) return this.Arr;
     if (this.Hte && this.Hte.Owner) {
-      var e = this.Mor;
+      var e = this.prr;
       if (e) {
-        this.wor = void 0;
+        this.Arr = void 0;
         for (let t = e.length - 1; -1 < t; t--) {
           var r = e[t];
           if (!r.Disabled)
             if (!i || "Flow" === r.Type.Type)
-              if (this.For(r)) {
-                this.wor = r;
+              if (this.Nrr(r)) {
+                this.Arr = r;
                 break;
               }
         }
-        return (this.Por = Time_1.Time.Frame), this.wor;
+        return (this.Urr = Time_1.Time.Frame), this.Arr;
       }
     }
   }
-  Vor(t, i, e, r = 0, n = 0) {
-    var s = t.Range || this.Lor;
-    let o = this.Uor;
-    t.DoIntactType && (o = t.DoIntactType);
-    var h = new LevelGameplayActionsDefine_1.CommonInteractOption();
-    return h.Init(++this.NUe, t, e, s, o, i, r, n), h;
+  Orr(t, i, e, r = 0, n = 0, s = !1) {
+    var o = t.Range || this.Irr;
+    let h = this.Drr;
+    t.DoIntactType && (h = t.DoIntactType);
+    var a = new LevelGameplayActionsDefine_1.CommonInteractOption();
+    return a.Init(++this.NUe, t, e, o, h, i, r, n, s), a;
   }
-  AddDynamicInteractOption(t, i, e, r = !0) {
-    if (!this.Mor) return -1;
-    let n = 0,
-      s = 0;
+  AddDynamicInteractOption(t, i, e, r = !1, n = !0) {
+    if (!this.prr) return -1;
+    let s = 0,
+      o = 0;
     i &&
       (i instanceof LevelGeneralContextDefine_1.QuestContext
-        ? ((s = 1), (n = i.QuestId))
+        ? ((o = 1), (s = i.QuestId))
         : i instanceof LevelGeneralContextDefine_1.GeneralLogicTreeContext &&
-          i.BtType === Protocol_1.Aki.Protocol.NCs.Proto_BtTypeQuest &&
-          ((s = 1), (n = i.TreeConfigId)));
-    t = this.Vor(t, 1, i, 0, s);
+          i.BtType === Protocol_1.Aki.Protocol.tps.Proto_BtTypeQuest &&
+          ((o = 1), (s = i.TreeConfigId)));
+    t = this.Orr(t, 1, i, 0, o, r);
     return (
-      (t.OptionContentId = n),
+      (t.OptionContentId = s),
       void 0 !== e && (t.TidContent = e),
-      this.Mor.push(t),
-      this.Eor.push(t),
-      1 === s && (this.yor.push(t), this.Wor()),
+      this.prr.push(t),
+      this.Mrr.push(t),
+      1 === o && (this.Err.push(t), this.Vrr()),
       i &&
-        ((e = this.Kor(t.Context)),
-        this.ChangeOptionDisabled(t.InstanceId, !e)),
-      r && this.kor(),
+        ((r = this.Hrr(t.Context)),
+        this.ChangeOptionDisabled(t.InstanceId, !r)),
+      n && this.Grr(),
       t.InstanceId
     );
   }
-  Wor() {
-    this.yor.sort((t, i) => {
+  Vrr() {
+    this.Err.sort((t, i) => {
       (t = ModelManager_1.ModelManager.QuestNewModel.GetQuest(
         t.OptionContentId,
       )),
@@ -467,28 +467,28 @@ class PawnInteractController {
     });
   }
   RemoveDynamicInteractOption(i) {
-    if (!this.Mor) return !1;
+    if (!this.prr) return !1;
     let e = !1;
-    for (let t = this.Eor.length - 1; -1 < t; t--) {
-      var r = this.Eor[t];
+    for (let t = this.Mrr.length - 1; -1 < t; t--) {
+      var r = this.Mrr[t];
       if (r.Guid === i) {
-        (e = 1 === r.ContentType), this.Eor.splice(t, 1);
+        (e = 1 === r.ContentType), this.Mrr.splice(t, 1);
         break;
       }
     }
     if (e)
-      for (let t = this.yor.length - 1; -1 < t; t--)
-        if (this.yor[t].Guid === i) {
-          this.yor.splice(t, 1);
+      for (let t = this.Err.length - 1; -1 < t; t--)
+        if (this.Err[t].Guid === i) {
+          this.Err.splice(t, 1);
           break;
         }
     let n = !1;
-    for (let t = this.Mor.length - 1; -1 < t; t--)
-      if (this.Mor[t].Guid === i) {
-        (n = !0), this.Mor.splice(t, 1)[0].Dispose();
+    for (let t = this.prr.length - 1; -1 < t; t--)
+      if (this.prr[t].Guid === i) {
+        (n = !0), this.prr.splice(t, 1)[0].Dispose();
         break;
       }
-    return n && this.kor(), n;
+    return n && this.Grr(), n;
   }
   AddClientInteractOption(t, i, e = "Option", r, n, s = 0, o) {
     var h = new LevelGameplayActionsDefine_1.CommonActionInfo(),
@@ -504,77 +504,77 @@ class PawnInteractController {
       r && (t.Range = r),
       n && (t.TidContent = n),
       o && (this.LocationOffset = o),
-      this.Mor
-        ? ((h = this.Vor(t, 3, void 0, s)),
-          this.Mor.push(h),
-          this.kor(),
+      this.prr
+        ? ((h = this.Orr(t, 3, void 0, s)),
+          this.prr.push(h),
+          this.Grr(),
           h.InstanceId)
         : -1
     );
   }
   RemoveClientInteractOption(i) {
-    if (!this.Mor) return !1;
+    if (!this.prr) return !1;
     let e = !1;
-    for (let t = this.Mor.length - 1; -1 < t; t--)
-      if (this.Mor[t].InstanceId === i) {
-        (e = !0), this.Mor.splice(t, 1)[0].Dispose();
+    for (let t = this.prr.length - 1; -1 < t; t--)
+      if (this.prr[t].InstanceId === i) {
+        (e = !0), this.prr.splice(t, 1)[0].Dispose();
         break;
       }
-    return e && this.kor(), e;
+    return e && this.Grr(), e;
   }
   OnChangeModeFinish() {
-    if (this.Mor)
-      for (const i of this.Mor) {
+    if (this.prr)
+      for (const i of this.prr) {
         var t;
         i.Context &&
           1 === i.OptionType &&
-          ((t = this.Kor(i.Context)),
+          ((t = this.Hrr(i.Context)),
           this.ChangeOptionDisabled(i.InstanceId, !t));
       }
   }
   ChangeOptionText(i, t) {
     var e;
-    this.Mor && (e = this.Mor.find((t) => t.Guid === i)) && (e.TidContent = t);
+    this.prr && (e = this.prr.find((t) => t.Guid === i)) && (e.TidContent = t);
   }
   ChangeOptionDisabled(i, t) {
     var e;
-    this.Mor &&
-      (e = this.Mor.find((t) => t.InstanceId === i)) &&
+    this.prr &&
+      (e = this.prr.find((t) => t.InstanceId === i)) &&
       (e.Disabled = t);
   }
   ChangeInteractOption(t) {
-    this.Ior = t;
+    this.Srr = t;
   }
   get CurrentInteractOption() {
-    return this.Ior;
+    return this.Srr;
   }
   get Options() {
-    if (this.Sor && this.Mor)
-      for (let t = (this.Sor.length = 0), i = this.Mor.length; t < i; t++) {
-        var e = this.Mor[t];
-        e.Disabled || this.Sor.push(e);
+    if (this.vrr && this.prr)
+      for (let t = (this.vrr.length = 0), i = this.prr.length; t < i; t++) {
+        var e = this.prr[t];
+        e.Disabled || this.vrr.push(e);
       }
-    return this.Sor;
+    return this.vrr;
   }
   get ShowOptions() {
     var e = new Array();
-    for (const t of this.yor)
+    for (const t of this.Err)
       StringUtils_1.StringUtils.IsEmpty(t.TidContent) ||
         t.Disabled ||
         "Option" !== t.DoIntactType ||
-        (this.For(t) && e.push(t));
-    for (let t = 0, i = this.Mor.length; t < i; t++) {
-      var r = this.Mor[t];
+        (this.Nrr(t) && e.push(t));
+    for (let t = 0, i = this.prr.length; t < i; t++) {
+      var r = this.prr[t];
       StringUtils_1.StringUtils.IsEmpty(r.TidContent) ||
         r.Disabled ||
         "Option" !== r.DoIntactType ||
         1 === r.ContentType ||
-        (this.For(r) && e.push(r));
+        (this.Nrr(r) && e.push(r));
     }
     return e.push(void 0), e;
   }
   get HasDynamicOption() {
-    return 0 < this.Eor.length;
+    return 0 < this.Mrr.length;
   }
   get Owner() {
     return this.Hte?.Owner;
@@ -586,32 +586,32 @@ class PawnInteractController {
     return this.Hte?.CreatureData;
   }
   HasInteractOptions() {
-    return void 0 !== this.Mor?.length && 0 < this.Mor?.length;
+    return void 0 !== this.prr?.length && 0 < this.prr?.length;
   }
   get InteractRange() {
-    return this.Ror;
+    return this.Lrr;
   }
   get InteractExitRange() {
-    return -1 === this.Dor ? this.Ror : this.Dor;
+    return -1 === this.Trr ? this.Lrr : this.Trr;
   }
   GetAutoTriggerOption() {
-    if (this.Mor)
-      for (let t = 0, i = this.Mor.length; t < i; t++) {
-        var e = this.Mor[t];
-        if ("Auto" === e.DoIntactType) if (this.For(e)) return e;
+    if (this.prr)
+      for (let t = 0, i = this.prr.length; t < i; t++) {
+        var e = this.prr[t];
+        if ("Auto" === e.DoIntactType) if (this.Nrr(e)) return e;
       }
   }
   InteractOption(t = 0) {
-    t >= this.Mor.length ||
-      (!(t = this.Mor[t]).Disabled &&
-        this.For(t) &&
+    t >= this.prr.length ||
+      (!(t = this.prr[t]).Disabled &&
+        this.Nrr(t) &&
         (PlotController_1.PlotController.EndInteraction("Flow" === t.Type.Type),
         TsInteractionUtils_1.TsInteractionUtils.HandleInteractionOptionNew(
           t,
           this,
         )));
   }
-  For(t) {
+  Nrr(t) {
     if (
       !ControllerHolder_1.ControllerHolder.LevelGeneralController.CheckConditionNew(
         t.Condition,
@@ -630,14 +630,14 @@ class PawnInteractController {
         if (i) {
           (i = i.ActorLocationProxy.Z - i.HalfHeight),
             (t = t.ActorLocationProxy.Z - t.HalfHeight);
-          if (Math.abs(i - t) > EXECUTION_MAX_HEIGHT_DIFF || this.Qor())
+          if (Math.abs(i - t) > EXECUTION_MAX_HEIGHT_DIFF || this.jrr())
             return !1;
         }
       }
     }
     return !0;
   }
-  Qor() {
+  jrr() {
     var t,
       i = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity,
       e = i.Entity.GetComponent(3),
@@ -686,10 +686,10 @@ class PawnInteractController {
     this.PreTalkConfigs;
   }
   RecordInteraction() {
-    this.Aor++;
+    this.Rrr++;
   }
   HasDynamicOptionType(t) {
-    for (const r of this.Eor)
+    for (const r of this.Mrr)
       if (6 === r.Context.Type) {
         var i = r.Context.TreeConfigId,
           e = ModelManager_1.ModelManager.QuestNewModel.GetQuest(i)?.GetNode(
@@ -701,24 +701,24 @@ class PawnInteractController {
     return !1;
   }
   HasDynamicOptionTask() {
-    for (const t of this.Eor)
+    for (const t of this.Mrr)
       if (6 === t.Context.Type) return 0 === t.Context.NodeId;
     return !1;
   }
   CheckInteractCount(t, i) {
     switch (i) {
       case 0:
-        return this.Aor === t;
+        return this.Rrr === t;
       case 1:
-        return this.Aor !== t;
+        return this.Rrr !== t;
       case 2:
-        return this.Aor < t;
+        return this.Rrr < t;
       case 3:
-        return this.Aor <= t;
+        return this.Rrr <= t;
       case 4:
-        return this.Aor > t;
+        return this.Rrr > t;
       case 5:
-        return this.Aor >= t;
+        return this.Rrr >= t;
     }
     return !1;
   }
@@ -726,64 +726,64 @@ class PawnInteractController {
     return this.Hte.CreatureData.GetPbDataId();
   }
   GetOptionByIndex(t) {
-    if (this.Mor) {
+    if (this.prr) {
       var i = t + 1;
-      for (const e of this.Mor) if (e.InstanceId === i) return e;
+      for (const e of this.prr) if (e.InstanceId === i) return e;
     }
   }
   GetOptionByInstanceId(t) {
-    if (this.Mor) for (const i of this.Mor) if (i.InstanceId === t) return i;
+    if (this.prr) for (const i of this.prr) if (i.InstanceId === t) return i;
   }
   GetOptionByGuid(t) {
-    if (t && this.Mor) for (const i of this.Mor) if (i.Guid === t) return i;
+    if (t && this.prr) for (const i of this.prr) if (i.Guid === t) return i;
   }
   HandleInteractRequest() {
-    this.vor?.Valid &&
+    this.frr?.Valid &&
       (WorldFunctionLibrary_1.default.GetEntityTypeByEntity(
-        this.vor.Entity.Id,
-      ) === Protocol_1.Aki.Protocol.HBs.Proto_Npc &&
-        this.vor.Entity.GetComponent(36)?.MoveToLocationLogic?.PushMoveInfo(),
-      this.vor.SetInteractionState(!1, "发送交互请求"),
+        this.frr.Entity.Id,
+      ) === Protocol_1.Aki.Protocol.wks.Proto_Npc &&
+        this.frr.Entity.GetComponent(37)?.MoveToLocationLogic?.PushMoveInfo(),
+      this.frr.SetInteractionState(!1, "发送交互请求"),
       InputDistributeController_1.InputDistributeController.RefreshInputTag()),
       this.OnInteractActionEnd && this.OnInteractActionEnd();
   }
   HandleInteractResponse(t, i) {
-    this.vor?.Valid &&
-      (this.vor.SetServerLockInteract(i, "Interaction Response"),
-      this.vor.SetInteractionState(!0, "接收交互应答")),
-      t !== Protocol_1.Aki.Protocol.lkn.Sys
+    this.frr?.Valid &&
+      (this.frr.SetServerLockInteract(i, "Interaction Response"),
+      this.frr.SetInteractionState(!0, "接收交互应答")),
+      t !== Protocol_1.Aki.Protocol.O4n.NRs
         ? (Log_1.Log.CheckInfo() &&
             Log_1.Log.Info("Interaction", 37, "交互失败", ["errorCode", t]),
-          this.vor.SetServerLockInteract(!1, "交互失败"),
-          t !== Protocol_1.Aki.Protocol.lkn.Proto_ErrSceneEntityNotExist &&
-            t !== Protocol_1.Aki.Protocol.lkn.Proto_ErrInteractRange &&
-            t !== Protocol_1.Aki.Protocol.lkn.Proto_ErrInteractCd &&
-            t !== Protocol_1.Aki.Protocol.lkn.Proto_ErrPreCondition &&
+          this.frr.SetServerLockInteract(!1, "交互失败"),
+          t !== Protocol_1.Aki.Protocol.O4n.Proto_ErrSceneEntityNotExist &&
+            t !== Protocol_1.Aki.Protocol.O4n.Proto_ErrInteractRange &&
+            t !== Protocol_1.Aki.Protocol.O4n.Proto_ErrInteractCd &&
+            t !== Protocol_1.Aki.Protocol.O4n.Proto_ErrPreCondition &&
             t !==
-              Protocol_1.Aki.Protocol.lkn.Proto_ErrInteractOptionGuidInvalid &&
+              Protocol_1.Aki.Protocol.O4n.Proto_ErrInteractOptionGuidInvalid &&
             ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
               t,
-              18507,
+              11211,
             ),
           !ModelManager_1.ModelManager.PlotModel.IsInPlot &&
             UiManager_1.UiManager.IsViewShow("PlotView") &&
             PlotController_1.PlotController.EndInteraction(!1, !0))
-        : ((i = this.Hte?.Entity?.GetComponent(125)) && i.CloseAllCollisions(),
+        : ((i = this.Hte?.Entity?.GetComponent(127)) && i.CloseAllCollisions(),
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.OnInteractDropItemSuccess,
           ));
   }
   HandleInteractClientAction() {
-    this.vor?.Valid &&
-      (this.vor.SetInteractionState(!1, "执行纯客户端行为"),
+    this.frr?.Valid &&
+      (this.frr.SetInteractionState(!1, "执行纯客户端行为"),
       InputDistributeController_1.InputDistributeController.RefreshInputTag());
   }
   FinishInteractClientAction() {
-    this.vor?.Valid &&
-      (this.vor.SetInteractionState(!0, "完成纯客户端行为"),
+    this.frr?.Valid &&
+      (this.frr.SetInteractionState(!0, "完成纯客户端行为"),
       InputDistributeController_1.InputDistributeController.RefreshInputTag());
   }
-  Kor(t) {
+  Hrr(t) {
     if (!t) return !0;
     let i = !0;
     switch (t.Type) {
@@ -808,9 +808,9 @@ class PawnInteractController {
     return i;
   }
   GetInteractionDebugInfos() {
-    if (this.Mor && 0 < this.Mor?.length) {
+    if (this.prr && 0 < this.prr?.length) {
       let t = "";
-      for (const e of this.Mor) {
+      for (const e of this.prr) {
         t =
           (t =
             (t =
@@ -824,7 +824,7 @@ class PawnInteractController {
             "\t\t") +
           ("Enable: " + !e.Disabled) +
           "\t\t";
-        var i = this.For(e);
+        var i = this.Nrr(e);
         if (((t += "满足开启条件: " + i), !i))
           for (const r of e.Condition.Conditions)
             t = (t += "\n") + "Condition: " + JSON.stringify(r);

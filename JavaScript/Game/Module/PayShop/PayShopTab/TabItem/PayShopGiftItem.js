@@ -20,22 +20,22 @@ class PayShopGiftItem extends GridProxyAbstract_1.GridProxyAbstract {
       (this.SellTimerId = void 0),
       (this.DiscountTimerId = void 0),
       (this.ToggleFunction = void 0),
-      (this.QBt = void 0),
-      (this.uFi = !1),
-      (this.O3e = 0),
-      (this.xIt = void 0),
-      (this.x4e = () => {
+      (this.Ybt = void 0),
+      (this.u3i = !1),
+      (this.t5e = 0),
+      (this.GTt = void 0),
+      (this.Bke = () => {
         this.GetExtendToggle(0).SetToggleState(0, !1),
           this.ToggleFunction(this.Data.GetGoodsId());
       }),
-      (this.qni = () => {
-        HelpController_1.HelpController.OpenHelpById(this.O3e);
+      (this.Gsi = () => {
+        HelpController_1.HelpController.OpenHelpById(this.t5e);
       }),
-      (this.i2i = (i) => {
+      (this.iFi = (i) => {
         var t = this.Data.GetGoodsData();
         t.IsDirect() || (t.Price.Id === i && this.SetPrice());
       }),
-      (this.cFi = () => {
+      (this.c3i = () => {
         (this.DiscountTimerId = void 0),
           this.SetDiscountTime(),
           this.Data.HasDiscount() ||
@@ -45,8 +45,8 @@ class PayShopGiftItem extends GridProxyAbstract_1.GridProxyAbstract {
               this.Data.GetGoodsId(),
             ));
       }),
-      (this.$Bt = LguiResourceManager_1.LguiResourceManager.InvalidId),
-      (this.mFi = i),
+      (this.zbt = LguiResourceManager_1.LguiResourceManager.InvalidId),
+      (this.m3i = i),
       t && this.CreateThenShowByActor(t.GetOwner());
   }
   OnRegisterComponent() {
@@ -67,31 +67,31 @@ class PayShopGiftItem extends GridProxyAbstract_1.GridProxyAbstract {
       [13, UE.UIButtonComponent],
     ]),
       (this.BtnBindInfo = [
-        [0, this.x4e],
-        [13, this.qni],
+        [0, this.Bke],
+        [13, this.Gsi],
       ]);
   }
   OnStart() {
     this.GetButton(13).RootUIComp.SetUIActive(!1);
   }
   AddEventListener() {
-    this.uFi ||
-      ((this.uFi = !0),
+    this.u3i ||
+      ((this.u3i = !0),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnPlayerCurrencyChange,
-        this.i2i,
+        this.iFi,
       ));
   }
   RemoveEventListener() {
-    this.uFi &&
-      ((this.uFi = !1),
+    this.u3i &&
+      ((this.u3i = !1),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnPlayerCurrencyChange,
-        this.i2i,
+        this.iFi,
       ));
   }
   SetBelongViewName(i) {
-    this.xIt = i;
+    this.GTt = i;
   }
   Refresh(i) {
     this.AddEventListener(), this.RefreshGiftItem(i);
@@ -108,7 +108,7 @@ class PayShopGiftItem extends GridProxyAbstract_1.GridProxyAbstract {
     this.RemoveEventListener(),
       this.RemoveSellTimer(),
       this.RemoveDiscountTimer(),
-      LguiResourceManager_1.LguiResourceManager.CancelLoadPrefab(this.$Bt);
+      LguiResourceManager_1.LguiResourceManager.CancelLoadPrefab(this.zbt);
   }
   RefreshState() {
     var i = this.Data.GetItemData();
@@ -124,12 +124,12 @@ class PayShopGiftItem extends GridProxyAbstract_1.GridProxyAbstract {
   SetQuality(i) {
     i = ConfigManager_1.ConfigManager.ItemConfig.GetQualityConfig(i);
     let t = i.PayShopTexture;
-    1 === this.mFi && (t = i.NewPayShopTexture),
+    1 === this.m3i && (t = i.NewPayShopTexture),
       this.SetTextureByPath(t, this.GetTexture(2));
   }
   SetIcon() {
     var i = this.GetTexture(1);
-    this.SetItemIcon(i, this.Data.GetItemData().ItemId, this.xIt);
+    this.SetItemIcon(i, this.Data.GetItemData().ItemId, this.GTt);
   }
   SetTips() {
     this.RootItem.SetAlpha(1);
@@ -183,7 +183,7 @@ class PayShopGiftItem extends GridProxyAbstract_1.GridProxyAbstract {
         i ||
           ((e = this.Data.GetDiscountRemainTime()),
           (this.DiscountTimerId = TimerSystem_1.RealTimeTimerSystem.Delay(
-            this.cFi,
+            this.c3i,
             e.RemainingTime * CommonDefine_1.MILLIONSECOND_PER_SECOND,
           ))))
       : t.SetUIActive(!1);
@@ -217,18 +217,18 @@ class PayShopGiftItem extends GridProxyAbstract_1.GridProxyAbstract {
   }
   ShowDebugText() {
     GlobalData_1.GlobalData.IsPlayInEditor &&
-      (this.QBt
-        ? this.QBt?.SetText(this.Data.GetGoodsId().toString())
-        : (LguiResourceManager_1.LguiResourceManager.CancelLoadPrefab(this.$Bt),
-          (this.$Bt =
+      (this.Ybt
+        ? this.Ybt?.SetText(this.Data.GetGoodsId().toString())
+        : (LguiResourceManager_1.LguiResourceManager.CancelLoadPrefab(this.zbt),
+          (this.zbt =
             LguiResourceManager_1.LguiResourceManager.LoadPrefabByResourceId(
               "UiItem_DebugText_Prefab",
               this.RootItem,
               (i) => {
-                (this.$Bt =
+                (this.zbt =
                   LguiResourceManager_1.LguiResourceManager.InvalidId),
-                  (this.QBt = i.GetComponentByClass(UE.UIText.StaticClass())),
-                  this.QBt?.SetText(this.Data.GetGoodsId().toString());
+                  (this.Ybt = i.GetComponentByClass(UE.UIText.StaticClass())),
+                  this.Ybt?.SetText(this.Data.GetGoodsId().toString());
               },
             ))));
   }
@@ -246,7 +246,7 @@ class PayShopGiftItem extends GridProxyAbstract_1.GridProxyAbstract {
     this.ToggleFunction = i;
   }
   SetTipsIdAndShowTipsButton(i) {
-    this.GetButton(13).RootUIComp.SetUIActive(!0), (this.O3e = i);
+    this.GetButton(13).RootUIComp.SetUIActive(!0), (this.t5e = i);
   }
 }
 exports.PayShopGiftItem = PayShopGiftItem;

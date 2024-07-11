@@ -8,7 +8,7 @@ class MiniRoleHeadItem extends UiPanelBase_1.UiPanelBase {
   constructor(e, i) {
     super(),
       this.CreateThenShowByResourceIdAsync("UiItem_MiniRoleHead_Prefab", e, !1),
-      (this.Gxt = i);
+      (this.kwt = i);
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [[0, UE.UITexture]];
@@ -17,10 +17,10 @@ class MiniRoleHeadItem extends UiPanelBase_1.UiPanelBase {
     var e,
       i = this.GetTexture(0);
     i &&
-      (e = RoleInfoById_1.configRoleInfoById.GetConfig(this.Gxt)) &&
+      (e = RoleInfoById_1.configRoleInfoById.GetConfig(this.kwt)) &&
       "" !== (e = e.RoleHeadIconBig) &&
       0 !== e.length &&
-      this.SetRoleIcon(e, i, this.Gxt);
+      this.SetRoleIcon(e, i, this.kwt);
   }
 }
 exports.MiniRoleHeadItem = MiniRoleHeadItem;

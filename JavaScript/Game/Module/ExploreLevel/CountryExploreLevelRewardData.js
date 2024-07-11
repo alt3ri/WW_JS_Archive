@@ -4,67 +4,67 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const ConfigManager_1 = require("../../Manager/ConfigManager");
 class CountryExploreLevelRewardData {
   constructor() {
-    (this.rTn = ""),
-      (this.nTn = ""),
-      (this.sTn = ""),
-      (this.i3i = 0),
-      (this.aTn = 0),
-      (this.hTn = 0),
-      (this.lTn = ""),
-      (this.Z4t = 0),
-      (this._Tn = !1),
-      (this.O3e = 0),
-      (this.uTn = "");
+    (this.lHs = ""),
+      (this._Hs = ""),
+      (this.uHs = ""),
+      (this.i4i = 0),
+      (this.cHs = 0),
+      (this.mHs = 0),
+      (this.dHs = ""),
+      (this.Z5t = 0),
+      (this.CHs = !1),
+      (this.t5e = 0),
+      (this.gHs = "");
   }
   Initialize(t) {
-    (this.rTn = t.ScoreName),
-      (this.nTn = t.Reward),
-      (this.sTn = t.ScoreTexturePath),
-      (this.i3i = t.ShowItem),
-      (this.aTn = t.NeedScore),
-      (this.hTn = t.Drop),
-      (this.lTn = t.Pic),
-      (this.Z4t = t.ExploreLevel),
-      (this._Tn = t.Show),
-      (this.O3e = t.Help);
+    (this.lHs = t.ScoreName),
+      (this._Hs = t.Reward),
+      (this.uHs = t.ScoreTexturePath),
+      (this.i4i = t.ShowItem),
+      (this.cHs = t.NeedScore),
+      (this.mHs = t.Drop),
+      (this.dHs = t.Pic),
+      (this.Z5t = t.ExploreLevel),
+      (this.CHs = t.Show),
+      (this.t5e = t.Help);
     (t = t.Country),
       (t = ConfigManager_1.ConfigManager.InfluenceConfig.GetCountryConfig(t));
-    this.uTn = t.Title;
+    this.gHs = t.Title;
   }
   GetScoreNameId() {
-    return this.rTn;
+    return this.lHs;
   }
   GetRewardNameId() {
-    return this.nTn;
+    return this._Hs;
   }
   GetScoreTexturePath() {
-    return this.sTn;
+    return this.uHs;
   }
   GetPreviewItemConfigId() {
-    return this.i3i;
+    return this.i4i;
   }
   GetMaxExploreScore() {
-    return this.aTn;
+    return this.cHs;
   }
   GetCountryNameId() {
-    return this.uTn;
+    return this.gHs;
   }
   GetDropItemNumMap() {
     return ConfigManager_1.ConfigManager.ExploreLevelConfig.GetDropShowInfo(
-      this.hTn,
+      this.mHs,
     );
   }
   GetExploreLevel() {
-    return this.Z4t;
+    return this.Z5t;
   }
   GetUnlockSpritePath() {
-    return this.lTn;
+    return this.dHs;
   }
   IsShowUnlockSprite() {
-    return this._Tn;
+    return this.CHs;
   }
   GetHelpId() {
-    return this.O3e;
+    return this.t5e;
   }
 }
 exports.CountryExploreLevelRewardData = CountryExploreLevelRewardData;

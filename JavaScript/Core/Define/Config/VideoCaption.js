@@ -20,6 +20,24 @@ class VideoCaption {
   get CaptionText() {
     return this.captiontext();
   }
+  get ShowMomentEn() {
+    return this.showmomenten();
+  }
+  get DurationEn() {
+    return this.durationen();
+  }
+  get ShowMomentKo() {
+    return this.showmomentko();
+  }
+  get DurationKo() {
+    return this.durationko();
+  }
+  get ShowMomentJa() {
+    return this.showmomentja();
+  }
+  get DurationJa() {
+    return this.durationja();
+  }
   __init(t, i) {
     return (this.z7 = t), (this.J7 = i), this;
   }
@@ -48,6 +66,30 @@ class VideoCaption {
   captiontext(t) {
     var i = this.J7.__offset(this.z7, 12);
     return i ? this.J7.__string(this.z7 + i, t) : null;
+  }
+  showmomenten() {
+    var t = this.J7.__offset(this.z7, 14);
+    return t ? this.J7.readInt32(this.z7 + t) : 0;
+  }
+  durationen() {
+    var t = this.J7.__offset(this.z7, 16);
+    return t ? this.J7.readInt32(this.z7 + t) : 0;
+  }
+  showmomentko() {
+    var t = this.J7.__offset(this.z7, 18);
+    return t ? this.J7.readInt32(this.z7 + t) : 0;
+  }
+  durationko() {
+    var t = this.J7.__offset(this.z7, 20);
+    return t ? this.J7.readInt32(this.z7 + t) : 0;
+  }
+  showmomentja() {
+    var t = this.J7.__offset(this.z7, 22);
+    return t ? this.J7.readInt32(this.z7 + t) : 0;
+  }
+  durationja() {
+    var t = this.J7.__offset(this.z7, 24);
+    return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
 }
 exports.VideoCaption = VideoCaption;

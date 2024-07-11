@@ -9,15 +9,15 @@ const UE = require("ue"),
 class PausePanel extends UiComponentsAction_1.UiComponentsAction {
   constructor() {
     super(...arguments),
-      (this.wvo = () => {
+      (this.AMo = () => {
         UiManager_1.UiManager.CloseView("SignalDecodeView");
       }),
-      (this.Bvo = () => {
+      (this.PMo = () => {
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.OnSignalCatchStartAgain,
         );
       }),
-      (this.bvo = () => {
+      (this.xMo = () => {
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.OnSignalCatchContinue,
         );
@@ -30,9 +30,9 @@ class PausePanel extends UiComponentsAction_1.UiComponentsAction {
       [2, UE.UIButtonComponent],
     ]),
       (this.BtnBindInfo = [
-        [0, this.wvo],
-        [1, this.Bvo],
-        [2, this.bvo],
+        [0, this.AMo],
+        [1, this.PMo],
+        [2, this.xMo],
       ]);
   }
 }

@@ -9,27 +9,27 @@ const Log_1 = require("../../../Core/Common/Log"),
   Global_1 = require("../../Global");
 class EffectManagerBusinessProxy {
   constructor() {
-    (this.Clr = void 0),
-      (this.glr = void 0),
-      (this.flr = void 0),
-      (this.plr = 0),
-      (this.vlr = (e) => {
-        EffectSystem_1.EffectSystem.GetHideOnBurstSkill(e) && this.glr.add(e);
+    (this.c1r = void 0),
+      (this.m1r = void 0),
+      (this.d1r = void 0),
+      (this.C1r = 0),
+      (this.g1r = (e) => {
+        EffectSystem_1.EffectSystem.GetHideOnBurstSkill(e) && this.m1r.add(e);
       }),
-      (this.Mlr = (e) => {
-        this.glr.delete(e);
+      (this.f1r = (e) => {
+        this.m1r.delete(e);
       }),
       (this.xie = () => {
-        (this.flr = Global_1.Global.BaseCharacter?.GetEntityNoBlueprint()),
-          (this.plr =
+        (this.d1r = Global_1.Global.BaseCharacter?.GetEntityNoBlueprint()),
+          (this.C1r =
             Global_1.Global.BaseCharacter?.GetEntityIdNoBlueprint() ?? 0);
       }),
-      (this.EYe = (e, t, s) => {
-        this.flr &&
-          e === this.plr &&
-          (e = this.flr.GetComponent(33)?.GetSkillInfo(t)) &&
+      (this.BJe = (e, t, s) => {
+        this.d1r &&
+          e === this.C1r &&
+          (e = this.d1r.GetComponent(33)?.GetSkillInfo(t)) &&
           3 === e.SkillGenre &&
-          this.glr.forEach((e) => {
+          this.m1r.forEach((e) => {
             EffectSystem_1.EffectSystem.IsValid(e) &&
               (Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info("RenderEffect", 26, "Effect Recycled By Burst", [
@@ -51,15 +51,15 @@ class EffectManagerBusinessProxy {
     );
   }
   Init() {
-    (this.Clr = void 0),
-      (this.glr = new Set()),
+    (this.c1r = void 0),
+      (this.m1r = new Set()),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.BeforePlayEffect,
-        this.vlr,
+        this.g1r,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.FinishEffect,
-        this.Mlr,
+        this.f1r,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnChangeRole,
@@ -67,7 +67,7 @@ class EffectManagerBusinessProxy {
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.CharUseSkill,
-        this.EYe,
+        this.BJe,
       );
   }
 }

@@ -7,7 +7,7 @@ const MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
   BulletLogicController_1 = require("./BulletLogicController");
 class BulletLogicManipulatableCreateBullet extends BulletLogicController_1.BulletLogicController {
   constructor(t, e) {
-    super(t, e), (this.u9o = t);
+    super(t, e), (this.h7o = t);
   }
   BulletLogicActionOnHitObstacles(t = void 0) {
     if (
@@ -17,16 +17,16 @@ class BulletLogicManipulatableCreateBullet extends BulletLogicController_1.Bulle
       t.Entity.GetComponent(0).IsSceneItem()
     ) {
       var e = t.Entity;
-      if (e?.GetComponent(140) && this.CheckCondition(e)) {
+      if (e?.GetComponent(142) && this.CheckCondition(e)) {
         var l = this.Bullet.GetBulletInfo(),
           r = l.AttackerActorComp.Actor,
           i =
             e.GetComponent(1)?.ActorTransform ??
             MathUtils_1.MathUtils.DefaultTransform,
-          o = this.u9o.CreateBulletRowName.Num(),
+          o = this.h7o.CreateBulletRowName.Num(),
           a = l.ContextId;
         for (let t = 0; t < o; t++) {
-          var u = this.u9o.CreateBulletRowName.Get(t);
+          var u = this.h7o.CreateBulletRowName.Get(t);
           BulletController_1.BulletController.CreateBulletCustomTarget(
             r,
             u,
@@ -45,8 +45,8 @@ class BulletLogicManipulatableCreateBullet extends BulletLogicController_1.Bulle
     }
   }
   CheckCondition(t) {
-    var e = this.u9o,
-      l = t?.GetComponent(177);
+    var e = this.h7o,
+      l = t?.GetComponent(180);
     if (!l) return !1;
     var r = e.ExistTagsCondition.GameplayTags,
       i = r.Num();

@@ -11,7 +11,7 @@ class LoginInputDistribute extends InputDistributeSetup_1.InputDistributeSetup {
   OnRefresh() {
     return !(
       WorldModel_1.WorldModel.IsStandalone ||
-      !this.Bmr() ||
+      !this.xdr() ||
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("Input", 8, "[InputDistribute]刷新登录状态输入Tag时"),
       this.SetInputDistributeTags([
@@ -23,7 +23,7 @@ class LoginInputDistribute extends InputDistributeSetup_1.InputDistributeSetup {
       0)
     );
   }
-  Bmr() {
+  xdr() {
     return !ModelManager_1.ModelManager.LoginModel.IsLoginStatus(
       LoginDefine_1.ELoginStatus.EnterGameRet,
     );

@@ -36,47 +36,47 @@ const Log_1 = require("../../../Core/Common/Log"),
   DEFAULT_CONFIG_ID = 1;
 class MapConfig extends ConfigBase_1.ConfigBase {
   constructor() {
-    super(...arguments), (this.pLi = void 0), (this.vLi = void 0);
+    super(...arguments), (this.pDi = void 0), (this.vDi = void 0);
   }
   OnInit() {
-    (this.pLi = new Map()), (this.vLi = new Map());
+    (this.pDi = new Map()), (this.vDi = new Map());
     var e =
       MapMarkRelativeSubTypeAll_1.configMapMarkRelativeSubTypeAll.GetConfigList();
-    if (e) for (const r of e) this.pLi.set(r.FunctionId, !0);
+    if (e) for (const r of e) this.pDi.set(r.FunctionId, !0);
     e = FogBlockAll_1.configFogBlockAll.GetConfigList();
-    if (e) for (const o of e) this.vLi.set(o.Block, !0);
+    if (e) for (const o of e) this.vDi.set(o.Block, !0);
     return !0;
   }
   OnClear() {
     return (
-      this.pLi?.clear(),
-      this.vLi?.clear(),
-      (this.pLi = void 0),
-      !(this.vLi = void 0)
+      this.pDi?.clear(),
+      this.vDi?.clear(),
+      (this.pDi = void 0),
+      !(this.vDi = void 0)
     );
   }
   GetTaskMarkConfig(e) {
     return TaskMarkByMarkId_1.configTaskMarkByMarkId.GetConfig(e);
   }
   GetConfigMarks(e) {
-    e = MapMarkByMapId_1.configMapMarkByMapId.GetConfigList(e);
+    var r = MapMarkByMapId_1.configMapMarkByMapId.GetConfigList(e);
     return (
-      e ||
+      r ||
         (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Map", 19, "找不到MapMark表")),
-      e
+          Log_1.Log.Error("Map", 64, "找不到MapMark表", ["mapId", e])),
+      r
     );
   }
   GetConfigMark(e) {
     return MapMarkByMarkId_1.configMapMarkByMarkId.GetConfig(e);
   }
   GetDynamicConfigMark(e) {
-    e = DynamicMapMarkByMarkId_1.configDynamicMapMarkByMarkId.GetConfig(e);
+    var r = DynamicMapMarkByMarkId_1.configDynamicMapMarkByMarkId.GetConfig(e);
     return (
-      e ||
+      r ||
         (Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Map", 50, "找不到DynamicMapMark表")),
-      e
+          Log_1.Log.Error("Map", 64, "找不到DynamicMapMark表", ["markId", e])),
+      r
     );
   }
   SearchGetMarkConfig(e) {
@@ -117,17 +117,18 @@ class MapConfig extends ConfigBase_1.ConfigBase {
       r
     );
   }
-  GetTileConfig(e) {
-    var r =
+  GetTileConfig(e, r = !1) {
+    var o =
       FogTextureConfigByBlock_1.configFogTextureConfigByBlock.GetConfig(e);
     return (
-      r ||
+      o ||
+        r ||
         (Log_1.Log.CheckError() &&
           Log_1.Log.Error("Map", 19, "找不到FogTextureConfig表的配置", [
             "Block",
             e,
           ])),
-      r
+      o
     );
   }
   GetAllTileConfig() {
@@ -162,7 +163,7 @@ class MapConfig extends ConfigBase_1.ConfigBase {
     );
   }
   GetFogBlockConfig(e) {
-    if (this.vLi.has(e))
+    if (this.vDi.has(e))
       return FogBlockByBlock_1.configFogBlockByBlock.GetConfig(e);
   }
   GetLocalText(e) {
@@ -226,7 +227,7 @@ class MapConfig extends ConfigBase_1.ConfigBase {
     );
   }
   GetMapMarkFuncTypeConfigByFuncId(e) {
-    if (this.pLi.has(e))
+    if (this.pDi.has(e))
       return MapMarkRelativeSubTypeByFunctionId_1.configMapMarkRelativeSubTypeByFunctionId.GetConfig(
         e,
       );

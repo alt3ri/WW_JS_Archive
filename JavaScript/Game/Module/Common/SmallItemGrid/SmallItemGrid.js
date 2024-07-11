@@ -28,12 +28,12 @@ class SmallItemGrid extends ItemGridBase_1.ItemGridBase {
     super(...arguments),
       (this.IsSelected = !1),
       (this.IsForceSelected = !1),
-      (this.txt = 0),
-      (this.oxt = void 0),
+      (this.nwt = 0),
+      (this.awt = void 0),
       (this.OnClickedEmptySlotButton = () => {
         var t;
-        this.oxt &&
-          ((t = { SmallItemGrid: this, Data: this.Data }), this.oxt(t));
+        this.awt &&
+          ((t = { SmallItemGrid: this, Data: this.Data }), this.awt(t));
       });
   }
   OnRegisterComponent() {
@@ -69,8 +69,8 @@ class SmallItemGrid extends ItemGridBase_1.ItemGridBase {
   }
   ApplyEmptySmallItemGrid(t) {
     this.SetEmptySlotVisible(!0),
-      this.IIt(void 0),
-      this._xt(void 0),
+      this.UTt(void 0),
+      this.SetQuality(void 0),
       this.SetBottomTextVisible(!1),
       this.SetExtendToggleEnable(!1),
       this.SetElement(void 0);
@@ -90,7 +90,7 @@ class SmallItemGrid extends ItemGridBase_1.ItemGridBase {
       this.SetNewFlagVisible(l),
       this.SetNotFoundVisible(m),
       this.SetCoolDown(r),
-      this.gBt(t);
+      this.vbt(t);
   }
   ApplyPhantomSmallItemGrid(t) {
     var e = t.IsLockVisible,
@@ -109,7 +109,7 @@ class SmallItemGrid extends ItemGridBase_1.ItemGridBase {
       this.SetNotFoundVisible(r),
       this.SetSelectedFlagVisible(n),
       this.SetVisionRoleHead(s),
-      this.fBt(t);
+      this.Mbt(t);
   }
   ApplyCharacterSmallItemGrid(t) {
     var e = t.IsLockVisible,
@@ -121,11 +121,11 @@ class SmallItemGrid extends ItemGridBase_1.ItemGridBase {
       this.SetReceivableVisible(i),
       this.SetReceivedVisible(o),
       this.SetSelectedFlagVisible(l),
-      this.pBt(m),
+      this.Ebt(m),
       this.SetElement(t.ElementId),
-      this.vBt(t);
+      this.Sbt(t);
   }
-  gBt(t) {
+  vbt(t) {
     var e,
       i = t.ItemConfigId,
       o = t.BottomTextId,
@@ -136,7 +136,7 @@ class SmallItemGrid extends ItemGridBase_1.ItemGridBase {
       r =
         (t.IconPath
           ? ((e = this.GetTexture(1)), this.SetTextureByPath(t.IconPath, e))
-          : this.IIt(i),
+          : this.UTt(i),
         r
           ? n.SetUIActive(!1)
           : (0 < t.QualityId
@@ -146,7 +146,7 @@ class SmallItemGrid extends ItemGridBase_1.ItemGridBase {
                     ModelManager_1.ModelManager.SmallItemGridModel
                       .DefaultQualitySpritePath),
                   this.SetSpriteByPath(e, n, !1))
-                : this._xt(i),
+                : this.SetQuality(i),
             n.SetUIActive(!0)),
         !StringUtils_1.StringUtils.IsEmpty(o) ||
           !StringUtils_1.StringUtils.IsEmpty(l));
@@ -161,28 +161,39 @@ class SmallItemGrid extends ItemGridBase_1.ItemGridBase {
       t,
     );
   }
-  fBt(t) {
+  Mbt(t) {
     var e = t.ItemConfigId,
       i = t.BottomTextId,
       o = t.BottomText,
       l = t.BottomTextParameter,
       m = t.MonsterId,
-      r = t.QualityIconResourceId,
-      n = t.IsQualityHidden,
-      s = t.IconHidden,
+      r = t.PhantomId,
+      n = t.QualityIconResourceId,
+      s = t.IsQualityHidden,
+      a = t.IconHidden,
       t =
         ((this.Data = t.Data),
-        s ? this.GetTexture(1)?.SetUIActive(!1) : m ? this.dxt(m) : this.IIt(e),
+        a
+          ? this.GetTexture(1)?.SetUIActive(!1)
+          : m
+            ? this.pwt(m)
+            : r
+              ? this.FYs(r)
+              : this.UTt(e),
         this.GetSprite(0)),
-      s =
-        (n ? t.SetUIActive(!1) : void 0 !== r ? this.Cxt(r) : this._xt(e),
+      a =
+        (s
+          ? t.SetUIActive(!1)
+          : void 0 !== n
+            ? this.vwt(n)
+            : this.SetQuality(e),
         !StringUtils_1.StringUtils.IsEmpty(i) ||
           !StringUtils_1.StringUtils.IsEmpty(o));
-    this.SetBottomTextVisible(s),
-      s && (this.SetBottomTextId(i, l), this.SetBottomText(o)),
+    this.SetBottomTextVisible(a),
+      a && (this.SetBottomTextId(i, l), this.SetBottomText(o)),
       this.SetExtendToggleEnable(!0);
   }
-  vBt(t) {
+  Sbt(t) {
     let e = t.ItemConfigId;
     var i = t.BottomTextId,
       o = t.BottomText,
@@ -206,7 +217,7 @@ class SmallItemGrid extends ItemGridBase_1.ItemGridBase {
                     ModelManager_1.ModelManager.SmallItemGridModel
                       .DefaultQualitySpritePath),
                   this.SetSpriteByPath(r, n, !1))
-                : this._xt(e),
+                : this.SetQuality(e),
             n.SetUIActive(!0)),
         !StringUtils_1.StringUtils.IsEmpty(i) ||
           !StringUtils_1.StringUtils.IsEmpty(o));
@@ -256,7 +267,7 @@ class SmallItemGrid extends ItemGridBase_1.ItemGridBase {
       t,
     );
   }
-  pBt(t) {
+  Ebt(t) {
     this.RefreshComponent(
       SmallItemGridCookUpComponent_1.SmallItemGridCookUpComponent,
       t,
@@ -270,19 +281,30 @@ class SmallItemGrid extends ItemGridBase_1.ItemGridBase {
       t,
     );
   }
-  IIt(t) {
+  UTt(t) {
     var e = this.GetTexture(1);
     void 0 === t
       ? e.SetUIActive(!1)
       : (this.SetItemIcon(e, t), e.SetUIActive(!0));
   }
-  dxt(t) {
+  pwt(t) {
     var e = this.GetTexture(1);
     void 0 === t
       ? e.SetUIActive(!1)
       : ((t =
           ConfigManager_1.ConfigManager.MonsterInfoConfig.GetMonsterIcon(t)),
         this.SetTextureByPath(t, e),
+        e.SetUIActive(!0));
+  }
+  FYs(t) {
+    var e = this.GetTexture(1);
+    void 0 === t
+      ? e.SetUIActive(!1)
+      : ((t =
+          ConfigManager_1.ConfigManager.PhantomBattleConfig.GetPhantomItemById(
+            t,
+          )),
+        this.SetTextureByPath(t.IconMiddle, e),
         e.SetUIActive(!0));
   }
   SetVisionRoleHead(t) {
@@ -292,12 +314,12 @@ class SmallItemGrid extends ItemGridBase_1.ItemGridBase {
       t,
     );
   }
-  _xt(t) {
+  SetQuality(t) {
     var e = this.GetSprite(0);
     void 0 === t
       ? e.SetUIActive(!1)
-      : (this.txt !== t &&
-          ((this.txt = t), this.SetItemQualityIcon(e, t, void 0)),
+      : (this.nwt !== t &&
+          ((this.nwt = t), this.SetItemQualityIcon(e, t, void 0)),
         e.SetUIActive(!0));
   }
   SetCoolDown(t, e) {
@@ -333,7 +355,7 @@ class SmallItemGrid extends ItemGridBase_1.ItemGridBase {
       t,
     );
   }
-  Cxt(t) {
+  vwt(t) {
     var e = this.GetSprite(0);
     void 0 === t ||
     ((t = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(t)),

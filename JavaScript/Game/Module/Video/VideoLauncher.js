@@ -13,12 +13,12 @@ class VideoLauncher {
     e ? VideoLauncher.ShowVideoCgAsync(e, i, o, a) : i();
   }
   static async ShowVideoCgAsync(e, i, o, a) {
-    this.BGo = i;
+    this.PNo = i;
     var n = ConfigManager_1.ConfigManager.VideoConfig.GetVideoData(e);
     n
       ? ((this.pDe = {
           VideoDataConf: n,
-          VideoCloseCb: this.Neo,
+          VideoCloseCb: this.Bto,
           BackgroundColor: o,
           RemainViewWhenEnd: a,
         }),
@@ -33,15 +33,15 @@ class VideoLauncher {
       : i?.();
   }
   static CloseVideoCg(e) {
-    (this.BGo = void 0), UiManager_1.UiManager.CloseView("VideoView", e);
+    (this.PNo = void 0), UiManager_1.UiManager.CloseView("VideoView", e);
   }
 }
 (exports.VideoLauncher = VideoLauncher),
-  ((_a = VideoLauncher).BGo = void 0),
+  ((_a = VideoLauncher).PNo = void 0),
   (VideoLauncher.pDe = void 0),
-  (VideoLauncher.Neo = () => {
+  (VideoLauncher.Bto = () => {
     var e;
-    _a.BGo && ((e = _a.BGo), (_a.BGo = void 0), e());
+    _a.PNo && ((e = _a.PNo), (_a.PNo = void 0), e());
   }),
   (VideoLauncher.AudioEventResult = new AudioController_1.PlayResult());
 //# sourceMappingURL=VideoLauncher.js.map

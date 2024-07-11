@@ -11,24 +11,24 @@ const UE = require("ue"),
 class OnlineMultipleApplyItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(),
-      (this.iNi = void 0),
-      (this.pGi = void 0),
-      (this.T6t = () => {
+      (this.iOi = void 0),
+      (this.pNi = void 0),
+      (this.T8t = () => {
         OnlineController_1.OnlineController.AgreeJoinResultRequest(
-          this.iNi.PlayerId,
+          this.iOi.PlayerId,
           !0,
         );
       }),
-      (this.I6t = () => {
+      (this.I8t = () => {
         OnlineController_1.OnlineController.AgreeJoinResultRequest(
-          this.iNi.PlayerId,
+          this.iOi.PlayerId,
           !1,
         ),
           ModelManager_1.ModelManager.OnlineModel.GetCurrentApplyListById(
-            this.iNi.PlayerId,
+            this.iOi.PlayerId,
           ) &&
             (ModelManager_1.ModelManager.OnlineModel.DeleteCurrentApplyListById(
-              this.iNi.PlayerId,
+              this.iOi.PlayerId,
             ),
             EventSystem_1.EventSystem.Emit(
               EventDefine_1.EEventName.OnRefreshApply,
@@ -45,15 +45,15 @@ class OnlineMultipleApplyItem extends GridProxyAbstract_1.GridProxyAbstract {
       [5, UE.UIButtonComponent],
     ]),
       (this.BtnBindInfo = [
-        [4, this.T6t],
-        [5, this.I6t],
+        [4, this.T8t],
+        [5, this.I8t],
       ]);
   }
   OnStart() {
-    this.pGi = this.GetSprite(3);
+    this.pNi = this.GetSprite(3);
   }
   Refresh(e, t, r) {
-    this.iNi = e;
+    this.iOi = e;
     var i = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(
       e.HeadId,
     )?.Card;
@@ -62,17 +62,17 @@ class OnlineMultipleApplyItem extends GridProxyAbstract_1.GridProxyAbstract {
       this.GetText(2).SetText(e.Level.toString());
   }
   UpdateCountDownProgressBar() {
-    this.iNi &&
-      (this.pGi.SetFillAmount(
-        this.iNi.ApplyTimeLeftTime /
+    this.iOi &&
+      (this.pNi.SetFillAmount(
+        this.iOi.ApplyTimeLeftTime /
           ModelManager_1.ModelManager.OnlineModel.ApplyCd,
       ),
-      this.iNi.ApplyTimeLeftTime <= 0) &&
+      this.iOi.ApplyTimeLeftTime <= 0) &&
       ModelManager_1.ModelManager.OnlineModel.GetCurrentApplyListById(
-        this.iNi.PlayerId,
+        this.iOi.PlayerId,
       ) &&
       (ModelManager_1.ModelManager.OnlineModel.DeleteCurrentApplyListById(
-        this.iNi.PlayerId,
+        this.iOi.PlayerId,
       ),
       EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.OnRefreshApply));
   }

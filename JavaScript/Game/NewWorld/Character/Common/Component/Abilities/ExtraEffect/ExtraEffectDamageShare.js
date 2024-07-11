@@ -25,7 +25,7 @@ class DamageShare extends ExtraEffectBase_1.BuffEffect {
       o = DamageById_1.configDamageById.GetConfig(e.ReBulletData.Base.DamageId);
     for ([i, s] of this.GetShareRateMap(t, o))
       EntitySystem_1.EntitySystem.Get(i)
-        ?.CheckGetComponent(51)
+        ?.CheckGetComponent(52)
         ?.OnSharedHit(e, r, a, s);
   }
   static ApplyBuffShare(t, e, r, a, i) {
@@ -69,7 +69,7 @@ class DamageShare extends ExtraEffectBase_1.BuffEffect {
   static GetShareRateMap(t, e) {
     var r,
       a,
-      i = t.GetComponent(157),
+      i = t.GetComponent(159),
       t = i.BuffEffectManager.FilterById(18),
       s = new Map();
     for (const o of t)

@@ -52,19 +52,19 @@ class DropDownTitle extends TitleItemBase_1.TitleItemBase {
 class MowingDifficultyDropDownPanel extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this.u1i = []),
-      (this.c1i = void 0),
+      (this.u_i = []),
+      (this.c_i = void 0),
       (this.NUe = void 0),
-      (this.m1i = void 0),
-      (this.d1i = (t, e) => new DropDownItem(t)),
-      (this.C1i = (t) => new DropDownTitle(t)),
-      (this.g1i = (t) => t),
-      (this.f1i = (t, e) => {
+      (this.m_i = void 0),
+      (this.d_i = (t, e) => new DropDownItem(t)),
+      (this.C_i = (t) => new DropDownTitle(t)),
+      (this.g_i = (t) => t),
+      (this.f_i = (t, e) => {
         var i,
           o =
             ActivityMowingController_1.ActivityMowingController.GetMowingActivityData();
         o
-          ? this.m1i
+          ? this.m_i
             ? ((i = TakeWeedsDifficultyById_1.configTakeWeedsDifficultyById
                 .GetConfig(e.Id)
                 .RecommendedLevel.toString()),
@@ -93,26 +93,26 @@ class MowingDifficultyDropDownPanel extends UiPanelBase_1.UiPanelBase {
       (this.BtnBindInfo = []);
   }
   async OnBeforeStartAsync() {
-    await this.p1i();
+    await this.p_i();
   }
-  async p1i() {
-    (this.c1i = new CommonDropDown_1.CommonDropDown(
+  async p_i() {
+    (this.c_i = new CommonDropDown_1.CommonDropDown(
       this.GetItem(2),
-      this.d1i,
-      this.C1i,
+      this.d_i,
+      this.C_i,
     )),
-      this.c1i.SetOnSelectCall(this.f1i),
-      await this.c1i.Init();
+      this.c_i.SetOnSelectCall(this.f_i),
+      await this.c_i.Init();
   }
   OnStart() {
-    this.GetItem(1).SetUIActive(!1), this.AddChild(this.c1i);
+    this.GetItem(1).SetUIActive(!1), this.AddChild(this.c_i);
   }
-  v1i() {
+  v_i() {
     var t =
       KillMonstersScoresByInstanceID_1.configKillMonstersScoresByInstanceID.GetConfig(
         this.NUe,
       );
-    if (!t || 0 === t.DifficultyOptions.length) return this.u1i;
+    if (!t || 0 === t.DifficultyOptions.length) return this.u_i;
     var e = [];
     for (const i of t.DifficultyOptions)
       e.push(
@@ -122,16 +122,16 @@ class MowingDifficultyDropDownPanel extends UiPanelBase_1.UiPanelBase {
   }
   RefreshByInstanceId(t) {
     (this.NUe = t),
-      (this.m1i =
+      (this.m_i =
         KillMonstersScoresByInstanceID_1.configKillMonstersScoresByInstanceID.GetConfig(
           this.NUe,
         ));
     t =
       ActivityMowingController_1.ActivityMowingController.GetMowingActivityData();
     t
-      ? this.c1i?.InitScroll(
-          this.v1i(),
-          this.g1i,
+      ? this.c_i?.InitScroll(
+          this.v_i(),
+          this.g_i,
           t.GetLevelDiffIndex(this.NUe),
         )
       : Log_1.Log.CheckError() &&

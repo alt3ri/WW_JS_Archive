@@ -11,10 +11,10 @@ const UE = require("ue"),
 class PlotHandBookItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor(e = void 0) {
     super(),
-      (this.Vzt = void 0),
-      (this.CZt = []),
-      (this.gZt = []),
-      (this.Wzt = (e, t, i) => {
+      (this.VZt = void 0),
+      (this.Cei = []),
+      (this.gei = []),
+      (this.WZt = (e, t, i) => {
         t = new PlotHandBookChildItem_1.PlotHandBookChildItem(t);
         return t.Refresh(e, !1, i), { Key: i, Value: t };
       }),
@@ -33,31 +33,29 @@ class PlotHandBookItem extends GridProxyAbstract_1.GridProxyAbstract {
           r,
         ),
       o =
-        ((this.CZt = r),
+        ((this.Cei = r),
         this.GetText(0).ShowTextNew(e.TypeDescription),
-        (this.gZt = []),
-        this.CZt.length);
+        (this.gei = []),
+        this.Cei.length);
     for (let e = 0; e < o; e++) {
-      var s = this.CZt[e],
+      var s = this.Cei[e],
         n = new HandBookDefine_1.HandBookCommonItemData(),
         a = ModelManager_1.ModelManager.HandBookModel.GetHandBookInfo(7, s.Id),
-        h = void 0 === a,
+        d = void 0 === a,
         a = void 0 !== a && !a.IsRead;
-      (n.Config = s), (n.IsLock = h), (n.IsNew = a), this.gZt.push(n);
+      (n.Config = s), (n.IsLock = d), (n.IsNew = a), this.gei.push(n);
     }
-    (this.Vzt = new GenericLayoutNew_1.GenericLayoutNew(
+    (this.VZt = new GenericLayoutNew_1.GenericLayoutNew(
       this.GetGridLayout(1),
-      this.Wzt,
+      this.WZt,
     )),
-      this.Vzt.RebuildLayoutByDataNew(this.gZt);
+      this.VZt.RebuildLayoutByDataNew(this.gei);
   }
   GetChildItemList() {
-    return this.Vzt ? this.Vzt.GetLayoutItemList() : [];
+    return this.VZt ? this.VZt.GetLayoutItemList() : [];
   }
   OnBeforeDestroy() {
-    this.Vzt && (this.Vzt.ClearChildren(), (this.Vzt = void 0)),
-      (this.CZt = []),
-      (this.gZt = []);
+    (this.Cei = []), (this.gei = []);
   }
 }
 exports.PlotHandBookItem = PlotHandBookItem;

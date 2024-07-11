@@ -12,61 +12,61 @@ const UE = require("ue"),
   sequenceCameraTag = new UE.FName("SequenceCamera");
 class NpcPerformSequence {
   constructor() {
-    (this.Ver = ""),
-      (this.FBi = void 0),
-      (this.EPe = void 0),
-      (this.ker = void 0),
-      (this.BRo = void 0),
-      (this.Fer = void 0),
-      (this.xBn = () => {
-        this.$ne(), this.PBn();
+    (this.ktr = ""),
+      (this.Fbi = void 0),
+      (this.SPe = void 0),
+      (this.Ntr = void 0),
+      (this.PUo = void 0),
+      (this.Otr = void 0),
+      (this.eGn = () => {
+        this.$ne(), this.tGn();
       }),
-      (this.STo = () => {
+      (this.pLo = () => {
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "NPC",
             8,
             "[CollectionItemDisplay]Npc表现Sequence播放完成",
-            ["SequenceName", this.EPe?.Sequence?.GetName()],
+            ["SequenceName", this.SPe?.Sequence?.GetName()],
           ),
           this.$ne();
       });
   }
   Destroy() {
-    this.EPe?.IsValid() && this.EPe.IsPlaying()
+    this.SPe?.IsValid() && this.SPe.IsPlaying()
       ? (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "NPC",
             8,
             "[CollectionItemDisplay]开始销毁Npc表现Sequence时，Sequence仍在播放，等播放完成后销毁",
           ),
-        this.EPe.OnFinished.Clear(),
-        this.EPe.OnFinished.Add(this.xBn))
+        this.SPe.OnFinished.Clear(),
+        this.SPe.OnFinished.Add(this.eGn))
       : (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "NPC",
             8,
             "[CollectionItemDisplay]开始销毁Npc表现Sequence",
           ),
-        this.PBn());
+        this.tGn());
   }
-  PBn() {
+  tGn() {
     if (
-      (this.FBi &&
-        (ResourceSystem_1.ResourceSystem.CancelAsyncLoad(this.FBi),
-        (this.FBi = void 0)),
-      this.EPe?.IsValid() &&
-        (this.EPe.Stop(), this.EPe.OnFinished.Clear(), (this.EPe = void 0)),
-      this.ker?.IsValid())
+      (this.Fbi &&
+        (ResourceSystem_1.ResourceSystem.CancelAsyncLoad(this.Fbi),
+        (this.Fbi = void 0)),
+      this.SPe?.IsValid() &&
+        (this.SPe.Stop(), this.SPe.OnFinished.Clear(), (this.SPe = void 0)),
+      this.Ntr?.IsValid())
     ) {
-      const e = this.ker;
+      const e = this.Ntr;
       TimerSystem_1.TimerSystem.Next(() => {
         ActorSystem_1.ActorSystem.Put(e);
       }),
-        (this.ker = void 0);
+        (this.Ntr = void 0);
     }
-    (this.BRo = void 0),
-      (this.Fer = void 0),
+    (this.PUo = void 0),
+      (this.Otr = void 0),
       CameraController_1.CameraController.ExitCameraMode(1, 0);
   }
   SetTransformOriginEntity(e) {
@@ -74,19 +74,19 @@ class NpcPerformSequence {
     this.SetTransformOriginActor(e);
   }
   SetTransformOriginActor(e) {
-    this.BRo &&
-      ((this.ker.bOverrideInstanceData = !0),
-      (this.BRo.TransformOriginActor = e));
+    this.PUo &&
+      ((this.Ntr.bOverrideInstanceData = !0),
+      (this.PUo.TransformOriginActor = e));
   }
   Load(e, t) {
-    this.Ver === e && this.IsValid()
+    this.ktr === e && this.IsValid()
       ? t && t()
-      : ((this.Ver = e),
-        (this.FBi = ResourceSystem_1.ResourceSystem.LoadAsync(
-          this.Ver,
+      : ((this.ktr = e),
+        (this.Fbi = ResourceSystem_1.ResourceSystem.LoadAsync(
+          this.ktr,
           UE.LevelSequence,
           (e) => {
-            this.Her(e), t && t();
+            this.Ftr(e), t && t();
           },
         )));
   }
@@ -100,13 +100,13 @@ class NpcPerformSequence {
               8,
               "[CollectionItemDisplay]尝试播放Npc表现Sequence时，Sequence正在播放中,停止后重新播放",
             ),
-          this.Iit()),
+          this.Oot()),
         (t =
           CameraController_1.CameraController.SequenceCamera.DisplayComponent
             .CineCamera).ResetSeqCineCamSetting(),
         this.AddBindingByTag(sequenceCameraTag, t),
         CameraController_1.CameraController.EnterCameraMode(1, 0),
-        this.jer(e),
+        this.Vtr(e),
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.OnPlayNpcPerformSequence,
         ))
@@ -118,55 +118,55 @@ class NpcPerformSequence {
         );
   }
   AddBindingByTag(e, t) {
-    this.ker.AddBindingByTag(e, t, !1, !0);
+    this.Ntr.AddBindingByTag(e, t, !1, !0);
   }
-  Her(e) {
-    (this.ker = ActorSystem_1.ActorSystem.Get(
+  Ftr(e) {
+    (this.Ntr = ActorSystem_1.ActorSystem.Get(
       UE.LevelSequenceActor.StaticClass(),
       new UE.Transform(),
       void 0,
       !1,
     )),
-      this.ker.SetSequence(e),
-      (this.EPe = this.ker.SequencePlayer),
-      (this.BRo = this.ker.DefaultInstanceData);
+      this.Ntr.SetSequence(e),
+      (this.SPe = this.Ntr.SequencePlayer),
+      (this.PUo = this.Ntr.DefaultInstanceData);
   }
-  jer(e) {
+  Vtr(e) {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "NPC",
         8,
         "[CollectionItemDisplay]开始播放Npc表现Sequence",
-        ["SequenceName", this.EPe?.Sequence?.GetName()],
+        ["SequenceName", this.SPe?.Sequence?.GetName()],
       ),
-      (this.Fer = e),
-      this.EPe.OnFinished.Add(this.STo),
-      this.EPe.Play();
+      (this.Otr = e),
+      this.SPe.OnFinished.Add(this.pLo),
+      this.SPe.Play();
   }
   Stop() {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info("NPC", 8, "[CollectionItemDisplay]Npc表现Sequence被停止"),
-      this.Iit();
+      this.Oot();
   }
-  Iit() {
+  Oot() {
     CameraController_1.CameraController.ExitCameraMode(1, 0),
-      this.EPe?.IsValid() && this.EPe.Stop();
+      this.SPe?.IsValid() && this.SPe.Stop();
   }
   Pause() {
-    this.EPe?.IsValid() && this.EPe.Pause();
+    this.SPe?.IsValid() && this.SPe.Pause();
   }
   Continue() {
-    this.EPe?.IsValid() && this.EPe.Play();
+    this.SPe?.IsValid() && this.SPe.Play();
   }
   IsPlaying() {
-    return !!this.EPe?.IsValid() && this.EPe.IsPlaying();
+    return !!this.SPe?.IsValid() && this.SPe.IsPlaying();
   }
   IsValid() {
-    return this.EPe?.IsValid() ?? !1;
+    return this.SPe?.IsValid() ?? !1;
   }
   $ne() {
     CameraController_1.CameraController.ExitCameraMode(1, 0),
-      this.Fer && this.Fer(),
+      this.Otr && this.Otr(),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnNpcPerformSequenceFinished,
       );

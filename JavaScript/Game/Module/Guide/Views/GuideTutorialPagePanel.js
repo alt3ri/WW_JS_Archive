@@ -9,7 +9,7 @@ const UE = require("ue"),
   GuideDescribeNew_1 = require("./GuideDescribeNew");
 class GuideTutorialPagePanel extends UiPanelBase_1.UiPanelBase {
   constructor() {
-    super(), (this.pzt = void 0), (this.EPe = void 0);
+    super(), (this.pZt = void 0), (this.SPe = void 0);
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -20,18 +20,18 @@ class GuideTutorialPagePanel extends UiPanelBase_1.UiPanelBase {
     ];
   }
   OnStart() {
-    (this.pzt = new GuideDescribeNew_1.GuideDescribeNew(this.GetText(2))),
-      (this.EPe = new LevelSequencePlayer_1.LevelSequencePlayer(
+    (this.pZt = new GuideDescribeNew_1.GuideDescribeNew(this.GetText(2))),
+      (this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(
         this.GetRootItem(),
       )),
       this.GetTexture(3).SetUIActive(!1);
   }
   OnBeforeDestroy() {
-    this.EPe.Clear(), (this.EPe = void 0);
+    this.SPe.Clear(), (this.SPe = void 0);
   }
   Init(e) {
     this.SetRootActor(e.GetOwner(), !0),
-      (this.pzt = new GuideDescribeNew_1.GuideDescribeNew(this.GetText(2)));
+      (this.pZt = new GuideDescribeNew_1.GuideDescribeNew(this.GetText(2)));
   }
   RefreshPage(e) {
     e &&
@@ -44,10 +44,10 @@ class GuideTutorialPagePanel extends UiPanelBase_1.UiPanelBase {
           this.GetTexture(3).SetUIActive(!0);
         }),
       this.GetText(2).SetUIActive(!0),
-      this.pzt.SetUpText(e.Content, ...e.Button));
+      this.pZt.SetUpText(e.Content, ...e.Button));
   }
   PlayAnime(e) {
-    this.EPe.PlayLevelSequenceByName(e ? "Show" : "Hide");
+    this.SPe.PlayLevelSequenceByName(e ? "Show" : "Hide");
   }
 }
 exports.GuideTutorialPagePanel = GuideTutorialPagePanel;

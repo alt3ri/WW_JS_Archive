@@ -35,9 +35,9 @@ class UrlPrefixInfo {
 }
 class UrlPrefixSelector {
   static Init() {
-    UrlPrefixSelector.gSr ||
-      UrlPrefixSelector.pSr(
-        UrlPrefixSelector.vSr(),
+    UrlPrefixSelector.mSr ||
+      UrlPrefixSelector.CSr(
+        UrlPrefixSelector.gSr(),
         void 0 !== BaseConfigController_1.BaseConfigController.GetSpeedRatio()
           ? BaseConfigController_1.BaseConfigController.GetSpeedRatio()
           : INLINE_SPEED_RATIO,
@@ -46,28 +46,28 @@ class UrlPrefixSelector {
           : INLINE_PRICE_RATIO,
       );
   }
-  static vSr() {
+  static gSr() {
     var e = new Map(),
-      o = BaseConfigController_1.BaseConfigController.GetCdnUrl();
-    if (o)
-      for (const i of o) {
-        var t = i.url,
+      t = BaseConfigController_1.BaseConfigController.GetCdnUrl();
+    if (t)
+      for (const i of t) {
+        var o = i.url,
           r = i.weight;
-        e.set(t, Number(r));
+        e.set(o, Number(r));
       }
     return e;
   }
-  static SetUrl(e, o, t) {
+  static SetUrl(e, t, o) {
     LauncherLog_1.LauncherLog.Info(
       "设置远程前缀参数",
       ["primary", e],
-      ["speedRatio", o],
-      ["priceRatio", t],
+      ["speedRatio", t],
+      ["priceRatio", o],
     );
     var r = new HotPatchLogReport_1.HotPatchLog(),
       i =
         ((r.s_step_id = "set_remote_prefix"),
-        (r.s_step_result = e + `|${o}|` + t),
+        (r.s_step_result = e + `|${t}|` + o),
         HotPatchLogReport_1.HotPatchLogReport.Report(r),
         new Map());
     if (e) {
@@ -78,13 +78,13 @@ class UrlPrefixSelector {
           n.length < 2 || i.set(n[0].trim(), Number(n[1].trim()));
         }
     }
-    UrlPrefixSelector.pSr(i, o, t);
+    UrlPrefixSelector.CSr(i, t, o);
   }
-  static pSr(o, e, t) {
-    if (0 < o.size) {
-      UrlPrefixSelector.gSr = new Array();
+  static CSr(t, e, o) {
+    if (0 < t.size) {
+      UrlPrefixSelector.mSr = new Array();
       let e = 0;
-      for (var [r, i] of o) {
+      for (var [r, i] of t) {
         var n = new UrlPrefixInfo();
         (n.Address = r),
           (n.Price = i),
@@ -94,30 +94,30 @@ class UrlPrefixSelector {
           (n.RemainDownloadTime = TEST_TIME),
           (n.DownloadedSize = bigIntZero),
           (n.Speed = 0),
-          UrlPrefixSelector.gSr.push(n);
+          UrlPrefixSelector.mSr.push(n);
       }
-      (0, ProcedureUtil_1.randomArray)(UrlPrefixSelector.gSr);
+      (0, ProcedureUtil_1.randomArray)(UrlPrefixSelector.mSr);
     }
-    (UrlPrefixSelector.SSr = e || INLINE_SPEED_RATIO),
-      (UrlPrefixSelector.ESr = t || INLINE_PRICE_RATIO);
+    (UrlPrefixSelector.pSr = e || INLINE_SPEED_RATIO),
+      (UrlPrefixSelector.vSr = o || INLINE_PRICE_RATIO);
   }
   static Reset() {
-    for (const e of UrlPrefixSelector.gSr)
+    for (const e of UrlPrefixSelector.mSr)
       (e.DownloadedSize = 0n),
         (e.Speed = 0),
         (e.RemainDownloadTime = TEST_TIME),
         (e.EvalPoint = 0),
         (e.IsEvaluated = !1);
-    1 < UrlPrefixSelector.gSr.length &&
-      (0, ProcedureUtil_1.randomArray)(UrlPrefixSelector.gSr);
+    1 < UrlPrefixSelector.mSr.length &&
+      (0, ProcedureUtil_1.randomArray)(UrlPrefixSelector.mSr);
   }
   static Evaluated() {
     if (
-      (1 < UrlPrefixSelector.gSr.length &&
-        UrlPrefixSelector.gSr.sort((e, o) => o.EvalPoint - e.EvalPoint),
-      UrlPrefixSelector.gSr && 0 < UrlPrefixSelector.gSr.length)
+      (1 < UrlPrefixSelector.mSr.length &&
+        UrlPrefixSelector.mSr.sort((e, t) => t.EvalPoint - e.EvalPoint),
+      UrlPrefixSelector.mSr && 0 < UrlPrefixSelector.mSr.length)
     )
-      for (const e of UrlPrefixSelector.gSr)
+      for (const e of UrlPrefixSelector.mSr)
         LauncherLog_1.LauncherLog.Info(
           "整体完成评估",
           ["prefix", e.Address],
@@ -127,15 +127,21 @@ class UrlPrefixSelector {
         );
   }
   static GetPrimaryPrefixList() {
-    return UrlPrefixSelector.gSr;
+    return (
+      (0, ProcedureUtil_1.randomArray)(UrlPrefixSelector.mSr),
+      UrlPrefixSelector.mSr
+    );
   }
-  static GetAllPrefixList() {
-    var e = new Array();
-    for (const o of UrlPrefixSelector.gSr) e.push(o.Address);
-    return (0, ProcedureUtil_1.randomArray)(e), e;
+  static GetAllPrefixList(e = !1) {
+    e &&
+      1 < UrlPrefixSelector.mSr.length &&
+      UrlPrefixSelector.mSr.sort((e, t) => t.EvalPoint - e.EvalPoint);
+    var t = new Array();
+    for (const o of UrlPrefixSelector.mSr) t.push(o.Address);
+    return e || (0, ProcedureUtil_1.randomArray)(t), t;
   }
-  static CalculateUrlPoint(e, o) {
-    return o * UrlPrefixSelector.SSr - e * UrlPrefixSelector.ESr;
+  static CalculateUrlPoint(e, t) {
+    return t * UrlPrefixSelector.pSr - e * UrlPrefixSelector.vSr;
   }
 }
 exports.UrlPrefixSelector = UrlPrefixSelector;
@@ -152,12 +158,12 @@ class RequestFileInfo {
 exports.RequestFileInfo = RequestFileInfo;
 class UrlPrefixDownload {
   constructor() {
-    (this.ySr = void 0), (this.ISr = !1), (this.TSr = void 0);
+    (this.MSr = void 0), (this.ESr = !1), (this.jpa = !1), (this.SSr = void 0);
   }
   CancelDownload() {
-    this.ySr && this.ySr.Cancel(), (this.ISr = !0);
+    this.jpa || (this.MSr && this.MSr.Cancel(), (this.ESr = !0));
   }
-  async StartEvaluatePrefix(e, o = !1, t = void 0) {
+  async StartEvaluatePrefix(e, t = !1, o = void 0) {
     if (e.length <= 0)
       return {
         Complete: !1,
@@ -165,15 +171,15 @@ class UrlPrefixDownload {
         DownloadState: DownloadDefine_1.EDownloadState.None,
         HttpCode: 0,
       };
-    (this.ISr = !1),
-      o && (this.TSr = t),
+    (this.ESr = !1),
+      t && (this.SSr = o),
       1 < e.length &&
-        e.sort((e, o) => (e.Size < o.Size ? 1 : e.Size > o.Size ? -1 : 0));
-    var o = UrlPrefixSelector.GetPrimaryPrefixList(),
-      t = new HotPatchLogReport_1.HotPatchLog(),
-      r = ((t.s_step_id = "start_prefixes_evaluate"), { success: !0 }),
+        e.sort((e, t) => (e.Size < t.Size ? 1 : e.Size > t.Size ? -1 : 0));
+    var t = UrlPrefixSelector.GetPrimaryPrefixList(),
+      o = new HotPatchLogReport_1.HotPatchLog(),
+      r = ((o.s_step_id = "start_prefixes_evaluate"), { success: !0 }),
       i = new Array();
-    for (const d of o) {
+    for (const d of t) {
       var n = {
         Address: d.Address,
         IsEvaluated: d.IsEvaluated,
@@ -185,12 +191,12 @@ class UrlPrefixDownload {
       i.push(n);
     }
     (r.info = i),
-      (t.s_step_result = LauncherSerialize_1.LauncherJson.Stringify(r)),
-      HotPatchLogReport_1.HotPatchLogReport.Report(t);
-    var t = await this.LSr(o, e),
+      (o.s_step_result = LauncherSerialize_1.LauncherJson.Stringify(r)),
+      HotPatchLogReport_1.HotPatchLogReport.Report(o);
+    var o = await this.ySr(t, e),
       a = new HotPatchLogReport_1.HotPatchLog();
     (a.s_step_id = "end_prefixes_evaluate"), (i.length = 0);
-    for (const f of o) {
+    for (const f of t) {
       var l = {
         Address: f.Address,
         IsEvaluated: f.IsEvaluated,
@@ -202,7 +208,7 @@ class UrlPrefixDownload {
       };
       i.push(l);
     }
-    return t.Complete
+    return o.Complete
       ? ((r.success = !0),
         (r.info = { msg: "evaluate complete", info: i }),
         (a.s_step_result = LauncherSerialize_1.LauncherJson.Stringify(r)),
@@ -210,11 +216,11 @@ class UrlPrefixDownload {
         UrlPrefixSelector.Evaluated(),
         {
           Complete: !0,
-          FileIndex: t.FileIndex,
-          DownloadState: t.DownloadState,
-          HttpCode: t.HttpCode,
+          FileIndex: o.FileIndex,
+          DownloadState: o.DownloadState,
+          HttpCode: o.HttpCode,
         })
-      : (t.FileIndex < e.length
+      : (o.FileIndex < e.length
           ? ((r.success = !1),
             (r.info = {
               msg: "evaluate not complete, download neither",
@@ -235,27 +241,27 @@ class UrlPrefixDownload {
             )),
         {
           Complete: !1,
-          FileIndex: t.FileIndex,
-          DownloadState: t.DownloadState,
-          HttpCode: t.HttpCode,
+          FileIndex: o.FileIndex,
+          DownloadState: o.DownloadState,
+          HttpCode: o.HttpCode,
         });
   }
-  async RequestFiles(o, e, t, r = void 0, i = !1) {
-    if (o.length <= 0)
+  async RequestFiles(t, e, o, r = void 0, i = !1) {
+    if (t.length <= 0)
       return {
         Success: !0,
         DownloadState: DownloadDefine_1.EDownloadState.Success,
         HttpCode: 0,
       };
-    (this.ISr = !1),
+    (this.ESr = !1),
       e && (UrlPrefixSelector.Init(), UrlPrefixSelector.Reset()),
-      (this.TSr = r);
+      (this.SSr = r);
     try {
       let e = 0;
       if (i) {
-        var n = await this.StartEvaluatePrefix(o);
+        var n = await this.StartEvaluatePrefix(t);
         if (!n.Complete)
-          return n.FileIndex < o.length
+          return n.FileIndex < t.length
             ? {
                 Success: !1,
                 DownloadState: n.DownloadState,
@@ -268,16 +274,16 @@ class UrlPrefixDownload {
               };
         e = n.FileIndex;
       }
-      var a = UrlPrefixSelector.GetAllPrefixList(),
+      var a = UrlPrefixSelector.GetAllPrefixList(i),
         l =
           (LauncherLog_1.LauncherLog.Info(
             "已完成评估，开始进入正式下载文件列表",
-            ["fileCount", o.length],
+            ["fileCount", t.length],
             ["fileIndex", e],
             ["prefixCount", a.length],
-            ["tryCount", t],
+            ["tryCount", o],
           ),
-          await this.DSr(a, o, t, 0, e));
+          await this.ISr(a, t, o, 0, e));
       return (
         LauncherLog_1.LauncherLog.Info("下载文件列表结束", ["success", l]), l
       );
@@ -297,18 +303,18 @@ class UrlPrefixDownload {
       );
     }
   }
-  async RequestFilesWithPrefix(e, o, t, r = void 0) {
+  async RequestFilesWithPrefix(e, t, o, r = void 0) {
     if (e.length <= 0) return !0;
-    (this.ISr = !1), (this.ySr = new UE.DownloaderProxy()), (this.TSr = r);
+    (this.ESr = !1), (this.MSr = new UE.DownloaderProxy()), (this.SSr = r);
     try {
       LauncherLog_1.LauncherLog.Info(
         "开始下载文件列表",
         ["fileCount", e.length],
         ["fileIndex", 0],
-        ["prefixCount", o.length],
-        ["tryCount", t],
+        ["prefixCount", t.length],
+        ["tryCount", o],
       );
-      var i = await this.DSr(o, e, t, 0, 0);
+      var i = await this.ISr(t, e, o, 0, 0);
       return (
         LauncherLog_1.LauncherLog.Info("下载文件列表结束", ["success", i]),
         i.Success
@@ -325,13 +331,13 @@ class UrlPrefixDownload {
       );
     }
   }
-  async LSr(e, o, t = 0, r = 0) {
+  async ySr(e, t, o = 0, r = 0) {
     if (e.length <= 1) {
       LauncherLog_1.LauncherLog.Info(
         "只有一个前缀不用评估，直接使用这个唯一的前缀",
         ["prefixCount", e.length],
-        ["prefixIndex", t],
-        ["fileCount", o.length],
+        ["prefixIndex", o],
+        ["fileCount", t.length],
         ["fileIndex", r],
       );
       const s = {
@@ -342,7 +348,7 @@ class UrlPrefixDownload {
       };
       return s;
     }
-    let i = 0 <= t ? t : 0,
+    let i = 0 <= o ? o : 0,
       n = 0 <= r ? r : 0;
     for (var a = e.length; i < a; i++) {
       var l = e[i];
@@ -352,7 +358,7 @@ class UrlPrefixDownload {
           ["prefixCount", e.length],
           ["prefixIndex", i],
           ["prefix", l.Address],
-          ["fileCount", o.length],
+          ["fileCount", t.length],
           ["fileIndex", n],
         ),
         !l.IsEvaluated)
@@ -362,10 +368,10 @@ class UrlPrefixDownload {
           c =
             ((f.s_url_prefix = l.Address),
             (f.s_step_id = "evaluate_prefix"),
-            await this.RSr(
+            await this.TSr(
               l.Address,
               i,
-              o,
+              t,
               n,
               1,
               l.RemainDownloadTime,
@@ -374,7 +380,7 @@ class UrlPrefixDownload {
             ));
         if (
           ((n = c.FileIndex),
-          !(c.RemainedTime <= 0 || (c.FileIndex < o.length && !this.ISr)))
+          !(c.RemainedTime <= 0 || (c.FileIndex < t.length && !this.ESr)))
         )
           return (
             (l.DownloadedSize = c.DownloadedSize),
@@ -386,7 +392,7 @@ class UrlPrefixDownload {
               ["prefix", l.Address],
               ["remainTime", c.RemainedTime],
               ["downloadSize", c.DownloadedSize],
-              ["fileCount", o.length],
+              ["fileCount", t.length],
               ["fileIndex", c.FileIndex],
             ),
             (d = {
@@ -411,7 +417,7 @@ class UrlPrefixDownload {
             "评估前缀列表，当前前缀评估已完成，换下一前缀评估",
             ["prefix", l.Address],
             ["point", l.EvalPoint],
-            ["fileCount", o.length],
+            ["fileCount", t.length],
             ["fileIndex", c.FileIndex],
           ),
           (c = {
@@ -428,7 +434,7 @@ class UrlPrefixDownload {
       "评估前缀列表，使用的下标已超出前缀数组长度，评估完成",
       ["prefixCount", e.length],
       ["prefixIndex", i],
-      ["fileCount", o.length],
+      ["fileCount", t.length],
       ["fileIndex", n],
     );
     const s = {
@@ -439,16 +445,16 @@ class UrlPrefixDownload {
     };
     return s;
   }
-  async DSr(e, o, t, r = 0, i = 0) {
+  async ISr(e, t, o, r = 0, i = 0) {
     if (e.length <= 0)
       return (
         LauncherLog_1.LauncherLog.Error(
           "使用前缀列表下载文件列表出错，传入的前缀数组为空",
           ["prefixCount", e.length],
           ["prefixIndex", r],
-          ["fileCount", o.length],
+          ["fileCount", t.length],
           ["fileIndex", i],
-          ["tryCount", t],
+          ["tryCount", o],
         ),
         {
           Success: !1,
@@ -464,9 +470,9 @@ class UrlPrefixDownload {
           "使用前缀列表下载文件列表失败，前缀轮询已超出数组长度",
           ["prefixCount", e.length],
           ["prefixIndex", n],
-          ["fileCount", o.length],
+          ["fileCount", t.length],
           ["fileIndex", a],
-          ["tryCount", t],
+          ["tryCount", o],
         ),
         {
           Success: !1,
@@ -485,18 +491,18 @@ class UrlPrefixDownload {
             ["prefixCount", e.length],
             ["prefixIndex", n],
             ["prefix", s],
-            ["fileCount", o.length],
+            ["fileCount", t.length],
             ["fileIndex", a],
-            ["tryCount", t],
+            ["tryCount", o],
           ),
-          await this.RSr(s, n, o, a, t));
+          await this.TSr(s, n, t, a, o));
       if (((a = u.FileIndex), u.Complete)) {
         LauncherLog_1.LauncherLog.Info(
           "使用前缀列表下载文件列表成功",
           ["prefixCount", e.length],
           ["prefixIndex", n],
           ["prefix", s],
-          ["fileCount", o.length],
+          ["fileCount", t.length],
           ["fileIndex", u.FileIndex],
         ),
           (l = !0);
@@ -509,19 +515,19 @@ class UrlPrefixDownload {
           ["prefixCount", e.length],
           ["prefixIndex", n + 1],
           ["prefix", s],
-          ["fileCount", o.length],
+          ["fileCount", t.length],
           ["fileIndex", u.FileIndex],
-          ["tryCount", t],
+          ["tryCount", o],
         );
     }
     return { Success: l, DownloadState: d, HttpCode: f };
   }
-  async RSr(e, o, t, r, i, n = -1, a = !1, l = bigIntZero) {
-    if (t.length <= 0) {
+  async TSr(e, t, o, r, i, n = -1, a = !1, l = bigIntZero) {
+    if (o.length <= 0) {
       LauncherLog_1.LauncherLog.Info(
         "使用前缀下载文件列表时，该文件列表为空",
         ["urlPrefix", e],
-        ["fileCount", t.length],
+        ["fileCount", o.length],
         ["downloadedSize", l],
       );
       const _ = {
@@ -537,7 +543,7 @@ class UrlPrefixDownload {
     LauncherLog_1.LauncherLog.Info(
       "开始使用前缀下载文件列表",
       ["urlPrefix", e],
-      ["fileCount", t.length],
+      ["fileCount", o.length],
       ["fileIndex", r],
       ["tryCount", i],
       ["tryTime", n],
@@ -547,15 +553,15 @@ class UrlPrefixDownload {
     let d = l,
       f = n,
       c = r;
-    for (var s = t.length; c < s; c++) {
-      var u = t[c],
-        u = await this.USr(e, o, u, i, f, a);
+    for (var s = o.length; c < s; c++) {
+      var u = o[c],
+        u = await this.LSr(e, t, u, i, f, a);
       if (((d += u.DownloadedSize), (f = u.RemainedTime), !u.Complete))
         return (
           LauncherLog_1.LauncherLog.Info(
             "使用前缀下载文件列表失败，",
             ["urlPrefix", e],
-            ["fileCount", t.length],
+            ["fileCount", o.length],
             ["fileIndex", c],
             ["downloadedSize", d],
           ),
@@ -572,7 +578,7 @@ class UrlPrefixDownload {
     LauncherLog_1.LauncherLog.Info(
       "使用前缀下载文件列表时，该文件列表已全部下载完成",
       ["urlPrefix", e],
-      ["fileCount", t.length],
+      ["fileCount", o.length],
       ["fileIndex", c],
       ["downloadedSize", d],
     );
@@ -586,37 +592,37 @@ class UrlPrefixDownload {
     };
     return _;
   }
-  async USr(t, e, r, i, o, n, a = bigIntZero) {
-    if (this.ISr)
+  async LSr(o, e, r, i, t, n, a = bigIntZero) {
+    if (this.ESr)
       return (
         LauncherLog_1.LauncherLog.Info(
           "使用前缀下载文件，下载被取消",
-          ["urlPrefix", t],
+          ["urlPrefix", o],
           ["file", r.FileName],
           ["tryCount", i],
           ["downloadedSize", a],
         ),
         {
           Complete: !1,
-          RemainedTime: o,
+          RemainedTime: t,
           DownloadedSize: a,
           DownloadState: DownloadDefine_1.EDownloadState.DownloadCanceled,
           HttpCode: 0,
         }
       );
-    let l = o,
+    let l = t,
       d = a,
       f = DownloadDefine_1.EDownloadState.None,
       c = 0;
-    for (let o = 0; o < i; o++) {
-      if (this.ISr)
+    for (let t = 0; t < i; t++) {
+      if (this.ESr)
         return (
           LauncherLog_1.LauncherLog.Info(
             "使用前缀下载文件，下载被取消(for-trycount)",
-            ["urlPrefix", t],
+            ["urlPrefix", o],
             ["file", r.FileName],
             ["tryCount", i],
-            ["i", o],
+            ["i", t],
             ["downloadedSize", d],
           ),
           {
@@ -637,35 +643,35 @@ class UrlPrefixDownload {
         };
       LauncherLog_1.LauncherLog.Info(
         "开始使用前缀下载文件",
-        ["urlPrefix", t],
+        ["urlPrefix", o],
         ["file", r.FileName],
         ["fileSize", r.Size],
-        ["tryCount", o],
+        ["tryCount", t],
         ["tryDownloadTime", l],
         ["bLimitTime", n],
         ["downloadedSize", d],
       );
       var s = new HotPatchLogReport_1.HotPatchLog(),
         s =
-          ((s.s_url_prefix = t),
-          (s.i_try_count = o.toString()),
+          ((s.s_url_prefix = o),
+          (s.i_try_count = t.toString()),
           (s.s_step_id = "prefix_download_file_start"),
           (s.s_file_name = r.FileName),
           HotPatchLogReport_1.HotPatchLogReport.Report(s),
           new HotPatchLogReport_1.HotPatchLog()),
         u =
-          ((s.s_url_prefix = t),
-          (s.i_try_count = o.toString()),
+          ((s.s_url_prefix = o),
+          (s.i_try_count = t.toString()),
           (s.s_step_id = "prefix_download_file_end"),
           (s.s_file_name = r.FileName),
           { success: !0 });
       try {
-        this.ySr = new UE.DownloaderProxy();
-        var _ = await this.ASr(t, e, n, r, n ? l : -1);
+        (this.MSr = new UE.DownloaderProxy()), (this.jpa = !1);
+        var _ = await this.DSr(o, e, n, r, n ? l : -1);
         if (((d += _.DownloadedSize), (l = _.RemainedTime), _.Complete)) {
           LauncherLog_1.LauncherLog.Info(
             "使用前缀下载文件完成",
-            ["urlPrefix", t],
+            ["urlPrefix", o],
             ["file", r.FileName],
             ["fileSize", r.Size],
             ["RemainedTime", l],
@@ -687,7 +693,7 @@ class UrlPrefixDownload {
           (c = _.HttpCode),
           LauncherLog_1.LauncherLog.Info(
             "使用前缀下载文件失败",
-            ["urlPrefix", t],
+            ["urlPrefix", o],
             ["file", r.FileName],
             ["fileSize", r.Size],
             ["RemainedTime", l],
@@ -703,14 +709,14 @@ class UrlPrefixDownload {
           ? LauncherLog_1.LauncherLog.ErrorWithStack(
               "使用前缀下载文件出现异常导致下载失败",
               e,
-              ["urlPrefix", t],
+              ["urlPrefix", o],
               ["file", r.FileName],
               ["fileSize", r.Size],
               ["error", e.message],
             )
           : LauncherLog_1.LauncherLog.Error(
               "使用前缀下载文件出现异常导致下载失败",
-              ["urlPrefix", t],
+              ["urlPrefix", o],
               ["file", r.FileName],
               ["fileSize", r.Size],
               ["error", e],
@@ -720,8 +726,8 @@ class UrlPrefixDownload {
           (s.s_step_result = LauncherSerialize_1.LauncherJson.Stringify(u)),
           HotPatchLogReport_1.HotPatchLogReport.Report(s);
         u = new HotPatchLogReport_1.HotPatchLog();
-        (u.s_url_prefix = t),
-          (u.i_try_count = o.toString()),
+        (u.s_url_prefix = o),
+          (u.i_try_count = t.toString()),
           (u.s_step_id = "download_exception"),
           (u.s_file_name = r.FileName),
           (u.s_step_result = "" + e),
@@ -737,42 +743,43 @@ class UrlPrefixDownload {
     };
     return p;
   }
-  async ASr(x, L, e, w, S) {
+  async DSr(x, L, e, w, S) {
     return new Promise((u) => {
       const _ = new Date(),
-        p = (e, o, t) => {
+        p = (e, t, o) => {
           var r;
-          this.TSr &&
+          this.SSr &&
             ((r = UE.KuroStaticLibrary.IsBuildShipping()
               ? w.HashString
               : w.FileName),
-            this.TSr(w.FileName, r, e, o, t));
+            this.SSr(w.FileName, r, e, t, o));
         },
-        h = (e, o) => {
-          var t = new Date(),
+        h = (e, t) => {
+          this.jpa = !0;
+          var o = new Date(),
             r = 7 === e,
             i =
               (w.Size && 0n < w.Size && r && p(0n, 0n, w.Size),
               (0, puerts_1.releaseManualReleaseDelegate)(h),
               (0, puerts_1.releaseManualReleaseDelegate)(p),
-              this.ySr.UnbindCallback(),
+              this.MSr.UnbindCallback(),
               0 <= S);
-          let n = i ? S - this.ySr.GetTotalDownloadTime() : -1,
-            a = this.ySr.GetReceivedSize();
+          let n = i ? S - this.MSr.GetTotalDownloadTime() : -1,
+            a = this.MSr.GetReceivedSize();
           (1 !== e && 4 !== e && 5 !== e) || ((n = S), (a = bigIntZero)),
-            w.Size < bigIntZero && (w.Size = this.ySr.GetContentLength()),
+            w.Size < bigIntZero && (w.Size = this.MSr.GetContentLength()),
             LauncherLog_1.LauncherLog.Info(
               "下载任务结束！不一定完成下载，有可能取消了",
               ["fileName", w.FileName],
               ["requireFileSize", w.Size],
-              ["savedSize", this.ySr.GetSavedSize()],
+              ["savedSize", this.MSr.GetSavedSize()],
               ["downloadState", e],
               ["downloadStateString", DownloadDefine_1.EDownloadState[e]],
-              ["httpState", o],
+              ["httpState", t],
             );
-          var l = this.ySr.GetReceivedSize(),
+          var l = this.MSr.GetReceivedSize(),
             d = Number(l / 1024n),
-            t = 0.001 * (t.getTime() - _.getTime()),
+            o = 0.001 * (o.getTime() - _.getTime()),
             f = new HotPatchLogReport_1.HotPatchLog(),
             c =
               ((f.s_url_prefix = x),
@@ -783,27 +790,27 @@ class UrlPrefixDownload {
             s = {
               urlPriority: L,
               isEvalute: i,
-              httpCode: o,
+              httpCode: t,
               network: "" + NetworkDefine_1.ENetworkType[c],
               end: "down end.",
             },
             s =
               ((f.s_step_result =
                 LauncherSerialize_1.LauncherJson.Stringify(s)),
-              (f.s_download_speed = (d / t).toFixed(3) + "KB/s"),
+              (f.s_download_speed = (d / o).toFixed(3) + "KB/s"),
               HotPatchLogReport_1.HotPatchLogReport.Report(f),
               new HotPatchLogReport_1.HotPatchLog()),
             f =
               ((s.s_step_id = "hp_download_info"),
               (s.i_download_size = 0n < l ? d : 0),
-              (s.f_download_spend = t),
+              (s.f_download_spend = o),
               (s.s_url_prefix = x),
               (s.s_file_name = w.FileName),
               {
                 urlPriority: L,
                 isBgDownload: !1,
                 isEvalute: i,
-                httpCode: o,
+                httpCode: t,
                 network: "" + NetworkDefine_1.ENetworkType[c],
               }),
             l =
@@ -815,15 +822,15 @@ class UrlPrefixDownload {
                 RemainedTime: n,
                 DownloadedSize: a,
                 DownloadState: e,
-                HttpCode: o,
+                HttpCode: t,
               });
           u(l);
         };
       var e = w.SavePath.substr(0, w.SavePath.lastIndexOf("/")),
-        o = UE.BlueprintPathsLibrary.DirectoryExists(e),
+        t = UE.BlueprintPathsLibrary.DirectoryExists(e),
         e =
-          (o || UE.KuroLauncherLibrary.MakeDirectory(e),
-          o &&
+          (t || UE.KuroLauncherLibrary.MakeDirectory(e),
+          t &&
             w.Size === bigIntZero &&
             UE.BlueprintPathsLibrary.FileExists(
               w.SavePath + exports.DOWNLOAD_SUFFIX,
@@ -835,24 +842,24 @@ class UrlPrefixDownload {
               w.SavePath + exports.DOWNLOAD_SUFFIX,
             )),
           new HotPatchLogReport_1.HotPatchLog()),
-        o =
+        t =
           ((e.s_url_prefix = x),
           (e.s_step_id = "start_download_file"),
           (e.s_file_name = w.FileName),
           UE.KuroLauncherLibrary.GetNetworkConnectionType()),
-        o = { network: "" + NetworkDefine_1.ENetworkType[o] },
-        o =
-          ((e.s_step_result = LauncherSerialize_1.LauncherJson.Stringify(o)),
+        t = { network: "" + NetworkDefine_1.ENetworkType[t] },
+        t =
+          ((e.s_step_result = LauncherSerialize_1.LauncherJson.Stringify(t)),
           HotPatchLogReport_1.HotPatchLogReport.Report(e),
           x + w.Url);
       LauncherLog_1.LauncherLog.Info(
         "开始下载",
-        ["url", o],
+        ["url", t],
         ["savePath", w.SavePath],
       ),
-        this.ySr.SetProgressCallback((0, puerts_1.toManualReleaseDelegate)(p)),
-        this.ySr.SetCompleteCallback((0, puerts_1.toManualReleaseDelegate)(h)),
-        this.ySr.Start(
+        this.MSr.SetProgressCallback((0, puerts_1.toManualReleaseDelegate)(p)),
+        this.MSr.SetCompleteCallback((0, puerts_1.toManualReleaseDelegate)(h)),
+        this.MSr.Start(
           x + w.Url,
           w.SavePath,
           exports.DOWNLOAD_SUFFIX,

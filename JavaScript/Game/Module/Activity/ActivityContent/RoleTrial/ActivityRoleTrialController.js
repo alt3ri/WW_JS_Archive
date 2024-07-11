@@ -19,12 +19,12 @@ const Log_1 = require("../../../../../Core/Common/Log"),
 class ActivityRoleTrialController extends ActivityControllerBase_1.ActivityControllerBase {
   constructor() {
     super(...arguments),
-      (this.wke = (e) => {
-        var t = ActivityRoleTrialController.Bke();
+      (this.Y2e = (e) => {
+        var t = ActivityRoleTrialController.J2e();
         t && t.IsRolePreviewOn() && (t.CurrentRoleId = e);
       }),
       (this.nye = () => {
-        var e = ActivityRoleTrialController.Bke();
+        var e = ActivityRoleTrialController.J2e();
         e &&
           e.IsRoleInstanceOn() &&
           !ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance() &&
@@ -32,11 +32,11 @@ class ActivityRoleTrialController extends ActivityControllerBase_1.ActivityContr
             ActivityRoleTrialController.CurrentActivityId,
           );
       }),
-      (this.bke = (e) => {
-        e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys &&
+      (this.z2e = (e) => {
+        e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs &&
           (ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-            e.lkn,
-            12955,
+            e.O4n,
+            12613,
           ),
           (e = {
             ButtonTextId: "ConfirmBox_133_ButtonText_0",
@@ -58,15 +58,15 @@ class ActivityRoleTrialController extends ActivityControllerBase_1.ActivityContr
       });
   }
   OnRegisterNetEvent() {
-    Net_1.Net.Register(12955, this.bke);
+    Net_1.Net.Register(12613, this.z2e);
   }
   OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(12955);
+    Net_1.Net.UnRegister(12613);
   }
   OnAddEvents() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.RoleSystemChangeRole,
-      this.wke,
+      this.Y2e,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.WorldDoneAndCloseLoading,
@@ -76,14 +76,14 @@ class ActivityRoleTrialController extends ActivityControllerBase_1.ActivityContr
   OnRemoveEvents() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.RoleSystemChangeRole,
-      this.wke,
+      this.Y2e,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.WorldDoneAndCloseLoading,
         this.nye,
       );
   }
-  static Bke() {
+  static J2e() {
     var e = ModelManager_1.ModelManager.ActivityModel.GetActivityById(
       ActivityRoleTrialController.CurrentActivityId,
     );
@@ -97,7 +97,7 @@ class ActivityRoleTrialController extends ActivityControllerBase_1.ActivityContr
   }
   OnCreateActivityData(e) {
     return (
-      (ActivityRoleTrialController.CurrentActivityId = e.Ekn),
+      (ActivityRoleTrialController.CurrentActivityId = e.J4n),
       new ActivityRoleTrialData_1.ActivityRoleTrialData()
     );
   }
@@ -106,16 +106,16 @@ class ActivityRoleTrialController extends ActivityControllerBase_1.ActivityContr
     return !1;
   }
   static RequestRoleInstanceReward(t) {
-    var e = new Protocol_1.Aki.Protocol.whs();
-    (e.l3n = t),
-      Net_1.Net.Call(9833, e, (e) => {
+    var e = new Protocol_1.Aki.Protocol.Lus();
+    (e.O6n = t),
+      Net_1.Net.Call(9233, e, (e) => {
         e &&
-          (e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys &&
+          (e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs &&
             ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-              e.lkn,
-              28067,
+              e.O4n,
+              2799,
             ),
-          (e = this.Bke())) &&
+          (e = this.J2e())) &&
           (e.SetRewardStateByRoleId(t, 2),
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(

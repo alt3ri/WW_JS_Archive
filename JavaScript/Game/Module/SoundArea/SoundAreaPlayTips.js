@@ -13,8 +13,8 @@ const UE = require("ue"),
 class SoundAreaPlayTips extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
-      (this.Hvt = 0),
-      (this.Ryo = (e) => {
+      (this.tEt = 0),
+      (this.TIo = (e) => {
         this.SetBuffInfo(e);
       });
   }
@@ -27,13 +27,13 @@ class SoundAreaPlayTips extends UiTickViewBase_1.UiTickViewBase {
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.SilentTipsRefresh,
-      this.Ryo,
+      this.TIo,
     );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.SilentTipsRefresh,
-      this.Ryo,
+      this.TIo,
     );
   }
   OnStart() {
@@ -48,7 +48,7 @@ class SoundAreaPlayTips extends UiTickViewBase_1.UiTickViewBase {
       : this.GetText(1)?.SetUIActive(!1),
       LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(2), e.BuffDescription),
       e?.Time &&
-        (this.Hvt =
+        (this.tEt =
           TimeUtil_1.TimeUtil.GetServerTimeStamp() +
           e.Time * TimeUtil_1.TimeUtil.InverseMillisecond),
       e?.MaxCount &&
@@ -64,12 +64,12 @@ class SoundAreaPlayTips extends UiTickViewBase_1.UiTickViewBase {
         ));
   }
   OnTick(e) {
-    0 < this.Hvt &&
-      TimeUtil_1.TimeUtil.GetServerTimeStamp() > this.Hvt &&
-      (this.CloseMe(), (this.Hvt = 0));
+    0 < this.tEt &&
+      TimeUtil_1.TimeUtil.GetServerTimeStamp() > this.tEt &&
+      (this.CloseMe(), (this.tEt = 0));
   }
   OnAfterPlayStartSequence() {
-    this.Hvt || this.CloseMe();
+    this.tEt || this.CloseMe();
   }
 }
 exports.SoundAreaPlayTips = SoundAreaPlayTips;

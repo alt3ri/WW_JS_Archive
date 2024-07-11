@@ -22,7 +22,7 @@ class CommonItemSelectViewOpenViewData extends UiPopViewData_1.UiPopViewData {
 exports.CommonItemSelectViewOpenViewData = CommonItemSelectViewOpenViewData;
 class CommonItemSelectView extends UiPanelBase_1.UiPanelBase {
   constructor(e = void 0) {
-    super(), (this.OIt = void 0), e && this.CreateThenShowByActor(e.GetOwner());
+    super(), (this.jTt = void 0), e && this.CreateThenShowByActor(e.GetOwner());
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -32,36 +32,36 @@ class CommonItemSelectView extends UiPanelBase_1.UiPanelBase {
       [3, UE.UIItem],
     ];
   }
-  kIt(e) {
+  WTt(e) {
     this.GetItem(3).SetUIActive(e?.length <= 0);
   }
   UpdateSelectableComponent(e, t, i, o, s = void 0) {
-    this.OIt ||
-      ((this.OIt = new (
+    this.jTt ||
+      ((this.jTt = new (
         0 === e
           ? SelectableComponent_1.SelectableComponent
           : VisionRecoverySelectableComponent_1.VisionRecoverySelectableComponent
       )()),
-      this.OIt.InitLoopScroller(
+      this.jTt.InitLoopScroller(
         this.GetLoopScrollViewComponent(0),
         this.GetItem(1),
         o,
       )),
       this.SetMaxSize(o.MaxSelectedGridNum),
-      this.kIt(t),
-      this.OIt.UpdateComponent(t, i, s);
+      this.WTt(t),
+      this.jTt.UpdateComponent(t, i, s);
   }
   GetCurrentSelectedData() {
-    return this.OIt.GetCurrentSelectedData();
+    return this.jTt.GetCurrentSelectedData();
   }
   UpdateByDataList(e) {
-    this.OIt.UpdateDataList(e);
+    this.jTt.UpdateDataList(e);
   }
   SetMaxSize(e) {
-    this.OIt.SetMaxSize(e);
+    this.jTt.SetMaxSize(e);
   }
   OnBeforeDestroy() {
-    this.OIt?.Destroy();
+    this.jTt?.Destroy();
   }
 }
 exports.CommonItemSelectView = CommonItemSelectView;

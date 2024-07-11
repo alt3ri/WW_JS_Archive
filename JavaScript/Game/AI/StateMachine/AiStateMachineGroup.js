@@ -13,7 +13,7 @@ const Time_1 = require("../../../Core/Common/Time"),
   ConfigManager_1 = require("../../Manager/ConfigManager"),
   CombatMessage_1 = require("../../Module/CombatMessage/CombatMessage"),
   PreloadDefine_1 = require("../../Preload/PreloadDefine"),
-  CombatDebugController_1 = require("../../Utils/CombatDebugController"),
+  CombatLog_1 = require("../../Utils/CombatLog"),
   FrequencyMonitor_1 = require("../../Utils/FrequencyMonitor"),
   AiStateMachine_1 = require("./AiStateMachine"),
   AiStateMachineTaskSkill_1 = require("./Task/AiStateMachineTaskSkill");
@@ -38,7 +38,6 @@ class AiStateMachineGroup {
       (this.SwitchStateFrequencyMonitor = void 0),
       (this.Inited = !1),
       (this.StateMachinesActivated = !1),
-      (this.ForceDisableAnimOptimization = !0),
       (this.zre = void 0),
       (this.ErrorMessage = void 0),
       (this.OnDeath = () => {
@@ -56,7 +55,7 @@ class AiStateMachineGroup {
               e.Task.SkillId === i
             )
               break;
-            CombatDebugController_1.CombatDebugController.CombatWarn(
+            CombatLog_1.CombatLog.Warn(
               "StateMachineNew",
               this.Entity,
               "主状态激活时，不应该释放其他技能",
@@ -105,7 +104,7 @@ class AiStateMachineGroup {
       this.zre.forEach((t) => {
         i.push(t.Name);
       }),
-        CombatDebugController_1.CombatDebugController.CombatWarn(
+        CombatLog_1.CombatLog.Warn(
           "StateMachineNew",
           this.Entity,
           "多个主状态节点激活，请保持主状态节点激活唯一",
@@ -127,11 +126,7 @@ class AiStateMachineGroup {
     return !1;
   }
   PushErrorMessage(t) {
-    CombatDebugController_1.CombatDebugController.CombatError(
-      "StateMachineNew",
-      this.Entity,
-      t,
-    ),
+    CombatLog_1.CombatLog.Error("StateMachineNew", this.Entity, t),
       this.ErrorMessage ||
         (this.ErrorMessage = new StringBuilder_1.StringBuilder()),
       this.ErrorMessage.Append(t),
@@ -178,7 +173,7 @@ class AiStateMachineGroup {
             t.StateMachine,
           ))?.StateMachineJson &&
         ((e = JSON.parse(e.StateMachineJson)),
-        ((s = this.Entity.GetComponent(65)).StateMachineName = t.StateMachine),
+        ((s = this.Entity.GetComponent(67)).StateMachineName = t.StateMachine),
         (s.StateMachineJsonObject = e)),
       !0
     );
@@ -207,23 +202,23 @@ class AiStateMachineGroup {
         (this.StateMachineMap = new Map()),
         (this.Yre = new Map()),
         (this.Jre = new Map());
-      for (const r of t.StateMachines) {
-        let t = this.GetNodeData(r);
+      for (const a of t.StateMachines) {
+        let t = this.GetNodeData(a);
         if (!(t = t.ReferenceUuid ? this.GetNodeData(t.ReferenceUuid) : t))
-          return void CombatDebugController_1.CombatDebugController.CombatError(
+          return void CombatLog_1.CombatLog.Error(
             "StateMachineNew",
             this.Entity,
             "状态机初始化失败，不存在状态机",
-            ["stateMachineId", r],
+            ["stateMachineId", a],
           );
         var e = new AiStateMachine_1.AiStateMachineBase(this, void 0, t);
         e.IsReferenceNode || this.StateMachines.push(e);
       }
       for (const n of this.NodeReferenceMap.values()) {
-        const a = this.NodeMap.get(n);
-        this.StateMachines.find((t) => t === a) || this.StateMachines.push(a);
+        const r = this.NodeMap.get(n);
+        this.StateMachines.find((t) => t === r) || this.StateMachines.push(r);
       }
-      CombatDebugController_1.CombatDebugController.CombatInfo(
+      CombatLog_1.CombatLog.Info(
         "StateMachineNew",
         this.Entity,
         "初始化状态机-成功",
@@ -234,13 +229,13 @@ class AiStateMachineGroup {
     }
   }
   StartStateMachines() {
-    var t = this.Entity.GetComponent(0).ComponentDataMap.get("aps")?.aps;
-    if (t?.mSs && 0 < t.mSs.length) {
+    var t = this.Entity.GetComponent(0).ComponentDataMap.get("Iys")?.Iys;
+    if (t?.xTs && 0 < t.xTs.length) {
       if (
-        ((this.Xre = Number(t.gSs)),
-        (this.$re = Number(t.CSs)),
+        ((this.Xre = Number(t.BTs)),
+        (this.$re = Number(t.bTs)),
         this.Qre !== this.$re &&
-          CombatDebugController_1.CombatDebugController.CombatWarn(
+          CombatLog_1.CombatLog.Warn(
             "StateMachineNew",
             this.Entity,
             "实体状态机与服务器版本不一致",
@@ -248,7 +243,7 @@ class AiStateMachineGroup {
             ["服务器", this.$re],
           ),
         this.Kre !== this.Xre &&
-          CombatDebugController_1.CombatDebugController.CombatWarn(
+          CombatLog_1.CombatLog.Warn(
             "StateMachineNew",
             this.Entity,
             "公共状态机与服务器版本不一致",
@@ -257,22 +252,22 @@ class AiStateMachineGroup {
           ),
         this.Inited)
       ) {
-        if (t.fSs) for (const i of t.fSs) this.Yre.set(i.Ckn, i.gkn);
-        if (t.vSs?.MSs)
-          for (const e of t.vSs.MSs)
-            CombatDebugController_1.CombatDebugController.CombatWarn(
+        if (t.qTs) for (const i of t.qTs) this.Yre.set(i.j4n, i.W4n);
+        if (t.GTs?.kTs)
+          for (const e of t.GTs.kTs)
+            CombatLog_1.CombatLog.Warn(
               "StateMachineNew",
               this.Entity,
               "初始化黑板值",
-              ["Key", e.Ckn],
-              ["Value", e.gkn],
+              ["Key", e.j4n],
+              ["Value", e.W4n],
             ),
-              this.Jre.set(e.Ckn, e.gkn);
-        for (const s of t.mSs) this.StartState(s.ukn, s.cSs, s.dSs);
+              this.Jre.set(e.j4n, e.W4n);
+        for (const s of t.xTs) this.StartState(s.k4n, s.UTs, s.wTs);
         this.StateMachinesActivated = !0;
       }
     } else
-      CombatDebugController_1.CombatDebugController.CombatError(
+      CombatLog_1.CombatLog.Error(
         "StateMachineNew",
         this.Entity,
         "状态机初始化失败，服务器实体没有相关初始状态",
@@ -280,41 +275,41 @@ class AiStateMachineGroup {
   }
   HandleBlackboard(t) {
     if (
-      (CombatDebugController_1.CombatDebugController.CombatInfo(
+      (CombatLog_1.CombatLog.Info(
         "StateMachineNew",
         this.Entity,
         "HandleBlackboard",
       ),
-      t.pSs)
+      t.OTs)
     )
-      for (const i of t.pSs)
-        CombatDebugController_1.CombatDebugController.CombatInfo(
+      for (const i of t.OTs)
+        CombatLog_1.CombatLog.Info(
           "StateMachineNew",
           this.Entity,
           "set",
-          ["key", i.Ckn],
-          ["value", i.gkn],
+          ["key", i.j4n],
+          ["value", i.W4n],
         ),
-          this.Yre.set(i.Ckn, i.gkn);
+          this.Yre.set(i.j4n, i.W4n);
   }
   HandleCustomBlackboard(t) {
     if (
-      (CombatDebugController_1.CombatDebugController.CombatInfo(
+      (CombatLog_1.CombatLog.Info(
         "StateMachineNew",
         this.Entity,
         "HandleCustomBlackboard",
       ),
-      t.vSs?.MSs)
+      t.GTs?.kTs)
     )
-      for (const i of t.vSs.MSs)
-        CombatDebugController_1.CombatDebugController.CombatInfo(
+      for (const i of t.GTs.kTs)
+        CombatLog_1.CombatLog.Info(
           "StateMachineNew",
           this.Entity,
           "set",
-          ["key", i.Ckn],
-          ["value", i.gkn],
+          ["key", i.j4n],
+          ["value", i.W4n],
         ),
-          this.Jre.set(i.Ckn, i.gkn);
+          this.Jre.set(i.j4n, i.W4n);
   }
   Clear() {
     if (this.StateMachines) for (const t of this.StateMachines) t.Clear();
@@ -366,9 +361,9 @@ class AiStateMachineGroup {
   RequestServerDebugInfo() {
     Time_1.Time.NowSeconds < this.tne + 1 ||
       (Net_1.Net.Call(
-        15100,
-        Protocol_1.Aki.Protocol.eYn.create({
-          rkn: this.ActorComp.CreatureData.GetCreatureDataId(),
+        18418,
+        Protocol_1.Aki.Protocol.QZn.create({
+          P4n: this.ActorComp.CreatureData.GetCreatureDataId(),
         }),
         (t) => {
           this.HandleEntityFsmGroupInfo(t);
@@ -445,17 +440,17 @@ ${this.ErrorMessage.ToString()}
     var s = this.GetNodeByUuid(i);
     s
       ? s.Activated ||
-        (CombatDebugController_1.CombatDebugController.CombatWarn(
+        (CombatLog_1.CombatLog.Warn(
           "StateMachineNew",
           this.Entity,
           `设置初始状态，激活状态 [${s.Name}|${s.Uuid}]`,
         ),
         s.Start(!1, e),
         this.ActorComp.IsAutonomousProxy &&
-          (((s = Protocol_1.Aki.Protocol.TNn.create()).ukn = t),
-          (s.ckn = i),
-          CombatMessage_1.CombatNet.Call(28719, this.Entity, s)))
-      : CombatDebugController_1.CombatDebugController.CombatWarn(
+          (((s = Protocol_1.Aki.Protocol.e4n.create()).k4n = t),
+          (s.F4n = i),
+          CombatMessage_1.CombatNet.Call(14914, this.Entity, s)))
+      : CombatLog_1.CombatLog.Warn(
           "StateMachineNew",
           this.Entity,
           `设置初始状态失败，目标节点不存在 [${i}]`,
@@ -468,18 +463,18 @@ ${this.ErrorMessage.ToString()}
       ? o.WaitSwitchState
         ? ((o.RemoteSwitchPending = e),
           (o.RemoteSwitchMessageId = s),
-          CombatDebugController_1.CombatDebugController.CombatWarn(
+          CombatLog_1.CombatLog.Warn(
             "StateMachineNew",
             this.Entity,
             `远端切换状态，目前处于等待切换结果状态，[${h.Name}|${h.Uuid}]`,
           ))
         : h.Activated
-          ? CombatDebugController_1.CombatDebugController.CombatWarn(
+          ? CombatLog_1.CombatLog.Warn(
               "StateMachineNew",
               this.Entity,
               `远端切换状态，状态已激活 [${h.Name}|${h.Uuid}]`,
             )
-          : (CombatDebugController_1.CombatDebugController.CombatWarn(
+          : (CombatLog_1.CombatLog.Warn(
               "StateMachineNew",
               this.Entity,
               `远端切换状态，root[${o.Name}|${o.Uuid}] 激活节点[${h.Name}|${h.Uuid}]`,
@@ -488,10 +483,10 @@ ${this.ErrorMessage.ToString()}
             h.ForceActive(),
             (o.CurrentMessageIdCache = void 0),
             this.ActorComp.IsAutonomousProxy &&
-              (((s = Protocol_1.Aki.Protocol.TNn.create()).ukn = t),
-              (s.ckn = e),
-              CombatMessage_1.CombatNet.Call(28719, this.Entity, s)))
-      : CombatDebugController_1.CombatDebugController.CombatWarn(
+              (((s = Protocol_1.Aki.Protocol.e4n.create()).k4n = t),
+              (s.F4n = e),
+              CombatMessage_1.CombatNet.Call(14914, this.Entity, s)))
+      : CombatLog_1.CombatLog.Warn(
           "StateMachineNew",
           this.Entity,
           `远端切换状态失败，目标节点不存在 [${e}]`,
@@ -502,52 +497,48 @@ ${this.ErrorMessage.ToString()}
     e
       ? e.Activated
         ? e.SetExecutedAction()
-        : CombatDebugController_1.CombatDebugController.CombatWarn(
+        : CombatLog_1.CombatLog.Warn(
             "StateMachineNew",
             this.Entity,
             `远端修改状态确认通知，该状态机未激活 [${e.Name}|${e.Uuid}]`,
           )
-      : CombatDebugController_1.CombatDebugController.CombatWarn(
+      : CombatLog_1.CombatLog.Warn(
           "StateMachineNew",
           this.Entity,
           `远端确认切换状态失败，目标节点不存在 [${i}]`,
         );
   }
   HandleEntityFsmGroupInfo(t) {
-    if (t.SSs)
-      for (const i of t.SSs)
-        for (const e of i.ESs)
-          this.GetNodeByUuid(e.xCs)?.HandleServerDebugInfo(e);
+    if (t.NTs)
+      for (const i of t.NTs)
+        for (const e of i.FTs)
+          this.GetNodeByUuid(e.Qvs)?.HandleServerDebugInfo(e);
   }
   ResetStateMachine(t, i) {
     if (
-      (CombatDebugController_1.CombatDebugController.CombatInfo(
-        "StateMachineNew",
-        this.Entity,
-        "状态机重置",
-      ),
-      t?.mSs && 0 < t.mSs.length)
+      (CombatLog_1.CombatLog.Info("StateMachineNew", this.Entity, "状态机重置"),
+      t?.xTs && 0 < t.xTs.length)
     ) {
       if (
-        ((this.Xre = Number(t.gSs)), (this.$re = Number(t.CSs)), this.Inited)
+        ((this.Xre = Number(t.BTs)), (this.$re = Number(t.bTs)), this.Inited)
       ) {
-        for (const o of t.mSs) {
-          var e = this.GetNodeByUuid(o.ukn),
-            s = this.GetNodeByUuid(o.cSs);
+        for (const o of t.xTs) {
+          var e = this.GetNodeByUuid(o.k4n),
+            s = this.GetNodeByUuid(o.UTs);
           if (!s)
-            return void CombatDebugController_1.CombatDebugController.CombatError(
+            return void CombatLog_1.CombatLog.Error(
               "StateMachineNew",
               this.Entity,
               "状态机重置失败，目标状态不存在",
-              ["fsmId", o.ukn],
-              ["fsmId", o.cSs],
+              ["fsmId", o.k4n],
+              ["fsmId", o.UTs],
             );
-          CombatDebugController_1.CombatDebugController.CombatWarn(
+          CombatLog_1.CombatLog.Warn(
             "StateMachineNew",
             this.Entity,
             "状态机重置状态",
-            ["fsmId", o.ukn],
-            ["stateId", o.cSs],
+            ["fsmId", o.k4n],
+            ["stateId", o.UTs],
           ),
             (e.CurrentMessageIdCache = i),
             s.ForceActive(),
@@ -556,7 +547,7 @@ ${this.ErrorMessage.ToString()}
         this.StateMachinesActivated = !0;
       }
     } else
-      CombatDebugController_1.CombatDebugController.CombatError(
+      CombatLog_1.CombatLog.Error(
         "StateMachineNew",
         this.Entity,
         "状态机重置失败，服务器实体没有相关初始状态",

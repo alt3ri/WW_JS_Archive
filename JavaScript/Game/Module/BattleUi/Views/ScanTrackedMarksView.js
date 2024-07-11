@@ -12,13 +12,13 @@ const UE = require("ue"),
 class ScanTrackedMarksView extends BattleChildView_1.BattleChildView {
   constructor() {
     super(...arguments),
-      (this.Sct = new Map()),
-      (this.Ect = new Set()),
-      (this.yct = (t, e) => {
+      (this.wmt = new Map()),
+      (this.Bmt = new Set()),
+      (this.bmt = (t, e) => {
         if (e && !(e.ScanInfos.length <= 0)) {
           var i = EntitySystem_1.EntitySystem.Get(t);
           if (i) {
-            this.Ect.add(t);
+            this.Bmt.add(t);
             const s = i.GetComponent(1)?.Owner,
               r = e.ScanCompositeConfig.ShowDistance;
             for (const n of e.ScanInfos) {
@@ -31,8 +31,8 @@ class ScanTrackedMarksView extends BattleChildView_1.BattleChildView {
                     e &&
                       e.IsValid() &&
                       s &&
-                      this.Ect.has(t) &&
-                      this.Ict(
+                      this.Bmt.has(t) &&
+                      this.qmt(
                         t,
                         e,
                         0,
@@ -51,23 +51,23 @@ class ScanTrackedMarksView extends BattleChildView_1.BattleChildView {
           }
         }
       }),
-      (this.Tct = (e) => {
-        this.Ect.has(e) && this.Ect.delete(e);
-        var t = this.Sct.get(e);
-        t && (t.ToClose(), this.Sct.delete(e));
+      (this.Gmt = (e) => {
+        this.Bmt.has(e) && this.Bmt.delete(e);
+        var t = this.wmt.get(e);
+        t && (t.ToClose(), this.wmt.delete(e));
       });
   }
   Initialize(e) {
-    super.Initialize(e), this.uje();
+    super.Initialize(e), this.yWe();
   }
   Reset() {
-    super.Reset(), this.Lct(), this.Sct.clear();
+    super.Reset(), this.Nmt(), this.wmt.clear();
   }
   Update() {
-    for (var [, e] of this.Sct) e.Update();
+    for (var [, e] of this.wmt) e.Update();
   }
-  Ict(e, t, i, s, r, n, a, o, _) {
-    this.Sct.has(e) ||
+  qmt(e, t, i, s, r, n, a, o, _) {
+    this.wmt.has(e) ||
       ((t = new ScanTrackedMarks_1.ScanTrackedMarks(
         this.RootItem,
         t,
@@ -79,26 +79,26 @@ class ScanTrackedMarksView extends BattleChildView_1.BattleChildView {
         o,
         _,
       )),
-      this.Sct.set(e, t));
+      this.wmt.set(e, t));
   }
-  uje() {
+  yWe() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.ScanTrackedStart,
-      this.yct,
+      this.bmt,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.ScanTrackedEnd,
-        this.Tct,
+        this.Gmt,
       );
   }
-  Lct() {
+  Nmt() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.ScanTrackedStart,
-      this.yct,
+      this.bmt,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.ScanTrackedEnd,
-        this.Tct,
+        this.Gmt,
       );
   }
   DestroyOverride() {

@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.DamageView = void 0);
 const UE = require("ue"),
+  Info_1 = require("../../../../Core/Common/Info"),
   Log_1 = require("../../../../Core/Common/Log"),
   Stats_1 = require("../../../../Core/Common/Stats"),
   Time_1 = require("../../../../Core/Common/Time"),
@@ -10,7 +11,6 @@ const UE = require("ue"),
   MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
   StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
   CameraController_1 = require("../../../Camera/CameraController"),
-  ModelManager_1 = require("../../../Manager/ModelManager"),
   UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
   BattleUiControl_1 = require("../../BattleUi/BattleUiControl"),
   LguiUtil_1 = require("../../Util/LguiUtil"),
@@ -21,18 +21,18 @@ const UE = require("ue"),
 class DamageView extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this._2t = Vector_1.Vector.Create()),
-      (this.u2t = 0),
-      (this.c2t = 0),
-      (this.m2t = void 0),
-      (this.d2t = void 0),
-      (this.l2t = void 0),
-      (this.BDn = void 0),
-      (this.C2t = void 0),
-      (this.g2t = void 0),
-      (this.f2t = -0),
-      (this.X4s = void 0),
-      (this.p2t = 0);
+      (this.uFt = Vector_1.Vector.Create()),
+      (this.cFt = 0),
+      (this.mFt = 0),
+      (this.dFt = void 0),
+      (this.CFt = void 0),
+      (this._Ft = void 0),
+      (this.FUn = void 0),
+      (this.gFt = void 0),
+      (this.fFt = void 0),
+      (this.pFt = -0),
+      (this.ejs = void 0),
+      (this.vFt = 0);
   }
   Init() {
     var i = BattleUiControl_1.BattleUiControl.Pool.GetDamageView();
@@ -55,19 +55,18 @@ class DamageView extends UiPanelBase_1.UiPanelBase {
     ];
   }
   OnStart() {
-    (this.m2t = this.GetText(0)),
-      (this.d2t = this.GetText(2)),
-      (this.p2t = this.m2t.GetSize()),
-      ModelManager_1.ModelManager.PlatformModel.IsMobile() &&
-        this.RefreshFontSize();
+    (this.dFt = this.GetText(0)),
+      (this.CFt = this.GetText(2)),
+      (this.vFt = this.dFt.GetSize()),
+      Info_1.Info.IsInTouch() && this.RefreshFontSize();
   }
   RefreshFontSize() {
     var i;
-    ModelManager_1.ModelManager.PlatformModel.IsMobile()
-      ? ((i = Math.floor(this.p2t * MOBLIE_FONT_SIZE_SCALE)),
-        this.m2t.SetFontSize(i),
-        this.d2t.SetFontSize(i))
-      : (this.m2t.SetFontSize(this.p2t), this.d2t.SetFontSize(this.p2t));
+    Info_1.Info.IsInTouch()
+      ? ((i = Math.floor(this.vFt * MOBLIE_FONT_SIZE_SCALE)),
+        this.dFt.SetFontSize(i),
+        this.CFt.SetFontSize(i))
+      : (this.dFt.SetFontSize(this.vFt), this.CFt.SetFontSize(this.vFt));
   }
   DestroyOverride() {
     return (
@@ -75,103 +74,103 @@ class DamageView extends UiPanelBase_1.UiPanelBase {
       !0
     );
   }
-  InitializeData(e, a, s, r, h = !1, _ = !1, o = !1, n = "") {
+  InitializeData(e, s, a, r, h = !1, o = !1, _ = !1, n = "") {
     if (r) {
-      (this.C2t = r), this._2t.DeepCopy(a), (this.g2t = s);
+      (this.gFt = r), this.uFt.DeepCopy(s), (this.fFt = a);
       let i = r.GetRandomOffsetX(),
         t = r.GetRandomOffsetY();
       h && ((i *= CRITICAL_OFFSET_SCALE), (t *= CRITICAL_OFFSET_SCALE));
-      (a = CameraController_1.CameraController.CameraLocation),
-        (s = Vector_1.Vector.DistSquared(a, this._2t)),
+      (s = CameraController_1.CameraController.CameraLocation),
+        (a = Vector_1.Vector.DistSquared(s, this.uFt)),
         (r = MathUtils_1.MathUtils.RangeClamp(
-          s,
+          a,
           DamageUiManager_1.DamageUiManager.MinDamageOffsetDistance,
           DamageUiManager_1.DamageUiManager.MaxDamageOffsetDistance,
           DamageUiManager_1.DamageUiManager.MaxDamageOffsetScale,
           DamageUiManager_1.DamageUiManager.MinDamageOffsetScale,
         )),
-        (a =
-          ((this.u2t = i * r),
-          (this.c2t = t * r),
+        (s =
+          ((this.cFt = i * r),
+          (this.mFt = t * r),
           !StringUtils_1.StringUtils.IsEmpty(n))),
-        (s = a ? n : _ ? "+" + e : e.toString());
-      this.M2t(this.g2t),
-        this.S2t(o, h, a),
-        this.E2t(h),
-        this.y2t(s, h, a),
-        this.I2t(),
+        (a = s ? n : o ? "+" + e : e.toString());
+      this.EFt(this.fFt),
+        this.SFt(_, h, s),
+        this.yFt(h),
+        this.IFt(a, h, s),
+        this.TFt(),
         this.SetActive(!0),
-        this.m2t.SetAlpha(0);
+        this.dFt.SetAlpha(0);
     }
   }
   ClearData() {
-    (this.C2t = void 0),
-      this.Y4s(),
+    (this.gFt = void 0),
+      this.tjs(),
       this.SetActive(!1),
       this.SetCriticalNiagaraVisible(!1);
   }
-  S2t(i, t, e) {
-    this.f2t = Time_1.Time.Now + ANIM_TIME;
-    (i = this.C2t.GetSequencePath(i, t, e)), (t = DamageView.T2t.get(i));
+  SFt(i, t, e) {
+    this.pFt = Time_1.Time.Now + ANIM_TIME;
+    (i = this.gFt.GetSequencePath(i, t, e)), (t = DamageView.LFt.get(i));
     if (void 0 === t)
       Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn("Battle", 18, "缺少伤害数字动画", ["sequencePath", i]);
     else {
-      this.X4s = this.GetItem(t)
+      this.ejs = this.GetItem(t)
         .GetOwner()
         .K2_GetComponentsByClass(UE.LGUIPlayTweenComponent.StaticClass());
-      var a = this.X4s.Num();
-      for (let i = 0; i < a; i++) this.X4s.Get(i).Play();
+      var s = this.ejs.Num();
+      for (let i = 0; i < s; i++) this.ejs.Get(i).Play();
     }
   }
-  Y4s() {
-    if (this.X4s) {
-      var t = this.X4s.Num();
-      for (let i = 0; i < t; i++) this.X4s.Get(i).Stop();
-      this.X4s = void 0;
+  tjs() {
+    if (this.ejs) {
+      var t = this.ejs.Num();
+      for (let i = 0; i < t; i++) this.ejs.Get(i).Stop();
+      this.ejs = void 0;
     }
   }
   Tick(i) {
     var t;
     this.RootItem &&
-      (this.BDn &&
-        ((t = this.GetUiNiagara(3)).SetNiagaraSystem(this.BDn),
+      (this.FUn &&
+        ((t = this.GetUiNiagara(3)).SetNiagaraSystem(this.FUn),
         t.ActivateSystem(!0),
-        (this.BDn = void 0)),
-      Time_1.Time.Now > this.f2t
+        (this.FUn = void 0)),
+      Time_1.Time.Now > this.pFt
         ? DamageUiManager_1.DamageUiManager.RemoveDamageView(this)
         : ((t =
             DamageUiManager_1.DamageUiManager.ProjectWorldLocationToScreenPosition(
-              this._2t.ToUeVector(),
+              this.uFt.ToUeVector(),
             )),
-          this.M2t(t)));
+          this.EFt(t)));
   }
-  M2t(i) {
-    i = this.L2t(i);
-    i && this.D2t(i);
+  EFt(i) {
+    i = this.DFt(i);
+    i && this.RFt(i);
   }
-  I2t() {
+  TFt() {
     var i = DamageUiManager_1.DamageUiManager.TotalDamageViewNum - 1;
     this.RootItem.SetHierarchyIndex(i);
   }
-  R2t(i) {
-    if (this.l2t !== i) {
+  UFt(i) {
+    if (this._Ft !== i) {
       const t = this.GetUiNiagara(3);
       StringUtils_1.StringUtils.IsEmpty(i)
-        ? ((this.l2t = void 0),
+        ? ((this._Ft = void 0),
           t.DeactivateSystem(),
           t.SetNiagaraSystem(void 0))
-        : ((this.l2t = i),
+        : ((this._Ft = i),
           ResourceSystem_1.ResourceSystem.LoadAsync(
             i,
             UE.NiagaraSystem,
             (i) => {
-              i?.IsValid() && t && (this.BDn = i);
+              i?.IsValid() && t && (this.FUn = i);
             },
           ));
     }
   }
-  U2t(i) {
+  AFt(i) {
     var t = this.GetItem(4);
     t.IsUIActiveSelf() !== i && t.SetUIActive(i);
   }
@@ -179,42 +178,42 @@ class DamageView extends UiPanelBase_1.UiPanelBase {
     var t = this.GetUiNiagara(3);
     t.IsUIActiveSelf() !== i && t.SetUIActive(i);
   }
-  y2t(i, t, e) {
+  IFt(i, t, e) {
     e
-      ? (this.A2t(this.m2t, t),
-        this.d2t.GetText() !== i &&
-          LguiUtil_1.LguiUtil.SetLocalText(this.d2t, i),
-        this.m2t.IsUIActiveSelf() && this.m2t.SetUIActive(!1),
-        this.d2t.IsUIActiveSelf() || this.d2t.SetUIActive(!0))
-      : (this.A2t(this.m2t, t),
-        this.m2t.GetText() !== i && this.m2t.SetText(i),
-        this.m2t.IsUIActiveSelf() || this.m2t.SetUIActive(!0),
-        this.d2t.IsUIActiveSelf() && this.d2t.SetUIActive(!1));
+      ? (this.PFt(this.dFt, t),
+        this.CFt.GetText() !== i &&
+          LguiUtil_1.LguiUtil.SetLocalText(this.CFt, i),
+        this.dFt.IsUIActiveSelf() && this.dFt.SetUIActive(!1),
+        this.CFt.IsUIActiveSelf() || this.CFt.SetUIActive(!0))
+      : (this.PFt(this.dFt, t),
+        this.dFt.GetText() !== i && this.dFt.SetText(i),
+        this.dFt.IsUIActiveSelf() || this.dFt.SetUIActive(!0),
+        this.CFt.IsUIActiveSelf() && this.CFt.SetUIActive(!1));
   }
-  E2t(i) {
+  yFt(i) {
     i
-      ? (this.U2t(!0), this.R2t(this.C2t.GetCriticalNiagaraPath()))
-      : this.U2t(!1);
+      ? (this.AFt(!0), this.UFt(this.gFt.GetCriticalNiagaraPath()))
+      : this.AFt(!1);
   }
-  A2t(i, t) {
+  PFt(i, t) {
     var e = i.GetOwner().GetComponentByClass(UE.UIEffectOutline.StaticClass());
-    let a = this.C2t.GetTextColor(),
-      s = this.C2t.GetStrokeColor();
+    let s = this.gFt.GetTextColor(),
+      a = this.gFt.GetStrokeColor();
     t &&
-      ((a = this.C2t.GetCriticalTextColor()),
-      (s = this.C2t.GetCriticalStrokeColor())),
-      i.GetColor().op_Equality(a) || i.SetColor(a),
-      e.GetOutlineColor().op_Equality(s) || e.SetOutlineColor(s);
+      ((s = this.gFt.GetCriticalTextColor()),
+      (a = this.gFt.GetCriticalStrokeColor())),
+      i.GetColor().op_Equality(s) || i.SetColor(s),
+      e.GetOutlineColor().op_Equality(a) || e.SetOutlineColor(a);
   }
-  D2t(i) {
+  RFt(i) {
     this.RootItem.SetAnchorOffset(i);
   }
-  L2t(i) {
+  DFt(i) {
     i = DamageUiManager_1.DamageUiManager.ScreenPositionToLguiPosition(i);
-    if (i) return (i.X = i.X + this.u2t), (i.Y = i.Y + this.c2t), i;
+    if (i) return (i.X = i.X + this.cFt), (i.Y = i.Y + this.mFt), i;
   }
 }
-((exports.DamageView = DamageView).T2t = new Map([
+((exports.DamageView = DamageView).LFt = new Map([
   ["Ani_OwnDamageSequence", 5],
   ["Ani_OwnCriticalDamageSequence", 6],
   ["Ani_MonsterDamageSequence", 7],
@@ -223,5 +222,5 @@ class DamageView extends UiPanelBase_1.UiPanelBase {
   ["Ani_SpecialDamage", 10],
   ["Ani_SpecialCriticalDamage", 11],
 ])),
-  (DamageView.v2t = void 0);
+  (DamageView.MFt = void 0);
 //# sourceMappingURL=DamageView.js.map

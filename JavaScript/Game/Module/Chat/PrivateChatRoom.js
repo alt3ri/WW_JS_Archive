@@ -5,16 +5,16 @@ const ModelManager_1 = require("../../Manager/ModelManager"),
   ChatRoom_1 = require("./ChatRoom");
 class PrivateChatRoom extends ChatRoom_1.ChatRoom {
   constructor(e, t) {
-    super(1, t), (this.jMt = e);
+    super(1, t), (this.iSt = e);
   }
   GetFriendData() {
-    return ModelManager_1.ModelManager.FriendModel.GetFriendById(this.jMt);
+    return ModelManager_1.ModelManager.FriendModel.GetFriendById(this.iSt);
   }
   GetTargetPlayerId() {
-    return this.jMt;
+    return this.iSt;
   }
   GetUniqueId() {
-    return this.jMt;
+    return this.iSt;
   }
   GetPlayerName() {
     return this.GetFriendData()?.PlayerName;
@@ -27,7 +27,7 @@ class PrivateChatRoom extends ChatRoom_1.ChatRoom {
   }
   CanChat() {
     var e = ModelManager_1.ModelManager.FriendModel;
-    return !e.HasBlockedPlayer(this.jMt) && !!e.HasFriend(this.jMt);
+    return !e.HasBlockedPlayer(this.iSt) && !!e.HasFriend(this.iSt);
   }
 }
 exports.PrivateChatRoom = PrivateChatRoom;

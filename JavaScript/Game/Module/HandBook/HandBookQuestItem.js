@@ -12,10 +12,10 @@ const UE = require("ue"),
 class HandBookQuestItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
-      (this.Vzt = void 0),
-      (this.GAn = []),
-      (this.gZt = []),
-      (this.Wzt = () => {
+      (this.VZt = void 0),
+      (this.Vxn = []),
+      (this.gei = []),
+      (this.WZt = () => {
         return new HandBookQuestChildItem_1.HandBookQuestChildItem();
       });
   }
@@ -26,9 +26,9 @@ class HandBookQuestItem extends GridProxyAbstract_1.GridProxyAbstract {
     ];
   }
   OnStart() {
-    this.Vzt = new GenericLayout_1.GenericLayout(
+    this.VZt = new GenericLayout_1.GenericLayout(
       this.GetGridLayout(1),
-      this.Wzt,
+      this.WZt,
     );
   }
   Refresh(e, t, i) {
@@ -39,13 +39,13 @@ class HandBookQuestItem extends GridProxyAbstract_1.GridProxyAbstract {
           e,
         ),
       r =
-        ((this.GAn = ConfigCommon_1.ConfigCommon.ToList(e)),
-        this.GAn.sort((e, t) => e.Id - t.Id),
+        ((this.Vxn = ConfigCommon_1.ConfigCommon.ToList(e)),
+        this.Vxn.sort((e, t) => e.Id - t.Id),
         this.GetText(0).ShowTextNew(o.TypeDescription),
-        (this.gZt = []),
-        this.GAn.length);
+        (this.gei = []),
+        this.Vxn.length);
     for (let e = 0; e < r; e++) {
-      var s = this.GAn[e],
+      var s = this.Vxn[e],
         n = new HandBookDefine_1.HandBookCommonItemData(),
         a = ModelManager_1.ModelManager.HandBookModel.GetHandBookInfo(
           o.Type,
@@ -58,17 +58,17 @@ class HandBookQuestItem extends GridProxyAbstract_1.GridProxyAbstract {
         (n.Config = s),
         (n.IsLock = h),
         (n.IsNew = a),
-        this.gZt.push(n));
+        this.gei.push(n));
     }
-    this.Vzt?.SetActive(0 < this.gZt.length), this.Vzt?.RefreshByData(this.gZt);
+    this.VZt?.SetActive(0 < this.gei.length), this.VZt?.RefreshByData(this.gei);
   }
   GetChildItemList() {
-    return this.Vzt.GetLayoutItemList();
+    return this.VZt.GetLayoutItemList();
   }
   OnBeforeDestroy() {
-    this.Vzt && (this.Vzt.ClearChildren(), (this.Vzt = void 0)),
-      (this.GAn = []),
-      (this.gZt = []);
+    this.VZt && (this.VZt.ClearChildren(), (this.VZt = void 0)),
+      (this.Vxn = []),
+      (this.gei = []);
   }
 }
 exports.HandBookQuestItem = HandBookQuestItem;

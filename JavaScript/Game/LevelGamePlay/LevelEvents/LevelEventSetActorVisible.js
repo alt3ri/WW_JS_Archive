@@ -5,6 +5,7 @@ const UE = require("ue"),
   Log_1 = require("../../../Core/Common/Log"),
   EntitySystem_1 = require("../../../Core/Entity/EntitySystem"),
   GlobalData_1 = require("../../GlobalData"),
+  ModelManager_1 = require("../../Manager/ModelManager"),
   LevelGeneralBase_1 = require("../LevelGeneralBase"),
   PATH_LENGTH = 3;
 class LevelEventSetActorVisible extends LevelGeneralBase_1.LevelEventBase {
@@ -13,94 +14,114 @@ class LevelEventSetActorVisible extends LevelGeneralBase_1.LevelEventBase {
     if (o) {
       e = t;
       if (e) {
-        t = EntitySystem_1.EntitySystem.Get(e.EntityId);
-        if (t?.Valid)
+        var a = EntitySystem_1.EntitySystem.Get(e.EntityId);
+        if (a?.Valid)
           if (o.Targets && 0 !== o.Targets.length)
-            if (t.GetComponent(182)?.Owner) {
-              var a = t.GetComponent(147);
-              if (a) {
-                var s = UE.KuroRenderingRuntimeBPPluginBPLibrary.GetSubsystem(
+            if (a.GetComponent(185)?.Owner) {
+              var n = a.GetComponent(149);
+              if (n) {
+                var r = UE.KuroRenderingRuntimeBPPluginBPLibrary.GetSubsystem(
                     GlobalData_1.GlobalData.World,
                     UE.KuroActorSubsystem.StaticClass(),
                   ),
-                  n = o.SyncChildActor || !1;
-                for (const E of o.Targets) {
-                  var r = E.PathName,
-                    i = r.split(".");
-                  if (i.length < PATH_LENGTH)
+                  s = o.SyncChildActor || !1;
+                for (const L of o.Targets) {
+                  var i = L.PathName,
+                    c = i.split(".");
+                  if (c.length < PATH_LENGTH)
                     Log_1.Log.CheckError() &&
                       Log_1.Log.Error(
                         "LevelEvent",
                         7,
                         "[SetActorVisible]actor路径错误",
-                        ["RefPath", r],
+                        ["RefPath", i],
                       );
                   else {
-                    i = i[1] + "." + i[2];
-                    if (a.IsValidPlatFormPath(i)) {
-                      var i = new UE.FName(i),
-                        c = s.GetActor(i);
-                      if (c?.IsValid())
+                    c = c[1] + "." + c[2];
+                    if (n.IsValidPlatFormPath(c)) {
+                      var c = new UE.FName(c),
+                        l = r.GetActor(c);
+                      if (l?.IsValid()) {
+                        c = a.GetComponent(0).GetPbDataId();
                         switch (
-                          (c.SetActorEnableCollision(o.Enable), o.ActorType)
+                          (ModelManager_1.ModelManager.SundryModel?.IsEnableDebugDetail(
+                            "SceneItemReferenceComponent_" + c,
+                          ) &&
+                            Log_1.Log.CheckInfo() &&
+                            Log_1.Log.Info(
+                              "LevelEvent",
+                              40,
+                              "[SetActorVisible] [疑难杂症] 行为开关Actor",
+                              [
+                                "RefEntityPbDataId",
+                                a.GetComponent(0)?.GetPbDataId(),
+                              ],
+                              ["TargetPath", i],
+                              ["ActorType", o.ActorType],
+                              ["Enable", o.Enable],
+                              ["ActionGuid", this.ActionGuid],
+                              ["Context", t],
+                            ),
+                          l.SetActorEnableCollision(o.Enable),
+                          o.ActorType)
                         ) {
                           case "MeshActor":
-                            c.SetActorHiddenInGame(!o.Enable);
-                            var l = o.Enable ? 3 : 0;
-                            c instanceof UE.StaticMeshActor &&
+                            l.SetActorHiddenInGame(!o.Enable);
+                            var E = o.Enable ? 3 : 0;
+                            l instanceof UE.StaticMeshActor &&
                               (o.Enable
-                                ? c.SetLogicallyShow(3)
-                                : c.SetLogicallyHidden()),
-                              c instanceof UE.BP_KuroISMGroup_C &&
+                                ? l.SetLogicallyShow(3)
+                                : l.SetLogicallyHidden()),
+                              l instanceof UE.BP_KuroISMGroup_C &&
                                 (o.Enable
-                                  ? c.SeyLogicallyShowForAllChildren()
-                                  : c.SeyLogicallyHiddenForAllChildren()),
-                              c.RootComponent?.IsValid() &&
-                                c.RootComponent instanceof
+                                  ? l.SeyLogicallyShowForAllChildren()
+                                  : l.SeyLogicallyHiddenForAllChildren()),
+                              l.RootComponent?.IsValid() &&
+                                l.RootComponent instanceof
                                   UE.PrimitiveComponent &&
-                                (c.RootComponent.SetCollisionEnabled(l),
-                                c.RootComponent.SetHiddenInGame(!o.Enable, n));
+                                (l.RootComponent.SetCollisionEnabled(E),
+                                l.RootComponent.SetHiddenInGame(!o.Enable, s));
                             break;
                           case "SoundActor":
-                            c instanceof UE.KuroAmbientSoundActor &&
-                              c.RootComponent instanceof
+                            l instanceof UE.KuroAmbientSoundActor &&
+                              l.RootComponent instanceof
                                 UE.KuroAmbientSoundComponent &&
                               (o.Enable
-                                ? c.RootComponent.PlaySound()
-                                : c.RootComponent.StopSound());
+                                ? l.RootComponent.PlaySound()
+                                : l.RootComponent.StopSound());
                             break;
                           case "EffectActor":
-                            c instanceof UE.BP_EffectActor_C &&
+                            l instanceof UE.BP_EffectActor_C &&
                               (o.Enable
-                                ? c.Play("[SetActorVisible]SceneEffectPlay")
-                                : c.Stop(
+                                ? l.Play("[SetActorVisible]SceneEffectPlay")
+                                : l.Stop(
                                     "[SetActorVisible]SceneEffectStop",
                                     !1,
                                   ));
                             break;
                           case "LightsGroup":
-                            c instanceof UE.BP_LightsGroup_C &&
-                              c.ToggleLights(o.Enable);
+                            l instanceof UE.BP_LightsGroup_C &&
+                              l.ToggleLights(o.Enable);
                             break;
                           case "PPVolume":
-                            c instanceof UE.KuroPostProcessVolume &&
-                              (c.bEnabled = o.Enable);
+                            l instanceof UE.KuroPostProcessVolume &&
+                              (l.bEnabled = o.Enable);
                             break;
                           case "CullDistanceVolume":
-                            c instanceof UE.CullDistanceVolume &&
-                              (c.bEnabled = o.Enable);
+                            l instanceof UE.CullDistanceVolume &&
+                              (l.bEnabled = o.Enable);
                             break;
                           case "Skybox":
-                            c instanceof UE.BP_CloudFuBen_C &&
-                              c.ChangeSky(o.Enable);
+                            l instanceof UE.BP_CloudFuBen_C &&
+                              l.ChangeSky(o.Enable);
                         }
-                      else
+                      } else
                         Log_1.Log.CheckError() &&
                           Log_1.Log.Error(
                             "LevelEvent",
                             7,
                             "[SetActorVisible]目标actor不存在",
-                            ["RefPath", r],
+                            ["RefPath", i],
                           );
                     }
                   }
@@ -115,7 +136,7 @@ class LevelEventSetActorVisible extends LevelGeneralBase_1.LevelEventBase {
             Log_1.Log.CheckError() &&
               Log_1.Log.Error("LevelEvent", 7, "目标actor未配置", [
                 "PbDataId",
-                t.GetComponent(0)?.GetPbDataId(),
+                a.GetComponent(0)?.GetPbDataId(),
               ]);
         else
           Log_1.Log.CheckError() &&

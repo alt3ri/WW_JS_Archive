@@ -25,7 +25,7 @@ class RoleReplaceView extends RogueSelectBaseView_1.RogueSelectBaseView {
       (this.ElementPanel = void 0),
       (this.ButtonItem = void 0),
       (this.RoleSelectItemLayout = void 0),
-      (this.m6t = () => {
+      (this.m8t = () => {
         this.RoguelikeChooseData.RogueGainEntryList.length <= 0
           ? Log_1.Log.CheckError() &&
             Log_1.Log.Error("Roguelike", 9, "当前可选角色为0")
@@ -90,7 +90,7 @@ class RoleReplaceView extends RogueSelectBaseView_1.RogueSelectBaseView {
       (this.ButtonItem = new ButtonItem_1.ButtonItem(
         this.GetButton(2).GetRootComponent(),
       )),
-      this.ButtonItem.SetFunction(this.m6t),
+      this.ButtonItem.SetFunction(this.m8t),
       (this.RoleSelectItemLayout = new GenericLayout_1.GenericLayout(
         this.GetHorizontalLayout(1),
         this.CreateRoleSelectItem,
@@ -109,11 +109,11 @@ class RoleReplaceView extends RogueSelectBaseView_1.RogueSelectBaseView {
       this.RefreshTopPanel(),
       this.RefreshElementPanel(),
       this.RefreshBtnText(),
-      this.Pao();
+      this.Dho();
   }
   RefreshTopPanel() {
     this.TopPanel.RefreshTitle(RoguelikeDefine_1.ROGUELIKEVIEW_3_TEXT);
-    var e = this.Eao(),
+    var e = this.pho(),
       i = ConfigManager_1.ConfigManager.RoguelikeConfig.GetRogueCharacterConfig(
         e[0].ConfigId,
       ),
@@ -131,13 +131,13 @@ class RoleReplaceView extends RogueSelectBaseView_1.RogueSelectBaseView {
     this.ElementPanel.Refresh();
   }
   RefreshPhantomSelectItemList() {
-    var e = this.Eao();
+    var e = this.pho();
     this.RoleSelectItemLayout.RefreshByData(e);
   }
   RefreshBtnText() {
     this.ButtonItem.SetShowText(RoguelikeDefine_1.ROGUELIKEVIEW_14_TEXT);
   }
-  Eao() {
+  pho() {
     var e = new Array(),
       i = ModelManager_1.ModelManager.RoguelikeModel.RogueInfo.RoleEntry;
     return (
@@ -147,7 +147,7 @@ class RoleReplaceView extends RogueSelectBaseView_1.RogueSelectBaseView {
       e
     );
   }
-  Pao() {
+  Dho() {
     this.GetText(4).ShowTextNew(RoguelikeDefine_1.ROGUELIKEVIEW_23_TEXT),
       this.GetText(5).ShowTextNew(RoguelikeDefine_1.ROGUELIKEVIEW_24_TEXT);
   }

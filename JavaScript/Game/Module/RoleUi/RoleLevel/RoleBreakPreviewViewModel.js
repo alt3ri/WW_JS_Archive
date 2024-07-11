@@ -11,13 +11,13 @@ const ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   RoleBreakPreviewView_1 = require("./RoleBreakPreviewView");
 class RoleBreakPreviewViewModel {
   constructor() {
-    (this.eLn = void 0),
-      (this.tLn = void 0),
-      (this.iLn = void 0),
-      (this.oLn = -1),
+    (this.OLn = void 0),
+      (this.kLn = void 0),
+      (this.FLn = void 0),
+      (this.VLn = -1),
       (this.CreateLevelLayoutGrid = () =>
         new RoleBreakPreviewView_1.LevelLayoutGrid(this)),
-      (this.xRn = (t) => {
+      (this.aPn = (t) => {
         var e = t.Data;
         ControllerHolder_1.ControllerHolder.ItemController.OpenItemTipsByItemId(
           e.ItemId,
@@ -26,40 +26,40 @@ class RoleBreakPreviewViewModel {
       }),
       (this.CreateItemLayoutGrid = () => {
         var t = new CostMediumItemGrid_1.CostMediumItemGrid();
-        return t.BindOnExtendToggleClicked(this.xRn), t;
+        return t.BindOnExtendToggleClicked(this.aPn), t;
       });
   }
   Dispose() {
-    (this.oLn = -1), this.UnbindView(), this.UnbindCostContentItem();
+    (this.VLn = -1), this.UnbindView(), this.UnbindCostContentItem();
   }
   get CachedRoleInstance() {
-    return this.iLn;
+    return this.FLn;
   }
   set CachedRoleInstance(t) {
-    (this.iLn && t) || (this.iLn = t);
+    (this.FLn && t) || (this.FLn = t);
   }
   get ChosenLevel() {
-    return this.oLn;
+    return this.VLn;
   }
   set ChosenLevel(t) {
     var e = this.CachedRoleInstance.GetLevelData().GetMaxBreachLevel();
     let s = t;
     s < 1 ? (s = 1) : s > e && (s = e),
-      (this.oLn = s),
-      (this.eLn.ChosenLevel = s),
-      (this.tLn.ChosenLevel = s);
+      (this.VLn = s),
+      (this.OLn.ChosenLevel = s),
+      (this.kLn.ChosenLevel = s);
   }
   BindView(t) {
-    this.eLn = new RoleBreakPreviewContext(this, t);
+    this.OLn = new RoleBreakPreviewContext(this, t);
   }
   UnbindView() {
-    this.eLn?.Dispose(), (this.eLn = void 0);
+    this.OLn?.Dispose(), (this.OLn = void 0);
   }
   BindCostContentItem(t) {
-    this.tLn = new CostContentItemContext(this, t);
+    this.kLn = new CostContentItemContext(this, t);
   }
   UnbindCostContentItem() {
-    this.tLn?.Dispose(), (this.tLn = void 0);
+    this.kLn?.Dispose(), (this.kLn = void 0);
   }
   HandleViewOnStart() {
     var t = this.CachedRoleInstance.GetLevelData().GetBreachLevel();
@@ -67,7 +67,7 @@ class RoleBreakPreviewViewModel {
   }
   HandleCostContentItemOnStart() {
     var t = this.CachedRoleInstance.GetLevelData();
-    this.tLn.ChosenLevel = t.GetBreachLevel();
+    this.kLn.ChosenLevel = t.GetBreachLevel();
   }
   HandleViewClosePromise(t) {
     t.then(() => {
@@ -129,89 +129,89 @@ class RoleBreakPreviewViewModel {
 exports.RoleBreakPreviewViewModel = RoleBreakPreviewViewModel;
 class RoleBreakPreviewContext {
   constructor(t, e) {
-    (this.rLn = void 0),
-      (this.nLn = void 0),
-      (this.sLn = -1),
-      (this.aLn = []),
-      (this.hLn = void 0),
-      (this.oLn = -1),
-      (this.rLn = t),
-      (this.nLn = e);
+    (this.HLn = void 0),
+      (this.jLn = void 0),
+      (this.WLn = -1),
+      (this.KLn = []),
+      (this.QLn = void 0),
+      (this.VLn = -1),
+      (this.HLn = t),
+      (this.jLn = e);
   }
   Dispose() {}
   get LevelContent() {
-    return this.sLn;
+    return this.WLn;
   }
   set LevelContent(t) {
-    (this.sLn = t), this.nLn.RefreshLevelContent(t);
+    (this.WLn = t), this.jLn.RefreshLevelContent(t);
   }
   get LevelLayout() {
-    return this.aLn;
+    return this.KLn;
   }
   set LevelLayout(t) {
-    (this.aLn = t), this.nLn.RefreshLevelLayout(t);
+    (this.KLn = t), this.jLn.RefreshLevelLayout(t);
   }
   get ItemLayout() {
-    return this.hLn;
+    return this.QLn;
   }
   set ItemLayout(t) {
-    (this.hLn = t) && this.nLn.RefreshItemLayout(t);
+    (this.QLn = t) && this.jLn.RefreshItemLayout(t);
   }
   get ChosenLevel() {
-    return this.oLn;
+    return this.VLn;
   }
   set ChosenLevel(t) {
-    this.oLn = t;
-    var e = this.rLn.CachedRoleInstance.GetLevelData(),
+    this.VLn = t;
+    var e = this.HLn.CachedRoleInstance.GetLevelData(),
       s = e.GetBreachLevel(),
       i = e.GetMaxBreachLevel(),
       e = e.GetBreachConfig(t).MaxLevel;
     t <= s
-      ? (this.nLn.RefreshLevelContentItem(!1), this.nLn.RefreshHasBrokenTip(!0))
-      : (this.nLn.RefreshLevelContentItem(!0),
-        this.nLn.RefreshHasBrokenTip(!1),
+      ? (this.jLn.RefreshLevelContentItem(!1), this.jLn.RefreshHasBrokenTip(!0))
+      : (this.jLn.RefreshLevelContentItem(!0),
+        this.jLn.RefreshHasBrokenTip(!1),
         (this.LevelContent = e)),
-      this.nLn.RefreshLeftButton(1 !== t),
-      this.nLn.RefreshRightButton(t !== i),
-      (this.LevelLayout = this.rLn.BuildLevelLayoutData(t)),
-      (this.ItemLayout = this.rLn.BuildItemLayoutData(t));
+      this.jLn.RefreshLeftButton(1 !== t),
+      this.jLn.RefreshRightButton(t !== i),
+      (this.LevelLayout = this.HLn.BuildLevelLayoutData(t)),
+      (this.ItemLayout = this.HLn.BuildItemLayoutData(t));
   }
 }
 exports.RoleBreakPreviewContext = RoleBreakPreviewContext;
 class CostContentItemContext {
   constructor(t, e) {
-    (this.rLn = void 0),
-      (this.lLn = void 0),
-      (this._Ln = 0),
-      (this.uLn = ItemDefines_1.EItemId.Gold),
-      (this.oLn = -1),
-      (this.rLn = t),
-      (this.lLn = e);
+    (this.HLn = void 0),
+      (this.XLn = void 0),
+      (this.$Ln = 0),
+      (this.YLn = ItemDefines_1.EItemId.Gold),
+      (this.VLn = -1),
+      (this.HLn = t),
+      (this.XLn = e);
   }
   Dispose() {}
   get CostNumber() {
-    return this._Ln;
+    return this.$Ln;
   }
   set CostNumber(t) {
-    (this._Ln = t), this.lLn.RefreshCostNumber(t.toString());
+    (this.$Ln = t), this.XLn.RefreshCostNumber(t.toString());
   }
   get MoneyIcon() {
-    return this.uLn;
+    return this.YLn;
   }
   set MoneyIcon(t) {
-    (this.uLn = t), this.lLn.RefreshMoneyIcon(t);
+    (this.YLn = t), this.XLn.RefreshMoneyIcon(t);
   }
   get ChosenLevel() {
-    return this.oLn;
+    return this.VLn;
   }
   set ChosenLevel(t) {
-    this.oLn = t;
-    t = this.rLn.BuildCostContentItemData(t);
+    this.VLn = t;
+    t = this.HLn.BuildCostContentItemData(t);
     t
       ? ((this.CostNumber = t.CostNum),
         (this.MoneyIcon = t.CostType),
-        this.lLn.Show())
-      : this.lLn.Hide();
+        this.XLn.Show())
+      : this.XLn.Hide();
   }
 }
 exports.CostContentItemContext = CostContentItemContext;

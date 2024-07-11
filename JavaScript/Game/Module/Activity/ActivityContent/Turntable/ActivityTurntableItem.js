@@ -18,10 +18,10 @@ class ActivityTurntableQuestItem extends UiPanelBase_1.UiPanelBase {
       (this.FRe = 0),
       (this.LOe = 0),
       (this.gOe = void 0),
-      (this.KIn = () => {
+      (this.uLn = () => {
         this.FRe &&
           (UiManager_1.UiManager.OpenView("QuestView", this.FRe),
-          this.Pbn()?.ReadCurrentUnlockQuest());
+          this.OOn()?.ReadCurrentUnlockQuest());
       });
   }
   OnRegisterComponent() {
@@ -32,7 +32,7 @@ class ActivityTurntableQuestItem extends UiPanelBase_1.UiPanelBase {
       [3, UE.UIButtonComponent],
       [4, UE.UIItem],
     ]),
-      (this.BtnBindInfo = [[3, this.KIn]]);
+      (this.BtnBindInfo = [[3, this.uLn]]);
   }
   async OnBeforeStartAsync() {
     var t = new ActivitySmallItemGrid_1.ActivitySmallItemGrid();
@@ -57,7 +57,7 @@ class ActivityTurntableQuestItem extends UiPanelBase_1.UiPanelBase {
   SetRedDot(t) {
     this.GetItem(4).SetUIActive(t);
   }
-  Pbn() {
+  OOn() {
     if (this.LOe)
       return ModelManager_1.ModelManager.ActivityModel.GetActivityById(
         this.LOe,
@@ -68,9 +68,9 @@ exports.ActivityTurntableQuestItem = ActivityTurntableQuestItem;
 class ActivityTurntableToggleGroupItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
-      (this.QIn = void 0),
-      (this.XIn = void 0),
-      (this.eji = void 0),
+      (this.cLn = void 0),
+      (this.mLn = void 0),
+      (this.zji = void 0),
       (this.CanToggleExecuteChange = void 0),
       (this.ToggleCallBack = void 0);
   }
@@ -83,34 +83,34 @@ class ActivityTurntableToggleGroupItem extends GridProxyAbstract_1.GridProxyAbst
   async OnBeforeStartAsync() {
     var t = this.GetItem(0),
       t =
-        ((this.QIn = new ActivityTurntableToggleItem()),
-        await this.QIn.CreateThenShowByActorAsync(t.GetOwner()),
-        (this.QIn.ToggleCallBack = this.ToggleCallBack),
-        (this.QIn.CanToggleExecuteChange = this.CanToggleExecuteChange),
+        ((this.cLn = new ActivityTurntableToggleItem()),
+        await this.cLn.CreateThenShowByActorAsync(t.GetOwner()),
+        (this.cLn.ToggleCallBack = this.ToggleCallBack),
+        (this.cLn.CanToggleExecuteChange = this.CanToggleExecuteChange),
         this.GetItem(1));
-    (this.XIn = new ActivityTurntableToggleItem()),
-      await this.XIn.CreateThenShowByActorAsync(t.GetOwner()),
-      (this.XIn.ToggleCallBack = this.ToggleCallBack),
-      (this.XIn.CanToggleExecuteChange = this.CanToggleExecuteChange);
+    (this.mLn = new ActivityTurntableToggleItem()),
+      await this.mLn.CreateThenShowByActorAsync(t.GetOwner()),
+      (this.mLn.ToggleCallBack = this.ToggleCallBack),
+      (this.mLn.CanToggleExecuteChange = this.CanToggleExecuteChange);
   }
   OnStart() {
     this.SetToggleDisable(!1);
   }
   SetToggleDisable(t) {
     var i = this.GetToggleState();
-    (this.eji = t ? this.XIn : this.QIn),
-      void 0 !== i && this.eji.SetToggleState(1 === i),
+    (this.zji = t ? this.mLn : this.cLn),
+      void 0 !== i && this.zji.SetToggleState(1 === i),
       this.GetItem(0)?.SetUIActive(!t),
       this.GetItem(1)?.SetUIActive(t);
   }
   Refresh(t) {
-    this.QIn.Refresh(t), this.XIn.Refresh(t);
+    this.cLn.Refresh(t), this.mLn.Refresh(t);
   }
   GetToggleState() {
-    return this.eji?.GetToggleState();
+    return this.zji?.GetToggleState();
   }
   SetToggleState(t, i = !1) {
-    this.eji?.SetToggleState(t, i);
+    this.zji?.SetToggleState(t, i);
   }
 }
 exports.ActivityTurntableToggleGroupItem = ActivityTurntableToggleGroupItem;
@@ -121,10 +121,10 @@ class ActivityTurntableToggleItem extends UiPanelBase_1.UiPanelBase {
       (this.Toggle = void 0),
       (this.CanToggleExecuteChange = void 0),
       (this.ToggleCallBack = void 0),
-      (this.$ke = () =>
+      (this.uFe = () =>
         !this.CanToggleExecuteChange ||
         this.CanToggleExecuteChange(this.RoundId)),
-      (this.Yke = () => {
+      (this.cFe = () => {
         this.ToggleCallBack &&
           this.ToggleCallBack(this.RoundId, 1 === this.Toggle.GetToggleState());
       });
@@ -135,18 +135,18 @@ class ActivityTurntableToggleItem extends UiPanelBase_1.UiPanelBase {
       [1, UE.UISprite],
       [2, UE.UISprite],
     ]),
-      (this.BtnBindInfo = [[0, this.Yke]]);
+      (this.BtnBindInfo = [[0, this.cFe]]);
   }
   OnStart() {
     (this.Toggle = this.GetExtendToggle(0)),
       this.Toggle &&
         (this.Toggle.CanExecuteChange.Unbind(),
-        this.Toggle.CanExecuteChange.Bind(this.$ke));
+        this.Toggle.CanExecuteChange.Bind(this.uFe));
   }
   Refresh(t) {
-    (this.RoundId = t), this.$In();
+    (this.RoundId = t), this.dLn();
   }
-  $In() {
+  dLn() {
     var t = this.RoundId + 1,
       i = "SP_TurntableSelect_Index0" + t,
       i = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(i),

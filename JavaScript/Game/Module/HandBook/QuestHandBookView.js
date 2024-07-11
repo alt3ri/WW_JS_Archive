@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.QuestHandBookView = void 0);
 const UE = require("ue"),
+  ConfigCommon_1 = require("../../../Core/Config/ConfigCommon"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
   ConfigManager_1 = require("../../Manager/ConfigManager"),
@@ -11,23 +12,22 @@ const UE = require("ue"),
   GenericLayoutNew_1 = require("../Util/Layout/GenericLayoutNew"),
   LguiUtil_1 = require("../Util/LguiUtil"),
   HandBookController_1 = require("./HandBookController"),
-  PlotHandBookItem_1 = require("./PlotHandBookItem"),
-  ConfigCommon_1 = require("../../../Core/Config/ConfigCommon");
+  PlotHandBookItem_1 = require("./PlotHandBookItem");
 class QuestHandBookView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
       (this.GenericLayout = void 0),
-      (this.hei = []),
+      (this.hti = []),
       (this.lqe = void 0),
       (this.Refresh = () => {
         this.InitVerticalLayout(), this.RefreshCollectText();
       }),
-      (this.lei = (e, t, i) => {
+      (this.lti = (e, t, i) => {
         t = new PlotHandBookItem_1.PlotHandBookItem(t);
         return t.Refresh(e, !1, i), { Key: i, Value: t };
       }),
-      (this.aZt = (e, t) => e.Id - t.Id),
-      (this.JSt = () => {
+      (this.aei = (e, t) => e.Id - t.Id),
+      (this.lyt = () => {
         UiManager_1.UiManager.CloseView("QuestHandBookView");
       }),
       (this.OnPhotoSelect = (e) => {
@@ -83,7 +83,7 @@ class QuestHandBookView extends UiViewBase_1.UiViewBase {
     var e =
       ConfigManager_1.ConfigManager.HandBookConfig.GetHandBookEntranceConfig(7);
     (this.lqe = new PopupCaptionItem_1.PopupCaptionItem(this.GetItem(0))),
-      this.lqe.SetCloseCallBack(this.JSt),
+      this.lqe.SetCloseCallBack(this.lyt),
       this.lqe.SetTitleLocalText(e.Name),
       this.lqe.SetTitleIcon(e.TitleIcon);
   }
@@ -91,15 +91,15 @@ class QuestHandBookView extends UiViewBase_1.UiViewBase {
     var e = ConfigCommon_1.ConfigCommon.ToList(
       ConfigManager_1.ConfigManager.HandBookConfig.GetPlotTypeConfigList(),
     );
-    e.sort(this.aZt),
-      (this.hei = e),
+    e.sort(this.aei),
+      (this.hti = e),
       this.GenericLayout ||
         (this.GenericLayout = new GenericLayoutNew_1.GenericLayoutNew(
           this.GetVerticalLayout(1),
-          this.lei,
+          this.lti,
         )),
       this.GenericLayout.ClearChildren(),
-      this.GenericLayout.RebuildLayoutByDataNew(this.hei);
+      this.GenericLayout.RebuildLayoutByDataNew(this.hti);
   }
   RefreshCollectText() {
     var e = HandBookController_1.HandBookController.GetCollectProgress(7);
@@ -119,7 +119,7 @@ class QuestHandBookView extends UiViewBase_1.UiViewBase {
   OnBeforeDestroy() {
     this.GenericLayout &&
       (this.GenericLayout.ClearChildren(), (this.GenericLayout = void 0)),
-      (this.hei = []);
+      (this.hti = []);
   }
 }
 exports.QuestHandBookView = QuestHandBookView;

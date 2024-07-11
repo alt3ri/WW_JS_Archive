@@ -11,7 +11,7 @@ class LoginQueueTipsView extends UiTickViewBase_1.UiTickViewBase {
     super(...arguments),
       (this.vSi = void 0),
       (this.MSi = 0),
-      (this.SSi = () => {
+      (this.ESi = () => {
         this.CloseMe();
       });
   }
@@ -22,24 +22,24 @@ class LoginQueueTipsView extends UiTickViewBase_1.UiTickViewBase {
       [2, UE.UIText],
       [3, UE.UIButtonComponent],
     ]),
-      (this.BtnBindInfo = [[3, this.SSi]]);
+      (this.BtnBindInfo = [[3, this.ESi]]);
   }
   OnBeforeDestroy() {
     ModelManager_1.ModelManager.LoginModel.HasAutoLoginPromise() &&
       ModelManager_1.ModelManager.LoginModel.FinishAutoLoginPromise(!1);
   }
   OnStart() {
-    switch (((this.vSi = this.GetViewParam()), this.vSi?.o6n)) {
+    switch (((this.vSi = this.GetViewParam()), this.vSi?.G9n)) {
       case 0:
         this.GetText(0).ShowTextNew("NormalWaitTipsText"),
           LguiUtil_1.LguiUtil.SetLocalTextNew(
             this.GetText(1),
             "ExpectWaitingTimeText",
-            Math.round(this.vSi.n6n / TimeUtil_1.TimeUtil.Minute)
+            Math.round(this.vSi.O9n / TimeUtil_1.TimeUtil.Minute)
               .toString()
               .padStart(2, "0"),
           ),
-          this.ESi();
+          this.SSi();
         break;
       case 1:
         this.GetText(0).ShowTextNew("specialWaitTipsText"),
@@ -48,9 +48,9 @@ class LoginQueueTipsView extends UiTickViewBase_1.UiTickViewBase {
     }
   }
   OnTick(i) {
-    (this.MSi += i), this.ESi();
+    (this.MSi += i), this.SSi();
   }
-  ESi() {
+  SSi() {
     var i, e;
     this.GetText(2).IsUIActiveInHierarchy() &&
       ((i = Math.round(TimeUtil_1.TimeUtil.SetTimeSecond(this.MSi))),

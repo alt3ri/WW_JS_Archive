@@ -18,6 +18,7 @@ const IGlobal_1 = require("../../Interface/IGlobal"),
   CustomSeqCsv_1 = require("./CustomSeqCsv"),
   DataLayerCsv_1 = require("./DataLayerCsv"),
   DungeonRewardWhiteListCsv_1 = require("./DungeonRewardWhiteListCsv"),
+  EntityPerformanceAttributeCsv_1 = require("./EntityPerformanceAttributeCsv"),
   ExcelFormatCsv_1 = require("./ExcelFormatCsv"),
   ExtendedEntityCsv_1 = require("./ExtendedEntityCsv"),
   FaceExpressionCSV_1 = require("./FaceExpressionCSV"),
@@ -65,6 +66,7 @@ var ECsvName;
     (e.Buff = "b.Buff"),
     (e.Bullet = "z.子弹"),
     (e.GameplayTag = "g.GameplayTag"),
+    (e.EntityPerformanceAttribute = "s.实体表现属性"),
     (e.FlowTemplate = "y.演出模板"),
     (e.Montage = "m.蒙太奇"),
     (e.ABPMontage = "a.ABP蒙太奇映射表"),
@@ -89,7 +91,7 @@ var ECsvName;
     (e.MorseCode = "m.捕获信号玩法配置"),
     (e.MorseCodeDifficulty = "m.捕获信号玩法难度"),
     (e.Timbre = "y.音色"),
-    (e.UniversalTone = "t.通用语音事件"),
+    (e.UniversalTone = "t.通用语气事件"),
     (e.TimbreAkEvent = "y.音色语音事件映射"),
     (e.DungeonRewardWhiteList = "f.副本掉落白名单"),
     (e.SetEntityVisibleWhiteList = "s.设置实体可见性白名单"),
@@ -148,7 +150,7 @@ const configs = [
     Path: "d.待机表演",
     CsvLoaderClass: StandbyTagCsv_1.StandbyTagCsvLoader,
     CsvClass: StandbyTagCsv_1.StandbyTagCsv,
-    HelpUrl: " ",
+    HelpUrl: "https://kurogame.feishu.cn/wiki/BJomw3rI5iROBFkiW13cUWQMnPS",
   },
   {
     Name: ECsvName.Map,
@@ -178,21 +180,32 @@ const configs = [
     Path: "z.Buff配置",
     CsvLoaderClass: BuffCsv_1.BuffCsvLoader,
     CsvClass: BuffCsv_1.BuffCsv,
-    HelpUrl: " ",
+    HelpUrl:
+      "https://kurogame.feishu.cn/wiki/QPnWwIv1wiCw7hkLHp0cVcZYnkD#HrZ3dGkvpoTQLHxBeNZc5SHBnBh",
   },
   {
     Name: ECsvName.Bullet,
     Path: "z.子弹配置",
     CsvLoaderClass: BulletCsv_1.BulletCsvLoader,
     CsvClass: BulletCsv_1.BulletCsv,
-    HelpUrl: " ",
+    HelpUrl:
+      "https://kurogame.feishu.cn/wiki/QPnWwIv1wiCw7hkLHp0cVcZYnkD#NywTd0s2WoxBMCxzpRGc4eCznPd",
   },
   {
     Name: ECsvName.GameplayTag,
     Path: "t.Tag配置",
     CsvLoaderClass: TagCsv_1.TagCsvLoader,
     CsvClass: TagCsv_1.TagCsv,
-    HelpUrl: " ",
+    HelpUrl: "https://kurogame.feishu.cn/wiki/OACQwboAMiwQTGkpqpycUb6lndh",
+  },
+  {
+    Name: ECsvName.EntityPerformanceAttribute,
+    Path: "s.实体表现属性",
+    CsvLoaderClass:
+      EntityPerformanceAttributeCsv_1.EntityPerformanceAttributeCsvLoader,
+    CsvClass: EntityPerformanceAttributeCsv_1.EntityPerformanceAttributeCsv,
+    HelpUrl:
+      "https://kurogame.feishu.cn/wiki/QPnWwIv1wiCw7hkLHp0cVcZYnkD#GgCpdTF6CoAGepx7RnOcqjHPnxg",
   },
   {
     Name: ECsvName.TidText,
@@ -223,21 +236,24 @@ const configs = [
     Path: "a.ABP蒙太奇映射表",
     CsvLoaderClass: MontageCsv_1.AbpMontageCsvLoader,
     CsvClass: MontageCsv_1.AbpMontageCsv,
-    HelpUrl: " ",
+    HelpUrl:
+      "https://kurogame.feishu.cn/wiki/QPnWwIv1wiCw7hkLHp0cVcZYnkD#UYujdgZxaooqOmxwDAVcRmz1n9g",
   },
   {
     Name: ECsvName.ABPOverlayMontage,
     Path: "a.ABP叠加蒙太奇映射表",
     CsvLoaderClass: MontageCsv_1.AbpMontageCsvLoader,
     CsvClass: MontageCsv_1.AbpOverlayMontageCsv,
-    HelpUrl: " ",
+    HelpUrl:
+      "https://kurogame.feishu.cn/wiki/QPnWwIv1wiCw7hkLHp0cVcZYnkD#doxcnM4a3b1rqE1L1beY0DwPcPf",
   },
   {
     Name: ECsvName.FaceExpression,
     Path: "b.表情",
     CsvLoaderClass: FaceExpressionCSV_1.FaceExpressionCsvLoader,
     CsvClass: FaceExpressionCSV_1.FaceExpressionCsv,
-    HelpUrl: " ",
+    HelpUrl:
+      "https://kurogame.feishu.cn/wiki/QPnWwIv1wiCw7hkLHp0cVcZYnkD#URlvdnDn1o4Fccx8RVrcsDvpnVd",
   },
   {
     Name: ECsvName.SexFormat,
@@ -268,21 +284,24 @@ const configs = [
     Path: "y.音频/y.音色",
     CsvLoaderClass: TimbreCsv_1.TimbreCsvLoader,
     CsvClass: TimbreCsv_1.TimbreCsv,
-    HelpUrl: " ",
+    HelpUrl:
+      "https://kurogame.feishu.cn/wiki/MGcFwfmSjiGsdSkEBnucZLPVnMf#Gq3ddSGfPoL7RixsDVycTClKnQc",
   },
   {
     Name: ECsvName.UniversalTone,
     Path: "y.音频/t.通用语音台本",
     CsvLoaderClass: UniversalTone_1.UniversalToneCsvLoader,
     CsvClass: UniversalTone_1.UniversalToneCsv,
-    HelpUrl: " ",
+    HelpUrl:
+      "https://kurogame.feishu.cn/wiki/MGcFwfmSjiGsdSkEBnucZLPVnMf#DXDWdKPbMoS9rhxD9xocrrmnnbg",
   },
   {
     Name: ECsvName.TimbreAkEvent,
     Path: "y.音频/y.音色语音事件映射",
     CsvLoaderClass: TimbreAkEvent_1.TimbreAkEventCsvLoader,
     CsvClass: TimbreAkEvent_1.TimbreAkEventCsv,
-    HelpUrl: " ",
+    HelpUrl:
+      "https://kurogame.feishu.cn/wiki/MGcFwfmSjiGsdSkEBnucZLPVnMf#KyrDdJc8Fo9uUCxz41ncTSyQnnf",
   },
   {
     Name: ECsvName.CipherGameplay,
@@ -297,28 +316,30 @@ const configs = [
     Path: "t.天空盒配置",
     CsvLoaderClass: SkyboxCsv_1.SkyboxCsvLoader,
     CsvClass: SkyboxCsv_1.SkyboxCsv,
-    HelpUrl: " ",
+    HelpUrl:
+      "https://kurogame.feishu.cn/wiki/QPnWwIv1wiCw7hkLHp0cVcZYnkD#Ehvpdde9Po45YOxXMcNchJLUn3g",
   },
   {
     Name: ECsvName.MonsterDisplay,
     Path: "g.怪物展示面板",
     CsvLoaderClass: MonsterDisplay_1.MonsterDisplayCsvLoader,
     CsvClass: MonsterDisplay_1.MonsterDisplayCsv,
-    HelpUrl: " ",
+    HelpUrl: "https://kurogame.feishu.cn/wiki/IL2qwaX3eiERFkkjYa8cXoJXn2c",
   },
   {
     Name: ECsvName.Telecom,
     Path: "t.通讯",
     CsvLoaderClass: TelecomCsv_1.TeleComCsvLoader,
     CsvClass: TelecomCsv_1.TeleComCsv,
-    HelpUrl: " ",
+    HelpUrl: "https://kurogame.feishu.cn/wiki/ZWdOwcKaIimNz6kP5XScB8oynke",
   },
   {
     Name: ECsvName.TalkIcon,
     Path: "d.对话选项图标",
     CsvLoaderClass: TalkIconCsv_1.TalkIconCsvLoader,
     CsvClass: TalkIconCsv_1.TalkIconCsv,
-    HelpUrl: " ",
+    HelpUrl:
+      "https://kurogame.feishu.cn/wiki/QPnWwIv1wiCw7hkLHp0cVcZYnkD#Hth4dkSUEodbTLxES75cONOfnUf",
   },
   {
     Name: ECsvName.DataLayer,
@@ -341,8 +362,7 @@ const configs = [
     Path: "z.战斗事件",
     CsvLoaderClass: BattleTagConfigCsv_1.BattleTagConfigCsvLoader,
     CsvClass: BattleTagConfigCsv_1.BattleTagConfigCsv,
-    HelpUrl:
-      "https://kurogame.feishu.cn/wiki/wikcnXmfNM3zEcO4I2nDhzqO2ec#UEvUdnaOjoeGfrxd3ubcqziLnse",
+    HelpUrl: "https://kurogame.feishu.cn/wiki/J9b9wG0SOiJheZkl3p1cmnGRnvc",
   },
   {
     Name: ECsvName.SignalBreakData,
@@ -397,7 +417,6 @@ const configs = [
     Path: "f.副本掉落白名单",
     CsvLoaderClass: DungeonRewardWhiteListCsv_1.DungeonRewardWhiteListCsvLoader,
     CsvClass: DungeonRewardWhiteListCsv_1.DungeonRewardWhiteListCsv,
-    IsDefaultEdLock: !0,
     HelpUrl:
       "https://kurogame.feishu.cn/wiki/PmQmwmm2ciTVBNkMUnscF6QvnNe#FzDUd7U5Roy18TxL1xZcZTI1nge",
   },
@@ -414,7 +433,8 @@ const configs = [
     Path: "j.剧情图鉴",
     CsvLoaderClass: PlotHandBookCsv_1.PlotHandBookCsvLoader,
     CsvClass: PlotHandBookCsv_1.PlotHandBookCsv,
-    HelpUrl: " ",
+    HelpUrl:
+      "https://kurogame.feishu.cn/wiki/QPnWwIv1wiCw7hkLHp0cVcZYnkD#M13Ad5wwToDu5JxJXw8cwqjUn3c",
   },
   {
     Name: ECsvName.BtStateConflictCheckWhiteList,
@@ -422,7 +442,7 @@ const configs = [
     CsvLoaderClass:
       BtStateConflictCheckWhiteList_1.BtStateConflictCheckWhiteListCsvLoader,
     CsvClass: BtStateConflictCheckWhiteList_1.BtStateConflictCheckWhiteListCsv,
-    HelpUrl: "https://kurogame.feishu.cn/wiki/JUXMw1iKwi4WoXkdDJTcoRaYnhf",
+    HelpUrl: "https://kurogame.feishu.cn/wiki/YQ4JwSl2Lizxivkw1qscaajAn3e",
   },
 ];
 (0, Init_1.isUe5)() ||
@@ -437,7 +457,7 @@ const configs = [
 class CsvRegistry {
   constructor() {
     (this.$ = new Map()),
-      (this.nBn = new Map()),
+      (this.vqn = new Map()),
       (this.H = new Map()),
       (this.J = new Map()),
       (this.K = new Map()),
@@ -446,7 +466,7 @@ class CsvRegistry {
       (this.te = (0, File_1.getProjectPath)(IGlobal_1.globalConfig.CsvFileDir)),
       configs.forEach((e) => {
         this.$.set(e.Name, e),
-          this.nBn.set(e.Name, e.HelpUrl),
+          this.vqn.set(e.Name, e.HelpUrl),
           this.H.set(e.CsvClass, e),
           this.CsvTable.set(e.Name, this.oe(e.Path));
       });
@@ -520,28 +540,34 @@ class CsvRegistry {
     throw new Error(`Can not find csv config for name [${e}]`);
   }
   GetCsvHelpUrl(e) {
-    var s = this.nBn.get(e);
+    var s = this.vqn.get(e);
     if (s) return s;
     throw new Error(`Can not find csv help url for name [${e}]`);
   }
   Load(e, s, a) {
-    (s = s ?? this.GetTables(e)[0].TablePath),
-      (a = a ?? (0, Util_1.getWorkspaceBranch)()),
-      (s = this.ne(s, a)),
-      (a = this.ie(this.GetCsvConfig(e)).LoadCsv(s));
-    return (a.Tables = this.GetTables(e)), a;
+    var t = this.ie(this.GetCsvConfig(e)),
+      s = s ?? this.GetTables(e)[0].TablePath,
+      a = a ?? (0, Util_1.getWorkspaceBranch)();
+    let i = this.ne(s, a);
+    (0, File_1.existFile)(i) ||
+      a === (0, Util_1.getWorkspaceBranch)() ||
+      (0, BranchDefine_1.isReachBranch)(a) ||
+      ((s = (0, File_1.getDirName)((0, File_1.getDir)(i))),
+      (i = t.GetOtherBranchCsvPath(s, a)));
+    s = t.LoadCsv(i);
+    return (s.Tables = this.GetTables(e)), s;
   }
   Save(e, s, a) {
     var t,
-      r,
-      C = this.$.get(e);
-    C
+      i,
+      r = this.$.get(e);
+    r
       ? this.CsvTable.get(e)
-        ? ((t = this.ie(C)),
-          (r = this.ne(a, s.Branch)),
-          t.SaveCsv(s, r),
-          this.RefreshCsvData(C.CsvClass),
-          (0, Log_1.log)(`Save csv: [${r}] [${a}]`),
+        ? ((t = this.ie(r)),
+          (i = this.ne(a, s.Branch)),
+          t.SaveCsv(s, i),
+          this.RefreshCsvData(r.CsvClass),
+          (0, Log_1.log)(`Save csv: [${i}] [${a}]`),
           EventSystem_1.editorEventDispatcher.Dispatch("SaveCsvEditor", e))
         : (0, Log_1.error)(`Can not save csv for table [${a}]`)
       : (0, Log_1.error)(`Can not save csv for name [${e}]`);
@@ -581,6 +607,7 @@ class CsvRegistry {
     a.push(...e.Rows);
     for (const t of e.OtherBranchCsv)
       ((0, Util_1.isNodeJsPlatform)() ||
+        (0, Util_1.isPipelineEnv)() ||
         (0, BranchDefine_1.isReachBranch)(
           t.Branch,
           Config_1.Config.Instance.Get("PlannedBranch"),

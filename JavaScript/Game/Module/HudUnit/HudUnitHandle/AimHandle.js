@@ -20,159 +20,187 @@ const UE = require("ue"),
 class AimHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
   constructor() {
     super(...arguments),
-      (this.rii = !1),
-      (this.nii = void 0),
-      (this.sii = Vector_1.Vector.Create()),
-      (this.aii = Vector_1.Vector.Create()),
-      (this.hii = void 0),
-      (this.lii = !1),
-      (this._ii = !1),
-      (this.o7e = () => {
-        this.uii();
+      (this.roi = !1),
+      (this.noi = void 0),
+      (this.soi = Vector_1.Vector.Create()),
+      (this.aoi = Vector_1.Vector.Create()),
+      (this.hoi = void 0),
+      (this.loi = !1),
+      (this._oi = !1),
+      (this.VRn = !1),
+      (this.fHe = () => {
+        this.uoi();
       }),
-      (this.cii = () => {
-        this.mii(), this.dii();
+      (this.coi = () => {
+        this.moi(), this.doi();
+      }),
+      (this.HRn = (t) => {
+        (this.VRn = t), this.uoi();
       });
   }
   OnInitialize() {
-    super.OnInitialize(), this.uii();
+    super.OnInitialize(), this.uoi();
   }
   OnAddEvents() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnChangeRole,
-      this.o7e,
+      this.fHe,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnAimStateChanged,
-        this.cii,
+        this.coi,
+      ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.BattleUiFollowerAimStateChanged,
+        this.HRn,
       );
   }
   OnRemoveEvents() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnChangeRole,
-      this.o7e,
+      this.fHe,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnAimStateChanged,
-        this.cii,
+        this.coi,
+      ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.BattleUiFollowerAimStateChanged,
+        this.HRn,
       );
   }
   OnTick(t) {
-    this.dii();
+    this.doi();
   }
   OnShowHud() {
-    super.OnShowHud(), this.mii(), this.dii();
+    super.OnShowHud(), this.moi(), this.doi();
   }
-  mii() {
-    if (this.nii && this.lii) {
-      var e = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
-      if (e?.Valid) {
-        let t =
-          e.Entity.GetComponent(158).DirectionState ===
-          CharacterUnifiedStateTypes_1.ECharDirectionState.AimDirection;
-        !t && this._ii && (t = e.Entity.GetComponent(185).HasTag(aimTagId)),
-          this.nii.SetTargetVisible(t, !1);
-      } else this.nii.SetTargetVisible(!1, !0);
+  moi() {
+    if (this.noi && this.loi) {
+      var e,
+        i = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
+      if (i?.Valid) {
+        let t = !1;
+        this.VRn
+          ? (t = !0)
+          : ((e = i.Entity.GetComponent(160).DirectionState),
+            !(t =
+              e ===
+              CharacterUnifiedStateTypes_1.ECharDirectionState.AimDirection) &&
+              this._oi &&
+              (t = i.Entity.GetComponent(188).HasTag(aimTagId))),
+          this.noi.SetTargetVisible(t, !1);
+      } else this.noi.SetTargetVisible(!1, !0);
     }
   }
-  dii() {
-    if (this.nii && this.nii.GetTargetVisible() && this.nii.GetActive()) {
-      var t = this.Cii();
+  doi() {
+    if (this.noi && this.noi.GetTargetVisible() && this.noi.GetActive()) {
+      var t = this.Coi();
       if (t) {
-        var e = t.Actors,
-          i = e.Num();
-        if (!(i <= 0)) {
+        var i = t.Actors,
+          s = i.Num();
+        if (!(s <= 0)) {
           var r = t.Components;
-          for (let t = 0; t < i; t++) {
-            var s = e.Get(t);
-            if (!s?.IsValid()) return void this.nii.SetAimStatus(1);
-            s = ActorUtils_1.ActorUtils.GetEntityByActor(s, !1);
-            if (!s) return void this.nii.SetAimStatus(1);
-            var o = s.Entity.GetComponent(0),
-              n = o?.GetEntityType();
-            if (n === Protocol_1.Aki.Protocol.HBs.Proto_Npc)
-              return void this.nii.SetAimStatus(1);
+          for (let e = 0; e < s; e++) {
+            var n = i.Get(e);
+            if (!n?.IsValid()) return void this.noi.SetAimStatus(1);
+            let t = ActorUtils_1.ActorUtils.GetEntityByActor(n, !1);
             if (
-              n === Protocol_1.Aki.Protocol.HBs.Proto_SceneItem ||
-              n === Protocol_1.Aki.Protocol.HBs.Proto_Animal
+              !(t =
+                t ||
+                ModelManager_1.ModelManager.SceneInteractionModel.GetEntityByActor(
+                  n,
+                  !0,
+                ))
             )
-              return void (this.gii(o.GetBaseInfo().Camp)
-                ? this.nii.SetAimStatus(1)
-                : this.nii.SetAimStatus(2));
-            if (n !== Protocol_1.Aki.Protocol.HBs.Proto_Monster)
-              return void this.nii.SetAimStatus(1);
-            n = r.Get(t);
-            if (n?.IsValid()) {
-              n = n.GetName();
-              if ("CollisionCylinder" !== n)
-                return this.gii(o.GetBaseInfo().Camp)
-                  ? void this.nii.SetAimStatus(1)
-                  : s.Entity.GetComponent(58)?.IsWeakness(n)
-                    ? void this.nii.SetAimStatus(3)
-                    : void this.nii.SetAimStatus(2);
+              return void this.noi.SetAimStatus(1);
+            var n = t.Entity.GetComponent(0),
+              h = n?.GetEntityType();
+            if (h === Protocol_1.Aki.Protocol.wks.Proto_Npc)
+              return void this.noi.SetAimStatus(1);
+            if (h === Protocol_1.Aki.Protocol.wks.Proto_SceneItem)
+              return void (void 0 === t.Entity.GetComponent(140) ||
+              7 !== n.GetBaseInfo().Camp
+                ? this.noi.SetAimStatus(1)
+                : this.noi.SetAimStatus(2));
+            if (h === Protocol_1.Aki.Protocol.wks.Proto_Animal)
+              return void (this.goi(n.GetBaseInfo().Camp)
+                ? this.noi.SetAimStatus(1)
+                : this.noi.SetAimStatus(2));
+            if (h !== Protocol_1.Aki.Protocol.wks.Proto_Monster)
+              return void this.noi.SetAimStatus(1);
+            h = r.Get(e);
+            if (h?.IsValid()) {
+              h = h.GetName();
+              if ("CollisionCylinder" !== h)
+                return this.goi(n.GetBaseInfo().Camp)
+                  ? void this.noi.SetAimStatus(1)
+                  : t.Entity.GetComponent(60)?.IsWeakness(h)
+                    ? void this.noi.SetAimStatus(3)
+                    : void this.noi.SetAimStatus(2);
             }
           }
         }
       }
-      this.nii.SetAimStatus(1);
+      this.noi.SetAimStatus(1);
     }
   }
-  gii(t) {
+  goi(t) {
     return 0 === t || 2 === t || 4 === t;
   }
-  uii() {
-    this.lii = !1;
+  uoi() {
+    this.loi = !1;
     var t = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
     t?.Valid &&
     (t = t.Entity.GetComponent(0)) &&
     ((t = t.GetRoleConfig()),
-    (this._ii = 2 === t.RoleType),
-    t.IsAim || this._ii)
-      ? ((this.lii = !0), this.fii())
-      : this.pii();
+    (this._oi = 2 === t.RoleType),
+    t.IsAim || this._oi || this.VRn)
+      ? ((this.loi = !0), this.foi())
+      : this.poi();
   }
-  fii() {
-    this.nii
-      ? (this.mii(), this.dii())
-      : this.rii ||
-        ((this.rii = !0),
+  foi() {
+    this.noi
+      ? (this.moi(), this.doi())
+      : this.roi ||
+        ((this.roi = !0),
         this.NewHudUnit(ArmUnit_1.AimUnit, "UiItem_Aim")
           .then((t) => {
-            (this.nii = t),
-              this.lii
-                ? (this.mii(), this.dii())
-                : this.nii.SetTargetVisible(!1, !0);
+            (this.noi = t),
+              this.loi
+                ? (this.moi(), this.doi())
+                : this.noi.SetTargetVisible(!1, !0);
           })
           .finally(() => {
-            this.rii = !1;
+            this.roi = !1;
           }));
   }
-  pii() {
-    this.nii && this.nii.SetTargetVisible(!1, !0);
+  poi() {
+    this.noi && this.noi.SetTargetVisible(!1, !0);
   }
-  Cii() {
+  Coi() {
     var t = Global_1.Global.CharacterCameraManager,
-      e = this.sii,
-      i = this.aii,
+      e = this.soi,
+      i = this.aoi,
       t =
         (e.FromUeVector(t.GetCameraLocation()),
         i.FromUeVector(t.GetActorForwardVector()),
         i.MultiplyEqual(MAX_AIM_DISTANCE),
         i.AdditionEqual(e),
-        (this.hii =
-          this.hii ??
+        (this.hoi =
+          this.hoi ??
           ModelManager_1.ModelManager.BulletModel.NewTraceElement(
             UE.TraceLineElement.StaticClass(),
             ModelManager_1.ModelManager.BulletModel.ObjectTypeTakeAim,
           )),
-        TraceElementCommon_1.TraceElementCommon.SetStartLocation(this.hii, e),
-        TraceElementCommon_1.TraceElementCommon.SetEndLocation(this.hii, i),
+        TraceElementCommon_1.TraceElementCommon.SetStartLocation(this.hoi, e),
+        TraceElementCommon_1.TraceElementCommon.SetEndLocation(this.hoi, i),
         TraceElementCommon_1.TraceElementCommon.LineTrace(
-          this.hii,
+          this.hoi,
           PROFILE_AIM_TRACE,
         ));
-    if (t) return this.hii.HitResult;
+    if (t) return this.hoi.HitResult;
   }
 }
-(exports.AimHandle = AimHandle).ght = void 0;
+(exports.AimHandle = AimHandle).Ult = void 0;
 //# sourceMappingURL=AimHandle.js.map

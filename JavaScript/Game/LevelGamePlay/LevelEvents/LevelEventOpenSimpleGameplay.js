@@ -52,12 +52,24 @@ class LevelEventOpenSimpleGameplay extends LevelGeneralBase_1.LevelEventBase {
             break;
           case "SignalDevice":
             this.VDe = r.FinishSendSelfEvent;
-            var l = EntitySystem_1.EntitySystem.Get(t.EntityId);
-            (this.E0 = l.GetComponent(0).GetCreatureDataId()),
+            var n = EntitySystem_1.EntitySystem.Get(t.EntityId);
+            (this.E0 = n.GetComponent(0).GetCreatureDataId()),
               TsInteractionUtils_1.TsInteractionUtils.RegisterOpenViewName(
                 "SignalDeviceView",
               ),
               SignalDeviceController_1.SignalDeviceController.OpenGameplay(
+                r.GameplayConfig.Config,
+                this.HDe,
+              );
+            break;
+          case "SignalDevice2":
+            this.VDe = r.FinishSendSelfEvent;
+            n = EntitySystem_1.EntitySystem.Get(t.EntityId);
+            (this.E0 = n.GetComponent(0).GetCreatureDataId()),
+              TsInteractionUtils_1.TsInteractionUtils.RegisterOpenViewName(
+                "SignalDeviceChasingMoonView",
+              ),
+              SignalDeviceController_1.SignalDeviceController.OpenGameplayChasingMoon(
                 r.GameplayConfig.Config,
                 this.HDe,
               );

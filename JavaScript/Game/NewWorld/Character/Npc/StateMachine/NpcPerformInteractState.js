@@ -7,37 +7,37 @@ const StateBase_1 = require("../../../../../Core/Utils/StateMachine/StateBase"),
 class NpcPerformInteractState extends StateBase_1.StateBase {
   constructor() {
     super(...arguments),
-      (this.xer = ""),
-      (this.YZo = void 0),
-      (this.ser = void 0),
-      (this.wer = !1),
-      (this.Ber = () => {
+      (this.Atr = ""),
+      (this.Qer = void 0),
+      (this.otr = void 0),
+      (this.Ptr = !1),
+      (this.xtr = () => {
         this.StateMachine.Switch(1);
       });
   }
   get NpcMontageController() {
-    return this.ser;
+    return this.otr;
   }
   set NpcMontageController(t) {
-    this.ser = t;
+    this.otr = t;
   }
   CanChangeFrom(t) {
-    var e = this.Owner.Entity.GetComponent(168);
-    return this.wer && 1 === t && !e.IsInPlot;
+    var e = this.Owner.Entity.GetComponent(171);
+    return this.Ptr && 1 === t && !e.IsInPlot;
   }
   OnCreate(t) {
     t?.ShowOnInteract?.Montage
-      ? ((this.wer = !0), (this.xer = t.ShowOnInteract.Montage))
-      : (this.wer = !1);
+      ? ((this.Ptr = !0), (this.Atr = t.ShowOnInteract.Montage))
+      : (this.Ptr = !1);
   }
   OnEnter(t) {
-    this.ser.LoadAsync(this.xer, (t) => {
-      t?.IsValid() && this?.Owner?.Valid && (this.ser?.Play(t), (this.YZo = t));
+    this.otr.LoadAsync(this.Atr, (t) => {
+      t?.IsValid() && this?.Owner?.Valid && (this.otr?.Play(t), (this.Qer = t));
     }),
       EventSystem_1.EventSystem.AddWithTarget(
         this.Owner,
         EventDefine_1.EEventName.OnInteractPlotEnd,
-        this.Ber,
+        this.xtr,
       );
   }
   OnUpdate(t) {}
@@ -45,14 +45,14 @@ class NpcPerformInteractState extends StateBase_1.StateBase {
     EventSystem_1.EventSystem.RemoveWithTarget(
       this.Owner,
       EventDefine_1.EEventName.OnInteractPlotEnd,
-      this.Ber,
+      this.xtr,
     ),
       this.Owner.Entity.GetComponent(3).ClearInput(),
-      this.ser?.ForceStop(0.5, this.YZo),
-      (this.YZo = void 0);
+      this.otr?.ForceStop(0.5, this.Qer),
+      (this.Qer = void 0);
   }
   OnDestroy() {
-    this.ser = void 0;
+    this.otr = void 0;
   }
 }
 exports.NpcPerformInteractState = NpcPerformInteractState;

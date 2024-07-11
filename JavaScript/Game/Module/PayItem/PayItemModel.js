@@ -10,19 +10,19 @@ const ModelBase_1 = require("../../../Core/Framework/ModelBase"),
 class PayItemModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
-      (this.YNi = []),
-      (this.JNi = new Map()),
+      (this.YOi = []),
+      (this.JOi = new Map()),
       (this.Version = ""),
-      (this.zNi = void 0);
+      (this.zOi = void 0);
   }
   GetDataList() {
-    return this.YNi;
+    return this.YOi;
   }
   GetPayingItemName() {
-    return this.zNi;
+    return this.zOi;
   }
   CleanPayingItemName() {
-    this.zNi = void 0;
+    this.zOi = void 0;
   }
   ConvertPayItemDataToPayShopItemBaseSt(e) {
     return e.ConvertPayItemDataToPayShopItemBaseSt();
@@ -30,29 +30,29 @@ class PayItemModel extends ModelBase_1.ModelBase {
   UpdatePayingItemName(e) {
     (e = ConfigManager_1.ConfigManager.PayItemConfig.GetPayItem(e)),
       (e = ConfigManager_1.ConfigManager.ItemConfig.GetItemName(e.ItemId));
-    this.zNi = e;
+    this.zOi = e;
   }
   ResetSpecialBonus(e) {
     for (const a of e) {
-      var t = this.JNi.get(a);
+      var t = this.JOi.get(a);
       t && (t.CanSpecialBonus = !0);
     }
   }
   InitDataListByServer(e) {
-    0 !== this.YNi.length && 0 !== e.length && (this.YNi.length = 0);
+    0 !== this.YOi.length && 0 !== e.length && (this.YOi.length = 0);
     for (const a of e) {
       var t = new PayItemDefine_1.PayItemData();
-      t.Phrase(a), this.YNi.push(t), this.JNi.set(a.Ekn, t);
+      t.Phrase(a), this.YOi.push(t), this.JOi.set(a.J4n, t);
     }
     EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.RefreshPayItemList);
   }
   OnClear() {
     return (
-      (this.YNi.length = 0),
-      (this.YNi = void 0),
-      this.JNi.clear(),
+      (this.YOi.length = 0),
+      (this.YOi = void 0),
+      this.JOi.clear(),
       (this.Version = ""),
-      !(this.zNi = void 0)
+      !(this.zOi = void 0)
     );
   }
   CreateSdkPayment(e, t, a) {

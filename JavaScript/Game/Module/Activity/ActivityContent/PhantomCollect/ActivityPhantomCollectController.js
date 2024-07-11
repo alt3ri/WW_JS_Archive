@@ -15,13 +15,13 @@ class ActivityPhantomCollectController extends ActivityControllerBase_1.Activity
   constructor() {
     super(...arguments),
       (this.OnPhantomCollectUpdateNotify = (t) => {
-        ActivityPhantomCollectController.ActivityId = t.YFn;
+        ActivityPhantomCollectController.ActivityId = t.T6n;
         var e = ActivityPhantomCollectController.GetCurrentActivityDataById();
-        t.b0s
-          ? (e.UpadatePhantomCollectReward(t.b0s),
+        t.Jps
+          ? (e.UpadatePhantomCollectReward(t.Jps),
             EventSystem_1.EventSystem.Emit(
               EventDefine_1.EEventName.OnPhantomCollectUpdate,
-              t.b0s.Ikn,
+              t.Jps.Z4n,
             ),
             EventSystem_1.EventSystem.Emit(
               EventDefine_1.EEventName.RefreshCommonActivityRedDot,
@@ -30,15 +30,15 @@ class ActivityPhantomCollectController extends ActivityControllerBase_1.Activity
           : Log_1.Log.CheckError() &&
             Log_1.Log.Error("Activity", 35, "声骇收集活动数据更新错误:", [
               "ActivityId:",
-              t.YFn,
+              t.T6n,
             ]);
       });
   }
   OnRegisterNetEvent() {
-    Net_1.Net.Register(1267, this.OnPhantomCollectUpdateNotify);
+    Net_1.Net.Register(29634, this.OnPhantomCollectUpdateNotify);
   }
   OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(1267);
+    Net_1.Net.UnRegister(29634);
   }
   OnGetActivityResource(t) {
     return "UiItem_ActivityPhantomCollect";
@@ -48,7 +48,7 @@ class ActivityPhantomCollectController extends ActivityControllerBase_1.Activity
   }
   OnCreateActivityData(t) {
     return (
-      (ActivityPhantomCollectController.ActivityId = t.Ekn),
+      (ActivityPhantomCollectController.ActivityId = t.J4n),
       new ActivityPhantomCollectData_1.ActivityPhantomCollectData()
     );
   }
@@ -65,14 +65,14 @@ class ActivityPhantomCollectController extends ActivityControllerBase_1.Activity
   static async PhantomCollectRewardReceiveRequest(t) {
     var e = new Protocol_1.Aki.Protocol.k$n(),
       e =
-        ((e.Ikn = t),
-        (e.YFn = ActivityPhantomCollectController.ActivityId),
-        await Net_1.Net.CallAsync(13175, e));
+        ((e.Z4n = t),
+        (e.T6n = ActivityPhantomCollectController.ActivityId),
+        await Net_1.Net.CallAsync(25649, e));
     if (e)
-      if (e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys)
+      if (e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs)
         ErrorCodeController_1.ErrorCodeController.OpenErrorCodeTipView(
-          e.lkn,
-          13175,
+          e.O4n,
+          25649,
         );
       else {
         e = ActivityPhantomCollectController.GetCurrentActivityDataById();
@@ -80,7 +80,7 @@ class ActivityPhantomCollectController extends ActivityControllerBase_1.Activity
           e = e.GetPhantomCollectRewardById(t);
           if (e)
             return (
-              (e.ckn = Protocol_1.Aki.Protocol.D0s.qms),
+              (e.F4n = Protocol_1.Aki.Protocol.jps.Jfs),
               EventSystem_1.EventSystem.Emit(
                 EventDefine_1.EEventName.RefreshCommonActivityRedDot,
                 ActivityPhantomCollectController.ActivityId,

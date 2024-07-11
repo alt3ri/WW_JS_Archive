@@ -7,10 +7,10 @@ class PrewarFormationData {
     (this.j8 = 0),
       (this.Mne = 0),
       (this.B8 = 0),
-      (this.Usi = !1),
-      (this.Asi = -1),
-      (this.Psi = 0),
-      (this.xsi = 1),
+      (this.Uai = !1),
+      (this.Aai = -1),
+      (this.Pai = 0),
+      (this.xai = 1),
       (this.Xy = 0);
   }
   GetPlayerId() {
@@ -31,7 +31,7 @@ class PrewarFormationData {
   IsLeader() {
     return (
       this.j8 ===
-      ModelManager_1.ModelManager.InstanceDungeonModel.GetMatchTeamInfo()?.Q4n
+      ModelManager_1.ModelManager.InstanceDungeonModel.GetMatchTeamInfo()?.DVn
     );
   }
   IsSelf() {
@@ -44,10 +44,10 @@ class PrewarFormationData {
     this.B8 = e;
   }
   GetIsReady() {
-    return this.Usi;
+    return this.Uai;
   }
   SetIsReady(e) {
-    this.Usi = e;
+    this.Uai = e;
   }
   GetPlayerName() {
     return (
@@ -57,22 +57,22 @@ class PrewarFormationData {
     );
   }
   SetOnlineNumber(e) {
-    this.Asi = e;
+    this.Aai = e;
   }
   GetOnlineNumber() {
-    return this.Asi;
+    return this.Aai;
   }
   GetLife() {
-    return this.Psi;
+    return this.Pai;
   }
   SetLife(e) {
-    this.Psi = e;
+    this.Pai = e;
   }
   GetMaxLife() {
-    return this.xsi;
+    return this.xai;
   }
   SetMaxLife(e) {
-    this.xsi = e;
+    this.xai = e;
   }
   GetIndex() {
     return this.Xy;

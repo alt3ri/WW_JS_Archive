@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TaskMarkItemView = void 0);
 const UE = require("ue"),
-  Log_1 = require("../../../../../Core/Common/Log"),
   Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
   EventDefine_1 = require("../../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../../Common/Event/EventSystem"),
@@ -14,26 +13,26 @@ class TaskMarkItemView extends ServerMarkItemView_1.ServerMarkItemView {
   constructor() {
     super(...arguments),
       (this.QuestStepId = 0),
-      (this.NDi = !1),
-      (this.ODi = !1),
+      (this.NRi = !1),
+      (this.ORi = !1),
       (this.ige = !1),
-      (this.kDi = void 0),
-      (this.FDi = void 0);
+      (this.kRi = void 0),
+      (this.FRi = void 0);
   }
   OnInitialize() {
     super.OnInitialize(),
-      this.VDi(),
+      this.VRi(),
       this.OnIconPathChanged(this.Holder.IconPath);
   }
-  VDi() {
+  VRi() {
     var e = this.Holder.MarkRange;
-    (this.NDi = 0 < e),
+    (this.NRi = 0 < e),
       e &&
-        ((this.kDi = new UE.Vector2D(
+        ((this.kRi = new UE.Vector2D(
           this.Holder.UiPosition.X,
           this.Holder.UiPosition.Y,
         )),
-        this.HDi(
+        this.HRi(
           GeneralLogicTreeUtil_1.GeneralLogicTreeUtil.GetPlayerLocation() ??
             Vector_1.Vector.ZeroVectorProxy,
         ),
@@ -61,21 +60,14 @@ class TaskMarkItemView extends ServerMarkItemView_1.ServerMarkItemView {
       this.RangeComponentInternal
     );
   }
-  OnUpdate(e, t = !1) {
-    void 0 === this.Holder
-      ? Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug(
-          "Map",
-          35,
-          "Holder is undefined in TaskMarkItemView.OnUpdate()",
-        )
-      : (super.OnUpdate(e, t), this.HDi(e, t));
+  OnSafeUpdate(e, t = !1) {
+    this.HRi(e, t);
   }
   IsRangeImageActive() {
-    return this.FDi;
+    return this.FRi;
   }
-  HDi(s, e = 0) {
-    if (this.NDi)
+  HRi(s, e = 0) {
+    if (this.NRi)
       if (this.Holder.IsCanShowView) {
         var r,
           h = this.Holder,
@@ -99,22 +91,22 @@ class TaskMarkItemView extends ServerMarkItemView_1.ServerMarkItemView {
           this.GetTrackComponentAsync().then((e) => {
             e.SetActive(t && this.Holder.IsTracked);
           }),
-          this.ige ? (this.jDi(!t), (this.ige = !1)) : this.jDi(e < a && i);
-      } else this.jDi(!1);
+          this.ige ? (this.jRi(!t), (this.ige = !1)) : this.jRi(e < a && i);
+      } else this.jRi(!1);
   }
-  jDi(e) {
+  jRi(e) {
     var t;
-    this.NDi &&
-      this.ODi !== e &&
-      ((this.ODi = e),
-      (void 0 !== this.FDi && this.FDi === e) ||
+    this.NRi &&
+      this.ORi !== e &&
+      ((this.ORi = e),
+      (void 0 !== this.FRi && this.FRi === e) ||
         (this.GetRangeComponentAsync().then((e) => {
-          e.SetActive(this.FDi),
+          e.SetActive(this.FRi),
             this.RangeComponentInternal?.GetRootItem()?.SetAnchorOffset(
-              this.kDi,
+              this.kRi,
             );
         }),
-        (this.FDi = e),
+        (this.FRi = e),
         1 === this.Holder.MapType &&
           ((t = this.Holder),
           EventSystem_1.EventSystem.Emit(

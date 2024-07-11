@@ -8,8 +8,8 @@ const UE = require("ue"),
 class RoleFavorBaseInfoComponent extends UiPanelBase_1.UiPanelBase {
   constructor(e, i) {
     super(),
-      (this.zke = 0),
-      (this.zke = i),
+      (this.dFe = 0),
+      (this.dFe = i),
       e && this.CreateThenShowByActor(e.GetOwner());
   }
   OnRegisterComponent() {
@@ -26,10 +26,10 @@ class RoleFavorBaseInfoComponent extends UiPanelBase_1.UiPanelBase {
   }
   OnStart() {
     var e, i;
-    this.zke &&
+    this.dFe &&
       ((e = this.GetText(0)),
       (i = ConfigManager_1.ConfigManager.RoleFavorConfig.GetFavorRoleInfoConfig(
-        this.zke,
+        this.dFe,
       )),
       LguiUtil_1.LguiUtil.SetLocalText(e, "FavorBaseInfo"),
       this.GetText(2).SetUIActive(!1),
@@ -39,7 +39,7 @@ class RoleFavorBaseInfoComponent extends UiPanelBase_1.UiPanelBase {
       this.GetText(6).ShowTextNew(i.Info));
   }
   OnBeforeDestroy() {
-    this.zke = void 0;
+    this.dFe = void 0;
   }
 }
 exports.RoleFavorBaseInfoComponent = RoleFavorBaseInfoComponent;

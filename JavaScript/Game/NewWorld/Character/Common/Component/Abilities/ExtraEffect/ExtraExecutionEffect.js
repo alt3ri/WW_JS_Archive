@@ -1,6 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
-  (exports.ExecuteAddBulletByStackCount =
+  (exports.QteExecution =
+    exports.PredictLockOnExecution =
+    exports.ExecuteAddBulletByStackCount =
     exports.ExecuteAddBuffByStackCount =
     exports.ExecuteBulletOrBuff =
     exports.PhantomAssistExecution =
@@ -19,9 +21,11 @@ const Log_1 = require("../../../../../../../Core/Common/Log"),
   Protocol_1 = require("../../../../../../../Core/Define/Net/Protocol"),
   RegisterComponent_1 = require("../../../../../../../Core/Entity/RegisterComponent"),
   TimeUtil_1 = require("../../../../../../Common/TimeUtil"),
+  ConfigManager_1 = require("../../../../../../Manager/ConfigManager"),
   ModelManager_1 = require("../../../../../../Manager/ModelManager"),
   FormationAttributeController_1 = require("../../../../../../Module/Abilities/FormationAttributeController"),
   PhantomUtil_1 = require("../../../../../../Module/Phantom/PhantomUtil"),
+  SceneTeamController_1 = require("../../../../../../Module/SceneTeam/SceneTeamController"),
   BulletController_1 = require("../../../../../Bullet/BulletController"),
   AbilityUtils_1 = require("../AbilityUtils"),
   ActiveBuffConfigs_1 = require("../Buff/ActiveBuffConfigs"),
@@ -87,9 +91,12 @@ class ReviveExecution extends (exports.PeriodExecution = PeriodExecution) {
       (this.HealValue = Number(t.ExtraEffectParameters[1] ?? 0));
   }
   OnExecute() {
-    this.OwnerBuffComponent?.GetEntity()
-      ?.CheckGetComponent(172)
-      ?.ExecuteReviveLocal();
+    var t = this.OwnerBuffComponent?.GetEntity(),
+      e = t?.GetComponent(0).GetPlayerId() ?? 0;
+    2 !==
+      ModelManager_1.ModelManager.SceneTeamModel.GetCurrentGroupLivingState(
+        e,
+      ) && t?.CheckGetComponent(175)?.ExecuteRevive();
   }
 }
 exports.ReviveExecution = ReviveExecution;
@@ -139,29 +146,29 @@ class AddEnergyExecution extends PeriodExecution {
   OnExecute() {
     var t = this.OwnerBuffComponent?.GetAttributeComponent();
     if (t) {
-      const h =
+      const a =
         t.GetCurrentValue(
           CharacterAttributeTypes_1.EAttributeId.Proto_EnergyEfficiency,
         ) / CharacterAttributeTypes_1.PER_TEN_THOUSAND;
       var e = CharacterAttributeTypes_1.EAttributeId.Proto_Energy,
         i = this.AddValue;
-      const u = i * h;
-      if ((t.AddBaseValue(e, u), t.Entity?.CheckGetComponent(158)?.IsInGame)) {
+      const h = i * a;
+      if ((t.AddBaseValue(e, h), t.Entity?.CheckGetComponent(160)?.IsInGame)) {
         var s =
           CharacterDamageCalculations_1.ENERGY_SHARE_RATE /
           CharacterAttributeTypes_1.PER_TEN_THOUSAND;
-        for (const a of ModelManager_1.ModelManager.SceneTeamModel.GetTeamEntities(
+        for (const u of ModelManager_1.ModelManager.SceneTeamModel.GetTeamEntities(
           !0,
         )) {
-          var r = a?.Entity?.CheckGetComponent(158),
-            o = a?.Entity?.CheckGetComponent(156);
+          var r = u?.Entity?.CheckGetComponent(160),
+            o = u?.Entity?.CheckGetComponent(158);
           if (r && !r.IsInGame && o) {
-            const h =
+            const a =
                 o.GetCurrentValue(
                   CharacterAttributeTypes_1.EAttributeId.Proto_EnergyEfficiency,
                 ) / CharacterAttributeTypes_1.PER_TEN_THOUSAND,
-              u = i * h;
-            o.AddBaseValue(e, u * s);
+              h = i * a;
+            o.AddBaseValue(e, h * s);
           }
         }
       }
@@ -209,31 +216,31 @@ exports.DamageExecution = DamageExecution;
 class CdReduceExecution extends PeriodExecution {
   constructor() {
     super(...arguments),
-      (this.$Qo = void 0),
-      (this.YQo = 0),
-      (this.JQo = void 0),
-      (this.zQo = void 0);
+      (this.KXo = void 0),
+      (this.QXo = 0),
+      (this.XXo = void 0),
+      (this.$Xo = void 0);
   }
   InitParameters(t) {
     var e = t.ExtraEffectParameters;
-    (this.$Qo = e[0]?.split("#") ?? []),
-      (this.YQo = Number(e[1] ?? 0)),
-      (this.JQo = t.ExtraEffectGrowParameters1),
-      (this.zQo = t.ExtraEffectGrowParameters2);
+    (this.KXo = e[0]?.split("#") ?? []),
+      (this.QXo = Number(e[1] ?? 0)),
+      (this.XXo = t.ExtraEffectGrowParameters1),
+      (this.$Xo = t.ExtraEffectGrowParameters2);
   }
   OnExecute() {
-    var t = this.OwnerBuffComponent?.GetEntity()?.GetComponent(186);
+    var t = this.OwnerBuffComponent?.GetEntity()?.GetComponent(190);
     if (t) {
       var e =
-          AbilityUtils_1.AbilityUtils.GetLevelValue(this.JQo, this.Level, 0) *
+          AbilityUtils_1.AbilityUtils.GetLevelValue(this.XXo, this.Level, 0) *
           CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND,
-        i = AbilityUtils_1.AbilityUtils.GetLevelValue(this.zQo, this.Level, 0);
-      switch (this.YQo) {
+        i = AbilityUtils_1.AbilityUtils.GetLevelValue(this.$Xo, this.Level, 0);
+      switch (this.QXo) {
         case 0:
-          t.ModifyCdTime(this.$Qo, -i, -e);
+          t.ModifyCdTime(this.KXo, -i, -e);
           break;
         case 1:
-          t.ModifyCdTimeBySkillGenres(this.$Qo, -i, -e);
+          t.ModifyCdTimeBySkillGenres(this.KXo, -i, -e);
       }
     }
   }
@@ -242,29 +249,29 @@ exports.CdReduceExecution = CdReduceExecution;
 class ExtendBuffDurationExecution extends PeriodExecution {
   constructor() {
     super(...arguments),
-      (this.QKo = void 0),
-      (this.ZQo = void 0),
-      (this.eXo = void 0),
-      (this.tXo = void 0);
+      (this.jQo = void 0),
+      (this.YXo = void 0),
+      (this.JXo = void 0),
+      (this.zXo = void 0);
   }
   InitParameters(t) {
     var e = t.ExtraEffectParameters;
     (this.TargetType = Number(e[0])),
-      (this.QKo = e[1].split("#").map((t) => BigInt(t))),
-      (this.tXo = e[2]?.split("#").map((t) => Number(t))),
-      (this.ZQo = t.ExtraEffectGrowParameters1),
-      (this.eXo = t.ExtraEffectGrowParameters2);
+      (this.jQo = e[1].split("#").map((t) => BigInt(t))),
+      (this.zXo = e[2]?.split("#").map((t) => Number(t))),
+      (this.YXo = t.ExtraEffectGrowParameters1),
+      (this.JXo = t.ExtraEffectGrowParameters2);
   }
   OnExecute() {
     var t = this.GetEffectTarget();
     if (t?.HasBuffAuthority()) {
       var e =
-          AbilityUtils_1.AbilityUtils.GetLevelValue(this.ZQo, this.Level, 0) *
+          AbilityUtils_1.AbilityUtils.GetLevelValue(this.YXo, this.Level, 0) *
           CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND,
         i =
-          AbilityUtils_1.AbilityUtils.GetLevelValue(this.eXo, this.Level, 0) *
+          AbilityUtils_1.AbilityUtils.GetLevelValue(this.JXo, this.Level, 0) *
           TimeUtil_1.TimeUtil.Millisecond;
-      for (const o of this.QKo) {
+      for (const o of this.jQo) {
         var s = t.GetBuffById(o);
         if (s) {
           var r = s.GetRemainDuration();
@@ -273,12 +280,12 @@ class ExtendBuffDurationExecution extends PeriodExecution {
               r * (1 + e) + i,
               ActiveBuffConfigs_1.MIN_BUFF_REMAIN_DURATION,
             );
-            this.tXo?.[0] &&
-              (t = Math.max(t, this.tXo[0] * TimeUtil_1.TimeUtil.Millisecond)),
-              this.tXo?.[1] &&
+            this.zXo?.[0] &&
+              (t = Math.max(t, this.zXo[0] * TimeUtil_1.TimeUtil.Millisecond)),
+              this.zXo?.[1] &&
                 (t = Math.min(
                   t,
-                  this.tXo[1] * TimeUtil_1.TimeUtil.Millisecond,
+                  this.zXo[1] * TimeUtil_1.TimeUtil.Millisecond,
                 )),
               s.SetDuration(t);
           }
@@ -328,7 +335,7 @@ class AddBuffToAdjacentRoleExecution extends (exports.InitExecution =
             var s = r.EntityHandle;
             if (s && s.Entity.GetComponent(0).IsRole() && s.Id !== e.Id)
               for (const o of this.ApplyBuffId)
-                s.Entity.GetComponent(157).AddIterativeBuff(
+                s.Entity.GetComponent(159).AddIterativeBuff(
                   o,
                   this.Buff,
                   void 0,
@@ -343,35 +350,35 @@ exports.AddBuffToAdjacentRoleExecution = AddBuffToAdjacentRoleExecution;
 class PhantomAssistExecution extends InitExecution {
   constructor() {
     super(...arguments),
-      (this.iXo = Protocol_1.Aki.Protocol.Oqs.Proto_ESummonTypeDefault),
-      (this.oXo = 0),
-      (this.Gco = 0),
-      (this.rXo = 2);
+      (this.ZXo = Protocol_1.Aki.Protocol.Summon.L3s.Proto_ESummonTypeDefault),
+      (this.e$o = 0),
+      (this.wmo = 0),
+      (this.t$o = 2);
   }
   CheckExecutable() {
     return this.OwnerBuffComponent?.HasBuffAuthority() ?? !1;
   }
   InitParameters(t) {
     t = t.ExtraEffectParameters;
-    (this.iXo = Number(t[0])),
-      (this.oXo = Number(t[1])),
-      (this.Gco = Number(t[2])),
-      (this.rXo = Number(t[3]));
+    (this.ZXo = Number(t[0])),
+      (this.e$o = Number(t[1])),
+      (this.wmo = Number(t[2])),
+      (this.t$o = Number(t[3]));
   }
   OnExecute(t) {
     var e = this.OwnerBuffComponent.GetEntity(),
       e = e
-        ? PhantomUtil_1.PhantomUtil.GetSummonedEntity(e, this.iXo, this.oXo)
+        ? PhantomUtil_1.PhantomUtil.GetSummonedEntity(e, this.ZXo, this.e$o)
         : void 0;
     e &&
-      e.Entity.GetComponent(33).BeginSkill(this.Gco, {
-        Target: this.nXo()?.Entity,
+      e.Entity.GetComponent(33).BeginSkill(this.wmo, {
+        Target: this.i$o()?.Entity,
         Context: "PhantomAssistExecution.OnExecute",
       });
   }
-  nXo() {
+  i$o() {
     let t = void 0;
-    switch (this.rXo) {
+    switch (this.t$o) {
       case 0:
         var e = this.OwnerBuffComponent?.GetSkillComponent();
         t = e?.SkillTarget;
@@ -423,7 +430,7 @@ class ExecuteBulletOrBuff extends PeriodExecution {
               ["持有者", this.OwnerBuffComponent?.GetDebugName()],
             );
       }),
-      (this.sXo = (t, e, i) => {
+      (this.o$o = (t, e, i) => {
         i.AddIterativeBuff(
           t,
           this.Buff,
@@ -432,7 +439,7 @@ class ExecuteBulletOrBuff extends PeriodExecution {
           `因为其它瞬间型buff额外效果迭代添加（前置buff Id=${this.BuffId}）`,
         );
       }),
-      (this.aXo = (t, e, i) => {
+      (this.r$o = (t, e, i) => {
         i.RemoveBuff(
           t,
           e,
@@ -451,13 +458,13 @@ class ExecuteBulletOrBuff extends PeriodExecution {
   OnExecute() {
     switch (this.GoalType) {
       case 0:
-        this.ExecutePerId(this.sXo);
+        this.ExecutePerId(this.o$o);
         break;
       case 1:
         this.ExecutePerId(this.ProcessBulletId);
         break;
       case 2:
-        this.ExecutePerId(this.aXo);
+        this.ExecutePerId(this.r$o);
     }
   }
   GetBulletTarget() {
@@ -477,7 +484,7 @@ class ExecuteBulletOrBuff extends PeriodExecution {
   GetBuffHolderSkillTarget() {
     var t =
       this.OwnerBuffComponent?.GetEntity()?.CheckGetComponent(33)?.SkillTarget;
-    return t ? t.Entity.CheckGetComponent(187) : this.OwnerBuffComponent;
+    return t ? t.Entity.CheckGetComponent(192) : this.OwnerBuffComponent;
   }
   CheckExecutable() {
     return 1 === this.GoalType
@@ -489,12 +496,12 @@ class ExecuteBulletOrBuff extends PeriodExecution {
   ExecutePerId(i) {
     for (let e = 0; e < this.Ids.length; e++) {
       let t = this.GetEffectTarget();
-      (t = (0, RegisterComponent_1.isComponentInstance)(t, 180)
+      (t = (0, RegisterComponent_1.isComponentInstance)(t, 183)
         ? t.GetCurrentBuffComponent()
-        : t) && i(this.Ids[e], this.hXo(e), t);
+        : t) && i(this.Ids[e], this.n$o(e), t);
     }
   }
-  hXo(t) {
+  n$o(t) {
     var e = this.Times;
     switch (this.GoalType) {
       case 0:
@@ -616,8 +623,112 @@ class ExecuteAddBulletByStackCount extends PeriodExecution {
   GetBuffHolderSkillTarget() {
     var t =
       this.OwnerBuffComponent?.GetEntity()?.CheckGetComponent(33)?.SkillTarget;
-    return t ? t.Entity.CheckGetComponent(187) : this.OwnerBuffComponent;
+    return t ? t.Entity.CheckGetComponent(192) : this.OwnerBuffComponent;
   }
 }
 exports.ExecuteAddBulletByStackCount = ExecuteAddBulletByStackCount;
+class PredictLockOnExecution extends PeriodExecution {
+  constructor() {
+    super(...arguments), (this.J7s = 0), (this.Jue = 4);
+  }
+  InitParameters(t) {
+    (this.J7s = Number(t.ExtraEffectParameters[0] ?? 0)),
+      (this.Jue = Number(t.ExtraEffectParameters[1] ?? 4));
+  }
+  OnExecute() {
+    var t,
+      e,
+      i = this.OwnerBuffComponent?.GetEntity()?.CheckGetComponent(29);
+    i &&
+      ((t = ConfigManager_1.ConfigManager.WorldConfig.GetLockOnConfig(
+        this.J7s,
+      )),
+      (e = i.DetectAlternativeTargets(t, !1)),
+      (e = i.FindTheBest(e, this.Jue, !1, t.ToleranceAngle)),
+      i.SetPredictedLockOnTarget(e));
+  }
+}
+exports.PredictLockOnExecution = PredictLockOnExecution;
+class QteExecution extends InitExecution {
+  constructor() {
+    super(...arguments), (this.zCa = 0);
+  }
+  InitParameters(t) {
+    this.zCa = Number(t.ExtraEffectParameters?.[0] ?? 0);
+  }
+  OnExecute(t) {
+    var e = this.OwnerEntity;
+    if (e?.Valid && e?.IsInit) {
+      var i = e.Id,
+        s = ModelManager_1.ModelManager.SceneTeamModel.GetTeamItem(i, {
+          ParamType: 1,
+        });
+      if (s?.IsMyRole()) {
+        var r =
+          ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity?.Entity;
+        if (r?.Valid && r?.IsInit) {
+          if (i !== r.Id) {
+            i = e.GetComponent(88)?.GetQteTagData();
+            if (i) {
+              if (!i.ChangeRole && !i.ChangeRoleOnQte) {
+                (e = 0 < this.zCa), (i = r.GetComponent(188));
+                e || i.TagContainer.UpdateExactTag(2, 2014048239, 1);
+                try {
+                  SceneTeamController_1.SceneTeamController.TryChangeRoleOrQte(
+                    s.GetCreatureDataId(),
+                  );
+                } catch (t) {
+                  t instanceof Error
+                    ? Log_1.Log.CheckError() &&
+                      Log_1.Log.ErrorWithStack(
+                        "Battle",
+                        49,
+                        "执行Qte额外效果出现异常",
+                        t,
+                        ["CreatureDataId", s.GetCreatureDataId()],
+                        ["Error", t.message],
+                      )
+                    : Log_1.Log.CheckError() &&
+                      Log_1.Log.Error(
+                        "Battle",
+                        49,
+                        "执行Qte额外效果出现异常",
+                        ["CreatureDataId", s.GetCreatureDataId()],
+                        ["Error", t],
+                      );
+                }
+                e || i.TagContainer.UpdateExactTag(2, 2014048239, -1);
+              }
+            } else
+              Log_1.Log.CheckWarn() &&
+                Log_1.Log.Warn(
+                  "Battle",
+                  49,
+                  "执行Qte额外效果时，Buff持有者无Qte配置",
+                  ["buffId", this.BuffId],
+                  ["持有者", this.OwnerBuffComponent?.GetDebugName()],
+                );
+          }
+        } else
+          Log_1.Log.CheckWarn() &&
+            Log_1.Log.Warn(
+              "Battle",
+              49,
+              "执行Qte额外效果时，编队当前角色不合法",
+              ["buffId", this.BuffId],
+              ["持有者", this.OwnerBuffComponent?.GetDebugName()],
+            );
+      }
+    } else
+      Log_1.Log.CheckWarn() &&
+        Log_1.Log.Warn(
+          "Battle",
+          49,
+          "执行Qte额外效果时，Buff持有者不合法",
+          ["buffId", this.BuffId],
+          ["持有者", this.OwnerBuffComponent?.GetDebugName()],
+        );
+  }
+}
+exports.QteExecution = QteExecution;
 //# sourceMappingURL=ExtraExecutionEffect.js.map

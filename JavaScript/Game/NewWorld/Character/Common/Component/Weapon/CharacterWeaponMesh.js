@@ -92,18 +92,18 @@ exports.CharacterWeapon = CharacterWeapon;
 const WEAPON_POOL_MAX_SIZE = 3;
 class CharacterWeaponMesh {
   constructor() {
-    (this.cZo = new Array()), (this.mZo = void 0), (this.OC = void 0);
+    (this.ler = new Array()), (this._er = void 0), (this.OC = void 0);
   }
   Init(t, e, s, i) {
     if (
-      ((this.mZo = new SkeletalMeshComponentPool_1.SkeletalMeshComponentPool()),
-      this.mZo.Init(WEAPON_POOL_MAX_SIZE, e, s, t, i),
+      ((this._er = new SkeletalMeshComponentPool_1.SkeletalMeshComponentPool()),
+      this._er.Init(WEAPON_POOL_MAX_SIZE, e, s, t, i),
       (this.OC = s),
       0 !== t.length)
     ) {
       let e = 0;
       for (const h of t)
-        this.cZo.push(
+        this.ler.push(
           new CharacterWeapon(e, h, s.WeaponHideEffect, this.OC.EntityId),
         ),
           e++;
@@ -111,22 +111,22 @@ class CharacterWeaponMesh {
     return !0;
   }
   Destroy() {
-    for (const e of this.cZo) e.Destroy();
-    this.cZo.splice(0, this.cZo.length), (this.mZo = void 0);
+    for (const e of this.ler) e.Destroy();
+    this.ler.splice(0, this.ler.length), (this._er = void 0);
   }
   ChangeCharacterWeapons(t) {
-    var s = this.cZo.length;
+    var s = this.ler.length;
     if (t > WEAPON_POOL_MAX_SIZE) return [];
-    var i = this.mZo?.GetComponents(t);
+    var i = this._er?.GetComponents(t);
     if (!i) return [];
     if (t < s) {
-      this.cZo.splice(t, s - t);
-      for (let e = 0; e < t; ++e) this.cZo[e].Mesh = i[e];
+      this.ler.splice(t, s - t);
+      for (let e = 0; e < t; ++e) this.ler[e].Mesh = i[e];
     } else if (s < t) {
       var h = t - s;
-      for (let e = 0; e < s; ++e) this.cZo[e].Mesh = i[e];
+      for (let e = 0; e < s; ++e) this.ler[e].Mesh = i[e];
       for (let e = 0; e < h; ++e)
-        this.cZo.push(
+        this.ler.push(
           new CharacterWeapon(
             e + s,
             i[e + s],
@@ -135,19 +135,19 @@ class CharacterWeaponMesh {
           ),
         );
     }
-    return this.cZo;
+    return this.ler;
   }
   get CharacterWeapons() {
-    return this.cZo;
+    return this.ler;
   }
   Clean() {
     this.ChangeCharacterWeapons(0);
   }
   ShrinkPool() {
-    this.mZo.Shrink();
+    this._er.Shrink();
   }
   GetUsedLength() {
-    return this.mZo.GetUsedLength();
+    return this._er.GetUsedLength();
   }
 }
 exports.CharacterWeaponMesh = CharacterWeaponMesh;

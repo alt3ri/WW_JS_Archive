@@ -23,13 +23,13 @@ class MenuScrollSettingContainerDynItem extends UiPanelBase_1.UiPanelBase {
   }
   GetItemSize(e) {
     void 0 === this.IGe && (this.IGe = Vector2D_1.Vector2D.Create());
-    e = this.$wi(e);
+    e = this.$Bi(e);
     return (
       e ? this.IGe.Set(e.GetWidth(), e.GetHeight()) : this.IGe.Set(0, 0),
       this.IGe.ToUeVector2D(!0)
     );
   }
-  $wi(e) {
+  $Bi(e) {
     if (0 === e.Type) return this.GetItem(1);
     switch (e.Data.MenuDataSetType) {
       case 1:

@@ -26,22 +26,22 @@ class DailyActivityTaskItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
       (this.BOe = 0),
-      (this.jOt = 1),
-      (this.WOt = []),
-      (this.KOt = !1),
-      (this.QOt = 0),
-      (this.XOt = () => {
+      (this.Wkt = 1),
+      (this.Kkt = []),
+      (this.Qkt = !1),
+      (this.Xkt = 0),
+      (this.$kt = () => {
         this.BOe &&
           DailyActivityController_1.DailyActivityController.RequestDailyActivityTaskReward(
             [this.BOe],
           );
       }),
-      (this.$Ot = () => {
+      (this.Ykt = () => {
         this.BOe &&
-          (this.KOt
+          (this.Qkt
             ? DailyActivityTaskController_1.DailyActiveTaskController.TrackTaskByType(
-                this.jOt,
-                this.WOt,
+                this.Wkt,
+                this.Kkt,
               )
             : ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
                 "FunctionDisable",
@@ -49,9 +49,9 @@ class DailyActivityTaskItem extends GridProxyAbstract_1.GridProxyAbstract {
       }),
       (this.jbe = () => {
         this.BOe &&
-          this.QOt &&
+          this.Xkt &&
           ControllerHolder_1.ControllerHolder.ItemController.OpenItemTipsByItemId(
-            this.QOt,
+            this.Xkt,
           );
       });
   }
@@ -69,18 +69,18 @@ class DailyActivityTaskItem extends GridProxyAbstract_1.GridProxyAbstract {
     ]),
       (this.BtnBindInfo = [
         [4, this.jbe],
-        [5, this.$Ot],
-        [6, this.XOt],
+        [5, this.Ykt],
+        [6, this.$kt],
       ]);
   }
   OnStart() {}
   OnBeforeDestroy() {}
   IsNormalTaskJumpType() {
-    return 1 === this.jOt;
+    return 1 === this.Wkt;
   }
   Refresh(t, i, s) {
     (this.BOe = t.TaskId),
-      (this.KOt = t.IsFunctionUnlock),
+      (this.Qkt = t.IsFunctionUnlock),
       this.GetText(1).SetText(
         t.CurrentProgress.toString() + "/" + t.TargetProgress.toString(),
       );
@@ -101,15 +101,15 @@ class DailyActivityTaskItem extends GridProxyAbstract_1.GridProxyAbstract {
         LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(0), r, ...a),
         e.TaskFunc),
       r =
-        (1 <= h.length && (this.jOt = Number(h[0])),
-        2 <= h.length && (this.WOt = h.slice(1)),
-        6 === this.jOt &&
-          (this.WOt = [
+        (1 <= h.length && (this.Wkt = Number(h[0])),
+        2 <= h.length && (this.Kkt = h.slice(1)),
+        6 === this.Wkt &&
+          (this.Kkt = [
             ModelManager_1.ModelManager.DailyActivityModel.AreaId.toString(),
           ]),
         t.RewardItemList[0]);
     switch (
-      ((this.QOt = r[0].ItemId),
+      ((this.Xkt = r[0].ItemId),
       this.GetText(8).SetText("+" + r[1].toString()),
       t.TaskState)
     ) {

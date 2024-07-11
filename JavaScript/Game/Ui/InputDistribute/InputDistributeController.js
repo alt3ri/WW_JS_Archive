@@ -17,15 +17,15 @@ class InputDistributeController extends ControllerBase_1.ControllerBase {
   }
   static Ore() {
     for (const e of InputDistributeDefine_1.inputDistributeEvents)
-      EventSystem_1.EventSystem.Add(e, this.kcr);
-    EventSystem_1.EventSystem.Add(EventDefine_1.EEventName.OpenView, this.UKe),
+      EventSystem_1.EventSystem.Add(e, this.Gmr);
+    EventSystem_1.EventSystem.Add(EventDefine_1.EEventName.OpenView, this.FQe),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OpenViewBegined,
-        this.Fcr,
+        this.Nmr,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OpenViewFail,
-        this.Vcr,
+        this.Omr,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.CloseView,
@@ -37,23 +37,23 @@ class InputDistributeController extends ControllerBase_1.ControllerBase {
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.ResetModuleByResetToBattleView,
-        this.VUo,
+        this.OAo,
       );
   }
   static kre() {
     for (const e of InputDistributeDefine_1.inputDistributeEvents)
-      EventSystem_1.EventSystem.Remove(e, this.kcr);
+      EventSystem_1.EventSystem.Remove(e, this.Gmr);
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OpenView,
-      this.UKe,
+      this.FQe,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OpenViewBegined,
-        this.Fcr,
+        this.Nmr,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OpenViewFail,
-        this.Vcr,
+        this.Omr,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.CloseView,
@@ -65,10 +65,10 @@ class InputDistributeController extends ControllerBase_1.ControllerBase {
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.ResetModuleByResetToBattleView,
-        this.VUo,
+        this.OAo,
       );
   }
-  static Hcr() {
+  static kmr() {
     ModelManager_1.ModelManager.InputDistributeModel.ClearAllNotAllowFightInputViewNames(),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnClearNotAllowFightInputViewName,
@@ -166,24 +166,24 @@ class InputDistributeController extends ControllerBase_1.ControllerBase {
     return ModelManager_1.ModelManager.InputDistributeModel.IsAllowHeadRotation();
   }
 }
-((exports.InputDistributeController = InputDistributeController).kcr = () => {
+((exports.InputDistributeController = InputDistributeController).Gmr = () => {
   InputDistributeController.RefreshInputTag();
 }),
   (InputDistributeController.nye = () => {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info("Input", 8, "当世界加载完成时，清理所有输入分发Tag"),
-      InputDistributeController.Hcr();
+      InputDistributeController.kmr();
   }),
-  (InputDistributeController.VUo = () => {
+  (InputDistributeController.OAo = () => {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "Input",
         8,
         "[InputDistribute]当回到主界面时，清理所有输入分发Tag",
       ),
-      InputDistributeController.Hcr();
+      InputDistributeController.kmr();
   }),
-  (InputDistributeController.UKe = (e) => {
+  (InputDistributeController.FQe = (e) => {
     ConfigManager_1.ConfigManager.InputDistributeConfig.IsViewAllowFightInput(
       e,
     ) ||
@@ -219,7 +219,7 @@ class InputDistributeController extends ControllerBase_1.ControllerBase {
         EventDefine_1.EEventName.OnRemoveNotAllowFightInputViewName,
       );
   }),
-  (InputDistributeController.Fcr = (e) => {
+  (InputDistributeController.Nmr = (e) => {
     ConfigManager_1.ConfigManager.InputDistributeConfig.IsViewAllowFightInput(
       e,
     ) ||
@@ -237,7 +237,7 @@ class InputDistributeController extends ControllerBase_1.ControllerBase {
         EventDefine_1.EEventName.OnAddNotAllowFightInputViewName,
       );
   }),
-  (InputDistributeController.Vcr = (e) => {
+  (InputDistributeController.Omr = (e) => {
     ConfigManager_1.ConfigManager.InputDistributeConfig.IsViewAllowFightInput(
       e,
     ) ||

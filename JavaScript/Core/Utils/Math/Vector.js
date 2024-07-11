@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.Vector = void 0);
 const UE = require("ue"),
+  Macro_1 = require("../../Preprocessor/Macro"),
   MathCommon_1 = require("./MathCommon"),
   Quat_1 = require("./Quat"),
   VECTOR_POOL_MAX_CAPACITY = 50;
@@ -165,14 +166,14 @@ class Vector {
   Division(t, r) {
     var e,
       a = this.Tuple,
-      o = r.Tuple;
+      i = r.Tuple;
     return (
       "number" == typeof t
-        ? ((o[0] = a[0] * (e = 1 / t)), (o[1] = a[1] * e), (o[2] = a[2] * e))
+        ? ((i[0] = a[0] * (e = 1 / t)), (i[1] = a[1] * e), (i[2] = a[2] * e))
         : ((e = t.Tuple),
-          (o[0] = a[0] / e[0]),
-          (o[1] = a[1] / e[1]),
-          (o[2] = a[2] / e[2])),
+          (i[0] = a[0] / e[0]),
+          (i[1] = a[1] / e[1]),
+          (i[2] = a[2] / e[2])),
       r
     );
   }
@@ -338,12 +339,12 @@ class Vector {
   GetSafeNormal2D(t, r = MathCommon_1.MathCommon.SmallNumber) {
     var e = this.Tuple,
       a = t.Tuple,
-      o = this.SizeSquared2D();
-    1 === o
+      i = this.SizeSquared2D();
+    1 === i
       ? t.DeepCopy(this)
-      : o < r
+      : i < r
         ? t.Reset()
-        : ((r = 1 / Math.sqrt(o)), (a[0] = e[0] * r), (a[1] = e[1] * r)),
+        : ((r = 1 / Math.sqrt(i)), (a[0] = e[0] * r), (a[1] = e[1] * r)),
       (a[2] = 0);
   }
   ToDirectionAndLength(t) {
@@ -400,15 +401,15 @@ class Vector {
   }
   GetClampedToSize2D(t, r, e) {
     var a = this.Tuple,
-      o = e.Tuple,
-      i = this.Size2D();
-    i > MathCommon_1.MathCommon.SmallNumber
-      ? e.DivisionEqual(this).DivisionEqual(i)
+      i = e.Tuple,
+      h = this.Size2D();
+    h > MathCommon_1.MathCommon.SmallNumber
+      ? e.DivisionEqual(this).DivisionEqual(h)
       : e.Reset(),
-      (i = MathCommon_1.MathCommon.Clamp(i, t, r)),
-      (o[0] = o[0] * i),
-      (o[1] = o[1] * i),
-      (o[2] = a[2]);
+      (h = MathCommon_1.MathCommon.Clamp(h, t, r)),
+      (i[0] = i[0] * h),
+      (i[1] = i[1] * h),
+      (i[2] = a[2]);
   }
   GetClampedToMaxSize(t, r) {
     var e;
@@ -421,12 +422,12 @@ class Vector {
   GetClampedToMaxSize2D(t, r) {
     var e,
       a = this.Tuple,
-      o = r.Tuple;
-    (o[2] = a[2]),
+      i = r.Tuple;
+    (i[2] = a[2]),
       t < MathCommon_1.MathCommon.KindaSmallNumber
-        ? (o[0] = o[1] = 0)
+        ? (i[0] = i[1] = 0)
         : (e = this.SizeSquared2D()) > Math.pow(t, 2)
-          ? ((t = +t / Math.sqrt(e)), (o[0] = a[0] * t), (o[1] = a[1] * t))
+          ? ((t = +t / Math.sqrt(e)), (i[0] = a[0] * t), (i[1] = a[1] * t))
           : r.DeepCopy(this);
   }
   AddBounded(t, r = MathCommon_1.MathCommon.MaxInt16) {
@@ -457,43 +458,43 @@ class Vector {
       r = r.Tuple,
       e = e.Tuple,
       t = t * MathCommon_1.MathCommon.DegToRad,
-      o = Math.sin(t),
+      i = Math.sin(t),
       t = Math.cos(t),
-      i = r[0] * r[0],
-      h = r[1] * r[1],
+      h = r[0] * r[0],
+      o = r[1] * r[1],
       s = r[2] * r[2],
       n = r[0] * r[1],
       c = r[1] * r[2],
       M = r[2] * r[0],
-      m = r[0] * o,
-      u = r[1] * o,
-      r = r[2] * o,
-      o = 1 - t,
+      m = r[0] * i,
+      u = r[1] * i,
+      r = r[2] * i,
+      i = 1 - t,
       V = a[0],
       C = a[1],
       a = a[2];
-    (e[0] = (o * i + t) * V + (o * n - r) * C + (o * M + u) * a),
-      (e[1] = (o * n + r) * V + (o * h + t) * C + (o * c - m) * a),
-      (e[2] = (o * M - u) * V + (o * c + m) * C + (o * s + t) * a);
+    (e[0] = (i * h + t) * V + (i * n - r) * C + (i * M + u) * a),
+      (e[1] = (i * n + r) * V + (i * o + t) * C + (i * c - m) * a),
+      (e[2] = (i * M - u) * V + (i * c + m) * C + (i * s + t) * a);
   }
   CosineAngle2D(t, r = MathCommon_1.MathCommon.KindaSmallNumber) {
     var e,
       a = this.Tuple[0],
-      o = this.Tuple[1],
-      i = t.Tuple[0],
+      i = this.Tuple[1],
+      h = t.Tuple[0],
       t = t.Tuple[1],
-      h = a * a + o * o;
-    return h <= r || (e = i * i + t * t) <= r
+      o = a * a + i * i;
+    return o <= r || (e = h * h + t * t) <= r
       ? 0
-      : (a * i + o * t) / Math.sqrt(h * e);
+      : (a * h + i * t) / Math.sqrt(o * e);
   }
   ProjectOnTo(t, r) {
-    t = this.DotProduct(t) / t.SizeSquared();
-    this.Multiply(t, r);
+    var e = this.DotProduct(t) / t.SizeSquared();
+    t.Multiply(e, r);
   }
   ProjectOnToNormal(t, r) {
-    t = this.DotProduct(t);
-    this.Multiply(t, r);
+    var e = this.DotProduct(t);
+    t.Multiply(e, r);
   }
   ToOrientationRotator(t) {
     (t.Yaw =
@@ -509,9 +510,9 @@ class Vector {
       e = Math.atan2(this.Tuple[2], this.Size2D()),
       a = Math.sin(0.5 * e),
       e = Math.cos(0.5 * e),
-      o = Math.sin(0.5 * r),
+      i = Math.sin(0.5 * r),
       r = Math.cos(0.5 * r);
-    (t.X = a * o), (t.Y = -a * r), (t.Z = e * o), (t.W = e * r);
+    (t.X = a * i), (t.Y = -a * r), (t.Z = e * i), (t.W = e * r);
   }
   Rotation(t) {
     this.ToOrientationRotator(t);
@@ -519,26 +520,26 @@ class Vector {
   FindBestAxisVectors(t, r) {
     var e = this.Tuple,
       a = t.Tuple,
-      o = Math.abs(e[0]),
-      i = Math.abs(e[1]),
-      h = Math.abs(e[2]),
-      o =
-        (o < h && i < h
+      i = Math.abs(e[0]),
+      h = Math.abs(e[1]),
+      o = Math.abs(e[2]),
+      i =
+        (i < o && h < o
           ? ((a[0] = 1), (a[1] = a[2] = 0))
           : ((a[0] = a[1] = 0), (a[2] = 1)),
         this.DotProduct(t)),
-      i = a[0] - e[0] * o,
-      h = a[1] - e[1] * o,
-      e = a[2] - e[2] * o,
-      o = i * i + h * h + e * e;
-    1 == o
-      ? ((a[0] = i), (a[1] = h), (a[2] = e))
-      : o < MathCommon_1.MathCommon.SmallNumber
+      h = a[0] - e[0] * i,
+      o = a[1] - e[1] * i,
+      e = a[2] - e[2] * i,
+      i = h * h + o * o + e * e;
+    1 == i
+      ? ((a[0] = h), (a[1] = o), (a[2] = e))
+      : i < MathCommon_1.MathCommon.SmallNumber
         ? t.Reset()
-        : ((o = 1 / Math.sqrt(o)),
-          (a[0] = i * o),
-          (a[1] = h * o),
-          (a[2] = e * o)),
+        : ((i = 1 / Math.sqrt(i)),
+          (a[0] = h * i),
+          (a[1] = o * i),
+          (a[2] = e * i)),
       t.CrossProduct(this, r);
   }
   UnwindEuler() {
@@ -566,17 +567,17 @@ class Vector {
   }
   static CreateOrthonormalBasis(t, r, e) {
     var a = t.Tuple,
-      o = r.Tuple,
-      i = e.Tuple,
-      h = t.DotProduct(e) / e.SizeSquared(),
+      i = r.Tuple,
+      h = e.Tuple,
+      o = t.DotProduct(e) / e.SizeSquared(),
       s = r.DotProduct(e) / e.SizeSquared(),
       a =
-        ((a[0] -= h * i[0]),
-        (a[1] -= h * i[1]),
-        (a[2] -= h * i[2]),
-        (o[0] -= s * i[0]),
-        (o[1] -= s * i[1]),
-        (o[2] -= s * i[2]),
+        ((a[0] -= o * h[0]),
+        (a[1] -= o * h[1]),
+        (a[2] -= o * h[2]),
+        (i[0] -= s * h[0]),
+        (i[1] -= s * h[1]),
+        (i[2] -= s * h[2]),
         MathCommon_1.MathCommon.Delta * MathCommon_1.MathCommon.Delta);
     t.SizeSquared() < a && r.CrossProduct(e, t),
       r.SizeSquared() < a && t.CrossProduct(e, r),
@@ -600,41 +601,41 @@ class Vector {
       r = r.Tuple,
       e = e.Tuple,
       a = t[0] - r[0],
-      o = t[1] - r[1],
+      i = t[1] - r[1],
       t = t[2] - r[2];
-    return a * e[0] + o * e[1] + t * e[2];
+    return a * e[0] + i * e[1] + t * e[2];
   }
   static PointPlaneProject(...t) {
-    var r, e, a, o, i, h, s, n, c, M;
+    var r, e, a, i, h, o, s, n, c, M;
     t.length < 3 ||
       5 < t.length ||
       ((r = t[0]),
       (a = (e = t[t.length - 1]).Tuple),
       3 === t.length
         ? ((c = t[1]),
-          (o = this.DotProduct(r, c) - c.W),
-          c.Multiply(-o, e),
+          (i = this.DotProduct(r, c) - c.W),
+          c.Multiply(-i, e),
           e.AdditionEqual(r))
         : 4 === t.length
           ? ((c = t[1]),
-            (o = t[2]),
-            (c = this.PointPlaneDist(r, c, o)),
-            o.Multiply(-c, e),
+            (i = t[2]),
+            (c = this.PointPlaneDist(r, c, i)),
+            i.Multiply(-c, e),
             e.AdditionEqual(r))
           : 5 === t.length &&
-            ((c = (o = t[1]).Tuple),
+            ((c = (i = t[1]).Tuple),
             (M = t[2].Tuple),
             (t = t[3].Tuple),
-            (i = M[0] - c[0]),
-            (h = M[1] - c[1]),
+            (h = M[0] - c[0]),
+            (o = M[1] - c[1]),
             (M = M[2] - c[2]),
             (s = t[0] - c[0]),
             (n = t[1] - c[1]),
             (t = t[0] - c[2]),
-            (a[0] = h * t - M * n),
-            (a[1] = M * s - i * t),
-            (a[2] = i * n - h * s),
-            (M = this.DotProduct(o, (c = e))),
+            (a[0] = o * t - M * n),
+            (a[1] = M * s - h * t),
+            (a[2] = h * n - o * s),
+            (M = this.DotProduct(i, (c = e))),
             (t = this.DotProduct(r, c) - M),
             c.Multiply(-t, e),
             e.AdditionEqual(r)));
@@ -699,10 +700,10 @@ class Vector {
     r,
     e,
     a,
-    o = MathCommon_1.MathCommon.ThreshNormalsAreParallel,
+    i = MathCommon_1.MathCommon.ThreshNormalsAreParallel,
   ) {
     return !(
-      !this.Parallel(r, a, o) ||
+      !this.Parallel(r, a, i) ||
       Math.abs(this.PointPlaneDist(t, e, r)) >
         MathCommon_1.MathCommon.ThreshPointOnPlane
     );
@@ -740,37 +741,37 @@ class Vector {
     var e = this.Tuple,
       t = t.Tuple;
     let a = e[0],
-      o = e[1],
-      i = t[0],
-      h = t[1];
-    (e = a * a + o * o),
-      r < e && ((t = 1 / Math.sqrt(e)), (a *= t), (o *= t)),
-      (e = i * i + h * h);
-    return r < e && ((t = 1 / Math.sqrt(e)), (i *= t), (h *= t)), a * h - o * i;
+      i = e[1],
+      h = t[0],
+      o = t[1];
+    (e = a * a + i * i),
+      r < e && ((t = 1 / Math.sqrt(e)), (a *= t), (i *= t)),
+      (e = h * h + o * o);
+    return r < e && ((t = 1 / Math.sqrt(e)), (h *= t), (o *= t)), a * o - i * h;
   }
-  static VectorBlendEaseIn(t, r, e, a, o) {
+  static VectorBlendEaseIn(t, r, e, a, i) {
     var t = t.Tuple,
       r = r.Tuple,
-      o = o.Tuple,
-      i = t[0],
-      h = t[1],
+      i = i.Tuple,
+      h = t[0],
+      o = t[1],
       t = t[2],
-      s = r[0] - i,
-      n = r[1] - h,
+      s = r[0] - h,
+      n = r[1] - o,
       r = r[2] - t,
       e = MathCommon_1.MathCommon.Lerp(0, 1, Math.pow(e, a));
-    (o[0] = i + s * e), (o[1] = h + n * e), (o[2] = t + r * e);
+    (i[0] = h + s * e), (i[1] = o + n * e), (i[2] = t + r * e);
   }
   static DirectLerp(t, r, e, a) {
-    var o,
-      i = Vector.DotProduct(t, r),
-      i = Math.acos(i) * MathCommon_1.MathCommon.RadToDeg;
-    i < e
+    var i,
+      h = Vector.DotProduct(t, r),
+      h = Math.acos(h) * MathCommon_1.MathCommon.RadToDeg;
+    h < e
       ? a.DeepCopy(r)
-      : ((o = Quat_1.Quat.Create()),
-        Quat_1.Quat.FindBetween(t, r, o),
-        Quat_1.Quat.Slerp(Quat_1.Quat.IdentityProxy, o, e / i, o),
-        o.RotateVector(t, a));
+      : ((i = Quat_1.Quat.Create()),
+        Quat_1.Quat.FindBetween(t, r, i),
+        Quat_1.Quat.Slerp(Quat_1.Quat.IdentityProxy, i, e / h, i),
+        i.RotateVector(t, a));
   }
   static Lerp(t, r, e, a) {
     e = MathCommon_1.MathCommon.Clamp(e, 0, 1);
@@ -783,6 +784,58 @@ class Vector {
       MathCommon_1.MathCommon.LerpSin(t[1], r[1], e),
       MathCommon_1.MathCommon.LerpSin(t[2], r[2], e),
     );
+  }
+  static LerpCubic(t, r, e, a, i, h) {
+    var o = i * i,
+      s = o * i,
+      n = 2 * s - 3 * o + 1,
+      i = s - 2 * o + i,
+      c = -2 * s + 3 * o,
+      s = s - o;
+    this.dHo.DeepCopy(t),
+      this.dHo.MultiplyEqual(n),
+      h.DeepCopy(this.dHo),
+      this.dHo.DeepCopy(r),
+      this.dHo.MultiplyEqual(i),
+      h.AdditionEqual(this.dHo),
+      this.dHo.DeepCopy(a),
+      this.dHo.MultiplyEqual(s),
+      h.AdditionEqual(this.dHo),
+      this.dHo.DeepCopy(e),
+      this.dHo.MultiplyEqual(c),
+      h.AdditionEqual(this.dHo);
+  }
+  static LerpCubicDerivative(t, r, e, a, i, h) {
+    var o = i * i;
+    this.dHo.DeepCopy(t),
+      this.dHo.MultiplyEqual(6),
+      this.Tz.DeepCopy(this.dHo),
+      this.dHo.DeepCopy(r),
+      this.dHo.MultiplyEqual(3),
+      this.Tz.AdditionEqual(this.dHo),
+      this.dHo.DeepCopy(a),
+      this.dHo.MultiplyEqual(3),
+      this.Tz.AdditionEqual(this.dHo),
+      this.dHo.DeepCopy(e),
+      this.dHo.MultiplyEqual(-6),
+      this.Tz.AdditionEqual(this.dHo),
+      this.dHo.DeepCopy(t),
+      this.dHo.MultiplyEqual(-6),
+      this.fHo.DeepCopy(this.dHo),
+      this.dHo.DeepCopy(r),
+      this.dHo.MultiplyEqual(-4),
+      this.fHo.AdditionEqual(this.dHo),
+      this.dHo.DeepCopy(a),
+      this.dHo.MultiplyEqual(-2),
+      this.fHo.AdditionEqual(this.dHo),
+      this.dHo.DeepCopy(e),
+      this.dHo.MultiplyEqual(6),
+      this.fHo.AdditionEqual(this.dHo),
+      this.Tz.MultiplyEqual(o),
+      this.fHo.MultiplyEqual(i),
+      h.DeepCopy(r),
+      h.AdditionEqual(this.Tz),
+      h.AdditionEqual(this.fHo);
   }
   static VectorCopy(t, r) {
     (r.X = t.X), (r.Y = t.Y), (r.Z = t.Z);
@@ -818,43 +871,55 @@ class Vector {
   (Vector.XAxisVector = Vector.XAxisVectorProxy.ToUeVector()),
   (Vector.YAxisVector = Vector.YAxisVectorProxy.ToUeVector()),
   (Vector.ZAxisVector = Vector.ZAxisVectorProxy.ToUeVector()),
-  Object.defineProperty(Vector.ZeroVectorProxy.Tuple, "0", { writable: !1 }),
-  Object.defineProperty(Vector.ZeroVectorProxy.Tuple, "1", { writable: !1 }),
-  Object.defineProperty(Vector.ZeroVectorProxy.Tuple, "2", { writable: !1 }),
-  Object.defineProperty(Vector.OneVectorProxy.Tuple, "0", { writable: !1 }),
-  Object.defineProperty(Vector.OneVectorProxy.Tuple, "1", { writable: !1 }),
-  Object.defineProperty(Vector.OneVectorProxy.Tuple, "2", { writable: !1 }),
-  Object.defineProperty(Vector.UpVectorProxy.Tuple, "0", { writable: !1 }),
-  Object.defineProperty(Vector.UpVectorProxy.Tuple, "1", { writable: !1 }),
-  Object.defineProperty(Vector.UpVectorProxy.Tuple, "2", { writable: !1 }),
-  Object.defineProperty(Vector.DownVectorProxy.Tuple, "0", { writable: !1 }),
-  Object.defineProperty(Vector.DownVectorProxy.Tuple, "1", { writable: !1 }),
-  Object.defineProperty(Vector.DownVectorProxy.Tuple, "2", { writable: !1 }),
-  Object.defineProperty(Vector.ForwardVectorProxy.Tuple, "0", { writable: !1 }),
-  Object.defineProperty(Vector.ForwardVectorProxy.Tuple, "1", { writable: !1 }),
-  Object.defineProperty(Vector.ForwardVectorProxy.Tuple, "2", { writable: !1 }),
-  Object.defineProperty(Vector.BackwardVectorProxy.Tuple, "0", {
-    writable: !1,
-  }),
-  Object.defineProperty(Vector.BackwardVectorProxy.Tuple, "1", {
-    writable: !1,
-  }),
-  Object.defineProperty(Vector.BackwardVectorProxy.Tuple, "2", {
-    writable: !1,
-  }),
-  Object.defineProperty(Vector.RightVectorProxy.Tuple, "0", { writable: !1 }),
-  Object.defineProperty(Vector.RightVectorProxy.Tuple, "1", { writable: !1 }),
-  Object.defineProperty(Vector.RightVectorProxy.Tuple, "2", { writable: !1 }),
-  Object.defineProperty(Vector.LeftVectorProxy.Tuple, "0", { writable: !1 }),
-  Object.defineProperty(Vector.LeftVectorProxy.Tuple, "1", { writable: !1 }),
-  Object.defineProperty(Vector.LeftVectorProxy.Tuple, "2", { writable: !1 }),
-  Object.defineProperty(Vector.XAxisVectorProxy.Tuple, "0", { writable: !1 }),
-  Object.defineProperty(Vector.XAxisVectorProxy.Tuple, "1", { writable: !1 }),
-  Object.defineProperty(Vector.XAxisVectorProxy.Tuple, "2", { writable: !1 }),
-  Object.defineProperty(Vector.YAxisVectorProxy.Tuple, "0", { writable: !1 }),
-  Object.defineProperty(Vector.YAxisVectorProxy.Tuple, "1", { writable: !1 }),
-  Object.defineProperty(Vector.YAxisVectorProxy.Tuple, "2", { writable: !1 }),
-  Object.defineProperty(Vector.ZAxisVectorProxy.Tuple, "0", { writable: !1 }),
-  Object.defineProperty(Vector.ZAxisVectorProxy.Tuple, "1", { writable: !1 }),
-  Object.defineProperty(Vector.ZAxisVectorProxy.Tuple, "2", { writable: !1 });
+  (Vector.dHo = Vector.Create()),
+  (Vector.Tz = Vector.Create()),
+  (Vector.fHo = Vector.Create()),
+  Macro_1.NOT_SHIPPING_ENVIRONMENT &&
+    (Object.defineProperty(Vector.ZeroVectorProxy.Tuple, "0", { writable: !1 }),
+    Object.defineProperty(Vector.ZeroVectorProxy.Tuple, "1", { writable: !1 }),
+    Object.defineProperty(Vector.ZeroVectorProxy.Tuple, "2", { writable: !1 }),
+    Object.defineProperty(Vector.OneVectorProxy.Tuple, "0", { writable: !1 }),
+    Object.defineProperty(Vector.OneVectorProxy.Tuple, "1", { writable: !1 }),
+    Object.defineProperty(Vector.OneVectorProxy.Tuple, "2", { writable: !1 }),
+    Object.defineProperty(Vector.UpVectorProxy.Tuple, "0", { writable: !1 }),
+    Object.defineProperty(Vector.UpVectorProxy.Tuple, "1", { writable: !1 }),
+    Object.defineProperty(Vector.UpVectorProxy.Tuple, "2", { writable: !1 }),
+    Object.defineProperty(Vector.DownVectorProxy.Tuple, "0", { writable: !1 }),
+    Object.defineProperty(Vector.DownVectorProxy.Tuple, "1", { writable: !1 }),
+    Object.defineProperty(Vector.DownVectorProxy.Tuple, "2", { writable: !1 }),
+    Object.defineProperty(Vector.ForwardVectorProxy.Tuple, "0", {
+      writable: !1,
+    }),
+    Object.defineProperty(Vector.ForwardVectorProxy.Tuple, "1", {
+      writable: !1,
+    }),
+    Object.defineProperty(Vector.ForwardVectorProxy.Tuple, "2", {
+      writable: !1,
+    }),
+    Object.defineProperty(Vector.BackwardVectorProxy.Tuple, "0", {
+      writable: !1,
+    }),
+    Object.defineProperty(Vector.BackwardVectorProxy.Tuple, "1", {
+      writable: !1,
+    }),
+    Object.defineProperty(Vector.BackwardVectorProxy.Tuple, "2", {
+      writable: !1,
+    }),
+    Object.defineProperty(Vector.RightVectorProxy.Tuple, "0", { writable: !1 }),
+    Object.defineProperty(Vector.RightVectorProxy.Tuple, "1", { writable: !1 }),
+    Object.defineProperty(Vector.RightVectorProxy.Tuple, "2", { writable: !1 }),
+    Object.defineProperty(Vector.LeftVectorProxy.Tuple, "0", { writable: !1 }),
+    Object.defineProperty(Vector.LeftVectorProxy.Tuple, "1", { writable: !1 }),
+    Object.defineProperty(Vector.LeftVectorProxy.Tuple, "2", { writable: !1 }),
+    Object.defineProperty(Vector.XAxisVectorProxy.Tuple, "0", { writable: !1 }),
+    Object.defineProperty(Vector.XAxisVectorProxy.Tuple, "1", { writable: !1 }),
+    Object.defineProperty(Vector.XAxisVectorProxy.Tuple, "2", { writable: !1 }),
+    Object.defineProperty(Vector.YAxisVectorProxy.Tuple, "0", { writable: !1 }),
+    Object.defineProperty(Vector.YAxisVectorProxy.Tuple, "1", { writable: !1 }),
+    Object.defineProperty(Vector.YAxisVectorProxy.Tuple, "2", { writable: !1 }),
+    Object.defineProperty(Vector.ZAxisVectorProxy.Tuple, "0", { writable: !1 }),
+    Object.defineProperty(Vector.ZAxisVectorProxy.Tuple, "1", { writable: !1 }),
+    Object.defineProperty(Vector.ZAxisVectorProxy.Tuple, "2", {
+      writable: !1,
+    }));
 //# sourceMappingURL=Vector.js.map

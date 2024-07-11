@@ -30,6 +30,9 @@ class GachaWeaponTransform {
   get AxisRotate() {
     return this.axisrotate();
   }
+  get WeaponTypeTexture() {
+    return this.weapontypetexture();
+  }
   __init(t, r) {
     return (this.z7 = t), (this.J7 = r), this;
   }
@@ -90,6 +93,10 @@ class GachaWeaponTransform {
           this.J7,
         )
       : null;
+  }
+  weapontypetexture(t) {
+    var r = this.J7.__offset(this.z7, 20);
+    return r ? this.J7.__string(this.z7 + r, t) : null;
   }
 }
 exports.GachaWeaponTransform = GachaWeaponTransform;

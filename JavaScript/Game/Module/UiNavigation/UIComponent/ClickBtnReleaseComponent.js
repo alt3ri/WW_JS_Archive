@@ -6,9 +6,9 @@ const HotKeyViewDefine_1 = require("../HotKeyViewDefine"),
   HotKeyComponent_1 = require("./HotKeyComponent");
 class ClickBtnReleaseComponent extends HotKeyComponent_1.HotKeyComponent {
   OnRelease(e) {
-    this.m6i(e.BindButtonTag);
+    this.c8i(e.BindButtonTag);
   }
-  m6i(e) {
+  c8i(e) {
     e === HotKeyViewDefine_1.EXIT_TAG
       ? UiNavigationNewController_1.UiNavigationNewController.HotKeyCloseView()
       : UiNavigationNewController_1.UiNavigationNewController.ClickButton(e);

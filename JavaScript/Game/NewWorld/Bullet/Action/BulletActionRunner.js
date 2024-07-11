@@ -10,20 +10,20 @@ const cpp_1 = require("cpp"),
   BulletActionCenter_1 = require("./BulletActionCenter");
 class BulletActionRunner {
   constructor() {
-    (this.w5o = new BulletActionCenter_1.BulletActionCenter()),
+    (this.AVo = new BulletActionCenter_1.BulletActionCenter()),
       (this.ac = 0),
-      (this.B5o = []),
-      (this.b5o = []),
-      (this.q5o = void 0);
+      (this.PVo = []),
+      (this.xVo = []),
+      (this.wVo = void 0);
   }
   Init() {
-    this.w5o.Init();
+    this.AVo.Init();
   }
   Clear() {
-    this.w5o.Clear();
+    this.AVo.Clear();
   }
   GetActionCenter() {
-    return this.w5o;
+    return this.AVo;
   }
   Pause() {
     0 !== this.ac
@@ -45,33 +45,33 @@ class BulletActionRunner {
       this.ac = 2;
       var r = ModelManager_1.ModelManager.BulletModel.GetBulletEntityMap();
       if (0 < t) {
-        (this.B5o.length = 0), (this.b5o.length = 0);
+        (this.PVo.length = 0), (this.xVo.length = 0);
         for (const s of r.values()) {
           var o = s.GetBulletInfo();
-          this.B5o.push(o);
+          this.PVo.push(o);
         }
       }
-      for (this.N5o(t, e), this.B5o.length = 0; 0 < this.b5o.length; ) {
-        var i = this.B5o;
-        (this.B5o = this.b5o),
-          (this.b5o = i),
-          this.N5o(0),
-          (this.B5o.length = 0);
+      for (this.bVo(t, e), this.PVo.length = 0; 0 < this.xVo.length; ) {
+        var i = this.PVo;
+        (this.PVo = this.xVo),
+          (this.xVo = i),
+          this.bVo(0),
+          (this.PVo.length = 0);
       }
       (this.ac = 3),
         ModelManager_1.ModelManager.BulletModel.ClearDestroyedBullets(),
         (this.ac = 0);
     }
   }
-  N5o(t = 0, e = !1) {
+  bVo(t = 0, e = !1) {
     let r = 0;
-    var o = this.w5o;
-    for (const l of this.B5o) {
+    var o = this.AVo;
+    for (const l of this.PVo) {
       PerformanceController_1.PerformanceController
         .IsEntityTickPerformanceTest &&
         (r = cpp_1.KuroTime.GetMilliseconds64());
       try {
-        if (((this.q5o = l), 0 < t)) {
+        if (((this.wVo = l), 0 < t)) {
           var i = l.PersistentActionList;
           if (e) for (const a of i) a.AfterTick(t);
           else for (const u of i) u.Tick(t);
@@ -127,18 +127,18 @@ class BulletActionRunner {
           l.BornFrameCount,
         );
     }
-    this.q5o = void 0;
+    this.wVo = void 0;
   }
   AddAction(t, e) {
     switch (this.ac) {
       case 0:
-        t.ActionInfoList.push(e), this.B5o.push(t), this.Run();
+        t.ActionInfoList.push(e), this.PVo.push(t), this.Run();
         break;
       case 1:
         t.ActionInfoList.push(e);
         break;
       case 2:
-        t.NextActionInfoList.push(e), t !== this.q5o && this.b5o.push(t);
+        t.NextActionInfoList.push(e), t !== this.wVo && this.xVo.push(t);
         break;
       case 3:
         Log_1.Log.CheckError() &&
@@ -158,7 +158,7 @@ class BulletActionRunner {
   static InitStat() {
     if (
       BulletConstant_1.BulletConstant.OpenActionStat &&
-      !(0 < this.O5o.length)
+      !(0 < this.qVo.length)
     )
       for (let t = 0; t < 17; t++)
         6 === t ||
@@ -167,9 +167,9 @@ class BulletActionRunner {
             13 !== t &&
             11 !== t &&
             BulletConstant_1.BulletConstant.OpenAllActionStat),
-          this.O5o.push(void 0);
+          this.qVo.push(void 0);
   }
 }
-((exports.BulletActionRunner = BulletActionRunner).G5o = void 0),
-  (BulletActionRunner.O5o = new Array());
+((exports.BulletActionRunner = BulletActionRunner).BVo = void 0),
+  (BulletActionRunner.qVo = new Array());
 //# sourceMappingURL=BulletActionRunner.js.map

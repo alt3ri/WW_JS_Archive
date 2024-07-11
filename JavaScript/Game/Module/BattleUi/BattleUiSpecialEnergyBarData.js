@@ -6,13 +6,13 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
       void 0);
 const UE = require("ue"),
   CustomPromise_1 = require("../../../Core/Common/CustomPromise"),
+  Info_1 = require("../../../Core/Common/Info"),
   Log_1 = require("../../../Core/Common/Log"),
   CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById"),
   ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem"),
   DataTableUtil_1 = require("../../../Core/Utils/DataTableUtil"),
   StringUtils_1 = require("../../../Core/Utils/StringUtils"),
-  GlobalData_1 = require("../../GlobalData"),
-  ModelManager_1 = require("../../Manager/ModelManager");
+  GlobalData_1 = require("../../GlobalData");
 class SpecialEnergyBarKeyInfo {
   constructor() {
     (this.Action = 0), (this.ActionType = 0);
@@ -45,12 +45,12 @@ class SpecialEnergyBarInfo {
     (this.Id = t),
       (this.PrefabType = i.PrefabType),
       (this.SlotNum = i.SlotNum),
-      this.oXe(i.ExtraFloatParams, this.ExtraFloatParams),
+      this.C$e(i.ExtraFloatParams, this.ExtraFloatParams),
       (this.PrefabPath = i.PrefabPath.ToAssetPathName()),
       (this.AttributeId = i.AttributeId),
       (this.MaxAttributeId = i.MaxAttributeId),
       (this.BuffId = i.BuffId),
-      (this.TagEnergyBarIdMap = this.rXe(i.TagEnergyBarIdMap)),
+      (this.TagEnergyBarIdMap = this.g$e(i.TagEnergyBarIdMap)),
       (this.EffectColor = StringUtils_1.StringUtils.IsEmpty(i.EffectColor)
         ? void 0
         : i.EffectColor),
@@ -59,7 +59,7 @@ class SpecialEnergyBarInfo {
         : i.PointColor),
       (this.IconPath = i.IconPath.ToAssetPathName()),
       (this.EnableIconPath = i.EnableIconPath.ToAssetPathName()),
-      this.CGn(i.NiagaraList, this.NiagaraPathList),
+      this.MNn(i.NiagaraList, this.NiagaraPathList),
       (this.KeyEnableNiagaraIndex = i.KeyEnableNiagaraIndex),
       this.KeyEnableNiagaraIndex >= this.NiagaraPathList.length &&
         ((this.KeyEnableNiagaraIndex = -1), Log_1.Log.CheckError()) &&
@@ -76,45 +76,45 @@ class SpecialEnergyBarInfo {
       i.KeyEnableTag && i.KeyEnableTag?.TagName !== StringUtils_1.NONE_STRING
         ? (this.KeyEnableTagId = i.KeyEnableTag.TagId)
         : (this.KeyEnableTagId = 0),
-      this.nXe(i.KeyInfoList);
+      this.f$e(i.KeyInfoList);
   }
-  nXe(i) {
-    if (2 === ModelManager_1.ModelManager.PlatformModel.OperationType) {
-      var e = i.Num();
-      for (let t = 0; t < e; t++) {
-        var s = i.Get(t),
+  f$e(i) {
+    if (2 === Info_1.Info.OperationType) {
+      var s = i.Num();
+      for (let t = 0; t < s; t++) {
+        var e = i.Get(t),
           r = new SpecialEnergyBarKeyInfo();
-        (r.Action = s.Action),
-          (r.ActionType = s.ActionType),
+        (r.Action = e.Action),
+          (r.ActionType = e.ActionType),
           this.KeyInfoList.push(r);
       }
     }
   }
-  rXe(i) {
-    var e = new Map(),
-      s = i.Num();
-    if (!(s <= 0))
-      for (let t = 0; t < s; t++) {
+  g$e(i) {
+    var s = new Map(),
+      e = i.Num();
+    if (!(e <= 0))
+      for (let t = 0; t < e; t++) {
         var r = i.GetKey(t),
           a = i.Get(r);
-        e.set(r.TagId, a);
+        s.set(r.TagId, a);
       }
-    return e;
+    return s;
   }
-  oXe(i, e) {
-    var s = i.Num();
-    if (!(s <= 0))
-      for (let t = 0; t < s; t++) {
+  C$e(i, s) {
+    var e = i.Num();
+    if (!(e <= 0))
+      for (let t = 0; t < e; t++) {
         var r = i.Get(t);
-        e.push(r);
+        s.push(r);
       }
   }
-  CGn(i, e) {
-    var s = i.Num();
-    if (!(s <= 0))
-      for (let t = 0; t < s; t++) {
+  MNn(i, s) {
+    var e = i.Num();
+    if (!(e <= 0))
+      for (let t = 0; t < e; t++) {
         var r = i.Get(t);
-        e.push(r.ToAssetPathName());
+        s.push(r.ToAssetPathName());
       }
   }
 }
@@ -123,30 +123,30 @@ class BattleUiSpecialEnergyBarData {
   constructor() {
     (this.IsOpenLog = !1),
       (this.IsSpecialEnergyBarEditorModeOpen = !1),
-      (this.sXe = void 0),
+      (this.p$e = void 0),
       (this.EnvironmentPropertyList = []),
       (this.SpecialEnergyBarInfoMap = new Map()),
       (this.gU = !1),
-      (this.aXe = !1);
+      (this.v$e = !1);
   }
   Init() {}
   async Preload() {
-    this.aXe = !0;
+    this.v$e = !0;
     const i = new CustomPromise_1.CustomPromise();
     var t = CommonParamById_1.configCommonParamById.GetStringConfig(
       "SpecialEnergyBarInfoPath",
     );
     return (
       ResourceSystem_1.ResourceSystem.LoadAsync(t, UE.DataTable, (t) => {
-        this.aXe && (this.sXe = t) && ((this.gU = !0), i.SetResult(!0));
+        this.v$e && (this.p$e = t) && ((this.gU = !0), i.SetResult(!0));
       }),
       i.Promise
     );
   }
   OnLeaveLevel() {
     (this.gU = !1),
-      (this.aXe = !1),
-      (this.sXe = void 0),
+      (this.v$e = !1),
+      (this.p$e = void 0),
       (this.EnvironmentPropertyList.length = 0),
       this.SpecialEnergyBarInfoMap.clear();
   }
@@ -154,14 +154,14 @@ class BattleUiSpecialEnergyBarData {
   GetSpecialEnergyBarInfo(i) {
     if (this.gU) {
       let t = this.SpecialEnergyBarInfoMap.get(i);
-      var e;
+      var s;
       return (
         t ||
-          ((e = DataTableUtil_1.DataTableUtil.GetDataTableRow(
-            this.sXe,
+          ((s = DataTableUtil_1.DataTableUtil.GetDataTableRow(
+            this.p$e,
             i.toString(),
           )),
-          (t = new SpecialEnergyBarInfo()).Init(i, e),
+          (t = new SpecialEnergyBarInfo()).Init(i, s),
           GlobalData_1.GlobalData.IsPlayInEditor) ||
           this.SpecialEnergyBarInfoMap.set(i, t),
         t

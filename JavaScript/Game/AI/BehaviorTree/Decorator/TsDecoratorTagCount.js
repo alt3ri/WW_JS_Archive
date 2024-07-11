@@ -50,7 +50,7 @@ class TsDecoratorTagCount extends UE.BTDecorator_BlueprintBase {
       if (!e) return !1;
       o = e;
     }
-    r = o.Entity.CheckGetComponent(185).GetTagCountById(this.TsTag.TagId);
+    r = o.Entity.CheckGetComponent(188).GetTagCount(this.TsTag.TagId);
     return MathUtils_1.MathUtils.InFastUeRange(r, this.TsRange);
   }
 }

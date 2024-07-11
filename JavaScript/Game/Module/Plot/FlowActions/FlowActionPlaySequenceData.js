@@ -14,7 +14,7 @@ const Log_1 = require("../../../../Core/Common/Log"),
 class FlowActionPlaySequenceData extends FlowActionBase_1.FlowActionBase {
   constructor() {
     super(...arguments),
-      (this.ZPt = () => {
+      (this.owt = () => {
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("Plot", 27, "PlaySequenceData Seq开始播放允许跳过"),
           ControllerHolder_1.ControllerHolder.FlowController.EnableSkip(!0);
@@ -23,11 +23,11 @@ class FlowActionPlaySequenceData extends FlowActionBase_1.FlowActionBase {
         ControllerHolder_1.ControllerHolder.FlowController.EnableSkip(!1),
           EventSystem_1.EventSystem.Has(
             EventDefine_1.EEventName.PlotSequencePlay,
-            this.ZPt,
+            this.owt,
           ) &&
             EventSystem_1.EventSystem.Remove(
               EventDefine_1.EEventName.PlotSequencePlay,
-              this.ZPt,
+              this.owt,
             ),
           this.FinishExecute(!0);
       });
@@ -46,7 +46,7 @@ class FlowActionPlaySequenceData extends FlowActionBase_1.FlowActionBase {
             (ModelManager_1.ModelManager.SequenceModel.Type = 1),
         EventSystem_1.EventSystem.Once(
           EventDefine_1.EEventName.PlotSequencePlay,
-          this.ZPt,
+          this.owt,
         ),
         SequenceController_1.SequenceController.Play(
           e,
@@ -62,32 +62,36 @@ class FlowActionPlaySequenceData extends FlowActionBase_1.FlowActionBase {
     ControllerHolder_1.ControllerHolder.FlowController.EnableSkip(!1),
       EventSystem_1.EventSystem.Has(
         EventDefine_1.EEventName.PlotSequencePlay,
-        this.ZPt,
+        this.owt,
       ) &&
         EventSystem_1.EventSystem.Remove(
           EventDefine_1.EEventName.PlotSequencePlay,
-          this.ZPt,
+          this.owt,
         ),
-      this.$Xi().finally(() => {
+      this.Q$i().finally(() => {
         this.FinishExecute(!0);
       });
   }
-  async $Xi() {
+  async Q$i() {
     var e = ModelManager_1.ModelManager.SequenceModel.IsFadeEnd.length - 1,
       e =
         ((ModelManager_1.ModelManager.PlotModel.IsFadeIn =
           0 <= e && ModelManager_1.ModelManager.SequenceModel.IsFadeEnd[e]),
         ModelManager_1.ModelManager.SequenceModel.CurFinalPos.length - 1),
-      e =
+      t =
         0 <= e
           ? ModelManager_1.ModelManager.SequenceModel.CurFinalPos[e]
           : void 0;
-    SequenceController_1.SequenceController.ManualFinish(),
+    0 < e &&
+      !t &&
+      Log_1.Log.CheckWarn() &&
+      Log_1.Log.Warn("Plot", 27, "SequenceData内缺失FinalPos"),
+      SequenceController_1.SequenceController.ManualFinish(),
       await PlotController_1.PlotController.CheckFormation(),
-      e &&
+      t &&
         (await TeleportController_1.TeleportController.TeleportToPositionNoLoading(
-          e.GetLocation().ToUeVector(),
-          e.GetRotation().Rotator().ToUeRotator(),
+          t.GetLocation().ToUeVector(),
+          t.GetRotation().Rotator().ToUeRotator(),
           "FlowActionPlaySequenceData.OnInterruptExecute",
         ));
   }

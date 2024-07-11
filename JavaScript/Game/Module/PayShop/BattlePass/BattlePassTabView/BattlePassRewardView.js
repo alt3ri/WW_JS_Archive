@@ -14,15 +14,15 @@ const UE = require("ue"),
 class BattlePassRewardView extends UiTabViewBase_1.UiTabViewBase {
   constructor() {
     super(...arguments),
-      (this.fki = !1),
-      (this.pki = !1),
-      (this.vki = void 0),
-      (this.Mki = void 0),
-      (this.v5t = void 0),
-      (this.Eki = () => {
+      (this.p2i = !1),
+      (this.v2i = !1),
+      (this.M2i = void 0),
+      (this.E2i = void 0),
+      (this.vVt = void 0),
+      (this.S2i = () => {
         UiManager_1.UiManager.OpenView("BattlePassPayView", this.ExtraParams);
       }),
-      (this.yki = () => {
+      (this.y2i = () => {
         var e = {
           WeaponDataList:
             ModelManager_1.ModelManager.BattlePassModel.GetWeaponDataList(),
@@ -31,36 +31,36 @@ class BattlePassRewardView extends UiTabViewBase_1.UiTabViewBase {
         };
         UiManager_1.UiManager.OpenView("WeaponPreviewView", e);
       }),
-      (this.Iki = () => {
+      (this.I2i = () => {
         return new BattlePassRewardGridItem_1.BattlePassRewardGridItem();
       }),
-      (this.Tki = () => {
+      (this.T2i = () => {
         this.GetItem(2).SetUIActive(
           ModelManager_1.ModelManager.BattlePassModel.PayType ===
-            Protocol_1.Aki.Protocol.B2s.Proto_NoPaid,
+            Protocol_1.Aki.Protocol.yNs.Proto_NoPaid,
         );
       }),
-      (this.Lki = () => {
+      (this.L2i = () => {
         var e;
-        this.fki &&
-          ((this.fki = !1),
+        this.p2i &&
+          ((this.p2i = !1),
           (e =
             ModelManager_1.ModelManager.BattlePassModel.GetCurrentShowLevel()),
-          this.v5t.ScrollToGridIndex(e - 1));
+          this.vVt.ScrollToGridIndex(e - 1));
       }),
-      (this.Dki = (e) => {
-        e ? this.v5t.RefreshGridProxy(e) : this.v5t.RefreshAllGridProxies(),
-          this.Rki();
+      (this.D2i = (e) => {
+        e ? this.vVt.RefreshGridProxy(e) : this.vVt.RefreshAllGridProxies(),
+          this.R2i();
       }),
-      (this.Mni = () => {
-        (this.fki = !0),
-          this.v5t.RefreshByData(
+      (this.Esi = () => {
+        (this.p2i = !0),
+          this.vVt.RefreshByData(
             ModelManager_1.ModelManager.BattlePassModel.RewardDataList,
           );
       }),
-      (this.Rki = () => {
-        var e = this.v5t.Ndi,
-          e = this.v5t.TryGetCachedData(e);
+      (this.R2i = () => {
+        var e = this.vVt.NCi,
+          e = this.vVt.TryGetCachedData(e);
         e &&
           ((e = e.Level - 1),
           0 !==
@@ -68,7 +68,7 @@ class BattlePassRewardView extends UiTabViewBase_1.UiTabViewBase {
               ModelManager_1.ModelManager.BattlePassModel.GetNextStageLevel(
                 e,
               ))) &&
-          this.Mki.Refresh(
+          this.E2i.Refresh(
             ModelManager_1.ModelManager.BattlePassModel.GetRewardData(e),
             !1,
             0,
@@ -86,72 +86,72 @@ class BattlePassRewardView extends UiTabViewBase_1.UiTabViewBase {
       [6, UE.UIButtonComponent],
     ]),
       (this.BtnBindInfo = [
-        [1, this.Eki],
-        [6, this.yki],
+        [1, this.S2i],
+        [6, this.y2i],
       ]);
   }
   async OnBeforeStartAsync() {
-    (this.Mki = new BattlePassRewardGridItem_1.BattlePassRewardGridItem()),
-      (this.vki = new BattlePassBackgroundPanel_1.BattlePassBackgroundPanel());
+    (this.E2i = new BattlePassRewardGridItem_1.BattlePassRewardGridItem()),
+      (this.M2i = new BattlePassBackgroundPanel_1.BattlePassBackgroundPanel());
     var e = { IsRewardPanel: !0, WeaponObservers: this.ExtraParams };
     await Promise.all([
-      this.Mki.OnlyCreateByActorAsync(this.GetItem(4).GetOwner()),
-      this.vki.OnlyCreateByActorAsync(this.GetItem(0).GetOwner(), e),
+      this.E2i.OnlyCreateByActorAsync(this.GetItem(4).GetOwner()),
+      this.M2i.OnlyCreateByActorAsync(this.GetItem(0).GetOwner(), e),
     ]),
-      this.AddChild(this.Mki),
-      this.AddChild(this.vki);
+      this.AddChild(this.E2i),
+      this.AddChild(this.M2i);
   }
   OnStart() {
-    (this.pki = !0),
+    (this.v2i = !0),
       this.GetItem(2).SetUIActive(
         ModelManager_1.ModelManager.BattlePassModel.PayType ===
-          Protocol_1.Aki.Protocol.B2s.Proto_NoPaid,
+          Protocol_1.Aki.Protocol.yNs.Proto_NoPaid,
       ),
-      (this.v5t = new LoopScrollView_1.LoopScrollView(
+      (this.vVt = new LoopScrollView_1.LoopScrollView(
         this.GetLoopScrollViewComponent(3),
         this.GetItem(5).GetOwner(),
-        this.Iki,
+        this.I2i,
       )),
-      this.v5t.BindOnScrollValueChanged(this.Rki),
-      this.v5t.BindLateUpdate(this.Lki);
+      this.vVt.BindOnScrollValueChanged(this.R2i),
+      this.vVt.BindLateUpdate(this.L2i);
   }
   OnBeforeShow() {
-    this.Mni();
+    this.Esi();
   }
   OnAfterShow() {
-    this.UiViewSequence?.PlaySequence(this.pki ? "Start" : "Switch"),
-      (this.pki = !1);
+    this.UiViewSequence?.PlaySequence(this.v2i ? "Start" : "Switch"),
+      (this.v2i = !1);
   }
   AddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.GetBattlePassRewardEvent,
-      this.Dki,
+      this.D2i,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.ReceiveBattlePassDataEvent,
-        this.Mni,
+        this.Esi,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.BattlePassFirstUnlockAnime,
-        this.Tki,
+        this.T2i,
       );
   }
   RemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.GetBattlePassRewardEvent,
-      this.Dki,
+      this.D2i,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.ReceiveBattlePassDataEvent,
-        this.Mni,
+        this.Esi,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.BattlePassFirstUnlockAnime,
-        this.Tki,
+        this.T2i,
       );
   }
   OnBeforeDestroy() {
-    this.v5t && (this.v5t.ClearGridProxies(), (this.v5t = void 0));
+    this.vVt && (this.vVt.ClearGridProxies(), (this.vVt = void 0));
   }
 }
 exports.BattlePassRewardView = BattlePassRewardView;

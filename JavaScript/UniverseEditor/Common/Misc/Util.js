@@ -51,13 +51,13 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.getEnumNames =
     exports.getEnumValues =
       void 0),
-  (exports.execAsync =
-    exports.isCurrentBranchAssetAsync =
+  (exports.getTextFileOriginRequiredList =
     exports.getFileSourceBranchAsync =
     exports.getBatchFileBranchDataAsync =
     exports.getFileDepotInfoAsync =
     exports.getFileDepotInfo =
     exports.isCurrentBranchAsset =
+    exports.getAllDepotBranchDataSync =
     exports.getBranchOriginsDataSync =
     exports.getBranchReqShortPath =
     exports.compareTextOrder =
@@ -67,14 +67,17 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.toDepotPath =
     exports.deepCopyData =
     exports.getNetWorkAddress =
+    exports.getMd5 =
     exports.stringIsNullOrEmpty =
     exports.formatDateTime =
+    exports.isPipelineEnv =
     exports.isInPie =
     exports.isValidVarName =
     exports.getEditorCommandArgs =
     exports.getCommandLine =
     exports.getLocalIp =
     exports.isPortInUse =
+    exports.isSetEqual =
     exports.isTransformEqual =
     exports.subVector =
     exports.addVector =
@@ -91,8 +94,6 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.getCurrentClientEditorSaviorSyncData =
     exports.loadEditorSaviorSyncConfig =
     exports.getAkiBaseProjectPath =
-    exports.getDevBranchClientName =
-    exports.getDevBranchLocalPath =
     exports.getAkiBaseLocalPath =
     exports.getCurrentP4Owner =
     exports.getWorkspaceBranch =
@@ -100,8 +101,13 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.getCurrentClientName =
     exports.getCurrentClientRoot =
     exports.getCurrentP4Stream =
+      void 0),
+  (exports.execAsync =
+    exports.isTextFileByExtension =
+    exports.isCurrentBranchAssetAsync =
       void 0);
-const IEditor_1 = require("../../Interface/IEditor"),
+const crypto = require("crypto-js"),
+  IEditor_1 = require("../../Interface/IEditor"),
   Init_1 = require("../../Interface/Init"),
   IUtil_1 = require("../../Interface/IUtil"),
   Platform_1 = require("../Platform/Platform"),
@@ -175,9 +181,9 @@ function stringFormat(t, ...r) {
     void 0 !== r[e] ? r[e].toString() : t,
   );
 }
-function parseFloatSafe(t) {
-  t = parseFloat(t);
-  return Number.isNaN(t) ? 0 : t;
+function parseFloatSafe(t, e) {
+  (t = parseFloat(t)), (t = Number.isNaN(t) ? 0 : t);
+  return e ? ((e = 10 ** e), Math.round(t * e) / e) : t;
 }
 function parseIntSafe(t, e) {
   t = parseInt(t, e);
@@ -259,17 +265,17 @@ function createMultiData(e, t, r) {
   const a = {};
   for (const c in t) r?.(c) || (void 0 === e[c] && (a[c] = null));
   for (const p in e) {
-    var i, s, u;
+    var s, i, u;
     r?.(p) ||
-      ((i = t[p]),
-      (s = e[p]),
-      null === i || null === s
+      ((s = t[p]),
+      (i = e[p]),
+      null === s || null === i
         ? (a[p] = null)
-        : void 0 === i
-          ? (a[p] = void 0 === s ? void 0 : null)
-          : (u = typeof i) == typeof s && "object" == u
-            ? ((u = createMultiData(i, s, r)), (a[p] = u))
-            : (a[p] = i !== s ? null : i));
+        : void 0 === s
+          ? (a[p] = void 0 === i ? void 0 : null)
+          : (u = typeof s) == typeof i && "object" == u
+            ? ((u = createMultiData(s, i, r)), (a[p] = u))
+            : (a[p] = s !== i ? null : s));
   }
   return a;
 }
@@ -289,8 +295,8 @@ function applyMultiData(r, t, n) {
   }
   var o,
     a,
-    i,
     s,
+    i,
     u = {};
   for (const c in t)
     n?.(c) ||
@@ -302,12 +308,12 @@ function applyMultiData(r, t, n) {
   for (const p in r)
     n?.(p) ||
       ((a = t[p]),
-      (i = r[p]),
+      (s = r[p]),
       null !== a
-        ? (s = typeof a) == typeof i && "object" == s
-          ? ((s = applyMultiData(i, a, n)), (u[p] = s))
+        ? (i = typeof a) == typeof s && "object" == i
+          ? ((i = applyMultiData(s, a, n)), (u[p] = i))
           : (u[p] = a)
-        : (u[p] = i));
+        : (u[p] = s));
   return u;
 }
 function strcmp(t, e) {
@@ -431,21 +437,21 @@ function checkMonsterValid(t) {
     n = t[1].X ?? 0,
     o = t[1].Y ?? 0;
   let a = n < e ? n : e,
-    i = n < e ? e : n,
-    s = o < r ? o : r,
+    s = n < e ? e : n,
+    i = o < r ? o : r,
     u = o < r ? r : o,
     c = 2;
   for (c = 2; c < t.length; c++) {
     var p = t[c].X ?? 0,
       f = t[c].Y ?? 0;
     (a = p < a ? p : a),
-      (i = p > i ? p : i),
-      (s = f < s ? f : s),
+      (s = p > s ? p : s),
+      (i = f < i ? f : i),
       (u = f > u ? f : u);
   }
   return [
-    { X: (a + i) / 2, Y: (u + s) / 2, Z: 0 },
-    Math.floor(Math.sqrt((i - a) * (i - a) + (u - s) * (u - s))) / 2,
+    { X: (a + s) / 2, Y: (u + i) / 2, Z: 0 },
+    Math.floor(Math.sqrt((s - a) * (s - a) + (u - i) * (u - i))) / 2,
   ];
 }
 function upperStringFirstLetter(t) {
@@ -578,7 +584,9 @@ function getCurrentClientName() {
 }
 function getCurrentP4Branch() {
   var t = getCurrentP4Stream();
-  return t ? t.substring("//aki/".length) : void 0;
+  if (!t) throw new Error("找不到当前工作空间的Stream");
+  if (t.startsWith("//aki/")) return t.substring("//aki/".length);
+  throw new Error("当前P4环境不是aki分支");
 }
 function getWorkspaceBranch() {
   return (0, Init_1.getWorkspaceBranchDefine)();
@@ -610,52 +618,6 @@ function getAkiBaseLocalPath() {
       }
       if (t) return (akiBasePath = t.Root);
       (0, Log_1.error)("本地找不到AkiBase目录, 请先创建WorkSpace");
-    }
-  }
-}
-exports.getAkiBaseLocalPath = getAkiBaseLocalPath;
-let devBranchPath = void 0;
-function getDevBranchLocalPath() {
-  if (devBranchPath) return devBranchPath;
-  var e = getClientDatas();
-  if (e) {
-    e = e.filter((t) => t.Stream?.startsWith("//aki/development"));
-    if (e.length <= 0)
-      (0, Log_1.error)("找不到 development 目录, 请先创建 WorkSpace");
-    else {
-      let t = void 0;
-      for (const n of e) {
-        var r = n.Root;
-        if ((0, File_1.existDir)(r)) {
-          t = n;
-          break;
-        }
-      }
-      if (t) return (devBranchPath = t.Root);
-      (0, Log_1.error)("本地找不到 development 目录, 请先创建 WorkSpace");
-    }
-  }
-}
-exports.getDevBranchLocalPath = getDevBranchLocalPath;
-let devBranchClientName = void 0;
-function getDevBranchClientName() {
-  if (devBranchClientName) return devBranchClientName;
-  var e = getClientDatas();
-  if (e) {
-    e = e.filter((t) => t.Stream?.startsWith("//aki/development"));
-    if (e.length <= 0)
-      (0, Log_1.error)("找不到 development 目录, 请先创建 WorkSpace");
-    else {
-      let t = void 0;
-      for (const n of e) {
-        var r = n.Root;
-        if ((0, File_1.existDir)(r)) {
-          t = n;
-          break;
-        }
-      }
-      if (t) return (devBranchClientName = t.Client);
-      (0, Log_1.error)("本地找不到 development 目录, 请先创建 WorkSpace");
     }
   }
 }
@@ -702,7 +664,7 @@ function getCurrentSyncData() {
       (isNaN(r.Timestamp) ? -1 : r.Timestamp) < t ? e : r)
     : e ?? r;
 }
-(exports.getDevBranchClientName = getDevBranchClientName),
+(exports.getAkiBaseLocalPath = getAkiBaseLocalPath),
   (exports.getAkiBaseProjectPath = getAkiBaseProjectPath),
   (exports.loadEditorSaviorSyncConfig = loadEditorSaviorSyncConfig),
   (exports.getCurrentClientEditorSaviorSyncData =
@@ -777,12 +739,17 @@ function subVector(t, e) {
 }
 function isTransformEqual(t, e, r = 1e-4, n = 1e-4, o = 1e-4) {
   var a = { X: 0, Y: 0, Z: 0 },
-    i = { X: 1, Y: 1, Z: 1 };
+    s = { X: 1, Y: 1, Z: 1 };
   return (
     isVectorEqual(t.Pos || a, e.Pos || a, 0, r) &&
     isVectorEqual(t.Rot ?? a, e.Rot ?? a, 0, n) &&
-    isVectorEqual(t.Scale ?? i, e.Scale ?? i, 1, o)
+    isVectorEqual(t.Scale ?? s, e.Scale ?? s, 1, o)
   );
+}
+function isSetEqual(t, e) {
+  if (t.size !== e.size) return !1;
+  for (const r of t) if (!e.has(r)) return !1;
+  return !0;
 }
 function isPortInUse(t) {
   return (0, Platform_1.getPlatform)().IsPortInUse(t);
@@ -798,6 +765,7 @@ function isPortInUse(t) {
   (exports.addVector = addVector),
   (exports.subVector = subVector),
   (exports.isTransformEqual = isTransformEqual),
+  (exports.isSetEqual = isSetEqual),
   (exports.isPortInUse = isPortInUse);
 let localIp = void 0;
 function getLocalIp() {
@@ -844,6 +812,9 @@ function isValidVarName(t) {
 function isInPie() {
   return (0, Platform_1.getPlatform)().IsInPie();
 }
+function isPipelineEnv() {
+  return (0, Platform_1.getPlatform)().IsPipelineEnv;
+}
 function formatDateTime(t) {
   var t = new Date(t),
     e = t.getFullYear(),
@@ -851,15 +822,18 @@ function formatDateTime(t) {
     n = 9 < t.getDate() ? t.getDate() : "0" + t.getDate(),
     o = 9 < t.getHours() ? t.getHours() : "0" + t.getHours(),
     a = 9 < t.getMinutes() ? t.getMinutes() : "0" + t.getMinutes(),
-    i = 9 < t.getSeconds() ? t.getSeconds() : "0" + t.getSeconds();
+    s = 9 < t.getSeconds() ? t.getSeconds() : "0" + t.getSeconds();
   return (
     e +
     `-${r}-${n}-${"星期" + "日一二三四五六".charAt(t.getDay())} ${o}:${a}:` +
-    i
+    s
   );
 }
 function stringIsNullOrEmpty(t) {
   return "string" != typeof t || void 0 === t || 0 === t.length;
+}
+function getMd5(t) {
+  return crypto.MD5(t).toString();
 }
 function getNetWorkAddress() {
   var [t, e] = exec(
@@ -965,6 +939,43 @@ function getBranchOriginsDataSync(t) {
     } else (0, Log_1.error)("获取文件分支信息失败: " + t);
   }
 }
+(exports.getLocalIp = getLocalIp),
+  (exports.getCommandLine = getCommandLine),
+  (exports.getEditorCommandArgs = getEditorCommandArgs),
+  (exports.isValidVarName = isValidVarName),
+  (exports.isInPie = isInPie),
+  (exports.isPipelineEnv = isPipelineEnv),
+  (exports.formatDateTime = formatDateTime),
+  (exports.stringIsNullOrEmpty = stringIsNullOrEmpty),
+  (exports.getMd5 = getMd5),
+  (exports.getNetWorkAddress = getNetWorkAddress),
+  (exports.deepCopyData = deepCopyData),
+  (exports.toDepotPath = toDepotPath),
+  (exports.doJsonHttpGet = doJsonHttpGet),
+  (exports.doJsonHttpPost = doJsonHttpPost),
+  (exports.doJsonHttpDelete = doJsonHttpDelete),
+  (exports.compareTextOrder = compareTextOrder),
+  (exports.getBranchReqShortPath = getBranchReqShortPath),
+  (exports.getBranchOriginsDataSync = getBranchOriginsDataSync);
+let allBranchesFromServer = void 0;
+function getAllDepotBranchDataSync() {
+  if (allBranchesFromServer) return allBranchesFromServer;
+  var [t, e] = exec(
+    "curl --request GET --url http://tools.aki.kuro.com:1025/multibranch/aki/branches",
+  );
+  if (t) {
+    var t = e.indexOf('{"code":');
+    if (!(t < 0))
+      return (
+        (t = parse(e.substring(t))),
+        (allBranchesFromServer = t.data.map((t) => t.replace("//aki/", "")))
+      );
+    (0, Log_1.error)(
+      `获取所有分支信息返回异常: 
+` + e,
+    );
+  } else (0, Log_1.error)("获取所有分支信息失败");
+}
 function isCurrentBranchAsset(t) {
   var e,
     t = getBranchOriginsDataSync(t);
@@ -992,30 +1003,31 @@ function getFileDepotInfo(t) {
 }
 async function getFileDepotInfoAsync(t) {
   t = getBranchReqShortPath(t);
-  const r = { filePath: t };
-  let e = { Success: !1, Error: "获取仓库信息失败" };
-  for (let t = 0; t < 2; t++)
-    if (
-      (e = await (async () => {
-        try {
-          var t,
-            e = await doJsonHttpPost(
-              "http://tools.aki.kuro.com:1025/multibranch/aki/file/exist",
-              r,
-            );
-          return e
-            ? { Success: !0, Result: e.data }
-            : ((t = `获取仓库信息失败: ${e} (${stringify(r)})`),
-              (0, Log_1.error)(t),
-              { Success: !1, Error: t, Result: [] });
-        } catch (t) {
-          e = "获取仓库信息失败: " + t;
-          return (0, Log_1.error)(e), { Success: !1, Error: e };
-        }
-      })()).Result
-    )
-      return e;
-  return e;
+  const e = { filePath: t };
+  let r = { Success: !1, Error: "获取仓库信息失败" };
+  for (
+    let t = 0;
+    t < 2 &&
+    !(r = await (async () => {
+      try {
+        var t = await doJsonHttpPost(
+          "http://tools.aki.kuro.com:1025/multibranch/aki/file/exist",
+          e,
+        );
+        return t
+          ? { Success: !0, Result: t.data }
+          : {
+              Success: !1,
+              Error: `获取仓库信息失败: ${t} (${stringify(e)})`,
+              Result: [],
+            };
+      } catch (t) {
+        return { Success: !1, Error: "获取仓库信息异常: " + t };
+      }
+    })()).Result;
+    t++
+  );
+  return r.Error && (0, Log_1.error)(r.Error), r;
 }
 async function getBatchFileBranchDataAsync(e) {
   const r = getCurrentP4Stream();
@@ -1025,13 +1037,13 @@ async function getBatchFileBranchDataAsync(e) {
     o = new Map();
   for (const l of e) {
     var a,
-      i = getBranchReqShortPath(l);
-    i &&
-      (a = await getFileDepotInfoAsync(i)).Success &&
+      s = getBranchReqShortPath(l);
+    s &&
+      (a = await getFileDepotInfoAsync(s)).Success &&
       -1 !== a.Result.findIndex((t) => t.endsWith(r)) &&
-      (o.set(i, a.Result), t.push(i), n.set(i, l));
+      (o.set(s, a.Result), t.push(s), n.set(s, l));
   }
-  var s = new Map(),
+  var i = new Map(),
     e = { filePaths: t };
   try {
     var u,
@@ -1050,17 +1062,17 @@ async function getBatchFileBranchDataAsync(e) {
       if (g.useDefault) {
         var f = o.get(x) ?? [];
         if (!(0 < f.length)) {
-          s.set(p, { IsManageByBranch: !1, Origins: [r] });
+          i.set(p, { IsManageByBranch: !1, Origins: [r] });
           continue;
         }
         if (f.every((t) => !g.origins.includes(t))) {
-          s.set(p, { IsManageByBranch: !0, Origins: [f[0]] });
+          i.set(p, { IsManageByBranch: !0, Origins: [f[0]] });
           continue;
         }
       }
-      s.set(p, { IsManageByBranch: !0, Origins: g.origins });
+      i.set(p, { IsManageByBranch: !0, Origins: g.origins });
     }
-    return { Success: !0, Result: s };
+    return { Success: !0, Result: i };
   } catch (t) {
     e = "获取分支信息失败: " + t;
     return (0, Log_1.error)(e), { Success: !1, Error: e };
@@ -1071,6 +1083,16 @@ async function getFileSourceBranchAsync(t) {
   return e.Success
     ? { Success: !0, Result: e.Result.get(t) }
     : { Success: !1, Error: e.Error };
+}
+async function getTextFileOriginRequiredList() {
+  var t = await doJsonHttpGet(
+    "http://tools.aki.kuro.com:1025/multibranch/aki/originrequiredlist",
+  );
+  return t
+    ? { Success: !0, Result: t.data }
+    : ((t = "获取分支管理文本文件路径信息失败: " + t),
+      (0, Log_1.error)(t),
+      { Success: !1, Error: t });
 }
 async function isCurrentBranchAssetAsync(t) {
   var e = getBranchReqShortPath(t);
@@ -1091,30 +1113,55 @@ async function isCurrentBranchAssetAsync(t) {
     return (0, Log_1.error)(e), !1;
   }
 }
+function isTextFileByExtension(t) {
+  t = t.split(".").pop()?.toLowerCase();
+  return !(
+    !t ||
+    ![
+      "txt",
+      "md",
+      "html",
+      "htm",
+      "css",
+      "js",
+      "ts",
+      "json",
+      "xml",
+      "csv",
+      "log",
+      "ini",
+      "yaml",
+      "yml",
+      "py",
+      "java",
+      "c",
+      "cpp",
+      "h",
+      "hpp",
+      "php",
+      "rb",
+      "sh",
+      "bat",
+      "cmd",
+      "pl",
+      "sql",
+      "r",
+      "go",
+      "kt",
+    ].includes(t)
+  );
+}
 async function execAsync(t) {
   return await (0, Platform_1.getPlatform)().ExecAsync(t);
 }
-(exports.getLocalIp = getLocalIp),
-  (exports.getCommandLine = getCommandLine),
-  (exports.getEditorCommandArgs = getEditorCommandArgs),
-  (exports.isValidVarName = isValidVarName),
-  (exports.isInPie = isInPie),
-  (exports.formatDateTime = formatDateTime),
-  (exports.stringIsNullOrEmpty = stringIsNullOrEmpty),
-  (exports.getNetWorkAddress = getNetWorkAddress),
-  (exports.deepCopyData = deepCopyData),
-  (exports.toDepotPath = toDepotPath),
-  (exports.doJsonHttpGet = doJsonHttpGet),
-  (exports.doJsonHttpPost = doJsonHttpPost),
-  (exports.doJsonHttpDelete = doJsonHttpDelete),
-  (exports.compareTextOrder = compareTextOrder),
-  (exports.getBranchReqShortPath = getBranchReqShortPath),
-  (exports.getBranchOriginsDataSync = getBranchOriginsDataSync),
+(exports.getAllDepotBranchDataSync = getAllDepotBranchDataSync),
   (exports.isCurrentBranchAsset = isCurrentBranchAsset),
   (exports.getFileDepotInfo = getFileDepotInfo),
   (exports.getFileDepotInfoAsync = getFileDepotInfoAsync),
   (exports.getBatchFileBranchDataAsync = getBatchFileBranchDataAsync),
   (exports.getFileSourceBranchAsync = getFileSourceBranchAsync),
+  (exports.getTextFileOriginRequiredList = getTextFileOriginRequiredList),
   (exports.isCurrentBranchAssetAsync = isCurrentBranchAssetAsync),
+  (exports.isTextFileByExtension = isTextFileByExtension),
   (exports.execAsync = execAsync);
 //# sourceMappingURL=Util.js.map

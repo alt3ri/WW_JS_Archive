@@ -6,20 +6,20 @@ const ConfigManager_1 = require("../../Manager/ConfigManager"),
 class ExploreCountryData {
   constructor() {
     (this.CountryId = 0),
-      (this.W5t = ""),
-      (this.Q5t = new Map()),
-      (this.X5t = []);
+      (this.WVt = ""),
+      (this.QVt = new Map()),
+      (this.XVt = []);
   }
   Initialize(r) {
-    (this.CountryId = r.Id), (this.W5t = r.Title);
+    (this.CountryId = r.Id), (this.WVt = r.Title);
   }
   AddExploreAreaData(r) {
     var e = r.AreaId,
       t = new ExploreAreaData_1.ExploreAreaData(),
       r =
         (t.Initialize(r),
-        this.Q5t.set(e, t),
-        this.X5t.push(t),
+        this.QVt.set(e, t),
+        this.XVt.push(t),
         ConfigManager_1.ConfigManager.ExploreProgressConfig.GetExploreProgressConfigListByArea(
           e,
         ));
@@ -27,24 +27,24 @@ class ExploreCountryData {
     return t.SortExploreAreaItemDataList(), t;
   }
   GetExploreAreaData(r) {
-    return this.Q5t.get(r);
+    return this.QVt.get(r);
   }
   GetExploreAreaDataMap() {
-    return this.Q5t;
+    return this.QVt;
   }
   GetExploreAreaDataList() {
-    return this.X5t;
+    return this.XVt;
   }
   GetAreaSize() {
-    return this.Q5t.size;
+    return this.QVt.size;
   }
   GetNameId() {
-    return this.W5t;
+    return this.WVt;
   }
   GetCountryExploreProgress() {
-    var r = 100 * this.X5t.length;
+    var r = 100 * this.XVt.length;
     let e = 0;
-    for (const t of this.X5t) e += t.GetProgress();
+    for (const t of this.XVt) e += t.GetProgress();
     return e / r;
   }
 }

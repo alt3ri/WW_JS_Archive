@@ -32,15 +32,23 @@ class LevelEventMoveWithSpline extends LevelGeneralBase_1.LevelEventBase {
       (this.xDe = void 0),
       (this.wDe = 0),
       (this.BDe = () => {
-        var e = this.sDe.Entity.GetComponent(113);
+        var e = this.sDe.Entity.GetComponent(115);
         e?.Valid &&
           this.xDe &&
           (e.RemoveStopMoveCallback(this.BDe),
-          e.StartPatrol(this.xDe.Spline, this.xDe.Speeds, !1, !1, !1, this.bDe),
+          e.StartPatrol(
+            this.xDe.Spline,
+            this.xDe.Speeds,
+            this.xDe.WaitTime,
+            !1,
+            !1,
+            !1,
+            this.bDe,
+          ),
           e.AddStopMoveCallback(this.qDe));
       }),
       (this.qDe = () => {
-        var e = this.sDe.Entity.GetComponent(113);
+        var e = this.sDe.Entity.GetComponent(115);
         e.RemoveStopMoveCallback(this.qDe), e.StopPatrol();
       }),
       (this.zpe = (e, t) => {
@@ -69,13 +77,13 @@ class LevelEventMoveWithSpline extends LevelGeneralBase_1.LevelEventBase {
               ActorSystem_1.ActorSystem.Put(this.Jie),
             i?.ClearInput(),
             this.YLe &&
-              ((i = this.sDe.Entity.GetComponent(36)) &&
+              ((i = this.sDe.Entity.GetComponent(37)) &&
                 (i.StopMove(!1),
-                (t = this.sDe.Entity.GetComponent(158)?.MoveState),
+                (t = this.sDe.Entity.GetComponent(160)?.MoveState),
                 i.ResetMaxSpeed(t)),
-              (i = this.sDe.Entity.GetComponent(52))?.ClearMoveVectorCache(),
+              (i = this.sDe.Entity.GetComponent(53))?.ClearMoveVectorCache(),
               i?.SetActive(!0)),
-            (this.sDe.Entity.GetComponent(36).IsSpecialMove = !1),
+            (this.sDe.Entity.GetComponent(37).IsSpecialMove = !1),
             this.FinishExecute(1 === e)));
       }),
       (this.bDe = () => {
@@ -84,7 +92,7 @@ class LevelEventMoveWithSpline extends LevelGeneralBase_1.LevelEventBase {
             ObjectUtils_1.ObjectUtils.IsValid(this.Jie) &&
             ActorSystem_1.ActorSystem.Put(this.Jie),
           this.sDe?.Valid &&
-            (this.sDe.Entity.GetComponent(113).RemoveStopMoveCallback(this.bDe),
+            (this.sDe.Entity.GetComponent(115).RemoveStopMoveCallback(this.bDe),
             this.FinishExecute(!0)));
       });
   }
@@ -132,7 +140,7 @@ class LevelEventMoveWithSpline extends LevelGeneralBase_1.LevelEventBase {
           this.zpe,
         ),
       this.sDe?.IsInit
-        ? ((e = this.sDe.Entity.GetComponent(38)),
+        ? ((e = this.sDe.Entity.GetComponent(39)),
           (i = this.sDe.Entity.GetComponent(1)),
           e?.IsAiDriver
             ? (Log_1.Log.CheckWarn() &&
@@ -245,7 +253,7 @@ class LevelEventMoveWithSpline extends LevelGeneralBase_1.LevelEventBase {
       i.push(h)),
       this.YLe &&
         (this.sDe.Entity.GetComponent(3).ClearInput(),
-        (s = this.sDe.Entity.GetComponent(52)).ClearMoveVectorCache(),
+        (s = this.sDe.Entity.GetComponent(53)).ClearMoveVectorCache(),
         s.SetActive(!1),
         (h = this.sDe.Entity.GetComponent(33))) &&
         h.EndOwnerAndFollowSkills(),
@@ -265,7 +273,7 @@ class LevelEventMoveWithSpline extends LevelGeneralBase_1.LevelEventBase {
   }
   ODe(e, t, i, s) {
     this.sDe.Entity.GetComponent(0).GetEntityType() ===
-    Protocol_1.Aki.Protocol.HBs.Proto_SceneItem
+    Protocol_1.Aki.Protocol.wks.Proto_SceneItem
       ? this.kDe(e, t)
       : this.FDe(e, t, i, s);
   }
@@ -300,7 +308,7 @@ class LevelEventMoveWithSpline extends LevelGeneralBase_1.LevelEventBase {
           i.CycleOption.Type === IComponent_1.EPatrolCycleMode.Loop &&
           ((e.Loop = !0), (e.CircleMove = i.CycleOption.IsCircle)),
         i?.TurnSpeed && (e.TurnSpeed = i.TurnSpeed),
-        this.sDe.Entity.GetComponent(36));
+        this.sDe.Entity.GetComponent(37));
     v.IsMovingToLocation() && v.MoveToLocationEnd(1),
       this.sDe.Entity.GetComponent(
         3,
@@ -311,18 +319,19 @@ class LevelEventMoveWithSpline extends LevelGeneralBase_1.LevelEventBase {
       v.MoveAlongPath(e);
   }
   kDe(e, t) {
-    var i = this.sDe.Entity.GetComponent(113);
+    var i = this.sDe.Entity.GetComponent(115);
     if (i?.Valid) {
-      var s = UE.NewArray(UE.BuiltinFloat);
-      for (const n of t.Points) s.Add(n.MoveSpeed);
-      this.xDe = { Spline: e, Speeds: s };
+      var s = UE.NewArray(UE.BuiltinFloat),
+        o = UE.NewArray(UE.BuiltinFloat);
+      for (const r of t.Points) s.Add(r.MoveSpeed), o.Add(r.StayTime ?? -1);
+      this.xDe = { Spline: e, Speeds: s, WaitTime: o };
       var e = Vector_1.Vector.Create(e.GetWorldLocationAtSplinePoint(0)),
-        o = Vector_1.Vector.Create(
+        n = Vector_1.Vector.Create(
           this.sDe.Entity.GetComponent(1).ActorLocationProxy,
         ),
-        o = Vector_1.Vector.Dist(e, o);
+        n = Vector_1.Vector.Dist(e, n);
       i.AddMoveTarget(
-        new SceneItemMoveComponent_1.MoveTarget(e, o / t.Points[0].MoveSpeed),
+        new SceneItemMoveComponent_1.MoveTarget(e, n / t.Points[0].MoveSpeed),
       ),
         i.AddStopMoveCallback(this.BDe);
     } else
@@ -361,14 +370,14 @@ class LevelEventMoveWithSpline extends LevelGeneralBase_1.LevelEventBase {
       );
     !this.YLe &&
       t &&
-      (((e = Protocol_1.Aki.Protocol.mss.create()).rkn =
+      (((e = Protocol_1.Aki.Protocol._1s.create()).P4n =
         MathUtils_1.MathUtils.NumberToLong(t)),
-      Net_1.Net.Call(8266, e, (e) => {
+      Net_1.Net.Call(15806, e, (e) => {
         e &&
-          e.uvs !== Protocol_1.Aki.Protocol.lkn.Sys &&
+          e.DEs !== Protocol_1.Aki.Protocol.O4n.NRs &&
           ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-            e.uvs,
-            11051,
+            e.DEs,
+            4561,
           );
       }));
   }

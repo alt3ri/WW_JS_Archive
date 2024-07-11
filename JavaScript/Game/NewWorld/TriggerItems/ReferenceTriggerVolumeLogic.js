@@ -6,48 +6,48 @@ const puerts_1 = require("puerts"),
   VALID_LEN = 3;
 class ReferenceTriggerVolumeLogic {
   constructor(i) {
-    (this.$nr = void 0),
-      (this.Ynr = void 0),
-      (this.Jnr = 0),
-      (this.znr = void 0),
-      (this.Ynr = new Set());
+    (this.Ksr = void 0),
+      (this.Qsr = void 0),
+      (this.Xsr = 0),
+      (this.$sr = void 0),
+      (this.Qsr = new Set());
     for (const e of i) {
       var t = e.PathName.split(".");
-      t?.length === VALID_LEN && this.Ynr.add(t[1] + "." + t[2]);
+      t?.length === VALID_LEN && this.Qsr.add(t[1] + "." + t[2]);
     }
-    (this.$nr = new Map()), (this.znr = []);
+    (this.Ksr = new Map()), (this.$sr = []);
   }
   AddVolume(i, t) {
-    this.Ynr.has(i) && (this.Vr(t), this.$nr.set(i, t));
+    this.Qsr.has(i) && (this.Vr(t), this.Ksr.set(i, t));
   }
   RemoveVolume(i) {
-    this.Ynr.has(i) && (this.kre(this.$nr.get(i)), this.$nr.delete(i));
+    this.Qsr.has(i) && (this.kre(this.Ksr.get(i)), this.Ksr.delete(i));
   }
   Clear() {
-    for (const i of this.$nr.values()) this.kre(i);
-    0 < this.Jnr && this.Znr(!1),
-      (this.Jnr = 0),
-      this.Ynr.clear(),
-      this.$nr.clear();
+    for (const i of this.Ksr.values()) this.kre(i);
+    0 < this.Xsr && this.Ysr(!1),
+      (this.Xsr = 0),
+      this.Qsr.clear(),
+      this.Ksr.clear();
   }
   Destroy() {
-    this.Clear(), (this.Ynr = void 0), (this.$nr = void 0), (this.znr = void 0);
+    this.Clear(), (this.Qsr = void 0), (this.Ksr = void 0), (this.$sr = void 0);
   }
   AddOnPlayerOverlapCallback(i) {
-    this.Jnr && i(!0), this.znr?.push(i);
+    this.Xsr && i(!0), this.$sr?.push(i);
   }
   RemoveOnPlayerOverlapCallback(i) {
-    void 0 === this.znr ||
-      (i = this.znr.indexOf(i)) < 0 ||
-      this.znr.splice(i, 1);
+    void 0 === this.$sr ||
+      (i = this.$sr.indexOf(i)) < 0 ||
+      this.$sr.splice(i, 1);
   }
   OnCollisionEnterFunc(i) {
-    this.esr(i) && (this.Jnr || this.Znr(!0), this.Jnr++);
+    this.Jsr(i) && (this.Xsr || this.Ysr(!0), this.Xsr++);
   }
   OnCollisionExitFunc(i) {
-    this.esr(i) && (this.Jnr--, this.Jnr || this.Znr(!1));
+    this.Jsr(i) && (this.Xsr--, this.Xsr || this.Ysr(!1));
   }
-  esr(i) {
+  Jsr(i) {
     return (
       i === RoleTriggerController_1.RoleTriggerController.GetMyRoleTrigger()
     );
@@ -73,9 +73,9 @@ class ReferenceTriggerVolumeLogic {
     i?.IsValid() &&
       (i.OnActorBeginOverlap.Clear(), i.OnActorEndOverlap.Clear());
   }
-  Znr(t) {
-    if (this.znr?.length)
-      for (let i = this.znr.length - 1; 0 <= i; i--) (0, this.znr[i])(t);
+  Ysr(t) {
+    if (this.$sr?.length)
+      for (let i = this.$sr.length - 1; 0 <= i; i--) (0, this.$sr[i])(t);
   }
 }
 exports.ReferenceTriggerVolumeLogic = ReferenceTriggerVolumeLogic;

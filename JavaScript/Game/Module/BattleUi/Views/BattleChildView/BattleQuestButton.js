@@ -14,8 +14,8 @@ class BattleQuestButton extends BattleEntranceButton_1.BattleEntranceButton {
   constructor() {
     super(...arguments),
       (this.SequencePlayer = void 0),
-      (this.w_t = void 0),
-      (this.ZPt = (e) => {
+      (this.$ut = void 0),
+      (this.owt = (e) => {
         switch (e) {
           case MissionUpgradeIn:
             this.GetItem(2)?.SetUIActive(!0);
@@ -23,7 +23,7 @@ class BattleQuestButton extends BattleEntranceButton_1.BattleEntranceButton {
           case MissionUpgradeOut:
         }
       }),
-      (this.aut = (e) => {
+      (this.yct = (e) => {
         switch (e) {
           case MissionUpgradeIn:
             this.SequencePlayer.PlayLevelSequenceByName(MissionUpgradeOut),
@@ -34,12 +34,12 @@ class BattleQuestButton extends BattleEntranceButton_1.BattleEntranceButton {
           case MissionUpgradeOut:
             EventSystem_1.EventSystem.Emit(
               EventDefine_1.EEventName.MissionUpdateAnimEnd,
-              this.w_t,
+              this.$ut,
             );
         }
       }),
-      (this.tAn = (e) => {
-        this.w_t = e;
+      (this.sxn = (e) => {
+        this.$ut = e;
         var t = this.GetText(3),
           e =
             (e.IsNewQuest
@@ -62,8 +62,8 @@ class BattleQuestButton extends BattleEntranceButton_1.BattleEntranceButton {
       (this.SequencePlayer = new LevelSequencePlayer_1.LevelSequencePlayer(
         this.RootItem,
       )),
-      this.SequencePlayer.BindSequenceStartEvent(this.ZPt),
-      this.SequencePlayer.BindSequenceCloseEvent(this.aut),
+      this.SequencePlayer.BindSequenceStartEvent(this.owt),
+      this.SequencePlayer.BindSequenceCloseEvent(this.yct),
       this.AddEvents();
   }
   Reset() {
@@ -82,13 +82,13 @@ class BattleQuestButton extends BattleEntranceButton_1.BattleEntranceButton {
   AddEvents() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.MissionUpdate,
-      this.tAn,
+      this.sxn,
     );
   }
   RemoveEvents() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.MissionUpdate,
-      this.tAn,
+      this.sxn,
     );
   }
 }

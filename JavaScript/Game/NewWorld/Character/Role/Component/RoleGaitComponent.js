@@ -19,11 +19,11 @@ var __decorate =
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleGaitComponent = void 0);
-const EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent"),
+const Info_1 = require("../../../../../Core/Common/Info"),
+  EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent"),
   RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
   MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
   TsBaseRoleConfig_1 = require("../../../../Character/TsBaseRoleConfig"),
-  ModelManager_1 = require("../../../../Manager/ModelManager"),
   FormationAttributeController_1 = require("../../../../Module/Abilities/FormationAttributeController"),
   CharacterUnifiedStateTypes_1 = require("../../Common/Component/Abilities/CharacterUnifiedStateTypes"),
   RoleGaitStatic_1 = require("./Define/RoleGaitStatic"),
@@ -36,46 +36,46 @@ let RoleGaitComponent = class RoleGaitComponent extends EntityComponent_1.Entity
       (this.Hte = void 0),
       (this.Nce = void 0),
       (this.Gce = void 0),
-      (this.zJo = void 0),
-      (this.mbr = void 0),
+      (this.$zo = void 0),
+      (this.HBr = void 0),
       (this.Xte = void 0),
       (this.RoleForbidMovementHelper = void 0),
       (this.RoleGaitUnEnableState = new Map()),
-      (this.don = (t) => {
+      (this.Xin = (t) => {
         t
           ? (this.Xte.RemoveTag(388142570),
-            this.zJo.RemoveBuffByTag(388142570),
+            this.$zo.RemoveBuffByTag(388142570),
             this.RoleGaitUnEnableState.get(2).add(-63548288),
             this.RoleGaitUnEnableState.get(3).add(-63548288))
           : (this.RoleGaitUnEnableState.get(2).delete(-63548288),
             this.RoleGaitUnEnableState.get(3).delete(-63548288)),
-          this.Con();
+          this.$in();
       }),
-      (this.gon = (t) => {
+      (this.Yin = (t) => {
         t
           ? (this.Xte.RemoveTag(388142570),
-            this.zJo.RemoveBuffByTag(388142570),
+            this.$zo.RemoveBuffByTag(388142570),
             this.RoleGaitUnEnableState.get(1).add(229513169),
             this.RoleGaitUnEnableState.get(3).add(229513169))
           : (this.RoleGaitUnEnableState.get(1).delete(229513169),
             this.RoleGaitUnEnableState.get(3).delete(229513169)),
-          this.Con();
+          this.$in();
       }),
-      (this.fon = (t) => {
+      (this.Jin = (t) => {
         t
           ? this.RoleGaitUnEnableState.get(1).add(930178923)
           : this.RoleGaitUnEnableState.get(1).delete(930178923),
-          this.Con();
+          this.$in();
       }),
-      (this.pon = (t) => {
+      (this.zin = (t) => {
         t
           ? this.RoleGaitUnEnableState.get(3).add(477750727)
           : this.RoleGaitUnEnableState.get(3).delete(477750727),
-          this.Con();
+          this.$in();
       });
   }
   static get Dependencies() {
-    return [3, 161];
+    return [3, 163];
   }
   OnInitData() {
     return (
@@ -87,11 +87,11 @@ let RoleGaitComponent = class RoleGaitComponent extends EntityComponent_1.Entity
   OnStart() {
     return (
       (this.Hte = this.Entity.CheckGetComponent(3)),
-      (this.Gce = this.Entity.CheckGetComponent(161)),
-      (this.mbr = this.Entity.CheckGetComponent(158)),
-      (this.Xte = this.Entity.CheckGetComponent(185)),
-      (this.Nce = this.Entity.CheckGetComponent(52)),
-      (this.zJo = this.Entity.CheckGetComponent(157)),
+      (this.Gce = this.Entity.CheckGetComponent(163)),
+      (this.HBr = this.Entity.CheckGetComponent(160)),
+      (this.Xte = this.Entity.CheckGetComponent(188)),
+      (this.Nce = this.Entity.CheckGetComponent(53)),
+      (this.$zo = this.Entity.CheckGetComponent(159)),
       RoleGaitStatic_1.RoleGaitStatic.Init(),
       this.InitRoleForbidMovementHelper(),
       !0
@@ -102,30 +102,30 @@ let RoleGaitComponent = class RoleGaitComponent extends EntityComponent_1.Entity
       this.RoleGaitUnEnableState.set(1, new Set()),
       this.RoleGaitUnEnableState.set(3, new Set()),
       (this.RoleForbidMovementHelper.TagComp =
-        this.Entity.CheckGetComponent(185)),
-      this.RoleForbidMovementHelper.CreateTagHandler(-63548288, 1, this.don),
-      this.RoleForbidMovementHelper.CreateTagHandler(229513169, 1, this.gon),
-      this.RoleForbidMovementHelper.CreateTagHandler(930178923, 0, this.fon),
+        this.Entity.CheckGetComponent(188)),
+      this.RoleForbidMovementHelper.CreateTagHandler(-63548288, 1, this.Xin),
+      this.RoleForbidMovementHelper.CreateTagHandler(229513169, 1, this.Yin),
+      this.RoleForbidMovementHelper.CreateTagHandler(930178923, 0, this.Jin),
       this.RoleForbidMovementHelper.RegisterMutuallyTags([
         -63548288, 930178923,
       ]),
-      this.RoleForbidMovementHelper.CreateTagHandler(477750727, 0, this.pon),
+      this.RoleForbidMovementHelper.CreateTagHandler(477750727, 0, this.zin),
       this.RoleForbidMovementHelper.Awake();
   }
   OnClear() {
     return this.RoleForbidMovementHelper.Clear(), !0;
   }
   OnTick(t) {
-    this.Con();
+    this.$in();
   }
-  Con() {
+  $in() {
     var t, e, i, a;
     this.Hte.IsAutonomousProxy &&
-      (this.von(),
-      (t = this.mbr.MoveState),
-      (e = this.mbr.PositionState),
+      (this.Zin(),
+      (t = this.HBr.MoveState),
+      (e = this.HBr.PositionState),
       (i = this.Xte.HasTag(388142570)),
-      (a = this.mbr.DirectionState),
+      (a = this.HBr.DirectionState),
       this.Gce.HasMoveInput
         ? this.UpdateMovePressing(i, e, t, a)
         : this.UpdateMoveReleasing(i, e, t, a));
@@ -157,33 +157,33 @@ let RoleGaitComponent = class RoleGaitComponent extends EntityComponent_1.Entity
             );
           if (i !== CharacterUnifiedStateTypes_1.ECharMoveState.Sprint) {
             if (s >= RoleStrengthComponent_1.STRENGTH_TOLERANCE) {
-              this.mbr.SetMoveState(
+              this.HBr.SetMoveState(
                 CharacterUnifiedStateTypes_1.ECharMoveState.Sprint,
               );
               break;
             }
           } else if (0 < s) break;
         }
-        this.mbr.IsWalkBaseMode
+        this.HBr.IsWalkBaseMode
           ? !this.EnableRoleGaitState(1) && this.EnableRoleGaitState(2)
-            ? this.mbr.SetMoveState(
+            ? this.HBr.SetMoveState(
                 CharacterUnifiedStateTypes_1.ECharMoveState.Run,
               )
-            : this.mbr.SetMoveState(
+            : this.HBr.SetMoveState(
                 CharacterUnifiedStateTypes_1.ECharMoveState.Walk,
               )
           : !this.EnableRoleGaitState(2) && this.EnableRoleGaitState(1)
-            ? this.mbr.SetMoveState(
+            ? this.HBr.SetMoveState(
                 CharacterUnifiedStateTypes_1.ECharMoveState.Walk,
               )
-            : this.mbr.SetMoveState(
+            : this.HBr.SetMoveState(
                 CharacterUnifiedStateTypes_1.ECharMoveState.Run,
               );
         break;
       case CharacterUnifiedStateTypes_1.ECharPositionState.Water:
         i !== CharacterUnifiedStateTypes_1.ECharMoveState.FastSwim &&
           i !== CharacterUnifiedStateTypes_1.ECharMoveState.NormalSwim &&
-          this.mbr.SetMoveState(
+          this.HBr.SetMoveState(
             CharacterUnifiedStateTypes_1.ECharMoveState.NormalSwim,
           );
         break;
@@ -192,7 +192,7 @@ let RoleGaitComponent = class RoleGaitComponent extends EntityComponent_1.Entity
           i !== CharacterUnifiedStateTypes_1.ECharMoveState.ExitClimb &&
           i !== CharacterUnifiedStateTypes_1.ECharMoveState.FastClimb &&
           i !== CharacterUnifiedStateTypes_1.ECharMoveState.NormalClimb &&
-          this.mbr.SetMoveState(
+          this.HBr.SetMoveState(
             CharacterUnifiedStateTypes_1.ECharMoveState.NormalClimb,
           );
     }
@@ -200,7 +200,7 @@ let RoleGaitComponent = class RoleGaitComponent extends EntityComponent_1.Entity
   UpdateMoveReleasing(t, e, i, a) {
     switch (
       (t &&
-        (this.Xte.RemoveTag(388142570), this.zJo.RemoveBuffByTag(388142570)),
+        (this.Xte.RemoveTag(388142570), this.$zo.RemoveBuffByTag(388142570)),
       e)
     ) {
       case CharacterUnifiedStateTypes_1.ECharPositionState.Ground:
@@ -215,30 +215,30 @@ let RoleGaitComponent = class RoleGaitComponent extends EntityComponent_1.Entity
             case CharacterUnifiedStateTypes_1.ECharMoveState.RunStop:
             case CharacterUnifiedStateTypes_1.ECharMoveState.SprintStop:
               this.Gce.Speed < STOP_SPEED &&
-                this.mbr.SetMoveState(
+                this.HBr.SetMoveState(
                   CharacterUnifiedStateTypes_1.ECharMoveState.Stand,
                 );
           }
         break;
       case CharacterUnifiedStateTypes_1.ECharPositionState.Water:
-        this.mbr.SetMoveState(
+        this.HBr.SetMoveState(
           CharacterUnifiedStateTypes_1.ECharMoveState.Other,
         );
         break;
       case CharacterUnifiedStateTypes_1.ECharPositionState.Climb:
-        this.mbr.MoveState !==
+        this.HBr.MoveState !==
           CharacterUnifiedStateTypes_1.ECharMoveState.EnterClimb &&
-          this.mbr.MoveState !==
+          this.HBr.MoveState !==
             CharacterUnifiedStateTypes_1.ECharMoveState.ExitClimb &&
-          this.mbr.SetMoveState(
+          this.HBr.SetMoveState(
             CharacterUnifiedStateTypes_1.ECharMoveState.Other,
           );
     }
   }
   SetRunStop() {
-    switch (this.mbr.MoveState) {
+    switch (this.HBr.MoveState) {
       case CharacterUnifiedStateTypes_1.ECharMoveState.Walk:
-        this.mbr.SetMoveState(
+        this.HBr.SetMoveState(
           CharacterUnifiedStateTypes_1.ECharMoveState.WalkStop,
         );
         break;
@@ -249,52 +249,47 @@ let RoleGaitComponent = class RoleGaitComponent extends EntityComponent_1.Entity
         this.Gce.Speed <
         this.Gce.MovementData.FaceDirection.Standing.SprintSpeed -
           TsBaseRoleConfig_1.tsBaseRoleConfig.MaxRunStopSpeed
-          ? this.mbr.SetMoveState(
+          ? this.HBr.SetMoveState(
               CharacterUnifiedStateTypes_1.ECharMoveState.RunStop,
             )
-          : this.mbr.SetMoveState(
+          : this.HBr.SetMoveState(
               CharacterUnifiedStateTypes_1.ECharMoveState.SprintStop,
             );
     }
   }
-  von() {
-    switch (ModelManager_1.ModelManager.PlatformModel.InputController) {
-      case 0:
-        break;
-      case 1:
-        this.Mon();
-        break;
-      case 2:
-        this.Son();
-    }
+  Zin() {
+    Info_1.Info.IsInKeyBoard() ||
+      (Info_1.Info.IsInGamepad()
+        ? this.eon()
+        : Info_1.Info.IsInTouch() && this.ton());
   }
-  Mon() {
+  eon() {
     this.Nce.GetMoveVectorCache().SizeSquared() >
     MathUtils_1.MathUtils.Square(
       RoleGaitStatic_1.RoleGaitStatic.GetWalkOrRunRate(),
     )
-      ? this.mbr.MoveState ===
+      ? this.HBr.MoveState ===
           CharacterUnifiedStateTypes_1.ECharMoveState.Walk &&
-        this.mbr.WalkPress()
-      : this.mbr.MoveState ===
+        this.HBr.WalkPress()
+      : this.HBr.MoveState ===
           CharacterUnifiedStateTypes_1.ECharMoveState.Run &&
-        this.mbr.WalkPress();
+        this.HBr.WalkPress();
   }
-  Son() {
+  ton() {
     this.Nce.GetMoveVectorCache().SizeSquared() >
     MathUtils_1.MathUtils.Square(
       RoleGaitStatic_1.RoleGaitStatic.GetWalkOrRunRate(),
     )
-      ? this.mbr.MoveState ===
+      ? this.HBr.MoveState ===
           CharacterUnifiedStateTypes_1.ECharMoveState.Walk &&
-        this.mbr.WalkPress()
-      : this.mbr.MoveState ===
+        this.HBr.WalkPress()
+      : this.HBr.MoveState ===
           CharacterUnifiedStateTypes_1.ECharMoveState.Run &&
-        this.mbr.WalkPress();
+        this.HBr.WalkPress();
   }
 };
 (RoleGaitComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(82)],
+  [(0, RegisterComponent_1.RegisterComponent)(84)],
   RoleGaitComponent,
 )),
   (exports.RoleGaitComponent = RoleGaitComponent);

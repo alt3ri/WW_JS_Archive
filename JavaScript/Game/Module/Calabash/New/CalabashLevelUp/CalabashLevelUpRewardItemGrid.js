@@ -18,9 +18,9 @@ class CalabashLevelUpRewardItemGrid extends LoopScrollSmallItemGrid_1.LoopScroll
   OnRefresh(e, t, r) {
     this.Mne = e.ItemData[0].ItemId;
     var a = e.ItemData[1];
-    this.bft(this.Mne, a, e);
+    this.Qpt(this.Mne, a, e);
   }
-  bft(e, t, r) {
+  Qpt(e, t, r) {
     if (
       ((this.Mne = e),
       1 ===

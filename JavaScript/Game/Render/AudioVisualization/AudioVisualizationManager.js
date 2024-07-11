@@ -13,9 +13,9 @@ class AudioVisualizationManager {
   }
   static Get() {
     return (
-      this.Ysr ||
-        ((this.Ysr = new AudioVisualizationManager()), this.Ysr.Initialize()),
-      this.Ysr
+      this.Yar ||
+        ((this.Yar = new AudioVisualizationManager()), this.Yar.Initialize()),
+      this.Yar
     );
   }
   LoadAssets() {
@@ -57,6 +57,6 @@ class AudioVisualizationManager {
   }
   Tick(i) {}
 }
-((exports.AudioVisualizationManager = AudioVisualizationManager).Ysr = void 0),
+((exports.AudioVisualizationManager = AudioVisualizationManager).Yar = void 0),
   (AudioVisualizationManager.xW = void 0);
 //# sourceMappingURL=AudioVisualizationManager.js.map

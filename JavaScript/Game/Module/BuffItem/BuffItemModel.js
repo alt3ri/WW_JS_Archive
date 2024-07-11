@@ -9,15 +9,15 @@ const ModelBase_1 = require("../../../Core/Framework/ModelBase"),
 class BuffItemModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
-      (this.Ugt = new Map()),
-      (this.Jot = new Map()),
-      (this.Agt = 0),
-      (this.Pgt = void 0),
-      (this.xgt = void 0),
-      (this.wgt = 0),
-      (this.Bgt = (e) => {
-        this.GetBuffItemRemainCdTime(this.wgt) <= 0 &&
-          (this.xgt && this.xgt(), this.bgt());
+      (this.F0t = new Map()),
+      (this.lnt = new Map()),
+      (this.V0t = 0),
+      (this.H0t = void 0),
+      (this.j0t = void 0),
+      (this.W0t = 0),
+      (this.K0t = (e) => {
+        this.GetBuffItemRemainCdTime(this.W0t) <= 0 &&
+          (this.j0t && this.j0t(), this.Q0t());
       });
   }
   OnInit() {
@@ -31,44 +31,44 @@ class BuffItemModel extends ModelBase_1.ModelBase {
   }
   NewBuffItemData(e, t, s) {
     t = new BuffItemData_1.BuffItemData(e, t, s);
-    this.Jot.set(e, t);
+    this.lnt.set(e, t);
   }
   GetBuffItemData(e) {
-    return this.Jot.get(e);
+    return this.lnt.get(e);
   }
   GetBuffItemMap() {
-    return this.Jot;
+    return this.lnt;
   }
   GetInCdBuffItemMap(e) {
-    for (const s of this.Jot.values()) {
+    for (const s of this.lnt.values()) {
       var t;
       s.GetBuffItemRemainCdTime() <= 0 || ((t = s.ItemConfigId), e.set(t, s));
     }
   }
   ClearAllBuffItemData() {
-    this.Ugt.clear(), this.Jot.clear();
+    this.F0t.clear(), this.lnt.clear();
   }
   NewUseBuffItemRoleData(e, t, s, i, r, f, m, u) {
     e = new UseBuffItemRoleData_1.UseBuffItemRoleData(e, t, s, i, r, f, m, u);
-    this.Ugt.set(t, e);
+    this.F0t.set(t, e);
   }
   SetCurrentUseBuffItemId(e) {
-    this.Agt = e;
+    this.V0t = e;
   }
   GetCurrentUseBuffItemId() {
-    return this.Agt;
+    return this.V0t;
   }
   GetAllUseBuffItemRole() {
-    return this.Ugt;
+    return this.F0t;
   }
   GetUseBuffItemRole(e) {
-    return this.Ugt.get(e);
+    return this.F0t.get(e);
   }
   GetUseItemRoleByRoleConfigId(e) {
-    for (const t of this.Ugt.values()) if (t.RoleConfigId === e) return t;
+    for (const t of this.F0t.values()) if (t.RoleConfigId === e) return t;
   }
   ClearAllUseBuffItemRoleData() {
-    this.Ugt.clear();
+    this.F0t.clear();
   }
   GetBuffItemRemainCdTime(e) {
     e = this.GetBuffItemData(e);
@@ -86,19 +86,19 @@ class BuffItemModel extends ModelBase_1.ModelBase {
   }
   SetBuffItemCdEndCallback(e, t) {
     this.GetBuffItemData(e) &&
-      ((this.wgt = e),
-      (this.xgt = t),
-      (this.Pgt = TimerSystem_1.TimerSystem.Forever(
-        this.Bgt,
+      ((this.W0t = e),
+      (this.j0t = t),
+      (this.H0t = TimerSystem_1.TimerSystem.Forever(
+        this.K0t,
         TimeUtil_1.TimeUtil.InverseMillisecond,
       )));
   }
-  bgt() {
-    TimerSystem_1.TimerSystem.Has(this.Pgt) &&
-      TimerSystem_1.TimerSystem.Remove(this.Pgt),
-      (this.wgt = 0),
-      (this.xgt = void 0),
-      (this.Pgt = void 0);
+  Q0t() {
+    TimerSystem_1.TimerSystem.Has(this.H0t) &&
+      TimerSystem_1.TimerSystem.Remove(this.H0t),
+      (this.W0t = 0),
+      (this.j0t = void 0),
+      (this.H0t = void 0);
   }
 }
 exports.BuffItemModel = BuffItemModel;

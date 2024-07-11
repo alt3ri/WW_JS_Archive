@@ -55,12 +55,12 @@ class BulletActionInitHit extends BulletActionBase_1.BulletActionBase {
       i.Base.DaHitTypePreset
         ? (this.BulletInfo.BulletCamp = i.Base.BulletCamp)
         : (this.BulletInfo.BulletCamp = campNumbers[i.Base.HitType]),
-      this.Z4o();
+      this.Y5o();
   }
-  Z4o() {
+  Y5o() {
     var e,
       i,
-      t = this.e5o();
+      t = this.J5o();
     t !== QueryTypeDefine_1.KuroCollisionChannel.Pawn &&
       ((e = this.BulletInfo.CollisionInfo),
       this.BulletInfo.BulletCamp & ENEMY_NUMBER ||
@@ -78,7 +78,7 @@ class BulletActionInitHit extends BulletActionBase_1.BulletActionBase {
       e.IgnoreChannels.add(i),
       e.IgnoreQueries.add(collisionChannelToObjectTypeQueryMap.get(i)));
   }
-  e5o() {
+  J5o() {
     return 0 === this.BulletInfo.AttackerCamp
       ? QueryTypeDefine_1.KuroCollisionChannel.PawnPlayer
       : 1 === this.BulletInfo.AttackerCamp

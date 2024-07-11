@@ -16,20 +16,20 @@ exports.CharacterDynamicFlowData = CharacterDynamicFlowData;
 class DynamicFlowController extends ControllerBase_1.ControllerBase {
   static OnInit() {
     return (
-      this.Q$o(),
-      Net_1.Net.Register(24376, DynamicFlowController.X$o),
-      Net_1.Net.Register(12700, DynamicFlowController.$$o),
+      this.jYo(),
+      Net_1.Net.Register(18847, DynamicFlowController.WYo),
+      Net_1.Net.Register(5877, DynamicFlowController.KYo),
       !0
     );
   }
   static OnClear() {
-    return Net_1.Net.UnRegister(24376), Net_1.Net.UnRegister(12700), !0;
+    return Net_1.Net.UnRegister(18847), Net_1.Net.UnRegister(5877), !0;
   }
-  static Q$o() {
-    this.Y$o.set(1, 5),
-      this.Y$o.set(2, 20),
-      this.Y$o.set(3, 20),
-      this.Y$o.set(4, 20);
+  static jYo() {
+    this.QYo.set(1, 5),
+      this.QYo.set(2, 20),
+      this.QYo.set(3, 20),
+      this.QYo.set(4, 20);
   }
   static CreateCharacterFlowData(r) {
     var t = new CharacterDynamicFlowData();
@@ -39,7 +39,7 @@ class DynamicFlowController extends ControllerBase_1.ControllerBase {
     if (!r?.BubbleData?.EntityIds.length) return !1;
     var t = this.GetDynamicFlowPriority(r.Type);
     for (const i of r.BubbleData.EntityIds)
-      if (this.J$o.has(i)) {
+      if (this.XYo.has(i)) {
         var e = this.GetDynamicFlowByActor(i);
         if (t <= this.GetDynamicFlowPriority(e.Type))
           return (
@@ -60,8 +60,8 @@ class DynamicFlowController extends ControllerBase_1.ControllerBase {
     var o = r.BubbleData.EntityIds[0],
       a = ModelManager_1.ModelManager.CreatureModel?.GetEntityByPbDataId(o);
     a?.Entity?.IsInit && a.Entity?.GetComponent(28)?.PlayDynamicFlowBegin(r),
-      this.z$o.set(o, r);
-    for (const n of r.BubbleData.EntityIds) this.J$o.set(n, o);
+      this.$Yo.set(o, r);
+    for (const n of r.BubbleData.EntityIds) this.XYo.set(n, o);
     return (
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
@@ -76,15 +76,15 @@ class DynamicFlowController extends ControllerBase_1.ControllerBase {
     );
   }
   static RemoveDynamicFlow(r) {
-    r = this.J$o.get(r);
+    r = this.XYo.get(r);
     if (!r) return !1;
-    var t = this.z$o.get(r);
+    var t = this.$Yo.get(r);
     if (!t) return !1;
     var e = ModelManager_1.ModelManager.CreatureModel?.GetEntityByPbDataId(r);
     e?.Entity?.IsInit && e.Entity?.GetComponent(28)?.PlayDynamicFlowEnd();
-    for (const o of t.BubbleData.EntityIds) this.J$o.delete(o);
+    for (const o of t.BubbleData.EntityIds) this.XYo.delete(o);
     return (
-      this.z$o.delete(r),
+      this.$Yo.delete(r),
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "NPC",
@@ -98,28 +98,28 @@ class DynamicFlowController extends ControllerBase_1.ControllerBase {
     );
   }
   static GetDynamicFlowByActor(r) {
-    r = this.J$o.get(r);
-    if (r) return this.z$o.get(r);
+    r = this.XYo.get(r);
+    if (r) return this.$Yo.get(r);
   }
   static GetDynamicFlowByMasterActor(r) {
-    if (r) return this.z$o.get(r);
+    if (r) return this.$Yo.get(r);
   }
   static GetDynamicFlowPriority(r) {
-    return r && this.Y$o.has(r) ? this.Y$o.get(r) : DEFAULT_TYPE_PRIORITY;
+    return r && this.QYo.has(r) ? this.QYo.get(r) : DEFAULT_TYPE_PRIORITY;
   }
 }
-((exports.DynamicFlowController = DynamicFlowController).z$o = new Map()),
-  (DynamicFlowController.J$o = new Map()),
-  (DynamicFlowController.Y$o = new Map()),
-  (DynamicFlowController.X$o = (r) => {
-    var r = ConfigManager_1.ConfigManager.BubbleConfig.GetBubbleData(r.rMs);
+((exports.DynamicFlowController = DynamicFlowController).$Yo = new Map()),
+  (DynamicFlowController.XYo = new Map()),
+  (DynamicFlowController.QYo = new Map()),
+  (DynamicFlowController.WYo = (r) => {
+    var r = ConfigManager_1.ConfigManager.BubbleConfig.GetBubbleData(r.pIs);
     r &&
       r.EntityIds.length &&
       ((r = DynamicFlowController.CreateCharacterFlowData(r)),
       DynamicFlowController.AddDynamicFlow(r));
   }),
-  (DynamicFlowController.$$o = (r) => {
-    var r = ConfigManager_1.ConfigManager.BubbleConfig.GetBubbleData(r.rMs);
+  (DynamicFlowController.KYo = (r) => {
+    var r = ConfigManager_1.ConfigManager.BubbleConfig.GetBubbleData(r.pIs);
     r &&
       r.EntityIds.length &&
       ((r = r.EntityIds[0]), DynamicFlowController.RemoveDynamicFlow(r));

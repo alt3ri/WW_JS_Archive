@@ -9,9 +9,9 @@ const UE = require("ue"),
 class RoleFavorHintItem extends UiPanelBase_1.UiPanelBase {
   constructor(e, i) {
     super(),
-      (this.q1o = void 0),
-      (this.EPe = void 0),
-      (this.G1o = (e) => {
+      (this.x_o = void 0),
+      (this.SPe = void 0),
+      (this.w_o = (e) => {
         "Start" === e
           ? this.PlayHalfway()
           : "Move" === e
@@ -19,21 +19,21 @@ class RoleFavorHintItem extends UiPanelBase_1.UiPanelBase {
             : "Close" === e && this.OnSequenceFinish();
       }),
       (this.PlayStart = () => {
-        this.EPe.PlayLevelSequenceByName("Start");
+        this.SPe.PlayLevelSequenceByName("Start");
       }),
       (this.PlayHalfway = () => {
-        this.EPe.PlayLevelSequenceByName("Move");
+        this.SPe.PlayLevelSequenceByName("Move");
       }),
       (this.PlayEnd = () => {
-        this.EPe.PlayLevelSequenceByName("Close");
+        this.SPe.PlayLevelSequenceByName("Close");
       }),
       (this.OnSequenceFinish = () => {
-        this.q1o && this.q1o();
+        this.x_o && this.x_o();
       }),
       (this.SetSequenceFinishCallBack = (e) => {
-        this.q1o = e;
+        this.x_o = e;
       }),
-      (this.N1o = e),
+      (this.B_o = e),
       this.CreateThenShowByActor(i.GetOwner());
   }
   OnRegisterComponent() {
@@ -46,8 +46,8 @@ class RoleFavorHintItem extends UiPanelBase_1.UiPanelBase {
   }
   OnStart() {
     var e, i;
-    this.N1o &&
-      ((e = this.N1o.Exp),
+    this.B_o &&
+      ((e = this.B_o.Exp),
       (i =
         ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
           "T_IconA80_hgd_UI",
@@ -56,12 +56,12 @@ class RoleFavorHintItem extends UiPanelBase_1.UiPanelBase {
       (i = this.GetText(1)),
       LguiUtil_1.LguiUtil.SetLocalText(i, "FavorExp"),
       this.GetText(2).SetText(String(e)),
-      (this.EPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem)),
-      this.EPe.BindSequenceCloseEvent(this.G1o),
+      (this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem)),
+      this.SPe.BindSequenceCloseEvent(this.w_o),
       this.PlayStart());
   }
   OnBeforeDestroy() {
-    this.EPe?.Clear(), (this.q1o = void 0), (this.N1o = void 0);
+    this.SPe?.Clear(), (this.x_o = void 0), (this.B_o = void 0);
   }
 }
 exports.RoleFavorHintItem = RoleFavorHintItem;

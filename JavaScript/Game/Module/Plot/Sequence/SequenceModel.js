@@ -42,6 +42,8 @@ class SequenceModel extends ModelBase_1.ModelBase {
       (this.RelativeTransform = void 0),
       (this.CurFinalPos = []),
       (this.IsFadeEnd = []),
+      (this.CurLanguageAudio = 0),
+      (this.NeedJumpWhenResume = !1),
       (this.CurLevelSeqActor = void 0),
       (this.CurSubtitleStartFrames = []),
       (this.CurSubtitleEndFrames = []),
@@ -99,6 +101,8 @@ class SequenceModel extends ModelBase_1.ModelBase {
       this.CurSubtitle.Clear(),
       (this.Type = void 0),
       (this.RelativeTransform = void 0),
+      (this.CurLanguageAudio = 0),
+      (this.NeedJumpWhenResume = !1),
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("Plot", 39, "清理引用数据-SequenceModel");
   }

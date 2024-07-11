@@ -13,7 +13,7 @@ class FlowActionCameraLookAt extends FlowActionLevelAsyncAction_1.FlowActionLeve
   OnInterruptExecute() {
     var e =
         ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity.Entity.GetComponent(
-          52,
+          53,
         ),
       o = this.ActionInfo.Params;
     CameraController_1.CameraController.FightCamera.LogicComponent.ExitCameraGuide(),

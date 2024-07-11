@@ -2,7 +2,8 @@
 var _a;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BattleUiControl = void 0);
-const Log_1 = require("../../../Core/Common/Log"),
+const Info_1 = require("../../../Core/Common/Info"),
+  Log_1 = require("../../../Core/Common/Log"),
   Stats_1 = require("../../../Core/Common/Stats"),
   ObjectSystem_1 = require("../../../Core/Object/ObjectSystem"),
   CameraController_1 = require("../../Camera/CameraController"),
@@ -51,51 +52,59 @@ class BattleUiControl extends UiControllerBase_1.UiControllerBase {
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.RoleLevelUp,
-        this.mKe,
+        this.TQe,
       ),
       EventSystem_1.EventSystem.Add(
-        EventDefine_1.EEventName.OnPlatformChanged,
-        this.dKe,
+        EventDefine_1.EEventName.ShowTypeChange,
+        this.N0a,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnFunctionOpenSet,
-        this.CKe,
+        this.DQe,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnFunctionOpenUpdate,
-        this.gKe,
+        this.RQe,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnRevive,
-        this.fKe,
+        this.UQe,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.CharOnBuffAddUIPrefab,
-        this.pKe,
+        this.AQe,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnUpdateSceneTeam,
-        this.tje,
+        this.mWe,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnRefreshOnlineTeamList,
-        this.tje,
+        this.mWe,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnChangeWalkOrRun,
-        this.vKe,
+        this.PQe,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.SetImageQuality,
-        this.MKe,
+        this.xQe,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.SetResolution,
-        this.MKe,
+        this.xQe,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.SetDisplayMode,
-        this.MKe,
+        this.xQe,
+      ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.OnPlayerFollowerCreate,
+        this.mDn,
+      ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.OnPlayerFollowerDestroy,
+        this.dDn,
       );
     var e =
         ModelManager_1.ModelManager.BattleUiModel.ExploreModeData.GetActionNames(),
@@ -107,15 +116,15 @@ class BattleUiControl extends UiControllerBase_1.UiControllerBase {
         ModelManager_1.ModelManager.BattleUiModel.FormationPanelData.GetActionNames());
     InputDistributeController_1.InputDistributeController.BindActions(
       e,
-      this.$yn,
+      this.gTn,
     ),
       ModelManager_1.ModelManager.BattleUiModel.ChildViewData.AddCallback(
         0,
-        this.SKe,
+        this.wQe,
       ),
       ModelManager_1.ModelManager.BattleUiModel.ChildViewData.AddCallback(
         18,
-        this.EKe,
+        this.BQe,
       );
   }
   static OnRemoveEvents() {
@@ -137,51 +146,59 @@ class BattleUiControl extends UiControllerBase_1.UiControllerBase {
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.RoleLevelUp,
-        this.mKe,
+        this.TQe,
       ),
       EventSystem_1.EventSystem.Remove(
-        EventDefine_1.EEventName.OnPlatformChanged,
-        this.dKe,
+        EventDefine_1.EEventName.ShowTypeChange,
+        this.N0a,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnFunctionOpenSet,
-        this.CKe,
+        this.DQe,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnFunctionOpenUpdate,
-        this.gKe,
+        this.RQe,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnRevive,
-        this.fKe,
+        this.UQe,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.CharOnBuffAddUIPrefab,
-        this.pKe,
+        this.AQe,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnUpdateSceneTeam,
-        this.tje,
+        this.mWe,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnRefreshOnlineTeamList,
-        this.tje,
+        this.mWe,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnChangeWalkOrRun,
-        this.vKe,
+        this.PQe,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.SetImageQuality,
-        this.MKe,
+        this.xQe,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.SetResolution,
-        this.MKe,
+        this.xQe,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.SetDisplayMode,
-        this.MKe,
+        this.xQe,
+      ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.OnPlayerFollowerCreate,
+        this.mDn,
+      ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.OnPlayerFollowerDestroy,
+        this.dDn,
       );
     var e =
         ModelManager_1.ModelManager.BattleUiModel.ExploreModeData.GetActionNames(),
@@ -193,15 +210,15 @@ class BattleUiControl extends UiControllerBase_1.UiControllerBase {
         ModelManager_1.ModelManager.BattleUiModel.FormationPanelData.GetActionNames());
     InputDistributeController_1.InputDistributeController.UnBindActions(
       e,
-      this.$yn,
+      this.gTn,
     ),
       ModelManager_1.ModelManager.BattleUiModel.ChildViewData.RemoveCallback(
         0,
-        this.SKe,
+        this.wQe,
       ),
       ModelManager_1.ModelManager.BattleUiModel.ChildViewData.RemoveCallback(
         18,
-        this.EKe,
+        this.BQe,
       );
   }
   static async PreloadBattleViewFromLoading() {
@@ -210,7 +227,7 @@ class BattleUiControl extends UiControllerBase_1.UiControllerBase {
         Log_1.Log.Debug("Battle", 18, "battleView preload start"),
       await this.Pool.Init(),
       await ModelManager_1.ModelManager.BattleUiModel.Preload(),
-      (BattleUiControl.yKe =
+      (BattleUiControl.bQe =
         await UiManager_1.UiManager.PreOpenViewAsync("BattleView")),
       DamageUiManager_1.DamageUiManager.PreloadDamageView(),
       Log_1.Log.CheckDebug() &&
@@ -223,17 +240,17 @@ class BattleUiControl extends UiControllerBase_1.UiControllerBase {
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("Battle", 18, "battleView open start"),
       (await UiManager_1.UiManager.OpenViewAfterPreOpenedAsync(
-        BattleUiControl.yKe,
+        BattleUiControl.bQe,
       )) || (await UiManager_1.UiManager.OpenViewAsync("BattleView")),
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("Battle", 18, "battleView open end"),
       !0
     );
   }
-  static IKe() {
+  static qQe() {
     EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.ShowHUD);
   }
-  static TKe() {
+  static GQe() {
     EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.HideHUD);
   }
   static AddFullScreenEffect(e, t) {
@@ -248,16 +265,16 @@ class BattleUiControl extends UiControllerBase_1.UiControllerBase {
     );
   }
   static SetBattleViewVisible(e) {
-    !this.LKe.delete(e) ||
-      0 < this.LKe.size ||
+    !this.NQe.delete(e) ||
+      0 < this.NQe.size ||
       ModelManager_1.ModelManager.BattleUiModel.ChildViewData.ShowBattleView(9);
   }
   static SetBattleViewDisable() {
     return (
       ModelManager_1.ModelManager.BattleUiModel.ChildViewData.HideBattleView(9),
-      this.DKe++,
-      this.LKe.add(this.DKe),
-      this.DKe
+      this.OQe++,
+      this.NQe.add(this.OQe),
+      this.OQe
     );
   }
   static FocusToTargetLocation(e) {
@@ -279,11 +296,11 @@ class BattleUiControl extends UiControllerBase_1.UiControllerBase {
   }
 }
 (exports.BattleUiControl = BattleUiControl),
-  ((_a = BattleUiControl).RKe = void 0),
+  ((_a = BattleUiControl).kQe = void 0),
   (BattleUiControl.Model = BattleUiModel_1.BattleUiModel),
   (BattleUiControl.Pool = new BattleUiPool_1.BattleUiPool()),
-  (BattleUiControl.DKe = 0),
-  (BattleUiControl.LKe = new Set()),
+  (BattleUiControl.OQe = 0),
+  (BattleUiControl.NQe = new Set()),
   (BattleUiControl.nye = () => {
     ModelManager_1.ModelManager.BattleUiModel.OnWorldDone();
   }),
@@ -296,25 +313,24 @@ class BattleUiControl extends UiControllerBase_1.UiControllerBase {
   (BattleUiControl.zpe = (e, t) => {
     ModelManager_1.ModelManager.BattleUiModel.OnRemoveEntity(t);
   }),
-  (BattleUiControl.fKe = (e) => {
+  (BattleUiControl.UQe = (e) => {
     ObjectSystem_1.ObjectSystem.IsValid(e) &&
       ModelManager_1.ModelManager.BattleUiModel.TryBroadcastRevive(e.Id);
   }),
-  (BattleUiControl.mKe = (e, t, n) => {
+  (BattleUiControl.TQe = (e, t, n) => {
     ModelManager_1.ModelManager.BattleUiModel.TryBroadcastRoleLevelUpData(
       e,
       t,
       n,
     );
   }),
-  (BattleUiControl.dKe = (e, t, n, a) => {
-    t !== n &&
-      UiManager_1.UiManager.IsViewOpen("BattleView") &&
+  (BattleUiControl.N0a = (e, t) => {
+    UiManager_1.UiManager.IsViewOpen("BattleView") &&
       UiManager_1.UiManager.CloseView("BattleView", () => {
         UiManager_1.UiManager.OpenView("BattleView");
       });
   }),
-  (BattleUiControl.CKe = (e, t) => {
+  (BattleUiControl.DQe = (e, t) => {
     (10016 !== e && !t) ||
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
@@ -326,7 +342,7 @@ class BattleUiControl extends UiControllerBase_1.UiControllerBase {
         EventDefine_1.EEventName.OnFirstOpenShopChanged,
       ));
   }),
-  (BattleUiControl.gKe = (e, t) => {
+  (BattleUiControl.RQe = (e, t) => {
     (10016 !== e && !t) ||
       (LocalStorage_1.LocalStorage.SetPlayer(
         LocalStorageDefine_1.ELocalStoragePlayerKey.FirstOpenShop,
@@ -336,7 +352,7 @@ class BattleUiControl extends UiControllerBase_1.UiControllerBase {
         EventDefine_1.EEventName.OnFirstOpenShopChanged,
       ));
   }),
-  (BattleUiControl.pKe = (e, t, n) => {
+  (BattleUiControl.AQe = (e, t, n) => {
     var a = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
     a?.Valid &&
       a.Id === e &&
@@ -348,13 +364,12 @@ class BattleUiControl extends UiControllerBase_1.UiControllerBase {
           e.SetFloatParameter("Sprite_Y", n.Height))
         : BattleUiControl.RemoveFullScreenEffectByUniqueId(a));
   }),
-  (BattleUiControl.tje = () => {
+  (BattleUiControl.mWe = () => {
     ModelManager_1.ModelManager.BattleUiModel.OnFormationLoaded();
   }),
-  (BattleUiControl.vKe = (e, t) => {
+  (BattleUiControl.PQe = (e, t) => {
     ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity?.Valid &&
-      !ModelManager_1.ModelManager.PlatformModel.IsMobile() &&
-      1 !== ModelManager_1.ModelManager.PlatformModel.InputController &&
+      Info_1.Info.IsInKeyBoard() &&
       e !== t &&
       ((e = InputSettingsManager_1.InputSettingsManager.GetActionBinding(
         InputMappingsDefine_1.actionMappings.走跑切换,
@@ -371,8 +386,14 @@ class BattleUiControl extends UiControllerBase_1.UiControllerBase {
             `<texture=${e}/>`,
           ));
   }),
-  (BattleUiControl.MKe = () => {
+  (BattleUiControl.xQe = () => {
     ModelManager_1.ModelManager.BattleUiModel.UpdateViewPortSize();
+  }),
+  (BattleUiControl.mDn = (e) => {
+    ModelManager_1.ModelManager.BattleUiModel.FormationData.AddFollower(e);
+  }),
+  (BattleUiControl.dDn = () => {
+    ModelManager_1.ModelManager.BattleUiModel.FormationData.RemoveFollower();
   }),
   (BattleUiControl.bMe = (e, t) => {
     ModelManager_1.ModelManager.BattleUiModel.ExploreModeData.InputAction(
@@ -380,7 +401,7 @@ class BattleUiControl extends UiControllerBase_1.UiControllerBase {
       0 === t,
     );
   }),
-  (BattleUiControl.$yn = (t, n) => {
+  (BattleUiControl.gTn = (t, n) => {
     if (0 === n) {
       let e = -1;
       switch (t) {
@@ -404,13 +425,13 @@ class BattleUiControl extends UiControllerBase_1.UiControllerBase {
         SceneTeamController_1.SceneTeamController.TryChangeRoleOrQte(n));
     }
   }),
-  (BattleUiControl.yKe = void 0),
-  (BattleUiControl.SKe = () => {
+  (BattleUiControl.bQe = void 0),
+  (BattleUiControl.wQe = () => {
     ModelManager_1.ModelManager.BattleUiModel.ChildViewData.GetChildVisible(0)
-      ? _a.IKe()
-      : _a.TKe();
+      ? _a.qQe()
+      : _a.GQe();
   }),
-  (BattleUiControl.EKe = () => {
+  (BattleUiControl.BQe = () => {
     var e =
       ModelManager_1.ModelManager.BattleUiModel.ChildViewData.GetChildVisible(
         18,

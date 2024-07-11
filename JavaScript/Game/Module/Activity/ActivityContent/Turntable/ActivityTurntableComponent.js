@@ -23,23 +23,23 @@ class ActivityTurntableComponent extends UiPanelBase_1.UiPanelBase {
     super(...arguments),
       (this.sOe = []),
       (this.LevelSequencePlayer = void 0),
-      (this.fRn = void 0),
-      (this.ddo = 0),
-      (this.pRn = 0),
-      (this.vRn = new UE.Rotator()),
+      (this.KAn = void 0),
+      (this.uCo = 0),
+      (this.QAn = 0),
+      (this.XAn = new UE.Rotator()),
       (this.Activate = !0),
-      (this.Uqn = 0),
-      (this.MRn = (t) => {
-        t === TURNTABLE_ROTATE_PARAM && this.Activate && this.SRn(this.pRn);
+      (this.B2n = 0),
+      (this.$An = (t) => {
+        t === TURNTABLE_ROTATE_PARAM && this.Activate && this.YAn(this.QAn);
       }),
-      (this.ERn = (t, e) => {
-        this.ddo += t;
-        t = Math.min(this.ddo / this.Uqn, 1);
-        (this.vRn.Pitch = 0),
-          (this.vRn.Roll = 0),
-          (this.vRn.Yaw = t * e),
-          this.GetItem(8).SetUIRelativeRotation(this.vRn),
-          this.ddo >= this.Uqn && this.yRn();
+      (this.JAn = (t, e) => {
+        this.uCo += t;
+        t = Math.min(this.uCo / this.B2n, 1);
+        (this.XAn.Pitch = 0),
+          (this.XAn.Roll = 0),
+          (this.XAn.Yaw = t * e),
+          this.GetItem(8).SetUIRelativeRotation(this.XAn),
+          this.uCo >= this.B2n && this.zAn();
       });
   }
   OnRegisterComponent() {
@@ -63,7 +63,7 @@ class ActivityTurntableComponent extends UiPanelBase_1.UiPanelBase {
       (this.LevelSequencePlayer = new LevelSequencePlayer_1.LevelSequencePlayer(
         this.RootItem,
       )),
-      (this.Uqn =
+      (this.B2n =
         CommonParamById_1.configCommonParamById.GetIntConfig(
           "TurntableActivitytRotateLoopTime",
         ) ?? ROTATE_LOOP_ANIMATION_TIME);
@@ -75,17 +75,17 @@ class ActivityTurntableComponent extends UiPanelBase_1.UiPanelBase {
   OnBeforeShow() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnActivitySequenceEmitEvent,
-      this.MRn,
+      this.$An,
     );
   }
   OnBeforeHide() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnActivitySequenceEmitEvent,
-      this.MRn,
+      this.$An,
     );
   }
   OnBeforeDestroy() {
-    this.yRn();
+    this.zAn();
   }
   async Refresh(e) {
     if (e.length !== TURNTABLE_GRID_SIZE)
@@ -104,18 +104,18 @@ class ActivityTurntableComponent extends UiPanelBase_1.UiPanelBase {
     }
   }
   RunTurntableByRewardId(t, e) {
-    this.IRn(t, e).catch(() => {
+    this.ZAn(t, e).catch(() => {
       e?.();
     });
   }
-  async IRn(t, e) {
-    const [i, s, r] = this.TRn(t);
-    this.pRn = i;
+  async ZAn(t, e) {
+    const [i, s, r] = this.ePn(t);
+    this.QAn = i;
     let n = "Start01";
-    s ? (n = "Start03") : r && (n = "Start02"), await this.LRn(n, !0);
+    s ? (n = "Start03") : r && (n = "Start02"), await this.tPn(n, !0);
     t = () => {
       this.GetItem(8).SetUIRelativeRotation(new UE.Rotator(0, 0, 0)),
-        this.DRn(i),
+        this.iPn(i),
         e?.();
     };
     if (
@@ -126,7 +126,7 @@ class ActivityTurntableComponent extends UiPanelBase_1.UiPanelBase {
       return;
     t();
   }
-  TRn(e) {
+  ePn(e) {
     let i = -1,
       s = !1,
       r = !1;
@@ -139,24 +139,24 @@ class ActivityTurntableComponent extends UiPanelBase_1.UiPanelBase {
       ? [-1, s, r]
       : [ROTATE_DEFAULT_ANGLE + ROTATE_GRID_ANGLE * i, s, r];
   }
-  SRn(e) {
+  YAn(e) {
     0 !== e &&
-      (this.DRn(-e),
-      (this.ddo = 0),
-      (this.fRn = TimerSystem_1.TimerSystem.Forever((t) => {
-        this.ERn(t, e);
+      (this.iPn(-e),
+      (this.uCo = 0),
+      (this.KAn = TimerSystem_1.TimerSystem.Forever((t) => {
+        this.JAn(t, e);
       }, TimerSystem_1.MIN_TIME)));
   }
-  DRn(t) {
+  iPn(t) {
     for (const e of this.sOe) e.Rotate(t);
   }
-  yRn() {
-    TimerSystem_1.TimerSystem.Has(this.fRn) &&
-      (TimerSystem_1.TimerSystem.Remove(this.fRn),
-      (this.fRn = void 0),
-      (this.ddo = 0));
+  zAn() {
+    TimerSystem_1.TimerSystem.Has(this.KAn) &&
+      (TimerSystem_1.TimerSystem.Remove(this.KAn),
+      (this.KAn = void 0),
+      (this.uCo = 0));
   }
-  async LRn(t, e) {
+  async tPn(t, e) {
     await this.LevelSequencePlayer.PlaySequenceAsync(
       t,
       new CustomPromise_1.CustomPromise(),
@@ -172,11 +172,11 @@ class ActivityTurntableGrid extends UiPanelBase_1.UiPanelBase {
       (this.RewardId = 0),
       (this.IsGoldenQuality = !1),
       (this.IsSpecial = !1),
-      (this.gIt = 0),
-      (this.M5s = () => {
-        this.gIt &&
+      (this.ETt = 0),
+      (this.nWs = () => {
+        this.ETt &&
           ControllerHolder_1.ControllerHolder.ItemController.OpenItemTipsByItemId(
-            this.gIt,
+            this.ETt,
           );
       });
   }
@@ -189,7 +189,7 @@ class ActivityTurntableGrid extends UiPanelBase_1.UiPanelBase {
       [4, UE.UIItem],
       [5, UE.UIButtonComponent],
     ]),
-      (this.BtnBindInfo = [[5, this.M5s]]);
+      (this.BtnBindInfo = [[5, this.nWs]]);
   }
   async Refresh(t) {
     (this.RewardId = t.Id), (this.IsSpecial = t.IsSpecial);
@@ -199,8 +199,8 @@ class ActivityTurntableGrid extends UiPanelBase_1.UiPanelBase {
         ++e === REFRESH_LOADING_COUNT && i.SetResult();
       },
       r =
-        ((this.gIt = t.RewardItem[0].ItemId),
-        this.SetItemIcon(this.GetTexture(0), this.gIt, void 0, s),
+        ((this.ETt = t.RewardItem[0].ItemId),
+        this.SetItemIcon(this.GetTexture(0), this.ETt, void 0, s),
         ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
           t.RewardItem[0].ItemId,
         )),

@@ -10,7 +10,7 @@ const UE = require("ue"),
 class WorldMapScaleComponent extends WorldMapComponentBase_1.WorldMapComponentBase {
   constructor(e) {
     super(e),
-      (this.lFo = 0),
+      (this.s3o = 0),
       (this.OnScaleSliderValueChanged = (e) => {
         this.SetMapScale(e, 3);
       }),
@@ -19,19 +19,19 @@ class WorldMapScaleComponent extends WorldMapComponentBase_1.WorldMapComponentBa
       });
   }
   get MapScale() {
-    return this.lFo;
+    return this.s3o;
   }
   OnBegin() {
     this.SetMapScale(ModelManager_1.ModelManager.WorldMapModel.MapScale, 0);
   }
   SetMapScale(e, t, n = !0) {
-    var o = this.lFo,
+    var o = this.s3o,
       e = MathCommon_1.MathCommon.Clamp(
         e,
         ModelManager_1.ModelManager.WorldMapModel.MapScaleMin,
         ModelManager_1.ModelManager.WorldMapModel.MapScaleMax,
       );
-    (this.lFo = e),
+    (this.s3o = e),
       (ModelManager_1.ModelManager.WorldMapModel.MapScale = e),
       this.Map.SetMapScale(e),
       this.Map.SelfPlayerNode.SetRelativeScale3D(

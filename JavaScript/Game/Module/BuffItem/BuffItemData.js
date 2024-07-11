@@ -5,33 +5,33 @@ const Time_1 = require("../../../Core/Common/Time"),
   TimeUtil_1 = require("../../Common/TimeUtil");
 class BuffItemData {
   constructor(t, e, i) {
-    (this.Igt = 0),
-      (this.Tgt = 0),
-      (this.Lgt = 0),
-      (this.Dgt = t),
-      (this.Rgt = i),
+    (this.q0t = 0),
+      (this.G0t = 0),
+      (this.N0t = 0),
+      (this.O0t = t),
+      (this.k0t = i),
       this.SetEndCdTimeStamp(e);
   }
   get ItemConfigId() {
-    return this.Dgt;
+    return this.O0t;
   }
   get EndCdTimeStamp() {
-    return this.Igt;
+    return this.q0t;
   }
   SetEndCdTimeStamp(t) {
-    (this.Igt = t / TimeUtil_1.TimeUtil.InverseMillisecond),
-      (this.Tgt = TimeUtil_1.TimeUtil.GetServerTime()),
-      (this.Lgt = Time_1.Time.WorldTimeSeconds);
+    (this.q0t = t / TimeUtil_1.TimeUtil.InverseMillisecond),
+      (this.G0t = TimeUtil_1.TimeUtil.GetServerTime()),
+      (this.N0t = Time_1.Time.WorldTimeSeconds);
   }
   SetTotalCdTime(t) {
-    this.Rgt = t;
+    this.k0t = t;
   }
   GetBuffItemRemainCdTime() {
-    var t = this.Igt - (Time_1.Time.WorldTimeSeconds - this.Lgt + this.Tgt);
+    var t = this.q0t - (Time_1.Time.WorldTimeSeconds - this.N0t + this.G0t);
     return Math.max(t, 0);
   }
   GetBuffItemTotalCdTime() {
-    return this.Rgt;
+    return this.k0t;
   }
 }
 exports.BuffItemData = BuffItemData;

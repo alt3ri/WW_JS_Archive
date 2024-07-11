@@ -32,31 +32,31 @@ class PlayerInfoModel extends ModelBase_1.ModelBase {
       );
   }
   GetIconList() {
-    return this.vQi;
+    return this.fXi;
   }
   SetIconList(e) {
-    this.vQi = e;
+    this.fXi = e;
   }
   GetFrameList() {
-    return this.MQi;
+    return this.pXi;
   }
   SetFrameList(e) {
-    this.MQi = e;
+    this.pXi = e;
   }
   GetNumberProp() {
-    return this.SQi;
+    return this.vXi;
   }
   SetNumberProp(e) {
-    this.SQi = e;
+    this.vXi = e;
   }
   GetStringProp() {
-    return this.EQi;
+    return this.MXi;
   }
   SetStringProp(e) {
-    this.EQi = e;
+    this.MXi = e;
   }
   ChangeNumberProp(e, t) {
-    void 0 !== this.SQi && this.SQi.set(e, t),
+    void 0 !== this.vXi && this.vXi.set(e, t),
       (13 !== e && 2 !== e && 3 !== e) ||
         ((t = this.GetPlayerMoneyItemId(e)),
         EventSystem_1.EventSystem.Emit(
@@ -65,10 +65,10 @@ class PlayerInfoModel extends ModelBase_1.ModelBase {
         ));
   }
   ChangeStringProp(e, t) {
-    this.EQi && this.EQi.set(e, t);
+    this.MXi && this.MXi.set(e, t);
   }
   GetNumberPropById(e) {
-    if (void 0 !== this.SQi) return this.SQi.get(e);
+    if (void 0 !== this.vXi) return this.vXi.get(e);
   }
   GetPlayerGender() {
     var e = this.GetNumberPropById(9);
@@ -82,8 +82,14 @@ class PlayerInfoModel extends ModelBase_1.ModelBase {
         : e === ItemDefines_1.EItemId.PayGold
           ? this.GetNumberPropById(13) ?? 0
           : e === ItemDefines_1.EItemId.Power
-            ? ModelManager_1.ModelManager.PowerModel.PowerCount ?? 0
-            : 0;
+            ? ModelManager_1.ModelManager.PowerModel.GetPowerDataById(
+                ItemDefines_1.EItemId.Power,
+              ).GetCurrentPower()
+            : e === ItemDefines_1.EItemId.OverPower
+              ? ModelManager_1.ModelManager.PowerModel.GetPowerDataById(
+                  ItemDefines_1.EItemId.OverPower,
+                ).GetCurrentPower()
+              : 0;
   }
   GetPlayerMoneyItemId(e) {
     return 2 === e
@@ -95,10 +101,10 @@ class PlayerInfoModel extends ModelBase_1.ModelBase {
           : void 0;
   }
   GetAccountName(e = !0) {
-    if (this.EQi)
+    if (this.MXi)
       return !e ||
         ConfigManager_1.ConfigManager.PlayerInfoConfig.GetIsUseAccountName()
-        ? this.EQi.get(7)
+        ? this.MXi.get(7)
         : ((e = this.GetPlayerRoleId()),
           ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(
             e,

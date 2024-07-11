@@ -13,8 +13,8 @@ class BattleVisibleChildView extends BattleChildView_1.BattleChildView {
       (this.BaseVisible = !1),
       (this.IsEnable = !1),
       (this.InnerVisibleState = 0),
-      (this.j$e = () => {
-        this.W$e();
+      (this.iJe = () => {
+        this.oJe();
       });
   }
   InitChildType(i = 0) {
@@ -23,24 +23,24 @@ class BattleVisibleChildView extends BattleChildView_1.BattleChildView {
         ModelManager_1.ModelManager.BattleUiModel.ChildViewData),
       (this.BaseVisible = this.ChildViewData.GetChildVisible(i)),
       (this.InnerVisibleState = 1),
-      this.ChildViewData.AddCallback(i, this.j$e);
+      this.ChildViewData.AddCallback(i, this.iJe);
   }
   ShowBattleVisibleChildView() {
-    (this.IsEnable = !0), this.K$e(0, !0);
+    (this.IsEnable = !0), this.rJe(0, !0);
     var i = this.GetVisible();
     this.SetActive(i), i && this.OnShowBattleChildView();
   }
   HideBattleVisibleChildView() {
     this.IsEnable = !1;
     var i = this.GetVisible();
-    this.K$e(0, !1),
+    this.rJe(0, !1),
       this.SetActive(this.GetVisible()),
       i && this.OnHideBattleChildView();
   }
   Reset() {
-    this.K$e(0, !1),
+    this.rJe(0, !1),
       this.ChildViewData &&
-        (this.ChildViewData.RemoveCallback(this.ChildType, this.j$e),
+        (this.ChildViewData.RemoveCallback(this.ChildType, this.iJe),
         (this.ChildViewData = void 0)),
       super.Reset();
   }
@@ -54,22 +54,22 @@ class BattleVisibleChildView extends BattleChildView_1.BattleChildView {
         )
       : super.SetActive(i);
   }
-  W$e() {
+  oJe() {
     var i = this.GetVisible();
     (this.BaseVisible = this.ChildViewData.GetChildVisible(this.ChildType)),
-      this.Q$e(i);
+      this.nJe(i);
   }
   SetVisible(i, t) {
     var e = this.GetVisible();
-    this.K$e(i, t), this.Q$e(e);
+    this.rJe(i, t), this.nJe(e);
   }
-  Q$e(i) {
+  nJe(i) {
     this.IsEnable &&
       i !== (i = this.GetVisible()) &&
       (this.SetActive(i),
       i ? this.OnShowBattleChildView() : this.OnHideBattleChildView());
   }
-  K$e(i, t) {
+  rJe(i, t) {
     this.InnerVisibleState = VisibleStateUtil_1.VisibleStateUtil.SetVisible(
       this.InnerVisibleState,
       t,

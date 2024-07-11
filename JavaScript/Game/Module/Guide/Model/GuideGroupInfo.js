@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GuideGroupInfo = void 0);
-const Log_1 = require("../../../../Core/Common/Log"),
+const Info_1 = require("../../../../Core/Common/Info"),
+  Log_1 = require("../../../../Core/Common/Log"),
   TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
   StateBase_1 = require("../../../../Core/Utils/StateMachine/StateBase"),
   StateMachine_1 = require("../../../../Core/Utils/StateMachine/StateMachine"),
@@ -19,7 +20,7 @@ class InitState extends StateBase_1.StateBase {
     this.Owner.StepInfoList.length = 0;
     for (const e of ConfigManager_1.ConfigManager.GuideConfig.GetOrderedStepIdsOfGroup(
       this.Owner.Id,
-      ModelManager_1.ModelManager.PlatformModel.InputController,
+      Info_1.Info.InputControllerMainType,
     ))
       this.Owner.StepInfoList.push(
         new GuideStepInfo_1.GuideStepInfo(e, this.Owner),
@@ -32,12 +33,12 @@ class InitState extends StateBase_1.StateBase {
 }
 class OpeningState extends StateBase_1.StateBase {
   constructor() {
-    super(...arguments), (this.PYt = !1);
+    super(...arguments), (this.PJt = !1);
   }
   OnEnter() {
     var e;
-    this.PYt ||
-      ((this.PYt = !0),
+    this.PJt ||
+      ((this.PJt = !0),
       (e = this.Owner.GetIfPreExecute()) && this.Owner.SwitchState(2),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.GuideGroupOpening,
@@ -46,7 +47,7 @@ class OpeningState extends StateBase_1.StateBase {
       ));
   }
   OnExit() {
-    this.PYt = !1;
+    this.PJt = !1;
   }
 }
 class ExecutingState extends StateBase_1.StateBase {
@@ -56,15 +57,15 @@ class ExecutingState extends StateBase_1.StateBase {
 }
 class PendingState extends StateBase_1.StateBase {
   constructor() {
-    super(...arguments), (this.xYt = void 0);
+    super(...arguments), (this.xJt = void 0);
   }
   jm() {
-    void 0 !== this.xYt &&
-      (TimerSystem_1.TimerSystem.Remove(this.xYt), (this.xYt = void 0));
+    void 0 !== this.xJt &&
+      (TimerSystem_1.TimerSystem.Remove(this.xJt), (this.xJt = void 0));
   }
   OnEnter() {
     this.jm(),
-      (this.xYt = TimerSystem_1.TimerSystem.Forever(() => {
+      (this.xJt = TimerSystem_1.TimerSystem.Forever(() => {
         this.Owner.CanEnterExecuting() &&
           (this.jm(), this.Owner.StateMachine.Switch(2));
       }, 1e3));
@@ -106,6 +107,7 @@ class GuideGroupInfo {
   }
   SwitchState(e) {
     let t = e;
+    var i;
     1 === e && 0 !== this.StateMachine.CurrentState
       ? Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn("Guide", 17, "引导组正在执行中, 不再重复执行")
@@ -123,17 +125,24 @@ class GuideGroupInfo {
                   "引导组是通过GM调用的, 跳过服务端完成步骤",
                 ),
               (t = 0))
-            : ModelManager_1.ModelManager.GuideModel.IsGroupFinished(this.Id) &&
-              !ModelManager_1.ModelManager.GuideModel.IsGroupCanRepeat(
+            : ((e = ModelManager_1.ModelManager.GuideModel.IsGroupFinished(
                 this.Id,
-              ) &&
-              (Log_1.Log.CheckError() &&
-                Log_1.Log.Error(
-                  "Guide",
-                  17,
-                  "引导组未配置为可重复完成但重复请求完成, 跳过服务端完成步骤",
-                ),
-              (t = 0))),
+              )),
+              (i = ModelManager_1.ModelManager.GuideModel.IsGroupCanRepeat(
+                this.Id,
+              )),
+              e &&
+                !i &&
+                (Log_1.Log.CheckError() &&
+                  Log_1.Log.Error(
+                    "Guide",
+                    17,
+                    "引导组未配置为可重复完成但重复请求完成, 跳过服务端完成步骤",
+                    ["GroupId", this.Id],
+                    ["isFinish", e],
+                    ["canRepeat", i],
+                  ),
+                (t = 0)))),
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Guide",
@@ -156,7 +165,7 @@ class GuideGroupInfo {
             ["组Id", this.Id],
           ),
         this.Break())
-      : (this.wYt(),
+      : (this.wJt(),
         (e = this.CurrentStepIndex + 1) >= this.StepInfoList.length
           ? this.SwitchState(4)
           : ((this.CurrentStepIndex = e),
@@ -166,14 +175,14 @@ class GuideGroupInfo {
               ? e.SwitchState(4)
               : (e.SwitchState(0), e.TryEnterExecuting())));
   }
-  wYt() {
+  wJt() {
     var e = this.CurrentStepIndex;
     0 <= e &&
       e < this.StepInfoList.length &&
       this.StepInfoList[e].SwitchState(5);
   }
   Reset() {
-    this.wYt(),
+    this.wJt(),
       (this.CurrentStepIndex = -1),
       this.SwitchState(0),
       EventSystem_1.EventSystem.Emit(
@@ -228,6 +237,9 @@ class GuideGroupInfo {
         ]),
       !1)
     );
+  }
+  CheckIsGuideRunning() {
+    return 0 !== this.StateMachine.CurrentState;
   }
 }
 exports.GuideGroupInfo = GuideGroupInfo;

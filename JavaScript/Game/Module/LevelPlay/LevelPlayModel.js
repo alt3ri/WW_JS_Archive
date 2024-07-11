@@ -12,18 +12,18 @@ const ModelBase_1 = require("../../../Core/Framework/ModelBase"),
 class LevelPlayModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
-      (this.Qfi = void 0),
-      (this.Xfi = void 0),
-      (this.$fi = 0),
-      (this.Yfi = void 0),
-      (this.Jfi = void 0),
+      (this.Xpi = void 0),
+      (this.$pi = void 0),
+      (this.Ypi = 0),
+      (this.Jpi = void 0),
+      (this.zpi = void 0),
       (this.IsInReceiveReward = !1),
-      (this.zfi = (e) => {
+      (this.Zpi = (e) => {
         for (const i of JSON.parse(e).LevelPlays)
-          this.Yfi.set(i.Id, i),
+          this.Jpi.set(i.Id, i),
             i.Tree &&
               GeneralLogicTreeConfigUtil_1.GeneralLogicTreeConfigUtil.InitBehaviorNodeConfig(
-                this.Jfi,
+                this.zpi,
                 i.Id,
                 i.Tree,
               );
@@ -31,11 +31,11 @@ class LevelPlayModel extends ModelBase_1.ModelBase {
   }
   OnInit() {
     return (
-      (this.Qfi = new Map()),
-      (this.Xfi = new Map()),
-      (this.Yfi = new Map()),
-      (this.Jfi = new Map()),
-      (this.$fi = LevelPlayDefine_1.INVALID_LEVELPLAYID),
+      (this.Xpi = new Map()),
+      (this.$pi = new Map()),
+      (this.Jpi = new Map()),
+      (this.zpi = new Map()),
+      (this.Ypi = LevelPlayDefine_1.INVALID_LEVELPLAYID),
       this.InitLevelPlayConfig(),
       PublicUtil_1.PublicUtil.RegisterEditorLocalConfig(),
       !0
@@ -43,12 +43,12 @@ class LevelPlayModel extends ModelBase_1.ModelBase {
   }
   OnClear() {
     return (
-      (this.Qfi = void 0),
-      (this.Xfi = void 0),
-      this.Yfi.clear(),
-      (this.Yfi = void 0),
-      this.Jfi.clear(),
-      !(this.Jfi = void 0)
+      (this.Xpi = void 0),
+      (this.$pi = void 0),
+      this.Jpi.clear(),
+      (this.Jpi = void 0),
+      this.zpi.clear(),
+      !(this.zpi = void 0)
     );
   }
   OnLeaveLevel() {
@@ -57,32 +57,32 @@ class LevelPlayModel extends ModelBase_1.ModelBase {
   InitLevelPlayConfig() {
     var e;
     PublicUtil_1.PublicUtil.UseDbConfig() ||
-      (this.Yfi.clear(),
-      this.Jfi.clear(),
+      (this.Jpi.clear(),
+      this.zpi.clear(),
       (e = (0, PublicUtil_1.getConfigPath)(
         IGlobal_1.globalConfig.LevelPlayListDir,
       )),
       GeneralLogicTreeConfigUtil_1.GeneralLogicTreeConfigUtil.InitConfig(
         e,
-        this.zfi,
+        this.Zpi,
       ));
   }
   GetLevelPlayConfig(e) {
-    if (!PublicUtil_1.PublicUtil.UseDbConfig()) return this.Yfi.get(e);
-    let i = this.Yfi.get(e);
+    if (!PublicUtil_1.PublicUtil.UseDbConfig()) return this.Jpi.get(e);
+    let i = this.Jpi.get(e);
     var t;
     return (
       i ||
         ((t =
           ConfigManager_1.ConfigManager.LevelPlayConfig.GetLevelPlayConfig(e)),
         (i = JSON.parse(t.Data)),
-        this.Yfi.set(e, i)),
+        this.Jpi.set(e, i)),
       i
     );
   }
   GetLevelPlayNodeConfig(e, i) {
-    if (!PublicUtil_1.PublicUtil.UseDbConfig()) return this.Jfi.get(e)?.get(i);
-    let t = this.Jfi.get(e),
+    if (!PublicUtil_1.PublicUtil.UseDbConfig()) return this.zpi.get(e)?.get(i);
+    let t = this.zpi.get(e),
       r = (t = t || new Map()).get(i);
     return (
       r ||
@@ -98,36 +98,36 @@ class LevelPlayModel extends ModelBase_1.ModelBase {
   }
   CreateLevelPlayInfo(e) {
     var i = new LevelPlay_1.LevelPlayInfo(e);
-    return i.InitConfig(), this.Qfi.set(e, i), i;
+    return i.InitConfig(), this.Xpi.set(e, i), i;
   }
   EnterLevelPlayRange(e) {
     var i = this.SafeCreateLevelPlayInfo(e);
-    return this.Xfi.set(e, i), i;
+    return this.$pi.set(e, i), i;
   }
   LeaveLevelPlayRange(e) {
     var i = this.GetProcessingLevelPlayInfo(e);
     i &&
       (i.RemoveBehaviorTree(),
-      this.Xfi.delete(e),
-      i.NeedShowInMap || this.Qfi.delete(e));
+      this.$pi.delete(e),
+      i.NeedShowInMap || this.Xpi.delete(e));
   }
   LevelPlayFinish(e) {
     var i = this.GetProcessingLevelPlayInfo(e);
     i &&
       (i.RemoveBehaviorTree(),
       i.UpdateState(3),
-      this.Xfi.delete(e),
-      this.$fi === e) &&
-      (i.SetTrack(!1), (this.$fi = LevelPlayDefine_1.INVALID_LEVELPLAYID));
+      this.$pi.delete(e),
+      this.Ypi === e) &&
+      (i.SetTrack(!1), (this.Ypi = LevelPlayDefine_1.INVALID_LEVELPLAYID));
   }
   LevelPlayClose(e) {
-    e && (e.UpdateState(0), e.RemoveBehaviorTree(), this.Xfi.delete(e.Id));
+    e && (e.UpdateState(0), e.RemoveBehaviorTree(), this.$pi.delete(e.Id));
   }
   SetTrackLevelPlayId(e) {
-    this.$fi !== e &&
-      (this.GetProcessingLevelPlayInfo(this.$fi)?.SetTrack(!1),
-      (this.$fi = e),
-      this.GetProcessingLevelPlayInfo(this.$fi)?.SetTrack(!0));
+    this.Ypi !== e &&
+      (this.GetProcessingLevelPlayInfo(this.Ypi)?.SetTrack(!1),
+      (this.Ypi = e),
+      this.GetProcessingLevelPlayInfo(this.Ypi)?.SetTrack(!0));
   }
   ChangeLevelPlayTrackRange(e, i) {
     e = this.GetProcessingLevelPlayInfo(e);
@@ -153,23 +153,23 @@ class LevelPlayModel extends ModelBase_1.ModelBase {
     return (i = i || this.CreateLevelPlayInfo(e));
   }
   GetLevelPlayInfo(e) {
-    return this.Qfi.get(e);
+    return this.Xpi.get(e);
   }
   GetProcessingLevelPlayInfo(e) {
-    return this.Xfi.get(e);
+    return this.$pi.get(e);
   }
   GetProcessingLevelPlayInfos() {
-    return this.Xfi;
+    return this.$pi;
   }
   GetTrackLevelPlayInfo() {
-    if (this.$fi !== LevelPlayDefine_1.INVALID_LEVELPLAYID)
-      return this.GetProcessingLevelPlayInfo(this.$fi);
+    if (this.Ypi !== LevelPlayDefine_1.INVALID_LEVELPLAYID)
+      return this.GetProcessingLevelPlayInfo(this.Ypi);
   }
   GetTrackLevelPlayId() {
-    return this.$fi;
+    return this.Ypi;
   }
   GetLevelPlayInfoByRewardEntityId(e) {
-    for (var [, i] of this.Qfi) if (i.RewardEntityId === e) return i;
+    for (var [, i] of this.Xpi) if (i.RewardEntityId === e) return i;
   }
 }
 exports.LevelPlayModel = LevelPlayModel;

@@ -15,10 +15,10 @@ const UE = require("ue"),
 class OnlineApplyView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
-      (this.Q2t = void 0),
-      (this.pGi = void 0),
-      (this.vGi = !1),
-      (this.MGi = () => {
+      (this.XFt = void 0),
+      (this.pNi = void 0),
+      (this.vNi = !1),
+      (this.MNi = () => {
         if (ModelManager_1.ModelManager.OnlineModel.GetCurrentApplySize() <= 1)
           return ModelManager_1.ModelManager.OnlineModel.CurrentApply
             ? void OnlineController_1.OnlineController.AgreeJoinResultRequest(
@@ -30,7 +30,17 @@ class OnlineApplyView extends UiTickViewBase_1.UiTickViewBase {
               void UiManager_1.UiManager.CloseView("OnlineMultipleApplyView"));
         UiManager_1.UiManager.OpenView("OnlineMultipleApplyView");
       }),
-      (this.SGi = () => {
+      (this.uHe = () => {
+        ModelManager_1.ModelManager.OnlineModel.CurrentApply
+          ? OnlineController_1.OnlineController.AgreeJoinResultRequest(
+              ModelManager_1.ModelManager.OnlineModel.CurrentApply.PlayerId,
+              !1,
+            )
+          : (Log_1.Log.CheckError() &&
+              Log_1.Log.Error("MultiPlayerTeam", 5, "当前申请不存在"),
+            UiManager_1.UiManager.CloseView("OnlineMultipleApplyView"));
+      }),
+      (this.ENi = () => {
         this.RefreshView();
       });
   }
@@ -44,33 +54,37 @@ class OnlineApplyView extends UiTickViewBase_1.UiTickViewBase {
       [5, UE.UIText],
       [6, UE.UISprite],
       [7, UE.UIText],
+      [8, UE.UIButtonComponent],
     ]),
-      (this.BtnBindInfo = [[2, this.MGi]]);
+      (this.BtnBindInfo = [
+        [2, this.MNi],
+        [8, this.uHe],
+      ]);
   }
   OnStart() {
-    (this.Q2t = this.GetText(5)),
-      (this.pGi = this.GetSprite(6)),
+    (this.XFt = this.GetText(5)),
+      (this.pNi = this.GetSprite(6)),
       this.RefreshView();
   }
   OnTick(e) {
     var i = ModelManager_1.ModelManager.OnlineModel.CurrentApply;
     !i || i.ApplyTimeLeftTime < 0
-      ? this.vGi || (this.CloseMe(), (this.vGi = !0))
-      : (this.Q2t.SetText(TimeUtil_1.TimeUtil.GetCoolDown(i.ApplyTimeLeftTime)),
-        this.pGi.SetFillAmount(
+      ? this.vNi || (this.CloseMe(), (this.vNi = !0))
+      : (this.XFt.SetText(TimeUtil_1.TimeUtil.GetCoolDown(i.ApplyTimeLeftTime)),
+        this.pNi.SetFillAmount(
           i.ApplyTimeLeftTime / ModelManager_1.ModelManager.OnlineModel.ApplyCd,
         ));
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnRefreshApply,
-      this.SGi,
+      this.ENi,
     );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnRefreshApply,
-      this.SGi,
+      this.ENi,
     );
   }
   RefreshView() {
@@ -89,19 +103,19 @@ class OnlineApplyView extends UiTickViewBase_1.UiTickViewBase {
         ModelManager_1.ModelManager.OnlineModel.CurrentApply);
     i &&
       (this.GetText(1).SetText(i.Name),
-      this.Q2t.SetText(
+      this.XFt.SetText(
         TimeUtil_1.TimeUtil.GetCoolDown(
           ModelManager_1.ModelManager.OnlineModel.CurrentApply
             .ApplyTimeLeftTime,
         ),
       ),
-      this.pGi.SetFillAmount(
+      this.pNi.SetFillAmount(
         i.ApplyTimeLeftTime / ModelManager_1.ModelManager.OnlineModel.ApplyCd,
       ),
       (n = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(
         i.HeadId,
-      )?.Card)) &&
-      this.SetTextureByPath(n, this.GetTexture(0));
+      )?.Card) && this.SetTextureByPath(n, this.GetTexture(0)),
+      this.GetButton(8)?.RootUIComp.SetUIActive(!0));
   }
 }
 exports.OnlineApplyView = OnlineApplyView;

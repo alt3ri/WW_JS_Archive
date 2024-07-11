@@ -5,46 +5,46 @@ const ItemGridVariantSelect_1 = require("../../ItemGrid/ItemGridVariantSelect"),
   SelectablePropComponentBase_1 = require("./SelectablePropComponentBase");
 class SelectablePropTypeItemVariantSelect extends SelectablePropComponentBase_1.SelectablePropComponentBase {
   constructor() {
-    super(...arguments), (this.Jwt = void 0);
+    super(...arguments), (this.ebt = void 0);
   }
   GetSelectableToggle() {
-    return this.Jwt.GetClickToggle();
+    return this.ebt.GetClickToggle();
   }
   GetSelectItem() {
-    return this.Jwt.GetFinishSelectItem();
+    return this.ebt.GetFinishSelectItem();
   }
   GetReduceButton() {
-    return this.Jwt.GetReduceButton();
+    return this.ebt.GetReduceButton();
   }
   GetControlItem() {
-    return this.Jwt.GetControlItem();
+    return this.ebt.GetControlItem();
   }
   GetFinishSelectItem() {}
   GetSelectNumberText() {
-    return this.Jwt.GetDownText();
+    return this.ebt.GetDownText();
   }
   ShowDefaultDownText() {
-    this.Jwt.ShowDefaultDownText();
+    this.ebt.ShowDefaultDownText();
   }
   RefreshRightDownLockSprite(e) {
-    this.Jwt.RefreshRightDownLockSprite(e);
+    this.ebt.RefreshRightDownLockSprite(e);
   }
   Refresh(e, t, r) {
     e = [{ IncId: e.IncId, ItemId: e.ItemId }, e.Count];
-    this.Jwt.Refresh(e, t, r);
+    this.ebt.Refresh(e, t, r);
   }
   SetToggleClick(e) {
-    this.Jwt.SetToggleClickStateEvent(e);
+    this.ebt.SetToggleClickStateEvent(e);
   }
   SetRoleIconState() {}
   OnStart() {
-    (this.Jwt = new ItemGridVariantSelect_1.ItemGridVariantSelect(
+    (this.ebt = new ItemGridVariantSelect_1.ItemGridVariantSelect(
       this.RootItem.GetOwner(),
     )),
-      this.Jwt.GetFinishMiddleItem().SetUIActive(!1);
+      this.ebt.GetFinishMiddleItem().SetUIActive(!1);
   }
   OnBeforeDestroy() {
-    this.Jwt.Destroy();
+    this.ebt.Destroy();
   }
 }
 exports.SelectablePropTypeItemVariantSelect =

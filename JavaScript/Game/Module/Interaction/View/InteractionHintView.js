@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InteractionHintView = void 0);
 const UE = require("ue"),
   AudioSystem_1 = require("../../../../Core/Audio/AudioSystem"),
+  Info_1 = require("../../../../Core/Common/Info"),
   Log_1 = require("../../../../Core/Common/Log"),
   Stats_1 = require("../../../../Core/Common/Stats"),
   TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
@@ -19,175 +20,177 @@ const UE = require("ue"),
   GenericLayout_1 = require("../../Util/Layout/GenericLayout"),
   InteractionDefine_1 = require("../InteractionDefine"),
   InteractionGuide_1 = require("./InteractionGuide"),
-  InteractionHint_1 = require("./InteractionHint");
+  InteractionHint_1 = require("./InteractionHint"),
+  LONG_PRESS_SHOW_TIME = 100;
 class InteractionHintView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
       (this.xqe = void 0),
-      (this.S_i = 0),
-      (this.E_i = void 0),
-      (this.y_i = 1),
-      (this.I_i = 0),
-      (this.T_i = 0),
-      (this.L_i = 0),
-      (this.D_i = 0),
-      (this.R_i = InteractionDefine_1.LERP_TIME),
-      (this.oTt = -1),
-      (this.U_i = 0),
-      (this.A_i = void 0),
-      (this.P_i = []),
-      (this.x_i = 0),
-      (this.w_i = !1),
-      (this.B_i = void 0),
-      (this.b_i = void 0),
-      (this.q_i = void 0),
-      (this.g_t = 0),
-      (this.G_i = !1),
-      (this.N_i = 0),
-      (this.O_i = 0),
-      (this.k_i = 0),
-      (this.F_i = !1),
-      (this.V_i = 0),
-      (this.H_i = void 0),
-      (this.j_i = !1),
+      (this.Eui = 0),
+      (this.Sui = void 0),
+      (this.yui = 1),
+      (this.Iui = 0),
+      (this.Tui = 0),
+      (this.Lui = 0),
+      (this.Dui = 0),
+      (this.Rui = InteractionDefine_1.LERP_TIME),
+      (this.hLt = -1),
+      (this.Uui = 0),
+      (this.Aui = void 0),
+      (this.Pui = []),
+      (this.xui = 0),
+      (this.wui = !1),
+      (this.Bui = void 0),
+      (this.bui = void 0),
+      (this.qui = void 0),
+      (this.xut = 0),
+      (this.Gui = !1),
+      (this.Nui = 0),
+      (this.Oui = 0),
+      (this.kui = 0),
+      (this.Fui = !1),
+      (this.Vui = 0),
+      (this.Hui = void 0),
+      (this.jui = !1),
       (this.IsHoverHint = !1),
-      (this.W_i = !1),
-      (this.K_i = !1),
-      (this.MJt = () => {
-        this.Ioi();
+      (this.Wui = !1),
+      (this.eYs = !1),
+      (this.Kui = !1),
+      (this.Csa = !1),
+      (this.lqt = () => {
+        this.eci(), this.Ysa(), this.Jsa();
       }),
-      (this.Q_i = () => {
+      (this.Mzt = () => {
+        this.Lri();
+      }),
+      (this.Qui = () => {
         this.CloseMe();
       }),
-      (this.X_i = (t) => {
-        0 <= this.U_i && this.OZt(this.U_i),
-          this.H_i && this.j_i && ((this.j_i = !1), this.$_i());
-        var i = this.E_i.GetDisplayGridNum(),
-          e = this.y_i > this.I_i ? this.I_i : this.y_i,
-          i = ((this.y_i = i), this.y_i > this.I_i ? this.I_i : this.y_i);
+      (this.Xui = (t) => {
+        0 <= this.Uui && this.Oei(this.Uui),
+          this.Hui && this.jui && ((this.jui = !1), this.$ui());
+        var i = this.Sui.GetDisplayGridNum(),
+          e = this.yui > this.Iui ? this.Iui : this.yui,
+          i = ((this.yui = i), this.yui > this.Iui ? this.Iui : this.yui);
         e !== i &&
-          ((this.L_i = this.T_i + this.D_i * ((i - 1) / 2)),
-          (this.R_i = 0),
-          (this.W_i = !0));
+          ((this.Lui = this.Tui + this.Dui * ((i - 1) / 2)),
+          (this.Rui = 0),
+          (this.Wui = !0));
       }),
-      (this.Y_i = () => {
+      (this.Yui = () => {
         var t = new InteractionHint_1.InteractionHint();
         return (
-          t.BindOnHover(this.J_i),
-          t.BindOnUnHover(this.z_i),
-          t.BindOnToggleStateChanged(this.s_i),
+          t.BindOnHover(this.Jui),
+          t.BindOnUnHover(this.zui),
+          t.BindOnToggleStateChanged(this.sui),
           t
         );
       }),
-      (this.J_i = (t) => {
+      (this.Jui = (t) => {
         this.IsHoverHint = !0;
         t = t.ActorIndex;
-        this.OZt(t);
+        this.Oei(t);
       }),
-      (this.z_i = (t) => {
+      (this.zui = (t) => {
         this.IsHoverHint = !1;
       }),
-      (this.s_i = (t, i) => {
+      (this.sui = (t, i) => {
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Test",
             8,
             "[InteractionView]自动拾取-----当ExtendToggle状态改变时，会打断自动拾取",
           ),
-          (this.G_i = !1),
-          this.Z_i(),
-          this.InteractPawn(i);
+          (this.Gui = !1),
+          this.Zui(),
+          this.InteractPawn(i, !0);
       }),
-      (this.fzt = (t) => {
+      (this.fZt = (t) => {
         t || (this.IsHoverHint = !1);
       }),
-      (this.dKe = () => {
-        this.eui();
+      (this.tci = () => {
+        Info_1.Info.IsInTouch() && this.ici() && this.oci();
       }),
-      (this.tui = () => {
-        ModelManager_1.ModelManager.PlatformModel.IsMobile() &&
-          this.iui() &&
-          this.oui();
-      }),
-      (this.rui = () => {
+      (this.rci = () => {
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("Test", 8, "[InteractionView]自动拾取-----成功拾取", [
             "IsAutoPicked",
-            this.G_i,
+            this.Gui,
           ]),
-          this.G_i ? this.nui() : (this.w_i = !1);
+          this.Gui ? this.nci() : (this.wui = !1);
       }),
-      (this.sui = () => {
+      (this.sci = () => {
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("Test", 8, "[InteractionView]刷新交互选项时"),
-          (this.w_i = !1),
-          this.w_i
+          (this.wui = !1),
+          this.wui
             ? Log_1.Log.CheckDebug() &&
               Log_1.Log.Debug(
                 "Test",
                 8,
                 "[InteractionView]刷新交互选项 - 自动拾取中",
-                ["Count", this.P_i?.length],
+                ["Count", this.Pui?.length],
               )
-            : this.b_i
+            : this.bui
               ? Log_1.Log.CheckDebug() &&
                 Log_1.Log.Debug(
                   "Test",
                   8,
                   "[InteractionView]刷新交互选项 - 下一帧会刷新交互选项",
                 )
-              : (this.b_i = TimerSystem_1.TimerSystem.Next(() => {
-                  this.aui(),
+              : (this.bui = TimerSystem_1.TimerSystem.Next(() => {
+                  this.aci(),
                     Log_1.Log.CheckDebug() &&
                       Log_1.Log.Debug(
                         "Test",
                         8,
                         "[InteractionView]刷新交互选项 - 开始刷新交互选项",
-                        ["Count", this.P_i?.length],
+                        ["Count", this.Pui?.length],
                       ),
-                    this.hui(this.P_i),
-                    this.lui(),
-                    (this.b_i = void 0);
+                    this.hci(this.Pui),
+                    this.vci(),
+                    this.lci(),
+                    (this.bui = void 0);
                 }));
       }),
       (this.bMe = (t, i) => {
         0 === i
-          ? this._ui()
-          : 1 === i && (this.H_i ? this.$_i() : (this.j_i = !0));
+          ? this._ci()
+          : 1 === i && (this.Hui ? this.$ui() : (this.jui = !0));
       }),
-      (this.Ltt = () => {
-        this.oui();
+      (this.Oit = () => {
+        this.oci();
       }),
-      (this.uui = (t, i) => {
-        0 === i && this.cui(void 0, -1);
+      (this.uci = (t, i) => {
+        0 === i && this.cci(void 0, -1);
       }),
-      (this.cui = (t, i) => {
+      (this.cci = (t, i) => {
         0 === i ||
           this.IsHoverHint ||
-          (1 !== this.E_i.GetDisplayGridNum() && this.SelectHint(0 < i));
+          (1 !== this.Sui.GetDisplayGridNum() && this.SelectHint(0 < i));
       }),
-      (this.mui = (t, i) => {
+      (this.mci = (t, i) => {
         0 === i && this.SelectHint(!0);
       }),
-      (this.dui = (t, i) => {
+      (this.dci = (t, i) => {
         0 === i && this.SelectHint(!1);
       }),
-      (this.pbt = (t, i) => {
+      (this.Eqt = (t, i) => {
         (i = i.TouchType),
           (t = Number(t)),
           (t = TouchFingerManager_1.TouchFingerManager.GetTouchFingerData(t));
         t &&
           (0 === i
-            ? (this.F_i = t.IsTouchComponentContainTag(
+            ? (this.Fui = t.IsTouchComponentContainTag(
                 InteractionDefine_1.autoPickUpTag,
               ))
             : 1 === i &&
-              (this.F_i &&
+              (this.Fui &&
                 t.IsTouchComponentContainTag(
                   InteractionDefine_1.autoPickUpTag,
                 ) &&
-                this.oui(),
-              (this.F_i = !1)));
+                this.oci(),
+              (this.Fui = !1)));
       });
   }
   OnRegisterComponent() {
@@ -199,32 +202,73 @@ class InteractionHintView extends UiTickViewBase_1.UiTickViewBase {
       [4, UE.UIButtonComponent],
       [5, UE.UIItem],
     ]),
-      (this.BtnBindInfo = [[4, this.tui]]);
+      (this.BtnBindInfo = [[4, this.tci]]);
   }
   OnAddEventListener() {
-    InputDistributeController_1.InputDistributeController.BindAction(
-      InputMappingsDefine_1.actionMappings.通用交互,
-      this.bMe,
+    this.Jsa(),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.InteractionViewUpdate,
+        this.sci,
+      ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.HideInteractView,
+        this.Qui,
+      ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.OnShowMouseCursor,
+        this.fZt,
+      ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.OnInteractDropItemSuccess,
+        this.rci,
+      ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.InputControllerChange,
+        this.lqt,
+      ),
+      ModelManager_1.ModelManager.BattleUiModel.ChildViewData.AddCallback(
+        19,
+        this.Mzt,
+      );
+  }
+  Jsa() {
+    InputDistributeController_1.InputDistributeController.BindAxis(
+      InputMappingsDefine_1.axisMappings.WheelAxis,
+      this.cci,
     ),
-      InputDistributeController_1.InputDistributeController.BindAction(
-        InputMappingsDefine_1.actionMappings.切换交互,
-        this.uui,
-      ),
-      InputDistributeController_1.InputDistributeController.BindAxis(
-        InputMappingsDefine_1.axisMappings.WheelAxis,
-        this.cui,
-      ),
       void 0 !==
-        ModelManager_1.ModelManager.InteractionModel.LockInteractionEntity &&
-        ((this.K_i = !0),
-        InputDistributeController_1.InputDistributeController.BindAction(
-          InputMappingsDefine_1.actionMappings.Ui方向上,
-          this.mui,
-        ),
-        InputDistributeController_1.InputDistributeController.BindAction(
-          InputMappingsDefine_1.actionMappings.Ui方向下,
-          this.dui,
-        )),
+      ModelManager_1.ModelManager.InteractionModel.LockInteractionEntity
+        ? ((this.Kui = !0),
+          Info_1.Info.IsInGamepad()
+            ? ((this.Csa = !0),
+              InputDistributeController_1.InputDistributeController.BindAction(
+                InputMappingsDefine_1.actionMappings.UI左摇杆上,
+                this.mci,
+              ),
+              InputDistributeController_1.InputDistributeController.BindAction(
+                InputMappingsDefine_1.actionMappings.UI左摇杆下,
+                this.dci,
+              ))
+            : (InputDistributeController_1.InputDistributeController.BindAction(
+                InputMappingsDefine_1.actionMappings.Ui方向上,
+                this.mci,
+              ),
+              InputDistributeController_1.InputDistributeController.BindAction(
+                InputMappingsDefine_1.actionMappings.Ui方向下,
+                this.dci,
+              )),
+          InputDistributeController_1.InputDistributeController.BindAction(
+            InputMappingsDefine_1.actionMappings.UI键盘F手柄A,
+            this.bMe,
+          ))
+        : (InputDistributeController_1.InputDistributeController.BindAction(
+            InputMappingsDefine_1.actionMappings.通用交互,
+            this.bMe,
+          ),
+          InputDistributeController_1.InputDistributeController.BindAction(
+            InputMappingsDefine_1.actionMappings.切换交互,
+            this.uci,
+          )),
       InputDistributeController_1.InputDistributeController.BindTouches(
         [
           InputMappingsDefine_1.touchIdMappings.Touch1,
@@ -238,56 +282,73 @@ class InteractionHintView extends UiTickViewBase_1.UiTickViewBase {
           InputMappingsDefine_1.touchIdMappings.Touch9,
           InputMappingsDefine_1.touchIdMappings.Touch10,
         ],
-        this.pbt,
-      ),
-      EventSystem_1.EventSystem.Add(
-        EventDefine_1.EEventName.InteractionViewUpdate,
-        this.sui,
-      ),
-      EventSystem_1.EventSystem.Add(
-        EventDefine_1.EEventName.HideInteractView,
-        this.Q_i,
-      ),
-      EventSystem_1.EventSystem.Add(
-        EventDefine_1.EEventName.OnShowMouseCursor,
-        this.fzt,
-      ),
-      EventSystem_1.EventSystem.Add(
-        EventDefine_1.EEventName.OnPlatformChanged,
-        this.dKe,
-      ),
-      EventSystem_1.EventSystem.Add(
-        EventDefine_1.EEventName.OnInteractDropItemSuccess,
-        this.rui,
-      ),
-      ModelManager_1.ModelManager.BattleUiModel.ChildViewData.AddCallback(
-        19,
-        this.MJt,
+        this.Eqt,
       );
   }
   OnRemoveEventListener() {
-    InputDistributeController_1.InputDistributeController.UnBindAction(
-      InputMappingsDefine_1.actionMappings.通用交互,
-      this.bMe,
+    this.Ysa(),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.InteractionViewUpdate,
+        this.sci,
+      ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.HideInteractView,
+        this.Qui,
+      ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.OnShowMouseCursor,
+        this.fZt,
+      ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.OnInteractDropItemSuccess,
+        this.rci,
+      ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.InputControllerChange,
+        this.lqt,
+      ),
+      ModelManager_1.ModelManager.BattleUiModel.ChildViewData.RemoveCallback(
+        19,
+        this.Mzt,
+      );
+  }
+  Ysa() {
+    InputDistributeController_1.InputDistributeController.UnBindAxis(
+      InputMappingsDefine_1.axisMappings.WheelAxis,
+      this.cci,
     ),
-      InputDistributeController_1.InputDistributeController.UnBindAction(
-        InputMappingsDefine_1.actionMappings.切换交互,
-        this.uui,
-      ),
-      InputDistributeController_1.InputDistributeController.UnBindAxis(
-        InputMappingsDefine_1.axisMappings.WheelAxis,
-        this.cui,
-      ),
-      this.K_i &&
-        ((this.K_i = !1),
-        InputDistributeController_1.InputDistributeController.UnBindAction(
-          InputMappingsDefine_1.actionMappings.Ui方向上,
-          this.mui,
-        ),
-        InputDistributeController_1.InputDistributeController.UnBindAction(
-          InputMappingsDefine_1.actionMappings.Ui方向下,
-          this.dui,
-        )),
+      this.Kui
+        ? ((this.Kui = !1),
+          this.Csa
+            ? ((this.Csa = !1),
+              InputDistributeController_1.InputDistributeController.UnBindAction(
+                InputMappingsDefine_1.actionMappings.UI左摇杆上,
+                this.mci,
+              ),
+              InputDistributeController_1.InputDistributeController.UnBindAction(
+                InputMappingsDefine_1.actionMappings.UI左摇杆下,
+                this.dci,
+              ))
+            : (InputDistributeController_1.InputDistributeController.UnBindAction(
+                InputMappingsDefine_1.actionMappings.Ui方向上,
+                this.mci,
+              ),
+              InputDistributeController_1.InputDistributeController.UnBindAction(
+                InputMappingsDefine_1.actionMappings.Ui方向下,
+                this.dci,
+              )),
+          InputDistributeController_1.InputDistributeController.UnBindAction(
+            InputMappingsDefine_1.actionMappings.UI键盘F手柄A,
+            this.bMe,
+          ))
+        : (InputDistributeController_1.InputDistributeController.UnBindAction(
+            InputMappingsDefine_1.actionMappings.通用交互,
+            this.bMe,
+          ),
+          InputDistributeController_1.InputDistributeController.UnBindAction(
+            InputMappingsDefine_1.actionMappings.切换交互,
+            this.uci,
+          )),
       InputDistributeController_1.InputDistributeController.UnBindTouches(
         [
           InputMappingsDefine_1.touchIdMappings.Touch1,
@@ -301,34 +362,10 @@ class InteractionHintView extends UiTickViewBase_1.UiTickViewBase {
           InputMappingsDefine_1.touchIdMappings.Touch9,
           InputMappingsDefine_1.touchIdMappings.Touch10,
         ],
-        this.pbt,
-      ),
-      EventSystem_1.EventSystem.Remove(
-        EventDefine_1.EEventName.InteractionViewUpdate,
-        this.sui,
-      ),
-      EventSystem_1.EventSystem.Remove(
-        EventDefine_1.EEventName.HideInteractView,
-        this.Q_i,
-      ),
-      EventSystem_1.EventSystem.Remove(
-        EventDefine_1.EEventName.OnShowMouseCursor,
-        this.fzt,
-      ),
-      EventSystem_1.EventSystem.Remove(
-        EventDefine_1.EEventName.OnPlatformChanged,
-        this.dKe,
-      ),
-      EventSystem_1.EventSystem.Remove(
-        EventDefine_1.EEventName.OnInteractDropItemSuccess,
-        this.rui,
-      ),
-      ModelManager_1.ModelManager.BattleUiModel.ChildViewData.RemoveCallback(
-        19,
-        this.MJt,
+        this.Eqt,
       );
   }
-  Ioi() {
+  Lri() {
     var t =
       ModelManager_1.ModelManager.BattleUiModel.ChildViewData.GetChildVisible(
         19,
@@ -336,225 +373,248 @@ class InteractionHintView extends UiTickViewBase_1.UiTickViewBase {
     this.SetUiActive(t),
       t &&
         !ModelManager_1.ModelManager.InteractionModel.LockInteractionEntity &&
-        ((this.j_i = !1),
+        ((this.jui = !1),
         InputDistributeController_1.InputDistributeController.ExecuteDelayInputAction(
           InputMappingsDefine_1.actionMappings.通用交互,
         ));
   }
   OnAfterShow() {
-    this.aui(), this.hui(this.P_i), this.lui(), this.Ioi(), this.OZt(0);
+    this.aci(), this.hci(this.Pui), this.lci(), this.Lri(), this.Oei(0);
   }
   OnAfterHide() {
-    this.H_i = void 0;
+    this.Hui = void 0;
   }
   OnStart() {
     (this.xqe = this.GetScrollViewWithScrollbar(2)),
-      (this.A_i = this.GetItem(3)),
-      (this.S_i = this.xqe.ScrollSensitivity),
-      (this.V_i = this.A_i.GetAnchorOffsetY()),
-      (this.T_i = this.A_i.GetAnchorOffsetY());
+      (this.Aui = this.GetItem(3)),
+      (this.Eui = this.xqe.ScrollSensitivity),
+      (this.Vui = this.Aui.GetAnchorOffsetY()),
+      (this.Tui = this.Aui.GetAnchorOffsetY());
     var t = this.GetItem(1),
       t =
-        ((this.E_i = new GenericLayout_1.GenericLayout(
+        ((this.Sui = new GenericLayout_1.GenericLayout(
           this.GetVerticalLayout(0),
-          this.Y_i,
+          this.Yui,
           t?.GetOwner(),
         )),
-        (this.D_i = t.GetHeight()),
-        (this.I_i = this.A_i.GetHeight() / this.D_i),
+        (this.Dui = t.GetHeight()),
+        (this.Iui = this.Aui.GetHeight() / this.Dui),
         ModelManager_1.ModelManager.InteractionModel);
-    (this.g_t = t.AutoLongPressTime + t.ShowLongPressTime),
-      this.xqe.OnLateUpdate.Bind(this.X_i);
+    (this.xut =
+      t.AutoLongPressTime + t.ShowLongPressTime + LONG_PRESS_SHOW_TIME),
+      this.xqe.OnLateUpdate.Bind(this.Xui);
   }
-  oui() {
-    (this.G_i = !0),
-      (this.w_i = !0),
-      (this.k_i = this.P_i.length),
-      (this.N_i = 0),
-      (this.O_i = 0);
+  oci() {
+    (this.Gui = !0),
+      (this.wui = !0),
+      (this.kui = this.Pui.length),
+      (this.Nui = 0),
+      (this.Oui = 0);
     var t = ModelManager_1.ModelManager.InteractionModel;
-    ModelManager_1.ModelManager.PlatformModel.IsMobile()
+    Info_1.Info.IsInTouch()
       ? t.SaveTriggerMobileGuide(!0)
       : t.SaveTriggerDesktopGuide(!0),
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("Test", 8, "[InteractionView]自动拾取-----开始", [
           "AutoPickLength",
-          this.k_i,
+          this.kui,
         ]),
-      this.nui();
+      this.nci();
   }
-  nui() {
-    this.O_i++;
-    var t = this.P_i[this.N_i];
+  nci() {
+    this.Oui++;
+    var t = this.Pui[this.Nui];
     (!t?.Valid ||
       (ModelManager_1.ModelManager.InteractionModel.CanAutoPickUp(t) ||
-        (this.N_i++, this.nui()),
-      this.InteractPawn(this.N_i)
-        ? (this.P_i.splice(this.N_i, 1), this.hui(this.P_i))
-        : (this.N_i++, this.nui()),
-      this.O_i >= this.k_i)) &&
-      this.Cui();
+        (this.Nui++, this.nci()),
+      this.InteractPawn(this.Nui)
+        ? (this.Pui.splice(this.Nui, 1), this.hci(this.Pui))
+        : (this.Nui++, this.nci()),
+      this.Oui >= this.kui)) &&
+      this.Cci();
   }
-  Cui() {
-    this.aui(),
+  Cci() {
+    this.aci(),
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("Test", 8, "[InteractionView]自动拾取-----结束", [
           "InteractLength",
-          this.P_i.length,
+          this.Pui.length,
         ]),
-      this.hui(this.P_i),
-      (this.w_i = !1);
+      this.hci(this.Pui),
+      (this.wui = !1);
   }
-  InteractPawn(t) {
-    var i = this.P_i[t];
-    return (
-      !!i?.Valid &&
-      !!(i = i.GetComponent(103))?.IsPawnInteractive() &&
-      ((t =
+  InteractPawn(i, t = !1) {
+    if (this.eYs) return !1;
+    var e = this.Pui[i];
+    if (!e?.Valid) return !1;
+    const s = e.GetComponent(105);
+    if (!s?.IsPawnInteractive()) return !1;
+    if (this.Hui)
+      if (t) {
+        if (this.Hui)
+          (this.eYs = !0),
+            this.Hui.PlayReleaseSequence().then(
+              () => {
+                this.eYs = !1;
+                var t =
+                  ModelManager_1.ModelManager.InteractionModel.GetOptionInstanceIdByIndex(
+                    i,
+                  );
+                s.InteractPawn(t);
+              },
+              () => {},
+            );
+      } else {
+        (this.eYs = !1),
+          this.Hui?.PlayReleaseSequence().then(
+            () => {},
+            () => {},
+          );
+        e =
+          ModelManager_1.ModelManager.InteractionModel.GetOptionInstanceIdByIndex(
+            i,
+          );
+        s.InteractPawn(e);
+      }
+    else
+      (t =
         ModelManager_1.ModelManager.InteractionModel.GetOptionInstanceIdByIndex(
-          t,
+          i,
         )),
-      i.InteractPawn(t),
-      !0)
-    );
+        s.InteractPawn(t);
+    return !0;
   }
   OnBeforeDestroy() {
-    this.E_i && (this.E_i.ClearChildren(), (this.E_i = void 0)),
-      this.q_i?.Destroy(),
-      (this.q_i = void 0),
-      (this.H_i = void 0),
-      this.A_i?.SetAnchorOffsetY(this.V_i),
-      (this.A_i = void 0),
+    this.Sui && (this.Sui.ClearChildren(), (this.Sui = void 0)),
+      this.qui?.Destroy(),
+      (this.qui = void 0),
+      (this.Hui = void 0),
+      this.Aui?.SetAnchorOffsetY(this.Vui),
+      (this.Aui = void 0),
       this.xqe &&
-        ((this.xqe.ScrollSensitivity = this.S_i),
+        ((this.xqe.ScrollSensitivity = this.Eui),
         this.xqe.OnLateUpdate.Unbind()),
-      (this.S_i = 0),
+      (this.Eui = 0),
       (this.xqe = void 0),
-      (this.w_i = !1),
-      (this.q_i = void 0),
-      (this.P_i.length = 0),
-      (this.F_i = !1),
-      this.Z_i(),
-      this.gui();
+      (this.wui = !1),
+      (this.qui = void 0),
+      (this.Pui.length = 0),
+      (this.Fui = !1),
+      this.Zui(),
+      this.gci();
   }
-  gui() {
-    this.b_i &&
-      TimerSystem_1.TimerSystem.Has(this.b_i) &&
-      (TimerSystem_1.TimerSystem.Remove(this.b_i), (this.b_i = void 0));
+  gci() {
+    this.bui &&
+      TimerSystem_1.TimerSystem.Has(this.bui) &&
+      (TimerSystem_1.TimerSystem.Remove(this.bui), (this.bui = void 0));
   }
-  hui(t) {
-    this.E_i.RefreshByData(t);
-    t = MathUtils_1.MathUtils.Clamp(this.oTt, 0, t.length - 1);
-    this.OZt(t);
+  hci(t) {
+    this.Sui.RefreshByData(t);
+    t = MathUtils_1.MathUtils.Clamp(this.hLt, 0, t.length - 1);
+    this.Oei(t);
   }
-  aui() {
-    (this.P_i.length = 0), (this.x_i = this.pui(this.P_i));
+  aci() {
+    (this.Pui.length = 0), (this.xui = this.pci(this.Pui));
   }
-  pui(t) {
+  pci(t) {
     return ModelManager_1.ModelManager.InteractionModel.RefreshInteractEntities(
       t,
     );
   }
   OnTick(t) {
-    this.W_i &&
-      (this.R_i < InteractionDefine_1.LERP_TIME
-        ? ((this.R_i += t),
-          (t = this.A_i.GetAnchorOffsetY()),
+    this.Wui &&
+      (this.Rui < InteractionDefine_1.LERP_TIME
+        ? ((this.Rui += t),
+          (t = this.Aui.GetAnchorOffsetY()),
           (t = MathUtils_1.MathUtils.Lerp(
             t,
-            this.L_i,
-            Math.min(this.R_i / InteractionDefine_1.LERP_TIME, 1),
+            this.Lui,
+            Math.min(this.Rui / InteractionDefine_1.LERP_TIME, 1),
           )),
-          this.A_i.SetAnchorOffsetY(t))
-        : (this.W_i = !1)),
-      this.q_i?.InAsyncLoading() || this.q_i?.RefreshTextWidth();
+          this.Aui.SetAnchorOffsetY(t))
+        : (this.Wui = !1)),
+      this.qui?.InAsyncLoading() || this.qui?.RefreshTextWidth();
   }
-  _ui() {
+  _ci() {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug(
         "Test",
         8,
         "[InteractionView]自动拾取-----当玩家按下通用交互，会打断自动拾取",
       ),
-      (this.G_i = !1),
-      this.H_i &&
-        !ModelManager_1.ModelManager.PlatformModel.IsMobile() &&
-        this.iui() &&
+      (this.Gui = !1),
+      this.Hui &&
+        !Info_1.Info.IsInTouch() &&
+        this.ici() &&
         this.GetActive() &&
-        (this.Z_i(),
-        (this.B_i = TimerSystem_1.TimerSystem.Delay(this.Ltt, this.g_t)));
+        (this.Zui(),
+        (this.Bui = TimerSystem_1.TimerSystem.Delay(this.Oit, this.xut)));
   }
-  Z_i() {
-    this.B_i &&
-      TimerSystem_1.TimerSystem.Has(this.B_i) &&
-      (TimerSystem_1.TimerSystem.Remove(this.B_i), (this.B_i = void 0));
+  Zui() {
+    this.Bui &&
+      TimerSystem_1.TimerSystem.Has(this.Bui) &&
+      (TimerSystem_1.TimerSystem.Remove(this.Bui), (this.Bui = void 0));
   }
-  $_i() {
+  $ui() {
     var t;
-    this.Z_i(),
-      this.G_i ||
+    this.Zui(),
+      this.Gui ||
         ModelManager_1.ModelManager.InteractionModel.InInteractCd() ||
         (this.GetActive() &&
-          this.H_i &&
-          this.InteractPawn(this.H_i.ActorIndex) &&
+          this.Hui &&
+          this.InteractPawn(this.Hui.ActorIndex, !0) &&
           (AudioSystem_1.AudioSystem.PostEvent("play_ui_ia_com_option"),
-          (t = Math.max(this.P_i.length - 1, 0)),
-          (this.oTt = Math.min(this.oTt, t))));
+          (t = Math.max(this.Pui.length - 1, 0)),
+          (this.hLt = Math.min(this.hLt, t))));
   }
   SelectHint(t) {
     let i = -1;
-    var e = this.P_i.length - 1;
+    var e = this.Pui.length - 1;
     (i = t
-      ? (i = this.oTt - 1) < 0
+      ? (i = this.hLt - 1) < 0
         ? e
         : i
-      : (i = this.oTt + 1) > e
+      : (i = this.hLt + 1) > e
         ? 0
-        : i) < 0 || ((this.U_i = i), this.OZt(this.U_i));
+        : i) < 0 || ((this.Uui = i), this.Oei(this.Uui));
   }
-  OZt(i) {
-    if (
-      i !== this.oTt &&
-      !ModelManager_1.ModelManager.PlatformModel.IsMobile() &&
-      this.E_i
-    ) {
-      let t = this.E_i.GetLayoutItemByIndex(i);
-      (t = t || this.E_i.GetLayoutItemByIndex(0)) &&
-        (this.H_i?.SetSelected(!1),
-        (this.H_i = t),
-        (this.oTt = i),
-        (this.U_i = -1),
-        this.vui(i),
-        this.E_i.SelectGridProxy(i),
+  Oei(i) {
+    if (!Info_1.Info.IsInTouch() && this.Sui) {
+      let t = this.Sui.GetLayoutItemByIndex(i);
+      (t = t || this.Sui.GetLayoutItemByIndex(0)) &&
+        (this.Hui?.SetSelected(!1),
+        (this.Hui = t),
+        (this.hLt = i),
+        (this.Uui = -1),
+        this.vci(),
+        this.Sui.SelectGridProxy(i),
         this.xqe.ScrollTo(t.GetRootItem()));
     }
   }
-  vui(t) {
-    var i;
-    this.iui() &&
-    ((i = ModelManager_1.ModelManager.InteractionModel),
-    (t = this.P_i[t]),
-    i.CanAutoPickUp(t))
-      ? this.H_i?.SetLongPressTime(i.AutoLongPressTime)
-      : this.H_i?.SetLongPressTime(0);
+  vci() {
+    var t;
+    this.ici()
+      ? ((t = ModelManager_1.ModelManager.InteractionModel),
+        this.Hui?.SetLongPressTime(t.AutoLongPressTime))
+      : this.Hui?.SetLongPressTime(0);
   }
-  lui() {
+  lci() {
     var t = ModelManager_1.ModelManager.InteractionModel;
     if (t.IsInShowAutoInteractionGuideCountLimit()) {
-      var i = ModelManager_1.ModelManager.PlatformModel.IsMobile();
+      var i = Info_1.Info.IsInTouch();
       if (i) {
         if (t.IsTriggerMobileGuide) return;
       } else if (t.IsTriggerDesktopGuide) return;
-      this.x_i <= t.ActiveInteractGuideCount ||
-        this.q_i ||
+      this.xui <= t.ActiveInteractGuideCount ||
+        this.qui ||
         (i
-          ? this.Mui().then(
+          ? this.Mci().then(
               (t) => {
                 t.Refresh("MobileAutoPickUpText");
               },
               () => {},
             )
-          : this.Mui().then(
+          : this.Mci().then(
               (t) => {
                 t.Refresh("DesktopAutoPickUpText");
               },
@@ -565,31 +625,31 @@ class InteractionHintView extends UiTickViewBase_1.UiTickViewBase {
         ));
     }
   }
-  async Mui() {
+  async Mci() {
     var t = this.GetItem(5);
     return (
-      (this.q_i = new InteractionGuide_1.InteractionGuide()),
-      await this.q_i.CreateThenShowByResourceIdAsync(
+      (this.qui = new InteractionGuide_1.InteractionGuide()),
+      await this.qui.CreateThenShowByResourceIdAsync(
         "UiItem_GuideNPCActScroll",
         t,
         !1,
       ),
-      this.q_i
+      this.qui
     );
   }
-  eui() {
-    this.q_i &&
-      (ModelManager_1.ModelManager.PlatformModel.IsMobile()
-        ? this.q_i.Refresh("MobileAutoPickUpText")
-        : this.q_i.Refresh("DesktopAutoPickUpText"));
+  eci() {
+    this.qui &&
+      (Info_1.Info.IsInTouch()
+        ? this.qui.Refresh("MobileAutoPickUpText")
+        : this.qui.Refresh("DesktopAutoPickUpText"));
   }
-  iui() {
-    return 0 < this.x_i;
+  ici() {
+    return 0 < this.xui;
   }
   GetGuideUiItemAndUiItemForShowEx(t) {
     var i;
     if (2 === t.length && t[0] === GuideConfig_1.GuideConfig.TabTag)
-      return (i = this.E_i.GetLayoutItemList()).length <= 0
+      return (i = this.Sui.GetLayoutItemList()).length <= 0
         ? void 0
         : [(i = i[0].GetButtonForGuide()), i];
     Log_1.Log.CheckError() &&
@@ -602,5 +662,5 @@ class InteractionHintView extends UiTickViewBase_1.UiTickViewBase {
     return UiLayerType_1.ELayerType.Normal;
   }
 }
-(exports.InteractionHintView = InteractionHintView).fui = void 0;
+(exports.InteractionHintView = InteractionHintView).fci = void 0;
 //# sourceMappingURL=InteractionHintView.js.map

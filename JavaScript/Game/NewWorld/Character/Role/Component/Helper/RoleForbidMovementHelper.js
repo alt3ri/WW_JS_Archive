@@ -21,10 +21,10 @@ class LimitTagHandler {
 class RoleForbidMovementHelper {
   constructor() {
     (this.TagComp = void 0),
-      (this.pZo = new Array()),
+      (this.Cer = new Array()),
       (this.CurrentActiveHandlers = new Array()),
       (this.Handlers = new Map()),
-      (this.ytr = (t, i) => {
+      (this.Eir = (t, i) => {
         var s = this.Handlers.get(t);
         if (
           s &&
@@ -71,7 +71,7 @@ class RoleForbidMovementHelper {
   Awake() {
     for (const i of this.Handlers) {
       var t = this.TagComp.HasTag(i[0]);
-      this.ytr(i[0], t);
+      this.Eir(i[0], t);
     }
   }
   ActiveHandler(t, i) {
@@ -85,12 +85,12 @@ class RoleForbidMovementHelper {
   CreateTagHandler(t, i, s) {
     var e = this.TagComp.HasTag(t);
     this.Handlers.set(t, new LimitTagHandler(t, i, e, s)),
-      this.pZo.push(this.TagComp.ListenForTagAddOrRemove(t, this.ytr));
+      this.Cer.push(this.TagComp.ListenForTagAddOrRemove(t, this.Eir));
   }
   Clear() {
     (this.CurrentActiveHandlers.length = 0), this.Handlers.clear();
-    for (const t of this.pZo) t.EndTask();
-    this.pZo.length = 0;
+    for (const t of this.Cer) t.EndTask();
+    this.Cer.length = 0;
   }
 }
 exports.RoleForbidMovementHelper = RoleForbidMovementHelper;

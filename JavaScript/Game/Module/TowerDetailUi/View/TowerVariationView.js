@@ -20,12 +20,12 @@ const UE = require("ue"),
 class TowerVariationView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
-      (this.fDo = !1),
+      (this.dRo = !1),
       (this._fe = !0),
-      (this.Ekt = void 0),
-      (this.uTt = void 0),
-      (this.pDo = []),
-      (this.ZLo = () => {
+      (this.y2t = void 0),
+      (this.gLt = void 0),
+      (this.CRo = []),
+      (this.YDo = () => {
         1 ===
           ModelManager_1.ModelManager.TowerModel?.GetDifficultyRewardProgress(
             ModelManager_1.ModelManager.TowerModel.CurrentSelectDifficulties,
@@ -37,18 +37,18 @@ class TowerVariationView extends UiTickViewBase_1.UiTickViewBase {
             this.AddChildViewById(r);
           });
       }),
-      (this.eDo = () => {
+      (this.JDo = () => {
         UiManager_1.UiManager.GetViewByName("TowerNormalView")
           ? this.CloseMe()
           : UiManager_1.UiManager.OpenViewAsync("TowerNormalView");
       }),
-      (this.tDo = () => {
+      (this.zDo = () => {
         ControllerHolder_1.ControllerHolder.PayShopController.OpenPayShopViewWithTab(
           5,
           0,
         );
       }),
-      (this.iDo = () => {
+      (this.ZDo = () => {
         var e =
           ModelManager_1.ModelManager.TowerModel?.GetDifficultyRewardProgress(
             TowerData_1.VARIATION_RISK_DIFFICULTY,
@@ -77,21 +77,21 @@ class TowerVariationView extends UiTickViewBase_1.UiTickViewBase {
       [11, UE.UIItem],
     ]),
       (this.BtnBindInfo = [
-        [2, this.ZLo],
-        [3, this.eDo],
-        [7, this.tDo],
+        [2, this.YDo],
+        [3, this.JDo],
+        [7, this.zDo],
       ]);
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnTowerRewardReceived,
-      this.iDo,
+      this.ZDo,
     );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnTowerRewardReceived,
-      this.iDo,
+      this.ZDo,
     );
   }
   OnBeforeShow() {
@@ -107,7 +107,7 @@ class TowerVariationView extends UiTickViewBase_1.UiTickViewBase {
         void 0,
         4,
       ),
-      this.iDo(),
+      this.ZDo(),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.RedDotTowerReward,
       ),
@@ -121,41 +121,42 @@ class TowerVariationView extends UiTickViewBase_1.UiTickViewBase {
       );
   }
   OnBeforeDestroy() {
-    this.uTt.Destroy(),
-      (this.uTt = void 0),
+    this.gLt.Destroy(),
+      (this.gLt = void 0),
       InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.RestoreDungeonEntranceEntity();
   }
-  async oDo() {
+  async eRo() {
     UiManager_1.UiManager.GetViewByName("TowerNormalView") &&
       (await UiManager_1.UiManager.CloseViewAsync("TowerNormalView")),
       this.CloseMe();
   }
   async OnBeforeStartAsync() {
-    var r =
-        ModelManager_1.ModelManager.TowerModel.GetDifficultyAllAreaFirstFloor(
-          TowerData_1.VARIATION_RISK_DIFFICULTY,
-        ).length,
-      t = [];
-    for (let e = 0; e < r; e++) {
-      var o = new TowerAreaItem_1.TowerAreaItem();
-      this.pDo.push(o),
-        t.push(
-          o.CreateThenShowByResourceIdAsync(
-            1 === e
-              ? "UiItem_DailyTowerLevelRedItem"
-              : "UiItem_DailyTowerLevelItem",
-          ),
-        );
-    }
-    await Promise.all(t);
+    var e =
+      ModelManager_1.ModelManager.TowerModel.GetDifficultyAllAreaFirstFloor(
+        TowerData_1.VARIATION_RISK_DIFFICULTY,
+      );
+    const o = this.GetHorizontalLayout(1).RootUIComp;
+    await e.reduce(async (e, r, t) => {
+      await e;
+      e = new TowerAreaItem_1.TowerAreaItem();
+      return (
+        this.CRo.push(e),
+        e.CreateThenShowByResourceIdAsync(
+          1 === t
+            ? "UiItem_DailyTowerLevelRedItem"
+            : "UiItem_DailyTowerLevelItem",
+          o,
+        )
+      );
+    }, Promise.resolve());
   }
   OnStart() {
-    (this.fDo = ModelManager_1.ModelManager.TowerModel.GetDifficultyIsClear(
+    (this.dRo = ModelManager_1.ModelManager.TowerModel.GetDifficultyIsClear(
       TowerData_1.HIGH_RISK_DIFFICULTY,
     )),
       (ModelManager_1.ModelManager.TowerModel.CurrentSelectDifficulties =
         TowerData_1.VARIATION_RISK_DIFFICULTY),
-      (this.uTt = new TowerTitleItem_1.TowerTitleItem(this.GetItem(0), () => {
+      (this.gLt = new TowerTitleItem_1.TowerTitleItem(this.GetItem(0), () => {
         var e;
         ModelManager_1.ModelManager.TowerModel.CheckInTower()
           ? ((e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(
@@ -166,9 +167,9 @@ class TowerVariationView extends UiTickViewBase_1.UiTickViewBase {
             ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
               e,
             ))
-          : this.oDo();
+          : this.eRo();
       })),
-      this.uTt.RefreshText("InstanceDungeonTitle_31_CommonText");
+      this.gLt.RefreshText("InstanceDungeonTitle_31_CommonText");
     var e = ModelManager_1.ModelManager.TowerModel.GetSeasonCountDownData(),
       r =
         (this.GetText(4).SetText(e.CountDownText),
@@ -176,19 +177,11 @@ class TowerVariationView extends UiTickViewBase_1.UiTickViewBase {
           EventDefine_1.EEventName.RedDotTowerRewardByDifficulties,
           3,
         ),
-        (ModelManager_1.ModelManager.TowerModel.CurrentTowerLock = !this.fDo),
+        (ModelManager_1.ModelManager.TowerModel.CurrentTowerLock = !this.dRo),
         ModelManager_1.ModelManager.TowerModel.GetDifficultyAllAreaFirstFloor(
           TowerData_1.VARIATION_RISK_DIFFICULTY,
-        )),
-      t = this.GetHorizontalLayout(1).RootUIComp;
-    for (let e = 0; e < this.pDo.length; e++) {
-      var o = this.pDo[e];
-      o.Refresh(r[e]),
-        o
-          .GetOriginalActor()
-          .GetComponentByClass(UE.UIItem.StaticClass())
-          .SetUIParent(t);
-    }
+        ));
+    for (let e = 0; e < this.CRo.length; e++) this.CRo[e].Refresh(r[e]);
   }
   OnBeforeHide() {
     RedDotController_1.RedDotController.UnBindGivenUi(
@@ -202,14 +195,14 @@ class TowerVariationView extends UiTickViewBase_1.UiTickViewBase {
       );
   }
   OnTick(e) {
-    this._fe && this.wkt();
+    this._fe && this.B2t();
   }
-  wkt() {
+  B2t() {
     var e,
       r =
         ModelManager_1.ModelManager.TowerModel.GetSeasonCountDownData()
           .CountDownText;
-    this.Ekt !== r && ((this.Ekt = r), this.GetText(4).SetText(r)),
+    this.y2t !== r && ((this.y2t = r), this.GetText(4).SetText(r)),
       MathUtils_1.MathUtils.LongToNumber(
         ModelManager_1.ModelManager.TowerModel.TowerEndTime,
       ) -

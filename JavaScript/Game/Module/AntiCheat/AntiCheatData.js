@@ -4,7 +4,10 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const LogReportDefine_1 = require("../LogReport/LogReportDefine");
 class AntiCheatBundleData extends LogReportDefine_1.PlayerCommonLogData {
   constructor() {
-    super(), (this.s_bundle_id = ""), (this.s_version = "");
+    super(),
+      (this.event_id = "8"),
+      (this.s_bundle_id = ""),
+      (this.s_version = "");
   }
 }
 exports.AntiCheatBundleData = AntiCheatBundleData;

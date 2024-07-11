@@ -11,7 +11,7 @@ class PlotPhotoView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
       (this.B7 = void 0),
-      (this.JSt = () => {
+      (this.lyt = () => {
         UiManager_1.UiManager.CloseView("PlotPhotoView");
       });
   }
@@ -27,7 +27,7 @@ class PlotPhotoView extends UiViewBase_1.UiViewBase {
       [7, UE.UIText],
       [8, UE.UIText],
     ]),
-      (this.BtnBindInfo = [[2, this.JSt]]);
+      (this.BtnBindInfo = [[2, this.lyt]]);
   }
   OnAddEventListener() {}
   OnRemoveEventListener() {}

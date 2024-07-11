@@ -34,12 +34,12 @@ exports.RoguelikeShopAttrItem = RoguelikeShopAttrItem;
 class RoguelikeShopDetail extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this.Lho = []),
-      (this.E_i = void 0),
-      (this.Wso = () => {
+      (this.ylo = []),
+      (this.Sui = void 0),
+      (this.Fao = () => {
         return new CommonSelectItem_1.CommonElementItem();
       }),
-      (this.nho = () => {
+      (this.ilo = () => {
         RoguelikeController_1.RoguelikeController.RogueChooseDataResultRequest(
           6,
         );
@@ -60,19 +60,19 @@ class RoguelikeShopDetail extends UiPanelBase_1.UiPanelBase {
       [10, UE.UIText],
       [11, UE.UIHorizontalLayout],
     ]),
-      (this.BtnBindInfo = [[7, this.nho]]);
+      (this.BtnBindInfo = [[7, this.ilo]]);
   }
   OnStart() {
-    this.E_i = new GenericLayout_1.GenericLayout(
+    this.Sui = new GenericLayout_1.GenericLayout(
       this.GetHorizontalLayout(11),
-      this.Wso,
+      this.Fao,
     );
   }
   Refresh(s) {
     var e = new AsyncTask_1.AsyncTask(
       "RoguelikeShopDetail.Refresh",
       async () => {
-        if (s.RoguelikeGainDataType === Protocol_1.Aki.Protocol.u3s.qDs) {
+        if (s.RoguelikeGainDataType === Protocol_1.Aki.Protocol.e8s.txs) {
           var e =
               ConfigManager_1.ConfigManager.RoguelikeConfig.GetRoguePhantomConfig(
                 s.ConfigId,
@@ -104,10 +104,10 @@ class RoguelikeShopDetail extends UiPanelBase_1.UiPanelBase {
             this.GetItem(4).SetUIActive(!0);
           const r = [];
           s.AffixEntryList.forEach((e, i) => {
-            this.Lho[i] ||
-              ((this.Lho[i] = new RoguelikeShopAttrItem()),
+            this.ylo[i] ||
+              ((this.ylo[i] = new RoguelikeShopAttrItem()),
               r.push(
-                this.Lho[i].CreateThenShowByActorAsync(
+                this.ylo[i].CreateThenShowByActorAsync(
                   LguiUtil_1.LguiUtil.CopyItem(
                     this.GetItem(5),
                     this.GetItem(4),
@@ -117,7 +117,7 @@ class RoguelikeShopDetail extends UiPanelBase_1.UiPanelBase {
           }),
             await Promise.all(r),
             s.AffixEntryList.forEach((e, i) => {
-              this.Lho[i].Update(e);
+              this.ylo[i].Update(e);
             });
         } else {
           e = ConfigManager_1.ConfigManager.RoguelikeConfig.GetRogueBuffConfig(
@@ -161,7 +161,7 @@ class RoguelikeShopDetail extends UiPanelBase_1.UiPanelBase {
           0 < e.length &&
             ((t = e[0]),
             (i = new Array(t.Count).fill(t.ElementId)),
-            await this.E_i?.RefreshByDataAsync(i)),
+            await this.Sui?.RefreshByDataAsync(i)),
           !0
         );
       },

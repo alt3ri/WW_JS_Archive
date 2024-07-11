@@ -12,105 +12,105 @@ const IUtil_1 = require("../../Interface/IUtil"),
   SouceMap_1 = require("../Misc/SouceMap"),
   TestOp_1 = require("./TestOp");
 class Expect {
-  constructor(e) {
-    this.Xe = e;
+  constructor(t) {
+    this.Xe = t;
   }
   get Je() {
     return (0, SouceMap_1.getCallerLocation)(2);
   }
-  notToBe(e) {
-    if (this.Xe === e)
+  notToBe(t) {
+    if (this.Xe === t)
       throw new Error(
-        `Expect: ${JSON.stringify(e)}
+        `Expect: ${JSON.stringify(t)}
 Value : ${JSON.stringify(this.Xe)}
 File  : ` + this.Je,
       );
   }
-  toBe(e) {
-    if (this.Xe !== e)
+  toBe(t) {
+    if (this.Xe !== t)
       throw new Error(
-        `Expect: ${JSON.stringify(e)}
+        `Expect: ${JSON.stringify(t)}
 Value : ${JSON.stringify(this.Xe)}
 File  : ` + this.Je,
       );
   }
-  toEqual(e) {
-    if (!(0, IUtil_1.deepEquals)(this.Xe, e))
+  toEqual(t) {
+    if (!(0, IUtil_1.deepEquals)(this.Xe, t))
       throw new Error(
-        `Expect: ${JSON.stringify(e)}
+        `Expect: ${JSON.stringify(t)}
 Value : ${JSON.stringify(this.Xe)}
 File  : ` + this.Je,
       );
   }
-  notToEqual(e) {
-    if ((0, IUtil_1.deepEquals)(this.Xe, e))
+  notToEqual(t) {
+    if ((0, IUtil_1.deepEquals)(this.Xe, t))
       throw new Error(
-        `Expect: ${JSON.stringify(e)}
+        `Expect: ${JSON.stringify(t)}
 Value : ${JSON.stringify(this.Xe)}
 File  : ` + this.Je,
       );
   }
-  toBeLessThan(e) {
+  toBeLessThan(t) {
     if ("bigint" != typeof this.Xe && "number" != typeof this.Xe)
       throw new Error(
         `Reason: Value is not a number
 File  : ` + this.Je,
       );
-    if (this.Xe >= e)
+    if (this.Xe >= t)
       throw new Error(
-        `Expect: Value < ${e}
+        `Expect: Value < ${t}
 Value : ${this.Xe}
 File  : ` + this.Je,
       );
   }
-  toBeLessThanOrEqual(e) {
+  toBeLessThanOrEqual(t) {
     if ("bigint" != typeof this.Xe && "number" != typeof this.Xe)
       throw new Error(
         `Reason: Value is not a number
 File  : ` + this.Je,
       );
-    if (this.Xe > e)
+    if (this.Xe > t)
       throw new Error(
-        `Expect: Value <= ${e}
+        `Expect: Value <= ${t}
 Value : ${this.Xe}
 File  : ` + this.Je,
       );
   }
-  toBeGreaterThan(e) {
+  toBeGreaterThan(t) {
     if ("bigint" != typeof this.Xe && "number" != typeof this.Xe)
       throw new Error(
         `Reason: Value is not a number
 File  : ` + this.Je,
       );
-    if (this.Xe <= e)
+    if (this.Xe <= t)
       throw new Error(
-        `Expect: Value > ${e}
+        `Expect: Value > ${t}
 Value : ${this.Xe}
 File  : ` + this.Je,
       );
   }
-  toBeGreaterThanOrEqual(e) {
+  toBeGreaterThanOrEqual(t) {
     if ("bigint" != typeof this.Xe && "number" != typeof this.Xe)
       throw new Error(
         `Reason: Value is not a number
 File  : ` + this.Je,
       );
-    if (this.Xe < e)
+    if (this.Xe < t)
       throw new Error(
-        `Expect: Value >= ${e}
+        `Expect: Value >= ${t}
 Value : ${this.Xe}
 File  : ` + this.Je,
       );
   }
-  toBeCloseTo(e, t) {
+  toBeCloseTo(t, e) {
     if ("number" != typeof this.Xe)
       throw new Error(
         `Reason: Value is not a number
 File  : ` + this.Je,
       );
-    if (Math.abs(this.Xe - e) > t)
+    if (Math.abs(this.Xe - t) > e)
       throw new Error(
-        `Expect: Value is close to ${e} +/- ${t}
+        `Expect: Value is close to ${t} +/- ${e}
 Value : ${this.Xe}
 File  : ` + this.Je,
       );
@@ -150,22 +150,22 @@ File  : ` + this.Je,
 File  : ` + this.Je,
       );
   }
-  Ye(e) {
+  Ye(t) {
     if ("function" != typeof this.Xe)
       throw new Error(
         `Reason: Value is not a function
 File  : ` + this.Je,
       );
-    let t = !1;
+    let e = !1;
     var r = this.Xe;
     try {
       r();
-    } catch (e) {
-      t = !0;
+    } catch (t) {
+      e = !0;
     }
-    if (t !== e)
+    if (e !== t)
       throw new Error(
-        `Reason: ${e ? "not" : ""}throw error
+        `Reason: ${t ? "not" : ""}throw error
 File  : ` + this.Je,
       );
   }
@@ -175,22 +175,22 @@ File  : ` + this.Je,
   toNotThrowError() {
     this.Ye(!1);
   }
-  async Ke(e) {
+  async Ke(t) {
     if ("function" != typeof this.Xe)
       throw new Error(
         `Reason: Value is not a function
 File  : ` + this.Je,
       );
-    let t = !1;
+    let e = !1;
     var r = this.Xe;
     try {
       await r();
-    } catch (e) {
-      t = !0;
+    } catch (t) {
+      e = !0;
     }
-    if (t !== e)
+    if (e !== t)
       throw new Error(
-        `Reason: ${e ? "not" : ""}throw error
+        `Reason: ${t ? "not" : ""}throw error
 File  : ` + this.Je,
       );
   }
@@ -201,45 +201,48 @@ File  : ` + this.Je,
     return this.Ke(!1);
   }
 }
-function beforeEach(e) {
-  TestOp_1.TestContext.Current.CurrentSuite.BeforeEach = e;
+function getRunningContext() {
+  var t = (0, TestOp_1.getCurrentTestRunningContextName)();
+  if (t) return (0, TestOp_1.getTestContext)(t);
+  throw new Error("contextName not found.");
 }
-function afterEach(e) {
-  TestOp_1.TestContext.Current.CurrentSuite.AfterEach = e;
+function beforeEach(t) {
+  getRunningContext().CurrentSuite.BeforeEach = t;
 }
-function beforeAll(e) {
-  TestOp_1.TestContext.Current.CurrentSuite.BeforeAll = e;
+function afterEach(t) {
+  getRunningContext().CurrentSuite.AfterEach = t;
 }
-function afterAll(e) {
-  TestOp_1.TestContext.Current.CurrentSuite.AfterAll = e;
+function beforeAll(t) {
+  getRunningContext().CurrentSuite.BeforeAll = t;
 }
-function describe(e, t) {
-  e = {
+function afterAll(t) {
+  getRunningContext().CurrentSuite.AfterAll = t;
+}
+function describe(t, e) {
+  t = {
     Type: "suite",
-    Name: e,
-    Id: TestOp_1.TestContext.Current.GenerateNodeId(),
+    Name: t,
+    Id: getRunningContext().GenerateNodeId(),
     FileLocation: (0, SouceMap_1.getCallerLocation)(1),
     Cases: [],
-    Run: t,
+    Run: e,
     RunTime: 0,
   };
-  TestOp_1.TestContext.Current.PushSuite(e),
-    t(),
-    TestOp_1.TestContext.Current.PopSuite();
+  getRunningContext().PushSuite(t), e(), getRunningContext().PopSuite();
 }
-function it(e, t, r) {
-  e = {
+function it(t, e, r) {
+  t = {
     Type: "case",
-    Name: e,
-    Id: TestOp_1.TestContext.Current.GenerateNodeId(),
-    Run: t,
+    Name: t,
+    Id: getRunningContext().GenerateNodeId(),
+    Run: e,
     FileLocation: (0, SouceMap_1.getCallerLocation)(1),
     TimeOut: r,
   };
-  TestOp_1.TestContext.Current.CurrentSuite.Cases.push(e);
+  getRunningContext().CurrentSuite.Cases.push(t);
 }
-function expect(e) {
-  return new Expect(e);
+function expect(t) {
+  return new Expect(t);
 }
 (exports.beforeEach = beforeEach),
   (exports.afterEach = afterEach),

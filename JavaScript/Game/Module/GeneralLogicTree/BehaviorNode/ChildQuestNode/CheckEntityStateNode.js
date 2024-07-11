@@ -4,29 +4,29 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const ChildQuestNodeBase_1 = require("./ChildQuestNodeBase");
 class CheckEntityStateNode extends ChildQuestNodeBase_1.ChildQuestNodeBase {
   constructor() {
-    super(...arguments), (this.xQt = void 0), (this.PQt = []);
+    super(...arguments), (this.xXt = void 0), (this.PXt = []);
   }
   get CorrelativeEntities() {
-    return this.PQt;
+    return this.PXt;
   }
   OnCreate(e) {
     if (!super.OnCreate(e)) return !1;
     e = e.Condition;
     if ("CheckEntityState" !== e.Type) return !1;
     if (e.Conditions) {
-      this.PQt = [];
-      for (const t of e.Conditions) this.PQt.push(t.EntityId);
+      this.PXt = [];
+      for (const t of e.Conditions) this.PXt.push(t.EntityId);
     }
     return (this.TrackTextRuleInner = 1), !0;
   }
   OnUpdateProgress(e) {
-    return !!e.Yfs && ((this.xQt = e.Yfs), !0);
+    return !!e.dEs && ((this.xXt = e.dEs), !0);
   }
   GetProgress() {
-    return this.xQt?.rkn?.length.toString() ?? "0";
+    return this.xXt?.P4n?.length.toString() ?? "0";
   }
   GetProgressMax() {
-    return this.PQt?.length.toString() ?? "0";
+    return this.PXt?.length.toString() ?? "0";
   }
 }
 exports.CheckEntityStateNode = CheckEntityStateNode;

@@ -12,7 +12,7 @@ const Log_1 = require("../../../Core/Common/Log"),
 class LevelEventFadeInScreen extends LevelGeneralBase_1.LevelEventBase {
   constructor() {
     super(...arguments),
-      (this.EDe = !1),
+      (this.SDe = !1),
       (this.yDe = () => {
         this.FinishExecute(!0);
       });
@@ -21,12 +21,12 @@ class LevelEventFadeInScreen extends LevelGeneralBase_1.LevelEventBase {
     if (t) {
       let e = void 0;
       if (
-        (t.KeepFadeAfterTreeEnd && (this.EDe = t.KeepFadeAfterTreeEnd),
-        !this.EDe &&
+        (t.KeepFadeAfterTreeEnd && (this.SDe = t.KeepFadeAfterTreeEnd),
+        !this.SDe &&
           n &&
           6 === n.Type &&
           (n = n) &&
-          n.BtType === Protocol_1.Aki.Protocol.NCs.Proto_BtTypeLevelPlay &&
+          n.BtType === Protocol_1.Aki.Protocol.tps.Proto_BtTypeLevelPlay &&
           ((e = n.TreeConfigId), Log_1.Log.CheckInfo()) &&
           Log_1.Log.Info("BlackScreen", 46, "玩法内开启黑幕：", [
             "treeId",
@@ -75,7 +75,7 @@ class LevelEventFadeInScreen extends LevelGeneralBase_1.LevelEventBase {
   }
   OnUpdateGuarantee() {
     var e;
-    this.EDe
+    this.SDe
       ? ((e = { Name: "ActionBlackScreenFadeOut" }),
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.RemGuaranteeAction,
@@ -92,7 +92,7 @@ class LevelEventFadeInScreen extends LevelGeneralBase_1.LevelEventBase {
         ));
   }
   OnReset() {
-    this.EDe = !1;
+    this.SDe = !1;
   }
 }
 exports.LevelEventFadeInScreen = LevelEventFadeInScreen;

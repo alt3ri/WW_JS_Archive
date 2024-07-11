@@ -9,13 +9,13 @@ const UE = require("ue"),
 class CommonRewardPopup extends UiPanelBase_1.UiPanelBase {
   constructor(t) {
     super(),
-      (this.FIt = void 0),
-      (this.VIt = void 0),
-      (this.nit = new Map()),
+      (this.KTt = void 0),
+      (this.QTt = void 0),
+      (this.vot = new Map()),
       (this.rOe = () => {
         return new RewardPanelItem();
       }),
-      (this.HIt = () => {
+      (this.XTt = () => {
         this.SetActive(!1);
       }),
       this.CreateByResourceIdAsync("UiItem_RewardPopup", t);
@@ -27,40 +27,40 @@ class CommonRewardPopup extends UiPanelBase_1.UiPanelBase {
       [2, UE.UIItem],
       [3, UE.UIButtonComponent],
     ]),
-      (this.BtnBindInfo = [[3, this.HIt]]);
+      (this.BtnBindInfo = [[3, this.XTt]]);
   }
   OnStart() {
-    (this.FIt = new GenericLayout_1.GenericLayout(
+    (this.KTt = new GenericLayout_1.GenericLayout(
       this.GetHorizontalLayout(0),
       this.rOe,
     )),
       this.SetActive(!1);
-    for (const t of this.nit.values()) t();
+    for (const t of this.vot.values()) t();
   }
   OnBeforeDestroy() {
-    this.FIt.ClearChildren(),
-      (this.FIt = void 0),
-      (this.VIt = void 0),
-      this.nit.clear();
+    this.KTt.ClearChildren(),
+      (this.KTt = void 0),
+      (this.QTt = void 0),
+      this.vot.clear();
   }
   Refresh(t) {
     var e = () => {
-      if (0 !== this.VIt.RewardLists.length) {
-        let t = this.VIt.MountItem.GetLGUISpaceAbsolutePosition();
-        void 0 !== this.VIt.PosBias && (t = t.op_Addition(this.VIt.PosBias)),
+      if (0 !== this.QTt.RewardLists.length) {
+        let t = this.QTt.MountItem.GetLGUISpaceAbsolutePosition();
+        void 0 !== this.QTt.PosBias && (t = t.op_Addition(this.QTt.PosBias)),
           this.GetItem(2).SetLGUISpaceAbsolutePosition(t),
-          this.FIt.RefreshByDataAsync(this.VIt.RewardLists).then(() => {
+          this.KTt.RefreshByDataAsync(this.QTt.RewardLists).then(() => {
             this.SetActive(!0);
           });
       }
     };
-    (this.VIt = t), this.InAsyncLoading() ? this.nit.set("Refresh", e) : e();
+    (this.QTt = t), this.InAsyncLoading() ? this.vot.set("Refresh", e) : e();
   }
 }
 exports.CommonRewardPopup = CommonRewardPopup;
 class RewardPanelItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
-    super(...arguments), (this.jIt = void 0), (this._Ne = void 0);
+    super(...arguments), (this.$Tt = void 0), (this._Ne = void 0);
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [[0, UE.UIItem]];
@@ -71,12 +71,12 @@ class RewardPanelItem extends GridProxyAbstract_1.GridProxyAbstract {
       this._Ne.Initialize(t);
   }
   Refresh(t, e, i) {
-    (this.jIt = t),
-      this._Ne.RefreshByConfigId(this.jIt.Id, this.jIt.Num),
-      this._Ne.SetReceivedVisible(this.jIt.Received);
+    (this.$Tt = t),
+      this._Ne.RefreshByConfigId(this.$Tt.Id, this.$Tt.Num),
+      this._Ne.SetReceivedVisible(this.$Tt.Received);
   }
   OnBeforeDestroy() {
-    this.jIt = void 0;
+    this.$Tt = void 0;
   }
 }
 //# sourceMappingURL=CommonRewardPopup.js.map

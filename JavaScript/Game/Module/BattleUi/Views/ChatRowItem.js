@@ -9,7 +9,7 @@ const UE = require("ue"),
   BattleChildView_1 = require("./BattleChildView/BattleChildView");
 class ChatRowItem extends BattleChildView_1.BattleChildView {
   constructor() {
-    super(...arguments), (this.xnt = void 0);
+    super(...arguments), (this.jst = void 0);
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -21,7 +21,7 @@ class ChatRowItem extends BattleChildView_1.BattleChildView {
     ];
   }
   Initialize(t) {
-    super.Initialize(), (this.xnt = t);
+    super.Initialize(), (this.jst = t);
     var i = this.GetText(4),
       e = this.GetSprite(1),
       r = this.GetSprite(2),
@@ -51,7 +51,7 @@ class ChatRowItem extends BattleChildView_1.BattleChildView {
         r?.SetUIActive(!0);
     }
     if (
-      (t.ContentType === Protocol_1.Aki.Protocol.U3n.nMs &&
+      (t.ContentType === Protocol_1.Aki.Protocol.l8n.SIs &&
         (1 === t.ContentChatRoomType
           ? l === _
             ? LguiUtil_1.LguiUtil.SetLocalTextNew(
@@ -74,7 +74,7 @@ class ChatRowItem extends BattleChildView_1.BattleChildView {
             ),
         i.SetUIActive(!0),
         (i.bBestFit = !1)),
-      t.ContentType === Protocol_1.Aki.Protocol.U3n.Proto_Emoji)
+      t.ContentType === Protocol_1.Aki.Protocol.l8n.Proto_Emoji)
     ) {
       (o = Number(t.Content)),
         (T = ConfigManager_1.ConfigManager.ChatConfig.GetExpressionConfig(o));
@@ -112,7 +112,7 @@ class ChatRowItem extends BattleChildView_1.BattleChildView {
     super.Reset();
   }
   GetChatRowData() {
-    return this.xnt;
+    return this.jst;
   }
 }
 exports.ChatRowItem = ChatRowItem;

@@ -8,12 +8,12 @@ const UE = require("ue"),
 class VisionRecoverySlotPanel extends UiPanelBase_1.UiPanelBase {
   constructor(e, i = !0) {
     super(),
-      (this.Ypt = new Array(CalabashDefine_1.VISION_RECOVERY_SLOT_MAX_NUM)),
-      (this.Jpt = new Array(CalabashDefine_1.VISION_RECOVERY_SLOT_MAX_NUM)),
-      (this.zpt = void 0),
-      (this.Qpt = !1),
-      (this.zpt = e),
-      (this.Qpt = i);
+      (this.hMt = new Array(CalabashDefine_1.VISION_RECOVERY_SLOT_MAX_NUM)),
+      (this.lMt = new Array(CalabashDefine_1.VISION_RECOVERY_SLOT_MAX_NUM)),
+      (this._Mt = void 0),
+      (this.nMt = !1),
+      (this._Mt = e),
+      (this.nMt = i);
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -26,25 +26,25 @@ class VisionRecoverySlotPanel extends UiPanelBase_1.UiPanelBase {
   }
   async OnBeforeStartAsync() {
     var e = new Array();
-    e.push(this.Zpt(0)),
-      e.push(this.Zpt(1)),
-      e.push(this.Zpt(2)),
-      e.push(this.Zpt(3)),
-      e.push(this.Zpt(4)),
+    e.push(this.uMt(0)),
+      e.push(this.uMt(1)),
+      e.push(this.uMt(2)),
+      e.push(this.uMt(3)),
+      e.push(this.uMt(4)),
       await Promise.all(e);
   }
-  async Zpt(e) {
+  async uMt(e) {
     var i = this.GetItem(e),
       s = new VisionRecoverySlotItem_1.VisionRecoverySlotItem(
-        this.zpt,
-        this.Qpt,
+        this._Mt,
+        this.nMt,
       );
-    await s.CreateThenShowByActorAsync(i.GetOwner()), (this.Jpt[e] = s);
+    await s.CreateThenShowByActorAsync(i.GetOwner()), (this.lMt[e] = s);
   }
   RefreshUi(s) {
-    for (let i = 0; i < this.Ypt.length; i++) {
-      let e = this.Ypt[i];
-      (e = i >= s.length ? void 0 : s[i]), this.Jpt[i].RefreshUi(e);
+    for (let i = 0; i < this.hMt.length; i++) {
+      let e = this.hMt[i];
+      (e = i >= s.length ? void 0 : s[i]), this.lMt[i].RefreshUi(e);
     }
   }
 }

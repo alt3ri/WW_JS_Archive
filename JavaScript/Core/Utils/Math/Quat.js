@@ -86,7 +86,9 @@ class Quat {
     (a[0] = t), (a[1] = i), (a[2] = h), (a[3] = s), this.NJ && this.ToUeQuat();
   }
   Multiply(t, i) {
-    Quat.VectorQuaternionMultiply(this, t, i), i.Inverse2(i);
+    "number" == typeof t
+      ? ((i.X *= t), (i.Y *= t), (i.Z *= t), (i.W *= t))
+      : (Quat.VectorQuaternionMultiply(this, t, i), i.Inverse2(i));
   }
   get Vector4() {
     var t = this.Tuple;
@@ -138,6 +140,11 @@ class Quat {
       (s[1] = o * t[1] + u * i[1]),
       (s[2] = o * t[2] + u * i[2]),
       (s[3] = o * t[3] + u * i[3]);
+  }
+  static Squad(t, i, h, s, a, e) {
+    Quat.VJ(t, h, a, Quat.WJ),
+      Quat.VJ(i, s, a, Quat.KJ),
+      Quat.Slerp(Quat.WJ, Quat.KJ, 2 * a * (1 - a), e);
   }
   static FindBetween(t, i, h) {
     this.FindBetweenVectors(t, i, h);
@@ -226,6 +233,14 @@ class Quat {
     var i = this.Tuple,
       t = t.Tuple;
     (t[0] = -i[0]), (t[1] = -i[1]), (t[2] = -i[2]), (t[3] = -i[3]);
+  }
+  IsNearZero(t = MathCommon_1.MathCommon.SmallNumber) {
+    return (
+      Math.abs(this.X) < t &&
+      Math.abs(this.Y) < t &&
+      Math.abs(this.Z) < t &&
+      Math.abs(this.W) < t
+    );
   }
   static ConstructorByAxisAngle(t, i, h) {
     var t = t.Tuple,

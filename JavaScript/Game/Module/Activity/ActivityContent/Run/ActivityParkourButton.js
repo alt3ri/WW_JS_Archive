@@ -7,9 +7,9 @@ const UE = require("ue"),
 class ActivityParkourButton extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this.c2e = void 0),
-      (this.m2e = () => {
-        this.c2e?.();
+      (this.RFe = void 0),
+      (this.UFe = () => {
+        this.RFe?.();
       });
   }
   OnRegisterComponent() {
@@ -19,13 +19,13 @@ class ActivityParkourButton extends UiPanelBase_1.UiPanelBase {
       [2, UE.UIText],
       [3, UE.UIButtonComponent],
     ]),
-      (this.BtnBindInfo = [[3, this.m2e]]);
+      (this.BtnBindInfo = [[3, this.UFe]]);
   }
   OnBeforeShow() {
     this.GetText(0).SetText(""), this.GetText(2).SetText("");
   }
   async InitializeAsync(t, i) {
-    (this.c2e = i), await this.CreateByActorAsync(t);
+    (this.RFe = i), await this.CreateByActorAsync(t);
   }
   SetFloatText(t, ...i) {
     this.GetText(2).SetUIActive(!0),

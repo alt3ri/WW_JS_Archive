@@ -28,59 +28,59 @@ var EComponentState, EActionCommandType;
 class ComponentAction {
   constructor() {
     (this.ComponentId = 0),
-      (this.p1r = EComponentState.Register),
+      (this.C_r = EComponentState.Register),
       (this.WaitToDestroy = !1),
       (this.DeadPromise = new CustomPromise_1.CustomPromise()),
-      (this.v1r = new List_1.default({
+      (this.g_r = new List_1.default({
         ActionCommand: EActionCommandType.Default,
         Processed: !0,
       })),
-      (this.ComponentId = ++ComponentAction.M1r);
+      (this.ComponentId = ++ComponentAction.f_r);
   }
   get IsRegister() {
-    return this.p1r === EComponentState.Register;
+    return this.C_r === EComponentState.Register;
   }
   get IsCreating() {
-    return this.p1r === EComponentState.Creating;
+    return this.C_r === EComponentState.Creating;
   }
   get IsCreate() {
-    return this.p1r === EComponentState.Create;
+    return this.C_r === EComponentState.Create;
   }
   get IsCreateOrCreating() {
     return this.IsCreating || this.IsCreate;
   }
   get IsStarting() {
-    return this.p1r === EComponentState.Starting;
+    return this.C_r === EComponentState.Starting;
   }
   get IsStart() {
-    return this.p1r === EComponentState.Start;
+    return this.C_r === EComponentState.Start;
   }
   get IsStartOrStarting() {
     return this.IsStarting || this.IsStart;
   }
   get IsShowing() {
-    return this.p1r === EComponentState.Showing;
+    return this.C_r === EComponentState.Showing;
   }
   get IsShow() {
-    return this.p1r === EComponentState.Show;
+    return this.C_r === EComponentState.Show;
   }
   get IsShowOrShowing() {
     return this.IsShowing || this.IsShow;
   }
   get IsHiding() {
-    return this.p1r === EComponentState.Hiding;
+    return this.C_r === EComponentState.Hiding;
   }
   get IsHide() {
-    return this.p1r === EComponentState.Hide;
+    return this.C_r === EComponentState.Hide;
   }
   get IsHideOrHiding() {
     return this.IsHiding || this.IsHide;
   }
   get IsDestroying() {
-    return this.p1r === EComponentState.Destroying;
+    return this.C_r === EComponentState.Destroying;
   }
   get IsDestroy() {
-    return this.p1r === EComponentState.Destroy;
+    return this.C_r === EComponentState.Destroy;
   }
   get IsDestroyOrDestroying() {
     return this.IsDestroy || this.IsDestroying;
@@ -101,7 +101,7 @@ class ComponentAction {
           "UiCore",
           17,
           "Enter CreateAsync failed, Duplicate call",
-          ["ComponentState", EComponentState[this.p1r]],
+          ["ComponentState", EComponentState[this.C_r]],
           ["ComponentName", this.constructor.name],
           ["ComponentId", this.ComponentId],
         );
@@ -113,21 +113,21 @@ class ComponentAction {
               "UiCore",
               17,
               "Enter CreateAsync failed",
-              ["ComponentState", EComponentState[this.p1r]],
+              ["ComponentState", EComponentState[this.C_r]],
               ["ComponentName", this.constructor.name],
               ["ComponentId", this.ComponentId],
             ),
           !1
         );
       if (
-        ((this.p1r = EComponentState.Creating),
+        ((this.C_r = EComponentState.Creating),
         ComponentAction.OpenLog &&
           Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "UiCore",
             17,
             "Enter CreateAsync Creating",
-            ["ComponentState", EComponentState[this.p1r]],
+            ["ComponentState", EComponentState[this.C_r]],
             ["ComponentName", this.constructor.name],
             ["ComponentId", this.ComponentId],
           ),
@@ -139,20 +139,20 @@ class ComponentAction {
               "UiCore",
               17,
               "Creating failed",
-              ["ComponentState", EComponentState[this.p1r]],
+              ["ComponentState", EComponentState[this.C_r]],
               ["ComponentName", this.constructor.name],
               ["ComponentId", this.ComponentId],
             ),
           !1
         );
-      (this.p1r = EComponentState.Create),
+      (this.C_r = EComponentState.Create),
         ComponentAction.OpenLog &&
           Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "UiCore",
             17,
             "Enter CreateAsync Create",
-            ["ComponentState", EComponentState[this.p1r]],
+            ["ComponentState", EComponentState[this.C_r]],
             ["ComponentName", this.constructor.name],
             ["ComponentId", this.ComponentId],
           );
@@ -162,18 +162,18 @@ class ComponentAction {
   async StartAsync() {
     var t;
     return (
-      !!this.S1r(EActionCommandType.Start) ||
-      ((t = await this.E1r()), this.y1r(), t)
+      !!this.p_r(EActionCommandType.Start) ||
+      ((t = await this.v_r()), this.M_r(), t)
     );
   }
-  async E1r() {
+  async v_r() {
     if (this.IsStartOrStarting)
       Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn(
           "UiCore",
           17,
           "Enter StartAsyncImplement failed, Duplicate call",
-          ["ComponentState", EComponentState[this.p1r]],
+          ["ComponentState", EComponentState[this.C_r]],
           ["ComponentName", this.constructor.name],
           ["ComponentId", this.ComponentId],
         );
@@ -185,32 +185,32 @@ class ComponentAction {
               "UiCore",
               17,
               "Enter StartAsyncImplement failed",
-              ["ComponentState", EComponentState[this.p1r]],
+              ["ComponentState", EComponentState[this.C_r]],
               ["ComponentName", this.constructor.name],
               ["ComponentId", this.ComponentId],
             ),
           !1
         );
-      (this.p1r = EComponentState.Starting),
+      (this.C_r = EComponentState.Starting),
         ComponentAction.OpenLog &&
           Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "UiCore",
             17,
             "Enter StartAsyncImplement Starting",
-            ["ComponentState", EComponentState[this.p1r]],
+            ["ComponentState", EComponentState[this.C_r]],
             ["ComponentName", this.constructor.name],
             ["ComponentId", this.ComponentId],
           ),
         await this.OnStartAsyncImplement(),
-        (this.p1r = EComponentState.Start),
+        (this.C_r = EComponentState.Start),
         ComponentAction.OpenLog &&
           Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "UiCore",
             17,
             "Enter StartAsyncImplement Start",
-            ["ComponentState", EComponentState[this.p1r]],
+            ["ComponentState", EComponentState[this.C_r]],
             ["ComponentName", this.constructor.name],
             ["ComponentId", this.ComponentId],
           );
@@ -220,18 +220,18 @@ class ComponentAction {
   async ShowAsync() {
     var t;
     return (
-      !!this.S1r(EActionCommandType.Show) ||
-      ((t = await this.I1r()), this.y1r(), t)
+      !!this.p_r(EActionCommandType.Show) ||
+      ((t = await this.E_r()), this.M_r(), t)
     );
   }
-  async I1r() {
+  async E_r() {
     if (this.IsShowOrShowing)
       Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn(
           "UiCore",
           17,
           "Enter ShowAsyncImplement failed, Duplicate call",
-          ["ComponentState", EComponentState[this.p1r]],
+          ["ComponentState", EComponentState[this.C_r]],
           ["ComponentName", this.constructor.name],
           ["ComponentId", this.ComponentId],
         );
@@ -243,32 +243,32 @@ class ComponentAction {
               "UiCore",
               17,
               "Enter ShowAsyncImplement failed",
-              ["ComponentState", EComponentState[this.p1r]],
+              ["ComponentState", EComponentState[this.C_r]],
               ["ComponentName", this.constructor.name],
               ["ComponentId", this.ComponentId],
             ),
           !1
         );
-      (this.p1r = EComponentState.Showing),
+      (this.C_r = EComponentState.Showing),
         ComponentAction.OpenLog &&
           Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "UiCore",
             17,
             "Enter ShowAsyncImplement Showing",
-            ["ComponentState", EComponentState[this.p1r]],
+            ["ComponentState", EComponentState[this.C_r]],
             ["ComponentName", this.constructor.name],
             ["ComponentId", this.ComponentId],
           ),
         await this.OnShowAsyncImplement(),
-        (this.p1r = EComponentState.Show),
+        (this.C_r = EComponentState.Show),
         ComponentAction.OpenLog &&
           Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "UiCore",
             17,
             "Enter ShowAsyncImplement Show",
-            ["ComponentState", EComponentState[this.p1r]],
+            ["ComponentState", EComponentState[this.C_r]],
             ["ComponentName", this.constructor.name],
             ["ComponentId", this.ComponentId],
           );
@@ -278,18 +278,18 @@ class ComponentAction {
   async HideAsync() {
     var t;
     return (
-      !!this.S1r(EActionCommandType.Hide) ||
-      ((t = await this.T1r()), this.y1r(), t)
+      !!this.p_r(EActionCommandType.Hide) ||
+      ((t = await this.S_r()), this.M_r(), t)
     );
   }
-  async T1r() {
+  async S_r() {
     if (this.IsHideOrHiding)
       Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn(
           "UiCore",
           17,
           "Enter HideAsyncImplement failed, Duplicate call",
-          ["ComponentState", EComponentState[this.p1r]],
+          ["ComponentState", EComponentState[this.C_r]],
           ["ComponentName", this.constructor.name],
           ["ComponentId", this.ComponentId],
         );
@@ -301,32 +301,32 @@ class ComponentAction {
               "UiCore",
               17,
               "Enter HideAsyncImplement failed",
-              ["ComponentState", EComponentState[this.p1r]],
+              ["ComponentState", EComponentState[this.C_r]],
               ["ComponentName", this.constructor.name],
               ["ComponentId", this.ComponentId],
             ),
           !1
         );
-      (this.p1r = EComponentState.Hiding),
+      (this.C_r = EComponentState.Hiding),
         ComponentAction.OpenLog &&
           Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "UiCore",
             17,
             "Enter HideAsyncImplement Hiding",
-            ["ComponentState", EComponentState[this.p1r]],
+            ["ComponentState", EComponentState[this.C_r]],
             ["ComponentName", this.constructor.name],
             ["ComponentId", this.ComponentId],
           ),
         await this.OnHideAsyncImplement(),
-        (this.p1r = EComponentState.Hide),
+        (this.C_r = EComponentState.Hide),
         ComponentAction.OpenLog &&
           Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "UiCore",
             17,
             "Enter HideAsyncImplement Hide",
-            ["ComponentState", EComponentState[this.p1r]],
+            ["ComponentState", EComponentState[this.C_r]],
             ["ComponentName", this.constructor.name],
             ["ComponentId", this.ComponentId],
           );
@@ -337,28 +337,28 @@ class ComponentAction {
     var t;
     return (
       (this.WaitToDestroy = !0),
-      this.v1r.RemoveAllNodeWithoutHead(),
-      !!this.S1r(EActionCommandType.Destroy) ||
-        ((t = await this.L1r()), this.v1r.RemoveAllNodeWithoutHead(), t)
+      this.g_r.RemoveAllNodeWithoutHead(),
+      !!this.p_r(EActionCommandType.Destroy) ||
+        ((t = await this.y_r()), this.g_r.RemoveAllNodeWithoutHead(), t)
     );
   }
   async CloseMeAsync() {
     return this.DestroyAsync();
   }
-  async L1r() {
+  async y_r() {
     if (this.IsDestroyOrDestroying)
       Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn(
           "UiCore",
           17,
           "Enter DestroyAsyncImplement failed, Duplicate call",
-          ["ComponentState", EComponentState[this.p1r]],
+          ["ComponentState", EComponentState[this.C_r]],
           ["ComponentName", this.constructor.name],
           ["ComponentId", this.ComponentId],
         );
     else
       try {
-        this.IsShowOrShowing && (await this.T1r()),
+        this.IsShowOrShowing && (await this.S_r()),
           (this.WaitToDestroy = !1),
           ComponentAction.OpenLog &&
             Log_1.Log.CheckDebug() &&
@@ -366,20 +366,20 @@ class ComponentAction {
               "UiCore",
               17,
               "Enter DestroyAsyncImplement Destroying",
-              ["ComponentState", EComponentState[this.p1r]],
+              ["ComponentState", EComponentState[this.C_r]],
               ["ComponentName", this.constructor.name],
               ["ComponentId", this.ComponentId],
             ),
-          (this.p1r = EComponentState.Destroying),
+          (this.C_r = EComponentState.Destroying),
           await this.OnDestroyAsyncImplement(),
-          (this.p1r = EComponentState.Destroy),
+          (this.C_r = EComponentState.Destroy),
           ComponentAction.OpenLog &&
             Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug(
               "UiCore",
               17,
               "Enter DestroyAsyncImplement Destroy",
-              ["ComponentState", EComponentState[this.p1r]],
+              ["ComponentState", EComponentState[this.C_r]],
               ["ComponentName", this.constructor.name],
               ["ComponentId", this.ComponentId],
             );
@@ -407,7 +407,7 @@ class ComponentAction {
             "UiCore",
             17,
             "Enter DestroyAsyncImplement Dead",
-            ["ComponentState", EComponentState[this.p1r]],
+            ["ComponentState", EComponentState[this.C_r]],
             ["ComponentName", this.constructor.name],
             ["ComponentId", this.ComponentId],
           ),
@@ -431,15 +431,15 @@ class ComponentAction {
   async OnShowAsyncImplement() {}
   async OnHideAsyncImplement() {}
   async OnDestroyAsyncImplement() {}
-  static D1r(t, e) {
+  static I_r(t, e) {
     return (
       t === e ||
       (t === EActionCommandType.Show && e === EActionCommandType.Hide) ||
       (t === EActionCommandType.Hide && e === EActionCommandType.Show)
     );
   }
-  R1r() {
-    switch (this.p1r) {
+  T_r() {
+    switch (this.C_r) {
       case EComponentState.Starting:
         return EActionCommandType.Start;
       case EComponentState.Showing:
@@ -452,23 +452,23 @@ class ComponentAction {
         return EActionCommandType.Default;
     }
   }
-  S1r(t) {
+  p_r(t) {
     var e, n;
     return (
       !!this.IsBusy &&
-      (this.R1r() === t
+      (this.T_r() === t
         ? (Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
               "UiCore",
               17,
               "[TryCacheAction] is same with current action",
               ["actionType", EActionCommandType[t]],
-              ["ComponentState", EComponentState[this.p1r]],
+              ["ComponentState", EComponentState[this.C_r]],
               ["ComponentName", this.constructor.name],
               ["ComponentId", this.ComponentId],
             ),
           !1)
-        : ((n = (e = this.v1r.TailNode).Element.ActionCommand) ===
+        : ((n = (e = this.g_r.TailNode).Element.ActionCommand) ===
           EActionCommandType.Destroy
             ? Log_1.Log.CheckWarn() &&
               Log_1.Log.Warn(
@@ -476,11 +476,11 @@ class ComponentAction {
                 17,
                 "[TryCacheAction] tailActionType is Destroy, not allow to cache any action",
                 ["actionType", EActionCommandType[t]],
-                ["ComponentState", EComponentState[this.p1r]],
+                ["ComponentState", EComponentState[this.C_r]],
                 ["ComponentName", this.constructor.name],
                 ["ComponentId", this.ComponentId],
               )
-            : (ComponentAction.D1r(n, t) &&
+            : (ComponentAction.I_r(n, t) &&
                 (Log_1.Log.CheckWarn() &&
                   Log_1.Log.Warn(
                     "UiCore",
@@ -488,11 +488,11 @@ class ComponentAction {
                     "[TryCacheAction] remove tail action which is pair with this action",
                     ["actionType", EActionCommandType[t]],
                     ["tailActionType", EActionCommandType[n]],
-                    ["ComponentState", EComponentState[this.p1r]],
+                    ["ComponentState", EComponentState[this.C_r]],
                     ["ComponentName", this.constructor.name],
                     ["ComponentId", this.ComponentId],
                   ),
-                this.v1r.RemoveNode(e)),
+                this.g_r.RemoveNode(e)),
               Log_1.Log.CheckDebug() &&
                 Log_1.Log.Debug(
                   "UiCore",
@@ -501,18 +501,18 @@ class ComponentAction {
                   ["actionType", EActionCommandType[t]],
                   [
                     "tailActionType",
-                    EActionCommandType[this.v1r.TailNode.Element.ActionCommand],
+                    EActionCommandType[this.g_r.TailNode.Element.ActionCommand],
                   ],
-                  ["ComponentState", EComponentState[this.p1r]],
+                  ["ComponentState", EComponentState[this.C_r]],
                   ["ComponentName", this.constructor.name],
                   ["ComponentId", this.ComponentId],
                 ),
-              this.v1r.AddTail({ ActionCommand: t, Processed: !1 })),
+              this.g_r.AddTail({ ActionCommand: t, Processed: !1 })),
           !0))
     );
   }
-  async y1r() {
-    let t = this.v1r.GetHeadNextNode();
+  async M_r() {
+    let t = this.g_r.GetHeadNextNode();
     for (; void 0 !== t && !t.Element.Processed; ) {
       var e = t.Element.ActionCommand;
       switch (
@@ -522,56 +522,56 @@ class ComponentAction {
             17,
             "[ExecuteCachedActions]",
             ["actionType", EActionCommandType[e]],
-            ["ComponentState", EComponentState[this.p1r]],
+            ["ComponentState", EComponentState[this.C_r]],
             ["ComponentName", this.constructor.name],
             ["ComponentId", this.ComponentId],
           ),
         e)
       ) {
         case EActionCommandType.Start:
-          await this.E1r();
+          await this.v_r();
           break;
         case EActionCommandType.Show:
-          await this.I1r();
+          await this.E_r();
           break;
         case EActionCommandType.Hide:
-          await this.T1r();
+          await this.S_r();
           break;
         case EActionCommandType.Destroy:
-          await this.L1r();
+          await this.y_r();
       }
       (t.Element.Processed = !0),
-        void 0 === (t = t.Next) && (t = this.v1r.GetHeadNextNode());
+        void 0 === (t = t.Next) && (t = this.g_r.GetHeadNextNode());
     }
-    this.v1r.RemoveAllNodeWithoutHead();
+    this.g_r.RemoveAllNodeWithoutHead();
   }
   OnStartImplementCompatible() {}
   OnShowImplementCompatible() {}
   OnHideImplementCompatible() {}
   OnDestroyImplementCompatible() {}
   StartCompatible() {
-    (this.p1r = EComponentState.Starting),
+    (this.C_r = EComponentState.Starting),
       this.OnStartImplementCompatible(),
-      (this.p1r = EComponentState.Start);
+      (this.C_r = EComponentState.Start);
   }
   ShowCompatible() {
-    (this.p1r = EComponentState.Showing),
+    (this.C_r = EComponentState.Showing),
       this.OnShowImplementCompatible(),
-      (this.p1r = EComponentState.Show);
+      (this.C_r = EComponentState.Show);
   }
   HideCompatible() {
-    (this.p1r = EComponentState.Hiding),
+    (this.C_r = EComponentState.Hiding),
       this.OnHideImplementCompatible(),
-      (this.p1r = EComponentState.Hide);
+      (this.C_r = EComponentState.Hide);
   }
   DestroyCompatible() {
     this.IsShowOrShowing && this.HideCompatible(),
-      (this.p1r = EComponentState.Destroying),
+      (this.C_r = EComponentState.Destroying),
       this.OnDestroyImplementCompatible(),
-      (this.p1r = EComponentState.Destroy),
+      (this.C_r = EComponentState.Destroy),
       this.DeadPromise.SetResult();
   }
 }
 ((exports.ComponentAction = ComponentAction).OpenLog = !0),
-  (ComponentAction.M1r = 0);
+  (ComponentAction.f_r = 0);
 //# sourceMappingURL=ComponentAction.js.map

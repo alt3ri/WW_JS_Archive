@@ -34,9 +34,9 @@ class RenderDataManager {
       (this.TempColor = void 0),
       (this.WriteTimeToCollection = !1),
       (this.IsInUiScene = !1),
-      (this.Jhr = 60),
-      (this.zhr = 1),
-      (this.Zhr = 0);
+      (this.Xlr = 60),
+      (this.$lr = 1),
+      (this.Ylr = 0);
   }
   static Get() {
     return (
@@ -155,7 +155,7 @@ class RenderDataManager {
         Info_1.Info.IsGameRunning() &&
         (GlobalData_1.GlobalData.IsUiSceneOpen ||
           GlobalData_1.GlobalData.IsUiSceneLoading)) !== this.IsInUiScene) &&
-      ((this.IsInUiScene = r), this.WRn());
+      ((this.IsInUiScene = r), this.MPn());
   }
   Tick(e) {
     var t, i, r;
@@ -169,21 +169,21 @@ class RenderDataManager {
       (this.PreviousCharacterPosition = this.CurrentCharacterPosition),
       this.CurrentCharacterPosition.FromUeVector(r),
       this.CurrentCharacterForward.FromUeVector(i),
-      this.elr(this.PreviousCharacterPosition),
+      this.Jlr(this.PreviousCharacterPosition),
       UE.KismetMaterialLibrary.SetVectorParameterValue(
         t,
         this.GlobalShaderParameters,
         RenderConfig_1.RenderConfig.GlobalCharacterPreviousWP,
         this.TempColor,
       ),
-      this.elr(this.CurrentCharacterPosition),
+      this.Jlr(this.CurrentCharacterPosition),
       UE.KismetMaterialLibrary.SetVectorParameterValue(
         t,
         this.GlobalShaderParameters,
         RenderConfig_1.RenderConfig.GlobalCharacterWorldPosition,
         this.TempColor,
       ),
-      this.elr(this.CurrentCharacterForward),
+      this.Jlr(this.CurrentCharacterForward),
       UE.KismetMaterialLibrary.SetVectorParameterValue(
         t,
         this.GlobalShaderParameters,
@@ -191,11 +191,11 @@ class RenderDataManager {
         this.TempColor,
       ),
       ModelManager_1.ModelManager.GameModeModel.InstanceType ===
-        Protocol_1.Aki.Protocol.sOs.Proto_BigWorldInstance &&
+        Protocol_1.Aki.Protocol.XFs.Proto_BigWorldInstance &&
         (this.SceneTime =
           ModelManager_1.ModelManager.TimeOfDayModel.GameTime.Minute),
       this.WriteTimeToCollection &&
-        ((r = Math.floor(this.SceneTime / this.Jhr)),
+        ((r = Math.floor(this.SceneTime / this.Xlr)),
         UE.KismetMaterialLibrary.SetScalarParameterValue(
           t,
           this.GlobalShaderParameters,
@@ -206,7 +206,7 @@ class RenderDataManager {
           t,
           this.GlobalShaderParameters,
           RenderConfig_1.RenderConfig.GlobalTimeMinutes,
-          this.SceneTime - r * this.Jhr,
+          this.SceneTime - r * this.Xlr,
         )),
       this.SetAudioParameters(e));
   }
@@ -257,9 +257,9 @@ class RenderDataManager {
   Destroy() {}
   SetAudioParameters(e) {
     var t;
-    (this.Zhr -= e),
-      0 < this.Zhr ||
-        ((this.Zhr = this.zhr),
+    (this.Ylr -= e),
+      0 < this.Ylr ||
+        ((this.Ylr = this.$lr),
         (e = this.GetRainIntensity()),
         (t = this.GetSnowIntensity()),
         AudioController_1.AudioController.SetRTPCValue(
@@ -275,12 +275,12 @@ class RenderDataManager {
           AudioDefine_1.RTPCGLOBALWET,
         ));
   }
-  elr(e) {
+  Jlr(e) {
     (this.TempColor.R = e.X),
       (this.TempColor.G = e.Y),
       (this.TempColor.B = e.Z);
   }
-  WRn() {
+  MPn() {
     UE.KuroRenderingRuntimeBPPluginBPLibrary.SetClusteredStuffVisible(
       GlobalData_1.GlobalData.World,
       !this.IsInUiScene,

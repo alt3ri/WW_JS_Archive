@@ -24,7 +24,7 @@ class RouletteGridEquipItem extends RouletteGridBase_1.RouletteGridBase {
                 "[FuncMenuWheel]轮盘道具格子对应ItemId不存在",
                 ["ItemId", o],
               )),
-          t ||
+          (t && !t.NeedShowNum) ||
             ((this.Data.ShowNum = !0),
             (t =
               ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(

@@ -8,15 +8,15 @@ const Log_1 = require("../../../Core/Common/Log"),
 class CommonPopViewBase extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this.dur = void 0),
-      (this.Cur = !0),
-      (this.gur = void 0),
+      (this.ucr = void 0),
+      (this.ccr = !0),
+      (this.mcr = void 0),
       (this.ContentItem = void 0),
       (this.ViewInfo = void 0),
       (this.OnClickBtnBtnCall = () => {}),
-      (this.fur = !1),
+      (this.dcr = !1),
       (this.OnClickMaskButton = () => {
-        this.Cur && this.TryHideSelf();
+        this.ccr && this.TryHideSelf();
       }),
       (this.OnClickCloseBtn = () => {
         this.TryHideSelf();
@@ -59,51 +59,51 @@ class CommonPopViewBase extends UiPanelBase_1.UiPanelBase {
     this.ViewInfo = t;
   }
   SetPopupViewBase() {
-    this.gur = this;
+    this.mcr = this;
   }
   TryHideSelf() {
-    this.pur();
+    this.Ccr();
   }
   OverrideBackBtnCallBack(t) {
-    (this.OnClickBtnBtnCall = t), (this.fur = !0);
+    (this.OnClickBtnBtnCall = t), (this.dcr = !0);
   }
-  pur() {
-    this.fur
+  Ccr() {
+    this.dcr
       ? this.OnClickBtnBtnCall()
       : UiManager_1.UiManager.CloseView(this.ViewInfo.Name);
   }
   SetCloseBtnInteractive(t) {
-    this.gur.OnSetCloseBtnInteractive(t);
+    this.mcr.OnSetCloseBtnInteractive(t);
   }
   SetHelpButtonActive(t) {
-    this.gur.OnSetHelpButtonActive(t);
+    this.mcr.OnSetHelpButtonActive(t);
   }
   SetTitleByTextIdAndArg(t, ...e) {
-    this.gur.OnSetTitleByTextIdAndArg(t, e);
+    this.mcr.OnSetTitleByTextIdAndArg(t, e);
   }
   SetBackBtnShowState(t) {
-    this.gur.OnSetBackBtnShowState(t);
+    this.mcr.OnSetBackBtnShowState(t);
   }
   RefreshCost(t) {
-    this.gur.OnRefreshCost(t);
+    this.mcr.OnRefreshCost(t);
   }
   SetMaskResponsibleState(t) {
-    this.Cur = t;
+    this.ccr = t;
   }
   async SetCurrencyItemList(t) {
     var e = this.GetCostParent();
     e
-      ? (this.dur ||
-          (this.dur =
+      ? (this.ucr ||
+          (this.ucr =
             new CommonCurrencyItemListComponent_1.CommonCurrencyItemListComponent(
               e,
             )),
-        await this.dur.SetCurrencyItemList(t))
+        await this.ucr.SetCurrencyItemList(t))
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error("UiCommon", 28, "找不到CostParent");
   }
   GetCurrencyComponent() {
-    return this.dur;
+    return this.ucr;
   }
   SetTitleVisible(t) {}
   SetTitleText(t) {}

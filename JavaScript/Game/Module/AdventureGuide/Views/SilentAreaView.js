@@ -26,15 +26,15 @@ const UE = require("ue"),
 class SilentAreaView extends UiTabViewBase_1.UiTabViewBase {
   constructor() {
     super(...arguments),
-      (this.DFe = void 0),
-      (this.B6e = void 0),
-      (this.b6e = 0),
-      (this.q6e = void 0),
+      (this.H3e = void 0),
+      (this.X8e = void 0),
+      (this.$8e = 0),
+      (this.Y8e = void 0),
       (this.IRe = void 0),
-      (this.G6e = void 0),
-      (this.TVe = void 0),
-      (this.LVe = void 0),
-      (this.q5e = (e, i, r) => {
+      (this.J8e = void 0),
+      (this.O6e = void 0),
+      (this.k6e = void 0),
+      (this.YVe = (e, i, r) => {
         var t = new CommonItemSmallItemGrid_1.CommonItemSmallItemGrid();
         return (
           t.Initialize(i.GetOwner()),
@@ -43,15 +43,15 @@ class SilentAreaView extends UiTabViewBase_1.UiTabViewBase {
           { Key: r, Value: t }
         );
       }),
-      (this.N6e = (e, i) => {
-        this.G6e && this.G6e !== i && this.G6e.SetToggleState(0),
-          (this.G6e = i),
+      (this.z8e = (e, i) => {
+        this.J8e && this.J8e !== i && this.J8e.SetToggleState(0),
+          (this.J8e = i),
           (ModelManager_1.ModelManager.AdventureGuideModel.CurrentSilentId = e);
         var i =
             ModelManager_1.ModelManager.AdventureGuideModel.GetSilentAreaDetectData(
               e,
             ),
-          e = ((this.b6e = e), this.GetText(2)),
+          e = ((this.$8e = e), this.GetText(2)),
           r = this.GetText(1),
           t = i.Conf.Name,
           o = this.GetText(17);
@@ -111,13 +111,13 @@ class SilentAreaView extends UiTabViewBase_1.UiTabViewBase {
           ),
           i.Conf.DangerType)
         ) {
-          case AdventureDefine_1.EDangerType.Low:
+          case 1:
             s.SetUIActive(!0), a.SetUIActive(!1), d.SetUIActive(!1);
             break;
-          case AdventureDefine_1.EDangerType.Middle:
+          case 2:
             s.SetUIActive(!1), a.SetUIActive(!0), d.SetUIActive(!1);
             break;
-          case AdventureDefine_1.EDangerType.High:
+          case 3:
             s.SetUIActive(!1), a.SetUIActive(!1), d.SetUIActive(!0);
         }
         (n = this.GetTexture(4)),
@@ -128,7 +128,7 @@ class SilentAreaView extends UiTabViewBase_1.UiTabViewBase {
           ? ((h = i.Conf.AttributesDescriptionLock),
             n.SetUIActive(!1),
             r.SetUIActive(!0),
-            this.q6e.SetInteractable(!1),
+            this.Y8e.SetInteractable(!1),
             LguiUtil_1.LguiUtil.SetLocalText(
               t,
               AdventureGuideController_1.UNDISCOVERED,
@@ -136,7 +136,7 @@ class SilentAreaView extends UiTabViewBase_1.UiTabViewBase {
           : ((h = i.Conf.AttributesDescriptionUnlock),
             r.SetUIActive(!1),
             n.SetUIActive(!0),
-            this.q6e.SetInteractable(!0),
+            this.Y8e.SetInteractable(!0),
             LguiUtil_1.LguiUtil.SetLocalText(
               t,
               AdventureGuideController_1.DETECT,
@@ -160,7 +160,7 @@ class SilentAreaView extends UiTabViewBase_1.UiTabViewBase {
           ),
           this.BuildRewardList(i.Conf.ShowReward);
       }),
-      (this.O6e = () => {
+      (this.Z8e = () => {
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.ResetToBattleView,
         );
@@ -173,7 +173,7 @@ class SilentAreaView extends UiTabViewBase_1.UiTabViewBase {
         };
         WorldMapController_1.WorldMapController.OpenView(2, !1, e);
       }),
-      (this.FVe = () => {
+      (this.t8e = () => {
         var e;
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
@@ -188,15 +188,15 @@ class SilentAreaView extends UiTabViewBase_1.UiTabViewBase {
               )
             : ((e =
                 ModelManager_1.ModelManager.AdventureGuideModel.GetSilentAreaDetectData(
-                  this.b6e,
+                  this.$8e,
                 )),
               ModelManager_1.ModelManager.AdventureGuideModel.SetFromManualDetect(
                 !0,
               ),
               ControllerHolder_1.ControllerHolder.AdventureGuideController.RequestForDetection(
-                Protocol_1.Aki.Protocol.d3n.Proto_SilentArea,
+                Protocol_1.Aki.Protocol.X6n.Proto_SilentArea,
                 e.Conf.LevelPlayList,
-                this.b6e,
+                this.$8e,
               ));
       });
   }
@@ -225,8 +225,8 @@ class SilentAreaView extends UiTabViewBase_1.UiTabViewBase {
       [20, UE.UIItem],
     ]),
       (this.BtnBindInfo = [
-        [0, this.FVe],
-        [18, this.O6e],
+        [0, this.t8e],
+        [18, this.Z8e],
       ]);
   }
   OnBeforeShow() {
@@ -236,30 +236,30 @@ class SilentAreaView extends UiTabViewBase_1.UiTabViewBase {
     );
   }
   async OnBeforeStartAsync() {
-    (this.B6e = new CommonCurrencyItem_1.CommonCurrencyItem()),
-      await this.B6e.CreateThenShowByActorAsync(this.GetItem(19).GetOwner());
+    (this.X8e = new CommonCurrencyItem_1.CommonCurrencyItem()),
+      await this.X8e.CreateThenShowByActorAsync(this.GetItem(19).GetOwner());
   }
   OnStart() {
-    (this.TVe = new LoopScrollView_1.LoopScrollView(
+    (this.O6e = new LoopScrollView_1.LoopScrollView(
       this.GetLoopScrollViewComponent(10),
       this.GetItem(20).GetOwner(),
       () => {
         var e = new SilentAreaItem_1.SilentAreaItem();
-        return e.BindCallback(this.N6e), e;
+        return e.BindCallback(this.z8e), e;
       },
     )),
-      (this.DFe = new GenericScrollView_1.GenericScrollView(
+      (this.H3e = new GenericScrollView_1.GenericScrollView(
         this.GetScrollViewWithScrollbar(11),
-        this.q5e,
+        this.YVe,
       )),
-      void 0 === this.q6e &&
-        (this.q6e = this.GetButton(0)
+      void 0 === this.Y8e &&
+        (this.Y8e = this.GetButton(0)
           .GetOwner()
           .GetComponentByClass(UE.UIInteractionGroup.StaticClass())),
-      this.B6e.RefreshTemp(
+      this.X8e.RefreshTemp(
         CommonParamById_1.configCommonParamById.GetIntConfig("BoPianId"),
       ),
-      this.B6e.SetButtonActive(!1);
+      this.X8e.SetButtonActive(!1);
     var e = this.ExtraParams;
     let i = "DisposableChallengeView" === e[0] ? e[1] : void 0,
       r =
@@ -283,8 +283,8 @@ class SilentAreaView extends UiTabViewBase_1.UiTabViewBase {
     ),
       (ModelManager_1.ModelManager.AdventureGuideModel.CurrentSilentId =
         i ?? r[0].SilentAreaDetectionData.Conf.Id),
-      (this.LVe = r),
-      this.TVe.ReloadData(r),
+      (this.k6e = r),
+      this.O6e.ReloadData(r),
       this.JumpToTarget(
         ModelManager_1.ModelManager.AdventureGuideModel.CurrentSilentId,
       );
@@ -292,9 +292,9 @@ class SilentAreaView extends UiTabViewBase_1.UiTabViewBase {
   OnBeforeDestroy() {
     this.IRe &&
       (TimerSystem_1.TimerSystem.Remove(this.IRe), (this.IRe = void 0)),
-      this.DFe && (this.DFe.ClearChildren(), (this.DFe = void 0)),
-      this.TVe && (this.TVe.ClearGridProxies(), (this.TVe = void 0)),
-      this.B6e && (this.B6e.Destroy(), (this.B6e = void 0));
+      this.H3e && (this.H3e.ClearChildren(), (this.H3e = void 0)),
+      this.O6e && (this.O6e.ClearGridProxies(), (this.O6e = void 0)),
+      this.X8e && (this.X8e.Destroy(), (this.X8e = void 0));
   }
   BuildRewardList(e) {
     var i =
@@ -304,16 +304,16 @@ class SilentAreaView extends UiTabViewBase_1.UiTabViewBase {
       var t = { Id: o, Num: i.get(o), Received: !1 };
       r.push(t);
     }
-    this.DFe.RefreshByData(r);
+    this.H3e.RefreshByData(r);
   }
   JumpToTarget(e) {
     let i = 0;
-    for (const r of this.LVe) {
+    for (const r of this.k6e) {
       if (e === r.SilentAreaDetectionData.Conf.Id)
         return (
-          this.TVe.DeselectCurrentGridProxy(),
-          this.TVe.ScrollToGridIndex(i, !0),
-          void this.TVe.SelectGridProxy(i)
+          this.O6e.DeselectCurrentGridProxy(),
+          this.O6e.ScrollToGridIndex(i, !0),
+          void this.O6e.SelectGridProxy(i)
         );
       i++;
     }

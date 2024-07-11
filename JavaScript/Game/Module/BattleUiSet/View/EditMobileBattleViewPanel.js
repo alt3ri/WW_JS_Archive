@@ -6,22 +6,22 @@ const UE = require("ue"),
   EditMobileBattleViewPanelItem_1 = require("./EditMobileBattleViewPanelItem");
 class EditMobileBattleViewPanel extends UiPanelBase_1.UiPanelBase {
   constructor() {
-    super(...arguments), (this.wCt = new Map()), (this.BCt = void 0);
+    super(...arguments), (this.Wgt = new Map()), (this.Kgt = void 0);
   }
   async OnBeforeStartAsync() {
     var e = this.OpenParam;
-    await this.bCt(e.PanelData, e.BattleViewBaseActor);
+    await this.Qgt(e.PanelData, e.BattleViewBaseActor);
   }
   OnBeforeDestroy() {
-    (this.BCt = void 0),
+    (this.Kgt = void 0),
       (this.PanelData = void 0),
-      (this.qCt = void 0),
-      this.wCt.clear();
+      (this.Xgt = void 0),
+      this.Wgt.clear();
   }
-  async bCt(e, t) {
+  async Qgt(e, t) {
     (this.PanelData = e),
-      (this.qCt = t),
-      (this.BCt = this.RootActor.GetComponentByClass(
+      (this.Xgt = t),
+      (this.Kgt = this.RootActor.GetComponentByClass(
         UE.LGUIComponentsRegistry.StaticClass(),
       ));
     var i = [],
@@ -30,7 +30,7 @@ class EditMobileBattleViewPanel extends UiPanelBase_1.UiPanelBase {
       (t = {
         PanelItemData: a.get(-1),
         PanelItem: this.RootItem,
-        BattleViewBaseActor: this.qCt,
+        BattleViewBaseActor: this.Xgt,
       }),
         (t = (e =
           new EditMobileBattleViewPanelItem_1.EditMobileBattleViewPanelItem()).CreateThenShowByActorAsync(
@@ -38,9 +38,9 @@ class EditMobileBattleViewPanel extends UiPanelBase_1.UiPanelBase {
           t,
         )),
         i.push(t),
-        this.wCt.set(-1, e);
+        this.Wgt.set(-1, e);
     else {
-      var s = this.BCt.Components;
+      var s = this.Kgt.Components;
       for (let e = 0; e < s.Num(); e++) {
         var r,
           l,
@@ -51,7 +51,7 @@ class EditMobileBattleViewPanel extends UiPanelBase_1.UiPanelBase {
           ((r = {
             PanelItemData: a?.get(e),
             PanelItem: this.RootItem,
-            BattleViewBaseActor: this.qCt,
+            BattleViewBaseActor: this.Xgt,
           }),
           (n = (l =
             new EditMobileBattleViewPanelItem_1.EditMobileBattleViewPanelItem()).CreateThenShowByActorAsync(
@@ -59,22 +59,22 @@ class EditMobileBattleViewPanel extends UiPanelBase_1.UiPanelBase {
             r,
           )),
           i.push(n),
-          this.wCt.set(e, l));
+          this.Wgt.set(e, l));
       }
       await Promise.all(i);
     }
   }
   ResetAllPanelItem() {
-    for (const e of this.wCt.values()) e.PanelItemData && e.Reset();
+    for (const e of this.Wgt.values()) e.PanelItemData && e.Reset();
   }
   SavePanelItem() {
-    for (const e of this.wCt.values()) e.OnSave();
+    for (const e of this.Wgt.values()) e.OnSave();
   }
   GetPanelItem(e) {
-    return this.wCt.get(e);
+    return this.Wgt.get(e);
   }
   RefreshHierarchyIndex(e) {
-    for (const a of this.wCt.values()) {
+    for (const a of this.Wgt.values()) {
       var t,
         i = a.PanelItemData;
       i &&
@@ -83,7 +83,7 @@ class EditMobileBattleViewPanel extends UiPanelBase_1.UiPanelBase {
     }
   }
   IsAnyItemOverlap(t) {
-    var i = this.BCt.Components;
+    var i = this.Kgt.Components;
     for (let e = 0; e < i.Num(); e++) {
       var a = this.GetPanelItem(e);
       if (a) {

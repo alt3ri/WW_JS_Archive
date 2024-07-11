@@ -9,55 +9,55 @@ const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
 class LongTimeToTriggerComponent extends HotKeyComponent_1.HotKeyComponent {
   constructor() {
     super(...arguments),
-      (this.Ebo = 0),
-      (this.ybo = void 0),
-      (this.Ibo = !1),
-      (this.Tbo = () => {
-        this.Ebo += TimerSystem_1.MIN_TIME;
+      (this.vqo = 0),
+      (this.Mqo = void 0),
+      (this.Eqo = !1),
+      (this.Sqo = () => {
+        this.vqo += TimerSystem_1.MIN_TIME;
         var e,
           i = this.GetHotKeyConfig();
         let t = 0;
-        this.Ebo > i.ReleaseFailureTime &&
-          (this.Lbo(),
+        this.vqo > i.ReleaseFailureTime &&
+          (this.yqo(),
           (e = i.LongPressTime),
-          (t = (this.Ebo - i.ReleaseFailureTime) / e)),
+          (t = (this.vqo - i.ReleaseFailureTime) / e)),
           1 <= t
             ? this.ReleaseWithoutCheck()
             : this.CurComponent.SetLongPressState(t);
       });
   }
   OnPress(e) {
-    this.Dbo(), this.Rbo();
+    this.Iqo(), this.Tqo();
   }
   OnRelease(e) {
-    this.Ebo >= e.LongPressTime + e.ReleaseFailureTime &&
-      this.m6i(e.BindButtonTag),
+    this.vqo >= e.LongPressTime + e.ReleaseFailureTime &&
+      this.c8i(e.BindButtonTag),
       this.CurComponent.SetLongPressState(0),
-      this.Dbo(),
-      (this.Ibo = !1);
+      this.Iqo(),
+      (this.Eqo = !1);
   }
-  m6i(e) {
+  c8i(e) {
     e === HotKeyViewDefine_1.EXIT_TAG
       ? UiNavigationNewController_1.UiNavigationNewController.HotKeyCloseView()
       : UiNavigationNewController_1.UiNavigationNewController.ClickButton(e);
   }
   OnUnRegisterMe() {
-    this.Dbo();
+    this.Iqo();
   }
-  Dbo() {
-    this.ybo &&
-      (TimerSystem_1.TimerSystem.Remove(this.ybo), (this.ybo = void 0)),
-      (this.Ebo = 0);
+  Iqo() {
+    this.Mqo &&
+      (TimerSystem_1.TimerSystem.Remove(this.Mqo), (this.Mqo = void 0)),
+      (this.vqo = 0);
   }
-  Rbo() {
-    this.ybo = TimerSystem_1.TimerSystem.Forever(
-      this.Tbo,
+  Tqo() {
+    this.Mqo = TimerSystem_1.TimerSystem.Forever(
+      this.Sqo,
       TimerSystem_1.MIN_TIME,
     );
   }
-  Lbo() {
-    if (!this.Ibo) {
-      this.Ibo = !0;
+  yqo() {
+    if (!this.Eqo) {
+      this.Eqo = !0;
       var e = ModelManager_1.ModelManager.UiNavigationModel;
       if (e)
         for (const i of e.GetActionHotKeyComponentSet(this.GetActionName()))

@@ -40,109 +40,76 @@ class ComposeController extends UiControllerBase_1.UiControllerBase {
   static OnAddEvents() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.ActiveRole,
-      ComposeController.Qyi,
+      ComposeController.QIi,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.SwitchViewType,
-        ComposeController.Xyi,
+        ComposeController.XIi,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnLoadingNetDataDone,
-        ComposeController.bbt,
+        ComposeController.Nqt,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnItemUse,
-        ComposeController.$yi,
+        ComposeController.$Ii,
       );
   }
   static OnRemoveEvents() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.ActiveRole,
-      ComposeController.Qyi,
+      ComposeController.QIi,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.SwitchViewType,
-        ComposeController.Xyi,
+        ComposeController.XIi,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnLoadingNetDataDone,
-        ComposeController.bbt,
+        ComposeController.Nqt,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnItemUse,
-        ComposeController.$yi,
+        ComposeController.$Ii,
       );
   }
   static RegisterCurrentInteractionEntity() {
-    this.Yyi =
+    this.YIi =
       ModelManager_1.ModelManager.InteractionModel.CurrentInteractEntityId;
   }
   static ClearCurrentInteractionEntityDisplay() {
-    this.Yyi && (this.ClearCompositeDisplay(), (this.Yyi = void 0));
+    this.YIi && (this.ClearCompositeDisplay(), (this.YIi = void 0));
   }
   static OnRegisterNetEvent() {
-    Net_1.Net.Register(26083, (e) => {
+    Net_1.Net.Register(23577, (e) => {
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("Compose", 50, "10277_服务端主动推送合成数据更新"),
-        ModelManager_1.ModelManager.ComposeModel.UpdateComposeDataList(e.xxs),
-        ModelManager_1.ModelManager.ComposeModel.HideComposeDataList(e.Oxs);
+        ModelManager_1.ModelManager.ComposeModel.UpdateComposeDataList(e.zqs),
+        ModelManager_1.ModelManager.ComposeModel.HideComposeDataList(e.rGs);
     }),
-      Net_1.Net.Register(17417, (e) => {
+      Net_1.Net.Register(29508, (e) => {
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Compose",
             50,
             "10280_服务端主动推送合成等级数据更新",
           ),
-          ModelManager_1.ModelManager.ComposeModel.UpdateComposeInfo(e.Bxs),
+          ModelManager_1.ModelManager.ComposeModel.UpdateComposeInfo(e.eGs),
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.UpdateComposeInfo,
           );
       });
   }
   static OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(26083), Net_1.Net.UnRegister(17417);
+    Net_1.Net.UnRegister(23577), Net_1.Net.UnRegister(29508);
   }
-  static Jyi(e) {
-    ModelManager_1.ModelManager.ComposeModel.CreateComposeDataList(e.xxs),
+  static JIi(e) {
+    ModelManager_1.ModelManager.ComposeModel.CreateComposeDataList(e.zqs),
       ModelManager_1.ModelManager.ComposeModel.UpdateComposeByServerConfig(
-        e.bxs,
+        e.Zqs,
       ),
-      ModelManager_1.ModelManager.ComposeModel.CreateComposeLevelInfo(e.Bxs),
-      ModelManager_1.ModelManager.ComposeModel.SaveLimitRefreshTime(e.rLs);
-  }
-  static SendSynthesisInfoRequest() {
-    var e;
-    ComposeController.zyi
-      ? Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug(
-          "Compose",
-          50,
-          "已经请求过10273_合成系统相关数据，等待返回",
-        )
-      : ((ComposeController.zyi = !0),
-        Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("Compose", 50, "10273_客户端请求合成系统相关数据"),
-        (e = new Protocol_1.Aki.Protocol.Z_s()),
-        Net_1.Net.Call(26777, Protocol_1.Aki.Protocol.Z_s.create(e), (e) => {
-          Log_1.Log.CheckDebug() &&
-            Log_1.Log.Debug("Compose", 50, "10273_返回请求合成系统相关数据"),
-            (ComposeController.zyi = !1),
-            e.Kms === Protocol_1.Aki.Protocol.lkn.Sys
-              ? (ComposeController.Jyi(e),
-                EventSystem_1.EventSystem.Emit(
-                  EventDefine_1.EEventName.GetComposeData,
-                ))
-              : (ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-                  e.Kms,
-                  8010,
-                  void 0,
-                  !0,
-                  !1,
-                ),
-                UiManager_1.UiManager.IsViewShow("ComposeRootView") &&
-                  UiManager_1.UiManager.CloseView("ComposeRootView"));
-        }));
+      ModelManager_1.ModelManager.ComposeModel.CreateComposeLevelInfo(e.eGs),
+      ModelManager_1.ModelManager.ComposeModel.SaveLimitRefreshTime(e.EPs);
   }
   static async SendSynthesisInfoRequestAsync() {
     Log_1.Log.CheckDebug() &&
@@ -151,19 +118,19 @@ class ComposeController extends UiControllerBase_1.UiControllerBase {
         50,
         "10273_客户端请求合成系统相关数据(异步刷新)",
       );
-    var e = new Protocol_1.Aki.Protocol.Z_s(),
-      e = await Net_1.Net.CallAsync(26777, e);
+    var e = new Protocol_1.Aki.Protocol.Qms(),
+      e = await Net_1.Net.CallAsync(17176, e);
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug(
         "Compose",
         50,
         "10273_返回请求合成系统相关数据(异步刷新)",
       ),
-      e.Kms === Protocol_1.Aki.Protocol.lkn.Sys
-        ? ComposeController.Jyi(e)
+      e.hvs === Protocol_1.Aki.Protocol.O4n.NRs
+        ? ComposeController.JIi(e)
         : (ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-            e.Kms,
-            8010,
+            e.hvs,
+            12316,
             void 0,
             !0,
             !1,
@@ -172,19 +139,19 @@ class ComposeController extends UiControllerBase_1.UiControllerBase {
             UiManager_1.UiManager.CloseView("ComposeRootView"));
   }
   static SendSynthesisItemRequest(e, o, t) {
-    var r = new Protocol_1.Aki.Protocol.tus();
-    (r.Ekn = e),
-      (r.l3n = o),
-      (r.I5n = t),
-      (r.N4n =
+    var r = new Protocol_1.Aki.Protocol.Yms();
+    (r.J4n = e),
+      (r.O6n = o),
+      (r.o9n = t),
+      (r.vVn =
         ModelManager_1.ModelManager.ComposeModel.CurrentInteractCreatureDataLongId),
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("Compose", 50, "10275_请求合成道具"),
-      Net_1.Net.Call(6114, Protocol_1.Aki.Protocol.tus.create(r), (t) => {
+      Net_1.Net.Call(7600, Protocol_1.Aki.Protocol.Yms.create(r), (t) => {
         if (
           (Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug("Compose", 50, "10275_请求合成道具返回"),
-          t.Kms === Protocol_1.Aki.Protocol.lkn.Sys)
+          t.hvs === Protocol_1.Aki.Protocol.O4n.NRs)
         ) {
           let e = void 0;
           (e =
@@ -192,44 +159,44 @@ class ComposeController extends UiControllerBase_1.UiControllerBase {
               (e =
                 e ||
                 ModelManager_1.ModelManager.ComposeModel.GetStructureDataById(
-                  t.Ekn,
+                  t.J4n,
                 )) ||
               ModelManager_1.ModelManager.ComposeModel.GetReagentProductionDataById(
-                t.Ekn,
+                t.J4n,
               )) ||
             ModelManager_1.ModelManager.ComposeModel.GetPurificationDataById(
-              t.Ekn,
-            )) && (e.LastRoleId = t.l3n);
-          var r = t.QTs,
-            n =
-              (0 !== t.YTs.length && r.push(...t.YTs),
+              t.J4n,
+            )) && (e.LastRoleId = t.O6n);
+          var r = t.dPs,
+            a =
+              (0 !== t.CPs.length && r.push(...t.CPs),
               ModelManager_1.ModelManager.ComposeModel),
-            a = n.GetComposeInfo(),
-            s = a.ComposeLevel,
-            i = n.GetComposeMaxLevel(),
-            l = n.GetComposeLevelByLevel(i),
-            a = a.TotalProficiency,
+            n = a.GetComposeInfo(),
+            s = n.ComposeLevel,
+            i = a.GetComposeMaxLevel(),
+            l = a.GetComposeLevelByLevel(i),
+            n = n.TotalProficiency,
             l = l.Completeness;
           let o = void 0;
-          1 === n.CurrentComposeListType &&
-            (n.LastExp < l || (s < i && a < l)) &&
-            ((l = n.GetComposeLevelByLevel(Math.min(i, s + 1))),
+          1 === a.CurrentComposeListType &&
+            (a.LastExp < l || (s < i && n < l)) &&
+            ((l = a.GetComposeLevelByLevel(Math.min(i, s + 1))),
             (i = {
-              FromProgress: n.LastExp,
-              ToProgress: a,
+              FromProgress: a.LastExp,
+              ToProgress: n,
               MaxProgress: l.Completeness,
             }),
             (o = [i])),
-            (n.LastExp = a);
+            (a.LastExp = n);
           const m = [];
           for (const g of r) {
-            var _ = g.G3n,
-              C = g.k4n,
+            var _ = g.f8n,
+              C = g.MVn,
               _ = new RewardItemData_1.RewardItemData(_, C);
             m.push(_);
           }
           ComposeController.PlayCompositeWorkingDisplay(() => {
-            ComposeController.Zyi(SUCCESS_AUDIO_ID),
+            ComposeController.ZIi(SUCCESS_AUDIO_ID),
               ComposeController.PlayCompositeLoopDisplay(),
               ItemRewardController_1.ItemRewardController.OpenCompositeRewardView(
                 2004,
@@ -237,15 +204,21 @@ class ComposeController extends UiControllerBase_1.UiControllerBase {
                 m,
                 o,
               );
-          }),
+          }) ||
+            ItemRewardController_1.ItemRewardController.OpenCompositeRewardView(
+              2004,
+              !0,
+              m,
+              o,
+            ),
             ModelManager_1.ModelManager.ComposeModel.UpdateComposeItemList(r),
             EventSystem_1.EventSystem.Emit(
               EventDefine_1.EEventName.ComposeSuccess,
             );
         } else
           ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-            t.Kms,
-            3993,
+            t.hvs,
+            15657,
           ),
             EventSystem_1.EventSystem.Emit(
               EventDefine_1.EEventName.ComposeFail,
@@ -254,42 +227,42 @@ class ComposeController extends UiControllerBase_1.UiControllerBase {
   }
   static SendSynthesisLevelRewardRequest() {
     var e;
-    ComposeController.eIi
+    ComposeController.eTi
       ? Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "Compose",
           50,
           "已经请求过10278_领取制药等级奖励，等待返回",
         )
-      : ((e = new Protocol_1.Aki.Protocol.ous()),
-        (ComposeController.eIi = !0),
-        Net_1.Net.Call(23876, Protocol_1.Aki.Protocol.ous.create(e), (e) => {
-          (ComposeController.eIi = !1),
-            e.Kms === Protocol_1.Aki.Protocol.lkn.Sys
+      : ((e = new Protocol_1.Aki.Protocol.Zms()),
+        (ComposeController.eTi = !0),
+        Net_1.Net.Call(19550, Protocol_1.Aki.Protocol.Zms.create(e), (e) => {
+          (ComposeController.eTi = !1),
+            e.hvs === Protocol_1.Aki.Protocol.O4n.NRs
               ? (Log_1.Log.CheckDebug() &&
                   Log_1.Log.Debug("Compose", 50, "10278_领取制药等级奖励返回"),
                 EventSystem_1.EventSystem.Emit(
                   EventDefine_1.EEventName.UpgradeComposeLevel,
                 ))
               : ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-                  e.Kms,
-                  3978,
+                  e.hvs,
+                  11388,
                 );
         }));
   }
   static SendSynthesisFormulaUnlockRequest(t) {
-    var e = new Protocol_1.Aki.Protocol.aus();
-    (e.Ekn = t),
-      Net_1.Net.Call(12637, Protocol_1.Aki.Protocol.aus.create(e), (e) => {
+    var e = new Protocol_1.Aki.Protocol.iCs();
+    (e.J4n = t),
+      Net_1.Net.Call(15739, Protocol_1.Aki.Protocol.iCs.create(e), (e) => {
         var o;
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("Compose", 50, "10281_制药配方解锁请求返回"),
-          e.Kms === Protocol_1.Aki.Protocol.lkn.Sys
+          e.hvs === Protocol_1.Aki.Protocol.O4n.NRs
             ? (ModelManager_1.ModelManager.ComposeModel.UnlockReagentProductionData(
-                e.Ekn,
+                e.J4n,
               ),
               ModelManager_1.ModelManager.ComposeModel.UnlockStructureData(
-                e.Ekn,
+                e.J4n,
               ),
               (o =
                 ConfigManager_1.ConfigManager.ComposeConfig.GetSynthesisFormulaById(
@@ -306,8 +279,8 @@ class ComposeController extends UiControllerBase_1.UiControllerBase {
                 EventDefine_1.EEventName.UpdateComposeFormula,
               ))
             : ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-                e.Kms,
-                26668,
+                e.hvs,
+                26203,
               );
       });
   }
@@ -383,9 +356,9 @@ class ComposeController extends UiControllerBase_1.UiControllerBase {
   }
   static GetMaxCreateCount(e) {
     e = ConfigManager_1.ConfigManager.ComposeConfig.GetSynthesisFormulaById(e);
-    return ComposeController.kbt(e.ConsumeItems, e.LimitCount);
+    return ComposeController.Hqt(e.ConsumeItems, e.LimitCount);
   }
-  static kbt(e, o) {
+  static Hqt(e, o) {
     let t = 0;
     t =
       0 !== o
@@ -393,14 +366,14 @@ class ComposeController extends UiControllerBase_1.UiControllerBase {
         : CommonParamById_1.configCommonParamById.GetIntConfig(
             "max_cooking_count",
           );
-    for (const a of e) {
-      var r = a.Count,
-        n = ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
-          a.ItemId,
+    for (const n of e) {
+      var r = n.Count,
+        a = ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
+          n.ItemId,
         );
-      if (n < r) return 0;
-      n = MathUtils_1.MathUtils.GetFloatPointFloor(n / r, 0);
-      t = t < n ? t : n;
+      if (a < r) return 0;
+      a = MathUtils_1.MathUtils.GetFloatPointFloor(a / r, 0);
+      t = t < a ? t : a;
     }
     return t;
   }
@@ -467,22 +440,22 @@ class ComposeController extends UiControllerBase_1.UiControllerBase {
   static PlayCompositeEnterDisplay(e) {
     this.ClearCompositeDisplay();
     var o,
-      t = this.Fbt();
+      t = this.jqt();
     t &&
       ((o = ModelManager_1.ModelManager.ComposeModel.ComposeEnterFlow),
       ComposeController.PlayCompositeFlow(o),
-      ComposeController.Zyi(ENTER_AUDIO_ID),
+      ComposeController.ZIi(ENTER_AUDIO_ID),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("Test", 8, "[CompositeDisplay]播放进入合成表现"),
       t.AddTag(-234527092),
-      (this.tIi = e),
-      (this.iIi = TimerSystem_1.TimerSystem.Delay(() => {
-        this.tIi && this.tIi();
+      (this.tTi = e),
+      (this.iTi = TimerSystem_1.TimerSystem.Delay(() => {
+        this.tTi && this.tTi();
       }, ComposeDefine_1.COMPOSITE_ENTER_SEQUENCE_TIME_LENGTH)));
   }
   static PlayCompositeLoopDisplay() {
     this.ClearCompositeDisplay();
-    var e = this.Fbt();
+    var e = this.jqt();
     e &&
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("Test", 8, "[CompositeDisplay]播放合成循环表现"),
@@ -490,21 +463,24 @@ class ComposeController extends UiControllerBase_1.UiControllerBase {
   }
   static PlayCompositeWorkingDisplay(e) {
     this.ClearCompositeDisplay();
-    var o = this.Fbt();
-    o &&
-      (EventSystem_1.EventSystem.Emit(
-        EventDefine_1.EEventName.OnBeginPlayCompositeWorkingDisplay,
-      ),
+    var o = this.jqt();
+    if (!o) return !1;
+    EventSystem_1.EventSystem.Emit(
+      EventDefine_1.EEventName.OnBeginPlayCompositeWorkingDisplay,
+    ),
       Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Test", 8, "[CompositeDisplay]播放合成工作中表现"),
+        Log_1.Log.Info("Test", 8, "[CompositeDisplay]播放合成工作中表现");
+    return (
       o.AddTag(686058684),
-      (this.oIi = e),
-      (this.iIi = TimerSystem_1.TimerSystem.Delay(() => {
+      (this.oTi = e),
+      (this.iTi = TimerSystem_1.TimerSystem.Delay(() => {
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.OnPlayCompositeWorkingDisplayFinished,
         ),
-          this.oIi && this.oIi();
-      }, ComposeDefine_1.COMPOSITE_WORKING_SEQUENCE_TIME_LENGTH)));
+          this.oTi && this.oTi();
+      }, ComposeDefine_1.COMPOSITE_WORKING_SEQUENCE_TIME_LENGTH)),
+      !0
+    );
   }
   static PlayCompositeFlow(e) {
     var o;
@@ -526,7 +502,7 @@ class ComposeController extends UiControllerBase_1.UiControllerBase {
         o,
       ));
   }
-  static Zyi(e, o) {
+  static ZIi(e, o) {
     var t = ConfigManager_1.ConfigManager.AudioConfig.GetAudioPath(e);
     t &&
       (AudioController_1.AudioController.PostEventByUi(t.Path, o),
@@ -534,25 +510,25 @@ class ComposeController extends UiControllerBase_1.UiControllerBase {
       Log_1.Log.Debug("Compose", 8, "播放合成台音频", ["audioId", e]);
   }
   static PlayLeaveCompositeAudio() {
-    this.Zyi(LEAVE_AUDIO_ID);
+    this.ZIi(LEAVE_AUDIO_ID);
   }
   static PlayCompositeFailDisplay(e) {
     this.ClearCompositeDisplay();
     var o,
-      t = this.Fbt();
+      t = this.jqt();
     t &&
       ((o = ModelManager_1.ModelManager.ComposeModel.ComposeFailFlow),
       ComposeController.PlayCompositeFlow(o),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("Test", 8, "[CompositeDisplay]播放合成失败表现"),
       t.AddTag(-269686894),
-      (this.rIi = e),
-      (this.iIi = TimerSystem_1.TimerSystem.Delay(() => {
-        this.rIi && this.rIi();
+      (this.rTi = e),
+      (this.iTi = TimerSystem_1.TimerSystem.Delay(() => {
+        this.rTi && this.rTi();
       }, ComposeDefine_1.COMPOSITE_FAIL_SEQUENCE_TIME_LENGTH)));
   }
   static ClearCompositeDisplay() {
-    var e = this.Fbt();
+    var e = this.jqt();
     e &&
       (e.RemoveTag(-269686894),
       e.RemoveTag(686058684),
@@ -560,29 +536,29 @@ class ComposeController extends UiControllerBase_1.UiControllerBase {
       e.RemoveTag(-234527092),
       Log_1.Log.CheckInfo()) &&
       Log_1.Log.Info("Test", 8, "[CompositeDisplay]清理所有GameplayTag"),
-      (this.tIi = void 0),
-      (this.oIi = void 0),
-      (this.rIi = void 0),
-      this.iIi &&
-        TimerSystem_1.TimerSystem.Has(this.iIi) &&
-        (TimerSystem_1.TimerSystem.Remove(this.iIi), (this.iIi = void 0));
+      (this.tTi = void 0),
+      (this.oTi = void 0),
+      (this.rTi = void 0),
+      this.iTi &&
+        TimerSystem_1.TimerSystem.Has(this.iTi) &&
+        (TimerSystem_1.TimerSystem.Remove(this.iTi), (this.iTi = void 0));
   }
-  static Fbt() {
-    if (this.Yyi) {
-      var e = EntitySystem_1.EntitySystem.Get(this.Yyi);
-      if (e) return e.GetComponent(177);
+  static jqt() {
+    if (this.YIi) {
+      var e = EntitySystem_1.EntitySystem.Get(this.YIi);
+      if (e) return e.GetComponent(180);
     }
   }
 }
-((exports.ComposeController = ComposeController).iIi = void 0),
-  (ComposeController.tIi = void 0),
-  (ComposeController.oIi = void 0),
-  (ComposeController.rIi = void 0),
-  (ComposeController.Yyi = void 0),
-  (ComposeController.bbt = () => {
+((exports.ComposeController = ComposeController).iTi = void 0),
+  (ComposeController.tTi = void 0),
+  (ComposeController.oTi = void 0),
+  (ComposeController.rTi = void 0),
+  (ComposeController.YIi = void 0),
+  (ComposeController.Nqt = () => {
     ModelManager_1.ModelManager.ComposeModel.CreatePurificationDataList();
   }),
-  (ComposeController.Xyi = (e) => {
+  (ComposeController.XIi = (e) => {
     if (1 === CommonManager_1.CommonManager.GetCurrentSystem())
       switch (e) {
         case 0:
@@ -595,7 +571,7 @@ class ComposeController extends UiControllerBase_1.UiControllerBase {
           ModelManager_1.ModelManager.ComposeModel.CurrentComposeViewType = 3;
       }
   }),
-  (ComposeController.$yi = (e, o) => {
+  (ComposeController.$Ii = (e, o) => {
     var t = ConfigManager_1.ConfigManager.ItemConfig.GetConfig(e);
     (t.ShowTypes.includes(35) || t.ShowTypes.includes(37)) &&
       ((t =
@@ -609,9 +585,8 @@ class ComposeController extends UiControllerBase_1.UiControllerBase {
       ),
       EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.UpdateFormula));
   }),
-  (ComposeController.Qyi = () => {
+  (ComposeController.QIi = () => {
     ModelManager_1.ModelManager.ComposeModel.UpdateHelpRoleItemDataList();
   }),
-  (ComposeController.zyi = !1),
-  (ComposeController.eIi = !1);
+  (ComposeController.eTi = !1);
 //# sourceMappingURL=ComposeController.js.map

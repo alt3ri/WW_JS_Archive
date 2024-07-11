@@ -9,6 +9,7 @@ const puerts_1 = require("puerts"),
   MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
   GlobalData_1 = require("../../../GlobalData"),
   CharacterUnifiedStateTypes_1 = require("../../../NewWorld/Character/Common/Component/Abilities/CharacterUnifiedStateTypes"),
+  GravityUtils_1 = require("../../../Utils/GravityUtils"),
   BlackboardController_1 = require("../../../World/Controller/BlackboardController"),
   AiContollerLibrary_1 = require("../../Controller/AiContollerLibrary"),
   TsAiController_1 = require("../../Controller/TsAiController"),
@@ -75,7 +76,7 @@ class TsTaskFlee extends TsTaskAbortImmediatelyBase_1.default {
           if (r) {
             const n = r.Entity;
             if (n)
-              if (((this.MoveComp = n.GetComponent(161)), this.MoveComp)) {
+              if (((this.MoveComp = n.GetComponent(163)), this.MoveComp)) {
                 5 === this.MoveComp.CharacterMovement.MovementMode &&
                   (this.IsFlying = !0);
                 var r = r.ActorLocationProxy,
@@ -145,7 +146,7 @@ class TsTaskFlee extends TsTaskAbortImmediatelyBase_1.default {
                     ? ((this.CurrentNavigationIndex = 1),
                       (this.NavigationEndTime =
                         Time_1.Time.WorldTime + s.AiFlee.TimeMilliseconds),
-                      (l = s.CharAiDesignComp.Entity.GetComponent(89))?.Valid &&
+                      (l = s.CharAiDesignComp.Entity.GetComponent(91))?.Valid &&
                         l.SetMoveState(
                           CharacterUnifiedStateTypes_1.ECharMoveState.Run,
                         ))
@@ -200,7 +201,8 @@ class TsTaskFlee extends TsTaskAbortImmediatelyBase_1.default {
         (r = Vector_1.Vector.Create(
           this.NavigationPath[this.CurrentNavigationIndex],
         )).Subtraction(s.ActorLocationProxy, r),
-        this.IsFlying || (r.Z = 0),
+        this.IsFlying ||
+          GravityUtils_1.GravityUtils.ConvertToPlanarVector(s, r),
         (h = r.Size()),
         (this.CompleteDistance = this.TsLeapMode
           ? this.TsLeapDistance

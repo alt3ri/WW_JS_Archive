@@ -4,12 +4,12 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const SpecialPanelHandleBase_1 = require("./SpecialPanelHandleBase");
 class InventoryViewPanelHandle extends SpecialPanelHandleBase_1.SpecialPanelHandleBase {
   constructor() {
-    super(...arguments), (this.nwo = !1);
+    super(...arguments), (this.oBo = !1);
   }
   get IsInDestroyMode() {
-    return this.nwo;
+    return this.oBo;
   }
-  swo() {
+  rBo() {
     let e = "";
     for (const t of this.DefaultNavigationListener)
       if ("InventoryItemGridToggle" === t.GetNavigationComponent().GetType()) {
@@ -19,8 +19,8 @@ class InventoryViewPanelHandle extends SpecialPanelHandleBase_1.SpecialPanelHand
     return this.GetNavigationGroup(e);
   }
   SetItemGridDestroyMode(r) {
-    this.nwo = r;
-    var n = this.swo();
+    this.oBo = r;
+    var n = this.rBo();
     if (n)
       for (let e = 0, t = n.ListenerList.Num(); e < t; ++e)
         n.ListenerList.Get(e).GetBehaviorComponent().bToggleOnSelect = !r;

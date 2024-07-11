@@ -38,7 +38,7 @@ const ActorSystem_1 = require("../../Core/Actor/ActorSystem"),
   ];
 class UiPoolActor {
   constructor(e) {
-    (this.OCe = void 0), (this.Ymr = ""), (this.Jmr = 0), (this.Ymr = e);
+    (this.OCe = void 0), (this.Xdr = ""), (this.$dr = 0), (this.Xdr = e);
   }
   get Actor() {
     return this.OCe;
@@ -53,13 +53,13 @@ class UiPoolActor {
     return this.OCe?.RootComponent;
   }
   get Path() {
-    return this.Ymr;
+    return this.Xdr;
   }
   get EndTime() {
-    return this.Jmr;
+    return this.$dr;
   }
   set EndTime(e) {
-    this.Jmr = e;
+    this.$dr = e;
   }
   Clear() {
     this.IsValid &&
@@ -69,14 +69,14 @@ class UiPoolActor {
 exports.UiPoolActor = UiPoolActor;
 class UiActorFactory {
   constructor(e, o) {
-    (this.Ymr = ""),
-      (this.zmr = void 0),
-      (this.Zmr = 0),
+    (this.Xdr = ""),
+      (this.Ydr = void 0),
+      (this.Jdr = 0),
       (this.IsKeepWhileCleaning = !1),
       (this.mp = new Queue_1.Queue(DEFAULT_CAPACITY)),
-      (this.edr = LguiResourceManager_1.LguiResourceManager.InvalidId),
-      (this.Ymr = e),
-      (this.zmr = o) ||
+      (this.zdr = LguiResourceManager_1.LguiResourceManager.InvalidId),
+      (this.Xdr = e),
+      (this.Ydr = o) ||
         (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Pool",
@@ -85,19 +85,19 @@ class UiActorFactory {
           ));
   }
   a7() {
-    var e = new UiPoolActor(this.Ymr);
+    var e = new UiPoolActor(this.Xdr);
     return (e.EndTime = Time_1.Time.Now + CACHE_TIME), e;
   }
   h7(e) {
     e.Clear();
   }
   async PreloadActor(e) {
-    this.Zmr = e();
+    this.Jdr = e();
     var o = e() - this.mp.Size;
     if (!(o <= 0))
-      if (this.zmr) {
+      if (this.Ydr) {
         var t = [];
-        for (let e = 0; e < o; e++) t.push(this.GetAsync(this.Ymr, this.zmr));
+        for (let e = 0; e < o; e++) t.push(this.GetAsync(this.Xdr, this.Ydr));
         (await Promise.all(t)).forEach((e) => {
           this.mp.Push(e);
         }),
@@ -107,7 +107,7 @@ class UiActorFactory {
               17,
               "预加载UiPoolActor对象",
               ["预加载数量", o],
-              ["资源路径", this.Ymr],
+              ["资源路径", this.Xdr],
             );
       } else
         Log_1.Log.CheckError() &&
@@ -117,11 +117,11 @@ class UiActorFactory {
             "[UiActorFactory:PreloadActor]初始化缓存池有问题,缓存池挂载根节点为空",
           );
   }
-  Release(e) {
+  Release(e, o) {
     return e
       ? (this.mp.Push(e),
         e.IsValid
-          ? (e.UiItem?.SetUIParent(this.zmr),
+          ? (e.UiItem?.SetUIParent(this.Ydr),
             (e.EndTime = Time_1.Time.Now + CACHE_TIME))
           : (e.EndTime = Time_1.Time.Now),
         Log_1.Log.CheckDebug() &&
@@ -133,13 +133,14 @@ class UiActorFactory {
             ["资源路径", e.Path],
           ),
         !0)
-      : (Log_1.Log.CheckError() &&
+      : (o &&
+          Log_1.Log.CheckError() &&
           Log_1.Log.Error("Pool", 17, "回收UiPoolActor对象不存在"),
         this.CancelGetAsync(),
         !1);
   }
   GarbageCollect(o) {
-    if (this.mp.Size <= this.Zmr) return o;
+    if (this.mp.Size <= this.Jdr) return o;
     let t = 0;
     for (let e = 0; e < o && !this.mp.Empty; ++e) {
       var r = this.mp.Front;
@@ -153,7 +154,7 @@ class UiActorFactory {
             17,
             "缓存池中UiPoolActor未使用对象执行GC",
             ["目前未使用数量", this.mp.Size],
-            ["资源路径", this.Ymr],
+            ["资源路径", this.Xdr],
           );
     }
     return o - t;
@@ -165,17 +166,17 @@ class UiActorFactory {
     }
     this.mp.Clear(),
       Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("Pool", 17, "清除操作", ["资源路径", this.Ymr]);
+        Log_1.Log.Debug("Pool", 17, "清除操作", ["资源路径", this.Xdr]);
   }
-  async tdr() {
-    if (this.zmr) {
+  async Zdr() {
+    if (this.Ydr) {
       const o = new CustomPromise_1.CustomPromise();
       return (
-        (this.edr = LguiResourceManager_1.LguiResourceManager.LoadPrefab(
-          this.Ymr,
-          this.zmr,
+        (this.zdr = LguiResourceManager_1.LguiResourceManager.LoadPrefab(
+          this.Xdr,
+          this.Ydr,
           (e) => {
-            (this.edr = LguiResourceManager_1.LguiResourceManager.InvalidId),
+            (this.zdr = LguiResourceManager_1.LguiResourceManager.InvalidId),
               o.SetResult(e);
           },
         )),
@@ -191,7 +192,7 @@ class UiActorFactory {
   }
   async GetAsync(e, o) {
     var t = this.mp.Empty ? this.a7() : this.mp.Pop(),
-      r = (t.IsValid || (t.Actor = await this.tdr()), t.UiItem);
+      r = (t.IsValid || (t.Actor = await this.Zdr()), t.UiItem);
     if (r)
       return (
         o && r?.SetUIParent(o),
@@ -207,59 +208,59 @@ class UiActorFactory {
       ]);
   }
   CancelGetAsync() {
-    LguiResourceManager_1.LguiResourceManager.CancelLoadPrefab(this.edr),
-      (this.edr = LguiResourceManager_1.LguiResourceManager.InvalidId);
+    LguiResourceManager_1.LguiResourceManager.CancelLoadPrefab(this.zdr),
+      (this.zdr = LguiResourceManager_1.LguiResourceManager.InvalidId);
   }
 }
 class UiActorPool {
-  static idr(e) {
-    let o = UiActorPool.odr.get(e);
+  static eCr(e) {
+    let o = UiActorPool.tCr.get(e);
     return (
       o ||
-        ((o = new UiActorFactory(e, UiActorPool.rdr)),
-        UiActorPool.odr.set(e, o)),
+        ((o = new UiActorFactory(e, UiActorPool.iCr)),
+        UiActorPool.tCr.set(e, o)),
       o
     );
   }
-  static ndr(e) {
-    return UiActorPool.odr.get(e);
+  static oCr(e) {
+    return UiActorPool.tCr.get(e);
   }
   static async Init() {
     this.IsOpenPool &&
-      ((UiActorPool.rdr = UiLayer_1.UiLayer.GetLayerRootUiItem(
+      ((UiActorPool.iCr = UiLayer_1.UiLayer.GetLayerRootUiItem(
         UiLayerType_1.ELayerType.Pool,
       )),
-      await UiActorPool.VQe());
+      await UiActorPool.e$e());
   }
-  static async VQe() {
+  static async e$e() {
     var e = [];
     for (const t of prepareConfigList) {
       var o = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
           t.ResourceId,
         ),
-        o = UiActorPool.idr(o);
+        o = UiActorPool.eCr(o);
       e.push(o.PreloadActor(t.CacheCount));
     }
     await Promise.all(e);
   }
   static Tick(e) {
     let o = TICK_GARBAGE_MAXCOUNT;
-    for (const t of UiActorPool.odr.values())
+    for (const t of UiActorPool.tCr.values())
       if ((o = t.GarbageCollect(o)) <= 0) break;
   }
   static ClearPool() {
-    for (var [e, o] of UiActorPool.odr)
-      o.IsKeepWhileCleaning || (o.Clear(), UiActorPool.odr.delete(e));
+    for (var [e, o] of UiActorPool.tCr)
+      o.IsKeepWhileCleaning || (o.Clear(), UiActorPool.tCr.delete(e));
   }
   static SetKeepWhileCleaning(e, o) {
-    this.IsOpenPool && (e = UiActorPool.idr(e)) && (e.IsKeepWhileCleaning = o);
+    this.IsOpenPool && (e = UiActorPool.eCr(e)) && (e.IsKeepWhileCleaning = o);
   }
   static async GetAsync(e, o) {
     return this.IsOpenPool
-      ? UiActorPool.idr(e).GetAsync(e, o)
-      : UiActorPool.sdr(e, o);
+      ? UiActorPool.eCr(e).GetAsync(e, o)
+      : UiActorPool.rCr(e, o);
   }
-  static async sdr(t, e) {
+  static async rCr(t, e) {
     const r = new CustomPromise_1.CustomPromise();
     return (
       LguiResourceManager_1.LguiResourceManager.LoadPrefab(t, e, (e) => {
@@ -271,10 +272,10 @@ class UiActorPool {
       r.Promise
     );
   }
-  static RecycleAsync(e, o) {
-    o = UiActorPool.ndr(o);
+  static RecycleAsync(e, o, t = !0) {
+    o = UiActorPool.oCr(o);
     o
-      ? o.Release(e)
+      ? o.Release(e, t)
       : e?.Actor &&
         (e.Clear(), Log_1.Log.CheckWarn()) &&
         Log_1.Log.Warn(
@@ -285,8 +286,8 @@ class UiActorPool {
         );
   }
 }
-((exports.UiActorPool = UiActorPool).odr = new Map()),
+((exports.UiActorPool = UiActorPool).tCr = new Map()),
   (UiActorPool.xW = void 0),
-  (UiActorPool.rdr = void 0),
+  (UiActorPool.iCr = void 0),
   (UiActorPool.IsOpenPool = !0);
 //# sourceMappingURL=UiActorPool.js.map

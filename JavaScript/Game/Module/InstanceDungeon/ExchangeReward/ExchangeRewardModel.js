@@ -7,37 +7,37 @@ const ModelBase_1 = require("../../../../Core/Framework/ModelBase"),
 exports.POWER_DISCOUNT_HELP_ID = 26;
 class ExchangeRewardModel extends ModelBase_1.ModelBase {
   constructor() {
-    super(...arguments), (this.FQ = new Map()), (this.bsi = new Map());
+    super(...arguments), (this.FQ = new Map()), (this.bai = new Map());
   }
   OnInit() {
     return !0;
   }
   Phrase(e) {
-    this.FQ.clear(), this.bsi.clear();
-    for (const r of Object.keys(e.JRs)) {
+    this.FQ.clear(), this.bai.clear();
+    for (const r of Object.keys(e.gws)) {
       var a = new ExchangeRewardData_1.ExchangeShareData();
-      a.Phrase(Number.parseInt(r), e.JRs[r]), this.bsi.set(a.GetId(), a);
+      a.Phrase(Number.parseInt(r), e.gws[r]), this.bai.set(a.GetId(), a);
     }
-    for (const t of Object.keys(e.zRs)) {
+    for (const t of Object.keys(e.fws)) {
       var n = new ExchangeRewardData_1.ExchangeRewardData();
-      n.Phrase(Number.parseInt(t), e.zRs[t]), this.FQ.set(n.GetId(), n);
+      n.Phrase(Number.parseInt(t), e.fws[t]), this.FQ.set(n.GetId(), n);
     }
   }
   OnExchangeRewardNotify(e) {
-    let a = this.FQ.get(e.ZRs);
+    let a = this.FQ.get(e.vws);
     a ||
       ((a = new ExchangeRewardData_1.ExchangeRewardData()),
-      this.FQ.set(e.ZRs, a)),
-      a.Phrase(e.ZRs, e.I5n);
+      this.FQ.set(e.vws, a)),
+      a.Phrase(e.vws, e.o9n);
   }
   OnShareInfoNotify(a) {
-    for (const r of Object.keys(a.eDs)) {
+    for (const r of Object.keys(a.pws)) {
       var n = Number.parseInt(r);
-      let e = this.bsi.get(n);
+      let e = this.bai.get(n);
       e ||
         ((e = new ExchangeRewardData_1.ExchangeShareData()),
-        this.bsi.set(n, e)),
-        e.Phrase(n, a.eDs[r]);
+        this.bai.set(n, e)),
+        e.Phrase(n, a.pws[r]);
     }
   }
   GetInstanceDungeonIfCanExchange(e) {
@@ -55,7 +55,7 @@ class ExchangeRewardModel extends ModelBase_1.ModelBase {
               ConfigManager_1.ConfigManager.ExchangeRewardConfig.GetShareMaxCount(
                 a,
               )),
-            this.bsi.get(a))
+            this.bai.get(a))
           : ((n =
               ConfigManager_1.ConfigManager.ExchangeRewardConfig.GetExchangeRewardMaxCount(
                 e,
@@ -77,7 +77,7 @@ class ExchangeRewardModel extends ModelBase_1.ModelBase {
               ConfigManager_1.ConfigManager.ExchangeRewardConfig.GetShareMaxCount(
                 a,
               )),
-            this.bsi.get(a))
+            this.bai.get(a))
           : ((n =
               ConfigManager_1.ConfigManager.ExchangeRewardConfig.GetExchangeRewardMaxCount(
                 e,
@@ -88,7 +88,7 @@ class ExchangeRewardModel extends ModelBase_1.ModelBase {
     );
   }
   GetExchangeRewardShareCount(e) {
-    return this.bsi.get(e)?.GetCount() ?? 0;
+    return this.bai.get(e)?.GetCount() ?? 0;
   }
   GetExchangeNormalConsume(e) {
     e =

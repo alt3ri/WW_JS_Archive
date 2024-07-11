@@ -16,16 +16,16 @@ const UE = require("ue"),
 class CommunicateView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
-      (this.ZBt = void 0),
-      (this.ebt = 0),
-      (this.tbt = 0),
-      (this.ibt = !1),
-      (this.obt = 0),
-      (this.nbt = () => {
+      (this.iqt = void 0),
+      (this.oqt = 0),
+      (this.rqt = 0),
+      (this.nqt = !1),
+      (this.sqt = 0),
+      (this.hqt = () => {
         this.$Oe((e) => {
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.CommunicateFinished,
-            this.obt,
+            this.sqt,
           );
         });
       }),
@@ -43,7 +43,7 @@ class CommunicateView extends UiTickViewBase_1.UiTickViewBase {
       [5, UE.UIButtonComponent],
       [6, UE.UIItem],
     ]),
-      (this.BtnBindInfo = [[5, this.nbt]]);
+      (this.BtnBindInfo = [[5, this.hqt]]);
   }
   OnStart() {
     var e,
@@ -51,17 +51,17 @@ class CommunicateView extends UiTickViewBase_1.UiTickViewBase {
     i.SetRichText(!0),
       i.SetHeight(100),
       LguiUtil_1.LguiUtil.SetLocalText(i, "QuestCommunicateConnect"),
-      (this.ebt = CommonParamById_1.configCommonParamById.GetIntConfig(
+      (this.oqt = CommonParamById_1.configCommonParamById.GetIntConfig(
         "CommunicateViewCloseTime",
       )),
-      (this.tbt = this.ebt),
-      (this.ZBt = new GuideCountDownItem_1.GuideCountDownItem(this.ebt)),
-      this.ZBt.Init(this.GetItem(0)),
-      (this.obt = this.OpenParam),
-      this.obt &&
-        ((i = CommunicateById_1.configCommunicateById.GetConfig(this.obt))
+      (this.rqt = this.oqt),
+      (this.iqt = new GuideCountDownItem_1.GuideCountDownItem(this.oqt)),
+      this.iqt.Init(this.GetItem(0)),
+      (this.sqt = this.OpenParam),
+      this.sqt &&
+        ((i = CommunicateById_1.configCommunicateById.GetConfig(this.sqt))
           ? (e = SpeakerById_1.configSpeakerById.GetConfig(i.Talker))
-            ? (this.hbt(e), this.lbt(e))
+            ? (this.uqt(e), this.cqt(e))
             : Log_1.Log.CheckError() &&
               Log_1.Log.Error("Quest", 19, "找不到通讯对话人配置", [
                 "talkerId",
@@ -70,10 +70,10 @@ class CommunicateView extends UiTickViewBase_1.UiTickViewBase {
           : Log_1.Log.CheckError() &&
             Log_1.Log.Error("Quest", 19, "找不到通讯配置", [
               "communicateId",
-              this.obt,
+              this.sqt,
             ]));
   }
-  hbt(e) {
+  uqt(e) {
     var i = ConfigManager_1.ConfigManager.TextConfig.GetTextById(
         "QuestCommunicateRequest",
       ),
@@ -81,15 +81,15 @@ class CommunicateView extends UiTickViewBase_1.UiTickViewBase {
       e = PublicUtil_1.PublicUtil.GetConfigTextByTable(0, e.Id);
     t.SetText(`【${e}】` + i);
   }
-  lbt(e) {
+  cqt(e) {
     var i = this.GetTexture(2);
     this.SetTextureByPath(e.HeadIconAsset, i);
   }
   OnTick(e) {
     this.RootItem.bIsUIActive &&
-      (this.tbt <= 0 && !this.ibt
-        ? ((this.ibt = !0), this.$Oe())
-        : ((this.tbt -= e), this.ZBt.OnDurationChange(this.tbt)));
+      (this.rqt <= 0 && !this.nqt
+        ? ((this.nqt = !0), this.$Oe())
+        : ((this.rqt -= e), this.iqt.OnDurationChange(this.rqt)));
   }
 }
 exports.CommunicateView = CommunicateView;

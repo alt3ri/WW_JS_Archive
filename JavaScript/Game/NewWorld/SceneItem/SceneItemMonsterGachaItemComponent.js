@@ -37,7 +37,7 @@ let SceneItemMonsterGachaItemComponent =
       super(...arguments),
         (this.Lo = void 0),
         (this.Hte = void 0),
-        (this.Qnn = () => {
+        (this.Rnn = () => {
           ResourceSystem_1.ResourceSystem.LoadAsync(
             this.Lo.MaterialDataPath,
             UE.ItemMaterialControllerActorData_C,
@@ -65,11 +65,11 @@ let SceneItemMonsterGachaItemComponent =
     }
     OnStart() {
       return (
-        (this.Hte = this.Entity.GetComponent(182)),
+        (this.Hte = this.Entity.GetComponent(185)),
         EventSystem_1.EventSystem.OnceWithTarget(
           this.Entity,
           EventDefine_1.EEventName.OnSceneInteractionLoadCompleted,
-          this.Qnn,
+          this.Rnn,
         ),
         !0
       );
@@ -77,7 +77,7 @@ let SceneItemMonsterGachaItemComponent =
   });
 (SceneItemMonsterGachaItemComponent = SceneItemMonsterGachaItemComponent_1 =
   __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(141)],
+    [(0, RegisterComponent_1.RegisterComponent)(143)],
     SceneItemMonsterGachaItemComponent,
   )),
   (exports.SceneItemMonsterGachaItemComponent =

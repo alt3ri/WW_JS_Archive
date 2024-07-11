@@ -59,6 +59,9 @@ class PayShopGoods {
   get Show() {
     return this.show();
   }
+  get SoldoutShowInShop() {
+    return this.soldoutshowinshop();
+  }
   get Tag() {
     return this.tag();
   }
@@ -143,8 +146,12 @@ class PayShopGoods {
     var t = this.J7.__offset(this.z7, 38);
     return !t || !!this.J7.readInt8(this.z7 + t);
   }
-  tag() {
+  soldoutshowinshop() {
     var t = this.J7.__offset(this.z7, 40);
+    return !!t && !!this.J7.readInt8(this.z7 + t);
+  }
+  tag() {
+    var t = this.J7.__offset(this.z7, 42);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
 }

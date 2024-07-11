@@ -17,27 +17,27 @@ const UE = require("ue"),
 class MingSuView extends CollectItemViewBase_1.CollectItemViewBase {
   constructor() {
     super(...arguments),
-      (this.NBi = void 0),
-      (this.kBi = 0),
-      (this.FBi = void 0),
-      (this.VBi = void 0),
-      (this.KBi = !1),
-      (this.mkt = () => {
+      (this.Nbi = void 0),
+      (this.kbi = 0),
+      (this.Fbi = void 0),
+      (this.Vbi = void 0),
+      (this.Kbi = !1),
+      (this.d2t = () => {
         var e = new CollectSmallItemGrid_1.CollectSmallItemGrid();
         return (
-          e.BindOnExtendToggleRelease(this.QBi),
+          e.BindOnExtendToggleRelease(this.Qbi),
           e.BindOnCanExecuteChange(() => !1),
           e
         );
       }),
-      (this.QBi = (e) => {
+      (this.Qbi = (e) => {
         e.MediumItemGrid.IsHover &&
           ((e = e.Data),
           ControllerHolder_1.ControllerHolder.ItemController.OpenItemTipsByItemId(
             e.ItemInfo.Id,
           ));
       }),
-      (this.zBi = () => {
+      (this.zbi = () => {
         --this.CurrentShowLevel,
           this.pO(),
           Log_1.Log.CheckInfo() &&
@@ -52,7 +52,7 @@ class MingSuView extends CollectItemViewBase_1.CollectItemViewBase {
                 ).toString(),
             );
       }),
-      (this.ZBi = () => {
+      (this.Zbi = () => {
         (this.CurrentShowLevel += 1),
           this.pO(),
           Log_1.Log.CheckInfo() &&
@@ -67,9 +67,9 @@ class MingSuView extends CollectItemViewBase_1.CollectItemViewBase {
                 ).toString(),
             );
       }),
-      (this.ebi = () => {
+      (this.eqi = () => {
         var e, t;
-        this.KBi ||
+        this.Kbi ||
           ((t = (e =
             ModelManager_1.ModelManager
               .MingSuModel).GetTargetDragonPoolLevelById(this.PoolConfigId)),
@@ -78,7 +78,7 @@ class MingSuView extends CollectItemViewBase_1.CollectItemViewBase {
               ? ((e.MingSuLastLevel = e.GetTargetDragonPoolLevelById(
                   this.PoolConfigId,
                 )),
-                e.CanLevelUp(this.PoolConfigId) && (this.KBi = !0),
+                e.CanLevelUp(this.PoolConfigId) && (this.Kbi = !0),
                 MingSuController_1.MingSuController.SendHandInMingSuRequest(
                   this.PoolConfigId,
                 ),
@@ -89,35 +89,35 @@ class MingSuView extends CollectItemViewBase_1.CollectItemViewBase {
                 ),
                 Log_1.Log.CheckInfo() &&
                   Log_1.Log.Info("MingSuTi", 8, "不可升级!!!!"))
-            : this.$Bi());
+            : this.$bi());
       }),
-      (this.tbi = () => {
+      (this.tqi = () => {
         ControllerHolder_1.ControllerHolder.ItemController.OpenItemTipsByItemId(
           MingSuDefine_1.MING_SU_ITEM_CONFIG_ID,
         );
       }),
-      (this.ACt = () => {
+      (this.Vgt = () => {
         this.CloseMe();
       });
   }
   OnRegisterComponent() {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info("MingSuTi", 8, "创建鸣素体界面!!!!"),
-      this.ibi();
+      this.iqi();
   }
   OnBegined() {
-    this.ChildPopView?.PopItem.OverrideBackBtnCallBack(() => {}), this.h7e();
+    this.ChildPopView?.PopItem.OverrideBackBtnCallBack(() => {}), this.SHe();
   }
   OnAfterShow() {
     this.UiViewSequence.PlaySequencePurely("Show");
   }
   OnEnded() {
-    this.FBi &&
-      (ResourceSystem_1.ResourceSystem.CancelAsyncLoad(this.FBi),
-      (this.FBi = void 0)),
-      (this.VBi = void 0);
+    this.Fbi &&
+      (ResourceSystem_1.ResourceSystem.CancelAsyncLoad(this.Fbi),
+      (this.Fbi = void 0)),
+      (this.Vbi = void 0);
   }
-  ibi() {
+  iqi() {
     (this.ComponentRegisterInfos = [
       [0, UE.UIButtonComponent],
       [1, UE.UIButtonComponent],
@@ -135,17 +135,17 @@ class MingSuView extends CollectItemViewBase_1.CollectItemViewBase {
       [13, UE.UIButtonComponent],
     ]),
       (this.BtnBindInfo = [
-        [0, this.zBi],
-        [1, this.ZBi],
-        [8, this.ebi],
-        [12, this.tbi],
-        [13, this.ACt],
+        [0, this.zbi],
+        [1, this.Zbi],
+        [8, this.eqi],
+        [12, this.tqi],
+        [13, this.Vgt],
       ]);
   }
-  h7e() {
-    (this.VBi = this.GetSprite(2)), this.pO();
+  SHe() {
+    (this.Vbi = this.GetSprite(2)), this.pO();
   }
-  obi(e) {
+  oqi(e) {
     var t = this.GetText(3),
       i =
         ModelManager_1.ModelManager.MingSuModel.GetTargetDragonPoolMaxLevelById(
@@ -158,7 +158,7 @@ class MingSuView extends CollectItemViewBase_1.CollectItemViewBase {
       (ModelManager_1.ModelManager.MingSuModel.CurrentPreviewLevel =
         this.CurrentShowLevel);
   }
-  rbi() {
+  rqi() {
     var e = this.GetButton(0),
       t = this.GetButton(1);
     (1 === this.CurrentShowLevel
@@ -172,7 +172,7 @@ class MingSuView extends CollectItemViewBase_1.CollectItemViewBase {
         e)
     ).SetSelfInteractive(!0);
   }
-  nbi() {
+  nqi() {
     var i = ModelManager_1.ModelManager.MingSuModel,
       s = i.GetTargetDragonPoolLevelById(this.PoolConfigId),
       h = i.GetTargetDragonPoolMaxLevelById(this.PoolConfigId),
@@ -182,9 +182,9 @@ class MingSuView extends CollectItemViewBase_1.CollectItemViewBase {
       (this.CurrentShowLevel === s && this.CurrentShowLevel === h)
     ) {
       let e = s;
-      (this.kBi = 1),
+      (this.kbi = 1),
         2 === i.GetTargetDragonPoolActiveById(this.PoolConfigId) &&
-          (this.kBi = 0),
+          (this.kbi = 0),
         s === h && --e;
       var h = i.GetTargetDragonPoolLevelNeedCoreById(this.PoolConfigId, e);
       let t = 0;
@@ -192,24 +192,24 @@ class MingSuView extends CollectItemViewBase_1.CollectItemViewBase {
         n =
           (t = n ? h : i.GetTargetDragonPoolCoreCountById(this.PoolConfigId)) /
           h;
-      this.VBi.SetFillAmount(n), r.SetText(t + "/" + h);
+      this.Vbi.SetFillAmount(n), r.SetText(t + "/" + h);
     } else
       this.CurrentShowLevel <= s
-        ? ((this.kBi = 0),
+        ? ((this.kbi = 0),
           (n = i.GetTargetDragonPoolLevelNeedCoreById(
             this.PoolConfigId,
             this.CurrentShowLevel - 1,
           )),
           r.SetText(n + "/" + n),
-          this.VBi.SetFillAmount(1))
+          this.Vbi.SetFillAmount(1))
         : this.CurrentShowLevel > s + 1 &&
-          ((this.kBi = 2),
+          ((this.kbi = 2),
           (h = i.GetTargetDragonPoolLevelNeedCoreById(
             this.PoolConfigId,
             this.CurrentShowLevel - 1,
           )),
           r.SetText("0/" + h),
-          this.VBi.SetFillAmount(0));
+          this.Vbi.SetFillAmount(0));
   }
   jqe() {
     var e =
@@ -218,32 +218,32 @@ class MingSuView extends CollectItemViewBase_1.CollectItemViewBase {
           this.CurrentShowLevel - 1,
         ),
       t = this.GetScrollViewWithScrollbar(5);
-    this.NBi ||
-      (this.NBi = new GenericLayout_1.GenericLayout(
+    this.Nbi ||
+      (this.Nbi = new GenericLayout_1.GenericLayout(
         t.GetContent().GetComponentByClass(UE.UILayoutBase.StaticClass()),
-        this.mkt,
+        this.d2t,
       )),
-      this.NBi.RefreshByData(e);
+      this.Nbi.RefreshByData(e);
   }
-  sbi() {
+  sqi() {
     var e = this.GetText(7);
     2 ===
       ModelManager_1.ModelManager.MingSuModel.GetTargetDragonPoolActiveById(
         this.PoolConfigId,
-      ) && (this.kBi = 3),
-      1 === this.kBi
+      ) && (this.kbi = 3),
+      1 === this.kbi
         ? e.SetUIActive(!1)
-        : 0 === this.kBi
+        : 0 === this.kbi
           ? (LguiUtil_1.LguiUtil.SetLocalTextNew(e, "MingSuDoneTips"),
             e.SetUIActive(!0))
-          : 2 === this.kBi
+          : 2 === this.kbi
             ? (LguiUtil_1.LguiUtil.SetLocalTextNew(e, "MingSuNotDoneTips"),
               e.SetUIActive(!0))
-            : 3 === this.kBi &&
+            : 3 === this.kbi &&
               (LguiUtil_1.LguiUtil.SetLocalTextNew(e, "MingSuDoneTips"),
               e.SetUIActive(!0));
   }
-  abi() {
+  aqi() {
     var e = this.GetText(9),
       t =
         2 ===
@@ -260,13 +260,13 @@ class MingSuView extends CollectItemViewBase_1.CollectItemViewBase {
           ? LguiUtil_1.LguiUtil.SetLocalText(e, "MingSuTi_Text3")
           : LguiUtil_1.LguiUtil.SetLocalText(e, "MingSuTi_Text4"));
   }
-  JBi() {
+  Jbi() {
     var e = ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
       MingSuDefine_1.MING_SU_ITEM_CONFIG_ID,
     );
     this.GetText(11).SetText(e.toString());
   }
-  $Bi() {
+  $bi() {
     var e =
         ModelManager_1.ModelManager.MingSuModel.GetTargetDragonPoolMaxLevelById(
           this.PoolConfigId,
@@ -277,16 +277,16 @@ class MingSuView extends CollectItemViewBase_1.CollectItemViewBase {
     (this.CurrentShowLevel = t === e ? t : t + 1), this.pO();
   }
   pO() {
-    this.obi(this.CurrentShowLevel),
-      this.rbi(),
-      this.nbi(),
+    this.oqi(this.CurrentShowLevel),
+      this.rqi(),
+      this.nqi(),
       this.jqe(),
-      this.sbi(),
-      this.abi(),
-      this.JBi();
+      this.sqi(),
+      this.aqi(),
+      this.Jbi();
   }
   OnUpdateDragonPoolView() {
-    this.$Bi();
+    this.$bi();
   }
   OnSubmitItemLevelUp() {
     this.SetActive(!1),
@@ -303,7 +303,7 @@ class MingSuView extends CollectItemViewBase_1.CollectItemViewBase {
       );
   }
   OnSubmitItemLevelUpSequencePlayFail() {
-    (this.KBi = !1),
+    (this.Kbi = !1),
       this.SetActive(!0),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.HangPlotViewHud,
@@ -311,11 +311,11 @@ class MingSuView extends CollectItemViewBase_1.CollectItemViewBase {
       );
   }
   OnCollectItemCountChanged(e) {
-    this.JBi();
+    this.Jbi();
   }
   OnCloseRewardView() {
     this.SetActive(!0),
-      (this.KBi = !1),
+      (this.Kbi = !1),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.HangPlotViewHud,
         !1,

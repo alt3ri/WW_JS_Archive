@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiViewInfo = void 0);
-const ConfigManager_1 = require("../../Manager/ConfigManager"),
-  ModelManager_1 = require("../../Manager/ModelManager");
+const Info_1 = require("../../../Core/Common/Info"),
+  ConfigManager_1 = require("../../Manager/ConfigManager");
 class UiViewInfo {
   constructor(
     e,
@@ -14,21 +14,21 @@ class UiViewInfo {
     h,
     n,
     R,
-    l,
     w,
     V,
+    l,
     r,
     c,
-    M,
-    g,
     u,
     p,
     f,
+    g,
+    I,
+    M,
     S,
     v,
-    W,
-    _,
-    d = "",
+    C,
+    W = "",
   ) {
     (this.Name = e),
       (this.Type = i),
@@ -39,35 +39,33 @@ class UiViewInfo {
       (this.AudioEvent = h),
       (this.OpenAudioEvent = n),
       (this.CloseAudioEvent = R),
-      (this.TimeDilation = l),
-      (this.ShowCursorType = w),
-      (this.CanOpenViewByShortcutKey = V),
+      (this.TimeDilation = w),
+      (this.ShowCursorType = V),
+      (this.CanOpenViewByShortcutKey = l),
       (this.IsShortKeysExitView = r),
       (this.SourceType = c),
-      (this.LoadAsync = M),
-      (this.NeedGc = g),
-      (this.IsFullScreen = u),
-      (this.SortIndex = p),
-      (this.CommonPopBg = f),
-      (this.CommonPopBgKey = S),
-      (this.ScenePathInternal = v),
-      (this.IsPermanent = W),
-      (this.SkipAnimActions = _),
-      (this.ScenePointTag = d);
+      (this.LoadAsync = u),
+      (this.NeedGc = p),
+      (this.IsFullScreen = f),
+      (this.SortIndex = g),
+      (this.CommonPopBg = I),
+      (this.CommonPopBgKey = M),
+      (this.ScenePathInternal = S),
+      (this.IsPermanent = v),
+      (this.SkipAnimActions = C),
+      (this.ScenePointTag = W);
   }
   get UiPath() {
-    return !ModelManager_1.ModelManager.PlatformModel?.IsMobile() && this.PcPath
-      ? this.PcPath
-      : this.Path;
+    return !Info_1.Info.IsInTouch() && this.PcPath ? this.PcPath : this.Path;
   }
   get ScenePath() {
-    var e = UiViewInfo.icr.get(this.Name);
+    var e = UiViewInfo.Zcr.get(this.Name);
     return e
       ? ConfigManager_1.ConfigManager.UiViewConfig.GetUiShowConfig(e).ScenePath
       : this.ScenePathInternal;
   }
 }
-(exports.UiViewInfo = UiViewInfo).icr = new Map([
+(exports.UiViewInfo = UiViewInfo).Zcr = new Map([
   ["RoleBreachView", "RoleRootView"],
   ["RoleSkillView", "RoleRootView"],
   ["RoleBreachSuccessView", "RoleRootView"],

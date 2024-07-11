@@ -13,40 +13,40 @@ class TabComponent extends UiPanelBase_1.UiPanelBase {
       (this.ToggleCallBack = i),
       (this.eGe = void 0),
       (this.NOe = CommonDefine_1.INVALID_VALUE),
-      (this.wBt = void 0),
-      (this.gRt = void 0),
-      (this.Z3e = () => {
+      (this.qbt = void 0),
+      (this.MUt = void 0),
+      (this.C5e = () => {
         var e = this.ProxyCreate(void 0, void 0);
         return (
           e.InitTabItem(),
-          e.SetSelectedCallBack(this.cLt),
-          e.SetCanExecuteChange(this.T7e),
+          e.SetSelectedCallBack(this.gDt),
+          e.SetCanExecuteChange(this.Lke),
           e
         );
       }),
-      (this.cLt = (e) => {
-        this.xBt(), (this.NOe = e), this.ToggleCallBack(e);
+      (this.gDt = (e) => {
+        this.bbt(), (this.NOe = e), this.ToggleCallBack(e);
       }),
-      (this.T7e = (e, t) =>
-        !(this.NOe === e && !t) && (!this.gRt || this.gRt(e))),
+      (this.Lke = (e, t) =>
+        !(this.NOe === e && !t) && (!this.MUt || this.MUt(e))),
       this.CreateThenShowByActor(e.GetOwner()),
-      (this.wBt = s);
+      (this.qbt = s);
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [[0, UE.UILayoutBase]];
   }
   OnStart() {
-    var e = this.wBt ? this.wBt.GetOwner() : void 0;
+    var e = this.qbt ? this.qbt.GetOwner() : void 0;
     this.eGe = new GenericLayout_1.GenericLayout(
       this.GetLayoutBase(0),
-      this.Z3e,
+      this.C5e,
       e,
     );
   }
   OnBeforeDestroy() {
-    this.wBt = void 0;
+    this.qbt = void 0;
   }
-  xBt() {
+  bbt() {
     var e;
     this.NOe !== CommonDefine_1.INVALID_VALUE &&
       (e = this.eGe.GetLayoutItemByKey(this.NOe)) &&
@@ -85,11 +85,11 @@ class TabComponent extends UiPanelBase_1.UiPanelBase {
     var e = this.eGe.GetLayoutItemByKey(this.NOe);
     e && e.SetForceSwitch(0);
   }
-  SelectToggleByIndex(e, t = !1) {
+  SelectToggleByIndex(e, t = !1, i = !0) {
     t && (this.ResetLastSelectTab(), (this.NOe = CommonDefine_1.INVALID_VALUE)),
       e !== this.NOe &&
         (t = this.eGe.GetLayoutItemByKey(e)) &&
-        t.SetForceSwitch(1, !0);
+        t.SetForceSwitch(1, i);
   }
   GetSelectedIndex() {
     return this.NOe;
@@ -104,7 +104,7 @@ class TabComponent extends UiPanelBase_1.UiPanelBase {
     return this.eGe;
   }
   SetCanChange(e) {
-    this.gRt = e;
+    this.MUt = e;
   }
 }
 exports.TabComponent = TabComponent;

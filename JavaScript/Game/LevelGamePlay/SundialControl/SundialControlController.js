@@ -149,21 +149,21 @@ class SundialControlController extends UiControllerBase_1.UiControllerBase {
             t.SequencePlayer.SetPlayRate(1),
             t.SequencePlayer.OnFinished.Add(() => {
               TimerSystem_1.TimerSystem.Delay(() => {
-                SundialControlController.SDe(),
+                SundialControlController.EDe(),
                   ActorSystem_1.ActorSystem.Put(t);
               }, 500);
             }),
             t.SequencePlayer.Play())
-          : SundialControlController.SDe();
+          : SundialControlController.EDe();
       },
     );
   }
-  static SDe(e = "MainQuest") {
-    var t = Protocol_1.Aki.Protocol.UKn.create();
-    (t.ykn = e),
-      (t.Ikn = Protocol_1.Aki.Protocol.dqs.Proto_SundialPuzzle),
-      Net_1.Net.Call(19172, t, (e) => {
-        e.uvs === Protocol_1.Aki.Protocol.lkn.Sys &&
+  static EDe(e = "MainQuest") {
+    var t = Protocol_1.Aki.Protocol.TJn.create();
+    (t.z4n = e),
+      (t.Z4n = Protocol_1.Aki.Protocol.t3s.Proto_SundialPuzzle),
+      Net_1.Net.Call(5703, t, (e) => {
+        e.DEs === Protocol_1.Aki.Protocol.O4n.NRs &&
           UiManager_1.UiManager.CloseView("SundialControlView");
       });
   }

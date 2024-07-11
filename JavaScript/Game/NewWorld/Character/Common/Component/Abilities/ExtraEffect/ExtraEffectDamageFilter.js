@@ -16,8 +16,8 @@ class DamageFilter extends ExtraEffectBase_1.BuffEffect {
     return !this.lNe;
   }
   static ApplyEffects(e, t, r, a, s, f) {
-    var i = e.GetComponent(157),
-      t = t.GetComponent(157);
+    var i = e.GetComponent(159),
+      t = t.GetComponent(159);
     if (i && t) {
       var c = e.GetComponent(33),
         o = new ExtraEffectBaseTypes_1.RequirementPayload(),
@@ -35,7 +35,7 @@ class DamageFilter extends ExtraEffectBase_1.BuffEffect {
         (o.BulletId = BigInt(r)),
         (o.BulletTags = a ?? []),
         (o.WeaponType =
-          e.GetComponent(83)?.GetWeaponType() ??
+          e.GetComponent(85)?.GetWeaponType() ??
           ExtraEffectBaseTypes_1.DEFAULT_WEAPON_TYPE_NOT_PASS);
       for (const E of t.BuffEffectManager.FilterById(22))
         if (E.Check(o, i) === E.Execute()) return !0;

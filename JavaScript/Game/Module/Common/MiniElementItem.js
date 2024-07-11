@@ -7,7 +7,7 @@ const UE = require("ue"),
 class MiniElementItem extends UiPanelBase_1.UiPanelBase {
   constructor(e, i, t) {
     super(),
-      (this.Vyt = e),
+      (this.ZIt = e),
       !t && i
         ? this.CreateThenShowByResourceIdAsync(
             "UiItem_MiniElement_Prefab",
@@ -23,7 +23,7 @@ class MiniElementItem extends UiPanelBase_1.UiPanelBase {
     ];
   }
   OnStart() {
-    this.RefreshMiniElement(this.Vyt);
+    this.RefreshMiniElement(this.ZIt);
   }
   RefreshMiniElement(e) {
     var i,

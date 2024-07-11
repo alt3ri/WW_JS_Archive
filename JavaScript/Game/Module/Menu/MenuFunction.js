@@ -6,6 +6,8 @@ const UE = require("ue"),
   Log_1 = require("../../../Core/Common/Log"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
+  LocalStorage_1 = require("../../Common/LocalStorage"),
+  LocalStorageDefine_1 = require("../../Common/LocalStorageDefine"),
   GameQualitySettingsManager_1 = require("../../GameQualitySettings/GameQualitySettingsManager"),
   GlobalData_1 = require("../../GlobalData"),
   KuroPushController_1 = require("../../KuroPushSdk/KuroPushController"),
@@ -23,15 +25,15 @@ const UE = require("ue"),
   ]);
 class MenuFunction {
   static SetImageQuality(e) {
-    var n,
-      t = GameQualitySettingsManager_1.GameQualitySettingsManager.Get(),
-      a = MenuController_1.MenuController.GetTargetMenuData(e);
-    a
-      ? ((n = MenuController_1.MenuController.GetTargetConfig(e)),
-        (a = a.MenuDataOptionsValueList[n]),
-        (n = t.GetQualityInfoByType(a)),
+    var t,
+      a = GameQualitySettingsManager_1.GameQualitySettingsManager.Get(),
+      n = MenuController_1.MenuController.GetTargetMenuData(e);
+    n
+      ? ((t = MenuController_1.MenuController.GetTargetConfig(e)),
+        (n = n.MenuDataOptionsValueList[t]),
+        (t = a.GetQualityInfoByType(n)),
         Log_1.Log.CheckInfo() && Log_1.Log.Info("Render", 8, "SetImageQuality"),
-        t.ApplyQualityInfoToCurrentQualityInfo(n),
+        a.ApplyQualityInfoToCurrentQualityInfo(t),
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.SetImageQuality,
         ))
@@ -44,114 +46,107 @@ class MenuFunction {
         );
   }
   static SetHighFps(e) {
-    var n = GameQualitySettingsManager_1.GameQualitySettingsManager.Get(),
+    var t = GameQualitySettingsManager_1.GameQualitySettingsManager.Get(),
       e = MenuController_1.MenuController.GetTargetConfig(e),
-      t = n.GetCurrentQualityInfo(),
-      e = n.GetFrameByList(e);
-    t.SetFrameRate(e),
-      t.ApplyFrameRate(),
+      a = t.GetCurrentQualityInfo(),
+      t = t.GetFrameByList(e);
+    a.SetFrameRate(t),
+      a.ApplyFrameRate(),
       Log_1.Log.CheckInfo() && Log_1.Log.Info("Render", 8, "SetHighFps"),
-      n.SaveCurrentQualityInfoToQualityData();
+      a.SaveByKey(LocalStorageDefine_1.ELocalStorageGlobalKey.CustomFrameRate);
   }
-  static SetShadowQuality(e) {
-    var n = GameQualitySettingsManager_1.GameQualitySettingsManager.Get(),
-      e = MenuController_1.MenuController.GetTargetConfig(e),
-      t = n.GetCurrentQualityInfo();
-    t.SetShadowQuality(e),
-      t.ApplyShadowQuality(),
+  static SetShadowQuality(e, t) {
+    var a =
+      GameQualitySettingsManager_1.GameQualitySettingsManager.Get().GetCurrentQualityInfo();
+    a.SetShadowQuality(t),
+      a.ApplyShadowQuality(),
       Log_1.Log.CheckInfo() && Log_1.Log.Info("Render", 8, "SetShadowQuality"),
-      n.SaveCurrentQualityInfoToQualityData();
+      a.SaveByKey(LocalStorageDefine_1.ELocalStorageGlobalKey.ShadowQuality);
   }
-  static SetNiagaraQuality(e) {
-    var n = GameQualitySettingsManager_1.GameQualitySettingsManager.Get(),
-      e = MenuController_1.MenuController.GetTargetConfig(e),
-      t = n.GetCurrentQualityInfo();
-    t.SetNiagaraQuality(e),
-      t.ApplyNiagaraQuality(),
-      n.SaveCurrentQualityInfoToQualityData();
+  static SetNiagaraQuality(e, t) {
+    var a =
+      GameQualitySettingsManager_1.GameQualitySettingsManager.Get().GetCurrentQualityInfo();
+    a.SetNiagaraQuality(t),
+      a.ApplyNiagaraQuality(),
+      a.SaveByKey(LocalStorageDefine_1.ELocalStorageGlobalKey.NiagaraQuality);
   }
-  static SetImageDetail(e) {
-    var n = GameQualitySettingsManager_1.GameQualitySettingsManager.Get(),
-      e = MenuController_1.MenuController.GetTargetConfig(e),
-      t = n.GetCurrentQualityInfo();
-    t.SetImageDetail(e),
-      t.ApplyImageDetail(),
-      n.SaveCurrentQualityInfoToQualityData();
+  static SetImageDetail(e, t) {
+    var a =
+      GameQualitySettingsManager_1.GameQualitySettingsManager.Get().GetCurrentQualityInfo();
+    a.SetImageDetail(t),
+      a.ApplyImageDetail(),
+      a.SaveByKey(LocalStorageDefine_1.ELocalStorageGlobalKey.ImageDetail);
   }
-  static SetAntiAliasing(e) {
-    var n = GameQualitySettingsManager_1.GameQualitySettingsManager.Get(),
-      e = MenuController_1.MenuController.GetTargetConfig(e),
-      t = n.GetCurrentQualityInfo();
-    t.SetAntiAliasing(e),
-      t.ApplyAntiAliasing(),
-      n.SaveCurrentQualityInfoToQualityData();
+  static SetAntiAliasing(e, t) {
+    var a =
+      GameQualitySettingsManager_1.GameQualitySettingsManager.Get().GetCurrentQualityInfo();
+    a.SetAntiAliasing(t),
+      a.ApplyAntiAliasing(),
+      a.SaveByKey(LocalStorageDefine_1.ELocalStorageGlobalKey.AntiAliasing);
   }
-  static SetSceneAo(e) {
-    var n = GameQualitySettingsManager_1.GameQualitySettingsManager.Get(),
-      e = MenuController_1.MenuController.GetTargetConfig(e),
-      t = n.GetCurrentQualityInfo();
-    t.SetSceneAo(e), t.ApplySceneAo(), n.SaveCurrentQualityInfoToQualityData();
+  static SetSceneAo(e, t) {
+    var a =
+      GameQualitySettingsManager_1.GameQualitySettingsManager.Get().GetCurrentQualityInfo();
+    a.SetSceneAo(t),
+      a.ApplySceneAo(),
+      a.SaveByKey(LocalStorageDefine_1.ELocalStorageGlobalKey.SceneAo);
   }
-  static SetVolumeFog(e) {
-    var n = GameQualitySettingsManager_1.GameQualitySettingsManager.Get(),
-      e = MenuController_1.MenuController.GetTargetConfig(e),
-      t = n.GetCurrentQualityInfo();
-    t.SetVolumeFog(e),
-      t.ApplyVolumeFog(),
-      n.SaveCurrentQualityInfoToQualityData();
+  static SetVolumeFog(e, t) {
+    var a =
+      GameQualitySettingsManager_1.GameQualitySettingsManager.Get().GetCurrentQualityInfo();
+    a.SetVolumeFog(t),
+      a.ApplyVolumeFog(),
+      a.SaveByKey(LocalStorageDefine_1.ELocalStorageGlobalKey.VolumeFog);
   }
-  static SetVolumeLight(e) {
-    var n = GameQualitySettingsManager_1.GameQualitySettingsManager.Get(),
-      e = MenuController_1.MenuController.GetTargetConfig(e),
-      t = n.GetCurrentQualityInfo();
-    t.SetVolumeLight(e),
-      t.ApplyVolumeLight(),
-      n.SaveCurrentQualityInfoToQualityData();
+  static SetVolumeLight(e, t) {
+    var a =
+      GameQualitySettingsManager_1.GameQualitySettingsManager.Get().GetCurrentQualityInfo();
+    a.SetVolumeLight(t),
+      a.ApplyVolumeLight(),
+      a.SaveByKey(LocalStorageDefine_1.ELocalStorageGlobalKey.VolumeLight);
   }
-  static SetMotionBlur(e) {
-    var n = GameQualitySettingsManager_1.GameQualitySettingsManager.Get(),
-      e = MenuController_1.MenuController.GetTargetConfig(e),
-      t = n.GetCurrentQualityInfo();
-    t.SetMotionBlur(e),
-      t.ApplyMotionBlur(),
-      n.SaveCurrentQualityInfoToQualityData();
+  static SetMotionBlur(e, t) {
+    var a =
+      GameQualitySettingsManager_1.GameQualitySettingsManager.Get().GetCurrentQualityInfo();
+    a.SetMotionBlur(t),
+      a.ApplyMotionBlur(),
+      a.SaveByKey(LocalStorageDefine_1.ELocalStorageGlobalKey.MotionBlur);
   }
-  static SetPcVsync(e) {
-    var n = GameQualitySettingsManager_1.GameQualitySettingsManager.Get(),
-      e = MenuController_1.MenuController.GetTargetConfig(e),
-      t = n.GetCurrentQualityInfo();
-    t.SetPcVsync(e), t.ApplyPcVsync(), n.SaveCurrentQualityInfoToQualityData();
+  static SetPcVsync(e, t) {
+    var a =
+      GameQualitySettingsManager_1.GameQualitySettingsManager.Get().GetCurrentQualityInfo();
+    a.SetPcVsync(t),
+      a.ApplyPcVsync(),
+      a.SaveByKey(LocalStorageDefine_1.ELocalStorageGlobalKey.PcVsync);
   }
-  static SetMobileResolution(e) {
-    var n = GameQualitySettingsManager_1.GameQualitySettingsManager.Get(),
-      e = MenuController_1.MenuController.GetTargetConfig(e),
-      t = n.GetCurrentQualityInfo();
-    t.SetMobileResolution(e),
-      t.ApplyMobileResolution(),
-      n.SaveCurrentQualityInfoToQualityData(),
+  static SetMobileResolution(e, t) {
+    var a =
+      GameQualitySettingsManager_1.GameQualitySettingsManager.Get().GetCurrentQualityInfo();
+    a.SetMobileResolution(t),
+      a.ApplyMobileResolution(),
+      a.SaveByKey(LocalStorageDefine_1.ELocalStorageGlobalKey.MobileResolution),
       EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.SetResolution);
   }
-  static SetSuperResolution(e) {
-    var n = GameQualitySettingsManager_1.GameQualitySettingsManager.Get(),
-      e = MenuController_1.MenuController.GetTargetConfig(e),
-      t = n.GetCurrentQualityInfo();
-    t.SetSuperResolution(e),
-      t.ApplySuperResolution(),
-      n.SaveCurrentQualityInfoToQualityData();
+  static SetSuperResolution(e, t) {
+    var a =
+      GameQualitySettingsManager_1.GameQualitySettingsManager.Get().GetCurrentQualityInfo();
+    a.SetSuperResolution(t),
+      a.ApplySuperResolution(),
+      a.SaveByKey(LocalStorageDefine_1.ELocalStorageGlobalKey.SuperResolution);
   }
   static SetTextLanguage(e) {
-    var n,
+    var t,
       e = MenuController_1.MenuController.GetTargetConfig(e),
       e = MenuTool_1.MenuTool.GetLanguageCodeById(e);
     e &&
-      ((n = LanguageSystem_1.LanguageSystem.PackageLanguage),
+      ((t = LanguageSystem_1.LanguageSystem.PackageLanguage),
       (LanguageSystem_1.LanguageSystem.PackageLanguage = e),
       ControllerHolder_1.ControllerHolder.KuroSdkController.PostKuroSdkEvent(
         16,
       ),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.TextLanguageChange,
-        n,
+        t,
         e,
       ));
   }
@@ -164,74 +159,74 @@ class MenuFunction {
         GlobalData_1.GlobalData.World,
       );
   }
-  static SetDisplayMode(e) {
-    var n = GameQualitySettingsManager_1.GameQualitySettingsManager.Get(),
-      e = MenuController_1.MenuController.GetTargetConfig(e),
-      t = n.GetCurrentQualityInfo(),
-      e = n.GetFullScreenModeByList(e);
-    t.SetPcFullScreenMode(e),
-      t.ApplyFullscreenMode(),
-      2 === e &&
-        (MenuController_1.MenuController.ApplyTargetConfig(6, 2),
-        EventSystem_1.EventSystem.Emit(
-          EventDefine_1.EEventName.ChangeConfigValue,
-          MenuDefine_1.EImageConfig.RESOLUTION,
-          2,
-        )),
-      n.SaveCurrentQualityInfoToQualityData(),
+  static SetDisplayMode(e, t) {
+    var a = GameQualitySettingsManager_1.GameQualitySettingsManager.Get(),
+      n = a.GetCurrentQualityInfo(),
+      a = a.GetFullScreenModeByList(t);
+    n.SetPcFullScreenMode(a),
+      n.ApplyFullscreenMode(),
+      n.SaveByKey(LocalStorageDefine_1.ELocalStorageGlobalKey.PcWindowMode),
       EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.SetDisplayMode);
   }
   static SetResolution(e) {
-    var n = GameQualitySettingsManager_1.GameQualitySettingsManager.Get(),
+    var t = GameQualitySettingsManager_1.GameQualitySettingsManager.Get(),
       e = MenuController_1.MenuController.GetTargetConfig(e),
-      t = n.GetCurrentQualityInfo(),
-      e = n.GetResolutionByList(e);
-    t.SetResolution(e),
-      t.ApplyScreenResolution(),
-      n.SaveCurrentQualityInfoToQualityData(),
+      a = t.GetCurrentQualityInfo(),
+      t = t.GetResolutionByList(e);
+    a.SetResolution(t),
+      a.ApplyScreenResolution(),
+      a.SaveByKey(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.PcResolutionWidth,
+      ),
+      a.SaveByKey(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.PcResolutionHeight,
+      ),
       EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.SetResolution);
   }
-  static SetBrightness(e) {
-    var n = GameQualitySettingsManager_1.GameQualitySettingsManager.Get(),
-      e = MenuController_1.MenuController.GetTargetConfig(e),
-      t = n.GetCurrentQualityInfo();
-    t.SetBrightness(e),
-      t.ApplyBrightness(),
-      n.SaveCurrentQualityInfoToQualityData();
+  static SetBrightness(e, t) {
+    var a =
+      GameQualitySettingsManager_1.GameQualitySettingsManager.Get().GetCurrentQualityInfo();
+    a.SetBrightness(t),
+      a.ApplyBrightness(),
+      a.SaveByKey(LocalStorageDefine_1.ELocalStorageGlobalKey.Brightness);
   }
-  static SetNpcDensity(e) {
-    var n = GameQualitySettingsManager_1.GameQualitySettingsManager.Get(),
-      e = MenuController_1.MenuController.GetTargetConfig(e),
-      t = n.GetCurrentQualityInfo();
-    t.SetNpcDensity(e),
-      t.ApplyNpcDensity(),
-      n.SaveCurrentQualityInfoToQualityData();
+  static SetNpcDensity(e, t) {
+    var a =
+      GameQualitySettingsManager_1.GameQualitySettingsManager.Get().GetCurrentQualityInfo();
+    a.SetNpcDensity(t),
+      a.ApplyNpcDensity(),
+      a.SaveByKey(LocalStorageDefine_1.ELocalStorageGlobalKey.NpcDensity);
   }
-  static SetNvidiaSuperSamplingEnable(e) {
-    var n = GameQualitySettingsManager_1.GameQualitySettingsManager.Get(),
-      e = MenuController_1.MenuController.GetTargetConfig(e),
-      t = n.GetCurrentQualityInfo();
-    t.SetNvidiaSuperSamplingEnable(e),
-      t.ApplyNvidiaSuperSamplingEnable(),
-      n.SaveCurrentQualityInfoToQualityData();
+  static SetNvidiaSuperSamplingEnable(e, t) {
+    var a =
+      GameQualitySettingsManager_1.GameQualitySettingsManager.Get().GetCurrentQualityInfo();
+    a.SetNvidiaSuperSamplingEnable(t),
+      a.ApplyNvidiaSuperSamplingEnable(),
+      a.SaveByKey(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.NvidiaSuperSamplingEnable,
+      );
   }
-  static SetNvidiaSuperSamplingFrameGenerate(e) {
-    var n = GameQualitySettingsManager_1.GameQualitySettingsManager.Get(),
-      e = MenuController_1.MenuController.GetTargetConfig(e),
-      t = n.GetCurrentQualityInfo();
-    t.SetNvidiaSuperSamplingFrameGenerate(e),
-      t.ApplyNvidiaSuperSamplingFrameGenerate(),
-      n.SaveCurrentQualityInfoToQualityData();
+  static SetNvidiaSuperSamplingFrameGenerate(e, t) {
+    var a =
+      GameQualitySettingsManager_1.GameQualitySettingsManager.Get().GetCurrentQualityInfo();
+    a.SetNvidiaSuperSamplingFrameGenerate(t),
+      a.ApplyNvidiaSuperSamplingFrameGenerate(),
+      a.SaveByKey(
+        LocalStorageDefine_1.ELocalStorageGlobalKey
+          .NvidiaSuperSamplingFrameGenerate,
+      );
   }
   static SetNvidiaSuperSamplingMode(e) {
-    var n,
-      t = GameQualitySettingsManager_1.GameQualitySettingsManager.Get(),
-      a = MenuController_1.MenuController.GetTargetMenuData(e);
-    a
-      ? ((n = MenuController_1.MenuController.GetTargetConfig(e)),
-        (a = a.MenuDataOptionsValueList[n]),
-        t.GetCurrentQualityInfo().SetNvidiaSuperSamplingMode(a),
-        t.SaveCurrentQualityInfoToQualityData())
+    var t,
+      a = GameQualitySettingsManager_1.GameQualitySettingsManager.Get(),
+      n = MenuController_1.MenuController.GetTargetMenuData(e);
+    n
+      ? ((t = MenuController_1.MenuController.GetTargetConfig(e)),
+        (n = n.MenuDataOptionsValueList[t]),
+        (t = a.GetCurrentQualityInfo()).SetNvidiaSuperSamplingMode(n),
+        t.SaveByKey(
+          LocalStorageDefine_1.ELocalStorageGlobalKey.NvidiaSuperSamplingMode,
+        ))
       : Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn(
           "Menu",
@@ -245,24 +240,26 @@ class MenuFunction {
       .GetCurrentQualityInfo()
       .ApplyNvidiaSuperSamplingMode();
   }
-  static SetNvidiaSuperSamplingSharpness(e) {
-    var n = GameQualitySettingsManager_1.GameQualitySettingsManager.Get(),
-      e = MenuController_1.MenuController.GetTargetConfig(e),
-      t = n.GetCurrentQualityInfo();
-    t.SetNvidiaSuperSamplingSharpness(e),
-      t.ApplyNvidiaSuperSamplingSharpness(),
-      n.SaveCurrentQualityInfoToQualityData();
+  static SetNvidiaSuperSamplingSharpness(e, t) {
+    var a =
+      GameQualitySettingsManager_1.GameQualitySettingsManager.Get().GetCurrentQualityInfo();
+    a.SetNvidiaSuperSamplingSharpness(t),
+      a.ApplyNvidiaSuperSamplingSharpness(),
+      a.SaveByKey(
+        LocalStorageDefine_1.ELocalStorageGlobalKey
+          .NvidiaSuperSamplingSharpness,
+      );
   }
   static SetNvidiaReflex(e) {
-    var n,
-      t = GameQualitySettingsManager_1.GameQualitySettingsManager.Get(),
-      a = MenuController_1.MenuController.GetTargetMenuData(e);
-    a
-      ? ((n = MenuController_1.MenuController.GetTargetConfig(e)),
-        (a = a.MenuDataOptionsValueList[n]),
-        (n = t.GetCurrentQualityInfo()).SetNvidiaReflex(a),
-        n.ApplyNvidiaReflex(),
-        t.SaveCurrentQualityInfoToQualityData())
+    var t,
+      a = GameQualitySettingsManager_1.GameQualitySettingsManager.Get(),
+      n = MenuController_1.MenuController.GetTargetMenuData(e);
+    n
+      ? ((t = MenuController_1.MenuController.GetTargetConfig(e)),
+        (n = n.MenuDataOptionsValueList[t]),
+        (t = a.GetCurrentQualityInfo()).SetNvidiaReflex(n),
+        t.ApplyNvidiaReflex(),
+        t.SaveByKey(LocalStorageDefine_1.ELocalStorageGlobalKey.NvidiaReflex))
       : Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn(
           "Menu",
@@ -271,268 +268,330 @@ class MenuFunction {
           ["functionId", e],
         );
   }
-  static SetFsrEnable(e) {
-    var n = GameQualitySettingsManager_1.GameQualitySettingsManager.Get(),
-      e = MenuController_1.MenuController.GetTargetConfig(e),
-      t = n.GetCurrentQualityInfo();
-    t.SetFsrEnable(e),
-      t.ApplyFsrEnable(),
-      n.SaveCurrentQualityInfoToQualityData();
+  static SetFsrEnable(e, t) {
+    var a =
+      GameQualitySettingsManager_1.GameQualitySettingsManager.Get().GetCurrentQualityInfo();
+    a.SetFsrEnable(t),
+      a.ApplyFsrEnable(),
+      a.SaveByKey(LocalStorageDefine_1.ELocalStorageGlobalKey.FsrEnable);
   }
   static SetXessEnable(e) {
-    var n = GameQualitySettingsManager_1.GameQualitySettingsManager.Get(),
+    var t = GameQualitySettingsManager_1.GameQualitySettingsManager.Get(),
       e = MenuController_1.MenuController.GetTargetConfig(e),
-      t = n.GetCurrentQualityInfo();
+      t = t.GetCurrentQualityInfo();
     t.SetXessEnable(e),
       t.ApplyXessEnable(),
-      n.SaveCurrentQualityInfoToQualityData();
+      t.SaveByKey(LocalStorageDefine_1.ELocalStorageGlobalKey.XessEnable);
   }
   static SetXessQuality(e) {
-    var n = GameQualitySettingsManager_1.GameQualitySettingsManager.Get(),
+    var t = GameQualitySettingsManager_1.GameQualitySettingsManager.Get(),
       e = MenuController_1.MenuController.GetTargetConfig(e),
-      t = n.GetCurrentQualityInfo();
+      t = t.GetCurrentQualityInfo();
     t.SetXessQuality(e),
       t.ApplyXessQuality(),
-      n.SaveCurrentQualityInfoToQualityData();
+      t.SaveByKey(LocalStorageDefine_1.ELocalStorageGlobalKey.XessQuality);
   }
   static SetMetalFxEnable(e) {
-    var n = GameQualitySettingsManager_1.GameQualitySettingsManager.Get(),
+    var t = GameQualitySettingsManager_1.GameQualitySettingsManager.Get(),
       e = MenuController_1.MenuController.GetTargetConfig(e),
-      t = n.GetCurrentQualityInfo();
+      t = t.GetCurrentQualityInfo();
     t.SetMetalFxEnable(e),
       t.ApplyMetalFxEnable(),
-      n.SaveCurrentQualityInfoToQualityData();
+      t.SaveByKey(LocalStorageDefine_1.ELocalStorageGlobalKey.MetalFxEnable);
   }
   static SetIrxEnable(e) {
-    var n = GameQualitySettingsManager_1.GameQualitySettingsManager.Get(),
+    var t = GameQualitySettingsManager_1.GameQualitySettingsManager.Get(),
       e = MenuController_1.MenuController.GetTargetConfig(e),
-      t = n.GetCurrentQualityInfo();
+      t = t.GetCurrentQualityInfo();
     t.SetIrxEnable(e),
       t.ApplyIrxEnable(),
-      n.SaveCurrentQualityInfoToQualityData();
+      t.SaveByKey(LocalStorageDefine_1.ELocalStorageGlobalKey.IrxEnable);
   }
   static SetBloomEnable(e) {
-    var n = GameQualitySettingsManager_1.GameQualitySettingsManager.Get(),
+    var t = GameQualitySettingsManager_1.GameQualitySettingsManager.Get(),
       e = MenuController_1.MenuController.GetTargetConfig(e),
-      t = n.GetCurrentQualityInfo();
+      t = t.GetCurrentQualityInfo();
     t.SetBloomEnable(e),
       t.ApplyBloomEnable(),
-      n.SaveCurrentQualityInfoToQualityData();
+      t.SaveByKey(LocalStorageDefine_1.ELocalStorageGlobalKey.BloomEnable);
   }
   static SetAudioVolume(e) {
-    var n = MenuController_1.MenuController.GetTargetConfig(e);
+    var t = MenuController_1.MenuController.GetTargetConfig(e);
     UE.AkGameplayStatics.SetRTPCValue(
       void 0,
-      n,
+      t,
       0,
       void 0,
       FUNCTIONID_2_VOUMETAG.get(e),
     );
   }
-  static SetHorizontalViewSensitivity(e) {
-    var n = GameQualitySettingsManager_1.GameQualitySettingsManager.Get(),
-      e = MenuController_1.MenuController.GetTargetConfig(e),
-      t = n.GetCurrentQualityInfo();
-    t.SetHorizontalViewSensitivity(e),
-      t.ApplyHorizontalViewSensitivity(),
-      n.SaveCurrentQualityInfoToQualityData();
+  static SetHorizontalViewSensitivity(e, t) {
+    var a =
+      GameQualitySettingsManager_1.GameQualitySettingsManager.Get().GetCurrentQualityInfo();
+    a.SetHorizontalViewSensitivity(t),
+      a.ApplyHorizontalViewSensitivity(),
+      a.SaveByKey(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.HorizontalViewSensitivity,
+      );
   }
-  static SetVerticalViewSensitivity(e) {
-    var n = GameQualitySettingsManager_1.GameQualitySettingsManager.Get(),
-      e = MenuController_1.MenuController.GetTargetConfig(e),
-      t = n.GetCurrentQualityInfo();
-    t.SetVerticalViewSensitivity(e),
-      t.ApplyVerticalViewSensitivity(),
-      n.SaveCurrentQualityInfoToQualityData();
+  static SetVerticalViewSensitivity(e, t) {
+    var a =
+      GameQualitySettingsManager_1.GameQualitySettingsManager.Get().GetCurrentQualityInfo();
+    a.SetVerticalViewSensitivity(t),
+      a.ApplyVerticalViewSensitivity(),
+      a.SaveByKey(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.VerticalViewSensitivity,
+      );
   }
-  static SetAimHorizontalViewSensitivity(e) {
-    var n = GameQualitySettingsManager_1.GameQualitySettingsManager.Get(),
-      e = MenuController_1.MenuController.GetTargetConfig(e),
-      t = n.GetCurrentQualityInfo();
-    t.SetAimHorizontalViewSensitivity(e),
-      t.ApplyAimHorizontalViewSensitivity(),
-      n.SaveCurrentQualityInfoToQualityData();
+  static SetAimHorizontalViewSensitivity(e, t) {
+    var a =
+      GameQualitySettingsManager_1.GameQualitySettingsManager.Get().GetCurrentQualityInfo();
+    a.SetAimHorizontalViewSensitivity(t),
+      a.ApplyAimHorizontalViewSensitivity(),
+      a.SaveByKey(
+        LocalStorageDefine_1.ELocalStorageGlobalKey
+          .AimHorizontalViewSensitivity,
+      );
   }
-  static SetAimVerticalViewSensitivity(e) {
-    var n = GameQualitySettingsManager_1.GameQualitySettingsManager.Get(),
-      e = MenuController_1.MenuController.GetTargetConfig(e),
-      t = n.GetCurrentQualityInfo();
-    t.SetAimVerticalViewSensitivity(e),
-      t.ApplyAimVerticalViewSensitivity(),
-      n.SaveCurrentQualityInfoToQualityData();
+  static SetAimVerticalViewSensitivity(e, t) {
+    var a =
+      GameQualitySettingsManager_1.GameQualitySettingsManager.Get().GetCurrentQualityInfo();
+    a.SetAimVerticalViewSensitivity(t),
+      a.ApplyAimVerticalViewSensitivity(),
+      a.SaveByKey(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.AimVerticalViewSensitivity,
+      );
   }
-  static SetCameraShakeStrength(e) {
-    var n = GameQualitySettingsManager_1.GameQualitySettingsManager.Get(),
-      e = MenuController_1.MenuController.GetTargetConfig(e),
-      t = n.GetCurrentQualityInfo();
-    t.SetCameraShakeStrength(e),
-      t.ApplyCameraShakeStrength(),
-      n.SaveCurrentQualityInfoToQualityData();
+  static SetCameraShakeStrength(e, t) {
+    var a =
+      GameQualitySettingsManager_1.GameQualitySettingsManager.Get().GetCurrentQualityInfo();
+    a.SetCameraShakeStrength(t),
+      a.ApplyCameraShakeStrength(),
+      a.SaveByKey(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.CameraShakeStrength,
+      );
   }
-  static SetMobileHorizontalViewSensitivity(e) {
-    var n = GameQualitySettingsManager_1.GameQualitySettingsManager.Get(),
-      e = MenuController_1.MenuController.GetTargetConfig(e),
-      t = n.GetCurrentQualityInfo();
-    t.SetMobileHorizontalViewSensitivity(e),
-      t.ApplyMobileHorizontalViewSensitivity(),
-      n.SaveCurrentQualityInfoToQualityData();
+  static SetMobileHorizontalViewSensitivity(e, t) {
+    var a =
+      GameQualitySettingsManager_1.GameQualitySettingsManager.Get().GetCurrentQualityInfo();
+    a.SetMobileHorizontalViewSensitivity(t),
+      a.ApplyMobileHorizontalViewSensitivity(),
+      a.SaveByKey(
+        LocalStorageDefine_1.ELocalStorageGlobalKey
+          .MobileHorizontalViewSensitivity,
+      );
   }
-  static SetMobileVerticalViewSensitivity(e) {
-    var n = GameQualitySettingsManager_1.GameQualitySettingsManager.Get(),
-      e = MenuController_1.MenuController.GetTargetConfig(e),
-      t = n.GetCurrentQualityInfo();
-    t.SetMobileVerticalViewSensitivity(e),
-      t.ApplyMobileVerticalViewSensitivity(),
-      n.SaveCurrentQualityInfoToQualityData();
+  static SetMobileVerticalViewSensitivity(e, t) {
+    var a =
+      GameQualitySettingsManager_1.GameQualitySettingsManager.Get().GetCurrentQualityInfo();
+    a.SetMobileVerticalViewSensitivity(t),
+      a.ApplyMobileVerticalViewSensitivity(),
+      a.SaveByKey(
+        LocalStorageDefine_1.ELocalStorageGlobalKey
+          .MobileVerticalViewSensitivity,
+      );
   }
-  static SetMobileAimHorizontalViewSensitivity(e) {
-    var n = GameQualitySettingsManager_1.GameQualitySettingsManager.Get(),
-      e = MenuController_1.MenuController.GetTargetConfig(e),
-      t = n.GetCurrentQualityInfo();
-    t.SetMobileAimHorizontalViewSensitivity(e),
-      t.ApplyMobileAimHorizontalViewSensitivity(),
-      n.SaveCurrentQualityInfoToQualityData();
+  static SetMobileAimHorizontalViewSensitivity(e, t) {
+    var a =
+      GameQualitySettingsManager_1.GameQualitySettingsManager.Get().GetCurrentQualityInfo();
+    a.SetMobileAimHorizontalViewSensitivity(t),
+      a.ApplyMobileAimHorizontalViewSensitivity(),
+      a.SaveByKey(
+        LocalStorageDefine_1.ELocalStorageGlobalKey
+          .MobileAimHorizontalViewSensitivity,
+      );
   }
-  static SetMobileAimVerticalViewSensitivity(e) {
-    var n = GameQualitySettingsManager_1.GameQualitySettingsManager.Get(),
-      e = MenuController_1.MenuController.GetTargetConfig(e),
-      t = n.GetCurrentQualityInfo();
-    t.SetMobileAimVerticalViewSensitivity(e),
-      t.ApplyMobileAimVerticalViewSensitivity(),
-      n.SaveCurrentQualityInfoToQualityData();
+  static SetMobileAimVerticalViewSensitivity(e, t) {
+    var a =
+      GameQualitySettingsManager_1.GameQualitySettingsManager.Get().GetCurrentQualityInfo();
+    a.SetMobileAimVerticalViewSensitivity(t),
+      a.ApplyMobileAimVerticalViewSensitivity(),
+      a.SaveByKey(
+        LocalStorageDefine_1.ELocalStorageGlobalKey
+          .MobileAimVerticalViewSensitivity,
+      );
   }
-  static SetMobileCameraShakeStrength(e) {
-    var n = GameQualitySettingsManager_1.GameQualitySettingsManager.Get(),
-      e = MenuController_1.MenuController.GetTargetConfig(e),
-      t = n.GetCurrentQualityInfo();
-    t.SetMobileCameraShakeStrength(e),
-      t.ApplyMobileCameraShakeStrength(),
-      n.SaveCurrentQualityInfoToQualityData();
+  static SetMobileCameraShakeStrength(e, t) {
+    var a =
+      GameQualitySettingsManager_1.GameQualitySettingsManager.Get().GetCurrentQualityInfo();
+    a.SetMobileCameraShakeStrength(t),
+      a.ApplyMobileCameraShakeStrength(),
+      a.SaveByKey(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.MobileCameraShakeStrength,
+      );
   }
-  static SetCommonSpringArmLength(e) {
-    var n = GameQualitySettingsManager_1.GameQualitySettingsManager.Get(),
-      e = MenuController_1.MenuController.GetTargetConfig(e),
-      t = n.GetCurrentQualityInfo();
-    t.SetCommonSpringArmLength(e),
-      t.ApplyCommonSprintArmLength(),
-      n.SaveCurrentQualityInfoToQualityData();
+  static SetCommonSpringArmLength(e, t) {
+    var a =
+      GameQualitySettingsManager_1.GameQualitySettingsManager.Get().GetCurrentQualityInfo();
+    a.SetCommonSpringArmLength(t),
+      a.ApplyCommonSprintArmLength(),
+      a.SaveByKey(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.CommonSpringArmLength,
+      );
   }
-  static SetFightSpringArmLength(e) {
-    var n = GameQualitySettingsManager_1.GameQualitySettingsManager.Get(),
-      e = MenuController_1.MenuController.GetTargetConfig(e),
-      t = n.GetCurrentQualityInfo();
-    t.SetFightSpringArmLength(e),
-      t.ApplyFightSpringArmLength(),
-      n.SaveCurrentQualityInfoToQualityData();
+  static SetFightSpringArmLength(e, t) {
+    var a =
+      GameQualitySettingsManager_1.GameQualitySettingsManager.Get().GetCurrentQualityInfo();
+    a.SetFightSpringArmLength(t),
+      a.ApplyFightSpringArmLength(),
+      a.SaveByKey(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.FightSpringArmLength,
+      );
   }
-  static SetResetFocusEnable(e) {
-    var n = GameQualitySettingsManager_1.GameQualitySettingsManager.Get(),
-      e = MenuController_1.MenuController.GetTargetConfig(e),
-      t = n.GetCurrentQualityInfo();
-    t.SetResetFocusEnable(e),
-      t.ApplyResetFocusEnable(),
-      n.SaveCurrentQualityInfoToQualityData();
+  static SetResetFocusEnable(e, t) {
+    var a =
+      GameQualitySettingsManager_1.GameQualitySettingsManager.Get().GetCurrentQualityInfo();
+    a.SetResetFocusEnable(t),
+      a.ApplyResetFocusEnable(),
+      a.SaveByKey(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.IsResetFocusEnable,
+      );
   }
-  static SetIsSidestepCameraEnable(e) {
-    var n = GameQualitySettingsManager_1.GameQualitySettingsManager.Get(),
-      e = MenuController_1.MenuController.GetTargetConfig(e),
-      t = n.GetCurrentQualityInfo();
-    t.SetIsSidestepCameraEnable(e),
-      t.ApplyIsSidestepCameraEnable(),
-      n.SaveCurrentQualityInfoToQualityData();
+  static SetIsSidestepCameraEnable(e, t) {
+    var a =
+      GameQualitySettingsManager_1.GameQualitySettingsManager.Get().GetCurrentQualityInfo();
+    a.SetIsSidestepCameraEnable(t),
+      a.ApplyIsSidestepCameraEnable(),
+      a.SaveByKey(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.IsSidestepCameraEnable,
+      );
   }
-  static SetIsSoftLockCameraEnable(e) {
-    var n = GameQualitySettingsManager_1.GameQualitySettingsManager.Get(),
-      e = MenuController_1.MenuController.GetTargetConfig(e),
-      t = n.GetCurrentQualityInfo();
-    t.SetIsSoftLockCameraEnable(e),
-      t.ApplyIsSoftLockCameraEnable(),
-      n.SaveCurrentQualityInfoToQualityData();
+  static SetIsSoftLockCameraEnable(e, t) {
+    var a =
+      GameQualitySettingsManager_1.GameQualitySettingsManager.Get().GetCurrentQualityInfo();
+    a.SetIsSoftLockCameraEnable(t),
+      a.ApplyIsSoftLockCameraEnable(),
+      a.SaveByKey(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.IsSoftLockCameraEnable,
+      );
   }
-  static SetJoystickShakeStrength(e) {
-    var n = GameQualitySettingsManager_1.GameQualitySettingsManager.Get(),
-      e = MenuController_1.MenuController.GetTargetConfig(e),
-      t = n.GetCurrentQualityInfo();
-    t.SetJoystickShakeStrength(e),
-      t.ApplyJoystickShake(),
-      n.SaveCurrentQualityInfoToQualityData();
+  static SetJoystickShakeStrength(e, t) {
+    var a =
+      GameQualitySettingsManager_1.GameQualitySettingsManager.Get().GetCurrentQualityInfo();
+    a.SetJoystickShakeStrength(t),
+      a.ApplyJoystickShake(),
+      a.SaveByKey(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.JoystickShakeStrength,
+      );
   }
-  static SetJoystickShakeType(e) {
-    var n = GameQualitySettingsManager_1.GameQualitySettingsManager.Get(),
-      e = MenuController_1.MenuController.GetTargetConfig(e),
-      t = n.GetCurrentQualityInfo();
-    t.SetJoystickShakeType(e),
-      t.ApplyJoystickShake(),
-      n.SaveCurrentQualityInfoToQualityData();
+  static SetJoystickShakeType(e, t) {
+    var a =
+      GameQualitySettingsManager_1.GameQualitySettingsManager.Get().GetCurrentQualityInfo();
+    a.SetJoystickShakeType(t),
+      a.ApplyJoystickShake(),
+      a.SaveByKey(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.JoystickShakeType,
+      );
   }
-  static SetWalkOrRunRate(e) {
-    var n = GameQualitySettingsManager_1.GameQualitySettingsManager.Get(),
-      e = MenuController_1.MenuController.GetTargetConfig(e),
-      t = n.GetCurrentQualityInfo();
-    t.SetWalkOrRunRate(e),
-      t.ApplyWalkOrRunRate(),
-      n.SaveCurrentQualityInfoToQualityData();
+  static SetWalkOrRunRate(e, t) {
+    var a =
+      GameQualitySettingsManager_1.GameQualitySettingsManager.Get().GetCurrentQualityInfo();
+    a.SetWalkOrRunRate(t),
+      a.ApplyWalkOrRunRate(),
+      a.SaveByKey(LocalStorageDefine_1.ELocalStorageGlobalKey.WalkOrRunRate);
   }
-  static SetJoystickMode(e) {
-    var e = MenuController_1.MenuController.GetTargetConfig(e),
-      n = GameQualitySettingsManager_1.GameQualitySettingsManager.Get(),
-      t = n.GetCurrentQualityInfo();
-    t.SetJoystickMode(e),
-      t.ApplyJoystickMode(),
-      n.SaveCurrentQualityInfoToQualityData();
+  static SetJoystickMode(e, t) {
+    var a =
+      GameQualitySettingsManager_1.GameQualitySettingsManager.Get().GetCurrentQualityInfo();
+    a.SetJoystickMode(t),
+      a.ApplyJoystickMode(),
+      a.SaveByKey(LocalStorageDefine_1.ELocalStorageGlobalKey.JoystickMode);
   }
-  static SetSkillButtonMode(e) {
-    var e = MenuController_1.MenuController.GetTargetConfig(e),
-      n = GameQualitySettingsManager_1.GameQualitySettingsManager.Get(),
-      t = n.GetCurrentQualityInfo();
-    t.SetAutoSwitchSkillButtonMode(e),
-      t.ApplyAutoSwitchSkillButtonMode(),
-      n.SaveCurrentQualityInfoToQualityData();
+  static SetSkillButtonMode(e, t) {
+    var a =
+      GameQualitySettingsManager_1.GameQualitySettingsManager.Get().GetCurrentQualityInfo();
+    a.SetAutoSwitchSkillButtonMode(t),
+      a.ApplyAutoSwitchSkillButtonMode(),
+      a.SaveByKey(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.IsAutoSwitchSkillButtonMode,
+      );
   }
   static SetPushEnableState(e) {
     0 === MenuController_1.MenuController.GetTargetConfig(e)
       ? KuroPushController_1.KuroPushController.TurnOffPush()
       : KuroPushController_1.KuroPushController.TurnOnPush();
   }
-  static SetAimAssistEnable(e) {
-    var e = MenuController_1.MenuController.GetTargetConfig(e),
-      n = GameQualitySettingsManager_1.GameQualitySettingsManager.Get(),
-      t = n.GetCurrentQualityInfo();
-    t.SetAimAssistEnable(e),
-      t.ApplyAimAssistEnable(),
-      n.SaveCurrentQualityInfoToQualityData();
+  static SetAimAssistEnable(e, t) {
+    var a =
+      GameQualitySettingsManager_1.GameQualitySettingsManager.Get().GetCurrentQualityInfo();
+    a.SetAimAssistEnable(t),
+      a.ApplyAimAssistEnable(),
+      a.SaveByKey(LocalStorageDefine_1.ELocalStorageGlobalKey.AimAssistEnable);
+  }
+  static SetKeyboardLockEnemyMode(e) {
+    var t =
+      GameQualitySettingsManager_1.GameQualitySettingsManager.Get().GetCurrentQualityInfo();
+    t.SetKeyboardLockEnemyMode(e),
+      t.ApplyKeyboardLockEnemyMode(),
+      t.SaveByKey(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.KeyboardLockEnemyMode,
+      );
   }
   static SetHorizontalViewRevert(e) {
-    var e = MenuController_1.MenuController.GetTargetConfig(e),
-      n = GameQualitySettingsManager_1.GameQualitySettingsManager.Get(),
-      t = n.GetCurrentQualityInfo();
+    var t =
+      GameQualitySettingsManager_1.GameQualitySettingsManager.Get().GetCurrentQualityInfo();
     t.SetHorizontalViewRevert(e),
       t.ApplyHorizontalViewRevert(),
-      n.SaveCurrentQualityInfoToQualityData();
+      t.SaveByKey(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.HorizontalViewRevert,
+      );
   }
   static SetVerticalViewRevert(e) {
-    var e = MenuController_1.MenuController.GetTargetConfig(e),
-      n = GameQualitySettingsManager_1.GameQualitySettingsManager.Get(),
-      t = n.GetCurrentQualityInfo();
+    var t =
+      GameQualitySettingsManager_1.GameQualitySettingsManager.Get().GetCurrentQualityInfo();
     t.SetVerticalViewRevert(e),
       t.ApplyVerticalViewRevert(),
-      n.SaveCurrentQualityInfoToQualityData();
+      t.SaveByKey(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.VerticalViewRevert,
+      );
+  }
+  static SetSkillLockEnemyMode(e) {
+    var t =
+      GameQualitySettingsManager_1.GameQualitySettingsManager.Get().GetCurrentQualityInfo();
+    t.SetSkillLockEnemyMode(e),
+      t.SaveByKey(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.SkillLockEnemyMode,
+      );
+  }
+  static SetGamepadLockEnemyMode(e) {
+    var t =
+      GameQualitySettingsManager_1.GameQualitySettingsManager.Get().GetCurrentQualityInfo();
+    t.SetGamepadLockEnemyMode(e),
+      t.ApplyGamepadLockEnemyMode(),
+      t.SaveByKey(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.GamepadLockEnemyMode,
+      );
+  }
+  static SetEnemyHitDisplayMode(e) {
+    var t =
+      GameQualitySettingsManager_1.GameQualitySettingsManager.Get().GetCurrentQualityInfo();
+    t.SetEnemyHitDisplayMode(e),
+      t.ApplyEnemyHitDisplayMode(),
+      t.SaveByKey(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.EnemyHitDisplayMode,
+      );
+  }
+  static SetPlayStationOnlyMode(e) {
+    LocalStorage_1.LocalStorage.SetGlobal(
+      LocalStorageDefine_1.ELocalStorageGlobalKey.PlayStationOnly,
+      e,
+    );
   }
 }
 exports.MenuFunction = MenuFunction;
 class MenuNoticeFunction {
   static ImageQuality(e) {
-    var n = GameQualitySettingsManager_1.GameQualitySettingsManager.Get(),
-      t = MenuController_1.MenuController.GetTargetMenuData(e),
+    var t = GameQualitySettingsManager_1.GameQualitySettingsManager.Get(),
+      a = MenuController_1.MenuController.GetTargetMenuData(e),
       e = MenuController_1.MenuController.GetTargetConfig(e),
-      t = t.MenuDataOptionsValueList[e],
-      a = n.GetQualityInfoByType(t);
-    for (const l in MenuDefine_1.EImageConfig) {
-      var i = Number(l);
+      a = a.MenuDataOptionsValueList[e],
+      n = t.GetQualityInfoByType(a);
+    for (const o in MenuDefine_1.EImageConfig) {
+      var i = Number(o);
       if (!isNaN(i))
         switch (i) {
           case MenuDefine_1.EImageConfig.HIGHESTFPS:
-            var r = n.GetFrameIndexByList(a.GetFrameRate());
+            var r = t.GetFrameIndexByList(n.GetFrameRate());
             EventSystem_1.EventSystem.Emit(
               EventDefine_1.EEventName.ChangeConfigValue,
               MenuDefine_1.EImageConfig.HIGHESTFPS,
@@ -547,121 +606,121 @@ class MenuNoticeFunction {
             EventSystem_1.EventSystem.Emit(
               EventDefine_1.EEventName.ChangeConfigValue,
               MenuDefine_1.EImageConfig.SHADOWQUALITY,
-              a.ShadowQuality,
+              n.ShadowQuality,
             ),
               MenuController_1.MenuController.ApplyTargetConfig(
                 MenuDefine_1.EImageConfig.SHADOWQUALITY,
-                a.ShadowQuality,
+                n.ShadowQuality,
               );
             break;
           case MenuDefine_1.EImageConfig.NIAGARAQUALITY:
             EventSystem_1.EventSystem.Emit(
               EventDefine_1.EEventName.ChangeConfigValue,
               MenuDefine_1.EImageConfig.NIAGARAQUALITY,
-              a.NiagaraQuality,
+              n.NiagaraQuality,
             ),
               MenuController_1.MenuController.ApplyTargetConfig(
                 MenuDefine_1.EImageConfig.NIAGARAQUALITY,
-                a.NiagaraQuality,
+                n.NiagaraQuality,
               );
             break;
           case MenuDefine_1.EImageConfig.IMAGEDETAIL:
             EventSystem_1.EventSystem.Emit(
               EventDefine_1.EEventName.ChangeConfigValue,
               MenuDefine_1.EImageConfig.IMAGEDETAIL,
-              a.ImageDetail,
+              n.ImageDetail,
             ),
               MenuController_1.MenuController.ApplyTargetConfig(
                 MenuDefine_1.EImageConfig.IMAGEDETAIL,
-                a.ImageDetail,
+                n.ImageDetail,
               );
             break;
           case MenuDefine_1.EImageConfig.ANTIALISING:
             EventSystem_1.EventSystem.Emit(
               EventDefine_1.EEventName.ChangeConfigValue,
               MenuDefine_1.EImageConfig.ANTIALISING,
-              a.AntiAliasing,
+              n.AntiAliasing,
             ),
               MenuController_1.MenuController.ApplyTargetConfig(
                 MenuDefine_1.EImageConfig.ANTIALISING,
-                a.AntiAliasing,
+                n.AntiAliasing,
               );
             break;
           case MenuDefine_1.EImageConfig.SCENEAO:
             EventSystem_1.EventSystem.Emit(
               EventDefine_1.EEventName.ChangeConfigValue,
               MenuDefine_1.EImageConfig.SCENEAO,
-              a.SceneAo,
+              n.SceneAo,
             ),
               MenuController_1.MenuController.ApplyTargetConfig(
                 MenuDefine_1.EImageConfig.SCENEAO,
-                a.SceneAo,
+                n.SceneAo,
               );
             break;
           case MenuDefine_1.EImageConfig.VOLUMEFOG:
             EventSystem_1.EventSystem.Emit(
               EventDefine_1.EEventName.ChangeConfigValue,
               MenuDefine_1.EImageConfig.VOLUMEFOG,
-              a.VolumeFog,
+              n.VolumeFog,
             ),
               MenuController_1.MenuController.ApplyTargetConfig(
                 MenuDefine_1.EImageConfig.VOLUMEFOG,
-                a.VolumeFog,
+                n.VolumeFog,
               );
             break;
           case MenuDefine_1.EImageConfig.VOLUMELIGHT:
             EventSystem_1.EventSystem.Emit(
               EventDefine_1.EEventName.ChangeConfigValue,
               MenuDefine_1.EImageConfig.VOLUMELIGHT,
-              a.VolumeLight,
+              n.VolumeLight,
             ),
               MenuController_1.MenuController.ApplyTargetConfig(
                 MenuDefine_1.EImageConfig.VOLUMELIGHT,
-                a.VolumeLight,
+                n.VolumeLight,
               );
             break;
           case MenuDefine_1.EImageConfig.MOTIONBLUR:
             EventSystem_1.EventSystem.Emit(
               EventDefine_1.EEventName.ChangeConfigValue,
               MenuDefine_1.EImageConfig.MOTIONBLUR,
-              a.MotionBlur,
+              n.MotionBlur,
             ),
               MenuController_1.MenuController.ApplyTargetConfig(
                 MenuDefine_1.EImageConfig.MOTIONBLUR,
-                a.MotionBlur,
+                n.MotionBlur,
               );
             break;
           case MenuDefine_1.EImageConfig.PCVSYNC:
             EventSystem_1.EventSystem.Emit(
               EventDefine_1.EEventName.ChangeConfigValue,
               MenuDefine_1.EImageConfig.PCVSYNC,
-              a.PcVsync,
+              n.PcVsync,
             ),
               MenuController_1.MenuController.ApplyTargetConfig(
                 MenuDefine_1.EImageConfig.PCVSYNC,
-                a.PcVsync,
+                n.PcVsync,
               );
             break;
           case MenuDefine_1.EImageConfig.MOBILERESOLUTION:
             EventSystem_1.EventSystem.Emit(
               EventDefine_1.EEventName.ChangeConfigValue,
               MenuDefine_1.EImageConfig.MOBILERESOLUTION,
-              a.MobileResolution,
+              n.MobileResolution,
             ),
               MenuController_1.MenuController.ApplyTargetConfig(
                 MenuDefine_1.EImageConfig.MOBILERESOLUTION,
-                a.MobileResolution,
+                n.MobileResolution,
               );
             break;
           case MenuDefine_1.EImageConfig.SUPERRESOLUTION:
             EventSystem_1.EventSystem.Emit(
               EventDefine_1.EEventName.ChangeConfigValue,
               MenuDefine_1.EImageConfig.SUPERRESOLUTION,
-              a.SuperResolution,
+              n.SuperResolution,
             ),
               MenuController_1.MenuController.ApplyTargetConfig(
                 MenuDefine_1.EImageConfig.SUPERRESOLUTION,
-                a.SuperResolution,
+                n.SuperResolution,
               );
             break;
           case MenuDefine_1.EImageConfig.RESOLUTION:
@@ -682,125 +741,124 @@ class MenuNoticeFunction {
             EventSystem_1.EventSystem.Emit(
               EventDefine_1.EEventName.ChangeConfigValue,
               MenuDefine_1.EImageConfig.NVIDIADLSS,
-              a.NvidiaSuperSamplingEnable,
+              n.NvidiaSuperSamplingEnable,
             ),
               MenuController_1.MenuController.ApplyTargetConfig(
                 MenuDefine_1.EImageConfig.NVIDIADLSS,
-                a.NvidiaSuperSamplingEnable,
+                n.NvidiaSuperSamplingEnable,
               );
             break;
           case MenuDefine_1.EImageConfig.NVIDIADLSSFG:
             EventSystem_1.EventSystem.Emit(
               EventDefine_1.EEventName.ChangeConfigValue,
               MenuDefine_1.EImageConfig.NVIDIADLSSFG,
-              a.NvidiaSuperSamplingFrameGenerate,
+              n.NvidiaSuperSamplingFrameGenerate,
             ),
               MenuController_1.MenuController.ApplyTargetConfig(
                 MenuDefine_1.EImageConfig.NVIDIADLSSFG,
-                a.NvidiaSuperSamplingFrameGenerate,
+                n.NvidiaSuperSamplingFrameGenerate,
               );
             break;
           case MenuDefine_1.EImageConfig.NVIDIADLSSMODE:
             EventSystem_1.EventSystem.Emit(
               EventDefine_1.EEventName.ChangeConfigValue,
               MenuDefine_1.EImageConfig.NVIDIADLSSMODE,
-              a.NvidiaSuperSamplingMode,
+              n.NvidiaSuperSamplingMode,
             ),
               MenuController_1.MenuController.ApplyTargetConfig(
                 MenuDefine_1.EImageConfig.NVIDIADLSSMODE,
-                a.NvidiaSuperSamplingMode,
+                n.NvidiaSuperSamplingMode,
               );
             break;
           case MenuDefine_1.EImageConfig.NVIDIADLSSSHARPNESS:
             EventSystem_1.EventSystem.Emit(
               EventDefine_1.EEventName.ChangeConfigValue,
               MenuDefine_1.EImageConfig.NVIDIADLSSSHARPNESS,
-              a.NvidiaSuperSamplingSharpness,
+              n.NvidiaSuperSamplingSharpness,
             ),
               MenuController_1.MenuController.ApplyTargetConfig(
                 MenuDefine_1.EImageConfig.NVIDIADLSSSHARPNESS,
-                a.NvidiaSuperSamplingSharpness,
+                n.NvidiaSuperSamplingSharpness,
               );
             break;
           case MenuDefine_1.EImageConfig.NVIDIAREFLEX:
             EventSystem_1.EventSystem.Emit(
               EventDefine_1.EEventName.ChangeConfigValue,
               MenuDefine_1.EImageConfig.NVIDIAREFLEX,
-              a.NvidiaReflex,
+              n.NvidiaReflex,
             ),
               MenuController_1.MenuController.ApplyTargetConfig(
                 MenuDefine_1.EImageConfig.NVIDIAREFLEX,
-                a.NvidiaReflex,
+                n.NvidiaReflex,
               );
             break;
           case MenuDefine_1.EImageConfig.FSR:
             EventSystem_1.EventSystem.Emit(
               EventDefine_1.EEventName.ChangeConfigValue,
               MenuDefine_1.EImageConfig.FSR,
-              a.FsrEnable,
+              n.FsrEnable,
             ),
               MenuController_1.MenuController.ApplyTargetConfig(
                 MenuDefine_1.EImageConfig.FSR,
-                a.FsrEnable,
+                n.FsrEnable,
               );
             break;
           case MenuDefine_1.EImageConfig.XESS:
             EventSystem_1.EventSystem.Emit(
               EventDefine_1.EEventName.ChangeConfigValue,
               MenuDefine_1.EImageConfig.XESS,
-              a.XessEnable,
+              n.XessEnable,
             ),
               MenuController_1.MenuController.ApplyTargetConfig(
                 MenuDefine_1.EImageConfig.XESS,
-                a.XessEnable,
+                n.XessEnable,
               );
             break;
           case MenuDefine_1.EImageConfig.XESS_QUALITY:
             EventSystem_1.EventSystem.Emit(
               EventDefine_1.EEventName.ChangeConfigValue,
               MenuDefine_1.EImageConfig.XESS_QUALITY,
-              a.XessQuality,
+              n.XessQuality,
             ),
               MenuController_1.MenuController.ApplyTargetConfig(
                 MenuDefine_1.EImageConfig.XESS_QUALITY,
-                a.XessQuality,
+                n.XessQuality,
               );
             break;
           case MenuDefine_1.EImageConfig.METALFX:
             EventSystem_1.EventSystem.Emit(
               EventDefine_1.EEventName.ChangeConfigValue,
               MenuDefine_1.EImageConfig.METALFX,
-              a.MetalFxEnable,
+              n.MetalFxEnable,
             ),
               MenuController_1.MenuController.ApplyTargetConfig(
                 MenuDefine_1.EImageConfig.METALFX,
-                a.MetalFxEnable,
+                n.MetalFxEnable,
               );
             break;
           case MenuDefine_1.EImageConfig.IRX:
             EventSystem_1.EventSystem.Emit(
               EventDefine_1.EEventName.ChangeConfigValue,
               MenuDefine_1.EImageConfig.IRX,
-              a.IrxEnable,
+              n.IrxEnable,
             ),
               MenuController_1.MenuController.ApplyTargetConfig(
                 MenuDefine_1.EImageConfig.IRX,
-                a.IrxEnable,
+                n.IrxEnable,
               );
             break;
           case MenuDefine_1.EImageConfig.BLOOM:
             EventSystem_1.EventSystem.Emit(
               EventDefine_1.EEventName.ChangeConfigValue,
               MenuDefine_1.EImageConfig.BLOOM,
-              a.BloomEnable,
+              n.BloomEnable,
             ),
               MenuController_1.MenuController.ApplyTargetConfig(
                 MenuDefine_1.EImageConfig.BLOOM,
-                a.BloomEnable,
+                n.BloomEnable,
               );
         }
     }
-    MenuController_1.MenuController.SaveLocalConfig();
   }
 }
 exports.MenuNoticeFunction = MenuNoticeFunction;

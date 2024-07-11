@@ -15,9 +15,12 @@ const cpp_1 = require("cpp"),
   ALWAYS_TICK_PRIORITY = 5,
   ALWAYS_TICK_2_PRIORITY = 6,
   FIGHT_EFFECT_PRIPRITY = 7,
-  ROLE_PRIORITY = 8,
-  HUD_PRIORITY = 9,
-  OTHER_PRIORITY = 10,
+  Boss_PRIORITY = 8,
+  ROLE_PRIORITY = 9,
+  NPC_PRIORITY = 10,
+  SIMPLE_NPC_PRIORITY = 11,
+  HUD_PRIORITY = 12,
+  OTHER_PRIORITY = 12,
   IDLE_EXEC_PRIORITY = 100,
   EFFECT_IMPORTANCE_ENABLE_MAX_RANGE =
     ((exports.EFFECT_ENABLE_RANGE = 30001),
@@ -27,52 +30,68 @@ const cpp_1 = require("cpp"),
   HUD_ENABLE_RANGE = 5e3;
 class GameBudgetAllocatorConfigCreator {
   static get TsNormalEntityGroupConfig() {
-    return this.ppr;
+    return this.Cvr;
+  }
+  static get TsBossEntityGroupConfig() {
+    return this.ITa;
   }
   static get TsCharacterEntityGroupConfig() {
-    return this.vpr;
+    return this.gvr;
+  }
+  static get TsNormalNpcEntityGroupConfig() {
+    return this.sTa;
+  }
+  static get TsSimpleNpcEntityGroupConfig() {
+    return this.aTa;
   }
   static get TsFightEffectGroupConfig() {
-    return this.Mpr;
+    return this.fvr;
   }
   static get TsEffectGroupConfig() {
-    return this.Spr;
+    return this.pvr;
   }
   static get TsEffectInportanceGroupConfig() {
-    return this.U6s;
+    return this.UXs;
   }
   static get TsAlwaysTickConfig() {
-    return this.Epr;
+    return this.vvr;
   }
   static get TsPlayerAlwaysTickConfig() {
-    return this.ypr;
+    return this.Mvr;
   }
   static get TsIdleExecConfig() {
-    return this.Ipr;
+    return this.Evr;
   }
   static get TsAlwaysTick2Config() {
-    return this.Tpr;
+    return this.Svr;
   }
   static get TsHUDTickConfig() {
-    return this.Lpr;
+    return this.yvr;
+  }
+  static get TsStabilizeLowEntityGroupConfig() {
+    return this.Hea;
   }
   static get TsCharacterDtailConfig() {
-    return this.vbn;
+    return this.pOn;
   }
   static CreateCharacterEntityConfigOnly() {
-    this.vbn = this.Rpr(!1);
+    this.pOn = this.Tvr(!1);
   }
   static CreateConfigs() {
-    this.Dpr(),
-      this.Rpr(),
-      this.Upr(),
-      this.Apr(),
-      this.x6s(),
-      this.Ppr(),
-      this.xpr(),
-      this.wpr(),
-      this.Bpr(),
-      this.bpr();
+    this.Ivr(),
+      this.TTa(),
+      this.Tvr(),
+      this.hTa(),
+      this.lTa(),
+      this.Lvr(),
+      this.Dvr(),
+      this.xXs(),
+      this.jea(),
+      this.Rvr(),
+      this.Uvr(),
+      this.Avr(),
+      this.Pvr(),
+      this.xvr();
   }
   static UpdateGroupConfigTickStrategy(e, t, o) {
     (e.ueGroupConfig.DisableActorTickStrategy = t),
@@ -90,12 +109,12 @@ class GameBudgetAllocatorConfigCreator {
         e.ueGroupConfig,
       );
   }
-  static qpr(e, t) {
+  static wvr(e, t) {
     var o = (0, puerts_1.$ref)(e);
-    for (const i in t) {
-      var a = t[i];
-      "Default" === i
-        ? (a ||
+    for (const n in t) {
+      var i = t[n];
+      "Default" === n
+        ? (i ||
             (Log_1.Log.CheckError() &&
               Log_1.Log.Error("Game", 25, "Missing default config!", [
                 "GroupName",
@@ -103,23 +122,23 @@ class GameBudgetAllocatorConfigCreator {
               ])),
           cpp_1.FKuroGameBudgetAllocatorInterface.SetDefaultTickIntervalDetailConfig(
             o,
-            a.MaxInterval,
-            a.TickReductionStartSize,
-            a.TickReductionIntervalSize,
+            i.MaxInterval,
+            i.TickReductionStartSize,
+            i.TickReductionIntervalSize,
           ))
-        : a &&
+        : i &&
           cpp_1.FKuroGameBudgetAllocatorInterface.SetTickIntervalDetailConfig(
             o,
-            a.GlobalMode,
-            a.ActorMode,
-            a.MaxInterval,
-            a.TickReductionStartSize,
-            a.TickReductionIntervalSize,
+            i.GlobalMode,
+            i.ActorMode,
+            i.MaxInterval,
+            i.TickReductionStartSize,
+            i.TickReductionIntervalSize,
           );
     }
     cpp_1.FKuroGameBudgetAllocatorInterface.SetGroupConfig(e.GroupName, e);
   }
-  static Bpr() {
+  static Pvr() {
     var e =
         new GameBudgetAllocatorConfig_1.TsGameBudgetAllocatorTickIntervalDetailConfig(
           0,
@@ -133,7 +152,7 @@ class GameBudgetAllocatorConfigCreator {
         ((t.GroupName = FNameUtil_1.FNameUtil.GetDynamicFName("IdleExecGroup")),
         (t.SignificanceGroup = 0),
         (t.TickPriority = IDLE_EXEC_PRIORITY),
-        (this.Ipr =
+        (this.Evr =
           new GameBudgetAllocatorConfig_1.TsGameBudgetGroupConfigCache(t)),
         (0, puerts_1.$ref)(t));
     cpp_1.FKuroGameBudgetAllocatorInterface.SetDefaultTickIntervalDetailConfig(
@@ -144,7 +163,7 @@ class GameBudgetAllocatorConfigCreator {
     ),
       cpp_1.FKuroGameBudgetAllocatorInterface.SetGroupConfig(t.GroupName, t);
   }
-  static Rpr(e = !0) {
+  static TTa(e = !0) {
     var t = {
       Default:
         new GameBudgetAllocatorConfig_1.TsGameBudgetAllocatorTickIntervalDetailConfig(
@@ -168,7 +187,110 @@ class GameBudgetAllocatorConfigCreator {
           1,
           120,
           1e3,
+          200,
+        ),
+      Normal_Fighting:
+        new GameBudgetAllocatorConfig_1.TsGameBudgetAllocatorTickIntervalDetailConfig(
+          0,
+          2,
+          10,
+          3e3,
+          500,
+        ),
+      Fighting_Rendered:
+        new GameBudgetAllocatorConfig_1.TsGameBudgetAllocatorTickIntervalDetailConfig(
+          1,
+          0,
+          60,
+          2e3,
+          200,
+        ),
+      Fighting_NotRendered:
+        new GameBudgetAllocatorConfig_1.TsGameBudgetAllocatorTickIntervalDetailConfig(
+          1,
+          1,
+          120,
+          1e3,
           100,
+        ),
+      Fighting_Fighting:
+        new GameBudgetAllocatorConfig_1.TsGameBudgetAllocatorTickIntervalDetailConfig(
+          1,
+          2,
+          1,
+          1,
+          1,
+        ),
+      Cutscene_Rendered:
+        new GameBudgetAllocatorConfig_1.TsGameBudgetAllocatorTickIntervalDetailConfig(
+          2,
+          0,
+          5,
+          3e3,
+          500,
+        ),
+      Cutscene_NotRendered:
+        new GameBudgetAllocatorConfig_1.TsGameBudgetAllocatorTickIntervalDetailConfig(
+          2,
+          1,
+          10,
+          2e3,
+          200,
+        ),
+      Cutscene_Fighting:
+        new GameBudgetAllocatorConfig_1.TsGameBudgetAllocatorTickIntervalDetailConfig(
+          2,
+          2,
+          5,
+          5e3,
+          500,
+        ),
+    };
+    return (
+      e &&
+        (((e = new UE.GameBudgetAllocatorGroupConfig()).GroupName =
+          FNameUtil_1.FNameUtil.GetDynamicFName("BossEntity")),
+        (e.SignificanceGroup = 3),
+        (e.TickPriority = Boss_PRIORITY),
+        (this.ITa =
+          new GameBudgetAllocatorConfig_1.TsGameBudgetGroupConfigCache(e)),
+        this.wvr(e, t)),
+      t
+    );
+  }
+  static Tvr(e = !0) {
+    var t = {
+      Default:
+        new GameBudgetAllocatorConfig_1.TsGameBudgetAllocatorTickIntervalDetailConfig(
+          0,
+          0,
+          60,
+          2e3,
+          200,
+        ),
+      Normal_Render:
+        new GameBudgetAllocatorConfig_1.TsGameBudgetAllocatorTickIntervalDetailConfig(
+          0,
+          0,
+          60,
+          2e3,
+          200,
+        ),
+      Normal_NotRendered:
+        new GameBudgetAllocatorConfig_1.TsGameBudgetAllocatorTickIntervalDetailConfig(
+          0,
+          1,
+          120,
+          1e3,
+          100,
+        ),
+      Normal_Fighting:
+        new GameBudgetAllocatorConfig_1.TsGameBudgetAllocatorTickIntervalDetailConfig(
+          0,
+          2,
+          60,
+          3e3,
+          300,
         ),
       Fighting_Rendered:
         new GameBudgetAllocatorConfig_1.TsGameBudgetAllocatorTickIntervalDetailConfig(
@@ -190,25 +312,25 @@ class GameBudgetAllocatorConfigCreator {
         new GameBudgetAllocatorConfig_1.TsGameBudgetAllocatorTickIntervalDetailConfig(
           1,
           2,
-          1,
-          1,
-          1,
+          20,
+          2e3,
+          300,
         ),
       Cutscene_Rendered:
         new GameBudgetAllocatorConfig_1.TsGameBudgetAllocatorTickIntervalDetailConfig(
           2,
           0,
-          1,
-          1,
-          1,
+          20,
+          3500,
+          500,
         ),
       Cutscene_NotRendered:
         new GameBudgetAllocatorConfig_1.TsGameBudgetAllocatorTickIntervalDetailConfig(
           2,
           1,
-          1,
-          1,
-          1,
+          120,
+          1e3,
+          100,
         ),
     };
     return (
@@ -217,19 +339,110 @@ class GameBudgetAllocatorConfigCreator {
           FNameUtil_1.FNameUtil.GetDynamicFName("CharacterEntity")),
         (e.SignificanceGroup = 2),
         (e.TickPriority = ROLE_PRIORITY),
-        (this.vpr =
+        (this.gvr =
           new GameBudgetAllocatorConfig_1.TsGameBudgetGroupConfigCache(e)),
-        this.qpr(e, t)),
+        this.wvr(e, t)),
       t
     );
   }
-  static Dpr() {
+  static hTa(e = !0) {
+    var t = {
+      Default:
+        new GameBudgetAllocatorConfig_1.TsGameBudgetAllocatorTickIntervalDetailConfig(
+          0,
+          0,
+          60,
+          500,
+          100,
+        ),
+      Normal_Render: void 0,
+      Normal_NotRendered:
+        new GameBudgetAllocatorConfig_1.TsGameBudgetAllocatorTickIntervalDetailConfig(
+          0,
+          1,
+          240,
+          500,
+          50,
+        ),
+      Normal_Fighting: void 0,
+      Fighting_Rendered: void 0,
+      Fighting_NotRendered: void 0,
+      Fighting_Fighting: void 0,
+      Cutscene_Rendered: void 0,
+      Cutscene_NotRendered:
+        new GameBudgetAllocatorConfig_1.TsGameBudgetAllocatorTickIntervalDetailConfig(
+          2,
+          1,
+          240,
+          500,
+          50,
+        ),
+    };
+    return (
+      e &&
+        (((e = new UE.GameBudgetAllocatorGroupConfig()).GroupName =
+          FNameUtil_1.FNameUtil.GetDynamicFName("NormalNpcEntity")),
+        (e.SignificanceGroup = 2),
+        (e.TickPriority = NPC_PRIORITY),
+        (this.sTa =
+          new GameBudgetAllocatorConfig_1.TsGameBudgetGroupConfigCache(e)),
+        this.wvr(e, t)),
+      t
+    );
+  }
+  static lTa(e = !0) {
+    var t = {
+      Default:
+        new GameBudgetAllocatorConfig_1.TsGameBudgetAllocatorTickIntervalDetailConfig(
+          0,
+          0,
+          15,
+          500,
+          100,
+        ),
+      Normal_Render: void 0,
+      Normal_NotRendered:
+        new GameBudgetAllocatorConfig_1.TsGameBudgetAllocatorTickIntervalDetailConfig(
+          0,
+          1,
+          2,
+          500,
+          100,
+        ),
+      Normal_Fighting: void 0,
+      Fighting_Rendered: void 0,
+      Fighting_NotRendered: void 0,
+      Fighting_Fighting: void 0,
+      Cutscene_Rendered: void 0,
+      Cutscene_NotRendered:
+        new GameBudgetAllocatorConfig_1.TsGameBudgetAllocatorTickIntervalDetailConfig(
+          2,
+          1,
+          2,
+          500,
+          100,
+        ),
+    };
+    return (
+      e &&
+        (((e = new UE.GameBudgetAllocatorGroupConfig()).GroupName =
+          FNameUtil_1.FNameUtil.GetDynamicFName("SimpleNpcEntity")),
+        (e.SignificanceGroup = 1),
+        (e.TickPriority = SIMPLE_NPC_PRIORITY),
+        (e.DisableActorTickStrategy = 4),
+        (this.aTa =
+          new GameBudgetAllocatorConfig_1.TsGameBudgetGroupConfigCache(e)),
+        this.wvr(e, t)),
+      t
+    );
+  }
+  static Ivr() {
     var e = {
         Default:
           new GameBudgetAllocatorConfig_1.TsGameBudgetAllocatorTickIntervalDetailConfig(
             0,
             0,
-            180,
+            60,
             500,
             100,
           ),
@@ -237,70 +450,42 @@ class GameBudgetAllocatorConfigCreator {
           new GameBudgetAllocatorConfig_1.TsGameBudgetAllocatorTickIntervalDetailConfig(
             0,
             0,
-            180,
-            2e3,
-            400,
+            60,
+            500,
+            100,
           ),
         Normal_NotRendered:
           new GameBudgetAllocatorConfig_1.TsGameBudgetAllocatorTickIntervalDetailConfig(
             0,
             1,
-            600,
+            1e3,
             500,
-            100,
+            10,
           ),
-        Fighting_Rendered:
-          new GameBudgetAllocatorConfig_1.TsGameBudgetAllocatorTickIntervalDetailConfig(
-            1,
-            0,
-            600,
-            500,
-            100,
-          ),
-        Fighting_NotRendered:
-          new GameBudgetAllocatorConfig_1.TsGameBudgetAllocatorTickIntervalDetailConfig(
-            1,
-            1,
-            600,
-            250,
-            100,
-          ),
-        Fighting_Fighting:
-          new GameBudgetAllocatorConfig_1.TsGameBudgetAllocatorTickIntervalDetailConfig(
-            1,
-            2,
-            1,
-            1,
-            1,
-          ),
-        Cutscene_Rendered:
-          new GameBudgetAllocatorConfig_1.TsGameBudgetAllocatorTickIntervalDetailConfig(
-            2,
-            0,
-            180,
-            2e3,
-            400,
-          ),
+        Normal_Fighting: void 0,
+        Fighting_Rendered: void 0,
+        Fighting_NotRendered: void 0,
+        Fighting_Fighting: void 0,
+        Cutscene_Rendered: void 0,
         Cutscene_NotRendered:
           new GameBudgetAllocatorConfig_1.TsGameBudgetAllocatorTickIntervalDetailConfig(
             2,
             1,
-            240,
             1e3,
-            200,
+            500,
+            10,
           ),
       },
       t = new UE.GameBudgetAllocatorGroupConfig();
     (t.GroupName = FNameUtil_1.FNameUtil.GetDynamicFName("NormalEntity")),
       (t.SignificanceGroup = 1),
       (t.TickPriority = OTHER_PRIORITY),
-      (t.DisableActorTickStrategy = 4),
-      (this.ppr = new GameBudgetAllocatorConfig_1.TsGameBudgetGroupConfigCache(
+      (this.Cvr = new GameBudgetAllocatorConfig_1.TsGameBudgetGroupConfigCache(
         t,
       )),
-      this.qpr(t, e);
+      this.wvr(t, e);
   }
-  static Upr() {
+  static Lvr() {
     var e =
         new GameBudgetAllocatorConfig_1.TsGameBudgetAllocatorTickIntervalDetailConfig(
           0,
@@ -317,7 +502,7 @@ class GameBudgetAllocatorConfigCreator {
         (t.TickPriority = FIGHT_EFFECT_PRIPRITY),
         (t.DisableActorTickStrategy = 1),
         (t.DisableActorTickDistance = exports.EFFECT_ENABLE_RANGE),
-        (this.Mpr =
+        (this.fvr =
           new GameBudgetAllocatorConfig_1.TsGameBudgetGroupConfigCache(t)),
         (0, puerts_1.$ref)(t));
     cpp_1.FKuroGameBudgetAllocatorInterface.SetDefaultTickIntervalDetailConfig(
@@ -328,7 +513,7 @@ class GameBudgetAllocatorConfigCreator {
     ),
       cpp_1.FKuroGameBudgetAllocatorInterface.SetGroupConfig(t.GroupName, t);
   }
-  static Apr() {
+  static Dvr() {
     var e = {
         Default:
           new GameBudgetAllocatorConfig_1.TsGameBudgetAllocatorTickIntervalDetailConfig(
@@ -354,6 +539,7 @@ class GameBudgetAllocatorConfigCreator {
             500,
             100,
           ),
+        Normal_Fighting: void 0,
         Fighting_Rendered:
           new GameBudgetAllocatorConfig_1.TsGameBudgetAllocatorTickIntervalDetailConfig(
             1,
@@ -370,21 +556,14 @@ class GameBudgetAllocatorConfigCreator {
             250,
             100,
           ),
-        Fighting_Fighting:
-          new GameBudgetAllocatorConfig_1.TsGameBudgetAllocatorTickIntervalDetailConfig(
-            1,
-            2,
-            1,
-            1,
-            1,
-          ),
+        Fighting_Fighting: void 0,
         Cutscene_Rendered:
           new GameBudgetAllocatorConfig_1.TsGameBudgetAllocatorTickIntervalDetailConfig(
             2,
             0,
-            1,
-            1,
-            1,
+            20,
+            4500,
+            500,
           ),
         Cutscene_NotRendered:
           new GameBudgetAllocatorConfig_1.TsGameBudgetAllocatorTickIntervalDetailConfig(
@@ -401,12 +580,12 @@ class GameBudgetAllocatorConfigCreator {
       (t.TickPriority = OTHER_PRIORITY),
       (t.DisableActorTickStrategy = 1),
       (t.DisableActorTickDistance = exports.EFFECT_ENABLE_RANGE),
-      (this.Spr = new GameBudgetAllocatorConfig_1.TsGameBudgetGroupConfigCache(
+      (this.pvr = new GameBudgetAllocatorConfig_1.TsGameBudgetGroupConfigCache(
         t,
       )),
-      this.qpr(t, e);
+      this.wvr(t, e);
   }
-  static x6s() {
+  static xXs() {
     var e = {
         Default:
           new GameBudgetAllocatorConfig_1.TsGameBudgetAllocatorTickIntervalDetailConfig(
@@ -432,6 +611,7 @@ class GameBudgetAllocatorConfigCreator {
             1e4,
             1e3,
           ),
+        Normal_Fighting: void 0,
         Fighting_Rendered:
           new GameBudgetAllocatorConfig_1.TsGameBudgetAllocatorTickIntervalDetailConfig(
             1,
@@ -460,9 +640,9 @@ class GameBudgetAllocatorConfigCreator {
           new GameBudgetAllocatorConfig_1.TsGameBudgetAllocatorTickIntervalDetailConfig(
             2,
             0,
-            1,
-            1,
-            1,
+            5,
+            6e4,
+            5e3,
           ),
         Cutscene_NotRendered:
           new GameBudgetAllocatorConfig_1.TsGameBudgetAllocatorTickIntervalDetailConfig(
@@ -481,12 +661,41 @@ class GameBudgetAllocatorConfigCreator {
       (t.TickPriority = OTHER_PRIORITY),
       (t.DisableActorTickStrategy = 1),
       (t.DisableActorTickDistance = EFFECT_IMPORTANCE_ENABLE_MAX_RANGE),
-      (this.U6s = new GameBudgetAllocatorConfig_1.TsGameBudgetGroupConfigCache(
+      (this.UXs = new GameBudgetAllocatorConfig_1.TsGameBudgetGroupConfigCache(
         t,
       )),
-      this.qpr(t, e);
+      this.wvr(t, e);
   }
-  static Ppr() {
+  static jea() {
+    var e = {
+        Default:
+          new GameBudgetAllocatorConfig_1.TsGameBudgetAllocatorTickIntervalDetailConfig(
+            0,
+            0,
+            10,
+            1,
+            1,
+          ),
+        Normal_Render: void 0,
+        Normal_NotRendered: void 0,
+        Normal_Fighting: void 0,
+        Fighting_Rendered: void 0,
+        Fighting_NotRendered: void 0,
+        Fighting_Fighting: void 0,
+        Cutscene_Rendered: void 0,
+        Cutscene_NotRendered: void 0,
+      },
+      t = new UE.GameBudgetAllocatorGroupConfig();
+    (t.GroupName = FNameUtil_1.FNameUtil.GetDynamicFName("CustomStabilizeLow")),
+      (t.SignificanceGroup = 1),
+      (t.TickPriority = OTHER_PRIORITY),
+      (t.DisableActorTickStrategy = 0),
+      (this.Hea = new GameBudgetAllocatorConfig_1.TsGameBudgetGroupConfigCache(
+        t,
+      )),
+      this.wvr(t, e);
+  }
+  static Rvr() {
     var e =
         new GameBudgetAllocatorConfig_1.TsGameBudgetAllocatorTickIntervalDetailConfig(
           0,
@@ -502,7 +711,7 @@ class GameBudgetAllocatorConfigCreator {
         )),
         (t.SignificanceGroup = 4),
         (t.TickPriority = PLAYER_ALWAYS_TICK_PRIORITY),
-        (this.ypr =
+        (this.Mvr =
           new GameBudgetAllocatorConfig_1.TsGameBudgetGroupConfigCache(t)),
         (0, puerts_1.$ref)(t));
     cpp_1.FKuroGameBudgetAllocatorInterface.SetDefaultTickIntervalDetailConfig(
@@ -513,7 +722,7 @@ class GameBudgetAllocatorConfigCreator {
     ),
       cpp_1.FKuroGameBudgetAllocatorInterface.SetGroupConfig(t.GroupName, t);
   }
-  static xpr() {
+  static Uvr() {
     var e =
         new GameBudgetAllocatorConfig_1.TsGameBudgetAllocatorTickIntervalDetailConfig(
           0,
@@ -528,7 +737,7 @@ class GameBudgetAllocatorConfigCreator {
           FNameUtil_1.FNameUtil.GetDynamicFName("AlwaysTickGroup")),
         (t.SignificanceGroup = 4),
         (t.TickPriority = ALWAYS_TICK_PRIORITY),
-        (this.Epr =
+        (this.vvr =
           new GameBudgetAllocatorConfig_1.TsGameBudgetGroupConfigCache(t)),
         (0, puerts_1.$ref)(t));
     cpp_1.FKuroGameBudgetAllocatorInterface.SetDefaultTickIntervalDetailConfig(
@@ -539,7 +748,7 @@ class GameBudgetAllocatorConfigCreator {
     ),
       cpp_1.FKuroGameBudgetAllocatorInterface.SetGroupConfig(t.GroupName, t);
   }
-  static wpr() {
+  static Avr() {
     var e =
         new GameBudgetAllocatorConfig_1.TsGameBudgetAllocatorTickIntervalDetailConfig(
           0,
@@ -555,7 +764,7 @@ class GameBudgetAllocatorConfigCreator {
         )),
         (t.SignificanceGroup = 4),
         (t.TickPriority = ALWAYS_TICK_2_PRIORITY),
-        (this.Tpr =
+        (this.Svr =
           new GameBudgetAllocatorConfig_1.TsGameBudgetGroupConfigCache(t)),
         (0, puerts_1.$ref)(t));
     cpp_1.FKuroGameBudgetAllocatorInterface.SetDefaultTickIntervalDetailConfig(
@@ -566,7 +775,7 @@ class GameBudgetAllocatorConfigCreator {
     ),
       cpp_1.FKuroGameBudgetAllocatorInterface.SetGroupConfig(t.GroupName, t);
   }
-  static bpr() {
+  static xvr() {
     var e =
         new GameBudgetAllocatorConfig_1.TsGameBudgetAllocatorTickIntervalDetailConfig(
           0,
@@ -582,7 +791,7 @@ class GameBudgetAllocatorConfigCreator {
         (t.TickPriority = HUD_PRIORITY),
         (t.DisableActorTickStrategy = 1),
         (t.DisableActorTickDistance = HUD_ENABLE_RANGE),
-        (this.Lpr =
+        (this.yvr =
           new GameBudgetAllocatorConfig_1.TsGameBudgetGroupConfigCache(t)),
         (0, puerts_1.$ref)(t));
     cpp_1.FKuroGameBudgetAllocatorInterface.SetDefaultTickIntervalDetailConfig(
@@ -594,42 +803,43 @@ class GameBudgetAllocatorConfigCreator {
       cpp_1.FKuroGameBudgetAllocatorInterface.SetGroupConfig(t.GroupName, t);
   }
   static GetEffectDynamicGroup(e) {
-    var t, o, a, i, r, n, g, _, l, c, C, s;
+    var t, o, i, n, a, r, g, _, l, d, c, s;
     return e >= exports.EFFECT_IMPORTANCE_ENABLE_RANGE
       ? this.TsEffectInportanceGroupConfig
       : this.TsEffectDynamicGroupConfigMap.get(e) ||
           (0,
-          (C = (e - (c = 0.2 * e)) / 179),
-          (r = (e - (s = 0.8 * e)) / 59),
-          (n = (e - (t = 0.2 * e)) / 299),
+          (c = (e - (d = 0.2 * e)) / 179),
+          (a = (e - (t = 0.8 * e)) / 59),
+          (r = (e - (s = 0.2 * e)) / 299),
           (g = (e - (o = 0.2 * e)) / 299),
-          (_ = (e - (a = 0.1 * e)) / 599),
-          (l = (e - (i = 0.4 * e)) / 119),
-          (c = {
+          (_ = (e - (i = 0.1 * e)) / 599),
+          (l = (e - (n = 0.4 * e)) / 119),
+          (d = {
             Default:
               new GameBudgetAllocatorConfig_1.TsGameBudgetAllocatorTickIntervalDetailConfig(
                 0,
                 0,
                 180,
+                d,
                 c,
-                C,
               ),
             Normal_Render:
               new GameBudgetAllocatorConfig_1.TsGameBudgetAllocatorTickIntervalDetailConfig(
                 0,
                 0,
                 60,
-                s,
-                r,
+                t,
+                a,
               ),
             Normal_NotRendered:
               new GameBudgetAllocatorConfig_1.TsGameBudgetAllocatorTickIntervalDetailConfig(
                 0,
                 1,
                 300,
-                t,
-                n,
+                s,
+                r,
               ),
+            Normal_Fighting: void 0,
             Fighting_Rendered:
               new GameBudgetAllocatorConfig_1.TsGameBudgetAllocatorTickIntervalDetailConfig(
                 1,
@@ -643,43 +853,36 @@ class GameBudgetAllocatorConfigCreator {
                 1,
                 1,
                 600,
-                a,
+                i,
                 _,
               ),
-            Fighting_Fighting:
-              new GameBudgetAllocatorConfig_1.TsGameBudgetAllocatorTickIntervalDetailConfig(
-                1,
-                2,
-                1,
-                1,
-                1,
-              ),
+            Fighting_Fighting: void 0,
             Cutscene_Rendered:
               new GameBudgetAllocatorConfig_1.TsGameBudgetAllocatorTickIntervalDetailConfig(
                 2,
                 0,
-                1,
-                1,
-                1,
+                5,
+                t,
+                a,
               ),
             Cutscene_NotRendered:
               new GameBudgetAllocatorConfig_1.TsGameBudgetAllocatorTickIntervalDetailConfig(
                 2,
                 1,
                 120,
-                i,
+                n,
                 l,
               ),
           }),
-          ((C = new UE.GameBudgetAllocatorGroupConfig()).GroupName =
+          ((c = new UE.GameBudgetAllocatorGroupConfig()).GroupName =
             FNameUtil_1.FNameUtil.GetDynamicFName("EffectGroup_" + e)),
-          (C.SignificanceGroup = 2),
-          (C.TickPriority = OTHER_PRIORITY),
-          (C.DisableActorTickStrategy = 1),
-          (C.DisableActorTickDistance = e),
-          (s = new GameBudgetAllocatorConfig_1.TsGameBudgetGroupConfigCache(C)),
+          (c.SignificanceGroup = 2),
+          (c.TickPriority = OTHER_PRIORITY),
+          (c.DisableActorTickStrategy = 1),
+          (c.DisableActorTickDistance = e),
+          (s = new GameBudgetAllocatorConfig_1.TsGameBudgetGroupConfigCache(c)),
           this.TsEffectDynamicGroupConfigMap.set(e, s),
-          this.qpr(C, c),
+          this.wvr(c, d),
           s);
   }
 }

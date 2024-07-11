@@ -13,44 +13,44 @@ const UE = require("ue"),
   UiCameraAnimationManager_1 = require("./UiCameraAnimationManager");
 class UiCameraAnimation {
   constructor() {
-    (this.oUo = void 0),
-      (this.rUo = void 0),
-      (this.nUo = 0),
+    (this.eAo = void 0),
+      (this.tAo = void 0),
+      (this.iAo = 0),
       (this.I1e = void 0),
-      (this.sUo = void 0),
+      (this.oAo = void 0),
       (this.qae = void 0),
-      (this.aUo = void 0),
-      (this.hUo = void 0),
-      (this.lUo = void 0),
-      (this._Uo = void 0),
-      (this.uUo = -0),
-      (this.cUo = void 0),
-      (this.mUo = new Map()),
-      (this.dUo = -0),
-      (this.CUo = void 0),
-      (this.gUo = void 0),
-      (this.fUo = void 0),
-      (this.pUo = void 0),
-      (this.vUo = () => {
-        this.MUo();
+      (this.rAo = void 0),
+      (this.nAo = void 0),
+      (this.sAo = void 0),
+      (this.aAo = void 0),
+      (this.hAo = -0),
+      (this.lAo = void 0),
+      (this._Ao = new Map()),
+      (this.uAo = -0),
+      (this.cAo = void 0),
+      (this.mAo = void 0),
+      (this.dAo = void 0),
+      (this.CAo = void 0),
+      (this.gAo = () => {
+        this.fAo();
       });
   }
   async AsyncPlayUiCameraAnimation(i, t, s) {
-    return this.SUo(), this.PlayUiCameraAnimation(i, t, s), this.EUo().Promise;
+    return this.pAo(), this.PlayUiCameraAnimation(i, t, s), this.vAo().Promise;
   }
-  SUo() {
-    this.CUo || (this.CUo = new CustomPromise_1.CustomPromise());
+  pAo() {
+    this.cAo || (this.cAo = new CustomPromise_1.CustomPromise());
   }
-  EUo() {
-    return this.CUo;
+  vAo() {
+    return this.cAo;
   }
   async WaitCameraAnimationFinished() {
-    return this.SUo(), this.EUo().Promise;
+    return this.pAo(), this.vAo().Promise;
   }
   PlayUiCameraAnimation(i, t, s) {
     this.ResetUiCameraBlendAnimation(),
       t.CanApplyAnimationHandle()
-        ? this.yUo(i, s, t)
+        ? this.MAo(i, s, t)
           ? (Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "CameraAnimation",
@@ -59,27 +59,27 @@ class UiCameraAnimation {
                 ["fromHandleName", i.ToString()],
                 ["toHandleName", t.ToString()],
                 ["blendDataName", s],
-                ["timeLength", this.dUo],
+                ["timeLength", this.uAo],
               ),
-            this.oUo.Deactivate(),
+            this.eAo.Deactivate(),
             UiCameraAnimationManager_1.UiCameraAnimationManager.UiCameraSpringStructure.SetCameraActorRelativeLocation(
               Vector_1.Vector.ZeroVector,
             ),
-            this.oUo.SetWidgetCameraAttachToAnimationActor(),
-            this.dUo <= 0
+            this.eAo.SetWidgetCameraAttachToAnimationActor(),
+            this.uAo <= 0
               ? (Log_1.Log.CheckInfo() &&
                   Log_1.Log.Info(
                     "CameraAnimation",
                     8,
                     "播放界面摄像机动画时间<=0，会立马结束动画",
-                    ["timeLength", this.dUo],
+                    ["timeLength", this.uAo],
                   ),
-                this.IUo())
-              : (this.TUo(),
-                this.LUo(
-                  this.rUo.LevelSequence,
-                  this.rUo.PlayRate,
-                  this.rUo.bReverse,
+                this.EAo())
+              : (this.SAo(),
+                this.yAo(
+                  this.tAo.LevelSequence,
+                  this.tAo.PlayRate,
+                  this.tAo.bReverse,
                 )))
           : Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
@@ -98,24 +98,24 @@ class UiCameraAnimation {
             ["toHandleData", t.ToString()],
           );
   }
-  yUo(i, t, s) {
+  MAo(i, t, s) {
     return (
-      (this.gUo = i),
-      (this.fUo = s),
-      (this.oUo =
+      (this.mAo = i),
+      (this.dAo = s),
+      (this.eAo =
         UiCameraAnimationManager_1.UiCameraAnimationManager.GetCurrentCameraHandle()),
-      (this.rUo =
+      (this.tAo =
         ConfigManager_1.ConfigManager.UiCameraAnimationConfig.GetUiCameraAnimationBlendData(
           t,
         )),
-      !!(this.oUo && this.rUo && this.gUo) &&
+      !!(this.eAo && this.tAo && this.mAo) &&
         ((i =
           UiCameraAnimationManager_1.UiCameraAnimationManager
             .UiCameraSpringStructure),
         (s =
           UiCameraAnimationManager_1.UiCameraAnimationManager
             .UiCameraPostEffectComponent),
-        this.DUo(
+        this.IAo(
           i.GetActorLocation(),
           i.GetActorRotation(),
           i.GetSpringArmLength(),
@@ -125,203 +125,203 @@ class UiCameraAnimation {
           s.GetManualFocusDistance(),
           s.GetCurrentAperture(),
           s.GetPostProcessBlendWeight(),
-          this.rUo.Time,
+          this.tAo.Time,
         ),
         !0)
     );
   }
-  DUo(i, t, s, e, a, h, r, o, n, m) {
+  IAo(i, t, s, e, a, h, r, o, n, m) {
     (this.I1e = i),
-      (this.sUo = t),
+      (this.oAo = t),
       (this.qae = s),
-      (this.aUo = e),
-      (this.hUo = a),
-      (this.lUo = h),
-      (this._Uo = r),
-      (this.uUo = o),
-      (this.cUo = n),
-      (this.dUo = m);
+      (this.rAo = e),
+      (this.nAo = a),
+      (this.sAo = h),
+      (this.aAo = r),
+      (this.hAo = o),
+      (this.lAo = n),
+      (this.uAo = m);
   }
   StopUiCameraAnimation() {
     var i;
-    this.fUo &&
+    this.dAo &&
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "CameraAnimation",
           8,
           "播放界面摄像机动画------停止",
-          ["fromHandleName", this.gUo?.ToString()],
-          ["toHandleName", this.fUo?.ToString()],
+          ["fromHandleName", this.mAo?.ToString()],
+          ["toHandleName", this.dAo?.ToString()],
         ),
-      this.CUo &&
+      this.cAo &&
         ((i = {
           FinishType: 1,
-          FromHandleData: this.gUo,
-          ToHandleData: this.fUo,
+          FromHandleData: this.mAo,
+          ToHandleData: this.dAo,
         }),
-        this.CUo.SetResult(i),
-        (this.CUo = void 0)),
-      this.MUo(!0, 1),
+        this.cAo.SetResult(i),
+        (this.cAo = void 0)),
+      this.fAo(!0, 1),
       this.ResetUiCameraBlendAnimation());
   }
-  IUo() {
+  EAo() {
     var i;
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "CameraAnimation",
         8,
         "播放界面摄像机动画------完成",
-        ["fromHandleName", this.gUo.ToString()],
-        ["toHandleName", this.fUo?.ToString()],
+        ["fromHandleName", this.mAo.ToString()],
+        ["toHandleName", this.dAo?.ToString()],
       ),
-      this.CUo &&
+      this.cAo &&
         ((i = {
           FinishType: 0,
-          FromHandleData: this.gUo,
-          ToHandleData: this.fUo,
+          FromHandleData: this.mAo,
+          ToHandleData: this.dAo,
         }),
-        this.CUo.SetResult(i),
-        (this.CUo = void 0)),
-      this.MUo(),
+        this.cAo.SetResult(i),
+        (this.cAo = void 0)),
+      this.fAo(),
       this.ResetUiCameraBlendAnimation();
   }
   ResetUiCameraBlendAnimation() {
-    (this.rUo = void 0),
-      (this.oUo = void 0),
-      (this.gUo = void 0),
-      (this.fUo = void 0),
+    (this.tAo = void 0),
+      (this.eAo = void 0),
+      (this.mAo = void 0),
+      (this.dAo = void 0),
       (this.I1e = void 0),
-      (this.sUo = void 0),
+      (this.oAo = void 0),
       (this.qae = void 0),
-      (this.aUo = void 0),
-      (this.hUo = void 0),
-      (this.lUo = void 0),
-      (this._Uo = void 0),
-      (this.cUo = void 0),
-      (this.nUo = 0),
-      (this.dUo = 0),
-      (this.pUo = void 0),
-      this.mUo.clear();
+      (this.rAo = void 0),
+      (this.nAo = void 0),
+      (this.sAo = void 0),
+      (this.aAo = void 0),
+      (this.lAo = void 0),
+      (this.iAo = 0),
+      (this.uAo = 0),
+      (this.CAo = void 0),
+      this._Ao.clear();
   }
-  LUo(i, t, s) {
+  yAo(i, t, s) {
     var e;
     UE.KismetSystemLibrary.IsValidSoftObjectReference(i) &&
-      (this.MUo(!0, 1),
+      (this.fAo(!0, 1),
       (e =
         UiCameraAnimationManager_1.UiCameraAnimationManager
           .UiCameraSequenceComponent).AddUiCameraSequenceFinishedCallback(
-        this.vUo,
+        this.gAo,
       ),
       e.LoadAndPlayUiCameraSequence(i, t, s));
   }
-  MUo(i = !0, t = 0) {
+  fAo(i = !0, t = 0) {
     UiCameraAnimationManager_1.UiCameraAnimationManager.UiCameraSequenceComponent?.DestroyUiCameraSequence(
       i,
       t,
     );
   }
   Tick(i) {
-    this.rUo &&
-      this.oUo &&
-      ((this.nUo += i / TimeUtil_1.TimeUtil.InverseMillisecond),
-      this.nUo >= this.dUo
-        ? this.IUo()
-        : this.fUo &&
-          ((i = this.fUo.GetUiCameraAnimationConfig()),
-          this.RUo(i.LocationType),
-          this.UUo(),
-          this.AUo(this.fUo.GetTargetArmLength()),
-          this.PUo(this.fUo.GetTargetArmOffsetLocation()),
-          this.xUo(this.fUo.GetTargetArmOffsetRotation()),
-          this.wUo(this.fUo.GetTargetFieldOfView()),
-          this.BUo(this.fUo.GetTargetFocalDistance()),
-          this.bUo(this.fUo.GetTargetAperture()),
-          this.qUo(this.fUo.GetTargetPostProcessBlendWeight())));
+    this.tAo &&
+      this.eAo &&
+      ((this.iAo += i / TimeUtil_1.TimeUtil.InverseMillisecond),
+      this.iAo >= this.uAo
+        ? this.EAo()
+        : this.dAo &&
+          ((i = this.dAo.GetUiCameraAnimationConfig()),
+          this.TAo(i.LocationType),
+          this.LAo(),
+          this.DAo(this.dAo.GetTargetArmLength()),
+          this.RAo(this.dAo.GetTargetArmOffsetLocation()),
+          this.UAo(this.dAo.GetTargetArmOffsetRotation()),
+          this.AAo(this.dAo.GetTargetFieldOfView()),
+          this.PAo(this.dAo.GetTargetFocalDistance()),
+          this.xAo(this.dAo.GetTargetAperture()),
+          this.wAo(this.dAo.GetTargetPostProcessBlendWeight())));
   }
   IsPlaying() {
-    return this.nUo < this.dUo;
+    return this.iAo < this.uAo;
   }
-  RUo(i) {
-    var t = this.fUo.GetTargetLocation();
-    t && this.GUo(t, 0 !== i);
+  TAo(i) {
+    var t = this.dAo.GetTargetLocation();
+    t && this.BAo(t, 0 !== i);
   }
-  UUo() {
-    var i = this.fUo.GetTargetRotation();
-    i && this.NUo(i);
+  LAo() {
+    var i = this.dAo.GetTargetRotation();
+    i && this.bAo(i);
   }
-  GUo(i, t) {
-    var s = this.OUo(1);
+  BAo(i, t) {
+    var s = this.qAo(1);
     void 0 !== s &&
       ((i = UE.KismetMathLibrary.VLerp(this.I1e, i, s)),
       t
-        ? this.oUo.SetUiCameraAnimationRelativeLocation(i)
-        : this.oUo.SetUiCameraAnimationLocation(i));
+        ? this.eAo.SetUiCameraAnimationRelativeLocation(i)
+        : this.eAo.SetUiCameraAnimationLocation(i));
   }
-  NUo(i) {
-    var t = this.OUo(2);
+  bAo(i) {
+    var t = this.qAo(2);
     t &&
-      ((i = UE.KismetMathLibrary.RLerp(this.sUo, i, t, !0)),
-      this.oUo.SetUiCameraAnimationRotation(i));
+      ((i = UE.KismetMathLibrary.RLerp(this.oAo, i, t, !0)),
+      this.eAo.SetUiCameraAnimationRotation(i));
   }
-  AUo(i) {
-    var t = this.OUo(3);
+  DAo(i) {
+    var t = this.qAo(3);
     t &&
       ((i = MathUtils_1.MathUtils.Lerp(this.qae, i, t)),
-      this.oUo.SetSpringArmLength(i));
+      this.eAo.SetSpringArmLength(i));
   }
-  PUo(i) {
-    var t = this.OUo(4);
+  RAo(i) {
+    var t = this.qAo(4);
     t &&
-      ((i = UE.KismetMathLibrary.VLerp(this.aUo, i, t)),
-      this.oUo.SetSpringArmRelativeLocation(i));
+      ((i = UE.KismetMathLibrary.VLerp(this.rAo, i, t)),
+      this.eAo.SetSpringArmRelativeLocation(i));
   }
-  xUo(i) {
-    var t = this.OUo(5);
+  UAo(i) {
+    var t = this.qAo(5);
     t &&
-      ((i = UE.KismetMathLibrary.RLerp(this.hUo, i, t, !0)),
-      this.oUo.SetSprintArmRelativeRotation(i));
+      ((i = UE.KismetMathLibrary.RLerp(this.nAo, i, t, !0)),
+      this.eAo.SetSprintArmRelativeRotation(i));
   }
-  wUo(i) {
-    var t = this.OUo(6);
+  AAo(i) {
+    var t = this.qAo(6);
     t &&
-      ((i = MathUtils_1.MathUtils.Lerp(this.lUo, i, t)),
-      this.oUo.SetCameraFieldOfView(i));
+      ((i = MathUtils_1.MathUtils.Lerp(this.sAo, i, t)),
+      this.eAo.SetCameraFieldOfView(i));
   }
-  BUo(i) {
-    var t = this.OUo(7);
+  PAo(i) {
+    var t = this.qAo(7);
     t &&
-      ((i = MathUtils_1.MathUtils.Lerp(this._Uo, i, t)),
-      this.oUo.SetCameraFocalDistance(i));
+      ((i = MathUtils_1.MathUtils.Lerp(this.aAo, i, t)),
+      this.eAo.SetCameraFocalDistance(i));
   }
-  bUo(i) {
-    var t = this.OUo(9);
+  xAo(i) {
+    var t = this.qAo(9);
     t &&
-      ((i = MathUtils_1.MathUtils.Lerp(this.uUo, i, t)),
-      this.oUo.SetCameraAperture(i));
+      ((i = MathUtils_1.MathUtils.Lerp(this.hAo, i, t)),
+      this.eAo.SetCameraAperture(i));
   }
-  qUo(i) {
-    var t = this.OUo(8);
+  wAo(i) {
+    var t = this.qAo(8);
     t &&
-      ((i = MathUtils_1.MathUtils.Lerp(this.cUo, i, t)),
-      this.oUo.SetCameraPostProcessBlendWeight(i));
+      ((i = MathUtils_1.MathUtils.Lerp(this.lAo, i, t)),
+      this.eAo.SetCameraPostProcessBlendWeight(i));
   }
-  OUo(i) {
-    return this.GetCurveFloatValue(i, this.nUo);
+  qAo(i) {
+    return this.GetCurveFloatValue(i, this.iAo);
   }
-  TUo() {
+  SAo() {
     var i;
     if (
-      (this.pUo?.IsValid() ||
-        ((i = this.rUo?.CommonCurve),
+      (this.CAo?.IsValid() ||
+        ((i = this.tAo?.CommonCurve),
         UE.KismetSystemLibrary.IsValidSoftObjectReference(i) &&
           ((i = i.ToAssetPathName()),
           StringUtils_1.StringUtils.IsEmpty(i) ||
             ResourceSystem_1.ResourceSystem.LoadAsync(i, UE.CurveFloat, (i) => {
-              this.pUo = i;
+              this.CAo = i;
             }))),
-      this.mUo.size <= 0)
+      this._Ao.size <= 0)
     ) {
-      var t = this.rUo?.CurveMap,
+      var t = this.tAo?.CurveMap,
         s = t.GetMaxIndex();
       for (let i = 0; i < s; i++) {
         const a = t.GetKey(i).valueOf();
@@ -330,14 +330,14 @@ class UiCameraAnimation {
           ((e = e.ToAssetPathName()),
           StringUtils_1.StringUtils.IsEmpty(e) ||
             ResourceSystem_1.ResourceSystem.LoadAsync(e, UE.CurveFloat, (i) => {
-              this.mUo.set(a, i);
+              this._Ao.set(a, i);
             }));
       }
     }
   }
   GetCurveFloat(i) {
-    i = this.mUo.get(i);
-    return i || this.pUo;
+    i = this._Ao.get(i);
+    return i || this.CAo;
   }
   GetCurveFloatValue(i, t) {
     return t > this.GetTimeLength
@@ -347,7 +347,7 @@ class UiCameraAnimation {
         : void 0;
   }
   get GetTimeLength() {
-    return this.dUo;
+    return this.uAo;
   }
 }
 exports.UiCameraAnimation = UiCameraAnimation;

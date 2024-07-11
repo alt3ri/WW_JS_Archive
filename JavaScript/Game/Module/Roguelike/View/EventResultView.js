@@ -1,23 +1,23 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
-  (exports.EventResultView = void 0);
+  (exports.EventResultViewAll = exports.EventResultViewOneByOne = void 0);
 const ConfigManager_1 = require("../../../Manager/ConfigManager"),
   UiActorPool_1 = require("../../../Ui/UiActorPool"),
   GenericLayout_1 = require("../../Util/Layout/GenericLayout"),
   RoguelikeDefine_1 = require("../Define/RoguelikeDefine"),
   CommonSelectItem_1 = require("./CommonSelectItem"),
   RogueSelectResultBaseView_1 = require("./RogueSelectResultBaseView");
-class EventResultView extends RogueSelectResultBaseView_1.RogueSelectResultBaseView {
+class EventResultViewOneByOne extends RogueSelectResultBaseView_1.RogueSelectResultBaseView {
   constructor() {
     super(...arguments),
-      (this.aao = void 0),
-      (this.KZt = 0),
-      (this.$so = void 0),
+      (this.oho = void 0),
+      (this.Kei = 0),
+      (this.Wao = void 0),
       (this.CommonSelectItemLayout = void 0),
       (this.CloseBtn = () => {
-        this.KZt + 1 >= this.aao.RogueGainEntryArray.length
-          ? this.CloseMe()
-          : (this.PlaySequence("Start"), (this.KZt += 1), this.Refresh());
+        this.Kei + 1 >= this.oho.RogueGainEntryArray.length
+          ? this.CloseMe(this.oho?.Callback)
+          : (this.PlaySequence("Start"), (this.Kei += 1), this.Refresh());
       }),
       (this.CreateCommonSelectItem = () => {
         return new CommonSelectItem_1.CommonSelectItem();
@@ -30,29 +30,29 @@ class EventResultView extends RogueSelectResultBaseView_1.RogueSelectResultBaseV
     var e = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
       RoguelikeDefine_1.COMMON_SELECT_ITEM,
     );
-    (this.$so = await UiActorPool_1.UiActorPool.GetAsync(e)),
+    (this.Wao = await UiActorPool_1.UiActorPool.GetAsync(e)),
       (this.CommonSelectItemLayout = new GenericLayout_1.GenericLayout(
         this.GetHorizontalLayout(3),
         this.CreateCommonSelectItem,
-        this.$so?.UiItem.GetOwner(),
+        this.Wao?.UiItem.GetOwner(),
       ));
   }
   OnStart() {
-    super.OnStart(), (this.aao = this.OpenParam);
+    super.OnStart(), (this.oho = this.OpenParam);
     var e = this.GetHorizontalLayout(3).GetRootComponent();
-    this.$so.UiItem.SetUIParent(e), this.Refresh();
+    this.Wao.UiItem.SetUIParent(e), this.Refresh();
   }
   OnBeforeDestroy() {
     this.CommonSelectItemLayout?.ClearChildren(),
-      this.$so &&
+      this.Wao &&
         UiActorPool_1.UiActorPool.RecycleAsync(
-          this.$so,
+          this.Wao,
           RoguelikeDefine_1.COMMON_SELECT_ITEM,
         );
   }
   Refresh() {
     this.CommonSelectItemLayout.RefreshByDataAsync([
-      this.aao.RogueGainEntryArray[this.KZt],
+      this.oho.RogueGainEntryArray[this.Kei],
     ]).then(
       () => {
         this.CommonSelectItemLayout.GetLayoutItemList().forEach((e) => {
@@ -67,5 +67,63 @@ class EventResultView extends RogueSelectResultBaseView_1.RogueSelectResultBaseV
     this.GetText(4).ShowTextNew(RoguelikeDefine_1.ROGUELIKEVIEW_20_TEXT);
   }
 }
-exports.EventResultView = EventResultView;
+exports.EventResultViewOneByOne = EventResultViewOneByOne;
+class EventResultViewAll extends RogueSelectResultBaseView_1.RogueSelectResultBaseView {
+  constructor() {
+    super(...arguments),
+      (this.oho = void 0),
+      (this.Wao = void 0),
+      (this.CommonSelectItemLayout = void 0),
+      (this.CloseBtn = () => {
+        this.CloseMe(this.oho?.Callback);
+      }),
+      (this.CreateCommonSelectItem = () => {
+        return new CommonSelectItem_1.CommonSelectItem();
+      }),
+      (this.OnDescModelChange = () => {
+        this.Refresh();
+      });
+  }
+  async OnBeforeStartAsync() {
+    var e = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
+      RoguelikeDefine_1.COMMON_SELECT_ITEM,
+    );
+    (this.Wao = await UiActorPool_1.UiActorPool.GetAsync(e)),
+      (this.CommonSelectItemLayout = new GenericLayout_1.GenericLayout(
+        this.GetHorizontalLayout(3),
+        this.CreateCommonSelectItem,
+        this.Wao?.UiItem.GetOwner(),
+      ));
+  }
+  OnStart() {
+    super.OnStart(), (this.oho = this.OpenParam);
+    var e = this.GetHorizontalLayout(3).GetRootComponent();
+    this.Wao.UiItem.SetUIParent(e), this.Refresh();
+  }
+  OnBeforeDestroy() {
+    this.CommonSelectItemLayout?.ClearChildren(),
+      this.Wao &&
+        UiActorPool_1.UiActorPool.RecycleAsync(
+          this.Wao,
+          RoguelikeDefine_1.COMMON_SELECT_ITEM,
+        );
+  }
+  Refresh() {
+    this.CommonSelectItemLayout.RefreshByDataAsync(
+      this.oho.RogueGainEntryArray,
+    ).then(
+      () => {
+        this.CommonSelectItemLayout.GetLayoutItemList().forEach((e) => {
+          e.SetToggleUnDetermined();
+        });
+      },
+      () => {},
+    ),
+      this.RefreshTitleText();
+  }
+  RefreshTitleText() {
+    this.GetText(4).ShowTextNew(RoguelikeDefine_1.ROGUELIKEVIEW_20_TEXT);
+  }
+}
+exports.EventResultViewAll = EventResultViewAll;
 //# sourceMappingURL=EventResultView.js.map

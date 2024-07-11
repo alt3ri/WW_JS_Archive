@@ -12,6 +12,7 @@ const UE = require("ue"),
   UiPopViewData_1 = require("../../Ui/Define/UiPopViewData"),
   UiManager_1 = require("../../Ui/UiManager"),
   FilterSortEntrance_1 = require("../Common/FilterSort/FilterSortEntrance"),
+  LevelSequencePlayer_1 = require("../Common/LevelSequencePlayer"),
   TeamPlayerSelectionComponent_1 = require("../Common/TeamPlayerSelectionComponent"),
   EditFormationDefine_1 = require("../EditFormation/EditFormationDefine"),
   RoleController_1 = require("../RoleUi/RoleController"),
@@ -25,7 +26,7 @@ const UE = require("ue"),
   TeamRoleSkillItem_1 = require("./TeamRoleSkillItem"),
   displaySkillTypes = [11, 2, 3, 6];
 class TeamRoleSelectViewData extends UiPopViewData_1.UiPopViewData {
-  constructor(i, t, e, s, h, o) {
+  constructor(i, e, t, s, h, o) {
     super(),
       (this.UseWay = void 0),
       (this.CurrentRoleId = 0),
@@ -42,8 +43,8 @@ class TeamRoleSelectViewData extends UiPopViewData_1.UiPopViewData {
       (this.CanConfirmFunc = void 0),
       (this.CanJoinTeam = void 0),
       (this.UseWay = i),
-      (this.CurrentRoleId = t),
-      (this.RoleList = e),
+      (this.CurrentRoleId = e),
+      (this.RoleList = t),
       (this.BackCallBack = h),
       (this.ConfirmCallBack = s),
       (this.Position = o);
@@ -69,34 +70,35 @@ class TeamRoleSelectView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
       (this.Pe = void 0),
-      (this.ami = void 0),
+      (this.adi = void 0),
       (this.CurSelectRole = void 0),
-      (this.jho = void 0),
-      (this.Kho = void 0),
-      (this.Xho = void 0),
-      (this.$ho = void 0),
-      (this.Yho = void 0),
-      (this.Jho = void 0),
-      (this.zho = void 0),
-      (this.x4t = !1),
-      (this.xUt = () => {
+      (this.Flo = void 0),
+      (this.Vlo = void 0),
+      (this.jlo = void 0),
+      (this.Wlo = void 0),
+      (this.Klo = void 0),
+      (this.Qlo = void 0),
+      (this.Xlo = void 0),
+      (this.x5t = !1),
+      (this.SPe = void 0),
+      (this.qAt = () => {
         var i = this.CurSelectRole?.GetDataId(),
-          t = this.Pe?.CanConfirmFunc;
-        (t && !t(i)) ||
+          e = this.Pe?.CanConfirmFunc;
+        (e && !e(i)) ||
           (this.Pe?.ConfirmCallBack?.(i),
           UiManager_1.UiManager.CloseView(this.Info.Name));
       }),
-      (this.W9t = () => {
+      (this.W7t = () => {
         this.Pe?.BackCallBack?.(),
           UiManager_1.UiManager.CloseView(this.Info.Name);
       }),
-      (this.Zho = () => {
+      (this.$lo = () => {
         var i = this.CurSelectRole.GetDataId(),
-          t = i >= RoleDefine_1.ROBOT_DATA_MIN_ID ? [i] : [];
-        RoleController_1.RoleController.OpenRoleMainView(0, i, t),
+          e = i >= RoleDefine_1.ROBOT_DATA_MIN_ID ? [i] : [];
+        RoleController_1.RoleController.OpenRoleMainView(0, i, e),
           EventSystem_1.EventSystem.Add(
             EventDefine_1.EEventName.OnRoleChangeEnd,
-            this.elo,
+            this.Ylo,
           ),
           EventSystem_1.EventSystem.Add(
             EventDefine_1.EEventName.CloseView,
@@ -107,22 +109,22 @@ class TeamRoleSelectView extends UiViewBase_1.UiViewBase {
         "RoleRootView" === i &&
           (EventSystem_1.EventSystem.Remove(
             EventDefine_1.EEventName.OnRoleChangeEnd,
-            this.elo,
+            this.Ylo,
           ),
           EventSystem_1.EventSystem.Remove(
             EventDefine_1.EEventName.CloseView,
             this.$Ge,
           ));
       }),
-      (this.w4t = (i) => {
+      (this.w5t = (i) => {
         (ModelManager_1.ModelManager.RoleModel.IsShowMultiSkillDesc = i),
-          (this.x4t = i);
-        i = this.Xho.GetSelectedGridIndex();
-        !this.$ho || i < 0 || this.$ho.length < i || this.tlo(this.$ho[i]);
+          (this.x5t = i);
+        i = this.jlo.GetSelectedGridIndex();
+        !this.Wlo || i < 0 || this.Wlo.length < i || this.Jlo(this.Wlo[i]);
       }),
-      (this.Qho = (i, t, e) => {
-        this.Kho = i;
-        var i = 0 < this.Kho.length,
+      (this.Hlo = (i, e, t) => {
+        this.Vlo = i;
+        var i = 0 < this.Vlo.length,
           s =
             (this.GetItem(8).SetUIActive(!i),
             this.GetButton(3).RootUIComp.SetUIActive(i),
@@ -139,30 +141,30 @@ class TeamRoleSelectView extends UiViewBase_1.UiViewBase {
               ModelManager_1.ModelManager.RoleSelectModel.SelectedRoleSet.delete(
                 s,
               ),
-            this.jho.DeselectCurrentGridProxy(),
-            this.jho.RefreshByData(this.Kho),
+            this.Flo.DeselectCurrentGridProxy(),
+            this.Flo.RefreshByData(this.Vlo),
             this.CurSelectRole)
           )
-            if (1 !== e || t) {
+            if (1 !== t || e) {
               let i = !1;
-              for (const h of this.Kho)
+              for (const h of this.Vlo)
                 if (h.GetDataId() === this.CurSelectRole?.GetDataId()) {
                   i = !0;
                   break;
                 }
-              i || (this.CurSelectRole = this.Kho[0]);
-            } else this.CurSelectRole = this.Kho[0];
+              i || (this.CurSelectRole = this.Vlo[0]);
+            } else this.CurSelectRole = this.Vlo[0];
           else
-            for (const o of this.Kho)
+            for (const o of this.Vlo)
               if (
                 ((this.CurSelectRole = o),
                 this.Pe?.CanJoinTeam?.(o.GetDataId()))
               )
                 break;
-          this.ilo();
+          this.zlo();
         }
       }),
-      (this.z9e = () => {
+      (this.cHe = () => {
         var i = new TeamRoleGrid_1.TeamRoleGrid();
         return (
           (i.IsHighlightIndex = this.IsHighlightIndex),
@@ -173,67 +175,66 @@ class TeamRoleSelectView extends UiViewBase_1.UiViewBase {
       }),
       (this.IsHighlightIndex = (i) => i === this.Pe?.Position),
       (this.ToggleFunction = (i) => {
-        var t;
+        var e;
         1 === i.State &&
-          ((t = this.CurSelectRole?.GetDataId()) &&
+          ((e = this.CurSelectRole?.GetDataId()) &&
             ModelManager_1.ModelManager.RoleSelectModel.SelectedRoleSet.delete(
-              t,
+              e,
             ),
-          (t = i.Data),
-          (this.CurSelectRole = t),
-          this.olo(),
-          (i = this.Kho.indexOf(t)),
-          this.jho.SelectGridProxy(i),
-          this.jho.RefreshGridProxy(i),
-          (t = this.CurSelectRole.GetDataId()),
-          ModelManager_1.ModelManager.RoleSelectModel.SelectedRoleSet.add(t),
-          this.rlo(t),
-          this.F6t(t),
-          this.U4t(t));
+          (e = i.Data),
+          (this.CurSelectRole = e),
+          this.Zlo(),
+          (i = this.Vlo.indexOf(e)),
+          this.Flo.SelectGridProxy(i),
+          (e = this.CurSelectRole.GetDataId()),
+          ModelManager_1.ModelManager.RoleSelectModel.SelectedRoleSet.add(e),
+          this.e1o(e),
+          this.F8t(e),
+          this.U5t(e));
       }),
-      (this.CanExecuteChangeFunction = (i, t, e) => {
-        return 1 !== e || this.CurSelectRole !== i;
+      (this.CanExecuteChangeFunction = (i, e, t) => {
+        return 1 !== t || this.CurSelectRole !== i;
       }),
-      (this.nlo = () => {
+      (this.t1o = () => {
         var i = new TeamRoleSkillItem_1.TeamRoleSkillItem();
-        return i.BindOnSkillStateChange(this.slo), i;
+        return i.BindOnSkillStateChange(this.i1o), i;
       }),
-      (this.slo = (i, t) => {
+      (this.i1o = (i, e) => {
         1 === i &&
-          this.$ho &&
-          ((i = this.$ho.indexOf(t)), this.Xho.SelectGridProxy(i), this.tlo(t));
+          this.Wlo &&
+          ((i = this.Wlo.indexOf(e)), this.jlo.SelectGridProxy(i), this.Jlo(e));
       }),
-      (this.alo = () => {
+      (this.o1o = () => {
         this.CurSelectRole &&
-          (this.olo(), this.rlo(this.CurSelectRole.GetDataId()));
+          (this.Zlo(), this.e1o(this.CurSelectRole.GetDataId()));
       }),
-      (this.elo = () => {
-        var t = ModelManager_1.ModelManager.RoleSelectModel;
-        let e = !1;
-        for (let i = 0; i < this.Kho.length; i++) {
-          var s = this.Kho[i],
+      (this.Ylo = () => {
+        var e = ModelManager_1.ModelManager.RoleSelectModel;
+        let t = !1;
+        for (let i = 0; i < this.Vlo.length; i++) {
+          var s = this.Vlo[i],
             h = this.CurSelectRole === s,
             o = ModelManager_1.ModelManager.RoleModel?.GetRoleDataById(
               s.GetDataId(),
             );
           o &&
             o !== s &&
-            ((e = !0),
-            (this.Kho[i] = o),
-            0 < (s = t.GetRoleIndex(s.GetDataId())) && t.RoleIndexMap.set(s, o),
+            ((t = !0),
+            (this.Vlo[i] = o),
+            0 < (s = e.GetRoleIndex(s.GetDataId())) && e.RoleIndexMap.set(s, o),
             h) &&
             (this.CurSelectRole = o);
         }
-        e && this.ami?.UpdateData(this.Pe.UseWay, this.Kho);
+        t && this.adi?.UpdateData(this.Pe.UseWay, this.Vlo);
       }),
-      (this.d3t = () => {
-        var i;
+      (this.C4t = (i) => {
+        var e;
         this.Pe?.EditBattleRoleSlotDataList &&
-          (((i =
+          (((e =
             ModelManager_1.ModelManager.EditBattleTeamModel.GetRoleSlotData(
               this.Pe.Position,
             )) &&
-            i.GetRoleData?.PlayerId ===
+            e.GetRoleData?.PlayerId ===
               ModelManager_1.ModelManager.PlayerInfoModel.GetId()) ||
             (this.Pe?.BackCallBack?.(),
             UiManager_1.UiManager.CloseView(this.Info.Name)),
@@ -271,187 +272,193 @@ class TeamRoleSelectView extends UiViewBase_1.UiViewBase {
       [23, UE.UIItem],
     ]),
       (this.BtnBindInfo = [
-        [3, this.xUt],
-        [4, this.W9t],
-        [9, this.Zho],
-        [22, this.w4t],
+        [3, this.qAt],
+        [4, this.W7t],
+        [9, this.$lo],
+        [22, this.w5t],
       ]);
   }
   async OnBeforeStartAsync() {
     var i = [];
-    for (const t of this.OpenParam.RoleList)
-      t.GetDataId() > RoleDefine_1.ROBOT_DATA_MIN_ID && i.push(t.GetDataId());
+    for (const e of this.OpenParam.RoleList)
+      e.GetDataId() > RoleDefine_1.ROBOT_DATA_MIN_ID && i.push(e.GetDataId());
     0 < i.length &&
       (await RoleController_1.RoleController.RobotRolePropRequest(i));
   }
   OnStart() {
     (this.Pe = this.OpenParam),
-      (this.jho = new LoopScrollView_1.LoopScrollView(
+      (this.Flo = new LoopScrollView_1.LoopScrollView(
         this.GetLoopScrollViewComponent(1),
         this.GetItem(7).GetOwner(),
-        this.z9e,
+        this.cHe,
       ));
     var i = this.GetItem(20),
       i =
-        ((this.Jho =
+        ((this.Qlo =
           new TeamPlayerSelectionComponent_1.TeamPlayerSelectionComponent(i)),
         this.GetItem(21)),
       i =
-        ((this.zho =
+        ((this.Xlo =
           new TeamPlayerSelectionComponent_1.TeamPlayerSelectionComponent(i)),
         ModelManager_1.ModelManager.GameModeModel.IsMulti),
       i =
         (this.GetItem(23).SetUIActive(i),
-        (this.x4t =
+        (this.x5t =
           ModelManager_1.ModelManager.RoleModel.IsShowMultiSkillDesc && i),
-        this.x4t ? 1 : 0),
-      t =
+        this.x5t ? 1 : 0),
+      e =
         (this.GetExtendToggle(22).SetToggleState(i),
-        (this.Xho = new GenericLayout_1.GenericLayout(
+        (this.jlo = new GenericLayout_1.GenericLayout(
           this.GetHorizontalLayout(13),
-          this.nlo,
+          this.t1o,
         )),
-        (this.Yho = new GenericLayout_1.GenericLayout(
+        (this.Klo = new GenericLayout_1.GenericLayout(
           this.GetMultiTemplateLayout(16),
           () => new RoleTagMediumIconItem_1.RoleTagMediumIconItem(),
         )),
-        (this.Kho = this.Pe?.RoleList),
+        (this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(
+          this.RootItem,
+        )),
+        (this.Vlo = this.Pe?.RoleList),
         this.Pe?.CurrentRoleId),
-      e = this.Pe?.FormationRoleList,
+      t = this.Pe?.FormationRoleList,
       s =
         (ModelManager_1.ModelManager.RoleSelectModel.ClearData(),
         ModelManager_1.ModelManager.RoleSelectModel.RoleIndexMap);
-    if (e)
+    if (t)
       for (
         let i = 1;
-        i <= EditFormationDefine_1.EDITE_FORAMTION_MAX_NUM && !(i > e.length);
+        i <= EditFormationDefine_1.EDITE_FORAMTION_MAX_NUM && !(i > t.length);
         i++
       ) {
-        var h = e[i - 1];
-        for (const o of this.Kho)
+        var h = t[i - 1];
+        for (const o of this.Vlo)
           if (o.GetDataId() === h) {
             s.set(i, o);
             break;
           }
       }
     i = this.GetItem(5);
-    this.ami = new FilterSortEntrance_1.FilterSortEntrance(i, this.Qho);
-    for (const r of this.Kho)
-      if (r.GetDataId() === t) {
+    this.adi = new FilterSortEntrance_1.FilterSortEntrance(i, this.Hlo);
+    for (const r of this.Vlo)
+      if (r.GetDataId() === e) {
         this.CurSelectRole = r;
         break;
       }
     this.RefreshTeamItem(this.Pe?.EditBattleRoleSlotDataList),
-      this.Kho.sort(
-        (i, t) => t.GetRoleConfig().Priority - i.GetRoleConfig().Priority,
+      this.Vlo.sort(
+        (i, e) => e.GetRoleConfig().Priority - i.GetRoleConfig().Priority,
       ),
-      this.ami?.UpdateData(this.Pe.UseWay, this.Kho);
+      this.adi?.UpdateData(this.Pe.UseWay, this.Vlo);
   }
   OnBeforeDestroy() {
     this.Pe?.OnHideFinishCallBack?.(),
-      this.ami?.Destroy(),
+      this.adi?.Destroy(),
       (this.Pe = void 0),
       (this.CurSelectRole = void 0),
-      this.ami?.Destroy(),
-      (this.ami = void 0),
-      this.jho?.ClearGridProxies(),
-      (this.jho = void 0),
-      this.Kho?.splice(0, this.Kho.length),
-      (this.Kho = void 0),
-      this.Jho?.Destroy(),
-      (this.Jho = void 0),
-      this.zho?.Destroy(),
-      (this.zho = void 0),
-      this.Xho?.ClearChildren(),
-      (this.Xho = void 0),
-      this.$ho?.splice(0, this.$ho.length),
-      (this.$ho = void 0),
-      this.Yho?.ClearChildren(),
-      (this.Yho = void 0);
+      this.adi?.Destroy(),
+      (this.adi = void 0),
+      this.Flo?.ClearGridProxies(),
+      (this.Flo = void 0),
+      this.Vlo?.splice(0, this.Vlo.length),
+      (this.Vlo = void 0),
+      this.Qlo?.Destroy(),
+      (this.Qlo = void 0),
+      this.Xlo?.Destroy(),
+      (this.Xlo = void 0),
+      this.jlo?.ClearChildren(),
+      (this.jlo = void 0),
+      this.Wlo?.splice(0, this.Wlo.length),
+      (this.Wlo = void 0),
+      this.Klo?.ClearChildren(),
+      (this.Klo = void 0);
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnRefreshEditBattleRoleSlotData,
-      this.d3t,
+      this.C4t,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.RoleRefreshAttribute,
-        this.alo,
+        this.o1o,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnRevive,
-        this.alo,
+        this.o1o,
       );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnRefreshEditBattleRoleSlotData,
-      this.d3t,
+      this.C4t,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.RoleRefreshAttribute,
-        this.alo,
+        this.o1o,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnRevive,
-        this.alo,
+        this.o1o,
       );
   }
-  ilo() {
-    this.olo();
-    var i = this.Kho.indexOf(this.CurSelectRole),
-      i = (this.jho.SelectGridProxy(i), this.CurSelectRole.GetDataId());
+  zlo() {
+    this.Zlo();
+    var i = this.Vlo.indexOf(this.CurSelectRole),
+      i = (this.Flo.SelectGridProxy(i), this.CurSelectRole.GetDataId());
     ModelManager_1.ModelManager.RoleSelectModel.SelectedRoleSet.add(i),
-      this.rlo(i),
-      this.F6t(i),
-      this.U4t(i);
+      this.e1o(i),
+      this.F8t(i),
+      this.U5t(i);
   }
-  RefreshTeamItem(t) {
-    if (t) {
-      this.Jho.SetActive(!0),
-        this.zho.SetActive(!0),
-        (this.Jho.IsSet = !1),
-        (this.zho.IsSet = !1);
+  RefreshTeamItem(e) {
+    if (e) {
+      this.Qlo.SetActive(!0),
+        this.Xlo.SetActive(!0),
+        (this.Qlo.IsSet = !1),
+        (this.Xlo.IsSet = !1);
       for (let i = 1; i <= SceneTeamDefine_1.SCENE_TEAM_MAX_NUM; i++) {
-        var e = t[i - 1];
-        !e?.HasRole ||
-          e.GetRoleData.IsSelf ||
-          (this.Jho.IsSet
-            ? this.zho.IsSet ||
-              (this.zho.SetRoleId(e.GetRoleData.ConfigId),
-              this.zho.SetTeamNumber(e.GetRoleData.OnlineIndex),
-              this.zho.RefreshItem())
-            : (this.Jho.SetRoleId(e.GetRoleData.ConfigId),
-              this.Jho.SetTeamNumber(e.GetRoleData.OnlineIndex),
-              this.Jho.RefreshItem()));
+        var t = e[i - 1];
+        !t?.HasRole ||
+          t.GetRoleData.IsSelf ||
+          (this.Qlo.IsSet
+            ? this.Xlo.IsSet ||
+              (this.Xlo.SetRoleId(t.GetRoleData.ConfigId),
+              this.Xlo.SetTeamNumber(t.GetRoleData.OnlineIndex),
+              this.Xlo.RefreshItem())
+            : (this.Qlo.SetRoleId(t.GetRoleData.ConfigId),
+              this.Qlo.SetTeamNumber(t.GetRoleData.OnlineIndex),
+              this.Qlo.RefreshItem()));
       }
-      this.Jho.SetActive(this.Jho.IsSet), this.zho.SetActive(this.zho.IsSet);
-    } else this.Jho.SetActive(!1), this.zho.SetActive(!1);
+      this.Qlo.SetActive(this.Qlo.IsSet), this.Xlo.SetActive(this.Xlo.IsSet);
+    } else this.Qlo.SetActive(!1), this.Xlo.SetActive(!1);
   }
-  rlo(i) {
+  e1o(i) {
     var i = this.Pe?.GetConfirmButtonTextCallBack?.(i);
     i &&
       ((i = ConfigManager_1.ConfigManager.TextConfig.GetTextContentIdById(i)),
       this.GetText(2).ShowTextNew(i));
   }
-  F6t(i) {
+  F8t(i) {
     this.Pe?.GetConfirmButtonEnableCallBack &&
       ((i = this.Pe.GetConfirmButtonEnableCallBack(i)),
       this.GetInteractionGroup(0)?.SetInteractable(i));
   }
-  U4t(i) {
-    var t = ModelManager_1.ModelManager.RoleModel.GetRoleName(i),
-      t =
-        (this.GetText(11).SetText(t),
+  U5t(i) {
+    "Switch" === this.SPe?.GetCurrentSequence()
+      ? this.SPe.ReplaySequenceByKey("Switch")
+      : this.SPe?.PlayLevelSequenceByName("Switch");
+    var e = ModelManager_1.ModelManager.RoleModel.GetRoleName(i),
+      e =
+        (this.GetText(11).SetText(e),
         ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(i));
-    if (t) {
-      var e = ConfigManager_1.ConfigManager.RoleSkillConfig.GetSkillList(
-        t.SkillId,
+    if (e) {
+      var t = ConfigManager_1.ConfigManager.RoleSkillConfig.GetSkillList(
+        e.SkillId,
       );
-      if (e) {
+      if (t) {
         const h = new Array();
         for (const o of displaySkillTypes)
-          for (const r of e)
+          for (const r of t)
             if (r.SkillType === o) {
               var s = new TeamRoleSkillItem_1.TeamRoleSkillData();
               (s.SkillIcon = r.Icon),
@@ -466,57 +473,57 @@ class TeamRoleSelectView extends UiViewBase_1.UiViewBase {
               break;
             }
         h.length <= 0 ||
-          ((this.$ho = h),
-          this.Xho.DeselectCurrentGridProxy(),
-          this.Xho.RefreshByData(h, () => {
-            this.Xho.SelectGridProxy(0), this.slo(1, h[0]);
+          ((this.Wlo = h),
+          this.jlo.DeselectCurrentGridProxy(),
+          this.jlo.RefreshByData(h, () => {
+            this.jlo.SelectGridProxy(0), this.i1o(1, h[0]);
           }),
-          (t = void 0 !== (i = t.Tag) && 0 < i.length),
-          this.GetMultiTemplateLayout(16).RootUIComp.SetUIActive(t),
-          t && this.Yho?.RefreshByData(i));
+          (e = void 0 !== (i = e.Tag) && 0 < i.length),
+          this.GetMultiTemplateLayout(16).RootUIComp.SetUIActive(e),
+          e && this.Klo?.RefreshByData(i));
       }
     }
   }
-  tlo(i) {
+  Jlo(i) {
     LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(15), i.SkillName);
-    var t = this.GetText(18),
-      t =
-        (this.x4t
+    var e = this.GetText(18),
+      e =
+        (this.x5t
           ? LguiUtil_1.LguiUtil.SetLocalTextNew(
-              t,
+              e,
               i.MultiSkillDesc,
               ...i.MultiSkillDescNum,
             )
           : "" === i.SkillResume
-            ? t.SetUIActive(!1)
+            ? e.SetUIActive(!1)
             : LguiUtil_1.LguiUtil.SetLocalTextNew(
-                t,
+                e,
                 i.SkillResume,
                 ...i.SkillResumeNum,
               ),
         ConfigManager_1.ConfigManager.RoleSkillConfig.GetSkillTypeNameLocalText(
           i.SkillType,
         ));
-    t && this.GetText(12).SetText(t);
+    e && this.GetText(12).SetText(e);
   }
-  olo() {
+  Zlo() {
     var i,
-      t,
-      e = this.GetText(6);
+      e,
+      t = this.GetText(6);
     !ModelManager_1.ModelManager.TowerModel.IsOpenFloorFormation() &&
     ((i = this.CurSelectRole.GetDataId()),
-    (t = this.Kho.indexOf(this.CurSelectRole)),
-    this.jho.RefreshGridProxy(t),
+    (e = this.Vlo.indexOf(this.CurSelectRole)),
+    this.Flo.RefreshGridProxy(e),
     this.Pe?.IsNeedRevive?.(i))
-      ? (e.SetUIActive(!0),
-        LguiUtil_1.LguiUtil.SetLocalText(e, "EditBattleTeamNeedRevive"))
-      : e.SetUIActive(!1);
+      ? (t.SetUIActive(!0),
+        LguiUtil_1.LguiUtil.SetLocalText(t, "EditBattleTeamNeedRevive"))
+      : t.SetUIActive(!1);
   }
   GetGuideUiItemAndUiItemForShowEx(i) {
-    var t = Number(i[0]);
-    if (0 !== t) {
-      t = this.hlo(t);
-      if (t) return [t, t];
+    var e = Number(i[0]);
+    if (0 !== e) {
+      e = this.r1o(e);
+      if (e) return [e, e];
     }
     Log_1.Log.CheckError() &&
       Log_1.Log.Error("Guide", 54, "聚焦引导extraParam项配置有误", [
@@ -524,17 +531,17 @@ class TeamRoleSelectView extends UiViewBase_1.UiViewBase {
         i,
       ]);
   }
-  hlo(t) {
-    let e = 0,
+  r1o(e) {
+    let t = 0,
       s = void 0;
     return (
-      this.Kho?.forEach(
+      this.Vlo?.forEach(
         (i) =>
-          i.GetRoleId() === t &&
-          ((e = this.Kho.indexOf(i)), (s = this.jho?.GetGrid(e)), !0),
+          i.GetRoleId() === e &&
+          ((t = this.Vlo.indexOf(i)), (s = this.Flo?.GetGrid(t)), !0),
       ),
       TimerSystem_1.TimerSystem.Next(() => {
-        this.jho.ScrollToGridIndex(e, !1);
+        this.Flo.ScrollToGridIndex(t, !1);
       }),
       s
     );

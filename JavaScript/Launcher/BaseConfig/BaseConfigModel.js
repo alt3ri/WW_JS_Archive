@@ -21,6 +21,7 @@ class EntryJson {
       (this.LoginServers = void 0),
       (this.PrivateServers = void 0),
       (this.GmOpen = !1),
+      (this.AsyncCheck = !1),
       (this.GARUrl = ""),
       (this.TDCfg = void 0),
       (this.LogReport = void 0),
@@ -45,6 +46,8 @@ class EntryJson {
       (this.LoginServers = (s && s.LoginServers ? s : i).LoginServers),
       (this.PrivateServers = (s && s.PrivateServers ? s : i).PrivateServers),
       (this.GmOpen = s && void 0 !== s.GmOpen ? s.GmOpen : i.GmOpen ?? !1),
+      (this.AsyncCheck =
+        s && void 0 !== s.AsyncCheck ? s.AsyncCheck : i.AsyncCheck ?? !1),
       (this.GARUrl = s && void 0 !== s.GARUrl ? s.GARUrl : i.GARUrl ?? ""),
       (this.TDCfg = (s && s.TDCfg ? s : i).TDCfg),
       (this.LogReport = (s && s.LogReport ? s : i).LogReport),
@@ -68,13 +71,13 @@ class EntryJson {
 }
 function parseClientEntryJson(t, i) {
   let o = void 0,
-    e = void 0;
+    h = void 0;
   Object.entries(i).forEach((i) => {
     var s = i[0],
       i = i[1];
-    "default" === s ? (o = i) : s === t && (e = i);
+    "default" === s ? (o = i) : s === t && (h = i);
   });
-  i = new EntryJson(o, e);
+  i = new EntryJson(o, h);
   BaseConfigModel.EntryJson = i;
 }
 (exports.EntryJson = EntryJson),

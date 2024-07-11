@@ -17,16 +17,16 @@ class BattleUiFloatTip {
 exports.BattleUiFloatTip = BattleUiFloatTip;
 class BattleUiFloatTipsData {
   constructor() {
-    (this.QKe = new Array()), (this.CurTip = void 0);
+    (this.nXe = new Array()), (this.CurTip = void 0);
   }
   Init() {}
   OnLeaveLevel() {
-    (this.CurTip = void 0), (this.QKe.length = 0);
+    (this.CurTip = void 0), (this.nXe.length = 0);
   }
   Clear() {}
   GetNextFloatTip() {
-    for (; 0 < this.QKe.length; ) {
-      var t = this.QKe.pop();
+    for (; 0 < this.nXe.length; ) {
+      var t = this.nXe.pop();
       if (!this.CheckIsExpired(t)) return t;
     }
   }
@@ -46,7 +46,7 @@ class BattleUiFloatTipsData {
       this.AddNewFloatTip(a);
   }
   AddNewFloatTip(t) {
-    this.CurTip && this.QKe.push(this.CurTip),
+    this.CurTip && this.nXe.push(this.CurTip),
       (this.CurTip = t),
       UiManager_1.UiManager.IsViewOpen("BattleFloatTipsView")
         ? EventSystem_1.EventSystem.Emit(

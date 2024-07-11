@@ -11,15 +11,15 @@ const UE = require("ue"),
 class PhotographModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
-      (this.Fji = void 0),
+      (this.OWi = void 0),
       (this.PlayMontageEntity = void 0),
       (this.MontageId = 0),
-      (this.Vji = new Map()),
-      (this.Hji = new UE.Transform()),
+      (this.kWi = new Map()),
+      (this.FWi = new UE.Transform()),
       (this.RightValue = 0),
       (this.UpValue = 0),
-      (this.jji = 0),
-      (this.Wji = void 0),
+      (this.VWi = 0),
+      (this.HWi = void 0),
       (this.IsOpenPhotograph = !1),
       (this.SavePath = ""),
       (this.IsSaveButtonVisible = !1);
@@ -40,13 +40,13 @@ class PhotographModel extends ModelBase_1.ModelBase {
     return this.DestroyUiCamera(), !0;
   }
   SpawnPhotographerStructure(t, e, r) {
-    this.Hji.SetLocation(t), this.Hji.SetRotation(e), this.Hji.SetScale3D(r);
+    this.FWi.SetLocation(t), this.FWi.SetRotation(e), this.FWi.SetScale3D(r);
     t = UiCameraManager_1.UiCameraManager.Get();
     return (
-      (this.Fji = t.PushStructure(
+      (this.OWi = t.PushStructure(
         UiCameraPhotographerStructure_1.UiCameraPhotographerStructure,
       )),
-      this.Fji.SetActorTransform(this.Hji),
+      this.OWi.SetActorTransform(this.FWi),
       t
         .GetUiCameraComponent(
           UiCameraPostEffectComponent_1.UiCameraPostEffectComponent,
@@ -54,51 +54,52 @@ class PhotographModel extends ModelBase_1.ModelBase {
         .SetCameraFocalDistance(
           PhotographDefine_1.DEFAULT_MANUAL_FOCUS_DISTANCE,
         ),
-      this.Fji
+      this.OWi
     );
   }
   DestroyUiCamera() {
     UiCameraManager_1.UiCameraManager.Destroy(
       PhotographDefine_1.PHOTOGRAPH_CAMERA_BLEND_OUT,
     ),
-      (this.Fji = void 0);
+      (this.OWi = void 0);
   }
   GetPhotographerStructure() {
-    return this.Fji;
+    return this.OWi;
   }
   SetPhotographOption(t, e) {
-    this.Vji.set(t, e);
+    this.kWi.set(t, e);
   }
   ClearPhotographOption() {
-    this.Vji.clear();
+    this.kWi.clear();
   }
   GetPhotographOption(t) {
-    return this.Vji.get(t);
+    return this.kWi.get(t);
   }
   GetAllPhotographOption() {
-    return this.Vji;
+    return this.kWi;
   }
   SetEntityEnable(t, e) {
     t?.Valid &&
       t.Entity?.Valid &&
       t.Entity.Active !== e &&
       (e
-        ? this.Wji && t.Id === this.Wji.Id
-          ? (t.Entity.Enable(this.jji, "PhotographModel.SetEntityEnable"),
-            (this.jji = void 0),
-            (this.Wji = void 0))
+        ? this.HWi && t.Id === this.HWi.Id
+          ? (t.Entity.Enable(this.VWi, "PhotographModel.SetEntityEnable"),
+            (this.VWi = void 0),
+            (this.HWi = void 0))
           : this.ResetEntityEnable()
-        : ((this.MontageId = 0),
-          (this.Wji = t),
-          (this.jji = t.Entity.Disable(
+        : (this.HWi && this.ResetEntityEnable(),
+          (this.MontageId = 0),
+          (this.HWi = t),
+          (this.VWi = t.Entity.Disable(
             "[PhotographModel.SetEntityEnable] bEnable为false",
           ))));
   }
   ResetEntityEnable() {
-    this.Wji &&
-      this.Wji.Entity?.Enable(this.jji, "PhotographModel.ResetEntityEnable"),
-      (this.jji = void 0),
-      (this.Wji = void 0);
+    this.HWi &&
+      this.HWi.Entity?.Enable(this.VWi, "PhotographModel.ResetEntityEnable"),
+      (this.VWi = void 0),
+      (this.HWi = void 0);
   }
 }
 exports.PhotographModel = PhotographModel;

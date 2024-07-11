@@ -14,31 +14,24 @@ class WorldMapModel extends ModelBase_1.ModelBase {
       (this.MapScale = -0),
       (this.MapScaleMin = -0),
       (this.MapScaleMax = -0),
-      (this.vFo = !1),
-      (this.MFo = void 0),
+      (this.g3o = !1),
+      (this.f3o = void 0),
       (this.CurrentFocalMarkType = 0),
       (this.CurrentFocalMarkId = 0),
       (this.IsBattleViewOpen = !1),
-      (this.SFo = void 0);
+      (this.p3o = void 0);
   }
   get HideCustomMarks() {
-    return (
-      !(
-        !ModelManager_1.ModelManager.OnlineModel.GetIsTeamModel() ||
-        ModelManager_1.ModelManager.OnlineModel.GetIsMyTeam()
-      ) || this.vFo
-    );
+    return this.g3o;
   }
   set HideCustomMarks(e) {
-    (ModelManager_1.ModelManager.OnlineModel.GetIsTeamModel() &&
-      !ModelManager_1.ModelManager.OnlineModel.GetIsMyTeam()) ||
-      (this.vFo = e);
+    this.g3o = e;
   }
   get WaitToTeleportMarkItem() {
-    return this.MFo;
+    return this.f3o;
   }
   set WaitToTeleportMarkItem(e) {
-    this.MFo = e;
+    this.f3o = e;
   }
   OnInit() {
     return (
@@ -86,13 +79,13 @@ class WorldMapModel extends ModelBase_1.ModelBase {
   UpdateAreaExploreInfo(e) {
     if (e) {
       var r = new Array();
-      for (const t of e.e5n)
-        r.push({ ExploreProgressId: t._Ls, ExplorePercent: t.lLs });
-      this.SFo = { AreaId: e.wFn, ExploreProgress: r, ExplorePercent: e.lLs };
+      for (const t of e.wVn)
+        r.push({ ExploreProgressId: t.APs, ExplorePercent: t.DPs });
+      this.p3o = { AreaId: e.l6n, ExploreProgress: r, ExplorePercent: e.DPs };
     }
   }
   GetAreaExploreInfo() {
-    return this.SFo;
+    return this.p3o;
   }
 }
 exports.WorldMapModel = WorldMapModel;

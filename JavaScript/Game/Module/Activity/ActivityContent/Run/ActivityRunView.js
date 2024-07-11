@@ -28,12 +28,12 @@ class ActivityRunView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
       (this.GOe = void 0),
-      (this.Y2e = void 0),
-      (this.J2e = void 0),
-      (this.z2e = void 0),
-      (this.Z2e = void 0),
+      (this.c3e = void 0),
+      (this.m3e = void 0),
+      (this.d3e = void 0),
+      (this.C3e = void 0),
       (this.lqe = void 0),
-      (this.eFe = (e) => {
+      (this.g3e = (e) => {
         var i =
           ModelManager_1.ModelManager.ActivityModel?.GetCurrentSelectActivity();
         e.has(i.Id) &&
@@ -52,17 +52,17 @@ class ActivityRunView extends UiTickViewBase_1.UiTickViewBase {
       (this.VOe = () => {
         return new ActivityRunItem_1.ActivityRunItem();
       }),
-      (this.tFe = () => new ActivityRunCycleItem_1.ActivityRunCycleItem()),
-      (this.iFe = () => {
-        this.oFe(), this.rFe(), this.nFe(), this.sFe(), this.aFe(), this.hFe();
+      (this.f3e = () => new ActivityRunCycleItem_1.ActivityRunCycleItem()),
+      (this.p3e = () => {
+        this.v3e(), this.M3e(), this.E3e(), this.S3e(), this.y3e(), this.I3e();
       }),
-      (this.lFe = (e) => {
-        this.Z2e.ScrollToGridIndex(e.GridIndex, !0);
+      (this.T3e = (e) => {
+        this.C3e.ScrollToGridIndex(e.GridIndex, !0);
       }),
-      (this.V2e = (e) => {
-        this.Z2e?.RefreshAllGridProxies();
+      (this.r3e = (e) => {
+        this.C3e?.RefreshAllGridProxies();
       }),
-      (this._Fe = () => {
+      (this.L3e = () => {
         var e;
         ModelManager_1.ModelManager.ActivityRunModel.GetActivityRunData(
           ModelManager_1.ModelManager.ActivityRunModel.CurrentSelectChallengeId,
@@ -81,12 +81,12 @@ class ActivityRunView extends UiTickViewBase_1.UiTickViewBase {
       (this.Awe = () => {
         this.CloseMe();
       }),
-      (this.uFe = () => {
+      (this.D3e = () => {
         this.OpenHelpView();
       }),
-      (this.cFe = !1),
+      (this.R3e = !1),
       (this.kOe = () => {
-        this.aFe();
+        this.y3e();
         var e,
           i = ModelManager_1.ModelManager.ActivityRunModel.GetActivityRunData(
             ModelManager_1.ModelManager.ActivityRunModel
@@ -94,14 +94,14 @@ class ActivityRunView extends UiTickViewBase_1.UiTickViewBase {
           );
         i &&
           ((i = i.GetIsShow()) &&
-            this.cFe !== i &&
-            ((e = this.Z2e.GetSelectedGridIndex()),
-            this.Z2e.RefreshGridProxy(e),
-            this.oFe(),
-            this.nFe(),
-            this.rFe(),
-            this.sFe()),
-          (this.cFe = i));
+            this.R3e !== i &&
+            ((e = this.C3e.GetSelectedGridIndex()),
+            this.C3e.RefreshGridProxy(e),
+            this.v3e(),
+            this.E3e(),
+            this.M3e(),
+            this.S3e()),
+          (this.R3e = i));
       });
   }
   OnRegisterComponent() {
@@ -125,28 +125,28 @@ class ActivityRunView extends UiTickViewBase_1.UiTickViewBase {
       [16, UE.UIText],
       [17, UE.UIText],
     ]),
-      (this.BtnBindInfo = [[6, this._Fe]]);
+      (this.BtnBindInfo = [[6, this.L3e]]);
   }
-  mFe() {
+  U3e() {
     (this.lqe = new PopupCaptionItem_1.PopupCaptionItem(this.GetItem(0))),
       this.lqe.SetCloseCallBack(this.Awe),
-      this.lqe.SetHelpCallBack(this.uFe),
-      this.lqe.SetTitle(this.J2e.GetTitle());
+      this.lqe.SetHelpCallBack(this.D3e),
+      this.lqe.SetTitle(this.m3e.GetTitle());
   }
   OnStart() {
-    (this.J2e =
+    (this.m3e =
       ModelManager_1.ModelManager.ActivityModel.GetCurrentSelectActivity()),
-      (this.Y2e = this.J2e.GetChallengeDataArray()),
-      this.mFe();
+      (this.c3e = this.m3e.GetChallengeDataArray()),
+      this.U3e();
     var e = this.GetVerticalLayout(7);
-    this.z2e = new GenericLayout_1.GenericLayout(e, this.VOe);
+    this.d3e = new GenericLayout_1.GenericLayout(e, this.VOe);
     e = this.GetItem(1)
       .GetOwner()
       .GetComponentByClass(UE.UILoopScrollViewComponent.StaticClass());
-    (this.Z2e = new LoopScrollView_1.LoopScrollView(
+    (this.C3e = new LoopScrollView_1.LoopScrollView(
       e,
       this.GetItem(2).GetOwner(),
-      this.tFe,
+      this.f3e,
     )),
       this.GetItem(2).SetUIActive(!1),
       this.GetButton(11).RootUIComp.SetUIActive(!1),
@@ -155,79 +155,79 @@ class ActivityRunView extends UiTickViewBase_1.UiTickViewBase {
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnSelectActivityRunChallengeItem,
-      this.iFe,
+      this.p3e,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnClickActivityRunChallenge,
-        this.lFe,
+        this.T3e,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnGetRunActivityReward,
-        this.V2e,
+        this.r3e,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnActivityClose,
-        this.eFe,
+        this.g3e,
       );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnSelectActivityRunChallengeItem,
-      this.iFe,
+      this.p3e,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnClickActivityRunChallenge,
-        this.lFe,
+        this.T3e,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnGetRunActivityReward,
-        this.V2e,
+        this.r3e,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnActivityClose,
-        this.eFe,
+        this.g3e,
       );
   }
-  sFe() {
+  S3e() {
     var e = ModelManager_1.ModelManager.ActivityRunModel.GetActivityRunData(
       ModelManager_1.ModelManager.ActivityRunModel.CurrentSelectChallengeId,
     ).GetIsShow();
     this.GetItem(3)?.SetUIActive(e), this.GetItem(9).SetUIActive(!e);
   }
-  rFe() {
+  M3e() {
     var e = ModelManager_1.ModelManager.ActivityRunModel.GetActivityRunData(
       ModelManager_1.ModelManager.ActivityRunModel.CurrentSelectChallengeId,
     );
     e && this.GetButton(6).RootUIComp.SetUIActive(e.GetIsShow());
   }
-  hFe() {
+  I3e() {
     this.UiViewSequence.HasSequenceNameInPlaying("Switch")
       ? this.UiViewSequence.ReplaySequence("Switch")
       : this.UiViewSequence.PlaySequence("Switch");
   }
   OpenHelpView() {
-    var e = this.J2e.GetHelpId();
+    var e = this.m3e.GetHelpId();
     HelpController_1.HelpController.OpenHelpById(e);
   }
   OnBeforeShow() {
     ActivityRunController_1.ActivityRunController.SelectDefaultChallengeId(
       ModelManager_1.ModelManager.ActivityModel.GetCurrentSelectActivity(),
     ),
-      this.dFe(),
-      this.CFe();
+      this.A3e(),
+      this.P3e();
   }
-  CFe() {
+  P3e() {
     this.GOe = TimerSystem_1.TimerSystem.Forever(this.kOe, TIMERGAP);
   }
-  aFe() {
+  y3e() {
     var e = ModelManager_1.ModelManager.ActivityRunModel.GetActivityRunData(
       ModelManager_1.ModelManager.ActivityRunModel.CurrentSelectChallengeId,
     );
     e.GetIsShow() ||
-      ((e = this.gFe(e.BeginOpenTime, "ActiveToOpenTime")),
+      ((e = this.x3e(e.BeginOpenTime, "ActiveToOpenTime")),
       this.GetText(10).SetText(e));
   }
-  gFe(e, i) {
+  x3e(e, i) {
     var t = TimeUtil_1.TimeUtil.GetServerTime();
     let r = Number(e) - t,
       n = (r <= 10 && (r = 10), TimeUtil_1.TimeUtil.GetCountDownData(r));
@@ -237,24 +237,24 @@ class ActivityRunView extends UiTickViewBase_1.UiTickViewBase {
     let o = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(e);
     return (o = o.replace("{0}", n.CountDownText));
   }
-  dFe() {
-    var i = this.Y2e.length,
+  A3e() {
+    var i = this.c3e.length,
       t = new Array();
-    for (let e = 0; e < i; e++) t.push(this.Y2e[e].Id);
-    this.Z2e.RefreshByDataAsync(t).then(() => {
-      this.Z2e.SelectGridProxy(
+    for (let e = 0; e < i; e++) t.push(this.c3e[e].Id);
+    this.C3e.RefreshByDataAsync(t).then(() => {
+      this.C3e.SelectGridProxy(
         ModelManager_1.ModelManager.ActivityRunModel.GetStartViewSelectIndex(),
         !0,
       );
     });
   }
-  oFe() {
+  v3e() {
     var e = ModelManager_1.ModelManager.ActivityRunModel.GetActivityRunData(
       ModelManager_1.ModelManager.ActivityRunModel.CurrentSelectChallengeId,
     );
-    e && ((e = e.GetScoreArray()), this.z2e.RefreshByData(e));
+    e && ((e = e.GetScoreArray()), this.d3e.RefreshByData(e));
   }
-  nFe() {
+  E3e() {
     var e,
       i = ModelManager_1.ModelManager.ActivityRunModel.GetActivityRunData(
         ModelManager_1.ModelManager.ActivityRunModel.CurrentSelectChallengeId,

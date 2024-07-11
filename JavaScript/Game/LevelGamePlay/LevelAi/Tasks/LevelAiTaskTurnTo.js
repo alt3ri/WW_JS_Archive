@@ -28,7 +28,7 @@ class LevelAiTaskTurnTo extends LevelAiTask_1.LevelAiTask {
         1
       );
     this.Tae = r.Entity.GetComponent(3);
-    r = r.Entity.GetComponent(36)?.CharacterMovement;
+    r = r.Entity.GetComponent(37)?.CharacterMovement;
     if (!r?.IsValid()) return 1;
     (this.WTe = r.MovementMode), (r.MovementMode = 1);
     r = Vector_1.Vector.Create(e.Pos.X ?? 0, e.Pos.Y ?? 0, e.Pos.Z ?? 0);
@@ -44,7 +44,7 @@ class LevelAiTaskTurnTo extends LevelAiTask_1.LevelAiTask {
   }
   TickTask(e) {
     this.Tae.InputRotatorProxy.Equals(this.Tae.ActorRotationProxy, TOLERANCE) &&
-      ((this.Tae.Entity.GetComponent(36).CharacterMovement.MovementMode =
+      ((this.Tae.Entity.GetComponent(37).CharacterMovement.MovementMode =
         this.WTe),
       this.FinishLatentTask(0));
   }

@@ -5,8 +5,10 @@ const UE = require("ue"),
   Log_1 = require("../../../Core/Common/Log"),
   Time_1 = require("../../../Core/Common/Time"),
   Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+  EntitySystem_1 = require("../../../Core/Entity/EntitySystem"),
   RegisterComponent_1 = require("../../../Core/Entity/RegisterComponent"),
   MathCommon_1 = require("../../../Core/Utils/Math/MathCommon"),
+  Quat_1 = require("../../../Core/Utils/Math/Quat"),
   Rotator_1 = require("../../../Core/Utils/Math/Rotator"),
   Vector_1 = require("../../../Core/Utils/Math/Vector"),
   MathUtils_1 = require("../../../Core/Utils/MathUtils"),
@@ -40,7 +42,7 @@ class BulletUtil {
       return !1;
     var o = e.Entity.GetComponent(0);
     if (11 === t.BulletCamp)
-      return o.GetEntityType() === Protocol_1.Aki.Protocol.HBs.Proto_Vision
+      return o.GetEntityType() === Protocol_1.Aki.Protocol.wks.Proto_Vision
         ? o.GetPlayerId() === t.AttackerPlayerId
         : ((r = ModelManager_1.ModelManager.GameModeModel.IsMulti
             ? ModelManager_1.ModelManager.SceneTeamModel.GetTeamItem(
@@ -62,7 +64,7 @@ class BulletUtil {
               !1));
     var r = t.AttackerCamp;
     let l = 0;
-    o.GetEntityType() !== Protocol_1.Aki.Protocol.HBs.Proto_Player &&
+    o.GetEntityType() !== Protocol_1.Aki.Protocol.wks.Proto_Player &&
       (l = o.GetEntityCamp());
     o = 2 * CampUtils_1.CampUtils.GetCampRelationship(r, l);
     return e === t.AttackerActorComp
@@ -72,8 +74,8 @@ class BulletUtil {
   static DoesEntityContainsTag(t, e) {
     return (
       !!t &&
-      (!!t.GetComponent(177)?.HasTag(e) ||
-        (!!(t = t.GetComponent(185)) && t.HasTag(e)))
+      (!!t.GetComponent(180)?.HasTag(e) ||
+        (!!(t = t.GetComponent(188)) && t.HasTag(e)))
     );
   }
   static GetCurrentRole(t) {
@@ -106,32 +108,27 @@ class BulletUtil {
     );
   }
   static IsPlayerOrSummons(t) {
-    var e;
     return (
       !!t.AttackerActorComp.IsRoleAndCtrlByMe ||
       !(
         !t.AttackerActorComp.IsAutonomousProxy ||
         !t.BulletDataMain.Render.CameraShakeToSummonOwner ||
-        ((t = t.AttackerCreatureDataComp.GetSummonerId()),
-        (e = Global_1.Global.BaseCharacter.GetEntityNoBlueprint()
-          ?.GetComponent(0)
-          ?.GetCreatureDataId()),
-        !t) ||
-        t !== e
+        !(t = t.AttackerCreatureDataComp.GetSummonerPlayerId()) ||
+        t !== ModelManager_1.ModelManager.PlayerInfoModel.GetId()
       )
     );
   }
-  static SummonBullet(t, e, o, r, l = void 0, a = void 0) {
-    var i =
+  static SummonBullet(t, e, o, r, l = void 0, i = void 0) {
+    var a =
       BulletController_1.BulletController.GetActionCenter().CreateBulletActionInfo(
         11,
       );
-    (i.ChildrenType = e),
-      (i.Victim = o),
-      (i.IsStayInCharacter = r),
-      l && (i.ParentImpactPoint = Vector_1.Vector.Create(l)),
-      a && (i.ParentLastPosition = Vector_1.Vector.Create(a)),
-      BulletController_1.BulletController.GetActionRunner().AddAction(t, i);
+    (a.ChildrenType = e),
+      (a.Victim = o),
+      (a.IsStayInCharacter = r),
+      l && (a.ParentImpactPoint = Vector_1.Vector.Create(l)),
+      i && (a.ParentLastPosition = Vector_1.Vector.Create(i)),
+      BulletController_1.BulletController.GetActionRunner().AddAction(t, a);
   }
   static CheckSupport(t, e) {
     t = t.BulletDataMain.Execution.SupportCamp;
@@ -185,19 +182,28 @@ class BulletUtil {
           BulletUtil.BulletUnfrozen(o);
       }
   }
-  static SetTimeScale(t, e, o, r, l, a, i = 0, n = 0) {
+  static SetTimeScale(t, e, o, r, l, i, a = 0, n = 0) {
     if (l <= 0 || t.BulletDataMain.TimeScale.TimeScaleWithAttacker) return 0;
-    if (0 < i && l <= i) return 0;
-    var i = Time_1.Time.WorldTimeSeconds - i,
-      u = i + l;
-    let _ = n;
-    0 <= n && ((t.TimeScaleId += 1), (_ = t.TimeScaleId));
-    n = new PawnTimeScaleComponent_1.TimeScale(i, u, e, o, r, l, _, a);
-    return t.TimeScaleList.Push(n), t.TimeScaleMap.set(_, n), _;
+    if (0 < a && l <= a) return 0;
+    var a = Time_1.Time.WorldTimeSeconds - a,
+      s = a + l;
+    let u = n;
+    0 <= n && ((t.TimeScaleId += 1), (u = t.TimeScaleId));
+    n = new PawnTimeScaleComponent_1.TimeScale(a, s, e, o, r, l, u, i);
+    return t.TimeScaleList.Push(n), t.TimeScaleMap.set(u, n), u;
   }
   static RemoveTimeScale(t, e) {
     t = t.TimeScaleMap.get(e);
     t && (t.MarkDelete = !0);
+  }
+  static SetVictimTimeScale(t, e, o, r, l, i, a, n, s) {
+    a <= 0 ||
+      ((o = o.SetTimeScale(r, l, i, a, n)),
+      s &&
+        0 < o &&
+        (r =
+          EntitySystem_1.EntitySystem.Get(t)?.GetBulletInfo().CollisionInfo) &&
+        r.HitTimeScaleEntityMap.set(e, o));
   }
   static GetHitRotator(t, e, o) {
     o.FromUeRotator(e.ActorRotationProxy);
@@ -205,88 +211,79 @@ class BulletUtil {
     if (3 === r) return !1;
     if (
       (0, RegisterComponent_1.isComponentInstance)(e, 3) &&
-      e.Entity.GetComponent(185)?.HasTag(855966206)
+      e.Entity.GetComponent(188)?.HasTag(855966206)
     )
       return !1;
     var l = t.AttackerActorComp,
-      a = Vector_1.Vector.Create();
+      i = Vector_1.Vector.Create();
     switch (r) {
       case 0:
-        a.FromUeVector(l.ActorLocationProxy),
-          a.SubtractionEqual(e.ActorLocationProxy),
-          MathUtils_1.MathUtils.LookRotationUpFirst(
-            a,
-            Vector_1.Vector.UpVectorProxy,
-            o,
-          );
+        i.FromUeVector(l.ActorLocationProxy),
+          i.SubtractionEqual(e.ActorLocationProxy),
+          MathUtils_1.MathUtils.LookRotationUpFirst(i, e.ActorUpProxy, o);
         break;
       case 1:
-        a.FromUeVector(t.ActorComponent.ActorLocationProxy),
-          a.SubtractionEqual(e.ActorLocationProxy),
-          MathUtils_1.MathUtils.LookRotationUpFirst(
-            a,
-            Vector_1.Vector.UpVectorProxy,
-            o,
-          );
+        i.FromUeVector(t.ActorComponent.ActorLocationProxy),
+          i.SubtractionEqual(e.ActorLocationProxy),
+          MathUtils_1.MathUtils.LookRotationUpFirst(i, e.ActorUpProxy, o);
         break;
       case 2:
         t.MoveInfo.BulletSpeedDir.Equals(
           Vector_1.Vector.ZeroVectorProxy,
           MathCommon_1.MathCommon.KindaSmallNumber,
         )
-          ? (a.FromUeVector(t.ActorComponent.ActorForward),
-            (a.Z = 0),
-            a.MultiplyEqual(-1))
-          : a.Set(
+          ? (i.FromUeVector(t.ActorComponent.ActorForward),
+            (i.Z = 0),
+            i.MultiplyEqual(-1))
+          : i.Set(
               -t.MoveInfo.BulletSpeedDir.X,
               -t.MoveInfo.BulletSpeedDir.Y,
               0,
             ),
-          MathUtils_1.MathUtils.LookRotationUpFirst(
-            a,
-            Vector_1.Vector.UpVectorProxy,
-            o,
-          );
+          MathUtils_1.MathUtils.LookRotationUpFirst(i, e.ActorUpProxy, o);
         break;
       case 4:
         SpaceUtils_1.SpaceUtils.IsLocationInSideBullet(t, e.ActorLocationProxy)
-          ? (a.FromUeVector(e.ActorLocationProxy),
-            a.SubtractionEqual(t.ActorComponent.ActorLocationProxy))
-          : (a.FromUeVector(t.ActorComponent.ActorLocationProxy),
-            a.SubtractionEqual(e.ActorLocationProxy)),
-          MathUtils_1.MathUtils.LookRotationUpFirst(
-            a,
-            Vector_1.Vector.UpVectorProxy,
-            o,
-          );
+          ? (i.FromUeVector(e.ActorLocationProxy),
+            i.SubtractionEqual(t.ActorComponent.ActorLocationProxy))
+          : (i.FromUeVector(t.ActorComponent.ActorLocationProxy),
+            i.SubtractionEqual(e.ActorLocationProxy)),
+          MathUtils_1.MathUtils.LookRotationUpFirst(i, e.ActorUpProxy, o);
     }
     return !0;
   }
   static SetHitRotator(t, e, o) {
-    var r = Rotator_1.Rotator.Create();
     return (
-      BulletUtil.GetHitRotator(t, e, r) &&
-        !e.Entity.GetComponent(185)?.HasTag(1447214865) &&
-        ((r.Yaw += o),
-        e.SetActorRotation(r.ToUeRotator(), this.constructor.name, !1),
+      BulletUtil.GetHitRotator(t, e, this.TmpRotator) &&
+        !e.Entity.GetComponent(188)?.HasTag(1447214865) &&
+        (this.TmpRotator2.Set(0, o, 0),
+        this.TmpRotator.Quaternion(this.TmpQuat),
+        this.TmpRotator2.Quaternion(this.TmpQuat2),
+        this.TmpQuat.Multiply(this.TmpQuat2, this.TmpQuat),
+        this.TmpQuat.Rotator(this.TmpRotator),
+        e.SetActorRotation(
+          this.TmpRotator.ToUeRotator(),
+          this.constructor.name,
+          !1,
+        ),
         (0, RegisterComponent_1.isComponentInstance)(e, 3)) &&
-        e.SetInputRotator(r),
-      r.ToUeRotator()
+        e.SetInputRotator(this.TmpRotator),
+      this.TmpRotator.ToUeRotator()
     );
   }
   static GetOverrideHitAnimByAngle(t, e, o) {
     let r = e;
-    var e = (0, RegisterComponent_1.isComponentInstance)(t, 182),
+    var e = (0, RegisterComponent_1.isComponentInstance)(t, 185),
       l = ModelManager_1.ModelManager.BulletModel,
-      a = l.SelfAdaptBeHitAnim.has(r);
+      i = l.SelfAdaptBeHitAnim.has(r);
     return (
-      (a || e) &&
+      (i || e) &&
         ((o =
           (((o - 180 - t.ActorRotationProxy.Yaw + QUARTER_PI_DEGREE) % 360) +
             360) %
           360),
         (t = Math.floor(o / 90)),
-        a
+        i
           ? (r = (
               l.HeavyHitAnim.has(r)
                 ? l.Index2HeavyHitAnimMap
@@ -297,8 +294,12 @@ class BulletUtil {
     );
   }
   static CheckBulletAttackerExist(t) {
-    return (
-      (t.AttackerHandle?.Valid ?? !1) && void 0 !== t.AttackerActorComp?.Actor
+    var e;
+    return !(
+      !t.AttackerHandle?.Valid ||
+      ((!(e = t.AttackerCreatureDataComp?.GetCreatureDataId()) ||
+        e !== ModelManager_1.ModelManager.BulletModel?.SceneBulletOwnerId) &&
+        void 0 === t.AttackerActorComp?.Actor)
     );
   }
   static FindLookAtRot(t, e, o) {
@@ -320,11 +321,11 @@ class BulletUtil {
     var r = o.BulletDataMain.Move.BeginVelocityLimitMap;
     if (!(r.size <= 0)) {
       var l = BulletPool_1.BulletPool.CreateRotator(),
-        a =
+        i =
           (o.AttackerActorComp.ActorRotationProxy.Clamp(l),
           BulletPool_1.BulletPool.CreateRotator());
-      o.MoveInfo.BeginSpeedRotator.Clamp(a);
-      let t = a.Pitch,
+      o.MoveInfo.BeginSpeedRotator.Clamp(i);
+      let t = i.Pitch,
         e =
           (void 0 !== (n = r.get(0)) &&
             t < MathCommon_1.MathCommon.FlatAngle &&
@@ -332,56 +333,57 @@ class BulletUtil {
           void 0 !== (n = r.get(1)) &&
             t > MathCommon_1.MathCommon.FlatAngle &&
             (t = Math.max(t, MathCommon_1.MathCommon.RoundAngle - n)),
-          a.Yaw);
+          i.Yaw);
       e =
         e > MathCommon_1.MathCommon.FlatAngle
           ? e - MathCommon_1.MathCommon.RoundAngle
           : e;
-      var i,
+      var a,
         n = r.get(3),
-        u =
-          (u = l.Yaw) > MathCommon_1.MathCommon.FlatAngle
-            ? u - MathCommon_1.MathCommon.RoundAngle
-            : u;
+        s =
+          (s = l.Yaw) > MathCommon_1.MathCommon.FlatAngle
+            ? s - MathCommon_1.MathCommon.RoundAngle
+            : s;
       void 0 !== n &&
-        0 < (i = e - u) &&
-        i < MathCommon_1.MathCommon.FlatAngle &&
-        n < i &&
+        0 < (a = e - s) &&
+        a < MathCommon_1.MathCommon.FlatAngle &&
+        n < a &&
         (e = Rotator_1.Rotator.ClampAxis(l.Yaw + n)),
         void 0 !== (n = r.get(2)) &&
-          0 < (i = u - e) &&
-          i < MathCommon_1.MathCommon.FlatAngle &&
-          n < i &&
+          0 < (a = s - e) &&
+          a < MathCommon_1.MathCommon.FlatAngle &&
+          n < a &&
           (e = Rotator_1.Rotator.ClampAxis(l.Yaw - n)),
         BulletPool_1.BulletPool.RecycleRotator(l),
-        BulletPool_1.BulletPool.RecycleRotator(a),
+        BulletPool_1.BulletPool.RecycleRotator(i),
         (o.MoveInfo.BeginSpeedRotator.Pitch = t),
         (o.MoveInfo.BeginSpeedRotator.Yaw = e);
     }
   }
-  static CreateBulletFromAN(t, e, o, r, l, a, i, n) {
+  static CreateBulletFromAN(t, e, o, r, l, i, a, n, s) {
     var u = t.GetEntityNoBlueprint();
-    let _ = u?.GetComponent(187);
-    n &&
-      ((n = PhantomUtil_1.PhantomUtil.GetSummonedEntity(
+    let _ = u?.GetComponent(192);
+    s &&
+      ((s = PhantomUtil_1.PhantomUtil.GetSummonedEntity(
         u,
-        Protocol_1.Aki.Protocol.Oqs.Proto_ESummonTypeConcomitantCustom,
+        Protocol_1.Aki.Protocol.Summon.L3s.Proto_ESummonTypeConcomitantCustom,
       )?.Entity),
-      (_ = n?.GetComponent(187)));
+      (_ = s?.GetComponent(192)));
     (u = _?.CreateAnimNotifyContent(void 0, e)),
-      (n = BulletController_1.BulletController.CreateBulletCustomTarget(
+      (s = BulletController_1.BulletController.CreateBulletCustomTarget(
         t,
         e,
         o,
         {
           SkillId: Number(r),
           SyncType: l ? 1 : 0,
-          InitTargetLocation: a,
-          LocationOffset: i,
+          InitTargetLocation: i,
+          LocationOffset: a,
+          BeginRotatorOffset: n,
         },
         u,
       ));
-    return n ? n.Id : -1;
+    return s ? s.Id : -1;
   }
   static AttachParentEffectSkeleton(t, e, o) {
     var r = t.BulletDataMain.Move;
@@ -412,5 +414,9 @@ class BulletUtil {
     );
   }
 }
-exports.BulletUtil = BulletUtil;
+((exports.BulletUtil = BulletUtil).TmpRotator = Rotator_1.Rotator.Create()),
+  (BulletUtil.TmpRotator2 = Rotator_1.Rotator.Create()),
+  (BulletUtil.TmpQuat = Quat_1.Quat.Create()),
+  (BulletUtil.TmpQuat2 = Quat_1.Quat.Create()),
+  (BulletUtil.TmpVector = Vector_1.Vector.Create());
 //# sourceMappingURL=BulletUtil.js.map

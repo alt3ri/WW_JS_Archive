@@ -7,7 +7,7 @@ const UE = require("ue"),
   SimpleGenericLayout_1 = require("../../Util/Layout/SimpleGenericLayout");
 class WeaponDescribeComponent extends UiPanelBase_1.UiPanelBase {
   constructor() {
-    super(...arguments), (this.cjt = 0), (this.$be = void 0);
+    super(...arguments), (this.cWt = 0), (this.$be = void 0);
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -27,11 +27,11 @@ class WeaponDescribeComponent extends UiPanelBase_1.UiPanelBase {
       this.GetSprite(5)?.SetUIActive(!0);
   }
   Update(e, i = !1) {
-    this.cjt = e;
+    this.cWt = e;
     (e = ConfigManager_1.ConfigManager.GachaConfig.GetGachaTextureInfo(
-      this.cjt,
+      this.cWt,
     )),
-      (e = e.IdArray.length <= 0 ? this.cjt : e.IdArray[0]),
+      (e = e.IdArray.length <= 0 ? this.cWt : e.IdArray[0]),
       (e =
         ConfigManager_1.ConfigManager.WeaponConfig.GetWeaponConfigByItemId(e));
     e &&
@@ -42,13 +42,13 @@ class WeaponDescribeComponent extends UiPanelBase_1.UiPanelBase {
           "SP_GachaWeaponBg",
         )),
       this.SetSpriteByPath(i, this.GetSprite(4), !1),
-      this.vjt(e.WeaponType),
-      this.HFe(e.QualityId));
+      this.vWt(e.WeaponType),
+      this.n4e(e.QualityId));
   }
-  HFe(e) {
+  n4e(e) {
     this.$be.RebuildLayout(e);
   }
-  vjt(e) {
+  vWt(e) {
     for (const i of ConfigManager_1.ConfigManager.MappingConfig.GetWeaponConfList())
       if (e === i.Value) {
         this.SetSpriteByPath(i.Icon, this.GetSprite(5), !1);

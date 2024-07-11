@@ -7,111 +7,111 @@ const UE = require("ue"),
   LguiUtil_1 = require("../LguiUtil");
 class GenericLayoutNew {
   constructor(t, i, e = void 0) {
-    (this.Cqo = void 0),
-      (this.$bo = void 0),
+    (this.cGo = void 0),
+      (this.Kqo = void 0),
       (this.xqe = void 0),
-      (this.Tqo = []),
-      (this.Lqo = []),
-      (this.NPo = void 0),
+      (this.SGo = []),
+      (this.yGo = []),
+      (this.bxo = void 0),
       (this.AQ = new Map()),
-      (this.g4e = new Array()),
-      (this.Ybo = void 0),
-      (this.Dqo = 0),
+      (this.x5e = new Array()),
+      (this.Qqo = void 0),
+      (this.IGo = 0),
       (this.vK = !1),
-      (this.Rqo = void 0),
-      (this.P9t = !0),
-      (this.Uqo = !0),
-      (this.$bo = t),
-      (this.Ybo = i),
-      this.Aqo(e),
-      (this.Cqo = new InTurnGridAppearAnimation_1.InTurnGridAppearAnimation(
+      (this.TGo = void 0),
+      (this.P7t = !0),
+      (this.LGo = !0),
+      (this.Kqo = t),
+      (this.Qqo = i),
+      this.DGo(e),
+      (this.cGo = new InTurnGridAppearAnimation_1.InTurnGridAppearAnimation(
         this,
       )),
-      this.Cqo.RegisterAnimController();
+      this.cGo.RegisterAnimController();
   }
   get TempOriginalItem() {
-    return this.NPo;
+    return this.bxo;
   }
-  Pqo() {
+  RGo() {
     for (const t of this.AQ.values())
       t instanceof UiComponentsAction_1.UiComponentsAction && t?.Destroy();
-    this.AQ.clear(), (this.g4e = []);
+    this.AQ.clear(), (this.x5e = []);
   }
-  Aqo(i) {
-    if (!this.NPo) {
+  DGo(i) {
+    if (!this.bxo) {
       let t = void 0;
       (t = void 0 === i ? this.GetItemByIndex(0) : i).SetUIActive(!1),
-        t.SetUIParent(this.xqo()),
-        (this.NPo = t),
-        (this.Rqo = t.displayName);
+        t.SetUIParent(this.UGo()),
+        (this.bxo = t),
+        (this.TGo = t.displayName);
     }
   }
   SetScrollView(t) {
-    (this.xqe = t), (this.Uqo = !1), this.Cqo?.RegisterAnimController();
+    (this.xqe = t), (this.LGo = !1), this.cGo?.RegisterAnimController();
   }
   PreLoadCopyItem(i) {
-    for (let t = 0; t < i; ++t) this.wqo().SetUIActive(!1);
+    for (let t = 0; t < i; ++t) this.AGo().SetUIActive(!1);
   }
   GetRootUiItem() {
-    return this.$bo.RootUIComp;
+    return this.Kqo.RootUIComp;
   }
-  xqo() {
+  UGo() {
     return this.GetRootUiItem().GetParentAsUIItem();
   }
-  Bqo() {
-    var t = this.Tqo.pop();
-    t && (t.SetUIActive(!1), this.Lqo.push(t));
+  PGo() {
+    var t = this.SGo.pop();
+    t && (t.SetUIActive(!1), this.yGo.push(t));
   }
-  wqo() {
-    var t = LguiUtil_1.LguiUtil.CopyItem(this.NPo, this.GetRootUiItem());
-    return this.Tqo.push(t), t;
+  AGo() {
+    var t = LguiUtil_1.LguiUtil.CopyItem(this.bxo, this.GetRootUiItem());
+    return this.SGo.push(t), t;
   }
-  bqo() {
-    var t = this.Lqo.pop();
-    t ? (t.SetUIActive(!0), this.Tqo.push(t)) : this.wqo().SetUIActive(!0);
+  xGo() {
+    var t = this.yGo.pop();
+    t ? (t.SetUIActive(!0), this.SGo.push(t)) : this.AGo().SetUIActive(!0);
   }
-  qqo() {
-    this.NPo &&
-      (this.NPo.SetUIActive(!0),
-      this.NPo.SetUIParent(this.GetRootUiItem()),
-      (this.NPo = void 0));
+  wGo() {
+    this.bxo &&
+      (this.bxo.SetUIActive(!0),
+      this.bxo.SetUIParent(this.GetRootUiItem()),
+      (this.bxo = void 0));
   }
   ht() {
-    for (let t = 0, i = this.Lqo.length; t < i; ++t)
-      this.Lqo[t].GetOwner().K2_DestroyActor();
-    for (let t = 0, i = this.Tqo.length; t < i; ++t)
-      this.Tqo[t].GetOwner().K2_DestroyActor();
-    (this.Lqo.length = 0), (this.Tqo.length = 0), this.ClearGridController();
+    for (let t = 0, i = this.yGo.length; t < i; ++t)
+      this.yGo[t].GetOwner().K2_DestroyActor();
+    for (let t = 0, i = this.SGo.length; t < i; ++t)
+      this.SGo[t].GetOwner().K2_DestroyActor();
+    (this.yGo.length = 0), (this.SGo.length = 0), this.ClearGridController();
   }
   ClearGridController() {
-    this.Cqo && (this.Cqo.Clear(), (this.Cqo = void 0));
+    this.cGo && (this.cGo.Clear(), (this.cGo = void 0));
   }
   SetNeedAnim(t) {
-    this.P9t = t;
+    this.P7t = t;
   }
   RebuildLayoutByDataNew(i, t = void 0) {
-    this.Aqo(void 0), this.Pqo();
+    this.DGo(void 0), this.RGo();
     var e = i ? i.length : 0,
       s = t || e,
-      r = this.Tqo.length;
-    if (((this.Dqo = s), (this.vK = !1), s < this.Tqo.length)) {
-      for (let t = 0; t < s; ++t) this.Tqo[t].SetUIActive(!0);
-      for (let t = s; t < r; ++t) this.Bqo();
-    } else if (s > this.Tqo.length) {
-      for (let t = 0; t < r; ++t) this.Tqo[t].SetUIActive(!0);
-      for (let t = 0; t < s - r; ++t) this.bqo();
+      r = this.SGo.length;
+    if (((this.IGo = s), (this.vK = !1), s < this.SGo.length)) {
+      for (let t = 0; t < s; ++t) this.SGo[t].SetUIActive(!0);
+      for (let t = s; t < r; ++t) this.PGo();
+    } else if (s > this.SGo.length) {
+      for (let t = 0; t < r; ++t) this.SGo[t].SetUIActive(!0);
+      for (let t = 0; t < s - r; ++t) this.xGo();
     }
     let h = 0;
     for (let t = 0; t < s; ++t) {
-      this.Tqo[t].SetDisplayName(this.Rqo + "_" + t);
+      this.SGo[t].SetDisplayName(this.TGo + "_" + t);
       var n = t < e ? i[t] : void 0,
-        n = this.Ybo?.(n, this.Tqo[t], h);
-      n && (this.AQ.set(n.Key, n.Value), this.g4e.push(n.Value), h++);
+        n = this.Qqo?.(n, this.SGo[t], h);
+      n && (this.AQ.set(n.Key, n.Value), this.x5e.push(n.Value), h++);
     }
-    this.Cqo && this.P9t && this.Cqo.PlayGridAnim(this.Dqo);
+    this.cGo && this.P7t && this.cGo.PlayGridAnim(this.IGo);
   }
   GetItemByIndex(t) {
-    if (this.$bo) {
+    if (this.Kqo) {
       var i = this.GetRootUiItem().GetAttachUIChildren();
       if (t < i.Num()) return i.Get(t);
     }
@@ -123,27 +123,27 @@ class GenericLayoutNew {
     return this.AQ;
   }
   GetLayoutItemList() {
-    return this.g4e;
+    return this.x5e;
   }
   GetLayoutItemByIndex(t) {
-    return this.g4e[t];
+    return this.x5e[t];
   }
   ClearChildren() {
     this.vK ||
       ((this.vK = !0),
-      this.$bo.OnLateUpdate.Unbind(),
-      this.Pqo(),
+      this.Kqo.OnLateUpdate.Unbind(),
+      this.RGo(),
       this.ht(),
-      this.qqo());
+      this.wGo());
   }
   SetActive(t) {
-    this.$bo.RootUIComp.SetUIActive(t);
+    this.Kqo.RootUIComp.SetUIActive(t);
   }
   GetDisplayGridNum() {
-    return this.Dqo;
+    return this.IGo;
   }
   GetPreservedGridNum() {
-    return this.Tqo.length;
+    return this.SGo.length;
   }
   GetDisplayGridStartIndex() {
     return 0;
@@ -152,10 +152,10 @@ class GenericLayoutNew {
     return this.GetDisplayGridNum() - 1;
   }
   GetGridAnimationInterval() {
-    return this.$bo.GetGridAnimationInterval();
+    return this.Kqo.GetGridAnimationInterval();
   }
   GetGridAnimationStartTime() {
-    return this.$bo.GetGridAnimationStartTime();
+    return this.Kqo.GetGridAnimationStartTime();
   }
   GetGrid(t) {
     return this.GetItemByIndex(t % this.GetDisplayGridNum());
@@ -164,22 +164,22 @@ class GenericLayoutNew {
     return this.GetItemByIndex(t);
   }
   BindLateUpdate(t) {
-    this.$bo.OnLateUpdate.Bind(t);
+    this.Kqo.OnLateUpdate.Bind(t);
   }
   UnBindLateUpdate() {
-    this.$bo.OnLateUpdate.Unbind();
+    this.Kqo.OnLateUpdate.Unbind();
   }
   NotifyAnimationStart() {
-    this.$bo.SetInAnimation(!0);
+    this.Kqo.SetInAnimation(!0);
   }
   NotifyAnimationEnd() {
-    this.$bo.SetInAnimation(!1);
+    this.Kqo.SetInAnimation(!1);
   }
   GetUiAnimController() {
-    return this.Uqo
-      ? this.$bo
-          ?.GetOwner()
-          .GetComponentByClass(UE.UIInturnAnimController.StaticClass())
+    return this.LGo
+      ? this.Kqo?.GetOwner().GetComponentByClass(
+          UE.UIInturnAnimController.StaticClass(),
+        )
       : this.xqe
           ?.GetContent()
           ?.GetComponentByClass(UE.UIInturnAnimController.StaticClass());

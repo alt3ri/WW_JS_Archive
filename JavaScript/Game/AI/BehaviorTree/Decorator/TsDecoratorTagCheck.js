@@ -65,7 +65,7 @@ class TsDecoratorTagCheck extends UE.BTDecorator_BlueprintBase {
       if (!t) return !1;
       if (!(i = EntitySystem_1.EntitySystem.Get(t))?.Valid) return !1;
     }
-    var o = i.GetComponent(185);
+    var o = i.GetComponent(188);
     if (1 === this.TsLogic) {
       for (let t = this.TsCheckTags.length - 1; 0 <= t; --t) {
         var s = this.TsCheckTags[t],

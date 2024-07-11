@@ -8,7 +8,7 @@ const UE = require("ue"),
   POINT_WIDTH = 9;
 class SpecialEnergyBarPoint extends SpecialEnergyBarBase_1.SpecialEnergyBarBase {
   constructor() {
-    super(...arguments), (this.Vct = void 0), (this.IsMorph = !1);
+    super(...arguments), (this.edt = void 0), (this.IsMorph = !1);
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -24,22 +24,22 @@ class SpecialEnergyBarPoint extends SpecialEnergyBarBase_1.SpecialEnergyBarBase 
       await Promise.all(e);
   }
   async InitPointItem(e) {
-    (this.Vct = new SpecialEnergyBarPointItem_1.SpecialEnergyBarPointItem()),
-      this.Vct.InitPrefabInfo(POINT_NUM, POINT_WIDTH),
-      await this.Vct.CreateThenShowByActorAsync(e.GetOwner());
+    (this.edt = new SpecialEnergyBarPointItem_1.SpecialEnergyBarPointItem()),
+      this.edt.InitPrefabInfo(POINT_NUM, POINT_WIDTH),
+      await this.edt.CreateThenShowByActorAsync(e.GetOwner());
   }
   OnStart() {
     var e;
     this.Config &&
       (this.Config.EffectColor &&
         ((e = new UE.LinearColor(UE.Color.FromHex(this.Config.EffectColor))),
-        this.Vct.SetFullEffectColor(e)),
+        this.edt.SetFullEffectColor(e)),
       this.GetItem(2).SetUIActive(!this.IsMorph),
       this.RefreshBarPercent(!0));
   }
   RefreshBarPercent(e = !1) {
     var t = this.PercentMachine.GetCurPercent();
-    this.Vct.UpdatePercent(t),
+    this.edt.UpdatePercent(t),
       this.KeyItem?.RefreshKeyEnable(this.GetKeyEnable(), e);
   }
   OnBarPercentChanged() {
@@ -49,7 +49,7 @@ class SpecialEnergyBarPoint extends SpecialEnergyBarBase_1.SpecialEnergyBarBase 
     this.RefreshBarPercent();
   }
   Tick(e) {
-    super.Tick(e), this.Vct?.Tick(e);
+    super.Tick(e), this.edt?.Tick(e);
   }
 }
 exports.SpecialEnergyBarPoint = SpecialEnergyBarPoint;

@@ -11,14 +11,14 @@ class InfluenceRewardItem extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
       (this.eGe = void 0),
-      (this.a5t = !1),
+      (this.aVt = !1),
       (this.sGe = (e, i, t) => {
         i = new CommonItemSimpleGridExFinish_1.CommonItemSimpleGridExFinish(
           i.GetOwner(),
         );
         return (
           i.RefreshItem(e[0], e[1]),
-          i.SetReceived(this.a5t),
+          i.SetReceived(this.aVt),
           { Key: t, Value: i }
         );
       }),
@@ -40,13 +40,13 @@ class InfluenceRewardItem extends UiPanelBase_1.UiPanelBase {
     this.eGe.ClearChildren(), (this.eGe = void 0);
   }
   UpdateItem(e, i) {
-    (this.a5t = i), this.Ani(e.Item1);
+    (this.aVt = i), this.Psi(e.Item1);
     i = ModelManager_1.ModelManager.InfluenceReputationModel.GetRewardList(
       e.Item2,
     );
     this.eGe.RebuildLayoutByDataNew(i);
   }
-  Ani(e) {
+  Psi(e) {
     var i = this.GetText(0);
     LguiUtil_1.LguiUtil.SetLocalText(i, "ReputationReceive", e);
   }

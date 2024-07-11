@@ -41,17 +41,17 @@ class ItemConfig {
         ((this.ShowInBag = i.ShowInBag),
         (this.ObtainedShowDescription = i.ObtainedShowDescription)),
       i instanceof ItemInfo_1.ItemInfo
-        ? this.Cci(i)
+        ? this.Cmi(i)
         : i instanceof PhantomItem_1.PhantomItem
-          ? this.gci(i)
+          ? this.gmi(i)
           : i instanceof WeaponConf_1.WeaponConf
-            ? this.fci(i)
-            : (i instanceof RoleInfo_1.RoleInfo && this.pci(i),
-              i instanceof BackgroundCard_1.BackgroundCard && this.vci(i),
-              i instanceof PreviewItem_1.PreviewItem && this.Mci(i),
-              i instanceof RogueCurrency_1.RogueCurrency && this.Sci(i));
+            ? this.fmi(i)
+            : (i instanceof RoleInfo_1.RoleInfo && this.pmi(i),
+              i instanceof BackgroundCard_1.BackgroundCard && this.vmi(i),
+              i instanceof PreviewItem_1.PreviewItem && this.Mmi(i),
+              i instanceof RogueCurrency_1.RogueCurrency && this.Emi(i));
   }
-  Cci(i) {
+  Cmi(i) {
     (this.ItemDataType = 0),
       (this.ItemType = i.ItemType),
       (this.MainTypeId = i.MainTypeId),
@@ -76,7 +76,7 @@ class ItemConfig {
     for ([t, s] of i.Parameters) this.Parameters.set(t, s);
     (this.SortIndex = i.SortIndex), (this.ShowTypes = i.ShowTypes);
   }
-  gci(i) {
+  gmi(i) {
     (this.ItemDataType = 3),
       (this.ItemType = 9),
       (this.MainTypeId = 3),
@@ -91,7 +91,7 @@ class ItemConfig {
       (this.RedDotDisableRule = i.RedDotDisableRule),
       (this.ItemBuffType = 0);
   }
-  Sci(i) {
+  Emi(i) {
     (this.ItemDataType = 8),
       (this.QualityId = i.QualityId),
       (this.ItemType = 15),
@@ -107,7 +107,7 @@ class ItemConfig {
       (this.ItemBuffType = 0),
       (this.Name = i.Title);
   }
-  fci(i) {
+  fmi(i) {
     (this.ItemDataType = 2),
       (this.ItemType = 2),
       (this.MainTypeId = 2),
@@ -123,7 +123,7 @@ class ItemConfig {
       (this.RedDotDisableRule = i.RedDotDisableRule),
       (this.ItemBuffType = 0);
   }
-  pci(i) {
+  pmi(i) {
     var t = ModelUtil_1.ModelUtil.GetModelConfig(i.MeshId);
     (this.ItemDataType = 1),
       (this.ItemType = void 0),
@@ -141,7 +141,7 @@ class ItemConfig {
       (this.RedDotDisableRule = i.RedDotDisableRule),
       (this.ItemBuffType = 0);
   }
-  vci(i) {
+  vmi(i) {
     (this.ItemDataType = 6),
       (this.ItemType = 14),
       (this.MainTypeId = 8),
@@ -157,7 +157,7 @@ class ItemConfig {
       (this.RedDotDisableRule = i.RedDotDisableRule),
       (this.ItemBuffType = 0);
   }
-  Mci(i) {
+  Mmi(i) {
     (this.ItemDataType = 7),
       (this.ItemType = 9),
       (this.MainTypeId = 3),

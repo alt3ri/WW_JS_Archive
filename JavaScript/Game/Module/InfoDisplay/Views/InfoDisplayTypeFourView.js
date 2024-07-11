@@ -12,24 +12,24 @@ const UE = require("ue"),
 class InfoDisplayTypeFourView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
-      (this.nsi = void 0),
-      (this.ssi = void 0),
-      (this.asi = 0),
-      (this.hsi = (e, i) => {
+      (this.sai = void 0),
+      (this.aai = void 0),
+      (this.hai = 0),
+      (this.lai = (e, i) => {
         for (let i = 0; i < e.Num(); i++) {
           var s, t;
-          this.ssi.length > i &&
-            ((t = this.ssi[i].Height),
+          this.aai.length > i &&
+            ((t = this.aai[i].Height),
             (s = e.Get(i).toPrecision(1)),
-            (s = this.asi * Number(s)),
+            (s = this.hai * Number(s)),
             (t = MathUtils_1.MathUtils.Lerp(t, s, LERP_PERCENTAGE)),
-            this.ssi[i].SetHeight(t));
+            this.aai[i].SetHeight(t));
         }
       }),
-      (this.Opt = () => {
+      (this.Jvt = () => {
         this.CloseMe();
       }),
-      (this.lsi = () => {
+      (this._ai = () => {
         var i =
             ModelManager_1.ModelManager.InfoDisplayModel.CurrentInformationId(),
           i =
@@ -58,34 +58,34 @@ class InfoDisplayTypeFourView extends UiTickViewBase_1.UiTickViewBase {
       [10, UE.UIItem],
     ]),
       (this.BtnBindInfo = [
-        [0, this.lsi],
-        [3, this.Opt],
+        [0, this._ai],
+        [3, this.Jvt],
       ]);
   }
   OnStart() {
-    this.nsi = new InfoDisplayAudioPlayer_1.InfoDisplayAudioPlayer();
+    this.sai = new InfoDisplayAudioPlayer_1.InfoDisplayAudioPlayer();
     var i = this.GetItem(8),
       e =
-        (this.nsi.Initialize(i.GetOwner()),
-        this.nsi.SetShowTextComponent(this.GetText(6)),
-        this.nsi.SetSpectrumCallBack(this.hsi),
-        (this.ssi = new Array()),
+        (this.sai.Initialize(i.GetOwner()),
+        this.sai.SetShowTextComponent(this.GetText(6)),
+        this.sai.SetSpectrumCallBack(this.lai),
+        (this.aai = new Array()),
         this.GetItem(10));
     for (let i = 0; i < e.UIChildren.Num(); i++)
-      this.ssi.push(e.UIChildren.Get(i)),
-        0 === i && (this.asi = e.UIChildren.Get(i).Height);
+      this.aai.push(e.UIChildren.Get(i)),
+        0 === i && (this.hai = e.UIChildren.Get(i).Height);
     i = ModelManager_1.ModelManager.InfoDisplayModel.CurrentInformationId();
-    this.OPt(i),
-      this.nsi.Refresh(
+    this.Hxt(i),
+      this.sai.Refresh(
         ConfigManager_1.ConfigManager.InfoDisplayModuleConfig.GetInfoDisplayAudio(
           i,
         ),
       );
   }
-  OPt(i) {
-    this._si(i), this.$8e(i), this.usi(i), this.msi(i);
+  Hxt(i) {
+    this.uai(i), this.l7e(i), this.cai(i), this.mai(i);
   }
-  _si(i) {
+  uai(i) {
     var i =
       ConfigManager_1.ConfigManager.InfoDisplayModuleConfig.GetInfoDisplayPictures(
         i,
@@ -94,7 +94,7 @@ class InfoDisplayTypeFourView extends UiTickViewBase_1.UiTickViewBase {
       "" !== (i = i[0]) &&
       this.SetTextureByPath(i, this.GetTexture(1));
   }
-  $8e(i) {
+  l7e(i) {
     var e =
         ConfigManager_1.ConfigManager.InfoDisplayModuleConfig.GetInfoDisplayTitle(
           i,
@@ -106,7 +106,7 @@ class InfoDisplayTypeFourView extends UiTickViewBase_1.UiTickViewBase {
         ));
     this.GetText(4).SetText(e);
   }
-  usi(i) {
+  cai(i) {
     i =
       ConfigManager_1.ConfigManager.InfoDisplayModuleConfig.GetInfoDisplayBgStamp(
         i,
@@ -114,16 +114,16 @@ class InfoDisplayTypeFourView extends UiTickViewBase_1.UiTickViewBase {
     "" !== i && this.SetTextureByPath(i, this.GetTexture(7));
   }
   OnTick(i) {
-    this.nsi?.OnTick(i);
+    this.sai?.OnTick(i);
   }
-  msi(i) {
+  mai(i) {
     "" !==
     ConfigManager_1.ConfigManager.InfoDisplayModuleConfig.GetInfoDisplayAudio(i)
       ? (this.GetItem(8).SetUIActive(!0), this.GetItem(9).SetUIActive(!0))
       : (this.GetItem(8).SetUIActive(!1), this.GetItem(9).SetUIActive(!1));
   }
   OnBeforeDestroy() {
-    this.nsi.Destroy();
+    this.sai.Destroy();
     var i = ModelManager_1.ModelManager.InfoDisplayModel.CurrentInformationId();
     InfoDisplayController_1.InfoDisplayController.RequestReadDisplayInfo(i);
   }

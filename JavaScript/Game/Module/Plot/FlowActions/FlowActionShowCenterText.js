@@ -10,7 +10,7 @@ const Log_1 = require("../../../../Core/Common/Log"),
 class FlowActionShowCenterText extends FlowActionBase_1.FlowActionBase {
   constructor() {
     super(...arguments),
-      (this.h$i = () => {
+      (this.sYi = () => {
         this.Runner.FinishShowCenterTextAction(() => {
           this.FinishExecute(!0);
         });
@@ -26,7 +26,7 @@ class FlowActionShowCenterText extends FlowActionBase_1.FlowActionBase {
         ["action", this.ActionInfo.ActionId],
       );
     var e = this.ActionInfo.Params;
-    ModelManager_1.ModelManager.PlotModel.ShowCenterText(e, this.h$i);
+    ModelManager_1.ModelManager.PlotModel.ShowCenterText(e, this.sYi);
   }
   OnInterruptExecute() {
     EventSystem_1.EventSystem.Emit(

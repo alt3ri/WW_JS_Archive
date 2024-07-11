@@ -31,11 +31,11 @@ class SceneItemMoveController extends ControllerBase_1.ControllerBase {
         r.Type === IAction_1.EMoveMotion.VariableMotion ? r.Acceleration : -1),
       (v.MaxSpeed =
         r.Type === IAction_1.EMoveMotion.VariableMotion ? r.MaxSpeed : -1),
-      this.EUr.set(e, v),
+      this._In.set(e, v),
       EventSystem_1.EventSystem.AddWithTarget(
         e,
         EventDefine_1.EEventName.OnSceneItemMoveEventBroken,
-        this.yUr,
+        this.uIn,
       );
     let i = -1;
     if (r.Type !== IAction_1.EMoveMotion.VariableMotion) {
@@ -46,7 +46,7 @@ class SceneItemMoveController extends ControllerBase_1.ControllerBase {
           o[o.length - 1].Z ?? 0,
         );
       if (Vector_1.Vector.Distance(c, t) < MathUtils_1.MathUtils.SmallNumber)
-        return void (v.IsLoop && this.TUr(e));
+        return void (v.IsLoop && this.mIn(e));
       var l = Vector_1.Vector.Create(
         o[o.length - 1].X ?? 0,
         o[o.length - 1].Y ?? 0,
@@ -65,12 +65,12 @@ class SceneItemMoveController extends ControllerBase_1.ControllerBase {
       }
       if (-1 === i) return;
     } else i = 0;
-    this.IUr(e, i);
+    this.cIn(e, i);
   }
-  static TUr(e, o = 1) {
-    var t = this.EUr.get(e);
+  static mIn(e, o = 1) {
+    var t = this._In.get(e);
     if (t) {
-      var r = e.GetComponent(113);
+      var r = e.GetComponent(115);
       if (r) {
         e = t.Points.slice();
         if (
@@ -102,15 +102,15 @@ class SceneItemMoveController extends ControllerBase_1.ControllerBase {
             );
           }
         t.IsLoop
-          ? r.AddStopMoveCallbackWithEntity(SceneItemMoveController.LUr)
-          : r.AddStopMoveCallbackWithEntity(SceneItemMoveController.yUr);
+          ? r.AddStopMoveCallbackWithEntity(SceneItemMoveController.dIn)
+          : r.AddStopMoveCallbackWithEntity(SceneItemMoveController.uIn);
       }
     }
   }
-  static IUr(e, t = 1) {
-    var r = this.EUr.get(e);
+  static cIn(e, t = 1) {
+    var r = this._In.get(e);
     if (r) {
-      var n = e.GetComponent(113);
+      var n = e.GetComponent(115);
       if (n) {
         e = r.Points.slice();
         if (
@@ -144,52 +144,52 @@ class SceneItemMoveController extends ControllerBase_1.ControllerBase {
             );
           }
         r.IsLoop
-          ? n.AddStopMoveCallbackWithEntity(SceneItemMoveController.DUr)
-          : n.AddStopMoveCallbackWithEntity(SceneItemMoveController.yUr);
+          ? n.AddStopMoveCallbackWithEntity(SceneItemMoveController.CIn)
+          : n.AddStopMoveCallbackWithEntity(SceneItemMoveController.uIn);
       }
     }
   }
 }
 (exports.SceneItemMoveController = SceneItemMoveController),
-  ((_a = SceneItemMoveController).EUr = new Map()),
-  (SceneItemMoveController.DUr = (e) => {
-    var o = e.GetComponent(113);
+  ((_a = SceneItemMoveController)._In = new Map()),
+  (SceneItemMoveController.CIn = (e) => {
+    var o = e.GetComponent(115);
     o &&
-      (o?.RemoveStopMoveCallbackWithEntity(_a.DUr),
+      (o?.RemoveStopMoveCallbackWithEntity(_a.CIn),
       Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Event",
           32,
           "[LevelEventSceneItemMove] MoveToStartCallback",
         ),
-      SceneItemMoveController.TUr(e));
+      SceneItemMoveController.mIn(e));
   }),
-  (SceneItemMoveController.LUr = (e) => {
-    var o = e.GetComponent(113);
+  (SceneItemMoveController.dIn = (e) => {
+    var o = e.GetComponent(115);
     o &&
-      (o?.RemoveStopMoveCallbackWithEntity(_a.LUr),
+      (o?.RemoveStopMoveCallbackWithEntity(_a.dIn),
       Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Event",
           32,
           "[LevelEventSceneItemMove] MoveToEndCallback",
         ),
-      SceneItemMoveController.IUr(e));
+      SceneItemMoveController.cIn(e));
   }),
-  (SceneItemMoveController.yUr = (e) => {
-    var o = e.GetComponent(113);
+  (SceneItemMoveController.uIn = (e) => {
+    var o = e.GetComponent(115);
     o &&
-      (o?.RemoveStopMoveCallbackWithEntity(_a.yUr),
+      (o?.RemoveStopMoveCallbackWithEntity(_a.uIn),
       EventSystem_1.EventSystem.HasWithTarget(
         e,
         EventDefine_1.EEventName.OnSceneItemMoveEventBroken,
-        _a.yUr,
+        _a.uIn,
       ) &&
         EventSystem_1.EventSystem.RemoveWithTarget(
           e,
           EventDefine_1.EEventName.OnSceneItemMoveEventBroken,
-          _a.yUr,
+          _a.uIn,
         ),
-      SceneItemMoveController.EUr.delete(e));
+      SceneItemMoveController._In.delete(e));
   });
 //# sourceMappingURL=SecenItemMoveController.js.map

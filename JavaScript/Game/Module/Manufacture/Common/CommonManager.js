@@ -7,13 +7,13 @@ const UiPopViewData_1 = require("../../../Ui/Define/UiPopViewData"),
   ForgingController_1 = require("../Forging/ForgingController");
 class CommonManager {
   static SetCurrentSystem(e) {
-    CommonManager.Pyi = e;
+    CommonManager.PIi = e;
   }
   static GetCurrentSystem() {
-    return CommonManager.Pyi;
+    return CommonManager.PIi;
   }
   static CheckIsBuff(e, o) {
-    switch (CommonManager.Pyi) {
+    switch (CommonManager.PIi) {
       case 1:
         return ComposeController_1.ComposeController.CheckIsBuff(e, o);
       case 2:
@@ -23,7 +23,7 @@ class CommonManager {
     }
   }
   static GetInfoText(e) {
-    switch (CommonManager.Pyi) {
+    switch (CommonManager.PIi) {
       case 1:
         return ComposeController_1.ComposeController.GetComposeInfoText(e);
       case 2:
@@ -33,7 +33,7 @@ class CommonManager {
     }
   }
   static GetDefaultRoleText() {
-    switch (CommonManager.Pyi) {
+    switch (CommonManager.PIi) {
       case 1:
         return "DefaultComposeHelperText";
       case 2:
@@ -43,7 +43,7 @@ class CommonManager {
     }
   }
   static GetCommonItemList() {
-    switch (CommonManager.Pyi) {
+    switch (CommonManager.PIi) {
       case 1:
         return ComposeController_1.ComposeController.GetComposeItemList();
       case 2:
@@ -63,52 +63,52 @@ class CommonManager {
     );
   }
   static GetSelectedLevel() {
-    if (1 === CommonManager.Pyi)
+    if (1 === CommonManager.PIi)
       return ComposeController_1.ComposeController.GetSelectedComposeLevel();
   }
   static SetSelectedLevel(e) {
-    1 === CommonManager.Pyi &&
+    1 === CommonManager.PIi &&
       ComposeController_1.ComposeController.SetSelectedComposeLevel(e);
   }
   static GetCurrentRewardLevel() {
-    if (1 === CommonManager.Pyi)
+    if (1 === CommonManager.PIi)
       return ComposeController_1.ComposeController.GetRewardLevelInfo()
         .ComposeLevel;
   }
   static GetCurrentRewardTotalProficiency() {
-    if (1 === CommonManager.Pyi)
+    if (1 === CommonManager.PIi)
       return ComposeController_1.ComposeController.GetRewardLevelInfo()
         .TotalProficiency;
   }
   static GetCurrentRewardAddExp() {
-    if (1 === CommonManager.Pyi)
+    if (1 === CommonManager.PIi)
       return ComposeController_1.ComposeController.GetRewardLevelInfo().AddExp;
   }
   static GetComposeLevelByLevel(e) {
-    if (1 === CommonManager.Pyi)
+    if (1 === CommonManager.PIi)
       return ComposeController_1.ComposeController.GetComposeLevelByLevel(e);
   }
   static GetLevelUpgradeTypeTexture(e) {
-    if (1 === CommonManager.Pyi) return "T_ComposeTypeLevel" + e;
+    if (1 === CommonManager.PIi) return "T_ComposeTypeLevel" + e;
   }
   static GetSumExpByLevel(e) {
-    if (1 === CommonManager.Pyi)
+    if (1 === CommonManager.PIi)
       return ComposeController_1.ComposeController.GetSumExpByLevel(e);
   }
   static GetDropIdByLevel(e) {
-    if (1 === CommonManager.Pyi)
+    if (1 === CommonManager.PIi)
       return ComposeController_1.ComposeController.GetDropIdByLevel(e);
   }
   static GetComposeMaxLevel() {
-    if (1 === CommonManager.Pyi)
+    if (1 === CommonManager.PIi)
       return ComposeController_1.ComposeController.GetComposeMaxLevel();
   }
   static SendLevelRewardRequest() {
-    1 === CommonManager.Pyi &&
+    1 === CommonManager.PIi &&
       ComposeController_1.ComposeController.SendSynthesisLevelRewardRequest();
   }
   static CheckIsBuffEx(e, o) {
-    switch (CommonManager.Pyi) {
+    switch (CommonManager.PIi) {
       case 1:
         return ComposeController_1.ComposeController.CheckIsBuffEx(e, o);
       case 2:
@@ -118,7 +118,7 @@ class CommonManager {
     }
   }
   static GetCommonManufactureText(e) {
-    switch (CommonManager.Pyi) {
+    switch (CommonManager.PIi) {
       case 1:
         return ComposeController_1.ComposeController.GetComposeText(e);
       case 2:
@@ -126,7 +126,7 @@ class CommonManager {
     }
   }
   static GetCommonManufactureId(e) {
-    switch (CommonManager.Pyi) {
+    switch (CommonManager.PIi) {
       case 1:
         return ComposeController_1.ComposeController.GetComposeId(e);
       case 2:
@@ -134,7 +134,7 @@ class CommonManager {
     }
   }
   static CheckShowRoleView() {
-    switch (CommonManager.Pyi) {
+    switch (CommonManager.PIi) {
       case 1:
         return ComposeController_1.ComposeController.CheckShowRoleView();
       case 2:
@@ -143,17 +143,17 @@ class CommonManager {
   }
   static GetMaxCreateCount(e) {
     return (
-      1 !== CommonManager.Pyi
+      1 !== CommonManager.PIi
         ? ForgingController_1.ForgingController
         : ComposeController_1.ComposeController
     ).GetMaxCreateCount(e);
   }
   static CheckCanManufacture(e) {
-    if (2 === CommonManager.Pyi)
+    if (2 === CommonManager.PIi)
       return ForgingController_1.ForgingController.CheckCanForging(e);
   }
   static SendManufacture(e, o) {
-    switch (CommonManager.Pyi) {
+    switch (CommonManager.PIi) {
       case 1:
         ComposeController_1.ComposeController.SendManufacture(e, o);
         break;
@@ -162,7 +162,7 @@ class CommonManager {
     }
   }
   static GetCurrentRoleId() {
-    switch (CommonManager.Pyi) {
+    switch (CommonManager.PIi) {
       case 1:
         return ComposeController_1.ComposeController.GetCurrentRoleId();
       case 2:
@@ -170,7 +170,7 @@ class CommonManager {
     }
   }
   static SetCurrentRoleId(e) {
-    switch (CommonManager.Pyi) {
+    switch (CommonManager.PIi) {
       case 1:
         ComposeController_1.ComposeController.SetCurrentRoleId(e);
         break;
@@ -179,7 +179,7 @@ class CommonManager {
     }
   }
   static GetManufactureRoleId(e) {
-    switch (CommonManager.Pyi) {
+    switch (CommonManager.PIi) {
       case 1:
         return ComposeController_1.ComposeController.GetComposeRoleId(e);
       case 2:
@@ -187,7 +187,7 @@ class CommonManager {
     }
   }
   static GetManufactureMaterialList(e) {
-    switch (CommonManager.Pyi) {
+    switch (CommonManager.PIi) {
       case 1:
         return ComposeController_1.ComposeController.GetManufactureMaterialList(
           e,
@@ -197,7 +197,7 @@ class CommonManager {
     }
   }
   static GetHelpRoleItemDataList(e) {
-    switch (CommonManager.Pyi) {
+    switch (CommonManager.PIi) {
       case 1:
         return ComposeController_1.ComposeController.GetHelpRoleItemDataList(e);
       case 2:
@@ -205,11 +205,11 @@ class CommonManager {
     }
   }
   static CheckCanShowExpItem() {
-    if (1 === CommonManager.Pyi)
+    if (1 === CommonManager.PIi)
       return ComposeController_1.ComposeController.CheckCanShowExpItem();
   }
   static CheckShowAmountItem() {
-    switch (CommonManager.Pyi) {
+    switch (CommonManager.PIi) {
       case 1:
         return !0;
       case 2:

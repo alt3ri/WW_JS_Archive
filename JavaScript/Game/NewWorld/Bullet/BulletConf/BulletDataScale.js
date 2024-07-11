@@ -4,25 +4,25 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const Vector_1 = require("../../../../Core/Utils/Math/Vector");
 class BulletDataScale {
   constructor(t) {
-    (this.y8o = void 0),
-      (this.I8o = void 0),
-      (this.T8o = !1),
-      (this.L8o = void 0),
+    (this.M9o = void 0),
+      (this.E9o = void 0),
+      (this.S9o = !1),
+      (this.y9o = void 0),
       (this.Pe = t);
   }
   get SizeScale() {
     return (
-      this.y8o || (this.y8o = Vector_1.Vector.Create(this.Pe.缩放倍率)),
-      this.y8o
+      this.M9o || (this.M9o = Vector_1.Vector.Create(this.Pe.缩放倍率)),
+      this.M9o
     );
   }
   get ScaleCurve() {
     return (
-      this.T8o || ((this.T8o = !0), (this.I8o = this.Pe.缩放倍率曲线)), this.I8o
+      this.S9o || ((this.S9o = !0), (this.E9o = this.Pe.缩放倍率曲线)), this.E9o
     );
   }
   get ShapeSwitch() {
-    return void 0 === this.L8o && (this.L8o = this.Pe.特定形状开关), this.L8o;
+    return void 0 === this.y9o && (this.y9o = this.Pe.特定形状开关), this.y9o;
   }
   Preload() {
     this.SizeScale;

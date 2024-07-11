@@ -13,12 +13,12 @@ class SkillCdData {
   constructor() {
     (this.SkillId2GroupIdMap = new Map()),
       (this.GroupSkillCdInfoMap = new Map()),
-      (this.XWe = 0),
+      (this.sQe = 0),
       (this.ServerSkillCd = new Map()),
       (this.ServerGroupSkillCd = new Map());
   }
   GenerateCdShareGroupId(t) {
-    return 0 === t ? (this.XWe++, this.XWe) : t;
+    return 0 === t ? (this.sQe++, this.sQe) : t;
   }
   Tick(t) {
     for (const i of this.GroupSkillCdInfoMap.values()) i.Tick(t);
@@ -26,7 +26,7 @@ class SkillCdData {
   Clear() {
     this.SkillId2GroupIdMap.clear(),
       this.GroupSkillCdInfoMap.clear(),
-      (this.XWe = 0);
+      (this.sQe = 0);
   }
 }
 exports.SkillCdData = SkillCdData;
@@ -53,29 +53,30 @@ class WorldSkillCdData {
       e.MaxCount,
       e.ShareGroupId,
       e.IsShareAllCdSkill,
+      e.CdTags,
     );
   }
-  InitSkillCdCommon(t, i, e, o, r, l, s) {
-    let a = void 0;
+  InitSkillCdCommon(t, i, e, o, r, l, s, a) {
+    let n = void 0;
     s
-      ? (a = this.AllShareSkillCdData)
-      : ((n = t.Id),
-        (h = void 0),
-        (a = this.EntitySkillCdMap.get(n)) ||
-          ((a =
+      ? (n = this.AllShareSkillCdData)
+      : ((h = t.Id),
+        (f = void 0),
+        (n = this.EntitySkillCdMap.get(h)) ||
+          ((n =
             t.GetComponent(0).IsRole() &&
-            ((f = t.GetComponent(0).GetPbDataId()),
-            (h = this.OffRoleSkillCdMap.get(f)))
-              ? (this.OffRoleSkillCdMap.delete(f), h)
+            ((_ = t.GetComponent(0).GetPbDataId()),
+            (f = this.OffRoleSkillCdMap.get(_)))
+              ? (this.OffRoleSkillCdMap.delete(_), f)
               : new SkillCdData()),
-          this.EntitySkillCdMap.set(n, a)));
-    var n,
-      h,
-      f = a.SkillId2GroupIdMap.get(i);
-    if (f) {
-      const _ = a.GroupSkillCdInfoMap.get(f),
-        d = _.SkillCdInfoMap.get(i);
-      return (d.SkillCd = e), _.EntityIds.add(t.Id), _;
+          this.EntitySkillCdMap.set(h, n)));
+    var h,
+      f,
+      _ = n.SkillId2GroupIdMap.get(i);
+    if (_) {
+      const d = n.GroupSkillCdInfoMap.get(_),
+        C = d.SkillCdInfoMap.get(i);
+      return (C.SkillCd = e), d.EntityIds.add(t.Id), d;
     }
     0 !== l &&
       l < MIN_SHARE_GROUP_ID &&
@@ -84,41 +85,43 @@ class WorldSkillCdData {
         "skillId",
         i,
       ]),
-      (f = a.GenerateCdShareGroupId(l));
-    let _ = a.GroupSkillCdInfoMap.get(f);
-    _ ||
-      (((_ = new GroupSkillCdInfo_1.GroupSkillCdInfo()).GroupId = f),
-      (_.CurMaxCd = 0),
-      (_.CurRemainingCd = 0),
-      (_.CurRemainingDelayCd = 0),
-      (_.MaxCount = r),
-      (_.LimitCount = r),
-      (_.RemainingCount = r),
+      (_ = n.GenerateCdShareGroupId(l));
+    let d = n.GroupSkillCdInfoMap.get(_);
+    if (!d) {
+      ((d = new GroupSkillCdInfo_1.GroupSkillCdInfo()).GroupId = _),
+        (d.CurMaxCd = 0),
+        (d.CurRemainingCd = 0),
+        (d.CurRemainingDelayCd = 0),
+        (d.MaxCount = r),
+        (d.LimitCount = r),
+        (d.RemainingCount = r);
+      for (let t = a.Num() - 1; 0 <= t; t--) d.CdTags.push(a.Get(t).TagId);
       0 !== l
-        ? this.$We(a.ServerGroupSkillCd, l, _, i)
-        : this.$We(a.ServerSkillCd, i, _, i),
-      a.GroupSkillCdInfoMap.set(f, _));
-    const d = new GroupSkillCdInfo_1.SkillCdInfo();
+        ? this.aQe(n.ServerGroupSkillCd, l, d, i)
+        : this.aQe(n.ServerSkillCd, i, d, i),
+        n.GroupSkillCdInfoMap.set(_, d);
+    }
+    const C = new GroupSkillCdInfo_1.SkillCdInfo();
     return (
-      (d.SkillId = i),
-      (d.SkillCd = e),
-      (d.CdDelay = o),
-      (d.IsShareAllCdSkill = s),
-      r !== _.MaxCount &&
+      (C.SkillId = i),
+      (C.SkillCd = e),
+      (C.CdDelay = o),
+      (C.IsShareAllCdSkill = s),
+      r !== d.MaxCount &&
         Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Battle",
           18,
           "同一个冷却组的技能，可使用次数配置不一致",
-          ["skillId", d.SkillId],
+          ["skillId", C.SkillId],
         ),
-      _.SkillCdInfoMap.set(i, d),
-      a.SkillId2GroupIdMap.set(i, f),
-      _.EntityIds.add(t.Id),
-      _
+      d.SkillCdInfoMap.set(i, C),
+      n.SkillId2GroupIdMap.set(i, _),
+      d.EntityIds.add(t.Id),
+      d
     );
   }
-  $We(t, i, e, o) {
+  aQe(t, i, e, o) {
     var r = t.get(i);
     if (r) {
       if (0 < r.length) {
@@ -133,7 +136,7 @@ class WorldSkillCdData {
               : (e.SkillIdQueue.Push(o),
                 e.CdQueue.Push((s - i) * TimeUtil_1.TimeUtil.Millisecond)),
             (i = s));
-        e.RemainingCount -= t;
+        (e.RemainingCount -= t), e.OnCountChanged();
       }
       t.delete(i);
     }
@@ -171,46 +174,46 @@ class WorldSkillCdData {
     for (const o of this.MultiSkillMap.values()) o.OnTick(t);
   }
   HandlePlayerSkillInfoPbNotify(t) {
-    if (t.uxs) {
-      var i = t.uxs.lxs;
-      i && this.YWe(this.AllShareSkillCdData, i);
-      for (const e of t.uxs._xs)
-        if (e.hxs) {
-          let t = this.QWe(e.axs);
-          t || ((t = new SkillCdData()), this.OffRoleSkillCdMap.set(e.axs, t)),
-            this.YWe(t, e.hxs);
+    if (t.Pqs) {
+      var i = t.Pqs.Dqs;
+      i && this.hQe(this.AllShareSkillCdData, i);
+      for (const e of t.Pqs.Aqs)
+        if (e.Rqs) {
+          let t = this.nQe(e.Lqs);
+          t || ((t = new SkillCdData()), this.OffRoleSkillCdMap.set(e.Lqs, t)),
+            this.hQe(t, e.Rqs);
         }
     }
   }
-  YWe(t, i) {
+  hQe(t, i) {
     var e = Time_1.Time.ServerTimeStamp;
-    for (const r of i.nxs)
-      this.JWe(r, e, t.ServerSkillCd, r.vkn), this.zWe(t, r, 0);
-    for (const l of i.sxs) {
-      var o = l.oxs;
-      o && (this.JWe(o, e, t.ServerGroupSkillCd, l.rxs), this.zWe(t, o, l.rxs));
+    for (const r of i.Iqs)
+      this.lQe(r, e, t.ServerSkillCd, r.X4n), this._Qe(t, r, 0);
+    for (const l of i.Tqs) {
+      var o = l.yqs;
+      o && (this.lQe(o, e, t.ServerGroupSkillCd, l.Eqs), this._Qe(t, o, l.Eqs));
     }
   }
-  zWe(t, i, e = 0) {
-    var o = t.SkillId2GroupIdMap.get(i.vkn);
+  _Qe(t, i, e = 0) {
+    var o = t.SkillId2GroupIdMap.get(i.X4n);
     return (
       !!o &&
       !!(o = t.GroupSkillCdInfoMap.get(o)) &&
       (0 !== e
-        ? this.$We(t.ServerSkillCd, e, o, i.vkn)
-        : this.$We(t.ServerSkillCd, i.vkn, o, i.vkn),
+        ? this.aQe(t.ServerSkillCd, e, o, i.X4n)
+        : this.aQe(t.ServerSkillCd, i.X4n, o, i.X4n),
       !0)
     );
   }
-  JWe(t, i, e, o) {
+  lQe(t, i, e, o) {
     var r = [];
-    for (const s of t.ixs) {
+    for (const s of t.Sqs) {
       var l = MathUtils_1.MathUtils.LongToNumber(s);
       i < l && r.push(l);
     }
     0 < r.length && (1 < r.length && r.sort((t, i) => t - i), e.set(o, r));
   }
-  QWe(t) {
+  nQe(t) {
     const i = this.OffRoleSkillCdMap.get(t);
     if (i) return i;
     for (const [o, i] of this.EntitySkillCdMap) {

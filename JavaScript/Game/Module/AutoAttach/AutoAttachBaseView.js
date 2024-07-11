@@ -28,52 +28,52 @@ class AutoAttachBaseView {
       (this.DataLength = 0),
       (this.MoveBoundary = 0),
       (this.InertiaState = !1),
-      (this.xje = !1),
+      (this.jWe = !1),
       (this.DragState = !1),
       (this.VelocityMoveState = !1),
-      (this.wje = void 0),
-      (this.Bje = void 0),
-      (this.bje = !0),
-      (this.qje = 0),
+      (this.WWe = void 0),
+      (this.KWe = void 0),
+      (this.QWe = !0),
+      (this.XWe = 0),
       (this.CurrentVelocityRunningTime = 0),
-      (this.Gje = void 0),
-      (this.Nje = void 0),
+      (this.$We = void 0),
+      (this.YWe = void 0),
       (this.BoundaryCurve = void 0),
-      (this.Oje = 0),
-      (this.kje = 0),
-      (this.Fje = 0),
-      (this.Vje = 0),
-      (this.Hje = 0),
-      (this.jje = new Map()),
+      (this.JWe = 0),
+      (this.zWe = 0),
+      (this.ZWe = 0),
+      (this.eKe = 0),
+      (this.tKe = 0),
+      (this.iKe = new Map()),
       (this.Items = new Array()),
       (this.AttachDirection = void 0),
       (this.CurrentSelectState = !1),
-      (this.Wje = 0),
-      (this.Kje = 0),
-      (this.Qje = 1),
-      (this.Xje = TickSystem_1.TickSystem.InvalidId),
-      (this.$je = MOVEMULFACTOR),
-      (this.Yje = DEFALTAUDIO),
-      (this.Jje = void 0),
+      (this.oKe = 0),
+      (this.rKe = 0),
+      (this.nKe = 1),
+      (this.sKe = TickSystem_1.TickSystem.InvalidId),
+      (this.aKe = MOVEMULFACTOR),
+      (this.hKe = DEFALTAUDIO),
+      (this.lKe = void 0),
       (this.CreateItemFunction = (t, i, s) => {}),
-      (this.zje = !1),
-      (this.Zje = void 0),
+      (this._Ke = !1),
+      (this.uKe = void 0),
       (this.r6 = (t) => {
         if (
-          (this.eWe &&
-            ((this.tWe += 1), 1 <= this.tWe) &&
-            ((this.eWe = !1), this.iWe(this.oWe)),
+          (this.cKe &&
+            ((this.mKe += 1), 1 <= this.mKe) &&
+            ((this.cKe = !1), this.dKe(this.CKe)),
           this.DragState || (!this.InertiaState && !this.VelocityMoveState))
         ) {
           if (
-            this.xje &&
-            ((this.xje = !1), (this.Kje = 0), !this.CurrentSelectState) &&
-            1 === this.Qje
+            this.jWe &&
+            ((this.jWe = !1), (this.rKe = 0), !this.CurrentSelectState) &&
+            1 === this.nKe
           ) {
             var i = this.Items.length;
             for (let t = 0; t < i; t++) {
               var s = this.Items[t];
-              s.GetCurrentShowItemIndex() !== this.Wje ||
+              s.GetCurrentShowItemIndex() !== this.oKe ||
                 s.GetSelectedState() ||
                 (s.Select(), (this.CurrentSelectState = !0));
             }
@@ -81,59 +81,59 @@ class AutoAttachBaseView {
           this.VelocityMoveState = !1;
         } else
           this.VelocityMoveState
-            ? this.rWe(t)
-            : this.Kje < this.kje
-              ? this.nWe(t)
-              : ((this.xje = !0), (this.InertiaState = !1));
-        this.zje !== this.MovingState() &&
-          ((this.zje = this.MovingState()), this.zje) &&
-          this.Zje?.();
+            ? this.gKe(t)
+            : this.rKe < this.zWe
+              ? this.fKe(t)
+              : ((this.jWe = !0), (this.InertiaState = !1));
+        this._Ke !== this.MovingState() &&
+          ((this._Ke = this.MovingState()), this._Ke) &&
+          this.uKe?.();
       }),
-      (this.sWe = (t) => {
+      (this.pKe = (t) => {
         (this.DragState = !0),
           (this.InertiaState = !1),
-          (this.xje = !1),
+          (this.jWe = !1),
           (this.VelocityMoveState = !1),
-          (this.wje = t.GetWorldPointInPlane()),
-          (this.Bje = t.GetWorldPointInPlane());
+          (this.WWe = t.GetWorldPointInPlane()),
+          (this.KWe = t.GetWorldPointInPlane());
         var i = this.Items.length;
         for (let t = 0; t < i; t++) this.Items[t].OnControllerDragStart();
-        this.Zje?.();
+        this.uKe?.();
       }),
-      (this.tWe = 0),
-      (this.eWe = !1),
-      (this.oWe = void 0),
-      (this.aWe = (t) => {
-        (this.tWe = 0), (this.eWe = !0);
-        var t = (this.oWe = t).GetWorldPointInPlane(),
-          i = this.hWe(t) - this.hWe(this.wje);
+      (this.mKe = 0),
+      (this.cKe = !1),
+      (this.CKe = void 0),
+      (this.vKe = (t) => {
+        (this.mKe = 0), (this.cKe = !0);
+        var t = (this.CKe = t).GetWorldPointInPlane(),
+          i = this.MKe(t) - this.MKe(this.WWe);
         0 != i &&
           (this.SetMoveTypeOffset(1, i),
           (i = this.RecalculateMoveOffset(i)),
           Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug("UiCommon", 28, "OnpointerDrag", ["result", i]),
-          this.lWe(i),
-          (this.wje = t));
+          this.EKe(i),
+          (this.WWe = t));
       }),
-      (this._We = (i) => {
+      (this.SKe = (i) => {
         var s = this.Items.length;
         for (let t = 0; t < s; t++) this.Items[t].OnControllerDragEnd();
         if (
           ((this.DragState = !1),
-          (this.Kje = 0),
-          (this.Vje = 0),
-          (this.Fje = 0),
-          this.bje)
+          (this.rKe = 0),
+          (this.eKe = 0),
+          (this.ZWe = 0),
+          this.QWe)
         ) {
           var i = i.GetWorldPointInPlane();
           let t = 0;
-          this.Bje && (t = (this.hWe(i) - this.hWe(this.Bje)) * this.$je),
-            Math.abs(t) < this.Hje
+          this.KWe && (t = (this.MKe(i) - this.MKe(this.KWe)) * this.aKe),
+            Math.abs(t) < this.tKe
               ? ((i = this.FindAutoAttachItem()),
                 this.AttachToIndex(i.GetCurrentShowItemIndex()))
               : ((this.VelocityMoveState = !0),
                 this.SetMoveTypeOffset(0, t),
-                (this.qje = 0 < t ? 1 : -1),
+                (this.XWe = 0 < t ? 1 : -1),
                 (this.CurrentVelocityRunningTime = 0));
         } else {
           i = this.FindAutoAttachItem();
@@ -144,19 +144,19 @@ class AutoAttachBaseView {
       (this.ControllerItem = t.GetComponentByClass(UE.UIItem.StaticClass())),
       (this.ControllerHeight = this.ControllerItem.Height),
       (this.ControllerWidth = this.ControllerItem.Width),
-      this.jje.set(0, 0),
-      this.jje.set(1, 0),
-      (this.Xje = TickSystem_1.TickSystem.Add(
+      this.iKe.set(0, 0),
+      this.iKe.set(1, 0),
+      (this.sKe = TickSystem_1.TickSystem.Add(
         this.r6,
         "AutoAttachBaseView",
         0,
         !0,
       ).Id),
-      (this.Gje = ResourceSystem_1.ResourceSystem.GetLoadedAsset(
+      (this.$We = ResourceSystem_1.ResourceSystem.GetLoadedAsset(
         AutoAttachDefine_1.VELOCITY_CURVE_PATH,
         UE.CurveFloat,
       )),
-      (this.Nje = ResourceSystem_1.ResourceSystem.GetLoadedAsset(
+      (this.YWe = ResourceSystem_1.ResourceSystem.GetLoadedAsset(
         AutoAttachDefine_1.INERTIA_CURVE_PATH,
         UE.CurveFloat,
       )),
@@ -164,23 +164,23 @@ class AutoAttachBaseView {
         AutoAttachDefine_1.BOUNDARY_CURVE_PATH,
         UE.CurveFloat,
       )),
-      (this.Oje =
+      (this.JWe =
         ConfigManager_1.ConfigManager.CommonConfig.GetAutoAttachVelocityTime()),
-      (this.kje =
+      (this.zWe =
         ConfigManager_1.ConfigManager.CommonConfig.GetAutoAttachInertiaTime()),
-      (this.zje = !1);
+      (this._Ke = !1);
   }
   SetItemSelectMode(t) {
-    this.Qje = t;
+    this.nKe = t;
   }
   SetMoveMultiFactor(t) {
-    this.$je = t;
+    this.aKe = t;
   }
   SetDragBeginCallback(t) {
-    this.Zje = t;
+    this.uKe = t;
   }
   SetAudioEvent(t) {
-    this.Yje = t;
+    this.hKe = t;
   }
   IsVelocityMoveState() {
     return this.VelocityMoveState;
@@ -196,9 +196,9 @@ class AutoAttachBaseView {
       (this.AttachDirection = h),
       (this.SourceItemHeight = this.SourceItem.Height),
       (this.SourceItemWidth = this.SourceItem.Width),
-      (this.ShowItemNum = this.uWe()),
-      (this.Hje = (this.GetItemSize() + this.Gap) / 2),
-      this.cWe();
+      (this.ShowItemNum = this.yKe()),
+      (this.tKe = (this.GetItemSize() + this.Gap) / 2),
+      this.IKe();
   }
   SetMoveBoundary(t) {
     this.MoveBoundary = t;
@@ -206,13 +206,13 @@ class AutoAttachBaseView {
   GetCurrentMoveDirection() {
     return this.AttachDirection;
   }
-  cWe() {
+  IKe() {
     this.MoveBoundary = this.GetItemSize();
   }
   SetBoundDistance(t) {
     this.MoveBoundary = t;
   }
-  uWe() {
+  yKe() {
     let t = 0;
     t =
       0 === this.AttachDirection ? this.ControllerWidth : this.ControllerHeight;
@@ -227,13 +227,13 @@ class AutoAttachBaseView {
         UE.UIDraggableComponent.StaticClass(),
       )) &&
       (t.OnPointerBeginDragCallBack.Bind((t) => {
-        this.sWe(t);
+        this.pKe(t);
       }),
       t.OnPointerDragCallBack.Bind((t) => {
-        this.aWe(t);
+        this.vKe(t);
       }),
       t.OnPointerEndDragCallBack.Bind((t) => {
-        this._We(t);
+        this.SKe(t);
       }),
       t.NavigateToPrevDelegate.Bind(() => {
         this.AttachToNextItem(-1);
@@ -271,43 +271,43 @@ class AutoAttachBaseView {
         ? this.ControllerWidth
         : this.ControllerHeight);
   }
-  rWe(t) {
+  gKe(t) {
     var i = this.GetMoveTypeOffset(0),
-      s = i / this.Oje,
+      s = i / this.JWe,
       h =
         ((this.CurrentVelocityRunningTime =
           this.CurrentVelocityRunningTime + t),
-        this.CurrentVelocityRunningTime / this.Oje),
-      s = s * this.GetCurveValue(this.Gje, (h = 1 < h ? 1 : h)) * t;
+        this.CurrentVelocityRunningTime / this.JWe),
+      s = s * this.GetCurveValue(this.$We, (h = 1 < h ? 1 : h)) * t;
     let e = this.RecalculateMoveOffset(s);
     Math.abs(e) < ENDMOVEFLOAT && (e = 0);
-    s = this.Vje + e;
-    Math.abs(s) > Math.abs(i) && (e = i - this.Vje),
-      this.lWe(e),
-      (this.Vje += e),
-      0 < this.qje
-        ? e <= 0 && this.mWe()
-        : this.qje < 0 && 0 <= e && this.mWe(),
+    s = this.eKe + e;
+    Math.abs(s) > Math.abs(i) && (e = i - this.eKe),
+      this.EKe(e),
+      (this.eKe += e),
+      0 < this.XWe
+        ? e <= 0 && this.TKe()
+        : this.XWe < 0 && 0 <= e && this.TKe(),
       1 <= h &&
-        (Math.abs(this.Vje) < Math.abs(i)
+        (Math.abs(this.eKe) < Math.abs(i)
           ? (this.CurrentVelocityRunningTime -= t)
-          : this.mWe());
+          : this.TKe());
   }
-  nWe(t) {
+  fKe(t) {
     var i = this.GetMoveTypeOffset(1),
-      s = i / this.kje,
-      h = ((this.Kje = this.Kje + t), this.Kje / this.kje);
-    let e = s * this.GetCurveValue(this.Nje, (h = 1 < h ? 1 : h)) * t;
-    s = this.Fje + e;
-    Math.abs(s) > Math.abs(i) && (e = i - this.Fje),
-      this.lWe(e),
-      (this.Fje += e),
-      1 <= h && Math.abs(this.Fje) < Math.abs(i) && (this.Kje -= t);
+      s = i / this.zWe,
+      h = ((this.rKe = this.rKe + t), this.rKe / this.zWe);
+    let e = s * this.GetCurveValue(this.YWe, (h = 1 < h ? 1 : h)) * t;
+    s = this.ZWe + e;
+    Math.abs(s) > Math.abs(i) && (e = i - this.ZWe),
+      this.EKe(e),
+      (this.ZWe += e),
+      1 <= h && Math.abs(this.ZWe) < Math.abs(i) && (this.rKe -= t);
   }
   GetCurveValue(t, i) {
     return t.GetFloatValue(i);
   }
-  mWe() {
+  TKe() {
     (this.VelocityMoveState = !1), (this.InertiaState = !1);
     var t = this.FindAutoAttachItem();
     this.ScrollToItem(t);
@@ -368,12 +368,12 @@ class AutoAttachBaseView {
       ((s = t.GetCurrentPosition()),
       this.SetMoveTypeOffset(1, -s),
       this.ForceUnSelectItems(),
-      (this.Wje = t.GetCurrentShowItemIndex()),
+      (this.oKe = t.GetCurrentShowItemIndex()),
       i
         ? (this.SetMoveTypeOffset(1, -s),
           (t = this.RecalculateMoveOffset(-s)),
-          this.lWe(t, i))
-        : ((this.Kje = 0), (this.InertiaState = !0)));
+          this.EKe(t, i))
+        : ((this.rKe = 0), (this.InertiaState = !0)));
   }
   AttachToNextItem(t) {
     t = this.FindNextDirectionItem(t);
@@ -385,41 +385,41 @@ class AutoAttachBaseView {
       ((s = this.GetShowIndexItem(t))
         ? this.ScrollToItem(s, i)
         : (this.ForceUnSelectItems(),
-          (this.Wje = t),
+          (this.oKe = t),
           (s = this.FindNearestMiddleItem()) &&
             ((t = t - s.GetCurrentShowItemIndex()),
             (t =
-              this.dWe() * (this.GetItemSize() + this.Gap) * t -
+              this.LKe() * (this.GetItemSize() + this.Gap) * t -
               s.GetCurrentPosition()),
             this.SetMoveTypeOffset(1, -t),
             i
               ? (this.SetMoveTypeOffset(1, -t),
                 (s = this.RecalculateMoveOffset(-t)),
-                this.lWe(s, i))
-              : ((this.Kje = 0), (this.InertiaState = !0)))));
+                this.EKe(s, i))
+              : ((this.rKe = 0), (this.InertiaState = !0)))));
   }
-  dWe() {
+  LKe() {
     return 0 === this.AttachDirection ? 1 : -1;
   }
   GetCurrentSelectIndex() {
-    return this.Wje;
+    return this.oKe;
   }
   MovingState() {
     return this.DragState || this.InertiaState;
   }
-  iWe(t) {
-    this.Bje = t.GetWorldPointInPlane();
+  dKe(t) {
+    this.KWe = t.GetWorldPointInPlane();
   }
-  hWe(t) {
+  MKe(t) {
     return 0 === this.AttachDirection ? t.X : t.Z;
   }
   GetMoveTypeOffset(t) {
-    return this.jje.get(t);
+    return this.iKe.get(t);
   }
   SetMoveTypeOffset(t, i) {
-    this.jje.set(t, i), 1 === t && (this.Fje = 0);
+    this.iKe.set(t, i), 1 === t && (this.ZWe = 0);
   }
-  lWe(i, s = !1) {
+  EKe(i, s = !1) {
     let h = VERYBIGDISTANCE,
       e = void 0;
     var r = this.Items.length;
@@ -427,24 +427,24 @@ class AutoAttachBaseView {
       var o = this.Items[t],
         a =
           (o.MoveItem(i),
-          ((this.CurrentSelectState || 0 !== this.Qje) && !s) ||
-            o.GetCurrentShowItemIndex() !== this.Wje ||
+          ((this.CurrentSelectState || 0 !== this.nKe) && !s) ||
+            o.GetCurrentShowItemIndex() !== this.oKe ||
             o.GetSelectedState() ||
             (o.Select(), (this.CurrentSelectState = !0)),
           o.GetCurrentMovePercentage()),
         a = Math.abs(a - DISTANCETOMIDDLE);
       a < h && ((h = a), (e = o.GetItemIndex()));
     }
-    this.Jje !== e &&
-      ((this.Jje = e), s || AudioSystem_1.AudioSystem.PostEvent(this.Yje));
+    this.lKe !== e &&
+      ((this.lKe = e), s || AudioSystem_1.AudioSystem.PostEvent(this.hKe));
   }
   Clear() {
     this.Items.forEach((t) => {
       t.Destroy();
     }),
       (this.Items = []),
-      this.Xje !== TickSystem_1.TickSystem.InvalidId &&
-        TickSystem_1.TickSystem.Remove(this.Xje);
+      this.sKe !== TickSystem_1.TickSystem.InvalidId &&
+        TickSystem_1.TickSystem.Remove(this.sKe);
   }
 }
 exports.AutoAttachBaseView = AutoAttachBaseView;

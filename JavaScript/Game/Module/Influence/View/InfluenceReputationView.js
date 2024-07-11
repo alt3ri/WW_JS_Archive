@@ -19,31 +19,31 @@ class InfluenceReputationView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
       (this.xqe = void 0),
-      (this.tni = 0),
-      (this.oTt = 0),
-      (this.ini = 0),
-      (this.oni = !1),
-      (this.rni = !1),
-      (this.nni = !1),
-      (this.sni = void 0),
-      (this.ani = void 0),
-      (this.hni = []),
-      (this.eHe = !1),
-      (this.lni = !1),
-      (this.gpt = () => {
+      (this.tsi = 0),
+      (this.hLt = 0),
+      (this.isi = 0),
+      (this.osi = !1),
+      (this.rsi = !1),
+      (this.nsi = !1),
+      (this.ssi = void 0),
+      (this.asi = void 0),
+      (this.hsi = []),
+      (this.cje = !1),
+      (this.lsi = !1),
+      (this.Rvt = () => {
         this.CloseMe();
       }),
-      (this.yUt = () => {
-        UiManager_1.UiManager.OpenView("InfluenceSearchView", this.tni);
+      (this.DAt = () => {
+        UiManager_1.UiManager.OpenView("InfluenceSearchView", this.tsi);
       }),
-      (this._ni = () => {
-        UiManager_1.UiManager.OpenView("InfluenceAreaSelectView", this.tni);
+      (this._si = () => {
+        UiManager_1.UiManager.OpenView("InfluenceAreaSelectView", this.tsi);
       }),
-      (this.uni = () => {
+      (this.usi = () => {
         var t = this.xqe.ContentItem,
           e = t.GetWidth(),
           t = Math.abs(t.GetAnchorOffsetX()) + this.xqe.ScrollWidth,
-          s = this.hni.length;
+          s = this.hsi.length;
         if (e < t) this.xqe.ScrollToRight(s - 2);
         else {
           e = e / s;
@@ -55,11 +55,11 @@ class InfluenceReputationView extends UiViewBase_1.UiViewBase {
             this.xqe.ScrollToRight(i);
         }
       }),
-      (this.cni = () => {
+      (this.msi = () => {
         var i = this.xqe.ContentItem,
           t = i.GetWidth(),
           i = Math.abs(i.GetAnchorOffsetX()),
-          e = (i < 0 && this.xqe.ScrollToLeft(1), this.hni.length),
+          e = (i < 0 && this.xqe.ScrollToLeft(1), this.hsi.length),
           t = t / e;
         let s = 0;
         (s =
@@ -68,16 +68,16 @@ class InfluenceReputationView extends UiViewBase_1.UiViewBase {
             : Math.floor(i / t) + 1),
           this.xqe.ScrollToLeft(s);
       }),
-      (this.mni = () => {
-        this.dni(!1),
-          void 0 !== this.oTt &&
-            (this.xqe.GetScrollItemByKey(this.oTt).SetDisActiveToggleState(),
-            (this.oTt = void 0));
+      (this.dsi = () => {
+        this.Csi(!1),
+          void 0 !== this.hLt &&
+            (this.xqe.GetScrollItemByKey(this.hLt).SetDisActiveToggleState(),
+            (this.hLt = void 0));
       }),
       (this.sGe = (i, t, e) => {
         t = new InfluenceDisplayItem_1.InfluenceDisplayItem(t);
         return (
-          t.UpdateItem(i, this.tni),
+          t.UpdateItem(i, this.tsi),
           t.SetToggleFunction(this.pqe),
           t.SetIndex(e),
           { Key: e, Value: t }
@@ -85,30 +85,30 @@ class InfluenceReputationView extends UiViewBase_1.UiViewBase {
       }),
       (this.pqe = (i, t) => {
         0 === i
-          ? this.oTt === t && ((this.oTt = void 0), this.Cni(), this.dni(!1))
-          : ((i = this.oTt),
-            (this.oTt = t),
+          ? this.hLt === t && ((this.hLt = void 0), this.gsi(), this.Csi(!1))
+          : ((i = this.hLt),
+            (this.hLt = t),
             void 0 !== i
               ? this.xqe.GetScrollItemByKey(i).SetDisActiveToggleState()
-              : this.Cni(),
-            (this.eHe = !0),
-            this.dni(!0));
+              : this.gsi(),
+            (this.cje = !0),
+            this.Csi(!0));
       }),
-      (this.gni = (i) => {
-        this.oni &&
-          ((i = MathUtils_1.MathUtils.Clamp(i.X, 0, 1)), this.ini !== i) &&
-          ((this.ini = i), this.Cni());
+      (this.fsi = (i) => {
+        this.osi &&
+          ((i = MathUtils_1.MathUtils.Clamp(i.X, 0, 1)), this.isi !== i) &&
+          ((this.isi = i), this.gsi());
       }),
-      (this.PWt = (i) => {
-        (this.tni = i), this.Og();
+      (this.PKt = (i) => {
+        (this.tsi = i), this.Og();
       }),
-      (this.fni = (i, t) => {
-        (this.tni = t), this.Og(), this.pni(i);
+      (this.psi = (i, t) => {
+        (this.tsi = t), this.Og(), this.vsi(i);
       }),
-      (this.nHe = (i) => {
-        this.eHe && ((this.eHe = !1), this.vni()),
-          this.lni &&
-            ((this.lni = !1), (this.oni = this.xqe.IsExpand), this.Cni());
+      (this.fje = (i) => {
+        this.cje && ((this.cje = !1), this.Msi()),
+          this.lsi &&
+            ((this.lsi = !1), (this.osi = this.xqe.IsExpand), this.gsi());
       });
   }
   OnRegisterComponent() {
@@ -127,51 +127,51 @@ class InfluenceReputationView extends UiViewBase_1.UiViewBase {
       [11, UE.UIItem],
     ]),
       (this.BtnBindInfo = [
-        [0, this.gpt],
-        [5, this.yUt],
-        [4, this._ni],
-        [2, this.uni],
-        [3, this.cni],
-        [10, this.mni],
+        [0, this.Rvt],
+        [5, this.DAt],
+        [4, this._si],
+        [2, this.usi],
+        [3, this.msi],
+        [10, this.dsi],
       ]);
   }
   OnBeforeCreate() {
-    this.tni = this.OpenParam;
+    this.tsi = this.OpenParam;
   }
   OnStart() {
     (this.xqe = new GenericScrollView_1.GenericScrollView(
       this.GetScrollViewWithScrollbar(1),
       this.sGe,
     )),
-      this.xqe.BindScrollValueChange(this.gni),
-      this.xqe.BindLateUpdate(this.nHe);
+      this.xqe.BindScrollValueChange(this.fsi),
+      this.xqe.BindLateUpdate(this.fje);
     var i = ModelManager_1.ModelManager.PlayerInfoModel.GetPlayerStand();
     this.SetTextureByPath(i, this.GetTexture(6)),
-      (this.sni = this.GetButton(2).RootUIComp),
-      (this.ani = this.GetButton(3).RootUIComp),
-      this.sni.SetUIActive(!1),
-      this.ani.SetUIActive(!1),
-      (this.rni = !1),
-      (this.nni = !1);
+      (this.ssi = this.GetButton(2).RootUIComp),
+      (this.asi = this.GetButton(3).RootUIComp),
+      this.ssi.SetUIActive(!1),
+      this.asi.SetUIActive(!1),
+      (this.rsi = !1),
+      (this.nsi = !1);
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.RefreshInfluencePanel,
-      this.PWt,
+      this.PKt,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.SearchInfluence,
-        this.fni,
+        this.psi,
       );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.RefreshInfluencePanel,
-      this.PWt,
+      this.PKt,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.SearchInfluence,
-        this.fni,
+        this.psi,
       );
   }
   OnAfterShow() {
@@ -180,65 +180,65 @@ class InfluenceReputationView extends UiViewBase_1.UiViewBase {
   OnBeforeDestroy() {
     this.xqe.ClearChildren(),
       (this.xqe = void 0),
-      (this.ani = void 0),
-      (this.sni = void 0);
+      (this.asi = void 0),
+      (this.ssi = void 0);
   }
   Og() {
     var i = ConfigManager_1.ConfigManager.InfluenceConfig.GetCountryConfig(
-      this.tni,
+      this.tsi,
     );
-    (this.hni = i.Influences.filter(
+    (this.hsi = i.Influences.filter(
       (i) => i !== InfluenceReputationDefine_1.RAMDOM_INFLUENCE_ID,
     )),
-      this.Mni(),
-      this.Sni(i.Title),
-      this.Eni(),
-      this.yni(),
-      this.dni(!1);
+      this.Esi(),
+      this.Ssi(i.Title),
+      this.ysi(),
+      this.Isi(),
+      this.Csi(!1);
   }
-  pni(i) {
-    i = this.hni.indexOf(i);
+  vsi(i) {
+    i = this.hsi.indexOf(i);
     this.xqe.GetScrollItemByKey(i).SetToggleState(1, !0);
   }
-  Mni() {
-    (this.oTt = void 0), this.xqe.RefreshByData(this.hni), (this.lni = !0);
+  Esi() {
+    (this.hLt = void 0), this.xqe.RefreshByData(this.hsi), (this.lsi = !0);
   }
-  Sni(i) {
+  Ssi(i) {
     LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(7), i);
   }
-  Eni() {
+  ysi() {
     let i = 0;
     for (const t of this.xqe.GetScrollItemMap().values()) t.IsUnLock() && i++;
     this.GetText(8).SetText(i.toString()),
-      this.GetText(9).SetText(this.hni.length.toString());
+      this.GetText(9).SetText(this.hsi.length.toString());
   }
-  yni() {
+  Isi() {
     var i =
       ModelManager_1.ModelManager.InfluenceReputationModel.HasRedDotExcludeCurrentCountry(
-        this.tni,
+        this.tsi,
       );
     this.GetItem(11).SetUIActive(i);
   }
-  Cni() {
+  gsi() {
     var i;
-    this.oni && void 0 === this.oTt
-      ? void 0 !== this.ini &&
-        ((i = this.ini < 1 - PROGRESS_DEVIATION_VALUE),
-        this.rni !== i && ((this.rni = i), this.sni.SetUIActive(i)),
-        (i = this.ini > PROGRESS_DEVIATION_VALUE),
-        this.nni !== i) &&
-        ((this.nni = i), this.ani.SetUIActive(i))
-      : (this.rni && ((this.rni = !1), this.sni.SetUIActive(!1)),
-        this.nni && ((this.nni = !1), this.ani.SetUIActive(!1)));
+    this.osi && void 0 === this.hLt
+      ? void 0 !== this.isi &&
+        ((i = this.isi < 1 - PROGRESS_DEVIATION_VALUE),
+        this.rsi !== i && ((this.rsi = i), this.ssi.SetUIActive(i)),
+        (i = this.isi > PROGRESS_DEVIATION_VALUE),
+        this.nsi !== i) &&
+        ((this.nsi = i), this.asi.SetUIActive(i))
+      : (this.rsi && ((this.rsi = !1), this.ssi.SetUIActive(!1)),
+        this.nsi && ((this.nsi = !1), this.asi.SetUIActive(!1)));
   }
-  dni(i) {
+  Csi(i) {
     this.GetButton(10).RootUIComp.SetUIActive(i);
   }
-  vni() {
+  Msi() {
     var i = this.xqe.GetScrollItemMap().size;
-    this.oTt === i - 1
-      ? this.xqe.ScrollToLeft(this.oTt - 1)
-      : this.xqe.ScrollToLeft(this.oTt);
+    this.hLt === i - 1
+      ? this.xqe.ScrollToLeft(this.hLt - 1)
+      : this.xqe.ScrollToLeft(this.hLt);
   }
 }
 exports.InfluenceReputationView = InfluenceReputationView;

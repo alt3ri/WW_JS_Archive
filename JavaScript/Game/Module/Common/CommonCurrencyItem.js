@@ -12,32 +12,32 @@ const UE = require("ue"),
 class CommonCurrencyItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this.gIt = 0),
+      (this.ETt = 0),
       (this.SkipAutoAddEvent = !1),
-      (this.Qyt = void 0),
-      (this.fIt = void 0),
-      (this.j7e = () => {
-        this.fIt?.(), this.Qyt?.(this.gIt);
+      (this.Gke = void 0),
+      (this.STt = void 0),
+      (this.ije = () => {
+        this.STt?.(), this.Gke?.(this.ETt);
       }),
-      (this.pIt = () => {
+      (this.yTt = () => {
         ControllerHolder_1.ControllerHolder.ItemController.OpenItemTipsByItemId(
-          this.gIt,
+          this.ETt,
         );
       }),
-      (this.vIt = () => {
+      (this.ITt = () => {
         this.RefreshCountText();
       }),
-      (this.MIt = (e) => {
+      (this.TTt = (e) => {
         for (const t of e)
-          if (this.gIt === t.Ekn) return void this.RefreshCountText();
+          if (this.ETt === t.J4n) return void this.RefreshCountText();
       }),
-      (this.SIt = (e) => {
-        e.includes(this.gIt) && this.RefreshCountText();
+      (this.LTt = (e) => {
+        e.includes(this.ETt) && this.RefreshCountText();
       }),
-      (this.EIt = (e, t, i) => {
-        this.gIt === e.Ekn && this.RefreshCountText();
+      (this.DTt = (e, t, i) => {
+        this.ETt === e.J4n && this.RefreshCountText();
       }),
-      (this.yIt = (e) => {
+      (this.RTt = (e) => {
         e === ConfigManager_1.ConfigManager.GachaConfig.PrimaryCurrency()
           ? ControllerHolder_1.ControllerHolder.PayShopController.OpenPayShopViewToRecharge()
           : e === ConfigManager_1.ConfigManager.GachaConfig.SecondCurrency() &&
@@ -53,10 +53,14 @@ class CommonCurrencyItem extends UiPanelBase_1.UiPanelBase {
       [2, UE.UIButtonComponent],
       [3, UE.UIButtonComponent],
       [4, UE.UITextureTransitionComponent],
+      [5, UE.UIItem],
+      [6, UE.UISprite],
+      [7, UE.UISprite],
+      [8, UE.UIItem],
     ]),
       (this.BtnBindInfo = [
-        [2, this.j7e],
-        [3, this.pIt],
+        [2, this.ije],
+        [3, this.yTt],
       ]);
   }
   OnStart() {
@@ -68,55 +72,55 @@ class CommonCurrencyItem extends UiPanelBase_1.UiPanelBase {
   AddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.PayShopGoodsBuy,
-      this.vIt,
+      this.ITt,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnPlayerCurrencyChange,
-        this.vIt,
+        this.ITt,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnAddCommonItemList,
-        this.MIt,
+        this.TTt,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnRemoveCommonItem,
-        this.SIt,
+        this.LTt,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnCommonItemCountRefresh,
-        this.EIt,
+        this.DTt,
       );
   }
   RemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.PayShopGoodsBuy,
-      this.vIt,
+      this.ITt,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnPlayerCurrencyChange,
-        this.vIt,
+        this.ITt,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnAddCommonItemList,
-        this.MIt,
+        this.TTt,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnRemoveCommonItem,
-        this.SIt,
+        this.LTt,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnCommonItemCountRefresh,
-        this.EIt,
+        this.DTt,
       );
   }
-  IIt() {
+  UTt() {
     const e = this.GetTexture(0);
     e.SetUIActive(!1),
-      this.SetItemIcon(this.GetTexture(0), this.gIt, void 0, () => {
-        e.SetUIActive(!0), this.TIt();
+      this.SetItemIcon(this.GetTexture(0), this.ETt, void 0, () => {
+        this.ATt(), e.SetUIActive(!0);
       });
   }
-  TIt() {
+  ATt() {
     var e = this.GetUiTextureTransitionComponent(4);
     e && e.SetAllStateTexture(this.GetTexture(0).GetTexture());
   }
@@ -124,37 +128,43 @@ class CommonCurrencyItem extends UiPanelBase_1.UiPanelBase {
     this.ShowWithoutText(e), this.RefreshCountText(t);
   }
   ShowWithoutText(e) {
-    (this.gIt = e), this.IIt();
+    (this.ETt = e), this.UTt();
   }
   RefreshCountText(e) {
     var t = this.GetText(1),
       e =
         e ??
         ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
-          this.gIt,
+          this.ETt,
         );
     t?.SetText(e.toString());
   }
   SetCountText(e, ...t) {
     LguiUtil_1.LguiUtil.SetLocalText(this.GetText(1), e, ...t);
   }
+  SetCountTextNew(e, ...t) {
+    LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(1), e, ...t);
+  }
   SetButtonFunction(e) {
-    this.Qyt = e;
+    this.Gke = e;
   }
   SetBeforeButtonFunction(e) {
-    this.fIt = e;
+    this.STt = e;
   }
   SetButtonActive(e) {
     this.GetButton(2).RootUIComp.SetUIActive(e);
   }
-  SetToPayShopFunction() {
-    this.Qyt = this.yIt;
+  RefreshMaxItem(e) {
+    this.GetItem(8).SetUIActive(e);
   }
-  SetPayShopButtonActive() {
+  SetToPayShopFunction() {
+    this.Gke = this.RTt;
+  }
+  RefreshAddButtonActive() {
     var e = ConfigManager_1.ConfigManager.GachaConfig.PrimaryCurrency(),
       t = ConfigManager_1.ConfigManager.GachaConfig.SecondCurrency(),
       i = this.GetButton(2);
-    this.gIt !== e && this.gIt !== t
+    this.ETt !== e && this.ETt !== t
       ? i.RootUIComp.SetUIActive(!1)
       : i.RootUIComp.SetUIActive(!0);
   }

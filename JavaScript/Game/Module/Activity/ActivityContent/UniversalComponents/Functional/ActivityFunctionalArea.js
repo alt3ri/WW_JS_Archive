@@ -9,11 +9,11 @@ const UE = require("ue"),
 class ActivityFunctionalArea extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this.KFe = void 0),
+      (this.h4e = void 0),
       (this.FunctionButton = void 0),
-      (this.QFe = void 0),
-      (this.XFe = () => {
-        this.KFe && this.KFe();
+      (this.l4e = void 0),
+      (this._4e = () => {
+        this.h4e && this.h4e();
       });
   }
   OnRegisterComponent() {
@@ -26,7 +26,7 @@ class ActivityFunctionalArea extends UiPanelBase_1.UiPanelBase {
       [5, UE.UIItem],
       [6, UE.UIItem],
     ]),
-      (this.BtnBindInfo = [[4, this.XFe]]);
+      (this.BtnBindInfo = [[4, this._4e]]);
   }
   OnStart() {
     var t = this.GetItem(6);
@@ -55,15 +55,18 @@ class ActivityFunctionalArea extends UiPanelBase_1.UiPanelBase {
     this.GetButton(4).SetSelfInteractive(t);
   }
   SetRewardButtonFunction(t) {
-    this.KFe = t;
+    this.h4e = t;
   }
   SetRewardRedDotVisible(t) {
     this.GetItem(5).SetUIActive(t);
   }
+  SetFunctionButtonVisible(t) {
+    this.FunctionButton?.SetUiActive(t);
+  }
   BindRewardRedDot(t, e = 0) {
     var i = this.GetItem(5);
     i &&
-      ((this.QFe = t), this.QFe) &&
+      ((this.l4e = t), this.l4e) &&
       RedDotController_1.RedDotController.BindRedDot(t, i, void 0, e);
   }
   UnbindRewardRedDotById(t, e) {
@@ -71,9 +74,15 @@ class ActivityFunctionalArea extends UiPanelBase_1.UiPanelBase {
     i && RedDotController_1.RedDotController.UnBindGivenUi(t, i, e);
   }
   UnBindRewardRedDot() {
-    this.QFe &&
-      (RedDotController_1.RedDotController.UnBindRedDot(this.QFe),
-      (this.QFe = void 0));
+    this.l4e &&
+      (RedDotController_1.RedDotController.UnBindRedDot(this.l4e),
+      (this.l4e = void 0));
+  }
+  SetPerformanceOpenTimeOver() {
+    this.SetPanelConditionVisible(!0),
+      this.SetLockTextByTextId("Activity_EndDesc01"),
+      this.SetRewardButtonVisible(!1),
+      this.FunctionButton.SetUiActive(!1);
   }
 }
 exports.ActivityFunctionalArea = ActivityFunctionalArea;

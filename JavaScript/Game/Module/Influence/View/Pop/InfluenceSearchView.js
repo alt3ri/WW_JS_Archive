@@ -17,12 +17,12 @@ class InfluenceSearchView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
       (this.CurrentCountryId = 0),
-      (this.vUt = ""),
+      (this.yAt = ""),
       (this.xqe = void 0),
-      (this.Pni = () => {
+      (this.xsi = () => {
         this.GetInputText(0).SetText("", !0);
       }),
-      (this.gpt = () => {
+      (this.Rvt = () => {
         this.CloseMe();
       }),
       (this.sGe = (e, t, i) => {
@@ -36,8 +36,8 @@ class InfluenceSearchView extends UiViewBase_1.UiViewBase {
         }
         t.SetUIActive(!1);
       }),
-      (this.xni = (e) => {
-        (this.vUt = e), this.RefreshSearchResult();
+      (this.wsi = (e) => {
+        (this.yAt = e), this.RefreshSearchResult();
       });
   }
   OnRegisterComponent() {
@@ -49,8 +49,8 @@ class InfluenceSearchView extends UiViewBase_1.UiViewBase {
       [4, UE.UIButtonComponent],
     ]),
       (this.BtnBindInfo = [
-        [1, this.Pni],
-        [4, this.gpt],
+        [1, this.xsi],
+        [4, this.Rvt],
       ]);
   }
   OnBeforeCreate() {
@@ -61,14 +61,14 @@ class InfluenceSearchView extends UiViewBase_1.UiViewBase {
       this.GetScrollViewWithScrollbar(2),
       this.sGe,
     )),
-      this.GetInputText(0).OnTextChange.Bind(this.xni);
+      this.GetInputText(0).OnTextChange.Bind(this.wsi);
   }
   OnAfterShow() {
     this.RefreshSearchResult();
   }
   RefreshSearchResult() {
     let e = [];
-    this.vUt
+    this.yAt
       ? (e =
           ModelManager_1.ModelManager.InfluenceReputationModel.GetUnLockCountry()).sort(
           (e, t) =>
@@ -82,7 +82,7 @@ class InfluenceSearchView extends UiViewBase_1.UiViewBase {
     var t =
         ModelManager_1.ModelManager.InfluenceReputationModel.FilterUnLockInfluenceList(
           e,
-          this.vUt,
+          this.yAt,
         ),
       i = t.HasResult;
     this.GetItem(3).SetUIActive(!i),
@@ -98,10 +98,10 @@ class InfluenceSearchGrid extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
       (this.eGe = void 0),
-      (this.z4t = 0),
+      (this.z5t = 0),
       (this.sGe = (e, t, i) => {
         t = new InfluenceSearchItem(t);
-        return t.UpdateItem(e, this.z4t), { Key: i, Value: t };
+        return t.UpdateItem(e, this.z5t), { Key: i, Value: t };
       }),
       this.CreateThenShowByActor(e.GetOwner());
   }
@@ -121,7 +121,7 @@ class InfluenceSearchGrid extends UiPanelBase_1.UiPanelBase {
     );
   }
   UpdateGrid(e, t) {
-    this.z4t = e;
+    this.z5t = e;
     var e = ConfigManager_1.ConfigManager.InfluenceConfig.GetCountryConfig(e),
       e =
         (LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(0), e.Title),
@@ -136,13 +136,13 @@ class InfluenceSearchGrid extends UiPanelBase_1.UiPanelBase {
 class InfluenceSearchItem extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
-      (this.z4t = 0),
-      (this.Tni = 0),
-      (this.j7e = () => {
+      (this.z5t = 0),
+      (this.Lsi = 0),
+      (this.ije = () => {
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.SearchInfluence,
-          this.Tni,
-          this.z4t,
+          this.Lsi,
+          this.z5t,
         ),
           UiManager_1.UiManager.CloseView("InfluenceSearchView");
       }),
@@ -159,13 +159,13 @@ class InfluenceSearchItem extends UiPanelBase_1.UiPanelBase {
       [6, UE.UIItem],
       [7, UE.UIButtonComponent],
     ]),
-      (this.BtnBindInfo = [[7, this.j7e]]);
+      (this.BtnBindInfo = [[7, this.ije]]);
   }
   OnBeforeDestroy() {
     RedDotController_1.RedDotController.UnBindRedDot("InfluenceReward");
   }
   UpdateItem(e, t) {
-    (this.Tni = e), (this.z4t = t);
+    (this.Lsi = e), (this.z5t = t);
     var t =
         ModelManager_1.ModelManager.InfluenceReputationModel.GetInfluenceInstance(
           e,
@@ -180,15 +180,15 @@ class InfluenceSearchItem extends UiPanelBase_1.UiPanelBase {
     e.ExtraDesc
       ? (i.SetUIActive(!0), LguiUtil_1.LguiUtil.SetLocalTextNew(i, e.ExtraDesc))
       : i.SetUIActive(!1),
-      this.Rni(t.Relation),
-      this.x6e(t.Id);
+      this.Usi(t.Relation),
+      this.K8e(t.Id);
   }
-  Rni(e) {
+  Usi(e) {
     this.GetItem(3).SetUIActive(2 === e),
       this.GetItem(4).SetUIActive(3 === e),
       this.GetItem(5).SetUIActive(1 === e);
   }
-  x6e(e) {
+  K8e(e) {
     RedDotController_1.RedDotController.BindRedDot(
       "InfluenceReward",
       this.GetItem(6),

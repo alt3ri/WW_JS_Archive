@@ -20,7 +20,7 @@ class LevelConditionCheckClientUseVisionSkill extends LevelGeneralBase_1.LevelCo
       : (o = e.LimitParams.get("PhantomSkillId"))
         ? !!(n = Global_1.Global.BaseCharacter) &&
           !!(
-            (i = n.GetEntityNoBlueprint()?.GetComponent(34)) &&
+            (i = n.GetEntityNoBlueprint()?.GetComponent(35)) &&
             (n = n.GetEntityNoBlueprint()?.GetComponent(33)) &&
             (i = i.GetVisionData(Number(o))) &&
             n.GetSkill(i.技能ID)?.Active

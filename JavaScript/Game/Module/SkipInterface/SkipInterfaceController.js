@@ -15,17 +15,17 @@ class SkipInterfaceController extends ControllerBase_1.ControllerBase {
   static Ore() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OpenViewBegined,
-      this.Eyo,
+      this.vIo,
     );
   }
   static kre() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OpenViewBegined,
-      this.Eyo,
+      this.vIo,
     );
   }
 }
-(exports.SkipInterfaceController = SkipInterfaceController).Eyo = (e) => {
+(exports.SkipInterfaceController = SkipInterfaceController).vIo = (e) => {
   SkipTaskManager_1.SkipTaskManager.CheckContainRingView(e);
 };
 //# sourceMappingURL=SkipInterfaceController.js.map

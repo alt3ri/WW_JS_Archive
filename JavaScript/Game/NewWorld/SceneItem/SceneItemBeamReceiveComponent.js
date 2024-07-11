@@ -41,84 +41,84 @@ let SceneItemBeamReceiveComponent =
     constructor() {
       super(...arguments),
         (this.Lo = void 0),
-        (this.SIe = void 0),
+        (this.EIe = void 0),
         (this.Hte = void 0),
         (this.Lie = void 0),
-        (this.fdn = 0),
-        (this.pdn = 0),
-        (this.vdn = void 0),
-        (this.Mdn = (e) => {
-          var t = this.SIe.GetEntityOnlineInteractType();
+        (this.$mn = 0),
+        (this.Ymn = 0),
+        (this.Jmn = void 0),
+        (this.zmn = (e) => {
+          var t = this.EIe.GetEntityOnlineInteractType();
           LevelGamePlayController_1.LevelGamePlayController.MultiplayerLimitTypeCheck(
             t,
           ) &&
-            1 !== this.fdn &&
-            ((this.fdn = 1),
-            this.Sdn(1),
-            this.Edn(Protocol_1.Aki.Protocol.CBs.Proto_BeginAction),
-            0 === this.pdn
-              ? this.ydn(e)
-              : (this.vdn && TimerSystem_1.TimerSystem.Has(this.vdn)) ||
-                (this.vdn = TimerSystem_1.TimerSystem.Delay(() => {
-                  this.ydn(e);
-                }, this.pdn)));
+            1 !== this.$mn &&
+            ((this.$mn = 1),
+            this.Zmn(1),
+            this.edn(Protocol_1.Aki.Protocol.rks.Proto_BeginAction),
+            0 === this.Ymn
+              ? this.tdn(e)
+              : (this.Jmn && TimerSystem_1.TimerSystem.Has(this.Jmn)) ||
+                (this.Jmn = TimerSystem_1.TimerSystem.Delay(() => {
+                  this.tdn(e);
+                }, this.Ymn)));
         }),
-        (this.Idn = (e) => {
-          var t = this.SIe.GetEntityOnlineInteractType();
+        (this.idn = (e) => {
+          var t = this.EIe.GetEntityOnlineInteractType();
           LevelGamePlayController_1.LevelGamePlayController.MultiplayerLimitTypeCheck(
             t,
           ) &&
-            0 !== this.fdn &&
-            ((this.fdn = 0),
-            this.Sdn(0),
-            this.vdn &&
-              TimerSystem_1.TimerSystem.Has(this.vdn) &&
-              TimerSystem_1.TimerSystem.Remove(this.vdn),
-            (this.vdn = void 0),
-            this.Edn(Protocol_1.Aki.Protocol.CBs.Proto_StopAction));
+            0 !== this.$mn &&
+            ((this.$mn = 0),
+            this.Zmn(0),
+            this.Jmn &&
+              TimerSystem_1.TimerSystem.Has(this.Jmn) &&
+              TimerSystem_1.TimerSystem.Remove(this.Jmn),
+            (this.Jmn = void 0),
+            this.edn(Protocol_1.Aki.Protocol.rks.Proto_StopAction));
         }),
-        (this.ydn = (e) => {
-          var t = this.SIe.GetEntityOnlineInteractType();
+        (this.tdn = (e) => {
+          var t = this.EIe.GetEntityOnlineInteractType();
           LevelGamePlayController_1.LevelGamePlayController.MultiplayerLimitTypeCheck(
             t,
           ) &&
-            2 !== this.fdn &&
-            ((this.fdn = 2),
-            this.Sdn(2),
-            this.vdn &&
-              TimerSystem_1.TimerSystem.Has(this.vdn) &&
-              TimerSystem_1.TimerSystem.Remove(this.vdn),
-            (this.vdn = void 0),
-            this.Edn(Protocol_1.Aki.Protocol.CBs.Proto_CompleteAction));
+            2 !== this.$mn &&
+            ((this.$mn = 2),
+            this.Zmn(2),
+            this.Jmn &&
+              TimerSystem_1.TimerSystem.Has(this.Jmn) &&
+              TimerSystem_1.TimerSystem.Remove(this.Jmn),
+            (this.Jmn = void 0),
+            this.edn(Protocol_1.Aki.Protocol.rks.Proto_CompleteAction));
         });
     }
     OnInitData(e) {
-      this.SIe = this.Entity.GetComponent(0);
+      this.EIe = this.Entity.GetComponent(0);
       e = e.GetParam(SceneItemBeamReceiveComponent_1)[0];
       return e
         ? ((this.Lo = e),
-          (this.pdn =
+          (this.Ymn =
             this.Lo.Duration * BattleUiDefine_1.SECOND_TO_MILLISECOND),
           !0)
         : (Log_1.Log.CheckError() &&
             Log_1.Log.Error("SceneItem", 40, "[BeamReceiveComp] 组件配置缺失", [
               "PbDataId",
-              this.SIe?.GetPbDataId(),
+              this.EIe?.GetPbDataId(),
             ]),
           !1);
     }
     OnActivate() {
-      (this.Hte = this.Entity.GetComponent(182)),
-        (this.Lie = this.Entity.GetComponent(177)),
+      (this.Hte = this.Entity.GetComponent(185)),
+        (this.Lie = this.Entity.GetComponent(180)),
         EventSystem_1.EventSystem.AddWithTarget(
           this.Entity,
           EventDefine_1.EEventName.BeamCastStart,
-          this.Mdn,
+          this.zmn,
         ),
         EventSystem_1.EventSystem.AddWithTarget(
           this.Entity,
           EventDefine_1.EEventName.BeamCastStop,
-          this.Idn,
+          this.idn,
         );
     }
     OnEnd() {
@@ -126,27 +126,27 @@ let SceneItemBeamReceiveComponent =
         EventSystem_1.EventSystem.HasWithTarget(
           this.Entity,
           EventDefine_1.EEventName.BeamCastStart,
-          this.Mdn,
+          this.zmn,
         ) &&
           EventSystem_1.EventSystem.RemoveWithTarget(
             this.Entity,
             EventDefine_1.EEventName.BeamCastStart,
-            this.Mdn,
+            this.zmn,
           ),
         EventSystem_1.EventSystem.HasWithTarget(
           this.Entity,
           EventDefine_1.EEventName.BeamCastStop,
-          this.Idn,
+          this.idn,
         ) &&
           EventSystem_1.EventSystem.RemoveWithTarget(
             this.Entity,
             EventDefine_1.EEventName.BeamCastStop,
-            this.Idn,
+            this.idn,
           ),
         !0
       );
     }
-    Sdn(e) {
+    Zmn(e) {
       switch (e) {
         case 0:
           this.Lie?.HasTag(castingPerformTag) &&
@@ -191,19 +191,19 @@ let SceneItemBeamReceiveComponent =
               this.Lie?.RemoveTag(stopCastingPerformTag);
       }
     }
-    Edn(t) {
-      var e = Protocol_1.Aki.Protocol.dds.create();
-      (e.rkn = this.SIe.GetCreatureDataId()),
-        (e.AFn = t),
-        Net_1.Net.Call(1508, e, (e) => {
-          e?.lkn !== Protocol_1.Aki.Protocol.lkn.Sys &&
+    edn(t) {
+      var e = Protocol_1.Aki.Protocol.hgs.create();
+      (e.P4n = this.EIe.GetCreatureDataId()),
+        (e.r6n = t),
+        Net_1.Net.Call(2381, e, (e) => {
+          e?.O4n !== Protocol_1.Aki.Protocol.O4n.NRs &&
             Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
               "SceneItem",
               40,
               "[BeamReceiveComp] 请求执行光线接收行为出错",
-              ["PbDataId", this.SIe?.GetPbDataId()],
-              ["CreatureDataId", this.SIe?.GetCreatureDataId()],
+              ["PbDataId", this.EIe?.GetPbDataId()],
+              ["CreatureDataId", this.EIe?.GetCreatureDataId()],
               ["EntityBeamReceiveType", t],
               ["Response", e],
             );
@@ -211,11 +211,11 @@ let SceneItemBeamReceiveComponent =
     }
     GetBeamReceiveActions(e) {
       switch (e) {
-        case Protocol_1.Aki.Protocol.CBs.Proto_BeginAction:
+        case Protocol_1.Aki.Protocol.rks.Proto_BeginAction:
           return this.Lo?.BeginActions;
-        case Protocol_1.Aki.Protocol.CBs.Proto_CompleteAction:
+        case Protocol_1.Aki.Protocol.rks.Proto_CompleteAction:
           return this.Lo?.CompleteActions;
-        case Protocol_1.Aki.Protocol.CBs.Proto_StopAction:
+        case Protocol_1.Aki.Protocol.rks.Proto_StopAction:
           return this.Lo?.StopActions;
         default:
           return;
@@ -224,7 +224,7 @@ let SceneItemBeamReceiveComponent =
   });
 (SceneItemBeamReceiveComponent = SceneItemBeamReceiveComponent_1 =
   __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(190)],
+    [(0, RegisterComponent_1.RegisterComponent)(195)],
     SceneItemBeamReceiveComponent,
   )),
   (exports.SceneItemBeamReceiveComponent = SceneItemBeamReceiveComponent);

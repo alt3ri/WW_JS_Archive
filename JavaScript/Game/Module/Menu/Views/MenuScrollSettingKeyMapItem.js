@@ -20,7 +20,7 @@ class MenuScrollSettingKeyMapItem extends MenuScrollSettingBaseItem_1.MenuScroll
     this.Pe && (this.Pe = void 0);
   }
   Update(e) {
-    (this.Pe = e), this.RefreshTitle(), this.dSe();
+    (this.Pe = e), this.RefreshTitle(), this.dEe();
   }
   RefreshTitle() {
     this.GetText(0).ShowTextNew(this.Pe.MenuDataFunctionName ?? "");
@@ -28,7 +28,7 @@ class MenuScrollSettingKeyMapItem extends MenuScrollSettingBaseItem_1.MenuScroll
   SetInteractionActive(e) {
     this.GetButton(1).SetSelfInteractive(!0);
   }
-  dSe() {
+  dEe() {
     this.GetRootItem().SetUIActive(!0);
     var e = MenuController_1.MenuController.GetTargetMenuData(
       this.Pe.MenuDataFunctionId,

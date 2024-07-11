@@ -1,8 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FightInputDistribute = void 0);
-const Log_1 = require("../../../../Core/Common/Log"),
-  ModelManager_1 = require("../../../Manager/ModelManager"),
+const Info_1 = require("../../../../Core/Common/Info"),
+  Log_1 = require("../../../../Core/Common/Log"),
   InputManager_1 = require("../../Input/InputManager"),
   UiLayer_1 = require("../../UiLayer"),
   InputDistributeDefine_1 = require("../InputDistributeDefine"),
@@ -13,12 +13,12 @@ class FightInputDistribute extends InputDistributeSetup_1.InputDistributeSetup {
       UiLayer_1.UiLayer.UiRootItem.IsUIActiveSelf() ||
       UiLayer_1.UiLayer.WorldSpaceUiRootItem.IsUIActiveSelf()
         ? InputManager_1.InputManager.IsShowMouseCursor() &&
-          ModelManager_1.ModelManager.PlatformModel.IsPc()
+          Info_1.Info.IsInKeyBoard()
           ? (Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "Input",
                 8,
-                "[InputDistribute]刷新战斗输入时，处于PC平台并且在显示鼠标，设置输入分发Tag为 UiInputRootTag",
+                "[InputDistribute]刷新战斗输入时，处于键鼠设备并且在显示鼠标，设置输入分发Tag为 UiInputRootTag",
               ),
             this.SetInputDistributeTag(
               InputDistributeDefine_1.inputDistributeTagDefine.UiInputRootTag,

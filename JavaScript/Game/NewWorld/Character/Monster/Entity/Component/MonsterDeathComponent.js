@@ -32,7 +32,7 @@ let MonsterDeathComponent = class MonsterDeathComponent extends BaseDeathCompone
   constructor() {
     super(...arguments),
       (this.Xte = void 0),
-      (this.L7r = void 0),
+      (this.s7r = void 0),
       (this.DelayDestroyCallback = (e, t) => {
         t || this.PlayDeathAnimation();
       }),
@@ -54,12 +54,12 @@ let MonsterDeathComponent = class MonsterDeathComponent extends BaseDeathCompone
       });
   }
   OnInitData() {
-    return (this.Xte = this.Entity.CheckGetComponent(185)), !0;
+    return (this.Xte = this.Entity.CheckGetComponent(188)), !0;
   }
   OnStart() {
     return (
       this.Entity.CheckGetComponent(0)?.GetLivingStatus() ===
-        Protocol_1.Aki.Protocol.Rvs.Proto_Dead && this.ExecuteDeath(),
+        Protocol_1.Aki.Protocol.HEs.Proto_Dead && this.ExecuteDeath(),
       !0
     );
   }
@@ -69,25 +69,21 @@ let MonsterDeathComponent = class MonsterDeathComponent extends BaseDeathCompone
   ExecuteDeath() {
     return (
       !!super.ExecuteDeath() &&
-      (EventSystem_1.EventSystem.Emit(
-        EventDefine_1.EEventName.OnCharDeathLogicBegin,
-        this.Entity.Id,
-      ),
-      this.Entity.GetComponent(157)?.RemoveBuffByEffectType(
+      (this.Entity.GetComponent(159)?.RemoveBuffByEffectType(
         36,
         "实体死亡移除冰冻buff",
       ),
       this.Xte.AddTag(1008164187),
       this.Xte?.HasTag(-1615707547)
-        ? (this.L7r = this.Xte.ListenForTagAddOrRemove(
+        ? (this.s7r = this.Xte.ListenForTagAddOrRemove(
             -1615707547,
             this.DelayDestroyCallback,
           ))
         : (this.Entity.GetComponent(33)?.StopAllSkills(
             "MonsterDeathComponent.ExecuteDeath",
           ),
-          this.Entity.GetComponent(89)?.ResetCharState(),
-          this.Entity.GetComponent(157)?.RemoveAllDurationBuffs(
+          this.Entity.GetComponent(91)?.ResetCharState(),
+          this.Entity.GetComponent(159)?.RemoveAllDurationBuffs(
             "实体死亡清理持续型buff",
           ),
           this.PlayDeathAnimation()),
@@ -111,7 +107,7 @@ let MonsterDeathComponent = class MonsterDeathComponent extends BaseDeathCompone
       this.Entity.IsInit &&
       this.Entity.Active
     ) {
-      var e = this.Entity.GetComponent(89)?.PositionState;
+      var e = this.Entity.GetComponent(91)?.PositionState;
       if (e === CharacterUnifiedStateTypes_1.ECharPositionState.Water)
         i.PlayMontageWithCallBack(1, this.OnDeathEnded);
       else {
@@ -144,8 +140,8 @@ let MonsterDeathComponent = class MonsterDeathComponent extends BaseDeathCompone
     } else this.OnDeathEnded();
   }
   ClearDeathTasks() {
-    this.L7r?.EndTask(),
-      (this.L7r = void 0),
+    this.s7r?.EndTask(),
+      (this.s7r = void 0),
       this.DeathTagTask?.EndTask(),
       (this.DeathTagTask = void 0),
       this.DeathTimerTask?.Remove(),
@@ -153,7 +149,7 @@ let MonsterDeathComponent = class MonsterDeathComponent extends BaseDeathCompone
   }
 };
 (MonsterDeathComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(165)],
+  [(0, RegisterComponent_1.RegisterComponent)(167)],
   MonsterDeathComponent,
 )),
   (exports.MonsterDeathComponent = MonsterDeathComponent);

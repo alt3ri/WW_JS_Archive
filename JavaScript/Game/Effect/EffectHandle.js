@@ -37,6 +37,7 @@ const puerts_1 = require("puerts"),
   GameBudgetAllocatorConfigCreator_1 = require("../World/Define/GameBudgetAllocatorConfigCreator"),
   EEffectFlag_1 = require("./EEffectFlag"),
   EffectActorHandle_1 = require("./EffectActorHandle"),
+  EffectModelGroupSpec_1 = require("./EffectSpec/EffectModelGroupSpec"),
   EffectModelNiagaraSpec_1 = require("./EffectSpec/EffectModelNiagaraSpec"),
   EffectSystem_1 = require("./EffectSystem"),
   MAX_LOOP_EFFECT_WITHOUT_OWNER_TIME_OF_EXISTENCE = 600;
@@ -67,8 +68,8 @@ class EffectHandle {
       (this.IsTickWhenPaused = !1),
       (this.NiagaraParameter = void 0),
       (this.ExtraState = -1),
-      (this.rbn = !1),
-      (this.DDn = !1),
+      (this.KGn = !1),
+      (this.TUn = !1),
       (this.Parent = void 0),
       (this.zCe = !1),
       (this.CreateReason = ""),
@@ -110,11 +111,11 @@ class EffectHandle {
       (this.TickSystemTick = (t) => {
         this.Tick(t * TimeUtil_1.TimeUtil.Millisecond);
       }),
-      (this.dge = !1),
+      (this.m0a = !1),
       (this.Cge = 0),
-      (this.obn = !0),
-      (this.nbn = () => {
-        this.IsEffectValid && this.OnVisibilityChanged(this.obn);
+      (this.QGn = !0),
+      (this.XGn = () => {
+        this.IsEffectValid && this.OnVisibilityChanged(this.QGn);
       }),
       (this.gge = !1),
       (this.fge = (t, i) => {
@@ -138,7 +139,8 @@ class EffectHandle {
           ));
       }),
       (this.OnCustomCheckOwner = void 0),
-      (this.pge = void 0);
+      (this.pge = void 0),
+      (this.vCa = void 0);
   }
   SetBornFrameCount() {
     this.BornFrameCount = UE.KismetSystemLibrary.GetFrameCount();
@@ -164,22 +166,22 @@ class EffectHandle {
       : (this.ExtraState = t);
   }
   get IgnoreVisibilityOptimize() {
-    return (this.IsRoot() ? this : this.GetRoot()).rbn;
+    return (this.IsRoot() ? this : this.GetRoot()).KGn;
   }
   set IgnoreVisibilityOptimize(t) {
-    this.rbn !== t &&
+    this.KGn !== t &&
       (t
-        ? (this.OnVisibilityChanged(!0, !1), (this.rbn = t))
-        : ((this.rbn = t), TimerSystem_1.TimerSystem.Next(this.nbn)));
+        ? (this.OnVisibilityChanged(!0, !1), (this.KGn = t))
+        : ((this.KGn = t), TimerSystem_1.TimerSystem.Next(this.XGn)));
   }
   get StoppingTime() {
-    return this.DDn;
+    return this.TUn;
   }
   set StoppingTime(t) {
     this.nx?.SourceObject instanceof UE.BP_EffectActor_C &&
       this.IsRoot() &&
-      this.DDn !== t &&
-      ((this.DDn = t), EffectSystem_1.EffectSystem.GlobalStoppingTime) &&
+      this.TUn !== t &&
+      ((this.TUn = t), EffectSystem_1.EffectSystem.GlobalStoppingTime) &&
       this.GetEffectSpec()?.OnGlobalStoppingTimeChange(t);
   }
   OnGlobalStoppingTimeChange(t) {
@@ -333,8 +335,11 @@ class EffectHandle {
       (this.Cge = 0),
       this.tge.Replay(),
       (this.OnCustomCheckOwner = void 0),
-      (this.DDn = !1),
-      (this.obn = !0);
+      (this.TUn = !1),
+      (this.QGn = !0),
+      (this.vCa = void 0),
+      (this.m0a = !1),
+      this.tge.FreezeEffect(!1);
   }
   Play(t) {
     16 & this.ige ||
@@ -344,7 +349,7 @@ class EffectHandle {
       this.IsRoot() &&
         Info_1.Info.IsGameRunning() &&
         GameBudgetInterfaceController_1.GameBudgetInterfaceController.IsOpen &&
-        !this.Sge &&
+        !this.Ege &&
         this.RegisterTick(),
       this.tge.Play(t),
       this.ApplyEffectParameters(),
@@ -385,8 +390,9 @@ class EffectHandle {
         Info_1.Info.IsGameRunning() &&
           GameBudgetInterfaceController_1.GameBudgetInterfaceController
             .IsOpen &&
-          this.Sge &&
+          this.Ege &&
           this.UnregisterTick(),
+          this.GetEffectSpec()?.FreezeEffect(!0),
           (this.ExtraState = -1);
       }
       this.IsPlaying() && this.tge.Stop(t, i);
@@ -430,7 +436,7 @@ class EffectHandle {
         EffectEnvironment_1.EffectEnvironment.GameTimeInSeconds),
       Info_1.Info.IsGameRunning() &&
         GameBudgetInterfaceController_1.GameBudgetInterfaceController.IsOpen &&
-        !this.Sge &&
+        !this.Ege &&
         this.RegisterTick(),
       this.GetEffectSpec()?.SetLifeCycle(this.LifeTime),
       this.GetEffectSpec()?.SetPlaying(!0));
@@ -446,7 +452,7 @@ class EffectHandle {
   InitEffectActorAfterPendingInit() {
     this.ege && this.InitCache && this.InitCache.EffectActorHandle
       ? (this.InitCache.EffectActorHandle.InitEffectActor(this.ege, this),
-        this.Sge &&
+        this.Ege &&
           void 0 !== this.yW &&
           GameBudgetInterfaceController_1.GameBudgetInterfaceController.UpdateRegisterActor(
             this.lge,
@@ -505,7 +511,7 @@ class EffectHandle {
         ((EffectHandle.Ige = void 0),
         (EffectHandle.Tge = void 0),
         (EffectHandle.Mge = void 0),
-        (EffectHandle.Ege = void 0))),
+        (EffectHandle.Sge = void 0))),
       (this.ige = 1);
     t = this.tge.Init(t);
     return this.SetIsInitializing(!1), t;
@@ -570,7 +576,7 @@ class EffectHandle {
   Destroy() {
     (this.ige |= 128), this.tge?.Destroy();
   }
-  get Sge() {
+  get Ege() {
     return void 0 !== this.yW || void 0 !== this.hge;
   }
   RegisterTick() {
@@ -671,19 +677,20 @@ class EffectHandle {
         ]);
   }
   SeekTo(t, i, e = !1) {
-    this.tge?.IsValid()
-      ? this.tge.SeekTo(t, e, i)
-      : Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("RenderEffect", 37, "[EffectHandle]SeekTo Failed", [
-          "handleId",
-          this.Id,
-        ]);
+    return this.tge?.IsValid()
+      ? (this.tge.SeekTo(t, e, i), !0)
+      : (Log_1.Log.CheckDebug() &&
+          Log_1.Log.Debug("RenderEffect", 37, "[EffectHandle]SeekTo Failed", [
+            "handleId",
+            this.Id,
+          ]),
+        !1);
   }
   ChaseFrame(t, i, e = !1) {
     this.tge?.IsValid()
       ? this.tge.ChaseFrame(t, e, i)
-      : Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("RenderEffect", 37, "[EffectHandle]ChaseFrame Failed", [
+      : Log_1.Log.CheckDebug() &&
+        Log_1.Log.Debug("RenderEffect", 37, "[EffectHandle]ChaseFrame Failed", [
           "handleId",
           this.Id,
         ]);
@@ -727,7 +734,9 @@ class EffectHandle {
               return void this.tge.TickNeedAlwaysTick(i);
             t > i && this.tge.SeekTimeWithoutAlwaysTick(t, !0);
           }
-          if (this.dge) return void this.Dge(i);
+          if (this.vCa)
+            return (this._ge = this.vCa.CustomProcess), void this.Dge(i);
+          if (this.IsFreeze) return void this.Dge(i);
           this.tge.Tick(i);
         }
         t !== i && (t += i);
@@ -736,8 +745,11 @@ class EffectHandle {
   RegisterActorDestroy() {
     this.IsRoot() && this.ege.OnEndPlay.Add(this.fge);
   }
+  get IsFreeze() {
+    return this.m0a;
+  }
   FreezeEffect(t) {
-    this.dge = t;
+    this.m0a !== t && ((this.m0a = t), this.GetEffectSpec()?.FreezeEffect(t));
   }
   Dge(t) {
     let i = t;
@@ -801,46 +813,47 @@ class EffectHandle {
         ]);
   }
   StopEffect(t, i = !1, e = !1) {
-    t
-      ? t.length < EffectSystem_1.EFFECT_REASON_LENGTH_LIMIT
-        ? Log_1.Log.CheckError() &&
-          Log_1.Log.Error(
-            "Entity",
-            3,
-            "StopEffect的Reason字符串长度必须大于等于限制字符数量",
-            ["Reason", t],
-            ["限制的字符数量", EffectSystem_1.EFFECT_REASON_LENGTH_LIMIT],
-            ["Path", this.Path],
-          )
-        : this.IsEffectValid()
-          ? this.IsRoot()
-            ? (!this.IsPendingInit && !this.GetRoot().IsDone()) || i
-              ? EffectSystem_1.EffectSystem.StopEffect(this, t, !0, e)
-              : (this.tge.SetPlaying(!1), this.tge.SetStopping(!0))
+    (this.vCa = void 0),
+      t
+        ? t.length < EffectSystem_1.EFFECT_REASON_LENGTH_LIMIT
+          ? Log_1.Log.CheckError() &&
+            Log_1.Log.Error(
+              "Entity",
+              3,
+              "StopEffect的Reason字符串长度必须大于等于限制字符数量",
+              ["Reason", t],
+              ["限制的字符数量", EffectSystem_1.EFFECT_REASON_LENGTH_LIMIT],
+              ["Path", this.Path],
+            )
+          : this.IsEffectValid()
+            ? this.IsRoot()
+              ? (!this.IsPendingInit && !this.GetRoot().IsDone()) || i
+                ? EffectSystem_1.EffectSystem.StopEffect(this, t, !0, e)
+                : (this.tge.SetPlaying(!1), this.tge.SetStopping(!0))
+              : Log_1.Log.CheckError() &&
+                Log_1.Log.Error(
+                  "Entity",
+                  3,
+                  "子特效不能调用StopEffect",
+                  ["Reason", t],
+                  ["Path", this.Path],
+                )
             : Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "Entity",
                 3,
-                "子特效不能调用StopEffect",
+                "EffectHandle已失效，不能调用StopEffect()",
                 ["Reason", t],
                 ["Path", this.Path],
               )
-          : Log_1.Log.CheckError() &&
-            Log_1.Log.Error(
-              "Entity",
-              3,
-              "EffectHandle已失效，不能调用StopEffect()",
-              ["Reason", t],
-              ["Path", this.Path],
-            )
-      : Log_1.Log.CheckError() &&
-        Log_1.Log.Error(
-          "Entity",
-          3,
-          "StopEffect的Reason不能使用undefined",
-          ["Reason", t],
-          ["Path", this.Path],
-        );
+        : Log_1.Log.CheckError() &&
+          Log_1.Log.Error(
+            "Entity",
+            3,
+            "StopEffect的Reason不能使用undefined",
+            ["Reason", t],
+            ["Path", this.Path],
+          );
   }
   DestroyEffect(t, i) {
     t
@@ -883,11 +896,11 @@ class EffectHandle {
         );
   }
   get HandleVisible() {
-    return this.obn;
+    return this.QGn;
   }
   OnVisibilityChanged(t, i = !0) {
     this.tge?.IsValid()
-      ? (i && (this.obn = t), this.tge.VisibilityChanged(t))
+      ? (i && (this.QGn = t), this.tge.VisibilityChanged(t))
       : Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn(
           "RenderEffect",
@@ -988,11 +1001,20 @@ class EffectHandle {
   GetGlobalStoppingPlayTime() {
     return EffectSystem_1.EffectSystem.GlobalStoppingPlayTime;
   }
+  SetPublicToSequence(t) {
+    if (this.tge instanceof EffectModelNiagaraSpec_1.EffectModelNiagaraSpec)
+      this.tge.SetPublicToSequence(t);
+    else if (this.tge instanceof EffectModelGroupSpec_1.EffectModelGroupSpec)
+      for (const i of this.tge.EffectSpecMap.values()) i.SetPublicToSequence(t);
+  }
+  SetSimulateFromSequence(t) {
+    (this.vCa = t), this.FreezeEffect(!0);
+  }
 }
 (EffectHandle.Ige = void 0),
   (EffectHandle.Tge = void 0),
   (EffectHandle.Mge = void 0),
-  (EffectHandle.Ege = void 0),
+  (EffectHandle.Sge = void 0),
   __decorate(
     [(0, PerformanceDecorators_1.TickEffectPerformanceWithEntity)()],
     EffectHandle.prototype,

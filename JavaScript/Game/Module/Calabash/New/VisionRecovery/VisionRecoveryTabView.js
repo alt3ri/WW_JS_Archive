@@ -27,46 +27,46 @@ const UE = require("ue"),
 class VisionRecoveryTabView extends UiTabViewBase_1.UiTabViewBase {
   constructor() {
     super(...arguments),
-      (this.evt = []),
-      (this.tvt = []),
-      (this.ivt = []),
-      (this.ovt = void 0),
-      (this.qpt = void 0),
-      (this.DFe = void 0),
-      (this.rvt = !1),
-      (this.nvt = !1),
-      (this.svt = () => {
-        this.ovt.SetActive(!1),
-          this.ovt.UiViewSequence.RemoveSequenceFinishEvent(
+      (this.cMt = []),
+      (this.mMt = []),
+      (this.dMt = []),
+      (this.CMt = void 0),
+      (this.Xvt = void 0),
+      (this.H3e = void 0),
+      (this.gMt = !1),
+      (this.fMt = !1),
+      (this.pMt = () => {
+        this.CMt.SetActive(!1),
+          this.CMt.UiViewSequence.RemoveSequenceFinishEvent(
             "SwitchB",
-            this.svt,
+            this.pMt,
           );
       }),
-      (this.avt = (e, i) => {
+      (this.vMt = (e, i) => {
         e
-          ? (this.nvt || this.hvt(), this.lvt())
-          : 0 <= (e = this.evt.findIndex((e) => e.IncId === i.GetUniqueId())) &&
-            (this.evt.splice(e, 1),
-            this._vt(this.tvt, this.evt),
-            this.Fpt(this.evt));
+          ? (this.fMt || this.MMt(), this.EMt())
+          : 0 <= (e = this.cMt.findIndex((e) => e.IncId === i.GetUniqueId())) &&
+            (this.cMt.splice(e, 1),
+            this.SMt(this.mMt, this.cMt),
+            this.Zvt(this.cMt));
       }),
-      (this.uvt = () => {
-        this.evt.length <= 0 ? this.cvt() : this.mvt();
+      (this.yMt = () => {
+        this.cMt.length <= 0 ? this.IMt() : this.TMt();
       }),
-      (this.dvt = () => {
-        if (this.evt.length < CalabashDefine_1.VISION_RECOVERY_SLOT_MAX_NUM)
+      (this.LMt = () => {
+        if (this.cMt.length < CalabashDefine_1.VISION_RECOVERY_SLOT_MAX_NUM)
           ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
             "Text_EchoLack_Text",
           );
         else if (
           ModelManager_1.ModelManager.CalabashModel.HideVisionRecoveryConfirmBox
         )
-          this.Cvt();
+          this.DMt();
         else {
           let e = !1,
             i = !1,
             t = !1;
-          for (const n of this.evt) {
+          for (const n of this.cMt) {
             var r =
               ControllerHolder_1.ControllerHolder.PhantomBattleController.GetPhantomItemDataByUniqueId(
                 n.IncId,
@@ -125,47 +125,47 @@ class VisionRecoveryTabView extends UiTabViewBase_1.UiTabViewBase {
             ? ((s = new ConfirmBoxDefine_1.ConfirmBoxDataNew(o)).SetTextArgs(
                 ...a,
               ),
-              s.FunctionMap.set(2, this.Cvt),
+              s.FunctionMap.set(2, this.DMt),
               (s.HasToggle = !0),
               (s.ToggleText =
                 MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
                   "Text_ItemRecycleConfirmToggle_text",
                 )),
-              s.SetToggleFunction(this.gvt),
+              s.SetToggleFunction(this.RMt),
               ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
                 s,
               ))
-            : this.Cvt();
+            : this.DMt();
         }
       }),
-      (this.Cvt = () => {
+      (this.DMt = () => {
         CalabashController_1.CalabashController.RequestPhantomRefiningRequest(
-          this.evt,
+          this.cMt,
         );
       }),
-      (this.gvt = (e) => {
+      (this.RMt = (e) => {
         ModelManager_1.ModelManager.CalabashModel.HideVisionRecoveryConfirmBox =
           e;
       }),
-      (this.fvt = () => {
+      (this.UMt = () => {
         return new CommonItemSmallItemGrid_1.CommonItemSmallItemGrid();
       }),
-      (this.pvt = (e) => {
-        (this.evt = e), this.Fpt(this.evt);
+      (this.AMt = (e) => {
+        (this.cMt = e), this.Zvt(this.cMt);
       }),
-      (this.vvt = () => {
-        this.Mvt();
+      (this.PMt = () => {
+        this.xMt();
       }),
-      (this.Svt = (e) => {
+      (this.wMt = (e) => {
         UiManager_1.UiManager.OpenView("VisionRecoveryResultView", e, (e) => {
-          (this.tvt =
+          (this.mMt =
             ModelManager_1.ModelManager.InventoryModel.GetUnEquipPhantomItemDataList()),
-            this.mvt(),
-            this.Mvt();
+            this.TMt(),
+            this.xMt();
         });
       }),
-      (this.Evt = (e) => {
-        void 0 !== e && (this.ivt = e);
+      (this.BMt = (e) => {
+        void 0 !== e && (this.dMt = e);
       });
   }
   OnRegisterComponent() {
@@ -179,43 +179,43 @@ class VisionRecoveryTabView extends UiTabViewBase_1.UiTabViewBase {
       [6, UE.UIText],
     ]),
       (this.BtnBindInfo = [
-        [3, this.uvt],
-        [4, this.dvt],
+        [3, this.yMt],
+        [4, this.LMt],
       ]);
   }
   async OnBeforeStartAsync() {
-    (this.qpt = new VisionRecoverySlotPanel_1.VisionRecoverySlotPanel(
-      this.avt,
+    (this.Xvt = new VisionRecoverySlotPanel_1.VisionRecoverySlotPanel(
+      this.vMt,
       !0,
     )),
-      await this.qpt.CreateThenShowByActorAsync(this.GetItem(0).GetOwner()),
-      (this.DFe = new GenericLayout_1.GenericLayout(
+      await this.Xvt.CreateThenShowByActorAsync(this.GetItem(0).GetOwner()),
+      (this.H3e = new GenericLayout_1.GenericLayout(
         this.GetHorizontalLayout(5),
-        this.fvt,
+        this.UMt,
       )),
-      this.yvt(),
-      (this.ovt = new VisionRecoveryChoosePanel_1.VisionRecoveryChoosePanel()),
-      this.ovt.BindClickCloseCallBack(this.vvt),
-      this.ovt.BindFilterSortRefresh(this.Evt);
+      this.bMt(),
+      (this.CMt = new VisionRecoveryChoosePanel_1.VisionRecoveryChoosePanel()),
+      this.CMt.BindClickCloseCallBack(this.PMt),
+      this.CMt.BindFilterSortRefresh(this.BMt);
     var e = this.GetItem(1);
-    await this.ovt.CreateByResourceIdAsync("UiItem_VisionRecoveryList", e);
+    await this.CMt.CreateByResourceIdAsync("UiItem_VisionRecoveryList", e);
   }
   OnStart() {
-    this.Fpt(this.evt);
+    this.Zvt(this.cMt);
   }
   AddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnVisionRecoveryResult,
-      this.Svt,
+      this.wMt,
     );
   }
-  hvt() {
-    (this.nvt = !0),
-      (this.tvt =
+  MMt() {
+    (this.fMt = !0),
+      (this.mMt =
         ModelManager_1.ModelManager.InventoryModel.GetUnEquipPhantomItemDataList()),
-      this._vt(this.tvt, this.evt);
+      this.SMt(this.mMt, this.cMt);
   }
-  yvt() {
+  bMt() {
     var e = CommonParamById_1.configCommonParamById.GetIntConfig(
         "VisionRecoveryPreviewRewardDropId",
       ),
@@ -228,14 +228,14 @@ class VisionRecoveryTabView extends UiTabViewBase_1.UiTabViewBase {
       var o = [{ IncId: 0, ItemId: r }, t.get(r)];
       i.push(o);
     }
-    this.DFe.RefreshByData(i);
+    this.H3e.RefreshByData(i);
   }
-  _vt(e, i) {
+  SMt(e, i) {
     var t = new CommonItemSelectView_1.CommonItemSelectViewOpenViewData(),
       o = new SelectableComponent_1.SelectableComponentData();
     (o.IsSingleSelected = !1),
       (o.MaxSelectedGridNum = CalabashDefine_1.VISION_RECOVERY_SLOT_MAX_NUM),
-      (o.OnChangeSelectedFunction = this.pvt),
+      (o.OnChangeSelectedFunction = this.AMt),
       (t.SelectableComponentType = 1),
       (t.ItemDataBaseList = e),
       (t.SelectedDataList = i),
@@ -243,9 +243,9 @@ class VisionRecoveryTabView extends UiTabViewBase_1.UiTabViewBase {
       (t.SelectableComponentData = o),
       (t.UseWayId = 33),
       (t.InitSortToggleState = !0),
-      this.ovt.RefreshUi(t);
+      this.CMt.RefreshUi(t);
   }
-  Fpt(e) {
+  Zvt(e) {
     const i = [];
     e.forEach((e) => {
       e = ModelManager_1.ModelManager.InventoryModel.GetPhantomItemData(
@@ -253,7 +253,7 @@ class VisionRecoveryTabView extends UiTabViewBase_1.UiTabViewBase {
       );
       void 0 !== e && i.push(e);
     }),
-      this.qpt.RefreshUi(i);
+      this.Xvt.RefreshUi(i);
     var e = i.length,
       t = this.GetText(2),
       o = 0 < e ? "DeleteSelect" : "AutoSelect";
@@ -265,23 +265,23 @@ class VisionRecoveryTabView extends UiTabViewBase_1.UiTabViewBase {
     ),
       LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(6), o);
   }
-  lvt() {
-    this.rvt ||
-      ((this.rvt = !0),
-      this.ovt.SetActive(!0),
+  EMt() {
+    this.gMt ||
+      ((this.gMt = !0),
+      this.CMt.SetActive(!0),
       this.UiViewSequence.PlaySequence("SwitchA"),
-      this.ovt.UiViewSequence.PlaySequence("SwitchA"),
+      this.CMt.UiViewSequence.PlaySequence("SwitchA"),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnRefreshCalabashTabShowState,
         !0,
       ));
   }
-  Mvt() {
-    this.rvt &&
-      ((this.rvt = !1),
+  xMt() {
+    this.gMt &&
+      ((this.gMt = !1),
       this.UiViewSequence.PlaySequence("SwitchB"),
-      this.ovt.UiViewSequence.PlaySequence("SwitchB"),
-      this.ovt.UiViewSequence.AddSequenceFinishEvent("SwitchB", this.svt),
+      this.CMt.UiViewSequence.PlaySequence("SwitchB"),
+      this.CMt.UiViewSequence.AddSequenceFinishEvent("SwitchB", this.pMt),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnRefreshCalabashTabShowState,
         !1,
@@ -290,13 +290,13 @@ class VisionRecoveryTabView extends UiTabViewBase_1.UiTabViewBase {
   RemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnVisionRecoveryResult,
-      this.Svt,
+      this.wMt,
     );
   }
-  cvt() {
-    this.nvt || this.Ivt();
+  IMt() {
+    this.fMt || this.qMt();
     var e = [];
-    for (const t of this.ivt) {
+    for (const t of this.dMt) {
       var i =
         ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomBattleData(
           t.GetUniqueId(),
@@ -314,19 +314,19 @@ class VisionRecoveryTabView extends UiTabViewBase_1.UiTabViewBase {
       ? ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
           "RoleNoMaterial",
         )
-      : ((this.evt = []),
+      : ((this.cMt = []),
         e.forEach((e) => {
           e =
             SelectablePropDataUtil_1.SelectablePropDataUtil.GetSelectablePropData(
               e,
             );
-          (e.SelectedCount = 1), this.evt.push(e);
+          (e.SelectedCount = 1), this.cMt.push(e);
         }),
-        this.Fpt(this.evt),
-        this._vt(this.tvt, this.evt));
+        this.Zvt(this.cMt),
+        this.SMt(this.mMt, this.cMt));
   }
-  Ivt() {
-    this.ivt =
+  qMt() {
+    this.dMt =
       ModelManager_1.ModelManager.InventoryModel.GetUnEquipPhantomItemDataList();
     var e = ConfigManager_1.ConfigManager.SortConfig.GetSortId(33),
       e = ConfigManager_1.ConfigManager.SortConfig.GetSortConfig(e),
@@ -334,16 +334,16 @@ class VisionRecoveryTabView extends UiTabViewBase_1.UiTabViewBase {
       t = (i.SetConfigId(e.Id), i.SetIsAscending(!0), e.BaseSortList[0]),
       o = ConfigManager_1.ConfigManager.SortConfig.GetSortRuleName(t, e.DataId);
     i.SetSelectBaseSort([t, o]),
-      ModelManager_1.ModelManager.SortModel.SortDataList(this.ivt, e.Id, i);
+      ModelManager_1.ModelManager.SortModel.SortDataList(this.dMt, e.Id, i);
   }
-  mvt() {
-    this.evt.length <= 0 ||
-      ((this.evt = []), this._vt(this.tvt, this.evt), this.Fpt(this.evt));
+  TMt() {
+    this.cMt.length <= 0 ||
+      ((this.cMt = []), this.SMt(this.mMt, this.cMt), this.Zvt(this.cMt));
   }
   RemoveAllVisionItemOutside() {
-    (this.tvt =
+    (this.mMt =
       ModelManager_1.ModelManager.InventoryModel.GetUnEquipPhantomItemDataList()),
-      this.mvt();
+      this.TMt();
   }
 }
 exports.VisionRecoveryTabView = VisionRecoveryTabView;

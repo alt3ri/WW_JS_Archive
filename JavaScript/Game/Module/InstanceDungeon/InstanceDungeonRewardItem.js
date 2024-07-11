@@ -11,8 +11,8 @@ class InstanceDungeonRewardItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
       (this.eGe = void 0),
-      (this.Wli = -1),
-      (this.q5e = () => {
+      (this.W1i = -1),
+      (this.YVe = () => {
         return new CommonItemSmallItemGrid_1.CommonItemSmallItemGrid();
       });
   }
@@ -26,7 +26,7 @@ class InstanceDungeonRewardItem extends GridProxyAbstract_1.GridProxyAbstract {
   OnStart() {
     this.eGe = new GenericLayout_1.GenericLayout(
       this.GetGridLayout(2),
-      this.q5e,
+      this.YVe,
     );
   }
   Refresh(e, t, r) {
@@ -44,10 +44,10 @@ class InstanceDungeonRewardItem extends GridProxyAbstract_1.GridProxyAbstract {
         "InstanceRewardDes",
         e[0],
       ),
-      (this.Wli = e[0]);
+      (this.W1i = e[0]);
   }
   SetCurrentItem(e) {
-    this.GetItem(1)?.SetUIActive(this.Wli === e);
+    this.GetItem(1)?.SetUIActive(this.W1i === e);
   }
 }
 exports.InstanceDungeonRewardItem = InstanceDungeonRewardItem;

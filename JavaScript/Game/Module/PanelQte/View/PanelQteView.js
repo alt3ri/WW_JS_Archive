@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PanelQteView = void 0);
 const UE = require("ue"),
+  Info_1 = require("../../../../Core/Common/Info"),
   Time_1 = require("../../../../Core/Common/Time"),
   ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem"),
   CameraController_1 = require("../../../Camera/CameraController"),
@@ -27,7 +28,7 @@ class PanelQteView extends UiTickViewBase_1.UiTickViewBase {
       (this.BuffId = void 0),
       (this.BuffCd = 0),
       (this.BuffEnableTime = 0),
-      (this.MJt = () => {
+      (this.Mzt = () => {
         this.RefreshVisible();
       }),
       (this.JDe = () => {
@@ -36,15 +37,15 @@ class PanelQteView extends UiTickViewBase_1.UiTickViewBase {
       (this.ZDe = () => {
         this.IsPause = !0;
       }),
-      (this.VNi = (e) => {
+      (this.VOi = (e) => {
         this.OpenParam === e && ((this.IsQteEnd = !0), this.HandleQteEnd());
       }),
-      (this.dKe = (e, t, i) => {
-        this.OnPlatformChangedInner(e);
+      (this.XBo = () => {
+        this.InputControllerChangeInner();
       });
   }
   OnRegisterComponent() {
-    this.IsMobile = ModelManager_1.ModelManager.PlatformModel.IsMobile();
+    this.IsMobile = Info_1.Info.IsInTouch();
   }
   OnAfterShow() {
     this.RefreshVisible();
@@ -60,16 +61,16 @@ class PanelQteView extends UiTickViewBase_1.UiTickViewBase {
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.PanelQteEnd,
-        this.VNi,
+        this.VOi,
       ),
       this.IsMobile ||
         EventSystem_1.EventSystem.Add(
-          EventDefine_1.EEventName.OnPlatformChanged,
-          this.dKe,
+          EventDefine_1.EEventName.InputControllerChange,
+          this.XBo,
         ),
       ModelManager_1.ModelManager.BattleUiModel.ChildViewData.AddCallback(
         20,
-        this.MJt,
+        this.Mzt,
       );
   }
   OnRemoveEventListener() {
@@ -83,16 +84,16 @@ class PanelQteView extends UiTickViewBase_1.UiTickViewBase {
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.PanelQteEnd,
-        this.VNi,
+        this.VOi,
       ),
       this.IsMobile ||
         EventSystem_1.EventSystem.Remove(
-          EventDefine_1.EEventName.OnPlatformChanged,
-          this.dKe,
+          EventDefine_1.EEventName.InputControllerChange,
+          this.XBo,
         ),
       ModelManager_1.ModelManager.BattleUiModel.ChildViewData.RemoveCallback(
         20,
-        this.MJt,
+        this.Mzt,
       );
   }
   RefreshVisible() {
@@ -103,7 +104,7 @@ class PanelQteView extends UiTickViewBase_1.UiTickViewBase {
     this.SetActive(e);
   }
   HandleQteEnd() {}
-  OnPlatformChangedInner(e) {}
+  InputControllerChangeInner() {}
   OnTick(e) {
     this.IsPause ||
       (this.IsQteStart &&
@@ -173,7 +174,7 @@ class PanelQteView extends UiTickViewBase_1.UiTickViewBase {
         ModelManager_1.ModelManager.PanelQteModel.GetContext()).GetSourceEntity())) &&
       ((i = t.GetComponent(0).GetCreatureDataId()),
       t
-        .GetComponent(157)
+        .GetComponent(159)
         ?.AddBuff(this.BuffId, {
           InstigatorId: i,
           Reason: "界面QTE输入时添加",

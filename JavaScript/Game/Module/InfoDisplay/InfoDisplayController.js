@@ -15,7 +15,7 @@ const Log_1 = require("../../../Core/Common/Log"),
   UiManager_1 = require("../../Ui/UiManager");
 exports.INFO_DISPLAY_ITEM_TYPE = 12;
 class InfoDisplayController extends ControllerBase_1.ControllerBase {
-  static OpenInfoDisplay(e, o) {
+  static OpenInfoDisplay(e, r, o) {
     if (
       UiManager_1.UiManager.IsViewOpen("InfoDisplayTypeOneView") ||
       UiManager_1.UiManager.IsViewOpen("InfoDisplayTypeTwoView") ||
@@ -23,12 +23,12 @@ class InfoDisplayController extends ControllerBase_1.ControllerBase {
       UiManager_1.UiManager.IsViewOpen("InfoDisplayTypeFourView")
     )
       return !1;
-    var r = CommonParamById_1.configCommonParamById.GetIntConfig(
+    var n = CommonParamById_1.configCommonParamById.GetIntConfig(
       "infodisplay_use_item_cd",
     );
     if (
-      0 !== InfoDisplayController.nHt &&
-      Time_1.Time.Now - InfoDisplayController.nHt <= 1e3 * r
+      0 !== InfoDisplayController.njt &&
+      Time_1.Time.Now - InfoDisplayController.njt <= 1e3 * n
     )
       return (
         ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
@@ -37,28 +37,20 @@ class InfoDisplayController extends ControllerBase_1.ControllerBase {
         !1
       );
     ModelManager_1.ModelManager.InfoDisplayModel.SetCurrentOpenInformationId(e);
-    r =
+    n =
       ConfigManager_1.ConfigManager.InfoDisplayModuleConfig.GetInfoDisplayType(
         e,
       );
     return (
-      1 === r
-        ? UiManager_1.UiManager.OpenView("InfoDisplayTypeOneView", void 0, o)
-        : 2 === r
-          ? UiManager_1.UiManager.OpenView("InfoDisplayTypeTwoView", void 0, o)
-          : 3 === r
-            ? UiManager_1.UiManager.OpenView(
-                "InfoDisplayTypeThreeView",
-                void 0,
-                o,
-              )
-            : 4 === r &&
-              UiManager_1.UiManager.OpenView(
-                "InfoDisplayTypeFourView",
-                void 0,
-                o,
-              ),
-      (InfoDisplayController.nHt = Time_1.Time.Now),
+      1 === n
+        ? UiManager_1.UiManager.OpenView("InfoDisplayTypeOneView", o, r)
+        : 2 === n
+          ? UiManager_1.UiManager.OpenView("InfoDisplayTypeTwoView", o, r)
+          : 3 === n
+            ? UiManager_1.UiManager.OpenView("InfoDisplayTypeThreeView", o, r)
+            : 4 === n &&
+              UiManager_1.UiManager.OpenView("InfoDisplayTypeFourView", o, r),
+      (InfoDisplayController.njt = Time_1.Time.Now),
       !0
     );
   }
@@ -84,21 +76,21 @@ class InfoDisplayController extends ControllerBase_1.ControllerBase {
     );
   }
   static RequestReadDisplayInfo(e) {
-    var o = new Protocol_1.Aki.Protocol.Ues();
-    (o.q5n = e),
-      Net_1.Net.Call(14219, o, (e) => {
+    var r = new Protocol_1.Aki.Protocol.Los();
+    (r.g9n = e),
+      Net_1.Net.Call(28765, r, (e) => {
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("InfoDisplay", 28, "协议接收", ["协议id", "10162"]),
-          e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys &&
+          e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs &&
             ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-              e.lkn,
-              15878,
+              e.O4n,
+              24908,
             );
       });
   }
 }
-((exports.InfoDisplayController = InfoDisplayController).nHt = 0),
-  (InfoDisplayController.OnItemUse = (e, o) => {
+((exports.InfoDisplayController = InfoDisplayController).njt = 0),
+  (InfoDisplayController.OnItemUse = (e, r) => {
     var e = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfig(e);
     0 < e.Parameters.size &&
       void 0 !== (e = e.Parameters.get(exports.INFO_DISPLAY_ITEM_TYPE)) &&

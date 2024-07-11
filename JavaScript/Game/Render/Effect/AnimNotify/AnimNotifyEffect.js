@@ -13,6 +13,7 @@ const puerts_1 = require("puerts"),
   TsBaseCharacter_1 = require("../../../Character/TsBaseCharacter"),
   SkeletalMeshEffectContext_1 = require("../../../Effect/EffectContext/SkeletalMeshEffectContext"),
   EffectSystem_1 = require("../../../Effect/EffectSystem"),
+  TsEffectActor_1 = require("../../../Effect/TsEffectActor"),
   GlobalData_1 = require("../../../GlobalData"),
   ColorUtils_1 = require("../../../Utils/ColorUtils"),
   RenderConfig_1 = require("../../Config/RenderConfig"),
@@ -77,31 +78,37 @@ class AnimNotifyEffect extends UE.KuroEffectMakerAN {
         !1
       );
     EffectSystem_1.EffectSystem.InitializeWithPreview(!1);
-    let o = 3,
+    let o = Info_1.Info.IsGameRunning() ? 3 : 0,
       n =
-        (e instanceof TsBaseCharacter_1.default &&
-          e.CharacterActorComponent?.Entity?.GetComponent(33) &&
-          (o = 0),
         (GlobalData_1.GlobalData.IsUiSceneOpen ||
-          e.Tags.Contains(RenderConfig_1.RenderConfig.UIName)) &&
-          (o = 1),
+        e.Tags.Contains(RenderConfig_1.RenderConfig.UIName)
+          ? (o = 1)
+          : ((e instanceof TsBaseCharacter_1.default &&
+              e.CharacterActorComponent?.Entity?.GetComponent(33)) ||
+              (e instanceof TsEffectActor_1.default &&
+                0 === e.GetEffectType())) &&
+            (o = 0),
+        void 0),
+      s =
+        (((n =
+          e instanceof TsBaseCharacter_1.default &&
+          e.CharacterActorComponent?.Entity
+            ? new SkeletalMeshEffectContext_1.SkeletalMeshEffectContext(
+                e.CharacterActorComponent?.Entity.Id,
+              )
+            : new SkeletalMeshEffectContext_1.SkeletalMeshEffectContext(
+                void 0,
+              )).SkeletalMeshComp = t),
+        (n.SourceObject = e),
+        (n.CreateFromType = 1),
+        e?.ActorHasTag(AnimNotifyEffect.TagFlagNoNiagara) && (n.PlayFlag |= 1),
         void 0);
-    ((n =
-      e instanceof TsBaseCharacter_1.default &&
-      e.CharacterActorComponent?.Entity
-        ? new SkeletalMeshEffectContext_1.SkeletalMeshEffectContext(
-            e.CharacterActorComponent?.Entity.Id,
-          )
-        : new SkeletalMeshEffectContext_1.SkeletalMeshEffectContext(
-            void 0,
-          )).SkeletalMeshComp = t),
-      (n.SourceObject = e),
-      (n.CreateFromType = 1),
-      e?.ActorHasTag(AnimNotifyEffect.TagFlagNoNiagara) && (n.PlayFlag |= 1);
+    e instanceof TsBaseCharacter_1.default &&
+      (s = e.CharacterActorComponent?.GetReplaceEffect(f));
     i = EffectSystem_1.EffectSystem.SpawnUnloopedEffect(
       e,
       new UE.Transform(),
-      f,
+      s || f,
       "[AnimNotifyEffect.K2_Notify]",
       n,
       o,
@@ -119,7 +126,7 @@ class AnimNotifyEffect extends UE.KuroEffectMakerAN {
     );
   }
   GameplayTagsCheck(t) {
-    var i = t.CharacterActorComponent?.Entity?.GetComponent(185);
+    var i = t.CharacterActorComponent?.Entity?.GetComponent(188);
     if (i) {
       var e = this.PlayNeedTags.Num();
       if (this.NeedAnyTag) {

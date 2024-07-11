@@ -10,7 +10,7 @@ class LoopScrollSmallItemGrid extends SmallItemGrid_1.SmallItemGrid {
       (this.ScrollViewDelegate = void 0),
       (this.GridIndex = 0),
       (this.DisplayIndex = 0),
-      (this.CBt = void 0);
+      (this.pbt = void 0);
   }
   Refresh(e, t, i) {
     this.OnRefresh(e, t, i);
@@ -19,20 +19,20 @@ class LoopScrollSmallItemGrid extends SmallItemGrid_1.SmallItemGrid {
   OnSelected(e) {}
   OnDeselected(e) {}
   OnAddEvents() {
-    (this.CBt = (e, t) => {
+    (this.pbt = (e, t) => {
       this.OnShowGridAnimation(e, t);
     }),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnShowGridAnimation,
-        this.CBt,
+        this.pbt,
       );
   }
   OnRemoveEvents() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnShowGridAnimation,
-      this.CBt,
+      this.pbt,
     ),
-      (this.CBt = void 0);
+      (this.pbt = void 0);
   }
   OnShowGridAnimation(e, t) {
     e === this.GridIndex &&

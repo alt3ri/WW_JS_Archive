@@ -8,10 +8,10 @@ const ModelBase_1 = require("../../../Core/Framework/ModelBase"),
 class WorldLevelModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
-      (this.uko = 0),
-      (this.cko = 0),
+      (this.h2o = 0),
+      (this.l2o = 0),
       (this.LastChangeWorldLevelTimeStamp = 0),
-      (this.mko = 0),
+      (this._2o = 0),
       (this.WorldLevelChangeTarget = 0);
   }
   get WorldLevelMultilingualText() {
@@ -20,31 +20,31 @@ class WorldLevelModel extends ModelBase_1.ModelBase {
     );
   }
   get CurWorldLevel() {
-    return this.cko;
+    return this.l2o;
   }
   set CurWorldLevel(e) {
-    this.cko !== e &&
-      ((this.cko = e),
+    this.l2o !== e &&
+      ((this.l2o = e),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.CurWorldLevelChange,
       ));
   }
   get OriginWorldLevel() {
-    return this.uko;
+    return this.h2o;
   }
   set OriginWorldLevel(e) {
-    var t = e > this.uko;
-    (this.uko = e),
+    var t = e > this.h2o;
+    (this.h2o = e),
       t &&
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.OriginWorldLevelUp,
         );
   }
   get Sex() {
-    return this.mko;
+    return this._2o;
   }
   set Sex(e) {
-    this.mko = e;
+    this._2o = e;
   }
   OnInit() {
     return !(this.LastChangeWorldLevelTimeStamp = 0);

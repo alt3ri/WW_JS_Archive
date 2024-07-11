@@ -7,11 +7,7 @@ const Log_1 = require("../../../Core/Common/Log"),
   EventSystem_1 = require("../../Common/Event/EventSystem");
 class CameraControllerBase {
   constructor(t) {
-    (this.BreakModifyArmLength = !1),
-      (this.BreakModifyCameraOffset = !1),
-      (this.BreakModifyArmRotation = !1),
-      (this.BreakModifyFov = !1),
-      (this.u1e = !0),
+    (this.u1e = !0),
       (this.c1e = new Set()),
       (this.m1e = new Map()),
       (this.$ = new Map()),
@@ -54,10 +50,10 @@ class CameraControllerBase {
       this.m1e.set(e.GetKey(t), e.Get(s));
     }
     for (let t = 0; t < i.Num(); t++) {
-      var h = i.GetKey(t);
+      var a = i.GetKey(t);
       this.d1e.set(
         i.GetKey(t),
-        CurveUtils_1.CurveUtils.CreateCurveByStruct(i.Get(h)),
+        CurveUtils_1.CurveUtils.CreateCurveByStruct(i.Get(a)),
       );
     }
   }
@@ -67,23 +63,23 @@ class CameraControllerBase {
         i = this.$.get(i);
         this.f1e(i, s);
       }
-      for (var [h, a] of this.$)
-        void 0 === this[a] &&
+      for (var [a, r] of this.$)
+        void 0 === this[r] &&
           (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Camera",
               6,
               "CameraController缺少配置",
               ["CameraType", this.constructor],
-              ["key", h],
-              ["value", a],
+              ["key", a],
+              ["value", r],
             ),
-          this.f1e(a, 1));
+          this.f1e(r, 1));
     }
     if (e) {
-      for (var [r, o] of e) {
-        r = this.C1e.get(r);
-        this.p1e(r, o);
+      for (var [o, h] of e) {
+        o = this.C1e.get(o);
+        this.p1e(o, h);
       }
       for (var [n, v] of this.C1e)
         void 0 === this[v] &&
@@ -101,18 +97,6 @@ class CameraControllerBase {
   }
   ResetDefaultConfig() {
     this.SetConfigs(this.m1e, this.d1e);
-  }
-  ResetBreakModifyInfo() {
-    (this.BreakModifyArmLength = !1),
-      (this.BreakModifyCameraOffset = !1),
-      (this.BreakModifyArmRotation = !1),
-      (this.BreakModifyFov = !1);
-  }
-  UpdateBreakModifyInfo() {
-    this.Camera.IsModifiedArmLength && (this.BreakModifyArmLength = !0),
-      this.Camera.IsModifiedCameraOffset && (this.BreakModifyCameraOffset = !0),
-      this.Camera.IsModifiedArmRotation && (this.BreakModifyArmRotation = !0),
-      this.Camera.IsModifiedFov && (this.BreakModifyFov = !0);
   }
   OnStart() {
     EventSystem_1.EventSystem.Add(

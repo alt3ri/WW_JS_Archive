@@ -19,7 +19,7 @@ class PackageUpdateController {
       HotPatchKuroSdk_1.HotPatchKuroSdk.CanUseSdk() &&
         (e = UE.KuroSDKManager.GetPackageId()),
         LauncherLog_1.LauncherLog.Info("整包配置", ["currentPackageId", e]),
-        (this.hIn = e);
+        (this.UTn = e);
       var t =
           BaseConfigController_1.BaseConfigController.GetPackageConfigOrDefault(
             "PatchVersion",
@@ -28,16 +28,16 @@ class PackageUpdateController {
         o = UE.KuroLauncherLibrary.GetAppVersion(),
         i =
           BaseConfigController_1.BaseConfigController.GetPublicValue("SdkArea");
-      (this.lIn =
+      (this.ATn =
         `packageId=${e}&platform=${r}&appVersion=${o}&patchVersion=${t}&area=` +
         i),
-        (this._In = (0, puerts_1.toManualReleaseDelegate)(this.uIn)),
-        (this.cIn = (0, puerts_1.toManualReleaseDelegate)(this.mIn)),
-        await this.lEr(a),
-        (0, puerts_1.releaseManualReleaseDelegate)(this.uIn),
-        (0, puerts_1.releaseManualReleaseDelegate)(this.mIn),
-        (this._In = void 0),
-        (this.cIn = void 0);
+        (this.PTn = (0, puerts_1.toManualReleaseDelegate)(this.xTn)),
+        (this.wTn = (0, puerts_1.toManualReleaseDelegate)(this.BTn)),
+        await this.syr(a),
+        (0, puerts_1.releaseManualReleaseDelegate)(this.xTn),
+        (0, puerts_1.releaseManualReleaseDelegate)(this.BTn),
+        (this.PTn = void 0),
+        (this.wTn = void 0);
     } catch (e) {
       e instanceof Error
         ? LauncherLog_1.LauncherLog.ErrorWithStack(e.message, e)
@@ -49,11 +49,11 @@ class PackageUpdateController {
       AppUtil_1.AppUtil.QuitGame();
     }
   }
-  static dIn(e, a, t) {
+  static bTn(e, a, t) {
     (e = e.MainUrl + "?" + a), (a = UE.KuroHttp.GetDefaultHeader());
     UE.KuroHttp.Get(e, a, t);
   }
-  static CIn(e, a, t, r, o) {
+  static qTn(e, a, t, r, o) {
     200 !== r
       ? ((r = e.SubUrl + "?" + a),
         LauncherLog_1.LauncherLog.Info("打开链接", ["updateData!.descUrl", r]),
@@ -62,11 +62,11 @@ class PackageUpdateController {
         LauncherLog_1.LauncherLog.Info("打开链接", ["updateData!.descUrl", r]),
         UE.KismetSystemLibrary.LaunchURL(r));
   }
-  static async lEr(e) {
+  static async syr(e) {
     let a = !1,
       t =
         (HotPatchKuroSdk_1.HotPatchKuroSdk.CanUseSdk() &&
-          this.hIn === TAPPACKAGEID &&
+          this.UTn === TAPPACKAGEID &&
           (a = !0),
         !0);
     var r,
@@ -75,26 +75,26 @@ class PackageUpdateController {
         var e =
           BaseConfigController_1.BaseConfigController.GetCdnReturnConfigInfo()
             .PackageUpdateDescUrl;
-        this.dIn(e, this.lIn, this.cIn);
+        this.bTn(e, this.ATn, this.wTn);
       },
       s = () => {
         var e;
         a
           ? UE.TapUpdateStaticLibrary.UpdateGame(void 0)
-          : this._On.has(this.hIn)
-            ? ((e = this._On.get(this.hIn)),
+          : this.Rkn.has(this.UTn)
+            ? ((e = this.Rkn.get(this.UTn)),
               LauncherLog_1.LauncherLog.Info("打开链接", ["finalUrl", e]),
               UE.KismetSystemLibrary.LaunchURL(e))
             : ("Windows" !== UE.GameplayStatics.GetPlatformName() &&
                 ((e =
                   BaseConfigController_1.BaseConfigController.GetCdnReturnConfigInfo()
                     .PackageUpdateUrl),
-                this.dIn(e, this.lIn, this._In)),
+                this.bTn(e, this.ATn, this.PTn)),
               "Windows" === UE.GameplayStatics.GetPlatformName() && (t = !1));
       };
     for (
       a &&
-      !this._Er &&
+      !this.ayr &&
       ((r =
         BaseConfigController_1.BaseConfigController.GetPublicValue(
           "TaptapClientId",
@@ -104,13 +104,13 @@ class PackageUpdateController {
           "TaptapClientToken",
         )),
       UE.TapUpdateStaticLibrary.Init(r, o),
-      (this._Er = !0));
+      (this.ayr = !0));
       t;
 
     )
-      await this.uEr(e, i, s, s);
+      await this.hyr(e, i, s, s);
   }
-  static async uEr(e, a, t, r) {
+  static async hyr(e, a, t, r) {
     ((await e.ShowDialog(
       !0,
       "HotFixTipsTitle",
@@ -124,12 +124,12 @@ class PackageUpdateController {
   }
 }
 (exports.PackageUpdateController = PackageUpdateController),
-  ((_a = PackageUpdateController)._Er = !1),
-  (PackageUpdateController._In = void 0),
-  (PackageUpdateController.cIn = void 0),
-  (PackageUpdateController.lIn = ""),
-  (PackageUpdateController.hIn = ""),
-  (PackageUpdateController._On = new Map([
+  ((_a = PackageUpdateController).ayr = !1),
+  (PackageUpdateController.PTn = void 0),
+  (PackageUpdateController.wTn = void 0),
+  (PackageUpdateController.ATn = ""),
+  (PackageUpdateController.UTn = ""),
+  (PackageUpdateController.Rkn = new Map([
     [CNIOS, "https://apps.apple.com/cn/app/%E9%B8%A3%E6%BD%AE/id6450693428"],
     [GLOBALIOS, "https://apps.apple.com/us/app/wuthering-waves/id6475033368"],
     [
@@ -137,21 +137,21 @@ class PackageUpdateController {
       "https://play.google.com/store/apps/details?id=com.kurogame.wutheringwaves.global",
     ],
   ])),
-  (PackageUpdateController.mIn = (e, a, t) => {
-    _a.CIn(
+  (PackageUpdateController.BTn = (e, a, t) => {
+    _a.qTn(
       BaseConfigController_1.BaseConfigController.GetCdnReturnConfigInfo()
         .PackageUpdateDescUrl,
-      _a.lIn,
+      _a.ATn,
       e,
       a,
       t,
     );
   }),
-  (PackageUpdateController.uIn = (e, a, t) => {
-    _a.CIn(
+  (PackageUpdateController.xTn = (e, a, t) => {
+    _a.qTn(
       BaseConfigController_1.BaseConfigController.GetCdnReturnConfigInfo()
         .PackageUpdateUrl,
-      _a.lIn,
+      _a.ATn,
       e,
       a,
       t,

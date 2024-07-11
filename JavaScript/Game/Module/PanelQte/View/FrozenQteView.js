@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FrozenQteView = void 0);
 const UE = require("ue"),
+  Info_1 = require("../../../../Core/Common/Info"),
   Log_1 = require("../../../../Core/Common/Log"),
   TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
   MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
@@ -17,17 +18,17 @@ const UE = require("ue"),
 class FrozenQteView extends PanelQteView_1.PanelQteView {
   constructor() {
     super(...arguments),
-      (this.ANi = 0),
-      (this.$Qt = 0),
+      (this.AOi = 0),
+      (this.$Xt = 0),
       (this.$G = [!1, !1]),
-      (this.PNi = []),
-      (this.xNi = void 0),
-      (this.wNi = void 0),
-      (this.BNi = (t, e) => {
+      (this.POi = []),
+      (this.xOi = void 0),
+      (this.wOi = void 0),
+      (this.BOi = (t, e) => {
         this.IsQteEnd ||
           (0 < e
-            ? (this.PNi[0].PressAnim(), this.bNi(1))
-            : e < 0 && (this.PNi[0].PressAnim(), this.bNi(0)));
+            ? (this.POi[0].PressAnim(), this.bOi(1))
+            : e < 0 && (this.POi[0].PressAnim(), this.bOi(0)));
       });
   }
   OnRegisterComponent() {
@@ -52,24 +53,24 @@ class FrozenQteView extends PanelQteView_1.PanelQteView {
         ? ((e = this.GetButton(0)),
           (t = this.GetButton(1)),
           e.OnPointDownCallBack.Bind(() => {
-            this.qNi(0);
+            this.qOi(0);
           }),
           t.OnPointDownCallBack.Bind(() => {
-            this.qNi(1);
+            this.qOi(1);
           }),
           (e = new QteAnimItem_1.QteAnimItem()).Init(this.GetItem(2)),
           e.StartAnim(),
           (t = new QteAnimItem_1.QteAnimItem()).Init(this.GetItem(3)),
           t.StartAnim(LOOP_ANIM_TIME),
-          this.PNi.push(e, t))
+          this.POi.push(e, t))
         : ((e = new QteAnimItem_1.QteAnimItem()).Init(this.GetItem(2)),
           e.StartAnim(0),
-          this.PNi.push(e),
-          this.OnPlatformChangedInner()),
-      (this.wNi = new QteTipItem_1.QteTipItem()),
-      this.wNi.Init(this.RootItem),
-      this.wNi.Refresh("Text_FrozenQteTip_Text"),
-      this.GNi();
+          this.POi.push(e),
+          this.InputControllerChangeInner()),
+      (this.wOi = new QteTipItem_1.QteTipItem()),
+      this.wOi.Init(this.RootItem),
+      this.wOi.Refresh("Text_FrozenQteTip_Text"),
+      this.GOi();
   }
   OnBeforeShow() {
     super.OnBeforeShow(),
@@ -86,15 +87,15 @@ class FrozenQteView extends PanelQteView_1.PanelQteView {
         (e = this.GetButton(1)),
         t.OnPointDownCallBack.Unbind(),
         e.OnPointDownCallBack.Unbind());
-    for (const i of this.PNi) i.Clear();
-    this.NNi(), this.wNi.Destroy(), (this.wNi = void 0);
+    for (const i of this.POi) i.Clear();
+    this.NOi(), this.wOi.Destroy(), (this.wOi = void 0);
   }
-  NNi() {
-    this.xNi &&
-      (TimerSystem_1.TimerSystem.Remove(this.xNi), (this.xNi = void 0));
+  NOi() {
+    this.xOi &&
+      (TimerSystem_1.TimerSystem.Remove(this.xOi), (this.xOi = void 0));
   }
-  GNi() {
-    this.ANi = 0;
+  GOi() {
+    this.AOi = 0;
     var t,
       e,
       i = this.OpenParam;
@@ -106,7 +107,7 @@ class FrozenQteView extends PanelQteView_1.PanelQteView {
           this.CloseMe())
         : ((t = i.Config.MaxSuccessCount),
           (e = i.Config.MinSuccessCount),
-          (this.$Qt = Math.floor(
+          (this.$Xt = Math.floor(
             MathUtils_1.MathUtils.GetRandomFloatNumber(e, t + 1),
           )),
           this.InitCameraShake(i.Config),
@@ -114,7 +115,7 @@ class FrozenQteView extends PanelQteView_1.PanelQteView {
           Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug("PanelQte", 18, "触发冰冻Qte", [
               "需按次数",
-              this.$Qt,
+              this.$Xt,
             ]))
       : (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("PanelQte", 18, "界面打开时qte已经结束了"),
@@ -125,7 +126,7 @@ class FrozenQteView extends PanelQteView_1.PanelQteView {
       this.IsMobile ||
         InputDistributeController_1.InputDistributeController.BindAxis(
           InputMappingsDefine_1.axisMappings.UiMoveRight,
-          this.BNi,
+          this.BOi,
         );
   }
   OnRemoveEventListener() {
@@ -133,28 +134,28 @@ class FrozenQteView extends PanelQteView_1.PanelQteView {
       this.IsMobile ||
         InputDistributeController_1.InputDistributeController.UnBindAxis(
           InputMappingsDefine_1.axisMappings.UiMoveRight,
-          this.BNi,
+          this.BOi,
         );
   }
-  OnPlatformChangedInner() {
-    var t = ModelManager_1.ModelManager.PlatformModel.IsGamepad(),
+  InputControllerChangeInner() {
+    var t = Info_1.Info.IsInGamepad(),
       e = this.GetItem(0),
       i = this.GetItem(1);
     e.SetUIActive(!t), i.SetUIActive(t);
   }
-  qNi(t) {
-    this.IsQteEnd || (this.PNi[t].PressAnim(), this.bNi(t));
+  qOi(t) {
+    this.IsQteEnd || (this.POi[t].PressAnim(), this.bOi(t));
   }
-  bNi(t) {
+  bOi(t) {
     (this.$G[t] = !0),
       this.$G[0] &&
         this.$G[1] &&
         ((this.$G[0] = !1),
         (this.$G[1] = !1),
-        this.ANi++,
+        this.AOi++,
         Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("PanelQte", 18, "冰冻Qte中", ["已按次数", this.ANi]),
-        this.ANi === this.$Qt) &&
+          Log_1.Log.Debug("PanelQte", 18, "冰冻Qte中", ["已按次数", this.AOi]),
+        this.AOi === this.$Xt) &&
         ((t = this.OpenParam),
         ModelManager_1.ModelManager.PanelQteModel.SetQteResult(t, !0),
         PanelQteController_1.PanelQteController.StopQte(t)),
@@ -162,10 +163,10 @@ class FrozenQteView extends PanelQteView_1.PanelQteView {
       this.AddBuff();
   }
   HandleQteEnd() {
-    if (!this.xNi) {
-      for (const t of this.PNi) t.StopAnim();
-      this.xNi = TimerSystem_1.TimerSystem.Delay(() => {
-        (this.xNi = void 0), this.CloseMe();
+    if (!this.xOi) {
+      for (const t of this.POi) t.StopAnim();
+      this.xOi = TimerSystem_1.TimerSystem.Delay(() => {
+        (this.xOi = void 0), this.CloseMe();
       }, STOP_ANIM_TIME);
     }
   }

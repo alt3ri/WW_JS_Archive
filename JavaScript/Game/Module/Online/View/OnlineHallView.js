@@ -1,12 +1,15 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.OnlineHallView = void 0);
-const UE = require("ue"),
+const puerts_1 = require("puerts"),
+  UE = require("ue"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase"),
   UiManager_1 = require("../../../Ui/UiManager"),
+  ButtonAndSpriteItem_1 = require("../../Common/Button/ButtonAndSpriteItem"),
   InstanceDungeonEntranceController_1 = require("../../InstanceDungeon/InstanceDungeonEntranceController"),
   InstanceDungeonMatchingCountDown_1 = require("../../InstanceDungeon/InstanceDungeonMatchingCountDown"),
   LguiUtil_1 = require("../../Util/LguiUtil"),
@@ -17,84 +20,108 @@ const UE = require("ue"),
 class OnlineHallView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
-      (this.bGi = void 0),
-      (this.qGi = void 0),
-      (this.ohi = void 0),
-      (this.GGi = () => new OnlineHallItem_1.OnlineHallItem(this.Info.Name)),
-      (this.NGi = () => new OnlineTeamItem_1.OnlineTeamItem()),
-      (this.OGi = (e) => {
-        1 === e &&
-          (ModelManager_1.ModelManager.OnlineModel.SetHallShowFriend(!0),
-          this.kGi(
-            ModelManager_1.ModelManager.OnlineModel.ShowCanJoin
-              ? ModelManager_1.ModelManager.OnlineModel.GetCanJoinFormFriend()
-              : ModelManager_1.ModelManager.OnlineModel.FriendWorld,
-          )),
+      (this.bNi = void 0),
+      (this.qNi = void 0),
+      (this.oli = void 0),
+      (this.a9t = void 0),
+      (this.tWs = !1),
+      (this.GNi = () => new OnlineHallItem_1.OnlineHallItem(this.Info.Name)),
+      (this.NNi = () => new OnlineTeamItem_1.OnlineTeamItem()),
+      (this.ONi = (e) => {
+        (this.tWs = !1),
+          this.GetInputText(12).SetText(""),
+          this.h9t(),
+          this.iWs(),
+          1 === e &&
+            (ModelManager_1.ModelManager.OnlineModel.SetHallShowFriend(!0),
+            this.kNi(
+              ModelManager_1.ModelManager.OnlineModel.ShowCanJoin
+                ? ModelManager_1.ModelManager.OnlineModel.GetCanJoinFormFriend()
+                : ModelManager_1.ModelManager.OnlineModel.FriendWorld,
+            )),
           0 === e &&
             (ModelManager_1.ModelManager.OnlineModel.SetHallShowFriend(!1),
-            this.kGi(
+            this.kNi(
               ModelManager_1.ModelManager.OnlineModel.ShowCanJoin
                 ? ModelManager_1.ModelManager.OnlineModel.GetCanJoinFormStranger()
                 : ModelManager_1.ModelManager.OnlineModel.StrangerWorld,
             ));
       }),
-      (this.FGi = (e) => {
-        1 === e &&
-          (ModelManager_1.ModelManager.OnlineModel.SetHallShowCanJoin(!0),
-          this.kGi(
-            ModelManager_1.ModelManager.OnlineModel.ShowFriend
-              ? ModelManager_1.ModelManager.OnlineModel.GetCanJoinFormFriend()
-              : ModelManager_1.ModelManager.OnlineModel.GetCanJoinFormStranger(),
-          )),
-          0 === e &&
-            (ModelManager_1.ModelManager.OnlineModel.SetHallShowCanJoin(!1),
-            this.kGi(
-              ModelManager_1.ModelManager.OnlineModel.ShowFriend
-                ? ModelManager_1.ModelManager.OnlineModel.FriendWorld
-                : ModelManager_1.ModelManager.OnlineModel.StrangerWorld,
-            ));
-      }),
-      (this.Opt = () => {
+      (this.Jvt = () => {
         this.CloseMe();
       }),
-      (this.VGi = () => {
+      (this.VNi = () => {
         UiManager_1.UiManager.OpenView("OnlineSettingView");
       }),
-      (this.HGi = () => {
-        UiManager_1.UiManager.OpenView(
-          "OnlineWorldSearchView",
-          void 0,
-          (e, t) => {
-            this.AddChildViewById(t);
-          },
-        );
-      }),
-      (this.jGi = () => {
-        var e = this.GetText(8),
+      (this.jNi = () => {
+        var e = this.GetText(7),
           t =
             "PermissionsSetting_" +
             ModelManager_1.ModelManager.OnlineModel.CurrentPermissionsSetting;
         LguiUtil_1.LguiUtil.SetLocalText(e, t);
       }),
-      (this.WGi = () => {
-        this.kGi(ModelManager_1.ModelManager.OnlineModel.StrangerWorld);
+      (this.WNi = () => {
+        this.kNi(ModelManager_1.ModelManager.OnlineModel.StrangerWorld);
       }),
-      (this.KGi = () => {
-        this.QGi(ModelManager_1.ModelManager.OnlineModel.GetTeamList()),
-          this.XGi();
+      (this.KNi = () => {
+        this.QNi(ModelManager_1.ModelManager.OnlineModel.GetTeamList()),
+          this.XNi();
       }),
-      (this.G$e = () => {
-        0 ===
-        ModelManager_1.ModelManager.InstanceDungeonEntranceModel.GetMatchingState()
-          ? this.ohi?.PlayAnimation("Close")
-          : 2 ===
-              ModelManager_1.ModelManager.InstanceDungeonEntranceModel.GetMatchingState() &&
-            this.ohi?.PlayAnimation("Finish");
+      (this.$Ye = () => {
+        var e =
+          ModelManager_1.ModelManager.InstanceDungeonEntranceModel.GetMatchingState();
+        0 === e || 2 === e
+          ? this.oli?.GetActive() && this.oli?.PlayAnimation("Close")
+          : 1 === e &&
+            (this.oli?.PlayAnimation("Start"),
+            this.oli.SetMatchingTime(0),
+            this.oli.StartTimer());
       }),
-      (this.N$e = () => {
-        this.ohi?.PlayAnimation("Start"),
-          this.ohi.SetMatchingTime(0),
-          this.ohi.StartTimer();
+      (this.YYe = () => {
+        this.oli?.PlayAnimation("Start"),
+          this.oli.SetMatchingTime(0),
+          this.oli.StartTimer();
+      }),
+      (this.h9t = () => {
+        "" === this.GetInputText(12).GetText()
+          ? this.a9t.RefreshSprite("SP_Paste")
+          : this.a9t.RefreshSprite("SP_Clear");
+      }),
+      (this.aOi = () => {
+        var e,
+          t,
+          i = this.GetInputText(12);
+        "" === i.GetText()
+          ? ((t = ((e = ""), puerts_1.$ref)("")),
+            UE.LGUIBPLibrary.ClipBoardPaste(t),
+            (e = (0, puerts_1.$unref)(t)),
+            i.SetText(e))
+          : i.SetText(""),
+          this.h9t();
+      }),
+      (this.l9t = () => {
+        var e;
+        this.tWs
+          ? ((this.tWs = !1),
+            this.GetInputText(12).SetText(""),
+            this.h9t(),
+            this.iWs(),
+            this.kNi(
+              1 === this.GetExtendToggle(2).ToggleState
+                ? ModelManager_1.ModelManager.OnlineModel.FriendWorld
+                : ModelManager_1.ModelManager.OnlineModel.StrangerWorld,
+            ))
+          : 0 < (e = this.GetInputText(12).GetText()).length
+            ? OnlineController_1.OnlineController.LobbyQueryPlayersRequest(
+                Number(e),
+              )
+            : ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
+                "OnlineUserIdIsNull",
+              );
+      }),
+      (this.sOi = () => {
+        var e = ModelManager_1.ModelManager.OnlineModel.SearchResult;
+        e && (this.kNi(e), (this.tWs = !0)), this.iWs();
       });
   }
   OnRegisterComponent() {
@@ -102,147 +129,173 @@ class OnlineHallView extends UiTickViewBase_1.UiTickViewBase {
       [0, UE.UIButtonComponent],
       [1, UE.UIButtonComponent],
       [2, UE.UIExtendToggle],
-      [3, UE.UIExtendToggle],
-      [4, UE.UIButtonComponent],
-      [5, UE.UILoopScrollViewComponent],
+      [3, UE.UIButtonComponent],
+      [4, UE.UILoopScrollViewComponent],
+      [5, UE.UIItem],
+      [7, UE.UIText],
       [6, UE.UIItem],
-      [8, UE.UIText],
-      [7, UE.UIItem],
+      [8, UE.UIItem],
       [9, UE.UIItem],
-      [10, UE.UIItem],
-      [11, UE.UIText],
-      [12, UE.UIItem],
+      [10, UE.UIText],
+      [11, UE.UIItem],
+      [12, UE.UITextInputComponent],
+      [13, UE.UIItem],
+      [14, UE.UIText],
     ]),
       (this.BtnBindInfo = [
-        [0, this.Opt],
-        [1, this.VGi],
-        [4, this.HGi],
+        [0, this.Jvt],
+        [1, this.VNi],
+        [3, this.l9t],
       ]);
   }
   async OnBeforeStartAsync() {
-    (this.ohi =
+    (this.oli =
       new InstanceDungeonMatchingCountDown_1.InstanceDungeonMatchingCountDown()),
-      await this.ohi.CreateByActorAsync(this.GetItem(12).GetOwner()),
-      this.ohi.SetActive(!1);
+      await this.oli.CreateByActorAsync(this.GetItem(11).GetOwner()),
+      this.oli.SetUiActive(!1);
   }
   OnStart() {
-    this.XGi(),
-      this.$Gi(),
+    this.XNi(),
+      this.$Ni(),
       ModelManager_1.ModelManager.OnlineModel.GetIsTeamModel()
-        ? this.QGi(ModelManager_1.ModelManager.OnlineModel.GetTeamList())
+        ? this.QNi(ModelManager_1.ModelManager.OnlineModel.GetTeamList())
         : OnlineController_1.OnlineController.RefreshWorldList() ||
-          this.kGi(ModelManager_1.ModelManager.OnlineModel.StrangerWorld),
+          this.kNi(ModelManager_1.ModelManager.OnlineModel.StrangerWorld),
       ModelManager_1.ModelManager.OnlineModel.SetHallShowCanJoin(!1),
       ModelManager_1.ModelManager.OnlineModel.SetHallShowFriend(!1),
-      this.jGi(),
-      (ModelManager_1.ModelManager.FriendModel.ShowingView = this.Info.Name);
+      this.jNi(),
+      (ModelManager_1.ModelManager.FriendModel.ShowingView = this.Info.Name),
+      (this.a9t = new ButtonAndSpriteItem_1.ButtonAndSpriteItem(
+        this.GetItem(13),
+      )),
+      this.a9t.BindCallback(this.aOi),
+      this.GetInputText(12).OnTextChange.Bind(this.h9t),
+      this.h9t(),
+      this.iWs();
   }
   OnAfterShow() {
-    this.ohi.BindOnStopTimer(
+    this.oli.BindOnStopTimer(
       () =>
         1 !==
         ModelManager_1.ModelManager.InstanceDungeonEntranceModel.GetMatchingState(),
     ),
-      this.ohi.BindOnClickBtnCancelMatching(() => {
-        this.ohi?.PlayAnimation("Close"),
+      this.oli.BindOnClickBtnCancelMatching(() => {
+        this.oli?.PlayAnimation("Close"),
           InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.CancelMatchRequest();
+      }),
+      this.oli?.BindOnAfterCloseAnimation((e) => {
+        "Close" === e && this.oli?.SetUiActive(!1);
       }),
       1 ===
         ModelManager_1.ModelManager.InstanceDungeonEntranceModel.GetMatchingState() &&
-        (this.ohi?.PlayAnimation("Start"), this.ohi.StartTimer());
+        (this.oli?.PlayAnimation("Start"), this.oli.StartTimer());
   }
   OnBeforeDestroy() {
-    this.GetExtendToggle(2).OnStateChange.Remove(this.OGi),
-      this.GetExtendToggle(3).OnStateChange.Remove(this.OGi),
-      this.bGi && this.bGi.ClearGridProxies(),
-      (this.bGi = void 0),
-      this.qGi && this.qGi.ClearGridProxies(),
-      (this.qGi = void 0),
-      (this.ohi = void 0);
+    this.GetExtendToggle(2).OnStateChange.Remove(this.ONi),
+      this.bNi && this.bNi.ClearGridProxies(),
+      (this.bNi = void 0),
+      this.qNi && this.qNi.ClearGridProxies(),
+      (this.qNi = void 0),
+      (this.oli = void 0);
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnRefreshPermissionsSetting,
-      this.jGi,
+      this.jNi,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnRefreshWorldList,
-        this.WGi,
+        this.WNi,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnRefreshOnlineTeamList,
-        this.KGi,
+        this.KNi,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnMatchingChange,
-        this.G$e,
+        this.$Ye,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnMatchingBegin,
-        this.N$e,
+        this.YYe,
+      ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.OnSearchWorld,
+        this.sOi,
       );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnRefreshPermissionsSetting,
-      this.jGi,
+      this.jNi,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnRefreshWorldList,
-        this.WGi,
+        this.WNi,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnRefreshOnlineTeamList,
-        this.KGi,
+        this.KNi,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnMatchingChange,
-        this.G$e,
+        this.$Ye,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnMatchingBegin,
-        this.N$e,
+        this.YYe,
+      ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.OnSearchWorld,
+        this.sOi,
       );
   }
-  XGi() {
+  XNi() {
     var e, t, i;
     ModelManager_1.ModelManager.OnlineModel.GetIsTeamModel()
-      ? ((e = this.GetItem(9)),
-        (t = this.GetItem(10)),
-        (i = this.GetText(11)),
-        e.SetUIActive(!1),
-        t.SetUIActive(!0),
-        i.SetText(
+      ? ((i = this.GetItem(8)),
+        (e = this.GetItem(9)),
+        (t = this.GetText(10)),
+        i.SetUIActive(!1),
+        e.SetUIActive(!0),
+        t.SetText(
           ModelManager_1.ModelManager.OnlineModel.GetCurrentTeamSize() +
             "/" +
             ModelManager_1.ModelManager.OnlineModel.TeamMaxSize,
-        ))
-      : (this.GetExtendToggle(2).OnStateChange.Add(this.OGi),
-        this.GetExtendToggle(3).OnStateChange.Add(this.FGi));
+        ),
+        (i = ModelManager_1.ModelManager.OnlineModel.GetIsMyTeam()),
+        this.GetButton(1)?.RootUIComp.SetUIActive(i))
+      : this.GetExtendToggle(2).OnStateChange.Add(this.ONi);
   }
-  $Gi() {
+  $Ni() {
     var e,
-      t = this.GetLoopScrollViewComponent(5);
+      t = this.GetLoopScrollViewComponent(4);
     ModelManager_1.ModelManager.OnlineModel.GetIsTeamModel()
-      ? ((e = this.GetItem(6).GetOwner()),
-        (this.qGi = new LoopScrollView_1.LoopScrollView(t, e, this.NGi)))
-      : ((e = this.GetItem(6).GetOwner()),
-        (this.bGi = new LoopScrollView_1.LoopScrollView(t, e, this.GGi)));
+      ? ((e = this.GetItem(5).GetOwner()),
+        (this.qNi = new LoopScrollView_1.LoopScrollView(t, e, this.NNi)))
+      : ((e = this.GetItem(5).GetOwner()),
+        (this.bNi = new LoopScrollView_1.LoopScrollView(t, e, this.GNi)));
   }
-  kGi(e) {
-    var t = this.GetItem(7),
-      i = this.GetLoopScrollViewComponent(5).RootUIComp;
+  kNi(e) {
+    var t = this.GetItem(6),
+      i = this.GetLoopScrollViewComponent(4).RootUIComp;
     !e || e.length <= 0
       ? (t.SetUIActive(!0), i.SetUIActive(!1))
       : (i.SetUIActive(!0),
         t.SetUIActive(!1),
-        this.bGi && this.bGi.ReloadData(e));
+        this.bNi && this.bNi.ReloadData(e));
   }
-  QGi(e) {
-    var t = this.GetItem(7);
+  QNi(e) {
+    var t = this.GetItem(6);
     e.length <= 0
-      ? (t.SetUIActive(!0), this.qGi.ReloadData(e))
-      : (t.SetUIActive(!1), this.qGi && this.qGi.ReloadData(e));
+      ? (t.SetUIActive(!0), this.qNi.ReloadData(e))
+      : (t.SetUIActive(!1), this.qNi && this.qNi.ReloadData(e));
+  }
+  iWs() {
+    LguiUtil_1.LguiUtil.SetLocalTextNew(
+      this.GetText(14),
+      this.tWs ? "Online_ResetSearch" : "Online_Search",
+    );
   }
 }
 exports.OnlineHallView = OnlineHallView;

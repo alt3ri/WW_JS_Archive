@@ -22,8 +22,8 @@ class GameBudgetTimeEstimationFramesOffset {
     cpp_1.FKuroGameBudgetAllocatorInterface.SetBudgetTime(this.TickBudgetTime);
   }
   SetMaximumFrameRate(t) {
-    (this.GK = (1e3 / t) * (Info_1.Info.IsMobile() ? 0.8 : 0.95)),
-      (this.NK = this.GK / (Info_1.Info.IsMobile() ? 2.33 : 1.5)),
+    (this.GK = (1e3 / t) * (Info_1.Info.IsMobilePlatform() ? 0.8 : 0.95)),
+      (this.NK = this.GK / (Info_1.Info.IsMobilePlatform() ? 2.33 : 1.5)),
       (this.TickBudgetTime = Math.floor(this.GK / 2)),
       (this.HK = this.GK * this.VK),
       (this.kK = t),

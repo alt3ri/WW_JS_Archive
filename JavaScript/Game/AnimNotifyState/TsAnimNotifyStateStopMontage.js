@@ -9,8 +9,8 @@ class TsAnimNotifyStateStopMontage extends UE.KuroAnimNotifyState {
     return (
       e instanceof TsBaseCharacter_1.default &&
       !!(e = e.CharacterActorComponent?.Entity) &&
-      (e.GetComponent(161)?.HasMoveInput &&
-        (e = e.GetComponent(160)) &&
+      (e.GetComponent(163)?.HasMoveInput &&
+        (e = e.GetComponent(162)) &&
         e.MainAnimInstance.Montage_Stop(QUIT_BLEND_TIME),
       !0)
     );

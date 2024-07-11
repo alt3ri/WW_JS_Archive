@@ -5,6 +5,7 @@ const UE = require("ue"),
   AudioSystem_1 = require("../../../Core/Audio/AudioSystem"),
   Log_1 = require("../../../Core/Common/Log"),
   CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById"),
+  GameplayCueById_1 = require("../../../Core/Define/ConfigQuery/GameplayCueById"),
   ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem"),
   TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
   CameraController_1 = require("../../Camera/CameraController"),
@@ -16,13 +17,15 @@ const UE = require("ue"),
   InputDistributeController_1 = require("../../Ui/InputDistribute/InputDistributeController"),
   UiManager_1 = require("../../Ui/UiManager"),
   PreloadConstants_1 = require("../../World/Controller/PreloadConstants"),
-  LevelGeneralBase_1 = require("../LevelGeneralBase");
+  LevelGeneralBase_1 = require("../LevelGeneralBase"),
+  screenEffectCueId = 10010092n;
 class LevelEventPlayDynamicSettlement extends LevelGeneralBase_1.LevelEventBase {
   constructor() {
     super(...arguments),
       (this.j3 = void 0),
       (this.$De = new Map()),
       (this.YDe = !0),
+      (this.uZs = void 0),
       (this.JDe = () => {
         this.YDe &&
           ((this.YDe = !1),
@@ -92,14 +95,15 @@ class LevelEventPlayDynamicSettlement extends LevelGeneralBase_1.LevelEventBase 
         this.FinishExecute(!1));
   }
   zDe() {
-    var e =
+    var e,
+      t =
         CommonParamById_1.configCommonParamById.GetFloatConfig(
           "BattleSettlementTime",
         ) * TimeUtil_1.TimeUtil.InverseMillisecond,
-      e =
+      t =
         ((this.j3 = TimerSystem_1.TimerSystem.Delay(() => {
           (this.j3 = void 0), this.eRe(), this.FinishExecute(!0);
-        }, e)),
+        }, t)),
         ModelManager_1.ModelManager.BattleUiModel.ChildViewData.HideBattleView(
           1,
         ),
@@ -110,12 +114,21 @@ class LevelEventPlayDynamicSettlement extends LevelGeneralBase_1.LevelEventBase 
           PreloadConstants_1.BATTLE_SETTLEMENT_TIME_SCALE_CURVE_PATH,
           UE.CurveFloat,
         )),
-      e =
-        (this.tRe(e),
+      t = (this.tRe(t), Global_1.Global.BaseCharacter?.GetEntityNoBlueprint()),
+      i =
+        (t &&
+          ((e = t.GetComponent(19)),
+          (i =
+            GameplayCueById_1.configGameplayCueById.GetConfig(
+              screenEffectCueId,
+            )),
+          e && i && (this.uZs = e?.CreateGameplayCue(i)),
+          (e = t.GetComponent(53))) &&
+          e.ClearInputCache(0, 0),
         CommonParamById_1.configCommonParamById.GetStringConfig(
           "BattleSettlementAudioEvent",
         ));
-    e && AudioSystem_1.AudioSystem.PostEvent(e),
+    i && AudioSystem_1.AudioSystem.PostEvent(i),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.BattleSettlementStateChanged,
         !0,
@@ -159,7 +172,7 @@ class LevelEventPlayDynamicSettlement extends LevelGeneralBase_1.LevelEventBase 
     var s, l;
     e?.Valid &&
       (l = e.Entity)?.IsInit &&
-      (s = l.GetComponent(107)) &&
+      (s = l.GetComponent(109)) &&
       (l = l.GetComponent(1)?.ActorLocationProxy) &&
       Math.abs(l.X - t.X) <= i &&
       Math.abs(l.Y - t.Y) <= i &&
@@ -179,6 +192,7 @@ class LevelEventPlayDynamicSettlement extends LevelGeneralBase_1.LevelEventBase 
         this.ZDe,
       ),
       this.$De.clear(),
+      this.uZs && (this.uZs.Destroy(), (this.uZs = void 0)),
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("LevelEvent", 18, "战斗结算效果结束"),
       EventSystem_1.EventSystem.Emit(

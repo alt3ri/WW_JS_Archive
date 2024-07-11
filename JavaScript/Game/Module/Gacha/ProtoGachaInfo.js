@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ProtoGachaInfo = exports.ProtoGachaPoolInfo = void 0);
-const MathUtils_1 = require("../../../Core/Utils/MathUtils"),
+const Log_1 = require("../../../Core/Common/Log"),
+  MathUtils_1 = require("../../../Core/Utils/MathUtils"),
   TimeUtil_1 = require("../../Common/TimeUtil"),
   ConfigManager_1 = require("../../Manager/ConfigManager");
 class ProtoGachaPoolInfo {
@@ -10,11 +11,23 @@ class ProtoGachaPoolInfo {
       (this.BeginTime = 0),
       (this.EndTime = 0),
       (this.Sort = 0),
-      (this.UrlList = void 0),
-      (this.Id = t.Ekn),
-      (this.BeginTime = MathUtils_1.MathUtils.LongToNumber(t.HCs)),
-      (this.EndTime = MathUtils_1.MathUtils.LongToNumber(t.jCs)),
-      (this.UrlList = t.pRs);
+      (this.Title = ""),
+      (this.Description = ""),
+      (this.UiType = 0),
+      (this.ThemeColor = ""),
+      (this.ShowIdList = []),
+      (this.UpList = []),
+      (this.PreviewIdList = []),
+      (this.Id = t.J4n),
+      (this.BeginTime = MathUtils_1.MathUtils.LongToNumber(t.nps)),
+      (this.EndTime = MathUtils_1.MathUtils.LongToNumber(t.sps)),
+      (this.Title = t.Qxs),
+      (this.Description = t.XLa),
+      (this.UiType = t.JLa),
+      (this.ThemeColor = t.zLa),
+      (this.ShowIdList = t.ZLa),
+      (this.UpList = t.eRa),
+      (this.PreviewIdList = t.tRa);
     t = ConfigManager_1.ConfigManager.GachaConfig.GetGachaPoolConfig(this.Id);
     t && (this.Sort = t.Sort);
   }
@@ -28,7 +41,7 @@ class ProtoGachaInfo {
       (this.ItemId = 0),
       (this.GachaConsumes = void 0),
       (this.UsePoolId = 0),
-      (this.bWt = []),
+      (this.bKt = []),
       (this.BeginTime = 0),
       (this.EndTime = 0),
       (this.DailyLimitTimes = 0),
@@ -36,30 +49,39 @@ class ProtoGachaInfo {
       (this.ResourcesId = ""),
       (this.GroupId = 0),
       (this.Sort = 0),
-      (this.Id = t.Ekn),
-      (this.TodayTimes = t.S5n),
-      (this.TotalTimes = t.E5n),
-      (this.ItemId = t.G3n),
-      (this.GachaConsumes = t.MRs),
-      (this.UsePoolId = t.SRs);
-    var i = t.ERs;
-    if (i) for (const s of i) this.bWt.push(new ProtoGachaPoolInfo(s));
-    (this.BeginTime = MathUtils_1.MathUtils.LongToNumber(t.HCs)),
-      (this.EndTime = MathUtils_1.MathUtils.LongToNumber(t.jCs)),
-      (this.DailyLimitTimes = t.yRs),
-      (this.TotalLimitTimes = t.IRs),
-      (this.ResourcesId = t.TRs);
+      (this.Id = t.J4n),
+      (this.TodayTimes = t.t9n),
+      (this.TotalTimes = t.i9n),
+      (this.ItemId = t.f8n),
+      (this.GachaConsumes = t.kUs),
+      (this.UsePoolId = t.NUs);
+    var i = t.FUs;
+    if (i) for (const s of i) this.bKt.push(new ProtoGachaPoolInfo(s));
+    (this.BeginTime = MathUtils_1.MathUtils.LongToNumber(t.nps)),
+      (this.EndTime = MathUtils_1.MathUtils.LongToNumber(t.sps)),
+      (this.DailyLimitTimes = t.VUs),
+      (this.TotalLimitTimes = t.$Us),
+      (this.ResourcesId = t.HUs);
     i = ConfigManager_1.ConfigManager.GachaConfig.GetGachaConfig(this.Id);
     i && ((this.Sort = i.Sort), (this.GroupId = i.RuleGroupId));
   }
   GetFirstValidPool() {
-    if (this.bWt && 0 < this.bWt.length)
-      for (const t of this.bWt) if (this.IsPoolValid(t)) return t;
+    if (this.bKt && 0 < this.bKt.length)
+      for (const t of this.bKt) if (this.IsPoolValid(t)) return t;
   }
   GetPoolInfo(t) {
     let i = void 0;
-    for (const s of this.bWt) s.Id === t && (i = s);
+    for (const s of this.bKt) s.Id === t && (i = s);
     return i;
+  }
+  GetCurrentPoolInfo() {
+    if (0 !== this.UsePoolId) return this.GetPoolInfo(this.UsePoolId);
+    Log_1.Log.CheckError() &&
+      Log_1.Log.Error(
+        "Gacha",
+        35,
+        "ProtoGachaInfo.GetCurrentPoolInfo UsePoolId is 0!",
+      );
   }
   GetPoolEndTimeByPoolId(t) {
     t = this.GetPoolInfo(t);
@@ -70,7 +92,7 @@ class ProtoGachaInfo {
     return !t || 0 === (t = t.EndTime) || (0 !== i && i < t) ? i : t;
   }
   GetValidPoolList() {
-    var t = this.bWt;
+    var t = this.bKt;
     if (t) {
       var i = [];
       for (const s of t) this.IsPoolValid(s) && i.push(s);

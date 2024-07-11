@@ -9,7 +9,7 @@ class AchievementSearchResultItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
       (this.Data = void 0),
-      (this.EGe = void 0),
+      (this.SGe = void 0),
       (this.yGe = void 0),
       (this.IGe = void 0);
   }
@@ -23,11 +23,11 @@ class AchievementSearchResultItem extends UiPanelBase_1.UiPanelBase {
     ];
   }
   async OnBeforeStartAsync() {
-    void 0 === this.EGe &&
-      ((this.EGe = new AchievementSearchDescItem_1.AchievementSearchDescItem(
+    void 0 === this.SGe &&
+      ((this.SGe = new AchievementSearchDescItem_1.AchievementSearchDescItem(
         this.GetItem(0),
       )),
-      await this.EGe.Init()),
+      await this.SGe.Init()),
       void 0 === this.yGe &&
         ((this.yGe = new AchievementDataItem_1.AchievementDataItem()),
         await this.yGe.Init(this.GetItem(1)));
@@ -41,10 +41,10 @@ class AchievementSearchResultItem extends UiPanelBase_1.UiPanelBase {
   }
   Update(e, t) {
     (this.Data = e),
-      this.EGe.SetActive(!1),
+      this.SGe.SetActive(!1),
       this.yGe.SetActive(!1),
       e.AchievementSearchGroupData
-        ? (this.EGe.SetActive(!0), this.EGe.Update(e))
+        ? (this.SGe.SetActive(!0), this.SGe.Update(e))
         : e.AchievementData &&
           (this.yGe.SetActive(!0), this.yGe.RefreshUi(e.AchievementData));
   }
@@ -52,7 +52,7 @@ class AchievementSearchResultItem extends UiPanelBase_1.UiPanelBase {
     this.Destroy();
   }
   OnBeforeDestroy() {
-    this.EGe && this.EGe.ClearItem(),
+    this.SGe && this.SGe.ClearItem(),
       this.yGe && this.yGe.ClearItem(),
       this.IGe && (this.IGe = void 0);
   }

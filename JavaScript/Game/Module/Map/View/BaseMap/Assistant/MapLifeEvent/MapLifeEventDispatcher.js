@@ -5,29 +5,29 @@ const ModelManager_1 = require("../../../../../../Manager/ModelManager"),
   MapSceneGameplayUnlock_1 = require("./MapSceneGameplayUnlock");
 class MapLifeEventDispatcher {
   constructor(e) {
-    (this.ZDi = void 0),
-      (this.eRi = void 0),
-      (this.ZDi = e),
-      (this.eRi = new Map([
-        [0, new MapSceneGameplayUnlock_1.MapSceneGameplayUnlock(this.ZDi)],
+    (this.ZRi = void 0),
+      (this.eUi = void 0),
+      (this.ZRi = e),
+      (this.eUi = new Map([
+        [0, new MapSceneGameplayUnlock_1.MapSceneGameplayUnlock(this.ZRi)],
       ]));
   }
   async OnWorldMapBeforeStartAsync() {
     var e,
       a,
       o = [];
-    for ([e, a] of this.eRi)
+    for ([e, a] of this.eUi)
       ModelManager_1.ModelManager.MapModel.MapLifeEventListenerTriggerMap.get(e)
         ?.State && o.push(a.OnWorldMapBeforeStartAsync());
     await Promise.all(o);
   }
   OnWorldMapBeforeShow() {
-    for (var [e, a] of this.eRi)
+    for (var [e, a] of this.eUi)
       ModelManager_1.ModelManager.MapModel.MapLifeEventListenerTriggerMap.get(e)
         ?.State && a.OnWorldMapBeforeShow();
   }
   OnWorldMapAfterShow() {
-    for (var [e, a] of this.eRi)
+    for (var [e, a] of this.eUi)
       ModelManager_1.ModelManager.MapModel.MapLifeEventListenerTriggerMap.get(e)
         ?.State && a.OnWorldMapAfterShow();
   }

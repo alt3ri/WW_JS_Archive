@@ -6,6 +6,7 @@ const UE = require("ue"),
   TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
   InputDistributeController_1 = require("../../../Ui/InputDistribute/InputDistributeController"),
   InputMappingsDefine_1 = require("../../../Ui/InputDistribute/InputMappingsDefine"),
@@ -17,28 +18,28 @@ const UE = require("ue"),
 class GuideFocusItem extends UiPanelBase_1.UiPanelBase {
   constructor(e, i, t) {
     super(),
-      (this.PJt = void 0),
+      (this.Pzt = void 0),
       (this.Owner = void 0),
-      (this.xJt = void 0),
-      (this.wJt = void 0),
-      (this.HXe = void 0),
+      (this.xzt = void 0),
+      (this.wzt = void 0),
+      (this.tYe = void 0),
       (this.RectItem = void 0),
       (this.Config = void 0),
-      (this.BJt = !1),
-      (this.bJt = !1),
-      (this.qJt = !1),
-      (this.GJt = void 0),
-      (this.NJt = void 0),
-      (this.OJt = void 0),
+      (this.Bzt = !1),
+      (this.bzt = !1),
+      (this.qzt = !1),
+      (this.Gzt = void 0),
+      (this.Nzt = void 0),
+      (this.Ozt = void 0),
       (this.Fr = () => {
         GuideFocusItem.IsOpenLog &&
           Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn("Guide", 17, "OnButtonClick enter");
         var e,
-          i = this.NJt;
-        this.kJt(),
+          i = this.Nzt;
+        this.kzt(),
           i?.IsInteractable() &&
-            this.xJt.bIsUIActive &&
+            this.xzt.bIsUIActive &&
             (i.IsA(UE.UIButtonComponent.StaticClass())
               ? (e = i).OnClickCallBack.IsBound() &&
                 (GuideFocusItem.IsOpenLog &&
@@ -89,13 +90,13 @@ class GuideFocusItem extends UiPanelBase_1.UiPanelBase {
                         ),
                       e.OnValueChangeCb.Execute(e.Value)));
       }),
-      (this.FJt = () => {
+      (this.Fzt = () => {
         var e, i;
-        this.BJt ||
+        this.Bzt ||
           (GuideFocusItem.IsOpenLog &&
             Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn("Guide", 17, "OnButtonPointerDownCallBack enter"),
-          (e = this.NJt)?.IsValid() &&
+          (e = this.Nzt)?.IsValid() &&
             (GuideFocusItem.IsOpenLog &&
               Log_1.Log.CheckWarn() &&
               Log_1.Log.Warn(
@@ -103,7 +104,7 @@ class GuideFocusItem extends UiPanelBase_1.UiPanelBase {
                 17,
                 "OnButtonPointerDownCallBack execute self",
               ),
-            (this.qJt = !0),
+            (this.qzt = !0),
             e.IsA(UE.UIButtonComponent.StaticClass())
               ? (i = e).OnPointDownCallBack.IsBound() &&
                 (GuideFocusItem.IsOpenLog &&
@@ -125,14 +126,14 @@ class GuideFocusItem extends UiPanelBase_1.UiPanelBase {
                   ),
                 i.OnPointDownCallBack.Execute(1))));
       }),
-      (this.VJt = () => {
+      (this.Vzt = () => {
         GuideFocusItem.IsOpenLog &&
           Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn("Guide", 17, "OnButtonPointerUpCallBack enter");
         var e,
-          i = this.NJt;
+          i = this.Nzt;
         i?.IsValid() &&
-          ((this.qJt = !1),
+          ((this.qzt = !1),
           GuideFocusItem.IsOpenLog &&
             Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
@@ -149,7 +150,7 @@ class GuideFocusItem extends UiPanelBase_1.UiPanelBase {
                   17,
                   "OnButtonPointerUpCallBack execute parent UIButtonComponent",
                 ),
-              this.kJt(),
+              this.kzt(),
               e.OnPointUpCallBack.Execute())
             : i.IsA(UE.UIExtendToggle.StaticClass()) &&
               (e = i).OnPointUpCallBack.IsBound() &&
@@ -160,16 +161,16 @@ class GuideFocusItem extends UiPanelBase_1.UiPanelBase {
                   17,
                   "OnButtonPointerUpCallBack execute parent UIExtendToggle",
                 ),
-              this.kJt(),
+              this.kzt(),
               e.OnPointUpCallBack.Execute(1)));
       }),
-      (this.HJt = (e) => {
+      (this.Hzt = (e) => {
         var i;
-        this.BJt ||
+        this.Bzt ||
           (GuideFocusItem.IsOpenLog &&
             Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn("Guide", 17, "OnDraggablePointerDownCallBack enter"),
-          (i = this.GJt)?.IsValid() &&
+          (i = this.Gzt)?.IsValid() &&
             (GuideFocusItem.IsOpenLog &&
               Log_1.Log.CheckWarn() &&
               Log_1.Log.Warn(
@@ -187,9 +188,9 @@ class GuideFocusItem extends UiPanelBase_1.UiPanelBase {
               ),
             i.OnPointerDownCallBack.Execute(e)));
       }),
-      (this.jJt = (e) => {
+      (this.jzt = (e) => {
         var i;
-        this.BJt ||
+        this.Bzt ||
           (GuideFocusItem.IsOpenLog &&
             Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
@@ -197,7 +198,7 @@ class GuideFocusItem extends UiPanelBase_1.UiPanelBase {
               17,
               "OnDraggablePointerBeginDragCallBack enter",
             ),
-          (i = this.GJt)?.IsValid() &&
+          (i = this.Gzt)?.IsValid() &&
             (GuideFocusItem.IsOpenLog &&
               Log_1.Log.CheckWarn() &&
               Log_1.Log.Warn(
@@ -205,7 +206,7 @@ class GuideFocusItem extends UiPanelBase_1.UiPanelBase {
                 17,
                 "OnDraggablePointerBeginDragCallBack execute self",
               ),
-            (this.bJt = !0),
+            (this.bzt = !0),
             i.OnPointerBeginDragCallBack.IsBound()) &&
             (GuideFocusItem.IsOpenLog &&
               Log_1.Log.CheckWarn() &&
@@ -216,13 +217,13 @@ class GuideFocusItem extends UiPanelBase_1.UiPanelBase {
               ),
             i.OnPointerBeginDragCallBack.Execute(e)));
       }),
-      (this.WJt = (e) => {
+      (this.Wzt = (e) => {
         var i;
-        this.BJt ||
+        this.Bzt ||
           (GuideFocusItem.IsOpenLog &&
             Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn("Guide", 17, "OnDraggablePointerDragCallBack enter"),
-          (i = this.GJt)?.IsValid() &&
+          (i = this.Gzt)?.IsValid() &&
             (GuideFocusItem.IsOpenLog &&
               Log_1.Log.CheckWarn() &&
               Log_1.Log.Warn(
@@ -230,7 +231,7 @@ class GuideFocusItem extends UiPanelBase_1.UiPanelBase {
                 17,
                 "OnDraggablePointerDragCallBack execute self",
               ),
-            (this.OJt = e),
+            (this.Ozt = e),
             i.OnPointerDragCallBack.IsBound()) &&
             (GuideFocusItem.IsOpenLog &&
               Log_1.Log.CheckWarn() &&
@@ -241,7 +242,7 @@ class GuideFocusItem extends UiPanelBase_1.UiPanelBase {
               ),
             i.OnPointerDragCallBack.Execute(e)));
       }),
-      (this.KJt = (e) => {
+      (this.Kzt = (e) => {
         GuideFocusItem.IsOpenLog &&
           Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
@@ -249,7 +250,7 @@ class GuideFocusItem extends UiPanelBase_1.UiPanelBase {
             17,
             "OnDraggablePointerEndDragCallBack enter",
           );
-        var i = this.GJt;
+        var i = this.Gzt;
         i?.IsValid() &&
           (GuideFocusItem.IsOpenLog &&
             Log_1.Log.CheckWarn() &&
@@ -258,7 +259,7 @@ class GuideFocusItem extends UiPanelBase_1.UiPanelBase {
               17,
               "OnDraggablePointerEndDragCallBack execute self",
             ),
-          (this.bJt = !1),
+          (this.bzt = !1),
           i.OnPointerEndDragCallBack.IsBound()) &&
           (GuideFocusItem.IsOpenLog &&
             Log_1.Log.CheckWarn() &&
@@ -269,11 +270,11 @@ class GuideFocusItem extends UiPanelBase_1.UiPanelBase {
             ),
           i.OnPointerEndDragCallBack.Execute(e));
       }),
-      (this.QJt = (e) => {
+      (this.Qzt = (e) => {
         GuideFocusItem.IsOpenLog &&
           Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn("Guide", 17, "OnDraggablePointerUpCallBack enter");
-        var i = this.GJt;
+        var i = this.Gzt;
         i?.IsValid() &&
           (GuideFocusItem.IsOpenLog &&
             Log_1.Log.CheckWarn() &&
@@ -298,7 +299,7 @@ class GuideFocusItem extends UiPanelBase_1.UiPanelBase {
               17,
               "OnDraggablePointerUpCallBack execute TryFinishByClick",
             ),
-          this.kJt());
+          this.kzt());
       }),
       (this.OnTouch = (e, i) => {
         var e = Number(e),
@@ -311,13 +312,13 @@ class GuideFocusItem extends UiPanelBase_1.UiPanelBase {
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.GuideTouchIdInject,
             e,
-            this.xJt.GetOwner(),
+            this.xzt.GetOwner(),
           );
       }),
       (this.Owner = t),
       (this.Config = this.Owner.GetGuideStepInfo().ViewData.ViewConf),
-      (this.xJt = e),
-      (this.wJt = i);
+      (this.xzt = e),
+      (this.wzt = i);
   }
   Init(e) {
     e && this.CreateThenShowByActorAsync(e.GetOwner());
@@ -334,27 +335,27 @@ class GuideFocusItem extends UiPanelBase_1.UiPanelBase {
   }
   async OnBeforeStartAsync() {
     var e = this.GetItem(3);
-    (this.PJt = new GuideFocusItemText_1.FocusItemText(this)),
-      await this.PJt.OnlyCreateByActorAsync(e.GetOwner()),
-      this.AddChild(this.PJt);
+    (this.Pzt = new GuideFocusItemText_1.FocusItemText(this)),
+      await this.Pzt.OnlyCreateByActorAsync(e.GetOwner()),
+      this.AddChild(this.Pzt);
   }
   OnStart() {
     this.Config.OnlyFrame
       ? this.GetItem(3).SetUIActive(!1)
-      : (this.GetItem(3).SetUIActive(!0), this.PJt.ShowText()),
+      : (this.GetItem(3).SetUIActive(!0), this.Pzt.ShowText()),
       this.Config.OnlyText
         ? this.GetItem(2).SetUIActive(!1)
         : this.GetItem(2).SetUIActive(!0),
-      (this.HXe = this.GetItem(1)),
+      (this.tYe = this.GetItem(1)),
       (this.RectItem = this.GetItem(2)),
       this.GetItem(1).SetUIActive(this.Config.UseMask),
-      (this.NJt = this.xJt
+      (this.Nzt = this.xzt
         .GetOwner()
         .GetComponentByClass(UE.UISelectableComponent.StaticClass()));
     const e = this.GetButton(0),
       i =
-        (e.OnPointDownCallBack.Bind(this.FJt),
-        e.OnPointUpCallBack.Bind(this.VJt),
+        (e.OnPointDownCallBack.Bind(this.Fzt),
+        e.OnPointUpCallBack.Bind(this.Vzt),
         this.GetItem(3));
     i.SetUIActive(!1),
       this.Config.ClickAnywhere &&
@@ -363,26 +364,26 @@ class GuideFocusItem extends UiPanelBase_1.UiPanelBase {
         TimerSystem_1.TimerSystem.Delay(() => {
           i.SetUIActive(!0), e.RootUIComp.SetRaycastTarget(!0);
         }, t)),
-      (this.GJt = this.xJt
+      (this.Gzt = this.xzt
         .GetOwner()
         .GetComponentByClass(UE.UIDraggableComponent.StaticClass()));
     var t = e.RootUIComp.GetOwner().GetComponentByClass(
       UE.UIDraggableComponent.StaticClass(),
     );
     t.OnPointerDownCallBack.Bind((e) => {
-      this.HJt(e);
+      this.Hzt(e);
     }),
       t.OnPointerBeginDragCallBack.Bind((e) => {
-        this.jJt(e);
+        this.jzt(e);
       }),
       t.OnPointerDragCallBack.Bind((e) => {
-        this.WJt(e);
+        this.Wzt(e);
       }),
       t.OnPointerEndDragCallBack.Bind((e) => {
-        this.KJt(e);
+        this.Kzt(e);
       }),
       t.OnPointerUpCallBack.Bind((e) => {
-        this.QJt(e);
+        this.Qzt(e);
       }),
       InputDistributeController_1.InputDistributeController.BindTouches(
         [
@@ -402,14 +403,20 @@ class GuideFocusItem extends UiPanelBase_1.UiPanelBase {
   }
   OnBeforeShow() {
     this.Owner?.Config?.UseMask
-      ? (UiNavigationNewController_1.UiNavigationNewController.SetNavigationFocusForGuide(
-          this.xJt,
-        ),
+      ? (ControllerHolder_1.ControllerHolder.GuideController.CheckHasNewTagInHookNameForShow(
+          this.Owner.Config,
+        )
+          ? UiNavigationNewController_1.UiNavigationNewController.SetNavigationFocusForGuide(
+              this.wzt,
+            )
+          : UiNavigationNewController_1.UiNavigationNewController.SetNavigationFocusForGuide(
+              this.xzt,
+            ),
         UiNavigationGlobalData_1.UiNavigationGlobalData.AddBlockListenerFocusTag(
           "GuideFocus",
         ))
-      : this.NJt?.FocusListenerDelegate.Bind(() => {
-          this.kJt();
+      : this.Nzt?.FocusListenerDelegate.Bind(() => {
+          this.kzt();
         });
   }
   OnAfterHide() {
@@ -418,15 +425,15 @@ class GuideFocusItem extends UiPanelBase_1.UiPanelBase {
           "GuideFocus",
         ),
         UiNavigationNewController_1.UiNavigationNewController.ResetNavigationFocusForGuide())
-      : this.NJt?.FocusListenerDelegate.Unbind();
+      : this.Nzt?.FocusListenerDelegate.Unbind();
   }
   OnAfterShow() {
     this.Owner.ReadyToShow = !0;
   }
-  kJt() {
+  kzt() {
     !this.Config.UseClick ||
-      this.BJt ||
-      ((this.BJt = !0),
+      this.Bzt ||
+      ((this.Bzt = !0),
       GuideFocusItem.IsOpenLog &&
         Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn("Guide", 17, "TryFinishByClick done"),
@@ -437,16 +444,16 @@ class GuideFocusItem extends UiPanelBase_1.UiPanelBase {
       }));
   }
   OnBaseViewCloseWhenFinish() {
-    this.PJt.OnBaseViewCloseWhenFinish();
+    this.Pzt.OnBaseViewCloseWhenFinish();
   }
   OnBeforeDestroy() {
-    (this.BJt = !0),
-      this.bJt &&
-        (this.KJt(this.OJt),
-        this.QJt(this.OJt),
-        (this.bJt = !1),
-        (this.OJt = void 0)),
-      this.qJt && (this.VJt(), (this.qJt = !1)),
+    (this.Bzt = !0),
+      this.bzt &&
+        (this.Kzt(this.Ozt),
+        this.Qzt(this.Ozt),
+        (this.bzt = !1),
+        (this.Ozt = void 0)),
+      this.qzt && (this.Vzt(), (this.qzt = !1)),
       InputDistributeController_1.InputDistributeController.UnBindTouches(
         [
           InputMappingsDefine_1.touchIdMappings.Touch1,
@@ -466,14 +473,14 @@ class GuideFocusItem extends UiPanelBase_1.UiPanelBase {
   OnTick(e) {
     this.IsShowOrShowing &&
       this.RootItem?.IsValid() &&
-      this.xJt?.IsValid() &&
-      (this.ApplyButtonFollow(), this.ApplyBgFollow(), this.PJt?.OnTick(e));
+      this.xzt?.IsValid() &&
+      (this.ApplyButtonFollow(), this.ApplyBgFollow(), this.Pzt?.OnTick(e));
   }
   OnDurationChange(e) {
-    this.GetActive() && this.PJt?.OnDurationChange(e);
+    this.GetActive() && this.Pzt?.OnDurationChange(e);
   }
   ApplyButtonFollow() {
-    var e = this.wJt,
+    var e = this.wzt,
       i = e.K2_GetComponentScale(),
       e =
         (this.RootItem.K2_SetWorldLocation(
@@ -485,7 +492,7 @@ class GuideFocusItem extends UiPanelBase_1.UiPanelBase {
         this.RootItem.SetPivot(e.GetPivot()),
         this.RootItem.SetHeight(e.Height * i.Y),
         this.RootItem.SetWidth(e.Width * i.X),
-        this.xJt),
+        this.xzt),
       i = this.GetButton(0).RootUIComp;
     this.Config.ClickAnywhere
       ? (i.K2_SetWorldLocation(
@@ -506,7 +513,7 @@ class GuideFocusItem extends UiPanelBase_1.UiPanelBase {
   ApplyBgFollow() {
     var e;
     this.Config.UseMask &&
-      ((e = this.HXe).K2_SetWorldLocation(
+      ((e = this.tYe).K2_SetWorldLocation(
         UiLayer_1.UiLayer.UiRootItem.K2_GetComponentLocation(),
         !1,
         void 0,

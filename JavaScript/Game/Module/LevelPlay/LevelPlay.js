@@ -15,37 +15,37 @@ const Log_1 = require("../../../Core/Common/Log"),
 class LevelPlayInfo extends LogicTreeContainer_1.LogicTreeContainer {
   constructor(t) {
     super(),
-      (this.uli = 0),
-      (this.Tfi = !1),
-      (this.Lfi = 0),
+      (this.u1i = 0),
+      (this.Lpi = !1),
+      (this.Dpi = 0),
       (this.ac = 0),
-      (this.Dfi = !1),
+      (this.Rpi = !1),
       (this.TrackRadiusSquared = 0),
       (this.CacheDistanceSquared = 0),
-      (this.cli = ""),
-      (this.mli = 0),
-      (this.dli = 0),
-      (this.Cli = 0),
-      (this.Rfi = void 0),
-      (this.Ufi = void 0),
-      (this.fli = void 0),
-      (this.pli = 0),
-      (this.Afi = 0),
-      (this.vli = 0),
-      (this.Mli = void 0),
-      (this.Sli = void 0),
-      (this.Pfi = void 0),
-      (this.xfi = void 0),
-      (this.wfi = "Local"),
-      (this.Bfi = void 0),
-      (this.uli = t),
-      (this.Tfi = !1),
-      (this.Lfi = 0),
+      (this.c1i = ""),
+      (this.m1i = 0),
+      (this.d1i = 0),
+      (this.C1i = 0),
+      (this.Upi = void 0),
+      (this.Api = void 0),
+      (this.f1i = void 0),
+      (this.p1i = 0),
+      (this.Ppi = 0),
+      (this.v1i = 0),
+      (this.M1i = void 0),
+      (this.E1i = void 0),
+      (this.xpi = void 0),
+      (this.wpi = void 0),
+      (this.Bpi = "Local"),
+      (this.bpi = void 0),
+      (this.u1i = t),
+      (this.Lpi = !1),
+      (this.Dpi = 0),
       (this.ac = 0),
       (this.CacheDistanceSquared = -1);
   }
   get Id() {
-    return this.uli;
+    return this.u1i;
   }
   get PlayState() {
     return this.ac;
@@ -63,7 +63,7 @@ class LevelPlayInfo extends LogicTreeContainer_1.LogicTreeContainer {
     if (
       this.LevelPlayEntityId !== QuestDefine_1.INVALID_ENTITYDATAID &&
       2 === this.ac &&
-      this.Ufi &&
+      this.Api &&
       this.BehaviorTree
     ) {
       if (this.BehaviorTree.IsChallengeUi()) return !0;
@@ -81,64 +81,64 @@ class LevelPlayInfo extends LogicTreeContainer_1.LogicTreeContainer {
     return !1;
   }
   get IsFirstPass() {
-    return this.Tfi;
+    return this.Lpi;
   }
   get RefreshTime() {
-    return this.Lfi;
+    return this.Dpi;
   }
   get CanGetReward() {
-    return this.Dfi;
+    return this.Rpi;
   }
   get Name() {
-    return this.cli;
+    return this.c1i;
   }
   get LevelPlayEntityId() {
-    return this.mli;
+    return this.m1i;
   }
   get MapId() {
-    return this.dli;
+    return this.d1i;
   }
   get InstanceId() {
-    return this.Cli;
+    return this.C1i;
   }
   get MarkConfig() {
-    return this.Rfi;
+    return this.Upi;
   }
   get NeedShowInMap() {
     return void 0 !== this.MarkConfig;
   }
   get TrackPriority() {
     return (
-      this.Ufi?.TrackPriority ??
+      this.Api?.TrackPriority ??
       LevelPlayDefine_1.INVALID_LEVELPLAY_TRACKPRIORITY
     );
   }
   get RewardConfig() {
-    return this.fli;
+    return this.f1i;
   }
   get RewardId() {
-    return this.pli;
+    return this.p1i;
   }
   get FirstRewardId() {
-    return this.Afi;
+    return this.Ppi;
   }
   get RewardEntityId() {
-    return this.vli;
+    return this.v1i;
   }
   get AfterGetRewardAction() {
-    return this.Mli;
+    return this.M1i;
   }
   get LevelPlayOpenAction() {
-    return this.Sli;
+    return this.E1i;
   }
   get LevelPlayFirstPassAction() {
-    return this.Pfi;
+    return this.xpi;
   }
   get LevelPlayEnterAction() {
-    return this.xfi;
+    return this.wpi;
   }
   get OnlineType() {
-    return this.wfi;
+    return this.Bpi;
   }
   get IsInteractValid() {
     return (
@@ -147,72 +147,72 @@ class LevelPlayInfo extends LogicTreeContainer_1.LogicTreeContainer {
     );
   }
   get LevelPlayType() {
-    return this.Bfi;
+    return this.bpi;
   }
   InitConfig() {
     var t = ModelManager_1.ModelManager.LevelPlayModel.GetLevelPlayConfig(
-      this.uli,
+      this.u1i,
     );
     if (t) {
       switch (
-        ((this.dli = t.LevelId),
-        (this.mli = t.LevelPlayEntityId),
-        (this.Cli = t.InstanceId ?? 0),
-        (this.cli = PublicUtil_1.PublicUtil.GetConfigTextByKey(t.TidName)),
-        (this.Rfi = t.LevelPlayMark),
-        (this.Ufi = t.LevelPlayTrack),
-        (this.Dfi = !0),
-        (this.Sli = t.LevelPlayOpenActions),
-        (this.xfi = t.EnterInRangeActions),
-        (this.wfi = t.OnlineType),
-        (this.Bfi = t.Type),
+        ((this.d1i = t.LevelId),
+        (this.m1i = t.LevelPlayEntityId),
+        (this.C1i = t.InstanceId ?? 0),
+        (this.c1i = PublicUtil_1.PublicUtil.GetConfigTextByKey(t.TidName)),
+        (this.Upi = t.LevelPlayMark),
+        (this.Api = t.LevelPlayTrack),
+        (this.Rpi = !0),
+        (this.E1i = t.LevelPlayOpenActions),
+        (this.wpi = t.EnterInRangeActions),
+        (this.Bpi = t.OnlineType),
+        (this.bpi = t.Type),
         t.LevelPlayRewardConfig.Type)
       ) {
         case "Interact":
-          (this.pli = t.LevelPlayRewardConfig.RewardId),
-            (this.Afi = t.LevelPlayRewardConfig.FirstRewardId ?? 0),
-            (this.vli = t.LevelPlayRewardConfig.RewardEntityId),
-            (this.Mli = t.LevelPlayRewardConfig.RewardCompleteActions),
-            (this.Pfi = t.LevelPlayRewardConfig.FirstCompleteActions);
+          (this.p1i = t.LevelPlayRewardConfig.RewardId),
+            (this.Ppi = t.LevelPlayRewardConfig.FirstRewardId ?? 0),
+            (this.v1i = t.LevelPlayRewardConfig.RewardEntityId),
+            (this.M1i = t.LevelPlayRewardConfig.RewardCompleteActions),
+            (this.xpi = t.LevelPlayRewardConfig.FirstCompleteActions);
           break;
         case "Automatic":
-          (this.pli = t.LevelPlayRewardConfig.RewardId),
-            (this.Afi = t.LevelPlayRewardConfig.FirstRewardId ?? 0);
+          (this.p1i = t.LevelPlayRewardConfig.RewardId),
+            (this.Ppi = t.LevelPlayRewardConfig.FirstRewardId ?? 0);
       }
-      this.Ufi && this.ChangeLevelPlayTrackRange(this.Ufi.TrackRadius);
+      this.Api && this.ChangeLevelPlayTrackRange(this.Api.TrackRadius);
     } else
       Log_1.Log.CheckError() &&
         Log_1.Log.Error("SceneGameplay", 19, "创建玩法时找不到玩法配置", [
           "玩法id",
-          this.uli,
+          this.u1i,
         ]);
   }
   UpdateFirstPass(t) {
-    this.Tfi = t ?? !1;
+    this.Lpi = t ?? !1;
   }
   UpdateState(t) {
     (this.ac = t ?? 0),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnLevelPlayStateChange,
-        this.uli,
+        this.u1i,
       );
   }
   UpdateRefreshTime(t) {
-    this.Lfi = Number(MathUtils_1.MathUtils.LongToBigInt(t));
+    this.Dpi = Number(MathUtils_1.MathUtils.LongToBigInt(t));
   }
   UpdateCanGetReward(t) {
-    this.Dfi = t;
+    this.Rpi = t;
   }
   UpdateDistanceSquared(t) {
     var e = GeneralLogicTreeUtil_1.GeneralLogicTreeUtil.GetEntityConfigPosition(
       this.LevelPlayEntityId,
     );
     e
-      ? (this.CacheDistanceSquared = this.bfi(e, t))
+      ? (this.CacheDistanceSquared = this.qpi(e, t))
       : Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn("SceneGameplay", 19, "配置的玩法追踪坐标为空", [
           "玩法id",
-          this.uli,
+          this.u1i,
         ]);
   }
   IsInTrackRange() {
@@ -221,16 +221,16 @@ class LevelPlayInfo extends LogicTreeContainer_1.LogicTreeContainer {
       this.CacheDistanceSquared < this.TrackRadiusSquared
     );
   }
-  bfi(t, e) {
+  qpi(t, e) {
     return (
       Math.pow(e.X - t.X, 2) + Math.pow(e.Y - t.Y, 2) + Math.pow(e.Z - t.Z, 2)
     );
   }
   GetUiPriority() {
-    return this.Ufi ? this.Ufi.TrackPriority : super.GetUiPriority();
+    return this.Api ? this.Api.TrackPriority : super.GetUiPriority();
   }
   ChangeLevelPlayTrackRange(t) {
-    t = t ?? this.Ufi.TrackRadius;
+    t = t ?? this.Api.TrackRadius;
     this.TrackRadiusSquared = t * t;
   }
 }

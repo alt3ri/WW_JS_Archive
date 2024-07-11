@@ -29,16 +29,16 @@ class BoneHiddenSwitch {
       (this.LastHidden = t.Actor.Mesh.IsBoneHiddenByName(
         FNameUtil_1.FNameUtil.GetDynamicFName(this.BoneName),
       )),
-      this.S$o(this.LastHidden, t);
+      this.pYo(this.LastHidden, t);
   }
   Do(t) {
     var i = t.Actor.Mesh.IsBoneHiddenByName(
         FNameUtil_1.FNameUtil.GetDynamicFName(this.BoneName),
       ),
       o = i !== this.LastHidden;
-    (this.LastHidden = i), o && this.S$o(this.LastHidden, t);
+    (this.LastHidden = i), o && this.pYo(this.LastHidden, t);
   }
-  S$o(t, i) {}
+  pYo(t, i) {}
   Clear() {}
 }
 class AkComponentDynamicConditionProxy {

@@ -4,7 +4,18 @@ const UE = require("ue"),
   MathUtils_1 = require("../../Core/Utils/MathUtils"),
   TsBaseCharacter_1 = require("../Character/TsBaseCharacter"),
   GlobalData_1 = require("../GlobalData"),
-  MIN_DELTA_TIME = 0.016;
+  GravityUtils_1 = require("../Utils/GravityUtils");
+class AnsRotateParam {
+  constructor(t) {
+    (this.NowTime = 0),
+      (this.TotalDurationReciprocal = 0),
+      (this.NowTime = 0),
+      (this.TotalDurationReciprocal = 1 / t);
+  }
+  Update(t, i) {
+    (this.NowTime = t), (this.TotalDurationReciprocal = 1 / i);
+  }
+}
 class TsAnimNotifyStateRotate extends UE.KuroAnimNotifyState {
   constructor() {
     super(...arguments),
@@ -22,23 +33,27 @@ class TsAnimNotifyStateRotate extends UE.KuroAnimNotifyState {
       (this.在横板模式中禁用 = !1),
       (this.只在横板模式中生效 = !1),
       (this.屏蔽标签列表 = void 0),
-      (this.TotalDuration = 0),
-      (this.NowTime = 0),
+      (this.ParamsMap = void 0),
       (this.IsInitialize = !1);
   }
   K2_NotifyBegin(t, i, s) {
-    (this.NowTime = 0), (this.TotalDuration = s), this.Initialize();
-    s = t.GetOwner();
+    this.Initialize();
+    t = t.GetOwner();
     if (
-      s instanceof TsBaseCharacter_1.default &&
-      !s.AbilitySystemComponent.HasAnyGameplayTag(this.屏蔽标签列表)
+      t instanceof TsBaseCharacter_1.default &&
+      !t.AbilitySystemComponent.HasAnyGameplayTag(this.屏蔽标签列表)
     ) {
-      t = s.CharacterActorComponent?.Entity;
+      t = t.CharacterActorComponent?.Entity;
       if (!t?.Valid) return !1;
-      if (this.在横板模式中禁用) {
-        if (t.GetComponent(95)?.Active) return !1;
+      if (
+        (this.ParamsMap.has(t.Id)
+          ? this.ParamsMap.get(t.Id).Update(0, s)
+          : this.ParamsMap.set(t.Id, new AnsRotateParam(s)),
+        this.在横板模式中禁用)
+      ) {
+        if (t.GetComponent(97)?.Active) return !1;
       } else if (this.只在横板模式中生效)
-        if (!t.GetComponent(95)?.Active) return !1;
+        if (!t.GetComponent(97)?.Active) return !1;
       var e = t.GetComponent(33);
       if (!e?.Valid) return !1;
       if (
@@ -72,50 +87,57 @@ class TsAnimNotifyStateRotate extends UE.KuroAnimNotifyState {
     }
     return !1;
   }
-  K2_NotifyTick(i, t, s) {
-    this.NowTime += s;
-    s = i.GetOwner();
-    if (s instanceof TsBaseCharacter_1.default) {
-      i = s.CharacterActorComponent?.Entity;
-      if (!i?.Valid) return !1;
-      if (this.在横板模式中禁用) {
-        if (i.GetComponent(95)?.Active) return !1;
+  K2_NotifyTick(e, t, r) {
+    e = e.GetOwner();
+    if (e instanceof TsBaseCharacter_1.default) {
+      var a = e.CharacterActorComponent?.Entity;
+      if (!a?.Valid) return !1;
+      var h = this.ParamsMap.get(a.Id),
+        n = h.NowTime;
+      if (((h.NowTime += r), this.在横板模式中禁用)) {
+        if (a.GetComponent(97)?.Active) return !1;
       } else if (this.只在横板模式中生效)
-        if (!i.GetComponent(95)?.Active) return !1;
-      i = i.GetComponent(33);
-      if (!i?.Valid) return !1;
-      let t =
-        this.旋转速度 *
-        this.Curve.GetFloatValue(
-          this.GetCurrentTriggerOffsetInThisNotifyTick(),
-        );
-      var e = this.TotalDuration - this.NowTime;
-      return (
-        this.是否平滑旋转 &&
-          e > MIN_DELTA_TIME &&
-          ((s = Math.abs(
-            s.CharacterActorComponent.InputRotatorProxy.Yaw -
-              s.CharacterActorComponent.ActorRotationProxy.Yaw,
-          )),
-          (t *= MathUtils_1.MathUtils.Clamp(s / e, 0, 1))),
-        i.SetSkillRotateSpeed(t),
-        !0
-      );
+        if (!a.GetComponent(97)?.Active) return !1;
+      a = a.GetComponent(33);
+      if (!a?.Valid) return !1;
+      let s = this.旋转速度;
+      if (this.是否平滑旋转) {
+        let t = n * h.TotalDurationReciprocal,
+          i = h.NowTime * h.TotalDurationReciprocal;
+        this.Curve &&
+          ((t = this.Curve.GetFloatValue(MathUtils_1.MathUtils.Clamp(t, 0, 1))),
+          (i = this.Curve.GetFloatValue(MathUtils_1.MathUtils.Clamp(i, 0, 1))));
+        n =
+          ((this.GetSkillRotateAngle(e.CharacterActorComponent, a) *
+            MathUtils_1.MathUtils.Clamp((i - t) / (1 - t), 0, 1)) /
+            r) *
+          h.TotalDurationReciprocal;
+        s *= Math.min(n, 1);
+      }
+      return a.SetSkillRotateSpeed(s), !0;
     }
     return !1;
+  }
+  GetSkillRotateAngle(t, i) {
+    var s = t.ActorForwardProxy,
+      i = i.GetSkillRotateDirect();
+    return !i || s.IsNearlyZero() || i.IsNearlyZero()
+      ? MathUtils_1.PI_DEG
+      : GravityUtils_1.GravityUtils.GetAngleOffsetInGravityAbs(t, s, i);
   }
   K2_NotifyEnd(t, i) {
     var t = t.GetOwner();
     return (
       t instanceof TsBaseCharacter_1.default &&
-        (t = t.CharacterActorComponent?.Entity?.GetComponent(33))?.Valid &&
+        (this.ParamsMap?.delete(t.CharacterActorComponent?.Entity.Id ?? 0),
+        (t = t.CharacterActorComponent?.Entity?.GetComponent(33))?.Valid) &&
         (t.SetSkillCanRotate(!1), t.SetRotateTarget(void 0, 0)),
       !1
     );
   }
   Initialize() {
     (this.IsInitialize && !GlobalData_1.GlobalData.IsPlayInEditor) ||
-      (this.IsInitialize = !0);
+      ((this.IsInitialize = !0), (this.ParamsMap = new Map()));
   }
   GetNotifyName() {
     return "旋转到黑板目标或技能目标或输入方向";

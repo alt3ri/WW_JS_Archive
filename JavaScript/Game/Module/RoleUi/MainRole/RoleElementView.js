@@ -31,28 +31,28 @@ class RoleElementView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
       (this.kGe = void 0),
-      (this.uft = void 0),
-      (this.s5i = 0),
-      (this.plo = void 0),
-      (this.Mlo = 0),
-      (this.Slo = 0),
-      (this.Elo = !1),
-      (this.C5i = void 0),
+      (this.ypt = void 0),
+      (this.nVi = 0),
+      (this.d1o = void 0),
+      (this.g1o = 0),
+      (this.f1o = 0),
+      (this.p1o = !1),
+      (this.dVi = void 0),
       (this.sGe = () => {
         var e = new RoleElementItem_1.RoleElementItem();
         return (
-          e.SetRoleViewAgent(this.plo),
+          e.SetRoleViewAgent(this.d1o),
           (e.OnToggleCallback = this.OnToggleClick),
-          (e.CanToggleChange = this.Eft),
+          (e.CanToggleChange = this.Bpt),
           e
         );
       }),
       (this.OnToggleClick = (e) => {
-        this.ylo(e),
+        this.v1o(e),
           RoleController_1.RoleController.PlayRoleMontage(19),
-          this.Mlo && this.Ilo();
+          this.g1o && this.M1o();
       }),
-      (this.Eft = (e) =>
+      (this.Bpt = (e) =>
         e !== this.kGe.GetGenericLayout().GetSelectedGridIndex()),
       (this.OnClickClose = () => {
         this.CloseMe();
@@ -60,49 +60,49 @@ class RoleElementView extends UiViewBase_1.UiViewBase {
       (this.OnClickSwitch = () => {
         var e;
         Global_1.Global.BaseCharacter?.CharacterActorComponent.Entity.GetComponent(
-          185,
+          188,
         )?.HasTag(1996802261)
           ? ScrollingTipsController_1.ScrollingTipsController.ShowTipsByText(
               ConfigManager_1.ConfigManager.TextConfig.GetTextById(
                 "CanNotTransferInFight",
               ),
             )
-          : this.s5i &&
+          : this.nVi &&
             (e = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(
-              this.s5i,
+              this.nVi,
             )) &&
             MainRoleController_1.MainRoleController.SendRoleElementChangeRequest(
               e.ElementId,
             );
       }),
-      (this.wke = (e) => {
-        (this.Elo = !0),
+      (this.Y2e = (e) => {
+        (this.p1o = !0),
           UiLayer_1.UiLayer.SetShowMaskLayer("RoleElementView", !0),
-          this.plo.SetCurSelectRoleId(e),
-          this.C5i?.Model?.CheckGetComponent(11)?.SetRoleDataId(e),
-          this.Tlo(e);
+          this.d1o.SetCurSelectRoleId(e),
+          this.dVi?.Model?.CheckGetComponent(11)?.SetRoleDataId(e),
+          this.E1o(e);
         for (const t of this.kGe.GetScrollItemList()) t.RefreshState();
-        this._pt();
+        this.Svt();
       }),
-      (this.Llo = (e) => {
-        e ? this.Ilo() : this.HideElementPreviewEffect();
+      (this.S1o = (e) => {
+        e ? this.M1o() : this.HideElementPreviewEffect();
       }),
-      (this.Dlo = () => {
+      (this.y1o = () => {
         UiLayer_1.UiLayer.SetShowMaskLayer("RoleElementView", !1),
-          (this.Elo = !1),
+          (this.p1o = !1),
           ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
             "ElementTransferSuccess",
           );
       }),
-      (this.Ilo = () => {
+      (this.M1o = () => {
         var e;
-        this.Elo ||
+        this.p1o ||
           ((e = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(
-            this.s5i,
+            this.nVi,
           )),
           this.ShowElementPreviewEffectById(e.ElementId));
       }),
-      (this.Rlo = () => {});
+      (this.I1o = () => {});
   }
   OnRegisterComponent() {
     (this.ComponentRegisterInfos = [
@@ -116,14 +116,14 @@ class RoleElementView extends UiViewBase_1.UiViewBase {
       ]);
   }
   async OnBeforeStartAsync() {
-    (this.plo = this.OpenParam),
-      void 0 === this.plo
+    (this.d1o = this.OpenParam),
+      void 0 === this.d1o
         ? Log_1.Log.CheckError() &&
           Log_1.Log.Error("Role", 59, "RoleViewAgent为空", [
             "界面名称",
             "RoleElementView",
           ])
-        : ((this.C5i =
+        : ((this.dVi =
             UiSceneManager_1.UiSceneManager.GetRoleSystemRoleActor()),
           (this.kGe = new GenericScrollViewNew_1.GenericScrollViewNew(
             this.GetScrollViewWithScrollbar(1),
@@ -142,57 +142,57 @@ class RoleElementView extends UiViewBase_1.UiViewBase {
       MainRoleController_1.MainRoleController.IsCanChangeRole(s.Id) &&
         r.push(s);
     }
-    (this.uft = r), await this.kGe.RefreshByDataAsync(r);
-    const o = this.plo.GetCurSelectRoleId();
+    (this.ypt = r), await this.kGe.RefreshByDataAsync(r);
+    const o = this.d1o.GetCurSelectRoleId();
     e = r.findIndex((e) => e.Id === o);
-    this.ylo(e);
+    this.v1o(e);
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.ShowRoleElementChangePreviewEffect,
-      this.Llo,
+      this.S1o,
     );
   }
   OnAfterShow() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.RoleSystemChangeRole,
-      this.wke,
+      this.Y2e,
     );
   }
-  ylo(e) {
-    var t = this.uft[e];
-    (this.s5i = t.Id),
+  v1o(e) {
+    var t = this.ypt[e];
+    (this.nVi = t.Id),
       this.kGe.GetGenericLayout().SelectGridProxy(e),
-      this._pt();
+      this.Svt();
   }
-  _pt() {
-    var e = this.plo.GetCurSelectRoleId() === this.s5i;
+  Svt() {
+    var e = this.d1o.GetCurSelectRoleId() === this.nVi;
     this.GetButton(2)?.SetSelfInteractive(!e);
   }
   OnBeforeHide() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.RoleSystemChangeRole,
-      this.wke,
+      this.Y2e,
     ),
       this.HideElementPreviewEffect();
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.ShowRoleElementChangePreviewEffect,
-      this.Llo,
+      this.S1o,
     );
   }
-  Tlo(e) {
+  E1o(e) {
     var e = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(e),
       t =
         (RoleController_1.RoleController.PlayRoleMontage(21),
         ConfigManager_1.ConfigManager.RoleConfig.GetRoleElementSwitchDelayTime());
     this.ShowElementSuccessEffectById(e.ElementId),
       TimerSystem_1.TimerSystem.Delay(() => {
-        this.Dlo();
+        this.y1o();
       }, t);
   }
-  async Ulo(e, i, r, t, s, o) {
+  async T1o(e, i, r, t, s, o) {
     let n = !1,
       a = void 0;
     const l = new CustomPromise_1.CustomPromise();
@@ -214,7 +214,7 @@ class RoleElementView extends UiViewBase_1.UiViewBase {
           0 !== e &&
             (s &&
               ((e = UE.LinearColor.FromSRGBColor(UE.Color.FromHex(s))),
-              this.Alo(t, e, n, a)),
+              this.L1o(t, e, n, a)),
             i &&
               r &&
               EffectSystem_1.EffectSystem.GetEffectActor(
@@ -229,7 +229,7 @@ class RoleElementView extends UiViewBase_1.UiViewBase {
       l.Promise
     );
   }
-  Alo(e, t, i, r) {
+  L1o(e, t, i, r) {
     var e = EffectSystem_1.EffectSystem.GetSureEffectActor(
         e,
       ).GetComponentByClass(UE.NiagaraComponent.StaticClass()),
@@ -244,42 +244,42 @@ class RoleElementView extends UiViewBase_1.UiViewBase {
       i,
       e = ConfigManager_1.ConfigManager.ElementInfoConfig.GetElementInfo(e);
     e &&
-      (i = (t = this.C5i).Model?.CheckGetComponent(1)?.MainMeshComponent) &&
-      (this.Ulo(
+      (i = (t = this.dVi).Model?.CheckGetComponent(1)?.MainMeshComponent) &&
+      (this.T1o(
         "AttributeSwitchBodyEffect",
         t.K2_GetRootComponent(),
         CharacterNameDefines_1.CharacterNameDefines.ROOT,
         void 0,
         e.ElementEffectColor,
-      ).catch(this.Rlo),
-      this.Ulo(
+      ).catch(this.I1o),
+      this.T1o(
         "AttributeSwitchHandEffect",
         i,
         CharacterNameDefines_1.CharacterNameDefines.ELEMENT_EFFECT_SOCKET_NAME,
         void 0,
         e.ElementEffectColor,
         e.Icon3,
-      ).catch(this.Rlo));
+      ).catch(this.I1o));
   }
   ShowElementPreviewEffectById(e) {
     e = ConfigManager_1.ConfigManager.ElementInfoConfig.GetElementInfo(e);
     if (e) {
-      if (this.Mlo) {
+      if (this.g1o) {
         const s = UE.LinearColor.FromSRGBColor(
           UE.Color.FromHex(e.ElementEffectColor),
         );
         ResourceSystem_1.ResourceSystem.LoadAsync(e.Icon3, UE.Texture, (e) => {
-          this.Alo(this.Mlo, s, !0, e);
+          this.L1o(this.g1o, s, !0, e);
         });
       } else {
-        var t = this.C5i,
+        var t = this.dVi,
           i = new UE.Transform(
             new UE.Rotator(0, 0, 0),
             new UE.Vector(0, 0, 0),
             new UE.Vector(1, 1, 1),
           ),
           t = t.Model?.CheckGetComponent(1);
-        this.Ulo(
+        this.T1o(
           "AttributePreviewHandEffect",
           t?.MainMeshComponent,
           CharacterNameDefines_1.CharacterNameDefines
@@ -288,8 +288,8 @@ class RoleElementView extends UiViewBase_1.UiViewBase {
           e.ElementEffectColor,
           e.Icon3,
         ).then((e) => {
-          this.Mlo = e;
-        }, this.Rlo);
+          this.g1o = e;
+        }, this.I1o);
       }
       try {
         var r = UiSceneManager_1.UiSceneManager.GetActorByTag(
@@ -297,15 +297,15 @@ class RoleElementView extends UiViewBase_1.UiViewBase {
             "RoleElementPreviewEffectCase",
           ),
         );
-        this.Slo ||
-          this.Ulo(
+        this.f1o ||
+          this.T1o(
             "AttributePreviewBodyEffect",
             void 0,
             void 0,
             r.GetTransform(),
           ).then((e) => {
-            this.Slo = e;
-          }, this.Rlo);
+            this.f1o = e;
+          }, this.I1o);
       } catch (e) {
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
@@ -317,22 +317,22 @@ class RoleElementView extends UiViewBase_1.UiViewBase {
     }
   }
   HideElementPreviewEffect() {
-    EffectSystem_1.EffectSystem.IsValid(this.Mlo) &&
+    EffectSystem_1.EffectSystem.IsValid(this.g1o) &&
       (EffectSystem_1.EffectSystem.StopEffectById(
-        this.Mlo,
+        this.g1o,
         "HideElementPreviewEffect",
         !0,
         !0,
       ),
-      (this.Mlo = 0)),
-      this.Slo &&
+      (this.g1o = 0)),
+      this.f1o &&
         (EffectSystem_1.EffectSystem.StopEffectById(
-          this.Slo,
+          this.f1o,
           "HideElementPreviewEffect",
           !0,
           !0,
         ),
-        (this.Slo = 0));
+        (this.f1o = 0));
   }
 }
 exports.RoleElementView = RoleElementView;

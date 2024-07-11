@@ -33,7 +33,8 @@ class TsTaskMoveToActor extends TsTaskAbortImmediatelyBase_1.default {
       (this.FoundPath = !1),
       (this.NavigationPath = void 0),
       (this.CurrentNavigationIndex = 0),
-      (this.NextCheckTime = -0);
+      (this.NextCheckTime = -0),
+      (this.CacheVector = void 0);
   }
   InitTsVariables() {
     (this.IsInitTsVariables && !GlobalData_1.GlobalData.IsPlayInEditor) ||
@@ -44,7 +45,8 @@ class TsTaskMoveToActor extends TsTaskAbortImmediatelyBase_1.default {
       (this.TsEndDistance = this.EndDistance),
       (this.TsTurnSpeed = this.TurnSpeed),
       (this.TsFixPeriod = this.FixPeriod),
-      (this.TsWalkOff = this.WalkOff));
+      (this.TsWalkOff = this.WalkOff),
+      (this.CacheVector = Vector_1.Vector.Create()));
   }
   ReceiveExecuteAI(t, i) {
     this.InitTsVariables();
@@ -53,7 +55,7 @@ class TsTaskMoveToActor extends TsTaskAbortImmediatelyBase_1.default {
       var s = e.CharActorComp,
         r =
           (this.TsWalkOff ||
-            s.Entity.GetComponent(36)?.SetWalkOffLedgeRecord(!1),
+            s.Entity.GetComponent(37)?.SetWalkOffLedgeRecord(!1),
           BlackboardController_1.BlackboardController.GetEntityIdByEntity(
             e.CharAiDesignComp.Entity.Id,
             this.TsBlackboardKeyActor,
@@ -62,22 +64,26 @@ class TsTaskMoveToActor extends TsTaskAbortImmediatelyBase_1.default {
       if (r && h?.Valid) {
         this.SelectedTargetLocation =
           AiContollerLibrary_1.AiControllerLibrary.GetLocationFromEntity(h);
-        var o = e.CharAiDesignComp?.Entity.GetComponent(158);
-        if (o?.Valid)
+        var a = e.CharAiDesignComp?.Entity.GetComponent(160);
+        if (a?.Valid)
           switch (this.TsMoveState) {
             case 1:
-              o.SetMoveState(CharacterUnifiedStateTypes_1.ECharMoveState.Walk);
+              a.SetMoveState(CharacterUnifiedStateTypes_1.ECharMoveState.Walk);
               break;
             case 2:
-              o.SetMoveState(CharacterUnifiedStateTypes_1.ECharMoveState.Run);
+              a.SetMoveState(CharacterUnifiedStateTypes_1.ECharMoveState.Run);
               break;
             case 3:
-              o.SetMoveState(
+              a.SetMoveState(
                 CharacterUnifiedStateTypes_1.ECharMoveState.Sprint,
               );
           }
         (this.NextCheckTime = Time_1.Time.WorldTime + this.TsFixPeriod),
-          this.FindNewPath(t, s.ActorLocation);
+          this.CacheVector.DeepCopy(s.ActorLocation),
+          s.Entity.GetComponent(91)?.PositionState ===
+            CharacterUnifiedStateTypes_1.ECharPositionState.Ground &&
+            (this.CacheVector.Z -= s.HalfHeight),
+          this.FindNewPath(t, this.CacheVector.ToUeVector());
       } else
         Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
@@ -102,27 +108,31 @@ class TsTaskMoveToActor extends TsTaskAbortImmediatelyBase_1.default {
         r = s.CharActorComp,
         h = r.ActorLocationProxy;
       if (Time_1.Time.WorldTime > this.NextCheckTime) {
-        var o = BlackboardController_1.BlackboardController.GetEntityIdByEntity(
+        var a = BlackboardController_1.BlackboardController.GetEntityIdByEntity(
             s.CharAiDesignComp.Entity.Id,
             this.TsBlackboardKeyActor,
           ),
-          a = EntitySystem_1.EntitySystem.Get(o);
-        if (!o || !a?.Valid) return void this.Finish(!1);
-        o = AiContollerLibrary_1.AiControllerLibrary.GetLocationFromEntity(a);
+          o = EntitySystem_1.EntitySystem.Get(a);
+        if (!a || !o?.Valid) return void this.Finish(!1);
+        a = AiContollerLibrary_1.AiControllerLibrary.GetLocationFromEntity(o);
         (this.NextCheckTime = Time_1.Time.WorldTime + this.TsFixPeriod),
-          Vector_1.Vector.Dist(o, this.SelectedTargetLocation) >
+          Vector_1.Vector.Dist(a, this.SelectedTargetLocation) >
             NAVIGATION_COMPLETE_DISTANCE &&
-            ((this.SelectedTargetLocation = o),
-            this.FindNewPath(t, h.ToUeVector()));
+            ((this.SelectedTargetLocation = a),
+            this.CacheVector.DeepCopy(h),
+            r.Entity.GetComponent(91)?.PositionState ===
+              CharacterUnifiedStateTypes_1.ECharPositionState.Ground &&
+              (this.CacheVector.Z -= r.HalfHeight),
+            this.FindNewPath(t, this.CacheVector.ToUeVector()));
       }
       if (this.FoundPath) {
-        (a = this.TsNavigationOn
+        (o = this.TsNavigationOn
           ? Vector_1.Vector.Create(
               this.NavigationPath[this.CurrentNavigationIndex],
             )
           : this.SelectedTargetLocation),
-          (o = Vector_1.Vector.Create(a)),
-          (t = (o.Subtraction(h, o), (o.Z = 0), o.Size()));
+          (a = Vector_1.Vector.Create(o)),
+          (t = (a.Subtraction(h, a), (a.Z = 0), a.Size()));
         if (
           (!this.TsNavigationOn ||
             this.CurrentNavigationIndex === this.NavigationPath.length - 1) &&
@@ -133,14 +143,12 @@ class TsTaskMoveToActor extends TsTaskAbortImmediatelyBase_1.default {
           t < NAVIGATION_COMPLETE_DISTANCE && this.CurrentNavigationIndex++,
             AiContollerLibrary_1.AiControllerLibrary.TurnToTarget(
               r,
-              a,
+              o,
               this.TsTurnSpeed,
             ),
-            (o.Z = 0),
-            (o.X /= t),
-            (o.Y /= t),
-            r.SetInputDirect(o);
-          var l = s.CharAiDesignComp?.Entity.GetComponent(158);
+            a.DivisionEqual(t),
+            r.SetInputDirect(a, !0);
+          var l = s.CharAiDesignComp?.Entity.GetComponent(160);
           if (l?.Valid)
             switch (this.TsMoveState) {
               case 1:
@@ -178,7 +186,7 @@ class TsTaskMoveToActor extends TsTaskAbortImmediatelyBase_1.default {
       (AiContollerLibrary_1.AiControllerLibrary.ClearInput(this.AIOwner),
       this.TsWalkOff ||
         this.AIOwner.AiController.CharActorComp.Entity.GetComponent(
-          36,
+          37,
         )?.SetWalkOffLedgeRecord(!0));
   }
 }

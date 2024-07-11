@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GeographyHandBookView = void 0);
 const UE = require("ue"),
+  ConfigCommon_1 = require("../../../Core/Config/ConfigCommon"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
   ConfigManager_1 = require("../../Manager/ConfigManager"),
@@ -11,33 +12,32 @@ const UE = require("ue"),
   GenericLayoutNew_1 = require("../Util/Layout/GenericLayoutNew"),
   LguiUtil_1 = require("../Util/LguiUtil"),
   GeographyHandBookItem_1 = require("./GeographyHandBookItem"),
-  HandBookController_1 = require("./HandBookController"),
-  ConfigCommon_1 = require("../../../Core/Config/ConfigCommon");
+  HandBookController_1 = require("./HandBookController");
 class GeographyHandBookView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
       (this.RoleRootUiCameraHandleData = void 0),
       (this.GenericLayout = void 0),
-      (this.pZt = []),
-      (this.vZt = []),
+      (this.pei = []),
+      (this.vei = []),
       (this.lqe = void 0),
       (this.Refresh = () => {
         this.InitVerticalLayout(), this.RefreshCollectText();
       }),
-      (this.MZt = (e, t, i) => {
+      (this.Mei = (e, t, i) => {
         t = new GeographyHandBookItem_1.GeographyHandBookItem(t);
-        return t.Refresh(e, !1, i), this.vZt.push(t), { Key: i, Value: t };
+        return t.Refresh(e, !1, i), this.vei.push(t), { Key: i, Value: t };
       }),
-      (this.aZt = (e, t) => e.Id - t.Id),
-      (this.SZt = (e, t) => e.Id - t.Id),
-      (this.JSt = () => {
+      (this.aei = (e, t) => e.Id - t.Id),
+      (this.Eei = (e, t) => e.Id - t.Id),
+      (this.lyt = () => {
         UiManager_1.UiManager.CloseView("GeographyHandBookView");
       }),
       (this.OnHandBookRead = (e, t) => {
         if (2 === e) {
-          var i = this.vZt.length;
+          var i = this.vei.length;
           for (let e = 0; e < i; e++) {
-            var o = this.vZt[e].GetChildItemList(),
+            var o = this.vei[e].GetChildItemList(),
               n = o.length;
             for (let e = 0; e < n; e++) {
               var s = o[e];
@@ -50,7 +50,7 @@ class GeographyHandBookView extends UiViewBase_1.UiViewBase {
         var i = ConfigCommon_1.ConfigCommon.ToList(
             ConfigManager_1.ConfigManager.HandBookConfig.GetAllGeographyHandBookConfig(),
           ),
-          o = (i.sort(this.SZt), this.GetScrollViewWithScrollbar(3)),
+          o = (i.sort(this.Eei), this.GetScrollViewWithScrollbar(3)),
           n = i.length;
         let s = void 0;
         for (let e = 0; e < n; e++) {
@@ -60,9 +60,9 @@ class GeographyHandBookView extends UiViewBase_1.UiViewBase {
             break;
           }
         }
-        var h = this.vZt.length;
+        var h = this.vei.length;
         for (let e = 0; e < h; e++) {
-          var a = this.vZt[e].GetChildItemList(),
+          var a = this.vei[e].GetChildItemList(),
             v = a.length;
           for (let e = 0; e < v; e++) {
             var _ = a[e],
@@ -123,7 +123,7 @@ class GeographyHandBookView extends UiViewBase_1.UiViewBase {
   }
   OnBeforeShow() {
     let e = !0;
-    for (const i of this.vZt)
+    for (const i of this.vei)
       for (const o of i.GetChildItemList()) {
         var t = o.GetTog();
         e && o.GetIsUnlock()
@@ -135,7 +135,7 @@ class GeographyHandBookView extends UiViewBase_1.UiViewBase {
     var e =
       ConfigManager_1.ConfigManager.HandBookConfig.GetHandBookEntranceConfig(2);
     (this.lqe = new PopupCaptionItem_1.PopupCaptionItem(this.GetItem(0))),
-      this.lqe.SetCloseCallBack(this.JSt),
+      this.lqe.SetCloseCallBack(this.lyt),
       this.lqe.SetTitleLocalText(e.Name),
       this.lqe.SetTitleIcon(e.TitleIcon);
   }
@@ -143,16 +143,16 @@ class GeographyHandBookView extends UiViewBase_1.UiViewBase {
     var e = ConfigCommon_1.ConfigCommon.ToList(
       ConfigManager_1.ConfigManager.HandBookConfig.GetGeographyTypeConfigList(),
     );
-    e.sort(this.aZt),
-      (this.pZt = e),
-      (this.vZt = []),
+    e.sort(this.aei),
+      (this.pei = e),
+      (this.vei = []),
       this.GenericLayout ||
         (this.GenericLayout = new GenericLayoutNew_1.GenericLayoutNew(
           this.GetVerticalLayout(1),
-          this.MZt,
+          this.Mei,
         )),
       this.GenericLayout.ClearChildren(),
-      this.GenericLayout.RebuildLayoutByDataNew(this.pZt);
+      this.GenericLayout.RebuildLayoutByDataNew(this.pei);
   }
   RefreshCollectText() {
     var e = HandBookController_1.HandBookController.GetCollectProgress(2);
@@ -163,8 +163,8 @@ class GeographyHandBookView extends UiViewBase_1.UiViewBase {
     (this.RoleRootUiCameraHandleData = void 0),
       this.GenericLayout &&
         (this.GenericLayout.ClearChildren(), (this.GenericLayout = void 0)),
-      (this.pZt = []),
-      (this.vZt = []);
+      (this.pei = []),
+      (this.vei = []);
   }
 }
 exports.GeographyHandBookView = GeographyHandBookView;

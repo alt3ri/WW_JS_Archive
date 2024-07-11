@@ -8,7 +8,7 @@ const EventDefine_1 = require("../../../Common/Event/EventDefine"),
 class LevelAiDecoratorQuestState extends LevelAiDecorator_1.LevelAiDecorator {
   constructor() {
     super(...arguments),
-      (this.DEe = (e) => {
+      (this.DSe = (e) => {
         var t = this.Params;
         t &&
           t.QuestId === e &&
@@ -18,13 +18,13 @@ class LevelAiDecoratorQuestState extends LevelAiDecorator_1.LevelAiDecorator {
   OnExecutionStart() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnQuestStateChange,
-      this.DEe,
+      this.DSe,
     );
   }
   OnExecutionFinish() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnQuestStateChange,
-      this.DEe,
+      this.DSe,
     );
   }
   CheckCondition(e) {

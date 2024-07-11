@@ -28,30 +28,30 @@ class LoginConfig extends ConfigBase_1.ConfigBase {
     );
   }
   GetLoginFailParam(n) {
-    var r =
+    var o =
         CommonParamById_1.configCommonParamById.GetStringConfig(
           "login_fail_params",
         ),
-      o = r.split(/[,|]/g);
-    if (0 === o.length || o.length % 2 != 0)
+      r = o.split(/[,|]/g);
+    if (0 === r.length || r.length % 2 != 0)
       return (
         Log_1.Log.CheckError() &&
           Log_1.Log.Error("Login", 9, "登录失败重试参数错误, 请检查个数", [
             "params",
-            r,
+            o,
           ]),
         0
       );
     let i = 0;
-    for (let e = 0; e < o.length; e += 2) {
-      var a = Number(o[e]),
-        t = Number(o[e + 1]);
+    for (let e = 0; e < r.length; e += 2) {
+      var a = Number(r[e]),
+        t = Number(r[e + 1]);
       if (isNaN(a) || a <= 0 || isNaN(t) || t <= 0)
         return (
           Log_1.Log.CheckError() &&
             Log_1.Log.Error("Login", 9, "登录失败重试参数错误, ", [
               "params",
-              r,
+              o,
             ]),
           0
         );
@@ -83,6 +83,16 @@ class LoginConfig extends ConfigBase_1.ConfigBase {
     return CommonParamById_1.configCommonParamById.GetStringConfig(
       "mainline_sdk_loginserver_ip",
     );
+  }
+  GetLoginViewNoExitButtonPackageIdList() {
+    return CommonParamById_1.configCommonParamById
+      .GetStringConfig("LoginViewNoShowExitButtonPackageIdList")
+      .split(",");
+  }
+  GetLoginViewNoAccountButtonPackageIdList() {
+    return CommonParamById_1.configCommonParamById
+      .GetStringConfig("LoginViewNoAccountButtonPackageIdList")
+      .split(",");
   }
 }
 exports.LoginConfig = LoginConfig;

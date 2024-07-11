@@ -14,7 +14,8 @@ class RouletteData {
       (this.DataNum = 0),
       (this.DataIndex = 0),
       (this.Name = void 0),
-      (this.State = 1);
+      (this.State = 1),
+      (this.ShowRedDot = !0);
   }
 }
 (exports.RouletteData = RouletteData),

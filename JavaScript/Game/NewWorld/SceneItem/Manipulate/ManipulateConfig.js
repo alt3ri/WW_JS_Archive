@@ -11,144 +11,144 @@ const Log_1 = require("../../../../Core/Common/Log"),
 class ManipulateConfig extends ConfigBase_1.ConfigBase {
   constructor() {
     super(...arguments),
-      (this.mrr = void 0),
-      (this.drr = -0),
-      (this.Crr = -0),
-      (this.grr = void 0),
-      (this.frr = void 0),
-      (this.prr = void 0),
-      (this.vrr = []),
-      (this.Mrr = []),
-      (this.Srr = -0),
-      (this.Err = -0),
-      (this.yrr = ""),
-      (this.Irr = ""),
-      (this.Trr = ""),
-      (this.Lrr = ""),
-      (this.Drr = -0),
-      (this.Rrr = -0),
-      (this.Urr = -0);
+      (this._nr = void 0),
+      (this.unr = -0),
+      (this.cnr = -0),
+      (this.mnr = void 0),
+      (this.dnr = void 0),
+      (this.Cnr = void 0),
+      (this.gnr = []),
+      (this.fnr = []),
+      (this.pnr = -0),
+      (this.vnr = -0),
+      (this.Mnr = ""),
+      (this.Enr = ""),
+      (this.Snr = ""),
+      (this.ynr = ""),
+      (this.Inr = -0),
+      (this.Tnr = -0),
+      (this.Lnr = -0);
   }
   OnInit() {
     return (
-      (this.mrr = new Array(
+      (this._nr = new Array(
         "Manipulate_Precast_Line_L",
         "Manipulate_Precast_Line_R",
         "Manipulate_Precast_Line_F",
         "Manipulate_Precast_Line_B",
       )),
-      (this.drr = CommonParamById_1.configCommonParamById.GetIntConfig(
+      (this.unr = CommonParamById_1.configCommonParamById.GetIntConfig(
         "ManipulatableItemDisconnectDistance",
       )),
-      (this.Crr = CommonParamById_1.configCommonParamById.GetIntConfig(
+      (this.cnr = CommonParamById_1.configCommonParamById.GetIntConfig(
         "ManipulatableItemSearchRange",
       )),
-      (this.grr = CommonParamById_1.configCommonParamById.GetStringConfig(
+      (this.mnr = CommonParamById_1.configCommonParamById.GetStringConfig(
         "ManipulatableItemPushFXAsset",
       )),
-      (this.frr = CommonParamById_1.configCommonParamById.GetStringConfig(
+      (this.dnr = CommonParamById_1.configCommonParamById.GetStringConfig(
         "ManipulateItemAppearEffect",
       )),
-      (this.prr = CommonParamById_1.configCommonParamById.GetStringConfig(
+      (this.Cnr = CommonParamById_1.configCommonParamById.GetStringConfig(
         "ManipulateItemDisappearEffect",
       )),
-      (this.vrr = new Array()),
+      (this.gnr = new Array()),
       CommonParamById_1.configCommonParamById
         .GetIntArrayConfig("ManipulatebleItemSearchAngle")
         .forEach((t) => {
-          this.vrr.push(t);
+          this.gnr.push(t);
         }),
-      (this.Mrr = new Array()),
+      (this.fnr = new Array()),
       CommonParamById_1.configCommonParamById
         .GetIntArrayConfig("ManipulatebleItemSearchAngleWeight")
         .forEach((t) => {
-          this.Mrr.push(t);
+          this.fnr.push(t);
         }),
-      (this.Srr =
+      (this.pnr =
         CommonParamById_1.configCommonParamById.GetFloatConfig(
           "ManipulatePrecastTime",
         ) * SECOND_TO_MICROSECOND),
-      (this.Err = CommonParamById_1.configCommonParamById.GetIntConfig(
+      (this.vnr = CommonParamById_1.configCommonParamById.GetIntConfig(
         "ManipulateDontUseLineDistance",
       )),
-      (this.yrr = CommonParamById_1.configCommonParamById.GetStringConfig(
+      (this.Mnr = CommonParamById_1.configCommonParamById.GetStringConfig(
         "ManipulateItemLine_Common",
       )),
-      (this.Irr = CommonParamById_1.configCommonParamById.GetStringConfig(
+      (this.Enr = CommonParamById_1.configCommonParamById.GetStringConfig(
         "ManipulatableItemLineNiagaraSystemAssetPath",
       )),
-      (this.Trr = CommonParamById_1.configCommonParamById.GetStringConfig(
+      (this.Snr = CommonParamById_1.configCommonParamById.GetStringConfig(
         "ManipulatableItemHandFXAssetPath",
       )),
-      (this.Lrr = CommonParamById_1.configCommonParamById.GetStringConfig(
+      (this.ynr = CommonParamById_1.configCommonParamById.GetStringConfig(
         "MatControllerDAPath",
       )),
-      (this.Drr = CommonParamById_1.configCommonParamById.GetFloatConfig(
+      (this.Inr = CommonParamById_1.configCommonParamById.GetFloatConfig(
         "ManipulatableItemMass",
       )),
-      (this.Rrr = CommonParamById_1.configCommonParamById.GetFloatConfig(
+      (this.Tnr = CommonParamById_1.configCommonParamById.GetFloatConfig(
         "ManipulatableItemLinearDamping",
       )),
-      (this.Urr = CommonParamById_1.configCommonParamById.GetFloatConfig(
+      (this.Lnr = CommonParamById_1.configCommonParamById.GetFloatConfig(
         "ManipulatableItemAngularDamping",
       )),
       !0
     );
   }
   get ManipulatePrecastLines() {
-    return this.mrr;
+    return this._nr;
   }
   get DisconnectDistance() {
-    return this.drr;
+    return this.unr;
   }
   get SearchRange() {
-    return this.Crr;
+    return this.cnr;
   }
   get PushEffectPath() {
-    return this.grr;
+    return this.mnr;
   }
   get ItemAppearEffectPath() {
-    return this.frr;
+    return this.dnr;
   }
   get ItemDisappearEffectPath() {
-    return this.prr;
+    return this.Cnr;
   }
   get SearchAnglesCos() {
-    return this.vrr;
+    return this.gnr;
   }
   get SearchAnglesWeight() {
-    return this.Mrr;
+    return this.fnr;
   }
   get PrecastTime() {
-    return this.Srr;
+    return this.pnr;
   }
   get DontUseLineDistance() {
-    return this.Err;
+    return this.vnr;
   }
   get CommonItemLine() {
-    return this.yrr;
+    return this.Mnr;
   }
   get LineFxNsPath() {
-    return this.Irr;
+    return this.Enr;
   }
   get MatControllerDaPath() {
-    return this.Lrr;
+    return this.ynr;
   }
   get HandFxPath() {
-    return this.Trr;
+    return this.Snr;
   }
   get ItemMass() {
-    return this.Drr;
+    return this.Inr;
   }
   get ItemLinearDamping() {
-    return this.Rrr;
+    return this.Tnr;
   }
   get ItemAngularDampling() {
-    return this.Urr;
+    return this.Lnr;
   }
   GetPrecastLineValue(t, e) {
     var a = DataTableUtil_1.DataTableUtil.GetDataTableRowFromName(10, t);
-    if (a) return this.Arr(a.ManipulatePoints, a.Duration, e);
+    if (a) return this.Dnr(a.ManipulatePoints, a.Duration, e);
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info("World", 32, "加载失败，Manipulate Precast表中没有该项", [
         "Row Name",
@@ -157,14 +157,14 @@ class ManipulateConfig extends ConfigBase_1.ConfigBase {
   }
   GetItemLineValue(t, e) {
     var a = DataTableUtil_1.DataTableUtil.GetDataTableRowFromName(9, t);
-    if (a) return this.Arr(a.ManipulatePoints, a.Duration, e);
+    if (a) return this.Dnr(a.ManipulatePoints, a.Duration, e);
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info("World", 32, "加载失败，Manipulate Item表中没有该项", [
         "Row Name",
         t,
       ]);
   }
-  Arr(t, e, a) {
+  Dnr(t, e, a) {
     var i = t.Num(),
       e = (i - 1) / e;
     return a <= 0
@@ -179,7 +179,7 @@ class ManipulateConfig extends ConfigBase_1.ConfigBase {
             ? ((i = i - a),
               0 === e.PointType
                 ? MathUtils_1.MathUtils.LerpVector(e.Location, t.Location, i)
-                : this.Prr(
+                : this.Rnr(
                     e.Location,
                     e.LeaveTangent,
                     t.Location,
@@ -190,13 +190,13 @@ class ManipulateConfig extends ConfigBase_1.ConfigBase {
   }
   OnClear() {
     return (
-      (this.mrr = void 0),
-      (this.grr = void 0),
-      (this.frr = void 0),
-      !(this.prr = void 0)
+      (this._nr = void 0),
+      (this.mnr = void 0),
+      (this.dnr = void 0),
+      !(this.Cnr = void 0)
     );
   }
-  Prr(t, e, a, i, r) {
+  Rnr(t, e, a, i, r) {
     var n = r * r,
       s = n * r,
       o = 2 * s - 3 * n + 1,

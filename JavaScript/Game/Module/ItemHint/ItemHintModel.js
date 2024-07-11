@@ -45,78 +45,78 @@ class InterfaceDataUnit {
 exports.InterfaceDataUnit = InterfaceDataUnit;
 class InsideInterfaceData {
   constructor() {
-    (this.KZt = 0), (this.FCi = void 0), (this.VCi = new Array());
+    (this.Kei = 0), (this.Fgi = void 0), (this.Vgi = new Array());
   }
   Clear() {
-    (this.KZt = 0), (this.VCi = new Array());
+    (this.Kei = 0), (this.Vgi = new Array());
   }
   IsEmpty() {
-    return !this.FCi || this.FCi.WaitList.length <= 0;
+    return !this.Fgi || this.Fgi.WaitList.length <= 0;
   }
   ShiftFirstData() {
-    if (this.FCi) return this.FCi.WaitList.shift();
+    if (this.Fgi) return this.Fgi.WaitList.shift();
   }
   GetMaxCount() {
-    return this.FCi
-      ? this.FCi.GetMaxCount()
+    return this.Fgi
+      ? this.Fgi.GetMaxCount()
       : (Log_1.Log.CheckError() &&
           Log_1.Log.Error("ItemHint", 9, "里列表当前单元无效!"),
         0);
   }
   GetAddItemTime() {
-    return this.FCi
-      ? this.FCi.GetAddItemTime()
+    return this.Fgi
+      ? this.Fgi.GetAddItemTime()
       : (Log_1.Log.CheckError() &&
           Log_1.Log.Error("ItemHint", 9, "里列表当前单元无效!"),
         0);
   }
   PostBattleViewOpen() {
-    this.HCi(), this.jCi();
+    this.Hgi(), this.jgi();
   }
-  HCi() {
-    this.KZt++;
+  Hgi() {
+    this.Kei++;
   }
-  jCi() {
-    for (const t of this.VCi) t.Mode = 1;
+  jgi() {
+    for (const t of this.Vgi) t.Mode = 1;
   }
   ShiftFirstUnit() {
-    this.FCi
-      ? (0 < this.FCi.WaitList.length &&
+    this.Fgi
+      ? (0 < this.Fgi.WaitList.length &&
           Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "ItemHint",
             9,
             "里列表关闭时, 还有数据在队列中未开始播放!",
           ),
-        this.VCi.shift(),
-        (this.FCi = void 0),
-        this.WCi())
+        this.Vgi.shift(),
+        (this.Fgi = void 0),
+        this.Wgi())
       : Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("ItemHint", 11, "里列表关闭时没有数据可以拿");
   }
   InsertItemRewardInfo(t) {
-    var e = this.KCi();
+    var e = this.Kgi();
     for (const s of t) {
       var r,
         i = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
-          s.Ekn,
+          s.J4n,
         );
       i &&
         i.ShowInBag &&
-        (((r = new ItemHintDefines_1.ItemRewardInfo()).ItemCount = s.I5n),
-        (r.ItemId = s.Ekn),
+        (((r = new ItemHintDefines_1.ItemRewardInfo()).ItemCount = s.o9n),
+        (r.ItemId = s.J4n),
         (r.Quality = i.QualityId),
         e.WaitList.push(r));
     }
-    this.WCi();
+    this.Wgi();
   }
-  WCi() {
-    !this.FCi && 0 < this.VCi.length && (this.FCi = this.VCi[0]);
+  Wgi() {
+    !this.Fgi && 0 < this.Vgi.length && (this.Fgi = this.Vgi[0]);
   }
-  KCi() {
-    for (const t of this.VCi) if (t.Index === this.KZt) return t;
-    const t = new InterfaceDataUnit(this.KZt);
-    return this.VCi.push(t), t;
+  Kgi() {
+    for (const t of this.Vgi) if (t.Index === this.Kei) return t;
+    const t = new InterfaceDataUnit(this.Kei);
+    return this.Vgi.push(t), t;
   }
 }
 exports.InsideInterfaceData = InsideInterfaceData;
@@ -128,12 +128,12 @@ class MainInterfaceData {
     for (const i of t) {
       var e,
         r = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
-          i.Ekn,
+          i.J4n,
         );
       r &&
         r.ShowInBag &&
-        (((e = new ItemHintDefines_1.ItemRewardInfo()).ItemCount = i.I5n),
-        (e.ItemId = i.Ekn),
+        (((e = new ItemHintDefines_1.ItemRewardInfo()).ItemCount = i.o9n),
+        (e.ItemId = i.J4n),
         (e.Quality = r.QualityId),
         this.WaitList.push(e));
     }
@@ -157,90 +157,90 @@ exports.ItemRewardData = ItemRewardData;
 class ItemHintModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
-      (this.QCi = new MainInterfaceData()),
-      (this.XCi = new MainInterfaceData()),
-      (this.$Ci = new Array()),
-      (this.YCi = new Array()),
-      (this.JCi = !1);
+      (this.Qgi = new MainInterfaceData()),
+      (this.Xgi = new MainInterfaceData()),
+      (this.$gi = new Array()),
+      (this.Ygi = new Array()),
+      (this.Jgi = !1);
   }
   get Visibility() {
-    return this.JCi;
+    return this.Jgi;
   }
   set Visibility(t) {
-    this.JCi = t;
+    this.Jgi = t;
   }
   OnInit() {
-    return (this.JCi = !0);
+    return (this.Jgi = !0);
   }
   OnClear() {
-    return this.QCi.Clear(), this.XCi.Clear(), (this.$Ci = new Array()), !0;
+    return this.Qgi.Clear(), this.Xgi.Clear(), (this.$gi = new Array()), !0;
   }
   AddItemRewardList(t) {
     var e = new ItemRewardData();
-    (e.ItemReward = t), this.$Ci.push(e);
+    (e.ItemReward = t), this.$gi.push(e);
   }
   AddAchievementItemRewardList(t) {
     var e = new ItemRewardData();
-    (e.ItemReward = t), this.YCi.push(e);
+    (e.ItemReward = t), this.Ygi.push(e);
   }
   AddItemRewardTest() {
-    var t = Protocol_1.Aki.Protocol.lts.create(),
-      e = Protocol_1.Aki.Protocol.Zks.create(),
+    var t = Protocol_1.Aki.Protocol.nns.create(),
+      e = Protocol_1.Aki.Protocol.V5s.create(),
       e =
-        ((e.I5n = 1),
-        (e.G3n = 21010014),
-        (e.r6n = 3),
-        t.Y5n.push(e),
+        ((e.o9n = 1),
+        (e.f8n = 21010014),
+        (e.q9n = 3),
+        t.U9n.push(e),
         new ItemRewardData());
-    (e.ItemReward = t), this.$Ci.push(e);
+    (e.ItemReward = t), this.$gi.push(e);
   }
   ShiftItemRewardListFirst() {
-    return this.$Ci.shift();
+    return this.$gi.shift();
   }
   ShiftAchievementItemRewardListFirst() {
-    return this.YCi.shift();
+    return this.Ygi.shift();
   }
   PeekItemRewardListFirst() {
-    return this.$Ci[0];
+    return this.$gi[0];
   }
   CleanItemRewardList() {
-    this.$Ci = new Array();
+    this.$gi = new Array();
   }
   get IsItemRewardListEmpty() {
-    return this.$Ci.length <= 0;
+    return this.$gi.length <= 0;
   }
   get IsAchievementItemRewardListEmpty() {
-    return this.YCi.length <= 0;
+    return this.Ygi.length <= 0;
   }
   MainInterfaceInsertItemRewardInfo(t) {
     for (const i of t) {
       var e,
         r = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
-          i.Ekn,
+          i.J4n,
         );
       r &&
         r.ShowInBag &&
-        (((e = new ItemHintDefines_1.ItemRewardInfo()).ItemCount = i.I5n),
-        (e.ItemId = i.Ekn),
+        (((e = new ItemHintDefines_1.ItemRewardInfo()).ItemCount = i.o9n),
+        (e.ItemId = i.J4n),
         (e.Quality = r.QualityId),
         (9 === r.ItemType || e.Quality >= HIGH_QUALITY
-          ? this.XCi
-          : this.QCi
+          ? this.Xgi
+          : this.Qgi
         ).AddItemRewardInfo(e));
     }
-    this.QCi.SortWaitList(), this.XCi.SortWaitList();
+    this.Qgi.SortWaitList(), this.Xgi.SortWaitList();
   }
   get IsMainInterfaceDataEmpty() {
-    return this.QCi.WaitList.length <= 0;
+    return this.Qgi.WaitList.length <= 0;
   }
   get IsPriorInterfaceDataEmpty() {
-    return this.XCi.WaitList.length <= 0;
+    return this.Xgi.WaitList.length <= 0;
   }
   ShiftMainInterfaceData() {
-    return this.QCi.WaitList.shift();
+    return this.Qgi.WaitList.shift();
   }
   ShiftPriorInterfaceData() {
-    return this.XCi.WaitList.shift();
+    return this.Xgi.WaitList.shift();
   }
 }
 exports.ItemHintModel = ItemHintModel;

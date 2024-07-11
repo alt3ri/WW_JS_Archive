@@ -11,17 +11,17 @@ const UE = require("ue"),
 class PhotographOptionSetup extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this.AWi = 0),
-      (this.PWi = void 0),
-      (this.xWi = 0),
-      (this.wWi = !1),
-      (this.BWi = void 0),
-      (this.EPe = void 0),
-      (this.m2e = () => {
-        this.fRt(!this.wWi),
-          this.bWi(this.wWi),
-          this.qWi(),
-          this.BWi && this.BWi(this.xWi);
+      (this.RKi = 0),
+      (this.UKi = void 0),
+      (this.AKi = 0),
+      (this.PKi = !1),
+      (this.xKi = void 0),
+      (this.SPe = void 0),
+      (this.UFe = () => {
+        this.EUt(!this.PKi),
+          this.wKi(this.PKi),
+          this.BKi(),
+          this.xKi && this.xKi(this.AKi);
       });
   }
   OnRegisterComponent() {
@@ -29,34 +29,34 @@ class PhotographOptionSetup extends UiPanelBase_1.UiPanelBase {
       [0, UE.UIText],
       [1, UE.UIButtonComponent],
     ]),
-      (this.BtnBindInfo = [[1, this.m2e]]);
+      (this.BtnBindInfo = [[1, this.UFe]]);
   }
   OnStart() {
-    this.EPe = new LevelSequencePlayer_1.LevelSequencePlayer(
+    this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(
       this.GetButton(1).RootUIComp,
     );
   }
   OnBeforeDestroy() {
-    this.EPe.Clear(), (this.EPe = void 0);
+    this.SPe.Clear(), (this.SPe = void 0);
   }
   Initialize(t) {
-    (this.AWi = t), this.Refresh(), this.SetEnable(!0);
+    (this.RKi = t), this.Refresh(), this.SetEnable(!0);
   }
-  fbt(t) {
-    (this.xWi = t), this.GWi(this.xWi), this.qWi();
+  Mqt(t) {
+    (this.AKi = t), this.bKi(this.AKi), this.BKi();
   }
   Refresh() {
     var t, e;
-    (this.PWi =
+    (this.UKi =
       ConfigManager_1.ConfigManager.PhotographConfig.GetPhotoSetupConfig(
-        this.AWi,
+        this.RKi,
       )),
-      0 === this.PWi.Type &&
+      0 === this.UKi.Type &&
         ((t = ModelManager_1.ModelManager.PhotographModel.GetPhotographOption(
-          this.AWi,
+          this.RKi,
         )),
-        this.fbt(t),
-        (t = this.PWi.Name),
+        this.Mqt(t),
+        (t = this.UKi.Name),
         (e = this.GetText(0)),
         LguiUtil_1.LguiUtil.SetLocalTextNew(e, t));
   }
@@ -64,31 +64,31 @@ class PhotographOptionSetup extends UiPanelBase_1.UiPanelBase {
     this.RootItem.SetAlpha(t ? 1 : 0.5), this.GetButton(1).SetEnable(t);
   }
   BindOnIndexChanged(t) {
-    this.BWi = t;
+    this.xKi = t;
   }
   GetSetupId() {
-    return this.AWi;
+    return this.RKi;
   }
   GetSetupConfig() {
-    return this.PWi;
+    return this.UKi;
   }
-  GWi(t) {
-    var e = this.PWi.Options.length - 1;
-    this.fRt(t === e, !1);
+  bKi(t) {
+    var e = this.UKi.Options.length - 1;
+    this.EUt(t === e, !1);
   }
-  bWi(t) {
-    var e = this.PWi.Options.length - 1;
-    this.xWi = t ? e : 0;
+  wKi(t) {
+    var e = this.UKi.Options.length - 1;
+    this.AKi = t ? e : 0;
   }
-  fRt(t, e = !0) {
-    t = (this.wWi = t) ? "ClickL" : "ClickR";
-    this.EPe?.PlayLevelSequenceByName(t),
-      e || this.EPe?.StopSequenceByKey(t, !1, !0);
+  EUt(t, e = !0) {
+    t = (this.PKi = t) ? "ClickL" : "ClickR";
+    this.SPe?.PlayLevelSequenceByName(t),
+      e || this.SPe?.StopSequenceByKey(t, !1, !0);
   }
-  qWi() {
+  BKi() {
     PhotographController_1.PhotographController.SetPhotographOption(
-      this.PWi.ValueType,
-      this.xWi,
+      this.UKi.ValueType,
+      this.AKi,
     );
   }
 }

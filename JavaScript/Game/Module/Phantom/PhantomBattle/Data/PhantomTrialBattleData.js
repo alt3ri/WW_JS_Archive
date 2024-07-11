@@ -6,43 +6,43 @@ const AttributeDefine_1 = require("../../../Attribute/AttributeDefine"),
 class PhantomTrialBattleData extends PhantomBattleData_1.PhantomBattleData {
   constructor() {
     super(...arguments),
-      (this.F5i = new Map()),
-      (this.V5i = void 0),
-      (this.H5i = new Map()),
-      (this.B5i = 0),
-      (this.j5i = 0);
+      (this.kVi = new Map()),
+      (this.FVi = void 0),
+      (this.VVi = new Map()),
+      (this.wVi = 0),
+      (this.HVi = 0);
   }
   SetMainPropValue(t, e, r) {
     e = new AttributeDefine_1.AttributeValueData(t, e, r);
-    this.F5i.set(t, e);
+    this.kVi.set(t, e);
   }
   SetSubPropValue(t, e, r) {
     e = new AttributeDefine_1.AttributeValueData(t, e, r);
-    this.H5i.set(t, e);
+    this.VVi.set(t, e);
   }
   SetFetterGroupId(t) {
-    this.j5i = t;
+    this.HVi = t;
   }
   GetFetterGroupId() {
-    return this.j5i;
+    return this.HVi;
   }
   SetSlotIndex(t) {
-    this.B5i = t;
+    this.wVi = t;
   }
   GetIfMain() {
-    return 0 === this.B5i;
+    return 0 === this.wVi;
   }
   GetUniqueId() {
     return this.GetIncrId();
   }
   GetMainTrailProp() {
-    return this.F5i;
+    return this.kVi;
   }
   GetSubTrailPropMap() {
-    return this.H5i;
+    return this.VVi;
   }
   GetBreachProp() {
-    return this.V5i;
+    return this.FVi;
   }
   IsBreach() {
     return !0;

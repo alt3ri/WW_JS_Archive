@@ -11,8 +11,8 @@ const UE = require("ue"),
 class TowerGuidePanel extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(),
-      (this.xLo = void 0),
-      (this.bLo = () => {
+      (this.UDo = void 0),
+      (this.xDo = () => {
         return new TowerBuffShowItem_1.TowerBuffShowItem();
       });
   }
@@ -26,9 +26,9 @@ class TowerGuidePanel extends UiPanelBase_1.UiPanelBase {
     ];
   }
   OnStart() {
-    this.xLo = new GenericScrollViewNew_1.GenericScrollViewNew(
+    this.UDo = new GenericScrollViewNew_1.GenericScrollViewNew(
       this.GetScrollViewWithScrollbar(4),
-      this.bLo,
+      this.xDo,
     );
     var e = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
       "T_ImgHelp_DailyTower_001_UI",
@@ -40,7 +40,7 @@ class TowerGuidePanel extends UiPanelBase_1.UiPanelBase {
     var e = ModelManager_1.ModelManager.TowerModel.CurrentTowerId;
     e &&
       (e = ConfigManager_1.ConfigManager.TowerClimbConfig.GetTowerInfo(e)) &&
-      this.xLo.RefreshByData(e.ShowBuffs);
+      this.UDo.RefreshByData(e.ShowBuffs);
   }
 }
 exports.TowerGuidePanel = TowerGuidePanel;

@@ -6,7 +6,7 @@ const UE = require("ue"),
   LguiUtil_1 = require("../Util/LguiUtil");
 class FragmentMemoryShareView extends UiPanelBase_1.UiPanelBase {
   constructor() {
-    super(...arguments), (this.Y6i = void 0);
+    super(...arguments), (this.$8i = void 0);
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -20,23 +20,23 @@ class FragmentMemoryShareView extends UiPanelBase_1.UiPanelBase {
     this.Og();
   }
   Og() {
-    (this.Y6i = this.OpenParam), this.Aqe(), this.C4e(), this.Pqe(), this.$2e();
+    (this.$8i = this.OpenParam), this.Aqe(), this.P5e(), this.Pqe(), this.u3e();
   }
-  $2e() {
+  u3e() {
     LguiUtil_1.LguiUtil.SetLocalTextNew(
       this.GetText(2),
       "FragmentMemoryCollectTime",
-      this.Y6i.GetTimeText(),
+      this.$8i.GetTimeText(),
     );
   }
   Aqe() {
-    this.SetTextureByPath(this.Y6i.GetBgResource(), this.GetTexture(0));
+    this.SetTextureByPath(this.$8i.GetBgResource(), this.GetTexture(0));
   }
-  C4e() {
-    this.GetText(1).ShowTextNew(this.Y6i.GetTitle());
+  P5e() {
+    this.GetText(1).ShowTextNew(this.$8i.GetTitle());
   }
   Pqe() {
-    this.GetText(3).ShowTextNew(this.Y6i.GetDesc());
+    this.GetText(3).ShowTextNew(this.$8i.GetDesc());
   }
 }
 exports.FragmentMemoryShareView = FragmentMemoryShareView;

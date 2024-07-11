@@ -8,15 +8,15 @@ const UE = require("ue"),
 class GuideCountDownItem extends UiPanelBase_1.UiPanelBase {
   constructor(t) {
     super(),
-      (this.LJt = 0),
+      (this.Lzt = 0),
       (this.hwe = Rotator_1.Rotator.Create(0, 0, 0)),
-      (this.DJt = void 0),
-      (this.RJt = void 0),
-      (this.LJt = t),
+      (this.Dzt = void 0),
+      (this.Rzt = void 0),
+      (this.Lzt = t),
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("Guide", 17, "[引导计时器初始化:关闭界面倒计时]", [
           "总时间",
-          this.LJt,
+          this.Lzt,
         ]);
   }
   Init(t) {
@@ -29,19 +29,19 @@ class GuideCountDownItem extends UiPanelBase_1.UiPanelBase {
     ];
   }
   OnStart() {
-    (this.DJt = this.GetSprite(0)),
-      (this.RJt = this.GetSprite(1)),
-      this.DJt.SetFillAmount(1),
+    (this.Dzt = this.GetSprite(0)),
+      (this.Rzt = this.GetSprite(1)),
+      this.Dzt.SetFillAmount(1),
       this.hwe.Set(0, 0, 0),
-      this.RJt.SetUIRelativeRotation(this.hwe.ToUeRotator()),
+      this.Rzt.SetUIRelativeRotation(this.hwe.ToUeRotator()),
       this.RootItem.SetUIActive(!0);
   }
   OnDurationChange(t) {
     this.IsShowOrShowing &&
-      ((t = t / this.LJt),
-      this.DJt.SetFillAmount(t),
+      ((t = t / this.Lzt),
+      this.Dzt.SetFillAmount(t),
       this.hwe.Set(0, 360 * (t - 1), 0),
-      this.RJt.SetUIRelativeRotation(this.hwe.ToUeRotator()));
+      this.Rzt.SetUIRelativeRotation(this.hwe.ToUeRotator()));
   }
 }
 exports.GuideCountDownItem = GuideCountDownItem;

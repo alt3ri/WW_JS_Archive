@@ -14,14 +14,14 @@ const UE = require("ue"),
 class PanelQteModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
-      (this.Qht = new PanelQteTimeDilation_1.PanelQteTimeDilation()),
+      (this.s1t = new PanelQteTimeDilation_1.PanelQteTimeDilation()),
       (this.IsInQte = void 0),
       (this.hJ = void 0),
-      (this.SNi = -0),
-      (this.ENi = -0),
-      (this.yNi = void 0),
+      (this.EOi = -0),
+      (this.SOi = -0),
+      (this.yOi = void 0),
       (this.nx = void 0),
-      (this.INi = void 0),
+      (this.IOi = void 0),
       (this.IsHideAllBattleUi = !1),
       (this.HideBattleUiChildren = void 0),
       (this.DisableFightInput = !1),
@@ -31,20 +31,20 @@ class PanelQteModel extends ModelBase_1.ModelBase {
     return (
       (this.IsInQte = !1),
       (this.hJ = 0),
-      this.Qht.Init(),
-      (this.INi = new PanelQteResultHandler_1.PanelQteResultHandler()),
+      this.s1t.Init(),
+      (this.IOi = new PanelQteResultHandler_1.PanelQteResultHandler()),
       !0
     );
   }
   OnLeaveLevel() {
-    return !(this.yNi = void 0);
+    return !(this.yOi = void 0);
   }
   OnClear() {
     return (
       (this.IsInQte = void 0),
       (this.hJ = void 0),
-      this.Qht.Clear(),
-      !(this.INi = void 0)
+      this.s1t.Clear(),
+      !(this.IOi = void 0)
     );
   }
   StartQte(e) {
@@ -52,13 +52,13 @@ class PanelQteModel extends ModelBase_1.ModelBase {
       this.hJ++,
       (this.IsInQte = !0),
       ((this.nx = e).QteHandleId = this.hJ),
-      this.Qht.Start(e),
+      this.s1t.Start(e),
       0 < e.Config.Duration
-        ? ((this.SNi =
+        ? ((this.EOi =
             e.Config.Duration * TimeUtil_1.TimeUtil.InverseMillisecond),
-          0 !== (e = this.Qht.GetWorldTimeDilation()) &&
-            (this.ENi = Time_1.Time.WorldTime + this.SNi * e))
-        : ((this.SNi = 0), (this.ENi = 0)),
+          0 !== (e = this.s1t.GetWorldTimeDilation()) &&
+            (this.SOi = Time_1.Time.WorldTime + this.EOi * e))
+        : ((this.EOi = 0), (this.SOi = 0)),
       this.hJ
     );
   }
@@ -66,7 +66,7 @@ class PanelQteModel extends ModelBase_1.ModelBase {
     return !(
       !this.IsInQte ||
       this.hJ !== e ||
-      ((this.IsInQte = !1), this.Qht.Stop(), 0)
+      ((this.IsInQte = !1), this.s1t.Stop(), 0)
     );
   }
   ForceStopQte() {
@@ -76,35 +76,35 @@ class PanelQteModel extends ModelBase_1.ModelBase {
     return this.nx;
   }
   GetWorldTimeDilation() {
-    return this.Qht.GetWorldTimeDilation();
+    return this.s1t.GetWorldTimeDilation();
   }
   GetLeftTime() {
-    return this.SNi;
+    return this.EOi;
   }
   ResetLeftTime(e) {
     this.hJ === e &&
-      (0 < this.SNi
-        ? 0 !== (e = this.Qht.GetWorldTimeDilation()) &&
-          (this.ENi = Time_1.Time.WorldTime + this.SNi * e)
-        : (this.ENi = 0));
+      (0 < this.EOi
+        ? 0 !== (e = this.s1t.GetWorldTimeDilation()) &&
+          (this.SOi = Time_1.Time.WorldTime + this.EOi * e)
+        : (this.SOi = 0));
   }
   UpdateTime(e) {
-    this.SNi <= 0 ||
+    this.EOi <= 0 ||
       (this.IsInQte &&
-        (0 === this.Qht.GetWorldTimeDilation()
-          ? (this.SNi -= e)
-          : (this.SNi = this.ENi - Time_1.Time.WorldTime),
-        this.SNi <= 0) &&
+        (0 === this.s1t.GetWorldTimeDilation()
+          ? (this.EOi -= e)
+          : (this.EOi = this.SOi - Time_1.Time.WorldTime),
+        this.EOi <= 0) &&
         PanelQteController_1.PanelQteController.StopQte(this.hJ));
   }
   GetPanelQteConfig(e) {
-    this.yNi ||
-      (this.yNi = ResourceSystem_1.ResourceSystem.GetLoadedAsset(
+    this.yOi ||
+      (this.yOi = ResourceSystem_1.ResourceSystem.GetLoadedAsset(
         "/Game/Aki/Data/Fight/UI/DT_PanelQte.DT_PanelQte",
         UE.DataTable,
       ));
     var t = DataTableUtil_1.DataTableUtil.GetDataTableRow(
-      this.yNi,
+      this.yOi,
       e.toString(),
     );
     return (
@@ -118,7 +118,7 @@ class PanelQteModel extends ModelBase_1.ModelBase {
     return this.hJ === e && ((this.nx.Success = t), !0);
   }
   HandleResult() {
-    this.INi.Handle(this.nx);
+    this.IOi.Handle(this.nx);
   }
   IsQteSuccess() {
     return this.nx?.Success ?? !1;

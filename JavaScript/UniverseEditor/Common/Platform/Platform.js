@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.getPlatform = exports.setPlatform = exports.Platform = void 0);
 class Platform {
   constructor() {
-    this.LogLevel = 0;
+    (this.LogLevel = 0), (this.IsPipelineEnv = !1);
   }
 }
 exports.Platform = Platform;

@@ -32,7 +32,10 @@ class GroupSkillCdInfo {
       (this.CurSkillId = 0),
       (this.CurRemainingDelayCd = -0),
       (this.CurDelaySkillId = 0),
-      (this.CurDelaySkillCd = 0);
+      (this.CurDelaySkillCd = 0),
+      (this.$zo = void 0),
+      (this.CdTags = []),
+      (this.Uqn = []);
   }
   IsInCd() {
     return 0 < this.CurRemainingCd;
@@ -43,58 +46,59 @@ class GroupSkillCdInfo {
   IsInDelay() {
     return 0 < this.CurRemainingDelayCd;
   }
-  StartCd(t, i, s = -1) {
-    var e = this.SkillCdInfoMap.get(t);
-    if (!e) return !1;
-    if (this.RemainingCount <= 0) return !1;
-    let h = s;
+  StartCd(t, i, s, h, e) {
+    this.$zo = s;
+    s = this.SkillCdInfoMap.get(t);
     return (
-      -1 === h &&
-        ((s =
-          i.GetCurrentValue(Protocol_1.Aki.Protocol.KBs.Proto_CdReduse) /
+      !!s &&
+      !(
+        this.RemainingCount <= 0 ||
+        ((i =
+          i.GetCurrentValue(Protocol_1.Aki.Protocol.Bks.Proto_CdReduse) /
           DEFAULT_PROPORTTION_VALUE),
-        (h = e.SkillCd * s)),
-      this.IsInDelay()
-        ? (Log_1.Log.CheckError() &&
-            Log_1.Log.Error(
-              "Battle",
-              18,
-              "技能CD延迟期间，不能再用一次技能，必须先打断前一次技能",
-              ["skillId", t],
-            ),
-          !1)
-        : (0 < (i = e.CdDelay)
-            ? ((this.CurRemainingDelayCd = i),
-              (this.CurDelaySkillId = t),
-              (this.CurDelaySkillCd = h),
-              Log_1.Log.CheckDebug() &&
-                Log_1.Log.Debug("Battle", 18, "技能CD开始延迟CD", [
-                  "skillId",
-                  t,
-                ]))
-            : h <= 0 ||
-              (this.IsInCd()
-                ? (this.CdQueue.Push(h), this.SkillIdQueue.Push(t))
-                : ((this.CurMaxCd = h),
-                  (this.CurRemainingCd = h),
-                  (this.CurSkillId = t)),
-              this.RemainingCount--,
-              this.jWe()),
-          !0)
+        (h = h.CalcExtraEffectCd(s.SkillCd, t, e) * i),
+        this.IsInDelay()
+          ? (Log_1.Log.CheckError() &&
+              Log_1.Log.Error(
+                "Battle",
+                18,
+                "技能CD延迟期间，不能再用一次技能，必须先打断前一次技能",
+                ["skillId", t],
+              ),
+            1)
+          : (0 < (e = s.CdDelay)
+              ? ((this.CurRemainingDelayCd = e),
+                (this.CurDelaySkillId = t),
+                (this.CurDelaySkillCd = h),
+                Log_1.Log.CheckDebug() &&
+                  Log_1.Log.Debug("Battle", 18, "技能CD开始延迟CD", [
+                    "skillId",
+                    t,
+                  ]))
+              : h <= 0 ||
+                (this.IsInCd()
+                  ? (this.CdQueue.Push(h), this.SkillIdQueue.Push(t))
+                  : ((this.CurMaxCd = h),
+                    (this.CurRemainingCd = h),
+                    (this.CurSkillId = t)),
+                this.RemainingCount--,
+                this.OnCountChanged()),
+            0))
+      )
     );
   }
   Tick(t) {
     var t = t * TimeUtil_1.TimeUtil.Millisecond,
       i = this.RemainingCount,
-      s = this.WWe(t);
-    let e = i !== this.RemainingCount;
-    (t = this.KWe(t)),
-      (e = e || i !== this.RemainingCount),
+      s = this.oQe(t);
+    let h = i !== this.RemainingCount;
+    (t = this.rQe(t)),
+      (h = h || i !== this.RemainingCount),
       (s = Math.min(s, t));
-    0 < s && (this.WWe(s), (e = e || i !== this.RemainingCount)),
-      e && this.jWe();
+    0 < s && (this.oQe(s), (h = h || i !== this.RemainingCount)),
+      h && this.OnCountChanged();
   }
-  WWe(t) {
+  oQe(t) {
     if (!this.IsInCd()) return t;
     let i = t;
     for (; 0 < i; ) {
@@ -114,7 +118,7 @@ class GroupSkillCdInfo {
     }
     return 0;
   }
-  KWe(t) {
+  rQe(t) {
     if (this.IsInDelay())
       if (t < this.CurRemainingDelayCd) this.CurRemainingDelayCd -= t;
       else if (
@@ -150,7 +154,7 @@ class GroupSkillCdInfo {
     (this.CurRemainingCd = 0),
       (this.CurRemainingDelayCd = 0),
       (this.RemainingCount = this.LimitCount),
-      this.jWe();
+      this.OnCountChanged();
   }
   ResetDelayCd() {
     return !(this.CurRemainingDelayCd <= 0 || (this.CurRemainingDelayCd = 0));
@@ -178,13 +182,23 @@ class GroupSkillCdInfo {
             : (0 < this.CdQueue.Size &&
                 ((this.CurRemainingCd = this.CdQueue.Pop()),
                 (this.CurSkillId = this.SkillIdQueue.Pop())),
-              this.jWe()))
+              this.OnCountChanged()))
         : EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.CharSkillRemainCdChanged,
             this,
           ));
   }
-  jWe() {
+  OnCountChanged() {
+    var t;
+    this.RemainingCount <= 0
+      ? ((t = this.$zo.AddTagWithReturnHandle(this.CdTags)), this.Uqn.push(t))
+      : (this.Uqn.forEach((t) => {
+          this.$zo.RemoveBuffByHandle(t, -1, "技能CD结束移除");
+        }),
+        (this.Uqn.length = 0)),
+      this.iQe();
+  }
+  iQe() {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug(
         "Battle",

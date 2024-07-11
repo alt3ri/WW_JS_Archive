@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SpecialEnergyBarBase = void 0);
 const UE = require("ue"),
   Log_1 = require("../../../../../Core/Common/Log"),
-  ModelManager_1 = require("../../../../Manager/ModelManager"),
   UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase"),
   BattleUiControl_1 = require("../../BattleUiControl"),
   VisibleStateUtil_1 = require("../../VisibleStateUtil"),
@@ -11,6 +10,7 @@ const UE = require("ue"),
   SpecialEnergyBarNumItem_1 = require("./SpecialEnergyBarNumItem"),
   SpecialEnergyBarPercentMachine_1 = require("./SpecialEnergyBarPercentMachine"),
   CustomPromise_1 = require("../../../../../Core/Common/CustomPromise"),
+  Info_1 = require("../../../../../Core/Common/Info"),
   ResourceSystem_1 = require("../../../../../Core/Resource/ResourceSystem");
 class SpecialEnergyBarBase extends UiPanelBase_1.UiPanelBase {
   constructor() {
@@ -32,12 +32,12 @@ class SpecialEnergyBarBase extends UiPanelBase_1.UiPanelBase {
       (this.NumItem = void 0),
       (this.PercentMachine =
         new SpecialEnergyBarPercentMachine_1.SpecialEnergyBarPercentMachine()),
-      (this.T$e = new Map()),
+      (this.GYe = new Map()),
       (this.VisibleState = 0),
-      (this.smt = (t, i, e) => {
+      (this.pdt = (t, i, e) => {
         this.OnAttributeChanged();
       }),
-      (this.amt = (t, i, e) => {
+      (this.vdt = (t, i, e) => {
         this.OnMaxAttributeChanged();
       }),
       (this.OnKeyEnableTagChanged = (t, i) => {
@@ -62,8 +62,8 @@ class SpecialEnergyBarBase extends UiPanelBase_1.UiPanelBase {
         (this.RoleData &&
           (Log_1.Log.CheckError() &&
             Log_1.Log.Error("Battle", 18, "能量条设置了多次角色的数据"),
-          this.R$e(),
-          this.U$e()),
+          this.kYe(),
+          this.FYe()),
         (this.RoleData = t),
         (this.Config = i),
         (this.AttributeComponent = this.RoleData.AttributeComponent),
@@ -75,12 +75,12 @@ class SpecialEnergyBarBase extends UiPanelBase_1.UiPanelBase {
   }
   OnInitData() {}
   AddEvents() {
-    this.ListenForAttributeChanged(this.Config.AttributeId, this.smt),
-      this.ListenForAttributeChanged(this.Config.MaxAttributeId, this.amt);
+    this.ListenForAttributeChanged(this.Config.AttributeId, this.pdt),
+      this.ListenForAttributeChanged(this.Config.MaxAttributeId, this.vdt);
   }
   RemoveEvents() {
-    this.RemoveListenAttributeChanged(this.Config.AttributeId, this.smt),
-      this.RemoveListenAttributeChanged(this.Config.MaxAttributeId, this.amt);
+    this.RemoveListenAttributeChanged(this.Config.AttributeId, this.pdt),
+      this.RemoveListenAttributeChanged(this.Config.MaxAttributeId, this.vdt);
   }
   SetVisible(t, i = 0) {
     (this.VisibleState = VisibleStateUtil_1.VisibleStateUtil.SetVisible(
@@ -123,8 +123,8 @@ class SpecialEnergyBarBase extends UiPanelBase_1.UiPanelBase {
   }
   OnBeforeDestroy() {
     this.InAsyncLoading() || this.RemoveEvents(),
-      this.R$e(),
-      this.U$e(),
+      this.kYe(),
+      this.FYe(),
       (this.RoleData = void 0),
       (this.AttributeComponent = void 0),
       (this.TagComponent = void 0),
@@ -147,24 +147,24 @@ class SpecialEnergyBarBase extends UiPanelBase_1.UiPanelBase {
   OnBarPercentChanged() {}
   ListenForAttributeChanged(t, i) {
     var e = this.RoleData?.AttributeComponent;
-    e && (e.AddListener(t, i), this.T$e.set(t, i));
+    e && (e.AddListener(t, i), this.GYe.set(t, i));
   }
   RemoveListenAttributeChanged(t, i) {
     var e = this.AttributeComponent;
-    e && (e.RemoveListener(t, i), this.T$e.delete(t));
+    e && (e.RemoveListener(t, i), this.GYe.delete(t));
   }
-  R$e() {
+  kYe() {
     var t = this.AttributeComponent;
     if (t) {
-      for (var [i, e] of this.T$e) t.RemoveListener(i, e);
-      this.T$e.clear();
+      for (var [i, e] of this.GYe) t.RemoveListener(i, e);
+      this.GYe.clear();
     }
   }
   ListenForTagCountChanged(t, i) {
     var e = this.TagComponent;
     e && ((e = e.ListenForTagAnyCountChanged(t, i)), this.TagTaskList.push(e));
   }
-  U$e() {
+  FYe() {
     if (this.TagTaskList) {
       for (const t of this.TagTaskList) t.EndTask();
       this.TagTaskList.length = 0;
@@ -183,12 +183,12 @@ class SpecialEnergyBarBase extends UiPanelBase_1.UiPanelBase {
         e = this.Config.NiagaraPathList.length;
       for (let t = 0; t < e; t++) {
         var s = this.Config.NiagaraPathList[t];
-        i.push(this.wyn(s, t, this.NiagaraList));
+        i.push(this.YIn(s, t, this.NiagaraList));
       }
       await Promise.all(i);
     }
   }
-  async wyn(t, i, e) {
+  async YIn(t, i, e) {
     const s = new CustomPromise_1.CustomPromise();
     return (
       ResourceSystem_1.ResourceSystem.LoadAsync(
@@ -204,7 +204,7 @@ class SpecialEnergyBarBase extends UiPanelBase_1.UiPanelBase {
   }
   async InitKeyItem(t) {
     !this.NeedInitKeyItem ||
-      ModelManager_1.ModelManager.PlatformModel.IsMobile() ||
+      Info_1.Info.IsInTouch() ||
       ((this.KeyItem = new SpecialEnergyBarKeyItem_1.SpecialEnergyBarKeyItem()),
       this.KeyItem.SetConfig(this.Config),
       await this.KeyItem.CreateThenShowByResourceIdAsync(
@@ -240,6 +240,7 @@ class SpecialEnergyBarBase extends UiPanelBase_1.UiPanelBase {
   }
   OnKeyEnableChanged() {}
   OnChangeVisibleByTagChange(t) {}
+  ReplaceFullEffect(t) {}
 }
 exports.SpecialEnergyBarBase = SpecialEnergyBarBase;
 //# sourceMappingURL=SpecialEnergyBarBase.js.map

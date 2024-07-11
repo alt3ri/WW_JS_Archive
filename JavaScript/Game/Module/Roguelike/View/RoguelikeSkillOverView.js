@@ -59,36 +59,49 @@ class RoguelikeSkillOverView extends UiViewBase_1.UiViewBase {
       [4, UE.UIItem],
     ];
   }
-  OnStart() {
+  async OnBeforeStartAsync() {
     (this.CaptionItem = new PopupCaptionItem_1.PopupCaptionItem(
       this.GetItem(1),
     )),
       this.CaptionItem.SetCloseCallBack(() => {
         UiManager_1.UiManager.CloseView(this.Info.Name);
       }),
-      this.InitDescItem();
+      await this.InitDescItem();
   }
   OnBeforeDestroy() {
     this.SkillDescItemList = [];
   }
-  InitDescItem() {
+  async InitDescItem() {
     let s = 0;
-    ModelManager_1.ModelManager.RoguelikeModel.RoguelikeSkillDataMap.forEach(
-      (e, i) => {
-        var t;
-        1 <= e &&
-          ((e = LguiUtil_1.LguiUtil.CopyItem(this.GetItem(2), this.GetItem(3))),
+    const r = [];
+    Array.from(ModelManager_1.ModelManager.RoguelikeModel.RoguelikeSkillDataMap)
+      .sort((e, i) => {
+        (e =
+          ConfigManager_1.ConfigManager.RoguelikeConfig.GetRogueTalentTreeById(
+            e[0],
+          )),
+          (i =
+            ConfigManager_1.ConfigManager.RoguelikeConfig.GetRogueTalentTreeById(
+              i[0],
+            ));
+        return e.TalentType !== i.TalentType
+          ? e.TalentType - i.TalentType
+          : e.Id - i.Id;
+      })
+      .forEach((e) => {
+        var i, t;
+        1 <= e[1] &&
+          ((i = LguiUtil_1.LguiUtil.CopyItem(this.GetItem(2), this.GetItem(3))),
           (t = new RoguelikeSkillDesc()),
           (s += 1),
           (t.Index = s),
           (t.Data =
             ConfigManager_1.ConfigManager.RoguelikeConfig.GetRogueTalentTreeById(
-              i,
+              e[0],
             )),
-          t.CreateThenShowByActor(e.GetOwner()),
-          this.SkillDescItemList.push(t));
-      },
-    ),
+          this.SkillDescItemList.push(t),
+          r.push(t.CreateThenShowByActorAsync(i.GetOwner())));
+      }),
       LguiUtil_1.LguiUtil.SetLocalTextNew(
         this.GetText(0),
         "Roguelike_SkillNumOverView_Title",
@@ -96,7 +109,8 @@ class RoguelikeSkillOverView extends UiViewBase_1.UiViewBase {
         ModelManager_1.ModelManager.RoguelikeModel.RoguelikeSkillDataMap.size,
       ),
       this.GetItem(2).SetUIActive(!1),
-      this.GetItem(4).SetUIActive(0 === s);
+      this.GetItem(4).SetUIActive(0 === s),
+      await Promise.all(r);
   }
 }
 exports.RoguelikeSkillOverView = RoguelikeSkillOverView;

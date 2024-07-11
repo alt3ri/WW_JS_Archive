@@ -18,16 +18,16 @@ const Log_1 = require("../../../../Core/Common/Log"),
 class FlowLaunchCenter extends ControllerAssistantBase_1.ControllerAssistantBase {
   constructor() {
     super(...arguments),
-      (this.oXi = !1),
-      (this.rXi = 0),
-      (this.pCo = new Array()),
-      (this.MAn = 7),
+      (this.t$i = !1),
+      (this.i$i = 0),
+      (this.Cgo = new Array()),
+      (this.Txn = 7),
       (this.StartPlotNetworkPending = () => {
         var e;
         ModelManager_1.ModelManager.PlotModel.IsInPlot ||
           (0 !== ModelManager_1.ModelManager.PlotModel.PlotPendingList.length &&
             ((e = ModelManager_1.ModelManager.PlotModel.PlotPendingList[0]),
-            this.sXi(e)
+            this.r$i(e)
               ? (ModelManager_1.ModelManager.PlotModel.PlotPendingList.shift(),
                 Log_1.Log.CheckInfo() &&
                   Log_1.Log.Info(
@@ -39,10 +39,10 @@ class FlowLaunchCenter extends ControllerAssistantBase_1.ControllerAssistantBase
                     ["FlowId", e.FlowId],
                     ["StateID", e.StateId],
                   ),
-                this.aXi(e))
-              : (this.oXi = !0)));
+                this.n$i(e))
+              : (this.t$i = !0)));
       }),
-      (this.SAn = (e, t) =>
+      (this.Lxn = (e, t) =>
         !ModelManager_1.ModelManager.LoadingModel.IsLoading ||
         (t.FadeBegin &&
           (Log_1.Log.CheckInfo() &&
@@ -58,8 +58,8 @@ class FlowLaunchCenter extends ControllerAssistantBase_1.ControllerAssistantBase
           ),
           (t.FadeBegin = void 0)),
         !1)),
-      (this.nXi = new Set(["BattleView", "PlotView", "PlotSubtitleView"])),
-      (this.EAn = (e, t) => {
+      (this.o$i = new Set(["BattleView", "PlotView", "PlotSubtitleView"])),
+      (this.Dxn = (e, t) => {
         return t.UiParam?.ViewName
           ? !!UiManager_1.UiManager.IsViewShow(t.UiParam.ViewName) ||
               (!!t.CanBeAbandoned &&
@@ -77,52 +77,52 @@ class FlowLaunchCenter extends ControllerAssistantBase_1.ControllerAssistantBase
                 !0))
           : !!(t = UiModel_1.UiModel.GetTopView(UiLayerType_1.ELayerType.Normal)
               ?.Info?.Name) &&
-              !!this.nXi.has(t) &&
+              !!this.o$i.has(t) &&
               UiManager_1.UiManager.IsViewShow(t);
       }),
-      (this.yAn = (e, t) =>
+      (this.Axn = (e, t) =>
         !ModelManager_1.ModelManager.TeleportModel.IsTeleport),
-      (this.IAn = (e, t) =>
+      (this.Uxn = (e, t) =>
         !ModelManager_1.ModelManager.SceneTeamModel.IsAllDid()),
-      (this.TAn = (e, t) => {
+      (this.Rxn = (e, t) => {
         var o = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentTeamItem;
         return !!o && !o.IsDead();
       }),
-      (this.LAn = (e, t) =>
+      (this.xxn = (e, t) =>
         ModelManager_1.ModelManager.SceneTeamModel.IsTeamReady),
-      (this.DAn = (e, t) => {
+      (this.Pxn = (e, t) => {
         return !(
           ("LevelC" === t.PlotLevel || t.IsWaitAnim) &&
-          (this.rXi >
+          (this.i$i >
           ModelManager_1.ModelManager.PlotModel.PlotGlobalConfig.WaitCalmTime
-            ? (this.rXi = 0)
+            ? (this.i$i = 0)
             : (t =
                   ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity.Entity.CheckGetComponent(
-                    185,
+                    188,
                   ))?.Valid
               ? t.HasTag(-1371021686)
-                ? ((this.rXi += e), 1)
-                : (this.rXi = 0)
+                ? ((this.i$i += e), 1)
+                : (this.i$i = 0)
               : (Log_1.Log.CheckDebug() &&
                   Log_1.Log.Debug(
                     "Plot",
                     27,
                     "开始剧情检查人物站立时拿不到BaseTagComponent",
                   ),
-                (this.rXi = 0)))
+                (this.i$i = 0)))
         );
       });
   }
   OnDestroy() {}
   OnInit() {
-    this.pCo.push([0, "场景未加载完", this.SAn]),
-      this.pCo.push([1, "界面检查不通过", this.EAn]),
-      this.pCo.push([2, "传送未完成", this.yAn]),
-      this.pCo.push([3, "死亡或者队伍没人", this.IAn]),
-      this.pCo.push([4, "当前角色死亡", this.TAn]),
-      this.pCo.push([5, "编队未准备好", this.LAn]),
-      this.pCo.push([6, "人物动作还没回正", this.DAn]),
-      this.pCo.forEach((e, t) => {
+    this.Cgo.push([0, "场景未加载完", this.Lxn]),
+      this.Cgo.push([1, "界面检查不通过", this.Dxn]),
+      this.Cgo.push([2, "传送未完成", this.Axn]),
+      this.Cgo.push([3, "死亡或者队伍没人", this.Uxn]),
+      this.Cgo.push([4, "当前角色死亡", this.Rxn]),
+      this.Cgo.push([5, "编队未准备好", this.xxn]),
+      this.Cgo.push([6, "人物动作还没回正", this.Pxn]),
+      this.Cgo.forEach((e, t) => {
         e[0] !== t &&
           Log_1.Log.CheckError() &&
           Log_1.Log.Error("Plot", 27, "剧情开始检查队列顺序错误", ["index", t]);
@@ -133,8 +133,8 @@ class FlowLaunchCenter extends ControllerAssistantBase_1.ControllerAssistantBase
     t,
     o,
     r = void 0,
-    a = FlowController_1.LOCAL_FLOWINCID,
-    i = !1,
+    i = FlowController_1.LOCAL_FLOWINCID,
+    a = !1,
     l = !1,
     n,
     s = !1,
@@ -145,16 +145,14 @@ class FlowLaunchCenter extends ControllerAssistantBase_1.ControllerAssistantBase
       h,
       M = ConfigManager_1.ConfigManager.FlowConfig.GetFlowStateActions(e, t, o);
     return M
-      ? ((a = i ? a : FlowLaunchCenter.hXi--),
-        (r = r
-          ? LevelGeneralContextDefine_1.GeneralContext.Copy(r)
-          : LevelGeneralContextDefine_1.QuestContext.Create()),
+      ? ((i = a ? i : FlowLaunchCenter.s$i--),
+        (r = r ? LevelGeneralContextDefine_1.GeneralContext.Copy(r) : void 0),
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "Plot",
             18,
             "StartFlow",
-            ["FLowIncId", a],
+            ["FLowIncId", i],
             ["FlowListName", e],
             ["FlowId", t],
             ["StateId", o],
@@ -166,8 +164,8 @@ class FlowLaunchCenter extends ControllerAssistantBase_1.ControllerAssistantBase
           o,
         )),
         (h = PlotData_1.PlotInfo.Create()).Init(
-          i,
           a,
+          i,
           e,
           t,
           o,
@@ -180,14 +178,14 @@ class FlowLaunchCenter extends ControllerAssistantBase_1.ControllerAssistantBase
           _,
           g,
         ),
-        this.sXi(h)
-          ? this.aXi(h)
+        this.r$i(h)
+          ? this.n$i(h)
           : (ModelManager_1.ModelManager.PlotModel.PendingPlot(h),
-            (this.oXi = !0),
+            (this.t$i = !0),
             ControllerHolder_1.ControllerHolder.FlowController.CheckDisableInput(
               h.PlotLevel,
             )),
-        a)
+        i)
       : (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Level",
@@ -202,12 +200,12 @@ class FlowLaunchCenter extends ControllerAssistantBase_1.ControllerAssistantBase
   }
   Tick(e) {
     var t;
-    this.oXi &&
+    this.t$i &&
       ((t =
         0 <= ModelManager_1.ModelManager.PlotModel.PlotPendingList.length
           ? ModelManager_1.ModelManager.PlotModel.PlotPendingList[0]
           : void 0)
-        ? this.sXi(t, e) &&
+        ? this.r$i(t, e) &&
           (ModelManager_1.ModelManager.PlotModel.PlotPendingList.shift(),
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
@@ -219,17 +217,17 @@ class FlowLaunchCenter extends ControllerAssistantBase_1.ControllerAssistantBase
               ["FlowId", t.FlowId],
               ["StateID", t.StateId],
             ),
-          this.aXi(t),
-          (this.oXi = !1))
-        : (this.oXi = !1));
+          (this.t$i = !1),
+          this.n$i(t))
+        : (this.t$i = !1));
   }
-  sXi(e, t = 0) {
+  r$i(e, t = 0) {
     if (!e.IsBreakdown) {
-      if (7 !== this.MAn && !this.pCo[this.MAn][2](t, e)) return !1;
-      for (const o of this.pCo)
-        if (o[0] !== this.MAn && !o[2](t, e))
+      if (7 !== this.Txn && !this.Cgo[this.Txn][2](t, e)) return !1;
+      for (const o of this.Cgo)
+        if (o[0] !== this.Txn && !o[2](t, e))
           return (
-            (this.MAn = o[0]),
+            (this.Txn = o[0]),
             Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "Plot",
@@ -241,9 +239,9 @@ class FlowLaunchCenter extends ControllerAssistantBase_1.ControllerAssistantBase
             !1
           );
     }
-    return (this.MAn = 7), !0;
+    return (this.Txn = 7), !0;
   }
-  aXi(e) {
+  n$i(e) {
     if (
       (ModelManager_1.ModelManager.PlotModel.IsInInteraction &&
         (Log_1.Log.CheckDebug() &&
@@ -298,5 +296,5 @@ class FlowLaunchCenter extends ControllerAssistantBase_1.ControllerAssistantBase
     }
   }
 }
-(exports.FlowLaunchCenter = FlowLaunchCenter).hXi = -1;
+(exports.FlowLaunchCenter = FlowLaunchCenter).s$i = -1;
 //# sourceMappingURL=FlowLaunchCenter.js.map

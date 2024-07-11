@@ -18,6 +18,7 @@ class AiStateMachineTaskMontage extends AiStateMachineTask_1.AiStateMachineTask 
         (this.Dne = !1),
           this.Node.Activated &&
             (this.Ine &&
+              this.Rne &&
               (this.Node.ActorComponent.EnableActor(this.Rne),
               (this.Rne = void 0)),
             this.Node.MoveComponent.SetForceSpeed(
@@ -70,6 +71,7 @@ class AiStateMachineTaskMontage extends AiStateMachineTask_1.AiStateMachineTask 
   OnExit(t) {
     this.Ine &&
       this.Dne &&
+      this.Rne &&
       (this.Node.ActorComponent.EnableActor(this.Rne), (this.Rne = void 0)),
       this.Node.MontageComponent.EndMontageTask(this.rse),
       (this.rse = void 0),

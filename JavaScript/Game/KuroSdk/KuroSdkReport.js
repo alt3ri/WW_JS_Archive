@@ -63,23 +63,23 @@ const Protocol_1 = require("../../Core/Define/Net/Protocol"),
   FLOWEVENTID = "123000";
 class KuroSdkReport {
   static Init() {
-    this.mEe();
+    this.mSe();
   }
   static Report(e) {
     HotPatchKuroSdk_1.HotPatchKuroSdk.ReportEvent(e);
   }
-  static mEe() {
+  static mSe() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnQuestStateChange,
-      this.DEe,
+      this.DSe,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnLogicTreeChildQuestNodeStatusChange,
-        this.REe,
+        this.RSe,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnPayItemSuccess,
-        this.UEe,
+        this.USe,
       );
   }
   static OnPlayerLevelChange(e) {
@@ -105,27 +105,27 @@ class KuroSdkReport {
   static OnChapterStart(e, t) {}
 }
 (exports.KuroSdkReport = KuroSdkReport),
-  ((_a = KuroSdkReport).UEe = (e) => {
+  ((_a = KuroSdkReport).USe = (e) => {
     var t;
     SdkReportRecharge.IfNeedReport(e.PayItemId) &&
       (((t = new SdkReportRecharge(void 0)).PayItemId = e.PayItemId),
       _a.Report(t));
   }),
-  (KuroSdkReport.DEe = (e, t) => {
+  (KuroSdkReport.DSe = (e, t) => {
     var r;
     SdkReportQuestFinish.IfNeedReport(e) &&
       (((r = new SdkReportQuestFinish(void 0)).QuestId = e), _a.Report(r)),
       SdkReportChapter.IfNeedReport(e, 0) &&
-        t === Protocol_1.Aki.Protocol.kMs.Proto_Finish &&
+        t === Protocol_1.Aki.Protocol.tTs.Proto_Finish &&
         (((r = new SdkReportChapter(void 0)).TreeConfigId = e), _a.Report(r));
   }),
-  (KuroSdkReport.REe = (e, t, r) => {
+  (KuroSdkReport.RSe = (e, t, r) => {
     var E;
     6 === e.Type &&
       ((E = e.TreeConfigId),
       (e = e.NodeId),
       SdkReportBattleTech.IfNeedReport(E, e)) &&
-      r === Protocol_1.Aki.Protocol.W2s.Proto_CQNS_Finished &&
+      r === Protocol_1.Aki.Protocol.bNs.Proto_CQNS_Finished &&
       (((r = new SdkReportBattleTech(void 0)).TreeConfigId = E),
       (r.NodeId = e),
       _a.Report(r));
@@ -185,7 +185,7 @@ class SdkReportBattleTech extends SdkReportData_1.SdkReportData {
     );
   }
   GetEventName() {
-    return (this.IfGlobalSdk && SdkReportBattleTech.AEe.get(this.NodeId)) || "";
+    return (this.IfGlobalSdk && SdkReportBattleTech.ASe.get(this.NodeId)) || "";
   }
   GetEventDataJson() {
     return (
@@ -197,7 +197,7 @@ class SdkReportBattleTech extends SdkReportData_1.SdkReportData {
     );
   }
 }
-(exports.SdkReportBattleTech = SdkReportBattleTech).AEe = new Map([
+(exports.SdkReportBattleTech = SdkReportBattleTech).ASe = new Map([
   [KILLPHANTOMSTEP1, "Beginner_level_Battle_Teach_Finish"],
   [KILLPHANTOMSTEP2, "Intermediater_level_Battle_Teach_Finish"],
   [KILLPHANTOMSTEP3, "Advanced_level_Battle_Teach_Finish"],
@@ -218,7 +218,7 @@ class SdkReportQuestFinish extends SdkReportData_1.SdkReportData {
   }
   GetEventName() {
     return (
-      (this.IfGlobalSdk && SdkReportQuestFinish.AEe.get(this.QuestId)) || ""
+      (this.IfGlobalSdk && SdkReportQuestFinish.ASe.get(this.QuestId)) || ""
     );
   }
   GetEventDataJson() {
@@ -231,7 +231,7 @@ class SdkReportQuestFinish extends SdkReportData_1.SdkReportData {
     );
   }
 }
-(exports.SdkReportQuestFinish = SdkReportQuestFinish).AEe = new Map([
+(exports.SdkReportQuestFinish = SdkReportQuestFinish).ASe = new Map([
   [CAPTUREPHANTOMMISSION, "Prologue_Task_Finish"],
 ]);
 class SdkReportStartFlow extends SdkReportData_1.SdkReportData {
@@ -263,14 +263,14 @@ class SdkReportRecharge extends SdkReportData_1.SdkReportData {
   }
   GetEventName() {
     if (this.IfGlobalSdk) {
-      const e = SdkReportRecharge.AEe.get(this.PayItemId);
+      const e = SdkReportRecharge.ASe.get(this.PayItemId);
       return e ? e : "";
     }
-    const e = SdkReportRecharge.PEe.get(this.PayItemId);
+    const e = SdkReportRecharge.PSe.get(this.PayItemId);
     return e || "";
   }
 }
-((exports.SdkReportRecharge = SdkReportRecharge).AEe = new Map([
+((exports.SdkReportRecharge = SdkReportRecharge).ASe = new Map([
   [RECHARGEONE, "Purchase_099"],
   [RECHARGETWO, "Purchase_499"],
   [RECHARGETHREE, "Purchase_1499"],
@@ -278,7 +278,7 @@ class SdkReportRecharge extends SdkReportData_1.SdkReportData {
   [RECHARGEFIVE, "Purchase_4999"],
   [RECHARGESIX, "Purchase_9999"],
 ])),
-  (SdkReportRecharge.PEe = new Map([
+  (SdkReportRecharge.PSe = new Map([
     [RECHARGEONE, "event_5"],
     [RECHARGETWO, "event_6"],
     [RECHARGETHREE, "event_7"],
@@ -306,11 +306,11 @@ class SdkReportDirectBuy extends SdkReportData_1.SdkReportData {
   }
   GetEventName() {
     return (
-      (this.IfGlobalSdk && SdkReportDirectBuy.AEe.get(this.PayItemId)) || ""
+      (this.IfGlobalSdk && SdkReportDirectBuy.ASe.get(this.PayItemId)) || ""
     );
   }
 }
-(exports.SdkReportDirectBuy = SdkReportDirectBuy).AEe = new Map([
+(exports.SdkReportDirectBuy = SdkReportDirectBuy).ASe = new Map([
   [PayShopDefine_1.MONTH_CARD_SHOP_ID, "Monthly_card"],
   [PayShopDefine_1.BATTLE_PASS_PRIMARY_ID, "BattlePass_Primary"],
   [PayShopDefine_1.BATTLE_PASS_HIGH_ID, "BattlePass_HIGH"],
@@ -337,14 +337,14 @@ class SdkReportChapter extends SdkReportData_1.SdkReportData {
   }
   GetEventName() {
     if (this.IfGlobalSdk) {
-      const e = SdkReportChapter.AEe.get(this.TreeConfigId);
+      const e = SdkReportChapter.ASe.get(this.TreeConfigId);
       return e ? e : "";
     }
-    const e = SdkReportChapter.PEe.get(this.TreeConfigId);
+    const e = SdkReportChapter.PSe.get(this.TreeConfigId);
     return e || "";
   }
 }
-((exports.SdkReportChapter = SdkReportChapter).AEe = new Map([
+((exports.SdkReportChapter = SdkReportChapter).ASe = new Map([
   [CHAPTERCPRE1, "Complete_pre_1"],
   [CHAPTERCPRE2, "Complete_pre_2"],
   [CHAPTERC11, "Complete_C1_1"],
@@ -354,7 +354,7 @@ class SdkReportChapter extends SdkReportData_1.SdkReportData {
   [CHAPTERC15, "Complete_C1_5"],
   [CHAPTERC16, "Complete_C1_6"],
 ])),
-  (SdkReportChapter.PEe = new Map([
+  (SdkReportChapter.PSe = new Map([
     [CHAPTERCPRE1, "event_12"],
     [CHAPTERCPRE2, "event_13"],
     [CHAPTERC11, "event_14"],
@@ -369,15 +369,15 @@ class SdkReportLevel extends SdkReportData_1.SdkReportData {
     super(...arguments), (this.Level = 0);
   }
   static IfNeedReport(e) {
-    return !!SdkReportLevel.xEe.includes(e);
+    return !!SdkReportLevel.xSe.includes(e);
   }
   GetEventName() {
     return this.IfGlobalSdk
       ? StringUtils_1.StringUtils.Format("Level_{0}", this.Level.toString())
-      : SdkReportLevel.PEe.get(this.Level) || "";
+      : SdkReportLevel.PSe.get(this.Level) || "";
   }
 }
-((exports.SdkReportLevel = SdkReportLevel).xEe = new Array(
+((exports.SdkReportLevel = SdkReportLevel).xSe = new Array(
   REPORTLEVEL8,
   REPORTLEVEL10,
   REPORTLEVEL12,
@@ -389,7 +389,7 @@ class SdkReportLevel extends SdkReportData_1.SdkReportData {
   REPORTLEVEL40,
   REPORTLEVEL45,
 )),
-  (SdkReportLevel.PEe = new Map([
+  (SdkReportLevel.PSe = new Map([
     [REPORTLEVEL8, "event_20"],
     [REPORTLEVEL10, "event_21"],
     [REPORTLEVEL12, "event_22"],

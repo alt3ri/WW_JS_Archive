@@ -17,13 +17,13 @@ const UE = require("ue"),
 class CommonPropTipsComponent extends UiPanelBase_1.UiPanelBase {
   constructor(t) {
     super(),
-      (this.QBt = void 0),
+      (this.Ybt = void 0),
       (this.GetWayLayout = void 0),
       (this.ConfigId = 0),
       (this.DoubleButtonItemList = []),
       (this.OneButtonItem = void 0),
       (this.IsOpenGetWay = !1),
-      (this.XBt = () => {
+      (this.Jbt = () => {
         (this.IsOpenGetWay = !this.IsOpenGetWay),
           this.GetLayoutBase(5)
             .GetRootComponent()
@@ -49,9 +49,9 @@ class CommonPropTipsComponent extends UiPanelBase_1.UiPanelBase {
           { Key: i, Value: t }
         );
       }),
-      (this.$Bt = LguiResourceManager_1.LguiResourceManager.InvalidId),
+      (this.zbt = LguiResourceManager_1.LguiResourceManager.InvalidId),
       this.CreateThenShowByActor(t.GetOwner()),
-      (this.EPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem));
+      (this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem));
   }
   OnRegisterComponent() {
     (this.ComponentRegisterInfos = [
@@ -72,16 +72,16 @@ class CommonPropTipsComponent extends UiPanelBase_1.UiPanelBase {
       [14, UE.UIText],
       [15, UE.UIItem],
     ]),
-      (this.BtnBindInfo = [[4, this.XBt]]);
+      (this.BtnBindInfo = [[4, this.Jbt]]);
   }
   OnStart() {
-    (this.EPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem)),
+    (this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem)),
       (this.GetWayLayout = new GenericLayoutAdd_1.GenericLayoutAdd(
         this.GetLayoutBase(5),
         this.sGe,
       )),
       this.GetItem(15).SetUIActive(!0),
-      this.YBt(!1),
+      this.Zbt(!1),
       this.SetBottomState(!1, !1),
       (this.OneButtonItem = new ButtonItem_1.ButtonItem(this.GetItem(8)));
     var i = this.GetItem(7).GetAttachUIChildren();
@@ -91,34 +91,34 @@ class CommonPropTipsComponent extends UiPanelBase_1.UiPanelBase {
     }
     this.SetOwnTextState(!1);
   }
-  YBt(t) {
+  Zbt(t) {
     this.GetExtendToggle(4).RootUIComp.SetUIActive(t),
       this.GetLayoutBase(5).GetRootComponent().SetUIActive(!1),
       (this.IsOpenGetWay = !1),
       this.GetExtendToggle(4).SetToggleState(this.IsOpenGetWay ? 1 : 0, !1);
   }
-  JBt(t) {
+  eqt(t) {
     this.GetWayLayout.AddItemToLayout(t, 1);
   }
   LoadDebugText() {
     GlobalData_1.GlobalData.IsPlayInEditor &&
-      (this.QBt
+      (this.Ybt
         ? LguiUtil_1.LguiUtil.SetLocalText(
-            this.QBt,
+            this.Ybt,
             "CommonTipsDebugItemId",
             this.ConfigId,
           )
-        : (LguiResourceManager_1.LguiResourceManager.CancelLoadPrefab(this.$Bt),
-          (this.$Bt =
+        : (LguiResourceManager_1.LguiResourceManager.CancelLoadPrefab(this.zbt),
+          (this.zbt =
             LguiResourceManager_1.LguiResourceManager.LoadPrefabByResourceId(
               "UiItem_DebugText_Prefab",
               this.RootItem,
               (t) => {
-                (this.$Bt =
+                (this.zbt =
                   LguiResourceManager_1.LguiResourceManager.InvalidId),
-                  (this.QBt = t.GetComponentByClass(UE.UIText.StaticClass())),
+                  (this.Ybt = t.GetComponentByClass(UE.UIText.StaticClass())),
                   LguiUtil_1.LguiUtil.SetLocalText(
-                    this.QBt,
+                    this.Ybt,
                     "CommonTipsDebugItemId",
                     this.ConfigId,
                   );
@@ -126,18 +126,18 @@ class CommonPropTipsComponent extends UiPanelBase_1.UiPanelBase {
             ))));
   }
   OnBeforeDestroy() {
-    this.EPe.Clear(),
-      (this.EPe = void 0),
+    this.SPe.Clear(),
+      (this.SPe = void 0),
       this.GetWayLayout.ClearChildren(),
       (this.GetWayLayout = void 0),
       this.OneButtonItem.Destroy(),
       (this.OneButtonItem = void 0);
     for (const t of this.DoubleButtonItemList) t.Destroy();
     (this.DoubleButtonItemList = []),
-      LguiResourceManager_1.LguiResourceManager.CancelLoadPrefab(this.$Bt),
-      this.QBt &&
-        (ActorSystem_1.ActorSystem.Put(this.QBt.GetOwner()),
-        (this.QBt = void 0));
+      LguiResourceManager_1.LguiResourceManager.CancelLoadPrefab(this.zbt),
+      this.Ybt &&
+        (ActorSystem_1.ActorSystem.Put(this.Ybt.GetOwner()),
+        (this.Ybt = void 0));
   }
   UpdateComponent(t, e = !1) {
     this.ConfigId = t;
@@ -160,8 +160,8 @@ class CommonPropTipsComponent extends UiPanelBase_1.UiPanelBase {
       ),
       this.LoadDebugText(),
       e && (this.GetWayLayout.ClearChildren(), 0 < t.ItemAccess.length)
-        ? (this.JBt(t.ItemAccess), this.YBt(!0))
-        : this.YBt(!1);
+        ? (this.eqt(t.ItemAccess), this.Zbt(!0))
+        : this.Zbt(!1);
   }
   SetBottomState(t, e) {
     var i,
@@ -200,10 +200,10 @@ class CommonPropTipsComponent extends UiPanelBase_1.UiPanelBase {
     return this.ConfigId;
   }
   PlayStartSequence() {
-    this.EPe.PlayLevelSequenceByName("Start");
+    this.SPe.PlayLevelSequenceByName("Start");
   }
   StopStartSequence() {
-    this.EPe.StopSequenceByKey("Start");
+    this.SPe.StopSequenceByKey("Start");
   }
 }
 exports.CommonPropTipsComponent = CommonPropTipsComponent;

@@ -16,19 +16,19 @@ const UE = require("ue"),
 class MarqueeView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
-      (this.tAi = 0),
-      (this.iAi = void 0),
-      (this.oAi = void 0),
-      (this.UBt = void 0),
-      (this.rAi = 0),
-      (this.nAi = void 0),
-      (this.unt = 0),
-      (this.sAi = void 0),
-      (this.aAi = !0),
-      (this.hAi = () => {
+      (this.tPi = 0),
+      (this.iPi = void 0),
+      (this.oPi = void 0),
+      (this.xbt = void 0),
+      (this.rPi = 0),
+      (this.nPi = void 0),
+      (this.Ist = 0),
+      (this.sPi = void 0),
+      (this.aPi = !0),
+      (this.hPi = () => {
         ModelManager_1.ModelManager.MarqueeModel.CurMarquee &&
           (ModelManager_1.ModelManager.MarqueeModel.CurMarquee.RefreshContent(),
-          this.hke(ModelManager_1.ModelManager.MarqueeModel.CurMarquee));
+          this.T2e(ModelManager_1.ModelManager.MarqueeModel.CurMarquee));
       });
   }
   OnRegisterComponent() {
@@ -41,33 +41,33 @@ class MarqueeView extends UiTickViewBase_1.UiTickViewBase {
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.TextLanguageChange,
-      this.hAi,
+      this.hPi,
     );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.TextLanguageChange,
-      this.hAi,
+      this.hPi,
     );
   }
   OnStart() {
     var e = ModelManager_1.ModelManager.MarqueeModel.PeekMarqueeData();
     e &&
       ((ModelManager_1.ModelManager.MarqueeModel.CurMarquee = e),
-      (this.oAi = this.GetItem(1)),
-      (this.iAi = this.GetText(0)),
-      this.hke(e),
-      (this.UBt = this.GetSprite(2)),
-      (this.tAi = this.oAi.GetWidth() / 2 + this.UBt.GetWidth()),
-      (this.rAi = this.tAi),
-      this.iAi.SetAnchorOffsetX(this.rAi),
-      (this.unt =
+      (this.oPi = this.GetItem(1)),
+      (this.iPi = this.GetText(0)),
+      this.T2e(e),
+      (this.xbt = this.GetSprite(2)),
+      (this.tPi = this.oPi.GetWidth() / 2 + this.xbt.GetWidth()),
+      (this.rPi = this.tPi),
+      this.iPi.SetAnchorOffsetX(this.rPi),
+      (this.Ist =
         CommonParamById_1.configCommonParamById.GetIntConfig("marquee_speed")));
   }
   OnTick() {
     var e = ModelManager_1.ModelManager.MarqueeModel.CurMarquee;
     if (e && MarqueeController_1.MarqueeController.CheckCurMarqueeValid(e)) {
-      e.Content !== this.sAi?.Content && this.hke(e);
+      e.Content !== this.sPi?.Content && this.T2e(e);
       var i = TimeUtil_1.TimeUtil.GetServerTime(),
         t = ModelManager_1.ModelManager.MarqueeModel.GetNextMarquee();
       if (t && t.BeginTime <= i)
@@ -76,30 +76,30 @@ class MarqueeView extends UiTickViewBase_1.UiTickViewBase {
           MarqueeController_1.MarqueeController.CloseMarqueeView();
       else {
         if (
-          this.rAi <
-          this.tAi -
-            this.oAi.GetWidth() -
-            (this.iAi.GetWidth() + this.UBt.GetWidth()) -
+          this.rPi <
+          this.tPi -
+            this.oPi.GetWidth() -
+            (this.iPi.GetWidth() + this.xbt.GetWidth()) -
             TARGETPOSITIONOFFSET
         ) {
-          if ((this.nAi || (this.nAi = i), !(i > this.nAi + e.ScrollInterval)))
+          if ((this.nPi || (this.nPi = i), !(i > this.nPi + e.ScrollInterval)))
             return void (
-              this.aAi && (this.RootItem?.SetUIActive(!1), (this.aAi = !1))
+              this.aPi && (this.RootItem?.SetUIActive(!1), (this.aPi = !1))
             );
-          (this.rAi = this.tAi),
-            this.iAi.SetAnchorOffsetX(this.rAi),
+          (this.rPi = this.tPi),
+            this.iPi.SetAnchorOffsetX(this.rPi),
             ModelManager_1.ModelManager.MarqueeModel.UpdateMarqueeStorageDataByDate(
               e,
             ),
-            (this.nAi = void 0),
-            this.aAi || (this.RootItem?.SetUIActive(!0), (this.aAi = !0));
+            (this.nPi = void 0),
+            this.aPi || (this.RootItem?.SetUIActive(!0), (this.aPi = !0));
         }
-        (this.rAi -= this.unt), this.iAi.SetAnchorOffsetX(this.rAi);
+        (this.rPi -= this.Ist), this.iPi.SetAnchorOffsetX(this.rPi);
       }
     } else MarqueeController_1.MarqueeController.CloseMarqueeView();
   }
-  hke(i) {
-    let t = (this.sAi = i).Content.replace(/\r\n/g, " ");
+  T2e(i) {
+    let t = (this.sPi = i).Content.replace(/\r\n/g, " ");
     if (t.includes("{EndTime}")) {
       var i =
           ModelManager_1.ModelManager.MarqueeModel.GetMarqueeDataLeftTime(i),
@@ -111,7 +111,7 @@ class MarqueeView extends UiTickViewBase_1.UiTickViewBase {
       let e = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(r);
       (e = e.replace("{0}", i.toString())), (t = t.replace("{EndTime}", e));
     }
-    this.iAi.SetText(t);
+    this.iPi.SetText(t);
   }
 }
 exports.MarqueeView = MarqueeView;

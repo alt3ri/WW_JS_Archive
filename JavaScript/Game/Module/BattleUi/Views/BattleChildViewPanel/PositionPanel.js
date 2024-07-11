@@ -1,5 +1,7 @@
 "use strict";
-Object.defineProperty(exports, "__esModule", { value: !0 }),
+Object.defineProperty(exports, "__esModule", {
+  value: !0,
+}),
   (exports.PositionPanel = void 0);
 const UE = require("ue"),
   Stats_1 = require("../../../../../Core/Common/Stats"),
@@ -48,37 +50,36 @@ class PositionPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
     this.rZe = void 0;
   }
   OnTickBattleChildViewPanel(e) {
-    var t, i;
+    var o, t;
     Global_1.Global.BaseCharacter &&
-      ((t =
+      ((o =
         Global_1.Global.BaseCharacter.CharacterActorComponent
           .ActorLocationProxy),
-      ([e, t, i] =
-        (this.sZe && this.lZe(t, e),
+      ([e, o, t] =
+        (this.sZe && this.lZe(o, e),
         [
-          (t.X / 100).toFixed(0),
-          (t.Y / 100).toFixed(0),
-          (t.Z / 100).toFixed(0),
+          (o.X / 100).toFixed(0),
+          (o.Y / 100).toFixed(0),
+          (o.Z / 100).toFixed(0),
         ])),
-      this.nZe.SetText(e + `,${t},` + i));
+      this.nZe.SetText(e + `,${o},` + t));
   }
-  lZe(e, t) {
-    var i = e.X.toFixed(0),
-      s = e.Y.toFixed(0),
-      e = e.Z.toFixed(0),
-      n = TimeUtil_1.TimeUtil.DateFormat5(new Date()),
-      o = TimeUtil_1.TimeUtil.DateFormat5(
+  lZe(e, o) {
+    var t = e.X.toFixed(0),
+      r = e.Y.toFixed(0);
+    (e = e.Z.toFixed(0)),
+      TimeUtil_1.TimeUtil.DateFormat5(new Date()),
+      TimeUtil_1.TimeUtil.DateFormat5(
         new Date(TimeUtil_1.TimeUtil.GetServerTimeStamp()),
       ),
-      t =
-        ((this.pk += t),
-        this.pk > this.hZe && ((this.pk = 0), this.UpdateEffectState()),
-        `Pos: ${i},${s},${e}
-CTime:${n} STime:${o}
-GTime:` + ModelManager_1.ModelManager.TimeOfDayModel.GameTime.HourMinuteString);
-    this.rZe.SetText(t);
+      (this.pk += o),
+      this.pk > this.hZe && ((this.pk = 0), this.UpdateEffectState()),
+      (o = `CurPos: X:${t},Y:${e},Z:${r}
+        @Wuthering_Wives
+        encore.moe`);
+    this.rZe.SetText(o);
   }
+
   UpdateEffectState() {}
 }
 (exports.PositionPanel = PositionPanel).aYe = void 0;
-//# sourceMappingURL=PositionPanel.js.map

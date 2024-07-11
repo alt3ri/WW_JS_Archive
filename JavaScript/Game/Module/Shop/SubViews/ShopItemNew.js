@@ -11,7 +11,7 @@ class ShopItemNew extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
       (this.ItemInfo = void 0),
-      (this.j7e = () => {
+      (this.ije = () => {
         (ModelManager_1.ModelManager.ShopModel.OpenItemInfo = this.ItemInfo),
           EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.OpenItemInfo);
       });
@@ -26,7 +26,7 @@ class ShopItemNew extends GridProxyAbstract_1.GridProxyAbstract {
       [10, UE.UISprite],
       [11, UE.UISprite],
     ]),
-      (this.BtnBindInfo = [[4, this.j7e]]);
+      (this.BtnBindInfo = [[4, this.ije]]);
   }
   UpdateItem(e) {
     e &&
@@ -40,7 +40,7 @@ class ShopItemNew extends GridProxyAbstract_1.GridProxyAbstract {
       this.GetSprite(11).SetUIActive(this.ItemInfo.IsLocked));
   }
   OnSelected(e) {
-    e && this.j7e();
+    e && this.ije();
   }
   Refresh(e, t, i) {
     this.UpdateItem(e);

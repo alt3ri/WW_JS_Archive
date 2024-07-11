@@ -12,41 +12,41 @@ class UiPopFrameView extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
       (this.PopItem = void 0),
-      (this.s_r = void 0),
-      (this.Gft = void 0),
-      (this.s_r = e);
+      (this.our = void 0),
+      (this.$pt = void 0),
+      (this.our = e);
   }
   OnBeforeCreate() {
     var e = UiPopFrameViewStorage_1.UiPopFrameViewStorage.GetUiBehaviourPopInfo(
-        this.s_r.CommonPopBg,
+        this.our.CommonPopBg,
       ),
       i = e[0];
     (this.PopItem = new e[1]()),
       this.SetRootActorLoadInfo(
         i,
-        UiLayer_1.UiLayer.GetLayerRootUiItem(this.s_r.Type),
+        UiLayer_1.UiLayer.GetLayerRootUiItem(this.our.Type),
         !1,
       );
   }
   async OnBeforeHideAsync() {
     var e = new CustomPromise_1.CustomPromise();
-    await this.Gft.PlaySequenceAsync("Close", e, !0);
+    await this.$pt.PlaySequenceAsync("Close", e, !0);
   }
   async OnBeforeStartAsync() {
     await this.PopItem.OnlyCreateByActorAsync(this.GetOriginalActor()),
-      this.PopItem.SetViewInfo(this.s_r);
+      this.PopItem.SetViewInfo(this.our);
     var e = this.Parent.GetOriginalActor().GetComponentByClass(
       UE.UIItem.StaticClass(),
     );
     this.PopItem.AttachItem(e, this.Parent.GetRootItem()),
       this.PopItem.SetPopupViewBase(),
       this.AddChild(this.PopItem),
-      (this.Gft = new UiSequencePlayer_1.UiSequencePlayer(this.RootItem));
+      (this.$pt = new UiSequencePlayer_1.UiSequencePlayer(this.RootItem));
   }
   async OnShowAsyncImplementImplement() {
     var e = new CustomPromise_1.CustomPromise();
     const i = new CustomPromise_1.CustomPromise();
-    this.Gft.PlaySequenceAsync("Start", e).finally(() => {
+    this.$pt.PlaySequenceAsync("Start", e).finally(() => {
       i.SetResult(!0);
     }),
       await i.Promise;
@@ -80,10 +80,10 @@ class UiPopFrameView extends UiPanelBase_1.UiPanelBase {
     LguiUtil_1.LguiUtil.SetActorIsPermanent(this.GetOriginalActor(), !0, !0);
   }
   PlayLevelSequenceByName(e, i = !1) {
-    this.Gft.PlaySequence(e, i);
+    this.$pt.PlaySequence(e, i);
   }
   async PlaySequenceAsync(e, i, t = !1, s = !1) {
-    await this.Gft.PlaySequenceAsync(e, i, t, s);
+    await this.$pt.PlaySequenceAsync(e, i, t, s);
   }
 }
 exports.UiPopFrameView = UiPopFrameView;

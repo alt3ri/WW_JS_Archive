@@ -34,66 +34,66 @@ const UE = require("ue"),
 class ChatView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
-      (this.mSt = []),
-      (this.dSt = !1),
-      (this.XYe = void 0),
-      (this.CSt = void 0),
-      (this.gSt = void 0),
-      (this.fSt = []),
+      (this.TSt = []),
+      (this.LSt = !1),
+      (this.sze = void 0),
+      (this.DSt = void 0),
+      (this.RSt = void 0),
+      (this.USt = []),
       (this.ChatInputMaxNum = 0),
-      (this.pSt = !1),
-      (this.vSt = !1),
-      (this.MSt = void 0),
-      (this.gUn = new InputKeyDisplayData_1.InputKeyDisplayData()),
-      (this.z9e = () => this.SSt()),
-      (this.ESt = (t) => {}),
-      (this.ySt = (t) => {
+      (this.ASt = !1),
+      (this.PSt = !1),
+      (this.xSt = void 0),
+      (this.XPn = new InputKeyDisplayData_1.InputKeyDisplayData()),
+      (this.cHe = () => this.wSt()),
+      (this.BSt = (t) => {}),
+      (this.bSt = (t) => {
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("Chat", 8, "当聊天文本提交时", ["content", t]),
-          this.ISt(t, Protocol_1.Aki.Protocol.U3n.nMs);
+          this.qSt(t, Protocol_1.Aki.Protocol.l8n.SIs);
       }),
-      (this.TSt = () => {}),
-      (this.LSt = (t) => !0),
-      (this.DSt = (t) => (
+      (this.GSt = () => {}),
+      (this.NSt = (t) => !0),
+      (this.OSt = (t) => (
         ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
           "ReachInputMaxNum",
           this.ChatInputMaxNum,
         ),
         !0
       )),
-      (this.RSt = (t) => {
+      (this.kSt = (t) => {
         var e;
         0 <= t.Y
-          ? (this.dSt = !0)
-          : this.dSt &&
+          ? (this.LSt = !0)
+          : this.LSt &&
             !ChatController_1.ChatController.IsInRequestHistory &&
-            ((this.dSt = !1),
+            ((this.LSt = !1),
             (e = (t =
               ModelManager_1.ModelManager
                 .ChatModel).GetJoinedChatRoom()) instanceof
               PrivateChatRoom_1.PrivateChatRoom) &&
             t.RequestPrivateRoomLocalHistory(e);
       }),
-      (this.USt = (t, e) => {
-        this.pSt &&
+      (this.FSt = (t, e) => {
+        this.ASt &&
           0 === e &&
           !(e = this.GetInputText(2)).IsInputActive() &&
           e.ActivateInputText();
       }),
-      (this.ASt = (t) => {}),
-      (this.PSt = (t) => {
+      (this.VSt = (t) => {}),
+      (this.HSt = (t) => {
         var e = ModelManager_1.ModelManager.ChatModel.GetAllSortedChatRoom(),
           i =
-            (this.xSt(e),
+            (this.jSt(e),
             ModelManager_1.ModelManager.ChatModel.GetJoinedChatRoom());
         i &&
-          (this.wSt(i, e), i.GetUniqueId() === t.GetUniqueId()) &&
+          (this.WSt(i, e), i.GetUniqueId() === t.GetUniqueId()) &&
           (i instanceof PrivateChatRoom_1.PrivateChatRoom
-            ? this.BSt(i)
-            : this.bSt(i),
-          this.qSt(!0));
+            ? this.KSt(i)
+            : this.QSt(i),
+          this.XSt(!0));
       }),
-      (this.GSt = (t, e) => {
+      (this.$St = (t, e) => {
         var i,
           s = ModelManager_1.ModelManager.ChatModel,
           r = s.GetJoinedChatRoom();
@@ -101,45 +101,45 @@ class ChatView extends UiTickViewBase_1.UiTickViewBase {
           ((i = r.GetUniqueId()),
           (t = t.GetUniqueId()),
           (s = s.GetAllSortedChatRoom()),
-          this.xSt(s),
-          this.wSt(r, s),
+          this.jSt(s),
+          this.WSt(r, s),
           i === t) &&
-          this.NSt(e, (t) => {
-            this.qSt(!0), this.OSt(ChatDefine_1.CHAT_SCROLL_DELAY);
+          this.YSt(e, (t) => {
+            this.XSt(!0), this.JSt(ChatDefine_1.CHAT_SCROLL_DELAY);
           });
       }),
-      (this.fJe = () => {
-        this.MSt.SetScrollProgress(1), (this.vSt = !1);
+      (this.Uze = () => {
+        this.xSt.SetScrollProgress(1), (this.PSt = !1);
       }),
-      (this.kSt = (t) => {
+      (this.zSt = (t) => {
         var e;
         ModelManager_1.ModelManager.ChatModel.GetJoinedChatRoom().GetUniqueId() ===
           t.GetUniqueId() &&
           ((e = ModelManager_1.ModelManager.ChatModel.GetAllSortedChatRoom()),
           t instanceof PrivateChatRoom_1.PrivateChatRoom
-            ? (this.BSt(t), this.wSt(t, e))
+            ? (this.KSt(t), this.WSt(t, e))
             : (t instanceof TeamChatRoom_1.TeamChatRoom ||
                 t instanceof WorldTeamChatRoom_1.WorldChatRoom) &&
-              (this.bSt(t), this.wSt(t, e)),
-          this.qSt(!0));
+              (this.QSt(t), this.WSt(t, e)),
+          this.XSt(!0));
       }),
-      (this.FSt = (t) => {
+      (this.ZSt = (t) => {
         var e;
         t instanceof PrivateChatRoom_1.PrivateChatRoom &&
-          ((this.vSt = !1),
+          ((this.PSt = !1),
           (e = ModelManager_1.ModelManager.ChatModel.GetJoinedChatRoom())
-            ? e.GetUniqueId() === t.GetUniqueId() && (this.VSt(t), this.qSt(!0))
+            ? e.GetUniqueId() === t.GetUniqueId() && (this.eyt(t), this.XSt(!0))
             : ((e =
                 ModelManager_1.ModelManager.ChatModel.GetAllSortedChatRoom()),
-              this.xSt(e),
-              this.HSt(t)));
+              this.jSt(e),
+              this.tyt(t)));
       }),
-      (this.jSt = (t) => {
+      (this.iyt = (t) => {
         var e = ModelManager_1.ModelManager.ChatModel.GetAllSortedChatRoom(),
-          e = (this.xSt(e), this.WSt(e));
-        e ? (1 === e.ChatRoomType ? this.BSt(e) : this.bSt(e)) : this.qSt(!1);
+          e = (this.jSt(e), this.oyt(e));
+        e ? (1 === e.ChatRoomType ? this.KSt(e) : this.QSt(e)) : this.XSt(!1);
       }),
-      (this.j8e = (t) => {
+      (this.r7e = (t) => {
         var e = ModelManager_1.ModelManager.ChatModel.GetJoinedChatRoom();
         if (e) {
           if (e instanceof PrivateChatRoom_1.PrivateChatRoom) {
@@ -153,25 +153,25 @@ class ChatView extends UiTickViewBase_1.UiTickViewBase {
                 ])
               );
           }
-          this.ISt(t.toString(), Protocol_1.Aki.Protocol.U3n.Proto_Emoji);
+          this.qSt(t.toString(), Protocol_1.Aki.Protocol.l8n.Proto_Emoji);
         } else
           Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn("Chat", 8, "当前没有加入任何一个聊天室");
       }),
-      (this.KSt = () => {
+      (this.ryt = () => {
         UiManager_1.UiManager.OpenView("SelectedFriendChatView");
       }),
-      (this.QSt = () => {
+      (this.nyt = () => {
         UiManager_1.UiManager.OpenView("ChatExpressionView");
       }),
-      (this.XSt = () => {
+      (this.syt = () => {
         UiManager_1.UiManager.OpenView("QuickChatView");
       }),
-      (this.$St = () => {
+      (this.ayt = () => {
         var t = this.GetInputText(2).GetText();
-        this.ISt(t, Protocol_1.Aki.Protocol.U3n.nMs);
+        this.qSt(t, Protocol_1.Aki.Protocol.l8n.SIs);
       }),
-      (this.YSt = () => {
+      (this.hyt = () => {
         var t = ModelManager_1.ModelManager.ChatModel.GetJoinedChatRoom();
         t &&
           this.GetButton(8)
@@ -181,10 +181,10 @@ class ChatView extends UiTickViewBase_1.UiTickViewBase {
           ((t = t.GetTargetPlayerId()),
           UiManager_1.UiManager.OpenView("ChatOption", t));
       }),
-      (this.JSt = () => {
+      (this.lyt = () => {
         UiManager_1.UiManager.CloseView("ChatView");
       }),
-      (this.zSt = () => {
+      (this._yt = () => {
         var t = ModelManager_1.ModelManager.ChatModel.GetJoinedChatRoom();
         t &&
           t instanceof PrivateChatRoom_1.PrivateChatRoom &&
@@ -192,26 +192,26 @@ class ChatView extends UiTickViewBase_1.UiTickViewBase {
           ModelManager_1.ModelManager.FriendModel.ClearFriendSearchResults(),
           FriendController_1.FriendController.RequestSearchPlayerBasicInfo(t));
       }),
-      (this.ZSt = (t) => {
+      (this.uyt = (t) => {
         t = ModelManager_1.ModelManager.ChatModel.GetPrivateChatRoom(t);
-        t && (this.eEt(t), this.x9e(t));
+        t && (this.cyt(t), this.K7e(t));
       }),
-      (this.hSt = (t) => {
+      (this.MSt = (t) => {
         var t = ModelManager_1.ModelManager.ChatModel.GetPrivateChatRoom(t);
         !t ||
-          (t = this.fSt.indexOf(t)) < 0 ||
-          this.gSt.UnsafeGetGridProxy(t)?.RefreshMuteItem();
+          (t = this.USt.indexOf(t)) < 0 ||
+          this.RSt.UnsafeGetGridProxy(t)?.RefreshMuteItem();
       }),
-      (this.KMt = (t) => {
+      (this.rSt = (t) => {
         var t = ModelManager_1.ModelManager.ChatModel.GetPrivateChatRoom(t);
         !t ||
-          (t = this.fSt.indexOf(t)) < 0 ||
-          this.gSt.UnsafeGetGridProxy(t)?.RefreshPlayerTexture();
+          (t = this.USt.indexOf(t)) < 0 ||
+          this.RSt.UnsafeGetGridProxy(t)?.RefreshPlayerTexture();
       }),
-      (this.dKe = () => {
-        this.fUn();
+      (this.XBo = () => {
+        this.$Pn();
       }),
-      (this.tEt = (t, e) => {
+      (this.myt = (t, e) => {
         var i = ModelManager_1.ModelManager.ChatModel;
         let s = void 0;
         switch (t) {
@@ -219,15 +219,15 @@ class ChatView extends UiTickViewBase_1.UiTickViewBase {
             if (!ModelManager_1.ModelManager.FriendModel.GetFriendById(e))
               return;
             (s = i.GetPrivateChatRoom(e)) instanceof
-              PrivateChatRoom_1.PrivateChatRoom && this.HSt(s);
+              PrivateChatRoom_1.PrivateChatRoom && this.tyt(s);
             break;
           case 2:
-            (s = i.GetTeamChatRoom()), this.iEt();
+            (s = i.GetTeamChatRoom()), this.dyt();
             break;
           case 3:
-            (s = i.GetWorldChatRoom()), this.oEt();
+            (s = i.GetWorldChatRoom()), this.Cyt();
         }
-        s && this.wSt(s, this.fSt),
+        s && this.WSt(s, this.USt),
           this.GetItem(11)
             .GetOwner()
             .GetComponentByClass(UE.UIInturnAnimController.StaticClass())
@@ -259,118 +259,118 @@ class ChatView extends UiTickViewBase_1.UiTickViewBase {
       [20, UE.UIItem],
     ]),
       (this.BtnBindInfo = [
-        [0, this.KSt],
-        [1, this.QSt],
-        [3, this.XSt],
-        [4, this.$St],
-        [8, this.YSt],
-        [9, this.JSt],
-        [16, this.JSt],
+        [0, this.ryt],
+        [1, this.nyt],
+        [3, this.syt],
+        [4, this.ayt],
+        [8, this.hyt],
+        [9, this.lyt],
+        [16, this.lyt],
       ]);
   }
   OnStart() {
-    (this.MSt = this.GetScrollViewWithScrollbar(14)),
+    (this.xSt = this.GetScrollViewWithScrollbar(14)),
       (this.ChatInputMaxNum =
         CommonParamById_1.configCommonParamById.GetIntConfig("chat_character")),
       (this.GetInputText(2).MaxInput = this.ChatInputMaxNum),
       this.GetItem(10).SetUIActive(!1);
     var t = this.GetItem(10).GetOwner(),
       t =
-        ((this.gSt = new LoopScrollView_1.LoopScrollView(
+        ((this.RSt = new LoopScrollView_1.LoopScrollView(
           this.GetLoopScrollViewComponent(15),
           t,
-          this.z9e,
+          this.cHe,
         )),
         ModelManager_1.ModelManager.ChatModel),
       e = t.GetAllSortedChatRoom();
-    this.xSt(e);
+    this.jSt(e);
     let i = t.GetJoinedChatRoom();
-    (i = i || this.WSt(e)) instanceof PrivateChatRoom_1.PrivateChatRoom
-      ? this.BSt(i)
-      : this.bSt(i),
-      this.qSt(void 0 !== i),
-      this.rEt(),
-      this.fUn(),
+    (i = i || this.oyt(e)) instanceof PrivateChatRoom_1.PrivateChatRoom
+      ? this.KSt(i)
+      : this.QSt(i),
+      this.XSt(void 0 !== i),
+      this.gyt(),
+      this.$Pn(),
       this.Ore();
   }
   OnBeforeDestroy() {
-    this.nEt(),
-      this.MJe(),
-      this.sEt(),
+    this.fyt(),
+      this.xze(),
+      this.pyt(),
       ModelManager_1.ModelManager.ChatModel.LeaveCurrentChatRoom(),
       this.kre(),
-      this.gSt.ClearGridProxies(),
-      (this.gSt = void 0),
-      (this.fSt.length = 0),
-      (this.vSt = !1),
-      (this.MSt = void 0);
+      this.RSt.ClearGridProxies(),
+      (this.RSt = void 0),
+      (this.USt.length = 0),
+      (this.PSt = !1),
+      (this.xSt = void 0);
   }
   OnTick(t) {
-    this.vSt && this.MSt.SetScrollProgress(1);
+    this.PSt && this.xSt.SetScrollProgress(1);
   }
   Ore() {
     var t = this.GetInputText(2);
-    t.OnTextChange.Bind(this.ESt),
-      t.OnTextSubmit.Bind(this.ySt),
-      t.OnInputActivateDelegate.Bind(this.TSt),
-      t.OnCheckTextInputDelegate.Bind(this.LSt),
-      t.OnTextClip.Bind(this.DSt),
-      this.MSt.OnScrollValueChange.Bind(this.RSt),
+    t.OnTextChange.Bind(this.BSt),
+      t.OnTextSubmit.Bind(this.bSt),
+      t.OnInputActivateDelegate.Bind(this.GSt),
+      t.OnCheckTextInputDelegate.Bind(this.NSt),
+      t.OnTextClip.Bind(this.OSt),
+      this.xSt.OnScrollValueChange.Bind(this.kSt),
       InputDistributeController_1.InputDistributeController.BindAction(
         InputMappingsDefine_1.actionMappings.激活聊天,
-        this.USt,
-      ),
-      EventSystem_1.EventSystem.Add(
-        EventDefine_1.EEventName.OnCreatePrivateChatRoom,
-        this.ASt,
-      ),
-      EventSystem_1.EventSystem.Add(
-        EventDefine_1.EEventName.OnJoinChatRoom,
-        this.kSt,
-      ),
-      EventSystem_1.EventSystem.Add(
-        EventDefine_1.EEventName.OnAddHistoryChatContentCompleted,
         this.FSt,
       ),
       EventSystem_1.EventSystem.Add(
-        EventDefine_1.EEventName.OnOpenChatRoom,
-        this.PSt,
+        EventDefine_1.EEventName.OnCreatePrivateChatRoom,
+        this.VSt,
       ),
       EventSystem_1.EventSystem.Add(
-        EventDefine_1.EEventName.OnAddChatContent,
-        this.GSt,
+        EventDefine_1.EEventName.OnJoinChatRoom,
+        this.zSt,
       ),
       EventSystem_1.EventSystem.Add(
-        EventDefine_1.EEventName.OnRemovePrivateChatRoom,
-        this.jSt,
-      ),
-      EventSystem_1.EventSystem.Add(
-        EventDefine_1.EEventName.OnClosePrivateChatRoom,
-        this.jSt,
-      ),
-      EventSystem_1.EventSystem.Add(
-        EventDefine_1.EEventName.OnSelectExpression,
-        this.j8e,
-      ),
-      EventSystem_1.EventSystem.Add(
-        EventDefine_1.EEventName.SearchPlayerInfo,
+        EventDefine_1.EEventName.OnAddHistoryChatContentCompleted,
         this.ZSt,
       ),
       EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.OnOpenChatRoom,
+        this.HSt,
+      ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.OnAddChatContent,
+        this.$St,
+      ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.OnRemovePrivateChatRoom,
+        this.iyt,
+      ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.OnClosePrivateChatRoom,
+        this.iyt,
+      ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.OnSelectExpression,
+        this.r7e,
+      ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.SearchPlayerInfo,
+        this.uyt,
+      ),
+      EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnAddMutePlayer,
-        this.hSt,
+        this.MSt,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnRemoveMutePlayer,
-        this.hSt,
+        this.MSt,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnChatPlayerInfoChanged,
-        this.KMt,
+        this.rSt,
       ),
       EventSystem_1.EventSystem.Add(
-        EventDefine_1.EEventName.OnPlatformChanged,
-        this.dKe,
+        EventDefine_1.EEventName.InputControllerChange,
+        this.XBo,
       );
   }
   kre() {
@@ -379,82 +379,82 @@ class ChatView extends UiTickViewBase_1.UiTickViewBase {
       t.OnTextSubmit.Unbind(),
       t.OnInputActivateDelegate.Unbind(),
       t.OnCheckTextInputDelegate.Unbind(),
-      this.MSt.OnScrollValueChange.Unbind(),
+      this.xSt.OnScrollValueChange.Unbind(),
       InputDistributeController_1.InputDistributeController.UnBindAction(
         InputMappingsDefine_1.actionMappings.激活聊天,
-        this.USt,
-      ),
-      EventSystem_1.EventSystem.Remove(
-        EventDefine_1.EEventName.OnCreatePrivateChatRoom,
-        this.ASt,
-      ),
-      EventSystem_1.EventSystem.Remove(
-        EventDefine_1.EEventName.OnJoinChatRoom,
-        this.kSt,
-      ),
-      EventSystem_1.EventSystem.Remove(
-        EventDefine_1.EEventName.OnAddHistoryChatContentCompleted,
         this.FSt,
       ),
       EventSystem_1.EventSystem.Remove(
-        EventDefine_1.EEventName.OnOpenChatRoom,
-        this.PSt,
+        EventDefine_1.EEventName.OnCreatePrivateChatRoom,
+        this.VSt,
       ),
       EventSystem_1.EventSystem.Remove(
-        EventDefine_1.EEventName.OnAddChatContent,
-        this.GSt,
+        EventDefine_1.EEventName.OnJoinChatRoom,
+        this.zSt,
       ),
       EventSystem_1.EventSystem.Remove(
-        EventDefine_1.EEventName.OnRemovePrivateChatRoom,
-        this.jSt,
-      ),
-      EventSystem_1.EventSystem.Remove(
-        EventDefine_1.EEventName.OnClosePrivateChatRoom,
-        this.jSt,
-      ),
-      EventSystem_1.EventSystem.Remove(
-        EventDefine_1.EEventName.OnSelectExpression,
-        this.j8e,
-      ),
-      EventSystem_1.EventSystem.Remove(
-        EventDefine_1.EEventName.SearchPlayerInfo,
+        EventDefine_1.EEventName.OnAddHistoryChatContentCompleted,
         this.ZSt,
       ),
       EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.OnOpenChatRoom,
+        this.HSt,
+      ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.OnAddChatContent,
+        this.$St,
+      ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.OnRemovePrivateChatRoom,
+        this.iyt,
+      ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.OnClosePrivateChatRoom,
+        this.iyt,
+      ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.OnSelectExpression,
+        this.r7e,
+      ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.SearchPlayerInfo,
+        this.uyt,
+      ),
+      EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnAddMutePlayer,
-        this.hSt,
+        this.MSt,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnRemoveMutePlayer,
-        this.hSt,
+        this.MSt,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnChatPlayerInfoChanged,
-        this.KMt,
+        this.rSt,
       ),
       EventSystem_1.EventSystem.Remove(
-        EventDefine_1.EEventName.OnPlatformChanged,
-        this.dKe,
+        EventDefine_1.EEventName.InputControllerChange,
+        this.XBo,
       );
   }
-  OSt(t) {
-    (this.vSt = !0),
-      this.MJe(),
-      (this.XYe = TimerSystem_1.TimerSystem.Delay(this.fJe, t));
+  JSt(t) {
+    (this.PSt = !0),
+      this.xze(),
+      (this.sze = TimerSystem_1.TimerSystem.Delay(this.Uze, t));
   }
-  MJe() {
-    TimerSystem_1.TimerSystem.Has(this.XYe) &&
-      TimerSystem_1.TimerSystem.Remove(this.XYe);
+  xze() {
+    TimerSystem_1.TimerSystem.Has(this.sze) &&
+      TimerSystem_1.TimerSystem.Remove(this.sze);
   }
-  fUn() {
+  $Pn() {
     var e = this.GetText(18);
     if (
       InputSettingsManager_1.InputSettingsManager.GetActionKeyDisplayData(
-        this.gUn,
+        this.XPn,
         InputMappingsDefine_1.actionMappings.激活聊天,
       )
     ) {
-      var i = this.gUn.GetDisplayKeyNameList();
+      var i = this.XPn.GetDisplayKeyNameList();
       if (i) {
         let t = "";
         for (const r of i) {
@@ -470,7 +470,7 @@ class ChatView extends UiTickViewBase_1.UiTickViewBase {
     } else
       LguiUtil_1.LguiUtil.SetLocalTextNew(e, "PrefabTextItem_1493640674_Text");
   }
-  ISt(t, e) {
+  qSt(t, e) {
     if (StringUtils_1.StringUtils.IsEmpty(t))
       ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
         "InputChatContent",
@@ -512,13 +512,13 @@ class ChatView extends UiTickViewBase_1.UiTickViewBase {
               ? ChatController_1.ChatController.ChannelChatRequest(
                   e,
                   t,
-                  Protocol_1.Aki.Protocol.kGs.Proto_MatchTeam,
+                  Protocol_1.Aki.Protocol.DFs.Proto_MatchTeam,
                 )
               : i instanceof WorldTeamChatRoom_1.WorldChatRoom &&
                 ChatController_1.ChatController.ChannelChatRequest(
                   e,
                   t,
-                  Protocol_1.Aki.Protocol.kGs.Proto_WorldTeam,
+                  Protocol_1.Aki.Protocol.DFs.Proto_WorldTeam,
                 );
           this.GetInputText(2).SetText("", !1);
         }
@@ -527,59 +527,59 @@ class ChatView extends UiTickViewBase_1.UiTickViewBase {
           Log_1.Log.Warn("Chat", 8, "当前没有加入任何一个聊天室");
     }
   }
-  qSt(t) {
+  XSt(t) {
     var e = this.GetItem(12),
       i = this.GetItem(13);
-    e.SetUIActive(t), i.SetUIActive(!t), (this.pSt = t);
+    e.SetUIActive(t), i.SetUIActive(!t), (this.ASt = t);
   }
-  aEt(t) {
+  vyt(t) {
     this.GetButton(8).GetOwner().GetUIItem()?.SetUIActive(t);
   }
-  BSt(t) {
+  KSt(t) {
     var e;
     t &&
       t.CanChat() &&
       ((e = ModelManager_1.ModelManager.ChatModel.GetAllSortedChatRoom()),
-      this.eEt(t, !0),
-      this.x9e(t),
-      this.wSt(t, e),
-      this.VSt(t),
-      this.aEt(!0),
-      this.qSt(!0));
+      this.cyt(t, !0),
+      this.K7e(t),
+      this.WSt(t, e),
+      this.eyt(t),
+      this.vyt(!0),
+      this.XSt(!0));
   }
-  bSt(t) {
+  QSt(t) {
     var e;
     t &&
       ((e = ModelManager_1.ModelManager.ChatModel.GetAllSortedChatRoom()),
-      this.wSt(t, e),
-      this.VSt(t),
-      this.eEt(void 0, !1),
-      this.x9e(void 0, !0),
-      this.aEt(!1),
-      this.qSt(!0));
+      this.WSt(t, e),
+      this.eyt(t),
+      this.cyt(void 0, !1),
+      this.K7e(void 0, !0),
+      this.vyt(!1),
+      this.XSt(!0));
   }
-  VSt(t) {
-    this.nEt();
+  eyt(t) {
+    this.fyt();
     t = t.GetChatContentList();
-    this.hEt(t);
+    this.Myt(t);
   }
-  hEt(e, i = 0) {
+  Myt(e, i = 0) {
     var t = e[i];
     t
-      ? this.NSt(t, (t) => {
+      ? this.YSt(t, (t) => {
           i >= e.length
-            ? this.OSt(ChatDefine_1.FIRST_CHAT_SCROLL_DELAY)
-            : this.hEt(e, i + 1);
+            ? this.JSt(ChatDefine_1.FIRST_CHAT_SCROLL_DELAY)
+            : this.Myt(e, i + 1);
         })
-      : this.OSt(ChatDefine_1.FIRST_CHAT_SCROLL_DELAY);
+      : this.JSt(ChatDefine_1.FIRST_CHAT_SCROLL_DELAY);
   }
-  NSt(t, e) {
+  YSt(t, e) {
     var i = this.GetItem(11);
     let s = void 0;
     return (
       (s =
-        t.NoticeType === Protocol_1.Aki.Protocol.FGs.Proto_EnterTeam ||
-        t.NoticeType === Protocol_1.Aki.Protocol.FGs.Proto_ExitTeam
+        t.NoticeType === Protocol_1.Aki.Protocol.PFs.Proto_EnterTeam ||
+        t.NoticeType === Protocol_1.Aki.Protocol.PFs.Proto_ExitTeam
           ? new ChatTeamTipsContent_1.ChatTeamTipsContent(
               ChatDefine_1.TEAM_CONTENT_RESOURCE_ID,
               i,
@@ -599,60 +599,62 @@ class ChatView extends UiTickViewBase_1.UiTickViewBase {
                 t,
                 e,
               )),
-      this.mSt.push(s),
+      this.TSt.push(s),
       s
     );
   }
-  nEt() {
-    for (const t of this.mSt) t.Destroy();
-    this.mSt.length = 0;
+  fyt() {
+    for (const t of this.TSt) t.Destroy();
+    this.TSt.length = 0;
   }
-  wSt(t, e) {
-    !t || (e = e.indexOf(t)) < 0 || this.gSt.SelectGridProxy(e);
+  WSt(t, e) {
+    !t || (e = e.indexOf(t)) < 0 || this.RSt.SelectGridProxy(e);
   }
-  eEt(t, e = !0) {
+  cyt(t, e = !0) {
     var i = this.GetItem(5),
       s = this.GetItem(17);
     e
       ? (i.SetUIActive(!1),
         s.SetUIActive(!1),
         !t ||
-          (e = this.fSt.indexOf(t)) < 0 ||
-          this.gSt.UnsafeGetGridProxy(e)?.RefreshIsOnline(t))
+          (e = this.USt.indexOf(t)) < 0 ||
+          this.RSt.UnsafeGetGridProxy(e)?.RefreshIsOnline(t))
       : (i.SetUIActive(!1), s.SetUIActive(!1));
   }
-  x9e(t, e = !1) {
+  K7e(t, e = !1) {
     var i = this.GetText(7),
       s = this.GetText(6);
     e
       ? (LguiUtil_1.LguiUtil.SetLocalText(i, "CurrentTeam"), s.SetUIActive(!1))
       : ((e = t.GetPlayerName()),
-        (t = t.GetPlayerRemarks())
-          ? (i.SetText(`(${e})`), s.SetText(t), s.SetUIActive(!0))
-          : (i.SetText(e), s.SetUIActive(!1)));
+        (t = t.GetPlayerRemarks()),
+        s.SetUIActive(!1),
+        t
+          ? (i.SetText(t), i?.SetColor(ChatDefine_1.playerMarkNameColor))
+          : (i.SetText(e), i.SetColor(ChatDefine_1.playerRealNameColor)));
   }
-  rEt() {
-    this.sEt();
+  gyt() {
+    this.pyt();
     var t = ModelManager_1.ModelManager.ChatModel.GetJoinedChatRoom();
     t &&
       t instanceof PrivateChatRoom_1.PrivateChatRoom &&
-      (this.CSt = TimerSystem_1.TimerSystem.Forever(
-        this.zSt,
+      (this.DSt = TimerSystem_1.TimerSystem.Forever(
+        this._yt,
         ChatDefine_1.REFRESH_PLAYER_INFO_TIME_DOWN,
       ));
   }
-  sEt() {
-    TimerSystem_1.TimerSystem.Has(this.CSt) &&
-      (TimerSystem_1.TimerSystem.Remove(this.CSt), (this.CSt = void 0));
+  pyt() {
+    TimerSystem_1.TimerSystem.Has(this.DSt) &&
+      (TimerSystem_1.TimerSystem.Remove(this.DSt), (this.DSt = void 0));
   }
-  xSt(t) {
-    (this.fSt = t), this.gSt?.RefreshByData(t);
+  jSt(t) {
+    (this.USt = t), this.RSt?.RefreshByData(t);
   }
-  SSt() {
+  wSt() {
     var t = new PrivateChatFriendItem_1.ChatRoomItem();
-    return t.BindOnClicked(this.tEt), t;
+    return t.BindOnClicked(this.myt), t;
   }
-  HSt(t) {
+  tyt(t) {
     var e,
       i = ModelManager_1.ModelManager.ChatModel,
       s = t.GetTargetPlayerId();
@@ -663,7 +665,7 @@ class ChatView extends UiTickViewBase_1.UiTickViewBase {
         e.GetTargetPlayerId() === s) ||
       i.JoinChatRoom(t);
   }
-  iEt() {
+  dyt() {
     var t = ModelManager_1.ModelManager.ChatModel,
       e = t.GetTeamChatRoom();
     e
@@ -671,7 +673,7 @@ class ChatView extends UiTickViewBase_1.UiTickViewBase {
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error("Chat", 5, "加入队伍聊天室失败，聊天室未初始化");
   }
-  oEt() {
+  Cyt() {
     var t = ModelManager_1.ModelManager.ChatModel,
       e = t.GetWorldChatRoom();
     e
@@ -679,14 +681,14 @@ class ChatView extends UiTickViewBase_1.UiTickViewBase {
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error("Chat", 5, "加入世界聊天室失败，聊天室未初始化");
   }
-  WSt(t) {
+  oyt(t) {
     for (const e of t)
       if (e instanceof PrivateChatRoom_1.PrivateChatRoom) {
-        if (e.CanChat()) return this.HSt(e), e;
+        if (e.CanChat()) return this.tyt(e), e;
       } else {
-        if (e instanceof TeamChatRoom_1.TeamChatRoom) return this.iEt(), e;
+        if (e instanceof TeamChatRoom_1.TeamChatRoom) return this.dyt(), e;
         if (e instanceof WorldTeamChatRoom_1.WorldChatRoom)
-          return this.oEt(), e;
+          return this.Cyt(), e;
       }
   }
 }

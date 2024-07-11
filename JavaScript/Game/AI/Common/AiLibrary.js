@@ -1,33 +1,34 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AiLibrary = void 0);
-const Log_1 = require("../../../Core/Common/Log"),
+const Info_1 = require("../../../Core/Common/Info"),
+  Log_1 = require("../../../Core/Common/Log"),
   MathUtils_1 = require("../../../Core/Utils/MathUtils");
 class AiLibrary {
-  static IsSkillAvailable(t, i, e, o, l, a, r, s, _, g, L = !1) {
-    var A,
-      c = t.AiSkill.SkillInfos.get(i);
+  static IsSkillAvailable(o, e, t, i, l, a, r, _, s, g, L = !1) {
+    var n,
+      I = o.AiSkill.SkillInfos.get(e);
     return (
-      !!c &&
-      !!(A = t.AiSkill.SkillPreconditionMap.get(c.SkillPreconditionId)) &&
+      !!I &&
+      !!(n = o.AiSkill.SkillPreconditionMap.get(I.SkillPreconditionId)) &&
       !(
-        !A.NeedTarget ||
-        (L &&
+        !n.NeedTarget ||
+        ((L = L && !Info_1.Info.IsBuildShipping) &&
           Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("AI", 6, "Detect Skill", ["SkillInfoId", i]),
-        0 <= l && c.SkillType !== l
+          Log_1.Log.Info("AI", 6, "Detect Skill", ["SkillInfoId", e]),
+        0 <= l && I.SkillType !== l
           ? (L &&
               Log_1.Log.CheckInfo() &&
               Log_1.Log.Info("AI", 6, "FailType", ["Type", l]),
             1)
-          : t.AiSkill.CanActivate(i) &&
-              e.IsCanUseSkill(Number(c.SkillId)) &&
-              t.AiSkill.CanActivate(i)
-            ? A.NeedTag &&
-              (!o.Valid ||
-                (t.AiSkill.PreconditionTagMap.has(c.SkillPreconditionId) &&
-                  !o.HasTag(
-                    t.AiSkill.PreconditionTagMap.get(c.SkillPreconditionId)
+          : o.AiSkill.CanActivate(e) &&
+              t.IsCanUseSkill(Number(I.SkillId)) &&
+              o.AiSkill.CanActivate(e)
+            ? n.NeedTag &&
+              (!i.Valid ||
+                (o.AiSkill.PreconditionTagMap.has(I.SkillPreconditionId) &&
+                  !i.HasTag(
+                    o.AiSkill.PreconditionTagMap.get(I.SkillPreconditionId)
                       .TagId,
                   )))
               ? (L &&
@@ -35,11 +36,11 @@ class AiLibrary {
                   Log_1.Log.Info("AI", 6, "FailTag"),
                 1)
               : !(
-                  MathUtils_1.MathUtils.InRangeAngle(a, A.TargetAngleRange) &&
-                  MathUtils_1.MathUtils.InRange(r, A.HeightRange) &&
+                  MathUtils_1.MathUtils.InRangeAngle(a, n.TargetAngleRange) &&
+                  MathUtils_1.MathUtils.InRange(r, n.HeightRange) &&
                   (!g ||
-                    (MathUtils_1.MathUtils.InRange(s, A.DistanceRange) &&
-                      MathUtils_1.MathUtils.InRangeAngle(_, A.AngleRange)))
+                    (MathUtils_1.MathUtils.InRange(_, n.DistanceRange) &&
+                      MathUtils_1.MathUtils.InRangeAngle(s, n.AngleRange)))
                 ) &&
                 (L &&
                   Log_1.Log.CheckInfo() &&
@@ -48,8 +49,8 @@ class AiLibrary {
                     6,
                     "FailLocation",
                     ["TargetAngle", a],
-                    ["Distance", s],
-                    ["Angle", _],
+                    ["Distance", _],
+                    ["Angle", s],
                     ["Height", r],
                   ),
                 1)

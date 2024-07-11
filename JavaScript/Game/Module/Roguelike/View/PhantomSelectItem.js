@@ -16,11 +16,11 @@ class PhantomSelectItem extends GridProxyAbstract_1.GridProxyAbstract {
       (this.PhantomAttrLayout = void 0),
       (this.IsRaycastTarget = !0),
       (this.NewUnlockAttrSet = new Set()),
-      (this.yao = void 0),
-      (this.Iao = (t) => {
-        this.yao?.(this.RogueGainEntry.ConfigId);
+      (this.vho = void 0),
+      (this.Mho = (t) => {
+        this.vho?.(this.RogueGainEntry.ConfigId);
       }),
-      (this.Tao = () => {
+      (this.Eho = () => {
         return new PhantomAttrItem_1.PhantomAttrItem();
       }),
       (this.IsRaycastTarget = t);
@@ -29,11 +29,11 @@ class PhantomSelectItem extends GridProxyAbstract_1.GridProxyAbstract {
     this.Update(t);
   }
   Update(t) {
-    t.RoguelikeGainDataType === Protocol_1.Aki.Protocol.u3s.qDs &&
+    t.RoguelikeGainDataType === Protocol_1.Aki.Protocol.e8s.txs &&
       ((this.RogueGainEntry = t), this.RefreshPanel());
   }
   SetToggleStateChangeCallback(t) {
-    this.yao = t;
+    this.vho = t;
   }
   SetToggleUnDetermined() {
     this.GetExtendToggle(5).SetToggleState(2);
@@ -65,22 +65,22 @@ class PhantomSelectItem extends GridProxyAbstract_1.GridProxyAbstract {
       [8, UE.UIItem],
       [9, UE.UIItem],
     ]),
-      (this.BtnBindInfo = [[5, this.Iao]]);
+      (this.BtnBindInfo = [[5, this.Mho]]);
   }
   OnStart() {
     (this.PhantomAttrLayout = new GenericLayout_1.GenericLayout(
       this.GetVerticalLayout(3),
-      this.Tao,
+      this.Eho,
     )),
       this.SetToggleRaycastTarget(this.IsRaycastTarget);
   }
   OnBeforeDestroy() {
-    this.yao = void 0;
+    this.vho = void 0;
   }
   RefreshPanel() {
-    this.RogueGainEntry && (this.V9i(), this.Lao());
+    this.RogueGainEntry && (this.F7i(), this.Sho());
   }
-  V9i() {
+  F7i() {
     var t = ConfigManager_1.ConfigManager.RoguelikeConfig.GetRoguePhantomConfig(
       this.RogueGainEntry.ConfigId,
     );
@@ -98,7 +98,7 @@ class PhantomSelectItem extends GridProxyAbstract_1.GridProxyAbstract {
       (this.SetTextureByPath(t.PhantomBgA, this.GetTexture(6)),
       this.SetTextureByPath(t.PhantomBgB, this.GetTexture(7)));
   }
-  Lao() {
+  Sho() {
     this.PhantomAttrLayout.RefreshByDataAsync(
       this.RogueGainEntry.AffixEntryList ?? [],
     ).then(() => {

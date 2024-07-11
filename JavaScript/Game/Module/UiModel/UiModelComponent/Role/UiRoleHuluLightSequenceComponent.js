@@ -34,25 +34,25 @@ const UE = require("ue"),
 let UiRoleHuluLightSequenceComponent = class UiRoleHuluLightSequenceComponent extends UiModelComponentBase_1.UiModelComponentBase {
   constructor() {
     super(...arguments),
-      (this.nXt = void 0),
-      (this.EPe = void 0),
-      (this.Bkt = void 0),
+      (this.n$t = void 0),
+      (this.SPe = void 0),
+      (this.b2t = void 0),
       (this.hJ = ResourceSystem_1.ResourceSystem.InvalidId),
-      (this.$wr = (e) => {
+      (this.Twr = (e) => {
         e || this.StopLightSequence();
       });
   }
   OnInit() {
-    this.nXt = this.Owner.CheckGetComponent(1);
+    this.n$t = this.Owner.CheckGetComponent(1);
   }
   OnStart() {
     EventSystem_1.EventSystem.AddWithTarget(
       this.Owner,
       EventDefine_1.EEventName.OnUiModelVisibleChange,
-      this.$wr,
+      this.Twr,
     );
   }
-  FBr() {
+  fBr() {
     var e = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
       "LevelSequence_HuluLight",
     );
@@ -65,36 +65,36 @@ let UiRoleHuluLightSequenceComponent = class UiRoleHuluLightSequenceComponent ex
           (((t = new UE.MovieSceneSequencePlaybackSettings()).bRestoreState =
             !0),
           (t.bPauseAtEnd = !0),
-          (this.Bkt = ActorSystem_1.ActorSystem.Get(
+          (this.b2t = ActorSystem_1.ActorSystem.Get(
             UE.LevelSequenceActor.StaticClass(),
             MathUtils_1.MathUtils.DefaultTransform,
             void 0,
             !1,
           )),
-          (this.Bkt.PlaybackSettings = t),
-          this.Bkt.SetSequence(e),
-          (this.EPe = this.Bkt.SequencePlayer),
-          this.EPe) &&
+          (this.b2t.PlaybackSettings = t),
+          this.b2t.SetSequence(e),
+          (this.SPe = this.b2t.SequencePlayer),
+          this.SPe) &&
           this.PlayLightSequence();
       },
     );
   }
   PlayLightSequence() {
     var e, t;
-    this.EPe
-      ? ((this.Bkt.bOverrideInstanceData = !0),
-        (e = this.Bkt.DefaultInstanceData),
-        (t = this.nXt.MainMeshComponent.GetSocketTransform(
+    this.SPe
+      ? ((this.b2t.bOverrideInstanceData = !0),
+        (e = this.b2t.DefaultInstanceData),
+        (t = this.n$t.MainMeshComponent.GetSocketTransform(
           CharacterNameDefines_1.CharacterNameDefines.GLIDEING_SOCKETNAME,
         )),
         (t = new UE.Transform(t.GetLocation())),
         (e.TransformOrigin = t),
-        this.EPe.Play())
-      : this.hJ === ResourceSystem_1.ResourceSystem.InvalidId && this.FBr();
+        this.SPe.Play())
+      : this.hJ === ResourceSystem_1.ResourceSystem.InvalidId && this.fBr();
   }
   StopLightSequence() {
-    this.EPe
-      ? this.EPe.Stop()
+    this.SPe
+      ? this.SPe.Stop()
       : this.hJ !== ResourceSystem_1.ResourceSystem.InvalidId &&
         (ResourceSystem_1.ResourceSystem.CancelAsyncLoad(this.hJ),
         (this.hJ = ResourceSystem_1.ResourceSystem.InvalidId));
@@ -103,15 +103,15 @@ let UiRoleHuluLightSequenceComponent = class UiRoleHuluLightSequenceComponent ex
     EventSystem_1.EventSystem.RemoveWithTarget(
       this.Owner,
       EventDefine_1.EEventName.OnUiModelVisibleChange,
-      this.$wr,
+      this.Twr,
     ),
       this.StopLightSequence();
-    const e = this.Bkt;
+    const e = this.b2t;
     TimerSystem_1.TimerSystem.Next(() => {
       ActorSystem_1.ActorSystem.Put(e);
     }),
-      (this.EPe = void 0),
-      (this.Bkt = void 0);
+      (this.SPe = void 0),
+      (this.b2t = void 0);
   }
 };
 (UiRoleHuluLightSequenceComponent = __decorate(

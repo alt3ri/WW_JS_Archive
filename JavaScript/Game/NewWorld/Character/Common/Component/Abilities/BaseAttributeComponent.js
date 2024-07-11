@@ -28,7 +28,7 @@ const Log_1 = require("../../../../../../Core/Common/Log"),
   RegisterComponent_1 = require("../../../../../../Core/Entity/RegisterComponent"),
   StatDefine_1 = require("../../../../../Common/StatDefine"),
   ModelManager_1 = require("../../../../../Manager/ModelManager"),
-  CombatDebugController_1 = require("../../../../../Utils/CombatDebugController"),
+  CombatLog_1 = require("../../../../../Utils/CombatLog"),
   AbilityUtils_1 = require("./AbilityUtils"),
   CharacterAttributeTypes_1 = require("./CharacterAttributeTypes");
 class AttributeSnapshot {
@@ -81,9 +81,9 @@ let BaseAttributeComponent =
       let r = e;
       var i,
         s,
-        e = this.Gbr(t),
+        e = this.mbr(t),
         e =
-          (void 0 !== e && (r = this.Nbr(t, r, e)),
+          (void 0 !== e && (r = this.dbr(t, r, e)),
           CharacterAttributeTypes_1.attrsNotClampZero.includes(t) ||
             (r = Math.max(r, 0)),
           (r = Math.floor(r)),
@@ -105,17 +105,9 @@ let BaseAttributeComponent =
     GetCurrentValue(t) {
       return this.CurrentValues[t];
     }
-    Gbr(t) {
-      var e = CharacterAttributeTypes_1.attrsBaseValueClamp.get(t);
-      return (
-        e ||
-        ((e = CharacterAttributeTypes_1.attrsBaseValueClampMax.get(t))
-          ? this.GetCurrentValue(e)
-          : void 0)
-      );
-    }
-    InitValueFromServer(t, e, r) {
-      (this.BaseValues[t] = e), (this.CurrentValues[t] = r);
+    mbr(t) {
+      t = CharacterAttributeTypes_1.attrsBaseValueClampMax.get(t);
+      if (t) return this.GetCurrentValue(t);
     }
     SyncValueFromServer(t, e, r) {
       var i = this.BaseValues[t],
@@ -125,7 +117,7 @@ let BaseAttributeComponent =
         this.DispatchCurrentValueEvent(t, r, s);
     }
     UpdateCurrentValue(t) {
-      let e = this.Obr(t);
+      let e = this.Cbr(t);
       var r = CharacterAttributeTypes_1.attrsCurrentValueClamp.get(t),
         r =
           (r && (e = Math.min(e, r)),
@@ -171,7 +163,7 @@ let BaseAttributeComponent =
       if (this.ModifierLists[t])
         for (const e of this.ModifierLists[t].values()) yield e;
     }
-    Obr(t) {
+    Cbr(t) {
       var e = this.BaseValues[t];
       if (!this.ModifierLists[t]) return e;
       let r = 0,
@@ -196,7 +188,7 @@ let BaseAttributeComponent =
                   ? this
                   : ModelManager_1.ModelManager.CreatureModel.GetEntity(
                       n.SourceEntity,
-                    )?.Entity?.GetComponent(156),
+                    )?.Entity?.GetComponent(158),
                 n.SourceAttributeId,
                 n.SourceCalculationType,
               ));
@@ -276,7 +268,7 @@ let BaseAttributeComponent =
       t = this.BoundsLockerMap.get(t);
       if (t) for (const e of t.values()) yield e;
     }
-    Nbr(t, e, r) {
+    dbr(t, e, r) {
       let i = e,
         s = void 0,
         a = r;
@@ -360,13 +352,13 @@ let BaseAttributeComponent =
       if (r !== t) {
         var i = this.BaseValueListenerMap.get(e);
         if (i) {
-          BaseAttributeComponent_1.kbr.get(e) ||
-            BaseAttributeComponent_1.kbr.set(e, void 0);
+          BaseAttributeComponent_1.gbr.get(e) ||
+            BaseAttributeComponent_1.gbr.set(e, void 0);
           for (const s of i)
             try {
               s(e, t, r);
             } catch (t) {
-              CombatDebugController_1.CombatDebugController.CombatErrorWithStack(
+              CombatLog_1.CombatLog.ErrorWithStack(
                 "Attribute",
                 this.Entity,
                 "属性回调异常",
@@ -379,7 +371,7 @@ let BaseAttributeComponent =
           try {
             a(e, t, r);
           } catch (t) {
-            CombatDebugController_1.CombatDebugController.CombatErrorWithStack(
+            CombatLog_1.CombatLog.ErrorWithStack(
               "Attribute",
               this.Entity,
               "全局属性回调异常",
@@ -393,13 +385,13 @@ let BaseAttributeComponent =
       if (r !== t) {
         var i = this.CurrentValueListenerMap.get(e);
         if (i) {
-          BaseAttributeComponent_1.Vbr.get(e) ||
-            BaseAttributeComponent_1.Vbr.set(e, void 0);
+          BaseAttributeComponent_1.pbr.get(e) ||
+            BaseAttributeComponent_1.pbr.set(e, void 0);
           for (const s of i)
             try {
               s(e, t, r);
             } catch (t) {
-              CombatDebugController_1.CombatDebugController.CombatErrorWithStack(
+              CombatLog_1.CombatLog.ErrorWithStack(
                 "Attribute",
                 this.Entity,
                 "属性回调异常",
@@ -412,7 +404,7 @@ let BaseAttributeComponent =
           try {
             a(e, t, r);
           } catch (t) {
-            CombatDebugController_1.CombatDebugController.CombatErrorWithStack(
+            CombatLog_1.CombatLog.ErrorWithStack(
               "Attribute",
               this.Entity,
               "全局属性回调异常",
@@ -427,7 +419,7 @@ let BaseAttributeComponent =
         case CharacterAttributeTypes_1.EAttributeId.Proto_CdReduse:
         case CharacterAttributeTypes_1.EAttributeId.Proto_ToughChange:
         case CharacterAttributeTypes_1.EAttributeId.Proto_SkillToughRatio:
-        case CharacterAttributeTypes_1.EAttributeId.R4n:
+        case CharacterAttributeTypes_1.EAttributeId._Vn:
         case CharacterAttributeTypes_1.EAttributeId.Proto_AutoAttackSpeed:
         case CharacterAttributeTypes_1.EAttributeId.Proto_CastAttackSpeed:
           return !0;
@@ -453,13 +445,13 @@ let BaseAttributeComponent =
     }
   });
 (BaseAttributeComponent.ModifierHandleGenerator = 100),
-  (BaseAttributeComponent.kbr = new Map()),
-  (BaseAttributeComponent.Fbr = void 0),
-  (BaseAttributeComponent.Vbr = new Map()),
-  (BaseAttributeComponent.Hbr = void 0),
+  (BaseAttributeComponent.gbr = new Map()),
+  (BaseAttributeComponent.fbr = void 0),
+  (BaseAttributeComponent.pbr = new Map()),
+  (BaseAttributeComponent.vbr = void 0),
   (BaseAttributeComponent = BaseAttributeComponent_1 =
     __decorate(
-      [(0, RegisterComponent_1.RegisterComponent)(155)],
+      [(0, RegisterComponent_1.RegisterComponent)(157)],
       BaseAttributeComponent,
     )),
   (exports.BaseAttributeComponent = BaseAttributeComponent);

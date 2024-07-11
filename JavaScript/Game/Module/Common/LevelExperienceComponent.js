@@ -34,8 +34,8 @@ class LevelExperienceComponent extends UiPanelBase_1.UiPanelBase {
       (this.LimitLevel = 0),
       (this.FrontExp = 0),
       (this.NeedPreviewTween = !0),
-      (this.EPe = void 0),
-      (this.UTt = () => {
+      (this.SPe = void 0),
+      (this.wLt = () => {
         (this.FrontExp = 0),
           this.ExpTweenFinishFunction && this.ExpTweenFinishFunction(),
           this.PlayEndLevelUpSequence();
@@ -63,7 +63,7 @@ class LevelExperienceComponent extends UiPanelBase_1.UiPanelBase {
       this.GetSprite(5),
       this.GetSprite(6),
       this.ParentTemp,
-      this.UTt,
+      this.wLt,
     )),
       (this.NextItem = this.GetItem(2)),
       (this.CurrentLevelText = this.GetText(0)),
@@ -72,7 +72,7 @@ class LevelExperienceComponent extends UiPanelBase_1.UiPanelBase {
       (this.ExpText = this.GetText(8)),
       (this.MaxItem = this.GetItem(3)),
       (this.CurrentMaxItem = this.GetItem(9)),
-      (this.EPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem)),
+      (this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem)),
       (this.NextLevelArrow = this.GetItem(10));
   }
   UpdateCurrentExpState(t) {
@@ -91,10 +91,10 @@ class LevelExperienceComponent extends UiPanelBase_1.UiPanelBase {
     }
   }
   PlayStartLevelUpSequence(t) {
-    this.ArrivedLevel !== t && this.EPe.PlayLevelSequenceByName("Sle");
+    this.ArrivedLevel !== t && this.SPe.PlayLevelSequenceByName("Sle");
   }
   PlayEndLevelUpSequence() {
-    this.EPe.PlayLevelSequenceByName("Sle02");
+    this.SPe.PlayLevelSequenceByName("Sle02");
   }
   PlayPreviewExp(t, i) {
     this.ExpTweenComponent.PlayPreviewExpTween(
@@ -202,9 +202,9 @@ class LevelExperienceComponent extends UiPanelBase_1.UiPanelBase {
       this.UpdateViewState();
   }
   UpdateExp(t, i = !0) {
-    return !((this.IsInMax() && t > this.FrontExp) || (this.FPt(t, i), 0));
+    return !((this.IsInMax() && t > this.FrontExp) || (this.Wxt(t, i), 0));
   }
-  FPt(t, i = !0) {
+  Wxt(t, i = !0) {
     (this.NeedPreviewTween = i),
       (this.FrontExp = t),
       LguiUtil_1.LguiUtil.SetLocalText(this.AddExp, "AddExp", Math.floor(t)),
@@ -255,7 +255,7 @@ class LevelExperienceComponent extends UiPanelBase_1.UiPanelBase {
       (this.AddExp = void 0),
       (this.ExpText = void 0),
       (this.MaxItem = void 0),
-      (this.EPe = void 0);
+      (this.SPe = void 0);
   }
 }
 exports.LevelExperienceComponent = LevelExperienceComponent;

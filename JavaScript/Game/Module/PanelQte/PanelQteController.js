@@ -16,18 +16,18 @@ const Log_1 = require("../../../Core/Common/Log"),
 class PanelQteController extends UiControllerBase_1.UiControllerBase {
   static StartAnimNotifyQte(e, t, a) {
     var r;
-    return this.vNi()
+    return this.vOi()
       ? (((r = new PanelQteContext_1.PanelQteContext()).QteId = e),
         (r.PreMessageId = a),
         (r.Source = 0),
         (r.SourceMeshComp = t),
         (r.SourceActor = t.GetOwner()),
-        this.MNi(r))
+        this.MOi(r))
       : -1;
   }
   static StartBuffQte(e, t, a, r, n) {
     var o;
-    return this.vNi() && r && r.Id === Global_1.Global.BaseCharacter?.EntityId
+    return this.vOi() && r && r.Id === Global_1.Global.BaseCharacter?.EntityId
       ? (((o = new PanelQteContext_1.PanelQteContext()).QteId = e),
         (o.Source = 1),
         (o.PreMessageId = n),
@@ -37,16 +37,16 @@ class PanelQteController extends UiControllerBase_1.UiControllerBase {
         (o.SourceEntityHandle =
           ModelManager_1.ModelManager.CharacterModel?.GetHandleByEntity(r)),
         (o.IsInitSourceEntity = !0),
-        this.MNi(o))
+        this.MOi(o))
       : -1;
   }
   static StartLevelSequenceQte(e, t) {
     var a;
-    return this.vNi()
+    return this.vOi()
       ? (((a = new PanelQteContext_1.PanelQteContext()).QteId = e),
         (a.Source = 2),
         (a.SourceActor = t),
-        this.MNi(a))
+        this.MOi(a))
       : -1;
   }
   static StopQte(e, t = !1) {
@@ -73,7 +73,7 @@ class PanelQteController extends UiControllerBase_1.UiControllerBase {
         (e =
           r?.EntityHandle === a.CurRoleEntity
             ? r.GameplayTagComponent
-            : a.CurRoleEntity.Entity.GetComponent(185))
+            : a.CurRoleEntity.Entity.GetComponent(188))
       )
         for (const n of disableInputTagIds) e.RemoveTag(n);
       else
@@ -95,10 +95,10 @@ class PanelQteController extends UiControllerBase_1.UiControllerBase {
       !0
     );
   }
-  static vNi() {
+  static vOi() {
     return !ModelManager_1.ModelManager.PanelQteModel.IsInQte;
   }
-  static MNi(e) {
+  static MOi(e) {
     var t = ModelManager_1.ModelManager.PanelQteModel.GetPanelQteConfig(
       e.QteId,
     );
@@ -161,19 +161,22 @@ class PanelQteController extends UiControllerBase_1.UiControllerBase {
   }
   static OnAddEvents() {
     EventSystem_1.EventSystem.Add(
-      EventDefine_1.EEventName.OnPlayerDead,
-      PanelQteController.XCt,
+      EventDefine_1.EEventName.OnTeamLivingStateChange,
+      PanelQteController.M7s,
     );
   }
   static OnRemoveEvents() {
     EventSystem_1.EventSystem.Remove(
-      EventDefine_1.EEventName.OnPlayerDead,
-      PanelQteController.XCt,
+      EventDefine_1.EEventName.OnTeamLivingStateChange,
+      PanelQteController.M7s,
     );
   }
 }
-(exports.PanelQteController = PanelQteController).XCt = () => {
-  var e = ModelManager_1.ModelManager.PanelQteModel.GetContext();
-  e?.QteHandleId && PanelQteController.StopQte(e.QteHandleId, !0);
+(exports.PanelQteController = PanelQteController).M7s = (e, t, a) => {
+  e &&
+    1 === t &&
+    2 === a &&
+    (e = ModelManager_1.ModelManager.PanelQteModel.GetContext())?.QteHandleId &&
+    PanelQteController.StopQte(e.QteHandleId, !0);
 };
 //# sourceMappingURL=PanelQteController.js.map

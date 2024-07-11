@@ -1,21 +1,21 @@
 "use strict";
 var __decorate =
   (this && this.__decorate) ||
-  function (t, e, o, i) {
+  function (t, e, i, s) {
     var f,
-      n = arguments.length,
-      s =
-        n < 3
+      o = arguments.length,
+      n =
+        o < 3
           ? e
-          : null === i
-            ? (i = Object.getOwnPropertyDescriptor(e, o))
-            : i;
+          : null === s
+            ? (s = Object.getOwnPropertyDescriptor(e, i))
+            : s;
     if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
-      s = Reflect.decorate(t, e, o, i);
+      n = Reflect.decorate(t, e, i, s);
     else
-      for (var r = t.length - 1; 0 <= r; r--)
-        (f = t[r]) && (s = (n < 3 ? f(s) : 3 < n ? f(e, o, s) : f(e, o)) || s);
-    return 3 < n && s && Object.defineProperty(e, o, s), s;
+      for (var h = t.length - 1; 0 <= h; h--)
+        (f = t[h]) && (n = (o < 3 ? f(n) : 3 < o ? f(e, i, n) : f(e, i)) || n);
+    return 3 < o && n && Object.defineProperty(e, i, n), n;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiModelEffectComponent = void 0);
@@ -33,11 +33,22 @@ const UE = require("ue"),
 let UiModelEffectComponent = class UiModelEffectComponent extends UiModelComponentBase_1.UiModelComponentBase {
   constructor() {
     super(...arguments),
-      (this.Clo = new Array()),
-      (this.MBr = new Map()),
-      (this.SBr = void 0),
-      (this.$wr = (t) => {
+      (this.u1o = new Array()),
+      (this.Ywr = new Map()),
+      (this.Jwr = void 0),
+      (this.zsa = !0),
+      (this.Zsa = 0.5),
+      (this.eaa = 0.5),
+      (this.Twr = (t) => {
         t || this.DestroyAllEffect();
+      }),
+      (this.taa = (t) => {
+        t > this.Zsa &&
+          !this.zsa &&
+          ((this.zsa = !0), this.SetAllEffectShowState(this.zsa)),
+          t < this.eaa &&
+            this.zsa &&
+            ((this.zsa = !1), this.SetAllEffectShowState(this.zsa));
       }),
       (this.OnAnsBegin = (t) => {
         this.PlayEffectByAnsContext(t);
@@ -47,15 +58,20 @@ let UiModelEffectComponent = class UiModelEffectComponent extends UiModelCompone
       });
   }
   OnInit() {
-    this.SBr = this.Owner.CheckGetComponent(6);
+    this.Jwr = this.Owner.CheckGetComponent(6);
   }
   OnStart() {
     EventSystem_1.EventSystem.AddWithTarget(
       this.Owner,
       EventDefine_1.EEventName.OnUiModelVisibleChange,
-      this.$wr,
+      this.Twr,
     ),
-      this.SBr?.RegisterAnsTrigger(
+      EventSystem_1.EventSystem.AddWithTarget(
+        this.Owner,
+        EventDefine_1.EEventName.OnUiModelSetDitherEffect,
+        this.taa,
+      ),
+      this.Jwr?.RegisterAnsTrigger(
         "UiEffectAnsContext",
         this.OnAnsBegin,
         this.OnAnsEnd,
@@ -65,15 +81,20 @@ let UiModelEffectComponent = class UiModelEffectComponent extends UiModelCompone
     EventSystem_1.EventSystem.RemoveWithTarget(
       this.Owner,
       EventDefine_1.EEventName.OnUiModelVisibleChange,
-      this.$wr,
+      this.Twr,
     ),
+      EventSystem_1.EventSystem.RemoveWithTarget(
+        this.Owner,
+        EventDefine_1.EEventName.OnUiModelSetDitherEffect,
+        this.taa,
+      ),
       this.DestroyAllEffect();
   }
-  PlayEffectOnRoot(t, e, o) {
+  PlayEffectOnRoot(t, e, i) {
     this.PlayEffectByPath(
       t,
       e,
-      o,
+      i,
       !0,
       !1,
       Vector_1.Vector.ZeroVector,
@@ -81,40 +102,41 @@ let UiModelEffectComponent = class UiModelEffectComponent extends UiModelCompone
       Vector_1.Vector.OneVector,
     );
   }
-  PlayEffectByPath(t, o, i, f, n, s, r, c, e) {
+  PlayEffectByPath(t, i, s, f, o, n, h, r, e) {
     t = EffectSystem_1.EffectSystem.SpawnEffect(
       GlobalData_1.GlobalData.World,
       MathUtils_1.MathUtils.DefaultTransform,
       t,
       "[RoleAnimStateEffectManager.PlayEffect]",
-      new EffectContext_1.EffectContext(void 0, o),
+      new EffectContext_1.EffectContext(void 0, i),
       1,
       (t) => {
         var e,
           t = EffectSystem_1.EffectSystem.GetEffectActor(t);
         t &&
           t.IsValid() &&
-          (f && !n
-            ? (t.K2_AttachToComponent(o, i, 0, 0, 0, !1),
-              (e = new UE.Transform(r, s, c)),
+          (f && !o
+            ? (t.K2_AttachToComponent(i, s, 0, 0, 0, !1),
+              (e = new UE.Transform(h, n, r)),
               t.K2_SetActorRelativeTransform(e, !1, void 0, !0))
-            : ((e = o.GetSocketTransform(i, 0)),
+            : ((e = i.GetSocketTransform(s, 0)),
               t.K2_SetActorLocationAndRotation(
-                e.TransformPosition(s),
-                e.TransformRotation(r.Quaternion()).Rotator(),
+                e.TransformPosition(n),
+                e.TransformRotation(h.Quaternion()).Rotator(),
                 !1,
                 void 0,
                 !0,
               ),
-              t.SetActorScale3D(c)));
+              t.SetActorScale3D(r)),
+          t.SetActorHiddenInGame(!this.zsa));
       },
       e,
     );
-    return EffectSystem_1.EffectSystem.IsValid(t) && this.Clo.push(t), t;
+    return EffectSystem_1.EffectSystem.IsValid(t) && this.u1o.push(t), t;
   }
   PlayEffectByAnsContext(t) {
     var e;
-    this.MBr.has(t) ||
+    this.Ywr.has(t) ||
       t.PlayOnEnd ||
       ((e = this.PlayEffectByPath(
         t.EffectPath,
@@ -126,7 +148,9 @@ let UiModelEffectComponent = class UiModelEffectComponent extends UiModelCompone
         t.Rotation,
         t.Scale,
       )),
-      this.MBr.set(t, e));
+      t.OnEffectSpawn && t.OnEffectSpawn(t.MeshComponent, e),
+      this.Ywr.set(t, e),
+      (t.Handle = e));
   }
   StopEffectByAnsContext(t) {
     var e;
@@ -141,15 +165,15 @@ let UiModelEffectComponent = class UiModelEffectComponent extends UiModelCompone
           t.Rotation,
           t.Scale,
         )
-      : (e = this.MBr.get(t)) && (this.StopEffect(e), this.MBr.delete(t));
+      : (e = this.Ywr.get(t)) && (this.StopEffect(e), this.Ywr.delete(t));
   }
   AttachEffect(t) {
-    this.Clo.push(t);
+    this.u1o.push(t);
   }
   DestroyAllEffect() {
-    this.Clo &&
-      0 !== this.Clo.length &&
-      (this.Clo.forEach((t) => {
+    this.u1o &&
+      0 !== this.u1o.length &&
+      (this.u1o.forEach((t) => {
         EffectSystem_1.EffectSystem.IsValid(t) &&
           EffectSystem_1.EffectSystem.StopEffectById(
             t,
@@ -157,8 +181,14 @@ let UiModelEffectComponent = class UiModelEffectComponent extends UiModelCompone
             !0,
           );
       }),
-      (this.Clo.length = 0),
-      this.MBr.clear());
+      (this.u1o.length = 0),
+      this.Ywr.clear());
+  }
+  SetAllEffectShowState(e) {
+    this.u1o.forEach((t) => {
+      t = EffectSystem_1.EffectSystem.GetEffectActor(t);
+      t && t.SetActorHiddenInGame(!e);
+    });
   }
   StopEffect(t) {
     EffectSystem_1.EffectSystem.IsValid(t) &&

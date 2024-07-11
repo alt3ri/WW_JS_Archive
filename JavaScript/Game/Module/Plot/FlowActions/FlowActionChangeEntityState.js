@@ -17,6 +17,8 @@ class FlowActionChangeEntityState extends FlowActionBase_1.FlowActionBase {
         o = GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(e.State);
         break;
       case IAction_1.EChangeEntityState.Loop:
+      case IAction_1.EChangeEntityState.BatchDirectly:
+        return;
     }
     o &&
       WaitEntityTask_1.WaitEntityTask.CreateWithPbDataId(

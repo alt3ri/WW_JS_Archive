@@ -6,8 +6,8 @@ const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
 class BattleUiNiagaraItem {
   constructor(t) {
     (this.IRe = void 0),
-      (this.E9e = () => {
-        (this.IRe = void 0), this.Iit();
+      (this.q7e = () => {
+        (this.IRe = void 0), this.Oot();
       }),
       (this.Item = t),
       (this.Duration = DEFAULT_DURATION);
@@ -15,19 +15,19 @@ class BattleUiNiagaraItem {
   Play() {
     this.Item.SetUIActive(!0),
       this.Item.ActivateSystem(!0),
-      this.p7e(),
-      this.Tit();
+      this.xHe(),
+      this.kot();
   }
   Stop() {
-    this.IRe && (this.p7e(), this.Iit());
+    this.IRe && (this.xHe(), this.Oot());
   }
-  Iit() {
+  Oot() {
     this.Item.SetUIActive(!1);
   }
-  Tit() {
-    this.IRe = TimerSystem_1.TimerSystem.Delay(this.E9e, this.Duration);
+  kot() {
+    this.IRe = TimerSystem_1.TimerSystem.Delay(this.q7e, this.Duration);
   }
-  p7e() {
+  xHe() {
     this.IRe &&
       (TimerSystem_1.TimerSystem.Remove(this.IRe), (this.IRe = void 0));
   }

@@ -40,81 +40,75 @@ let PerformanceComponent =
   ) {
     constructor() {
       super(...arguments),
-        (this.Snn = void 0),
-        (this.nXt = void 0),
-        (this.ynn = void 0),
-        (this.Inn = 0),
-        (this.Tnn = 0),
-        (this.Lnn = 0),
-        (this.UZt = 0),
-        (this.Dnn = void 0),
-        (this.Rnn = void 0),
-        (this.Ann = 0),
-        (this.Unn = void 0),
-        (this.Pnn = void 0),
-        (this.xnn = void 0),
-        (this.TXr = void 0),
-        (this.wnn = !1),
-        (this.Bnn = (t, e) => {
-          this.nXt.SkeletalMesh || this.LoadAndChangeStaticMesh(),
-            this.bnn() && this.qnn(),
-            this.Gnn(t, e),
-            this.Nnn(),
-            this.Onn(t, e),
-            this.knn(t, e),
-            (0, RegisterComponent_1.isComponentInstance)(this.nXt, 182) &&
-              (!(t = this.nXt.CurLevelPrefabShowActor)?.IsValid() ||
+        (this.inn = void 0),
+        (this.n$t = void 0),
+        (this.rnn = void 0),
+        (this.nnn = 0),
+        (this.snn = 0),
+        (this.ann = 0),
+        (this.Uei = 0),
+        (this.hnn = void 0),
+        (this.lnn = void 0),
+        (this._nn = 0),
+        (this.unn = void 0),
+        (this.cnn = void 0),
+        (this.mnn = void 0),
+        (this.nXr = void 0),
+        (this.dnn = !1),
+        (this.Cnn = (t, e) => {
+          this.n$t.SkeletalMesh || this.LoadAndChangeStaticMesh(),
+            this.gnn() && this.fnn(),
+            this.pnn(t, e),
+            this.vnn(),
+            this.Mnn(t, e),
+            this.Enn(t, e),
+            (0, RegisterComponent_1.isComponentInstance)(this.n$t, 185) &&
+              (!(t = this.n$t.CurLevelPrefabShowActor)?.IsValid() ||
               UE.KuroStaticLibrary.IsObjectClassByName(
                 t,
                 CharacterNameDefines_1.CharacterNameDefines.BP_BASEITEM,
               )
-                ? this.nXt.RefreshShowActor()
+                ? this.n$t.RefreshShowActor()
                 : t instanceof TsEffectActor_1.default &&
                   ((e = t.GetHandle()),
                   EffectSystem_1.EffectSystem.IsValid(e) ||
-                    this.nXt.RefreshShowActor()));
+                    this.n$t.RefreshShowActor()));
         }),
-        (this.Fnn = (t) => {
+        (this.Snn = (t) => {
           var e;
           return (
-            !this.ynn.has(t) &&
+            !this.rnn.has(t) &&
             ((e = GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(t)),
-            void 0 !== (e = this.TXr.场景交互物特效列表.Get(e))) &&
-            !!(0, RegisterComponent_1.isComponentInstance)(this.nXt, 182) &&
-            (this.nXt.PlaySceneInteractionEffect(e), this.ynn.set(t, e), !0)
+            void 0 !== (e = this.nXr.场景交互物特效列表.Get(e))) &&
+            !!(0, RegisterComponent_1.isComponentInstance)(this.n$t, 185) &&
+            (this.n$t.PlaySceneInteractionEffect(e), this.rnn.set(t, e), !0)
           );
         }),
-        (this.Vnn = (t) => {
+        (this.ynn = (t) => {
           var e;
-          this.Rnn.has(t) ||
+          this.lnn.has(t) ||
             ((e = GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(t)),
-            (e = this.TXr.常驻特效列表.Get(e)) &&
-              (e = this.Hnn(
+            (e = this.nXr.常驻特效列表.Get(e)) &&
+              (e = this.Inn(
                 e.AssetPathName?.toString(),
                 "[PerformanceComponent.CheckAndAddOwnEffectByTag]",
                 void 0,
               )) &&
-              (this.Rnn.set(t, e),
-              (t = this.nXt.CreatureData.GetVisible()),
-              this.jnn(e, t)));
+              (this.lnn.set(t, e),
+              (t = this.n$t.CreatureData.GetVisible()),
+              this.Tnn(e, t)));
         }),
-        (this.Wnn = void 0),
-        (this.Knn = void 0),
-        (this.Qnn = () => {
-          EventSystem_1.EventSystem.RemoveWithTarget(
-            this.Entity,
-            EventDefine_1.EEventName.OnSceneInteractionLoadCompleted,
-            this.Qnn,
-          ),
-            this.Xnn(),
-            this.$nn();
+        (this.Lnn = void 0),
+        (this.Dnn = void 0),
+        (this.Rnn = () => {
+          this.Unn(), this.Ann();
         }),
-        (this.Ynn = (t, e) => {
+        (this.Pnn = (t, e) => {
           5 === t &&
             this?.Entity?.Valid &&
             EffectSystem_1.EffectSystem.IsValid(e) &&
-            ((this.Dnn = EffectSystem_1.EffectSystem.GetNiagaraComponent(e)),
-            this.Dnn) &&
+            ((this.hnn = EffectSystem_1.EffectSystem.GetNiagaraComponent(e)),
+            this.hnn) &&
             EventSystem_1.EventSystem.EmitWithTarget(
               this.Entity,
               EventDefine_1.EEventName.OnAddCommonEffect,
@@ -122,36 +116,36 @@ let PerformanceComponent =
         });
     }
     SetIsSceneInteractionJumpToEnd(t) {
-      this.wnn = t;
+      this.dnn = t;
     }
     OnStart() {
       return (
-        (this.xnn = void 0),
-        (this.Snn = this.Entity.CheckGetComponent(177)),
-        (this.nXt = this.Entity.GetComponent(1)),
-        (this.TXr = this.nXt.CreatureData.GetModelConfig()),
-        !(this.wnn = !1)
+        (this.mnn = void 0),
+        (this.inn = this.Entity.CheckGetComponent(180)),
+        (this.n$t = this.Entity.GetComponent(1)),
+        (this.nXr = this.n$t.CreatureData.GetModelConfig()),
+        !(this.dnn = !1)
       );
     }
     OnActivate() {
-      this.nXt.SkeletalMesh || this.LoadAndChangeStaticMesh(),
-        this.Jnn(),
-        (this.ynn = new Map()),
-        (0, RegisterComponent_1.isComponentInstance)(this.nXt, 182) &&
-          !this.nXt.GetIsSceneInteractionLoadCompleted() &&
+      this.n$t.SkeletalMesh || this.LoadAndChangeStaticMesh(),
+        this.xnn(),
+        (this.rnn = new Map()),
+        (0, RegisterComponent_1.isComponentInstance)(this.n$t, 185) &&
+          !this.n$t.GetIsSceneInteractionLoadCompleted() &&
           EventSystem_1.EventSystem.AddWithTarget(
             this.Entity,
             EventDefine_1.EEventName.OnSceneInteractionLoadCompleted,
-            this.Qnn,
+            this.Rnn,
           ),
         this.eve(),
-        this.bnn() && this.znn(),
-        (this.Rnn = new Map()),
-        this.Znn(),
+        this.gnn() && this.wnn(),
+        (this.lnn = new Map()),
+        this.Bnn(),
         EventSystem_1.EventSystem.AddWithTarget(
           this.Entity,
           EventDefine_1.EEventName.OnLevelTagChanged,
-          this.Bnn,
+          this.Cnn,
         );
     }
     OnEnd() {
@@ -159,237 +153,244 @@ let PerformanceComponent =
         EventSystem_1.EventSystem.HasWithTarget(
           this.Entity,
           EventDefine_1.EEventName.OnLevelTagChanged,
-          this.Bnn,
+          this.Cnn,
         ) &&
           EventSystem_1.EventSystem.RemoveWithTarget(
             this.Entity,
             EventDefine_1.EEventName.OnLevelTagChanged,
-            this.Bnn,
+            this.Cnn,
           ),
-        (0, RegisterComponent_1.isComponentInstance)(this.nXt, 182) &&
+        (0, RegisterComponent_1.isComponentInstance)(this.n$t, 185) &&
           EventSystem_1.EventSystem.HasWithTarget(
             this.Entity,
             EventDefine_1.EEventName.OnSceneInteractionLoadCompleted,
-            this.Qnn,
+            this.Rnn,
           ) &&
           EventSystem_1.EventSystem.RemoveWithTarget(
             this.Entity,
             EventDefine_1.EEventName.OnSceneInteractionLoadCompleted,
-            this.Qnn,
+            this.Rnn,
           ),
         !0
       );
     }
     OnClear() {
       if (
-        (this.ynn && (this.ynn.clear(), (this.ynn = void 0)),
-        this.esn(),
-        (this.Pnn = void 0),
-        this.Rnn)
+        (this.rnn && (this.rnn.clear(), (this.rnn = void 0)),
+        this.bnn(),
+        (this.cnn = void 0),
+        this.lnn)
       ) {
-        for (const t of this.Rnn.values())
+        for (const t of this.lnn.values())
           EffectSystem_1.EffectSystem.StopEffectById(
             t,
             "[PerformanceComponent.OnClear 1]",
             !0,
           );
-        this.Rnn.clear(), (this.Rnn = void 0);
+        this.lnn.clear(), (this.lnn = void 0);
       }
       return (
-        this.UZt &&
-          ((this.Dnn = void 0),
+        this.Uei &&
+          ((this.hnn = void 0),
           EffectSystem_1.EffectSystem.StopEffectById(
-            this.UZt,
+            this.Uei,
             "[PerformanceComponent.OnClear 2]",
             !1,
           ),
-          (this.UZt = 0)),
-        this.Ann &&
-          (EffectSystem_1.EffectSystem.RemoveFinishCallback(this.Ann, this.Unn),
+          (this.Uei = 0)),
+        this._nn &&
+          (EffectSystem_1.EffectSystem.RemoveFinishCallback(this._nn, this.unn),
           EffectSystem_1.EffectSystem.StopEffectById(
-            this.Ann,
+            this._nn,
             "[PerformanceComponent.OnClear 3]",
             !0,
           ),
-          (this.Ann = 0)),
-        !(this.Unn = void 0)
+          (this._nn = 0)),
+        !(this.unn = void 0)
       );
     }
     OnEnable() {
       this.Entity?.IsInit &&
-        this.SetPerformanceVisible(this.nXt.CreatureData.GetVisible());
+        this.SetPerformanceVisible(this.n$t.CreatureData.GetVisible());
     }
     OnDisable() {
       this.SetPerformanceVisible(!1);
     }
-    Jnn() {
-      this.tsn(!0);
+    xnn() {
+      this.qnn(!0);
     }
-    Nnn() {
-      this.tsn(!1);
+    vnn() {
+      this.qnn(!1);
     }
-    tsn(t) {
-      var e = this.isn(this.TXr.场景交互物状态列表);
+    qnn(t) {
+      var e = this.Gnn(this.nXr.场景交互物状态列表);
       if (void 0 !== e) {
-        if (e === this.Inn)
-          return void (
-            (0, RegisterComponent_1.isComponentInstance)(this.nXt, 182) &&
-            this.nXt.SetIsSceneInteractionLoadCompleted()
-          );
-        this.Inn = e;
+        if (e === this.nnn) return;
+        this.nnn = e;
       } else {
         var e = -821437887,
           i = GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(e);
-        if (e === this.Inn || void 0 === this.TXr.场景交互物状态列表.Get(i))
+        if (e === this.nnn || void 0 === this.nXr.场景交互物状态列表.Get(i))
           return void (
-            (0, RegisterComponent_1.isComponentInstance)(this.nXt, 182) &&
-            this.nXt.SetIsSceneInteractionLoadCompleted()
+            (0, RegisterComponent_1.isComponentInstance)(this.n$t, 185) &&
+            this.n$t.SetIsSceneInteractionLoadCompleted()
           );
-        this.Inn = e;
+        this.nnn = e;
       }
-      if ((0, RegisterComponent_1.isComponentInstance)(this.nXt, 182)) {
+      if ((0, RegisterComponent_1.isComponentInstance)(this.n$t, 185)) {
         let e = void 0;
         if (
           ((e =
-            1227933697 === this.Inn
+            1227933697 === this.nnn
               ? 20
               : ((i = GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(
-                  this.Inn,
+                  this.nnn,
                 )),
-                this.TXr.场景交互物状态列表.Get(i))),
+                this.nXr.场景交互物状态列表.Get(i))),
           t)
         ) {
           let t = !1;
-          -991879492 === this.Inn && (t = !0),
-            this.nXt.LoadSceneInteractionLevel(e, t);
-        } else this.nXt.SwitchToState(e, !this.wnn, this.wnn);
+          -991879492 === this.nnn && (t = !0),
+            this.n$t.LoadSceneInteractionLevel(e, t);
+        } else this.n$t.SwitchToState(e, !this.dnn, this.dnn);
       }
     }
-    Xnn() {
-      if (this.Snn)
-        for (const t of this.Snn.GetTagIds()) if (this.Fnn(t)) break;
+    Unn() {
+      if (this.inn) {
+        if (
+          (0, RegisterComponent_1.isComponentInstance)(this.n$t, 185) &&
+          this.rnn &&
+          0 < this.rnn.size
+        ) {
+          for (var [, t] of this.rnn)
+            this.n$t?.EndSceneInteractionEffect(t),
+              this.n$t?.PlaySceneInteractionEndEffect(t);
+          this.rnn?.clear();
+        }
+        for (const e of this.inn.GetTagIds()) if (this.Snn(e)) break;
+      }
     }
-    $nn() {
-      if (this.Snn)
-        for (const e of this.Snn.GetTagIds()) {
+    Ann() {
+      if (this.inn)
+        for (const e of this.inn.GetTagIds()) {
           var t = GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(e);
-          (0, RegisterComponent_1.isComponentInstance)(this.nXt, 182) &&
+          (0, RegisterComponent_1.isComponentInstance)(this.n$t, 185) &&
             void 0 !== t &&
-            this.nXt.PlayExtraEffect(t);
+            this.n$t.PlayExtraEffect(t);
         }
     }
-    Onn(t, e) {
+    Mnn(t, e) {
       for (const s of e) {
         var i;
-        this.ynn.has(s) &&
-          ((i = this.ynn.get(s)),
-          this.ynn.delete(s),
-          (0, RegisterComponent_1.isComponentInstance)(this.nXt, 182)) &&
+        this.rnn.has(s) &&
+          ((i = this.rnn.get(s)),
+          this.rnn.delete(s),
+          (0, RegisterComponent_1.isComponentInstance)(this.n$t, 185)) &&
           void 0 !== i &&
-          (this.nXt.EndSceneInteractionEffect(i),
-          this.nXt.PlaySceneInteractionEndEffect(i));
+          (this.n$t.EndSceneInteractionEffect(i),
+          this.n$t.PlaySceneInteractionEndEffect(i));
       }
-      for (const h of t) this.Fnn(h);
+      for (const h of t) this.Snn(h);
     }
-    knn(t, e) {
+    Enn(t, e) {
       for (const h of e) {
         var i = GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(h);
-        (0, RegisterComponent_1.isComponentInstance)(this.nXt, 182) &&
+        (0, RegisterComponent_1.isComponentInstance)(this.n$t, 185) &&
           void 0 !== i &&
-          this.nXt.StopExtraEffect(i);
+          this.n$t.StopExtraEffect(i);
       }
       for (const n of t) {
         var s = GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(n);
-        (0, RegisterComponent_1.isComponentInstance)(this.nXt, 182) &&
+        (0, RegisterComponent_1.isComponentInstance)(this.n$t, 185) &&
           void 0 !== s &&
-          this.nXt.PlayExtraEffect(s, !1);
+          this.n$t.PlayExtraEffect(s, !1);
       }
     }
     LoadAndChangeStaticMesh() {
-      if (!this.nXt.SkeletalMesh) {
-        var t = this.isn(this.TXr.静态网格体列表);
+      if (!this.n$t.SkeletalMesh) {
+        var t = this.Gnn(this.nXr.静态网格体列表);
         if (void 0 !== t) {
-          if (t === this.Tnn) return;
-          this.Tnn = t;
+          if (t === this.snn) return;
+          this.snn = t;
         } else {
           var t = -821437887,
             e = GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(t);
-          if (t === this.Tnn || void 0 === this.TXr.静态网格体列表.Get(e))
+          if (t === this.snn || void 0 === this.nXr.静态网格体列表.Get(e))
             return;
-          this.Tnn = t;
+          this.snn = t;
         }
-        (0, RegisterComponent_1.isComponentInstance)(this.nXt, 182) &&
+        (0, RegisterComponent_1.isComponentInstance)(this.n$t, 185) &&
           ((e = GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(
-            this.Tnn,
+            this.snn,
           )),
-          this.nXt.LoadAndChangeStaticMesh(e));
+          this.n$t.LoadAndChangeStaticMesh(e));
       }
     }
     eve() {
       var t =
           GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(-1133639932),
-        t = this.TXr.常驻特效列表.Get(t);
+        t = this.nXr.常驻特效列表.Get(t);
       t &&
-        ((this.UZt = this.Hnn(
+        ((this.Uei = this.Inn(
           t.AssetPathName?.toString(),
           "[PerformanceComponent.InitCommonEffect]",
-          this.Ynn,
+          this.Pnn,
         )),
-        EffectSystem_1.EffectSystem.IsValid(this.UZt)) &&
-        (EffectSystem_1.EffectSystem.GetEffectActor(this.UZt)?.K2_AttachToActor(
-          this.nXt.Owner,
+        EffectSystem_1.EffectSystem.IsValid(this.Uei)) &&
+        (EffectSystem_1.EffectSystem.GetEffectActor(this.Uei)?.K2_AttachToActor(
+          this.n$t.Owner,
           void 0,
           2,
           1,
           1,
           !1,
         ),
-        (t = this.nXt.CreatureData.GetVisible()),
-        this.jnn(this.UZt, t));
+        (t = this.n$t.CreatureData.GetVisible()),
+        this.Tnn(this.Uei, t));
     }
-    bnn() {
+    gnn() {
       var t;
       return (
-        !!this.UZt &&
-        (t = this.isn(this.TXr.通用特效常驻参数)) !== this.Lnn &&
-        ((this.Lnn = t), !!this.Lnn)
+        !!this.Uei &&
+        (t = this.Gnn(this.nXr.通用特效常驻参数)) !== this.ann &&
+        ((this.ann = t), !!this.ann)
       );
     }
-    znn() {
+    wnn() {
       var t;
-      this.UZt &&
-        ((t = GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(this.Lnn)),
-        (t = this.TXr.通用特效常驻参数.Get(t))) &&
-        this.osn(t);
+      this.Uei &&
+        ((t = GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(this.ann)),
+        (t = this.nXr.通用特效常驻参数.Get(t))) &&
+        this.Nnn(t);
     }
-    qnn() {
-      var t = GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(this.Lnn),
-        t = this.TXr.通用特效变化参数.Get(t);
+    fnn() {
+      var t = GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(this.ann),
+        t = this.nXr.通用特效变化参数.Get(t);
       t
         ? (0 < t.ManualLifeTime &&
-            (this.Pnn ||
-              (this.Pnn = (t) => {
-                this.znn();
+            (this.cnn ||
+              (this.cnn = (t) => {
+                this.wnn();
               }),
-            this.esn(),
-            (this.xnn = TimerSystem_1.TimerSystem.Loop(
-              this.Pnn,
+            this.bnn(),
+            (this.mnn = TimerSystem_1.TimerSystem.Loop(
+              this.cnn,
               TimeUtil_1.TimeUtil.SetTimeMillisecond(t.ManualLifeTime),
               1,
               0,
             ))),
-          this.osn(t))
-        : this.znn();
+          this.Nnn(t))
+        : this.wnn();
     }
-    Znn() {
-      if (this.Snn) for (const t of this.Snn.GetTagIds()) this.Vnn(t);
+    Bnn() {
+      if (this.inn) for (const t of this.inn.GetTagIds()) this.ynn(t);
     }
-    Gnn(t, e) {
+    pnn(t, e) {
       for (const n of e) {
         var i;
-        this.Rnn.has(n) &&
-          ((i = this.Rnn.get(n)),
-          this.Rnn.delete(n),
+        this.lnn.has(n) &&
+          ((i = this.lnn.get(n)),
+          this.lnn.delete(n),
           EffectSystem_1.EffectSystem.StopEffectById(
             i,
             "[PerformanceComponent.ChangeOwnEffects]",
@@ -399,42 +400,42 @@ let PerformanceComponent =
       let s = void 0;
       for (const o of t) {
         var h = GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(o),
-          h = this.TXr.变化特效列表.Get(h);
+          h = this.nXr.变化特效列表.Get(h);
         h
-          ? (s = this.Hnn(
+          ? (s = this.Inn(
               h.AssetPathName?.toString(),
               "[PerformanceComponent.ChangeOwnEffects]",
               void 0,
             ))
-          : this.Vnn(o);
+          : this.ynn(o);
       }
       s &&
-        (this.Unn ||
-          (this.Unn = (t) => {
-            (this.Ann = 0), this.Znn();
+        (this.unn ||
+          (this.unn = (t) => {
+            (this._nn = 0), this.Bnn();
           }),
-        EffectSystem_1.EffectSystem.AddFinishCallback(this.Ann, this.Unn),
-        (this.Ann = s));
+        EffectSystem_1.EffectSystem.AddFinishCallback(this._nn, this.unn),
+        (this._nn = s));
     }
-    isn(t) {
-      if (this.Snn.HasTag(PerformanceComponent_1.rsn))
-        return PerformanceComponent_1.rsn;
-      if (((this.Wnn = void 0), (this.Knn = t), this.Snn))
-        for (const i of this.Snn.GetTagIds())
-          if (i !== PerformanceComponent_1.rsn) {
+    Gnn(t) {
+      if (this.inn.HasTag(PerformanceComponent_1.Onn))
+        return PerformanceComponent_1.Onn;
+      if (((this.Lnn = void 0), (this.Dnn = t), this.inn))
+        for (const i of this.inn.GetTagIds())
+          if (i !== PerformanceComponent_1.Onn) {
             var e = GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(i);
-            if (void 0 !== this.Knn.Get(e)) {
-              this.Wnn = i;
+            if (void 0 !== this.Dnn.Get(e)) {
+              this.Lnn = i;
               break;
             }
           }
-      return (this.Knn = void 0), this.Wnn;
+      return (this.Dnn = void 0), this.Lnn;
     }
-    Hnn(t, e, i) {
-      return t && !(t.length <= 0) && this.nXt
+    Inn(t, e, i) {
+      return t && !(t.length <= 0) && this.n$t
         ? EffectSystem_1.EffectSystem.SpawnEffect(
             GlobalData_1.GlobalData.World,
-            this.nXt.ActorTransform,
+            this.n$t.ActorTransform,
             t,
             e,
             new EffectContext_1.EffectContext(this.Entity.Id),
@@ -444,28 +445,28 @@ let PerformanceComponent =
           )
         : 0;
     }
-    osn(t) {
-      EffectSystem_1.EffectSystem.SetEffectDataByNiagaraParam(this.UZt, t, !0);
+    Nnn(t) {
+      EffectSystem_1.EffectSystem.SetEffectDataByNiagaraParam(this.Uei, t, !0);
     }
     ApplyNiagaraParameters(t, e) {
       return !(
-        !this.UZt ||
-        !this.Dnn ||
+        !this.Uei ||
+        !this.hnn ||
         (e instanceof UE.Vector
-          ? this.Dnn.SetNiagaraVariableVec3(t, e)
-          : this.Dnn.SetNiagaraVariableFloat(t, e),
+          ? this.hnn.SetNiagaraVariableVec3(t, e)
+          : this.hnn.SetNiagaraVariableFloat(t, e),
         0)
       );
     }
-    esn() {
-      TimerSystem_1.TimerSystem.Has(this.xnn) &&
-        TimerSystem_1.TimerSystem.Remove(this.xnn);
+    bnn() {
+      TimerSystem_1.TimerSystem.Has(this.mnn) &&
+        TimerSystem_1.TimerSystem.Remove(this.mnn);
     }
     SetPerformanceVisible(t) {
-      this.jnn(this.UZt, t);
-      for (var [, e] of this.Rnn ?? []) this.jnn(e, t);
+      this.Tnn(this.Uei, t);
+      for (var [, e] of this.lnn ?? []) this.Tnn(e, t);
     }
-    jnn(t, e) {
+    Tnn(t, e) {
       EffectSystem_1.EffectSystem.IsValid(t) &&
         (EffectSystem_1.EffectSystem.GetEffectActor(t)?.SetActorHiddenInGame(
           !e,
@@ -473,10 +474,10 @@ let PerformanceComponent =
         EffectSystem_1.EffectSystem.SetTimeScale(t, e ? this.TimeDilation : 0));
     }
   });
-(PerformanceComponent.rsn = 1227933697),
+(PerformanceComponent.Onn = 1227933697),
   (PerformanceComponent = PerformanceComponent_1 =
     __decorate(
-      [(0, RegisterComponent_1.RegisterComponent)(93)],
+      [(0, RegisterComponent_1.RegisterComponent)(95)],
       PerformanceComponent,
     )),
   (exports.PerformanceComponent = PerformanceComponent);

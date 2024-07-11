@@ -26,22 +26,22 @@ const UE = require("ue"),
 class VisionIdentifyView extends UiTabViewBase_1.UiTabViewBase {
   constructor() {
     super(...arguments),
-      (this.b7i = void 0),
-      (this.q7i = void 0),
-      (this.G7i = 0),
-      (this.N7i = void 0),
-      (this.O7i = !1),
-      (this.v8i = void 0),
-      (this.k7i = new Map()),
-      (this.F7i = new Array()),
-      (this.V7i = () => {
-        this.g0t();
+      (this.BHi = void 0),
+      (this.bHi = void 0),
+      (this.qHi = 0),
+      (this.GHi = void 0),
+      (this.NHi = !1),
+      (this.p9i = void 0),
+      (this.OHi = new Map()),
+      (this.kHi = new Array()),
+      (this.FHi = () => {
+        this.Rft();
       }),
-      (this.H7i = (e, t) => {
-        this.j7i(e, t);
+      (this.VHi = (e, t) => {
+        this.HHi(e, t);
       }),
-      (this.W7i = () => {
-        this.K7i();
+      (this.jHi = () => {
+        this.WHi();
       });
   }
   OnRegisterComponent() {
@@ -53,60 +53,60 @@ class VisionIdentifyView extends UiTabViewBase_1.UiTabViewBase {
     ];
   }
   async OnBeforeStartAsync() {
-    (this.b7i = new VisionIdentifyComponent_1.LevelUpIdentifyComponent(
+    (this.BHi = new VisionIdentifyComponent_1.LevelUpIdentifyComponent(
       this.GetItem(2),
     )),
-      await this.b7i.Init(this.GetViewName()),
-      (this.q7i =
+      await this.BHi.Init(this.GetViewName()),
+      (this.bHi =
         new VisionMainAttributeComponent_1.VisionMainAttributeComponent()),
-      await this.q7i.CreateByActorAsync(this.GetItem(0).GetOwner());
+      await this.bHi.CreateByActorAsync(this.GetItem(0).GetOwner());
   }
   OnStart() {
-    (this.N7i = new VisionIdentifyCostItem(this.GetItem(1))),
-      this.N7i.Init(),
-      this.N7i.SetOnChangeValueCallBack(this.V7i),
-      (this.v8i = new VisionNameText_1.VisionNameText(this.GetText(3)));
+    (this.GHi = new VisionIdentifyCostItem(this.GetItem(1))),
+      this.GHi.Init(),
+      this.GHi.SetOnChangeValueCallBack(this.FHi),
+      (this.p9i = new VisionNameText_1.VisionNameText(this.GetText(3)));
   }
   OnBeforeShow() {
-    this.mEe(), (this.G7i = this.ExtraParams), this.K7i(), this.Og();
+    this.mSe(), (this.qHi = this.ExtraParams), this.WHi(), this.Og();
   }
-  mEe() {
+  mSe() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnVisionIdentify,
-      this.W7i,
+      this.jHi,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnVisionIdentifyDoAnimation,
-        this.H7i,
+        this.VHi,
       ),
-      (this.O7i = !0);
+      (this.NHi = !0);
   }
-  dEe() {
-    this.O7i &&
-      ((this.O7i = !1),
+  dSe() {
+    this.NHi &&
+      ((this.NHi = !1),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnVisionIdentify,
-        this.W7i,
+        this.jHi,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnVisionIdentifyDoAnimation,
-        this.H7i,
+        this.VHi,
       ));
   }
   Og() {
-    this.Q7i(), this.sbi(), this.C4e();
+    this.KHi(), this.sqi(), this.P5e();
   }
-  C4e() {
+  P5e() {
     var e =
       ControllerHolder_1.ControllerHolder.PhantomBattleController.GetPhantomItemDataByUniqueId(
-        this.G7i,
+        this.qHi,
       );
-    this.v8i.Update(e);
+    this.p9i.Update(e);
   }
-  async j7i(e, t) {
+  async HHi(e, t) {
     UiLayer_1.UiLayer.SetShowMaskLayer("PhantomLevelUp", !0),
-      this.X7i(),
-      0 < this.F7i?.length && (await this.b7i.PlayUpdateAnimation(this.F7i));
+      this.QHi(),
+      0 < this.kHi?.length && (await this.BHi.PlayUpdateAnimation(this.kHi));
     const i =
       ControllerHolder_1.ControllerHolder.PhantomBattleController.GetPhantomItemDataByUniqueId(
         e,
@@ -126,78 +126,78 @@ class VisionIdentifyView extends UiTabViewBase_1.UiTabViewBase {
     }, e),
       this.Og();
   }
-  X7i() {
+  QHi() {
     var e, t;
-    0 < this.F7i.length &&
+    0 < this.kHi.length &&
       ((e = (t =
         ControllerHolder_1.ControllerHolder.PhantomBattleController.GetPhantomItemDataByUniqueId(
-          this.G7i,
+          this.qHi,
         )).GetCurrentCanIdentifyCount()),
       0 <
         (t = t.GetSubPropIdentifyPreviewData(
           t.GetPhantomLevel(),
-          0 === e ? 0 : this.N7i.CurrentConsumeSelectNum(),
+          0 === e ? 0 : this.GHi.CurrentConsumeSelectNum(),
         )).length) &&
-      this.b7i.Update(t, !0);
+      this.BHi.Update(t, !0);
   }
-  K7i() {
-    this.F7i = [];
+  WHi() {
+    this.kHi = [];
     var e =
         ControllerHolder_1.ControllerHolder.PhantomBattleController.GetPhantomItemDataByUniqueId(
-          this.G7i,
+          this.qHi,
         ),
       t = e.GetCurrentCanIdentifyCount(),
       i = e.GetSubPropIdentifyPreviewData(
         e.GetPhantomLevel(),
-        0 === t ? 0 : this.N7i.CurrentConsumeSelectNum(),
+        0 === t ? 0 : this.GHi.CurrentConsumeSelectNum(),
       ),
       s = i.length;
     if (0 < s)
       for (let e = 0; e < s; e++) {
-        var r = this.k7i.get(e);
+        var r = this.OHi.get(e);
         (5 !== r && 1 !== r) ||
           r === i[e].SlotState ||
           3 !== i[e].SlotState ||
-          this.F7i.push(e);
+          this.kHi.push(e);
       }
     for (let e = 0; e < s; e++) {
       var n = i[e].SlotState;
-      this.k7i.set(e, n);
+      this.OHi.set(e, n);
     }
   }
-  sbi() {
+  sqi() {
     var e =
       ControllerHolder_1.ControllerHolder.PhantomBattleController.GetPhantomItemDataByUniqueId(
-        this.G7i,
+        this.qHi,
       );
-    this.N7i.Update(e);
+    this.GHi.Update(e);
   }
-  Q7i() {
+  KHi() {
     var e =
         ControllerHolder_1.ControllerHolder.PhantomBattleController.GetPhantomItemDataByUniqueId(
-          this.G7i,
+          this.qHi,
         ),
       e = e.GetLevelUpPreviewData(e.GetPhantomLevel());
-    this.q7i.Update(e);
+    this.bHi.Update(e);
   }
-  g0t() {
+  Rft() {
     var e =
         ControllerHolder_1.ControllerHolder.PhantomBattleController.GetPhantomItemDataByUniqueId(
-          this.G7i,
+          this.qHi,
         ),
       t = e.GetCurrentCanIdentifyCount(),
       e = e.GetSubPropIdentifyPreviewData(
         e.GetPhantomLevel(),
-        0 === t ? 0 : this.N7i.CurrentConsumeSelectNum(),
+        0 === t ? 0 : this.GHi.CurrentConsumeSelectNum(),
       ),
       t = 0 < e.length;
-    t && this.b7i.Update(e, !1), this.b7i.SetActive(t);
+    t && this.BHi.Update(e, !1), this.BHi.SetActive(t);
   }
   OnBeforeHide() {
-    this.dEe(), UiLayer_1.UiLayer.SetShowMaskLayer("PhantomLevelUp", !1);
+    this.dSe(), UiLayer_1.UiLayer.SetShowMaskLayer("PhantomLevelUp", !1);
   }
   OnBeforeDestroy() {
-    this.dEe(), this.b7i.Destroy(), this.q7i.Destroy(), this.N7i.Destroy();
+    this.dSe(), this.BHi.Destroy(), this.bHi.Destroy(), this.GHi.Destroy();
   }
 }
 exports.VisionIdentifyView = VisionIdentifyView;
@@ -207,11 +207,11 @@ class VisionIdentifyCostItem extends UiComponentsAction_1.UiComponentsAction {
       (this.wqe = void 0),
       (this.WGe = void 0),
       (this.Pe = void 0),
-      (this.$7i = void 0),
-      (this.Y7i = void 0),
-      (this.Jwt = void 0),
-      (this.w$t = (e) => {
-        this.Jwt?.SetSelected(!1, !0);
+      (this.XHi = void 0),
+      (this.$Hi = void 0),
+      (this.ebt = void 0),
+      (this.wYt = (e) => {
+        this.ebt?.SetSelected(!1, !0);
         var t = this.Pe.GetCurrentIdentifyCostId(),
           i =
             ModelManager_1.ModelManager.InventoryModel.GetItemDataBaseByConfigId(
@@ -227,10 +227,10 @@ class VisionIdentifyCostItem extends UiComponentsAction_1.UiComponentsAction {
               t,
             );
       }),
-      (this.J7i = () => {
-        this.z7i(this.Pe)
+      (this.YHi = () => {
+        this.JHi(this.Pe)
           ? this.Pe.GetIfHaveEnoughIdentifyGold(this.CurrentConsumeSelectNum())
-            ? this.Z7i()
+            ? this.zHi()
             : ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
                 "IdentifyNotEnoughMoney",
               )
@@ -246,7 +246,7 @@ class VisionIdentifyCostItem extends UiComponentsAction_1.UiComponentsAction {
         return new LguiUtil_1.TableTextArgNew(t, e);
       }),
       (this.QGe = (e) => {
-        this.Og(), this.Y7i?.();
+        this.Og(), this.$Hi?.();
       }),
       (this.wqe = e);
   }
@@ -275,13 +275,13 @@ class VisionIdentifyCostItem extends UiComponentsAction_1.UiComponentsAction {
     (this.WGe = new NumberSelectComponent_1.NumberSelectComponent(
       this.GetItem(8),
     )),
-      (this.$7i = new ButtonItem_1.ButtonItem(this.GetItem(11))),
-      this.$7i.SetFunction(this.J7i),
-      (this.Jwt = new MediumItemGrid_1.MediumItemGrid()),
-      this.Jwt.Initialize(this.GetItem(12).GetOwner()),
-      this.Jwt.BindOnExtendToggleStateChanged(this.w$t);
+      (this.XHi = new ButtonItem_1.ButtonItem(this.GetItem(11))),
+      this.XHi.SetFunction(this.YHi),
+      (this.ebt = new MediumItemGrid_1.MediumItemGrid()),
+      this.ebt.Initialize(this.GetItem(12).GetOwner()),
+      this.ebt.BindOnExtendToggleStateChanged(this.wYt);
   }
-  async Z7i() {
+  async zHi() {
     UiLayer_1.UiLayer.SetShowMaskLayer("PhantomIdentify", !0),
       await ControllerHolder_1.ControllerHolder.PhantomBattleController.RequestPhantomIdentify(
         this.Pe.GetIncrId(),
@@ -289,8 +289,8 @@ class VisionIdentifyCostItem extends UiComponentsAction_1.UiComponentsAction {
       ),
       UiLayer_1.UiLayer.SetShowMaskLayer("PhantomIdentify", !1);
   }
-  eHi() {}
-  tHi(e) {
+  ZHi() {}
+  eji(e) {
     var t = e.GetCurrentIdentifyCostId(),
       i = {
         Type: 4,
@@ -321,9 +321,9 @@ class VisionIdentifyCostItem extends UiComponentsAction_1.UiComponentsAction {
             s.toString(),
             r.toString(),
           )),
-      this.Jwt.Apply(i);
+      this.ebt.Apply(i);
   }
-  iHi(e) {
+  tji(e) {
     var e = e.GetCurrentCanIdentifyCount(),
       t = {
         MaxNumber: e,
@@ -337,7 +337,7 @@ class VisionIdentifyCostItem extends UiComponentsAction_1.UiComponentsAction {
       this.WGe.SetAddReduceButtonInteractive(1 < e),
       this.WGe.SetReduceButtonInteractive(1 < this.CurrentConsumeSelectNum());
   }
-  oHi(e) {
+  Pke(e) {
     var t = e.GetIdentifyCostItemId(),
       t = (this.SetItemIcon(this.GetTexture(9), t), this.GetText(10));
     t.SetText(
@@ -350,11 +350,11 @@ class VisionIdentifyCostItem extends UiComponentsAction_1.UiComponentsAction {
         t.changeColor,
       );
   }
-  rHi(e) {
-    e = this.nHi(e);
+  iji(e) {
+    e = this.oji(e);
     this.GetItem(3).SetUIActive(e);
   }
-  nHi(e) {
+  oji(e) {
     let t = !0;
     for (const i of e.GetLevelSubPropData(e.GetPhantomLevel()))
       if (3 !== i.SlotState) {
@@ -363,8 +363,8 @@ class VisionIdentifyCostItem extends UiComponentsAction_1.UiComponentsAction {
       }
     return t;
   }
-  H5e(e) {
-    var t = this.sHi(e);
+  o6e(e) {
+    var t = this.rji(e);
     this.GetItem(4).SetUIActive(t),
       t &&
         (e.GetIfHaveEnoughIdentifyConsumeItem(this.CurrentConsumeSelectNum())
@@ -379,19 +379,19 @@ class VisionIdentifyCostItem extends UiComponentsAction_1.UiComponentsAction {
               ),
             ));
   }
-  z7i(e) {
+  JHi(e) {
     return e.GetIfHaveEnoughIdentifyConsumeItem(this.CurrentConsumeSelectNum());
   }
-  sHi(e) {
+  rji(e) {
     var t = e.GetIfHaveEnoughIdentifyConsumeItem(
         this.CurrentConsumeSelectNum(),
       ),
       i = e.GetIfHaveUnIdentifySubProp();
-    return !(this.nHi(e) || (i && t));
+    return !(this.oji(e) || (i && t));
   }
-  aHi(e) {
-    var t = this.nHi(e),
-      i = this.sHi(e),
+  nji(e) {
+    var t = this.oji(e),
+      i = this.rji(e),
       s = t || i;
     this.GetItem(7).SetUIActive(!s),
       this.GetItem(11).SetUIActive(!s),
@@ -407,12 +407,12 @@ class VisionIdentifyCostItem extends UiComponentsAction_1.UiComponentsAction {
     return this.WGe.GetSelectNumber();
   }
   Update(e) {
-    (this.Pe = e), this.iHi(this.Pe), this.Og();
+    (this.Pe = e), this.tji(this.Pe), this.Og();
   }
   SetOnChangeValueCallBack(e) {
-    this.Y7i = e;
+    this.$Hi = e;
   }
-  hHi(e) {
+  sji(e) {
     e.GetIfHaveEnoughIdentifyConsumeItem(this.CurrentConsumeSelectNum()) ||
       1 !== this.CurrentConsumeSelectNum() ||
       ((e =
@@ -426,13 +426,13 @@ class VisionIdentifyCostItem extends UiComponentsAction_1.UiComponentsAction {
       this.WGe.SetNumberSelectTipsText(e));
   }
   Og() {
-    this.oHi(this.Pe),
-      this.H5e(this.Pe),
-      this.rHi(this.Pe),
-      this.aHi(this.Pe),
-      this.tHi(this.Pe),
-      this.eHi(),
-      this.hHi(this.Pe);
+    this.Pke(this.Pe),
+      this.o6e(this.Pe),
+      this.iji(this.Pe),
+      this.nji(this.Pe),
+      this.eji(this.Pe),
+      this.ZHi(),
+      this.sji(this.Pe);
   }
 }
 //# sourceMappingURL=VisionIdentifyView.js.map

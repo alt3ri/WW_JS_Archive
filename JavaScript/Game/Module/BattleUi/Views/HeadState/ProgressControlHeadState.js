@@ -7,10 +7,10 @@ const UE = require("ue"),
 class ProgressControlHeadState extends HeadStateViewBase_1.HeadStateViewBase {
   constructor() {
     super(...arguments),
-      (this.xht = 0),
+      (this.Wlt = 0),
       (this.OnProgressControlDataChange = (t) => {
         "CaptureStrategicPoint" === t.ProgressCtrlType &&
-          this.M1t(t.CurrentValue / t.MaxValue);
+          this.x_t(t.CurrentValue / t.MaxValue);
       });
   }
   OnRegisterComponent() {
@@ -29,12 +29,12 @@ class ProgressControlHeadState extends HeadStateViewBase_1.HeadStateViewBase {
       r = e.GetStretchLeft(),
       i = e.GetParentAsUIItem().GetWidth(),
       i =
-        ((this.xht = i - 2 * r),
+        ((this.Wlt = i - 2 * r),
         e.SetUIActive(!0),
         s.SetUIActive(!0),
         t.GetProgressControlData());
     "CaptureStrategicPoint" === i.ProgressCtrlType &&
-      this.M1t(i.CurrentValue / i.MaxValue);
+      this.x_t(i.CurrentValue / i.MaxValue);
   }
   BindCallback() {
     super.BindCallback(),
@@ -42,8 +42,8 @@ class ProgressControlHeadState extends HeadStateViewBase_1.HeadStateViewBase {
         this.OnProgressControlDataChange,
       );
   }
-  M1t(t) {
-    var e = MathUtils_1.MathUtils.Clamp(t, 0, 1) * this.xht,
+  x_t(t) {
+    var e = MathUtils_1.MathUtils.Clamp(t, 0, 1) * this.Wlt,
       e =
         (this.GetSprite(0).SetWidth(e),
         Math.round(MathUtils_1.MathUtils.RangeClamp(t, 0, 1, 0, 100)));

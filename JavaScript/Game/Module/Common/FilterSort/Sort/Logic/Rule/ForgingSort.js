@@ -6,7 +6,7 @@ const ForgingController_1 = require("../../../../../Manufacture/Forging/ForgingC
 class ForgingSort extends CommonSort_1.CommonSort {
   constructor() {
     super(...arguments),
-      (this.XLt = (r, t, o) => {
+      (this.zDt = (r, t, o) => {
         var n =
             ForgingController_1.ForgingController.CheckCanForgingOrCanUnlock(
               r.ItemId,
@@ -35,19 +35,19 @@ class ForgingSort extends CommonSort_1.CommonSort {
         const i = e - n;
         return i * (o ? -1 : 1);
       }),
-      (this.K7e = (r, t, o) => {
+      (this.rje = (r, t, o) => {
         return t.WeaponType !== r.WeaponType
           ? (t.WeaponType - r.WeaponType) * (o ? -1 : 1)
           : 0;
       }),
-      (this.zLt = (r, t, o) => {
+      (this.iRt = (r, t, o) => {
         return r.ItemId !== t.ItemId ? (t.ItemId - r.ItemId) * (o ? -1 : 1) : 0;
       });
   }
   OnInitSortMap() {
-    this.SortMap.set(1, this.XLt),
-      this.SortMap.set(2, this.K7e),
-      this.SortMap.set(3, this.zLt);
+    this.SortMap.set(1, this.zDt),
+      this.SortMap.set(2, this.rje),
+      this.SortMap.set(3, this.iRt);
   }
 }
 exports.ForgingSort = ForgingSort;

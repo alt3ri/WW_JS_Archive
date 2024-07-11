@@ -62,21 +62,21 @@ let CharacterGlideComponent =
   ) {
     constructor() {
       super(...arguments),
-        (this.nXt = void 0),
-        (this.s3o = void 0),
-        (this._Vr = void 0),
+        (this.n$t = void 0),
+        (this.o4o = void 0),
+        (this.H5r = void 0),
         (this.Xte = void 0),
         (this.oRe = void 0),
-        (this.uVr = void 0),
-        (this.cVr = Vector_1.Vector.Create()),
-        (this.mVr = Vector_1.Vector.Create()),
-        (this.dVr = Quat_1.Quat.Create()),
-        (this.CVr = Vector_1.Vector.Create()),
-        (this.gVr = !1),
-        (this.fVr = 0),
-        (this.pVr = (t) => {
+        (this.j5r = void 0),
+        (this.W5r = Vector_1.Vector.Create()),
+        (this.K5r = Vector_1.Vector.Create()),
+        (this.Q5r = Quat_1.Quat.Create()),
+        (this.X5r = Vector_1.Vector.Create()),
+        (this.$5r = !1),
+        (this.Y5r = 0),
+        (this.J5r = (t) => {
           this.Xte?.HasTag(921953316)
-            ? this.s3o.CharacterMovement.KuroFlying(
+            ? this.o4o.CharacterMovement.KuroFlying(
                 t,
                 0,
                 FLYING_FRICTION,
@@ -85,7 +85,7 @@ let CharacterGlideComponent =
                 FLYING_MAX_SPEED,
                 FLYING_MAX_FALLING_SPEED,
               )
-            : this.s3o.CharacterMovement.KuroFlying(
+            : this.o4o.CharacterMovement.KuroFlying(
                 t,
                 FLYING_GRAVITY,
                 FLYING_FRICTION,
@@ -95,32 +95,32 @@ let CharacterGlideComponent =
                 FLYING_MAX_FALLING_SPEED,
               );
         }),
-        (this.vVr = (t) => {
+        (this.z5r = (t) => {
           var e, i, _;
-          this.nXt &&
-            this.s3o &&
-            (e = this.s3o.CharacterMovement) &&
+          this.n$t &&
+            this.o4o &&
+            (e = this.o4o.CharacterMovement) &&
             (this.CalculateSoarQuat(),
-            this.dVr.RotateVector(
+            this.Q5r.RotateVector(
               Vector_1.Vector.UpVectorProxy,
               CharacterGlideComponent_1.Lz,
             ),
             (i = this.oRe?.HasKuroRootMotion),
-            (_ = !this.nXt.InputDirectProxy.IsZero()),
-            this.gVr
-              ? this.s3o.Speed > SOAR_INPUT_MAX_SPEED && (this.gVr = !1)
-              : this.fVr < Time_1.Time.Frame &&
+            (_ = !this.n$t.InputDirectProxy.IsZero()),
+            this.$5r
+              ? this.o4o.Speed > SOAR_INPUT_MAX_SPEED && (this.$5r = !1)
+              : this.Y5r < Time_1.Time.Frame &&
                 !i &&
-                this.s3o.Speed < SOAR_INPUT_MIN_SPEED &&
-                (this.gVr = !0),
+                this.o4o.Speed < SOAR_INPUT_MIN_SPEED &&
+                (this.$5r = !0),
             i
-              ? this.dVr.RotateVector(Vector_1.Vector.UpVectorProxy, this.mVr)
-              : this.gVr || !_
-                ? (this.nXt.ActorQuatProxy.Inverse(
+              ? this.Q5r.RotateVector(Vector_1.Vector.UpVectorProxy, this.K5r)
+              : this.$5r || !_
+                ? (this.n$t.ActorQuatProxy.Inverse(
                     CharacterGlideComponent_1.az,
                   ),
                   CharacterGlideComponent_1.az.RotateVector(
-                    this.mVr,
+                    this.K5r,
                     CharacterGlideComponent_1.Lz,
                   ),
                   (i =
@@ -158,48 +158,48 @@ let CharacterGlideComponent =
                   (_ = Math.sin(_)),
                   (CharacterGlideComponent_1.Lz.Y = _ * Math.sin(i)),
                   (CharacterGlideComponent_1.Lz.Z = _ * Math.cos(i)),
-                  this.nXt.ActorQuatProxy.RotateVector(
+                  this.n$t.ActorQuatProxy.RotateVector(
                     CharacterGlideComponent_1.Lz,
-                    this.mVr,
+                    this.K5r,
                   ))
-                : (this.cVr.DeepCopy(this.nXt.InputDirectProxy),
-                  this.cVr.Normalize(),
-                  (_ = this.cVr.Y * SOAR_ROTATE_SPEED * t),
+                : (this.W5r.DeepCopy(this.n$t.InputDirectProxy),
+                  this.W5r.Normalize(),
+                  (_ = this.W5r.Y * SOAR_ROTATE_SPEED * t),
                   CharacterGlideComponent_1.Gue.Set(0, _, 0),
-                  this.nXt.AddActorLocalRotation(
+                  this.n$t.AddActorLocalRotation(
                     CharacterGlideComponent_1.Gue.ToUeRotator(),
                   ),
                   CharacterGlideComponent_1.Gue.Quaternion(
                     CharacterGlideComponent_1.az,
                   ),
-                  CharacterGlideComponent_1.az.Multiply(this.dVr, this.dVr),
+                  CharacterGlideComponent_1.az.Multiply(this.Q5r, this.Q5r),
                   CharacterGlideComponent_1.Lz.DeepCopy(
-                    this.nXt.ActorVelocityProxy,
+                    this.n$t.ActorVelocityProxy,
                   ),
                   CharacterGlideComponent_1.az.RotateVector(
                     CharacterGlideComponent_1.Lz,
                     CharacterGlideComponent_1.Lz,
                   ),
                   (e.Velocity = CharacterGlideComponent_1.Lz.ToUeVector()),
-                  CharacterGlideComponent_1.az.RotateVector(this.mVr, this.mVr),
+                  CharacterGlideComponent_1.az.RotateVector(this.K5r, this.K5r),
                   (i =
-                    this.cVr.X *
+                    this.W5r.X *
                     SOAR_MAX_NORMAL_ANGLE *
                     MathUtils_1.MathUtils.DegToRad),
-                  (this.CVr.X = Math.sin(i)),
-                  (this.CVr.Y = 0),
-                  (this.CVr.Z = Math.cos(i)),
-                  this.dVr.RotateVector(this.CVr, this.CVr),
-                  this.dVr.RotateVector(
+                  (this.X5r.X = Math.sin(i)),
+                  (this.X5r.Y = 0),
+                  (this.X5r.Z = Math.cos(i)),
+                  this.Q5r.RotateVector(this.X5r, this.X5r),
+                  this.Q5r.RotateVector(
                     Vector_1.Vector.UpVectorProxy,
                     CharacterGlideComponent_1.Lz,
                   ),
-                  this.MVr(this.CVr),
+                  this.Z5r(this.X5r),
                   (_ = SOAR_NORMAL_SPEED * t),
-                  Vector_1.Vector.DirectLerp(this.mVr, this.CVr, _, this.mVr)),
-            this.dVr.Inverse(CharacterGlideComponent_1.az),
+                  Vector_1.Vector.DirectLerp(this.K5r, this.X5r, _, this.K5r)),
+            this.Q5r.Inverse(CharacterGlideComponent_1.az),
             CharacterGlideComponent_1.az.RotateVector(
-              this.mVr,
+              this.K5r,
               CharacterGlideComponent_1.Lz,
             ),
             CharacterGlideComponent_1.Lz.Z < 0 &&
@@ -207,28 +207,28 @@ let CharacterGlideComponent =
                 -CharacterGlideComponent_1.Lz.X),
               (CharacterGlideComponent_1.Lz.Y =
                 -CharacterGlideComponent_1.Lz.Y),
-              this.dVr.RotateVector(CharacterGlideComponent_1.Lz, this.mVr)),
+              this.Q5r.RotateVector(CharacterGlideComponent_1.Lz, this.K5r)),
             DEBUG_DRAW &&
-              (this.nXt.ActorLocationProxy.Addition(
-                this.nXt.ActorVelocityProxy,
+              (this.n$t.ActorLocationProxy.Addition(
+                this.n$t.ActorVelocityProxy,
                 CharacterGlideComponent_1.Lz,
               ),
               UE.KismetSystemLibrary.DrawDebugArrow(
-                this.nXt.Actor,
-                this.nXt.ActorLocationProxy.ToUeVector(),
+                this.n$t.Actor,
+                this.n$t.ActorLocationProxy.ToUeVector(),
                 CharacterGlideComponent_1.Lz.ToUeVector(),
                 100,
                 redColor,
                 void 0,
                 10,
               ),
-              this.mVr.Multiply(100, CharacterGlideComponent_1.Lz),
+              this.K5r.Multiply(100, CharacterGlideComponent_1.Lz),
               CharacterGlideComponent_1.Lz.AdditionEqual(
-                this.nXt.ActorLocationProxy,
+                this.n$t.ActorLocationProxy,
               ),
               UE.KismetSystemLibrary.DrawDebugArrow(
-                this.nXt.Actor,
-                this.nXt.ActorLocationProxy.ToUeVector(),
+                this.n$t.Actor,
+                this.n$t.ActorLocationProxy.ToUeVector(),
                 CharacterGlideComponent_1.Lz.ToUeVector(),
                 100,
                 greenColor,
@@ -239,7 +239,7 @@ let CharacterGlideComponent =
               ((CharacterGlideComponent_1.Lz.Z = 0),
               CharacterGlideComponent_1.Lz.Normalize() ||
                 CharacterGlideComponent_1.Lz.DeepCopy(
-                  this.nXt.ActorForwardProxy,
+                  this.n$t.ActorForwardProxy,
                 )),
             UE.KuroMovementBPLibrary.KuroSoar(
               t,
@@ -247,42 +247,41 @@ let CharacterGlideComponent =
               SOAR_AIRFRICTION,
               SOAR_AERODYNAMICS,
               soarGravity,
-              this.mVr.ToUeVector(),
+              this.K5r.ToUeVector(),
             ) || this.ExitSoarState(),
-            this.nXt.ResetAllCachedTime());
+            this.n$t.ResetAllCachedTime());
         }),
-        (this.OnStateInherit = (t, e, i) => {
+        (this.OnStateInherit = (t, e) => {
           t?.Valid &&
-            (t = t.GetComponent(50))?.Valid &&
-            0 === e &&
-            !i &&
-            (this.mVr.DeepCopy(t.mVr),
-            this.dVr.DeepCopy(t.dVr),
-            this.CVr.DeepCopy(t.CVr),
-            (this.gVr = t.gVr));
+            (t = t.GetComponent(51))?.Valid &&
+            !e &&
+            (this.K5r.DeepCopy(t.K5r),
+            this.Q5r.DeepCopy(t.Q5r),
+            this.X5r.DeepCopy(t.X5r),
+            (this.$5r = t.$5r));
         }),
-        (this.SVr = (t, e) => {
-          this._Vr?.SetParaglidingIsAscent(e);
+        (this.eVr = (t, e) => {
+          this.H5r?.SetParaglidingIsAscent(e);
         });
     }
     OnStart() {
       return (
-        (this.nXt = this.Entity.CheckGetComponent(3)),
-        (this.s3o = this.Entity.CheckGetComponent(161)),
-        (this._Vr = this.Entity.CheckGetComponent(69)),
-        (this.Xte = this.Entity.CheckGetComponent(185)),
-        (this.oRe = this.Entity.CheckGetComponent(160)),
+        (this.n$t = this.Entity.CheckGetComponent(3)),
+        (this.o4o = this.Entity.CheckGetComponent(163)),
+        (this.H5r = this.Entity.CheckGetComponent(71)),
+        (this.Xte = this.Entity.CheckGetComponent(188)),
+        (this.oRe = this.Entity.CheckGetComponent(162)),
         EventSystem_1.EventSystem.AddWithTarget(
           this.Entity,
           EventDefine_1.EEventName.CustomMoveGlide,
-          this.pVr,
+          this.J5r,
         ),
         EventSystem_1.EventSystem.AddWithTarget(
           this.Entity,
           EventDefine_1.EEventName.CustomMoveSoar,
-          this.vVr,
+          this.z5r,
         ),
-        (this.uVr = this.Xte.ListenForTagAddOrRemove(-1819043374, this.SVr)),
+        (this.j5r = this.Xte.ListenForTagAddOrRemove(-1819043374, this.eVr)),
         EventSystem_1.EventSystem.AddWithTarget(
           this.Entity,
           EventDefine_1.EEventName.RoleOnStateInherit,
@@ -296,15 +295,15 @@ let CharacterGlideComponent =
         EventSystem_1.EventSystem.RemoveWithTarget(
           this.Entity,
           EventDefine_1.EEventName.CustomMoveGlide,
-          this.pVr,
+          this.J5r,
         ),
         EventSystem_1.EventSystem.RemoveWithTarget(
           this.Entity,
           EventDefine_1.EEventName.CustomMoveSoar,
-          this.vVr,
+          this.z5r,
         ),
-        this.uVr.EndTask(),
-        (this.uVr = void 0),
+        this.j5r.EndTask(),
+        (this.j5r = void 0),
         EventSystem_1.EventSystem.RemoveWithTarget(
           this.Entity,
           EventDefine_1.EEventName.RoleOnStateInherit,
@@ -314,55 +313,55 @@ let CharacterGlideComponent =
       );
     }
     EnterGlideState() {
-      this.s3o.CharacterMovement.SetMovementMode(
+      this.o4o.CharacterMovement.SetMovementMode(
         6,
         CustomMovementDefine_1.CUSTOM_MOVEMENTMODE_GLIDE,
       );
     }
     ExitGlideState() {
-      this.s3o.CharacterMovement.SetMovementMode(3, 0);
+      this.o4o.CharacterMovement.SetMovementMode(3, 0);
     }
     EnterSoarState() {
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("Test", 6, "EnterSoarState", ["Entity", this.Entity.Id]),
-        this.s3o.CharacterMovement.SetMovementMode(
+        this.o4o.CharacterMovement.SetMovementMode(
           6,
           CustomMovementDefine_1.CUSTOM_MOVEMENTMODE_SOAR,
         ),
-        this.nXt.ClearInput(),
+        this.n$t.ClearInput(),
         this.CalculateSoarQuat(),
-        this.dVr.RotateVector(Vector_1.Vector.UpVectorProxy, this.mVr),
-        (this.gVr = !1),
-        (this.fVr = Time_1.Time.Frame);
+        this.Q5r.RotateVector(Vector_1.Vector.UpVectorProxy, this.K5r),
+        (this.$5r = !1),
+        (this.Y5r = Time_1.Time.Frame);
     }
     ExitSoarState() {
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("Test", 6, "ExitSoarState", ["Entity", this.Entity.Id]),
-        this.s3o.CharacterMovement.SetMovementMode(3, 0);
+        this.o4o.CharacterMovement.SetMovementMode(3, 0);
     }
     CalculateSoarQuat() {
       var t;
-      this.nXt.ActorVelocityProxy.IsNearlyZero()
-        ? this.dVr.DeepCopy(this.nXt.ActorQuatProxy)
-        : (t = this.nXt.ActorVelocityProxy).SizeSquared2D() <
+      this.n$t.ActorVelocityProxy.IsNearlyZero()
+        ? this.Q5r.DeepCopy(this.n$t.ActorQuatProxy)
+        : (t = this.n$t.ActorVelocityProxy).SizeSquared2D() <
             SOAR_TURN_SPEED_SQR_THRESHOLD
-          ? (CharacterGlideComponent_1.Lz.DeepCopy(this.nXt.ActorForwardProxy),
+          ? (CharacterGlideComponent_1.Lz.DeepCopy(this.n$t.ActorForwardProxy),
             0 < t.Z && CharacterGlideComponent_1.Lz.MultiplyEqual(-1),
             MathUtils_1.MathUtils.LookRotationForwardFirst(
               t,
               CharacterGlideComponent_1.Lz,
-              this.dVr,
+              this.Q5r,
             ))
           : MathUtils_1.MathUtils.LookRotationForwardFirst(
               t,
               Vector_1.Vector.UpVectorProxy,
-              this.dVr,
+              this.Q5r,
             );
     }
-    MVr(t) {
+    Z5r(t) {
       var e, i;
-      this.nXt &&
-        ((i = t.DotProduct(this.nXt.ActorForwardProxy)),
+      this.n$t &&
+        ((i = t.DotProduct(this.n$t.ActorForwardProxy)),
         (e = t.DotProduct(Vector_1.Vector.UpVectorProxy)),
         ((e = Math.atan2(e, i) * MathUtils_1.MathUtils.RadToDeg) >=
           SOAR_PITCH_MIN &&
@@ -374,12 +373,12 @@ let CharacterGlideComponent =
               e) *
             MathUtils_1.MathUtils.DegToRad),
           CharacterGlideComponent_1.Lz.Set(Math.cos(i), 0, Math.sin(i)),
-          this.nXt.ActorQuatProxy.RotateVector(
+          this.n$t.ActorQuatProxy.RotateVector(
             CharacterGlideComponent_1.Lz,
             CharacterGlideComponent_1.Lz,
           ),
           Quat_1.Quat.FindBetween(
-            this.nXt.ActorForwardProxy,
+            this.n$t.ActorForwardProxy,
             CharacterGlideComponent_1.Lz,
             CharacterGlideComponent_1.az,
           ),
@@ -391,7 +390,7 @@ let CharacterGlideComponent =
   (CharacterGlideComponent.az = Quat_1.Quat.Create()),
   (CharacterGlideComponent = CharacterGlideComponent_1 =
     __decorate(
-      [(0, RegisterComponent_1.RegisterComponent)(50)],
+      [(0, RegisterComponent_1.RegisterComponent)(51)],
       CharacterGlideComponent,
     )),
   (exports.CharacterGlideComponent = CharacterGlideComponent);

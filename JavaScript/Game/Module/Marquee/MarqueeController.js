@@ -21,29 +21,29 @@ class MarqueeController extends UiControllerBase_1.UiControllerBase {
   static OnAddEvents() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.LocalStorageInitPlayerId,
-      MarqueeController.VUi,
+      MarqueeController.VAi,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.WorldDoneAndCloseLoading,
-        MarqueeController.HUi,
+        MarqueeController.HAi,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.BeforeLoadMap,
-        MarqueeController.jUi,
+        MarqueeController.jAi,
       );
   }
   static OnRemoveEvents() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.LocalStorageInitPlayerId,
-      MarqueeController.VUi,
+      MarqueeController.VAi,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.WorldDoneAndCloseLoading,
-        MarqueeController.HUi,
+        MarqueeController.HAi,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.BeforeLoadMap,
-        MarqueeController.jUi,
+        MarqueeController.jAi,
       );
   }
   static TestMarquee(e) {
@@ -52,12 +52,12 @@ class MarqueeController extends UiControllerBase_1.UiControllerBase {
         "{0}",
         e,
       );
-    this.WUi(200, e), MarqueeController.CloseMarqueeView(!0);
+    this.WAi(200, e), MarqueeController.CloseMarqueeView(!0);
   }
-  static WUi(e, n) {
+  static WAi(e, n) {
     const a = ModelManager_1.ModelManager.MarqueeModel;
     200 !== e && 404 === e
-      ? MarqueeController.KUi()
+      ? MarqueeController.KAi()
       : (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("Marquee", 9, "接收到跑马灯数据", ["marquee", n]),
         n?.includes("contents")
@@ -71,7 +71,7 @@ class MarqueeController extends UiControllerBase_1.UiControllerBase {
                   a.CurMarquee.WhiteLists,
                 ) &&
                 MarqueeController.CloseMarqueeView(!1))
-            : MarqueeController.KUi()
+            : MarqueeController.KAi()
           : Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "Marquee",
@@ -79,7 +79,7 @@ class MarqueeController extends UiControllerBase_1.UiControllerBase {
               "跑马灯数据不正确未包含 contents 字段，需要检查跑马灯数据",
             ));
   }
-  static KUi() {
+  static KAi() {
     UiManager_1.UiManager.IsViewShow("MarqueeView") &&
       UiManager_1.UiManager.CloseView("MarqueeView"),
       ModelManager_1.ModelManager.MarqueeModel.RemoveAllMarqueeData();
@@ -98,14 +98,14 @@ class MarqueeController extends UiControllerBase_1.UiControllerBase {
             e &&
               (Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info("Marquee", 28, "关闭跑马灯检查下一个跑马灯"),
-              MarqueeController.QUi());
+              MarqueeController.QAi());
           })
         : e &&
           (Log_1.Log.CheckInfo() &&
             Log_1.Log.Info("Marquee", 28, "检查下一个跑马灯"),
-          MarqueeController.QUi());
+          MarqueeController.QAi());
   }
-  static QUi() {
+  static QAi() {
     var e;
     Log_1.Log.CheckInfo() && Log_1.Log.Info("Marquee", 28, "检查跑马灯"),
       UiManager_1.UiManager.IsViewShow("MarqueeView") ||
@@ -126,7 +126,7 @@ class MarqueeController extends UiControllerBase_1.UiControllerBase {
               : (ModelManager_1.ModelManager.MarqueeModel.RemoveMarqueeData(
                   e.Id,
                 ),
-                MarqueeController.QUi())
+                MarqueeController.QAi())
             : Log_1.Log.CheckInfo() &&
               Log_1.Log.Info("Marquee", 28, "获取队列的第一个跑马灯数据空"));
   }
@@ -142,28 +142,28 @@ class MarqueeController extends UiControllerBase_1.UiControllerBase {
     );
   }
 }
-((exports.MarqueeController = MarqueeController).VUi = () => {
+((exports.MarqueeController = MarqueeController).VAi = () => {
   ModelManager_1.ModelManager.MarqueeModel.InitMarqueeStorageDataMap();
 }),
-  (MarqueeController.jUi = () => {
+  (MarqueeController.jAi = () => {
     void 0 !== MarqueeModel_1.MarqueeModel.TimerId &&
       (TimerSystem_1.TimerSystem.Remove(MarqueeModel_1.MarqueeModel.TimerId),
       (MarqueeModel_1.MarqueeModel.TimerId = void 0));
   }),
-  (MarqueeController.HUi = () => {
+  (MarqueeController.HAi = () => {
     ModelManager_1.ModelManager.LoginModel.IsLoginStatus(
       LoginDefine_1.ELoginStatus.EnterGameRet,
     ) &&
       void 0 === MarqueeModel_1.MarqueeModel.TimerId &&
       (MarqueeModel_1.MarqueeModel.TimerId = TimerSystem_1.TimerSystem.Forever(
-        MarqueeController.XUi,
+        MarqueeController.XAi,
         TimeUtil_1.TimeUtil.Minute * TimeUtil_1.TimeUtil.InverseMillisecond -
           Math.random() *
             INTERVAL_OFFSET *
             TimeUtil_1.TimeUtil.InverseMillisecond,
       ));
   }),
-  (MarqueeController.XUi = () => {
+  (MarqueeController.XAi = () => {
     var e =
       ModelManager_1.ModelManager.LoginServerModel.GetCurrentLoginServerId();
     !StringUtils_1.StringUtils.IsEmpty(e) &&
@@ -176,7 +176,7 @@ class MarqueeController extends UiControllerBase_1.UiControllerBase {
           e,
         ))) &&
       Http_1.Http.Get(e, void 0, (e, n, a) => {
-        MarqueeController.WUi(n, a), MarqueeController.QUi();
+        MarqueeController.WAi(n, a), MarqueeController.QAi();
       });
   });
 //# sourceMappingURL=MarqueeController.js.map

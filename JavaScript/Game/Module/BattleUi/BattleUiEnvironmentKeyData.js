@@ -6,45 +6,47 @@ const Log_1 = require("../../../Core/Common/Log"),
   EventSystem_1 = require("../../Common/Event/EventSystem");
 class BattleUiEnvironmentKeyData {
   constructor() {
-    (this.xKe = 0), (this.wKe = []);
+    (this.jQe = 0), (this.WQe = []);
   }
   GetCurEnvironmentalKey() {
-    return this.xKe;
+    return this.jQe;
   }
   GetCurKeyText() {
-    return BattleUiEnvironmentKeyData.BKe[this.xKe];
+    return BattleUiEnvironmentKeyData.KQe[this.jQe];
   }
   Init() {
-    (this.xKe = 0), (this.wKe.length = 0), this.wKe.push(!0);
-    for (let e = 1; e < 4; e++) this.wKe.push(!1);
+    (this.jQe = 0), (this.WQe.length = 0), this.WQe.push(!0);
+    for (let e = 1; e < 6; e++) this.WQe.push(!1);
   }
   SetEnvironmentKeyVisible(t, e) {
-    if (this.wKe[t] !== e)
-      if ((this.wKe[t] = e)) this.xKe < t && ((this.xKe = t), this.bKe());
-      else if (!(this.xKe > t))
+    if (this.WQe[t] !== e)
+      if ((this.WQe[t] = e)) this.jQe < t && ((this.jQe = t), this.QQe());
+      else if (!(this.jQe > t))
         for (let e = t - 1; 0 <= e; e--)
-          if (this.wKe[e]) return (this.xKe = e), void this.bKe();
+          if (this.WQe[e]) return (this.jQe = e), void this.QQe();
   }
-  bKe() {
+  QQe() {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug("Battle", 18, "环境特性快捷键类型改变", [
         "type",
-        this.xKe,
+        this.jQe,
       ]),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.BattleUiEnvironmentKeyChanged,
       );
   }
   OnLeaveLevel() {
-    this.xKe = 0;
-    for (let e = 1; e < 4; e++) this.wKe[e] = !1;
+    this.jQe = 0;
+    for (let e = 1; e < 6; e++) this.WQe[e] = !1;
   }
   Clear() {}
 }
-(exports.BattleUiEnvironmentKeyData = BattleUiEnvironmentKeyData).BKe = [
+(exports.BattleUiEnvironmentKeyData = BattleUiEnvironmentKeyData).KQe = [
   void 0,
   "HotKeyText_SilentAreaTips_Name",
   "HotKeyText_EnvironmentBuffTips_Name",
+  "HotKeyText_SilentAreaTips_Name",
   "HotKeyText_RogueInfoTips_Name",
+  "HotKeyText_VisionLevelTips_Name",
 ];
 //# sourceMappingURL=BattleUiEnvironmentKeyData.js.map

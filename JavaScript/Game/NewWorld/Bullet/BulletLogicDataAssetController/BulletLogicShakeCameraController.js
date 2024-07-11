@@ -9,52 +9,52 @@ const UE = require("ue"),
 class BulletLogicShakeCameraController extends BulletLogicController_1.BulletLogicController {
   constructor(t, e) {
     super(t, e),
-      (this.b9o = !1),
-      (this.q9o = -0),
-      (this.G9o = 0),
-      (this.N9o = void 0),
+      (this.x7o = !1),
+      (this.w7o = -0),
+      (this.B7o = 0),
+      (this.b7o = void 0),
       (this.NeedTick = !0),
-      (this.Hte = e.GetComponent(152)),
-      (this.O9o = t.Count),
-      (this.k9o = t.Interval * TimeUtil_1.TimeUtil.InverseMillisecond),
+      (this.Hte = e.GetComponent(154)),
+      (this.q7o = t.Count),
+      (this.G7o = t.Interval * TimeUtil_1.TimeUtil.InverseMillisecond),
       ResourceSystem_1.ResourceSystem.LoadAsync(
         this.LogicController.Shake.ToAssetPathName(),
         UE.Class,
         (t) => {
-          this.N9o = t;
+          this.b7o = t;
         },
       );
   }
   Update(t) {
-    !this.b9o ||
-      this.G9o >= this.O9o ||
-      (this.q9o < this.k9o
-        ? (this.q9o += t)
-        : this.N9o &&
+    !this.x7o ||
+      this.B7o >= this.q7o ||
+      (this.w7o < this.G7o
+        ? (this.w7o += t)
+        : this.b7o &&
           (CameraController_1.CameraController.PlayWorldCameraShake(
-            this.N9o,
+            this.b7o,
             this.Hte.ActorLocation,
             this.LogicController.InnerRadius,
             this.LogicController.OuterRadius,
             this.LogicController.Falloff,
             this.LogicController.OrientShakeTowardsEpicenter,
           ),
-          (this.q9o = 0),
-          this.G9o++));
+          (this.w7o = 0),
+          this.B7o++));
   }
   BulletLogicAction() {
-    this.N9o &&
+    this.b7o &&
       (CameraController_1.CameraController.PlayWorldCameraShake(
-        this.N9o,
+        this.b7o,
         this.Hte.ActorLocation,
         this.LogicController.InnerRadius,
         this.LogicController.OuterRadius,
         this.LogicController.Falloff,
         this.LogicController.OrientShakeTowardsEpicenter,
       ),
-      (this.b9o = !0),
-      (this.q9o = 0),
-      (this.G9o = 1));
+      (this.x7o = !0),
+      (this.w7o = 0),
+      (this.B7o = 1));
   }
 }
 exports.BulletLogicShakeCameraController = BulletLogicShakeCameraController;

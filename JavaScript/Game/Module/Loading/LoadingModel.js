@@ -12,39 +12,42 @@ class LoadingModel extends ModelBase_1.ModelBase {
     super(...arguments),
       (this.ScreenEffect = void 0),
       (this.TargetTeleportId = 0),
-      (this.Tpi = 0),
-      (this.Lpi = !0),
-      (this.Efi = !1),
+      (this.Tvi = 0),
+      (this.Lvi = !0),
+      (this.ypi = !1),
       (this.Speed = 0),
       (this.SpeedRate = 1),
       (this.ReachHandleQueue = new Queue_1.Queue()),
       (this.CurrentProgress = 0),
       (this.NextProgress = 0),
-      (this.Dpi = !1),
-      (this.Rpi = !1);
+      (this.Dvi = !1),
+      (this.Rvi = !1),
+      (this.Ssa = void 0),
+      (this.Esa = void 0),
+      (this.ysa = void 0);
   }
   get TipTime() {
     return (
-      this.Tpi ||
-        (this.Tpi =
+      this.Tvi ||
+        (this.Tvi =
           ConfigManager_1.ConfigManager.LoadingConfig.GetLoadingTipsTime()),
-      this.Tpi
+      this.Tvi
     );
   }
   get IsShowUidView() {
-    return this.Lpi;
+    return this.Lvi;
   }
   set IsShowUidView(e) {
-    e !== this.Lpi &&
-      ((this.Lpi = e),
+    e !== this.Lvi &&
+      ((this.Lvi = e),
       LoadingController_1.LoadingController.UpdateUidViewShow());
   }
   get IsLoading() {
-    return this.Efi;
+    return this.ypi;
   }
   SetIsLoading(e) {
-    this.Efi !== e &&
-      ((this.Efi = e)
+    this.ypi !== e &&
+      ((this.ypi = e)
         ? EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.OnStartLoadingState,
           )
@@ -53,11 +56,11 @@ class LoadingModel extends ModelBase_1.ModelBase {
           ));
   }
   get IsLoadingView() {
-    return this.Dpi;
+    return this.Dvi;
   }
   SetIsLoadingView(e) {
-    this.Dpi !== e &&
-      ((this.Dpi = e)
+    this.Dvi !== e &&
+      ((this.Dvi = e)
         ? EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.OnOpenLoadingView,
           )
@@ -66,14 +69,32 @@ class LoadingModel extends ModelBase_1.ModelBase {
           ));
   }
   SetIsLoginToWorld(e) {
-    this.Rpi = e;
+    this.Rvi = e;
   }
   GetIsLoginToWorld() {
-    var e = this.Rpi;
-    return (this.Rpi = !1), e;
+    var e = this.Rvi;
+    return (this.Rvi = !1), e;
+  }
+  SetLoadingTexturePath(e) {
+    this.Ssa = e;
+  }
+  GetLoadingTexturePath() {
+    return this.Ssa;
+  }
+  SetLoadingTitle(e) {
+    this.Esa = e;
+  }
+  GetLoadingTitle() {
+    return this.Esa;
+  }
+  SetLoadingTips(e) {
+    this.ysa = e;
+  }
+  GetLoadingTips() {
+    return this.ysa;
   }
   OnClear() {
-    return (this.Efi = !1), (this.Dpi = !1), this.ReachHandleQueue.Clear(), !0;
+    return (this.ypi = !1), (this.Dvi = !1), this.ReachHandleQueue.Clear(), !0;
   }
 }
 exports.LoadingModel = LoadingModel;

@@ -2,20 +2,20 @@
 var __decorate =
   (this && this.__decorate) ||
   function (t, i, e, s) {
-    var r,
-      a = arguments.length,
-      o =
-        a < 3
+    var a,
+      r = arguments.length,
+      h =
+        r < 3
           ? i
           : null === s
             ? (s = Object.getOwnPropertyDescriptor(i, e))
             : s;
     if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
-      o = Reflect.decorate(t, i, e, s);
+      h = Reflect.decorate(t, i, e, s);
     else
-      for (var h = t.length - 1; 0 <= h; h--)
-        (r = t[h]) && (o = (a < 3 ? r(o) : 3 < a ? r(i, e, o) : r(i, e)) || o);
-    return 3 < a && o && Object.defineProperty(i, e, o), o;
+      for (var o = t.length - 1; 0 <= o; o--)
+        (a = t[o]) && (h = (r < 3 ? a(h) : 3 < r ? a(i, e, h) : a(i, e)) || h);
+    return 3 < r && h && Object.defineProperty(i, e, h), h;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharacterPartComponent = exports.CharacterPart = void 0);
@@ -29,11 +29,11 @@ const Log_1 = require("../../../../../Core/Common/Log"),
   EventDefine_1 = require("../../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../../Common/Event/EventSystem"),
   ModelManager_1 = require("../../../../Manager/ModelManager"),
-  CombatMessage_1 = require("../../../../Module/CombatMessage/CombatMessage"),
-  CombatDebugController_1 = require("../../../../Utils/CombatDebugController");
-var EAttributeId = Protocol_1.Aki.Protocol.KBs;
-const GlobalData_1 = require("../../../../GlobalData"),
-  RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent");
+  CombatMessage_1 = require("../../../../Module/CombatMessage/CombatMessage");
+var EAttributeId = Protocol_1.Aki.Protocol.Bks;
+const RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
+  GlobalData_1 = require("../../../../GlobalData"),
+  CombatLog_1 = require("../../../../Utils/CombatLog");
 class CharacterPart {
   constructor(t, i, e) {
     (this.BaseEntity = void 0),
@@ -65,8 +65,8 @@ class CharacterPart {
       (this.HitBoneName = ""),
       (this.BaseEntity = t),
       (this.ActorComp = t.GetComponent(3)),
-      (this.TagComponent = t.GetComponent(185)),
-      (this.AttributeComp = t.GetComponent(156)),
+      (this.TagComponent = t.GetComponent(188)),
+      (this.AttributeComp = t.GetComponent(158)),
       (this.Index = i),
       (this.PartTag = GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagByName(
         e.部位标签.TagName,
@@ -98,7 +98,7 @@ class CharacterPart {
       this.AttributeBuffList.push(e.属性快照Buff列表.Get(t));
     this.InheritLife
       ? (this.LifeMax =
-          this.AttributeComp.GetCurrentValue(EAttributeId.Tkn) *
+          this.AttributeComp.GetCurrentValue(EAttributeId.e5n) *
           e.继承生命值比例)
       : (this.LifeMax = -1),
       (this.Life = this.LifeMax);
@@ -106,7 +106,7 @@ class CharacterPart {
   SetActive(t) {
     this.Active = t;
   }
-  N$o(t) {
+  bYo(t) {
     this.Active !== t &&
       ((this.Active = t),
       this.Active
@@ -114,30 +114,30 @@ class CharacterPart {
         : this.TagComponent.RemoveTag(this.ActiveTag?.TagId));
   }
   UpdatePartInfo(t, i = !0) {
-    CombatDebugController_1.CombatDebugController.CombatInfo(
+    CombatLog_1.CombatLog.Info(
       "Part",
       this.BaseEntity,
       "UpdatePartInfo",
       ["TagName", this.PartTag.TagName],
-      ["Activated", t.Lkn],
-      ["LifeValue", t.d9n],
+      ["Activated", t.t5n],
+      ["LifeValue", t.Wjn],
     ),
-      this.N$o(t.Lkn),
-      (this.LifeMax = t.Tkn),
-      this.HandleChangeLife(t.d9n, i);
+      this.bYo(t.t5n),
+      (this.LifeMax = t.e5n),
+      this.HandleChangeLife(t.Wjn, i);
   }
   OnDamage(t, i, e, s = !0) {
-    let r = !1;
-    var a = this.ActorComp.Actor,
-      o = this.RemainedLifeRate();
+    let a = !1;
+    var r = this.ActorComp.Actor,
+      h = this.RemainedLifeRate();
     return (
       s &&
         ((this.Life -= t),
         (s = this.RemainedLifeRate()),
         GlobalData_1.GlobalData.BpEventManager.角色部位血量变化时.Broadcast(
-          a,
+          r,
           this.PartTag,
-          o,
+          h,
           s,
         ),
         EventSystem_1.EventSystem.EmitWithTarget(
@@ -146,17 +146,17 @@ class CharacterPart {
           t,
           this,
         ),
-        0 < o) &&
+        0 < h) &&
         s <= 0 &&
-        (r = !0),
+        (a = !0),
       i &&
         ((t = e.GetComponent(3).Actor),
         GlobalData_1.GlobalData.BpEventManager.角色部位弱点打击时.Broadcast(
-          a,
+          r,
           this.PartTag,
           t,
         )),
-      r
+      a
     );
   }
   HandleChangeLife(t, i = !0) {
@@ -200,90 +200,90 @@ let CharacterPartComponent = class CharacterPartComponent extends EntityComponen
       (this.PartMapByTag = void 0),
       (this.WeaknessByBone = void 0),
       (this.GroupMapByBone = void 0),
-      (this.Tjr = void 0),
-      (this.Ljr = void 0),
-      (this.Djr = !1);
+      (this.njr = void 0),
+      (this.sjr = void 0),
+      (this.ajr = !1);
   }
   get IsMultiPart() {
-    return this.Djr;
+    return this.ajr;
   }
   OnInitData() {
     var t = this.Entity.GetComponent(0);
     return (
-      (this.Ljr = t.ComponentDataMap.get("Nvs")?.Nvs),
+      (this.sjr = t.ComponentDataMap.get("rys")?.rys),
       (this.Parts = []),
       (this.PartMapByBone = new Map()),
       (this.PartMapByTag = new Map()),
       (this.GroupMapByBone = new Map()),
       (this.WeaknessByBone = new Map()),
-      (this.Tjr = []),
+      (this.njr = []),
       !0
     );
   }
   OnInit() {
     return (
-      (this.TagComponent = this.Entity.GetComponent(185)),
-      this.Entity.GetComponent(3).Actor?.DtCharacterPart && (this.Djr = !0),
+      (this.TagComponent = this.Entity.GetComponent(188)),
+      this.Entity.GetComponent(3).Actor?.DtCharacterPart && (this.ajr = !0),
       !0
     );
   }
   OnActivate() {
-    if (this.Djr) {
+    if (this.ajr) {
       (this.ActorComp = this.Entity.GetComponent(3)),
         (this.BaseChar = this.ActorComp.Actor),
         (this.DtCharacterPart = this.BaseChar.DtCharacterPart);
       var i = DataTableUtil_1.DataTableUtil.GetAllDataTableRowFromTable(
           this.DtCharacterPart,
         ),
-        e = this.Ljr;
+        e = this.sjr;
       for (let t = 0; t < i.length; t++) {
         var s,
-          r = i[t],
-          a = new CharacterPart(this.Entity, t, r),
-          o =
-            (this.Parts.push(a),
-            this.PartMapByBone.set(r.部位名, a),
-            r.骨骼名.Num()),
-          h = a.IsWeakness;
-        for (let t = 0; t < o; t++) {
-          var n = r.骨骼名.Get(t);
-          this.GroupMapByBone.set(n, r.部位名),
-            h && this.WeaknessByBone.set(n, a);
+          a = i[t],
+          r = new CharacterPart(this.Entity, t, a),
+          h =
+            (this.Parts.push(r),
+            this.PartMapByBone.set(a.部位名, r),
+            a.骨骼名.Num()),
+          o = r.IsWeakness;
+        for (let t = 0; t < h; t++) {
+          var n = a.骨骼名.Get(t);
+          this.GroupMapByBone.set(n, a.部位名),
+            o && this.WeaknessByBone.set(n, r);
         }
-        this.TagComponent.RemoveTag(r.部位标签?.TagId),
-          this.PartMapByTag.has(r.部位标签.TagName) &&
-            CombatDebugController_1.CombatDebugController.CombatError(
+        this.TagComponent.RemoveTag(a.部位标签?.TagId),
+          this.PartMapByTag.has(a.部位标签.TagName) &&
+            CombatLog_1.CombatLog.Error(
               "Part",
               this.Entity,
               "部位标签重复注册",
-              ["v", r.部位标签.TagName],
+              ["v", a.部位标签.TagName],
             ),
-          this.PartMapByTag.set(r.部位标签.TagName, a),
-          this.Tjr.push(this.Rjr(a, r.部位激活标签)),
+          this.PartMapByTag.set(a.部位标签.TagName, r),
+          this.njr.push(this.hjr(r, a.部位激活标签)),
           e
-            ? (s = e.oSs[t]) && a.UpdatePartInfo(s)
-            : (r.是否出生激活 &&
-                (this.TagComponent.HasTag(r.部位激活标签.TagId) &&
+            ? (s = e.yTs[t]) && r.UpdatePartInfo(s)
+            : (a.是否出生激活 &&
+                (this.TagComponent.HasTag(a.部位激活标签.TagId) &&
                   Log_1.Log.CheckError() &&
                   Log_1.Log.Error(
                     "Character",
                     21,
                     "部位勾选了[是否出生激活]，但是在蓝图中提前加了标签，会导致标签添加时无法触发从无到有事件，引起功能失效",
                     ["角色", this.BaseChar.GetName()],
-                    ["部位", r.部位名],
+                    ["部位", a.部位名],
                   ),
-                this.TagComponent.AddTag(r.部位激活标签?.TagId)),
-              ((s = Protocol_1.Aki.Protocol.dGs.create()).d9n = a.Life),
-              (s.Tkn = a.LifeMax),
-              (s.o9n = a.Index),
-              (s.Lkn = r.是否出生激活),
-              (s.n7n = a.PartTag.TagId));
+                this.TagComponent.AddTag(a.部位激活标签?.TagId)),
+              ((s = Protocol_1.Aki.Protocol.iFs.create()).Wjn = r.Life),
+              (s.e5n = r.LifeMax),
+              (s.bjn = r.Index),
+              (s.t5n = a.是否出生激活),
+              (s.qWn = r.PartTag.TagId));
       }
     }
     return !0;
   }
   OnEnd() {
-    if (this.Djr) for (const t of this.Tjr) t.EndTask();
+    if (this.ajr) for (const t of this.njr) t.EndTask();
     return !0;
   }
   IsWeakness(t) {
@@ -298,54 +298,40 @@ let CharacterPartComponent = class CharacterPartComponent extends EntityComponen
     var i = this.PartMapByTag.get(t.TagName);
     return (
       i ||
-        CombatDebugController_1.CombatDebugController.CombatError(
-          "Part",
-          this.Entity,
-          "获取部位失败",
-          ["TagName", t.TagName],
-        ),
+        CombatLog_1.CombatLog.Error("Part", this.Entity, "获取部位失败", [
+          "TagName",
+          t.TagName,
+        ]),
       i
     );
   }
   GetPartByIndex(t) {
     if (!(t < 0 || t >= this.Parts.length)) return this.Parts[t];
-    CombatDebugController_1.CombatDebugController.CombatError(
-      "Part",
-      this.Entity,
-      "获取部位失败",
-      ["index", t],
-    );
+    CombatLog_1.CombatLog.Error("Part", this.Entity, "获取部位失败", [
+      "index",
+      t,
+    ]);
   }
-  Rjr(e, t) {
+  hjr(e, t) {
     return this.TagComponent.ListenForTagAddOrRemove(t?.TagId, (t, i) => {
       e.SetActive(i);
     });
   }
   static PartUpdateNotify(t, i) {
-    var e = MathUtils_1.MathUtils.LongToNumber(i.rkn),
+    var e = MathUtils_1.MathUtils.LongToNumber(i.P4n),
       e = ModelManager_1.ModelManager.CreatureModel.GetEntity(e);
     if (e) {
-      CombatDebugController_1.CombatDebugController.CombatDebug(
-        "Part",
-        t,
-        "PartUpdateNotify",
-        ["data", JSON.stringify(i)],
-      );
-      var s = e.Entity.GetComponent(58);
-      for (const r of i.aSs) s.GetPartByIndex(r.o9n)?.UpdatePartInfo(r);
+      var s = e.Entity.GetComponent(60);
+      for (const a of i.LTs) s.GetPartByIndex(a.bjn)?.UpdatePartInfo(a);
     }
   }
   static PartComponentInitNotify(t, i) {
-    var e = MathUtils_1.MathUtils.LongToNumber(i.rkn),
+    var e = MathUtils_1.MathUtils.LongToNumber(i.P4n),
       e = ModelManager_1.ModelManager.CreatureModel.GetEntity(e);
     if (e) {
-      CombatDebugController_1.CombatDebugController.CombatInfo(
-        "Part",
-        t,
-        "PartComponentInitNotify",
-      );
-      var s = e.Entity.GetComponent(58);
-      for (const r of i.Nvs.oSs) s.GetPartByIndex(r.o9n)?.UpdatePartInfo(r);
+      CombatLog_1.CombatLog.Info("Part", t, "PartComponentInitNotify");
+      var s = e.Entity.GetComponent(60);
+      for (const a of i.rys.yTs) s.GetPartByIndex(a.bjn)?.UpdatePartInfo(a);
     }
   }
   GetDebugText() {
@@ -364,19 +350,19 @@ let CharacterPartComponent = class CharacterPartComponent extends EntityComponen
   }
 };
 __decorate(
-  [CombatMessage_1.CombatNet.Listen("KOn", !1)],
+  [CombatMessage_1.CombatNet.Listen("SFn", !1)],
   CharacterPartComponent,
   "PartUpdateNotify",
   null,
 ),
   __decorate(
-    [CombatMessage_1.CombatNet.Handle("QOn")],
+    [CombatMessage_1.CombatNet.Handle("EFn")],
     CharacterPartComponent,
     "PartComponentInitNotify",
     null,
   ),
   (CharacterPartComponent = __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(58)],
+    [(0, RegisterComponent_1.RegisterComponent)(60)],
     CharacterPartComponent,
   )),
   (exports.CharacterPartComponent = CharacterPartComponent);

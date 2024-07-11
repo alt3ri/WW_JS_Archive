@@ -1,22 +1,49 @@
 "use strict";
-var EActorDeleteMode,
+var EEntityActorLoadMode,
+  EActorDeleteMode,
   EMaximumDisplayCountInSelector,
   ERecentSelectRecordMode,
   EEditorLoginAccountType,
   EEditorLaunchMode,
-  ERangeTipShape;
+  EPackageServerType,
+  EEditorSearchMode;
+function getEntityActorLoadModeName(e) {
+  return exports.actorLoadOptions[e];
+}
 Object.defineProperty(exports, "__esModule", { value: !0 }),
-  (exports.ERangeTipShape =
+  (exports.EEditorSearchMode =
+    exports.EPackageServerType =
     exports.EEditorLaunchMode =
     exports.EEditorLoginAccountType =
     exports.ERecentSelectRecordMode =
     exports.defaultEditorArgConfig =
     exports.EMaximumDisplayCountInSelector =
     exports.EActorDeleteMode =
+    exports.getEntityActorLoadModeName =
+    exports.actorLoadOptions =
+    exports.EEntityActorLoadMode =
+    exports.multiplyValue =
     exports.EDITOR_SAVE_CONFIG_PATH =
       void 0),
   (exports.EDITOR_SAVE_CONFIG_PATH =
     "Saved/Editor/JsonConfig/EditorSaveConfig.json"),
+  (exports.multiplyValue = null),
+  (function (e) {
+    (e.Self = "Self"),
+      (e.ParentChild = "ParentChild"),
+      (e.SizeCell = "SizeCell"),
+      (e.WpCell = "WpCell");
+  })(
+    (EEntityActorLoadMode =
+      exports.EEntityActorLoadMode || (exports.EEntityActorLoadMode = {})),
+  ),
+  (exports.actorLoadOptions = {
+    [EEntityActorLoadMode.Self]: "实体Actor",
+    [EEntityActorLoadMode.ParentChild]: "父子链相关实体",
+    [EEntityActorLoadMode.SizeCell]: "实体和周边地形",
+    [EEntityActorLoadMode.WpCell]: "实体和所属地块",
+  }),
+  (exports.getEntityActorLoadModeName = getEntityActorLoadModeName),
   (function (e) {
     (e.AskUser = "AskUser"),
       (e.DontAskUserAndDeleteChild = "DontAskUserAndDeleteChild"),
@@ -58,17 +85,25 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
       (exports.EEditorLoginAccountType = {})),
   ),
   (function (e) {
-    (e.PIE = "PIE"), (e.Package = "Package");
+    (e.PIE = "PIE"), (e.Package = "Package"), (e.Attach = "Attach");
   })(
     (EEditorLaunchMode =
       exports.EEditorLaunchMode || (exports.EEditorLaunchMode = {})),
   ),
   (function (e) {
-    (e[(e.Box = 0)] = "Box"),
-      (e[(e.Sphere = 1)] = "Sphere"),
-      (e[(e.Cylinder = 2)] = "Cylinder"),
-      (e[(e.SignagePoint = 3)] = "SignagePoint");
+    (e.Package = "Package"), (e.Local = "Local");
   })(
-    (ERangeTipShape = exports.ERangeTipShape || (exports.ERangeTipShape = {})),
+    (EPackageServerType =
+      exports.EPackageServerType || (exports.EPackageServerType = {})),
+  ),
+  (function (e) {
+    (e.Keyword = "Keyword"),
+      (e.TidText = "TidText"),
+      (e.EntityId = "EntityId"),
+      (e.Action = "Action"),
+      (e.VarRef = "VarRef");
+  })(
+    (EEditorSearchMode =
+      exports.EEditorSearchMode || (exports.EEditorSearchMode = {})),
   );
 //# sourceMappingURL=IEditor.js.map

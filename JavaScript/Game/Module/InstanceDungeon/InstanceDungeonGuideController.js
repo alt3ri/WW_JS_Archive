@@ -11,18 +11,18 @@ const ControllerBase_1 = require("../../../Core/Framework/ControllerBase"),
   JoinTeamController_1 = require("../JoinTeam/JoinTeamController");
 class InstanceDungeonGuideController extends ControllerBase_1.ControllerBase {
   static OnInit() {
-    return this.mEe(), !0;
+    return this.mSe(), !0;
   }
   static OnClear() {
-    return this.dEe(), !0;
+    return this.dSe(), !0;
   }
-  static mEe() {
+  static mSe() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.WorldDoneAndCloseLoading,
       this.nye,
     );
   }
-  static dEe() {
+  static dSe() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.WorldDoneAndCloseLoading,
       this.nye,
@@ -30,9 +30,9 @@ class InstanceDungeonGuideController extends ControllerBase_1.ControllerBase {
   }
   static StartReplayGuide() {
     ModelManager_1.ModelManager.GuideModel.ClearAllGroup(),
-      InstanceDungeonGuideController.ali();
+      InstanceDungeonGuideController.a1i();
   }
-  static ali() {
+  static a1i() {
     var e =
         ModelManager_1.ModelManager.InstanceDungeonGuideModel.GetCurrentInstanceDungeonGuideType(),
       n =

@@ -19,15 +19,15 @@ const puerts_1 = require("puerts"),
   SELFDEFINESN = "push";
 class KuroPushController extends ControllerBase_1.ControllerBase {
   static IfCanUsePush() {
-    var t = Info_1.Info.IsMobile();
+    var t = Info_1.Info.IsMobilePlatform();
     return !(!UE.KuroStaticLibrary.IsModuleLoaded("KuroPushSdk") || !t);
   }
   static OnInit() {
     return (
       UE.KuroLauncherLibrary.IsFirstIntoLauncher() &&
-        (this.oEe(), this.BindCurrentLanguageTag(), this._5s()),
+        (this.oSe(), this.BindCurrentLanguageTag(), this.fjs()),
       this.BindCurrentLanguageTag(),
-      this.nEe(),
+      this.nSe(),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("Push", 28, "current push clientId", [
           "clientId",
@@ -36,10 +36,10 @@ class KuroPushController extends ControllerBase_1.ControllerBase {
       !0
     );
   }
-  static async _5s() {
-    await this.u5s(), await this.rEe();
+  static async fjs() {
+    await this.pjs(), await this.rSe();
   }
-  static async u5s() {
+  static async pjs() {
     var t;
     LauncherStorageLib_1.LauncherStorageLib.GetGlobal(
       LauncherStorageLib_1.ELauncherStorageGlobalKey
@@ -61,7 +61,7 @@ class KuroPushController extends ControllerBase_1.ControllerBase {
       (t = UE.NewArray(UE.BuiltinString)).Add(
         "android.permission.POST_NOTIFICATIONS",
       ),
-      0 < (await this.KSr(t)).length
+      0 < (await this.HSr(t)).length
         ? (Log_1.Log.CheckInfo() &&
             Log_1.Log.Info("Push", 28, "KuroPush:安卓推送权限获取失败"),
           this.TurnOffPush())
@@ -69,7 +69,7 @@ class KuroPushController extends ControllerBase_1.ControllerBase {
             Log_1.Log.Info("Push", 28, "KuroPush:安卓推送权限获取成功"),
           await this.TurnOnPush(!1)));
   }
-  static async KSr(e) {
+  static async HSr(e) {
     return new Promise((t) => {
       const n = UE.AndroidPermissionFunctionLibrary.AcquirePermissions(e),
         u = (e, r) => {
@@ -91,7 +91,7 @@ class KuroPushController extends ControllerBase_1.ControllerBase {
       Log_1.Log.Info("Push", 28, "current push Language Tag", ["Tag", t]),
       UE.KuroPushSdkStaticLibrary.SetTag(t, SELFDEFINESN);
   }
-  static nEe() {
+  static nSe() {
     var t = this.GetPushState() ? 1 : 0;
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info("KuroSdk", 8, "刷新推送状态", ["result", t]),
@@ -101,37 +101,37 @@ class KuroPushController extends ControllerBase_1.ControllerBase {
         121,
       );
   }
-  static async rEe() {
+  static async rSe() {
     this.IfCanUsePush() &&
       ((await this.GetPushNotiPermissionEnableState())
         ? this.TurnOnPush()
         : this.TurnOffPush());
   }
-  static oEe() {
-    this.sEe ||
+  static oSe() {
+    this.sSe ||
       ((KuroPushController.PushFunctionDelegate = (0,
-      puerts_1.toManualReleaseDelegate)(KuroPushController.aEe)),
+      puerts_1.toManualReleaseDelegate)(KuroPushController.aSe)),
       UE.KuroPushSdkStaticLibrary.GetPushObject()?.PushSdkMessageBluePrintDelegate.Add(
-        KuroPushController.aEe,
+        KuroPushController.aSe,
       ),
       Application_1.Application.AddApplicationHandler(
         4,
-        KuroPushController.hEe,
+        KuroPushController.hSe,
       )),
-      (this.sEe = !0);
+      (this.sSe = !0);
   }
   static RemovePushDelegate() {
     KuroPushController.PushFunctionDelegate &&
       (UE.KuroPushSdkStaticLibrary.GetPushObject()?.IsValid() &&
         UE.KuroPushSdkStaticLibrary.GetPushObject()?.PushSdkMessageBluePrintDelegate.Remove(
-          KuroPushController.aEe,
+          KuroPushController.aSe,
         ),
-      (0, puerts_1.releaseManualReleaseDelegate)(KuroPushController.aEe),
+      (0, puerts_1.releaseManualReleaseDelegate)(KuroPushController.aSe),
       (KuroPushController.PushFunctionDelegate = void 0),
-      (this.sEe = !1));
+      (this.sSe = !1));
   }
   static SetPushNotifyCall(t) {
-    this.lEe = t;
+    this.lSe = t;
   }
   static SendLocalPush(t, e, r) {
     HotPatchPushSdk_1.HotPatchPushSdk.SendLocalPush(t, e, r);
@@ -166,7 +166,7 @@ class KuroPushController extends ControllerBase_1.ControllerBase {
   }
   static async TurnOnPush(t = !0) {
     HotPatchPushSdk_1.HotPatchPushSdk.TurnOnPush(),
-      this.nEe(),
+      this.nSe(),
       t &&
         !(await this.GetPushNotiPermissionEnableState()) &&
         ((t = new ConfirmBoxDefine_1.ConfirmBoxDataNew(171)).FunctionMap.set(
@@ -181,7 +181,7 @@ class KuroPushController extends ControllerBase_1.ControllerBase {
         ));
   }
   static TurnOffPush() {
-    HotPatchPushSdk_1.HotPatchPushSdk.TurnOffPush(), this.nEe();
+    HotPatchPushSdk_1.HotPatchPushSdk.TurnOffPush(), this.nSe();
   }
   static GetPushState() {
     var t = LauncherStorageLib_1.LauncherStorageLib.GetGlobal(
@@ -192,14 +192,14 @@ class KuroPushController extends ControllerBase_1.ControllerBase {
   }
 }
 (exports.KuroPushController = KuroPushController),
-  ((_a = KuroPushController).sEe = !1),
-  (KuroPushController.lEe = void 0),
+  ((_a = KuroPushController).sSe = !1),
+  (KuroPushController.lSe = void 0),
   (KuroPushController.PushFunctionDelegate = void 0),
-  (KuroPushController.hEe = () => {
+  (KuroPushController.hSe = () => {
     _a.RemovePushDelegate();
   }),
-  (KuroPushController.aEe = (t, e) => {
-    _a.lEe?.(t, e),
+  (KuroPushController.aSe = (t, e) => {
+    _a.lSe?.(t, e),
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "Push",

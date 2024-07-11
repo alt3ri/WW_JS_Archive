@@ -27,8 +27,7 @@ class CameraHookController extends CameraControllerBase_1.CameraControllerBase {
     (this.WI = !1), 0 !== this.f_e && this.B_e(t);
   }
   w_e() {
-    this.ResetBreakModifyInfo(),
-      (this.f_e = 1),
+    (this.f_e = 1),
       (this.H6 = 0),
       (this.p_e = 0),
       this.A_e.DeepCopy(this.Camera.CameraForward),
@@ -46,9 +45,10 @@ class CameraHookController extends CameraControllerBase_1.CameraControllerBase {
   UpdateInternal(t) {
     if (this.U_e.Valid)
       switch (
-        (this.UpdateBreakModifyInfo(),
-        (this.H6 += t),
-        (this.BreakModifyArmRotation || this.BreakModifyArmLength) &&
+        ((this.H6 += t),
+        (this.Camera.IsModifiedArmRotationPitch ||
+          this.Camera.IsModifiedArmRotationYaw ||
+          this.Camera.IsModifiedArmLength) &&
           this.B_e(),
         this.b_e(),
         this.f_e)
@@ -103,12 +103,14 @@ class CameraHookController extends CameraControllerBase_1.CameraControllerBase {
         (Vector_1.Vector.LerpSin(this.A_e, this.x_e, t, i),
         i.ToUeVector().Rotation());
     this.Camera.DesiredCamera.ArmRotation.DeepCopy(t),
-      (this.Camera.IsModifiedArmRotation = !0);
+      (this.Camera.IsModifiedArmRotationPitch = !0),
+      (this.Camera.IsModifiedArmRotationYaw = !0);
   }
   G_e() {
     var t = this.x_e.ToUeVector().Rotation();
     this.Camera.DesiredCamera.ArmRotation.DeepCopy(t),
-      (this.Camera.IsModifiedArmRotation = !0);
+      (this.Camera.IsModifiedArmRotationPitch = !0),
+      (this.Camera.IsModifiedArmRotationYaw = !0);
   }
   D_e(t) {
     var i = Vector_1.Vector.Create(),
@@ -116,7 +118,8 @@ class CameraHookController extends CameraControllerBase_1.CameraControllerBase {
         (Vector_1.Vector.LerpSin(this.P_e, this.A_e, t, i),
         i.ToUeVector().Rotation());
     this.Camera.DesiredCamera.ArmRotation.DeepCopy(t),
-      (this.Camera.IsModifiedArmRotation = !0);
+      (this.Camera.IsModifiedArmRotationPitch = !0),
+      (this.Camera.IsModifiedArmRotationYaw = !0);
   }
   b_e() {
     var t = this.U_e.Location,

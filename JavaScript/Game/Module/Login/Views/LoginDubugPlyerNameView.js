@@ -3,29 +3,29 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LoginDebugPlayerNameView = void 0);
 const UE = require("ue"),
   StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
   ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine"),
-  PersonalDefine_1 = require("../../Personal/Model/PersonalDefine"),
-  ControllerHolder_1 = require("../../../Manager/ControllerHolder");
+  PersonalDefine_1 = require("../../Personal/Model/PersonalDefine");
 class LoginDebugPlayerNameView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.NMi = void 0),
-      (this.OMi = (e) => {
+      (this.NEi = void 0),
+      (this.OEi = (e) => {
         this.GetButton(3).SetSelfInteractive(0 < e.length);
       }),
-      (this.J9e = () => {
+      (this.uHe = () => {
         this.CloseMe();
       }),
-      (this._Fe = () => {
+      (this.L3e = () => {
         var e = this.GetInputText(0).GetText();
         StringUtils_1.StringUtils.GetStringRealCount(e) >
         PersonalDefine_1.MAX_NAME_LENGTH
-          ? this.kMi()
+          ? this.kEi()
           : (ModelManager_1.ModelManager.LoginModel.SetPlayerName(e),
             this.CloseMe(),
-            this.NMi && this.NMi());
+            this.NEi && this.NEi());
       });
   }
   OnRegisterComponent() {
@@ -37,26 +37,26 @@ class LoginDebugPlayerNameView extends UiViewBase_1.UiViewBase {
       [4, UE.UIText],
     ]),
       (this.BtnBindInfo = [
-        [2, this.J9e],
-        [3, this._Fe],
+        [2, this.uHe],
+        [3, this.L3e],
       ]);
   }
   OnBeforeCreate() {
-    this.NMi = this.OpenParam;
+    this.NEi = this.OpenParam;
   }
   OnStart() {
     this.GetText(1).SetUIActive(!1),
-      this.GetInputText(0).OnTextChange.Bind(this.OMi),
+      this.GetInputText(0).OnTextChange.Bind(this.OEi),
       this.GetButton(3).SetSelfInteractive(!1);
   }
-  kMi() {
+  kEi() {
     var e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(112);
     ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
       e,
     );
   }
   OnBeforeDestroy() {
-    this.NMi = void 0;
+    this.NEi = void 0;
   }
 }
 exports.LoginDebugPlayerNameView = LoginDebugPlayerNameView;

@@ -14,27 +14,53 @@ class WorldEntity extends Entity_1.Entity {
   }
   static StaticGameBudgetConfig(r) {
     let e = -1,
-      t = -1;
-    var o;
-    switch (
-      (r instanceof WorldEntity &&
-        ((o = r.GetComponent(0)),
-        (e = o.GetEntityType()),
-        (t = o.GetSummonerId())),
-      e)
-    ) {
-      case Protocol_1.Aki.Protocol.HBs.Proto_Player:
-      case Protocol_1.Aki.Protocol.HBs.Proto_Vision:
+      t = -1,
+      o = -1,
+      a = -1;
+    if (r instanceof WorldEntity) {
+      var n = r.GetComponent(0),
+        n =
+          ((e = n.GetEntityType()),
+          (t = n.GetSubEntityType()),
+          (o = n.GetSummonerId()),
+          n.GetBaseInfo());
+      if (n) {
+        if (n.EntityUpdateStrategy)
+          return GameBudgetAllocatorConfigCreator_1
+            .GameBudgetAllocatorConfigCreator.TsStabilizeLowEntityGroupConfig;
+        void 0 !== n.Category.MonsterMatchType &&
+          (a = n?.Category.MonsterMatchType);
+      }
+    }
+    switch (e) {
+      case Protocol_1.Aki.Protocol.wks.Proto_Player:
+      case Protocol_1.Aki.Protocol.wks.Proto_Vision:
         return GameBudgetAllocatorConfigCreator_1
           .GameBudgetAllocatorConfigCreator.TsPlayerAlwaysTickConfig;
-      case Protocol_1.Aki.Protocol.HBs.Proto_Monster:
-        return r instanceof WorldEntity && 0 < t
+      case Protocol_1.Aki.Protocol.wks.Proto_Monster:
+        if (r instanceof WorldEntity) {
+          if (0 < o)
+            return GameBudgetAllocatorConfigCreator_1
+              .GameBudgetAllocatorConfigCreator.TsPlayerAlwaysTickConfig;
+          if (r.GetComponent(202))
+            return GameBudgetAllocatorConfigCreator_1
+              .GameBudgetAllocatorConfigCreator.TsPlayerAlwaysTickConfig;
+        }
+        return 2 <= a
           ? GameBudgetAllocatorConfigCreator_1.GameBudgetAllocatorConfigCreator
-              .TsPlayerAlwaysTickConfig
+              .TsBossEntityGroupConfig
           : GameBudgetAllocatorConfigCreator_1.GameBudgetAllocatorConfigCreator
               .TsCharacterEntityGroupConfig;
-      case Protocol_1.Aki.Protocol.HBs.Proto_Npc:
-      case Protocol_1.Aki.Protocol.HBs.Proto_Animal:
+      case Protocol_1.Aki.Protocol.wks.Proto_Npc:
+        return 2 === t
+          ? GameBudgetAllocatorConfigCreator_1.GameBudgetAllocatorConfigCreator
+              .TsCharacterEntityGroupConfig
+          : 1 === t
+            ? GameBudgetAllocatorConfigCreator_1
+                .GameBudgetAllocatorConfigCreator.TsSimpleNpcEntityGroupConfig
+            : GameBudgetAllocatorConfigCreator_1
+                .GameBudgetAllocatorConfigCreator.TsNormalNpcEntityGroupConfig;
+      case Protocol_1.Aki.Protocol.wks.Proto_Animal:
         return GameBudgetAllocatorConfigCreator_1
           .GameBudgetAllocatorConfigCreator.TsCharacterEntityGroupConfig;
       default:

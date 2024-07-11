@@ -16,20 +16,20 @@ const UE = require("ue"),
 class VisionRecommendView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.QHi = void 0),
-      (this.XHi = void 0),
+      (this.Wji = void 0),
+      (this.Kji = void 0),
       (this.sGe = (e, i, r) => {
         i = new RecommendSubItem(i);
         return i.Refresh(e), { Key: r, Value: i };
       }),
-      (this.dIt = () => {
+      (this.Mke = () => {
         var e,
           i =
             ModelManager_1.ModelManager.RoleModel.GetCurSelectMainRoleInstance();
         ModelManager_1.ModelManager.PhantomBattleModel.GetRoleIfEquipVision(
           i.GetRoleId(),
         )
-          ? this.$Hi()
+          ? this.Qji()
           : ((e =
               ControllerHolder_1.ControllerHolder.PhantomBattleController.GetRecommendEquipUniqueIdList(
                 i.GetRoleId(),
@@ -44,9 +44,9 @@ class VisionRecommendView extends UiViewBase_1.UiViewBase {
         var i =
             ModelManager_1.ModelManager.PhantomBattleModel.PhantomRecommendData
               .MonsterIdList,
-          r = (this.QHi.Refresh(i[0]), []);
+          r = (this.Wji.Refresh(i[0]), []);
         for (let e = 1; e < i.length; e++) r.push(i[e]);
-        this.XHi.RebuildLayoutByDataNew(r);
+        this.Kji.RebuildLayoutByDataNew(r);
       });
   }
   OnRegisterComponent() {
@@ -55,16 +55,16 @@ class VisionRecommendView extends UiViewBase_1.UiViewBase {
       [1, UE.UIVerticalLayout],
       [2, UE.UIButtonComponent],
     ]),
-      (this.BtnBindInfo = [[2, this.dIt]]);
+      (this.BtnBindInfo = [[2, this.Mke]]);
   }
   OnStart() {
-    (this.QHi = new RecommendMainItem(this.GetItem(0))),
-      (this.XHi = new GenericLayoutNew_1.GenericLayoutNew(
+    (this.Wji = new RecommendMainItem(this.GetItem(0))),
+      (this.Kji = new GenericLayoutNew_1.GenericLayoutNew(
         this.GetVerticalLayout(1),
         this.sGe,
       ));
   }
-  $Hi() {
+  Qji() {
     const i =
       ModelManager_1.ModelManager.RoleModel.GetCurSelectMainRoleInstance();
     var e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(96);
@@ -107,19 +107,19 @@ class VisionRecommendView extends UiViewBase_1.UiViewBase {
     );
   }
   OnBeforeDestroy() {
-    this.XHi.ClearChildren();
+    this.Kji.ClearChildren();
   }
 }
 exports.VisionRecommendView = VisionRecommendView;
 class RecommendMainItem extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
-      (this.c6i = 0),
-      (this.Kyt = () => {
+      (this.u8i = 0),
+      (this.eTt = () => {
         ControllerHolder_1.ControllerHolder.AdventureGuideController.JumpToTargetView(
           "MonsterDetectView",
           ConfigManager_1.ConfigManager.CalabashConfig.GetCalabashDevelopRewardByMonsterId(
-            this.c6i,
+            this.u8i,
           )?.MonsterProbeId,
         ),
           UiManager_1.UiManager.CloseView("VisionRecommendView");
@@ -133,14 +133,14 @@ class RecommendMainItem extends UiPanelBase_1.UiPanelBase {
       [2, UE.UITexture],
       [3, UE.UITexture],
     ]),
-      (this.BtnBindInfo = [[1, this.Kyt]]);
+      (this.BtnBindInfo = [[1, this.eTt]]);
   }
   Refresh(e) {
-    this.c6i = e;
+    this.u8i = e;
     var i,
       e =
         ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomItemIdArrayByMonsterId(
-          this.c6i,
+          this.u8i,
         );
     e &&
       0 !== e.length &&
@@ -166,12 +166,12 @@ class RecommendMainItem extends UiPanelBase_1.UiPanelBase {
 class RecommendSubItem extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
-      (this.c6i = 0),
-      (this.Kyt = () => {
+      (this.u8i = 0),
+      (this.eTt = () => {
         ControllerHolder_1.ControllerHolder.AdventureGuideController.JumpToTargetView(
           "MonsterDetectView",
           ConfigManager_1.ConfigManager.CalabashConfig.GetCalabashDevelopRewardByMonsterId(
-            this.c6i,
+            this.u8i,
           )?.MonsterProbeId,
         ),
           UiManager_1.UiManager.CloseView("VisionRecommendView");
@@ -184,14 +184,14 @@ class RecommendSubItem extends UiPanelBase_1.UiPanelBase {
       [1, UE.UIButtonComponent],
       [2, UE.UITexture],
     ]),
-      (this.BtnBindInfo = [[1, this.Kyt]]);
+      (this.BtnBindInfo = [[1, this.eTt]]);
   }
   Refresh(e) {
-    this.c6i = e;
+    this.u8i = e;
     var i,
       e =
         ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomItemIdArrayByMonsterId(
-          this.c6i,
+          this.u8i,
         );
     e &&
       0 !== e.length &&

@@ -4,7 +4,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const ChildQuestNodeBase_1 = require("./ChildQuestNodeBase");
 class UseItemBehaviorNode extends ChildQuestNodeBase_1.ChildQuestNodeBase {
   constructor() {
-    super(...arguments), (this.xQt = void 0);
+    super(...arguments), (this.xXt = void 0);
   }
   get CorrelativeEntities() {}
   OnCreate(e) {
@@ -15,10 +15,10 @@ class UseItemBehaviorNode extends ChildQuestNodeBase_1.ChildQuestNodeBase {
     );
   }
   OnUpdateProgress(e) {
-    return !!e.K4n && ((this.xQt = e.K4n), !0);
+    return !!e.LVn && ((this.xXt = e.LVn), !0);
   }
   GetProgress() {
-    return this.xQt?.I5n?.toString() ?? "0";
+    return this.xXt?.o9n?.toString() ?? "0";
   }
 }
 exports.UseItemBehaviorNode = UseItemBehaviorNode;

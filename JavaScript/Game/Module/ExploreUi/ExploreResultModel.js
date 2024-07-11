@@ -5,87 +5,87 @@ const ModelBase_1 = require("../../../Core/Framework/ModelBase");
 class ExploreResultModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
-      (this.fVt = 0),
-      (this.pVt = ""),
-      (this.vVt = ""),
-      (this.MVt = ""),
-      (this.SVt = ""),
-      (this.EVt = ""),
-      (this.yVt = void 0),
-      (this.IVt = void 0),
-      (this.TVt = void 0),
-      (this.LVt = void 0);
+      (this.f6t = 0),
+      (this.p6t = ""),
+      (this.v6t = ""),
+      (this.M6t = ""),
+      (this.E6t = ""),
+      (this.S6t = ""),
+      (this.y6t = void 0),
+      (this.I6t = void 0),
+      (this.T6t = void 0),
+      (this.L6t = void 0);
   }
   ResetFailData() {
-    (this.fVt = 0),
-      (this.pVt = ""),
-      (this.yVt = void 0),
-      (this.IVt = void 0),
-      (this.TVt = void 0),
-      (this.vVt = ""),
-      (this.SVt = ""),
-      (this.EVt = ""),
-      (this.MVt = ""),
-      (this.LVt = void 0);
+    (this.f6t = 0),
+      (this.p6t = ""),
+      (this.y6t = void 0),
+      (this.I6t = void 0),
+      (this.T6t = void 0),
+      (this.v6t = ""),
+      (this.E6t = ""),
+      (this.S6t = ""),
+      (this.M6t = ""),
+      (this.L6t = void 0);
   }
   SetLeftBtnData(t, i) {
-    (this.yVt = t), (this.vVt = i);
+    (this.y6t = t), (this.v6t = i);
   }
   SetRightBtnData(t, i) {
-    (this.TVt = t), (this.MVt = i);
+    (this.T6t = t), (this.M6t = i);
   }
   SetMiddleBtnData(t, i, e) {
-    (this.IVt = t), (this.SVt = i), (this.EVt = e);
+    (this.I6t = t), (this.E6t = i), (this.S6t = e);
   }
   SetScore(t) {
-    this.fVt = t;
+    this.f6t = t;
   }
   SetMiddleDesc(t) {
-    this.pVt = t;
+    this.p6t = t;
   }
   SetShowRewards(t) {
-    this.LVt = t;
+    this.L6t = t;
   }
   SetData(t, i, e, s, h, r, o, d) {
     this.ResetFailData(),
-      (this.yVt = t),
-      (this.IVt = i),
-      (this.fVt = e),
-      (this.pVt = s),
-      (this.vVt = h),
-      (this.SVt = r),
-      (this.EVt = o),
-      (this.LVt = d);
+      (this.y6t = t),
+      (this.I6t = i),
+      (this.f6t = e),
+      (this.p6t = s),
+      (this.v6t = h),
+      (this.E6t = r),
+      (this.S6t = o),
+      (this.L6t = d);
   }
   GetFailScore() {
-    return this.fVt;
+    return this.f6t;
   }
   GetMiddleDesc() {
-    return this.pVt;
+    return this.p6t;
   }
   GetLeftBtnClickFunction() {
-    return this.yVt;
+    return this.y6t;
   }
   GetRightBtnClickFunction() {
-    return this.TVt;
+    return this.T6t;
   }
   GetMiddleBtnClickFunction() {
-    return this.IVt;
+    return this.I6t;
   }
   GetLeftText() {
-    return this.vVt;
+    return this.v6t;
   }
   GetRightText() {
-    return this.MVt;
+    return this.M6t;
   }
   GetMiddleText() {
-    return this.SVt;
+    return this.E6t;
   }
   GetMiddleDownText() {
-    return this.EVt;
+    return this.S6t;
   }
   GetShowItems() {
-    return this.LVt;
+    return this.L6t;
   }
 }
 exports.ExploreResultModel = ExploreResultModel;

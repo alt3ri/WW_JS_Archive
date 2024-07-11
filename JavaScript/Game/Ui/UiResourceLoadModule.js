@@ -15,24 +15,24 @@ class UiResourceHandle {
 exports.UiResourceHandle = UiResourceHandle;
 class UiResourceLoadModule {
   constructor() {
-    this.aCr = new Map();
+    this.rgr = new Map();
   }
   CancelResource(e) {
-    let s = this.aCr.get(e);
+    let s = this.rgr.get(e);
     s
       ? s.CancelResource()
-      : ((s = new UiResourceHandle(e)), this.aCr.set(e, s));
+      : ((s = new UiResourceHandle(e)), this.rgr.set(e, s));
   }
   SetResourceId(e, s) {
-    e = this.aCr.get(e);
+    e = this.rgr.get(e);
     e && (e.ResourceId = s);
   }
   DeleteResourceHandle(e) {
-    this.aCr.delete(e);
+    this.rgr.delete(e);
   }
   Clear() {
-    for (const e of this.aCr.values()) e.CancelResource();
-    this.aCr.clear();
+    for (const e of this.rgr.values()) e.CancelResource();
+    this.rgr.clear();
   }
 }
 exports.UiResourceLoadModule = UiResourceLoadModule;

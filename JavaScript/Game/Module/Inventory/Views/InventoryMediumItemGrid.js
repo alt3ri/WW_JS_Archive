@@ -11,10 +11,10 @@ const MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLa
   RED_TICK_ALPHA = 0.9;
 class InventoryMediumItemGrid extends LoopScrollMediumItemGrid_1.LoopScrollMediumItemGrid {
   constructor() {
-    super(...arguments), (this.rmi = void 0), (this.nmi = void 0);
+    super(...arguments), (this.rdi = void 0), (this.ndi = void 0);
   }
   OnRefresh(e, t, i) {
-    var r = (this.rmi = e).GetItemViewInfo(),
+    var r = (this.rdi = e).GetItemViewInfo(),
       o = r.ItemDataType,
       s = r.QualityId,
       l = 1 === e.GetItemOperationType(),
@@ -33,7 +33,7 @@ class InventoryMediumItemGrid extends LoopScrollMediumItemGrid_1.LoopScrollMediu
       };
     switch (o) {
       case 0:
-        var n = this.rmi.GetItemDataBase();
+        var n = this.rdi.GetItemDataBase();
         r.SelectOnNum
           ? ((d = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
               "Text_ItemRecycleChosen_text",
@@ -50,7 +50,7 @@ class InventoryMediumItemGrid extends LoopScrollMediumItemGrid_1.LoopScrollMediu
           (a.IsOmitBottomText = !1);
         break;
       case 2:
-        var d = this.rmi.GetItemDataBase().GetUniqueId(),
+        var d = this.rdi.GetItemDataBase().GetUniqueId(),
           n = ModelManager_1.ModelManager.WeaponModel.GetWeaponDataByIncId(d);
         (a.BottomTextId = "Text_LevelShow_Text"),
           (a.BottomTextParameter = [n.GetLevel()]),
@@ -59,7 +59,7 @@ class InventoryMediumItemGrid extends LoopScrollMediumItemGrid_1.LoopScrollMediu
         break;
       case 3:
         var _,
-          d = this.rmi.GetItemDataBase().GetUniqueId(),
+          d = this.rdi.GetItemDataBase().GetUniqueId(),
           n =
             ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomBattleData(
               d,
@@ -121,11 +121,11 @@ class InventoryMediumItemGrid extends LoopScrollMediumItemGrid_1.LoopScrollMediu
     this.SetSelected(!1);
   }
   GetRemainingCoolDownTime() {
-    var e = this.rmi.GetConfigId();
+    var e = this.rdi.GetConfigId();
     return ModelManager_1.ModelManager.BuffItemModel.GetBuffItemRemainCdTime(e);
   }
   GetTotalCoolDownTime() {
-    var e = this.rmi.GetConfigId();
+    var e = this.rdi.GetConfigId();
     return ModelManager_1.ModelManager.BuffItemModel.GetBuffItemTotalCdTime(e);
   }
   RefreshCoolDown() {
@@ -134,10 +134,10 @@ class InventoryMediumItemGrid extends LoopScrollMediumItemGrid_1.LoopScrollMediu
     this.SetCoolDown(e, t);
   }
   BindOnItemButtonClickedCallback(e) {
-    this.nmi = e;
+    this.ndi = e;
   }
   OnExtendToggleStateChanged(e) {
-    this.nmi && this.nmi(this.rmi);
+    this.ndi && this.ndi(this.rdi);
   }
 }
 exports.InventoryMediumItemGrid = InventoryMediumItemGrid;

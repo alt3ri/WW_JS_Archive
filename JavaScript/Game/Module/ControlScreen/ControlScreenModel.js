@@ -10,19 +10,19 @@ const CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParam
 class ControlScreenModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
-      (this.Ibt = ControlScreenDefine_1.DEFAULT_COMMON_ROTATION_RATE),
-      (this.Tbt = ControlScreenDefine_1.DEFAULT_ARM_ROTATION_RATE),
-      (this.Lbt = ControlScreenDefine_1.DEFAULT_COMMON_ROTATION_RATE),
+      (this.Dqt = ControlScreenDefine_1.DEFAULT_COMMON_ROTATION_RATE),
+      (this.Rqt = ControlScreenDefine_1.DEFAULT_ARM_ROTATION_RATE),
+      (this.Uqt = ControlScreenDefine_1.DEFAULT_COMMON_ROTATION_RATE),
       (this.MinTouchMoveDifference = 0),
       (this.MaxTouchMoveDifference = 0),
       (this.MaxTouchMoveValue = 0),
       (this.MinTouchMoveValue = 0),
-      (this.Dbt = 0),
-      (this.Rbt = 0),
-      (this.Ubt = -0),
-      (this.Abt = new Map()),
-      (this.Pbt = void 0),
-      (this.xbt = void 0);
+      (this.Aqt = 0),
+      (this.Pqt = 0),
+      (this.xqt = -0),
+      (this.wqt = new Map()),
+      (this.Bqt = void 0),
+      (this.bqt = void 0);
   }
   OnInit() {
     return (
@@ -42,15 +42,15 @@ class ControlScreenModel extends ModelBase_1.ModelBase {
         CommonParamById_1.configCommonParamById.GetFloatConfig(
           "MinTouchMoveValue",
         )),
-      (this.Ibt =
+      (this.Dqt =
         CommonParamById_1.configCommonParamById.GetFloatConfig(
           "CommonRotationRate",
         )),
-      (this.Tbt =
+      (this.Rqt =
         CommonParamById_1.configCommonParamById.GetFloatConfig(
           "ArmRotationRate",
         )),
-      (this.Ubt =
+      (this.xqt =
         CommonParamById_1.configCommonParamById.GetIntConfig(
           "DoubleTouchTime",
         )),
@@ -58,71 +58,71 @@ class ControlScreenModel extends ModelBase_1.ModelBase {
     );
   }
   SetCurrentTouchTimeStamp(e) {
-    this.Dbt = e;
+    this.Aqt = e;
   }
   SetCurrentTouchId(e) {
-    this.Rbt = e;
+    this.Pqt = e;
   }
   SetCurrentEnterComponent(e) {
-    this.Pbt = e;
+    this.Bqt = e;
   }
   SetCurrentPressComponent(e) {
-    this.xbt = e;
+    this.bqt = e;
   }
   IsDoubleTouch(e) {
     return (
       1 === this.GetTouchEmptyFingerDataCount() &&
-      e === this.Rbt &&
-      TimeUtil_1.TimeUtil.GetServerTimeStamp() - this.Dbt <= this.Ubt
+      e === this.Pqt &&
+      TimeUtil_1.TimeUtil.GetServerTimeStamp() - this.Aqt <= this.xqt
     );
   }
   IsDoubleTouchResetCameraComponent(e, t) {
     return (
       !(
-        !this.Pbt?.IsValid() ||
-        !this.xbt?.IsValid() ||
-        (!this.Pbt.ComponentHasTag(t) && !this.xbt.ComponentHasTag(t))
+        !this.Bqt?.IsValid() ||
+        !this.bqt?.IsValid() ||
+        (!this.Bqt.ComponentHasTag(t) && !this.bqt.ComponentHasTag(t))
       ) && e.IsTouchComponentContainTag(t)
     );
   }
   AddTouchEmptyFingerData(e) {
     var t = e.GetFingerIndex();
-    this.Abt.set(t, e);
+    this.wqt.set(t, e);
   }
   RemoveTouchEmptyFingerData(e) {
     e = e.GetFingerIndex();
-    this.Abt.delete(e);
+    this.wqt.delete(e);
   }
   GetTouchEmptyFingerDataCount() {
-    return this.Abt.size;
+    return this.wqt.size;
   }
   IsTouchEmpty(e) {
-    return this.Abt.has(e);
+    return this.wqt.has(e);
   }
   GetTouchEmptyFingerDataByCount(e) {
     var t = [];
-    for (const o of this.Abt.values()) {
+    for (const o of this.wqt.values()) {
       if (e <= t.length) break;
       t.push(o);
     }
     return t;
   }
   SetCommonRotationScreenRate(e) {
-    this.Ibt = e;
+    this.Dqt = e;
   }
   SetArmRotationScreenRate(e) {
-    this.Tbt = e;
+    this.Rqt = e;
   }
   RefreshRotationScreenRate() {
     var e = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
     e &&
-    e.Entity.GetComponent(158).DirectionState ===
+    e.Entity.GetComponent(160).DirectionState ===
       CharacterUnifiedStateTypes_1.ECharDirectionState.AimDirection
-      ? (this.Lbt = this.Tbt)
-      : (this.Lbt = this.Ibt);
+      ? (this.Uqt = this.Rqt)
+      : (this.Uqt = this.Dqt);
   }
   GetRotationScreenRate() {
-    return this.Lbt;
+    return this.Uqt;
   }
 }
 exports.ControlScreenModel = ControlScreenModel;

@@ -90,15 +90,15 @@ class PerformanceController {
   }
   static SetEntityTickPerformanceTest(t) {
     (this.fY = t)
-      ? ((this.SY = new Map()),
-        (this.EY = new Map()),
+      ? ((this.EY = new Map()),
+        (this.SY = new Map()),
         (this.yY = new Map()),
         (this.IY = UE.KismetSystemLibrary.GetFrameCount()))
-      : (this.SY.clear(),
-        this.EY.clear(),
+      : (this.EY.clear(),
+        this.SY.clear(),
         this.yY.clear(),
-        (this.SY = void 0),
         (this.EY = void 0),
+        (this.SY = void 0),
         (this.yY = void 0));
   }
   static SetEntityGpuPerformanceTest(t) {
@@ -106,12 +106,12 @@ class PerformanceController {
   }
   static CollectTickPerformanceInfo(t, e, r, o = 1, i) {
     if (!(i && i < this.IY)) {
-      this.SY || (this.SY = new Map());
-      i = this.SY.get(t);
+      this.EY || (this.EY = new Map());
+      i = this.EY.get(t);
       if (
         (i
           ? ((i[0] = i[0] + (e ? 1 : 0)), (i[1] = i[1] + r))
-          : this.SY.set(t, [1, r]),
+          : this.EY.set(t, [1, r]),
         this.TY)
       ) {
         if (t.includes("EntityTick")) {
@@ -138,7 +138,7 @@ class PerformanceController {
   static ConsumeTickTime(t) {
     var e,
       r,
-      o = PerformanceController.SY.get(t);
+      o = PerformanceController.EY.get(t);
     return o
       ? ((e = o[0]),
         (o = o[1]),
@@ -151,7 +151,7 @@ class PerformanceController {
             ["time", o],
             ["count", e],
           ),
-        PerformanceController.SY.delete(t),
+        PerformanceController.EY.delete(t),
         r)
       : 0;
   }
@@ -207,9 +207,9 @@ class PerformanceController {
     var a, l;
     n < this.IY ||
       !this.UY ||
-      (this.EY || (this.EY = new Map()),
+      (this.SY || (this.SY = new Map()),
       (n = t.slice(0, t.indexOf("."))),
-      (t = this.EY.get(n)),
+      (t = this.SY.get(n)),
       (a = o - r),
       ((l = new EffectPerformanceStatistics()).Frame =
         UE.KismetSystemLibrary.GetFrameCount()),
@@ -225,15 +225,15 @@ class PerformanceController {
         : (((r = new EffectPerformanceRecords()).TickCount = 1),
           (r.Duration = a),
           r.Records.push(l),
-          this.EY.set(n, r)),
+          this.SY.set(n, r)),
       this.TY &&
         ((o = this.UY.get(i)), this.RY(`EffectHandle.${o}.` + n, i, a)));
   }
   static ConsumeEffectTickTime() {
-    if (this.EY) {
+    if (this.SY) {
       this.PY || (this.PY = new Map()), this.PY.clear();
-      for (const i of this.EY.keys()) {
-        var e = this.EY.get(i),
+      for (const i of this.SY.keys()) {
+        var e = this.SY.get(i),
           r = 0 === e.TickCount ? 0 : e.Duration / e.TickCount,
           o = [];
         o.push(["Score", r.toFixed(3)]),
@@ -250,7 +250,7 @@ class PerformanceController {
             ++t;
         this.PY.set(i, o);
       }
-      return this.EY.clear(), this.PY;
+      return this.SY.clear(), this.PY;
     }
   }
   static SetStatisticsMode(t, e, r = "") {
@@ -306,9 +306,9 @@ class PerformanceController {
   (PerformanceController.IsOpenCatchWorldEntity = !1),
   (PerformanceController.fY = !1),
   (PerformanceController.pY = !1),
-  (PerformanceController.SY = void 0),
-  (PerformanceController.yY = void 0),
   (PerformanceController.EY = void 0),
+  (PerformanceController.yY = void 0),
+  (PerformanceController.SY = void 0),
   (PerformanceController.PY = void 0),
   (PerformanceController.AY = void 0),
   (PerformanceController.TY = !1),

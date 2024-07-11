@@ -19,8 +19,8 @@ class ExpTweenComponent {
       (this.ArrivedLevel = 0),
       (this.TargetLevel = 0),
       (this.InCurrent = !1),
-      (this.qTt = void 0),
-      (this.GTt = void 0),
+      (this.kLt = void 0),
+      (this.FLt = void 0),
       (this.PlayFillAmount = (t) => {
         this.SetCurrentFillAmount(t);
       }),
@@ -58,7 +58,7 @@ class ExpTweenComponent {
   }
   TweenCompleteCallBack(t, i, s) {
     this.KillExpTweener(),
-      this.GTt && this.GTt(t === i),
+      this.FLt && this.FLt(t === i),
       t < i
         ? this.PlayTween(t + 1, i, s)
         : (UiLayer_1.UiLayer.SetShowMaskLayer("ExpTweenComponent", !1),
@@ -111,13 +111,13 @@ class ExpTweenComponent {
       t && this.PreviewTweenStopState();
   }
   BindPlayCompleteCallBack(t) {
-    this.GTt = t;
+    this.FLt = t;
   }
   BindPlayCurrentFillAmountCallback(t) {
-    this.qTt = t;
+    this.kLt = t;
   }
   SetCurrentFillAmount(t) {
-    this.CurrentSprite.SetFillAmount(t), this.qTt && this.qTt(t);
+    this.CurrentSprite.SetFillAmount(t), this.kLt && this.kLt(t);
   }
   SetNextFillAmount(t) {
     this.NextSprite.SetFillAmount(t);

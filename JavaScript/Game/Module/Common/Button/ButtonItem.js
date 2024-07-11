@@ -9,10 +9,10 @@ class ButtonItem extends UiPanelBase_1.UiPanelBase {
   constructor(t) {
     super(),
       (this.Pe = 0),
-      (this.QFe = void 0),
-      (this.Qyt = void 0),
-      (this.j7e = () => {
-        this.Qyt && this.Qyt(this.Pe);
+      (this.l4e = void 0),
+      (this.Gke = void 0),
+      (this.ije = () => {
+        this.Gke && this.Gke(this.Pe);
       }),
       this.CreateThenShowByActor(t.GetOwner());
   }
@@ -22,7 +22,10 @@ class ButtonItem extends UiPanelBase_1.UiPanelBase {
       [1, UE.UIText],
       [2, UE.UIItem],
     ]),
-      (this.BtnBindInfo = [[0, this.j7e]]);
+      (this.BtnBindInfo = [[0, this.ije]]);
+  }
+  OnBeforeDestroy() {
+    this.UnBindRedDot();
   }
   SetButtonAllowEventBubbleUp(t) {
     this.GetButton(0).AllowEventBubbleUp = t;
@@ -47,7 +50,7 @@ class ButtonItem extends UiPanelBase_1.UiPanelBase {
     this.GetButton(0)?.SetSelfInteractive(t);
   }
   SetFunction(t) {
-    this.Qyt = t;
+    this.Gke = t;
   }
   SetRedDotVisible(t) {
     this.GetItem(2).SetUIActive(t);
@@ -55,13 +58,13 @@ class ButtonItem extends UiPanelBase_1.UiPanelBase {
   BindRedDot(t, e = 0) {
     var i = this.GetItem(2);
     i &&
-      ((this.QFe = t), this.QFe) &&
+      (this.UnBindRedDot(), (this.l4e = t), this.l4e) &&
       RedDotController_1.RedDotController.BindRedDot(t, i, void 0, e);
   }
   UnBindRedDot() {
-    this.QFe &&
-      (RedDotController_1.RedDotController.UnBindRedDot(this.QFe),
-      (this.QFe = void 0));
+    this.l4e &&
+      (RedDotController_1.RedDotController.UnBindRedDot(this.l4e),
+      (this.l4e = void 0));
   }
   GetBtn() {
     return this.GetButton(0);

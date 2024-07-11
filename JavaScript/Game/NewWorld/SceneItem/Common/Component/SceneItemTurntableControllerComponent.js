@@ -50,30 +50,30 @@ let SceneItemTurntableControllerComponent =
   ) {
     constructor() {
       super(...arguments),
-        (this.O_n = void 0),
-        (this.k_n = void 0),
+        (this.p_n = void 0),
+        (this.v_n = void 0),
         (this.Rne = void 0),
         (this.Xte = void 0),
-        (this.zht = void 0),
-        (this.F_n = !1),
-        (this.Qnn = () => {
+        (this.u1t = void 0),
+        (this.M_n = !1),
+        (this.Rnn = () => {
           EventSystem_1.EventSystem.RemoveWithTarget(
             this.Entity,
             EventDefine_1.EEventName.OnSceneInteractionLoadCompleted,
-            this.Qnn,
+            this.Rnn,
           ),
-            this.V_n() &&
-              (this.H_n(), (this.F_n = !0), this.UpdateAllRingsAtTarget(!0)) &&
+            this.E_n() &&
+              (this.S_n(), (this.M_n = !0), this.UpdateAllRingsAtTarget(!0)) &&
               !this.Xte?.HasTag(1298716444) &&
-              this.j_n();
+              this.y_n();
         }),
-        (this.B1n = (t, e) => {
-          if (this.F_n && 1298716444 === t) {
+        (this.m1n = (t, e) => {
+          if (this.M_n && 1298716444 === t) {
             this.SetAllowRotate(!1);
-            for (const s of this.k_n) {
-              var i = this.O_n.ItemConfig[s.Index];
+            for (const s of this.v_n) {
+              var i = this.p_n.ItemConfig[s.Index];
               s?.IsAtTarget ||
-                (this.W_n(s, i.TargetAngle),
+                (this.I_n(s, i.TargetAngle),
                 this.UpdateRingAtTarget(s.Index, !1));
             }
             this.UpdateAllRingsAtTargetEffect(),
@@ -101,7 +101,7 @@ let SceneItemTurntableControllerComponent =
               "稷廷开门机关组件创建错误，圈数不对",
             );
         else {
-          (this.zht = e), (this.O_n = t.Config), (this.k_n = []);
+          (this.u1t = e), (this.p_n = t.Config), (this.v_n = []);
           for (let t = 0; t < i; t++) {
             var s = new RotatingRing();
             (s.Index = t),
@@ -110,22 +110,22 @@ let SceneItemTurntableControllerComponent =
               (s.IsRotating = !1),
               (s.CurSpeed = 0),
               (s.AccumulateAngle = 0),
-              this.k_n.push(s);
+              this.v_n.push(s);
           }
-          this.F_n = !1;
+          this.M_n = !1;
         }
       }
       return !0;
     }
     OnStart() {
       return (
-        (this.Xte = this.Entity.GetComponent(177)),
+        (this.Xte = this.Entity.GetComponent(180)),
         this.Xte
-          ? (this.O_n &&
+          ? (this.p_n &&
               EventSystem_1.EventSystem.AddWithTarget(
                 this.Entity,
                 EventDefine_1.EEventName.OnSceneInteractionLoadCompleted,
-                this.Qnn,
+                this.Rnn,
               ),
             !0)
           : (Log_1.Log.CheckError() &&
@@ -139,46 +139,58 @@ let SceneItemTurntableControllerComponent =
     }
     OnActivate() {
       this.SetAllowRotate(!1),
-        EventSystem_1.EventSystem.AddWithTarget(
+        EventSystem_1.EventSystem.HasWithTarget(
           this.Entity,
           EventDefine_1.EEventName.OnSceneItemStateChange,
-          this.B1n,
-        );
+          this.m1n,
+        )
+          ? Log_1.Log.CheckError() &&
+            Log_1.Log.Error(
+              "SceneItem",
+              40,
+              "SceneItemTurntableControllerComponent.OnActivate，重复添加事件",
+              ["PbDataId", this.Entity.GetComponent(0)?.GetPbDataId()],
+            )
+          : EventSystem_1.EventSystem.AddWithTarget(
+              this.Entity,
+              EventDefine_1.EEventName.OnSceneItemStateChange,
+              this.m1n,
+            );
     }
     OnTick(t) {
-      this.F_n &&
+      this.M_n &&
         (this.GetControlType() === IComponent_1.EControllerType.FixedAngle
-          ? this.K_n(t)
-          : this.Q_n(t),
-        this.X_n(t));
+          ? this.T_n(t)
+          : this.L_n(t),
+        this.D_n(t));
     }
     OnEnd() {
       return (
         EventSystem_1.EventSystem.HasWithTarget(
           this.Entity,
           EventDefine_1.EEventName.OnSceneItemStateChange,
-          this.B1n,
+          this.m1n,
         ) &&
           EventSystem_1.EventSystem.RemoveWithTarget(
             this.Entity,
             EventDefine_1.EEventName.OnSceneItemStateChange,
-            this.B1n,
+            this.m1n,
           ),
         EventSystem_1.EventSystem.HasWithTarget(
           this.Entity,
           EventDefine_1.EEventName.OnSceneInteractionLoadCompleted,
-          this.Qnn,
+          this.Rnn,
         ) &&
           EventSystem_1.EventSystem.RemoveWithTarget(
             this.Entity,
             EventDefine_1.EEventName.OnSceneInteractionLoadCompleted,
-            this.Qnn,
+            this.Rnn,
           ),
         !0
       );
     }
-    V_n() {
-      var t = this.Entity?.GetComponent(182);
+    E_n() {
+      var t = this.Entity?.GetComponent(185);
       if (!t)
         return (
           Log_1.Log.CheckError() &&
@@ -189,7 +201,7 @@ let SceneItemTurntableControllerComponent =
             ),
           !1
         );
-      for (const s of this.k_n) {
+      for (const s of this.v_n) {
         var e = "Ring" + s.Index,
           i = t.GetActorInSceneInteraction(e);
         if (!i?.IsValid())
@@ -207,30 +219,30 @@ let SceneItemTurntableControllerComponent =
       }
       return !0;
     }
-    H_n() {
+    S_n() {
       var t = this.Xte?.HasTag(1298716444) ?? !1;
-      for (const i of this.k_n) {
-        var e = this.O_n.ItemConfig[i.Index];
-        t ? this.W_n(i, e.TargetAngle) : this.W_n(i, e.InitAngle);
+      for (const i of this.v_n) {
+        var e = this.p_n.ItemConfig[i.Index];
+        t ? this.I_n(i, e.TargetAngle) : this.I_n(i, e.InitAngle);
       }
     }
     DeselectAllRings(t) {
-      for (const e of this.k_n) e.IsSelected = !1;
+      for (const e of this.v_n) e.IsSelected = !1;
       t && this.UpdateAllRingsSelectedEffect();
     }
     SelectRingByIndex(t, e) {
-      t = this.k_n[t];
+      t = this.v_n[t];
       t &&
         ((t.IsSelected = !0), e) &&
         this.UpdateRingSelectedEffectByIndex(t.Index);
     }
     DeselectRingByIndex(t, e) {
-      t = this.k_n[t];
+      t = this.v_n[t];
       t &&
         ((t.IsSelected = !1), e) &&
         this.UpdateRingSelectedEffectByIndex(t.Index);
     }
-    $_n(t) {
+    R_n(t) {
       switch (t) {
         case 0:
           return 981971147;
@@ -241,7 +253,7 @@ let SceneItemTurntableControllerComponent =
       }
       return 0;
     }
-    Y_n(t) {
+    U_n(t) {
       switch (t) {
         case 0:
           return -639326900;
@@ -252,38 +264,38 @@ let SceneItemTurntableControllerComponent =
       }
       return 0;
     }
-    J_n(t, e) {
-      t = this.k_n[t];
+    A_n(t, e) {
+      t = this.v_n[t];
       t &&
-        this.F_n &&
+        this.M_n &&
         this.GetRotateAllowed() &&
         !this.IsBusyRotating() &&
         ((t.AccumulateAngle = 0),
         (t.CurSpeed =
-          (Math.abs(this.O_n.RotationSpeed) * (e ? 1 : -1)) /
+          (Math.abs(this.p_n.RotationSpeed) * (e ? 1 : -1)) /
           CommonDefine_1.MILLIONSECOND_PER_SECOND),
         (t.IsRotating = !0));
     }
-    z_n(t) {
-      t = this.k_n[t];
+    P_n(t) {
+      t = this.v_n[t];
       t &&
-        this.F_n &&
+        this.M_n &&
         this.GetRotateAllowed() &&
         ((t.AccumulateAngle = 0), (t.CurSpeed = 0), (t.IsRotating = !1));
     }
     TriggerStartSelectedRingsRotate() {
-      this.O_n.Type === IComponent_1.EControllerType.FixedAngle
-        ? this.Z_n()
-        : this.eun();
+      this.p_n.Type === IComponent_1.EControllerType.FixedAngle
+        ? this.x_n()
+        : this.w_n();
     }
-    Z_n() {
-      this.F_n &&
+    x_n() {
+      this.M_n &&
         this.GetRotateAllowed() &&
-        this.O_n.Type === IComponent_1.EControllerType.FixedAngle &&
-        (this.k_n.forEach((t) => {
+        this.p_n.Type === IComponent_1.EControllerType.FixedAngle &&
+        (this.v_n.forEach((t) => {
           var e;
           t.IsSelected &&
-            ((e = 0 < this.O_n.RotationSpeed), this.J_n(t.Index, e));
+            ((e = 0 < this.p_n.RotationSpeed), this.A_n(t.Index, e));
         }),
         EventSystem_1.EventSystem.EmitWithTarget(
           this.Entity,
@@ -292,14 +304,14 @@ let SceneItemTurntableControllerComponent =
           !1,
         ));
     }
-    eun() {
-      this.F_n &&
+    w_n() {
+      this.M_n &&
         this.GetRotateAllowed() &&
-        this.O_n.Type === IComponent_1.EControllerType.FreeAngle &&
-        (this.k_n.forEach((t) => {
+        this.p_n.Type === IComponent_1.EControllerType.FreeAngle &&
+        (this.v_n.forEach((t) => {
           var e;
           t.IsSelected &&
-            ((e = 0 < this.O_n.RotationSpeed), this.J_n(t.Index, e));
+            ((e = 0 < this.p_n.RotationSpeed), this.A_n(t.Index, e));
         }),
         EventSystem_1.EventSystem.EmitWithTarget(
           this.Entity,
@@ -309,19 +321,19 @@ let SceneItemTurntableControllerComponent =
         ));
     }
     TriggerStopAllRingsRotate() {
-      this.O_n.Type === IComponent_1.EControllerType.FixedAngle
-        ? this.tun()
-        : this.iun();
+      this.p_n.Type === IComponent_1.EControllerType.FixedAngle
+        ? this.B_n()
+        : this.b_n();
     }
-    tun() {
-      this.F_n &&
+    B_n() {
+      this.M_n &&
         this.GetRotateAllowed() &&
         this.IsBusyRotating() &&
-        this.O_n.Type === IComponent_1.EControllerType.FixedAngle &&
-        (this.k_n.forEach((t) => {
-          t.IsRotating && this.oun(t, -t.AccumulateAngle), this.z_n(t.Index);
+        this.p_n.Type === IComponent_1.EControllerType.FixedAngle &&
+        (this.v_n.forEach((t) => {
+          t.IsRotating && this.q_n(t, -t.AccumulateAngle), this.P_n(t.Index);
         }),
-        this.UpdateAllRingsAtTarget(!0) && this.j_n(),
+        this.UpdateAllRingsAtTarget(!0) && this.y_n(),
         EventSystem_1.EventSystem.EmitWithTarget(
           this.Entity,
           EventDefine_1.EEventName.OnTurntableControllerBusyStateChange,
@@ -329,15 +341,15 @@ let SceneItemTurntableControllerComponent =
           this.IsAllRingsAtTarget(),
         ));
     }
-    iun() {
-      this.F_n &&
+    b_n() {
+      this.M_n &&
         this.GetRotateAllowed() &&
         this.IsBusyRotating() &&
-        this.O_n.Type === IComponent_1.EControllerType.FreeAngle &&
-        (this.k_n.forEach((t) => {
-          this.z_n(t.Index);
+        this.p_n.Type === IComponent_1.EControllerType.FreeAngle &&
+        (this.v_n.forEach((t) => {
+          this.P_n(t.Index);
         }),
-        this.UpdateAllRingsAtTarget(!0) && this.j_n(),
+        this.UpdateAllRingsAtTarget(!0) && this.y_n(),
         EventSystem_1.EventSystem.EmitWithTarget(
           this.Entity,
           EventDefine_1.EEventName.OnTurntableControllerBusyStateChange,
@@ -346,21 +358,21 @@ let SceneItemTurntableControllerComponent =
         ));
     }
     TriggerResetAllRingsToInitAngle(t = !1) {
-      !this.F_n ||
+      !this.M_n ||
         !this.GetRotateAllowed() ||
         this.IsBusyRotating() ||
         (this.IsAllRingsAtTarget() && !t) ||
-        (this.k_n.forEach((t) => {
-          var e = this.O_n.ItemConfig[t.Index];
-          this.W_n(t, e.InitAngle);
+        (this.v_n.forEach((t) => {
+          var e = this.p_n.ItemConfig[t.Index];
+          this.I_n(t, e.InitAngle);
         }),
         this.UpdateAllRingsAtTarget(!0));
     }
-    K_n(e) {
-      if (this.F_n) {
-        var i = this.O_n;
+    T_n(e) {
+      if (this.M_n) {
+        var i = this.p_n;
         if (i)
-          for (const r of this.k_n)
+          for (const r of this.v_n)
             if (r.IsRotating) {
               let t = r.CurSpeed * e;
               var s,
@@ -369,12 +381,12 @@ let SceneItemTurntableControllerComponent =
               Math.abs(n) >= Math.abs(h)
                 ? ((s = 0 < r.CurSpeed),
                   (t -= n - Math.abs(h) * (s ? 1 : -1)),
-                  this.oun(r, t),
+                  this.q_n(r, t),
                   (r.AccumulateAngle += t),
-                  this.z_n(r.Index),
+                  this.P_n(r.Index),
                   this.IsBusyRotating()
                     ? this.UpdateRingAtTarget(r.Index, !0)
-                    : (this.UpdateAllRingsAtTarget(!0) && this.j_n(),
+                    : (this.UpdateAllRingsAtTarget(!0) && this.y_n(),
                       EventSystem_1.EventSystem.EmitWithTarget(
                         this.Entity,
                         EventDefine_1.EEventName
@@ -382,38 +394,38 @@ let SceneItemTurntableControllerComponent =
                         !1,
                         this.IsAllRingsAtTarget(),
                       )))
-                : (this.oun(r, t),
+                : (this.q_n(r, t),
                   (r.AccumulateAngle += t),
                   r.IsAtTarget && this.UpdateRingAtTarget(r.Index, !0));
             }
       }
     }
-    Q_n(t) {
-      if (this.F_n)
-        for (const i of this.k_n) {
+    L_n(t) {
+      if (this.M_n)
+        for (const i of this.v_n) {
           var e;
           i.IsRotating &&
-            ((e = i.CurSpeed * t), this.oun(i, e), i.IsAtTarget) &&
+            ((e = i.CurSpeed * t), this.q_n(i, e), i.IsAtTarget) &&
             this.UpdateRingAtTarget(i.Index, !0);
         }
     }
-    X_n(t) {
-      if (this.F_n)
-        for (const n of this.k_n) {
+    D_n(t) {
+      if (this.M_n)
+        for (const n of this.v_n) {
           var e, i, s;
           n.IsRotating ||
             !n.IsAtTarget ||
-            ((s = this.O_n.ItemConfig[n.Index]),
-            (s = this.run(this.nun(n), s.TargetAngle)),
+            ((s = this.p_n.ItemConfig[n.Index]),
+            (s = this.G_n(this.N_n(n), s.TargetAngle)),
             MathUtils_1.MathUtils.IsNearlyZero(s)) ||
             ((e = 0 < s),
             (i =
-              this.O_n.RotationSpeed / CommonDefine_1.MILLIONSECOND_PER_SECOND),
+              this.p_n.RotationSpeed / CommonDefine_1.MILLIONSECOND_PER_SECOND),
             (s = Math.min(Math.abs(s), Math.abs(i * t)) * (e ? 1 : -1)),
-            this.oun(n, s));
+            this.q_n(n, s));
         }
     }
-    nun(t) {
+    N_n(t) {
       if (t?.ControllerRingActor?.IsValid())
         return (
           t.RingRotator ||
@@ -423,7 +435,7 @@ let SceneItemTurntableControllerComponent =
           -t.RingRotator.Pitch
         );
     }
-    W_n(t, e) {
+    I_n(t, e) {
       t.ControllerRingActor?.IsValid() &&
         (t.RingRotator || (t.RingRotator = Rotator_1.Rotator.Create()),
         (t.RingRotator.Pitch = -e),
@@ -434,7 +446,7 @@ let SceneItemTurntableControllerComponent =
           !1,
         ));
     }
-    oun(t, e) {
+    q_n(t, e) {
       t.ControllerRingActor?.IsValid() &&
         (t.RingRotator || (t.RingRotator = Rotator_1.Rotator.Create()),
         (t.RingRotator.Pitch -= e),
@@ -447,7 +459,7 @@ let SceneItemTurntableControllerComponent =
     }
     UpdateAllRingsAtTarget(t) {
       let e = !0;
-      for (const i of this.k_n)
+      for (const i of this.v_n)
         this.UpdateRingAtTarget(i.Index, !1) || (e = !1);
       return t && this.UpdateAllRingsAtTargetEffect(), e;
     }
@@ -455,56 +467,56 @@ let SceneItemTurntableControllerComponent =
       var i,
         s,
         n,
-        t = this.k_n[t];
+        t = this.v_n[t];
       return (
-        !(!t || !this.F_n || !t?.RingRotator) &&
-        ((n = this.nun(t)),
-        (i = (s = this.O_n).ItemConfig[t.Index]?.TargetAngle),
+        !(!t || !this.M_n || !t?.RingRotator) &&
+        ((n = this.N_n(t)),
+        (i = (s = this.p_n).ItemConfig[t.Index]?.TargetAngle),
         (s =
-          this.O_n.Type === IComponent_1.EControllerType.FixedAngle
+          this.p_n.Type === IComponent_1.EControllerType.FixedAngle
             ? 1
             : s.IntervalAngle),
-        (n = Math.abs(this.run(n, i))),
+        (n = Math.abs(this.G_n(n, i))),
         (t.IsAtTarget = n <= s),
         e && this.UpdateRingAtTargetEffectByIndex(t.Index),
         t.IsAtTarget)
       );
     }
     IsBusyRotating() {
-      for (const t of this.k_n) if (t.IsRotating) return !0;
+      for (const t of this.v_n) if (t.IsRotating) return !0;
       return !1;
     }
     IsRingRotatingByIndex(t) {
-      t = this.k_n[t];
-      return !(!t || !this.F_n) && t.IsRotating;
+      t = this.v_n[t];
+      return !(!t || !this.M_n) && t.IsRotating;
     }
     GetRingsNum() {
-      return this.k_n?.length;
+      return this.v_n?.length;
     }
     GetControlType() {
-      return this.O_n.Type;
+      return this.p_n.Type;
     }
     IsAllRingsAtTarget() {
-      for (const t of this.k_n) if (!t.IsAtTarget) return !1;
+      for (const t of this.v_n) if (!t.IsAtTarget) return !1;
       return !0;
     }
     IsRingAtTargetByIndex(t) {
-      t = this.k_n[t];
-      return !(!t || !this.F_n) && t.IsAtTarget;
+      t = this.v_n[t];
+      return !(!t || !this.M_n) && t.IsAtTarget;
     }
     IsRingSelectedByIndex(t) {
-      t = this.k_n[t];
-      return !(!t || !this.F_n) && t.IsSelected;
+      t = this.v_n[t];
+      return !(!t || !this.M_n) && t.IsSelected;
     }
     UpdateAllRingsAtTargetEffect() {
       if (this.Xte) {
         this.Xte.NotifyLock++;
-        for (const e of this.k_n) {
+        for (const e of this.v_n) {
           var t;
           e.IsAtTarget
-            ? ((t = this.Y_n(e.Index)),
+            ? ((t = this.U_n(e.Index)),
               this.Xte.HasTag(t) || this.Xte.AddTag(t))
-            : ((t = this.Y_n(e.Index)),
+            : ((t = this.U_n(e.Index)),
               this.Xte.HasTag(t) && this.Xte.RemoveTag(t));
         }
         this.Xte.NotifyLock--;
@@ -512,23 +524,23 @@ let SceneItemTurntableControllerComponent =
     }
     UpdateRingAtTargetEffectByIndex(t) {
       var e,
-        t = this.k_n[t];
+        t = this.v_n[t];
       t &&
-        this.F_n &&
+        this.M_n &&
         (t.IsAtTarget
-          ? ((e = this.Y_n(t.Index)), this.Xte.HasTag(e) || this.Xte.AddTag(e))
-          : ((e = this.Y_n(t.Index)),
+          ? ((e = this.U_n(t.Index)), this.Xte.HasTag(e) || this.Xte.AddTag(e))
+          : ((e = this.U_n(t.Index)),
             this.Xte.HasTag(e) && this.Xte.RemoveTag(e)));
     }
     UpdateAllRingsSelectedEffect() {
       if (this.Xte) {
         this.Xte.NotifyLock++;
-        for (const e of this.k_n) {
+        for (const e of this.v_n) {
           var t;
           e.IsSelected
-            ? ((t = this.$_n(e.Index)),
+            ? ((t = this.R_n(e.Index)),
               this.Xte.HasTag(t) || this.Xte.AddTag(t))
-            : ((t = this.$_n(e.Index)),
+            : ((t = this.R_n(e.Index)),
               this.Xte.HasTag(t) && this.Xte.RemoveTag(t));
         }
         this.Xte.NotifyLock--;
@@ -536,12 +548,12 @@ let SceneItemTurntableControllerComponent =
     }
     UpdateRingSelectedEffectByIndex(t) {
       var e,
-        t = this.k_n[t];
+        t = this.v_n[t];
       t &&
-        this.F_n &&
+        this.M_n &&
         (t.IsSelected
-          ? ((e = this.$_n(t.Index)), this.Xte.HasTag(e) || this.Xte.AddTag(e))
-          : ((e = this.$_n(t.Index)),
+          ? ((e = this.R_n(t.Index)), this.Xte.HasTag(e) || this.Xte.AddTag(e))
+          : ((e = this.R_n(t.Index)),
             this.Xte.HasTag(e) && this.Xte.RemoveTag(e)));
     }
     SetAllowRotate(t) {
@@ -558,16 +570,16 @@ let SceneItemTurntableControllerComponent =
     GetRotateAllowed() {
       return void 0 === this.Rne;
     }
-    j_n() {
+    y_n() {
       var t;
-      this.zht &&
-        (((t = Protocol_1.Aki.Protocol.Ccs.create()).rkn =
-          MathUtils_1.MathUtils.NumberToLong(this.zht.GetCreatureDataId())),
-        Net_1.Net.Call(9599, t, (t) => {
-          t?.X5n !== Protocol_1.Aki.Protocol.lkn.Sys &&
-            t?.X5n !==
-              Protocol_1.Aki.Protocol.lkn.Proto_ErrStateEntityStateNoChange &&
-            (this.F_n &&
+      this.u1t &&
+        (((t = Protocol_1.Aki.Protocol._0s.create()).P4n =
+          MathUtils_1.MathUtils.NumberToLong(this.u1t.GetCreatureDataId())),
+        Net_1.Net.Call(13600, t, (t) => {
+          t?.A9n !== Protocol_1.Aki.Protocol.O4n.NRs &&
+            t?.A9n !==
+              Protocol_1.Aki.Protocol.O4n.Proto_ErrStateEntityStateNoChange &&
+            (this.M_n &&
               this.GetRotateAllowed() &&
               this.IsBusyRotating() &&
               this.TriggerStopAllRingsRotate(),
@@ -580,10 +592,10 @@ let SceneItemTurntableControllerComponent =
             ));
         }));
     }
-    run(t, e) {
-      return this.sun(e - t, -180, 180);
+    G_n(t, e) {
+      return this.O_n(e - t, -180, 180);
     }
-    sun(t, e, i) {
+    O_n(t, e, i) {
       let s = t;
       for (; s < e; ) s += 360;
       for (; s >= i; ) s -= 360;
@@ -593,7 +605,7 @@ let SceneItemTurntableControllerComponent =
 (SceneItemTurntableControllerComponent =
   SceneItemTurntableControllerComponent_1 =
     __decorate(
-      [(0, RegisterComponent_1.RegisterComponent)(119)],
+      [(0, RegisterComponent_1.RegisterComponent)(121)],
       SceneItemTurntableControllerComponent,
     )),
   (exports.SceneItemTurntableControllerComponent =

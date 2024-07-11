@@ -20,20 +20,20 @@ class ChatOption extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
       (this.j8 = void 0),
-      (this.sSt = void 0),
-      (this.aSt = void 0),
-      (this.hSt = (e) => {
-        e === this.j8 && this.lSt();
+      (this.pSt = void 0),
+      (this.vSt = void 0),
+      (this.MSt = (e) => {
+        e === this.j8 && this.ESt();
       }),
-      (this._St = () => {
+      (this.SSt = () => {
         ModelManager_1.ModelManager.ChatModel.IsInMute(this.j8)
           ? ChatController_1.ChatController.ChatMutePlayerRequest(this.j8, !1)
           : ChatController_1.ChatController.ChatMutePlayerRequest(this.j8, !0),
           UiManager_1.UiManager.CloseView("ChatOption");
       }),
-      (this.uSt = () => {
+      (this.ySt = () => {
         var e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(57);
-        e.SetTextArgs(this.sSt.PlayerName),
+        e.SetTextArgs(this.pSt.PlayerName),
           e.FunctionMap.set(2, () => {
             FriendController_1.FriendController.RequestBlockPlayer(this.j8),
               UiManager_1.UiManager.CloseView("ChatOption");
@@ -42,7 +42,7 @@ class ChatOption extends UiViewBase_1.UiViewBase {
             e,
           );
       }),
-      (this.cSt = () => {
+      (this.ISt = () => {
         UiManager_1.UiManager.CloseView("ChatOption");
         var e = ModelManager_1.ModelManager.FriendModel.GetFriendById(this.j8);
         ReportController_1.ReportController.OpenReportView(e, 1);
@@ -57,48 +57,48 @@ class ChatOption extends UiViewBase_1.UiViewBase {
       [4, UE.UIButtonComponent],
     ]),
       (this.BtnBindInfo = [
-        [3, this.uSt],
-        [4, this.cSt],
+        [3, this.ySt],
+        [4, this.ISt],
       ]);
   }
   OnStart() {
     var e;
     this.GetButton(1)?.RootUIComp.SetUIActive(!1),
-      (this.aSt = new ChatOptionButton(this.GetItem(2))),
-      this.aSt.SetClickCallBack(this._St),
+      (this.vSt = new ChatOptionButton(this.GetItem(2))),
+      this.vSt.SetClickCallBack(this.SSt),
       (this.j8 = this.OpenParam),
-      (this.sSt = ModelManager_1.ModelManager.FriendModel.GetFriendById(
+      (this.pSt = ModelManager_1.ModelManager.FriendModel.GetFriendById(
         this.j8,
       )),
-      this.sSt &&
+      this.pSt &&
         ((e = this.GetText(0)),
-        LguiUtil_1.LguiUtil.SetLocalText(e, "OptionTitle", this.sSt.PlayerName),
-        this.lSt());
+        LguiUtil_1.LguiUtil.SetLocalText(e, "OptionTitle", this.pSt.PlayerName),
+        this.ESt());
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnAddMutePlayer,
-      this.hSt,
+      this.MSt,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnRemoveMutePlayer,
-        this.hSt,
+        this.MSt,
       );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnAddMutePlayer,
-      this.hSt,
+      this.MSt,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnRemoveMutePlayer,
-        this.hSt,
+        this.MSt,
       );
   }
   OnBeforeDestroy() {
-    (this.j8 = void 0), (this.sSt = void 0);
+    (this.j8 = void 0), (this.pSt = void 0);
   }
-  lSt() {
+  ESt() {
     var e;
     ModelManager_1.ModelManager.ChatModel.IsInMute(this.j8)
       ? ((e =
@@ -106,22 +106,22 @@ class ChatOption extends UiViewBase_1.UiViewBase {
             "CancelMuteText",
           )),
         (e = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(e)),
-        this.aSt.RefreshButtonText(e))
+        this.vSt.RefreshButtonText(e))
       : ((e =
           ConfigManager_1.ConfigManager.TextConfig.GetTextContentIdById(
             "MuteText",
           )),
         (e = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(e)),
-        this.aSt.RefreshButtonText(e));
+        this.vSt.RefreshButtonText(e));
   }
 }
 exports.ChatOption = ChatOption;
 class ChatOptionButton extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
-      (this.Kpt = void 0),
+      (this.rMt = void 0),
       (this.nqe = () => {
-        this.Kpt && this.Kpt();
+        this.rMt && this.rMt();
       }),
       this.CreateThenShowByActor(e.GetOwner());
   }
@@ -136,7 +136,7 @@ class ChatOptionButton extends UiPanelBase_1.UiPanelBase {
     this.GetText(1).SetText(e);
   }
   SetClickCallBack(e) {
-    this.Kpt = e;
+    this.rMt = e;
   }
 }
 //# sourceMappingURL=ChatOption.js.map

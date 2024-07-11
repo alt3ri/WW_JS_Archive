@@ -9,16 +9,16 @@ const UE = require("ue"),
 class AreaView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
-      (this.yje = !1),
-      (this.Ije = () => {
+      (this.bWe = !1),
+      (this.qWe = () => {
         this.GetText(0) &&
           ModelManager_1.ModelManager.AreaModel.AreaHintName &&
           this.GetText(0).SetText(
             ModelManager_1.ModelManager.AreaModel.AreaHintName,
           );
       }),
-      (this.Tje = () => {
-        this.UiViewSequence.ReplaySequence("Start"), this.Ije();
+      (this.GWe = () => {
+        this.UiViewSequence.ReplaySequence("Start"), this.qWe();
       });
   }
   OnRegisterComponent() {
@@ -29,26 +29,26 @@ class AreaView extends UiTickViewBase_1.UiTickViewBase {
   }
   OnStart() {
     this.UiViewSequence.AddSequenceFinishEvent("Start", () => {
-      this.yje = !0;
+      this.bWe = !0;
     });
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.UpdateAreaView,
-      this.Tje,
+      this.GWe,
     );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.UpdateAreaView,
-      this.Tje,
+      this.GWe,
     );
   }
   OnBeforeShow() {
-    this.Ije();
+    this.qWe();
   }
   OnTick(e) {
-    this.yje && this.IsShow && ((this.yje = !1), this.CloseMe());
+    this.bWe && this.IsShow && ((this.bWe = !1), this.CloseMe());
   }
 }
 exports.AreaView = AreaView;

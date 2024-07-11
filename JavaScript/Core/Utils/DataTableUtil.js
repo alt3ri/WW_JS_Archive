@@ -48,6 +48,7 @@ exports.dataTablePaths = new Map([
   ],
   [6, "/Game/Aki/Character/Role/Common/Data/DT/DT_Footprint.DT_Footprint"],
   [20, "/Game/Aki/Sequence/Manager/DT_SequenceMember.DT_SequenceMember"],
+  [21, "/Game/Aki/Data/GaCha/GachaWeaponTransform.GachaWeaponTransform"],
 ]);
 class DataTableUtil {
   static GetDataTableRow(a, e) {
@@ -122,8 +123,17 @@ class DataTableUtil {
     if (i) {
       for (let a = 0; a < i.Num(); a++) {
         var r = i.Get(a).toString(),
-          r = DataTableUtil.GetDataTableRow(e, r);
-        t.push(r);
+          o = DataTableUtil.GetDataTableRow(e, r);
+        o
+          ? t.push(o)
+          : Log_1.Log.CheckInfo() &&
+            Log_1.Log.Info(
+              "DataTableUtil",
+              37,
+              "[GetAllDataTableRowFromTable]GetRowValue Failed",
+              ["Table", e?.GetName()],
+              ["RowName", r],
+            );
       }
       return t;
     }
@@ -138,7 +148,16 @@ class DataTableUtil {
       for (let a = 0; a < i.Num(); a++) {
         var r = i.Get(a).toString(),
           o = DataTableUtil.GetDataTableRow(e, r);
-        t.push([r, o]);
+        o
+          ? t.push([r, o])
+          : Log_1.Log.CheckInfo() &&
+            Log_1.Log.Info(
+              "DataTableUtil",
+              37,
+              "[GetAllDataTableRowFromTableWithRowName]GetRowValue Failed",
+              ["Table", e?.GetName()],
+              ["RowName", r],
+            );
       }
       return t;
     }

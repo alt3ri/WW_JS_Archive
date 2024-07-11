@@ -24,7 +24,10 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
       (e.Refresh = "Refresh"),
       (e.Camera = "Camera"),
       (e.Capture = "Capture"),
-      (e.CopyLink = "CopyLink");
+      (e.CopyLink = "CopyLink"),
+      (e.Copy = "Copy"),
+      (e.MagnifierTab = "MagnifierTab"),
+      (e.MagnifierButton = "MagnifierButton");
   })((ETexture = exports.ETexture || (exports.ETexture = {})));
 const texturePathMap = {
   [ETexture.FileTree]:
@@ -65,6 +68,11 @@ const texturePathMap = {
     "/Game/Aki/UniverseEditor/Res/Icons/T_EditorIcon_Capture.T_EditorIcon_Capture",
   [ETexture.CopyLink]:
     "/Game/Aki/UniverseEditor/Res/Icons/T_CopyLink.T_CopyLink",
+  [ETexture.Copy]: "/Game/Aki/UniverseEditor/Res/Icons/T_Copy.T_Copy",
+  [ETexture.MagnifierTab]:
+    "/Game/Aki/UniverseEditor/Res/Icons/T_Magnifier1.T_Magnifier1",
+  [ETexture.MagnifierButton]:
+    "/Game/Aki/UniverseEditor/Res/Icons/T_Magnifier2.T_Magnifier2",
 };
 function getTexturePath(e) {
   return texturePathMap[e];

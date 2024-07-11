@@ -19,7 +19,7 @@ class RoguelikeSettleView extends UiViewBase_1.UiViewBase {
       (this.RecordItemList = []),
       (this.SkillPointRewardItem = void 0),
       (this.OutSideRewardItem = void 0),
-      (this.Sho = () => {
+      (this.plo = () => {
         InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.LeaveInstanceDungeon().finally(
           () => {
             UiManager_1.UiManager.IsViewShow(this.Info.Name) && this.CloseMe();
@@ -52,7 +52,7 @@ class RoguelikeSettleView extends UiViewBase_1.UiViewBase {
       [20, UE.UIText],
       [21, UE.UIText],
     ]),
-      (this.BtnBindInfo = [[17, this.Sho]]);
+      (this.BtnBindInfo = [[17, this.plo]]);
   }
   async OnBeforeStartAsync() {
     (this.SkillPointRewardItem = new RoguelikeSettleCurrencyItem()),
@@ -76,15 +76,15 @@ class RoguelikeSettleView extends UiViewBase_1.UiViewBase {
   pie() {
     var e = this.OpenParam,
       t =
-        (this.GetItem(6).SetUIActive(e.IAs),
+        (this.GetItem(6).SetUIActive(e.$xs),
         ConfigManager_1.ConfigManager.RoguelikeConfig.GetRogueCharacterConfig(
-          e.vws.R5n,
+          e.G2s._9n,
         )),
       i = ConfigManager_1.ConfigManager.RoleConfig?.GetRoleConfig(t.RoleId),
       s = ConfigManager_1.ConfigManager.RoguelikeConfig.GetRoguePhantomConfig(
-        e.pws.R5n,
+        e.O2s._9n,
       ),
-      o = TimeUtil_1.TimeUtil.GetTimeString(e.kws),
+      o = TimeUtil_1.TimeUtil.GetTimeString(e.oqs),
       o =
         (this.GetText(21).SetText(o),
         LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(2), i.Name),
@@ -99,7 +99,7 @@ class RoguelikeSettleView extends UiViewBase_1.UiViewBase {
             this.SetTextureByPath(s.PokemonSettleIcon, this.GetTexture(3)))
           : (this.GetText(4).SetUIActive(!1),
             this.GetTexture(3).SetUIActive(!1)),
-        ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(e.vFn)),
+        ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(e.X5n)),
       t =
         (LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(7), i.MapName),
         LguiUtil_1.LguiUtil.SetLocalTextNew(
@@ -111,8 +111,8 @@ class RoguelikeSettleView extends UiViewBase_1.UiViewBase {
           "RoguelikeSettlePlayerName",
           ModelManager_1.ModelManager.FunctionModel.GetPlayerName(),
         ),
-        TimeUtil_1.TimeUtil.DateFormatString(e.Bws)),
-      o = (this.GetText(9).SetText(t), Math.floor((e.Pws / e.Uws) * 100)),
+        TimeUtil_1.TimeUtil.DateFormatString(e.eqs)),
+      o = (this.GetText(9).SetText(t), Math.floor((e.X2s / e.Y2s) * 100)),
       s =
         (this.GetSprite(14).SetFillAmount(o / 100),
         LguiUtil_1.LguiUtil.SetLocalTextNew(
@@ -206,7 +206,7 @@ class RoguelikeSettleView extends UiViewBase_1.UiViewBase {
                 ),
         LguiUtil_1.LguiUtil.CopyItem(this.GetItem(12), this.GetItem(11))),
       t = LguiUtil_1.LguiUtil.CopyItem(this.GetItem(12), this.GetItem(11)),
-      r = Object.keys(e.wPs);
+      r = Object.keys(e.zbs);
     let a = 0,
       l = 0,
       g = 0;
@@ -214,21 +214,21 @@ class RoguelikeSettleView extends UiViewBase_1.UiViewBase {
       ModelManager_1.ModelManager.RoguelikeModel.GetParamConfigBySeasonId();
     for (const u of r)
       Number(u) === _.SkillPoint
-        ? (a = e.wPs[u])
+        ? (a = e.zbs[u])
         : Number(u) === _.TokenItem
-          ? (l = e.wPs[u])
-          : Number(u) === _.InsideCurrency && (g = e.wPs[u]);
-    (n = new RoguelikeSettleRecordItem(0, e.qws)),
+          ? (l = e.zbs[u])
+          : Number(u) === _.InsideCurrency && (g = e.zbs[u]);
+    (n = new RoguelikeSettleRecordItem(0, e.tqs)),
       n.CreateThenShowByActorAsync(this.GetItem(12).GetOwner()),
-      (o = new RoguelikeSettleRecordItem(1, e.Gws)),
+      (o = new RoguelikeSettleRecordItem(1, e.iqs)),
       o.CreateThenShowByActorAsync(i.GetOwner()),
       (s = new RoguelikeSettleRecordItem(2, g));
     s.CreateThenShowByActorAsync(t.GetOwner());
     let h = !(this.RecordItemList = [n, o, s]);
     for (const U of ConfigManager_1.ConfigManager.RoguelikeConfig.GetRoguelikePopularEntries())
-      U.Insts.includes(e.vFn) && (h = !0);
-    this.SkillPointRewardItem.Refresh(_.SkillPoint, a, e.Nws, h),
-      this.OutSideRewardItem.Refresh(_.TokenItem, l, e.Nws, h);
+      U.Insts.includes(e.X5n) && (h = !0);
+    this.SkillPointRewardItem.Refresh(_.SkillPoint, a, e.nqs, h),
+      this.OutSideRewardItem.Refresh(_.TokenItem, l, e.nqs, h);
   }
 }
 exports.RoguelikeSettleView = RoguelikeSettleView;

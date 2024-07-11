@@ -17,7 +17,7 @@ const Log_1 = require("../../../../../../Core/Common/Log"),
   DEFAULT_LOOP_TIME = 10;
 class CharacterFlowLogic {
   constructor(t, i) {
-    (this.K$o = 0),
+    (this.HYo = 0),
       (this.ActorComp = void 0),
       (this.HeadInfoComp = void 0),
       (this.FlowInfoList = new Array()),
@@ -32,9 +32,9 @@ class CharacterFlowLogic {
       (this.IsExecuteFlowEnd = !0),
       (this.WaitSecondsRemain = 0),
       (this.ActorComp = t),
-      (this.HeadInfoComp = t.Entity.GetComponent(70)),
+      (this.HeadInfoComp = t.Entity.GetComponent(72)),
       (this.TempFlowInfoList = new Array()),
-      (this.K$o = this.ActorComp.CreatureData.GetPbDataId()),
+      (this.HYo = this.ActorComp.CreatureData.GetPbDataId()),
       i && ((this.EntityList = i.NpcIds), (this.FlowInfoList = i.Flows));
   }
   Tick(t) {
@@ -91,7 +91,7 @@ class CharacterFlowLogic {
             ? ((this.CurrentTalkItems = e.TalkItems),
               (this.IsExecuteFlowEnd = !1),
               this.PlayTalk(0),
-              this.hDi(t))
+              this.hRi(t))
             : this.HandleFlowEnd();
       }
     } else this.HandleFlowEnd();
@@ -153,22 +153,37 @@ class CharacterFlowLogic {
               ),
             void this.PlayTalk(i + 1)
           );
-        o = s[r];
-        t = this.GetEntity(o);
+        var s = s[r];
+        if (!(t = this.GetEntity(s)))
+          return (
+            Log_1.Log.CheckError() &&
+              Log_1.Log.Error(
+                "Level",
+                51,
+                "播放多人冒泡时找不到演员",
+                ["MasterPbDataId", this.ActorComp.CreatureData.GetPbDataId()],
+                ["ActorPbDataId", s],
+                ["FlowName", o?.FlowListName],
+                ["FlowId", o?.FlowId],
+                ["StateId", o?.StateId],
+                ["Index", r],
+              ),
+            void this.PlayTalk(i + 1)
+          );
       }
       this.HandleTalkAction(t, e)
         ? ((this.IsExecuteFlowEnd = !1),
           this.WaitSecondsRemain <= 0 &&
             (this.WaitSecondsRemain = this.GetWaitSeconds(e)),
           (s = this.ActorComp.CreatureData.GetPbDataId()),
-          (r = this.GetFlowText(e.TidTalk)),
+          (o = this.GetFlowText(e.TidTalk)),
           Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug(
               "Level",
               51,
               "[CharacterFlowLogic] 播放对话框文本",
               ["PbDataId", s],
-              ["DialogText", r],
+              ["DialogText", o],
               ["WaitTime", this.WaitSecondsRemain],
             ))
         : this.PlayTalk(i + 1);
@@ -242,14 +257,14 @@ class CharacterFlowLogic {
     if (t && !StringUtils_1.StringUtils.IsEmpty(t))
       return MultiTextLang_1.configMultiTextLang.GetLocalTextNew(t);
   }
-  hDi(t) {
+  hRi(t) {
     var i = new LogReportDefine_1.PlayFlowLogData(),
       e =
         ((i.i_bubble_type = this.DynamicFlowData ? 2 : 1),
         (i.s_flow_file = t.FlowListName),
         (i.i_flow_id = t.FlowId),
         (i.i_flow_status_id = t.StateId ?? 0),
-        (i.i_config_id = this.K$o),
+        (i.i_config_id = this.HYo),
         (i.i_area_id =
           ModelManager_1.ModelManager.AreaModel.GetCurrentAreaId()),
         (i.i_father_area_id =
@@ -259,12 +274,12 @@ class CharacterFlowLogic {
     (i.f_pos_x = e.X),
       (i.f_pos_y = e.Y),
       (i.f_pos_z = e.Z),
-      Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info(
+      Log_1.Log.CheckDebug() &&
+        Log_1.Log.Debug(
           "Plot",
           43,
           "播放冒泡埋点",
-          ["EntityConfigId", this.K$o],
+          ["EntityConfigId", this.HYo],
           ["FlowListName", t.FlowListName],
           ["FlowId", t.FlowId],
           ["StateId", t.StateId],

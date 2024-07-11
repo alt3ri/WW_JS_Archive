@@ -37,6 +37,7 @@ class GameBudgetAllocatorConfig {
     (this.Default = void 0),
       (this.Normal_Render = void 0),
       (this.Normal_NotRendered = void 0),
+      (this.Normal_Fighting = void 0),
       (this.Fighting_Rendered = void 0),
       (this.Fighting_NotRendered = void 0),
       (this.Fighting_Fighting = void 0),

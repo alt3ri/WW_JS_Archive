@@ -17,36 +17,36 @@ const UE = require("ue"),
 class GachaSelectionView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.JHt = void 0),
-      (this.zHt = void 0),
-      (this.ZHt = void 0),
-      (this.ejt = void 0),
-      (this.tjt = () => {
+      (this.Jjt = void 0),
+      (this.zjt = void 0),
+      (this.Zjt = void 0),
+      (this.eWt = void 0),
+      (this.tWt = () => {
         GachaController_1.GachaController.GachaUsePoolRequest(
-          this.JHt.Id,
-          this.ijt,
+          this.Jjt.Id,
+          this.iWt,
         ),
           UiManager_1.UiManager.CloseView("GachaSelectionView");
       }),
-      (this.ojt = (e) => {
-        (this.JHt = e), this.rjt();
+      (this.oWt = (e) => {
+        (this.Jjt = e), this.rWt();
       }),
-      (this.njt = () => {
+      (this.nWt = () => {
         var e = new GachaSelectionItem_1.GachaSelectionItem();
-        return (e.ToggleCallBack = this.sjt), (e.CanToggleChange = this.Eft), e;
+        return (e.ToggleCallBack = this.sWt), (e.CanToggleChange = this.Bpt), e;
       }),
-      (this.sjt = (e) => {
-        this.zHt?.GetGenericLayout()?.SelectGridProxy(e), this.ajt();
+      (this.sWt = (e) => {
+        this.zjt?.GetGenericLayout()?.SelectGridProxy(e), this.aWt();
       }),
-      (this.Eft = (e) => {
-        return e !== this.zHt?.GetGenericLayout()?.GetSelectedGridIndex();
+      (this.Bpt = (e) => {
+        return e !== this.zjt?.GetGenericLayout()?.GetSelectedGridIndex();
       });
   }
-  get ijt() {
-    var e = this.zHt.GetGenericLayout().GetSelectedGridIndex();
-    return !this.ZHt || e < 0 || e >= this.ZHt.length
+  get iWt() {
+    var e = this.zjt.GetGenericLayout().GetSelectedGridIndex();
+    return !this.Zjt || e < 0 || e >= this.Zjt.length
       ? 0
-      : this.ZHt[e].PoolInfo.Id;
+      : this.Zjt[e].PoolInfo.Id;
   }
   OnRegisterComponent() {
     (this.ComponentRegisterInfos = [
@@ -58,70 +58,70 @@ class GachaSelectionView extends UiViewBase_1.UiViewBase {
       [5, UE.UIButtonComponent],
       [6, UE.UIText],
     ]),
-      (this.BtnBindInfo = [[5, this.tjt]]);
+      (this.BtnBindInfo = [[5, this.tWt]]);
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.GachaSelectionViewRefresh,
-      this.ojt,
+      this.oWt,
     );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.GachaSelectionViewRefresh,
-      this.ojt,
+      this.oWt,
     );
   }
   async OnBeforeStartAsync() {
-    (this.zHt = new GenericScrollViewNew_1.GenericScrollViewNew(
+    (this.zjt = new GenericScrollViewNew_1.GenericScrollViewNew(
       this.GetScrollViewWithScrollbar(2),
-      this.njt,
+      this.nWt,
     )),
-      (this.ejt = new SmallItemGrid_1.SmallItemGrid()),
-      await this.ejt.CreateThenShowByActorAsync(this.GetItem(3).GetOwner()),
-      (this.JHt = this.OpenParam.GachaInfo),
-      this.rjt();
+      (this.eWt = new SmallItemGrid_1.SmallItemGrid()),
+      await this.eWt.CreateThenShowByActorAsync(this.GetItem(3).GetOwner()),
+      (this.Jjt = this.OpenParam.GachaInfo),
+      this.rWt();
   }
-  _jt() {
-    if (this.JHt) {
-      var i = this.JHt.GetValidPoolList();
+  _Wt() {
+    if (this.Jjt) {
+      var i = this.Jjt.GetValidPoolList();
       if (i) {
         var t = new Array(i.length);
         for (let e = 0; e < i.length; e++) {
-          var s = new GachaDefine_1.GachaPoolData(this.JHt, i[e]);
+          var s = new GachaDefine_1.GachaPoolData(this.Jjt, i[e]);
           t[e] = s;
         }
         return t;
       }
     }
   }
-  ljt() {
-    var e = this.JHt.GetValidPoolList();
-    return !(!e || !this.ZHt) && e.length === this.ZHt.length;
+  lWt() {
+    var e = this.Jjt.GetValidPoolList();
+    return !(!e || !this.Zjt) && e.length === this.Zjt.length;
   }
-  rjt() {
+  rWt() {
     if (
-      this.zHt &&
-      ((this.ZHt = this._jt()), this.ZHt) &&
-      0 !== this.ZHt.length
+      this.zjt &&
+      ((this.Zjt = this._Wt()), this.Zjt) &&
+      0 !== this.Zjt.length
     ) {
-      const t = this.ijt;
-      this.zHt.RefreshByData(this.ZHt, () => {
-        if (this.ljt()) {
-          const i = 0 < t ? t : this.JHt.UsePoolId;
+      const t = this.iWt;
+      this.zjt.RefreshByData(this.Zjt, () => {
+        if (this.lWt()) {
+          const i = 0 < t ? t : this.Jjt.UsePoolId;
           let e = 0;
           0 < i &&
-            (e = this.ZHt.findIndex((e) => e.PoolInfo.Id === i)) < 0 &&
+            (e = this.Zjt.findIndex((e) => e.PoolInfo.Id === i)) < 0 &&
             (e = 0),
-            this.zHt.GetGenericLayout().SelectGridProxy(e),
-            this.ajt();
-        } else this.rjt();
+            this.zjt.GetGenericLayout().SelectGridProxy(e),
+            this.aWt();
+        } else this.rWt();
       });
     }
   }
-  ajt() {
-    var e = this.zHt.GetGenericLayout().GetSelectedGridIndex(),
-      e = this.ZHt[e].PoolInfo.Id,
+  aWt() {
+    var e = this.zjt.GetGenericLayout().GetSelectedGridIndex(),
+      e = this.Zjt[e].PoolInfo.Id,
       i = ConfigManager_1.ConfigManager.GachaConfig.GetGachaViewInfo(e),
       t = i.ShowIdList[0],
       i = i.Type,
@@ -134,14 +134,14 @@ class GachaSelectionView extends UiViewBase_1.UiViewBase {
         (s
           ? ((i = ConfigManager_1.ConfigManager.GachaConfig.GetRoleInfoById(t)),
             LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(4), i.Name),
-            this.ejt.Apply({ Data: void 0, Type: 2, ItemConfigId: t }))
+            this.eWt.Apply({ Data: void 0, Type: 2, ItemConfigId: t }))
           : ((s =
               ConfigManager_1.ConfigManager.InventoryConfig.GetWeaponItemConfig(
                 t,
               )),
             LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(4), s.WeaponName),
-            this.ejt.Apply({ Data: void 0, Type: 4, ItemConfigId: t })),
-        this.JHt.UsePoolId),
+            this.eWt.Apply({ Data: void 0, Type: 4, ItemConfigId: t })),
+        this.Jjt.UsePoolId),
       s = i === e,
       t = s ? "Text_GachaOptionalText1_Text" : "Text_GachaOptionalText2_Text";
     this.GetButton(5)?.SetSelfInteractive(!s),

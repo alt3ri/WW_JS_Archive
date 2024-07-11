@@ -18,7 +18,7 @@ const Log_1 = require("../../../../../../Core/Common/Log"),
   VisionDestroyFilter_1 = require("./Rule/VisionDestroyFilter");
 class FilterLogic {
   constructor() {
-    (this.NTt = {
+    (this.VLt = {
       [1]: new RoleFilter_1.RoleFilter(),
       2: new PhantomFilter_1.PhantomFilter(),
       3: new PhantomFetterFilter_1.PhantomFetterFilter(),
@@ -33,7 +33,7 @@ class FilterLogic {
       12: new InventoryFilter_1.InventoryFilter(),
       13: new VisionDestroyFilter_1.VisionDestroyFilter(),
     }),
-      (this.OTt = {
+      (this.HLt = {
         [1]: FilterTypeFunctionLibrary_1.FilterTypeFunctionLibrary
           .GetElementFilterData,
         2: FilterTypeFunctionLibrary_1.FilterTypeFunctionLibrary
@@ -86,11 +86,11 @@ class FilterLogic {
           .GetRoleTagFilterList,
       });
   }
-  kTt(e) {
-    return this.NTt[e].DefaultFilterList();
+  jLt(e) {
+    return this.VLt[e].DefaultFilterList();
   }
-  FTt(e, r) {
-    var t = this.NTt[e],
+  WLt(e, r) {
+    var t = this.VLt[e],
       t = (t.InitFilterMap(), t.GetFilterFunction(r));
     if (t) return t;
     Log_1.Log.CheckError() &&
@@ -102,8 +102,8 @@ class FilterLogic {
         ["筛选表格类型", r],
       );
   }
-  VTt(e, r, t, i) {
-    var n = this.FTt(r, t);
+  KLt(e, r, t, i) {
+    var n = this.WLt(r, t);
     if (!n) return e;
     var o = [];
     for (const F of e) {
@@ -118,8 +118,8 @@ class FilterLogic {
     }
     return o;
   }
-  HTt(e, r, t, i) {
-    var n = this.FTt(r, t);
+  QLt(e, r, t, i) {
+    var n = this.WLt(r, t);
     if (!n) return { FindList: [], UnFindList: e };
     var o = [],
       l = [];
@@ -142,7 +142,7 @@ class FilterLogic {
     let o = [];
     var l,
       F,
-      a = this.kTt(t);
+      a = this.jLt(t);
     0 === a.length && (o = e);
     for (const L of a) for (const p of e) (L(p) ? n : o).push(p);
     if (r) {
@@ -155,19 +155,19 @@ class FilterLogic {
       for ([u, _] of i)
         _.size <= 0 ||
           ((r = !0),
-          (y = this.HTt(e, t, u, _)),
+          (y = this.QLt(e, t, u, _)),
           (e = y.UnFindList),
           c.push(...y.FindList));
       return r ? c.concat(n) : e.concat(n);
     }
     let s = o;
-    for ([l, F] of i) F.size <= 0 || (s = this.VTt(s, t, l, F));
+    for ([l, F] of i) F.size <= 0 || (s = this.KLt(s, t, l, F));
     return s.concat(n);
   }
   GetFilterItemDataList(e, r) {
     var t = ConfigManager_1.ConfigManager.FilterConfig.GetFilterRuleConfig(e),
       e = t.FilterType,
-      i = this.OTt[e];
+      i = this.HLt[e];
     if (i) {
       var n = ConfigManager_1.ConfigManager.FilterConfig.GetFilterConfig(r),
         r = i(t.IdList);

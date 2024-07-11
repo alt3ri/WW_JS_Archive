@@ -45,35 +45,35 @@ let PostProcessBridgeComponent =
       super(...arguments),
         (this.gU = !1),
         (this.Vge = !1),
-        (this.nsn = void 0),
-        (this.ssn = void 0),
-        (this.asn = void 0),
-        (this.hsn = void 0),
-        (this.lsn = void 0),
-        (this._sn = void 0),
+        (this.knn = void 0),
+        (this.Fnn = void 0),
+        (this.Vnn = void 0),
+        (this.Hnn = void 0),
+        (this.jnn = void 0),
+        (this.Wnn = void 0),
         (this.OC = void 0),
-        (this.usn = !0),
-        (this.csn = void 0),
-        (this.msn = void 0),
+        (this.Knn = !0),
+        (this.Qnn = void 0),
+        (this.Xnn = void 0),
         (this.e8 = 0),
-        (this.dsn = !1),
-        (this.Csn = 0.001),
+        (this.$nn = !1),
+        (this.Ynn = 0.001),
         (this.Jue = 10),
-        (this.gsn = 0),
-        (this.fsn = 0),
-        (this.psn = (t) => {
+        (this.Jnn = 0),
+        (this.znn = 0),
+        (this.Znn = (t) => {
           t ? this.OnTriggerEnter() : this.OnTriggerExit();
         }),
-        (this.cjr = (t) => {
+        (this.KHr = (t) => {
           this.gU &&
-            (0 < this.msn && this.vsn(t), this.fsn !== this.gsn) &&
-            (this.gsn > this.fsn
-              ? ((this.fsn = this.fsn + t * this.Csn),
-                (this.fsn = Math.min(this.fsn, this.gsn)))
-              : ((this.fsn = this.fsn - t * this.Csn),
-                (this.fsn = Math.max(this.fsn, this.gsn))),
-            (this._sn.BlendWeight = this.fsn),
-            this.Msn());
+            (0 < this.Xnn && this.esn(t), this.znn !== this.Jnn) &&
+            (this.Jnn > this.znn
+              ? ((this.znn = this.znn + t * this.Ynn),
+                (this.znn = Math.min(this.znn, this.Jnn)))
+              : ((this.znn = this.znn - t * this.Ynn),
+                (this.znn = Math.max(this.znn, this.Jnn))),
+            (this.Wnn.BlendWeight = this.znn),
+            this.tsn());
         });
     }
     OnInitData(t) {
@@ -82,20 +82,20 @@ let PostProcessBridgeComponent =
       return (
         t.SkyboxSetting
           ? (i = SkyboxById_1.configSkyboxById.GetConfig(t.SkyboxSetting)) &&
-            ((this.nsn = i.StaticSkybox), (this.ssn = i.DynamicSkybox))
-          : ((this.nsn = t.WeatherDataAsset), (this.ssn = t.PPTODDataAsset)),
+            ((this.knn = i.StaticSkybox), (this.Fnn = i.DynamicSkybox))
+          : ((this.knn = t.WeatherDataAsset), (this.Fnn = t.PPTODDataAsset)),
         void 0 !== t.FadeTime && 0 < t.FadeTime
-          ? (this.Csn =
+          ? (this.Ynn =
               1 / (t.FadeTime * TimeUtil_1.TimeUtil.InverseMillisecond))
-          : (this.Csn = 0),
+          : (this.Ynn = 0),
         (this.Jue = t.Priority ?? DEFAULT_PRIORITY),
-        (this.usn = void 0 === t.TriggerMode),
-        (this.csn = t.TriggerMode),
+        (this.Knn = void 0 === t.TriggerMode),
+        (this.Qnn = t.TriggerMode),
         t.TriggerMode?.Type === IComponent_1.ETriggerMode.Distance
-          ? ((i = t.TriggerMode), (this.msn = i.Distance * i.Distance))
-          : (this.msn = 0),
+          ? ((i = t.TriggerMode), (this.Xnn = i.Distance * i.Distance))
+          : (this.Xnn = 0),
         (this.e8 = 0),
-        !(this.dsn = !1)
+        !(this.$nn = !1)
       );
     }
     OnStart() {
@@ -107,22 +107,22 @@ let PostProcessBridgeComponent =
           GlobalData_1.GlobalData.IsPlayInEditor &&
             ((t = this.Entity.GetComponent(0)?.GetPbDataId()),
             i.SetActorLabel("SkyboxEntity_" + t)),
-          (this._sn = i.GetComponentByClass(
+          (this.Wnn = i.GetComponentByClass(
             UE.KuroPostProcessComponent.StaticClass(),
           )),
-          this._sn?.IsValid() ||
-            (this._sn = i.AddComponentByClass(
+          this.Wnn?.IsValid() ||
+            (this.Wnn = i.AddComponentByClass(
               UE.KuroPostProcessComponent.StaticClass(),
               !1,
               MathUtils_1.MathUtils.DefaultTransform,
               !1,
             )),
-          (this._sn.bUnbound = !0),
-          (this._sn.BlendWeight = this.fsn),
-          this.Msn(),
-          this.usn)
+          (this.Wnn.bUnbound = !0),
+          (this.Wnn.BlendWeight = this.znn),
+          this.tsn(),
+          this.Knn)
         ) {
-          if (((this.lsn = this.Entity.GetComponent(74)), !this.lsn))
+          if (((this.jnn = this.Entity.GetComponent(76)), !this.jnn))
             return (
               (this.gU = !1),
               Log_1.Log.CheckError() &&
@@ -133,36 +133,36 @@ let PostProcessBridgeComponent =
                 ),
               !1
             );
-          this.lsn.AddOnPlayerOverlapCallback(this.psn);
+          this.jnn.AddOnPlayerOverlapCallback(this.Znn);
         }
         if (
           ((this.gU = !0),
           this.EnableComponent(),
-          !StringUtils_1.StringUtils.IsEmpty(this.nsn))
+          !StringUtils_1.StringUtils.IsEmpty(this.knn))
         )
           return (
             ResourceSystem_1.ResourceSystem.LoadAsync(
-              this.nsn,
+              this.knn,
               UE.KuroWeatherDataAsset,
               (t) => {
                 t?.IsValid() &&
-                  ((this.asn = t),
-                  (this._sn.WeatherDataAsset = this.asn),
-                  this._sn.SetPriority(this.Jue));
+                  ((this.Vnn = t),
+                  (this.Wnn.WeatherDataAsset = this.Vnn),
+                  this.Wnn.SetPriority(this.Jue));
               },
             ),
             !0
           );
-        if (!StringUtils_1.StringUtils.IsEmpty(this.ssn))
+        if (!StringUtils_1.StringUtils.IsEmpty(this.Fnn))
           return (
             ResourceSystem_1.ResourceSystem.LoadAsync(
-              this.ssn,
+              this.Fnn,
               UE.KuroTODData,
               (t) => {
                 t?.IsValid() &&
-                  ((this.hsn = t),
-                  (this._sn.PPTODDataAsset = this.hsn),
-                  this._sn.SetPriority(this.Jue));
+                  ((this.Hnn = t),
+                  (this.Wnn.PPTODDataAsset = this.Hnn),
+                  this.Wnn.SetPriority(this.Jue));
               },
             ),
             !0
@@ -172,8 +172,8 @@ let PostProcessBridgeComponent =
             "Entity",
             18,
             "氛围组件初始化失败",
-            ["WeatherDataAssetPath", this.nsn],
-            ["TodDataAssetPath", this.ssn],
+            ["WeatherDataAssetPath", this.knn],
+            ["TodDataAssetPath", this.Fnn],
           );
       } else
         Log_1.Log.CheckError() &&
@@ -183,45 +183,45 @@ let PostProcessBridgeComponent =
     OnTriggerEnter() {
       this.gU &&
         this.Vge &&
-        ((this.dsn = !0),
+        ((this.$nn = !0),
         this.SetTargetBlendWeight(1),
         Log_1.Log.CheckDebug()) &&
         Log_1.Log.Debug(
           "Entity",
           18,
           "氛围组件触发",
-          ["WeatherDataAssetPath", this.nsn],
-          ["TodDataAssetPath", this.ssn],
+          ["WeatherDataAssetPath", this.knn],
+          ["TodDataAssetPath", this.Fnn],
         );
     }
     OnTriggerExit() {
       this.gU &&
         this.Vge &&
-        ((this.dsn = !1),
+        ((this.$nn = !1),
         this.SetTargetBlendWeight(0),
         Log_1.Log.CheckDebug()) &&
         Log_1.Log.Debug(
           "Entity",
           18,
           "氛围组件关闭",
-          ["WeatherDataAssetPath", this.nsn],
-          ["TodDataAssetPath", this.ssn],
+          ["WeatherDataAssetPath", this.knn],
+          ["TodDataAssetPath", this.Fnn],
         );
     }
     SetTargetBlendWeight(t, i = !1) {
       this.gU &&
-        ((this.gsn = t),
-        (!i && 0 !== this.Csn) ||
-          ((this.fsn = t), (this._sn.BlendWeight = this.fsn), this.Msn()));
+        ((this.Jnn = t),
+        (!i && 0 !== this.Ynn) ||
+          ((this.znn = t), (this.Wnn.BlendWeight = this.znn), this.tsn()));
     }
     EnableComponent() {
       this.gU &&
         ((this.Vge = !0),
         (this.e8 = TICK_TIME),
-        (this.dsn = !1),
-        this.usn
-          ? this.lsn.IsOverlappingPlayer() && this.OnTriggerEnter()
-          : this.csn?.Type === IComponent_1.ETriggerMode.Global &&
+        (this.$nn = !1),
+        this.Knn
+          ? this.jnn.IsOverlappingPlayer() && this.OnTriggerEnter()
+          : this.Qnn?.Type === IComponent_1.ETriggerMode.Global &&
             this.OnTriggerEnter());
     }
     DisableComponent() {
@@ -232,7 +232,7 @@ let PostProcessBridgeComponent =
         this.Active &&
         ComponentForceTickController_1.ComponentForceTickController.RegisterTick(
           this,
-          this.cjr,
+          this.KHr,
         );
     }
     OnEnable() {
@@ -240,7 +240,7 @@ let PostProcessBridgeComponent =
         this.Entity?.IsInit &&
         ComponentForceTickController_1.ComponentForceTickController.RegisterTick(
           this,
-          this.cjr,
+          this.KHr,
         );
     }
     OnDisable(t) {
@@ -250,26 +250,26 @@ let PostProcessBridgeComponent =
         );
     }
     OnForceTick(t) {
-      this.cjr(t);
+      this.KHr(t);
     }
-    vsn(t) {
+    esn(t) {
       (this.e8 += t),
         this.e8 < TICK_TIME ||
           ((this.e8 = 0),
           (t =
             RoleTriggerController_1.RoleTriggerController.GetMyRoleTrigger())?.IsValid() &&
             this.OC?.IsValid() &&
-            ((t = t.GetSquaredDistanceTo(this.OC) < this.msn),
-            this.dsn ? t || this.OnTriggerExit() : t && this.OnTriggerEnter()));
+            ((t = t.GetSquaredDistanceTo(this.OC) < this.Xnn),
+            this.$nn ? t || this.OnTriggerExit() : t && this.OnTriggerEnter()));
     }
-    Msn() {
-      this._sn.bEnabled = 0 < this.fsn;
+    tsn() {
+      this.Wnn.bEnabled = 0 < this.znn;
     }
     OnEnd() {
       return (
-        this.lsn &&
-          (this.lsn.RemoveOnPlayerOverlapCallback(this.psn),
-          (this.lsn = void 0)),
+        this.jnn &&
+          (this.jnn.RemoveOnPlayerOverlapCallback(this.Znn),
+          (this.jnn = void 0)),
         (this.gU = !1),
         Info_1.Info.EnableForceTick ||
           ComponentForceTickController_1.ComponentForceTickController.UnregisterTick(
@@ -281,7 +281,7 @@ let PostProcessBridgeComponent =
   });
 (PostProcessBridgeComponent = PostProcessBridgeComponent_1 =
   __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(94)],
+    [(0, RegisterComponent_1.RegisterComponent)(96)],
     PostProcessBridgeComponent,
   )),
   (exports.PostProcessBridgeComponent = PostProcessBridgeComponent);

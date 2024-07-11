@@ -14,8 +14,8 @@ class EffectModelLightSpec extends EffectSpec_1.EffectSpec {
       (this.NeedDestroy = !1),
       (this.HasTransformAnim = !1),
       (this.CachedLocationCurve = void 0),
-      (this.S0e = void 0),
-      (this.E0e = void 0);
+      (this.E0e = void 0),
+      (this.S0e = void 0);
   }
   static SetMaxFightLightNumber(t) {
     this.MaxFightLightNumber = t;
@@ -24,7 +24,7 @@ class EffectModelLightSpec extends EffectSpec_1.EffectSpec {
     this.LightModel = this.EffectModel;
     var t = this.Handle.GetSureEffectActor(),
       i =
-        (Stats_1.Stat.Enable && ((this.S0e = void 0), (this.E0e = void 0)),
+        (Stats_1.Stat.Enable && ((this.E0e = void 0), (this.S0e = void 0)),
         this.Handle.Parent),
       i = i ? i.GetEffectSpec()?.GetSceneComponent() : void 0;
     return (

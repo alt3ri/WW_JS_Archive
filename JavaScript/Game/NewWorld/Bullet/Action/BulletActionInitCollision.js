@@ -43,10 +43,10 @@ class BulletActionInitCollision extends BulletActionBase_1.BulletActionBase {
           "BulletRowName",
           this.BulletInfo.BulletRowName,
         ]),
-      this.H4o(t.Base.Shape),
+      this.k5o(t.Base.Shape),
       this.BulletInfo.CloseCollision || 4 === t.Base.Shape
         ? (this.BulletInfo.IsCollisionRelativeLocationZero = !0)
-        : (this.j4o(),
+        : (this.F5o(),
           this.BulletInfo.IsCollisionRelativeRotationModify &&
             this.CollisionInfo.CollisionComponent.K2_SetRelativeRotation(
               t.Base.Rotator.ToUeRotator(),
@@ -55,44 +55,44 @@ class BulletActionInitCollision extends BulletActionBase_1.BulletActionBase {
               !0,
             ),
           (this.CollisionInfo.HasObstaclesCollision = 0 < t.Obstacle.Radius),
-          this.W4o()),
+          this.V5o()),
       this.CollisionInfo.LastFramePosition.FromUeVector(
         this.BulletInfo.CollisionLocation,
       ),
       this.CollisionInfo.ActiveDelayMs <= 0 &&
         (this.CollisionInfo.IsStartup = !0);
   }
-  H4o(t) {
+  k5o(t) {
     switch (t) {
       case 0:
-        this.K4o();
+        this.H5o();
         break;
       case 1:
-        this.Q4o();
+        this.j5o();
         break;
       case 2:
-        this.X4o();
+        this.W5o();
         break;
       case 3:
-        this.$4o();
+        this.K5o();
         break;
       case 4:
-        this.Y4o();
+        this.Q5o();
         break;
       case 6:
-        this.J4o(UE.KuroRegionBoxComponent.StaticClass());
+        this.X5o(UE.KuroRegionBoxComponent.StaticClass());
         break;
       case 7:
-        this.z4o();
+        this.$5o();
         break;
       case 8:
-        this.J4o(UE.KuroRegionSectorComponent.StaticClass());
+        this.X5o(UE.KuroRegionSectorComponent.StaticClass());
         break;
       case 9:
-        this.J4o(UE.KuroRegionCylinderComponent.StaticClass());
+        this.X5o(UE.KuroRegionCylinderComponent.StaticClass());
     }
   }
-  K4o() {
+  H5o() {
     var t = this.BulletInfo.BulletDataMain,
       i = this.BulletInfo.Actor,
       s = i.GetComponentByClass(UE.BoxComponent.StaticClass()),
@@ -120,7 +120,7 @@ class BulletActionInitCollision extends BulletActionBase_1.BulletActionBase {
           (this.CollisionInfo.CollisionComponent.CreationMethod = 3),
         i.FinishAddComponent(l, !1, MathUtils_1.MathUtils.DefaultTransform));
   }
-  Q4o() {
+  j5o() {
     var t = this.BulletInfo.BulletDataMain,
       i = this.BulletInfo.Actor,
       s = i.GetComponentByClass(UE.SphereComponent.StaticClass()),
@@ -143,7 +143,7 @@ class BulletActionInitCollision extends BulletActionBase_1.BulletActionBase {
           (this.CollisionInfo.CollisionComponent.CreationMethod = 3),
         i.FinishAddComponent(l, !1, MathUtils_1.MathUtils.DefaultTransform));
   }
-  X4o() {
+  W5o() {
     var t = this.BulletInfo.BulletDataMain,
       i = this.BulletInfo.Actor,
       s =
@@ -172,7 +172,7 @@ class BulletActionInitCollision extends BulletActionBase_1.BulletActionBase {
           (this.CollisionInfo.CollisionComponent.CreationMethod = 3),
         i.FinishAddComponent(l, !1, MathUtils_1.MathUtils.DefaultTransform));
   }
-  $4o() {
+  K5o() {
     var t = this.BulletInfo.BulletDataMain,
       i = this.BulletInfo.Actor,
       s =
@@ -201,16 +201,16 @@ class BulletActionInitCollision extends BulletActionBase_1.BulletActionBase {
           (this.CollisionInfo.CollisionComponent.CreationMethod = 3),
         i.FinishAddComponent(l, !1, MathUtils_1.MathUtils.DefaultTransform));
   }
-  Y4o() {
+  Q5o() {
     var t = this.BulletInfo.BulletDataMain,
       i = this.BulletInfo.RayInfo;
     (i.Speed = this.BulletInfo.Size.X / TimeUtil_1.TimeUtil.InverseMillisecond),
       (i.BlockByCharacter = "f" !== t.Base.SpecialParams.get(1));
   }
-  z4o() {
+  $5o() {
     this.BulletInfo.CloseCollision = !1;
   }
-  J4o(t) {
+  X5o(t) {
     var i = this.BulletInfo.Actor,
       s =
         GlobalData_1.GlobalData.IsPlayInEditor &&
@@ -241,7 +241,7 @@ class BulletActionInitCollision extends BulletActionBase_1.BulletActionBase {
           ((t.CreationMethod = 3),
           i.FinishAddComponent(t, !1, MathUtils_1.MathUtils.DefaultTransform)));
   }
-  j4o() {
+  F5o() {
     var t = this.BulletInfo.BulletDataMain,
       i = this.CollisionInfo.CollisionComponent,
       s = this.CollisionInfo.RegionComponent,
@@ -295,7 +295,7 @@ class BulletActionInitCollision extends BulletActionBase_1.BulletActionBase {
               e,
             ));
   }
-  W4o() {
+  V5o() {
     this.BulletInfo.Actor.SetActorHiddenInGame(!1);
     var i = this.CollisionInfo?.CollisionComponent;
     if (i) {

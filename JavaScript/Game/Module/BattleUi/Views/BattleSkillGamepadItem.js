@@ -13,12 +13,12 @@ class BattleSkillGamepadItem extends BattleSkillItem_1.BattleSkillItem {
     super(...arguments),
       (this.GamepadData = void 0),
       (this.IsMainButton = !1),
-      (this.HSe = ""),
-      (this.Fet = !1),
-      (this.Vet = void 0),
-      (this.EPe = void 0),
-      (this.Het = !1),
-      (this.jet = void 0);
+      (this.HEe = ""),
+      (this.eit = !1),
+      (this.tit = void 0),
+      (this.SPe = void 0),
+      (this.iit = !1),
+      (this.oit = void 0);
   }
   Initialize(t) {
     super.Initialize(t), (this.IsMainButton = t < MAIN_KEY_NUM);
@@ -26,29 +26,29 @@ class BattleSkillGamepadItem extends BattleSkillItem_1.BattleSkillItem {
   async InitializeAsync() {
     await super.InitializeAsync(),
       this.IsMainButton &&
-        ((this.jet = new BattleSkillSecondCdItem_1.BattleSkillSecondCdItem()),
-        this.jet.SetIndex(this.GetInputIndex()),
-        await this.jet.CreateByResourceIdAsync(
+        ((this.oit = new BattleSkillSecondCdItem_1.BattleSkillSecondCdItem()),
+        this.oit.SetIndex(this.GetInputIndex()),
+        await this.oit.CreateByResourceIdAsync(
           "UiItem_BattleSkillSecondCdItem",
           this.GetExtraContainer(),
         ));
   }
   SetKeyName(t) {
-    this.HSe = t;
+    this.HEe = t;
   }
   Tick(t) {
-    super.Tick(t), this.jet?.Tick(t);
+    super.Tick(t), this.oit?.Tick(t);
   }
   Refresh(t) {
-    var i = void 0 !== this.SkillButtonData || void 0 !== this.Vet;
-    (this.Vet = void 0),
+    var i = void 0 !== this.SkillButtonData || void 0 !== this.tit;
+    (this.tit = void 0),
       t
         ? (this.SkillButtonData !== t &&
             (this.OnCoolDownFinishedCallback = void 0),
           super.Refresh(t))
-        : (!i && this.Fet) || ((this.Fet = !0), this.Wet());
+        : (!i && this.eit) || ((this.eit = !0), this.rit());
   }
-  Wet() {
+  rit() {
     this.IsMainButton
       ? ((this.SkillButtonData = void 0),
         this.SetSkillIcon(this.GamepadData.NoneIcon),
@@ -72,12 +72,12 @@ class BattleSkillGamepadItem extends BattleSkillItem_1.BattleSkillItem {
     this.IsMainButton
       ? this.IsVisible()
         ? this.IsShowOrShowing || this.Show()
-        : this.Wet()
+        : this.rit()
       : super.RefreshVisible();
   }
   RefreshEnable(t = !1) {
-    this.Vet
-      ? this.SetSkillItemEnable(this.Vet.IsEnable, t)
+    this.tit
+      ? this.SetSkillItemEnable(this.tit.IsEnable, t)
       : super.RefreshEnable(t);
   }
   RefreshSkillCoolDown() {
@@ -87,7 +87,7 @@ class BattleSkillGamepadItem extends BattleSkillItem_1.BattleSkillItem {
   }
   RefreshByBehaviorButtonData(t) {
     (this.SkillButtonData = void 0),
-      (this.Vet = t),
+      (this.tit = t),
       this.ResetSkillCoolDown(),
       (this.SetTextureHandleId = 0),
       (this.OnCoolDownFinishedCallback = void 0),
@@ -108,22 +108,19 @@ class BattleSkillGamepadItem extends BattleSkillItem_1.BattleSkillItem {
     return !!this.SkillButtonData && super.CheckSkillIconIsTexture(t);
   }
   RefreshSkillIcon() {
-    this.Vet
-      ? this.SetSkillIcon(this.Vet.SkillIconPathList[this.Vet.State])
+    this.tit
+      ? this.SetSkillIcon(this.tit.SkillIconPathList[this.tit.State])
       : this.GamepadData.InWater && 5 === this.SkillButtonData?.GetButtonType()
         ? this.SetSkillIcon(this.GamepadData.SwimIcon)
         : super.RefreshSkillIcon();
   }
   IsVisible() {
     return (
-      !(
-        this.GamepadData.GetIsPressCombineButton() &&
-        ("Gamepad_LeftTrigger" === this.HSe ||
-          "Gamepad_RightTrigger" === this.HSe) &&
-        !this.GamepadData.IsAim()
-      ) &&
-      (this.Vet
-        ? this.Vet.IsVisible
+      (!this.GamepadData.GetIsPressCombineButton() ||
+        ("Gamepad_LeftTrigger" !== this.HEe &&
+          "Gamepad_RightTrigger" !== this.HEe)) &&
+      (this.tit
+        ? this.tit.IsVisible
         : !(
             11 !== this.SkillButtonData?.GetButtonType() ||
             !this.GamepadData.IsAim()
@@ -131,17 +128,17 @@ class BattleSkillGamepadItem extends BattleSkillItem_1.BattleSkillItem {
     );
   }
   Deactivate() {
-    super.Deactivate(), (this.Fet = !1);
+    super.Deactivate(), (this.eit = !1);
   }
   Reset() {
-    this.EPe?.Clear(), (this.EPe = void 0), super.Reset();
+    this.SPe?.Clear(), (this.SPe = void 0), super.Reset();
   }
   RefreshKey() {
     if (this.IsMainButton) this.KeyItem.SetActive(!1);
     else {
       let i = void 0;
-      if (this.Vet)
-        (i = this.Vet.ActionName),
+      if (this.tit)
+        (i = this.tit.ActionName),
           this.KeyActionName !== i &&
             ((s = { ActionOrAxisName: i }),
             this.KeyItem.RefreshByActionOrAxis(s),
@@ -152,12 +149,12 @@ class BattleSkillGamepadItem extends BattleSkillItem_1.BattleSkillItem {
       ) {
         let t = 0;
         i === InputMappingsDefine_1.actionMappings.攻击 &&
-          "Gamepad_RightTrigger" === this.HSe &&
+          "Gamepad_RightTrigger" === this.HEe &&
           (s =
             InputSettingsManager_1.InputSettingsManager.GetActionBinding(i)) &&
           (s.GetGamepadKeyNameList((s = [])), s) &&
           0 < s.length &&
-          (t = s.indexOf(this.HSe)) < 0 &&
+          (t = s.indexOf(this.HEe)) < 0 &&
           (t = 0);
         var s = { ActionOrAxisName: i, Index: t };
         this.KeyItem.RefreshByActionOrAxis(s),
@@ -167,33 +164,33 @@ class BattleSkillGamepadItem extends BattleSkillItem_1.BattleSkillItem {
     }
   }
   OnInputAction(t = !1) {
-    this.Vet
-      ? this.Vet.IsEnable && this.Vet.IsVisible && this.ClickEffect?.Play()
+    this.tit
+      ? this.tit.IsEnable && this.tit.IsVisible && this.ClickEffect?.Play()
       : super.OnInputAction(t);
   }
   PlayPressCombineButtonSeq() {
-    this.Ket(),
-      this.EPe.StopCurrentSequence(),
-      this.EPe.PlaySequencePurely("ClickLbIn"),
+    this.nit(),
+      this.SPe.StopCurrentSequence(),
+      this.SPe.PlaySequencePurely("ClickLbIn"),
       this.CombinePressTipSprite.SetUIActive(!0),
-      (this.Het = !0),
+      (this.iit = !0),
       this.ClickEffect?.Stop();
   }
   PlayReleaseCombineButtonSeq() {
-    this.Het &&
-      ((this.Het = !1),
-      this.Ket(),
-      this.EPe.StopCurrentSequence(),
-      this.EPe.PlaySequencePurely("ClickLbOut"),
+    this.iit &&
+      ((this.iit = !1),
+      this.nit(),
+      this.SPe.StopCurrentSequence(),
+      this.SPe.PlaySequencePurely("ClickLbOut"),
       this.CombinePressTipSprite.SetUIActive(!1),
       this.ClickEffect?.Stop());
   }
-  Ket() {
-    this.EPe ||
-      (this.EPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem));
+  nit() {
+    this.SPe ||
+      (this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem));
   }
   RefreshSecondCd(t) {
-    this.jet?.RefreshSkillCoolDown(t);
+    this.oit?.RefreshSkillCoolDown(t);
   }
 }
 exports.BattleSkillGamepadItem = BattleSkillGamepadItem;

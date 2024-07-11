@@ -10,15 +10,15 @@ const UE = require("ue"),
 class HandBookPhantomItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this.jZt = void 0),
-      (this.kzt = void 0),
-      (this.Gzt = void 0),
-      (this.Ozt = (e) => {
-        this.Gzt && this.Gzt(this.kzt, 0);
+      (this.jei = void 0),
+      (this.kZt = void 0),
+      (this.GZt = void 0),
+      (this.OZt = (e) => {
+        this.GZt && this.GZt(this.kZt, 0);
       });
   }
   Initialize(e, o) {
-    (this.kzt = e), o && this.CreateThenShowByActor(o.GetOwner());
+    (this.kZt = e), o && this.CreateThenShowByActor(o.GetOwner());
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -29,9 +29,9 @@ class HandBookPhantomItem extends UiPanelBase_1.UiPanelBase {
     ];
   }
   OnStart() {
-    (this.jZt = new HandBookCommonItem_1.HandBookCommonItem()),
-      this.jZt.Initialize(this.GetItem(0).GetOwner());
-    var e = this.kzt.Config,
+    (this.jei = new HandBookCommonItem_1.HandBookCommonItem()),
+      this.jei.Initialize(this.GetItem(0).GetOwner());
+    var e = this.kZt.Config,
       o = new HandBookDefine_1.HandBookCommonItemData(),
       i = ModelManager_1.ModelManager.HandBookModel.GetHandBookInfo(
         1,
@@ -43,9 +43,9 @@ class HandBookPhantomItem extends UiPanelBase_1.UiPanelBase {
         ((o.Icon = e.Icon),
         (o.IsLock = t),
         (o.IsNew = i),
-        this.jZt.Refresh(o, !1, 0),
-        this.jZt.BindOnExtendToggleClicked(this.Ozt),
-        this.jZt.SetNewFlagVisible(!1),
+        this.jei.Refresh(o, !1, 0),
+        this.jei.BindOnExtendToggleClicked(this.OZt),
+        this.jei.SetNewFlagVisible(!1),
         this.GetText(1));
     this.GetText(3).SetUIActive(!1),
       t
@@ -57,16 +57,16 @@ class HandBookPhantomItem extends UiPanelBase_1.UiPanelBase {
         : i.ShowTextNew(e.MonsterName);
   }
   BindToggleCallback(e) {
-    this.Gzt = e;
+    this.GZt = e;
   }
   SetToggleStateForce(e, o = 0) {
-    this.jZt.SetSelected(1 === e);
+    this.jei.SetSelected(1 === e);
   }
   OnSelected(e) {
-    this.jZt.OnSelected(e);
+    this.jei.OnSelected(e);
   }
   OnBeforeDestroy() {
-    (this.jZt = void 0), (this.kzt = void 0), (this.Gzt = void 0);
+    (this.jei = void 0), (this.kZt = void 0), (this.GZt = void 0);
   }
 }
 exports.HandBookPhantomItem = HandBookPhantomItem;

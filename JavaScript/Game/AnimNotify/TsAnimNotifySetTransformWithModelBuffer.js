@@ -33,7 +33,7 @@ class TsAnimNotifySetTransformWithModelBuffer extends UE.KuroAnimNotify {
             this.RotatorKey,
           )) &&
         r.SetRotation(WorldGlobal_1.WorldGlobal.ToUeRotator(l).Quaternion()),
-      (l = t.GetComponent(160))?.Valid
+      (l = t.GetComponent(162))?.Valid
         ? l.SetTransformWithModelBuffer(r, this.TimeLength)
         : o.SetActorTransform(r, "TsAnimNotifySetTransformWithModelBuffer", !0),
       !0)

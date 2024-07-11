@@ -14,21 +14,21 @@ const UE = require("ue"),
 class ActivityMowingSubView extends ActivitySubViewBase_1.ActivitySubViewBase {
   constructor() {
     super(...arguments),
-      (this._ke = void 0),
+      (this.D2e = void 0),
       (this.bOe = void 0),
       (this.ANe = void 0),
       (this.JGe = () => {
         return new CommonItemSmallItemGrid_1.CommonItemSmallItemGrid();
       }),
-      (this.uke = () => {
+      (this.R2e = () => {
         UiManager_1.UiManager.OpenView(
           "ActivityRewardPopUpView",
-          this._ke.GetRewardViewData(),
+          this.D2e.GetRewardViewData(),
         );
       }),
-      (this.cke = () => {
+      (this.U2e = () => {
         var i;
-        this._ke.GetPreGuideQuestFinishState()
+        this.D2e.GetPreGuideQuestFinishState()
           ? ((i = {
               MarkId:
                 CommonParamById_1.configCommonParamById.GetIntConfig(
@@ -41,10 +41,10 @@ class ActivityMowingSubView extends ActivitySubViewBase_1.ActivitySubViewBase {
               OpenAreaId: 0,
             }),
             WorldMapController_1.WorldMapController.OpenView(2, !1, i),
-            this._ke.ReadNewInstance())
+            this.D2e.ReadNewInstance())
           : UiManager_1.UiManager.OpenView(
               "QuestView",
-              this._ke.GetUnFinishPreGuideQuestId(),
+              this.D2e.GetUnFinishPreGuideQuestId(),
             );
       });
   }
@@ -65,7 +65,6 @@ class ActivityMowingSubView extends ActivitySubViewBase_1.ActivitySubViewBase {
       [12, UE.UIItem],
       [13, UE.UIText],
       [14, UE.UIText],
-      [15, UE.UIText],
     ];
   }
   async OnBeforeStartAsync() {
@@ -76,20 +75,20 @@ class ActivityMowingSubView extends ActivitySubViewBase_1.ActivitySubViewBase {
   OnStart() {
     var i = this.GetScrollViewWithScrollbar(5);
     (this.bOe = new GenericScrollViewNew_1.GenericScrollViewNew(i, this.JGe)),
-      this.ANe.SetRewardButtonFunction(this.uke),
-      this.ANe.FunctionButton.SetFunction(this.cke);
+      this.ANe.SetRewardButtonFunction(this.R2e),
+      this.ANe.FunctionButton.SetFunction(this.U2e);
   }
   OnSetData() {
-    this._ke = this.ActivityBaseData;
+    this.D2e = this.ActivityBaseData;
   }
   OnAddEventListener() {}
   OnRemoveEventListener() {}
   OnRefreshView() {
-    this.hke(), this.mke(), this._Oe(), this.BNe(), this.dke();
+    this.T2e(), this.A2e(), this._Oe(), this.BNe(), this.P2e();
   }
-  dke() {
-    var i = this._ke.IsNewInstanceOpen(),
-      e = this._ke.GetPreGuideQuestFinishState();
+  P2e() {
+    var i = this.D2e.IsNewInstanceOpen(),
+      e = this.D2e.GetPreGuideQuestFinishState();
     i &&
       e &&
       ((i = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
@@ -101,13 +100,13 @@ class ActivityMowingSubView extends ActivitySubViewBase_1.ActivitySubViewBase {
     var [e, t] = this.GetTimeVisibleAndRemainTime();
     this.GetText(10).SetUIActive(e), e && this.GetText(10).SetText(t);
   }
-  hke() {
-    var i = this._ke.GetTitle(),
-      i = (this.GetText(1)?.SetText(i), this._ke.GetDesc());
+  T2e() {
+    var i = this.D2e.GetTitle(),
+      i = (this.GetText(1)?.SetText(i), this.D2e.GetDesc());
     this.GetText(3)?.SetText(i),
       this.GetText(14)?.ShowTextNew("CollectActivity_Button_ahead");
   }
-  mke() {
+  A2e() {
     var i = this.ActivityBaseData.GetPreviewReward();
     this.bOe.RefreshByData(i);
   }
@@ -118,9 +117,9 @@ class ActivityMowingSubView extends ActivitySubViewBase_1.ActivitySubViewBase {
       this.GetItem(11)?.SetUIActive(i);
   }
   BNe() {
-    var i = this._ke.IsHaveRewardToGet(),
-      i = (this.ANe.SetRewardRedDotVisible(i), this._ke.IsNewInstanceOpen()),
-      e = this._ke.GetPreGuideQuestFinishState();
+    var i = this.D2e.IsHaveRewardToGet(),
+      i = (this.ANe.SetRewardRedDotVisible(i), this.D2e.IsNewInstanceOpen()),
+      e = this.D2e.GetPreGuideQuestFinishState();
     this.ANe.FunctionButton.SetRedDotVisible(e && i);
   }
 }

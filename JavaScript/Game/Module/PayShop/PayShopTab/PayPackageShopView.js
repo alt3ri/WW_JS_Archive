@@ -12,13 +12,13 @@ const Log_1 = require("../../../../Core/Common/Log"),
 class PayPackageShopView extends DiscountShopView_1.DiscountShopView {
   constructor() {
     super(...arguments),
-      (this.rFi = !1),
-      (this.UEe = (e) => {
+      (this.r3i = !1),
+      (this.USe = (e) => {
         this.RefreshLoopScroll(this.CurrentSelectTabId);
       }),
-      (this.nFi = () => {
+      (this.n3i = () => {
         var e;
-        this.rFi
+        this.r3i
           ? this.RefreshLoopScroll(this.CurrentSelectTabId)
           : ((e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(
               138,
@@ -28,29 +28,29 @@ class PayPackageShopView extends DiscountShopView_1.DiscountShopView {
             ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
               e,
             )),
-          (this.rFi = !1);
+          (this.r3i = !1);
       });
   }
   AddEventListener() {
     super.AddEventListener(),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.RefreshPayGiftList,
-        this.nFi,
+        this.n3i,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnPayItemSuccess,
-        this.UEe,
+        this.USe,
       );
   }
   RemoveEventListener() {
     super.RemoveEventListener(),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.RefreshPayGiftList,
-        this.nFi,
+        this.n3i,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnPayItemSuccess,
-        this.UEe,
+        this.USe,
       );
   }
   RefreshLoopScroll(e) {
@@ -94,7 +94,7 @@ class PayPackageShopView extends DiscountShopView_1.DiscountShopView {
   OnBeforeShow() {
     this.GetItem(4).SetUIActive(!0),
       this.TabGroup.SetActive(!0),
-      (this.rFi = !0),
+      (this.r3i = !0),
       ControllerHolder_1.ControllerHolder.PayGiftController.SendPayGiftInfoRequest(),
       PayItemController_1.PayItemController.SendPayItemInfoRequest();
   }

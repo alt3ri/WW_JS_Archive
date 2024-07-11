@@ -17,9 +17,9 @@ const UE = require("ue"),
 class InstanceMatchingConfirm extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.r1i = 0),
+      (this.r_i = 0),
       (this.j3 = void 0),
-      (this.G$e = () => {
+      (this.$Ye = () => {
         switch (
           ModelManager_1.ModelManager.InstanceDungeonEntranceModel.GetMatchingState()
         ) {
@@ -40,16 +40,16 @@ class InstanceMatchingConfirm extends UiViewBase_1.UiViewBase {
           : LguiUtil_1.LguiUtil.SetLocalText(
               this.GetText(0),
               "MatchingCoolDown",
-              TimeUtil_1.TimeUtil.GetCoolDown(this.r1i--),
+              TimeUtil_1.TimeUtil.GetCoolDown(this.r_i--),
             );
       }),
-      (this.n1i = () => {
+      (this.n_i = () => {
         InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.MatchConfirmRequest(
           !1,
         ),
           ModelManager_1.ModelManager.InstanceDungeonModel.ResetData();
       }),
-      (this.Lli = () => {
+      (this.L1i = () => {
         InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.MatchConfirmRequest(
           !0,
         ),
@@ -65,8 +65,8 @@ class InstanceMatchingConfirm extends UiViewBase_1.UiViewBase {
       [4, UE.UIItem],
     ]),
       (this.BtnBindInfo = [
-        [2, this.n1i],
-        [3, this.Lli],
+        [2, this.n_i],
+        [3, this.L1i],
       ]);
   }
   OnStart() {
@@ -77,6 +77,7 @@ class InstanceMatchingConfirm extends UiViewBase_1.UiViewBase {
         ).MapName,
       ),
     ),
+      this.ChildPopView?.PopItem?.SetMaskResponsibleState(!1),
       this.ChildPopView?.PopItem?.OverrideBackBtnCallBack(() => {
         InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.MatchConfirmRequest(
           !1,
@@ -88,28 +89,28 @@ class InstanceMatchingConfirm extends UiViewBase_1.UiViewBase {
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnMatchingChange,
-      this.G$e,
+      this.$Ye,
     );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnMatchingChange,
-      this.G$e,
+      this.$Ye,
     );
   }
   OnBeforeDestroy() {
     void 0 !== this.j3 && TimerSystem_1.TimerSystem.Remove(this.j3),
       (this.j3 = void 0),
-      (this.r1i = 0);
+      (this.r_i = 0);
   }
   ShowConfirmState(e) {
-    (this.r1i = CommonParamById_1.configCommonParamById.GetIntConfig(
+    (this.r_i = CommonParamById_1.configCommonParamById.GetIntConfig(
       "match_confirm_time_out_seconds",
     )),
       LguiUtil_1.LguiUtil.SetLocalText(
         this.GetText(0),
         "MatchingCoolDown",
-        (this.r1i--).toString(),
+        (this.r_i--).toString(),
       ),
       LguiUtil_1.LguiUtil.SetLocalText(this.GetText(1), "MatchingContext", e),
       this.GetText(0)?.SetUIActive(!0),

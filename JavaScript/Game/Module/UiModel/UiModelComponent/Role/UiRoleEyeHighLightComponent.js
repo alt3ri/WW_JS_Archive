@@ -27,13 +27,13 @@ const UE = require("ue"),
 let UiRoleEyeHighLightComponent = class UiRoleEyeHighLightComponent extends UiModelComponentBase_1.UiModelComponentBase {
   constructor() {
     super(...arguments),
-      (this.nXt = void 0),
+      (this.n$t = void 0),
       (this.OnRoleMeshLoadComplete = () => {
         this.DisableEyeHighLight();
       });
   }
   OnInit() {
-    this.nXt = this.Owner.CheckGetComponent(1);
+    this.n$t = this.Owner.CheckGetComponent(1);
   }
   OnStart() {
     EventSystem_1.EventSystem.AddWithTarget(
@@ -52,10 +52,10 @@ let UiRoleEyeHighLightComponent = class UiRoleEyeHighLightComponent extends UiMo
   DisableEyeHighLight() {
     var e = [new UE.FName("MI_Eyes"), new UE.FName("MI_Eye")],
       t = new UE.FName("LightDisableSwitch"),
-      i = this.nXt.MainMeshComponent;
-    this.qBr(i, e, t);
+      i = this.n$t.MainMeshComponent;
+    this.cBr(i, e, t);
   }
-  qBr(e, t, i) {
+  cBr(e, t, i) {
     for (const s of t) {
       var n,
         o = e.GetMaterialIndex(s);

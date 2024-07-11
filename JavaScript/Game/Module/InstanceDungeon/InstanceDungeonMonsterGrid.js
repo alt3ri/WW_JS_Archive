@@ -8,7 +8,7 @@ const ue_1 = require("ue"),
   LguiUtil_1 = require("../Util/LguiUtil");
 class InstanceDungeonMonsterGrid extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
-    super(), (this.Vli = 0);
+    super(), (this.V1i = 0);
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -19,10 +19,10 @@ class InstanceDungeonMonsterGrid extends GridProxyAbstract_1.GridProxyAbstract {
     ];
   }
   Refresh(e, r, a) {
-    this.Vli = e;
+    this.V1i = e;
     var i,
       n = ConfigManager_1.ConfigManager.MonsterInfoConfig.GetMonsterName(
-        this.Vli,
+        this.V1i,
       );
     this.GetText(0).SetText(n);
     let t = ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(
@@ -49,7 +49,7 @@ class InstanceDungeonMonsterGrid extends GridProxyAbstract_1.GridProxyAbstract {
           ))),
       LguiUtil_1.LguiUtil.SetLocalText(this.GetText(1), "LevelText", t);
     var o = ConfigManager_1.ConfigManager.MonsterInfoConfig.GetMonsterIcon(
-        this.Vli,
+        this.V1i,
       ),
       s =
         (this.SetTextureByPath(o, this.GetTexture(2)),

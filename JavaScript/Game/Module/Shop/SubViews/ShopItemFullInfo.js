@@ -17,31 +17,31 @@ class ShopItemFullInfo {
       (this.Price = new Map()),
       (this.ConditionText = ""),
       (this.ItemInfo = t),
-      (this.BoughtCount = s.s8n ?? 0),
-      (this.IsLocked = s.h3n),
-      (this.BuyLimit = s.yxs),
-      (this.StackSize = s.k4n),
-      s.Exs.forEach((i, t) => {
-        var e = s.Ixs.find((t) => t.gVn === i.gVn),
-          e = new ItemPrice(i.gVn, i.Mxs, e?.Mxs ?? -1);
-        this.Price.set(i.gVn, e), 0 === t && (this.DefaultPrice = e);
+      (this.BoughtCount = s.N7n ?? 0),
+      (this.IsLocked = s.j6n),
+      (this.BuyLimit = s.Vqs),
+      (this.StackSize = s.MVn),
+      s.Fqs.forEach((i, t) => {
+        var e = s.$qs.find((t) => t.QHn === i.QHn),
+          e = new ItemPrice(i.QHn, i.kqs, e?.kqs ?? -1);
+        this.Price.set(i.QHn, e), 0 === t && (this.DefaultPrice = e);
       }),
-      (this.Id = s.Ekn),
-      (this.Label = s.Txs),
-      (this.BeginTime = s.HCs ?? 0),
-      (this.EndTime = s.jCs ?? 0);
+      (this.Id = s.J4n),
+      (this.Label = s.Hqs),
+      (this.BeginTime = s.nps ?? 0),
+      (this.EndTime = s.sps ?? 0);
     t = ConfigManager_1.ConfigManager.ShopConfig.GetShopFixedInfoByItemId(
       i,
-      s.Ekn,
+      s.J4n,
     );
     0 !== t.CondId &&
       (this.ConditionText =
         ConfigManager_1.ConfigManager.ConditionConfig.GetConditionGroupConfig(
           t?.CondId,
         ).HintText),
-      (this.SwitchText = s.Lxs),
-      (this.PurchaseText = s.Rxs),
-      (this.ItemId = s.G3n),
+      (this.SwitchText = s.jqs),
+      (this.PurchaseText = s.Wqs),
+      (this.ItemId = s.f8n),
       (this.ShopId = i);
   }
   get LockInfo() {
@@ -153,7 +153,7 @@ class ShopItemFullInfo {
   }
   GetPrice(t) {
     return this.Price && 0 !== this.Price.size
-      ? this.Price.get(t).CoinPrice
+      ? this.Price.get(t)?.CoinPrice ?? 0
       : -1;
   }
   GetOriginalPrice() {

@@ -27,25 +27,25 @@ class ReviveItemView extends UiViewBase_1.UiViewBase {
       (this.PropScrollView = void 0),
       (this.ItemIdMap = void 0),
       (this.SelectedItemId = -1),
-      (this.zke = -1),
-      (this.N2t = void 0),
-      (this.mIt = () => {
+      (this.dFe = -1),
+      (this.OFt = void 0),
+      (this.m2e = () => {
         this.ConfirmBoxButtonClick();
       }),
       (this.JGe = (i, e, t) => {
         var s = new ReviveSmallItemGrid_1.ReviveSmallItemGrid();
         return (
           s.Initialize(e.GetOwner()),
-          s.BindOnExtendToggleStateChanged(this.zAt),
+          s.BindOnExtendToggleStateChanged(this.txt),
           s.Refresh(i[0], i[1]),
           { Key: t, Value: s }
         );
       }),
-      (this.zAt = (i) => {
+      (this.txt = (i) => {
         i = i.MediumItemGrid;
-        this.O2t(i);
+        this.kFt(i);
       }),
-      (this.k2t = () => {
+      (this.FFt = () => {
         -1 === this.SelectedItemId
           ? ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
               "ReviveItemNotClick",
@@ -53,7 +53,7 @@ class ReviveItemView extends UiViewBase_1.UiViewBase {
           : (BuffItemControl_1.BuffItemControl.RequestUseBuffItem(
               this.SelectedItemId,
               1,
-              this.zke,
+              this.dFe,
             ),
             this.CloseMe());
       });
@@ -64,12 +64,12 @@ class ReviveItemView extends UiViewBase_1.UiViewBase {
       [1, UE.UIButtonComponent],
       [2, UE.UIScrollViewWithScrollbarComponent],
     ]),
-      (this.BtnBindInfo = [[1, this.k2t]]);
+      (this.BtnBindInfo = [[1, this.FFt]]);
   }
   OnStart() {
-    this.ChildPopView?.PopItem.OverrideBackBtnCallBack(this.mIt);
+    this.ChildPopView?.PopItem.OverrideBackBtnCallBack(this.m2e);
     var i = this.OpenParam;
-    (this.zke = i.PlayerId),
+    (this.dFe = i.PlayerId),
       (this.SelectedItemId = i.ChoseId),
       (this.ItemIdMap = new Map());
     for (const t of i.ItemIdList) {
@@ -94,22 +94,22 @@ class ReviveItemView extends UiViewBase_1.UiViewBase {
       }),
         this.PropScrollView.RefreshByData(s);
       i = this.PropScrollView.GetScrollItemList()[t];
-      i.SetSelected(!0), this.O2t(i);
+      i.SetSelected(!0), this.kFt(i);
     }
   }
   OnBeforeDestroy() {
     this.ItemIdMap && this.ItemIdMap.clear(),
       (this.SelectedItemId = -1),
-      (this.zke = -1),
+      (this.dFe = -1),
       this.PropScrollView.ClearChildren();
   }
   ConfirmBoxButtonClick() {
     this.CloseMe();
   }
-  O2t(i) {
+  kFt(i) {
     i &&
-      (this.N2t?.SetSelected(!1),
-      (this.N2t = i),
+      (this.OFt?.SetSelected(!1),
+      (this.OFt = i),
       (this.SelectedItemId = i.ItemId),
       (i = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
         this.SelectedItemId,

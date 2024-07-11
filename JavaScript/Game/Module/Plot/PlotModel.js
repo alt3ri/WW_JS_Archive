@@ -159,20 +159,20 @@ class PlotModel extends ModelBase_1.ModelBase {
       (this.PlotConfig = new PlotConfig()),
       (this.PlotResult = new PlotData_1.PlotResultInfo()),
       (this.TmpPlotResult = new PlotData_1.PlotResultInfo()),
-      (this.N$i = void 0),
+      (this.qYi = void 0),
       (this.PlotPendingList = new Array()),
       (this.GrayOptionMap = new Map()),
       (this.CurContext = void 0),
-      (this.O$i = !1),
-      (this.k$i = void 0),
+      (this.GYi = !1),
+      (this.NYi = void 0),
       (this.jZ = void 0),
       (this.WZ = void 0),
-      (this.F$i = void 0),
+      (this.OYi = void 0),
       (this.PlotTemplate = new PlotTemplate_1.PlotTemplate()),
       (this.KeepBgAudio = !1),
-      (this.V$i = !1),
+      (this.kYi = !1),
       (this.CenterText = new PlotData_1.PlotCenterText()),
-      (this.H$i = !1),
+      (this.FYi = !1),
       (this.PlotGlobalConfig = new PlotGlobalConfig_1.PlotGlobalConfig()),
       (this.PlotTextReplacer = new PlotTextReplacer_1.PlotTextReplacer()),
       (this.PlotWeather = new PlotWeather_1.PlotWeather()),
@@ -194,7 +194,7 @@ class PlotModel extends ModelBase_1.ModelBase {
       (this.GoBattleMaterial = void 0),
       (this.InSeamlessFormation = !1),
       (this.IsTipsViewShowed = !1),
-      (this.OptionEnable = !1),
+      (this.OptionEnable = !0),
       (this.OnShowCenterTextFinished = () => {
         (this.PlayFlow = void 0),
           ModelManager_1.ModelManager.TeleportModel.CgTeleportCompleted &&
@@ -215,7 +215,7 @@ class PlotModel extends ModelBase_1.ModelBase {
       (this.IsInPlot = !1),
       (this.IsInInteraction = !1),
       (this.IsBackInteractionAfterFlow = !1),
-      (this.V$i = !1),
+      (this.kYi = !1),
       this.PlotGlobalConfig.Init(),
       this.PlotWeather.Init(),
       !0
@@ -333,9 +333,9 @@ class PlotModel extends ModelBase_1.ModelBase {
     return !1;
   }
   CenterTextTransition(t, e) {
-    this.H$i === t
+    this.FYi === t
       ? e && e()
-      : (this.H$i = t)
+      : (this.FYi = t)
         ? LevelLoadingController_1.LevelLoadingController.OpenLoading(
             11,
             3,
@@ -380,32 +380,28 @@ class PlotModel extends ModelBase_1.ModelBase {
       (this.CenterText.Callback = e),
       PlotController_1.PlotController.HandleShowCenterText(!1));
   }
-  ShowCenterTextForTeleport(t) {
-    var e;
+  ShowCenterTextForTeleport() {
+    var t;
     this.PlayFlow &&
-      (e =
+      (t =
         PlotController_1.PlotController.GetTalkItemsOfCenterTextForTeleport()) &&
-      ((this.CenterText.Text =
-        PublicUtil_1.PublicUtil.GetFlowConfigLocalText(e)),
-      (this.CenterText.Callback = t),
+      t.TidCenterText &&
+      ((this.CenterText.Text = PublicUtil_1.PublicUtil.GetFlowConfigLocalText(
+        t.TidCenterText,
+      )),
+      (this.CenterText.Config = t),
+      (this.CenterText.Callback = this.OnShowCenterTextFinished),
       PlotController_1.PlotController.HandleShowCenterText(!1));
   }
   ApplyPlotConfig(t = !1) {
-    this.W$i(),
-      this.K$i(),
-      this.Q$i(t),
-      this.X$i(),
-      this.$$i(),
-      this.Y$i(),
-      this.J$i(),
+    this.HYi(),
+      this.jYi(),
+      this.WYi(t),
+      this.KYi(),
+      this.QYi(),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.PlotConfigChanged,
       );
-  }
-  Y$i() {
-    "LevelC" === this.PlotConfig.PlotLevel
-      ? this.SetRender(!0)
-      : this.SetRender(!1);
   }
   SetRender(t) {
     this.HasSetRender !== t &&
@@ -417,9 +413,6 @@ class PlotModel extends ModelBase_1.ModelBase {
             .GetCurrentQualityInfo()
             .CancleSequenceFrameRateLimit());
   }
-  J$i() {
-    "LevelD" !== this.PlotConfig.PlotLevel && this.SetInPlotGameBudget(!0);
-  }
   SetInPlotGameBudget(t) {
     this.HasSetGameBudget !== t &&
       ((this.HasSetGameBudget = t),
@@ -427,7 +420,7 @@ class PlotModel extends ModelBase_1.ModelBase {
         t,
       ));
   }
-  K$i() {
+  jYi() {
     this.PlotTimeOfDay.OnPlotStart(this.PlotConfig.PauseTime);
   }
   IsInTemplate() {
@@ -467,7 +460,7 @@ class PlotModel extends ModelBase_1.ModelBase {
       3 === this.PlotConfig.CameraMode &&
       this.PlotTemplate.PlayCameraAnimCompatible(t);
   }
-  W$i() {
+  HYi() {
     var t;
     "LevelD" !== this.PlotConfig.PlotLevel &&
       Global_1.Global.BaseCharacter &&
@@ -477,13 +470,13 @@ class PlotModel extends ModelBase_1.ModelBase {
         ))?.Valid &&
       t.StopAllSkills("PlotModel.StopMainCharacterSkill");
   }
-  X$i() {
+  KYi() {
     InputDistributeController_1.InputDistributeController.RefreshInputTag();
   }
   SwitchCameraMode(t) {
-    (this.PlotConfig.CameraMode = t), this.Q$i();
+    (this.PlotConfig.CameraMode = t), this.WYi();
   }
-  Q$i(t = !1) {
+  WYi(t = !1) {
     if (GlobalData_1.GlobalData.World)
       switch (this.PlotConfig.CameraMode) {
         case 0:
@@ -508,10 +501,11 @@ class PlotModel extends ModelBase_1.ModelBase {
             CameraController_1.CameraController.EnterCameraMode(1, 0, 0, 0);
       }
   }
-  $$i() {
-    "LevelD" === this.PlotConfig.PlotLevel
+  QYi() {
+    "LevelD" === this.PlotConfig.PlotLevel ||
+    "Prompt" === this.PlotConfig.PlotLevel
       ? this.ResetAudioState()
-      : ((this.V$i = !0),
+      : ((this.kYi = !0),
         AudioSystem_1.AudioSystem.SetState(
           AudioDefine_1.STATEGROUP,
           AudioDefine_1.STATEINCUTSCENE,
@@ -523,8 +517,8 @@ class PlotModel extends ModelBase_1.ModelBase {
         );
   }
   ResetAudioState() {
-    this.V$i &&
-      ((this.V$i = !1),
+    this.kYi &&
+      ((this.kYi = !1),
       AudioSystem_1.AudioSystem.SetState(
         AudioDefine_1.STATEGROUP,
         AudioDefine_1.STATENORMAL,
@@ -546,9 +540,9 @@ class PlotModel extends ModelBase_1.ModelBase {
   CheckOptionCondition(t, e) {
     if (!t.PreCondition) return !0;
     let i = !1;
-    return (i = "PreOption" === t.PreCondition.Type ? this.z$i(t, e) : i);
+    return (i = "PreOption" === t.PreCondition.Type ? this.YYi(t, e) : i);
   }
-  z$i(t, e) {
+  YYi(t, e) {
     let i = !0;
     for (const s of t.PreCondition.PreOptions) {
       var o = this.GrayOptionMap.get(e.Id);
@@ -565,17 +559,17 @@ class PlotModel extends ModelBase_1.ModelBase {
   }
   SaveCharacterLockOn() {
     var t;
-    this.Z$i() &&
+    this.JYi() &&
       ((t = Global_1.Global.BaseCharacter.GetEntityIdNoBlueprint()),
       EntitySystem_1.EntitySystem.Get(t)
-        ?.GetComponent(185)
+        ?.GetComponent(188)
         ?.HasTag(-1150819426)) &&
-      (this.O$i = !0);
+      (this.GYi = !0);
   }
   RevertCharacterLockOn() {
-    this.O$i && ((this.O$i = !1), this.Z$i()?.EnterLockDirection());
+    this.GYi && ((this.GYi = !1), this.JYi()?.EnterLockDirection());
   }
-  Z$i() {
+  JYi() {
     var t = Global_1.Global.BaseCharacter?.GetEntityIdNoBlueprint();
     if (t) {
       t = EntitySystem_1.EntitySystem.Get(t)?.GetComponent(29);
@@ -586,15 +580,15 @@ class PlotModel extends ModelBase_1.ModelBase {
     this.CurContext?.Release(), (this.CurContext = void 0);
   }
   HandlePlayMontage(t) {
-    this.N$i || (this.N$i = new PlotMontage_1.PlotMontage()),
-      this.N$i.StopAllMontage(!1),
-      this.N$i.StartPlayMontage(t);
+    this.qYi || (this.qYi = new PlotMontage_1.PlotMontage()),
+      this.qYi.StopAllMontage(!1),
+      this.qYi.StartPlayMontage(t);
   }
   FinishMontage() {
-    this.N$i && this.N$i.StopAllMontage();
+    this.qYi && this.qYi.StopAllMontage();
   }
   InitPlotTemplate() {
-    this.k$i = new Map();
+    this.NYi = new Map();
     let t = (0, PublicUtil_1.getConfigPath)(
       IGlobal_1.globalConfig.FlowTemplateCameraConfigPath,
     );
@@ -607,7 +601,7 @@ class PlotModel extends ModelBase_1.ModelBase {
       (UE.KuroStaticLibrary.LoadFileToString(e, t),
       (e = (0, puerts_1.$unref)(e)))
     )
-      for (const i of JSON.parse(e).List) this.k$i.set(i.Id, i);
+      for (const i of JSON.parse(e).List) this.NYi.set(i.Id, i);
   }
   InitMontageConfig() {
     this.jZ = new Map();
@@ -679,8 +673,8 @@ class PlotModel extends ModelBase_1.ModelBase {
     } else this.WZ || this.QZ();
     return this.WZ.get(t);
   }
-  eYi() {
-    this.F$i = new Map();
+  zYi() {
+    this.OYi = new Map();
     let t = (0, PublicUtil_1.getConfigPath)(
       IGlobal_1.globalConfig.AbpOverlayMontageConfigPath,
     );
@@ -693,11 +687,11 @@ class PlotModel extends ModelBase_1.ModelBase {
       (UE.KuroStaticLibrary.LoadFileToString(e, t),
       (e = (0, puerts_1.$unref)(e)))
     )
-      for (const i of JSON.parse(e).Montages) this.F$i.set(i.Id, i);
+      for (const i of JSON.parse(e).Montages) this.OYi.set(i.Id, i);
   }
   GetOverlayAbpMontageConfig(t) {
     if (PublicUtil_1.PublicUtil.UseDbConfig()) {
-      if ((this.F$i || (this.F$i = new Map()), !this.F$i.get(t))) {
+      if ((this.OYi || (this.OYi = new Map()), !this.OYi.get(t))) {
         var e =
           ConfigManager_1.ConfigManager.PlotMontageConfig.GetOverlayAbpMontageConfig(
             t,
@@ -709,14 +703,14 @@ class PlotModel extends ModelBase_1.ModelBase {
           ExpressionMontage: "",
           MouthSequence: "",
         };
-        this.F$i.set(t, e);
+        this.OYi.set(t, e);
       }
-    } else this.F$i || this.eYi();
-    return this.F$i.get(t);
+    } else this.OYi || this.zYi();
+    return this.OYi.get(t);
   }
   GetPlotTemplateConfig(t) {
     if (PublicUtil_1.PublicUtil.UseDbConfig()) {
-      if ((this.k$i || (this.k$i = new Map()), !this.k$i.get(t))) {
+      if ((this.NYi || (this.NYi = new Map()), !this.NYi.get(t))) {
         var e =
           ConfigManager_1.ConfigManager.CameraTemplateConfig.GetCameraTemplateConfig(
             t,
@@ -732,10 +726,10 @@ class PlotModel extends ModelBase_1.ModelBase {
           ActorDataArray: JSON.parse(e.ActorDataArray),
           CameraData: JSON.parse(e.CameraData),
         };
-        this.k$i.set(t, e);
+        this.NYi.set(t, e);
       }
-    } else this.k$i || this.InitPlotTemplate();
-    return this.k$i.get(t);
+    } else this.NYi || this.InitPlotTemplate();
+    return this.NYi.get(t);
   }
 }
 exports.PlotModel = PlotModel;

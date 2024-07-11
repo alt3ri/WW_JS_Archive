@@ -15,118 +15,119 @@ const puerts_1 = require("puerts"),
   UIVOLUMEFUNCTION = 70;
 class HotFixGameSettingManager {
   ApplyGameSettings() {
-    var e = this.POn();
+    var e = this.Qpa();
     e &&
-      (this.rGi(e, MASTERVOLUMEFUNCTION),
-      this.rGi(e, VOICEVOLUMEFUNCTION),
-      this.rGi(e, MUSICVOLUMEFUNCTION),
-      this.rGi(e, SFXVOLUMEFUNCTION),
-      this.rGi(e, AMBVOLUMEFUNCTION),
-      this.rGi(e, UIVOLUMEFUNCTION),
-      this.rGi(e, RESOLUTION));
+      (this.rNi(e, MASTERVOLUMEFUNCTION),
+      this.rNi(e, VOICEVOLUMEFUNCTION),
+      this.rNi(e, MUSICVOLUMEFUNCTION),
+      this.rNi(e, SFXVOLUMEFUNCTION),
+      this.rNi(e, AMBVOLUMEFUNCTION),
+      this.rNi(e, UIVOLUMEFUNCTION),
+      this.rNi(e, RESOLUTION));
   }
-  POn() {
-    var e = LauncherStorageLib_1.LauncherStorageLib.GetGlobal(
-        LauncherStorageLib_1.ELauncherStorageGlobalKey.PlayMenuInfo,
-        "",
-      ),
-      a = e && "" !== e;
-    let i = void 0;
-    return (i = a ? this.BOn(JSON.parse(e)) : i);
+  Qpa() {
+    let e = LauncherStorageLib_1.LauncherStorageLib.GetGlobal(
+      LauncherStorageLib_1.ELauncherStorageGlobalKey.MenuData,
+      void 0,
+    );
+    return (
+      e ||
+        ((e = new Map()),
+        this.Kpa(e, MASTERVOLUMEFUNCTION),
+        this.Kpa(e, VOICEVOLUMEFUNCTION),
+        this.Kpa(e, MUSICVOLUMEFUNCTION),
+        this.Kpa(e, SFXVOLUMEFUNCTION),
+        this.Kpa(e, AMBVOLUMEFUNCTION),
+        this.Kpa(e, UIVOLUMEFUNCTION),
+        this.Kpa(e, RESOLUTION)),
+      e
+    );
   }
-  n4s(e, a) {
-    var i = LauncherConfigLib_1.LauncherConfigLib.GetMenuConfigByFunctionId(a);
-    e.set(a, i ? i.OptionsDefault : 0);
+  Kpa(e, i) {
+    var t = LauncherConfigLib_1.LauncherConfigLib.GetMenuConfigByFunctionId(i);
+    e.set(i, t ? t.OptionsDefault : 0);
   }
-  rGi(e, a) {
-    var i = e.get(a);
-    if (void 0 === i)
+  rNi(e, i) {
+    var t = e.get(i);
+    if (void 0 === t)
       LauncherLog_1.LauncherLog.Info(
         "[HotFixGameSettingManager]找不到对应热更游戏设置数据",
-        ["functionId", a],
-        ["value", i],
+        ["functionId", i],
+        ["value", t],
       );
     else
       switch (
         (LauncherLog_1.LauncherLog.Info(
           "[HotFixGameSettingManager]应用热更游戏设置数据",
-          ["functionId", a],
-          ["value", i],
+          ["functionId", i],
+          ["value", t],
         ),
-        a)
+        i)
       ) {
         case MASTERVOLUMEFUNCTION:
-          this.s4s("Master_Audio_Bus_Volume", i);
+          this.$pa("Master_Audio_Bus_Volume", t);
           break;
         case VOICEVOLUMEFUNCTION:
-          this.s4s("Vocal_Audio_Bus_Volume", i);
+          this.$pa("Vocal_Audio_Bus_Volume", t);
           break;
         case MUSICVOLUMEFUNCTION:
-          this.s4s("Music_Audio_Bus_Volume", i);
+          this.$pa("Music_Audio_Bus_Volume", t);
           break;
         case SFXVOLUMEFUNCTION:
-          this.s4s("SFX_Audio_Bus_Volume", i);
+          this.$pa("SFX_Audio_Bus_Volume", t);
           break;
         case AMBVOLUMEFUNCTION:
-          this.s4s("AMB_Audio_Bus_Volume", i);
+          this.$pa("AMB_Audio_Bus_Volume", t);
           break;
         case UIVOLUMEFUNCTION:
-          this.s4s("UI_Audio_Bus_Volume", i);
+          this.$pa("UI_Audio_Bus_Volume", t);
           break;
         case RESOLUTION:
-          this.m4s(i);
+          this.Xpa(t);
       }
   }
-  s4s(e, a) {
-    UE.AkGameplayStatics.SetRTPCValue(void 0, a, 0, void 0, new UE.FName(e));
+  $pa(e, i) {
+    UE.AkGameplayStatics.SetRTPCValue(void 0, i, 0, void 0, new UE.FName(e));
   }
-  m4s(e) {
-    var a = this.GetResolutionList(),
-      a =
+  Xpa(e) {
+    var i = this.GetResolutionList(),
+      i =
         (LauncherLog_1.LauncherLog.Info(
           "[HotFixGameSettingManager]当前分辨率列表",
-          ["resolutionList", a],
+          ["resolutionList", i],
           ["value", e],
         ),
-        a[e]);
-    a &&
+        i[e]);
+    i &&
       (LauncherLog_1.LauncherLog.Info(
         "[HotFixGameSettingManager]热更时应用分辨率",
         ["value", e],
-        ["resolution", a],
+        ["resolution", i],
       ),
-      (e = UE.GameUserSettings.GetGameUserSettings()).SetScreenResolution(a),
+      (e = UE.GameUserSettings.GetGameUserSettings()).SetScreenResolution(i),
       e.ApplySettings(!0));
   }
   GetResolutionList() {
-    var a = [],
+    var i = [],
       e = (0, puerts_1.$ref)(void 0);
     if (UE.KismetSystemLibrary.GetSupportedFullscreenResolutions(e)) {
-      var i = (0, puerts_1.$unref)(e);
-      for (let e = i.Num() - 1; 0 <= e; --e) {
-        var t = i.Get(e);
-        t && a.push(t);
+      var t = (0, puerts_1.$unref)(e);
+      for (let e = t.Num() - 1; 0 <= e; --e) {
+        var a = t.Get(e);
+        a && i.push(a);
       }
     }
     return (
-      a.length
-        ? a.sort((e, a) => (e.X === a.X ? a.Y - e.Y : a.X - e.X))
+      i.length
+        ? i.sort((e, i) => (e.X === i.X ? i.Y - e.Y : i.X - e.X))
         : (LauncherLog_1.LauncherLog.Info(
             "[HotFixGameSettingManager]获取当前分辨率列表失败",
           ),
-          a.push(
+          i.push(
             UE.GameUserSettings.GetGameUserSettings().GetDesktopResolution(),
           )),
-      a
+      i
     );
-  }
-  BOn(e) {
-    var a = new Map();
-    for (const t in e) {
-      var i = Number(t);
-      isNaN(i) || a.set(i, e[t]);
-    }
-    return a;
   }
 }
 exports.HotFixGameSettingManager = HotFixGameSettingManager;

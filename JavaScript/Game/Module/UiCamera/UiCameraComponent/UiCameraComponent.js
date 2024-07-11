@@ -8,14 +8,14 @@ class UiCameraComponent {
     (this.OwnerUiCamera = void 0),
       (this.CameraActor = void 0),
       (this.CineCameraComponent = void 0),
-      (this.P$i = TickSystem_1.TickSystem.InvalidId),
-      (this.iRo = !1),
-      (this.r6 = (i) => {
-        this.OnTick(i);
+      (this.UYi = TickSystem_1.TickSystem.InvalidId),
+      (this.ZRo = !1),
+      (this.r6 = (t) => {
+        this.OnTick(t);
       });
   }
-  Initialize(i) {
-    (this.OwnerUiCamera = i),
+  Initialize(t) {
+    (this.OwnerUiCamera = t),
       (this.CameraActor = this.OwnerUiCamera.GetCameraActor()),
       this.CameraActor.SetTickableWhenPaused(!0),
       (this.CineCameraComponent = this.OwnerUiCamera.GetCineCameraComponent()),
@@ -29,7 +29,7 @@ class UiCameraComponent {
       this.OnDestroy();
   }
   Activate() {
-    this.iRo ||
+    this.ZRo ||
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("UiCamera", 8, "激活相机组件", [
           "Name",
@@ -37,10 +37,10 @@ class UiCameraComponent {
         ]),
       this.OnAddEvents(),
       this.OnActivate(),
-      (this.iRo = !0));
+      (this.ZRo = !0));
   }
   Deactivate() {
-    this.iRo &&
+    this.ZRo &&
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("UiCamera", 8, "休眠相机组件", [
           "Name",
@@ -49,47 +49,29 @@ class UiCameraComponent {
       this.RemoveTick(),
       this.OnRemoveEvents(),
       this.OnDeactivate(),
-      (this.iRo = !1));
+      (this.ZRo = !1));
   }
   EnableTick() {
-    this.P$i === TickSystem_1.TickSystem.InvalidId &&
-      ((this.P$i = TickSystem_1.TickSystem.Add(
+    this.UYi === TickSystem_1.TickSystem.InvalidId &&
+      (this.UYi = TickSystem_1.TickSystem.Add(
         this.r6,
         this.constructor.name,
         0,
         !0,
-      ).Id),
-      Log_1.Log.CheckInfo()) &&
-      Log_1.Log.Info("CameraAnimation", 44, "Ui相机组件Tick开始", [
-        "Component",
-        this.constructor.name,
-      ]);
+      ).Id);
   }
   ResumeTick() {
-    this.P$i !== TickSystem_1.TickSystem.InvalidId &&
-      (TickSystem_1.TickSystem.Resume(this.P$i), Log_1.Log.CheckInfo()) &&
-      Log_1.Log.Info("CameraAnimation", 44, "Ui相机组件Tick恢复", [
-        "Component",
-        this.constructor.name,
-      ]);
+    this.UYi !== TickSystem_1.TickSystem.InvalidId &&
+      TickSystem_1.TickSystem.Resume(this.UYi);
   }
   PauseTick() {
-    this.P$i !== TickSystem_1.TickSystem.InvalidId &&
-      (TickSystem_1.TickSystem.Pause(this.P$i), Log_1.Log.CheckInfo()) &&
-      Log_1.Log.Info("CameraAnimation", 44, "Ui相机组件Tick暂停", [
-        "Component",
-        this.constructor.name,
-      ]);
+    this.UYi !== TickSystem_1.TickSystem.InvalidId &&
+      TickSystem_1.TickSystem.Pause(this.UYi);
   }
   RemoveTick() {
-    this.P$i !== TickSystem_1.TickSystem.InvalidId &&
-      (TickSystem_1.TickSystem.Remove(this.P$i),
-      (this.P$i = TickSystem_1.TickSystem.InvalidId),
-      Log_1.Log.CheckInfo()) &&
-      Log_1.Log.Info("CameraAnimation", 44, "Ui相机组件Tick删除", [
-        "Component",
-        this.constructor.name,
-      ]);
+    this.UYi !== TickSystem_1.TickSystem.InvalidId &&
+      (TickSystem_1.TickSystem.Remove(this.UYi),
+      (this.UYi = TickSystem_1.TickSystem.InvalidId));
   }
   OnInitialize() {}
   OnDestroy() {}
@@ -97,9 +79,9 @@ class UiCameraComponent {
   OnDeactivate() {}
   OnAddEvents() {}
   OnRemoveEvents() {}
-  OnTick(i) {}
+  OnTick(t) {}
   GetIsActivate() {
-    return this.iRo;
+    return this.ZRo;
   }
   GetCameraStructure() {
     return this.OwnerUiCamera.GetStructure();

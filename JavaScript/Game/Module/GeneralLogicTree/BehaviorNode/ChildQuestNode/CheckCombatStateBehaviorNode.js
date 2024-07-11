@@ -8,31 +8,31 @@ const Log_1 = require("../../../../../Core/Common/Log"),
 class CheckCombatStateBehaviorNode extends TickBehaviorNode_1.TickBehaviorNode {
   constructor() {
     super(...arguments),
-      (this.RQt = !1),
-      (this.UQt = 0),
-      (this.AQt = 0),
-      (this.PQt = []),
-      (this.B9s = !0),
+      (this.RXt = !1),
+      (this.UXt = 0),
+      (this.AXt = 0),
+      (this.PXt = []),
+      (this.Lia = !0),
       (this.OnAfterSubmit = (e) => {
-        this.RQt = !1;
+        this.RXt = !1;
       });
   }
   get CorrelativeEntities() {
-    return this.PQt;
+    return this.PXt;
   }
   OnCreate(e) {
     return !(
       !super.OnCreate(e) ||
       "DetectCombatState" !== (e = e.Condition).Type ||
-      ((this.RQt = !1),
-      (this.AQt = e.EntityId),
-      (this.PQt = [e.EntityId]),
-      this.AQt
-        ? ((this.UQt = GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(
+      ((this.RXt = !1),
+      (this.AXt = e.EntityId),
+      (this.PXt = [e.EntityId]),
+      this.AXt
+        ? ((this.UXt = GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(
             e.State,
           )),
-          this.UQt
-            ? ((this.B9s = "Ne" !== e.Compare), 0)
+          this.UXt
+            ? ((this.Lia = "Ne" !== e.Compare), 0)
             : (Log_1.Log.CheckError() &&
                 Log_1.Log.Error(
                   "GeneralLogicTree",
@@ -51,21 +51,21 @@ class CheckCombatStateBehaviorNode extends TickBehaviorNode_1.TickBehaviorNode {
     );
   }
   OnTick() {
-    if (!this.RQt && this.UQt) {
+    if (!this.RXt && this.UXt) {
       var t = ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(
-        this.AQt,
+        this.AXt,
       );
       if (t?.IsInit) {
-        let e = t.Entity.GetComponent(185);
-        (e = e || t.Entity.GetComponent(177)) &&
-          (e.HasTag(this.UQt)
-            ? this.B9s && this.SubmitNode()
-            : this.B9s || this.SubmitNode());
+        let e = t.Entity.GetComponent(188);
+        (e = e || t.Entity.GetComponent(180)) &&
+          (e.HasTag(this.UXt)
+            ? this.Lia && this.SubmitNode()
+            : this.Lia || this.SubmitNode());
       }
     }
   }
   OnBeforeSubmit() {
-    this.RQt = !0;
+    this.RXt = !0;
   }
 }
 exports.CheckCombatStateBehaviorNode = CheckCombatStateBehaviorNode;

@@ -20,26 +20,26 @@ class RogueInfoView extends UiViewBase_1.UiViewBase {
       (this.ElementPanel = void 0),
       (this.TokenDetailPage = void 0),
       (this.OverviewPage = void 0),
-      (this.Gao = void 0),
-      (this.xLn = void 0),
-      (this.Nao = () => {
+      (this.who = void 0),
+      (this.SDn = void 0),
+      (this.Bho = () => {
         this.OverviewPage?.RefreshPanel(),
           this.TokenDetailPage?.DetailItem?.RefreshPanel(),
-          this.Gao?.Refresh(
+          this.who?.Refresh(
             ModelManager_1.ModelManager.RoguelikeModel.RogueInfo
               .SpecialEntryList,
           );
       }),
-      (this.Oao = (e, i) => {
+      (this.bho = (e, i) => {
         this.TokenDetailPage.OnSelected(e, i);
       }),
-      (this.kao = (e) => {
+      (this.qho = (e) => {
         1 === e && this.ChangePage(0);
       }),
-      (this.Fao = (e) => {
+      (this.Gho = (e) => {
         1 === e && this.ChangePage(1);
       }),
-      (this.Vao = (e) => {
+      (this.Nho = (e) => {
         1 === e && this.ChangePage(2);
       });
   }
@@ -59,29 +59,29 @@ class RogueInfoView extends UiViewBase_1.UiViewBase {
       [11, UE.UIText],
     ]),
       (this.BtnBindInfo = [
-        [4, this.kao],
-        [5, this.Fao],
-        [9, this.Vao],
+        [4, this.qho],
+        [5, this.Gho],
+        [9, this.Nho],
       ]);
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.RoguelikeInfoSelectedToken,
-      this.Oao,
+      this.bho,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.RoguelikeDataUpdate,
-        this.Nao,
+        this.Bho,
       );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.RoguelikeInfoSelectedToken,
-      this.Oao,
+      this.bho,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.RoguelikeDataUpdate,
-        this.Nao,
+        this.Bho,
       );
   }
   async OnBeforeStartAsync() {
@@ -89,7 +89,7 @@ class RogueInfoView extends UiViewBase_1.UiViewBase {
       (this.TokenDetailPage =
         new RogueInfoViewTokenDetail_1.RogueInfoViewTokenDetail()),
       (this.OverviewPage = new RogueInfoOverview_1.RogueInfoOverview()),
-      (this.Gao = new RogueInfoSpecialView_1.RogueInfoSpecialView()),
+      (this.who = new RogueInfoSpecialView_1.RogueInfoSpecialView()),
       (this.TopPanel = new TopPanel_1.TopPanel()),
       await this.ElementPanel.CreateThenShowByActorAsync(
         this.GetItem(2).GetOwner(),
@@ -97,7 +97,7 @@ class RogueInfoView extends UiViewBase_1.UiViewBase {
       await this.OverviewPage.CreateThenShowByActorAsync(
         this.GetItem(7).GetOwner(),
       ),
-      await this.Gao.CreateThenShowByActorAsync(this.GetItem(10).GetOwner()),
+      await this.who.CreateThenShowByActorAsync(this.GetItem(10).GetOwner()),
       await this.TokenDetailPage.CreateByActorAsync(this.GetItem(6).GetOwner()),
       await this.TopPanel.CreateThenShowByActorAsync(
         this.GetItem(0).GetOwner(),
@@ -114,24 +114,24 @@ class RogueInfoView extends UiViewBase_1.UiViewBase {
       this.TokenDetailPage.Update(
         ModelManager_1.ModelManager.RoguelikeModel.RogueInfo.BuffEntryList,
       ),
-      this.Gao.Refresh(
+      this.who.Refresh(
         ModelManager_1.ModelManager.RoguelikeModel.RogueInfo.SpecialEntryList,
       ),
       this.GetExtendToggle(4).SetToggleState(1, !1),
       this.ChangePage(0);
   }
   ChangePage(e) {
-    void 0 !== this.xLn &&
-      (0 === this.xLn
+    void 0 !== this.SDn &&
+      (0 === this.SDn
         ? this.OverviewPage
-        : 1 === this.xLn
+        : 1 === this.SDn
           ? this.TokenDetailPage
-          : this.Gao
+          : this.who
       ).UiViewSequence.PlaySequence("Close");
     var i = ModelManager_1.ModelManager.RoguelikeModel.RogueInfo;
     this.TokenDetailPage.SetActive(1 === e),
       this.OverviewPage.SetActive(0 === e),
-      this.Gao.SetActive(2 === e),
+      this.who.SetActive(2 === e),
       this.TokenDetailPage.Update(i.BuffEntryList),
       0 === e
         ? (this.GetItem(8).SetUIActive(!1),
@@ -143,7 +143,7 @@ class RogueInfoView extends UiViewBase_1.UiViewBase {
               this.GetText(11),
               "RogueNoTokenTips",
             ))
-          : (this.Gao.UiViewSequence.PlaySequence("Start"),
+          : (this.who.UiViewSequence.PlaySequence("Start"),
             this.GetItem(8).SetUIActive(0 === i.SpecialEntryList.length),
             LguiUtil_1.LguiUtil.SetLocalTextNew(
               this.GetText(11),

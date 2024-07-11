@@ -34,29 +34,29 @@ const UE = require("ue"),
   ]);
 class BattleHeadStatePanel {
   constructor() {
-    (this.Wat = new Map()),
-      (this.Kat = new Map()),
-      (this.Qat = 0),
-      (this.Xat = 0),
-      (this.$at = 0),
-      (this.Yat = 0),
-      (this.Jat = 0),
-      (this.zat = void 0),
-      (this.Zat = void 0),
-      (this.eht = 0),
-      (this.qot = 0),
-      (this.tht = 0),
-      (this.iht = (t, e, a) => {
+    (this.olt = new Map()),
+      (this.rlt = new Map()),
+      (this.nlt = 0),
+      (this.slt = 0),
+      (this.hlt = 0),
+      (this.llt = 0),
+      (this._lt = 0),
+      (this.ult = void 0),
+      (this.clt = void 0),
+      (this.mlt = 0),
+      (this.Xrt = 0),
+      (this.dlt = 0),
+      (this.Clt = (t, e, a) => {
         var i = EntitySystem_1.EntitySystem.Get(t);
         i?.Valid &&
           CharacterController_1.CharacterController.GetCharacter(i) &&
-          !i.GetComponent(185).HasTag(1008164187) &&
-          (i = this.oht(t)) &&
+          !i.GetComponent(188).HasTag(1008164187) &&
+          (i = this.glt(t)) &&
           i.OnHealthChanged(t);
       }),
-      (this.rht = (t) => {
-        8 === this.nht(t.Id) &&
-          this.sht(t) &&
+      (this.flt = (t) => {
+        8 === this.plt(t.Id) &&
+          this.vlt(t) &&
           (Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "Battle",
@@ -64,9 +64,9 @@ class BattleHeadStatePanel {
               "[HeadState]当任何使用多阶段打击机关耐久度（不可完全破坏）的可破坏物受击时，添加显示血条的实体",
               ["EntityId", t.Id],
             ),
-          this.aht(t));
+          this.Mlt(t));
       }),
-      (this.hht = (t, e, a) => {
+      (this.Elt = (t, e, a) => {
         if (e !== a)
           if (
             (Log_1.Log.CheckInfo() &&
@@ -80,7 +80,7 @@ class BattleHeadStatePanel {
               ),
             e <= 0)
           ) {
-            var i = this.oht(t.Id);
+            var i = this.glt(t.Id);
             if (i)
               switch (i.HeadStateType) {
                 case 7:
@@ -105,7 +105,7 @@ class BattleHeadStatePanel {
                       ["newDurability", e],
                       ["currentDurability", a],
                     ),
-                    this.lht(t.Entity, !0);
+                    this.Slt(t.Entity, !0);
               }
             else
               Log_1.Log.CheckInfo() &&
@@ -118,7 +118,7 @@ class BattleHeadStatePanel {
                   ["currentDurability", a],
                 );
           } else
-            this.sht(t.Entity) &&
+            this.vlt(t.Entity) &&
               (Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info(
                   "Battle",
@@ -128,9 +128,9 @@ class BattleHeadStatePanel {
                   ["newDurability", e],
                   ["currentDurability", a],
                 ),
-              this.aht(t.Entity, a));
+              this.Mlt(t.Entity, a));
       }),
-      (this._ht = (t, e, a) => {
+      (this.ylt = (t, e, a) => {
         var i = t.GetComponent(0)?.GetPbDataId();
         if (
           (Log_1.Log.CheckInfo() &&
@@ -145,7 +145,7 @@ class BattleHeadStatePanel {
             ),
           !e)
         )
-          return this.oht(t.Id)
+          return this.glt(t.Id)
             ? (Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info(
                   "Battle",
@@ -155,7 +155,7 @@ class BattleHeadStatePanel {
                   ["PbDataId", i],
                   ["ProgressData", a],
                 ),
-              void this.lht(t, !0))
+              void this.Slt(t, !0))
             : void (
                 Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info(
@@ -167,7 +167,7 @@ class BattleHeadStatePanel {
                   ["ProgressData", a],
                 )
               );
-        this.sht(t) &&
+        this.vlt(t) &&
           (Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "Battle",
@@ -178,7 +178,7 @@ class BattleHeadStatePanel {
               ["ProgressData", a],
             ),
           "CaptureStrategicPoint" === a.ProgressCtrlType
-            ? this.aht(t, a.CurrentValue / a.MaxValue, !1)
+            ? this.Mlt(t, a.CurrentValue / a.MaxValue, !1)
             : Log_1.Log.CheckWarn() &&
               Log_1.Log.Warn(
                 "Battle",
@@ -192,32 +192,32 @@ class BattleHeadStatePanel {
       (this.hMe = () => {
         this.ClearAllHeadState();
       }),
-      (this.uht = () => {
+      (this.Ilt = () => {
         this.ClearAllHeadState();
       }),
       (this.OnAddOrRemoveBuff = (t, e, a, i) => {
-        var r = this.oht(t);
+        var r = this.glt(t);
         r && r.AddOrRemoveBuff(t, e, a, i);
       }),
       (this.OnRoleLevelChange = (t, e, a) => {
-        for (const i of this.Kat.values()) i.RoleLevelChange(t, e, a);
+        for (const i of this.rlt.values()) i.RoleLevelChange(t, e, a);
       }),
       (this.OnChangeTeam = () => {
-        for (const t of this.Kat.values()) t.ChangeTeam();
+        for (const t of this.rlt.values()) t.ChangeTeam();
       }),
-      (this.cht = (t) => {
-        this.lht(t);
+      (this.Tlt = (t) => {
+        this.Slt(t);
       }),
-      (this.Xat = CommonParamById_1.configCommonParamById.GetIntConfig(
+      (this.slt = CommonParamById_1.configCommonParamById.GetIntConfig(
         "ComStateShowMaxDistance",
       )),
-      (this.$at = CommonParamById_1.configCommonParamById.GetIntConfig(
+      (this.hlt = CommonParamById_1.configCommonParamById.GetIntConfig(
         "ComStateShowDistance",
       )),
-      (this.Yat = CommonParamById_1.configCommonParamById.GetIntConfig(
+      (this.llt = CommonParamById_1.configCommonParamById.GetIntConfig(
         "GameplayStateShowMaxDistance",
       )),
-      (this.Jat = CommonParamById_1.configCommonParamById.GetIntConfig(
+      (this._lt = CommonParamById_1.configCommonParamById.GetIntConfig(
         "GameplayStateShowDistance",
       ));
     var t = CommonParamById_1.configCommonParamById.GetStringConfig(
@@ -226,20 +226,20 @@ class BattleHeadStatePanel {
       e = CommonParamById_1.configCommonParamById.GetStringConfig(
         "DurabilityHeadStateScaleCurvePath",
       );
-    (this.eht = CommonParamById_1.configCommonParamById.GetIntConfig(
+    (this.mlt = CommonParamById_1.configCommonParamById.GetIntConfig(
       "TempHeadStateHideTime",
     )),
-      (this.qot = CommonParamById_1.configCommonParamById.GetIntConfig(
+      (this.Xrt = CommonParamById_1.configCommonParamById.GetIntConfig(
         "ComHPAttenuateBufferSpeed",
       )),
-      (this.tht = CommonParamById_1.configCommonParamById.GetIntConfig(
+      (this.dlt = CommonParamById_1.configCommonParamById.GetIntConfig(
         "Detail_Head_State_Range",
       )),
       ResourceSystem_1.ResourceSystem.LoadAsync(
         e,
         UE.CurveFloat,
         (t) => {
-          t?.IsValid() && (this.Zat = t);
+          t?.IsValid() && (this.clt = t);
         },
         103,
       ),
@@ -248,7 +248,7 @@ class BattleHeadStatePanel {
         UE.CurveFloat,
         (t) => {
           t?.IsValid() &&
-            ((this.zat = t),
+            ((this.ult = t),
             this.RefreshCurrentRole(),
             this.InitializeEntityList(),
             this.Ore());
@@ -259,41 +259,41 @@ class BattleHeadStatePanel {
   InitializeEntityList() {
     var t = ModelManager_1.ModelManager.CreatureModel.GetAllEntities();
     if (t) {
-      for (const e of t) e.IsInit && this.mht(e.Entity) && this.dht(e.Entity);
+      for (const e of t) e.IsInit && this.Llt(e.Entity) && this.Dlt(e.Entity);
       this.RefreshAllHeadState(0);
     }
   }
   ResetAllHeadStates() {
     this.kre(),
       this.ClearAllHeadState(),
-      this.Cht(),
-      (this.zat = void 0),
-      (this.Zat = void 0);
+      this.Rlt(),
+      (this.ult = void 0),
+      (this.clt = void 0);
   }
   ClearAllHeadState() {
-    for (const t of this.Kat.values()) t.Destroy();
-    this.Kat.clear();
+    for (const t of this.rlt.values()) t.Destroy();
+    this.rlt.clear();
   }
-  Cht() {
-    for (const t of this.Wat.values()) t.Clear();
-    this.Wat.clear();
+  Rlt() {
+    for (const t of this.olt.values()) t.Clear();
+    this.olt.clear();
   }
   Ore() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.CharOnHealthChanged,
-      this.iht,
+      this.Clt,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnAnySceneItemEntityHit,
-        this.rht,
+        this.flt,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnAnySceneItemDurabilityChange,
-        this.hht,
+        this.Elt,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnAnyProgressControlEnableStateChange,
-        this._ht,
+        this.ylt,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnStartLoadingState,
@@ -301,7 +301,7 @@ class BattleHeadStatePanel {
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.TeleportComplete,
-        this.uht,
+        this.Ilt,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.CharOnBuffAddUITexture,
@@ -319,19 +319,19 @@ class BattleHeadStatePanel {
   kre() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.CharOnHealthChanged,
-      this.iht,
+      this.Clt,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnAnySceneItemEntityHit,
-        this.rht,
+        this.flt,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnAnySceneItemDurabilityChange,
-        this.hht,
+        this.Elt,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnAnyProgressControlEnableStateChange,
-        this._ht,
+        this.ylt,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnStartLoadingState,
@@ -339,7 +339,7 @@ class BattleHeadStatePanel {
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.TeleportComplete,
-        this.uht,
+        this.Ilt,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.CharOnBuffAddUITexture,
@@ -358,102 +358,102 @@ class BattleHeadStatePanel {
     this.RefreshAllHeadState(t);
   }
   RefreshAllHeadState(t) {
-    for (const i of this.Wat.values()) {
+    for (const i of this.olt.values()) {
       var e,
         a = i.GetEntityId();
-      this.fht(i)
-        ? (e = this.oht(a))
-          ? this.pht(e, i.DistanceSquared, t)
-          : this.Mht(i)
-        : this.Sht(a);
+      this.Alt(i)
+        ? (e = this.glt(a))
+          ? this.Plt(e, i.DistanceSquared, t)
+          : this.wlt(i)
+        : this.Blt(a);
     }
   }
-  fht(t) {
+  Alt(t) {
     if (t.IsEntityActive() && !t.HasDeadTag && !t.HasHideTag) {
       t.RefreshDistance();
       var e = t.DistanceSquared,
         a = t.GetHeadStateType();
       if (1 === a || 2 === a) {
-        if (e <= this.$at) return !1;
+        if (e <= this.hlt) return !1;
         if (t.HasFightTag) return !0;
-        if (e <= this.Xat) return !0;
+        if (e <= this.slt) return !0;
       } else {
-        if (e <= this.Jat) return !1;
-        if (e <= this.Yat) return !0;
+        if (e <= this._lt) return !1;
+        if (e <= this.llt) return !0;
       }
     }
     return !1;
   }
-  pht(t, e, a) {
+  Plt(t, e, a) {
     let i = -1;
     1 === t.HeadStateType || 2 === t.HeadStateType
-      ? this.zat && (i = this.zat.GetFloatValue(e))
-      : this.Zat && (i = this.Zat.GetFloatValue(e)),
+      ? this.ult && (i = this.ult.GetFloatValue(e))
+      : this.clt && (i = this.clt.GetFloatValue(e)),
       i < 0 || t.OnRefresh(e, i, a);
   }
   RefreshCurrentRole() {
     var t = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
-    this.Qat = t?.Id ?? 0;
+    this.nlt = t?.Id ?? 0;
   }
   OnCreateEntity(t) {
-    this.mht(t) && this.dht(t);
+    this.Llt(t) && this.Dlt(t);
   }
   OnRemoveEntity(t) {
-    (this.mht(t) || this.sht(t)) && this.lht(t);
+    (this.Llt(t) || this.vlt(t)) && this.Slt(t);
   }
-  dht(t, e) {
+  Dlt(t, e) {
     if (ObjectSystem_1.ObjectSystem.IsValid(t)) {
       var a = t.Id,
-        i = this.nht(a);
+        i = this.plt(a);
       if (i)
-        if (!this.Wat.has(a))
+        if (!this.olt.has(a))
           return (
             (i = new HeadStateData_1.HeadStateData()).Initialize(t),
             i.SetOriginalHp(e ?? 0),
-            this.Wat.set(a, i),
+            this.olt.set(a, i),
             i
           );
     }
   }
-  aht(t, e, a = !0) {
+  Mlt(t, e, a = !0) {
     var i;
-    (a && !this.eht) ||
-      ((i = this.oht(t.Id))
-        ? a && i.ActivateHideTimeDown(this.eht, this.cht)
-        : (i = this.dht(t, e)) &&
+    (a && !this.mlt) ||
+      ((i = this.glt(t.Id))
+        ? a && i.ActivateHideTimeDown(this.mlt, this.Tlt)
+        : (i = this.Dlt(t, e)) &&
           (a
-            ? this.Mht(i).then(
+            ? this.wlt(i).then(
                 (t) => {
-                  t && t.ActivateHideTimeDown(this.eht, this.cht);
+                  t && t.ActivateHideTimeDown(this.mlt, this.Tlt);
                 },
                 () => {},
               )
-            : this.Mht(i)));
+            : this.wlt(i)));
   }
-  lht(t, e = !1) {
-    this.yht(t, e);
-    (e = t.Id), (t = this.Wat.get(e));
-    t && (t.Clear(), this.Wat.delete(e));
+  Slt(t, e = !1) {
+    this.qlt(t, e);
+    (e = t.Id), (t = this.olt.get(e));
+    t && (t.Clear(), this.olt.delete(e));
   }
-  async Iht(a) {
+  async Glt(a) {
     var i = a.GetHeadStateType(),
       r = headStateViewMap.get(i);
     if (r) {
       var s = a.GetEntityId(),
         r = new r();
-      this.Kat.set(s, r);
+      this.rlt.set(s, r);
       let t = void 0,
         e = void 0;
       if (
         ((e =
           1 === i || 2 === i
-            ? ((t = this.Xat), this.$at)
-            : ((t = this.Yat), this.Jat)),
+            ? ((t = this.slt), this.hlt)
+            : ((t = this.llt), this._lt)),
         await r.InitializeHeadState(
           UiLayer_1.UiLayer.WorldSpaceUiRootItem,
           i,
-          this.qot,
-          this.tht,
+          this.Xrt,
+          this.dlt,
           t,
           e,
           a,
@@ -463,13 +463,13 @@ class BattleHeadStatePanel {
         return r;
     }
   }
-  async Mht(t) {
+  async wlt(t) {
     var e = t.GetEntityId();
-    if (e !== this.Qat && (t.IsNormalMonster() || t.IsSceneItem()))
-      return this.Iht(t);
+    if (e !== this.nlt && (t.IsNormalMonster() || t.IsSceneItem()))
+      return this.Glt(t);
   }
-  Sht(t, e = !1) {
-    var a = this.oht(t);
+  Blt(t, e = !1) {
+    var a = this.glt(t);
     a
       ? (e &&
           Log_1.Log.CheckInfo() &&
@@ -478,7 +478,7 @@ class BattleHeadStatePanel {
             t,
           ]),
         a.Destroy(),
-        this.Kat.delete(t))
+        this.rlt.delete(t))
       : e &&
         Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
@@ -488,10 +488,10 @@ class BattleHeadStatePanel {
           ["EntityId", t],
         );
   }
-  yht(t, e = !1) {
+  qlt(t, e = !1) {
     var a;
     t?.Valid
-      ? ((a = t.Id), this.Sht(a, e))
+      ? ((a = t.Id), this.Blt(a, e))
       : e &&
         Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("Battle", 8, "[HeadState]休眠头顶状态条时，实体不可用", [
@@ -499,34 +499,34 @@ class BattleHeadStatePanel {
           t.Id,
         ]);
   }
-  mht(t) {
+  Llt(t) {
     t = t.GetComponent(3);
     return (
       !!t?.Valid &&
       t.CreatureData.GetEntityType() ===
-        Protocol_1.Aki.Protocol.HBs.Proto_Monster &&
+        Protocol_1.Aki.Protocol.wks.Proto_Monster &&
       !t.IsBoss
     );
   }
-  sht(t) {
+  vlt(t) {
     t = t.GetComponent(1);
     return (
       !!t?.Valid &&
       t.CreatureData.GetEntityType() ===
-        Protocol_1.Aki.Protocol.HBs.Proto_SceneItem
+        Protocol_1.Aki.Protocol.wks.Proto_SceneItem
     );
   }
-  nht(t) {
+  plt(t) {
     t = EntitySystem_1.EntitySystem.Get(t).GetComponent(0);
     if (t?.Valid)
       return t.GetBaseInfo()?.HeadStateViewConfig?.HeadStateViewType ?? 0;
   }
-  oht(t) {
-    return this.Kat.get(t);
+  glt(t) {
+    return this.rlt.get(t);
   }
 }
-((exports.BattleHeadStatePanel = BattleHeadStatePanel).ght = void 0),
-  (BattleHeadStatePanel.Tht = void 0),
-  (BattleHeadStatePanel.vht = void 0),
-  (BattleHeadStatePanel.Eht = void 0);
+((exports.BattleHeadStatePanel = BattleHeadStatePanel).Ult = void 0),
+  (BattleHeadStatePanel.Nlt = void 0),
+  (BattleHeadStatePanel.xlt = void 0),
+  (BattleHeadStatePanel.blt = void 0);
 //# sourceMappingURL=BattleHeadStatePanel.js.map

@@ -7,21 +7,21 @@ const Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
 class MarkItemDataUtil {
   static TransformMarkTypeToClient(r) {
     switch (r) {
-      case Protocol_1.Aki.Protocol.qNs.ENUMS.Proto_None:
+      case Protocol_1.Aki.Protocol.T6s.ENUMS.Proto_None:
         return 0;
-      case Protocol_1.Aki.Protocol.qNs.ENUMS.Proto_Custom:
+      case Protocol_1.Aki.Protocol.T6s.ENUMS.Proto_Custom:
         return 9;
-      case Protocol_1.Aki.Protocol.qNs.ENUMS.OMs:
+      case Protocol_1.Aki.Protocol.T6s.ENUMS.eTs:
         return 12;
-      case Protocol_1.Aki.Protocol.qNs.ENUMS.Proto_TemporaryTeleport:
+      case Protocol_1.Aki.Protocol.T6s.ENUMS.Proto_TemporaryTeleport:
         return 15;
-      case Protocol_1.Aki.Protocol.qNs.ENUMS.Proto_SoundBox:
+      case Protocol_1.Aki.Protocol.T6s.ENUMS.Proto_SoundBox:
         return 16;
-      case Protocol_1.Aki.Protocol.qNs.ENUMS.Proto_TreasureBoxPoint:
+      case Protocol_1.Aki.Protocol.T6s.ENUMS.Proto_TreasureBoxPoint:
         return 17;
-      case Protocol_1.Aki.Protocol.qNs.ENUMS.Y6n:
+      case Protocol_1.Aki.Protocol.T6s.ENUMS.U7n:
         return 18;
-      case Protocol_1.Aki.Protocol.qNs.ENUMS.Proto_CalmingWindBell:
+      case Protocol_1.Aki.Protocol.T6s.ENUMS.Proto_CalmingWindBell:
         return 21;
       default:
         return 0;
@@ -30,19 +30,19 @@ class MarkItemDataUtil {
   static InverseTransformMarkTypeToClient(r) {
     switch (r) {
       case 9:
-        return Protocol_1.Aki.Protocol.qNs.ENUMS.Proto_Custom;
+        return Protocol_1.Aki.Protocol.T6s.ENUMS.Proto_Custom;
       case 12:
-        return Protocol_1.Aki.Protocol.qNs.ENUMS.OMs;
+        return Protocol_1.Aki.Protocol.T6s.ENUMS.eTs;
       case 15:
-        return Protocol_1.Aki.Protocol.qNs.ENUMS.Proto_TemporaryTeleport;
+        return Protocol_1.Aki.Protocol.T6s.ENUMS.Proto_TemporaryTeleport;
       case 16:
-        return Protocol_1.Aki.Protocol.qNs.ENUMS.Proto_SoundBox;
+        return Protocol_1.Aki.Protocol.T6s.ENUMS.Proto_SoundBox;
       case 17:
-        return Protocol_1.Aki.Protocol.qNs.ENUMS.Proto_TreasureBoxPoint;
+        return Protocol_1.Aki.Protocol.T6s.ENUMS.Proto_TreasureBoxPoint;
       case 18:
-        return Protocol_1.Aki.Protocol.qNs.ENUMS.Y6n;
+        return Protocol_1.Aki.Protocol.T6s.ENUMS.U7n;
       case 21:
-        return Protocol_1.Aki.Protocol.qNs.ENUMS.Proto_CalmingWindBell;
+        return Protocol_1.Aki.Protocol.T6s.ENUMS.Proto_CalmingWindBell;
       default:
         return 0;
     }

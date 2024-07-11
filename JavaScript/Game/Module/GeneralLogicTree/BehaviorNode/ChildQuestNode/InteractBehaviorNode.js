@@ -8,19 +8,19 @@ const IComponent_1 = require("../../../../../UniverseEditor/Interface/IComponent
   ChildQuestNodeBase_1 = require("./ChildQuestNodeBase");
 class InteractBehaviorNode extends ChildQuestNodeBase_1.ChildQuestNodeBase {
   constructor() {
-    super(...arguments), (this.P5s = []), (this.xQt = void 0), (this.PQt = []);
+    super(...arguments), (this.yWs = []), (this.xXt = void 0), (this.PXt = []);
   }
   get CorrelativeEntities() {
-    return this.PQt;
+    return this.PXt;
   }
   OnCreate(e) {
     if (!super.OnCreate(e)) return !1;
     e = e.Condition;
     if ("DoInteract" !== e.Type) return !1;
     if (!e.AddOptions) return !1;
-    (this.TrackTextRuleInner = 1), (this.PQt = []);
+    (this.TrackTextRuleInner = 1), (this.PXt = []);
     for (const r of e.AddOptions) {
-      this.PQt.push(r.EntityId);
+      this.PXt.push(r.EntityId);
       var t = ModelManager_1.ModelManager.CreatureModel.GetCompleteEntityData(
         r.EntityId,
       );
@@ -30,35 +30,35 @@ class InteractBehaviorNode extends ChildQuestNodeBase_1.ChildQuestNodeBase {
           "BaseInfoComponent",
         )) &&
         t.Occupation &&
-        this.P5s.push(t.Occupation);
+        this.yWs.push(t.Occupation);
     }
     return !0;
   }
   OnStart() {
-    for (const e of this.P5s)
+    for (const e of this.yWs)
       this.Blackboard.AddRefOccupationId(this.NodeId, e);
   }
   OnEnd() {
-    for (const e of this.P5s)
+    for (const e of this.yWs)
       this.Blackboard.RemoveRefOccupationId(this.NodeId, e);
   }
   OnUpdateProgress(e) {
     return (
-      !!e.Qfs &&
-      ((this.xQt = e.Qfs.tvs),
+      !!e.uEs &&
+      ((this.xXt = e.uEs.vEs),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.GeneralLogicTreeEntityInteractFinished,
         this.NodeId,
-        this.xQt,
+        this.xXt,
       ),
       !0)
     );
   }
   GetProgress() {
-    return this.xQt?.length.toString() ?? "0";
+    return this.xXt?.length.toString() ?? "0";
   }
   GetProgressMax() {
-    return this.PQt?.length.toString() ?? "0";
+    return this.PXt?.length.toString() ?? "0";
   }
 }
 exports.InteractBehaviorNode = InteractBehaviorNode;

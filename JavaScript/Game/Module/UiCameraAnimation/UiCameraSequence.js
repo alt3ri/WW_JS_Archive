@@ -13,80 +13,80 @@ const puerts_1 = require("puerts"),
   FIGHT_CAMERA = new UE.FName("FightCamera");
 class UiCameraSequence {
   constructor() {
-    (this.Bkt = void 0),
-      (this.BRo = void 0),
-      (this.bRo = void 0),
-      (this.qRo = []),
-      (this.GRo = !1),
-      (this.NRo = void 0),
-      (this.ORo = void 0),
-      (this.jRo = () => {
-        this.WRo();
+    (this.b2t = void 0),
+      (this.PUo = void 0),
+      (this.xUo = void 0),
+      (this.wUo = []),
+      (this.BUo = !1),
+      (this.bUo = void 0),
+      (this.qUo = void 0),
+      (this.FUo = () => {
+        this.VUo();
       });
   }
   InitializeUiCameraSequence(e) {
-    (this.Bkt = this.QRo(e)),
-      (this.Bkt.bOverrideInstanceData = !1),
-      (this.BRo = this.Bkt.DefaultInstanceData),
-      this.VRo(this.Bkt);
+    (this.b2t = this.jUo(e)),
+      (this.b2t.bOverrideInstanceData = !1),
+      (this.PUo = this.b2t.DefaultInstanceData),
+      this.OUo(this.b2t);
   }
   PlayUiCameraSequence(e = 1, i = !1, t = !0) {
-    this.Bkt &&
-      ((this.GRo = t),
-      (t = this.Bkt.SequencePlayer).SetPlayRate(e),
-      t.OnFinished.Add(this.jRo),
+    this.b2t &&
+      ((this.BUo = t),
+      (t = this.b2t.SequencePlayer).SetPlayRate(e),
+      t.OnFinished.Add(this.FUo),
       i ? t.PlayReverse() : t.Play());
   }
   Pause() {
     var e;
-    this.Bkt?.IsValid() &&
-      (e = this.Bkt.SequencePlayer)?.IsValid() &&
+    this.b2t?.IsValid() &&
+      (e = this.b2t.SequencePlayer)?.IsValid() &&
       e.Pause();
   }
   Continue() {
     var e;
-    this.Bkt?.IsValid() &&
-      (e = this.Bkt.SequencePlayer)?.IsValid() &&
+    this.b2t?.IsValid() &&
+      (e = this.b2t.SequencePlayer)?.IsValid() &&
       e.IsPaused() &&
       e.Play();
   }
   DestroyUiCameraSequence(e = !0) {
-    this.XRo(),
-      this.$Ro(),
+    this.WUo(),
+      this.KUo(),
       e && this.DestroyBlackScreenView(),
-      (this.qRo.length = 0),
-      (this.NRo = void 0),
-      (this.ORo = void 0);
+      (this.wUo.length = 0),
+      (this.bUo = void 0),
+      (this.qUo = void 0);
   }
-  WRo() {
-    for (const e of this.qRo) e(this);
-    this.DestroyUiCameraSequence(this.GRo);
+  VUo() {
+    for (const e of this.wUo) e(this);
+    this.DestroyUiCameraSequence(this.BUo);
   }
-  XRo() {
-    this.Bkt && this.Bkt.SequencePlayer.Stop();
+  WUo() {
+    this.b2t && this.b2t.SequencePlayer.Stop();
   }
-  $Ro() {
-    this.Bkt && (this.Bkt.SetShouldLatentDestroy(!0), (this.Bkt = void 0));
+  KUo() {
+    this.b2t && (this.b2t.SetShouldLatentDestroy(!0), (this.b2t = void 0));
   }
   ExecuteUiCameraSequenceEvent(e) {
-    this.NRo && this.ORo === e && this.NRo();
+    this.bUo && this.qUo === e && this.bUo();
   }
   SetTransformOrigin(e) {
-    this.BRo &&
-      ((this.Bkt.bOverrideInstanceData = !0), (this.BRo.TransformOrigin = e));
+    this.PUo &&
+      ((this.b2t.bOverrideInstanceData = !0), (this.PUo.TransformOrigin = e));
   }
   SetTransformOriginActor(e) {
-    this.BRo &&
-      ((this.Bkt.bOverrideInstanceData = !0),
-      (this.BRo.TransformOriginActor = e));
+    this.PUo &&
+      ((this.b2t.bOverrideInstanceData = !0),
+      (this.PUo.TransformOriginActor = e));
   }
   AddUiCameraSequenceEvent(e, i) {
-    (this.ORo = e), (this.NRo = i);
+    (this.qUo = e), (this.bUo = i);
   }
   AddUiCameraSequenceFinishedCallback(e) {
-    e && this.qRo.push(e);
+    e && this.wUo.push(e);
   }
-  QRo(e) {
+  jUo(e) {
     var i = (0, puerts_1.$ref)(void 0),
       e =
         (UE.LevelSequencePlayer.CreateLevelSequencePlayer(
@@ -98,12 +98,12 @@ class UiCameraSequence {
         (0, puerts_1.$unref)(i));
     return e;
   }
-  VRo(i) {
+  OUo(i) {
     i.ResetBindings();
     var e,
       t = i.GetSequence();
     t.HasBindingTag(BLACK_TEXTURE_TAG, !0) &&
-      this.YRo().then(
+      this.QUo().then(
         (e) => {
           e = e.GetBlackScreenTextureActor();
           i.AddBindingByTag(BLACK_TEXTURE_TAG, e);
@@ -123,23 +123,23 @@ class UiCameraSequence {
           ).CameraActor),
         i.AddBindingByTag(FIGHT_CAMERA, e));
   }
-  async YRo() {
+  async QUo() {
     var e;
     return (
-      this.bRo ||
+      this.xUo ||
         ((e = UiLayer_1.UiLayer.GetLayerRootUiItem(
           UiLayerType_1.ELayerType.Pop,
         )),
-        (this.bRo = new BlackScreenView_1.BlackScreenView()),
-        await this.bRo.CreateThenShowByResourceIdAsync(
+        (this.xUo = new BlackScreenView_1.BlackScreenView()),
+        await this.xUo.CreateThenShowByResourceIdAsync(
           "UiView_BlackScreen_Prefab",
           e,
         )),
-      this.bRo
+      this.xUo
     );
   }
   DestroyBlackScreenView() {
-    this.bRo && (this.bRo.Destroy(), (this.bRo = void 0));
+    this.xUo && (this.xUo.Destroy(), (this.xUo = void 0));
   }
 }
 exports.UiCameraSequence = UiCameraSequence;

@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AiStateMachineTaskSkill = void 0);
 const Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
   CombatMessage_1 = require("../../../Module/CombatMessage/CombatMessage"),
-  CombatDebugController_1 = require("../../../Utils/CombatDebugController"),
+  CombatLog_1 = require("../../../Utils/CombatLog"),
   AiStateMachine_1 = require("../AiStateMachine"),
   AiStateMachineTask_1 = require("./AiStateMachineTask");
 class AiStateMachineTaskSkill extends AiStateMachineTask_1.AiStateMachineTask {
@@ -51,14 +51,14 @@ class AiStateMachineTaskSkill extends AiStateMachineTask_1.AiStateMachineTask {
             ContextId: t,
             Context: "AiStateMachineTaskSkill.OnEnter",
           }))))
-      : CombatDebugController_1.CombatDebugController.CombatError(
+      : CombatLog_1.CombatLog.Error(
           "StateMachineNew",
           this.Node.Entity,
           `状态节点执行技能失败，技能查询失败，节点[${this.Node.Name}]，技能名[${this.SkillName}]`,
         );
   }
   OnTick(t, i) {
-    var e;
+    var s;
     this.Done ||
       (!this.Node.ActorComponent.IsAutonomousProxy && !this.PreExecution) ||
       (this.Node.ElapseTime < this.Timeout
@@ -66,16 +66,16 @@ class AiStateMachineTaskSkill extends AiStateMachineTask_1.AiStateMachineTask {
             ContextId: i,
             Context: "AiStateMachineTaskSkill.OnTick",
           }))
-        : (CombatDebugController_1.CombatDebugController.CombatInfo(
+        : (CombatLog_1.CombatLog.Info(
             "StateMachineNew",
             this.Node.Entity,
             `状态机技能释放失败 节点[${this.Node.Name}]，技能名[${this.SkillName}]`,
           ),
-          ((e = Protocol_1.Aki.Protocol.UNn.create()).vkn = this.SkillId),
+          ((s = Protocol_1.Aki.Protocol.o4n.create()).X4n = this.SkillId),
           CombatMessage_1.CombatNet.Call(
-            14218,
+            23875,
             this.Node.Entity,
-            e,
+            s,
             () => {},
             i,
           ),

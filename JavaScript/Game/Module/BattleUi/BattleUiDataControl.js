@@ -10,14 +10,14 @@ const Protocol_1 = require("../../../Core/Define/Net/Protocol"),
   InputDistributeController_1 = require("../../Ui/InputDistribute/InputDistributeController");
 class BattleUiDataControl extends UiControllerBase_1.UiControllerBase {
   static OnAddEvents() {
-    EventSystem_1.EventSystem.Add(EventDefine_1.EEventName.OpenView, this.UKe),
+    EventSystem_1.EventSystem.Add(EventDefine_1.EEventName.OpenView, this.FQe),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.CloseView,
         this.$Ge,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnLogicTreeNodeProgressChange,
-        this.AKe,
+        this.VQe,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnLogicTreeNodeStatusChange,
@@ -25,13 +25,13 @@ class BattleUiDataControl extends UiControllerBase_1.UiControllerBase {
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.GeneralLogicTreeRemove,
-        this.PKe,
+        this.HQe,
       );
   }
   static OnRemoveEvents() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OpenView,
-      this.UKe,
+      this.FQe,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.CloseView,
@@ -39,7 +39,7 @@ class BattleUiDataControl extends UiControllerBase_1.UiControllerBase {
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnLogicTreeNodeProgressChange,
-        this.AKe,
+        this.VQe,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnLogicTreeNodeStatusChange,
@@ -47,7 +47,7 @@ class BattleUiDataControl extends UiControllerBase_1.UiControllerBase {
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.GeneralLogicTreeRemove,
-        this.PKe,
+        this.HQe,
       );
     var e =
       ModelManager_1.ModelManager.BattleUiModel.ExploreModeData.GetActionNames();
@@ -57,7 +57,7 @@ class BattleUiDataControl extends UiControllerBase_1.UiControllerBase {
     );
   }
 }
-((exports.BattleUiDataControl = BattleUiDataControl).UKe = (e) => {
+((exports.BattleUiDataControl = BattleUiDataControl).FQe = (e) => {
   "GuideFocusView" === e &&
     ModelManager_1.ModelManager.BattleUiModel.ExploreModeData.UpdateGuidingState(
       !0,
@@ -69,18 +69,18 @@ class BattleUiDataControl extends UiControllerBase_1.UiControllerBase {
         !1,
       );
   }),
-  (BattleUiDataControl.AKe = (t, n) => {
-    if (t && 6 === t.Type && n.Wfs) {
+  (BattleUiDataControl.VQe = (t, n) => {
+    if (t && 6 === t.Type && n.lEs) {
       let e = void 0;
       switch (t.BtType) {
-        case Protocol_1.Aki.Protocol.NCs.Proto_BtTypeQuest:
+        case Protocol_1.Aki.Protocol.tps.Proto_BtTypeQuest:
           e = ModelManager_1.ModelManager.QuestNewModel.GetQuestNodeConfig(
             t.TreeConfigId,
             t.NodeId,
           );
           break;
-        case Protocol_1.Aki.Protocol.NCs.Proto_BtTypeLevelPlay:
-        case Protocol_1.Aki.Protocol.NCs.Proto_BtTypeInst:
+        case Protocol_1.Aki.Protocol.tps.Proto_BtTypeLevelPlay:
+        case Protocol_1.Aki.Protocol.tps.Proto_BtTypeInst:
           e = ModelManager_1.ModelManager.LevelPlayModel.GetLevelPlayNodeConfig(
             t.TreeConfigId,
             t.NodeId,
@@ -94,22 +94,22 @@ class BattleUiDataControl extends UiControllerBase_1.UiControllerBase {
         ModelManager_1.ModelManager.BattleUiModel.MergeHeadStateData.UpdateProgress(
           t.TreeIncId,
           t.NodeId,
-          n.Wfs,
+          n.lEs,
           o.TidMonsterGroupName,
         );
     }
   }),
   (BattleUiDataControl.fIe = (e, t, n) => {
     e instanceof LevelGeneralContextDefine_1.GeneralLogicTreeContext &&
-      ((n !== Protocol_1.Aki.Protocol.N2s.Proto_CompletedFailed &&
-        n !== Protocol_1.Aki.Protocol.N2s.Proto_CompletedSuccess &&
-        n !== Protocol_1.Aki.Protocol.N2s.Proto_Destroy) ||
+      ((n !== Protocol_1.Aki.Protocol.DNs.Proto_CompletedFailed &&
+        n !== Protocol_1.Aki.Protocol.DNs.Proto_CompletedSuccess &&
+        n !== Protocol_1.Aki.Protocol.DNs.Proto_Destroy) ||
         ModelManager_1.ModelManager.BattleUiModel.MergeHeadStateData.RemoveNode(
           e.TreeIncId,
           e.NodeId,
         ));
   }),
-  (BattleUiDataControl.PKe = (e) => {
+  (BattleUiDataControl.HQe = (e) => {
     ModelManager_1.ModelManager.BattleUiModel.MergeHeadStateData.RemoveTree(e);
   }),
   (BattleUiDataControl.bMe = (e, t) => {

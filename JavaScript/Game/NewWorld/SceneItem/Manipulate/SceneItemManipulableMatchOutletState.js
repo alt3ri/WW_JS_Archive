@@ -14,19 +14,19 @@ class SceneItemManipulableMatchOutletState extends SceneItemManipulableBaseState
       (this.SceneItem.IsCanBeHeld = !0),
       this.OpenPhysicsSplit(),
       (this.PropComp.IsMoving = !1),
-      this.Lnr();
+      this.ysr();
   }
   OnExit() {
     this.SceneItem.TryRemoveTagById(1370513573),
       this.ClosePhysicsSplit(),
       (this.PropComp.IsMoving = !0),
-      this.Dnr();
+      this.Isr();
   }
-  Lnr() {
+  ysr() {
     var t,
       e,
       a,
-      i = this.SceneItem.Entity.GetComponent(110),
+      i = this.SceneItem.Entity.GetComponent(112),
       s = this.SceneItem.ActivatedOutlet;
     i &&
       s?.GetIsNeedAttach() &&
@@ -47,8 +47,8 @@ class SceneItemManipulableMatchOutletState extends SceneItemManipulableBaseState
         "[MatchOutletState] TryAttachToOutlet",
       ));
   }
-  Dnr() {
-    var t = this.SceneItem.Entity.GetComponent(110);
+  Isr() {
+    var t = this.SceneItem.Entity.GetComponent(112);
     t && t.UnRegTarget("[MatchOutletState] TryDetachFromOutlet");
   }
 }

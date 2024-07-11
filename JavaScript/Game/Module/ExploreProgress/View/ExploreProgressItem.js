@@ -9,13 +9,13 @@ const UE = require("ue"),
 class ExploreProgressItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this.GTn = void 0),
-      (this.OTn = () => {
-        this.GTn &&
-          UiManager_1.UiManager.OpenView("ExploreMissionView", this.GTn.AreaId);
+      (this.jHs = void 0),
+      (this.WHs = () => {
+        this.jHs &&
+          UiManager_1.UiManager.OpenView("ExploreMissionView", this.jHs.AreaId);
       }),
-      (this.NTn = () => {
-        var e = this.GTn?.GetPhantomSkillHelpId();
+      (this.KHs = () => {
+        var e = this.jHs?.GetPhantomSkillHelpId();
         e && HelpController_1.HelpController.OpenHelpById(e);
       });
   }
@@ -31,12 +31,12 @@ class ExploreProgressItem extends UiPanelBase_1.UiPanelBase {
       [7, UE.UIText],
     ]),
       (this.BtnBindInfo = [
-        [4, this.OTn],
-        [6, this.NTn],
+        [4, this.WHs],
+        [6, this.KHs],
       ]);
   }
   Refresh(i) {
-    var s = (this.GTn = i).GetProgress();
+    var s = (this.jHs = i).GetProgress();
     if (
       (LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(0), i.GetNameId()),
       this.GetSprite(2).SetFillAmount(s / 100),
@@ -45,15 +45,13 @@ class ExploreProgressItem extends UiPanelBase_1.UiPanelBase {
         : this.GetText(1).SetText(
             i.GetCurrentCount() + "/" + i.GetTotalCount(),
           ),
+      this.GetItem(3).SetUIActive(6 === i.ExploreType),
       i.IsCompleted())
     )
-      this.GetItem(3).SetUIActive(!1), this.GetItem(5).SetUIActive(!1);
+      this.GetItem(5).SetUIActive(!1);
     else {
       (s = i.HasPhantomSkill()),
-        (s =
-          (this.GetItem(3).SetUIActive(6 === i.ExploreType),
-          this.GetItem(5).SetUIActive(s),
-          this.GetText(7)));
+        (s = (this.GetItem(5).SetUIActive(s), this.GetText(7)));
       let e = void 0;
       (e = i.GetIsPhantomSkillUnlock()
         ? (s.SetChangeColor(!1), i.GetUnlockTextId())

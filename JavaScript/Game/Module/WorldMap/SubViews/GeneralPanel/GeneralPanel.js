@@ -8,15 +8,15 @@ const ButtonItem_1 = require("../../../Common/Button/ButtonItem"),
 class GeneralPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
   constructor() {
     super(...arguments),
-      (this.dko = void 0),
-      (this.$Ut = void 0),
-      (this.Rko = () => {
+      (this.u2o = void 0),
+      (this.ZAt = void 0),
+      (this.T2o = () => {
         MapController_1.MapController.RequestTrackMapMark(
-          this.dko.MarkType,
-          this.dko.MarkId,
-          !this.dko.IsTracked,
+          this.u2o.MarkType,
+          this.u2o.MarkId,
+          !this.u2o.IsTracked,
         ),
-          this.Uko(),
+          this.L2o(),
           this.Close();
       });
   }
@@ -30,38 +30,38 @@ class GeneralPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
   }
   OnStart() {
     this.RootItem.SetRaycastTarget(!1),
-      (this.$Ut = new ButtonItem_1.ButtonItem(this.GetButton(11).RootUIComp)),
-      this.$Ut.SetFunction(this.Rko);
+      (this.ZAt = new ButtonItem_1.ButtonItem(this.GetButton(11).RootUIComp)),
+      this.ZAt.SetFunction(this.T2o);
   }
   OnShowWorldMapSecondaryUi(t) {
-    (this.dko = t),
-      this.Uko(),
-      this.GetText(1).SetText(this.dko.GetTitleText()),
-      this.GetText(4).ShowTextNew(this.dko.MarkConfig.MarkDesc),
-      this.SetSpriteByPath(this.dko.IconPath, this.GetSprite(0), !1),
+    (this.u2o = t),
+      this.L2o(),
+      this.GetText(1).SetText(this.u2o.GetTitleText()),
+      this.GetText(4).ShowTextNew(this.u2o.MarkConfig.MarkDesc),
+      this.SetSpriteByPath(this.u2o.IconPath, this.GetSprite(0), !1),
       this.GetItem(12).SetUIActive(!1),
       this.GetVerticalLayout(7).RootUIComp.SetUIActive(!1),
       this.GetItem(6).SetUIActive(!1),
       this.GetVerticalLayout(5).RootUIComp.SetUIActive(!1),
       this.GetItem(9).SetUIActive(!1),
       this.GetItem(8).SetUIActive(!1);
-    var t = this.dko.GetAreaText(),
+    var t = this.u2o.GetAreaText(),
       e = void 0 !== t;
     this.GetText(3).SetUIActive(e),
       this.GetItem(22).SetUIActive(e),
       e && this.GetText(3).SetText(t),
       this.RootItem.SetUIActive(!0);
   }
-  Uko() {
-    this.dko &&
-      this.$Ut.SetLocalText(
-        this.dko.IsTracked
+  L2o() {
+    this.u2o &&
+      this.ZAt.SetLocalText(
+        this.u2o.IsTracked
           ? "InstanceDungeonEntranceCancelTrack"
           : "InstanceDungeonEntranceTrack",
       );
   }
   OnBeforeDestroy() {
-    this.$Ut.Destroy();
+    this.ZAt.Destroy();
   }
 }
 exports.GeneralPanel = GeneralPanel;

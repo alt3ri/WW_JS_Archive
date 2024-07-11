@@ -10,7 +10,7 @@ const UE = require("ue"),
 class CookMaterialItemContent extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this.Aqt = void 0),
+      (this.wGt = void 0),
       (this.ClickDelegate = void 0),
       (this.OnClick = () => {
         this?.ClickDelegate();
@@ -57,19 +57,19 @@ class CookMaterialItemContent extends UiPanelBase_1.UiPanelBase {
       this.GetSprite(11).SetUIActive(!1);
   }
   Update(t) {
-    (this.Aqt = t), this.RefreshHave(), this.Kbe(), this.Pqt();
+    (this.wGt = t), this.RefreshHave(), this.Kbe(), this.BGt();
   }
   RefreshNeed(t = 1) {
     this.RefreshHave(t);
   }
   RefreshHave(t = 1) {
-    var t = this.Aqt.k4n * t,
+    var t = this.wGt.MVn * t,
       i = ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
-        this.Aqt.G3n,
+        this.wGt.f8n,
       );
     let e = void 0;
-    (e = this.Aqt.m3n
-      ? i < this.Aqt.k4n
+    (e = this.wGt.G6n
+      ? i < this.wGt.MVn
         ? StringUtils_1.StringUtils.Format(
             CommonDefine_1.MATERIAL_NOT_ENOUGHT_TEXT_PATTERN,
             i.toString(),
@@ -88,16 +88,16 @@ class CookMaterialItemContent extends UiPanelBase_1.UiPanelBase {
   }
   Kbe() {
     var t;
-    this.Aqt.m3n
+    this.wGt.G6n
       ? (this.GetTexture(1).SetUIActive(!0),
-        (t = ConfigManager_1.ConfigManager.ItemConfig.GetConfig(this.Aqt.G3n)),
+        (t = ConfigManager_1.ConfigManager.ItemConfig.GetConfig(this.wGt.f8n)),
         this.SetTextureByPath(t.Icon, this.GetTexture(1)))
       : this.GetTexture(1).SetUIActive(!1);
   }
-  Pqt() {
-    this.Aqt.m3n
+  BGt() {
+    this.wGt.G6n
       ? (this.GetSprite(0).SetUIActive(!0),
-        this.SetItemQualityIcon(this.GetSprite(0), this.Aqt.G3n))
+        this.SetItemQualityIcon(this.GetSprite(0), this.wGt.f8n))
       : this.GetSprite(0).SetUIActive(!1);
   }
   OnBeforeDestroy() {}
@@ -107,14 +107,14 @@ class CookMaterialItem extends UiPanelBase_1.UiPanelBase {
     super(...arguments),
       (this.yGe = void 0),
       (this.Xy = 0),
-      (this.Wgt = void 0),
-      (this.Aqt = void 0),
+      (this.oft = void 0),
+      (this.wGt = void 0),
       (this.OnClick = () => {
-        this?.Wgt(this.Aqt, this.Xy);
+        this?.oft(this.wGt, this.Xy);
       });
   }
   BindOnClickedCallback(t) {
-    (this.Wgt = void 0), (this.Wgt = t);
+    (this.oft = void 0), (this.oft = t);
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [[0, UE.UIItem]];
@@ -126,7 +126,7 @@ class CookMaterialItem extends UiPanelBase_1.UiPanelBase {
       (this.yGe.ClickDelegate = this.OnClick);
   }
   Update(t, i) {
-    (this.Aqt = t), this.yGe.Update(t), (this.Xy = i);
+    (this.wGt = t), this.yGe.Update(t), (this.Xy = i);
   }
   UpdateSelectedState(t) {
     t === this.Xy ? this.yGe.SetSelect() : this.yGe.SetDelect();

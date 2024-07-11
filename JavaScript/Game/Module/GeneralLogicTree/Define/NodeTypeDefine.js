@@ -130,6 +130,10 @@ function newNodeObj(o) {
     CheckConditionGroup: new NodeTypeData(
       ServerAchieveChildQuestNode_1.ServerAchieveChildQuestNode,
     ),
+    CheckActivityState: new NodeTypeData(
+      ServerAchieveChildQuestNode_1.ServerAchieveChildQuestNode,
+    ),
+    CheckPlayerInput: new NodeTypeData(void 0),
   }),
   (exports.newNodeObj = newNodeObj);
 //# sourceMappingURL=NodeTypeDefine.js.map

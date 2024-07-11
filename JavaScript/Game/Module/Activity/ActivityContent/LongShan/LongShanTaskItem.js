@@ -48,7 +48,7 @@ class LongShanTaskItem extends GridProxyAbstract_1.GridProxyAbstract {
     );
   }
   Refresh(i, e, t) {
-    this.BOe = i.Ekn;
+    this.BOe = i.J4n;
     var r = LongShanTaskById_1.configLongShanTaskById.GetConfig(this.BOe),
       s = [];
     for (const n of r.TaskReward) {
@@ -56,16 +56,16 @@ class LongShanTaskItem extends GridProxyAbstract_1.GridProxyAbstract {
       s.push(o);
     }
     this.bOe.RefreshByData(s),
-      this.GetButton(1).RootUIComp.SetUIActive(i.$0s && !i.H0s),
-      this.GetItem(3).SetUIActive(i.H0s),
-      this.GetItem(2).SetUIActive(!i.$0s && 0 === r.JumpId),
-      this.GetButton(0).RootUIComp.SetUIActive(!i.$0s && 0 < r.JumpId),
+      this.GetButton(1).RootUIComp.SetUIActive(i.sMs && !i.aMs),
+      this.GetItem(3).SetUIActive(i.aMs),
+      this.GetItem(2).SetUIActive(!i.sMs && 0 === r.JumpId),
+      this.GetButton(0).RootUIComp.SetUIActive(!i.sMs && 0 < r.JumpId),
       LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(4), r.TaskName),
       LguiUtil_1.LguiUtil.SetLocalTextNew(
         this.GetText(5),
         "LongShanStage_Progress",
-        i.k0s,
-        i.s3n,
+        i.iMs,
+        i.b6n,
       );
   }
 }

@@ -26,25 +26,25 @@ class TutorialUtils {
     );
   }
   static GetTutorialTypeIconPath(t) {
-    if (this.qDo.has(t))
+    if (this.wRo.has(t))
       return (
-        (t = TutorialUtils.qDo.get(t)),
+        (t = TutorialUtils.wRo.get(t)),
         ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(t)
       );
   }
   static GetTutorialTypeTxt(t) {
-    if (this.GDo.has(t)) return TutorialUtils.GDo.get(t);
+    if (this.BRo.has(t)) return TutorialUtils.BRo.get(t);
   }
 }
 ((exports.TutorialUtils = TutorialUtils).FixedDropDropShowPlanId = 2),
-  (TutorialUtils.qDo = new Map([
+  (TutorialUtils.wRo = new Map([
     [ETutorialType.All, "SP_TutorialIconAll"],
     [ETutorialType.QteReaction, "SP_TutorialIconQteReaction"],
     [ETutorialType.Enemy, "SP_TutorialIconEnemy"],
     [ETutorialType.System, "SP_TutorialIconSystem"],
     [ETutorialType.Adventure, "SP_TutorialIconAdventure"],
   ])),
-  (TutorialUtils.GDo = new Map([
+  (TutorialUtils.BRo = new Map([
     [ETutorialType.All, "GuideTutorialType_0"],
     [ETutorialType.QteReaction, "GuideTutorialType_1"],
     [ETutorialType.Enemy, "GuideTutorialType_2"],

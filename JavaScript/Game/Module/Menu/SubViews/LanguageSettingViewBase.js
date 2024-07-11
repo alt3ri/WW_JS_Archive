@@ -21,13 +21,13 @@ class LanguageSettingViewBase extends UiViewBase_1.UiViewBase {
       (this.ConfirmButton = void 0),
       (this.ScrollView = void 0),
       (this.SelectedToggle = void 0),
-      (this.lwi = void 0),
+      (this.lBi = void 0),
       (this.IsConfirm = !1),
-      (this.Jqt = () => {
+      (this.eNt = () => {
         this.CloseMe();
       }),
-      (this._wi = () => {
-        (this.IsConfirm = !0), this.Jqt();
+      (this._Bi = () => {
+        (this.IsConfirm = !0), this.eNt();
       }),
       (this.DoSelected = (e, t) => {
         this.SelectedToggle !== e && 1 === t && this.SelectedToggle?.UnSelect(),
@@ -56,12 +56,12 @@ class LanguageSettingViewBase extends UiViewBase_1.UiViewBase {
     ];
   }
   OnStart() {
-    (this.lwi = this.OpenParam),
-      (this.MenuDataIns = this.lwi[0]),
+    (this.lBi = this.OpenParam),
+      (this.MenuDataIns = this.lBi[0]),
       (this.CancelButton = new ButtonItem_1.ButtonItem(this.GetItem(1))),
       (this.ConfirmButton = new ButtonItem_1.ButtonItem(this.GetItem(2))),
-      this.CancelButton.SetFunction(this.Jqt),
-      this.ConfirmButton.SetFunction(this._wi),
+      this.CancelButton.SetFunction(this.eNt),
+      this.ConfirmButton.SetFunction(this._Bi),
       (this.ScrollView = new GenericScrollView_1.GenericScrollView(
         this.GetScrollViewWithScrollbar(3),
         this.DoRefreshScrollView,
@@ -73,7 +73,7 @@ class LanguageSettingViewBase extends UiViewBase_1.UiViewBase {
       this.MenuDataIns.MenuDataFunctionName ?? "",
     ),
       this.ChildPopView?.PopItem.OverrideBackBtnCallBack(() => {
-        this.Jqt();
+        this.eNt();
       });
   }
   InitScrollViewData() {
@@ -92,8 +92,8 @@ class LanguageSettingViewBase extends UiViewBase_1.UiViewBase {
         MenuController_1.MenuController.NoticeChange(
           this.MenuDataIns.MenuDataFunctionId,
         ),
-      this.lwi[1](
-        this.lwi[0].MenuDataFunctionId,
+      this.lBi[1](
+        this.lBi[0].MenuDataFunctionId,
         this.SelectedToggle.GetIndex(),
       )),
       (this.IsConfirm = !1);
@@ -118,7 +118,7 @@ class LanguageToggleBase extends UiPanelBase_1.UiPanelBase {
       (this.PreToggled = !1),
       (this.SelectedCallBack = void 0),
       (this.MainText = void 0),
-      (this.uwi = (e) => {
+      (this.uBi = (e) => {
         this.SelectedCallBack?.(this, e), this.OnSelected();
       });
   }
@@ -133,7 +133,7 @@ class LanguageToggleBase extends UiPanelBase_1.UiPanelBase {
       [1, UE.UIText],
       [2, UE.UIText],
     ]),
-      (this.BtnBindInfo = [[0, this.uwi]]);
+      (this.BtnBindInfo = [[0, this.uBi]]);
   }
   OnStart() {
     this.PreToggled && this.GetExtendToggle(0).SetToggleState(1, !1),

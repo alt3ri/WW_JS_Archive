@@ -10,7 +10,6 @@ const CommonParamLang_1 = require("./ConfigCommon/CommonParamLang"),
   OccupationConfigLang_1 = require("./ConfigQuery/OccupationConfigLang"),
   SpeakerLang_1 = require("./ConfigQuery/SpeakerLang"),
   SubtitleTextLang_1 = require("./ConfigQuery/SubtitleTextLang"),
-  TidTextLang_1 = require("./ConfigQuery/TidTextLang"),
   langMap = new Map();
 function getLangInterface(e) {
   return langMap.get(e);
@@ -27,6 +26,5 @@ function getLangInterface(e) {
   ),
   langMap.set("Speaker", SpeakerLang_1.configSpeakerLang),
   langMap.set("SubtitleText", SubtitleTextLang_1.configSubtitleTextLang),
-  langMap.set("TidText", TidTextLang_1.configTidTextLang),
   langMap.set("CommonParam", CommonParamLang_1.configCommonParamLang);
 //# sourceMappingURL=ConfigDefine.js.map

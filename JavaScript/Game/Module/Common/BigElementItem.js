@@ -7,7 +7,7 @@ const UE = require("ue"),
   UiPanelBase_1 = require("../../Ui/Base/UiPanelBase");
 class BigElementItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
-    super(...arguments), (this.Vyt = 0);
+    super(...arguments), (this.ZIt = 0);
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -18,8 +18,8 @@ class BigElementItem extends UiPanelBase_1.UiPanelBase {
   OnStart() {}
   Refresh(e) {
     var t, i;
-    this.Vyt !== e &&
-      ((this.Vyt = e), (t = this.GetTexture(1))) &&
+    this.ZIt !== e &&
+      ((this.ZIt = e), (t = this.GetTexture(1))) &&
       (i = ConfigManager_1.ConfigManager.CommonConfig.GetElementConfig(e)) &&
       ((e = i.Icon4Pure),
       StringUtils_1.StringUtils.IsEmpty(e) ||

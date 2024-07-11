@@ -11,10 +11,10 @@ class ExpComponent extends UiPanelBase_1.UiPanelBase {
     super(),
       (this.IsAddUp = i),
       (this.ExpTweenComponent = void 0),
-      (this.RTt = ""),
+      (this.xLt = ""),
       (this.wqe = void 0),
-      (this.UTt = () => {}),
-      (this.ATt = 0),
+      (this.wLt = () => {}),
+      (this.BLt = 0),
       (this.wqe = t);
   }
   Init() {
@@ -43,11 +43,11 @@ class ExpComponent extends UiPanelBase_1.UiPanelBase {
         this.GetSprite(5),
         this.GetSprite(7),
         void 0,
-        this.UTt,
+        this.wLt,
       ));
   }
   SetLevelFormatText(t) {
-    this.RTt = t;
+    this.xLt = t;
   }
   PlayExpTween(t) {
     let i = 1;
@@ -63,16 +63,16 @@ class ExpComponent extends UiPanelBase_1.UiPanelBase {
   }
   UpdateInitState(t) {
     var i, e;
-    StringUtils_1.StringUtils.IsEmpty(this.RTt)
+    StringUtils_1.StringUtils.IsEmpty(this.xLt)
       ? this.GetText(0).SetText(t.GetCurrentLevel().toString())
       : LguiUtil_1.LguiUtil.SetLocalText(
           this.GetText(0),
-          this.RTt,
+          this.xLt,
           t.GetCurrentLevel().toString(),
         ),
       this.ExpTweenComponent.SetCurrentSpriteActive(!0),
       this.ExpTweenComponent.SetNextSpriteActive(!1),
-      this.PTt(!1),
+      this.bLt(!1),
       this.GetText(2).SetUIActive(!1),
       this.SetMaxItemActive(t.GetArrivedLevel() === t.GetCurrentMaxLevel()),
       t.GetCurrentLevel() === t.GetCurrentMaxLevel()
@@ -89,22 +89,22 @@ class ExpComponent extends UiPanelBase_1.UiPanelBase {
             ? t.AddUpMaxExp(t.GetCurrentLevel() - 1) + t.GetCurrentExp()
             : t.GetCurrentExp()),
           LguiUtil_1.LguiUtil.SetLocalText(this.GetText(3), "ExpShow", e, i)),
-      (this.ATt = t.GetArrivedLevel());
+      (this.BLt = t.GetArrivedLevel());
   }
   Update(t, i = !0) {
     this.GetText(2).SetText("+" + Math.floor(t.GetCurrentAddExp()).toString()),
       this.GetText(2).SetUIActive(0 < t.GetCurrentAddExp()),
-      t.GetIfNext() ? this.xTt(t, i) : this.wTt(t, i);
+      t.GetIfNext() ? this.qLt(t, i) : this.GLt(t, i);
   }
-  xTt(t, i = !0) {
-    this.BTt(t.GetArrivedLevel()),
+  qLt(t, i = !0) {
+    this.NLt(t.GetArrivedLevel()),
       this.SetMaxItemActive(t.GetArrivedLevel() === t.GetCurrentMaxLevel()),
-      i ? this.bTt(t) : this.UpdateNextExpState(t.GetArrivedFillAmount());
+      i ? this.OLt(t) : this.UpdateNextExpState(t.GetArrivedFillAmount());
   }
-  wTt(t, i = !0) {
-    this.PTt(!1),
+  GLt(t, i = !0) {
+    this.bLt(!1),
       this.SetMaxItemActive(t.GetArrivedLevel() === t.GetCurrentMaxLevel()),
-      i ? this.bTt(t) : this.UpdateCurrentExpState(t.GetArrivedFillAmount());
+      i ? this.OLt(t) : this.UpdateCurrentExpState(t.GetArrivedFillAmount());
   }
   UpdateNextExpState(t) {
     this.ExpTweenComponent.SetCurrentSpriteActive(!1),
@@ -115,15 +115,15 @@ class ExpComponent extends UiPanelBase_1.UiPanelBase {
   SetMaxItemActive(t) {
     this.GetItem(8).SetUIActive(t);
   }
-  bTt(t) {
+  OLt(t) {
     this.ExpTweenComponent.PlayPreviewExpTween(
       t.GetCurrentLevel(),
-      this.ATt,
+      this.BLt,
       t.GetArrivedLevel(),
       t.GetCurrentMaxLevel(),
       t.GetArrivedFillAmount(),
     ),
-      (this.ATt = t.GetArrivedLevel());
+      (this.BLt = t.GetArrivedLevel());
   }
   BindPlayCompleteCallBack(t) {
     this.ExpTweenComponent.BindPlayCompleteCallBack(t);
@@ -133,16 +133,16 @@ class ExpComponent extends UiPanelBase_1.UiPanelBase {
       this.ExpTweenComponent.SetAddFillAmount(t),
       this.ExpTweenComponent.SetNextSpriteActive(!1);
   }
-  PTt(t) {
+  bLt(t) {
     t || this.GetText(1).SetText(""), this.GetItem(4).SetUIActive(t);
   }
-  BTt(t) {
-    this.PTt(!0),
-      StringUtils_1.StringUtils.IsEmpty(this.RTt)
+  NLt(t) {
+    this.bLt(!0),
+      StringUtils_1.StringUtils.IsEmpty(this.xLt)
         ? this.GetText(1).SetText(t.toString())
         : LguiUtil_1.LguiUtil.SetLocalText(
             this.GetText(1),
-            this.RTt,
+            this.xLt,
             t.toString(),
           );
   }

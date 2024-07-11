@@ -5,16 +5,16 @@ const ModelBase_1 = require("../../../Core/Framework/ModelBase"),
   RenderModuleController_1 = require("../../Render/Manager/RenderModuleController");
 class WuYinAreaModel extends ModelBase_1.ModelBase {
   constructor() {
-    super(...arguments), (this.v4o = new Map());
+    super(...arguments), (this.g5o = new Map());
   }
   OnInit() {
     return !0;
   }
   OnClear() {
-    return this.v4o.clear(), !0;
+    return this.g5o.clear(), !0;
   }
   GetWuYinLevelSequenceState(e) {
-    if (this.v4o.has(e)) return this.v4o.get(e);
+    if (this.g5o.has(e)) return this.g5o.get(e);
   }
   PlayWuYinSequence(e, r) {
     r = "Play" === r ? 1 : 0;

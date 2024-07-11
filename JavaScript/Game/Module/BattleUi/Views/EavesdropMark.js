@@ -28,60 +28,60 @@ const UE = require("ue"),
 class EavesdropMark extends UiPanelBase_1.UiPanelBase {
   constructor(t, i) {
     super(),
-      (this.lXe = void 0),
-      (this.Cqn = void 0),
-      (this.gqn = void 0),
-      (this.Ken = void 0),
+      (this.E$e = void 0),
+      (this.v2n = void 0),
+      (this.M2n = void 0),
+      (this.yen = void 0),
       (this.JZ = void 0),
-      (this.fqn = void 0),
-      (this.pqn = void 0),
-      (this.vqn = void 0),
-      (this.EPe = void 0),
-      (this.Glt = Rotator_1.Rotator.Create()),
-      (this.Mqn = 3),
-      (this.Sqn = 3),
-      (this.Eqn = (t, i) => {
-        i && 0 !== this.Mqn && this.PlayChangeToNormalSeq();
+      (this.S2n = void 0),
+      (this.E2n = void 0),
+      (this.y2n = void 0),
+      (this.SPe = void 0),
+      (this.$1t = Rotator_1.Rotator.Create()),
+      (this.I2n = 3),
+      (this.T2n = 3),
+      (this.L2n = (t, i) => {
+        i && 0 !== this.I2n && this.PlayChangeToNormalSeq();
       }),
-      (this.yqn = (t, i) => {
-        i && 0 === this.Mqn && this.PlayTakingSeq();
+      (this.D2n = (t, i) => {
+        i && 0 === this.I2n && this.PlayTakingSeq();
       }),
-      (this.Iqn = (t, i) => {
-        i && 3 !== this.Mqn && this.PlayEndSeq();
+      (this.A2n = (t, i) => {
+        i && 3 !== this.I2n && this.PlayEndSeq();
       }),
-      (this.KIt = (t) => {
+      (this.JTt = (t) => {
         if (t === NORMAL_END || t === TAKING_END)
           switch (
             (t === NORMAL_END
               ? this.JZ?.SetUIActive(!1)
-              : t === TAKING_END && this.pqn?.SetUIActive(!1),
-            this.Sqn)
+              : t === TAKING_END && this.E2n?.SetUIActive(!1),
+            this.T2n)
           ) {
             case 1:
-              this.pqn?.SetUIActive(!0), this.Tqn();
+              this.E2n?.SetUIActive(!0), this.U2n();
               break;
             case 2:
-              this.vqn?.SetUIActive(!0), this.Lqn();
+              this.y2n?.SetUIActive(!0), this.R2n();
               break;
             case 0:
-              this.JZ?.SetUIActive(!0), this.Dqn();
+              this.JZ?.SetUIActive(!0), this.x2n();
               break;
             case 3:
               EventSystem_1.EventSystem.Emit(
                 EventDefine_1.EEventName.RemoveEavesdropMark,
-                this.Cqn,
+                this.v2n,
               );
           }
-        else t === TAKING_START && this.EPe?.PlaySequencePurely(TAKING_LOOP);
+        else t === TAKING_START && this.SPe?.PlaySequencePurely(TAKING_LOOP);
       }),
       GlobalData_1.GlobalData.World &&
-        ((this.lXe = t),
-        (this.Cqn = i),
+        ((this.E$e = t),
+        (this.v2n = i),
         (t = EntitySystem_1.EntitySystem.Get(i))) &&
-        ((this.gqn = t.GetComponent(185)),
-        this.gqn.AddTagAddOrRemoveListener(normalTag, this.Eqn),
-        this.gqn.AddTagAddOrRemoveListener(startTakingTag, this.yqn),
-        this.gqn.AddTagAddOrRemoveListener(endTag, this.Iqn));
+        ((this.M2n = t.GetComponent(188)),
+        this.M2n.AddTagAddOrRemoveListener(normalTag, this.L2n),
+        this.M2n.AddTagAddOrRemoveListener(startTakingTag, this.D2n),
+        this.M2n.AddTagAddOrRemoveListener(endTag, this.A2n));
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -93,93 +93,93 @@ class EavesdropMark extends UiPanelBase_1.UiPanelBase {
   }
   OnStart() {
     (this.JZ = this.GetItem(0)),
-      (this.fqn = this.GetText(1)),
-      (this.pqn = this.GetItem(2)),
-      (this.vqn = this.GetItem(3)),
-      (this.EPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem)),
-      this.EPe?.BindSequenceCloseEvent(this.KIt),
+      (this.S2n = this.GetText(1)),
+      (this.E2n = this.GetItem(2)),
+      (this.y2n = this.GetItem(3)),
+      (this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem)),
+      this.SPe?.BindSequenceCloseEvent(this.JTt),
       this.JZ?.SetUIActive(!0),
-      this.pqn?.SetUIActive(!1),
-      this.vqn?.SetUIActive(!1),
-      this.EPe.PlaySequencePurely(NORMAL_START),
-      (this.Mqn = 0),
-      (this.Ken = this.lXe.GetComponentByClass(
+      this.E2n?.SetUIActive(!1),
+      this.y2n?.SetUIActive(!1),
+      this.SPe.PlaySequencePurely(NORMAL_START),
+      (this.I2n = 0),
+      (this.yen = this.E$e.GetComponentByClass(
         UE.SkeletalMeshComponent.StaticClass(),
       )),
       this.T_e(),
-      this.Aqn(),
-      this.Kwr(),
+      this.P2n(),
+      this.Swr(),
       this.RootItem.SetUIRelativeScale3D(
         Vector_1.Vector.Create(0.5, 0.5, 0.5).ToUeVector(!0),
       );
   }
   Update() {
-    this.T_e(), this.Aqn(), this.Kwr();
+    this.T_e(), this.P2n(), this.Swr();
   }
   T_e() {
     var t = CameraController_1.CameraController.CameraRotator,
       i = t.Yaw + 90,
       t = t.Pitch - 90,
       s = Rotator_1.Rotator.Create(this.RootItem.RelativeRotation);
-    (Math.abs(i - this.Glt.Yaw) < UPDATE_TOLERATION &&
-      Math.abs(t - this.Glt.Roll) < UPDATE_TOLERATION &&
-      s.Equals(this.Glt, UPDATE_TOLERATION)) ||
-      ((this.Glt.Yaw = i),
-      (this.Glt.Pitch = 0),
-      (this.Glt.Roll = t),
-      this.RootItem?.SetUIRelativeRotation(this.Glt.ToUeRotator()));
+    (Math.abs(i - this.$1t.Yaw) < UPDATE_TOLERATION &&
+      Math.abs(t - this.$1t.Roll) < UPDATE_TOLERATION &&
+      s.Equals(this.$1t, UPDATE_TOLERATION)) ||
+      ((this.$1t.Yaw = i),
+      (this.$1t.Pitch = 0),
+      (this.$1t.Roll = t),
+      this.RootItem?.SetUIRelativeRotation(this.$1t.ToUeRotator()));
   }
-  Aqn() {
+  P2n() {
     var t =
         Global_1.Global.BaseCharacter?.CharacterActorComponent
           ?.ActorLocationProxy,
-      i = this.lXe?.K2_GetActorLocation();
+      i = this.E$e?.K2_GetActorLocation();
     if (t && i)
       return (
         (i = Vector_1.Vector.Create(i).SubtractionEqual(
           Vector_1.Vector.Create(t),
         )),
-        this.fqn?.SetText(Math.round(i.Size() / 100).toString() + " 米"),
+        this.S2n?.SetText(Math.round(i.Size() / 100).toString() + " 米"),
         i.Size()
       );
-    this.fqn?.SetText("");
+    this.S2n?.SetText("");
   }
-  Kwr() {
-    var t = this.Ken.GetSocketLocation(headName);
+  Swr() {
+    var t = this.yen.GetSocketLocation(headName);
     (t.Z += HEAD_OFFSET), this.RootItem.SetUIRelativeLocation(t);
   }
   PlayFoundSeq() {
-    2 !== this.Mqn &&
-      (0 === this.Mqn
-        ? (this.EPe?.PlaySequencePurely(NORMAL_END), (this.Sqn = 2))
-        : 1 === this.Mqn &&
-          (this.EPe?.PlaySequencePurely(TAKING_END), (this.Sqn = 2)));
+    2 !== this.I2n &&
+      (0 === this.I2n
+        ? (this.SPe?.PlaySequencePurely(NORMAL_END), (this.T2n = 2))
+        : 1 === this.I2n &&
+          (this.SPe?.PlaySequencePurely(TAKING_END), (this.T2n = 2)));
   }
-  Lqn() {
-    this.EPe?.PlaySequencePurely(FOUND), (this.Mqn = 2), (this.Sqn = 3);
+  R2n() {
+    this.SPe?.PlaySequencePurely(FOUND), (this.I2n = 2), (this.T2n = 3);
   }
-  Dqn() {
-    this.EPe?.PlaySequencePurely(NORMAL_START), (this.Mqn = 0), (this.Sqn = 3);
+  x2n() {
+    this.SPe?.PlaySequencePurely(NORMAL_START), (this.I2n = 0), (this.T2n = 3);
   }
   PlayEndSeq() {
-    3 !== this.Mqn &&
-      (1 === this.Mqn
-        ? this.EPe?.PlaySequencePurely(TAKING_END)
-        : 0 === this.Mqn && this.EPe?.PlaySequencePurely(NORMAL_END),
-      (this.Mqn = 3));
+    3 !== this.I2n &&
+      (1 === this.I2n
+        ? this.SPe?.PlaySequencePurely(TAKING_END)
+        : 0 === this.I2n && this.SPe?.PlaySequencePurely(NORMAL_END),
+      (this.I2n = 3));
   }
   PlayTakingSeq() {
-    1 !== this.Mqn &&
-      0 === this.Mqn &&
-      (this.EPe?.PlaySequencePurely(NORMAL_END), (this.Sqn = 1));
+    1 !== this.I2n &&
+      0 === this.I2n &&
+      (this.SPe?.PlaySequencePurely(NORMAL_END), (this.T2n = 1));
   }
   PlayChangeToNormalSeq() {
-    0 !== this.Mqn &&
-      1 === this.Mqn &&
-      (this.EPe?.PlaySequencePurely(TAKING_END), (this.Sqn = 0));
+    0 !== this.I2n &&
+      1 === this.I2n &&
+      (this.SPe?.PlaySequencePurely(TAKING_END), (this.T2n = 0));
   }
-  Tqn() {
-    this.EPe?.PlaySequencePurely(TAKING_START), (this.Mqn = 1), (this.Sqn = 3);
+  U2n() {
+    this.SPe?.PlaySequencePurely(TAKING_START), (this.I2n = 1), (this.T2n = 3);
   }
   Initialize(t) {
     this.CreateThenShowByResourceIdAsync("UiItem_Eavesdrop", t);

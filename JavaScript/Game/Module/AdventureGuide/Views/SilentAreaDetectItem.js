@@ -12,10 +12,10 @@ class SilentAreaDetectDynamicItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
       (this.Data = void 0),
-      (this.T6e = void 0),
-      (this.L6e = void 0),
-      (this.D6e = void 0),
-      (this.R6e = void 0);
+      (this.O8e = void 0),
+      (this.k8e = void 0),
+      (this.F8e = void 0),
+      (this.V8e = void 0);
   }
   async Init(t) {
     await super.CreateByActorAsync(t.GetOwner(), void 0, !0);
@@ -27,8 +27,8 @@ class SilentAreaDetectDynamicItem extends UiPanelBase_1.UiPanelBase {
     ];
   }
   OnStart() {
-    this.T6e || (this.T6e = new SilentCategoryItem(this.GetItem(0))),
-      this.L6e || (this.L6e = new SilentResultItem(this.GetItem(1)));
+    this.O8e || (this.O8e = new SilentCategoryItem(this.GetItem(0))),
+      this.k8e || (this.k8e = new SilentResultItem(this.GetItem(1)));
   }
   GetUsingItem(t) {
     if (t.SilentAreaDetectionData) {
@@ -40,41 +40,41 @@ class SilentAreaDetectDynamicItem extends UiPanelBase_1.UiPanelBase {
   }
   Update(t, i) {
     (this.Data = t),
-      this.L6e.SetActive(!1),
-      this.T6e.SetActive(!1),
+      this.k8e.SetActive(!1),
+      this.O8e.SetActive(!1),
       t.SilentAreaDetectionData
-        ? (this.L6e.SetActive(!0),
-          this.L6e.Update(t.SilentAreaDetectionData),
-          this.L6e.BindResultCallback(this.R6e))
-        : (this.T6e.SetActive(!0),
-          this.T6e.Update([t.SilentAreaTitleData, t.IsShow]),
-          this.T6e.BindCategoryCallback(this.D6e));
+        ? (this.k8e.SetActive(!0),
+          this.k8e.Update(t.SilentAreaDetectionData),
+          this.k8e.BindResultCallback(this.V8e))
+        : (this.O8e.SetActive(!0),
+          this.O8e.Update([t.SilentAreaTitleData, t.IsShow]),
+          this.O8e.BindCategoryCallback(this.F8e));
   }
   BindClickCategoryCallback(t) {
-    this.D6e = t;
+    this.F8e = t;
   }
   BindClickResultCallback(t) {
-    this.R6e = t;
+    this.V8e = t;
   }
   ClearItem() {
     this.Destroy();
   }
   OnBeforeDestroy() {
-    this.T6e && (this.T6e.Destroy(), (this.T6e = void 0)),
-      this.L6e && (this.L6e.Destroy(), (this.L6e = void 0));
+    this.O8e && (this.O8e.Destroy(), (this.O8e = void 0)),
+      this.k8e && (this.k8e.Destroy(), (this.k8e = void 0));
   }
 }
 exports.SilentAreaDetectDynamicItem = SilentAreaDetectDynamicItem;
 class SilentCategoryItem extends UiPanelBase_1.UiPanelBase {
   constructor(t) {
     super(),
-      (this.b5e = void 0),
-      (this.U6e = void 0),
+      (this.$Ve = void 0),
+      (this.H8e = void 0),
       (this.Pe = void 0),
-      (this.A6e = !1),
+      (this.j8e = !1),
       (this.OnClickExtendToggle = (t) => {
-        (this.A6e = !this.A6e),
-          this.U6e && this.U6e(this.Pe.TypeDescription, this.b5e, this.A6e);
+        (this.j8e = !this.j8e),
+          this.H8e && this.H8e(this.Pe.TypeDescription, this.$Ve, this.j8e);
       }),
       this.CreateThenShowByActor(t.GetOwner());
   }
@@ -88,29 +88,29 @@ class SilentCategoryItem extends UiPanelBase_1.UiPanelBase {
       (this.BtnBindInfo = [[0, this.OnClickExtendToggle]]);
   }
   OnStart() {
-    (this.b5e = this.GetExtendToggle(0)),
-      this.b5e.SetToggleState(0),
-      this.b5e.OnPostAudioEvent.Bind((t) => {
+    (this.$Ve = this.GetExtendToggle(0)),
+      this.$Ve.SetToggleState(0),
+      this.$Ve.OnPostAudioEvent.Bind((t) => {
         t && this.PostClickAudioEvent(t);
       }),
-      this.b5e.OnPostAudioStateEvent.Bind((t, i) => {
+      this.$Ve.OnPostAudioStateEvent.Bind((t, i) => {
         i && this.PostClickAudioEvent(i);
       });
   }
   OnBeforeDestroy() {
-    this.P6e(),
+    this.W8e(),
       (this.Pe = void 0),
-      this.b5e.OnPostAudioEvent.Unbind(),
-      this.b5e.OnPostAudioStateEvent.Unbind();
+      this.$Ve.OnPostAudioEvent.Unbind(),
+      this.$Ve.OnPostAudioStateEvent.Unbind();
   }
   Update(t) {
     (this.Pe = t[0]),
-      (this.A6e = t[1]),
+      (this.j8e = t[1]),
       LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(1), this.Pe.TitleName),
-      this.GetExtendToggle(0).SetToggleState(this.A6e ? 1 : 0, !1),
-      this.x6e();
+      this.GetExtendToggle(0).SetToggleState(this.j8e ? 1 : 0, !1),
+      this.K8e();
   }
-  x6e() {
+  K8e() {
     RedDotController_1.RedDotController.BindRedDot(
       "AdventureFirstAwardCategory",
       this.GetItem(3),
@@ -118,7 +118,7 @@ class SilentCategoryItem extends UiPanelBase_1.UiPanelBase {
       this.Pe.TypeDescription,
     );
   }
-  P6e() {
+  W8e() {
     this.Pe &&
       RedDotController_1.RedDotController.UnBindGivenUi(
         "AdventureFirstAwardCategory",
@@ -130,18 +130,18 @@ class SilentCategoryItem extends UiPanelBase_1.UiPanelBase {
     this.GetItem(3).SetUIActive(t);
   }
   BindCategoryCallback(t) {
-    this.U6e = t;
+    this.H8e = t;
   }
 }
 exports.SilentCategoryItem = SilentCategoryItem;
 class SilentResultItem extends UiPanelBase_1.UiPanelBase {
   constructor(t) {
     super(),
-      (this.w6e = void 0),
+      (this.Q8e = void 0),
       (this.Pe = void 0),
-      (this.b5e = void 0),
+      (this.$Ve = void 0),
       (this.OnClickExtendToggle = (t) => {
-        this.w6e && this.w6e(this.Pe.Conf.Id, this.b5e);
+        this.Q8e && this.Q8e(this.Pe.Conf.Id, this.$Ve);
       }),
       this.CreateThenShowByActor(t.GetOwner());
   }
@@ -158,20 +158,20 @@ class SilentResultItem extends UiPanelBase_1.UiPanelBase {
       (this.BtnBindInfo = [[0, this.OnClickExtendToggle]]);
   }
   OnStart() {
-    (this.b5e = this.GetExtendToggle(0)),
-      this.b5e.SetToggleState(0),
-      this.b5e.OnPostAudioEvent.Bind((t) => {
+    (this.$Ve = this.GetExtendToggle(0)),
+      this.$Ve.SetToggleState(0),
+      this.$Ve.OnPostAudioEvent.Bind((t) => {
         t && this.PostClickAudioEvent(t);
       }),
-      this.b5e.OnPostAudioStateEvent.Bind((t, i) => {
+      this.$Ve.OnPostAudioStateEvent.Bind((t, i) => {
         i && this.PostClickAudioEvent(i);
       });
   }
   OnBeforeDestroy() {
-    this.P6e(),
+    this.W8e(),
       (this.Pe = void 0),
-      this.b5e.OnPostAudioEvent.Unbind(),
-      this.b5e.OnPostAudioStateEvent.Unbind();
+      this.$Ve.OnPostAudioEvent.Unbind(),
+      this.$Ve.OnPostAudioStateEvent.Unbind();
   }
   Update(t) {
     this.Pe = t;
@@ -186,9 +186,9 @@ class SilentResultItem extends UiPanelBase_1.UiPanelBase {
       ? (s.SetUIActive(!0), i.SetUIActive(!1))
       : (s.SetUIActive(!1), i.SetUIActive(!0)),
       this.GetSprite(5).SetUIActive(t.IsTargeting),
-      this.x6e();
+      this.K8e();
   }
-  x6e() {
+  K8e() {
     RedDotController_1.RedDotController.BindRedDot(
       "AdventureFirstAwardResult",
       this.GetItem(6),
@@ -196,7 +196,7 @@ class SilentResultItem extends UiPanelBase_1.UiPanelBase {
       this.Pe.Conf.Id,
     );
   }
-  P6e() {
+  W8e() {
     this.Pe &&
       RedDotController_1.RedDotController.UnBindGivenUi(
         "AdventureFirstAwardResult",
@@ -205,7 +205,7 @@ class SilentResultItem extends UiPanelBase_1.UiPanelBase {
       );
   }
   BindResultCallback(t) {
-    this.w6e = t;
+    this.Q8e = t;
   }
 }
 exports.SilentResultItem = SilentResultItem;

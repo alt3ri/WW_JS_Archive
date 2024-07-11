@@ -13,11 +13,11 @@ class PerformanceCollectionData {
       (this.Average = 0),
       (this.Max = 0),
       (this.MaxInfo = void 0),
-      PerformanceCollectionData.E3i ||
-        ((PerformanceCollectionData.E3i = UE.GameplayStatics.GetPlatformName()),
+      PerformanceCollectionData.E4i ||
+        ((PerformanceCollectionData.E4i = UE.GameplayStatics.GetPlatformName()),
         GlobalData_1.GlobalData.IsPlayInEditor &&
-          (PerformanceCollectionData.E3i += "_Editor")),
-      (this.Platform = PerformanceCollectionData.E3i),
+          (PerformanceCollectionData.E4i += "_Editor")),
+      (this.Platform = PerformanceCollectionData.E4i),
       (this.ClientVersion =
         ThinkDataLaunchReporter_1.ThinkDataLaunchReporter.ClientVersion);
   }

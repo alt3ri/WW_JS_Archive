@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.LockCursorHandle = void 0);
 const UE = require("ue"),
   FNameUtil_1 = require("../../../../Core/Utils/FNameUtil"),
+  Vector2D_1 = require("../../../../Core/Utils/Math/Vector2D"),
   TsBaseCharacter_1 = require("../../../Character/TsBaseCharacter"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
@@ -13,125 +14,132 @@ const UE = require("ue"),
   InputMappingsDefine_1 = require("../../../Ui/InputDistribute/InputMappingsDefine"),
   BattleUiControl_1 = require("../../BattleUi/BattleUiControl"),
   LockCursorUnit_1 = require("../HudUnit/LockCursorUnit"),
+  HudUnitUtils_1 = require("../Utils/HudUnitUtils"),
   HudUnitHandleBase_1 = require("./HudUnitHandleBase"),
+  Info_1 = require("../../../../Core/Common/Info"),
   HIT_CASE_SOCKET = new UE.FName("HitCase");
 class LockCursorHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
   constructor() {
     super(...arguments),
-      (this.Aii = void 0),
-      (this.aXe = !1),
-      (this.Pii = !1),
-      (this.xii = !1),
-      (this.wii = 0),
-      (this.Bii = (t, e) => {
-        ModelManager_1.ModelManager.PlatformModel.IsGamepad() &&
-          (0 === e ? (this.xii = void 0 !== this.Aii) : (this.Pii = !0)),
-          this.Aii &&
+      (this.Uua = new Vector2D_1.Vector2D()),
+      (this.Poi = void 0),
+      (this.v$e = !1),
+      (this.xoi = !1),
+      (this.woi = !1),
+      (this.Boi = 0),
+      (this.boi = (t, e) => {
+        Info_1.Info.IsInGamepad() &&
+          (0 === e ? (this.woi = void 0 !== this.Poi) : (this.xoi = !0)),
+          this.Poi &&
             !ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity?.Entity?.GetComponent(
-              185,
+              188,
             )?.HasTag(-2140742267) &&
-            (0 === e ? this.bii() : this.qii());
+            (0 === e ? this.qoi() : this.Goi());
       }),
-      (this.Gii = (t, e) => {
-        102 === e && (t ? this.bii() : this.qii());
+      (this.Noi = (t, e) => {
+        102 === e && (t ? this.qoi() : this.Goi());
       }),
-      (this.AYe = (t, e) => {
-        t ? (this.wii = e) : e === this.wii && (this.wii = 0);
+      (this.VJe = (t, e) => {
+        t ? (this.Boi = e) : e === this.Boi && (this.Boi = 0);
       });
   }
   OnAddEvents() {
     InputDistributeController_1.InputDistributeController.BindAction(
       InputMappingsDefine_1.actionMappings.锁定目标,
-      this.Bii,
+      this.boi,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnPressOrReleaseBehaviorButton,
-        this.Gii,
+        this.Noi,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnEnterOrExitExecutionRange,
-        this.AYe,
+        this.VJe,
       );
   }
   OnRemoveEvents() {
     InputDistributeController_1.InputDistributeController.UnBindAction(
       InputMappingsDefine_1.actionMappings.锁定目标,
-      this.Bii,
+      this.boi,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnPressOrReleaseBehaviorButton,
-        this.Gii,
+        this.Noi,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnEnterOrExitExecutionRange,
-        this.AYe,
+        this.VJe,
       );
   }
   OnDestroyed() {
-    this.Aii = void 0;
+    this.Poi = void 0;
   }
-  bii() {
+  qoi() {
     var t, e;
-    this.Aii &&
+    this.Poi &&
       ((e = (t =
         ModelManager_1.ModelManager.SceneTeamModel
-          .GetCurrentEntity).Entity.GetComponent(185)),
-      (t = t.Entity.GetComponent(52)),
+          .GetCurrentEntity).Entity.GetComponent(188)),
+      (t = t.Entity.GetComponent(53)),
       e.HasTag(-1150819426)) &&
       ((e =
         t.BpInputComp.UnlockLongPressTime *
         TimeUtil_1.TimeUtil.InverseMillisecond),
-      this.Aii.ActivateUnlockTimeDown(e));
+      this.Poi.ActivateUnlockTimeDown(e));
   }
-  qii() {
-    this.Aii?.DeactivateUnlockTimeDown();
+  Goi() {
+    this.Poi?.DeactivateUnlockTimeDown();
   }
   OnTick(t) {
     var e;
     super.OnTick(t),
-      this.aXe ||
+      this.v$e ||
         ((t = this.GetTargetInfo()),
-        this.Pii &&
-          ((this.Pii = !1),
-          this.xii ||
+        this.xoi &&
+          ((this.xoi = !1),
+          this.woi ||
             t.ShowTarget ||
-            this.Nii() ||
+            this.Ooi() ||
             BattleUiControl_1.BattleUiControl.ResetFocus()),
         t &&
         t.ShowTarget?.Valid &&
-        t.ShowTarget.Id !== this.wii &&
+        t.ShowTarget.Id !== this.Boi &&
         (e = this.GetWorldLocation()) &&
-        (e = this.ProjectWorldToScreen(e))
+        HudUnitUtils_1.HudUnitUtils.PositionUtil.ProjectWorldToScreen(
+          e,
+          this.Uua,
+        )
           ? (this.Activate(),
-            this.Aii &&
-              (this.Aii.UpdateShowTargetState(t.ShowTarget),
-              this.Aii.RefreshManualLockVisible(),
-              (t = this.Aii.GetRootItem()).SetAnchorOffsetX(e.X),
-              t.SetAnchorOffsetY(e.Y)))
+            this.Poi &&
+              (this.Poi.UpdateShowTargetState(t.ShowTarget),
+              this.Poi.RefreshManualLockVisible(),
+              this.Poi.GetRootItem().SetAnchorOffset(
+                this.Uua.ToUeVector2D(!0),
+              )))
           : this.Deactivate());
   }
-  Nii() {
+  Ooi() {
     var t = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
     return (
       !!t?.Valid &&
-      t.Entity.GetComponent(158)?.DirectionState ===
+      t.Entity.GetComponent(160)?.DirectionState ===
         CharacterUnifiedStateTypes_1.ECharDirectionState.AimDirection
     );
   }
   Activate() {
-    this.Aii
-      ? this.Aii.Activate()
-      : this.aXe ||
-        ((this.aXe = !0),
+    this.Poi
+      ? this.Poi.Activate()
+      : this.v$e ||
+        ((this.v$e = !0),
         this.NewHudUnit(LockCursorUnit_1.LockCursorUnit, "UiItem_SuoDing").then(
           (t) => {
-            t && ((this.aXe = !1), (this.Aii = t));
+            t && ((this.v$e = !1), (this.Poi = t));
           },
           () => {},
         ));
   }
   Deactivate() {
-    this.Aii && this.Aii.Deactivate();
+    this.Poi && this.Poi.Deactivate();
   }
   GetTargetInfo() {
     var t = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;

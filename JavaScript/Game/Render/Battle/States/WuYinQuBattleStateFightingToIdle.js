@@ -12,30 +12,30 @@ class WuYinQuBattleStateFightingToIdle extends WuYinQuBattleStateBase_1.default 
   constructor() {
     super(...arguments),
       (this.j3 = -0),
-      (this.Jsr = void 0),
-      (this.zsr = ResourceSystem_1.ResourceSystem.InvalidId);
+      (this.Jar = void 0),
+      (this.zar = ResourceSystem_1.ResourceSystem.InvalidId);
   }
   OnEnter(e) {
     const t = this.Owner.GetKuroLevelSequenceActor();
     t &&
     UE.KismetSystemLibrary.IsValid(t) &&
     UE.KismetSystemLibrary.IsValid(t.SequencePlayer)
-      ? ((this.Jsr = t?.GetSequence()),
-        UE.KismetSystemLibrary.IsValid(this.Jsr)
-          ? (t.SetSequence(this.Jsr), this.Zsr())
+      ? ((this.Jar = t?.GetSequence()),
+        UE.KismetSystemLibrary.IsValid(this.Jar)
+          ? (t.SetSequence(this.Jar), this.Zar())
           : (Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "RenderBattle",
                 39,
                 "进入Fighting2Idle过度状态没有Sequence资源，开始资源加载。",
               ),
-            (this.zsr = ResourceSystem_1.ResourceSystem.LoadAsync(
+            (this.zar = ResourceSystem_1.ResourceSystem.LoadAsync(
               t.LevelSequence.AssetPathName.toString(),
               UE.LevelSequence,
               (e) => {
-                (this.zsr = ResourceSystem_1.ResourceSystem.InvalidId),
+                (this.zar = ResourceSystem_1.ResourceSystem.InvalidId),
                   UE.KismetSystemLibrary.IsValid(e)
-                    ? ((this.Jsr = e), t.SetSequence(this.Jsr), this.Zsr())
+                    ? ((this.Jar = e), t.SetSequence(this.Jar), this.Zar())
                     : Log_1.Log.CheckError() &&
                       Log_1.Log.Error(
                         "RenderBattle",
@@ -45,15 +45,15 @@ class WuYinQuBattleStateFightingToIdle extends WuYinQuBattleStateBase_1.default 
                       );
               },
             ))))
-      : Log_1.Log.CheckError() &&
-        Log_1.Log.Error(
+      : Log_1.Log.CheckDebug() &&
+        Log_1.Log.Debug(
           "RenderBattle",
           39,
           "进入Fighting2Idle过度状态没有SequencePlayer",
           ["WuYinQuBattleActor", this.Owner?.GetName()],
         );
   }
-  Zsr() {
+  Zar() {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info("RenderBattle", 12, "进入Fighting2Idle过度状态"),
       RenderModuleController_1.RenderModuleController.DecBattleReference(),
@@ -136,10 +136,10 @@ class WuYinQuBattleStateFightingToIdle extends WuYinQuBattleStateBase_1.default 
           .GlobalLandscapeCenterAndIntensity,
         new UE.LinearColor(t.X, t.Y, t.Z, 0),
       )),
-      (this.Jsr = void 0),
-      this.zsr !== ResourceSystem_1.ResourceSystem.InvalidId &&
-        (ResourceSystem_1.ResourceSystem.CancelAsyncLoad(this.zsr),
-        (this.zsr = ResourceSystem_1.ResourceSystem.InvalidId),
+      (this.Jar = void 0),
+      this.zar !== ResourceSystem_1.ResourceSystem.InvalidId &&
+        (ResourceSystem_1.ResourceSystem.CancelAsyncLoad(this.zar),
+        (this.zar = ResourceSystem_1.ResourceSystem.InvalidId),
         Log_1.Log.CheckError()) &&
         Log_1.Log.Error(
           "RenderBattle",

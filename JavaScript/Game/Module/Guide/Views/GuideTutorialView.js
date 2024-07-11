@@ -20,17 +20,17 @@ class GuideTutorialView extends UiViewBase_1.UiViewBase {
       (this.ZAe = void 0),
       (this.ePe = 0),
       (this.tPe = void 0),
-      (this.EPe = void 0),
+      (this.SPe = void 0),
       (this.iPe = void 0),
       (this.oPe = void 0),
       (this.rPe = void 0),
       (this.nPe = () => {
-        var i, t, s;
+        var i, t, e;
         !this.rPe &&
           0 < this.ePe &&
           ((t = (i = this.iPe.GetRootItem()).RelativeLocation),
-          (s = this.GetItem(12)).SetUIRelativeLocation(
-            new UE.Vector(-s.Width, s.RelativeLocation.Y, s.RelativeLocation.Z),
+          (e = this.GetItem(12)).SetUIRelativeLocation(
+            new UE.Vector(-e.Width, e.RelativeLocation.Y, e.RelativeLocation.Z),
           ),
           this.sPe(),
           this.oPe
@@ -38,7 +38,7 @@ class GuideTutorialView extends UiViewBase_1.UiViewBase {
             .SetUIRelativeLocation(new UE.Vector(i.Width, t.Y, t.Z)),
           this.Og(this.ePe - 1),
           (this.rPe = UE.LTweenBPLibrary.LocalPositionXTo(
-            s,
+            e,
             0,
             TWEEN_TIME,
             0,
@@ -49,12 +49,12 @@ class GuideTutorialView extends UiViewBase_1.UiViewBase {
           }));
       }),
       (this.aPe = () => {
-        var i, t, s;
+        var i, t, e;
         !this.rPe &&
           this.ePe < this.ZAe.length - 1 &&
           ((t = (i = this.iPe.GetRootItem()).RelativeLocation),
-          (s = this.GetItem(12)).SetUIRelativeLocation(
-            new UE.Vector(s.Width, s.RelativeLocation.Y, s.RelativeLocation.Z),
+          (e = this.GetItem(12)).SetUIRelativeLocation(
+            new UE.Vector(e.Width, e.RelativeLocation.Y, e.RelativeLocation.Z),
           ),
           this.sPe(),
           this.oPe
@@ -62,7 +62,7 @@ class GuideTutorialView extends UiViewBase_1.UiViewBase {
             .SetUIRelativeLocation(new UE.Vector(-i.Width, t.Y, t.Z)),
           this.Og(this.ePe + 1),
           (this.rPe = UE.LTweenBPLibrary.LocalPositionXTo(
-            s,
+            e,
             0,
             TWEEN_TIME,
             0,
@@ -72,17 +72,17 @@ class GuideTutorialView extends UiViewBase_1.UiViewBase {
             this.rPe = void 0;
           }));
       }),
-      (this.hPe = (i, t, s) => {
-        var e = void 0;
+      (this.hPe = (i, t, e) => {
+        var s = void 0;
         return (
-          (e = new TutorialPageItem_1.TutorialPageItem(t)).Init(),
-          e.UpdateShow(!1),
-          { Key: s, Value: e }
+          (s = new TutorialPageItem_1.TutorialPageItem(t)).Init(),
+          s.UpdateShow(!1),
+          { Key: e, Value: s }
         );
       }),
-      (this.WFt = (i) => {
+      (this.K3t = (i) => {
         "Start" === i
-          ? this.EPe.PlayLevelSequenceByName("Close")
+          ? this.SPe.PlayLevelSequenceByName("Close")
           : "Close" === i && this._Pe();
       }),
       (this.lPe = () => {
@@ -115,21 +115,24 @@ class GuideTutorialView extends UiViewBase_1.UiViewBase {
       ]);
   }
   OnBeforeDestroy() {
-    this.tPe && (this.tPe.ClearChildren(), (this.tPe = void 0)),
-      this.EPe.Clear(),
-      (this.EPe = void 0),
+    this.tPe?.ClearChildren(),
+      (this.tPe = void 0),
+      this.SPe?.Clear(),
+      (this.SPe = void 0),
       this.TutorialInfo &&
-        (ModelManager_1.ModelManager.GuideModel.ClipTipState(),
-        ModelManager_1.ModelManager.GuideModel.RemoveCurrentTutorialInfo(),
-        ModelManager_1.ModelManager.GuideModel.TryShowTutorial()),
+        (ModelManager_1.ModelManager.GuideModel?.ClipTipState(),
+        ModelManager_1.ModelManager.GuideModel?.RemoveCurrentTutorialInfo(),
+        ModelManager_1.ModelManager.GuideModel?.TryShowTutorial()),
       TutorialController_1.TutorialController.TryOpenAwardUiViewPending(),
-      this.iPe.Destroy(),
+      this.iPe?.Destroy(),
       (this.iPe = void 0),
-      this.oPe && (this.oPe.Destroy(), (this.oPe = void 0)),
-      this.rPe && (this.rPe.Kill(), (this.rPe = void 0));
+      this.oPe?.Destroy(),
+      (this.oPe = void 0),
+      this.rPe?.Kill(),
+      (this.rPe = void 0);
   }
-  Lzt() {
-    this.EPe.PlayLevelSequenceByName("Start"),
+  LZt() {
+    this.SPe.PlayLevelSequenceByName("Start"),
       this.GetItem(10).SetUIActive(!1),
       this.GetItem(11).SetUIActive(!1),
       this.GetItem(9).SetUIActive(!0);
@@ -160,15 +163,15 @@ class GuideTutorialView extends UiViewBase_1.UiViewBase {
         this.hPe,
         this.GetItem(6),
       )),
-      (this.EPe = new LevelSequencePlayer_1.LevelSequencePlayer(
+      (this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(
         this.GetItem(9),
       )),
-      this.EPe.BindSequenceCloseEvent(this.WFt),
+      this.SPe.BindSequenceCloseEvent(this.K3t),
       (this.ZAe =
         ConfigManager_1.ConfigManager.GuideConfig.GetGuideTutorialPageIds(
           this.TutorialInfo.GuideId,
         )),
-      this.Dzt(),
+      this.DZt(),
       this.ZAe.length <= 1
         ? (this.GetButton(7).RootUIComp.SetUIActive(!1),
           this.GetButton(8).RootUIComp.SetUIActive(!1),
@@ -186,7 +189,7 @@ class GuideTutorialView extends UiViewBase_1.UiViewBase {
       this.Og(0);
   }
   OnBeforeShow() {
-    this.TutorialInfo.TutorialTip ? this._Pe() : this.Lzt();
+    this.TutorialInfo.TutorialTip ? this._Pe() : this.LZt();
   }
   Og(i) {
     1 < this.ZAe.length &&
@@ -209,7 +212,7 @@ class GuideTutorialView extends UiViewBase_1.UiViewBase {
     LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(1), t.Title),
       this.iPe.RefreshPage(t);
   }
-  Dzt() {
+  DZt() {
     var i = ModelManager_1.ModelManager.TutorialModel.GetSavedDataById(
       this.TutorialInfo.GuideId,
     );

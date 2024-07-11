@@ -40,6 +40,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.ETargetBattleAttribute =
     exports.combatStateConfig =
     exports.EUseSkillCheckType =
+    exports.elementGenreCnMap =
     exports.skillTypeCnMap =
     exports.skillGenreCnMap =
     exports.ESkillCategory =
@@ -88,7 +89,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.EEnableSystemType ||
     (exports.EEnableSystemType = {})).GradingSystem = "GradingSystem"),
   (function (e) {
-    (e.Score = "Score"), (e.Grade = "Grade");
+    (e.Score = "Score"), (e.Grade = "Grade"), (e.Wave = "Wave");
   })(
     (EGradingSystemVarType =
       exports.EGradingSystemVarType || (exports.EGradingSystemVarType = {})),
@@ -117,6 +118,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (function (e) {
     (e.Collect = "Collect"),
       (e.UseSkill = "UseSkill"),
+      (e.UseSkillNew = "UseSkillNew"),
       (e.PlayerTriggerMotion = "PlayerTriggerMotion"),
       (e.Timer = "Timer"),
       (e.MonsterPoint = "MonsterPoint"),
@@ -160,6 +162,8 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     VisionSystem: {},
     ParallaxAlign: {},
     CheckConditionGroup: {},
+    CheckActivityState: {},
+    CheckPlayerInput: {},
   }),
   (exports.childQuestsForTest = []),
   (function (e) {
@@ -205,6 +209,15 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     NormalSkill: "角色通用技能",
     VisionSkill: "战斗幻象",
     CharacterFightSkill: "角色战斗技能",
+  }),
+  (exports.elementGenreCnMap = {
+    [0]: "物理",
+    1: "冷凝",
+    2: "热熔",
+    3: "导电",
+    4: "气动",
+    5: "衍射",
+    6: "湮灭",
   }),
   (function (e) {
     (e.CheckSkillGenre = "CheckBySkillGenre"),

@@ -8,92 +8,92 @@ const ModelBase_1 = require("../../../Core/Framework/ModelBase"),
 class TeleportModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
-      (this.Yyo = void 0),
-      (this.Jyo = void 0),
-      (this.zyo = void 0),
-      (this.Zyo = void 0),
-      (this.eIo = void 0),
+      (this.QIo = void 0),
+      (this.XIo = void 0),
+      (this.$Io = void 0),
+      (this.YIo = void 0),
+      (this.JIo = void 0),
       (this.TeleportMode = 1),
       (this.TeleportCameraFadeStatus = void 0),
       (this.CallSource = void 0),
       (this.CheckStreamingCompletedTimerId = void 0),
       (this.CheckPhysicsCompletedTimerId = void 0),
-      (this.tIo = void 0),
-      (this.k6s = void 0),
-      (this.oIo = void 0),
-      (this.rIo = void 0);
+      (this.zIo = void 0),
+      (this.fKs = void 0),
+      (this.eTo = void 0),
+      (this.tTo = void 0);
   }
   get IsTeleport() {
-    return this.Yyo;
+    return this.QIo;
   }
   set IsTeleport(t) {
-    this.Yyo = t;
+    this.QIo = t;
   }
   get StartPosition() {
-    return this.Jyo;
+    return this.XIo;
   }
   set StartPosition(t) {
-    this.Jyo = t;
+    this.XIo = t;
   }
   get StartRotation() {
-    return this.zyo;
+    return this.$Io;
   }
   set StartRotation(t) {
-    this.zyo = t;
+    this.$Io = t;
   }
   get TargetPosition() {
-    return this.Zyo;
+    return this.YIo;
   }
   set TargetPosition(t) {
-    this.Zyo = t;
+    this.YIo = t;
   }
   get TargetRotation() {
-    return this.eIo;
+    return this.JIo;
   }
   set TargetRotation(t) {
-    this.eIo = t;
+    this.JIo = t;
   }
   get StreamingCompleted() {
-    return this.tIo;
+    return this.zIo;
   }
   get VoxelStreamingCompleted() {
-    return this.k6s;
+    return this.fKs;
   }
   get TeleportFinishRequest() {
-    return this.oIo;
+    return this.eTo;
   }
   get CgTeleportCompleted() {
-    return this.rIo;
+    return this.tTo;
   }
   OnInit() {
     return (
-      (this.Jyo = Vector_1.Vector.Create()),
-      (this.Zyo = Vector_1.Vector.Create()),
-      (this.zyo = Rotator_1.Rotator.Create()),
-      (this.eIo = Rotator_1.Rotator.Create()),
+      (this.XIo = Vector_1.Vector.Create()),
+      (this.YIo = Vector_1.Vector.Create()),
+      (this.$Io = Rotator_1.Rotator.Create()),
+      (this.JIo = Rotator_1.Rotator.Create()),
       !(this.TeleportCameraFadeStatus = !1)
     );
   }
   OnClear() {
     return (
-      (this.Jyo = void 0),
-      (this.Zyo = void 0),
-      (this.zyo = void 0),
-      (this.eIo = void 0),
+      (this.XIo = void 0),
+      (this.YIo = void 0),
+      (this.$Io = void 0),
+      (this.JIo = void 0),
       !(this.TeleportCameraFadeStatus = !1)
     );
   }
   CreatePromise() {
-    (this.tIo = new GameModePromise_1.GameModePromise()),
-      (this.k6s = new GameModePromise_1.GameModePromise()),
-      (this.oIo = new GameModePromise_1.GameModePromise()),
-      (this.rIo = new GameModePromise_1.GameModePromise());
+    (this.zIo = new GameModePromise_1.GameModePromise()),
+      (this.fKs = new GameModePromise_1.GameModePromise()),
+      (this.eTo = new GameModePromise_1.GameModePromise()),
+      (this.tTo = new GameModePromise_1.GameModePromise());
   }
   ResetPromise() {
-    (this.tIo = void 0),
-      (this.k6s = void 0),
-      (this.oIo = void 0),
-      (this.rIo = void 0);
+    (this.zIo = void 0),
+      (this.fKs = void 0),
+      (this.eTo = void 0),
+      (this.tTo = void 0);
   }
 }
 exports.TeleportModel = TeleportModel;

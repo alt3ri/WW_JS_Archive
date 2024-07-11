@@ -24,16 +24,16 @@ const ControllerBase_1 = require("../../../Core/Framework/ControllerBase"),
   CombatMessage_1 = require("./CombatMessage");
 class RoleSceneInteractController extends ControllerBase_1.ControllerBase {
   static OnHookMoveNotify(e, t) {
-    e = e?.GetComponent(87);
+    e = e?.GetComponent(89);
     e &&
       (e.TargetLocation || (e.TargetLocation = Vector_1.Vector.Create()),
-      (e.TargetLocation.X = t.M3n.X),
-      (e.TargetLocation.Y = t.M3n.Y),
-      (e.TargetLocation.Z = t.M3n.Z));
+      (e.TargetLocation.X = t.e8n.X),
+      (e.TargetLocation.Y = t.e8n.Y),
+      (e.TargetLocation.Z = t.e8n.Z));
   }
 }
 __decorate(
-  [CombatMessage_1.CombatNet.SyncHandle("C2n")],
+  [CombatMessage_1.CombatNet.SyncHandle("jFn")],
   RoleSceneInteractController,
   "OnHookMoveNotify",
   null,

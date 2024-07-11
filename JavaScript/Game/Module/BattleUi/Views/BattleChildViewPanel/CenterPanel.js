@@ -22,82 +22,82 @@ const UE = require("ue"),
 class CenterPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
   constructor() {
     super(...arguments),
-      (this.hYe = void 0),
-      (this.lYe = void 0),
-      (this._Ye = void 0),
-      (this.uYe = []),
-      (this.cYe = 0),
-      (this.mYe = void 0),
-      (this.dYe = void 0),
-      (this.CYe = void 0),
-      (this.gYe = !1),
-      (this.fYe = void 0),
-      (this.B8e = void 0),
-      (this.pYe = void 0),
-      (this.vYe = (t, i) => {
+      (this.MJe = void 0),
+      (this.EJe = void 0),
+      (this.SJe = void 0),
+      (this.yJe = []),
+      (this.IJe = 0),
+      (this.TJe = void 0),
+      (this.LJe = void 0),
+      (this.DJe = void 0),
+      (this.RJe = !1),
+      (this.UJe = void 0),
+      (this.X9e = void 0),
+      (this.AJe = void 0),
+      (this.PJe = (t, i) => {
         var e = ModelManager_1.ModelManager.RouletteModel.CurrentExploreSkillId;
         e &&
           e === HOOK_PHANTOM_ID &&
-          (Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info(
-              "Test",
-              8,
+          (Log_1.Log.CheckDebug() &&
+            Log_1.Log.Debug(
+              "Battle",
+              18,
               "[HookPoint]角色发现钩锁点",
               ["Found", t],
-              ["IsUsingHook", this.gYe],
+              ["IsUsingHook", this.RJe],
             ),
-          this.gYe ||
+          this.RJe ||
             (t
-              ? (this.CYe && this.CYe.GetIsInterrupting()) || this.MYe(i)
-              : this.SYe()));
+              ? (this.DJe && this.DJe.GetIsInterrupting()) || this.xJe(i)
+              : this.wJe()));
       }),
-      (this.EYe = (t, i, e) => {
+      (this.BJe = (t, i, e) => {
         var s = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
-        s.Valid &&
+        s?.Valid &&
           t === s.Id &&
           i === GRAPPING_HOOK_SKILL_ID &&
-          (this.gYe = !0);
+          (this.RJe = !0);
       }),
-      (this.yYe = (t, i) => {
-        !this.B8e?.Valid ||
-          t !== this.B8e.Id ||
+      (this.bJe = (t, i) => {
+        !this.X9e?.Valid ||
+          t !== this.X9e.Id ||
           i !== GRAPPING_HOOK_SKILL_ID ||
-          ((this.gYe = !1), this.CYe?.GetIsInterrupting()) ||
-          this.IYe() ||
-          this.SYe();
+          ((this.RJe = !1), this.DJe?.GetIsInterrupting()) ||
+          this.qJe() ||
+          this.wJe();
       }),
-      (this.TYe = (t, i) => {
+      (this.GJe = (t, i) => {
         var e = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
         e.Valid &&
           t === e.Id &&
           i === GRAPPING_HOOK_SKILL_ID &&
-          this.CYe?.Interrupt();
+          this.DJe?.Interrupt();
       }),
-      (this.LYe = () => {
-        this.B8e?.Valid &&
+      (this.NJe = () => {
+        this.X9e?.Valid &&
           (Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "Test",
               8,
               "[HookPoint]定点钩锁被打断后尝试激活定点钩锁Ui",
             ),
-          this.IYe() ||
+          this.qJe() ||
             (Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "Test",
                 8,
                 "[HookPoint]定点钩锁被打断后找不到定点钩锁点",
               ),
-            this.SYe()));
+            this.wJe()));
       }),
-      (this.DYe = () => {
-        this.IYe() || this.SYe();
+      (this.OJe = () => {
+        this.qJe() || this.wJe();
       }),
-      (this.RYe = () => {
+      (this.kJe = () => {
         var t = this.ChildViewData.GetChildVisible(17);
-        this.GetItem(0).SetUIActive(t), this._Ye?.OnBattleHudVisibleChanged(t);
+        this.GetItem(0).SetUIActive(t), this.SJe?.OnBattleHudVisibleChanged(t);
       }),
-      (this.UYe = (t) => {
+      (this.FJe = (t) => {
         this.GetItem(2).SetUIActive(t),
           this.GetItem(2).SetRaycastTarget(t),
           Log_1.Log.CheckInfo() &&
@@ -108,28 +108,28 @@ class CenterPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
               ["bVisible", t],
             );
       }),
-      (this.AYe = (t, i) => {
+      (this.VJe = (t, i) => {
         t
           ? (Log_1.Log.CheckDebug() &&
               Log_1.Log.Debug("Battle", 18, "进入处决范围"),
-            this.fYe ||
-              ((this.fYe = new ExecutionPanel_1.ExecutionPanel()),
-              this.fYe.Init(this.RootItem)),
-            this.fYe.ShowByEntity(i))
+            this.UJe ||
+              ((this.UJe = new ExecutionPanel_1.ExecutionPanel()),
+              this.UJe.Init(this.RootItem)),
+            this.UJe.ShowByEntity(i))
           : (Log_1.Log.CheckDebug() &&
               Log_1.Log.Debug("Battle", 18, "离开处决范围"),
-            this.fYe?.HideByEntity(i));
+            this.UJe?.HideByEntity(i));
       }),
-      (this.PYe = (t) => {
+      (this.HJe = (t) => {
         this.GetItem(0).SetUIActive(t),
           this.GetItem(1).SetUIActive(t),
           this.GetItem(2).SetUIActive(t);
       }),
-      (this.o7e = () => {
+      (this.fHe = () => {
         var t = ModelManager_1.ModelManager.BattleUiModel.GetCurRoleData();
-        (this.B8e = t.EntityHandle),
-          (this.pYe = this.B8e.Entity.GetComponent(87)),
-          this.xYe();
+        (this.X9e = t.EntityHandle),
+          (this.AJe = this.X9e.Entity.GetComponent(89)),
+          this.jJe();
       });
   }
   OnRegisterComponent() {
@@ -149,138 +149,138 @@ class CenterPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
         ]);
   }
   InitializeTemp() {
-    this.RYe(),
-      (this.B8e = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity),
-      this.B8e?.Valid && (this.pYe = this.B8e.Entity.GetComponent(87));
+    this.kJe(),
+      (this.X9e = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity),
+      this.X9e?.Valid && (this.AJe = this.X9e.Entity.GetComponent(89));
   }
   async InitializeAsync() {
-    await Promise.all([this.wYe(), this.BYe(), this.bYe(), this.qYe()]),
+    await Promise.all([this.WJe(), this.KJe(), this.QJe(), this.XJe()]),
       this.GetItem(2).SetUIActive(!1),
-      this.IYe();
+      this.qJe();
   }
   OnShowBattleChildViewPanel() {
-    this.mYe?.ShowBattleVisibleChildView(),
-      this.hYe?.OnShowBattleChildViewPanel();
+    this.TJe?.ShowBattleVisibleChildView(),
+      this.MJe?.OnShowBattleChildViewPanel();
   }
   OnHideBattleChildViewPanel() {
-    this.mYe?.HideBattleVisibleChildView(),
-      this.hYe?.OnHideBattleChildViewPanel();
+    this.TJe?.HideBattleVisibleChildView(),
+      this.MJe?.OnHideBattleChildViewPanel();
   }
   SetEventVisible(t) {}
   Reset() {
-    (this.hYe = void 0),
-      (this._Ye = void 0),
-      (this.mYe = void 0),
-      this.CYe?.Destroy(),
-      (this.CYe = void 0),
-      this.fYe?.Destroy(),
-      (this.fYe = void 0),
-      (this.uYe.length = 0),
+    (this.MJe = void 0),
+      (this.SJe = void 0),
+      (this.TJe = void 0),
+      this.DJe?.Destroy(),
+      (this.DJe = void 0),
+      this.UJe?.Destroy(),
+      (this.UJe = void 0),
+      (this.yJe.length = 0),
       super.Reset();
   }
   AddEvents() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.BattleUiCurRoleDataChanged,
-      this.o7e,
+      this.fHe,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.RoleFindFixHook,
-        this.vYe,
+        this.PJe,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.CharUseSkill,
-        this.EYe,
+        this.BJe,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnSkillEnd,
-        this.yYe,
+        this.bJe,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.CharInterruptSkill,
-        this.TYe,
+        this.GJe,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnChangeSelectedExploreId,
-        this.DYe,
+        this.OJe,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnRouletteViewVisibleChanged,
-        this.UYe,
+        this.FJe,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnEnterOrExitExecutionRange,
-        this.AYe,
+        this.VJe,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.GmOnlyShowJoyStick,
-        this.PYe,
+        this.HJe,
       ),
-      this.ChildViewData.AddCallback(17, this.RYe);
+      this.ChildViewData.AddCallback(17, this.kJe);
   }
   RemoveEvents() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.BattleUiCurRoleDataChanged,
-      this.o7e,
+      this.fHe,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.RoleFindFixHook,
-        this.vYe,
+        this.PJe,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.CharUseSkill,
-        this.EYe,
+        this.BJe,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnSkillEnd,
-        this.yYe,
+        this.bJe,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.CharInterruptSkill,
-        this.TYe,
+        this.GJe,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnChangeSelectedExploreId,
-        this.DYe,
+        this.OJe,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnRouletteViewVisibleChanged,
-        this.UYe,
+        this.FJe,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnEnterOrExitExecutionRange,
-        this.AYe,
+        this.VJe,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.GmOnlyShowJoyStick,
-        this.PYe,
+        this.HJe,
       ),
-      this.ChildViewData.RemoveCallback(17, this.RYe);
+      this.ChildViewData.RemoveCallback(17, this.kJe);
   }
   OnTickBattleChildViewPanel(t) {
-    this.mYe?.Tick(t), this.dYe?.Tick(t), this._Ye.Update(t);
+    this.TJe?.Tick(t), this.LJe?.Tick(t), this.SJe.Update(t);
   }
   OnAfterTickBattleChildViewPanel(t) {
-    this.hYe?.Update(t), this.lYe.Update(), this.VYe();
+    this.MJe?.Update(t), this.EJe.Update(), this.eze();
   }
-  MYe(t) {
-    this.CYe && (this.CYe.Destroy(), (this.CYe = void 0));
+  xJe(t) {
+    this.DJe && (this.DJe.Destroy(), (this.DJe = void 0));
     var i = UiLayer_1.UiLayer.GetBattleViewUnit(1);
-    (this.CYe = new GrapplingHookPoint_1.GrapplingHookPoint(t, i)),
-      this.CYe.BindOnInterruptCompleted(this.LYe);
+    (this.DJe = new GrapplingHookPoint_1.GrapplingHookPoint(t, i)),
+      this.DJe.BindOnInterruptCompleted(this.NJe);
   }
-  IYe() {
+  qJe() {
     var t;
     return !(
-      !this.pYe?.Valid ||
-      !this.HYe() ||
-      !this.jYe(this.pYe) ||
-      ((t = this.pYe.GetNextTargetVector()), this.MYe(t), 0)
+      !this.AJe?.Valid ||
+      !this.tze() ||
+      !this.ize(this.AJe) ||
+      ((t = this.AJe.GetNextTargetVector()), this.xJe(t), 0)
     );
   }
   GetExecutionItem() {
-    return this.fYe?.GetExecutionItem();
+    return this.UJe?.GetExecutionItem();
   }
-  jYe(t) {
+  ize(t) {
     var i = ModelManager_1.ModelManager.RouletteModel.CurrentExploreSkillId;
     return !(
       !i ||
@@ -291,73 +291,74 @@ class CenterPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
       !t.GetNextTargetVector()
     );
   }
-  SYe() {
-    this.CYe &&
-      this.CYe.GetIsActivateHook() &&
-      (this.CYe.Destroy(), (this.CYe = void 0));
+  wJe() {
+    this.DJe &&
+      this.DJe.GetIsActivateHook() &&
+      (this.DJe.Destroy(), (this.DJe = void 0));
   }
-  HYe() {
+  tze() {
     var t = ModelManager_1.ModelManager.RouletteModel.CurrentExploreSkillId;
     return !(!t || t !== HOOK_PHANTOM_ID);
   }
-  VYe() {
-    this.CYe &&
-      this.pYe?.Valid &&
-      (this.HYe() && this.jYe(this.pYe) ? this.CYe?.AfterTick() : this.SYe());
+  eze() {
+    this.DJe &&
+      this.AJe?.Valid &&
+      (this.tze() && this.ize(this.AJe) ? this.DJe?.AfterTick() : this.wJe());
   }
-  async wYe() {
+  async WJe() {
     var t = this.GetItem(0);
-    this.hYe = await this.NewStaticChildViewAsync(
+    this.MJe = await this.NewStaticChildViewAsync(
       t.GetOwner(),
       TrackedMarksView_1.TrackedMarksView,
     );
   }
-  async BYe() {
+  async KJe() {
     var t = this.GetItem(0);
-    this.lYe = await this.NewStaticChildViewAsync(
+    this.EJe = await this.NewStaticChildViewAsync(
       t.GetOwner(),
       ScanTrackedMarksView_1.ScanTrackedMarksView,
     );
   }
-  async bYe() {
+  async QJe() {
     var t = this.GetItem(1);
-    this._Ye = await this.NewStaticChildViewAsync(
+    this.SJe = await this.NewStaticChildViewAsync(
       t.GetOwner(),
       AlterMarksView_1.AlterMarksView,
     );
   }
-  async qYe() {
+  async XJe() {
     var t;
     1 === this.GetOperationType() &&
       ((t = this.GetItem(3)),
-      (this.mYe = await this.NewStaticChildViewAsync(
+      (this.TJe = await this.NewStaticChildViewAsync(
         t.GetOwner(),
         Joystick_1.Joystick,
+        this.RootItem,
       ))),
-      this.xYe();
+      this.jJe();
   }
-  xYe() {
-    this.mYe &&
+  jJe() {
+    this.TJe &&
       (this.ClearAllTagSignificantChangedCallback(),
-      this.ListenForTagSignificantChanged(this.B8e, forbidMoveTagId, (t, i) => {
-        this.mYe.SetForbidMove(i);
+      this.ListenForTagSignificantChanged(this.X9e, forbidMoveTagId, (t, i) => {
+        this.TJe.SetForbidMove(i);
       }),
-      this.mYe.SetForbidMove(this.ContainsTag(this.B8e, forbidMoveTagId)));
+      this.TJe.SetForbidMove(this.ContainsTag(this.X9e, forbidMoveTagId)));
     var t = ModelManager_1.ModelManager.BattleUiModel.GetCurRoleData();
     let i = 0;
     t?.RoleBattleViewInfo && (i = t.RoleBattleViewInfo.JoystickType),
-      this.cYe !== i &&
-        ((this.cYe = i),
-        this.mYe?.SetVisible(3, 0 === i),
-        this.dYe && this.dYe.Destroy(),
+      this.IJe !== i &&
+        ((this.IJe = i),
+        this.TJe?.SetVisible(3, 0 === i),
+        this.LJe && this.LJe.Destroy(),
         1 === i) &&
-        ((this.dYe = new MoveSkillPanel_1.MoveSkillPanel()),
-        this.dYe.CreateDynamic(this.GetRootItem()));
+        ((this.LJe = new MoveSkillPanel_1.MoveSkillPanel()),
+        this.LJe.CreateDynamic(this.GetRootItem()));
   }
 }
-((exports.CenterPanel = CenterPanel).OYe = void 0),
-  (CenterPanel.kYe = void 0),
-  (CenterPanel.GYe = void 0),
-  (CenterPanel.FYe = void 0),
-  (CenterPanel.NYe = void 0);
+((exports.CenterPanel = CenterPanel).JJe = void 0),
+  (CenterPanel.zJe = void 0),
+  (CenterPanel.$Je = void 0),
+  (CenterPanel.ZJe = void 0),
+  (CenterPanel.YJe = void 0);
 //# sourceMappingURL=CenterPanel.js.map

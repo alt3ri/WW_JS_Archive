@@ -13,7 +13,7 @@ class RoleFavorData extends RoleModuleDataBase_1.RoleModuleDataBase {
     super(...arguments),
       (this.Level = 0),
       (this.Exp = 0),
-      (this.Ylo = new Map());
+      (this.K1o = new Map());
   }
   GetFavorLevel() {
     return this.Level;
@@ -31,7 +31,7 @@ class RoleFavorData extends RoleModuleDataBase_1.RoleModuleDataBase {
       );
   }
   UpdateRoleFavorData(e, t) {
-    this.Ylo.set(e, this.Jlo(t)),
+    this.K1o.set(e, this.Q1o(t)),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.UpdateRoleFavorData,
         this.RoleId,
@@ -39,7 +39,7 @@ class RoleFavorData extends RoleModuleDataBase_1.RoleModuleDataBase {
   }
   UpdateUnlockId(e, t, r) {
     var e = this.GetClientFavorTabType(e),
-      o = this.Ylo.get(e),
+      o = this.K1o.get(e),
       a = o.length;
     for (let e = 0; e < a; e++) {
       var n = o[e];
@@ -58,7 +58,7 @@ class RoleFavorData extends RoleModuleDataBase_1.RoleModuleDataBase {
   UpdateCanUnlockId(e, r) {
     var t,
       e = this.GetClientFavorTabType(e),
-      o = this.Ylo.get(e);
+      o = this.K1o.get(e);
     if (o) {
       var a = o.length;
       let t = !1;
@@ -76,23 +76,23 @@ class RoleFavorData extends RoleModuleDataBase_1.RoleModuleDataBase {
         );
     } else
       (t = []).push(new FavorItemInfo_1.FavorItemInfo(r, 1)),
-        this.Ylo.set(e, t);
+        this.K1o.set(e, t);
   }
-  Jlo(t) {
+  Q1o(t) {
     var r = [],
       o = t.length;
     for (let e = 0; e < o; e++) {
       var a = t[e];
-      r.push(this.zlo(a));
+      r.push(this.X1o(a));
     }
     return r;
   }
-  zlo(e) {
-    var t = this.GetClientFavorItemStatus(e.n3n);
-    return new FavorItemInfo_1.FavorItemInfo(e.Ekn, t);
+  X1o(e) {
+    var t = this.GetClientFavorItemStatus(e.w6n);
+    return new FavorItemInfo_1.FavorItemInfo(e.J4n, t);
   }
   GetFavorItemState(t, e) {
-    var r = this.Ylo.get(e),
+    var r = this.K1o.get(e),
       o = r.length;
     for (let e = 0; e < o; e++) {
       var a = r[e];
@@ -103,25 +103,25 @@ class RoleFavorData extends RoleModuleDataBase_1.RoleModuleDataBase {
   GetClientFavorItemStatus(e) {
     let t = void 0;
     return (
-      e === Protocol_1.Aki.Protocol.cks.Proto_ItemLocked
+      e === Protocol_1.Aki.Protocol.t5s.Proto_ItemLocked
         ? (t = 0)
-        : e === Protocol_1.Aki.Protocol.cks.Proto_ItemCanUnLock
+        : e === Protocol_1.Aki.Protocol.t5s.Proto_ItemCanUnLock
           ? (t = 1)
-          : e === Protocol_1.Aki.Protocol.cks.Proto_ItemUnLocked && (t = 2),
+          : e === Protocol_1.Aki.Protocol.t5s.Proto_ItemUnLocked && (t = 2),
       t
     );
   }
   GetClientFavorTabType(e) {
-    return e === Protocol_1.Aki.Protocol.dks.I3n
+    return e === Protocol_1.Aki.Protocol.i5s.o8n
       ? 0
-      : e === Protocol_1.Aki.Protocol.dks.Proto_Story
+      : e === Protocol_1.Aki.Protocol.i5s.Proto_Story
         ? 1
-        : e === Protocol_1.Aki.Protocol.dks.Proto_Goods
+        : e === Protocol_1.Aki.Protocol.i5s.Proto_Goods
           ? 3
           : void 0;
   }
   IsExistCanUnlockFavorItem() {
-    for (var [e] of this.Ylo) if (this.IsFavorItemCanUnlock(e)) return !0;
+    for (var [e] of this.K1o) if (this.IsFavorItemCanUnlock(e)) return !0;
     return !1;
   }
   IsFavorItemCanUnlock(e) {
@@ -129,7 +129,7 @@ class RoleFavorData extends RoleModuleDataBase_1.RoleModuleDataBase {
       return ModelManager_1.ModelManager.MotionModel.IfRoleMotionCanUnlock(
         this.RoleId,
       );
-    var t = this.Ylo.get(e);
+    var t = this.K1o.get(e);
     if (t) {
       var r = t.length;
       for (let e = 0; e < r; e++) if (1 === t[e].Status) return !0;
@@ -138,7 +138,7 @@ class RoleFavorData extends RoleModuleDataBase_1.RoleModuleDataBase {
   }
   GetUnlockActionIndexList() {
     var t = [],
-      r = this.Ylo.get(2);
+      r = this.K1o.get(2);
     if (r) {
       var o = r.length;
       for (let e = 0; e < o; e++) {

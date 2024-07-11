@@ -2,6 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RenderUtil = void 0);
 const UE = require("ue"),
+  Info_1 = require("../../../Core/Common/Info"),
+  Log_1 = require("../../../Core/Common/Log"),
   GlobalData_1 = require("../../GlobalData"),
   CharBodyEffect_1 = require("../Character/Components/Components/CharBodyEffect"),
   CharDecalShadow_1 = require("../Character/Components/Components/CharDecalShadow"),
@@ -188,16 +190,52 @@ class RenderUtil {
     GlobalData_1.GlobalData.World &&
       UE.KismetSystemLibrary.ExecuteConsoleCommand(
         GlobalData_1.GlobalData.World,
-        "r.Mobile.CustomDepthForToonRimShadingDistance 5000",
+        "r.VelocityScreenSizeCull 0",
       );
   }
   static EnableVelocityScreenSizeCull() {
     GlobalData_1.GlobalData.World &&
       UE.KismetSystemLibrary.ExecuteConsoleCommand(
         GlobalData_1.GlobalData.World,
-        "r.Mobile.CustomDepthForToonRimShadingDistance 800",
+        "r.VelocityScreenSizeCull 0.01",
       );
   }
+  static BeginPSOSyncMode() {
+    GlobalData_1.GlobalData.World &&
+      (Log_1.Log.CheckInfo() &&
+        Log_1.Log.Info("RenderUtil", 47, "Begin pso sync mode"),
+      1 == Info_1.Info.PlatformType
+        ? ((RenderUtil.mca = UE.KismetSystemLibrary.GetConsoleVariableIntValue(
+            "r.PSO.CompilationMode",
+          )),
+          UE.KismetSystemLibrary.ExecuteConsoleCommand(
+            GlobalData_1.GlobalData.World,
+            "r.PSO.CompilationMode 1",
+          ))
+        : 2 == Info_1.Info.PlatformType &&
+          ((RenderUtil.mca = UE.KismetSystemLibrary.GetConsoleVariableIntValue(
+            "r.OpenGL.ProgramBinarySyncCreate",
+          )),
+          UE.KismetSystemLibrary.ExecuteConsoleCommand(
+            GlobalData_1.GlobalData.World,
+            "r.OpenGL.ProgramBinarySyncCreate 1",
+          )));
+  }
+  static EndPSOSyncMode() {
+    GlobalData_1.GlobalData.World &&
+      (Log_1.Log.CheckInfo() &&
+        Log_1.Log.Info("RenderUtil", 47, "End pso sync mode"),
+      1 == Info_1.Info.PlatformType
+        ? UE.KismetSystemLibrary.ExecuteConsoleCommand(
+            GlobalData_1.GlobalData.World,
+            "r.PSO.CompilationMode " + RenderUtil.mca,
+          )
+        : 2 == Info_1.Info.PlatformType &&
+          UE.KismetSystemLibrary.ExecuteConsoleCommand(
+            GlobalData_1.GlobalData.World,
+            "r.OpenGL.ProgramBinarySyncCreate " + RenderUtil.mca,
+          ));
+  }
 }
-exports.RenderUtil = RenderUtil;
+(exports.RenderUtil = RenderUtil).mca = 0;
 //# sourceMappingURL=RenderUtil.js.map

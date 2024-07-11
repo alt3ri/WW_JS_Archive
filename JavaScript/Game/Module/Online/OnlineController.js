@@ -25,128 +25,131 @@ const Log_1 = require("../../../Core/Common/Log"),
 class OnlineController extends UiControllerBase_1.UiControllerBase {
   static OnInit() {
     return (
-      (OnlineController.Uqi =
+      (OnlineController.UGi =
         CommonParamById_1.configCommonParamById.GetIntConfig(
           "netstate_push_interval",
         ) * TimeUtil_1.TimeUtil.InverseMillisecond),
-      (OnlineController.Aqi =
+      (OnlineController.AGi =
         CommonParamById_1.configCommonParamById.GetIntConfig("netstate_great")),
-      (OnlineController.Pqi =
+      (OnlineController.PGi =
         CommonParamById_1.configCommonParamById.GetIntConfig("netstate_good")),
-      (OnlineController.xqi =
+      (OnlineController.xGi =
         CommonParamById_1.configCommonParamById.GetIntConfig("netstate_weak")),
       !0
     );
   }
   static OnAddEvents() {
     EventSystem_1.EventSystem.Add(
-      EventDefine_1.EEventName.WorldDone,
-      OnlineController.b4e,
+      EventDefine_1.EEventName.ScenePlayerLeaveScene,
+      OnlineController.y4t,
     ),
       EventSystem_1.EventSystem.Add(
-        EventDefine_1.EEventName.OnFinishLoadingState,
-        OnlineController.wqi,
+        EventDefine_1.EEventName.WorldDone,
+        OnlineController.$5e,
       ),
       EventSystem_1.EventSystem.Add(
-        EventDefine_1.EEventName.ScenePlayerLeaveScene,
-        OnlineController.E3t,
+        EventDefine_1.EEventName.OnFinishLoadingState,
+        OnlineController.wGi,
       );
   }
   static OnRemoveEvents() {
     EventSystem_1.EventSystem.Remove(
-      EventDefine_1.EEventName.WorldDone,
-      OnlineController.b4e,
+      EventDefine_1.EEventName.ScenePlayerLeaveScene,
+      OnlineController.y4t,
     ),
       EventSystem_1.EventSystem.Remove(
-        EventDefine_1.EEventName.OnFinishLoadingState,
-        OnlineController.wqi,
+        EventDefine_1.EEventName.WorldDone,
+        OnlineController.$5e,
       ),
       EventSystem_1.EventSystem.Remove(
-        EventDefine_1.EEventName.ScenePlayerLeaveScene,
-        OnlineController.E3t,
+        EventDefine_1.EEventName.OnFinishLoadingState,
+        OnlineController.wGi,
       );
   }
   static OnRegisterNetEvent() {
-    Net_1.Net.Register(7337, OnlineController.ApplyJoinWorldNotify),
-      Net_1.Net.Register(24023, OnlineController.AgreeJoinResultNotify),
-      Net_1.Net.Register(21212, OnlineController.AllApplyJoinNotify),
-      Net_1.Net.Register(7487, OnlineController.JoinWorldTeamNotify),
-      Net_1.Net.Register(20308, OnlineController.PlayerLeaveWorldTeamNotify),
-      Net_1.Net.Register(7081, OnlineController.PlayerEnterWorldTeamNotify),
+    Net_1.Net.Register(5709, OnlineController.ApplyJoinWorldNotify),
+      Net_1.Net.Register(12847, OnlineController.AgreeJoinResultNotify),
+      Net_1.Net.Register(23482, OnlineController.AllApplyJoinNotify),
+      Net_1.Net.Register(17840, OnlineController.JoinWorldTeamNotify),
+      Net_1.Net.Register(25439, OnlineController.PlayerLeaveWorldTeamNotify),
+      Net_1.Net.Register(17966, OnlineController.PlayerEnterWorldTeamNotify),
       Net_1.Net.Register(
-        7355,
+        9146,
         OnlineController.WorldTeamPlayerInfoChangeNotify,
       ),
       Net_1.Net.Register(
-        28527,
+        10751,
         OnlineController.UpdateWorldTeamPlayerFightInfoNotify,
       ),
-      Net_1.Net.Register(6968, OnlineController.ReceiveRechallengeNotify),
-      Net_1.Net.Register(19634, OnlineController.InviteRechallengeNotify),
+      Net_1.Net.Register(24747, OnlineController.ReceiveRechallengeNotify),
+      Net_1.Net.Register(2817, OnlineController.InviteRechallengeNotify),
       Net_1.Net.Register(
-        14623,
+        27751,
         OnlineController.ReceiveRechallengePlayerIdsNotify,
       ),
-      Net_1.Net.Register(6400, OnlineController.PlayerNetStateNotify),
-      Net_1.Net.Register(9468, OnlineController.MatchChangePlayerUiStateNotify),
-      Net_1.Net.Register(4796, OnlineController.PlayerTeleportStateNotify),
-      Net_1.Net.Register(25706, OnlineController.ApplyerEnterSceneNotify);
+      Net_1.Net.Register(9521, OnlineController.PlayerNetStateNotify),
+      Net_1.Net.Register(
+        23710,
+        OnlineController.MatchChangePlayerUiStateNotify,
+      ),
+      Net_1.Net.Register(17029, OnlineController.PlayerTeleportStateNotify),
+      Net_1.Net.Register(15428, OnlineController.ApplyerEnterSceneNotify);
   }
   static OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(7337),
-      Net_1.Net.UnRegister(24023),
-      Net_1.Net.UnRegister(20308),
-      Net_1.Net.UnRegister(7487),
-      Net_1.Net.UnRegister(21212),
-      Net_1.Net.UnRegister(7081),
-      Net_1.Net.UnRegister(7355),
-      Net_1.Net.UnRegister(28527),
-      Net_1.Net.UnRegister(6968),
-      Net_1.Net.UnRegister(19634),
-      Net_1.Net.UnRegister(14623),
-      Net_1.Net.UnRegister(6400),
-      Net_1.Net.UnRegister(9468),
-      Net_1.Net.UnRegister(4796),
-      Net_1.Net.UnRegister(25706);
+    Net_1.Net.UnRegister(5709),
+      Net_1.Net.UnRegister(12847),
+      Net_1.Net.UnRegister(25439),
+      Net_1.Net.UnRegister(17840),
+      Net_1.Net.UnRegister(23482),
+      Net_1.Net.UnRegister(17966),
+      Net_1.Net.UnRegister(9146),
+      Net_1.Net.UnRegister(10751),
+      Net_1.Net.UnRegister(24747),
+      Net_1.Net.UnRegister(2817),
+      Net_1.Net.UnRegister(27751),
+      Net_1.Net.UnRegister(9521),
+      Net_1.Net.UnRegister(23710),
+      Net_1.Net.UnRegister(17029),
+      Net_1.Net.UnRegister(15428);
   }
   static RefreshWorldList() {
     var e = TimeUtil_1.TimeUtil.GetServerTime();
     return (
-      e - OnlineController.FVt > LIST_REQUEST_CD &&
+      e - OnlineController.F6t > LIST_REQUEST_CD &&
       (ModelManager_1.ModelManager.OnlineModel.CleanFriendWorldList(),
       ModelManager_1.ModelManager.OnlineModel.CleanStrangerWorldList(),
       OnlineController.LobbyListRequest(!1),
       OnlineController.LobbyListRequest(!0),
-      (OnlineController.FVt = e),
+      (OnlineController.F6t = e),
       !0)
     );
   }
   static OnTick(e) {
     ModelManager_1.ModelManager.GameModeModel.WorldDone &&
       ModelManager_1.ModelManager.GameModeModel.IsMulti &&
-      (OnlineController.Bqi > OnlineController.Uqi &&
-        ((OnlineController.Bqi -= OnlineController.Uqi),
+      (OnlineController.BGi > OnlineController.UGi &&
+        ((OnlineController.BGi -= OnlineController.UGi),
         OnlineController.PlayerNetStatePush()),
-      (OnlineController.Bqi += e));
+      (OnlineController.BGi += e));
   }
   static LobbyListRequest(l) {
-    var e = new Protocol_1.Aki.Protocol.Qcs();
-    (e.e8n = l),
-      Net_1.Net.Call(18887, e, (e) => {
+    var e = new Protocol_1.Aki.Protocol.$0s();
+    (e.B7n = l),
+      Net_1.Net.Call(28280, e, (e) => {
         if (
           (Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug("MultiPlayerTeam", 5, "协议接收", [
               "协议id",
-              "9663" + Protocol_1.Aki.Protocol.Xcs.name,
+              "9663" + Protocol_1.Aki.Protocol.H0s.name,
             ]),
-          e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys)
+          e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs)
         )
           ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-            e.lkn,
-            15020,
+            e.O4n,
+            26384,
           );
         else
-          for (const o of e.Y5n) {
+          for (const o of e.U9n) {
             var n = new OnlineHallData_1.OnlineHallData(o);
             l
               ? ModelManager_1.ModelManager.OnlineModel.PushFriendWorldList(n)
@@ -154,27 +157,28 @@ class OnlineController extends UiControllerBase_1.UiControllerBase {
                   n,
                 );
           }
-        EventSystem_1.EventSystem.Emit(
-          EventDefine_1.EEventName.OnRefreshWorldList,
-        );
+        ModelManager_1.ModelManager.OnlineModel.SortWorldList(l),
+          EventSystem_1.EventSystem.Emit(
+            EventDefine_1.EEventName.OnRefreshWorldList,
+          );
       });
   }
   static WorldEnterPermissionsRequest(e) {
-    var n = new Protocol_1.Aki.Protocol.Ocs();
-    (n.Ikn = e),
-      Net_1.Net.Call(28642, n, (e) => {
+    var n = new Protocol_1.Aki.Protocol.x0s();
+    (n.Z4n = e),
+      Net_1.Net.Call(1231, n, (e) => {
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("MultiPlayerTeam", 5, "协议接收", [
             "协议id",
-            "9671" + Protocol_1.Aki.Protocol.kcs.name,
+            "9671" + Protocol_1.Aki.Protocol.b0s.name,
           ]),
-          e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys
+          e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs
             ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-                e.lkn,
-                14015,
+                e.O4n,
+                25262,
               )
             : (ModelManager_1.ModelManager.OnlineModel.SetPermissionsSetting(
-                e.Ikn,
+                e.Z4n,
               ),
               EventSystem_1.EventSystem.Emit(
                 EventDefine_1.EEventName.OnRefreshPermissionsSetting,
@@ -182,24 +186,24 @@ class OnlineController extends UiControllerBase_1.UiControllerBase {
       });
   }
   static ApplyJoinWorldRequest(e, n) {
-    var o = new Protocol_1.Aki.Protocol.Ncs();
-    (o.aFn = e),
-      (o.t8n = n),
-      Net_1.Net.Call(7899, o, (e) => {
+    var o = new Protocol_1.Aki.Protocol.B0s();
+    (o.q5n = e),
+      (o.w7n = n),
+      Net_1.Net.Call(1119, o, (e) => {
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("MultiPlayerTeam", 5, "协议接收", [
             "协议id",
-            "9669" + Protocol_1.Aki.Protocol.Fcs.name,
+            "9669" + Protocol_1.Aki.Protocol.q0s.name,
           ]),
-          e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys &&
+          e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs &&
             ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-              e.lkn,
-              14476,
-              e.Fms,
+              e.O4n,
+              18254,
+              e.ivs,
             );
       });
   }
-  static bqi() {
+  static bGi() {
     return (
       !!(
         UiManager_1.UiManager.IsViewOpen("CycleTowerView") ||
@@ -214,28 +218,28 @@ class OnlineController extends UiControllerBase_1.UiControllerBase {
     );
   }
   static LobbyQueryPlayersRequest(n) {
-    var e = new Protocol_1.Aki.Protocol.Ycs();
-    (e.aFn = n),
-      Net_1.Net.Call(8821, e, (e) => {
+    var e = new Protocol_1.Aki.Protocol.j0s();
+    (e.q5n = n),
+      Net_1.Net.Call(27974, e, (e) => {
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("MultiPlayerTeam", 5, "协议接收", [
             "协议id",
-            "9661" + Protocol_1.Aki.Protocol.Jcs.name,
+            "9661" + Protocol_1.Aki.Protocol.W0s.name,
           ]),
-          e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys
-            ? e.lkn === Protocol_1.Aki.Protocol.lkn.Proto_ErrLobbyTryQuerySelf
+          e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs
+            ? e.O4n === Protocol_1.Aki.Protocol.O4n.Proto_ErrLobbyTryQuerySelf
               ? ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
                   "CanNotSearchSelf",
                 )
-              : e.lkn === Protocol_1.Aki.Protocol.lkn.Proto_ErrHostOffline
+              : e.O4n === Protocol_1.Aki.Protocol.O4n.Proto_ErrHostOffline
                 ? ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
                     "OnlineInvalidUserId",
                   )
                 : ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-                    e.lkn,
-                    27989,
+                    e.O4n,
+                    6220,
                   )
-            : (e = e.pbs) && 0 !== e.aFn
+            : (e = e.aOs) && 0 !== e.q5n
               ? (ModelManager_1.ModelManager.OnlineModel.CleanSearchResultList(),
                 (e = new OnlineHallData_1.OnlineHallData(e)),
                 ModelManager_1.ModelManager.OnlineModel.PushSearchResultList(e),
@@ -249,19 +253,19 @@ class OnlineController extends UiControllerBase_1.UiControllerBase {
       });
   }
   static AgreeJoinResultRequest(n, e) {
-    var o = new Protocol_1.Aki.Protocol.$cs();
-    (o.aFn = n),
-      (o.i8n = e),
-      Net_1.Net.Call(24130, o, (e) => {
+    var o = new Protocol_1.Aki.Protocol.O0s();
+    (o.q5n = n),
+      (o.b7n = e),
+      Net_1.Net.Call(15318, o, (e) => {
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("MultiPlayerTeam", 5, "协议接收", [
             "协议id",
-            "9666" + Protocol_1.Aki.Protocol.Hcs.name,
+            "9666" + Protocol_1.Aki.Protocol.k0s.name,
           ]),
-          e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys
+          e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs
             ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-                e.lkn,
-                1697,
+                e.O4n,
+                24501,
               )
             : (ModelManager_1.ModelManager.OnlineModel.DeleteCurrentApplyListById(
                 n,
@@ -272,18 +276,18 @@ class OnlineController extends UiControllerBase_1.UiControllerBase {
       });
   }
   static MatchChangePlayerUiStateRequest(n) {
-    var e = new Protocol_1.Aki.Protocol.ios();
-    (e.K5n = n),
-      Net_1.Net.Call(26132, e, (e) => {
+    var e = new Protocol_1.Aki.Protocol.ehs();
+    (e.T9n = n),
+      Net_1.Net.Call(1747, e, (e) => {
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("MultiPlayerTeam", 5, "协议接收", [
             "协议id",
-            "9666" + Protocol_1.Aki.Protocol.ros.name,
+            "9666" + Protocol_1.Aki.Protocol.ths.name,
           ]),
-          e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys
+          e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs
             ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-                e.lkn,
-                1697,
+                e.O4n,
+                24501,
               )
             : ((e = ModelManager_1.ModelManager.PlayerInfoModel.GetId()),
               ModelManager_1.ModelManager.InstanceDungeonModel.SetPlayerUiState(
@@ -302,24 +306,30 @@ class OnlineController extends UiControllerBase_1.UiControllerBase {
   }
   static IsNetStateGood(e) {
     return (
-      e === Protocol_1.Aki.Protocol.oFs.Proto_GREAT ||
-      e === Protocol_1.Aki.Protocol.oFs.Proto_GOOD
+      e === Protocol_1.Aki.Protocol.Y8s.Proto_GREAT ||
+      e === Protocol_1.Aki.Protocol.Y8s.Proto_GOOD
     );
   }
   static ApplyRechallengeRequest(e) {
     ModelManager_1.ModelManager.OnlineModel.RefreshInitiateTime();
-    var n = new Protocol_1.Aki.Protocol.Oss();
-    (n.V5n = e),
-      Net_1.Net.Call(13121, n, (e) => {
+    var n = new Protocol_1.Aki.Protocol.b1s();
+    (n.E9n = e),
+      EventSystem_1.EventSystem.Emit(
+        EventDefine_1.EEventName.OnRefreshOnlineChallengePlayer,
+      ),
+      Net_1.Net.Call(12703, n, (e) => {
         Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("MultiPlayerTeam", 5, "协议接收", [
-            "协议id",
-            "9624" + Protocol_1.Aki.Protocol.kss.name,
-          ]),
-          e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys &&
+          Log_1.Log.Debug(
+            "MultiPlayerTeam",
+            5,
+            "协议接收",
+            ["协议id", "9624" + Protocol_1.Aki.Protocol.B1s.name],
+            ["response", e],
+          ),
+          e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs &&
             ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-              e.lkn,
-              16522,
+              e.O4n,
+              18836,
             ),
           ModelManager_1.ModelManager.OnlineModel.GetIsMyTeam()
             ? ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
@@ -330,34 +340,39 @@ class OnlineController extends UiControllerBase_1.UiControllerBase {
               );
       });
   }
-  static ReceiveRechallengeRequest() {
-    var e = new Protocol_1.Aki.Protocol.Fss();
-    Net_1.Net.Call(28900, e, (e) => {
-      Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("MultiPlayerTeam", 5, "协议接收", [
-          "协议id",
-          "9624" + Protocol_1.Aki.Protocol.Vss.name,
-        ]),
-        e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys &&
-          ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-            e.lkn,
-            12176,
-          );
-    });
+  static ReceiveRechallengeRequest(e, n) {
+    var o = new Protocol_1.Aki.Protocol.G1s();
+    (o.b7n = e
+      ? Protocol_1.Aki.Protocol.SRa.Proto_Accept
+      : n
+        ? Protocol_1.Aki.Protocol.SRa.Proto_ActiveRefuse
+        : Protocol_1.Aki.Protocol.SRa.Proto_TimeOutRefuse),
+      Net_1.Net.Call(24071, o, (e) => {
+        Log_1.Log.CheckDebug() &&
+          Log_1.Log.Debug("MultiPlayerTeam", 5, "协议接收", [
+            "协议id",
+            "9624" + Protocol_1.Aki.Protocol.O1s.name,
+          ]),
+          e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs &&
+            ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
+              e.O4n,
+              15391,
+            );
+      });
   }
   static InviteRechallengeRequest() {
     ModelManager_1.ModelManager.OnlineModel.RefreshInitiateTime();
-    var e = new Protocol_1.Aki.Protocol.$ss();
-    Net_1.Net.Call(11267, e, (e) => {
+    var e = new Protocol_1.Aki.Protocol.k1s();
+    Net_1.Net.Call(3393, e, (e) => {
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("MultiPlayerTeam", 5, "协议接收", [
           "协议id",
-          "9624" + Protocol_1.Aki.Protocol.kss.name,
+          "9624" + Protocol_1.Aki.Protocol.k1s.name,
         ]),
-        e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys
+        e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs
           ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-              e.lkn,
-              16522,
+              e.O4n,
+              4683,
             )
           : (UiManager_1.UiManager.OpenView("OnlineChallengeStateView"),
             UiManager_1.UiManager.IsViewOpen("OnlineChallengeApplyView") &&
@@ -365,44 +380,44 @@ class OnlineController extends UiControllerBase_1.UiControllerBase {
     });
   }
   static LeaveWorldTeamRequest(e) {
-    var n = new Protocol_1.Aki.Protocol.ids();
-    (n.aFn = e),
-      Net_1.Net.Call(19381, n, (e) => {
+    var n = new Protocol_1.Aki.Protocol.J0s();
+    (n.q5n = e),
+      Net_1.Net.Call(4442, n, (e) => {
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("MultiPlayerTeam", 5, "协议接收", [
             "协议id",
-            "9624" + Protocol_1.Aki.Protocol.rds.name,
+            "9624" + Protocol_1.Aki.Protocol.z0s.name,
           ]),
-          e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys
+          e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs
             ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-                e.lkn,
-                20914,
+                e.O4n,
+                24336,
               )
             : ModelManager_1.ModelManager.OnlineModel.ClearOnlineTeamMap();
       });
   }
   static KickWorldTeamRequest(e) {
-    var n = new Protocol_1.Aki.Protocol.ods();
-    (n.aFn = e),
-      Net_1.Net.Call(1996, n, (e) => {
+    var n = new Protocol_1.Aki.Protocol.Z0s();
+    (n.q5n = e),
+      Net_1.Net.Call(21614, n, (e) => {
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("MultiPlayerTeam", 5, "协议接收", [
             "协议id",
-            "9626" + Protocol_1.Aki.Protocol.nds.name,
+            "9626" + Protocol_1.Aki.Protocol.egs.name,
           ]),
-          e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys &&
+          e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs &&
             ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-              e.lkn,
-              29330,
+              e.O4n,
+              14162,
             );
       });
   }
   static PlayerNetStatePush() {
-    var e = new Protocol_1.Aki.Protocol.lds(),
+    var e = new Protocol_1.Aki.Protocol.ogs(),
       n = Net_1.Net.RttMs,
       e =
-        ((e.r8n = n),
-        Net_1.Net.Send(3429, e),
+        ((e.q7n = n),
+        Net_1.Net.Send(4357, e),
         ModelManager_1.ModelManager.PlayerInfoModel.GetId()),
       n = this.GetNetPingState(n),
       o = ModelManager_1.ModelManager.OnlineModel.GetCurrentTeamListById(e);
@@ -417,26 +432,26 @@ class OnlineController extends UiControllerBase_1.UiControllerBase {
   }
   static GetNetPingState(e) {
     return e < 0
-      ? Protocol_1.Aki.Protocol.oFs.Proto_UNKNOWN
-      : e <= OnlineController.Aqi
-        ? Protocol_1.Aki.Protocol.oFs.Proto_GREAT
-        : e <= OnlineController.Pqi
-          ? Protocol_1.Aki.Protocol.oFs.Proto_GOOD
-          : e <= OnlineController.xqi
-            ? Protocol_1.Aki.Protocol.oFs.Proto_POOR
-            : Protocol_1.Aki.Protocol.oFs.Proto_UNKNOWN;
+      ? Protocol_1.Aki.Protocol.Y8s.Proto_UNKNOWN
+      : e <= OnlineController.AGi
+        ? Protocol_1.Aki.Protocol.Y8s.Proto_GREAT
+        : e <= OnlineController.PGi
+          ? Protocol_1.Aki.Protocol.Y8s.Proto_GOOD
+          : e <= OnlineController.xGi
+            ? Protocol_1.Aki.Protocol.Y8s.Proto_POOR
+            : Protocol_1.Aki.Protocol.Y8s.Proto_UNKNOWN;
   }
   static OnAddOpenViewCheckFunction() {
     UiManager_1.UiManager.AddOpenViewCheckFunction(
       "OnlineWorldHallView",
-      OnlineController.V4e,
+      OnlineController.iVe,
       "OnlineController.CanOpenView",
     );
   }
   static OnRemoveOpenViewCheckFunction() {
     UiManager_1.UiManager.RemoveOpenViewCheckFunction(
       "OnlineWorldHallView",
-      OnlineController.V4e,
+      OnlineController.iVe,
     );
   }
   static ShowTipsWhenOnlineDisabled() {
@@ -471,7 +486,7 @@ class OnlineController extends UiControllerBase_1.UiControllerBase {
       }
     return !1;
   }
-  static qqi() {
+  static qGi() {
     var e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(136);
     e.SetCloseFunction(() => {
       ControllerHolder_1.ControllerHolder.KuroSdkController.PostKuroSdkEvent(5);
@@ -482,15 +497,14 @@ class OnlineController extends UiControllerBase_1.UiControllerBase {
   }
 }
 (exports.OnlineController = OnlineController),
-  ((_a = OnlineController).FVt = 0),
-  (OnlineController.Gqi = !1),
-  (OnlineController.Bqi = 0),
-  (OnlineController.b4e = () => {
+  ((_a = OnlineController).F6t = 0),
+  (OnlineController.BGi = 0),
+  (OnlineController.$5e = () => {
     ModelManager_1.ModelManager.OnlineModel.SetPermissionsSetting(
       ModelManager_1.ModelManager.FunctionModel.GetWorldPermission(),
     );
   }),
-  (OnlineController.E3t = (e) => {
+  (OnlineController.y4t = (e) => {
     ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance() &&
       (ModelManager_1.ModelManager.OnlineModel.SetContinuingChallengeConfirmState(
         e,
@@ -501,36 +515,35 @@ class OnlineController extends UiControllerBase_1.UiControllerBase {
         EventDefine_1.EEventName.PlayerChallengeStateChange,
         e,
         1,
+      ),
+      EventSystem_1.EventSystem.Emit(
+        EventDefine_1.EEventName.OnRefreshOnlineChallengePlayer,
       ));
   }),
-  (OnlineController.wqi = () => {
-    OnlineController.Gqi &&
-      ((OnlineController.Gqi = !1),
-      ModelManager_1.ModelManager.DeadReviveModel.AllDead) &&
-      UiManager_1.UiManager.OpenView("ReviveView"),
-      OnlineController.Nqi &&
-        (ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
-          OnlineController.Nqi[0],
-          OnlineController.Nqi[1],
-        ),
-        (OnlineController.Nqi = void 0));
+  (OnlineController.wGi = () => {
+    OnlineController.NGi &&
+      (ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
+        OnlineController.NGi[0],
+        OnlineController.NGi[1],
+      ),
+      (OnlineController.NGi = void 0));
   }),
   (OnlineController.ApplyJoinWorldNotify = (e) => {
     if (
       (Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("MultiPlayerTeam", 5, "协议接收", [
           "协议id",
-          "9667" + Protocol_1.Aki.Protocol.Vcs.name,
+          "9667" + Protocol_1.Aki.Protocol.G0s.name,
         ]),
       !ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance() &&
-        !OnlineController.bqi())
+        !OnlineController.bGi())
     ) {
       const n = new OnlineHallData_1.OnlineApplyData(
-        e.Rgs,
-        e.aFn,
-        e.fbs,
-        e.$gs,
-        e.r3n,
+        e.HMs,
+        e.q5n,
+        e.nOs,
+        e.sSs,
+        e.P6n,
       );
       ModelManager_1.ModelManager.OnlineModel.PushCurrentApplyList(n),
         ModelManager_1.ModelManager.OnlineModel.GetCurrentApplySize() <= 1 &&
@@ -551,21 +564,21 @@ class OnlineController extends UiControllerBase_1.UiControllerBase {
     }
   }),
   (OnlineController.AgreeJoinResultNotify = (e) => {
-    e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys
+    e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs
       ? ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
           "ApplyRefused",
-          e.Rgs,
+          e.HMs,
         )
-      : (OnlineController.Nqi = ["EnteringOtherWorld", [e.Rgs]]);
+      : (OnlineController.NGi = ["EnteringOtherWorld", [e.HMs]]);
   }),
   (OnlineController.AllApplyJoinNotify = (e) => {
-    for (const n of e.vbs) {
+    for (const n of e.sOs) {
       const o = new OnlineHallData_1.OnlineApplyData(
-        n.Rgs,
-        n.aFn,
-        n.fbs,
-        n.$gs,
-        n.r3n,
+        n.HMs,
+        n.q5n,
+        n.nOs,
+        n.sSs,
+        n.P6n,
       );
       ModelManager_1.ModelManager.OnlineModel.PushCurrentApplyList(o),
         TimerSystem_1.TimerSystem.Delay(() => {
@@ -589,43 +602,41 @@ class OnlineController extends UiControllerBase_1.UiControllerBase {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug("MultiPlayerTeam", 5, "通知接收", [
         "通知id",
-        "9620 " + Protocol_1.Aki.Protocol.Zcs.name,
+        "9620 " + Protocol_1.Aki.Protocol.Q0s.name,
       ]);
     var o = ModelManager_1.ModelManager.OnlineModel,
-      l = (o.ClearWorldTeamPlayerFightInfo(), n.ZEs.length);
+      l = (o.ClearWorldTeamPlayerFightInfo(), n.vRs.length);
     let r = 0;
     for (let e = 0; e < l; e++) {
-      var t = n.ZEs[e],
+      var t = n.vRs[e],
         a = new OnlineHallData_1.OnlineTeamData(
-          t.Rgs,
-          t.aFn,
-          t.r3n,
-          t.$gs,
-          t.l5n,
+          t.HMs,
+          t.q5n,
+          t.P6n,
+          t.sSs,
+          t.HVn,
           e + 1,
-          t.pbs,
-          t.Sbs,
+          t.aOs,
+          t.lOs,
         ),
         i =
           (ModelManager_1.ModelManager.OnlineModel.PushCurrentTeamList(a),
           new Array());
-      for (const M of t.Mbs.FLs) {
-        var _ = new OnlineHallData_1.WorldTeamRoleInfo(M.l3n, M.XAs);
+      for (const M of t.hOs.sUs) {
+        var _ = new OnlineHallData_1.WorldTeamRoleInfo(M.O6n, M.Cbs);
         (_.RoleIndex = r++), i.push(_);
       }
       a = new OnlineHallData_1.WorldTeamPlayerFightInfo(
         ModelManager_1.ModelManager.OnlineModel.GetCurrentTeamListById(
-          t.aFn,
+          t.q5n,
         ).Name,
-        t.aFn,
-        t.Mbs.z4n,
+        t.q5n,
+        t.hOs.PVn,
         i,
       );
       o.PushWorldTeamPlayerFightInfo(a);
     }
-    ModelManager_1.ModelManager.OnlineModel.SetTeamOwnerId(n.qps),
-      ModelManager_1.ModelManager.DeadReviveModel.AllDead &&
-        (OnlineController.Gqi = !0),
+    ModelManager_1.ModelManager.OnlineModel.SetTeamOwnerId(n.zys),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.ResetToBattleView,
       ),
@@ -640,22 +651,22 @@ class OnlineController extends UiControllerBase_1.UiControllerBase {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug("MultiPlayerTeam", 5, "通知接收", [
         "通知id",
-        "9621 " + Protocol_1.Aki.Protocol.eds.name,
+        "9621 " + Protocol_1.Aki.Protocol.X0s.name,
       ]);
-    var n = e.aFn,
+    var n = e.q5n,
       o = ModelManager_1.ModelManager.OnlineModel.GetCurrentTeamListById(n);
     if (o.IsSelf) {
       if (!ModelManager_1.ModelManager.GameModeModel.WorldDone)
         return (
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info("Formation", 5, "离开队伍时世界未加载完成"),
-          void _a.qqi()
+          void _a.qGi()
         );
       UiManager_1.UiManager.IsViewOpen("OnlineWorldHallView") &&
         UiManager_1.UiManager.CloseView("OnlineWorldHallView"),
         n !== ModelManager_1.ModelManager.OnlineModel.OwnerId &&
-          e.V5n === Protocol_1.Aki.Protocol.iFs.Proto_Dissolve &&
-          (OnlineController.Nqi = ["LeaderExitOnlineTeam", [o.Name]]),
+          e.E9n === Protocol_1.Aki.Protocol.Q8s.Proto_Dissolve &&
+          (OnlineController.NGi = ["LeaderExitOnlineTeam", [o.Name]]),
         ModelManager_1.ModelManager.OnlineModel.SetTeamOwnerId(-1),
         ModelManager_1.ModelManager.OnlineModel.ClearOnlineTeamMap(),
         ModelManager_1.ModelManager.OnlineModel.ClearPlayerTeleportState(),
@@ -684,28 +695,28 @@ class OnlineController extends UiControllerBase_1.UiControllerBase {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug("MultiPlayerTeam", 5, "通知接收", [
         "通知id",
-        "9621 " + Protocol_1.Aki.Protocol.tds.name,
+        "9621 " + Protocol_1.Aki.Protocol.Y0s.name,
       ]);
-    var e = e.pys,
+    var e = e.ORs,
       n = new OnlineHallData_1.OnlineTeamData(
-        e.Rgs,
-        e.aFn,
-        e.r3n,
-        e.$gs,
-        e.l5n,
+        e.HMs,
+        e.q5n,
+        e.P6n,
+        e.sSs,
+        e.HVn,
         ModelManager_1.ModelManager.OnlineModel.GetCurrentTeamSize() + 1,
-        e.pbs,
-        e.Sbs,
+        e.aOs,
+        e.lOs,
       ),
       o = new Array();
-    for (const t of e.Mbs.FLs) {
-      var l = new OnlineHallData_1.WorldTeamRoleInfo(t.l3n, t.XAs);
+    for (const t of e.hOs.sUs) {
+      var l = new OnlineHallData_1.WorldTeamRoleInfo(t.O6n, t.Cbs);
       o.push(l);
     }
     var r = new OnlineHallData_1.WorldTeamPlayerFightInfo(
-      e.Rgs,
-      e.aFn,
-      e.Mbs.z4n,
+      e.HMs,
+      e.q5n,
+      e.hOs.PVn,
       o,
     );
     ModelManager_1.ModelManager.OnlineModel.PushCurrentTeamList(n),
@@ -713,7 +724,7 @@ class OnlineController extends UiControllerBase_1.UiControllerBase {
       ModelManager_1.ModelManager.OnlineModel.WorldTeamPlayerResetIndex(),
       ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
         "IsEnteringWorld",
-        e.Rgs,
+        e.HMs,
       ),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnRefreshOnlineTeamList,
@@ -723,24 +734,24 @@ class OnlineController extends UiControllerBase_1.UiControllerBase {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug("MultiPlayerTeam", 5, "通知接收", [
         "通知id",
-        "9619 " + Protocol_1.Aki.Protocol.zcs.name,
+        "9619 " + Protocol_1.Aki.Protocol.K0s.name,
       ]);
     var n = ModelManager_1.ModelManager.OnlineModel.GetCurrentTeamListById(
-      e.aFn,
+      e.q5n,
     );
     if (n) {
-      switch (e.TIs) {
-        case Protocol_1.Aki.Protocol.rFs.Proto_Head:
-          n.HeadId = e.Z3n;
+      switch (e.HDs) {
+        case Protocol_1.Aki.Protocol.X8s.Proto_Head:
+          n.HeadId = e.B8n;
           break;
-        case Protocol_1.Aki.Protocol.rFs.r3n:
-          n.Level = e.Z3n;
+        case Protocol_1.Aki.Protocol.X8s.P6n:
+          n.Level = e.B8n;
           break;
-        case Protocol_1.Aki.Protocol.rFs.e4n:
-          n.Name = e.t4n;
+        case Protocol_1.Aki.Protocol.X8s.w8n:
+          n.Name = e.b8n;
           break;
-        case Protocol_1.Aki.Protocol.rFs.l5n:
-          n.Signature = e.t4n;
+        case Protocol_1.Aki.Protocol.X8s.HVn:
+          n.Signature = e.b8n;
       }
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnRefreshOnlineTeamList,
@@ -752,110 +763,136 @@ class OnlineController extends UiControllerBase_1.UiControllerBase {
     }
   }),
   (OnlineController.UpdateWorldTeamPlayerFightInfoNotify = (e) => {
-    var n = e.Mbs,
+    var n = e.hOs,
       o = ModelManager_1.ModelManager.OnlineModel.GetWorldTeamPlayerFightInfo(
-        e.aFn,
+        e.q5n,
       );
     if (o) {
-      const i = n.FLs;
+      const i = n.sUs;
       var l = o.GetIsDiffRoleList(i),
         r = ModelManager_1.ModelManager.SceneTeamModel,
         t = ModelManager_1.ModelManager.OnlineModel;
-      if (((o.CurRoleId = n.z4n), l)) {
+      if (((o.CurRoleId = n.PVn), l)) {
         const i = new Array();
-        for (const _ of n.FLs) {
-          var a = new OnlineHallData_1.WorldTeamRoleInfo(_.l3n, _.XAs);
+        for (const _ of n.sUs) {
+          var a = new OnlineHallData_1.WorldTeamRoleInfo(_.O6n, _.Cbs);
           i.push(a);
         }
         (o.RoleInfos = i), t.WorldTeamPlayerResetIndex();
       } else
-        for (const M of r.GetTeamItemsByPlayer(e.aFn))
-          M.SetRemoteIsControl(M.GetConfigId === n.z4n);
+        for (const M of r.GetTeamItemsByPlayer(e.q5n))
+          M.SetRemoteIsControl(M.GetConfigId === n.PVn);
     } else
       Log_1.Log.CheckError() &&
         Log_1.Log.Error("Formation", 5, "获取WorldTeamPlayerFightInfo失败", [
           "playerId",
-          e.aFn,
+          e.q5n,
         ]);
   }),
   (OnlineController.ReceiveRechallengeNotify = (e) => {
-    var e = e.aFn,
-      n =
-        (ModelManager_1.ModelManager.OnlineModel.SetContinuingChallengeConfirmState(
-          e,
+    var n = e.q5n;
+    e.b7n !== Protocol_1.Aki.Protocol.SRa.Proto_Accept
+      ? (UiManager_1.UiManager.IsViewOpen("OnlineChallengeStateView") &&
+          UiManager_1.UiManager.CloseView("OnlineChallengeStateView"),
+        n !== ModelManager_1.ModelManager.PlayerInfoModel?.GetId() &&
+          ((e =
+            ModelManager_1.ModelManager.OnlineModel.GetCurrentTeamListById(
+              n,
+            ).Name),
+          ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
+            "RefuseInviteMatch",
+            e,
+          )))
+      : (ModelManager_1.ModelManager.OnlineModel.SetContinuingChallengeConfirmState(
+          n,
           0,
         ),
-        ModelManager_1.ModelManager.PlayerInfoModel.GetId());
-    e === ModelManager_1.ModelManager.OnlineModel.OwnerId &&
-      0 ===
-        ModelManager_1.ModelManager.OnlineModel.GetContinuingChallengeConfirmState(
+        EventSystem_1.EventSystem.Emit(
+          EventDefine_1.EEventName.OnRefreshOnlineChallengePlayer,
+        ),
+        (e = ModelManager_1.ModelManager.PlayerInfoModel.GetId()),
+        n === ModelManager_1.ModelManager.OnlineModel.OwnerId &&
+          0 ===
+            ModelManager_1.ModelManager.OnlineModel.GetContinuingChallengeConfirmState(
+              e,
+            ) &&
+          UiManager_1.UiManager.OpenView("OnlineChallengeStateView"),
+        EventSystem_1.EventSystem.Emit(
+          EventDefine_1.EEventName.PlayerChallengeStateChange,
           n,
-        ) &&
-      UiManager_1.UiManager.OpenView("OnlineChallengeStateView"),
-      EventSystem_1.EventSystem.Emit(
-        EventDefine_1.EEventName.PlayerChallengeStateChange,
-        e,
-        0,
-      );
+          0,
+        ));
   }),
   (OnlineController.InviteRechallengeNotify = (e) => {
-    (0 ===
+    var n =
       ModelManager_1.ModelManager.OnlineModel.GetContinuingChallengeConfirmState(
         ModelManager_1.ModelManager.PlayerInfoModel.GetId(),
-      ) &&
-      !ModelManager_1.ModelManager.OnlineModel.GetIsMyTeam()) ||
-      (ModelManager_1.ModelManager.OnlineModel.SetChallengeApplyPlayerId(e.QUs),
-      UiManager_1.UiManager.IsViewOpen("OnlineChallengeStateView")) ||
-      UiManager_1.UiManager.OpenView("OnlineChallengeApplyView");
+      );
+    EventSystem_1.EventSystem.Emit(
+      EventDefine_1.EEventName.OnRefreshOnlineChallengePlayer,
+    ),
+      (0 === n && ModelManager_1.ModelManager.OnlineModel.GetIsMyTeam()) ||
+        (ModelManager_1.ModelManager.OnlineModel.SetChallengeApplyPlayerId(
+          e.d2s,
+        ),
+        UiManager_1.UiManager.IsViewOpen("OnlineChallengeStateView")) ||
+        (UiManager_1.UiManager.IsViewOpen("OnlineChallengeApplyView")
+          ? EventSystem_1.EventSystem.Emit(
+              EventDefine_1.EEventName.OnRefreshSuggestChallengePlayerInfo,
+            )
+          : UiManager_1.UiManager.OpenView("OnlineChallengeApplyView"));
   }),
   (OnlineController.ReceiveRechallengePlayerIdsNotify = (e) => {
     ModelManager_1.ModelManager.OnlineModel.ResetContinuingChallengeConfirmState();
-    for (const n of e.XUs)
+    for (const n of e.m2s)
       ModelManager_1.ModelManager.OnlineModel.SetContinuingChallengeConfirmState(
         n,
         0,
-      );
+      ),
+        EventSystem_1.EventSystem.Emit(
+          EventDefine_1.EEventName.OnRefreshOnlineChallengePlayer,
+        );
   }),
   (OnlineController.PlayerNetStateNotify = (e) => {
     var n = ModelManager_1.ModelManager.OnlineModel.GetCurrentTeamListById(
-      e.aFn,
+      e.q5n,
     );
     n &&
-      ((n.PingState = e.Sbs),
+      ((n.PingState = e.lOs),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnRefreshPlayerPing,
-        e.aFn,
+        e.q5n,
         n.PingState,
       ));
   }),
   (OnlineController.MatchChangePlayerUiStateNotify = (e) => {
     ModelManager_1.ModelManager.InstanceDungeonModel.SetPlayerUiState(
-      e.aFn,
-      e.K5n,
+      e.q5n,
+      e.T9n,
     );
   }),
   (OnlineController.PlayerTeleportStateNotify = (e) => {
     var n,
       o,
-      l = e.aFn;
-    ModelManager_1.ModelManager.OnlineModel.SetPlayerTeleportState(l, e.Ebs),
+      l = e.q5n;
+    ModelManager_1.ModelManager.OnlineModel.SetPlayerTeleportState(l, e._Os),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnRefreshPlayerUiState,
         l,
       ),
       l !== ModelManager_1.ModelManager.PlayerInfoModel.GetId() &&
-        ((n = e.Ebs === Protocol_1.Aki.Protocol.nFs.Proto_Default),
+        ((n = e._Os === Protocol_1.Aki.Protocol.J8s.Proto_Default),
         ModelManager_1.ModelManager.OnlineModel.SetRoleActivated(l, n),
         n) &&
-        (e.ybs
+        (e.uOs
           ? (n = ModelManager_1.ModelManager.CreatureModel.GetEntity(
-              MathUtils_1.MathUtils.LongToNumber(e.ybs.rkn),
+              MathUtils_1.MathUtils.LongToNumber(e.uOs.P4n),
             )) &&
             n.Entity &&
             ((o = n.Entity.GetComponent(3)),
-            (e = Vector_1.Vector.Create(e.ybs.$kn.X, e.ybs.$kn.Y, e.ybs.$kn.Z)),
+            (e = Vector_1.Vector.Create(e.uOs.y5n.X, e.uOs.y5n.Y, e.uOs.y5n.Z)),
             o.FixBornLocation("队友传送完成", !0, e, !0),
-            n.Entity.GetComponent(57)?.ClearReplaySamples())
+            n.Entity.GetComponent(59)?.ClearReplaySamples())
           : Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "MultiPlayerTeam",
@@ -865,7 +902,7 @@ class OnlineController extends UiControllerBase_1.UiControllerBase {
             ));
   }),
   (OnlineController.ApplyerEnterSceneNotify = (e) => {
-    e = ConfigManager_1.ConfigManager.ErrorCodeConfig.GetTextByErrorId(e.lkn);
+    e = ConfigManager_1.ConfigManager.ErrorCodeConfig.GetTextByErrorId(e.O4n);
     ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByItsType(
       9,
       void 0,
@@ -873,7 +910,7 @@ class OnlineController extends UiControllerBase_1.UiControllerBase {
       [e],
     );
   }),
-  (OnlineController.V4e = (e) =>
+  (OnlineController.iVe = (e) =>
     ModelManager_1.ModelManager.SceneTeamModel.IsPhantomTeam
       ? (ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
           "PhantomFormationEnterOnlineTip",

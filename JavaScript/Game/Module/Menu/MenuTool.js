@@ -4,14 +4,15 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.ImageConfigTool =
     exports.MenuTool =
       void 0);
-const Application_1 = require("../../../Core/Application/Application"),
+const UE = require("ue"),
+  Application_1 = require("../../../Core/Application/Application"),
+  Info_1 = require("../../../Core/Common/Info"),
   LanguageSystem_1 = require("../../../Core/Common/LanguageSystem"),
   Log_1 = require("../../../Core/Common/Log"),
   CommonDefine_1 = require("../../../Core/Define/CommonDefine"),
   MathUtils_1 = require("../../../Core/Utils/MathUtils"),
   GameQualitySettingsManager_1 = require("../../GameQualitySettings/GameQualitySettingsManager"),
   ModelManager_1 = require("../../Manager/ModelManager"),
-  PlatformController_1 = require("../Platform/PlatformController"),
   MenuDefine_1 = require("./MenuDefine");
 class MenuTool {
   static CheckPlatform(e) {
@@ -26,18 +27,22 @@ class MenuTool {
           return 2 === a || 3 === a;
         case 4:
           return 2 === a || 4 === a;
+        case 5:
+          return 5 === a;
         default:
           return !0;
       }
     switch (e) {
       case 1:
-        return PlatformController_1.PlatformController.IsPc();
+        return Info_1.Info.IsPcOrGamepadPlatform();
       case 2:
-        return PlatformController_1.PlatformController.IsMobile();
+        return Info_1.Info.IsMobilePlatform();
       case 3:
-        return 2 === ModelManager_1.ModelManager.PlatformModel.PlatformType;
+        return 2 === Info_1.Info.PlatformType;
       case 4:
-        return 1 === ModelManager_1.ModelManager.PlatformModel.PlatformType;
+        return 1 === Info_1.Info.PlatformType;
+      case 5:
+        return Info_1.Info.IsPs5Platform();
       default:
         return !0;
     }
@@ -45,7 +50,10 @@ class MenuTool {
   static CheckDeviceVendor(e) {
     var a =
         GameQualitySettingsManager_1.GameQualitySettingsManager.IsDlssGpuDevice(),
-      n = !a && !0;
+      n = UE.XeSSBlueprintLibrary.IsXeSSSupported(),
+      t = !a && !n,
+      r =
+        GameQualitySettingsManager_1.GameQualitySettingsManager.IsPWSDKDevice();
     switch (e) {
       case 81:
         return a;
@@ -56,14 +64,19 @@ class MenuTool {
       case 85:
         return a;
       case 87:
-        return n;
+        return t;
       case 128:
-        return !1;
+        return r;
       case 127:
         return GameQualitySettingsManager_1.GameQualitySettingsManager.IsMetalFxDevice();
       case 125:
       case 126:
-        return !1;
+        return n;
+      case 58:
+        return (
+          !GameQualitySettingsManager_1.GameQualitySettingsManager.IsAndroidPlatformScreenBad() &&
+          !GameQualitySettingsManager_1.GameQualitySettingsManager.IsIosPlatform()
+        );
       default:
         return !0;
     }
@@ -116,86 +129,86 @@ class ImageConfigTool {
   static ResetImageConfig(e) {
     var a = GameQualitySettingsManager_1.GameQualitySettingsManager.Get(),
       n = a.GetCurrentQualityInfo();
-    for (const r of e.keys())
-      switch (r) {
+    for (const t of e.keys())
+      switch (t) {
         case MenuDefine_1.EImageConfig.IMAGEQUALITY:
-          e.set(r, n.GetGameQualitySettingLevel());
+          e.set(t, n.GetGameQualitySettingLevel());
           break;
         case MenuDefine_1.EImageConfig.HIGHESTFPS:
-          e.set(r, a.GetFrameIndexByList(n.GetFrameRate()));
+          e.set(t, a.GetFrameIndexByList(n.GetFrameRate()));
           break;
         case MenuDefine_1.EImageConfig.SHADOWQUALITY:
-          e.set(r, n.ShadowQuality);
+          e.set(t, n.ShadowQuality);
           break;
         case MenuDefine_1.EImageConfig.NIAGARAQUALITY:
-          e.set(r, n.NiagaraQuality);
+          e.set(t, n.NiagaraQuality);
           break;
         case MenuDefine_1.EImageConfig.IMAGEDETAIL:
-          e.set(r, n.ImageDetail);
+          e.set(t, n.ImageDetail);
           break;
         case MenuDefine_1.EImageConfig.ANTIALISING:
-          e.set(r, n.AntiAliasing);
+          e.set(t, n.AntiAliasing);
           break;
         case MenuDefine_1.EImageConfig.SCENEAO:
-          e.set(r, n.SceneAo);
+          e.set(t, n.SceneAo);
           break;
         case MenuDefine_1.EImageConfig.VOLUMEFOG:
-          e.set(r, n.VolumeFog);
+          e.set(t, n.VolumeFog);
           break;
         case MenuDefine_1.EImageConfig.VOLUMELIGHT:
-          e.set(r, n.VolumeLight);
+          e.set(t, n.VolumeLight);
           break;
         case MenuDefine_1.EImageConfig.MOTIONBLUR:
-          e.set(r, n.MotionBlur);
+          e.set(t, n.MotionBlur);
           break;
         case MenuDefine_1.EImageConfig.PCVSYNC:
-          e.set(r, n.PcVsync);
+          e.set(t, n.PcVsync);
           break;
         case MenuDefine_1.EImageConfig.MOBILERESOLUTION:
-          e.set(r, n.MobileResolution);
+          e.set(t, n.MobileResolution);
           break;
         case MenuDefine_1.EImageConfig.SUPERRESOLUTION:
-          e.set(r, n.SuperResolution);
+          e.set(t, n.SuperResolution);
           break;
         case MenuDefine_1.EImageConfig.RESOLUTION:
-          e.set(r, a.GetResolutionIndexByList(n.PcScreenResolution));
+          e.set(t, a.GetResolutionIndexByList(n.PcScreenResolution));
           break;
         case MenuDefine_1.EImageConfig.DISPLAYMODE:
-          e.set(r, a.GetFullScreenModeIndexByList(n.PcFullScreenMode));
+          e.set(t, a.GetFullScreenModeIndexByList(n.PcFullScreenMode));
           break;
         case MenuDefine_1.EImageConfig.NPCDENSITY:
-          e.set(r, n.NpcDensity);
+          e.set(t, n.NpcDensity);
           break;
         case MenuDefine_1.EImageConfig.NVIDIADLSS:
-          e.set(r, n.NvidiaSuperSamplingEnable);
+          e.set(t, n.NvidiaSuperSamplingEnable);
           break;
         case MenuDefine_1.EImageConfig.FSR:
-          e.set(r, n.FsrEnable);
+          e.set(t, n.FsrEnable);
           break;
         case MenuDefine_1.EImageConfig.XESS:
-          e.set(r, n.XessEnable);
+          e.set(t, n.XessEnable);
           break;
         case MenuDefine_1.EImageConfig.XESS_QUALITY:
-          e.set(r, n.XessQuality);
+          e.set(t, n.XessQuality);
           break;
         case MenuDefine_1.EImageConfig.METALFX:
-          e.set(r, n.MetalFxEnable);
+          e.set(t, n.MetalFxEnable);
           break;
         case MenuDefine_1.EImageConfig.IRX:
-          e.set(r, n.IrxEnable);
+          e.set(t, n.IrxEnable);
           break;
         case MenuDefine_1.EImageConfig.BLOOM:
-          e.set(r, n.BloomEnable);
+          e.set(t, n.BloomEnable);
       }
   }
 }
 exports.ImageConfigTool = ImageConfigTool;
 class FunctionItemViewTool {
   static GetSliderPosition(e, a, n = 0) {
-    var r = e[0],
+    var t = e[0],
       e = e[1],
-      r = MathUtils_1.MathUtils.GetRangePct(r, e, a);
-    return MathUtils_1.MathUtils.GetFloatPointFloor(r * e, n);
+      t = MathUtils_1.MathUtils.GetRangePct(t, e, a);
+    return MathUtils_1.MathUtils.GetFloatPointFloor(t * e, n);
   }
   static CheckNotice(e) {
     return (

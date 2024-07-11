@@ -14,8 +14,8 @@ class CipherCircleAttachItem extends AutoAttachItem_1.AutoAttachItem {
       (this.pye = void 0),
       (this.vye = UE.Color.FromHex(WRONG_COLOR)),
       (this.Mye = UE.Color.FromHex(RIGHT_COLOR)),
-      (this.Sye = UE.Color.FromHex(NORMAL_COLOR)),
-      (this.Eye = void 0);
+      (this.Eye = UE.Color.FromHex(NORMAL_COLOR)),
+      (this.Sye = void 0);
   }
   OnMoveItem() {}
   OnRegisterComponent() {
@@ -28,14 +28,14 @@ class CipherCircleAttachItem extends AutoAttachItem_1.AutoAttachItem {
   OnSelect() {
     ModelManager_1.ModelManager.CipherModel.SetCurPassword(this.fye, this.pye);
     var t = this.GetText(0);
-    t.SetChangeColor(!1, t.changeColor), this.Eye && this.Eye(this.pye);
+    t.SetChangeColor(!1, t.changeColor), this.Sye && this.Sye(this.pye);
   }
   OnUnSelect() {
     var t = this.GetText(0);
-    t.SetColor(this.Sye), t.SetChangeColor(!0, t.changeColor);
+    t.SetColor(this.Eye), t.SetChangeColor(!0, t.changeColor);
   }
   InitData(t, e) {
-    (this.fye = t), (this.Eye = e);
+    (this.fye = t), (this.Sye = e);
   }
   HandleConfirm(t) {
     let e = this.vye;

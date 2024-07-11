@@ -27,7 +27,7 @@ const Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
   EventSystem_1 = require("../../../../Common/Event/EventSystem"),
   ModelManager_1 = require("../../../../Manager/ModelManager"),
   FormationDataController_1 = require("../../../../Module/Abilities/FormationDataController"),
-  CombatDebugController_1 = require("../../../../Utils/CombatDebugController"),
+  CombatLog_1 = require("../../../../Utils/CombatLog"),
   BattleSetting_1 = require("../../../Setting/BattleSetting"),
   ActiveBuffConfigs_1 = require("../../Common/Component/Abilities/Buff/ActiveBuffConfigs"),
   CharacterBuffComponent_1 = require("../../Common/Component/Abilities/CharacterBuffComponent"),
@@ -45,7 +45,7 @@ let currentRoleId = 0,
             (currentRoleId && this.TriggerEvents(17, this, {}),
             (currentRoleId = e.Entity.Id));
         }),
-        (this.aqn = () => {
+        (this.u2n = () => {
           currentRoleId = 0;
         });
     }
@@ -53,7 +53,7 @@ let currentRoleId = 0,
       super.OnActivate();
       var e = FormationDataController_1.FormationDataController.GetPlayerEntity(
         ModelManager_1.ModelManager.CreatureModel.GetPlayerId(),
-      )?.GetComponent(180);
+      )?.GetComponent(183);
       if (e)
         for (const t of e.GetAllBuffs())
           this.CueComponent.CreateGameplayCueByBuff(t);
@@ -66,23 +66,23 @@ let currentRoleId = 0,
         ),
         EventSystem_1.EventSystem.Add(
           EventDefine_1.EEventName.DoLeaveLevel,
-          this.aqn,
+          this.u2n,
         ),
         EventSystem_1.EventSystem.Add(
           EventDefine_1.EEventName.OnEnterOnlineWorld,
-          this.aqn,
+          this.u2n,
         ),
         EventSystem_1.EventSystem.Add(
           EventDefine_1.EEventName.OnLeaveOnlineWorld,
-          this.aqn,
+          this.u2n,
         ),
         EventSystem_1.EventSystem.Add(
           EventDefine_1.EEventName.EnterInstanceDungeon,
-          this.aqn,
+          this.u2n,
         ),
         EventSystem_1.EventSystem.Add(
           EventDefine_1.EEventName.LeaveInstanceDungeon,
-          this.aqn,
+          this.u2n,
         ),
         !0
       );
@@ -95,23 +95,23 @@ let currentRoleId = 0,
         ),
         EventSystem_1.EventSystem.Remove(
           EventDefine_1.EEventName.DoLeaveLevel,
-          this.aqn,
+          this.u2n,
         ),
         EventSystem_1.EventSystem.Remove(
           EventDefine_1.EEventName.OnEnterOnlineWorld,
-          this.aqn,
+          this.u2n,
         ),
         EventSystem_1.EventSystem.Remove(
           EventDefine_1.EEventName.OnLeaveOnlineWorld,
-          this.aqn,
+          this.u2n,
         ),
         EventSystem_1.EventSystem.Remove(
           EventDefine_1.EEventName.EnterInstanceDungeon,
-          this.aqn,
+          this.u2n,
         ),
         EventSystem_1.EventSystem.Remove(
           EventDefine_1.EEventName.LeaveInstanceDungeon,
-          this.aqn,
+          this.u2n,
         ),
         !0
       );
@@ -120,14 +120,14 @@ let currentRoleId = 0,
       if (this.HasBuffAuthority())
         return FormationDataController_1.FormationDataController.GetPlayerEntity(
           ModelManager_1.ModelManager.CreatureModel.GetPlayerId(),
-        )?.GetComponent(180);
-      CombatDebugController_1.CombatDebugController.CombatWarn(
+        )?.GetComponent(183);
+      CombatLog_1.CombatLog.Warn(
         "Buff",
         this.Entity,
         "暂不支持对其它玩家操作编队buff",
       );
     }
-    AddBuffInner(e, t, o, n, r, f, i, s, u, a, l, _, m, C, v, h) {
+    AddBuffInner(e, t, o, n, r, f, i, s, u, a, l, _, m, v, C, h) {
       return 5 === t.FormationPolicy
         ? this.GetFormationBuffComp()?.AddBuffInner(
             e,
@@ -143,11 +143,11 @@ let currentRoleId = 0,
             l,
             _,
             m,
-            C,
             v,
+            C,
             h,
           ) ?? ActiveBuffConfigs_1.INVALID_BUFF_HANDLE
-        : super.AddBuffInner(e, t, o, n, r, f, i, s, u, a, l, _, m, C, v, h);
+        : super.AddBuffInner(e, t, o, n, r, f, i, s, u, a, l, _, m, v, C, h);
     }
     RemoveBuffLocal(e, t, o) {
       var n = CharacterBuffController_1.default.GetBuffDefinition(e);
@@ -155,7 +155,7 @@ let currentRoleId = 0,
         ? 5 === n.FormationPolicy
           ? this.GetFormationBuffComp()?.RemoveBuffLocal(e, t, o) ?? 0
           : super.RemoveBuffLocal(e, t, o)
-        : (CombatDebugController_1.CombatDebugController.CombatError(
+        : (CombatLog_1.CombatLog.Error(
             "Buff",
             this.Entity,
             "[buffComp] 尝试本地移除buff时找不到合法配置",
@@ -168,7 +168,7 @@ let currentRoleId = 0,
     RemoveBuffOrder(e, t, o) {
       5 ===
       CharacterBuffController_1.default.GetBuffDefinition(e)?.FormationPolicy
-        ? CombatDebugController_1.CombatDebugController.CombatError(
+        ? CombatLog_1.CombatLog.Error(
             "Buff",
             this.Entity,
             "暂不支持移除远端编队buff",
@@ -191,7 +191,7 @@ let currentRoleId = 0,
     HasBuffAuthority() {
       return (
         !!BattleSetting_1.BattleSetting.IsModuleClientControl(
-          Protocol_1.Aki.Protocol.kOs.Proto_GameplayEffect,
+          Protocol_1.Aki.Protocol.D4s.Proto_GameplayEffect,
         ) ||
         this.Entity.GetComponent(0).GetPlayerId() ===
           ModelManager_1.ModelManager.CreatureModel.GetPlayerId()
@@ -204,7 +204,7 @@ let currentRoleId = 0,
             s = ModelManager_1.ModelManager.SceneTeamModel.GetTeamEntities(!0);
           if (s.some((e) => e.Entity === this.Entity))
             for (const _ of s) {
-              var u = _.Entity?.GetComponent(157);
+              var u = _.Entity?.GetComponent(159);
               _.Entity !== this.Entity && u && i.push(u);
             }
           var a = e.Id,
@@ -245,10 +245,10 @@ let currentRoleId = 0,
     RemovePauseLock(e) {
       super.RemovePauseLock(e), this.GetFormationBuffComp()?.RefreshTimeScale();
     }
-    NeedBroadcastBuff(e = void 0) {
+    NeedBroadcastBuff(e, t = !1) {
       return (
         (!e || !ActiveBuffConfigs_1.noBroadCastBuff.has(e.Id ?? 0n)) &&
-        super.NeedBroadcastBuff()
+        super.NeedBroadcastBuff(e, t)
       );
     }
   });
@@ -258,7 +258,7 @@ let currentRoleId = 0,
 ]),
   (RoleBuffComponent = RoleBuffComponent_1 =
     __decorate(
-      [(0, RegisterComponent_1.RegisterComponent)(171)],
+      [(0, RegisterComponent_1.RegisterComponent)(174)],
       RoleBuffComponent,
     )),
   (exports.RoleBuffComponent = RoleBuffComponent);

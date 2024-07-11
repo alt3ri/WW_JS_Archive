@@ -11,8 +11,8 @@ class ActivityTowerGuideData extends ActivityData_1.ActivityBaseData {
   constructor() {
     super(...arguments),
       (this.TowerDifficultIdList = [1, 2]),
-      (this.kFe = new Map()),
-      (this.FFe = new Map()),
+      (this.i4e = new Map()),
+      (this.o4e = new Map()),
       (this.TrialRoleId = 0),
       (this.MapMarkId = 0);
   }
@@ -43,20 +43,20 @@ class ActivityTowerGuideData extends ActivityData_1.ActivityBaseData {
     return e ? 2 : 1;
   }
   SetRewardClaimed(e, t) {
-    this.FFe.set(e, t), this.RefreshRewardState(e);
+    this.o4e.set(e, t), this.RefreshRewardState(e);
   }
   RefreshRewardState(e) {
-    var t = this.VFe(e);
-    this.kFe.set(e, t),
+    var t = this.r4e(e);
+    this.i4e.set(e, t),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.RefreshCommonActivityRedDot,
         this.Id,
       );
   }
-  VFe(e) {
+  r4e(e) {
     return this.IsUnLock()
       ? ModelManager_1.ModelManager.TowerModel.GetDifficultyIsClear(e)
-        ? void 0 !== (e = this.FFe.get(e)) && e
+        ? void 0 !== (e = this.o4e.get(e)) && e
           ? 3
           : 2
         : 1
@@ -66,7 +66,7 @@ class ActivityTowerGuideData extends ActivityData_1.ActivityBaseData {
     return ModelManager_1.ModelManager.TowerModel.GetDifficultyProgress(e);
   }
   GetTowerProgressState(e) {
-    return this.kFe.get(e) ?? 0;
+    return this.i4e.get(e) ?? 0;
   }
   GetTrialRoleData() {
     return ModelManager_1.ModelManager.RoleModel.GetRoleDataById(

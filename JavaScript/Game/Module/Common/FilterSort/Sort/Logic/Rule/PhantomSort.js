@@ -10,7 +10,7 @@ const ConfigManager_1 = require("../../../../../../Manager/ConfigManager"),
 class PhantomSort extends CommonSort_1.CommonSort {
   constructor() {
     super(...arguments),
-      (this.ZLt = (t, i, s) => {
+      (this.oRt = (t, i, s) => {
         var e, h, a;
         return (t instanceof ItemViewData_1.ItemViewData &&
           i instanceof ItemViewData_1.ItemViewData) ||
@@ -28,7 +28,7 @@ class PhantomSort extends CommonSort_1.CommonSort {
             ? (i.Level - t.Level) * (s ? -1 : 1)
             : 0;
       }),
-      (this.iDt = (t, i, s) => {
+      (this.sRt = (t, i, s) => {
         var e = t,
           h = i,
           t = ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomDataBase(
@@ -63,7 +63,7 @@ class PhantomSort extends CommonSort_1.CommonSort {
         }
         return a !== n ? (n - a) * (s ? -1 : 1) : 0;
       }),
-      (this.oDt = (t, i, s) => {
+      (this.aRt = (t, i, s) => {
         var e = t,
           h = i,
           a =
@@ -83,7 +83,7 @@ class PhantomSort extends CommonSort_1.CommonSort {
           }
         return r !== o ? ((t = r ? 1 : 0), (o ? 1 : 0) - t) : 0;
       }),
-      (this.rDt = (t, i, s) => {
+      (this.hRt = (t, i, s) => {
         var e, h, a;
         return (t instanceof ItemViewData_1.ItemViewData &&
           i instanceof ItemViewData_1.ItemViewData) ||
@@ -103,7 +103,7 @@ class PhantomSort extends CommonSort_1.CommonSort {
             ? (a - h) * (s ? -1 : 1)
             : 0;
       }),
-      (this.VLt = (t, i, s) => {
+      (this.KDt = (t, i, s) => {
         var e, h, a;
         return t instanceof CommonItemData_1.CommonItemData &&
           i instanceof CommonItemData_1.CommonItemData
@@ -124,7 +124,7 @@ class PhantomSort extends CommonSort_1.CommonSort {
               ? (i.Quality - t.Quality) * (s ? -1 : 1)
               : 0;
       }),
-      (this.WLt = (t, i, s) => {
+      (this.$Dt = (t, i, s) => {
         var e, h, a;
         return (t instanceof ItemViewData_1.ItemViewData &&
           i instanceof ItemViewData_1.ItemViewData) ||
@@ -142,7 +142,7 @@ class PhantomSort extends CommonSort_1.CommonSort {
             ? (i.MonsterId - t.MonsterId) * (s ? -1 : 1)
             : 0;
       }),
-      (this.eDt = (t, i, s) => {
+      (this.rRt = (t, i, s) => {
         var e, h, a;
         return (t instanceof ItemViewData_1.ItemViewData &&
           i instanceof ItemViewData_1.ItemViewData) ||
@@ -160,7 +160,7 @@ class PhantomSort extends CommonSort_1.CommonSort {
             ? (i.Id - t.Id) * (s ? -1 : 1)
             : 0;
       }),
-      (this.nDt = (i, s, e = !1) => {
+      (this.lRt = (i, s, e = !1) => {
         var h = i.length;
         for (let t = 0; t < h; t++)
           if (i[t].PhantomPropId === s) {
@@ -169,149 +169,133 @@ class PhantomSort extends CommonSort_1.CommonSort {
           }
         return 0;
       }),
-      (this.sDt = (t, i, s) => {
-        (t = this.nDt(t.MainPropMap, 10002)),
-          (i = this.nDt(i.MainPropMap, 10002));
+      (this._Rt = (t, i, s) => {
+        (t = this.lRt(t.MainPropMap, 10002)),
+          (i = this.lRt(i.MainPropMap, 10002));
         return t !== i ? (i - t) * (s ? -1 : 1) : 0;
       }),
-      (this.aDt = (t, i, s) => {
-        (t = this.nDt(t.MainPropMap, 10002, !0)),
-          (i = this.nDt(i.MainPropMap, 10002, !0));
+      (this.uRt = (t, i, s) => {
+        (t = this.lRt(t.MainPropMap, 10002, !0)),
+          (i = this.lRt(i.MainPropMap, 10002, !0));
         return t !== i ? (i - t) * (s ? -1 : 1) : 0;
       }),
-      (this.hDt = (t, i, s) => {
-        (t = this.nDt(t.MainPropMap, 10007)),
-          (i = this.nDt(i.MainPropMap, 10007));
+      (this.cRt = (t, i, s) => {
+        (t = this.lRt(t.MainPropMap, 10007)),
+          (i = this.lRt(i.MainPropMap, 10007));
         return t !== i ? (i - t) * (s ? -1 : 1) : 0;
       }),
-      (this.lDt = (t, i, s) => {
-        (t = this.nDt(t.MainPropMap, 10007, !0)),
-          (i = this.nDt(i.MainPropMap, 10007, !0));
+      (this.mRt = (t, i, s) => {
+        (t = this.lRt(t.MainPropMap, 10007, !0)),
+          (i = this.lRt(i.MainPropMap, 10007, !0));
         return t !== i ? (i - t) * (s ? -1 : 1) : 0;
       }),
-      (this._Dt = (t, i, s) => {
-        (t = this.nDt(t.MainPropMap, 10010)),
-          (i = this.nDt(i.MainPropMap, 10010));
+      (this.dRt = (t, i, s) => {
+        (t = this.lRt(t.MainPropMap, 10010)),
+          (i = this.lRt(i.MainPropMap, 10010));
         return t !== i ? (i - t) * (s ? -1 : 1) : 0;
       }),
-      (this.uDt = (t, i, s) => {
-        (t = this.nDt(t.MainPropMap, 10010, !0)),
-          (i = this.nDt(i.MainPropMap, 10010, !0));
+      (this.CRt = (t, i, s) => {
+        (t = this.lRt(t.MainPropMap, 10010, !0)),
+          (i = this.lRt(i.MainPropMap, 10010, !0));
         return t !== i ? (i - t) * (s ? -1 : 1) : 0;
       }),
-      (this.cDt = (t, i, s) => {
-        (t = this.nDt(t.MainPropMap, 8)), (i = this.nDt(i.MainPropMap, 8));
+      (this.gRt = (t, i, s) => {
+        (t = this.lRt(t.MainPropMap, 8)), (i = this.lRt(i.MainPropMap, 8));
         return t !== i ? (i - t) * (s ? -1 : 1) : 0;
       }),
-      (this.mDt = (t, i, s) => {
-        (t = this.nDt(t.MainPropMap, 9)), (i = this.nDt(i.MainPropMap, 9));
+      (this.fRt = (t, i, s) => {
+        (t = this.lRt(t.MainPropMap, 9)), (i = this.lRt(i.MainPropMap, 9));
         return t !== i ? (i - t) * (s ? -1 : 1) : 0;
       }),
-      (this.dDt = (t, i, s) => {
-        (t = this.nDt(t.MainPropMap, 35)), (i = this.nDt(i.MainPropMap, 35));
+      (this.pRt = (t, i, s) => {
+        (t = this.lRt(t.MainPropMap, 35)), (i = this.lRt(i.MainPropMap, 35));
         return t !== i ? (i - t) * (s ? -1 : 1) : 0;
       }),
-      (this.CDt = (t, i, s) => {
-        (t = this.nDt(t.MainPropMap, 21)), (i = this.nDt(i.MainPropMap, 21));
+      (this.vRt = (t, i, s) => {
+        (t = this.lRt(t.MainPropMap, 21)), (i = this.lRt(i.MainPropMap, 21));
         return t !== i ? (i - t) * (s ? -1 : 1) : 0;
       }),
-      (this.gDt = (t, i, s) => {
-        (t = this.nDt(t.MainPropMap, 22)), (i = this.nDt(i.MainPropMap, 22));
+      (this.MRt = (t, i, s) => {
+        (t = this.lRt(t.MainPropMap, 22)), (i = this.lRt(i.MainPropMap, 22));
         return t !== i ? (i - t) * (s ? -1 : 1) : 0;
       }),
-      (this.fDt = (t, i, s) => {
-        (t = this.nDt(t.MainPropMap, 23)), (i = this.nDt(i.MainPropMap, 23));
+      (this.ERt = (t, i, s) => {
+        (t = this.lRt(t.MainPropMap, 23)), (i = this.lRt(i.MainPropMap, 23));
         return t !== i ? (i - t) * (s ? -1 : 1) : 0;
       }),
-      (this.pDt = (t, i, s) => {
-        (t = this.nDt(t.MainPropMap, 24)), (i = this.nDt(i.MainPropMap, 24));
+      (this.SRt = (t, i, s) => {
+        (t = this.lRt(t.MainPropMap, 24)), (i = this.lRt(i.MainPropMap, 24));
         return t !== i ? (i - t) * (s ? -1 : 1) : 0;
       }),
-      (this.vDt = (t, i, s) => {
-        (t = this.nDt(t.MainPropMap, 25)), (i = this.nDt(i.MainPropMap, 25));
+      (this.yRt = (t, i, s) => {
+        (t = this.lRt(t.MainPropMap, 25)), (i = this.lRt(i.MainPropMap, 25));
         return t !== i ? (i - t) * (s ? -1 : 1) : 0;
       }),
-      (this.MDt = (t, i, s) => {
-        (t = this.nDt(t.MainPropMap, 26)), (i = this.nDt(i.MainPropMap, 26));
+      (this.IRt = (t, i, s) => {
+        (t = this.lRt(t.MainPropMap, 26)), (i = this.lRt(i.MainPropMap, 26));
         return t !== i ? (i - t) * (s ? -1 : 1) : 0;
       }),
-      (this.SDt = (t, i, s) => {
-        (t = this.nDt(t.MainPropMap, 27)), (i = this.nDt(i.MainPropMap, 27));
+      (this.TRt = (t, i, s) => {
+        (t = this.lRt(t.MainPropMap, 27)), (i = this.lRt(i.MainPropMap, 27));
         return t !== i ? (i - t) * (s ? -1 : 1) : 0;
       }),
-      (this.EDt = (t, i, s) => {
-        (t = this.nDt(t.MainPropMap, 11)), (i = this.nDt(i.MainPropMap, 11));
+      (this.LRt = (t, i, s) => {
+        (t = this.lRt(t.MainPropMap, 11)), (i = this.lRt(i.MainPropMap, 11));
         return t !== i ? (i - t) * (s ? -1 : 1) : 0;
       }),
-      (this.yDt = (t, i, s) => {
-        (t = this.nDt(t.SubPropMap, 1)), (i = this.nDt(i.SubPropMap, 1));
+      (this.DRt = (t, i, s) => {
+        (t = this.lRt(t.SubPropMap, 1)), (i = this.lRt(i.SubPropMap, 1));
         return t !== i ? (i - t) * (s ? -1 : 1) : 0;
       }),
-      (this.IDt = (t, i, s) => {
-        (t = this.nDt(t.SubPropMap, 4, !0)),
-          (i = this.nDt(i.SubPropMap, 4, !0));
+      (this.RRt = (t, i, s) => {
+        (t = this.lRt(t.SubPropMap, 4, !0)),
+          (i = this.lRt(i.SubPropMap, 4, !0));
         return t !== i ? (i - t) * (s ? -1 : 1) : 0;
       }),
-      (this.TDt = (t, i, s) => {
-        (t = this.nDt(t.SubPropMap, 2)), (i = this.nDt(i.SubPropMap, 2));
+      (this.URt = (t, i, s) => {
+        (t = this.lRt(t.SubPropMap, 2)), (i = this.lRt(i.SubPropMap, 2));
         return t !== i ? (i - t) * (s ? -1 : 1) : 0;
       }),
-      (this.LDt = (t, i, s) => {
-        (t = this.nDt(t.SubPropMap, 5, !0)),
-          (i = this.nDt(i.SubPropMap, 5, !0));
+      (this.ARt = (t, i, s) => {
+        (t = this.lRt(t.SubPropMap, 5, !0)),
+          (i = this.lRt(i.SubPropMap, 5, !0));
         return t !== i ? (i - t) * (s ? -1 : 1) : 0;
       }),
-      (this.DDt = (t, i, s) => {
-        (t = this.nDt(t.SubPropMap, 3)), (i = this.nDt(i.SubPropMap, 3));
+      (this.PRt = (t, i, s) => {
+        (t = this.lRt(t.SubPropMap, 3)), (i = this.lRt(i.SubPropMap, 3));
         return t !== i ? (i - t) * (s ? -1 : 1) : 0;
       }),
-      (this.RDt = (t, i, s) => {
-        (t = this.nDt(t.SubPropMap, 6, !0)),
-          (i = this.nDt(i.SubPropMap, 6, !0));
+      (this.xRt = (t, i, s) => {
+        (t = this.lRt(t.SubPropMap, 6, !0)),
+          (i = this.lRt(i.SubPropMap, 6, !0));
         return t !== i ? (i - t) * (s ? -1 : 1) : 0;
       }),
-      (this.UDt = (t, i, s) => {
-        (t = this.nDt(t.SubPropMap, 14)), (i = this.nDt(i.SubPropMap, 14));
+      (this.wRt = (t, i, s) => {
+        (t = this.lRt(t.SubPropMap, 14)), (i = this.lRt(i.SubPropMap, 14));
         return t !== i ? (i - t) * (s ? -1 : 1) : 0;
       }),
-      (this.ADt = (t, i, s) => {
-        (t = this.nDt(t.SubPropMap, 15)), (i = this.nDt(i.SubPropMap, 15));
+      (this.BRt = (t, i, s) => {
+        (t = this.lRt(t.SubPropMap, 15)), (i = this.lRt(i.SubPropMap, 15));
         return t !== i ? (i - t) * (s ? -1 : 1) : 0;
       }),
-      (this.PDt = (t, i, s) => 0),
-      (this.xDt = (t, i, s) => {
-        (t = this.nDt(t.SubPropMap, 7)), (i = this.nDt(i.SubPropMap, 7));
+      (this.bRt = (t, i, s) => 0),
+      (this.kRt = (t, i, s) => {
+        (t = this.lRt(t.SubPropMap, 11)), (i = this.lRt(i.SubPropMap, 11));
         return t !== i ? (i - t) * (s ? -1 : 1) : 0;
       }),
-      (this.wDt = (t, i, s) => {
-        (t = this.nDt(t.SubPropMap, 8)), (i = this.nDt(i.SubPropMap, 8));
+      (this.FRt = (t, i, s) => {
+        (t = this.lRt(t.SubPropMap, 12)), (i = this.lRt(i.SubPropMap, 12));
         return t !== i ? (i - t) * (s ? -1 : 1) : 0;
       }),
-      (this.BDt = (t, i, s) => {
-        (t = this.nDt(t.SubPropMap, 9)), (i = this.nDt(i.SubPropMap, 9));
+      (this.VRt = (t, i, s) => {
+        (t = this.lRt(t.SubPropMap, 13)), (i = this.lRt(i.SubPropMap, 13));
         return t !== i ? (i - t) * (s ? -1 : 1) : 0;
       }),
-      (this.bDt = (t, i, s) => {
-        (t = this.nDt(t.SubPropMap, 10)), (i = this.nDt(i.SubPropMap, 10));
+      (this.HRt = (t, i, s) => {
+        (t = this.lRt(t.SubPropMap, 16)), (i = this.lRt(i.MainPropMap, 16));
         return t !== i ? (i - t) * (s ? -1 : 1) : 0;
       }),
-      (this.qDt = (t, i, s) => {
-        (t = this.nDt(t.SubPropMap, 11)), (i = this.nDt(i.SubPropMap, 11));
-        return t !== i ? (i - t) * (s ? -1 : 1) : 0;
-      }),
-      (this.GDt = (t, i, s) => {
-        (t = this.nDt(t.SubPropMap, 12)), (i = this.nDt(i.SubPropMap, 12));
-        return t !== i ? (i - t) * (s ? -1 : 1) : 0;
-      }),
-      (this.NDt = (t, i, s) => {
-        (t = this.nDt(t.SubPropMap, 13)), (i = this.nDt(i.SubPropMap, 13));
-        return t !== i ? (i - t) * (s ? -1 : 1) : 0;
-      }),
-      (this.ODt = (t, i, s) => {
-        (t = this.nDt(t.SubPropMap, 16)), (i = this.nDt(i.MainPropMap, 16));
-        return t !== i ? (i - t) * (s ? -1 : 1) : 0;
-      }),
-      (this.kDt = (t, i, s) => {
+      (this.jRt = (t, i, s) => {
         if (
           (t instanceof ItemViewData_1.ItemViewData &&
             i instanceof ItemViewData_1.ItemViewData) ||
@@ -336,7 +320,7 @@ class PhantomSort extends CommonSort_1.CommonSort {
           n = 0 < i.Role ? 1 : 0;
         return a !== n ? (a - n) * (s ? -1 : 1) : 0;
       }),
-      (this.FDt = (t, i, s, e) => {
+      (this.WRt = (t, i, s, e) => {
         if (e <= 0) return 0;
         if (
           (t instanceof ItemViewData_1.ItemViewData &&
@@ -362,7 +346,7 @@ class PhantomSort extends CommonSort_1.CommonSort {
           r = i.Role === e ? 1 : 0;
         return (1 !== n && 1 !== r) || n === r ? 0 : -1 * (n - r);
       }),
-      (this.VDt = (t, i, s) => {
+      (this.KRt = (t, i, s) => {
         if (
           (t instanceof ItemViewData_1.ItemViewData &&
             i instanceof ItemViewData_1.ItemViewData) ||
@@ -387,7 +371,7 @@ class PhantomSort extends CommonSort_1.CommonSort {
           n = i.IsLock ? 1 : 0;
         return a !== n ? -1 * (a - n) : 0;
       }),
-      (this.HDt = (t, i, s) => {
+      (this.QRt = (t, i, s) => {
         if (
           (t instanceof ItemViewData_1.ItemViewData &&
             i instanceof ItemViewData_1.ItemViewData) ||
@@ -412,7 +396,7 @@ class PhantomSort extends CommonSort_1.CommonSort {
           n = i.Rarity;
         return a !== n ? (a - n) * (s ? 1 : -1) : 0;
       }),
-      (this.QLt = (t, i, s) => {
+      (this.JDt = (t, i, s) => {
         (t =
           ModelManager_1.ModelManager.PhantomBattleModel.GetMonsterSkinListByMonsterId(
             t.MonsterId,
@@ -422,55 +406,71 @@ class PhantomSort extends CommonSort_1.CommonSort {
               i.MonsterId,
             )?.length ?? 0);
         return t !== i ? (i - t) * (s ? -1 : 1) : 0;
+      }),
+      (this.hVs = (t, i, s) => {
+        (t = this.lRt(t.SubPropMap, 7)), (i = this.lRt(i.SubPropMap, 7));
+        return t !== i ? (i - t) * (s ? -1 : 1) : 0;
+      }),
+      (this.lVs = (t, i, s) => {
+        (t = this.lRt(t.SubPropMap, 8)), (i = this.lRt(i.SubPropMap, 8));
+        return t !== i ? (i - t) * (s ? -1 : 1) : 0;
+      }),
+      (this._Vs = (t, i, s) => {
+        (t = this.lRt(t.SubPropMap, 9)), (i = this.lRt(i.SubPropMap, 9));
+        return t !== i ? (i - t) * (s ? -1 : 1) : 0;
+      }),
+      (this.uVs = (t, i, s) => {
+        (t = this.lRt(t.SubPropMap, 10)), (i = this.lRt(i.SubPropMap, 10));
+        return t !== i ? (i - t) * (s ? -1 : 1) : 0;
       });
   }
   OnInitSortMap() {
-    this.SortMap.set(1, this.ZLt),
-      this.SortMap.set(2, this.rDt),
-      this.SortMap.set(3, this.VLt),
-      this.SortMap.set(4, this.WLt),
-      this.SortMap.set(5, this.eDt),
-      this.SortMap.set(8, this.hDt),
-      this.SortMap.set(9, this.lDt),
-      this.SortMap.set(6, this.sDt),
-      this.SortMap.set(7, this.aDt),
-      this.SortMap.set(10, this._Dt),
-      this.SortMap.set(11, this.uDt),
-      this.SortMap.set(12, this.cDt),
-      this.SortMap.set(13, this.mDt),
-      this.SortMap.set(14, this.dDt),
-      this.SortMap.set(15, this.CDt),
-      this.SortMap.set(16, this.gDt),
-      this.SortMap.set(17, this.fDt),
-      this.SortMap.set(18, this.pDt),
-      this.SortMap.set(19, this.vDt),
-      this.SortMap.set(20, this.MDt),
-      this.SortMap.set(21, this.SDt),
-      this.SortMap.set(22, this.EDt),
-      this.SortMap.set(25, this.TDt),
-      this.SortMap.set(26, this.LDt),
-      this.SortMap.set(23, this.yDt),
-      this.SortMap.set(24, this.IDt),
-      this.SortMap.set(27, this.DDt),
-      this.SortMap.set(28, this.RDt),
-      this.SortMap.set(29, this.UDt),
-      this.SortMap.set(30, this.ADt),
-      this.SortMap.set(31, this.PDt),
-      this.SortMap.set(32, this.xDt),
-      this.SortMap.set(33, this.wDt),
-      this.SortMap.set(34, this.BDt),
-      this.SortMap.set(35, this.bDt),
-      this.SortMap.set(36, this.qDt),
-      this.SortMap.set(37, this.GDt),
-      this.SortMap.set(38, this.NDt),
-      this.SortMap.set(39, this.ODt),
-      this.SortMap.set(40, this.iDt),
-      this.SortMap.set(41, this.oDt),
-      this.SortMap.set(42, this.kDt),
-      this.SortMap.set(43, this.FDt),
-      this.SortMap.set(44, this.VDt),
-      this.SortMap.set(45, this.HDt),
-      this.SortMap.set(46, this.QLt);
+    this.SortMap.set(1, this.oRt),
+      this.SortMap.set(2, this.hRt),
+      this.SortMap.set(3, this.KDt),
+      this.SortMap.set(4, this.$Dt),
+      this.SortMap.set(5, this.rRt),
+      this.SortMap.set(8, this.cRt),
+      this.SortMap.set(9, this.mRt),
+      this.SortMap.set(6, this._Rt),
+      this.SortMap.set(7, this.uRt),
+      this.SortMap.set(10, this.dRt),
+      this.SortMap.set(11, this.CRt),
+      this.SortMap.set(12, this.gRt),
+      this.SortMap.set(13, this.fRt),
+      this.SortMap.set(14, this.pRt),
+      this.SortMap.set(15, this.vRt),
+      this.SortMap.set(16, this.MRt),
+      this.SortMap.set(17, this.ERt),
+      this.SortMap.set(18, this.SRt),
+      this.SortMap.set(19, this.yRt),
+      this.SortMap.set(20, this.IRt),
+      this.SortMap.set(21, this.TRt),
+      this.SortMap.set(22, this.LRt),
+      this.SortMap.set(25, this.URt),
+      this.SortMap.set(26, this.ARt),
+      this.SortMap.set(23, this.DRt),
+      this.SortMap.set(24, this.RRt),
+      this.SortMap.set(27, this.PRt),
+      this.SortMap.set(28, this.xRt),
+      this.SortMap.set(29, this.wRt),
+      this.SortMap.set(30, this.BRt),
+      this.SortMap.set(31, this.bRt),
+      this.SortMap.set(36, this.kRt),
+      this.SortMap.set(37, this.FRt),
+      this.SortMap.set(38, this.VRt),
+      this.SortMap.set(39, this.HRt),
+      this.SortMap.set(40, this.sRt),
+      this.SortMap.set(41, this.aRt),
+      this.SortMap.set(42, this.jRt),
+      this.SortMap.set(43, this.WRt),
+      this.SortMap.set(44, this.KRt),
+      this.SortMap.set(45, this.QRt),
+      this.SortMap.set(46, this.JDt),
+      this.SortMap.set(47, this.hVs),
+      this.SortMap.set(48, this.lVs),
+      this.SortMap.set(49, this._Vs),
+      this.SortMap.set(50, this.uVs);
   }
 }
 exports.PhantomSort = PhantomSort;

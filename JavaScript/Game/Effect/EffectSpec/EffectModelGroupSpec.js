@@ -35,7 +35,7 @@ class EffectModelGroupSpec extends EffectSpec_1.EffectSpec {
   }
   SetTimeScale(t, s = !1) {
     super.SetTimeScale(t, s);
-    for (const i of this.EffectSpecMap.values()) i.SetTimeScale(t, s);
+    for (const e of this.EffectSpecMap.values()) e.SetTimeScale(t, s);
   }
   SetExtraState(t) {
     for (const s of this.EffectSpecMap.values())
@@ -60,15 +60,15 @@ class EffectModelGroupSpec extends EffectSpec_1.EffectSpec {
           !1,
           this.EffectModel,
         ),
-        i =
+        e =
           ((this.GroupComponent = t),
           this.GroupComponent.SetComponentTickEnabled(!1),
           (this.SceneComponent = t),
           this.EffectModel.EffectData.Num());
-      const f = this.EffectModel.EffectData;
-      let o = i;
-      for (let t = 0; t < i; ++t) {
-        const n = f.GetKey(t);
+      const h = this.EffectModel.EffectData;
+      let o = e;
+      for (let t = 0; t < e; ++t) {
+        const n = h.GetKey(t);
         if (!n?.IsValid())
           return (
             Log_1.Log.CheckError() &&
@@ -84,13 +84,13 @@ class EffectModelGroupSpec extends EffectSpec_1.EffectSpec {
           );
         const s = this.Handle.GetSureEffectActor();
         var r = s.GetOuter(),
-          h = UE.KismetSystemLibrary.GetPathName(n);
-        let e = !1;
+          f = UE.KismetSystemLibrary.GetPathName(n);
+        let i = !1;
         r = EffectSystem_1.EffectSystem.SpawnChildEffect(
           r,
           this.Handle,
           s,
-          h,
+          f,
           this.Handle.CreateReason,
           !1,
           this.Handle.GetContext(),
@@ -102,14 +102,14 @@ class EffectModelGroupSpec extends EffectSpec_1.EffectSpec {
                 this.EffectSpecMap.delete(s);
                 break;
               case 0:
-                e = !0;
+                i = !0;
                 break;
               case 5:
-                var i = f.Get(n);
-                0 < i && (this.C0e.push([s, i]), this.d0e.add(s));
+                var e = h.Get(n);
+                0 < e && (this.C0e.push([s, e]), this.d0e.add(s));
             }
             o ||
-              (e
+              (i
                 ? ((this.C0e.length = 0),
                   this.d0e.clear(),
                   this.InitPromise.SetResult(0))
@@ -151,9 +151,9 @@ class EffectModelGroupSpec extends EffectSpec_1.EffectSpec {
   OnClear() {
     let t = !1;
     for (const s of this.EffectSpecMap.values()) s.Clear() || (t = !0);
-    for (const i of this.EffectSpecMap.values())
+    for (const e of this.EffectSpecMap.values())
       EffectSystem_1.EffectSystem.StopEffect(
-        i,
+        e,
         "[EffectModelGroupSpec.OnClear]",
         !0,
       );
@@ -180,12 +180,12 @@ class EffectModelGroupSpec extends EffectSpec_1.EffectSpec {
   OnTick(s) {
     if (0 < this.g0e.length)
       for (let t = 0; t < this.g0e.length; ++t) {
-        var i = this.g0e[t],
-          e = i[1] - s;
-        (i[1] = e) <= 0 &&
-          ((e = i[0]),
+        var e = this.g0e[t],
+          i = e[1] - s;
+        (e[1] = i) <= 0 &&
+          ((i = e[0]),
           this.g0e.splice(t, 1),
-          this.EffectSpecMap.get(e)?.Play(
+          this.EffectSpecMap.get(i)?.Play(
             "[EffectModelGroupSpec.OnTick] 延迟播放",
           ),
           t--);
@@ -217,10 +217,10 @@ class EffectModelGroupSpec extends EffectSpec_1.EffectSpec {
       s.GetEffectSpec().SetStopping(t);
   }
   OnPlay(t) {
-    for (var [s, i] of this.EffectSpecMap) this.d0e.has(s) || i.Play(t);
+    for (var [s, e] of this.EffectSpecMap) this.d0e.has(s) || e.Play(t);
     if (this.C0e.length) {
       this.g0e.length = 0;
-      for (const e of this.C0e) this.g0e.push([e[0], e[1]]);
+      for (const i of this.C0e) this.g0e.push([i[0], i[1]]);
     }
     this.GroupComponent &&
       UE.KuroRenderingRuntimeBPPluginBPLibrary.UpdateEffectTransform(
@@ -244,7 +244,7 @@ class EffectModelGroupSpec extends EffectSpec_1.EffectSpec {
     for (const t of this.EffectSpecMap.values()) t.OnEnterPool();
   }
   OnStop(t, s) {
-    for (const i of this.EffectSpecMap.values()) i.Stop(t, s);
+    for (const e of this.EffectSpecMap.values()) e.Stop(t, s);
   }
   OnPreStop() {
     for (const t of this.EffectSpecMap.values()) t.PreStop();
@@ -260,20 +260,20 @@ class EffectModelGroupSpec extends EffectSpec_1.EffectSpec {
   OnVisibilityChanged(t) {
     for (const s of this.EffectSpecMap.values()) s.OnVisibilityChanged(t);
   }
-  ChaseFrame(t, s, i) {
-    super.ChaseFrame(t, s, i);
-    for (const e of this.EffectSpecMap.values())
-      e.GetEffectSpec()?.ChaseFrame(t, s, i);
+  ChaseFrame(t, s, e) {
+    super.ChaseFrame(t, s, e);
+    for (const i of this.EffectSpecMap.values())
+      i.GetEffectSpec()?.ChaseFrame(t, s, e);
   }
-  SeekTo(t, s, i) {
-    super.SeekTo(t, s, i);
-    for (const e of this.EffectSpecMap.values())
-      e.GetEffectSpec()?.SeekTo(t, s, i);
+  SeekTo(t, s, e) {
+    super.SeekTo(t, s, e);
+    for (const i of this.EffectSpecMap.values())
+      i.GetEffectSpec()?.SeekTo(t, s, e);
   }
-  SeekDelta(t, s, i) {
-    super.SeekDelta(t, s, i);
-    for (const e of this.EffectSpecMap.values())
-      e.GetEffectSpec()?.SeekDelta(t, s, i);
+  SeekDelta(t, s, e) {
+    super.SeekDelta(t, s, e);
+    for (const i of this.EffectSpecMap.values())
+      i.GetEffectSpec()?.SeekDelta(t, s, e);
   }
   DebugErrorNiagaraPauseCount() {
     let t = 0;
@@ -291,8 +291,8 @@ class EffectModelGroupSpec extends EffectSpec_1.EffectSpec {
       s.GetEffectSpec()?.TickNeedAlwaysTick(t);
   }
   SeekTimeWithoutAlwaysTick(t, s) {
-    for (const i of this.EffectSpecMap.values())
-      i.GetEffectSpec()?.SeekTimeWithoutAlwaysTick(t, s);
+    for (const e of this.EffectSpecMap.values())
+      e.GetEffectSpec()?.SeekTimeWithoutAlwaysTick(t, s);
   }
   IsVisible() {
     for (const t of this.EffectSpecMap.values())
@@ -303,6 +303,10 @@ class EffectModelGroupSpec extends EffectSpec_1.EffectSpec {
     for (const t of this.EffectSpecMap.values())
       if (t.GetEffectSpec()?.IsUseBoundsCalculateDistance()) return !0;
     return !1;
+  }
+  FreezeEffect(t) {
+    super.FreezeEffect(t);
+    for (const s of this.EffectSpecMap.values()) s.FreezeEffect(t);
   }
 }
 exports.EffectModelGroupSpec = EffectModelGroupSpec;

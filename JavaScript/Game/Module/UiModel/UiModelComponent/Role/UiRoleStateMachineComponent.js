@@ -27,19 +27,19 @@ const EventDefine_1 = require("../../../../Common/Event/EventDefine"),
 let UiRoleStateMachineComponent = class UiRoleStateMachineComponent extends UiModelComponentBase_1.UiModelComponentBase {
   constructor() {
     super(...arguments),
-      (this.Qwr = void 0),
-      (this.nXt = void 0),
-      (this.Fmo = 0),
-      (this.HBr = !1),
-      (this.jBr = !1),
-      (this.WBr = !1),
+      (this.ywr = void 0),
+      (this.n$t = void 0),
+      (this.Ndo = 0),
+      (this.vBr = !1),
+      (this.MBr = !1),
+      (this.EBr = !1),
       (this.OnRoleMeshLoadComplete = () => {
-        this.KBr(), this.m8();
+        this.SBr(), this.m8();
       });
   }
   OnInit() {
-    (this.Qwr = this.Owner.CheckGetComponent(0)),
-      (this.nXt = this.Owner.CheckGetComponent(1));
+    (this.ywr = this.Owner.CheckGetComponent(0)),
+      (this.n$t = this.Owner.CheckGetComponent(1));
   }
   OnStart() {
     EventSystem_1.EventSystem.AddWithTarget(
@@ -56,19 +56,19 @@ let UiRoleStateMachineComponent = class UiRoleStateMachineComponent extends UiMo
     );
   }
   SetState(e, t = !1, i = !1, n = !1) {
-    (this.Fmo = e), (this.HBr = t), (this.WBr = i), (this.jBr = n), this.m8();
+    (this.Ndo = e), (this.vBr = t), (this.EBr = i), (this.MBr = n), this.m8();
   }
   m8() {
     var e;
-    2 === this.Qwr.GetModelLoadState() &&
-      ((e = this.nXt.MainMeshComponent),
-      this.nXt
+    2 === this.ywr.GetModelLoadState() &&
+      ((e = this.n$t.MainMeshComponent),
+      this.n$t
         .GetAnimInstanceFromSkeletalMesh(e)
-        ?.SetState(this.Fmo, this.HBr, this.WBr, this.jBr));
+        ?.SetState(this.Ndo, this.vBr, this.EBr, this.MBr));
   }
-  KBr() {
-    var e = this.nXt.MainMeshComponent,
-      e = this.nXt.GetAnimInstanceFromSkeletalMesh(e),
+  SBr() {
+    var e = this.n$t.MainMeshComponent,
+      e = this.n$t.GetAnimInstanceFromSkeletalMesh(e),
       t =
         ConfigManager_1.ConfigManager.RoleConfig.GetRolePerformanceDelayTime();
     e?.SetPerformDelay(t);

@@ -14,6 +14,8 @@ const Log_1 = require("../../Core/Common/Log"),
   RedDotCommonActivityPage_1 = require("../Module/Activity/RedDotCommonActivityPage"),
   RedDotItemHandBook_1 = require("../Module/HandBook/RedDotItemHandBook"),
   RedDotPhantomHandBook_1 = require("../Module/HandBook/RedDotPhantomHandBook"),
+  RedDotActivityRecallSignEntryButton_1 = require("./RedDots/Activity/Recall/RedDotActivityRecallSignEntryButton"),
+  RedDotActivityRecallTaskEntryButton_1 = require("./RedDots/Activity/Recall/RedDotActivityRecallTaskEntryButton"),
   RedDotAdventureBattleButton_1 = require("./RedDots/AdventureGuideSystem/RedDotAdventureBattleButton"),
   RedDotAdventureDailyActivityTab_1 = require("./RedDots/AdventureGuideSystem/RedDotAdventureDailyActivityTab"),
   RedDotAdventureFirstAward_1 = require("./RedDots/AdventureGuideSystem/RedDotAdventureFirstAward"),
@@ -48,6 +50,7 @@ const Log_1 = require("../../Core/Common/Log"),
   RedDotFunctionNotice_1 = require("./RedDots/FunctionMenu/RedDotFunctionNotice"),
   RedDotFunctionPayShop_1 = require("./RedDots/FunctionMenu/RedDotFunctionPayShop"),
   RedDotFunctionPhantom_1 = require("./RedDots/FunctionMenu/RedDotFunctionPhantom"),
+  RedDotFunctionPhantomExploreSet_1 = require("./RedDots/FunctionMenu/RedDotFunctionPhantomExploreSet"),
   RedDotFunctionRole_1 = require("./RedDots/FunctionMenu/RedDotFunctionRole"),
   RedDotFunctionTutorial_1 = require("./RedDots/FunctionMenu/RedDotFunctionTutorial"),
   RedDotInfluenceReputation_1 = require("./RedDots/Influence/RedDotInfluenceReputation"),
@@ -64,6 +67,17 @@ const Log_1 = require("../../Core/Common/Log"),
   RedDotMailBoxFilter_1 = require("./RedDots/Mail/RedDotMailBoxFilter"),
   RedDotMailBoxImportantFilter_1 = require("./RedDots/Mail/RedDotMailBoxImportantFilter"),
   RedDotMailBoxUnScannedFilter_1 = require("./RedDots/Mail/RedDotMailBoxUnScannedFilter"),
+  RedDotMoonChasingAllQuest_1 = require("./RedDots/MoonChasing/RedDotMoonChasingAllQuest"),
+  RedDotMoonChasingBranchTab_1 = require("./RedDots/MoonChasing/RedDotMoonChasingBranchTab"),
+  RedDotMoonChasingBuilding_1 = require("./RedDots/MoonChasing/RedDotMoonChasingBuilding"),
+  RedDotMoonChasingDelegation_1 = require("./RedDots/MoonChasing/RedDotMoonChasingDelegation"),
+  RedDotMoonChasingHandbook_1 = require("./RedDots/MoonChasing/RedDotMoonChasingHandbook"),
+  RedDotMoonChasingMainlineTab_1 = require("./RedDots/MoonChasing/RedDotMoonChasingMainlineTab"),
+  RedDotMoonChasingReward_1 = require("./RedDots/MoonChasing/RedDotMoonChasingReward"),
+  RedDotMoonChasingRewardAndShop_1 = require("./RedDots/MoonChasing/RedDotMoonChasingRewardAndShop"),
+  RedDotMoonChasingRole_1 = require("./RedDots/MoonChasing/RedDotMoonChasingRole"),
+  RedDotMoonChasingShop_1 = require("./RedDots/MoonChasing/RedDotMoonChasingShop"),
+  PersonalCardRedDot_1 = require("./RedDots/Personal/PersonalCardRedDot"),
   RedDotBattleViewQuestBtn_1 = require("./RedDots/Quest/RedDotBattleViewQuestBtn"),
   RedDotFunctionViewQuestBtn_1 = require("./RedDots/Quest/RedDotFunctionViewQuestBtn"),
   RedDotQuestViewItem_1 = require("./RedDots/Quest/RedDotQuestViewItem"),
@@ -84,6 +98,7 @@ const Log_1 = require("../../Core/Common/Log"),
   CustomerServerRedDot_1 = require("./RedDots/Sdk/CustomerServerRedDot"),
   PayShopInstanceRedDot_1 = require("./RedDots/Shop/PayShopInstanceRedDot"),
   PayShopTabRedDot_1 = require("./RedDots/Shop/PayShopTabRedDot"),
+  TowerDefenceRewardRedDot_1 = require("./RedDots/TowerDefence/TowerDefenceRewardRedDot"),
   RedDotTowerReward_1 = require("./RedDots/TowerRewrad/RedDotTowerReward"),
   RedDotTowerRewardByDifficulties_1 = require("./RedDots/TowerRewrad/RedDotTowerRewardByDifficulties"),
   RedDotTutorialType_1 = require("./RedDots/Tutorial/RedDotTutorialType"),
@@ -91,7 +106,7 @@ const Log_1 = require("../../Core/Common/Log"),
   VisionOneKeyEquipRedDot_1 = require("./RedDots/Vision/VisionOneKeyEquipRedDot");
 class RedDotModel extends ModelBase_1.ModelBase {
   constructor() {
-    super(...arguments), (this.jsr = new Map());
+    super(...arguments), (this.jar = new Map());
   }
   OnInit() {
     return (
@@ -170,6 +185,10 @@ class RedDotModel extends ModelBase_1.ModelBase {
       this.qp(
         "FunctionPayShop",
         new RedDotFunctionPayShop_1.RedDotFunctionPayShop(),
+      ),
+      this.qp(
+        "FunctionPhantomExploreSet",
+        new RedDotFunctionPhantomExploreSet_1.RedDotFunctionPhantomExploreSet(),
       ),
       this.qp(
         "AdventureManual",
@@ -343,6 +362,14 @@ class RedDotModel extends ModelBase_1.ModelBase {
         new BossRushRewardRedDot_1.BossRushRewardRedDot(),
       ),
       this.qp(
+        "TowerDefenseReward",
+        new TowerDefenceRewardRedDot_1.TowerDefenseRewardRedDot(),
+      ),
+      this.qp(
+        "TowerDefenseInstance",
+        new TowerDefenceRewardRedDot_1.TowerDefenseInstanceRedDot(),
+      ),
+      this.qp(
         "CustomerService",
         new CustomerServerRedDot_1.CustomerServerRedDot(),
       ),
@@ -362,30 +389,79 @@ class RedDotModel extends ModelBase_1.ModelBase {
         "BattlePassPayButton",
         new RedDotBattlePassPayButton_1.RedDotBattlePassPayButton(),
       ),
-      this.Wsr(),
+      this.qp("PersonalCard", new PersonalCardRedDot_1.PersonalCardRedDot()),
+      this.qp(
+        "ActivityRecallSignEntry",
+        new RedDotActivityRecallSignEntryButton_1.RedDotActivityRecallSignEntryButton(),
+      ),
+      this.qp(
+        "ActivityRecallTask",
+        new RedDotActivityRecallTaskEntryButton_1.RedDotActivityRecallTaskEntryButton(),
+      ),
+      this.qp(
+        "MoonChasingAllQuest",
+        new RedDotMoonChasingAllQuest_1.RedDotMoonChasingAllQuest(),
+      ),
+      this.qp(
+        "MoonChasingBranchTab",
+        new RedDotMoonChasingBranchTab_1.RedDotMoonChasingBranchTab(),
+      ),
+      this.qp(
+        "MoonChasingMainlineTab",
+        new RedDotMoonChasingMainlineTab_1.RedDotMoonChasingMainlineTab(),
+      ),
+      this.qp(
+        "MoonChasingHandbook",
+        new RedDotMoonChasingHandbook_1.RedDotMoonChasingHandbook(),
+      ),
+      this.qp(
+        "MoonChasingReward",
+        new RedDotMoonChasingReward_1.RedDotMoonChasingReward(),
+      ),
+      this.qp(
+        "MoonChasingShop",
+        new RedDotMoonChasingShop_1.RedDotMoonChasingShop(),
+      ),
+      this.qp(
+        "MoonChasingRewardAndShop",
+        new RedDotMoonChasingRewardAndShop_1.RedDotMoonChasingRewardAndShop(),
+      ),
+      this.qp(
+        "MoonChasingDelegation",
+        new RedDotMoonChasingDelegation_1.RedDotMoonChasingDelegation(),
+      ),
+      this.qp(
+        "MoonChasingRole",
+        new RedDotMoonChasingRole_1.RedDotMoonChasingRole(),
+      ),
+      this.qp(
+        "MoonChasingBuilding",
+        new RedDotMoonChasingBuilding_1.RedDotMoonChasingBuilding(),
+      ),
+      this.War(),
       !0
     );
   }
   qp(e, t) {
-    (t.Name = e), this.Ksr(e, t);
+    (t.Name = e), this.Kar(e, t);
   }
-  Wsr() {
+  War() {
     var e,
       t,
       o = ConfigManager_1.ConfigManager.RedDotConfig.GetRelativeNameMap();
-    for ([e, t] of this.jsr) {
+    for ([e, t] of this.jar) {
       var n = t.Element.GetParentName() ?? o.get(e);
       void 0 === n ||
         StringUtils_1.StringUtils.IsEmpty(n) ||
-        ((n = this.jsr.get(n)) && n.AddChild(t));
+        ((n = this.jar.get(n)) && n.AddChild(t));
     }
   }
-  Ksr(e, t) {
-    let o = this.jsr.get(e);
-    return o || ((o = new Tree_1.Tree(t)), this.jsr.set(e, o)), o;
+  Kar(e, t) {
+    let o = this.jar.get(e);
+    return o || ((o = new Tree_1.Tree(t)), this.jar.set(e, o)), o;
   }
   GetRedDotTree(e) {
-    var t = this.jsr.get(e);
+    var t = this.jar.get(e);
     if (t) return t;
     Log_1.Log.CheckError() &&
       Log_1.Log.Error("RedDot", 17, "获取红点树失败，当前红点未注册！", [
@@ -394,7 +470,7 @@ class RedDotModel extends ModelBase_1.ModelBase {
       ]);
   }
   GetRedDot(e) {
-    var t = this.jsr.get(e)?.Element;
+    var t = this.jar.get(e)?.Element;
     if (t) return t;
     Log_1.Log.CheckError() &&
       Log_1.Log.Error("RedDot", 17, "获取红点失败，当前红点未注册！", [
@@ -402,16 +478,16 @@ class RedDotModel extends ModelBase_1.ModelBase {
         e,
       ]);
   }
-  Qsr(e, t) {
+  Qar(e, t) {
     var o;
     t.add(e);
-    for ([o] of this.GetRedDotTree(e.Name).ChildMap) this.Qsr(o, t);
+    for ([o] of this.GetRedDotTree(e.Name).ChildMap) this.Qar(o, t);
   }
   LogAllRedDotTree(e) {
     e = this.GetRedDot(e);
     if (e) {
       var t = new Set(),
-        o = (this.Qsr(e, t), new StringBuilder_1.StringBuilder());
+        o = (this.Qar(e, t), new StringBuilder_1.StringBuilder());
       for (const n of t) o.Append(n.ToRedDotString());
       Log_1.Log.CheckInfo() && Log_1.Log.Info("RedDot", 11, o.ToString());
     }
@@ -420,7 +496,7 @@ class RedDotModel extends ModelBase_1.ModelBase {
     var t = this.GetRedDot(e);
     if (t) {
       var o = new Set();
-      this.Qsr(t, o),
+      this.Qar(t, o),
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "RedDot",

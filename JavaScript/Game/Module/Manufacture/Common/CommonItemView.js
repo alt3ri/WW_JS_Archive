@@ -10,9 +10,9 @@ class MaterialItem extends UiPanelBase_1.UiPanelBase {
     super(),
       (this.ItemData = void 0),
       (this.ItemInfo = void 0),
-      (this.Wgt = void 0),
+      (this.oft = void 0),
       (this.OnClick = (i) => {
-        this.Wgt && this.Wgt(this.ItemData);
+        this.oft && this.oft(this.ItemData);
       }),
       this.CreateThenShowByActor(i.GetOwner());
   }
@@ -28,46 +28,46 @@ class MaterialItem extends UiPanelBase_1.UiPanelBase {
   }
   Update(i) {
     (this.ItemData = i),
-      0 !== this.ItemData.G3n
+      0 !== this.ItemData.f8n
         ? (this.ItemInfo = ConfigManager_1.ConfigManager.ItemConfig.GetConfig(
-            this.ItemData.G3n,
+            this.ItemData.f8n,
           ))
         : (this.ItemInfo = void 0),
       this.RefreshNeed(),
       this.RefreshHave(),
       this.Kbe(),
-      this.Pqt();
+      this.BGt();
   }
   RefreshNeed(i = 1) {
-    let e = this.ItemData.k4n;
+    let e = this.ItemData.MVn;
     1 !== i && (e *= i), this.GetText(2).SetText(e.toString());
   }
   RefreshHave() {
     var i = ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
-      this.ItemData.G3n,
+      this.ItemData.f8n,
     );
     let e = void 0;
-    (e = this.ItemData.m3n
-      ? i < this.ItemData.k4n
+    (e = this.ItemData.G6n
+      ? i < this.ItemData.MVn
         ? `<color=#dc0300>${i}</color>`
         : `<color=#ffffff>${i}</color>`
       : "<color=#ffffff>--</color>"),
       this.GetText(1).SetText(e);
   }
   Kbe() {
-    this.ItemData.m3n
+    this.ItemData.G6n
       ? (this.GetTexture(3).SetUIActive(!0),
         this.SetTextureByPath(this.ItemInfo.Icon, this.GetTexture(3)))
       : this.GetTexture(3).SetUIActive(!1);
   }
-  Pqt() {
-    this.ItemData.m3n
+  BGt() {
+    this.ItemData.G6n
       ? (this.GetSprite(4).SetUIActive(!0),
         this.SetItemQualityIcon(this.GetSprite(4), this.ItemInfo.Id))
       : this.GetSprite(4).SetUIActive(!1);
   }
   BindOnClickedCallback(i) {
-    this.Wgt = i;
+    this.oft = i;
   }
 }
 exports.MaterialItem = MaterialItem;

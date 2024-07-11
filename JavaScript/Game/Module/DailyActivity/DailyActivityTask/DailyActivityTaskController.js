@@ -15,7 +15,7 @@ class DailyActiveTaskController extends UiControllerBase_1.UiControllerBase {
       case 1:
         break;
       case 2:
-        DailyActiveTaskController.kOt();
+        DailyActiveTaskController.Fkt();
         break;
       case 3:
         var r = [];
@@ -26,7 +26,7 @@ class DailyActiveTaskController extends UiControllerBase_1.UiControllerBase {
         let e = "DailyActivityTabView",
           r = void 0;
         a && 1 <= a.length && ((e = a[0]), 2 <= a.length) && (r = a.slice(1)),
-          DailyActiveTaskController.FOt(e, r);
+          DailyActiveTaskController.Vkt(e, r);
         break;
       }
       case 5: {
@@ -37,18 +37,18 @@ class DailyActiveTaskController extends UiControllerBase_1.UiControllerBase {
       case 6: {
         let e = 0;
         a && 1 <= a.length && (e = Number(a[0])),
-          DailyActiveTaskController.VOt(e);
+          DailyActiveTaskController.Hkt(e);
         break;
       }
       case 7: {
         let e = -1;
         a && 1 <= a.length && (e = Number(a[0])),
-          DailyActiveTaskController.HOt(e);
+          DailyActiveTaskController.jkt(e);
         break;
       }
     }
   }
-  static kOt() {
+  static Fkt() {
     if (ModelManager_1.ModelManager.FunctionModel.IsOpen(10023005)) {
       let o = new Map();
       ModelManager_1.ModelManager.DailyTaskModel.GetAllDailyQuest().forEach(
@@ -106,7 +106,7 @@ class DailyActiveTaskController extends UiControllerBase_1.UiControllerBase {
     e = { MarkId: r, MarkType: 0, OpenAreaId: 0 };
     WorldMapController_1.WorldMapController.OpenView(2, !1, e);
   }
-  static FOt(e = "DailyActivityTabView", r) {
+  static Vkt(e = "DailyActivityTabView", r) {
     ControllerHolder_1.ControllerHolder.AdventureGuideController.OpenGuideView(
       e,
       r,
@@ -115,14 +115,14 @@ class DailyActiveTaskController extends UiControllerBase_1.UiControllerBase {
   static COe(e) {
     RoleController_1.RoleController.OpenRoleMainView(0, 0, [], e);
   }
-  static HOt(e) {
+  static jkt(e) {
     void 0 === e || e < 0
       ? UiManager_1.UiManager.OpenView("QuestView")
       : ((e =
           ModelManager_1.ModelManager.QuestNewModel.GetFirstShowQuestByType(e)),
         UiManager_1.UiManager.OpenView("QuestView", e?.Id ?? void 0));
   }
-  static VOt(e) {
+  static Hkt(e) {
     e &&
       (e = ConfigManager_1.ConfigManager.AreaConfig.GetAreaInfo(e)) &&
       ((e = {

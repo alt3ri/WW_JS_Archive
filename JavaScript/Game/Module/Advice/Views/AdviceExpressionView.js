@@ -14,9 +14,9 @@ const UE = require("ue"),
 class AdviceExpressionView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.$9e = void 0),
-      (this.Y9e = void 0),
-      (this._Fe = () => {
+      (this.lHe = void 0),
+      (this._He = void 0),
+      (this.L3e = () => {
         (ModelManager_1.ModelManager.AdviceModel.CurrentExpressionId =
           ModelManager_1.ModelManager.AdviceModel.PreSelectExpressionId),
           EventSystem_1.EventSystem.Emit(
@@ -24,17 +24,17 @@ class AdviceExpressionView extends UiViewBase_1.UiViewBase {
           ),
           this.CloseMe();
       }),
-      (this.J9e = () => {
+      (this.uHe = () => {
         this.CloseMe();
       }),
-      (this.z9e = () => {
+      (this.cHe = () => {
         return new AdviceExpressionItem_1.AdviceExpressionItem();
       }),
       (this.fqe = (e, i) => {
         return new AdviceExpressionSwitchItem_1.AdviceExpressionSwitchItem();
       }),
       (this.pqe = (e) => {
-        this.Z9e(e);
+        this.mHe(e);
       });
   }
   OnRegisterComponent() {
@@ -47,19 +47,19 @@ class AdviceExpressionView extends UiViewBase_1.UiViewBase {
       [5, UE.UIButtonComponent],
     ]),
       (this.BtnBindInfo = [
-        [4, this.J9e],
-        [5, this._Fe],
+        [4, this.uHe],
+        [5, this.L3e],
       ]);
   }
   async OnBeforeStartAsync() {
     var e = this.GetItem(1).GetOwner(),
       i =
-        ((this.$9e = new LoopScrollView_1.LoopScrollView(
+        ((this.lHe = new LoopScrollView_1.LoopScrollView(
           this.GetLoopScrollViewComponent(0),
           e,
-          this.z9e,
+          this.cHe,
         )),
-        (this.Y9e = new TabComponent_1.TabComponent(
+        (this._He = new TabComponent_1.TabComponent(
           this.GetHorizontalLayout(2).GetRootComponent(),
           this.fqe,
           this.pqe,
@@ -69,23 +69,23 @@ class AdviceExpressionView extends UiViewBase_1.UiViewBase {
           ModelManager_1.ModelManager.AdviceModel.CurrentExpressionId),
         ConfigManager_1.ConfigManager.ChatConfig.GetAllExpressionGroupConfig()),
       e = i.length,
-      t = (await this.Y9e.RefreshTabItemByLengthAsync(e), this.e7e());
+      t = (await this._He.RefreshTabItemByLengthAsync(e), this.dHe());
     let r = 0;
     for (let e = 0; e < i.length; e++)
       if (i[e].Id === t) {
         r = e;
         break;
       }
-    this.t7e(), this.Y9e.SelectToggleByIndex(r), this.Z9e(i[r].Id);
+    this.CHe(), this._He.SelectToggleByIndex(r), this.mHe(i[r].Id);
   }
-  Z9e(e) {
+  mHe(e) {
     e =
       ConfigManager_1.ConfigManager.ChatConfig.GetAllExpressionConfigByGroupId(
         e,
       );
-    this.$9e.ReloadData(e);
+    this.lHe.ReloadData(e);
   }
-  e7e() {
+  dHe() {
     let i = 0;
     var t = ConfigManager_1.ConfigManager.ChatConfig.GetAllExpressionConfig();
     for (let e = 0; e < t.length; e++)
@@ -98,15 +98,15 @@ class AdviceExpressionView extends UiViewBase_1.UiViewBase {
       }
     return i;
   }
-  t7e() {
+  CHe() {
     var e,
       i,
       t =
         ConfigManager_1.ConfigManager.ChatConfig.GetAllExpressionGroupConfig();
-    for ([e, i] of this.Y9e.GetTabItemMap()) i.UpdateView(t[e].Id);
+    for ([e, i] of this._He.GetTabItemMap()) i.UpdateView(t[e].Id);
   }
   OnBeforeDestroy() {
-    this.$9e.ClearGridProxies(), this.Y9e.Destroy();
+    this.lHe.ClearGridProxies(), this._He.Destroy();
   }
 }
 exports.AdviceExpressionView = AdviceExpressionView;

@@ -25,21 +25,21 @@ class MingSuController extends UiControllerBase_1.UiControllerBase {
   static OnAddEvents() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnAntiqueShopUpgradeSequenceFinished,
-      this.LBi,
+      this.Lbi,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnAntiqueShopLevelMaxSequenceFinished,
-        this.Vwn,
+        this.RGn,
       );
   }
   static OnRemoveEvents() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnAntiqueShopUpgradeSequenceFinished,
-      this.LBi,
+      this.Lbi,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnAntiqueShopLevelMaxSequenceFinished,
-        this.Vwn,
+        this.RGn,
       );
   }
   static OpenView(e, o) {
@@ -66,33 +66,33 @@ class MingSuController extends UiControllerBase_1.UiControllerBase {
   }
   static SendOpenDragonPoolRequest(e, r) {
     Log_1.Log.CheckInfo() && Log_1.Log.Info("MingSuTi", 8, "打开龙池!!!");
-    var o = new Protocol_1.Aki.Protocol._os();
-    (o.z6n = e),
-      Net_1.Net.Call(22706, Protocol_1.Aki.Protocol._os.create(o), (e) => {
+    var o = new Protocol_1.Aki.Protocol.hhs();
+    (o.x7n = e),
+      Net_1.Net.Call(6023, Protocol_1.Aki.Protocol.hhs.create(o), (e) => {
         var o, n;
         e &&
-          (e.lkn === Protocol_1.Aki.Protocol.lkn.Sys
-            ? ((o = e.z6n),
-              (n = e.Tfs),
+          (e.O4n === Protocol_1.Aki.Protocol.O4n.NRs
+            ? ((o = e.x7n),
+              (n = e.VSs),
               ModelManager_1.ModelManager.MingSuModel.RefreshDragonPoolDropItems(
                 o,
                 n,
               ),
               r && r())
             : ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-                e.lkn,
-                6272,
+                e.O4n,
+                9566,
               ));
       });
   }
   static SendHandInMingSuRequest(t) {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info("MingSuTi", 8, "HandInMingSuRequest", ["dragonPoolId", t]);
-    var e = new Protocol_1.Aki.Protocol.sos();
-    (e.z6n = t),
-      (e.N4n =
+    var e = new Protocol_1.Aki.Protocol.ohs();
+    (e.x7n = t),
+      (e.vVn =
         ModelManager_1.ModelManager.MingSuModel.CurrentInteractCreatureDataLongId),
-      Net_1.Net.Call(25090, Protocol_1.Aki.Protocol.sos.create(e), (e) => {
+      Net_1.Net.Call(8020, Protocol_1.Aki.Protocol.ohs.create(e), (e) => {
         var o, n, r;
         e &&
           (Log_1.Log.CheckInfo() &&
@@ -101,16 +101,16 @@ class MingSuController extends UiControllerBase_1.UiControllerBase {
               8,
               "[CollectionItemDisplay]HandInMingSuResponse",
               ["dragonPoolId", t],
-              ["提交数量", e.yfs],
-              ["提交后的等级", e.r3n],
-              ["提交后的状态", e.Efs],
+              ["提交数量", e.NSs],
+              ["提交后的等级", e.P6n],
+              ["提交后的状态", e.kSs],
             ),
-          e.lkn === Protocol_1.Aki.Protocol.lkn.Sys
+          e.O4n === Protocol_1.Aki.Protocol.O4n.NRs
             ? ((r =
                 ModelManager_1.ModelManager.MingSuModel.GetDragonPoolInstanceById(
-                  e.z6n,
+                  e.x7n,
                 )) &&
-                ((o = e.r3n),
+                ((o = e.P6n),
                 (n = r.GetDragonPoolLevel()),
                 (r = r.GetDragonPoolMaxLevel()),
                 Log_1.Log.CheckInfo() &&
@@ -162,8 +162,8 @@ class MingSuController extends UiControllerBase_1.UiControllerBase {
                 EventDefine_1.EEventName.UpdateDragonPoolView,
               ))
             : (ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-                e.lkn,
-                29217,
+                e.O4n,
+                14790,
               ),
               ItemRewardController_1.ItemRewardController.Close()));
       });
@@ -171,7 +171,7 @@ class MingSuController extends UiControllerBase_1.UiControllerBase {
 }
 ((exports.MingSuController = MingSuController).Model =
   MingSuModel_1.MingSuModel),
-  (MingSuController.LBi = () => {
+  (MingSuController.Lbi = () => {
     switch (
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
@@ -198,7 +198,7 @@ class MingSuController extends UiControllerBase_1.UiControllerBase {
         );
     }
   }),
-  (MingSuController.Vwn = () => {
+  (MingSuController.RGn = () => {
     switch (
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(

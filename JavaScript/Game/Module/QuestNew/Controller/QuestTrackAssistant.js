@@ -15,10 +15,10 @@ const Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
 class QuestTrackAssistant extends ControllerAssistantBase_1.ControllerAssistantBase {
   constructor() {
     super(...arguments),
-      (this.Qoo = (e) => {
-        0 !== e.Xkn &&
+      (this.Hro = (e) => {
+        0 !== e.I5n &&
           ModelManager_1.ModelManager.QuestNewModel.SetQuestTrackState(
-            e.Xkn,
+            e.I5n,
             !0,
           );
       }),
@@ -27,14 +27,14 @@ class QuestTrackAssistant extends ControllerAssistantBase_1.ControllerAssistantB
           ((r = ModelManager_1.ModelManager.QuestNewModel.GetCurTrackedQuest()),
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.OnLogicTreeTrackUpdate,
-            Protocol_1.Aki.Protocol.NCs.Proto_BtTypeQuest,
+            Protocol_1.Aki.Protocol.tps.Proto_BtTypeQuest,
             r?.TreeId,
           ));
       }),
-      (this.Xoo = (e, r, t) => {
+      (this.jro = (e, r, t) => {
         var n =
           ModelManager_1.ModelManager.GeneralLogicTreeModel.GetBehaviorTree(e);
-        if (n && n.BtType === Protocol_1.Aki.Protocol.NCs.Proto_BtTypeQuest) {
+        if (n && n.BtType === Protocol_1.Aki.Protocol.tps.Proto_BtTypeQuest) {
           var o =
             ModelManager_1.ModelManager.QuestNewModel.GetCurTrackedQuest();
           if (o && o.TreeId === e)
@@ -50,15 +50,15 @@ class QuestTrackAssistant extends ControllerAssistantBase_1.ControllerAssistantB
   }
   OnDestroy() {}
   OnRegisterNetEvent() {
-    Net_1.Net.Register(12471, this.Qoo);
+    Net_1.Net.Register(25934, this.Hro);
   }
   OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(12471);
+    Net_1.Net.UnRegister(25934);
   }
   OnAddEvents() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.GeneralLogicTreeSuspend,
-      this.Xoo,
+      this.jro,
     ),
       InputDistributeController_1.InputDistributeController.BindAction(
         InputMappingsDefine_1.actionMappings.任务追踪,
@@ -68,7 +68,7 @@ class QuestTrackAssistant extends ControllerAssistantBase_1.ControllerAssistantB
   OnRemoveEvents() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.GeneralLogicTreeSuspend,
-      this.Xoo,
+      this.jro,
     ),
       InputDistributeController_1.InputDistributeController.UnBindAction(
         InputMappingsDefine_1.actionMappings.任务追踪,
@@ -94,16 +94,16 @@ class QuestTrackAssistant extends ControllerAssistantBase_1.ControllerAssistantB
       );
     ModelManager_1.ModelManager.QuestNewModel.SetQuestTrackState(e, r, n),
       o?.();
-    var s = Protocol_1.Aki.Protocol.sss.create({
-      Xkn: e,
-      U8n: r ? 1 : 2,
-      A8n: t,
+    var s = Protocol_1.Aki.Protocol.i1s.create({
+      I5n: e,
+      hHn: r ? 1 : 2,
+      aHn: t,
     });
-    Net_1.Net.Call(28835, s, (e) => {
-      e.uvs !== Protocol_1.Aki.Protocol.lkn.Sys &&
+    Net_1.Net.Call(25751, s, (e) => {
+      e.DEs !== Protocol_1.Aki.Protocol.O4n.NRs &&
         ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-          e.uvs,
-          17726,
+          e.DEs,
+          22186,
         );
     });
   }

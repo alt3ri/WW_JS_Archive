@@ -8,40 +8,40 @@ const CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonPa
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   ControllerAssistantBase_1 = require("../../GeneralLogicTree/ControllerAssistant/ControllerAssistantBase"),
-  GeneralLogicTreeUtil_1 = require("../../GeneralLogicTree/GeneralLogicTreeUtil"),
-  ControllerHolder_1 = require("../../../Manager/ControllerHolder");
+  GeneralLogicTreeUtil_1 = require("../../GeneralLogicTree/GeneralLogicTreeUtil");
 class DailyQuestAssistant extends ControllerAssistantBase_1.ControllerAssistantBase {
   constructor() {
     super(...arguments),
-      (this.Kio = !1),
-      (this.Uje = () => {
+      (this.Hoo = !1),
+      (this.FWe = () => {
         if (
           ModelManager_1.ModelManager.LoginModel.GetTodayFirstTimeLogin() &&
-          !this.Kio
+          !this.Hoo
         ) {
           var e;
-          this.Kio = !0;
+          this.Hoo = !0;
           for (const n of ModelManager_1.ModelManager.DailyTaskModel.GetDailyTaskCorrelativeEntities()) {
-            var r =
+            var t =
               ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(n);
-            if (this.Qio(r)) return;
+            if (this.joo(t)) return;
           }
           for ([
             ,
             e,
           ] of ModelManager_1.ModelManager.DailyTaskModel.GetAllDailyQuest()) {
-            var t = e.GetCurrentActiveChildQuestNode();
-            t &&
+            var r = e.GetCurrentActiveChildQuestNode();
+            r &&
               ModelManager_1.ModelManager.GeneralLogicTreeModel.ForceShowDailyQuestInfo(
                 e.TreeId,
-                t.NodeId,
+                r.NodeId,
               );
           }
         }
       }),
-      (this.Xio = (e, r, t) => {
+      (this.Woo = (e, t, r) => {
         var n = ModelManager_1.ModelManager.QuestNewModel.GetQuest(e);
         if (
           n &&
@@ -49,63 +49,66 @@ class DailyQuestAssistant extends ControllerAssistantBase_1.ControllerAssistantB
           ("SingleHangUpOnline" !== n.OnlineType ||
             !ModelManager_1.ModelManager.GameModeModel.IsMulti)
         )
-          switch (t) {
+          switch (r) {
             case 0:
-              n.IsRangeTrack(r) ? n.StartTextExpress(1) : this.$io(n),
-                this.Yio(n),
+              n.IsRangeTrack(t) ? n.StartTextExpress(1) : this.Koo(n),
+                this.Qoo(n),
                 (n.TriggerQuestTips = !0);
               break;
             case 1:
-              n.IsRangeTrack(r) && n.EndTextExpress(1);
+              n.IsRangeTrack(t) && n.EndTextExpress(1);
           }
       }),
-      (this.Jio = (e) => {
+      (this.Xoo = (e) => {
         4 === e.Type &&
           ModelManager_1.ModelManager.DailyTaskModel.AddDailyQuest(e);
       }),
-      (this.DEe = (e, r) => {
-        r === Protocol_1.Aki.Protocol.kMs.Proto_Finish &&
-          ModelManager_1.ModelManager.DailyTaskModel.RemoveDailyQuest(e);
+      (this.DSe = (e, t) => {
+        switch (t) {
+          case Protocol_1.Aki.Protocol.tTs.Proto_Finish:
+          case Protocol_1.Aki.Protocol.tTs.Proto_Delete:
+            ModelManager_1.ModelManager.DailyTaskModel.RemoveDailyQuest(e);
+        }
       });
   }
   OnDestroy() {}
   OnAddEvents() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.WorldDoneAndCloseLoading,
-      this.Uje,
+      this.FWe,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnEnterDailyQuestNotifyRange,
-        this.Xio,
+        this.Woo,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnAddNewQuest,
-        this.Jio,
+        this.Xoo,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnQuestStateChange,
-        this.DEe,
+        this.DSe,
       );
   }
   OnRemoveEvents() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.WorldDoneAndCloseLoading,
-      this.Uje,
+      this.FWe,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnEnterDailyQuestNotifyRange,
-        this.Xio,
+        this.Woo,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnAddNewQuest,
-        this.Jio,
+        this.Xoo,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnQuestStateChange,
-        this.DEe,
+        this.DSe,
       );
   }
-  Qio(e) {
+  joo(e) {
     return (
       !!e &&
       !!(e = e.Entity.GetComponent(1)) &&
@@ -118,26 +121,26 @@ class DailyQuestAssistant extends ControllerAssistantBase_1.ControllerAssistantB
         )
     );
   }
-  Yio(e) {
-    var r;
+  Qoo(e) {
+    var t;
     e &&
       4 === e.Type &&
       !e.TriggerQuestTips &&
       ((e = ModelManager_1.ModelManager.QuestNewModel.GetQuestName(e.Id)),
-      (r =
+      (t =
         ConfigManager_1.ConfigManager.TextConfig.GetTextContentIdById(
           "TriggerMission",
         )),
-      (r = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(r)),
+      (t = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(t)),
       ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByItsType(
         6,
         void 0,
         void 0,
         [e],
-        [r],
+        [t],
       ));
   }
-  $io(e) {
+  Koo(e) {
     e &&
       4 === e.Type &&
       !e.TriggerQuestTips &&
@@ -148,7 +151,7 @@ class DailyQuestAssistant extends ControllerAssistantBase_1.ControllerAssistantB
   }
   CreateMarksOnWakeUp() {
     var e = ModelManager_1.ModelManager.DailyTaskModel.GetAllDailyQuest();
-    if (e) for (var [, r] of e) r.CreateMapMarks();
+    if (e) for (var [, t] of e) t.CreateMapMarks();
   }
 }
 exports.DailyQuestAssistant = DailyQuestAssistant;

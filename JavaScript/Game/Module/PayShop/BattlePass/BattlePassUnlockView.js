@@ -13,14 +13,14 @@ const UE = require("ue"),
 class BattlePassUnlockView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.Fki = void 0),
-      (this.ZNi = []),
-      (this.sOi = () => {
+      (this.F2i = void 0),
+      (this.ZOi = []),
+      (this.aki = () => {
         this.CloseMe();
       }),
       (this.rOe = () =>
         new CommonItemSmallItemGrid_1.CommonItemSmallItemGrid()),
-      (this.Vki = () => {
+      (this.V2i = () => {
         this.CloseMe();
       });
   }
@@ -33,33 +33,33 @@ class BattlePassUnlockView extends UiViewBase_1.UiViewBase {
       [4, UE.UIButtonComponent],
       [5, UE.UIText],
     ]),
-      (this.BtnBindInfo = [[4, this.Vki]]);
+      (this.BtnBindInfo = [[4, this.V2i]]);
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.BattlePassMainViewHide,
-      this.sOi,
+      this.aki,
     );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.BattlePassMainViewHide,
-      this.sOi,
+      this.aki,
     );
   }
   OnStart() {
     var e = this.OpenParam,
       t =
-        ((this.ZNi = []),
+        ((this.ZOi = []),
         ConfigManager_1.ConfigManager.BattlePassConfig.GetBattlePassUnlockReward(
           e,
-          this.ZNi,
+          this.ZOi,
         ),
-        (this.Fki = new GenericLayout_1.GenericLayout(
+        (this.F2i = new GenericLayout_1.GenericLayout(
           this.GetHorizontalLayout(0),
           this.rOe,
         )),
-        this.Fki.RefreshByData(this.ZNi),
+        this.F2i.RefreshByData(this.ZOi),
         ConfigManager_1.ConfigManager.BattlePassConfig.GetBattlePassUnlock(e));
     LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(1), t.UnlockTitle),
       LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(5), t.UnlockText),
@@ -67,9 +67,9 @@ class BattlePassUnlockView extends UiViewBase_1.UiViewBase {
       this.GetItem(3).SetUIActive(1 !== e);
   }
   OnBeforeDestroy() {
-    (this.ZNi.length = 0),
-      (this.ZNi = void 0),
-      (this.Fki = void 0),
+    (this.ZOi.length = 0),
+      (this.ZOi = void 0),
+      (this.F2i = void 0),
       1 === this.OpenParam
         ? EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.BattlePassFirstUnlockAnime,

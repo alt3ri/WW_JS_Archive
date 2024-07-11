@@ -16,32 +16,32 @@ class QuestPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
   constructor() {
     super(...arguments),
       (this.sOe = void 0),
-      (this.$ro = void 0),
-      (this.Wro = !1),
+      (this.Wno = void 0),
+      (this.Fno = !1),
       (this.FRe = 0),
-      (this.i2o = 0),
-      (this.dko = void 0),
-      (this.$Ut = void 0),
-      (this.o2o = void 0),
-      (this.r2o = void 0),
-      (this.$_t = () => {
-        0 !== this.i2o
+      (this.Z2o = 0),
+      (this.u2o = void 0),
+      (this.ZAt = void 0),
+      (this.eFo = void 0),
+      (this.tFo = void 0),
+      (this.uct = () => {
+        0 !== this.Z2o
           ? QuestController_1.QuestNewController.RequestTrackQuest(
               this.FRe,
-              !this.Wro,
+              !this.Fno,
               1,
               0,
               () => {
-                this.ono(), this.Close();
+                this.Zno(), this.Close();
               },
             )
           : (MapController_1.MapController.RequestTrackMapMark(
               12,
-              this.dko.MarkId,
-              !this.Wro,
+              this.u2o.MarkId,
+              !this.Fno,
             ),
-            (this.Wro = !this.Wro),
-            this.ono(),
+            (this.Fno = !this.Fno),
+            this.Zno(),
             this.Close());
       });
   }
@@ -53,49 +53,49 @@ class QuestPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
       WorldMapDefine_1.secondaryUiPanelComponentsRegisterInfoA;
   }
   async OnBeforeStartAsync() {
-    (this.o2o = new RewardItemBar_1.RewardItemBar()),
-      (this.o2o.SkipDestroyActor = !0),
+    (this.eFo = new RewardItemBar_1.RewardItemBar()),
+      (this.eFo.SkipDestroyActor = !0),
       await Promise.all([
         super.OnBeforeStartAsync(),
-        this.o2o.CreateThenShowByActorAsync(this.GetItem(8).GetOwner(), !0),
+        this.eFo.CreateThenShowByActorAsync(this.GetItem(8).GetOwner(), !0),
       ]);
   }
   OnStart() {
     this.RootItem.SetRaycastTarget(!1),
-      (this.$ro = []),
+      (this.Wno = []),
       (this.sOe = []),
-      (this.r2o = new TipsListView_1.TipsListView()),
-      this.r2o.Initialize(this.GetVerticalLayout(5)),
-      (this.$Ut = new ButtonItem_1.ButtonItem(this.GetButton(11).RootUIComp)),
-      this.$Ut.SetFunction(this.$_t);
+      (this.tFo = new TipsListView_1.TipsListView()),
+      this.tFo.Initialize(this.GetVerticalLayout(5)),
+      (this.ZAt = new ButtonItem_1.ButtonItem(this.GetButton(11).RootUIComp)),
+      this.ZAt.SetFunction(this.uct);
   }
   OnBeforeDestroy() {
     for (const t of this.sOe) this.AddChild(t);
-    (this.sOe.length = 0), this.o2o.Destroy(), this.r2o.Clear();
+    (this.sOe.length = 0), this.eFo.Destroy(), this.tFo.Clear();
   }
   OnShowWorldMapSecondaryUi(t) {
     (this.FRe = t.TreeConfigId),
-      (this.i2o = t.NodeId),
-      (this.dko = t),
-      this.n2o(),
-      this.ono(),
+      (this.Z2o = t.NodeId),
+      (this.u2o = t),
+      this.iFo(),
+      this.Zno(),
       this.GetItem(2)?.SetUIActive(!1),
-      this.SetSpriteByPath(this.dko.IconPath, this.GetSprite(0), !1),
+      this.SetSpriteByPath(this.u2o.IconPath, this.GetSprite(0), !1),
       this.GetItem(9).SetUIActive(!1),
       this.GetItem(12).SetUIActive(!1);
   }
   OnCloseWorldMapSecondaryUi() {
-    this.r2o.Clear();
+    this.tFo.Clear();
   }
-  n2o() {
+  iFo() {
     var t = ModelManager_1.ModelManager.QuestNewModel;
     this.GetText(1).SetText(t.GetQuestName(this.FRe)),
       this.GetText(4).SetText(t.GetQuestDetails(this.FRe)),
-      0 === this.i2o
-        ? this.o2o.SetActive(!1)
-        : (this.o2o.SetActive(!0), this.s2o(this.FRe, this.i2o), this.hno());
+      0 === this.Z2o
+        ? this.eFo.SetActive(!1)
+        : (this.eFo.SetActive(!0), this.oFo(this.FRe, this.Z2o), this.rso());
   }
-  s2o(t, e) {
+  oFo(t, e) {
     var t = ModelManager_1.ModelManager.QuestNewModel.GetQuest(t);
     t &&
       ((t =
@@ -103,36 +103,36 @@ class QuestPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
           t.TreeId,
           e,
         )),
-      (e = this.r2o.AddItemByKey(QUEST_CONDIGION_KEY)).SetHelpButtonVisible(!1),
+      (e = this.tFo.AddItemByKey(QUEST_CONDIGION_KEY)).SetHelpButtonVisible(!1),
       e.SetLeftText(
         MultiTextLang_1.configMultiTextLang.GetLocalTextNew("TowerProcess") ??
           "",
       ),
       e.SetRightText(t));
   }
-  hno() {
-    this.$ro.length = 0;
+  rso() {
+    this.Wno.length = 0;
     var t =
       ModelManager_1.ModelManager.QuestNewModel.GetDisplayRewardCommonInfo(
         this.FRe,
       );
     t
-      ? ((this.$ro = t),
+      ? ((this.Wno = t),
         this.GetVerticalLayout(7).RootUIComp.SetUIActive(!0),
-        this.o2o.RebuildRewardsByData(this.$ro))
+        this.eFo.RebuildRewardsByData(this.Wno))
       : this.GetVerticalLayout(7).RootUIComp.SetUIActive(!1);
   }
-  ono() {
+  Zno() {
     var t, e;
-    0 !== this.i2o
-      ? (this.Wro = ModelManager_1.ModelManager.QuestNewModel.IsTrackingQuest(
+    0 !== this.Z2o
+      ? (this.Fno = ModelManager_1.ModelManager.QuestNewModel.IsTrackingQuest(
           this.FRe,
         ))
-      : ((t = this.dko.MarkId),
+      : ((t = this.u2o.MarkId),
         (e = ModelManager_1.ModelManager.MapModel.GetCurTrackMark()),
-        (this.Wro = !!e && e[1] === t)),
-      this.$Ut.SetLocalText(
-        this.Wro
+        (this.Fno = !!e && e[1] === t)),
+      this.ZAt.SetLocalText(
+        this.Fno
           ? "InstanceDungeonEntranceCancelTrack"
           : "InstanceDungeonEntranceTrack",
       );

@@ -9,63 +9,63 @@ const Log_1 = require("../../../../../../../Core/Common/Log"),
 class GameplayCueMagnitude extends GameplayCueBase_1.GameplayCueBase {
   constructor() {
     super(...arguments),
-      (this.ZXo = !1),
-      (this.e$o = void 0),
+      (this.Y$o = !1),
+      (this.J$o = void 0),
       (this.$te = void 0),
       (this.Xte = void 0),
-      (this.elt = void 0),
-      (this.t$o = void 0),
+      (this.m1t = void 0),
+      (this.z$o = void 0),
       (this.one = 0),
       (this.rne = 0),
       (this.Xe = 0),
-      (this.i$o = 0),
-      (this.mEo = (t, i, s) => {
-        t === this.t$o ? (this.rne = i) : (this.Xe = i), this.o$o(this.Xe);
+      (this.Z$o = 0),
+      (this._yo = (t, i, s) => {
+        t === this.z$o ? (this.rne = i) : (this.Xe = i), this.eYo(this.Xe);
       }),
-      (this.r$o = (t) => {
-        this.o$o(t);
+      (this.tYo = (t) => {
+        this.eYo(t);
       });
   }
   OnInit() {
     var t = this.Entity;
-    (this.$te = t.CheckGetComponent(156)),
-      (this.elt = t.CheckGetComponent(157)),
-      (this.Xte = t.CheckGetComponent(185)),
+    (this.$te = t.CheckGetComponent(158)),
+      (this.m1t = t.CheckGetComponent(159)),
+      (this.Xte = t.CheckGetComponent(188)),
       (this.one = this.CueConfig.Min),
       (this.rne = this.CueConfig.Max);
   }
   OnTick(t) {
     super.OnTick(t),
-      this.i$o && ((t = this.n$o()), this.o$o(t, !1), t || (this.i$o = 0));
+      this.Z$o && ((t = this.iYo()), this.eYo(t, !1), t || (this.Z$o = 0));
   }
   OnCreate() {
-    this.UseMagnitude() && (this.ZXo = this.s$o());
+    this.UseMagnitude() && (this.Y$o = this.oYo());
   }
   OnDestroy() {
-    this.ZXo && this.a$o();
+    this.Y$o && this.rYo();
   }
   OnSetMagnitude(t) {}
   UseMagnitude() {
     return 0 !== this.CueConfig.Magni && !this.IsInstant;
   }
-  s$o() {
+  oYo() {
     let t = 0;
     switch (this.CueConfig.Magni) {
       case 1:
         if (!this.Ii(this.CueConfig.AttrId, "属性Id没填！")) return !1;
-        (this.t$o = CharacterAttributeTypes_1.attributeIdsWithMax.get(
+        (this.z$o = CharacterAttributeTypes_1.attributeIdsWithMax.get(
           this.CueConfig.AttrId,
         )),
           this.CueConfig.bListenAttr &&
             (this.$te.AddListener(
               this.CueConfig.AttrId,
-              this.mEo,
+              this._yo,
               "GameplayCueMagnitude",
             ),
-            this.t$o) &&
-            this.$te.AddListener(this.t$o, this.mEo, "GameplayCueMagnitudeMax"),
+            this.z$o) &&
+            this.$te.AddListener(this.z$o, this._yo, "GameplayCueMagnitudeMax"),
           (t = this.$te.GetCurrentValue(this.CueConfig.AttrId)),
-          this.t$o && (this.rne = this.$te.GetCurrentValue(this.t$o));
+          this.z$o && (this.rne = this.$te.GetCurrentValue(this.z$o));
         break;
       case 2:
         if (!this.Ii(this.CueConfig.Tag, "Tag没填！")) return !1;
@@ -73,44 +73,44 @@ class GameplayCueMagnitude extends GameplayCueBase_1.GameplayCueBase {
           this.CueConfig.Tag,
         );
         this.CueConfig.bListenAttr &&
-          (this.e$o = this.Xte.ListenForTagAnyCountChanged(i, this.r$o)),
-          (t = this.Xte.GetTagCountById(i));
+          (this.J$o = this.Xte.ListenForTagAnyCountChanged(i, this.tYo)),
+          (t = this.Xte.GetTagCount(i));
         break;
       case 3:
-        t = this.elt.GetBuffByHandle(this.ActiveHandleId)?.Level ?? 1;
+        t = this.m1t.GetBuffByHandle(this.ActiveHandleId)?.Level ?? 1;
         break;
       case 4:
-        this.CueConfig.bListenAttr && (this.i$o = this.ActiveHandleId),
-          (t = this.n$o());
+        this.CueConfig.bListenAttr && (this.Z$o = this.ActiveHandleId),
+          (t = this.iYo());
         break;
       default:
         return !1;
     }
-    return this.o$o(t);
+    return this.eYo(t);
   }
-  a$o() {
+  rYo() {
     switch (this.CueConfig.Magni) {
       case 1:
         this.CueConfig.bListenAttr &&
-          (this.$te.RemoveListener(this.CueConfig.AttrId, this.mEo),
-          this.t$o) &&
-          this.$te.RemoveListener(this.t$o, this.mEo);
+          (this.$te.RemoveListener(this.CueConfig.AttrId, this._yo),
+          this.z$o) &&
+          this.$te.RemoveListener(this.z$o, this._yo);
         break;
       case 2:
         this.CueConfig.bListenAttr &&
-          this.e$o &&
-          (this.e$o.EndTask(), (this.e$o = void 0));
+          this.J$o &&
+          (this.J$o.EndTask(), (this.J$o = void 0));
         break;
       case 3:
         break;
       case 4:
-        this.CueConfig.bListenAttr && (this.i$o = 0);
+        this.CueConfig.bListenAttr && (this.Z$o = 0);
     }
   }
-  o$o(t, i = !0) {
+  eYo(t, i = !0) {
     if (!this.Ii(this.rne >= this.one, "Buff特效表Min>Max！有问题")) return !1;
     this.Xe = t;
-    t = this.h$o();
+    t = this.nYo();
     return (
       i &&
         Log_1.Log.CheckDebug() &&
@@ -128,10 +128,13 @@ class GameplayCueMagnitude extends GameplayCueBase_1.GameplayCueBase {
       !0
     );
   }
-  h$o() {
-    return this.one === this.rne
-      ? 0
-      : (MathUtils_1.MathUtils.Clamp(this.Xe, this.one, this.rne) - this.one) /
+  nYo() {
+    return this.Z$o
+      ? this.Xe
+      : this.one === this.rne
+        ? 0
+        : (MathUtils_1.MathUtils.Clamp(this.Xe, this.one, this.rne) -
+            this.one) /
           (this.rne - this.one);
   }
   Ii(t, i) {
@@ -142,10 +145,10 @@ class GameplayCueMagnitude extends GameplayCueBase_1.GameplayCueBase {
       !1)
     );
   }
-  n$o() {
+  iYo() {
     var t =
-        this.elt.GetBuffByHandle(this.ActiveHandleId)?.GetRemainDuration() ?? 0,
-      i = this.elt.GetBuffByHandle(this.ActiveHandleId)?.Duration ?? 1;
+        this.m1t.GetBuffByHandle(this.ActiveHandleId)?.GetRemainDuration() ?? 0,
+      i = this.m1t.GetBuffByHandle(this.ActiveHandleId)?.Duration ?? 1;
     return 0 < i ? t / i : 0;
   }
 }

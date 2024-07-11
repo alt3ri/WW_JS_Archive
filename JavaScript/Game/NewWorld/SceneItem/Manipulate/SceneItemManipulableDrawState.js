@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneItemManipulableDrawState = void 0);
 const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
   FNameUtil_1 = require("../../../../Core/Utils/FNameUtil"),
   MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
@@ -11,28 +12,37 @@ const UE = require("ue"),
 class SceneItemManipulableDrawState extends SceneItemManipulableBaseState_1.SceneItemManipulableBaseState {
   constructor(t, e, i) {
     super(t),
-      (this.M$i = void 0),
-      (this.onr = void 0),
-      (this.rnr = void 0),
-      (this.inr = void 0),
-      (this.M$i = e),
-      (this.inr = i),
+      (this.pYi = void 0),
+      (this.esr = void 0),
+      (this.tsr = void 0),
+      (this.Znr = void 0),
+      (this.pYi = e),
+      (this.Znr = i),
       (this.StateType = "BeDrawing");
   }
   SetEnterCallback(t) {
     this.EnterCallback = t;
   }
   OnEnter() {
-    this.SceneItem.ActivatedOutlet?.Valid &&
-      (this.SceneItem.MatchSequence &&
-        ((this.SceneItem.PlayingMatchSequence = !0),
-        this.SceneItem.PlayMatchSequence(() => {
-          this.nnr(),
-            (this.SceneItem.PlayingMatchSequence = !1),
-            (this.SceneItem.MatchSequence = void 0);
-        }, !0)),
-      this.SceneItem.ActivatedOutlet.OnPickUpItem(this.SceneItem.Entity)),
-      void 0 === this.SceneItem.MatchSequence && this.nnr(),
+    (this.SceneItem.NeedRemoveControllerId = !0),
+      Log_1.Log.CheckInfo() &&
+        Log_1.Log.Info(
+          "Character",
+          32,
+          "[CharacterManipulateComp] DrawState OnEnter",
+          ["PbDataId", this.SceneItem?.ActorComp?.CreatureData.GetPbDataId()],
+          ["ActivatedOutlet", this.SceneItem.ActivatedOutlet?.Valid],
+        ),
+      this.SceneItem.ActivatedOutlet?.Valid &&
+        (this.SceneItem.MatchSequence &&
+          ((this.SceneItem.PlayingMatchSequence = !0),
+          this.SceneItem.PlayMatchSequence(() => {
+            this.isr(),
+              (this.SceneItem.PlayingMatchSequence = !1),
+              (this.SceneItem.MatchSequence = void 0);
+          }, !0)),
+        this.SceneItem.ActivatedOutlet.OnPickUpItem(this.SceneItem.Entity)),
+      void 0 === this.SceneItem.MatchSequence && this.isr(),
       FNameUtil_1.FNameUtil.IsNothing(
         this.SceneItem.ManipulateBaseConfig.吸取状态碰撞预设,
       ) ||
@@ -40,25 +50,25 @@ class SceneItemManipulableDrawState extends SceneItemManipulableBaseState_1.Scen
           this.SceneItem.ManipulateBaseConfig.吸取状态碰撞预设,
         );
   }
-  nnr() {
+  isr() {
     this.SceneItem.ActivatedOutlet?.Valid &&
       this.SceneItem.ClearAttachOutletInfo(),
-      this.StartCameraShake(this.M$i),
+      this.StartCameraShake(this.pYi),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.AddSubCameraTag,
-        this.inr,
+        this.Znr,
       ),
       (this.SceneItem.ActorComp.PhysicsMode = 0),
       (this.Timer = 0),
-      (this.onr = this.SceneItem.GetDrawStartLocation().ToUeVector()),
-      (this.rnr = this.SceneItem.ActorComp.ActorRotation),
+      (this.esr = this.SceneItem.GetDrawStartLocation().ToUeVector()),
+      (this.tsr = this.SceneItem.ActorComp.ActorRotation),
       this.EnterCallback && this.EnterCallback();
   }
   OnTick(t) {
     return (
       this.SceneItem.PlayingMatchSequence ||
         ((this.Timer += t),
-        (t = this.snr()),
+        (t = this.osr()),
         this.SceneItem.ActorComp.SetActorLocationAndRotation(
           t.Loc,
           t.Rot,
@@ -72,10 +82,10 @@ class SceneItemManipulableDrawState extends SceneItemManipulableBaseState_1.Scen
     this.StopCameraShake(),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.RemoveSubCameraTag,
-        this.inr,
+        this.Znr,
       );
   }
-  snr() {
+  osr() {
     var t = this.SceneItem.ManipulateBaseConfig;
     let e = 1,
       i = 1;
@@ -89,8 +99,8 @@ class SceneItemManipulableDrawState extends SceneItemManipulableBaseState_1.Scen
           1,
         )),
         (i = UE.KismetMathLibrary.Ease(0, 1, i, 7)));
-    var s = new UE.Vector(this.onr.X, this.onr.Y, this.onr.Z),
-      t = ((s.Z += t.牵引高度 * e), this.rnr),
+    var s = new UE.Vector(this.esr.X, this.esr.Y, this.esr.Z),
+      t = ((s.Z += t.牵引高度 * e), this.tsr),
       h = this.SceneItem.UsingAssistantHoldOffset
         ? this.SceneItem.ConfigAssistantHoldOffset
         : this.SceneItem.ConfigHoldOffset,
@@ -100,7 +110,7 @@ class SceneItemManipulableDrawState extends SceneItemManipulableBaseState_1.Scen
       this.SceneItem.ConfigHoldRotator,
       a.Rotator(),
     );
-    var a = this.SceneItem.Entity.GetComponent(122);
+    var a = this.SceneItem.Entity.GetComponent(124);
     a?.Valid &&
       ((a = new UE.Rotator(0, -a.Rotation, 0)),
       (n = UE.KismetMathLibrary.ComposeRotators(a, n)));

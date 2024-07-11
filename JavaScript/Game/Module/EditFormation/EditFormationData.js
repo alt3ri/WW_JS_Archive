@@ -16,35 +16,35 @@ class EditFormationRoleData {
 class EditFormationData {
   constructor(t) {
     (this.FormationId = 0),
-      (this.r4t = 0),
-      (this.n4t = []),
-      (this.sQe = new Map()),
+      (this.n5t = 0),
+      (this.Wke = []),
+      (this.pXe = new Map()),
       (this.FormationId = t);
   }
   AddRoleData(t, i, s, e = !1) {
-    var o = this.n4t.length + 1,
-      t = (this.n4t.push(t), new EditFormationRoleData(o, t, i, s));
-    this.sQe.set(o, t), e && (this.r4t = o);
+    var o = this.Wke.length + 1,
+      t = (this.Wke.push(t), new EditFormationRoleData(o, t, i, s));
+    this.pXe.set(o, t), e && (this.n5t = o);
   }
   GetRoleDataByPosition(t) {
-    return this.sQe.get(t);
+    return this.pXe.get(t);
   }
   get GetRoleIdList() {
-    return this.n4t;
+    return this.Wke;
   }
   SetCurrentRole(t) {
-    for (const i of this.sQe.values())
-      i.ConfigId === t && (this.r4t = i.Position);
+    for (const i of this.pXe.values())
+      i.ConfigId === t && (this.n5t = i.Position);
   }
   GetRoleDataMap() {
-    return this.sQe;
+    return this.pXe;
   }
   get GetCurrentRoleConfigId() {
-    var t = this.r4t - 1;
-    return this.n4t[t];
+    var t = this.n5t - 1;
+    return this.Wke[t];
   }
   get GetCurrentRolePosition() {
-    return this.r4t;
+    return this.n5t;
   }
 }
 exports.EditFormationData = EditFormationData;

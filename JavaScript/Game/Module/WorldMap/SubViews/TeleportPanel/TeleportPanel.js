@@ -15,23 +15,23 @@ const Log_1 = require("../../../../../Core/Common/Log"),
 class TeleportPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
   constructor() {
     super(...arguments),
-      (this.dko = void 0),
-      (this.$Ut = void 0),
-      (this.Rko = () => {
-        this.dko &&
-          (this.dko.IsLocked
+      (this.u2o = void 0),
+      (this.ZAt = void 0),
+      (this.T2o = () => {
+        this.u2o &&
+          (this.u2o.IsLocked
             ? (Log_1.Log.CheckInfo() &&
-                Log_1.Log.Info("Map", 50, "追踪", ["markId", this.dko.MarkId]),
+                Log_1.Log.Info("Map", 50, "追踪", ["markId", this.u2o.MarkId]),
               MapController_1.MapController.RequestTrackMapMark(
-                this.dko.MarkType,
-                this.dko.MarkId,
-                !this.dko.IsTracked,
+                this.u2o.MarkType,
+                this.u2o.MarkId,
+                !this.u2o.IsTracked,
               ),
-              this.Uko(),
+              this.L2o(),
               this.Close())
             : (Log_1.Log.CheckInfo() &&
-                Log_1.Log.Info("Map", 50, "传送", ["markId", this.dko.MarkId]),
-              WorldMapController_1.WorldMapController.TryTeleport(this.dko)));
+                Log_1.Log.Info("Map", 50, "传送", ["markId", this.u2o.MarkId]),
+              WorldMapController_1.WorldMapController.TryTeleport(this.u2o)));
       });
   }
   GetResourceId() {
@@ -44,25 +44,25 @@ class TeleportPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
   }
   OnStart() {
     this.RootItem.SetRaycastTarget(!1),
-      (this.$Ut = new ButtonItem_1.ButtonItem(this.GetButton(11).RootUIComp)),
-      this.$Ut.SetFunction(this.Rko);
+      (this.ZAt = new ButtonItem_1.ButtonItem(this.GetButton(11).RootUIComp)),
+      this.ZAt.SetFunction(this.T2o);
   }
   OnShowWorldMapSecondaryUi(t) {
-    this.dko = t;
+    this.u2o = t;
     var e = ModelManager_1.ModelManager.MapModel?.GetMarkExtraShowState(
-        this.dko.MarkId,
+        this.u2o.MarkId,
       ),
       r =
-        (e.ShowFlag === Protocol_1.Aki.Protocol.BNs.Proto_ShowDisable
-          ? this.$Ut.SetEnableClick(!1)
-          : this.$Ut.SetEnableClick(!0),
-        this.Uko(),
-        this.GetText(1).SetText(this.dko.GetTitleText()),
-        this.dko.GetAreaText()),
+        (e.ShowFlag === Protocol_1.Aki.Protocol.I6s.Proto_ShowDisable
+          ? this.ZAt.SetEnableClick(!1)
+          : this.ZAt.SetEnableClick(!0),
+        this.L2o(),
+        this.GetText(1).SetText(this.u2o.GetTitleText()),
+        this.u2o.GetAreaText()),
       r =
         (r && this.GetText(3).SetText(r),
-        this.GetText(4).ShowTextNew(this.dko.GetLocaleDesc()),
-        this.SetSpriteByPath(this.dko.IconPath, this.GetSprite(0), !1),
+        this.GetText(4).ShowTextNew(this.u2o.GetLocaleDesc()),
+        this.SetSpriteByPath(this.u2o.IconPath, this.GetSprite(0), !1),
         t.IsMultiMapTeleport),
       r =
         (this.GetSprite(23).SetUIActive(r),
@@ -71,7 +71,7 @@ class TeleportPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
             MULTI_MAP_SELECT_ICON_PATH,
           )),
           this.SetSpriteByPath(t, this.GetSprite(23), !1)),
-        e.ShowFlag === Protocol_1.Aki.Protocol.BNs.Proto_ShowDisable);
+        e.ShowFlag === Protocol_1.Aki.Protocol.I6s.Proto_ShowDisable);
     this.GetSprite(24).SetUIActive(r),
       r &&
         ((t =
@@ -87,18 +87,18 @@ class TeleportPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
       this.GetItem(8).SetUIActive(!1),
       this.RootItem.SetUIActive(!0);
   }
-  Uko() {
-    this.dko &&
-      (this.dko.IsLocked
-        ? this.$Ut.SetLocalText(
-            this.dko.IsTracked
+  L2o() {
+    this.u2o &&
+      (this.u2o.IsLocked
+        ? this.ZAt.SetLocalText(
+            this.u2o.IsTracked
               ? "InstanceDungeonEntranceCancelTrack"
               : "InstanceDungeonEntranceTrack",
           )
-        : this.$Ut.SetLocalText("TeleportFastMove"));
+        : this.ZAt.SetLocalText("TeleportFastMove"));
   }
   OnBeforeDestroy() {
-    this.$Ut.Destroy();
+    this.ZAt.Destroy();
   }
 }
 exports.TeleportPanel = TeleportPanel;

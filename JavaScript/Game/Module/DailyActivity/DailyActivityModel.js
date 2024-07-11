@@ -10,34 +10,34 @@ const ModelBase_1 = require("../../../Core/Framework/ModelBase"),
 class DailyActivityModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
-      (this.xOt = 0),
-      (this.wOt = 0),
-      (this.BOt = new Map()),
-      (this.bOt = []),
-      (this.qOt = 0),
-      (this.GOt = void 0),
+      (this.wkt = 0),
+      (this.Bkt = 0),
+      (this.bkt = new Map()),
+      (this.qkt = []),
+      (this.Gkt = 0),
+      (this.Nkt = void 0),
       (this.AreaId = 0);
   }
   get ActivityValue() {
-    return this.xOt;
+    return this.wkt;
   }
   get ActivityMaxValue() {
-    return this.wOt;
+    return this.Bkt;
   }
   get DailyActivityGoalMap() {
-    return this.BOt;
+    return this.bkt;
   }
   get DailyActivityTaskList() {
-    return this.bOt;
+    return this.qkt;
   }
   get DayEndTime() {
-    return this.qOt;
+    return this.Gkt;
   }
   get RewardData() {
-    return this.GOt;
+    return this.Nkt;
   }
   set RewardData(t) {
-    this.GOt = t;
+    this.Nkt = t;
   }
   OnInit() {
     return !0;
@@ -48,7 +48,7 @@ class DailyActivityModel extends ModelBase_1.ModelBase {
     );
   }
   InitGoalData() {
-    this.BOt = new Map();
+    this.bkt = new Map();
     var t =
       ConfigManager_1.ConfigManager.DailyActivityConfig.GetAllActivityGoalData();
     for (const s of t) {
@@ -58,13 +58,13 @@ class DailyActivityModel extends ModelBase_1.ModelBase {
       ).entries())
         e.push([{ IncId: 0, ItemId: a[0] }, a[1]]);
       var i = { Id: s.Id, Goal: s.Goal, Rewards: e, Achieved: !1, State: 2 };
-      this.BOt.set(s.Id, i);
+      this.bkt.set(s.Id, i);
     }
-    this.wOt = t[t.length - 1].Goal;
+    this.Bkt = t[t.length - 1].Goal;
   }
   RefreshActivityInfo(t) {
     for (const i of t) {
-      var e = this.BOt.get(i);
+      var e = this.bkt.get(i);
       e &&
         ((e.Achieved = !0), (e.State = this.GetActivityGoalState(e.Goal, !0)));
     }
@@ -75,47 +75,47 @@ class DailyActivityModel extends ModelBase_1.ModelBase {
       this.EmitDailyActivityStateCheck();
   }
   RefreshActivityValue(t) {
-    (this.xOt = t),
-      this.BOt.forEach((t, e) => {
+    (this.wkt = t),
+      this.bkt.forEach((t, e) => {
         t.State = this.GetActivityGoalState(t.Goal, t.Achieved);
       }),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.DailyActivityValueChange,
-        this.xOt,
+        this.wkt,
       ),
       this.EmitDailyActivityStateCheck();
   }
   GetActivityRewardById(t) {
-    return this.BOt.get(t).Rewards;
+    return this.bkt.get(t).Rewards;
   }
   RefreshDailyActivityData(s, t) {
-    (this.xOt = s?.sAs ?? 0),
-      (this.qOt = Number(MathUtils_1.MathUtils.LongToBigInt(s?.xfs ?? 0))),
-      this.BOt.forEach((t, e) => {
-        var i = s.aAs.includes(t.Id);
+    (this.wkt = s?.Txs ?? 0),
+      (this.Gkt = Number(MathUtils_1.MathUtils.LongToBigInt(s?.YSs ?? 0))),
+      this.bkt.forEach((t, e) => {
+        var i = s.Lxs.includes(t.Id);
         (t.Achieved = i), (t.State = this.GetActivityGoalState(t.Goal, i));
       }),
-      (this.AreaId = s.wFn),
-      (this.bOt = []);
-    for (const r of s.V0s) {
+      (this.AreaId = s.l6n),
+      (this.qkt = []);
+    for (const r of s.nMs) {
       var e = new DailyActivityTaskItem_1.DailyActiveTaskData(),
         i =
-          ((e.TaskId = r.Ekn),
-          (e.CurrentProgress = r.k0s),
-          (e.TargetProgress = r.s3n),
-          (e.IsFunctionUnlock = r.hAs),
-          r.$0s
-            ? r.H0s
+          ((e.TaskId = r.J4n),
+          (e.CurrentProgress = r.iMs),
+          (e.TargetProgress = r.b6n),
+          (e.IsFunctionUnlock = r.Rxs),
+          r.sMs
+            ? r.aMs
               ? (e.TaskState = 3)
               : (e.TaskState = 1)
             : (e.TaskState = 2),
           ConfigManager_1.ConfigManager.DailyActivityConfig.GetActivityTaskConfigById(
-            r.Ekn,
+            r.J4n,
           )),
         a = ((e.Sort = i.SortRank), []);
       for (const n of i.TaskReward.entries())
         a.push([{ ItemId: n[0], IncId: 0 }, n[1]]);
-      (e.RewardItemList = a), this.bOt.push(e);
+      (e.RewardItemList = a), this.qkt.push(e);
     }
     this.SortTaskDataList(),
       t &&
@@ -128,18 +128,18 @@ class DailyActivityModel extends ModelBase_1.ModelBase {
       this.EmitDailyActivityStateCheck();
   }
   UpdateDailyActivityData(t) {
-    this.xOt = t?.sAs ?? 0;
-    for (const s of t.aAs) {
-      var e = this.BOt.get(s);
+    this.wkt = t?.Txs ?? 0;
+    for (const s of t.Lxs) {
+      var e = this.bkt.get(s);
       e &&
         ((e.Achieved = !0), (e.State = this.GetActivityGoalState(e.Goal, !0)));
     }
-    this.AreaId = t.wFn;
-    for (const a of t.V0s) {
-      var i = this.bOt.find((t) => t.TaskId === a.Ekn);
-      (i.CurrentProgress = a.k0s),
-        a.$0s
-          ? a.H0s
+    this.AreaId = t.l6n;
+    for (const a of t.nMs) {
+      var i = this.qkt.find((t) => t.TaskId === a.J4n);
+      (i.CurrentProgress = a.iMs),
+        a.sMs
+          ? a.aMs
             ? (i.TaskState = 3)
             : (i.TaskState = 1)
           : (i.TaskState = 2);
@@ -151,7 +151,7 @@ class DailyActivityModel extends ModelBase_1.ModelBase {
       this.EmitDailyActivityStateCheck();
   }
   SortTaskDataList() {
-    this.bOt.sort((t, e) =>
+    this.qkt.sort((t, e) =>
       t.TaskState === e.TaskState
         ? t.Sort === e.Sort
           ? t.TaskId - e.TaskId
@@ -163,15 +163,15 @@ class DailyActivityModel extends ModelBase_1.ModelBase {
     let i = 2;
     return e ? (i = 3) : this.ActivityValue >= t && (i = 1), i;
   }
-  NOt() {
-    if (!(this.xOt >= this.wOt))
+  Okt() {
+    if (!(this.wkt >= this.Bkt))
       for (const t of this.DailyActivityTaskList)
         if (1 === t.TaskState) return !0;
     return !1;
   }
-  OOt() {
+  kkt() {
     let t = !1;
-    for (const e of this.BOt.entries())
+    for (const e of this.bkt.entries())
       if (1 === e[1].State) {
         t = !0;
         break;
@@ -179,10 +179,10 @@ class DailyActivityModel extends ModelBase_1.ModelBase {
     return t;
   }
   CheckIsRewardWaitTake() {
-    return this.NOt() || this.OOt();
+    return this.Okt() || this.kkt();
   }
   CheckIsFinish() {
-    return this.xOt >= this.wOt;
+    return this.wkt >= this.Bkt;
   }
 }
 exports.DailyActivityModel = DailyActivityModel;

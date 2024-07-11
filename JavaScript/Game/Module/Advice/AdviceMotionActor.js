@@ -13,20 +13,20 @@ const UE = require("ue"),
   REVERTIME = 3e3;
 class AdviceMotionActor {
   constructor() {
-    (this.z6e = void 0),
+    (this.c9e = void 0),
       (this.ActorInternal = void 0),
       (this.SkeletalMeshInternal = void 0),
-      (this.$6e = void 0),
-      (this.Y6e = 0),
-      (this.B8e = 0),
+      (this.l9e = void 0),
+      (this._9e = 0),
+      (this.X9e = 0),
       (this.Td = !1),
-      (this.i8e = () => {
-        this.o8e(),
+      (this.g9e = () => {
+        this.f9e(),
           this.SkeletalMeshInternal.SetHiddenInGame(!0),
-          (this.z6e = void 0),
+          (this.c9e = void 0),
           ModelManager_1.ModelManager.AdviceModel.RecycleMotionActor(this),
           ModelManager_1.ModelManager.AdviceModel.RemovePlayingMotionEntity(
-            this.B8e,
+            this.X9e,
           );
       }),
       (this.OnActorDestroy = () => {
@@ -35,20 +35,20 @@ class AdviceMotionActor {
             (ActorSystem_1.ActorSystem.Put(this.ActorInternal),
             (this.ActorInternal = void 0)),
           ModelManager_1.ModelManager.AdviceModel.RemovePlayingMotionEntity(
-            this.B8e,
+            this.X9e,
           ),
           ModelManager_1.ModelManager.AdviceModel.RemoveMotionActor(this);
       });
   }
   PlayMotion(t) {
-    (this.B8e = t),
-      this.s8e(t, () => {
-        this.b8e(t);
+    (this.X9e = t),
+      this.M9e(t, () => {
+        this.$9e(t);
       });
   }
-  s8e(t, s) {
+  M9e(t, s) {
     var t = EntitySystem_1.EntitySystem.Get(t),
-      i = t.GetComponent(182),
+      i = t.GetComponent(185),
       t = t.GetComponent(0).GetAdviceInfo().GetAdviceData().GetAdviceMotionId();
     0 !== t &&
       (this.ActorInternal ||
@@ -62,7 +62,7 @@ class AdviceMotionActor {
           MathUtils_1.MathUtils.DefaultTransform,
           !1,
         )),
-        (this.$6e = this.ActorInternal.AddComponentByClass(
+        (this.l9e = this.ActorInternal.AddComponentByClass(
           UE.CharRenderingComponent_C.StaticClass(),
           !1,
           MathUtils_1.MathUtils.DefaultTransform,
@@ -71,7 +71,7 @@ class AdviceMotionActor {
         this.SkeletalMeshInternal.SetEnableGravity(!1),
         this.SkeletalMeshInternal.SetCollisionEnabled(0),
         this.SkeletalMeshInternal.SetSimulatePhysics(!1),
-        this.$6e.Init(0)),
+        this.l9e.Init(0)),
       this.ActorInternal.K2_SetActorRelativeLocation(
         i.ActorLocationProxy.ToUeVector(),
         !1,
@@ -96,66 +96,66 @@ class AdviceMotionActor {
       ),
       this.ActorInternal.OnDestroyed.Add(this.OnActorDestroy));
   }
-  b8e(t) {
-    this.jm(), (this.Td = !0), this.o8e();
+  $9e(t) {
+    this.jm(), (this.Td = !0), this.f9e();
     t = EntitySystem_1.EntitySystem.Get(t)
       .GetComponent(0)
       .GetAdviceInfo()
       .GetAdviceData()
       .GetAdviceMotionId();
     if (0 !== t) {
-      this.o8e();
+      this.f9e();
       const s = this.SkeletalMeshInternal;
       var t = ConfigManager_1.ConfigManager.MotionConfig.GetMotionAnimation(t);
       ResourceSystem_1.ResourceSystem.LoadAsync(
         t,
         UE.AnimationAsset,
         (t, i) => {
-          this.Td && s.PlayAnimation(t, !1), this.q8e();
+          this.Td && s.PlayAnimation(t, !1), this.Y9e();
         },
       ),
         s.SetPlayRate(1),
         s.SetPosition(1),
-        this.$6e.AddComponentByCase(0, this.SkeletalMeshInternal),
-        this.$6e &&
+        this.l9e.AddComponentByCase(0, this.SkeletalMeshInternal),
+        this.l9e &&
           ((t = ConfigManager_1.ConfigManager.AdviceConfig.GetAdviceModelMat()),
           ResourceSystem_1.ResourceSystem.LoadAsync(
             t,
             UE.PD_CharacterControllerData_C,
             (t, i) => {
-              this.Td && (this.Y6e = this.$6e.AddMaterialControllerData(t)),
-                this.q8e();
+              this.Td && (this._9e = this.l9e.AddMaterialControllerData(t)),
+                this.Y9e();
             },
           )),
         ModelManager_1.ModelManager.AdviceModel.AddPlayingMotionEntity(
-          this.B8e,
+          this.X9e,
           this,
         );
     }
   }
-  q8e() {
+  Y9e() {
     const t = this.SkeletalMeshInternal;
     t &&
       this.Td &&
-      0 < this.Y6e &&
+      0 < this._9e &&
       TimerSystem_1.TimerSystem.Delay(() => {
         t &&
           this.Td &&
-          0 < this.Y6e &&
+          0 < this._9e &&
           (t.SetHiddenInGame(!1),
-          (this.z6e = TimerSystem_1.TimerSystem.Delay(this.i8e, REVERTIME)));
+          (this.c9e = TimerSystem_1.TimerSystem.Delay(this.g9e, REVERTIME)));
       }, TimerSystem_1.MIN_TIME);
   }
   jm() {
     (this.Td = !1),
-      void 0 !== this.z6e &&
-        (TimerSystem_1.TimerSystem.Remove(this.z6e), (this.z6e = void 0));
+      void 0 !== this.c9e &&
+        (TimerSystem_1.TimerSystem.Remove(this.c9e), (this.c9e = void 0));
   }
-  o8e() {
-    this.$6e &&
-      0 < this.Y6e &&
-      (this.$6e.RemoveMaterialControllerDataWithEnding(this.Y6e),
-      (this.Y6e = 0));
+  f9e() {
+    this.l9e &&
+      0 < this._9e &&
+      (this.l9e.RemoveMaterialControllerDataWithEnding(this._9e),
+      (this._9e = 0));
   }
 }
 exports.AdviceMotionActor = AdviceMotionActor;

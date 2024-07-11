@@ -10,7 +10,6 @@ const Log_1 = require("../../../../../Core/Common/Log"),
   ConfigManager_1 = require("../../../../Manager/ConfigManager"),
   ModelManager_1 = require("../../../../Manager/ModelManager"),
   ButtonItem_1 = require("../../../Common/Button/ButtonItem"),
-  InstanceDungeonEntranceConfig_1 = require("../../../InstanceDungeon/InstanceDungeonEntranceConfig"),
   MapController_1 = require("../../../Map/Controller/MapController"),
   TowerController_1 = require("../../../TowerDetailUi/TowerController"),
   WorldMapSecondaryUi_1 = require("../../ViewComponent/WorldMapSecondaryUi"),
@@ -25,28 +24,28 @@ const Log_1 = require("../../../../../Core/Common/Log"),
 class TowerEntrancePanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
   constructor() {
     super(...arguments),
-      (this.dko = void 0),
-      (this.$Ut = void 0),
-      (this.xko = void 0),
+      (this.u2o = void 0),
+      (this.ZAt = void 0),
+      (this.U2o = void 0),
       (this.RewardsView = void 0),
       (this.IRe = void 0),
-      (this.Gko = 0),
-      (this.Nko = 0),
-      (this.Oko = () => {
-        this.kko(this.Gko), this.Fko(this.Gko), this.$2e();
+      (this.B2o = 0),
+      (this.b2o = 0),
+      (this.q2o = () => {
+        this.G2o(this.B2o), this.N2o(this.B2o), this.u3e();
       }),
-      (this.gko = () => {
-        this.dko.IsLocked
+      (this.m2o = () => {
+        this.u2o.IsLocked
           ? (Log_1.Log.CheckInfo() &&
-              Log_1.Log.Info("Map", 50, "追踪", ["markId", this.dko.MarkId]),
+              Log_1.Log.Info("Map", 50, "追踪", ["markId", this.u2o.MarkId]),
             MapController_1.MapController.RequestTrackMapMark(
-              this.dko.MarkType,
-              this.dko.MarkId,
-              !this.dko.IsTracked,
+              this.u2o.MarkType,
+              this.u2o.MarkId,
+              !this.u2o.IsTracked,
             ))
           : (Log_1.Log.CheckInfo() &&
-              Log_1.Log.Info("Map", 50, "追踪", ["markId", this.dko.MarkId]),
-            WorldMapController_1.WorldMapController.TryTeleport(this.dko)),
+              Log_1.Log.Info("Map", 50, "追踪", ["markId", this.u2o.MarkId]),
+            WorldMapController_1.WorldMapController.TryTeleport(this.u2o)),
           this.Close();
       });
   }
@@ -61,16 +60,16 @@ class TowerEntrancePanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
     this.RootItem.SetRaycastTarget(!1),
       this.GetItem(14).SetUIActive(!0),
       this.GetVerticalLayout(5).RootUIComp.SetUIActive(!0),
-      (this.xko = new TipsListView_1.TipsListView()),
-      this.xko.Initialize(this.GetVerticalLayout(5)),
+      (this.U2o = new TipsListView_1.TipsListView()),
+      this.U2o.Initialize(this.GetVerticalLayout(5)),
       (this.RewardsView = new RewardItemBar_1.RewardItemBar()),
       this.RewardsView.SetRootActor(this.GetItem(8).GetOwner(), !0),
-      (this.$Ut = new ButtonItem_1.ButtonItem(this.GetButton(11).RootUIComp)),
-      this.$Ut.SetFunction(this.gko);
+      (this.ZAt = new ButtonItem_1.ButtonItem(this.GetButton(11).RootUIComp)),
+      this.ZAt.SetFunction(this.m2o);
   }
   OnShowWorldMapSecondaryUi(e) {
     (e =
-      0 !== (this.dko = e).MarkConfig.RelativeId
+      0 !== (this.u2o = e).MarkConfig.RelativeId
         ? e.MarkConfig.RelativeId
         : ConfigManager_1.ConfigManager.InstanceDungeonEntranceConfig.GetEntranceIdByMarkId(
             e.MarkConfigId,
@@ -79,29 +78,29 @@ class TowerEntrancePanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
         ConfigManager_1.ConfigManager.InstanceDungeonEntranceConfig.GetInstanceDungeonEntranceFlowId(
           e,
         )),
-      (this.Gko = e),
-      this.$2e(),
+      (this.B2o = e),
+      this.u3e(),
       this.mGe(),
       this.jqe(),
-      this.Fko(e),
-      this.l1i(),
-      this.kko(e),
-      (e = this.dko.GetAreaText());
+      this.N2o(e),
+      this.l_i(),
+      this.G2o(e),
+      (e = this.u2o.GetAreaText());
     e && this.GetText(3).SetText(e),
-      this.SetSpriteByPath(this.dko.IconPath, this.GetSprite(0), !1),
+      this.SetSpriteByPath(this.u2o.IconPath, this.GetSprite(0), !1),
       this.GetItem(9).SetUIActive(!1),
       this.GetItem(12).SetUIActive(!1),
       (this.IRe = TimerSystem_1.TimerSystem.Forever(() => {
-        this.Oko();
+        this.q2o();
       }, TimeUtil_1.TimeUtil.InverseMillisecond)),
-      (this.Nko =
+      (this.b2o =
         MathUtils_1.MathUtils.LongToNumber(
           ModelManager_1.ModelManager.TowerModel.TowerEndTime,
         ) - TimeUtil_1.TimeUtil.GetServerTime());
   }
   mGe() {
-    this.GetText(1).SetText(this.dko.GetTitleText()),
-      this.GetText(4).ShowTextNew(this.dko.GetLocaleDesc());
+    this.GetText(1).SetText(this.u2o.GetTitleText()),
+      this.GetText(4).ShowTextNew(this.u2o.GetLocaleDesc());
   }
   jqe() {
     var e,
@@ -118,8 +117,8 @@ class TowerEntrancePanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
       : (this.RewardsView.SetActive(!0),
         this.RewardsView.RebuildRewardsByData(i));
   }
-  kko(e) {
-    var t = this.xko.AddItemByKey(DIFFICULT_KEY),
+  G2o(e) {
+    var t = this.U2o.AddItemByKey(DIFFICULT_KEY),
       i = ModelManager_1.ModelManager.TowerModel.GetMaxDifficulty(),
       i =
         (t.SetHelpButtonVisible(!1),
@@ -132,9 +131,9 @@ class TowerEntrancePanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
         ));
     t.SetRightText(i);
   }
-  $2e() {
+  u3e() {
     var e = ModelManager_1.ModelManager.TowerModel.GetSeasonCountDownData(),
-      t = this.xko.AddItemByKey(TIME_KEY),
+      t = this.U2o.AddItemByKey(TIME_KEY),
       i = StringUtils_1.StringUtils.Format(
         MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
           "Text_ActiveRemainTime_Text",
@@ -144,13 +143,13 @@ class TowerEntrancePanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
     t.SetLeftText(i),
       t.SetRightText(e.CountDownText ?? ""),
       t.SetHelpButtonVisible(!1),
-      this.Nko--,
-      this.Nko < 2 && TowerController_1.TowerController.RefreshTower();
+      this.b2o--,
+      this.b2o < 2 && TowerController_1.TowerController.RefreshTower();
   }
-  Fko(e) {
+  N2o(e) {
     var t, i, r;
-    e >= InstanceDungeonEntranceConfig_1.EInstanceEntranceFlowType.CycleTower &&
-      ((e = this.xko.AddItemByKey(SCORE_KEY)),
+    4 <= e &&
+      ((e = this.U2o.AddItemByKey(SCORE_KEY)),
       (t = (r = ModelManager_1.ModelManager.TowerModel).GetMaxDifficulty()),
       (i = r.GetDifficultyMaxStars(t)),
       (r = r.GetDifficultyAllStars(t)),
@@ -161,23 +160,23 @@ class TowerEntrancePanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
       e.SetRightText(i + "/" + r),
       e.SetStarVisible(!0));
   }
-  l1i() {
+  l_i() {
     let e = "";
-    (e = this.dko.IsLocked
-      ? this.dko.IsTracked
+    (e = this.u2o.IsLocked
+      ? this.u2o.IsTracked
         ? "InstanceDungeonEntranceCancelTrack"
         : "InstanceDungeonEntranceTrack"
       : "TeleportFastMove"),
-      this.$Ut.SetLocalText(e);
+      this.ZAt.SetLocalText(e);
   }
   OnCloseWorldMapSecondaryUi() {
-    this.xko.Clear(),
+    this.U2o.Clear(),
       this.IRe &&
         TimerSystem_1.TimerSystem.Has(this.IRe) &&
         TimerSystem_1.TimerSystem.Remove(this.IRe);
   }
   OnBeforeDestroy() {
-    this.$Ut.Destroy(), this.RewardsView.Destroy(), this.xko.Clear();
+    this.ZAt.Destroy(), this.RewardsView.Destroy(), this.U2o.Clear();
   }
 }
 exports.TowerEntrancePanel = TowerEntrancePanel;

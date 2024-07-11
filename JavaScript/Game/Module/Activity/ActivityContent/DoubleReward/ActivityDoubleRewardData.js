@@ -9,17 +9,16 @@ const DoubleRewardActivityById_1 = require("../../../../../Core/Define/ConfigQue
   TimeUtil_1 = require("../../../../Common/TimeUtil"),
   ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../../Manager/ModelManager"),
-  AdventureDefine_1 = require("../../../AdventureGuide/AdventureDefine"),
   ActivityData_1 = require("../../ActivityData");
 class ActivityDoubleRewardData extends ActivityData_1.ActivityBaseData {
   constructor() {
-    super(...arguments), (this.MOe = 0), (this.SOe = void 0);
+    super(...arguments), (this.MOe = 0), (this.EOe = void 0);
   }
   PhraseEx(e) {
-    this.MOe = e.g0s.KCs;
+    this.MOe = e.wps.hps;
   }
   GetExDataRedPointShowState() {
-    var e = this.WLn();
+    var e = this.ARn();
     return (
       1 !==
       ModelManager_1.ModelManager.ActivityModel.GetActivityCacheData(
@@ -31,7 +30,7 @@ class ActivityDoubleRewardData extends ActivityData_1.ActivityBaseData {
       )
     );
   }
-  WLn() {
+  ARn() {
     var e = new Date();
     return (
       e.getHours() < TimeUtil_1.TimeUtil.CrossDayHour &&
@@ -44,7 +43,7 @@ class ActivityDoubleRewardData extends ActivityData_1.ActivityBaseData {
     return !1;
   }
   ReadDailyRedDot() {
-    var e = this.WLn();
+    var e = this.ARn();
     ModelManager_1.ModelManager.ActivityModel.SaveActivityData(
       this.Id,
       e,
@@ -76,24 +75,21 @@ class ActivityDoubleRewardData extends ActivityData_1.ActivityBaseData {
     ).Prefab;
   }
   get AdventureGuideUpList() {
-    if (!this.SOe)
+    if (!this.EOe)
       switch (this.SubType) {
         case 1:
-          this.SOe = [AdventureDefine_1.EDungeonType.Simulation];
+          this.EOe = [19];
           break;
         case 2:
-          this.SOe = [
-            AdventureDefine_1.EDungeonType.Mat,
-            AdventureDefine_1.EDungeonType.Simulation,
-          ];
+          this.EOe = [4, 19];
           break;
         case 3:
-          this.SOe = [AdventureDefine_1.EDungeonType.NoSoundArea];
+          this.EOe = [22];
           break;
         default:
-          this.SOe = [AdventureDefine_1.EDungeonType.Simulation];
+          this.EOe = [19];
       }
-    return this.SOe;
+    return this.EOe;
   }
   GetDungeonUpList(e) {
     switch (this.SubType) {

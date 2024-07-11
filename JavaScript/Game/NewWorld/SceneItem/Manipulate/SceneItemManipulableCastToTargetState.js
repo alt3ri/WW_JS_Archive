@@ -10,22 +10,22 @@ const UE = require("ue"),
 class SceneItemManipulableCastToTargetState extends SceneItemManipulableCastState_1.SceneItemManipulableCastState {
   constructor(t, e) {
     super(t, e),
-      (this.F7o = void 0),
-      (this.tnr = Vector_1.Vector.Create()),
+      (this.NHo = void 0),
+      (this.znr = Vector_1.Vector.Create()),
       (this.StateType = "BeCastingToTarget");
   }
   SetTarget(t) {
-    this.F7o = t;
+    this.NHo = t;
   }
   SetEnterCallback(t) {
     this.EnterCallback = t;
   }
   OnEnter() {
     var t;
-    this.F7o?.Valid
+    this.NHo?.Valid
       ? (super.OnEnter(),
         (this.SceneItem.IsCanBeHeld = !1),
-        (t = this.F7o.GetComponent(1)),
+        (t = this.NHo.GetComponent(1)),
         (this.SceneItem.TargetActorComponent = t),
         (this.SceneItem.TargetOutletComponent = void 0),
         this.StartCast(),
@@ -44,7 +44,7 @@ class SceneItemManipulableCastToTargetState extends SceneItemManipulableCastStat
     return (
       this.SceneItem.CastCurve &&
         (e = this.SceneItem.CastCurve.GetFloatValue(e)),
-      this.tnr.DeepCopy(this.SceneItem.ActorComp.ActorLocation),
+      this.znr.DeepCopy(this.SceneItem.ActorComp.ActorLocation),
       this.UpdateLocation(e),
       this.UpdateRotation(),
       this.UpdateRotationAccordingToVelocity(),
@@ -53,7 +53,7 @@ class SceneItemManipulableCastToTargetState extends SceneItemManipulableCastStat
     );
   }
   OnExit() {
-    super.OnExit(), (this.F7o = void 0);
+    super.OnExit(), (this.NHo = void 0);
   }
   UpdateRotation() {
     let t = 0;
@@ -78,7 +78,7 @@ class SceneItemManipulableCastToTargetState extends SceneItemManipulableCastStat
     this.SceneItem.ManipulateBaseConfig.随速度调整朝向 &&
       !this.AfterHit &&
       ((t = Vector_1.Vector.Create()),
-      this.SceneItem.ActorComp.ActorLocationProxy.Subtraction(this.tnr, t),
+      this.SceneItem.ActorComp.ActorLocationProxy.Subtraction(this.znr, t),
       t.Normalize(),
       (t = UE.KismetMathLibrary.FindLookAtRotation(
         this.SceneItem.ActorComp.ActorLocation,
@@ -97,7 +97,7 @@ class SceneItemManipulableCastToTargetState extends SceneItemManipulableCastStat
       ((this.SceneItem.ActorComp.PhysicsMode = 3),
       (t = Vector_1.Vector.Create(
         this.SceneItem.ActorComp.ActorLocation,
-      )).SubtractionEqual(this.tnr),
+      )).SubtractionEqual(this.znr),
       t.Normalize(),
       t.MultiplyEqual(this.SceneItem.Config.ThrowCfg.MotionConfig.Velocity),
       this.SceneItem.ActorComp.GetPrimitiveComponent().SetPhysicsLinearVelocity(

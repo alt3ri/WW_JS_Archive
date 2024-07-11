@@ -11,13 +11,13 @@ class QuestRewardItemList extends UiPanelBase_1.UiPanelBase {
     super(),
       (this.wqe = void 0),
       (this.kGe = void 0),
-      (this.N2t = void 0),
-      (this.mkt = (e, r, t) => {
-        r = this.x$t(r);
+      (this.OFt = void 0),
+      (this.d2t = (e, r, t) => {
+        r = this.xYt(r);
         return r.Refresh(e, !1, t), { Key: t, Value: r };
       }),
-      (this.w$t = (e) => {
-        this.N2t?.SetSelected(!1, !0), (this.N2t = e.MediumItemGrid);
+      (this.wYt = (e) => {
+        this.OFt?.SetSelected(!1, !0), (this.OFt = e.MediumItemGrid);
         var e = e.Data,
           r = e.ConfigId,
           e = e.UniqueId;
@@ -45,7 +45,7 @@ class QuestRewardItemList extends UiPanelBase_1.UiPanelBase {
       this.wqe.SetUIActive(!1),
       (this.kGe = new GenericScrollView_1.GenericScrollView(
         this.GetScrollViewWithScrollbar(2),
-        this.mkt,
+        this.d2t,
       ));
   }
   Refresh(e) {
@@ -60,12 +60,12 @@ class QuestRewardItemList extends UiPanelBase_1.UiPanelBase {
     }),
       this.kGe.RefreshByData(e);
   }
-  x$t(e) {
+  xYt(e) {
     var r = new QuestRewardItemGrid_1.QuestRewardItemGrid();
     return (
       r.Initialize(e.GetOwner()),
       r.BindOnCanExecuteChange(() => !1),
-      r.BindOnExtendToggleClicked(this.w$t),
+      r.BindOnExtendToggleClicked(this.wYt),
       r.SetActive(!0),
       r
     );

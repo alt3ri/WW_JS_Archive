@@ -25,27 +25,27 @@ class ActivityDailyAdventureController extends ActivityControllerBase_1.Activity
   }
   OnCreateActivityData(e) {
     return (
-      (ActivityDailyAdventureController.CurrentActivityId = e.Ekn),
+      (ActivityDailyAdventureController.CurrentActivityId = e.J4n),
       new ActivityDailyAdventureData_1.ActivityDailyAdventureData()
     );
   }
   OnAddEvents() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnCommonItemCountAnyChange,
-      ActivityDailyAdventureController.qmi,
+      ActivityDailyAdventureController.qdi,
     );
   }
   OnRemoveEvents() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnCommonItemCountAnyChange,
-      ActivityDailyAdventureController.qmi,
+      ActivityDailyAdventureController.qdi,
     );
   }
   OnRegisterNetEvent() {
-    Net_1.Net.Register(7834, ActivityDailyAdventureController.KNe);
+    Net_1.Net.Register(26408, ActivityDailyAdventureController.KNe);
   }
   OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(7834);
+    Net_1.Net.UnRegister(26408);
   }
   static GetDailyAdventureData() {
     return ModelManager_1.ModelManager.ActivityModel?.GetActivityById(
@@ -57,14 +57,14 @@ class ActivityDailyAdventureController extends ActivityControllerBase_1.Activity
     return e ? e.GetDefaultMapMarkId() : 0;
   }
   static RequestTaskReward(t) {
-    var e = new Protocol_1.Aki.Protocol.wXn();
-    (e.Ekn = t),
-      Net_1.Net.Call(9216, e, (e) => {
+    var e = new Protocol_1.Aki.Protocol.LZn();
+    (e.J4n = t),
+      Net_1.Net.Call(25473, e, (e) => {
         e &&
-          (e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys
+          (e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs
             ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-                e.lkn,
-                14376,
+                e.O4n,
+                14990,
               )
             : (e = this.GetDailyAdventureData()) &&
               (e.SetTaskInfo(t, 2),
@@ -75,14 +75,14 @@ class ActivityDailyAdventureController extends ActivityControllerBase_1.Activity
       });
   }
   static RequestPointReward(t) {
-    var e = new Protocol_1.Aki.Protocol.PXn();
-    (e.Ekn = t),
-      Net_1.Net.Call(13587, e, (e) => {
+    var e = new Protocol_1.Aki.Protocol.IZn();
+    (e.J4n = t),
+      Net_1.Net.Call(18192, e, (e) => {
         e &&
-          (e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys
+          (e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs
             ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-                e.lkn,
-                12517,
+                e.O4n,
+                7098,
               )
             : (e = this.GetDailyAdventureData()) &&
               (e.SetPointReward(t, !0),
@@ -95,7 +95,7 @@ class ActivityDailyAdventureController extends ActivityControllerBase_1.Activity
 }
 (exports.ActivityDailyAdventureController = ActivityDailyAdventureController),
   ((_a = ActivityDailyAdventureController).CurrentActivityId = 0),
-  (ActivityDailyAdventureController.qmi = (e, t) => {
+  (ActivityDailyAdventureController.qdi = (e, t) => {
     e === ActivityDailyAdventureDefine_1.DAILY_ADVENTURE_PT_CONFIGID &&
       (e = _a.GetDailyAdventureData()) &&
       (e.SetProgressPoint(t),
@@ -106,17 +106,16 @@ class ActivityDailyAdventureController extends ActivityControllerBase_1.Activity
   }),
   (ActivityDailyAdventureController.KNe = (e) => {
     var t = _a.GetDailyAdventureData();
-    if (t) {
-      for (const r of e.N0s)
-        t.SetTaskInfo(
-          r.Ekn,
-          ActivityDailyAdventureData_1.rewardStateResolver[r.n3n],
-          r.k0s,
-        );
+    t &&
+      (t.CreateTaskInfo(e.rMs),
+      e.bLa &&
+        EventSystem_1.EventSystem.Emit(
+          EventDefine_1.EEventName.ActivityViewRefreshCurrent,
+          t.Id,
+        ),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.RefreshCommonActivityRedDot,
         t.Id,
-      );
-    }
+      ));
   });
 //# sourceMappingURL=ActivityDailyAdventureController.js.map

@@ -2,21 +2,21 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RewardItemList = void 0);
 const UE = require("ue"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
   GenericScrollViewNew_1 = require("../../Util/ScrollView/GenericScrollViewNew"),
-  RewardSmallItemGrid_1 = require("./RewardSmallItemGrid"),
-  ControllerHolder_1 = require("../../../Manager/ControllerHolder");
+  RewardSmallItemGrid_1 = require("./RewardSmallItemGrid");
 class RewardItemList extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
       (this.wqe = void 0),
       (this.kGe = void 0),
-      (this.N2t = void 0),
-      (this.mkt = () => {
-        return this.P0i();
+      (this.OFt = void 0),
+      (this.d2t = () => {
+        return this.Pfi();
       }),
-      (this.w$t = (e) => {
-        this.N2t?.SetSelected(!1, !0), (this.N2t = e.MediumItemGrid);
+      (this.wYt = (e) => {
+        this.OFt?.SetSelected(!1, !0), (this.OFt = e.MediumItemGrid);
         var e = e.Data,
           r = e.ConfigId,
           e = e.UniqueId;
@@ -43,11 +43,11 @@ class RewardItemList extends UiPanelBase_1.UiPanelBase {
       this.wqe.SetUIActive(!1),
       (this.kGe = new GenericScrollViewNew_1.GenericScrollViewNew(
         this.GetScrollViewWithScrollbar(2),
-        this.mkt,
+        this.d2t,
       ));
   }
   OnBeforeDestroy() {
-    (this.N2t = void 0), (this.kGe = void 0);
+    (this.OFt = void 0), (this.kGe = void 0);
   }
   Refresh(e) {
     e.sort((e, r) => {
@@ -61,11 +61,11 @@ class RewardItemList extends UiPanelBase_1.UiPanelBase {
     }),
       this.kGe.RefreshByData(e);
   }
-  P0i() {
+  Pfi() {
     var e = new RewardSmallItemGrid_1.RewardSmallItemGrid();
     return (
       e.BindOnCanExecuteChange(() => !1),
-      e.BindOnExtendToggleClicked(this.w$t),
+      e.BindOnExtendToggleClicked(this.wYt),
       e
     );
   }

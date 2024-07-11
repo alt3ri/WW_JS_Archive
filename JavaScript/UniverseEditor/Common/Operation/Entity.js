@@ -6,6 +6,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.checkPosInEntityAoi =
     exports.getEntityAoiDistXy =
     exports.AOI_METRIC_SCALE =
+    exports.getLevelIdAndEntityIdByJsonPath =
     exports.getLevelIdByEntityUid =
     exports.getIdByEntityUid =
     exports.decompressEntityData =
@@ -156,6 +157,16 @@ function getLevelIdByEntityUid(t) {
     ? levelIdByUid.get(t)
     : ((e = t.split("_")), (e = parseInt(e[1])), levelIdByUid.set(t, e), e);
 }
+function getLevelIdAndEntityIdByJsonPath(t) {
+  (t = t.replace(/\\/g, "/")),
+    (t = /\S+\/(?<LevelId>\d+)\/\S+\/(?<EntityId>\d+)_\S+.json/.exec(t));
+  return t && t.groups
+    ? [
+        (0, Util_1.parseIntSafe)(t.groups.LevelId),
+        (0, Util_1.parseIntSafe)(t.groups.EntityId),
+      ]
+    : [-1, -1];
+}
 function getEntityAoiDistXy(t) {
   let e =
     (0, IComponent_1.getComponent)(t.ComponentsData, "BaseInfoComponent")
@@ -187,20 +198,23 @@ function checkPosInEntityAoi(t, e) {
   return r <= o && n;
 }
 function getEntityAoiDistZ(t) {
-  var t = (0, IComponent_1.getComponent)(t.ComponentsData, "BaseInfoComponent");
-  return t
-    ? t.CustomAoiZRadius
+  var e,
+    n = (0, IComponent_1.getComponent)(t.ComponentsData, "BaseInfoComponent");
+  return n && void 0 !== t.EdWpPath
+    ? n.CustomAoiZRadius
       ? [
-          t.CustomAoiZRadius.Up
-            ? t.CustomAoiZRadius.Up / exports.AOI_METRIC_SCALE
+          n.CustomAoiZRadius.Up
+            ? n.CustomAoiZRadius.Up / exports.AOI_METRIC_SCALE
             : -1,
-          t.CustomAoiZRadius.Down
-            ? t.CustomAoiZRadius.Down / exports.AOI_METRIC_SCALE
+          n.CustomAoiZRadius.Down
+            ? n.CustomAoiZRadius.Down / exports.AOI_METRIC_SCALE
             : -1,
         ]
-      : 0 !== (t = t?.AoiZRadius || 0)
-        ? [(t = IComponent_1.aoizLayerValues[t] / exports.AOI_METRIC_SCALE), t]
-        : [-1, -1]
+      : 0 !== (n = n?.AoiZRadius || 0)
+        ? [(e = IComponent_1.aoizLayerValues[n] / exports.AOI_METRIC_SCALE), e]
+        : 0 === n
+          ? [(e = getEntityAoiDistXy(t)), e / 2]
+          : [-1, -1]
     : [-1, -1];
 }
 function checkIsAllComponentsFolded(t, e, n) {
@@ -231,6 +245,7 @@ function foldAllComponents(t, e, n) {
   );
 }
 (exports.getLevelIdByEntityUid = getLevelIdByEntityUid),
+  (exports.getLevelIdAndEntityIdByJsonPath = getLevelIdAndEntityIdByJsonPath),
   (exports.AOI_METRIC_SCALE = 100),
   (exports.getEntityAoiDistXy = getEntityAoiDistXy),
   (exports.checkPosInEntityAoi = checkPosInEntityAoi),

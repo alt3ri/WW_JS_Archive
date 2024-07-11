@@ -9,8 +9,8 @@ class TowerDetailInformationMonsterItem extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
       (this.MonsterLayout = void 0),
-      (this.ILo = void 0),
-      (this.jli = (e, t, i) => {
+      (this.EDo = void 0),
+      (this.j1i = (e, t, i) => {
         t =
           new TowerDetailInformationMonsterSubItem_1.TowerDetailInformationMonsterSubItem(
             t,
@@ -30,14 +30,14 @@ class TowerDetailInformationMonsterItem extends UiPanelBase_1.UiPanelBase {
     this.GetItem(1).SetUIParent(this.GetGridLayout(2).GetRootComponent()),
       (this.MonsterLayout = new GenericLayoutNew_1.GenericLayoutNew(
         this.GetGridLayout(2),
-        this.jli,
+        this.j1i,
       ));
   }
   Update(e, t) {
-    (this.ILo = e), this.Og();
+    (this.EDo = e), this.Og();
   }
   Og() {
-    var e = this.ILo.MonsterInfos;
+    var e = this.EDo.MonsterInfos;
     this.MonsterLayout.RebuildLayoutByDataNew(e);
   }
   OnBeforeDestroy() {

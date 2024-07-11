@@ -21,16 +21,16 @@ class ItemDeliverController extends UiControllerBase_1.UiControllerBase {
           ModelManager_1.ModelManager.GeneralLogicTreeModel.GetBehaviorTreeOwnerId(
             e.TreeIncId,
           )),
-        ((a = Protocol_1.Aki.Protocol.oKn.create()).T5n = o),
-        (a.L5n = MathUtils_1.MathUtils.BigIntToLong(e.TreeIncId)),
-        (a.Jkn = e.NodeId),
-        (a.z5n = r),
-        Net_1.Net.Call(16265, a, (e) => {
+        ((a = Protocol_1.Aki.Protocol.zYn.create()).n9n = o),
+        (a.s9n = MathUtils_1.MathUtils.BigIntToLong(e.TreeIncId)),
+        (a.L5n = e.NodeId),
+        (a.x9n = r),
+        Net_1.Net.Call(21156, a, (e) => {
           e
-            ? e.uvs !== Protocol_1.Aki.Protocol.lkn.Sys
+            ? e.DEs !== Protocol_1.Aki.Protocol.O4n.NRs
               ? (ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-                  e.uvs,
-                  26150,
+                  e.DEs,
+                  16700,
                 ),
                 t && t(!1))
               : t && t(!0)
@@ -40,22 +40,22 @@ class ItemDeliverController extends UiControllerBase_1.UiControllerBase {
   static ItemUseRequest(e, r, t, o) {
     if (1 !== e.Type) o && o(!1);
     else {
-      const a = Protocol_1.Aki.Protocol.ats.create();
-      (a.I5n = 1),
-        (a.G3n = r),
-        (a.I5n = t),
-        Net_1.Net.Call(6884, a, (e) => {
+      const a = Protocol_1.Aki.Protocol.rns.create();
+      (a.o9n = 1),
+        (a.f8n = r),
+        (a.o9n = t),
+        Net_1.Net.Call(29255, a, (e) => {
           e
-            ? e.X5n !== Protocol_1.Aki.Protocol.lkn.Sys
+            ? e.A9n !== Protocol_1.Aki.Protocol.O4n.NRs
               ? (ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-                  e.X5n,
-                  25612,
+                  e.A9n,
+                  14128,
                 ),
                 o && o(!1))
               : (o && o(!0),
                 EventSystem_1.EventSystem.Emit(
                   EventDefine_1.EEventName.OnDeliveryProps,
-                  a.G3n,
+                  a.f8n,
                 ))
             : o && o(!1);
         });

@@ -11,7 +11,7 @@ const UE = require("ue"),
   STATE_SLOT_COUNT = 3;
 class MediumItemGridVisionSlotComponent extends MediumItemGridComponent_1.MediumItemGridComponent {
   constructor() {
-    super(...arguments), (this.bxt = []);
+    super(...arguments), (this.Nwt = []);
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -33,7 +33,7 @@ class MediumItemGridVisionSlotComponent extends MediumItemGridComponent_1.Medium
     return "UiItem_ItemVisionStateA";
   }
   OnActivate() {
-    this.bxt = [
+    this.Nwt = [
       [
         this.GetSprite(0),
         this.GetSprite(1),
@@ -55,19 +55,19 @@ class MediumItemGridVisionSlotComponent extends MediumItemGridComponent_1.Medium
     ];
   }
   OnDeactivate() {
-    this.bxt.length = 0;
+    this.Nwt.length = 0;
   }
   OnRefresh(e) {
     if (e) {
       for (let _ = 0; _ < STATE_SLOT_COUNT; _++) {
         var t = e[_];
-        this.qxt(_, t);
+        this.Owt(_, t);
       }
       this.SetActive(!0);
     } else this.SetActive(!1);
   }
-  qxt(_, e) {
-    var t = this.bxt[_];
+  Owt(_, e) {
+    var t = this.Nwt[_];
     if (t && !(t.length < STATE_COUNT))
       if (void 0 === e) for (const N of t) N.SetUIActive(!1);
       else

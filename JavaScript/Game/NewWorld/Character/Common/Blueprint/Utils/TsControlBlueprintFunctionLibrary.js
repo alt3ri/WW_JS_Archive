@@ -4,34 +4,48 @@ const UE = require("ue"),
   Info_1 = require("../../../../../../Core/Common/Info"),
   Log_1 = require("../../../../../../Core/Common/Log"),
   EntitySystem_1 = require("../../../../../../Core/Entity/EntitySystem"),
+  Vector_1 = require("../../../../../../Core/Utils/Math/Vector"),
   Global_1 = require("../../../../../Global"),
-  ModelManager_1 = require("../../../../../Manager/ModelManager");
+  tmpVector2D = new UE.Vector2D(),
+  tmpVector = Vector_1.Vector.Create();
 class TsControlBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
   static GetMoveVectorCache(t) {
-    return EntitySystem_1.EntitySystem.GetComponent(t, 52).GetMoveVectorCache();
+    t = EntitySystem_1.EntitySystem.GetComponent(t, 53).GetMoveVectorCache();
+    return (tmpVector2D.X = t.X), (tmpVector2D.Y = t.Y), tmpVector2D;
   }
   static GetMoveDirectionCache(t) {
-    return EntitySystem_1.EntitySystem.GetComponent(
-      t,
-      52,
-    ).GetMoveDirectionCache();
+    t = EntitySystem_1.EntitySystem.GetComponent(t, 53).GetMoveDirectionCache();
+    return (tmpVector2D.X = t.X), (tmpVector2D.Y = t.Y), tmpVector2D;
   }
   static GetWorldMoveDirectionCache(t) {
-    return EntitySystem_1.EntitySystem.GetComponent(
+    t = EntitySystem_1.EntitySystem.GetComponent(
       t,
-      52,
+      53,
     ).GetWorldMoveDirectionCache();
+    return (tmpVector2D.X = t.X), (tmpVector2D.Y = t.Y), tmpVector2D;
   }
   static GetMoveVector(t) {
-    return EntitySystem_1.EntitySystem.GetComponent(t, 52).GetMoveVector();
+    return (
+      EntitySystem_1.EntitySystem.GetComponent(t, 53).GetMoveVector(tmpVector),
+      (tmpVector2D.X = tmpVector.X),
+      (tmpVector2D.Y = tmpVector.Y),
+      tmpVector2D
+    );
   }
   static GetMoveDirection(t) {
-    return EntitySystem_1.EntitySystem.GetComponent(t, 52).GetMoveDirection();
+    return (
+      EntitySystem_1.EntitySystem.GetComponent(t, 53).GetMoveDirection(
+        tmpVector,
+      ),
+      (tmpVector2D.X = tmpVector.X),
+      (tmpVector2D.Y = tmpVector.Y),
+      tmpVector2D
+    );
   }
-  static PlayKuroForceFeedback(t, e, o, r, n) {
-    ModelManager_1.ModelManager.PlatformModel?.IsGamepad() &&
+  static PlayKuroForceFeedback(t, e, o, r, c) {
+    Info_1.Info.IsInGamepad() &&
       Global_1.Global.CharacterController &&
-      Global_1.Global.CharacterController.PlayKuroForceFeedback(t, e, o, r, n);
+      Global_1.Global.CharacterController.PlayKuroForceFeedback(t, e, o, r, c);
   }
   static StopKuroForceFeedback(t, e) {
     Global_1.Global.CharacterController &&
@@ -48,21 +62,11 @@ class TsControlBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
           t.GetComponent(3)?.Actor?.GetName(),
         ]));
   }
-  static SetUseControllerRotationPitch(t, e) {
-    EntitySystem_1.EntitySystem.GetComponent(t, 3).UseControllerRotation.Pitch =
-      e ? 1 : 0;
-  }
   static SetUseControllerRotationYaw(t, e) {
-    EntitySystem_1.EntitySystem.GetComponent(t, 3).UseControllerRotation.Yaw = e
-      ? 1
-      : 0;
-  }
-  static SetUseControllerRotationRoll(t, e) {
-    EntitySystem_1.EntitySystem.GetComponent(t, 3).UseControllerRotation.Roll =
-      e ? 1 : 0;
+    EntitySystem_1.EntitySystem.GetComponent(t, 3).UseControllerRotation = e;
   }
   static SetBpInputComponent(t, e) {
-    var o = EntitySystem_1.EntitySystem.GetComponent(t, 52),
+    var o = EntitySystem_1.EntitySystem.GetComponent(t, 53),
       t = EntitySystem_1.EntitySystem.GetComponent(t, 3);
     (o.BpInputComp = e).OwnerActor = t.Actor;
   }

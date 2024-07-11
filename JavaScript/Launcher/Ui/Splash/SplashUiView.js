@@ -13,24 +13,24 @@ const UE = require("ue"),
 class SplashUiView extends LaunchComponentsAction_1.LaunchComponentsAction {
   constructor() {
     super(...arguments),
-      (this.NQe = void 0),
-      (this.XEr = void 0),
-      (this.PSr = void 0),
-      (this.QPt = void 0),
-      (this.$Er = void 0),
-      (this.YEr = void 0),
-      (this.JEr = "Company_"),
-      (this.bEr = "WutheringWave_"),
-      (this.zEr = void 0),
-      (this.ZEr = void 0),
-      (this.sXe = void 0),
+      (this.YXe = void 0),
+      (this.Wyr = void 0),
+      (this.RSr = void 0),
+      (this.Jxt = void 0),
+      (this.Kyr = void 0),
+      (this.Qyr = void 0),
+      (this.Xyr = "Company_"),
+      (this.xyr = "WutheringWave_"),
+      (this.$yr = void 0),
+      (this.Yyr = void 0),
+      (this.p$e = void 0),
       (this.NQ = new Map()),
-      (this.qEr = (i) => {
-        this.NQe = i;
+      (this.wyr = (i) => {
+        this.YXe = i;
       }),
-      (this.GEr = (i) => {
+      (this.Byr = (i) => {
         this.SetRootActorLaunchComponentsAction(i),
-          (this.XEr = this.RootItem.GetOwner());
+          (this.Wyr = this.RootItem.GetOwner());
       });
   }
   async InitAsync(i) {
@@ -43,144 +43,144 @@ class SplashUiView extends LaunchComponentsAction_1.LaunchComponentsAction {
         "r.DepthOfFieldQuality 0",
       ),
       UE.KismetSystemLibrary.ExecuteConsoleCommand(i, "r.ScreenPercentage 80")),
-      (this.PSr = i),
+      (this.RSr = i),
       await LaunchUtil_1.LaunchUtil.LoadResourceAsync(
         LaunchUtil_1.LaunchUtil.UiRootPath,
-        this.PSr,
+        this.RSr,
         void 0,
-        this.qEr,
+        this.wyr,
       ),
       await LaunchUtil_1.LaunchUtil.LoadResourceAsync(
         "/Game/Aki/UI/Module/HotFix/Prefab/UiView_LoginLogo.UiView_LoginLogo",
-        this.PSr,
-        this.NQe.RootComponent,
-        this.GEr,
+        this.RSr,
+        this.YXe.RootComponent,
+        this.Byr,
       ),
       await this.LoadResourceAsync(),
-      this.eyr();
+      this.Jyr();
   }
   async LoadResourceAsync() {
-    await this.tyr("/Game/Aki/HotPatch/Splash/SplashTable.SplashTable"),
-      await this.iyr();
+    await this.zyr("/Game/Aki/HotPatch/Splash/SplashTable.SplashTable"),
+      await this.Zyr();
   }
   OnStart() {
-    (this.$Er = LauncherLanguageLib_1.LauncherLanguageLib.GetPackageLanguage()),
-      (this.YEr = LauncherLanguageLib_1.LauncherLanguageLib.GetDefaultCulture(
-        this.$Er,
+    (this.Kyr = LauncherLanguageLib_1.LauncherLanguageLib.GetPackageLanguage()),
+      (this.Qyr = LauncherLanguageLib_1.LauncherLanguageLib.GetDefaultCulture(
+        this.Kyr,
       ));
   }
   OnBeforeDestroy() {
-    this.sXe && (this.sXe = void 0),
-      (this.XEr = void 0),
+    this.p$e && (this.p$e = void 0),
+      (this.Wyr = void 0),
       (this.NQ = void 0),
-      (this.zEr = void 0),
-      (this.ZEr = void 0),
-      (this.$Er = void 0),
-      (this.YEr = void 0);
+      (this.$yr = void 0),
+      (this.Yyr = void 0),
+      (this.Kyr = void 0),
+      (this.Qyr = void 0);
   }
-  eyr() {
-    this.oyr(), this.ryr();
+  Jyr() {
+    this.eIr(), this.tIr();
   }
-  oyr() {
-    this.GetTexture(1).SetTexture(this.ZEr),
+  eIr() {
+    this.GetTexture(1).SetTexture(this.Yyr),
       this.GetTexture(1).SetSizeFromTexture(),
-      this.GetTexture(5).SetTexture(this.zEr),
+      this.GetTexture(5).SetTexture(this.$yr),
       this.GetTexture(5).SetSizeFromTexture();
   }
-  H8s() {
+  cYs() {
     return (
       "CN" !==
       BaseConfigController_1.BaseConfigController.GetPublicValue("SdkArea")
     );
   }
-  ryr() {
-    var i = this.H8s();
+  tIr() {
+    var i = this.cYs();
     LauncherLog_1.LauncherLog.Info("TsSplash", ["ifglobal", i]);
-    let t = this.nyr(this.$Er, "SplashCautionTitle"),
+    let t = this.iIr(this.Kyr, "SplashCautionTitle"),
       s =
         (("" !== t && void 0 !== t) ||
-          (t = this.nyr(this.YEr, "SplashCautionTitle")),
+          (t = this.iIr(this.Qyr, "SplashCautionTitle")),
         this.GetText(7).SetText(t),
-        this.nyr(this.$Er, "SplashCautionContent")),
+        this.iIr(this.Kyr, "SplashCautionContent")),
       h =
         (("" !== s && void 0 !== s) ||
-          (s = this.nyr(this.YEr, "SplashCautionContent")),
+          (s = this.iIr(this.Qyr, "SplashCautionContent")),
         this.GetText(8).SetText(s),
-        this.nyr(this.$Er, "SplashLoading")),
+        this.iIr(this.Kyr, "SplashLoading")),
       e =
         (("" !== h && void 0 !== h) ||
-          (h = this.nyr(this.YEr, "SplashLoading")),
+          (h = this.iIr(this.Qyr, "SplashLoading")),
         this.GetText(9).SetText(h),
         ""),
       a =
         (i ||
-          ("" !== (e = this.nyr(this.$Er, "SplashHealthyGamingAdvisory")) &&
+          ("" !== (e = this.iIr(this.Kyr, "SplashHealthyGamingAdvisory")) &&
             void 0 !== e) ||
-          (e = this.nyr(this.YEr, "SplashHealthyGamingAdvisory")),
+          (e = this.iIr(this.Qyr, "SplashHealthyGamingAdvisory")),
         this.GetText(2).SetText(e),
         "");
     i ||
-      ("" !== (a = this.nyr(this.$Er, "SplashCopyrightInformation")) &&
+      ("" !== (a = this.iIr(this.Kyr, "SplashCopyrightInformation")) &&
         void 0 !== a) ||
-      (a = this.nyr(this.YEr, "SplashCopyrightInformation")),
+      (a = this.iIr(this.Qyr, "SplashCopyrightInformation")),
       this.GetText(3).SetText(a);
   }
   PlayAnimationLogo(i) {
-    this.syr("LogoAnimation", i);
+    this.oIr("LogoAnimation", i);
   }
   PlayWuthering(i) {
-    this.syr("WutheringWaveAnimation", i);
+    this.oIr("WutheringWaveAnimation", i);
   }
   PlayCautionAnimation(i) {
-    this.syr("CautionAnimation", i);
+    this.oIr("CautionAnimation", i);
   }
   PlayPreventAddictionAnimation(i) {
-    this.syr("PreventAddiction", i);
+    this.oIr("PreventAddiction", i);
   }
   StopCurrentAnimation() {
-    this.ayr();
+    this.rIr();
   }
-  nyr(i, t) {
+  iIr(i, t) {
     return LauncherConfigLib_1.LauncherConfigLib.GetHotPatchText(t) ?? "";
   }
-  async iyr() {
-    (this.ZEr = await this.hyr(this.bEr + this.$Er)),
-      void 0 === this.ZEr && (this.ZEr = await this.hyr(this.bEr + this.YEr));
-    let i = this.JEr + this.$Er;
-    this.H8s() && (i = ENCOMPANYNAME),
-      (this.zEr = await this.hyr(i)),
-      void 0 === this.zEr && (this.zEr = await this.hyr(this.JEr + this.YEr));
+  async Zyr() {
+    (this.Yyr = await this.nIr(this.xyr + this.Kyr)),
+      void 0 === this.Yyr && (this.Yyr = await this.nIr(this.xyr + this.Qyr));
+    let i = this.Xyr + this.Kyr;
+    this.cYs() && (i = ENCOMPANYNAME),
+      (this.$yr = await this.nIr(i)),
+      void 0 === this.$yr && (this.$yr = await this.nIr(this.Xyr + this.Qyr));
   }
-  syr(i, t) {
-    this.ayr();
-    var s = this.XEr.GetSequencePlayContextOfKey(i);
+  oIr(i, t) {
+    this.rIr();
+    var s = this.Wyr.GetSequencePlayContextOfKey(i);
     void 0 !== s &&
       (s.OnFinish.Bind(() => {
-        (this.QPt = void 0), t?.();
+        (this.Jxt = void 0), t?.();
       }),
-      (this.QPt = i),
+      (this.Jxt = i),
       s.ExecutePlay());
   }
-  ayr() {
+  rIr() {
     var i;
-    void 0 !== this.QPt &&
-      ((i = this.XEr.GetSequencePlayerByKey(this.QPt)) &&
-        (this.XEr.SequenceJumpToSecondByKey(
-          this.QPt,
+    void 0 !== this.Jxt &&
+      ((i = this.Wyr.GetSequencePlayerByKey(this.Jxt)) &&
+        (this.Wyr.SequenceJumpToSecondByKey(
+          this.Jxt,
           i.SequencePlayer.GetDuration().Time,
         ),
-        this.XEr.StopSequenceByKey(this.QPt)),
-      (this.QPt = void 0));
+        this.Wyr.StopSequenceByKey(this.Jxt)),
+      (this.Jxt = void 0));
   }
-  async tyr(i) {
+  async zyr(i) {
     return new Promise((t) => {
       LauncherResourceLib_1.LauncherResourceLib.LoadAsync(
         i,
         UE.DataTable,
         (i) => {
-          (this.sXe = i),
+          (this.p$e = i),
             (this.NQ = LaunchUtil_1.LaunchUtil.GetDataTableMap(
-              this.sXe,
+              this.p$e,
               "path",
             )),
             t(void 0);
@@ -188,7 +188,7 @@ class SplashUiView extends LaunchComponentsAction_1.LaunchComponentsAction {
       );
     });
   }
-  async hyr(i) {
+  async nIr(i) {
     const s = this.NQ.get(i);
     if (s)
       return new Promise((t) => {
@@ -203,10 +203,10 @@ class SplashUiView extends LaunchComponentsAction_1.LaunchComponentsAction {
   }
   Destroy() {
     super.Destroy(),
-      this.NQe &&
-        (UE.LGUIBPLibrary.DestroyActorWithHierarchy(this.NQe, !0),
-        (this.NQe = void 0)),
-      this.PSr && (this.PSr = void 0);
+      this.YXe &&
+        (UE.LGUIBPLibrary.DestroyActorWithHierarchy(this.YXe, !0),
+        (this.YXe = void 0)),
+      this.RSr && (this.RSr = void 0);
   }
 }
 exports.SplashUiView = SplashUiView;

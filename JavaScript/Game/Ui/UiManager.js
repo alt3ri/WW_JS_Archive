@@ -88,14 +88,22 @@ class UiManager {
         e,
       ]);
     var a = !!i && i?.IsMultipleView;
-    if (UiManager.V4e(e, a)) {
-      a = UiManager.Gdr(e);
+    if (UiManager.iVe(e, a, i)) {
+      a = UiManager.BCr(e);
       if (a)
         return (
+          !0 === a.Info?.IsFullScreen
+            ? ue_1.PerfSightHelper.BeginExtTag(
+                `UiViewInFullScreen[${a.Info.Name}]`,
+              )
+            : !1 === a.Info?.IsFullScreen &&
+              ue_1.PerfSightHelper.BeginExtTag(
+                `UiViewInWindow[${a.Info.Name}]`,
+              ),
           (a.OpenParam = i),
           (a.OpenPromise = new CustomPromise_1.CustomPromise()),
           await Promise.all([
-            UiManager.Ndr.get(a.Info.Type).OpenViewAsync(a),
+            UiManager.bCr.get(a.Info.Type).OpenViewAsync(a),
             a.OpenPromise.Promise,
           ]),
           (a.OpenPromise = void 0),
@@ -152,7 +160,7 @@ class UiManager {
     );
   }
   static async CloseViewAsync(e) {
-    var i = this.Fur.get(e);
+    var i = this.Ncr.get(e);
     if (!i)
       return (
         Log_1.Log.CheckWarn() &&
@@ -204,7 +212,7 @@ class UiManager {
     );
   }
   static async CloseViewByIdAsync(e) {
-    var i = this.Odr.get(e);
+    var i = this.qCr.get(e);
     return i
       ? UiManager.CloseViewImplementAsync(i)
       : (Log_1.Log.CheckWarn() &&
@@ -229,7 +237,7 @@ class UiManager {
         ),
       e.OpenPromise && e.OpenPromise.SetResult(void 0),
       e.ClosePromise || (e.ClosePromise = new CustomPromise_1.CustomPromise()),
-      await UiManager.Ndr.get(i.Type).CloseViewAsync(e),
+      await UiManager.bCr.get(i.Type).CloseViewAsync(e),
       await e.ClosePromise?.Promise,
       (e.ClosePromise = void 0),
       Log_1.Log.CheckInfo() &&
@@ -240,6 +248,10 @@ class UiManager {
           ["界面名称", i.Name],
           ["ViewId", e.GetViewId()],
         ),
+      !0 === e.Info?.IsFullScreen
+        ? ue_1.PerfSightHelper.EndExtTag(`UiViewInFullScreen[${e.Info.Name}]`)
+        : !1 === e.Info?.IsFullScreen &&
+          ue_1.PerfSightHelper.EndExtTag(`UiViewInWindow[${e.Info.Name}]`),
       !0
     );
   }
@@ -285,13 +297,13 @@ class UiManager {
             "[CloseAndOpenViewAsync]非栈容器的界面不允许使用该接口",
           ),
         !1)
-      : (r = UiManager.kdr(e))
+      : (r = UiManager.GCr(e))
         ? ((n = !!a && a?.IsMultipleView),
-          UiManager.V4e(i, n)
-            ? (((n = UiManager.Gdr(i)).OpenParam = a),
-              await UiManager.Ndr.get(
-                UiLayerType_1.ELayerType.Normal,
-              ).CloseAndOpenNewAsync(r, n),
+          UiManager.iVe(i, n, a)
+            ? (((n = UiManager.BCr(i)).OpenParam = a),
+              await UiManager.bCr
+                .get(UiLayerType_1.ELayerType.Normal)
+                .CloseAndOpenNewAsync(r, n),
               Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info(
                   "UiCore",
@@ -325,12 +337,12 @@ class UiManager {
         "界面名称",
         e,
       ]);
-    var i = UiManager.Gdr(e);
+    var i = UiManager.BCr(e);
     if (i)
       return (
         i.OnPreOpen(),
-        UiManager.Fdr.set(i.GetViewId(), i),
-        await UiManager.Ndr.get(i.Info.Type).PreOpenViewAsync(i),
+        UiManager.NCr.set(i.GetViewId(), i),
+        await UiManager.bCr.get(i.Info.Type).PreOpenViewAsync(i),
         i.GetViewId()
       );
     Log_1.Log.CheckError() &&
@@ -344,47 +356,42 @@ class UiManager {
   static async OpenViewAfterPreOpenedAsync(e, i) {
     var a,
       r,
-      n = UiManager.Fdr.get(e);
-    return n
-      ? ((a = n.Info.Name),
-        Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info(
-            "UiCore",
-            17,
-            "[OpenViewAfterPreOpenedAsync](已预打开过)请求打开界面",
-            ["界面名称", a],
-          ),
-        (r = !!i && i?.IsMultipleView),
-        UiManager.V4e(a, r)
-          ? ((n.OpenParam = i),
-            (n.OpenPromise = new CustomPromise_1.CustomPromise()),
-            UiManager.RemovePreOpenView(e),
-            await Promise.all([
-              UiManager.Ndr.get(n.Info.Type).OpenViewAfterPreOpenedAsync(n),
-              n.OpenPromise.Promise,
-            ]),
-            !(n.OpenPromise = void 0))
-          : (Log_1.Log.CheckInfo() &&
-              Log_1.Log.Info(
-                "UiCore",
-                17,
-                "[OpenViewAfterPreOpenedAsync](已预打开过)打开界面失败, 不满足界面打开条件",
-                ["界面名称", a],
-              ),
-            !1))
-      : (Log_1.Log.CheckError() &&
-          Log_1.Log.Error(
-            "UiCore",
-            17,
-            "[OpenViewAfterPreOpenedAsync](已预打开过)打开界面失败, 界面实例不存在",
-          ),
-        !1);
+      n = UiManager.NCr.get(e);
+    return !(
+      !n ||
+      ((a = n.Info.Name),
+      Log_1.Log.CheckInfo() &&
+        Log_1.Log.Info(
+          "UiCore",
+          17,
+          "[OpenViewAfterPreOpenedAsync](已预打开过)请求打开界面",
+          ["界面名称", a],
+        ),
+      (r = !!i && i?.IsMultipleView),
+      UiManager.iVe(a, r, i)
+        ? ((n.OpenParam = i),
+          (n.OpenPromise = new CustomPromise_1.CustomPromise()),
+          UiManager.RemovePreOpenView(e),
+          await Promise.all([
+            UiManager.bCr.get(n.Info.Type).OpenViewAfterPreOpenedAsync(n),
+            n.OpenPromise.Promise,
+          ]),
+          (n.OpenPromise = void 0))
+        : (Log_1.Log.CheckInfo() &&
+            Log_1.Log.Info(
+              "UiCore",
+              17,
+              "[OpenViewAfterPreOpenedAsync](已预打开过)打开界面失败, 不满足界面打开条件",
+              ["界面名称", a],
+            ),
+          1))
+    );
   }
   static RemovePreOpenView(e) {
-    UiManager.Fdr.delete(e);
+    UiManager.NCr.delete(e);
   }
-  static wRn() {
-    for (const e of UiManager.Fdr.values())
+  static hPn() {
+    for (const e of UiManager.NCr.values())
       try {
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
@@ -414,10 +421,10 @@ class UiManager {
               ["error", e],
             );
       }
-    UiManager.Fdr.clear();
+    UiManager.NCr.clear();
   }
   static IsViewShow(e) {
-    e = UiManager.Fur.get(e);
+    e = UiManager.Ncr.get(e);
     if (e)
       for (const i of e) {
         if (i.IsPreOpening) return !1;
@@ -426,7 +433,7 @@ class UiManager {
     return !1;
   }
   static IsViewOpen(e) {
-    e = UiManager.Fur.get(e);
+    e = UiManager.Ncr.get(e);
     if (e)
       for (const i of e) {
         if (i.IsPreOpening) return !1;
@@ -436,33 +443,33 @@ class UiManager {
     return !1;
   }
   static IsViewCreating(e) {
-    e = UiManager.Fur.get(e);
+    e = UiManager.Ncr.get(e);
     if (e) for (const i of e) if (i.IsCreating) return !0;
     return !1;
   }
   static IsViewDestroying(e) {
-    e = UiManager.Fur.get(e);
+    e = UiManager.Ncr.get(e);
     if (e) for (const i of e) if (i.IsDestroying) return !0;
     return !1;
   }
-  static Vdr() {
-    UiManager.Ndr.clear(),
-      UiManager.Ndr.set(
+  static OCr() {
+    UiManager.bCr.clear(),
+      UiManager.bCr.set(
         UiLayerType_1.ELayerType.HUD,
         new UiViewSetContainer_1.UiViewSetContainer(UiModel_1.UiModel.HudMap),
       );
     var e = new UiViewStackContainer_1.UiViewStackContainer(
       UiModel_1.UiModel.NormalStack,
     );
-    UiManager.Ndr.set(UiLayerType_1.ELayerType.Normal, e),
-      UiManager.Ndr.set(UiLayerType_1.ELayerType.CG, e),
-      UiManager.Ndr.set(
+    UiManager.bCr.set(UiLayerType_1.ELayerType.Normal, e),
+      UiManager.bCr.set(UiLayerType_1.ELayerType.CG, e),
+      UiManager.bCr.set(
         UiLayerType_1.ELayerType.Pop,
         new UiViewListContainer_1.UiViewListContainer(
           UiModel_1.UiModel.PopList,
         ),
       ),
-      UiManager.Ndr.set(
+      UiManager.bCr.set(
         UiLayerType_1.ELayerType.Float,
         new UiViewFloatContainer_1.UiViewFloatContainer(
           UiModel_1.UiModel.FloatQueueMap,
@@ -470,26 +477,26 @@ class UiManager {
           UiModel_1.UiModel.HideViewMap,
         ),
       ),
-      UiManager.Ndr.set(
+      UiManager.bCr.set(
         UiLayerType_1.ELayerType.Guide,
         new UiViewListContainer_1.UiViewListContainer(
           UiModel_1.UiModel.GuideList,
         ),
       ),
-      UiManager.Ndr.set(
+      UiManager.bCr.set(
         UiLayerType_1.ELayerType.Loading,
         new UiViewSetContainer_1.UiViewSetContainer(
           UiModel_1.UiModel.LoadingMap,
         ),
       ),
-      UiManager.Ndr.set(
+      UiManager.bCr.set(
         UiLayerType_1.ELayerType.NetWork,
         new UiViewListContainer_1.UiViewListContainer(
           UiModel_1.UiModel.NetWorkList,
         ),
       ),
       ue_1.KuroStaticLibrary.IsBuildShipping() ||
-        UiManager.Ndr.set(
+        UiManager.bCr.set(
           UiLayerType_1.ELayerType.Debug,
           new UiViewSetContainer_1.UiViewSetContainer(
             UiModel_1.UiModel.DebugMap,
@@ -499,23 +506,23 @@ class UiManager {
   static dde() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.ResetToBattleView,
-      UiManager.Hdr,
+      UiManager.kCr,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.ExitNormalQueueState,
-        UiManager.jdr,
+        UiManager.FCr,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.ActiveBattleView,
-        UiManager.Wdr,
+        UiManager.VCr,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.DisActiveBattleView,
-        UiManager.Kdr,
+        UiManager.HCr,
       );
   }
   static ResetToBattleView(e) {
-    UiManager.Ndr.get(UiLayerType_1.ELayerType.Pop).CloseAllView(),
+    UiManager.bCr.get(UiLayerType_1.ELayerType.Pop).CloseAllView(),
       UiManager.NormalResetToView("BattleView", e);
   }
   static NormalResetToView(i, a) {
@@ -552,8 +559,8 @@ class UiManager {
     );
   }
   static async NormalResetToViewAsync(e) {
-    var i = UiManager.Ndr.get(UiLayerType_1.ELayerType.Normal),
-      a = UiManager.kdr(e);
+    var i = UiManager.bCr.get(UiLayerType_1.ELayerType.Normal),
+      a = UiManager.GCr(e);
     a
       ? (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("UiCore", 17, "[NormalResetToView]重置到界面", [
@@ -598,7 +605,7 @@ class UiManager {
     );
   }
   static async CloseHistoryRingViewAsync(e) {
-    var i = UiManager.Ndr.get(UiLayerType_1.ELayerType.Normal);
+    var i = UiManager.bCr.get(UiLayerType_1.ELayerType.Normal);
     void 0 !== i && (await i.CloseHistoryRingViewAsync(e));
   }
   static AddTickView(e) {
@@ -607,7 +614,7 @@ class UiManager {
         "name",
         e.constructor.name,
       ]),
-      UiManager.Qdr.add(e);
+      UiManager.jCr.add(e);
   }
   static RemoveTickView(e) {
     Log_1.Log.CheckInfo() &&
@@ -615,9 +622,9 @@ class UiManager {
         "name",
         e.constructor.name,
       ]),
-      UiManager.Qdr.delete(e);
+      UiManager.jCr.delete(e);
   }
-  static Gdr(e) {
+  static BCr(e) {
     var i,
       a = UiConfig_1.UiConfig.TryGetViewInfo(e);
     if (a)
@@ -627,7 +634,7 @@ class UiManager {
           ((a = new UiPopFrameView_1.UiPopFrameView(a)),
           (i.ChildPopView = a),
           i.AddChild(a)),
-        UiManager.Xdr(i),
+        UiManager.WCr(i),
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.CreateViewInstance,
           i,
@@ -637,11 +644,11 @@ class UiManager {
     Log_1.Log.CheckError() &&
       Log_1.Log.Error("UiCore", 17, "界面信息viewInfo获取失败", ["name", e]);
   }
-  static $dr() {
-    UiManager.Ndr.get(UiLayerType_1.ELayerType.Float).StartWaitingNormalView();
+  static KCr() {
+    UiManager.bCr.get(UiLayerType_1.ELayerType.Float).StartWaitingNormalView();
   }
-  static kdr(e) {
-    e = this.Fur.get(e);
+  static GCr(e) {
+    e = this.Ncr.get(e);
     if (e && 0 !== e.size) for (const i of e.values()) return i;
   }
   static async Initialize() {
@@ -656,7 +663,7 @@ class UiManager {
           LguiEventSystemManager_1.LguiEventSystemManager.Initialize(),
         ]),
         await UiActorPool_1.UiActorPool.Init(),
-        UiManager.Vdr(),
+        UiManager.OCr(),
         UiNavigationViewManager_1.UiNavigationViewManager.Initialize(),
         UIGlobalMaterialParam_1.UiGlobalMaterialParam.Init(),
         UiManager.dde(),
@@ -667,25 +674,25 @@ class UiManager {
   }
   static LockOpen() {
     LguiUtil_1.LguiUtil.SetActorIsPermanent(UiLayer_1.UiLayer.UiRoot, !0, !0),
-      (UiManager.Ydr = !0),
+      (UiManager.QCr = !0),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("UiCore", 17, "[UIManager.UnLockOpen] 禁止打开界面");
   }
   static UnLockOpen() {
-    (UiManager.Ydr = !1),
+    (UiManager.QCr = !1),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("UiCore", 17, "[UIManager.UnLockOpen] 恢复打开界面");
   }
   static get IsLockOpen() {
-    return UiManager.Ydr;
+    return UiManager.QCr;
   }
   static async ClearAsync() {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info("UiCore", 17, "[UIManager.ClearAsync] 清理UIManager 开始");
-    for (var [e, i] of UiManager.Ndr)
+    for (var [e, i] of UiManager.bCr)
       0 < (e & UiLayerType_1.NORMAL_CONTAINER_TYPE) || i.ClearContainer();
     var a = [];
-    for (const n of UiManager.Odr.values())
+    for (const n of UiManager.qCr.values())
       n.Info?.IsPermanent ||
         0 < (n.Info.Type & UiLayerType_1.NORMAL_CONTAINER_TYPE) ||
         (Log_1.Log.CheckInfo() &&
@@ -698,10 +705,10 @@ class UiManager {
           ),
         a.push(n.DeadPromise?.Promise));
     await Promise.all(a),
-      UiManager.wRn(),
-      UiManager.Ndr.get(UiLayerType_1.ELayerType.Normal)?.ClearContainer();
+      UiManager.hPn(),
+      UiManager.bCr.get(UiLayerType_1.ELayerType.Normal)?.ClearContainer();
     var r = [];
-    for (const o of UiManager.Odr.values())
+    for (const o of UiManager.qCr.values())
       o.Info?.IsPermanent ||
         (o.Info.Type & UiLayerType_1.NORMAL_CONTAINER_TYPE) <= 0 ||
         (Log_1.Log.CheckInfo() &&
@@ -740,13 +747,13 @@ class UiManager {
       Log_1.Log.Info("UiCore", 17, "[UIManager.ClearAsync] 清理UIManager 完成");
   }
   static Tick(e) {
-    for (const i of this.Qdr) i.Tick(e);
+    for (const i of this.jCr) i.Tick(e);
     UiActorPool_1.UiActorPool.Tick(e);
   }
   static AfterTick(e) {
-    for (const i of this.Qdr) i.AfterTick(e);
+    for (const i of this.jCr) i.AfterTick(e);
   }
-  static V4e(e, i = !1) {
+  static iVe(e, i = !1, a = void 0) {
     if (
       GlobalData_1.GlobalData.IsSceneClearing &&
       !UiConfig_1.UiConfig.CanOpenWhileClearSceneViewNameSet.has(e)
@@ -761,7 +768,7 @@ class UiManager {
           ),
         !1
       );
-    if (UiManager.Ydr)
+    if (UiManager.QCr)
       return (
         Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
@@ -772,8 +779,8 @@ class UiManager {
           ),
         !1
       );
-    var a = UiConfig_1.UiConfig.TryGetViewInfo(e);
-    if (!a)
+    var r = UiConfig_1.UiConfig.TryGetViewInfo(e);
+    if (!r)
       return (
         Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn("UiCore", 17, "[CanOpenView] 界面配置不存在", [
@@ -782,8 +789,8 @@ class UiManager {
           ]),
         !1
       );
-    var r = 0 < (a.Type & UiLayerType_1.MULTIPLE_VIEW_TYPE);
-    if (!r && !i && UiManager.IsViewOpen(e))
+    var n = 0 < (r.Type & UiLayerType_1.MULTIPLE_VIEW_TYPE);
+    if (!n && !i && UiManager.IsViewOpen(e))
       return (
         Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn("UiCore", 17, "[CanOpenView] 界面重复打开", [
@@ -792,7 +799,7 @@ class UiManager {
           ]),
         !1
       );
-    if (a.ScenePointTag)
+    if (r.ScenePointTag)
       return (
         Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
@@ -803,9 +810,9 @@ class UiManager {
           ),
         !1
       );
-    if (0 < a.BeObstructView.length)
-      for (const n of a.BeObstructView)
-        if (UiManager.IsViewShow(n))
+    if (0 < r.BeObstructView.length)
+      for (const o of r.BeObstructView)
+        if (UiManager.IsViewShow(o))
           return (
             Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
@@ -813,12 +820,12 @@ class UiManager {
                 17,
                 "[CanOpenView] 检测到表格配置了界面互斥",
                 ["ViewName", e],
-                ["ViewOpenCheck", n],
+                ["ViewOpenCheck", o],
               ),
             !1
           );
-    return UiManager.Jdr(e)
-      ? !!UiManager.Jdr(e, !0) ||
+    return UiManager.XCr(e, !1, a)
+      ? !!UiManager.XCr(e, !0, a) ||
           (Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "UiCore",
@@ -837,18 +844,18 @@ class UiManager {
         !1);
   }
   static AddOpenViewCheckFunction(e, i, a) {
-    let r = UiManager.zdr.get(e);
-    r || ((r = new Map()), UiManager.zdr.set(e, r)), r.set(i, a);
+    let r = UiManager.$Cr.get(e);
+    r || ((r = new Map()), UiManager.$Cr.set(e, r)), r.set(i, a);
   }
   static RemoveOpenViewCheckFunction(e, i) {
-    var a = UiManager.zdr.get(e);
-    a && (a.delete(i), 0 === a.size) && UiManager.zdr.delete(e);
+    var a = UiManager.$Cr.get(e);
+    a && (a.delete(i), 0 === a.size) && UiManager.$Cr.delete(e);
   }
-  static Jdr(e, i = !1) {
-    i = UiManager.zdr.get(i ? "All" : e);
+  static XCr(e, i = !1, a = void 0) {
+    i = UiManager.$Cr.get(i ? "All" : e);
     if (i && 0 < i.size)
-      for (var [a, r] of i)
-        if (!a(e))
+      for (var [r, n] of i)
+        if (!r(e, a))
           return (
             Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
@@ -856,59 +863,59 @@ class UiManager {
                 17,
                 "外部注册的OpenView检查函数不通过",
                 ["viewName", e],
-                ["reason", r],
+                ["reason", n],
               ),
             !1
           );
     return !0;
   }
   static GetViewByName(e) {
-    return UiManager.kdr(e);
+    return UiManager.GCr(e);
   }
   static GetView(e) {
-    return this.Odr.get(e);
+    return this.qCr.get(e);
   }
-  static Xdr(e) {
-    UiManager.Odr.set(e.GetViewId(), e);
+  static WCr(e) {
+    UiManager.qCr.set(e.GetViewId(), e);
     var i = e.Info.Name;
-    let a = UiManager.Fur.get(i);
-    a || ((a = new Set()), UiManager.Fur.set(i, a)), a.add(e);
+    let a = UiManager.Ncr.get(i);
+    a || ((a = new Set()), UiManager.Ncr.set(i, a)), a.add(e);
   }
   static RemoveView(e) {
     var i,
-      a = UiManager.Odr.get(e);
+      a = UiManager.qCr.get(e);
     a &&
-      (UiManager.Odr.delete(e),
+      (UiManager.qCr.delete(e),
       (e = a.Info.Name),
-      (i = UiManager.Fur.get(e))) &&
-      (i.delete(a), i.size || UiManager.Fur.delete(e));
+      (i = UiManager.Ncr.get(e))) &&
+      (i.delete(a), i.size || UiManager.Ncr.delete(e));
   }
 }
 ((exports.UiManager = UiManager).Ife = 0),
-  (UiManager.Ndr = new Map()),
-  (UiManager.zdr = new Map()),
-  (UiManager.MBo = void 0),
-  (UiManager.Odr = new Map()),
-  (UiManager.Fur = new Map()),
-  (UiManager.Qdr = new Set()),
-  (UiManager.Fdr = new Map()),
-  (UiManager.Hdr = () => {
+  (UiManager.bCr = new Map()),
+  (UiManager.$Cr = new Map()),
+  (UiManager.fbo = void 0),
+  (UiManager.qCr = new Map()),
+  (UiManager.Ncr = new Map()),
+  (UiManager.jCr = new Set()),
+  (UiManager.NCr = new Map()),
+  (UiManager.kCr = () => {
     Log_1.Log.CheckInfo() && Log_1.Log.Info("UiCore", 17, "重置回到主界面"),
-      UiManager.Ndr.get(UiLayerType_1.ELayerType.Pop).CloseAllView(),
+      UiManager.bCr.get(UiLayerType_1.ELayerType.Pop).CloseAllView(),
       UiManager.NormalResetToView("BattleView");
   }),
-  (UiManager.jdr = () => {
+  (UiManager.FCr = () => {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info("UiCore", 17, "退出队列状态,重置回到主界面"),
-      UiManager.$dr();
+      UiManager.KCr();
   }),
-  (UiManager.Wdr = () => {
+  (UiManager.VCr = () => {
     (UiModel_1.UiModel.IsInMainView = !0),
-      UiManager.Ndr.get(UiLayerType_1.ELayerType.Float).ShowFloatTips();
+      UiManager.bCr.get(UiLayerType_1.ELayerType.Float).ShowFloatTips();
   }),
-  (UiManager.Kdr = () => {
+  (UiManager.HCr = () => {
     (UiModel_1.UiModel.IsInMainView = !1),
-      UiManager.Ndr.get(UiLayerType_1.ELayerType.Float).HideFloatTips();
+      UiManager.bCr.get(UiLayerType_1.ELayerType.Float).HideFloatTips();
   }),
-  (UiManager.Ydr = !1);
+  (UiManager.QCr = !1);
 //# sourceMappingURL=UiManager.js.map

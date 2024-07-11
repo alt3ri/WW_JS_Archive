@@ -16,22 +16,22 @@ const puerts_1 = require("puerts"),
 class WorldMapMoveComponent extends WorldMapComponentBase_1.WorldMapComponentBase {
   constructor(t, e) {
     super(t),
-      (this.G2o = void 0),
-      (this.K2o = !1),
-      (this.Q2o = void 0),
-      (this.X2o = void 0),
-      (this.$2o = void 0),
-      (this.Y2o = new Vector2D_1.Vector2D()),
-      (this.J2o = new Vector2D_1.Vector2D()),
-      (this.z2o = void 0),
-      (this.Z2o = (t) => {
+      (this.BFo = void 0),
+      (this.HFo = !1),
+      (this.jFo = void 0),
+      (this.WFo = void 0),
+      (this.KFo = void 0),
+      (this.QFo = new Vector2D_1.Vector2D()),
+      (this.XFo = new Vector2D_1.Vector2D()),
+      (this.$Fo = void 0),
+      (this.YFo = (t) => {
         t = Vector2D_1.Vector2D.Create(t);
         this.SetMapPosition(t, !1, 2);
       }),
-      (this.eFo = (t) => {
+      (this.JFo = (t) => {
         var e = Vector2D_1.Vector2D.Create(),
           t =
-            (t.Multiply(this.G2o.TweenTime, e),
+            (t.Multiply(this.BFo.TweenTime, e),
             Vector2D_1.Vector2D.Create(
               this.Map.GetRootItem().GetAnchorOffset(),
             ).AdditionEqual(e));
@@ -45,30 +45,30 @@ class WorldMapMoveComponent extends WorldMapComponentBase_1.WorldMapComponentBas
           ),
         );
       }),
-      (this.FCo = () => {
-        this.Q2o?.Kill(!0);
+      (this.Ngo = () => {
+        this.jFo?.Kill(!0);
       }),
-      (this.tFo = () => {
-        this.Q2o?.Kill(!0);
+      (this.zFo = () => {
+        this.jFo?.Kill(!0);
       }),
-      (this.aWe = (t) => {
-        this.iFo(t);
+      (this.vKe = (t) => {
+        this.ZFo(t);
       }),
-      (this.oFo = !1),
-      (this.rFo = !1),
-      (this.nFo = (t) => {
-        (this.Y2o.Y = t), (this.oFo = !0);
+      (this.e3o = !1),
+      (this.t3o = !1),
+      (this.i3o = (t) => {
+        (this.QFo.Y = t), (this.e3o = !0);
       }),
-      (this.sFo = (t) => {
-        (this.J2o.X = t), (this.rFo = !0);
+      (this.o3o = (t) => {
+        (this.XFo.X = t), (this.t3o = !0);
       }),
-      (this.$2o = { MinX: 0, MaxX: 0, MinY: 0, MaxY: 0 }),
-      (this.z2o = { MinX: 0, MaxX: 0, MinY: 0, MaxY: 0 }),
-      (this.G2o = e),
-      (this.X2o = (0, puerts_1.toManualReleaseDelegate)(this.Z2o));
+      (this.KFo = { MinX: 0, MaxX: 0, MinY: 0, MaxY: 0 }),
+      (this.$Fo = { MinX: 0, MaxX: 0, MinY: 0, MaxY: 0 }),
+      (this.BFo = e),
+      (this.WFo = (0, puerts_1.toManualReleaseDelegate)(this.YFo));
   }
   get SafeAreaSize() {
-    var t = this.$2o;
+    var t = this.KFo;
     return (
       (t.MinX =
         -(
@@ -92,7 +92,7 @@ class WorldMapMoveComponent extends WorldMapComponentBase_1.WorldMapComponentBas
     );
   }
   get DangerousAreaSize() {
-    var t = this.z2o;
+    var t = this.$Fo;
     return (
       (t.MinX =
         -(
@@ -120,10 +120,10 @@ class WorldMapMoveComponent extends WorldMapComponentBase_1.WorldMapComponentBas
     );
   }
   get IsTweeningMove() {
-    return this.K2o;
+    return this.HFo;
   }
   KillTweening() {
-    this.K2o && this.aFo(), (this.K2o = !1);
+    this.HFo && this.r3o(), (this.HFo = !1);
   }
   get MapScale() {
     return ModelManager_1.ModelManager.WorldMapModel.MapScale;
@@ -131,73 +131,73 @@ class WorldMapMoveComponent extends WorldMapComponentBase_1.WorldMapComponentBas
   AddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.WorldMapDragInertia,
-      this.eFo,
+      this.JFo,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.WorldMapPointerDrag,
-        this.aWe,
+        this.vKe,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.WorldMapPointerDown,
-        this.FCo,
+        this.Ngo,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.WorldMapWheelAxisInput,
-        this.tFo,
+        this.zFo,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.WorldMapJoystickMoveForward,
-        this.nFo,
+        this.i3o,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.WorldMapJoystickMoveRight,
-        this.sFo,
+        this.o3o,
       );
   }
   RemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.WorldMapDragInertia,
-      this.eFo,
+      this.JFo,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.WorldMapPointerDrag,
-        this.aWe,
+        this.vKe,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.WorldMapPointerDown,
-        this.FCo,
+        this.Ngo,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.WorldMapWheelAxisInput,
-        this.tFo,
+        this.zFo,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.WorldMapJoystickMoveForward,
-        this.nFo,
+        this.i3o,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.WorldMapJoystickMoveRight,
-        this.sFo,
+        this.o3o,
       );
   }
   OnDestroy() {
-    this.aFo(),
-      (0, puerts_1.releaseManualReleaseDelegate)(this.Z2o),
-      (this.X2o = void 0),
-      (this.$2o = void 0),
-      (this.z2o = void 0),
-      (this.G2o = void 0);
+    this.r3o(),
+      (0, puerts_1.releaseManualReleaseDelegate)(this.YFo),
+      (this.WFo = void 0),
+      (this.KFo = void 0),
+      (this.$Fo = void 0),
+      (this.BFo = void 0);
   }
   PushMap(t, e = !0, i = 2) {
     var s, h, n, o, r;
-    this.G2o
+    this.BFo
       ? ((s = t.UiPosition.X),
         (t = t.UiPosition.Y),
         (h = this.Map.GetRootItem().GetAnchorOffset()),
         (r = s * this.MapScale + h.X),
         (h = t * this.MapScale + h.Y),
-        (n = this.G2o.FocusMark_AnchoredPosition.X),
-        (o = this.G2o.FocusMark_AnchoredPosition.Y),
+        (n = this.BFo.FocusMark_AnchoredPosition.X),
+        (o = this.BFo.FocusMark_AnchoredPosition.Y),
         r === n && h === o
           ? EventSystem_1.EventSystem.Emit(
               EventDefine_1.EEventName.WorldMapPositionChanged,
@@ -210,15 +210,15 @@ class WorldMapMoveComponent extends WorldMapComponentBase_1.WorldMapComponentBas
               r,
               e,
               i,
-              this.G2o.TweenTypeEase,
-              this.G2o.TweenTime,
+              this.BFo.TweenTypeEase,
+              this.BFo.TweenTime,
             )))
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error("Map", 19, "请于根节点挂KuroWorldMapUIParams组件");
   }
   SetMapPosition(e, i, s = 0, h, n, o = !0) {
     if (e)
-      if (this.G2o) {
+      if (this.BFo) {
         let t = Vector2D_1.Vector2D.Create();
         e instanceof Vector2D_1.Vector2D
           ? t.DeepCopy(e)
@@ -227,21 +227,21 @@ class WorldMapMoveComponent extends WorldMapComponentBase_1.WorldMapComponentBas
             (t.Y = e.UiPosition.Y),
             t.MultiplyEqual(this.MapScale).UnaryNegation(t));
         e = Vector2D_1.Vector2D.Create(t.X, t.Y);
-        (t = this.hFo(e, s)),
+        (t = this.n3o(e, s)),
           i
-            ? ((this.K2o = !0),
-              this.aFo(),
-              (this.Q2o = UE.LTweenBPLibrary.Vector2To(
+            ? ((this.HFo = !0),
+              this.r3o(),
+              (this.jFo = UE.LTweenBPLibrary.Vector2To(
                 GlobalData_1.GlobalData.World,
-                this.X2o,
+                this.WFo,
                 this.Map.GetRootItem().GetAnchorOffset(),
                 t.ToUeVector2D(!0),
                 n,
                 0,
                 h,
               )),
-              this.Q2o.OnCompleteCallBack.Bind(() => {
-                this.K2o = !1;
+              this.jFo.OnCompleteCallBack.Bind(() => {
+                this.HFo = !1;
               }))
             : (this.Map.GetRootItem().SetAnchorOffset(t.ToUeVector2D(!0)),
               o &&
@@ -255,9 +255,9 @@ class WorldMapMoveComponent extends WorldMapComponentBase_1.WorldMapComponentBas
   FocusPlayer(t, e = !1, i = 0) {
     var s = Vector2D_1.Vector2D.Create();
     t.Multiply(this.MapScale, s).UnaryNegation(s),
-      this.SetMapPosition(s, e, i, this.G2o.TweenTypeEase, this.G2o.TweenTime);
+      this.SetMapPosition(s, e, i, this.BFo.TweenTypeEase, this.BFo.TweenTime);
   }
-  hFo(t, e, i = !1) {
+  n3o(t, e, i = !1) {
     let s = t.X,
       h = t.Y;
     switch (e) {
@@ -271,8 +271,8 @@ class WorldMapMoveComponent extends WorldMapComponentBase_1.WorldMapComponentBas
         )),
           (h = MathCommon_1.MathCommon.Clamp(
             t.Y,
-            this.$2o.MinY,
-            this.$2o.MaxY,
+            this.KFo.MinY,
+            this.KFo.MaxY,
           ));
         break;
       case 2:
@@ -295,10 +295,10 @@ class WorldMapMoveComponent extends WorldMapComponentBase_1.WorldMapComponentBas
       n
     );
   }
-  aFo() {
-    this.Q2o && (this.Q2o.Kill(), (this.Q2o = void 0));
+  r3o() {
+    this.jFo && (this.jFo.Kill(), (this.jFo = void 0));
   }
-  iFo(t) {
+  ZFo(t) {
     var e = Vector2D_1.Vector2D.Create(
       this.Map.GetRootItem().GetAnchorOffset(),
     );
@@ -306,12 +306,12 @@ class WorldMapMoveComponent extends WorldMapComponentBase_1.WorldMapComponentBas
   }
   TickMoveDirty() {
     var t;
-    (this.oFo || this.rFo) &&
+    (this.e3o || this.t3o) &&
       ((t = Vector2D_1.Vector2D.Create(
         this.Map.GetRootItem().GetAnchorOffset(),
       )),
-      this.oFo && (t.AdditionEqual(this.Y2o), (this.oFo = !1)),
-      this.rFo && (t.AdditionEqual(this.J2o), (this.rFo = !1)),
+      this.e3o && (t.AdditionEqual(this.QFo), (this.e3o = !1)),
+      this.t3o && (t.AdditionEqual(this.XFo), (this.t3o = !1)),
       this.SetMapPosition(t, !1, 2));
   }
 }

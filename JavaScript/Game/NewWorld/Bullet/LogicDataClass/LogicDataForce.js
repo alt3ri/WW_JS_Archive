@@ -18,7 +18,8 @@ class LogicDataForce extends LogicDataBase_1.default {
       (this.IsLaunching = !1),
       (this.WorkHaveTag = void 0),
       (this.IsResetOnLast = !1),
-      (this.Group = 0);
+      (this.Group = 0),
+      (this.ImmuneStopDuration = 0);
   }
 }
 exports.default = LogicDataForce;

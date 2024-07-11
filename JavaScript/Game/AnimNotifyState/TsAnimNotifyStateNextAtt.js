@@ -19,7 +19,7 @@ class TsAnimNotifyStateNextAtt extends UE.KuroAnimNotifyState {
     return (
       e instanceof TsBaseCharacter_1.default &&
       ((r = e.CharacterActorComponent?.Entity?.GetComponent(33)),
-      (e = e.CharacterActorComponent?.Entity?.GetComponent(157)),
+      (e = e.CharacterActorComponent?.Entity?.GetComponent(159)),
       r?.Valid && r.SetSkillAcceptInput(!1),
       e?.Valid &&
         e.HasBuffAuthority() &&

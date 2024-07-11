@@ -6,17 +6,17 @@ class DropDownItemBase extends UiPanelBase_1.UiPanelBase {
   constructor(t) {
     super(),
       (this.Xy = 0),
-      (this.U4e = void 0),
-      (this.fTt = void 0),
-      (this.LTt = () => {
-        this.U4e?.(this.Xy);
+      (this.j5e = void 0),
+      (this.SLt = void 0),
+      (this.PLt = () => {
+        this.j5e?.(this.Xy);
       }),
-      (this.DTt = () => this.fTt?.(this.Xy) ?? !1),
+      (this.gke = () => this.SLt?.(this.Xy) ?? !1),
       this.CreateThenShowByActor(t.GetOwner());
   }
   OnStartImplement() {
     var t = this.GetDropDownToggle();
-    t.OnStateChange.Add(this.LTt), t.CanExecuteChange.Bind(this.DTt);
+    t.OnStateChange.Add(this.PLt), t.CanExecuteChange.Bind(this.gke);
   }
   OnBeforeDestroyImplement() {
     var t = this.GetDropDownToggle();
@@ -26,10 +26,10 @@ class DropDownItemBase extends UiPanelBase_1.UiPanelBase {
     (this.Xy = e), this.OnShowDropDownItemBase(t);
   }
   SetToggleFunction(t) {
-    this.U4e = t;
+    this.j5e = t;
   }
   SetCanExecuteFunction(t) {
-    this.fTt = t;
+    this.SLt = t;
   }
   SetToggle(t) {
     var e = t ? 1 : 0;

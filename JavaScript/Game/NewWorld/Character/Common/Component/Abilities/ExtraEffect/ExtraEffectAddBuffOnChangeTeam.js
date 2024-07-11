@@ -8,18 +8,18 @@ const EventDefine_1 = require("../../../../../../Common/Event/EventDefine"),
 class AddBuffOnChangeTeam extends ExtraEffectBase_1.BuffEffect {
   constructor() {
     super(...arguments),
-      (this.QKo = void 0),
-      (this.XKo = void 0),
-      (this.ypi = () => {
+      (this.jQo = void 0),
+      (this.WQo = void 0),
+      (this.yvi = () => {
         const n = this.OwnerBuffComponent.GetBuffByHandle(this.ActiveHandleId);
         var e;
         n?.IsValid() &&
           ((e =
             ModelManager_1.ModelManager.SceneTeamModel.GetTeamEntities()).forEach(
             (e) => {
-              if (!this.XKo.includes(e.Id)) {
-                var t = e.Entity.GetComponent(157);
-                for (const s of this.QKo)
+              if (!this.WQo.includes(e.Id)) {
+                var t = e.Entity.GetComponent(159);
+                for (const s of this.jQo)
                   t?.AddIterativeBuff(
                     s,
                     n,
@@ -30,13 +30,13 @@ class AddBuffOnChangeTeam extends ExtraEffectBase_1.BuffEffect {
               }
             },
           ),
-          (this.XKo = e.map((e) => e.Id)));
+          (this.WQo = e.map((e) => e.Id)));
       });
   }
   InitParameters(e) {
     e = e.ExtraEffectParameters;
-    (this.QKo = e[0].split("#").map((e) => BigInt(e))),
-      (this.XKo =
+    (this.jQo = e[0].split("#").map((e) => BigInt(e))),
+      (this.WQo =
         ModelManager_1.ModelManager.SceneTeamModel.GetTeamEntities().map(
           (e) => e.Id,
         ));
@@ -45,14 +45,14 @@ class AddBuffOnChangeTeam extends ExtraEffectBase_1.BuffEffect {
     this.OwnerBuffComponent.HasBuffAuthority() &&
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnUpdateSceneTeam,
-        this.ypi,
+        this.yvi,
       );
   }
   OnRemoved() {
     this.OwnerBuffComponent?.HasBuffAuthority() &&
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnUpdateSceneTeam,
-        this.ypi,
+        this.yvi,
       );
   }
   OnExecute() {}

@@ -6,64 +6,64 @@ const UE = require("ue"),
 class DamageViewData {
   constructor() {
     (this.Mne = 0),
-      (this.e2t = void 0),
-      (this.t2t = 0),
-      (this.i2t = 0),
-      (this.o2t = 0),
-      (this.r2t = 0),
-      (this.n2t = void 0),
-      (this.s2t = void 0),
-      (this.a2t = void 0),
-      (this.h2t = void 0),
-      (this.l2t = "");
+      (this.tFt = void 0),
+      (this.iFt = 0),
+      (this.oFt = 0),
+      (this.rFt = 0),
+      (this.nFt = 0),
+      (this.sFt = void 0),
+      (this.aFt = void 0),
+      (this.hFt = void 0),
+      (this.lFt = void 0),
+      (this._Ft = "");
   }
   Initialize(t) {
     (this.Mne = t.Id),
-      (this.e2t = t),
-      (this.l2t = t.CritNiagaraPath),
-      (this.t2t = t.MinDeviationX),
-      (this.i2t = t.MinDeviationY),
-      (this.o2t = t.MaxDeviationX),
-      (this.r2t = t.MaxDeviationX),
-      (this.n2t = UE.Color.FromHex(t.TextColor)),
-      (this.s2t = UE.Color.FromHex(t.CritTextColor)),
-      (this.a2t = UE.Color.FromHex(t.StrokeColor)),
-      (this.h2t = UE.Color.FromHex(t.CritStrokeColor));
+      (this.tFt = t),
+      (this._Ft = t.CritNiagaraPath),
+      (this.iFt = t.MinDeviationX),
+      (this.oFt = t.MinDeviationY),
+      (this.rFt = t.MaxDeviationX),
+      (this.nFt = t.MaxDeviationX),
+      (this.sFt = UE.Color.FromHex(t.TextColor)),
+      (this.aFt = UE.Color.FromHex(t.CritTextColor)),
+      (this.hFt = UE.Color.FromHex(t.StrokeColor)),
+      (this.lFt = UE.Color.FromHex(t.CritStrokeColor));
   }
   GetConfigId() {
     return this.Mne;
   }
   GetRandomOffsetX() {
-    return MathUtils_1.MathUtils.GetRandomFloatNumber(this.t2t, this.o2t);
+    return MathUtils_1.MathUtils.GetRandomFloatNumber(this.iFt, this.rFt);
   }
   GetRandomOffsetY() {
-    return MathUtils_1.MathUtils.GetRandomFloatNumber(this.i2t, this.r2t);
+    return MathUtils_1.MathUtils.GetRandomFloatNumber(this.oFt, this.nFt);
   }
   GetTextColor() {
-    return this.n2t;
+    return this.sFt;
   }
   GetCriticalTextColor() {
-    return this.s2t;
+    return this.aFt;
   }
   GetStrokeColor() {
-    return this.a2t;
+    return this.hFt;
   }
   GetCriticalStrokeColor() {
-    return this.h2t;
+    return this.lFt;
   }
   GetCriticalNiagaraPath() {
-    return this.l2t;
+    return this._Ft;
   }
   GetSequencePath(t, i, s) {
     return s
-      ? this.e2t.DamageTextSequence
+      ? this.tFt.DamageTextSequence
       : t
         ? i
-          ? this.e2t.OwnCriticalDamageSequence
-          : this.e2t.OwnDamageSequence
+          ? this.tFt.OwnCriticalDamageSequence
+          : this.tFt.OwnDamageSequence
         : i
-          ? this.e2t.MonsterCriticalDamageSequence
-          : this.e2t.MonsterDamageSequence;
+          ? this.tFt.MonsterCriticalDamageSequence
+          : this.tFt.MonsterDamageSequence;
   }
 }
 exports.DamageViewData = DamageViewData;

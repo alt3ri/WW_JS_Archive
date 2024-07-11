@@ -20,62 +20,62 @@ const UE = require("ue"),
   BulletPool_1 = require("../Model/BulletPool"),
   BulletStaticFunction_1 = require("./BulletStaticFunction");
 class BulletCollisionUtil {
-  static UpdateCollisionExtend(t, l, e, o, i) {
+  static UpdateCollisionExtend(t, l, o, e, i) {
     switch (t) {
       case 0:
-        l.SetBoxExtent(e.ToUeVector(), !0);
+        l.SetBoxExtent(o.ToUeVector(), !0);
         break;
       case 1:
-        l.SetSphereRadius(e.X, !0);
+        l.SetSphereRadius(o.X, !0);
         break;
       case 2:
-        var a = this.GetSectorExtent(e, o),
-          r = l,
-          s = BulletPool_1.BulletPool.CreateVector();
-        i.Quaternion().RotateVector(BulletCollisionUtil.o7o, s),
-          r.K2_SetRelativeLocation(s.ToUeVector(), !1, void 0, !0),
-          BulletPool_1.BulletPool.RecycleVector(s),
-          r.SetBoxExtent(a.ToUeVector(), !0);
+        var a = this.GetSectorExtent(o, e),
+          s = l,
+          r = BulletPool_1.BulletPool.CreateVector();
+        i.Quaternion().RotateVector(BulletCollisionUtil.eHo, r),
+          s.K2_SetRelativeLocation(r.ToUeVector(), !1, void 0, !0),
+          BulletPool_1.BulletPool.RecycleVector(r),
+          s.SetBoxExtent(a.ToUeVector(), !0);
         break;
       case 3:
-        l.SetBoxExtent(new UE.Vector(e.X, e.X, e.Z), !0);
+        l.SetBoxExtent(new UE.Vector(o.X, o.X, o.Z), !0);
     }
   }
-  static UpdateRegionExtend(t, l, e) {
+  static UpdateRegionExtend(t, l, o) {
     switch (t) {
       case 6:
-        l.BoxExtent = e.ToUeVector();
+        l.BoxExtent = o.ToUeVector();
         break;
       case 7:
-        l.Radius = e.X;
+        l.Radius = o.X;
         break;
       case 8:
-        (l.Radius = e.X), (l.HalfHeight = e.Z), (l.Angle = e.Y);
+        (l.Radius = o.X), (l.HalfHeight = o.Z), (l.Angle = o.Y);
         break;
       case 9:
-        (l.Radius = e.X), (l.HalfHeight = e.Z);
+        (l.Radius = o.X), (l.HalfHeight = o.Z);
     }
   }
   static GetSectorExtent(t, l) {
-    BulletCollisionUtil.o7o.FromUeVector(l);
-    var e,
+    BulletCollisionUtil.eHo.FromUeVector(l);
+    var o,
       l = Vector_1.Vector.Create();
     return (
       t.Y < 180
-        ? ((BulletCollisionUtil.o7o.X += 0.5 * t.X),
+        ? ((BulletCollisionUtil.eHo.X += 0.5 * t.X),
           l.Set(
             0.5 * t.X,
             Math.sin(0.5 * t.Y * MathUtils_1.MathUtils.DegToRad) * t.X,
             t.Z,
           ))
-        : ((e = Math.cos(0.5 * t.Y * MathUtils_1.MathUtils.DegToRad)),
-          (BulletCollisionUtil.o7o.X += t.X * (1 + e) * 0.5),
-          l.Set(t.X * (1 - e) * 0.5, t.X, t.Z)),
+        : ((o = Math.cos(0.5 * t.Y * MathUtils_1.MathUtils.DegToRad)),
+          (BulletCollisionUtil.eHo.X += t.X * (1 + o) * 0.5),
+          l.Set(t.X * (1 - o) * 0.5, t.X, t.Z)),
       l
     );
   }
   static ShowBulletDeBugDraw(t) {
-    var l, e, o, i, a, r, s;
+    var l, o, e, i, a, s, r;
     UE.KismetSystemLibrary.DrawDebugSphere(
       GlobalData_1.GlobalData.GameInstance,
       t.ActorComponent.ActorLocation,
@@ -87,354 +87,485 @@ class BulletCollisionUtil {
         ((l = t.BulletDataMain.Base.Shape),
         (e = t.CollisionInfo.CollisionComponent),
         3 === l
-          ? ((i = e.BoundsScale),
+          ? ((s = e.BoundsScale),
             BulletStaticFunction_1.BulletStaticFunction.DebugDrawRing(
-              t.Size.Z * i,
-              i * t.Size.Y,
-              t.Size.X * i,
+              t.Size.Z * s,
+              s * t.Size.Y,
+              t.Size.X * s,
               t.CenterLocation,
             ),
             t.BulletDataMain?.Base.DebugShowProgress &&
-              ((r = BulletPool_1.BulletPool.CreateVector()).FromUeVector(
+              ((o = BulletPool_1.BulletPool.CreateVector()).FromUeVector(
                 t.CenterLocation,
               ),
-              (r.Z -= t.Size.Z * i),
-              (s = t.LiveTime * MathUtils_1.MathUtils.MillisecondToSecond),
-              (i = MathUtils_1.MathUtils.Lerp(
-                i * t.Size.Y,
-                t.Size.X * i,
-                s / t.BulletDataMain.Base.Duration,
+              (o.Z -= t.Size.Z * s),
+              (r = t.LiveTime * MathUtils_1.MathUtils.MillisecondToSecond),
+              (s = MathUtils_1.MathUtils.Lerp(
+                s * t.Size.Y,
+                t.Size.X * s,
+                r / t.BulletDataMain.Base.Duration,
               )),
               UE.KismetSystemLibrary.DrawDebugCircle(
                 GlobalData_1.GlobalData.GameInstance,
-                r.ToUeVector(),
-                i,
+                o.ToUeVector(),
+                s,
                 36,
                 ColorUtils_1.ColorUtils.LinearRed,
-                t.BulletDataMain.Base.Duration - s,
+                t.BulletDataMain.Base.Duration - r,
                 3,
                 t.Actor?.GetActorRightVector(),
                 t.Actor?.GetActorForwardVector(),
                 !1,
               ),
-              BulletPool_1.BulletPool.RecycleVector(r)))
+              BulletPool_1.BulletPool.RecycleVector(o)))
           : 2 === l
-            ? ((i = e.BoundsScale),
-              (s = BulletPool_1.BulletPool.CreateRotator()).FromUeRotator(
+            ? ((s = e.BoundsScale),
+              (r = BulletPool_1.BulletPool.CreateRotator()).FromUeRotator(
                 t.CollisionRotator,
               ),
               BulletStaticFunction_1.BulletStaticFunction.DebugDrawSector(
-                t.Size.Z * i,
-                t.Size.X * i,
+                t.Size.Z * s,
+                t.Size.X * s,
                 t.Size.Y,
-                s.Quaternion(),
+                r.Quaternion(),
                 t.CenterLocation,
               ),
               t.BulletDataMain?.Base.DebugShowProgress &&
-                ((r = t.LiveTime * MathUtils_1.MathUtils.MillisecondToSecond),
-                (o = MathUtils_1.MathUtils.Lerp(
+                ((o = t.LiveTime * MathUtils_1.MathUtils.MillisecondToSecond),
+                (a = MathUtils_1.MathUtils.Lerp(
                   0,
                   t.Size.Y,
-                  r / t.BulletDataMain.Base.Duration,
+                  o / t.BulletDataMain.Base.Duration,
                 )),
-                (a = BulletPool_1.BulletPool.CreateVector()).FromUeVector(
+                (i = BulletPool_1.BulletPool.CreateVector()).FromUeVector(
                   t.CenterLocation,
                 ),
-                (a.Z -= t.Size.Z * i),
+                (i.Z -= t.Size.Z * s),
                 BulletStaticFunction_1.BulletStaticFunction.DebugDrawSector(
                   1,
-                  t.Size.X * i,
-                  o,
-                  s.Quaternion(),
+                  t.Size.X * s,
                   a,
+                  r.Quaternion(),
+                  i,
                   ColorUtils_1.ColorUtils.LinearRed,
-                  t.BulletDataMain.Base.Duration - r,
+                  t.BulletDataMain.Base.Duration - o,
                 ),
-                BulletPool_1.BulletPool.RecycleVector(a)),
-              BulletPool_1.BulletPool.RecycleRotator(s))
+                BulletPool_1.BulletPool.RecycleVector(i)),
+              BulletPool_1.BulletPool.RecycleRotator(r))
             : 0 === l
-              ? ((i = e.BoundsScale),
-                (o = BulletPool_1.BulletPool.CreateVector()).FromUeVector(
+              ? ((s = e.BoundsScale),
+                (a = BulletPool_1.BulletPool.CreateVector()).FromUeVector(
                   e.BoxExtent,
                 ),
-                o.MultiplyEqual(i),
+                a.MultiplyEqual(s),
                 UE.KismetSystemLibrary.DrawDebugBox(
                   GlobalData_1.GlobalData.GameInstance,
                   e.K2_GetComponentLocation(),
-                  o.ToUeVector(),
+                  a.ToUeVector(),
                   ColorUtils_1.ColorUtils.LinearYellow,
                   e.K2_GetComponentRotation(),
                   0,
                   1,
                 ),
                 t.BulletDataMain?.Base.DebugShowProgress &&
-                  ((r = BulletPool_1.BulletPool.CreateVector()),
-                  (a = t.LiveTime * MathUtils_1.MathUtils.MillisecondToSecond),
+                  ((o = BulletPool_1.BulletPool.CreateVector()),
+                  (i = t.LiveTime * MathUtils_1.MathUtils.MillisecondToSecond),
                   Vector_1.Vector.Lerp(
                     Vector_1.Vector.ZeroVectorProxy,
+                    a,
+                    i / t.BulletDataMain.Base.Duration,
                     o,
-                    a / t.BulletDataMain.Base.Duration,
-                    r,
                   ),
-                  (r.Z = 4),
-                  (s = BulletPool_1.BulletPool.CreateVector()).FromUeVector(
+                  (o.Z = 4),
+                  (r = BulletPool_1.BulletPool.CreateVector()).FromUeVector(
                     e.K2_GetComponentLocation(),
                   ),
-                  (s.Z -= o.Z + 2),
+                  (r.Z -= a.Z + 2),
                   UE.KismetSystemLibrary.DrawDebugBox(
                     GlobalData_1.GlobalData.GameInstance,
-                    s.ToUeVector(),
                     r.ToUeVector(),
+                    o.ToUeVector(),
                     ColorUtils_1.ColorUtils.LinearRed,
                     e.K2_GetComponentRotation(),
-                    t.BulletDataMain.Base.Duration - a,
+                    t.BulletDataMain.Base.Duration - i,
                     2,
                   ),
-                  BulletPool_1.BulletPool.RecycleVector(r),
-                  BulletPool_1.BulletPool.RecycleVector(s)),
-                BulletPool_1.BulletPool.RecycleVector(o))
-              : 1 === l &&
-                ((i = e.GetScaledSphereRadius()),
-                (a = BulletPool_1.BulletPool.CreateVector()).FromUeVector(
-                  e.K2_GetComponentLocation(),
-                ),
-                UE.KismetSystemLibrary.DrawDebugSphere(
-                  GlobalData_1.GlobalData.GameInstance,
-                  a.ToUeVector(),
-                  i,
-                  void 0,
-                  ColorUtils_1.ColorUtils.LinearGreen,
-                ),
-                t.BulletDataMain?.Base.DebugShowProgress &&
-                  ((r = t.LiveTime * MathUtils_1.MathUtils.MillisecondToSecond),
-                  (s = MathUtils_1.MathUtils.Lerp(
-                    0,
-                    i,
-                    r / t.BulletDataMain.Base.Duration,
-                  )),
-                  UE.KismetSystemLibrary.DrawDebugCircle(
+                  BulletPool_1.BulletPool.RecycleVector(o),
+                  BulletPool_1.BulletPool.RecycleVector(r)),
+                BulletPool_1.BulletPool.RecycleVector(a))
+              : 1 === l
+                ? ((s = e.GetScaledSphereRadius()),
+                  (i = BulletPool_1.BulletPool.CreateVector()).FromUeVector(
+                    e.K2_GetComponentLocation(),
+                  ),
+                  UE.KismetSystemLibrary.DrawDebugSphere(
                     GlobalData_1.GlobalData.GameInstance,
-                    a.ToUeVector(),
+                    i.ToUeVector(),
                     s,
-                    36,
-                    ColorUtils_1.ColorUtils.LinearRed,
-                    t.BulletDataMain.Base.Duration - r,
-                    3,
-                    t.Actor?.GetActorRightVector(),
-                    t.Actor?.GetActorForwardVector(),
-                    !1,
-                  )),
-                BulletPool_1.BulletPool.RecycleVector(a)));
+                    void 0,
+                    ColorUtils_1.ColorUtils.LinearGreen,
+                  ),
+                  t.BulletDataMain?.Base.DebugShowProgress &&
+                    ((o =
+                      t.LiveTime * MathUtils_1.MathUtils.MillisecondToSecond),
+                    (r = MathUtils_1.MathUtils.Lerp(
+                      0,
+                      s,
+                      o / t.BulletDataMain.Base.Duration,
+                    )),
+                    UE.KismetSystemLibrary.DrawDebugCircle(
+                      GlobalData_1.GlobalData.GameInstance,
+                      i.ToUeVector(),
+                      r,
+                      36,
+                      ColorUtils_1.ColorUtils.LinearRed,
+                      t.BulletDataMain.Base.Duration - o,
+                      3,
+                      t.Actor?.GetActorRightVector(),
+                      t.Actor?.GetActorForwardVector(),
+                      !1,
+                    )),
+                  BulletPool_1.BulletPool.RecycleVector(i))
+                : 6 === l
+                  ? ((a = t.CollisionInfo.RegionComponent),
+                    (e = BulletPool_1.BulletPool.CreateVector()).FromUeVector(
+                      a.BoxExtent,
+                    ),
+                    UE.KismetSystemLibrary.DrawDebugBox(
+                      GlobalData_1.GlobalData.GameInstance,
+                      a.K2_GetComponentLocation(),
+                      e.ToUeVector(),
+                      ColorUtils_1.ColorUtils.LinearYellow,
+                      a.K2_GetComponentRotation(),
+                      0,
+                      1,
+                    ),
+                    t.BulletDataMain?.Base.DebugShowProgress &&
+                      ((s = BulletPool_1.BulletPool.CreateVector()),
+                      (r =
+                        t.LiveTime * MathUtils_1.MathUtils.MillisecondToSecond),
+                      Vector_1.Vector.Lerp(
+                        Vector_1.Vector.ZeroVectorProxy,
+                        e,
+                        r / t.BulletDataMain.Base.Duration,
+                        s,
+                      ),
+                      (s.Z = 4),
+                      (o = BulletPool_1.BulletPool.CreateVector()).FromUeVector(
+                        a.K2_GetComponentLocation(),
+                      ),
+                      (o.Z -= e.Z + 2),
+                      UE.KismetSystemLibrary.DrawDebugBox(
+                        GlobalData_1.GlobalData.GameInstance,
+                        o.ToUeVector(),
+                        s.ToUeVector(),
+                        ColorUtils_1.ColorUtils.LinearRed,
+                        a.K2_GetComponentRotation(),
+                        t.BulletDataMain.Base.Duration - r,
+                        2,
+                      ),
+                      BulletPool_1.BulletPool.RecycleVector(s),
+                      BulletPool_1.BulletPool.RecycleVector(o)),
+                    BulletPool_1.BulletPool.RecycleVector(e))
+                  : 7 === l
+                    ? ((i = t.Size.X),
+                      (a = t.ActorComponent.ActorLocation),
+                      UE.KismetSystemLibrary.DrawDebugSphere(
+                        GlobalData_1.GlobalData.GameInstance,
+                        a,
+                        i,
+                        void 0,
+                        ColorUtils_1.ColorUtils.LinearGreen,
+                      ),
+                      t.BulletDataMain?.Base.DebugShowProgress &&
+                        ((r =
+                          t.LiveTime *
+                          MathUtils_1.MathUtils.MillisecondToSecond),
+                        (s = MathUtils_1.MathUtils.Lerp(
+                          0,
+                          i,
+                          r / t.BulletDataMain.Base.Duration,
+                        )),
+                        UE.KismetSystemLibrary.DrawDebugCircle(
+                          GlobalData_1.GlobalData.GameInstance,
+                          a,
+                          s,
+                          36,
+                          ColorUtils_1.ColorUtils.LinearRed,
+                          t.BulletDataMain.Base.Duration - r,
+                          3,
+                          t.Actor?.GetActorRightVector(),
+                          t.Actor?.GetActorForwardVector(),
+                          !1,
+                        )))
+                    : 8 === l
+                      ? ((o = t.CollisionInfo.RegionComponent),
+                        (e =
+                          BulletPool_1.BulletPool.CreateRotator()).FromUeRotator(
+                          t.CollisionRotator,
+                        ),
+                        BulletStaticFunction_1.BulletStaticFunction.DebugDrawSector(
+                          o.HalfHeight,
+                          o.Radius,
+                          o.Angle,
+                          e.Quaternion(),
+                          t.CenterLocation,
+                        ),
+                        t.BulletDataMain?.Base.DebugShowProgress &&
+                          ((i =
+                            t.LiveTime *
+                            MathUtils_1.MathUtils.MillisecondToSecond),
+                          (a = MathUtils_1.MathUtils.Lerp(
+                            0,
+                            t.Size.Y,
+                            i / t.BulletDataMain.Base.Duration,
+                          )),
+                          (s =
+                            BulletPool_1.BulletPool.CreateVector()).FromUeVector(
+                            t.CenterLocation,
+                          ),
+                          (s.Z -= o.HalfHeight),
+                          BulletStaticFunction_1.BulletStaticFunction.DebugDrawSector(
+                            1,
+                            o.Radius,
+                            a,
+                            e.Quaternion(),
+                            s,
+                            ColorUtils_1.ColorUtils.LinearRed,
+                            t.BulletDataMain.Base.Duration - i,
+                          ),
+                          BulletPool_1.BulletPool.RecycleVector(s)),
+                        BulletPool_1.BulletPool.RecycleRotator(e))
+                      : 9 === l &&
+                        ((r = t.CollisionInfo.RegionComponent),
+                        BulletStaticFunction_1.BulletStaticFunction.DebugDrawRingWithRotation(
+                          r.HalfHeight,
+                          0,
+                          r.Radius,
+                          t.CenterLocation,
+                          t.ActorComponent.ActorQuat,
+                        )));
   }
   static EntityLeave(t, l) {
-    var e = l.EntityHandle;
-    if (e?.Valid) {
-      const a = e.Entity;
+    var o = l.EntityHandle;
+    if (o?.Valid) {
+      const a = o.Entity;
       if (1 === l.Type) {
-        var o,
-          e = t.CollisionInfo,
-          i = e.CharacterEntityMap.get(a);
+        var e,
+          o = t.CollisionInfo,
+          i = o.CharacterEntityMap.get(a);
         void 0 === i ||
-          ((o = a.GetComponent(3)) &&
-            (this.r7o(t, a, o.IsRoleAndCtrlByMe), 0 < i) &&
-            a.GetComponent(107)?.RemoveTimeScale(i),
-          e.CharacterEntityMap.delete(a),
+          ((e = a.GetComponent(3)) &&
+            (this.tHo(t, a, e.IsRoleAndCtrlByMe), 0 < i) &&
+            a.GetComponent(109)?.RemoveTimeScale(i),
+          o.CharacterEntityMap.delete(a),
           t.BulletDataMain.Base.Interval <= 0 &&
-            e.ObjectsHitCurrent.delete(a.Id),
-          e.CharacterEntityMap.size) ||
-          (e.HaveCharacterInBullet = !1);
+            o.ObjectsHitCurrent.delete(a.Id),
+          o.CharacterEntityMap.size) ||
+          (o.HaveCharacterInBullet = !1);
       } else if (2 === l.Type) {
         const a = ModelManager_1.ModelManager.BulletModel.GetBulletEntityById(
           l.BulletEntityId,
         );
         a &&
-          void 0 !== (i = (o = t.CollisionInfo).BulletEntityMap.get(a)) &&
+          void 0 !== (i = (e = t.CollisionInfo).BulletEntityMap.get(a)) &&
           (0 < i && BulletUtil_1.BulletUtil.RemoveTimeScale(t, i),
-          o.BulletEntityMap.delete(a));
+          e.BulletEntityMap.delete(a));
       }
     }
   }
-  static r7o(t, l, e) {
-    (e = l.GetComponent(0)?.IsRole() && !e), (t = t.BulletDataMain);
-    if (!e && t.Execution.GeIdApplyToVictim) {
-      var o = l.GetComponent(157);
-      if (o)
+  static tHo(t, l, o) {
+    (o = l.GetComponent(0)?.IsRole() && !o), (t = t.BulletDataMain);
+    if (!o && t.Execution.GeIdApplyToVictim) {
+      var e = l.GetComponent(159);
+      if (e)
         for (const i of t.Execution.GeIdApplyToVictim)
-          o.RemoveBuff(
+          e.RemoveBuff(
             i,
             -1,
             "BulletCollisionUtil.CharacterLeaveBulletUseBuff",
           );
     }
   }
-  static n7o(t, l, e, o, i, a) {
-    var r = new Array(),
-      l = l.EffectOnHit.get(e ? 7 : 4);
-    return (
-      l && 0 < l.length && "None" !== l && r.push(l),
+  static iHo(t, l, o, e, i, a) {
+    BulletCollisionUtil.Xfa.clear();
+    var l = l.EffectOnHit.get(o ? 7 : 4);
+    l && 0 < l.length && "None" !== l && BulletCollisionUtil.Xfa.set(l, !0),
       i &&
         t.IsPartHit &&
-        (e = t.GetPartHitConf(o)) &&
-        (e.ReplaceBulletHitEffect && (r.length = 0),
-        (l = e.Effect),
+        (o = t.GetPartHitConf(e)) &&
+        (o.ReplaceBulletHitEffect && BulletCollisionUtil.Xfa.clear(),
+        (l = o.Effect),
         ObjectUtils_1.ObjectUtils.SoftObjectReferenceValid(l) &&
-          r.push(l.ToAssetPathName()),
+          BulletCollisionUtil.Xfa.set(l.ToAssetPathName(), !1),
         a) &&
-        ((i = e.Audio),
+        ((i = o.Audio),
         ObjectUtils_1.ObjectUtils.SoftObjectReferenceValid(i)) &&
-        r.push(i.ToAssetPathName()),
-      r
-    );
+        BulletCollisionUtil.Xfa.set(i.ToAssetPathName(), !1);
   }
-  static PlayHitEffect(l, o, i, a, r, s) {
-    var _ = l.BulletDataMain,
-      u = _.Render,
-      _ = 0 < _.Base.DamageId,
-      o = o.Entity.GetComponent(185).HasTag(-1728163740)
-        ? void 0
-        : BulletCollisionUtil.n7o(
-            o,
-            u,
-            a,
-            i,
-            _,
-            l.BulletDataMain.Base.EnablePartHitAudio,
-          );
-    if (o && 0 < o.length) {
-      a = u.EffectOnHitConf.get(0);
-      let t = void 0;
-      (t = a
-        ? (a.EnableHighLimit &&
-            ((i = l.GetActorLocation().Z),
-            (_ = a.HighLimit),
-            (r.Z = MathUtils_1.MathUtils.Clamp(r.Z, i + _.X, i + _.Y))),
-          a.Scale)
-        : Vector_1.Vector.OneVectorProxy),
-        BulletCollisionUtil.s7o.Set(r, s.Quaternion(), t);
-      var n = l.Attacker?.GetComponent(51)?.HitEffectMap,
-        i = l.Attacker?.GetComponent(42);
-      let e = !1;
-      (0, RegisterComponent_1.isComponentInstance)(i, 170) &&
-        (e = "p1" === i.Priority.State);
-      var c = BulletStaticFunction_1.HitStaticFunction.CreateEffectContext(
-        l.Attacker,
-        e,
-      );
-      const C = u.AudioOnHit;
-      var U = (t, l) => {
-        BulletStaticFunction_1.HitStaticFunction.PlayHitAudio(t, l, C, e);
-      };
-      for (const h of o) {
-        let t = 0;
-        var B = n.get(h);
-        B &&
-        B.Size >= CharacterHitComponent_1.MAX_HIT_EFFECT_COUNT &&
-        ((t = B.Pop()), EffectSystem_1.EffectSystem.IsValid(t))
-          ? (EffectSystem_1.EffectSystem.ReplayEffect(
-              t,
-              "ReUseHitEffect",
-              BulletCollisionUtil.s7o.ToUeTransform(),
-            ),
-            B.Push(t),
-            BulletStaticFunction_1.HitStaticFunction.PlayHitAudio(5, t, C, e))
-          : ((t = EffectSystem_1.EffectSystem.SpawnEffect(
-              GlobalData_1.GlobalData.World,
-              BulletCollisionUtil.s7o.ToUeTransform(),
-              h,
-              "[BulletCollisionUtil.ProcessHitEffect]",
-              c,
-              void 0,
-              void 0,
-              U,
-            )),
-            n.has(h) || n.set(h, new Queue_1.Queue()),
-            n.get(h).Push(t));
+  static PlayHitEffect(l, e, i, a, s, r) {
+    var _ = e.Entity.GetComponent(188);
+    if (!_.HasTag(-1728163740)) {
+      var _ = l.BulletDataMain,
+        u = _.Render,
+        _ = 0 < _.Base.DamageId;
+      if (
+        (BulletCollisionUtil.iHo(
+          e,
+          u,
+          a,
+          i,
+          _,
+          l.BulletDataMain.Base.EnablePartHitAudio,
+        ),
+        0 < BulletCollisionUtil.Xfa.size)
+      ) {
+        e = u.EffectOnHitConf.get(0);
+        let t = void 0;
+        (t = e
+          ? (e.EnableHighLimit &&
+              ((a = l.GetActorLocation().Z),
+              (i = e.HighLimit),
+              (s.Z = MathUtils_1.MathUtils.Clamp(s.Z, a + i.X, a + i.Y))),
+            e.Scale)
+          : Vector_1.Vector.OneVectorProxy),
+          BulletCollisionUtil.oHo.Set(s, r.Quaternion(), t);
+        var n = l.Attacker?.GetComponent(52)?.HitEffectMap,
+          c = l.Attacker?.GetComponent(3),
+          _ = l.Attacker?.GetComponent(43);
+        let o = !1;
+        (0, RegisterComponent_1.isComponentInstance)(_, 173) &&
+          (o = "p1" === _.Priority.State);
+        var U = BulletStaticFunction_1.HitStaticFunction.CreateEffectContext(
+          l.Attacker,
+          o,
+        );
+        const P = u.AudioOnHit;
+        var B,
+          C,
+          h = (t, l) => {
+            BulletStaticFunction_1.HitStaticFunction.PlayHitAudio(t, l, P, o);
+          };
+        for ([B, C] of BulletCollisionUtil.Xfa) {
+          let t = 0,
+            l = c?.GetReplaceEffect(B);
+          l = l || B;
+          var f = n.get(l);
+          f &&
+          f.Size >= CharacterHitComponent_1.MAX_HIT_EFFECT_COUNT &&
+          ((t = f.Pop()), EffectSystem_1.EffectSystem.IsValid(t))
+            ? (EffectSystem_1.EffectSystem.ReplayEffect(
+                t,
+                "ReUseHitEffect",
+                BulletCollisionUtil.oHo.ToUeTransform(),
+              ),
+              f.Push(t),
+              C &&
+                BulletStaticFunction_1.HitStaticFunction.PlayHitAudio(
+                  5,
+                  t,
+                  P,
+                  o,
+                ))
+            : ((t = EffectSystem_1.EffectSystem.SpawnEffect(
+                GlobalData_1.GlobalData.World,
+                BulletCollisionUtil.oHo.ToUeTransform(),
+                l,
+                "[BulletCollisionUtil.ProcessHitEffect]",
+                U,
+                void 0,
+                void 0,
+                C ? h : void 0,
+              )),
+              n.has(l) || n.set(l, new Queue_1.Queue()),
+              n.get(l).Push(t));
+        }
       }
     }
   }
-  static PlaySceneItemHitEffect(t, l, e, o) {
-    var i = t?.GetComponent(51)?.HitEffectMap;
+  static PlaySceneItemHitEffect(t, l, o, e) {
+    var i = t?.GetComponent(52)?.HitEffectMap;
     let a = 0;
-    var r = i.get(l),
-      s = t?.GetComponent(42);
+    var s = i.get(l),
+      r = t?.GetComponent(43);
     let _ = !1;
-    (0, RegisterComponent_1.isComponentInstance)(s, 170) &&
-      (_ = "p1" === s.Priority.State),
-      r &&
-      r.Size >= CharacterHitComponent_1.MAX_HIT_EFFECT_COUNT &&
-      ((a = r.Pop()), EffectSystem_1.EffectSystem.IsValid(a))
-        ? (EffectSystem_1.EffectSystem.ReplayEffect(a, "ReUseHitEffect", e),
-          r.Push(a),
-          BulletStaticFunction_1.HitStaticFunction.PlayHitAudio(5, a, o, _))
-        : ((s = BulletStaticFunction_1.HitStaticFunction.CreateEffectContext(
+    (0, RegisterComponent_1.isComponentInstance)(r, 173) &&
+      (_ = "p1" === r.Priority.State),
+      s &&
+      s.Size >= CharacterHitComponent_1.MAX_HIT_EFFECT_COUNT &&
+      ((a = s.Pop()), EffectSystem_1.EffectSystem.IsValid(a))
+        ? (EffectSystem_1.EffectSystem.ReplayEffect(a, "ReUseHitEffect", o),
+          s.Push(a),
+          BulletStaticFunction_1.HitStaticFunction.PlayHitAudio(5, a, e, _))
+        : ((r = BulletStaticFunction_1.HitStaticFunction.CreateEffectContext(
             t,
             _,
           )),
           (a = EffectSystem_1.EffectSystem.SpawnEffect(
             GlobalData_1.GlobalData.World,
-            e,
+            o,
             l,
             "[BulletCollisionUtil.ProcessHitEffect]",
-            s,
+            r,
             void 0,
             void 0,
             (t, l) => {
-              BulletStaticFunction_1.HitStaticFunction.PlayHitAudio(t, l, o, _);
+              BulletStaticFunction_1.HitStaticFunction.PlayHitAudio(t, l, e, _);
             },
           )),
           i.has(l) || i.set(l, new Queue_1.Queue()),
           i.get(l).Push(a));
   }
   static CalcPartDistance(t, l) {
-    var e = BulletPool_1.BulletPool.CreateVector(),
+    var o = BulletPool_1.BulletPool.CreateVector(),
       t =
-        (e.FromUeVector(t.K2_GetComponentLocation()),
+        (o.FromUeVector(t.K2_GetComponentLocation()),
         BulletPool_1.BulletPool.CreateVector()),
       l =
-        (e.Subtraction(l.CenterLocation, t),
+        (o.Subtraction(l.CenterLocation, t),
         t.Normalize(),
-        Vector_1.Vector.DistSquared(e, l.GetActorLocation()));
+        Vector_1.Vector.DistSquared(o, l.GetActorLocation()));
     return (
-      BulletPool_1.BulletPool.RecycleVector(e),
+      BulletPool_1.BulletPool.RecycleVector(o),
       BulletPool_1.BulletPool.RecycleVector(t),
       l
     );
   }
-  static GetImpactPointCharacter(t, l, e) {
-    var o, i, a, r;
+  static GetImpactPointCharacter(t, l, o) {
+    var e, i, a, s;
     t instanceof UE.CapsuleComponent
-      ? ((o = l.GetActorLocation()),
-        e.FromUeVector(t.GetUpVector()),
-        this.h7o.FromUeVector(t.K2_GetComponentLocation()),
-        o.Subtraction(this.h7o, this.l7o),
-        (r = Vector_1.Vector.DotProduct(this.l7o, e)),
-        (i = Math.sign(r)),
-        (a = Math.abs(r)),
-        (r = Math.min(t.CapsuleHalfHeight, a) * i),
-        e.MultiplyEqual(r),
-        e.AdditionEqual(this.h7o),
+      ? ((e = l.GetActorLocation()),
+        o.FromUeVector(t.GetUpVector()),
+        this.nHo.FromUeVector(t.K2_GetComponentLocation()),
+        e.Subtraction(this.nHo, this.sHo),
+        (s = Vector_1.Vector.DotProduct(this.sHo, o)),
+        (i = Math.sign(s)),
+        (a = Math.abs(s)),
+        (s = Math.min(t.CapsuleHalfHeight, a) * i),
+        o.MultiplyEqual(s),
+        o.AdditionEqual(this.nHo),
         ModelManager_1.ModelManager.BulletModel.ShowBulletCollision(
           l.Attacker.Id,
         ) &&
           UE.KismetSystemLibrary.DrawDebugSphere(
             GlobalData_1.GlobalData.World,
-            e.ToUeVector(),
+            o.ToUeVector(),
             4,
             8,
             ColorUtils_1.ColorUtils.LinearBlue,
             2,
             3,
           ),
-        o.Subtraction(e, this._7o),
-        this._7o.Normalize(),
-        this._7o.MultiplyEqual(t.CapsuleRadius),
-        e.AdditionEqual(this._7o),
+        e.Subtraction(o, this.aHo),
+        this.aHo.Normalize(),
+        this.aHo.MultiplyEqual(t.CapsuleRadius),
+        o.AdditionEqual(this.aHo),
         ModelManager_1.ModelManager.BulletModel.ShowBulletCollision(
           l.Attacker.Id,
         ) &&
           UE.KismetSystemLibrary.DrawDebugSphere(
             GlobalData_1.GlobalData.World,
-            e.ToUeVector(),
+            o.ToUeVector(),
             4,
             8,
             ColorUtils_1.ColorUtils.LinearYellow,
@@ -451,7 +582,7 @@ class BulletCollisionUtil {
             ["bulletRowName", l.BulletRowName],
           ))
       : t instanceof UE.BoxComponent
-        ? BulletCollisionUtil.GetHitPointBoxComp(t, l, e)
+        ? BulletCollisionUtil.GetHitPointBoxComp(t, l, o)
         : (Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
               "Bullet",
@@ -460,21 +591,21 @@ class BulletCollisionUtil {
               ["boneName", t?.GetName()],
               ["actorName", t?.GetOwner().GetName()],
             ),
-          e.FromUeVector(l.GetActorLocation()));
+          o.FromUeVector(l.GetActorLocation()));
   }
-  static GetHitPointBoxComp(t, l, e, o) {
-    this.c7o.FromUeTransform(t.K2_GetComponentToWorld());
-    var o = o ?? l.GetActorLocation(),
+  static GetHitPointBoxComp(t, l, o, e) {
+    this.lHo.FromUeTransform(t.K2_GetComponentToWorld());
+    var e = e ?? l.GetActorLocation(),
       i =
-        (this.c7o.InverseTransformPosition(o, this.m7o),
-        this.d7o.FromUeVector(this.m7o),
-        this.d7o.MultiplyEqual(-1),
+        (this.lHo.InverseTransformPosition(e, this._Ho),
+        this.uHo.FromUeVector(this._Ho),
+        this.uHo.MultiplyEqual(-1),
         t.BoxExtent),
       a = i.X,
-      r = i.Y,
+      s = i.Y,
       i = i.Z,
-      a = this.C7o(this.m7o, this.d7o, [-a, -r, -i], [a, r, i], this.g7o);
-    this.c7o.TransformPosition(this.g7o, e),
+      a = this.cHo(this._Ho, this.uHo, [-a, -s, -i], [a, s, i], this.mHo);
+    this.lHo.TransformPosition(this.mHo, o),
       1 !== a &&
         Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn(
@@ -493,14 +624,14 @@ class BulletCollisionUtil {
           "命中特效 碰撞点 角色 Box",
           ["boneName", t.GetName()],
           ["bulletRowName", l.BulletRowName],
-          ["outPoint", e],
+          ["outPoint", o],
         ),
       ModelManager_1.ModelManager.BulletModel.ShowBulletCollision(
         l.Attacker.Id,
       ) &&
         (UE.KismetSystemLibrary.DrawDebugSphere(
           GlobalData_1.GlobalData.World,
-          e.ToUeVector(),
+          o.ToUeVector(),
           4,
           8,
           ColorUtils_1.ColorUtils.LinearYellow,
@@ -509,58 +640,58 @@ class BulletCollisionUtil {
         ),
         UE.KismetSystemLibrary.DrawDebugLine(
           GlobalData_1.GlobalData.World,
-          o.ToUeVector(),
-          this.c7o.GetLocation().ToUeVector(),
+          e.ToUeVector(),
+          this.lHo.GetLocation().ToUeVector(),
           ColorUtils_1.ColorUtils.LinearBlue,
           2,
           3,
         ));
   }
-  static C7o(o, i, a, r, t) {
-    let s = 0,
+  static cHo(e, i, a, s, t) {
+    let r = 0,
       _ = Number.MAX_VALUE;
-    for (let e = 0; e < 3; e++)
-      if (Math.abs(i.Tuple[e]) < Number.EPSILON) {
-        if (o.Tuple[e] < a[e] || o.Tuple[e] > r[e]) return 0;
+    for (let o = 0; o < 3; o++)
+      if (Math.abs(i.Tuple[o]) < Number.EPSILON) {
+        if (e.Tuple[o] < a[o] || e.Tuple[o] > s[o]) return 0;
       } else {
-        var u = 1 / i.Tuple[e];
-        let t = (a[e] - o.Tuple[e]) * u,
-          l = (r[e] - o.Tuple[e]) * u;
+        var u = 1 / i.Tuple[o];
+        let t = (a[o] - e.Tuple[o]) * u,
+          l = (s[o] - e.Tuple[o]) * u;
         if (
           (t > l && ((u = t), (t = l), (l = u)),
-          t > s && (s = t),
+          t > r && (r = t),
           l > _ && (_ = l),
-          s > _)
+          r > _)
         )
           return 0;
       }
-    return i.Multiply(s, t), t.AdditionEqual(o), 1;
+    return i.Multiply(r, t), t.AdditionEqual(e), 1;
   }
-  static GetImpactPointSceneItem(t, l, e) {
-    var o,
+  static GetImpactPointSceneItem(t, l, o) {
+    var e,
       i = BulletPool_1.BulletPool.CreateVector(),
       a =
         (i.FromUeVector(t.K2_GetComponentLocation()),
         BulletPool_1.BulletPool.CreateVector());
-    const r = t.Bounds.SphereRadius;
+    const s = t.Bounds.SphereRadius;
     if (
       (Math.abs(l.MoveInfo.BulletSpeed) < MathUtils_1.MathUtils.SmallNumber
         ? t.IsA(UE.BoxComponent.StaticClass())
           ? BulletCollisionUtil.GetHitPointBoxComp(
               t,
               l,
-              e,
+              o,
               l.AttackerActorComp.ActorLocationProxy,
             )
           : (l.AttackerActorComp.ActorLocationProxy.Subtraction(i, a),
             a.Normalize(),
-            a.MultiplyEqual(r),
-            a.Addition(i, e))
+            a.MultiplyEqual(s),
+            a.Addition(i, o))
         : (i.Subtraction(l.CollisionInfo.LastFramePosition, a),
-          (o = a.Size() - r),
+          (e = a.Size() - s),
           a.Normalize(),
-          a.MultiplyEqual(o),
-          l.CollisionInfo.LastFramePosition.Addition(a, e)),
+          a.MultiplyEqual(e),
+          l.CollisionInfo.LastFramePosition.Addition(a, o)),
       BulletPool_1.BulletPool.RecycleVector(i),
       BulletPool_1.BulletPool.RecycleVector(a),
       BulletConstant_1.BulletConstant.OpenHitActorLog &&
@@ -570,12 +701,12 @@ class BulletCollisionUtil {
           21,
           "命中特效 碰撞点 场景物",
           ["boneName", t.GetName()],
-          ["radius", r],
+          ["radius", s],
           ["bulletRowName", l.BulletRowName],
         ),
       ModelManager_1.ModelManager.BulletModel.ShowBulletTrace(l.Attacker.Id))
     ) {
-      const r = 4;
+      const s = 4;
       UE.KismetSystemLibrary.DrawDebugSphere(
         GlobalData_1.GlobalData.World,
         i.ToUeVector(),
@@ -587,7 +718,7 @@ class BulletCollisionUtil {
       ),
         UE.KismetSystemLibrary.DrawDebugSphere(
           GlobalData_1.GlobalData.World,
-          e.ToUeVector(),
+          o.ToUeVector(),
           4,
           8,
           ColorUtils_1.ColorUtils.LinearYellow,
@@ -597,16 +728,17 @@ class BulletCollisionUtil {
     }
   }
 }
-((exports.BulletCollisionUtil = BulletCollisionUtil).o7o =
+((exports.BulletCollisionUtil = BulletCollisionUtil).eHo =
   Vector_1.Vector.Create()),
-  (BulletCollisionUtil.a7o = void 0),
-  (BulletCollisionUtil.s7o = Transform_1.Transform.Create()),
-  (BulletCollisionUtil.h7o = Vector_1.Vector.Create()),
-  (BulletCollisionUtil.l7o = Vector_1.Vector.Create()),
-  (BulletCollisionUtil._7o = Vector_1.Vector.Create()),
-  (BulletCollisionUtil.c7o = Transform_1.Transform.Create()),
-  (BulletCollisionUtil.m7o = Vector_1.Vector.Create()),
-  (BulletCollisionUtil.d7o = Vector_1.Vector.Create()),
-  (BulletCollisionUtil.g7o = Vector_1.Vector.Create()),
-  (BulletCollisionUtil.u7o = void 0);
+  (BulletCollisionUtil.rHo = void 0),
+  (BulletCollisionUtil.oHo = Transform_1.Transform.Create()),
+  (BulletCollisionUtil.Xfa = new Map()),
+  (BulletCollisionUtil.nHo = Vector_1.Vector.Create()),
+  (BulletCollisionUtil.sHo = Vector_1.Vector.Create()),
+  (BulletCollisionUtil.aHo = Vector_1.Vector.Create()),
+  (BulletCollisionUtil.lHo = Transform_1.Transform.Create()),
+  (BulletCollisionUtil._Ho = Vector_1.Vector.Create()),
+  (BulletCollisionUtil.uHo = Vector_1.Vector.Create()),
+  (BulletCollisionUtil.mHo = Vector_1.Vector.Create()),
+  (BulletCollisionUtil.hHo = void 0);
 //# sourceMappingURL=BulletCollisionUtil.js.map

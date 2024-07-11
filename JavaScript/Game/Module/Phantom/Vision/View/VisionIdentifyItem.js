@@ -16,20 +16,20 @@ const UE = require("ue"),
 class VisionIdentifyItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
-      (this.L7i = ""),
-      (this.Y6i = void 0),
+      (this.THi = ""),
+      (this.$8i = void 0),
       (this.bPe = void 0),
-      (this.R7i = void 0),
-      (this.Wpt = void 0),
+      (this.DHi = void 0),
+      (this.oMt = void 0),
       (this.nqe = () => {
         UiManager_1.UiManager.IsViewShow("VisionIntensifyView")
           ? EventSystem_1.EventSystem.Emit(
               EventDefine_1.EEventName.OnClickVisionIntensifyItemJump,
             )
-          : this.Wpt &&
+          : this.oMt &&
             UiManager_1.UiManager.OpenView(
               "VisionIntensifyView",
-              this.Wpt.GetIncrId(),
+              this.oMt.GetIncrId(),
               () => {
                 EventSystem_1.EventSystem.Emit(
                   EventDefine_1.EEventName.OnClickVisionIntensifyItemJump,
@@ -64,43 +64,43 @@ class VisionIdentifyItem extends GridProxyAbstract_1.GridProxyAbstract {
     );
   }
   async PlaySequenceAndUpdate(e, t) {
-    (this.R7i = new CustomPromise_1.CustomPromise()),
+    (this.DHi = new CustomPromise_1.CustomPromise()),
       0 < e
         ? TimerSystem_1.TimerSystem.Delay(() => {
             this.bPe?.PlaySequencePurely("Update");
           }, e)
         : this.bPe?.PlaySequencePurely("Update"),
       TimerSystem_1.TimerSystem.Delay(() => {
-        this.R7i?.SetResult();
+        this.DHi?.SetResult();
       }, e + t),
-      await this.R7i.Promise;
-    e = this.Y6i;
+      await this.DHi.Promise;
+    e = this.$8i;
     e &&
-      (this.U7i(e),
-      this.A7i(e),
-      this.P7i(e),
-      this.x7i(e),
-      this.wxt(e),
-      this.w7i(e));
+      (this.RHi(e),
+      this.UHi(e),
+      this.AHi(e),
+      this.PHi(e),
+      this.qwt(e),
+      this.xHi(e));
   }
   Update(e, t) {
     var i = e.Data;
-    (this.L7i = t),
-      (this.Wpt = e.CurrentVisionData),
-      (this.Y6i = i),
+    (this.THi = t),
+      (this.oMt = e.CurrentVisionData),
+      (this.$8i = i),
       e.IfPreCache ||
-        (this.U7i(i),
-        this.A7i(i),
-        this.P7i(i),
-        this.x7i(i),
-        this.wxt(i),
-        this.w7i(i));
+        (this.RHi(i),
+        this.UHi(i),
+        this.AHi(i),
+        this.PHi(i),
+        this.qwt(i),
+        this.xHi(i));
   }
-  x7i(e) {
+  PHi(e) {
     this.GetButton(5).RootUIComp.SetRaycastTarget(
-      1 === e.SlotState && this.B7i(),
+      1 === e.SlotState && this.wHi(),
     ),
-      this.GetItem(2).SetUIActive(1 === e.SlotState && this.B7i());
+      this.GetItem(2).SetUIActive(1 === e.SlotState && this.wHi());
   }
   Rh(e) {
     let t = "";
@@ -108,7 +108,7 @@ class VisionIdentifyItem extends GridProxyAbstract_1.GridProxyAbstract {
       0 === e.SlotState
         ? (t = GRAYCOLOR)
         : 1 === e.SlotState
-          ? (t = this.B7i() ? GREENCOLOR : WHITECOLOR)
+          ? (t = this.wHi() ? GREENCOLOR : WHITECOLOR)
           : 3 === e.SlotState
             ? (t = NORMALCOLOR)
             : 2 === e.SlotState
@@ -117,13 +117,13 @@ class VisionIdentifyItem extends GridProxyAbstract_1.GridProxyAbstract {
       t
     );
   }
-  U7i(e) {
+  RHi(e) {
     e = UE.Color.FromHex(this.Rh(e));
     this.GetText(0).SetColor(e),
       this.GetText(4).SetColor(e),
       this.GetItem(2).SetColor(e);
   }
-  w7i(e) {
+  xHi(e) {
     var e = UE.Color.FromHex(this.Rh(e)),
       t = this.GetUiSpriteTransition(7).TransitionInfo,
       t =
@@ -140,21 +140,21 @@ class VisionIdentifyItem extends GridProxyAbstract_1.GridProxyAbstract {
       (t.DisabledTransition.FontColor = e),
       (t.NormalTransition.FontColor = e);
   }
-  A7i(e) {
+  UHi(e) {
     this.GetText(0).SetText(e.GetLevelUpViewName());
   }
-  P7i(e) {
+  AHi(e) {
     var t = 3 === e.SlotState;
     this.GetText(1).SetUIActive(t),
       t && this.GetText(1).SetText(e.GetAttributeValueString());
   }
-  B7i() {
+  wHi() {
     return (
-      "VisionLevelUpView" === this.L7i || "VisionEquipmentView" === this.L7i
+      "VisionLevelUpView" === this.THi || "VisionEquipmentView" === this.THi
     );
   }
-  wxt(e) {
-    this.GetItem(3).SetUIActive(1 === e.SlotState && this.B7i());
+  qwt(e) {
+    this.GetItem(3).SetUIActive(1 === e.SlotState && this.wHi());
   }
 }
 exports.VisionIdentifyItem = VisionIdentifyItem;

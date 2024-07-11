@@ -6,9 +6,12 @@ class GameplayAbilityVisionBase {
   constructor(t) {
     this.VisionComponent = t;
   }
-  static Create(t) {
+  static Spawn(t) {
     t = new this(t);
-    return t.OnCreate(), t;
+    return t.Create(), t;
+  }
+  Create() {
+    this.OnCreate();
   }
   Destroy() {
     this.OnDestroy();
@@ -22,7 +25,9 @@ class GameplayAbilityVisionBase {
   EndAbility() {
     return this.OnEndAbility();
   }
-  OnVisionChanged() {}
+  ChangeVision() {
+    this.OnChangeVision();
+  }
   OnCreate() {}
   OnDestroy() {}
   OnTick(t) {}
@@ -32,6 +37,8 @@ class GameplayAbilityVisionBase {
   OnEndAbility() {
     return !0;
   }
+  OnChangeVision() {}
+  OnGoDown() {}
   get Entity() {
     return this.VisionComponent.Entity;
   }
@@ -47,25 +54,25 @@ class GameplayAbilityVisionBase {
     return this.Entity.GetComponent(3);
   }
   get AttributeComponent() {
-    return this.Entity.GetComponent(156);
+    return this.Entity.GetComponent(158);
   }
   get GameplayTagComponent() {
-    return this.Entity.GetComponent(185);
+    return this.Entity.GetComponent(188);
   }
   get SkillComponent() {
     return this.Entity.GetComponent(33);
   }
   get BuffComponent() {
-    return this.Entity.GetComponent(157);
+    return this.Entity.GetComponent(159);
   }
   get MoveComponent() {
-    return this.Entity.GetComponent(161);
+    return this.Entity.GetComponent(163);
   }
   get AudioComponent() {
-    return this.Entity.GetComponent(42);
+    return this.Entity.GetComponent(43);
   }
   get TeamComponent() {
-    return this.Entity.GetComponent(81);
+    return this.Entity.GetComponent(83);
   }
 }
 exports.GameplayAbilityVisionBase = GameplayAbilityVisionBase;

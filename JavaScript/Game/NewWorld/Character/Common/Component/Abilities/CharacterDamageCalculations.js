@@ -88,7 +88,7 @@ const formulas = {
   },
   5: function (t, e, r, a, A, s, i, _, u, c, T) {
     return (
-      (t.TargetSnapshot.CurrentValues.Tkn *
+      (t.TargetSnapshot.CurrentValues.e5n *
         (c * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND)) /
         u +
       T
@@ -108,7 +108,7 @@ const formulas = {
       n),
       (c =
         t.TargetSnapshot.CurrentValues.Proto_Life -
-        (t.TargetSnapshot.CurrentValues.Tkn *
+        (t.TargetSnapshot.CurrentValues.e5n *
           h *
           CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND +
           b));
@@ -452,7 +452,7 @@ class Calculation {
     }
     return 0;
   }
-  static LKo(t, e, r, a) {
+  static yQo(t, e, r, a) {
     var r = getAttrFromSnapshots(t, 0, r),
       a = a * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND,
       A =
@@ -660,7 +660,7 @@ class Calculation {
               a,
               0,
             )),
-            this.LKo(e, A, c, u));
+            this.yQo(e, A, c, u));
     }
     (i = t.RandomSeed),
       (t.RandomSeed = RandomSystem_1.default.GetNextRandomSeed(i, 1)),

@@ -14,11 +14,11 @@ class InfluenceDisplayItem extends UiPanelBase_1.UiPanelBase {
   constructor(t) {
     super(),
       (this.yGe = void 0),
-      (this.Ini = 0),
-      (this.Tni = 0),
-      (this.U4e = void 0),
+      (this.Tsi = 0),
+      (this.Lsi = 0),
+      (this.j5e = void 0),
       (this.Xy = 0),
-      (this.T7e = () => {
+      (this.Lke = () => {
         var t = this.IsUnLock();
         return (
           t ||
@@ -28,9 +28,9 @@ class InfluenceDisplayItem extends UiPanelBase_1.UiPanelBase {
           t
         );
       }),
-      (this.Lni = (t) => {
-        1 === t ? this.SetActiveToggleState() : this.Dni(),
-          this.U4e?.(t, this.Xy);
+      (this.Dsi = (t) => {
+        1 === t ? this.SetActiveToggleState() : this.Rsi(),
+          this.j5e?.(t, this.Xy);
       }),
       this.CreateThenShowByActor(t.GetOwner());
   }
@@ -48,10 +48,10 @@ class InfluenceDisplayItem extends UiPanelBase_1.UiPanelBase {
       [10, UE.UIItem],
       [9, UE.UITexture],
     ]),
-      (this.BtnBindInfo = [[2, this.Lni]]);
+      (this.BtnBindInfo = [[2, this.Dsi]]);
   }
   OnStart() {
-    this.GetExtendToggle(2).CanExecuteChange.Bind(this.T7e),
+    this.GetExtendToggle(2).CanExecuteChange.Bind(this.Lke),
       (this.yGe = new ContentItem(this.GetItem(8))),
       this.yGe.SetActive(!1);
   }
@@ -59,23 +59,23 @@ class InfluenceDisplayItem extends UiPanelBase_1.UiPanelBase {
     var t = this.GetExtendToggle(2);
     t.SetToggleState(0),
       t.CanExecuteChange.Unbind(),
-      this.Dpt(),
+      this.Ovt(),
       this.yGe.Destroy(),
       (this.yGe = void 0);
   }
   UpdateItem(t, i) {
-    this.Tni = t;
+    this.Lsi = t;
     var e =
       ModelManager_1.ModelManager.InfluenceReputationModel.GetInfluenceInstance(
         t,
       );
-    e && (this.Ini = e.Relation), this.Rni(t, i), this.x6e();
+    e && (this.Tsi = e.Relation), this.Usi(t, i), this.K8e();
   }
   SetToggleState(t, i = !1) {
     this.GetExtendToggle(2).SetToggleState(t, i);
   }
   SetToggleFunction(t) {
-    this.U4e = t;
+    this.j5e = t;
   }
   SetIndex(t) {
     this.Xy = t;
@@ -86,20 +86,20 @@ class InfluenceDisplayItem extends UiPanelBase_1.UiPanelBase {
       this.GetItem(10).SetUIActive(!1);
   }
   SetDisActiveToggleState() {
-    this.SetToggleState(0), this.Dni();
+    this.SetToggleState(0), this.Rsi();
   }
-  Dni() {
-    this.yGe.SetActive(!1), this.x6e();
+  Rsi() {
+    this.yGe.SetActive(!1), this.K8e();
   }
-  Rni(t, i) {
+  Usi(t, i) {
     var e = this.GetText(0),
       s = this.GetText(1),
       n = this.GetTexture(9);
-    this.GetItem(5).SetUIActive(1 === this.Ini),
-      this.GetItem(3).SetUIActive(2 === this.Ini),
-      this.GetItem(6).SetUIActive(3 === this.Ini),
-      this.GetItem(7).SetUIActive(0 === this.Ini),
-      0 === this.Ini
+    this.GetItem(5).SetUIActive(1 === this.Tsi),
+      this.GetItem(3).SetUIActive(2 === this.Tsi),
+      this.GetItem(6).SetUIActive(3 === this.Tsi),
+      this.GetItem(7).SetUIActive(0 === this.Tsi),
+      0 === this.Tsi
         ? (e.SetUIActive(!1),
           n.SetUIActive(!1),
           LguiUtil_1.LguiUtil.SetLocalText(s, "InfluenceLockName"))
@@ -113,8 +113,8 @@ class InfluenceDisplayItem extends UiPanelBase_1.UiPanelBase {
               LguiUtil_1.LguiUtil.SetLocalTextNew(s, e.ExtraDesc))
             : s.SetUIActive(!1),
           LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(1), e.Title),
-          this.yGe.UpdateItem(t, i, this.Ini),
-          2 === this.Ini &&
+          this.yGe.UpdateItem(t, i, this.Tsi),
+          2 === this.Tsi &&
             ((s =
               ModelManager_1.ModelManager.InfluenceReputationModel.GetReputationProgress(
                 t,
@@ -123,29 +123,29 @@ class InfluenceDisplayItem extends UiPanelBase_1.UiPanelBase {
           n.SetUIActive(!0),
           this.SetTextureByPath(e.Logo, n));
   }
-  x6e() {
+  K8e() {
     RedDotController_1.RedDotController.BindRedDot(
       "InfluenceReward",
       this.GetItem(10),
       void 0,
-      this.Tni,
+      this.Lsi,
     );
   }
-  Dpt() {
+  Ovt() {
     RedDotController_1.RedDotController.UnBindRedDot("InfluenceReward");
   }
   IsUnLock() {
-    return 0 !== this.Ini;
+    return 0 !== this.Tsi;
   }
 }
 exports.InfluenceDisplayItem = InfluenceDisplayItem;
 class ContentItem extends UiPanelBase_1.UiPanelBase {
   constructor(t) {
     super(),
-      (this.Tni = 0),
-      (this.z4t = 0),
-      (this.xUt = () => {
-        var t = { InfluenceId: this.Tni, CountryId: this.z4t };
+      (this.Lsi = 0),
+      (this.z5t = 0),
+      (this.qAt = () => {
+        var t = { InfluenceId: this.Lsi, CountryId: this.z5t };
         UiManager_1.UiManager.OpenView("ReputationDetailsView", t);
       }),
       this.CreateThenShowByActor(t.GetOwner());
@@ -157,12 +157,12 @@ class ContentItem extends UiPanelBase_1.UiPanelBase {
       [2, UE.UIItem],
       [3, UE.UIText],
     ]),
-      (this.BtnBindInfo = [[1, this.xUt]]);
+      (this.BtnBindInfo = [[1, this.qAt]]);
   }
   UpdateItem(t, i, e) {
-    (this.Tni = t), (this.z4t = i), this.Uni(), this.Rni(e);
+    (this.Lsi = t), (this.z5t = i), this.Asi(), this.Usi(e);
   }
-  Rni(t) {
+  Usi(t) {
     var i = this.GetButton(1),
       e = this.GetText(3);
     1 === t
@@ -181,9 +181,9 @@ class ContentItem extends UiPanelBase_1.UiPanelBase {
               t,
             ]);
   }
-  Uni() {
+  Asi() {
     var t = ConfigManager_1.ConfigManager.InfluenceConfig.GetInfluenceConfig(
-      this.Tni,
+      this.Lsi,
     );
     LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(0), t.Introduction);
   }
@@ -192,7 +192,7 @@ class ContentItem extends UiPanelBase_1.UiPanelBase {
       "InfluenceReward",
       this.GetItem(2),
       void 0,
-      this.Tni,
+      this.Lsi,
     );
   }
 }

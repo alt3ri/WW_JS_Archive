@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BaseMap = void 0);
 const UE = require("ue"),
+  CustomPromise_1 = require("../../../../../Core/Common/CustomPromise"),
   Vector2D_1 = require("../../../../../Core/Utils/Math/Vector2D"),
   EventDefine_1 = require("../../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../../Common/Event/EventSystem"),
@@ -18,35 +19,36 @@ class BaseMap extends UiPanelBase_1.UiPanelBase {
       (this.PlayerArrow = void 0),
       (this.PlayerOutOfBoundIndicator = void 0),
       (this.MapType = 2),
-      (this.dUi = 1),
-      (this.lRi = 1),
-      (this.CUi = void 0),
-      (this.gUi = void 0),
-      (this.fUi = void 0),
-      (this.I_t = void 0),
-      (this.pUi = 100),
-      (this.vUi = void 0),
-      (this.MUi = () => {
-        this.gUi.OnMapSetUp(),
-          this.CUi.OnMapSetup(),
+      (this.dAi = 1),
+      (this.lUi = 1),
+      (this.CAi = void 0),
+      (this.gAi = void 0),
+      (this.fAi = void 0),
+      (this.kut = void 0),
+      (this.pAi = 100),
+      (this.vAi = void 0),
+      (this.daa = !1),
+      (this.MAi = () => {
+        this.gAi.OnMapSetUp(),
+          this.CAi.OnMapSetup(),
           this.RootItem.SetUIActive(!0);
       }),
-      (this.fUi = h),
-      (this.dUi = t),
-      (this.lRi = s),
+      (this.fAi = h),
+      (this.dAi = t),
+      (this.lUi = s),
       (this.MapType = e),
-      (this.I_t = i),
-      (this.pUi = r);
+      (this.kut = i),
+      (this.pAi = r);
   }
   get MapRootItem() {
     return this.RootItem;
   }
   OnBeforeDestroy() {
     this.UnBindEvents(),
-      this.CUi.Dispose(),
-      (this.CUi = void 0),
-      this.gUi.Dispose(),
-      (this.gUi = void 0);
+      this.CAi.Dispose(),
+      (this.CAi = void 0),
+      this.gAi.Dispose(),
+      (this.gAi = void 0);
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -59,107 +61,110 @@ class BaseMap extends UiPanelBase_1.UiPanelBase {
       [6, UE.UIItem],
       [7, UE.UIItem],
       [8, UE.UITexture],
+      [9, UE.UITexture],
     ];
   }
   OnStart() {
-    this.SetMapScale(this.dUi),
-      this.FXt(this.lRi),
-      this.uje(),
+    this.SetMapScale(this.dAi),
+      this.F$t(this.lUi),
+      this.yWe(),
       this.RootItem.SetUIActive(!1),
-      2 === this.MapType && this.MUi(),
+      2 === this.MapType && this.MAi(),
       (this.SelfPlayerNode = this.GetItem(0)),
       (this.PlayerOutOfBoundIndicator = this.GetItem(2)),
       (this.PlayerArrow = this.GetItem(1)),
       this.RootItem.SetHierarchyIndex(0);
     var e = this.GetItem(6);
-    e.SetWidth(2 * this.pUi),
-      e.SetHeight(2 * this.pUi),
+    e.SetWidth(2 * this.pAi),
+      e.SetHeight(2 * this.pAi),
       e.SetUIActive(!1),
-      (this.vUi = new LevelSequencePlayer_1.LevelSequencePlayer(e));
+      (this.vAi = new LevelSequencePlayer_1.LevelSequencePlayer(e));
   }
-  FXt(e) {
+  F$t(e) {
     var t = this.GetItem(3),
-      i = this.GetItem(4),
-      s = this.GetTexture(5),
-      r = this.GetItem(7),
+      i = this.GetItem(4);
+    let s = this.GetTexture(5);
+    2 === BaseMap.MapMaterialVersion && (s = this.GetTexture(9));
+    var r = this.GetItem(7),
       h = this.GetTexture(8);
-    (this.CUi = new MapMarkMgr_1.MapMarkMgr(this.MapType, t, this.I_t, e)),
-      this.CUi.Initialize(),
-      (this.gUi = new MapTileMgr_1.MapTileMgr(
+    (this.CAi = new MapMarkMgr_1.MapMarkMgr(this.MapType, t, this.kut, e)),
+      this.CAi.Initialize(),
+      (this.gAi = new MapTileMgr_1.MapTileMgr(
         this.RootItem,
         i,
         s,
         r,
         h,
         this.MapType,
-        this.fUi,
+        BaseMap.MapMaterialVersion,
+        this.fAi,
       )),
-      this.gUi.Initialize();
+      this.gAi.Initialize();
   }
   get MarkContainer() {
     return this.GetItem(3);
   }
-  uje() {
+  yWe() {
     2 !== this.MapType &&
       (ModelManager_1.ModelManager.GameModeModel.WorldDone
-        ? this.MUi()
+        ? this.MAi()
         : EventSystem_1.EventSystem.Add(
             EventDefine_1.EEventName.WorldDone,
-            this.MUi,
+            this.MAi,
           ));
   }
   UnBindEvents() {
     2 !== this.MapType &&
       EventSystem_1.EventSystem.Has(
         EventDefine_1.EEventName.WorldDone,
-        this.MUi,
+        this.MAi,
       ) &&
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.WorldDone,
-        this.MUi,
+        this.MAi,
       );
   }
   GetAllMarkItems() {
-    return this.CUi.GetAllMarkItems();
+    return this.CAi.GetAllMarkItems();
   }
   GetMarkItemsByType(e) {
-    return this.CUi.GetMarkItemsByType(e);
+    return this.CAi.GetMarkItemsByType(e);
   }
   GetMarkItemsByClickPosition(e) {
-    return this.CUi.GetMarkItemsByClickPosition(e);
+    return this.CAi.GetMarkItemsByClickPosition(e);
   }
   GetMarkItem(e, t) {
-    return this.CUi.GetMarkItem(e, t);
+    return this.CAi.GetMarkItem(e, t);
   }
   CreateCustomMark(e) {
-    return this.CUi.CreateDynamicMark(e);
+    return this.CAi.CreateDynamicMark(e);
   }
   get MapOffset() {
-    return this.gUi.MapOffset;
+    return this.gAi.MapOffset;
   }
   get FakeOffset() {
-    return this.gUi.FakeOffset;
+    return this.gAi.FakeOffset;
   }
-  ShowSubMapTile(e, t) {
-    this.gUi.ShowSubMapByPosition(e, t);
+  ShowSubMapTile(e, t, i) {
+    this.gAi.ShowSubMapByPosition(e, t, i);
   }
   HideSubMapTile() {
-    this.gUi.HideSubMap();
+    this.gAi.HideSubMap();
   }
   GetSubMapGroupIdByPosition() {
-    return this.gUi.GetSubMapGroupByRootItemPosition();
+    return this.gAi.GetSubMapGroupByRootItemPosition();
   }
   SetMapScale(e) {
     this.RootItem.SetUIRelativeScale3D(new UE.Vector(e, e, e));
   }
   HandleAreaOpen(e) {
-    this.gUi.HandleAreaOpen(e);
+    this.gAi.HandleAreaOpen(e);
   }
   HandleMapTileDelegate() {
-    this.gUi.HandleDelegate();
+    this.gAi.HandleDelegate();
   }
   UnBindMapTileDelegate() {
-    this.gUi.UnBindDelegate();
+    this.gAi.UnBindDelegate();
   }
   HandleSceneGamePlayMarkItemOpen(e, t, i) {
     e = this.GetMarkItemsByType(e);
@@ -182,13 +187,30 @@ class BaseMap extends UiPanelBase_1.UiPanelBase {
       });
   }
   SetClickRangeVisible(e, t = Vector2D_1.Vector2D.Create(0, 0)) {
-    var i = this.GetItem(6);
-    i.SetUIActive(e),
-      i.SetWorldScale3D(new UE.Vector(1, 1, 1)),
-      e &&
-        (i?.SetAnchorOffset(t.ToUeVector2D(!0)),
-        this.vUi?.PlayLevelSequenceByName("Start"));
+    this.laa(e, t);
+  }
+  async laa(e, t) {
+    var i;
+    return (
+      this.daa !== e &&
+        ((i = this.GetItem(6)),
+        (this.daa = e),
+        this.daa
+          ? (i.SetUIActive(this.daa),
+            i.SetWorldScale3D(new UE.Vector(1, 1, 1)),
+            i?.SetAnchorOffset(t.ToUeVector2D(!0)),
+            await this.vAi?.PlaySequenceAsync(
+              "Start",
+              new CustomPromise_1.CustomPromise(),
+            ))
+          : (await this.vAi?.PlaySequenceAsync(
+              "Close",
+              new CustomPromise_1.CustomPromise(),
+            ),
+            i?.SetUIActive(this.daa))),
+      !0
+    );
   }
 }
-exports.BaseMap = BaseMap;
+(exports.BaseMap = BaseMap).MapMaterialVersion = 2;
 //# sourceMappingURL=Map.js.map

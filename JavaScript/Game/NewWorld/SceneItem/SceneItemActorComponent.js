@@ -2,10 +2,10 @@
 var __decorate =
   (this && this.__decorate) ||
   function (t, e, i, n) {
-    var r,
-      s = arguments.length,
+    var s,
+      r = arguments.length,
       o =
-        s < 3
+        r < 3
           ? e
           : null === n
             ? (n = Object.getOwnPropertyDescriptor(e, i))
@@ -14,8 +14,8 @@ var __decorate =
       o = Reflect.decorate(t, e, i, n);
     else
       for (var a = t.length - 1; 0 <= a; a--)
-        (r = t[a]) && (o = (s < 3 ? r(o) : 3 < s ? r(e, i, o) : r(e, i)) || o);
-    return 3 < s && o && Object.defineProperty(e, i, o), o;
+        (s = t[a]) && (o = (r < 3 ? s(o) : 3 < r ? s(e, i, o) : s(e, i)) || o);
+    return 3 < r && o && Object.defineProperty(e, i, o), o;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneItemActorComponent = void 0);
@@ -53,21 +53,22 @@ const cpp_1 = require("cpp"),
 let SceneItemActorComponent = class SceneItemActorComponent extends BaseActorComponent_1.BaseActorComponent {
   constructor() {
     super(...arguments),
-      (this.Smn = void 0),
+      (this.emn = void 0),
       (this.StaticMeshComponent = void 0),
-      (this.Emn = 1),
-      (this.J6e = -1),
-      (this.ymn = void 0),
-      (this.Imn = !1),
-      (this.Tmn = !1),
-      (this.Lmn = void 0),
-      (this.uoi = void 0),
-      (this.Dmn = void 0),
-      (this.Rmn = 4),
-      (this.Amn = void 0),
-      (this.Umn = 0),
-      (this.Pmn = void 0),
-      (this.n8e = () => {
+      (this.tmn = 1),
+      (this.u9e = -1),
+      (this.imn = void 0),
+      (this.omn = !1),
+      (this.rmn = !1),
+      (this.nmn = void 0),
+      (this.mri = void 0),
+      (this.smn = void 0),
+      (this.amn = 4),
+      (this.hmn = void 0),
+      (this.a1a = !0),
+      (this.lmn = 0),
+      (this._mn = void 0),
+      (this.v9e = () => {
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Entity",
@@ -76,25 +77,25 @@ let SceneItemActorComponent = class SceneItemActorComponent extends BaseActorCom
             ["造物点ID", this.CreatureDataInternal.GetOwnerId()],
             ["model表Id", this.CreatureDataInternal.GetModelConfig().ID],
           ),
-          this.xmn(),
+          this.umn(),
           this.Entity.ChangeTickInterval(0);
       }),
-      (this.wmn = (t) => {
+      (this.cmn = (t) => {
         this.RefreshShowActor();
       }),
-      (this.Bmn = void 0);
+      (this.mmn = void 0);
   }
   get CurLevelPrefabShowActor() {
-    return this.Amn;
+    return this.hmn;
   }
   get Extent() {
-    return (0, puerts_1.$unref)(this.Dmn);
+    return (0, puerts_1.$unref)(this.smn);
   }
   get Origin() {
-    return (0, puerts_1.$unref)(this.uoi);
+    return (0, puerts_1.$unref)(this.mri);
   }
   get SkeletalMesh() {
-    return this.Smn;
+    return this.emn;
   }
   get StaticMesh() {
     return this.StaticMeshComponent;
@@ -103,49 +104,55 @@ let SceneItemActorComponent = class SceneItemActorComponent extends BaseActorCom
     return this.StaticMeshComponent;
   }
   GetPrimitiveComponent() {
-    return this.Smn ?? this.StaticMeshComponent;
+    return this.emn ?? this.StaticMeshComponent;
   }
   GetInteractionMainActor() {
-    if (-1 !== this.J6e)
+    if (-1 !== this.u9e)
       return SceneInteractionManager_1.SceneInteractionManager.Get().GetSceneInteractionMainActor(
-        this.J6e,
+        this.u9e,
+      );
+  }
+  GetMainCollisionActor() {
+    if (-1 !== this.u9e)
+      return SceneInteractionManager_1.SceneInteractionManager.Get().GetMainCollisionActor(
+        this.u9e,
       );
   }
   HasMesh() {
-    return !!this.Smn?.SkeletalMesh || !!this.StaticMeshComponent?.StaticMesh;
+    return !!this.emn?.SkeletalMesh || !!this.StaticMeshComponent?.StaticMesh;
   }
-  bmn() {
+  dmn() {
     var t;
-    this.Amn === this.ActorInternal
-      ? (this.Umn = 0)
-      : (this.Pmn || (this.Pmn = (0, puerts_1.$ref)(void 0)),
-        this.Amn &&
-          (this.Amn.GetActorBounds(!1, void 0, this.Pmn),
-          (t = (0, puerts_1.$unref)(this.Pmn)),
-          (this.Umn = t.Size() / 2)));
+    this.hmn === this.ActorInternal
+      ? (this.lmn = 0)
+      : (this._mn || (this._mn = (0, puerts_1.$ref)(void 0)),
+        this.hmn &&
+          (this.hmn.GetActorBounds(!1, void 0, this._mn),
+          (t = (0, puerts_1.$unref)(this._mn)),
+          (this.lmn = t.Size() / 2)));
   }
   get PrefabRadius() {
-    return this.Umn;
+    return this.lmn;
   }
   GetRadius() {
     if (!this.HasMesh()) return 0;
     let t = void 0;
     return (
-      this.Smn
-        ? (t = this.Smn.CachedWorldSpaceBounds)
+      this.emn
+        ? (t = this.emn.CachedWorldSpaceBounds)
         : this.StaticMeshComponent && (t = this.StaticMeshComponent.Bounds),
       t && t.BoxExtent ? t.BoxExtent.Y : 0
     );
   }
   GetSceneInteractionLevelHandleId() {
-    return this.J6e;
+    return this.u9e;
   }
   get PhysicsMode() {
-    return this.Emn;
+    return this.tmn;
   }
   set PhysicsMode(t) {
-    if (this.Emn !== t) {
-      this.Emn = t;
+    if (this.tmn !== t) {
+      this.tmn = t;
       var e = this.GetPrimitiveComponent();
       switch (t) {
         case 0:
@@ -167,8 +174,8 @@ let SceneItemActorComponent = class SceneItemActorComponent extends BaseActorCom
   OnInitData() {
     return (
       super.OnInitData(),
-      (this.uoi = (0, puerts_1.$ref)(void 0)),
-      (this.Dmn = (0, puerts_1.$ref)(void 0)),
+      (this.mri = (0, puerts_1.$ref)(void 0)),
+      (this.smn = (0, puerts_1.$ref)(void 0)),
       !!this.InitCreatureData()
     );
   }
@@ -203,7 +210,7 @@ let SceneItemActorComponent = class SceneItemActorComponent extends BaseActorCom
                 this.CreatureDataInternal.GetModelConfig(),
                 this.CreatureDataInternal.GetTransform(),
               ))),
-        this.ActorInternal && this.ActorInternal.OnDestroyed.Add(this.n8e),
+        this.ActorInternal && this.ActorInternal.OnDestroyed.Add(this.v9e),
         this.ActorInternal && this.ActorInternal.IsValid()
           ? (this.SetActorVisible(
               !1,
@@ -225,14 +232,14 @@ let SceneItemActorComponent = class SceneItemActorComponent extends BaseActorCom
                 this.ActorInternal.SetPrimitiveEntityType(
                   RenderConfig_1.RenderConfig.GetEntityRenderPriority(
                     !1,
-                    Protocol_1.Aki.Protocol.HBs.Proto_SceneItem,
+                    Protocol_1.Aki.Protocol.wks.Proto_SceneItem,
                   ),
                 ),
                 this.ActorInternal.SetPrimitiveBlueprintTypeName(
                   new UE.FName(this.CreatureDataInternal.EntityPbModelConfigId),
                 ),
-                this.qmn(),
-                this.Jnn(),
+                this.Cmn(),
+                this.xnn(),
                 GlobalData_1.GlobalData.IsPlayInEditor &&
                   (e = this.CreatureDataInternal.GetPbDataId()) &&
                   this.ActorInternal.Tags.Add(new UE.FName("PbDataId:" + e)),
@@ -247,8 +254,8 @@ let SceneItemActorComponent = class SceneItemActorComponent extends BaseActorCom
                     : this.Entity.RegisterToGameBudgetController(
                         this.ActorInternal,
                       ),
-                  (this.Amn = this.ActorInternal),
-                  this.bmn()),
+                  (this.hmn = this.ActorInternal),
+                  this.dmn()),
                 !0)
               : (Log_1.Log.CheckError() &&
                   Log_1.Log.Error(
@@ -294,8 +301,8 @@ let SceneItemActorComponent = class SceneItemActorComponent extends BaseActorCom
   OnStart() {
     var t;
     return (
-      (void 0 !== this.Entity.GetComponent(140) ||
-        void 0 !== this.Entity.GetComponent(196)) &&
+      (void 0 !== this.Entity.GetComponent(142) ||
+        void 0 !== this.Entity.GetComponent(201)) &&
         (this.OverrideStaticMeshFromSceneInteraction(),
         (this.PhysicsMode = 0),
         (t = this.GetPrimitiveComponent()).SetCollisionEnabled(3),
@@ -310,8 +317,8 @@ let SceneItemActorComponent = class SceneItemActorComponent extends BaseActorCom
   }
   OnEnd() {
     return (
-      void 0 !== this.Lmn &&
-        (TimerSystem_1.TimerSystem.Remove(this.Lmn), (this.Lmn = void 0)),
+      void 0 !== this.nmn &&
+        (TimerSystem_1.TimerSystem.Remove(this.nmn), (this.nmn = void 0)),
       !0
     );
   }
@@ -325,13 +332,13 @@ let SceneItemActorComponent = class SceneItemActorComponent extends BaseActorCom
     this.OnSetActorActive(!1, t), this.ToggleSceneInteractionVisible(!1);
   }
   OnActivate() {
-    super.OnActivate(),
-      this.SetActorVisible(!0, "[SceneItemActorComponent.OnActivate] Visible"),
+    this.SetActorVisible(!0, "[SceneItemActorComponent.OnActivate] Visible"),
       this.SetCollisionEnable(
         !0,
         "[SceneItemActorComponent.OnActivate] Visible",
       ),
       this.SetTickEnable(!0, "[SceneItemActorComponent.OnActivate] Visible"),
+      super.OnActivate(),
       ControllerHolder_1.ControllerHolder.WorldController.SetActorDataByCreature(
         this.CreatureDataInternal,
         this.ActorInternal,
@@ -339,23 +346,24 @@ let SceneItemActorComponent = class SceneItemActorComponent extends BaseActorCom
   }
   OnClear() {
     return (
-      this.ActorInternal && this.ActorInternal.OnDestroyed.Remove(this.n8e),
-      this.Amn instanceof TsEffectActor_1.default &&
+      this.ActorInternal && this.ActorInternal.OnDestroyed.Remove(this.v9e),
+      this.hmn instanceof TsEffectActor_1.default &&
         EffectSystem_1.EffectSystem.RemoveFinishCallback(
-          this.Amn.GetHandle(),
-          this.wmn,
+          this.hmn.GetHandle(),
+          this.cmn,
         ),
       super.OnClear(),
-      this.xmn(),
+      this.umn(),
       !0
     );
   }
-  xmn() {
+  umn() {
     var t =
       SceneInteractionManager_1.SceneInteractionManager.Get().GetSceneInteractionMainActor(
-        this.J6e,
+        this.u9e,
       );
     t?.IsValid() &&
+      void 0 !== t.GetAttachParentActor() &&
       ControllerHolder_1.ControllerHolder.AttachToActorController.DetachActor(
         t,
         !1,
@@ -364,36 +372,36 @@ let SceneItemActorComponent = class SceneItemActorComponent extends BaseActorCom
         1,
         1,
       ),
-      -1 !== this.J6e &&
+      -1 !== this.u9e &&
         (Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("Entity", 18, "销毁场景交互物", [
             "HandleId",
-            this.J6e,
+            this.u9e,
           ]),
         SceneInteractionManager_1.SceneInteractionManager.Get().DestroySceneInteraction(
-          this.J6e,
+          this.u9e,
         ),
-        (this.J6e = -1)),
-      (this.Imn = !1),
-      (this.ymn = void 0);
+        (this.u9e = -1)),
+      (this.omn = !1),
+      (this.imn = void 0);
   }
   InitSkeletalMeshComponent() {
-    this.Smn ||
-      (this.Smn = this.ActorInternal.AddComponentByClass(
+    this.emn ||
+      (this.emn = this.ActorInternal.AddComponentByClass(
         UE.SkeletalMeshComponent.StaticClass(),
         !1,
         MathUtils_1.MathUtils.DefaultTransform,
         !1,
       ));
   }
-  qmn() {
+  Cmn() {
     var t = this.ActorInternal,
       e = this.CreatureDataInternal.GetModelConfig();
     e &&
       (UE.KismetSystemLibrary.IsValidSoftObjectReference(e.网格体)
         ? (this.InitSkeletalMeshComponent(),
           ActorUtils_1.ActorUtils.LoadAndChangeMeshAnim(
-            this.Smn,
+            this.emn,
             e.网格体,
             e.动画蓝图,
           ))
@@ -439,27 +447,27 @@ let SceneItemActorComponent = class SceneItemActorComponent extends BaseActorCom
     }
   }
   SetIsSceneInteractionLoadCompleted(t = !0) {
-    this.Imn = t;
+    this.omn = t;
   }
   GetIsSceneInteractionLoadCompleted() {
-    return this.Imn;
+    return this.omn;
   }
-  Jnn() {
-    (this.J6e = -1), (this.Imn = !1), (this.Tmn = !1);
+  xnn() {
+    (this.u9e = -1), (this.omn = !1), (this.rmn = !1);
   }
   LoadSceneInteractionLevel(t, e = !1) {
-    this.xmn();
+    this.umn();
     var i,
       n = this.CreatureDataInternal.GetModelConfig();
     n &&
     (i = n.场景交互物) &&
     ObjectUtils_1.ObjectUtils.SoftObjectPathIsValid(i)
       ? (this.ResetAllCachedTime(),
-        (this.ymn = t),
-        (this.J6e =
+        (this.imn = t),
+        (this.u9e =
           SceneInteractionManager_1.SceneInteractionManager.Get().CreateSceneInteractionLevel(
             i.AssetPathName?.toString(),
-            this.ymn,
+            this.imn,
             this.ActorLocation,
             this.ActorRotation,
             () => {
@@ -474,28 +482,28 @@ let SceneItemActorComponent = class SceneItemActorComponent extends BaseActorCom
             18,
             "生成场景交互物",
             ["initState", t],
-            ["HandleId", this.J6e],
+            ["HandleId", this.u9e],
             ["ModelId", n.ID],
           ))
       : this.SetIsSceneInteractionLoadCompleted();
   }
   Txe() {
-    if (-1 !== this.J6e) {
-      (this.Imn = !0),
+    if (-1 !== this.u9e) {
+      (this.omn = !0),
         SceneInteractionManager_1.SceneInteractionManager.Get().AttachToActor(
-          this.J6e,
+          this.u9e,
           this.ActorInternal,
         ),
         SceneInteractionManager_1.SceneInteractionManager.Get().SetCollisionActorsOwner(
-          this.J6e,
+          this.u9e,
           this.ActorInternal,
         ),
         SceneInteractionManager_1.SceneInteractionManager.Get().AttachChildActor(
-          this.J6e,
+          this.u9e,
         );
       var i =
         SceneInteractionManager_1.SceneInteractionManager.Get().GetSceneInteractionAllActorsInLevel(
-          this.J6e,
+          this.u9e,
         );
       if (i)
         for (let t = 0, e = i.Num(); t < e; t++) {
@@ -504,22 +512,23 @@ let SceneItemActorComponent = class SceneItemActorComponent extends BaseActorCom
             (n.Tags.Add(CharacterNameDefines_1.CharacterNameDefines.NO_SLIDE),
             n.StaticMeshComponent?.SetReceivesDecals(!1));
         }
-      var r =
+      var s =
         SceneInteractionManager_1.SceneInteractionManager.Get().GetReceivingDecalsActors(
-          this.J6e,
+          this.u9e,
         );
-      if (r)
-        for (let t = 0, e = r.Num(); t < e; t++)
-          r.Get(t)
+      if (s)
+        for (let t = 0, e = s.Num(); t < e; t++)
+          s.Get(t)
             .GetComponentByClass(UE.PrimitiveComponent.StaticClass())
             ?.SetReceivesDecals(!0);
-      this.Tmn && this.Gmn(),
-        this.Nmn(),
+      this.rmn ? this.gmn() : this.hla(),
+        this.fmn(),
         this.RefreshShowActor(),
         EventSystem_1.EventSystem.EmitWithTarget(
           this.Entity,
           EventDefine_1.EEventName.OnSceneInteractionLoadCompleted,
-        );
+        ),
+        this.a1a || (this.ToggleSceneInteractionVisible(!1), (this.a1a = !0));
     }
   }
   RefreshShowActor() {
@@ -532,38 +541,39 @@ let SceneItemActorComponent = class SceneItemActorComponent extends BaseActorCom
             this.Entity.GameBudgetManagedToken,
             t,
           ),
-          this.Amn !== t &&
-            ((this.Amn = t),
-            this.bmn(),
+          this.hmn !== t &&
+            ((this.hmn = t),
+            this.dmn(),
             t instanceof TsEffectActor_1.default) &&
             EffectSystem_1.EffectSystem.AddFinishCallback(
               t.GetHandle(),
-              this.wmn,
+              this.cmn,
             ))
-        : ((this.Amn = this.ActorInternal),
-          this.bmn(),
+        : ((this.hmn = this.ActorInternal),
+          this.dmn(),
           cpp_1.FKuroGameBudgetAllocatorInterface.UpdatePerformanceActor(
             this.Entity.GameBudgetConfig.GroupName,
             this.Entity.GameBudgetManagedToken,
-            this.Amn,
+            this.hmn,
           )));
   }
   ToggleSceneInteractionVisible(t, e = void 0) {
-    -1 !== this.J6e &&
+    (!this.omn && ((this.a1a = t), -1 === this.u9e)) ||
       SceneInteractionManager_1.SceneInteractionManager.Get().ToggleSceneInteractionVisible(
-        this.J6e,
+        this.u9e,
         t,
+        this.CreatureData.GetRemoveState(),
         e,
       );
   }
   SwitchToState(t, e, i) {
-    -1 !== this.J6e &&
-      this.ymn !== t &&
-      (this.Omn(t, this.ymn),
-      (this.ymn = t),
+    -1 !== this.u9e &&
+      this.imn !== t &&
+      (this.pmn(t, this.imn),
+      (this.imn = t),
       SceneInteractionManager_1.SceneInteractionManager.Get().SwitchSceneInteractionToState(
-        this.J6e,
-        this.ymn,
+        this.u9e,
+        this.imn,
         e,
         !1,
         i,
@@ -574,109 +584,109 @@ let SceneItemActorComponent = class SceneItemActorComponent extends BaseActorCom
           18,
           "场景交互物改变状态",
           ["targetState", t],
-          ["HandleId", this.J6e],
+          ["HandleId", this.u9e],
           ["ModelId", this.CreatureDataInternal.GetModelConfig().ID],
           ["needTransition", e],
           ["jumpToEnd", i],
         ),
       this.RefreshShowActor());
   }
-  Nmn() {
+  fmn() {
     var t;
-    20 === this.ymn &&
+    20 === this.imn &&
       (t = this.GetInteractionMainActor()) &&
-      !t.States.Get(this.ymn) &&
-      this.Omn(this.ymn);
+      !t.States.Get(this.imn) &&
+      this.pmn(this.imn);
   }
-  Omn(t, e = 22) {
+  pmn(t, e = 22) {
     20 === t && this.SetSceneItemActorHide(!0),
       20 === e && this.SetSceneItemActorHide(!1);
   }
   PlaySceneInteractionEffect(t) {
-    -1 !== this.J6e &&
+    -1 !== this.u9e &&
       (Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "Entity",
           18,
           "场景交互物播放特效",
           ["effectKey", t],
-          ["HandleId", this.J6e],
+          ["HandleId", this.u9e],
           ["ModelId", this.CreatureDataInternal.GetModelConfig().ID],
         ),
       SceneInteractionManager_1.SceneInteractionManager.Get().PlaySceneInteractionEffect(
-        this.J6e,
+        this.u9e,
         t,
       ));
   }
   EndSceneInteractionEffect(t) {
-    -1 !== this.J6e &&
+    -1 !== this.u9e &&
       SceneInteractionManager_1.SceneInteractionManager.Get().EndSceneInteractionEffect(
-        this.J6e,
+        this.u9e,
         t,
       );
   }
   PlayExtraEffect(t, e = !0) {
-    -1 !== this.J6e &&
+    -1 !== this.u9e &&
       SceneInteractionManager_1.SceneInteractionManager.Get().PlayExtraEffectByTag(
-        this.J6e,
+        this.u9e,
         t,
         e,
       );
   }
   StopExtraEffect(t) {
-    -1 !== this.J6e &&
+    -1 !== this.u9e &&
       SceneInteractionManager_1.SceneInteractionManager.Get().StopExtraEffectByTag(
-        this.J6e,
+        this.u9e,
         t,
       );
   }
   UpdateHitInfo(t, e) {
-    -1 !== this.J6e &&
+    -1 !== this.u9e &&
       SceneInteractionManager_1.SceneInteractionManager.Get().UpdateHitInfo(
-        this.J6e,
+        this.u9e,
         t,
         e,
       );
   }
   PlaySceneInteractionEndEffect(t) {
-    -1 !== this.J6e &&
+    -1 !== this.u9e &&
       (Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "Entity",
           7,
           "场景交互物播放结束特效",
           ["effectKey", t],
-          ["HandleId", this.J6e],
+          ["HandleId", this.u9e],
           ["ModelId", this.CreatureDataInternal.GetModelConfig().ID],
         ),
       SceneInteractionManager_1.SceneInteractionManager.Get().PlaySceneInteractionEndEffect(
-        this.J6e,
+        this.u9e,
         t,
       ));
   }
   GetActorInSceneInteraction(t) {
-    if (-1 !== this.J6e)
+    if (-1 !== this.u9e)
       return SceneInteractionManager_1.SceneInteractionManager.Get().GetSceneInteractionActorByKey(
-        this.J6e,
+        this.u9e,
         t,
       );
   }
   GetActorInSceneInteractionOriginalRelTransform(t) {
-    if (-1 !== this.J6e)
+    if (-1 !== this.u9e)
       return SceneInteractionManager_1.SceneInteractionManager.Get().GetActorOriginalRelTransform(
-        this.J6e,
+        this.u9e,
         t,
       );
   }
   OverrideStaticMeshFromSceneInteraction() {
-    (this.Tmn = !0), this.Imn && this.Gmn();
+    (this.rmn = !0), this.omn && this.gmn();
   }
-  Gmn() {
+  gmn() {
     var t, e, i, n;
-    -1 !== this.J6e &&
+    -1 !== this.u9e &&
       (i =
         SceneInteractionManager_1.SceneInteractionManager.Get().GetMainCollisionActor(
-          this.J6e,
+          this.u9e,
         )) &&
       ((t = i.GetComponentByClass(UE.StaticMeshComponent.StaticClass())),
       (e = this.Owner.GetComponentByClass(
@@ -693,47 +703,59 @@ let SceneItemActorComponent = class SceneItemActorComponent extends BaseActorCom
       e.SetHiddenInGame(!0),
       t.SetStaticMesh(i));
   }
+  hla() {
+    var e =
+      SceneInteractionManager_1.SceneInteractionManager.Get().GetMainCollisionActor(
+        this.u9e,
+      );
+    if (e) {
+      let t = e.GetComponentByClass(UE.ShapeComponent.StaticClass());
+      (t = t || e.GetComponentByClass(UE.StaticMeshComponent.StaticClass())) &&
+        (3 === t.GetCollisionEnabled() && t.SetCollisionEnabled(0),
+        t.SetCollisionEnabled(3));
+    }
+  }
   ChangeSceneInteractionPlayDirection(t) {
-    -1 !== this.J6e &&
+    -1 !== this.u9e &&
       SceneInteractionManager_1.SceneInteractionManager.Get().ChangeSceneInteractionPlayDirection(
-        this.J6e,
+        this.u9e,
         t,
       );
   }
   GetActiveTagSequencePlaybackProgress(t) {
-    if (-1 !== this.J6e)
+    if (-1 !== this.u9e)
       return SceneInteractionManager_1.SceneInteractionManager.Get().GetActiveTagSequencePlaybackProgress(
-        this.J6e,
+        this.u9e,
         t,
       );
   }
   SetActiveTagSequencePlaybackProgress(t, e) {
-    -1 !== this.J6e &&
+    -1 !== this.u9e &&
       SceneInteractionManager_1.SceneInteractionManager.Get().SetActiveTagSequencePlaybackProgress(
-        this.J6e,
+        this.u9e,
         t,
         e,
       );
   }
   SetActiveTagSequenceDurationTime(t, e) {
-    -1 !== this.J6e &&
+    -1 !== this.u9e &&
       SceneInteractionManager_1.SceneInteractionManager.Get().SetActiveTagSequenceDurationTime(
-        this.J6e,
+        this.u9e,
         t,
         e,
       );
   }
   PauseActiveTagSequence(t) {
-    -1 !== this.J6e &&
+    -1 !== this.u9e &&
       SceneInteractionManager_1.SceneInteractionManager.Get().PauseActiveTagSequence(
-        this.J6e,
+        this.u9e,
         t,
       );
   }
   ResumeActiveTagSequence(t, e = !1) {
-    -1 !== this.J6e &&
+    -1 !== this.u9e &&
       SceneInteractionManager_1.SceneInteractionManager.Get().ResumeActiveTagSequence(
-        this.J6e,
+        this.u9e,
         t,
         e,
       );
@@ -787,74 +809,74 @@ let SceneItemActorComponent = class SceneItemActorComponent extends BaseActorCom
       e,
       i,
       n,
-      r =
+      s =
         SceneInteractionManager_1.SceneInteractionManager.Get().GetMainCollisionActor(
-          this.J6e,
+          this.u9e,
         );
-    return void 0 === r
+    return void 0 === s
       ? [!1, void 0]
-      : ((t = r.K2_GetActorRotation()),
-        r.K2_SetActorRotation(new UE.Rotator(0, 0, 0), !1),
-        r.GetActorBounds(!1, this.uoi, this.Dmn),
-        r.K2_SetActorRotation(t, !1),
-        (r = MathUtils_1.MathUtils.CommonTempVector).FromUeVector(
-          (0, puerts_1.$unref)(this.uoi),
+      : ((t = s.K2_GetActorRotation()),
+        s.K2_SetActorRotation(new UE.Rotator(0, 0, 0), !1),
+        s.GetActorBounds(!1, this.mri, this.smn),
+        s.K2_SetActorRotation(t, !1),
+        (s = MathUtils_1.MathUtils.CommonTempVector).FromUeVector(
+          (0, puerts_1.$unref)(this.mri),
         ),
         (n =
           ModelManager_1.ModelManager.TraceElementModel
-            .CommonStartLocation).Set(r.X, r.Y, r.Z + FIX_SPAWN_TRACE_UP),
+            .CommonStartLocation).Set(s.X, s.Y, s.Z + FIX_SPAWN_TRACE_UP),
         (e =
           ModelManager_1.ModelManager.TraceElementModel.CommonEndLocation).Set(
-          r.X,
-          r.Y,
-          r.Z + FIX_SPAWN_TRACE_DOWN,
+          s.X,
+          s.Y,
+          s.Z + FIX_SPAWN_TRACE_DOWN,
         ),
-        ((r =
+        ((s =
           ModelManager_1.ModelManager.TraceElementModel.GetBoxTrace()).WorldContextObject =
           this.ActorInternal),
-        (i = (0, puerts_1.$unref)(this.Dmn)),
-        (r.HalfSizeX = i.X - 2),
-        (r.HalfSizeY = i.Y - 2),
-        (r.HalfSizeZ = i.Z - 2),
-        TraceElementCommon_1.TraceElementCommon.SetStartLocation(r, n),
-        TraceElementCommon_1.TraceElementCommon.SetEndLocation(r, e),
-        TraceElementCommon_1.TraceElementCommon.SetBoxOrientation(r, t),
-        (i = TraceElementCommon_1.TraceElementCommon.BoxTrace(r, PROFILE_KEY)),
-        (n = r.HitResult),
-        r.ClearCacheData(),
+        (i = (0, puerts_1.$unref)(this.smn)),
+        (s.HalfSizeX = i.X - 2),
+        (s.HalfSizeY = i.Y - 2),
+        (s.HalfSizeZ = i.Z - 2),
+        TraceElementCommon_1.TraceElementCommon.SetStartLocation(s, n),
+        TraceElementCommon_1.TraceElementCommon.SetEndLocation(s, e),
+        TraceElementCommon_1.TraceElementCommon.SetBoxOrientation(s, t),
+        (i = TraceElementCommon_1.TraceElementCommon.BoxTrace(s, PROFILE_KEY)),
+        (n = s.HitResult),
+        s.ClearCacheData(),
         [i, n]);
   }
   SetSceneItemActorHide(t) {
-    this.ActorInternal?.IsValid() && this.kmn(this.ActorInternal, t);
+    this.ActorInternal?.IsValid() && this.vmn(this.ActorInternal, t);
   }
-  kmn(t, e) {
+  vmn(t, e) {
     if (t?.IsValid()) {
       var i = (0, puerts_1.$ref)(void 0),
         n = (t.GetAttachedActors(i, !0), (0, puerts_1.$unref)(i));
       if (n && 0 < n.Num())
         for (let t = 0; t < n.Num(); t++) {
-          var r = n.Get(t);
-          r && this.kmn(r, e);
+          var s = n.Get(t);
+          s && this.vmn(s, e);
         }
       t !== this.ActorInternal
         ? (t.SetActorHiddenInGame(e), t.SetActorEnableCollision(!e))
         : (i = this.GetPrimitiveComponent())?.IsValid() &&
-          (e && 4 === this.Rmn && (this.Rmn = i.GetCollisionEnabled()),
-          i.SetCollisionEnabled(e ? 0 : this.Rmn));
+          (e && 4 === this.amn && (this.amn = i.GetCollisionEnabled()),
+          i.SetCollisionEnabled(e ? 0 : this.amn));
     }
   }
   OnChangeTimeDilation(t) {
-    var t = t * (this.Entity.GetComponent(107)?.CurrentTimeScale ?? 1),
+    var t = t * (this.Entity.GetComponent(109)?.CurrentTimeScale ?? 1),
       e =
         ((this.ActorInternal.CustomTimeDilation = t),
         this.GetInteractionMainActor());
     e?.IsValid() && e.SetTimeDilation(t);
   }
   GetSocketLocation(t) {
-    if (this.Imn && !FNameUtil_1.FNameUtil.IsNothing(t)) {
+    if (this.omn && !FNameUtil_1.FNameUtil.IsNothing(t)) {
       t =
         SceneInteractionManager_1.SceneInteractionManager.Get().GetSceneInteractionActorByKey(
-          this.J6e,
+          this.u9e,
           t.toString(),
         );
       if (t?.IsValid()) return t.K2_GetActorLocation();
@@ -862,30 +884,30 @@ let SceneItemActorComponent = class SceneItemActorComponent extends BaseActorCom
     return this.ActorLocation;
   }
   GetSocketTransform(t) {
-    if (this.Imn && !FNameUtil_1.FNameUtil.IsNothing(t)) {
+    if (this.omn && !FNameUtil_1.FNameUtil.IsNothing(t)) {
       t =
         SceneInteractionManager_1.SceneInteractionManager.Get().GetSceneInteractionActorByKey(
-          this.J6e,
+          this.u9e,
           t.toString(),
         );
       if (t?.IsValid()) return t.GetTransform();
     }
     return this.ActorTransform;
   }
-  UpdateInteractionMaterialColorParam(t, e, i, n, r = 1) {
-    var s = this.GetInteractionMainActor();
-    s &&
-      s.InteractionMaterialController &&
-      (this.Bmn || (this.Bmn = new UE.LinearColor()),
-      (this.Bmn.R = e),
-      (this.Bmn.G = i),
-      (this.Bmn.B = n),
-      (this.Bmn.A = r),
-      s.InteractionMaterialController.ChangeVectorParameter(this.Bmn, t));
+  UpdateInteractionMaterialColorParam(t, e, i, n, s = 1) {
+    var r = this.GetInteractionMainActor();
+    r &&
+      r.InteractionMaterialController &&
+      (this.mmn || (this.mmn = new UE.LinearColor()),
+      (this.mmn.R = e),
+      (this.mmn.G = i),
+      (this.mmn.B = n),
+      (this.mmn.A = s),
+      r.InteractionMaterialController.ChangeVectorParameter(this.mmn, t));
   }
 };
 (SceneItemActorComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(182)],
+  [(0, RegisterComponent_1.RegisterComponent)(185)],
   SceneItemActorComponent,
 )),
   (exports.SceneItemActorComponent = SceneItemActorComponent);

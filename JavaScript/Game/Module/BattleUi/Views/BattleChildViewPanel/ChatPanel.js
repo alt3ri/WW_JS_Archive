@@ -2,10 +2,12 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ChatPanel = void 0);
 const UE = require("ue"),
+  Info_1 = require("../../../../../Core/Common/Info"),
   CommonParamById_1 = require("../../../../../Core/Define/ConfigCommon/CommonParamById"),
   TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem"),
   EventDefine_1 = require("../../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../../Manager/ModelManager"),
   RedDotController_1 = require("../../../../RedDot/RedDotController"),
   InputDistributeController_1 = require("../../../../Ui/InputDistribute/InputDistributeController"),
@@ -21,36 +23,35 @@ const UE = require("ue"),
 class ChatPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
   constructor() {
     super(...arguments),
-      (this.WYe = new Map()),
-      (this.H6s = []),
-      (this.KYe = void 0),
-      (this.QYe = 0),
-      (this.XYe = void 0),
-      (this.$Ye = !1),
-      (this.YYe = void 0),
-      (this.EPe = void 0),
-      (this.jwn = (e) => {
+      (this.oze = new Map()),
+      (this.VXs = []),
+      (this.rze = void 0),
+      (this.nze = 0),
+      (this.sze = void 0),
+      (this.aze = !1),
+      (this.hze = void 0),
+      (this.SPe = void 0),
+      (this.PGn = (e) => {
         2 === this.GetOperationType() &&
-          this.rJe().then(
+          this.gze().then(
             () => {
-              this.WYe.size <= 0
-                ? this.vJe(!1)
+              this.oze.size <= 0
+                ? this.Pze(!1)
                 : (this.DelayScroll(ChatDefine_1.CHAT_SCROLL_DELAY),
                   (e &&
                     !ModelManager_1.ModelManager.ChatModel.HasOfflineMassage()) ||
-                    this.ZYe());
+                    this.uze());
             },
             () => {},
           );
       }),
-      (this.dKe = () => {
-        this.iJe();
+      (this.XBo = () => {
+        this.dze();
       }),
-      (this.lJe = () => {
-        ModelManager_1.ModelManager.PlatformModel.IsMobile() ||
-          (this._Je(), this.uJe());
+      (this.Eze = () => {
+        Info_1.Info.IsInTouch() || (this.Sze(), this.yze());
       }),
-      (this.cJe = () => {
+      (this.Ize = () => {
         UiManager_1.UiManager.IsViewShow("ChatView") ||
           UiManager_1.UiManager.OpenView("ChatView");
       }),
@@ -62,39 +63,45 @@ class ChatPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
               0
             ) {
               case 1:
-                this.mJe();
+                this.Tze();
                 break;
               case 2:
-                this.dJe();
+                this.Lze();
                 break;
               case 3:
-                this.CJe();
+                this.oXn();
+                break;
+              case 4:
+                this.Dze();
+                break;
+              case 5:
+                this.mzs();
             }
         } else
-          e === InputMappingsDefine_1.actionMappings.组合主键 && this.gJe(t);
+          e === InputMappingsDefine_1.actionMappings.组合主键 && this.Rze(t);
       }),
-      (this.fJe = () => {
-        this.nJe();
+      (this.Uze = () => {
+        this.fze();
       }),
-      (this.pJe = () => {
-        this.EPe.StopCurrentSequence(), this.EPe.PlaySequencePurely("Close");
+      (this.Aze = () => {
+        this.SPe.StopCurrentSequence(), this.SPe.PlaySequencePurely("Close");
       });
   }
   InitializeTemp() {
-    this.QYe =
+    this.nze =
       CommonParamById_1.configCommonParamById.GetIntConfig("ChatViewTimeDown");
     var e = this.GetOperationType();
     2 === e &&
-      (this.rJe().then(
+      (this.gze().then(
         () => {
-          !(this.WYe.size <= 0) &&
+          !(this.oze.size <= 0) &&
           ModelManager_1.ModelManager.ChatModel.HasOfflineMassage()
-            ? (this.ZYe(), this.DelayScroll(ChatDefine_1.CHAT_SCROLL_DELAY))
-            : this.vJe(!1);
+            ? (this.uze(), this.DelayScroll(ChatDefine_1.CHAT_SCROLL_DELAY))
+            : this.Pze(!1);
         },
         () => {},
       ),
-      (this.EPe = new LevelSequencePlayer_1.LevelSequencePlayer(
+      (this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(
         this.GetItem(3),
       ))),
       1 === e &&
@@ -102,17 +109,17 @@ class ChatPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
           "ChatView",
           this.GetItem(1),
         ),
-        (this.EPe = new LevelSequencePlayer_1.LevelSequencePlayer(
+        (this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(
           this.GetItem(2),
         ))),
-      this.EPe.BindSequenceCloseEvent((e) => {
-        "Close" === e && this.vJe(!1);
+      this.SPe.BindSequenceCloseEvent((e) => {
+        "Close" === e && this.Pze(!1);
       });
   }
   Reset() {
     super.Reset(),
-      this.MJe(),
-      this.SJe(),
+      this.xze(),
+      this.wze(),
       1 === this.GetOperationType() &&
         RedDotController_1.RedDotController.UnBindRedDot("ChatView");
   }
@@ -130,29 +137,29 @@ class ChatPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
           [8, UE.UIItem],
           [9, UE.UIText],
         ]),
-        (this.BtnBindInfo = [[0, this.cJe]]))
+        (this.BtnBindInfo = [[0, this.Ize]]))
       : 1 === e &&
         ((this.ComponentRegisterInfos = [
           [0, UE.UIButtonComponent],
           [1, UE.UIItem],
           [2, UE.UIItem],
         ]),
-        (this.BtnBindInfo = [[0, this.cJe]]));
+        (this.BtnBindInfo = [[0, this.Ize]]));
   }
   async InitializeAsync() {
     var e;
     await super.InitializeAsync(),
-      ModelManager_1.ModelManager.PlatformModel.IsMobile() ||
+      Info_1.Info.IsInTouch() ||
         ((e = this.GetItem(8)),
-        (this.YYe = new CommonKeyItem_1.CommonKeyItem()),
-        await this.YYe.CreateThenShowByActorAsync(e.GetOwner()));
+        (this.hze = new CommonKeyItem_1.CommonKeyItem()),
+        await this.hze.CreateThenShowByActorAsync(e.GetOwner()));
   }
   OnShowBattleChildViewPanel() {
-    var e = ModelManager_1.ModelManager.PlatformModel.OperationType;
+    var e = Info_1.Info.OperationType;
     if (2 === e) {
       var t = ModelManager_1.ModelManager.FriendModel,
         i = [];
-      for (const a of this.WYe.values()) {
+      for (const a of this.oze.values()) {
         var s,
           r,
           n = a.GetChatRowData();
@@ -161,34 +168,34 @@ class ChatPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
           (r = n.TargetPlayerId) && t.HasBlockedPlayer(r) && i.push(s),
           n.IsVisible || i.push(s));
       }
-      for (const h of i) this.tJe(h);
-      this.WYe.size <= 0
-        ? (this.SJe(), this.vJe(!1))
+      for (const h of i) this.mze(h);
+      this.oze.size <= 0
+        ? (this.wze(), this.Pze(!1))
         : this.DelayScroll(ChatDefine_1.CHAT_SCROLL_DELAY);
       e = ModelManager_1.ModelManager.BattleUiModel.EnvironmentKeyData;
-      e.SetEnvironmentKeyVisible(2, this.EJe()),
-        e.SetEnvironmentKeyVisible(3, this.yJe()),
-        this.YYe?.RefreshAction(InputMappingsDefine_1.actionMappings.功能菜单),
-        this.uJe(),
-        this.iJe(),
-        this.EPe.StopCurrentSequence(),
-        this.EPe.PlaySequencePurely("Start");
+      e.SetEnvironmentKeyVisible(2, this.Bze()),
+        e.SetEnvironmentKeyVisible(4, this.bze()),
+        this.hze?.RefreshAction(InputMappingsDefine_1.actionMappings.功能菜单),
+        this.yze(),
+        this.dze(),
+        this.SPe.StopCurrentSequence(),
+        this.SPe.PlaySequencePurely("Start");
     }
   }
-  iJe() {
-    var e = ModelManager_1.ModelManager.PlatformModel.IsGamepad();
+  dze() {
+    var e = Info_1.Info.IsInGamepad();
     this.GetItem(4)?.SetUIActive(!e),
       this.GetItem(5)?.SetUIActive(e),
-      this._Je();
+      this.Sze();
   }
-  _Je() {
-    var e = ModelManager_1.ModelManager.PlatformModel.IsGamepad(),
+  Sze() {
+    var e = Info_1.Info.IsInGamepad(),
       t =
         ModelManager_1.ModelManager.BattleUiModel?.EnvironmentKeyData?.GetCurEnvironmentalKey() ??
         0;
-    this.GetItem(7)?.SetUIActive(0 !== t && this.$Ye && e);
+    this.GetItem(7)?.SetUIActive(0 !== t && this.aze && e);
   }
-  uJe() {
+  yze() {
     var e =
       ModelManager_1.ModelManager.BattleUiModel?.EnvironmentKeyData?.GetCurKeyText();
     e && LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(9), e);
@@ -197,15 +204,15 @@ class ChatPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
     2 === this.GetOperationType() &&
       (EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnRefreshChatRowData,
-        this.jwn,
+        this.PGn,
       ),
       EventSystem_1.EventSystem.Add(
-        EventDefine_1.EEventName.OnPlatformChanged,
-        this.dKe,
+        EventDefine_1.EEventName.InputControllerChange,
+        this.XBo,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.BattleUiEnvironmentKeyChanged,
-        this.lJe,
+        this.Eze,
       ),
       InputDistributeController_1.InputDistributeController.BindActions(
         [
@@ -219,27 +226,27 @@ class ChatPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
     2 === this.GetOperationType() &&
       (EventSystem_1.EventSystem.Has(
         EventDefine_1.EEventName.OnRefreshChatRowData,
-        this.jwn,
+        this.PGn,
       ) &&
         EventSystem_1.EventSystem.Remove(
           EventDefine_1.EEventName.OnRefreshChatRowData,
-          this.jwn,
+          this.PGn,
         ),
       EventSystem_1.EventSystem.Has(
-        EventDefine_1.EEventName.OnPlatformChanged,
-        this.dKe,
+        EventDefine_1.EEventName.InputControllerChange,
+        this.XBo,
       ) &&
         EventSystem_1.EventSystem.Remove(
-          EventDefine_1.EEventName.OnPlatformChanged,
-          this.dKe,
+          EventDefine_1.EEventName.InputControllerChange,
+          this.XBo,
         ),
       EventSystem_1.EventSystem.Has(
         EventDefine_1.EEventName.BattleUiEnvironmentKeyChanged,
-        this.lJe,
+        this.Eze,
       ) &&
         EventSystem_1.EventSystem.Remove(
           EventDefine_1.EEventName.BattleUiEnvironmentKeyChanged,
-          this.lJe,
+          this.Eze,
         ),
       InputDistributeController_1.InputDistributeController.UnBindActions(
         [
@@ -249,39 +256,47 @@ class ChatPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
         this.bMe,
       ));
   }
-  gJe(e) {
-    (this.$Ye = 0 === e), this._Je();
+  Rze(e) {
+    (this.aze = 0 === e), this.Sze();
   }
-  dJe() {
-    !this.EJe() ||
+  Lze() {
+    !this.Bze() ||
       UiManager_1.UiManager.IsViewShow("TowerGuideView") ||
       UiManager_1.UiManager.OpenView("TowerGuideView");
   }
-  EJe() {
+  Bze() {
     return ModelManager_1.ModelManager.TowerModel.CheckInTower();
   }
-  CJe() {
-    !this.yJe() ||
+  oXn() {
+    ControllerHolder_1.ControllerHolder.InstanceDungeonGuideController.StartReplayGuide();
+  }
+  Dze() {
+    !this.bze() ||
       UiManager_1.UiManager.IsViewShow("RogueInfoView") ||
       RoguelikeController_1.RoguelikeController.OpenRogueInfoView();
   }
-  yJe() {
+  bze() {
     return ModelManager_1.ModelManager.RoguelikeModel.CheckInRoguelike();
   }
-  mJe() {
+  Tze() {
     EventSystem_1.EventSystem.Emit(
       EventDefine_1.EEventName.BattleUiToggleSilentAreaInfoView,
     );
   }
-  async rJe() {
-    this.IJe();
+  mzs() {
+    EventSystem_1.EventSystem.Emit(
+      EventDefine_1.EEventName.BattleUiToggleTowerDefenseInfoView,
+    );
+  }
+  async gze() {
+    this.qze();
     var e,
       t = [];
     for (const i of ModelManager_1.ModelManager.ChatModel.GetChatRowDataList())
-      i.IsVisible && ((e = this.zYe(i)), t.push(e));
+      i.IsVisible && ((e = this._ze(i)), t.push(e));
     await Promise.all(t);
   }
-  async zYe(e) {
+  async _ze(e) {
     var t = e.UniqueId;
     if (1 === e.ContentChatRoomType) {
       var i = e.TargetPlayerId;
@@ -298,55 +313,55 @@ class ChatPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
         !0,
         e,
       ));
-    this.WYe.set(t, i), this.H6s.push(t);
+    this.oze.set(t, i), this.VXs.push(t);
   }
   DelayScroll(e) {
-    this.MJe(),
+    this.xze(),
       2 === this.GetOperationType() &&
-        (this.XYe = TimerSystem_1.TimerSystem.Delay(this.fJe, e));
+        (this.sze = TimerSystem_1.TimerSystem.Delay(this.Uze, e));
   }
-  MJe() {
-    TimerSystem_1.TimerSystem.Has(this.XYe) &&
-      TimerSystem_1.TimerSystem.Remove(this.XYe),
-      (this.XYe = void 0);
+  xze() {
+    TimerSystem_1.TimerSystem.Has(this.sze) &&
+      TimerSystem_1.TimerSystem.Remove(this.sze),
+      (this.sze = void 0);
   }
-  SJe() {
-    TimerSystem_1.TimerSystem.Has(this.KYe) &&
-      TimerSystem_1.TimerSystem.Remove(this.KYe),
-      (this.KYe = void 0);
+  wze() {
+    TimerSystem_1.TimerSystem.Has(this.rze) &&
+      TimerSystem_1.TimerSystem.Remove(this.rze),
+      (this.rze = void 0);
   }
-  nJe() {
-    var e = this.j6s();
+  fze() {
+    var e = this.HXs();
     e && this.GetScrollViewWithScrollbar(1)?.ScrollTo(e.GetRootItem());
   }
-  tJe(e) {
-    var t = this.WYe.get(e),
+  mze(e) {
+    var t = this.oze.get(e),
       t =
         (t?.GetRootActor()?.IsValid() && t.Destroy(),
-        this.WYe.delete(e),
-        this.H6s.indexOf(e));
-    0 <= t && this.H6s.splice(t, 1);
+        this.oze.delete(e),
+        this.VXs.indexOf(e));
+    0 <= t && this.VXs.splice(t, 1);
   }
-  IJe() {
-    for (const e of this.WYe.values())
+  qze() {
+    for (const e of this.oze.values())
       e?.GetRootActor()?.IsValid() && e.Destroy();
-    this.WYe.clear(), (this.H6s.length = 0);
+    this.oze.clear(), (this.VXs.length = 0);
   }
-  j6s() {
-    var e = this.H6s.length;
+  HXs() {
+    var e = this.VXs.length;
     if (!(e <= 0)) {
-      e = this.H6s[e - 1];
-      if (e) return this.WYe.get(e);
+      e = this.VXs[e - 1];
+      if (e) return this.oze.get(e);
     }
   }
-  ZYe() {
-    this.SJe(),
+  uze() {
+    this.wze(),
       this.GetItem(3)?.bIsUIActive ||
-        (this.EPe.StopCurrentSequence(), this.EPe.PlaySequencePurely("Start")),
-      this.vJe(!0),
-      (this.KYe = TimerSystem_1.TimerSystem.Delay(this.pJe, this.QYe));
+        (this.SPe.StopCurrentSequence(), this.SPe.PlaySequencePurely("Start")),
+      this.Pze(!0),
+      (this.rze = TimerSystem_1.TimerSystem.Delay(this.Aze, this.nze));
   }
-  vJe(e) {
+  Pze(e) {
     this.GetItem(3)?.SetUIActive(e);
   }
 }

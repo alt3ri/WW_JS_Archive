@@ -50,7 +50,7 @@ class ControlScreenController extends UiControllerBase_1.UiControllerBase {
           InputMappingsDefine_1.touchIdMappings.Touch9,
           InputMappingsDefine_1.touchIdMappings.Touch10,
         ],
-        this.pbt,
+        this.Eqt,
       );
   }
   static OnRemoveEvents() {
@@ -83,10 +83,10 @@ class ControlScreenController extends UiControllerBase_1.UiControllerBase {
           InputMappingsDefine_1.touchIdMappings.Touch9,
           InputMappingsDefine_1.touchIdMappings.Touch10,
         ],
-        this.pbt,
+        this.Eqt,
       );
   }
-  static hCt(e, n) {
+  static Mgt(e, n) {
     var t,
       r,
       o,
@@ -133,7 +133,7 @@ class ControlScreenController extends UiControllerBase_1.UiControllerBase {
                   )))
         : t.RemoveTouchEmptyFingerData(i));
   }
-  static lCt(e) {
+  static Egt(e) {
     var n = ModelManager_1.ModelManager.ControlScreenModel;
     switch (n.GetTouchEmptyFingerDataCount()) {
       case 1:
@@ -150,7 +150,7 @@ class ControlScreenController extends UiControllerBase_1.UiControllerBase {
   }
   static RefreshCameraRotation(e) {
     var n;
-    return ControlScreenController.vbt()
+    return ControlScreenController.Sqt()
       ? (n = TouchFingerManager_1.TouchFingerManager.GetTouchFingerData(e))
         ? n.IsInTouch()
           ? ModelManager_1.ModelManager.ControlScreenModel.IsTouchEmpty(e)
@@ -190,7 +190,7 @@ class ControlScreenController extends UiControllerBase_1.UiControllerBase {
   }
   static RefreshCameraSpringLength(e, n) {
     return (
-      !!ControlScreenController.Mbt() && (this.ExecuteCameraZoom(e, n), !0)
+      !!ControlScreenController.yqt() && (this.ExecuteCameraZoom(e, n), !0)
     );
   }
   static ExecuteCameraRotation(e) {
@@ -226,10 +226,10 @@ class ControlScreenController extends UiControllerBase_1.UiControllerBase {
       n,
     );
   }
-  static Sbt(e) {
+  static Iqt(e) {
     var n = e.Id;
-    this.Ebt !== n &&
-      ((this.Ebt = n), e) &&
+    this.Tqt !== n &&
+      ((this.Tqt = n), e) &&
       !EventSystem_1.EventSystem.HasWithTarget(
         e,
         EventDefine_1.EEventName.CharOnDirectionStateChanged,
@@ -241,7 +241,7 @@ class ControlScreenController extends UiControllerBase_1.UiControllerBase {
         ControlScreenController.OnCharCameraStateChanged,
       );
   }
-  static ybt(e) {
+  static Lqt(e) {
     EventSystem_1.EventSystem.HasWithTarget(
       e.Entity,
       EventDefine_1.EEventName.CharOnDirectionStateChanged,
@@ -253,49 +253,49 @@ class ControlScreenController extends UiControllerBase_1.UiControllerBase {
         ControlScreenController.OnCharCameraStateChanged,
       );
   }
-  static vbt() {
+  static Sqt() {
     return InputDistributeController_1.InputDistributeController.IsAllowFightCameraRotationInput();
   }
-  static Mbt() {
+  static yqt() {
     return InputDistributeController_1.InputDistributeController.IsAllowFightCameraZoomInput();
   }
 }
-((exports.ControlScreenController = ControlScreenController).pbt = (e, n) => {
+((exports.ControlScreenController = ControlScreenController).Eqt = (e, n) => {
   var n = n.TouchType,
     t = Number(e);
   switch (n) {
     case 0:
-      ControlScreenController.hCt(!0, t);
+      ControlScreenController.Mgt(!0, t);
       break;
     case 1:
-      ControlScreenController.hCt(!1, t);
+      ControlScreenController.Mgt(!1, t);
       break;
     case 2:
-      ControlScreenController.lCt(t);
+      ControlScreenController.Egt(t);
   }
 }),
   (ControlScreenController.OnFormationLoadCompleted = () => {
     var e = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
     e &&
       (ModelManager_1.ModelManager.ControlScreenModel.RefreshRotationScreenRate(),
-      ControlScreenController.Sbt(e.Entity));
+      ControlScreenController.Iqt(e.Entity));
   }),
   (ControlScreenController.OnChangeRole = () => {
     var e = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
     e &&
       (ModelManager_1.ModelManager.ControlScreenModel.RefreshRotationScreenRate(),
-      ControlScreenController.Sbt(e.Entity));
+      ControlScreenController.Iqt(e.Entity));
   }),
   (ControlScreenController.OnRoleGoDown = (e) => {
     e = ModelManager_1.ModelManager.CreatureModel.GetEntity(e);
-    e && ControlScreenController.ybt(e);
+    e && ControlScreenController.Lqt(e);
   }),
   (ControlScreenController.OnRemoveEntity = (e, n) => {
     var t = n.Entity.GetComponent(0);
     t?.Valid &&
-      t.GetEntityType() === Protocol_1.Aki.Protocol.HBs.Proto_Player &&
+      t.GetEntityType() === Protocol_1.Aki.Protocol.wks.Proto_Player &&
       ModelManager_1.ModelManager.PlayerInfoModel.GetId() === t.GetPlayerId() &&
-      ControlScreenController.ybt(n);
+      ControlScreenController.Lqt(n);
   }),
   (ControlScreenController.OnCharCameraStateChanged = (e, n) => {
     n !== e &&

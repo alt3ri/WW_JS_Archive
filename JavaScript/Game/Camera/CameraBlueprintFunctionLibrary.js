@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: !0 });
 const puerts_1 = require("puerts"),
   UE = require("ue"),
+  Macro_1 = require("../../Core/Preprocessor/Macro"),
   FNameUtil_1 = require("../../Core/Utils/FNameUtil"),
   Quat_1 = require("../../Core/Utils/Math/Quat"),
   Rotator_1 = require("../../Core/Utils/Math/Rotator"),
@@ -24,8 +25,8 @@ class CameraBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
       this.TmpQuatInternal
     );
   }
-  static OnPossess(a) {
-    CameraController_1.CameraController.OnPossess(a);
+  static OnPossess(e) {
+    CameraController_1.CameraController.OnPossess(e);
   }
   static GetCameraMode() {
     return CameraController_1.CameraController.Model.CameraMode;
@@ -33,15 +34,15 @@ class CameraBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
   static GetSequenceCameraActor() {
     return CameraController_1.CameraController.Model.SequenceCamera.PlayerComponent.GetCurrentLevelSequenceActor();
   }
-  static EnterCameraMode(a, e, r, t) {
-    CameraController_1.CameraController.EnterCameraMode(a, e, r, t);
+  static EnterCameraMode(e, r, a, t) {
+    CameraController_1.CameraController.EnterCameraMode(e, r, a, t);
   }
-  static ExitCameraMode(a, e, r, t) {
-    CameraController_1.CameraController.ExitCameraMode(a, e, r, t);
+  static ExitCameraMode(e, r, a, t) {
+    CameraController_1.CameraController.ExitCameraMode(e, r, a, t);
   }
-  static SetCameraRotation(a) {
+  static SetCameraRotation(e) {
     CameraController_1.CameraController.FightCamera.LogicComponent.SetRotation(
-      a,
+      e,
     );
   }
   static IsTargetSocketLocationValid() {
@@ -54,85 +55,88 @@ class CameraBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
   static GetFightCameraLocation() {
     return CameraController_1.CameraController.FightCamera.LogicComponent.CameraLocation.ToUeVector();
   }
+  static GetFightCameraRotation() {
+    return CameraController_1.CameraController.FightCamera.LogicComponent.CameraRotation.ToUeRotator();
+  }
   static GetFightCameraActor() {
     return CameraController_1.CameraController.FightCamera.LogicComponent
       .CameraActor;
   }
-  static SetFightCameraFollow(a) {
+  static SetFightCameraFollow(e) {
     CameraController_1.CameraController.FightCamera.LogicComponent.IsFollowing =
-      a;
+      e;
   }
-  static ApplyCameraModify(a, e, r, t, o, i, n, l, C, c, s, m, M) {
+  static ApplyCameraModify(e, r, a, t, o, i, l, n, C, s, m, c, _) {
     CameraUtility_1.CameraUtility.CheckApplyCameraModifyCondition(
-      ModelManager_1.ModelManager.CreatureModel.GetEntityById(s),
+      ModelManager_1.ModelManager.CreatureModel.GetEntityById(m),
       i,
-      m,
-      (0, puerts_1.$unref)(M),
+      c,
+      (0, puerts_1.$unref)(_),
     ) &&
       CameraController_1.CameraController.FightCamera.LogicComponent.ApplyCameraModify(
-        a,
         e,
         r,
+        a,
         t,
         i,
-        n,
-        o,
         l,
+        o,
+        n,
         C,
         void 0,
-        c,
+        s,
       );
   }
-  static ApplyCameraGuide(a, e, r, t, o, i, n) {
+  static ApplyCameraGuide(e, r, a, t, o, i, l) {
     this.CacheLookAtVector ||
       (this.CacheLookAtVector = Vector_1.Vector.Create()),
-      this.CacheLookAtVector.FromUeVector(a),
+      this.CacheLookAtVector.FromUeVector(e),
       CameraController_1.CameraController.FightCamera.LogicComponent.ApplyCameraGuide(
         this.CacheLookAtVector,
-        e,
         r,
+        a,
         t,
         o,
         i,
-        n,
+        l,
       );
   }
-  static EnterCameraExplore(a, e, r, t, o, i, n) {
+  static EnterCameraExplore(e, r, a, t, o, i, l) {
     CameraController_1.CameraController.FightCamera.LogicComponent.EnterCameraExplore(
-      a,
       e,
       r,
+      a,
       t,
       o,
       i,
-      n,
+      l,
     );
   }
-  static ExitCameraExplore(a) {
+  static ExitCameraExplore(e) {
     CameraController_1.CameraController.FightCamera.LogicComponent.ExitCameraExplore(
-      a,
+      e,
     );
   }
-  static PlayCameraSequence(a, e, r, t, o, i, n, l, C, c, s, m, M, _) {
-    var e = ModelManager_1.ModelManager.CreatureModel.GetEntityById(e);
+  static PlayCameraSequence(e, r, a, t, o, i, l, n, C, s, m, c, _, u) {
+    var r = ModelManager_1.ModelManager.CreatureModel.GetEntityById(r);
     return (
-      !!e &&
-      !!(e = e.Entity?.GetComponent(3)?.Actor) &&
-      !!CameraUtility_1.CameraUtility.CheckCameraSequenceCondition(e, a) &&
+      !!r &&
+      !!(r = r.Entity?.GetComponent(3)?.Actor) &&
+      !!CameraUtility_1.CameraUtility.CheckCameraSequenceCondition(r, e) &&
       CameraController_1.CameraController.SequenceCamera.PlayerComponent.PlayCameraSequence(
-        r,
+        a,
         t,
         o,
-        e,
+        r,
         FNameUtil_1.FNameUtil.GetDynamicFName(i),
-        FNameUtil_1.FNameUtil.GetDynamicFName(n),
-        l,
+        FNameUtil_1.FNameUtil.GetDynamicFName(l),
+        n,
         C,
-        c,
         s,
         m,
-        M,
+        c,
         _,
+        u,
       )
     );
   }
@@ -140,26 +144,26 @@ class CameraBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
     return CameraController_1.CameraController.WidgetCamera.DisplayComponent
       .CineCamera;
   }
-  static SetWidgetCameraBlendParams(a, e, r, t, o, i, n, l, C, c, s) {
+  static SetWidgetCameraBlendParams(e, r, a, t, o, i, l, n, C, s, m) {
     CameraController_1.CameraController.WidgetCamera.BlendComponent.SetBlendParams(
-      a,
       e,
       r,
+      a,
       t,
       o,
       i,
-      n,
       l,
+      n,
       C,
-      c,
       s,
+      m,
     );
   }
-  static PlayCameraOrbital(a, e, r, t, o) {
+  static PlayCameraOrbital(e, r, a, t, o) {
     CameraController_1.CameraController.OrbitalCamera.PlayerComponent.PlayCameraOrbital(
-      a,
       e,
       r,
+      a,
       t,
       o,
     );
@@ -172,9 +176,9 @@ class CameraBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
       Rotator_1.Rotator.ZeroRotator,
     );
   }
-  static EnterSequenceDialogue(a) {
+  static EnterSequenceDialogue(e) {
     CameraController_1.CameraController.FightCamera.LogicComponent.CameraDialogueController.EnterSequenceDialogue(
-      Vector_1.Vector.Create(a.K2_GetActorLocation()),
+      Vector_1.Vector.Create(e.K2_GetActorLocation()),
     );
   }
   static ExitSequenceDialogue() {
@@ -184,201 +188,60 @@ class CameraBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
     CameraController_1.CameraController.FightCamera.LogicComponent.LoadConfig(),
       CameraController_1.CameraController.FightCamera.LogicComponent.CameraConfigController.LoadConfig();
   }
-  static SetAimAssistMode(a) {
-    ModelManager_1.ModelManager.CameraModel.SetAimAssistMode(a);
+  static SetAimAssistMode(e) {
+    ModelManager_1.ModelManager.CameraModel.SetAimAssistMode(e);
   }
   static IsRoleOnCameraRight() {
-    var a =
+    var e =
         Global_1.Global.BaseCharacter.GetEntityNoBlueprint().GetComponent(1),
-      e = ModelManager_1.ModelManager.CameraModel.FightCamera.LogicComponent;
+      r = ModelManager_1.ModelManager.CameraModel.FightCamera.LogicComponent;
     return (
-      e.CameraRotation.Quaternion(CameraBlueprintFunctionLibrary.TmpQuat),
+      r.CameraRotation.Quaternion(CameraBlueprintFunctionLibrary.TmpQuat),
       CameraBlueprintFunctionLibrary.TmpQuat.RotateVector(
         Vector_1.Vector.RightVectorProxy,
         CameraBlueprintFunctionLibrary.TmpVector,
       ),
       0 <
-        a.ActorLocationProxy.DotProduct(
+        e.ActorLocationProxy.DotProduct(
           CameraBlueprintFunctionLibrary.TmpVector,
         ) -
-          e.CameraLocation.DotProduct(CameraBlueprintFunctionLibrary.TmpVector)
+          r.CameraLocation.DotProduct(CameraBlueprintFunctionLibrary.TmpVector)
     );
-  }
-  static SetCameraDebugToolEnabled(a) {
-    void 0 !==
-      ModelManager_1.ModelManager?.CameraModel?.CameraDebugToolEnabled &&
-      (ModelManager_1.ModelManager.CameraModel.CameraDebugToolEnabled = a);
-  }
-  static SwitchCameraDebugToolDrawCameraCollision() {
-    void 0 !==
-      ModelManager_1.ModelManager?.CameraModel
-        ?.CameraDebugToolDrawCameraCollision &&
-      (ModelManager_1.ModelManager.CameraModel.CameraDebugToolDrawCameraCollision =
-        !ModelManager_1.ModelManager.CameraModel
-          .CameraDebugToolDrawCameraCollision);
-  }
-  static SwitchCameraDebugToolDrawSpringArm() {
-    void 0 !==
-      ModelManager_1.ModelManager?.CameraModel?.CameraDebugToolDrawSpringArm &&
-      (ModelManager_1.ModelManager.CameraModel.CameraDebugToolDrawSpringArm =
-        !ModelManager_1.ModelManager?.CameraModel
-          ?.CameraDebugToolDrawSpringArm);
-  }
-  static SwitchCameraDebugToolDrawFocusTargetLine() {
-    void 0 !==
-      ModelManager_1.ModelManager?.CameraModel
-        ?.CameraDebugToolDrawFocusTargetLine &&
-      (ModelManager_1.ModelManager.CameraModel.CameraDebugToolDrawFocusTargetLine =
-        !ModelManager_1.ModelManager.CameraModel
-          .CameraDebugToolDrawFocusTargetLine);
-  }
-  static SwitchCameraDebugToolDrawSpringArmEdgeRange() {
-    void 0 !==
-      ModelManager_1.ModelManager?.CameraModel
-        ?.CameraDebugToolDrawSpringArmEdgeRange &&
-      (ModelManager_1.ModelManager.CameraModel.CameraDebugToolDrawSpringArmEdgeRange =
-        !ModelManager_1.ModelManager.CameraModel
-          .CameraDebugToolDrawSpringArmEdgeRange);
-  }
-  static SwitchCameraDebugToolDrawLockCameraMoveLine() {
-    void 0 !==
-      ModelManager_1.ModelManager?.CameraModel
-        ?.CameraDebugToolDrawLockCameraMoveLine &&
-      (ModelManager_1.ModelManager.CameraModel.CameraDebugToolDrawLockCameraMoveLine =
-        !ModelManager_1.ModelManager.CameraModel
-          .CameraDebugToolDrawLockCameraMoveLine);
-  }
-  static SwitchCameraDebugToolDrawSettlementCamera() {
-    void 0 !==
-      ModelManager_1.ModelManager?.CameraModel
-        ?.CameraDebugToolDrawSettlementCamera &&
-      (ModelManager_1.ModelManager.CameraModel.CameraDebugToolDrawSettlementCamera =
-        !ModelManager_1.ModelManager.CameraModel
-          .CameraDebugToolDrawSettlementCamera);
-  }
-  static GetDebugDesiredCameraProps() {
-    const r =
-        ModelManager_1.ModelManager?.CameraModel?.FightCamera?.LogicComponent,
-      t = UE.NewMap(UE.BuiltinString, UE.BuiltinString);
-    return (
-      r &&
-        r.DebugDesiredCameraProps.forEach((a, e) => {
-          t.Add(e, r.DebugValueToString(a, 0, 0));
-        }),
-      t
-    );
-  }
-  static GetDebugCameraPropsRaw() {
-    var a =
-      ModelManager_1.ModelManager?.CameraModel?.FightCamera?.LogicComponent;
-    const r = new Map();
-    return (
-      a &&
-        a.DebugDesiredCameraProps.forEach((a, e) => {
-          a instanceof Vector_1.Vector
-            ? r.set(e, Vector_1.Vector.Create(a))
-            : a instanceof Rotator_1.Rotator
-              ? r.set(e, Rotator_1.Rotator.Create(a))
-              : r.set(e, a);
-        }),
-      r
-    );
-  }
-  static GetSubCameraModifications() {
-    const r = new Map([
-      [0, "基础镜头"],
-      [2, "子镜头"],
-      [1, "战斗镜头"],
-      [3, "锁定目标镜头"],
-    ]);
-    var a =
-      ModelManager_1.ModelManager?.CameraModel?.FightCamera?.LogicComponent
-        ?.CameraConfigController;
-    const i = UE.NewArray(UE.SCameraDebugTool_SubCameraModification);
-    return (
-      a &&
-        a?.DebugSubCameraModifications?.forEach((a, e) => {
-          const t = new UE.SCameraDebugTool_SubCameraModification(),
-            o =
-              ((t.CameraType = r.get(e.Type) ?? "(Unknown Type)"),
-              (t.CameraPriority = e.Priority),
-              (t.CameraTag = e?.Tag?.TagName ?? ""),
-              UE.NewArray(UE.SCameraDebugTool_CameraProperty));
-          a.forEach((a, e) => {
-            var r = new UE.SCameraDebugTool_CameraProperty();
-            (r.PropertyName = e ?? "(Invalid Property)"),
-              (r.Value = a.Value ?? 0),
-              (r.IsEffect = a.IsEffect ?? !1),
-              o.Add(r),
-              t.ModifiedProperties.Add(r);
-          }),
-            i.Add(t);
-        }),
-      i
-    );
-  }
-  static GetControllerModifications() {
-    var a =
-      ModelManager_1.ModelManager?.CameraModel?.FightCamera?.LogicComponent;
-    const t = UE.NewArray(UE.SCameraDebugTool_ControllerModification);
-    return (
-      a &&
-        a?.DebugControllerModifications?.forEach((a, r) => {
-          a.forEach((a) => {
-            var e = new UE.SCameraDebugTool_ControllerModification();
-            (e.ControllerName = r),
-              (e.PropertyName = a.PropertyName),
-              (e.OldValue = a.OldValue),
-              (e.NewValue = a.NewValue),
-              t.Add(e);
-          });
-        }),
-      t
-    );
-  }
-  static GetCamereModeInfo() {
-    var a = new UE.SCameraDebugTool_CameraModeInfo(),
-      e = ModelManager_1.ModelManager?.CameraModel?.CameraMode,
-      r =
-        ((a.CurrentCameraMode = e || 0),
-        ModelManager_1.ModelManager?.CameraModel),
-      t = UE.NewArray(UE.BuiltinBool);
-    if (r) for (let a = 0; a < 5; ++a) t.Add(r.IsModeEnabled(a));
-    return (a.CameraModeEnabledArray = t), a;
-  }
-  static PlaySettlementCamera() {
-    var a =
-      ModelManager_1.ModelManager?.CameraModel?.FightCamera?.LogicComponent;
-    a && a.PlaySettlementCamera();
   }
   static GetIsCameraTargetInScreen() {
-    var a =
+    var e =
       ModelManager_1.ModelManager?.CameraModel?.FightCamera?.LogicComponent;
     return (
-      !!a?.IsTargetLocationValid &&
-      a.CheckPositionInScreen(
-        a.TargetLocation,
-        a.CameraAdjustController.CheckInScreenMinX,
-        a.CameraAdjustController.CheckInScreenMaxX,
-        a.CameraAdjustController.CheckInScreenMinY,
-        a.CameraAdjustController.CheckInScreenMaxY,
+      !!e?.IsTargetLocationValid &&
+      e.CheckPositionInScreen(
+        e.TargetLocation,
+        e.CameraAdjustController.CheckInScreenMinX,
+        e.CameraAdjustController.CheckInScreenMaxX,
+        e.CameraAdjustController.CheckInScreenMinY,
+        e.CameraAdjustController.CheckInScreenMaxY,
       )
     );
   }
-  static EnterSpecialGameplayCamera(a) {
-    var e =
+  static EnterSpecialGameplayCamera(e) {
+    var r =
       ModelManager_1.ModelManager?.CameraModel?.FightCamera?.LogicComponent;
-    if (e) return e.EnterSpecialGameplayCamera(a);
+    if (r) return r.EnterSpecialGameplayCamera(e);
   }
   static ExitSpecialGameplayCamera() {
-    var a =
+    var e =
       ModelManager_1.ModelManager?.CameraModel?.FightCamera?.LogicComponent;
-    a && a.ExitSpecialGameplayCamera();
+    e && e.ExitSpecialGameplayCamera();
   }
   static ExitSpecialGameplayCamera2() {
-    var a =
+    var e =
       ModelManager_1.ModelManager?.CameraModel?.FightCamera?.LogicComponent;
-    a && a.ExitSpecialGameplayCamera();
+    e && e.ExitSpecialGameplayCamera();
+  }
+  static SetAimAssistModeByKey(e, r) {
+    ModelManager_1.ModelManager.CameraModel?.SetAimAssistModeWithKey(e, r);
+  }
+  static ClearAimAssistModeByKey(e) {
+    ModelManager_1.ModelManager.CameraModel?.ClearAimAssistModeWithKey(e);
   }
 }
 exports.default = CameraBlueprintFunctionLibrary;

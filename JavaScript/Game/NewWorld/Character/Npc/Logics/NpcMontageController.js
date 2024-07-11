@@ -9,7 +9,7 @@ class NpcMontageController {
     (this.Jh = void 0),
       (this.oRe = void 0),
       (this.Jh = e),
-      (this.oRe = this.Jh.GetComponent(35));
+      (this.oRe = this.Jh.GetComponent(36));
   }
   LoadAsync(e, t) {
     return ResourceSystem_1.ResourceSystem.LoadAsync(e, UE.AnimMontage, t);

@@ -8,7 +8,7 @@ class ManipulateInteractModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
       (this.InRangePoints = new Set()),
-      (this.LHr = (e, t) => {
+      (this.sHr = (e, t) => {
         e ? this.InRangePoints.add(t) : this.InRangePoints.delete(t);
       });
   }
@@ -16,7 +16,7 @@ class ManipulateInteractModel extends ModelBase_1.ModelBase {
     return (
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnOverlapSceneItemExploreInteractRange,
-        this.LHr,
+        this.sHr,
       ),
       !0
     );
@@ -25,7 +25,7 @@ class ManipulateInteractModel extends ModelBase_1.ModelBase {
     return (
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnOverlapSceneItemExploreInteractRange,
-        this.LHr,
+        this.sHr,
       ),
       !0
     );

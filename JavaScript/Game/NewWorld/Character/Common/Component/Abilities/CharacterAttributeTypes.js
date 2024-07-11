@@ -4,24 +4,19 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.attrsAutoRecoverSpeedMap =
     exports.attrsCurrentValueClamp =
     exports.attrsBaseValueClampMax =
-    exports.attrsBaseValueClamp =
     exports.attrsNotClampZero =
-    exports.allElementTypes =
-    exports.elementEnergyAttributeIds =
     exports.specialEnergyIds =
     exports.attributeIdsWithMax =
     exports.stateAttributeIds =
     exports.DIVIDED_TEN_THOUSAND =
     exports.PER_TEN_THOUSAND =
-    exports.ELEMENT_POWER_MAX =
     exports.ATTRIBUTE_ID_MAX =
     exports.EAttributeId =
       void 0);
 const Protocol_1 = require("../../../../../../Core/Define/Net/Protocol");
-var EAttributeId = Protocol_1.Aki.Protocol.KBs;
+var EAttributeId = Protocol_1.Aki.Protocol.Bks;
 (exports.EAttributeId = EAttributeId),
-  (exports.ATTRIBUTE_ID_MAX = Protocol_1.Aki.Protocol.KBs.EAttributeType_MAX),
-  (exports.ELEMENT_POWER_MAX = 1e4),
+  (exports.ATTRIBUTE_ID_MAX = Protocol_1.Aki.Protocol.Bks.EAttributeType_MAX),
   (exports.PER_TEN_THOUSAND = 1e4),
   (exports.DIVIDED_TEN_THOUSAND = 1e-4),
   (exports.stateAttributeIds = new Set([
@@ -36,22 +31,16 @@ var EAttributeId = Protocol_1.Aki.Protocol.KBs;
     EAttributeId.Proto_SpecialEnergy2,
     EAttributeId.Proto_SpecialEnergy3,
     EAttributeId.Proto_SpecialEnergy4,
-    EAttributeId.Proto_ElementPower1,
-    EAttributeId.Proto_ElementPower2,
-    EAttributeId.Proto_ElementPower3,
-    EAttributeId.Proto_ElementPower4,
-    EAttributeId.Proto_ElementPower5,
-    EAttributeId.Proto_ElementPower6,
     EAttributeId.Proto_StatusBuildUp1,
     EAttributeId.Proto_StatusBuildUp2,
     EAttributeId.Proto_StatusBuildUp3,
     EAttributeId.Proto_StatusBuildUp4,
     EAttributeId.Proto_StatusBuildUp5,
+    EAttributeId.Proto_ElementEnergy,
   ])),
   (exports.attributeIdsWithMax = new Map([
-    [EAttributeId.Proto_Life, EAttributeId.Tkn],
+    [EAttributeId.Proto_Life, EAttributeId.e5n],
     [EAttributeId.Proto_Strength, EAttributeId.Proto_StrengthMax],
-    [EAttributeId.Proto_Life, EAttributeId.Tkn],
     [EAttributeId.Proto_Tough, EAttributeId.Proto_ToughMax],
     [EAttributeId.Proto_Rage, EAttributeId.Proto_RageMax],
     [EAttributeId.Proto_Hardness, EAttributeId.Proto_HardnessMax],
@@ -65,6 +54,7 @@ var EAttributeId = Protocol_1.Aki.Protocol.KBs;
     [EAttributeId.Proto_StatusBuildUp3, EAttributeId.Proto_StatusBuildUp3Max],
     [EAttributeId.Proto_StatusBuildUp4, EAttributeId.Proto_StatusBuildUp4Max],
     [EAttributeId.Proto_StatusBuildUp5, EAttributeId.Proto_StatusBuildUp5Max],
+    [EAttributeId.Proto_ElementEnergy, EAttributeId.Proto_ElementEnergyMax],
   ])),
   (exports.specialEnergyIds = [
     EAttributeId.Proto_SpecialEnergy1,
@@ -72,15 +62,6 @@ var EAttributeId = Protocol_1.Aki.Protocol.KBs;
     EAttributeId.Proto_SpecialEnergy3,
     EAttributeId.Proto_SpecialEnergy4,
   ]),
-  (exports.elementEnergyAttributeIds = [
-    EAttributeId.Proto_ElementPower1,
-    EAttributeId.Proto_ElementPower2,
-    EAttributeId.Proto_ElementPower3,
-    EAttributeId.Proto_ElementPower4,
-    EAttributeId.Proto_ElementPower5,
-    EAttributeId.Proto_ElementPower6,
-  ]),
-  (exports.allElementTypes = [1, 2, 3, 4, 5, 6]),
   (exports.attrsNotClampZero = [
     EAttributeId.Proto_Crit,
     EAttributeId.Proto_DamageReduce,
@@ -100,16 +81,8 @@ var EAttributeId = Protocol_1.Aki.Protocol.KBs;
     EAttributeId.Proto_DamageResistanceElement6,
     EAttributeId.Proto_ParalysisTimeRecover,
   ]),
-  (exports.attrsBaseValueClamp = new Map([
-    [EAttributeId.Proto_ElementPower1, exports.ELEMENT_POWER_MAX],
-    [EAttributeId.Proto_ElementPower2, exports.ELEMENT_POWER_MAX],
-    [EAttributeId.Proto_ElementPower3, exports.ELEMENT_POWER_MAX],
-    [EAttributeId.Proto_ElementPower4, exports.ELEMENT_POWER_MAX],
-    [EAttributeId.Proto_ElementPower5, exports.ELEMENT_POWER_MAX],
-    [EAttributeId.Proto_ElementPower6, exports.ELEMENT_POWER_MAX],
-  ])),
   (exports.attrsBaseValueClampMax = new Map([
-    [EAttributeId.Proto_Life, EAttributeId.Tkn],
+    [EAttributeId.Proto_Life, EAttributeId.e5n],
     [EAttributeId.Proto_Energy, EAttributeId.Proto_EnergyMax],
     [EAttributeId.Proto_SpecialEnergy1, EAttributeId.Proto_SpecialEnergy1Max],
     [EAttributeId.Proto_SpecialEnergy2, EAttributeId.Proto_SpecialEnergy2Max],
@@ -124,6 +97,7 @@ var EAttributeId = Protocol_1.Aki.Protocol.KBs;
     [EAttributeId.Proto_StatusBuildUp3, EAttributeId.Proto_StatusBuildUp3Max],
     [EAttributeId.Proto_StatusBuildUp4, EAttributeId.Proto_StatusBuildUp4Max],
     [EAttributeId.Proto_StatusBuildUp5, EAttributeId.Proto_StatusBuildUp5Max],
+    [EAttributeId.Proto_ElementEnergy, EAttributeId.Proto_ElementEnergyMax],
   ]));
 const ATTACK_SPEED_MAX = 2e4,
   REDUCE_MAX = 1e4;

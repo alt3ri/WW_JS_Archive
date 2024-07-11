@@ -9,12 +9,12 @@ class ExploreCountryItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
       (this.Pe = void 0),
-      (this.EVe = void 0),
-      (this.yAt = void 0),
+      (this.q6e = void 0),
+      (this.LPt = void 0),
       (this.OnExtendToggleStateChanged = (e) => {
-        this.EVe && this.EVe(this, this.Pe, e);
+        this.q6e && this.q6e(this, this.Pe, e);
       }),
-      (this.DTt = () => !this.yAt || this.yAt());
+      (this.gke = () => !this.LPt || this.LPt());
   }
   Initialize(e) {
     this.CreateByActorAsync(e.GetOwner());
@@ -30,11 +30,11 @@ class ExploreCountryItem extends UiPanelBase_1.UiPanelBase {
       (this.BtnBindInfo = [[3, this.OnExtendToggleStateChanged]]);
   }
   OnStart() {
-    this.GetExtendToggle(3).CanExecuteChange.Bind(this.DTt);
+    this.GetExtendToggle(3).CanExecuteChange.Bind(this.gke);
   }
   OnBeforeDestroy() {
-    (this.EVe = void 0),
-      (this.yAt = void 0),
+    (this.q6e = void 0),
+      (this.LPt = void 0),
       this.GetExtendToggle(3).CanExecuteChange.Unbind();
   }
   Refresh(e) {
@@ -58,7 +58,7 @@ class ExploreCountryItem extends UiPanelBase_1.UiPanelBase {
     this.GetExtendToggle(3).CanExecuteChange.Bind(e);
   }
   BindOnSelected(e) {
-    this.EVe = e;
+    this.q6e = e;
   }
 }
 exports.ExploreCountryItem = ExploreCountryItem;

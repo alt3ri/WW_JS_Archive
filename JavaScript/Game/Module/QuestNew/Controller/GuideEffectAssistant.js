@@ -44,19 +44,19 @@ class EffectData {
 class GuideEffectAssistant extends ControllerAssistantBase_1.ControllerAssistantBase {
   constructor() {
     super(...arguments),
-      (this.zio = 0),
-      (this.Zio = 0),
-      (this.eoo = IComponent_1.EEffectSplineCreateMode.WholeLine),
+      (this.$oo = 0),
+      (this.Yoo = 0),
+      (this.Joo = IComponent_1.EEffectSplineCreateMode.WholeLine),
       (this._0e = 0),
-      (this.too = new Map()),
-      (this.ioo = new Set()),
-      (this.ooo = (e, i) => {
+      (this.zoo = new Map()),
+      (this.Zoo = new Set()),
+      (this.ero = (e, i) => {
         if (
           i === QuestDefine_1.SCAN_SKILL_ID &&
           e === Global_1.Global.BaseCharacter?.GetEntityIdNoBlueprint()
         )
-          if (this.zio) {
-            i = this.too.get(this.zio);
+          if (this.$oo) {
+            i = this.zoo.get(this.$oo);
             if (i) {
               var o,
                 n,
@@ -73,11 +73,11 @@ class GuideEffectAssistant extends ControllerAssistantBase_1.ControllerAssistant
                       "Guide",
                       32,
                       "当前追踪任务Spline未找到",
-                      ["TrackQuestId:", this.zio],
+                      ["TrackQuestId:", this.$oo],
                       ["SplineId", o],
                     )
                   );
-                var [r, a, _] = this.roo(s, n);
+                var [r, a, _] = this.tro(s, n);
                 !r ||
                   _ >
                     ConfigManager_1.ConfigManager.LevelGamePlayConfig
@@ -90,21 +90,21 @@ class GuideEffectAssistant extends ControllerAssistantBase_1.ControllerAssistant
                   e >
                   ConfigManager_1.ConfigManager.LevelGamePlayConfig
                     .GenExtraGuideEffectMinDist;
-              this.noo();
+              this.iro();
               for ([f, l] of i) {
                 var c,
-                  h = this.soo(s, l, l.BestIndex, f === t && E);
-                this.Zio <= 0
+                  h = this.oro(s, l, l.BestIndex, f === t && E);
+                this.Yoo <= 0
                   ? Log_1.Log.CheckDebug() &&
                     Log_1.Log.Debug(
                       "Guide",
                       32,
                       "当前位置无法生成spline",
-                      ["TrackQuestId:", this.zio],
+                      ["TrackQuestId:", this.$oo],
                       ["SplineId", f],
                     )
                   : ((c = l.SplineData.Effect),
-                    (c = this.aoo(c, h)),
+                    (c = this.rro(c, h)),
                     (l.CurActor = h),
                     EffectSystem_1.EffectSystem.IsValid(c) &&
                       ((l.EffectHandle = c),
@@ -117,7 +117,7 @@ class GuideEffectAssistant extends ControllerAssistantBase_1.ControllerAssistant
                           c,
                         )) instanceof UE.NiagaraComponent &&
                         h.ReinitializeSystem(),
-                      this.eoo ===
+                      this.Joo ===
                         IComponent_1.EEffectSplineCreateMode.EquidistantPoint &&
                         ((c = Math.ceil(l.SplineLength / this._0e)),
                         h.SetIntParameter(new UE.FName("SpawnCount"), c)),
@@ -130,26 +130,26 @@ class GuideEffectAssistant extends ControllerAssistantBase_1.ControllerAssistant
               Log_1.Log.CheckDebug() &&
                 Log_1.Log.Debug("Guide", 34, "当前追踪任务未配置引导特效", [
                   "TrackQuestId:",
-                  this.zio,
+                  this.$oo,
                 ]);
           } else
             Log_1.Log.CheckDebug() &&
               Log_1.Log.Debug("Guide", 34, "当前无追踪任务");
       }),
-      (this.hoo = (e, t, i) => {
-        t === Protocol_1.Aki.Protocol.kMs.Proto_Finish &&
-          this.too.has(e) &&
-          (this.zio === e && (this.noo(), (this.zio = void 0)),
-          this.too.delete(e));
+      (this.nro = (e, t, i) => {
+        t === Protocol_1.Aki.Protocol.tTs.Proto_Finish &&
+          this.zoo.has(e) &&
+          (this.$oo === e && (this.iro(), (this.$oo = void 0)),
+          this.zoo.delete(e));
       }),
-      (this.Gdt = (e) => {
-        e === Protocol_1.Aki.Protocol.NCs.Proto_BtTypeQuest &&
-          (this.noo(),
+      (this.$Ct = (e) => {
+        e === Protocol_1.Aki.Protocol.tps.Proto_BtTypeQuest &&
+          (this.iro(),
           (e = ModelManager_1.ModelManager.QuestNewModel.GetCurTrackedQuest()),
-          (this.zio = e ? e.Id : void 0));
+          (this.$oo = e ? e.Id : void 0));
       });
   }
-  aoo(e, t) {
+  rro(e, t) {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info("Guide", 32, "[GuideEffectAssistant] 生成新的特效");
     var i = MathUtils_1.MathUtils.DefaultTransform;
@@ -162,52 +162,52 @@ class GuideEffectAssistant extends ControllerAssistantBase_1.ControllerAssistant
     );
   }
   OnDestroy() {
-    this.too.clear();
+    this.zoo.clear();
   }
   OnAddEvents() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.CharUseSkill,
-      this.ooo,
+      this.ero,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnQuestStateChange,
-        this.hoo,
+        this.nro,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnLogicTreeTrackUpdate,
-        this.Gdt,
+        this.$Ct,
       );
   }
   OnRemoveEvents() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.CharUseSkill,
-      this.ooo,
+      this.ero,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnQuestStateChange,
-        this.hoo,
+        this.nro,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnLogicTreeTrackUpdate,
-        this.Gdt,
+        this.$Ct,
       );
   }
-  noo() {
-    var e = this.too.get(this.zio);
-    if (e) for (var [, t] of e) this.loo(t);
+  iro() {
+    var e = this.zoo.get(this.$oo);
+    if (e) for (var [, t] of e) this.sro(t);
   }
-  loo(e) {
+  sro(e) {
     var t = e.CurActor;
     if (t?.IsValid()) {
       var i = e.EffectHandle;
       if (EffectSystem_1.EffectSystem.IsValid(i)) {
         if (1 === e.State) {
           const o = e.CurActor;
-          this.ioo.add(o),
+          this.Zoo.add(o),
             EffectSystem_1.EffectSystem.AddFinishCallback(
               e.EffectHandle,
               (e) => {
-                this._oo(o);
+                this.aro(o);
               },
             ),
             (e.CurActor = void 0),
@@ -221,21 +221,21 @@ class GuideEffectAssistant extends ControllerAssistantBase_1.ControllerAssistant
       } else ActorSystem_1.ActorSystem.Put(t), (e.CurActor = void 0);
     }
   }
-  _oo(e) {
+  aro(e) {
     e?.IsValid() &&
-      this.ioo.has(e) &&
-      (this.ioo.delete(e), ActorSystem_1.ActorSystem.Put(e));
+      this.Zoo.has(e) &&
+      (this.Zoo.delete(e), ActorSystem_1.ActorSystem.Put(e));
   }
   UpdateQuestGuideEffect(e) {
-    if (this.zio) {
-      var t = this.too.get(this.zio);
+    if (this.$oo) {
+      var t = this.zoo.get(this.$oo);
       if (t)
         for (var [, i] of t)
           Time_1.Time.Now >= i.HideTime &&
-            (this.noo(), (i.HideTime = Number.MAX_VALUE));
+            (this.iro(), (i.HideTime = Number.MAX_VALUE));
     }
   }
-  roo(e, t) {
+  tro(e, t) {
     var i,
       o,
       t = t.SplinePoints;
@@ -247,7 +247,7 @@ class GuideEffectAssistant extends ControllerAssistantBase_1.ControllerAssistant
     }
     return -1 === s ? [!1, 0, 0] : [!0, s, n];
   }
-  soo(t, e, i, o) {
+  oro(t, e, i, o) {
     var n = ActorSystem_1.ActorSystem.Get(
         UE.BP_BasePathLine_C.StaticClass(),
         MathUtils_1.MathUtils.DefaultTransform,
@@ -257,16 +257,16 @@ class GuideEffectAssistant extends ControllerAssistantBase_1.ControllerAssistant
         n.GetComponentByClass(UE.SplineComponent.StaticClass())),
       r = e.SplinePoints,
       a = UE.NewArray(UE.Vector);
-    o && this.uoo(t, r[i], a);
+    o && this.hro(t, r[i], a);
     var _ = i + 1 + Math.ceil(SHOW_EFFECT_DISTANCE / SAMPLE_STEP);
     _ = MathUtils_1.MathUtils.Clamp(_, i + 1, r.length);
     for (let e = i + 1; e < _; e++) {
       var f = Vector_1.Vector.Create();
       f.DeepCopy(r[e]), f.SubtractionEqual(t), a.Add(f.ToUeVector());
     }
-    return s.SetSplinePoints(a, 0, !0), (this.Zio = a.Num()), n;
+    return s.SetSplinePoints(a, 0, !0), (this.Yoo = a.Num()), n;
   }
-  uoo(t, e, i) {
+  hro(t, e, i) {
     var o = UE.NavigationSystemV1.FindPathToLocationSynchronously(
       GlobalData_1.GlobalData.World,
       t.ToUeVector(),
@@ -289,7 +289,7 @@ class GuideEffectAssistant extends ControllerAssistantBase_1.ControllerAssistant
         i.Add(n);
     }
   }
-  coo(e, t) {
+  lro(e, t) {
     var i = ModelManager_1.ModelManager.CreatureModel.GetCompleteEntityData(e);
     if (i) {
       var o = (0, IComponent_1.getComponent)(
@@ -311,8 +311,8 @@ class GuideEffectAssistant extends ControllerAssistantBase_1.ControllerAssistant
               ["SplineEntityId", e],
             );
         else {
-          (this.eoo = o.Option.CreateOption.Type),
-            this.eoo ===
+          (this.Joo = o.Option.CreateOption.Type),
+            this.Joo ===
               IComponent_1.EEffectSplineCreateMode.EquidistantPoint &&
               ((o = o.Option.CreateOption), (this._0e = o.Space));
           var n =
@@ -370,7 +370,7 @@ class GuideEffectAssistant extends ControllerAssistantBase_1.ControllerAssistant
         );
   }
   ClearQuestTraceEffect(e) {
-    this.too.delete(e);
+    this.zoo.delete(e);
   }
   aoe(e, t) {
     if (!GuideEffectAssistant.uoe) {
@@ -396,18 +396,18 @@ class GuideEffectAssistant extends ControllerAssistantBase_1.ControllerAssistant
   AddQuestTraceEffect(e, t, i) {
     var o = new EffectData();
     let n = new Map();
-    this.too.has(e) ? (n = this.too.get(e)) : this.too.set(e, n),
+    this.zoo.has(e) ? (n = this.zoo.get(e)) : this.zoo.set(e, n),
       n.set(i, o),
       (o.Duration = t),
-      this.coo(i, o);
+      this.lro(i, o);
   }
   RemoveQuestTraceEffect(e, t) {
     var i,
-      e = this.too.get(e);
+      e = this.zoo.get(e);
     void 0 !== e &&
       void 0 !== (i = e.get(t)) &&
       (ModelManager_1.ModelManager.GameSplineModel.ReleaseSpline(t, t),
-      this.loo(i),
+      this.sro(i),
       e.delete(t));
   }
 }

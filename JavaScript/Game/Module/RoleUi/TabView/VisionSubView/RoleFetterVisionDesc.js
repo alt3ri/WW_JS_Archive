@@ -7,7 +7,7 @@ const UE = require("ue"),
   GenericScrollView_1 = require("../../../Util/ScrollView/GenericScrollView");
 class RoleFetterVisionDesc extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
-    super(), (this.wdo = void 0), this.CreateThenShowByActor(e.GetOwner());
+    super(), (this.ACo = void 0), this.CreateThenShowByActor(e.GetOwner());
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -16,18 +16,18 @@ class RoleFetterVisionDesc extends UiPanelBase_1.UiPanelBase {
     ];
   }
   Refresh(e) {
-    this.wdo.SetActive(0 < e.length), this.wdo.Update(e);
+    this.ACo.SetActive(0 < e.length), this.ACo.Update(e);
   }
   OnBeforeDestroy() {
-    this.wdo.Destroy();
+    this.ACo.Destroy();
   }
 }
 exports.RoleFetterVisionDesc = RoleFetterVisionDesc;
 class RoleVisionDescScroller extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
-      (this.F7e = void 0),
-      (this.JVi = (e, s, t) => {
+      (this.ZHe = void 0),
+      (this.Y6i = (e, s, t) => {
         s = new RoleVisionFetterDescScrollerItem(s);
         return s.Update(e), { Key: t, Value: s };
       }),
@@ -40,16 +40,16 @@ class RoleVisionDescScroller extends UiPanelBase_1.UiPanelBase {
     ];
   }
   OnStart() {
-    this.F7e = new GenericScrollView_1.GenericScrollView(
+    this.ZHe = new GenericScrollView_1.GenericScrollView(
       this.GetScrollViewWithScrollbar(0),
-      this.JVi,
+      this.Y6i,
     );
   }
   Update(e) {
-    this.F7e.RefreshByData(e);
+    this.ZHe.RefreshByData(e);
   }
   OnBeforeDestroy() {
-    this.F7e.ClearChildren();
+    this.ZHe.ClearChildren();
   }
 }
 class RoleVisionFetterDescScrollerItem extends UiPanelBase_1.UiPanelBase {

@@ -14,50 +14,50 @@ const Log_1 = require("../../../../Core/Common/Log"),
 class ComposeModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
-      (this.Wbt = -1),
+      (this.Xqt = -1),
       (this.CurrentInteractCreatureDataLongId = void 0),
-      (this.nIi = 0),
+      (this.nTi = 0),
       (this.LastExp = 0),
       (this.ComposeEnterFlow = void 0),
       (this.ComposeSuccessFlow = void 0),
       (this.ComposeFailFlow = void 0),
-      (this.sIi = 1),
-      (this.aIi = []),
-      (this.hIi = void 0),
-      (this.lIi = void 0),
-      (this._Ii = (t, e) =>
+      (this.sTi = 1),
+      (this.aTi = []),
+      (this.hTi = void 0),
+      (this.lTi = void 0),
+      (this._Ti = (t, e) =>
         t.IsPurification === e.IsPurification
           ? t.IsUnlock === e.IsUnlock
             ? e.ItemId - t.ItemId
             : e.IsUnlock - t.IsUnlock
           : e.IsPurification - t.IsPurification),
-      (this.uIi = 0),
-      (this.cIi = void 0),
-      (this.mIi = void 0),
-      (this.dIi = void 0),
-      (this.CIi = 0),
-      (this.gIi = void 0),
-      (this.fIi = (t, e) =>
+      (this.uTi = 0),
+      (this.cTi = void 0),
+      (this.mTi = void 0),
+      (this.dTi = void 0),
+      (this.CTi = 0),
+      (this.gTi = void 0),
+      (this.fTi = (t, e) =>
         t.IsBuff === e.IsBuff ? t.RoleId - e.RoleId : t.IsBuff ? -1 : 1);
   }
   SaveLimitRefreshTime(t) {
-    this.Wbt =
+    this.Xqt =
       MathUtils_1.MathUtils.LongToNumber(t) * TimeUtil_1.TimeUtil.Millisecond;
   }
   GetRefreshLimitTime() {
     var t;
-    if (0 !== this.Wbt)
+    if (0 !== this.Xqt)
       return (
         (t = TimeUtil_1.TimeUtil.GetServerTime()),
-        TimeUtil_1.TimeUtil.GetRemainTimeDataFormat(this.Wbt - t).CountDownText
+        TimeUtil_1.TimeUtil.GetRemainTimeDataFormat(this.Xqt - t).CountDownText
       );
   }
   GetRefreshLimitTimeValue() {
     var t;
-    return this.Wbt <= 0
+    return this.Xqt <= 0
       ? 1
       : ((t = TimeUtil_1.TimeUtil.GetServerTime()),
-        TimeUtil_1.TimeUtil.GetRemainTimeDataFormat(this.Wbt - t)
+        TimeUtil_1.TimeUtil.GetRemainTimeDataFormat(this.Xqt - t)
           .RemainingTime);
   }
   OnInit() {
@@ -111,16 +111,16 @@ class ComposeModel extends ModelBase_1.ModelBase {
     );
   }
   set CurrentComposeViewType(t) {
-    this.nIi = t;
+    this.nTi = t;
   }
   get CurrentComposeViewType() {
-    return this.nIi;
+    return this.nTi;
   }
   set CurrentComposeListType(t) {
-    this.sIi = t;
+    this.sTi = t;
   }
   get CurrentComposeListType() {
-    return this.sIi;
+    return this.sTi;
   }
   CreateComposeDataList(t) {
     this.CreateReagentProductionDataList(t),
@@ -135,16 +135,16 @@ class ComposeModel extends ModelBase_1.ModelBase {
   UpdateComposeByServerConfig(t) {
     for (const r of t) {
       var e =
-          MathUtils_1.MathUtils.LongToNumber(r.$Ts) *
+          MathUtils_1.MathUtils.LongToNumber(r.hPs) *
           TimeUtil_1.TimeUtil.Millisecond,
         i =
-          MathUtils_1.MathUtils.LongToNumber(r.HTs) *
+          MathUtils_1.MathUtils.LongToNumber(r.lPs) *
           TimeUtil_1.TimeUtil.Millisecond,
-        o = this.aIi.findIndex((t) => t.ItemId === r.Ekn);
+        o = this.aTi.findIndex((t) => t.ItemId === r.J4n);
       -1 !== o &&
         ((0 == e && 0 == i) || TimeUtil_1.TimeUtil.IsInTimeSpan(e, i)
-          ? ((this.aIi[o].ExistStartTime = e), (this.aIi[o].ExistEndTime = i))
-          : this.aIi.splice(o, 1));
+          ? ((this.aTi[o].ExistStartTime = e), (this.aTi[o].ExistEndTime = i))
+          : this.aTi.splice(o, 1));
     }
   }
   HideComposeDataList(t) {
@@ -153,8 +153,8 @@ class ComposeModel extends ModelBase_1.ModelBase {
   CreateReagentProductionDataList(t) {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug("Compose", 50, "初始化药剂制造相关数据列表"),
-      this.aIi || (this.aIi = new Array()),
-      (this.aIi.length = 0);
+      this.aTi || (this.aTi = new Array()),
+      (this.aTi.length = 0);
     var e,
       i =
         ConfigManager_1.ConfigManager.ComposeConfig.GetComposeListByType(1) ??
@@ -182,92 +182,95 @@ class ComposeModel extends ModelBase_1.ModelBase {
           TotalMakeCountInLimitTime: a.LimitCount,
           IsUnlock: 0,
         };
-      this.aIi.push(r), o.set(a.Id, r);
+      this.aTi.push(r), o.set(a.Id, r);
     }
     for (const s of t)
       1 ===
         ConfigManager_1.ConfigManager.ComposeConfig.GetSynthesisFormulaById(
-          s.Ekn,
+          s.J4n,
         ).FormulaType &&
-        o.has(s.Ekn) &&
-        (((e = o.get(s.Ekn)).ItemId = s.Ekn),
-        (e.ComposeCount = s.I5n ?? 0),
+        o.has(s.J4n) &&
+        (((e = o.get(s.J4n)).ItemId = s.J4n),
+        (e.ComposeCount = s.o9n ?? 0),
         (e.IsNew = ModelManager_1.ModelManager.NewFlagModel.HasNewFlag(
           LocalStorageDefine_1.ELocalStoragePlayerKey.ComposeLevelKey,
-          s.Ekn,
+          s.J4n,
         )),
-        (e.LastRoleId = s.NTs ?? 0),
+        (e.LastRoleId = s.nPs ?? 0),
         (e.ExistStartTime =
-          MathUtils_1.MathUtils.LongToNumber(s.$Ts) *
+          MathUtils_1.MathUtils.LongToNumber(s.hPs) *
           TimeUtil_1.TimeUtil.Millisecond),
         (e.ExistEndTime =
-          MathUtils_1.MathUtils.LongToNumber(s.HTs) *
+          MathUtils_1.MathUtils.LongToNumber(s.lPs) *
           TimeUtil_1.TimeUtil.Millisecond),
-        (e.MadeCountInLimitTime = s.Gxs),
-        (e.TotalMakeCountInLimitTime = s.FTs),
+        (e.MadeCountInLimitTime = s.iGs),
+        (e.TotalMakeCountInLimitTime = s.sPs),
         (e.IsUnlock = 1),
         (e.IsCompose = this.CheckCanReagentProduction(e.ItemId) ? 1 : 0));
   }
   UpdateReagentProductionDataList(t) {
-    let e = !1;
-    for (const a of t) {
-      var i,
-        o = ConfigManager_1.ConfigManager.ComposeConfig.GetSynthesisFormulaById(
-          a.Ekn,
-        );
-      if (1 === o.FormulaType) {
-        let t = !1;
-        for (const s of this.aIi)
-          if (a.Ekn === s.ItemId) {
-            var r = 1 === s.IsUnlock;
-            (s.ComposeCount = a.I5n ?? 0),
-              (s.MadeCountInLimitTime = a.Gxs ?? 0),
-              (s.IsCompose = this.CheckCanReagentProduction(a.Ekn) ? 1 : 0),
-              (s.IsUnlock = 1),
-              (t = !0),
-              r || (e = !0);
-            break;
-          }
-        t ||
-          ((o =
+    if (!(this.aTi.length <= 0)) {
+      let e = !1;
+      for (const a of t) {
+        var i,
+          o =
             ConfigManager_1.ConfigManager.ComposeConfig.GetSynthesisFormulaById(
-              a.Ekn,
-            )),
-          (i = ConfigManager_1.ConfigManager.ItemConfig.GetConfig(o.ItemId)),
-          (i = {
-            MainType: 1,
-            SubType: 0,
-            UniqueId: 0,
-            ItemId: a.Ekn,
-            ComposeCount: a.I5n ?? 0,
-            IsNew: !0,
-            LastRoleId: a.NTs ?? 0,
-            IsCompose: 0,
-            Quality: i.QualityId,
-            EffectType: o.TypeId,
-            ExistStartTime:
-              MathUtils_1.MathUtils.LongToNumber(a.$Ts) *
-              TimeUtil_1.TimeUtil.Millisecond,
-            ExistEndTime:
-              MathUtils_1.MathUtils.LongToNumber(a.HTs) *
-              TimeUtil_1.TimeUtil.Millisecond,
-            MadeCountInLimitTime: a.Gxs,
-            TotalMakeCountInLimitTime: a.FTs,
-            IsUnlock: 1,
-          }),
-          (e = !0),
-          ModelManager_1.ModelManager.NewFlagModel.AddNewFlag(
-            LocalStorageDefine_1.ELocalStoragePlayerKey.ComposeLevelKey,
-            a.Ekn,
-          ),
-          this.aIi.push(i),
-          (i.IsCompose = this.CheckCanReagentProduction(i.ItemId) ? 1 : 0));
+              a.J4n,
+            );
+        if (1 === o.FormulaType) {
+          let t = !1;
+          for (const s of this.aTi)
+            if (a.J4n === s.ItemId) {
+              var r = 1 === s.IsUnlock;
+              (s.ComposeCount = a.o9n ?? 0),
+                (s.MadeCountInLimitTime = a.iGs ?? 0),
+                (s.IsCompose = this.CheckCanReagentProduction(a.J4n) ? 1 : 0),
+                (s.IsUnlock = 1),
+                (t = !0),
+                r || (e = !0);
+              break;
+            }
+          t ||
+            ((o =
+              ConfigManager_1.ConfigManager.ComposeConfig.GetSynthesisFormulaById(
+                a.J4n,
+              )),
+            (i = ConfigManager_1.ConfigManager.ItemConfig.GetConfig(o.ItemId)),
+            (i = {
+              MainType: 1,
+              SubType: 0,
+              UniqueId: 0,
+              ItemId: a.J4n,
+              ComposeCount: a.o9n ?? 0,
+              IsNew: !0,
+              LastRoleId: a.nPs ?? 0,
+              IsCompose: 0,
+              Quality: i.QualityId,
+              EffectType: o.TypeId,
+              ExistStartTime:
+                MathUtils_1.MathUtils.LongToNumber(a.hPs) *
+                TimeUtil_1.TimeUtil.Millisecond,
+              ExistEndTime:
+                MathUtils_1.MathUtils.LongToNumber(a.lPs) *
+                TimeUtil_1.TimeUtil.Millisecond,
+              MadeCountInLimitTime: a.iGs,
+              TotalMakeCountInLimitTime: a.sPs,
+              IsUnlock: 1,
+            }),
+            (e = !0),
+            ModelManager_1.ModelManager.NewFlagModel.AddNewFlag(
+              LocalStorageDefine_1.ELocalStoragePlayerKey.ComposeLevelKey,
+              a.J4n,
+            ),
+            this.aTi.push(i),
+            (i.IsCompose = this.CheckCanReagentProduction(i.ItemId) ? 1 : 0));
+        }
       }
+      e &&
+        ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
+          "FormulaLearned",
+        );
     }
-    e &&
-      ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
-        "FormulaLearned",
-      );
   }
   UnlockReagentProductionData(t) {
     var e =
@@ -276,18 +279,18 @@ class ComposeModel extends ModelBase_1.ModelBase {
       let t = 0;
       for (
         ;
-        t < this.aIi.length &&
-        (35 !== this.aIi[t].SubType || this.aIi[t].ItemId !== e.FormulaItemId);
+        t < this.aTi.length &&
+        (35 !== this.aTi[t].SubType || this.aTi[t].ItemId !== e.FormulaItemId);
         t++
       );
-      this.aIi.splice(t, 1);
+      this.aTi.splice(t, 1);
     }
   }
   GetReagentProductionDataList() {
-    return this.aIi;
+    return this.aTi;
   }
   GetReagentProductionDataById(t) {
-    for (const e of this.aIi) if (t === e.ItemId) return e;
+    for (const e of this.aTi) if (t === e.ItemId) return e;
   }
   GetReagentProductionRoleId(t) {
     t = this.GetReagentProductionDataById(t);
@@ -296,15 +299,15 @@ class ComposeModel extends ModelBase_1.ModelBase {
       : ModelManager_1.ModelManager.PlayerInfoModel.GetPlayerRoleId();
   }
   CheckCanReagentProduction(t) {
-    return this.pIi(this.GetReagentProductionDataById(t));
+    return this.pTi(this.GetReagentProductionDataById(t));
   }
   CheckCanPurification(t) {
-    return this.pIi(this.GetPurificationDataById(t));
+    return this.pTi(this.GetPurificationDataById(t));
   }
   CheckCanStructure(t) {
-    return this.pIi(this.GetStructureDataById(t));
+    return this.pTi(this.GetStructureDataById(t));
   }
-  pIi(t) {
+  pTi(t) {
     return (
       this.CheckUnlock(t) &&
       this.CheckLimitCount(t) &&
@@ -342,8 +345,8 @@ class ComposeModel extends ModelBase_1.ModelBase {
   CreateStructureDataList(t) {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug("Compose", 50, "初始化构造数据相关数据列表"),
-      this.hIi || (this.hIi = new Array()),
-      (this.hIi.length = 0);
+      this.hTi || (this.hTi = new Array()),
+      (this.hTi.length = 0);
     var e,
       i =
         ConfigManager_1.ConfigManager.ComposeConfig.GetComposeListByType(2) ??
@@ -368,55 +371,55 @@ class ComposeModel extends ModelBase_1.ModelBase {
           IsUnlock: 0,
         }),
         o.set(e.ItemId, e),
-        this.hIi.push(e));
+        this.hTi.push(e));
     for (const s of t) {
       var r =
         ConfigManager_1.ConfigManager.ComposeConfig.GetSynthesisFormulaById(
-          s.Ekn,
+          s.J4n,
         );
       if (2 === r.FormulaType) {
         r = ConfigManager_1.ConfigManager.ItemConfig.GetConfig(r.ItemId);
         let t = void 0;
-        o.has(s.Ekn)
-          ? (((t = o.get(s.Ekn)).StructureCount = s.I5n),
+        o.has(s.J4n)
+          ? (((t = o.get(s.J4n)).StructureCount = s.o9n),
             (t.IsNew = ModelManager_1.ModelManager.NewFlagModel.HasNewFlag(
               LocalStorageDefine_1.ELocalStoragePlayerKey.ComposeLevelKey,
-              s.Ekn,
+              s.J4n,
             )),
-            (t.LastRoleId = s.NTs),
+            (t.LastRoleId = s.nPs),
             (t.IsStructure = 0),
             (t.ExistStartTime =
-              MathUtils_1.MathUtils.LongToNumber(s.$Ts) *
+              MathUtils_1.MathUtils.LongToNumber(s.hPs) *
               TimeUtil_1.TimeUtil.Millisecond),
             (t.ExistEndTime =
-              MathUtils_1.MathUtils.LongToNumber(s.HTs) *
+              MathUtils_1.MathUtils.LongToNumber(s.lPs) *
               TimeUtil_1.TimeUtil.Millisecond),
-            (t.MadeCountInLimitTime = s.Gxs),
-            (t.TotalMakeCountInLimitTime = s.FTs),
+            (t.MadeCountInLimitTime = s.iGs),
+            (t.TotalMakeCountInLimitTime = s.sPs),
             (t.IsUnlock = 1))
           : ((t = {
               MainType: 2,
               SubType: 0,
-              ItemId: s.Ekn,
-              StructureCount: s.I5n ?? 0,
+              ItemId: s.J4n,
+              StructureCount: s.o9n ?? 0,
               IsNew: ModelManager_1.ModelManager.NewFlagModel.HasNewFlag(
                 LocalStorageDefine_1.ELocalStoragePlayerKey.ComposeLevelKey,
-                s.Ekn,
+                s.J4n,
               ),
-              LastRoleId: s.NTs ?? 0,
+              LastRoleId: s.nPs ?? 0,
               IsStructure: 0,
               Quality: r.QualityId,
               ExistStartTime:
-                MathUtils_1.MathUtils.LongToNumber(s.$Ts) *
+                MathUtils_1.MathUtils.LongToNumber(s.hPs) *
                 TimeUtil_1.TimeUtil.Millisecond,
               ExistEndTime:
-                MathUtils_1.MathUtils.LongToNumber(s.HTs) *
+                MathUtils_1.MathUtils.LongToNumber(s.lPs) *
                 TimeUtil_1.TimeUtil.Millisecond,
-              MadeCountInLimitTime: s.Gxs,
-              TotalMakeCountInLimitTime: s.FTs,
+              MadeCountInLimitTime: s.iGs,
+              TotalMakeCountInLimitTime: s.sPs,
               IsUnlock: 1,
             }),
-            this.hIi.push(t)),
+            this.hTi.push(t)),
           (t.IsStructure = this.CheckCanStructure(t.ItemId) ? 1 : 0);
       }
     }
@@ -425,25 +428,25 @@ class ComposeModel extends ModelBase_1.ModelBase {
     for (const o of t) {
       var i =
         ConfigManager_1.ConfigManager.ComposeConfig.GetSynthesisFormulaById(
-          o.Ekn,
+          o.J4n,
         );
       if (2 === i.FormulaType) {
         let t = !1,
           e = !1;
-        for (const r of this.hIi)
-          if (o.Ekn === r.ItemId) {
-            (r.StructureCount = o.I5n ?? 0),
-              (r.MadeCountInLimitTime = o.Gxs ?? 0),
+        for (const r of this.hTi)
+          if (o.J4n === r.ItemId) {
+            (r.StructureCount = o.o9n ?? 0),
+              (r.MadeCountInLimitTime = o.iGs ?? 0),
               (t = !0),
               (e = !r.IsUnlock),
               (r.IsUnlock = 1),
-              (r.IsStructure = this.CheckCanStructure(o.Ekn) ? 1 : 0);
+              (r.IsStructure = this.CheckCanStructure(o.J4n) ? 1 : 0);
             break;
           }
         (!e && t) ||
           (ModelManager_1.ModelManager.NewFlagModel.AddNewFlag(
             LocalStorageDefine_1.ELocalStoragePlayerKey.ComposeLevelKey,
-            o.Ekn,
+            o.J4n,
           ),
           ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
             "FormulaLearned",
@@ -453,23 +456,23 @@ class ComposeModel extends ModelBase_1.ModelBase {
             (i = {
               MainType: 2,
               SubType: 0,
-              ItemId: o.Ekn,
-              StructureCount: o.I5n ?? 0,
+              ItemId: o.J4n,
+              StructureCount: o.o9n ?? 0,
               IsNew: !0,
-              LastRoleId: o.NTs ?? 0,
+              LastRoleId: o.nPs ?? 0,
               IsStructure: 0,
               Quality: i.QualityId,
               ExistStartTime:
-                MathUtils_1.MathUtils.LongToNumber(o.$Ts) *
+                MathUtils_1.MathUtils.LongToNumber(o.hPs) *
                 TimeUtil_1.TimeUtil.Millisecond,
               ExistEndTime:
-                MathUtils_1.MathUtils.LongToNumber(o.HTs) *
+                MathUtils_1.MathUtils.LongToNumber(o.lPs) *
                 TimeUtil_1.TimeUtil.Millisecond,
-              MadeCountInLimitTime: o.Gxs,
-              TotalMakeCountInLimitTime: o.FTs,
+              MadeCountInLimitTime: o.iGs,
+              TotalMakeCountInLimitTime: o.sPs,
               IsUnlock: 1,
             }),
-            this.hIi.push(i),
+            this.hTi.push(i),
             (i.IsStructure = this.CheckCanStructure(i.ItemId) ? 1 : 0));
       }
     }
@@ -481,11 +484,11 @@ class ComposeModel extends ModelBase_1.ModelBase {
       let t = 0;
       for (
         ;
-        t < this.hIi.length &&
-        (37 !== this.hIi[t].SubType || this.hIi[t].ItemId !== e.FormulaItemId);
+        t < this.hTi.length &&
+        (37 !== this.hTi[t].SubType || this.hTi[t].ItemId !== e.FormulaItemId);
         t++
       );
-      this.hIi.splice(t, 1);
+      this.hTi.splice(t, 1);
     }
   }
   HideStructureDataList(t) {
@@ -494,16 +497,16 @@ class ComposeModel extends ModelBase_1.ModelBase {
         ConfigManager_1.ConfigManager.ComposeConfig.GetSynthesisFormulaById(i);
       if (2 === e.FormulaType) {
         let t = 0;
-        for (; t < this.hIi.length && this.hIi[t].ItemId !== i; t++);
-        this.hIi.splice(t, 1);
+        for (; t < this.hTi.length && this.hTi[t].ItemId !== i; t++);
+        this.hTi.splice(t, 1);
       }
     }
   }
   GetStructureDataList() {
-    return this.hIi;
+    return this.hTi;
   }
   GetStructureDataById(t) {
-    for (const e of this.hIi) if (t === e.ItemId) return e;
+    for (const e of this.hTi) if (t === e.ItemId) return e;
   }
   GetStructureRoleId(t) {
     t = this.GetStructureDataById(t);
@@ -514,7 +517,7 @@ class ComposeModel extends ModelBase_1.ModelBase {
   CreatePurificationDataList() {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug("Compose", 50, "初始化纯化数据相关数据列表"),
-      this.lIi || (this.lIi = new Array());
+      this.lTi || (this.lTi = new Array());
     for (const e of ConfigManager_1.ConfigManager.ComposeConfig.GetComposeListByType(
       3,
     )) {
@@ -535,50 +538,50 @@ class ComposeModel extends ModelBase_1.ModelBase {
           MadeCountInLimitTime: 0,
           TotalMakeCountInLimitTime: 0,
         };
-      this.lIi.push(t),
+      this.lTi.push(t),
         (t.IsPurification = this.CheckCanPurification(t.ItemId) ? 1 : 0);
     }
-    this.lIi.sort(this._Ii);
+    this.lTi.sort(this._Ti);
   }
   UpdatePurificationDataList(t, e) {
     for (const o of t) {
       var i =
         ConfigManager_1.ConfigManager.ComposeConfig.GetSynthesisFormulaById(
-          o.Ekn,
+          o.J4n,
         );
       if (3 === i.FormulaType)
-        for (const r of this.lIi)
-          if (o.Ekn === r.ItemId) {
+        for (const r of this.lTi)
+          if (o.J4n === r.ItemId) {
             (r.IsUnlock = 1),
-              (r.LastRoleId = o.NTs ?? 0),
+              (r.LastRoleId = o.nPs ?? 0),
               (r.ExistStartTime =
-                MathUtils_1.MathUtils.LongToNumber(o.$Ts) *
+                MathUtils_1.MathUtils.LongToNumber(o.hPs) *
                 TimeUtil_1.TimeUtil.Millisecond),
               (r.ExistEndTime =
-                MathUtils_1.MathUtils.LongToNumber(o.HTs) *
+                MathUtils_1.MathUtils.LongToNumber(o.lPs) *
                 TimeUtil_1.TimeUtil.Millisecond),
-              (r.MadeCountInLimitTime = o.Gxs),
-              (r.TotalMakeCountInLimitTime = o.FTs),
+              (r.MadeCountInLimitTime = o.iGs),
+              (r.TotalMakeCountInLimitTime = o.sPs),
               e &&
-                0 === o.NTs &&
+                0 === o.nPs &&
                 ((r.IsNew = e),
                 ModelManager_1.ModelManager.NewFlagModel.AddNewFlag(
                   LocalStorageDefine_1.ELocalStoragePlayerKey.ComposeLevelKey,
-                  o.Ekn,
+                  o.J4n,
                 ),
                 ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
                   "FormulaLearned",
                 )),
-              (r.IsPurification = this.CheckCanPurification(o.Ekn) ? 1 : 0);
+              (r.IsPurification = this.CheckCanPurification(o.J4n) ? 1 : 0);
             break;
           }
     }
   }
   GetPurificationDataList() {
-    return this.lIi;
+    return this.lTi;
   }
   GetPurificationDataById(t) {
-    for (const e of this.lIi) if (t === e.ItemId) return e;
+    for (const e of this.lTi) if (t === e.ItemId) return e;
   }
   GetPurificationRoleId(t) {
     t = this.GetPurificationDataById(t);
@@ -587,34 +590,34 @@ class ComposeModel extends ModelBase_1.ModelBase {
       : ModelManager_1.ModelManager.PlayerInfoModel.GetPlayerRoleId();
   }
   set SelectedComposeLevel(t) {
-    this.uIi = t;
+    this.uTi = t;
   }
   get SelectedComposeLevel() {
-    return this.uIi;
+    return this.uTi;
   }
   CreateComposeLevelInfo(t) {
-    this.UpdateComposeInfo(t), (this.cIi = new Map());
+    this.UpdateComposeInfo(t), (this.cTi = new Map());
     for (const e of ConfigManager_1.ConfigManager.ComposeConfig.GetComposeLevel())
-      this.cIi.set(e.Id, e);
+      this.cTi.set(e.Id, e);
   }
   UpdateComposeInfo(t) {
     let e = 0;
-    this.mIi &&
-      ((this.LastExp = this.mIi.TotalProficiency),
-      (e = t.qxs - this.mIi.TotalProficiency)),
-      (this.mIi = { ComposeLevel: t.r3n, TotalProficiency: t.qxs, AddExp: e });
+    this.mTi &&
+      ((this.LastExp = this.mTi.TotalProficiency),
+      (e = t.tGs - this.mTi.TotalProficiency)),
+      (this.mTi = { ComposeLevel: t.P6n, TotalProficiency: t.tGs, AddExp: e });
   }
   GetComposeInfo() {
-    return this.mIi;
+    return this.mTi;
   }
   CleanAddExp() {
-    this.mIi.AddExp = 0;
+    this.mTi.AddExp = 0;
   }
   GetComposeLevelByLevel(t) {
-    return this.cIi.get(t);
+    return this.cTi.get(t);
   }
   GetComposeMaxLevel() {
-    return this.cIi.size;
+    return this.cTi.size;
   }
   GetSumExpByLevel(t) {
     var e = this.GetComposeMaxLevel();
@@ -632,15 +635,15 @@ class ComposeModel extends ModelBase_1.ModelBase {
     for (const i of ConfigManager_1.ConfigManager.ComposeConfig.GetSynthesisFormulaById(
       t,
     ).ConsumeItems)
-      e.push({ G3n: i.ItemId, k4n: i.Count, m3n: !0 });
+      e.push({ f8n: i.ItemId, MVn: i.Count, G6n: !0 });
     return e;
   }
   UpdateComposeItemList(t) {
-    this.dIi || (this.dIi = new Array()), (this.dIi.length = 0);
-    for (const e of t) this.dIi.push({ ItemId: e.G3n, ItemNum: e.k4n });
+    this.dTi || (this.dTi = new Array()), (this.dTi.length = 0);
+    for (const e of t) this.dTi.push({ ItemId: e.f8n, ItemNum: e.MVn });
   }
   GetComposeItemList() {
-    return this.dIi;
+    return this.dTi;
   }
   GetComposeText(t) {
     t = ConfigManager_1.ConfigManager.ComposeConfig.GetSynthesisFormulaById(t);
@@ -652,15 +655,15 @@ class ComposeModel extends ModelBase_1.ModelBase {
     ).ItemId;
   }
   set CurrentComposeRoleId(t) {
-    this.CIi = t;
+    this.CTi = t;
   }
   get CurrentComposeRoleId() {
-    return this.CIi;
+    return this.CTi;
   }
   UpdateHelpRoleItemDataList() {
-    this.gIi || (this.gIi = new Array()), (this.gIi.length = 0);
+    this.gTi || (this.gTi = new Array()), (this.gTi.length = 0);
     for (const t of ModelManager_1.ModelManager.RoleModel.GetRoleList())
-      this.gIi.push({
+      this.gTi.push({
         RoleId: t.GetRoleId(),
         RoleName: t.GetRoleRealName(),
         RoleIcon: t.GetRoleConfig().RoleHeadIcon,
@@ -669,17 +672,17 @@ class ComposeModel extends ModelBase_1.ModelBase {
       });
   }
   ClearComposeRoleItemDataList() {
-    this.gIi = void 0;
+    this.gTi = void 0;
   }
   GetHelpRoleItemDataList(t) {
-    this.gIi || this.UpdateHelpRoleItemDataList();
-    for (const e of this.gIi)
+    this.gTi || this.UpdateHelpRoleItemDataList();
+    for (const e of this.gTi)
       (e.ItemId = t),
         (e.IsBuff = ComposeController_1.ComposeController.CheckIsBuff(
           e.RoleId,
           t,
         ));
-    return this.gIi.sort(this.fIi);
+    return this.gTi.sort(this.fTi);
   }
 }
 exports.ComposeModel = ComposeModel;

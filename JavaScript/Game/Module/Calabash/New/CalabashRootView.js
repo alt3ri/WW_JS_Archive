@@ -22,78 +22,78 @@ const UE = require("ue"),
 class CalabashRootView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.upt = void 0),
-      (this.cpt = void 0),
-      (this.mpt = void 0),
-      (this.dpt = void 0),
-      (this.Cpt = !1),
-      (this.O3e = 0),
-      (this.gpt = () => {
+      (this.yvt = void 0),
+      (this.Ivt = void 0),
+      (this.Tvt = void 0),
+      (this.Lvt = void 0),
+      (this.Dvt = !1),
+      (this.t5e = 0),
+      (this.Rvt = () => {
         this.CloseMe();
       }),
-      (this.ift = () => {
-        HelpController_1.HelpController.OpenHelpById(this.O3e);
+      (this.dpt = () => {
+        HelpController_1.HelpController.OpenHelpById(this.t5e);
       }),
-      (this.fpt = (e) => {
-        var t = this.upt.findIndex(
+      (this.Uvt = (e) => {
+        var t = this.yvt.findIndex(
           (e) => "CalabashCollectTabView" === e.ChildViewName,
         );
-        this.dpt
-          ? ((this.dpt.TabViewName = "CalabashCollectTabView"),
-            (this.dpt.Param = e))
-          : (this.dpt = { TabViewName: "CalabashCollectTabView", Param: e }),
-          this.cpt.SelectToggleByIndex(t);
+        this.Lvt
+          ? ((this.Lvt.TabViewName = "CalabashCollectTabView"),
+            (this.Lvt.Param = e))
+          : (this.Lvt = { TabViewName: "CalabashCollectTabView", Param: e }),
+          this.Ivt.SelectToggleByIndex(t);
       }),
-      (this.ppt = (e) => {
-        var t = this.upt.findIndex(
+      (this.Avt = (e) => {
+        var t = this.yvt.findIndex(
           (e) => "PhantomBattleFettersTabView" === e.ChildViewName,
         );
-        this.dpt
-          ? ((this.dpt.TabViewName = "PhantomBattleFettersTabView"),
-            (this.dpt.Param = e))
-          : (this.dpt = {
+        this.Lvt
+          ? ((this.Lvt.TabViewName = "PhantomBattleFettersTabView"),
+            (this.Lvt.Param = e))
+          : (this.Lvt = {
               TabViewName: "PhantomBattleFettersTabView",
               Param: e,
             }),
-          this.cpt.SelectToggleByIndex(t);
+          this.Ivt.SelectToggleByIndex(t);
       }),
-      (this.vpt = () => {
-        this.cpt?.HideItem();
+      (this.Pvt = () => {
+        this.Ivt?.HideItem();
       }),
-      (this.Mpt = () => {
-        this.cpt?.ShowItem();
+      (this.xvt = () => {
+        this.Ivt?.ShowItem();
       }),
-      (this.Spt = (e) => {
+      (this.wvt = (e) => {
         e
           ? this.UiViewSequence.PlaySequence("SwitchA")
           : this.UiViewSequence.PlaySequence("SwitchB");
       }),
       (this.fqe = (e) => new CalabashTabItem_1.CalabashTabItem()),
       (this.pqe = (e) => {
-        var t = this.upt[e],
+        var t = this.yvt[e],
           i = t.ChildViewName,
-          e = this.cpt.GetTabItemByIndex(e),
-          a = i === this.dpt?.TabViewName ? this.dpt?.Param : void 0;
-        this.mpt.ToggleCallBack(t, i, e, a),
-          this.dpt && (this.dpt.Param = void 0);
+          e = this.Ivt.GetTabItemByIndex(e),
+          a = i === this.Lvt?.TabViewName ? this.Lvt?.Param : void 0;
+        this.Tvt.ToggleCallBack(t, i, e, a),
+          this.Lvt && (this.Lvt.Param = void 0);
         let n = !1;
         "CalabashLevelUpTabView" === i
-          ? ((this.O3e = CALABASH_LEVEL_UP_HELP_ID), (n = !0))
+          ? ((this.t5e = CALABASH_LEVEL_UP_HELP_ID), (n = !0))
           : "CalabashCollectTabView" === i
-            ? ((this.O3e = CALABASH_COLLECT_HELP_ID), (n = !0))
+            ? ((this.t5e = CALABASH_COLLECT_HELP_ID), (n = !0))
             : "VisionRecoveryTabView" === i &&
-              ((this.O3e = VISION_RECOVERY_HELP_ID), (n = !0)),
-          this.cpt.SetHelpButtonShowState(n),
+              ((this.t5e = VISION_RECOVERY_HELP_ID), (n = !0)),
+          this.Ivt.SetHelpButtonShowState(n),
           this.GetItem(3)?.SetUIActive("CalabashCollectTabView" === i);
       }),
       (this.yqe = (e) => {
-        e = this.upt[e];
+        e = this.yvt[e];
         return new CommonTabData_1.CommonTabData(
           e.Icon,
           new CommonTabTitleData_1.CommonTabTitleData(e.TabName),
         );
       }),
-      (this.Ept = (e) => {
+      (this.Bvt = (e) => {
         ModelManager_1.ModelManager.CalabashModel.SaveIfSimpleState(!e);
       });
   }
@@ -104,54 +104,54 @@ class CalabashRootView extends UiViewBase_1.UiViewBase {
       [2, UE.UIExtendToggle],
       [3, UE.UIItem],
     ]),
-      (this.BtnBindInfo = [[2, this.Ept]]);
+      (this.BtnBindInfo = [[2, this.Bvt]]);
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.JumpToCalabashCollect,
-      this.fpt,
+      this.Uvt,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.JumpToPhantomBattleFettersTabView,
-        this.ppt,
+        this.Avt,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.CalabashEnterInternalView,
-        this.vpt,
+        this.Pvt,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.CalabashQuitInternalView,
-        this.Mpt,
+        this.xvt,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnRefreshCalabashTabShowState,
-        this.Spt,
+        this.wvt,
       );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.JumpToCalabashCollect,
-      this.fpt,
+      this.Uvt,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.JumpToPhantomBattleFettersTabView,
-        this.ppt,
+        this.Avt,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.CalabashEnterInternalView,
-        this.vpt,
+        this.Pvt,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.CalabashQuitInternalView,
-        this.Mpt,
+        this.xvt,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnRefreshCalabashTabShowState,
-        this.Spt,
+        this.wvt,
       );
   }
   async OnBeforeStartAsync() {
-    (this.Cpt = !0),
+    (this.Dvt = !0),
       await HandBookController_1.HandBookController.SendIllustratedInfoRequestAsync(
         [1],
       ),
@@ -160,77 +160,77 @@ class CalabashRootView extends UiViewBase_1.UiViewBase {
       ? 0
       : 1;
     this.GetExtendToggle(2)?.SetToggleState(e),
-      (this.dpt = this.OpenParam),
-      this.ypt(),
-      await this.Ipt(),
-      this.Tpt();
+      (this.Lvt = this.OpenParam),
+      this.bvt(),
+      await this.qvt(),
+      this.Gvt();
   }
-  ypt() {
-    this.upt = ModelManager_1.ModelManager.CalabashModel?.GetViewTabList();
+  bvt() {
+    this.yvt = ModelManager_1.ModelManager.CalabashModel?.GetViewTabList();
   }
-  async Ipt() {
+  async qvt() {
     var e = new CommonTabComponentData_1.CommonTabComponentData(
         this.fqe,
         this.pqe,
         this.yqe,
       ),
       e =
-        ((this.cpt =
+        ((this.Ivt =
           new TabComponentWithCaptionItem_1.TabComponentWithCaptionItem(
             this.GetItem(0),
             e,
-            this.gpt,
+            this.Rvt,
           )),
-        this.cpt.SetHelpButtonCallBack(this.ift),
-        this.upt.length);
-    await this.cpt.RefreshTabItemByLengthAsync(e);
+        this.Ivt.SetHelpButtonCallBack(this.dpt),
+        this.yvt.length);
+    await this.Ivt.RefreshTabItemByLengthAsync(e);
   }
-  Tpt() {
-    this.mpt = new TabViewComponent_1.TabViewComponent(this.GetItem(1));
+  Gvt() {
+    this.Tvt = new TabViewComponent_1.TabViewComponent(this.GetItem(1));
   }
-  Lpt() {
-    const t = this.dpt?.TabViewName;
+  Nvt() {
+    const t = this.Lvt?.TabViewName;
     let e = 0;
     var i;
     (e = t
-      ? this.upt.findIndex((e) => e.ChildViewName === t)
-      : (i = this.cpt.GetSelectedIndex()) !== CommonDefine_1.INVALID_VALUE
+      ? this.yvt.findIndex((e) => e.ChildViewName === t)
+      : (i = this.Ivt.GetSelectedIndex()) !== CommonDefine_1.INVALID_VALUE
         ? i
         : 0),
-      this.cpt.SelectToggleByIndex(e);
+      this.Ivt.SelectToggleByIndex(e);
   }
-  x6e() {
-    var e = this.upt.findIndex(
+  K8e() {
+    var e = this.yvt.findIndex(
       (e) => "CalabashLevelUpTabView" === e.ChildViewName,
     );
-    0 <= e && this.cpt.GetTabItemByIndex(e)?.BindRedDot("CalabashTab");
+    0 <= e && this.Ivt.GetTabItemByIndex(e)?.BindRedDot("CalabashTab");
   }
   OnBeforeShow() {
-    this.Cpt ? this.Lpt() : this.mpt.SetCurrentTabViewState(!0),
-      (this.Cpt = !1),
-      this.x6e();
+    this.Dvt ? this.Nvt() : this.Tvt.SetCurrentTabViewState(!0),
+      (this.Dvt = !1),
+      this.K8e();
   }
   OnBeforeHide() {
-    this.Dpt(), this.mpt.SetCurrentTabViewState(!1);
+    this.Ovt(), this.Tvt.SetCurrentTabViewState(!1);
   }
   OnAfterHide() {
-    var e = this.mpt.GetTabViewByTabName("VisionRecoveryTabView");
+    var e = this.Tvt.GetTabViewByTabName("VisionRecoveryTabView");
     void 0 !== e && e.RemoveAllVisionItemOutside();
   }
-  Dpt() {
-    var e = this.upt.findIndex(
+  Ovt() {
+    var e = this.yvt.findIndex(
       (e) => "CalabashLevelUpTabView" === e.ChildViewName,
     );
-    this.cpt.GetTabItemByIndex(e)?.UnBindRedDot();
+    this.Ivt.GetTabItemByIndex(e)?.UnBindRedDot();
   }
   OnBeforeDestroy() {
-    this.cpt.Destroy(), this.mpt.DestroyTabViewComponent();
+    this.Ivt.Destroy(), this.Tvt.DestroyTabViewComponent();
   }
   GetGuideUiItemAndUiItemForShowEx(e) {
     const t = Number(e[0]);
-    var i = this.cpt
-      .GetTabItemByIndex(this.upt.findIndex((e) => e.Id === t))
-      .GetRootItem();
+    var i = this.Ivt.GetTabItemByIndex(
+      this.yvt.findIndex((e) => e.Id === t),
+    ).GetRootItem();
     if (i) return [i, i];
     Log_1.Log.CheckError() &&
       Log_1.Log.Error("Guide", 54, "聚焦引导extraParam项配置有误", [

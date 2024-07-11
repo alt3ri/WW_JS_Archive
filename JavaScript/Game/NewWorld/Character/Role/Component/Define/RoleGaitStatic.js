@@ -16,14 +16,14 @@ class RoleGaitStatic {
       (RoleGaitStatic.IsInit = !0));
   }
   static SetWalkOrRunRateForRocker(t) {
-    RoleGaitStatic.Etr = t;
+    RoleGaitStatic.Mir = t;
   }
   static GetWalkOrRunRate() {
-    return RoleGaitStatic.Etr;
+    return RoleGaitStatic.Mir;
   }
 }
 ((exports.RoleGaitStatic = RoleGaitStatic).MovementStatusGapValue = 0),
   (RoleGaitStatic.MovementStatusGapValueSquare = 0),
   (RoleGaitStatic.IsInit = !1),
-  (RoleGaitStatic.Etr = WALK_TO_RUN_RATE);
+  (RoleGaitStatic.Mir = WALK_TO_RUN_RATE);
 //# sourceMappingURL=RoleGaitStatic.js.map

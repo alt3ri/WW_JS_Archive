@@ -11,43 +11,43 @@ const EventDefine_1 = require("../../Common/Event/EventDefine"),
 class SceneGameplayItemRewardView extends CommonResultView_1.CommonResultView {
   constructor() {
     super(...arguments),
-      (this.Zfi = () => {
+      (this.evi = () => {
         this.SetActive(!1);
       }),
-      (this.epi = () => {
+      (this.tvi = () => {
         this.SetActive(!0);
       }),
-      (this.Lli = () => {
+      (this.L1i = () => {
         UiManager_1.UiManager.IsViewShow(this.Info.Name) && this.CloseMe();
       });
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.PlotNetworkStart,
-      this.Zfi,
+      this.evi,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.PlotNetworkEnd,
-        this.epi,
+        this.tvi,
       );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.PlotNetworkStart,
-      this.Zfi,
+      this.evi,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.PlotNetworkEnd,
-        this.epi,
+        this.tvi,
       );
   }
   OnStart() {
-    super.OnStart(), this.qIt();
+    super.OnStart(), this.FTt();
   }
-  qIt() {
-    this.Yhi();
+  FTt() {
+    this.Yli();
   }
-  Yhi() {
+  Yli() {
     var e =
         ModelManager_1.ModelManager.ItemHintModel.ShiftItemRewardListFirst(),
       e = ItemHintController_1.ItemHintController.CombineAllShowItems(
@@ -58,20 +58,20 @@ class SceneGameplayItemRewardView extends CommonResultView_1.CommonResultView {
     this.RewardLayout.RebuildLayoutByDataNew(e);
   }
   SetupButtonFormat() {
-    var e = this.zli();
+    var e = this.z1i();
     this.RefreshButtonList(e);
   }
-  zli() {
+  z1i() {
     var e = new Array();
-    return e.push(this.Zli()), e;
+    return e.push(this.Z1i()), e;
   }
-  Zli() {
+  Z1i() {
     var e = new CommonResultButtonData_1.CommonResultButtonData();
     return (
       e.SetRefreshCallBack((e) => {
         e.SetBtnText("ButtonTextConfirm");
       }),
-      e.SetClickCallBack(this.Lli),
+      e.SetClickCallBack(this.L1i),
       e
     );
   }

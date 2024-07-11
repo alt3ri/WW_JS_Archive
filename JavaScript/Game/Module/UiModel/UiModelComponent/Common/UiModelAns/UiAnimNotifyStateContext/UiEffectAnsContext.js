@@ -3,7 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiEffectAnsContext = void 0);
 const UiAnsContextBase_1 = require("./UiAnsContextBase");
 class UiEffectAnsContext extends UiAnsContextBase_1.UiAnsContextBase {
-  constructor(t, s, i, e, n, o, h, r, c) {
+  constructor(t, s, i, e, n, o, h, r, c, x) {
     super(),
       (this.EffectPath = t),
       (this.MeshComponent = s),
@@ -13,7 +13,9 @@ class UiEffectAnsContext extends UiAnsContextBase_1.UiAnsContextBase {
       (this.Location = o),
       (this.Rotation = h),
       (this.Scale = r),
-      (this.PlayOnEnd = c);
+      (this.PlayOnEnd = c),
+      (this.OnEffectSpawn = x),
+      (this.Handle = void 0);
   }
   IsValid() {
     return (

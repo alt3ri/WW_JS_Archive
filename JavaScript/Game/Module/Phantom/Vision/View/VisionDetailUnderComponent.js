@@ -3,23 +3,23 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.VisionDetailUnderComponent = void 0);
 const UE = require("ue"),
   ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../../Manager/ModelManager"),
   UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase"),
   ButtonItem_1 = require("../../../Common/Button/ButtonItem"),
-  LguiUtil_1 = require("../../../Util/LguiUtil"),
-  ControllerHolder_1 = require("../../../../Manager/ControllerHolder");
+  LguiUtil_1 = require("../../../Util/LguiUtil");
 class VisionDetailUnderComponent extends UiPanelBase_1.UiPanelBase {
   constructor(t) {
     super(),
-      (this.S8i = void 0),
-      (this.E8i = void 0),
-      (this.y8i = void 0),
+      (this.M9i = void 0),
+      (this.E9i = void 0),
+      (this.S9i = void 0),
       (this.iNe = void 0),
       (this.tNe = void 0),
-      (this.I8i = () => {
+      (this.y9i = () => {
         this.iNe?.();
       }),
-      (this.T8i = () => {
+      (this.I9i = () => {
         this.tNe?.();
       }),
       this.CreateThenShowByActor(t.GetOwner());
@@ -32,17 +32,17 @@ class VisionDetailUnderComponent extends UiPanelBase_1.UiPanelBase {
     ];
   }
   OnStart() {
-    (this.E8i = new ButtonItem_1.ButtonItem(this.GetItem(0))),
-      this.E8i.SetFunction(this.I8i),
-      (this.y8i = new ButtonItem_1.ButtonItem(this.GetItem(1))),
-      this.y8i.SetFunction(this.T8i),
-      (this.S8i = new EquipRoleAttribute(this.GetItem(2)));
+    (this.E9i = new ButtonItem_1.ButtonItem(this.GetItem(0))),
+      this.E9i.SetFunction(this.y9i),
+      (this.S9i = new ButtonItem_1.ButtonItem(this.GetItem(1))),
+      this.S9i.SetFunction(this.I9i),
+      (this.M9i = new EquipRoleAttribute(this.GetItem(2)));
   }
   RefreshRightButtonText(t) {
-    this.E8i.SetLocalText(t);
+    this.E9i.SetLocalText(t);
   }
   RefreshLeftButtonText(t) {
-    this.y8i.SetLocalText(t);
+    this.S9i.SetLocalText(t);
   }
   SetRightButtonClick(t) {
     this.iNe = t;
@@ -51,15 +51,15 @@ class VisionDetailUnderComponent extends UiPanelBase_1.UiPanelBase {
     this.tNe = t;
   }
   RefreshViewByCompareState(t) {
-    this.y8i.SetActive(!t), this.E8i.SetActive(!t);
+    this.S9i.SetActive(!t), this.E9i.SetActive(!t);
   }
   Update(t) {
-    this.S8i.SetActive(
+    this.M9i.SetActive(
       ControllerHolder_1.ControllerHolder.PhantomBattleController.CheckIsEquip(
         t.GetUniqueId(),
       ),
     ),
-      this.S8i.Update(t);
+      this.M9i.Update(t);
   }
 }
 exports.VisionDetailUnderComponent = VisionDetailUnderComponent;

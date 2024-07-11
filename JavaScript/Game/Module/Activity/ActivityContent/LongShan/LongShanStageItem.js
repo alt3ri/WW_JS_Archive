@@ -12,7 +12,7 @@ class LongShanStageItem extends UiPanelBase_1.UiPanelBase {
     super(),
       (this.xOe = 0),
       (this.OnClickStageDetail = void 0),
-      (this.EGn = () => {
+      (this.DNn = () => {
         this.OnClickStageDetail?.(this.xOe);
       }),
       (this.xOe = e);
@@ -29,7 +29,7 @@ class LongShanStageItem extends UiPanelBase_1.UiPanelBase {
       [7, UE.UIItem],
       [8, UE.UIItem],
     ]),
-      (this.BtnBindInfo = [[0, this.EGn]]);
+      (this.BtnBindInfo = [[0, this.DNn]]);
   }
   OnStart() {
     this.RefreshState();

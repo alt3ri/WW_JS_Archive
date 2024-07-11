@@ -23,18 +23,18 @@ class TsTaskDestroySelf extends TsTaskAbortImmediatelyBase_1.default {
     var o, t;
     r
       ? ((o = r.CharActorComp),
-        (t = r.CharActorComp.Entity.GetComponent(38)),
+        (t = r.CharActorComp.Entity.GetComponent(39)),
         this.TsIsPause
           ? (t?.DisableAi("玩家主控权"),
             o.CreatureData.GetEntityType() ===
-              Protocol_1.Aki.Protocol.HBs.Proto_Player &&
+              Protocol_1.Aki.Protocol.wks.Proto_Player &&
               TimerSystem_1.TimerSystem.Next((e) => {
                 var s = r.CharActorComp,
                   o = r.CharActorComp.Entity;
-                o.GetComponent(38) &&
+                o.GetComponent(39) &&
                   (Global_1.Global.CharacterController.Possess(s.Actor),
-                  (s = o.GetComponent(161)) && s.StopMove(!1),
-                  (s = o.GetComponent(52)).ClearMoveVectorCache(),
+                  (s = o.GetComponent(163)) && s.StopMove(!1),
+                  (s = o.GetComponent(53)).ClearMoveVectorCache(),
                   s.SetActive(!0));
               }))
           : Log_1.Log.CheckError() &&

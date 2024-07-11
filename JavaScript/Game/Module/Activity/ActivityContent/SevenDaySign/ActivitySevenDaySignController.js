@@ -16,34 +16,34 @@ const Log_1 = require("../../../../../Core/Common/Log"),
 class ActivitySevenDaySignController extends ActivityControllerBase_1.ActivityControllerBase {
   constructor() {
     super(...arguments),
-      (this.fFe = (e) => {
+      (this.w3e = (e) => {
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "Activity",
             38,
             "[ActivitySevenDaySign][OnNotify]收到签到状态通知",
-            ["ActivityId", e.YFn],
-            ["SignIndex", e.Akn],
-            ["SignState", e.D0s],
+            ["ActivityId", e.T6n],
+            ["SignIndex", e.r5n],
+            ["SignState", e.jps],
           ),
           ModelManager_1.ModelManager.ActivityModel.GetActivityById(
-            e.YFn,
+            e.T6n,
           )?.UpdateActivityData(e),
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.ActivityViewRefreshCurrent,
-            e.YFn,
+            e.T6n,
           ),
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.RefreshCommonActivityRedDot,
-            e.YFn,
+            e.T6n,
           );
       });
   }
   OnRegisterNetEvent() {
-    Net_1.Net.Register(29053, this.fFe);
+    Net_1.Net.Register(23634, this.w3e);
   }
   OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(29053);
+    Net_1.Net.UnRegister(23634);
   }
   OnOpenView(e) {}
   OnGetActivityResource(e) {
@@ -51,18 +51,10 @@ class ActivitySevenDaySignController extends ActivityControllerBase_1.ActivityCo
       ConfigManager_1.ConfigManager.ActivitySevenDaySignConfig.GetActivitySignById(
         e.Id,
       );
-    if (!t)
-      return (
-        Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Activity", 38, "签到活动未查到对应配置", [
-            "Id",
-            e.Id,
-          ]),
-        ""
-      );
+    if (!t) return "";
     switch (t.Type) {
       case 1:
-        return "UiView_signinMain";
+        return t.PrefabResource;
       case 2:
         return "UiItem_VersionSignIn";
       default:
@@ -72,7 +64,7 @@ class ActivitySevenDaySignController extends ActivityControllerBase_1.ActivityCo
               "Type",
               t.Type,
             ]),
-          "UiItem_VersionSignIn"
+          ""
         );
     }
   }
@@ -114,13 +106,13 @@ class ActivitySevenDaySignController extends ActivityControllerBase_1.ActivityCo
   }
   static GetRewardByDay(t, i) {
     var e = Protocol_1.Aki.Protocol.I$n.create();
-    (e.YFn = t),
-      (e.Akn = i),
-      Net_1.Net.Call(29475, e, (e) => {
-        e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys
+    (e.T6n = t),
+      (e.r5n = i),
+      Net_1.Net.Call(14006, e, (e) => {
+        e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs
           ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-              e.lkn,
-              18930,
+              e.O4n,
+              15799,
             )
           : (ModelManager_1.ModelManager.ActivityModel.GetActivityById(
               t,

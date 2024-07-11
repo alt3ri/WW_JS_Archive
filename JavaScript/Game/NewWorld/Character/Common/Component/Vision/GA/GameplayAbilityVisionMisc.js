@@ -47,7 +47,7 @@ const UE = require("ue"),
   (exports.VISION_HIDDEN_DELAY = 1e3),
   (exports.EXPLORE_SKILL_ID = 12e5),
   (exports.VISION_END_BULLET = "210000004"),
-  (exports.controlVisionEnergy = Protocol_1.Aki.Protocol.KBs.Proto_Life),
+  (exports.controlVisionEnergy = Protocol_1.Aki.Protocol.Bks.Proto_Life),
   (exports.morphTag = -2100129479),
   (exports.summonTag = -1369542279),
   (exports.invincibleTag = -208062360),
@@ -60,13 +60,13 @@ function getLineTrace() {
         UE.TraceLineElement.StaticClass(),
       )).bIsSingle = !0),
       (lineTrace.bIgnoreSelf = !0),
-      (lineTrace.WorldContextObject = GlobalData_1.GlobalData.World),
       lineTrace.AddObjectTypeQuery(
         QueryTypeDefine_1.KuroObjectTypeQuery.WorldStatic,
       ),
       lineTrace.AddObjectTypeQuery(
         QueryTypeDefine_1.KuroObjectTypeQuery.WorldStaticIgnoreBullet,
       )),
+    (lineTrace.WorldContextObject = GlobalData_1.GlobalData.World),
     lineTrace.ClearCacheData(),
     lineTrace
   );

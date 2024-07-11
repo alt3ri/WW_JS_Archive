@@ -16,7 +16,7 @@ class ShopItem extends UiPanelBase_1.UiPanelBase {
   constructor(t) {
     super(),
       (this.ItemInfo = void 0),
-      (this.j7e = () => {
+      (this.ije = () => {
         (ModelManager_1.ModelManager.ShopModel.OpenItemInfo = this.ItemInfo),
           EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.OpenItemInfo);
       }),
@@ -41,7 +41,7 @@ class ShopItem extends UiPanelBase_1.UiPanelBase {
       [14, UE.UIText],
       [15, UE.UIText],
     ]),
-      (this.BtnBindInfo = [[0, this.j7e]]);
+      (this.BtnBindInfo = [[0, this.ije]]);
   }
   UpdateItem(t) {
     var i;

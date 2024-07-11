@@ -15,8 +15,8 @@ class NpcDecisionController {
       (this.CheckWeatherState = !1),
       (this.Gre = (t, e) => {
         !this.bre ||
-          (e !== Protocol_1.Aki.Protocol.kMs.Gms &&
-            e !== Protocol_1.Aki.Protocol.kMs.Proto_Finish) ||
+          (e !== Protocol_1.Aki.Protocol.tTs.zfs &&
+            e !== Protocol_1.Aki.Protocol.tTs.Proto_Finish) ||
           (this.qre &&
             this.qre.has(t) &&
             (e = this.bre.TsAiController) &&

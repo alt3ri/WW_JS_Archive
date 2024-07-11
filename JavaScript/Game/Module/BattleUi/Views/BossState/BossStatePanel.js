@@ -21,174 +21,174 @@ const UE = require("ue"),
 class BossStatePanel extends BattleChildViewPanel_1.BattleChildViewPanel {
   constructor() {
     super(...arguments),
-      (this.mot = new Set()),
-      (this._jn = new Map()),
-      (this.dot = -1),
-      (this.Cot = void 0),
-      (this.got = void 0),
-      (this.fot = void 0),
-      (this.pot = 0),
-      (this.vot = 0),
-      (this.Mot = (t) => {
-        t && this.Sot(t);
+      (this.Drt = new Set()),
+      (this.HQn = new Map()),
+      (this.Rrt = -1),
+      (this.Urt = void 0),
+      (this.Art = void 0),
+      (this.Prt = void 0),
+      (this.xrt = 0),
+      (this.wrt = 0),
+      (this.Brt = (t) => {
+        t && this.brt(t);
       }),
       (this.zpe = (t, e) => {
         var i;
         e?.Valid &&
           (i = e.Entity.GetComponent(3)) &&
           i.IsBoss &&
-          ((i = e.Id), this.mot.has(i)) &&
-          (this.mot.delete(i), this._jn.delete(i), i === this.dot) &&
+          ((i = e.Id), this.Drt.has(i)) &&
+          (this.Drt.delete(i), this.HQn.delete(i), i === this.Rrt) &&
           this.IsTargetBossExist() &&
-          (this.Eot(!1), this.yot());
+          (this.qrt(!1), this.Grt());
       }),
-      (this.pKe = (t, e, i, s) => {
-        this.dot === t &&
-          e.CueType === BattleUiDefine_1.UI_EFFECT_CUE_TYPE &&
-          this.got?.ChangeBuff(e, i, s);
+      (this.AQe = (t, e, i, s) => {
+        this.Rrt !== t ||
+          (2 !== e.CueType && 14 !== e.CueType) ||
+          this.Art?.ChangeBuff(e, i, s);
       }),
-      (this.Iot = (t) => {
+      (this.Nrt = (t) => {
         var e;
         t.IsVisible
-          ? this.fot
-            ? (this.fot.Refresh(t), this.fot.IsShowOrShowing || this.fot.Show())
-            : ((this.fot =
+          ? this.Prt
+            ? (this.Prt.Refresh(t), this.Prt.IsShowOrShowing || this.Prt.Show())
+            : ((this.Prt =
                 new MergeMonsterHeadStateView_1.MergeMonsterHeadStateView()),
-              this.fot.Refresh(t),
+              this.Prt.Refresh(t),
               (t = this.GetItem(0)),
               (e = BattleUiControl_1.BattleUiControl.Pool.GetHeadStateView(
-                this.fot.GetResourceId(),
+                this.Prt.GetResourceId(),
               )),
               (e = LguiUtil_1.LguiUtil.DuplicateActor(e, t)),
-              this.fot.NewByRootActorAsync(e).finally(() => {
-                this.fot.Info && this.fot.Show();
+              this.Prt.NewByRootActorAsync(e).finally(() => {
+                this.Prt.Info && this.Prt.Show();
               }))
-          : this.fot &&
-            !this.fot.IsHideOrHiding &&
-            (this.fot.Refresh(void 0), this.fot.Hide());
+          : this.Prt &&
+            !this.Prt.IsHideOrHiding &&
+            (this.Prt.Refresh(void 0), this.Prt.Hide());
       }),
-      (this.Tot = (t) => {
-        this.fot && this.fot.Info === t && this.fot.OnHealthChanged();
+      (this.Ort = (t) => {
+        this.Prt && this.Prt.Info === t && this.Prt.OnHealthChanged();
       }),
       (this.OnLanguageChange = () => {
-        this.fot?.OnLanguageChange();
+        this.Prt?.OnLanguageChange();
       });
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [[0, UE.UIItem]];
   }
   InitializeTemp() {
-    (this.pot = CommonParamById_1.configCommonParamById.GetIntConfig(
+    (this.xrt = CommonParamById_1.configCommonParamById.GetIntConfig(
       "BossStateShowDistance",
     )),
-      (this.vot = CommonParamById_1.configCommonParamById.GetIntConfig(
+      (this.wrt = CommonParamById_1.configCommonParamById.GetIntConfig(
         "BossStateShowMaxDistance",
       )),
-      this.Lot();
+      this.krt();
   }
   async InitializeAsync() {
-    await this.Uot(), this.Aot();
+    await this.Frt(), this.Vrt();
   }
   Reset() {
-    this.Eot(), this.yot(), this.Pot(), (this.got = void 0), super.Reset();
+    this.qrt(), this.Grt(), this.Hrt(), (this.Art = void 0), super.Reset();
   }
-  Lot() {
+  krt() {
     var t = ModelManager_1.ModelManager.CreatureModel.GetAllEntities();
-    if (t) for (const e of t) e.IsInit && this.Sot(e);
+    if (t) for (const e of t) e.IsInit && this.brt(e);
   }
-  async Uot() {
-    this.Cot = new Map();
+  async Frt() {
+    this.Urt = new Map();
     const s = [];
     BattleUiDefine_1.bossStateViewResourceIdMap.forEach((t, e) => {
       var i = this.GetItem(0),
         t = BattleUiControl_1.BattleUiControl.Pool.GetHeadStateView(t);
       t.K2_AttachRootComponentTo(i);
       i = new (bossStateViewMap.get(e))();
-      this.Cot.set(e, i), s.push(i.NewByRootActorAsync(t));
+      this.Urt.set(e, i), s.push(i.NewByRootActorAsync(t));
     }),
       await Promise.all(s);
   }
-  Pot() {
-    for (const t of this.Cot.values()) t.DestroyCompatible();
-    this.Cot = void 0;
+  Hrt() {
+    for (const t of this.Urt.values()) t.DestroyCompatible();
+    this.Urt = void 0;
   }
-  xot(t, e) {
-    this.got ||
-      ((this.got = this.Cot.get(e)),
-      this.got.Activate(t),
+  jrt(t, e) {
+    this.Art ||
+      ((this.Art = this.Urt.get(e)),
+      this.Art.Activate(t),
       ModelManager_1.ModelManager.BattleUiModel.ExploreModeData.UpdateBossState(
         !0,
       ));
   }
-  Eot(t = !0) {
+  qrt(t = !0) {
     var e;
-    this.got &&
-      ((e = EntitySystem_1.EntitySystem.Get(this.dot)),
-      this.got.Deactivate(e),
-      t ? this.got.Hide() : this.got.HideWithAnim(),
-      (this.got = void 0),
+    this.Art &&
+      ((e = EntitySystem_1.EntitySystem.Get(this.Rrt)),
+      this.Art.Deactivate(e),
+      t ? this.Art.Hide() : this.Art.HideWithAnim(),
+      (this.Art = void 0),
       ModelManager_1.ModelManager.BattleUiModel.ExploreModeData.UpdateBossState(
         !1,
       ));
   }
   OnTickBattleChildViewPanel(t) {
-    this.Aot(), this.got?.Tick(t), this.fot?.Tick(t);
+    this.Vrt(), this.Art?.Tick(t), this.Prt?.Tick(t);
   }
   OnChangeBoss(t) {
-    this.got && (this.Eot(), this.yot()), (this.dot = t);
+    this.Art && (this.qrt(), this.Grt()), (this.Rrt = t);
     var e,
-      t = this.wot()?.BossViewConfig?.BossStateViewType ?? 0;
+      t = this.Wrt()?.BossViewConfig?.BossStateViewType ?? 0;
     bossStateViewMap.get(Number(t)) &&
-      ((e = EntitySystem_1.EntitySystem.Get(this.dot))
-        ? this.xot(e, t)
+      ((e = EntitySystem_1.EntitySystem.Get(this.Rrt))
+        ? this.jrt(e, t)
         : Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn("Battle", 8, "显示Boss状态条时找不到对应Boss实体"));
   }
-  Aot() {
-    var t = this.Bot();
+  Vrt() {
+    var t = this.Krt();
     -1 === t
-      ? this.IsTargetBossExist() && (this.Eot(!1), this.yot())
-      : this.dot !== t && this.OnChangeBoss(t);
+      ? this.IsTargetBossExist() && (this.qrt(!1), this.Grt())
+      : this.Rrt !== t && this.OnChangeBoss(t);
   }
-  yot() {
-    this.dot = -1;
+  Grt() {
+    this.Rrt = -1;
   }
-  Bot() {
+  Krt() {
     var t = Global_1.Global.BaseCharacter;
     if (!t) return -1;
-    if (0 === this.mot.size) return -1;
+    if (0 === this.Drt.size) return -1;
     let e = -1,
       i = MathUtils_1.MathUtils.Int32Max;
-    for (const h of this.mot) {
+    for (const h of this.Drt) {
       var s,
         n = EntitySystem_1.EntitySystem.Get(h);
       n &&
         (n = n.GetComponent(3)) &&
         ((n = n.Owner.GetSquaredDistanceTo(t)),
-        (s = this._jn.get(h))
+        (s = this.HQn.get(h))
           ? n <= s && n < i && ((i = n), (e = h))
-          : n > this.vot ||
-            (n <= this.pot && n < i && ((i = n), (e = h)),
-            n > this.pot &&
-              n <= this.vot &&
-              -1 !== this.dot &&
+          : n > this.wrt ||
+            (n <= this.xrt && n < i && ((i = n), (e = h)),
+            n > this.xrt &&
+              n <= this.wrt &&
+              -1 !== this.Rrt &&
               n < i &&
               ((i = n), (e = h))));
     }
     return e;
   }
-  wot() {
-    if (this.dot) return this.bot(this.dot);
+  Wrt() {
+    if (this.Rrt) return this.Qrt(this.Rrt);
   }
-  bot(t) {
+  Qrt(t) {
     return EntitySystem_1.EntitySystem.Get(t)
       .GetComponent(0)
       ?.GetMonsterComponent();
   }
   IsTargetBossExist() {
-    return -1 !== this.dot;
+    return -1 !== this.Rrt;
   }
-  Sot(e) {
+  brt(e) {
     if (e?.Valid) {
       var i = e.Entity.GetComponent(0);
       if (i) {
@@ -197,31 +197,31 @@ class BossStatePanel extends BattleChildViewPanel_1.BattleChildViewPanel {
           let t = 0;
           var i = i.BossViewConfig;
           0 === (t = i ? i.BossStateViewType : t) ||
-            this.mot.has(e.Id) ||
-            (this.mot.add(e.Id),
+            this.Drt.has(e.Id) ||
+            (this.Drt.add(e.Id),
             i?.ShowDistance &&
-              ((i = i.ShowDistance * i.ShowDistance), this._jn.set(e.Id, i)));
+              ((i = i.ShowDistance * i.ShowDistance), this.HQn.set(e.Id, i)));
         }
       }
     }
   }
   AddEvents() {
-    EventSystem_1.EventSystem.Add(EventDefine_1.EEventName.SpawnBoss, this.Mot),
+    EventSystem_1.EventSystem.Add(EventDefine_1.EEventName.SpawnBoss, this.Brt),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.RemoveEntity,
         this.zpe,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.CharOnBuffAddUITexture,
-        this.pKe,
+        this.AQe,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.BattleUiMergeHeadStateVisibleChanged,
-        this.Iot,
+        this.Nrt,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.BattleUiMergeHeadStateHealthChanged,
-        this.Tot,
+        this.Ort,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.TextLanguageChange,
@@ -231,7 +231,7 @@ class BossStatePanel extends BattleChildViewPanel_1.BattleChildViewPanel {
   RemoveEvents() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.SpawnBoss,
-      this.Mot,
+      this.Brt,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.RemoveEntity,
@@ -239,15 +239,15 @@ class BossStatePanel extends BattleChildViewPanel_1.BattleChildViewPanel {
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.CharOnBuffAddUITexture,
-        this.pKe,
+        this.AQe,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.BattleUiMergeHeadStateVisibleChanged,
-        this.Iot,
+        this.Nrt,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.BattleUiMergeHeadStateHealthChanged,
-        this.Tot,
+        this.Ort,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.TextLanguageChange,
@@ -255,8 +255,8 @@ class BossStatePanel extends BattleChildViewPanel_1.BattleChildViewPanel {
       );
   }
   GetUiActorForGuide() {
-    return this.got?.GetRootActor();
+    return this.Art?.GetRootActor();
   }
 }
-(exports.BossStatePanel = BossStatePanel).aYe = void 0;
+(exports.BossStatePanel = BossStatePanel).vJe = void 0;
 //# sourceMappingURL=BossStatePanel.js.map

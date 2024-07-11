@@ -10,23 +10,23 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SECONDS_PRE_HOUR = 3600);
 class Shop {
   constructor(t) {
-    (this.dvo = t.eAs), (this.g4e = new Map()), this.UpdateShopItemList(t.Dxs);
+    (this.uMo = t.pxs), (this.x5e = new Map()), this.UpdateShopItemList(t.Kqs);
   }
   get UpdateTime() {
-    return this.dvo;
+    return this.uMo;
   }
   UpdateRefreshTime(t) {
-    this.dvo = t;
+    this.uMo = t;
   }
   UpdateShopItemList(t) {
-    this.g4e.clear();
-    for (const e of t) this.g4e.set(e.Ekn, e);
+    this.x5e.clear();
+    for (const e of t) this.x5e.set(e.J4n, e);
   }
   GetItemInfo(t) {
-    return this.g4e.get(t);
+    return this.x5e.get(t);
   }
   GetItemList() {
-    return this.g4e;
+    return this.x5e;
   }
 }
 exports.Shop = Shop;

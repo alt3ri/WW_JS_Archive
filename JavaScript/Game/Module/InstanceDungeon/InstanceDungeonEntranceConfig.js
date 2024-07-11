@@ -1,45 +1,38 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
-  (exports.InstanceDungeonEntranceConfig = exports.EInstanceEntranceFlowType =
-    void 0);
+  (exports.InstanceDungeonEntranceConfig = void 0);
 const Log_1 = require("../../../Core/Common/Log"),
   InstanceDungeonEntranceAll_1 = require("../../../Core/Define/ConfigQuery/InstanceDungeonEntranceAll"),
   InstanceDungeonEntranceById_1 = require("../../../Core/Define/ConfigQuery/InstanceDungeonEntranceById"),
   ConfigBase_1 = require("../../../Core/Framework/ConfigBase"),
   InstanceDungeonEntranceFlowNormal_1 = require("./Define/InstanceDungeonEntranceFlowNormal"),
   InstanceDungeonEntranceFlowRoguelike_1 = require("./Define/InstanceDungeonEntranceFlowRoguelike"),
-  InstanceDungeonEntranceFlowSkipEditFormation_1 = require("./Define/InstanceDungeonEntranceFlowSkipEditFormation");
-var EInstanceEntranceFlowType;
-!(function (n) {
-  (n[(n.Normal = 1)] = "Normal"),
-    (n[(n.SkipEditFormation = 2)] = "SkipEditFormation"),
-    (n[(n.SingleTimeTower = 3)] = "SingleTimeTower"),
-    (n[(n.CycleTower = 4)] = "CycleTower"),
-    (n[(n.NewTower = 5)] = "NewTower"),
-    (n[(n.Roguelike = 6)] = "Roguelike"),
-    (n[(n.BossRush = 7)] = "BossRush");
-})(
-  (EInstanceEntranceFlowType =
-    exports.EInstanceEntranceFlowType ||
-    (exports.EInstanceEntranceFlowType = {})),
-);
+  InstanceDungeonEntranceFlowSkipEditFormation_1 = require("./Define/InstanceDungeonEntranceFlowSkipEditFormation"),
+  InstanceDungeonEntranceFlowTowerDefence_1 = require("./Define/InstanceDungeonEntranceFlowTowerDefence");
 class InstanceDungeonEntranceConfig extends ConfigBase_1.ConfigBase {
   constructor() {
-    super(...arguments), (this.hai = new Map()), (this.lai = void 0);
+    super(...arguments),
+      (this.hhi = new Map()),
+      (this.lhi = void 0),
+      (this.Gzs = void 0);
   }
   OnInit() {
     return (
-      this.hai.set(
-        EInstanceEntranceFlowType.Normal,
+      this.hhi.set(
+        1,
         new InstanceDungeonEntranceFlowNormal_1.InstanceDungeonEntranceFlowNormal(),
       ),
-      this.hai.set(
-        EInstanceEntranceFlowType.SkipEditFormation,
+      this.hhi.set(
+        2,
         new InstanceDungeonEntranceFlowSkipEditFormation_1.InstanceDungeonEntranceFlowSkipEditFormation(),
       ),
-      this.hai.set(
-        EInstanceEntranceFlowType.Roguelike,
+      this.hhi.set(
+        6,
         new InstanceDungeonEntranceFlowRoguelike_1.InstanceDungeonEntranceFlowRoguelike(),
+      ),
+      this.hhi.set(
+        8,
+        new InstanceDungeonEntranceFlowTowerDefence_1.InstanceDungeonEntranceFlowTowerDefense(),
       ),
       !0
     );
@@ -62,7 +55,7 @@ class InstanceDungeonEntranceConfig extends ConfigBase_1.ConfigBase {
             "flowId",
             e,
           ]),
-        (e = EInstanceEntranceFlowType.Normal)),
+        (e = 1)),
       e
     );
   }
@@ -75,36 +68,42 @@ class InstanceDungeonEntranceConfig extends ConfigBase_1.ConfigBase {
             "flowId",
             e,
           ]),
-        (e = EInstanceEntranceFlowType.Normal)),
-      this.hai.get(e)
+        (e = 1)),
+      this.hhi.get(e)
     );
   }
   GetEntranceIdByMarkId(n) {
-    if (!this.lai) {
-      this.lai = new Map();
+    if (!this.lhi) {
+      this.lhi = new Map();
       for (const e of InstanceDungeonEntranceAll_1.configInstanceDungeonEntranceAll.GetConfigList())
-        e.MarkId && this.lai.set(e.MarkId, e.Id);
+        e.MarkId && this.lhi.set(e.MarkId, e.Id);
     }
-    return this.lai.get(n) ?? 0;
+    return this.lhi.get(n) ?? 0;
   }
   CheckMarkIdLinkDungeonEntrance(n) {
     return 0 < this.GetEntranceIdByMarkId(n);
   }
   CheckMarkIdIsTowerEntrance(n) {
-    var n = this.lai.get(n);
+    var n = this.lhi.get(n);
     return (
       !!n &&
-      ((n = this.GetConfig(n))?.FlowId ===
-        EInstanceEntranceFlowType.CycleTower ||
-        n?.FlowId === EInstanceEntranceFlowType.SingleTimeTower ||
-        n?.FlowId === EInstanceEntranceFlowType.NewTower)
+      (4 === (n = this.GetConfig(n))?.FlowId ||
+        3 === n?.FlowId ||
+        5 === n?.FlowId)
     );
   }
   CheckMarkIdIsRoguelike(n) {
-    n = this.lai.get(n);
-    return (
-      !!n && this.GetConfig(n)?.FlowId === EInstanceEntranceFlowType.Roguelike
-    );
+    n = this.lhi.get(n);
+    return !!n && 6 === this.GetConfig(n)?.FlowId;
+  }
+  CheckInstanceIdIsTowerDefence(n) {
+    if (!this.Gzs) {
+      this.Gzs = new Map();
+      for (const e of InstanceDungeonEntranceAll_1.configInstanceDungeonEntranceAll.GetConfigList())
+        for (const n of e.InstanceDungeonList) this.Gzs.set(n, e);
+    }
+    const e = this.Gzs.get(n);
+    return !!e && 8 === e.FlowId;
   }
 }
 exports.InstanceDungeonEntranceConfig = InstanceDungeonEntranceConfig;

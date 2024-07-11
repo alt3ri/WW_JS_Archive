@@ -48,8 +48,8 @@ class CameraGuideController extends CameraControllerBase_1.CameraControllerBase 
       (this.p_e = 0),
       (this.v_e = Vector_1.Vector.Create()),
       (this.M_e = DEFAULT_VALUE),
-      (this.S_e = 0),
-      (this.E_e = !1);
+      (this.E_e = 0),
+      (this.S_e = !1);
   }
   get IsBlending() {
     return 0 !== this.f_e;
@@ -80,11 +80,11 @@ class CameraGuideController extends CameraControllerBase_1.CameraControllerBase 
     this.y_e();
   }
   SetConfigs(t, i) {
-    super.SetConfigs(t, i), (this.E_e = !0);
+    super.SetConfigs(t, i), (this.S_e = !0);
   }
   ApplyCameraGuide(t, i, s, h, e, a, r) {
     this.IsActivate &&
-      this.E_e &&
+      this.S_e &&
       (this.v_e.FromUeVector(t),
       (this.j1e = i),
       (this.c_e = s),
@@ -157,7 +157,7 @@ class CameraGuideController extends CameraControllerBase_1.CameraControllerBase 
         ? (this.g_e.DeepCopy(a),
           this.g_e.SubtractionEqual(t),
           (this.M_e = r),
-          (this.S_e = this.Camera.CurrentCamera.Fov))
+          (this.E_e = this.Camera.CurrentCamera.Fov))
         : ((s = Vector_1.Vector.Create()).DeepCopy(this.v_e),
           s.SubtractionEqual(t),
           (s.Z = 0),
@@ -181,10 +181,11 @@ class CameraGuideController extends CameraControllerBase_1.CameraControllerBase 
     var i = MathUtils_1.MathUtils.LerpSin(this.sle, this.ale, t),
       s = MathUtils_1.MathUtils.LerpSin(this.ole, this.rle, t);
     (this.Camera.DesiredCamera.ArmRotation = Rotator_1.Rotator.Create(s, i, 0)),
-      (this.Camera.IsModifiedArmRotation = !0),
+      (this.Camera.IsModifiedArmRotationPitch = !0),
+      (this.Camera.IsModifiedArmRotationYaw = !0),
       this.M_e &&
         DEFAULT_VALUE !== this.M_e &&
-        ((s = MathUtils_1.MathUtils.LerpSin(this.S_e, this.M_e, t)),
+        ((s = MathUtils_1.MathUtils.LerpSin(this.E_e, this.M_e, t)),
         (this.Camera.DesiredCamera.Fov = s));
   }
   L_e(t) {
@@ -250,14 +251,16 @@ class CameraGuideController extends CameraControllerBase_1.CameraControllerBase 
       ),
       this.M_e &&
         DEFAULT_VALUE !== this.M_e &&
-        ((t = MathUtils_1.MathUtils.LerpSin(this.S_e, this.Camera.Fov, t)),
+        ((t = MathUtils_1.MathUtils.LerpSin(this.E_e, this.Camera.Fov, t)),
         (this.Camera.DesiredCamera.Fov = t));
   }
   UpdateInternal(t) {
     switch (
-      (this.UpdateBreakModifyInfo(),
-      (this.H6 += t),
-      (this.BreakModifyArmRotation || this.BreakModifyArmLength) && this.y_e(),
+      ((this.H6 += t),
+      (this.Camera.IsModifiedArmRotationPitch ||
+        this.Camera.IsModifiedArmRotationYaw ||
+        this.Camera.IsModifiedArmLength) &&
+        this.y_e(),
       this.f_e)
     ) {
       case 1:
@@ -288,8 +291,7 @@ class CameraGuideController extends CameraControllerBase_1.CameraControllerBase 
       (this.f_e = 0);
   }
   I_e() {
-    this.ResetBreakModifyInfo(),
-      (this.f_e = 1),
+    (this.f_e = 1),
       (this.H6 = 0),
       (this.p_e = 0),
       (this.d_e = this.CurrentCameraArmLengthAddition),
@@ -312,7 +314,7 @@ class CameraGuideController extends CameraControllerBase_1.CameraControllerBase 
       this.Camera.CameraInputController.Unlock(this),
       this.M_e &&
         DEFAULT_VALUE !== this.M_e &&
-        (this.S_e = this.Camera.CurrentCamera.Fov));
+        (this.E_e = this.Camera.CurrentCamera.Fov));
   }
   IsLockCameraInput() {
     return this.m_e;

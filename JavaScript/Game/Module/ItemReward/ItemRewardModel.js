@@ -8,27 +8,27 @@ const ModelBase_1 = require("../../../Core/Framework/ModelBase"),
   RewardData_1 = require("./RewardData/RewardData");
 class ItemRewardModel extends ModelBase_1.ModelBase {
   constructor() {
-    super(...arguments), (this.qgi = void 0), (this.CurrentReasonId = void 0);
+    super(...arguments), (this.q0i = void 0), (this.CurrentReasonId = void 0);
   }
   OnClear() {
-    return (this.qgi = void 0), !(this.CurrentReasonId = void 0);
+    return (this.q0i = void 0), !(this.CurrentReasonId = void 0);
   }
   RefreshRewardData(e, t) {
     e = { Type: 0, ViewName: e };
     return (
-      this.qgi || this.NewRewardData(),
-      this.qgi.SetRewardInfo(e),
-      this.qgi.SetItemList(t),
-      this.qgi
+      this.q0i || this.NewRewardData(),
+      this.q0i.SetRewardInfo(e),
+      this.q0i.SetItemList(t),
+      this.q0i
     );
   }
   RefreshExploreLevelRewardData(e, t, i, s) {
     e = { Type: 0, ViewName: e, CurrentExploreLevel: t, TargetExploreLevel: i };
     return (
-      this.qgi || this.NewRewardData(),
-      this.qgi.SetRewardInfo(e),
-      this.qgi.SetItemList(s),
-      this.qgi
+      this.q0i || this.NewRewardData(),
+      this.q0i.SetRewardInfo(e),
+      this.q0i.SetItemList(s),
+      this.q0i
     );
   }
   RefreshCommonRewardDataFromConfig(e, t, i, s) {
@@ -47,10 +47,10 @@ class ItemRewardModel extends ModelBase_1.ModelBase {
           IsItemVisible: e.IsItemVisible,
           OnCloseCallback: s,
         }),
-        this.qgi || this.NewRewardData(),
-        this.qgi.SetRewardInfo(t),
-        this.qgi.SetItemList(i),
-        this.qgi
+        this.q0i || this.NewRewardData(),
+        this.q0i.SetRewardInfo(t),
+        this.q0i.SetItemList(i),
+        this.q0i
       );
   }
   RefreshCompositeRewardDataFromConfig(e, t = !0, i, s) {
@@ -73,14 +73,14 @@ class ItemRewardModel extends ModelBase_1.ModelBase {
           ProgressBarAnimationTime: e.ProgressBarAnimationTime,
           IsItemVisible: e.IsItemVisible,
         }),
-        this.qgi || this.NewRewardData(),
-        this.qgi.SetRewardInfo(t),
-        this.qgi.SetItemList(i),
-        s && this.qgi.SetProgressQueue(s),
-        this.qgi
+        this.q0i || this.NewRewardData(),
+        this.q0i.SetRewardInfo(t),
+        this.q0i.SetItemList(i),
+        s && this.q0i.SetProgressQueue(s),
+        this.q0i
       );
   }
-  RefreshExploreRewardDataFromConfig(e, t = !0, i, s, r, a, o, n, h, l) {
+  RefreshExploreRewardDataFromConfig(e, t = !0, i, s, r, a, o, n, h, l, d, m) {
     e =
       ConfigManager_1.ConfigManager.ItemRewardConfig.GetExploreRewardDisplayConfig(
         e,
@@ -104,69 +104,74 @@ class ItemRewardModel extends ModelBase_1.ModelBase {
           Description: e.Description,
           OnCloseCallback: h,
           Tip: l,
+          IsShowOnlineChallengePlayer: d,
         }),
-        this.qgi || this.NewRewardData(),
-        this.qgi.SetRewardInfo(t),
-        this.qgi.SetItemList(i),
-        s && this.qgi.SetExploreRecordInfo(s),
-        r && this.qgi.SetExploreBarDataList(r),
-        a && this.qgi.SetButtonInfoList(a),
-        o && this.qgi.SetTargetReached(o),
-        n && this.qgi.SetStateToggle(n),
-        this.qgi
+        this.q0i || this.NewRewardData(),
+        this.q0i.SetRewardInfo(t),
+        this.q0i.SetItemList(i),
+        s && this.q0i.SetExploreRecordInfo(s),
+        r && this.q0i.SetExploreBarDataList(r),
+        a && this.q0i.SetButtonInfoList(a),
+        o && this.q0i.SetTargetReached(o),
+        n && this.q0i.SetStateToggle(n),
+        m && this.q0i.SetExploreFriendDataList(m),
+        this.q0i
       );
   }
   SetItemList(e) {
-    this.qgi || this.NewRewardData(),
+    this.q0i || this.NewRewardData(),
       !e ||
         e.length < 1 ||
-        (this.qgi.SetItemList(e),
+        (this.q0i.SetItemList(e),
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.OnRefreshRewardViewItemList,
           e,
         ));
   }
   AddItemList(e) {
-    this.qgi || this.NewRewardData(),
+    this.q0i || this.NewRewardData(),
       !e ||
         e.length < 1 ||
-        (this.qgi.AddItemList(e),
+        (this.q0i.AddItemList(e),
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.OnRefreshRewardViewItemList,
           e,
         ));
   }
   SetProgressQueue(e) {
-    this.qgi || this.NewRewardData(),
-      this.qgi.SetProgressQueue(e),
+    this.q0i || this.NewRewardData(),
+      this.q0i.SetProgressQueue(e),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnRefreshRewardProgressBar,
       );
   }
   SetExploreBarDataList(e) {
-    this.qgi || this.NewRewardData(), this.qgi.SetExploreBarDataList(e);
+    this.q0i || this.NewRewardData(), this.q0i.SetExploreBarDataList(e);
   }
   SetExploreRecordInfo(e) {
-    this.qgi || this.NewRewardData(), this.qgi.SetExploreRecordInfo(e);
+    this.q0i || this.NewRewardData(), this.q0i.SetExploreRecordInfo(e);
+  }
+  SetExploreFriendDataList(e) {
+    this.q0i || this.NewRewardData(), this.q0i.SetExploreFriendDataList(e);
   }
   SetButtonList(e) {
-    this.qgi || this.NewRewardData(),
+    this.q0i || this.NewRewardData(),
       !e ||
         e.length < 1 ||
-        (this.qgi.SetButtonInfoList(e),
+        (this.q0i.SetButtonInfoList(e),
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.OnRefreshRewardButton,
         ));
   }
   NewRewardData() {
     var e;
-    return this.qgi || ((e = new RewardData_1.RewardData()), (this.qgi = e));
+    return this.q0i || ((e = new RewardData_1.RewardData()), (this.q0i = e));
   }
   ClearCurrentRewardData() {
-    this.qgi = void 0;
+    this.q0i = void 0;
   }
   GetCurrentRewardData() {
-    return this.qgi;
+    return this.q0i;
   }
 }
 exports.ItemRewardModel = ItemRewardModel;

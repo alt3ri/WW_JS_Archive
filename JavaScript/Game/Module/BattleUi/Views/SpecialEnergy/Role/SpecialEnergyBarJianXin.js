@@ -5,13 +5,13 @@ const SpecialEnergyBarPointGraduate_1 = require("../SpecialEnergyBarPointGraduat
 class SpecialEnergyBarJianXin extends SpecialEnergyBarPointGraduate_1.SpecialEnergyBarPointGraduate {
   constructor() {
     super(...arguments),
-      (this.kct = 0),
-      (this.Fct = (t) => {
-        0 < t && this.SlotItem.PlayUseEffectWithPercent(this.kct);
+      (this.zmt = 0),
+      (this.Zmt = (t) => {
+        0 < t && this.SlotItem.PlayUseEffectWithPercent(this.zmt);
       });
   }
   AddEvents() {
-    super.AddEvents(), this.ListenForTagCountChanged(2044061337, this.Fct);
+    super.AddEvents(), this.ListenForTagCountChanged(2044061337, this.Zmt);
   }
   RefreshBarPercent(t = !1) {
     let i = this.PercentMachine.GetCurPercent();
@@ -37,7 +37,7 @@ class SpecialEnergyBarJianXin extends SpecialEnergyBarPointGraduate_1.SpecialEne
     )
       for (const r of this.GraduateItemList) r.SetUIActive(!s);
     this.KeyItem?.RefreshKeyEnable(this.IsKeyEnable, t),
-      0 === i && (this.kct = this.LastPercent),
+      0 === i && (this.zmt = this.LastPercent),
       (this.LastPercent = i);
   }
 }

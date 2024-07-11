@@ -15,69 +15,70 @@ const Log_1 = require("../../../Core/Common/Log"),
 class GeneralLogicTreeModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
-      (this.d$t = void 0),
-      (this.C$t = void 0),
-      (this.g$t = void 0),
-      (this.B5s = void 0),
-      (this.f$t = void 0),
+      (this.dYt = void 0),
+      (this.CYt = void 0),
+      (this.gYt = void 0),
+      (this.IWs = void 0),
+      (this.fYt = void 0),
       (this.IsWakeUp = !1),
       (this.ExpressionOccupationTreeIncId = void 0),
       (this.TimeStop = !1),
       (this.CountDownViewClosing = !1),
       (this.DisableInput = !1),
-      (this.lro = 0);
+      (this.nno = 0);
   }
   OnInit() {
     return (
-      (this.d$t = BigInt(0)),
-      (this.C$t = new Map()),
-      (this.g$t = new Map()),
-      (this.f$t = new Map()),
-      (this.B5s = new Map()),
+      (this.dYt = BigInt(0)),
+      (this.CYt = new Map()),
+      (this.gYt = new Map()),
+      (this.fYt = new Map()),
+      (this.IWs = new Map()),
       !0
     );
   }
   OnLeaveLevel() {
-    return this.p$t(), !0;
+    return this.pYt(), !0;
   }
   OnChangeMode() {
-    return this.p$t(), !0;
+    return this.pYt(), !0;
   }
-  p$t() {
-    for (var [, e] of this.C$t) e.SetSleep(!0);
+  pYt() {
+    for (var [, e] of this.CYt) e.SetSleep(!0);
     this.IsWakeUp = !1;
   }
   OnClear() {
     return (
-      this.C$t?.clear(),
-      (this.C$t = void 0),
-      this.g$t?.clear(),
-      (this.g$t = void 0),
-      this.f$t?.clear(),
-      !(this.f$t = void 0)
+      this.CYt?.clear(),
+      (this.CYt = void 0),
+      this.gYt?.clear(),
+      (this.gYt = void 0),
+      this.fYt?.clear(),
+      !(this.fYt = void 0)
     );
   }
   SetTimerUiOwnerId(e) {
-    this.d$t = e;
+    this.dYt = e;
   }
   IsTimerUiOwner(e) {
-    return this.d$t === e;
+    return this.dYt === e;
   }
   CreateBehaviorTree(i) {
-    var r = MathUtils_1.MathUtils.LongToBigInt(i.L5n);
-    let t = this.C$t.get(r);
+    var r = MathUtils_1.MathUtils.LongToBigInt(i.s9n);
+    let t = this.CYt.get(r);
     if (t) return t.Recover(i), t;
     let o = !this.IsWakeUp;
-    switch (i.NCs) {
-      case Protocol_1.Aki.Protocol.NCs.Proto_BtTypeQuest:
-        var n = ModelManager_1.ModelManager.QuestNewModel.GetQuest(i.qfs);
+    switch (i.tps) {
+      case Protocol_1.Aki.Protocol.tps.Proto_BtTypeQuest:
+        var n = ModelManager_1.ModelManager.QuestNewModel.GetQuest(i.ZSs);
         n
           ? ((t = new BaseBehaviorTree_1.BaseBehaviorTree(
               r,
-              i.qfs,
-              i.NCs,
+              i.ZSs,
+              i.tps,
               n.DungeonId,
               n.QuestMarkId,
+              n.IsNewQuest,
             )),
             n.SetUpBehaviorTree(t))
           : Log_1.Log.CheckError() &&
@@ -85,19 +86,19 @@ class GeneralLogicTreeModel extends ModelBase_1.ModelBase {
               "GeneralLogicTree",
               19,
               "创建任务行为树时：任务不存在",
-              ["任务Id", i.qfs],
+              ["任务Id", i.ZSs],
             );
         break;
-      case Protocol_1.Aki.Protocol.NCs.Proto_BtTypeLevelPlay:
+      case Protocol_1.Aki.Protocol.tps.Proto_BtTypeLevelPlay:
         n =
           ModelManager_1.ModelManager.LevelPlayModel.GetProcessingLevelPlayInfo(
-            i.qfs,
+            i.ZSs,
           );
         n
           ? ((t = new BaseBehaviorTree_1.BaseBehaviorTree(
               r,
-              i.qfs,
-              i.NCs,
+              i.ZSs,
+              i.tps,
               ModelManager_1.ModelManager.CreatureModel.GetInstanceId(),
               GeneralLogicTreeDefine_1.COMMONLEVELPLAY_TRACKICONID,
             )),
@@ -107,10 +108,10 @@ class GeneralLogicTreeModel extends ModelBase_1.ModelBase {
               "GeneralLogicTree",
               19,
               "创建玩法行为树时：玩法不存在",
-              ["玩法Id", i.qfs],
+              ["玩法Id", i.ZSs],
             );
         break;
-      case Protocol_1.Aki.Protocol.NCs.Proto_BtTypeInst: {
+      case Protocol_1.Aki.Protocol.tps.Proto_BtTypeInst: {
         n =
           ModelManager_1.ModelManager.InstanceDungeonModel.GetInstanceDungeonInfo();
         if (!n) {
@@ -119,7 +120,7 @@ class GeneralLogicTreeModel extends ModelBase_1.ModelBase {
               "GeneralLogicTree",
               19,
               "创建副本行为树时：副本不存在",
-              ["副本Id", i.qfs],
+              ["副本Id", i.ZSs],
             );
           break;
         }
@@ -141,8 +142,8 @@ class GeneralLogicTreeModel extends ModelBase_1.ModelBase {
           !ModelManager_1.ModelManager.GameModeModel.WorldDoneAndLoadingClosed),
           (t = new BaseBehaviorTree_1.BaseBehaviorTree(
             r,
-            i.qfs,
-            i.NCs,
+            i.ZSs,
+            i.tps,
             ModelManager_1.ModelManager.CreatureModel.GetInstanceId(),
             e,
           )),
@@ -155,14 +156,14 @@ class GeneralLogicTreeModel extends ModelBase_1.ModelBase {
             "GeneralLogicTree",
             19,
             "创建行为树时找不到对应的行为树类型",
-            ["行为树类型Id", i.NCs],
+            ["行为树类型Id", i.tps],
           );
     }
     if (t) {
-      this.C$t.set(r, t), this.f$t.set(r, i.T5n);
-      let e = this.g$t.get(i.NCs);
+      this.CYt.set(r, t), this.fYt.set(r, i.n9n);
+      let e = this.gYt.get(i.tps);
       return (
-        e || ((e = new Map()), this.g$t.set(i.NCs, e)),
+        e || ((e = new Map()), this.gYt.set(i.tps, e)),
         e.set(r, t),
         t.InitTree(i, o),
         t
@@ -173,25 +174,25 @@ class GeneralLogicTreeModel extends ModelBase_1.ModelBase {
         "GeneralLogicTree",
         19,
         "创建行为树失败",
-        ["行为树类型Id", i.NCs],
-        ["行为树Id", i.qfs],
+        ["行为树类型Id", i.tps],
+        ["行为树Id", i.ZSs],
       );
   }
   RemoveBehaviorTree(e) {
-    var i = this.C$t.get(e);
-    i && (i.Destroy(), this.C$t.delete(e), this.g$t.get(i.BtType)?.delete(e));
+    var i = this.CYt.get(e);
+    i && (i.Destroy(), this.CYt.delete(e), this.gYt.get(i.BtType)?.delete(e));
   }
   GetBehaviorTree(e) {
-    return this.C$t.get(e);
+    return this.CYt.get(e);
   }
   GetBehaviorTrees(e) {
-    return this.g$t.get(e);
+    return this.gYt.get(e);
   }
   GetBehaviorTreeOwnerId(e) {
-    if (void 0 !== e) return this.f$t.get(e);
+    if (void 0 !== e) return this.fYt.get(e);
   }
   GetAllBehaviorTrees() {
-    return this.C$t;
+    return this.CYt;
   }
   SaveUpdateInfo(e, i, r) {
     var t =
@@ -235,27 +236,27 @@ class GeneralLogicTreeModel extends ModelBase_1.ModelBase {
       (this.ExpressionOccupationTreeIncId = void 0));
   }
   UpdateGuideLineStartShowTime() {
-    this.lro = TimeUtil_1.TimeUtil.GetServerTime();
+    this.nno = TimeUtil_1.TimeUtil.GetServerTime();
   }
   GetGuideLineStartShowTime() {
-    return this.lro;
+    return this.nno;
   }
   AddOccupationInfo(e) {
-    this.B5s.set(e.cvs, MathUtils_1.MathUtils.LongToBigInt(e.Ykn));
+    this.IWs.set(e.AEs, MathUtils_1.MathUtils.LongToBigInt(e.T5n));
   }
   RemoveOccupationInfo(e) {
-    this.B5s.delete(e);
+    this.IWs.delete(e);
   }
   IsOccupationExist(e) {
-    return void 0 !== this.B5s.get(e);
+    return void 0 !== this.IWs.get(e);
   }
   GetOccupationTreeId(e) {
-    return this.B5s.get(e);
+    return this.IWs.get(e);
   }
   GetOccupationQuestName(e) {
-    var e = this.B5s.get(e);
+    var e = this.IWs.get(e);
     return (e = e && this.GetBehaviorTree(e)) &&
-      e.BtType === Protocol_1.Aki.Protocol.NCs.Proto_BtTypeQuest
+      e.BtType === Protocol_1.Aki.Protocol.tps.Proto_BtTypeQuest
       ? ModelManager_1.ModelManager.QuestNewModel.GetQuest(e.TreeConfigId)
           ?.Name ?? ""
       : "";

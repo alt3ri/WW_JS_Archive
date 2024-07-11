@@ -12,7 +12,7 @@ class TsAnimNotifyStateVisionCounterAttack extends UE.KuroAnimNotifyState {
       t instanceof TsBaseCharacter_1.default &&
       !!(t = t.CharacterActorComponent?.Entity)?.Valid &&
       (t.GetComponent(33)?.SetCurSkillAnIndex(this.exportIndex),
-      (t = t.GetComponent(51))?.SetVisionCounterAttackInfo(this.对策设置),
+      (t = t.GetComponent(52))?.SetVisionCounterAttackInfo(this.对策设置),
       t?.SetCounterAttackEndTime(r),
       !0)
     );
@@ -23,7 +23,7 @@ class TsAnimNotifyStateVisionCounterAttack extends UE.KuroAnimNotifyState {
       t instanceof TsBaseCharacter_1.default &&
       !!(t = t.CharacterActorComponent?.Entity)?.Valid &&
       (t.GetComponent(33)?.SetCurSkillAnIndex(this.exportIndex),
-      t.GetComponent(51)?.VisionCounterAttackEnd(),
+      t.GetComponent(52)?.VisionCounterAttackEnd(),
       !0)
     );
   }

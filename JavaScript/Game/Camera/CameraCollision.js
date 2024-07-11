@@ -53,6 +53,7 @@ class CameraCollision {
       (this.Hae = 0),
       (this.jae = 0),
       (this.Wae = 0),
+      (this.gga = 0),
       (this.IsNpcDitherEnable = !0),
       (this.IsPlayerXRayEnable = !0),
       (this.Kae = new Set()),
@@ -130,10 +131,10 @@ class CameraCollision {
       this.Hse.ActorsToIgnore.Add(t),
       this.Dae.ActorsToIgnore.Add(t),
       this.Rae.ActorsToIgnore.Add(t),
-      (this.Lae = t?.CharacterActorComponent?.Entity?.GetComponent(66));
+      (this.Lae = t?.CharacterActorComponent?.Entity?.GetComponent(68));
   }
-  SetCameraConfig(t) {
-    this.Wae = t * t * PROBE_RATIO;
+  SetCameraConfig(t, i) {
+    (this.Wae = t * t * PROBE_RATIO), (this.gga = i);
   }
   Clear() {
     this.Fse && (this.Fse.Dispose(), (this.Fse = void 0)),
@@ -175,6 +176,10 @@ class CameraCollision {
           this.Lae.GetWaterLocation().Z +
             this.Hh.CollisionAdditionalHeightInWater,
         )),
+      (this._ae.Z = Math.max(
+        this._ae.Z,
+        this.Hh.Character.CharacterActorComponent.FloorLocation.Z + this.gga,
+      )),
       TraceElementCommon_1.TraceElementCommon.SetStartLocation(
         this.Fse,
         this._ae,
@@ -509,7 +514,7 @@ class CameraCollision {
     return t.Subtraction(i, this.Lz).SizeSquared() < s * s;
   }
   hhe(t) {
-    return !!t.GetEntityNoBlueprint()?.GetComponent(185)?.HasTag(-1151151013);
+    return !!t.GetEntityNoBlueprint()?.GetComponent(188)?.HasTag(-1151151013);
   }
   nhe() {
     var t, i;

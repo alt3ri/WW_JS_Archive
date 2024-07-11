@@ -11,10 +11,10 @@ const UE = require("ue"),
 class ProficiencyView extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this.uqt = void 0),
-      (this.Gft = void 0),
+      (this.dGt = void 0),
+      (this.$pt = void 0),
       (this.OnChangeRoleClick = () => {
-        this?.uqt();
+        this?.dGt();
       });
   }
   OnRegisterComponent() {
@@ -27,15 +27,15 @@ class ProficiencyView extends UiPanelBase_1.UiPanelBase {
       (this.BtnBindInfo = [[2, this.OnChangeRoleClick]]);
   }
   OnStart() {
-    this.Gft = new LevelSequencePlayer_1.LevelSequencePlayer(
+    this.$pt = new LevelSequencePlayer_1.LevelSequencePlayer(
       this.GetButton(2).RootUIComp,
     );
   }
   OnBeforeDestroy() {
-    this.Gft.Clear();
+    this.$pt.Clear();
   }
   BindChangeRoleClick(e) {
-    this.uqt = e;
+    this.dGt = e;
   }
   SetExpNum(e, i, r, t) {
     var r = i * r,
@@ -73,10 +73,10 @@ class ProficiencyView extends UiPanelBase_1.UiPanelBase {
       e,
     ),
       CookController_1.CookController.CheckIsBuffEx(e, i)
-        ? this.Gft.GetCurrentSequence()
-          ? this.Gft.ReplaySequenceByKey("Show")
-          : this.Gft.PlayLevelSequenceByName("Show")
-        : this.Gft?.StopCurrentSequence(!1, !0);
+        ? this.$pt.GetCurrentSequence()
+          ? this.$pt.ReplaySequenceByKey("Show")
+          : this.$pt.PlayLevelSequenceByName("Show")
+        : this.$pt?.StopCurrentSequence(!1, !0);
   }
   SetTypeContent(e = void 0) {
     var i = this.GetText(3);

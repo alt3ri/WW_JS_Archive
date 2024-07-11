@@ -10,7 +10,7 @@ class LevelConditionSelfGameplayTagCheck extends LevelGeneralBase_1.LevelConditi
       !(!e.LimitParams || !a) &&
       !!(e = e.LimitParams.get("GamePlayTag")) &&
       a instanceof TsBaseCharacter_1.default &&
-      (a.CharacterActorComponent?.Entity?.GetComponent(185)?.HasTag(
+      (a.CharacterActorComponent?.Entity?.GetComponent(188)?.HasTag(
         GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(e),
       ) ??
         !1)

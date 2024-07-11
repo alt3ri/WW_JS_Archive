@@ -11,31 +11,31 @@ const Log_1 = require("../../../../../../Core/Common/Log"),
 class SwimConfig extends ConfigBase_1.ConfigBase {
   constructor() {
     super(...arguments),
-      (this.xzo = void 0),
-      (this.wzo = void 0),
-      (this.Bzo = void 0),
-      (this.bzo = void 0);
+      (this.UZo = void 0),
+      (this.AZo = void 0),
+      (this.PZo = void 0),
+      (this.xZo = void 0);
   }
   OnInit() {
     return (
-      (this.xzo = new Map()),
-      (this.wzo = BigInt(0)),
-      (this.Bzo = BigInt(0)),
-      (this.bzo = BigInt(0)),
+      (this.UZo = new Map()),
+      (this.AZo = BigInt(0)),
+      (this.PZo = BigInt(0)),
+      (this.xZo = BigInt(0)),
       this.InitSwimBuffConfig(),
       !0
     );
   }
   OnClear() {
     return (
-      (this.xzo = void 0),
-      (this.wzo = void 0),
-      (this.Bzo = void 0),
-      !(this.bzo = void 0)
+      (this.UZo = void 0),
+      (this.AZo = void 0),
+      (this.PZo = void 0),
+      !(this.xZo = void 0)
     );
   }
   GetSwimConfigByRoleBodyId(i) {
-    var e = this.xzo.get(i);
+    var e = this.UZo.get(i);
     return (
       e ||
       ((e = SwimById_1.configSwimById.GetConfig(i)) ||
@@ -44,22 +44,22 @@ class SwimConfig extends ConfigBase_1.ConfigBase {
             "RoleBody",
             i,
           ])),
-      this.xzo.set(i, e),
+      this.UZo.set(i, e),
       e)
     );
   }
   GetSwimBuffId(i, e) {
-    return i ? (e ? this.Bzo : this.wzo) : this.bzo;
+    return i ? (e ? this.PZo : this.AZo) : this.xZo;
   }
   InitSwimBuffConfig() {
     var i = SwimBuffById_1.configSwimBuffById.GetConfig(NORMAL_SWIM_CONFIG_ID);
     i
-      ? ((this.wzo = BigInt(i.BuffId)),
+      ? ((this.AZo = BigInt(i.BuffId)),
         (i = SwimBuffById_1.configSwimBuffById.GetConfig(NO_INPUT_CONFIG_ID))
-          ? ((this.bzo = BigInt(i.BuffId)),
+          ? ((this.xZo = BigInt(i.BuffId)),
             (i =
               SwimBuffById_1.configSwimBuffById.GetConfig(FAST_SWIM_CONFIG_ID))
-              ? (this.Bzo = BigInt(i.BuffId))
+              ? (this.PZo = BigInt(i.BuffId))
               : Log_1.Log.CheckError() &&
                 Log_1.Log.Error(
                   "Movement",

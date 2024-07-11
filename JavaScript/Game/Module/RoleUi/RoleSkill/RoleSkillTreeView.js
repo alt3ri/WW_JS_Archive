@@ -18,83 +18,84 @@ const UE = require("ue"),
 class RoleSkillTreeView extends UiTabViewBase_1.UiTabViewBase {
   constructor() {
     super(...arguments),
-      (this.plo = void 0),
-      (this.zke = 0),
-      (this.Emo = void 0),
-      (this.ymo = void 0),
-      (this.Imo = void 0),
-      (this.Tmo = void 0),
-      (this.Lmo = () => {
-        UiManager_1.UiManager.OpenView("RoleSkillInputView", this.zke);
+      (this.d1o = void 0),
+      (this.dFe = 0),
+      (this.vdo = void 0),
+      (this.Mdo = void 0),
+      (this.Edo = void 0),
+      (this.Sdo = void 0),
+      (this.ydo = () => {
+        var e = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(this.dFe);
+        UiManager_1.UiManager.OpenView("RoleSkillInputView", e);
       }),
-      (this.Dmo = (e) => {
-        e === this.Tmo
-          ? this.Tmo.SetToggleState(1)
-          : (this.Tmo?.SetToggleState(0),
-            (this.Tmo = e),
-            this.Tmo.SetToggleState(1),
-            this.Rmo());
+      (this.Ido = (e) => {
+        e === this.Sdo
+          ? this.Sdo.SetToggleState(1)
+          : (this.Sdo?.SetToggleState(0),
+            (this.Sdo = e),
+            this.Sdo.SetToggleState(1),
+            this.Tdo());
       }),
-      (this.Umo = (e) => {
-        this.Amo(e), 1 === this.plo.RoleViewState && this.Pmo();
+      (this.Ldo = (e) => {
+        this.Ddo(e), 1 === this.d1o.RoleViewState && this.Rdo();
       }),
-      (this.xmo = (e) => {
+      (this.Udo = (e) => {
         var i =
           ConfigManager_1.ConfigManager.RoleSkillConfig.GetSkillTreeNode(e);
-        this.Amo(e),
-          1 === this.plo.RoleViewState &&
+        this.Ddo(e),
+          1 === this.d1o.RoleViewState &&
             RoleController_1.RoleController.SendRoleSkillViewRequest(
-              this.zke,
+              this.dFe,
               i.SkillId,
-              this.Pmo,
+              this.Rdo,
             );
       }),
-      (this.Juo = () => {
+      (this.Qco = () => {
         this.UiViewSequence.StopSequenceByKey("MoveLeft"),
           this.UiViewSequence.PlaySequence("MoveLeft"),
-          this.Zuo(),
-          this.wmo(!0);
+          this.$co(),
+          this.Ado(!0);
       }),
-      (this.Bmo = () => {
+      (this.Pdo = () => {
         this.UiViewSequence.StopSequenceByKey("MoveLeft"),
           this.UiViewSequence.PlaySequence("MoveLeft"),
-          this.Zuo(),
-          this.wmo(!0);
+          this.$co(),
+          this.Ado(!0);
       }),
-      (this.Pmo = () => {
+      (this.Rdo = () => {
         var e;
-        this.Tmo &&
-          0 !== this.plo.RoleViewState &&
-          ((e = this.Tmo.GetSkillNodeId()),
+        this.Sdo &&
+          0 !== this.d1o.RoleViewState &&
+          ((e = this.Sdo.GetSkillNodeId()),
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.UpdateSkillTreeInfoView,
-            this.zke,
+            this.dFe,
             e,
           ));
       }),
-      (this.bmo = () => {
+      (this.xdo = () => {
         var e, i;
-        this.Tmo &&
-          1 !== this.plo.RoleViewState &&
-          ((e = this.Tmo.GetSkillNodeId()),
+        this.Sdo &&
+          1 !== this.d1o.RoleViewState &&
+          ((e = this.Sdo.GetSkillNodeId()),
           ((i = new RoleSkillDefine_1.RoleSkillTreeInfoViewData()).RoleId =
-            this.zke),
+            this.dFe),
           (i.SkillNodeId = e),
           UiManager_1.UiManager.OpenView("RoleSkillTreeInfoView", i),
-          this.wmo(!1),
+          this.Ado(!1),
           this.UiViewSequence.StopSequenceByKey("MoveRight"),
           this.UiViewSequence.PlaySequence("MoveRight"),
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.OnRoleInternalViewEnter,
           ));
       }),
-      (this.Yuo = (e) => {
+      (this.Kco = (e) => {
         this.UiViewSequence.StopSequenceByKey("ChangeRole"),
           this.UiViewSequence.PlaySequence("ChangeRole"),
-          this.qmo(e);
+          this.wdo(e);
       }),
-      (this.qmo = (e) => {
-        (this.zke = e), this.Refresh();
+      (this.wdo = (e) => {
+        (this.dFe = e), this.Refresh();
       });
   }
   OnRegisterComponent() {
@@ -107,90 +108,90 @@ class RoleSkillTreeView extends UiTabViewBase_1.UiTabViewBase {
       [5, UE.UIItem],
       [6, UE.UIButtonComponent],
     ]),
-      (this.BtnBindInfo = [[6, this.Lmo]]);
+      (this.BtnBindInfo = [[6, this.ydo]]);
   }
   OnStart() {
-    (this.plo = this.ExtraParams),
-      void 0 === this.plo
+    (this.d1o = this.ExtraParams),
+      void 0 === this.d1o
         ? Log_1.Log.CheckError() &&
           Log_1.Log.Error("Role", 59, "RoleViewAgent为空", [
             "界面名称",
             "RoleSkillTreeView",
           ])
-        : ((this.Emo =
+        : ((this.vdo =
             new RoleSkillInnerPassiveSkillAndOuterPassiveSkillItem_1.RoleSkillInnerPassiveSkillAndOuterPassiveSkillItem()),
-          this.Emo.CreateThenShowByActor(this.GetItem(0).GetOwner()),
-          (this.Imo =
+          this.vdo.CreateThenShowByActor(this.GetItem(0).GetOwner()),
+          (this.Edo =
             new RoleSkillOuterPassiveSkillItem_1.RoleSkillOuterPassiveSkillItem()),
-          this.Imo.CreateThenShowByActor(this.GetItem(5).GetOwner()),
-          this.Gmo());
+          this.Edo.CreateThenShowByActor(this.GetItem(5).GetOwner()),
+          this.Bdo());
   }
-  Gmo() {
+  Bdo() {
     var i = [1, 2, 3, 4];
-    this.ymo = new Array(i.length);
+    this.Mdo = new Array(i.length);
     for (let e = 0; e < i.length; e++) {
       var t = i[e],
         s =
           new RoleSkillInnerSkillAndOuterAttributeItem_1.RoleSkillInnerSkillAndOuterAttributeItem();
-      s.CreateThenShowByActor(this.GetItem(t).GetOwner()), (this.ymo[e] = s);
+      s.CreateThenShowByActor(this.GetItem(t).GetOwner()), (this.Mdo[e] = s);
     }
   }
   AddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.RoleSystemChangeRole,
-      this.Yuo,
+      this.Kco,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnSkillTreeNodeToggleClick,
-        this.Dmo,
+        this.Ido,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnRoleInternalViewQuit,
-        this.Juo,
+        this.Qco,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.SelectRoleTabOutside,
-        this.Bmo,
+        this.Pdo,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.SkillTreeNodeActive,
-        this.Umo,
+        this.Ldo,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.SkillTreeNodeLevelUp,
-        this.xmo,
+        this.Udo,
       );
   }
   RemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.RoleSystemChangeRole,
-      this.Yuo,
+      this.Kco,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnSkillTreeNodeToggleClick,
-        this.Dmo,
+        this.Ido,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnRoleInternalViewQuit,
-        this.Juo,
+        this.Qco,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.SelectRoleTabOutside,
-        this.Bmo,
+        this.Pdo,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.SkillTreeNodeActive,
-        this.Umo,
+        this.Ldo,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.SkillTreeNodeLevelUp,
-        this.xmo,
+        this.Udo,
       );
   }
   OnBeforeShow() {
-    RoleController_1.RoleController.PlayRoleMontage(3);
-    var e = this.plo.GetCurSelectRoleId();
-    this.qmo(e),
+    RoleController_1.RoleController.PlayRoleMontage(5);
+    var e = this.d1o.GetCurSelectRoleId();
+    this.wdo(e),
       UiSceneManager_1.UiSceneManager.GetRoleSystemRoleActor()
         .Model?.CheckGetComponent(3)
         ?.SetLoadingOpen(!1);
@@ -201,26 +202,24 @@ class RoleSkillTreeView extends UiTabViewBase_1.UiTabViewBase {
         .Model?.CheckGetComponent(3)
         ?.SetLoadingOpen(!0);
   }
-  Zuo() {
-    this.Tmo?.SetToggleState(0), (this.Tmo = void 0);
+  $co() {
+    this.Sdo?.SetToggleState(0), (this.Sdo = void 0);
   }
-  Amo(e) {
-    this.Emo.OnNodeLevelChange(e);
-    for (const i of this.ymo) i.OnNodeLevelChange(e);
-    this.Imo.OnNodeLevelChange(e);
+  Ddo(e) {
+    this.vdo.OnNodeLevelChange(e);
+    for (const i of this.Mdo) i.OnNodeLevelChange(e);
+    this.Edo.OnNodeLevelChange(e);
   }
-  wmo(e) {
-    var i = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(this.zke),
-      t = this.GetButton(6).GetRootComponent();
-    i.IsTrialRole() ? t.SetUIActive(!1) : t.SetUIActive(e);
+  Ado(e) {
+    this.GetButton(6).GetRootComponent().SetUIActive(e);
   }
-  Rmo() {
-    if (this.Tmo) {
-      var i = this.Tmo.GetRoleId(),
-        t = this.Tmo.GetSkillNodeId();
+  Tdo() {
+    if (this.Sdo) {
+      var i = this.Sdo.GetRoleId(),
+        t = this.Sdo.GetSkillNodeId();
       let e = void 0;
-      e = 1 === this.plo.RoleViewState ? this.Pmo : this.bmo;
-      var s = this.Tmo.GetType();
+      e = 1 === this.d1o.RoleViewState ? this.Rdo : this.xdo;
+      var s = this.Sdo.GetType();
       4 === s || 3 === s
         ? e()
         : ((s =
@@ -233,24 +232,24 @@ class RoleSkillTreeView extends UiTabViewBase_1.UiTabViewBase {
     }
   }
   Refresh() {
-    var e = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(this.zke);
-    this.wmo(!e.IsTrialRole()), this.RefreshRole(e.GetRoleSkillTreeConfig());
+    var e = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(this.dFe);
+    this.Ado(!0), this.RefreshRole(e.GetRoleSkillTreeConfig());
   }
   RefreshRole(e) {
     for (const i of e)
       switch (i.NodeType) {
         case 1:
-          this.Emo.Update(this.zke, i.Id);
+          this.vdo.Update(this.dFe, i.Id);
           break;
         case 2:
-          i.Coordinate <= this.ymo.length &&
-            this.ymo[i.Coordinate - 1]?.Update(this.zke, i.Id);
+          i.Coordinate <= this.Mdo.length &&
+            this.Mdo[i.Coordinate - 1]?.Update(this.dFe, i.Id);
           break;
         case 4:
           break;
         case 3:
           (void 0 !== i.ParentNodes && 0 !== i.ParentNodes.length) ||
-            this.Imo?.Update(this.zke, i.Id);
+            this.Edo?.Update(this.dFe, i.Id);
       }
   }
 }

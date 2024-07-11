@@ -42,16 +42,16 @@ let SceneItemExploreInteractComponent =
       super(...arguments),
         (this.Lo = void 0),
         (this.Hte = void 0),
-        (this.SIe = void 0),
-        (this.r1n = void 0),
-        (this.ktn = void 0),
+        (this.EIe = void 0),
+        (this.Oln = void 0),
+        (this.vtn = void 0),
         (this.YO = void 0),
         (this.Lie = void 0),
         (this.ac = 4),
-        (this.Qnn = () => {
+        (this.Rnn = () => {
           this.ChangeManipulateInteractPointState(0);
         }),
-        (this.vln = (t) => {
+        (this.eln = (t) => {
           this.Lo.Option.Type ===
             IComponent_1.EExploreSkillInteractType.PullGiant &&
             EventSystem_1.EventSystem.Emit(
@@ -65,10 +65,10 @@ let SceneItemExploreInteractComponent =
       return this.Hte.ActorLocationProxy;
     }
     get CreatureDataId() {
-      return this.SIe.GetCreatureDataId();
+      return this.EIe.GetCreatureDataId();
     }
     get IsLocked() {
-      return this.r1n.IsLocked;
+      return this.Oln.IsLocked;
     }
     get InteractActions() {
       if (
@@ -91,16 +91,16 @@ let SceneItemExploreInteractComponent =
     }
     OnStart() {
       return (
-        (this.Hte = this.Entity.GetComponent(182)),
-        (this.SIe = this.Entity.GetComponent(0)),
-        (this.r1n = this.Entity.GetComponent(115)),
-        (this.ktn = this.Entity.GetComponent(74)),
-        this.ktn.AddOnPlayerOverlapCallback(this.vln),
-        (this.Lie = this.Entity.GetComponent(177)),
+        (this.Hte = this.Entity.GetComponent(185)),
+        (this.EIe = this.Entity.GetComponent(0)),
+        (this.Oln = this.Entity.GetComponent(117)),
+        (this.vtn = this.Entity.GetComponent(76)),
+        this.vtn.AddOnPlayerOverlapCallback(this.eln),
+        (this.Lie = this.Entity.GetComponent(180)),
         EventSystem_1.EventSystem.OnceWithTarget(
           this.Entity,
           EventDefine_1.EEventName.OnSceneInteractionLoadCompleted,
-          this.Qnn,
+          this.Rnn,
         ),
         !0
       );
@@ -112,7 +112,7 @@ let SceneItemExploreInteractComponent =
         : this.Lo.Option.PullTime;
     }
     OnClear() {
-      return this.ktn.RemoveOnPlayerOverlapCallback(this.vln), !0;
+      return this.vtn.RemoveOnPlayerOverlapCallback(this.eln), !0;
     }
     CheckCondition() {
       return (
@@ -136,7 +136,7 @@ let SceneItemExploreInteractComponent =
   });
 (SceneItemExploreInteractComponent = SceneItemExploreInteractComponent_1 =
   __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(134)],
+    [(0, RegisterComponent_1.RegisterComponent)(136)],
     SceneItemExploreInteractComponent,
   )),
   (exports.SceneItemExploreInteractComponent =

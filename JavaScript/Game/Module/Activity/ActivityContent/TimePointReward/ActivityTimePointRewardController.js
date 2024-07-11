@@ -23,13 +23,13 @@ class ActivityTimePointRewardController extends ActivityControllerBase_1.Activit
     return !1;
   }
   static GetRewardById(t, r) {
-    var e = Protocol_1.Aki.Protocol.f6s.create();
-    (e.Ekn = r),
-      Net_1.Net.Call(4504, e, (e) => {
-        e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys
+    var e = Protocol_1.Aki.Protocol.O$s.create();
+    (e.J4n = r),
+      Net_1.Net.Call(2857, e, (e) => {
+        e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs
           ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-              e.lkn,
-              3145,
+              e.O4n,
+              11132,
             )
           : ModelManager_1.ModelManager.ActivityModel.GetActivityById(
               t,

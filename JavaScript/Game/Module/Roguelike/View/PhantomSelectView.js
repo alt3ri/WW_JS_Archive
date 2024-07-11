@@ -130,7 +130,7 @@ class PhantomSelectView extends RogueSelectBaseView_1.RogueSelectBaseView {
       this.RefreshElementPanel(),
       this.RefreshBtnText(),
       this.RefreshBtnEnableClick(),
-      this.Pao();
+      this.Dho();
   }
   RefreshTopPanel() {
     this.TopPanel.RefreshTitle(RoguelikeDefine_1.ROGUELIKEVIEW_5_TEXT),
@@ -149,7 +149,7 @@ class PhantomSelectView extends RogueSelectBaseView_1.RogueSelectBaseView {
   RefreshBtnText() {
     this.ButtonItem.SetShowText(RoguelikeDefine_1.ROGUELIKEVIEW_13_TEXT);
   }
-  Pao() {
+  Dho() {
     "RoguePhantomReplaceView" === this.Info.Name &&
       (this.GetText(4).ShowTextNew(RoguelikeDefine_1.ROGUELIKEVIEW_22_TEXT),
       this.GetText(5).ShowTextNew(RoguelikeDefine_1.ROGUELIKEVIEW_24_TEXT));

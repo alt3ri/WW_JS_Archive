@@ -8,7 +8,6 @@ const UE = require("ue"),
   Rotator_1 = require("../../../../Core/Utils/Math/Rotator"),
   Transform_1 = require("../../../../Core/Utils/Math/Transform"),
   Vector_1 = require("../../../../Core/Utils/Math/Vector"),
-  Vector2D_1 = require("../../../../Core/Utils/Math/Vector2D"),
   MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
   TsBaseCharacter_1 = require("../../../Character/TsBaseCharacter"),
   GameSplineUtils_1 = require("../../../LevelGamePlay/Common/GameSplineUtils"),
@@ -27,9 +26,9 @@ class AiShengGuYangCamera {
       (this.Fce = void 0),
       (this.Vce = void 0),
       (this.Hce = 0),
-      (this.jce = Vector2D_1.Vector2D.Create()),
-      (this.Wce = Vector2D_1.Vector2D.Create()),
-      (this.Kce = Vector2D_1.Vector2D.Create()),
+      (this.jce = Vector_1.Vector.Create()),
+      (this.Wce = Vector_1.Vector.Create()),
+      (this.Kce = Vector_1.Vector.Create()),
       (this.Qce = 1),
       (this.Xce = !1),
       (this.$ce = 0),
@@ -69,11 +68,11 @@ class AiShengGuYangCamera {
     return this.Ic?.IsValid() ? this.Ic.CameraComponent : void 0;
   }
   OnInit(t) {
-    (this.Ic = t), this.Sme();
+    (this.Ic = t), this.Eme();
   }
   Update(t) {
     if (
-      (this.qce?.IsValid() || this.Sme(),
+      (this.qce?.IsValid() || this.Eme(),
       this.qce?.IsValid() &&
         this.Lie?.Valid &&
         this.Gce?.Valid &&
@@ -85,10 +84,9 @@ class AiShengGuYangCamera {
         this.Ic?.IsValid() &&
         this.Hh?.IsValid())
     ) {
-      this.Xce = !!this.Lie.HasTag(1100468875);
-      var i = this.Nce.GetMoveVector();
-      this.jce.FromUeVector2D(i),
-        this.Kce.Set(1200, 1200),
+      (this.Xce = !!this.Lie.HasTag(1100468875)),
+        this.Nce.GetMoveVector(this.jce),
+        this.Kce.Set(1200, 1200, 0),
         this.Xce
           ? (this.Hh.SetFieldOfView(120),
             (this.$ce = 4500),
@@ -258,7 +256,7 @@ class AiShengGuYangCamera {
                 ),
               ) * MathUtils_1.MathUtils.RadToDeg),
             (i = MathUtils_1.MathUtils.Clamp(i, -25, 25)),
-            (this.ume = this.Eme(
+            (this.ume = this.Sme(
               Vector_1.Vector.ZeroVectorProxy,
               this.fz,
               this.gme,
@@ -282,7 +280,7 @@ class AiShengGuYangCamera {
               MathUtils_1.MathUtils.Clamp(this.fz.DotProduct(this.pz), -1, 1),
             ) * MathUtils_1.MathUtils.RadToDeg),
           (i = MathUtils_1.MathUtils.Clamp(i, -25, 25)),
-          (this.ume = this.Eme(
+          (this.ume = this.Sme(
             Vector_1.Vector.ZeroVectorProxy,
             this.fz,
             this.pz,
@@ -369,7 +367,7 @@ class AiShengGuYangCamera {
       (this.Gce = void 0),
       (this.Nce = void 0);
   }
-  Sme() {
+  Eme() {
     var t,
       i = ModelManager_1.ModelManager.SceneTeamModel?.GetCurrentEntity;
     i?.Valid &&
@@ -377,11 +375,11 @@ class AiShengGuYangCamera {
         TsBaseCharacter_1.default &&
       ((this.qce = t),
       this.qce.CharacterMovement?.SetMovementMode(5, 0),
-      (this.Gce = i.Entity?.GetComponent(36)),
+      (this.Gce = i.Entity?.GetComponent(37)),
       this.Gce?.Valid && (this.Gce.CanMoveFromInput = !1),
-      (this.Lie = i.Entity?.GetComponent(185)),
+      (this.Lie = i.Entity?.GetComponent(188)),
       this.Lie?.Valid) &&
-      ((this.Nce = i.Entity?.GetComponent(52)), this.Nce?.Valid) &&
+      ((this.Nce = i.Entity?.GetComponent(53)), this.Nce?.Valid) &&
       (this.Mme.Set(
         Vector_1.Vector.ZeroVectorProxy,
         Quat_1.Quat.Create(),
@@ -408,7 +406,7 @@ class AiShengGuYangCamera {
           this.Oce,
         ));
   }
-  Eme(t, i, s) {
+  Sme(t, i, s) {
     var s = UE.KismetMathLibrary.FindLookAtRotation(
         t.ToUeVector(),
         s.ToUeVector(),

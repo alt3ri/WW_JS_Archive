@@ -21,17 +21,13 @@ class TestManager {
     (this.Name = e), (this.Dir = t);
   }
   get Context() {
-    return (
-      this.Ve ||
-        ((this.Ve = new TestOp_1.TestContext()),
-        (TestOp_1.TestContext.Current = this.Ve),
-        this.je()),
-      this.Ve
-    );
+    var e = (0, TestOp_1.getTestContext)(this.Name);
+    return 0 === e.RootSuite.Cases.length && this.je(), e;
   }
   je() {
     var e = scanFiles(this.Dir),
       t = (0, File_1.getAbsolutePath)(__dirname);
+    (0, TestOp_1.pushTestRunningContextName)(this.Name);
     for (const r of e) {
       var s = (0, File_1.getRelativePathToDir)(r, t);
       try {
@@ -40,6 +36,7 @@ class TestManager {
         (0, Log_1.error)(`[${this.Name}] import test file ${s} failed: ` + e);
       }
     }
+    (0, TestOp_1.popTestRunningContextName)();
   }
   async RunAllTests() {
     var e = new TestOp_1.TestFilter();
@@ -50,8 +47,14 @@ class TestManager {
   }
   async RunTests(e) {
     var t = this.Context["RootSuite"],
-      s = new TestOp_1.TestResult();
-    return await TestOp_1.TestOp.RunSuite(t, e, s), s;
+      s =
+        ((0, TestOp_1.pushTestRunningContextName)(this.Name),
+        new TestOp_1.TestResult());
+    return (
+      await TestOp_1.TestOp.RunSuite(this.Context, t, e, s),
+      (0, TestOp_1.popTestRunningContextName)(),
+      s
+    );
   }
   async RunTestSuiteByName(e) {
     e = this.$e(e);

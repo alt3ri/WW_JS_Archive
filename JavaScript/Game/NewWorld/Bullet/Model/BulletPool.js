@@ -99,20 +99,20 @@ class BulletPool {
   }
   static CreateVector(t = !1) {
     let l = BulletPool.VectorPool.Get();
-    return l ? t && l.Reset() : (l = Vector_1.Vector.Create()), this.LHo++, l;
+    return l ? t && l.Reset() : (l = Vector_1.Vector.Create()), this.yjo++, l;
   }
   static RecycleVector(t) {
-    this.LHo--,
+    this.yjo--,
       BulletConstant_1.BulletConstant.OpenPoolCheck
         ? t.Set(NaN, NaN, NaN)
         : BulletPool.VectorPool.Release(t);
   }
   static CreateRotator(t = !1) {
     let l = BulletPool.RotatorPool.Get();
-    return l ? t && l.Reset() : (l = Rotator_1.Rotator.Create()), this.DHo++, l;
+    return l ? t && l.Reset() : (l = Rotator_1.Rotator.Create()), this.Ijo++, l;
   }
   static RecycleRotator(t) {
-    this.DHo--,
+    this.Ijo--,
       BulletConstant_1.BulletConstant.OpenPoolCheck
         ? t.Set(NaN, NaN, NaN)
         : BulletPool.RotatorPool.Release(t);
@@ -120,36 +120,36 @@ class BulletPool {
   static CreateBulletHitTempResult() {
     let t = BulletPool.BulletHitTempResultPool.Get();
     return (
-      (t = t || new BulletHitActorData_1.BulletHitTempResult()), this.RHo++, t
+      (t = t || new BulletHitActorData_1.BulletHitTempResult()), this.Tjo++, t
     );
   }
   static RecycleBulletHitTempResult(t) {
-    this.RHo--, BulletPool.BulletHitTempResultPool.Release(t);
+    this.Tjo--, BulletPool.BulletHitTempResultPool.Release(t);
   }
   static CheckAtFrameEnd() {
-    0 !== this.LHo &&
+    0 !== this.yjo &&
       (Log_1.Log.CheckError() &&
         Log_1.Log.Error("Bullet", 18, "当前帧子弹申请的Vector没有回收", [
           "VectorCount",
-          this.LHo,
+          this.yjo,
         ]),
-      (this.LHo = 0)),
-      0 !== this.DHo &&
+      (this.yjo = 0)),
+      0 !== this.Ijo &&
         (Log_1.Log.CheckError() &&
           Log_1.Log.Error("Bullet", 18, "当前帧子弹申请的Rotator没有回收", [
             "RotatorCount",
-            this.DHo,
+            this.Ijo,
           ]),
-        (this.DHo = 0)),
-      0 !== this.RHo &&
+        (this.Ijo = 0)),
+      0 !== this.Tjo &&
         (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Bullet",
             18,
             "当前帧子弹申请的BulletHitTempResultCount没有回收",
-            ["BulletHitTempResultCount", this.RHo],
+            ["BulletHitTempResultCount", this.Tjo],
           ),
-        (this.RHo = 0));
+        (this.Tjo = 0));
   }
 }
 ((exports.BulletPool = BulletPool).BulletEntityPool = new ProxyLru_1.ProxyLru(
@@ -165,9 +165,9 @@ class BulletPool {
     () => new BulletCollisionInfo_1.BulletConditionResult(),
   )),
   (BulletPool.VectorPool = new SimplePool()),
-  (BulletPool.LHo = 0),
+  (BulletPool.yjo = 0),
   (BulletPool.RotatorPool = new SimplePool()),
-  (BulletPool.DHo = 0),
+  (BulletPool.Ijo = 0),
   (BulletPool.BulletHitTempResultPool = new SimplePool()),
-  (BulletPool.RHo = 0);
+  (BulletPool.Tjo = 0);
 //# sourceMappingURL=BulletPool.js.map

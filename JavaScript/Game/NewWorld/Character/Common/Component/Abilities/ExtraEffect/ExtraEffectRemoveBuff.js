@@ -7,8 +7,8 @@ const EventDefine_1 = require("../../../../../../Common/Event/EventDefine"),
 class RemoveBuff extends ExtraEffectBase_1.BuffEffect {
   constructor() {
     super(...arguments),
-      (this.UQo = void 0),
-      (this.AQo = () => {
+      (this.LXo = void 0),
+      (this.DXo = () => {
         this.OwnerBuffComponent.HasBuffAuthority() &&
           this.OwnerBuffComponent.RemoveBuffByHandle(
             this.ActiveHandleId,
@@ -16,7 +16,7 @@ class RemoveBuff extends ExtraEffectBase_1.BuffEffect {
             "buff施加者死亡导致移除",
           );
       }),
-      (this.PQo = (e, t) => {
+      (this.RXo = (e, t) => {
         t === this.InstigatorEntity &&
           this.OwnerBuffComponent.HasBuffAuthority() &&
           this.OwnerBuffComponent.RemoveBuffByHandle(
@@ -28,40 +28,40 @@ class RemoveBuff extends ExtraEffectBase_1.BuffEffect {
   }
   InitParameters(e) {
     e = e.ExtraEffectParameters;
-    this.UQo = (e[0] ?? "0").split("#").map((e) => Number(e));
+    this.LXo = (e[0] ?? "0").split("#").map((e) => Number(e));
   }
   OnCreated() {
-    for (const e of this.UQo)
+    for (const e of this.LXo)
       switch (e) {
         case 0:
           EventSystem_1.EventSystem.AddWithTarget(
             this.InstigatorEntity.Entity,
             EventDefine_1.EEventName.CharOnRoleDeadTargetSelf,
-            this.AQo,
+            this.DXo,
           );
           break;
         case 1:
           EventSystem_1.EventSystem.Add(
             EventDefine_1.EEventName.RemoveEntity,
-            this.PQo,
+            this.RXo,
           );
       }
   }
   OnRemoved(e) {
-    for (const t of this.UQo)
+    for (const t of this.LXo)
       switch (t) {
         case 0:
           if (!this.InstigatorEntity?.Valid) return;
           EventSystem_1.EventSystem.RemoveWithTarget(
             this.InstigatorEntity.Entity,
             EventDefine_1.EEventName.CharOnRoleDeadTargetSelf,
-            this.AQo,
+            this.DXo,
           );
           break;
         case 1:
           EventSystem_1.EventSystem.Remove(
             EventDefine_1.EEventName.RemoveEntity,
-            this.PQo,
+            this.RXo,
           );
       }
   }

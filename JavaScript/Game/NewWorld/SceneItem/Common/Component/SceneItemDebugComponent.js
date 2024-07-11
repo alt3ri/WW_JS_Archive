@@ -23,11 +23,11 @@ const EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent"),
   RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent");
 let SceneItemDebugComponent = class SceneItemDebugComponent extends EntityComponent_1.EntityComponent {
   GetTagDebugStrings() {
-    return this.Entity.GetComponent(177).GetTagDebugStrings();
+    return this.Entity.GetComponent(180).GetTagDebugStrings();
   }
 };
 (SceneItemDebugComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(111)],
+  [(0, RegisterComponent_1.RegisterComponent)(113)],
   SceneItemDebugComponent,
 )),
   (exports.SceneItemDebugComponent = SceneItemDebugComponent);

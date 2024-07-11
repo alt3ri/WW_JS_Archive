@@ -19,35 +19,35 @@ class LoginServerController extends UiControllerBase_1.UiControllerBase {
   static OnAddEvents() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.WorldDoneAndCloseLoading,
-      LoginServerController.yMi,
+      LoginServerController.yEi,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnGetPlayerBasicInfo,
-        LoginServerController.IMi,
+        LoginServerController.IEi,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnPlayerLevelChanged,
-        LoginServerController.TMi,
+        LoginServerController.TEi,
       );
   }
   static OnRemoveEvents() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.WorldDoneAndCloseLoading,
-      LoginServerController.yMi,
+      LoginServerController.yEi,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnGetPlayerBasicInfo,
-        LoginServerController.IMi,
+        LoginServerController.IEi,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnPlayerLevelChanged,
-        LoginServerController.TMi,
+        LoginServerController.TEi,
       );
   }
   static OnInit() {
     return (
       (LoginServerController.IcmpPingCallBack = (0,
-      puerts_1.toManualReleaseDelegate)(LoginServerController.LFt)),
+      puerts_1.toManualReleaseDelegate)(LoginServerController.D3t)),
       !0
     );
   }
@@ -81,14 +81,14 @@ class LoginServerController extends UiControllerBase_1.UiControllerBase {
     e
       ? (Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("Login", 9, "获得登录玩家数据", ["http", e]),
-        Http_1.Http.Get(e, void 0, this.LMi))
+        Http_1.Http.Get(e, void 0, this.LEi))
       : Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("KuroSdk", 28, "没有GetLoginPlayerInfo");
   }
   static OnClear() {
     return (
       LoginServerController.IcmpPingCallBack &&
-        ((0, puerts_1.releaseManualReleaseDelegate)(LoginServerController.LFt),
+        ((0, puerts_1.releaseManualReleaseDelegate)(LoginServerController.D3t),
         (LoginServerController.IcmpPingCallBack = void 0)),
       !0
     );
@@ -96,14 +96,14 @@ class LoginServerController extends UiControllerBase_1.UiControllerBase {
 }
 ((exports.LoginServerController = LoginServerController).IcmpPingCallBack =
   void 0),
-  (LoginServerController.yMi = () => {
+  (LoginServerController.yEi = () => {
     ModelManager_1.ModelManager.LoginServerModel.CurrentSelectServerData &&
       ModelManager_1.ModelManager.LoginServerModel.SaveFirstLogin(
         ModelManager_1.ModelManager.LoginModel.GetSdkLoginConfig()?.Uid ?? "",
         ModelManager_1.ModelManager.LoginServerModel.CurrentSelectServerData,
       );
   }),
-  (LoginServerController.IMi = () => {
+  (LoginServerController.IEi = () => {
     ModelManager_1.ModelManager.LoginServerModel.CurrentSelectServerData &&
       ModelManager_1.ModelManager.LoginServerModel.SaveLocalRegionLevel(
         ModelManager_1.ModelManager.LoginModel.GetSdkLoginConfig()?.Uid ?? "",
@@ -112,7 +112,7 @@ class LoginServerController extends UiControllerBase_1.UiControllerBase {
         ModelManager_1.ModelManager.FunctionModel.GetPlayerLevel(),
       );
   }),
-  (LoginServerController.TMi = (e, r, o, n, t, l, i) => {
+  (LoginServerController.TEi = (e, r, o, n, t, l, i) => {
     ModelManager_1.ModelManager.LoginServerModel.CurrentSelectServerData &&
       ModelManager_1.ModelManager.LoginServerModel.SaveLocalRegionLevel(
         ModelManager_1.ModelManager.LoginModel.GetSdkLoginConfig()?.Uid ?? "",
@@ -121,7 +121,7 @@ class LoginServerController extends UiControllerBase_1.UiControllerBase {
         r,
       );
   }),
-  (LoginServerController.LFt = (e, r) => {
+  (LoginServerController.D3t = (e, r) => {
     ControllerHolder_1.ControllerHolder.KuroSdkController.GetIfGlobalSdk() &&
       ModelManager_1.ModelManager.LoginServerModel.RefreshIpPing(e, r),
       Log_1.Log.CheckDebug() &&
@@ -133,7 +133,7 @@ class LoginServerController extends UiControllerBase_1.UiControllerBase {
           ["time", r],
         );
   }),
-  (LoginServerController.LMi = (e, r, o) => {
+  (LoginServerController.LEi = (e, r, o) => {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug("Login", 28, "获取SetLoginPlayerInfoData", ["data", o]),
       200 === r &&

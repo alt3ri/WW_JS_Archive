@@ -4,8 +4,8 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.INVALID_INDEX =
     exports.FINISH_INDEX =
       void 0);
-const Log_1 = require("../../../../Core/Common/Log"),
-  Time_1 = require("../../../../Core/Common/Time"),
+const CustomPromise_1 = require("../../../../Core/Common/CustomPromise"),
+  Log_1 = require("../../../../Core/Common/Log"),
   StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
@@ -17,29 +17,31 @@ const Log_1 = require("../../../../Core/Common/Log"),
 (exports.FINISH_INDEX = -1), (exports.INVALID_INDEX = -2);
 class FlowSequence {
   constructor() {
-    (this.vXi = !1),
-      (this.MXi = !1),
-      (this.SXi = void 0),
-      (this.EXi = new Map()),
-      (this.yXi = exports.INVALID_INDEX),
-      (this.IXi = void 0),
+    (this.f$i = !1),
+      (this.p$i = !1),
+      (this.v$i = void 0),
+      (this.M$i = new Map()),
+      (this.E$i = exports.INVALID_INDEX),
+      (this.S$i = void 0),
       (this.nx = void 0),
-      (this.TXi = !1),
-      (this.LXi = !1),
-      (this.DXi = !1),
-      (this.RXi = 0),
-      (this.UXi = void 0),
-      (this.AXi = []),
-      (this.i5s = new Map()),
-      (this.r5s = new Map()),
-      (this.PXi = -1),
-      (this.xXi = !1),
-      (this.ZPt = () => {
+      (this.y$i = !1),
+      (this.I$i = !1),
+      (this.T$i = !1),
+      (this.L$i = 0),
+      (this.D$i = void 0),
+      (this.R$i = []),
+      (this.sjs = new Map()),
+      (this.ajs = new Map()),
+      (this.SubtitleActionPromise = void 0),
+      (this.OptionActionPromise = void 0),
+      (this.U$i = -1),
+      (this.A$i = !1),
+      (this.owt = () => {
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("Plot", 27, "[FlowSequence] Seq开始播放允许跳过"),
           ControllerHolder_1.ControllerHolder.FlowController.EnableSkip(!0);
       }),
-      (this.wXi = () => {
+      (this.P$i = () => {
         (this.nx.CurTalkId = -1),
           (this.nx.CurOptionId = -1),
           (this.nx.CurSubActionId = 0),
@@ -47,107 +49,117 @@ class FlowSequence {
           (this.nx.CurShowTalkActionId = 0),
           ModelManager_1.ModelManager.PlotModel.GrayOptionMap.clear(),
           (ModelManager_1.ModelManager.PlotModel.CurShowTalk = void 0),
-          (ModelManager_1.ModelManager.PlotModel.OptionEnable = !1),
+          (ModelManager_1.ModelManager.PlotModel.OptionEnable = !0),
           ControllerHolder_1.ControllerHolder.FlowController.EnableSkip(!1),
           EventSystem_1.EventSystem.Remove(
             EventDefine_1.EEventName.PlotSequencePlay,
-            this.ZPt,
+            this.owt,
           ),
           this.Clear(),
           Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug("Plot", 27, "[FlowSequence] 停止"),
           ControllerHolder_1.ControllerHolder.FlowController.RunNextAction();
       }),
-      (this.BXi = () => {
-        var t;
-        this.DXi &&
-          (this.bXi()
-            ? this.OnSelectOption(
-                ControllerHolder_1.ControllerHolder.FlowController.GetRecommendedOption(
-                  this.IXi,
-                ),
-              )
-            : this.RXi >= this.SXi.TalkItems.length
-              ? this.OnSequenceStop()
-              : ((t = this.SXi.TalkItems[this.RXi].Id),
-                this.OnSubtitleStart(t),
-                this.OnSubtitleEnd(t)));
+      (this.x$i = (t) => {
+        var e;
+        this.SubtitleActionPromise &&
+          ((e = this.SubtitleActionPromise),
+          (this.SubtitleActionPromise = void 0),
+          e.SetResult()),
+          this.T$i &&
+            t &&
+            (this.w$i()
+              ? this.OnSelectOption(
+                  ControllerHolder_1.ControllerHolder.FlowController.GetRecommendedOption(
+                    this.S$i,
+                  ),
+                )
+              : this.L$i >= this.v$i.TalkItems.length
+                ? this.OnSequenceStop()
+                : ((e = this.v$i.TalkItems[this.L$i].Id),
+                  this.OnSubtitleStart(e),
+                  this.OnSubtitleEnd(e)));
       }),
-      (this.qXi = () => {
-        var t;
-        this.DXi &&
-          (this.RXi >= this.SXi.TalkItems.length
-            ? this.OnSequenceStop()
-            : ((t = this.SXi.TalkItems[this.RXi].Id),
-              this.OnSubtitleStart(t),
-              this.OnSubtitleEnd(t)));
+      (this.B$i = (t) => {
+        var e;
+        this.OptionActionPromise &&
+          ((e = this.OptionActionPromise),
+          (this.OptionActionPromise = void 0),
+          e.SetResult()),
+          t &&
+            this.T$i &&
+            (this.L$i >= this.v$i.TalkItems.length
+              ? this.OnSequenceStop()
+              : ((e = this.v$i.TalkItems[this.L$i].Id),
+                this.OnSubtitleStart(e),
+                this.OnSubtitleEnd(e)));
       }),
       (this.OnSequenceStop = () => {
-        this.GXi(),
+        this.b$i(),
           Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug("Plot", 27, "[FlowSequence] Seq播放完毕"),
-          (this.MXi = !1),
+          (this.p$i = !1),
           this.Stop();
       });
   }
   get IsInit() {
-    return this.vXi;
+    return this.f$i;
   }
   get IsPlaying() {
-    return this.MXi;
+    return this.p$i;
   }
   Clear() {
-    (this.vXi = !1),
-      (this.MXi = !1),
-      (this.SXi = void 0),
-      this.EXi.clear(),
-      (this.yXi = exports.INVALID_INDEX),
-      (this.IXi = void 0),
+    (this.f$i = !1),
+      (this.p$i = !1),
+      (this.v$i = void 0),
+      this.M$i.clear(),
+      (this.E$i = exports.INVALID_INDEX),
+      (this.S$i = void 0),
       (this.nx = void 0),
-      (this.TXi = !1),
-      (this.LXi = !1),
-      (this.DXi = !1),
-      (this.RXi = void 0),
-      (this.UXi = void 0),
-      (this.AXi.length = 0),
-      this.i5s.clear(),
-      this.r5s.clear(),
-      (this.PXi = -1),
-      (this.xXi = !1),
+      (this.y$i = !1),
+      (this.I$i = !1),
+      (this.T$i = !1),
+      (this.L$i = void 0),
+      (this.D$i = void 0),
+      (this.R$i.length = 0),
+      this.sjs.clear(),
+      this.ajs.clear(),
+      (this.U$i = -1),
+      (this.A$i = !1),
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("Plot", 39, "清理引用数据-FlowSequence");
   }
   Init(t, e) {
     this.Clear(),
-      (this.SXi = t),
-      !this.SXi || StringUtils_1.StringUtils.IsEmpty(this.SXi.SequenceDataAsset)
+      (this.v$i = t),
+      !this.v$i || StringUtils_1.StringUtils.IsEmpty(this.v$i.SequenceDataAsset)
         ? ControllerHolder_1.ControllerHolder.FlowController.LogError(
             "[FlowSequence] 配置错误",
           )
-        : (this.SXi.TalkSequence?.forEach((t, e) => {
+        : (this.v$i.TalkSequence?.forEach((t, e) => {
             t.forEach((t) => {
-              this.EXi.has(t)
+              this.M$i.has(t)
                 ? ControllerHolder_1.ControllerHolder.FlowController.LogError(
                     "[FlowSequence] 初始化分段时Id重复",
                   )
-                : this.EXi.set(t, e);
+                : this.M$i.set(t, e);
             });
           }),
           (this.nx = e),
           (this.nx.CurTalkId = -1),
           (this.nx.CurOptionId = -1),
           (this.nx.CurSubActionId = 0),
-          (this.yXi = 0),
-          (this.RXi = 0),
-          (this.vXi = !0),
+          (this.E$i = 0),
+          (this.L$i = 0),
+          (this.f$i = !0),
           EventSystem_1.EventSystem.Add(
             EventDefine_1.EEventName.PlotSequencePlay,
-            this.ZPt,
+            this.owt,
           ));
   }
   Start() {
     if (this.IsInit && !this.IsPlaying) {
-      (this.MXi = !0),
+      (this.p$i = !0),
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("Plot", 27, "[FlowSequence] 开始"),
         "LevelA" === ModelManager_1.ModelManager.PlotModel.PlotConfig.PlotLevel
@@ -157,12 +169,12 @@ class FlowSequence {
             (ModelManager_1.ModelManager.SequenceModel.Type = 1),
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.PlotStartShowTalk,
-          this.SXi,
+          this.v$i,
         ),
-        (ModelManager_1.ModelManager.PlotModel.CurShowTalk = this.SXi);
+        (ModelManager_1.ModelManager.PlotModel.CurShowTalk = this.v$i);
       const i = new Array(),
         e =
-          (this.SXi.TalkFrameEvents?.forEach((t) => {
+          (this.v$i.TalkFrameEvents?.forEach((t) => {
             var e;
             i.push(t.FrameEvent),
               ModelManager_1.ModelManager.SequenceModel.FrameEventsMap.has(
@@ -185,13 +197,13 @@ class FlowSequence {
           }),
           []);
       "LevelB" === ModelManager_1.ModelManager.PlotModel.PlotConfig.PlotLevel &&
-        this.SXi.TalkItems?.forEach((t) => {
+        this.v$i.TalkItems?.forEach((t) => {
           t.TidTalk && t.PlayVoice && e.push(t.TidTalk);
         }),
         SequenceController_1.SequenceController.Play(
           {
-            Path: this.SXi.SequenceDataAsset,
-            ResetCamera: this.SXi.ResetCamera,
+            Path: this.v$i.SequenceDataAsset,
+            ResetCamera: this.v$i.ResetCamera,
             FrameEvents: i,
           },
           e,
@@ -206,20 +218,20 @@ class FlowSequence {
   Stop(t = 0) {
     this.IsInit &&
       (this.IsPlaying &&
-        ((this.MXi = !1),
+        ((this.p$i = !1),
         SequenceController_1.SequenceController.ManualFinish()),
-      this.NXi().finally(this.wXi));
+      this.q$i().finally(this.P$i));
   }
-  async NXi() {
+  async q$i() {
     var t;
     await PlotController_1.PlotController.CheckFormation(),
-      this.DXi &&
-        (0 <= (t = this.IXi ? this.EXi.get(this.IXi.Id) : 0) &&
-          t < this.AXi.length &&
-          this.AXi[t] &&
+      this.T$i &&
+        (0 <= (t = this.S$i ? this.M$i.get(this.S$i.Id) : 0) &&
+          t < this.R$i.length &&
+          this.R$i[t] &&
           (ModelManager_1.ModelManager.PlotModel.IsFadeIn = !0),
-        this.UXi) &&
-        ((t = t < this.UXi.length ? this.UXi[t] : void 0)
+        this.D$i) &&
+        ((t = t < this.D$i.length ? this.D$i[t] : void 0)
           ? await TeleportController_1.TeleportController.TeleportToPositionNoLoading(
               t.GetLocation().ToUeVector(),
               t.GetRotation().Rotator().ToUeRotator(),
@@ -236,75 +248,75 @@ class FlowSequence {
     var t;
     this.IsInit &&
       this.IsPlaying &&
-      !this.DXi &&
+      !this.T$i &&
       (Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("Plot", 27, "[FlowSequence] 执行跳过"),
-      (this.DXi = !0),
+      (this.T$i = !0),
       0 !== ModelManager_1.ModelManager.SequenceModel.CurFinalPos?.length &&
-        (this.UXi = Object.assign(
+        (this.D$i = Object.assign(
           [],
           ModelManager_1.ModelManager.SequenceModel.CurFinalPos,
         )),
       ModelManager_1.ModelManager.SequenceModel.IsFadeEnd.forEach((t) => {
-        this.AXi.push(t);
+        this.R$i.push(t);
       }),
       ModelManager_1.ModelManager.SequenceModel.FrameEvents.forEach((t, e) => {
-        this.r5s.set(e, t);
+        this.ajs.set(e, t);
       }),
       ModelManager_1.ModelManager.SequenceModel.FrameEventsMap.forEach(
         (t, e) => {
-          this.i5s.set(e, t);
+          this.sjs.set(e, t);
         },
       ),
       SequenceController_1.SequenceController.ManualFinish(),
-      (this.MXi = !1),
-      this.TXi
-        ? this.OnSubtitleEnd(this.IXi.Id)
-        : this.bXi() && !this.LXi
+      (this.p$i = !1),
+      this.y$i
+        ? this.OnSubtitleEnd(this.S$i.Id)
+        : this.w$i() && !this.I$i
           ? this.OnSelectOption(
               ControllerHolder_1.ControllerHolder.FlowController.GetRecommendedOption(
-                this.IXi,
+                this.S$i,
               ),
             )
-          : this.RXi >= this.SXi.TalkItems.length
+          : this.L$i >= this.v$i.TalkItems.length
             ? this.OnSequenceStop()
-            : ((t = this.SXi.TalkItems[this.RXi].Id),
+            : ((t = this.v$i.TalkItems[this.L$i].Id),
               this.OnSubtitleStart(t),
               this.OnSubtitleEnd(t)));
   }
-  bXi() {
-    return !!this.IXi?.Options && 0 < this.IXi?.Options?.length;
+  w$i() {
+    return !!this.S$i?.Options && 0 < this.S$i?.Options?.length;
   }
-  GXi() {
-    this.xXi &&
-      !this.LXi &&
+  b$i() {
+    this.A$i &&
+      !this.I$i &&
       ControllerHolder_1.ControllerHolder.FlowController.LogError("遗漏选项", [
         "Miss TalkItem Id",
-        this.PXi,
+        this.U$i,
       ]),
-      (this.PXi = this.IXi?.Id ?? -1),
-      (this.xXi = this.bXi());
+      (this.U$i = this.S$i?.Id ?? -1),
+      (this.A$i = this.w$i());
   }
   OnJumpTalk(e) {
     this.IsInit &&
-      ((this.yXi = this.EXi.get(e) ?? exports.FINISH_INDEX),
-      SequenceController_1.SequenceController.SetNextSequenceIndex(this.yXi),
+      ((this.E$i = this.M$i.get(e) ?? exports.FINISH_INDEX),
+      SequenceController_1.SequenceController.SetNextSequenceIndex(this.E$i),
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("Plot", 27, "[FlowSequence] JumpTalk设置下个分支Seq", [
           "NextIndex",
-          this.yXi,
+          this.E$i,
         ]),
-      (this.RXi = this.SXi.TalkItems.findIndex((t) => t.Id === e)),
-      this.DXi) &&
+      (this.L$i = this.v$i.TalkItems.findIndex((t) => t.Id === e)),
+      this.T$i) &&
       (this.OnSubtitleStart(e), this.OnSubtitleEnd(e));
   }
   OnFinishTalk() {
     this.IsInit &&
-      ((this.yXi = exports.FINISH_INDEX),
-      SequenceController_1.SequenceController.SetNextSequenceIndex(this.yXi),
+      ((this.E$i = exports.FINISH_INDEX),
+      SequenceController_1.SequenceController.SetNextSequenceIndex(this.E$i),
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("Plot", 27, "[FlowSequence] FinishTalk设置结束"),
-      this.DXi) &&
+      this.T$i) &&
       this.OnSequenceStop();
   }
   OnSubtitleStart(e) {
@@ -315,73 +327,80 @@ class FlowSequence {
           "talkId",
           e,
         ]),
-      (t = this.SXi.TalkItems.find((t) => t.Id === e)),
-      this.SXi.TalkItems[this.RXi].Id !== e &&
+      (t = this.v$i.TalkItems.find((t) => t.Id === e)),
+      this.v$i.TalkItems[this.L$i].Id !== e &&
         (ControllerHolder_1.ControllerHolder.FlowController.LogError(
           "[FlowSequence][Subtitle] Seq字幕顺序与编辑器对不上",
           ["talkId", e],
           ["SeqIndex", ModelManager_1.ModelManager.SequenceModel.SubSeqIndex],
-          ["index in seq", this.RXi],
+          ["index in seq", this.L$i],
         ),
-        (this.RXi = this.SXi.TalkItems.indexOf(t))),
-      this.RXi++,
+        (this.L$i = this.v$i.TalkItems.indexOf(t))),
+      this.L$i++,
       t ||
         ControllerHolder_1.ControllerHolder.FlowController.LogError(
           "[FlowSequence][Subtitle] 依赖编辑器的Seq找不到字幕",
           ["talkItem.ID", e],
         ),
-      (this.TXi = !0),
+      (this.y$i = !0),
       (this.nx.CurTalkId = e),
       (this.nx.CurOptionId = -1),
-      (this.IXi = t),
-      this.GXi(),
-      (this.LXi = !1),
-      this.DXi) &&
+      (this.S$i = t),
+      this.b$i(),
+      (this.I$i = !1),
+      this.T$i) &&
       this.RunSequenceFrameEventsWhenSkip(e);
   }
   OnSubtitleEnd(t) {
-    this.IsInit &&
-      this.TXi &&
-      this.IXi.Id === t &&
-      (Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("Plot", 27, "[FlowSequence][Subtitle] 字幕关闭"),
-      (this.TXi = !1),
-      this.OXi(this.IXi.Actions, this.BXi));
+    return !(
+      !this.IsInit ||
+      !this.y$i ||
+      (void 0 !== t && this.S$i.Id !== t
+        ? (ControllerHolder_1.ControllerHolder.FlowController.LogError(
+            "[FlowSequence] 结束对话Id错误",
+            ["id", t],
+            ["cur", this.S$i.Id],
+          ),
+          1)
+        : ((this.y$i = !1),
+          (this.SubtitleActionPromise = new CustomPromise_1.CustomPromise()),
+          Log_1.Log.CheckDebug() &&
+            Log_1.Log.Debug("Plot", 27, "[FlowSequence][Subtitle] 字幕关闭"),
+          this.G$i(this.S$i.Actions, this.x$i),
+          0))
+    );
   }
   OnSelectOption(t) {
-    this.IsInit &&
-      -1 === this.nx.CurOptionId &&
-      !this.LXi &&
-      (this.OnSubtitleEnd(this.IXi.Id),
-      (this.LXi = !0),
-      (this.nx.CurOptionId = t),
+    if (!this.IsInit) return !1;
+    if (-1 !== this.nx.CurOptionId || this.I$i) return !1;
+    if (
+      ((this.I$i = !0),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("Plot", 27, "[FlowSequence] 选择选项", ["index", t]),
-      !this.IXi.Options || t >= this.IXi.Options.length
-        ? (ControllerHolder_1.ControllerHolder.FlowController.LogError(
-            "[FlowSequence] 选项超出下标",
-          ),
-          this.qXi())
-        : (ControllerHolder_1.ControllerHolder.FlowController.SelectOption(
-            this.IXi.Id,
-            t,
-          ),
-          (t = this.IXi.Options[t]),
-          this.OXi(t.Actions, this.qXi)));
+      !this.S$i.Options || t >= this.S$i.Options.length)
+    )
+      return (
+        ControllerHolder_1.ControllerHolder.FlowController.LogError(
+          "[FlowSequence] 选项超出下标",
+        ),
+        !1
+      );
+    ControllerHolder_1.ControllerHolder.FlowController.SelectOption(
+      this.S$i.Id,
+      t,
+    );
+    t = this.S$i.Options[t];
+    return (
+      (this.OptionActionPromise = new CustomPromise_1.CustomPromise()),
+      this.G$i(t.Actions, this.B$i),
+      !0
+    );
   }
-  OXi(t, e) {
-    const i = Time_1.Time.Frame;
+  G$i(t, e) {
     ControllerHolder_1.ControllerHolder.FlowController.ExecuteSubActions(
       t,
-      () => {
-        i !== Time_1.Time.Frame &&
-          Log_1.Log.CheckWarn() &&
-          Log_1.Log.Warn(
-            "Plot",
-            27,
-            "[FlowSequence] 高级别ShowTalk中不应配非即时事件",
-          ),
-          e && e();
+      (t) => {
+        e?.(t);
       },
     );
   }
@@ -389,7 +408,7 @@ class FlowSequence {
     var t;
     if (this.IsInit)
       return (
-        (t = this.SXi.TalkItems.find((t) => t.Id === e)) ||
+        (t = this.v$i.TalkItems.find((t) => t.Id === e)) ||
           ControllerHolder_1.ControllerHolder.FlowController.LogError(
             "[FlowSequence] 剧情Seq找不到字幕",
             ["talkId", e],
@@ -398,18 +417,18 @@ class FlowSequence {
       );
   }
   GetNextTalkItem() {
-    return void 0 !== this.RXi &&
-      void 0 !== this.SXi &&
-      0 < this.SXi.TalkItems.length &&
-      this.SXi.TalkItems.length > this.RXi
-      ? this.SXi.TalkItems[this.RXi]
+    return void 0 !== this.L$i &&
+      void 0 !== this.v$i &&
+      0 < this.v$i.TalkItems.length &&
+      this.v$i.TalkItems.length > this.L$i
+      ? this.v$i.TalkItems[this.L$i]
       : void 0;
   }
   RunSequenceFrameEventsWhenSkip(i) {
     let t = void 0;
-    (t = this.i5s.has(i) ? this.i5s.get(i) : t) &&
+    (t = this.sjs.has(i) ? this.sjs.get(i) : t) &&
       t.forEach((t) => {
-        var e = this.r5s.get(t);
+        var e = this.ajs.get(t);
         e &&
           0 !== e.length &&
           (Log_1.Log.CheckInfo() &&

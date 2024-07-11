@@ -5,55 +5,55 @@ const Log_1 = require("../../../../Core/Common/Log");
 class ScrollViewDelegate {
   constructor(i) {
     (this.Pe = []),
-      (this.gWe = 0),
-      (this.DGo = []),
-      (this.RGo = []),
-      (this.oNi = void 0),
-      (this.UGo = void 0),
-      (this.AGo = !1),
-      (this.PGo = -1),
-      (this.xGo = void 0),
-      (this.oNi = i);
+      (this.RKe = 0),
+      (this.INo = []),
+      (this.TNo = []),
+      (this.oOi = void 0),
+      (this.LNo = void 0),
+      (this.DNo = !1),
+      (this.RNo = -1),
+      (this.UNo = void 0),
+      (this.oOi = i);
   }
   SetData(i) {
     this.ClearData(),
       (this.Pe = this.Pe.concat(i)),
-      (this.gWe = this.Pe.length);
+      (this.RKe = this.Pe.length);
   }
   GetDatas() {
     return this.Pe;
   }
   SetDataProxy(i, t, s = !0) {
-    this.ClearData(), (this.UGo = i), (this.gWe = t), (this.AGo = s);
+    this.ClearData(), (this.LNo = i), (this.RKe = t), (this.DNo = s);
   }
   OnGridsUpdate(i, t, s, e) {
-    i >= this.gWe || t >= this.DGo.length
+    i >= this.RKe || t >= this.INo.length
       ? Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "ScrollViewGrid",
           25,
-          `参数值非法 gridIndex: ${i} displayIndex: ${t} Data.length: ${this.gWe} Proxies.length: ` +
-            this.DGo.length,
+          `参数值非法 gridIndex: ${i} displayIndex: ${t} Data.length: ${this.RKe} Proxies.length: ` +
+            this.INo.length,
         )
-      : (-1 !== this.PGo &&
-          (this.PGo < s || this.PGo > e) &&
-          (this.xGo = void 0),
-        (this.RGo[t] = !0),
+      : (-1 !== this.RNo &&
+          (this.RNo < s || this.RNo > e) &&
+          (this.UNo = void 0),
+        (this.TNo[t] = !0),
         this.RefreshGridProxy(i, t));
   }
   RefreshGridProxy(i, t) {
     var s, e, h;
-    i >= this.gWe || t >= this.DGo.length
+    i >= this.RKe || t >= this.INo.length
       ? Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn(
           "ScrollViewGrid",
           25,
-          `参数值非法 gridIndex: ${i} displayIndex: ${t} Data.length: ${this.gWe} Proxies.length: ` +
-            this.DGo.length,
+          `参数值非法 gridIndex: ${i} displayIndex: ${t} Data.length: ${this.RKe} Proxies.length: ` +
+            this.INo.length,
         )
       : (s = this.GetGridProxy(t))
-        ? ((e = -1 !== i && i === this.PGo) && !this.xGo && (this.xGo = s),
-          (h = this.wGo(i, t)),
+        ? ((e = -1 !== i && i === this.RNo) && !this.UNo && (this.UNo = s),
+          (h = this.ANo(i, t)),
           (s.GridIndex = i),
           (s.DisplayIndex = t),
           s.Refresh(h, e, i))
@@ -61,16 +61,16 @@ class ScrollViewDelegate {
           Log_1.Log.Error(
             "ScrollViewGrid",
             25,
-            `Proxy获取异常 gridIndex: ${i} displayIndex: ${t} Data.length: ${this.gWe} Proxies.length: ` +
-              this.DGo.length,
+            `Proxy获取异常 gridIndex: ${i} displayIndex: ${t} Data.length: ${this.RKe} Proxies.length: ` +
+              this.INo.length,
           );
   }
-  wGo(i, t) {
+  ANo(i, t) {
     let s = void 0;
     return (
       !(s = this.Pe.length > i ? this.Pe[i] : s) &&
-        this.UGo &&
-        ((s = this.UGo(i)), this.AGo) &&
+        this.LNo &&
+        ((s = this.LNo(i)), this.DNo) &&
         (this.Pe[i] = s),
       s
     );
@@ -83,9 +83,9 @@ class ScrollViewDelegate {
       Log_1.Log.Info(
         "ScrollViewGrid",
         25,
-        `CreateProxy displayIndex: ${i}, Proxies.length: ` + this.DGo.length,
+        `CreateProxy displayIndex: ${i}, Proxies.length: ` + this.INo.length,
       );
-    var s = this.DGo[i];
+    var s = this.INo[i];
     return (
       s
         ? Log_1.Log.CheckError() &&
@@ -93,9 +93,9 @@ class ScrollViewDelegate {
             "DisplayIndex",
             i,
           ])
-        : ((s = this.oNi()).CreateThenShowByActor(t),
-          (this.DGo[i] = s),
-          (this.RGo[i] = !1),
+        : ((s = this.oOi()).CreateThenShowByActor(t),
+          (this.INo[i] = s),
+          (this.TNo[i] = !1),
           (s.ScrollViewDelegate = this)),
       s
     );
@@ -105,9 +105,9 @@ class ScrollViewDelegate {
       Log_1.Log.Info(
         "ScrollViewGrid",
         44,
-        `CreateProxy displayIndex: ${i}, Proxies.length: ` + this.DGo.length,
+        `CreateProxy displayIndex: ${i}, Proxies.length: ` + this.INo.length,
       );
-    var s = this.DGo[i];
+    var s = this.INo[i];
     return (
       s
         ? Log_1.Log.CheckError() &&
@@ -117,15 +117,15 @@ class ScrollViewDelegate {
             "Proxy已经存在 displayIndex: ",
             ["displayIndex", i],
           )
-        : ((((s = this.oNi()).ScrollViewDelegate = this).DGo[i] = s),
-          (this.RGo[i] = !1),
+        : ((((s = this.oOi()).ScrollViewDelegate = this).INo[i] = s),
+          (this.TNo[i] = !1),
           await s.CreateThenShowByActorAsync(t),
-          (this.RGo[i] = !0)),
+          (this.TNo[i] = !0)),
       s
     );
   }
   GetGridProxy(i) {
-    if (this.RGo.length < i || !this.RGo[i])
+    if (this.TNo.length < i || !this.TNo[i])
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "ScrollViewGrid",
@@ -133,7 +133,7 @@ class ScrollViewDelegate {
           "获取Proxy非法，请检查初始动画是否尚未播放完成。displayIndex: " + i,
         );
     else {
-      var t = this.DGo[i];
+      var t = this.INo[i];
       if (t) return t;
       Log_1.Log.CheckError() &&
         Log_1.Log.Error("ScrollViewGrid", 25, "无法获取Proxy", [
@@ -147,42 +147,42 @@ class ScrollViewDelegate {
     t && t.Clear();
   }
   SelectGridProxy(i, t, s) {
-    this.PGo !== i &&
+    this.RNo !== i &&
       (this.DeselectCurrentGridProxy(s),
-      (t = this.GetGridProxy(t)) && (t.OnSelected(s), (this.xGo = t)),
-      (this.PGo = i));
+      (t = this.GetGridProxy(t)) && (t.OnSelected(s), (this.UNo = t)),
+      (this.RNo = i));
   }
   DeselectCurrentGridProxy(i) {
-    (this.PGo = -1),
-      this.xGo && (this.xGo.OnDeselected(i), (this.xGo = void 0));
+    (this.RNo = -1),
+      this.UNo && (this.UNo.OnDeselected(i), (this.UNo = void 0));
   }
   ClearSelectInfo() {
-    (this.PGo = -1), (this.xGo = void 0);
+    (this.RNo = -1), (this.UNo = void 0);
   }
   GetSelectedProxy() {
-    return this.xGo;
+    return this.UNo;
   }
   GetSelectedGridIndex() {
-    return this.PGo;
+    return this.RNo;
   }
   GetDataLength() {
-    return this.gWe;
+    return this.RKe;
   }
   IsProxyValid(i) {
-    return i < this.RGo.length && this.RGo[i];
+    return i < this.TNo.length && this.TNo[i];
   }
   ClearData() {
-    0 < this.Pe.length && (this.Pe.length = 0), (this.gWe = 0);
+    0 < this.Pe.length && (this.Pe.length = 0), (this.RKe = 0);
   }
   Destroy() {
     this.ClearData(),
-      this.DGo.forEach((i) => {
+      this.INo.forEach((i) => {
         i.ScrollViewDelegate = void 0;
       }),
-      (this.DGo.length = 0),
-      (this.RGo.length = 0),
-      (this.oNi = void 0),
-      (this.UGo = void 0);
+      (this.INo.length = 0),
+      (this.TNo.length = 0),
+      (this.oOi = void 0),
+      (this.LNo = void 0);
   }
 }
 exports.ScrollViewDelegate = ScrollViewDelegate;

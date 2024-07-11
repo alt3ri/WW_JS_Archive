@@ -3,22 +3,22 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BulletDataAimed = void 0);
 class BulletDataAimed {
   constructor(t) {
-    (this.$5o = void 0),
-      (this.Y5o = void 0),
-      (this.J5o = void 0),
+    (this.KVo = void 0),
+      (this.QVo = void 0),
+      (this.XVo = void 0),
       (this.Pe = t);
   }
   get AimedCtrlDir() {
-    return void 0 === this.$5o && (this.$5o = this.Pe.瞄准发射), this.$5o;
+    return void 0 === this.KVo && (this.KVo = this.Pe.瞄准发射), this.KVo;
   }
   get AngleOffset() {
     return (
-      void 0 === this.Y5o && (this.Y5o = this.Pe.瞄准子弹最大偏转角度), this.Y5o
+      void 0 === this.QVo && (this.QVo = this.Pe.瞄准子弹最大偏转角度), this.QVo
     );
   }
   get DistLimit() {
     return (
-      void 0 === this.J5o && (this.J5o = this.Pe.瞄准子弹最大射程), this.J5o
+      void 0 === this.XVo && (this.XVo = this.Pe.瞄准子弹最大射程), this.XVo
     );
   }
 }

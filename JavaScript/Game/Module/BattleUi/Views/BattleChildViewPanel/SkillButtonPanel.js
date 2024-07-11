@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SkillButtonPanel = void 0);
 const UE = require("ue"),
+  Info_1 = require("../../../../../Core/Common/Info"),
   Stats_1 = require("../../../../../Core/Common/Stats"),
   EventDefine_1 = require("../../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../../Common/Event/EventSystem"),
@@ -29,43 +30,43 @@ const UE = require("ue"),
 class SkillButtonPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
   constructor() {
     super(...arguments),
-      (this.JJe = []),
-      (this._Ze = new Map()),
-      (this.uZe = void 0),
-      (this.cZe = void 0),
-      (this.GKe = !1),
-      (this.mZe = (t) => {
-        if (t) for (const e of this.JJe) e.RefreshEnable(!0);
+      (this.lZe = []),
+      (this.Tet = new Map()),
+      (this.Let = void 0),
+      (this.Det = void 0),
+      (this.$Qe = !1),
+      (this.Ret = (t) => {
+        if (t) for (const e of this.lZe) e.RefreshEnable(!0);
       }),
-      (this.gKe = (t, e) => {
-        10031 === t && this.dZe(102)?.SetActive(e);
+      (this.RQe = (t, e) => {
+        10031 === t && this.Uet(102)?.SetActive(e);
       }),
-      (this.ZJe = (t) => {
-        3 !== t && 2 !== t && (this.eze(), this.CZe());
+      (this.uZe = (t) => {
+        3 !== t && 2 !== t && (this.cZe(), this.Aet());
       }),
-      (this.tze = () => {
-        this.ize();
+      (this.mZe = () => {
+        this.dZe();
       }),
-      (this.oze = () => {
-        this.eze(), this.CZe();
+      (this.CZe = () => {
+        this.cZe(), this.Aet();
       }),
-      (this.rze = (t, e) => {
+      (this.gZe = (t, e) => {
         t = this.GetBattleSkillItemByButtonType(t);
         t && t.GetSkillButtonData() && t.RefreshEnable();
       }),
-      (this.sze = (t) => {
+      (this.pZe = (t) => {
         t = this.GetBattleSkillItemByButtonType(t);
         t &&
           t.GetSkillButtonData() &&
           (t.RefreshVisible(),
           t.RefreshKey(),
-          ModelManager_1.ModelManager.PlatformModel.IsMobile() || this.CZe());
+          Info_1.Info.IsInTouch() || this.Aet());
       }),
-      (this.aze = (t) => {
+      (this.vZe = (t) => {
         t = this.GetBattleSkillItemByButtonType(t);
         t && t.GetSkillButtonData() && t.RefreshDynamicEffect();
       }),
-      (this.lze = (t) => {
+      (this.EZe = (t) => {
         var e =
           ModelManager_1.ModelManager.SkillButtonUiModel.GetSkillButtonDataByButton(
             t,
@@ -73,62 +74,53 @@ class SkillButtonPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
         e &&
           (t = this.GetBattleSkillItemByButtonType(t)) &&
           (e.GetSkillId() ? t.Refresh(e) : t.Deactivate(),
-          ModelManager_1.ModelManager.PlatformModel.IsMobile() || this.CZe());
+          Info_1.Info.IsInTouch() || this.Aet());
       }),
-      (this.uze = (t) => {
+      (this.yZe = (t) => {
         t = this.GetBattleSkillItemByButtonType(t);
         t && t.RefreshAttribute(!0);
       }),
-      (this.cze = (t) => {
+      (this.IZe = (t) => {
         t = this.GetBattleSkillItemByButtonType(t);
         t && (t.RefreshSkillIcon(), t.RefreshSkillName());
       }),
-      (this.mze = (t) => {
+      (this.TZe = (t) => {
         t = this.GetBattleSkillItemByButtonType(t);
         t && t.RefreshSkillCoolDown();
       }),
-      (this.Cze = (t) => {
-        t = this.dZe(t);
+      (this.DZe = (t) => {
+        t = this.Uet(t);
         t && t.RefreshVisible();
       }),
-      (this.gZe = () => {
-        this.fZe();
+      (this.Pet = () => {
+        this.xet();
       }),
       (this.xie = (t, e) => {
-        this.pZe(), this.fZe();
+        this.wet(), this.xet();
       }),
-      (this.dze = (t) => {
-        for (const e of this.JJe) e.PauseGame(t);
+      (this.LZe = (t) => {
+        for (const e of this.lZe) e.PauseGame(t);
       }),
-      (this.kJe = () => {
-        for (const t of this.JJe) t.RefreshTimeDilation();
+      (this.zze = () => {
+        for (const t of this.lZe) t.RefreshTimeDilation();
       }),
-      (this.dKe = (t, e, i) => {
-        this.SetVisible(
-          5,
-          !ModelManager_1.ModelManager.PlatformModel.IsGamepad(),
-        ),
-          this.eze(),
-          this.CZe();
+      (this.XBo = () => {
+        this.SetVisible(5, !Info_1.Info.IsInGamepad()), this.cZe(), this.Aet();
       }),
-      (this.vZe = (t) => {
-        if (t) for (const e of this.JJe) e.RefreshEnable(!0);
-        else for (const i of this.JJe) i.DisableButton();
-      }),
-      (this.MZe = (t) => {
+      (this.bet = (t) => {
         ModelManager_1.ModelManager.SkillButtonUiModel.IsNormalButtonTypeList &&
           !ModelManager_1.ModelManager.BattleUiModel.GetCurRoleData()?.IsPhantom() &&
-          this.GKe !== t &&
-          this.SZe(t, !0);
+          this.$Qe !== t &&
+          this.qet(t, !0);
       }),
       (this.bMe = (t, e) => {
         if (0 === e)
           if (t === InputMappingsDefine_1.actionMappings.瞄准)
-            this._Ze.get(101)?.OnInputAction();
+            this.Tet.get(101)?.OnInputAction();
           else if (t === InputMappingsDefine_1.actionMappings.锁定目标)
-            this._Ze.get(102)?.OnInputAction();
+            this.Tet.get(102)?.OnInputAction();
           else
-            for (const s of this.JJe) {
+            for (const s of this.lZe) {
               var i = s.GetSkillButtonData();
               if (i && i.GetActionName() === t) return void s.OnInputAction();
             }
@@ -165,38 +157,35 @@ class SkillButtonPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
     }
   }
   async InitializeAsync() {
-    await Promise.all([this.NewAllBattleSkillItems(), this.EZe()]),
-      this.SetVisible(
-        5,
-        !ModelManager_1.ModelManager.PlatformModel.IsGamepad(),
-      ),
-      this.eze(),
-      this.pZe(),
-      this.fZe(),
-      this.CZe();
+    await Promise.all([this.NewAllBattleSkillItems(), this.Oet()]),
+      this.SetVisible(5, !Info_1.Info.IsInGamepad()),
+      this.cZe(),
+      this.wet(),
+      this.xet(),
+      this.Aet();
   }
   Reset() {
-    (this.JJe.length = 0), super.Reset(), (this.cZe = void 0);
+    (this.lZe.length = 0), super.Reset(), (this.Det = void 0);
   }
   OnAfterShow() {
-    for (const t of this.JJe) t.RefreshEnable(!0), t.UpdateAlpha();
-    for (const e of this._Ze.values()) e.UpdateAlpha();
+    for (const t of this.lZe) t.RefreshEnable(!0);
+    for (const e of this.Tet.values()) e.UpdateAlpha();
   }
   OnHideBattleChildViewPanel() {
-    for (const t of this.JJe) t.IsShowOrShowing && t.TryReleaseButton();
+    for (const t of this.lZe) t.IsShowOrShowing && t.TryReleaseButton();
   }
   OnShowBattleChildViewPanel() {
-    for (const t of this.JJe) t.RefreshSkillCoolDownOnShow();
+    for (const t of this.lZe) t.RefreshSkillCoolDownOnShow();
   }
   OnTickBattleChildViewPanel(t) {
-    if (this.Visible) for (const e of this.JJe) e.Tick(t);
+    if (this.Visible) for (const e of this.lZe) e.Tick(t);
   }
-  eze() {
+  cZe() {
     var e = ModelManager_1.ModelManager.SkillButtonUiModel,
       i = e.GetButtonTypeList();
-    for (let t = 0; t < this.JJe.length; t++) {
+    for (let t = 0; t < this.lZe.length; t++) {
       var s = i[t],
-        n = this.JJe[t],
+        n = this.lZe[t],
         h = e.GetSkillButtonDataByButton(s);
       h
         ? s && !(s < 0) && h.GetSkillId()
@@ -205,8 +194,8 @@ class SkillButtonPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
         : n.Deactivate();
     }
   }
-  ize() {
-    for (const t of this.JJe) t.Deactivate();
+  dZe() {
+    for (const t of this.lZe) t.Deactivate();
   }
   async NewAllBattleSkillItems() {
     let t = void 0;
@@ -233,9 +222,9 @@ class SkillButtonPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
           this.GetItem(10).GetOwner(),
         ]);
     const i = 1 === e;
-    await Promise.all(t.map(async (t, e) => this.Uze(t, e, i)));
+    await Promise.all(t.map(async (t, e) => this.FZe(t, e, i)));
   }
-  async Uze(t, e, i) {
+  async FZe(t, e, i) {
     let s = void 0;
     return (
       (s =
@@ -250,21 +239,21 @@ class SkillButtonPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
               BattleSkillItem_1.BattleSkillItem,
               e,
             )),
-      this.JJe.push(s),
+      this.lZe.push(s),
       s
     );
   }
-  Aze(t) {
-    return this.JJe[t];
+  VZe(t) {
+    return this.lZe[t];
   }
   GetBattleSkillItemByButtonType(t) {
     t =
       ModelManager_1.ModelManager.SkillButtonUiModel.GetSkillButtonIndexByButton(
         t,
       );
-    if (!(t < 0)) return this.Aze(t);
+    if (!(t < 0)) return this.VZe(t);
   }
-  async EZe() {
+  async Oet() {
     var t,
       e,
       i = this.GetOperationType();
@@ -272,13 +261,13 @@ class SkillButtonPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
       ? ((t = this.GetItem(6)),
         (e = this.GetItem(7)),
         await Promise.all([
-          this.yZe(
+          this.ket(
             t.GetOwner(),
             101,
             InputEnums_1.EInputAction[InputEnums_1.EInputAction.瞄准],
             !0,
           ),
-          this.yZe(
+          this.ket(
             e.GetOwner(),
             102,
             InputEnums_1.EInputAction[InputEnums_1.EInputAction.锁定目标],
@@ -288,95 +277,95 @@ class SkillButtonPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
         ((t = this.GetItem(8)),
         (e = this.GetItem(7)),
         await Promise.all([
-          this.yZe(t.GetOwner(), 101, void 0, !0),
-          this.yZe(e.GetOwner(), 102),
+          this.ket(t.GetOwner(), 101, void 0, !0),
+          this.ket(e.GetOwner(), 102),
         ]));
   }
-  async yZe(t, e, i, s = !1) {
+  async ket(t, e, i, s = !1) {
     (i = { InputActionType: e, ActionName: i, IsToggle: s }),
       (s = await this.NewStaticChildViewAsync(
         t,
         BehaviorButton_1.BehaviorButton,
         i,
       ));
-    return this._Ze.set(e, s), s;
+    return this.Tet.set(e, s), s;
   }
-  pZe() {
+  wet() {
     var t = ModelManager_1.ModelManager.SkillButtonUiModel;
-    for (const i of this._Ze.values()) {
+    for (const i of this.Tet.values()) {
       var e = t.GetBehaviorButtonDataByButton(i.BehaviorType);
       i.Refresh(e);
     }
   }
-  fZe() {
+  xet() {
     var t,
       e = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
     e?.Valid &&
-      ((e = e.Entity.GetComponent(158).DirectionState),
-      (t = this.dZe(101)) &&
+      ((e = e.Entity.GetComponent(160).DirectionState),
+      (t = this.Uet(101)) &&
         (e === CharacterUnifiedStateTypes_1.ECharDirectionState.AimDirection
           ? t.SetBehaviorToggleState(1)
           : t.SetBehaviorToggleState(0)),
-      (t = this.dZe(102))) &&
+      (t = this.Uet(102))) &&
       (e === CharacterUnifiedStateTypes_1.ECharDirectionState.LockDirection
         ? t.SetBehaviorToggleState(1)
         : t.SetBehaviorToggleState(0));
   }
-  dZe(t) {
-    return this._Ze.get(t);
+  Uet(t) {
+    return this.Tet.get(t);
   }
   AddEvents() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnUiScreenRootVisibleChange,
-      this.mZe,
+      this.Ret,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnSkillButtonDataRefresh,
-        this.ZJe,
+        this.uZe,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnSkillButtonDataClear,
-        this.tze,
+        this.mZe,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnSkillButtonIndexRefresh,
-        this.oze,
+        this.CZe,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnSkillButtonEnableRefresh,
-        this.rze,
+        this.gZe,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnSkillButtonVisibleRefresh,
-        this.sze,
+        this.pZe,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnSkillButtonDynamicEffectRefresh,
-        this.aze,
+        this.vZe,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnSkillButtonSkillIdRefresh,
-        this.lze,
+        this.EZe,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnSkillButtonAttributeRefresh,
-        this.uze,
+        this.yZe,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnSkillButtonIconPathRefresh,
-        this.cze,
+        this.IZe,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnSkillButtonCdRefresh,
-        this.mze,
+        this.TZe,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnBehaviorButtonVisibleRefresh,
-        this.Cze,
+        this.DZe,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnAimStateChanged,
-        this.gZe,
+        this.Pet,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnChangeRole,
@@ -384,35 +373,31 @@ class SkillButtonPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.PauseGame,
-        this.dze,
+        this.LZe,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.TriggerUiTimeDilation,
-        this.kJe,
+        this.zze,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.CharSkillCdPauseStateChanged,
-        this.kJe,
+        this.zze,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnFunctionOpenSet,
-        this.gKe,
+        this.RQe,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnFunctionOpenUpdate,
-        this.gKe,
+        this.RQe,
       ),
       EventSystem_1.EventSystem.Add(
-        EventDefine_1.EEventName.OnPlatformChanged,
-        this.dKe,
-      ),
-      EventSystem_1.EventSystem.Add(
-        EventDefine_1.EEventName.SetEnableStateBattleViewSkill,
-        this.vZe,
+        EventDefine_1.EEventName.InputControllerChange,
+        this.XBo,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.BattleUiExploreModeChanged,
-        this.MZe,
+        this.bet,
       ),
       2 === this.GetOperationType() &&
         InputDistributeController_1.InputDistributeController.BindActions(
@@ -423,55 +408,55 @@ class SkillButtonPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
   RemoveEvents() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnUiScreenRootVisibleChange,
-      this.mZe,
+      this.Ret,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnSkillButtonDataRefresh,
-        this.ZJe,
+        this.uZe,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnSkillButtonDataClear,
-        this.tze,
+        this.mZe,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnSkillButtonIndexRefresh,
-        this.oze,
+        this.CZe,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnSkillButtonEnableRefresh,
-        this.rze,
+        this.gZe,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnSkillButtonVisibleRefresh,
-        this.sze,
+        this.pZe,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnSkillButtonDynamicEffectRefresh,
-        this.aze,
+        this.vZe,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnSkillButtonSkillIdRefresh,
-        this.lze,
+        this.EZe,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnSkillButtonAttributeRefresh,
-        this.uze,
+        this.yZe,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnSkillButtonIconPathRefresh,
-        this.cze,
+        this.IZe,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnSkillButtonCdRefresh,
-        this.mze,
+        this.TZe,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnBehaviorButtonVisibleRefresh,
-        this.Cze,
+        this.DZe,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnAimStateChanged,
-        this.gZe,
+        this.Pet,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnChangeRole,
@@ -479,35 +464,31 @@ class SkillButtonPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.PauseGame,
-        this.dze,
+        this.LZe,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.TriggerUiTimeDilation,
-        this.kJe,
+        this.zze,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.CharSkillCdPauseStateChanged,
-        this.kJe,
+        this.zze,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnFunctionOpenSet,
-        this.gKe,
+        this.RQe,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnFunctionOpenUpdate,
-        this.gKe,
+        this.RQe,
       ),
       EventSystem_1.EventSystem.Remove(
-        EventDefine_1.EEventName.OnPlatformChanged,
-        this.dKe,
-      ),
-      EventSystem_1.EventSystem.Remove(
-        EventDefine_1.EEventName.SetEnableStateBattleViewSkill,
-        this.vZe,
+        EventDefine_1.EEventName.InputControllerChange,
+        this.XBo,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.BattleUiExploreModeChanged,
-        this.MZe,
+        this.bet,
       ),
       2 === this.GetOperationType() &&
         InputDistributeController_1.InputDistributeController.UnBindActions(
@@ -515,47 +496,46 @@ class SkillButtonPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
           this.bMe,
         );
   }
-  CZe() {
+  Aet() {
     var t =
       ModelManager_1.ModelManager.BattleUiModel.ExploreModeData.GetIsInExploreMode();
     if (
       ModelManager_1.ModelManager.SkillButtonUiModel.IsNormalButtonTypeList ||
       ModelManager_1.ModelManager.BattleUiModel.GetCurRoleData()?.IsPhantom()
     )
-      return this.GKe === t &&
-        ModelManager_1.ModelManager.PlatformModel.IsMobile()
+      return this.$Qe === t && Info_1.Info.IsInTouch()
         ? void 0
-        : void this.SZe(t);
-    this.GKe && this.SZe(!1);
+        : void this.qet(t);
+    this.$Qe && this.qet(!1);
   }
-  SZe(t, e = !1) {
-    var i = !(this.GKe = t);
-    this._Ze.get(101)?.SetVisibleByExploreMode(i, e),
-      this._Ze.get(102)?.SetVisibleByExploreMode(i, e),
-      this.JJe[1]?.SetVisibleByExploreMode(i, e),
-      this.JJe[2]?.SetVisibleByExploreMode(i, e),
-      ModelManager_1.ModelManager.PlatformModel.IsMobile()
-        ? this.JJe[4]?.SetVisibleByExploreMode(i, e)
-        : (this.JJe[3]?.SetVisibleByExploreMode(i, e), this.IZe(t, e));
+  qet(t, e = !1) {
+    var i = !(this.$Qe = t);
+    this.Tet.get(101)?.SetVisibleByExploreMode(i, e),
+      this.Tet.get(102)?.SetVisibleByExploreMode(i, e),
+      this.lZe[1]?.SetVisibleByExploreMode(i, e),
+      this.lZe[2]?.SetVisibleByExploreMode(i, e),
+      Info_1.Info.IsInTouch()
+        ? this.lZe[4]?.SetVisibleByExploreMode(i, e)
+        : (this.lZe[3]?.SetVisibleByExploreMode(i, e), this.Fet(t, e));
   }
-  IZe(t, e = !1) {
+  Fet(t, e = !1) {
     let i = INIT_OFFSET_X;
     if (t) {
       let e = 0;
-      for (let t = 1; t < 4; t++) this.JJe[t].IsShowOrShowing && e++;
+      for (let t = 1; t < 4; t++) this.lZe[t].IsShowOrShowing && e++;
       i += e * ITEM_WIDTH;
     }
     e
-      ? (this.cZe
-          ? this.cZe.Stop()
-          : (this.cZe = this.RootActor.GetComponentByClass(
+      ? (this.Det
+          ? this.Det.Stop()
+          : (this.Det = this.RootActor.GetComponentByClass(
               UE.LGUIPlayTweenComponent.StaticClass(),
             )),
-        ((t = this.cZe.GetPlayTween()).from = this.RootItem.GetAnchorOffsetX()),
+        ((t = this.Det.GetPlayTween()).from = this.RootItem.GetAnchorOffsetX()),
         (t.to = i),
-        this.cZe.Play())
-      : (this.cZe && this.cZe.Stop(), this.RootItem?.SetAnchorOffsetX(i));
+        this.Det.Play())
+      : (this.Det && this.Det.Stop(), this.RootItem?.SetAnchorOffsetX(i));
   }
 }
-(exports.SkillButtonPanel = SkillButtonPanel).RKe = void 0;
+(exports.SkillButtonPanel = SkillButtonPanel).kQe = void 0;
 //# sourceMappingURL=SkillButtonPanel.js.map

@@ -17,23 +17,23 @@ class CheckPointEffectInfo {
 }
 class CheckPointEffectController {
   constructor() {
-    (this.qKt = new Map()), (this.GKt = new Map());
+    (this.qQt = new Map()), (this.GQt = new Map());
   }
   EnableAllEffects(t) {
-    if (this.GKt)
-      for (var [e, o] of this.qKt) t ? this.NKt(e, o) : this.StopEffect(e);
+    if (this.GQt)
+      for (var [e, o] of this.qQt) t ? this.NQt(e, o) : this.StopEffect(e);
   }
   OnNodeStart(t, e, o, i) {
-    var r = this.qKt.get(t);
+    var r = this.qQt.get(t);
     r ||
       (((r = new CheckPointEffectInfo()).EffectPathKey = e),
       (r.EffectSpawnPosition = o),
-      this.qKt.set(t, r),
+      this.qQt.set(t, r),
       i) ||
-      this.NKt(t, r);
+      this.NQt(t, r);
   }
   OnNodeEnd(t) {
-    this.qKt.delete(t), this.StopEffect(t);
+    this.qQt.delete(t), this.StopEffect(t);
   }
   OnBtApplyExpressionOccupation(t) {
     t || this.EnableAllEffects(!0);
@@ -41,7 +41,7 @@ class CheckPointEffectController {
   OnBtReleaseExpressionOccupation(t) {
     t || this.EnableAllEffects(!1);
   }
-  NKt(o, t) {
+  NQt(o, t) {
     var e = EffectUtil_1.EffectUtil.GetEffectPath(
       t.EffectPathKey ?? "DA_Fx_Group_Sl3_Cishi_10idle",
     );
@@ -68,24 +68,24 @@ class CheckPointEffectController {
                 ["result", t],
               )
             : e &&
-              (this.GKt.has(o) && this.StopEffect(o),
-              this.GKt.set(o, e),
+              (this.GQt.has(o) && this.StopEffect(o),
+              this.GQt.set(o, e),
               EffectSystem_1.EffectSystem.RegisterCustomCheckOwnerFunc(
                 e,
-                () => void 0 !== this.GKt.get(o),
+                () => void 0 !== this.GQt.get(o),
               ));
         },
       );
   }
   StopEffect(t) {
-    var e = this.GKt.get(t) ?? 0;
+    var e = this.GQt.get(t) ?? 0;
     EffectSystem_1.EffectSystem.IsValid(e) &&
       EffectSystem_1.EffectSystem.StopEffectById(
         e,
         "[CheckPointEffectController.End]",
         !0,
       ),
-      this.GKt.delete(t);
+      this.GQt.delete(t);
   }
 }
 exports.CheckPointEffectController = CheckPointEffectController;

@@ -5,22 +5,25 @@ const UE = require("ue"),
   Log_1 = require("../../../../Core/Common/Log"),
   CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById"),
   MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
   TimeUtil_1 = require("../../../Common/TimeUtil"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase"),
   InstanceDungeonEntranceController_1 = require("../../InstanceDungeon/InstanceDungeonEntranceController"),
   LguiUtil_1 = require("../../Util/LguiUtil"),
-  OnlineController_1 = require("../OnlineController"),
-  ControllerHolder_1 = require("../../../Manager/ControllerHolder");
+  OnlineController_1 = require("../OnlineController");
 class OnlineChallengeApplyView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
-      (this.EGi = -1),
-      (this.yGi = -1),
-      (this.Q2t = void 0),
-      (this.pGi = void 0),
-      (this.MGi = () => {
+      (this.SNi = -1),
+      (this.yNi = -1),
+      (this.XFt = void 0),
+      (this.pNi = void 0),
+      (this.YMa = !1),
+      (this.MNi = () => {
         if (
           ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance()
         ) {
@@ -32,19 +35,36 @@ class OnlineChallengeApplyView extends UiTickViewBase_1.UiTickViewBase {
             ModelManager_1.ModelManager.OnlineModel.GetIsMyTeam()
           )
             return void OnlineController_1.OnlineController.InviteRechallengeRequest();
-          OnlineController_1.OnlineController.ReceiveRechallengeRequest();
+          OnlineController_1.OnlineController.ReceiveRechallengeRequest(!0, !1);
         } else
           InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.TeamMatchAcceptInviteRequest(
             !0,
+            !1,
           );
         this.CloseMe();
       }),
-      (this.J9e = () => {
-        ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance() ||
-          InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.TeamMatchAcceptInviteRequest(
-            !1,
-          ),
+      (this.uHe = () => {
+        ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance()
+          ? OnlineController_1.OnlineController.ReceiveRechallengeRequest(
+              !1,
+              !0,
+            )
+          : InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.TeamMatchAcceptInviteRequest(
+              !1,
+              !0,
+            ),
           this.CloseMe();
+      }),
+      (this.eWs = () => {
+        var e;
+        ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance()
+          ? ((this.SNi = ModelManager_1.ModelManager.OnlineModel.ApplyCd),
+            this.INi())
+          : ((e = CommonParamById_1.configCommonParamById.GetIntConfig(
+              "match_confirm_time_out_seconds",
+            )),
+            (this.SNi = e),
+            this.TNi());
       });
   }
   OnRegisterComponent() {
@@ -60,63 +80,86 @@ class OnlineChallengeApplyView extends UiTickViewBase_1.UiTickViewBase {
       [8, UE.UIButtonComponent],
     ]),
       (this.BtnBindInfo = [
-        [2, this.MGi],
-        [8, this.J9e],
+        [2, this.MNi],
+        [8, this.uHe],
       ]);
   }
   OnStart() {
     var e;
     this.GetButton(8).GetRootComponent().SetUIActive(!0),
-      (this.Q2t = this.GetText(5)),
-      (this.pGi = this.GetSprite(6)),
+      (this.XFt = this.GetText(5)),
+      (this.pNi = this.GetSprite(6)),
       ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance()
-        ? ((this.EGi = ModelManager_1.ModelManager.OnlineModel.ApplyCd),
-          (this.yGi = ModelManager_1.ModelManager.OnlineModel.ApplyCd),
-          this.IGi())
+        ? ((this.SNi = ModelManager_1.ModelManager.OnlineModel.ApplyCd),
+          (this.yNi = ModelManager_1.ModelManager.OnlineModel.ApplyCd),
+          this.INi())
         : ((e = CommonParamById_1.configCommonParamById.GetIntConfig(
             "match_confirm_time_out_seconds",
           )),
-          (this.EGi = e),
-          (this.yGi = e),
-          this.TGi());
+          (this.SNi = e),
+          (this.yNi = e),
+          this.TNi());
+  }
+  OnAddEventListener() {
+    EventSystem_1.EventSystem.Add(
+      EventDefine_1.EEventName.OnRefreshSuggestChallengePlayerInfo,
+      this.eWs,
+    );
+  }
+  OnRemoveEventListener() {
+    EventSystem_1.EventSystem.Remove(
+      EventDefine_1.EEventName.OnRefreshSuggestChallengePlayerInfo,
+      this.eWs,
+    );
   }
   OnTick(e) {
-    (this.EGi -= e * TimeUtil_1.TimeUtil.Millisecond),
-      this.EGi <= 0
-        ? this.CloseMe()
-        : (this.Q2t.SetText(TimeUtil_1.TimeUtil.GetCoolDown(this.EGi)),
-          this.pGi.SetFillAmount(this.EGi / this.yGi));
+    this.YMa ||
+      ((this.SNi -= e * TimeUtil_1.TimeUtil.Millisecond),
+      this.SNi <= 0
+        ? (ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance()
+            ? OnlineController_1.OnlineController.ReceiveRechallengeRequest(
+                !1,
+                !1,
+              )
+            : InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.TeamMatchAcceptInviteRequest(
+                !1,
+                !1,
+              ),
+          this.CloseMe(),
+          (this.YMa = !0))
+        : (this.XFt.SetText(TimeUtil_1.TimeUtil.GetCoolDown(this.SNi)),
+          this.pNi.SetFillAmount(this.SNi / this.yNi)));
   }
-  IGi() {
+  INi() {
     var e = this.GetItem(3),
       i = this.GetItem(4),
-      t = this.GetText(7),
+      n = this.GetText(7),
       e =
         (e.SetUIActive(!0),
         i.SetUIActive(!1),
         ModelManager_1.ModelManager.SceneTeamModel.IsAllDid()
           ? ModelManager_1.ModelManager.CreatureModel.IsMyWorld()
-            ? LguiUtil_1.LguiUtil.SetLocalText(t, "SuggestChallengeAgain")
-            : LguiUtil_1.LguiUtil.SetLocalText(t, "InviteChallengeAgain")
+            ? LguiUtil_1.LguiUtil.SetLocalText(n, "SuggestChallengeAgain")
+            : LguiUtil_1.LguiUtil.SetLocalText(n, "InviteChallengeAgain")
           : ModelManager_1.ModelManager.CreatureModel.IsMyWorld()
-            ? LguiUtil_1.LguiUtil.SetLocalText(t, "SuggestContinueChallenge")
-            : LguiUtil_1.LguiUtil.SetLocalText(t, "InviteContinueChallenge"),
+            ? LguiUtil_1.LguiUtil.SetLocalText(n, "SuggestContinueChallenge")
+            : LguiUtil_1.LguiUtil.SetLocalText(n, "InviteContinueChallenge"),
         ModelManager_1.ModelManager.OnlineModel.ChallengeApplyPlayerId),
       i = ModelManager_1.ModelManager.OnlineModel.GetCurrentTeamListById(e);
     i
       ? (this.GetText(1).SetText(i.Name),
-        this.Q2t.SetText(TimeUtil_1.TimeUtil.GetCoolDown(this.EGi)),
-        this.pGi.SetFillAmount(this.EGi / this.yGi),
-        (t = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(
+        this.XFt.SetText(TimeUtil_1.TimeUtil.GetCoolDown(this.SNi)),
+        this.pNi.SetFillAmount(this.SNi / this.yNi),
+        (n = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(
           i.HeadId,
-        )?.Card) && this.SetTextureByPath(t, this.GetTexture(0)))
+        )?.Card) && this.SetTextureByPath(n, this.GetTexture(0)))
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error("MultiPlayerTeam", 5, "未找到发起邀请的玩家", [
           "playerId：",
           e,
         ]);
   }
-  TGi() {
+  TNi() {
     var e = this.GetItem(3),
       i = this.GetItem(4),
       e = (e.SetUIActive(!0), i.SetUIActive(!1), this.GetText(1)),
@@ -132,8 +175,8 @@ class OnlineChallengeApplyView extends UiTickViewBase_1.UiTickViewBase {
       i = (i.SetText(e), ModelManager_1.ModelManager.OnlineModel.OwnerId),
       e = ModelManager_1.ModelManager.OnlineModel.GetCurrentTeamListById(i);
     e
-      ? (this.Q2t.SetText(TimeUtil_1.TimeUtil.GetCoolDown(this.EGi)),
-        this.pGi.SetFillAmount(this.EGi / this.yGi),
+      ? (this.XFt.SetText(TimeUtil_1.TimeUtil.GetCoolDown(this.SNi)),
+        this.pNi.SetFillAmount(this.SNi / this.yNi),
         (e = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(
           e.HeadId,
         )?.Card) && this.SetTextureByPath(e, this.GetTexture(0)))

@@ -62,7 +62,7 @@ class TsAnimNotifyStatePositionTarget extends UE.KuroAnimNotifyState {
       this.速度.Multiply(t, this.TmpVector),
       this.TmpVector.GetClampedToMaxSize(this.最大速度, this.TmpVector),
       this.TmpVector.MultiplyEqual(s),
-      r.GetComponent(36)?.SetAddMoveOffset(this.TmpVector.ToUeVector()),
+      r.GetComponent(37)?.SetAddMoveOffset(this.TmpVector.ToUeVector()),
       !0
     );
   }

@@ -7,46 +7,46 @@ const Time_1 = require("../../../../Core/Common/Time"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
   TimeUtil_1 = require("../../../Common/TimeUtil"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   UiManager_1 = require("../../../Ui/UiManager"),
   GeneralLogicTreeController_1 = require("../GeneralLogicTreeController"),
   LogicTreeTimerBase_1 = require("./LogicTreeTimerBase"),
-  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   GENERAL_TIP_ID = 19,
   ONE_HUNDRED = 100;
 class CountDownTimer extends LogicTreeTimerBase_1.LogicTreeTimerBase {
   constructor(e, t, i) {
     super(e, t, !0, i),
-      (this.M$t = -0),
-      (this.S$t = -0),
-      (this.E$t = -0),
-      (this.y$t = !1),
-      (this.I$t = 0),
+      (this.MYt = -0),
+      (this.EYt = -0),
+      (this.SYt = -0),
+      (this.yYt = !1),
+      (this.IYt = 0),
       (this.OnTick = (e) => {
         var t = TimeUtil_1.TimeUtil.GetServerTimeStamp(),
-          i = t - this.I$t;
-        (this.I$t = t),
+          i = t - this.IYt;
+        (this.IYt = t),
           ModelManager_1.ModelManager.GeneralLogicTreeModel.TimeStop ||
-            ((this.E$t += i * Time_1.Time.TimeDilation),
-            (t = this.GetRemainTime()) < 0 ? this.T$t() : this.L$t(t));
+            ((this.SYt += i * Time_1.Time.TimeDilation),
+            (t = this.GetRemainTime()) < 0 ? this.TYt() : this.LYt(t));
       }),
-      (this.D$t = (e, t, i, r) => {
+      (this.DYt = (e, t, i, r) => {
         if (e && e === this.TreeId && this.InnerTimerType === t) {
           var o = 1e3 * r;
           switch (i) {
-            case Protocol_1.Aki.Protocol.uqs.Proto_Add:
-              this.M$t += o;
+            case Protocol_1.Aki.Protocol.ZNs.Proto_Add:
+              this.MYt += o;
               break;
-            case Protocol_1.Aki.Protocol.uqs.Proto_Sub:
-              this.M$t -= o;
+            case Protocol_1.Aki.Protocol.ZNs.Proto_Sub:
+              this.MYt -= o;
               break;
-            case Protocol_1.Aki.Protocol.uqs.Proto_Set:
-              this.M$t = TimeUtil_1.TimeUtil.GetServerTimeStamp() + o;
+            case Protocol_1.Aki.Protocol.ZNs.Proto_Set:
+              this.MYt = TimeUtil_1.TimeUtil.GetServerTimeStamp() + o;
           }
-          this.L$t(this.GetRemainTime());
+          this.LYt(this.GetRemainTime());
         }
       }),
-      (this.M$t = 0);
+      (this.MYt = 0);
   }
   Destroy() {
     this.EndShowTimer(), super.Destroy();
@@ -54,26 +54,26 @@ class CountDownTimer extends LogicTreeTimerBase_1.LogicTreeTimerBase {
   OnAddEvents() {
     EventSystem_1.EventSystem.Has(
       EventDefine_1.EEventName.GeneralLogicTreeTimerInfoChanged,
-      this.D$t,
+      this.DYt,
     ) ||
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.GeneralLogicTreeTimerInfoChanged,
-        this.D$t,
+        this.DYt,
       );
   }
   OnRemoveEvents() {
     EventSystem_1.EventSystem.Has(
       EventDefine_1.EEventName.GeneralLogicTreeTimerInfoChanged,
-      this.D$t,
+      this.DYt,
     ) &&
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.GeneralLogicTreeTimerInfoChanged,
-        this.D$t,
+        this.DYt,
       );
   }
-  T$t() {
-    this.y$t ||
-      ((this.y$t = !0),
+  TYt() {
+    this.yYt ||
+      ((this.yYt = !0),
       this.EndShowTimer(),
       GeneralLogicTreeController_1.GeneralLogicTreeController.RequestTimerEnd(
         this.TreeId,
@@ -82,17 +82,17 @@ class CountDownTimer extends LogicTreeTimerBase_1.LogicTreeTimerBase {
   }
   StartShowTimer(e) {
     e &&
-      ((this.M$t = e),
-      (this.S$t = TimeUtil_1.TimeUtil.GetServerTimeStamp()),
-      (this.E$t = 0),
-      (this.I$t = this.S$t),
+      ((this.MYt = e),
+      (this.EYt = TimeUtil_1.TimeUtil.GetServerTimeStamp()),
+      (this.SYt = 0),
+      (this.IYt = this.EYt),
       ModelManager_1.ModelManager.GeneralLogicTreeModel.SetTimerUiOwnerId(
         this.TreeId,
       ),
-      this.R$t(this.GetRemainTime()),
+      this.RYt(this.GetRemainTime()),
       this.OnAddEvents());
   }
-  R$t(e) {
+  RYt(e) {
     var t =
         ConfigManager_1.ConfigManager.GenericPromptConfig.GetPromptInfo(
           GENERAL_TIP_ID,
@@ -119,16 +119,16 @@ class CountDownTimer extends LogicTreeTimerBase_1.LogicTreeTimerBase {
         i,
         GENERAL_TIP_ID,
       ),
-      this.L$t(e);
+      this.LYt(e);
   }
   EndShowTimer() {
-    this.OnRemoveEvents(), this.L$t(void 0, this.GetRemainTime() <= 0);
+    this.OnRemoveEvents(), this.LYt(void 0, this.GetRemainTime() <= 0);
   }
   GetRemainTime() {
-    var e = (this.M$t - (this.S$t + this.E$t)) / 1e3;
+    var e = (this.MYt - (this.EYt + this.SYt)) / 1e3;
     return Math.max(e, 0);
   }
-  L$t(e, t) {
+  LYt(e, t) {
     ModelManager_1.ModelManager.GeneralLogicTreeModel.IsTimerUiOwner(
       this.TreeId,
     ) &&

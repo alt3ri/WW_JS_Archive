@@ -7,10 +7,10 @@ const UE = require("ue"),
   UiSceneManager_1 = require("../UiComponent/UiSceneManager");
 class SkeletalObserverHandle {
   constructor() {
-    this.dSo = void 0;
+    this.uSo = void 0;
   }
   get Model() {
-    return this.dSo?.Model;
+    return this.uSo?.Model;
   }
   CreateSkeletalObserverHandle(e) {
     var t = UE.GameplayStatics.BeginDeferredActorSpawnFromClass(
@@ -23,13 +23,13 @@ class SkeletalObserverHandle {
       t,
       MathUtils_1.MathUtils.DefaultTransform,
     ),
-      (this.dSo = t).Init(e);
+      (this.uSo = t).Init(e);
   }
   ResetSkeletalObserverHandle() {
-    this.dSo?.Destroy();
+    this.uSo?.Destroy();
   }
   AddUiShowRoomShowActor(e) {
-    var t = this.dSo;
+    var t = this.uSo;
     UiSceneManager_1.UiSceneManager.AddUiShowRoomShowActor(t, e);
   }
 }

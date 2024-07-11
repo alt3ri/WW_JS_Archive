@@ -12,7 +12,7 @@ class TsAnimNotifyAddTag extends UE.KuroAnimNotify {
     return (
       e instanceof TsBaseCharacter_1.default &&
         t &&
-        (e = e.CharacterActorComponent.Entity?.GetComponent(185)) &&
+        (e = e.CharacterActorComponent.Entity?.GetComponent(188)) &&
         e.TagContainer.UpdateExactTag(4, t, 1),
       !0
     );

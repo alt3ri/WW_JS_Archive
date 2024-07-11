@@ -8,7 +8,7 @@ const UE = require("ue"),
 class InfoDisplayImgView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.Opt = () => {
+      (this.Jvt = () => {
         this.CloseMe();
       });
   }
@@ -18,7 +18,7 @@ class InfoDisplayImgView extends UiViewBase_1.UiViewBase {
       [1, UE.UIText],
       [2, UE.UIButtonComponent],
     ]),
-      (this.BtnBindInfo = [[2, this.Opt]]);
+      (this.BtnBindInfo = [[2, this.Jvt]]);
   }
   OnStart() {
     this.Og();

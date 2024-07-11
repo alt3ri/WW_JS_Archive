@@ -9,9 +9,9 @@ const ModelBase_1 = require("../../../../Core/Framework/ModelBase"),
 class BattleScoreModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
-      (this.iyn = new Map()),
-      (this.oyn = new Map()),
-      (this.ryn = 0),
+      (this.vIn = new Map()),
+      (this.MIn = new Map()),
+      (this.EIn = 0),
       (this.RougeScoreMusicState = new StateRef_1.StateRef(
         "game_rogue_combat_combo_rank",
         "none",
@@ -22,26 +22,26 @@ class BattleScoreModel extends ModelBase_1.ModelBase {
   }
   OnLeaveLevel() {
     return (
-      this.iyn.clear(),
-      (this.ryn = 0),
+      this.vIn.clear(),
+      (this.EIn = 0),
       (this.RougeScoreMusicState.State = "none"),
       !0
     );
   }
   HandleBattleScoreNotify(e) {
-    this.UpdateScore(e.mTs, e.CTs);
+    this.UpdateScore(e.xAs, e.bAs);
   }
   UpdateScore(e, t) {
     var r;
-    this.iyn.set(e, t),
-      this.ryn !== e &&
-        ((this.ryn = e),
-        this.oyn.has(e) ||
+    this.vIn.set(e, t),
+      this.EIn !== e &&
+        ((this.EIn = e),
+        this.MIn.has(e) ||
           ((r =
             ConfigManager_1.ConfigManager.BattleScoreConfig.GetBattleScoreConfig(
               e,
             )) &&
-            this.oyn.set(e, r))),
+            this.MIn.set(e, r))),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.BattleScoreChanged,
         e,
@@ -49,16 +49,16 @@ class BattleScoreModel extends ModelBase_1.ModelBase {
       );
   }
   GetScoreConfig(e) {
-    return this.oyn.get(e);
+    return this.MIn.get(e);
   }
   GetScore(e) {
-    return this.iyn.get(e) ?? 0;
+    return this.vIn.get(e) ?? 0;
   }
   GetScoreMap() {
-    return this.iyn;
+    return this.vIn;
   }
   GetCurScoreId() {
-    return this.ryn;
+    return this.EIn;
   }
 }
 exports.BattleScoreModel = BattleScoreModel;

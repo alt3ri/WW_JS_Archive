@@ -13,9 +13,9 @@ const UE = require("ue"),
   INTERLUDE_LIMIT_TIME = 30;
 class CameraFadeLoading {
   constructor() {
-    (this.ifi = !1),
-      (this.ofi = new UE.LinearColor(0, 0, 0, 1)),
-      (this.kei = new UE.LinearColor(1, 1, 1, 1));
+    (this.ipi = !1),
+      (this.opi = new UE.LinearColor(0, 0, 0, 1)),
+      (this.kti = new UE.LinearColor(1, 1, 1, 1));
   }
   EnterInterlude(
     e = INTERLUDE_FADE_IN_TIME,
@@ -26,14 +26,14 @@ class CameraFadeLoading {
     o,
   ) {
     e = MathUtils_1.MathUtils.Clamp(e, 0, INTERLUDE_LIMIT_TIME);
-    this.rfi(e * TimeUtil_1.TimeUtil.InverseMillisecond, a, r, t, i, o);
+    this.rpi(e * TimeUtil_1.TimeUtil.InverseMillisecond, a, r, t, i, o);
   }
   ExitInterlude(e = INTERLUDE_FADE_OUT_TIME, a) {
     e = MathUtils_1.MathUtils.Clamp(e, 0, INTERLUDE_LIMIT_TIME);
-    this.nfi(e * TimeUtil_1.TimeUtil.InverseMillisecond, a);
+    this.npi(e * TimeUtil_1.TimeUtil.InverseMillisecond, a);
   }
   IsInFade() {
-    return this.ifi;
+    return this.ipi;
   }
   IsInFadeOut() {
     return (
@@ -41,7 +41,7 @@ class CameraFadeLoading {
       ModelManager_1.ModelManager.LevelLoadingModel.CameraFadeHidePromise
     );
   }
-  rfi(
+  rpi(
     e = 1,
     a = !1,
     r = !0,
@@ -49,27 +49,27 @@ class CameraFadeLoading {
     i = IAction_1.EFadeInScreenShowType.Black,
     o,
   ) {
-    if (!this.ifi) {
-      this.ifi = !0;
+    if (!this.ipi) {
+      this.ipi = !0;
       var _ = Global_1.Global.CharacterCameraManager;
       if (i)
         switch (i) {
           case IAction_1.EFadeInScreenShowType.White:
-            _.FadeColor = this.kei;
+            _.FadeColor = this.kti;
             break;
           case IAction_1.EFadeInScreenShowType.Black:
-            _.FadeColor = this.ofi;
+            _.FadeColor = this.opi;
         }
       BlackScreenFadeController_1.BlackScreenFadeController.ChangeColor(i),
-        this.sfi(e, a, r, t).finally(o);
+        this.spi(e, a, r, t).finally(o);
     }
   }
-  nfi(e = 1, a) {
-    this.afi(e).finally(() => {
-      (this.ifi = !1), a?.();
+  npi(e = 1, a) {
+    this.api(e).finally(() => {
+      (this.ipi = !1), a?.();
     });
   }
-  async sfi(e, a = !1, r = !0, t = void 0) {
+  async spi(e, a = !1, r = !0, t = void 0) {
     BlackScreenFadeController_1.BlackScreenFadeController.AddFadeBlackScreen(
       e,
       a,
@@ -80,7 +80,7 @@ class CameraFadeLoading {
       await ModelManager_1.ModelManager.LevelLoadingModel.CameraFadeShowPromise
         ?.Promise;
   }
-  async afi(e) {
+  async api(e) {
     BlackScreenFadeController_1.BlackScreenFadeController.RemoveFadeBlackScreen(
       e,
       "CameraFadeLoading:FadeOut",
@@ -101,10 +101,10 @@ class CameraFadeLoading {
     if (e)
       switch (e) {
         case IAction_1.EFadeInScreenShowType.White:
-          a.FadeColor = this.kei;
+          a.FadeColor = this.kti;
           break;
         case IAction_1.EFadeInScreenShowType.Black:
-          a.FadeColor = this.ofi;
+          a.FadeColor = this.opi;
       }
     return (
       BlackScreenFadeController_1.BlackScreenFadeController.ChangeColor(e), !0

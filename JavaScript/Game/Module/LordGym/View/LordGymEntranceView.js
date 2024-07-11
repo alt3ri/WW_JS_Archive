@@ -23,34 +23,34 @@ class LordGymEntranceView extends UiViewBase_1.UiViewBase {
       (this.jSi = 0),
       (this.WSi = void 0),
       (this.KSi = 0),
-      (this.O3e = 0),
+      (this.t5e = 0),
       (this.QSi = !1),
       (this.XSi = 0),
       (this.$Si = void 0),
-      (this.u6e = void 0),
+      (this.T8e = void 0),
       (this.YSi = () => {
         return new LordGymItem_1.LordGymItem(this.JSi, this.zSi);
       }),
       (this.rOe = () => {
         return new CommonItemSmallItemGrid_1.CommonItemSmallItemGrid();
       }),
-      (this.xhi = () => {
+      (this.xli = () => {
         UiManager_1.UiManager.CloseView(this.Info.Name);
       }),
       (this.ZSi = () => {
-        0 < this.O3e && HelpController_1.HelpController.OpenHelpById(this.O3e);
+        0 < this.t5e && HelpController_1.HelpController.OpenHelpById(this.t5e);
       }),
-      (this.eEi = () => {
+      (this.eyi = () => {
         LordGymController_1.LordGymController.LordGymBeginRequest(
           this.KSi,
         ).then((e) => {
           e && this.CloseMe();
         });
       }),
-      (this.tEi = () => {
+      (this.tyi = () => {
         UiManager_1.UiManager.OpenView("LordGymChallengeRecordView");
       }),
-      (this.iEi = () => {
+      (this.iyi = () => {
         ControllerHolder_1.ControllerHolder.PayShopController.OpenPayShopViewWithTab(
           5,
           PayShopDefine_1.LORD_GYM_TAB_INDEX,
@@ -81,8 +81,8 @@ class LordGymEntranceView extends UiViewBase_1.UiViewBase {
         const s = ModelManager_1.ModelManager.LordGymModel?.GetLordGymIsFinish(
           this.KSi,
         );
-        this.u6e.RefreshByDataAsync(r).finally(() => {
-          for (const e of this.u6e.GetScrollItemList()) e.SetReceivedVisible(s);
+        this.T8e.RefreshByDataAsync(r).finally(() => {
+          for (const e of this.T8e.GetScrollItemList()) e.SetReceivedVisible(s);
         }),
           LguiUtil_1.LguiUtil.SetLocalTextNew(
             this.GetText(15),
@@ -97,7 +97,7 @@ class LordGymEntranceView extends UiViewBase_1.UiViewBase {
               ? LguiUtil_1.LguiUtil.SetLocalTextNew(
                   this.GetText(24),
                   "BestPassTime",
-                  TimeUtil_1.TimeUtil.GetTimeString(r.EAs),
+                  TimeUtil_1.TimeUtil.GetTimeString(r.Fxs),
                 )
               : LguiUtil_1.LguiUtil.SetLocalTextNew(
                   this.GetText(24),
@@ -105,7 +105,7 @@ class LordGymEntranceView extends UiViewBase_1.UiViewBase {
                 ),
             i.HelpId
               ? (this.GetButton(10).RootUIComp.SetUIActive(!0),
-                (this.O3e = i.HelpId))
+                (this.t5e = i.HelpId))
               : this.GetButton(10).RootUIComp.SetUIActive(!1),
             !ModelManager_1.ModelManager.LordGymModel.GetLordGymIsUnLock(
               this.KSi,
@@ -113,7 +113,7 @@ class LordGymEntranceView extends UiViewBase_1.UiViewBase {
           o = ModelManager_1.ModelManager.LordGymModel.GetLastGymFinish(
             this.KSi,
           ),
-          a = i.MonsterLevel > this.oEi();
+          a = i.MonsterLevel > this.oyi();
         this.GetItem(20).SetUIActive(r || !o),
           this.GetItem(25).SetUIActive(a && !r && o),
           this.GetButton(19).RootUIComp.SetUIActive(!(r || !o)),
@@ -179,19 +179,19 @@ class LordGymEntranceView extends UiViewBase_1.UiViewBase {
       [25, ue_1.UIItem],
     ]),
       (this.BtnBindInfo = [
-        [1, this.xhi],
+        [1, this.xli],
         [10, this.ZSi],
-        [19, this.eEi],
-        [18, this.tEi],
-        [23, this.iEi],
+        [19, this.eyi],
+        [18, this.tyi],
+        [23, this.iyi],
       ]);
   }
-  async rEi() {
+  async ryi() {
     (this.$Si = new GenericScrollViewNew_1.GenericScrollViewNew(
       this.GetScrollViewWithScrollbar(2),
       this.YSi,
     )),
-      (this.u6e = new GenericScrollViewNew_1.GenericScrollViewNew(
+      (this.T8e = new GenericScrollViewNew_1.GenericScrollViewNew(
         this.GetScrollViewWithScrollbar(16),
         this.rOe,
       )),
@@ -209,7 +209,7 @@ class LordGymEntranceView extends UiViewBase_1.UiViewBase {
           ]);
   }
   async OnBeforeStartAsync() {
-    await this.rEi();
+    await this.ryi();
   }
   OnStart() {
     var e = ConfigManager_1.ConfigManager.LordGymConfig.GetLordGymConfig(
@@ -226,9 +226,9 @@ class LordGymEntranceView extends UiViewBase_1.UiViewBase {
     this.SetTextureByPath(e, this.GetTexture(9)),
       LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(13), "SpecialRule"),
       LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(14), "FirstPassReward"),
-      this.nEi();
+      this.nyi();
   }
-  nEi() {
+  nyi() {
     (this.XSi = this.WSi[0]),
       this.WSi.forEach((e) => {
         ModelManager_1.ModelManager.LordGymModel.GetLordGymIsUnLock(e) &&
@@ -241,13 +241,13 @@ class LordGymEntranceView extends UiViewBase_1.UiViewBase {
     e?.SelectGridProxy(i.GridIndex), this.JSi(this.XSi);
   }
   OnBeforeDestroy() {
-    (this.$Si = void 0), (this.u6e = void 0);
+    (this.$Si = void 0), (this.T8e = void 0);
   }
-  oEi() {
+  oyi() {
     let e = 0,
       i = 0;
     for (const r of ModelManager_1.ModelManager.SceneTeamModel.GetTeamEntities()) {
-      var t = r.Entity?.GetComponent(156);
+      var t = r.Entity?.GetComponent(158);
       t &&
         ((e += t.GetCurrentValue(
           CharacterAttributeTypes_1.EAttributeId.Proto_Lv,

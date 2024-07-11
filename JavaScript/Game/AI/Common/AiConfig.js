@@ -32,7 +32,7 @@ class AiConfig extends ConfigBase_1.ConfigBase {
   constructor() {
     super(...arguments),
       (this.CommonStateMachineJsonObject = void 0),
-      (this.Ste = new Set());
+      (this.Ete = new Set());
   }
   OnInit() {
     var e =
@@ -51,20 +51,20 @@ class AiConfig extends ConfigBase_1.ConfigBase {
       );
     this.CommonStateMachineJsonObject = JSON.parse(e.StateMachineJson);
     for (const r of BlackboardWhiteListAll_1.configBlackboardWhiteListAll.GetConfigList())
-      this.Ste.add(r.Key);
+      this.Ete.add(r.Key);
     return !0;
   }
   OnClear() {
-    return this.Ste.clear(), !0;
+    return this.Ete.clear(), !0;
   }
   CheckBlackboardWhiteList(e) {
-    return this.Ste.has(e);
+    return this.Ete.has(e);
   }
   LoadAiConfig(e, r, i = !1) {
     var o = e.CharActorComp;
     (e.AiBase = AiBaseById_1.configAiBaseById.GetConfig(r)),
       e.AiBase
-        ? (e.AiBase.SubBehaviorConfigs && this.Ete(e, i),
+        ? (e.AiBase.SubBehaviorConfigs && this.Ste(e, i),
           e.AiBase.StateMachine &&
             (e.StateMachineConfig =
               AiStateMachineConfigById_1.configAiStateMachineConfigById.GetConfig(
@@ -104,7 +104,7 @@ class AiConfig extends ConfigBase_1.ConfigBase {
         ["CreatureId", r.CreatureData.GetOwnerId()],
       );
   }
-  Ete(e, r = !1) {
+  Ste(e, r = !1) {
     var i = e.CharActorComp,
       o = this.LoadSpecialHateAndSenseConfig(e);
     this.yte(e);

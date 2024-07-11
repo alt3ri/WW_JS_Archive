@@ -6,37 +6,37 @@ const ActorSystem_1 = require("../../../Core/Actor/ActorSystem"),
   LguiUtil_1 = require("./LguiUtil");
 class GenericLayoutAdd {
   constructor(t, e) {
-    (this.$bo = void 0),
-      (this.Ybo = void 0),
-      (this.Jbo = new Map()),
-      (this.zbo = []),
+    (this.Kqo = void 0),
+      (this.Qqo = void 0),
+      (this.Xqo = new Map()),
+      (this.$qo = []),
       (this.AQ = new Map()),
-      (this.$bo = t),
-      (this.Ybo = e),
-      this.Zbo();
+      (this.Kqo = t),
+      (this.Qqo = e),
+      this.Yqo();
   }
-  Zbo() {
-    if (this.$bo) {
-      var i = this.eqo().GetAttachUIChildren();
+  Yqo() {
+    if (this.Kqo) {
+      var i = this.Jqo().GetAttachUIChildren();
       for (let t = 0, e = i.Num(); t < e; ++t) {
         var o = i.Get(t);
-        o.SetUIActive(!1), this.Jbo.set(t, o);
+        o.SetUIActive(!1), this.Xqo.set(t, o);
       }
     }
   }
-  eqo() {
-    return this.$bo.GetRootComponent();
+  Jqo() {
+    return this.Kqo.GetRootComponent();
   }
   AddItemToLayout(o, r = 0) {
-    var s = this.Jbo.get(r);
+    var s = this.Xqo.get(r);
     if (s) {
       s.SetUIActive(!0);
       let i = this.AQ.get(r);
       i || ((i = new Map()), this.AQ.set(r, i));
       for (let t = 0, e = o.length; t < e; ++t) {
-        var h = LguiUtil_1.LguiUtil.CopyItem(s, this.eqo()),
-          a = this.Ybo(o[t], h, t, r);
-        i.set(a.Key, a.Value), this.zbo.push(h);
+        var h = LguiUtil_1.LguiUtil.CopyItem(s, this.Jqo()),
+          a = this.Qqo(o[t], h, t, r);
+        i.set(a.Key, a.Value), this.$qo.push(h);
       }
       s.SetUIActive(!1);
     } else
@@ -57,8 +57,8 @@ class GenericLayoutAdd {
       t.clear();
     }
     this.AQ.clear();
-    for (const i of this.zbo) ActorSystem_1.ActorSystem.Put(i.GetOwner());
-    this.zbo.length = 0;
+    for (const i of this.$qo) ActorSystem_1.ActorSystem.Put(i.GetOwner());
+    this.$qo.length = 0;
   }
 }
 exports.GenericLayoutAdd = GenericLayoutAdd;

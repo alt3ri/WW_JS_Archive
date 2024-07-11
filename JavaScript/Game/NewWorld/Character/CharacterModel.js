@@ -43,7 +43,7 @@ class CharacterModel extends ModelBase_1.ModelBase {
                   Vector_1.Vector.DistSquared(r, bEntityLocation))
               : 0);
       })),
-      (this.MWo = new Map()),
+      (this.fKo = new Map()),
       (this.TestSoarOn = !1),
       (this.EntityPool = new Lru_1.Lru(
         ENTITY_LRU_CAPACITY,
@@ -70,13 +70,13 @@ class CharacterModel extends ModelBase_1.ModelBase {
         e,
       )
     )
-      return this.SWo(t);
+      return this.pKo(t);
   }
   SpawnEntity(t) {
     t = this.EntityPool.Get(t);
-    if (t && ObjectSystem_1.ObjectSystem.CreateExternal(t)) return this.SWo(t);
+    if (t && ObjectSystem_1.ObjectSystem.CreateExternal(t)) return this.pKo(t);
   }
-  SWo(t) {
+  pKo(t) {
     for (var e = t.Index; this.nK.length <= e; ) this.nK.push(void 0);
     t = new EntityHandle_1.EntityHandle(t);
     return (this.nK[e] = t);
@@ -100,8 +100,9 @@ class CharacterModel extends ModelBase_1.ModelBase {
     var o = [
       t,
       () =>
-        this.EWo(t, n)
-          ? (Log_1.Log.CheckInfo() &&
+        this.vKo(t, n)
+          ? (ModelManager_1.ModelManager.CreatureModel.EnableEntityLog &&
+              Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "Entity",
                 3,
@@ -114,8 +115,9 @@ class CharacterModel extends ModelBase_1.ModelBase {
           : (e(!1), !1),
       () =>
         !!r &&
-        (this.yWo(t, n)
-          ? (Log_1.Log.CheckInfo() &&
+        (this.MKo(t, n)
+          ? (ModelManager_1.ModelManager.CreatureModel.EnableEntityLog &&
+              Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "Entity",
                 3,
@@ -128,9 +130,9 @@ class CharacterModel extends ModelBase_1.ModelBase {
             !0)
           : (e(!1), !1)),
     ];
-    this.AwakeQueue.Push(o), this.MWo.set(t, o);
+    this.AwakeQueue.Push(o), this.fKo.set(t, o);
   }
-  EWo(t, e) {
+  vKo(t, e) {
     var r, i, n;
     return (
       !!t.Valid &&
@@ -153,7 +155,7 @@ class CharacterModel extends ModelBase_1.ModelBase {
       e)
     );
   }
-  yWo(t, e) {
+  MKo(t, e) {
     var r, i;
     return !(
       !t.Valid ||
@@ -186,7 +188,7 @@ class CharacterModel extends ModelBase_1.ModelBase {
   PopAwakeHandler() {
     var t;
     if (!this.AwakeQueue.Empty)
-      return (t = this.AwakeQueue.Pop()), this.MWo.delete(t[0]), t;
+      return (t = this.AwakeQueue.Pop()), this.fKo.delete(t[0]), t;
   }
   Destroy(t) {
     if (!t?.Valid)
@@ -237,7 +239,7 @@ class CharacterModel extends ModelBase_1.ModelBase {
     );
   }
   ClearData() {
-    this.AwakeQueue.Clear(), this.MWo.clear();
+    this.AwakeQueue.Clear(), this.fKo.clear();
   }
   GetHandle(t) {
     var e;
@@ -256,7 +258,7 @@ class CharacterModel extends ModelBase_1.ModelBase {
     return this.nK[e]?.Id === t;
   }
   SortItem(t) {
-    t = this.MWo.get(t);
+    t = this.fKo.get(t);
     t && this.AwakeQueue.Update(t);
   }
 }

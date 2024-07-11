@@ -16,20 +16,20 @@ const UE = require("ue"),
 class ActivitySevenDaySignView extends ActivitySubViewBase_1.ActivitySubViewBase {
   constructor() {
     super(...arguments),
-      (this.g4e = void 0),
-      (this.f4e = void 0),
-      (this.IFe = (e) => {
-        this.TFe(e)
+      (this.x5e = void 0),
+      (this.w5e = void 0),
+      (this.k3e = (e) => {
+        this.F3e(e)
           ? ActivitySevenDaySignController_1.ActivitySevenDaySignController.GetRewardByDay(
-              this.f4e.Id,
+              this.w5e.Id,
               e,
             )
-          : e === this.f4e.GetImportantItemIndex() && this.p4e();
+          : e === this.w5e.GetImportantItemIndex() && this.B5e();
       }),
-      (this.p4e = () => {
+      (this.B5e = () => {
         var e =
           ConfigManager_1.ConfigManager.ActivitySevenDaySignConfig?.GetActivitySignById(
-            this.f4e.Id,
+            this.w5e.Id,
           );
         switch (e.ImportantRewardType) {
           case 1:
@@ -64,64 +64,64 @@ class ActivitySevenDaySignView extends ActivitySubViewBase_1.ActivitySubViewBase
       [9, UE.UIItem],
       [10, UE.UIItem],
     ]),
-      (this.BtnBindInfo = [[3, this.p4e]]);
+      (this.BtnBindInfo = [[3, this.B5e]]);
   }
   async OnBeforeStartAsync() {
     var t = [],
-      r = ((this.g4e = []), this.f4e.GetImportantItemIndex());
+      r = ((this.x5e = []), this.w5e.GetImportantItemIndex());
     for (let i = 0; i < SIGN_DAY_COUNT; i++) {
       let e = void 0;
       var n = this.GetItem(ITEM_START_INDEX + i);
       0 <= r && r === i
         ? ((e =
             new ActivitySevenDaySignDefine_1.ImportantRewardItem()).BigIconPath =
-            this.f4e?.GetBigRewardIcon(this.f4e.Id) ?? "")
+            this.w5e?.GetBigRewardIcon(this.w5e.Id) ?? "")
         : (e = new ActivitySevenDaySignDefine_1.NormalRewardItem()),
-        this.g4e.push(e),
+        this.x5e.push(e),
         (e.SkipDestroyActor = !0),
-        (e.OnClickToGet = this.IFe),
+        (e.OnClickToGet = this.k3e),
         t.push(e.CreateThenShowByActorAsync(n.GetOwner()));
     }
     await Promise.all(t);
   }
   OnBeforeShow() {
-    for (const e of this.g4e) this.AddChild(e);
+    for (const e of this.x5e) this.AddChild(e);
   }
   OnSetData() {
-    this.f4e = this.ActivityBaseData;
+    this.w5e = this.ActivityBaseData;
   }
   OnTimer(e) {
     var [i, t] = this.GetTimeVisibleAndRemainTime();
     this.GetText(1).SetUIActive(i), i && this.GetText(1).SetText(t);
   }
   OnBeforeDestroy() {
-    for (const e of this.g4e) this.AddChild(e);
+    for (const e of this.x5e) this.AddChild(e);
   }
-  v4e() {
+  b5e() {
     return MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
-      this.f4e.LocalConfig.Desc,
+      this.w5e.LocalConfig.Desc,
     );
   }
   OnRefreshView() {
-    this.GetText(0).SetText(this.f4e.GetTitle()),
-      this.GetText(2).SetText(this.v4e()),
+    this.GetText(0).SetText(this.w5e.GetTitle()),
+      this.GetText(2).SetText(this.b5e()),
       this.jqe();
   }
   jqe() {
     this.OnTimer(1);
     for (let e = 0; e < SIGN_DAY_COUNT; e++) {
-      var i = this.f4e.GetRewardByDay(e),
-        t = this.f4e.GetRewardStateByDay(e),
+      var i = this.w5e.GetRewardByDay(e),
+        t = this.w5e.GetRewardStateByDay(e),
         i = i[0],
-        r = this.g4e[e];
+        r = this.x5e[e];
       r && r.RefreshByData(i, t, e);
     }
-    var e = 0 !== this.f4e.GetImportantRewardType();
+    var e = 0 !== this.w5e.GetImportantRewardType();
     this.GetButton(3)?.RootUIComp.SetUIActive(e),
       this.GetButton(3)?.RootUIComp.SetRaycastTarget(e);
   }
-  TFe(e) {
-    return this.f4e.GetRewardStateByDay(e) === Protocol_1.Aki.Protocol.D0s.j0s;
+  F3e(e) {
+    return this.w5e.GetRewardStateByDay(e) === Protocol_1.Aki.Protocol.jps.hMs;
   }
 }
 exports.ActivitySevenDaySignView = ActivitySevenDaySignView;

@@ -12,15 +12,15 @@ class TowerRewardItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(),
       (this.QSi = !1),
-      (this.uDo = 0),
+      (this.hRo = 0),
       (this.bOe = void 0),
-      (this.jjt = () => {
+      (this.jWt = () => {
         return new CommonItemSmallItemGrid_1.CommonItemSmallItemGrid();
       }),
-      (this.cDo = () => {
+      (this.lRo = () => {
         TowerController_1.TowerController.TowerRewardRequest(
           ModelManager_1.ModelManager.TowerModel.CurrentSelectDifficulties,
-          this.uDo,
+          this.hRo,
         ),
           this.GetItem(3).SetUIActive(!0),
           this.GetItem(5).SetUIActive(!1);
@@ -35,20 +35,20 @@ class TowerRewardItem extends GridProxyAbstract_1.GridProxyAbstract {
       [4, UE.UIItem],
       [5, UE.UIItem],
     ]),
-      (this.BtnBindInfo = [[2, this.cDo]]);
+      (this.BtnBindInfo = [[2, this.lRo]]);
   }
   OnStart() {
     this.bOe = new GenericScrollViewNew_1.GenericScrollViewNew(
       this.GetScrollViewWithScrollbar(0),
-      this.jjt,
+      this.jWt,
     );
   }
   OnBeforeDestroy() {
     this.bOe = void 0;
   }
   Refresh(e) {
-    (this.QSi = e.IsReceived), (this.uDo = e.Index);
-    var r = this.mDo(e.RewardId),
+    (this.QSi = e.IsReceived), (this.hRo = e.Index);
+    var r = this._Ro(e.RewardId),
       r =
         (this.bOe.RefreshByData(r, () => {
           for (const e of this.bOe.GetScrollItemList())
@@ -62,7 +62,7 @@ class TowerRewardItem extends GridProxyAbstract_1.GridProxyAbstract {
       this.GetItem(4).SetUIActive(r < e.Target),
       this.GetItem(5).SetUIActive(r >= e.Target && !this.QSi);
   }
-  mDo(e) {
+  _Ro(e) {
     var r,
       t,
       i = [];

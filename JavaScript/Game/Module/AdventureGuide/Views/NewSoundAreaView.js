@@ -6,6 +6,7 @@ const UE = require("ue"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   UiTabViewBase_1 = require("../../../Ui/Base/UiTabViewBase"),
   UiManager_1 = require("../../../Ui/UiManager"),
@@ -24,40 +25,42 @@ const UE = require("ue"),
 class NewSoundAreaView extends UiTabViewBase_1.UiTabViewBase {
   constructor() {
     super(...arguments),
-      (this.jVe = void 0),
-      (this.WVe = void 0),
-      (this.KVe = []),
-      (this.QVe = AdventureDefine_1.EDungeonType.Mat),
-      (this.UVe = void 0),
-      (this.XVe = void 0),
-      (this.$Ve = void 0),
-      (this.YVe = void 0),
-      (this.JVe = 0),
-      (this.O3e = 0),
-      (this.V5s = 1),
-      (this.zVe = (e) => new OneTextTitleItem_1.OneTextTitleItem(e)),
-      (this.ZVe = (e) => new OneTextDropDownItem_1.OneTextDropDownItem(e)),
-      (this.e6e = (e) => {
-        (this.V5s = e),
+      (this.r8e = void 0),
+      (this.n8e = void 0),
+      (this.s8e = []),
+      (this.a8e = 4),
+      (this.H6e = void 0),
+      (this.h8e = void 0),
+      (this.l8e = void 0),
+      (this._8e = void 0),
+      (this.u8e = 0),
+      (this.t5e = 0),
+      (this.bWs = 1),
+      (this.c8e = (e) => new OneTextTitleItem_1.OneTextTitleItem(e)),
+      (this.m8e = (e) => new OneTextDropDownItem_1.OneTextDropDownItem(e)),
+      (this.d8e = (e) => {
+        (this.bWs = e),
+          (ModelManager_1.ModelManager.AdventureGuideModel.CurrentShowLevel =
+            e),
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.NewSoundAreaRefreshReward,
             e,
           ),
-          this.YVe?.GetCurrentSequence()
-            ? this.YVe?.ReplaySequenceByKey("Switch")
-            : this.YVe?.PlayLevelSequenceByName("Switch");
+          this._8e?.GetCurrentSequence()
+            ? this._8e?.ReplaySequenceByKey("Switch")
+            : this._8e?.PlayLevelSequenceByName("Switch");
       }),
-      (this.t6e = (e, i) => {
-        this.e6e(i);
+      (this.C8e = (e, i) => {
+        this.d8e(i);
       }),
-      (this.i6e = (e) => {
+      (this.g8e = (e) => {
         var i =
           e === ModelManager_1.ModelManager.WorldLevelModel.CurWorldLevel
             ? "Text_WorldCurrentLevelTag_Text"
             : "Text_WorldLevelTag_Text";
         return new LguiUtil_1.TableTextArgNew(i, e);
       }),
-      (this.o6e = () => {
+      (this.f8e = () => {
         UiManager_1.UiManager.OpenView("LordGymChallengeRecordView");
       });
   }
@@ -86,51 +89,55 @@ class NewSoundAreaView extends UiTabViewBase_1.UiTabViewBase {
       [20, UE.UIItem],
       [21, UE.UIItem],
     ]),
-      (this.BtnBindInfo = [[15, this.o6e]]);
+      (this.BtnBindInfo = [[15, this.f8e]]);
   }
   OnBeforeDestroy() {
-    this.jVe?.ClearGridProxies(),
-      this.WVe?.ClearGridProxies(),
-      this.$Ve?.Clear(),
-      (this.$Ve = void 0),
-      this.YVe?.Clear(),
-      (this.YVe = void 0);
+    this.r8e?.ClearGridProxies(),
+      this.n8e?.ClearGridProxies(),
+      this.l8e?.Clear(),
+      (this.l8e = void 0),
+      this._8e?.Clear(),
+      (this._8e = void 0);
   }
   async OnBeforeStartAsync() {
-    (this.XVe = new CommonDropDown_1.CommonDropDown(
+    (this.h8e = new CommonDropDown_1.CommonDropDown(
       this.GetItem(17),
-      this.ZVe,
-      this.zVe,
+      this.m8e,
+      this.c8e,
     )),
-      await this.XVe.Init();
+      await this.h8e.Init(),
+      ModelManager_1.ModelManager.TowerModel.GetSeasonCountDownData()
+        .RemainingTime < 2 &&
+        (await ControllerHolder_1.ControllerHolder.TowerController.RefreshTower());
   }
   OnStart() {
     const i = (e, i) => {
-        this.QVe = e;
+        this.a8e = e;
         var t =
             ConfigManager_1.ConfigManager.AdventureModuleConfig.GetSecondaryGuideDataConf(
               e,
             ),
+          r = t?.ShowDropDown ?? !1,
           i =
-            (this.GetItem(21)?.SetUIActive(t?.ShowDropDown ?? !1),
-            this.UVe?.SetToggleState(0, !1),
-            (this.UVe = i),
-            this.KVe.indexOf(e)),
+            (this.GetItem(21)?.SetUIActive(r),
+            this.H6e?.SetToggleState(0, !1),
+            (this.H6e = i),
+            this.s8e.indexOf(e)),
           e =
-            (0 <= i && this.jVe.SelectGridProxy(i, !1),
+            (0 <= i && this.r8e.SelectGridProxy(i, !1),
             EventSystem_1.EventSystem.Emit(
               EventDefine_1.EEventName.AdventureHelpBtn,
               t.HelpGroupId,
             ),
-            (this.O3e = t.HelpGroupId),
+            (this.t5e = t.HelpGroupId),
             this.RefreshDungeonType(),
-            this.r6e(),
-            this.e6e(this.V5s),
-            this.YVe?.GetCurrentSequence()
-              ? this.YVe?.ReplaySequenceByKey("Switch")
-              : this.YVe?.PlayLevelSequenceByName("Switch"),
+            this.p8e(),
+            r && this.d8e(this.bWs),
+            this._8e?.GetCurrentSequence()
+              ? this._8e?.ReplaySequenceByKey("Switch")
+              : this._8e?.PlayLevelSequenceByName("Switch"),
             ActivityDoubleRewardController_1.ActivityDoubleRewardController.GetAdventureUpActivity(
-              this.QVe,
+              this.a8e,
             ));
         e
           ? (this.GetItem(18).SetUIActive(!0),
@@ -143,8 +150,8 @@ class NewSoundAreaView extends UiTabViewBase_1.UiTabViewBase {
             ))
           : this.GetItem(18).SetUIActive(!1);
       },
-      t = (e) => this.QVe !== e;
-    (this.jVe = new LoopScrollView_1.LoopScrollView(
+      t = (e) => this.a8e !== e;
+    (this.r8e = new LoopScrollView_1.LoopScrollView(
       this.GetLoopScrollViewComponent(1),
       this.GetItem(4).GetOwner(),
       () => {
@@ -152,7 +159,7 @@ class NewSoundAreaView extends UiTabViewBase_1.UiTabViewBase {
         return e.BindOnToggleFunc(i), e.BindCanToggleExecuteChange(t), e;
       },
     )),
-      (this.WVe = new LoopScrollView_1.LoopScrollView(
+      (this.n8e = new LoopScrollView_1.LoopScrollView(
         this.GetLoopScrollViewComponent(3),
         this.GetItem(2).GetOwner(),
         () => new NewSoundDetectItem_1.NewSoundDetectItem(),
@@ -164,25 +171,24 @@ class NewSoundAreaView extends UiTabViewBase_1.UiTabViewBase {
       e++
     )
       r.push(e);
-    (this.JVe = ModelManager_1.ModelManager.WorldLevelModel.CurWorldLevel - 1),
-      (this.V5s = this.JVe),
-      this.XVe.SetOnSelectCall(this.t6e),
-      this.XVe.SetShowType(0),
-      this.XVe.InitScroll(r, this.i6e, this.JVe);
+    (this.u8e = ModelManager_1.ModelManager.WorldLevelModel.CurWorldLevel - 1),
+      (this.bWs = this.u8e),
+      this.h8e.SetOnSelectCall(this.C8e),
+      this.h8e.SetShowType(0),
+      this.h8e.InitScroll(r, this.g8e, this.u8e);
     var e =
       ModelManager_1.ModelManager.AdventureGuideModel.GetAllCanShowDungeonTypeList();
-    (this.KVe = e),
-      (this.$Ve = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem)),
-      (this.YVe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem));
+    (this.s8e = e),
+      (this.l8e = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem)),
+      (this._8e = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem));
   }
-  r6e() {
+  p8e() {
     var e =
       ModelManager_1.ModelManager.AdventureGuideModel.GetCanShowDungeonRecordsByType(
-        this.QVe,
+        this.a8e,
       );
     e?.length &&
-      ((this.QVe !== AdventureDefine_1.EDungeonType.Tutorial &&
-        this.QVe !== AdventureDefine_1.EDungeonType.SkillTeach) ||
+      ((6 !== this.a8e && 62 !== this.a8e) ||
         e.sort((e, i) => {
           (e = e.Conf.SubDungeonId), (i = i.Conf.SubDungeonId);
           return (
@@ -194,7 +200,7 @@ class NewSoundAreaView extends UiTabViewBase_1.UiTabViewBase {
               : 0)
           );
         }),
-      this.WVe.RefreshByData(e));
+      this.n8e.RefreshByData(e));
   }
   OnBeforeShow() {
     var e = this.ExtraParams,
@@ -203,15 +209,15 @@ class NewSoundAreaView extends UiTabViewBase_1.UiTabViewBase {
           ? e[1]
           : void 0;
     let i = 0;
-    void 0 !== e && 0 <= (e = this.KVe.indexOf(Number(e))) && (i = e),
-      this.jVe.RefreshByData(this.KVe, void 0, () => {
-        this.jVe.SelectGridProxy(i, !0),
-          this.jVe.UnsafeGetGridProxy(i)?.SetSelectToggle();
+    void 0 !== e && 0 <= (e = this.s8e.indexOf(Number(e))) && (i = e),
+      this.r8e.RefreshByData(this.s8e, void 0, () => {
+        this.r8e.SelectGridProxy(i, !0),
+          this.r8e.UnsafeGetGridProxy(i)?.SetSelectToggle();
       }),
-      this.$Ve?.PlayLevelSequenceByName("Start"),
+      this.l8e?.PlayLevelSequenceByName("Start"),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.AdventureHelpBtn,
-        this.O3e,
+        this.t5e,
       );
   }
   RefreshDungeonType() {
@@ -223,32 +229,28 @@ class NewSoundAreaView extends UiTabViewBase_1.UiTabViewBase {
       this.GetItem(16).SetUIActive(!1),
       this.GetItem(11).SetUIActive(!1),
       this.GetItem(20).SetUIActive(!1),
-      this.QVe)
+      this.a8e)
     ) {
-      case AdventureDefine_1.EDungeonType.Rouge:
-        this.n6e();
+      case 18:
+        this.v8e();
         break;
-      case AdventureDefine_1.EDungeonType.Tower:
-        this.s6e(), this.a6e();
+      case 5:
+        this.M8e(), this.E8e();
         break;
-      case AdventureDefine_1.EDungeonType.Weekly:
-        this.s6e();
+      case 7:
+        this.M8e();
         break;
-      case AdventureDefine_1.EDungeonType.LordGym:
-        this.h6e();
+      case 61:
+        this.S8e();
         break;
-      case AdventureDefine_1.EDungeonType.SkillTeach:
-        this.l6e();
+      case 62:
+        this.y8e();
         break;
-      case AdventureDefine_1.EDungeonType.Tutorial:
-        this._6e();
-        break;
-      case AdventureDefine_1.EDungeonType.NoSoundArea:
-      case AdventureDefine_1.EDungeonType.Boss:
-      case AdventureDefine_1.EDungeonType.Mat:
+      case 6:
+        this.I8e();
     }
   }
-  n6e() {
+  v8e() {
     this.GetItem(5).SetUIActive(!0);
     var e =
         ModelManager_1.ModelManager.InventoryModel?.GetItemCountByConfigId(
@@ -263,7 +265,7 @@ class NewSoundAreaView extends UiTabViewBase_1.UiTabViewBase {
       i,
     );
   }
-  a6e() {
+  E8e() {
     this.GetItem(11).SetUIActive(!0), this.GetItem(12).SetUIActive(!0);
     var e = ModelManager_1.ModelManager.TowerModel.GetMaxDifficulty(),
       e =
@@ -272,65 +274,65 @@ class NewSoundAreaView extends UiTabViewBase_1.UiTabViewBase {
         );
     this.GetText(13)?.SetText(e);
   }
-  h6e() {
+  S8e() {
     this.GetItem(11).SetUIActive(!0), this.GetItem(14).SetUIActive(!0);
   }
-  l6e() {
+  y8e() {
     this.GetItem(11).SetUIActive(!0), this.GetItem(20).SetUIActive(!0);
   }
-  _6e() {
+  I8e() {
     this.GetItem(11).SetUIActive(!0), this.GetItem(16).SetUIActive(!0);
   }
-  s6e() {
+  M8e() {
     var i = this.GetItem(8),
       t = (i?.SetUIActive(!0), this.GetText(10)),
       r = this.GetText(9);
-    if (this.QVe === AdventureDefine_1.EDungeonType.Weekly) {
+    if (7 === this.a8e) {
       r.SetUIActive(!1);
-      var n =
+      var o =
         ModelManager_1.ModelManager.AdventureGuideModel.GetCanShowDungeonRecordsByType(
-          this.QVe,
+          this.a8e,
         );
       let e = 0;
-      if (1 === n[0].Type) {
-        var s = n[0].Conf.MarkId;
-        if (!s) return void i.SetUIActive(!1);
-        e = ConfigManager_1.ConfigManager.MapConfig.GetConfigMark(s)?.Reward;
+      if (1 === o[0].Type) {
+        var n = o[0].Conf.MarkId;
+        if (!n) return void i.SetUIActive(!1);
+        e = ConfigManager_1.ConfigManager.MapConfig.GetConfigMark(n)?.Reward;
       } else {
-        if (!n[0].Conf.DungeonId) return void i.SetUIActive(!1);
+        if (!o[0].Conf.DungeonId) return void i.SetUIActive(!1);
         e = ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(
-          n[0].Conf.SubDungeonId,
+          o[0].Conf.SubDungeonId,
         )?.RewardId;
       }
       t.SetUIActive(!0);
-      var s =
+      var n =
         ConfigManager_1.ConfigManager.ExchangeRewardConfig.GetExchangeRewardConfig(
           e,
         )?.SharedId;
-      s
-        ? ((n =
+      n
+        ? ((o =
             ConfigManager_1.ConfigManager.ExchangeRewardConfig.GetExchangeShareConfig(
-              s,
+              n,
             )),
-          (s =
+          (n =
             ModelManager_1.ModelManager.ExchangeRewardModel.GetExchangeRewardShareCount(
-              s,
+              n,
             )),
-          (s = (n = n.MaxCount) - s),
+          (n = (o = o.MaxCount) - n),
           LguiUtil_1.LguiUtil.SetLocalText(
             t,
             AdventureGuideController_1.RECEIVED_COUNT,
-            s + "/" + n,
+            n + "/" + o,
           ))
         : i.SetUIActive(!1);
     } else
-      this.QVe === AdventureDefine_1.EDungeonType.Tower &&
+      5 === this.a8e &&
         (t?.SetUIActive(!1),
         r.SetUIActive(!0),
-        (s =
+        (n =
           ModelManager_1.ModelManager.TowerModel.GetSeasonCountDownData()
             .CountDownText),
-        r.SetText(s));
+        r.SetText(n));
   }
   OnBeforeHide() {
     UiManager_1.UiManager.IsViewShow("PowerView") &&
@@ -346,10 +348,10 @@ class NewSoundAreaView extends UiTabViewBase_1.UiTabViewBase {
     else {
       e = Number(e[0]);
       if (0 === e)
-        return (i = this.WVe.GetGridByDisplayIndex(0)) ? [i, i] : void 0;
-      var i = this.KVe.indexOf(e);
+        return (i = this.n8e.GetGridByDisplayIndex(0)) ? [i, i] : void 0;
+      var i = this.s8e.indexOf(e);
       if (0 <= i) {
-        e = this.jVe?.UnsafeGetGridProxy(i);
+        e = this.r8e?.UnsafeGetGridProxy(i);
         if (e) {
           i = e.GetButtonItem();
           if (i) return [i, i];

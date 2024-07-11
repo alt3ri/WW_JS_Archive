@@ -9,7 +9,7 @@ const UE = require("ue"),
 class WeaponResonanceSuccessView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.xUt = () => {
+      (this.qAt = () => {
         UiManager_1.UiManager.CloseView("WeaponResonanceSuccessView");
       });
   }
@@ -19,7 +19,7 @@ class WeaponResonanceSuccessView extends UiViewBase_1.UiViewBase {
       [1, UE.UIText],
       [2, UE.UIText],
     ]),
-      (this.BtnBindInfo = [[0, this.xUt]]);
+      (this.BtnBindInfo = [[0, this.qAt]]);
   }
   OnBeforeShow() {
     var e = this.OpenParam,

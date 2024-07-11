@@ -7,9 +7,9 @@ const UE = require("ue"),
 class TowerTitleItem extends UiPanelBase_1.UiPanelBase {
   constructor(e, t) {
     super(),
-      (this.CDo = t),
+      (this.cRo = t),
       (this.Awe = () => {
-        this.CDo && this.CDo();
+        this.cRo && this.cRo();
       }),
       this.CreateThenShowByActor(e.GetOwner());
   }
@@ -27,7 +27,7 @@ class TowerTitleItem extends UiPanelBase_1.UiPanelBase {
     LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(1), e, ...t);
   }
   OnBeforeDestroy() {
-    this.CDo = void 0;
+    this.cRo = void 0;
   }
 }
 exports.TowerTitleItem = TowerTitleItem;

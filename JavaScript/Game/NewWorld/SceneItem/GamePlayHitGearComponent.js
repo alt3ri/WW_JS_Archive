@@ -48,61 +48,62 @@ let GamePlayHitGearComponent =
     constructor() {
       super(...arguments),
         (this.Hte = void 0),
-        (this.pcn = void 0),
-        (this.vcn = void 0),
+        (this.Jun = void 0),
+        (this.zun = void 0),
         (this.md = void 0),
-        (this.Mcn = void 0),
+        (this.Zun = void 0),
         (this.zie = void 0),
-        (this.Scn = void 0),
-        (this.Ecn = void 0),
-        (this.ycn = void 0),
-        (this.Icn = void 0),
-        (this.Tcn = void 0),
-        (this.Lcn = void 0),
-        (this.Dcn = void 0),
-        (this.Rcn = Vector_1.Vector.Create()),
-        (this.Acn = () => {
-          this.Entity.GetComponent(113).RemoveStopMoveCallback(this.Acn),
-            this.Icn ||
+        (this.ecn = void 0),
+        (this.tcn = void 0),
+        (this.icn = void 0),
+        (this.ocn = void 0),
+        (this.rcn = void 0),
+        (this.ncn = void 0),
+        (this.scn = void 0),
+        (this.acn = Vector_1.Vector.Create()),
+        (this.Lo = void 0),
+        (this.hcn = () => {
+          this.Entity.GetComponent(115).RemoveStopMoveCallback(this.hcn),
+            this.ocn ||
               (EventSystem_1.EventSystem.AddWithTarget(
                 this,
                 EventDefine_1.EEventName.OnSceneItemHitByHitData,
-                this.M1n,
+                this.Zln,
               ),
-              (this.Icn = !0)),
+              (this.ocn = !0)),
             this.BDe();
         }),
         (this.gIe = () => {}),
-        (this.M1n = (e) => {
-          this.Ucn(e) &&
+        (this.Zln = (e) => {
+          this.lcn(e) &&
             e.ReBulletData.Base.DamageId !== BigInt(0) &&
-            !this.Entity.GetComponent(117).IsInState(3) &&
-            (e = TimeUtil_1.TimeUtil.GetServerTimeStamp()) - this.Lcn >
-              this.Tcn * THOUSAND &&
+            !this.Entity.GetComponent(119).IsInState(3) &&
+            (e = TimeUtil_1.TimeUtil.GetServerTimeStamp()) - this.ncn >
+              this.rcn * THOUSAND &&
             (LevelGamePlayController_1.LevelGamePlayController.ShootTargetHitGearStateChangeRequest(
               this.Entity.Id,
               (e) => {
                 if (e)
                   if (
-                    e.lkn ===
-                    Protocol_1.Aki.Protocol.lkn.Proto_ErrTargetGearFinished
+                    e.O4n ===
+                    Protocol_1.Aki.Protocol.O4n.Proto_ErrTargetGearFinished
                   )
                     Log_1.Log.CheckWarn() &&
                       Log_1.Log.Warn("World", 32, "靶机关已完成");
                   else {
                     if (
-                      e.lkn !==
-                      Protocol_1.Aki.Protocol.lkn
+                      e.O4n !==
+                      Protocol_1.Aki.Protocol.O4n
                         .Proto_ErrTargetGearEntityNotExist
                     )
-                      return e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys
-                        ? e.lkn ===
-                          Protocol_1.Aki.Protocol.lkn
+                      return e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs
+                        ? e.O4n ===
+                          Protocol_1.Aki.Protocol.O4n
                             .Proto_ErrOnlineInteractNoPermission
                           ? void 0
                           : void ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-                              e.lkn,
-                              26180,
+                              e.O4n,
+                              11184,
                             )
                         : void (
                             this.Entity?.Valid &&
@@ -116,9 +117,9 @@ let GamePlayHitGearComponent =
                   }
               },
             ),
-            (this.Lcn = e));
+            (this.ncn = e));
         }),
-        (this.Ucn = (e) => {
+        (this.lcn = (e) => {
           return (
             !ModelManager_1.ModelManager.GameModeModel.IsMulti ||
             (!!e.Attacker?.Valid &&
@@ -129,42 +130,41 @@ let GamePlayHitGearComponent =
     OnInitData(e) {
       var t = e.GetParam(GamePlayHitGearComponent_1)[0];
       if (
-        ((this.ycn = !!t.Patrol),
-        this.ycn
-          ? ((this.vcn = t.Patrol?.SplineEntityId),
-            (this.Scn = t.Patrol?.IsCircle),
-            (this.Ecn = t.Patrol?.IsLookDir))
-          : ((this.vcn = void 0), (this.Scn = void 0), (this.Ecn = void 0)),
-        (this.Icn = !1),
-        (this.Tcn = t.HitCd || MIN_HIT_CD),
-        (this.Lcn = 0),
-        (this.pcn = this.Entity.GetComponent(138)),
-        this.pcn.RegisterComponent(this, t),
+        ((this.Lo = t),
+        (this.icn = !!t.Patrol),
+        this.icn
+          ? ((this.zun = t.Patrol?.SplineEntityId),
+            (this.ecn = t.Patrol?.IsCircle),
+            (this.tcn = t.Patrol?.IsLookDir))
+          : ((this.zun = void 0), (this.ecn = void 0), (this.tcn = void 0)),
+        (this.ocn = !1),
+        (this.rcn = t.HitCd || MIN_HIT_CD),
+        (this.ncn = 0),
         t.HitBullet)
       ) {
         var o;
         switch (t.HitBullet.Type) {
           case IComponent_1.EHitBulletType.OnlyDropAttack:
-            this.Dcn = 1994027462;
+            this.scn = 1994027462;
             break;
           case IComponent_1.EHitBulletType.CrystalBulletAttack:
-            (this.Dcn = -1590436469),
+            (this.scn = -1590436469),
               (o = t.HitBullet.TrackOffset),
-              (this.Rcn = Vector_1.Vector.Create(o.X, o.Y, o.Z));
+              (this.acn = Vector_1.Vector.Create(o.X, o.Y, o.Z));
             break;
           case IComponent_1.EHitBulletType.PlayerAttack:
           case IComponent_1.EHitBulletType.FixedBulletId:
         }
       }
       return (
-        this.Entity.GetComponent(106).SetLogicRange(
+        this.Entity.GetComponent(108).SetLogicRange(
           ConfigManager_1.ConfigManager.ManipulateConfig.SearchRange,
         ),
         !0
       );
     }
     OnStart() {
-      if (((this.Hte = this.Entity.GetComponent(182)), !this.Hte))
+      if (((this.Hte = this.Entity.GetComponent(185)), !this.Hte))
         return (
           Log_1.Log.CheckError() &&
             Log_1.Log.Error(
@@ -174,24 +174,19 @@ let GamePlayHitGearComponent =
             ),
           !1
         );
-      if (this.ycn && this.vcn) {
-        var e = ModelManager_1.ModelManager.CreatureModel.GetCompleteEntityData(
-          this.vcn,
-        );
-        if (!e)
-          return (
-            Log_1.Log.CheckWarn() &&
-              Log_1.Log.Warn(
-                "Level",
-                32,
-                "[GamePlayHitGearComponent.OnStart] 无法找到Spline Entity",
-                ["SplineEntityId", this.vcn],
-              ),
-            !1
-          );
-        var t = (0, IComponent_1.getComponent)(
-          e.ComponentsData,
-          "SplineComponent",
+      (this.Jun = this.Entity.GetComponent(140)),
+        this.Jun.RegisterComponent(this, this.Lo);
+      var e = this.Entity.GetComponent(144);
+      if (
+        (e &&
+          e.SetEnableMovementSync(
+            !1,
+            "GamePlayHitGearComponent OnStart默认关闭",
+          ),
+        this.icn && this.zun)
+      ) {
+        var t = ModelManager_1.ModelManager.CreatureModel.GetCompleteEntityData(
+          this.zun,
         );
         if (!t)
           return (
@@ -199,57 +194,73 @@ let GamePlayHitGearComponent =
               Log_1.Log.Warn(
                 "Level",
                 32,
-                "[GamePlayHitGearComponent.OnStart] 无法找到SplineComponent配置",
-                ["SplineEntityId", this.vcn],
+                "[GamePlayHitGearComponent.OnStart] 无法找到Spline Entity",
+                ["SplineEntityId", this.zun],
               ),
             !1
           );
-        if (t.Option.Type !== IComponent_1.ESplineType.Patrol)
+        var o = (0, IComponent_1.getComponent)(
+          t.ComponentsData,
+          "SplineComponent",
+        );
+        if (!o)
+          return (
+            Log_1.Log.CheckWarn() &&
+              Log_1.Log.Warn(
+                "Level",
+                32,
+                "[GamePlayHitGearComponent.OnStart] 无法找到SplineComponent配置",
+                ["SplineEntityId", this.zun],
+              ),
+            !1
+          );
+        if (o.Option.Type !== IComponent_1.ESplineType.Patrol)
           return (
             Log_1.Log.CheckWarn() &&
               Log_1.Log.Warn(
                 "Level",
                 32,
                 "[GamePlayHitGearComponent.OnStart] SplineComponent配置类型不是Patrol",
-                ["SplineEntityId", this.vcn],
+                ["SplineEntityId", this.zun],
               ),
             !1
           );
         this.zie =
           ModelManager_1.ModelManager.GameSplineModel.LoadAndGetSplineComponent(
-            this.vcn,
+            this.zun,
             this.Entity.GetComponent(0).GetPbDataId(),
           );
-        var t = Vector_1.Vector.Create(
-            e.Transform?.Pos.X ?? 0,
-            e.Transform?.Pos.Y ?? 0,
-            e.Transform?.Pos.Z ?? 0,
+        var o = Vector_1.Vector.Create(
+            t.Transform?.Pos.X ?? 0,
+            t.Transform?.Pos.Y ?? 0,
+            t.Transform?.Pos.Z ?? 0,
           ),
-          e =
+          t =
             ((this.md =
               ModelManager_1.ModelManager.GameSplineModel.GetSplineActorBySplineId(
-                this.vcn,
+                this.zun,
               )),
-            (this.Mcn = this.md.SplineData),
-            this.md.K2_SetActorLocation(t.ToUeVector(), !1, void 0, !1),
-            this.Entity.GetComponent(113)),
-          t = Vector_1.Vector.Create(
+            (this.Zun = this.md.SplineData),
+            this.md.K2_SetActorLocation(o.ToUeVector(), !1, void 0, !1),
+            this.Entity.GetComponent(115)),
+          o = Vector_1.Vector.Create(
             this.zie.GetWorldLocationAtDistanceAlongSpline(0),
           ),
-          o =
-            Vector_1.Vector.Dist(t, this.Hte.ActorLocationProxy) /
+          i =
+            Vector_1.Vector.Dist(o, this.Hte.ActorLocationProxy) /
             SPEED_TO_PATROL;
-        e.AddMoveTarget(new SceneItemMoveComponent_1.MoveTarget(t, o)),
-          e.AddStopMoveCallback(this.Acn);
+        t.AddMoveTarget(new SceneItemMoveComponent_1.MoveTarget(o, i)),
+          t.AddStopMoveCallback(this.hcn),
+          e && e.SetEnableMovementSync(!0, "GamePlayHitGearComponent");
       }
       return (
-        this.ycn ||
+        this.icn ||
           (EventSystem_1.EventSystem.AddWithTarget(
             this,
             EventDefine_1.EEventName.OnSceneItemHitByHitData,
-            this.M1n,
+            this.Zln,
           ),
-          (this.Icn = !0)),
+          (this.ocn = !0)),
         EventSystem_1.EventSystem.AddWithTarget(
           this.Entity,
           EventDefine_1.EEventName.OnGameplayTagChanged,
@@ -259,35 +270,38 @@ let GamePlayHitGearComponent =
       );
     }
     BDe() {
-      var e = UE.NewArray(UE.BuiltinFloat);
-      for (const t of this.Mcn.Points) e.Add(t.MoveSpeed);
-      this.Entity.GetComponent(113).StartPatrol(
+      var e = UE.NewArray(UE.BuiltinFloat),
+        t = UE.NewArray(UE.BuiltinFloat);
+      for (const o of this.Zun.Points)
+        e.Add(o.MoveSpeed), t.Add(o.StayTime ?? -1);
+      this.Entity.GetComponent(115).StartPatrol(
         this.zie,
         e,
+        t,
         !0,
-        this.Scn,
-        this.Ecn,
+        this.ecn,
+        this.tcn,
       );
     }
     OnEnd() {
       return (
-        this.ycn &&
-          this.vcn &&
+        this.icn &&
+          this.zun &&
           ModelManager_1.ModelManager.GameSplineModel.ReleaseSpline(
-            this.vcn,
+            this.zun,
             this.Entity.GetComponent(0).GetPbDataId(),
           ),
         EventSystem_1.EventSystem.RemoveWithTarget(
           this,
           EventDefine_1.EEventName.OnSceneItemHitByHitData,
-          this.M1n,
+          this.Zln,
         ),
         EventSystem_1.EventSystem.RemoveWithTarget(
           this.Entity,
           EventDefine_1.EEventName.OnGameplayTagChanged,
           this.gIe,
         ),
-        (this.pcn = void 0),
+        (this.Jun = void 0),
         Info_1.Info.EnableForceTick ||
           ComponentForceTickController_1.ComponentForceTickController.UnregisterTick(
             this,
@@ -296,11 +310,11 @@ let GamePlayHitGearComponent =
       );
     }
     IsCanBeManipulateLock() {
-      var e = this.Entity.GetComponent(177);
-      return -1590436469 === this.Dcn && e.HasTag(-3775711);
+      var e = this.Entity.GetComponent(180);
+      return -1590436469 === this.scn && e.HasTag(-3775711);
     }
     GetHitPoint() {
-      var e = Vector_1.Vector.Create(this.Rcn),
+      var e = Vector_1.Vector.Create(this.acn),
         t = Vector_1.Vector.Create(),
         o = Vector_1.Vector.Create();
       return (
@@ -317,7 +331,7 @@ let GamePlayHitGearComponent =
   });
 (GamePlayHitGearComponent = GamePlayHitGearComponent_1 =
   __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(124)],
+    [(0, RegisterComponent_1.RegisterComponent)(126)],
     GamePlayHitGearComponent,
   )),
   (exports.GamePlayHitGearComponent = GamePlayHitGearComponent);

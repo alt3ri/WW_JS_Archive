@@ -15,16 +15,16 @@ const UE = require("ue"),
 class BossRushSelectView extends UiTabViewBase_1.UiTabViewBase {
   constructor() {
     super(...arguments),
-      (this.CPr = void 0),
-      (this.v5t = void 0),
-      (this.EPe = void 0),
-      (this.Iki = () => {
+      (this.pyn = void 0),
+      (this.vVt = void 0),
+      (this.SPe = void 0),
+      (this.I2i = () => {
         return new BossRushMainViewScrollItem();
       }),
-      (this.cDo = () => {
+      (this.lRo = () => {
         UiManager_1.UiManager.OpenView(
           "ActivityRewardPopUpView",
-          this.CPr.GetRewardViewData(),
+          this.pyn.GetRewardPopUpViewData(),
         );
       });
   }
@@ -36,57 +36,57 @@ class BossRushSelectView extends UiTabViewBase_1.UiTabViewBase {
       [3, UE.UIItem],
       [4, UE.UIItem],
     ]),
-      (this.BtnBindInfo = [[0, this.cDo]]);
+      (this.BtnBindInfo = [[0, this.lRo]]);
   }
   OnStart() {
     var e = ModelManager_1.ModelManager.ActivityModel.GetActivityById(
       ModelManager_1.ModelManager.BossRushModel.CurrentSelectActivityId,
     );
-    (this.CPr = e),
-      (this.v5t = new LoopScrollView_1.LoopScrollView(
+    (this.pyn = e),
+      (this.vVt = new LoopScrollView_1.LoopScrollView(
         this.GetLoopScrollViewComponent(2),
         this.GetItem(3).GetOwner(),
-        this.Iki,
+        this.I2i,
       )),
-      (this.EPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem));
+      (this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem));
   }
-  x6e() {
+  K8e() {
     var e = this.GetItem(4);
     RedDotController_1.RedDotController.BindRedDot(
       "BossRushReward",
       e,
       void 0,
-      this.CPr?.Id,
+      this.pyn?.Id,
     );
   }
-  Dpt() {
+  Ovt() {
     var e = this.GetItem(4);
     RedDotController_1.RedDotController.UnBindGivenUi("BossRushReward", e);
   }
-  Mni() {
-    this.v5t && this.v5t.RefreshByData(this.CPr.GetBossRushLevelDetailInfo());
+  Esi() {
+    this.vVt && this.vVt.RefreshByData(this.pyn.GetBossRushLevelDetailInfo());
   }
   OnBeforeShow() {
-    this.Ebn(), this.Mni(), this.ELn(), this.x6e();
+    this.SOn(), this.Esi(), this.hDn(), this.K8e();
   }
-  Ebn() {
+  SOn() {
     let e = "Start";
     ModelManager_1.ModelManager.BossRushModel.PlayBackAnimation &&
       (e = "ShowView"),
-      this.EPe?.PlaySequencePurely(e),
+      this.SPe?.PlaySequencePurely(e),
       (ModelManager_1.ModelManager.BossRushModel.PlayBackAnimation = !1);
   }
   OnBeforeHide() {
-    this.Dpt();
+    this.Ovt();
   }
-  ELn() {
-    this.GetText(1).SetText(this.CPr.GetFullScore().toString());
+  hDn() {
+    this.GetText(1).SetText(this.pyn.GetFullScore().toString());
   }
   GetGuideUiItemAndUiItemForShowEx(e) {
     if (1 === e.length && !isNaN(Number(e[0])))
       return (
         (e = Number(e[0])),
-        (e = this.v5t.UnsafeGetGridProxy(e).GetButtonItem()) ? [e, e] : void 0
+        (e = this.vVt.UnsafeGetGridProxy(e).GetButtonItem()) ? [e, e] : void 0
       );
   }
 }
@@ -94,18 +94,18 @@ exports.BossRushSelectView = BossRushSelectView;
 class BossRushMainViewScrollItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
-      (this.Y6i = void 0),
+      (this.$8i = void 0),
       (this.nqe = () => {
         var e;
-        this.Y6i?.GetUnLockState()
+        this.$8i?.GetUnLockState()
           ? ((e =
               ModelManager_1.ModelManager.BossRushModel.GetBossRushTeamInfoByActivityId(
                 ModelManager_1.ModelManager.BossRushModel
                   .CurrentSelectActivityId,
               )).Clear(),
-            e.SetCurrentSelectLevel(this.Y6i),
+            e.SetCurrentSelectLevel(this.$8i),
             (ModelManager_1.ModelManager.BossRushModel.CurrentSelectLevelDetailData =
-              this.Y6i),
+              this.$8i),
             (ModelManager_1.ModelManager.BossRushModel.CurrentTeamInfo =
               ModelManager_1.ModelManager.BossRushModel.CurrentSelectLevelDetailData.ConvertToTeamInfo()),
             EventSystem_1.EventSystem.Emit(
@@ -130,22 +130,22 @@ class BossRushMainViewScrollItem extends GridProxyAbstract_1.GridProxyAbstract {
       (this.BtnBindInfo = [[5, this.nqe]]);
   }
   Refresh(e, i, t) {
-    (this.Y6i = e), this.L7e(e), this.Q2e(e), this.gPr(e), this.fPr(e);
+    (this.$8i = e), this.wke(e), this.l3e(e), this.vyn(e), this.Myn(e);
   }
-  fPr(e) {
+  Myn(e) {
     this.SetTextureByPath(e.GetMonsterTexturePath(), this.GetTexture(0));
     var i = this.GetTexture(6);
     i.SetUIActive(!e.GetUnLockState()),
       this.SetTextureByPath(e.GetMonsterTexturePath(), i);
   }
-  L7e(e) {
+  wke(e) {
     e = e.GetUnLockState();
     this.GetItem(1).SetUIActive(e), this.GetItem(2).SetUIActive(!e);
   }
-  Q2e(e) {
+  l3e(e) {
     e.GetUnLockState() && this.GetText(3).SetText(e.GetScore().toString());
   }
-  gPr(e) {
+  vyn(e) {
     e.GetUnLockState() || this.GetText(4).SetText(e.GetUnlockTimeText());
   }
   GetButtonItem() {

@@ -2,17 +2,24 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PersonalCardBaseItem = void 0);
 const UE = require("ue"),
-  ModelManager_1 = require("../../../Manager/ModelManager"),
-  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
-class PersonalCardBaseItem extends UiPanelBase_1.UiPanelBase {
-  constructor(e, t) {
-    super(),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract");
+class PersonalCardBaseItem extends GridProxyAbstract_1.GridProxyAbstract {
+  constructor() {
+    super(...arguments),
+      (this.CardData = void 0),
+      (this.CardConfig = void 0),
+      (this.NeedShowRedDot = !0),
       (this.OnToggleCallBack = void 0),
       (this.kqe = () => {
-        this.OnToggleCallBack && this.OnToggleCallBack(this.CardConfig);
+        this.OnToggleCallBack &&
+          this.OnToggleCallBack(this.GridIndex, this.CardData);
       }),
-      (this.CardConfig = t),
-      this.CreateThenShowByActor(e.GetOwner());
+      (this.$5i = (e) => {
+        e === this.CardData.CardId && this.BNe(this.CardData);
+      });
   }
   OnRegisterComponent() {
     (this.ComponentRegisterInfos = [
@@ -22,28 +29,47 @@ class PersonalCardBaseItem extends UiPanelBase_1.UiPanelBase {
     ]),
       (this.BtnBindInfo = [[2, this.kqe]]);
   }
-  OnStart() {
-    this.SetTextureByPath(this.CardConfig.CardPath, this.GetTexture(0)),
-      this.GetItem(1).SetUIActive(!1);
+  OnBeforeShow() {
+    EventSystem_1.EventSystem.Add(
+      EventDefine_1.EEventName.OnPersonalCardRead,
+      this.$5i,
+    );
+  }
+  OnBeforeHide() {
+    EventSystem_1.EventSystem.Remove(
+      EventDefine_1.EEventName.OnPersonalCardRead,
+      this.$5i,
+    );
+  }
+  Refresh(e, t, s) {
+    (this.CardData = e),
+      (this.GridIndex = s),
+      (this.CardConfig =
+        ConfigManager_1.ConfigManager.InventoryConfig.GetCardItemConfig(
+          e.CardId,
+        )),
+      this.BNe(e),
+      this.SetToggleState(t),
+      this.SetTextureByPath(this.CardConfig.CardPath, this.GetTexture(0));
+  }
+  BNe(e) {
+    this.GetItem(1).SetUIActive(e.IsUnLock && !e.IsRead && this.NeedShowRedDot);
+  }
+  SetNeedShowRedDot(e) {
+    this.NeedShowRedDot = e;
   }
   SetToggleCallBack(e) {
     this.OnToggleCallBack = e;
   }
   SetToggleState(e) {
+    e = e ? 1 : 0;
     this.GetExtendToggle(2).SetToggleState(e);
   }
-  RefreshRedDot() {
-    var t = ModelManager_1.ModelManager.PersonalModel.GetCardUnlockList(),
-      s = t.length,
-      i = this.GetItem(1);
-    i.SetUIActive(!1);
-    for (let e = 0; e < s; e++) {
-      var a = t[e];
-      if (a.CardId === this.CardConfig.Id && !a.IsRead) {
-        i.SetUIActive(!0);
-        break;
-      }
-    }
+  OnSelected(e) {
+    this.SetToggleState(!0);
+  }
+  OnDeselected(e) {
+    this.SetToggleState(!1);
   }
   GetConfig() {
     return this.CardConfig;

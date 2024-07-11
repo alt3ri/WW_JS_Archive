@@ -6,7 +6,7 @@ const UE = require("ue"),
   MenuScrollSettingBaseItem_1 = require("./MenuScrollSettingBaseItem");
 class MenuScrollSettingTitleItem extends MenuScrollSettingBaseItem_1.MenuScrollSettingBaseItem {
   constructor() {
-    super(...arguments), (this.Pe = void 0), (this.Gft = void 0);
+    super(...arguments), (this.Pe = void 0), (this.$pt = void 0);
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -15,11 +15,11 @@ class MenuScrollSettingTitleItem extends MenuScrollSettingBaseItem_1.MenuScrollS
     ];
   }
   OnStart() {
-    void 0 === this.Gft &&
-      (this.Gft = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem));
+    void 0 === this.$pt &&
+      (this.$pt = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem));
   }
   OnBeforeDestroy() {
-    this.Gft && (this.Gft = void 0), this.Pe && (this.Pe = void 0);
+    this.$pt && (this.$pt = void 0), this.Pe && (this.Pe = void 0);
   }
   Update(e) {
     (this.Pe = e), this.mGe();
@@ -29,7 +29,7 @@ class MenuScrollSettingTitleItem extends MenuScrollSettingBaseItem_1.MenuScrollS
       this.GetText(1).ShowTextNew(this.Pe.MenuDataSubName ?? "");
   }
   PlaySequenceFromName(e) {
-    this.Gft?.PlayLevelSequenceByName(e);
+    this.$pt?.PlayLevelSequenceByName(e);
   }
   SetInteractionActive(e) {}
 }

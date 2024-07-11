@@ -30,29 +30,29 @@ const Log_1 = require("../../../../Core/Common/Log"),
 let LevelTagComponent = class LevelTagComponent extends BaseTagComponent_1.BaseTagComponent {
   constructor() {
     super(...arguments),
-      (this.zht = void 0),
-      (this.gnn = new Map()),
-      (this.fnn = 0);
+      (this.u1t = void 0),
+      (this.Jrn = new Map()),
+      (this.zrn = 0);
   }
   get NotifyLock() {
-    return this.fnn;
+    return this.zrn;
   }
   set NotifyLock(t) {
-    t !== this.fnn &&
-      ((this.fnn = t), 0 === this.fnn) &&
+    t !== this.zrn &&
+      ((this.zrn = t), 0 === this.zrn) &&
       this.NotifyTagChanged();
   }
   OnInitData() {
     if (
       (super.OnInitData(),
-      this.gnn.clear(),
-      (this.zht = this.Entity.GetComponent(0)),
-      this.zht)
+      this.Jrn.clear(),
+      (this.u1t = this.Entity.GetComponent(0)),
+      this.u1t)
     ) {
-      var t = this.zht.GetPbDataId(),
-        e = this.zht.GetCreatureDataId();
-      for (const a of this.zht.GetEntityCommonTags())
-        this.pnn(a),
+      var t = this.u1t.GetPbDataId(),
+        e = this.u1t.GetCreatureDataId();
+      for (const a of this.u1t.GetEntityCommonTags())
+        this.Zrn(a),
           Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug(
               "Entity",
@@ -84,8 +84,8 @@ let LevelTagComponent = class LevelTagComponent extends BaseTagComponent_1.BaseT
               "Entity",
               40,
               "实体配置了非【关卡.Common.表现】子Tag的客户端模型表现Tag，请检查配置",
-              ["pbDataId", this.zht?.GetPbDataId()],
-              ["creatureDataId", this.zht?.GetCreatureDataId()],
+              ["pbDataId", this.u1t?.GetPbDataId()],
+              ["creatureDataId", this.u1t?.GetCreatureDataId()],
               ["tagId", e],
               [
                 "tagName",
@@ -126,7 +126,7 @@ let LevelTagComponent = class LevelTagComponent extends BaseTagComponent_1.BaseT
   ChangeLocalLevelTag(t, e) {
     this.NotifyLock++, this.RemoveTag(e), this.AddTag(t), this.NotifyLock--;
   }
-  pnn(t) {
+  Zrn(t) {
     var e;
     this.HasTag(t) ||
       (void 0 === (e = GameplayTagUtils_1.GameplayTagUtils.GetNameByTagId(t))
@@ -143,15 +143,15 @@ let LevelTagComponent = class LevelTagComponent extends BaseTagComponent_1.BaseT
               "Entity",
               18,
               "添加服务端标签:",
-              ["pbDataId", this.zht?.GetPbDataId()],
-              ["creatureDataId", this.zht?.GetCreatureDataId()],
+              ["pbDataId", this.u1t?.GetPbDataId()],
+              ["creatureDataId", this.u1t?.GetCreatureDataId()],
               ["tagId", t],
               ["tagName", e],
             ),
           this.TagContainer.AddExactTag(3, t),
           this.NotifyLock--));
   }
-  vnn(t) {
+  enn(t) {
     this.TagContainer.GetRowTagCount(3, t) <= 0 ||
       (this.NotifyLock++,
       this.TagContainer.RemoveExactTag(3, t),
@@ -160,8 +160,8 @@ let LevelTagComponent = class LevelTagComponent extends BaseTagComponent_1.BaseT
           "Entity",
           18,
           "移除服务端标签:",
-          ["pbDataId", this.zht.GetPbDataId()],
-          ["creatureDataId", this.zht.GetCreatureDataId()],
+          ["pbDataId", this.u1t.GetPbDataId()],
+          ["creatureDataId", this.u1t.GetCreatureDataId()],
           ["tagId", t],
           ["tagName", GameplayTagUtils_1.GameplayTagUtils.GetNameByTagId(t)],
         ),
@@ -169,12 +169,12 @@ let LevelTagComponent = class LevelTagComponent extends BaseTagComponent_1.BaseT
   }
   SyncTagsFromServer(t) {
     for (const a of t) {
-      var e = a.Ukn;
-      a.y9n ? this.pnn(e) : this.vnn(e);
+      var e = a.o5n;
+      a.eWn ? this.Zrn(e) : this.enn(e);
     }
   }
   AddServerTagByIdLocal(t, e) {
-    this.pnn(t),
+    this.Zrn(t),
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("Entity", 37, "通过客户端添加服务器下发的Tag", [
           "原因",
@@ -182,7 +182,7 @@ let LevelTagComponent = class LevelTagComponent extends BaseTagComponent_1.BaseT
         ]);
   }
   RemoveServerTagByIdLocal(t, e) {
-    this.vnn(t),
+    this.enn(t),
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("Entity", 37, "通过客户端移除服务器下发的Tag", [
           "原因",
@@ -192,22 +192,22 @@ let LevelTagComponent = class LevelTagComponent extends BaseTagComponent_1.BaseT
   NotifyTagChanged() {
     var t = [],
       e = [];
-    for (const s of this.gnn.keys()) {
-      var a = this.gnn.get(s),
-        i = this.GetTagCountById(s);
+    for (const s of this.Jrn.keys()) {
+      var a = this.Jrn.get(s),
+        i = this.GetTagCount(s);
       0 < a && i <= 0 ? e.push(s) : a <= 0 && 0 < i && t.push(s);
     }
-    this.gnn.clear();
+    this.Jrn.clear();
     let o = !1;
     if (0 < t.length)
       for (const r of t)
-        if (this.Mnn(r)) {
+        if (this.tnn(r)) {
           o = !0;
           break;
         }
     if (!o && 0 < e.length)
       for (const n of e)
-        if (this.Mnn(n)) {
+        if (this.tnn(n)) {
           o = !0;
           break;
         }
@@ -225,17 +225,17 @@ let LevelTagComponent = class LevelTagComponent extends BaseTagComponent_1.BaseT
   OnAnyTagChanged(t, e, a) {
     void 0 === t ||
       a === e ||
-      (super.OnAnyTagChanged(t, e, a), this.gnn.has(t)) ||
-      this.gnn.set(t, a);
+      (super.OnAnyTagChanged(t, e, a), this.Jrn.has(t)) ||
+      this.Jrn.set(t, a);
   }
-  Mnn(t) {
+  tnn(t) {
     for (const e of shouldNotifyTagType)
       if (GameplayTagUtils_1.GameplayTagUtils.IsChildTag(t, e)) return !0;
     return !1;
   }
 };
 (LevelTagComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(177)],
+  [(0, RegisterComponent_1.RegisterComponent)(180)],
   LevelTagComponent,
 )),
   (exports.LevelTagComponent = LevelTagComponent);

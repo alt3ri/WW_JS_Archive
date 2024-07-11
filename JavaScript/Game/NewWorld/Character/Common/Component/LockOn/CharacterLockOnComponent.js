@@ -23,6 +23,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharacterLockOnComponent =
     exports.LockOnInfo =
     exports.ShowTargetInfo =
+    exports.lockOnEnhancedTags =
       void 0);
 const UE = require("ue"),
   Log_1 = require("../../../../../../Core/Common/Log"),
@@ -42,15 +43,16 @@ const UE = require("ue"),
   TraceElementCommon_1 = require("../../../../../../Core/Utils/TraceElementCommon"),
   CameraController_1 = require("../../../../../Camera/CameraController"),
   CameraUtility_1 = require("../../../../../Camera/CameraUtility"),
+  FightCameraLogicComponent_1 = require("../../../../../Camera/FightCameraLogicComponent"),
   TsBaseCharacter_1 = require("../../../../../Character/TsBaseCharacter"),
   EventDefine_1 = require("../../../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../../../Common/Event/EventSystem"),
-  StatDefine_1 = require("../../../../../Common/StatDefine"),
   Global_1 = require("../../../../../Global"),
   GlobalData_1 = require("../../../../../GlobalData"),
   ConfigManager_1 = require("../../../../../Manager/ConfigManager"),
   ModelManager_1 = require("../../../../../Manager/ModelManager"),
   CombatMessage_1 = require("../../../../../Module/CombatMessage/CombatMessage"),
+  MenuController_1 = require("../../../../../Module/Menu/MenuController"),
   ColorUtils_1 = require("../../../../../Utils/ColorUtils"),
   CharacterController_1 = require("../../../CharacterController"),
   CampUtils_1 = require("../../Blueprint/Utils/CampUtils"),
@@ -61,8 +63,8 @@ const UE = require("ue"),
   CHECK_COUNT = 3,
   RESET_FOCUS_TIME = 0.6,
   RESET_TARGETS_ISLOCK_TIME = 1e4,
-  DEFAULT_LOCKON_CONFIG_ID = 0,
-  OFFSET = 250;
+  DEFAULT_LOCKON_CONFIG_ID = 0;
+exports.lockOnEnhancedTags = [-336338240, -164894127];
 class ShowTargetInfo {
   constructor() {
     (this.ShowTarget = void 0), (this.SocketName = ""), (this.LastSetTime = -0);
@@ -92,19 +94,19 @@ class LockOnInfo {
 exports.LockOnInfo = LockOnInfo;
 class CustomizedLockedQueue {
   constructor() {
-    this.Z$o = [];
+    this.YYo = [];
   }
   Has(i) {
-    return !!i && this.Z$o.some((t) => t.Equal(i));
+    return !!i && this.YYo.some((t) => t.Equal(i));
   }
   Push(t) {
-    t && !this.Has(t) && this.Z$o.push(t);
+    t && !this.Has(t) && this.YYo.push(t);
   }
   Pop() {
-    return this.Z$o.shift();
+    return this.YYo.shift();
   }
   Clear() {
-    this.Z$o.length = 0;
+    this.YYo.length = 0;
   }
 }
 let CharacterLockOnComponent =
@@ -113,57 +115,67 @@ let CharacterLockOnComponent =
   ) {
     constructor() {
       super(...arguments),
+        (this.kma = void 0),
+        (this.Gma = void 0),
+        (this.Nma = void 0),
+        (this.Fma = void 0),
+        (this.Vma = void 0),
+        (this.$ma = void 0),
+        (this.Hma = void 0),
+        (this.jma = void 0),
+        (this.Wma = void 0),
+        (this.Qma = void 0),
+        (this.Kma = void 0),
+        (this.Xma = void 0),
+        (this.lpa = void 0),
+        (this._pa = void 0),
+        (this.upa = void 0),
+        (this.cpa = void 0),
         (this.ActorComp = void 0),
-        (this.NextUpdateTime = 0),
-        (this.ResetTargetLocation = Vector_1.Vector.Create()),
-        (this.ResetAddRotator = Rotator_1.Rotator.Create()),
-        (this.o$r = void 0),
-        (this.r$r = void 0),
-        (this.n$r = ""),
-        (this.s$r = void 0),
-        (this.a$r = void 0),
-        (this.h$r = 0),
+        (this.GXr = void 0),
+        (this.NXr = void 0),
+        (this.OXr = ""),
+        (this.kXr = void 0),
+        (this.FXr = void 0),
+        (this.VXr = 0),
         (this.Xte = void 0),
-        (this.mbr = void 0),
-        (this.PSo = void 0),
-        (this.l$r = void 0),
-        (this._$r = void 0),
-        (this.u$r = void 0),
-        (this.c$r = !1),
-        (this.f7o = Vector_1.Vector.Create()),
+        (this.HBr = void 0),
+        (this.RSo = void 0),
+        (this.HXr = void 0),
+        (this.jXr = void 0),
+        (this.WXr = void 0),
+        (this.KXr = !1),
+        (this.dHo = Vector_1.Vector.Create()),
         (this.Tz = Vector_1.Vector.Create()),
         (this.Dz = Quat_1.Quat.Create()),
-        (this.Xyn = Vector2D_1.Vector2D.Create()),
-        (this.m$r = Vector_1.Vector.Create()),
-        (this.d$r = Vector_1.Vector.Create()),
-        (this.C$r = 0),
-        (this.g$r = 0),
-        (this.f$r = !1),
-        (this.p$r = 0),
+        (this.CTn = Vector2D_1.Vector2D.Create()),
+        (this.QXr = Vector_1.Vector.Create()),
+        (this.XXr = Vector_1.Vector.Create()),
+        (this.$Xr = 0),
+        (this.YXr = 0),
+        (this.JXr = !1),
+        (this.zXr = 0),
         (this.uoe = void 0),
-        (this.v$r = (t) => {
-          this.o$r?.EntityHandle?.Id === t && this.xDn();
+        (this.ZXr = (t) => {
+          this.GXr?.EntityHandle?.Id === t && this.AUn();
         }),
         (this.zpe = (t, i) => {
-          this.o$r?.EntityHandle === i && this.xDn();
+          this.GXr?.EntityHandle === i && this.AUn();
         }),
-        (this.W3r = (t) => {
+        (this.BSa = new Set()),
+        (this.I3r = (t) => {
           t = t.GetComponent(29);
-          (this.c$r = t.c$r),
-            this.E$r(t.o$r),
-            (this.s$r = t.s$r),
+          (this.KXr = t.KXr),
+            this.i$r(t.GXr),
+            (this.kXr = t.kXr),
             this.SetShowTarget(t.ShowTarget, t.ShowTargetSocket);
         }),
-        (this.y$r = void 0),
-        (this.$Vs = void 0),
-        (this.T$r = void 0),
-        (this.L$r = void 0),
-        (this.D$r = (t, i) => {
+        (this.a$r = (t, i) => {
           var e;
           i
-            ? this.M$r && (this.a$r = this.o$r)
-            : ((i = this.a$r?.EntityHandle?.Entity),
-              this.a$r &&
+            ? this.e$r && (this.FXr = this.GXr)
+            : ((i = this.FXr?.EntityHandle?.Entity),
+              this.FXr &&
                 i?.Valid &&
                 (i = i.GetComponent(3))?.Valid &&
                 (e =
@@ -175,24 +187,25 @@ let CharacterLockOnComponent =
                   e.CameraAdjustController.CheckInScreenMinY,
                   e.CameraAdjustController.CheckInScreenMaxY,
                 ) &&
-                (this.M$r
-                  ? (this.E$r(this.a$r),
+                (this.e$r
+                  ? (this.i$r(this.FXr),
                     this.SetShowTarget(
-                      this.o$r.EntityHandle,
-                      this.o$r.SocketName,
+                      this.GXr.EntityHandle,
+                      this.GXr.SocketName,
                     ),
-                    CharacterLockOnComponent_1.R$r.Push(this.o$r))
+                    CharacterLockOnComponent_1.h$r.Push(this.GXr))
                   : this.EnterLockDirection(),
-                (this.a$r = void 0)));
+                (this.FXr = void 0)));
         }),
-        (this.A$r = !1),
-        (this.cVr = Vector_1.Vector.Create()),
-        (this.U$r = void 0),
-        (this.P$r = !1);
+        (this.l$r = !1),
+        (this.W5r = Vector_1.Vector.Create()),
+        (this._$r = Vector_1.Vector.Create()),
+        (this.u$r = !1),
+        (this.cca = void 0);
     }
-    E$r(t) {
-      var i = this.o$r;
-      (this.o$r = t),
+    i$r(t) {
+      var i = this.GXr;
+      (this.GXr = t),
         (i?.EntityHandle === t?.EntityHandle &&
           i?.SocketName === t?.SocketName) ||
           (Log_1.Log.CheckDebug() &&
@@ -206,27 +219,27 @@ let CharacterLockOnComponent =
             ));
     }
     GetCurrentTarget() {
-      return this.o$r?.EntityHandle;
+      return this.GXr?.EntityHandle;
     }
     GetCurrentTargetSocketName() {
-      return this.o$r?.SocketName ?? "";
+      return this.GXr?.SocketName ?? "";
     }
     GetTargetInfo() {
       return (
-        (this.u$r.ShowTarget = this.ShowTarget),
-        (this.u$r.SocketName = this.ShowTargetSocket),
-        (this.u$r.LastSetTime = this.h$r),
-        this.u$r
+        (this.WXr.ShowTarget = this.ShowTarget),
+        (this.WXr.SocketName = this.ShowTargetSocket),
+        (this.WXr.LastSetTime = this.VXr),
+        this.WXr
       );
     }
     get ShowTarget() {
-      return this.r$r;
+      return this.NXr;
     }
     get ShowTargetSocket() {
-      return this.n$r;
+      return this.OXr;
     }
     SetShowTarget(t, i = "") {
-      this.h$r = Time_1.Time.WorldTime;
+      this.VXr = Time_1.Time.WorldTime;
       var e = t?.Entity?.GetComponent(3);
       if (this.ShowTarget !== t || this.ShowTargetSocket !== i) {
         if (
@@ -242,15 +255,15 @@ let CharacterLockOnComponent =
           void 0 === t)
         )
           return (
-            (this.r$r = void 0),
-            (this.n$r = ""),
+            (this.NXr = void 0),
+            (this.OXr = ""),
             GlobalData_1.GlobalData.BpEventManager.小队技能目标改变时.Broadcast(
               void 0,
             ),
             !1
           );
-        (this.r$r = t),
-          (this.n$r = i),
+        (this.NXr = t),
+          (this.OXr = i),
           e &&
             GlobalData_1.GlobalData.BpEventManager.小队技能目标改变时.Broadcast(
               e.Actor,
@@ -258,10 +271,10 @@ let CharacterLockOnComponent =
       }
       return !0;
     }
-    x$r(t, i = "") {
+    c$r(t, i = "") {
       var e, s;
       return (
-        !this.M$r &&
+        !this.e$r &&
         !this.Xte.HasTag(2066208190) &&
         (t?.Valid && t.Entity.Active
           ? (e = t.Entity.GetComponent(3))
@@ -275,30 +288,36 @@ let CharacterLockOnComponent =
       );
     }
     static get Dependencies() {
-      return [158];
+      return [160];
     }
-    xDn() {
-      this.c$r
+    AUn() {
+      this.KXr
         ? this.ForceLookAtTarget(void 0, !1, !0)
-        : this.M$r
-          ? this.S$r(!0)
-          : (this.E$r(void 0), this.SetShowTarget(void 0));
+        : this.e$r
+          ? this.t$r(!0)
+          : (this.i$r(void 0), this.SetShowTarget(void 0));
+    }
+    Jma(t) {
+      return (
+        this.BSa.clear(),
+        CharacterLockOnComponent_1.EnhancedEntityIds.forEach((t) => {
+          var i = ModelManager_1.ModelManager.CharacterModel?.GetHandle(t);
+          i
+            ? this.BSa.add(i)
+            : CharacterLockOnComponent_1.EnhancedEntityIds.delete(t);
+        }),
+        ModelManager_1.ModelManager.CreatureModel.GetEntitiesInRangeWithLocation(
+          this.ActorComp.ActorLocationProxy,
+          t,
+          3,
+          this.BSa,
+          !1,
+        ),
+        this.BSa
+      );
     }
     OnInitData() {
-      return (
-        (this.u$r = new ShowTargetInfo()),
-        (this.U$r = new UE.Vector2D(0, 0)),
-        !0
-      );
-    }
-    OnInit() {
-      return (
-        (this.NextUpdateTime = 0),
-        (this.y$r = void 0),
-        (this.$Vs = void 0),
-        (this.T$r = void 0),
-        !(this.L$r = void 0)
-      );
+      return (this.WXr = new ShowTargetInfo()), !0;
     }
     OnStart() {
       this.ActorComp = this.Entity.CheckGetComponent(3);
@@ -308,12 +327,12 @@ let CharacterLockOnComponent =
           t.GetRoleConfig().LockOnDefaultId,
           t.GetRoleConfig().LockOnLookOnId,
         ),
-        (this.Xte = this.Entity.CheckGetComponent(185)),
-        (this.mbr = this.Entity.CheckGetComponent(158)),
-        (this.PSo = this.Entity.CheckGetComponent(52)),
+        (this.Xte = this.Entity.CheckGetComponent(188)),
+        (this.HBr = this.Entity.CheckGetComponent(160)),
+        (this.RSo = this.Entity.CheckGetComponent(53)),
         EventSystem_1.EventSystem.Add(
           EventDefine_1.EEventName.CharOnRoleDead,
-          this.v$r,
+          this.ZXr,
         ),
         EventSystem_1.EventSystem.Add(
           EventDefine_1.EEventName.RemoveEntity,
@@ -322,9 +341,9 @@ let CharacterLockOnComponent =
         EventSystem_1.EventSystem.AddWithTarget(
           this.Entity,
           EventDefine_1.EEventName.RoleOnStateInherit,
-          this.W3r,
+          this.I3r,
         ),
-        this.Xte.ListenForTagAddOrRemove(483118073, this.D$r),
+        this.Xte.ListenForTagAddOrRemove(483118073, this.a$r),
         this.koe(),
         !0
       );
@@ -333,7 +352,7 @@ let CharacterLockOnComponent =
       return (
         EventSystem_1.EventSystem.Remove(
           EventDefine_1.EEventName.CharOnRoleDead,
-          this.v$r,
+          this.ZXr,
         ),
         EventSystem_1.EventSystem.Remove(
           EventDefine_1.EEventName.RemoveEntity,
@@ -342,7 +361,7 @@ let CharacterLockOnComponent =
         EventSystem_1.EventSystem.RemoveWithTarget(
           this.Entity,
           EventDefine_1.EEventName.RoleOnStateInherit,
-          this.W3r,
+          this.I3r,
         ),
         !0
       );
@@ -355,7 +374,7 @@ let CharacterLockOnComponent =
         this.uoe.SetTraceTypeQuery(
           QueryTypeDefine_1.KuroTraceTypeQuery.IkGround,
         ),
-        this.f$r &&
+        this.JXr &&
           ((this.uoe.DrawTime = 5),
           this.uoe.SetDrawDebugTrace(2),
           TraceElementCommon_1.TraceElementCommon.SetTraceColor(
@@ -369,129 +388,144 @@ let CharacterLockOnComponent =
     }
     SetLockOnConfig(t, i) {
       0 !== t &&
-        (this.l$r =
+        (this.HXr =
           ConfigManager_1.ConfigManager.WorldConfig.GetLockOnConfig(t)),
         0 !== i &&
-          (this._$r =
+          (this.jXr =
             ConfigManager_1.ConfigManager.WorldConfig.GetLockOnConfig(i));
     }
     OnTick(t) {
-      this.w$r(),
-        this.XVs(),
+      this.m$r(),
+        this.Kea(),
         this.Ii(t),
-        this.b$r(t),
-        this.q$r(),
+        this.C$r(t),
+        this.g$r(),
         LockOnDebug_1.LockOnDebug.Tick(this.Entity);
     }
     Ii(t) {
-      this.j$r(this.o$r?.EntityHandle)
-        ? (this.M$r || this.c$r) &&
-          ((this.g$r += t),
-          this.g$r < DELAY_TIME ||
-            ((this.g$r = 0),
-            this.J4r(this.o$r)
-              ? (this.C$r++,
-                this.C$r >= CHECK_COUNT && (this.YVs(), (this.C$r = 0)))
-              : (this.C$r = 0)))
-        : this.YVs();
+      this.I$r(this.GXr?.EntityHandle)
+        ? (this.e$r || this.KXr) &&
+          ((this.YXr += t),
+          this.YXr < DELAY_TIME ||
+            ((this.YXr = 0),
+            (t = Global_1.Global.CharacterCameraManager.K2_GetActorLocation()),
+            this.A4r(this.GXr, t)
+              ? (this.$Xr++,
+                this.$Xr >= CHECK_COUNT && (this.$ea(), (this.$Xr = 0)))
+              : (this.$Xr = 0)))
+        : this.$ea();
     }
-    YVs() {
-      this.E$r(void 0),
+    $ea() {
+      this.i$r(void 0),
         this.SetShowTarget(void 0),
         this.ExitLockDirection(),
         this.ForceLookAtTarget(void 0, !1);
     }
-    b$r(t) {
-      this.M$r &&
-        ((this.p$r += t),
-        this.p$r < RESET_TARGETS_ISLOCK_TIME ||
-          ((this.p$r = 0),
-          CharacterLockOnComponent_1.R$r.Clear(),
-          CharacterLockOnComponent_1.R$r.Push(this.o$r)));
+    C$r(t) {
+      this.e$r &&
+        ((this.zXr += t),
+        this.zXr < RESET_TARGETS_ISLOCK_TIME ||
+          ((this.zXr = 0),
+          CharacterLockOnComponent_1.h$r.Clear(),
+          CharacterLockOnComponent_1.h$r.Push(this.GXr)));
     }
-    SelectSoftLockTarget(i = DEFAULT_LOCKON_CONFIG_ID, t = 0, e = 4, s = !1) {
-      if (!this.M$r && !this.c$r)
-        if (0 !== t) this.o$r || this.SelectSoftLockTarget();
+    DetectSoftLockTarget(i = DEFAULT_LOCKON_CONFIG_ID, e = 0, s = 4, r = !1) {
+      if (!this.e$r && !this.KXr)
+        if (0 !== e) this.GXr || this.DetectSoftLockTarget();
         else {
-          let t = this.l$r;
+          let t = this.HXr;
           DEFAULT_LOCKON_CONFIG_ID !== i &&
-            (t = ConfigManager_1.ConfigManager.WorldConfig.GetLockOnConfig(i)),
-            this.G$r(t, e),
-            s &&
-              this.x$r(
+            (t = ConfigManager_1.ConfigManager.WorldConfig.GetLockOnConfig(i));
+          (e = this.DetectAlternativeTargets(t, !1)),
+            (i = this.FindTheBest(this.M$r(e, !1), s, !1, t.ToleranceAngle));
+          this.i$r(i),
+            i?.EntityHandle?.Valid &&
+              LockOnDebug_1.LockOnDebug.SetDebugArrow(i),
+            r &&
+              this.c$r(
                 this.GetCurrentTarget(),
                 this.GetCurrentTargetSocketName(),
               );
         }
     }
-    G$r(t, i) {
-      var e = this.N$r(t, !1);
-      let s = void 0;
-      (s = s || this.O$r(this.k$r(e, !1), i, !1, t.ToleranceAngle)),
-        this.E$r(s),
-        s?.EntityHandle?.Valid && LockOnDebug_1.LockOnDebug.SetDebugArrow(s);
-    }
-    O$r(t, i, e, s) {
+    FindTheBest(t, i, e, s) {
+      if (8 === i)
+        switch (MenuController_1.MenuController.GetTargetConfig(133)) {
+          case 0:
+            i = 0;
+            break;
+          case 1:
+            i = 4;
+            break;
+          case 2:
+            i = 3;
+        }
       let r = void 0,
         h = !1;
       switch (i) {
         case 0:
-          (h = !this.P$r),
-            (this.P$r = !1),
-            (r = this.cVr.IsNearlyZero() ? this.F$r() : this.cVr);
+        case 5:
+          (h = !this.u$r),
+            (this.u$r = !1),
+            (r = this.W5r.IsNearlyZero() ? this.E$r() : this.W5r);
           break;
         case 1:
+        case 7:
           r = this.ActorComp.ActorForwardProxy;
           break;
         case 2:
-          (r = this.F$r()), (h = !0);
+          (r = this.E$r()), (h = !0);
           break;
         case 3:
           break;
         case 4:
-          r = this.F$r();
+        case 6:
+          r = this.E$r();
       }
-      let o = void 0,
-        a = 180 / s,
-        n = Number.MAX_VALUE;
-      for (const C of t) {
-        switch (this.V$r(C, e, h)) {
+      var o = [5, 7, 6].includes(i),
+        a =
+          CommonParamById_1.configCommonParamById.GetIntConfig("LockOnOffset");
+      let n = void 0,
+        _ = Number.MAX_VALUE,
+        c = void 0,
+        C = Number.MAX_VALUE;
+      for (const v of t) {
+        switch (this.S$r(v, e, h)) {
           case 0:
             continue;
           case 1:
             break;
           case 2:
             return (
-              LockOnDebug_1.LockOnDebug.SetDebugString(C, 0, 0, this.cVr, r), C
+              LockOnDebug_1.LockOnDebug.SetDebugString(v, 0, 0, this.W5r, r), v
             );
         }
-        this.GetSkillBoneLocation(C.EntityHandle, C.SocketName, this.f7o);
-        var _ = this.ActorComp.ActorLocationProxy,
-          c = Vector_1.Vector.Dist(_, this.f7o);
+        this.zma(v.EntityHandle, v.SocketName, this.dHo);
+        var l = this.ActorComp.ActorLocationProxy,
+          u = Vector_1.Vector.Dist(l, this.dHo);
         let t = 0;
         r &&
           (this.Tz.DeepCopy(r),
           this.Tz.Normalize(),
-          this.Tz.Multiply(OFFSET, this.Tz),
-          _.Subtraction(this.Tz, this.Tz),
-          this.f7o.Subtraction(this.Tz, this.f7o),
-          (t = this.H$r(r, this.f7o)));
-        _ = Math.floor(t / s);
-        _ === a && o
-          ? c < n && ((n = c), (o = C))
-          : _ <= a && ((a = _), (n = c), (o = C)),
-          LockOnDebug_1.LockOnDebug.SetDebugString(C, t, c, this.cVr, r);
+          this.Tz.Multiply(o ? 0 : a, this.Tz),
+          l.Subtraction(this.Tz, this.Tz),
+          this.dHo.Subtraction(this.Tz, this.dHo),
+          (t = this.y$r(r, this.dHo))),
+          t < s
+            ? (!n || u < _) && ((n = v), (_ = u))
+            : o || ((!c || u < C) && ((c = v), (C = u))),
+          LockOnDebug_1.LockOnDebug.SetDebugString(v, t, u, this.W5r, r);
       }
-      return o;
+      return n || c;
     }
-    V$r(t, i, e) {
-      return i && CharacterLockOnComponent_1.R$r.Has(t)
+    S$r(t, i, e) {
+      return i && CharacterLockOnComponent_1.h$r.Has(t)
         ? 0
-        : e && this.j$r(this.o$r?.EntityHandle) && this.o$r?.Equal(t)
+        : e && this.I$r(this.GXr?.EntityHandle) && this.GXr?.Equal(t)
           ? 2
           : 1;
     }
-    F$r() {
+    E$r() {
       var t = Vector_1.Vector.Create();
       return (
         CameraController_1.CameraController.CameraRotator.Quaternion().RotateVector(
@@ -501,7 +535,7 @@ let CharacterLockOnComponent =
         t
       );
     }
-    H$r(t, i, e = !1) {
+    y$r(t, i, e = !1) {
       return (
         Math.acos(
           e
@@ -511,38 +545,38 @@ let CharacterLockOnComponent =
       );
     }
     ForceLookAtTarget(t, i, e = !1) {
-      var s = this.c$r;
+      var s = this.KXr;
       if (i) {
         if (
-          ((this.c$r = !0),
-          this.M$r &&
-            (this.c$r || (this.s$r = this.o$r), !t?.Different(this.o$r)))
+          ((this.KXr = !0),
+          this.e$r &&
+            (this.KXr || (this.kXr = this.GXr), !t?.Different(this.GXr)))
         )
           return;
-        this.mbr.SetDirectionState(
+        this.HBr.SetDirectionState(
           CharacterUnifiedStateTypes_1.ECharDirectionState.LookAtDirection,
         ),
-          this.E$r(t),
+          this.i$r(t),
           this.SetShowTarget(t?.EntityHandle, t?.SocketName);
       } else
-        this.c$r &&
-          !t?.Different(this.o$r) &&
-          (this.j$r(this.s$r?.EntityHandle) && e
-            ? (this.E$r(this.s$r),
-              this.SetShowTarget(this.s$r.EntityHandle, this.s$r.SocketName),
-              CharacterLockOnComponent_1.R$r.Push(this.s$r),
-              this.mbr.SetDirectionState(
+        this.KXr &&
+          !t?.Different(this.GXr) &&
+          (this.I$r(this.kXr?.EntityHandle) && e
+            ? (this.i$r(this.kXr),
+              this.SetShowTarget(this.kXr.EntityHandle, this.kXr.SocketName),
+              CharacterLockOnComponent_1.h$r.Push(this.kXr),
+              this.HBr.SetDirectionState(
                 CharacterUnifiedStateTypes_1.ECharDirectionState.LockDirection,
               ))
-            : (this.M$r && this.j$r(this.o$r?.EntityHandle)) ||
-              (this.E$r(void 0),
+            : (this.e$r && this.I$r(this.GXr?.EntityHandle)) ||
+              (this.i$r(void 0),
               this.SetShowTarget(void 0),
-              this.mbr.SetDirectionState(
+              this.HBr.SetDirectionState(
                 CharacterUnifiedStateTypes_1.ECharDirectionState.FaceDirection,
               )),
-          (this.c$r = !1),
-          (this.s$r = void 0));
-      s !== this.c$r &&
+          (this.KXr = !1),
+          (this.kXr = void 0));
+      s !== this.KXr &&
         Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "Battle",
@@ -555,10 +589,10 @@ let CharacterLockOnComponent =
         );
     }
     EnterLockDirection() {
-      if (this.c$r)
-        (this.s$r = void 0), CharacterLockOnComponent_1.R$r.Push(this.o$r);
+      if (this.KXr)
+        (this.kXr = void 0), CharacterLockOnComponent_1.h$r.Push(this.GXr);
       else {
-        if (this.M$r) return;
+        if (this.e$r) return;
         if (this.Xte.HasTag(428837378)) return;
         if (this.Xte.HasTag(2066208190)) return;
         if (
@@ -566,23 +600,23 @@ let CharacterLockOnComponent =
             .IsDisableResetFocus
         )
           return;
-        if ((this.S$r(!0), !this.o$r)) return void this.ResetFocus();
-        this.C$r = 0;
+        if ((this.t$r(!0), !this.GXr)) return void this.ResetFocus();
+        this.$Xr = 0;
       }
-      this.mbr.SetDirectionState(
+      this.HBr.SetDirectionState(
         CharacterUnifiedStateTypes_1.ECharDirectionState.LockDirection,
       );
     }
     ExitLockDirection() {
-      this.M$r &&
-        (this.c$r
-          ? (this.mbr.SetDirectionState(
+      this.e$r &&
+        (this.KXr
+          ? (this.HBr.SetDirectionState(
               CharacterUnifiedStateTypes_1.ECharDirectionState.LookAtDirection,
             ),
-            (this.s$r = void 0))
+            (this.kXr = void 0))
           : (this.SetShowTarget(void 0),
-            CharacterLockOnComponent_1.R$r.Clear(),
-            this.mbr.SetDirectionState(
+            CharacterLockOnComponent_1.h$r.Clear(),
+            this.HBr.SetDirectionState(
               CharacterUnifiedStateTypes_1.ECharDirectionState.FaceDirection,
             )));
     }
@@ -590,12 +624,13 @@ let CharacterLockOnComponent =
       CameraController_1.CameraController.FightCamera.LogicComponent
         .IsDisableResetFocus ||
         !ModelManager_1.ModelManager.CameraModel.IsEnableResetFocus ||
-        this.c$r ||
-        this.M$r ||
+        this.KXr ||
+        this.e$r ||
+        (CameraController_1.CameraController.FightCamera.LogicComponent.ResetCameraInput(),
         CameraController_1.CameraController.FightCamera.LogicComponent.PlayCameraEulerRotatorWithCurve(
           CameraUtility_1.CameraUtility.GetCameraDefaultFocusRotator(),
           RESET_FOCUS_TIME,
-        );
+        ));
     }
     ResetPitch(t = RESET_FOCUS_TIME, i = void 0) {
       var e =
@@ -605,50 +640,47 @@ let CharacterLockOnComponent =
         s =
           CameraController_1.CameraController.FightCamera.LogicComponent.CameraRotation.ToUeRotator().Euler(),
         e = Rotator_1.Rotator.Create(e, s.Z, s.X);
-      CameraController_1.CameraController.FightCamera.LogicComponent.PlayCameraEulerRotatorWithCurve(
-        e,
-        t,
-        i,
-      );
+      CameraController_1.CameraController.FightCamera.LogicComponent.ResetCameraInput(),
+        CameraController_1.CameraController.FightCamera.LogicComponent.PlayCameraEulerRotatorWithCurve(
+          e,
+          t,
+          i,
+        );
     }
-    W$r(t) {
+    T$r(t) {
       return (
         !!t?.Valid &&
         ((t = t.Entity.GetComponent(0).GetEntityType()),
         !![
-          Protocol_1.Aki.Protocol.HBs.Proto_Monster,
-          Protocol_1.Aki.Protocol.HBs.Proto_Npc,
-          Protocol_1.Aki.Protocol.HBs.Proto_Player,
-          Protocol_1.Aki.Protocol.HBs.Proto_Vision,
+          Protocol_1.Aki.Protocol.wks.Proto_Monster,
+          Protocol_1.Aki.Protocol.wks.Proto_Npc,
+          Protocol_1.Aki.Protocol.wks.Proto_Player,
+          Protocol_1.Aki.Protocol.wks.Proto_Vision,
         ].includes(t))
       );
     }
-    XVs() {
+    Kea() {
       var t;
-      this.c$r ||
+      this.KXr ||
         (this.Xte.HasTag(2066208190)
-          ? this.YVs()
-          : this.o$r?.EntityHandle?.Valid &&
-            (this.M$r
-              ? ((t = this.f7o),
-                this.GetSkillBoneLocation(
-                  this.o$r.EntityHandle,
-                  this.o$r.SocketName,
-                  t,
-                ),
-                (this.K$r(this.o$r.EntityHandle) ||
-                  this.Q$r(this._$r, this.o$r.EntityHandle, t)) &&
+          ? this.$ea()
+          : this.GXr?.EntityHandle?.Valid &&
+            (this.e$r
+              ? ((t = this.dHo),
+                this.zma(this.GXr.EntityHandle, this.GXr.SocketName, t),
+                (this.L$r(this.GXr.EntityHandle) ||
+                  this.D$r(this.jXr, this.GXr.EntityHandle, t)) &&
                   this.ExitLockDirection())
-              : (this.X$r(this.o$r.EntityHandle) ||
-                  this.Q$r(
-                    this._$r,
-                    this.o$r.EntityHandle,
-                    this.o$r.EntityHandle.Entity.GetComponent(1)
+              : (this.R$r(this.GXr.EntityHandle) ||
+                  this.D$r(
+                    this.jXr,
+                    this.GXr.EntityHandle,
+                    this.GXr.EntityHandle.Entity.GetComponent(1)
                       .ActorLocationProxy,
                   )) &&
-                (this.E$r(void 0), this.SetShowTarget(void 0))));
+                (this.i$r(void 0), this.SetShowTarget(void 0))));
     }
-    GetSkillBoneLocation(t, i, e) {
+    zma(t, i, e) {
       var s = t?.Entity?.GetComponent(1);
       s
         ? (t = t?.Entity?.GetComponent(3)?.Actor)?.IsValid() &&
@@ -662,43 +694,40 @@ let CharacterLockOnComponent =
     }
     LockOnSpecifyTarget(t) {
       var i;
-      this.M$r ||
-        this.c$r ||
-        (this.j$r(t) &&
+      this.e$r ||
+        this.KXr ||
+        (this.I$r(t) &&
           (((i = new LockOnInfo()).EntityHandle = t),
-          this.E$r(i),
+          this.i$r(i),
           this.SetShowTarget(t)));
     }
-    j$r(t) {
+    I$r(t) {
       var i;
-      return !(
-        !t?.Valid ||
-        !t?.IsInit ||
-        !t?.Entity?.Active ||
-        ((i = t.Entity.GetComponent(1)) &&
-          i.ActorLocationProxy.ContainsNaN()) ||
-        (i = t.Entity.GetComponent(0))?.GetRemoveState() ||
-        !i?.GetVisible() ||
-        ((i = t.Entity.GetComponent(185)) &&
-          i.HasAnyTag([1008164187, -1243968098]))
+      return (
+        !!t?.Valid &&
+        !(
+          !t?.IsInit ||
+          !t?.Entity?.Active ||
+          (i = t.Entity.GetComponent(0))?.GetRemoveState() ||
+          !i?.GetVisible() ||
+          ((i = t.Entity.GetComponent(188)) &&
+            i.HasAnyTag([1008164187, -1243968098]))
+        )
       );
     }
-    J4r(t) {
-      this.m$r.FromUeVector(
-        Global_1.Global.CharacterCameraManager.K2_GetActorLocation(),
-      );
-      var i = t.EntityHandle.Entity.GetComponent(1);
-      return (
+    A4r(t, i) {
+      this.QXr.FromUeVector(i);
+      (i = t.EntityHandle.Entity.GetComponent(1)),
         t.SocketName
-          ? this.GetSkillBoneLocation(t.EntityHandle, t.SocketName, this.d$r)
-          : (this.d$r.DeepCopy(i.ActorLocationProxy),
+          ? this.zma(t.EntityHandle, t.SocketName, this.XXr)
+          : (this.XXr.DeepCopy(i.ActorLocationProxy),
             (t =
               t.EntityHandle.Entity.GetComponent(0)?.GetFightInterConfig()
                 ?.LockOffset) &&
               ((t = Vector_1.Vector.Create(t.X ?? 0, t.Y ?? 0, t.Z ?? 0)),
-              this.d$r.Addition(t, this.d$r))),
-        this.TraceDetectBlock(this.m$r, this.d$r, i.Owner)
-      );
+              this.XXr.Addition(t, this.XXr))),
+        (t = this.TraceDetectBlock(this.QXr, this.XXr, i.Owner));
+      return t;
     }
     TraceDetectBlock(t, i, e) {
       return (
@@ -719,91 +748,84 @@ let CharacterLockOnComponent =
           e !== i
       );
     }
-    S$r(t) {
-      t && CharacterLockOnComponent_1.R$r.Clear();
+    t$r(t) {
+      t && CharacterLockOnComponent_1.h$r.Clear();
       for (
-        var i = this.N$r(this._$r, !0);
-        i.length && i.every((t) => CharacterLockOnComponent_1.R$r.Has(t));
+        var i = this.DetectAlternativeTargets(this.jXr, !0);
+        i.length && i.every((t) => CharacterLockOnComponent_1.h$r.Has(t));
 
       )
-        CharacterLockOnComponent_1.R$r.Pop();
-      t = this.O$r(this.k$r(i, !0), 4, !0, this._$r.ToleranceAngle);
-      this.E$r(t),
+        CharacterLockOnComponent_1.h$r.Pop();
+      t = this.FindTheBest(this.M$r(i, !0), 4, !0, this.jXr.ToleranceAngle);
+      this.i$r(t),
         t
-          ? (CharacterLockOnComponent_1.R$r.Push(t),
+          ? (CharacterLockOnComponent_1.h$r.Push(t),
             this.SetShowTarget(t.EntityHandle, t.SocketName),
-            (this.p$r = 0),
+            (this.zXr = 0),
             t?.EntityHandle?.Valid &&
               LockOnDebug_1.LockOnDebug.SetDebugArrow(t))
           : (this.SetShowTarget(void 0), this.ExitLockDirection());
     }
-    N$r(i, t) {
+    DetectAlternativeTargets(i, t) {
       LockOnDebug_1.LockOnDebug.Clear();
       var e = [],
-        s = Vector_1.Vector.Create();
-      CameraController_1.CameraController.CameraRotator &&
-        CameraController_1.CameraController.CameraRotator.Quaternion().RotateVector(
-          Vector_1.Vector.ForwardVectorProxy,
-          s,
-        ),
-        (s.Z = 0),
-        s.Normalize(MathUtils_1.MathUtils.SmallNumber);
-      for (const u of ModelManager_1.ModelManager.CreatureModel.GetAllEntities())
-        if (this.j$r(u) && u.Id !== this.Entity.Id) {
+        s = Global_1.Global.CharacterCameraManager.K2_GetActorLocation();
+      for (const u of this.Jma(Math.max(i.Distance, i.SectorRadius)))
+        if (this.I$r(u) && u.Id !== this.Entity.Id) {
           var r = u.Entity.GetComponent(0)?.GetEntityType(),
             h = CharacterController_1.CharacterController.GetActor(u);
           if (h?.IsValid()) {
-            var o = h,
-              h = h instanceof TsBaseCharacter_1.default,
-              a = this.W$r(u);
-            if (a) {
+            var o,
+              a = h,
+              h = h instanceof TsBaseCharacter_1.default;
+            if ((o = this.T$r(u))) {
               if (
                 2 !==
                 CampUtils_1.CampUtils.GetCampRelationship(
-                  o.Camp,
+                  a.Camp,
                   this.ActorComp.Actor.Camp,
                 )
               )
                 continue;
-              if (!o || !h) continue;
+              if (!a || !h) continue;
             } else {
               if (t) continue;
-              if (r !== Protocol_1.Aki.Protocol.HBs.Proto_SceneItem) continue;
-              o = u.Entity.GetComponent(102)?.LockRange;
-              if (!o || -1 === o) continue;
+              if (r !== Protocol_1.Aki.Protocol.wks.Proto_SceneItem) continue;
+              a = u.Entity.GetComponent(104)?.LockRange;
+              if (!a || a <= 0) continue;
+              h = u.Entity.GetComponent(1);
               if (
-                o * o <
-                Vector_1.Vector.DistSquared(
-                  u.Entity.GetComponent(1).ActorLocationProxy,
+                a <
+                Vector_1.Vector.Dist2D(
+                  h.ActorLocationProxy,
                   this.ActorComp.ActorLocationProxy,
                 )
               )
                 continue;
             }
-            if (t ? !this.K$r(u) : !this.X$r(u)) {
-              h = u.Entity.GetComponent(3);
-              if (0 < (h?.LockOnParts?.size ?? 0)) {
+            if (t ? !this.L$r(u) : !this.R$r(u)) {
+              r = u.Entity.GetComponent(3);
+              if (0 < (r?.LockOnParts?.size ?? 0)) {
                 let t = !1;
-                var r = h.LockOnParts.values(),
-                  n = this.f7o;
-                for (const v of r)
+                var a = r.LockOnParts.values(),
+                  n = this.dHo;
+                for (const v of a)
                   if (
-                    (this.GetSkillBoneLocation(u, v.BoneNameString, n),
-                    !(t = this.Q$r(i, u, n)))
+                    (this.zma(u, v.BoneNameString, n), !(t = this.D$r(i, u, n)))
                   )
                     break;
                 if (t) continue;
               } else if (
-                this.Q$r(i, u, u.Entity.GetComponent(1).ActorLocationProxy)
+                this.D$r(i, u, u.Entity.GetComponent(1).ActorLocationProxy)
               )
                 continue;
-              if (a) {
-                o = u.Entity.GetComponent(3);
-                if (o?.LockOnParts.size) {
+              if (o) {
+                h = u.Entity.GetComponent(3);
+                if (h?.LockOnParts.size) {
                   var _,
-                    c = u.Entity.GetComponent(58),
+                    c = u.Entity.GetComponent(60),
                     C = u.Entity.GetComponent(33);
-                  for ([, _] of o.LockOnParts)
+                  for ([, _] of h.LockOnParts)
                     if (
                       (t ? _.HardLockValid : _.SoftLockValid) &&
                       (!C || !C.IgnoreSocketName.has(_.BoneNameString))
@@ -816,60 +838,60 @@ let CharacterLockOnComponent =
                       (l.EntityHandle = u),
                         (l.SocketName = _.BoneNameString),
                         LockOnDebug_1.LockOnDebug.Push(l),
-                        this.J4r(l) || e.push(l);
+                        this.A4r(l, s) || e.push(l);
                     }
                 } else {
-                  h = new LockOnInfo();
-                  (h.EntityHandle = u),
-                    LockOnDebug_1.LockOnDebug.Push(h),
-                    this.J4r(h) || e.push(h);
+                  r = new LockOnInfo();
+                  (r.EntityHandle = u),
+                    LockOnDebug_1.LockOnDebug.Push(r),
+                    this.A4r(r, s) || e.push(r);
                 }
               } else {
-                r = new LockOnInfo();
-                (r.EntityHandle = u),
-                  LockOnDebug_1.LockOnDebug.Push(r),
-                  this.J4r(r) || e.push(r);
+                a = new LockOnInfo();
+                (a.EntityHandle = u),
+                  LockOnDebug_1.LockOnDebug.Push(a),
+                  this.A4r(a, s) || e.push(a);
               }
             }
           }
         }
       return e;
     }
-    k$r(t, i) {
+    M$r(t, i) {
       var e = t.filter((t) =>
-        t.EntityHandle?.Entity?.GetComponent(185)?.HasTag(1659143519),
+        t.EntityHandle?.Entity?.GetComponent(188)?.HasTag(1659143519),
       );
       return i
-        ? e.every((t) => CharacterLockOnComponent_1.R$r.Has(t))
+        ? e.every((t) => CharacterLockOnComponent_1.h$r.Has(t))
           ? t
           : e
         : e.length
           ? e
           : t;
     }
-    K$r(t) {
+    L$r(t) {
       return (
         !!t?.Valid &&
-        !!(t = t.Entity?.GetComponent(185))?.Valid &&
+        !!(t = t.Entity?.GetComponent(188))?.Valid &&
         (t.HasAnyTag([-1243968098, -620990172]) ||
           this.Xte.HasAnyTag([-620990172, 63495198]))
       );
     }
-    X$r(t) {
+    R$r(t) {
       return (
         !!t?.Valid &&
-        !!(t = t.Entity?.GetComponent(185))?.Valid &&
+        !!(t = t.Entity?.GetComponent(188))?.Valid &&
         (t.HasAnyTag([-1243968098, -1092371289]) ||
           this.Xte.HasAnyTag([-1092371289, 63495198]))
       );
     }
-    Q$r(t, i, e) {
+    D$r(t, i, e) {
       return (
-        !this.$$r(t, this.ActorComp.ActorLocationProxy, e) &&
-        !this.Y$r(i, e, this.ActorComp.ActorLocationProxy)
+        !this.U$r(t, this.ActorComp.ActorLocationProxy, e) &&
+        !this.A$r(i, e, this.ActorComp.ActorLocationProxy)
       );
     }
-    $$r(t, i, e) {
+    U$r(t, i, e) {
       var s = i.Z - e.Z;
       if (s < -t.UpDistance || s > t.DownDistance) return !1;
       if (Vector_1.Vector.DistSquared(i, e) <= t.Distance * t.Distance)
@@ -879,15 +901,15 @@ let CharacterLockOnComponent =
       s = ((s.GetControlRotation().Yaw % 360) + 360) % 360;
       if (Vector_1.Vector.DistSquared(i, e) > t.SectorRadius * t.SectorRadius)
         return !1;
-      e.Subtraction(i, this.f7o).Normalize(MathUtils_1.MathUtils.SmallNumber);
-      (e = (180 * Math.atan2(this.f7o.Y, this.f7o.X)) / Math.PI),
+      e.Subtraction(i, this.dHo).Normalize(MathUtils_1.MathUtils.SmallNumber);
+      (e = (180 * Math.atan2(this.dHo.Y, this.dHo.X)) / Math.PI),
         (i = Math.abs(((360 + e) % 360) - s));
       return (180 < i ? 360 - i : i) <= t.SectorAngle / 2;
     }
-    Y$r(t, i, e) {
+    A$r(t, i, e) {
       var s;
       return (
-        !!t.Entity?.GetComponent(185)?.HasAnyTag([-336338240, -164894127]) &&
+        !!t.Entity?.GetComponent(188)?.HasAnyTag(exports.lockOnEnhancedTags) &&
         !!(t = t.Entity.GetComponent(3))?.LockOnConfig &&
         !(
           (s = i.Z - e.Z) < -t.LockOnConfig.UpDistance ||
@@ -897,60 +919,67 @@ let CharacterLockOnComponent =
         )
       );
     }
-    q$r() {
-      var t = this.M$r;
-      this.A$r !== t &&
+    g$r() {
+      var t = this.e$r;
+      this.l$r !== t &&
         (CombatMessage_1.CombatNet.Call(
-          t ? 20063 : 16772,
+          t ? 9149 : 19890,
           this.Entity,
           (t
-            ? Protocol_1.Aki.Protocol.RNn
-            : Protocol_1.Aki.Protocol.xNn
+            ? Protocol_1.Aki.Protocol.n4n
+            : Protocol_1.Aki.Protocol.s4n
           ).create(),
         ),
-        (this.A$r = t));
+        (this.l$r = t));
     }
     RefreshCurrentLockState(t) {
       var i;
-      this.o$r?.EntityHandle === t &&
+      this.GXr?.EntityHandle === t &&
         (t = t?.Entity?.GetComponent(3)) &&
-        (i = this.o$r?.SocketName) &&
+        (i = this.GXr?.SocketName) &&
         t.LockOnParts.has(i) &&
         ((t = t.LockOnParts.get(i)).HardLockValid || this.ExitLockDirection(),
         t.SoftLockValid || this.SetShowTarget(void 0));
     }
-    get M$r() {
+    get e$r() {
       return this.Xte.HasTag(-1150819426);
     }
-    w$r() {
-      var t = this.PSo.GetMoveDirectionCache();
-      this.U$r.Equals(t, MathUtils_1.MathUtils.SmallNumber) ||
-        (this.U$r?.Set(t.X, t.Y),
-        this.cVr.DeepCopy(this.ActorComp.InputDirectProxy),
-        this.U$r?.IsNearlyZero(MathUtils_1.MathUtils.SmallNumber)) ||
-        (this.P$r = !0);
+    m$r() {
+      var t = this.RSo.GetMoveDirectionCache(),
+        [i] = this.RSo.GetCameraInput();
+      (0 === i && this._$r.Equals(t, MathUtils_1.MathUtils.SmallNumber)) ||
+        (this._$r.Set(t.X, t.Y, 0),
+        this.W5r.DeepCopy(this.ActorComp.InputDirectProxy),
+        this._$r?.IsNearlyZero(MathUtils_1.MathUtils.SmallNumber)) ||
+        (this.u$r = !0),
+        this.SpeedUpCleanTarget() && (this.u$r = !0);
+    }
+    SpeedUpCleanTarget() {
+      var t = this.Entity.GetComponent(163);
+      return !(
+        !(
+          t?.Valid &&
+          t.Speed > FightCameraLogicComponent_1.CLEAN_TARGET_SPEED_THRESHOLD
+        ) || this.Xte.HasTag(-1371021686)
+      );
     }
     ResetTarget() {
-      !this.c$r && this.M$r && this.S$r(!1);
+      !this.KXr && this.e$r && this.t$r(!1);
     }
     ChangeShowTarget(t, i, e) {
-      if (this.c$r || !this.M$r) return !1;
+      if (this.KXr || !this.e$r) return !1;
       var s,
         r,
         h,
-        o = this.N$r(this._$r, !0),
+        o = this.DetectAlternativeTargets(this.jXr, !0),
         a = this.ActorComp.ActorLocationProxy,
         n =
-          (this.GetSkillBoneLocation(
-            this.o$r.EntityHandle,
-            this.o$r.SocketName,
-            this.f7o,
-          ),
+          (this.zma(this.GXr.EntityHandle, this.GXr.SocketName, this.dHo),
           this.Tz.DeepCopy(a),
-          (this.Tz.Z = this.f7o.Z),
-          this.f7o.SubtractionEqual(a),
+          (this.Tz.Z = this.dHo.Z),
+          this.dHo.SubtractionEqual(a),
           MathUtils_1.MathUtils.LookRotationUpFirst(
-            this.f7o,
+            this.dHo,
             Vector_1.Vector.UpVectorProxy,
             this.Dz,
           ),
@@ -959,36 +988,43 @@ let CharacterLockOnComponent =
       let _ = void 0,
         c = MathUtils_1.MathUtils.LargeNumber;
       for (const C of o)
-        !this.j$r(C.EntityHandle) ||
-          C.Equal(this.o$r) ||
-          (this.GetSkillBoneLocation(C.EntityHandle, C.SocketName, this.f7o),
-          this.f7o.SubtractionEqual(this.Tz),
-          this.Dz.RotateVector(this.f7o, this.f7o),
-          Math.abs(this.f7o.X) < MathUtils_1.MathUtils.SmallNumber &&
-            Math.abs(this.f7o.Y) < MathUtils_1.MathUtils.SmallNumber) ||
+        !this.I$r(C.EntityHandle) ||
+          C.Equal(this.GXr) ||
+          (this.zma(C.EntityHandle, C.SocketName, this.dHo),
+          this.dHo.SubtractionEqual(this.Tz),
+          this.Dz.RotateVector(this.dHo, this.dHo),
+          Math.abs(this.dHo.X) < MathUtils_1.MathUtils.SmallNumber &&
+            Math.abs(this.dHo.Y) < MathUtils_1.MathUtils.SmallNumber) ||
           ((s =
-            Math.atan2(this.f7o.Y, this.f7o.X) *
+            Math.atan2(this.dHo.Y, this.dHo.X) *
             MathUtils_1.MathUtils.RadToDeg),
           (r =
-            Math.asin(this.f7o.Z / this.f7o.Size()) *
+            Math.asin(this.dHo.Z / this.dHo.Size()) *
             MathUtils_1.MathUtils.RadToDeg),
-          (this.Xyn.X = s),
-          (this.Xyn.Y = r),
-          (h = this.Xyn.DotProduct(t)) < 0) ||
+          (this.CTn.X = s),
+          (this.CTn.Y = r),
+          (h = this.CTn.DotProduct(t)) < 0) ||
           ((h =
             (i *
-              (Math.acos(h / Math.sqrt(this.Xyn.SizeSquared() * n)) *
+              (Math.acos(h / Math.sqrt(this.CTn.SizeSquared() * n)) *
                 MathUtils_1.MathUtils.RadToDeg)) /
               180 +
             e * Math.sqrt(s * s + r * r)) < c &&
             ((c = h), (_ = C)));
       return (
         !!_ &&
-        (this.E$r(_), this.SetShowTarget(_.EntityHandle, _.SocketName), !0)
+        (this.i$r(_), this.SetShowTarget(_.EntityHandle, _.SocketName), !0)
       );
     }
+    GetPredictedLockOnTarget() {
+      if (this.Xte?.HasTag(-126337119)) return this.cca;
+    }
+    SetPredictedLockOnTarget(t) {
+      this.cca = t;
+    }
   });
-(CharacterLockOnComponent.R$r = new CustomizedLockedQueue()),
+(CharacterLockOnComponent.h$r = new CustomizedLockedQueue()),
+  (CharacterLockOnComponent.EnhancedEntityIds = new Set()),
   (CharacterLockOnComponent = CharacterLockOnComponent_1 =
     __decorate(
       [(0, RegisterComponent_1.RegisterComponent)(29)],

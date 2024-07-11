@@ -17,9 +17,9 @@ exports.initLockItem = initLockItem;
 class RoleFavorLockComponent extends UiPanelBase_1.UiPanelBase {
   constructor(e, t) {
     super(),
-      (this.E_i = void 0),
-      (this.c_o = []),
-      (this.m_o = t),
+      (this.Sui = void 0),
+      (this.huo = []),
+      (this.luo = t),
       e && this.CreateThenShowByActor(e.GetOwner());
   }
   OnRegisterComponent() {
@@ -36,34 +36,34 @@ class RoleFavorLockComponent extends UiPanelBase_1.UiPanelBase {
     this.nOe();
   }
   OnBeforeDestroy() {
-    (this.m_o = void 0), this.d_o(), (this.c_o = []);
+    (this.luo = void 0), this._uo(), (this.huo = []);
   }
   Refresh(e) {
-    (this.m_o = e), this.d_o(), (this.c_o = []), this.nOe();
+    (this.luo = e), this._uo(), (this.huo = []), this.nOe();
   }
   nOe() {
-    this.LBt(), this.C_o(), this.g_o();
+    this.Ubt(), this.uuo(), this.cuo();
   }
-  d_o() {
-    this.E_i && (this.E_i.ClearChildren(), (this.E_i = void 0));
+  _uo() {
+    this.Sui && (this.Sui.ClearChildren(), (this.Sui = void 0));
   }
-  g_o() {
-    (this.E_i = new GenericLayoutNew_1.GenericLayoutNew(
+  cuo() {
+    (this.Sui = new GenericLayoutNew_1.GenericLayoutNew(
       this.GetVerticalLayout(0),
       exports.initLockItem,
       this.GetItem(5),
     )),
-      (this.c_o = this.f_o()),
-      this.E_i.RebuildLayoutByDataNew(this.c_o);
+      (this.huo = this.muo()),
+      this.Sui.RebuildLayoutByDataNew(this.huo);
   }
-  LBt() {
-    var e = this.p_o();
+  Ubt() {
+    var e = this.duo();
     LguiUtil_1.LguiUtil.SetLocalText(this.GetText(2), e);
   }
-  C_o() {
+  uuo() {
     var e = this.GetItem(4),
       t = this.GetItem(3);
-    2 === this.m_o.FavorTabType && 1 === this.m_o.TypeParam
+    2 === this.luo.FavorTabType && 1 === this.luo.TypeParam
       ? (e.SetUIActive(!0),
         t.SetUIActive(!0),
         LguiUtil_1.LguiUtil.SetLocalText(
@@ -72,9 +72,9 @@ class RoleFavorLockComponent extends UiPanelBase_1.UiPanelBase {
         ))
       : (e.SetUIActive(!1), t.SetUIActive(!1));
   }
-  p_o() {
+  duo() {
     let e = "";
-    switch (this.m_o.FavorTabType) {
+    switch (this.luo.FavorTabType) {
       case 2:
         e = "FavorUnlockActionCondition";
         break;
@@ -89,18 +89,18 @@ class RoleFavorLockComponent extends UiPanelBase_1.UiPanelBase {
     }
     return e;
   }
-  f_o() {
+  muo() {
     let e = [];
-    var t = this.m_o.Config,
-      i = this.m_o.FavorTabType,
+    var t = this.luo.Config,
+      i = this.luo.FavorTabType,
       o = t.Id,
       t = t.CondGroupId;
-    return (e = 2 !== i && 1 !== i && 3 !== i && 0 !== i ? e : this.v_o(o, t));
+    return (e = 2 !== i && 1 !== i && 3 !== i && 0 !== i ? e : this.Cuo(o, t));
   }
-  v_o(i, e) {
+  Cuo(i, e) {
     var o = [],
-      r = this.m_o.RoleId,
-      a = this.m_o.FavorTabType,
+      r = this.luo.RoleId,
+      a = this.luo.FavorTabType,
       e =
         ConfigManager_1.ConfigManager.ConditionConfig.GetConditionGroupConfig(
           e,

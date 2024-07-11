@@ -36,7 +36,7 @@ class MergeHeadStateMonsterInfo {
       (this.HasFightTag = !1),
       (this.Hp = 0),
       (this.HpMax = 0),
-      (this.$Ke = (t, e) => {
+      (this.aXe = (t, e) => {
         this.HasFightTag !== e &&
           ((this.HasFightTag = e),
           ModelManager_1.ModelManager.BattleUiModel.MergeHeadStateData.OnMonsterFightTagChange(
@@ -44,7 +44,7 @@ class MergeHeadStateMonsterInfo {
             e,
           ));
       }),
-      (this.YKe = (t, e, i) => {
+      (this.hXe = (t, e, i) => {
         var s = this.Hp;
         (this.Hp = e),
           this.HpMax <= 0 ||
@@ -54,7 +54,7 @@ class MergeHeadStateMonsterInfo {
               e,
             ));
       }),
-      (this.JKe = (t, e, i) => {
+      (this.lXe = (t, e, i) => {
         var s = this.HpMax;
         this.HpMax = e;
         let r = 0,
@@ -75,7 +75,7 @@ class MergeHeadStateMonsterInfo {
           this.EntityHandle.Id,
         ]),
       this.RemoveListener());
-    var t = this.EntityHandle.Entity.GetComponent(185);
+    var t = this.EntityHandle.Entity.GetComponent(188);
     if (!t)
       return (
         Log_1.Log.CheckError() &&
@@ -88,7 +88,7 @@ class MergeHeadStateMonsterInfo {
         !1
       );
     if (
-      ((this.AttributeComponent = this.EntityHandle.Entity.GetComponent(156)),
+      ((this.AttributeComponent = this.EntityHandle.Entity.GetComponent(158)),
       !this.AttributeComponent)
     )
       return (
@@ -101,15 +101,15 @@ class MergeHeadStateMonsterInfo {
           ),
         !1
       );
-    (this.FightTagListenTask = t.ListenForTagAddOrRemove(1996802261, this.$Ke)),
+    (this.FightTagListenTask = t.ListenForTagAddOrRemove(1996802261, this.aXe)),
       (this.HasFightTag = t.HasTag(1996802261));
     t = this.AttributeComponent;
     return (
       t.AddListener(
         CharacterAttributeTypes_1.EAttributeId.Proto_Life,
-        this.YKe,
+        this.hXe,
       ),
-      t.AddListener(CharacterAttributeTypes_1.EAttributeId.Tkn, this.JKe),
+      t.AddListener(CharacterAttributeTypes_1.EAttributeId.e5n, this.lXe),
       !0
     );
   }
@@ -120,16 +120,16 @@ class MergeHeadStateMonsterInfo {
       this.AttributeComponent &&
         ((t = this.AttributeComponent).RemoveListener(
           CharacterAttributeTypes_1.EAttributeId.Proto_Life,
-          this.YKe,
+          this.hXe,
         ),
-        t.RemoveListener(CharacterAttributeTypes_1.EAttributeId.Tkn, this.JKe),
+        t.RemoveListener(CharacterAttributeTypes_1.EAttributeId.e5n, this.lXe),
         (this.AttributeComponent = void 0));
   }
 }
 exports.MergeHeadStateMonsterInfo = MergeHeadStateMonsterInfo;
 class BattleUiMergeHeadStateData {
   constructor() {
-    (this.zKe = 0),
+    (this._Xe = 0),
       (this.InfoMap = new Map()),
       (this.ListenMonsterAddMap = new Map()),
       (this.ListenMonsterRemoveMap = new Map());
@@ -138,7 +138,7 @@ class BattleUiMergeHeadStateData {
   OnLeaveLevel() {
     if (!(this.ListenMonsterRemoveMap.size <= 0)) {
       for (const e of this.ListenMonsterRemoveMap.values()) {
-        (e.EntityHandle = void 0), this.ZKe(e);
+        (e.EntityHandle = void 0), this.uXe(e);
         var t = this.InfoMap.get(e.Id);
         if (!t)
           return void (
@@ -156,7 +156,7 @@ class BattleUiMergeHeadStateData {
     }
   }
   Clear() {
-    for (const t of this.InfoMap.values()) this.eQe(t);
+    for (const t of this.InfoMap.values()) this.cXe(t);
     this.InfoMap.clear(),
       this.ListenMonsterAddMap.clear(),
       this.ListenMonsterRemoveMap.clear();
@@ -164,23 +164,23 @@ class BattleUiMergeHeadStateData {
   UpdateProgress(t, e, i, s) {
     if (i) {
       for (const r of this.InfoMap.values())
-        if (r.TreeId === t && r.NodeId === e) return void this.tQe(r, i);
-      this.iQe(t, e, i, s);
+        if (r.TreeId === t && r.NodeId === e) return void this.mXe(r, i);
+      this.dXe(t, e, i, s);
     }
   }
   RemoveTree(t) {
-    for (const e of this.InfoMap.values()) e.TreeId === t && this.eQe(e);
+    for (const e of this.InfoMap.values()) e.TreeId === t && this.cXe(e);
   }
   RemoveNode(t, e) {
     for (const i of this.InfoMap.values())
-      if (i.TreeId === t && i.NodeId === e) return void this.eQe(i);
+      if (i.TreeId === t && i.NodeId === e) return void this.cXe(i);
   }
   OnAddEntity(s) {
     if (!(this.ListenMonsterAddMap.size <= 0)) {
       var r = ModelManager_1.ModelManager.CreatureModel.GetPbDataIdByEntity(s),
         h = this.ListenMonsterAddMap.get(r);
       if (h) {
-        this.ListenMonsterAddMap.delete(r), (h.EntityHandle = s), this.oQe(h);
+        this.ListenMonsterAddMap.delete(r), (h.EntityHandle = s), this.CXe(h);
         r = this.InfoMap.get(h.Id);
         if (r) {
           let i = !1;
@@ -189,7 +189,7 @@ class BattleUiMergeHeadStateData {
                 CharacterAttributeTypes_1.EAttributeId.Proto_Life,
               ),
               o = h.AttributeComponent.GetCurrentValue(
-                CharacterAttributeTypes_1.EAttributeId.Tkn,
+                CharacterAttributeTypes_1.EAttributeId.e5n,
               );
             if (s !== h.Hp || o !== h.HpMax) {
               let t = 0,
@@ -202,8 +202,8 @@ class BattleUiMergeHeadStateData {
             }
           }
           r.IsVisible
-            ? i && this.rQe(r)
-            : h.HasFightTag && ((r.IsVisible = !0), this.nQe(r));
+            ? i && this.gXe(r)
+            : h.HasFightTag && ((r.IsVisible = !0), this.fXe(r));
         } else
           Log_1.Log.CheckError() &&
             Log_1.Log.Error(
@@ -221,7 +221,7 @@ class BattleUiMergeHeadStateData {
       ((e = this.ListenMonsterRemoveMap.get(t.Id)) &&
         (this.ListenMonsterRemoveMap.delete(t.Id),
         (e.EntityHandle = void 0),
-        this.ZKe(e),
+        this.uXe(e),
         (t = this.InfoMap.get(e.Id))
           ? e.HasFightTag && ((e.HasFightTag = !1), this.UpdateVisible(t, !0))
           : Log_1.Log.CheckError() &&
@@ -232,32 +232,32 @@ class BattleUiMergeHeadStateData {
               ["id", e.Id],
             )));
   }
-  iQe(t, e, i, s) {
+  dXe(t, e, i, s) {
     var r = new MergeHeadStateInfo();
-    this.zKe++,
-      (r.Id = this.zKe),
+    this._Xe++,
+      (r.Id = this._Xe),
       (r.TreeId = t),
       (r.NodeId = e),
       (r.MonsterGroupName = s ?? EMPTY_STR);
-    for (const o of i.ovs)
-      for (const a of o._vs) {
+    for (const o of i.SEs)
+      for (const a of o.REs) {
         var h = new MergeHeadStateMonsterInfo();
         (h.Id = r.Id),
-          (h.PbDataId = a.jkn),
-          (h.IsDead = 2 === a.ckn),
-          (h.BaseLife = MathUtils_1.MathUtils.LongToNumber(a.rvs)),
+          (h.PbDataId = a.v5n),
+          (h.IsDead = 2 === a.F4n),
+          (h.BaseLife = MathUtils_1.MathUtils.LongToNumber(a.MEs)),
           (h.EntityHandle =
             ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(
               h.PbDataId,
             )),
           h.EntityHandle?.Valid
-            ? (this.oQe(h),
+            ? (this.CXe(h),
               h.AttributeComponent &&
                 ((h.Hp = h.AttributeComponent.GetCurrentValue(
                   CharacterAttributeTypes_1.EAttributeId.Proto_Life,
                 )),
                 (h.HpMax = h.AttributeComponent.GetCurrentValue(
-                  CharacterAttributeTypes_1.EAttributeId.Tkn,
+                  CharacterAttributeTypes_1.EAttributeId.e5n,
                 ))))
             : (h.IsDead
                 ? (h.Hp = 0)
@@ -271,22 +271,22 @@ class BattleUiMergeHeadStateData {
         (r.TotalHpMax += n.BaseLife);
     this.UpdateVisible(r, !1),
       this.InfoMap.set(r.Id, r),
-      r.IsVisible && this.nQe(r);
+      r.IsVisible && this.fXe(r);
   }
-  tQe(t, e) {
-    for (const s of e.ovs)
-      for (const r of s._vs) {
-        var i = t.MonsterInfos.get(r.jkn);
+  mXe(t, e) {
+    for (const s of e.SEs)
+      for (const r of s.REs) {
+        var i = t.MonsterInfos.get(r.v5n);
         i
           ? i.IsDead ||
-            ((i.IsDead = 2 === r.ckn),
+            ((i.IsDead = 2 === r.F4n),
             i.IsDead &&
-              (this.ZKe(i),
+              (this.uXe(i),
               (0 === i.Hp && i.HpMax === i.BaseLife) ||
                 (0 < i.HpMax && (t.TotalHp -= (i.Hp / i.HpMax) * i.BaseLife),
                 (i.Hp = 0),
                 (i.HpMax = i.BaseLife),
-                this.rQe(t))))
+                this.gXe(t))))
           : Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Battle",
@@ -295,25 +295,25 @@ class BattleUiMergeHeadStateData {
             );
       }
   }
-  eQe(t) {
+  cXe(t) {
     for (const e of t.MonsterInfos.values())
       e.RemoveListener(),
         e.EntityHandle
           ? this.ListenMonsterRemoveMap.delete(e.EntityHandle.Id)
           : this.ListenMonsterAddMap.delete(e.PbDataId);
-    t.IsVisible && ((t.IsVisible = !1), this.nQe(t)), this.InfoMap.delete(t.Id);
+    t.IsVisible && ((t.IsVisible = !1), this.fXe(t)), this.InfoMap.delete(t.Id);
   }
-  oQe(t) {
+  CXe(t) {
     t.AddListener() && this.ListenMonsterRemoveMap.set(t.EntityHandle.Id, t);
   }
-  ZKe(t) {
+  uXe(t) {
     t.RemoveListener(), t.IsDead || this.ListenMonsterAddMap.set(t.PbDataId, t);
   }
   OnMonsterFightTagChange(t, e) {
     var i = this.InfoMap.get(t);
     i
       ? i.IsVisible !== e &&
-        (e ? ((i.IsVisible = !0), this.nQe(i)) : this.UpdateVisible(i, !0))
+        (e ? ((i.IsVisible = !0), this.fXe(i)) : this.UpdateVisible(i, !0))
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error("Battle", 18, "[合并怪物血条]更新进战时InfoId错误", [
           "id",
@@ -327,9 +327,9 @@ class BattleUiMergeHeadStateData {
         i = !0;
         break;
       }
-    t.IsVisible !== i && ((t.IsVisible = i), e) && this.nQe(t);
+    t.IsVisible !== i && ((t.IsVisible = i), e) && this.fXe(t);
   }
-  nQe(t) {
+  fXe(t) {
     EventSystem_1.EventSystem.Emit(
       EventDefine_1.EEventName.BattleUiMergeHeadStateVisibleChanged,
       t,
@@ -338,14 +338,14 @@ class BattleUiMergeHeadStateData {
   OnMonsterHealthChange(t, e) {
     var i = this.InfoMap.get(t);
     i
-      ? ((i.TotalHp += e), this.rQe(i))
+      ? ((i.TotalHp += e), this.gXe(i))
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error("Battle", 18, "[合并怪物血条]更新血量时InfoId错误", [
           "id",
           t,
         ]);
   }
-  rQe(t) {
+  gXe(t) {
     EventSystem_1.EventSystem.Emit(
       EventDefine_1.EEventName.BattleUiMergeHeadStateHealthChanged,
       t,

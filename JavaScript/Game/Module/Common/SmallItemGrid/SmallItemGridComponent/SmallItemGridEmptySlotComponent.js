@@ -6,14 +6,14 @@ const UE = require("ue"),
 class SmallItemGridEmptySlotComponent extends SmallItemGridComponent_1.SmallItemGridComponent {
   constructor() {
     super(...arguments),
-      (this.Wgt = void 0),
-      (this.Mxt = () => {
-        this.Wgt && this.Wgt();
+      (this.oft = void 0),
+      (this.Iwt = () => {
+        this.oft && this.oft();
       });
   }
   OnRegisterComponent() {
     (this.ComponentRegisterInfos = [[0, UE.UIButtonComponent]]),
-      (this.BtnBindInfo = [[0, this.Mxt]]);
+      (this.BtnBindInfo = [[0, this.Iwt]]);
   }
   GetResourceId() {
     return "UiItem_ItemBStateAdd";
@@ -22,13 +22,13 @@ class SmallItemGridEmptySlotComponent extends SmallItemGridComponent_1.SmallItem
     return 1;
   }
   OnDeactivate() {
-    this.Wgt = void 0;
+    this.oft = void 0;
   }
   BindEmptySlotButtonCallback(t) {
-    this.Wgt = t;
+    this.oft = t;
   }
   UnBindEmptySlotButtonCallback() {
-    this.Wgt = void 0;
+    this.oft = void 0;
   }
   OnRefresh(t) {}
 }

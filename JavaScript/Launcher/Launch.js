@@ -5,6 +5,8 @@ const puerts_1 = require("puerts"),
   LauncherConfigLib_1 = require("./Define/LauncherConfigLib"),
   HotPatch_1 = require("./HotPatch"),
   HotPatchLogReport_1 = require("./HotPatchLogReport"),
+  Platform_1 = require("./Platform/Platform"),
+  PlatformSdkManagerNew_1 = require("./Platform/PlatformSdk/PlatformSdkManagerNew"),
   AppUtil_1 = require("./Update/AppUtil"),
   LauncherLanguageLib_1 = require("./Util/LauncherLanguageLib"),
   LauncherLog_1 = require("./Util/LauncherLog"),
@@ -16,12 +18,14 @@ function launch() {
     r = e.GetWorld();
   (e.IsStartFromLaunch = !0),
     AppUtil_1.AppUtil.SetWorldContext(r),
+    Platform_1.Platform.Initialize(),
     LauncherStorageLib_1.LauncherStorageLib.Initialize(),
     LauncherConfigLib_1.LauncherConfigLib.Initialize(),
     LauncherLanguageLib_1.LauncherLanguageLib.Initialize(
       UE.KuroStaticLibrary.IsEditor(r),
     ),
     LauncherResourceLib_1.LauncherResourceLib.Initialize(),
+    PlatformSdkManagerNew_1.PlatformSdkManagerNew.Initialize(),
     LauncherLog_1.LauncherLog.Info("launch called, starting HotPatch"),
     (HotPatchLogReport_1.HotPatchLogReport.World = r),
     HotPatch_1.HotPatch.Start(r, e);

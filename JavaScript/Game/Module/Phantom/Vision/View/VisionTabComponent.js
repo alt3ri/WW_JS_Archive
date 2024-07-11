@@ -6,13 +6,13 @@ const UE = require("ue"),
 class VisionTabComponent extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
-      (this.lji = void 0),
-      (this._ji = void 0),
-      (this.uji = () => {
-        this.lji?.();
+      (this.aWi = void 0),
+      (this.hWi = void 0),
+      (this.lWi = () => {
+        this.aWi?.();
       }),
-      (this.cji = () => {
-        this._ji?.();
+      (this._Wi = () => {
+        this.hWi?.();
       }),
       this.CreateThenShowByActor(e.GetOwner());
   }
@@ -22,15 +22,15 @@ class VisionTabComponent extends UiPanelBase_1.UiPanelBase {
       [1, UE.UIExtendToggle],
     ]),
       (this.BtnBindInfo = [
-        [0, this.uji],
-        [1, this.cji],
+        [0, this.lWi],
+        [1, this._Wi],
       ]);
   }
   SetToggleOneButtonClick(e) {
-    this.lji = e;
+    this.aWi = e;
   }
   SetToggleTwoButtonClick(e) {
-    this._ji = e;
+    this.hWi = e;
   }
 }
 exports.VisionTabComponent = VisionTabComponent;

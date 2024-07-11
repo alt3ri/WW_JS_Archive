@@ -19,19 +19,19 @@ const LanguageSystem_1 = require("../../../../Core/Common/LanguageSystem"),
 class VoiceLanguageDownloadView extends LanguageSettingViewBase_1.LanguageSettingViewBase {
   constructor() {
     super(...arguments),
-      (this.wwi = !1),
-      (this.Bwi = () => {
+      (this.wBi = !1),
+      (this.BBi = () => {
         this.RefreshUiBySelect(this.SelectedToggle);
       }),
-      (this.bwi = () => {
+      (this.bBi = () => {
         this.CloseMe();
       }),
-      (this.qwi = () => {
+      (this.qBi = () => {
         ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
           "InUseCanNotDelete",
         );
       }),
-      (this.Gwi = () => {
+      (this.GBi = () => {
         let e = void 0;
         switch (this.SelectedToggle.Updater.Status) {
           case 2:
@@ -100,11 +100,11 @@ class VoiceLanguageDownloadView extends LanguageSettingViewBase_1.LanguageSettin
   }
   OnStart() {
     super.OnStart(),
-      this.CancelButton.SetFunction(this.bwi),
-      this.ConfirmButton.SetFunction(this.Gwi);
+      this.CancelButton.SetFunction(this.bBi),
+      this.ConfirmButton.SetFunction(this.GBi);
   }
   OnBeforeDestroy() {
-    this.wwi = !0;
+    this.wBi = !0;
   }
   CreateToggle(e, t, i) {
     var a = new VoiceLanguageToggle();
@@ -112,7 +112,7 @@ class VoiceLanguageDownloadView extends LanguageSettingViewBase_1.LanguageSettin
   }
   OnRefreshView(e) {
     var t = this.MenuDataIns.MenuDataOptionsNameList[e.GetIndex()];
-    e.SetMainText(t), e.SetDownloadStatusCallback(this.Bwi);
+    e.SetMainText(t), e.SetDownloadStatusCallback(this.BBi);
   }
   InitScrollViewData() {
     var e =
@@ -120,9 +120,9 @@ class VoiceLanguageDownloadView extends LanguageSettingViewBase_1.LanguageSettin
     this.ScrollView.RefreshByData(e.sort((e, t) => e - t));
   }
   OnAfterShow() {
-    this.Nwi(this.SelectedToggle);
+    this.NBi(this.SelectedToggle);
   }
-  Nwi(e) {
+  NBi(e) {
     e.Updater.IsDownloading
       ? this.ConfirmButton.SetLocalText("PauseDownload")
       : 2 !== e.Updater.Status &&
@@ -131,32 +131,32 @@ class VoiceLanguageDownloadView extends LanguageSettingViewBase_1.LanguageSettin
         this.ConfirmButton.SetLocalText("DeleteLanguage"),
       2 === e.Updater.Status &&
       e.Updater.LanguageCode === LanguageSystem_1.LanguageSystem.PackageAudio
-        ? this.ConfirmButton.SetFunction(this.qwi)
-        : this.ConfirmButton.SetFunction(this.Gwi);
+        ? this.ConfirmButton.SetFunction(this.qBi)
+        : this.ConfirmButton.SetFunction(this.GBi);
   }
   OnSelected(e, t) {
     this.RefreshUiBySelect(e);
   }
   RefreshUiBySelect(e) {
-    this.wwi || (this.Nwi(e), e.RefreshUi());
+    this.wBi || (this.NBi(e), e.RefreshUi());
   }
 }
 exports.VoiceLanguageDownloadView = VoiceLanguageDownloadView;
 class LanguageDownloadTips extends ResourceUpdateView_1.ResourceUpdateViewBase {
   constructor(e, t) {
     super(),
-      (this.Owi = void 0),
-      (this.kwi = ""),
-      (this.Owi = e),
-      (this.kwi = t);
+      (this.OBi = void 0),
+      (this.kBi = ""),
+      (this.OBi = e),
+      (this.kBi = t);
   }
   UpdatePatchProgress(e, t, i, a) {
-    this.Owi
+    this.OBi
       ? t === i &&
-        (this.Owi.CalculateDownloadStatus(), 2 === this.Owi.Status) &&
+        (this.OBi.CalculateDownloadStatus(), 2 === this.OBi.Status) &&
         ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
           "LanguageDownloadFinished",
-          this.kwi,
+          this.kBi,
         )
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
@@ -169,9 +169,9 @@ class LanguageDownloadTips extends ResourceUpdateView_1.ResourceUpdateViewBase {
 class VoiceLanguageToggle extends LanguageSettingViewBase_1.LanguageToggleBase {
   constructor() {
     super(...arguments),
-      (this.HLn = void 0),
+      (this.IRn = void 0),
       (this.Updater = void 0),
-      (this.Fwi = void 0);
+      (this.FBi = void 0);
   }
   async ShowNotEnoughSpaceConfirmation(a) {
     return new Promise((e) => {
@@ -191,18 +191,18 @@ class VoiceLanguageToggle extends LanguageSettingViewBase_1.LanguageToggleBase {
   }
   UpdatePatchProgress(e, t, i, a) {
     this.Updater
-      ? (this.Vwi(t, i, a),
-        t === i && (this.Updater.CalculateDownloadStatus(), this.Fwi?.()))
+      ? (this.VBi(t, i, a),
+        t === i && (this.Updater.CalculateDownloadStatus(), this.FBi?.()))
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "HotPatch",
           8,
           "UpdatePatchProgress时，找不到对应的LanguageUpdater",
-          ["languageCode", this.HLn],
+          ["languageCode", this.IRn],
         );
   }
   SetDownloadStatusCallback(e) {
-    this.Fwi = e;
+    this.FBi = e;
   }
   RefreshUi() {
     var i,
@@ -245,7 +245,7 @@ class VoiceLanguageToggle extends LanguageSettingViewBase_1.LanguageToggleBase {
           "HotPatch",
           8,
           "RefreshUi时，找不到对应的LanguageUpdater",
-          ["languageCode", this.HLn],
+          ["languageCode", this.IRn],
         ),
         s.SetUIActive(!1);
   }
@@ -254,10 +254,10 @@ class VoiceLanguageToggle extends LanguageSettingViewBase_1.LanguageToggleBase {
   }
   OnStart() {
     super.OnStart(),
-      (this.HLn = MenuTool_1.MenuTool.GetAudioCodeById(this.Index)),
-      this.HLn
+      (this.IRn = MenuTool_1.MenuTool.GetAudioCodeById(this.Index)),
+      this.IRn
         ? ((this.Updater =
-            LanguageUpdateManager_1.LanguageUpdateManager.GetUpdater(this.HLn)),
+            LanguageUpdateManager_1.LanguageUpdateManager.GetUpdater(this.IRn)),
           this.Updater
             ? (this.Updater.UpdateView.SetImplement(this),
               this.Updater.CalculateDownloadStatus(),
@@ -267,7 +267,7 @@ class VoiceLanguageToggle extends LanguageSettingViewBase_1.LanguageToggleBase {
                 "HotPatch",
                 8,
                 "创建VoiceLanguageToggle时，找不到对应的LanguageUpdater",
-                ["languageCode", this.HLn],
+                ["languageCode", this.IRn],
               ))
         : Log_1.Log.CheckError() &&
           Log_1.Log.Error(
@@ -277,7 +277,7 @@ class VoiceLanguageToggle extends LanguageSettingViewBase_1.LanguageToggleBase {
             ["Index", this.Index],
           );
   }
-  Vwi(e, t, i) {
+  VBi(e, t, i) {
     (e = LauncherTextLib_1.LauncherTextLib.SpaceSizeFormat(e)),
       (t = LauncherTextLib_1.LauncherTextLib.SpaceSizeFormat(t)),
       (i = LauncherTextLib_1.LauncherTextLib.SpaceSizeFormat(i)),
@@ -297,7 +297,7 @@ class VoiceLanguageToggle extends LanguageSettingViewBase_1.LanguageToggleBase {
           "HotPatch",
           8,
           "销毁VoiceLanguageToggle时，找不到对应的LanguageUpdater",
-          ["languageCode", this.HLn],
+          ["languageCode", this.IRn],
         );
   }
 }

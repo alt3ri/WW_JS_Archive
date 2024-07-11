@@ -16,41 +16,41 @@ class MotionController extends ControllerBase_1.ControllerBase {
   static OnAddEvents() {}
   static OnRemoveEvents() {}
   static OnRegisterNetEvent() {
-    Net_1.Net.Register(15672, MotionController.hbi),
-      Net_1.Net.Register(13882, MotionController.lbi),
-      Net_1.Net.Register(11219, MotionController._bi),
-      Net_1.Net.Register(5529, MotionController.ubi);
+    Net_1.Net.Register(9975, MotionController.hqi),
+      Net_1.Net.Register(10771, MotionController.lqi),
+      Net_1.Net.Register(4959, MotionController._qi),
+      Net_1.Net.Register(14592, MotionController.uqi);
   }
   static OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(15672),
-      Net_1.Net.UnRegister(13882),
-      Net_1.Net.UnRegister(11219),
-      Net_1.Net.UnRegister(5529);
+    Net_1.Net.UnRegister(9975),
+      Net_1.Net.UnRegister(10771),
+      Net_1.Net.UnRegister(4959),
+      Net_1.Net.UnRegister(14592);
   }
 }
 ((exports.MotionController = MotionController).RequestUnlockMotion = (e, o) => {
-  var t = new Protocol_1.Aki.Protocol.jJn();
-  (t.l3n = e),
-    (t.Z6n = o),
-    Net_1.Net.Call(25015, t, (e) => {
-      e.X5n !== Protocol_1.Aki.Protocol.lkn.Sys
+  var t = new Protocol_1.Aki.Protocol.kts();
+  (t.O6n = e),
+    (t.P7n = o),
+    Net_1.Net.Call(6347, t, (e) => {
+      e.A9n !== Protocol_1.Aki.Protocol.O4n.NRs
         ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-            e.X5n,
-            3375,
+            e.A9n,
+            19789,
           )
-        : ModelManager_1.ModelManager.MotionModel.OnMotionUnlock(e.l3n, e.Z6n);
+        : ModelManager_1.ModelManager.MotionModel.OnMotionUnlock(e.O6n, e.P7n);
     });
 }),
-  (MotionController.hbi = (e) => {
-    ModelManager_1.ModelManager.MotionModel.OnNewMotionCanUnlock(e.l3n, e.DLs);
+  (MotionController.hqi = (e) => {
+    ModelManager_1.ModelManager.MotionModel.OnNewMotionCanUnlock(e.O6n, e.KPs);
   }),
-  (MotionController.lbi = (e) => {
+  (MotionController.lqi = (e) => {
     ModelManager_1.ModelManager.MotionModel.OnRoleMotionActive(e);
   }),
-  (MotionController._bi = (e) => {
+  (MotionController._qi = (e) => {
     ModelManager_1.ModelManager.MotionModel.OnGetAllRoleMotionInfo(e);
   }),
-  (MotionController.ubi = (e) => {
+  (MotionController.uqi = (e) => {
     ModelManager_1.ModelManager.MotionModel.OnMotionFinishCondition(e);
   });
 //# sourceMappingURL=MotionController.js.map

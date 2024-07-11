@@ -8,25 +8,35 @@ class WeaponTrialData extends WeaponDataBase_1.WeaponDataBase {
     super(...arguments),
       (this.TrialId = 0),
       (this.TrialConfig = void 0),
+      (this.FullLevelWeaponData = void 0),
       (this.RoleId = 0),
       (this.BreachLevel = 0);
   }
-  SetTrialId(e) {
+  SetTrialId(e, t = !0) {
     (this.TrialId = e),
       (this.TrialConfig =
         ConfigManager_1.ConfigManager.WeaponConfig.GetTrialWeaponConfig(
           this.TrialId,
         )),
-      this.InitWeaponBreachLevel();
+      this.InitWeaponBreachLevel(),
+      t ? this.InitFullLevelWeaponData() : (this.FullLevelWeaponData = void 0);
   }
   InitWeaponBreachLevel() {
     var e = this.GetBreachConfigList(),
       t = this.GetLevel();
-    for (const r of e)
-      if (t <= r.LevelLimit) {
-        this.BreachLevel = r.Level;
+    for (const a of e)
+      if (t <= a.LevelLimit) {
+        this.BreachLevel = a.Level;
         break;
       }
+  }
+  InitFullLevelWeaponData() {
+    var e = this.TrialConfig.FullLevelTrialId;
+    e <= 0 ||
+      ((e = ConfigManager_1.ConfigManager.WeaponConfig.GetTrialWeaponConfig(e))
+        ? ((this.FullLevelWeaponData = new WeaponTrialData()),
+          this.FullLevelWeaponData.SetTrialId(e.Id, !1))
+        : (this.FullLevelWeaponData = void 0));
   }
   GetItemId() {
     return this.TrialConfig.WeaponId;
@@ -57,6 +67,9 @@ class WeaponTrialData extends WeaponDataBase_1.WeaponDataBase {
   }
   GetTrialConfig() {
     return this.TrialConfig;
+  }
+  GetFullLevelWeaponData() {
+    return this.FullLevelWeaponData;
   }
 }
 exports.WeaponTrialData = WeaponTrialData;

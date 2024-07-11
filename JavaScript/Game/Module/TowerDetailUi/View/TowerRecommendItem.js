@@ -15,26 +15,26 @@ const UE = require("ue"),
 class TowerRecommendItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(),
-      (this.Nke = void 0),
-      (this.rDo = void 0),
-      (this.Hke = (e, t, r) => {
+      (this.tFe = void 0),
+      (this.tRo = void 0),
+      (this.nFe = (e, t, r) => {
         var i = new MediumItemGrid_1.MediumItemGrid(),
           t =
             (i.Initialize(t.GetOwner()),
-            ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(e.l3n)),
+            ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(e.O6n)),
           t = {
             Type: 2,
-            ItemConfigId: e.l3n,
+            ItemConfigId: e.O6n,
             BottomTextId: "Text_LevelShow_Text",
-            BottomTextParameter: [e.r3n],
+            BottomTextParameter: [e.P6n],
             ElementId: t.ElementId,
-            IsDisable: !this.nDo(e),
+            IsDisable: !this.iRo(e),
           };
         return i.Apply(t), { Key: r, Value: i };
       }),
-      (this.sDo = () => {
+      (this.oRo = () => {
         EditBattleTeamController_1.EditBattleTeamController.SetEditBattleTeamByRoleId(
-          this.rDo,
+          this.tRo,
         ),
           UiManager_1.UiManager.CloseView("TowerRecommendView");
       });
@@ -47,41 +47,41 @@ class TowerRecommendItem extends GridProxyAbstract_1.GridProxyAbstract {
       [3, UE.UIText],
       [4, UE.UIHorizontalLayout],
     ]),
-      (this.BtnBindInfo = [[0, this.sDo]]);
+      (this.BtnBindInfo = [[0, this.oRo]]);
   }
   OnStart() {
-    this.rDo = [];
+    this.tRo = [];
   }
   Refresh(e, t, r) {
     this.GetText(2).SetText("" + (r + 1)),
       LguiUtil_1.LguiUtil.SetLocalTextNew(
         this.GetText(3),
         "Text_ExplorationDegree_Text",
-        MathUtils_1.MathUtils.GetFloatPointFloorString(e.obs * PERCENT, 2),
+        MathUtils_1.MathUtils.GetFloatPointFloorString(e.yGs * PERCENT, 2),
       ),
-      (this.Nke = new GenericLayoutNew_1.GenericLayoutNew(
+      (this.tFe = new GenericLayoutNew_1.GenericLayoutNew(
         this.GetHorizontalLayout(4),
-        this.Hke,
+        this.nFe,
       ));
     var i = [];
-    for (const a of e.SVn) i.push(a);
+    for (const a of e.zHn) i.push(a);
     i.sort((e, t) => {
       var r, i;
-      return e.r3n === t.r3n
+      return e.P6n === t.P6n
         ? (r = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(
-            e.l3n,
+            e.O6n,
           ).QualityId) ===
           (i = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(
-            t.l3n,
+            t.O6n,
           ).QualityId)
-          ? t.l3n - e.l3n
+          ? t.O6n - e.O6n
           : i - r
-        : t.r3n - e.r3n;
+        : t.P6n - e.P6n;
     }),
-      this.Nke.RebuildLayoutByDataNew(i);
+      this.tFe.RebuildLayoutByDataNew(i);
   }
-  nDo(e) {
-    e = e.l3n;
+  iRo(e) {
+    e = e.O6n;
     if (ModelManager_1.ModelManager.RoleModel.IsMainRole(e)) {
       var t = ModelManager_1.ModelManager.PlayerInfoModel.GetPlayerRoleId();
       if (
@@ -91,16 +91,16 @@ class TowerRecommendItem extends GridProxyAbstract_1.GridProxyAbstract {
         )?.GetElementInfo()?.Id
       )
         return this.GetInteractionGroup(1).SetInteractable(!1), !1;
-      this.rDo.push(t);
+      this.tRo.push(t);
     } else {
       if (!ModelManager_1.ModelManager.RoleModel.GetRoleDataById(e))
         return this.GetInteractionGroup(1).SetInteractable(!1), !1;
-      this.rDo.push(e);
+      this.tRo.push(e);
     }
     return !0;
   }
   OnBeforeDestroy() {
-    (this.rDo.length = 0), (this.Nke = void 0);
+    (this.tRo.length = 0), (this.tFe = void 0);
   }
 }
 exports.TowerRecommendItem = TowerRecommendItem;

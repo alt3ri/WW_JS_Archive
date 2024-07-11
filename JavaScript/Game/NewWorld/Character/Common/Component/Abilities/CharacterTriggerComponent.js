@@ -31,27 +31,34 @@ const Log_1 = require("../../../../../../Core/Common/Log"),
   builtinFunc = {
     GetTags: (e) => {
       var r = [];
-      for (const t of e.CheckGetComponent(185).TagContainer.GetAllExactTags() ??
+      for (const t of e.CheckGetComponent(188).TagContainer.GetAllExactTags() ??
         [])
         r.push(GameplayTagUtils_1.GameplayTagUtils.GetNameByTagId(t));
       return r;
     },
     GetAttributeByID(e, r) {
-      return e.CheckGetComponent(156).GetCurrentValue(r);
+      return e.CheckGetComponent(158).GetCurrentValue(r);
     },
+    HasInt: (e, r) => !(!r || 0 === r.length) && r.includes(e),
+    MatchAnyInt: (e, r) =>
+      !(!e || !r || 0 === e.length || 0 === r.length) &&
+      e.some((e) => r.includes(e)),
+    MatchAllInt: (e, r) =>
+      !(!e || !r || 0 === e.length || 0 === r.length) &&
+      e.every((e) => r.includes(e)),
     MatchAnyTag: (e, r) =>
       e
-        .CheckGetComponent(185)
+        .CheckGetComponent(188)
         .HasAnyTag(
           r.map((e) => GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(e)),
         ),
     MatchAllTags: (e, r) =>
       e
-        .CheckGetComponent(185)
+        .CheckGetComponent(188)
         .HasAllTag(
           r.map((e) => GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(e)),
         ),
-    GetShieldValue: (e) => e.CheckGetComponent(64)?.ShieldTotal ?? 0,
+    GetShieldValue: (e) => e.CheckGetComponent(66)?.ShieldTotal ?? 0,
     Distance: (e, r) => {
       var t = ModelManager_1.ModelManager.CreatureModel,
         i = e?.GetComponent(0),
@@ -80,15 +87,15 @@ const Log_1 = require("../../../../../../Core/Common/Log"),
 let triggerHandleCounter = 0,
   CharacterTriggerComponent = class CharacterTriggerComponent extends EntityComponent_1.EntityComponent {
     constructor() {
-      super(...arguments), (this.o2r = new Map()), (this.r2r = new Map());
+      super(...arguments), (this.wkr = new Map()), (this.Bkr = new Map());
     }
     OnInit() {
       return !0;
     }
     OnStart() {
-      for (const e of Object.keys(builtinFunc)) this.r2r.set(e, builtinFunc[e]);
+      for (const e of Object.keys(builtinFunc)) this.Bkr.set(e, builtinFunc[e]);
       return (
-        this.r2r.set("GetSelfTeamAttributeByID", (e) => {
+        this.Bkr.set("GetSelfTeamAttributeByID", (e) => {
           return ModelManager_1.ModelManager.SceneTeamModel.GetTeamItem(
             this.Entity.Id,
             { ParamType: 1 },
@@ -102,9 +109,9 @@ let triggerHandleCounter = 0,
       );
     }
     OnClear() {
-      this.r2r.clear();
-      for (const e of this.o2r.keys()) this.RemoveTrigger(e);
-      return this.o2r.clear(), !0;
+      this.Bkr.clear();
+      for (const e of this.wkr.keys()) this.RemoveTrigger(e);
+      return this.wkr.clear(), !0;
     }
     AddTrigger(r, e) {
       if (!r)
@@ -132,8 +139,8 @@ let triggerHandleCounter = 0,
         );
       var i = triggerHandleCounter++;
       try {
-        var o = new t(r, i, this, this.r2r, e);
-        o.OnInitParams(r.Preset), this.o2r.set(i, o);
+        var o = new t(r, i, this, this.Bkr, e);
+        o.OnInitParams(r.Preset), this.wkr.set(i, o);
       } catch (e) {
         return (
           e instanceof Error
@@ -164,14 +171,14 @@ let triggerHandleCounter = 0,
       return i;
     }
     GetTrigger(e) {
-      return this.o2r.get(e);
+      return this.wkr.get(e);
     }
     RemoveTrigger(e) {
-      var r = this.o2r.get(e);
-      r && (r.Destroy(), this.o2r.delete(e));
+      var r = this.wkr.get(e);
+      r && (r.Destroy(), this.wkr.delete(e));
     }
     SetTriggerActive(e, r) {
-      this.o2r.get(e)?.SetActive(r);
+      this.wkr.get(e)?.SetActive(r);
     }
   };
 (CharacterTriggerComponent = __decorate(

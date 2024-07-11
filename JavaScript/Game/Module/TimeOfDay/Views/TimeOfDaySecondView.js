@@ -26,25 +26,25 @@ class TimeOfDaySecondView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
       (this.IRe = void 0),
-      (this.ITo = void 0),
-      (this.TTo = void 0),
-      (this.E_i = void 0),
-      (this.rIn = void 0),
-      (this.nIn = void 0),
-      (this.LTo = () => {
+      (this.ELo = void 0),
+      (this.SLo = void 0),
+      (this.Sui = void 0),
+      (this.TTn = void 0),
+      (this.LTn = void 0),
+      (this.yLo = () => {
         return new TimeOfDaySecondToggleItem_1.TimeOfDaySecondToggleItem();
       }),
-      (this.DTo = (e, i, t) => {
+      (this.ILo = (e, i, t) => {
         return new TimeOfDaySecondCircleAttachItem_1.TimeOfDaySecondCircleAttachItem(
           e,
         );
       }),
-      (this.RTo = (e) => {
-        this.ITo.IsVelocityMoveState() ||
-          this.ITo.AttachToIndex(e.GetCurrentShowItemIndex(), !1);
+      (this.TLo = (e) => {
+        this.ELo.IsVelocityMoveState() ||
+          this.ELo.AttachToIndex(e.GetCurrentShowItemIndex(), !1);
       }),
-      (this.UTo = () => {
-        this.ATo();
+      (this.LLo = () => {
+        this.DLo();
       }),
       (this.$Ge = (e) => {
         "TimeOfDayLoadingView" === e &&
@@ -53,10 +53,10 @@ class TimeOfDaySecondView extends UiTickViewBase_1.UiTickViewBase {
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.DestroyAllUiCameraAnimationHandles,
           ),
-          this.nIn) &&
-          (this.nIn(), (this.nIn = void 0));
+          this.LTn) &&
+          (this.LTn(), (this.LTn = void 0));
       }),
-      (this.gTt = (i) => {
+      (this.ELt = (i) => {
         if (
           !(
             i < 0 ||
@@ -64,20 +64,20 @@ class TimeOfDaySecondView extends UiTickViewBase_1.UiTickViewBase {
               ?.ChangeDayIndex === i
           )
         ) {
-          this.E_i.SelectGridProxy(i);
-          for (let e = 0; e < this.TTo.length; e++)
-            if (this.TTo[e].ChangeDayIndex === i) {
+          this.Sui.SelectGridProxy(i);
+          for (let e = 0; e < this.SLo.length; e++)
+            if (this.SLo[e].ChangeDayIndex === i) {
               ModelManager_1.ModelManager.TimeOfDayModel.CurrentSelectTimeItemSt =
-                this.TTo[e];
+                this.SLo[e];
               break;
             }
-          this.ITo.AttachToIndex(
+          this.ELo.AttachToIndex(
             ModelManager_1.ModelManager.TimeOfDayModel.CurrentSelectTimeItemSt
               .Id,
             !0,
           );
           for (let e = -3; e < 3; e++)
-            this.ITo.GetItemByShowIndex(e)
+            this.ELo.GetItemByShowIndex(e)
               ?.GetRootItem()
               .SetHierarchyIndex(e + 3);
           this.GetItem(7)
@@ -86,37 +86,37 @@ class TimeOfDaySecondView extends UiTickViewBase_1.UiTickViewBase {
             .Play();
         }
       }),
-      (this.E9e = () => {
+      (this.q7e = () => {
         this.FNe();
       }),
       (this.Awe = () => {
         this.CloseMe();
       }),
-      (this._Fe = () => {
-        this.PTo(
+      (this.L3e = () => {
+        this.RLo(
           ModelManager_1.ModelManager.TimeOfDayModel.GameTime.Second,
           ModelManager_1.ModelManager.TimeOfDayModel.CurrentSelectTimeItemSt
             .SetTime,
         );
       }),
-      (this.PTo = (e, i, t) => {
+      (this.RLo = (e, i, t) => {
         var r =
             i - e <
             TimeOfDayDefine_1.TOD_MIN_ADJUST_MINUTE *
               TimeOfDayDefine_1.TOD_SECOND_PER_MINUTE
               ? i + TimeOfDayDefine_1.TOD_SECOND_PER_DAY
               : i,
-          t = ((this.nIn = t), this.xTo());
+          t = ((this.LTn = t), this.ULo());
         TimeOfDayController_1.TimeOfDayController.SetUiAnimFlag(!0),
           TimeOfDayController_1.TimeOfDayController.AdjustTime(
             i,
-            Protocol_1.Aki.Protocol.pOs.Proto_PlayerOperate,
+            Protocol_1.Aki.Protocol.h4s.Proto_PlayerOperate,
             t,
           ),
-          (this.rIn = TimerSystem_1.TimerSystem.Delay(() => {
-            this.wTo(), (this.rIn = void 0);
+          (this.TTn = TimerSystem_1.TimerSystem.Delay(() => {
+            this.ALo(), (this.TTn = void 0);
           }, 1e3)),
-          this.BTo(e, r, () => {});
+          this.PLo(e, r, () => {});
       });
   }
   OnRegisterComponent() {
@@ -134,20 +134,20 @@ class TimeOfDaySecondView extends UiTickViewBase_1.UiTickViewBase {
     ]),
       (this.BtnBindInfo = [
         [2, this.Awe],
-        [3, this._Fe],
+        [3, this.L3e],
       ]);
   }
   async OnBeforeStartAsync() {
-    this.E_i = new GenericLayout_1.GenericLayout(
+    this.Sui = new GenericLayout_1.GenericLayout(
       this.GetHorizontalLayout(8),
-      this.LTo,
+      this.yLo,
     );
     var e =
         ConfigManager_1.ConfigManager.TimeOfDayConfig.GetDayTimeChangePresets(),
       i = [],
       e =
-        (i.push(this.E_i.RefreshByDataAsync(e)),
-        this.E_i.SelectGridProxy(0),
+        (i.push(this.Sui.RefreshByDataAsync(e)),
+        this.Sui.SelectGridProxy(0),
         CommonParamById_1.configCommonParamById.GetStringConfig(
           "TimeOfDaySecondMiddleOffsetCurve",
         ));
@@ -166,31 +166,31 @@ class TimeOfDaySecondView extends UiTickViewBase_1.UiTickViewBase {
     var e = this.GetItem(6),
       i = this.GetItem(7);
     this.GetUiNiagara(4).SetUIActive(!1),
-      (this.ITo = new NoCircleAttachView_1.NoCircleAttachView(e.GetOwner())),
-      this.ITo?.SetControllerItem(i),
-      this.ITo?.SetIfNeedFakeItem(!0),
-      this.ITo.CreateItems(this.GetItem(5).GetOwner(), 0, this.DTo),
+      (this.ELo = new NoCircleAttachView_1.NoCircleAttachView(e.GetOwner())),
+      this.ELo?.SetControllerItem(i),
+      this.ELo?.SetIfNeedFakeItem(!0),
+      this.ELo.CreateItems(this.GetItem(5).GetOwner(), 0, this.ILo),
       this.GetItem(5).SetUIActive(!1),
       this.FNe(),
-      this.wTo(),
-      (this.IRe = TimerSystem_1.TimerSystem.Forever(this.E9e, TIMEGAP));
+      this.ALo(),
+      (this.IRe = TimerSystem_1.TimerSystem.Forever(this.q7e, TIMEGAP));
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.ClickTimeItem,
-      this.RTo,
+      this.TLo,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.AdjustTimeInAnim,
-        this.PTo,
+        this.RLo,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnSelectTimeItem,
-        this.UTo,
+        this.LLo,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnSelectTimePreset,
-        this.gTt,
+        this.ELt,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.CloseView,
@@ -200,45 +200,45 @@ class TimeOfDaySecondView extends UiTickViewBase_1.UiTickViewBase {
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.ClickTimeItem,
-      this.RTo,
+      this.TLo,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.AdjustTimeInAnim,
-        this.PTo,
+        this.RLo,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnSelectTimeItem,
-        this.UTo,
+        this.LLo,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnSelectTimePreset,
-        this.gTt,
+        this.ELt,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.CloseView,
         this.$Ge,
       );
   }
-  ATo() {
+  DLo() {
     var e = ModelManager_1.ModelManager.TimeOfDayModel.CurrentSelectTimeItemSt;
-    this.E_i.SelectGridProxy(e.ChangeDayIndex);
+    this.Sui.SelectGridProxy(e.ChangeDayIndex);
   }
-  wTo() {
-    this.TTo =
+  ALo() {
+    this.SLo =
       ModelManager_1.ModelManager.TimeOfDayModel.GetTimeOfDayShowData();
-    var e = this.TTo;
-    this.ITo.ReloadView(e.length, e);
+    var e = this.SLo;
+    this.ELo.ReloadView(e.length, e);
     for (let e = -3; e < 3; e++)
-      this.ITo.GetItemByShowIndex(e)
+      this.ELo.GetItemByShowIndex(e)
         ?.GetRootItem()
         .SetHierarchyIndex(e + 3);
   }
   OnTick(e) {
-    this.bTo();
+    this.xLo();
   }
-  bTo() {
+  xLo() {
     var e = this.GetUiNiagara(4);
-    !this.ITo || this.ITo.MovingState()
+    !this.ELo || this.ELo.MovingState()
       ? e.IsUIActiveSelf() && this.GetUiNiagara(4).SetUIActive(!1)
       : e.IsUIActiveSelf() || this.GetUiNiagara(4).SetUIActive(!0);
   }
@@ -250,23 +250,23 @@ class TimeOfDaySecondView extends UiTickViewBase_1.UiTickViewBase {
   OnBeforeDestroy() {
     TimerSystem_1.TimerSystem.Has(this.IRe) &&
       TimerSystem_1.TimerSystem.Remove(this.IRe),
-      TimerSystem_1.TimerSystem.Has(this.rIn) &&
-        TimerSystem_1.TimerSystem.Remove(this.rIn),
+      TimerSystem_1.TimerSystem.Has(this.TTn) &&
+        TimerSystem_1.TimerSystem.Remove(this.TTn),
       (TimeOfDayAnimController_1.TimeOfDayAnimController.CallBack = () => {}),
       TimeOfDayController_1.TimeOfDayController.SetUiAnimFlag(!1),
       UiLayer_1.UiLayer.SetShowNormalMaskLayer(!1),
       TimeOfDayController_1.TimeOfDayController.ResumeTimeScale(),
-      this.nIn && (this.nIn(), (this.nIn = void 0)),
+      this.LTn && (this.LTn(), (this.LTn = void 0)),
       (TimeOfDaySecondCircleAttachItem_1.TimeOfDaySecondCircleAttachItem.MiddleOffsetCurve =
         void 0),
-      this.ITo.Clear(),
-      this.E_i?.ClearChildren();
+      this.ELo.Clear(),
+      this.Sui?.ClearChildren();
   }
-  xTo() {
+  ULo() {
     return ModelManager_1.ModelManager.TimeOfDayModel.CurrentSelectTimeItemSt
       .ChangeDayIndex;
   }
-  BTo(e, i, t) {
+  PLo(e, i, t) {
     TimeOfDayAnimController_1.TimeOfDayAnimController.PlayTimeAnimation(
       e,
       i,
@@ -276,10 +276,10 @@ class TimeOfDaySecondView extends UiTickViewBase_1.UiTickViewBase {
   GetGuideUiItemAndUiItemForShowEx(e) {
     const i = Number(e[0]);
     if (0 !== i) {
-      e = this.TTo?.findIndex((e) => e.SetTime === i);
+      e = this.SLo?.findIndex((e) => e.SetTime === i);
       if (e && 0 <= e) {
-        this.ITo?.AttachToIndex(e, !0);
-        e = this.ITo?.GetItemByShowIndex(e)?.GetRootItem();
+        this.ELo?.AttachToIndex(e, !0);
+        e = this.ELo?.GetItemByShowIndex(e)?.GetRootItem();
         if (e) return [e, e];
       }
     }

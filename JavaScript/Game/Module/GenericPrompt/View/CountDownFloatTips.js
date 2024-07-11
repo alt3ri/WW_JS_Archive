@@ -13,14 +13,14 @@ const UE = require("ue"),
 class CountDownFloatTips extends GenericPromptFloatTipsBase_1.GenericPromptFloatTipsBase {
   constructor() {
     super(...arguments),
-      (this.uYt = -0),
-      (this.cYt = ""),
-      (this.mYt = ""),
-      (this.dYt = ""),
-      (this.Lut = void 0),
+      (this.uJt = -0),
+      (this.cJt = ""),
+      (this.mJt = ""),
+      (this.dJt = ""),
+      (this.Oct = void 0),
       (this.LevelSequencePlayer = void 0),
-      (this.P$t = (e, t) => {
-        void 0 === (this.uYt = e) || e <= 0
+      (this.PYt = (e, t) => {
+        void 0 === (this.uJt = e) || e <= 0
           ? (this.GetUiNiagara(2).SetUIActive(!1),
             this.GetUiNiagara(3).SetUIActive(!1),
             t && this.SetExtraText((t = "00"), t, t),
@@ -36,18 +36,18 @@ class CountDownFloatTips extends GenericPromptFloatTipsBase_1.GenericPromptFloat
             (t = Math.floor(
               (e % TimeUtil_1.TimeUtil.Hour) / TimeUtil_1.TimeUtil.Minute,
             )),
-            (this.mYt = (t < 10 ? "0" : "") + t),
+            (this.mJt = (t < 10 ? "0" : "") + t),
             (t = Math.floor(e % TimeUtil_1.TimeUtil.Minute)),
-            (this.dYt = (t < 10 ? "0" : "") + t),
+            (this.dJt = (t < 10 ? "0" : "") + t),
             (t = Math.floor((e - Math.floor(e)) * ONE_HUNDRED)),
-            (this.cYt = (t < 10 ? "0" : "") + t));
+            (this.cJt = (t < 10 ? "0" : "") + t));
       });
   }
   OnRegisterComponent() {
     super.OnRegisterComponent(),
       this.ComponentRegisterInfos.push([2, UE.UINiagara]),
       this.ComponentRegisterInfos.push([3, UE.UINiagara]),
-      (this.Lut = UE.Color.FromHex("FFFFFFFF"));
+      (this.Oct = UE.Color.FromHex("FFFFFFFF"));
   }
   OnStart() {
     super.OnStart(),
@@ -59,31 +59,31 @@ class CountDownFloatTips extends GenericPromptFloatTipsBase_1.GenericPromptFloat
     super.OnAddEventListener(),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnGamePlayCdChanged,
-        this.P$t,
+        this.PYt,
       );
   }
   OnRemoveEventListener() {
     super.OnRemoveEventListener(),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnGamePlayCdChanged,
-        this.P$t,
+        this.PYt,
       );
   }
   OnTick(e) {
-    this.mYt &&
-      this.dYt &&
-      this.cYt &&
-      (this.uYt <= 10
+    this.mJt &&
+      this.dJt &&
+      this.cJt &&
+      (this.uJt <= 10
         ? "Loop" !== this.LevelSequencePlayer.GetCurrentSequence() &&
           this.LevelSequencePlayer.PlayLevelSequenceByName("Loop")
         : ("Loop" === this.LevelSequencePlayer.GetCurrentSequence() &&
             this.LevelSequencePlayer.StopCurrentSequence(),
-          this.MainText.SetColor(this.Lut),
-          this.ExtraText.SetColor(this.Lut),
+          this.MainText.SetColor(this.Oct),
+          this.ExtraText.SetColor(this.Oct),
           this.MainText.SetUIItemScale(Vector_1.Vector.OneVector),
           this.ExtraText.SetUIItemScale(Vector_1.Vector.OneVector)),
-      0 === this.uYt && (this.cYt = "00"),
-      this.SetExtraText(this.mYt, this.dYt, this.cYt));
+      0 === this.uJt && (this.cJt = "00"),
+      this.SetExtraText(this.mJt, this.dJt, this.cJt));
   }
 }
 exports.CountDownFloatTips = CountDownFloatTips;

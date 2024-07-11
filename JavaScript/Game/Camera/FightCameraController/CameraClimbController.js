@@ -46,7 +46,8 @@ class CenterState extends StateBase_1.StateBase {
   }
   OnUpdate(t) {
     var i;
-    this.Owner.Camera.IsModifiedArmRotation
+    this.Owner.Camera.IsModifiedArmRotationPitch ||
+    this.Owner.Camera.IsModifiedArmRotationYaw
       ? this.StateMachine.Switch(0)
       : ((i =
           (t / this.Owner.FadeInCenterTime) *
@@ -69,7 +70,8 @@ class CenterState extends StateBase_1.StateBase {
           i,
           this.Owner.Camera.DesiredCamera.ArmRotation,
         ),
-        (this.Owner.Camera.IsModifiedArmRotation = !0),
+        (this.Owner.Camera.IsModifiedArmRotationPitch = !0),
+        (this.Owner.Camera.IsModifiedArmRotationYaw = !0),
         this.gle > this.Owner.FadeInCenterTime && this.StateMachine.Switch(2));
   }
 }
@@ -81,7 +83,8 @@ class ReadyState extends StateBase_1.StateBase {
     this.gle = 0;
   }
   OnUpdate(t) {
-    this.Owner.Camera.IsModifiedArmRotation
+    this.Owner.Camera.IsModifiedArmRotationPitch ||
+    this.Owner.Camera.IsModifiedArmRotationYaw
       ? this.StateMachine.Switch(0)
       : this.Owner.IsMoving
         ? ((this.gle += t * this.Owner.ElapseTimeScale),
@@ -98,7 +101,8 @@ class AdjustState extends StateBase_1.StateBase {
   }
   OnUpdate(t) {
     var i, s, h, e;
-    this.Owner.Camera.IsModifiedArmRotation
+    this.Owner.Camera.IsModifiedArmRotationPitch ||
+    this.Owner.Camera.IsModifiedArmRotationYaw
       ? this.StateMachine.Switch(0)
       : this.Owner.IsMoving
         ? ((e = Vector_1.Vector.Create()),
@@ -126,7 +130,8 @@ class AdjustState extends StateBase_1.StateBase {
                   )
                 : s.DeepCopy(e),
               s.Rotation(this.Owner.Camera.DesiredCamera.ArmRotation),
-              (this.Owner.Camera.IsModifiedArmRotation = !0),
+              (this.Owner.Camera.IsModifiedArmRotationPitch = !0),
+              (this.Owner.Camera.IsModifiedArmRotationYaw = !0),
               (this.vle = !0))
             : (this.vle = i),
           MathUtils_1.MathUtils.IsNearlyEqual(
@@ -156,7 +161,8 @@ class FadeOutState extends StateBase_1.StateBase {
   }
   OnUpdate(t) {
     var i;
-    this.Owner.Camera.IsModifiedArmRotation
+    this.Owner.Camera.IsModifiedArmRotationPitch ||
+    this.Owner.Camera.IsModifiedArmRotationYaw
       ? this.StateMachine.Switch(0)
       : this.Owner.IsMoving
         ? this.StateMachine.Switch(3)
@@ -177,15 +183,16 @@ class ReachThePeakState extends StateBase_1.StateBase {
   constructor() {
     super(...arguments),
       (this.Mle = Vector_1.Vector.Create()),
-      (this.Sle = Rotator_1.Rotator.Create());
+      (this.Ele = Rotator_1.Rotator.Create());
   }
   OnEnter() {
-    this.Sle.DeepCopy(this.Owner.Camera.PlayerRotator),
-      (this.Sle.Pitch = this.Owner.ReachThePeakPitch),
-      this.Sle.Vector(this.Mle);
+    this.Ele.DeepCopy(this.Owner.Camera.PlayerRotator),
+      (this.Ele.Pitch = this.Owner.ReachThePeakPitch),
+      this.Ele.Vector(this.Mle);
   }
   OnUpdate(t) {
-    this.Owner.Camera.IsModifiedArmRotation
+    this.Owner.Camera.IsModifiedArmRotationPitch ||
+    this.Owner.Camera.IsModifiedArmRotationYaw
       ? this.StateMachine.Switch(0)
       : this.Owner.UpdateInterp(t, this.Owner.ReachThePeakSpeed, this.Mle);
   }
@@ -215,7 +222,7 @@ class CameraClimbController extends CameraControllerBase_1.CameraControllerBase 
       (this.StartInputDelay = 0),
       (this.ElapseTimeScale = 1),
       (this.IsMoving = !1),
-      (this.Ele = Vector_1.Vector.Create()),
+      (this.Sle = Vector_1.Vector.Create()),
       (this.yle = 0),
       (this.Ile = 0),
       (this.MoveDirection = Vector_1.Vector.Create()),
@@ -271,7 +278,7 @@ class CameraClimbController extends CameraControllerBase_1.CameraControllerBase 
       this.Camera.CameraAdjustController.Lock(this),
       this.Camera.CameraAutoController.Lock(this),
       this.Camera.CameraSidestepController.Lock(this),
-      this.Ele.Reset(),
+      this.Sle.Reset(),
       (this.yle =
         Time_1.Time.Now +
         this.StartInputDelay * TimeUtil_1.TimeUtil.InverseMillisecond),
@@ -299,21 +306,21 @@ class CameraClimbController extends CameraControllerBase_1.CameraControllerBase 
     return this.Camera.ContainsTag(504239013);
   }
   UpdateInternal(t) {
-    var i =
-      this.Camera.CharacterEntityHandle.Entity.GetComponent(52).GetMoveVector();
-    (this.Lz.X = i.X),
-      (this.Lz.Y = i.Y),
+    var i;
+    this.Camera.CharacterEntityHandle.Entity.GetComponent(53).GetMoveVector(
+      this.Lz,
+    ),
       this.Dle(this.Lz)
         ? Time_1.Time.Now > this.yle
-          ? (this.Ele.DeepCopy(this.Lz),
-            this.Lz.Set(0, this.Ele.Y, this.Ele.X),
+          ? (this.Sle.DeepCopy(this.Lz),
+            this.Lz.Set(0, this.Sle.Y, this.Sle.X),
             this.Camera.Character.CharacterActorComponent.ActorQuatProxy.RotateVector(
               this.Lz,
               this.MoveDirection,
             ),
             (this.IsMoving = !0),
             (i =
-              this.Camera.CharacterEntityHandle.Entity.GetComponent(161).Speed),
+              this.Camera.CharacterEntityHandle.Entity.GetComponent(163).Speed),
             (this.ElapseTimeScale =
               i > this.ReferToMoveSpeed ? i / this.ReferToMoveSpeed : 1),
             (this.yle =
@@ -328,7 +335,7 @@ class CameraClimbController extends CameraControllerBase_1.CameraControllerBase 
               this.StartInputDelay * TimeUtil_1.TimeUtil.InverseMillisecond))
         : this.IsMoving &&
           ((i =
-            this.Camera.CharacterEntityHandle.Entity.GetComponent(161).Speed),
+            this.Camera.CharacterEntityHandle.Entity.GetComponent(163).Speed),
           (this.ElapseTimeScale =
             i > this.ReferToMoveSpeed ? i / this.ReferToMoveSpeed : 1)),
       this.Lle.Update(t);
@@ -341,7 +348,7 @@ class CameraClimbController extends CameraControllerBase_1.CameraControllerBase 
           ((this.Ile =
             Time_1.Time.Now +
             this.StopInputDelay * TimeUtil_1.TimeUtil.InverseMillisecond),
-          this.Ele.X * t.X + this.Ele.Y * t.Y >
+          this.Sle.X * t.X + this.Sle.Y * t.Y >
             Math.cos(
               this.LargeAngleTurnThreshold * MathUtils_1.MathUtils.DegToRad,
             ))
@@ -352,7 +359,7 @@ class CameraClimbController extends CameraControllerBase_1.CameraControllerBase 
               this.LargeAngleTurnDelay *
                 TimeUtil_1.TimeUtil.InverseMillisecond),
             (t =
-              this.Camera.CharacterEntityHandle.Entity.GetComponent(161).Speed),
+              this.Camera.CharacterEntityHandle.Entity.GetComponent(163).Speed),
             (this.ElapseTimeScale =
               t > this.ReferToMoveSpeed ? t / this.ReferToMoveSpeed : 1),
             !1
@@ -443,7 +450,8 @@ class CameraClimbController extends CameraControllerBase_1.CameraControllerBase 
       Vector_1.Vector.UpVectorProxy,
       a,
     ),
-      (this.Camera.IsModifiedArmRotation = !0);
+      (this.Camera.IsModifiedArmRotationPitch = !0),
+      (this.Camera.IsModifiedArmRotationYaw = !0);
   }
   Tle(t) {
     return 2 === t || 7 === t || 8 === t || 9 === t;

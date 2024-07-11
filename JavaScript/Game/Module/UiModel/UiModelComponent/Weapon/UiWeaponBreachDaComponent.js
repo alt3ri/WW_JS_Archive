@@ -31,18 +31,18 @@ const UE = require("ue"),
 let UiWeaponBreachDaComponent = class UiWeaponBreachDaComponent extends UiModelComponentBase_1.UiModelComponentBase {
   constructor() {
     super(...arguments),
-      (this.Qwr = void 0),
-      (this.nXt = void 0),
-      (this.ZBr = void 0),
+      (this.ywr = void 0),
+      (this.n$t = void 0),
+      (this.UBr = void 0),
       (this.KY = () => {
-        var e = this.ZBr?.WeaponData?.GetBreachLevel() ?? 0;
+        var e = this.UBr?.WeaponData?.GetBreachLevel() ?? 0;
         this.RefreshWeaponBreachDa(e);
       });
   }
   OnInit() {
-    (this.Qwr = this.Owner.CheckGetComponent(0)),
-      (this.nXt = this.Owner.CheckGetComponent(1)),
-      (this.ZBr = this.Owner.CheckGetComponent(18));
+    (this.ywr = this.Owner.CheckGetComponent(0)),
+      (this.n$t = this.Owner.CheckGetComponent(1)),
+      (this.UBr = this.Owner.CheckGetComponent(18));
   }
   OnStart() {
     EventSystem_1.EventSystem.AddWithTarget(
@@ -61,14 +61,14 @@ let UiWeaponBreachDaComponent = class UiWeaponBreachDaComponent extends UiModelC
   RefreshWeaponBreachDa(i) {
     ModelManager_1.ModelManager.WeaponModel.BlueprintWeaponBreachLevel = i;
     var e = ModelUtil_1.ModelUtil.GetModelConfig(
-      this.Qwr.ModelConfigId,
+      this.ywr.ModelConfigId,
     )?.DA?.AssetPathName.toString();
     e &&
       !StringUtils_1.StringUtils.IsBlank(e) &&
       ResourceSystem_1.ResourceSystem.LoadAsync(e, UE.Object, (e) => {
         var t;
         e &&
-          ((t = this.nXt?.MainMeshComponent),
+          ((t = this.n$t?.MainMeshComponent),
           e instanceof UE.PD_WeaponLevelMaterialDatas_C) &&
           UE.BP_CharacterRenderingFunctionLibrary_C.ApplyWeaponLevelMaterial(
             t,

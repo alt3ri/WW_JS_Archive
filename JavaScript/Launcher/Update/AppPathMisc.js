@@ -4,24 +4,24 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const UE = require("ue");
 class AppPathMisc {
   constructor() {
-    (this.lyr = ""), (this.rxi = ""), (this._yr = "");
+    (this.sIr = ""), (this.rwi = ""), (this.aIr = "");
   }
   GetPatchSaveDir() {
     return (
-      this.lyr ||
-        (this.lyr = UE.BlueprintPathsLibrary.ProjectSavedDir() + "Resources/"),
-      this.lyr
+      this.sIr ||
+        (this.sIr = UE.BlueprintPathsLibrary.ProjectSavedDir() + "Resources/"),
+      this.sIr
     );
   }
   GetPlatform() {
     return (
-      this.rxi || (this.rxi = UE.KuroLauncherLibrary.GetPlatform()), this.rxi
+      this.rwi || (this.rwi = UE.KuroLauncherLibrary.GetPlatform()), this.rwi
     );
   }
   GetInternalUseType() {
     return (
-      this._yr || (this._yr = UE.KuroLauncherLibrary.GetAppInternalUseType()),
-      this._yr
+      this.aIr || (this.aIr = UE.KuroLauncherLibrary.GetAppInternalUseType()),
+      this.aIr
     );
   }
 }

@@ -14,86 +14,86 @@ const Stats_1 = require("../../../../Core/Common/Stats"),
 class StrengthHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
   constructor() {
     super(...arguments),
-      (this.vri = void 0),
-      (this.Mri = 0),
-      (this.Sri = 0),
-      (this.Eri = 0),
-      (this.yri = 0),
-      (this.Iri = void 0),
-      (this.Tri = void 0),
-      (this.Lri = void 0),
-      (this.Dri = void 0),
-      (this.Rri = 0),
-      (this.Uri = 0),
-      (this.B8e = void 0),
+      (this.vni = void 0),
+      (this.Mni = 0),
+      (this.Eni = 0),
+      (this.Sni = 0),
+      (this.yni = 0),
+      (this.Ini = void 0),
+      (this.Tni = void 0),
+      (this.Lni = void 0),
+      (this.Dni = void 0),
+      (this.Rni = 0),
+      (this.Uni = 0),
+      (this.X9e = void 0),
       (this.xie = () => {
         var t = ModelManager_1.ModelManager.BattleUiModel.GetCurRoleData();
-        this.tXe(this.B8e),
-          this.eXe(t),
-          this.vri &&
-            (this.vri.RefreshEntity(t),
-            this.vri.RefreshBuffState(),
-            this.vri.RefreshEnableState(),
-            this.Ari());
+        this.m$e(this.X9e),
+          this.c$e(t),
+          this.vni &&
+            (this.vni.RefreshEntity(t),
+            this.vni.RefreshBuffState(),
+            this.vni.RefreshEnableState(),
+            this.Ani());
       }),
       (this.zpe = (t, i) => {
-        this.tXe(i);
+        this.m$e(i);
       }),
-      (this.pKe = (t, i, e, s) => {
+      (this.AQe = (t, i, e, s) => {
         s === RECOVERY_STRENGTH_BUFF_ID &&
-          t === this.Rri &&
-          this.vri &&
-          this.vri.PlayPickUpAnim();
+          t === this.Rni &&
+          this.vni &&
+          this.vni.PlayPickUpAnim();
       }),
-      (this.Pri = (t, i, e) => {
-        this.vri && (this.xri(), this.wri(), this.Bri());
+      (this.Pni = (t, i, e) => {
+        this.vni && (this.xni(), this.wni(), this.Bni());
       }),
-      (this.bri = (t, i, e) => {
-        this.xri(), this.qri();
+      (this.bni = (t, i, e) => {
+        this.xni(), this.qni();
       }),
-      (this.Gri = (t, i) => {
-        i ? this.vri.SetBuff(1) : this.vri.SetBuff(0);
+      (this.Gni = (t, i) => {
+        i ? this.vni.SetBuff(1) : this.vni.SetBuff(0);
       }),
-      (this.Nri = (t, i) => {
-        i ? this.vri.SetBuff(2) : this.vri.SetBuff(0);
+      (this.Nni = (t, i) => {
+        i ? this.vni.SetBuff(2) : this.vni.SetBuff(0);
       }),
-      (this.Ori = (t, i) => {
-        this.vri.SetEnable(!i);
+      (this.Oni = (t, i) => {
+        this.vni.SetEnable(!i);
       }),
-      (this.kri = (t, i) => {
-        this.vri.PlayPickUpAnim();
+      (this.kni = (t, i) => {
+        this.vni.PlayPickUpAnim();
       });
   }
   OnInitialize() {
     super.OnInitialize(),
-      (this.yri =
+      (this.yni =
         CommonParamById_1.configCommonParamById.GetIntConfig(
           "LowEndurancePercent",
         ) / CommonDefine_1.RATE_10000),
       this.NewHudUnit(StrengthUnit_1.StrengthUnit, "UiItem_Endurance").then(
         (t) => {
-          this.vri = t;
+          this.vni = t;
           t = ModelManager_1.ModelManager.BattleUiModel.GetCurRoleData();
           t &&
-            (this.eXe(t),
-            this.vri.RefreshEntity(t),
-            this.vri.RefreshBuffState(),
-            this.vri.RefreshEnableState(),
-            this.xri(),
-            this.wri(),
-            this.Ari(),
-            this.qri()),
-            this.vri.SetVisible(!1);
+            (this.c$e(t),
+            this.vni.RefreshEntity(t),
+            this.vni.RefreshBuffState(),
+            this.vni.RefreshEnableState(),
+            this.xni(),
+            this.wni(),
+            this.Ani(),
+            this.qni()),
+            this.vni.SetVisible(!1);
         },
         () => {},
       );
   }
   OnDestroyed() {
     super.OnDestroyed(),
-      (this.vri = void 0),
-      (this.Mri = void 0),
-      (this.Sri = void 0),
-      (this.Eri = void 0);
+      (this.vni = void 0),
+      (this.Mni = void 0),
+      (this.Eni = void 0),
+      (this.Sni = void 0);
   }
   OnShowHud() {}
   OnAddEvents() {
@@ -107,15 +107,15 @@ class StrengthHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.CharOnBuffAddUITexture,
-        this.pKe,
+        this.AQe,
       ),
       FormationAttributeController_1.FormationAttributeController.AddValueListener(
         1,
-        this.Pri,
+        this.Pni,
       ),
       FormationAttributeController_1.FormationAttributeController.AddMaxListener(
         1,
-        this.bri,
+        this.bni,
       );
   }
   OnRemoveEvents() {
@@ -129,132 +129,132 @@ class StrengthHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.CharOnBuffAddUITexture,
-        this.pKe,
+        this.AQe,
       ),
       FormationAttributeController_1.FormationAttributeController.RemoveValueListener(
         1,
-        this.Pri,
+        this.Pni,
       ),
       FormationAttributeController_1.FormationAttributeController.RemoveMaxListener(
         1,
-        this.bri,
+        this.bni,
       );
   }
-  eXe(t) {
+  c$e(t) {
     var i;
     t &&
-      ((i = t.EntityHandle.Id), this.Rri !== i) &&
-      ((this.Rri = i),
-      (this.B8e = t.EntityHandle),
+      ((i = t.EntityHandle.Id), this.Rni !== i) &&
+      ((this.Rni = i),
+      (this.X9e = t.EntityHandle),
       (i = t.GameplayTagComponent),
-      (this.Tri = i.ListenForTagAddOrRemove(
+      (this.Tni = i.ListenForTagAddOrRemove(
         334800376,
-        this.Gri,
-        StrengthHandle._$e,
+        this.Gni,
+        StrengthHandle.SYe,
       )),
-      (this.Iri = i.ListenForTagAddOrRemove(
+      (this.Ini = i.ListenForTagAddOrRemove(
         -951946659,
-        this.Nri,
-        StrengthHandle._$e,
+        this.Nni,
+        StrengthHandle.SYe,
       )),
-      (this.Lri = i.ListenForTagAddOrRemove(
+      (this.Lni = i.ListenForTagAddOrRemove(
         64400505,
-        this.Ori,
-        StrengthHandle._$e,
+        this.Oni,
+        StrengthHandle.SYe,
       )),
-      (this.Dri = i.ListenForTagAddOrRemove(
+      (this.Dni = i.ListenForTagAddOrRemove(
         778582368,
-        this.kri,
-        StrengthHandle._$e,
+        this.kni,
+        StrengthHandle.SYe,
       )));
   }
-  tXe(t) {
+  m$e(t) {
     t?.Valid &&
-      this.Rri === t.Id &&
-      (this.Tri.EndTask(),
-      this.Iri.EndTask(),
-      this.Lri.EndTask(),
-      this.Dri.EndTask(),
-      (this.Iri = void 0),
-      (this.Iri = void 0),
-      (this.Lri = void 0),
-      (this.Dri = void 0),
-      (this.Rri = void 0),
-      (this.B8e = void 0),
-      this.vri) &&
-      this.vri.RefreshEntity(void 0);
+      this.Rni === t.Id &&
+      (this.Tni.EndTask(),
+      this.Ini.EndTask(),
+      this.Lni.EndTask(),
+      this.Dni.EndTask(),
+      (this.Ini = void 0),
+      (this.Ini = void 0),
+      (this.Lni = void 0),
+      (this.Dni = void 0),
+      (this.Rni = void 0),
+      (this.X9e = void 0),
+      this.vni) &&
+      this.vni.RefreshEntity(void 0);
   }
-  xri() {
-    (this.Mri =
+  xni() {
+    (this.Mni =
       FormationAttributeController_1.FormationAttributeController.GetValue(1)),
-      (this.Sri =
+      (this.Eni =
         FormationAttributeController_1.FormationAttributeController.GetBaseMax(
           1,
         )),
-      (this.Eri =
+      (this.Sni =
         FormationAttributeController_1.FormationAttributeController.GetMax(1)),
-      this.vri.SetStrengthPercent(this.Mri, this.Sri);
+      this.vni.SetStrengthPercent(this.Mni, this.Eni);
   }
-  wri() {
+  wni() {
     var t, i;
-    this.Fri() &&
-      ((t = this.Mri - this.Sri),
-      (i = this.Eri - this.Sri),
-      this.vri.SetTemporaryStrengthPercent(t, i));
+    this.Fni() &&
+      ((t = this.Mni - this.Eni),
+      (i = this.Sni - this.Eni),
+      this.vni.SetTemporaryStrengthPercent(t, i));
   }
-  Ari() {
-    var t = this.Fri();
-    this.vri.PlayTemporaryAnim(t);
+  Ani() {
+    var t = this.Fni();
+    this.vni.PlayTemporaryAnim(t);
   }
-  Fri() {
-    var t = this.Sri;
-    return !(this.Vri() <= 0 && this.Eri <= t);
+  Fni() {
+    var t = this.Eni;
+    return !(this.Vni() <= 0 && this.Sni <= t);
   }
-  Vri() {
-    return this.Mri - this.Sri;
+  Vni() {
+    return this.Mni - this.Eni;
   }
-  qri() {
-    var t = this.Eri - this.Sri;
-    this.vri.RefreshSingleStrengthItemRotation(this.Sri),
-      this.vri.RefreshSingleTemporaryStrengthItemRotation(t),
-      this.vri.RefreshSingleTemporaryStrengthItemVisible(t);
+  qni() {
+    var t = this.Sni - this.Eni;
+    this.vni.RefreshSingleStrengthItemRotation(this.Eni),
+      this.vni.RefreshSingleTemporaryStrengthItemRotation(t),
+      this.vni.RefreshSingleTemporaryStrengthItemVisible(t);
   }
-  Bri() {
-    var t = this.Mri,
-      i = this.Eri;
+  Bni() {
+    var t = this.Mni,
+      i = this.Sni;
     return (
-      this.Fri()
-        ? 0 < this.Vri()
-          ? (this.vri.SetTemporaryVisible(!0), this.vri.PlayTemporaryAnim(!0))
-          : this.vri.PlayTemporaryAnim(!1)
-        : this.vri.SetTemporaryVisible(!1),
+      this.Fni()
+        ? 0 < this.Vni()
+          ? (this.vni.SetTemporaryVisible(!0), this.vni.PlayTemporaryAnim(!0))
+          : this.vni.PlayTemporaryAnim(!1)
+        : this.vni.SetTemporaryVisible(!1),
       i <= t
-        ? 0 === this.Uri
+        ? 0 === this.Uni
           ? void 0
-          : ((this.Uri = 0),
-            this.vri.SetNone(!1),
-            this.vri.StopNoneAnim(),
-            this.vri.SetNormal(!0),
-            void this.vri.PlayFullAnim())
+          : ((this.Uni = 0),
+            this.vni.SetNone(!1),
+            this.vni.StopNoneAnim(),
+            this.vni.SetNormal(!0),
+            void this.vni.PlayFullAnim())
         : t <= 0
-          ? 3 === this.Uri
+          ? 3 === this.Uni
             ? void 0
-            : ((this.Uri = 3),
-              this.vri.SetNone(!0),
-              void this.vri.PlayNoneAnim())
-          : ((t = t / i > this.yri),
+            : ((this.Uni = 3),
+              this.vni.SetNone(!0),
+              void this.vni.PlayNoneAnim())
+          : ((t = t / i > this.yni),
             void (
-              this.Uri !== (i = t ? 1 : 2) &&
-              ((this.Uri = i),
-              this.vri.SetNone(!1),
-              this.vri.StopNoneAnim(),
-              this.vri.SetNormal(t),
-              this.vri.SetVisible(!0),
-              this.vri.PlayStartAnim())
+              this.Uni !== (i = t ? 1 : 2) &&
+              ((this.Uni = i),
+              this.vni.SetNone(!1),
+              this.vni.StopNoneAnim(),
+              this.vni.SetNormal(t),
+              this.vni.SetVisible(!0),
+              this.vni.PlayStartAnim())
             ))
     );
   }
 }
-((exports.StrengthHandle = StrengthHandle).RKe = void 0),
-  (StrengthHandle._$e = void 0);
+((exports.StrengthHandle = StrengthHandle).kQe = void 0),
+  (StrengthHandle.SYe = void 0);
 //# sourceMappingURL=StrengthHandle.js.map

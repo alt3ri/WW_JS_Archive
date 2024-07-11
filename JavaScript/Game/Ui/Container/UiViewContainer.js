@@ -24,19 +24,19 @@ class UiViewContainer {
           ["ViewName", i.Info?.Name],
           ["path", i.Info.UiPath],
         ),
+      this.OnContainerOpenView(i),
+      await i.CreateAsync())
+    ) {
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OpenView,
         i.Info.Name,
         i.GetViewId(),
       ),
-      this.OnContainerOpenView(i),
-      await i.CreateAsync())
-    ) {
-      Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("UiViewContainer", 17, "OpenViewImplement 界面Start", [
-          "ViewName",
-          i.Info?.Name,
-        ]),
+        Log_1.Log.CheckInfo() &&
+          Log_1.Log.Info("UiViewContainer", 17, "OpenViewImplement 界面Start", [
+            "ViewName",
+            i.Info?.Name,
+          ]),
         await i.StartAsync();
       let e = !0;
       i.ClosePromise

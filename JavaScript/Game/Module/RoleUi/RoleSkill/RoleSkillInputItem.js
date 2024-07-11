@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleSkillInputItem = void 0);
 const UE = require("ue"),
+  Info_1 = require("../../../../Core/Common/Info"),
   MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang"),
   StringBuilder_1 = require("../../../../Core/Utils/StringBuilder"),
   StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
@@ -9,14 +10,13 @@ const UE = require("ue"),
   InputSettings_1 = require("../../../InputSettings/InputSettings"),
   InputSettingsManager_1 = require("../../../InputSettings/InputSettingsManager"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
-  ModelManager_1 = require("../../../Manager/ModelManager"),
   UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
   KeyUtil_1 = require("../../Util/KeyUtil"),
   LguiUtil_1 = require("../../Util/LguiUtil"),
   RoleSkillTreeSkillSpriteItem_1 = require("./RoleSkillTreeSkillSpriteItem");
 class RoleSkillInputItem extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
-    super(), (this.Rco = 0), this.CreateThenShowByActor(e.GetOwner());
+    super(), (this.Imo = 0), this.CreateThenShowByActor(e.GetOwner());
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -25,29 +25,26 @@ class RoleSkillInputItem extends UiPanelBase_1.UiPanelBase {
     ];
   }
   Update(e) {
-    (this.Rco = e), this.Refresh();
+    (this.Imo = e), this.Refresh();
   }
   Refresh() {
-    var e,
-      t = ConfigManager_1.ConfigManager.RoleSkillConfig.GetSkillInputConfigById(
-        this.Rco,
+    var e =
+      ConfigManager_1.ConfigManager.RoleSkillConfig.GetSkillInputConfigById(
+        this.Imo,
       );
-    t &&
-      ((e = ModelManager_1.ModelManager.PlatformModel).IsPc()
-        ? this.HandlePcInputText(t)
-        : e.IsMobile()
-          ? this.HandleMobileInputText(t)
-          : e.IsGamepad() && this.HandleGamepadInputText(t));
+    e &&
+      (Info_1.Info.IsInKeyBoard()
+        ? this.HandlePcInputText(e)
+        : Info_1.Info.IsInTouch()
+          ? this.HandleMobileInputText(e)
+          : Info_1.Info.IsInGamepad() && this.HandleGamepadInputText(e));
   }
   HandlePcInputText(t) {
     var i = [],
       r = t.InputArray.length;
     for (let e = 0; e < r; e++) {
       var n = t.InputArray[e],
-        n = KeyUtil_1.KeyUtil.GetPcKeyNameByAction(
-          n,
-          ModelManager_1.ModelManager.PlatformModel.PlatformType,
-        ),
+        n = KeyUtil_1.KeyUtil.GetPcKeyNameByAction(n),
         l = n[0],
         a = n[1],
         s = new StringBuilder_1.StringBuilder(),

@@ -33,24 +33,24 @@ let CharacterRoleTransitionComponent = class CharacterRoleTransitionComponent ex
   constructor() {
     super(...arguments),
       (this.Hte = void 0),
-      (this.sWr = 800),
-      (this.aWr = !1),
-      (this.hWr = 0),
-      (this.lWr = !1);
+      (this.kjr = 800),
+      (this.Fjr = !1),
+      (this.Vjr = 0),
+      (this.Hjr = !1);
   }
   OnStart() {
     return (
-      (this.hWr = CHECK_CHANGE_ROLE_TIME),
+      (this.Vjr = CHECK_CHANGE_ROLE_TIME),
       (this.Hte = this.Entity.CheckGetComponent(3)),
       !0
     );
   }
   OnTick(e) {
     var t;
-    this.lWr &&
-      ((this.hWr -= e),
-      0 < this.hWr ||
-        ((this.hWr = CHECK_CHANGE_ROLE_TIME),
+    this.Hjr &&
+      ((this.Vjr -= e),
+      0 < this.Vjr ||
+        ((this.Vjr = CHECK_CHANGE_ROLE_TIME),
         Global_1.Global.BaseCharacter &&
           ((e =
             Global_1.Global.BaseCharacter.CharacterActorComponent
@@ -60,20 +60,20 @@ let CharacterRoleTransitionComponent = class CharacterRoleTransitionComponent ex
             Vector_1.Vector.Create(e),
             Vector_1.Vector.Create(t),
           )),
-          (this.aWr = e < this.sWr * this.sWr),
+          (this.Fjr = e < this.kjr * this.kjr),
           this.Hte.IsAutonomousProxy
-            ? this.aWr ||
-              ((t = this._Wr())?.Valid &&
-                ((e = t.GetComponent(0)), this.uWr(t.Id, e.GetPlayerId())))
-            : this.aWr &&
+            ? this.Fjr ||
+              ((t = this.jjr())?.Valid &&
+                ((e = t.GetComponent(0)), this.Wjr(t.Id, e.GetPlayerId())))
+            : this.Fjr &&
               ((t = ModelManager_1.ModelManager.CreatureModel.GetPlayerId()),
-              this.uWr(this.Entity.Id, t)))));
+              this.Wjr(this.Entity.Id, t)))));
   }
-  _Wr() {
+  jjr() {
     for (const r of ModelManager_1.ModelManager.CreatureModel.GetAllEntities())
       if (r?.IsInit) {
         var e = r.Entity.GetComponent(0);
-        if (e.GetEntityType() === Protocol_1.Aki.Protocol.HBs.Proto_Player) {
+        if (e.GetEntityType() === Protocol_1.Aki.Protocol.wks.Proto_Player) {
           e =
             CharacterController_1.CharacterController.GetCharacterActorComponentById(
               r.Id,
@@ -87,14 +87,14 @@ let CharacterRoleTransitionComponent = class CharacterRoleTransitionComponent ex
               e = e.ActorLocation;
             if (
               UE.KismetMathLibrary.Vector_DistanceSquared(t, e) <
-              this.sWr * this.sWr
+              this.kjr * this.kjr
             )
               return r.Entity;
           }
         }
       }
   }
-  uWr(e, t) {
+  Wjr(e, t) {
     ControllerHolder_1.ControllerHolder.CreatureController.ChangeEntityRoleRequest(
       e,
       t,
@@ -102,7 +102,7 @@ let CharacterRoleTransitionComponent = class CharacterRoleTransitionComponent ex
   }
 };
 (CharacterRoleTransitionComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(63)],
+  [(0, RegisterComponent_1.RegisterComponent)(65)],
   CharacterRoleTransitionComponent,
 )),
   (exports.CharacterRoleTransitionComponent = CharacterRoleTransitionComponent);

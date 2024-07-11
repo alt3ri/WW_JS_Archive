@@ -44,29 +44,29 @@ let PasserbyGeneratorComponent = class PasserbyGeneratorComponent extends Entity
   constructor() {
     super(...arguments),
       (this.Hte = void 0),
-      (this.SIe = void 0),
-      (this.Win = Array()),
-      (this.Kin = 0),
-      (this.Qin = !0),
-      (this.wit = Vector_1.Vector.Create());
+      (this.EIe = void 0),
+      (this.Tin = Array()),
+      (this.Lin = 0),
+      (this.Din = !0),
+      (this.Xot = Vector_1.Vector.Create());
   }
   OnStart() {
     (this.Hte = this.Entity.GetComponent(1)),
-      (this.SIe = this.Entity.GetComponent(0));
+      (this.EIe = this.Entity.GetComponent(0));
     var e,
       t,
       o = (0, IComponent_1.getComponent)(
-        this.SIe.GetPbEntityInitData().ComponentsData,
+        this.EIe.GetPbEntityInitData().ComponentsData,
         "PasserbyNpcSpawnComponent",
       );
-    if (!o?.SpawnConfig.MinDistance) return !(this.Qin = !1);
-    this.Kin = o.SpawnConfig.MinDistance * o.SpawnConfig.MinDistance;
+    if (!o?.SpawnConfig.MinDistance) return !(this.Din = !1);
+    this.Lin = o.SpawnConfig.MinDistance * o.SpawnConfig.MinDistance;
     for (const r of o.MoveConfig.Routes)
       r.IsLoop &&
         ((e = r.SplineEntityId),
         (t = new GameSplineComponent_1.GameSplineComponent(e)).Initialize()
           ? t.GetNumberOfSplinePoints() &&
-            this.Win.push(
+            this.Tin.push(
               new SplineStateInfo(e, t.GetWorldLocationAtSplinePoint(0)),
             )
           : Log_1.Log.CheckError() &&
@@ -74,64 +74,64 @@ let PasserbyGeneratorComponent = class PasserbyGeneratorComponent extends Entity
               "NPC",
               51,
               "行人生成器获取样条信息错误",
-              ["PbDataId", this.SIe?.GetPbDataId()],
+              ["PbDataId", this.EIe?.GetPbDataId()],
               ["SplinePbDataId", e],
             ));
-    return this.Win.length || (this.Qin = !1), !0;
+    return this.Tin.length || (this.Din = !1), !0;
   }
   OnTick(e) {
-    if (this.Qin)
-      for (const t of this.Win)
-        this.Xin(t.Location)
+    if (this.Din)
+      for (const t of this.Tin)
+        this.Rin(t.Location)
           ? t.InRange ||
             ((t.InRange = !0),
-            this.$in(t.PbDataId, !0),
+            this.Uin(t.PbDataId, !0),
             Log_1.Log.CheckDebug() &&
               Log_1.Log.Debug("NPC", 51, "进入生成范围", [
                 "PbDataId",
-                this.SIe?.GetPbDataId(),
+                this.EIe?.GetPbDataId(),
               ]))
           : t.InRange &&
             ((t.InRange = !1),
-            this.$in(t.PbDataId, !1),
+            this.Uin(t.PbDataId, !1),
             Log_1.Log.CheckDebug()) &&
             Log_1.Log.Debug("NPC", 51, "离开生成范围", [
               "PbDataId",
-              this.SIe?.GetPbDataId(),
+              this.EIe?.GetPbDataId(),
             ]);
   }
-  Xin(e) {
+  Rin(e) {
     let t = MathUtils_1.MathUtils.MaxFloat;
     var o;
     return (
       ModelManager_1.ModelManager.GameModeModel.IsMulti
-        ? ((o = this.Yin(e)), (t = o.MinDistSquared))
+        ? ((o = this.Ain(e)), (t = o.MinDistSquared))
         : (o = Global_1.Global.BaseCharacter)?.IsValid() &&
           (o.CharacterActorComponent.ActorLocationProxy.Subtraction(
             e,
-            this.wit,
+            this.Xot,
           ),
-          (t = this.wit.SizeSquared2D())),
-      t < this.Kin
+          (t = this.Xot.SizeSquared2D())),
+      t < this.Lin
     );
   }
-  $in(e, t) {
-    var o = Protocol_1.Aki.Protocol.iJn.create();
-    (o.rkn = MathUtils_1.MathUtils.NumberToLong(
+  Uin(e, t) {
+    var o = Protocol_1.Aki.Protocol.Yes.create();
+    (o.P4n = MathUtils_1.MathUtils.NumberToLong(
       this.Hte.CreatureData.GetCreatureDataId(),
     )),
-      (o.d7n = e),
-      (o.C7n = t),
-      Net_1.Net.Call(25538, o, (e) => {
+      (o.WWn = e),
+      (o.KWn = t),
+      Net_1.Net.Call(6794, o, (e) => {
         e &&
-          e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys &&
+          e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs &&
           ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-            e.lkn,
-            11896,
+            e.O4n,
+            29867,
           );
       });
   }
-  Yin(e) {
+  Ain(e) {
     var t = ModelManager_1.ModelManager.CreatureModel.ScenePlayerDataMap,
       o = ModelManager_1.ModelManager.SceneTeamModel;
     let r = void 0,
@@ -140,15 +140,15 @@ let PasserbyGeneratorComponent = class PasserbyGeneratorComponent extends Entity
       var i,
         s = o.GetTeamItem(a[0], { ParamType: 2, IsControl: !0 })?.EntityHandle;
       s &&
-        (s.Entity.GetComponent(3).ActorLocationProxy.Subtraction(e, this.wit),
-        (i = this.wit.SizeSquared2D()) < n) &&
+        (s.Entity.GetComponent(3).ActorLocationProxy.Subtraction(e, this.Xot),
+        (i = this.Xot.SizeSquared2D()) < n) &&
         ((n = i), (r = s));
     }
     return { PlayerEntity: r, MinDistSquared: n };
   }
 };
 (PasserbyGeneratorComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(189)],
+  [(0, RegisterComponent_1.RegisterComponent)(194)],
   PasserbyGeneratorComponent,
 )),
   (exports.PasserbyGeneratorComponent = PasserbyGeneratorComponent);

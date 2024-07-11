@@ -5,19 +5,19 @@ var SceneItemManipulatableComponent_1,
     function (t, e, i, s) {
       var h,
         a = arguments.length,
-        o =
+        n =
           a < 3
             ? e
             : null === s
               ? (s = Object.getOwnPropertyDescriptor(e, i))
               : s;
       if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
-        o = Reflect.decorate(t, e, i, s);
+        n = Reflect.decorate(t, e, i, s);
       else
-        for (var n = t.length - 1; 0 <= n; n--)
-          (h = t[n]) &&
-            (o = (a < 3 ? h(o) : 3 < a ? h(e, i, o) : h(e, i)) || o);
-      return 3 < a && o && Object.defineProperty(e, i, o), o;
+        for (var o = t.length - 1; 0 <= o; o--)
+          (h = t[o]) &&
+            (n = (a < 3 ? h(n) : 3 < a ? h(e, i, n) : h(e, i)) || n);
+      return 3 < a && n && Object.defineProperty(e, i, n), n;
     };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneItemManipulatableComponent = void 0);
@@ -89,7 +89,7 @@ let SceneItemManipulatableComponent =
       super(...arguments),
         (this.Config = void 0),
         (this.ManipulateBaseConfig = void 0),
-        (this.gpn = !1),
+        (this.$fn = !1),
         (this.ConfigHoldOffset = void 0),
         (this.ConfigHoldRotator = void 0),
         (this.ConfigMatchType = void 0),
@@ -98,48 +98,48 @@ let SceneItemManipulatableComponent =
         (this.TargetOutletComponent = void 0),
         (this.ActorComp = void 0),
         (this.ActivatedOutlet = void 0),
-        (this.ugn = void 0),
-        (this.Xrr = void 0),
-        (this.ijr = void 0),
-        (this.Snn = void 0),
-        (this.fpn = void 0),
-        (this.ppn = void 0),
-        (this.vpn = void 0),
-        (this.Mpn = void 0),
+        (this.jCn = void 0),
+        (this.Wnr = void 0),
+        (this.qHr = void 0),
+        (this.inn = void 0),
+        (this.Yfn = void 0),
+        (this.Jfn = void 0),
+        (this.zfn = void 0),
+        (this.Zfn = void 0),
         (this.CastTargetLocation = void 0),
         (this.MatchSequence = void 0),
         (this.PlayingMatchSequence = !1),
         (this.PropComp = void 0),
         (this.CastCurve = void 0),
         (this.IsCanBeHeld = !0),
-        (this.Uxr = void 0),
-        (this.jDn = void 0),
-        (this.Spn = 0),
-        (this.rBn = 0),
+        (this.sxr = void 0),
+        (this.JUn = void 0),
+        (this.epn = 0),
+        (this.fqn = 0),
         (this.NeedRemoveControllerId = !1),
         (this.IsRequestingRemoveControllerId = !1),
         (this.IsRequestingRemoveAutonomousId = !1),
-        (this.Epn = !1),
-        (this.ypn = !1),
+        (this.tpn = !1),
+        (this.ipn = !1),
         (this.FinishCheckInitAttach = !1),
         (this.EnableDynamicAttach = !1),
         (this.mBe = void 0),
-        (this.Ipn = !1),
-        (this.Tpn = void 0),
-        (this.Lpn = !1),
-        (this.Dpn = !0),
-        (this.Rpn = !0),
-        (this.Apn = !0),
-        (this.Upn = !0),
-        (this.zht = void 0),
+        (this.opn = !1),
+        (this.rpn = void 0),
+        (this.npn = !1),
+        (this.spn = !0),
+        (this.apn = !0),
+        (this.hpn = !0),
+        (this.lpn = !0),
+        (this.u1t = void 0),
+        (this.Hfn = void 0),
         (this._pn = void 0),
-        (this.Ppn = void 0),
-        (this.xpn = void 0),
+        (this.upn = void 0),
         (this.UsingAssistantHoldOffset = !1),
         (this.ConfigAssistantHoldOffset = void 0),
         (this.MovementTargetLocation = void 0),
         (this.MovementTargetRotation = void 0),
-        (this.wpn = void 0),
+        (this.ZOe = void 0),
         (this.ResetState = void 0),
         (this.ChantState = void 0),
         (this.DrawState = void 0),
@@ -151,134 +151,134 @@ let SceneItemManipulatableComponent =
         (this.CastProjectileState = void 0),
         (this.MatchOutletState = void 0),
         (this.DropState = void 0),
-        (this.Bpn = ""),
-        (this.bpn = 0),
-        (this.qpn = !1),
-        (this.Gpn = !1),
-        (this.Npn = !1),
-        (this.Opn = 0),
-        (this.kpn = 0),
-        (this.Fpn = MAX_CREATE_BULLET_NUM),
-        (this.Vpn = 0),
-        (this.Hpn = 0),
+        (this.cpn = ""),
+        (this.mpn = 0),
+        (this.dpn = !1),
+        (this.Cpn = !1),
+        (this.gpn = !1),
+        (this.fpn = 0),
+        (this.ppn = 0),
+        (this.vpn = MAX_CREATE_BULLET_NUM),
+        (this.Mpn = 0),
+        (this.Epn = 0),
         (this.IsHoldingUsePhysics = !1),
         (this.ForceMoving = !1),
         (this.LastHoldingLocation = Vector_1.Vector.Create()),
         (this.BCe = void 0),
-        (this.R_n = void 0),
+        (this.a_n = void 0),
         (this.YO = void 0),
-        (this.jpn = void 0),
-        (this.Wpn = !1),
-        (this.azr = () => {
+        (this.Spn = void 0),
+        (this.ypn = !1),
+        (this.FJr = () => {
           EventSystem_1.EventSystem.HasWithTarget(
             this.Entity,
             EventDefine_1.EEventName.EnterPresentationInitRange,
-            this.azr,
+            this.FJr,
           ) &&
             EventSystem_1.EventSystem.RemoveWithTarget(
               this.Entity,
               EventDefine_1.EEventName.EnterPresentationInitRange,
-              this.azr,
+              this.FJr,
             );
         }),
-        (this.Kpn = (t, e, i) => {
+        (this.Ipn = (t, e, i) => {
           var s = e.Entity.GetComponent(0);
-          this.zht?.RelationId === s.GetPbDataId() &&
-            (this.Qpn(e, this.zht.PbRelationMatchCfgIndex),
-            this.Xpn(e),
+          this.u1t?.RelationId === s.GetPbDataId() &&
+            (this.Tpn(e, this.u1t.PbRelationMatchCfgIndex),
+            this.Lpn(e),
             EventSystem_1.EventSystem.Remove(
               EventDefine_1.EEventName.AddEntity,
-              this.Kpn,
+              this.Ipn,
             ));
         }),
-        (this.$pn = () => {
+        (this.Dpn = () => {
           var t = Global_1.Global.BaseCharacter.CharacterActorComponent.Entity;
-          this.szo(t, this.Bpn),
+          this.oZo(t, this.cpn),
             EventSystem_1.EventSystem.RemoveWithTarget(
               this,
               EventDefine_1.EEventName.OnSceneItemHit,
-              this.$pn,
+              this.Dpn,
             ),
-            this.qpn && this.Ypn();
+            this.dpn && this.Rpn();
         }),
-        (this.Jpn = (t, e) => {
+        (this.Upn = (t, e) => {
           e !== Global_1.Global.BaseCharacter.CharacterActorComponent.Owner &&
             ((e = Global_1.Global.BaseCharacter.CharacterActorComponent.Entity),
-            this.szo(e, String(this.Opn)),
-            this.qpn) &&
-            this.Ypn();
+            this.oZo(e, String(this.fpn)),
+            this.dpn) &&
+            this.Rpn();
         }),
-        (this.zpn = () => {
+        (this.Apn = () => {
           this.CurrentState === this.ChantState &&
             (this.CurrentState = this.ResetState);
         }),
-        (this.cjr = (t) => {
-          (this.Hpn += t),
-            this.Dpn || this.Zpn(t),
-            this.Rpn || this.evn(),
-            this.Apn || this.tvn(),
-            this.Upn || this.ivn(t),
-            this.Xrr.DeepCopy(this.ActorComp.ActorLocationProxy),
-            this.ijr.DeepCopy(this.ActorComp.ActorRotationProxy),
+        (this.KHr = (t) => {
+          (this.Epn += t),
+            this.spn || this.Ppn(t),
+            this.apn || this.xpn(),
+            this.hpn || this.wpn(),
+            this.lpn || this.Bpn(t),
+            this.Wnr.DeepCopy(this.ActorComp.ActorLocationProxy),
+            this.qHr.DeepCopy(this.ActorComp.ActorRotationProxy),
             this.IsCanBeHeld ||
-              !this.Epn ||
-              this.Ipn ||
+              !this.tpn ||
+              this.opn ||
               (this.ManipulateBaseConfig?.被控制CD &&
               0 < this.ManipulateBaseConfig?.被控制CD
-                ? ((this.Ipn = !0),
-                  (this.Tpn = TimerSystem_1.TimerSystem.Delay(() => {
-                    (this.Ipn = !1),
+                ? ((this.opn = !0),
+                  (this.rpn = TimerSystem_1.TimerSystem.Delay(() => {
+                    (this.opn = !1),
                       (this.IsCanBeHeld = !0),
                       this.NeedRemoveControllerId &&
                         !this.IsRequestingRemoveControllerId &&
-                        this.ovn(),
-                      (this.Tpn = void 0);
+                        this.bpn(),
+                      (this.rpn = void 0);
                   }, this.ManipulateBaseConfig.被控制CD * TimeUtil_1.TimeUtil.InverseMillisecond)))
                 : ((this.IsCanBeHeld = !0),
                   this.NeedRemoveControllerId &&
                     !this.IsRequestingRemoveControllerId &&
-                    this.ovn())),
-            this.Dpn &&
-              this.Rpn &&
-              (this.Lpn || this.Apn) &&
-              this.Upn &&
-              ((this.Lpn = !1),
+                    this.bpn())),
+            this.spn &&
+              this.apn &&
+              (this.npn || this.hpn) &&
+              this.lpn &&
+              ((this.npn = !1),
               this.TryDisableTick(
                 "[SceneItemManipulatableComponent.OnTick] 没有被控制",
               ),
               this.ActorComp.ResetLocationCachedTime(),
-              this.Ppn?.ForceSendPendingMoveInfos(),
+              this._pn?.CollectSampleAndSend(!0),
               this.IsRequestingRemoveAutonomousId ||
-                ((this.IsCanBeHeld = !1), this.oBn()));
+                ((this.IsCanBeHeld = !1), this.pqn()));
         }),
         (this.gIe = (t, e) => {
           Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug("SceneItem", 32, "[电池] 改变状态", [
               "State",
-              this.Snn.GetTagNames(),
+              this.inn.GetTagNames(),
             ]),
             t.includes(-1611484717)
               ? TimerSystem_1.TimerSystem.Next(() => {
-                  this.Snn.RemoveTag(-938118674), this.Snn.AddTag(1926099076);
+                  this.inn.RemoveTag(-938118674), this.inn.AddTag(1926099076);
                 })
               : t.includes(-1660917319) &&
                 TimerSystem_1.TimerSystem.Next(() => {
-                  this.Snn.RemoveTag(1926099076), this.Snn.AddTag(-938118674);
+                  this.inn.RemoveTag(1926099076), this.inn.AddTag(-938118674);
                 });
         }),
-        (this.rvn = (t, e) => {
+        (this.qpn = (t, e) => {
           0 !== t
             ? ((t =
                 ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(
                   t,
                 )),
-              this.Qpn(t, e))
-            : this.nvn();
+              this.Tpn(t, e))
+            : this.Gpn();
         }),
-        (this.svn = (t) => {
-          void 0 !== t && ((this.jpn = t), this.avn());
+        (this.Npn = (t, e) => {
+          void 0 !== t && ((this.Spn = t), this.Opn(e));
         }),
-        (this.hvn = (t) =>
+        (this.kpn = (t) =>
           SceneItemHitUtils_1.SceneItemHitUtils.CheckHitDataMatchPlayerAttack(
             { Type: IComponent_1.EHitBulletType.PlayerAttack },
             t,
@@ -286,18 +286,18 @@ let SceneItemManipulatableComponent =
           ));
     }
     GetControllerId() {
-      return this.Spn;
+      return this.epn;
     }
     SetControllerId(t) {
-      (this.Spn = t),
+      (this.epn = t),
         (this.ActorComp.GetPrimitiveComponent().bCanCharacterStandOn =
           t === INVALID_ID);
     }
     GetAutonomousId() {
-      return this.rBn;
+      return this.fqn;
     }
     SetAutonomousId(t) {
-      this.rBn = t;
+      this.fqn = t;
     }
     get CanBeHeld() {
       let t = !0;
@@ -313,30 +313,30 @@ let SceneItemManipulatableComponent =
         ) &&
           this.IsCanBeHeld &&
           t &&
-          !this.Ipn &&
+          !this.opn &&
           !this.PropComp?.IsLocked &&
-          this.gpn
+          this.$fn
       );
     }
     get CanBeChant() {
       return "Reset" === this.State || "MatchingOutlet" === this.State;
     }
     get PutIndex() {
-      return this.jpn;
+      return this.Spn;
     }
     get IsProjectileAimMode() {
-      return this.Wpn;
+      return this.ypn;
     }
     set IsProjectileAimMode(t) {
-      (this.Wpn = t),
+      (this.ypn = t),
         this.CurrentState === this.HoldState &&
-          (this.Wpn
+          (this.ypn
             ? this.HoldState.EnterProjectileAimMode()
             : this.HoldState.ExitProjectileAimMode());
     }
     IsCanInteractType() {
       return LevelGamePlayController_1.LevelGamePlayController.MultiplayerLimitTypeCheck(
-        this._pn,
+        this.Hfn,
       );
     }
     OnInitData(t) {
@@ -349,35 +349,35 @@ let SceneItemManipulatableComponent =
               RestrictionId: this.Config.PlayerStateRestritionId,
             }),
             (this.YO = { Type: 0, Conditions: [t] })),
-          (this.zht = this.Entity.GetComponent(0)),
-          this.zht.GetBaseInfo());
-      (this._pn = t?.OnlineInteractType),
+          (this.u1t = this.Entity.GetComponent(0)),
+          this.u1t.GetBaseInfo());
+      (this.Hfn = t?.OnlineInteractType),
         (this.ConfigMatchType = t?.Category?.ControlMatchType),
         (this.CurrentState = this.ResetState),
-        (this.ugn = Rotator_1.Rotator.Create()),
-        (this.Xrr = Vector_1.Vector.Create()),
-        (this.ijr = Rotator_1.Rotator.Create());
-      this.Entity.GetComponent(138).AddComponentHitCondition(this, this.hvn);
+        (this.jCn = Rotator_1.Rotator.Create()),
+        (this.Wnr = Vector_1.Vector.Create()),
+        (this.qHr = Rotator_1.Rotator.Create());
+      this.Entity.GetComponent(140).AddComponentHitCondition(this, this.kpn);
       t = this.Config.DestroyCfg;
       if (t)
         for (const e of t.Conditions)
           switch (e.Type) {
             case IComponent_1.ETeleControlDestroyCondition.CreateBullet:
-              this.qpn = !0;
+              this.dpn = !0;
               break;
             case IComponent_1.ETeleControlDestroyCondition.LetGo:
-              this.Gpn = !0;
+              this.Cpn = !0;
               break;
             case IComponent_1.ETeleControlDestroyCondition.Throw:
-              this.Npn = !0;
+              this.gpn = !0;
           }
-      t = this.zht.ComponentDataMap.get("rps");
+      t = this.u1t.ComponentDataMap.get("Mys");
       return (
-        (this.jDn = MathUtils_1.MathUtils.LongToBigInt(t?.rps?.S4n)),
+        (this.JUn = MathUtils_1.MathUtils.LongToBigInt(t?.Mys?.tVn)),
         EventSystem_1.EventSystem.AddWithTarget(
           this.Entity,
           EventDefine_1.EEventName.EnterPresentationInitRange,
-          this.azr,
+          this.FJr,
         ),
         !0
       );
@@ -387,34 +387,34 @@ let SceneItemManipulatableComponent =
         EventSystem_1.EventSystem.HasWithTarget(
           this,
           EventDefine_1.EEventName.OnSceneItemHit,
-          this.$pn,
+          this.Dpn,
         ) &&
           EventSystem_1.EventSystem.RemoveWithTarget(
             this,
             EventDefine_1.EEventName.OnSceneItemHit,
-            this.$pn,
+            this.Dpn,
           ),
         !0
       );
     }
-    Xpn(t) {
+    Lpn(t) {
       var e = t.Entity.GetComponent(0),
-        i = this.zht.GetPbDataId();
+        i = this.u1t.GetPbDataId();
       e.OccupiedGridInfo.has(i) &&
         ((e = e.OccupiedGridInfo.get(i)),
-        ((i = this.Entity.GetComponent(122)).PutDownIndex =
-          new SceneItemJigsawBaseComponent_1.JigsawIndex(e.M3n.tFn, e.M3n.rFn)),
-        (i.Rotation = e.M3n.oFn),
-        (i = t.Entity.GetComponent(145).GetSocketRotator(this.Entity)),
+        ((i = this.Entity.GetComponent(124)).PutDownIndex =
+          new SceneItemJigsawBaseComponent_1.JigsawIndex(e.e8n.R5n, e.e8n.P5n)),
+        (i.Rotation = e.e8n.B5n),
+        (i = t.Entity.GetComponent(147).GetSocketRotator(this.Entity)),
         this.ActorComp.SetActorRotation(i.ToUeRotator()));
     }
-    Qpn(t, e) {
+    Tpn(t, e) {
       this.TargetActorComponent = t.Entity.GetComponent(1);
-      t = t.Entity.GetComponent(145);
+      t = t.Entity.GetComponent(147);
       t &&
         ((this.ActivatedOutlet = t),
-        (this.ActivatedOutlet.MatchCfgIndex = e),
-        (this.ActivatedOutlet.EntityInSocket = this),
+        ((this.ActivatedOutlet.EntityInSocket =
+          this).ActivatedOutlet.MatchCfgIndex = e),
         (e = t.GetMatchSequence(this.Entity)),
         StringUtils_1.StringUtils.IsEmpty(e) || (this.MatchSequence = e),
         (this.CastTargetLocation = t.GetSocketLocation(this.Entity)),
@@ -427,34 +427,38 @@ let SceneItemManipulatableComponent =
     OnStart() {
       var t;
       return (
-        (this.ActorComp = this.Entity.GetComponent(182)),
+        (this.ActorComp = this.Entity.GetComponent(185)),
         this.ActorComp.Owner.Tags.Add(CONTROL_OBJECT_TAG),
         this.ActorComp.Owner.Tags.Add(
           CharacterNameDefines_1.CharacterNameDefines.NO_SLIDE,
         ),
         this.ActorComp.GetPrimitiveComponent().SetUseCCD(!0),
-        (this.Snn = this.Entity.GetComponent(177)),
-        this.Snn.AddTag(-1299967416),
+        (this.inn = this.Entity.GetComponent(180)),
+        this.inn.AddTag(-1299967416),
         (this.TargetActorComponent = void 0),
         (this.TargetOutletComponent = void 0),
-        this.ugn.DeepCopy(this.ActorComp.ActorRotationProxy),
-        this.Xrr.DeepCopy(this.ActorComp.ActorLocationProxy),
-        (this.mBe = this.Entity.GetComponent(117)),
-        (this.PropComp = this.Entity.GetComponent(115)),
-        (this.Ppn = this.Entity.GetComponent(142)),
-        (this.Spn = this.zht.ControllerId),
-        this.Spn !== INVALID_ID &&
-          this.zht.IsShowingHandFx &&
-          this.lvn(this.Spn, !0),
-        (this.rBn = this.zht.AutonomousId),
-        this.rBn !== INVALID_ID
+        this.jCn.DeepCopy(this.ActorComp.ActorRotationProxy),
+        this.Wnr.DeepCopy(this.ActorComp.ActorLocationProxy),
+        (this.mBe = this.Entity.GetComponent(119)),
+        (this.PropComp = this.Entity.GetComponent(117)),
+        (this._pn = this.Entity.GetComponent(144)),
+        (this.epn = this.u1t.ControllerId),
+        this.epn !== INVALID_ID &&
+          this.u1t.IsShowingHandFx &&
+          this.Fpn(this.epn, !0),
+        (this.fqn = this.u1t.AutonomousId),
+        this.fqn !== INVALID_ID
           ? ((t = ModelManager_1.ModelManager.CreatureModel.GetEntity(
-              this.Spn,
+              this.epn,
             ).Entity.GetComponent(3)),
             this.ActorComp.SetAutonomous(t.IsRoleAndCtrlByMe),
-            this.Entity.GetComponent(142)?.TryEnable())
-          : this.Entity.GetComponent(142)?.TryDisable(
-              "[SceneItemManipulatableComponent.OnStart] AutonomousId === INVALID_CONTROL_ID",
+            this.Entity.GetComponent(144)?.SetEnableMovementSync(
+              !0,
+              "SceneItemManipulatableComponent",
+            ))
+          : this.Entity.GetComponent(144)?.SetEnableMovementSync(
+              !1,
+              "SceneItemManipulatableComponent",
             ),
         EventSystem_1.EventSystem.AddWithTarget(
           this.Entity,
@@ -464,24 +468,24 @@ let SceneItemManipulatableComponent =
         EventSystem_1.EventSystem.AddWithTarget(
           this.Entity,
           EventDefine_1.EEventName.OnManipulatableSceneItemPosInFoundation,
-          this.rvn,
+          this.qpn,
         ),
         EventSystem_1.EventSystem.AddWithTarget(
           this.Entity,
           EventDefine_1.EEventName.OnModifyJigsawItemPutIndex,
-          this.svn,
+          this.Npn,
         ),
         EventSystem_1.EventSystem.Add(
           EventDefine_1.EEventName.OnManipulateCancelChanting,
-          this.zpn,
+          this.Apn,
         ),
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("SceneItem", 32, "[电池] OnStart", [
             "State",
-            this.Snn.GetTagNames(),
+            this.inn.GetTagNames(),
           ]),
-        this._vn(),
-        this.uvn(),
+        this.Vpn(),
+        this.Hpn(),
         this.TryDisableTick(
           "[SceneItemManipulatableComponent.OnStart] 默认Disable",
         ),
@@ -493,17 +497,17 @@ let SceneItemManipulatableComponent =
         this.Active &&
         ComponentForceTickController_1.ComponentForceTickController.RegisterTick(
           this,
-          this.cjr,
+          this.KHr,
         );
     }
-    uvn() {
+    Hpn() {
       ResourceSystem_1.ResourceSystem.LoadAsync(
         this.Config.BaseCfg.CommonConfig,
         UE.BP_TeleControlConfig_C,
         (t) => {
           if (t?.IsValid()) {
-            (this.gpn = !0), (this.ManipulateBaseConfig = t);
-            this.Entity.GetComponent(106).SetLogicRange(
+            (this.$fn = !0), (this.ManipulateBaseConfig = t);
+            this.Entity.GetComponent(108).SetLogicRange(
               this.ManipulateBaseConfig.被感知范围,
             ),
               (this.IsHoldingUsePhysics =
@@ -531,19 +535,19 @@ let SceneItemManipulatableComponent =
                       e.CameraShake + "_C",
                       UE.Class,
                       (t) => {
-                        this.Mpn = t;
+                        this.Zfn = t;
                       },
                     )),
-                (this.fpn = this.ManipulateBaseConfig.读条震屏),
-                (this.vpn = this.ManipulateBaseConfig.吸取飞行震屏),
-                (this.ppn = this.ManipulateBaseConfig.控物保持震屏),
+                (this.Yfn = this.ManipulateBaseConfig.读条震屏),
+                (this.zfn = this.ManipulateBaseConfig.吸取飞行震屏),
+                (this.Jfn = this.ManipulateBaseConfig.控物保持震屏),
                 (this.ConfigHoldOffset = this.ManipulateBaseConfig.一级偏移),
                 (this.ConfigAssistantHoldOffset =
                   this.ManipulateBaseConfig.二级偏移),
                 this.ManipulateBaseConfig.旋转),
               e =
                 ((this.ConfigHoldRotator = new UE.Rotator(t.Y, t.Z, t.X)),
-                (this.wpn = void 0),
+                (this.ZOe = void 0),
                 (this.ResetState =
                   new SceneItemManipulableResetState_1.SceneItemManipulableResetState(
                     this,
@@ -551,19 +555,19 @@ let SceneItemManipulatableComponent =
                 (this.ChantState =
                   new SceneItemManipulableChantState_1.SceneItemManipulableChantState(
                     this,
-                    this.fpn,
+                    this.Yfn,
                     this.ManipulateBaseConfig.读条镜头,
                   )),
                 (this.DrawState =
                   new SceneItemManipulableDrawState_1.SceneItemManipulableDrawState(
                     this,
-                    this.vpn,
+                    this.zfn,
                     this.ManipulateBaseConfig.吸取飞行镜头,
                   )),
                 (this.HoldState =
                   new SceneItemManipulableHoldState_1.SceneItemManipulableHoldState(
                     this,
-                    this.ppn,
+                    this.Jfn,
                     this.ManipulateBaseConfig.控物保持镜头,
                     this.ManipulateBaseConfig.控物保持标签,
                   )),
@@ -577,17 +581,17 @@ let SceneItemManipulatableComponent =
                 (this.CastToTargetState =
                   new SceneItemManipulableCastToTargetState_1.SceneItemManipulableCastToTargetState(
                     this,
-                    this.Mpn,
+                    this.Zfn,
                   )),
                   (this.CastToOutletState =
                     new SceneItemManipulableCastToOutletState_1.SceneItemManipulableCastToOutletState(
                       this,
-                      this.Mpn,
+                      this.Zfn,
                     )),
                   (this.CastFreeState =
                     new SceneItemManipulableCastFreeState_1.SceneItemManipulableCastFreeState(
                       this,
-                      this.Mpn,
+                      this.Zfn,
                     )),
                   (this.CastProjectileState =
                     new SceneItemManipulableCastProjectileState_1.SceneItemManipulatableCastProjectileState(
@@ -599,7 +603,7 @@ let SceneItemManipulatableComponent =
                 var i =
                   new SceneItemManipulableBoomerangCastState_1.SceneItemManipulableBoomerangCastState(
                     this,
-                    this.Mpn,
+                    this.Zfn,
                   );
                 (this.CastToTargetState = i),
                   (this.CastToOutletState = i),
@@ -614,17 +618,17 @@ let SceneItemManipulatableComponent =
                 (this.CastToTargetState =
                   new SceneItemManipulableTrackTargetCastToTargetState_1.SceneItemManipulableTrackTargetCastToTargetState(
                     this,
-                    this.Mpn,
+                    this.Zfn,
                   )),
                   (this.CastToOutletState =
                     new SceneItemManipulableCastToOutletState_1.SceneItemManipulableCastToOutletState(
                       this,
-                      this.Mpn,
+                      this.Zfn,
                     )),
                   (this.CastFreeState =
                     new SceneItemManipulableTrackTargetCastToFreeState_1.SceneItemManipulableTrackTargetCastToFreeState(
                       this,
-                      this.Mpn,
+                      this.Zfn,
                     )),
                   (this.CastProjectileState =
                     new SceneItemManipulableCastProjectileState_1.SceneItemManipulatableCastProjectileState(
@@ -632,7 +636,7 @@ let SceneItemManipulatableComponent =
                       void 0,
                     ));
             }
-            this.Entity.GetComponent(122)?.Valid
+            this.Entity.GetComponent(124)?.Valid
               ? (this.MatchOutletState =
                   new SceneItemManipulableMatchJigsawBaseState_1.SceneItemManipulableMatchJigsawBaseState(
                     this,
@@ -645,23 +649,23 @@ let SceneItemManipulatableComponent =
                 new SceneItemManipulableDropState_1.SceneItemManipulableDropState(
                   this,
                 )),
-              this.Gpn &&
+              this.Cpn &&
                 this.DropState.SetEnterCallback(() => {
-                  this.Ypn();
+                  this.Rpn();
                 }),
               (this.CurrentState = this.ResetState),
-              this.avn(),
-              this.cvn();
+              this.Opn(),
+              this.jpn();
             t = this.Config.BulletCfg?.CreateConditions;
             if (t)
               for (const s of t)
                 switch (s.Type) {
                   case IComponent_1.EBulletCreateCondition.OnHit:
-                    (this.Bpn = String(s.BulletId)),
+                    (this.cpn = String(s.BulletId)),
                       EventSystem_1.EventSystem.AddWithTarget(
                         this,
                         EventDefine_1.EEventName.OnSceneItemHit,
-                        this.$pn,
+                        this.Dpn,
                       );
                     break;
                   case IComponent_1.EBulletCreateCondition.OnMatching:
@@ -669,40 +673,40 @@ let SceneItemManipulatableComponent =
                       var t =
                         Global_1.Global.BaseCharacter.CharacterActorComponent
                           .Entity;
-                      this.szo(t, String(s.BulletId)), this.qpn && this.Ypn();
+                      this.oZo(t, String(s.BulletId)), this.dpn && this.Rpn();
                     });
                     break;
                   case IComponent_1.EBulletCreateCondition.OnCollision:
-                    (this.Opn = s.BulletId),
-                      this.CastFreeState.SetHitCallback(this.Jpn),
-                      this.CastToOutletState.SetHitCallback(this.Jpn),
-                      this.CastToTargetState.SetHitCallback(this.Jpn),
-                      this.CastProjectileState.SetHitCallback(this.Jpn),
+                    (this.fpn = s.BulletId),
+                      this.CastFreeState.SetHitCallback(this.Upn),
+                      this.CastToOutletState.SetHitCallback(this.Upn),
+                      this.CastToTargetState.SetHitCallback(this.Upn),
+                      this.CastProjectileState.SetHitCallback(this.Upn),
                       s.TriggerCount &&
-                        ((this.Fpn = s.TriggerCount.TriggerCount),
-                        (this.Vpn =
+                        ((this.vpn = s.TriggerCount.TriggerCount),
+                        (this.Mpn =
                           s.TriggerCount.TriggerInterval *
                           TimeUtil_1.TimeUtil.InverseMillisecond),
                         this.HoldState.SetEnterCallback(() => {
-                          (this.bpn = 0), (this.Hpn = 0);
+                          (this.mpn = 0), (this.Epn = 0);
                         }));
                     break;
                   case IComponent_1.EBulletCreateCondition.OnThrowTriggerTime:
                     this.CastFreeState.SetEnterCallback(() => {
-                      this.R_n = TimerSystem_1.TimerSystem.Delay(() => {
+                      this.a_n = TimerSystem_1.TimerSystem.Delay(() => {
                         var t =
                           Global_1.Global.BaseCharacter.CharacterActorComponent
                             .Entity;
-                        this.szo(t, String(s.BulletId)), this.qpn && this.Ypn();
+                        this.oZo(t, String(s.BulletId)), this.dpn && this.Rpn();
                       }, s.TriggerTime * TimeUtil_1.TimeUtil.InverseMillisecond);
                     }),
                       this.CastProjectileState.SetEnterCallback(() => {
-                        this.R_n = TimerSystem_1.TimerSystem.Delay(() => {
+                        this.a_n = TimerSystem_1.TimerSystem.Delay(() => {
                           var t =
                             Global_1.Global.BaseCharacter
                               .CharacterActorComponent.Entity;
-                          this.szo(t, String(s.BulletId)),
-                            this.qpn && this.Ypn();
+                          this.oZo(t, String(s.BulletId)),
+                            this.dpn && this.Rpn();
                         }, s.TriggerTime * TimeUtil_1.TimeUtil.InverseMillisecond);
                       });
                 }
@@ -710,46 +714,46 @@ let SceneItemManipulatableComponent =
         },
       );
     }
-    avn() {
-      var t = this.Entity.GetComponent(122);
-      this.ypn ||
+    Opn(t = !1) {
+      var e = this.Entity.GetComponent(124);
+      (this.ipn && !t) ||
         void 0 === this.MatchOutletState ||
-        (t?.Valid && void 0 === this.PutIndex) ||
+        (e?.Valid && void 0 === this.PutIndex) ||
         ((this.ActivatedOutlet = void 0),
-        this.zht.RelationId &&
+        this.u1t.RelationId &&
           ((t = ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(
-            this.zht.RelationId,
+            this.u1t.RelationId,
           ))?.IsInit
-            ? (this.Qpn(t, this.zht.PbRelationMatchCfgIndex), this.Xpn(t))
+            ? (this.Tpn(t, this.u1t.PbRelationMatchCfgIndex), this.Lpn(t))
             : EventSystem_1.EventSystem.Add(
                 EventDefine_1.EEventName.AddEntity,
-                this.Kpn,
+                this.Ipn,
               )),
-        (this.ypn = !0));
+        (this.ipn = !0));
     }
-    cvn() {
+    jpn() {
       var t,
-        e = this.Entity.GetComponent(110);
+        e = this.Entity.GetComponent(112);
       this.FinishCheckInitAttach ||
         (e && this.CurrentState === this.ResetState
           ? (((t =
               new SceneItemDynamicAttachTargetComponent_1.AttachParam()).PosAttachType =
               2),
-            (t.PosAttachOffset = this.zht.PbDynAttachRelPos),
+            (t.PosAttachOffset = this.u1t.PbDynAttachRelPos),
             (t.PosAbsolute = !1),
             (t.RotAttachType = 2),
-            (t.RotAttachOffset = this.zht.PbDynAttachRelRot),
+            (t.RotAttachOffset = this.u1t.PbDynAttachRelRot),
             (t.RotAbsolute = !1),
-            this.zht.PbDynAttachEntityConfigId
+            this.u1t.PbDynAttachEntityConfigId
               ? e.RegEntityTarget(
-                  this.zht.PbDynAttachEntityConfigId,
-                  this.zht.PbDynAttachEntityActorKey,
+                  this.u1t.PbDynAttachEntityConfigId,
+                  this.u1t.PbDynAttachEntityActorKey,
                   t,
                   "[ManipulatableComp] CheckInitAttach",
                 )
-              : this.zht.PbDynAttachRefActorKey?.length &&
+              : this.u1t.PbDynAttachRefActorKey?.length &&
                 e.RegRefActorTarget(
-                  this.zht.PbDynAttachRefActorKey,
+                  this.u1t.PbDynAttachRefActorKey,
                   t,
                   "[ManipulatableComp] CheckInitAttach",
                 ),
@@ -760,14 +764,14 @@ let SceneItemManipulatableComponent =
             (this.EnableDynamicAttach = !0)));
     }
     OnForceTick(t) {
-      this.cjr(t);
+      this.KHr(t);
     }
     OnEnable() {
       !Info_1.Info.EnableForceTick &&
         this.Entity?.IsInit &&
         ComponentForceTickController_1.ComponentForceTickController.RegisterTick(
           this,
-          this.cjr,
+          this.KHr,
         );
     }
     OnDisable(t) {
@@ -787,10 +791,10 @@ let SceneItemManipulatableComponent =
           ((this.ActivatedOutlet.EntityInSocket = void 0),
           (this.ActivatedOutlet.MatchCfgIndex = void 0),
           (this.ActivatedOutlet = void 0)),
-        this.NeedRemoveControllerId && this.ovn(),
-        this.Spn !== INVALID_ID && this.lvn(this.Spn, !1),
-        void 0 !== this.R_n &&
-          (TimerSystem_1.TimerSystem.Remove(this.R_n), (this.R_n = void 0)),
+        this.NeedRemoveControllerId && this.bpn(),
+        this.epn !== INVALID_ID && this.Fpn(this.epn, !1),
+        void 0 !== this.a_n &&
+          (TimerSystem_1.TimerSystem.Remove(this.a_n), (this.a_n = void 0)),
         this.ActorComp?.Owner?.OnActorHit?.Clear(),
         EventSystem_1.EventSystem.RemoveWithTarget(
           this.Entity,
@@ -800,52 +804,52 @@ let SceneItemManipulatableComponent =
         EventSystem_1.EventSystem.RemoveWithTarget(
           this.Entity,
           EventDefine_1.EEventName.OnManipulatableSceneItemPosInFoundation,
-          this.rvn,
+          this.qpn,
         ),
         EventSystem_1.EventSystem.RemoveWithTarget(
           this.Entity,
           EventDefine_1.EEventName.OnModifyJigsawItemPutIndex,
-          this.svn,
+          this.Npn,
         ),
         EventSystem_1.EventSystem.Remove(
           EventDefine_1.EEventName.OnManipulateCancelChanting,
-          this.zpn,
+          this.Apn,
         ),
         EventSystem_1.EventSystem.Has(
           EventDefine_1.EEventName.AddEntity,
-          this.Kpn,
+          this.Ipn,
         ) &&
           EventSystem_1.EventSystem.Remove(
             EventDefine_1.EEventName.AddEntity,
-            this.Kpn,
+            this.Ipn,
           ),
         EventSystem_1.EventSystem.HasWithTarget(
           this.Entity,
           EventDefine_1.EEventName.EnterPresentationInitRange,
-          this.azr,
+          this.FJr,
         ) &&
           EventSystem_1.EventSystem.RemoveWithTarget(
             this.Entity,
             EventDefine_1.EEventName.EnterPresentationInitRange,
-            this.azr,
+            this.FJr,
           ),
         EventSystem_1.EventSystem.HasWithTarget(
           this,
           EventDefine_1.EEventName.OnSceneItemHit,
-          this.$pn,
+          this.Dpn,
         ) &&
           EventSystem_1.EventSystem.RemoveWithTarget(
             this,
             EventDefine_1.EEventName.OnSceneItemHit,
-            this.$pn,
+            this.Dpn,
           ),
         Info_1.Info.EnableForceTick ||
           ComponentForceTickController_1.ComponentForceTickController.UnregisterTick(
             this,
           ),
-        this.xpn)
+        this.upn)
       ) {
-        const t = this.xpn;
+        const t = this.upn;
         TimerSystem_1.TimerSystem.Next(() => {
           ActorSystem_1.ActorSystem.Put(t);
         });
@@ -854,95 +858,93 @@ let SceneItemManipulatableComponent =
     }
     BePopupFormOutlet() {
       (this.IsCanBeHeld = !1),
-        (this.ActorComp.PhysicsMode = 3),
         (this.CurrentState = this.CastFreeState),
         (this.ActivatedOutlet.EntityInSocket = void 0),
         (this.ActivatedOutlet.MatchCfgIndex = void 0),
         (this.ActivatedOutlet = void 0),
-        (this.MatchSequence = void 0),
-        this.TryEnableTick();
+        (this.MatchSequence = void 0);
     }
-    szo(t, e) {
+    oZo(t, e) {
       !this.Entity?.Valid ||
-        this.bpn >= this.Fpn ||
-        (0 < this.bpn && this.Hpn < this.Vpn) ||
-        ((this.Hpn = 0),
-        this.bpn++,
+        this.mpn >= this.vpn ||
+        (0 < this.mpn && this.Epn < this.Mpn) ||
+        ((this.Epn = 0),
+        this.mpn++,
         BulletController_1.BulletController.CreateBulletCustomTarget(
           t,
           e,
           this.ActorComp.ActorTransform,
           {},
-          this.jDn,
+          this.JUn,
         ));
     }
-    mvn(t) {
+    Wpn(t) {
       "MatchingOutlet" === this.State &&
         ((this.TargetActorComponent = void 0),
         (this.TargetOutletComponent = void 0),
-        (this.ActivatedOutlet = t.GetComponent(145)),
+        (this.ActivatedOutlet = t.GetComponent(147)),
         this.ActorComp?.Valid) &&
         (this.ActorComp.PhysicsMode = 0);
     }
-    dvn(i, s) {
-      this.Ppn.ForceSendPendingMoveInfos();
+    Kpn(i, s) {
+      this._pn.CollectSampleAndSend(!0);
       var t = i.GetComponent(0).GetCreatureDataId(),
-        e = this.zht.GetCreatureDataId(),
-        h = Protocol_1.Aki.Protocol.M1s.create(),
+        e = this.u1t.GetCreatureDataId(),
+        h = Protocol_1.Aki.Protocol.mds.create(),
         t =
-          ((h.rkn = MathUtils_1.MathUtils.NumberToLong(t)),
-          (h.E7n = MathUtils_1.MathUtils.NumberToLong(e)),
-          (h.y7n = s ? 1 : 0),
-          Protocol_1.Aki.Protocol.VBs.create()),
+          ((h.P4n = MathUtils_1.MathUtils.NumberToLong(t)),
+          (h.tKn = MathUtils_1.MathUtils.NumberToLong(e)),
+          (h.iKn = s ? 1 : 0),
+          Protocol_1.Aki.Protocol.Pks.create()),
         e = this.ActorComp.ActorLocationProxy,
         e =
           ((t.X = e.X),
           (t.Y = e.Y),
           (t.Z = e.Z),
-          Protocol_1.Aki.Protocol.iws.create()),
+          Protocol_1.Aki.Protocol.S2s.create()),
         a = this.ActorComp.ActorRotationProxy;
       (e.Pitch = a.Pitch),
         (e.Roll = a.Roll),
         (e.Yaw = a.Yaw),
-        (h.M3n = t),
-        (h.S3n = e),
-        Net_1.Net.Call(9907, h, (t) => {
+        (h.e8n = t),
+        (h.t8n = e),
+        Net_1.Net.Call(4551, h, (t) => {
           Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug(
               "Character",
               32,
               "[Manipulate] Match outlet net response!",
-              ["active", t.y7n],
+              ["active", t.iKn],
             );
-          var e = i.GetComponent(145);
+          var e = i.GetComponent(147);
           s && e.OnPutDownItem(this.Entity),
-            t.lkn !== Protocol_1.Aki.Protocol.lkn.Sys
+            t.O4n !== Protocol_1.Aki.Protocol.O4n.NRs
               ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-                  t.lkn,
-                  6430,
+                  t.O4n,
+                  23327,
                 )
               : s &&
                 (this.ManipulateBaseConfig?.被控制CD &&
                   0 < this.ManipulateBaseConfig?.被控制CD &&
-                  ((this.Ipn = !0),
-                  (this.Tpn = TimerSystem_1.TimerSystem.Delay(() => {
-                    (this.Ipn = !1), (this.Tpn = void 0);
+                  ((this.opn = !0),
+                  (this.rpn = TimerSystem_1.TimerSystem.Delay(() => {
+                    (this.opn = !1), (this.rpn = void 0);
                   }, this.ManipulateBaseConfig.被控制CD * TimeUtil_1.TimeUtil.InverseMillisecond))),
-                1 === t.y7n
-                  ? ((this.CurrentState = this.MatchOutletState), this.mvn(i))
+                1 === t.iKn
+                  ? ((this.CurrentState = this.MatchOutletState), this.Wpn(i))
                   : (this.CurrentState = this.DropState));
         });
     }
     TryPlayMismatchSequence(t) {
       var e,
         i,
-        t = t.GetComponent(145),
+        t = t.GetComponent(147),
         s = t.GetMismatchSequence(this.Entity);
       void 0 !== s &&
         t?.Valid &&
         ((this.PlayingMatchSequence = !0),
-        void 0 === this.xpn && this.Cvn(),
-        (t = this.xpn.DefaultInstanceData),
+        void 0 === this.upn && this.Qpn(),
+        (t = this.upn.DefaultInstanceData),
         (e = this.ActorComp.ActorLocationProxy),
         (i = this.ActorComp.ActorRotationProxy),
         (i = Transform_1.Transform.Create(
@@ -951,23 +953,27 @@ let SceneItemManipulatableComponent =
           Vector_1.Vector.OneVectorProxy,
         )),
         (t.TransformOrigin = i.ToUeTransform()),
-        this.xpn) &&
+        this.upn) &&
         ((this.IsCanBeHeld = !1),
         (this.NeedRemoveControllerId = !0),
-        this.gvn(s));
+        this.Xpn(s));
     }
     ShouldPlayMismatchSequence(t) {
-      t = t.GetComponent(145);
+      t = t.GetComponent(147);
       return !(void 0 === t.GetMismatchSequence(this.Entity) || !t?.Valid);
     }
-    gvn(t) {
+    Xpn(t) {
       ResourceSystem_1.ResourceSystem.LoadAsync(t, UE.LevelSequence, (t) => {
         this.BePopupFormOutlet(),
-          this.xpn.SetActorTickEnabled(!0),
-          this.xpn.SetSequence(t),
-          this.fvn(!1, () => {
-            this.PlayingMatchSequence = !1;
-          });
+          this.upn.SetActorTickEnabled(!0),
+          this.upn.SetSequence(t),
+          TimerSystem_1.TimerSystem.Delay(() => {
+            this.$pn(!1, () => {
+              this.PlayingMatchSequence = !1;
+            }),
+              (this.ActorComp.PhysicsMode = 3),
+              this.TryEnableTick();
+          }, 50);
       });
     }
     ResetItemLocationAndRotation(t = 0, e = !1) {
@@ -987,7 +993,7 @@ let SceneItemManipulatableComponent =
             "[SceneItemManipulatableComponent.ResetItemLocationAndRotation]",
             new EffectContext_1.EffectContext(this.Entity.Id),
           ),
-          this.zht.GetPbEntityInitData()),
+          this.u1t.GetPbEntityInitData()),
         h = s.Transform.Pos,
         s = s.Transform.Rot,
         h = Vector_1.Vector.Create(h?.X ?? 0, h?.Y ?? 0, h?.Z ?? 0),
@@ -1018,28 +1024,28 @@ let SceneItemManipulatableComponent =
           this.ActorComp.GetPrimitiveComponent());
       s.SetPhysicsLinearVelocity(new UE.Vector(0, 0, 0)),
         s.SetPhysicsAngularVelocityInDegrees(new UE.Vector(0, 0, 0)),
-        this.R_n &&
-          (TimerSystem_1.TimerSystem.Remove(this.R_n), (this.R_n = void 0)),
+        this.a_n &&
+          (TimerSystem_1.TimerSystem.Remove(this.a_n), (this.a_n = void 0)),
         (this.IsCanBeHeld = !0),
-        (this.Ipn = !1),
-        this.Tpn &&
-          (TimerSystem_1.TimerSystem.Remove(this.Tpn), (this.Tpn = void 0)),
-        this.NeedRemoveControllerId && this.ovn(),
-        this.nvn(),
+        (this.opn = !1),
+        this.rpn &&
+          (TimerSystem_1.TimerSystem.Remove(this.rpn), (this.rpn = void 0)),
+        this.NeedRemoveControllerId && this.bpn(),
+        this.Gpn(),
         e &&
-          (((h = Protocol_1.Aki.Protocol.l_s.create()).rkn =
-            MathUtils_1.MathUtils.NumberToLong(this.zht.GetCreatureDataId())),
-          (h.I7n = MathUtils_1.MathUtils.NumberToLong(t)),
-          Net_1.Net.Call(17308, h, (t) => {
-            switch (t.lkn) {
-              case Protocol_1.Aki.Protocol.lkn.Sys:
-              case Protocol_1.Aki.Protocol.lkn
+          (((h = Protocol_1.Aki.Protocol.oms.create()).P4n =
+            MathUtils_1.MathUtils.NumberToLong(this.u1t.GetCreatureDataId())),
+          (h.rKn = MathUtils_1.MathUtils.NumberToLong(t)),
+          Net_1.Net.Call(16153, h, (t) => {
+            switch (t.O4n) {
+              case Protocol_1.Aki.Protocol.O4n.NRs:
+              case Protocol_1.Aki.Protocol.O4n
                 .Proto_ErrBeControlledEntityNotExist:
                 break;
               default:
                 ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-                  t.lkn,
-                  6430,
+                  t.O4n,
+                  23327,
                 );
             }
           })),
@@ -1048,19 +1054,19 @@ let SceneItemManipulatableComponent =
           EventDefine_1.EEventName.OnManipulatedItemPosReset,
         );
     }
-    nvn() {
+    Gpn() {
       (this.MatchSequence = void 0),
         this.ActivatedOutlet &&
           ((this.ActivatedOutlet.EntityInSocket = void 0),
           (this.ActivatedOutlet.MatchCfgIndex = void 0),
           (this.ActivatedOutlet = void 0));
     }
-    _vn() {
+    Vpn() {
       let t = void 0;
-      this.Snn.HasTag(-1660917319)
+      this.inn.HasTag(-1660917319)
         ? (t = -938118674)
-        : this.Snn.HasTag(-1611484717) && (t = 1926099076),
-        t && this.Snn.AddTag(t);
+        : this.inn.HasTag(-1611484717) && (t = 1926099076),
+        t && this.inn.AddTag(t);
     }
     CalcCastTargetPoint() {
       void 0 !== this.MatchSequence && (this.MatchSequence = void 0),
@@ -1071,10 +1077,10 @@ let SceneItemManipulatableComponent =
           StringUtils_1.StringUtils.IsEmpty(t) || (this.MatchSequence = t));
       var t =
           ModelManager_1.ModelManager.ManipulaterModel.GetTargetPartLocation(),
-        e = this.TargetActorComponent?.Entity.GetComponent(132);
+        e = this.TargetActorComponent?.Entity.GetComponent(134);
       let i = Vector_1.Vector.Create();
       (i = this.TargetOutletComponent?.Valid
-        ? this.TargetActorComponent.Entity.GetComponent(121)?.Valid
+        ? this.TargetActorComponent.Entity.GetComponent(123)?.Valid
           ? this.TargetOutletComponent.GetCurrentLockLocation()
           : this.TargetOutletComponent.GetSocketLocation(this.Entity)
         : e?.Valid
@@ -1086,7 +1092,7 @@ let SceneItemManipulatableComponent =
     }
     CalcCastTargetPointWithEntity(t) {
       var e = t.GetComponent(1),
-        t = t.GetComponent(145);
+        t = t.GetComponent(147);
       return t
         ? t.GetSocketLocation(this.Entity)
         : Vector_1.Vector.Create(e.ActorLocationProxy);
@@ -1097,15 +1103,15 @@ let SceneItemManipulatableComponent =
         : this.ActorComp.ActorLocationProxy;
     }
     TryEnableTick(t = !1) {
-      (this.Dpn = !1),
-        (this.Rpn = !1),
-        (this.Apn = !1),
-        (this.Upn = !1),
-        (this.kpn = 0),
-        (this.Epn = !1),
-        void 0 !== this.Uxr &&
+      (this.spn = !1),
+        (this.apn = !1),
+        (this.hpn = !1),
+        (this.lpn = !1),
+        (this.ppn = 0),
+        (this.tpn = !1),
+        void 0 !== this.sxr &&
           (this.Enable(
-            this.Uxr,
+            this.sxr,
             "SceneItemManipulatableComponent.TryEnableTick",
           ),
           t) &&
@@ -1114,18 +1120,18 @@ let SceneItemManipulatableComponent =
           this.ActorComp.GetPrimitiveComponent().SetPhysicsLinearVelocity(
             Vector_1.Vector.OneVector.op_Multiply(0.1),
           )),
-        (this.Uxr = void 0),
+        (this.sxr = void 0),
         this.ActorComp.GetPrimitiveComponent().SetPhysicsLinearVelocity(
           Vector_1.Vector.ZeroVector,
           !1,
         );
     }
     TryDisableTick(t) {
-      void 0 === this.Uxr &&
-        ((this.Uxr = this.Disable(t)), 0 !== this.ActorComp.PhysicsMode) &&
+      void 0 === this.sxr &&
+        ((this.sxr = this.Disable(t)), 0 !== this.ActorComp.PhysicsMode) &&
         (this.ActorComp.PhysicsMode = 0);
     }
-    Zpn(t) {
+    Ppn(t) {
       switch (this.State) {
         case "BeCastingToTarget":
         case "BeCastingToOutlet":
@@ -1133,10 +1139,10 @@ let SceneItemManipulatableComponent =
           this.CurrentState.Tick(0.001 * t);
           break;
         default:
-          this.Dpn = !0;
+          this.spn = !0;
       }
     }
-    evn() {
+    xpn() {
       var t;
       this.ForceMoving ||
         ((t = this.ActorComp.GetPrimitiveComponent())
@@ -1151,13 +1157,13 @@ let SceneItemManipulatableComponent =
               Vector_1.Vector.ZeroVector,
               MathUtils_1.MathUtils.SmallNumber,
             ) &&
-          this.ActorComp.ActorLocationProxy.Equals(this.Xrr) &&
-          this.ActorComp.ActorRotationProxy.Equals(this.ijr) &&
+          this.ActorComp.ActorLocationProxy.Equals(this.Wnr) &&
+          this.ActorComp.ActorRotationProxy.Equals(this.qHr) &&
           (("BeCastingFree" !== this.State && "BeDropping" !== this.State) ||
             (this.CurrentState = this.ResetState),
-          (this.Rpn = !0)));
+          (this.apn = !0)));
     }
-    tvn() {
+    wpn() {
       var t, e, i;
       this.PlayingMatchSequence ||
         ((0 === this.ActorComp.PhysicsMode ||
@@ -1169,122 +1175,108 @@ let SceneItemManipulatableComponent =
             TraceElementCommon_1.TraceElementCommon.GetHitLocation(i, 0, t),
             (i = e.Z - t.Z - this.ActorComp.Extent.Z) < ON_GROUND_OFFSET) &&
             0 < i)) &&
-          (this.Apn = !0));
+          (this.hpn = !0));
     }
-    ivn(t) {
+    Bpn(t) {
       var e, i, s;
       this.PlayingMatchSequence ||
         (3 === this.ActorComp.PhysicsMode &&
-          ((e = Vector_1.Vector.Create(this.Xrr)),
+          ((e = Vector_1.Vector.Create(this.Wnr)),
           this.ActorComp.ActorLocationProxy.Subtraction(e, e),
           (e = e.Size()),
           (e /= t * TimeUtil_1.TimeUtil.Millisecond),
           (i = Vector_1.Vector.Create()),
           (s = Vector_1.Vector.Create()),
           this.ActorComp.ActorRotationProxy.Vector(s),
-          this.ijr.Vector(i),
+          this.qHr.Vector(i),
           i.Subtraction(s, i),
           (s = i.Size()),
           (s /= t * TimeUtil_1.TimeUtil.Millisecond),
           this.ManipulateBaseConfig.打开速度Log &&
             Log_1.Log.CheckError() &&
             Log_1.Log.Error("SceneItem", 32, "[Manipulate] 速度", ["size", e]),
-          e < this.ManipulateBaseConfig.可再被控速度最小值 && (this.Epn = !0),
+          e < this.ManipulateBaseConfig.可再被控速度最小值 && (this.tpn = !0),
           e < MIN_VELOCITY && 0 == s
-            ? (this.kpn++,
-              this.kpn > ZERO_VELOCITY_FRAME_NUM &&
+            ? (this.ppn++,
+              this.ppn > ZERO_VELOCITY_FRAME_NUM &&
                 (this.ActorComp.PhysicsMode = 0))
-            : (this.kpn = 0)),
-        0 === this.ActorComp.PhysicsMode && (this.Upn = !0));
+            : (this.ppn = 0)),
+        0 === this.ActorComp.PhysicsMode && (this.lpn = !0));
     }
-    ovn() {
+    bpn() {
       var t, e;
-      this.Spn === INVALID_ID
+      this.epn === INVALID_ID
         ? (this.IsCanBeHeld = !0)
-        : ((t = this.zht?.GetCreatureDataId()),
-          ((e = Protocol_1.Aki.Protocol.y1s.create()).rkn =
+        : ((t = this.u1t?.GetCreatureDataId()),
+          ((e = Protocol_1.Aki.Protocol.fds.create()).P4n =
             MathUtils_1.MathUtils.NumberToLong(t)),
-          (e.W9n = !1),
+          (e.EWn = !1),
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "SceneItem",
               32,
               "[Manipulate] RequestRemoveControllerId",
               ["location", this.ActorComp?.ActorLocationProxy],
-              ["id", this.zht?.GetPbDataId()],
+              ["id", this.u1t?.GetPbDataId()],
             ),
           (this.IsRequestingRemoveControllerId = !0),
-          Net_1.Net.Call(19086, e, (t) => {
-            switch (((this.IsRequestingRemoveControllerId = !1), t.lkn)) {
-              case Protocol_1.Aki.Protocol.lkn.Sys:
+          Net_1.Net.Call(24371, e, (t) => {
+            switch (((this.IsRequestingRemoveControllerId = !1), t.O4n)) {
+              case Protocol_1.Aki.Protocol.O4n.NRs:
                 (this.NeedRemoveControllerId = !1), (this.IsCanBeHeld = !0);
                 break;
-              case Protocol_1.Aki.Protocol.lkn
+              case Protocol_1.Aki.Protocol.O4n
                 .Proto_ErrBeControlledEntityNotExist:
-              case Protocol_1.Aki.Protocol.lkn
+              case Protocol_1.Aki.Protocol.O4n
                 .Proto_ErrNotBeControlledNotPlayer:
                 this.IsCanBeHeld = !0;
                 break;
               default:
                 ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-                  t.lkn,
-                  6430,
+                  t.O4n,
+                  23327,
                 );
             }
           }));
     }
-    oBn() {
+    pqn() {
       var t, e;
-      this.rBn === INVALID_ID ||
-      this.rBn !== ModelManager_1.ModelManager.CreatureModel.GetPlayerId()
+      this.fqn === INVALID_ID ||
+      this.fqn !== ModelManager_1.ModelManager.CreatureModel.GetPlayerId()
         ? (this.IsCanBeHeld = !0)
-        : ((t = this.zht?.GetCreatureDataId()),
-          ((e = Protocol_1.Aki.Protocol.vms.create()).rkn =
+        : ((t = this.u1t?.GetCreatureDataId()),
+          ((e = Protocol_1.Aki.Protocol.Pfs.create()).P4n =
             MathUtils_1.MathUtils.NumberToLong(t)),
-          (e.W9n = !1),
+          (e.EWn = !1),
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "SceneItem",
               32,
               "[Manipulate] RequestRemoveAutonomousId",
               ["location", this.ActorComp?.ActorLocationProxy],
-              ["id", this.zht?.GetPbDataId()],
+              ["id", this.u1t?.GetPbDataId()],
             ),
           (this.IsRequestingRemoveAutonomousId = !0),
-          Net_1.Net.Call(6535, e, (t) => {
-            switch (
-              ((this.IsRequestingRemoveAutonomousId = !1),
-              (this.IsCanBeHeld = !0),
-              t.lkn)
-            ) {
-              case Protocol_1.Aki.Protocol.lkn.Sys:
-              case Protocol_1.Aki.Protocol.lkn
-                .Proto_ErrBeControlledEntityNotExist:
-                break;
-              default:
-                ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-                  t.lkn,
-                  3946,
-                );
-            }
+          Net_1.Net.Call(22971, e, (t) => {
+            (this.IsRequestingRemoveAutonomousId = !1), (this.IsCanBeHeld = !0);
           }));
     }
-    lvn(t, e) {
+    Fpn(t, e) {
       var t = ModelManager_1.ModelManager.CreatureModel.GetEntity(t);
       t?.Valid &&
-        ((t = t.Entity.GetComponent(55)),
+        ((t = t.Entity.GetComponent(56)),
         e ? t.ActiveHandFX(this.Entity) : t.DeactiveHandFx());
     }
     get CurrentState() {
-      return this.wpn;
+      return this.ZOe;
     }
     set CurrentState(t) {
       var e;
-      this.wpn !== t &&
+      this.ZOe !== t &&
         ((e = this.State),
-        this.wpn?.Exit(),
-        (this.wpn = t),
-        this.wpn?.Enter(),
+        this.ZOe?.Exit(),
+        (this.ZOe = t),
+        this.ZOe?.Enter(),
         EventSystem_1.EventSystem.EmitWithTarget(
           this.Entity,
           EventDefine_1.EEventName.OnManipulatableItemStateModified,
@@ -1293,28 +1285,28 @@ let SceneItemManipulatableComponent =
         ));
     }
     RequestAttachToOutlet() {
-      this.dvn(this.ActivatedOutlet.Entity, !0);
+      this.Kpn(this.ActivatedOutlet.Entity, !0);
     }
     ClearAttachOutletInfo() {
       (this.ActivatedOutlet.EntityInSocket = void 0),
         (this.ActivatedOutlet.MatchCfgIndex = void 0),
         (this.ActivatedOutlet = void 0);
     }
-    Cvn() {
-      void 0 === this.xpn &&
-        ((this.xpn = ActorSystem_1.ActorSystem.Get(
+    Qpn() {
+      void 0 === this.upn &&
+        ((this.upn = ActorSystem_1.ActorSystem.Get(
           UE.LevelSequenceActor.StaticClass(),
           MathUtils_1.MathUtils.DefaultTransform,
           void 0,
           !1,
         )),
-        (this.xpn.bOverrideInstanceData = !0));
+        (this.upn.bOverrideInstanceData = !0));
     }
     PlayMatchSequence(e, i) {
       var t, s;
       StringUtils_1.StringUtils.IsEmpty(this.MatchSequence) ||
-        (void 0 === this.xpn && this.Cvn(),
-        (t = this.xpn.DefaultInstanceData),
+        (void 0 === this.upn && this.Qpn(),
+        (t = this.upn.DefaultInstanceData),
         (s = this.ActorComp.ActorTransform).SetLocation(
           this.CastTargetLocation.ToUeVector(),
         ),
@@ -1323,60 +1315,60 @@ let SceneItemManipulatableComponent =
           this.MatchSequence,
           UE.LevelSequence,
           (t) => {
-            this.xpn.SetActorTickEnabled(!0),
-              this.xpn.SetSequence(t),
-              this.fvn(i, e);
+            this.upn.SetActorTickEnabled(!0),
+              this.upn.SetSequence(t),
+              this.$pn(i, e);
           },
         ));
     }
-    fvn(t, e) {
-      this.xpn.AddBindingByTag(BINDING_TAG, this.ActorComp.Owner),
-        this.xpn.SequencePlayer.IsValid() &&
-          (this.xpn.SequencePlayer.SetPlayRate(1),
-          this.xpn.SequencePlayer.OnFinished.Clear(),
+    $pn(t, e) {
+      this.upn.AddBindingByTag(BINDING_TAG, this.ActorComp.Owner),
+        this.upn.SequencePlayer.IsValid() &&
+          (this.upn.SequencePlayer.SetPlayRate(1),
+          this.upn.SequencePlayer.OnFinished.Clear(),
           t
-            ? this.xpn.SequencePlayer.PlayReverse()
-            : this.xpn.SequencePlayer.Play(),
-          this.xpn.SequencePlayer.OnFinished.Add(e),
-          this.xpn.SequencePlayer.OnFinished.Add(() => {
-            this.xpn.RemoveBindingByTag(BINDING_TAG, this.ActorComp.Owner);
+            ? this.upn.SequencePlayer.PlayReverse()
+            : this.upn.SequencePlayer.Play(),
+          this.upn.SequencePlayer.OnFinished.Add(e),
+          this.upn.SequencePlayer.OnFinished.Add(() => {
+            this.upn.RemoveBindingByTag(BINDING_TAG, this.ActorComp.Owner);
           }));
     }
     StopSequence() {
-      this.xpn?.SequencePlayer?.IsPlaying &&
-        (this.xpn.SequencePlayer.Stop(),
+      this.upn?.SequencePlayer?.IsPlaying &&
+        (this.upn.SequencePlayer.Stop(),
         (this.PlayingMatchSequence = !1),
-        this.xpn.RemoveBindingByTag(BINDING_TAG, this.ActorComp.Owner));
+        this.upn.RemoveBindingByTag(BINDING_TAG, this.ActorComp.Owner));
     }
-    Ypn() {
-      var t = this.zht?.GetCreatureDataId(),
-        e = Protocol_1.Aki.Protocol.r_s.create();
-      (e.rkn = MathUtils_1.MathUtils.NumberToLong(t)),
-        Net_1.Net.Call(10407, e, (t) => {
-          switch (t.lkn) {
-            case Protocol_1.Aki.Protocol.lkn.Sys:
-            case Protocol_1.Aki.Protocol.lkn
+    Rpn() {
+      var t = this.u1t?.GetCreatureDataId(),
+        e = Protocol_1.Aki.Protocol.zds.create();
+      (e.P4n = MathUtils_1.MathUtils.NumberToLong(t)),
+        Net_1.Net.Call(13850, e, (t) => {
+          switch (t.O4n) {
+            case Protocol_1.Aki.Protocol.O4n.NRs:
+            case Protocol_1.Aki.Protocol.O4n
               .Proto_ErrBeControlledEntityNotExist:
-              this.R_n &&
-                (TimerSystem_1.TimerSystem.Remove(this.R_n),
-                (this.R_n = void 0));
+              this.a_n &&
+                (TimerSystem_1.TimerSystem.Remove(this.a_n),
+                (this.a_n = void 0));
               break;
             default:
               ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-                t.lkn,
-                6955,
+                t.O4n,
+                21273,
               );
           }
         });
     }
     OnCastItem() {
       var t;
-      this.Npn &&
+      this.gpn &&
         ((t = this.Config.DestroyCfg.Conditions.filter(
           (t) => t.Type === IComponent_1.ETeleControlDestroyCondition.Throw,
         )[0]),
         (this.BCe = TimerSystem_1.TimerSystem.Delay(() => {
-          this.Ypn();
+          this.Rpn();
         }, t.DelayTime * TimeUtil_1.TimeUtil.InverseMillisecond)));
     }
     ClearCastDestroyTimer() {
@@ -1384,10 +1376,10 @@ let SceneItemManipulatableComponent =
         (TimerSystem_1.TimerSystem.Remove(this.BCe), (this.BCe = void 0));
     }
     TryAddTagById(t) {
-      this.Snn.HasTag(t) || this.Snn.AddTag(t);
+      this.inn.HasTag(t) || this.inn.AddTag(t);
     }
     TryRemoveTagById(t) {
-      this.Snn.HasTag(t) && this.Snn.RemoveTag(t);
+      this.inn.HasTag(t) && this.inn.RemoveTag(t);
     }
     ForceStopDropping() {
       if ("BeDropping" === this.State && this.NeedRemoveControllerId) {
@@ -1408,7 +1400,7 @@ let SceneItemManipulatableComponent =
         t?.IsValid() && (t.bEnableAutoPhysicsSplit = !0),
           0 !== this.ActorComp.PhysicsMode && (this.ActorComp.PhysicsMode = 0),
           (this.IsCanBeHeld = !1),
-          (this.Lpn = !0);
+          (this.npn = !0);
       } else
         Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
@@ -1417,24 +1409,24 @@ let SceneItemManipulatableComponent =
             "[SceneItemManipulatableComponent.ForceStopDropping] 尝试强停物理掉落时，被控物不处于脱手掉落状态，返回",
             ["State", this.State],
             ["NeedRemoveControllerId", this.NeedRemoveControllerId],
-            ["PbDataId", this.zht?.GetPbDataId()],
+            ["PbDataId", this.u1t?.GetPbDataId()],
           );
     }
     TryAddSpecLockTag() {
       var t;
-      this.Entity.GetComponent(122) &&
+      this.Entity.GetComponent(124) &&
         ((t = void 0 !== this.ActivatedOutlet ? 2142861976 : -628734864),
-        this.Snn.HasTag(t) || this.Snn.AddTag(t));
+        this.inn.HasTag(t) || this.inn.AddTag(t));
     }
     TryRemoveSpecLockTag() {
       var t;
-      this.Entity.GetComponent(122) &&
-        (this.Snn.HasTag((t = 2142861976)) && this.Snn.RemoveTag(t),
-        this.Snn.HasTag((t = -628734864))) &&
-        this.Snn.RemoveTag(t);
+      this.Entity.GetComponent(124) &&
+        (this.inn.HasTag((t = 2142861976)) && this.inn.RemoveTag(t),
+        this.inn.HasTag((t = -628734864))) &&
+        this.inn.RemoveTag(t);
     }
     TryReqAttachToFloor() {
-      var t = this.Entity.GetComponent(110);
+      var t = this.Entity.GetComponent(112);
       if (
         t &&
         this.ActorComp?.Owner?.IsValid() &&
@@ -1444,10 +1436,10 @@ let SceneItemManipulatableComponent =
         var e,
           i,
           s,
-          h = this.pvn(0, -5);
+          h = this.Ypn(0, -5);
         if (h)
           return (
-            ([s, i] = this.vvn(h)),
+            ([s, i] = this.Jpn(h)),
             s?.IsValid() && i
               ? i.length <= 0
                 ? void 0
@@ -1458,10 +1450,10 @@ let SceneItemManipulatableComponent =
                   )).GetLocation()),
                   (s = s.Rotator()),
                   void t.RequestAttachRefActor(i, e, s))
-              : (([i, e] = this.Mvn(h)),
+              : (([i, e] = this.zpn(h)),
                 void (
                   i &&
-                  ((s = i.GetComponent(182)),
+                  ((s = i.GetComponent(185)),
                   (i = i.GetComponent(0).GetPbDataId()),
                   s) &&
                   i &&
@@ -1476,7 +1468,7 @@ let SceneItemManipulatableComponent =
           );
       }
     }
-    pvn(e, i) {
+    Ypn(e, i) {
       if (this.ActorComp) {
         var s =
           SceneInteractionManager_1.SceneInteractionManager.Get().GetMainCollisionActor(
@@ -1485,21 +1477,21 @@ let SceneItemManipulatableComponent =
         if (s?.IsValid) {
           var h = s.K2_GetActorRotation(),
             a = (0, puerts_1.$ref)(void 0),
-            o = (0, puerts_1.$ref)(void 0),
+            n = (0, puerts_1.$ref)(void 0),
             s =
               (s.GetActorBounds(!1, a, void 0),
               s.K2_SetActorRotation(new UE.Rotator(0, 0, 0), !1),
-              s.GetActorBounds(!1, void 0, o),
+              s.GetActorBounds(!1, void 0, n),
               s.K2_SetActorRotation(h, !1),
               MathUtils_1.MathUtils.CommonTempVector),
             a =
               (s.FromUeVector((0, puerts_1.$unref)(a)),
               ModelManager_1.ModelManager.TraceElementModel
                 .CommonStartLocation),
-            n = ModelManager_1.ModelManager.TraceElementModel.CommonEndLocation,
+            o = ModelManager_1.ModelManager.TraceElementModel.CommonEndLocation,
             r =
               (a.Set(s.X, s.Y, s.Z + e),
-              n.Set(s.X, s.Y, s.Z + i),
+              o.Set(s.X, s.Y, s.Z + i),
               ModelManager_1.ModelManager.TraceElementModel.ClearBoxTrace(),
               ModelManager_1.ModelManager.TraceElementModel.GetBoxTrace()),
             l =
@@ -1513,12 +1505,12 @@ let SceneItemManipulatableComponent =
           r.bIgnoreSelf = !0;
           (e = MathUtils_1.MathUtils.CommonTempVector),
             (s =
-              (e.FromUeVector((0, puerts_1.$unref)(o)),
+              (e.FromUeVector((0, puerts_1.$unref)(n)),
               (r.HalfSizeX = e.X),
               (r.HalfSizeY = e.Y),
               (r.HalfSizeZ = e.Z),
               TraceElementCommon_1.TraceElementCommon.SetStartLocation(r, a),
-              TraceElementCommon_1.TraceElementCommon.SetEndLocation(r, n),
+              TraceElementCommon_1.TraceElementCommon.SetEndLocation(r, o),
               TraceElementCommon_1.TraceElementCommon.SetBoxOrientation(r, h),
               TraceElementCommon_1.TraceElementCommon.BoxTrace(
                 r,
@@ -1538,7 +1530,7 @@ let SceneItemManipulatableComponent =
         }
       }
     }
-    vvn(t) {
+    Jpn(t) {
       if (t.IsValid()) {
         var e = UE.KismetSystemLibrary.GetPathName(t),
           i = e.indexOf(".");
@@ -1553,15 +1545,15 @@ let SceneItemManipulatableComponent =
             return [t, e];
           i = t.GetAttachRootParentActor();
           if (i && UE.KismetMathLibrary.NotEqual_ObjectObject(i, t))
-            return this.vvn(i);
+            return this.Jpn(i);
         }
       }
       return [void 0, void 0];
     }
-    Mvn(e) {
+    zpn(e) {
       var t =
           ModelManager_1.ModelManager.CreatureModel.GetEntityByChildActor(e),
-        i = t?.Entity?.GetComponent(182);
+        i = t?.Entity?.GetComponent(185);
       if (!i?.Owner?.IsValid()) return [void 0, void 0];
       var s =
         SceneInteractionManager_1.SceneInteractionManager.Get().GetSceneInteractionAllKeyRefActors(
@@ -1571,9 +1563,9 @@ let SceneItemManipulatableComponent =
       var a = s?.Num();
       if (a)
         for (let t = 0; t < a; t++) {
-          var o = s.GetKey(t);
-          if (s.Get(o) === e) {
-            h = o;
+          var n = s.GetKey(t);
+          if (s.Get(n) === e) {
+            h = n;
             break;
           }
         }
@@ -1582,7 +1574,7 @@ let SceneItemManipulatableComponent =
   });
 (SceneItemManipulatableComponent = SceneItemManipulatableComponent_1 =
   __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(140)],
+    [(0, RegisterComponent_1.RegisterComponent)(142)],
     SceneItemManipulatableComponent,
   )),
   (exports.SceneItemManipulatableComponent = SceneItemManipulatableComponent);

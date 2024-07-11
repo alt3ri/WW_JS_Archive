@@ -7,7 +7,7 @@ const UE = require("ue"),
 class AccessPathPcButton extends UiPanelBase_1.UiPanelBase {
   constructor(e, t) {
     super(),
-      (this.Pci = t),
+      (this.Pmi = t),
       this.CreateThenShowByResourceIdAsync(
         "UiItem_PcAccessPathButton_Prefab",
         e,
@@ -20,7 +20,7 @@ class AccessPathPcButton extends UiPanelBase_1.UiPanelBase {
   OnStart() {
     var e,
       t = ConfigManager_1.ConfigManager.InventoryConfig.GetAccessPathConfig(
-        this.Pci,
+        this.Pmi,
       );
     t && ((e = this.GetText(0)), (t = t.Description), e.ShowTextNew(t));
   }

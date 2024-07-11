@@ -4,6 +4,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const UE = require("ue"),
   Log_1 = require("../../../../Core/Common/Log"),
   ShareRewardById_1 = require("../../../../Core/Define/ConfigQuery/ShareRewardById"),
+  CameraController_1 = require("../../../Camera/CameraController"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
@@ -15,27 +16,26 @@ const UE = require("ue"),
   LguiUtil_1 = require("../../Util/LguiUtil"),
   GachaSceneView_1 = require("../GachaUiSceneManager/GachaSceneView"),
   GachaMultipleResultItem_1 = require("./GachaMultipleResultItem"),
-  GachaResultItemNew_1 = require("./GachaResultItemNew"),
-  CameraController_1 = require("../../../Camera/CameraController");
+  GachaResultItemNew_1 = require("./GachaResultItemNew");
 class GachaResultView extends GachaSceneView_1.GachaSceneView {
   constructor() {
     super(...arguments),
-      (this.wjt = !1),
-      (this.Bjt = void 0),
-      (this.bjt = void 0),
-      (this.qjt = void 0),
-      (this.Gjt = void 0),
-      (this.Njt = void 0),
-      (this.Ojt = () => {
+      (this.wWt = !1),
+      (this.BWt = void 0),
+      (this.bWt = void 0),
+      (this.qWt = void 0),
+      (this.GWt = void 0),
+      (this.NWt = void 0),
+      (this.OWt = () => {
         if (ChannelController_1.ChannelController.CouldShare()) {
           var t = ModelManager_1.ModelManager.GachaModel.CurGachaResult;
           let e = 0;
           if (1 === t.length) {
-            if (this.GetItemQuality(t[0].u5n.G3n) < 5) return;
+            if (this.GetItemQuality(t[0].WVn.f8n) < 5) return;
             e =
               2 ===
               ConfigManager_1.ConfigManager.GachaConfig.GetItemIdType(
-                t[0].u5n.G3n,
+                t[0].WVn.f8n,
               )
                 ? 4
                 : 3;
@@ -47,20 +47,20 @@ class GachaResultView extends GachaSceneView_1.GachaSceneView {
             Log_1.Log.Info("Gacha", 28, "刷新分享按钮", ["showShareReward", a]),
             this.GetItem(7).SetUIActive(a),
             a &&
-              ((a = [...t.ShareReward][0]), this.Njt?.SetItemInfo(a[0], a[1]));
+              ((a = [...t.ShareReward][0]), this.NWt?.SetItemInfo(a[0], a[1]));
         }
       }),
-      (this.kjt = () => {
+      (this.kWt = () => {
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.CloseGachaSceneView,
         );
       }),
-      (this.Fjt = () => {
+      (this.FWt = () => {
         ChannelController_1.ChannelController.ShareGacha(
           ModelManager_1.ModelManager.GachaModel.CurGachaResult,
         );
       }),
-      (this.Vjt = (e, t) => {
+      (this.VWt = (e, t) => {
         var e = e[0].ItemId,
           t = t[0].ItemId,
           a =
@@ -73,8 +73,8 @@ class GachaResultView extends GachaSceneView_1.GachaSceneView {
             )?.QualityId;
         return a === i ? e - t : i - a;
       }),
-      (this.Hjt = () => new GachaResultItemNew_1.GachaResultItemNew()),
-      (this.jjt = () =>
+      (this.HWt = () => new GachaResultItemNew_1.GachaResultItemNew()),
+      (this.jWt = () =>
         new CommonItemSmallItemGrid_1.CommonItemSmallItemGrid());
   }
   OnRegisterComponent() {
@@ -90,61 +90,61 @@ class GachaResultView extends GachaSceneView_1.GachaSceneView {
       [8, UE.UIItem],
     ]),
       (this.BtnBindInfo = [
-        [4, this.kjt],
-        [6, this.Fjt],
+        [4, this.kWt],
+        [6, this.FWt],
       ]);
   }
   OnAfterInitComponentsData() {
     var e = this.OpenParam;
-    this.wjt = e?.ResultViewHideExtraReward;
+    this.wWt = e?.ResultViewHideExtraReward;
   }
   async OnBeforeStartAsync() {
     var e,
       t = ModelManager_1.ModelManager.GachaModel.CurGachaResult;
     t &&
       0 !== t.length &&
-      ((this.qjt = new GenericLayout_1.GenericLayout(
+      ((this.qWt = new GenericLayout_1.GenericLayout(
         this.GetGridLayout(1),
-        this.jjt,
+        this.jWt,
       )),
-      (this.Gjt = new GenericLayout_1.GenericLayout(
+      (this.GWt = new GenericLayout_1.GenericLayout(
         this.GetGridLayout(3),
-        this.jjt,
+        this.jWt,
       )),
-      (this.Njt = new ShareRewardInfo_1.ShareRewardInfo()),
-      (e = [this.Njt.OnlyCreateByActorAsync(this.GetItem(8).GetOwner())]),
+      (this.NWt = new ShareRewardInfo_1.ShareRewardInfo()),
+      (e = [this.NWt.OnlyCreateByActorAsync(this.GetItem(8).GetOwner())]),
       1 === t.length
-        ? e.push(this.Wjt(t[0]))
+        ? e.push(this.WWt(t[0]))
         : e.push(this.HandleMultiGacha(t)),
       await Promise.all(e),
-      this.AddChild(this.Njt),
+      this.AddChild(this.NWt),
       this.GetButton(6)?.RootUIComp.SetUIActive(!1),
       this.GetItem(7)?.SetUIActive(!1),
       CameraController_1.CameraController.ResetViewTarget());
   }
   OnBeforeShow() {
-    this.Ojt();
+    this.OWt();
   }
   AfterAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnFirstShare,
-      this.Ojt,
+      this.OWt,
     );
   }
   AfterRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnFirstShare,
-      this.Ojt,
+      this.OWt,
     );
   }
-  Kjt(e) {
-    e && 0 < e.length && !this.wjt
-      ? (this.GetItem(0).SetUIActive(!0), this.qjt.RefreshByData(e))
+  KWt(e) {
+    e && 0 < e.length && !this.wWt
+      ? (this.GetItem(0).SetUIActive(!0), this.qWt.RefreshByData(e))
       : this.GetItem(0).SetUIActive(!1);
   }
-  Qjt(e) {
-    e && 0 < e.length && !this.wjt
-      ? (this.GetItem(2).SetUIActive(!0), this.Gjt.RefreshByData(e))
+  QWt(e) {
+    e && 0 < e.length && !this.wWt
+      ? (this.GetItem(2).SetUIActive(!0), this.GWt.RefreshByData(e))
       : this.GetItem(2).SetUIActive(!1);
   }
   async HandleMultiGacha(e) {
@@ -156,16 +156,16 @@ class GachaResultView extends GachaSceneView_1.GachaSceneView {
         ),
         t.GetGachaResultItemLayout()),
       a =
-        ((this.bjt = new GenericLayout_1.GenericLayout(t, this.Hjt)),
+        ((this.bWt = new GenericLayout_1.GenericLayout(t, this.HWt)),
         new Map()),
       i = new Map();
     for (const s of e) {
-      s.p5n && this.Xjt(s.p5n, a);
-      var r = s.M5n;
-      r && 0 < r.G3n && 0 < r.g5n && this.$jt(r, i);
+      s.zVn && this.XWt(s.zVn, a);
+      var r = s.e9n;
+      r && 0 < r.f8n && 0 < r.YVn && this.$Wt(r, i);
     }
-    (t = this.Yjt(a)), this.Kjt(t), (t = this.Yjt(i));
-    this.Qjt(t);
+    (t = this.YWt(a)), this.KWt(t), (t = this.YWt(i));
+    this.QWt(t);
     const n = (e) => {
       switch (e) {
         case 1:
@@ -180,46 +180,46 @@ class GachaResultView extends GachaSceneView_1.GachaSceneView {
     t.sort((e, t) => {
       var a =
           ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
-            e.u5n.G3n,
+            e.WVn.f8n,
           )?.QualityId ?? 0,
         i =
           ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
-            t.u5n.G3n,
+            t.WVn.f8n,
           )?.QualityId ?? 0;
       return a === i
         ? ((e = n(
-            ConfigManager_1.ConfigManager.GachaConfig.GetItemIdType(e.u5n.G3n),
+            ConfigManager_1.ConfigManager.GachaConfig.GetItemIdType(e.WVn.f8n),
           )),
           n(
-            ConfigManager_1.ConfigManager.GachaConfig.GetItemIdType(t.u5n.G3n),
+            ConfigManager_1.ConfigManager.GachaConfig.GetItemIdType(t.WVn.f8n),
           ) - e)
         : i - a;
     }),
-      await this.bjt.RefreshByDataAsync(t);
+      await this.bWt.RefreshByDataAsync(t);
   }
-  async Wjt(e) {
+  async WWt(e) {
     var t = await LguiUtil_1.LguiUtil.LoadPrefabByResourceIdAsync(
         "UiItem_SingleGacha",
         this.GetItem(5),
       ),
       t =
-        ((this.Bjt = new GachaResultItemNew_1.GachaResultItemNew()),
-        await this.Bjt.CreateThenShowByActorAsync(t),
-        this.Bjt.Update(e),
+        ((this.BWt = new GachaResultItemNew_1.GachaResultItemNew()),
+        await this.BWt.CreateThenShowByActorAsync(t),
+        this.BWt.Update(e),
         new Map()),
       a = new Map(),
-      e = (e.p5n && this.Xjt(e.p5n, t), e.M5n),
-      e = (e && 0 < e.G3n && 0 < e.g5n && this.$jt(e, a), this.Yjt(t)),
-      t = (this.Kjt(e), this.Yjt(a));
-    this.Qjt(t);
+      e = (e.zVn && this.XWt(e.zVn, t), e.e9n),
+      e = (e && 0 < e.f8n && 0 < e.YVn && this.$Wt(e, a), this.YWt(t)),
+      t = (this.KWt(e), this.YWt(a));
+    this.QWt(t);
   }
-  Xjt(e, t) {
-    for (const a of e) this.$jt(a, t);
+  XWt(e, t) {
+    for (const a of e) this.$Wt(a, t);
   }
-  $jt(e, t) {
-    t.set(e.G3n, (e.g5n ?? 0) + (t.get(e.G3n) ?? 0));
+  $Wt(e, t) {
+    t.set(e.f8n, (e.YVn ?? 0) + (t.get(e.f8n) ?? 0));
   }
-  Yjt(e) {
+  YWt(e) {
     if (e && 0 !== e.size) {
       const a = new Array();
       return (
@@ -227,7 +227,7 @@ class GachaResultView extends GachaSceneView_1.GachaSceneView {
           t = [{ IncId: 0, ItemId: t }, e];
           a.push(t);
         }),
-        a.sort(this.Vjt),
+        a.sort(this.VWt),
         a
       );
     }

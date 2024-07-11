@@ -10,33 +10,33 @@ class FilterViewData {
 exports.FilterViewData = FilterViewData;
 class FilterResultData {
   constructor() {
-    (this.ConfigId = 0), (this.oLt = new Map());
+    (this.ConfigId = 0), (this.aDt = new Map());
   }
   SetConfigId(t) {
     this.ConfigId = t;
   }
   AddSingleRuleData(t, e, r) {
-    let s = this.oLt.get(t);
-    (s = s || new Map()).set(e, r), this.oLt.set(t, s);
+    let s = this.aDt.get(t);
+    (s = s || new Map()).set(e, r), this.aDt.set(t, s);
   }
   SetSelectRuleData(t, e) {
-    this.oLt.set(t, e);
+    this.aDt.set(t, e);
   }
   SetRuleData(t) {
-    this.oLt = t;
+    this.aDt = t;
   }
   GetSelectRuleDataById(t) {
-    return this.oLt.get(t);
+    return this.aDt.get(t);
   }
   GetSelectRuleData() {
-    return this.oLt;
+    return this.aDt;
   }
   ClearSelectRuleData() {
-    this.oLt.clear();
+    this.aDt.clear();
   }
   ShowAllFilterContent() {
     var t = new StringBuilder_1.StringBuilder();
-    for (const e of this.oLt.values())
+    for (const e of this.aDt.values())
       for (const r of e.values()) t.Append(r), t.Append(",");
     return t.RemoveLast(1), t.ToString();
   }

@@ -156,28 +156,33 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
           (this.Reset = !1);
       }
     };
-    s.BindActivateSkillGroup = class B {
+    s.BindDelaySuicide = class B {
+      constructor() {
+        (this.SuicideDelay = 0), (this.DestroyDelay = 0);
+      }
+    };
+    s.BindActivateSkillGroup = class C {
       constructor() {
         this.ConfigId = 0;
       }
     };
-    s.BindAiHateConfig = class C {
+    s.BindAiHateConfig = class D {
       constructor() {
         this.ConfigId = 0;
       }
     };
-    s.BindAiSenseEnable = class D {
+    s.BindAiSenseEnable = class E {
       constructor() {
         this.ConfigId = 0;
       }
     };
-    s.BindCue = class E {
+    s.BindCue = class G {
       constructor() {
         (this.CueIds = void 0), (this.HideOnLoading = !1);
       }
     };
-    s.BindDisableActor = class G {};
-    s.BindLeaveFight = class H {
+    s.BindDisableActor = class H {};
+    s.BindLeaveFight = class I {
       constructor() {
         (this.RandomRadius = 0),
           (this.MinWanderDistance = 0),
@@ -188,22 +193,22 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
           (this.UsePatrolPointPriority = !1);
       }
     };
-    s.BindMontage = class I {
+    s.BindMontage = class J {
       constructor() {
         (this.MontageName = ""), (this.HideOnLoading = !1);
       }
     };
-    s.BindBoneVisible = class J {
+    s.BindBoneVisible = class K {
       constructor() {
         (this.BoneName = ""), (this.Visible = !1);
       }
     };
-    s.BindMeshVisible = class K {
+    s.BindMeshVisible = class L {
       constructor() {
         (this.Tag = ""), (this.Visible = !1), (this.PropagateToChildren = !1);
       }
     };
-    s.BindBoneCollision = class L {
+    s.BindBoneCollision = class N {
       constructor() {
         (this.BoneName = ""),
           (this.IsBlockPawn = !1),
@@ -214,28 +219,28 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
           (this.IsBlockCameraOnExit = !1);
       }
     };
-    s.BindPartPanelVisible = class N {
+    s.BindPartPanelVisible = class P {
       constructor() {
         (this.PartName = ""), (this.Visible = !1);
       }
     };
-    s.BindDeathMontage = class P {
+    s.BindDeathMontage = class Q {
       constructor() {
         (this.DeathType = 0), (this.MontageName = "");
       }
     };
-    s.BindPalsy = class Q {
+    s.BindPalsy = class R {
       constructor() {
         (this.CounterAttackEffect = ""), (this.CounterAttackCamera = "");
       }
     };
-    s.BindCollisionChannel = class R {
+    s.BindCollisionChannel = class S {
       constructor() {
         this.IgnoreChannels = void 0;
       }
     };
-    s.BindDisableCollision = class S {};
-    s.Condition = class T {
+    s.BindDisableCollision = class T {};
+    s.Condition = class U {
       constructor() {
         (this.Type = 0),
           (this.Reverse = !1),
@@ -243,44 +248,44 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
           (this.Name = void 0);
       }
     };
-    s.CondAnd = class U {
+    s.CondAnd = class V {
       constructor() {
         this.Conditions = void 0;
       }
     };
-    s.CondOr = class V {
+    s.CondOr = class W {
       constructor() {
         this.Conditions = void 0;
       }
     };
-    s.CondTrue = class W {};
-    s.CondHpLessThan = class X {
+    s.CondTrue = class X {};
+    s.CondHpLessThan = class Y {
       constructor() {
         this.HpRatio = 0;
       }
     };
-    s.CondSkillEnd = class Y {};
-    s.CondTag = class Z {
+    s.CondSkillEnd = class Z {};
+    s.CondTag = class $ {
       constructor() {
         (this.TagId = 0), (this.TagName = "");
       }
     };
-    s.CondBBValueCompare = class $ {
+    s.CondBBValueCompare = class ss {
       constructor() {
         (this.Key1 = 0), (this.Key2 = 0), (this.Compare = 0);
       }
     };
-    s.CondAttrCompare = class ss {
+    s.CondAttrCompare = class ts {
       constructor() {
         (this.Attr1 = 0), (this.Attr2 = 0), (this.Compare = 0);
       }
     };
-    s.CondAttribute = class ts {
+    s.CondAttribute = class cs {
       constructor() {
         (this.AttributeId = 0), (this.Min = 0), (this.Max = 0);
       }
     };
-    s.CondAttributeRate = class cs {
+    s.CondAttributeRate = class is {
       constructor() {
         (this.AttributeId = 0),
           (this.Denominator = 0),
@@ -288,13 +293,12 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
           (this.Max = 0);
       }
     };
-    s.CondCheckState = class is {
+    s.CondCheckState = class os {
       constructor() {
         this.TargetState = 0;
       }
     };
-    s.CondHate = class os {};
-    s.CondListenLeaveFight = class hs {};
+    s.CondHate = class hs {};
     s.CondTimer = class rs {
       constructor() {
         (this.MinTime = 0), (this.MaxTime = 0);

@@ -15,25 +15,25 @@ class InstanceDungeonModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
       (this.NUe = 0),
-      (this.Rli = void 0),
-      (this.Uli = new Map()),
-      (this.Ali = new Array()),
-      (this.Pli = new Map()),
-      (this.xli = void 0),
-      (this.wli = new Map()),
+      (this.R1i = void 0),
+      (this.U1i = new Map()),
+      (this.A1i = new Array()),
+      (this.P1i = new Map()),
+      (this.x1i = void 0),
+      (this.w1i = new Map()),
       (this.InstanceFinishSuccess = 0),
       (this.InstanceRewardHaveTake = !1),
-      (this.Bli = void 0),
-      (this.bli = void 0),
-      (this.qli = void 0),
+      (this.B1i = void 0),
+      (this.b1i = void 0),
+      (this.q1i = void 0),
       (this.CurrentInstanceIsFinish = !1);
   }
   OnClear() {
-    return !(this.Bli = void 0);
+    return !(this.B1i = void 0);
   }
   OnLeaveLevel() {
     return (
-      this.Bli?.SetTrack(!1),
+      this.B1i?.SetTrack(!1),
       (this.InstanceFinishSuccess = 0),
       !(this.InstanceRewardHaveTake = !1)
     );
@@ -45,48 +45,54 @@ class InstanceDungeonModel extends ModelBase_1.ModelBase {
     this.NUe = t;
   }
   SetMatchTeamInfo(t) {
-    this.Rli = t;
+    this.R1i = t;
   }
   GetMatchTeamInfo() {
-    return this.Rli;
+    return this.R1i;
   }
   SetMatchTeamHost(t) {
-    this.Rli.Q4n = t;
+    this.R1i.DVn = t;
   }
   SetMatchTeamState(t) {
-    this.Rli.H5n = t;
+    this.R1i.y9n = t;
   }
   GetMatchTeamName(t) {
-    for (const e of this.Rli.ZEs) if (e.aFn === t) return e.Rgs;
+    for (const e of this.R1i.vRs) if (e.q5n === t) return e.HMs;
     Log_1.Log.CheckError() &&
       Log_1.Log.Error("InstanceDungeon", 5, "获取匹配副本队伍队员信息失败", [
         "队员Id",
         t,
       ]);
   }
+  GetMatchTeamRoleCfgId(t) {
+    var e = [];
+    for (const r of this.R1i.vRs)
+      if (r.q5n === t) for (const a of r.V6n) e.push(a.O6n);
+    return e;
+  }
   IsMatchTeamHost() {
     return (
-      ModelManager_1.ModelManager.CreatureModel.GetPlayerId() === this.Rli?.Q4n
+      ModelManager_1.ModelManager.CreatureModel.GetPlayerId() === this.R1i?.DVn
     );
   }
   IsTeamNotFull() {
-    return this.Gli() < MATCHINGTEAMSIZE;
+    return this.G1i() < MATCHINGTEAMSIZE;
   }
   GetNeedMatchSize() {
-    return MATCHINGTEAMSIZE - this.Gli();
+    return MATCHINGTEAMSIZE - this.G1i();
   }
-  Gli() {
-    var t = this.Rli.ZEs;
+  G1i() {
+    var t = this.R1i.vRs;
     if (!ModelManager_1.ModelManager.GameModeModel.IsMulti) return t.length;
     var e = ModelManager_1.ModelManager.OnlineModel.GetAllWorldTeamPlayer();
     let r = t.length + e.length;
-    for (const a of e) for (const n of t) a === n.aFn && r--;
+    for (const a of e) for (const n of t) a === n.q5n && r--;
     return r;
   }
   IsAllPlayerInMatchTeam() {
     if (!ModelManager_1.ModelManager.GameModeModel.IsMulti) return !0;
     var t = [];
-    for (const r of this.Rli.ZEs) t.push(r.aFn);
+    for (const r of this.R1i.vRs) t.push(r.q5n);
     let e = !0;
     for (const a of ModelManager_1.ModelManager.OnlineModel.GetAllWorldTeamPlayer())
       t.includes(a) || (e = !1);
@@ -94,164 +100,167 @@ class InstanceDungeonModel extends ModelBase_1.ModelBase {
   }
   InitMatchingTeamConfirmReadyState(t) {
     for (const e of t) {
-      this.Uli.set(e.aFn, e.YAs), this.Pli.set(e.aFn, e.O5n);
-      for (const r of this.Ali)
-        r.GetPlayerId() === e.aFn && r.SetIsReady(e.O5n);
+      this.U1i.set(e.q5n, e.gbs), this.P1i.set(e.q5n, e.p9n);
+      for (const r of this.A1i)
+        r.GetPlayerId() === e.q5n && r.SetIsReady(e.p9n);
     }
   }
   SetMatchingPlayerConfirmState(t, e) {
-    this.Uli.set(t, e);
+    this.U1i.set(t, e);
   }
   GetMatchingPlayerConfirmStateByPlayerId(t) {
-    return this.Uli.get(t);
+    return this.U1i.get(t);
   }
   GetMatchingTeamReady() {
-    return this.Rli.H5n === Protocol_1.Aki.Protocol.kNs.Proto_ReadyConfirm;
+    return this.R1i.y9n === Protocol_1.Aki.Protocol.D6s.Proto_ReadyConfirm;
   }
   GetPlayerUiState(t) {
-    for (const e of this.Rli.ZEs) if (e.aFn === t) return e.K5n;
-    return Protocol_1.Aki.Protocol.FNs.Proto_Wait;
+    for (const e of this.R1i.vRs) if (e.q5n === t) return e.T9n;
+    return Protocol_1.Aki.Protocol.P6s.Proto_Wait;
   }
   SetPlayerUiState(t, e) {
-    for (const r of this.Rli.ZEs) r.aFn === t && (r.K5n = e);
+    for (const r of this.R1i.vRs) r.q5n === t && (r.T9n = e);
     EventSystem_1.EventSystem.Emit(
       EventDefine_1.EEventName.OnRefreshPlayerUiState,
       t,
     );
   }
   SetPrewarPlayerReadyState(t, e) {
-    this.Pli.set(t, e);
-    for (const r of this.Ali) r.GetPlayerId() === t && r.SetIsReady(e);
+    this.P1i.set(t, e);
+    for (const r of this.A1i) r.GetPlayerId() === t && r.SetIsReady(e);
   }
   RemovePrewarPlayerReadyState(t) {
-    this.Pli.delete(t);
+    this.P1i.delete(t);
   }
   ClearPrewarPlayerReadyState() {
-    this.Pli.clear();
+    this.P1i.clear();
   }
   RemoveMatchingTeamConfirmState(t) {
-    this.Uli.delete(t);
+    this.U1i.delete(t);
   }
   ClearMatchingTeamConfirmState() {
-    this.Uli.clear();
+    this.U1i.clear();
   }
   GetPrewarPlayerReadyState(t) {
-    t = this.Pli.get(t);
+    t = this.P1i.get(t);
     return t || !1;
+  }
+  JYs(t, e) {
+    t.SetLevel(e.Cbs), t.SetConfigId(e.O6n);
   }
   SetPrewarFormationDataList() {
     this.ClearPrewarData();
-    for (const e of this.GetMatchTeamInfo().ZEs)
-      for (const r of e.j5n) {
-        var t = new PrewarFormationData_1.PrewarFormationData();
-        t.SetPlayerId(e.aFn),
-          t.SetIsReady(this.GetPrewarPlayerReadyState(e.aFn)),
-          t.SetLife(1),
-          t.SetMaxLife(1),
-          t.SetLevel(r.XAs),
-          t.SetConfigId(r.l3n),
-          this.Ali.push(t);
-      }
-    this.Nli();
+    var t = this.GetMatchTeamInfo();
+    if (t) {
+      for (const r of t.vRs)
+        for (const a of r.V6n) {
+          var e = new PrewarFormationData_1.PrewarFormationData();
+          e.SetPlayerId(r.q5n),
+            e.SetIsReady(this.GetPrewarPlayerReadyState(r.q5n)),
+            e.SetLife(1),
+            e.SetMaxLife(1),
+            this.JYs(e, a),
+            this.A1i.push(e);
+        }
+      this.N1i();
+    }
   }
   AddPrewarFormationDataByPlayerInfo(t, e = !0) {
-    e && this.Rli.ZEs.push(t);
-    for (const a of t.j5n) {
+    e && this.R1i.vRs.push(t);
+    for (const a of t.V6n) {
       var r = new PrewarFormationData_1.PrewarFormationData();
-      r.SetPlayerId(t.aFn),
-        r.SetIsReady(this.GetPrewarPlayerReadyState(t.aFn)),
+      r.SetPlayerId(t.q5n),
+        r.SetIsReady(this.GetPrewarPlayerReadyState(t.q5n)),
         r.SetLife(1),
         r.SetMaxLife(1),
-        r.SetLevel(a.XAs),
-        r.SetConfigId(a.l3n),
-        this.Ali.push(r);
+        this.JYs(r, a),
+        this.A1i.push(r);
     }
-    this.Nli();
+    this.N1i();
   }
-  Nli() {
-    var t = this.GetMatchTeamInfo().Q4n;
+  N1i() {
+    var t = this.GetMatchTeamInfo().DVn;
     let e = 1,
       r = 1;
-    for (const a of this.Ali)
+    for (const a of this.A1i)
       a.GetPlayerId() === t && (a.SetIndex(e++), a.SetOnlineNumber(r));
     r++;
-    for (const n of this.Ali)
+    for (const n of this.A1i)
       n.GetPlayerId() !== t && (n.SetIndex(e++), n.SetOnlineNumber(r++));
-    this.Ali.sort((t, e) => t.GetIndex() - e.GetIndex());
+    this.A1i.sort((t, e) => t.GetIndex() - e.GetIndex());
   }
   SetMatchTeamInfoPlayerRole(t, e) {
-    for (const n of this.Rli.ZEs) {
+    for (const n of this.R1i.vRs) {
       var r, a;
-      n.aFn === t &&
-        ((r = n.j5n.length),
+      n.q5n === t &&
+        ((r = n.V6n.length),
         (a = e.length),
-        (n.j5n = e),
-        r === a && this.Oli(n),
-        r < a && (this.kli(t), this.AddPrewarFormationDataByPlayerInfo(n, !1)),
+        (n.V6n = e),
+        r === a && this.O1i(n),
+        r < a && (this.k1i(t), this.AddPrewarFormationDataByPlayerInfo(n, !1)),
         a < r) &&
-        this.Fli(n);
+        this.F1i(n);
     }
     EventSystem_1.EventSystem.Emit(
       EventDefine_1.EEventName.PrewarFormationChanged,
     );
   }
   GetPrewarFormationDataList() {
-    return this.Ali;
+    return this.A1i;
   }
   RemovePrewarFormationDataByPlayer(e) {
     let r = !1;
-    for (let t = this.Ali.length - 1; 0 <= t; --t)
-      this.Ali[t].GetPlayerId() === e &&
+    for (let t = this.A1i.length - 1; 0 <= t; --t)
+      this.A1i[t].GetPlayerId() === e &&
         ((r = !0),
-        this.Ali.splice(t, 1),
+        this.A1i.splice(t, 1),
         this.RemovePrewarPlayerReadyState(e),
         this.RemoveMatchingTeamConfirmState(e));
-    for (let t = this.Rli.ZEs.length - 1; 0 <= t; --t) {
-      var a = this.Rli.ZEs[t];
-      a && a.aFn === e && ((r = !0), this.Rli.ZEs.splice(t, 1));
+    for (let t = this.R1i.vRs.length - 1; 0 <= t; --t) {
+      var a = this.R1i.vRs[t];
+      a && a.q5n === e && ((r = !0), this.R1i.vRs.splice(t, 1));
     }
-    return this.Nli(), r;
+    return this.N1i(), r;
   }
-  Oli(e) {
-    var r = this.Ali.length;
+  O1i(e) {
+    var r = this.A1i.length;
     let a = 0;
     for (let t = 0; t < r; t++) {
       var n,
-        o = this.Ali[t];
-      e.aFn === o.GetPlayerId() &&
-        ((n = e.j5n[a++]), o.SetConfigId(n.l3n), o.SetLevel(n.XAs));
+        o = this.A1i[t];
+      e.q5n === o.GetPlayerId() && ((n = e.V6n[a++]), this.JYs(o, n));
     }
   }
-  Fli(t) {
-    var r = t.aFn,
-      a = t.j5n;
-    for (let e = this.Ali.length - 1; 0 <= e; --e) {
-      var n = this.Ali[e];
+  F1i(t) {
+    var r = t.q5n,
+      a = t.V6n;
+    for (let e = this.A1i.length - 1; 0 <= e; --e) {
+      var n = this.A1i[e];
       if (n.GetPlayerId() === r) {
         let t = !1;
         for (const o of a)
-          if (o.l3n === n.GetConfigId()) {
+          if (o.O6n === n.GetConfigId()) {
             t = !0;
             break;
           }
-        t || this.Ali.splice(e, 1);
+        t || this.A1i.splice(e, 1);
       }
     }
-    this.Nli();
+    this.N1i();
   }
-  kli(e) {
-    for (let t = this.Ali.length - 1; 0 <= t; --t)
-      this.Ali[t].GetPlayerId() === e && this.Ali.splice(t, 1);
+  k1i(e) {
+    for (let t = this.A1i.length - 1; 0 <= t; --t)
+      this.A1i[t].GetPlayerId() === e && this.A1i.splice(t, 1);
   }
   IsInPrewarFormation(t) {
-    for (const e of this.Ali) if (e.GetPlayerId() === t) return !0;
+    for (const e of this.A1i) if (e.GetPlayerId() === t) return !0;
     return !1;
   }
   ClearPrewarData() {
-    this.Ali.length = 0;
+    this.A1i.length = 0;
   }
   MatchingPlayerCount() {
-    return this.Uli.size;
+    return this.U1i.size;
   }
   get FormationAverageRoleLevel() {
     let t = 0;
@@ -292,66 +301,66 @@ class InstanceDungeonModel extends ModelBase_1.ModelBase {
           );
   }
   GetInstanceBeInviteDataList() {
-    return this.xli;
+    return this.x1i;
   }
   AddInstanceBeInviteData(t) {
     t &&
-      (this.xli
+      (this.x1i
         ? this.RemoveInstanceBeInviteData(t.GetPlayerId())
-        : (this.xli = new Array()),
-      this.xli.push(t));
+        : (this.x1i = new Array()),
+      this.x1i.push(t));
   }
   RemoveInstanceBeInviteData(e) {
-    for (let t = 0; t < this.xli.length; t++)
-      if (this.xli[t].GetPlayerId() === e) return this.xli.splice(t, 1), !0;
+    for (let t = 0; t < this.x1i.length; t++)
+      if (this.x1i[t].GetPlayerId() === e) return this.x1i.splice(t, 1), !0;
     return !1;
   }
   GetInvitePlayerCd(t) {
-    t = this.wli.get(t);
+    t = this.w1i.get(t);
     return t || 0;
   }
   SetInvitePlayerCd(t, e) {
-    this.wli.set(t, e);
+    this.w1i.set(t, e);
   }
   CreateInstanceInfo(t) {
     return (
-      (this.Bli = new InstanceDungeonInfo_1.InstanceDungeonInfo(t)),
-      this.Bli.InitConfig(),
-      this.Bli
+      (this.B1i = new InstanceDungeonInfo_1.InstanceDungeonInfo(t)),
+      this.B1i.InitConfig(),
+      this.B1i
     );
   }
   ClearInstanceDungeonInfo() {
     var t;
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug("InstanceDungeon", 28, "尝试清除副本行为树"),
-      this.Bli
-        ? ((t = this.Bli), (this.Bli = void 0), t.Destroy())
+      this.B1i
+        ? ((t = this.B1i), (this.B1i = void 0), t.Destroy())
         : Log_1.Log.CheckError() &&
           Log_1.Log.Error("InstanceDungeon", 5, "销毁副本树时，副本树不存在");
   }
   GetInstanceDungeonInfo() {
-    return this.Bli;
+    return this.B1i;
   }
   ResetData() {
     this.ClearPrewarData(),
       this.ClearPrewarPlayerReadyState(),
       this.ClearMatchingTeamConfirmState(),
-      (this.Rli = void 0);
+      (this.R1i = void 0);
   }
   get LastEnterRoleList() {
-    return this.bli;
+    return this.b1i;
   }
   set LastEnterRoleList(t) {
-    this.bli = t;
+    this.b1i = t;
   }
   SetInstanceDungeonName(t) {
-    this.qli = t;
+    this.q1i = t;
   }
   GetInstanceDungeonName() {
-    return this.qli;
+    return this.q1i;
   }
   ConstructCurrentDungeonAreaName() {
-    (this.qli = void 0),
+    (this.q1i = void 0),
       ModelManager_1.ModelManager.TowerModel.CheckInTower() &&
         this.SetInstanceDungeonName(
           ModelManager_1.ModelManager.TowerModel.GetCurrentFloorName(),

@@ -42,55 +42,59 @@ class PlotGlobalConfig {
       (this.SkipTipsOpenTime = 3),
       (this.AudioEndWaitTimePrompt = 0),
       (this.DefaultDurationPrompt = 0),
+      (this.ProtectOptionTime = 0),
       (this.gU = !1);
   }
   Init() {
     this.gU ||
-      ((this.EndWaitTimeLevelC = this.B$i("LevelC.EndWaitTime")),
-      (this.EndWaitTimeLevelD = this.B$i("LevelD.EndWaitTime")),
-      (this.EndWaitTimeInteraction = this.B$i("Interaction.EndWaitTime")),
-      (this.EndWaitTimeCenterText = this.B$i("CenterText.EndWaitTime")),
+      ((this.EndWaitTimeLevelC = this.xYi("LevelC.EndWaitTime")),
+      (this.EndWaitTimeLevelD = this.xYi("LevelD.EndWaitTime")),
+      (this.EndWaitTimeInteraction = this.xYi("Interaction.EndWaitTime")),
+      (this.EndWaitTimeCenterText = this.xYi("CenterText.EndWaitTime")),
       (this.TextAnimSpeedSeq =
-        this.B$i("Seq.CharPerSec") / TimeUtil_1.TimeUtil.Minute),
+        this.xYi("Seq.CharPerSec") / TimeUtil_1.TimeUtil.Minute),
       (this.TextAnimSpeedLevelC =
-        this.B$i("LevelC.CharPerSec") / TimeUtil_1.TimeUtil.Minute),
+        this.xYi("LevelC.CharPerSec") / TimeUtil_1.TimeUtil.Minute),
       (this.TextAnimSpeedLevelD =
-        this.B$i("LevelD.CharPerSec") / TimeUtil_1.TimeUtil.Minute),
+        this.xYi("LevelD.CharPerSec") / TimeUtil_1.TimeUtil.Minute),
       (this.TextAnimSpeedInteraction =
-        this.B$i("Interaction.CharPerSec") / TimeUtil_1.TimeUtil.Minute),
-      (this.TextAnimSpeedCenterText = this.B$i("CenterText.CharPerSec")),
-      (this.JumpWaitTime = this.B$i("Talk.JumpWaitTime")),
-      (this.GuardTime = this.B$i("Talk.GuardTime")),
-      (this.AudioDelay = this.B$i("Talk.AudioDelay")),
-      (this.AudioTransitionDuration = this.B$i("Talk.AudioTransitionDuration")),
-      (this.CenterTextFontSizeSmall = this.B$i("CenterText.FontSizeSmall")),
-      (this.CenterTextFontSizeMiddle = this.B$i("CenterText.FontSizeMiddle")),
-      (this.CenterTextFontSizeBig = this.B$i("CenterText.FontSizeBig")),
+        this.xYi("Interaction.CharPerSec") / TimeUtil_1.TimeUtil.Minute),
+      (this.TextAnimSpeedCenterText = this.xYi("CenterText.CharPerSec")),
+      (this.JumpWaitTime = this.xYi("Talk.JumpWaitTime")),
+      (this.GuardTime = this.xYi("Talk.GuardTime")),
+      (this.AudioDelay = this.xYi("Talk.AudioDelay")),
+      (this.AudioTransitionDuration = this.xYi("Talk.AudioTransitionDuration")),
+      (this.CenterTextFontSizeSmall = this.xYi("CenterText.FontSizeSmall")),
+      (this.CenterTextFontSizeMiddle = this.xYi("CenterText.FontSizeMiddle")),
+      (this.CenterTextFontSizeBig = this.xYi("CenterText.FontSizeBig")),
       (this.TemplateCameraShakePath =
-        this.b$i("PlotTemplate.CameraShake") ?? ""),
+        this.wYi("PlotTemplate.CameraShake") ?? ""),
       (this.PlotGoBattleMaterialPath =
-        this.b$i("Plot.GoBattleMaterialPath") ?? ""),
-      this.q$i(),
-      this.G$i(),
+        this.wYi("Plot.GoBattleMaterialPath") ?? ""),
+      this.BYi(),
+      this.bYi(),
       (this.CallShowAudioEvent =
-        this.b$i("PhoneCall.CallShowAudioEvent") ?? ""),
+        this.wYi("PhoneCall.CallShowAudioEvent") ?? ""),
       (this.CallHideAudioEvent =
-        this.b$i("PhoneCall.CallHideAudioEvent") ?? ""),
-      (this.SequenceEndLeastTime = this.B$i("Sequence.SequenceEndLeastTime")),
-      (this.TipsDuration = this.B$i("Plot.TipsDuration")),
-      (this.SkipPressingTime = this.B$i("Plot.SkipPressingTime")),
-      (this.DoubleClickInterval = this.B$i("Plot.DoubleClickInterval")),
-      (this.ClickBufferTime = this.B$i("Plot.ClickBufferTime")),
-      (this.DisableFlow = 1 <= this.B$i("Plot.DisableFlow")),
+        this.wYi("PhoneCall.CallHideAudioEvent") ?? ""),
+      (this.SequenceEndLeastTime = this.xYi("Sequence.SequenceEndLeastTime")),
+      (this.TipsDuration = this.xYi("Plot.TipsDuration")),
+      (this.SkipPressingTime = this.xYi("Plot.SkipPressingTime")),
+      (this.DoubleClickInterval = this.xYi("Plot.DoubleClickInterval")),
+      (this.ClickBufferTime = this.xYi("Plot.ClickBufferTime")),
+      (this.DisableFlow = 1 <= this.xYi("Plot.DisableFlow")),
       (this.WaitCalmTime =
-        this.B$i("Plot.WaitCalmTime") * TimeUtil_1.TimeUtil.InverseMillisecond),
-      (this.DragDist = this.B$i("Plot.DragDist")),
-      (this.AudioEndWaitTimePrompt = this.B$i("Plot.AudioEndWaitTimePrompt")),
-      (this.DefaultDurationPrompt = this.B$i("Plot.DefaultDurationPrompt")),
+        this.xYi("Plot.WaitCalmTime") * TimeUtil_1.TimeUtil.InverseMillisecond),
+      (this.DragDist = this.xYi("Plot.DragDist")),
+      (this.AudioEndWaitTimePrompt = this.xYi("Plot.AudioEndWaitTimePrompt")),
+      (this.DefaultDurationPrompt = this.xYi("Plot.DefaultDurationPrompt")),
+      (this.ProtectOptionTime =
+        this.xYi("Plot.ProtectOptionTime") *
+        TimeUtil_1.TimeUtil.InverseMillisecond),
       (this.gU = !0));
   }
-  q$i() {
-    var t = this.b$i("PlotTemplate.LookAtDelay");
+  BYi() {
+    var t = this.wYi("PlotTemplate.LookAtDelay");
     StringUtils_1.StringUtils.IsEmpty(t) ||
       (2 === (t = t.split(",")).length &&
         (this.PlotTemplateLookAtDelay = [
@@ -98,8 +102,8 @@ class PlotGlobalConfig {
           parseFloat(t[1]) * CommonDefine_1.MILLIONSECOND_PER_SECOND,
         ]));
   }
-  G$i() {
-    var t = this.b$i("PlotTemplate.CameraExitRotation");
+  bYi() {
+    var t = this.wYi("PlotTemplate.CameraExitRotation");
     StringUtils_1.StringUtils.IsEmpty(t) ||
       (3 === (t = t.split(",")).length &&
         (this.PlotTemplateCameraExitRotation = Rotator_1.Rotator.Create(
@@ -108,7 +112,7 @@ class PlotGlobalConfig {
           parseFloat(t[2]),
         )));
   }
-  b$i(t) {
+  wYi(t) {
     var i =
       GlobalConfigFromCsvByName_1.configGlobalConfigFromCsvByName.GetConfig(t);
     if (i) return i.Value;
@@ -118,8 +122,8 @@ class PlotGlobalConfig {
         t,
       ]);
   }
-  B$i(t) {
-    t = this.b$i(t);
+  xYi(t) {
+    t = this.wYi(t);
     return t ? parseFloat(t) : 0;
   }
 }

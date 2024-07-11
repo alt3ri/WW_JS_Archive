@@ -43,11 +43,11 @@ exports.RoleAttrItem = RoleAttrItem;
 class RoleSelectItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
-      (this.fao = void 0),
-      (this.Pho = void 0),
-      (this.xho = void 0),
-      (this.vao = () => {}),
-      (this.who = () => {
+      (this.mho = void 0),
+      (this.Rlo = void 0),
+      (this.Ulo = void 0),
+      (this.Cho = () => {}),
+      (this.Alo = () => {
         return new RoleAttrItem();
       });
   }
@@ -55,13 +55,13 @@ class RoleSelectItem extends GridProxyAbstract_1.GridProxyAbstract {
     this.Update(t);
   }
   Update(t) {
-    (this.fao = t), this.RefreshPanel();
+    (this.mho = t), this.RefreshPanel();
   }
   SetLevelUpItem(t) {
     this.GetItem(7).SetUIActive(t);
   }
   SetSecondColorForAttrItem(t) {
-    this.xho = t;
+    this.Ulo = t;
   }
   OnRegisterComponent() {
     (this.ComponentRegisterInfos = [
@@ -80,25 +80,25 @@ class RoleSelectItem extends GridProxyAbstract_1.GridProxyAbstract {
       [12, UE.UIVerticalLayout],
       [13, UE.UIScrollViewWithScrollbarComponent],
     ]),
-      (this.BtnBindInfo = [[5, this.vao]]);
+      (this.BtnBindInfo = [[5, this.Cho]]);
   }
   OnStart() {
-    this.Pho = new GenericLayout_1.GenericLayout(
+    this.Rlo = new GenericLayout_1.GenericLayout(
       this.GetVerticalLayout(12),
-      this.who,
+      this.Alo,
     );
   }
   RefreshPanel() {
-    this.Vke(), this.Lao(), this.kIt();
+    this.Ake(), this.Sho(), this.WTt();
   }
-  Vke() {
+  Ake() {
     var t,
       e,
       i = ConfigManager_1.ConfigManager.RoguelikeConfig.GetRogueCharacterConfig(
-        this.fao.ConfigId,
+        this.mho.ConfigId,
       );
     i &&
-      ((e = Math.min(5, this.fao.AffixEntryList.length + 1)),
+      ((e = Math.min(5, this.mho.AffixEntryList.length + 1)),
       (t = ConfigManager_1.ConfigManager.ItemConfig.GetQualityConfig(e)),
       (e =
         ConfigManager_1.ConfigManager.RoguelikeConfig?.GetRogueQualityConfigByQualityId(
@@ -116,12 +116,12 @@ class RoleSelectItem extends GridProxyAbstract_1.GridProxyAbstract {
       (this.GetText(4).ShowTextNew(e.Name),
       this.SetTextureByPath(e.FormationRoleCard, this.GetTexture(1)));
   }
-  Lao() {
-    this.Pho.RefreshByDataAsync(this.fao.AffixEntryList ?? []).then(() => {
-      if (this.xho) {
+  Sho() {
+    this.Rlo.RefreshByDataAsync(this.mho.AffixEntryList ?? []).then(() => {
+      if (this.Ulo) {
         let o = void 0;
-        for (const t of this.Pho.GetLayoutItemList())
-          this.xho?.has(t.AffixEntry.Id) &&
+        for (const t of this.Rlo.GetLayoutItemList())
+          this.Ulo?.has(t.AffixEntry.Id) &&
             (t.SetSecondColor(), t.RefreshPanel(), (o = t));
         if (void 0 !== o) {
           const h = this.GetScrollViewWithScrollbar(13);
@@ -142,8 +142,8 @@ class RoleSelectItem extends GridProxyAbstract_1.GridProxyAbstract {
       }
     });
   }
-  kIt() {
-    this.GetItem(8).SetUIActive((this.fao.AffixEntryList?.length ?? 0) <= 0);
+  WTt() {
+    this.GetItem(8).SetUIActive((this.mho.AffixEntryList?.length ?? 0) <= 0);
   }
 }
 exports.RoleSelectItem = RoleSelectItem;

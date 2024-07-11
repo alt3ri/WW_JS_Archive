@@ -14,7 +14,7 @@ class LevelGamePlayModel extends ModelBase_1.ModelBase {
       (this.pUe = !1),
       (this.vUe = !1),
       (this.MUe = void 0),
-      (this.SUe = () => {
+      (this.EUe = () => {
         this.SetWorldLoad(!0);
       }),
       (this.ZDe = () => {
@@ -39,7 +39,7 @@ class LevelGamePlayModel extends ModelBase_1.ModelBase {
       (this.MUe = new Queue_1.Queue()),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.WorldDone,
-        this.SUe,
+        this.EUe,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.DisActiveBattleView,
@@ -89,7 +89,7 @@ class LevelGamePlayModel extends ModelBase_1.ModelBase {
       (this.MUe = void 0),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.WorldDone,
-        this.SUe,
+        this.EUe,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.DisActiveBattleView,

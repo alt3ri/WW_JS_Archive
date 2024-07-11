@@ -5,34 +5,34 @@ const ExtraEffectBase_1 = require("./ExtraEffectBase");
 class ExtraEffectSkillLimitCount extends ExtraEffectBase_1.BuffEffect {
   constructor() {
     super(...arguments),
-      (this.FQo = void 0),
-      (this.VQo = void 0),
-      (this.HQo = 0);
+      (this.NXo = void 0),
+      (this.OXo = void 0),
+      (this.kXo = 0);
   }
   InitParameters(t) {
     t = t.ExtraEffectParameters;
-    (this.FQo = t[0].split("#")),
-      (this.VQo = t[1].split("#").map((t) => Number(t))),
-      0 === Number(t[2] ?? 0) ? (this.HQo = 0) : (this.HQo = 1);
+    (this.NXo = t[0].split("#")),
+      (this.OXo = t[1].split("#").map((t) => Number(t))),
+      0 === Number(t[2] ?? 0) ? (this.kXo = 0) : (this.kXo = 1);
   }
   OnCreated() {
-    var e = this.jQo().CheckGetComponent(186);
-    for (let t = 0; t < this.FQo.length; t++) {
-      var s = Number(this.FQo[t]);
-      e.IsSkillInCd(s), e.SetLimitCount(s, this.VQo[t]);
+    var e = this.FXo().CheckGetComponent(190);
+    for (let t = 0; t < this.NXo.length; t++) {
+      var s = Number(this.NXo[t]);
+      e.IsSkillInCd(s), e.SetLimitCount(s, this.OXo[t]);
     }
   }
   OnRemoved() {
-    var t = this.jQo().CheckGetComponent(186);
+    var t = this.FXo().CheckGetComponent(190);
     if (t)
-      for (const s of this.FQo) {
+      for (const s of this.NXo) {
         var e = Number(s);
         t.IsSkillInCd(e), t.SetLimitCount(e);
       }
   }
   OnExecute() {}
-  jQo() {
-    return 0 !== this.HQo ? this.InstigatorEntity.Entity : this.OwnerEntity;
+  FXo() {
+    return 0 !== this.kXo ? this.InstigatorEntity.Entity : this.OwnerEntity;
   }
 }
 exports.ExtraEffectSkillLimitCount = ExtraEffectSkillLimitCount;

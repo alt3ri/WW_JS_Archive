@@ -29,9 +29,9 @@ class LauncherConfigLib {
         var r = a.Get(e).split(",");
         if (
           !(r.length <= 2) &&
-          (LauncherConfigLib._Sr ||
+          (LauncherConfigLib.aSr ||
             (r[0] === i &&
-              ((LauncherConfigLib._Sr = new DbInfo(
+              ((LauncherConfigLib.aSr = new DbInfo(
                 LauncherConfigLib.te + r[1],
                 r[2],
               )),
@@ -48,7 +48,7 @@ class LauncherConfigLib {
         e,
       i = new UE.KuroSqliteResultSet();
     if (
-      UE.KuroSqliteLibrary.Query(LauncherConfigLib._Sr.ConfigDbPath, n, i) &&
+      UE.KuroSqliteLibrary.Query(LauncherConfigLib.aSr.ConfigDbPath, n, i) &&
       i.HasValue()
     )
       return (
@@ -63,7 +63,7 @@ class LauncherConfigLib {
     var n = `SELECT * FROM \`${LauncherMenuConfig_1.LauncherMenuConfig.GetLanguageTableName()}\` WHERE LanguageCode='${e}'`,
       i = new UE.KuroSqliteResultSet();
     return UE.KuroSqliteLibrary.Query(
-      LauncherConfigLib._Sr.ConfigDbPath,
+      LauncherConfigLib.aSr.ConfigDbPath,
       n,
       i,
     ) && i.HasValue()
@@ -83,18 +83,18 @@ class LauncherConfigLib {
   }
   static GetHotPatchText(e) {
     if (e) {
-      var n = LauncherConfigLib.uSr.get(e);
+      var n = LauncherConfigLib.hSr.get(e);
       if (n) return n;
       var i = `SELECT * FROM \`${TABLE}\` WHERE Id="${e}"`,
         a = new UE.KuroSqliteResultSet(),
-        r = UE.KuroSqliteLibrary.Query(LauncherConfigLib.cSr(DB), i, a),
+        r = UE.KuroSqliteLibrary.Query(LauncherConfigLib.lSr(DB), i, a),
         u = (0, puerts_1.$ref)(void 0);
       if (r && a.HasValue()) {
         if (a.GetString("Content", u))
           return (
             a.Release(),
             (n = (0, puerts_1.$unref)(u)),
-            LauncherConfigLib.uSr.set(e, n),
+            LauncherConfigLib.hSr.set(e, n),
             n
           );
         LauncherLog_1.LauncherLog.Error(
@@ -104,12 +104,12 @@ class LauncherConfigLib {
         LauncherLog_1.LauncherLog.Error(
           "查询HotPatchText多语言表失败",
           ["textId", e],
-          ["DB", LauncherConfigLib.cSr(DB)],
+          ["DB", LauncherConfigLib.lSr(DB)],
           ["command", i],
         );
     }
   }
-  static cSr(e, n = void 0) {
+  static lSr(e, n = void 0) {
     n =
       (n || LauncherLanguageLib_1.LauncherLanguageLib.GetPackageLanguage()) +
       "/" +
@@ -118,7 +118,7 @@ class LauncherConfigLib {
   }
 }
 ((exports.LauncherConfigLib = LauncherConfigLib).te = ""),
-  (LauncherConfigLib._Sr = void 0),
-  (LauncherConfigLib.uSr = new Map()),
+  (LauncherConfigLib.aSr = void 0),
+  (LauncherConfigLib.hSr = new Map()),
   (LauncherConfigLib.gU = !1);
 //# sourceMappingURL=LauncherConfigLib.js.map

@@ -10,18 +10,18 @@ const UE = require("ue"),
 class AdviceWordItem extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
-      (this.X7e = 0),
-      (this.$7e = () => {
-        this.Og(), this.W9e();
+      (this.sje = 0),
+      (this.aje = () => {
+        this.Og(), this.nHe();
       }),
-      (this.T7e = () =>
+      (this.Lke = () =>
         ModelManager_1.ModelManager.AdviceModel.PreSelectSortWordId !==
-        this.X7e),
-      (this.j7e = () => {
+        this.sje),
+      (this.ije = () => {
         ModelManager_1.ModelManager.AdviceModel.PreSelectSortWordId !==
-          this.X7e &&
+          this.sje &&
           ((ModelManager_1.ModelManager.AdviceModel.PreSelectSortWordId =
-            this.X7e),
+            this.sje),
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.OnClickAdviceSortWord,
           ));
@@ -34,35 +34,35 @@ class AdviceWordItem extends UiPanelBase_1.UiPanelBase {
       [1, UE.UIText],
       [2, UE.UIItem],
     ]),
-      (this.BtnBindInfo = [[0, this.j7e]]);
+      (this.BtnBindInfo = [[0, this.ije]]);
   }
   OnStart() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnClickAdviceSortWord,
-      this.$7e,
+      this.aje,
     );
     var e = this.GetExtendToggle(0);
-    e.CanExecuteChange.Unbind(), e.CanExecuteChange.Bind(this.T7e);
+    e.CanExecuteChange.Unbind(), e.CanExecuteChange.Bind(this.Lke);
   }
   UpdateItem(e) {
-    (this.X7e = e), this.Og(), this.Q7e(), this.W9e();
+    (this.sje = e), this.Og(), this.nje(), this.nHe();
   }
   Og() {
     var e =
       ModelManager_1.ModelManager.AdviceModel.CurrentSelectSortWordId ===
-      this.X7e;
+      this.sje;
     this.GetItem(2).SetUIActive(e);
   }
-  Q7e() {
+  nje() {
     var e = ConfigManager_1.ConfigManager.AdviceConfig.GetAdviceWordText(
-      this.X7e,
+      this.sje,
     );
     this.GetText(1).SetText(e);
   }
-  W9e() {
+  nHe() {
     var e = this.GetExtendToggle(0).ToggleState,
       t =
-        this.X7e === ModelManager_1.ModelManager.AdviceModel.PreSelectSortWordId
+        this.sje === ModelManager_1.ModelManager.AdviceModel.PreSelectSortWordId
           ? 1
           : 0;
     e !== t && this.GetExtendToggle(0).SetToggleStateForce(t, !1);
@@ -70,7 +70,7 @@ class AdviceWordItem extends UiPanelBase_1.UiPanelBase {
   OnBeforeDestroy() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnClickAdviceSortWord,
-      this.$7e,
+      this.aje,
     );
   }
 }

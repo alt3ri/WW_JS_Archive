@@ -9,21 +9,21 @@ const UE = require("ue"),
 class UpWeaponGachaPoolItem extends GachaPoolItem_1.GachaPoolItem {
   constructor() {
     super(...arguments),
-      (this.mjt = void 0),
-      (this.djt = new Map()),
-      (this.Cjt = void 0),
-      (this.gjt = new Queue_1.Queue()),
-      (this.pHt = !1);
+      (this.mWt = void 0),
+      (this.dWt = new Map()),
+      (this.CWt = void 0),
+      (this.gWt = new Queue_1.Queue()),
+      (this.pjt = !1);
   }
-  get RHt() {
-    return this.pHt;
+  get Rjt() {
+    return this.pjt;
   }
-  UHt() {
-    this.pHt = !0;
+  Ujt() {
+    this.pjt = !0;
   }
-  O0t() {
+  Jft() {
     var t;
-    (this.pHt = !1), 0 !== this.gjt.Size && (t = this.gjt.Pop()) && this.fjt(t);
+    (this.pjt = !1), 0 !== this.gWt.Size && (t = this.gWt.Pop()) && this.fWt(t);
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -33,38 +33,38 @@ class UpWeaponGachaPoolItem extends GachaPoolItem_1.GachaPoolItem {
     ];
   }
   async OnBeforeStartAsync() {
-    (this.mjt = new WeaponDescribeComponent_1.WeaponDescribeComponent()),
-      await this.mjt.CreateThenShowByActorAsync(this.GetItem(1).GetOwner());
+    (this.mWt = new WeaponDescribeComponent_1.WeaponDescribeComponent()),
+      await this.mWt.CreateThenShowByActorAsync(this.GetItem(1).GetOwner());
   }
   Refresh() {
     var t;
-    this.GachaViewInfo && ((t = this.GachaViewInfo.ShowIdList[0]), this.fjt(t));
+    this.GachaViewInfo && ((t = this.GachaViewInfo.ShowIdList[0]), this.fWt(t));
   }
-  fjt(t) {
-    this.RHt
-      ? this.gjt.Push(t)
-      : (this.UHt(),
-        this.pjt(t).finally(() => {
-          this.O0t();
+  fWt(t) {
+    this.Rjt
+      ? this.gWt.Push(t)
+      : (this.Ujt(),
+        this.pWt(t).finally(() => {
+          this.Jft();
         }));
   }
-  async pjt(t) {
+  async pWt(t) {
     var e, i;
     this.IsDestroyOrDestroying ||
-      (this.mjt.Update(t),
+      (this.mWt.Update(t),
       (t = UE.Color.FromHex(this.GachaViewInfo.ThemeColor)),
       this.GetTexture(2).SetColor(t),
       (t = this.GetItem(0)),
       (e = this.GachaViewInfo.WeaponPrefabPath),
-      (i = this.djt.get(e)) && i === this.Cjt) ||
-      (this.Cjt?.SetUIActive(!1),
+      (i = this.dWt.get(e)) && i === this.CWt) ||
+      (this.CWt?.SetUIActive(!1),
       i
-        ? (i.SetUIActive(!0), (this.Cjt = i))
+        ? (i.SetUIActive(!0), (this.CWt = i))
         : ((i = (
             await LguiUtil_1.LguiUtil.LoadPrefabByAsync(e, t)
           ).GetComponentByClass(UE.UIItem.StaticClass())).SetUIActive(!0),
-          (this.Cjt = i),
-          this.djt.set(e, i)));
+          (this.CWt = i),
+          this.dWt.set(e, i)));
   }
 }
 exports.UpWeaponGachaPoolItem = UpWeaponGachaPoolItem;

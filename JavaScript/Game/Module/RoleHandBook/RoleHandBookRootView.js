@@ -9,10 +9,10 @@ const Log_1 = require("../../../Core/Common/Log"),
   UiCameraAnimationManager_1 = require("../UiCameraAnimation/UiCameraAnimationManager");
 class RoleHandBookRootView extends RoleRootView_1.RoleRootView {
   constructor() {
-    super(...arguments), (this.Oho = ""), (this.kho = !0);
+    super(...arguments), (this.qlo = ""), (this.Glo = !0);
   }
   OnCheckIfNeedScene() {
-    return this.kho;
+    return this.Glo;
   }
   OnHandleLoadScene() {
     Log_1.Log.CheckDebug() &&
@@ -33,8 +33,8 @@ class RoleHandBookRootView extends RoleRootView_1.RoleRootView {
     );
   }
   OnBeforeCreate() {
-    (this.Oho = this.OpenParam),
-      (this.kho = "RoleHandBookSelectionView" !== this.Oho);
+    (this.qlo = this.OpenParam),
+      (this.Glo = "RoleHandBookSelectionView" !== this.qlo);
   }
   InitRoleIdList() {
     ConfigCommon_1.ConfigCommon.ToList(
@@ -57,12 +57,12 @@ class RoleHandBookRootView extends RoleRootView_1.RoleRootView {
     this.InitTabComponent(),
       this.GetButton(1).GetRootComponent().SetUIActive(!1),
       this.GetItem(3).SetUIActive(!1),
-      this.kho && this.UpdateSelectRoleInstance(),
+      this.Glo && this.UpdateSelectRoleInstance(),
       this.TabComponent.SelectToggleByIndex(0, !0),
       this.LoadFloorEffect();
   }
   LoadFloorEffect() {
-    this.kho && super.LoadFloorEffect();
+    this.Glo && super.LoadFloorEffect();
   }
   OnBeforeDestroy() {
     this.ClearData();

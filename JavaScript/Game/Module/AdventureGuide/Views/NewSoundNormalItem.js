@@ -5,13 +5,12 @@ const UE = require("ue"),
   UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
   GenericLayout_1 = require("../../Util/Layout/GenericLayout"),
   LguiUtil_1 = require("../../Util/LguiUtil"),
-  AdventureDefine_1 = require("../AdventureDefine"),
   NewSoundNormaPhantomItem_1 = require("./NewSoundNormaPhantomItem");
 class NewSoundNormalItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(),
-      (this.M6e = void 0),
-      (this.S6e = () =>
+      (this.B8e = void 0),
+      (this.b8e = () =>
         new NewSoundNormaPhantomItem_1.NewSoundNormaPhantomItem());
   }
   OnRegisterComponent() {
@@ -23,9 +22,9 @@ class NewSoundNormalItem extends UiPanelBase_1.UiPanelBase {
     ];
   }
   OnStart() {
-    this.M6e = new GenericLayout_1.GenericLayout(
+    this.B8e = new GenericLayout_1.GenericLayout(
       this.GetVerticalLayout(3),
-      this.S6e,
+      this.b8e,
     );
   }
   Update(e) {
@@ -40,17 +39,17 @@ class NewSoundNormalItem extends UiPanelBase_1.UiPanelBase {
           i,
           e.Conf.AttributesDescriptionUnlock,
         ),
-        this.M6e?.SetActive(!1))
+        this.B8e?.SetActive(!1))
       : (this.SetTextureByPath(e.Conf.BigIcon, t),
         LguiUtil_1.LguiUtil.SetLocalTextNew(
           i,
           e.Conf.InstanceSubTypeDescription,
         ),
-        e.Conf.Secondary === AdventureDefine_1.EDungeonType.NoSoundArea &&
+        22 === e.Conf.Secondary &&
         e.Conf.PhantomId &&
         0 !== e.Conf.PhantomId.length
-          ? (this.M6e?.SetActive(!0), this.M6e?.RefreshByData(e.Conf.PhantomId))
-          : this.M6e?.SetActive(!1));
+          ? (this.B8e?.SetActive(!0), this.B8e?.RefreshByData(e.Conf.PhantomId))
+          : this.B8e?.SetActive(!1));
   }
 }
 exports.NewSoundNormalItem = NewSoundNormalItem;

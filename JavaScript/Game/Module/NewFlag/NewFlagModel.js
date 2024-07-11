@@ -10,9 +10,9 @@ const Log_1 = require("../../../Core/Common/Log"),
 class NewFlagModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
-      (this.Dqi = new Map()),
-      (this.Rqi = new Array()),
-      (this.IVs = new Map()),
+      (this.DGi = new Map()),
+      (this.RGi = new Array()),
+      (this.vZs = new Map()),
       (this.LoadNewFlagConfig = () => {
         for (const t of [
           LocalStorageDefine_1.ELocalStoragePlayerKey.ComposeLevelKey,
@@ -23,16 +23,26 @@ class NewFlagModel extends ModelBase_1.ModelBase {
           LocalStorageDefine_1.ELocalStoragePlayerKey
             .InventoryAttributeItemRedDot,
           LocalStorageDefine_1.ELocalStoragePlayerKey.InventoryCommonItemRedDot,
+          LocalStorageDefine_1.ELocalStoragePlayerKey.MoonChasingShopItemUnlock,
+          LocalStorageDefine_1.ELocalStoragePlayerKey
+            .MoonChasingShopItemChecked,
+          LocalStorageDefine_1.ELocalStoragePlayerKey.MoonChasingRoleUnlock,
+          LocalStorageDefine_1.ELocalStoragePlayerKey.MoonChasingQuestUnlock,
           LocalStorageDefine_1.ELocalStoragePlayerKey.RoleDataItem,
+          LocalStorageDefine_1.ELocalStoragePlayerKey
+            .RouletteAssemblyItemRedDot,
           LocalStorageDefine_1.ELocalStoragePlayerKey.VisionSkin,
         ]) {
           var e = LocalStorage_1.LocalStorage.GetPlayer(t),
             e = new Set(e || void 0);
-          this.Dqi.set(t, e), this.IVs.set(t, !1);
+          this.DGi.set(t, e), this.vZs.set(t, !1);
         }
+        EventSystem_1.EventSystem.Emit(
+          EventDefine_1.EEventName.OnLoadedNewFlagConfig,
+        );
       }),
       (this.ClearNewFlag = () => {
-        this.Dqi.clear(), (this.Rqi.length = 0), this.IVs.clear();
+        this.DGi.clear(), (this.RGi.length = 0), this.vZs.clear();
       });
   }
   OnInit() {
@@ -62,7 +72,7 @@ class NewFlagModel extends ModelBase_1.ModelBase {
       );
   }
   SaveNewFlagConfig(e) {
-    var t = this.Dqi.get(e);
+    var t = this.DGi.get(e);
     if (!t)
       return (
         Log_1.Log.CheckDebug() &&
@@ -72,18 +82,18 @@ class NewFlagModel extends ModelBase_1.ModelBase {
           ]),
         !1
       );
-    if (!this.IVs.get(e)) return !1;
-    this.Rqi.length = t.size;
+    if (!this.vZs.get(e)) return !1;
+    this.RGi.length = t.size;
     let o = 0;
-    for (const r of t) this.Rqi[o++] = r;
+    for (const n of t) this.RGi[o++] = n;
     return (
-      this.IVs.set(e, !1), LocalStorage_1.LocalStorage.SetPlayer(e, this.Rqi)
+      this.vZs.set(e, !1), LocalStorage_1.LocalStorage.SetPlayer(e, this.RGi)
     );
   }
   AddNewFlag(e, t) {
-    var o = this.Dqi.get(e);
+    var o = this.DGi.get(e);
     return o
-      ? (o.add(t), this.IVs.set(e, !0), !0)
+      ? (o.add(t), this.vZs.set(e, !0), !0)
       : (Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "NewFlag",
@@ -94,9 +104,9 @@ class NewFlagModel extends ModelBase_1.ModelBase {
         !1);
   }
   RemoveNewFlag(e, t) {
-    var o = this.Dqi.get(e);
+    var o = this.DGi.get(e);
     return o
-      ? ((o = o.delete(t)), (t = this.IVs.get(e)), this.IVs.set(e, o || t), o)
+      ? ((o = o.delete(t)), (t = this.vZs.get(e)), this.vZs.set(e, o || t), o)
       : (Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "NewFlag",
@@ -107,11 +117,11 @@ class NewFlagModel extends ModelBase_1.ModelBase {
         !1);
   }
   HasNewFlag(e, t) {
-    e = this.Dqi.get(e);
+    e = this.DGi.get(e);
     return !!e && e.has(t);
   }
   GetNewFlagSet(e) {
-    return this.Dqi.get(e);
+    return this.DGi.get(e);
   }
 }
 exports.NewFlagModel = NewFlagModel;

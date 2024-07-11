@@ -24,48 +24,48 @@ const UiModelComponentDefine_1 = require("../../Define/UiModelComponentDefine"),
 let UiModelFadeComponent = class UiModelFadeComponent extends UiModelComponentBase_1.UiModelComponentBase {
   constructor() {
     super(...arguments),
-      (this.Qwr = void 0),
-      (this.F7t = 0),
-      (this.EBr = 0),
+      (this.ywr = void 0),
+      (this.FHt = 0),
+      (this.zwr = 0),
       (this.gle = 0),
-      (this.Wht = 0),
-      (this.HYo = void 0),
-      (this.eAn = !1);
+      (this.r1t = 0),
+      (this.kJo = void 0),
+      (this.LPn = !1);
   }
   OnCreate() {
-    this.eAn = !1;
+    this.LPn = !1;
   }
   OnInit() {
-    this.Qwr = this.Owner.CheckGetComponent(0);
+    this.ywr = this.Owner.CheckGetComponent(0);
   }
   OnEnd() {
-    this.NeedTick && this.Qwr?.SetDitherEffect(this.EBr),
-      (this.eAn = !0),
+    this.NeedTick && this.ywr?.SetDitherEffect(this.zwr),
+      (this.LPn = !0),
       this.av();
   }
   Fade(t, e, i, s) {
-    this.eAn ||
-      ((this.F7t = t),
-      (this.EBr = e),
-      (this.Wht = i),
-      (this.HYo = s),
+    this.LPn ||
+      ((this.FHt = t),
+      (this.zwr = e),
+      (this.r1t = i),
+      (this.kJo = s),
       (this.gle = 0),
       (this.NeedTick = !0),
-      this.Qwr?.SetDitherEffect(t));
+      this.ywr?.SetDitherEffect(t));
   }
   Tick(t) {
     this.gle += 1e3 * t;
     t =
-      this.HYo.GetFloatValue(this.gle / this.Wht) * (this.EBr - this.F7t) +
-      this.F7t;
-    this.Qwr?.SetDitherEffect(t),
-      this.gle >= this.Wht && ((this.NeedTick = !1), this.av());
+      this.kJo.GetFloatValue(this.gle / this.r1t) * (this.zwr - this.FHt) +
+      this.FHt;
+    this.ywr?.SetDitherEffect(t),
+      this.gle >= this.r1t && ((this.NeedTick = !1), this.av());
   }
   av() {
-    (this.F7t = 0),
-      (this.EBr = 0),
-      (this.Wht = 0),
-      (this.HYo = void 0),
+    (this.FHt = 0),
+      (this.zwr = 0),
+      (this.r1t = 0),
+      (this.kJo = void 0),
       (this.gle = 0);
   }
 };

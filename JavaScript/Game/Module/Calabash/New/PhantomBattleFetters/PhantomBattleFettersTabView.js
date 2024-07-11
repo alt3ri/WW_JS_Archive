@@ -5,16 +5,16 @@ const UiTabViewBase_1 = require("../../../../Ui/Base/UiTabViewBase"),
   PhantomBattleFettersViewItem_1 = require("../../../Phantom/PhantomBattle/View/PhantomBattleFettersViewItem");
 class PhantomBattleFettersTabView extends UiTabViewBase_1.UiTabViewBase {
   constructor() {
-    super(...arguments), (this.Rpt = void 0);
+    super(...arguments), (this.kvt = void 0);
   }
   async OnBeforeStartAsync() {
-    (this.Rpt =
+    (this.kvt =
       new PhantomBattleFettersViewItem_1.PhantomBattleFettersViewItem()),
-      await this.Rpt.CreateThenShowByActorAsync(this.GetRootItem().GetOwner());
+      await this.kvt.CreateThenShowByActorAsync(this.GetRootItem().GetOwner());
   }
   OnBeforeShow() {
     var e = this.ExtraParams;
-    0 < e && this.Rpt.SelectByFetterId(e);
+    0 < e && this.kvt.SelectByFetterId(e);
   }
 }
 exports.PhantomBattleFettersTabView = PhantomBattleFettersTabView;

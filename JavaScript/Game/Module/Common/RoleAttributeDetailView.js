@@ -12,15 +12,15 @@ class RoleAttributeDetailView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
       (this.lqe = void 0),
-      (this.Lje = void 0),
-      (this.Dje = (e, t, i) => {
+      (this.NWe = void 0),
+      (this.OWe = (e, t, i) => {
         t = new RoleAttrListScrollItem_1.RoleAttrListScrollItem(
           t,
           e.AttributeType,
         );
         return t.ShowTemp(e, i), { Key: i, Value: t };
       }),
-      (this.Mft = () => {
+      (this.xpt = () => {
         this.CloseMe();
       });
   }
@@ -33,14 +33,14 @@ class RoleAttributeDetailView extends UiViewBase_1.UiViewBase {
   }
   OnStart() {
     (this.lqe = new PopupCaptionItem_1.PopupCaptionItem(this.GetItem(0))),
-      this.lqe.SetCloseCallBack(this.Mft),
+      this.lqe.SetCloseCallBack(this.xpt),
       this.lqe.SetTitleLocalText("PrefabTextItem_1302715335_Text");
     var e = this.OpenParam;
-    (this.Lje = new GenericScrollView_1.GenericScrollView(
+    (this.NWe = new GenericScrollView_1.GenericScrollView(
       this.GetScrollViewWithScrollbar(1),
-      this.Dje,
+      this.OWe,
     )),
-      this.Lje.RefreshByData(e),
+      this.NWe.RefreshByData(e),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.AttributeComponentEvent,
         !0,
@@ -48,7 +48,7 @@ class RoleAttributeDetailView extends UiViewBase_1.UiViewBase {
   }
   OnBeforeDestroy() {
     this.lqe.Destroy(),
-      this.Lje && (this.Lje.ClearChildren(), (this.Lje = void 0));
+      this.NWe && (this.NWe.ClearChildren(), (this.NWe = void 0));
   }
 }
 exports.RoleAttributeDetailView = RoleAttributeDetailView;

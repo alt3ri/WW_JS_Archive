@@ -9,9 +9,9 @@ const Log_1 = require("../../../Core/Common/Log"),
 class LevelEventLeisureInteract extends LevelGeneralBase_1.LevelEventBase {
   constructor() {
     super(...arguments),
-      (this.v8s = void 0),
-      (this.LQi = void 0),
-      (this.M8s = void 0);
+      (this.iXs = void 0),
+      (this.IXi = void 0),
+      (this.rXs = void 0);
   }
   ExecuteNew(e, t, i) {
     var s = e;
@@ -66,7 +66,7 @@ class LevelEventLeisureInteract extends LevelGeneralBase_1.LevelEventBase {
           case IAction_1.ELeisureInteract.StandControl:
             r.PlayCustomCommonSkill(400202), this.FinishExecute(!0);
         }
-        (this.v8s = void 0), (this.LQi = void 0), (this.M8s = void 0);
+        (this.iXs = void 0), (this.IXi = void 0), (this.rXs = void 0);
       } else
         Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
@@ -74,9 +74,9 @@ class LevelEventLeisureInteract extends LevelGeneralBase_1.LevelEventBase {
             37,
             " LevelEventLeisureInteract, 尝试执行时主角未创建",
           ),
-          (this.v8s = e),
-          (this.LQi = t),
-          (this.M8s = i);
+          (this.iXs = e),
+          (this.IXi = t),
+          (this.rXs = i);
     else
       Log_1.Log.CheckError() &&
         Log_1.Log.Error(
@@ -87,10 +87,10 @@ class LevelEventLeisureInteract extends LevelGeneralBase_1.LevelEventBase {
   }
   OnTick(e) {
     Global_1.Global.BaseCharacter &&
-      this.v8s &&
-      this.LQi &&
-      this.M8s &&
-      this.ExecuteNew(this.v8s, this.LQi, this.M8s);
+      this.iXs &&
+      this.IXi &&
+      this.rXs &&
+      this.ExecuteNew(this.iXs, this.IXi, this.rXs);
   }
 }
 exports.LevelEventLeisureInteract = LevelEventLeisureInteract;

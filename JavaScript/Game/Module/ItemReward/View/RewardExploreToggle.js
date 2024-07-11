@@ -7,7 +7,7 @@ const UE = require("ue"),
   LguiUtil_1 = require("../../Util/LguiUtil");
 class RewardExploreToggle extends UiPanelBase_1.UiPanelBase {
   constructor() {
-    super(...arguments), (this.A0i = void 0);
+    super(...arguments), (this.Afi = void 0);
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -16,17 +16,17 @@ class RewardExploreToggle extends UiPanelBase_1.UiPanelBase {
     ];
   }
   OnStart() {
-    this.A0i = this.GetExtendToggle(1);
+    this.Afi = this.GetExtendToggle(1);
   }
   OnBeforeDestroy() {
-    this.A0i = void 0;
+    this.Afi = void 0;
   }
   Refresh(e) {
-    this.A0i.OnStateChange.Add(e.OnToggleClick),
+    this.Afi.OnStateChange.Add(e.OnToggleClick),
       StringUtils_1.StringUtils.IsEmpty(e.DescriptionTextId) ||
-        this.LBt(e.DescriptionTextId);
+        this.Ubt(e.DescriptionTextId);
   }
-  LBt(e) {
+  Ubt(e) {
     var t;
     StringUtils_1.StringUtils.IsEmpty(e) ||
       ((t = this.GetText(0)), LguiUtil_1.LguiUtil.SetLocalTextNew(t, e));

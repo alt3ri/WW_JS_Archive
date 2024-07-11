@@ -27,28 +27,28 @@ const EventDefine_1 = require("../../../../Common/Event/EventDefine"),
   UiModelComponentBase_1 = require("../UiModelComponentBase");
 let UiRoleDataComponent = class UiRoleDataComponent extends UiModelComponentBase_1.UiModelComponentBase {
   constructor() {
-    super(...arguments), (this.Qwr = void 0), (this.BBr = 0), (this.bBr = 0);
+    super(...arguments), (this.ywr = void 0), (this._Br = 0), (this.uBr = 0);
   }
   get RoleDataId() {
-    return this.BBr;
+    return this._Br;
   }
   get RoleConfigId() {
-    return this.bBr;
+    return this.uBr;
   }
   OnInit() {
-    this.Qwr = this.Owner.CheckGetComponent(0);
+    this.ywr = this.Owner.CheckGetComponent(0);
   }
   SetRoleConfigId(e) {
-    this.bBr = e;
+    this.uBr = e;
     e = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(e);
-    (this.Qwr.ModelConfigId = e.UiMeshId),
+    (this.ywr.ModelConfigId = e.UiMeshId),
       EventSystem_1.EventSystem.EmitWithTarget(
         this.Owner,
         EventDefine_1.EEventName.OnUiModelRoleConfigIdChange,
       );
   }
   SetRoleDataId(e) {
-    this.BBr = e;
+    this._Br = e;
     e = ModelManager_1.ModelManager.RoleModel?.GetRoleDataById(e);
     e &&
       (this.SetRoleConfigId(e.GetRoleId()),

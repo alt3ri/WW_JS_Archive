@@ -27,31 +27,30 @@ const Log_1 = require("../../../../../Core/Common/Log"),
   ActiveBuffConfigs_1 = require("../../Common/Component/Abilities/Buff/ActiveBuffConfigs");
 let RoleInheritComponent = class RoleInheritComponent extends EntityComponent_1.EntityComponent {
   constructor() {
-    super(...arguments), (this.elt = void 0);
+    super(...arguments), (this.m1t = void 0);
   }
   OnStart() {
-    return (this.elt = this.Entity.CheckGetComponent(157)), !0;
+    return (this.m1t = this.Entity.CheckGetComponent(159)), !0;
   }
   static StateInherit(e, t, o, n) {
     e &&
       t &&
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("Battle", 20, "换人进入StateInherit"),
-      e.elt.TriggerEvents(5, t.elt, {}),
-      t.elt.TriggerEvents(4, e.elt, {}),
-      this.Ton(e, t),
+      e.m1t.TriggerEvents(5, t.m1t, {}),
+      t.m1t.TriggerEvents(4, e.m1t, {}),
+      this.non(e, t),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("Battle", 20, "换人进入RoleOnStateInherit"),
       EventSystem_1.EventSystem.EmitWithTarget(
         t.Entity,
         EventDefine_1.EEventName.RoleOnStateInherit,
         e.Entity,
-        o,
-        n,
+        1 === o || n || (t.Entity.GetComponent(188)?.HasTag(1144073280) ?? !1),
       ));
   }
-  static Ton(t, o) {
-    for (const f of t.elt.GetAllBuffs()) {
+  static non(t, o) {
+    for (const f of t.m1t.GetAllBuffs()) {
       var n = f.StackCount;
       if (!(n <= 0)) {
         var r = f.Handle,
@@ -62,7 +61,7 @@ let RoleInheritComponent = class RoleInheritComponent extends EntityComponent_1.
           0 < f.Duration &&
             e <= 0 &&
             (e = ActiveBuffConfigs_1.MIN_BUFF_REMAIN_DURATION),
-            o.elt.AddBuff(f.Id, {
+            o.m1t.AddBuff(f.Id, {
               Level: f.Level,
               ServerId: f.ServerId,
               InstigatorId: i ?? 0,
@@ -73,14 +72,14 @@ let RoleInheritComponent = class RoleInheritComponent extends EntityComponent_1.
               Reason: "因为状态继承导致的buff添加",
             }),
             3 === s.FormationPolicy &&
-              t.elt.RemoveBuffByHandle(r, -1, "因为状态继承导致的移除");
+              t.m1t.RemoveBuffByHandle(r, -1, "因为状态继承导致的移除");
         }
       }
     }
   }
 };
 (RoleInheritComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(84)],
+  [(0, RegisterComponent_1.RegisterComponent)(86)],
   RoleInheritComponent,
 )),
   (exports.RoleInheritComponent = RoleInheritComponent);

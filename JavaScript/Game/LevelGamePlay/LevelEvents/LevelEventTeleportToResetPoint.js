@@ -40,24 +40,24 @@ class LevelEventTeleportToResetPoint extends LevelGeneralBase_1.LevelEventBase {
   zRe() {
     var e =
       ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity?.Entity?.GetComponent(
-        156,
+        158,
       );
     return (
       !!e &&
       +e.GetCurrentValue(CharacterAttributeTypes_1.EAttributeId.Proto_Life) /
-        e.GetCurrentValue(CharacterAttributeTypes_1.EAttributeId.Tkn) <=
+        e.GetCurrentValue(CharacterAttributeTypes_1.EAttributeId.e5n) <=
         DAMAGE_PERCENT
     );
   }
   ZRe() {
     for (const t of ModelManager_1.ModelManager.SceneTeamModel.GetTeamItems()) {
-      var e = t.EntityHandle?.Entity?.GetComponent(156);
+      var e = t.EntityHandle?.Entity?.GetComponent(158);
       if (e)
         if (
           +e.GetCurrentValue(
             CharacterAttributeTypes_1.EAttributeId.Proto_Life,
           ) /
-            e.GetCurrentValue(CharacterAttributeTypes_1.EAttributeId.Tkn) >
+            e.GetCurrentValue(CharacterAttributeTypes_1.EAttributeId.e5n) >
           DAMAGE_PERCENT
         )
           return !1;

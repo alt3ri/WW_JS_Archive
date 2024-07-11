@@ -7,12 +7,12 @@ const GlobalData_1 = require("../../../GlobalData"),
 class AiStateMachineTaskPatrol extends AiStateMachineTask_1.AiStateMachineTask {
   constructor() {
     super(...arguments),
-      (this.mLn = void 0),
+      (this.JLn = void 0),
       (this.$ie = void 0),
       (this.Jh = void 0),
       (this.Gce = void 0),
       (this.mBe = void 0),
-      (this.dLn = void 0),
+      (this.zLn = void 0),
       (this.Hte = void 0),
       (this.Bte = void 0),
       (this.MoveState = 0),
@@ -29,72 +29,72 @@ class AiStateMachineTaskPatrol extends AiStateMachineTask_1.AiStateMachineTask {
     var i = this.Node.AiComponent.TsAiController;
     i instanceof TsAiController_1.default &&
     ((this.Bte = i.AiController),
-    (this.mLn = this.Bte.AiPatrol),
-    (this.$ie = this.mLn.GetConfig()),
+    (this.JLn = this.Bte.AiPatrol),
+    (this.$ie = this.JLn.GetConfig()),
     this.$ie)
       ? ((this.Jh = this.Bte.CharAiDesignComp.Entity),
-        (this.Gce = this.Jh.GetComponent(36)),
-        (this.mBe = this.Jh.GetComponent(89)),
-        (this.dLn = this.Jh.GetComponent(39)),
+        (this.Gce = this.Jh.GetComponent(37)),
+        (this.mBe = this.Jh.GetComponent(91)),
+        (this.zLn = this.Jh.GetComponent(40)),
         (this.Hte = this.Bte.CharActorComp),
-        this.CLn())
+        this.ZLn())
       : this.$ne();
   }
   OnExit(t) {
     this.Node.TaskFinish ||
-      (this.dLn.PausePatrol("AiStateMachineTaskPatrol"), this.gLn()),
+      (this.zLn.PausePatrol("AiStateMachineTaskPatrol"), this.eDn()),
       this.Gce && (this.Gce.StopMove(!0), (this.Gce.IsSpecialMove = !1));
   }
   $ne() {
     this.Node.TaskFinish = !0;
   }
-  fLn() {
-    this.mLn.GeneratePatrol(!0),
-      this.mLn.StartPatrol(!0, () => {
-        this.pLn();
+  tDn() {
+    this.JLn.GeneratePatrol(!0),
+      this.JLn.StartPatrol(!0, () => {
+        this.iDn();
       }),
-      this.mLn.ResetBaseInfoByMainPoint(this.Gce, this.mBe, this.MoveState);
+      this.JLn.ResetBaseInfoByMainPoint(this.Gce, this.mBe, this.MoveState);
   }
-  pLn() {
+  iDn() {
     var t;
     GlobalData_1.GlobalData.BpEventManager &&
-      (t = this.mLn?.PatrolPoint) &&
+      (t = this.JLn?.PatrolPoint) &&
       t.IsMain &&
       GlobalData_1.GlobalData.BpEventManager.AI巡逻达到样条点.Broadcast(
         this.Hte.Actor,
-        this.mLn.PatrolIndex,
+        this.JLn.PatrolIndex,
       );
   }
-  vLn() {
-    const i = this.mLn?.PatrolPoint;
+  oDn() {
+    const i = this.JLn?.PatrolPoint;
     var t;
     i &&
-      (this.dLn.HasPatrolRecord()
-        ? this.dLn.ResumePatrol("AiStateMachineTaskPatrol")
+      (this.zLn.HasPatrolRecord()
+        ? this.zLn.ResumePatrol("AiStateMachineTaskPatrol")
         : ((t = {
             DebugMode: this.OpenDebugMode,
             UseNearestPoint: !0,
             ReturnFalseWhenNavigationFailed: !1,
             OnArrivePointHandle: () => {
-              var t = this.dLn.GetLastPointRawIndex();
-              -1 !== t && this.mLn.SetPatrolIndex(t), i.IsMain && this.pLn();
+              var t = this.zLn.GetLastPointRawIndex();
+              -1 !== t && this.JLn.SetPatrolIndex(t), i.IsMain && this.iDn();
             },
             OnPatrolEndHandle: (t) => {
-              1 === t && this.gLn(), this.$ne();
+              1 === t && this.eDn(), this.$ne();
             },
           }),
-          this.dLn.StartPatrol(this.$ie.SplineEntityId, t)));
+          this.zLn.StartPatrol(this.$ie.SplineEntityId, t)));
   }
-  gLn() {
-    this.pLn(), this.mLn?.PatrolFinish();
+  eDn() {
+    this.iDn(), this.JLn?.PatrolFinish();
   }
-  CLn() {
+  ZLn() {
     this.$ie.ContainZ &&
       this.Gce &&
       this.Gce.CharacterMovement.SetMovementMode(5),
-      this.fLn(),
-      this.mLn?.PatrolPoint
-        ? (this.vLn(),
+      this.tDn(),
+      this.JLn?.PatrolPoint
+        ? (this.oDn(),
           void 0 !== this.Bte.AiPatrol.StartWithInversePath &&
             (this.Bte.AiPatrol.StartWithInversePath = void 0))
         : this.$ne();

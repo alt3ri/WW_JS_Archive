@@ -40,8 +40,8 @@ class PlotInfo {
       (this.StateId = e),
       (this.StateActions = h),
       (this.KeepMusic = r),
-      (this.Context = l),
       (this.IsServerNotify = t),
+      (this.Context = l),
       (this.FlowIncId = i),
       (this.IsBackground = a),
       (this.IsBreakdown = !1),
@@ -78,9 +78,9 @@ class PlotInfo {
       ("LevelD" !== s && "Prompt" !== s) ||
         t.UiParam.ViewName ||
         (t.UiParam.ViewName = "BattleView"),
-      "Prompt" === s && this.xPn(i, t);
+      "Prompt" === s && this._bn(i, t);
   }
-  static xPn(t, i) {
+  static _bn(t, i) {
     var s,
       o,
       e = new Map();

@@ -13,12 +13,12 @@ const UE = require("ue"),
 class ExploreProgressView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.Ako = void 0),
-      (this.Pko = (e, i, r) => {
+      (this.D2o = void 0),
+      (this.R2o = (e, i, r) => {
         i = new ExploreProgressItem(i);
         return i.Update(e), { Key: r, Value: i };
       }),
-      (this.mIt = () => {
+      (this.m2e = () => {
         UiManager_1.UiManager.CloseView("ExploreProgressView");
       });
   }
@@ -29,16 +29,16 @@ class ExploreProgressView extends UiViewBase_1.UiViewBase {
       [2, UE.UIText],
       [3, UE.UIScrollViewWithScrollbarComponent],
     ]),
-      (this.BtnBindInfo = [[0, this.mIt]]);
+      (this.BtnBindInfo = [[0, this.m2e]]);
   }
   OnStart() {
-    this.Ako = new GenericScrollView_1.GenericScrollView(
+    this.D2o = new GenericScrollView_1.GenericScrollView(
       this.GetScrollViewWithScrollbar(3),
-      this.Pko,
+      this.R2o,
     );
   }
   OnBeforeDestroy() {
-    this.Ako && (this.Ako.ClearChildren(), (this.Ako = void 0));
+    this.D2o && (this.D2o.ClearChildren(), (this.D2o = void 0));
   }
   OnAfterShow() {
     var e = ModelManager_1.ModelManager.WorldMapModel.GetAreaExploreInfo(),
@@ -52,7 +52,7 @@ class ExploreProgressView extends UiViewBase_1.UiViewBase {
           e.ExplorePercent,
         ),
         ModelManager_1.ModelManager.WorldMapModel.GetAreaExploreInfo());
-    this.Ako.RefreshByData(i.ExploreProgress);
+    this.D2o.RefreshByData(i.ExploreProgress);
   }
 }
 exports.ExploreProgressView = ExploreProgressView;

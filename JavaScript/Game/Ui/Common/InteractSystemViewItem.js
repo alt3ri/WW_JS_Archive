@@ -13,13 +13,13 @@ const UE = require("ue"),
 class InteractSystemViewItem extends CommonPopViewBehaviourBase_1.CommonPopViewBase {
   constructor() {
     super(...arguments),
-      (this.nVt = void 0),
-      (this.vur = void 0),
-      (this.YZe = () => {
-        var t = this.vur.HelpGroupId;
+      (this.n6t = void 0),
+      (this.gcr = void 0),
+      (this.dtt = () => {
+        var t = this.gcr.HelpGroupId;
         HelpController_1.HelpController.OpenHelpById(t);
       }),
-      (this.ACt = () => {
+      (this.Vgt = () => {
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("Test", 8, "[CloseCookRootView]当点击关闭按钮时", [
             "viewName",
@@ -41,7 +41,7 @@ class InteractSystemViewItem extends CommonPopViewBehaviourBase_1.CommonPopViewB
     ];
   }
   OnStart() {
-    this.nVt = new PopupCaptionItem_1.PopupCaptionItem(this.GetItem(3));
+    this.n6t = new PopupCaptionItem_1.PopupCaptionItem(this.GetItem(3));
     var t,
       i,
       e,
@@ -56,7 +56,7 @@ class InteractSystemViewItem extends CommonPopViewBehaviourBase_1.CommonPopViewB
           a,
         );
     l
-      ? ((t = (this.vur = l).Title),
+      ? ((t = (this.gcr = l).Title),
         (i = l.TitleSpritePath),
         (e = l.ContentSpritePath),
         (s = l.CostItemList),
@@ -73,10 +73,10 @@ class InteractSystemViewItem extends CommonPopViewBehaviourBase_1.CommonPopViewB
         this.SetCurrencyItemVisible(h),
         h && this.SetCostItemList(s),
         this.SetHelpButtonVisible(l.IsHelpButtonVisible),
-        this.nVt.SetHelpCallBack(this.YZe),
-        this.nVt.SetCloseCallBack(this.ACt),
-        this.nVt.SetTitleTextActive(!1),
-        this.nVt.SetTitleIconVisible(!1))
+        this.n6t.SetHelpCallBack(this.dtt),
+        this.n6t.SetCloseCallBack(this.Vgt),
+        this.n6t.SetTitleTextActive(!1),
+        this.n6t.SetTitleIconVisible(!1))
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Test",
@@ -86,7 +86,7 @@ class InteractSystemViewItem extends CommonPopViewBehaviourBase_1.CommonPopViewB
         );
   }
   OnBeforeDestroy() {
-    (this.vur = void 0), (this.nVt = void 0);
+    (this.gcr = void 0), (this.n6t = void 0);
   }
   SetTitleVisible(t) {
     this.GetText(1).SetUIActive(t);
@@ -116,22 +116,22 @@ class InteractSystemViewItem extends CommonPopViewBehaviourBase_1.CommonPopViewB
       });
   }
   SetCaptionTitleVisible(t) {
-    this.nVt.SetTitleTextActive(t);
+    this.n6t.SetTitleTextActive(t);
   }
   SetCurrencyItemVisible(t) {
-    this.nVt.SetCurrencyItemVisible(t);
+    this.n6t.SetCurrencyItemVisible(t);
   }
   SetCaptionTitleSprite(t) {
-    this.nVt.SetTitleIcon(t);
+    this.n6t.SetTitleIcon(t);
   }
   SetCaptionTitleIconVisible(t) {
-    this.nVt.SetTitleIconVisible(t);
+    this.n6t.SetTitleIconVisible(t);
   }
   async SetCostItemList(t) {
-    await this.nVt.SetCurrencyItemList(t);
+    await this.n6t.SetCurrencyItemList(t);
   }
   SetHelpButtonVisible(t) {
-    this.nVt.SetHelpBtnActive(t);
+    this.n6t.SetHelpBtnActive(t);
   }
 }
 exports.InteractSystemViewItem = InteractSystemViewItem;

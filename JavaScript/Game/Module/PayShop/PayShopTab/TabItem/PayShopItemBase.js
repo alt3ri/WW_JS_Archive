@@ -30,10 +30,10 @@ class PayShopItemBaseSt {
       (this.GetTextTipsColor = void 0),
       (this.RedDotExistFunc = void 0),
       (this.GetDirectPriceTextFunc = void 0),
-      (this.bor = "");
+      (this.xrr = "");
   }
   Refresh(t) {
-    this.bor !== LanguageSystem_1.LanguageSystem.PackageLanguage &&
+    this.xrr !== LanguageSystem_1.LanguageSystem.PackageLanguage &&
       (t instanceof PayShopGoods_1.PayShopGoods
         ? this.PhraseFromPayItemData(t)
         : this.PhrasePromPayItemData(t));
@@ -58,7 +58,7 @@ class PayShopItemBaseSt {
     (this.RedDotExistFunc = () =>
       !(!t.IfCanBuy() || t.IsLocked() || t.IsSoldOut() || this.IsDirect) &&
       0 === t.GetPriceData().NowPrice),
-      (this.bor = LanguageSystem_1.LanguageSystem.PackageLanguage);
+      (this.xrr = LanguageSystem_1.LanguageSystem.PackageLanguage);
   }
   PhrasePromPayItemData(t) {
     var i = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
@@ -74,7 +74,7 @@ class PayShopItemBaseSt {
       this.IsDirect &&
         (this.GetDirectPriceTextFunc = () => t.GetDirectPriceText()),
       (this.IfRechargeItem = !0),
-      (this.bor = LanguageSystem_1.LanguageSystem.PackageLanguage);
+      (this.xrr = LanguageSystem_1.LanguageSystem.PackageLanguage);
   }
 }
 exports.PayShopItemBaseSt = PayShopItemBaseSt;
@@ -83,16 +83,16 @@ class PayShopItemBase extends UiPanelBase_1.UiPanelBase {
     super(),
       (this.Pe = void 0),
       (this.wqe = void 0),
-      (this.qFi = !1),
+      (this.q3i = !1),
       (this.hJ = ResourceSystem_1.ResourceSystem.InvalidId),
-      (this.GFi = void 0),
-      (this.JGn = ""),
-      (this.qni = () => {
+      (this.G3i = void 0),
+      (this.rkn = ""),
+      (this.Gsi = () => {
         HelpController_1.HelpController.OpenHelpById(
           PayShopDefine_1.MONTH_CARD_HELP_ID,
         );
       }),
-      (this.NFi = !0),
+      (this.N3i = !0),
       (this.RefreshRedDotState = !0),
       (this.wqe = t);
   }
@@ -116,7 +116,7 @@ class PayShopItemBase extends UiPanelBase_1.UiPanelBase {
       [12, UE.UITexture],
       [13, UE.UIItem],
     ]),
-      (this.BtnBindInfo = [[3, this.qni]]);
+      (this.BtnBindInfo = [[3, this.Gsi]]);
   }
   SetDownPriceShowState(t) {
     this.GetSprite(1).SetUIActive(t),
@@ -129,38 +129,38 @@ class PayShopItemBase extends UiPanelBase_1.UiPanelBase {
       this.GetText(10).SetUIActive(!t);
   }
   OnTimerRefresh(t, i, s) {
-    (this.Pe && this.Pe.Id === t.Id) || (this.qFi = !1),
+    (this.Pe && this.Pe.Id === t.Id) || (this.q3i = !1),
       (this.Pe = t),
-      this.OFi();
+      this.O3i();
   }
   Refresh(t, i, s) {
-    (this.Pe && this.Pe.Id === t.Id) || (this.qFi = !1),
+    (this.Pe && this.Pe.Id === t.Id) || (this.q3i = !1),
       (this.Pe = t),
-      this.kFi(),
+      this.k3i(),
       this.Aqe(),
-      this.FFi(),
-      this.VFi(),
-      this.HFi(),
-      this.jFi(),
-      this.OFi();
+      this.F3i(),
+      this.V3i(),
+      this.H3i(),
+      this.j3i(),
+      this.O3i();
   }
-  OFi() {
-    this.WFi(), this.i2i(), this.KFi(), this.QFi(), this.RefreshRedDot();
+  O3i() {
+    this.W3i(), this.iFi(), this.K3i(), this.Q3i(), this.RefreshRedDot();
   }
   OnBeforeDestroy() {
-    this.XFi();
+    this.X3i();
   }
-  QFi() {
+  Q3i() {
     var t;
     this.Pe.GetTextTipsColor &&
       ((t = this.Pe.GetTextTipsColor()),
       this.GetText(10).SetColor(UE.Color.FromHex(t)));
   }
-  HFi() {
+  H3i() {
     var t = ConfigManager_1.ConfigManager.PayShopConfig.GetMonthCardShopId();
     this.GetButton(3).RootUIComp.SetUIActive(this.Pe.Id === t);
   }
-  kFi() {
+  k3i() {
     var t = ConfigManager_1.ConfigManager.ItemConfig.GetQualityConfig(
       this.Pe.Quality,
     ).PayShopQualitySprite;
@@ -186,15 +186,15 @@ class PayShopItemBase extends UiPanelBase_1.UiPanelBase {
               )),
               this.SetRoleIcon(i.Card, t, this.Pe.ItemId))
             : this.SetItemIcon(t, this.Pe.ItemId),
-          this.XFi(),
-          this.$Fi());
+          this.X3i(),
+          this.$3i());
   }
-  XFi() {
+  X3i() {
     this.hJ !== ResourceSystem_1.ResourceSystem.InvalidId &&
       (ResourceSystem_1.ResourceSystem.CancelAsyncLoad(this.hJ),
       (this.hJ = ResourceSystem_1.ResourceSystem.InvalidId));
   }
-  $Fi() {
+  $3i() {
     var t =
       ConfigManager_1.ConfigManager.InventoryConfig.GetItemDataTypeByConfigId(
         this.Pe.ItemId,
@@ -215,17 +215,17 @@ class PayShopItemBase extends UiPanelBase_1.UiPanelBase {
         )))
       : i.SetCustomUIMaterial(void 0);
   }
-  FFi() {
-    this.qFi || (this.GetText(5).SetText(this.Pe.ItemName), (this.qFi = !0));
+  F3i() {
+    this.q3i || (this.GetText(5).SetText(this.Pe.ItemName), (this.q3i = !0));
   }
-  VFi() {
+  V3i() {
     var t,
       i = this.GetTexture(7);
     this.Pe.IsDirect || 0 === (t = this.Pe.PriceData).NowPrice
       ? i.SetUIActive(!1)
       : (i.SetUIActive(!0), this.SetItemIcon(i, t.CurrencyId));
   }
-  WFi() {
+  W3i() {
     var t,
       i = this.GetText(9);
     !this.Pe.IsDirect &&
@@ -234,15 +234,15 @@ class PayShopItemBase extends UiPanelBase_1.UiPanelBase {
       ? (i.SetUIActive(!0), i.SetText(`<s>${t.OriginalPrice.toString()}</s>`))
       : i.SetUIActive(!1);
   }
-  i2i() {
+  iFi() {
     let t = NORMALCOLOR;
     var i, s;
     !this.Pe.IsDirect &&
       this.Pe.PriceData.OwnNumber() < this.Pe.PriceData.NowPrice &&
       (t = REDCOLOR),
-      (this.GFi && this.GFi === this.Pe.PriceData && this.JGn === t) ||
-        ((this.JGn = t),
-        (this.GFi = this.Pe?.PriceData),
+      (this.G3i && this.G3i === this.Pe.PriceData && this.rkn === t) ||
+        ((this.rkn = t),
+        (this.G3i = this.Pe?.PriceData),
         (i = this.GetText(8)),
         this.Pe.IsDirect
           ? (s = this.Pe.GetDirectPriceTextFunc?.()) &&
@@ -253,19 +253,19 @@ class PayShopItemBase extends UiPanelBase_1.UiPanelBase {
             (s = t),
             i.SetColor(UE.Color.FromHex(s))));
   }
-  KFi() {
+  K3i() {
     var t,
       i = this.Pe.GetShopTipsText?.();
-    this.NFi && !StringUtils_1.StringUtils.IsEmpty(i)
+    this.N3i && !StringUtils_1.StringUtils.IsEmpty(i)
       ? ((t = this.GetText(4)).SetUIActive(!0), t.SetText(i))
       : this.GetText(4).SetUIActive(!1);
   }
   SetLeftTimeTextShowState(t) {
-    (this.NFi = t),
+    (this.N3i = t),
       this.Pe &&
         ((t = this.Pe.GetShopTipsText?.()),
         this.GetText(4).SetUIActive(
-          this.NFi && !StringUtils_1.StringUtils.IsEmpty(t),
+          this.N3i && !StringUtils_1.StringUtils.IsEmpty(t),
         ));
   }
   SetNameTextShowState(t) {
@@ -279,7 +279,7 @@ class PayShopItemBase extends UiPanelBase_1.UiPanelBase {
       this.Pe.RedDotExistFunc &&
       this.SetRedDotVisible(this.Pe.RedDotExistFunc());
   }
-  jFi() {
+  j3i() {
     this.GetItem(13)?.SetUIActive(!this.Pe.IfRechargeItem);
   }
 }

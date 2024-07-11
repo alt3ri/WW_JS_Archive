@@ -18,71 +18,71 @@ const puerts_1 = require("puerts"),
 class LogUploadView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.cwi = !1),
-      (this.mwi = 0),
-      (this.dwi = 0),
-      (this.Cwi = void 0),
-      (this.gwi = void 0),
-      (this.fwi = void 0),
-      (this.$Ut = void 0),
+      (this.cBi = !1),
+      (this.mBi = 0),
+      (this.dBi = 0),
+      (this.CBi = void 0),
+      (this.gBi = void 0),
+      (this.fBi = void 0),
+      (this.ZAt = void 0),
       (this.UploadDelegate = void 0),
-      (this.pwi = void 0),
-      (this.vwi = 1),
-      (this.Mwi = (t) => {
-        this.cwi = 1 === t;
+      (this.pBi = void 0),
+      (this.vBi = 1),
+      (this.MBi = (t) => {
+        this.cBi = 1 === t;
       }),
-      (this.Swi = () => {
-        2 === this.vwi &&
+      (this.EBi = () => {
+        2 === this.vBi &&
           LogController_1.LogController.RequestOutputDebugInfo(),
           ControllerHolder_1.ControllerHolder.KuroSdkController.OpenCustomerService(
-            this.vwi,
+            this.vBi,
           );
       }),
-      (this.dIt = () => {
-        switch (this.Ewi) {
+      (this.Mke = () => {
+        switch (this.SBi) {
           case 0:
-            if (!this.cwi)
+            if (!this.cBi)
               return void ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
                 "LogUploadConfirmTip",
               );
-            if (!this.ywi())
+            if (!this.yBi())
               return void ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
                 "LogUploadLimited",
               );
-            (this.Ewi = 1), this.Iwi();
+            (this.SBi = 1), this.IBi();
             break;
           case 1:
-            this.Twi() && (this.Ewi = 0);
+            this.TBi() && (this.SBi = 0);
             break;
           case 2:
-            this.mIt();
+            this.m2e();
             break;
           case 3:
-            (this.Ewi = 1), this.Iwi();
+            (this.SBi = 1), this.IBi();
         }
       }),
-      (this.mIt = () => {
-        (1 === this.Ewi && !this.Twi()) || this.CloseMe();
+      (this.m2e = () => {
+        (1 === this.SBi && !this.TBi()) || this.CloseMe();
       }),
       (this.UploadEventCallBack = (t, i) => {
         var e;
-        1 === this.Ewi &&
-          ((this.pwi = t),
-          5 === this.pwi || 4 === this.pwi
-            ? this.Lwi()
-            : this.dwi === i ||
-              (1 !== this.pwi && 2 !== this.pwi) ||
+        1 === this.SBi &&
+          ((this.pBi = t),
+          5 === this.pBi || 4 === this.pBi
+            ? this.LBi()
+            : this.dBi === i ||
+              (1 !== this.pBi && 2 !== this.pBi) ||
               ((t =
                 Math.round(
                   i * MathCommon_1.MathCommon.ProgressTotalValue,
                 ).toString() + "%"),
               (e =
-                1 === this.pwi
+                1 === this.pBi
                   ? "Text_LogCompressing_Text"
                   : "Text_LogUploading_Text"),
-              LguiUtil_1.LguiUtil.SetLocalTextNew(this.Cwi, e, t),
-              this.gwi.SetFillAmount(i),
-              (this.dwi = i)));
+              LguiUtil_1.LguiUtil.SetLocalTextNew(this.CBi, e, t),
+              this.gBi.SetFillAmount(i),
+              (this.dBi = i)));
       });
   }
   OnRegisterComponent() {
@@ -95,54 +95,54 @@ class LogUploadView extends UiViewBase_1.UiViewBase {
       [5, UE.UISprite],
       [6, UE.UIExtendToggle],
     ]),
-      (this.BtnBindInfo = [[6, this.Mwi]]);
+      (this.BtnBindInfo = [[6, this.MBi]]);
   }
   OnStart() {
-    this.OpenParam && (this.vwi = this.OpenParam),
-      (this.Cwi = this.GetText(0)),
-      (this.gwi = this.GetSprite(2)),
-      (this.fwi = new ButtonItem_1.ButtonItem(this.GetItem(3))),
-      this.fwi.SetFunction(this.Swi),
-      this.fwi.SetShowText("Text_LogUploadService_Text"),
-      this.fwi.SetActive(!1),
-      this.fwi.BindRedDot("CustomerService"),
-      (this.$Ut = new ButtonItem_1.ButtonItem(this.GetItem(4))),
-      this.$Ut.SetFunction(this.dIt),
-      (this.Ewi = 0),
+    this.OpenParam && (this.vBi = this.OpenParam),
+      (this.CBi = this.GetText(0)),
+      (this.gBi = this.GetSprite(2)),
+      (this.fBi = new ButtonItem_1.ButtonItem(this.GetItem(3))),
+      this.fBi.SetFunction(this.EBi),
+      this.fBi.SetShowText("Text_LogUploadService_Text"),
+      this.fBi.SetActive(!1),
+      this.fBi.BindRedDot("CustomerService"),
+      (this.ZAt = new ButtonItem_1.ButtonItem(this.GetItem(4))),
+      this.ZAt.SetFunction(this.Mke),
+      (this.SBi = 0),
       this.ChildPopView?.PopItem.OverrideBackBtnCallBack(() => {
-        this.mIt();
+        this.m2e();
       });
   }
   OnBeforeDestroy() {
-    this.Dwi(),
-      (this.Cwi = void 0),
-      (this.gwi = void 0),
-      this.fwi?.UnBindRedDot(),
-      this.fwi?.Destroy();
+    this.DBi(),
+      (this.CBi = void 0),
+      (this.gBi = void 0),
+      this.fBi?.UnBindRedDot(),
+      this.fBi?.Destroy();
   }
-  Rwi(t) {
+  RBi(t) {
     t &&
     ControllerHolder_1.ControllerHolder.KuroSdkController.NeedShowCustomerService()
-      ? this.fwi.SetActive(!0)
-      : this.fwi.SetActive(!1);
+      ? this.fBi.SetActive(!0)
+      : this.fBi.SetActive(!1);
   }
-  Dwi() {
+  DBi() {
     UE.KuroTencentCOSLibrary.ClearAllProgressCallback(),
       this.UploadDelegate &&
         ((0, puerts_1.releaseManualReleaseDelegate)(this.UploadEventCallBack),
         (this.UploadDelegate = void 0));
   }
-  set Ewi(t) {
-    this.mwi = t;
+  set SBi(t) {
+    this.mBi = t;
     var i = this.GetExtendToggle(6),
       e = this.GetItem(1),
       o = this.GetSprite(5);
-    switch (this.mwi) {
+    switch (this.mBi) {
       case 0:
-        this.Rwi(!0),
-          this.$Ut.SetShowText("Text_LogUpload_Text"),
-          this.Cwi.ShowTextNew("Text_LogUploadConfirm_Text"),
-          this.Cwi.SetUIActive(!0);
+        this.RBi(!0),
+          this.ZAt.SetShowText("Text_LogUpload_Text"),
+          this.CBi.ShowTextNew("Text_LogUploadConfirm_Text"),
+          this.CBi.SetUIActive(!0);
         var s =
           ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
             "SP_UploadState1",
@@ -152,9 +152,9 @@ class LogUploadView extends UiViewBase_1.UiViewBase {
           e.SetUIActive(!1);
         break;
       case 1:
-        this.Rwi(!1),
-          this.$Ut.SetShowText("Text_LogUploadCancel_Text"),
-          this.Cwi.SetText("");
+        this.RBi(!1),
+          this.ZAt.SetShowText("Text_LogUploadCancel_Text"),
+          this.CBi.SetText("");
         s =
           ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
             "SP_UploadState2",
@@ -164,9 +164,9 @@ class LogUploadView extends UiViewBase_1.UiViewBase {
           e.SetUIActive(!0);
         break;
       case 2:
-        this.Rwi(!0),
-          this.$Ut.SetShowText("Text_LogUploadYes_Text"),
-          this.Cwi.ShowTextNew("Text_LogUploadSuccess_Text");
+        this.RBi(!0),
+          this.ZAt.SetShowText("Text_LogUploadYes_Text"),
+          this.CBi.ShowTextNew("Text_LogUploadSuccess_Text");
         s =
           ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
             "SP_UploadState3",
@@ -176,12 +176,12 @@ class LogUploadView extends UiViewBase_1.UiViewBase {
           e.SetUIActive(!1);
         break;
       case 3:
-        this.Rwi(!0), this.$Ut.SetShowText("Text_LogUploadRetry_Text");
+        this.RBi(!0), this.ZAt.SetShowText("Text_LogUploadRetry_Text");
         var s = UE.KuroTencentCOSLibrary.GetAllFileNumNeedToSend(),
           r = s - UE.KuroTencentCOSLibrary.GetSendedFileNum(),
           r =
             (LguiUtil_1.LguiUtil.SetLocalTextNew(
-              this.Cwi,
+              this.CBi,
               "Text_LogUploadFail_Text",
               r,
               s,
@@ -194,10 +194,10 @@ class LogUploadView extends UiViewBase_1.UiViewBase {
           e.SetUIActive(!1);
     }
   }
-  get Ewi() {
-    return this.mwi;
+  get SBi() {
+    return this.mBi;
   }
-  ywi() {
+  yBi() {
     var t = CommonParamById_1.configCommonParamById.GetIntConfig(
         "LogUploadTimeInterval",
       ),
@@ -207,19 +207,19 @@ class LogUploadView extends UiViewBase_1.UiViewBase {
       );
     return void 0 === e || t < i - e;
   }
-  Iwi() {
-    (this.dwi = 0),
-      this.gwi.SetFillAmount(0),
-      this.Dwi(),
+  IBi() {
+    (this.dBi = 0),
+      this.gBi.SetFillAmount(0),
+      this.DBi(),
       this.UploadDelegate ||
         (this.UploadDelegate = (0, puerts_1.toManualReleaseDelegate)(
           this.UploadEventCallBack,
         )),
-      2 === this.vwi && LogController_1.LogController.RequestOutputDebugInfo(),
+      2 === this.vBi && LogController_1.LogController.RequestOutputDebugInfo(),
       LogUpload_1.LogUpload.SendLog(this.UploadDelegate);
   }
-  Twi() {
-    return 1 === this.pwi
+  TBi() {
+    return 1 === this.pBi
       ? (ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
           "LogUploadCompressingTip",
         ),
@@ -231,10 +231,10 @@ class LogUploadView extends UiViewBase_1.UiViewBase {
           ),
           !0);
   }
-  Lwi() {
-    this.Dwi();
-    var t = 5 === this.pwi;
-    (this.Ewi = t ? 2 : 3),
+  LBi() {
+    this.DBi();
+    var t = 5 === this.pBi;
+    (this.SBi = t ? 2 : 3),
       t &&
         ((t = TimeUtil_1.TimeUtil.GetServerTime()),
         LocalStorage_1.LocalStorage.SetGlobal(

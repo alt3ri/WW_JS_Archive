@@ -12,39 +12,45 @@ const MathUtils_1 = require("../../../Core/Utils/MathUtils"),
   PersonalDefine_1 = require("../Personal/Model/PersonalDefine");
 class FriendBlackListData {
   constructor() {
-    this.jVt = void 0;
+    this.j6t = void 0;
   }
   InitializeFriendBlackListData(t) {
-    (this.jVt = new FriendData()), this.jVt.SetPlayerBasicInfo(t);
+    (this.j6t = new FriendData()), this.j6t.SetPlayerBasicInfo(t);
   }
   get GetBlockedPlayerData() {
-    return this.jVt;
+    return this.j6t;
   }
   set GetBlockedPlayerData(t) {
-    this.jVt = t;
+    this.j6t = t;
   }
 }
 exports.FriendBlackListData = FriendBlackListData;
 class FriendApplyData {
   constructor() {
-    (this.jVt = void 0), (this.WVt = -0), (this.Fresh = !0);
+    (this.j6t = void 0), (this.W6t = -0), (this.Fresh = !0), (this.Tta = 0);
   }
   InitializeFriendApply(t) {
-    (this.jVt = new FriendData()),
-      this.jVt.SetPlayerBasicInfo(t.a5n),
-      (this.WVt = Number(MathUtils_1.MathUtils.LongToBigInt(t.sRs)));
+    (this.j6t = new FriendData()),
+      this.j6t.SetPlayerBasicInfo(t.FVn),
+      (this.W6t = Number(MathUtils_1.MathUtils.LongToBigInt(t.TUs)));
   }
   get ApplyCreatedTime() {
-    return this.WVt;
+    return this.W6t;
   }
   set ApplyCreatedTime(t) {
-    this.WVt = t;
+    this.W6t = t;
   }
   get ApplyPlayerData() {
-    return this.jVt;
+    return this.j6t;
   }
   set ApplyPlayerData(t) {
-    this.jVt = t;
+    this.j6t = t;
+  }
+  get ApplyTimeLeftTime() {
+    return this.Tta - TimeUtil_1.TimeUtil.GetServerTime();
+  }
+  set ApplyTimeLeftTime(t) {
+    this.Tta = t + ModelManager_1.ModelManager.FriendModel.ApplyCdTime;
   }
 }
 exports.FriendApplyData = FriendApplyData;
@@ -53,8 +59,8 @@ class RecentlyTeamData {
     (this.PlayerData = new FriendData()), (this.TeamTime = -0);
   }
   InitData(t) {
-    this.PlayerData.SetPlayerBasicInfo(t.a5n),
-      (this.TeamTime = Number(MathUtils_1.MathUtils.LongToBigInt(t.uRs)));
+    this.PlayerData.SetPlayerBasicInfo(t.FVn),
+      (this.TeamTime = Number(MathUtils_1.MathUtils.LongToBigInt(t.PUs)));
   }
   GetOfflineDay() {
     var t = this.TeamTime;
@@ -67,11 +73,11 @@ class FriendData {
     (this.xe = 0),
       (this.he = ""),
       (this.B8 = 0),
-      (this.KVt = 0),
-      (this.QVt = 0),
-      (this.XVt = !1),
-      (this.$Vt = 0),
-      (this.YVt = void 0),
+      (this.K6t = 0),
+      (this.Q6t = 0),
+      (this.X6t = !1),
+      (this.$6t = 0),
+      (this.Y6t = void 0),
       (this.Debug = !1),
       (this.WorldLevel = 0),
       (this.TeamMemberCount = 0),
@@ -84,44 +90,46 @@ class FriendData {
       (this.CardUnlockList = []);
   }
   SetFriendDataAttribute(t) {
-    this.SetPlayerBasicInfo(t.a5n),
-      (this.YVt = t.h5n),
-      this.YVt ||
-        ((t = ModelManager_1.ModelManager.FriendModel.GetFriendById(t.a5n.aFn)),
-        (this.YVt = t?.YVt));
+    this.SetPlayerBasicInfo(t.FVn),
+      (this.Y6t = t.VVn),
+      this.Y6t ||
+        ((t = ModelManager_1.ModelManager.FriendModel.GetFriendById(t.FVn.q5n)),
+        (this.Y6t = t?.Y6t));
   }
   SetPlayerBasicInfo(e) {
-    (this.xe = e.aFn),
-      (this.he = e.e4n),
-      (this.B8 = e.r3n),
-      (this.KVt = e.$gs),
-      (this.QVt = e.Hgs),
-      (this.XVt = e.jgs),
-      (this.$Vt = Number(MathUtils_1.MathUtils.LongToBigInt(e.Kgs))),
-      this.YVt ||
-        ((t = ModelManager_1.ModelManager.FriendModel.GetFriendById(e.aFn)),
-        (this.YVt = t?.YVt)),
-      (this.WorldLevel = e.Vgs),
-      (this.TeamMemberCount = e.Qgs),
-      (this.Signature = e.l5n),
-      (this.CurCard = e.zgs),
+    (this.xe = e.q5n),
+      (this.he = e.w8n),
+      (this.B8 = e.P6n),
+      (this.K6t = e.sSs),
+      (this.Q6t = e.aSs),
+      (this.X6t = e.hSs),
+      (this.$6t = Number(MathUtils_1.MathUtils.LongToBigInt(e._Ss))),
+      this.Y6t ||
+        ((t = ModelManager_1.ModelManager.FriendModel.GetFriendById(e.q5n)),
+        (this.Y6t = t?.Y6t)),
+      (this.WorldLevel = e.nSs),
+      (this.TeamMemberCount = e.uSs),
+      (this.Signature = e.HVn),
+      (this.CurCard = e.CSs),
       0 === this.CurCard &&
         (this.CurCard =
           ConfigManager_1.ConfigManager.FriendConfig.GetDefaultBackgroundCardId()),
       (this.RoleShowList = []);
     var t,
-      i = e.Ygs.length;
+      i = e.dSs.length;
     for (let t = 0; t < i; t++) {
-      var s = e.Ygs[t];
-      this.RoleShowList.push(new PersonalDefine_1.RoleShowEntry(s.l3n, s.r3n));
+      var s = e.dSs[t];
+      this.RoleShowList.push(new PersonalDefine_1.RoleShowEntry(s.O6n, s.P6n));
     }
-    (this.CardShowList = e.Jgs),
+    (this.CardShowList = e.mSs),
       (this.CardUnlockList = []),
-      e.Jgs.forEach((t) => {
-        this.CardUnlockList.push(new PersonalDefine_1.CardShowEntry(t, !0));
+      e.mSs.forEach((t) => {
+        this.CardUnlockList.push(
+          new PersonalDefine_1.PersonalCardData(t, !0, !0),
+        );
       }),
-      (this.Birthday = e._5n),
-      (this.IsBirthdayDisplay = e.Zgs);
+      (this.Birthday = e.jVn),
+      (this.IsBirthdayDisplay = e.gSs);
   }
   get PlayerId() {
     return this.xe;
@@ -142,32 +150,32 @@ class FriendData {
     this.B8 = t;
   }
   get PlayerHeadPhoto() {
-    return this.KVt;
+    return this.K6t;
   }
   get PlayerHeadFrame() {
-    return this.QVt;
+    return this.Q6t;
   }
   get PlayerIsOnline() {
-    return this.XVt;
+    return this.X6t;
   }
   set PlayerIsOnline(t) {
-    this.XVt = t;
+    this.X6t = t;
   }
   get PlayerLastOfflineTime() {
-    return this.$Vt;
+    return this.$6t;
   }
   set PlayerLastOfflineTime(t) {
-    this.$Vt = t;
+    this.$6t = t;
   }
   GetOfflineDay() {
     var t = this.PlayerLastOfflineTime;
     return TimeUtil_1.TimeUtil.CalculateDayTimeStampGapBetweenNow(t, !1);
   }
   get FriendRemark() {
-    return this.YVt;
+    return this.Y6t;
   }
   set FriendRemark(t) {
-    this.YVt = t;
+    this.Y6t = t;
   }
 }
 exports.FriendData = FriendData;

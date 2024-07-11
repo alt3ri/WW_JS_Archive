@@ -426,26 +426,26 @@ function findActorInEditorWorld(o) {
 function isInPieOrPkg() {
   return (0, Util_1.isInPie)() || Config_1.Config.IsPkgRunning;
 }
-function getVectorInfoFromTransformInUeClipboard(t = !1) {
-  var o = (0, puerts_1.$ref)(""),
-    o = (ue_1.EditorOperations.ClipboardPaste(o), (0, puerts_1.$unref)(o)),
-    o =
+function getVectorInfoFromTransformInUeClipboard(t = !1, o) {
+  var e = (0, puerts_1.$ref)(""),
+    e = (ue_1.EditorOperations.ClipboardPaste(e), (0, puerts_1.$unref)(e)),
+    e =
       /\((?:Pitch=(?<Pitch>-?\d+\.?\d*),Yaw=(?<Yaw>-?\d+\.?\d*),Roll=(?<Roll>-?\d+\.?\d*),)?X=(?<X>-?\d+\.?\d*),Y=(?<Y>-?\d+\.?\d*),Z=(?<Z>-?\d+\.?\d*)\)/.exec(
-        o,
+        e,
       ),
-    e = o?.groups?.X,
-    r = o?.groups?.Y,
-    n = o?.groups?.Z,
-    o = o?.groups?.Yaw;
-  if (e && r && n)
+    r = e?.groups?.X,
+    n = e?.groups?.Y,
+    i = e?.groups?.Z,
+    e = e?.groups?.Yaw;
+  if (r && n && i)
     return (
-      (e = {
-        X: (0, Util_1.parseFloatSafe)(e),
-        Y: (0, Util_1.parseFloatSafe)(r),
-        Z: (0, Util_1.parseFloatSafe)(n),
+      (r = {
+        X: (0, Util_1.parseFloatSafe)(r, o),
+        Y: (0, Util_1.parseFloatSafe)(n, o),
+        Z: (0, Util_1.parseFloatSafe)(i, o),
       }),
-      t && void 0 !== o && (e.A = (0, Util_1.parseFloatSafe)(o)),
-      e
+      t && void 0 !== e && (r.A = (0, Util_1.parseFloatSafe)(e, o)),
+      r
     );
 }
 function getRotatorFromTransformInUeClipboard() {

@@ -18,28 +18,28 @@ const UE = require("ue"),
 class InteractQteView extends PanelQteView_1.PanelQteView {
   constructor() {
     super(...arguments),
-      (this.xet = void 0),
-      (this.xNi = void 0),
-      (this.ONi = void 0),
-      (this.EPe = void 0),
+      (this.Qtt = void 0),
+      (this.xOi = void 0),
+      (this.OOi = void 0),
+      (this.SPe = void 0),
       (this.NTe = 0),
-      (this.kNi = () => {
+      (this.kOi = () => {
         this.IsQteEnd ||
-          (this.ONi?.SetUIActive(!0),
-          this.EPe?.PlayLevelSequenceByName("Start"));
+          (this.OOi?.SetUIActive(!0),
+          this.SPe?.PlayLevelSequenceByName("Start"));
       }),
-      (this.WPt = (e) => {
+      (this.$xt = (e) => {
         "Start" !== e ||
           this.IsQteEnd ||
-          (this.EPe?.PlayLevelSequenceByName("Loop"),
-          0 < this.NTe && this.FNi("Loop", 1 / this.NTe),
+          (this.SPe?.PlayLevelSequenceByName("Loop"),
+          0 < this.NTe && this.FOi("Loop", 1 / this.NTe),
           (e = this.OpenParam),
           ModelManager_1.ModelManager.PanelQteModel.ResetLeftTime(e),
-          this.IsMobile || (this.GetItem(1)?.SetUIActive(!0), this.xet?.Show()),
+          this.IsMobile || (this.GetItem(1)?.SetUIActive(!0), this.Qtt?.Show()),
           (this.IsQteStart = !0));
       }),
-      (this.BNi = (e, t) => {
-        !this.IsQteEnd && this.IsQteStart && 0 === t && this.bNi();
+      (this.BOi = (e, t) => {
+        !this.IsQteEnd && this.IsQteStart && 0 === t && this.bOi();
       });
   }
   OnRegisterComponent() {
@@ -59,26 +59,26 @@ class InteractQteView extends PanelQteView_1.PanelQteView {
     var e;
     this.IsMobile ||
       ((e = this.GetItem(2)) &&
-        ((this.xet = new CombineKeyItem_1.CombineKeyItem()),
-        await this.xet.CreateByActorAsync(e.GetOwner()),
-        this.xet.RefreshAction(InputMappingsDefine_1.actionMappings.QTE交互))),
+        ((this.Qtt = new CombineKeyItem_1.CombineKeyItem()),
+        await this.Qtt.CreateByActorAsync(e.GetOwner()),
+        this.Qtt.RefreshAction(InputMappingsDefine_1.actionMappings.QTE交互))),
       (this.IsQteStart = !1);
   }
   OnStart() {
     this.IsMobile
-      ? ((this.ONi = this.GetItem(0)),
+      ? ((this.OOi = this.GetItem(0)),
         this.GetButton(1).OnPointDownCallBack.Bind(() => {
-          this.qNi();
+          this.qOi();
         }))
-      : ((this.ONi = this.GetItem(0)), this.GetItem(1).SetUIActive(!1)),
-      (this.EPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.ONi)),
-      this.EPe.BindSequenceCloseEvent(this.WPt),
-      this.GNi(),
-      this.ONi?.SetUIActive(!1),
-      this.UiViewSequence.AddSequenceFinishEvent("Start", this.kNi);
+      : ((this.OOi = this.GetItem(0)), this.GetItem(1).SetUIActive(!1)),
+      (this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.OOi)),
+      this.SPe.BindSequenceCloseEvent(this.$xt),
+      this.GOi(),
+      this.OOi?.SetUIActive(!1),
+      this.UiViewSequence.AddSequenceFinishEvent("Start", this.kOi);
   }
   OnBeforeDestroyImplement() {
-    this.EPe?.Clear();
+    this.SPe?.Clear();
   }
   OnBeforeShow() {
     super.OnBeforeShow(),
@@ -90,14 +90,14 @@ class InteractQteView extends PanelQteView_1.PanelQteView {
   OnBeforeDestroy() {
     super.OnBeforeDestroy(),
       this.IsMobile && this.GetButton(1).OnPointDownCallBack.Unbind(),
-      this.NNi();
+      this.NOi();
   }
   RefreshVisible() {}
-  NNi() {
-    this.xNi &&
-      (TimerSystem_1.TimerSystem.Remove(this.xNi), (this.xNi = void 0));
+  NOi() {
+    this.xOi &&
+      (TimerSystem_1.TimerSystem.Remove(this.xOi), (this.xOi = void 0));
   }
-  GNi() {
+  GOi() {
     var e = this.OpenParam;
     ModelManager_1.ModelManager.PanelQteModel.IsInQte
       ? e !==
@@ -118,7 +118,7 @@ class InteractQteView extends PanelQteView_1.PanelQteView {
       this.IsMobile ||
         InputDistributeController_1.InputDistributeController.BindAction(
           InputMappingsDefine_1.actionMappings.QTE交互,
-          this.BNi,
+          this.BOi,
         );
   }
   OnRemoveEventListener() {
@@ -126,34 +126,34 @@ class InteractQteView extends PanelQteView_1.PanelQteView {
       this.IsMobile ||
         InputDistributeController_1.InputDistributeController.UnBindAction(
           InputMappingsDefine_1.actionMappings.QTE交互,
-          this.BNi,
+          this.BOi,
         );
   }
-  qNi() {
-    !this.IsQteEnd && this.IsQteStart && this.bNi();
+  qOi() {
+    !this.IsQteEnd && this.IsQteStart && this.bOi();
   }
-  bNi() {
+  bOi() {
     var e = this.OpenParam;
     ModelManager_1.ModelManager.PanelQteModel.SetQteResult(e, !0),
       PanelQteController_1.PanelQteController.StopQte(e);
   }
   HandleQteEnd() {
-    this.xNi ||
+    this.xOi ||
       (AudioSystem_1.AudioSystem.SetState(
         AudioDefine_1.STATEGROUP,
         AudioDefine_1.STATENORMAL,
       ),
       this.IsMobile || this.GetItem(1).SetUIActive(!1),
-      this.EPe?.StopCurrentSequence(),
+      this.SPe?.StopCurrentSequence(),
       ModelManager_1.ModelManager.PanelQteModel.IsQteSuccess()
-        ? this.EPe?.PlayLevelSequenceByName("Success")
-        : this.EPe?.PlayLevelSequenceByName("Fail"),
-      (this.xNi = TimerSystem_1.TimerSystem.Delay(() => {
-        (this.xNi = void 0), UiManager_1.UiManager.CloseView("InteractQteView");
+        ? this.SPe?.PlayLevelSequenceByName("Success")
+        : this.SPe?.PlayLevelSequenceByName("Fail"),
+      (this.xOi = TimerSystem_1.TimerSystem.Delay(() => {
+        (this.xOi = void 0), UiManager_1.UiManager.CloseView("InteractQteView");
       }, STOP_ANIM_TIME)));
   }
-  FNi(e, t) {
-    this.ONi.GetOwner()
+  FOi(e, t) {
+    this.OOi.GetOwner()
       .GetSequencePlayerByKey(e)
       ?.SequencePlayer?.SetPlayRate(t);
   }

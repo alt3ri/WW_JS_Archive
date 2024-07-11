@@ -28,7 +28,7 @@ class LevelEventChangeEntityPerformanceState extends LevelGeneralBase_1.LevelEve
         WaitEntityTask_1.WaitEntityTask.CreateWithPbDataId(a, (e) => {
           var t;
           e
-            ? (e = n?.Entity?.GetComponent(117))
+            ? (e = n?.Entity?.GetComponent(119))
               ? (t = GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(
                   r.PerformanceTag,
                 ))

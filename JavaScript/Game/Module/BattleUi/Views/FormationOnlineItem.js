@@ -9,12 +9,12 @@ const UE = require("ue"),
 class FormationOnlineItem extends UiPanelBase_1.UiPanelBase {
   constructor(t) {
     super(),
-      (this.rat = void 0),
-      (this.nat = void 0),
-      (this.sat = !1),
-      (this.aat = !1),
-      (this.hat = !1),
-      (this.lat = void 0),
+      (this.fht = void 0),
+      (this.pht = void 0),
+      (this.vht = !1),
+      (this.Mht = !1),
+      (this.Eht = !1),
+      (this.Sht = void 0),
       this.CreateThenShowByResourceIdAsync("UiItem_FigthRoleHeadOnline", t);
   }
   OnRegisterComponent() {
@@ -26,16 +26,16 @@ class FormationOnlineItem extends UiPanelBase_1.UiPanelBase {
     ];
   }
   OnStart() {
-    (this.lat = new LevelSequencePlayer_1.LevelSequencePlayer(this.GetItem(1))),
-      this._at();
+    (this.Sht = new LevelSequencePlayer_1.LevelSequencePlayer(this.GetItem(1))),
+      this.yht();
   }
   OnBeforeDestroy() {
-    this.lat.Clear(), (this.lat = void 0);
+    this.Sht.Clear(), (this.Sht = void 0);
   }
   SetNameText(t) {
     var i;
     this.InAsyncLoading()
-      ? (this.rat = t)
+      ? (this.fht = t)
       : ((i = this.GetText(3)),
         StringUtils_1.StringUtils.IsEmpty(t)
           ? i.SetUIActive(!1)
@@ -44,7 +44,7 @@ class FormationOnlineItem extends UiPanelBase_1.UiPanelBase {
   SetOnlineNumber(t) {
     var i;
     this.InAsyncLoading()
-      ? (this.nat = t)
+      ? (this.pht = t)
       : ((i = this.GetTexture(2)),
         t < 0
           ? i.SetUIActive(!1)
@@ -57,27 +57,27 @@ class FormationOnlineItem extends UiPanelBase_1.UiPanelBase {
   SetIsGrayByOtherControl(t) {
     var i;
     this.InAsyncLoading()
-      ? (this.sat = t)
+      ? (this.vht = t)
       : ((i = this.GetTexture(2)).SetChangeColor(t, i.changeColor),
         (i = this.GetText(3)).SetChangeColor(t, i.changeColor));
   }
   SetNetWeak(t) {
-    this.InAsyncLoading() ? (this.aat = t) : this.GetItem(0).SetUIActive(t);
+    this.InAsyncLoading() ? (this.Mht = t) : this.GetItem(0).SetUIActive(t);
   }
   SetNetDisconnect(t) {
-    this.InAsyncLoading() ? (this.hat = t) : this.uat(t);
+    this.InAsyncLoading() ? (this.Eht = t) : this.Iht(t);
   }
-  uat(t) {
+  Iht(t) {
     this.GetItem(1).SetUIActive(t),
-      this.lat.StopCurrentSequence(),
-      t && this.lat.PlayLevelSequenceByName("AutoLoop");
+      this.Sht.StopCurrentSequence(),
+      t && this.Sht.PlayLevelSequenceByName("AutoLoop");
   }
-  _at() {
-    void 0 !== this.rat && (this.SetNameText(this.rat), (this.rat = void 0)),
-      this.nat && (this.SetOnlineNumber(this.nat), (this.nat = void 0)),
-      this.GetItem(0).SetUIActive(this.aat),
-      this.uat(this.hat),
-      this.SetIsGrayByOtherControl(this.sat);
+  yht() {
+    void 0 !== this.fht && (this.SetNameText(this.fht), (this.fht = void 0)),
+      this.pht && (this.SetOnlineNumber(this.pht), (this.pht = void 0)),
+      this.GetItem(0).SetUIActive(this.Mht),
+      this.Iht(this.Eht),
+      this.SetIsGrayByOtherControl(this.vht);
   }
 }
 exports.FormationOnlineItem = FormationOnlineItem;

@@ -14,18 +14,18 @@ const CommonParamById_1 = require("../../../../../Core/Define/ConfigCommon/Commo
 class TemporaryTeleportPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
   constructor() {
     super(...arguments),
-      (this.dko = void 0),
-      (this.UUt = void 0),
-      (this.g2o = void 0),
-      (this.f2o = () => {
+      (this.u2o = void 0),
+      (this.wAt = void 0),
+      (this.mFo = void 0),
+      (this.dFo = () => {
         MapController_1.MapController.RequestTeleportToTargetByTemporaryTeleport(
-          this.dko.TeleportId,
+          this.u2o.TeleportId,
         ),
           this.Close();
       }),
-      (this.p2o = () => {
+      (this.CFo = () => {
         MapController_1.MapController.RequestRemoveDynamicMapMark(
-          this.dko.MarkId,
+          this.u2o.MarkId,
         ),
           this.Close();
       });
@@ -39,17 +39,17 @@ class TemporaryTeleportPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
   }
   OnStart() {
     this.RootItem.SetRaycastTarget(!1),
-      (this.UUt = new ButtonAndTextItem_1.ButtonAndTextItem(this.GetItem(8))),
-      this.UUt.BindCallback(this.f2o),
-      (this.g2o = new ButtonAndTextItem_1.ButtonAndTextItem(this.GetItem(7))),
-      this.g2o.BindCallback(this.p2o);
+      (this.wAt = new ButtonAndTextItem_1.ButtonAndTextItem(this.GetItem(8))),
+      this.wAt.BindCallback(this.dFo),
+      (this.mFo = new ButtonAndTextItem_1.ButtonAndTextItem(this.GetItem(7))),
+      this.mFo.BindCallback(this.CFo);
   }
   OnShowWorldMapSecondaryUi(e) {
-    (this.dko = e),
+    (this.u2o = e),
       this.GetText(1).SetText(
         StringUtils_1.StringUtils.Format(
           "{0}{1}/{2}",
-          this.dko.GetTitleText(),
+          this.u2o.GetTitleText(),
           ModelManager_1.ModelManager.MapModel.GetMarkCountByType(
             15,
           ).toString(),
@@ -58,14 +58,14 @@ class TemporaryTeleportPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
             .toString(),
         ),
       ),
-      this.SetSpriteByPath(this.dko.IconPath, this.GetSprite(0), !1),
-      this.GetText(2).SetText(this.dko.GetDescText()),
+      this.SetSpriteByPath(this.u2o.IconPath, this.GetSprite(0), !1),
+      this.GetText(2).SetText(this.u2o.GetDescText()),
       this.GetText(3).SetUIActive(!1),
       this.GetItem(5).SetUIActive(!1),
-      this.l1i();
+      this.l_i();
   }
-  l1i() {
-    this.g2o.SetText(
+  l_i() {
+    this.mFo.SetText(
       MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
         "Text_TeleportDelete_Text",
       ),
@@ -75,20 +75,20 @@ class TemporaryTeleportPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
           "TeleportFastMove",
         ),
       e =
-        (this.UUt.SetText(
+        (this.wAt.SetText(
           MultiTextLang_1.configMultiTextLang.GetLocalTextNew(e),
         ),
         ModelManager_1.ModelManager.OnlineModel.GetIsTeamModel()
-          ? this.g2o.SetActive(
+          ? this.mFo.SetActive(
               ModelManager_1.ModelManager.OnlineModel.GetIsMyTeam(),
             )
-          : this.g2o.SetActive(!0),
+          : this.mFo.SetActive(!0),
         ModelManager_1.ModelManager.MapModel?.GetMarkExtraShowState(
-          this.dko.MarkId,
+          this.u2o.MarkId,
         ));
-    e.ShowFlag === Protocol_1.Aki.Protocol.BNs.Proto_ShowDisable
-      ? this.UUt.RefreshEnable(!1)
-      : this.UUt.RefreshEnable(!0);
+    e.ShowFlag === Protocol_1.Aki.Protocol.I6s.Proto_ShowDisable
+      ? this.wAt.RefreshEnable(!1)
+      : this.wAt.RefreshEnable(!0);
   }
 }
 exports.TemporaryTeleportPanel = TemporaryTeleportPanel;

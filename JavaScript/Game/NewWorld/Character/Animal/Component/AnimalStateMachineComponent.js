@@ -43,9 +43,9 @@ let AnimalStateMachineComponent =
       super(...arguments),
         (this.Mne = 0),
         (this.oRe = void 0),
-        (this.bbr = void 0),
+        (this.ubr = void 0),
         (this.Lle = void 0),
-        (this.qbr = 0),
+        (this.cbr = 0),
         (this.aGe = !1),
         (this.Pz = (t, e) => {});
     }
@@ -58,7 +58,7 @@ let AnimalStateMachineComponent =
       var t = this.Entity.GetComponent(0),
         t =
           ((this.Mne = t.GetPbDataId()),
-          (this.oRe = this.Entity.GetComponent(160)),
+          (this.oRe = this.Entity.GetComponent(162)),
           this.oRe?.MainAnimInstance);
       return (
         t &&
@@ -66,7 +66,7 @@ let AnimalStateMachineComponent =
           t.GetClass(),
           UE.BPI_AnimalEcological_C.StaticClass(),
         )
-          ? ((this.bbr = t),
+          ? ((this.ubr = t),
             UE.KuroStaticLibrary.IsObjectClassByName(
               t,
               CharacterNameDefines_1.CharacterNameDefines.ABP_BASEANIMAL,
@@ -74,42 +74,42 @@ let AnimalStateMachineComponent =
               ? (this.Lle.AddState(
                   0,
                   AnimalPerformBornState_1.AnimalPerformBornState,
-                  this.bbr,
+                  this.ubr,
                 ),
                 this.Lle.AddState(
                   1,
                   AnimalPerformStandState_1.AnimalPerformStandState,
-                  this.bbr,
+                  this.ubr,
                 ),
                 this.Lle.AddState(
                   2,
                   AnimalPerformIdleState_1.AnimalPerformIdleState,
-                  this.bbr,
+                  this.ubr,
                 ),
                 this.Lle.AddState(
                   3,
                   AnimalPerformInteractState_1.AnimalPerformInteractState,
-                  this.bbr,
+                  this.ubr,
                 ),
                 this.Lle.AddState(
                   4,
                   AnimalPerformUnderAttackState_1.AnimalPerformUnderAttackState,
-                  this.bbr,
+                  this.ubr,
                 ),
                 this.Lle.AddState(
                   6,
                   AnimalPerformAlertState_1.AnimalPerformAlertState,
-                  this.bbr,
+                  this.ubr,
                 ),
                 this.Lle.AddState(
                   5,
                   AnimalPerformTakeOffState_1.AnimalPerformTakeOffState,
-                  this.bbr,
+                  this.ubr,
                 ),
                 this.Lle.AddState(
                   7,
                   AnimalPerformSystemUiState_1.AnimalPerformSystemUiState,
-                  this.bbr,
+                  this.ubr,
                 ),
                 this.StartStateMachine())
               : Log_1.Log.CheckDebug() &&
@@ -138,7 +138,7 @@ let AnimalStateMachineComponent =
       return (this.aGe = !1), this.Lle.Destroy(), !0;
     }
     StartStateMachine() {
-      this.Lle.Start(this.qbr), (this.aGe = !0);
+      this.Lle.Start(this.cbr), (this.aGe = !0);
     }
     CurrentState() {
       return AnimalStateMachineComponent_1.GetUeState(this.Lle.CurrentState);

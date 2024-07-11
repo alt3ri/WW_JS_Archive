@@ -21,20 +21,20 @@ class CommonInputViewBase extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
       (this.InputData = void 0),
-      (this.DUt = void 0),
+      (this.PAt = void 0),
       (this.j3 = CommonDefine_1.INVALID_VALUE),
-      (this.RUt = void 0),
+      (this.xAt = void 0),
       (this.ConfirmButton = void 0),
-      (this.vUt = void 0),
-      (this.UUt = void 0),
-      (this.AUt = (t) => {
-        t && 1 === this.DUt && this.RefreshTips(0);
+      (this.InputText = void 0),
+      (this.wAt = void 0),
+      (this.BAt = (t) => {
+        t && 1 === this.PAt && this.RefreshTips(0);
       }),
-      (this.PUt = () => {
+      (this.bAt = () => {
         this.CloseMe();
       }),
-      (this.xUt = () => {
-        var t = this.vUt.GetText(),
+      (this.qAt = () => {
+        var t = this.InputText.GetText(),
           i = StringUtils_1.StringUtils.GetStringRealCount(t);
         i > this.GetMaxLimit()
           ? (this.RefreshTips(2), (this.j3 = 0))
@@ -44,57 +44,57 @@ class CommonInputViewBase extends UiTickViewBase_1.UiTickViewBase {
               ? (this.RefreshTips(3), (this.j3 = 0))
               : this.ExtraConfirmCheck(i, t) && this.ExecuteInputConfirm(t);
       }),
-      (this.wUt = () => {
+      (this.GAt = () => {
         this.SetTipsVisible(!1),
           this.ConfirmButton.SetSelfInteractive(!0),
           (this.j3 = CommonDefine_1.INVALID_VALUE);
       }),
-      (this.BUt = () => {
-        this.bUt("PrefabTextItem_Entertext_Text", 0);
+      (this.NAt = () => {
+        this.OAt("PrefabTextItem_Entertext_Text", 0);
       }),
-      (this.qUt = () => {
-        this.bUt(
+      (this.kAt = () => {
+        this.OAt(
           "PrefabTextItem_Textoverlength_Text",
           CommonDefine_1.INVALID_VALUE,
         ),
           this.ConfirmButton.SetSelfInteractive(!1);
       }),
-      (this.GUt = () => {
-        this.bUt("CDKey_TooShort", 0),
+      (this.FAt = () => {
+        this.OAt("CDKey_TooShort", 0),
           this.ConfirmButton.SetSelfInteractive(!1);
       }),
-      (this.NUt = () => {
-        this.bUt("PrefabTextItem_Textillegality_Text", 0);
+      (this.VAt = () => {
+        this.OAt("PrefabTextItem_Textillegality_Text", 0);
       }),
       (this.CdKeyErrorText =
         MultiTextLang_1.configMultiTextLang.GetLocalTextNew("CDKey_Error")),
-      (this.OUt = () => {
-        this.kUt(this.CdKeyErrorText, 0),
+      (this.HAt = () => {
+        this.jAt(this.CdKeyErrorText, 0),
           this.ConfirmButton.SetSelfInteractive(!1);
       }),
-      (this.FUt = () => {
+      (this.WAt = () => {
         var t =
           CdKeyInputController_1.CdKeyInputController.GetCdKeyUseCd().toString();
-        this.bUt("CDKey_CDtime", 0, t),
+        this.OAt("CDKey_CDtime", 0, t),
           this.ConfirmButton.SetSelfInteractive(!1);
       }),
-      (this.VUt = () => {
-        this.vUt.SetText("", !0);
+      (this.KAt = () => {
+        this.InputText.SetText("", !0);
       }),
-      (this.HUt = () => {
+      (this.QAt = () => {
         var t = (0, puerts_1.$ref)("");
         UE.LGUIBPLibrary.ClipBoardPaste(t),
           (t = (0, puerts_1.$unref)(t)),
-          StringUtils_1.StringUtils.IsEmpty(t) || this.vUt.SetText(t, !0);
+          StringUtils_1.StringUtils.IsEmpty(t) || this.InputText.SetText(t, !0);
       }),
-      (this.jUt = () => {
+      (this.XAt = () => {
         var t =
           ConfigManager_1.ConfigManager.TextConfig.GetTextById(
             "SetNameSuccess",
           );
         ScrollingTipsController_1.ScrollingTipsController.ShowTipsByText(t);
       }),
-      (this.WUt = () => {
+      (this.$At = () => {
         var t =
           ConfigManager_1.ConfigManager.TextConfig.GetTextById(
             "SetSignSuccess",
@@ -105,7 +105,8 @@ class CommonInputViewBase extends UiTickViewBase_1.UiTickViewBase {
         this.SetClearOrPaste(),
           StringUtils_1.StringUtils.GetStringRealCount(t) <= this.GetMaxLimit()
             ? this.RefreshTips(0)
-            : this.RefreshTips(2);
+            : this.RefreshTips(2),
+          this.RefreshDuplicateName(t);
       });
   }
   OnRegisterComponent() {
@@ -118,11 +119,12 @@ class CommonInputViewBase extends UiTickViewBase_1.UiTickViewBase {
       [5, UE.UITextInputComponent],
       [6, UE.UIText],
       [7, UE.UIItem],
+      [8, UE.UIText],
     ]),
       (this.BtnBindInfo = [
-        [5, this.AUt],
-        [3, this.PUt],
-        [4, this.xUt],
+        [5, this.BAt],
+        [3, this.bAt],
+        [4, this.qAt],
       ]);
   }
   ExtraConfirmCheck(t, i) {
@@ -131,7 +133,7 @@ class CommonInputViewBase extends UiTickViewBase_1.UiTickViewBase {
   ExecuteInputConfirm(t) {
     this.InputData.ConfirmFunc?.(t).then(
       (t) => {
-        t === Protocol_1.Aki.Protocol.lkn.Proto_ContainsDirtyWord
+        t === Protocol_1.Aki.Protocol.O4n.Proto_ContainsDirtyWord
           ? this.RefreshTips(4)
           : this.CloseMe();
       },
@@ -143,50 +145,57 @@ class CommonInputViewBase extends UiTickViewBase_1.UiTickViewBase {
   }
   OnBeforeCreate() {
     (this.InputData = this.OpenParam),
-      (this.RUt = {
-        [0]: this.wUt,
-        1: this.BUt,
-        2: this.qUt,
-        3: this.GUt,
-        4: this.NUt,
-        5: this.OUt,
-        6: this.FUt,
+      (this.xAt = {
+        [0]: this.GAt,
+        1: this.NAt,
+        2: this.kAt,
+        3: this.FAt,
+        4: this.VAt,
+        5: this.HAt,
+        6: this.WAt,
       });
   }
-  bUt(t, i, ...e) {
+  OAt(t, i, ...e) {
     this.SetTipsVisible(!0);
     var s = this.GetText(2);
     LguiUtil_1.LguiUtil.SetLocalTextNew(s, t, e), (this.j3 = i);
   }
-  kUt(t, i) {
+  jAt(t, i) {
     this.SetTipsVisible(!0), this.GetText(2).SetText(t), (this.j3 = i);
   }
+  SetBottomTipsTextAndColor(t, i) {
+    var e = this.GetText(8);
+    LguiUtil_1.LguiUtil.SetLocalTextNew(e, t), e.SetColor(i);
+  }
+  SetBottomTipsShowState(t) {
+    this.GetText(8).SetUIActive(t);
+  }
   OnBeforeShow() {
-    this.KUt(), this.mGe(), this.RefreshTips(0), this.InitExtraParam();
+    this.YAt(), this.mGe(), this.RefreshTips(0), this.InitExtraParam();
   }
   SetClearOrPaste() {
-    "" === this.vUt.GetText()
-      ? (this.UUt.RefreshSprite("SP_Paste"), this.UUt.BindCallback(this.HUt))
-      : (this.UUt.RefreshSprite("SP_Clear"), this.UUt.BindCallback(this.VUt));
+    "" === this.InputText.GetText()
+      ? (this.wAt.RefreshSprite("SP_Paste"), this.wAt.BindCallback(this.QAt))
+      : (this.wAt.RefreshSprite("SP_Clear"), this.wAt.BindCallback(this.KAt));
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnNameChange,
-      this.jUt,
+      this.XAt,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnSignChange,
-        this.WUt,
+        this.$At,
       );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnNameChange,
-      this.jUt,
+      this.XAt,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnSignChange,
-        this.WUt,
+        this.$At,
       );
   }
   OnTick(t) {
@@ -195,29 +204,30 @@ class CommonInputViewBase extends UiTickViewBase_1.UiTickViewBase {
       this.RefreshTips(0);
   }
   OnBeforeDestroy() {
-    this.QUt(),
-      (this.UUt = void 0),
-      (this.vUt = void 0),
+    this.JAt(),
+      (this.wAt = void 0),
+      (this.InputText = void 0),
       (this.ConfirmButton = void 0);
   }
-  KUt() {
-    (this.UUt = new ButtonAndSpriteItem_1.ButtonAndSpriteItem(this.GetItem(7))),
+  YAt() {
+    (this.wAt = new ButtonAndSpriteItem_1.ButtonAndSpriteItem(this.GetItem(7))),
       this.GetItem(7).SetUIActive(this.InputData.NeedFunctionButton),
       (this.ConfirmButton = this.GetButton(4)),
-      (this.vUt = this.GetInputText(5)),
-      (this.vUt.bAllowMultiLine = this.IsAllowMultiLine()),
-      this.vUt.OnTextChange.Bind(this.OnTextChange),
-      this.vUt.SetText(this.InputData.InputText, !0),
+      (this.InputText = this.GetInputText(5)),
+      (this.InputText.bAllowMultiLine = this.IsAllowMultiLine()),
+      this.InputText.OnTextChange.Bind(this.OnTextChange),
+      this.InputText.SetText(this.InputData.InputText, !0),
       this.GetText(6).SetText(this.InputData.DefaultText),
       this.SetClearOrPaste(),
-      this.SetTipsVisible(!1);
+      this.SetTipsVisible(!1),
+      this.SetBottomTipsShowState(!1);
   }
   SetTipsVisible(t) {
     this.GetItem(1).SetUIActive(t);
   }
   InitExtraParam() {}
-  QUt() {
-    this.vUt.OnTextChange.Unbind();
+  JAt() {
+    this.InputText.OnTextChange.Unbind();
   }
   mGe() {
     LguiUtil_1.LguiUtil.SetLocalTextNew(
@@ -227,8 +237,9 @@ class CommonInputViewBase extends UiTickViewBase_1.UiTickViewBase {
     );
   }
   RefreshTips(t) {
-    t !== this.DUt && ((this.DUt = t), this.RUt[t]());
+    t !== this.PAt && ((this.PAt = t), this.xAt[t]());
   }
+  RefreshDuplicateName(t) {}
   GetMinLimit() {
     return 0;
   }

@@ -4,42 +4,42 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const KeyItemBase_1 = require("./KeyItemBase");
 class LongPressKeyItemBase extends KeyItemBase_1.KeyItemBase {
   constructor() {
-    super(...arguments), (this.g_t = -0), (this.K1t = -0), (this.f_t = !1);
+    super(...arguments), (this.xut = -0), (this.rut = -0), (this.wut = !1);
   }
   RefreshActionLongPress(s, t = 0) {
     this.ActionName !== s &&
-      ((this.g_t = t), this.RefreshAction(s), this.p_t(0 < t), this.v_t(0));
+      ((this.xut = t), this.RefreshAction(s), this.But(0 < t), this.but(0));
   }
   ForceShowLongPress() {
-    (this.g_t = 0), this.p_t(!0), this.v_t(100);
+    (this.xut = 0), this.But(!0), this.but(100);
   }
   RefreshAxis(s) {
-    this.AxisName !== s && ((this.g_t = 0), this.p_t(!1), super.RefreshAxis(s));
+    this.AxisName !== s && ((this.xut = 0), this.But(!1), super.RefreshAxis(s));
   }
   OnBeforeDestroy() {
-    this.M_t();
+    this.qut();
   }
   OnInputAction(s, t) {
-    this.IsEnable && 0 === t ? this.S_t() : this.M_t();
+    this.IsEnable && 0 === t ? this.Gut() : this.qut();
   }
   Tick(s) {
-    this.f_t &&
+    this.wut &&
       (!this.IsEnable ||
-        ((this.K1t += s),
-        this.v_t(this.K1t / this.g_t),
-        this.K1t >= this.g_t)) &&
-      this.M_t();
+        ((this.rut += s),
+        this.but(this.rut / this.xut),
+        this.rut >= this.xut)) &&
+      this.qut();
   }
-  S_t() {
-    (this.K1t = 0), this.v_t(0), (this.f_t = !0);
+  Gut() {
+    (this.rut = 0), this.but(0), (this.wut = !0);
   }
-  M_t() {
-    (this.K1t = 0), this.v_t(0), (this.f_t = !1);
+  qut() {
+    (this.rut = 0), this.but(0), (this.wut = !1);
   }
-  p_t(s) {
+  But(s) {
     this.GetLongPressItem()?.SetUIActive(s);
   }
-  v_t(s) {
+  but(s) {
     this.GetLongPressTexture()?.SetFillAmount(s);
   }
 }

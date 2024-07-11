@@ -114,7 +114,7 @@ class LevelGeneralCommons {
         );
   }
   static LUe(e, t, r) {
-    var a = t?.Entity?.GetComponent(177);
+    var a = t?.Entity?.GetComponent(180);
     if (a) {
       var o = GameplayTagUtils_1.GameplayTagUtils.GetNameByTagId(r),
         n = t.Entity.GetComponent(0)?.GetPbEntityInitData(),

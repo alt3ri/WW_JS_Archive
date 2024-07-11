@@ -30,7 +30,7 @@ class AdviceModel extends ModelBase_1.ModelBase {
       (this.CurrentChangeWordType = 0),
       (this.CurrentLineModel = 0),
       (this.CurrentSentenceSelectIndex = 0),
-      (this.E8e = 0),
+      (this.q9e = 0),
       (this.PreSelectSortTypeId = 0),
       (this.PreSelectSortWordId = 0),
       (this.CurrentSelectSortWordId = 0),
@@ -45,96 +45,96 @@ class AdviceModel extends ModelBase_1.ModelBase {
       (this.PreSelectMotionId = 0),
       (this.PreSelectAdviceItemId = 0),
       (this.AdviceViewShowId = void 0),
-      (this.y8e = new Set()),
-      (this.I8e = new Map()),
-      (this.T8e = void 0),
-      (this.L8e = !1),
-      (this.D8e = 0),
-      (this.R8e = void 0),
-      (this.U8e = !1),
-      (this.A8e = new Stack_1.Stack()),
-      (this.P8e = new Map()),
-      (this.x8e = void 0);
+      (this.G9e = new Set()),
+      (this.N9e = new Map()),
+      (this.O9e = void 0),
+      (this.k9e = !1),
+      (this.F9e = 0),
+      (this.V9e = void 0),
+      (this.H9e = !1),
+      (this.j9e = new Stack_1.Stack()),
+      (this.W9e = new Map()),
+      (this.K9e = void 0);
   }
   GetAdviceCreateActor() {
     return (
-      this.x8e ||
-        ((this.x8e = new AdviceCreateActor_1.AdviceCreateActor()),
-        this.x8e.Init()),
-      this.x8e.RefreshPosition(),
-      this.x8e
+      this.K9e ||
+        ((this.K9e = new AdviceCreateActor_1.AdviceCreateActor()),
+        this.K9e.Init()),
+      this.K9e.RefreshPosition(),
+      this.K9e
     );
   }
   OnAdviceCreateActorDestroy() {
-    this.x8e = void 0;
+    this.K9e = void 0;
   }
   GetAdviceMotionActor(e) {
-    e = this.P8e.get(e);
-    return e || this.A8e.Pop() || new AdviceMotionActor_1.AdviceMotionActor();
+    e = this.W9e.get(e);
+    return e || this.j9e.Pop() || new AdviceMotionActor_1.AdviceMotionActor();
   }
   AddPlayingMotionEntity(e, t) {
-    this.P8e.set(e, t);
+    this.W9e.set(e, t);
   }
   RemovePlayingMotionEntity(e) {
-    this.P8e.delete(e);
+    this.W9e.delete(e);
   }
   RecycleMotionActor(e) {
-    this.A8e.Push(e);
+    this.j9e.Push(e);
   }
   RemoveMotionActor(e) {
-    this.A8e.Delete(e);
+    this.j9e.Delete(e);
   }
   PhraseAdviceData(e) {
-    this.y8e.clear(),
-      e.Ags.forEach((e) => {
+    this.G9e.clear(),
+      e.WMs.forEach((e) => {
         e = MathUtils_1.MathUtils.LongToBigInt(e);
-        this.y8e.add(e);
+        this.G9e.add(e);
       }),
-      this.I8e.clear(),
-      e.Dgs.forEach((e) => {
+      this.N9e.clear(),
+      e.jMs.forEach((e) => {
         var t = new AdviceData_1.AdviceData();
-        t.Phrase(e), this.I8e.set(t.GetAdviceBigId(), t);
+        t.Phrase(e), this.N9e.set(t.GetAdviceBigId(), t);
       }),
-      (this.L8e = !0),
+      (this.k9e = !0),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnReceiveAdviceData,
       );
   }
   PhraseAdviceCreateData(e) {
     var t = new AdviceData_1.AdviceData();
-    t.Phrase(e.Lgs),
-      this.I8e.set(t.GetAdviceBigId(), t),
-      (this.L8e = !0),
+    t.Phrase(e.$Ms),
+      this.N9e.set(t.GetAdviceBigId(), t),
+      (this.k9e = !0),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnCreateAdviceSuccess,
       );
   }
   OnAdviceUpdateNotify(e) {
-    this.y8e.clear(),
-      e.Ags.forEach((e) => {
+    this.G9e.clear(),
+      e.WMs.forEach((e) => {
         e = MathUtils_1.MathUtils.LongToBigInt(e);
-        this.y8e.add(e);
+        this.G9e.add(e);
       }),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnAdviceVoteNotify,
       );
   }
   OnRequestVote(e, t) {
-    this.y8e.delete(e),
-      t === Protocol_1.Aki.Protocol.$Bs.Proto_Up && this.y8e.add(e),
+    this.G9e.delete(e),
+      t === Protocol_1.Aki.Protocol.Uks.Proto_Up && this.G9e.add(e),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnAdviceVoteNotify,
       );
   }
   OnAdviceVoteUpdate(e, t) {
-    e = this.I8e.get(e);
-    e && e.PhraseUpDownData(t.Tgs);
+    e = this.N9e.get(e);
+    e && e.PhraseUpDownData(t.VMs);
   }
   OnModifyAdvice(e, t) {
     var i = MathUtils_1.MathUtils.LongToBigInt(e),
-      i = this.I8e.get(i);
+      i = this.N9e.get(i);
     i && i.PhraseData(t),
-      (this.L8e = !0),
+      (this.k9e = !0),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnModifyAdviceSuccess,
         e,
@@ -142,20 +142,20 @@ class AdviceModel extends ModelBase_1.ModelBase {
   }
   OnDeleteAdvice(e) {
     e = MathUtils_1.MathUtils.LongToBigInt(e);
-    this.I8e.delete(e),
-      (this.L8e = !0),
+    this.N9e.delete(e),
+      (this.k9e = !0),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnDeleteAdviceSuccess,
       );
   }
   GetAdviceArray() {
     return (
-      this.L8e && ((this.T8e = Array.from(this.I8e.values())), (this.L8e = !1)),
-      this.T8e
+      this.k9e && ((this.O9e = Array.from(this.N9e.values())), (this.k9e = !1)),
+      this.O9e
     );
   }
   GetUpVoteIds() {
-    return Array.from(this.y8e);
+    return Array.from(this.G9e);
   }
   GetIfCanCreateAdvice(e) {
     var t,
@@ -171,15 +171,15 @@ class AdviceModel extends ModelBase_1.ModelBase {
     return !(1 === e && (!n || n <= 0));
   }
   SetCurrentEntityId(e) {
-    (this.D8e = e), (this.R8e = void 0);
+    (this.F9e = e), (this.V9e = void 0);
     var e = EntitySystem_1.EntitySystem.Get(e);
-    e && ((e = e.GetComponent(0)), (this.R8e = e.GetAdviceInfo()));
+    e && ((e = e.GetComponent(0)), (this.V9e = e.GetAdviceInfo()));
   }
   GetCurrentEntityAdviceData() {
-    return this.R8e;
+    return this.V9e;
   }
   GetCurrentEntityId() {
-    return this.D8e;
+    return this.F9e;
   }
   ResetWordData() {
     this.CurrentWordMap.clear(),
@@ -208,8 +208,8 @@ class AdviceModel extends ModelBase_1.ModelBase {
       this.RandomSecondSentenceWord();
   }
   SetAdviceShowSetting(e) {
-    this.U8e = e;
-    e = this.U8e ? 1 : 0;
+    this.H9e = e;
+    e = this.H9e ? 1 : 0;
     MenuController_1.MenuController.SetTargetConfig(59, e),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.RefreshMenuSetting,
@@ -217,11 +217,11 @@ class AdviceModel extends ModelBase_1.ModelBase {
       );
   }
   GetAdviceShowSetting() {
-    return this.U8e;
+    return this.H9e;
   }
   GetCreateAdvicePreConditionState() {
     var e;
-    return this.w8e()
+    return this.Q9e()
       ? ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance()
         ? (Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug("Advice", 28, "IsInInstance"),
@@ -231,7 +231,7 @@ class AdviceModel extends ModelBase_1.ModelBase {
             ? !(
                 (e =
                   ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity.Entity.GetComponent(
-                    185,
+                    188,
                   )).HasTag(1996802261) ||
                 (!e.HasTag(248240472) &&
                   (Log_1.Log.CheckDebug() &&
@@ -275,12 +275,12 @@ class AdviceModel extends ModelBase_1.ModelBase {
     var e;
     return ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance()
       ? "CannotPutAdviceInInstanceDungeon"
-      : this.w8e()
+      : this.Q9e()
         ? ModelManager_1.ModelManager.CreatureModel.IsMyWorld()
           ? AdviceController_1.AdviceController.CheckIfStandAndInValidActor()
             ? (e =
                 ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity.Entity.GetComponent(
-                  185,
+                  188,
                 )).HasTag(1996802261)
               ? "AdviceCannotOpenOnBattle"
               : e.HasTag(248240472)
@@ -304,7 +304,7 @@ class AdviceModel extends ModelBase_1.ModelBase {
             ? "OverCreateAdviceMax"
             : "CurrentStateCannotPutAdvice");
   }
-  w8e() {
+  Q9e() {
     return !(
       !ModelManager_1.ModelManager.FunctionModel.IsOpen(10048) ||
       !ModelManager_1.ModelManager.FunctionModel.IsOpen(10050)
@@ -374,10 +374,10 @@ class AdviceModel extends ModelBase_1.ModelBase {
       t = Number(
         MathUtils_1.MathUtils.GetRandomRange(0, e.length - 1).toFixed(),
       );
-    (this.E8e = t),
+    (this.q9e = t),
       ModelManager_1.ModelManager.AdviceModel.CurrentSentenceWordMap.set(
         1,
-        e[this.E8e].Id,
+        e[this.q9e].Id,
       );
   }
   GetFirstLineText() {
@@ -387,7 +387,7 @@ class AdviceModel extends ModelBase_1.ModelBase {
         (t.SetData(
           this.CurrentSentenceWordMap.get(0),
           this.CurrentWordMap.get(0),
-          Protocol_1.Aki.Protocol.FBs.Proto_Sentence,
+          Protocol_1.Aki.Protocol.Aks.Proto_Sentence,
         ),
         e.push(t),
         new AdviceData_1.AdviceData());
@@ -399,13 +399,13 @@ class AdviceModel extends ModelBase_1.ModelBase {
     t.SetData(
       this.CurrentConjunctionId,
       0,
-      Protocol_1.Aki.Protocol.FBs.Proto_Conjunction,
+      Protocol_1.Aki.Protocol.Aks.Proto_Conjunction,
     ),
       e.push(t),
       (t = new AdviceData_1.AdviceContentData()).SetData(
         this.CurrentSentenceWordMap.get(1),
         this.CurrentWordMap.get(1),
-        Protocol_1.Aki.Protocol.FBs.Proto_Sentence,
+        Protocol_1.Aki.Protocol.Aks.Proto_Sentence,
       ),
       e.push(t);
     var i = new AdviceData_1.AdviceData();
@@ -418,7 +418,7 @@ class AdviceModel extends ModelBase_1.ModelBase {
       e.SetData(
         this.CurrentSentenceWordMap.get(0),
         this.CurrentWordMap.get(0),
-        Protocol_1.Aki.Protocol.FBs.Proto_Sentence,
+        Protocol_1.Aki.Protocol.Aks.Proto_Sentence,
       ),
         t.push(e);
     } else {
@@ -426,19 +426,19 @@ class AdviceModel extends ModelBase_1.ModelBase {
       e.SetData(
         this.CurrentSentenceWordMap.get(0),
         this.CurrentWordMap.get(0),
-        Protocol_1.Aki.Protocol.FBs.Proto_Sentence,
+        Protocol_1.Aki.Protocol.Aks.Proto_Sentence,
       ),
         t.push(e),
         (e = new AdviceData_1.AdviceContentData()).SetData(
           this.CurrentConjunctionId,
           0,
-          Protocol_1.Aki.Protocol.FBs.Proto_Conjunction,
+          Protocol_1.Aki.Protocol.Aks.Proto_Conjunction,
         ),
         t.push(e),
         (e = new AdviceData_1.AdviceContentData()).SetData(
           this.CurrentSentenceWordMap.get(1),
           this.CurrentWordMap.get(1),
-          Protocol_1.Aki.Protocol.FBs.Proto_Sentence,
+          Protocol_1.Aki.Protocol.Aks.Proto_Sentence,
         ),
         t.push(e);
     }
@@ -464,7 +464,7 @@ class AdviceModel extends ModelBase_1.ModelBase {
           (i = new AdviceData_1.AdviceContentData()).SetData(
             t,
             r,
-            Protocol_1.Aki.Protocol.FBs.Proto_Sentence,
+            Protocol_1.Aki.Protocol.Aks.Proto_Sentence,
           ),
           n.push(i)),
         1 === c &&
@@ -473,7 +473,7 @@ class AdviceModel extends ModelBase_1.ModelBase {
           ((r = new AdviceData_1.AdviceContentData()).SetData(
             s,
             0,
-            Protocol_1.Aki.Protocol.FBs.Proto_Conjunction,
+            Protocol_1.Aki.Protocol.Aks.Proto_Conjunction,
           ),
           n.push(r)));
     return (
@@ -481,14 +481,14 @@ class AdviceModel extends ModelBase_1.ModelBase {
         ((a = new AdviceData_1.AdviceContentData()).SetData(
           o.CurrentExpressionId,
           0,
-          Protocol_1.Aki.Protocol.FBs.Proto_Expression,
+          Protocol_1.Aki.Protocol.Aks.Proto_Expression,
         ),
         n.push(a)),
       0 < o.CurrentSelectMotionId &&
         ((a = new AdviceData_1.AdviceContentData()).SetData(
           o.CurrentSelectMotionId,
           0,
-          Protocol_1.Aki.Protocol.FBs.y3n,
+          Protocol_1.Aki.Protocol.Aks.r8n,
         ),
         n.push(a)),
       n

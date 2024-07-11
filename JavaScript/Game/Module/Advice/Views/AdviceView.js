@@ -15,25 +15,25 @@ class AdviceView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
       (this.xqe = void 0),
-      (this.Z7e = void 0),
-      (this.eHe = !1),
-      (this.tHe = 0),
-      (this.iHe = () => {
-        this.oHe(), this.rHe(), this.Qbe();
+      (this.uje = void 0),
+      (this.cje = !1),
+      (this.mje = 0),
+      (this.dje = () => {
+        this.Cje(), this.gje(), this.Qbe();
       }),
       (this.sGe = (e, t, i) => {
         t = new AdviceItem_1.AdviceItem(t);
         return t.Update(e), { Key: i, Value: t };
       }),
-      (this.nHe = (e) => {
+      (this.fje = (e) => {
         var t;
-        this.eHe &&
-          this.tHe >= WAITUPDATECOUNT &&
-          ((this.eHe = !1),
-          (t = this.sHe(this.Z7e)),
+        this.cje &&
+          this.mje >= WAITUPDATECOUNT &&
+          ((this.cje = !1),
+          (t = this.pje(this.uje)),
           this.GetScrollViewWithScrollbar(1).SetScrollProgress(t),
           this.xqe.UnBindLateUpdate()),
-          this.tHe++;
+          this.mje++;
       });
   }
   OnRegisterComponent() {
@@ -53,35 +53,35 @@ class AdviceView extends UiViewBase_1.UiViewBase {
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnDeleteAdviceSuccess,
-      this.iHe,
+      this.dje,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnCreateAdviceSuccess,
-        this.iHe,
+        this.dje,
       );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnDeleteAdviceSuccess,
-      this.iHe,
+      this.dje,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnCreateAdviceSuccess,
-        this.iHe,
+        this.dje,
       );
   }
   OnAfterShow() {
-    this.oHe(), this.rHe(), this.Qbe();
+    this.Cje(), this.gje(), this.Qbe();
   }
-  oHe() {
-    this.Z7e = new Array();
+  Cje() {
+    this.uje = new Array();
     var t = ModelManager_1.ModelManager.AdviceModel.GetAdviceArray();
-    for (let e = t.length - 1; 0 <= e; e--) this.Z7e.push(t[e]);
-    this.xqe.RefreshByData(this.Z7e),
+    for (let e = t.length - 1; 0 <= e; e--) this.uje.push(t[e]);
+    this.xqe.RefreshByData(this.uje),
       this.xqe.UnBindLateUpdate(),
-      (this.eHe = !0),
-      (this.tHe = 0),
-      this.xqe.BindLateUpdate(this.nHe);
+      (this.cje = !0),
+      (this.mje = 0),
+      this.xqe.BindLateUpdate(this.fje);
   }
   Qbe() {
     var e = ModelManager_1.ModelManager.AdviceModel.GetAdviceArray(),
@@ -96,7 +96,7 @@ class AdviceView extends UiViewBase_1.UiViewBase {
       t,
     );
   }
-  sHe(t) {
+  pje(t) {
     let i = 0;
     for (let e = 0; e < t.length; e++)
       if (
@@ -108,7 +108,7 @@ class AdviceView extends UiViewBase_1.UiViewBase {
       }
     return i / (t.length - 1);
   }
-  rHe() {
+  gje() {
     var e =
       0 === ModelManager_1.ModelManager.AdviceModel.GetAdviceArray().length;
     this.GetItem(2).SetUIActive(e),

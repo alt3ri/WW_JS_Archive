@@ -28,38 +28,38 @@ class LogUpload {
           10,
           "CDN下发数据未配置腾讯云对象存储相关配置！",
         ),
-      UE.KuroTencentCOSLibrary.SetAdmissibleValue(this.$pi),
+      UE.KuroTencentCOSLibrary.SetAdmissibleValue(this.$vi),
       UE.KuroTencentCOSLibrary.SetHandleFunc(
         (0, puerts_1.toManualReleaseDelegate)(this.PreSendFiles),
         (0, puerts_1.toManualReleaseDelegate)(this.PostSended),
       ),
-      this.Ypi &&
-        (Info_1.Info.IsPc() &&
+      this.Yvi &&
+        (Info_1.Info.IsPcOrGamepadPlatform() &&
           UE.KuroTencentCOSLibrary.EnableAutoSendWhenExit(),
-        Info_1.Info.IsMobile()) &&
+        Info_1.Info.IsMobilePlatform()) &&
         UE.KuroLauncherLibrary.GetNetworkConnectionType() ===
           NetworkDefine_1.ENetworkType.WiFi &&
         UE.KuroTencentCOSLibrary.SendLogToTencentCOS(
-          (0, puerts_1.toManualReleaseDelegate)(this.Jpi),
+          (0, puerts_1.toManualReleaseDelegate)(this.Jvi),
         );
   }
-  static zpi(e) {
+  static zvi(e) {
     return UE.KuroStaticLibrary.DirectoryExists(e);
   }
-  static Zpi() {
-    this.evi();
+  static Zvi() {
+    this.eMi();
     let e = "";
     "" !== this.ae && (e = this.ae + "-");
     var o = new Date(),
       o =
         `${o.getFullYear()}.${o.getMonth() + 1}.${o.getDate()}-${o.getHours()}.${o.getMinutes()}.` +
         o.getSeconds();
-    return "" === this.tvi ? e + o + ".zip" : `${this.tvi}-${e}${o}.zip`;
+    return "" === this.tMi ? e + o + ".zip" : `${this.tMi}-${e}${o}.zip`;
   }
   static SendLog(e) {
     UE.KuroTencentCOSLibrary.SendLogToTencentCOS(e);
   }
-  static evi() {
+  static eMi() {
     let e = "";
     var o;
     Net_1.Net.IsServerConnected()
@@ -69,35 +69,36 @@ class LogUpload {
             LocalStorageDefine_1.ELocalStorageGlobalKey.RecentlyLoginUID,
           )) && (e = o.toString());
     let r = "0";
-    ControllerHolder_1.ControllerHolder.KuroSdkController.CanUseSdk() &&
+    !this.Yvi &&
+      ControllerHolder_1.ControllerHolder.KuroSdkController.CanUseSdk() &&
       (r = ModelManager_1.ModelManager.LoginModel.GetSdkLoginConfig().Uid),
-      (this.tvi = r + "-" + e),
+      (this.tMi = r + "-" + e),
       Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Log", 38, "获取日志上传UID", ["UID", this.tvi]);
+        Log_1.Log.Info("Log", 38, "获取日志上传UID", ["UID", this.tMi]);
   }
 }
 (exports.LogUpload = LogUpload),
-  ((_a = LogUpload).Ypi = !0),
-  (LogUpload.$pi = 5),
+  ((_a = LogUpload).Yvi = !0),
+  (LogUpload.$vi = 5),
   (LogUpload.ae = ""),
-  (LogUpload.ivi = 20),
-  (LogUpload.tvi = ""),
-  (LogUpload.ovi = "Logs/Sendedlogs.json"),
-  (LogUpload.rvi = void 0),
-  (LogUpload.Jpi = (e, o) => {
+  (LogUpload.iMi = 20),
+  (LogUpload.tMi = ""),
+  (LogUpload.oMi = "Logs/Sendedlogs.json"),
+  (LogUpload.rMi = void 0),
+  (LogUpload.Jvi = (e, o) => {
     (5 !== e && 4 !== e) || UE.KuroTencentCOSLibrary.SetIsAutoSend(!1);
   }),
   (LogUpload.PostSended = (o) => {
-    _a.rvi || (_a.rvi = { Paths: [] });
+    _a.rMi || (_a.rMi = { Paths: [] });
     var r = cpp_1.KuroLoggingLibrary.GetLogFilename(),
       a = o.Num();
     for (let e = 0; e < a; e++) {
       var t = o.Get(e);
-      t.endsWith(r) || _a.rvi.Paths.includes(t) || _a.rvi.Paths.push(t);
+      t.endsWith(r) || _a.rMi.Paths.includes(t) || _a.rMi.Paths.push(t);
     }
     UE.KuroStaticLibrary.SaveStringToFile(
-      JSON.stringify(_a.rvi),
-      UE.BlueprintPathsLibrary.ProjectSavedDir() + _a.ovi,
+      JSON.stringify(_a.rMi),
+      UE.BlueprintPathsLibrary.ProjectSavedDir() + _a.oMi,
     );
   }),
   (LogUpload.PreSendFiles = (o) => {
@@ -106,7 +107,7 @@ class LogUpload {
     var t = o.Num();
     for (let e = 0; e < t; e++) {
       var _ = o.Get(e);
-      if (!_a.zpi(_)) {
+      if (!_a.zvi(_)) {
         var i = _.split("/"),
           i = i[i.length - 1],
           l = i.split(".");
@@ -120,23 +121,23 @@ class LogUpload {
     }
     var e,
       n,
-      s = UE.BlueprintPathsLibrary.ProjectSavedDir() + _a.ovi;
+      s = UE.BlueprintPathsLibrary.ProjectSavedDir() + _a.oMi;
     UE.KuroStaticLibrary.FileExists(
-      UE.BlueprintPathsLibrary.ProjectSavedDir() + _a.ovi,
+      UE.BlueprintPathsLibrary.ProjectSavedDir() + _a.oMi,
     ) &&
       ((n = ((e = ""), puerts_1.$ref)("")),
       UE.KuroStaticLibrary.LoadFileToString(n, s),
       (e = (0, puerts_1.$unref)(n)),
-      (_a.rvi = JSON.parse(e)),
-      (_a.rvi.Paths = _a.rvi.Paths.filter((e) => a.includes(e)))),
-      a.length > _a.ivi && (a.sort(), a.splice(0, a.length - _a.ivi)),
+      (_a.rMi = JSON.parse(e)),
+      (_a.rMi.Paths = _a.rMi.Paths.filter((e) => a.includes(e)))),
+      a.length > _a.iMi && (a.sort(), a.splice(0, a.length - _a.iMi)),
       0 <
-        (a = _a.rvi ? a.filter((e) => !_a.rvi.Paths.includes(e)) : a).length &&
+        (a = _a.rMi ? a.filter((e) => !_a.rMi.Paths.includes(e)) : a).length &&
         (s = /\d{4}.\d{1,2}.\d{1,2}-\d{1,2}.\d{1,2}.\d{1,2}/.exec(a[0])) &&
         0 < s?.length &&
         (_a.ae = s[0]);
     for (const g of a) r.Add(g);
     UE.KuroTencentCOSLibrary.SetFilesToSend(r),
-      UE.KuroTencentCOSLibrary.SetSendLogZipName(_a.Zpi());
+      UE.KuroTencentCOSLibrary.SetSendLogZipName(_a.Zvi());
   });
 //# sourceMappingURL=LogUpload.js.map

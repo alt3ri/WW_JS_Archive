@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PlotController = void 0);
-const ue_1 = require("ue"),
+const cpp_1 = require("cpp"),
+  ue_1 = require("ue"),
   Log_1 = require("../../../Core/Common/Log"),
   Time_1 = require("../../../Core/Common/Time"),
   EntitySystem_1 = require("../../../Core/Entity/EntitySystem"),
@@ -15,6 +16,7 @@ const ue_1 = require("ue"),
   ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../Manager/ModelManager"),
   CharacterBuffIds_1 = require("../../NewWorld/Character/Common/Component/Abilities/CharacterBuffIds"),
+  PerfSightController_1 = require("../../PerfSight/PerfSightController"),
   UiControllerBase_1 = require("../../Ui/Base/UiControllerBase"),
   InputDistributeController_1 = require("../../Ui/InputDistribute/InputDistributeController"),
   InputDistributeDefine_1 = require("../../Ui/InputDistribute/InputDistributeDefine"),
@@ -25,7 +27,7 @@ const ue_1 = require("ue"),
 class PlotController extends UiControllerBase_1.UiControllerBase {
   static OnInit() {
     return (
-      (this.y$i = !1),
+      (this.EYi = !1),
       ResourceSystem_1.ResourceSystem.LoadAsync(
         ModelManager_1.ModelManager.PlotModel.PlotGlobalConfig
           .PlotGoBattleMaterialPath,
@@ -54,7 +56,7 @@ class PlotController extends UiControllerBase_1.UiControllerBase {
   static OnAddEvents() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.BeforeLoadMap,
-      PlotController.I$i,
+      PlotController.SYi,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.WorldDoneAndCloseLoading,
@@ -74,7 +76,7 @@ class PlotController extends UiControllerBase_1.UiControllerBase {
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnLeaveOnlineWorld,
-        PlotController.hJe,
+        PlotController.Mze,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnUpdateSceneTeam,
@@ -85,7 +87,7 @@ class PlotController extends UiControllerBase_1.UiControllerBase {
   static OnRemoveEvents() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.BeforeLoadMap,
-      PlotController.I$i,
+      PlotController.SYi,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.WorldDoneAndCloseLoading,
@@ -105,7 +107,7 @@ class PlotController extends UiControllerBase_1.UiControllerBase {
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnLeaveOnlineWorld,
-        PlotController.hJe,
+        PlotController.Mze,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnUpdateSceneTeam,
@@ -117,13 +119,17 @@ class PlotController extends UiControllerBase_1.UiControllerBase {
     return !0;
   }
   static ChangeFormation() {
-    this.T$i.ChangeFormation();
+    this.yYi.ChangeFormation();
   }
   static async CheckFormation() {
-    return this.T$i.CheckFormationPromise();
+    return this.yYi.CheckFormationPromise();
   }
   static OnStartPlotNetwork(e) {
-    (ModelManager_1.ModelManager.PlotModel.IsInPlot = !0),
+    PerfSightController_1.PerfSightController.IsEnable &&
+      (ue_1.PerfSightHelper.BeginExtTag("Plot"),
+      (this.PTa = `Plot_${e.FlowListName}_` + e.FlowId),
+      cpp_1.FPerfSightHelper.BeginExtTagUtf8(this.PTa)),
+      (ModelManager_1.ModelManager.PlotModel.IsInPlot = !0),
       (ModelManager_1.ModelManager.PlotModel.PlotStartFrame =
         Time_1.Time.Frame),
       (ModelManager_1.ModelManager.PlotModel.FlowListName = e.FlowListName),
@@ -142,13 +148,20 @@ class PlotController extends UiControllerBase_1.UiControllerBase {
         "LevelD" === e.PlotLevel ||
         "Prompt" === e.PlotLevel ||
         this.PlotViewManager.ProtectPlotView(),
+      e.IsBackground ||
+        ("LevelA" !== e.PlotLevel && "LevelB" !== e.PlotLevel) ||
+        ModelManager_1.ModelManager.PlotModel.SetInPlotGameBudget(!0),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.PlotNetworkStart,
         e,
       );
   }
   static OnEndPlotNetwork() {
-    (ModelManager_1.ModelManager.PlotModel.KeepBgAudio = !1),
+    PerfSightController_1.PerfSightController.IsEnable &&
+      (ue_1.PerfSightHelper.EndExtTag("Plot"),
+      cpp_1.FPerfSightHelper.EndExtTagUtf8(this.PTa),
+      (this.PTa = "")),
+      (ModelManager_1.ModelManager.PlotModel.KeepBgAudio = !1),
       ModelManager_1.ModelManager.PlotModel.ResetAudioState(),
       (ModelManager_1.ModelManager.PlotModel.IsInPlot = !1),
       ModelManager_1.ModelManager.PlotModel.FinishMontage(),
@@ -261,38 +274,38 @@ class PlotController extends UiControllerBase_1.UiControllerBase {
       r.SetIgnoreLookInput(t));
   }
   static TogglePlotProtect(e) {
-    this.y$i !== e &&
-      ((this.y$i = e)
+    this.EYi !== e &&
+      ((this.EYi = e)
         ? ModelManager_1.ModelManager.PlotModel.SaveCharacterLockOn()
         : ModelManager_1.ModelManager.PlotModel.RevertCharacterLockOn()),
-      e ? this.ProtectCurrentRole() : this.L$i();
+      e ? this.ProtectCurrentRole() : this.IYi();
   }
   static ProtectCurrentRole() {
     var e,
       t = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
     t &&
-      !this.D$i.has(t.Id) &&
-      (this.D$i.add(t.Id),
-      (e = t?.Entity?.GetComponent(157)),
-      (t = t?.Entity?.GetComponent(185)) &&
-        (t.HasTag(this.R$i) || t.AddTag(this.R$i),
-        t.HasTag(this.U$i) || t.AddTag(this.U$i)),
+      !this.TYi.has(t.Id) &&
+      (this.TYi.add(t.Id),
+      (e = t?.Entity?.GetComponent(159)),
+      (t = t?.Entity?.GetComponent(188)) &&
+        (t.HasTag(this.LYi) || t.AddTag(this.LYi),
+        t.HasTag(this.DYi) || t.AddTag(this.DYi)),
       e?.AddBuff(CharacterBuffIds_1.buffId.StoryInvincibleCommon, {
         InstigatorId: e.CreatureDataId,
         Reason: "PlotController.ProtectCurrentRole",
       }));
   }
-  static L$i() {
-    for (const t of this.D$i) {
+  static IYi() {
+    for (const t of this.TYi) {
       var e = EntitySystem_1.EntitySystem.Get(t);
-      this.A$i(e, !0);
+      this.RYi(e, !0);
     }
-    this.D$i.clear();
+    this.TYi.clear();
   }
-  static A$i(e, t) {
-    var o = e?.GetComponent(157),
-      e = e?.GetComponent(185);
-    t && (e?.RemoveTag(this.R$i), e?.RemoveTag(this.U$i)),
+  static RYi(e, t) {
+    var o = e?.GetComponent(159),
+      e = e?.GetComponent(188);
+    t && (e?.RemoveTag(this.LYi), e?.RemoveTag(this.DYi)),
       o?.RemoveBuff(
         CharacterBuffIds_1.buffId.StoryInvincibleCommon,
         -1,
@@ -337,7 +350,7 @@ class PlotController extends UiControllerBase_1.UiControllerBase {
     if (e) {
       var o = ModelManager_1.ModelManager.CreatureModel.GetEntityById(e);
       if (!o) return !1;
-      var r = o.Entity.GetComponent(178);
+      var r = o.Entity.GetComponent(181);
       if (!r) return !1;
       if (!r.IsPawnInteractive()) return !1;
       (ModelManager_1.ModelManager.PlotModel.CurrentInteractEntity = o),
@@ -477,7 +490,7 @@ class PlotController extends UiControllerBase_1.UiControllerBase {
       );
       if (t) {
         t = t.find((e) => "ShowCenterText" === e.Name);
-        if (t) return t.Params.TidCenterText;
+        if (t) return t.Params;
         Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "Level",
@@ -520,14 +533,14 @@ class PlotController extends UiControllerBase_1.UiControllerBase {
       );
   }
   static AddTick(e) {
-    return this.P$i++, this.x$i++, this.w$i.set(this.P$i, e), this.P$i;
+    return this.UYi++, this.AYi++, this.PYi.set(this.UYi, e), this.UYi;
   }
   static RemoveTick(e) {
-    this.w$i.delete(e) && this.x$i--;
+    this.PYi.delete(e) && this.AYi--;
   }
   static TickAll(o) {
-    this.x$i <= 0 ||
-      this.w$i.forEach((e, t) => {
+    this.AYi <= 0 ||
+      this.PYi.forEach((e, t) => {
         try {
           e(o);
         } catch (e) {
@@ -545,15 +558,16 @@ class PlotController extends UiControllerBase_1.UiControllerBase {
 }
 ((exports.PlotController = PlotController).PlotViewManager =
   new PlotViewManager_1.PlotViewManager()),
-  (PlotController.T$i = new PlotFormation_1.PlotFormation()),
-  (PlotController.R$i = 1659230325),
-  (PlotController.U$i = 426183687),
-  (PlotController.y$i = !1),
-  (PlotController.D$i = new Set()),
-  (PlotController.P$i = 0),
-  (PlotController.w$i = new Map()),
-  (PlotController.x$i = 0),
-  (PlotController.I$i = () => {
+  (PlotController.yYi = new PlotFormation_1.PlotFormation()),
+  (PlotController.LYi = 1659230325),
+  (PlotController.DYi = 426183687),
+  (PlotController.EYi = !1),
+  (PlotController.TYi = new Set()),
+  (PlotController.UYi = 0),
+  (PlotController.PYi = new Map()),
+  (PlotController.AYi = 0),
+  (PlotController.PTa = ""),
+  (PlotController.SYi = () => {
     ModelManager_1.ModelManager.PlotModel.IsInPlot &&
       ((ModelManager_1.ModelManager.PlotModel.PlotResult.ResultCode = 1),
       ControllerHolder_1.ControllerHolder.FlowController.BackgroundFlow(
@@ -563,7 +577,7 @@ class PlotController extends UiControllerBase_1.UiControllerBase {
   }),
   (PlotController.nye = () => {
     ModelManager_1.ModelManager.PlotModel.IsInPlot ||
-      PlotController.A$i(
+      PlotController.RYi(
         ModelManager_1.ModelManager.SceneTeamModel?.GetCurrentEntity?.Entity,
         !1,
       );
@@ -571,7 +585,7 @@ class PlotController extends UiControllerBase_1.UiControllerBase {
   (PlotController.hMe = () => {
     PlotController.EndInteraction();
   }),
-  (PlotController.hJe = () => {
+  (PlotController.Mze = () => {
     ModelManager_1.ModelManager.PlotModel.IsInPlot &&
       (ControllerHolder_1.ControllerHolder.FlowController.FinishFlow(
         "退出联机时退出剧情",
@@ -589,7 +603,7 @@ class PlotController extends UiControllerBase_1.UiControllerBase {
   (PlotController.OnChangeRole = (e, t) => {
     ModelManager_1.ModelManager.PlotModel.IsInHighLevelPlot()
       ? PlotController.ProtectCurrentRole()
-      : PlotController.A$i(e.Entity, !1);
+      : PlotController.RYi(e.Entity, !1);
   }),
   (PlotController.dLe = () => {
     3 === ModelManager_1.ModelManager.SceneTeamModel.CurrentGroupType &&

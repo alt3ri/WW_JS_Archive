@@ -12,31 +12,31 @@ const UE = require("ue"),
 class CalabashUpgradeSuccessView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.wvt = !1),
-      (this.Bvt = !1),
-      (this.bvt = !1),
-      (this.qvt = 0),
-      (this.Gvt = 0),
-      (this.Nvt = 0),
-      (this.Ovt = 0),
-      (this.kvt = 0),
-      (this.Fvt = void 0),
-      (this.Vvt =
+      (this.WMt = !1),
+      (this.KMt = !1),
+      (this.QMt = !1),
+      (this.XMt = 0),
+      (this.$Mt = 0),
+      (this.YMt = 0),
+      (this.JMt = 0),
+      (this.zMt = 0),
+      (this.ZMt = void 0),
+      (this.eEt =
         CommonParamById_1.configCommonParamById.GetIntConfig("ExpDisplayTime")),
-      (this.Hvt = CommonParamById_1.configCommonParamById.GetIntConfig(
+      (this.tEt = CommonParamById_1.configCommonParamById.GetIntConfig(
         "ExpDisplayCloseTime",
       )),
-      (this.jvt = (i) => {
-        (this.qvt += this.kvt * i),
-          this.qvt >= this.Nvt &&
-            ((this.qvt = this.Nvt),
-            TimerSystem_1.TimerSystem.Remove(this.Fvt),
-            this.wvt
+      (this.iEt = (i) => {
+        (this.XMt += this.zMt * i),
+          this.XMt >= this.YMt &&
+            ((this.XMt = this.YMt),
+            TimerSystem_1.TimerSystem.Remove(this.ZMt),
+            this.WMt
               ? (this.GetItem(6).SetUIActive(!0),
                 this.GetItem(5).SetUIActive(!1),
                 this.UiViewSequence?.PlaySequence("LevelUp"))
               : this.CloseMe()),
-          this.Wvt();
+          this.oEt();
       });
   }
   OnRegisterComponent() {
@@ -54,12 +54,12 @@ class CalabashUpgradeSuccessView extends UiViewBase_1.UiViewBase {
   OnStart() {
     var i,
       s = this.OpenParam;
-    (this.wvt = s.CurLevel > s.PreLevel),
-      (this.Bvt = s.AddExp),
-      (this.bvt = !1),
-      this.GetItem(6).SetUIActive(!this.Bvt),
-      this.GetItem(5).SetUIActive(this.Bvt),
-      this.wvt &&
+    (this.WMt = s.CurLevel > s.PreLevel),
+      (this.KMt = s.AddExp),
+      (this.QMt = !1),
+      this.GetItem(6).SetUIActive(!this.KMt),
+      this.GetItem(5).SetUIActive(this.KMt),
+      this.WMt &&
         (this.GetText(3).SetText(s.CurLevel.toString()),
         (i =
           ConfigManager_1.ConfigManager.CalabashConfig.GetCalabashConfigByLevel(
@@ -71,49 +71,49 @@ class CalabashUpgradeSuccessView extends UiViewBase_1.UiViewBase {
               i.LevelUpDescription,
             ))
           : this.GetItem(7).SetUIActive(!1)),
-      this.Bvt &&
+      this.KMt &&
         (this.GetText(0).SetText(s.PreLevel.toString()),
-        (this.qvt = s.PreExp),
-        (this.Gvt = ModelManager_1.ModelManager.CalabashModel.GetMaxExpByLevel(
+        (this.XMt = s.PreExp),
+        (this.$Mt = ModelManager_1.ModelManager.CalabashModel.GetMaxExpByLevel(
           s.PreLevel,
         )),
-        (this.Ovt = ModelManager_1.ModelManager.CalabashModel.GetMaxExpByLevel(
+        (this.JMt = ModelManager_1.ModelManager.CalabashModel.GetMaxExpByLevel(
           s.CurLevel,
         )),
-        (this.Nvt = this.wvt ? s.CurExp + this.Gvt : s.CurExp),
-        (this.kvt = (this.Nvt - this.qvt) / this.Vvt),
-        this.Wvt()),
+        (this.YMt = this.WMt ? s.CurExp + this.$Mt : s.CurExp),
+        (this.zMt = (this.YMt - this.XMt) / this.eEt),
+        this.oEt()),
       this.UiViewSequence.AddSequenceFinishEvent("LevelUp", () => {
         this.CloseMe();
       });
   }
-  get Kvt() {
-    return this.wvt && this.qvt >= this.Gvt;
+  get rEt() {
+    return this.WMt && this.XMt >= this.$Mt;
   }
-  Wvt() {
-    var i = this.Kvt ? this.qvt - this.Gvt : this.qvt,
-      s = this.Kvt ? this.Ovt : this.Gvt;
+  oEt() {
+    var i = this.rEt ? this.XMt - this.$Mt : this.XMt,
+      s = this.rEt ? this.JMt : this.$Mt;
     this.GetText(1).SetText(Math.round(i) + "/" + s),
       this.GetSprite(2).SetFillAmount(i / s),
-      this.Fvt &&
+      this.ZMt &&
         s < i &&
-        !this.bvt &&
-        ((this.bvt = !0), this.UiViewSequence.PlaySequence("Stuck"));
+        !this.QMt &&
+        ((this.QMt = !0), this.UiViewSequence.PlaySequence("Stuck"));
   }
   OnAfterShow() {
-    this.Bvt
-      ? (this.Fvt = TimerSystem_1.TimerSystem.Forever(
-          this.jvt,
+    this.KMt
+      ? (this.ZMt = TimerSystem_1.TimerSystem.Forever(
+          this.iEt,
           TimerSystem_1.MIN_TIME,
         ))
-      : (this.Fvt = TimerSystem_1.TimerSystem.Delay(() => {
+      : (this.ZMt = TimerSystem_1.TimerSystem.Delay(() => {
           this.CloseMe();
-        }, this.Hvt));
+        }, this.tEt));
   }
   OnBeforeDestroy() {
-    this.Fvt &&
-      TimerSystem_1.TimerSystem.Has(this.Fvt) &&
-      TimerSystem_1.TimerSystem.Remove(this.Fvt);
+    this.ZMt &&
+      TimerSystem_1.TimerSystem.Has(this.ZMt) &&
+      TimerSystem_1.TimerSystem.Remove(this.ZMt);
   }
 }
 exports.CalabashUpgradeSuccessView = CalabashUpgradeSuccessView;

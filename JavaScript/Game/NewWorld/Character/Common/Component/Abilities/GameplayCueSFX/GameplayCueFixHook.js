@@ -4,7 +4,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const GameplayCueHookUp_1 = require("./GameplayCueHookUp");
 class GameplayCueFixHook extends GameplayCueHookUp_1.GameplayCueHookUp {
   GetTargetPosition() {
-    return this.Entity.GetComponent(87).GetCurrentTargetLocation();
+    return this.Entity.GetComponent(89).GetCurrentTargetLocation();
   }
 }
 exports.GameplayCueFixHook = GameplayCueFixHook;

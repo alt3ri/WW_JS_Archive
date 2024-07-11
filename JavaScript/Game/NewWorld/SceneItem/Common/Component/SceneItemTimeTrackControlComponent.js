@@ -30,7 +30,7 @@ const CommonDefine_1 = require("../../../../../Core/Define/CommonDefine"),
   EventDefine_1 = require("../../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../../Common/Event/EventSystem"),
   LevelGameplayActionsDefine_1 = require("../../../../LevelGamePlay/LevelGameplayActionsDefine"),
-  performSeqTagId = -687845e3;
+  performSeqTagId = -1438951185;
 let SceneItemTimeTrackControlComponent =
   (SceneItemTimeTrackControlComponent_1 = class SceneItemTimeTrackControlComponent extends (
     EntityComponent_1.EntityComponent
@@ -40,10 +40,10 @@ let SceneItemTimeTrackControlComponent =
         (this.Hte = void 0),
         (this.Lie = void 0),
         (this.mBe = void 0),
-        (this.B_n = void 0),
-        (this.b_n = void 0),
-        (this.q_n = 0),
-        (this.G_n = () => {
+        (this.m_n = void 0),
+        (this.d_n = void 0),
+        (this.C_n = 0),
+        (this.g_n = () => {
           var e =
             GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(
               performSeqTagId,
@@ -54,71 +54,71 @@ let SceneItemTimeTrackControlComponent =
             (2 === this.mBe.State
               ? this.Lie.HasTag(performSeqTagId) ||
                 (this.Lie.AddTag(performSeqTagId),
-                this.Hte.SetActiveTagSequencePlaybackProgress(e, this.q_n),
+                this.Hte.SetActiveTagSequencePlaybackProgress(e, this.C_n),
                 this.Hte.PauseActiveTagSequence(e))
               : this.Lie.HasTag(performSeqTagId) &&
-                ((this.q_n =
+                ((this.C_n =
                   this.Hte.GetActiveTagSequencePlaybackProgress(e) ?? 0),
-                this.Lie.RemoveTag(performSeqTagId)));
+                this.Hte.PauseActiveTagSequence(e)));
         });
     }
     OnInitData(e) {
       e = e.GetParam(SceneItemTimeTrackControlComponent_1)[0];
-      return (this.B_n = e.ControlGroups), !0;
+      return (this.m_n = e.ControlGroups), !0;
     }
     OnStart() {
       return (
-        (this.Hte = this.Entity.GetComponent(182)),
-        (this.Lie = this.Entity.GetComponent(185)),
-        (this.mBe = this.Entity.GetComponent(117)),
+        (this.Hte = this.Entity.GetComponent(185)),
+        (this.Lie = this.Entity.GetComponent(188)),
+        (this.mBe = this.Entity.GetComponent(119)),
         !0
       );
     }
     OnActivate() {
-      var e = this.Entity.GetComponent(178);
+      var e = this.Entity.GetComponent(181);
       if (e) {
         var t = e.GetInteractController();
         if (t) {
           let e = 0;
-          for (const i of this.B_n) this.N_n(t, e, i), e++;
+          for (const i of this.m_n) this.f_n(t, e, i), e++;
           EventSystem_1.EventSystem.HasWithTarget(
             this.Entity,
             EventDefine_1.EEventName.OnSceneItemStateChange,
-            this.G_n,
+            this.g_n,
           ) ||
             EventSystem_1.EventSystem.AddWithTarget(
               this.Entity,
               EventDefine_1.EEventName.OnSceneItemStateChange,
-              this.G_n,
+              this.g_n,
             ),
-            0 !== this.mBe.State && this.G_n();
+            0 !== this.mBe.State && this.g_n();
         }
       }
       return !0;
     }
     OnEnd() {
       return (
-        this.b_n?.Valid() &&
-          (TimerSystem_1.TimerSystem.Remove(this.b_n), (this.b_n = void 0)),
+        this.d_n?.Valid() &&
+          (TimerSystem_1.TimerSystem.Remove(this.d_n), (this.d_n = void 0)),
         this.Lie?.HasTag(performSeqTagId) &&
           this.Lie.RemoveTag(performSeqTagId),
         EventSystem_1.EventSystem.HasWithTarget(
           this.Entity,
           EventDefine_1.EEventName.OnSceneItemStateChange,
-          this.G_n,
+          this.g_n,
         ) &&
           EventSystem_1.EventSystem.RemoveWithTarget(
             this.Entity,
             EventDefine_1.EEventName.OnSceneItemStateChange,
-            this.G_n,
+            this.g_n,
           ),
         !0
       );
     }
     GetTimeTrackControlConfig(e) {
-      if (!(this.B_n.length < e)) return this.B_n[e];
+      if (!(this.m_n.length < e)) return this.m_n[e];
     }
-    N_n(e, t, i) {
+    f_n(e, t, i) {
       var o = new LevelGameplayActionsDefine_1.ActionTimeTrackControl(),
         r =
           ((o.ConfigIndex = t),
@@ -129,30 +129,30 @@ let SceneItemTimeTrackControlComponent =
         i.Condition,
         r ? r.DoIntactType : "Direct",
         void 0,
-        this.B_n[t].TidContent,
+        this.m_n[t].TidContent,
       );
     }
     GetTargetActions(i) {
       if (i) {
         let t = void 0;
-        for (const e of this.B_n[i.qCs].ControlPointEvents)
-          if (e.Index === i.GCs) {
+        for (const e of this.m_n[i.Jvs].ControlPointEvents)
+          if (e.Index === i.zvs) {
             t = e;
             break;
           }
         if (t) {
           let e = void 0;
-          switch (i.OCs) {
-            case Protocol_1.Aki.Protocol.mBs.Proto_LeftIn:
+          switch (i.Zvs) {
+            case Protocol_1.Aki.Protocol.iks.Proto_LeftIn:
               e = t.LeftInEventActions;
               break;
-            case Protocol_1.Aki.Protocol.mBs.Proto_LeftOut:
+            case Protocol_1.Aki.Protocol.iks.Proto_LeftOut:
               e = t.LeftOutEventActions;
               break;
-            case Protocol_1.Aki.Protocol.mBs.Proto_RightIn:
+            case Protocol_1.Aki.Protocol.iks.Proto_RightIn:
               e = t.RightInEventActions;
               break;
-            case Protocol_1.Aki.Protocol.mBs.Proto_RightOut:
+            case Protocol_1.Aki.Protocol.iks.Proto_RightOut:
               e = t.RightOutEventActions;
           }
           return e;
@@ -169,20 +169,20 @@ let SceneItemTimeTrackControlComponent =
           (this.Lie.HasTag(performSeqTagId) &&
             this.Lie.RemoveTag(performSeqTagId),
           this.Lie.AddTag(performSeqTagId),
-          this.Hte.SetActiveTagSequencePlaybackProgress(i, this.q_n),
+          this.Hte.SetActiveTagSequencePlaybackProgress(i, this.C_n),
           this.Hte.PauseActiveTagSequence(i)),
-        this.b_n?.Valid() &&
-          (TimerSystem_1.TimerSystem.Remove(this.b_n), (this.b_n = void 0)),
+        this.d_n?.Valid() &&
+          (TimerSystem_1.TimerSystem.Remove(this.d_n), (this.d_n = void 0)),
         0 !== t) &&
         (this.Hte.ResumeActiveTagSequence(i, e), 0 < t) &&
-        (this.b_n = TimerSystem_1.TimerSystem.Delay(() => {
-          this.Hte?.PauseActiveTagSequence(i), (this.b_n = void 0);
+        (this.d_n = TimerSystem_1.TimerSystem.Delay(() => {
+          this.Hte?.PauseActiveTagSequence(i), (this.d_n = void 0);
         }, t * CommonDefine_1.MILLIONSECOND_PER_SECOND));
     }
   });
 (SceneItemTimeTrackControlComponent = SceneItemTimeTrackControlComponent_1 =
   __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(118)],
+    [(0, RegisterComponent_1.RegisterComponent)(120)],
     SceneItemTimeTrackControlComponent,
   )),
   (exports.SceneItemTimeTrackControlComponent =

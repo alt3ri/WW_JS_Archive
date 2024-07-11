@@ -2,13 +2,13 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TsPhotographer = void 0);
 const UE = require("ue"),
+  Info_1 = require("../../../Core/Common/Info"),
   CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById"),
   ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem"),
   FNameUtil_1 = require("../../../Core/Utils/FNameUtil"),
   Vector_1 = require("../../../Core/Utils/Math/Vector"),
   MathUtils_1 = require("../../../Core/Utils/MathUtils"),
   Global_1 = require("../../Global"),
-  PlatformController_1 = require("../Platform/PlatformController"),
   PhotographController_1 = require("./PhotographController"),
   PhotographDefine_1 = require("./PhotographDefine"),
   SOURCE_DISTANCE = 300,
@@ -85,9 +85,7 @@ class TsPhotographer extends UE.Actor {
       (this.Character = Global_1.Global.BaseCharacter),
       this.PlayerLocation.FromUeVector(this.Character.K2_GetActorLocation()),
       (this.IsLoadingConfigCompleted = !1);
-    var t = PlatformController_1.PlatformController.IsMobile()
-      ? MOBILE_CONFIG_PATH
-      : CONFIG_PATH;
+    var t = Info_1.Info.IsMobilePlatform() ? MOBILE_CONFIG_PATH : CONFIG_PATH;
     ResourceSystem_1.ResourceSystem.LoadAsync(
       t,
       UE.BP_FightCameraConfig_C,
@@ -265,13 +263,8 @@ class TsPhotographer extends UE.Actor {
   SetFov(t) {
     let i = 50;
     (i =
-      0 === PhotographController_1.PhotographController.CameraCaptureType
+      1 === PhotographController_1.PhotographController.CameraCaptureType
         ? MathUtils_1.MathUtils.Clamp(
-            t,
-            PhotographDefine_1.MIN_FOV,
-            PhotographDefine_1.MAX_FOV,
-          )
-        : MathUtils_1.MathUtils.Clamp(
             t,
             PhotographController_1.PhotographController.MinFov
               ? PhotographController_1.PhotographController.MinFov.Value
@@ -279,6 +272,11 @@ class TsPhotographer extends UE.Actor {
             PhotographController_1.PhotographController.MaxFov
               ? PhotographController_1.PhotographController.MaxFov.Value
               : PhotographDefine_1.MAX_FOV,
+          )
+        : MathUtils_1.MathUtils.Clamp(
+            t,
+            PhotographDefine_1.MIN_FOV,
+            PhotographDefine_1.MAX_FOV,
           )),
       this.CameraActor.CameraComponent.SetFieldOfView(i);
   }

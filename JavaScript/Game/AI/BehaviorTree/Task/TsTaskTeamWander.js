@@ -7,6 +7,7 @@ const Log_1 = require("../../../../Core/Common/Log"),
   MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
   GlobalData_1 = require("../../../GlobalData"),
   CharacterUnifiedStateTypes_1 = require("../../../NewWorld/Character/Common/Component/Abilities/CharacterUnifiedStateTypes"),
+  GravityUtils_1 = require("../../../Utils/GravityUtils"),
   AiContollerLibrary_1 = require("../../Controller/AiContollerLibrary"),
   TsAiController_1 = require("../../Controller/TsAiController"),
   TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase"),
@@ -54,8 +55,8 @@ class TsTaskTeamWander extends TsTaskAbortImmediatelyBase_1.default {
       t instanceof TsAiController_1.default &&
         ((t = t.AiController),
         this.TsWalkOff ||
-          t.CharActorComp.Entity.GetComponent(36)?.SetWalkOffLedgeRecord(!1),
-        t.CharActorComp.Entity.CheckGetComponent(158).SetMoveState(
+          t.CharActorComp.Entity.GetComponent(37)?.SetWalkOffLedgeRecord(!1),
+        t.CharActorComp.Entity.CheckGetComponent(160).SetMoveState(
           CharacterUnifiedStateTypes_1.ECharMoveState.Walk,
         ),
         this.Destination ||
@@ -89,7 +90,7 @@ class TsTaskTeamWander extends TsTaskAbortImmediatelyBase_1.default {
               this.TmpSelfToTarget,
             ),
               this.TmpDirection.DeepCopy(this.TmpSelfToTarget);
-            const n = s.CharActorComp.Entity.GetComponent(36);
+            const n = s.CharActorComp.Entity.GetComponent(37);
             void (
               (n && n.MoveController.IsMovingToLocation()) ||
               this.SetInputParams(
@@ -181,7 +182,7 @@ class TsTaskTeamWander extends TsTaskAbortImmediatelyBase_1.default {
                   ]),
                   this.StopMoveToLocation(s.CharActorComp);
               }
-              const n = r.Entity.GetComponent(36);
+              const n = r.Entity.GetComponent(37);
               (n && n.MoveController.IsMovingToLocation()) ||
                 this.SetInputParams(r, this.TmpSelfToTarget, this.TmpDirection);
             }
@@ -229,7 +230,7 @@ class TsTaskTeamWander extends TsTaskAbortImmediatelyBase_1.default {
     }
   }
   StopMoveToLocation(t) {
-    t = t.Entity.GetComponent(36);
+    t = t.Entity.GetComponent(37);
     t &&
       t.MoveController.IsMovingToLocation() &&
       t?.MoveController.StopMoveToLocation(),
@@ -237,11 +238,11 @@ class TsTaskTeamWander extends TsTaskAbortImmediatelyBase_1.default {
   }
   SetMoveToLocation(t, i, s) {
     this.TmpVector2.DeepCopy(t);
-    t = i.Entity.GetComponent(36);
+    t = i.Entity.GetComponent(37);
     if (!t) return !1;
     if (
       (!this.LastDestination.IsNearlyZero() ||
-        Vector_1.Vector.Dist2D(this.LastDestination, this.TmpVector2) < 100) &&
+        Vector_1.Vector.Dist(this.LastDestination, this.TmpVector2) < 100) &&
       t.MoveController.IsMovingToLocation()
     )
       return this.LastDestination.DeepCopy(this.TmpVector2), !0;
@@ -263,12 +264,13 @@ class TsTaskTeamWander extends TsTaskAbortImmediatelyBase_1.default {
   SetInputParams(t, i, s) {
     4 === this.CurrentMoveDirect
       ? AiContollerLibrary_1.AiControllerLibrary.ClearInput(this.AIOwner)
-      : (AiContollerLibrary_1.AiControllerLibrary.GetDirectionVector(
-          s,
-          this.CurrentMoveDirect,
+      : (this.TmpVector.DeepCopy(s),
+        GravityUtils_1.GravityUtils.TurnVectorByDirectionInGravity(
+          t,
           this.TmpVector,
+          this.CurrentMoveDirect,
         ),
-        t.Entity.GetComponent(89)?.MoveState !==
+        t.Entity.GetComponent(91)?.MoveState !==
         CharacterUnifiedStateTypes_1.ECharMoveState.Walk
           ? (AiContollerLibrary_1.AiControllerLibrary.TurnToDirect(
               t,
@@ -315,7 +317,7 @@ class TsTaskTeamWander extends TsTaskAbortImmediatelyBase_1.default {
     this.AIOwner instanceof TsAiController_1.default &&
       ((t =
         this.AIOwner.AiController.CharActorComp.Entity.GetComponent(
-          36,
+          37,
         ))?.MoveController.StopMoveToLocation(),
       this.LastDestination?.Reset(),
       AiContollerLibrary_1.AiControllerLibrary.ClearInput(this.AIOwner),

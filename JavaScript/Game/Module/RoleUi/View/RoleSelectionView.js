@@ -15,42 +15,44 @@ const UE = require("ue"),
 class RoleSelectionView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.ami = void 0),
-      (this.jho = void 0),
-      (this.plo = void 0),
-      (this.ggo = []),
-      (this.fgo = void 0),
-      (this.s5i = void 0),
+      (this.adi = void 0),
+      (this.Flo = void 0),
+      (this.d1o = void 0),
+      (this.m0o = []),
+      (this.d0o = void 0),
+      (this.nVi = void 0),
       (this.BackFunction = () => {
-        this.fgo !== this.s5i &&
+        this.d0o !== this.nVi &&
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.RoleSystemChangeRole,
-            this.fgo,
+            this.d0o,
           ),
           this.CloseMe();
       }),
-      (this.z9e = () => {
-        var e = new RoleSelectionMediumItemGrid_1.RoleSelectionMediumItemGrid();
+      (this.cHe = () => {
+        var e = new RoleSelectionMediumItemGrid_1.RoleSelectionMediumItemGrid(),
+          i = this.d1o.GetRoleSystemUiParams();
         return (
-          e.BindOnExtendToggleStateChanged(this.U4e),
-          e.BindOnCanExecuteChange(this.OBt),
+          e.SetNeedShowTrial(i.RoleListNeedTrial),
+          e.BindOnExtendToggleStateChanged(this.j5e),
+          e.BindOnCanExecuteChange(this.Vbt),
           e
         );
       }),
-      (this.pgo = (e) => {
-        (this.ggo = e), this.vgo(e);
+      (this.C0o = (e, i, t) => {
+        (this.m0o = e), this.g0o(e, i, t);
       }),
-      (this.U4e = (e) => {
+      (this.j5e = (e) => {
         var i = e.State,
           e = e.Data;
-        1 === i && (this.jho.DeselectCurrentGridProxy(), this.Mgo(e));
+        1 === i && (this.Flo.DeselectCurrentGridProxy(), this.f0o(e));
       }),
-      (this.OBt = (e, i, t) => {
+      (this.Vbt = (e, i, t) => {
         return !(
           (UiCameraAnimationManager_1.UiCameraAnimationManager.IsPlayingAnimation() &&
-            void 0 !== this.s5i &&
+            void 0 !== this.nVi &&
             0 === t) ||
-          (1 === t && this.s5i === e.GetRoleId())
+          (1 === t && this.nVi === e.GetRoleId())
         );
       });
   }
@@ -66,20 +68,20 @@ class RoleSelectionView extends UiViewBase_1.UiViewBase {
       (this.BtnBindInfo = [[1, this.BackFunction]]);
   }
   OnStart() {
-    (this.jho = new LoopScrollView_1.LoopScrollView(
+    (this.Flo = new LoopScrollView_1.LoopScrollView(
       this.GetLoopScrollViewComponent(3),
       this.GetItem(4).GetOwner(),
-      this.z9e,
+      this.cHe,
     )),
-      (this.ami = new FilterSortEntrance_1.FilterSortEntrance(
+      (this.adi = new FilterSortEntrance_1.FilterSortEntrance(
         this.GetItem(5),
-        this.pgo,
+        this.C0o,
       )),
-      (this.plo = this.OpenParam);
+      (this.d1o = this.OpenParam);
     var e = [];
-    for (const i of this.plo.GetRoleIdList())
+    for (const i of this.d1o.GetRoleIdList())
       e.push(ModelManager_1.ModelManager.RoleModel.GetRoleDataById(i));
-    this.ami.UpdateData(1, e);
+    this.adi.UpdateData(1, e);
   }
   OnBeforeDestroy() {
     ModelManager_1.ModelManager.NewFlagModel.SaveNewFlagConfig(
@@ -88,52 +90,49 @@ class RoleSelectionView extends UiViewBase_1.UiViewBase {
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.RoleSelectionListUpdate,
       ),
-      this.ami.Destroy(),
-      (this.ami = void 0),
-      this.jho.ClearGridProxies(),
-      (this.jho = void 0),
-      (this.ggo = []);
+      this.adi.Destroy(),
+      (this.adi = void 0),
+      this.Flo.ClearGridProxies(),
+      (this.Flo = void 0),
+      (this.m0o = []);
   }
   OnBeforeShow() {
-    var e = this.plo.GetCurSelectRoleData();
-    this.Mgo(e, !0);
+    var e = this.d1o.GetCurSelectRoleData();
+    this.f0o(e, !0);
   }
-  vgo(i) {
+  g0o(i, e, t) {
     if (
-      (this.jho.DeselectCurrentGridProxy(),
-      this.jho.ReloadData(i),
-      void 0 !== this.s5i)
+      (this.Flo.DeselectCurrentGridProxy(),
+      this.Flo.ReloadData(i),
+      void 0 !== this.nVi && !(i.length <= 0))
     ) {
       let e = 0;
-      for (const t of i) {
-        if (t.GetRoleId() === this.s5i)
-          return (
-            this.jho.ScrollToGridIndex(e), void this.jho.SelectGridProxy(e)
-          );
-        e++;
-      }
-      this.Mgo(this.ggo[0], !0);
+      0 === t &&
+        (e = (e = i.findIndex((e) => e.GetDataId() === this.nVi)) <= 0 ? 0 : e),
+        this.Flo.ScrollToGridIndex(e),
+        this.Flo.SelectGridProxy(e),
+        this.f0o(i[e], !0);
     }
   }
-  CNt(e) {
+  gOt(e) {
     this.GetText(2).SetText(e);
   }
-  Sgo(e) {
+  p0o(e) {
     var i = e.GetDataId(),
-      t = this.s5i ?? 0;
-    this.s5i !== i &&
-      ((this.s5i = i),
-      this.CNt(e.GetName()),
-      this.plo.SetCurSelectRoleId(this.s5i),
-      RoleController_1.RoleController.OnSelectedRoleChange(this.s5i),
+      t = this.nVi ?? 0;
+    this.nVi !== i &&
+      ((this.nVi = i),
+      this.gOt(e.GetName()),
+      this.d1o.SetCurSelectRoleId(this.nVi),
+      RoleController_1.RoleController.OnSelectedRoleChange(this.nVi),
       RoleController_1.RoleController.PlayRoleMontage(3, !1, 0 < t));
   }
-  Mgo(e, i = !1) {
-    var t = this.ggo.indexOf(e);
+  f0o(e, i = !1) {
+    var t = this.m0o.indexOf(e);
     0 <= t &&
-      (i && this.jho.ScrollToGridIndex(t),
-      this.jho.SelectGridProxy(t),
-      this.Sgo(e));
+      (i && this.Flo.ScrollToGridIndex(t),
+      this.Flo.SelectGridProxy(t),
+      this.p0o(e));
   }
 }
 exports.RoleSelectionView = RoleSelectionView;

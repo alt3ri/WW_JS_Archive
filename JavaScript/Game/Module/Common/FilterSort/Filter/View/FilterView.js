@@ -12,29 +12,29 @@ class FilterView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
       (this.Scroll = void 0),
-      (this.ogt = void 0),
-      (this.DLt = void 0),
-      (this.O8e = () => {
+      (this.C0t = void 0),
+      (this.PDt = void 0),
+      (this.Z9e = () => {
         for (const e of this.Scroll.GetScrollItemList())
           e.ResetTempFilterDataMap(),
             e.RefreshGroupItem(),
             e.RefreshSelectAllToggleState();
       }),
-      (this.RLt = () => {
+      (this.xDt = () => {
         var e,
           i,
           r = ModelManager_1.ModelManager.FilterModel.GetFilterResultData(
-            this.ogt.ConfigId,
+            this.C0t.ConfigId,
           );
         for ([e, i] of this.Scroll.GetScrollItemMap()) {
           var t = i.GetTempFilterDataMap();
           r.SetSelectRuleData(e, t);
         }
-        this.ogt.ConfirmFunction?.(), this.CloseMe();
+        this.C0t.ConfirmFunction?.(), this.CloseMe();
       }),
-      (this.ULt = (e, i, r) => {
+      (this.wDt = (e, i, r) => {
         (i = new FilterGroup_1.FilterGroup(i)),
-          i.ShowTemp(e, this.ogt.ConfigId),
+          i.ShowTemp(e, this.C0t.ConfigId),
           (e = i.GetFilterType());
         return { Key: e, Value: i };
       });
@@ -46,47 +46,47 @@ class FilterView extends UiViewBase_1.UiViewBase {
       [2, UE.UIButtonComponent],
     ]),
       (this.BtnBindInfo = [
-        [1, this.O8e],
-        [2, this.RLt],
+        [1, this.Z9e],
+        [2, this.xDt],
       ]);
   }
   OnBeforeCreate() {
-    this.ogt = this.OpenParam;
+    this.C0t = this.OpenParam;
   }
   async OnCreateAsync() {
     var e = ConfigManager_1.ConfigManager.FilterConfig.GetFilterConfig(
-        this.ogt.ConfigId,
+        this.C0t.ConfigId,
       ),
       e = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
         e.GridType,
       ),
       i = await this.LoadPrefabAsync(e, void 0);
     i?.IsValid()
-      ? (this.DLt = i.GetUIItem())
+      ? (this.PDt = i.GetUIItem())
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Filter",
           11,
           "动态加载筛选格子失败",
-          ["配置项id", this.ogt.ConfigId],
+          ["配置项id", this.C0t.ConfigId],
           ["路径", e],
         );
   }
   OnStart() {
-    this.DLt.SetUIParent(this.GetScrollViewWithScrollbar(0).ContentUIItem),
-      this.TLt();
+    this.PDt.SetUIParent(this.GetScrollViewWithScrollbar(0).ContentUIItem),
+      this.UDt();
   }
   OnBeforeDestroy() {
     this.Scroll.ClearChildren();
   }
-  TLt() {
+  UDt() {
     this.Scroll = new GenericScrollView_1.GenericScrollView(
       this.GetScrollViewWithScrollbar(0),
-      this.ULt,
-      this.DLt,
+      this.wDt,
+      this.PDt,
     );
     var e = ConfigManager_1.ConfigManager.FilterConfig.GetFilterConfig(
-      this.ogt.ConfigId,
+      this.C0t.ConfigId,
     );
     this.Scroll.RefreshByData(e.RuleList);
   }

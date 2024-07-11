@@ -2,10 +2,10 @@
 var __decorate =
   (this && this.__decorate) ||
   function (t, e, i, h) {
-    var r,
-      s = arguments.length,
+    var s,
+      r = arguments.length,
       a =
-        s < 3
+        r < 3
           ? e
           : null === h
             ? (h = Object.getOwnPropertyDescriptor(e, i))
@@ -14,20 +14,20 @@ var __decorate =
       a = Reflect.decorate(t, e, i, h);
     else
       for (var n = t.length - 1; 0 <= n; n--)
-        (r = t[n]) && (a = (s < 3 ? r(a) : 3 < s ? r(e, i, a) : r(e, i)) || a);
-    return 3 < s && a && Object.defineProperty(e, i, a), a;
+        (s = t[n]) && (a = (r < 3 ? s(a) : 3 < r ? s(e, i, a) : s(e, i)) || a);
+    return 3 < r && a && Object.defineProperty(e, i, a), a;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharacterFightStateComponent = void 0);
 const EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent"),
-  CombatDebugController_1 = require("../../../../Utils/CombatDebugController"),
-  CharacterUnifiedStateTypes_1 = require("./Abilities/CharacterUnifiedStateTypes"),
-  RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent");
+  RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
+  CombatLog_1 = require("../../../../Utils/CombatLog"),
+  CharacterUnifiedStateTypes_1 = require("./Abilities/CharacterUnifiedStateTypes");
 let CharacterFightStateComponent = class CharacterFightStateComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments),
-      (this.zKe = 0),
-      (this.aYo = void 0),
+      (this._Xe = 0),
+      (this.rJo = void 0),
       (this.CurrentState = 0),
       (this.SubStatePriority = 0),
       (this.IsLocal = !1),
@@ -35,15 +35,15 @@ let CharacterFightStateComponent = class CharacterFightStateComponent extends En
       (this.CurrentHandle = 0);
   }
   OnStart() {
-    return (this.aYo = this.Entity.GetComponent(158)), !0;
+    return (this.rJo = this.Entity.GetComponent(160)), !0;
   }
   PreSwitchRemoteFightState(t) {
     var e = t >> 8,
       t = 255 & t,
-      i = this.G5r(e, t, !1);
+      i = this.g5r(e, t, !1);
     return (
       i ||
-        CombatDebugController_1.CombatDebugController.CombatInfo(
+        CombatLog_1.CombatLog.Info(
           "FightState",
           this.Entity,
           `预算切换状态失败，目标[[${e}][${t}]，当前[${this.CurrentState}][${this.SubStatePriority}]`,
@@ -55,9 +55,9 @@ let CharacterFightStateComponent = class CharacterFightStateComponent extends En
     if (7 === t) return this.TrySwitchState(4, 0, e);
     if (
       e &&
-      this.aYo.MoveState ===
+      this.rJo.MoveState ===
         CharacterUnifiedStateTypes_1.ECharMoveState.KnockUp &&
-      this.aYo.PositionState ===
+      this.rJo.PositionState ===
         CharacterUnifiedStateTypes_1.ECharPositionState.Air
     )
       return this.TrySwitchState(2, 2, e);
@@ -82,13 +82,13 @@ let CharacterFightStateComponent = class CharacterFightStateComponent extends En
             : this.TrySwitchState(1, i, e)
     );
   }
-  G5r(t, e, i = !1) {
+  g5r(t, e, i = !1) {
     return i
-      ? this.N5r(this.CurrentState, this.SubStatePriority, t, e)
+      ? this.f5r(this.CurrentState, this.SubStatePriority, t, e)
       : !this.WaitConfirm ||
-          !this.N5r(t, e, this.CurrentState, this.SubStatePriority);
+          !this.f5r(t, e, this.CurrentState, this.SubStatePriority);
   }
-  N5r(t, e, i, h) {
+  f5r(t, e, i, h) {
     if (i !== t) return t < i;
     if (h === e)
       switch (i) {
@@ -100,47 +100,42 @@ let CharacterFightStateComponent = class CharacterFightStateComponent extends En
     return e < h;
   }
   TrySwitchState(t, e, i = !1) {
-    return this.G5r(t, e, i)
-      ? (this.O5r(t, e, i),
-        CombatDebugController_1.CombatDebugController.CombatInfo(
+    return this.g5r(t, e, i)
+      ? (this.p5r(t, e, i),
+        CombatLog_1.CombatLog.Info(
           "FightState",
           this.Entity,
           `切换主状态成功[handle:${this.CurrentHandle}][${t}][${e}][local:${i}]`,
         ),
         this.CurrentHandle)
-      : (CombatDebugController_1.CombatDebugController.CombatInfo(
+      : (CombatLog_1.CombatLog.Info(
           "FightState",
           this.Entity,
           `切换主状态失败，目标[[${t}][${e}][local:${i}]，当前[${this.CurrentState}][${this.SubStatePriority}][local:${this.IsLocal}]`,
         ),
         0);
   }
-  O5r(t, e, i = !1) {
+  p5r(t, e, i = !1) {
     return (
       (this.CurrentState = t),
       (this.SubStatePriority = e),
       (this.IsLocal = i),
       (this.WaitConfirm = i),
-      (this.CurrentHandle = ++this.zKe),
+      (this.CurrentHandle = ++this._Xe),
       this.CurrentHandle
     );
   }
   ConfirmState(t) {
     this.CurrentHandle === t
-      ? ((this.WaitConfirm = !1),
-        CombatDebugController_1.CombatDebugController.CombatDebug(
-          "FightState",
-          this.Entity,
-          `确认状态[handle:${t}]`,
-        ))
-      : CombatDebugController_1.CombatDebugController.CombatInfo(
+      ? (this.WaitConfirm = !1)
+      : CombatLog_1.CombatLog.Info(
           "FightState",
           this.Entity,
           `确认状态失败[handle:${t}]，当前[handle:${this.CurrentHandle}]`,
         );
   }
   ResetState() {
-    CombatDebugController_1.CombatDebugController.CombatInfo(
+    CombatLog_1.CombatLog.Info(
       "FightState",
       this.Entity,
       `重置主状态[handle:${this.CurrentHandle}]`,
@@ -153,7 +148,7 @@ let CharacterFightStateComponent = class CharacterFightStateComponent extends En
   }
   ExitState(t) {
     this.CurrentHandle === t
-      ? (CombatDebugController_1.CombatDebugController.CombatInfo(
+      ? (CombatLog_1.CombatLog.Info(
           "FightState",
           this.Entity,
           `退出主状态[handle:${t}][${this.CurrentState}]`,
@@ -163,7 +158,7 @@ let CharacterFightStateComponent = class CharacterFightStateComponent extends En
         (this.IsLocal = !1),
         (this.WaitConfirm = !1),
         (this.CurrentHandle = 0))
-      : CombatDebugController_1.CombatDebugController.CombatInfo(
+      : CombatLog_1.CombatLog.Info(
           "FightState",
           this.Entity,
           `退出主状态失败[handle:${t}][${this.CurrentState}]，当前[handle:${this.CurrentHandle}]`,
@@ -176,7 +171,7 @@ let CharacterFightStateComponent = class CharacterFightStateComponent extends En
   }
 };
 (CharacterFightStateComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(46)],
+  [(0, RegisterComponent_1.RegisterComponent)(47)],
   CharacterFightStateComponent,
 )),
   (exports.CharacterFightStateComponent = CharacterFightStateComponent);

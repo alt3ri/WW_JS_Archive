@@ -1,15 +1,15 @@
 "use strict";
-function formatColor(r, e) {
-  r = parseInt(r.slice(1, 7), 16);
+function formatColor(e, r) {
+  e = parseInt(e.slice(1, 7), 16);
   return {
-    R: ((16711680 & r) >>> 16) / 255,
-    G: ((65280 & r) >>> 8) / 255,
-    B: (255 & r) / 255,
-    A: e ?? 1,
+    R: ((16711680 & e) >>> 16) / 255,
+    G: ((65280 & e) >>> 8) / 255,
+    B: (255 & e) / 255,
+    A: r ?? 1,
   };
 }
-function rgbToHex(r, e, t) {
-  return "#" + ((r << 16) | (e << 8) | t).toString(16).padStart(6, "0");
+function rgbToHex(e, r, t) {
+  return "#" + ((e << 16) | (r << 8) | t).toString(16).padStart(6, "0");
 }
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.underline =
@@ -21,9 +21,11 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.blue =
     exports.rgbToHex =
     exports.formatColor =
+    exports.FOCUS_COLOR =
     exports.HIGHTLIGHT_COLOR =
       void 0),
   (exports.HIGHTLIGHT_COLOR = "#003000 dark green"),
+  (exports.FOCUS_COLOR = "#008000 green"),
   (exports.formatColor = formatColor),
   (exports.rgbToHex = rgbToHex);
 const OKBLUE = "[94m",
@@ -34,26 +36,26 @@ const OKBLUE = "[94m",
   ENDC = "[0m",
   BOLD = "[1m",
   UNDERLINE = "[4m";
-function blue(r) {
-  return OKBLUE + r + ENDC;
+function blue(e) {
+  return OKBLUE + e + ENDC;
 }
-function cyan(r) {
-  return OKCYAN + r + ENDC;
+function cyan(e) {
+  return OKCYAN + e + ENDC;
 }
-function green(r) {
-  return OKGREEN + r + ENDC;
+function green(e) {
+  return OKGREEN + e + ENDC;
 }
-function red(r) {
-  return FAIL + r + ENDC;
+function red(e) {
+  return FAIL + e + ENDC;
 }
-function yellow(r) {
-  return WARNING + r + ENDC;
+function yellow(e) {
+  return WARNING + e + ENDC;
 }
-function bold(r) {
-  return BOLD + r + ENDC;
+function bold(e) {
+  return BOLD + e + ENDC;
 }
-function underline(r) {
-  return UNDERLINE + r + ENDC;
+function underline(e) {
+  return UNDERLINE + e + ENDC;
 }
 (exports.blue = blue),
   (exports.cyan = cyan),

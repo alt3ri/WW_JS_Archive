@@ -10,7 +10,7 @@ const MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLa
 class PayPackageData {
   constructor() {
     (this.he = ""),
-      (this.v2i = void 0),
+      (this.vFi = void 0),
       (this.Id = 0),
       (this.PayId = 0),
       (this.ItemId = 0),
@@ -25,28 +25,28 @@ class PayPackageData {
       (this.Amount = ""),
       (this.TabId = 0),
       (this.Type = 3),
-      (this.v2i = new PayShopGoods_1.PayShopGoods(3));
+      (this.vFi = new PayShopGoods_1.PayShopGoods(3));
   }
   Phrase(t) {
-    (this.Id = t.Ekn ?? 0),
-      (this.PayId = t.xPs ?? 0),
-      (this.ItemId = t.G3n ?? 0),
-      (this.ItemCount = t.g5n ?? 0),
-      (this.Sort = t.NPs ?? 0),
-      (this.BuyLimit = t.FPs ?? 0),
-      (this.BoughtCount = t.s8n ?? 0),
-      (this.StageImage = t.GPs ?? ""),
-      (this.BeginTime = Number(MathUtils_1.MathUtils.LongToBigInt(t.HCs))),
-      (this.EndTime = Number(MathUtils_1.MathUtils.LongToBigInt(t.jCs))),
-      (this.ProductId = t.OPs ?? ""),
-      (this.Amount = t.kPs ?? ""),
-      (this.TabId = t.VPs ?? 0),
-      (this.Type = t.Ikn ?? 3),
-      this.M2i(),
-      this.v2i.SetGoodsData(this.ConvertToPayShopGoodsData()),
-      this.v2i.SetPayGiftId(this.Id);
+    (this.Id = t.J4n ?? 0),
+      (this.PayId = t.Zbs ?? 0),
+      (this.ItemId = t.f8n ?? 0),
+      (this.ItemCount = t.YVn ?? 0),
+      (this.Sort = t.nBs ?? 0),
+      (this.BuyLimit = t.sBs ?? 0),
+      (this.BoughtCount = t.N7n ?? 0),
+      (this.StageImage = t.rBs ?? ""),
+      (this.BeginTime = Number(MathUtils_1.MathUtils.LongToBigInt(t.nps))),
+      (this.EndTime = Number(MathUtils_1.MathUtils.LongToBigInt(t.sps))),
+      (this.ProductId = t.oBs ?? ""),
+      (this.Amount = t.k6n ?? ""),
+      (this.TabId = t.aBs ?? 0),
+      (this.Type = t.Z4n ?? 3),
+      this.MFi(),
+      this.vFi.SetGoodsData(this.ConvertToPayShopGoodsData()),
+      this.vFi.SetPayGiftId(this.Id);
   }
-  M2i() {
+  MFi() {
     var t = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
       this.ItemId,
     );
@@ -70,7 +70,7 @@ class PayPackageData {
     return this.he;
   }
   GetPayShopGoods() {
-    return this.v2i;
+    return this.vFi;
   }
   ConvertToPayShopGoodsData() {
     var t = new PayShopGoodsData_1.PayShopGoodsData();

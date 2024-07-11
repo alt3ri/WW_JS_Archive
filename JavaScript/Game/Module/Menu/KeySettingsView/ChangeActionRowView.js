@@ -8,11 +8,11 @@ const UE = require("ue"),
 class ChangeActionRowView extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this.uAi = void 0),
+      (this.uPi = void 0),
       (this.IsRevert = !1),
-      (this.EVe = void 0),
-      (this.OCt = (t) => {
-        1 === t && this.EVe && this.EVe(this, this.IsRevert);
+      (this.q6e = void 0),
+      (this.Jgt = (t) => {
+        1 === t && this.q6e && this.q6e(this, this.IsRevert);
       });
   }
   OnRegisterComponent() {
@@ -21,14 +21,14 @@ class ChangeActionRowView extends UiPanelBase_1.UiPanelBase {
       [2, UE.UIText],
       [0, UE.UIExtendToggle],
     ]),
-      (this.BtnBindInfo = [[0, this.OCt]]);
+      (this.BtnBindInfo = [[0, this.Jgt]]);
   }
   OnBeforeDestroy() {
-    this.uAi = void 0;
+    this.uPi = void 0;
   }
   Refresh(t, e, i) {
-    (this.uAi = t), (this.IsRevert = i);
-    var t = this.uAi.BothActionName,
+    (this.uPi = t), (this.IsRevert = i);
+    var t = this.uPi.BothActionName,
       s = t[0],
       t = t[1],
       s = InputSettingsManager_1.InputSettingsManager.GetActionBinding(s),
@@ -36,17 +36,17 @@ class ChangeActionRowView extends UiPanelBase_1.UiPanelBase {
       n = [],
       h = [],
       s =
-        (s.GetKeyNameList(n), t.GetKeyNameList(h), n[this.uAi.GetKeyIndex(e)]),
-      t = h[this.uAi.GetKeyIndex(e)],
-      n = this.uAi.GetSettingName(),
+        (s.GetKeyNameList(n), t.GetKeyNameList(h), n[this.uPi.GetKeyIndex(e)]),
+      t = h[this.uPi.GetKeyIndex(e)],
+      n = this.uPi.GetSettingName(),
       h =
         (LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(1), n),
         i ? [t, s] : [s, t]),
-      n = this.uAi.GetKeyNameRichTextByKeyNameList(e, h, "/");
+      n = this.uPi.GetKeyNameRichTextByKeyNameList(e, h, "/");
     this.GetText(2)?.SetText(n);
   }
   BindOnSelected(t) {
-    this.EVe = t;
+    this.q6e = t;
   }
   SetSelected(t) {
     t

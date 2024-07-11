@@ -9,18 +9,18 @@ const Log_1 = require("../../../Core/Common/Log"),
 class RewardConfig extends ConfigBase_1.ConfigBase {
   constructor() {
     super(...arguments),
-      (this.lso = void 0),
-      (this._so = void 0),
-      (this.uso = void 0),
-      (this.cso = void 0),
-      (this.mso = void 0),
-      (this.dso = void 0),
-      (this.Cso = void 0),
-      (this.gso = void 0),
-      (this.fso = void 0),
-      (this.pso = void 0),
-      (this.vso = void 0),
-      (this.Mso = void 0);
+      (this.nao = void 0),
+      (this.sao = void 0),
+      (this.aao = void 0),
+      (this.hao = void 0),
+      (this.lao = void 0),
+      (this._ao = void 0),
+      (this.uao = void 0),
+      (this.cao = void 0),
+      (this.mao = void 0),
+      (this.dao = void 0),
+      (this.Cao = void 0),
+      (this.gao = void 0);
   }
   GetDropPackage(t) {
     return DropPackageById_1.configDropPackageById.GetConfig(t);
@@ -34,114 +34,114 @@ class RewardConfig extends ConfigBase_1.ConfigBase {
   }
   GetSpeed() {
     return (
-      this.lso ||
-        (this.lso =
+      this.nao ||
+        (this.nao =
           CommonParamById_1.configCommonParamById.GetIntConfig(
             "adsorption_speed",
           )),
-      this.lso
+      this.nao
     );
   }
   GetMaxAdsorption() {
     return (
-      this._so ||
-        (this._so =
+      this.sao ||
+        (this.sao =
           CommonParamById_1.configCommonParamById.GetIntConfig(
             "adsorption_time",
           )),
-      this._so
+      this.sao
     );
   }
   GetHeightProtect() {
     return (
-      this.uso ||
-        (this.uso = CommonParamById_1.configCommonParamById.GetIntConfig(
+      this.aao ||
+        (this.aao = CommonParamById_1.configCommonParamById.GetIntConfig(
           "drop_height_protect",
         )),
-      this.uso
+      this.aao
     );
   }
   GetRestitution() {
     return (
-      this.cso ||
-        (this.cso = CommonParamById_1.configCommonParamById.GetFloatConfig(
+      this.hao ||
+        (this.hao = CommonParamById_1.configCommonParamById.GetFloatConfig(
           "drop_bounce_coefficient",
         )),
-      this.cso
+      this.hao
     );
   }
   GetFriction() {
     return (
-      this.mso ||
-        (this.mso =
+      this.lao ||
+        (this.lao =
           CommonParamById_1.configCommonParamById.GetFloatConfig(
             "drop_friction",
           )),
-      this.mso
+      this.lao
     );
   }
   GetDropItemPickUpRange() {
     return (
-      this.dso ||
-        (this.dso = CommonParamById_1.configCommonParamById.GetIntConfig(
+      this._ao ||
+        (this._ao = CommonParamById_1.configCommonParamById.GetIntConfig(
           "drop_item_pickup_range",
         )),
-      this.dso
+      this._ao
     );
   }
   GetPickUpInBagRange() {
     return (
-      this.Cso ||
-        (this.Cso = CommonParamById_1.configCommonParamById.GetIntConfig(
+      this.uao ||
+        (this.uao = CommonParamById_1.configCommonParamById.GetIntConfig(
           "drop_pickup_in_bag_range",
         )),
-      this.Cso
+      this.uao
     );
   }
   GetDropItemAcceleration() {
     return (
-      this.gso ||
-        (this.gso = CommonParamById_1.configCommonParamById.GetIntConfig(
+      this.cao ||
+        (this.cao = CommonParamById_1.configCommonParamById.GetIntConfig(
           "adsorption_acceleration",
         )),
-      this.gso
+      this.cao
     );
   }
   GetFallToGroundSpeed() {
     return (
-      this.fso ||
-        (this.fso = CommonParamById_1.configCommonParamById.GetIntConfig(
+      this.mao ||
+        (this.mao = CommonParamById_1.configCommonParamById.GetIntConfig(
           "drop_fall_ground_speed",
         )),
-      this.fso
+      this.mao
     );
   }
   GetDropChestOffsetZ() {
     return (
-      this.pso ||
-        (this.pso = CommonParamById_1.configCommonParamById.GetIntConfig(
+      this.dao ||
+        (this.dao = CommonParamById_1.configCommonParamById.GetIntConfig(
           "drop_chest_zaxis_offset",
         )),
-      this.pso
+      this.dao
     );
   }
   GetDropBornRadius() {
     return (
-      this.vso ||
-        (this.vso =
+      this.Cao ||
+        (this.Cao =
           CommonParamById_1.configCommonParamById.GetIntConfig(
             "drop_born_radius",
           )),
-      this.vso
+      this.Cao
     );
   }
   GetDropRotationProtectTime() {
     return (
-      this.Mso ||
-        (this.Mso = CommonParamById_1.configCommonParamById.GetIntConfig(
+      this.gao ||
+        (this.gao = CommonParamById_1.configCommonParamById.GetIntConfig(
           "drop_lock_rotation_time",
         )),
-      this.Mso
+      this.gao
     );
   }
   GetMergedDropPackagePreviewItemList(t) {
@@ -281,17 +281,17 @@ class RewardConfig extends ConfigBase_1.ConfigBase {
   }
   OnClear() {
     return (
-      (this.lso = void 0),
-      (this._so = void 0),
-      (this.uso = void 0),
-      (this.cso = void 0),
-      (this.mso = void 0),
-      (this.dso = void 0),
-      (this.Cso = void 0),
-      (this.gso = void 0),
-      (this.fso = void 0),
-      (this.pso = void 0),
-      !(this.vso = void 0)
+      (this.nao = void 0),
+      (this.sao = void 0),
+      (this.aao = void 0),
+      (this.hao = void 0),
+      (this.lao = void 0),
+      (this._ao = void 0),
+      (this.uao = void 0),
+      (this.cao = void 0),
+      (this.mao = void 0),
+      (this.dao = void 0),
+      !(this.Cao = void 0)
     );
   }
 }

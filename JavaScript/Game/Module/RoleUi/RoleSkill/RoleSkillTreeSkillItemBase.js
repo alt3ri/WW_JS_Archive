@@ -11,9 +11,9 @@ const EventDefine_1 = require("../../../Common/Event/EventDefine"),
 class RoleSkillTreeSkillItemBase extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this.Smo = void 0),
+      (this.pdo = void 0),
       (this.ac = void 0),
-      (this.I6e = () => {
+      (this.N8e = () => {
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.OnSkillTreeNodeToggleClick,
           this,
@@ -21,20 +21,20 @@ class RoleSkillTreeSkillItemBase extends UiPanelBase_1.UiPanelBase {
       });
   }
   OnStart() {
-    (this.Smo = new RoleSkillIconItem_1.RoleSkillIconItem(
+    (this.pdo = new RoleSkillIconItem_1.RoleSkillIconItem(
       this.GetSkillIconItem(),
       this.IsIconTexture(),
     )),
-      this.SetToggleCallBack(this.I6e);
+      this.SetToggleCallBack(this.N8e);
   }
   Update(e, t) {
-    this.Smo.SetId(e, t), this.Refresh();
+    this.pdo.SetId(e, t), this.Refresh();
   }
   GetRoleId() {
-    return this.Smo.GetRoleId();
+    return this.pdo.GetRoleId();
   }
   GetSkillNodeId() {
-    return this.Smo.GetSkillNodeId();
+    return this.pdo.GetSkillNodeId();
   }
   GetSkillIconItem() {}
   GetLevelText() {}
@@ -42,7 +42,7 @@ class RoleSkillTreeSkillItemBase extends UiPanelBase_1.UiPanelBase {
   GetLockItem() {}
   GetStrongArrowUpItem() {}
   Refresh() {
-    this.Smo.Refresh(),
+    this.pdo.Refresh(),
       this.RefreshName(),
       this.RefreshLevel(),
       this.RefreshState();
@@ -76,10 +76,10 @@ class RoleSkillTreeSkillItemBase extends UiPanelBase_1.UiPanelBase {
       LguiUtil_1.LguiUtil.SetLocalText(i, "LevelRichText", e, t));
   }
   SetToggleCallBack(e) {
-    this.Smo.SetToggleCallBack(e);
+    this.pdo.SetToggleCallBack(e);
   }
   SetToggleState(e) {
-    this.Smo.SetToggleState(e);
+    this.pdo.SetToggleState(e);
   }
   RefreshState() {
     var e,
@@ -103,10 +103,10 @@ class RoleSkillTreeSkillItemBase extends UiPanelBase_1.UiPanelBase {
             i?.SetUIActive(e));
   }
   OnOtherNodeLevelChange() {
-    3 !== this.ac && (this.Smo.RefreshState(), this.RefreshState());
+    3 !== this.ac && (this.pdo.RefreshState(), this.RefreshState());
   }
   OnSelfNodeLevelChange() {
-    this.Smo.RefreshState(), this.RefreshLevel(), this.RefreshState();
+    this.pdo.RefreshState(), this.RefreshLevel(), this.RefreshState();
   }
   OnNodeLevelChange(e) {
     e === this.GetSkillNodeId()

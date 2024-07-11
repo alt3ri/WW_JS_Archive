@@ -4,68 +4,68 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const RoleDefine_1 = require("../RoleDefine");
 class RoleLevelResponseData {
   constructor() {
-    (this.q_o = 0), (this.G_o = new RoleLevelUpViewResponseData());
+    (this.xuo = 0), (this.wuo = new RoleLevelUpViewResponseData());
   }
   UpdateRoleLevelUpViewResponse(e) {
-    this.G_o = e;
+    this.wuo = e;
   }
   CalculateItemList(e, t) {
-    for (const i of this.G_o.Y5n)
-      if (i.Ckn === e)
-        return (this.q_o = e), (i.gkn = t ? i.gkn + 1 : i.gkn - 1), !0;
+    for (const i of this.wuo.U9n)
+      if (i.j4n === e)
+        return (this.xuo = e), (i.W4n = t ? i.W4n + 1 : i.W4n - 1), !0;
     if (!t) return !1;
-    this.q_o = e;
+    this.xuo = e;
     var s = new RoleDefine_1.ArrayIntInt();
-    return (s.Ckn = e), (s.gkn = 1), this.G_o.Y5n.push(s), !0;
+    return (s.j4n = e), (s.W4n = 1), this.wuo.U9n.push(s), !0;
   }
   SetSelectedItemId(e) {
-    this.q_o = e;
+    this.xuo = e;
   }
   GetItemList() {
-    return this.G_o.Y5n;
+    return this.wuo.U9n;
   }
   ClearItemList() {
-    this.G_o.Y5n = [];
+    this.wuo.U9n = [];
   }
   GetItemCountByItemId(e) {
-    for (const t of this.G_o.Y5n) if (t.Ckn === e) return t.gkn;
+    for (const t of this.wuo.U9n) if (t.j4n === e) return t.W4n;
     return 0;
   }
   GetCostList() {
-    return this.G_o.z8n;
+    return this.wuo.xHn;
   }
   GetOverFlowMap() {
     var e = new Map();
-    for (const t of this.G_o.eVn) e.set(t.Ckn, t.gkn);
+    for (const t of this.wuo.BHn) e.set(t.j4n, t.W4n);
     return e;
   }
   GetAddExp() {
-    return this.G_o.tVn;
+    return this.wuo.wHn;
   }
   GetFinalProp() {
     var e = new Map();
-    for (const t of this.G_o.J8n) e.set(t.Ckn, t.gkn);
+    for (const t of this.wuo.RHn) e.set(t.j4n, t.W4n);
     return e;
   }
   GetLevelExp(e) {
-    for (const t of this.G_o.iVn) if (t.Ckn === e) return t.gkn;
+    for (const t of this.wuo.bHn) if (t.j4n === e) return t.W4n;
     return 0;
   }
   GetSelectedItemId() {
-    return this.q_o;
+    return this.xuo;
   }
 }
 exports.RoleLevelResponseData = RoleLevelResponseData;
 class RoleLevelUpViewResponseData {
   constructor() {
-    (this.r3n = 1),
-      (this.iVn = void 0),
-      (this.k3n = 0),
-      (this.tVn = 0),
-      (this.J8n = void 0),
-      (this.z8n = void 0),
-      (this.eVn = void 0),
-      (this.Y5n = void 0);
+    (this.P6n = 1),
+      (this.bHn = void 0),
+      (this.M8n = 0),
+      (this.wHn = 0),
+      (this.RHn = void 0),
+      (this.xHn = void 0),
+      (this.BHn = void 0),
+      (this.U9n = void 0);
   }
 }
 //# sourceMappingURL=RoleLevelResponseData.js.map

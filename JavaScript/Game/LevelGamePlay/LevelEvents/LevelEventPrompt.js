@@ -104,8 +104,7 @@ class LevelEventPrompt extends LevelGeneralBase_1.LevelEventBase {
                 void UiManager_1.UiManager.OpenView("GameplayEnterView", t))
               : void 0;
           case IAction_1.ECommonTipType.FirstComplete:
-            var t,
-              n = o.TidText;
+            n = o.TidText;
             return n
               ? (((t =
                   new GameplayViewDefine_1.GameplayFirstPassViewData()).InfoId =
@@ -118,6 +117,12 @@ class LevelEventPrompt extends LevelGeneralBase_1.LevelEventBase {
             return void GenericPromptController_1.GenericPromptController.ShowPromptByItsType(
               18,
               new LguiUtil_1.TableTextArgNew(n),
+            );
+          case IAction_1.ECommonTipType.DreamlessWarning:
+            var t = o.WarningText;
+            return void GenericPromptController_1.GenericPromptController.ShowPromptByItsType(
+              20,
+              new LguiUtil_1.TableTextArgNew(t),
             );
           default:
             return;

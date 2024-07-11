@@ -9,10 +9,10 @@ const UE = require("ue"),
 class TowerDetailItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(),
-      (this.DLo = void 0),
-      (this.RLo = -1),
+      (this.IDo = void 0),
+      (this.TDo = -1),
       (this.kqe = () => {
-        this.DLo && this.DLo(this.RLo);
+        this.IDo && this.IDo(this.TDo);
       });
   }
   OnRegisterComponent() {
@@ -23,7 +23,7 @@ class TowerDetailItem extends GridProxyAbstract_1.GridProxyAbstract {
       (this.BtnBindInfo = [[0, this.kqe]]);
   }
   Refresh(e, t, i) {
-    this.RLo = e;
+    this.TDo = e;
     var r = ConfigManager_1.ConfigManager.TowerClimbConfig.GetTowerInfo(e);
     LguiUtil_1.LguiUtil.SetLocalTextNew(
       this.GetText(1),
@@ -35,13 +35,13 @@ class TowerDetailItem extends GridProxyAbstract_1.GridProxyAbstract {
         : this.SetToggleState(0);
   }
   BindOnClickToggle(e) {
-    this.DLo = e;
+    this.IDo = e;
   }
   SetToggleState(e) {
     this.GetExtendToggle(0).SetToggleState(e), 1 === e && this.kqe();
   }
   OnBeforeDestroy() {
-    this.DLo = void 0;
+    this.IDo = void 0;
   }
 }
 exports.TowerDetailItem = TowerDetailItem;

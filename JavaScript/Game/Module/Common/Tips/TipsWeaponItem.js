@@ -10,7 +10,7 @@ const UE = require("ue"),
   UiComponentUtil_1 = require("../../Util/UiComponentUtil");
 class TipsWeaponItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
-    super(...arguments), (this.zBt = void 0);
+    super(...arguments), (this.tqt = void 0);
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -23,13 +23,13 @@ class TipsWeaponItem extends UiPanelBase_1.UiPanelBase {
     ];
   }
   async OnBeforeStartAsync() {
-    this.zBt = [];
+    this.tqt = [];
     var i = [],
       t = this.GetItem(3).GetAttachUIChildren();
     for (let e = 0; e < t.Num(); e++) {
       var a = t.Get(e),
         r = new StarItem_1.StarItem();
-      i.push(r.CreateThenShowByActorAsync(a.GetOwner())), this.zBt.push(r);
+      i.push(r.CreateThenShowByActorAsync(a.GetOwner())), this.tqt.push(r);
     }
     await Promise.all(i);
   }
@@ -63,7 +63,7 @@ class TipsWeaponItem extends UiPanelBase_1.UiPanelBase {
       a.LevelLimit,
     ),
       UiComponentUtil_1.UiComponentUtil.SetStarActiveNew(
-        this.zBt,
+        this.tqt,
         0,
         void 0,
         !1,

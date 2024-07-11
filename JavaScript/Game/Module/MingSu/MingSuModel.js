@@ -13,14 +13,14 @@ const Log_1 = require("../../../Core/Common/Log"),
 class MingSuModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
-      (this.wBi = new Map()),
-      (this.BBi = void 0),
-      (this.bBi = 0),
+      (this.wbi = new Map()),
+      (this.Bbi = void 0),
+      (this.bbi = 0),
       (this.UpgradeFlow = void 0),
       (this.CurrentPreviewLevel = 0),
-      (this.aAr = 0),
+      (this.qAr = 0),
       (this.CurrentInteractCreatureDataLongId = void 0),
-      (this.qBi = 0);
+      (this.qbi = 0);
   }
   OnInit() {
     return this.InitData(), !0;
@@ -29,47 +29,47 @@ class MingSuModel extends ModelBase_1.ModelBase {
     this.InitMingSuMap();
   }
   SetCurrentDragonPoolId(e) {
-    this.bBi = e;
+    this.bbi = e;
   }
   GetCurrentDragonPoolId() {
-    return this.bBi;
+    return this.bbi;
   }
   SetCollectItemConfigId(e) {
-    this.aAr = e;
+    this.qAr = e;
   }
   GetCollectItemConfigId() {
-    return this.aAr;
+    return this.qAr;
   }
   RefreshDragonPoolActiveStatus(e, t) {
-    e = this.wBi.get(e);
+    e = this.wbi.get(e);
     e && e.SetDragonPoolState(t);
   }
   RefreshDragonPoolDropItems(e, t) {
-    e = this.wBi.get(e);
+    e = this.wbi.get(e);
     e && e.SetDropItemList(t);
   }
   RefreshDragonPoolLevel(e, t) {
-    e = this.wBi.get(e);
+    e = this.wbi.get(e);
     e && e.SetDragonPoolLevel(t);
   }
   RefreshDragonPoolHadCoreCount(e, t) {
-    e = this.wBi.get(e);
+    e = this.wbi.get(e);
     e && e.SetHadCoreCount(t);
   }
   UpdateDragonPoolInfoMap(e) {
     for (const t of e) this.DoUpdateDragonPoolInfoMap(t);
   }
   DoUpdateDragonPoolInfoMap(e) {
-    this.RefreshDragonPoolActiveStatus(e.z6n, e.Efs),
-      this.RefreshDragonPoolLevel(e.z6n, e.r3n),
-      this.RefreshDragonPoolHadCoreCount(e.z6n, e.yfs);
+    this.RefreshDragonPoolActiveStatus(e.x7n, e.kSs),
+      this.RefreshDragonPoolLevel(e.x7n, e.P6n),
+      this.RefreshDragonPoolHadCoreCount(e.x7n, e.NSs);
   }
   InitMingSuMap() {
     var e = DragonPoolAll_1.configDragonPoolAll.GetConfigList();
     if (e)
       for (const r of e) {
         var t = new MingSuInstance_1.MingSuInstance(r.Id);
-        this.wBi.set(r.Id, t);
+        this.wbi.set(r.Id, t);
       }
     else
       Log_1.Log.CheckDebug() &&
@@ -79,7 +79,7 @@ class MingSuModel extends ModelBase_1.ModelBase {
         ]);
   }
   GetDragonPoolInstanceById(e) {
-    return this.wBi.get(e);
+    return this.wbi.get(e);
   }
   GetTargetDragonPoolLevelById(e) {
     e = this.GetDragonPoolInstanceById(e);
@@ -102,12 +102,12 @@ class MingSuModel extends ModelBase_1.ModelBase {
     if (e) {
       e = e.GetDropItemList();
       if (e && e.length > t) {
-        e = e[t]._gs;
+        e = e[t].RMs;
         if (!e) return;
         var r = new Array();
         for (const n of e) {
-          var o = ConfigManager_1.ConfigManager.ItemConfig.GetConfig(n.G3n);
-          r.push({ ItemInfo: o, Count: n.g5n });
+          var o = ConfigManager_1.ConfigManager.ItemConfig.GetConfig(n.f8n);
+          r.push({ ItemInfo: o, Count: n.YVn });
         }
         return r;
       }
@@ -118,10 +118,10 @@ class MingSuModel extends ModelBase_1.ModelBase {
     if (e) {
       e = e.GetDropItemList();
       if (e && e.length > t) {
-        e = e[t]._gs;
+        e = e[t].RMs;
         if (!e) return;
         var r = new Array();
-        for (const o of e) r.push([{ ItemId: o.G3n, IncId: 0 }, o.g5n]);
+        for (const o of e) r.push([{ ItemId: o.f8n, IncId: 0 }, o.YVn]);
         return r;
       }
     }
@@ -157,7 +157,7 @@ class MingSuModel extends ModelBase_1.ModelBase {
     return (
       0 !== e &&
       ((n = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(n.Name)),
-      this.GBi({ UseCoreCount: e >= i ? i : e, CoreName: n ?? "" }),
+      this.Gbi({ UseCoreCount: e >= i ? i : e, CoreName: n ?? "" }),
       !0)
     );
   }
@@ -172,31 +172,31 @@ class MingSuModel extends ModelBase_1.ModelBase {
   }
   GetCanUpPoolId() {
     let e = 0;
-    for (var [t, r] of this.wBi) {
+    for (var [t, r] of this.wbi) {
       var o = r.GetDragonPoolLevel(),
-        r = r.GetNeedCoreCount(o),
-        o = this.GetTargetDragonPoolCoreById(t);
-      if (r <= this.GetItemCount(o)) {
+        o = r.GetNeedCoreCount(o) - r.GetHadCoreCount(),
+        r = this.GetTargetDragonPoolCoreById(t);
+      if (o <= this.GetItemCount(r)) {
         e = t;
         break;
       }
     }
     return e;
   }
-  GBi(e) {
+  Gbi(e) {
     var t = [];
     t.push(e.CoreName, e.UseCoreCount.toString()),
-      (this.BBi = new ConfirmBoxDefine_1.ConfirmBoxDataNew(9)),
-      this.BBi.SetTextArgs(...t);
+      (this.Bbi = new ConfirmBoxDefine_1.ConfirmBoxDataNew(9)),
+      this.Bbi.SetTextArgs(...t);
   }
   GetUpData() {
-    return this.BBi;
+    return this.Bbi;
   }
   set MingSuLastLevel(e) {
-    this.qBi = e;
+    this.qbi = e;
   }
   get MingSuLastLevel() {
-    return this.qBi;
+    return this.qbi;
   }
 }
 exports.MingSuModel = MingSuModel;

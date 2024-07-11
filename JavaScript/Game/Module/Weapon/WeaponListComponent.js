@@ -5,28 +5,28 @@ const GenericScrollViewNew_1 = require("../Util/ScrollView/GenericScrollViewNew"
   WeaponItemSmallItemGrid_1 = require("./WeaponItemSmallItemGrid");
 class WeaponListComponent {
   constructor() {
-    (this.TOi = void 0),
+    (this.Dki = void 0),
       (this.xqe = void 0),
-      (this.DOo = void 0),
+      (this.Iko = void 0),
       (this.InitWeaponItem = () => {
         var t = new WeaponItemSmallItemGrid_1.WeaponItemSmallItemGrid();
         return (
-          t.BindOnExtendToggleStateChanged(this.I6e),
-          t.BindOnCanExecuteChange(this.d4e),
+          t.BindOnExtendToggleStateChanged(this.N8e),
+          t.BindOnCanExecuteChange(this.A5e),
           t
         );
       }),
-      (this.d4e = (t, e, i) => this.GetCurSelectedData() !== t),
-      (this.I6e = (t) => {
+      (this.A5e = (t, e, i) => this.GetCurSelectedData() !== t),
+      (this.N8e = (t) => {
         1 === t.State &&
           (t = t.MediumItemGrid) instanceof
             WeaponItemSmallItemGrid_1.WeaponItemSmallItemGrid &&
-          this.ROo(t.GridIndex);
+          this.Tko(t.GridIndex);
       }),
-      (this.ROo = (t) => {
+      (this.Tko = (t) => {
         this.xqe.GetGenericLayout()?.DeselectCurrentGridProxy(),
           this.xqe.GetGenericLayout()?.SelectGridProxy(t),
-          this.DOo?.();
+          this.Iko?.();
       });
   }
   Init(t) {
@@ -36,25 +36,25 @@ class WeaponListComponent {
     );
   }
   SetWeaponChangeCallBack(t) {
-    this.DOo = t;
+    this.Iko = t;
   }
   async UpdateDataList(t) {
-    (this.TOi = t),
+    (this.Dki = t),
       this.xqe.SetActive(1 < t.length),
-      await this.xqe.RefreshByDataAsync(this.TOi);
+      await this.xqe.RefreshByDataAsync(this.Dki);
   }
   SetCurSelect(t) {
     var e;
-    !this.TOi ||
+    !this.Dki ||
       t < 0 ||
-      t >= this.TOi.length ||
+      t >= this.Dki.length ||
       t === this.xqe.GetGenericLayout().GetSelectedGridIndex() ||
       ((e = this.xqe.GetScrollItemByIndex(t)) &&
-        (e?.SetSelected(!0), this.ROo(t)));
+        (e?.SetSelected(!0), this.Tko(t)));
   }
   GetCurSelectedData() {
     var t = this.xqe.GetGenericLayout().GetSelectedGridIndex();
-    if (!(!this.TOi || t < 0 || t >= this.TOi.length)) return this.TOi[t];
+    if (!(!this.Dki || t < 0 || t >= this.Dki.length)) return this.Dki[t];
   }
   CancelSelect() {
     this.xqe.GetGenericLayout()?.DeselectCurrentGridProxy();

@@ -13,10 +13,10 @@ const CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParam
 class BattleUiSetModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
-      (this.Zdt = new Map()),
-      (this.eCt = new Map()),
+      (this.ugt = new Map()),
+      (this.cgt = new Map()),
       (this.SelectedPanelItemData = void 0),
-      (this.tCt = new Map()),
+      (this.mgt = new Map()),
       (this.MinTouchMoveDifference = 0),
       (this.MaxTouchMoveDifference = 0),
       (this.MaxTouchMoveValue = 0),
@@ -37,10 +37,10 @@ class BattleUiSetModel extends ModelBase_1.ModelBase {
             i.ItemIndex,
             i,
           );
-        a.push(r), this.eCt.set(o, r);
+        a.push(r), this.cgt.set(o, r);
       }
       var n = new BattleUiSetPanelData_1.BattleUiSetPanelData(e, a);
-      this.Zdt.set(e, n);
+      this.ugt.set(e, n);
     }
     return (
       (this.MinTouchMoveDifference =
@@ -68,17 +68,17 @@ class BattleUiSetModel extends ModelBase_1.ModelBase {
   }
   OnClear() {
     return (
-      this.Zdt.clear(), this.eCt.clear(), !(this.SelectedPanelItemData = void 0)
+      this.ugt.clear(), this.cgt.clear(), !(this.SelectedPanelItemData = void 0)
     );
   }
   GetPanelDataMap() {
-    return this.Zdt;
+    return this.ugt;
   }
   GetPanelItemDataMap() {
-    return this.eCt;
+    return this.cgt;
   }
   GetPanelItemDataByConfigId(e) {
-    return this.eCt.get(e);
+    return this.cgt.get(e);
   }
   SetPanelItemSelected(e) {
     e &&
@@ -105,7 +105,7 @@ class BattleUiSetModel extends ModelBase_1.ModelBase {
         o = s.EditOffsetX,
         r = s.EditOffsetY,
         n = s.EditorHierarchyIndex,
-        i = { Ekn: s.ConfigId, x3n: t, P3n: a, B3n: o, w3n: r, b3n: n, q3n: 0 };
+        i = { J4n: s.ConfigId, u8n: t, c8n: a, m8n: o, d8n: r, C8n: n, g8n: 0 };
       (s.Size = t),
         (s.Alpha = a),
         (s.OffsetX = o),
@@ -122,17 +122,17 @@ class BattleUiSetModel extends ModelBase_1.ModelBase {
   }
   AddTouchFingerData(e) {
     var t = e.GetFingerIndex();
-    this.tCt.set(t, e);
+    this.mgt.set(t, e);
   }
   RemoveTouchFingerData(e) {
     e = e.GetFingerIndex();
-    this.tCt.delete(e);
+    this.mgt.delete(e);
   }
   GetTouchFingerDataCount() {
-    return this.tCt.size;
+    return this.mgt.size;
   }
   GetTouchFingerData(e) {
-    return this.tCt.get(e);
+    return this.mgt.get(e);
   }
 }
 exports.BattleUiSetModel = BattleUiSetModel;

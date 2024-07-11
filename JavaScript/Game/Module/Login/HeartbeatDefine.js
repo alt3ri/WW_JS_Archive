@@ -14,7 +14,8 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
       (e[(e.BeforeGetToken = 1)] = "BeforeGetToken"),
       (e[(e.LoginStatusInit = 2)] = "LoginStatusInit"),
       (e[(e.BackLoginView = 3)] = "BackLoginView"),
-      (e[(e.ReconnectStart = 4)] = "ReconnectStart");
+      (e[(e.ReconnectStart = 4)] = "ReconnectStart"),
+      (e[(e.BackLoginAndEnterGame = 5)] = "BackLoginAndEnterGame");
   })(
     (EStopHeartbeat = exports.EStopHeartbeat || (exports.EStopHeartbeat = {})),
   );

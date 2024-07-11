@@ -12,31 +12,31 @@ class PayGiftModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
       (this.Version = ""),
-      (this.l2i = []),
-      (this._2i = []),
-      (this.u2i = new Map()),
-      (this.c2i = new Map()),
-      (this.m2i = new Array());
+      (this.lFi = []),
+      (this._Fi = []),
+      (this.uFi = new Map()),
+      (this.cFi = new Map()),
+      (this.mFi = new Array());
   }
   InitDataByServer(e) {
     if (0 !== e.length) {
-      (this._2i = []),
-        (this.l2i = []),
-        (this.m2i = []),
-        this.u2i.clear(),
-        this.c2i.clear();
+      (this._Fi = []),
+        (this.lFi = []),
+        (this.mFi = []),
+        this.uFi.clear(),
+        this.cFi.clear();
       var t = new Array();
       for (const a of e) {
         var r = new PayPackageData_1.PayPackageData();
         r.Phrase(a),
-          t.push(a.OPs),
-          this.l2i.push(r),
-          this._2i.push(r.GetPayShopGoods()),
-          this.u2i.set(r.Id, r.GetPayShopGoods()),
-          this.c2i.set(r.Id, r),
-          !this.m2i.includes(r.TabId) &&
+          t.push(a.oBs),
+          this.lFi.push(r),
+          this._Fi.push(r.GetPayShopGoods()),
+          this.uFi.set(r.Id, r.GetPayShopGoods()),
+          this.cFi.set(r.Id, r),
+          !this.mFi.includes(r.TabId) &&
             r.ShowInShop() &&
-            this.m2i.push(r.TabId);
+            this.mFi.push(r.TabId);
       }
       ControllerHolder_1.ControllerHolder.KuroSdkController.QueryProductByProductId(
         t,
@@ -47,18 +47,18 @@ class PayGiftModel extends ModelBase_1.ModelBase {
     }
   }
   IfHaveFreeGift() {
-    for (const e of this.l2i) if ("0" === e.Amount) return !0;
+    for (const e of this.lFi) if ("0" === e.Amount) return !0;
     return !1;
   }
   GetTabList() {
     var e = new Set(),
       t = ModelManager_1.ModelManager.PayShopModel.GetPayShopTabIdList(3);
-    for (const r of this.m2i) e.add(r);
+    for (const r of this.mFi) e.add(r);
     for (const a of t) e.add(a);
     return Array.from(e);
   }
   GetPayShopGoodsById(e) {
-    var t = this.u2i.get(e);
+    var t = this.uFi.get(e);
     return (
       t ||
         (Log_1.Log.CheckError() &&
@@ -70,16 +70,16 @@ class PayGiftModel extends ModelBase_1.ModelBase {
     );
   }
   GetPayGiftDataList() {
-    return this.l2i;
+    return this.lFi;
   }
   GetPayGiftDataById(e) {
-    return this.c2i.get(e);
+    return this.cFi.get(e);
   }
   GetPayShopGoodsList() {
-    return this._2i;
+    return this._Fi;
   }
   GetDataList() {
-    return this.l2i;
+    return this.lFi;
   }
 }
 exports.PayGiftModel = PayGiftModel;

@@ -148,7 +148,7 @@ class TsAnimNotifyStatePositionBranchTarget extends UE.KuroAnimNotifyState {
     if (
       !(e =
         (this.TsIsShareTarget &&
-          ((h = t.Entity.GetComponent(47)),
+          ((h = t.Entity.GetComponent(48)),
           (e = EntitySystem_1.EntitySystem.Get(h.RoleId)?.GetComponent(33)))) ||
         r)
     )
@@ -167,7 +167,7 @@ class TsAnimNotifyStatePositionBranchTarget extends UE.KuroAnimNotifyState {
         (paramPool.length
           ? paramPool.pop()
           : new PositionBranchTargetParams())).CharActorComp = t),
-      (o.CharUnifiedComp = t.Entity.GetComponent(158)),
+      (o.CharUnifiedComp = t.Entity.GetComponent(160)),
       (o.CharSkillComp = e),
       o.RefreshTarget(this.TsBlackboardKey),
       (o.NowTime = 0),

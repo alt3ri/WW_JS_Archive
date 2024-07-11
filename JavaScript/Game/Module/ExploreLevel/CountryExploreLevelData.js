@@ -5,43 +5,43 @@ const CountryExploreLevelRewardData_1 = require("./CountryExploreLevelRewardData
   CountryExploreScoreData_1 = require("./CountryExploreScoreData");
 class CountryExploreLevelData {
   constructor() {
-    (this.z4t = 0),
-      (this.Z4t = 0),
-      (this.e5t = 0),
-      (this.t5t = new Map()),
-      (this.i5t = []),
-      (this.o5t = []),
-      (this.r5t = new Map()),
-      (this.n5t = []),
-      (this.s5t = 0);
+    (this.z5t = 0),
+      (this.Z5t = 0),
+      (this.eVt = 0),
+      (this.tVt = new Map()),
+      (this.iVt = []),
+      (this.oVt = []),
+      (this.rVt = new Map()),
+      (this.nVt = []),
+      (this.sVt = 0);
   }
   Initialize(e, t) {
-    (this.z4t = e), (this.s5t = 0);
+    (this.z5t = e), (this.sVt = 0);
     for (const a of t) {
       var r =
           new CountryExploreLevelRewardData_1.CountryExploreLevelRewardData(),
         o = (r.Initialize(a), a.ExploreLevel);
-      this.t5t.set(o, r),
-        this.i5t.push(r),
-        a.Show && this.o5t.push(r),
-        this.s5t < o && (this.s5t = o);
+      this.tVt.set(o, r),
+        this.iVt.push(r),
+        a.Show && this.oVt.push(r),
+        this.sVt < o && (this.sVt = o);
     }
   }
   AddExploreScoreData(e, t, r, o) {
     var a = new CountryExploreScoreData_1.CountryExploreScoreData();
-    a.Initialize(this.z4t, e, t, r, o);
-    let s = this.r5t.get(e);
-    s || ((s = new Map()), this.r5t.set(e, s)), s.set(t, a), this.n5t.push(a);
+    a.Initialize(this.z5t, e, t, r, o);
+    let s = this.rVt.get(e);
+    s || ((s = new Map()), this.rVt.set(e, s)), s.set(t, a), this.nVt.push(a);
   }
   GetExploreScoreData(e, t) {
-    return this.r5t.get(e)?.get(t);
+    return this.rVt.get(e)?.get(t);
   }
   GetAllExploreScoreData() {
-    return this.n5t;
+    return this.nVt;
   }
   GetVisibleExploreScoreDataList() {
     var e = [];
-    for (const a of this.r5t.values())
+    for (const a of this.rVt.values())
       for (var [t, r] of a) {
         var o = r.LastProgress,
           o = a.get(o);
@@ -55,45 +55,45 @@ class CountryExploreLevelData {
     this.GetExploreScoreData(e, t)?.SetReceived(r);
   }
   GetCountryId() {
-    return this.z4t;
+    return this.z5t;
   }
   SetExploreLevel(e) {
-    this.Z4t = e;
+    this.Z5t = e;
   }
   GetExploreLevel() {
-    return this.Z4t;
+    return this.Z5t;
   }
   SetExploreScore(e) {
-    this.e5t = e;
+    this.eVt = e;
   }
   GetExploreScore() {
-    return this.e5t;
+    return this.eVt;
   }
   GetExploreLevelRewardData(e) {
-    return this.t5t.get(e);
+    return this.tVt.get(e);
   }
   GetExploreLevelRewardDataMap() {
-    return this.t5t;
+    return this.tVt;
   }
   GetCurrentExploreLevelRewardData() {
-    return this.t5t.get(this.Z4t);
+    return this.tVt.get(this.Z5t);
   }
   GetAllExploreLevelRewardData() {
-    return this.i5t;
+    return this.iVt;
   }
   GetUnlockFunctionExploreLevelRewardDataList() {
-    return this.o5t;
+    return this.oVt;
   }
   GetMaxExploreLevel() {
-    return this.s5t;
+    return this.sVt;
   }
   CanLevelUp() {
     let e = 0;
-    for (const r of this.n5t) r.CanReceive() && (e += r.Score);
+    for (const r of this.nVt) r.CanReceive() && (e += r.Score);
     var t = this.GetCurrentExploreLevelRewardData();
     return (
-      !(0 === e || this.e5t >= t.GetMaxExploreScore()) &&
-      this.e5t + e >= t.GetMaxExploreScore()
+      !(0 === e || this.eVt >= t.GetMaxExploreScore()) &&
+      this.eVt + e >= t.GetMaxExploreScore()
     );
   }
 }

@@ -8,72 +8,72 @@ class ExploreAreaItemData {
     (this.AreaId = 0),
       (this.ExploreType = 0),
       (this.ExploreProgressId = 0),
-      (this.V5t = 0),
-      (this.kAt = 0),
-      (this.JQt = 0),
-      (this.RTn = void 0),
-      (this.DTn = 0),
-      (this.PTn = void 0),
-      (this.ATn = void 0),
-      (this.UTn = !1),
-      (this.wTn = 0),
-      (this.SortIndex = 0);
+      (this.VVt = 0),
+      (this.HPt = 0),
+      (this.JXt = 0),
+      (this.wHs = void 0),
+      (this.bHs = 0),
+      (this.qHs = void 0),
+      (this.GHs = void 0),
+      (this.OHs = !1),
+      (this.NHs = 0);
   }
   Initialize(t) {
     (this.AreaId = t.Area),
       (this.ExploreType = t.ExploreType),
-      (this.RTn = t.TypeName),
-      (this.DTn = t.PhantomSkillId),
-      (this.PTn = t.UnlockTextId),
-      (this.ATn = t.LockTextId),
-      (this.wTn = t.CountMode),
-      (this.SortIndex = t.SortIndex),
-      (this.ExploreProgressId = t.Id),
-      (this.UTn = !1),
-      0 !== this.DTn &&
-        (this.UTn =
+      (this.wHs = t.TypeName),
+      (this.bHs = t.PhantomSkillId),
+      (this.qHs = t.UnlockTextId),
+      (this.GHs = t.LockTextId),
+      (this.NHs = t.CountMode),
+      (this.OHs = !1),
+      0 !== this.bHs &&
+        (this.OHs =
           ModelManager_1.ModelManager.RouletteModel.UnlockExploreSkillDataMap.has(
-            this.DTn,
+            this.bHs,
           ));
   }
   Refresh(t) {
-    (this.V5t = t.lLs), (this.kAt = t.Yys), (this.JQt = t.jms);
+    (this.VVt = t.DPs),
+      (this.ExploreProgressId = t.APs),
+      (this.HPt = t.CDs),
+      (this.JXt = t.svs);
   }
   GetProgress() {
-    return this.V5t;
+    return this.VVt;
   }
   GetCurrentCount() {
-    return this.kAt;
+    return this.HPt;
   }
   GetTotalCount() {
-    return this.JQt;
+    return this.JXt;
   }
   GetNameId() {
-    return this.RTn;
+    return this.wHs;
   }
   IsPercent() {
-    return 0 === this.wTn;
+    return 0 === this.NHs;
   }
   IsCompleted() {
     return (
-      100 <= this.V5t || (0 < this.kAt && 0 < this.JQt && this.kAt >= this.JQt)
+      100 <= this.VVt || (0 < this.HPt && 0 < this.JXt && this.HPt >= this.JXt)
     );
   }
   HasPhantomSkill() {
-    return 0 !== this.DTn;
+    return 0 !== this.bHs;
   }
   GetUnlockTextId() {
-    return this.PTn;
+    return this.qHs;
   }
   GetLockTextId() {
-    return this.ATn;
+    return this.GHs;
   }
   GetIsPhantomSkillUnlock() {
-    return this.UTn;
+    return this.OHs;
   }
   GetPhantomSkillHelpId() {
     var t = ConfigManager_1.ConfigManager.RouletteConfig.GetExploreConfigById(
-      this.DTn,
+      this.bHs,
     );
     if (t) return t.HelpId;
   }

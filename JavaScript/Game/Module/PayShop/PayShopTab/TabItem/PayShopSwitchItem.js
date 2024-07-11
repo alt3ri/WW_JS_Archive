@@ -9,9 +9,9 @@ const UE = require("ue"),
 class PayShopSwitchItem extends CommonTabItemBase_1.CommonTabItemBase {
   constructor() {
     super(...arguments),
-      (this.QFe = void 0),
+      (this.l4e = void 0),
       (this.bD = 0),
-      (this.X9e = (e) => {
+      (this.hHe = (e) => {
         1 === e && this.SelectedCallBack(this.GridIndex);
       });
   }
@@ -21,7 +21,7 @@ class PayShopSwitchItem extends CommonTabItemBase_1.CommonTabItemBase {
       [0, UE.UIText],
       [2, UE.UIItem],
     ]),
-      (this.BtnBindInfo = [[1, this.X9e]]);
+      (this.BtnBindInfo = [[1, this.hHe]]);
   }
   Refresh(e, t, i) {
     (this.CurrentData = e),
@@ -55,18 +55,18 @@ class PayShopSwitchItem extends CommonTabItemBase_1.CommonTabItemBase {
   BindRedDot(e, t = 0) {
     this.UnBindRedDot();
     var i = this.GetItem(2);
-    (this.QFe = e),
+    (this.l4e = e),
       (this.bD = t),
       RedDotController_1.RedDotController.BindRedDot(e, i, void 0, t);
   }
   UnBindRedDot() {
-    this.QFe &&
+    this.l4e &&
       (RedDotController_1.RedDotController.UnBindGivenUi(
-        this.QFe,
+        this.l4e,
         this.GetItem(2),
         this.bD,
       ),
-      (this.QFe = void 0),
+      (this.l4e = void 0),
       (this.bD = 0));
   }
 }

@@ -13,63 +13,63 @@ class DailyActivityController extends UiControllerBase_1.UiControllerBase {
     return !0;
   }
   static OnRegisterNetEvent() {
-    Net_1.Net.Register(9218, DailyActivityController.ROt),
-      Net_1.Net.Register(27336, DailyActivityController.UOt),
-      Net_1.Net.Register(26708, DailyActivityController.AOt);
+    Net_1.Net.Register(21718, DailyActivityController.Ukt),
+      Net_1.Net.Register(16660, DailyActivityController.Akt),
+      Net_1.Net.Register(22991, DailyActivityController.Pkt);
   }
   static OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(9218),
-      Net_1.Net.UnRegister(27336),
-      Net_1.Net.UnRegister(26708);
+    Net_1.Net.UnRegister(21718),
+      Net_1.Net.UnRegister(16660),
+      Net_1.Net.UnRegister(22991);
   }
   static OnAddEvents() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnLoadingNetDataDone,
-      this.POt,
+      this.xkt,
     );
   }
   static OnRemoveEvents() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnLoadingNetDataDone,
-      this.POt,
+      this.xkt,
     );
   }
   static async RequestDailyActivityData() {
-    var e = Protocol_1.Aki.Protocol.zts.create(),
-      e = await Net_1.Net.CallAsync(16864, e);
+    var e = Protocol_1.Aki.Protocol.Qns.create(),
+      e = await Net_1.Net.CallAsync(14727, e);
     return (
       !!e &&
       (ModelManager_1.ModelManager.DailyActivityModel.RefreshDailyActivityData(
-        e.lAs,
+        e.Dxs,
         !1,
       ),
       !0)
     );
   }
   static RequestDailyActivityTaskReward(e) {
-    var t = Protocol_1.Aki.Protocol.ris.create();
-    (t.XFn = e),
-      Net_1.Net.Call(24549, t, (e) => {
+    var t = Protocol_1.Aki.Protocol.Zns.create();
+    (t.I6n = e),
+      Net_1.Net.Call(13475, t, (e) => {
         e &&
-          e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys &&
+          e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs &&
           ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-            e.lkn,
-            21961,
+            e.O4n,
+            15315,
           );
       });
   }
   static RequestDailyActivityReward(e) {
-    var t = Protocol_1.Aki.Protocol.nis.create();
-    (t.j4n = e),
-      Net_1.Net.Call(23404, t, (e) => {
+    var t = Protocol_1.Aki.Protocol.tss.create();
+    (t.IVn = e),
+      Net_1.Net.Call(29869, t, (e) => {
         e &&
-          (e.lkn === Protocol_1.Aki.Protocol.lkn.Sys
+          (e.O4n === Protocol_1.Aki.Protocol.O4n.NRs
             ? ModelManager_1.ModelManager.DailyActivityModel.RefreshActivityInfo(
-                e.j4n,
+                e.IVn,
               )
             : ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-                e.lkn,
-                24278,
+                e.O4n,
+                7185,
               ));
       });
   }
@@ -82,22 +82,22 @@ class DailyActivityController extends UiControllerBase_1.UiControllerBase {
       DailyActivityController.RequestDailyActivityReward(r);
   }
 }
-((exports.DailyActivityController = DailyActivityController).POt = () => {
+((exports.DailyActivityController = DailyActivityController).xkt = () => {
   ModelManager_1.ModelManager.DailyActivityModel.InitGoalData(),
     DailyActivityController.RequestDailyActivityData();
 }),
-  (DailyActivityController.ROt = (e) => {
+  (DailyActivityController.Ukt = (e) => {
     ModelManager_1.ModelManager.DailyActivityModel.UpdateDailyActivityData(
-      e.lAs,
+      e.Dxs,
     );
   }),
-  (DailyActivityController.UOt = (e) => {
+  (DailyActivityController.Akt = (e) => {
     ModelManager_1.ModelManager.DailyActivityModel.RefreshDailyActivityData(
-      e.lAs,
+      e.Dxs,
       !0,
     );
   }),
-  (DailyActivityController.AOt = (e) => {
-    ModelManager_1.ModelManager.DailyActivityModel.RefreshActivityValue(e.sAs);
+  (DailyActivityController.Pkt = (e) => {
+    ModelManager_1.ModelManager.DailyActivityModel.RefreshActivityValue(e.Txs);
   });
 //# sourceMappingURL=DailyActivityController.js.map

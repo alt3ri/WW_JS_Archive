@@ -9,7 +9,7 @@ class LevelEventChangePatrol extends LevelGeneralBase_1.LevelEventBase {
       e &&
       a instanceof TsBaseCharacter_1.default &&
       ((e = e.get("PatrolIndex")), void 0 !== (e = Number.parseInt(e))) &&
-      (a = a.CharacterActorComponent.Entity.GetComponent(38)) &&
+      (a = a.CharacterActorComponent.Entity.GetComponent(39)) &&
       a.TsAiController &&
       a.TsAiController.AiController.AiPatrol.ResetPatrol(e);
   }

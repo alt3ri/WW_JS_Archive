@@ -11,8 +11,8 @@ class LevelConditionCompareVar extends LevelGeneralBase_1.LevelConditionBase {
     var t = e.Var1,
       n = e.Var2;
     if (t.Type !== n.Type) return !1;
-    var s = this.VTn(t, a),
-      u = this.VTn(n, a);
+    var s = this.LRn(t, a),
+      u = this.LRn(n, a);
     if (void 0 === s || void 0 === u) return !1;
     switch (e.Compare) {
       case "Eq":
@@ -31,7 +31,7 @@ class LevelConditionCompareVar extends LevelGeneralBase_1.LevelConditionBase {
         return !1;
     }
   }
-  VTn(e, r) {
+  LRn(e, r) {
     switch (e.Source) {
       case "Constant":
         return e.Value;
@@ -40,15 +40,15 @@ class LevelConditionCompareVar extends LevelGeneralBase_1.LevelConditionBase {
           e.Keyword,
         );
       case "Other":
-        var a = this.HTn(e.Name, e.RefId, e.RefType);
+        var a = this.DRn(e.Name, e.RefId, e.RefType);
         return this.E$(a);
       case "Self":
-        return r ? ((a = this.jTn(e.Name, r)), this.E$(a)) : void 0;
+        return r ? ((a = this.RRn(e.Name, r)), this.E$(a)) : void 0;
       default:
         return;
     }
   }
-  jTn(e, r) {
+  RRn(e, r) {
     switch (r.Type) {
       case 1:
         var a = ModelManager_1.ModelManager.CreatureModel?.GetEntityById(
@@ -70,7 +70,7 @@ class LevelConditionCompareVar extends LevelGeneralBase_1.LevelConditionBase {
         return;
     }
   }
-  HTn(e, r, a) {
+  DRn(e, r, a) {
     switch (a) {
       case "Entity":
         var t =
@@ -91,15 +91,15 @@ class LevelConditionCompareVar extends LevelGeneralBase_1.LevelConditionBase {
   }
   E$(e) {
     if (e)
-      switch ((0, IVar_1.getVarTypeByIndex)(e.xMs)) {
+      switch ((0, IVar_1.getVarTypeByIndex)(e.XIs)) {
         case "Boolean":
-          return e.bMs;
+          return e.YIs;
         case "Float":
-          return e.GMs;
+          return e.ZIs;
         case "Int":
-          return MathUtils_1.MathUtils.LongToNumber(e.BMs);
+          return MathUtils_1.MathUtils.LongToNumber(e.JIs);
         case "String":
-          return e.qMs;
+          return e.zIs;
         default:
           return;
       }

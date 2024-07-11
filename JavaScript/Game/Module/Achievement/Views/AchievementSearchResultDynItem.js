@@ -6,7 +6,7 @@ const UE = require("ue"),
   UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
 class AchievementSearchResultDynItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
-    super(...arguments), (this.MGe = void 0), (this.SGe = void 0);
+    super(...arguments), (this.MGe = void 0), (this.EGe = void 0);
   }
   async Init(e) {
     await super.CreateByActorAsync(e.GetOwner());
@@ -21,15 +21,15 @@ class AchievementSearchResultDynItem extends UiPanelBase_1.UiPanelBase {
     this.MGe = Vector2D_1.Vector2D.Create();
     let e = this.GetItem(0);
     this.MGe.Set(e.GetWidth(), e.GetHeight()),
-      (this.SGe = Vector2D_1.Vector2D.Create()),
+      (this.EGe = Vector2D_1.Vector2D.Create()),
       (e = this.GetItem(1)),
-      this.SGe.Set(e.GetWidth(), e.GetHeight());
+      this.EGe.Set(e.GetWidth(), e.GetHeight());
   }
   GetItemSize(e) {
     return e.AchievementSearchGroupData
       ? this.MGe.ToUeVector2D(!0)
       : e.AchievementData
-        ? this.SGe.ToUeVector2D(!0)
+        ? this.EGe.ToUeVector2D(!0)
         : new Vector2D_1.Vector2D().ToUeVector2D();
   }
   ClearItem() {}

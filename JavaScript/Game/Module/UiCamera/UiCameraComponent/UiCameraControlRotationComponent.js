@@ -1,12 +1,12 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiCameraControlRotationComponent = void 0);
-const Log_1 = require("../../../../Core/Common/Log"),
+const Info_1 = require("../../../../Core/Common/Info"),
+  Log_1 = require("../../../../Core/Common/Log"),
   MathCommon_1 = require("../../../../Core/Utils/Math/MathCommon"),
   Rotator_1 = require("../../../../Core/Utils/Math/Rotator"),
   Vector_1 = require("../../../../Core/Utils/Math/Vector"),
   MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
-  ModelManager_1 = require("../../../Manager/ModelManager"),
   UiCameraComponent_1 = require("./UiCameraComponent"),
   UiCameraPostEffectComponent_1 = require("./UiCameraPostEffectComponent");
 class VirtualCamera {
@@ -53,31 +53,31 @@ class UiCameraControlRotationComponent extends UiCameraComponent_1.UiCameraCompo
       (this.TempCameraVector = Vector_1.Vector.Create()),
       (this.TempCameraLocation = Vector_1.Vector.Create()),
       (this.TempSourceLocation = Vector_1.Vector.Create()),
-      (this.oRo = -0),
-      (this.rRo = -0),
-      (this.nRo = -0),
-      (this.sRo = -0),
-      (this.aRo = -0),
-      (this.hRo = -0),
-      (this.lRo = -0),
-      (this._Ro = -0),
-      (this.uRo = -0),
-      (this.cRo = -0),
-      (this.mRo = -0),
-      (this.dRo = -0),
-      (this.CRo = -0),
-      (this.gRo = 0),
-      (this.fRo = 0),
-      (this.pRo = 0),
-      (this.vRo = -0),
-      (this.MRo = !1),
-      (this.SRo = -0),
-      (this.ERo = -0),
-      (this.yRo = void 0),
-      (this.IRo = !1),
-      (this.TRo = !1),
-      (this.LRo = !1),
-      (this.DRo = !1);
+      (this.eUo = -0),
+      (this.tUo = -0),
+      (this.iUo = -0),
+      (this.oUo = -0),
+      (this.rUo = -0),
+      (this.nUo = -0),
+      (this.sUo = -0),
+      (this.aUo = -0),
+      (this.hUo = -0),
+      (this.lUo = -0),
+      (this._Uo = -0),
+      (this.uUo = -0),
+      (this.cUo = -0),
+      (this.mUo = 0),
+      (this.dUo = 0),
+      (this.CUo = 0),
+      (this.gUo = -0),
+      (this.fUo = !1),
+      (this.pUo = -0),
+      (this.vUo = -0),
+      (this.MUo = void 0),
+      (this.EUo = !1),
+      (this.SUo = !1),
+      (this.yUo = !1),
+      (this.IUo = !1);
   }
   OnActivate() {
     this.EnableTick();
@@ -102,21 +102,21 @@ class UiCameraControlRotationComponent extends UiCameraComponent_1.UiCameraCompo
       t.最小臂长时的光圈,
     );
   }
-  InitData(t, i, s, h, a, e, o, r, n, _, m, C, l) {
-    (this.oRo = t),
-      (this.rRo = i),
-      (this.nRo = s),
-      (this.sRo = h),
-      (this.aRo = a),
-      (this.hRo = e),
-      (this.lRo = m);
+  InitData(t, i, s, h, a, e, o, r, n, _, m, C, U) {
+    (this.eUo = t),
+      (this.tUo = i),
+      (this.iUo = s),
+      (this.oUo = h),
+      (this.rUo = a),
+      (this.nUo = e),
+      (this.sUo = m);
     t = this.DesiredCamera;
     (t.MinArmLength = o),
       (t.MaxArmLength = r),
       (t.PitchLimitMin = n),
       (t.PitchLimitMax = _),
-      (this.dRo = C),
-      (this.CRo = l);
+      (this.uUo = C),
+      (this.cUo = U);
   }
   UpdateData(t, i, s, h, a) {
     var e,
@@ -144,47 +144,47 @@ class UiCameraControlRotationComponent extends UiCameraComponent_1.UiCameraCompo
         this.TempLookCenterLocation,
       ),
       (this.DesiredCamera.ArmLength = r.GetSpringArmLength()),
-      (this.vRo = r.GetSpringArmLength()),
-      Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info(
+      (this.gUo = r.GetSpringArmLength()),
+      Log_1.Log.CheckDebug() &&
+        Log_1.Log.Debug(
           "UiCamera",
           44,
           "UiCameraControlRotationComponent初始化",
-          ["初始臂长", this.vRo],
+          ["初始臂长", this.gUo],
         ),
       (this.DesiredCamera.ArmHeight =
-        this.TempLookCenterLocation.Z - this.TempSourceLocation.Z - this.lRo),
-      (this._Ro = i),
-      (this.uRo = s),
-      (this.mRo = h),
-      (this.cRo = a),
+        this.TempLookCenterLocation.Z - this.TempSourceLocation.Z - this.sUo),
+      (this.aUo = i),
+      (this.hUo = s),
+      (this._Uo = h),
+      (this.lUo = a),
       (this.DesiredCamera.HeightOffset = 0),
       this.DefaultCamera.DeepCopy(this.DesiredCamera),
       this.CurrentCamera.DeepCopy(this.DesiredCamera));
   }
   OnTick(t) {
-    this.MRo || this.RRo(t),
-      this.uxr(),
-      this.URo(),
-      this.ARo(),
-      this.PRo(t),
-      this.xRo();
+    this.fUo || this.TUo(t),
+      this.FPr(),
+      this.LUo(),
+      this.DUo(),
+      this.RUo(t),
+      this.UUo();
   }
-  wRo() {
-    (this.gRo = 0), (this.fRo = 0), (this.pRo = 0);
+  AUo() {
+    (this.mUo = 0), (this.dUo = 0), (this.CUo = 0);
   }
-  RRo(t) {
-    let i = this.gRo,
-      s = this.fRo,
-      h = this.pRo;
-    this.wRo(),
-      ModelManager_1.ModelManager.PlatformModel.IsGamepad()
-        ? ((i *= this.oRo), (s *= this.oRo))
-        : ModelManager_1.ModelManager.PlatformModel.IsMobile() &&
-          ((i *= this.rRo), (s *= this.rRo), (h *= this.nRo)),
-      (i = i * this.sRo * t),
-      (s = s * this.aRo * t),
-      (h = h * this.hRo * t),
+  TUo(t) {
+    let i = this.mUo,
+      s = this.dUo,
+      h = this.CUo;
+    this.AUo(),
+      Info_1.Info.IsInGamepad()
+        ? ((i *= this.eUo), (s *= this.eUo))
+        : Info_1.Info.IsInTouch() &&
+          ((i *= this.tUo), (s *= this.tUo), (h *= this.iUo)),
+      (i = i * this.oUo * t),
+      (s = s * this.rUo * t),
+      (h = h * this.nUo * t),
       MathUtils_1.MathUtils.IsNearlyZero(i) ||
         (this.DesiredCamera.ArmRotation.Yaw += i),
       MathUtils_1.MathUtils.IsNearlyZero(s) ||
@@ -192,11 +192,11 @@ class UiCameraControlRotationComponent extends UiCameraComponent_1.UiCameraCompo
       MathUtils_1.MathUtils.IsNearlyZero(h) ||
         (this.DesiredCamera.ArmLength += h);
   }
-  uxr() {
+  FPr() {
     var t = this.DesiredCamera.ArmRotation.Yaw;
     this.DesiredCamera.ArmRotation.Yaw = t = 180 < (t %= 360) ? t - 360 : t;
   }
-  URo() {
+  LUo() {
     var t = this.DesiredCamera.ArmRotation.Pitch,
       t = 180 < (t %= 360) ? t - 360 : t;
     (t = MathUtils_1.MathUtils.Clamp(
@@ -206,7 +206,7 @@ class UiCameraControlRotationComponent extends UiCameraComponent_1.UiCameraCompo
     )),
       (this.DesiredCamera.ArmRotation.Pitch = t);
   }
-  ARo() {
+  DUo() {
     this.DesiredCamera.ArmLength = MathUtils_1.MathUtils.Clamp(
       this.DesiredCamera.ArmLength,
       this.DesiredCamera.MinArmLength,
@@ -215,43 +215,43 @@ class UiCameraControlRotationComponent extends UiCameraComponent_1.UiCameraCompo
   }
   StartFade(t, i, s, h, a, e) {
     this.LastCamera.DeepCopy(this.CurrentCamera),
-      (this.IRo = s),
-      (this.TRo = h),
-      (this.LRo = a),
-      (this.DRo = e),
-      (this.MRo = !0),
-      (this.SRo = t),
-      (this.ERo = 0),
-      (this.yRo = i);
+      (this.EUo = s),
+      (this.SUo = h),
+      (this.yUo = a),
+      (this.IUo = e),
+      (this.fUo = !0),
+      (this.pUo = t),
+      (this.vUo = 0),
+      (this.MUo = i);
   }
-  PRo(t) {
-    this.MRo && this.yRo
-      ? ((this.ERo += t),
-        this.ERo >= this.SRo
-          ? ((this.MRo = !1),
-            (this.yRo = void 0),
+  RUo(t) {
+    this.fUo && this.MUo
+      ? ((this.vUo += t),
+        this.vUo >= this.pUo
+          ? ((this.fUo = !1),
+            (this.MUo = void 0),
             this.CurrentCamera.DeepCopy(this.DesiredCamera))
-          : ((t = this.yRo.GetFloatValue(this.ERo / this.SRo)),
-            this.IRo &&
+          : ((t = this.MUo.GetFloatValue(this.vUo / this.pUo)),
+            this.EUo &&
               (this.CurrentCamera.ArmLength = MathUtils_1.MathUtils.Lerp(
                 this.LastCamera.ArmLength,
                 this.DesiredCamera.ArmLength,
                 t,
               )),
-            this.TRo &&
+            this.SUo &&
               (this.CurrentCamera.ArmRotation.Pitch =
                 MathUtils_1.MathUtils.Lerp(
                   this.LastCamera.ArmRotation.Pitch,
                   this.DesiredCamera.ArmRotation.Pitch,
                   t,
                 )),
-            this.LRo &&
+            this.yUo &&
               (this.CurrentCamera.ArmRotation.Yaw = MathUtils_1.MathUtils.Lerp(
                 this.LastCamera.ArmRotation.Yaw,
                 this.DesiredCamera.ArmRotation.Yaw,
                 t,
               )),
-            this.DRo &&
+            this.IUo &&
               (this.CurrentCamera.ArmRotation.Roll = MathUtils_1.MathUtils.Lerp(
                 this.LastCamera.ArmRotation.Roll,
                 this.DesiredCamera.ArmRotation.Roll,
@@ -259,7 +259,7 @@ class UiCameraControlRotationComponent extends UiCameraComponent_1.UiCameraCompo
               ))))
       : this.CurrentCamera.DeepCopy(this.DesiredCamera);
   }
-  xRo() {
+  UUo() {
     var t = this.CurrentCamera.ArmRotation,
       i =
         (this.TempLookCenterLocation.DeepCopy(
@@ -299,42 +299,42 @@ class UiCameraControlRotationComponent extends UiCameraComponent_1.UiCameraCompo
       i.SetActorLocation(this.TempCameraLocation.ToUeVector()));
   }
   UpdateHeightOffset(t) {
-    t < this.vRo
+    t < this.gUo
       ? (this.CurrentCamera.HeightOffset = MathUtils_1.MathUtils.RangeClamp(
           t,
-          this.cRo,
-          this.vRo,
-          this.uRo,
+          this.lUo,
+          this.gUo,
+          this.hUo,
           0,
         ))
       : (this.CurrentCamera.HeightOffset = MathUtils_1.MathUtils.RangeClamp(
           t,
-          this.vRo,
-          this.mRo,
+          this.gUo,
+          this._Uo,
           0,
-          this._Ro,
+          this.aUo,
         ));
   }
   UpdateAperture(t) {
     (this.CurrentCamera.Aperture = MathUtils_1.MathUtils.RangeClamp(
       t,
-      this.cRo,
-      this.mRo,
-      this.CRo,
-      this.dRo,
+      this.lUo,
+      this._Uo,
+      this.cUo,
+      this.uUo,
     )),
       this.OwnerUiCamera.GetUiCameraComponent(
         UiCameraPostEffectComponent_1.UiCameraPostEffectComponent,
       )?.SetCameraAperture(this.CurrentCamera.Aperture);
   }
   AddZoomInput(t) {
-    this.pRo = t;
+    this.CUo = t;
   }
   AddYawInput(t) {
-    this.gRo = t;
+    this.mUo = t;
   }
   AddPitchInput(t) {
-    this.fRo = t;
+    this.dUo = t;
   }
   DoMoveForward(t, i, s) {
     (this.DesiredCamera.ArmLength = this.DesiredCamera.ArmLength - t),

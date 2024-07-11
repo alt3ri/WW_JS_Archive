@@ -8,7 +8,7 @@ const EventDefine_1 = require("../../Common/Event/EventDefine"),
   RoleMorphPaoTaiHandle_1 = require("./handle/RoleMorphPaoTaiHandle");
 class RoleMorphController extends UiControllerBase_1.UiControllerBase {
   static OnLeaveLevel() {
-    return this.Hho && (this.Hho.EndMorph(), (this.Hho = void 0)), !0;
+    return this.klo && (this.klo.EndMorph(), (this.klo = void 0)), !0;
   }
   static OnAddEvents() {
     EventSystem_1.EventSystem.Add(
@@ -23,7 +23,7 @@ class RoleMorphController extends UiControllerBase_1.UiControllerBase {
     );
   }
   static EndMorph() {
-    this.Hho && (this.Hho.EndMorph(), (this.Hho = void 0));
+    this.klo && (this.klo.EndMorph(), (this.klo = void 0));
   }
 }
 ((exports.RoleMorphController = RoleMorphController).A6 = new Map([
@@ -35,7 +35,7 @@ class RoleMorphController extends UiControllerBase_1.UiControllerBase {
     e &&
       (e = e.RoleConfig?.Id) &&
       (e = RoleMorphController.A6.get(e)) &&
-      ((RoleMorphController.Hho = new e()),
-      RoleMorphController.Hho.BeginMorph());
+      ((RoleMorphController.klo = new e()),
+      RoleMorphController.klo.BeginMorph());
   });
 //# sourceMappingURL=RoleMorphController.js.map

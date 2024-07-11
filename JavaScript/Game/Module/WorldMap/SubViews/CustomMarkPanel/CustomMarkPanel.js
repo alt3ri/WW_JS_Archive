@@ -18,37 +18,42 @@ const UE = require("ue"),
 class CustomMarkPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
   constructor() {
     super(...arguments),
-      (this.UUt = void 0),
-      (this.pko = void 0),
-      (this.vko = void 0),
-      (this.dko = void 0),
-      (this.Mko = !1),
-      (this.Sko = 0),
-      (this.Eko = () => {
-        MapController_1.MapController.RequestTrackMapMark(
-          this.dko.MarkType,
-          this.dko.MarkId,
-          !this.Mko,
-        ),
-          (this.Mko = !this.Mko),
-          this.ono(this.Mko),
-          this.Close();
+      (this.wAt = void 0),
+      (this.C2o = void 0),
+      (this.g2o = void 0),
+      (this.u2o = void 0),
+      (this.f2o = !1),
+      (this.Ria = !1),
+      (this.p2o = 0),
+      (this.v2o = () => {
+        this.Ria ||
+          (MapController_1.MapController.RequestTrackMapMark(
+            this.u2o.MarkType,
+            this.u2o.MarkId,
+            !this.f2o,
+          ),
+          (this.Ria = !0),
+          (this.f2o = !this.f2o),
+          this.Zno(this.f2o),
+          this.Close());
       }),
-      (this.yko = () => {
-        switch (this.Sko) {
-          case 0:
-            MapController_1.MapController.RequestCreateCustomMark(
-              this.dko.TrackPosition,
-              this.dko.ConfigId,
-            );
-            break;
-          case 1:
-            MapController_1.MapController.RequestRemoveMapMark(
-              9,
-              this.dko.MarkId,
-            );
+      (this.M2o = () => {
+        if (!this.Ria) {
+          switch (this.p2o) {
+            case 0:
+              MapController_1.MapController.RequestCreateCustomMark(
+                this.u2o.TrackPosition,
+                this.u2o.ConfigId,
+              );
+              break;
+            case 1:
+              MapController_1.MapController.RequestRemoveMapMark(
+                9,
+                this.u2o.MarkId,
+              );
+          }
+          (this.Ria = !0), this.Close();
         }
-        this.Close();
       });
   }
   GetResourceId() {
@@ -60,18 +65,19 @@ class CustomMarkPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
   }
   OnStart() {
     this.RootItem.SetRaycastTarget(!1),
-      (this.UUt = new ButtonAndTextItem_1.ButtonAndTextItem(this.GetItem(7))),
-      this.UUt.BindCallback(this.yko),
-      (this.pko = new ButtonAndTextItem_1.ButtonAndTextItem(this.GetItem(8))),
-      this.pko.BindCallback(this.Eko),
-      (this.vko = []),
-      this.Iko();
+      (this.wAt = new ButtonAndTextItem_1.ButtonAndTextItem(this.GetItem(7))),
+      this.wAt.BindCallback(this.M2o),
+      (this.C2o = new ButtonAndTextItem_1.ButtonAndTextItem(this.GetItem(8))),
+      this.C2o.BindCallback(this.v2o),
+      (this.g2o = []),
+      this.E2o();
   }
   OnShowWorldMapSecondaryUi(t, e, i) {
-    (this.Sko = e),
-      (this.dko = t),
-      this.Tko(e),
-      this.SetSpriteByPath(this.dko.IconPath, this.GetSprite(0), !1),
+    (this.p2o = e),
+      (this.u2o = t),
+      (this.Ria = !1),
+      this.S2o(e),
+      this.SetSpriteByPath(this.u2o.IconPath, this.GetSprite(0), !1),
       (this.GetText(3).text =
         i + "/" + ModelManager_1.ModelManager.WorldMapModel.CustomMarkSize),
       this.RootItem.SetUIActive(!0),
@@ -80,16 +86,16 @@ class CustomMarkPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
       LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(2), "CustomeMarkTip");
   }
   SelectOptionChecked(t) {
-    if (0 !== this.vko.length) {
-      if (1 === this.Sko)
-        for (const e of this.vko)
+    if (0 !== this.g2o.length) {
+      if (1 === this.p2o)
+        for (const e of this.g2o)
           if (e.Config.MarkPic === t.IconPath) return void e.SetToggleChecked();
-      this.vko[0].SetToggleChecked();
+      this.g2o[0].SetToggleChecked();
     }
   }
-  Tko(t) {
+  S2o(t) {
     let e = void 0;
-    switch (this.Sko) {
+    switch (this.p2o) {
       case 0:
         e =
           MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
@@ -102,49 +108,50 @@ class CustomMarkPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
             "HotKeyText_DeleteTips_Name",
           ) ?? "";
     }
-    this.UUt.SetText(e), this.ono(this.dko.IsTracked);
+    this.wAt.SetText(e), this.Zno(this.u2o.IsTracked);
   }
   OnCloseWorldMapSecondaryUi() {
-    this.dko &&
-      0 === this.Sko &&
-      EventSystem_1.EventSystem.Emit(
-        EventDefine_1.EEventName.RemoveMapMark,
-        9,
-        this.dko.MarkId,
-      );
+    (this.Ria = !1),
+      this.u2o &&
+        0 === this.p2o &&
+        EventSystem_1.EventSystem.Emit(
+          EventDefine_1.EEventName.RemoveMapMark,
+          9,
+          this.u2o.MarkId,
+        );
   }
-  ono(t) {
-    this.Mko = t;
+  Zno(t) {
+    this.f2o = t;
     (t =
       MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
-        this.Mko
+        this.f2o
           ? "Text_InstanceDungeonEntranceCancelTrack_Text"
           : "Text_InstanceDungeonEntranceTrack_Text",
       ) ?? ""),
-      this.pko.SetText(t),
-      (t = 0 === this.Sko);
-    this.pko.RefreshEnable(!t);
+      this.C2o.SetText(t),
+      (t = 0 === this.p2o);
+    this.C2o.RefreshEnable(!t);
   }
-  Lko(t, e) {
+  y2o(t, e) {
     1 === e &&
-      (this.dko.IsNewCustomMarkItem ||
-        MapController_1.MapController.RequestMapMarkReplace(this.dko.MarkId, t),
-      this.dko.SetConfigId(t),
-      this.SetSpriteByPath(this.dko.IconPath, this.GetSprite(0), !1));
+      (this.u2o.IsNewCustomMarkItem ||
+        MapController_1.MapController.RequestMapMarkReplace(this.u2o.MarkId, t),
+      this.u2o.SetConfigId(t),
+      this.SetSpriteByPath(this.u2o.IconPath, this.GetSprite(0), !1));
   }
-  Iko() {
+  E2o() {
     var t = ConfigManager_1.ConfigManager.WorldMapConfig.GetCustomMarks();
     if (t) {
       for (const s of t) {
         var e = LguiUtil_1.LguiUtil.CopyItem(this.GetItem(6), this.GetItem(4)),
           i = new MarkIconOption_1.MarkIconOption();
         i.Initialize(e, this.GetItem(4), s),
-          0 === this.Sko && 0 === this.vko.length && i.SetToggleChecked(),
-          1 === this.Sko &&
-            this.dko.IconPath === s.MarkPic &&
+          0 === this.p2o && 0 === this.g2o.length && i.SetToggleChecked(),
+          1 === this.p2o &&
+            this.u2o.IconPath === s.MarkPic &&
             i.SetToggleChecked(),
-          i.SetOnclick(this.Lko.bind(this, s.MarkId)),
-          this.vko.push(i);
+          i.SetOnclick(this.y2o.bind(this, s.MarkId)),
+          this.g2o.push(i);
       }
       this.GetItem(6).SetUIActive(!1);
     }

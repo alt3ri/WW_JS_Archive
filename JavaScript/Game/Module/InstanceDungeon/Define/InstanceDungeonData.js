@@ -9,26 +9,26 @@ const UE = require("ue"),
   ConfigManager_1 = require("../../../Manager/ConfigManager");
 class InstanceDungeonData {
   constructor(t) {
-    (this.Esi = 0), (this.ysi = 0), (this.Isi = 0), (this.Esi = t);
+    (this.Sai = 0), (this.yai = 0), (this.Iai = 0), (this.Sai = t);
     t = ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetCountConfig(
-      this.Esi,
+      this.Sai,
     );
-    (this.ysi = t?.EnterCount ?? 0), (this.Tsi = t.EnterCountConsumeType);
+    (this.yai = t?.EnterCount ?? 0), (this.Tai = t.EnterCountConsumeType);
   }
   get ChallengedTimes() {
-    return this.Isi;
+    return this.Iai;
   }
   set ChallengedTimes(t) {
-    void 0 !== t && (this.Isi = t);
+    void 0 !== t && (this.Iai = t);
   }
   get CostType() {
-    return this.Tsi;
+    return this.Tai;
   }
   get LimitChallengedTimes() {
-    return this.ysi;
+    return this.yai;
   }
   get LeftChallengedTimes() {
-    var t = this.LimitChallengedTimes - this.Isi;
+    var t = this.LimitChallengedTimes - this.Iai;
     return 0 <= t ? t : 0;
   }
   get CanRepeatChallenge() {
@@ -37,17 +37,17 @@ class InstanceDungeonData {
   get CanChallenge() {
     return (
       !!this.CanRepeatChallenge ||
-      1 === this.Tsi ||
-      2 === this.Tsi ||
+      1 === this.Tai ||
+      2 === this.Tai ||
       this.ChallengedTimes < this.LimitChallengedTimes
     );
   }
   get CanReward() {
     return (
       !!this.CanRepeatChallenge ||
-      0 === this.Tsi ||
-      3 === this.Tsi ||
-      (1 === this.Tsi
+      0 === this.Tai ||
+      3 === this.Tai ||
+      (1 === this.Tai
         ? this.ChallengedTimes <= this.LimitChallengedTimes
         : this.ChallengedTimes < this.LimitChallengedTimes)
     );

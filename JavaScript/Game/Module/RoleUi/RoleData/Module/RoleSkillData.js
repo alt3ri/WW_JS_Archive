@@ -26,8 +26,8 @@ class RoleSkillData extends RoleModuleDataBase_1.RoleModuleDataBase {
       (this.RoleSkillMap = new Map()),
       (this.RoleSkillReferenceMap = new Map()),
       (this.SkillNodeState = []),
-      (this.i1o = new Map()),
-      (this.o1o = []);
+      (this.z1o = new Map()),
+      (this.Z1o = []);
   }
   GetSkillNodeLevel(e) {
     let r = 0;
@@ -50,24 +50,24 @@ class RoleSkillData extends RoleModuleDataBase_1.RoleModuleDataBase {
   }
   GetSkillList() {
     var e;
-    return 0 < this.o1o.length
-      ? this.o1o
+    return 0 < this.Z1o.length
+      ? this.Z1o
       : ((e = this.GetRoleConfig().SkillId),
         (e = ConfigCommon_1.ConfigCommon.ToList(
           ConfigManager_1.ConfigManager.RoleSkillConfig.GetSkillList(e),
         )).sort((e, r) => e.SortIndex - r.SortIndex),
-        this.r1o(e),
+        this.e_o(e),
         e);
   }
-  r1o(r) {
+  e_o(r) {
     var t = r.length;
     for (let e = 0; e < t; e++) {
       var i = r[e];
-      this.o1o.push(i), this.i1o.set(i.Id, i);
+      this.Z1o.push(i), this.z1o.set(i.Id, i);
     }
   }
   GetSkillConfigFromCache(e) {
-    return 0 === this.i1o.size && this.GetSkillList(), this.i1o.get(e);
+    return 0 === this.z1o.size && this.GetSkillList(), this.z1o.get(e);
   }
   IsHasSkill(e) {
     return this.RoleSkillMap.has(e);

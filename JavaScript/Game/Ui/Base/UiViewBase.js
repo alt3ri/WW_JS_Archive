@@ -34,21 +34,21 @@ class UiViewBase extends UiPanelBase_1.UiPanelBase {
       (this.UiViewSequence = void 0),
       (this.UiBlurBehaviour = void 0),
       (this.AudioEvent = void 0),
-      (this.K_r = !0),
+      (this.Hur = !0),
       (this.LastHide = !1),
       (this.PlayEventResult = new AudioController_1.PlayResult()),
-      (this.Q_r = !1),
+      (this.jur = !1),
       (this.IsPreOpening = !1),
-      (this.X_r = void 0),
+      (this.Wur = void 0),
       (this.IsExistInLeaveLevel = !1),
       (this.OpenPromise = void 0),
       (this.ClosePromise = void 0),
       (this.ShowPromise = void 0),
       (this.LoadScenePromise = void 0),
-      (this.$_r = !1),
-      (this.Y_r = (e, i) => {
+      (this.Kur = !1),
+      (this.Qur = (e, i) => {
         0 === i &&
-          ((this.$_r = !0),
+          ((this.Kur = !0),
           this.UiViewSequence.HasSequenceNameInPlaying(
             this.UiViewSequence.StartSequenceName,
           ) &&
@@ -59,10 +59,10 @@ class UiViewBase extends UiPanelBase_1.UiPanelBase {
             ),
           InputDistributeController_1.InputDistributeController.UnBindActions(
             this.Info.SkipAnimActions,
-            this.Y_r,
+            this.Qur,
           ));
       }),
-      (this.gjt = new Queue_1.Queue()),
+      (this.gWt = new Queue_1.Queue()),
       (this.SkipLoadScene = !1),
       (this.SkipReleaseScene = !1),
       (this.SceneLoaded = !1),
@@ -131,16 +131,16 @@ class UiViewBase extends UiPanelBase_1.UiPanelBase {
     this.AudioEvent = e;
   }
   RegisterUiBehavior() {
-    this.J_r(), this.z_r(), this.Z_r();
+    this.Xur(), this.$ur(), this.Yur();
   }
-  eur(e, i = void 0) {
+  Jur(e, i = void 0) {
     this.PlaySequence(
       e,
       i,
       0 < (this.Info.Type & UiLayerType_1.BLOCKCLICK_TYPE),
     );
   }
-  async tur(e) {
+  async zur(e) {
     await this.PlaySequenceAsync(
       e,
       0 < (this.Info.Type & UiLayerType_1.BLOCKCLICK_TYPE),
@@ -152,18 +152,18 @@ class UiViewBase extends UiPanelBase_1.UiPanelBase {
   ResumeCurrentSequence() {
     this.UiViewSequence?.ResumeSequence();
   }
-  J_r() {
+  Xur() {
     (this.UiViewSequence = new UiViewSequence_1.UiBehaviorLevelSequence(this)),
       this.UiViewSequence.SetSequenceName(this.OpenParam),
       this.AddUiBehavior(this.UiViewSequence);
   }
-  z_r() {
+  $ur() {
     var e = new UiBehaviorUiBlur_1.UiBehaviourUiBlur();
     (this.UiBlurBehaviour = e).SetCurrentLayer(this.Info.Type),
       e.SetViewInfo(this),
       this.AddUiBehavior(e);
   }
-  Z_r() {
+  Yur() {
     var e = new UiBehaviorAudio_1.UiBehaviorAudio(this);
     this.AddUiBehavior(e);
   }
@@ -174,7 +174,7 @@ class UiViewBase extends UiPanelBase_1.UiPanelBase {
         : this.RootActor
     ).GetComponentByClass(UE.UIViewAudioEffectComponent.StaticClass());
   }
-  iur() {
+  Zur() {
     var e, i;
     return this.IsPreOpening
       ? UiLayer_1.UiLayer.GetLayerRootUiItem(UiLayerType_1.ELayerType.Pool)
@@ -196,7 +196,7 @@ class UiViewBase extends UiPanelBase_1.UiPanelBase {
     var e = this.Info;
     this.SetRootActorLoadInfoByPath(
       e.UiPath,
-      this.iur(),
+      this.Zur(),
       1 === e.SourceType,
       e.IsPermanent,
     );
@@ -204,16 +204,16 @@ class UiViewBase extends UiPanelBase_1.UiPanelBase {
   OnBeforeCreateImplementImplement() {}
   OnBeforeCreateImplement() {
     this.RegisterUiBehavior(),
-      this.our(),
+      this.ecr(),
       this.OnBeforeCreateImplementImplement();
   }
   OnAfterCreateImplement() {
     (this.IsExistInLeaveLevel || UiManager_1.UiManager.IsLockOpen) &&
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("UiCore", 11, "场景切换过程中, 设置无缝加载标记"),
-      this.rur());
+      this.tcr());
   }
-  rur() {
+  tcr() {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info("UiCore", 17, "SetViewPermanent", [
         "ViewName",
@@ -226,10 +226,10 @@ class UiViewBase extends UiPanelBase_1.UiPanelBase {
   OnStartImplementImplement() {}
   OnStartImplement() {
     this.SetAudioEvent(this.Info.AudioEvent),
-      (this.Q_r = UE.LGUIBPLibrary.GetWorldUISceneRendering(
+      (this.jur = UE.LGUIBPLibrary.GetWorldUISceneRendering(
         this.GetRootActor(),
       )),
-      (this.K_r = !0),
+      (this.Hur = !0),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnViewLoadCompleted,
         this.Info.Name,
@@ -242,11 +242,11 @@ class UiViewBase extends UiPanelBase_1.UiPanelBase {
       this.UiViewSequence.AddSequenceStartEvent(
         this.UiViewSequence.StartSequenceName,
         () => {
-          (this.$_r = !1),
+          (this.Kur = !1),
             TimerSystem_1.TimerSystem.Next(() => {
               InputDistributeController_1.InputDistributeController.BindActions(
                 this.Info.SkipAnimActions,
-                this.Y_r,
+                this.Qur,
               );
             });
         },
@@ -256,7 +256,7 @@ class UiViewBase extends UiPanelBase_1.UiPanelBase {
         () => {
           InputDistributeController_1.InputDistributeController.UnBindActions(
             this.Info.SkipAnimActions,
-            this.Y_r,
+            this.Qur,
           );
         },
       ),
@@ -264,7 +264,10 @@ class UiViewBase extends UiPanelBase_1.UiPanelBase {
   }
   OnBeforeShowImplementImplement() {}
   async OnBeforeShowAsyncImplement() {
-    await this.LoadScene(),
+    await Promise.all([
+      this.OnBeforeShowAsyncImplementImplement(),
+      this.LoadScene(),
+    ]),
       this.LoadScenePromise?.SetResult(void 0),
       this.SceneLoaded &&
         !this.SkipRemoveBlackScreen &&
@@ -273,6 +276,7 @@ class UiViewBase extends UiPanelBase_1.UiPanelBase {
           this.Info.Name,
         );
   }
+  async OnBeforeShowAsyncImplementImplement() {}
   OnBeforeShowImplement() {
     this.OnAddEventListener(),
       this.OnBeforeShowImplementImplement(),
@@ -281,37 +285,37 @@ class UiViewBase extends UiPanelBase_1.UiPanelBase {
         .ApplyPerformanceLimit(this.Info.Name);
   }
   async OnShowAsyncImplementImplement() {
-    this.Info.IsFullScreen &&
-      UE.LGUIBPLibrary.SetIsFullScreenUIRendering(this.GetRootActor(), !0),
-      this.K_r
-        ? (Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info(
-              "UiCore",
-              17,
-              "播放界面动画Start(开始)",
-              ["ViewName", this.Info.Name],
-              ["SequenceName", this.UiViewSequence.StartSequenceName],
-            ),
-          (!this.Info.IsPermanent && this.IsExistInLeaveLevel) ||
-            (await Promise.all([
-              this.tur(this.UiViewSequence.StartSequenceName),
-              this.OnPlayingStartSequenceAsync(),
-            ])),
-          this.OnAfterPlayStartSequence(),
-          this.UiViewSequence?.PlaySequencePurely("AutoLoop"),
-          (this.K_r = !1))
-        : (Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info(
-              "UiCore",
-              17,
-              "播放界面动画Show(开始)",
-              ["ViewName", this.Info.Name],
-              ["SequenceName", "ShowView"],
-            ),
-          await this.tur("ShowView")),
+    this.Hur
+      ? (Log_1.Log.CheckInfo() &&
+          Log_1.Log.Info(
+            "UiCore",
+            17,
+            "播放界面动画Start(开始)",
+            ["ViewName", this.Info.Name],
+            ["SequenceName", this.UiViewSequence.StartSequenceName],
+          ),
+        (!this.Info.IsPermanent && this.IsExistInLeaveLevel) ||
+          (await Promise.all([
+            this.zur(this.UiViewSequence.StartSequenceName),
+            this.OnPlayingStartSequenceAsync(),
+          ])),
+        this.OnAfterPlayStartSequence(),
+        this.UiViewSequence?.PlaySequencePurely("AutoLoop"),
+        (this.Hur = !1))
+      : (Log_1.Log.CheckInfo() &&
+          Log_1.Log.Info(
+            "UiCore",
+            17,
+            "播放界面动画Show(开始)",
+            ["ViewName", this.Info.Name],
+            ["SequenceName", this.UiViewSequence.ShowSequenceName],
+          ),
+        await this.zur(this.UiViewSequence.ShowSequenceName)),
       GameQualitySettingsManager_1.GameQualitySettingsManager.Get()
         .GetCurrentQualityInfo()
         .ApplyPerformanceSeqLimit(this.Info.Name),
+      this.Info.IsFullScreen &&
+        UE.LGUIBPLibrary.SetIsFullScreenUIRendering(this.GetRootActor(), !0),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("UiCore", 17, "播放界面动画(结束)", [
           "ViewName",
@@ -319,25 +323,23 @@ class UiViewBase extends UiPanelBase_1.UiPanelBase {
         ]);
   }
   TryEmitInterruptOpExitView() {
-    this.$_r &&
+    this.Kur &&
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("UiCore", 38, "跳过界面动画Start流程,关闭界面", [
           "ViewName",
           this.Info.Name,
         ]),
       UiNavigationNewController_1.UiNavigationNewController.HotKeyCloseView(),
-      (this.$_r = !1));
+      (this.Kur = !1));
   }
   OnShowAsyncImplementImplementCompatible() {
-    this.Info.IsFullScreen &&
-      UE.LGUIBPLibrary.SetIsFullScreenUIRendering(this.GetRootActor(), !0),
-      this.LoadScene(),
-      this.K_r
-        ? (this.eur(this.UiViewSequence.StartSequenceName),
+    this.LoadScene(),
+      this.Hur
+        ? (this.Jur(this.UiViewSequence.StartSequenceName),
           this.OnAfterPlayStartSequence(),
           this.UiViewSequence?.PlaySequencePurely("AutoLoop"),
-          (this.K_r = !1))
-        : this.eur("ShowView");
+          (this.Hur = !1))
+        : this.Jur(this.UiViewSequence.ShowSequenceName);
   }
   OnAfterShowImplement() {
     this.OpenPromise?.SetResult(void 0),
@@ -348,34 +350,34 @@ class UiViewBase extends UiPanelBase_1.UiPanelBase {
     GameQualitySettingsManager_1.GameQualitySettingsManager.Get()
       .GetCurrentQualityInfo()
       .CancelPerformanceSeqLimit(this.Info.Name),
+      this.Info.IsFullScreen &&
+        UE.LGUIBPLibrary.SetIsFullScreenUIRendering(
+          this.GetRootActor(),
+          this.jur,
+        ),
       this.WaitToDestroy ||
         (this.LastHide
           ? ((this.LastHide = !1),
             this.OnBeforePlayCloseSequence(),
-            await Promise.all([this.nur(), this.OnPlayingCloseSequenceAsync()]))
-          : await this.tur("HideView")),
-      this.ReleaseScene(),
-      this.Info.IsFullScreen &&
-        UE.LGUIBPLibrary.SetIsFullScreenUIRendering(
-          this.GetRootActor(),
-          this.Q_r,
-        );
+            await Promise.all([this.icr(), this.OnPlayingCloseSequenceAsync()]))
+          : await this.zur(this.UiViewSequence.HideSequenceName)),
+      this.ReleaseScene();
   }
   OnHideAsyncImplementImplementCompatible() {
     GameQualitySettingsManager_1.GameQualitySettingsManager.Get()
       .GetCurrentQualityInfo()
       .CancelPerformanceSeqLimit(this.Info.Name),
-      this.LastHide
-        ? ((this.LastHide = !1),
-          this.OnBeforePlayCloseSequence(),
-          this.eur(this.UiViewSequence.CloseSequenceName))
-        : this.eur("HideView"),
-      this.ReleaseScene(),
       this.Info.IsFullScreen &&
         UE.LGUIBPLibrary.SetIsFullScreenUIRendering(
           this.GetRootActor(),
-          this.Q_r,
-        );
+          this.jur,
+        ),
+      this.LastHide
+        ? ((this.LastHide = !1),
+          this.OnBeforePlayCloseSequence(),
+          this.Jur(this.UiViewSequence.CloseSequenceName))
+        : this.Jur(this.UiViewSequence.HideSequenceName),
+      this.ReleaseScene();
   }
   OnAfterHideImplementImplement() {}
   OnAfterHideImplement() {
@@ -394,7 +396,7 @@ class UiViewBase extends UiPanelBase_1.UiPanelBase {
       (this.ChildPopView = void 0),
       this.ResetOperationQueue(),
       UiManager_1.UiManager.RemoveView(this.GetViewId()),
-      this.sur(),
+      this.ocr(),
       Promise.resolve()
     );
   }
@@ -402,7 +404,7 @@ class UiViewBase extends UiPanelBase_1.UiPanelBase {
     (this.ChildPopView = void 0),
       this.ResetOperationQueue(),
       UiManager_1.UiManager.RemoveView(this.GetViewId()),
-      this.sur();
+      this.ocr();
   }
   OnAfterDestroyImplement() {
     this.ClosePromise?.SetResult(void 0),
@@ -420,22 +422,24 @@ class UiViewBase extends UiPanelBase_1.UiPanelBase {
         ControllerHolder_1.ControllerHolder.WorldController.ManuallyGarbageCollection(
           0,
         ),
-        UE.KuroStaticLibrary.ForceGarbageCollection(!1));
+        ControllerHolder_1.ControllerHolder.WorldController.ForceGarbageCollection(
+          !1,
+        ));
   }
   AddChildViewById(e) {
     this.AddChild(UiManager_1.UiManager.GetView(e));
   }
-  our() {
+  ecr() {
     this.Info?.OpenAudioEvent &&
       AudioSystem_1.AudioSystem.PostEvent(this.Info.OpenAudioEvent);
   }
-  sur() {
+  ocr() {
     this.Info?.CloseAudioEvent &&
       AudioSystem_1.AudioSystem.PostEvent(this.Info.CloseAudioEvent);
   }
-  async nur() {
+  async icr() {
     var e = this.UiViewSequence.CloseSequenceName;
-    e && (await this.tur(e));
+    e && (await this.zur(e));
   }
   DeleteCloseSequence() {
     this.UiViewSequence.CloseSequenceName = void 0;
@@ -447,13 +451,13 @@ class UiViewBase extends UiPanelBase_1.UiPanelBase {
     return this.Info.Type;
   }
   SetLoadingFinishOperation(e) {
-    this.gjt.Push(e);
+    this.gWt.Push(e);
   }
   HandleAllLoadingFinishOperation() {
-    for (; 0 < this.gjt.Size; ) this.gjt.Pop()?.();
+    for (; 0 < this.gWt.Size; ) this.gWt.Pop()?.();
   }
   ResetOperationQueue() {
-    this.gjt.Clear();
+    this.gWt.Clear();
   }
   WillLoadScene() {
     return (
@@ -498,7 +502,7 @@ class UiViewBase extends UiPanelBase_1.UiPanelBase {
   }
   OnPreOpen() {
     (this.IsPreOpening = !0),
-      (this.X_r = TimerSystem_1.TimerSystem.Delay(() => {
+      (this.Wur = TimerSystem_1.TimerSystem.Delay(() => {
         Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "UiCore",
@@ -508,15 +512,15 @@ class UiViewBase extends UiPanelBase_1.UiPanelBase {
           ),
           this.Destroy(),
           UiManager_1.UiManager.RemovePreOpenView(this.GetViewId()),
-          (this.X_r = void 0);
+          (this.Wur = void 0);
       }, 6e4));
   }
   OnOpenAfterPreOpened() {
     (this.IsPreOpening = !1),
-      TimerSystem_1.TimerSystem.Has(this.X_r) &&
-        TimerSystem_1.TimerSystem.Remove(this.X_r),
-      (this.X_r = void 0),
-      this.GetRootItem().SetUIParent(this.iur());
+      TimerSystem_1.TimerSystem.Has(this.Wur) &&
+        TimerSystem_1.TimerSystem.Remove(this.Wur),
+      (this.Wur = void 0),
+      this.GetRootItem().SetUIParent(this.Zur());
   }
   GetViewParam() {
     return this.OpenParam;

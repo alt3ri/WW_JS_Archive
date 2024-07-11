@@ -5,28 +5,28 @@ const Log_1 = require("../../../../Core/Common/Log"),
   UiNavigationViewManager_1 = require("./UiNavigationViewManager");
 class NavigationScrollbarData {
   constructor() {
-    (this.Qxo = []),
-      (this.Xxo = void 0),
-      (this.$xo = void 0),
-      (this.Yxo = void 0);
+    (this.Wwo = []),
+      (this.Kwo = void 0),
+      (this.Qwo = void 0),
+      (this.Xwo = void 0);
   }
-  Jxo() {
-    if (!this.Xxo?.IsListenerActive()) {
+  $wo() {
+    if (!this.Kwo?.IsListenerActive()) {
       let i = void 0;
-      for (const t of this.Qxo)
+      for (const t of this.Wwo)
         if (t.IsListenerActive()) {
           i = t;
           break;
         }
-      this.zxo(i);
+      this.Ywo(i);
     }
   }
-  zxo(i) {
-    this.Xxo && (this.Xxo.IsFocusScrollbar = !1),
+  Ywo(i) {
+    this.Kwo && (this.Kwo.IsFocusScrollbar = !1),
       i && (i.IsFocusScrollbar = !0),
-      (this.Yxo = this.Xxo),
-      (this.Xxo = i),
-      (this.$xo = i?.GetBehaviorComponent()),
+      (this.Xwo = this.Kwo),
+      (this.Kwo = i),
+      (this.Qwo = i?.GetBehaviorComponent()),
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("UiNavigation", 11, "设置当前的滚动区域对象", [
           "名字",
@@ -34,73 +34,75 @@ class NavigationScrollbarData {
         ]);
   }
   AddScrollbar(r) {
-    this.Qxo = [];
+    this.Wwo = [];
     for (let i = 0, t = r.Num(); i < t; ++i) {
       var s = r.Get(i).ListenerList;
       for (let i = 0, t = s.Num(); i < t; ++i) {
         var e = s.Get(i);
-        this.Qxo.push(e);
+        this.Wwo.push(e);
       }
     }
-    this.Qxo.sort((i, t) => i.ScrollbarIndex - t.ScrollbarIndex), this.Jxo();
+    this.Wwo.sort((i, t) => i.ScrollbarIndex - t.ScrollbarIndex), this.$wo();
   }
   DeleteScrollbar(i) {
     var r = i.ListenerList;
     if (r) {
       for (let i = 0, t = r.Num(); i < t; ++i) {
         var s = r.Get(i),
-          e = this.Qxo.indexOf(s);
-        this.Qxo.splice(e, 1), this.Xxo === s && this.zxo(void 0);
+          e = this.Wwo.indexOf(s);
+        this.Wwo.splice(e, 1), this.Kwo === s && this.Ywo(void 0);
       }
-      this.Jxo();
+      this.$wo();
     }
   }
   ResumeLastListener() {
-    this.Yxo?.IsValid() ? this.zxo(this.Yxo) : this.Jxo();
+    this.Xwo?.IsValid() && this.Xwo.IsListenerActive()
+      ? this.Ywo(this.Xwo)
+      : this.$wo();
   }
   GetCurrentListener() {
-    return this.Xxo;
+    return this.Kwo;
   }
   GetCurrentScrollbar() {
-    return this.$xo;
+    return this.Qwo;
   }
   HasActiveScrollbarList() {
-    return 1 < this.Qxo.filter((i) => i.IsListenerActive()).length;
+    return 1 < this.Wwo.filter((i) => i.IsListenerActive()).length;
   }
   FindNextScrollbar() {
-    if (this.Xxo) {
-      var t = this.Qxo.length;
-      if (1 === t) return void this.zxo(void 0);
-      var r = this.Qxo.indexOf(this.Xxo);
+    if (this.Kwo) {
+      var t = this.Wwo.length;
+      if (1 === t) return void this.Ywo(void 0);
+      var r = this.Wwo.indexOf(this.Kwo);
       let i = r + 1 < t ? r + 1 : 0;
       for (; r !== i; ) {
-        if (this.Qxo[i].IsListenerActive()) {
-          this.zxo(this.Qxo[i]);
+        if (this.Wwo[i].IsListenerActive()) {
+          this.Ywo(this.Wwo[i]);
           break;
         }
         i = i + 1 < t ? i + 1 : 0;
       }
-    } else this.Jxo();
+    } else this.$wo();
     UiNavigationViewManager_1.UiNavigationViewManager.RefreshCurrentHotKey();
   }
   FindPrevScrollbar() {
-    if (this.Xxo) {
-      var t = this.Qxo.length;
+    if (this.Kwo) {
+      var t = this.Wwo.length;
       if (1 === t) return;
-      var r = this.Qxo.indexOf(this.Xxo);
+      var r = this.Wwo.indexOf(this.Kwo);
       let i = 0 <= r - 1 ? r - 1 : t - 1;
       for (; r !== i; ) {
-        if (this.Qxo[i].IsListenerActive()) {
-          this.zxo(this.Qxo[i]);
+        if (this.Wwo[i].IsListenerActive()) {
+          this.Ywo(this.Wwo[i]);
           break;
         }
         i = 0 <= i - 1 ? i - 1 : t - 1;
       }
-    } else this.Jxo();
+    } else this.$wo();
     UiNavigationViewManager_1.UiNavigationViewManager.RefreshCurrentHotKey();
   }
   TryFindScrollbar() {
-    this.Jxo();
+    this.$wo();
   }
 }
 exports.NavigationScrollbarData = NavigationScrollbarData;

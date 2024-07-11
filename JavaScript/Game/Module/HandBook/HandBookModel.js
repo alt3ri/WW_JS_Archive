@@ -12,21 +12,21 @@ const Protocol_1 = require("../../../Core/Define/Net/Protocol"),
 class HandBookModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
-      (this.kZt = new Map()),
-      (this.FZt = []),
-      (this.VZt = new Map()),
-      (this.HZt = new Map());
+      (this.kei = new Map()),
+      (this.Fei = []),
+      (this.Vei = new Map()),
+      (this.Hei = new Map());
   }
   UpdateHandBookActiveStateMap(e, o) {
-    var e = this.GetClientHandBookType(e, o.qRs),
-      t = o.Ekn,
+    var e = this.GetClientHandBookType(e, o.tws),
+      t = o.J4n,
       r = TimeUtil_1.TimeUtil.DateFormat4(
-        new Date(o.BRs * TimeUtil_1.TimeUtil.InverseMillisecond),
+        new Date(o.ews * TimeUtil_1.TimeUtil.InverseMillisecond),
       ),
-      a = o.cfs,
-      n = o.O3n,
+      a = o.ASs,
+      n = o.p8n,
       i = new HandBookDefine_1.HandBookEntry(t, r, n, a),
-      s = this.kZt.get(e);
+      s = this.kei.get(e);
     if (s) {
       var l = s.length;
       let t = !1;
@@ -43,45 +43,45 @@ class HandBookModel extends ModelBase_1.ModelBase {
       t || s.push(i);
     } else {
       t = [];
-      t.push(i), this.kZt.set(e, t);
+      t.push(i), this.kei.set(e, t);
     }
     EventSystem_1.EventSystem.Emit(
       EventDefine_1.EEventName.OnHandBookDataUpdate,
       e,
-      o.Ekn,
+      o.J4n,
     );
   }
   ClearHandBookActiveStateMap() {
-    this.kZt.clear();
+    this.kei.clear();
   }
   InitHandBookActiveStateMap(t, o) {
     var r = this.GetClientHandBookEntryList(o),
       a = [],
       n = r.length;
-    if (t !== Protocol_1.Aki.Protocol.Hks.Proto_Photograph) {
+    if (t !== Protocol_1.Aki.Protocol.x5s.Proto_Photograph) {
       var i = this.GetClientHandBookType(t);
       for (let e = 0; e < n; e++) {
         var s = r[e];
         HandBookController_1.HandBookController.CheckConfigIsLegal(i, s.Id) &&
           a.push(s);
       }
-      this.kZt.set(i, a);
+      this.kei.set(i, a);
     } else {
-      this.ZBn();
+      this.GGn();
       for (let e = 0; e < n; e++) {
         var l = r[e],
-          _ = this.GetClientHandBookType(t, o[e].qRs);
+          _ = this.GetClientHandBookType(t, o[e].tws);
         HandBookController_1.HandBookController.CheckConfigIsLegal(_, l.Id) &&
-          this.kZt.get(_).push(l);
+          this.kei.get(_).push(l);
       }
     }
     EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.OnHandBookDataInit);
   }
-  ZBn() {
-    this.kZt.set(9, []), this.kZt.set(8, []), this.kZt.set(7, []);
+  GGn() {
+    this.kei.set(9, []), this.kei.set(8, []), this.kei.set(7, []);
   }
   InitHandBookRedDotList(t) {
-    this.FZt = [];
+    this.Fei = [];
     var o = t.length;
     for (let e = 0; e < o; e++) {
       var r = this.GetClientHandBookType(t[e]);
@@ -97,14 +97,14 @@ class HandBookModel extends ModelBase_1.ModelBase {
           );
         }
       }
-      this.FZt.push(r);
+      this.Fei.push(r);
     }
     EventSystem_1.EventSystem.Emit(
       EventDefine_1.EEventName.OnHandBookRedDotUpdate,
     );
   }
   UpdateRedDot(t, o) {
-    var r = this.kZt.get(t);
+    var r = this.kei.get(t);
     if (r) {
       var a = r.length;
       for (let e = 0; e < a; e++) {
@@ -134,12 +134,12 @@ class HandBookModel extends ModelBase_1.ModelBase {
     }
   }
   IsShowRedDot(t) {
-    var o = this.FZt.length;
-    for (let e = 0; e < o; e++) if (t === this.FZt[e]) return !0;
+    var o = this.Fei.length;
+    for (let e = 0; e < o; e++) if (t === this.Fei[e]) return !0;
     return !1;
   }
   GetCollectCount(e) {
-    e = this.kZt.get(e);
+    e = this.kei.get(e);
     return e ? e.length : 0;
   }
   GetClientHandBookEntryList(t) {
@@ -147,19 +147,19 @@ class HandBookModel extends ModelBase_1.ModelBase {
       r = t.length;
     for (let e = 0; e < r; e++) {
       var a = t[e],
-        n = a.Ekn,
+        n = a.J4n,
         i = TimeUtil_1.TimeUtil.DateFormat4(
-          new Date(a.BRs * TimeUtil_1.TimeUtil.InverseMillisecond),
+          new Date(a.ews * TimeUtil_1.TimeUtil.InverseMillisecond),
         ),
-        s = a.cfs,
-        a = a.O3n,
+        s = a.ASs,
+        a = a.p8n,
         n = new HandBookDefine_1.HandBookEntry(n, i, a, s);
       o.push(n);
     }
     return o;
   }
   GetHandBookInfo(e, t) {
-    var o = this.kZt.get(e);
+    var o = this.kei.get(e);
     if (o) {
       var r = o.length;
       for (let e = 0; e < r; e++) {
@@ -169,43 +169,43 @@ class HandBookModel extends ModelBase_1.ModelBase {
     }
   }
   GetHandBookInfoList(e) {
-    e = this.kZt.get(e);
+    e = this.kei.get(e);
     if (e) return e;
   }
   GetClientHandBookType(e, t) {
     let o = void 0;
     switch (e) {
-      case Protocol_1.Aki.Protocol.Hks.Proto_Monster:
+      case Protocol_1.Aki.Protocol.x5s.Proto_Monster:
         o = 0;
         break;
-      case Protocol_1.Aki.Protocol.Hks.Proto_VocalCorpse:
+      case Protocol_1.Aki.Protocol.x5s.Proto_VocalCorpse:
         o = 1;
         break;
-      case Protocol_1.Aki.Protocol.Hks.Proto_ViewPoint:
+      case Protocol_1.Aki.Protocol.x5s.Proto_ViewPoint:
         o = 2;
         break;
-      case Protocol_1.Aki.Protocol.Hks.Proto_Weapon:
+      case Protocol_1.Aki.Protocol.x5s.Proto_Weapon:
         o = 3;
         break;
-      case Protocol_1.Aki.Protocol.Hks.Proto_Animal:
+      case Protocol_1.Aki.Protocol.x5s.Proto_Animal:
         o = 4;
         break;
-      case Protocol_1.Aki.Protocol.Hks.pbs:
+      case Protocol_1.Aki.Protocol.x5s.aOs:
         o = 5;
         break;
-      case Protocol_1.Aki.Protocol.Hks.Proto_Chip:
+      case Protocol_1.Aki.Protocol.x5s.Proto_Chip:
         o = 6;
         break;
-      case Protocol_1.Aki.Protocol.Hks.Proto_Photograph:
+      case Protocol_1.Aki.Protocol.x5s.Proto_Photograph:
         if (t)
           switch (t) {
-            case Protocol_1.Aki.Protocol.qRs.Proto_PhotographSub:
+            case Protocol_1.Aki.Protocol.tws.Proto_PhotographSub:
               o = 7;
               break;
-            case Protocol_1.Aki.Protocol.qRs.OMs:
+            case Protocol_1.Aki.Protocol.tws.eTs:
               o = 9;
               break;
-            case Protocol_1.Aki.Protocol.qRs.tRs:
+            case Protocol_1.Aki.Protocol.tws.MUs:
               o = 8;
               break;
             default:
@@ -219,28 +219,28 @@ class HandBookModel extends ModelBase_1.ModelBase {
     let t = void 0;
     switch (e) {
       case 0:
-        t = Protocol_1.Aki.Protocol.Hks.Proto_Monster;
+        t = Protocol_1.Aki.Protocol.x5s.Proto_Monster;
         break;
       case 1:
-        t = Protocol_1.Aki.Protocol.Hks.Proto_VocalCorpse;
+        t = Protocol_1.Aki.Protocol.x5s.Proto_VocalCorpse;
         break;
       case 2:
-        t = Protocol_1.Aki.Protocol.Hks.Proto_ViewPoint;
+        t = Protocol_1.Aki.Protocol.x5s.Proto_ViewPoint;
         break;
       case 3:
-        t = Protocol_1.Aki.Protocol.Hks.Proto_Weapon;
+        t = Protocol_1.Aki.Protocol.x5s.Proto_Weapon;
         break;
       case 4:
-        t = Protocol_1.Aki.Protocol.Hks.Proto_Animal;
+        t = Protocol_1.Aki.Protocol.x5s.Proto_Animal;
         break;
       case 5:
-        t = Protocol_1.Aki.Protocol.Hks.pbs;
+        t = Protocol_1.Aki.Protocol.x5s.aOs;
         break;
       case 6:
-        t = Protocol_1.Aki.Protocol.Hks.Proto_Chip;
+        t = Protocol_1.Aki.Protocol.x5s.Proto_Chip;
         break;
       default:
-        t = Protocol_1.Aki.Protocol.Hks.Proto_Photograph;
+        t = Protocol_1.Aki.Protocol.x5s.Proto_Photograph;
     }
     return t;
   }
@@ -254,7 +254,7 @@ class HandBookModel extends ModelBase_1.ModelBase {
     return r;
   }
   GetConfigListIdByType(e) {
-    var t = this.VZt.get(e);
+    var t = this.Vei.get(e);
     if (t) return t;
     let o = void 0;
     switch (e) {
@@ -296,19 +296,19 @@ class HandBookModel extends ModelBase_1.ModelBase {
       var n = o[e];
       a.push(n.Id);
     }
-    return this.VZt.set(e, a), a;
+    return this.Vei.set(e, a), a;
   }
   GetAnimalConfigByMeshId(e) {
-    if (0 === this.HZt.size) {
+    if (0 === this.Hei.size) {
       var t =
           ConfigManager_1.ConfigManager.HandBookConfig.GetAnimalHandBookConfigList(),
         o = t.length;
       for (let e = 0; e < o; e++) {
         var r = t[e];
-        this.HZt.set(r.MeshId, r);
+        this.Hei.set(r.MeshId, r);
       }
     }
-    return this.HZt.get(e);
+    return this.Hei.get(e);
   }
 }
 exports.HandBookModel = HandBookModel;

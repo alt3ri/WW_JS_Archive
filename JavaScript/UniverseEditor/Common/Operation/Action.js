@@ -16,6 +16,8 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.defaultVec =
     exports.getActions =
     exports.getActionRestrictedMapContext =
+    exports.isBanInDynamicPrefabAction =
+    exports.isActionImplementType =
     exports.isTestAction =
     exports.actionConfig =
       void 0);
@@ -26,6 +28,12 @@ function isTestAction(e, t) {
     !!exports.actionConfig[e].IsTest ||
     !!exports.actionConfig[e].ContextForTest?.includes(t)
   );
+}
+function isActionImplementType(e, t) {
+  return exports.actionConfig[e].ImplementType === t;
+}
+function isBanInDynamicPrefabAction(e) {
+  return !!exports.actionConfig[e].IsBanInDynamicPrefab;
 }
 (exports.actionConfig = {
   Invoke: {
@@ -93,6 +101,7 @@ function isTestAction(e, t) {
     Context: ["entity", "quest", "levelPlay"],
     Env: ["aki", "ue5"],
     ImplementType: "Server",
+    IsBanInDynamicPrefab: !0,
   },
   Activate: { Env: ["ue5"], ImplementType: "Client" },
   AccpetCurrentQuest: {
@@ -354,6 +363,11 @@ function isTestAction(e, t) {
     Env: ["aki", "ue5"],
     ImplementType: "Server",
   },
+  ChangeNpcPerformState: {
+    Context: ["entity", "quest", "levelPlay", "flow"],
+    Env: ["aki"],
+    ImplementType: "Server",
+  },
   SetReviveRegion: {
     Context: ["entity", "quest", "levelPlay"],
     Env: ["aki", "ue5"],
@@ -440,12 +454,10 @@ function isTestAction(e, t) {
     ImplementType: "Client",
   },
   EnableNearbyTracking: {
-    Context: ["entity"],
+    Context: ["entity", "levelPlay", "quest"],
     Env: ["aki", "ue5"],
     ImplementType: "Server",
   },
-  HideByRange: { Env: [], ImplementType: "Client", IsAbandoned: !0 },
-  ShowAllRangeHided: { Env: [], ImplementType: "Client", IsAbandoned: !0 },
   TeleportDungeon: {
     Context: ["entity", "levelPlay", "quest"],
     Env: ["aki"],
@@ -463,6 +475,18 @@ function isTestAction(e, t) {
     ImplementType: "Server",
   },
   RemoveTrialCharacter: {
+    Env: ["aki"],
+    Context: ["quest", "levelPlay"],
+    ContextForTest: ["flow"],
+    ImplementType: "Server",
+  },
+  AddTrialFollowShooter: {
+    Env: ["aki"],
+    Context: ["quest", "levelPlay"],
+    ContextForTest: ["flow"],
+    ImplementType: "Server",
+  },
+  RemoveTrialFollowShooter: {
     Env: ["aki"],
     Context: ["quest", "levelPlay"],
     ContextForTest: ["flow"],
@@ -692,6 +716,11 @@ function isTestAction(e, t) {
     Context: ["entity"],
     ImplementType: "Server",
   },
+  RogueSelectRoom: {
+    Env: ["aki"],
+    Context: ["entity"],
+    ImplementType: "Server",
+  },
   TriggerCameraShake: {
     Env: ["aki"],
     Context: ["entity", "quest", "levelPlay"],
@@ -732,6 +761,12 @@ function isTestAction(e, t) {
     Env: ["aki"],
     Context: ["entity"],
     ImplementType: "Client",
+  },
+  ModifyEntityPerformanceAttribute: {
+    Env: ["aki"],
+    Context: ["entity"],
+    ImplementType: "Client",
+    IsTest: !0,
   },
   HideTargetRange: {
     Env: ["aki"],
@@ -855,10 +890,22 @@ function isTestAction(e, t) {
     IsTest: !0,
     ImplementType: "Server",
   },
+  FixFoundationRelation: {
+    Env: ["aki"],
+    Context: ["entity"],
+    IsTest: !0,
+    ImplementType: "Server",
+  },
   SetAudioState: {
     Env: ["aki"],
     Context: ["quest", "levelPlay", "flow"],
     ImplementType: "Server",
+  },
+  PerformerAiSplineMove: {
+    Env: ["aki"],
+    Context: [],
+    ImplementType: "Client",
+    IsTest: !0,
   },
   CustomJson: {
     Env: ["aki"],
@@ -866,8 +913,27 @@ function isTestAction(e, t) {
     IsTest: !0,
     ImplementType: "Server",
   },
+  ExecResurrection: {
+    Env: ["aki"],
+    Context: ["levelPlay"],
+    IsTest: !0,
+    ImplementType: "Server",
+  },
+  OpenSystemBoardWithReturn: {
+    Context: ["entity", "quest", "levelPlay"],
+    Env: ["aki", "ue5"],
+    ImplementType: "Server",
+  },
+  FixShowTargetRange: {
+    Env: ["aki"],
+    Context: ["entity", "quest", "levelPlay"],
+    IsTest: !0,
+    ImplementType: "Server",
+  },
 }),
-  (exports.isTestAction = isTestAction);
+  (exports.isTestAction = isTestAction),
+  (exports.isActionImplementType = isActionImplementType),
+  (exports.isBanInDynamicPrefabAction = isBanInDynamicPrefabAction);
 const getActionsCache = new Map();
 function getActionRestrictedMapContext(e) {
   return exports.actionConfig[e].RestrictedMapContext;
@@ -878,12 +944,12 @@ function getActions(e, t, n) {
   if (!i) {
     i = [];
     for (const l in exports.actionConfig) {
-      var a = l,
-        o = exports.actionConfig[a];
-      !(o.Context?.includes(t) || (n && o.ContextForTest?.includes(t))) ||
-        !o.Env?.includes(e) ||
-        (!n && o.IsTest) ||
-        i.push(a);
+      var o = l,
+        a = exports.actionConfig[o];
+      !(a.Context?.includes(t) || (n && a.ContextForTest?.includes(t))) ||
+        !a.Env?.includes(e) ||
+        (!n && a.IsTest) ||
+        i.push(o);
     }
     i.sort(), getActionsCache.set(l, i);
   }

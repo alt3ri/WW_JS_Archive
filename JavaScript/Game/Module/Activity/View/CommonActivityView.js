@@ -21,48 +21,48 @@ const UE = require("ue"),
 class CommonActivityView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.N3e = !0),
+      (this.e5e = !0),
       (this.lqe = void 0),
-      (this.O3e = 0),
-      (this.k3e = void 0),
-      (this.F3e = void 0),
-      (this.V3e = void 0),
-      (this.H3e = void 0),
-      (this.j3e = void 0),
-      (this.W3e = new Map()),
-      (this.K3e = []),
-      (this.Q3e = !0),
-      (this.LLn = []),
-      (this.X3e = () => {
-        this.$3e(!0);
+      (this.t5e = 0),
+      (this.i5e = void 0),
+      (this.o5e = void 0),
+      (this.r5e = void 0),
+      (this.n5e = void 0),
+      (this.s5e = void 0),
+      (this.a5e = new Map()),
+      (this.h5e = []),
+      (this.l5e = !0),
+      (this.PRn = []),
+      (this._5e = () => {
+        this.u5e(!0);
       }),
       (this.XOe = () => {
-        HelpController_1.HelpController.OpenHelpById(this.O3e);
+        HelpController_1.HelpController.OpenHelpById(this.t5e);
       }),
       (this.$Oe = () => {
         this.CloseMe();
       }),
-      (this.Y3e = (t, e) => {
-        e && this.J3e(t);
+      (this.c5e = (t, e) => {
+        e && this.m5e(t);
       }),
-      (this.z3e = (t, e) => this.H3e !== t),
-      (this.Z3e = () => {
+      (this.d5e = (t, e) => this.n5e !== t),
+      (this.C5e = () => {
         return new ActivityPageSelectContent_1.ActivityPageSelectContent();
       }),
-      (this.YIn = (t) => {
+      (this.CLn = (t) => {
         t.length <= 0 ||
           (this.lqe.SetCurrencyItemVisible(!0),
           this.lqe.SetCurrencyItemList(t).catch(() => {}));
       }),
-      (this.e4e = () => {
-        this.t4e();
+      (this.g5e = () => {
+        this.f5e();
       }),
-      (this.i4e = () => {
-        this.o4e();
+      (this.p5e = () => {
+        this.v5e();
       }),
-      (this.r4e = (t) => {
+      (this.M5e = (t) => {
         ModelManager_1.ModelManager.ActivityModel.GetCurrentSelectActivity()
-          ?.Id === t && this.j3e?.RefreshView();
+          ?.Id === t && this.s5e?.RefreshView();
       }),
       (this.OnActivityUpdate = () => {
         var t = () => {
@@ -77,15 +77,15 @@ class CommonActivityView extends UiViewBase_1.UiViewBase {
             e,
           );
       }),
-      (this.n4e = (t) => {
-        this.j3e?.PlaySubViewSequence(t);
+      (this.E5e = (t) => {
+        this.s5e?.PlaySubViewSequence(t);
       }),
-      (this.$3e = (t, e, i) => {
-        e && (this.LLn = ActivityCommonDefine_1.activityViewStateSequence[e]),
-          t !== this.N3e &&
-            ((this.N3e = t),
-            this.UiViewSequence.PlaySequence(t ? this.LLn[0] : this.LLn[1], i),
-            this.j3e?.OnCommonViewStateChange(t)),
+      (this.u5e = (t, e = 0, i) => {
+        (this.PRn = ActivityCommonDefine_1.activityViewStateSequence[e]),
+          t !== this.e5e &&
+            ((this.e5e = t),
+            this.UiViewSequence.PlaySequence(t ? this.PRn[0] : this.PRn[1], i),
+            this.s5e?.OnCommonViewStateChange(t)),
           this.RefreshTabIcon();
       });
   }
@@ -102,21 +102,21 @@ class CommonActivityView extends UiViewBase_1.UiViewBase {
       [7, UE.UITexture],
       [8, UE.UIButtonComponent],
     ]),
-      (this.BtnBindInfo = [[8, this.X3e]]);
+      (this.BtnBindInfo = [[8, this._5e]]);
   }
   OnAddEventListener() {
-    this.s4e(),
+    this.S5e(),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnSelectActivity,
-        this.e4e,
+        this.g5e,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.ActivityViewChange,
-        this.i4e,
+        this.p5e,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.ActivityViewRefreshCurrent,
-        this.r4e,
+        this.M5e,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnActivityClose,
@@ -128,30 +128,30 @@ class CommonActivityView extends UiViewBase_1.UiViewBase {
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.PlaySequenceEventByStringParam,
-        this.n4e,
+        this.E5e,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.SetActivityViewState,
-        this.$3e,
+        this.u5e,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.SetActivityViewCurrency,
-        this.YIn,
+        this.CLn,
       );
   }
   OnRemoveEventListener() {
-    this.a4e(),
+    this.y5e(),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnSelectActivity,
-        this.e4e,
+        this.g5e,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.ActivityViewChange,
-        this.i4e,
+        this.p5e,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.ActivityViewRefreshCurrent,
-        this.r4e,
+        this.M5e,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnActivityClose,
@@ -163,91 +163,91 @@ class CommonActivityView extends UiViewBase_1.UiViewBase {
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.PlaySequenceEventByStringParam,
-        this.n4e,
+        this.E5e,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.SetActivityViewState,
-        this.$3e,
+        this.u5e,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.SetActivityViewCurrency,
-        this.YIn,
+        this.CLn,
       );
   }
   async OnBeforeStartAsync() {
-    this.h4e(), await this.l4e();
+    this.I5e(), await this.T5e();
   }
-  h4e() {
+  I5e() {
     var t = this.GetScrollViewWithScrollbar(1);
-    this.k3e = new GenericScrollViewNew_1.GenericScrollViewNew(t, this.Z3e);
+    this.i5e = new GenericScrollViewNew_1.GenericScrollViewNew(t, this.C5e);
   }
-  async l4e() {
+  async T5e() {
     (this.lqe = new PopupCaptionItem_1.PopupCaptionItem(this.GetItem(0))),
       this.lqe.SetHelpCallBack(this.XOe),
       this.lqe.SetCloseCallBack(this.$Oe),
-      (this.F3e = new ActivitySwitchToggle_1.ActivitySwitchToggle(0)),
-      await this.F3e.CreateByActorAsync(this.GetItem(3).GetOwner()),
-      this.F3e.BindOnToggleFunction(this.Y3e),
-      this.F3e.BindOnCanToggleExecuteChange(this.z3e),
-      (this.V3e = new ActivitySwitchToggle_1.ActivitySwitchToggle(1)),
-      await this.V3e.CreateByActorAsync(this.GetItem(4).GetOwner()),
-      this.V3e.BindOnToggleFunction(this.Y3e),
-      this.V3e.BindOnCanToggleExecuteChange(this.z3e);
+      (this.o5e = new ActivitySwitchToggle_1.ActivitySwitchToggle(0)),
+      await this.o5e.CreateByActorAsync(this.GetItem(3).GetOwner()),
+      this.o5e.BindOnToggleFunction(this.c5e),
+      this.o5e.BindOnCanToggleExecuteChange(this.d5e),
+      (this.r5e = new ActivitySwitchToggle_1.ActivitySwitchToggle(1)),
+      await this.r5e.CreateByActorAsync(this.GetItem(4).GetOwner()),
+      this.r5e.BindOnToggleFunction(this.c5e),
+      this.r5e.BindOnCanToggleExecuteChange(this.d5e);
   }
   OnStart() {
     var t = this.OpenParam ?? 4;
     ModelManager_1.ModelManager.ActivityModel.SendActivityViewOpenLogData(t),
-      (this.LLn = ActivityCommonDefine_1.activityViewStateSequence[0]),
+      (this.PRn = ActivityCommonDefine_1.activityViewStateSequence[0]),
       this.lqe.SetTitleLocalText("Activity_Title"),
-      this.F3e.SetUiActive(!0),
-      this.V3e.SetUiActive(!1);
+      this.o5e.SetUiActive(!0),
+      this.r5e.SetUiActive(!1);
   }
   OnBeforeShow() {
-    this.Q3e && (this.F3e.SetToggleState(!0, !0), (this.Q3e = !1));
-    for (const t of this.K3e)
+    this.l5e && (this.o5e.SetToggleState(!0, !0), (this.l5e = !1));
+    for (const t of this.h5e)
       if (!t.CheckIfInShowTime())
         return void ControllerHolder_1.ControllerHolder.ActivityController.RequestActivityData().finally(
           () => {
             this.OnActivityUpdate();
           },
         );
-    this.j3e?.RefreshView();
+    this.s5e?.RefreshView();
   }
   async OnBeforeHideAsync() {
-    await this.j3e?.BeforeHideSelfAsync();
+    await this.s5e?.BeforeHideSelfAsync();
   }
   OnBeforeDestroy() {
-    this.W3e.forEach((t, e) => {
+    this.a5e.forEach((t, e) => {
       this.AddChild(t);
     }),
-      this.W3e.clear();
+      this.a5e.clear();
   }
-  J3e(t) {
-    (0 === (this.H3e = t) ? this.V3e : this.F3e).SetToggleState(!1, !1),
-      this.o4e(t);
+  m5e(t) {
+    (0 === (this.n5e = t) ? this.r5e : this.o5e).SetToggleState(!1, !1),
+      this.v5e(t);
   }
-  _4e(t) {
-    t = this.k3e.GetScrollItemByIndex(t);
-    t && (this.k3e.ScrollTo(t.GetRootItem()), t.SetToggleState(!0, !0));
+  L5e(t) {
+    t = this.i5e.GetScrollItemByIndex(t);
+    t && (this.i5e.ScrollTo(t.GetRootItem()), t.SetToggleState(!0, !0));
   }
-  s4e() {
+  S5e() {
     RedDotController_1.RedDotController.BindRedDot(
       "ActivityEntrance",
-      this.F3e.GetToggleRedDot(),
+      this.o5e.GetToggleRedDot(),
     );
   }
-  a4e() {
+  y5e() {
     RedDotController_1.RedDotController.UnBindGivenUi(
       "ActivityEntrance",
-      this.F3e.GetToggleRedDot(),
+      this.o5e.GetToggleRedDot(),
     );
   }
-  o4e(t = 0) {
+  v5e(t = 0) {
     const s =
       ModelManager_1.ModelManager.ActivityModel.GetCurrentShowingActivities();
     s.sort(ActivityModel_1.ActivityModel.SortFunc),
-      (this.K3e = s),
-      this.k3e.RefreshByData(s, () => {
+      (this.h5e = s),
+      this.i5e.RefreshByData(s, () => {
         var e =
           ModelManager_1.ModelManager.ActivityModel.GetCurrentSelectActivityId();
         let i = 0;
@@ -257,18 +257,18 @@ class CommonActivityView extends UiViewBase_1.UiViewBase {
             break;
           }
         ModelManager_1.ModelManager.ActivityModel.SetCurrentSelectActivityId(0),
-          this._4e(i);
+          this.L5e(i);
       });
   }
-  t4e() {
+  f5e() {
     var t =
       ModelManager_1.ModelManager.ActivityModel.GetCurrentSelectActivity();
-    this.u4e(t), this.c4e(t);
+    this.D5e(t), this.R5e(t);
   }
-  u4e(t) {
+  D5e(t) {
     var e = t.GetTitle();
-    (this.O3e = t.GetHelpId()),
-      this.lqe.SetHelpBtnActive(0 !== this.O3e),
+    (this.t5e = t.GetHelpId()),
+      this.lqe.SetHelpBtnActive(0 !== this.t5e),
       this.lqe.SetTitle(e.replace(/<.*?>/g, "")),
       this.RefreshTabIcon();
   }
@@ -281,34 +281,44 @@ class CommonActivityView extends UiViewBase_1.UiViewBase {
     }),
       await e.Promise;
   }
-  async c4e(t) {
-    let e = this.W3e.get(t);
+  async R5e(t) {
+    let e = this.a5e.get(t);
     if (!e) {
       var i = ActivityManager_1.ActivityManager.GetActivityController(t.Type),
         s = this.GetItem(5),
         n = i.GetActivityResource(t);
       if (!(e = i.CreateSubPageComponent(t))) return;
-      e.SetData(t), await e.CreateByPathAsync(n, s), this.W3e.set(t, e);
+      e.SetData(t), await e.CreateByPathAsync(n, s), this.a5e.set(t, e);
     }
-    ModelManager_1.ModelManager.ActivityModel.GetCurrentSelectActivityId() ===
-      t.Id &&
+    i = ModelManager_1.ModelManager.ActivityModel.GetCurrentSelectActivityId();
+    i === t.Id &&
       (await this.WNe(t),
-      this.j3e?.SetActive(!1),
+      this.s5e?.SetActive(!1),
       this.lqe.SetCurrencyItemVisible(!1),
-      (this.j3e = e),
-      await this.j3e.BeforeShowSelfAsync(),
-      this.j3e.SetActive(!0),
-      this.j3e.RefreshView(),
+      (this.s5e = e),
+      await this.s5e.BeforeShowSelfAsync(),
+      this.s5e.SetActive(!0),
+      this.s5e.RefreshView(),
       this.UiViewSequence.HasSequenceNameInPlaying("Switch")
         ? this.UiViewSequence.ReplaySequence("Switch")
-        : this.UiViewSequence.PlaySequence("Switch"));
+        : this.UiViewSequence.PlaySequence("Switch"),
+      EventSystem_1.EventSystem.Emit(
+        EventDefine_1.EEventName.OnSelectActivityAndSubViewReady,
+        i,
+      ));
   }
   RefreshTabIcon() {
     var t =
         ModelManager_1.ModelManager.ActivityModel.GetCurrentSelectActivity()
           .LocalConfig,
-      t = this.N3e ? t.TabResource : t.TabResource2;
+      t = this.e5e ? t.TabResource : t.TabResource2;
     t && this.lqe.SetTitleIcon(t);
+  }
+  GetGuideUiItemAndUiItemForShowEx(t) {
+    var e =
+        ModelManager_1.ModelManager.ActivityModel.GetCurrentSelectActivity(),
+      e = this.a5e.get(e);
+    if (void 0 !== e) return e.GetGuideUiItemAndUiItemForShowEx(t);
   }
 }
 exports.CommonActivityView = CommonActivityView;

@@ -12,15 +12,15 @@ const UE = require("ue"),
 class RoguelikeSelectSpecialItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor(e) {
     super(),
-      (this.fao = void 0),
-      (this._ho = void 0),
+      (this.mho = void 0),
+      (this.alo = void 0),
       (this.$be = void 0),
       (this.zbe = () =>
         new RoguelikeSelectSpecialStarItem_1.RoguelikeSelectSpecialStarItem()),
-      (this.uho = (e) => {
-        this._ho && this._ho(this, this.fao);
+      (this.hlo = (e) => {
+        this.alo && this.alo(this, this.mho);
       }),
-      (this._ho = e);
+      (this.alo = e);
   }
   OnRegisterComponent() {
     (this.ComponentRegisterInfos = [
@@ -36,8 +36,9 @@ class RoguelikeSelectSpecialItem extends GridProxyAbstract_1.GridProxyAbstract {
       [9, UE.UIExtendToggle],
       [10, UE.UINiagara],
       [11, UE.UINiagara],
+      [12, UE.UIItem],
     ]),
-      (this.BtnBindInfo = [[9, this.uho]]);
+      (this.BtnBindInfo = [[9, this.hlo]]);
   }
   OnBeforeShow() {
     this.$be = new GenericLayout_1.GenericLayout(
@@ -46,7 +47,7 @@ class RoguelikeSelectSpecialItem extends GridProxyAbstract_1.GridProxyAbstract {
     );
   }
   Refresh(e, i, t) {
-    this.fao = e;
+    this.mho = e;
     var r =
       ConfigManager_1.ConfigManager.RoguelikeConfig?.GetRoguelikeSpecialConfig(
         e.ConfigId,
@@ -72,6 +73,7 @@ class RoguelikeSelectSpecialItem extends GridProxyAbstract_1.GridProxyAbstract {
             e.RestCount,
           ),
           s.SetUIActive(0 !== e.RestCount),
+          this.GetItem(12).SetUIActive(e.IsNew),
           0 < r.Level
             ? (this.GetItem(2).SetUIActive(!0),
               this.GetItem(3).SetUIActive(!1),

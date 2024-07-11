@@ -6,13 +6,13 @@ const UE = require("ue"),
   CommonSelectItem_1 = require("./CommonSelectItem");
 class ElementItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
-    super(...arguments), (this.jso = void 0), (this.oao = void 0);
+    super(...arguments), (this.kao = void 0), (this.Zao = void 0);
   }
   Refresh(t, e, s) {
     this.Update(t);
   }
   Update(t) {
-    (this.jso = t), this.PWt();
+    (this.kao = t), this.PKt();
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -20,23 +20,23 @@ class ElementItem extends GridProxyAbstract_1.GridProxyAbstract {
       [1, UE.UIText],
     ];
   }
-  PWt() {
+  PKt() {
     var t;
-    this.jso.Name
-      ? this.GetText(1).ShowTextNew(this.jso.Name)
+    this.kao.Name
+      ? this.GetText(1).ShowTextNew(this.kao.Name)
       : ((t = this.GetText(1)).SetChangeColor(
-          this.jso.IsPreview,
+          this.kao.IsPreview,
           t.changeColor,
         ),
-        t.SetText(this.jso.Count.toString())),
-      this.oao ||
-        ((this.oao = new CommonSelectItem_1.CommonElementItem()),
-        this.oao.Update(this.jso.ElementId),
-        this.oao
-          .CreateThenShowByActorAsync(this.GetItem(0).GetOwner())
-          .then(() => {
-            this.oao?.RefreshPanel();
-          }));
+        t.SetText(this.kao.Count.toString())),
+      this.Zao ||
+        ((this.Zao = new CommonSelectItem_1.CommonElementItem()),
+        this.Zao.Update(this.kao.ElementId),
+        this.Zao.CreateThenShowByActorAsync(this.GetItem(0).GetOwner()).then(
+          () => {
+            this.Zao?.RefreshPanel();
+          },
+        ));
   }
 }
 exports.ElementItem = ElementItem;

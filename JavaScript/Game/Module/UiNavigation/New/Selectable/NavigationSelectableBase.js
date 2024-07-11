@@ -10,9 +10,9 @@ class NavigationSelectableBase {
       (this.Selectable = void 0),
       (this.Listener = void 0),
       (this.PanelHandle = void 0),
-      (this.S9 = "Button"),
+      (this.E9 = "Button"),
       (this.Selectable = t),
-      (this.S9 = i);
+      (this.E9 = i);
   }
   Init() {
     this.OnInit();
@@ -71,12 +71,12 @@ class NavigationSelectableBase {
     return (
       !!this.IsAllowNavigationByGroup() &&
       !!this.IsAllowNavigationBySelfParam(t) &&
-      !!this.dwo() &&
+      !!this.cBo() &&
       this.OnHandlePointerEnter(t)
     );
   }
   HandlePointerSelect(t) {
-    return !!this.dwo() && this.OnHandlePointerSelect(t);
+    return !!this.cBo() && this.OnHandlePointerSelect(t);
   }
   IsIgnoreScrollOrLayoutCheckInSwitchGroup() {
     return this.OnIsIgnoreScrollOrLayoutCheck();
@@ -118,7 +118,7 @@ class NavigationSelectableBase {
   OnIsIgnoreScrollOrLayoutCheck() {
     return !1;
   }
-  dwo() {
+  cBo() {
     var t, i;
     return !(
       !this.Listener.PanelConfig ||
@@ -140,7 +140,7 @@ class NavigationSelectableBase {
   OnStart() {}
   OnClear() {}
   GetType() {
-    return this.S9;
+    return this.E9;
   }
 }
 exports.NavigationSelectableBase = NavigationSelectableBase;

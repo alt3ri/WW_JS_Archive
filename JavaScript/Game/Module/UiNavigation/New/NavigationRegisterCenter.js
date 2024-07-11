@@ -79,9 +79,9 @@ const BasePanelHandle_1 = require("./PanelHandle/BasePanelHandle"),
   };
 class NavigationRegisterCenter {
   static Init() {
-    this.Wxo(), this.Kxo();
+    this.Hwo(), this.jwo();
   }
-  static Wxo() {
+  static Hwo() {
     for (const n in selectableCtorMap) {
       var e = n;
       NavigationSelectableCreator_1.NavigationSelectableCreator.RegisterNavigationBehavior(
@@ -90,7 +90,7 @@ class NavigationRegisterCenter {
       );
     }
   }
-  static Kxo() {
+  static jwo() {
     for (const n in panelHandleCtorMap) {
       var e = n;
       NavigationPanelHandleCreator_1.NavigationPanelHandleCreator.RegisterSpecialPanelHandle(

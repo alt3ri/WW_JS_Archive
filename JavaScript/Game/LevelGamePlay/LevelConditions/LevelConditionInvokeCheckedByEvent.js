@@ -19,7 +19,7 @@ const Log_1 = require("../../../Core/Common/Log"),
   SceneTeamDefine_1 = require("../../Module/SceneTeam/SceneTeamDefine"),
   LevelGeneralBase_1 = require("../LevelGeneralBase"),
   LevelGeneralDefine_1 = require("../LevelGeneralDefine");
-var EAttributeId = Protocol_1.Aki.Protocol.KBs;
+var EAttributeId = Protocol_1.Aki.Protocol.Bks;
 class LevelConditionFunctionUnlock extends LevelGeneralBase_1.LevelConditionBase {
   Check(e, n, ...o) {
     var t, i;
@@ -93,10 +93,10 @@ class LevelConditionHpLowerThan extends LevelGeneralBase_1.LevelConditionBase {
         ? !(
             !(t =
               ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity) ||
-            ((i = t.Entity.GetComponent(156)?.GetCurrentValue(
+            ((i = t.Entity.GetComponent(158)?.GetCurrentValue(
               EAttributeId.Proto_Life,
             )),
-            (r = t.Entity.GetComponent(156)?.GetCurrentValue(EAttributeId.Tkn)),
+            (r = t.Entity.GetComponent(158)?.GetCurrentValue(EAttributeId.e5n)),
             !i) ||
             !r
           ) && i / r < o / CommonDefine_1.RATE_10000
@@ -134,8 +134,8 @@ class LevelConditionHarmonyQte extends LevelGeneralBase_1.LevelConditionBase {
             !1)
           : ((e = o[0]),
             (o = o[1]),
-            10 * (e = e.GetComponent(79)?.RoleElementType) +
-              (o = o.GetComponent(79)?.RoleElementType) ===
+            10 * (e = e.GetComponent(81)?.RoleElementType) +
+              (o = o.GetComponent(81)?.RoleElementType) ===
               t || 10 * o + e === t))
     );
   }

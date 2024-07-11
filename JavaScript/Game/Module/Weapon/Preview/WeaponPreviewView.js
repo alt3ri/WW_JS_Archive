@@ -13,23 +13,44 @@ const UE = require("ue"),
 class WeaponPreviewView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.qki = void 0),
-      (this.Gki = void 0),
+      (this.q2i = void 0),
+      (this.G2i = void 0),
       (this.lqe = void 0),
-      (this.wvo = () => {
+      (this.Sjs = !0),
+      (this.AMo = () => {
         UiManager_1.UiManager.CloseView("WeaponPreviewView");
       }),
-      (this.kki = () => {
-        var e = this.Gki.GetCurSelectedData();
-        this.qki.UpdateComponent(e),
+      (this.k2i = () => {
+        let e = this.G2i.GetCurSelectedData();
+        var i,
+          t = e.GetFullLevelWeaponData();
+        void 0 === t
+          ? this.lqe.SetToggleVisible(!1)
+          : (this.lqe.SetToggleVisible(!0),
+            (i = 1 === this.lqe.GetToggleState()),
+            (e = i ? t : e)),
+          this.q2i.UpdateComponent(e),
           WeaponController_1.WeaponController.OnSelectedWeaponChange(
             e,
-            this.Nki,
-            this.Oki,
+            this.N2i,
+            this.O2i,
+            this.Sjs,
           );
       }),
-      (this.Nki = void 0),
-      (this.Oki = void 0);
+      (this.N2i = void 0),
+      (this.O2i = void 0),
+      (this.gzs = (e) => {
+        let i = this.G2i.GetCurSelectedData();
+        var t = i.GetFullLevelWeaponData();
+        1 === e && t && (i = t),
+          this.q2i.UpdateComponent(i),
+          WeaponController_1.WeaponController.OnSelectedWeaponChange(
+            i,
+            this.N2i,
+            this.O2i,
+            this.Sjs,
+          );
+      });
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -39,40 +60,44 @@ class WeaponPreviewView extends UiViewBase_1.UiViewBase {
     ];
   }
   async OnBeforeStartAsync() {
-    (this.qki = new WeaponDetailTipsComponent_1.WeaponDetailTipsComponent()),
-      await this.qki.CreateThenShowByActorAsync(this.GetItem(0).GetOwner()),
-      this.qki.SetCanShowEquip(!1),
-      (this.Gki = new WeaponListComponent_1.WeaponListComponent()),
-      this.Gki.Init(this.GetScrollViewWithScrollbar(2)),
-      this.Gki.SetWeaponChangeCallBack(this.kki),
+    (this.q2i = new WeaponDetailTipsComponent_1.WeaponDetailTipsComponent()),
+      await this.q2i.CreateThenShowByActorAsync(this.GetItem(0).GetOwner()),
+      this.q2i.SetCanShowEquip(!1),
+      (this.G2i = new WeaponListComponent_1.WeaponListComponent()),
+      this.G2i.Init(this.GetScrollViewWithScrollbar(2)),
+      this.G2i.SetWeaponChangeCallBack(this.k2i),
       (this.lqe = new PopupCaptionItem_1.PopupCaptionItem(this.GetItem(1))),
-      this.lqe.SetCloseCallBack(this.wvo);
+      await this.lqe.CreateToggleTab(this.gzs),
+      this.lqe.SetToggleName("PrefabTextItem_3652268202_Text"),
+      this.lqe.SetCloseCallBack(this.AMo);
     var e = this.OpenParam.WeaponDataList;
-    e && 0 !== e.length && (await this.Gki.UpdateDataList(e));
+    e && 0 !== e.length && (await this.G2i.UpdateDataList(e));
   }
   OnBeforeShow() {
     ModelManager_1.ModelManager.WeaponModel.SetCurSelectViewName(2);
     var e = this.OpenParam;
-    this.Gki?.SetCurSelect(e.SelectedIndex);
+    this.G2i?.SetCurSelect(e.SelectedIndex);
   }
   OnAfterHide() {
-    this.Gki?.CancelSelect(),
+    this.G2i?.CancelSelect(),
       ModelManager_1.ModelManager.WeaponModel.SetCurSelectViewName(0);
   }
   OnBeforeCreate() {
     var e = this.OpenParam?.WeaponObservers;
     e
-      ? ((this.Nki = e.WeaponObserver), (this.Oki = e.WeaponScabbardObserver))
-      : ((this.Nki = UiSceneManager_1.UiSceneManager.InitWeaponObserver()),
-        (this.Oki =
+      ? ((this.N2i = e.WeaponObserver), (this.O2i = e.WeaponScabbardObserver))
+      : ((this.N2i = UiSceneManager_1.UiSceneManager.InitWeaponObserver(
+          this.Sjs,
+        )),
+        (this.O2i =
           UiSceneManager_1.UiSceneManager.InitWeaponScabbardObserver()));
   }
   OnBeforeDestroy() {
     this.OpenParam?.WeaponObservers ||
-      (UiSceneManager_1.UiSceneManager.DestroyWeaponObserver(this.Nki),
-      (this.Nki = void 0),
-      UiSceneManager_1.UiSceneManager.DestroyWeaponScabbardObserver(this.Oki),
-      (this.Oki = void 0));
+      (UiSceneManager_1.UiSceneManager.DestroyWeaponObserver(this.N2i),
+      (this.N2i = void 0),
+      UiSceneManager_1.UiSceneManager.DestroyWeaponScabbardObserver(this.O2i),
+      (this.O2i = void 0));
   }
 }
 exports.WeaponPreviewView = WeaponPreviewView;

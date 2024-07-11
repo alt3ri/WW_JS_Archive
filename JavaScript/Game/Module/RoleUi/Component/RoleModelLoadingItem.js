@@ -1,35 +1,42 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleModelLoadingItem = void 0);
-const TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
+const UE = require("ue"),
+  TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
   UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
 class RoleModelLoadingItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
-    super(...arguments), (this.clo = !0), (this.TDe = void 0), (this.R2e = !0);
+    super(...arguments), (this.h1o = !0), (this.TDe = void 0), (this.jFe = !0);
+  }
+  OnRegisterComponent() {
+    this.ComponentRegisterInfos = [[0, UE.UIItem]];
   }
   OnStart() {
-    this.mlo();
+    this.l1o();
   }
   OnBeforeDestroy() {
-    this.dlo();
+    this._1o();
   }
-  dlo() {
+  _1o() {
     void 0 !== this.TDe &&
       (TimerSystem_1.TimerSystem.Remove(this.TDe), (this.TDe = void 0));
   }
-  mlo() {
-    this.SetActive(this.clo && this.R2e);
+  l1o() {
+    this.SetActive(this.h1o && this.jFe);
   }
   SetLoadingOpen(e) {
-    this.R2e = e;
+    this.jFe = e;
   }
   SetLoadingActive(e) {
-    this.clo !== e &&
-      ((this.clo = e)
+    this.h1o !== e &&
+      ((this.h1o = e)
         ? (this.TDe = TimerSystem_1.TimerSystem.Delay(() => {
-            this.dlo(), this.mlo();
+            this._1o(), this.l1o();
           }, 300))
-        : (this.dlo(), this.mlo()));
+        : (this._1o(), this.l1o()));
+  }
+  SetIconPosition(e) {
+    this.GetItem(0)?.SetAnchorOffset(e);
   }
 }
 exports.RoleModelLoadingItem = RoleModelLoadingItem;

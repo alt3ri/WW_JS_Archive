@@ -12,6 +12,9 @@ class LevelEventAddTrialCharacter extends LevelGeneralBase_1.LevelEventBase {
   constructor() {
     super(...arguments), (this.vLe = !1), (this.MLe = void 0);
   }
+  ExecuteInGm(e, r) {
+    this.FinishExecute(!0);
+  }
   ExecuteNew(e, r) {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info("Event", 49, "[AddTrialEvent] 开始");
@@ -39,7 +42,7 @@ class LevelEventAddTrialCharacter extends LevelGeneralBase_1.LevelEventBase {
           Log_1.Log.Info("Event", 49, "[AddTrialEvent] 无试用角色id，完成"),
         this.FinishExecute(!0))
       : ((this.MLe = o),
-        this.SLe()
+        this.ELe()
           ? (Log_1.Log.CheckInfo() &&
               Log_1.Log.Info("Event", 49, "[AddTrialEvent] 开始时编队已完成"),
             this.FinishExecute(!0))
@@ -52,27 +55,25 @@ class LevelEventAddTrialCharacter extends LevelGeneralBase_1.LevelEventBase {
   }
   OnTick(e) {
     this.MLe &&
-      this.SLe() &&
+      this.ELe() &&
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("Event", 49, "[AddTrialEvent] 编队完成"),
       this.FinishExecute(!0));
   }
-  SLe() {
+  ELe() {
     if (!ModelManager_1.ModelManager.SceneTeamModel.IsTeamReady) return !1;
-    for (const r of this.MLe) if (!this.TPr(r)) return !1;
+    for (const r of this.MLe) if (!this.tPr(r)) return !1;
     var e;
     return (
       !this.vLe ||
-        (e = this.TPr(this.MLe[0])).IsControl() ||
+        (e = this.tPr(this.MLe[0])).IsControl() ||
         ControllerHolder_1.ControllerHolder.SceneTeamController.RequestChangeRole(
           e.GetCreatureDataId(),
-          !0,
-          !1,
         ),
       !0
     );
   }
-  TPr(e) {
+  tPr(e) {
     for (const t of ModelManager_1.ModelManager.SceneTeamModel.GetTeamItems(
       !0,
     )) {

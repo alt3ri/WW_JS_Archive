@@ -65,13 +65,19 @@ class ActivityFunctionalTypeA extends UiPanelBase_1.UiPanelBase {
   SetFunctionRedDotVisible(t) {
     this.GetItem(3)?.SetUIActive(t);
   }
+  SetPerformanceOpenTimeOver() {
+    this.SetPanelConditionVisible(!0),
+      this.SetLockTextByTextId("Activity_EndDesc01"),
+      this.SetActivatePanelConditionVisible(!1),
+      this.FunctionButton.SetUiActive(!1);
+  }
 }
 exports.ActivityFunctionalTypeA = ActivityFunctionalTypeA;
 class FunctionalPanelConditionLock extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
       (this.ButtonCallBack = void 0),
-      (this.LDn = () => {
+      (this.IUn = () => {
         this.ButtonCallBack?.();
       });
   }
@@ -81,7 +87,7 @@ class FunctionalPanelConditionLock extends UiPanelBase_1.UiPanelBase {
       [1, UE.UIText],
       [2, UE.UIButtonComponent],
     ]),
-      (this.BtnBindInfo = [[2, this.LDn]]);
+      (this.BtnBindInfo = [[2, this.IUn]]);
   }
   SetTextByTextId(t, ...e) {
     LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(1), t, e);

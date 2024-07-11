@@ -14,36 +14,36 @@ class ActivityNoviceJourneyController extends ActivityControllerBase_1.ActivityC
   constructor() {
     super(...arguments),
       (this.sNe = 0),
-      (this.Cke = () => {
+      (this.x2e = () => {
         0 !== this.sNe &&
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.RefreshCommonActivityRedDot,
             this.sNe,
           );
       }),
-      (this.gke = (e) => {
+      (this.w2e = (e) => {
         ModelManager_1.ModelManager.ActivityModel.GetActivityById(
           this.sNe,
-        ).SetReceiveData(e.i0s);
+        ).SetReceiveData(e.vps);
       });
   }
   OnAddEvents() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnPlayerLevelChanged,
-      this.Cke,
+      this.x2e,
     );
   }
   OnRemoveEvents() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnPlayerLevelChanged,
-      this.Cke,
+      this.x2e,
     );
   }
   OnRegisterNetEvent() {
-    Net_1.Net.Register(15744, this.gke);
+    Net_1.Net.Register(24259, this.w2e);
   }
   OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(15744);
+    Net_1.Net.UnRegister(24259);
   }
   OnOpenView(e) {}
   OnGetActivityResource(e) {
@@ -54,7 +54,7 @@ class ActivityNoviceJourneyController extends ActivityControllerBase_1.ActivityC
   }
   OnCreateActivityData(e) {
     return (
-      (this.sNe = e.Ekn),
+      (this.sNe = e.J4n),
       new ActivityNoviceJourneyData_1.ActivityNoviceJourneyData()
     );
   }
@@ -62,13 +62,13 @@ class ActivityNoviceJourneyController extends ActivityControllerBase_1.ActivityC
     return !1;
   }
   RequestReward(t) {
-    var e = Protocol_1.Aki.Protocol.Tos.create();
-    (e.r3n = t),
-      Net_1.Net.Call(3359, e, (e) => {
-        e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys
+    var e = Protocol_1.Aki.Protocol.Ehs.create();
+    (e.P6n = t),
+      Net_1.Net.Call(17371, e, (e) => {
+        e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs
           ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-              e.lkn,
-              22570,
+              e.O4n,
+              15369,
             )
           : (ModelManager_1.ModelManager.ActivityModel.GetActivityById(
               this.sNe,

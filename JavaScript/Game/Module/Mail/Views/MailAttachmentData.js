@@ -6,22 +6,22 @@ const ConfigManager_1 = require("../../../Manager/ConfigManager"),
 class MailAttachmentData extends ScrollViewDataBase_1.ScrollViewDataBase {
   constructor(t, e, a) {
     super(),
-      (this.gIt = t),
+      (this.ETt = t),
       (this.t6 = e),
-      (this.WEi = a),
+      (this.Wyi = a),
       (this.Lo =
         ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
-          this.gIt,
+          this.ETt,
         ));
   }
   GetItemId() {
-    return this.gIt;
+    return this.ETt;
   }
   GetCount() {
     return this.t6;
   }
   GetPicked() {
-    return this.WEi;
+    return this.Wyi;
   }
   GetItemConfig() {
     return this.Lo;

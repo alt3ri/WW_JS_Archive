@@ -10,24 +10,24 @@ const Log_1 = require("../../../../../Core/Common/Log"),
   ActivityData_1 = require("../../ActivityData");
 class ActivityRougeData extends ActivityData_1.ActivityBaseData {
   constructor() {
-    super(...arguments), (this.l2e = 0), (this._2e = 0), (this.a9s = !1);
+    super(...arguments), (this.TFe = 0), (this.LFe = 0), (this.fta = !1);
   }
   set FunctionBtnRedDot(t) {
-    (this.a9s = t),
+    (this.fta = t),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.RefreshCommonActivityRedDot,
         this.Id,
       );
   }
   get FunctionBtnRedDot() {
-    return this.a9s;
+    return this.fta;
   }
   PhraseEx(t) {
-    t = t.E0s;
+    t = t.kps;
     t
-      ? ((this.l2e = Number(MathUtils_1.MathUtils.LongToBigInt(t.a0s))),
-        (this._2e = Number(MathUtils_1.MathUtils.LongToBigInt(t.h0s))),
-        (this.a9s = this.GetIfFirstOpen()))
+      ? ((this.TFe = Number(MathUtils_1.MathUtils.LongToBigInt(t.yps))),
+        (this.LFe = Number(MathUtils_1.MathUtils.LongToBigInt(t.Ips))),
+        (this.fta = this.GetIfFirstOpen()))
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error("Roguelike", 59, "ActivityRougeData无肉鸽额外数据");
   }
@@ -35,7 +35,7 @@ class ActivityRougeData extends ActivityData_1.ActivityBaseData {
     return !1;
   }
   get ReceiveEndOpenTime() {
-    return this._2e;
+    return this.LFe;
   }
   get RedPointShowState() {
     return (
@@ -51,17 +51,16 @@ class ActivityRougeData extends ActivityData_1.ActivityBaseData {
   }
   GetExDataRedPointShowState() {
     return (
-      (ModelManager_1.ModelManager.RoguelikeModel.GetRoguelikeAchievementRedDot() ||
-        ModelManager_1.ModelManager.RoguelikeModel.CheckHasCanUnlockSkill() ||
-        ModelManager_1.ModelManager.RoguelikeModel.CheckRoguelikeShopRedDot() ||
-        this.a9s) &&
-      this.CheckIfInOpenTime()
+      ModelManager_1.ModelManager.RoguelikeModel.GetRoguelikeAchievementRedDot() ||
+      ModelManager_1.ModelManager.RoguelikeModel.CheckHasCanUnlockSkill() ||
+      ModelManager_1.ModelManager.RoguelikeModel.CheckRoguelikeShopRedDot() ||
+      this.fta
     );
   }
   GetRogueActivityState() {
     return this.CheckIfInOpenTime()
       ? 0
-      : this.CheckIfInTimeInterval(this.l2e, this._2e)
+      : this.CheckIfInTimeInterval(this.TFe, this.LFe)
         ? 1
         : 2;
   }

@@ -56,7 +56,7 @@ class ServerMarkItem extends MarkItem_1.MarkItem {
   }
   CheckCanShowView() {
     var e = this.GetCurrentMapShowScale(),
-      e = this.CheckInShowRange(e);
+      e = this.CheckInShowRange(e) || this.IsTracked;
     return (
       this.IsCanShowViewIntermediately !== e &&
         (this.NeedPlayShowOrHideSeq = e ? "ShowView" : "HideView"),

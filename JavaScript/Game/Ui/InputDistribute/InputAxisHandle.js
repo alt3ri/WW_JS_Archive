@@ -4,7 +4,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const InputDistributeHandle_1 = require("./InputDistributeHandle");
 class InputAxisHandle extends InputDistributeHandle_1.InputDistributeHandle {
   constructor() {
-    super(...arguments), (this.Ocr = 0);
+    super(...arguments), (this.qmr = 0);
   }
   BindAxis(t) {
     this.Bind(t);
@@ -16,10 +16,10 @@ class InputAxisHandle extends InputDistributeHandle_1.InputDistributeHandle {
     this.InputCacheAxisValue(t), this.Call(t);
   }
   InputCacheAxisValue(t) {
-    this.Ocr = t;
+    this.qmr = t;
   }
   GetCacheAxisValue() {
-    return this.Ocr;
+    return this.qmr;
   }
 }
 exports.InputAxisHandle = InputAxisHandle;

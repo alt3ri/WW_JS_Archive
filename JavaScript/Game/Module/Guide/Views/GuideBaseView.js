@@ -30,13 +30,13 @@ class GuideBaseView extends UiViewBase_1.UiViewBase {
       (this.GuideStepInfo = void 0),
       (this.CombineInputMap = new Map()),
       (this.RemainDuration = 0),
-      (this.CJt = 0),
-      (this.gJt = !1),
-      (this.fJt = void 0),
-      (this.pJt = void 0),
+      (this.Czt = 0),
+      (this.gzt = !1),
+      (this.fzt = void 0),
+      (this.pzt = void 0),
       (this.TimeTicker = void 0),
-      (this.vJt = void 0),
-      (this.MJt = (i) => {
+      (this.vzt = void 0),
+      (this.Mzt = (i) => {
         this.GetActive() && (i ? this.OnAfterShow() : this.OnAfterHide());
       }),
       (this.OnFinishConditionOk = () => {
@@ -59,7 +59,7 @@ class GuideBaseView extends UiViewBase_1.UiViewBase {
             ["this.GuideStepInfo!.Id", this.GuideStepInfo.Id],
             ["结束条件id", this.GuideStepInfo.Config.FailureCondition],
           ),
-          this.OnCheckBaseViewFinishConditionFail() && this.SJt();
+          this.OnCheckBaseViewFinishConditionFail() && this.Ezt();
       }),
       (this.OnTick = (e) => {
         if (!UiManager_1.UiManager.IsViewShow("LoadingView")) {
@@ -70,28 +70,28 @@ class GuideBaseView extends UiViewBase_1.UiViewBase {
             (t -= i =
               !this.GuideStepInfo?.ViewData?.IsAttachToBattleView || this.IsShow
                 ? i
-                : 0) <= 0 && this.EJt(),
+                : 0) <= 0 && this.Szt(),
               (this.RemainDuration = t),
               this.OnDurationChange(t);
           }
-          this.IsShow && ((this.CJt -= e), this.yJt());
+          this.IsShow && ((this.Czt -= e), this.yzt());
         }
       });
   }
   get TotalDuration() {
     return this.GuideStepInfo ? this.GuideStepInfo.Config.Duration : 0;
   }
-  yJt() {
+  yzt() {
     var i,
       e = this.GuideStepInfo.Config;
-    this.fJt ||
+    this.fzt ||
       ((i = e.SuccessCondition) &&
         ControllerHolder_1.ControllerHolder.LevelGeneralController.CheckCondition(
           i.toString(),
           void 0,
         ) &&
         this.OnFinishConditionOk()),
-      this.pJt ||
+      this.pzt ||
         ((i = e.FailureCondition) &&
           ControllerHolder_1.ControllerHolder.LevelGeneralController.CheckCondition(
             i.toString(),
@@ -102,14 +102,14 @@ class GuideBaseView extends UiViewBase_1.UiViewBase {
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnUiScreenRootVisibleChange,
-      this.MJt,
+      this.Mzt,
     ),
       this.OnGuideBaseViewAddEvent();
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnUiScreenRootVisibleChange,
-      this.MJt,
+      this.Mzt,
     ),
       this.OnGuideBaseViewRemoveEvent();
   }
@@ -120,12 +120,12 @@ class GuideBaseView extends UiViewBase_1.UiViewBase {
   }
   DoCloseByFinished() {
     this.IsFinished ||
-      ((this.IsFinished = !0), this.OnGuideViewCloseWhenFinish(), this.SJt());
+      ((this.IsFinished = !0), this.OnGuideViewCloseWhenFinish(), this.Ezt());
   }
-  SJt() {
-    var i = this.CJt;
+  Ezt() {
+    var i = this.Czt;
     i < TimerSystem_1.MIN_TIME
-      ? this.Jqt()
+      ? this.eNt()
       : (Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Guide",
@@ -135,28 +135,28 @@ class GuideBaseView extends UiViewBase_1.UiViewBase {
             ["剩余倒计时", i],
           ),
         TimerSystem_1.TimerSystem.Delay(() => {
-          this.Jqt();
+          this.eNt();
         }, i));
   }
-  Jqt() {
+  eNt() {
     this.TimeTicker && (this.TimeTicker.Remove(), (this.TimeTicker = void 0)),
       this.CloseMe();
   }
   BindInput(e, t, i) {
-    if (e.length === t.length && this.vJt !== i) {
-      this.vJt = i;
+    if (e.length === t.length && this.vzt !== i) {
+      this.vzt = i;
       for (let i = 0; i < t.length; i++) {
         var s = e[i];
         Object.values(InputMappingsDefine_1.actionMappings).includes(s)
           ? (InputDistributeController_1.InputDistributeController.BindAction(
               t[i],
-              this.vJt,
+              this.vzt,
             ),
             this.CombineInputMap.set(t[i], 1))
           : Object.values(InputMappingsDefine_1.axisMappings).includes(s)
             ? (InputDistributeController_1.InputDistributeController.BindAxis(
                 t[i],
-                this.vJt,
+                this.vzt,
               ),
               this.CombineInputMap.set(t[i], 0))
             : Log_1.Log.CheckError() &&
@@ -191,18 +191,18 @@ class GuideBaseView extends UiViewBase_1.UiViewBase {
     return i;
   }
   UnbindInput(e, t) {
-    if (e.length === t.length && this.vJt) {
+    if (e.length === t.length && this.vzt) {
       for (let i = 0; i < t.length; i++) {
         var s = e[i];
         Object.values(InputMappingsDefine_1.actionMappings).includes(s)
           ? InputDistributeController_1.InputDistributeController.UnBindAction(
               t[i],
-              this.vJt,
+              this.vzt,
             )
           : Object.values(InputMappingsDefine_1.axisMappings).includes(s)
             ? InputDistributeController_1.InputDistributeController.UnBindAxis(
                 t[i],
-                this.vJt,
+                this.vzt,
               )
             : Log_1.Log.CheckError() &&
               Log_1.Log.Error(
@@ -214,16 +214,16 @@ class GuideBaseView extends UiViewBase_1.UiViewBase {
               ),
           this.CombineInputMap.delete(t[i]);
       }
-      this.vJt = void 0;
+      this.vzt = void 0;
     }
   }
   OnBeforeCreate() {
-    (this.gJt = !1),
+    (this.gzt = !1),
       (this.GuideStepInfo = this.OpenParam),
       (this.RemainDuration = this.TotalDuration),
-      (this.CJt = this.GuideStepInfo.Config.MinDuration),
+      (this.Czt = this.GuideStepInfo.Config.MinDuration),
       this.GuideStepInfo.AssignGuideView(this),
-      this.IJt(),
+      this.Izt(),
       this.OnBeforeGuideBaseViewCreate();
   }
   OnStart() {
@@ -251,7 +251,7 @@ class GuideBaseView extends UiViewBase_1.UiViewBase {
       !ModelManager_1.ModelManager.GameModeModel.IsMulti &&
       (InputDistributeController_1.InputDistributeController.RefreshInputTag(),
       UiTimeDilation_1.UiTimeDilation.SetTimeDilationHighLevel(i, "GuideBase")),
-      this.IJt(),
+      this.Izt(),
       this.OnGuideViewAfterShow();
   }
   OnAfterHide() {
@@ -266,13 +266,13 @@ class GuideBaseView extends UiViewBase_1.UiViewBase {
           "GuideBase",
         ),
         InputDistributeController_1.InputDistributeController.RefreshInputTag()),
-      this.TJt(),
+      this.Tzt(),
       this.OnGuideBaseViewAfterHide();
   }
-  IJt() {
+  Izt() {
     var i, e;
-    this.gJt ||
-      ((this.gJt = !0),
+    this.gzt ||
+      ((this.gzt = !0),
       (i = this.GuideStepInfo.Config).SuccessCondition &&
         ((e = new LevelConditionRegistry_1.ConditionPassCallback(
           this.OnFinishConditionOk,
@@ -281,7 +281,7 @@ class GuideBaseView extends UiViewBase_1.UiViewBase {
           i.SuccessCondition,
           e,
         )) &&
-        (this.fJt = e),
+        (this.fzt = e),
       i.FailureCondition &&
         ((e = new LevelConditionRegistry_1.ConditionPassCallback(
           this.OnFinishConditionFail,
@@ -290,26 +290,26 @@ class GuideBaseView extends UiViewBase_1.UiViewBase {
           i.FailureCondition,
           e,
         )) &&
-        (this.pJt = e));
+        (this.pzt = e));
   }
-  TJt() {
+  Tzt() {
     var i;
-    this.gJt &&
-      ((this.gJt = !1),
+    this.gzt &&
+      ((this.gzt = !1),
       (i = this.GuideStepInfo.Config).SuccessCondition &&
-        this.fJt &&
+        this.fzt &&
         (LevelConditionRegistry_1.LevelConditionRegistry.UnRegisterConditionGroup(
           i.SuccessCondition,
-          this.fJt,
+          this.fzt,
         ),
-        (this.fJt = void 0)),
+        (this.fzt = void 0)),
       i.FailureCondition) &&
-      this.pJt &&
+      this.pzt &&
       (LevelConditionRegistry_1.LevelConditionRegistry.UnRegisterConditionGroup(
         i.FailureCondition,
-        this.pJt,
+        this.pzt,
       ),
-      (this.pJt = void 0));
+      (this.pzt = void 0));
   }
   OnBeforeDestroy() {
     this.TimeTicker && (this.TimeTicker.Remove(), (this.TimeTicker = void 0));
@@ -334,8 +334,8 @@ class GuideBaseView extends UiViewBase_1.UiViewBase {
               ),
             i.SwitchState(3)));
   }
-  EJt() {
-    this.Jqt();
+  Szt() {
+    this.eNt();
   }
   OnBeforeGuideBaseViewCreate() {}
   OnGuideBaseViewStart() {}

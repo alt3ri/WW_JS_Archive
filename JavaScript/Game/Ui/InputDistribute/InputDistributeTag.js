@@ -3,21 +3,21 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InputDistributeTag = void 0);
 class InputDistributeTag {
   constructor(t, e) {
-    (this.Gmr = new Set()), (this.Nmr = t);
-    let s = (this.Omr = e);
+    (this.bdr = new Set()), (this.qdr = t);
+    let s = (this.Gdr = e);
     for (; s; ) {
       var r = s.TagName;
-      this.Gmr.add(r), (s = s.ParentTag);
+      this.bdr.add(r), (s = s.ParentTag);
     }
   }
   get TagName() {
-    return this.Nmr;
+    return this.qdr;
   }
   get ParentTag() {
-    return this.Omr;
+    return this.Gdr;
   }
   MatchTag(t, e = !1) {
-    return this.Nmr === t || (!e && this.Gmr.has(t));
+    return this.qdr === t || (!e && this.bdr.has(t));
   }
 }
 exports.InputDistributeTag = InputDistributeTag;

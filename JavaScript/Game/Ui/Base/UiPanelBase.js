@@ -4,12 +4,14 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const UE = require("ue"),
   AudioSystem_1 = require("../../../Core/Audio/AudioSystem"),
   Log_1 = require("../../../Core/Common/Log"),
+  Macro_1 = require("../../../Core/Preprocessor/Macro"),
   ConfigManager_1 = require("../../Manager/ConfigManager"),
   LguiUtil_1 = require("../../Module/Util/LguiUtil"),
   UiActorPool_1 = require("../UiActorPool"),
   UiImageSettingModule_1 = require("../UiImageSettingModule"),
   UiNiagaraSettingModule_1 = require("../UiNiagaraSettingModule"),
   UiPrefabLoadModule_1 = require("../UiPrefabLoadModule"),
+  UiSpineLoadModule_1 = require("../UiSpineLoadModule"),
   ComponentAction_1 = require("./ComponentAction"),
   UiBehaviorBase_1 = require("./UiBehaviorBase");
 class UiPanelBase extends ComponentAction_1.ComponentAction {
@@ -17,23 +19,24 @@ class UiPanelBase extends ComponentAction_1.ComponentAction {
     super(),
       (this.RootItem = void 0),
       (this.RootActor = void 0),
-      (this.k1r = void 0),
-      (this.NPo = void 0),
+      (this.G_r = void 0),
+      (this.bxo = void 0),
       (this.ParentUiItem = void 0),
       (this.UsePool = !1),
       (this.SkipDestroyActor = !1),
-      (this.F1r = !1),
+      (this.N_r = !1),
+      (this.EnableActorPoolReleaseLog = !0),
       (this.OpenParam = void 0),
-      (this.V1r = ""),
-      (this.H1r = []),
+      (this.O_r = ""),
+      (this.k_r = []),
       (this.u9 = []),
       (this.Parent = void 0),
-      (this.j1r = new Map()),
+      (this.F_r = new Map()),
       (this.ComponentRegisterInfos = []),
       (this.BtnBindInfo = []),
-      (this.W1r = void 0),
+      (this.V_r = void 0),
       (this.UiPoolActorNew = void 0),
-      (this.K1r = () => {
+      (this.H_r = () => {
         this.IsDestroyOrDestroying ||
           (Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug(
@@ -48,9 +51,10 @@ class UiPanelBase extends ComponentAction_1.ComponentAction {
         t = (0, AudioSystem_1.parseAudioEventPath)(t);
         t && AudioSystem_1.AudioSystem.PostEvent(t);
       }),
-      (this.Q1r = new UiImageSettingModule_1.UiImageSettingModule()),
-      (this.X1r = new UiNiagaraSettingModule_1.UiNiagaraSettingModule()),
-      (this.bQe = new UiPrefabLoadModule_1.UiPrefabLoadModule()),
+      (this.j_r = new UiImageSettingModule_1.UiImageSettingModule()),
+      (this.W_r = new UiNiagaraSettingModule_1.UiNiagaraSettingModule()),
+      (this.wAr = new UiSpineLoadModule_1.UiSpineLoadModule()),
+      (this.QXe = new UiPrefabLoadModule_1.UiPrefabLoadModule()),
       (this.OnSequenceEvent = (t, i) => {});
   }
   OnRegisterComponent() {}
@@ -84,10 +88,10 @@ class UiPanelBase extends ComponentAction_1.ComponentAction {
     let i = !0;
     return (
       await Promise.all([
-        this.$1r(),
+        this.K_r(),
         this.OnCreateAsyncImplementImplement(),
         this.OnCreateAsync(),
-        ...this.H1r.map(async (t) => t.CreateAsync()),
+        ...this.k_r.map(async (t) => t.CreateAsync()),
         ...this.u9.map(async (t) => t.CreateAsync()),
       ]).catch((t) => {
         t instanceof Error
@@ -119,14 +123,14 @@ class UiPanelBase extends ComponentAction_1.ComponentAction {
       this.OnStartImplement(),
       this.OnStart(),
       await Promise.all([
-        ...this.H1r.map(async (t) => t.StartAsync()),
+        ...this.k_r.map(async (t) => t.StartAsync()),
         ...this.u9.map(async (t) => t.StartAsync()),
       ]);
   }
   OnStartImplementCompatible() {
     this.OnStartImplement(),
       this.OnStart(),
-      this.H1r.forEach((t) => {
+      this.k_r.forEach((t) => {
         t.StartCompatible();
       }),
       this.u9.forEach((t) => {
@@ -140,7 +144,7 @@ class UiPanelBase extends ComponentAction_1.ComponentAction {
       this.SetUiActive(!0),
       await Promise.all([
         this.OnShowAsyncImplementImplement(),
-        ...this.H1r.map(async (t) => t.ShowAsync()),
+        ...this.k_r.map(async (t) => t.ShowAsync()),
         ...this.u9.map(async (t) => t.ShowAsync()),
       ]),
       this.OnAfterShowImplement(),
@@ -152,7 +156,7 @@ class UiPanelBase extends ComponentAction_1.ComponentAction {
       this.OnBeforeShow(),
       this.SetUiActive(!0),
       this.OnShowAsyncImplementImplementCompatible(),
-      this.H1r.forEach((t) => {
+      this.k_r.forEach((t) => {
         t.ShowCompatible();
       }),
       this.u9.forEach((t) => {
@@ -166,7 +170,7 @@ class UiPanelBase extends ComponentAction_1.ComponentAction {
       this.OnBeforeHide(),
       this.OnBeforeHideImplement(),
       await Promise.all([
-        ...this.H1r.map(async (t) => t.HideAsync()),
+        ...this.k_r.map(async (t) => t.HideAsync()),
         ...this.u9.map(async (t) => t.HideAsync()),
         this.OnHideAsyncImplementImplement(),
       ]),
@@ -178,7 +182,7 @@ class UiPanelBase extends ComponentAction_1.ComponentAction {
   OnHideImplementCompatible() {
     this.OnBeforeHide(),
       this.OnBeforeHideImplement(),
-      this.H1r.forEach((t) => {
+      this.k_r.forEach((t) => {
         t.HideCompatible();
       }),
       this.u9.forEach((t) => {
@@ -193,11 +197,11 @@ class UiPanelBase extends ComponentAction_1.ComponentAction {
     this.OnBeforeDestroy(),
       this.OnBeforeDestroyImplement(),
       await Promise.all([
-        ...this.H1r.map(async (t) => t.DestroyAsync()),
+        ...this.k_r.map(async (t) => t.DestroyAsync()),
         ...this.u9.map(async (t) => t.CloseMeAsync()),
       ]),
       await this.OnDestroyAsyncImplementImplement(),
-      this.Y1r(),
+      this.Q_r(),
       this.OnAfterDestroy(),
       this.OnAfterDestroyImplement();
   }
@@ -205,26 +209,26 @@ class UiPanelBase extends ComponentAction_1.ComponentAction {
   OnDestroyImplementCompatible() {
     this.OnBeforeDestroy(),
       this.OnBeforeDestroyImplement(),
-      this.H1r.forEach((t) => {
+      this.k_r.forEach((t) => {
         t.DestroyCompatible();
       }),
       [...this.u9].forEach((t) => {
         t.DestroyCompatible();
       }),
       this.OnDestroyAsyncImplementImplementCompatible(),
-      this.Y1r(),
+      this.Q_r(),
       this.OnAfterDestroy(),
       this.OnAfterDestroyImplement();
   }
   SetRootActorLoadInfoByPath(t, i, e = !1, s = !1) {
-    (this.V1r = t), (this.ParentUiItem = i), (this.UsePool = e), (this.F1r = s);
+    (this.O_r = t), (this.ParentUiItem = i), (this.UsePool = e), (this.N_r = s);
   }
   SetRootActorLoadInfo(t, i, e = !1, s = !1) {
-    (this.V1r =
+    (this.O_r =
       ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(t)),
       (this.ParentUiItem = i),
       (this.UsePool = e),
-      (this.F1r = s);
+      (this.N_r = s);
   }
   async CreateThenShowByResourceIdAsync(t, i, e = !1) {
     t = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(t);
@@ -272,8 +276,8 @@ class UiPanelBase extends ComponentAction_1.ComponentAction {
   InAsyncLoading() {
     return this.IsCreating;
   }
-  async $1r() {
-    var i = this.V1r;
+  async K_r() {
+    var i = this.O_r;
     if (i) {
       let t = void 0;
       (t = this.UsePool
@@ -281,7 +285,7 @@ class UiPanelBase extends ComponentAction_1.ComponentAction {
             i,
             this.ParentUiItem,
           )),
-          UiActorPool_1.UiActorPool.SetKeepWhileCleaning(i, this.F1r),
+          UiActorPool_1.UiActorPool.SetKeepWhileCleaning(i, this.N_r),
           this.UiPoolActorNew.Actor)
         : await this.LoadPrefabAsync(i, this.ParentUiItem)).IsValid() &&
         (this.IsDestroy &&
@@ -297,13 +301,13 @@ class UiPanelBase extends ComponentAction_1.ComponentAction {
   }
   oL(t) {
     return t?.IsValid()
-      ? ((this.k1r = t),
-        (this.NPo = this.k1r.GetComponentByClass(UE.UIItem.StaticClass())),
-        this.J1r(),
-        this.z1r(),
+      ? ((this.G_r = t),
+        (this.bxo = this.G_r.GetComponentByClass(UE.UIItem.StaticClass())),
+        this.X_r(),
+        this.$_r(),
         this.BindOnClickEvents(),
         this.SetUiActive(!1),
-        this.k1r.OnDestroyed.Add(this.K1r),
+        this.G_r.OnDestroyed.Add(this.H_r),
         !0)
       : (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
@@ -315,15 +319,15 @@ class UiPanelBase extends ComponentAction_1.ComponentAction {
           ),
         !1);
   }
-  J1r() {
+  X_r() {
     this.OnRegisterComponent(),
-      (this.RootActor = this.Z1r() ?? this.k1r),
+      (this.RootActor = this.Y_r() ?? this.G_r),
       (this.RootItem = this.RootActor.GetComponentByClass(
         UE.UIItem.StaticClass(),
       ));
   }
-  Z1r() {
-    var t = this.k1r;
+  Y_r() {
+    var t = this.G_r;
     let i = LguiUtil_1.LguiUtil.GetComponentsRegistry(t),
       e = t;
     if (
@@ -334,9 +338,11 @@ class UiPanelBase extends ComponentAction_1.ComponentAction {
           (i = LguiUtil_1.LguiUtil.GetComponentsRegistry(e))),
       i)
     ) {
-      i.TsClassName = this.constructor.name;
+      Macro_1.NOT_SHIPPING_ENVIRONMENT &&
+        (i.TsClassName = this.constructor.name);
       var s = i.Components.Num();
-      s !== this.ComponentRegisterInfos.length &&
+      Macro_1.NOT_SHIPPING_ENVIRONMENT &&
+        s !== this.ComponentRegisterInfos.length &&
         Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn(
           "UiCore",
@@ -350,7 +356,8 @@ class UiPanelBase extends ComponentAction_1.ComponentAction {
       for (const o of this.ComponentRegisterInfos) {
         var n = o[0];
         s <= n
-          ? Log_1.Log.CheckWarn() &&
+          ? Macro_1.NOT_SHIPPING_ENVIRONMENT &&
+            Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
               "UiCore",
               17,
@@ -360,7 +367,7 @@ class UiPanelBase extends ComponentAction_1.ComponentAction {
               ["缺失的组件类型为", o[1].StaticClass().GetName()],
             )
           : (n = i.Components.Get(n)?.GetComponentByClass(o[1].StaticClass()))
-            ? (this.j1r.set(o[0], [o[1], n]), this.e_r(o[1], n))
+            ? (this.F_r.set(o[0], [o[1], n]), this.J_r(o[1], n))
             : Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "UiCore",
@@ -377,28 +384,28 @@ class UiPanelBase extends ComponentAction_1.ComponentAction {
   DestroyOverride() {
     return !1;
   }
-  Y1r() {
+  Q_r() {
     this.UnBindOnClickEvents(),
-      this.t_r(),
-      this.i_r(),
+      this.z_r(),
+      this.Z_r(),
       this.ClearUiPrefabLoadModule(),
-      this.j1r.clear(),
+      this.F_r.clear(),
       (this.BtnBindInfo.length = 0),
       (this.u9.length = 0),
-      this.o_r(),
-      (this.H1r.length = 0),
+      this.eur(),
+      (this.k_r.length = 0),
       (this.OpenParam = void 0),
-      this.r_r();
+      this.tur();
   }
-  r_r() {
+  tur() {
     this.SkipDestroyActor ||
-      (this.RootActor?.OnDestroyed.Remove(this.K1r),
+      (this.RootActor?.OnDestroyed.Remove(this.H_r),
       this.DestroyOverride() ||
         (this.UsePool
-          ? this.n_r()
-          : this.k1r?.IsValid() &&
-            UE.LGUIBPLibrary.DestroyActorWithHierarchy(this.k1r, !0)),
-      (this.k1r = void 0),
+          ? this.iur()
+          : this.G_r?.IsValid() &&
+            UE.LGUIBPLibrary.DestroyActorWithHierarchy(this.G_r, !0)),
+      (this.G_r = void 0),
       (this.RootActor = void 0),
       (this.RootItem = void 0));
   }
@@ -409,17 +416,21 @@ class UiPanelBase extends ComponentAction_1.ComponentAction {
     return this.RootActor;
   }
   GetOriginalActor() {
-    return this.k1r;
+    return this.G_r;
   }
   GetOriginalItem() {
-    return this.NPo;
+    return this.bxo;
   }
   GetClosePromiseImplement() {}
-  n_r() {
-    UiActorPool_1.UiActorPool.RecycleAsync(this.UiPoolActorNew, this.V1r),
+  iur() {
+    UiActorPool_1.UiActorPool.RecycleAsync(
+      this.UiPoolActorNew,
+      this.O_r,
+      this.EnableActorPoolReleaseLog,
+    ),
       (this.UiPoolActorNew = void 0);
   }
-  e_r(t, i) {
+  J_r(t, i) {
     var e;
     t === UE.UIButtonComponent
       ? ((e = i).OnPostAudioEvent.Bind((t) => {
@@ -436,8 +447,8 @@ class UiPanelBase extends ComponentAction_1.ComponentAction {
           this.PostClickAudioEvent(i);
         }));
   }
-  t_r() {
-    for (var [t, i] of this.j1r.values()) {
+  z_r() {
+    for (var [t, i] of this.F_r.values()) {
       var e;
       t === UE.UIButtonComponent
         ? ((e = i).OnPostAudioEvent.Unbind(), e.OnPostAudioStateEvent.Unbind())
@@ -447,7 +458,7 @@ class UiPanelBase extends ComponentAction_1.ComponentAction {
   }
   BindOnClickEvents() {
     for (const t of this.BtnBindInfo)
-      this.j1r.has(t[0])
+      this.F_r.has(t[0])
         ? this.BindOnClickEvent(t[0], t[1])
         : Log_1.Log.CheckError() &&
           Log_1.Log.Error(
@@ -457,7 +468,7 @@ class UiPanelBase extends ComponentAction_1.ComponentAction {
           );
   }
   BindOnClickEvent(t, i) {
-    t = this.j1r.get(t);
+    t = this.F_r.get(t);
     t &&
       (t[0] === UE.UIButtonComponent
         ? t[1].OnClickCallBack.Bind(i)
@@ -475,7 +486,7 @@ class UiPanelBase extends ComponentAction_1.ComponentAction {
   }
   UnBindOnClickEvent(t) {
     var i,
-      t = this.j1r.get(t);
+      t = this.F_r.get(t);
     t &&
       (t[0] === UE.UIButtonComponent
         ? t[1].OnClickCallBack.Unbind()
@@ -489,129 +500,133 @@ class UiPanelBase extends ComponentAction_1.ComponentAction {
                 t[1].OnInputActivateDelegate.Unbind());
   }
   GetButton(t) {
-    t = this.j1r.get(t);
+    t = this.F_r.get(t);
     if (t && t[0] === UE.UIButtonComponent) return t[1];
   }
   GetItem(t) {
-    t = this.j1r.get(t);
+    t = this.F_r.get(t);
     if (t && t[0] === UE.UIItem) return t[1];
   }
+  GetSpine(t) {
+    t = this.F_r.get(t);
+    if (t && t[0] === UE.SpineSkeletonAnimationComponent) return t[1];
+  }
   GetInteractionGroup(t) {
-    t = this.j1r.get(t);
+    t = this.F_r.get(t);
     if (t && t[0] === UE.UIInteractionGroup) return t[1];
   }
   GetText(t) {
-    t = this.j1r.get(t);
+    t = this.F_r.get(t);
     if (t && t[0] === UE.UIText) return t[1];
   }
   GetSprite(t) {
-    t = this.j1r.get(t);
+    t = this.F_r.get(t);
     if (t && t[0] === UE.UISprite) return t[1];
   }
   GetTexture(t) {
-    t = this.j1r.get(t);
+    t = this.F_r.get(t);
     if (t && t[0] === UE.UITexture) return t[1];
   }
   GetSlider(t) {
-    t = this.j1r.get(t);
+    t = this.F_r.get(t);
     if (t && t[0] === UE.UISliderComponent) return t[1];
   }
   GetToggle(t) {
-    t = this.j1r.get(t);
+    t = this.F_r.get(t);
     if (t && t[0] === UE.UIToggleComponent) return t[1];
   }
   GetExtendToggle(t) {
-    t = this.j1r.get(t);
+    t = this.F_r.get(t);
     if (t && t[0] === UE.UIExtendToggle) return t[1];
   }
   GetExtendToggleGroup(t) {
-    t = this.j1r.get(t);
+    t = this.F_r.get(t);
     if (t && t[0] === UE.UIExtendToggleGroup) return t[1];
   }
   GetScrollViewWithScrollbar(t) {
-    t = this.j1r.get(t);
+    t = this.F_r.get(t);
     if (t && t[0] === UE.UIScrollViewWithScrollbarComponent) return t[1];
   }
   GetUIDynScrollViewComponent(t) {
-    t = this.j1r.get(t);
+    t = this.F_r.get(t);
     if (t && t[0] === UE.UIDynScrollViewComponent) return t[1];
   }
   GetScrollScrollbar(t) {
-    t = this.j1r.get(t);
+    t = this.F_r.get(t);
     if (t && t[0] === UE.UIScrollbarComponent) return t[1];
   }
   GetScrollView(t) {
-    t = this.j1r.get(t);
+    t = this.F_r.get(t);
     if (t && t[0] === UE.UIScrollViewComponent) return t[1];
   }
   GetLoopScrollViewComponent(t) {
-    t = this.j1r.get(t);
+    t = this.F_r.get(t);
     if (t && t[0] === UE.UILoopScrollViewComponent) return t[1];
   }
   GetDropdown(t) {
-    t = this.j1r.get(t);
+    t = this.F_r.get(t);
     if (t && t[0] === UE.UIDropdownComponent) return t[1];
   }
   GetInputText(t) {
-    t = this.j1r.get(t);
+    t = this.F_r.get(t);
     if (t && t[0] === UE.UITextInputComponent) return t[1];
   }
   GetDraggable(t) {
-    t = this.j1r.get(t);
+    t = this.F_r.get(t);
     if (t && t[0] === UE.UIDraggableComponent) return t[1];
   }
   GetUiNiagara(t) {
-    t = this.j1r.get(t);
+    t = this.F_r.get(t);
     if (t && t[0] === UE.UINiagara) return t[1];
   }
   GetVerticalLayout(t) {
-    t = this.j1r.get(t);
+    t = this.F_r.get(t);
     if (t && t[0] === UE.UIVerticalLayout) return t[1];
   }
   GetHorizontalLayout(t) {
-    t = this.j1r.get(t);
+    t = this.F_r.get(t);
     if (t && t[0] === UE.UIHorizontalLayout) return t[1];
   }
   GetMultiTemplateLayout(t) {
-    t = this.j1r.get(t);
+    t = this.F_r.get(t);
     if (t && t[0] === UE.UIMultiTemplateLayout) return t[1];
   }
   GetGridLayout(t) {
-    t = this.j1r.get(t);
+    t = this.F_r.get(t);
     if (t && t[0] === UE.UIGridLayout) return t[1];
   }
   GetLayoutBase(t) {
-    t = this.j1r.get(t);
+    t = this.F_r.get(t);
     if (t && t[0] === UE.UILayoutBase) return t[1];
   }
   GetUITextTransition(t) {
-    t = this.j1r.get(t);
+    t = this.F_r.get(t);
     if (t && t[0] === UE.UITextTransition) return t[1];
   }
   GetUiTextureTransitionComponent(t) {
-    t = this.j1r.get(t);
+    t = this.F_r.get(t);
     if (t && t[0] === UE.UITextureTransitionComponent) return t[1];
   }
   GetUiSpriteTransition(t) {
-    t = this.j1r.get(t);
+    t = this.F_r.get(t);
     if (t && t[0] === UE.UISpriteTransition) return t[1];
   }
   GetUiExtendToggleSpriteTransition(t) {
-    t = this.j1r.get(t);
+    t = this.F_r.get(t);
     if (t && t[0] === UE.UIExtendToggleSpriteTransition) return t[1];
   }
   GetUiExtendToggleTextureTransition(t) {
-    t = this.j1r.get(t);
+    t = this.F_r.get(t);
     if (t && t[0] === UE.UIExtendToggleTextureTransition) return t[1];
   }
-  z1r() {
-    this.W1r = this.GetRootActor()?.GetComponentByClass(
+  $_r() {
+    this.V_r = this.GetRootActor()?.GetComponentByClass(
       UE.GuideHookRegistry.StaticClass(),
     );
   }
   GetGuideUiItem(t) {
-    if (this.W1r) {
-      t = this.W1r.GuideHookComponents.Get(t);
+    if (this.V_r) {
+      t = this.V_r.GuideHookComponents.Get(t);
       if (t) return t.GetUIItem();
     }
   }
@@ -637,76 +652,98 @@ class UiPanelBase extends ComponentAction_1.ComponentAction {
   }
   SetSpriteByPath(t, i, e, s = void 0, n = void 0) {
     s
-      ? this.Q1r.SetSpriteByPathSync(t, i, e, s, n)
-      : this.Q1r.SetSpriteByPathAsync(t, i, e, n);
+      ? this.j_r.SetSpriteByPathSync(t, i, e, s, n)
+      : this.j_r.SetSpriteByPathAsync(t, i, e, n);
+  }
+  async SetSpriteTransitionByPath(t, i, e = 5) {
+    await this.j_r.SetSpriteTransitionByPath(t, i, e);
   }
   SetTextureByPath(t, i, e = void 0, s = void 0) {
     e
-      ? this.Q1r.SetTextureByPathSync(t, i, e, s)
-      : this.Q1r.SetTextureByPathAsync(t, i, s);
+      ? this.j_r.SetTextureByPathSync(t, i, e, s)
+      : this.j_r.SetTextureByPathAsync(t, i, s);
+  }
+  async SetTextureAsync(t, i) {
+    await this.j_r.SetTextureAsync(t, i);
+  }
+  async SetSpriteAsync(t, i, e) {
+    await this.j_r.SetSpriteAsync(t, i, e);
+  }
+  SetTextureShowUntilLoaded(t, i, e = void 0) {
+    i &&
+      (i.SetUIActive(!1),
+      this.j_r.SetTextureByPathAsync(t, i, (t) => {
+        i.SetUIActive(!0), e && e(t);
+      }));
   }
   SetItemIcon(t, i, e = void 0, s = void 0) {
     e
-      ? this.Q1r.SetItemIconSync(t, i, e, s)
-      : this.Q1r.SetItemIconAsync(t, i, s);
+      ? this.j_r.SetItemIconSync(t, i, e, s)
+      : this.j_r.SetItemIconAsync(t, i, s);
+  }
+  async SetItemIconAsync(t, i) {
+    await this.j_r.SetItemIconTextureAsync(t, i);
   }
   SetQualityIconById(t, i, e = void 0, s = "BackgroundSprite", n = void 0) {
     e
-      ? this.Q1r.SetQualityIconByIdSync(t, i, e, s, n)
-      : this.Q1r.SetQualityIconByIdAsync(t, i, s, n);
+      ? this.j_r.SetQualityIconByIdSync(t, i, e, s, n)
+      : this.j_r.SetQualityIconByIdAsync(t, i, s, n);
   }
   SetItemQualityIcon(t, i, e = void 0, s = "BackgroundSprite", n = void 0) {
     e
-      ? this.Q1r.SetItemQualityIconSync(t, i, e, s, n)
-      : this.Q1r.SetItemQualityIconAsync(t, i, s, n);
+      ? this.j_r.SetItemQualityIconSync(t, i, e, s, n)
+      : this.j_r.SetItemQualityIconAsync(t, i, s, n);
   }
   SetRoleIcon(t, i, e, s = void 0, n) {
     s
-      ? this.Q1r.SetRoleIconSync(t, i, e, s, n)
-      : this.Q1r.SetRoleIconAsync(t, i, e, n);
+      ? this.j_r.SetRoleIconSync(t, i, e, s, n)
+      : this.j_r.SetRoleIconAsync(t, i, e, n);
   }
   SetElementIcon(t, i, e, s = void 0) {
     s
-      ? this.Q1r.SetElementIconSync(t, i, e, s)
-      : this.Q1r.SetElementIcon(t, i, e);
+      ? this.j_r.SetElementIconSync(t, i, e, s)
+      : this.j_r.SetElementIcon(t, i, e);
   }
   SetMonsterIcon(t, i, e, s = void 0) {
     s
-      ? this.Q1r.SetMonsterIconSync(t, i, e, s)
-      : this.Q1r.SetMonsterIconAsync(t, i, e);
+      ? this.j_r.SetMonsterIconSync(t, i, e, s)
+      : this.j_r.SetMonsterIconAsync(t, i, e);
   }
   SetDungeonEntranceIconSync(t, i, e, s = void 0) {
     s
-      ? this.Q1r.SetDungeonEntranceIconSync(t, i, e, s)
-      : this.Q1r.SetDungeonEntranceIconAsync(t, i, e);
+      ? this.j_r.SetDungeonEntranceIconSync(t, i, e, s)
+      : this.j_r.SetDungeonEntranceIconAsync(t, i, e);
   }
   SetNiagaraTextureByPath(t, i, e, s, n = void 0, o = void 0) {
     n
-      ? this.Q1r.SetNiagaraTextureSync(t, i, e, s, n, o)
-      : this.Q1r.SetNiagaraTextureAsync(t, i, e, s, o);
+      ? this.j_r.SetNiagaraTextureSync(t, i, e, s, n, o)
+      : this.j_r.SetNiagaraTextureAsync(t, i, e, s, o);
   }
   SetNiagaraSystemByPath(t, i, e = void 0) {
-    this.X1r.SetNiagaraByPathAsync(t, i, e);
+    this.W_r.SetNiagaraByPathAsync(t, i, e);
   }
-  i_r() {
-    this.Q1r.Clear(), this.X1r.Clear();
+  async SetSpineAssetByPath(t, i, e) {
+    await this.wAr.LoadSpineAssetAsync(t, i, e);
+  }
+  Z_r() {
+    this.j_r.Clear(), this.W_r.Clear(), this.wAr.Clear();
   }
   async LoadPrefabAsync(t, i) {
-    return this.bQe.LoadPrefabAsync(t, i);
+    return this.QXe.LoadPrefabAsync(t, i);
   }
   ClearUiPrefabLoadModule() {
-    this.bQe.Clear();
+    this.QXe.Clear();
   }
   AddUiBehavior(t) {
     this.AddUiBehaviorProxy(new UiBehaviorBase_1.UiBehaviorBaseProxy(t));
   }
   AddUiBehaviorProxy(t) {
-    this.H1r.push(t);
+    this.k_r.push(t);
   }
   AddChild(t) {
     this.u9.push(t), (t.Parent = this);
   }
-  o_r() {
+  eur() {
     var t;
     !this.Parent ||
       (t = this.Parent?.u9.indexOf(this)) < 0 ||

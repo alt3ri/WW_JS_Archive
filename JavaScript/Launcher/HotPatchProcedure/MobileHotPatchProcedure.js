@@ -16,20 +16,20 @@ class MobileHotPatchProcedure extends BaseHotPatchProcedure_1.BaseHotPatchProced
   constructor(t, e) {
     super(t, e),
       (this.UpdateSize = void 0),
+      (this.XSr = void 0),
+      (this.$Sr = void 0),
+      (this.YSr = void 0),
       (this.JSr = void 0),
-      (this.zSr = void 0),
-      (this.ZSr = void 0),
-      (this.eEr = void 0),
-      (this.jno = void 0),
-      (this.tEr = NetworkDefine_1.ENetworkType.None),
-      (this.iEr = !1),
-      (this.oEr = !1),
-      (this.rEr = void 0),
-      (this.nEr = void 0),
-      (this.sEr = !1);
+      (this.kso = void 0),
+      (this.zSr = NetworkDefine_1.ENetworkType.None),
+      (this.ZSr = !1),
+      (this.eyr = !1),
+      (this.tyr = void 0),
+      (this.iyr = void 0),
+      (this.oyr = !1);
   }
   get NetworkListener() {
-    return this.jno || (this.jno = new UE.KuroNetworkChange()), this.jno;
+    return this.kso || (this.kso = new UE.KuroNetworkChange()), this.kso;
   }
   async UpdateResource(t, ...e) {
     if (!t) return super.UpdateResource(t, ...e);
@@ -37,8 +37,8 @@ class MobileHotPatchProcedure extends BaseHotPatchProcedure_1.BaseHotPatchProced
     (o.s_step_id = "hotpatch_mobile_procedure_update_res_start"),
       HotPatchLogReport_1.HotPatchLogReport.Report(o),
       (this.UpdateSize = 0n),
-      (this.JSr = 0n),
-      (this.zSr = 0n);
+      (this.XSr = 0n),
+      (this.$Sr = 0n);
     let r = !0;
     for (const h of e) {
       var i = new HotPatchLogReport_1.HotPatchLog(),
@@ -72,7 +72,7 @@ class MobileHotPatchProcedure extends BaseHotPatchProcedure_1.BaseHotPatchProced
         (i.s_step_id = "hotpatch_mobile_procedure_check_resource_complete"),
           HotPatchLogReport_1.HotPatchLogReport.Report(i),
           (this.UpdateSize += h.GetUpdateSize()),
-          (this.zSr += h.GetNeedSpace());
+          (this.$Sr += h.GetNeedSpace());
       } else {
         i = new HotPatchLogReport_1.HotPatchLog();
         (i.s_step_id = "hotpatch_mobile_procedure_check_version_continue"),
@@ -84,7 +84,7 @@ class MobileHotPatchProcedure extends BaseHotPatchProcedure_1.BaseHotPatchProced
       if (
         ((o.s_step_id = "hotpatch_mobile_procedure_check_space"),
         HotPatchLogReport_1.HotPatchLogReport.Report(o),
-        !(r = await this.DoesSavedDirHaveEnoughSpace(this.zSr)))
+        !(r = await this.DoesSavedDirHaveEnoughSpace(this.$Sr)))
       )
         return !1;
       o = new HotPatchLogReport_1.HotPatchLog();
@@ -151,29 +151,29 @@ class MobileHotPatchProcedure extends BaseHotPatchProcedure_1.BaseHotPatchProced
     (o = new HotPatchLogReport_1.HotPatchLog()),
       (o.s_step_id = "hotpatch_mobile_procedure_use_bgdownload"),
       HotPatchLogReport_1.HotPatchLogReport.Report(o),
-      (this.ZSr = void 0),
-      (this.iEr = !1),
-      (this.oEr = !1),
-      (this.tEr = NetworkDefine_1.ENetworkType.None),
-      (this.rEr = (t) => {
+      (this.YSr = void 0),
+      (this.ZSr = !1),
+      (this.eyr = !1),
+      (this.zSr = NetworkDefine_1.ENetworkType.None),
+      (this.tyr = (t) => {
         LauncherLog_1.LauncherLog.Info("原始等待(promise1)被调用！");
       }),
-      (this.nEr = (t) => {
+      (this.iyr = (t) => {
         LauncherLog_1.LauncherLog.Info("监听到切换网络", [
           "state",
           NetworkDefine_1.ENetworkType[t],
         ]),
-          this.sEr ||
-            this.tEr === NetworkDefine_1.ENetworkType.Cell ||
+          this.oyr ||
+            this.zSr === NetworkDefine_1.ENetworkType.Cell ||
             t !== NetworkDefine_1.ENetworkType.Cell ||
-            this.iEr ||
+            this.ZSr ||
             (LauncherLog_1.LauncherLog.Info(
               "因网络切换为蜂窝数据，自动取消了下载，并弹窗提示玩家！",
             ),
-            (this.iEr = !0),
-            (this.oEr = !1),
-            this.eEr?.Cancel(),
-            this.ZSr?.CancelDownload(),
+            (this.ZSr = !0),
+            (this.eyr = !1),
+            this.JSr?.Cancel(),
+            this.YSr?.CancelDownload(),
             this.ViewMgr.ShowDialog(
               !0,
               "HotFixTipsTitle",
@@ -187,9 +187,9 @@ class MobileHotPatchProcedure extends BaseHotPatchProcedure_1.BaseHotPatchProced
                   "用户确认了网络切为蜂窝数据确认框",
                   ["result", t],
                 ),
-                  (this.oEr = !0),
-                  (this.sEr = this.sEr || t),
-                  this.rEr(t);
+                  (this.eyr = !0),
+                  (this.oyr = this.oyr || t),
+                  this.tyr(t);
               })
               .catch((t) => {
                 LauncherLog_1.LauncherLog.ErrorWithStack(
@@ -198,7 +198,7 @@ class MobileHotPatchProcedure extends BaseHotPatchProcedure_1.BaseHotPatchProced
                 );
               }));
       }),
-      this.NetworkListener.NetworkChangeDelegate.Add(this.nEr),
+      this.NetworkListener.NetworkChangeDelegate.Add(this.iyr),
       (t = new HotPatchLogReport_1.HotPatchLog());
     (t.s_step_id = "hotpatch_mobile_procedure_evaluate"),
       HotPatchLogReport_1.HotPatchLogReport.Report(t);
@@ -251,13 +251,13 @@ class MobileHotPatchProcedure extends BaseHotPatchProcedure_1.BaseHotPatchProced
       w = !1,
       g = 0;
     if (
-      ((this.rEr = (t) => {
+      ((this.tyr = (t) => {
         LauncherLog_1.LauncherLog.Info("原始等待(promise2)被调用！");
       }),
-      (o = await this.aEr(
+      (o = await this.ryr(
         async () => {
-          this.ZSr = new UrlPrefixDownload_1.UrlPrefixDownload();
-          var t = await this.ZSr.StartEvaluatePrefix(i, !0, d);
+          this.YSr = new UrlPrefixDownload_1.UrlPrefixDownload();
+          var t = await this.YSr.StartEvaluatePrefix(i, !0, d);
           return (
             (L = t.Complete),
             (g = t.FileIndex),
@@ -281,7 +281,7 @@ class MobileHotPatchProcedure extends BaseHotPatchProcedure_1.BaseHotPatchProced
           );
         },
         async (t = "") => (
-          (this.ZSr = void 0),
+          (this.YSr = void 0),
           this.ViewMgr.ShowDialog(
             !0,
             "HotFixTipsTitle",
@@ -293,10 +293,10 @@ class MobileHotPatchProcedure extends BaseHotPatchProcedure_1.BaseHotPatchProced
           )
         ),
       )),
-      (this.ZSr = void 0),
+      (this.YSr = void 0),
       !o)
     )
-      return this.NetworkListener.NetworkChangeDelegate.Remove(this.nEr), !1;
+      return this.NetworkListener.NetworkChangeDelegate.Remove(this.iyr), !1;
     t = new HotPatchLogReport_1.HotPatchLog();
     if (
       ((t.s_step_id = "hotpatch_mobile_procedure_evaluate_complete"),
@@ -304,7 +304,7 @@ class MobileHotPatchProcedure extends BaseHotPatchProcedure_1.BaseHotPatchProced
       w)
     )
       return (
-        this.NetworkListener.NetworkChangeDelegate.Remove(this.nEr),
+        this.NetworkListener.NetworkChangeDelegate.Remove(this.iyr),
         HotPatchLogReport_1.HotPatchLogReport.Report(r),
         !0
       );
@@ -313,29 +313,29 @@ class MobileHotPatchProcedure extends BaseHotPatchProcedure_1.BaseHotPatchProced
     (e.s_step_id = "hotpatch_mobile_procedure_bg_download"),
       HotPatchLogReport_1.HotPatchLogReport.Report(e);
     const H = UE.NewArray(UE.BuiltinString);
-    for (const v of UrlPrefixDownload_1.UrlPrefixSelector.GetAllPrefixList())
+    for (const v of UrlPrefixDownload_1.UrlPrefixSelector.GetAllPrefixList(!0))
       H.Add(v);
     const f = UE.NewArray(UE.KuroRequestDownloadInfo);
     let R = 0;
     for (const x of i)
       ++R <= g
-        ? (this.JSr += x.Size)
+        ? (this.XSr += x.Size)
         : (((P = new UE.KuroRequestDownloadInfo()).FileName = x.FileName),
           (P.HashString = x.HashString),
           (P.SavePath = x.SavePath),
           (P.Size = x.Size),
           (P.Url = x.Url),
           f.Add(P));
-    this.eEr = void 0;
+    this.JSr = void 0;
     const D = (t, e) => {
       var o,
         r = i[t]?.FileName;
       r &&
         ((r = UE.KuroStaticLibrary.IsBuildShipping() ? i[t]?.HashString : r),
         (o = (t = new Date().getTime()) - s),
-        (l -= o) < 0 && ((l = 500), (u = BigInt(this.eEr.GetBpsSpeed()))),
+        (l -= o) < 0 && ((l = 500), (u = BigInt(this.JSr.GetBpsSpeed()))),
         (s = t),
-        (t = (100n * (o = this.JSr + e)) / this.UpdateSize),
+        (t = (100n * (o = this.XSr + e)) / this.UpdateSize),
         (e = Number(t) / 100),
         this.ViewMgr.UpdatePatchDownProgress(
           !1,
@@ -349,13 +349,13 @@ class MobileHotPatchProcedure extends BaseHotPatchProcedure_1.BaseHotPatchProced
         }));
     };
     return (
-      (this.rEr = (t) => {
+      (this.tyr = (t) => {
         LauncherLog_1.LauncherLog.Info("原始等待(promise3)被调用！");
       }),
-      (o = await this.aEr(
+      (o = await this.ryr(
         async (t) => {
-          this.eEr = t ? this.eEr : new UE.KuroBgPrefixDownload();
-          var [t, e] = await this.hEr(this.eEr, H, f, D, t);
+          this.JSr = t ? this.JSr : new UE.KuroBgPrefixDownload();
+          var [t, e] = await this.nyr(this.JSr, H, f, D, t);
           return (
             LauncherLog_1.LauncherLog.Info(
               "后台下载结束",
@@ -376,12 +376,12 @@ class MobileHotPatchProcedure extends BaseHotPatchProcedure_1.BaseHotPatchProced
             t,
           ),
       )),
-      this.NetworkListener.NetworkChangeDelegate.Remove(this.nEr),
+      this.NetworkListener.NetworkChangeDelegate.Remove(this.iyr),
       HotPatchLogReport_1.HotPatchLogReport.Report(r),
       o
     );
   }
-  async aEr(o, c) {
+  async ryr(o, c) {
     let n = !1,
       _ = !1;
     return (
@@ -390,23 +390,23 @@ class MobileHotPatchProcedure extends BaseHotPatchProcedure_1.BaseHotPatchProced
           var t = AppUtil_1.AppUtil.GetNetworkConnectionType();
           if (
             (t === NetworkDefine_1.ENetworkType.Cell &&
-              this.tEr !== t &&
-              this.nEr(t),
-            (this.tEr = t),
-            this.tEr === NetworkDefine_1.ENetworkType.Cell && !this.sEr)
+              this.zSr !== t &&
+              this.iyr(t),
+            (this.zSr = t),
+            this.zSr === NetworkDefine_1.ENetworkType.Cell && !this.oyr)
           ) {
             t = new HotPatchLogReport_1.HotPatchLog();
             (t.s_step_id = "mobile_do_download"),
               (t.s_step_result =
                 "network is cell, and user do not allow cell download."),
               HotPatchLogReport_1.HotPatchLogReport.Report(t);
-            const e = this.oEr
-              ? this.sEr
+            const e = this.eyr
+              ? this.oyr
               : await new Promise((t) => {
                   LauncherLog_1.LauncherLog.Info(
                     "等待用户做出选择(doDownload promise)...",
                   ),
-                    (this.rEr = t);
+                    (this.tyr = t);
                 });
             if (!e)
               return (
@@ -417,33 +417,33 @@ class MobileHotPatchProcedure extends BaseHotPatchProcedure_1.BaseHotPatchProced
                 { Success: !1 }
               );
           }
-          this.iEr = !1;
+          this.ZSr = !1;
           const e = await o(_);
           return (n = e.Success), { Success: e.Success, Others: e };
         },
         async (t, e) => {
           if (
             (LauncherLog_1.LauncherLog.Info("下载失败，进入处理重试逻辑"),
-            this.iEr)
+            this.ZSr)
           ) {
             LauncherLog_1.LauncherLog.Info(
               "切换网络导致的下载中断",
-              ["userAnsweredDialog", this.oEr],
-              ["allowCellDownload", this.sEr],
+              ["userAnsweredDialog", this.eyr],
+              ["allowCellDownload", this.oyr],
             );
             var o = new HotPatchLogReport_1.HotPatchLog(),
               r =
                 ((o.s_step_id = "mobile_failed_retry"),
-                { userAnsweredDialog: this.oEr, allowCellDownload: this.sEr });
+                { userAnsweredDialog: this.eyr, allowCellDownload: this.oyr });
             (o.s_step_result = LauncherSerialize_1.LauncherJson.Stringify(r)),
               HotPatchLogReport_1.HotPatchLogReport.Report(o);
-            const h = this.oEr
-              ? this.sEr
+            const h = this.eyr
+              ? this.oyr
               : await new Promise((t) => {
                   LauncherLog_1.LauncherLog.Info(
                     "等待用户做出选择(failedToRetry promise)...",
                   ),
-                    (this.rEr = t);
+                    (this.tyr = t);
                 });
             return h
               ? ((_ = !0), LauncherLog_1.LauncherLog.Info("重试下载"), e())
@@ -476,7 +476,7 @@ class MobileHotPatchProcedure extends BaseHotPatchProcedure_1.BaseHotPatchProced
       n
     );
   }
-  async hEr(t, e, r, i, a = !1) {
+  async nyr(t, e, r, i, a = !1) {
     return new Promise((o) => {
       t.ProgressDelegateNew.Clear(),
         t.AllCompleteDelegate.Clear(),

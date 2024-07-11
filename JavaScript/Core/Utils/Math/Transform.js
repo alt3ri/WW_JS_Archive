@@ -83,7 +83,8 @@ class Transform {
     t.Subtraction(this.rz, s),
       this.mC.Inverse(Transform.az),
       Transform.az.RotateVector(s, s),
-      this.nz.Multiply(s, s);
+      this.nz.Reciprocal(Transform.CQs),
+      Transform.CQs.Multiply(s, s);
   }
   InverseTransformPositionNoScale(t, s) {
     t.Subtraction(this.rz, s),
@@ -111,5 +112,6 @@ class Transform {
       this.sz && this.ToUeTransform();
   }
 }
-(exports.Transform = Transform).az = Quat_1.Quat.Create();
+((exports.Transform = Transform).CQs = Vector_1.Vector.Create()),
+  (Transform.az = Quat_1.Quat.Create());
 //# sourceMappingURL=Transform.js.map

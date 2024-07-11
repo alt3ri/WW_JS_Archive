@@ -12,32 +12,32 @@ const UE = require("ue"),
   MapMarkMgr_1 = require("./Assistant/MapMarkMgr"),
   MapTileMgr_1 = require("./Assistant/MapTileMgr");
 class MiniMap extends UiPanelBase_1.UiPanelBase {
-  constructor(t, e, i, s = 1, r) {
+  constructor(t, e, i, s = 1, a) {
     super(),
       (this.MapType = 1),
-      (this.CUi = void 0),
-      (this.gUi = void 0),
-      (this.fUi = void 0),
-      (this.dUi = 1),
-      (this.lRi = 1),
-      (this.I_t = void 0),
-      (this.MUi = () => {
-        this.gUi.OnMapSetUp(),
-          this.CUi.OnMapSetup(),
+      (this.CAi = void 0),
+      (this.gAi = void 0),
+      (this.fAi = void 0),
+      (this.dAi = 1),
+      (this.lUi = 1),
+      (this.kut = void 0),
+      (this.MAi = () => {
+        this.gAi.OnMapSetUp(),
+          this.CAi.OnMapSetup(),
           this.RootItem.SetUIActive(!0);
       }),
       (this.MapType = t),
-      (this.dUi = i),
-      (this.lRi = s),
-      (this.I_t = e),
-      (this.fUi = r);
+      (this.dAi = i),
+      (this.lUi = s),
+      (this.kut = e),
+      (this.fAi = a);
   }
   OnBeforeDestroy() {
     this.UnBindEvents(),
-      this.CUi?.Dispose(),
-      (this.CUi = void 0),
-      this.gUi?.Dispose(),
-      (this.gUi = void 0);
+      this.CAi?.Dispose(),
+      (this.CAi = void 0),
+      this.gAi?.Dispose(),
+      (this.gAi = void 0);
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -47,56 +47,60 @@ class MiniMap extends UiPanelBase_1.UiPanelBase {
       [3, UE.UIItem],
       [4, UE.UITexture],
       [5, UE.UIItem],
+      [6, UE.UITexture],
     ];
   }
   OnStart() {
-    this.SetMapScale(this.dUi),
-      this.FXt(this.lRi),
-      this.uje(),
+    this.SetMapScale(this.dAi),
+      this.F$t(this.lUi),
+      this.yWe(),
       this.RootItem.SetUIActive(!1),
       this.RootItem.SetHierarchyIndex(0);
   }
-  FXt(t) {
+  F$t(t) {
     var e = this.GetItem(0),
-      i = this.GetItem(1),
-      s = this.GetTexture(2),
-      r = this.GetItem(3),
-      a = this.GetTexture(4),
-      n = this.GetItem(5);
-    (this.CUi = new MapMarkMgr_1.MapMarkMgr(this.MapType, e, this.I_t, t)),
-      this.CUi.Initialize(),
-      (this.gUi = new MapTileMgr_1.MapTileMgr(
+      i = this.GetItem(1);
+    let s = this.GetTexture(2);
+    var a = this.GetItem(3),
+      n = this.GetTexture(4),
+      r =
+        (2 === MiniMap.MapMaterialVersion && (s = this.GetTexture(6)),
+        this.GetItem(5));
+    (this.CAi = new MapMarkMgr_1.MapMarkMgr(this.MapType, e, this.kut, t)),
+      this.CAi.Initialize(),
+      (this.gAi = new MapTileMgr_1.MapTileMgr(
         this.RootItem,
         i,
         s,
-        r,
         a,
-        this.MapType,
-        this.fUi,
         n,
+        this.MapType,
+        MiniMap.MapMaterialVersion,
+        this.fAi,
+        r,
       )),
-      this.gUi.Initialize();
+      this.gAi.Initialize();
   }
-  uje() {
+  yWe() {
     ModelManager_1.ModelManager.GameModeModel.WorldDone
-      ? this.MUi()
+      ? this.MAi()
       : EventSystem_1.EventSystem.Add(
           EventDefine_1.EEventName.WorldDone,
-          this.MUi,
+          this.MAi,
         );
   }
   UnBindEvents() {
     EventSystem_1.EventSystem.Has(
       EventDefine_1.EEventName.WorldDone,
-      this.MUi,
+      this.MAi,
     ) &&
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.WorldDone,
-        this.MUi,
+        this.MAi,
       );
   }
-  MiniMapUpdateMarkItems(a, n, t) {
-    this.CUi.UpdateNearbyMarkItem(
+  MiniMapUpdateMarkItems(n, r, t) {
+    this.CAi.UpdateNearbyMarkItem(
       t,
       (e) => {
         e.LogicUpdate(t), (e.IsInAoiRange = !0), e.ViewUpdate(t);
@@ -104,19 +108,19 @@ class MiniMap extends UiPanelBase_1.UiPanelBase {
         if (i) {
           const s = Vector2D_1.Vector2D.Create(i.X, i.Y);
           if (e.IsTracked) {
-            const r = Vector2D_1.Vector2D.Create();
-            s.Multiply(n, r).Addition(a, r);
+            const a = Vector2D_1.Vector2D.Create();
+            s.Multiply(r, a).Addition(n, a);
             let t = !1;
             e instanceof TaskMarkItem_1.TaskMarkItem &&
               ((i = e.View), (t = i.IsRangeImageActive() ?? !1)),
-              r.Size() > BattleUiDefine_1.CLAMP_RANGE && !t
-                ? (r
-                    .DivisionEqual(r.Size())
+              a.Size() > BattleUiDefine_1.CLAMP_RANGE && !t
+                ? (a
+                    .DivisionEqual(a.Size())
                     .MultiplyEqual(BattleUiDefine_1.CLAMP_RANGE)
-                    .SubtractionEqual(a)
-                    .DivisionEqual(n),
+                    .SubtractionEqual(n)
+                    .DivisionEqual(r),
                   e.GetRootItemAsync().then((t) => {
-                    t?.SetAnchorOffset(r.ToUeVector2D(!0));
+                    t?.SetAnchorOffset(a.ToUeVector2D(!0));
                   }))
                 : e.GetRootItemAsync().then((t) => {
                     t?.SetAnchorOffset(s.ToUeVector2D(!0));
@@ -133,11 +137,11 @@ class MiniMap extends UiPanelBase_1.UiPanelBase {
     );
   }
   UpdateMinimapTiles(t) {
-    this.gUi.UpdateMinimapTiles(t);
+    this.gAi.UpdateMinimapTiles(t);
   }
   SetMapScale(t) {
     this.RootItem.SetWorldScale3D(new UE.Vector(t, t, t));
   }
 }
-exports.MiniMap = MiniMap;
+(exports.MiniMap = MiniMap).MapMaterialVersion = 2;
 //# sourceMappingURL=MiniMap.js.map

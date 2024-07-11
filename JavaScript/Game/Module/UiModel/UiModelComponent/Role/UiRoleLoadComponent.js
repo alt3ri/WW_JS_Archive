@@ -25,33 +25,33 @@ const Log_1 = require("../../../../../Core/Common/Log"),
   UiModelLoadComponent_1 = require("../Common/UiModelLoadComponent");
 let UiRoleLoadComponent = class UiRoleLoadComponent extends UiModelLoadComponent_1.UiModelLoadComponent {
   constructor() {
-    super(...arguments), (this.VBr = void 0);
+    super(...arguments), (this.pBr = void 0);
   }
   OnInit() {
-    super.OnInit(), (this.VBr = this.Owner.CheckGetComponent(11));
+    super.OnInit(), (this.pBr = this.Owner.CheckGetComponent(11));
   }
   OnEnd() {
     super.OnEnd();
   }
   LoadModelByRoleDataId(e, o = !1, t) {
-    e === this.VBr.RoleDataId
+    e === this.pBr.RoleDataId
       ? Log_1.Log.CheckError() &&
         Log_1.Log.Error("Character", 44, "重复加载角色", ["RoleDataId", e])
-      : (this.VBr.SetRoleDataId(e),
+      : (this.pBr.SetRoleDataId(e),
         (this.LoadFinishCallBack = t),
         this.LoadModel(o));
   }
   LoadModelByRoleConfigId(e, o = !1, t) {
-    e === this.VBr.RoleConfigId
+    e === this.pBr.RoleConfigId
       ? Log_1.Log.CheckError() &&
         Log_1.Log.Error("Character", 44, "重复加载角色", ["RoleConfigId", e])
-      : (this.VBr.SetRoleConfigId(e),
+      : (this.pBr.SetRoleConfigId(e),
         (this.LoadFinishCallBack = t),
         this.LoadModel(o));
   }
   GetAnimClassPath() {
     return ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(
-      this.VBr.RoleConfigId,
+      this.pBr.RoleConfigId,
     ).UiScenePerformanceABP;
   }
 };

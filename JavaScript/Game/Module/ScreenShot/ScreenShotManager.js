@@ -29,7 +29,7 @@ class ScreenShotManager {
       (r = Vector2D_1.Vector2D.Create(a, i)),
       (a = GlobalData_1.GlobalData.World);
     return (
-      (this.hpo = UE.KuroGameScreenshotBPLibrary.PrepareTakeScreenshot(
+      (this.nvo = UE.KuroGameScreenshotBPLibrary.PrepareTakeScreenshot(
         a,
         e,
         t.ToUeVector2D(),
@@ -38,16 +38,16 @@ class ScreenShotManager {
         0,
         s,
       )),
-      this.hpo
+      this.nvo
     );
   }
   static ResetScreenShot() {
-    this.hpo && this.hpo.IsValid() && this.hpo.Reset(), (this.hpo = void 0);
+    this.nvo && this.nvo.IsValid() && this.nvo.Reset(), (this.nvo = void 0);
   }
   static RequestIOSPhotoLibraryAuthorization() {
-    this.hpo?.RequestIOSPhotoLibraryAuthorization();
+    this.nvo?.RequestIOSPhotoLibraryAuthorization();
   }
 }
 ((exports.ScreenShotManager = ScreenShotManager).vT = new Map()),
-  (ScreenShotManager.hpo = void 0);
+  (ScreenShotManager.nvo = void 0);
 //# sourceMappingURL=ScreenShotManager.js.map

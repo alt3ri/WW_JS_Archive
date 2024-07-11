@@ -42,7 +42,7 @@ class AiStateMachineStatePalsy extends AiStateMachineState_1.AiStateMachineState
           4,
         ),
         (t = this.Node.AiController.AiHateList.GetCurrentTarget()) &&
-          t.Entity.GetComponent(107).SetTimeScale(
+          t.Entity.GetComponent(109).SetTimeScale(
             e.AttackerTimeScale.优先级,
             e.AttackerTimeScale.时间膨胀值,
             e.AttackerTimeScale.时间膨胀变化曲线,

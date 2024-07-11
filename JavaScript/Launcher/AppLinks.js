@@ -11,7 +11,7 @@ const UE = require("ue"),
 class AppLinks {
   static Init() {
     var e, t;
-    AppLinks.E_e ||
+    AppLinks.S_e ||
       ("Android" !== (e = UE.GameplayStatics.GetPlatformName()) &&
         "IOS" !== e) ||
       ((t =
@@ -34,36 +34,36 @@ class AppLinks {
               UE.KuroLauncherLibrary.IsFirstIntoLauncher() &&
               (LauncherLog_1.LauncherLog.Info("派发IOS缓存的事件"),
               UE.KuroiOSDelegateStaticLibrary.DispatchCacheMessage()),
-          (AppLinks.E_e = !0)));
+          (AppLinks.S_e = !0)));
   }
   static Destroy() {
-    AppLinks.E_e &&
+    AppLinks.S_e &&
       (UE.KuroSDKManager.Get().OnActivatedByApplinksDelegate.Clear(),
-      this.Jbn.clear(),
-      (AppLinks.E_e = !1));
+      this.i2n.clear(),
+      (AppLinks.S_e = !1));
   }
   static ReportApplinksActivation(e, t, o) {
     (e !== APP_LINKS_HOST && e !== APP_LINKS_HOST_GLOBAL) ||
       (HotPatchLogReport_1.HotPatchLogReport.ReportAppLinksEvent(t, o),
-      "" !== t && this.Jbn.has(t) && this.Jbn.get(t)(t, o)),
+      "" !== t && this.i2n.has(t) && this.i2n.get(t)(t, o)),
       LauncherLog_1.LauncherLog.Info(
         `Application Activated By AppLinks: ${e}, ${t}, ` + o,
       );
   }
   static SetDeepValueHandle(e, t) {
-    this.Jbn.has(e)
+    this.i2n.has(e)
       ? LauncherLog_1.LauncherLog.Error(
           "Try to set duplicated handle for deepvalue: " + e,
         )
-      : this.Jbn.set(e, t);
+      : this.i2n.set(e, t);
   }
   static RemoveDeepValueHandle(e) {
-    this.Jbn.has(e)
-      ? this.Jbn.delete(e)
+    this.i2n.has(e)
+      ? this.i2n.delete(e)
       : LauncherLog_1.LauncherLog.Error(
           "Can't find handle for deepvalue: " + e,
         );
   }
 }
-((exports.AppLinks = AppLinks).E_e = !1), (AppLinks.Jbn = new Map());
+((exports.AppLinks = AppLinks).S_e = !1), (AppLinks.i2n = new Map());
 //# sourceMappingURL=AppLinks.js.map

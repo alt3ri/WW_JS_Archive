@@ -13,129 +13,139 @@ const Protocol_1 = require("../../../Core/Define/Net/Protocol"),
   PersonalDefine_1 = require("../Personal/Model/PersonalDefine");
 class OnlineHallData {
   constructor(e) {
-    (this.CardUnlockList = []), (this.Oqi = 0);
-    for (const t of (this.kqi = e).Jgs)
-      this.CardUnlockList.push(new PersonalDefine_1.CardShowEntry(t, !0));
+    (this.CardUnlockList = []), (this.OGi = 0);
+    for (const t of (this.kGi = e).mSs)
+      this.CardUnlockList.push(
+        new PersonalDefine_1.PersonalCardData(t, !0, !0),
+      );
   }
   SetApplyTime(e) {
-    e <= 0 || (this.Oqi = e);
+    e <= 0 || (this.OGi = e);
   }
   get ApplyTimeLeftTime() {
-    return this.Oqi - TimeUtil_1.TimeUtil.GetServerTime();
+    return this.OGi - TimeUtil_1.TimeUtil.GetServerTime();
   }
   get PlayerId() {
-    return this.kqi.aFn;
+    return this.kGi.q5n;
   }
   get HeadId() {
-    return this.kqi.$gs;
+    return this.kGi.sSs;
   }
   get Level() {
-    return this.kqi.r3n;
+    return this.kGi.P6n;
   }
   get PlayerCount() {
-    return this.kqi.Qgs;
+    return this.kGi.uSs;
   }
   get WorldLevel() {
-    return this.kqi.Vgs;
+    return this.kGi.nSs;
   }
   get Name() {
-    return this.kqi.e4n;
+    return this.kGi.w8n;
   }
   get PlayerName() {
-    return this.kqi.e4n;
+    return this.kGi.w8n;
   }
   get Signature() {
-    return this.kqi.l5n;
+    return this.kGi.HVn;
   }
   get PlayerCard() {
-    return this.kqi.zgs;
+    return this.kGi.CSs;
   }
   get PlayerDetails() {
-    return this.kqi;
+    return this.kGi;
+  }
+  get PlayerOriginWorldLevel() {
+    return this.kGi.oSs;
+  }
+  get PlayerLastOfflineTime() {
+    return MathUtils_1.MathUtils.LongToNumber(this.kGi._Ss);
   }
 }
 exports.OnlineHallData = OnlineHallData;
 class OnlineApplyData {
   constructor(e, t, r, s, i) {
-    (this.Fqi = e),
-      (this.Vqi = t),
-      (this.Oqi = r),
-      (this.Hqi = s),
-      (this.jqi = i);
+    (this.FGi = e),
+      (this.VGi = t),
+      (this.OGi = r),
+      (this.HGi = s),
+      (this.jGi = i);
   }
   get ApplyTimeLeftTime() {
     return (
-      Number(MathUtils_1.MathUtils.LongToBigInt(this.Oqi)) -
+      Number(MathUtils_1.MathUtils.LongToBigInt(this.OGi)) -
       TimeUtil_1.TimeUtil.GetServerTime()
     );
   }
   get PlayerId() {
-    return this.Vqi;
+    return this.VGi;
   }
   get RefuseTimestamp() {
-    return this.Oqi;
+    return this.OGi;
   }
   get Level() {
-    return this.jqi;
+    return this.jGi;
   }
   get Name() {
-    return this.Fqi;
+    return this.FGi;
   }
   get HeadId() {
-    return this.Hqi;
+    return this.HGi;
   }
 }
 exports.OnlineApplyData = OnlineApplyData;
 class OnlineTeamData {
   constructor(e, t, r, s, i, n, l, o) {
     (this.CardUnlockList = []),
-      (this.Wqi = 0),
-      (this.Fqi = e),
-      (this.Vqi = t),
-      (this.jqi = r),
-      (this.Hqi = s),
-      (this.Kqi = i),
+      (this.WGi = 0),
+      (this.FGi = e),
+      (this.VGi = t),
+      (this.jGi = r),
+      (this.HGi = s),
+      (this.KGi = i),
       (this.PlayerNumber = n),
-      (this.kqi = l),
-      (this.Qqi = Protocol_1.Aki.Protocol.oFs.Proto_GREAT);
-    for (const h of l.Jgs)
-      this.CardUnlockList.push(new PersonalDefine_1.CardShowEntry(h, !0));
+      (this.kGi = l),
+      (this.QGi = Protocol_1.Aki.Protocol.Y8s.Proto_GREAT);
+    for (const h of l.mSs)
+      this.CardUnlockList.push(
+        new PersonalDefine_1.PersonalCardData(h, !0, !0),
+      );
   }
   get PlayerId() {
-    return this.Vqi;
+    return this.VGi;
   }
   get HeadId() {
-    return this.Hqi;
+    return this.HGi;
   }
   set HeadId(e) {
-    this.Hqi = e;
+    this.HGi = e;
   }
   get Level() {
-    return this.jqi;
+    return this.jGi;
   }
   set Level(e) {
-    this.jqi = e;
+    this.jGi = e;
   }
   get Name() {
-    return this.Fqi;
+    return this.FGi;
   }
   set Name(e) {
-    this.Fqi = e;
+    this.FGi = e;
   }
   get PlayerName() {
-    return this.Fqi;
+    return this.FGi;
   }
   get Signature() {
-    return this.Kqi;
+    return this.KGi;
   }
   set Signature(e) {
-    this.Kqi = e;
+    this.KGi = e;
   }
   get PlayerNumber() {
-    return this.Wqi;
+    return this.WGi;
   }
   set PlayerNumber(e) {
-    this.Wqi = e;
+    this.WGi = e;
   }
   get IsSelf() {
     return (
@@ -143,46 +153,46 @@ class OnlineTeamData {
     );
   }
   get PingState() {
-    return this.Qqi;
+    return this.QGi;
   }
   set PingState(e) {
-    this.Qqi = e;
+    this.QGi = e;
   }
   get PlayerDetails() {
-    return this.kqi;
+    return this.kGi;
   }
   set PlayerDetails(e) {
-    this.kqi = e;
+    this.kGi = e;
   }
 }
 exports.OnlineTeamData = OnlineTeamData;
 class WorldTeamPlayerFightInfo {
   constructor(e, t, r, s) {
-    (this.Fqi = e), (this.Vqi = t), (this.Xqi = s), (this.$qi = r);
+    (this.FGi = e), (this.VGi = t), (this.XGi = s), (this.$Gi = r);
   }
   get PlayerId() {
-    return this.Vqi;
+    return this.VGi;
   }
   get CurRoleId() {
-    return this.$qi;
+    return this.$Gi;
   }
   set CurRoleId(e) {
-    this.$qi = e;
+    this.$Gi = e;
   }
   get RoleInfos() {
-    return this.Xqi;
+    return this.XGi;
   }
   set RoleInfos(e) {
-    this.Xqi = e;
+    this.XGi = e;
   }
   GetRoleInfoByConfigId(e) {
-    for (const t of this.Xqi) if (t.RoleId === e) return t;
+    for (const t of this.XGi) if (t.RoleId === e) return t;
   }
   get Name() {
-    return this.Fqi;
+    return this.FGi;
   }
   set Name(e) {
-    this.Fqi = e;
+    this.FGi = e;
   }
   get IsSelf() {
     return (
@@ -190,44 +200,44 @@ class WorldTeamPlayerFightInfo {
     );
   }
   GetIsDiffRoleList(e) {
-    if (e.length !== this.Xqi.length) return !0;
+    if (e.length !== this.XGi.length) return !0;
     for (const t of e) {
       let e = !1;
-      for (const r of this.Xqi) t.l3n === r.RoleId && (e = !0);
+      for (const r of this.XGi) t.O6n === r.RoleId && (e = !0);
       if (!e) return !0;
     }
     return !1;
   }
   GetRoleLength() {
-    return this.Xqi.length;
+    return this.XGi.length;
   }
 }
 exports.WorldTeamPlayerFightInfo = WorldTeamPlayerFightInfo;
 class WorldTeamRoleInfo {
   constructor(e, t) {
-    (this.Yqi = 0),
+    (this.YGi = 0),
       (this.RoleCurHp = 1),
       (this.RoleMaxHp = 1),
-      (this.Jqi = e),
-      (this.zqi = t);
+      (this.JGi = e),
+      (this.zGi = t);
   }
   get RoleId() {
-    return this.Jqi;
+    return this.JGi;
   }
   set RoleId(e) {
-    this.Jqi = e;
+    this.JGi = e;
   }
   get RoleLevel() {
-    return this.zqi;
+    return this.zGi;
   }
   set RoleLevel(e) {
-    this.zqi = e;
+    this.zGi = e;
   }
   get RoleIndex() {
-    return this.Yqi;
+    return this.YGi;
   }
   set RoleIndex(e) {
-    this.Yqi = e;
+    this.YGi = e;
   }
 }
 exports.WorldTeamRoleInfo = WorldTeamRoleInfo;

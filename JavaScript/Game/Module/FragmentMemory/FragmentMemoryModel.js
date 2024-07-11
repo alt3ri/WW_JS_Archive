@@ -14,17 +14,17 @@ class FragmentMemoryModel extends ModelBase_1.ModelBase {
     super(...arguments),
       (this.ActivitySubViewTryPlayAnimation = ""),
       (this.MemoryFragmentMainViewTryPlayAnimation = ""),
-      (this.UUn = new Map()),
+      (this.awn = new Map()),
       (this.CurrentTrackMapMarkId = 0),
       (this.CurrentTrackFragmentId = 0),
-      (this.RUn = new Map()),
+      (this.hwn = new Map()),
       (this.CurrentUnlockCollectId = 0);
   }
   OnPhotoMemoryResponse(e) {
-    this.xUn(e.CUs);
+    this.lwn(e.bBs);
   }
   OnPhotoMemoryUpdate(e) {
-    this.xUn(e.CUs),
+    this.lwn(e.bBs),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnFragmentMemoryDataUpdate,
       );
@@ -37,12 +37,12 @@ class FragmentMemoryModel extends ModelBase_1.ModelBase {
       ),
       (this.CurrentTrackMapMarkId = 0));
   }
-  xUn(e) {
-    this.RUn.clear(), this.UUn.clear();
+  lwn(e) {
+    this.hwn.clear(), this.awn.clear();
     for (const r of e) {
-      var t = this.PUn(r),
-        t = (this.RUn.set(r.Ekn, t), t.GetCollectDataList());
-      for (const o of t) this.UUn.set(o.GetId(), o);
+      var t = this._wn(r),
+        t = (this.hwn.set(r.J4n, t), t.GetCollectDataList());
+      for (const o of t) this.awn.set(o.GetId(), o);
     }
     EventSystem_1.EventSystem.Emit(
       EventDefine_1.EEventName.FragmentRewardEntranceRedDot,
@@ -51,7 +51,7 @@ class FragmentMemoryModel extends ModelBase_1.ModelBase {
   GetCollectedIds() {
     var e,
       t = [];
-    for ([, e] of this.RUn)
+    for ([, e] of this.hwn)
       for (const r of e.GetCollectDataList())
         r.GetIfUnlock() && t.push(r.GetId());
     return t;
@@ -73,8 +73,8 @@ class FragmentMemoryModel extends ModelBase_1.ModelBase {
     );
   }
   OnPhotoMemoryCollectUpdate(e) {
-    var t = e.gUs.Ekn;
-    let r = this.UUn.get(t);
+    var t = e.BBs.J4n;
+    let r = this.awn.get(t);
     r ||
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("FragmentMemory", 28, "记忆历程数据刷新时找不到数据", [
@@ -82,25 +82,25 @@ class FragmentMemoryModel extends ModelBase_1.ModelBase {
           t,
         ]),
       (r = new FragmentMemoryData_1.FragmentMemoryCollectData())),
-      r.Phrase(e.gUs),
+      r.Phrase(e.BBs),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnFragmentMemoryCollectUpdate,
       );
   }
-  PUn(e) {
+  _wn(e) {
     var t = new FragmentMemoryData_1.FragmentMemoryTopicData();
     return t.Phrase(e), t;
   }
   GetCollectDataById(e) {
-    e = this.UUn.get(e);
+    e = this.awn.get(e);
     if (e) return e;
   }
   GetTopicDataById(e) {
-    e = this.RUn.get(e);
+    e = this.hwn.get(e);
     if (e) return e;
   }
   GetRedDotState() {
-    for (var [, e] of this.RUn) if (e.GetRedDotState()) return !0;
+    for (var [, e] of this.hwn) if (e.GetRedDotState()) return !0;
     return !1;
   }
 }

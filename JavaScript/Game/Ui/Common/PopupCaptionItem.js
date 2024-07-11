@@ -2,19 +2,22 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PopupCaptionItem = void 0);
 const UE = require("ue"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
   CommonCurrencyItemListComponent_1 = require("../../Module/Common/CommonCurrencyItemListComponent"),
   LguiUtil_1 = require("../../Module/Util/LguiUtil"),
-  UiPanelBase_1 = require("../Base/UiPanelBase");
+  UiPanelBase_1 = require("../Base/UiPanelBase"),
+  PopupCaptionToggleItem_1 = require("./PopupCaptionToggleItem");
 class PopupCaptionItem extends UiPanelBase_1.UiPanelBase {
   constructor(t) {
     super(),
-      (this.dur = void 0),
+      (this.ucr = void 0),
+      (this.Maa = void 0),
       (this.OnClickCloseBtnCall = () => {}),
       (this.OnClickHelpBtnCall = () => {}),
-      (this.Opt = () => {
+      (this.Jvt = () => {
         this.OnClickCloseBtnCall && this.OnClickCloseBtnCall();
       }),
-      (this.Sur = () => {
+      (this.pcr = () => {
         this.OnClickHelpBtnCall && this.OnClickHelpBtnCall();
       }),
       this.CreateThenShowByActor(t.GetOwner());
@@ -26,10 +29,11 @@ class PopupCaptionItem extends UiPanelBase_1.UiPanelBase {
       [2, UE.UIButtonComponent],
       [3, UE.UIButtonComponent],
       [4, UE.UIItem],
+      [5, UE.UIItem],
     ]),
       (this.BtnBindInfo = [
-        [3, this.Opt],
-        [2, this.Sur],
+        [3, this.Jvt],
+        [2, this.pcr],
       ]);
   }
   SetCloseBtnActive(t) {
@@ -65,6 +69,10 @@ class PopupCaptionItem extends UiPanelBase_1.UiPanelBase {
   SetTitleLocalText(t) {
     LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(1), t);
   }
+  async SetTitleIconByResourceId(t) {
+    t = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(t);
+    await this.SetSpriteAsync(t, this.GetSprite(0), !1);
+  }
   SetTitleIcon(t) {
     this.SetSpriteByPath(t, this.GetSprite(0), !1);
   }
@@ -78,15 +86,32 @@ class PopupCaptionItem extends UiPanelBase_1.UiPanelBase {
     this.GetItem(4).SetUIActive(t);
   }
   async SetCurrencyItemList(t) {
-    this.dur ||
-      (this.dur =
+    this.ucr ||
+      (this.ucr =
         new CommonCurrencyItemListComponent_1.CommonCurrencyItemListComponent(
           this.GetItem(4),
         )),
-      await this.dur.SetCurrencyItemList(t);
+      await this.ucr.SetCurrencyItemList(t);
   }
   GetCurrencyItemList() {
-    return this.dur?.GetCurrencyItemList();
+    return this.ucr?.GetCurrencyItemList();
+  }
+  async CreateToggleTab(t) {
+    (this.Maa = new PopupCaptionToggleItem_1.PopupCaptionToggleItem()),
+      await this.Maa.CreateByResourceIdAsync("TogTabCName", this.GetItem(5)),
+      this.Maa.SetClickToggleCallback(t);
+  }
+  SetToggleName(t) {
+    this.Maa?.SetNameText(t);
+  }
+  SetToggleVisible(t) {
+    this.Maa?.SetUiActive(t);
+  }
+  GetToggleState() {
+    return void 0 === this.Maa ? 0 : this.Maa.GetToggleState();
+  }
+  GetCostContent() {
+    return this.GetItem(4);
   }
 }
 exports.PopupCaptionItem = PopupCaptionItem;

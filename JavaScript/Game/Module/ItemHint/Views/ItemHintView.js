@@ -12,20 +12,20 @@ const UE = require("ue"),
 class ItemHintView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
-      (this.egi = void 0),
-      (this.tgi = void 0),
-      (this.igi = () =>
+      (this.e0i = void 0),
+      (this.t0i = void 0),
+      (this.i0i = () =>
         ConfigManager_1.ConfigManager.ItemConfig.GetItemListMaxSize()),
-      (this.ogi = () =>
+      (this.o0i = () =>
         ConfigManager_1.ConfigManager.ItemConfig.GetPriorItemListMaxSize()),
-      (this.rgi = () =>
+      (this.r0i = () =>
         !ModelManager_1.ModelManager.ItemHintModel.IsMainInterfaceDataEmpty),
-      (this.ngi = () =>
+      (this.n0i = () =>
         !ModelManager_1.ModelManager.ItemHintModel.IsPriorInterfaceDataEmpty),
-      (this.sgi = () =>
+      (this.s0i = () =>
         ConfigManager_1.ConfigManager.RewardConfig.GetNextItemTime()),
       (this.HDe = () => {
-        this.tgi.IsFinish && this.egi.IsFinish && this.CloseMe();
+        this.t0i.IsFinish && this.e0i.IsFinish && this.CloseMe();
       });
   }
   OnRegisterComponent() {
@@ -35,37 +35,37 @@ class ItemHintView extends UiTickViewBase_1.UiTickViewBase {
     ];
   }
   OnBeforeDestroy() {
-    this.egi && (this.egi.DestroyMe(), (this.egi = void 0)),
-      this.tgi && (this.tgi.DestroyMe(), (this.tgi = void 0));
+    this.e0i && (this.e0i.DestroyMe(), (this.e0i = void 0)),
+      this.t0i && (this.t0i.DestroyMe(), (this.t0i = void 0));
   }
   OnStart() {
-    this.rgi() || this.ngi()
-      ? ((this.egi = new ListSliderControl_1.ListSliderControl(
+    this.r0i() || this.n0i()
+      ? ((this.e0i = new ListSliderControl_1.ListSliderControl(
           ItemHintItem_1.ItemHintItem,
           this.GetItem(1),
-          this.igi,
-          this.rgi,
-          this.sgi,
+          this.i0i,
+          this.r0i,
+          this.s0i,
           this.HDe,
           0,
         )),
-        this.egi.DisEnableParentLayout(),
-        (this.tgi = new ListSliderControl_1.ListSliderControl(
+        this.e0i.DisEnableParentLayout(),
+        (this.t0i = new ListSliderControl_1.ListSliderControl(
           ItemPriorHintItem_1.ItemPriorHintItem,
           this.GetItem(0),
-          this.ogi,
-          this.ngi,
-          this.sgi,
+          this.o0i,
+          this.n0i,
+          this.s0i,
           this.HDe,
           0,
         )),
-        this.tgi.DisEnableParentLayout())
+        this.t0i.DisEnableParentLayout())
       : (Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn("ItemHint", 9, "进包列表为空, 但打开了界面!"),
         this.CloseMe());
   }
   OnTick(i) {
-    this.tgi && this.tgi.Tick(i), this.egi && this.egi.Tick(i);
+    this.t0i && this.t0i.Tick(i), this.e0i && this.e0i.Tick(i);
   }
 }
 exports.ItemHintView = ItemHintView;

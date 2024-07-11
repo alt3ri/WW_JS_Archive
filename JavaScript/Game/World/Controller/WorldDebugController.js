@@ -43,7 +43,7 @@ class WorldDebugController extends ControllerBase_1.ControllerBase {
       !0
     );
   }
-  static Yfr() {
+  static Xpr() {
     var e = ModelManager_1.ModelManager.WorldDebugModel.AoiNpcSet.size,
       o = ModelManager_1.ModelManager.WorldDebugModel.AoiMonsterSet.size,
       t = e + o,
@@ -74,7 +74,7 @@ class WorldDebugController extends ControllerBase_1.ControllerBase {
       for (const D of ModelManager_1.ModelManager.WorldDebugModel.AoiTotalSet) {
         var u = D.Entity.GetComponent(0),
           M = u.GetCreatureDataId(),
-          g = this.Jfr(u.GetEntityType()),
+          g = this.$pr(u.GetEntityType()),
           i = u.GetBaseInfo()?.TidName,
           M = {
             CreatureDataId: M,
@@ -104,15 +104,15 @@ ${_}
       Log_1.Log.CheckError() && Log_1.Log.Error("World", 3, a);
     }
   }
-  static Jfr(e) {
+  static $pr(e) {
     switch (e) {
-      case Protocol_1.Aki.Protocol.HBs.Proto_Player:
+      case Protocol_1.Aki.Protocol.wks.Proto_Player:
         return "角色";
-      case Protocol_1.Aki.Protocol.HBs.Proto_Monster:
+      case Protocol_1.Aki.Protocol.wks.Proto_Monster:
         return "怪物";
-      case Protocol_1.Aki.Protocol.HBs.Proto_Npc:
+      case Protocol_1.Aki.Protocol.wks.Proto_Npc:
         return "NPC";
-      case Protocol_1.Aki.Protocol.HBs.Proto_Vision:
+      case Protocol_1.Aki.Protocol.wks.Proto_Vision:
         return "幻像";
       default:
         return;
@@ -124,7 +124,7 @@ ${_}
   r &&
     ((t = r.Entity.GetComponent(0)),
     ModelManager_1.ModelManager.WorldDebugModel.AddEntity(t.GetEntityType(), r),
-    WorldDebugController.Yfr());
+    WorldDebugController.Xpr());
 }),
   (WorldDebugController.zpe = (e, r) => {
     var o;

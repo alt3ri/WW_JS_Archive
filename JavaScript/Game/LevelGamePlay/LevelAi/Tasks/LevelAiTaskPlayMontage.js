@@ -20,7 +20,7 @@ class LevelAiTaskPlayMontage extends LevelAiTask_1.LevelAiTask {
       (this.OTe = s.RepeatTimes ?? 0),
       (this.qTe = void 0 !== this.NTe && 0 !== this.NTe),
       (this.GTe = -1 === this.NTe || -1 === this.OTe);
-    var t = this.CreatureDataComponent.Entity.GetComponent(37),
+    var t = this.CreatureDataComponent.Entity.GetComponent(38),
       e = new BasePerformComponent_1.PlayMontageConfig(
         this.OTe,
         this.NTe,
@@ -45,7 +45,7 @@ class LevelAiTaskPlayMontage extends LevelAiTask_1.LevelAiTask {
   AbortTask() {
     return (
       (this.kTe = !0),
-      this.CreatureDataComponent.Entity.GetComponent(37).ClearAndStopMontage(
+      this.CreatureDataComponent.Entity.GetComponent(38).ClearAndStopMontage(
         this.bTe,
       ),
       2

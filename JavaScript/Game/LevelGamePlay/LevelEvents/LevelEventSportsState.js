@@ -38,7 +38,16 @@ class LevelEventSportsState extends LevelGeneralBase_1.LevelEventBase {
         "Player" === t.Target.Type
           ? Global_1.Global.BaseCharacter?.GetEntityNoBlueprint()
           : e)
-        ? e.GetComponent(32)?.EnterSkiMode(t)
+        ? (Log_1.Log.CheckInfo() &&
+            Log_1.Log.Info(
+              "LevelEvent",
+              51,
+              "进入滑雪模式",
+              ["Type", o.Type],
+              ["TreeId", o.TreeConfigId],
+              ["NodeId", o.NodeId],
+            ),
+          e.GetComponent(32)?.EnterSkiMode(t))
         : Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "LevelEvent",
@@ -64,7 +73,16 @@ class LevelEventSportsState extends LevelGeneralBase_1.LevelEventBase {
         "Player" === t.Target.Type
           ? Global_1.Global.BaseCharacter?.GetEntityNoBlueprint()
           : e)
-        ? e.GetComponent(32)?.ExitSkiMode()
+        ? (Log_1.Log.CheckInfo() &&
+            Log_1.Log.Info(
+              "LevelEvent",
+              51,
+              "退出滑雪模式",
+              ["Type", o.Type],
+              ["TreeId", o.TreeConfigId],
+              ["NodeId", o.NodeId],
+            ),
+          e.GetComponent(32)?.ExitSkiMode())
         : Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "LevelEvent",

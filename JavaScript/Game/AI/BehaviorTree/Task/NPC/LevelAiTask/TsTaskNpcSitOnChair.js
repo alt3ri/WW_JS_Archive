@@ -6,6 +6,7 @@ const Log_1 = require("../../../../../../Core/Common/Log"),
   GlobalData_1 = require("../../../../../GlobalData"),
   ModelManager_1 = require("../../../../../Manager/ModelManager"),
   BasePerformComponent_1 = require("../../../../../NewWorld/Character/Common/Component/BasePerformComponent"),
+  GravityUtils_1 = require("../../../../../Utils/GravityUtils"),
   AiContollerLibrary_1 = require("../../../../Controller/AiContollerLibrary"),
   TsTaskAbortImmediatelyBase_1 = require("../../TsTaskAbortImmediatelyBase"),
   TOLERANCE = 10,
@@ -71,28 +72,44 @@ class TsTaskNpcSitOnChair extends TsTaskAbortImmediatelyBase_1.default {
     s
       ? ((this.Entity = s.CharAiDesignComp.Entity),
         (this.Character = this.Entity.GetComponent(3)),
-        (this.MoveComp = this.Entity.GetComponent(36)),
+        (this.MoveComp = this.Entity.GetComponent(37)),
         this.MoveComp?.CharacterMovement?.IsValid()
           ? ((s = ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(
               this.TsChairEntityId,
             )),
             (this.ChairController =
               s?.Entity?.GetComponent(
-                178,
+                181,
               )?.GetSubEntityInteractLogicController()),
             this.ChairController &&
             this.ChairController.IsSceneInteractionLoadCompleted()
               ? "" === this.TsMontagePath
-                ? this.FinishExecute(!1)
+                ? (Log_1.Log.CheckError() &&
+                    Log_1.Log.Error(
+                      "BehaviorTree",
+                      51,
+                      "[TsTaskSitOnChair]无效的Montage路径",
+                      ["Type", t.GetClass().GetName()],
+                      ["PbDataId", this.Character.CreatureData.GetPbDataId()],
+                    ),
+                  this.FinishExecute(!0))
                 : (this.Phase = 1)
               : this.FinishExecute(!0))
-          : this.FinishExecute(!1))
+          : (Log_1.Log.CheckError() &&
+              Log_1.Log.Error(
+                "BehaviorTree",
+                51,
+                "[TsTaskSitOnChair]MoveComp不合法",
+                ["Type", t.GetClass().GetName()],
+                ["PbDataId", this.Character.CreatureData.GetPbDataId()],
+              ),
+            this.FinishExecute(!0)))
       : (Log_1.Log.CheckError() &&
           Log_1.Log.Error("BehaviorTree", 6, "错误的Controller类型", [
             "Type",
             t.GetClass().GetName(),
           ]),
-        this.FinishExecute(!1));
+        this.FinishExecute(!0));
   }
   ReceiveTickAI(t, i, s) {
     switch (this.Phase) {
@@ -107,10 +124,9 @@ class TsTaskNpcSitOnChair extends TsTaskAbortImmediatelyBase_1.default {
         break;
       case 4:
         this.ExecuteTurnTo(),
-          this.Character.InputRotatorProxy.Equals(
-            this.Character.ActorRotationProxy,
-            TOLERANCE,
-          ) &&
+          GravityUtils_1.GravityUtils.GetAngleOffsetFromCurrentToInputAbs(
+            this.Character,
+          ) < TOLERANCE &&
             ((this.MoveComp.CharacterMovement.MovementMode = this.MovementMode),
             (this.Phase = 5));
         break;
@@ -140,7 +156,7 @@ class TsTaskNpcSitOnChair extends TsTaskAbortImmediatelyBase_1.default {
         ? this.Character?.ClearInput()
         : 5 === this.Phase &&
           ((this.HasAborted = !0),
-          this.Entity?.GetComponent(37)?.ClearAndStopMontage(
+          this.Entity?.GetComponent(38)?.ClearAndStopMontage(
             this.PlayingMontageId,
           ));
   }
@@ -229,7 +245,7 @@ class TsTaskNpcSitOnChair extends TsTaskAbortImmediatelyBase_1.default {
         void 0 !== this.TsLoopDuration && 0 !== this.TsLoopDuration),
       (this.LoopMontage =
         -1 === this.TsLoopDuration || -1 === this.TsRepeatTimes),
-      (t = this.Entity.GetComponent(37)),
+      (t = this.Entity.GetComponent(38)),
       (i = new BasePerformComponent_1.PlayMontageConfig(
         this.TsRepeatTimes,
         this.TsLoopDuration,
@@ -246,7 +262,7 @@ class TsTaskNpcSitOnChair extends TsTaskAbortImmediatelyBase_1.default {
         },
         () => !this.HasAborted,
       )),
-      this.PlayingMontageId < 0 && this.Finish(!1));
+      this.PlayingMontageId < 0 && this.Finish(!0));
   }
   ExecuteMoveAway() {
     var t;

@@ -3,23 +3,23 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.OnlineChallengePlayerStateItem = void 0);
 const UE = require("ue"),
   Log_1 = require("../../../../Core/Common/Log"),
-  StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
-  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
-  OnlineModel_1 = require("../OnlineModel");
-class OnlineChallengePlayerStateItem extends UiPanelBase_1.UiPanelBase {
-  constructor(e, r) {
-    super(), (this.j8 = r), this.CreateThenShowByActor(e.GetOwner());
+  GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract");
+class OnlineChallengePlayerStateItem extends GridProxyAbstract_1.GridProxyAbstract {
+  constructor() {
+    super(...arguments), (this.j8 = -1);
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
       [0, UE.UITexture],
       [1, UE.UIText],
-      [2, UE.UISprite],
+      [2, UE.UIItem],
+      [3, UE.UIItem],
     ];
   }
-  OnStart() {
+  Refresh(e, r, t) {
+    this.j8 = e;
     var e = ModelManager_1.ModelManager.OnlineModel.GetCurrentTeamListById(
       this.j8,
     );
@@ -32,19 +32,25 @@ class OnlineChallengePlayerStateItem extends UiPanelBase_1.UiPanelBase {
           ModelManager_1.ModelManager.OnlineModel.GetContinuingChallengeConfirmState(
             this.j8,
           )),
-        this.SetTeamPlayerSprite(e))
+        this.SetTeamPlayerSprite(this.j8, e))
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error("MultiPlayerTeam", 5, "获取队友联机时，失败", [
           "PlayerId",
           this.j8,
         ]);
   }
-  SetTeamPlayerSprite(e) {
-    e = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
-      OnlineModel_1.onlineContinuingChallengeIcon[e],
-    );
-    StringUtils_1.StringUtils.IsEmpty(e) ||
-      this.SetSpriteByPath(e, this.GetSprite(2), !1);
+  SetTeamPlayerSprite(e, r) {
+    if (this.j8 === e)
+      switch (r) {
+        case 0:
+          this.GetItem(2)?.SetUIActive(!0), this.GetItem(3)?.SetUIActive(!1);
+          break;
+        case 2:
+          this.GetItem(2)?.SetUIActive(!1), this.GetItem(3)?.SetUIActive(!0);
+          break;
+        case 1:
+          this.GetItem(2)?.SetUIActive(!1), this.GetItem(3)?.SetUIActive(!1);
+      }
   }
 }
 exports.OnlineChallengePlayerStateItem = OnlineChallengePlayerStateItem;

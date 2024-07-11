@@ -5,18 +5,18 @@ const ConfigManager_1 = require("../../Manager/ConfigManager"),
   ModelManager_1 = require("../../Manager/ModelManager");
 class DynamicTabCamera {
   static GetCameraHandleData() {
-    return this.NFt;
+    return this.O3t;
   }
   static PlayTabUiCamera(a, e = 0) {}
   static GetUiCameraHandleName(a) {
     var a = ConfigManager_1.ConfigManager.DynamicTabConfig.GetViewTab(a),
       e = a.ParentViewName,
-      e = this.OFt.get(e);
+      e = this.k3t.get(e);
     return e ? e(a.UiCameraSettingsName) : a.UiCameraSettingsName;
   }
 }
-((exports.DynamicTabCamera = DynamicTabCamera).kFt = new Map()),
-  (DynamicTabCamera.FFt = (a) => {
+((exports.DynamicTabCamera = DynamicTabCamera).F3t = new Map()),
+  (DynamicTabCamera.V3t = (a) => {
     return (
       a +
       "_" +
@@ -24,12 +24,12 @@ class DynamicTabCamera {
         .RoleBody
     );
   }),
-  (DynamicTabCamera.OFt = new Map([
-    ["RoleRootView", DynamicTabCamera.FFt],
-    ["RoleHandBookRootView", DynamicTabCamera.FFt],
+  (DynamicTabCamera.k3t = new Map([
+    ["RoleRootView", DynamicTabCamera.V3t],
+    ["RoleHandBookRootView", DynamicTabCamera.V3t],
   ])),
   (DynamicTabCamera.OnPlayCameraAnimationFinished = (a) => {
-    (a = a.ToHandleData.HandleName), (a = DynamicTabCamera.kFt.get(a));
+    (a = a.ToHandleData.HandleName), (a = DynamicTabCamera.F3t.get(a));
     a && a();
   });
 //# sourceMappingURL=DynamicTabCamera.js.map

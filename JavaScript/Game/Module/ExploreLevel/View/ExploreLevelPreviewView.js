@@ -13,30 +13,30 @@ const UE = require("ue"),
 class ExploreLevelPreviewView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.f5t = void 0),
-      (this.p5t = void 0),
-      (this.v5t = void 0),
-      (this.o5t = []),
-      (this.M5t = 0),
-      (this.cTn = void 0),
-      (this.sRn = (e) => {
+      (this.fVt = void 0),
+      (this.pVt = void 0),
+      (this.vVt = void 0),
+      (this.oVt = []),
+      (this.MVt = 0),
+      (this.fHs = void 0),
+      (this.pHs = (e) => {
         e = e.Data;
         ItemController_1.ItemController.OpenItemTipsByItemId(e);
       }),
-      (this.YZe = () => {
-        HelpController_1.HelpController.OpenHelpById(this.p5t.GetHelpId());
+      (this.dtt = () => {
+        HelpController_1.HelpController.OpenHelpById(this.pVt.GetHelpId());
       }),
-      (this.S5t = () => {
-        this.M5t = Math.max(0, this.M5t - 1);
-        var e = this.o5t[this.M5t];
-        e && (this.E5t(e), this.dTn(e)), this.y5t();
+      (this.EVt = () => {
+        this.MVt = Math.max(0, this.MVt - 1);
+        var e = this.oVt[this.MVt];
+        e && (this.SVt(e), this.vHs(e)), this.yVt();
       }),
-      (this.I5t = () => {
-        this.M5t = Math.min(this.M5t + 1, this.o5t.length - 1);
-        var e = this.o5t[this.M5t];
-        e && (this.E5t(e), this.dTn(e)), this.y5t();
+      (this.IVt = () => {
+        this.MVt = Math.min(this.MVt + 1, this.oVt.length - 1);
+        var e = this.oVt[this.MVt];
+        e && (this.SVt(e), this.vHs(e)), this.yVt();
       }),
-      (this.T5t = () => {
+      (this.TVt = () => {
         return new ExploreLevelPreviewItem_1.ExploreLevelPreviewItem();
       });
   }
@@ -54,49 +54,49 @@ class ExploreLevelPreviewView extends UiViewBase_1.UiViewBase {
       [9, UE.UIItem],
     ]),
       (this.BtnBindInfo = [
-        [0, this.YZe],
-        [1, this.S5t],
-        [2, this.I5t],
+        [0, this.dtt],
+        [1, this.EVt],
+        [2, this.IVt],
       ]);
   }
   async OnBeforeStartAsync() {
-    (this.cTn = new SmallItemGrid_1.SmallItemGrid()),
-      this.cTn.BindOnExtendToggleClicked(this.sRn),
-      this.cTn.BindOnCanExecuteChange(() => !1),
-      await this.cTn.CreateThenShowByActorAsync(this.GetItem(9).GetOwner());
+    (this.fHs = new SmallItemGrid_1.SmallItemGrid()),
+      this.fHs.BindOnExtendToggleClicked(this.pHs),
+      this.fHs.BindOnCanExecuteChange(() => !1),
+      await this.fHs.CreateThenShowByActorAsync(this.GetItem(9).GetOwner());
   }
   OnStart() {
     var e = this.OpenParam,
       e =
-        ((this.v5t = new LoopScrollView_1.LoopScrollView(
+        ((this.vVt = new LoopScrollView_1.LoopScrollView(
           this.GetLoopScrollViewComponent(6),
           this.GetItem(7).GetOwner(),
-          this.T5t,
+          this.TVt,
         )),
-        (this.f5t = e),
-        (this.o5t = this.f5t.GetUnlockFunctionExploreLevelRewardDataList()),
-        (this.M5t = this.L5t(this.f5t.GetExploreLevel())),
-        this.o5t[this.M5t]);
-    e && (this.E5t(e), this.dTn(e)), this.y5t(), this.D5t();
+        (this.fVt = e),
+        (this.oVt = this.fVt.GetUnlockFunctionExploreLevelRewardDataList()),
+        (this.MVt = this.LVt(this.fVt.GetExploreLevel())),
+        this.oVt[this.MVt]);
+    e && (this.SVt(e), this.vHs(e)), this.yVt(), this.DVt();
   }
   OnBeforeDestroy() {
-    (this.f5t = void 0), this.v5t.ClearGridProxies(), (this.v5t = void 0);
+    (this.fVt = void 0), this.vVt.ClearGridProxies(), (this.vVt = void 0);
   }
-  L5t(i) {
-    var t = this.o5t.length;
-    for (let e = 0; e < t; e++) if (this.o5t[e].GetExploreLevel() > i) return e;
+  LVt(i) {
+    var t = this.oVt.length;
+    for (let e = 0; e < t; e++) if (this.oVt[e].GetExploreLevel() > i) return e;
     for (let e = t - 1; 0 < e; e--)
-      if (this.o5t[e].GetExploreLevel() < i) return e;
+      if (this.oVt[e].GetExploreLevel() < i) return e;
   }
-  E5t(e) {
+  SVt(e) {
     var i, t, s;
-    (this.p5t = e).IsShowUnlockSprite() &&
+    (this.pVt = e).IsShowUnlockSprite() &&
       (this.SetSpriteByPath(e.GetUnlockSpritePath(), this.GetSprite(5), !1),
       (i = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
         e.GetScoreNameId(),
       )),
       (t = this.GetText(4)),
-      (s = e.GetExploreLevel() <= this.f5t.GetExploreLevel())
+      (s = e.GetExploreLevel() <= this.fVt.GetExploreLevel())
         ? LguiUtil_1.LguiUtil.SetLocalTextNew(t, "ExploreUnlockRewardText", i)
         : LguiUtil_1.LguiUtil.SetLocalTextNew(t, "ExploreLockRewardText", i),
       this.GetSprite(8).SetUIActive(!s),
@@ -105,18 +105,18 @@ class ExploreLevelPreviewView extends UiViewBase_1.UiViewBase {
         e.GetRewardNameId(),
       ));
   }
-  dTn(e) {
+  vHs(e) {
     e = e.GetPreviewItemConfigId();
-    this.cTn?.Apply({ Type: 4, Data: e, ItemConfigId: e });
+    this.fHs?.Apply({ Type: 4, Data: e, ItemConfigId: e });
   }
-  y5t() {
-    var e = this.o5t.length;
-    this.SetButtonUiActive(2, this.M5t < e - 1),
-      this.SetButtonUiActive(1, 0 < this.M5t);
+  yVt() {
+    var e = this.oVt.length;
+    this.SetButtonUiActive(2, this.MVt < e - 1),
+      this.SetButtonUiActive(1, 0 < this.MVt);
   }
-  D5t() {
-    var e = this.f5t.GetAllExploreLevelRewardData().slice(1);
-    this.v5t.ReloadData(e);
+  DVt() {
+    var e = this.fVt.GetAllExploreLevelRewardData().slice(1);
+    this.vVt.ReloadData(e);
   }
 }
 exports.ExploreLevelPreviewView = ExploreLevelPreviewView;

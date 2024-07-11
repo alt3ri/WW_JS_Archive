@@ -3,15 +3,13 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ConfirmBoxView = void 0);
 const UE = require("ue"),
   StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
-  EventDefine_1 = require("../../../Common/Event/EventDefine"),
-  EventSystem_1 = require("../../../Common/Event/EventSystem"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
-  CommonCurrencyItem_1 = require("../../Common/CommonCurrencyItem"),
   CommonItemSmallItemGrid_1 = require("../../Common/ItemGrid/CommonItemSmallItemGrid"),
   ItemDefines_1 = require("../../Item/Data/ItemDefines"),
   PowerController_1 = require("../../Power/PowerController"),
+  PowerCurrencyItem_1 = require("../../Power/SubViews/PowerCurrencyItem"),
   GenericScrollView_1 = require("../../Util/ScrollView/GenericScrollView"),
   ConfirmBoxButton_1 = require("./ConfirmBoxButton");
 class ConfirmBoxView extends UiViewBase_1.UiViewBase {
@@ -23,15 +21,8 @@ class ConfirmBoxView extends UiViewBase_1.UiViewBase {
       (this.ConfirmBoxData = void 0),
       (this.SelectedIndex = -1),
       (this.ButtonComponentList = new Array()),
-      (this.dbt = void 0),
-      (this.Cbt = () => {
-        var t, i;
-        this.dbt &&
-          ((t = ModelManager_1.ModelManager.PowerModel.PowerCount),
-          (i =
-            ConfigManager_1.ConfigManager.PowerConfig.GetPowerNaturalLimit()),
-          this.dbt.RefreshTemp(ItemDefines_1.EItemId.Power, t + "/" + i));
-      }),
+      (this.SQs = void 0),
+      (this.Szs = void 0),
       (this.OnClose = () => {
         this.ConfirmBoxButtonClick();
       }),
@@ -44,7 +35,7 @@ class ConfirmBoxView extends UiViewBase_1.UiViewBase {
         );
       }),
       (this.ToggleFunction = void 0),
-      (this.x4e = (t) => {
+      (this.Bke = (t) => {
         this.ToggleFunction && this.ToggleFunction(t);
       });
   }
@@ -61,24 +52,12 @@ class ConfirmBoxView extends UiViewBase_1.UiViewBase {
       [8, UE.UIItem],
       [9, UE.UIText],
     ]),
-      (this.BtnBindInfo = [[6, this.x4e]]);
-  }
-  OnAddEventListener() {
-    EventSystem_1.EventSystem.Add(
-      EventDefine_1.EEventName.OnPowerChanged,
-      this.Cbt,
-    );
-  }
-  OnRemoveEventListener() {
-    EventSystem_1.EventSystem.Remove(
-      EventDefine_1.EEventName.OnPowerChanged,
-      this.Cbt,
-    );
+      (this.BtnBindInfo = [[6, this.Bke]]);
   }
   ConfirmBoxButtonClick() {
     this.CloseMe(this.ConfirmBoxData.GetCloseFunction());
   }
-  gbt() {
+  vqt() {
     -1 === this.SelectedIndex &&
       (1 === this.Config.ButtonText.length ||
       this.ConfirmBoxData.IsEscViewTriggerCallBack
@@ -114,10 +93,19 @@ class ConfirmBoxView extends UiViewBase_1.UiViewBase {
       t.Tip && this.GetText(9).SetText(t.Tip),
       await this.InitButton(),
       this.InitPropItem(),
-      this.fbt(),
+      this.Mqt(),
       this.ConfirmBoxData.ShowPowerItem &&
-        ((this.dbt = new CommonCurrencyItem_1.CommonCurrencyItem()),
-        await this.dbt.CreateThenShowByResourceIdAsync(
+        ((this.Szs = new PowerCurrencyItem_1.PowerCurrencyItem()),
+        await this.Szs.CreateThenShowByResourceIdAsync(
+          "UIItem_CommonCurrencyItem",
+        ),
+        this.Szs.ShowWithoutText(ItemDefines_1.EItemId.OverPower),
+        this.Szs.RefreshAddButtonActive(),
+        this.Szs.SetActive(
+          ModelManager_1.ModelManager.FunctionModel.IsOpen(10066),
+        ),
+        (this.SQs = new PowerCurrencyItem_1.PowerCurrencyItem()),
+        await this.SQs.CreateThenShowByResourceIdAsync(
           "UIItem_CommonCurrencyItem",
         ));
   }
@@ -129,20 +117,20 @@ class ConfirmBoxView extends UiViewBase_1.UiViewBase {
         .SetUIParent(t);
   }
   OnBeforeShow() {
-    var t, i;
     this.ChildPopView?.SetBackBtnShowState(this.Config.NeedClose),
       this.ChildPopView?.PopItem.SetMaskResponsibleState(
         this.Config.NeedMaskClose,
       ),
       this.ChildPopView?.PopItem.OverrideBackBtnCallBack(this.OnClose),
       this.ConfirmBoxData.ShowPowerItem &&
-        (this.dbt
-          ?.GetRootItem()
-          .SetUIParent(this.ChildPopView?.PopItem?.GetCostParent()),
-        (t = ModelManager_1.ModelManager.PowerModel.PowerCount),
-        (i = ConfigManager_1.ConfigManager.PowerConfig.GetPowerNaturalLimit()),
-        this.dbt.RefreshTemp(ItemDefines_1.EItemId.Power, t + "/" + i),
-        this.dbt?.SetButtonFunction(() => {
+        (this.Szs?.GetRootItem().SetUIParent(
+          this.ChildPopView?.PopItem?.GetCostParent(),
+        ),
+        this.SQs?.GetRootItem().SetUIParent(
+          this.ChildPopView?.PopItem?.GetCostParent(),
+        ),
+        this.SQs.ShowWithoutText(ItemDefines_1.EItemId.Power),
+        this.SQs?.SetButtonFunction(() => {
           PowerController_1.PowerController.OpenPowerView();
         }));
   }
@@ -160,7 +148,7 @@ class ConfirmBoxView extends UiViewBase_1.UiViewBase {
       for (let t = 0, i = this.ButtonComponentList.length; t < i; ++t) {
         var s = this.ButtonComponentList[t];
         e.push(
-          this.k2e(s.RootUIComp, t, () => {
+          this.i3e(s.RootUIComp, t, () => {
             (this.SelectedIndex = t + 1), this.ConfirmBoxButtonClick();
           }),
         );
@@ -168,7 +156,7 @@ class ConfirmBoxView extends UiViewBase_1.UiViewBase {
       this.ButtonList = await Promise.all(e);
     }
   }
-  async k2e(t, i, e) {
+  async i3e(t, i, e) {
     var s = new ConfirmBoxButton_1.ConfirmBoxButton();
     return (
       await s.CreateByActorAsync(t.GetOwner()),
@@ -187,7 +175,7 @@ class ConfirmBoxView extends UiViewBase_1.UiViewBase {
       s
     );
   }
-  uBt() {
+  dbt() {
     for (let t = 0, i = this.ButtonList.length; t < i; ++t)
       this.ButtonList[t].Destroy();
     this.ButtonList = [];
@@ -203,7 +191,7 @@ class ConfirmBoxView extends UiViewBase_1.UiViewBase {
         this.PropScrollView.RefreshByData(e);
     }
   }
-  fbt() {
+  Mqt() {
     var t = this.OpenParam;
     this.GetExtendToggle(6).RootUIComp.SetUIActive(t.HasToggle),
       (this.ToggleFunction = void 0),
@@ -212,9 +200,12 @@ class ConfirmBoxView extends UiViewBase_1.UiViewBase {
         (this.ToggleFunction = t.GetToggleFunction()));
   }
   OnBeforeDestroy() {
-    this.uBt(), this.PropScrollView?.ClearChildren(), this.gbt();
+    this.dbt(), this.PropScrollView?.ClearChildren(), this.vqt();
     var t = this.ConfirmBoxData?.FunctionMap.get(this.SelectedIndex);
-    t && t(), this.ConfirmBoxData?.DestroyFunction?.();
+    t && t(),
+      this.ConfirmBoxData?.DestroyFunction?.(),
+      this.SQs?.Destroy(),
+      this.Szs?.Destroy();
   }
 }
 exports.ConfirmBoxView = ConfirmBoxView;

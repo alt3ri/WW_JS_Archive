@@ -4,25 +4,25 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const ModelBase_1 = require("../../../../Core/Framework/ModelBase");
 class TriggerVolumeModel extends ModelBase_1.ModelBase {
   constructor() {
-    super(...arguments), (this.$nr = void 0);
+    super(...arguments), (this.Ksr = void 0);
   }
   OnInit() {
-    return (this.$nr = new Map()), !0;
+    return (this.Ksr = new Map()), !0;
   }
   AddTriggerVolume(e, r, o) {
-    let t = this.$nr.get(e);
-    t || ((t = new Map()), this.$nr.set(e, t)), t.set(r, o);
+    let t = this.Ksr.get(e);
+    t || ((t = new Map()), this.Ksr.set(e, t)), t.set(r, o);
   }
   RemoveTriggerVolume(e, r) {
-    e = this.$nr.get(e);
+    e = this.Ksr.get(e);
     e && e.delete(r);
   }
   GetTriggerVolume(e, r) {
-    e = this.$nr.get(e);
+    e = this.Ksr.get(e);
     if (e) return e.get(r);
   }
   OnClear() {
-    return !(this.$nr = void 0);
+    return !(this.Ksr = void 0);
   }
 }
 exports.TriggerVolumeModel = TriggerVolumeModel;

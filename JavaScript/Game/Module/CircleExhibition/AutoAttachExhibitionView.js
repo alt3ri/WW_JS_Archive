@@ -7,8 +7,8 @@ const UE = require("ue"),
 exports.DEFAULT_ATTACH_TIME = 8;
 class AutoAttachExhibitionView {
   constructor(t) {
-    (this.wje = void 0),
-      (this.Bje = void 0),
+    (this.WWe = void 0),
+      (this.KWe = void 0),
       (this.CurrentDirection = void 0),
       (this.CreateSourceActor = void 0),
       (this.CreateSourceUiActor = void 0),
@@ -27,7 +27,7 @@ class AutoAttachExhibitionView {
       (this.CurrentShowItemIndex = 0),
       (this.Width = 0),
       (this.Height = 0),
-      (this.IEt = 0),
+      (this.byt = 0),
       (this.SupportVelocity = !0),
       (this.CurrentVelocity = 0),
       (this.VelocityDirection = 0),
@@ -37,35 +37,35 @@ class AutoAttachExhibitionView {
       (this.BoundDistance = 0),
       (this.DebugMode = !1),
       (this.CurrentSelectState = !1),
-      (this.TEt = 0),
-      (this.LEt = 0),
+      (this.qyt = 0),
+      (this.Gyt = 0),
       (this.OnPointerBeginDrag = (t) => {
         (this.DragState = !0),
           (this.InertiaState = !1),
           (this.VelocityMoveState = !1),
-          (this.wje = t.GetWorldPointInPlane()),
-          (this.Bje = t.GetWorldPointInPlane());
+          (this.WWe = t.GetWorldPointInPlane()),
+          (this.KWe = t.GetWorldPointInPlane());
         for (let t = 0; t < this.Items.length; t++)
           this.Items[t].OnControllerDragStart();
       }),
       (this.OnPointerDrag = (t) => {
         var i = t.GetWorldPointInPlane();
-        this.Bje = t.GetWorldPointInPlane();
+        this.KWe = t.GetWorldPointInPlane();
         let s = 0;
         0 !==
           (s =
             0 === this.CurrentDirection
-              ? i.X - this.wje.X
-              : i.Z - this.wje.Z) && (this.MoveItems(s), (this.wje = i));
+              ? i.X - this.WWe.X
+              : i.Z - this.WWe.Z) && (this.MoveItems(s), (this.WWe = i));
       }),
       (this.OnPointerEndDrag = (i) => {
         for (let t = 0; t < this.Items.length; t++)
           this.Items[t].OnControllerDragEnd();
-        if (((this.DragState = !1), (this.LEt = 0), this.SupportVelocity)) {
+        if (((this.DragState = !1), (this.Gyt = 0), this.SupportVelocity)) {
           var i = i.GetWorldPointInPlane();
           let t = 0;
           (t =
-            0 === this.CurrentDirection ? i.X - this.Bje.X : i.Z - this.Bje.Z),
+            0 === this.CurrentDirection ? i.X - this.KWe.X : i.Z - this.KWe.Z),
             Math.abs(t) < this.VelocityFactor
               ? ((i = this.FindAutoAttachItem()),
                 this.ScrollToIndex(this.AttachTime, i.ShowItemIndex))
@@ -91,7 +91,7 @@ class AutoAttachExhibitionView {
     this.VelocityFactor = t;
   }
   SetItemOnSelectTime(t) {
-    this.IEt = t;
+    this.byt = t;
   }
   SetBoundDistance(t) {
     this.BoundDistance = t;
@@ -111,10 +111,10 @@ class AutoAttachExhibitionView {
         UE.UIItem.StaticClass(),
       )),
       (this.ShowItemNum = i),
-      this.DEt(),
+      this.Nyt(),
       (this.Gap = s);
   }
-  DEt() {
+  Nyt() {
     (this.ItemSizeX = this.CreateSourceUiActor.GetWidth()),
       (this.ItemSizeY = this.CreateSourceUiActor.GetHeight()),
       (this.Width = this.ItemActor.GetWidth()),
@@ -207,16 +207,16 @@ class AutoAttachExhibitionView {
         (this.CurrentShowItemIndex = s.ShowItemIndex),
         0 === i
           ? this.MoveItems(-t)
-          : ((this.LEt = 0), (this.TEt = i), (this.InertiaState = !0));
+          : ((this.Gyt = 0), (this.qyt = i), (this.InertiaState = !0));
     }
   }
   ScrollToIndex(t, i) {
     this.AttachToIndex(t, i);
   }
   AttachToIndex(t, i) {
-    this.REt(t, i);
+    this.Oyt(t, i);
   }
-  REt(i, s) {
+  Oyt(i, s) {
     if (!this.InertiaState) {
       var h = this.GetShowIndexItem(s);
       if (h) this.ScrollToItem(i, h);
@@ -234,7 +234,7 @@ class AutoAttachExhibitionView {
             (this.Distance = -t),
             0 === i
               ? this.MoveItems(-t)
-              : ((this.LEt = 0), (this.TEt = i), (this.InertiaState = !0));
+              : ((this.Gyt = 0), (this.qyt = i), (this.InertiaState = !0));
         }
       }
     }
@@ -243,8 +243,8 @@ class AutoAttachExhibitionView {
     if (this.DragState || (!this.InertiaState && !this.VelocityMoveState)) {
       if (
         this.InertiaState &&
-        ((this.InertiaState = !1), (this.LEt = 0), !this.CurrentSelectState) &&
-        1 === this.IEt
+        ((this.InertiaState = !1), (this.Gyt = 0), !this.CurrentSelectState) &&
+        1 === this.byt
       )
         for (let t = 0; t < this.Items.length; t++) {
           var i = this.Items[t];
@@ -258,12 +258,12 @@ class AutoAttachExhibitionView {
         ? ((this.CurrentVelocity = this.ReCalculateOffset(
             this.CurrentVelocity,
           )),
-          this.rWe(t))
-        : this.LEt < this.TEt
-          ? this.nWe()
+          this.gKe(t))
+        : this.Gyt < this.qyt
+          ? this.fKe()
           : (this.InertiaState = !1);
   }
-  rWe(t) {
+  gKe(t) {
     (this.CurrentVelocityTime = this.CurrentVelocityTime + t / 100),
       0 < this.VelocityDirection
         ? (this.MoveItems(this.CurrentVelocity),
@@ -285,8 +285,8 @@ class AutoAttachExhibitionView {
     var t = this.FindAutoAttachItem();
     this.ScrollToIndex(this.AttachTime, t.ShowItemIndex);
   }
-  nWe() {
-    this.MoveItems(this.Distance / this.TEt), this.LEt++;
+  fKe() {
+    this.MoveItems(this.Distance / this.qyt), this.Gyt++;
   }
   MoveItems(i) {
     for (let t = 0; t < this.Items.length; t++) {
@@ -296,7 +296,7 @@ class AutoAttachExhibitionView {
           Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("UiCommon", 28, "Test"),
         this.CurrentSelectState ||
-          0 !== this.IEt ||
+          0 !== this.byt ||
           s.ShowItemIndex !== this.CurrentShowItemIndex ||
           s.GetSelectState() ||
           (s.Select(), (this.CurrentSelectState = !0));

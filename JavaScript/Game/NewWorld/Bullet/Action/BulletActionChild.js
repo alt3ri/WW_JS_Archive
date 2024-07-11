@@ -10,32 +10,32 @@ const Log_1 = require("../../../../Core/Common/Log"),
   BulletActionBase_1 = require("./BulletActionBase");
 class BulletActionChild extends BulletActionBase_1.BulletActionBase {
   constructor() {
-    super(...arguments), (this.ChildInfo = void 0), (this.U4o = void 0);
+    super(...arguments), (this.ChildInfo = void 0), (this.L5o = void 0);
   }
   OnExecute() {
     (this.ChildInfo = new BulletChildInfo_1.BulletChildInfo()),
       (this.BulletInfo.ChildInfo = this.ChildInfo),
       (this.ChildInfo.HaveSummonedBulletNumber = []),
-      (this.U4o = this.BulletInfo.BulletDataMain.Children);
-    var i = this.U4o.length;
+      (this.L5o = this.BulletInfo.BulletDataMain.Children);
+    var i = this.L5o.length;
     for (let t = 0; t < i; t++) this.ChildInfo.HaveSummonedBulletNumber.push(0);
-    this.A4o();
+    this.D5o();
   }
   Clear() {
-    super.Clear(), (this.ChildInfo = void 0), (this.U4o = void 0);
+    super.Clear(), (this.ChildInfo = void 0), (this.L5o = void 0);
   }
-  A4o() {
-    for (const t of this.U4o)
+  D5o() {
+    for (const t of this.L5o)
       if (2 === t.Condition)
         return void (this.ChildInfo.HaveSpecialChildrenBullet = !0);
   }
   OnTick(t) {
-    this.BulletInfo.NeedDestroy || this.P4o();
+    this.BulletInfo.NeedDestroy || this.R5o();
   }
-  P4o() {
-    var i = this.U4o.length;
+  R5o() {
+    var i = this.L5o.length;
     for (let t = 0; t < i; ++t) {
-      var e = this.U4o[t],
+      var e = this.L5o[t],
         l = t;
       if (
         !(

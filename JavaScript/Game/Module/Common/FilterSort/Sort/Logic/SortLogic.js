@@ -17,7 +17,7 @@ const ConfigManager_1 = require("../../../../../Manager/ConfigManager"),
   WeaponSort_1 = require("./Rule/WeaponSort");
 class SortLogic {
   constructor() {
-    this.NTt = {
+    this.VLt = {
       [1]: new RoleSort_1.RoleSort(),
       2: new WeaponSort_1.WeaponSort(),
       3: new ItemSort_1.ItemSort(),
@@ -41,7 +41,7 @@ class SortLogic {
     this.SortDataByData(e, r, i, o, ...t);
   }
   SortDataByData(e, r, i, u, ...S) {
-    const n = this.NTt[r];
+    const n = this.VLt[r];
     n.InitSortMap(),
       e.sort((e, r) => {
         for (const t of i.values()) {

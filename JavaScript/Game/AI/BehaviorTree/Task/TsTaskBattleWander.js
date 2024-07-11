@@ -7,6 +7,7 @@ const Log_1 = require("../../../../Core/Common/Log"),
   MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
   GlobalData_1 = require("../../../GlobalData"),
   CharacterUnifiedStateTypes_1 = require("../../../NewWorld/Character/Common/Component/Abilities/CharacterUnifiedStateTypes"),
+  GravityUtils_1 = require("../../../Utils/GravityUtils"),
   AiContollerLibrary_1 = require("../../Controller/AiContollerLibrary"),
   TsAiController_1 = require("../../Controller/TsAiController"),
   TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase"),
@@ -42,7 +43,14 @@ class TsTaskBattleWander extends TsTaskAbortImmediatelyBase_1.default {
       ((this.IsInitTsVariables = !0),
       (this.TsMoveState = this.MoveState),
       (this.TsAllyDetect = this.AllyDetect),
-      (this.TsWalkOff = this.WalkOff));
+      (this.TsWalkOff = this.WalkOff)),
+      this.TmpVector ||
+        ((this.TmpVector = Vector_1.Vector.Create()),
+        (this.TmpOffset = Vector_1.Vector.Create()),
+        (this.TmpVector2 = Vector_1.Vector.Create()),
+        (this.TmpDirection = Vector_1.Vector.Create()),
+        (this.TmpQuat = Quat_1.Quat.Create()),
+        (this.LastDestination = Vector_1.Vector.Create()));
   }
   ReceiveExecuteAI(t, i) {
     this.InitTsVariables(),
@@ -50,16 +58,9 @@ class TsTaskBattleWander extends TsTaskAbortImmediatelyBase_1.default {
       t instanceof TsAiController_1.default &&
         ((t = t.AiController),
         this.TsWalkOff ||
-          t.CharActorComp.Entity.GetComponent(161)?.SetWalkOffLedgeRecord(!1),
+          t.CharActorComp.Entity.GetComponent(163)?.SetWalkOffLedgeRecord(!1),
         t.AiWanderInfos?.AiBattleWanderGroups?.length
-          ? (this.TmpVector ||
-              ((this.TmpVector = Vector_1.Vector.Create()),
-              (this.TmpOffset = Vector_1.Vector.Create()),
-              (this.TmpVector2 = Vector_1.Vector.Create()),
-              (this.TmpDirection = Vector_1.Vector.Create()),
-              (this.TmpQuat = Quat_1.Quat.Create()),
-              (this.LastDestination = Vector_1.Vector.Create())),
-            (this.EndTime =
+          ? ((this.EndTime =
               Time_1.Time.WorldTime +
               t.AiWanderInfos.RandomBattleWanderEndTime()),
             (t.AiWanderInfos.BattleWanderAddTime = 0),
@@ -93,7 +94,10 @@ class TsTaskBattleWander extends TsTaskAbortImmediatelyBase_1.default {
                       h.ActorLocationProxy,
                       this.TmpOffset,
                     ),
-                    (this.TmpOffset.Z = 0),
+                    GravityUtils_1.GravityUtils.ConvertToPlanarVector(
+                      h,
+                      this.TmpOffset,
+                    ),
                     (a = this.TmpOffset.Size()) <
                     MathUtils_1.MathUtils.SmallNumber
                       ? (h.ActorForwardProxy.Multiply(-1, this.TmpVector),
@@ -130,7 +134,7 @@ class TsTaskBattleWander extends TsTaskAbortImmediatelyBase_1.default {
     this.AIOwner instanceof TsAiController_1.default &&
       ((t =
         this.AIOwner.AiController.CharActorComp.Entity.GetComponent(
-          36,
+          37,
         ))?.MoveController.StopMoveToLocation(),
       this.LastDestination?.Reset(),
       AiContollerLibrary_1.AiControllerLibrary.ClearInput(this.AIOwner),
@@ -152,7 +156,7 @@ class TsTaskBattleWander extends TsTaskAbortImmediatelyBase_1.default {
         ((this.DistanceIndex = this.FindDistanceIndexByDistance(i, e)),
         this.FindDirectByWeights(i),
         this.CheckNavigationAndAllyBlock(t, this.TmpOffset, e),
-        t.CharAiDesignComp.Entity.GetComponent(158));
+        t.CharAiDesignComp.Entity.GetComponent(160));
     if (h.Valid)
       switch (this.TsMoveState) {
         case 1:
@@ -196,60 +200,31 @@ class TsTaskBattleWander extends TsTaskAbortImmediatelyBase_1.default {
     }
   }
   CheckNavigationAndAllyBlock(t, i, s) {
-    if (4 !== this.DirectIndex && !(s <= MathUtils_1.MathUtils.SmallNumber))
-      if (
-        (this.TmpVector || (this.TmpVector = Vector_1.Vector.Create()),
-        this.TmpVector.DeepCopy(i),
-        this.TmpVector.DivisionEqual(s),
-        AiContollerLibrary_1.AiControllerLibrary.AllyOnPath(
-          t,
-          this.TmpVector,
-          this.TsAllyDetect,
-          this.DirectIndex,
-        ))
+    4 === this.DirectIndex ||
+      s <= MathUtils_1.MathUtils.SmallNumber ||
+      (this.TmpVector.DeepCopy(i),
+      this.TmpVector.DivisionEqual(s),
+      AiContollerLibrary_1.AiControllerLibrary.AllyOnPath(
+        t,
+        this.TmpVector,
+        this.TsAllyDetect,
+        this.DirectIndex,
       )
-        this.DirectIndex = 4;
-      else
-        switch (this.DirectIndex) {
-          case 0:
-            break;
-          case 1:
-            (this.TmpVector.X = -this.TmpVector.X),
-              (this.TmpVector.Y = -this.TmpVector.Y);
-            break;
-          case 2:
-            var e = this.TmpVector.X;
-            (this.TmpVector.X = -this.TmpVector.Y), (this.TmpVector.Y = e);
-            break;
-          case 3:
-            e = -this.TmpVector.X;
-            (this.TmpVector.X = this.TmpVector.Y), (this.TmpVector.Y = e);
-        }
+        ? (this.DirectIndex = 4)
+        : GravityUtils_1.GravityUtils.TurnVectorByDirectionInGravity(
+            t.CharActorComp,
+            this.TmpVector,
+            this.DirectIndex,
+          ));
   }
   SetInputParams(t, i, s) {
-    switch (
-      (this.TmpOffset ||
-        ((this.TmpOffset = Vector_1.Vector.Create()),
-        (this.TmpVector2 = Vector_1.Vector.Create()),
-        (this.TmpQuat = Quat_1.Quat.Create())),
-      i.ActorLocationProxy.Subtraction(t.ActorLocationProxy, this.TmpOffset),
+    i.ActorLocationProxy.Subtraction(t.ActorLocationProxy, this.TmpOffset),
       this.TmpDirection.DeepCopy(this.TmpOffset),
-      this.DirectIndex)
-    ) {
-      case 0:
-        break;
-      case 1:
-        (this.TmpOffset.X = -this.TmpOffset.X),
-          (this.TmpOffset.Y = -this.TmpOffset.Y);
-        break;
-      case 3:
-        var e = this.TmpOffset.X;
-        (this.TmpOffset.X = this.TmpOffset.Y), (this.TmpOffset.Y = -e);
-        break;
-      case 2:
-        e = this.TmpOffset.X;
-        (this.TmpOffset.X = -this.TmpOffset.Y), (this.TmpOffset.Y = e);
-    }
+      GravityUtils_1.GravityUtils.TurnVectorByDirectionInGravity(
+        t,
+        this.TmpOffset,
+        this.DirectIndex,
+      );
     s =
       2 === this.TsMoveState ? s.RunTurnSpeed : s.TurnSpeeds[this.DirectIndex];
     if (this.NavigationInterval > NAV_INTERVAL_TIME) {
@@ -273,9 +248,9 @@ class TsTaskBattleWander extends TsTaskAbortImmediatelyBase_1.default {
       this.DirectIndex,
     )
       ? ((this.DirectIndex = 4), t.ClearInput())
-      : ((i = t.Entity.GetComponent(36)) &&
+      : ((i = t.Entity.GetComponent(37)) &&
           i.MoveController.IsMovingToLocation()) ||
-        (t.Entity.GetComponent(89)?.MoveState !==
+        (t.Entity.GetComponent(91)?.MoveState !==
         CharacterUnifiedStateTypes_1.ECharMoveState.Walk
           ? (AiContollerLibrary_1.AiControllerLibrary.TurnToDirect(
               t,
@@ -294,7 +269,7 @@ class TsTaskBattleWander extends TsTaskAbortImmediatelyBase_1.default {
             ));
   }
   StopMoveToLocation(t) {
-    t = t.Entity.GetComponent(36);
+    t = t.Entity.GetComponent(37);
     t &&
       t.MoveController.IsMovingToLocation() &&
       t?.MoveController.StopMoveToLocation(),
@@ -303,11 +278,11 @@ class TsTaskBattleWander extends TsTaskAbortImmediatelyBase_1.default {
   SetMoveToLocation(t, i, s, e) {
     this.TmpVector2.DeepCopy(t),
       this.TmpVector2.AdditionEqual(i.ActorLocationProxy);
-    t = i.Entity.GetComponent(36);
+    t = i.Entity.GetComponent(37);
     if (!t) return !1;
     if (
       (!this.LastDestination.IsNearlyZero() ||
-        Vector_1.Vector.Dist2D(this.LastDestination, this.TmpVector2) < 100) &&
+        Vector_1.Vector.Dist(this.LastDestination, this.TmpVector2) < 100) &&
       t.MoveController.IsMovingToLocation()
     )
       return this.LastDestination.DeepCopy(this.TmpVector2), !0;

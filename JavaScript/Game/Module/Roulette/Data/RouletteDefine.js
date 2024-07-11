@@ -9,6 +9,8 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.AssemblyExploreGridData =
     exports.AssemblyGridData =
       void 0);
+const LocalStorageDefine_1 = require("../../../Common/LocalStorageDefine"),
+  ModelManager_1 = require("../../../Manager/ModelManager");
 class AssemblyGridData {
   constructor() {
     (this.Id = 0),
@@ -24,6 +26,12 @@ class AssemblyExploreGridData extends (exports.AssemblyGridData =
   AssemblyGridData) {
   constructor() {
     super(...arguments), (this.IconPath = "");
+  }
+  get HasRedDot() {
+    return ModelManager_1.ModelManager.NewFlagModel.HasNewFlag(
+      LocalStorageDefine_1.ELocalStoragePlayerKey.RouletteAssemblyItemRedDot,
+      this.Id,
+    );
   }
 }
 exports.AssemblyExploreGridData = AssemblyExploreGridData;

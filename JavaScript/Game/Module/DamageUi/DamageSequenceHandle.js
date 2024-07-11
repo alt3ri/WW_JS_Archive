@@ -11,8 +11,8 @@ const UE = require("ue"),
   StringUtils_1 = require("../../../Core/Utils/StringUtils");
 class DamageSequenceHandle {
   constructor() {
-    (this.Bkt = void 0),
-      (this.Gft = void 0),
+    (this.b2t = void 0),
+      (this.$pt = void 0),
       (this.n8 = ""),
       (this.GPe = UE.NewArray(UE.Actor));
   }
@@ -20,43 +20,43 @@ class DamageSequenceHandle {
     this.n8 = t;
   }
   Destroy() {
-    if (this.Bkt) {
-      const t = this.Bkt;
+    if (this.b2t) {
+      const t = this.b2t;
       TimerSystem_1.TimerSystem.Next(() => {
         ActorSystem_1.ActorSystem.Put(t);
       }),
-        (this.Bkt = void 0),
-        (this.Gft = void 0);
+        (this.b2t = void 0),
+        (this.$pt = void 0);
     }
   }
   Reset() {
-    this.Stop(), this.ResetSequenceBinding(), this.Gft.OnFinished.Clear();
+    this.Stop(), this.ResetSequenceBinding(), this.$pt.OnFinished.Clear();
   }
   Play() {
-    this.Gft?.IsValid() && this.Gft.Play();
+    this.$pt?.IsValid() && this.$pt.Play();
   }
   Stop() {
-    this.Gft?.IsValid() && this.Gft.IsPlaying() && this.Gft.Stop();
+    this.$pt?.IsValid() && this.$pt.IsPlaying() && this.$pt.Stop();
   }
   SetSequenceBindingByTag(t, e) {
-    this.Bkt?.IsValid() &&
+    this.b2t?.IsValid() &&
       e &&
       (this.GPe.Empty(),
       this.GPe.Add(e),
       (e = FNameUtil_1.FNameUtil.GetDynamicFName(t)),
-      this.Bkt.SetBindingByTag(e, this.GPe, !1));
+      this.b2t.SetBindingByTag(e, this.GPe, !1));
   }
   AddSequenceBindingByTag(t, e) {
-    this.Bkt?.IsValid() &&
+    this.b2t?.IsValid() &&
       e &&
       ((t = FNameUtil_1.FNameUtil.GetDynamicFName(t)),
-      this.Bkt.AddBindingByTag(t, e));
+      this.b2t.AddBindingByTag(t, e));
   }
   ResetSequenceBinding() {
-    this.Bkt?.IsValid() && this.Bkt.ResetBindings();
+    this.b2t?.IsValid() && this.b2t.ResetBindings();
   }
   AddOnFinished(t) {
-    this.Gft?.IsValid() && this.Gft.OnFinished.Add(t);
+    this.$pt?.IsValid() && this.$pt.OnFinished.Add(t);
   }
   SpawnSequence(e = void 0) {
     StringUtils_1.StringUtils.IsEmpty(this.n8) ||
@@ -65,14 +65,14 @@ class DamageSequenceHandle {
         UE.LevelSequence,
         (t) => {
           ObjectUtils_1.ObjectUtils.IsValid(t) &&
-            ((this.Bkt = ActorSystem_1.ActorSystem.Get(
+            ((this.b2t = ActorSystem_1.ActorSystem.Get(
               UE.LevelSequenceActor.StaticClass(),
               MathUtils_1.MathUtils.DefaultTransform,
               void 0,
               !1,
             )),
-            this.Bkt.SetSequence(t),
-            (this.Gft = this.Bkt.SequencePlayer),
+            this.b2t.SetSequence(t),
+            (this.$pt = this.b2t.SequencePlayer),
             e) &&
             e(this);
         },

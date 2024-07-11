@@ -7,41 +7,41 @@ class RoleSkillLine extends UiPanelBase_1.UiPanelBase {
   constructor(s, i, t, e) {
     super(),
       this.CreateThenShowByActor(e.GetOwner()),
-      (this.xco = e.GetAttachUIChild(0)),
-      (this.wco = e.GetAttachUIChild(1)),
-      (this.Bco = e.GetAttachUIChild(2)),
+      (this.Rmo = e.GetAttachUIChild(0)),
+      (this.Umo = e.GetAttachUIChild(1)),
+      (this.Amo = e.GetAttachUIChild(2)),
       (this.StartPosId = s),
       (this.EndPosId = i),
       this.SetColor(t);
   }
   SetColor(s) {
-    this.Bco && this.Bco.SetColor(UE.Color.FromHex(s)),
-      this.wco && this.wco.SetColor(UE.Color.FromHex(s));
+    this.Amo && this.Amo.SetColor(UE.Color.FromHex(s)),
+      this.Umo && this.Umo.SetColor(UE.Color.FromHex(s));
   }
   SetLineActive(s) {
     switch (s) {
       case 1:
-        this.RootItem.SetUIActive(!1), this.Bco.SetUIActive(!1);
+        this.RootItem.SetUIActive(!1), this.Amo.SetUIActive(!1);
         break;
       case 2:
         this.RootItem.SetUIActive(!0),
-          this.xco.SetUIActive(!0),
-          this.wco.SetUIActive(!1),
-          this.Bco.SetUIActive(!1);
+          this.Rmo.SetUIActive(!0),
+          this.Umo.SetUIActive(!1),
+          this.Amo.SetUIActive(!1);
         break;
       case 3:
         this.RootItem.SetUIActive(!0),
-          this.xco.SetUIActive(!1),
-          this.wco.SetUIActive(!0),
-          this.Bco.SetUIActive(!0);
+          this.Rmo.SetUIActive(!1),
+          this.Umo.SetUIActive(!0),
+          this.Amo.SetUIActive(!0);
     }
   }
   OnBeforeDestroy() {
     (this.StartPosId = void 0),
       (this.EndPosId = void 0),
-      (this.xco = void 0),
-      (this.wco = void 0),
-      (this.Bco = void 0);
+      (this.Rmo = void 0),
+      (this.Umo = void 0),
+      (this.Amo = void 0);
   }
 }
 exports.RoleSkillLine = RoleSkillLine;

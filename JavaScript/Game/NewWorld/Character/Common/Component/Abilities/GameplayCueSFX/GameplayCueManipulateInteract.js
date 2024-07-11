@@ -11,30 +11,30 @@ const UE = require("ue"),
 class GameplayCueManipulateInteract extends GameplayCueBase_1.GameplayCueBase {
   constructor() {
     super(...arguments),
-      (this.olt = void 0),
-      (this.l$o = []),
-      (this.CXo = void 0);
+      (this.g1t = void 0),
+      (this.sYo = []),
+      (this.c$o = void 0);
   }
   OnInit() {}
   OnTick(e) {}
   OnCreate() {
-    (this.olt = FNameUtil_1.FNameUtil.GetDynamicFName(this.CueConfig.Socket)),
-      (this.l$o = this.CueConfig.Resources),
-      (this.CXo = ActorSystem_1.ActorSystem.Get(
+    (this.g1t = FNameUtil_1.FNameUtil.GetDynamicFName(this.CueConfig.Socket)),
+      (this.sYo = this.CueConfig.Resources),
+      (this.c$o = ActorSystem_1.ActorSystem.Get(
         UE.Actor.StaticClass(),
         this.ActorInternal.GetTransform(),
       )),
       GlobalData_1.GlobalData.IsPlayInEditor &&
-        this.CXo.SetActorLabel(
+        this.c$o.SetActorLabel(
           this.ActorInternal.GetActorLabel() +
             ":" +
             GameplayCueManipulateInteract.name,
         ),
       ResourceSystem_1.ResourceSystem.LoadAsync(
-        this.l$o[0],
+        this.sYo[0],
         UE.NiagaraSystem,
         (e) => {
-          var t = this.CXo.AddComponentByClass(
+          var t = this.c$o.AddComponentByClass(
             UE.NiagaraComponent.StaticClass(),
             !1,
             MathUtils_1.MathUtils.DefaultTransform,
@@ -42,9 +42,9 @@ class GameplayCueManipulateInteract extends GameplayCueBase_1.GameplayCueBase {
           );
           t.SetAsset(e),
             t.SetNiagaraVariableVec3("End", this.GetTargetPosition()),
-            this.CXo.K2_AttachToComponent(
+            this.c$o.K2_AttachToComponent(
               this.ActorInternal.Mesh,
-              this.olt,
+              this.g1t,
               2,
               2,
               2,
@@ -54,10 +54,10 @@ class GameplayCueManipulateInteract extends GameplayCueBase_1.GameplayCueBase {
       );
   }
   OnDestroy() {
-    ActorSystem_1.ActorSystem.Put(this.CXo);
+    ActorSystem_1.ActorSystem.Put(this.c$o);
   }
   GetTargetPosition() {
-    return this.Entity.GetComponent(56).GetTargetLocation().ToUeVector();
+    return this.Entity.GetComponent(57).GetTargetLocation().ToUeVector();
   }
 }
 exports.GameplayCueManipulateInteract = GameplayCueManipulateInteract;

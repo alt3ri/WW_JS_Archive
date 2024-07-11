@@ -108,10 +108,10 @@ class SeamlessTravelController extends ControllerBase_1.ControllerBase {
   static SetSeamlessTravelPlayerEntity(e) {
     for (const r of e.Entity.Components)
       (0, RegisterComponent_1.isComponentInstance)(r, 3) ||
-        (0, RegisterComponent_1.isComponentInstance)(r, 161) ||
-        (0, RegisterComponent_1.isComponentInstance)(r, 52) ||
-        (0, RegisterComponent_1.isComponentInstance)(r, 160) ||
-        (0, RegisterComponent_1.isComponentInstance)(r, 82) ||
+        (0, RegisterComponent_1.isComponentInstance)(r, 163) ||
+        (0, RegisterComponent_1.isComponentInstance)(r, 53) ||
+        (0, RegisterComponent_1.isComponentInstance)(r, 162) ||
+        (0, RegisterComponent_1.isComponentInstance)(r, 84) ||
         r.Disable("无缝加载:关闭实体组件Tick");
     ModelManager_1.ModelManager.SeamlessTravelModel.SeamlessTravelPlayerEntity =
       e;
@@ -156,7 +156,7 @@ class SeamlessTravelController extends ControllerBase_1.ControllerBase {
       ((e =
         ModelManager_1.ModelManager.SeamlessTravelModel
           .SeamlessTravelPlayerEntity)?.Valid ||
-        ((e = e.Entity.GetComponent(52)),
+        ((e = e.Entity.GetComponent(53)),
         InputController_1.InputController.RemoveInputHandler(e)),
       ModelManager_1.ModelManager.SeamlessTravelModel.SeamlessTravelPlayer.CharacterMovement.SetMovementMode(
         0,
@@ -188,10 +188,10 @@ class SeamlessTravelController extends ControllerBase_1.ControllerBase {
       Global_1.Global.BaseCharacter.CharacterMovement.SetMovementMode(1),
       (r = (o =
         Global_1.Global.BaseCharacter.CharacterActorComponent
-          .Entity).GetComponent(160)) &&
+          .Entity).GetComponent(162)) &&
         r.MainAnimInstance?.SyncAnimStates(void 0),
-      o.GetComponent(161)?.StopAllAddMove(),
-      o.GetComponent(158)?.ResetCharState(),
+      o.GetComponent(163)?.StopAllAddMove(),
+      o.GetComponent(160)?.ResetCharState(),
       (r =
         CameraController_1.CameraController.FightCamera.LogicComponent
           .InitialCameraPitch),
@@ -223,7 +223,7 @@ class SeamlessTravelController extends ControllerBase_1.ControllerBase {
     ControllerHolder_1.ControllerHolder.CreatureController.RemoveEntity(
       r,
       "FinishSeamlessTravel",
-      Protocol_1.Aki.Protocol.WBs.Proto_RemoveTypeForce,
+      Protocol_1.Aki.Protocol.bks.Proto_RemoveTypeForce,
     ) ||
       (Log_1.Log.CheckError() &&
         Log_1.Log.Error(

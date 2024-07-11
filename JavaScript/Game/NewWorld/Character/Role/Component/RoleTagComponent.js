@@ -37,7 +37,7 @@ let RoleTagComponent = class RoleTagComponent extends BaseTagComponent_1.BaseTag
           t =
             FormationDataController_1.FormationDataController.GetPlayerEntity(
               t,
-            )?.GetComponent(185);
+            )?.GetComponent(188);
         if (t) {
           var n,
             r,
@@ -90,12 +90,12 @@ let RoleTagComponent = class RoleTagComponent extends BaseTagComponent_1.BaseTag
       (super.OnAnyTagChanged(e, t, o),
       (t = this.Entity.GetComponent(0)?.GetPlayerId())) &&
       FormationDataController_1.FormationDataController.GetPlayerEntity(t)
-        ?.GetComponent(180)
+        ?.GetComponent(183)
         ?.OnTagChanged(e);
   }
 };
 (RoleTagComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(174)],
+  [(0, RegisterComponent_1.RegisterComponent)(177)],
   RoleTagComponent,
 )),
   (exports.RoleTagComponent = RoleTagComponent);

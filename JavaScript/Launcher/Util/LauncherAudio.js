@@ -22,61 +22,61 @@ class LauncherAudio {
               PAUSE_AUDIO_EVENT,
               UE.AkAudioEvent,
               (e) => {
-                (this.Fyr = e), this.Vyr();
+                (this.NIr = e), this.OIr();
               },
             ),
             LauncherResourceLib_1.LauncherResourceLib.LoadAsync(
               RESUME_AUDIO_EVENT,
               UE.AkAudioEvent,
               (e) => {
-                (this.Hyr = e), this.Vyr();
+                (this.kIr = e), this.OIr();
               },
             ),
             (this.gU = !0))
           : LauncherLog_1.LauncherLog.Info("LauncherAudio 不是提审包 ~")));
   }
-  static Vyr() {
-    void 0 !== this.Fyr &&
-      void 0 !== this.Hyr &&
+  static OIr() {
+    void 0 !== this.NIr &&
+      void 0 !== this.kIr &&
       (UE.KuroAudioDelegates.SetAudioPauseDelegate(
-        (0, puerts_1.toManualReleaseDelegate)(this.jyr),
+        (0, puerts_1.toManualReleaseDelegate)(this.FIr),
       ),
       UE.KuroAudioDelegates.SetAudioResumeDelegate(
-        (0, puerts_1.toManualReleaseDelegate)(this.Wyr),
+        (0, puerts_1.toManualReleaseDelegate)(this.VIr),
       ));
   }
   static Destroy() {
     this.gU &&
-      (void 0 !== this.Fyr &&
-        void 0 !== this.Hyr &&
-        ((0, puerts_1.releaseManualReleaseDelegate)(this.jyr),
+      (void 0 !== this.NIr &&
+        void 0 !== this.kIr &&
+        ((0, puerts_1.releaseManualReleaseDelegate)(this.FIr),
         UE.KuroAudioDelegates.UnbindAudioPauseDelegate(),
-        (0, puerts_1.releaseManualReleaseDelegate)(this.Wyr),
+        (0, puerts_1.releaseManualReleaseDelegate)(this.VIr),
         UE.KuroAudioDelegates.UnbindAudioResumeDelegate()),
       (this.gU = !1));
   }
 }
 (exports.LauncherAudio = LauncherAudio),
-  ((_a = LauncherAudio).Fyr = void 0),
-  (LauncherAudio.Hyr = void 0),
+  ((_a = LauncherAudio).NIr = void 0),
+  (LauncherAudio.kIr = void 0),
   (LauncherAudio.gU = !1),
-  (LauncherAudio.oWr = void 0),
-  (LauncherAudio.jyr = () => {
-    void 0 !== _a.Fyr &&
-      (!0 === _a.oWr
+  (LauncherAudio.Gjr = void 0),
+  (LauncherAudio.FIr = () => {
+    void 0 !== _a.NIr &&
+      (!0 === _a.Gjr
         ? LauncherLog_1.LauncherLog.Info("重复暂停音乐")
         : (LauncherLog_1.LauncherLog.Info("暂停所有音乐"),
-          UE.AkGameplayStatics.PostEvent(_a.Fyr, void 0, 0, void 0),
+          UE.AkGameplayStatics.PostEvent(_a.NIr, void 0, 0, void 0),
           UE.AkGameplayStatics.RenderAudio(),
-          (_a.oWr = !0)));
+          (_a.Gjr = !0)));
   }),
-  (LauncherAudio.Wyr = () => {
-    void 0 !== _a.Hyr &&
-      (!1 === _a.oWr
+  (LauncherAudio.VIr = () => {
+    void 0 !== _a.kIr &&
+      (!1 === _a.Gjr
         ? LauncherLog_1.LauncherLog.Info("重复恢复音乐")
         : (LauncherLog_1.LauncherLog.Info("恢复所有音乐"),
-          UE.AkGameplayStatics.PostEvent(_a.Hyr, void 0, 0, void 0),
+          UE.AkGameplayStatics.PostEvent(_a.kIr, void 0, 0, void 0),
           UE.AkGameplayStatics.RenderAudio(),
-          (_a.oWr = !1)));
+          (_a.Gjr = !1)));
   });
 //# sourceMappingURL=LauncherAudio.js.map

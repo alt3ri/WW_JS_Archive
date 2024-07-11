@@ -18,21 +18,21 @@ class LockOnDebugData {
   DrawDebug(t) {
     var e = EntitySystem_1.EntitySystem.Get(this.LAe.EntityHandle.Id);
     this.LAe.SocketName
-      ? this.Due.DeepCopy(this.eYo(e, this.LAe.SocketName)?.GetLocation())
+      ? this.Due.DeepCopy(this.JYo(e, this.LAe.SocketName)?.GetLocation())
       : this.Due.DeepCopy(e.GetComponent(1).ActorLocationProxy);
     let a = void 0;
     switch (this.ColorType) {
       case 0:
-        a = LockOnDebugData.tYo;
+        a = LockOnDebugData.zYo;
         break;
       case 2:
-        a = LockOnDebugData.iYo;
+        a = LockOnDebugData.ZYo;
         break;
       case 1:
-        a = LockOnDebugData.Rut;
+        a = LockOnDebugData.Fct;
         break;
       case 3:
-        a = LockOnDebugData.oYo;
+        a = LockOnDebugData.eJo;
     }
     UE.KismetSystemLibrary.DrawDebugArrow(
       GlobalData_1.GlobalData.World,
@@ -50,7 +50,7 @@ class LockOnDebugData {
           a,
         );
   }
-  eYo(t, e) {
+  JYo(t, e) {
     var t = t.GetComponent(3)?.Actor;
     return t?.IsValid() &&
       e &&
@@ -61,27 +61,27 @@ class LockOnDebugData {
       : MathUtils_1.MathUtils.DefaultTransform;
   }
 }
-((exports.LockOnDebugData = LockOnDebugData).tYo = new UE.LinearColor(
+((exports.LockOnDebugData = LockOnDebugData).zYo = new UE.LinearColor(
   1,
   0,
   0,
   1,
 )),
-  (LockOnDebugData.Rut = new UE.LinearColor(0, 1, 0, 1)),
-  (LockOnDebugData.iYo = new UE.LinearColor(0, 0, 1, 1)),
-  (LockOnDebugData.oYo = new UE.LinearColor(1, 1, 0, 1));
+  (LockOnDebugData.Fct = new UE.LinearColor(0, 1, 0, 1)),
+  (LockOnDebugData.ZYo = new UE.LinearColor(0, 0, 1, 1)),
+  (LockOnDebugData.eJo = new UE.LinearColor(1, 1, 0, 1));
 class LockOnDebug {
   static Clear() {
-    LockOnDebug.rYo.clear();
+    LockOnDebug.tJo.clear();
   }
   static Push(t) {
     var e;
     LockOnDebug.IsShowDebugLine &&
-      ((e = new LockOnDebugData(t)), LockOnDebug.rYo.set(t, e));
+      ((e = new LockOnDebugData(t)), LockOnDebug.tJo.set(t, e));
   }
   static SetDebugString(t, e, a, o, i) {
     LockOnDebug.IsShowDebugLine &&
-      (t = LockOnDebug.rYo.get(t)) &&
+      (t = LockOnDebug.tJo.get(t)) &&
       ((t.ShowTip =
         "角度：" + e + "\n距离：" + a + "\n移动方向：" + o.ToString()),
       i) &&
@@ -89,15 +89,15 @@ class LockOnDebug {
   }
   static SetDebugArrow(t) {
     LockOnDebug.IsShowDebugLine &&
-      (t = LockOnDebug.rYo.get(t)) &&
+      (t = LockOnDebug.tJo.get(t)) &&
       (t.ColorType = 0);
   }
   static Tick(t) {
     if (LockOnDebug.IsShowDebugLine)
-      for (var [e, a] of LockOnDebug.rYo)
-        e.EntityHandle?.Valid ? a.DrawDebug(t) : LockOnDebug.rYo.delete(e);
+      for (var [e, a] of LockOnDebug.tJo)
+        e.EntityHandle?.Valid ? a.DrawDebug(t) : LockOnDebug.tJo.delete(e);
   }
 }
 ((exports.LockOnDebug = LockOnDebug).IsShowDebugLine = !1),
-  (LockOnDebug.rYo = new Map());
+  (LockOnDebug.tJo = new Map());
 //# sourceMappingURL=LockOnDebug.js.map

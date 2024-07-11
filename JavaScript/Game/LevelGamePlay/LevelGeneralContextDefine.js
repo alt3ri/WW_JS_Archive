@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GeneralLogicTreeContext =
+    exports.PlotContext =
     exports.GmLevelActionContext =
     exports.GuaranteeContext =
     exports.TriggerContext =
@@ -159,13 +160,26 @@ class GmLevelActionContext extends GeneralContext {
   }
 }
 exports.GmLevelActionContext = GmLevelActionContext;
+class PlotContext extends GeneralContext {
+  constructor() {
+    super(), (this.FlowIncId = 0), (this.Type = 9);
+  }
+  Reset() {
+    this.FlowIncId = 0;
+  }
+  static Create(t, e) {
+    e = GeneralContext.GetObj(8, e, PlotContext);
+    return (e.FlowIncId = t), e;
+  }
+}
+exports.PlotContext = PlotContext;
 class GeneralLogicTreeContext extends GeneralContext {
   constructor() {
     super(),
       (this.TreeIncId = void 0),
       (this.TreeConfigId = 0),
       (this.NodeId = 0),
-      (this.BtType = void 0),
+      (this.BtType = 0),
       (this.Type = 6);
   }
   Reset() {

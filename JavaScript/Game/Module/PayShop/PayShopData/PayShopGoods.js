@@ -14,24 +14,24 @@ const CommonDefine_1 = require("../../../../Core/Define/CommonDefine"),
 class PayShopGoods {
   constructor(t) {
     (this.Pe = void 0),
-      (this.S2i = !1),
+      (this.EFi = !1),
       (this.PayShopId = 1),
-      (this.XNi = void 0),
-      (this.E2i = 0),
+      (this.XOi = void 0),
+      (this.SFi = 0),
       (this.PayShopId = t);
   }
   SetGoodsData(t) {
     (this.Pe = t),
-      (this.S2i = this.InSellTime()),
-      (this.XNi = new PayShopItemBase_1.PayShopItemBaseSt()),
-      this.XNi.PhraseFromPayItemData(this);
+      (this.EFi = this.InSellTime()),
+      (this.XOi = new PayShopItemBase_1.PayShopItemBaseSt()),
+      this.XOi.PhraseFromPayItemData(this);
   }
   SetPayGiftId(t) {
-    this.E2i = t;
+    this.SFi = t;
   }
   GetGetPayGiftData() {
     return ModelManager_1.ModelManager.PayGiftModel.GetPayGiftDataById(
-      this.E2i,
+      this.SFi,
     );
   }
   GetGoodsData() {
@@ -178,8 +178,8 @@ class PayShopGoods {
     );
   }
   NeedUpdate() {
-    return this.InSellTime() && !this.S2i
-      ? (this.S2i = !0)
+    return this.InSellTime() && !this.EFi
+      ? (this.EFi = !0)
       : !!this.Pe.HasBuyLimit() &&
           0 !== this.Pe.UpdateTime &&
           Number(this.Pe.UpdateTime) <= TimeUtil_1.TimeUtil.GetServerTime() &&
@@ -448,38 +448,33 @@ class PayShopGoods {
   }
   IfCanBuy() {
     if (this.CheckIfMonthCardItem()) {
-      var e = ModelManager_1.ModelManager.MonthCardModel.GetRemainDays(),
-        i = ConfigManager_1.ConfigManager.ItemConfig.GetConfig(
-          this.GetGoodsData().ItemId,
-        );
-      let t = i.Parameters.get(
+      var e = ConfigManager_1.ConfigManager.ItemConfig.GetConfig(
+        this.GetGoodsData().ItemId,
+      );
+      let t = e.Parameters.get(
         ItemDefines_1.EItemFunctionType.ManualOpenMonthCard,
       );
       if (
         !(t =
           t ||
-          i.Parameters.get(ItemDefines_1.EItemFunctionType.AutoOpenMonthCard))
+          e.Parameters.get(ItemDefines_1.EItemFunctionType.AutoOpenMonthCard))
       )
         return !0;
-      if (
-        CommonParamById_1.configCommonParamById.GetIntConfig(
-          "MonthCardMaxDays",
-        ) < e
-      )
+      if (!ModelManager_1.ModelManager.MonthCardModel.CheckMonthCardIfCanBuy())
         return !1;
     }
-    i = this.GetGoodsData().GetItemConfig();
-    if (i && i.ShowTypes?.includes(30)) {
-      e = ModelManager_1.ModelManager.RoleModel.GetResonantItemRoleId(
+    e = this.GetGoodsData().GetItemConfig();
+    if (e && e.ShowTypes?.includes(30)) {
+      var e = ModelManager_1.ModelManager.RoleModel.GetResonantItemRoleId(
         this.GetGoodsData().ItemId,
       );
       if (e && 0 < e.length)
         return (
-          (i = e[0]),
-          !!ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(i) &&
+          (e = e[0]),
+          !!ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(e) &&
             0 <
               ModelManager_1.ModelManager.RoleModel.GetRoleLeftResonantCountWithInventoryItem(
-                i,
+                e,
               )
         );
     }
@@ -501,13 +496,10 @@ class PayShopGoods {
     return this.Pe.IsShowInShop();
   }
   ConvertToPayShopBaseSt() {
-    return this.XNi.Refresh(this), this.XNi;
+    return this.XOi.Refresh(this), this.XOi;
   }
   CheckIfMonthCardItem() {
-    return (
-      this.GetGoodsData().Id ===
-      ConfigManager_1.ConfigManager.PayShopConfig.GetMonthCardShopId()
-    );
+    return this.GetGoodsData().CheckIfMonthCardItem();
   }
 }
 exports.PayShopGoods = PayShopGoods;

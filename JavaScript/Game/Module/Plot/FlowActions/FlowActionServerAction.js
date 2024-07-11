@@ -6,7 +6,7 @@ const Log_1 = require("../../../../Core/Common/Log"),
   FlowActionBase_1 = require("./FlowActionBase");
 class FlowActionServerAction extends FlowActionBase_1.FlowActionBase {
   constructor() {
-    super(...arguments), (this.YXi = !1);
+    super(...arguments), (this.X$i = !1);
   }
   Execute(t, o, e) {
     Log_1.Log.CheckInfo() &&
@@ -19,10 +19,10 @@ class FlowActionServerAction extends FlowActionBase_1.FlowActionBase {
       ),
       (this.Context = o),
       (this.ActionInfo = t),
-      (this.YXi = e),
+      (this.X$i = e),
       this.Context.IsServerNotify
         ? (o.IsBackground ? this.OnBackgroundExecute() : this.OnExecute(),
-          this.YXi && this.FinishExecute(!0))
+          this.X$i && this.FinishExecute(!0))
         : (Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
               "Plot",
@@ -32,7 +32,7 @@ class FlowActionServerAction extends FlowActionBase_1.FlowActionBase {
           this.FinishExecute(!0));
   }
   OnExecute() {
-    this.RequestServerAction(!this.YXi);
+    this.RequestServerAction(!this.X$i);
   }
   OnBackgroundExecute() {
     this.OnExecute();

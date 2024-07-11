@@ -33,7 +33,7 @@ const UE = require("ue"),
 class WorldDebugModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
-      (this.kMr = !0),
+      (this.GEr = !0),
       (this.AoiTotalSet = new Set()),
       (this.AoiSummonSet = new Set()),
       (this.AoiVisionSet = new Set()),
@@ -42,10 +42,10 @@ class WorldDebugModel extends ModelBase_1.ModelBase {
       (this.AoiRoleSet = new Set());
   }
   set EnableDebug(t) {
-    this.kMr = t;
+    this.GEr = t;
   }
   get EnableDebug() {
-    return this.kMr;
+    return this.GEr;
   }
   AddSummonEntity(t) {
     t && (this.AoiSummonSet.add(t), this.AoiTotalSet.add(t));
@@ -68,32 +68,32 @@ class WorldDebugModel extends ModelBase_1.ModelBase {
   AddEntity(t, e) {
     if (e)
       switch (t) {
-        case Protocol_1.Aki.Protocol.HBs.Proto_Player:
+        case Protocol_1.Aki.Protocol.wks.Proto_Player:
           this.AddRoleEntity(e);
           break;
-        case Protocol_1.Aki.Protocol.HBs.Proto_Monster:
+        case Protocol_1.Aki.Protocol.wks.Proto_Monster:
           this.AddMonsterEntity(e);
           break;
-        case Protocol_1.Aki.Protocol.HBs.Proto_Npc:
+        case Protocol_1.Aki.Protocol.wks.Proto_Npc:
           this.AddNpcEntity(e);
           break;
-        case Protocol_1.Aki.Protocol.HBs.Proto_Vision:
+        case Protocol_1.Aki.Protocol.wks.Proto_Vision:
           this.AddVisionEntity(e);
       }
   }
   RemoveEntity(t, e) {
     if (e)
       switch (t) {
-        case Protocol_1.Aki.Protocol.HBs.Proto_Player:
+        case Protocol_1.Aki.Protocol.wks.Proto_Player:
           this.AoiRoleSet.delete(e), this.AoiTotalSet.delete(e);
           break;
-        case Protocol_1.Aki.Protocol.HBs.Proto_Monster:
+        case Protocol_1.Aki.Protocol.wks.Proto_Monster:
           this.AoiMonsterSet.delete(e), this.AoiTotalSet.delete(e);
           break;
-        case Protocol_1.Aki.Protocol.HBs.Proto_Npc:
+        case Protocol_1.Aki.Protocol.wks.Proto_Npc:
           this.AoiNpcSet.delete(e), this.AoiTotalSet.delete(e);
           break;
-        case Protocol_1.Aki.Protocol.HBs.Proto_Vision:
+        case Protocol_1.Aki.Protocol.wks.Proto_Vision:
           this.AoiVisionSet.delete(e), this.AoiTotalSet.delete(e);
       }
   }

@@ -20,10 +20,10 @@ const UE = require("ue"),
 class ProficiencyView extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this.uqt = void 0),
-      (this.Gft = void 0),
+      (this.dGt = void 0),
+      (this.$pt = void 0),
       (this.OnChangeRoleClick = () => {
-        this.uqt && this.uqt();
+        this.dGt && this.dGt();
       });
   }
   OnRegisterComponent() {
@@ -36,15 +36,15 @@ class ProficiencyView extends UiPanelBase_1.UiPanelBase {
       (this.BtnBindInfo = [[2, this.OnChangeRoleClick]]);
   }
   OnStart() {
-    this.Gft = new LevelSequencePlayer_1.LevelSequencePlayer(
+    this.$pt = new LevelSequencePlayer_1.LevelSequencePlayer(
       this.GetButton(2).RootUIComp,
     );
   }
   OnBeforeDestroy() {
-    this.Gft.Clear();
+    this.$pt.Clear();
   }
   BindChangeRoleClick(e) {
-    this.uqt = e;
+    this.dGt = e;
   }
   SetExpNum(e, i, t, s) {
     var t = i * t,
@@ -85,10 +85,10 @@ class ProficiencyView extends UiPanelBase_1.UiPanelBase {
       e,
     ),
       CommonManager_1.CommonManager.CheckIsBuffEx(e, i)
-        ? this.Gft.GetCurrentSequence()
-          ? this.Gft.ReplaySequenceByKey("Show")
-          : this.Gft.PlayLevelSequenceByName("Show")
-        : this.Gft?.StopCurrentSequence(!1, !0);
+        ? this.$pt.GetCurrentSequence()
+          ? this.$pt.ReplaySequenceByKey("Show")
+          : this.$pt.PlayLevelSequenceByName("Show")
+        : this.$pt?.StopCurrentSequence(!1, !0);
   }
   SetTypeContent(e = void 0) {
     var i = this.GetText(3);
@@ -130,37 +130,45 @@ class SvInfo extends UiPanelBase_1.UiPanelBase {
 class ComposeIngredientsVerticalView extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this.fqt = void 0),
-      (this.dqt = void 0),
+      (this.MGt = void 0),
+      (this.fGt = void 0),
       (this.t6 = 1),
       (this.WGe = void 0),
-      (this.vIi = void 0),
-      (this.pqt = void 0),
-      (this.vqt = !1),
-      (this.Mqt = 0),
-      (this.Sqt = void 0),
-      (this.mqt = void 0),
-      (this.yqt = (e) => {
+      (this.vTi = void 0),
+      (this.EGt = void 0),
+      (this.SGt = !1),
+      (this.yGt = 0),
+      (this.IGt = void 0),
+      (this.gGt = void 0),
+      (this.LGt = (e) => {
+        var i;
         (this.t6 = e),
-          this.Iqt(),
+          this.DGt(),
           LguiUtil_1.LguiUtil.SetLocalTextNew(
             this.GetText(10),
             "Text_ItemSelectSynthesisQuantityTip_text",
             this.t6,
           ),
-          this.dqt && this.dqt && this.MIi(this.dqt);
+          this.fGt &&
+            this.fGt &&
+            ((i = ComposeController_1.ComposeController.GetMaxCreateCount(
+              this.fGt.ItemId,
+            )),
+            this.WGe.SetAddButtonInteractive(e < i),
+            this.WGe.SetReduceButtonInteractive(1 < e),
+            this.MTi(this.fGt));
       }),
-      (this._9e = () => {
-        this.vIi && this.vIi();
+      (this.I7e = () => {
+        this.vTi && this.vTi();
       }),
-      (this.Eqt = () => {
+      (this.TGt = () => {
         var e = new ManufactureMaterialItem_1.ManufactureMaterialItem();
         return (
           e.BindOnCanExecuteChange(() => !1),
           e.BindOnExtendToggleClicked((e) => {
             e = e.Data;
             ControllerHolder_1.ControllerHolder.ItemController.OpenItemTipsByItemId(
-              e.G3n,
+              e.f8n,
             );
           }),
           e
@@ -198,18 +206,18 @@ class ComposeIngredientsVerticalView extends UiPanelBase_1.UiPanelBase {
       (this.BtnBindInfo = []);
   }
   async OnBeforeStartAsync() {
-    (this.pqt = new GenericScrollViewNew_1.GenericScrollViewNew(
+    (this.EGt = new GenericScrollViewNew_1.GenericScrollViewNew(
       this.GetScrollViewWithScrollbar(19),
-      this.Eqt,
+      this.TGt,
     )),
-      (this.fqt = new SvInfo()),
-      await this.fqt.CreateByActorAsync(this.GetItem(0).GetOwner()),
-      (this.mqt = new ProficiencyView()),
-      await this.mqt.CreateThenShowByActorAsync(this.GetItem(26).GetOwner()),
-      this.mqt.BindChangeRoleClick(this._9e);
+      (this.MGt = new SvInfo()),
+      await this.MGt.CreateByActorAsync(this.GetItem(0).GetOwner()),
+      (this.gGt = new ProficiencyView()),
+      await this.gGt.CreateThenShowByActorAsync(this.GetItem(26).GetOwner()),
+      this.gGt.BindChangeRoleClick(this.I7e);
   }
   OnStart() {
-    this.fqt.SetActive(!0),
+    this.MGt.SetActive(!0),
       this.GetItem(1).SetUIActive(!1),
       this.GetItem(9).SetUIActive(!0),
       this.GetItem(22).SetUIActive(!1),
@@ -220,37 +228,38 @@ class ComposeIngredientsVerticalView extends UiPanelBase_1.UiPanelBase {
     var e = this.GetItem(8),
       e =
         ((this.WGe = new NumberSelectComponent_1.NumberSelectComponent(e)),
-        { MaxNumber: 0, ValueChangeFunction: this.yqt });
+        { MaxNumber: 0, ValueChangeFunction: this.LGt });
     this.WGe.Init(e),
       this.WGe.SetUiActive(!0),
       this.WGe.SetNumberSelectTipsVisible(!1),
+      this.WGe.SetAddReduceButtonActive(!0),
       this.GetText(12).SetUIActive(!1),
-      (this.Sqt = new MediumItemGrid_1.MediumItemGrid()),
-      this.Sqt.Initialize(this.GetItem(21).GetOwner()),
-      this.Sqt.BindOnCanExecuteChange(() => !1),
-      this.Sqt.BindOnExtendToggleClicked((e) => {
+      (this.IGt = new MediumItemGrid_1.MediumItemGrid()),
+      this.IGt.Initialize(this.GetItem(21).GetOwner()),
+      this.IGt.BindOnCanExecuteChange(() => !1),
+      this.IGt.BindOnExtendToggleClicked((e) => {
         e = e.Data;
         ControllerHolder_1.ControllerHolder.ItemController.OpenItemTipsByItemId(
           e,
         );
       });
   }
-  Iqt() {
-    this.Tqt(this.vqt, this.Mqt * this.t6);
-    var e = this.pqt?.GetScrollItemList();
+  DGt() {
+    this.RGt(this.SGt, this.yGt * this.t6);
+    var e = this.EGt?.GetScrollItemList();
     if (e) for (const i of e) i.SetTimes(this.t6);
   }
   OnBeforeDestroy() {
-    this.fqt.Destroy();
+    this.MGt = void 0;
   }
-  Lqt(e) {
+  UGt(e) {
     e = ConfigManager_1.ConfigManager.TextConfig.GetTextById(e);
-    this.fqt.SetTypeName(), this.mqt.SetTypeContent(e);
+    this.MGt.SetTypeName(), this.gGt.SetTypeContent(e);
   }
-  SIi(e, i, t, s) {
-    this.mqt.SetExpNum(e, i, t, s);
+  ETi(e, i, t, s) {
+    this.gGt.SetExpNum(e, i, t, s);
   }
-  gqt(e) {
+  vGt(e) {
     return (
       !!e ||
       (Log_1.Log.CheckError() &&
@@ -258,40 +267,51 @@ class ComposeIngredientsVerticalView extends UiPanelBase_1.UiPanelBase {
       !1)
     );
   }
-  kqn(e) {
+  j2n(e) {
     var i = CommonManager_1.CommonManager.GetCurrentRoleId();
-    i && this.mqt.SetRoleTexture(i, e);
+    i && this.gGt.SetRoleTexture(i, e);
   }
-  EIi(e) {
-    var i;
-    this.gqt(e) &&
-      (i = CommonManager_1.CommonManager.GetManufactureRoleId(e.ItemId)) &&
-      (CommonManager_1.CommonManager.SetCurrentRoleId(i),
-      this.mqt.SetRoleTexture(i, e.ItemId));
+  STi(i) {
+    if (this.vGt(i)) {
+      let e = CommonManager_1.CommonManager.GetCurrentRoleId();
+      e ||
+        ((e = CommonManager_1.CommonManager.GetManufactureRoleId(i.ItemId)),
+        CommonManager_1.CommonManager.SetCurrentRoleId(e)),
+        e ||
+          ((e = ModelManager_1.ModelManager.PlayerInfoModel.GetPlayerRoleId()),
+          CommonManager_1.CommonManager.SetCurrentRoleId(e)),
+        e && this.gGt.SetRoleTexture(e, i.ItemId);
+    }
   }
-  Uqt(e) {
+  xGt(e) {
     let i = !1,
       t = 0;
     e = e.filter(
       (e) =>
-        e.G3n !== ComposeController_1.ComposeController.ComposeCoinId ||
-        ((i = !0), (t = e.k4n), !1),
+        e.f8n !== ComposeController_1.ComposeController.ComposeCoinId ||
+        ((i = !0), (t = e.MVn), !1),
     );
     return [i, t, e];
   }
-  eOt(e) {
-    (this.dqt = e), (this.t6 = 1);
+  tkt(e) {
+    this.fGt &&
+      this.fGt.ItemId !== e.ItemId &&
+      (ModelManager_1.ModelManager.ComposeModel.CurrentComposeRoleId = 0),
+      (this.fGt = e),
+      (this.t6 = 1);
     var i = ComposeController_1.ComposeController.GetMaxCreateCount(
-        this.dqt.ItemId,
+        this.fGt.ItemId,
       ),
       i =
         (this.WGe.Refresh(i),
+        this.WGe.SetAddReduceButtonActive(!0),
+        this.WGe.SetReduceButtonInteractive(!1),
         ConfigManager_1.ConfigManager.ComposeConfig.GetSynthesisFormulaById(
           e.ItemId,
         )),
       t =
-        (this.fqt.SetDescVisible(!0),
-        this.fqt.SetDescBgVisible(!1),
+        (this.MGt.SetDescVisible(!0),
+        this.MGt.SetDescBgVisible(!1),
         ConfigManager_1.ConfigManager.ItemConfig?.GetItemAttributeDesc(
           i.ItemId,
         )),
@@ -300,8 +320,8 @@ class ComposeIngredientsVerticalView extends UiPanelBase_1.UiPanelBase {
         : ConfigManager_1.ConfigManager.CookConfig.GetLocalText(
             i.ComposeBackground,
           );
-    this.fqt.SetDesc(t),
-      this.fqt.SetDescBg(i),
+    this.MGt.SetDesc(t),
+      this.MGt.SetDescBg(i),
       this.WGe.SetUiActive(0 < e.IsUnlock),
       this.GetItem(9).SetUIActive(0 < e.IsUnlock),
       e.IsUnlock
@@ -310,15 +330,15 @@ class ComposeIngredientsVerticalView extends UiPanelBase_1.UiPanelBase {
           (t = ModelManager_1.ModelManager.ComposeModel.GetComposeMaterialList(
             e.ItemId,
           )),
-          ([this.vqt, this.Mqt, t] = this.Uqt(t)),
-          this.pqt.RefreshByData(t, () => {
-            this.Iqt();
+          ([this.SGt, this.yGt, t] = this.xGt(t)),
+          this.EGt.RefreshByData(t, () => {
+            this.DGt();
           }))
         : (this.GetItem(20).SetUIActive(!0),
           this.GetItem(18).SetUIActive(!1),
           (i =
             ConfigManager_1.ConfigManager.ComposeConfig.GetSynthesisFormulaById(
-              this.dqt.ItemId,
+              this.fGt.ItemId,
             )),
           (e = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfig(
             i.FormulaItemId,
@@ -331,29 +351,29 @@ class ComposeIngredientsVerticalView extends UiPanelBase_1.UiPanelBase {
               IsProhibit: !0,
               IsOmitBottomText: !0,
             }),
-            this.Sqt.Apply(t)));
+            this.IGt.Apply(t)));
   }
   BindChangeClickCall(e) {
-    this.vIi = e;
+    this.vTi = e;
   }
-  MIi(e) {
+  MTi(e) {
     var i = ConfigManager_1.ConfigManager.ComposeConfig.GetSynthesisFormulaById(
         e.ItemId,
       ),
       t = i.Proficiency,
       i = i.MaxProficiencyCount;
-    this.SIi(e.ComposeCount, t, i, this.t6);
+    this.ETi(e.ComposeCount, t, i, this.t6);
   }
   OnSecondTimerRefresh() {
-    this.dqt && this.Dqt(this.dqt);
+    this.fGt && this.AGt(this.fGt);
   }
   RefreshProficiencyAndHelpRole(e) {
-    this.MIi(e), this.kqn(e.ItemId);
+    this.MTi(e), this.j2n(e.ItemId);
   }
   RefreshHelpRole() {
-    this.kqn(this.dqt.ItemId);
+    this.j2n(this.fGt.ItemId);
   }
-  Dqt(e) {
+  AGt(e) {
     e.ExistEndTime <= 0
       ? (this.GetItem(24).SetUIActive(!1), this.WGe.ResetLimitMaxValue())
       : (this.GetItem(24).SetUIActive(!0),
@@ -362,7 +382,7 @@ class ComposeIngredientsVerticalView extends UiPanelBase_1.UiPanelBase {
         )),
         this.GetText(25).SetText(e.CountDownText));
   }
-  Rqt(i) {
+  PGt(i) {
     if (i.TotalMakeCountInLimitTime <= 0)
       this.GetItem(3).SetUIActive(!1), this.WGe.ResetLimitMaxValue();
     else {
@@ -383,7 +403,7 @@ class ComposeIngredientsVerticalView extends UiPanelBase_1.UiPanelBase {
         );
     }
   }
-  Tqt(e, i) {
+  RGt(e, i) {
     var t;
     this.GetText(12).GetParentAsUIItem().SetUIActive(e),
       e &&
@@ -403,33 +423,33 @@ class ComposeIngredientsVerticalView extends UiPanelBase_1.UiPanelBase {
           : this.GetText(11).SetText(i.toString()),
         this.SetTextureByPath(t.IconSmall, this.GetTexture(13)));
   }
-  Fqn(e, i = !1) {
-    i ? this.mqt.SetExpVisible(e) : this.mqt.SetActive(e);
+  W2n(e, i = !1) {
+    i ? this.gGt.SetExpVisible(e) : this.gGt.SetActive(e);
   }
   RefreshReagentProduction(e) {
-    this.Dqt(e),
-      this.Rqt(e),
-      this.eOt(e),
-      this.Fqn(!0, !0),
-      this.Lqt("Material"),
-      this.MIi(e),
-      this.EIi(e);
+    this.AGt(e),
+      this.PGt(e),
+      this.tkt(e),
+      this.W2n(!0, !0),
+      this.UGt("Material"),
+      this.MTi(e),
+      this.STi(e);
   }
   RefreshStructure(e) {
-    this.Dqt(e),
-      this.Rqt(e),
-      this.eOt(e),
-      this.Lqt("Prop"),
-      this.Fqn(!1, !0),
-      this.EIi(e);
+    this.AGt(e),
+      this.PGt(e),
+      this.tkt(e),
+      this.UGt("Prop"),
+      this.W2n(!1, !0),
+      this.STi(e);
   }
   RefreshPurification(e) {
-    this.Dqt(e),
-      this.Rqt(e),
-      this.eOt(e),
-      this.Lqt("Material"),
-      this.Fqn(!1, !0),
-      this.EIi(e),
+    this.AGt(e),
+      this.PGt(e),
+      this.tkt(e),
+      this.UGt("Material"),
+      this.W2n(!1, !0),
+      this.STi(e),
       e.IsUnlock <= 0 && this.WGe.Refresh(0);
   }
 }

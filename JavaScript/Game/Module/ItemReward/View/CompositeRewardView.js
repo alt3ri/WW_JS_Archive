@@ -9,23 +9,23 @@ const UE = require("ue"),
   UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase"),
   UiManager_1 = require("../../../Ui/UiManager"),
   LguiUtil_1 = require("../../Util/LguiUtil"),
+  ItemRewardController_1 = require("../ItemRewardController"),
   RewardItemList_1 = require("./RewardItemList"),
-  RewardProgressBar_1 = require("./RewardProgressBar"),
-  ItemRewardController_1 = require("../ItemRewardController");
+  RewardProgressBar_1 = require("./RewardProgressBar");
 class CompositeRewardView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
-      (this.jIt = void 0),
+      (this.$Tt = void 0),
       (this.sOe = void 0),
-      (this.Hgi = void 0),
-      (this.iSt = () => {
+      (this.H0i = void 0),
+      (this.dSt = () => {
         UiManager_1.UiManager.CloseView("CompositeRewardView");
       }),
-      (this.B$t = (e) => {
-        this.b$t() && this.q$t();
+      (this.BYt = (e) => {
+        this.bYt() && this.qYt();
       }),
-      (this.jgi = () => {
-        this.Wgi() && this.Kgi();
+      (this.j0i = () => {
+        this.W0i() && this.K0i();
       });
   }
   OnRegisterComponent() {
@@ -39,80 +39,80 @@ class CompositeRewardView extends UiTickViewBase_1.UiTickViewBase {
       [6, UE.UIItem],
       [7, UE.UIItem],
     ]),
-      (this.BtnBindInfo = [[0, this.iSt]]);
+      (this.BtnBindInfo = [[0, this.dSt]]);
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnRefreshRewardViewItemList,
-      this.B$t,
+      this.BYt,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnRefreshRewardProgressBar,
-        this.jgi,
+        this.j0i,
       );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnRefreshRewardViewItemList,
-      this.B$t,
+      this.BYt,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnRefreshRewardProgressBar,
-        this.jgi,
+        this.j0i,
       );
   }
   async OnBeforeStartAsync() {
     this.sOe = new RewardItemList_1.RewardItemList();
     var e = this.GetItem(5);
     await this.sOe.CreateThenShowByActorAsync(e.GetOwner(), e),
-      (this.Hgi = new RewardProgressBar_1.RewardProgressBar(
+      (this.H0i = new RewardProgressBar_1.RewardProgressBar(
         this.GetItem(6).GetOwner(),
       ));
   }
   OnStart() {
-    (this.jIt = this.OpenParam),
-      this.G$t() && this.mGe(),
-      this.Qgi() && this.Xgi(),
-      this.N$t() && this.O$t(),
-      this.b$t() && this.q$t(),
-      this.Wgi() && this.Kgi();
-    var e = this.jIt.GetRewardInfo().AudioId;
+    (this.$Tt = this.OpenParam),
+      this.GYt() && this.mGe(),
+      this.Q0i() && this.X0i(),
+      this.NYt() && this.OYt(),
+      this.bYt() && this.qYt(),
+      this.W0i() && this.K0i();
+    var e = this.$Tt.GetRewardInfo().AudioId;
     ItemRewardController_1.ItemRewardController.PlayAudio(e);
   }
   OnAfterShow() {
-    this.jIt.GetRewardInfo().IsSuccess
+    this.$Tt.GetRewardInfo().IsSuccess
       ? this.UiViewSequence.PlaySequence("Success", !0)
       : this.UiViewSequence.PlaySequence("Fail", !0),
       EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.OnShowRewardView);
   }
   OnBeforeDestroy() {
-    (this.Hgi = void 0),
-      (this.jIt = void 0),
+    (this.H0i = void 0),
+      (this.$Tt = void 0),
       ModelManager_1.ModelManager.ItemRewardModel.ClearCurrentRewardData();
   }
   OnTick(e) {
-    this.Hgi.Tick(e);
+    this.H0i.Tick(e);
   }
-  G$t() {
-    var e = this.jIt.GetRewardInfo().Title,
+  GYt() {
+    var e = this.$Tt.GetRewardInfo().Title,
       e = !StringUtils_1.StringUtils.IsEmpty(e);
     return this.GetItem(4).SetUIActive(e), e;
   }
   mGe() {
     var e,
-      t = this.jIt.GetRewardInfo().Title;
+      t = this.$Tt.GetRewardInfo().Title;
     StringUtils_1.StringUtils.IsEmpty(t) ||
       ((e = this.GetText(1)), LguiUtil_1.LguiUtil.SetLocalTextNew(e, t));
   }
-  Qgi() {
-    var e = this.jIt.GetRewardInfo().TitleIconPath,
+  Q0i() {
+    var e = this.$Tt.GetRewardInfo().TitleIconPath,
       e = !StringUtils_1.StringUtils.IsEmpty(e),
       t = this.GetTexture(2),
       i = this.GetTexture(3);
     return t.SetUIActive(e), i.SetUIActive(e), e;
   }
-  Xgi() {
-    var e = this.jIt.GetRewardInfo().TitleIconPath;
+  X0i() {
+    var e = this.$Tt.GetRewardInfo().TitleIconPath;
     if (!StringUtils_1.StringUtils.IsEmpty(e)) {
       const t = this.GetTexture(2);
       t.SetUIActive(!1),
@@ -121,40 +121,40 @@ class CompositeRewardView extends UiTickViewBase_1.UiTickViewBase {
         });
     }
   }
-  N$t() {
-    var e = this.jIt.GetRewardInfo().ContinueText,
+  NYt() {
+    var e = this.$Tt.GetRewardInfo().ContinueText,
       e = !StringUtils_1.StringUtils.IsEmpty(e);
     return this.GetItem(7).SetUIActive(e), e;
   }
-  O$t() {
+  OYt() {
     var e,
-      t = this.jIt.GetRewardInfo().ContinueText;
+      t = this.$Tt.GetRewardInfo().ContinueText;
     StringUtils_1.StringUtils.IsEmpty(t) ||
       ((e = this.GetText(7)), LguiUtil_1.LguiUtil.SetLocalTextNew(e, t));
   }
-  b$t() {
-    var e = this.jIt.GetRewardInfo().IsItemVisible,
-      t = this.jIt.GetItemList(),
+  bYt() {
+    var e = this.$Tt.GetRewardInfo().IsItemVisible,
+      t = this.$Tt.GetItemList(),
       e = e && void 0 !== t && 0 < t?.length;
     return this.sOe.GetActive() !== e && this.sOe.SetActive(e), e;
   }
-  q$t() {
-    this.sOe.Refresh(this.jIt.GetItemList());
+  qYt() {
+    this.sOe.Refresh(this.$Tt.GetItemList());
   }
-  Wgi() {
-    var e = this.jIt.GetRewardInfo(),
-      t = this.jIt.GetExtendRewardInfo(),
+  W0i() {
+    var e = this.$Tt.GetRewardInfo(),
+      t = this.$Tt.GetExtendRewardInfo(),
       e = e.IsProgressVisible,
       t = t.ProgressQueue,
       e = e && void 0 !== t && 0 < t?.length;
-    return this.Hgi.SetActive(e), e;
+    return this.H0i.SetActive(e), e;
   }
-  Kgi() {
-    var e = this.jIt.GetRewardInfo(),
-      t = this.jIt.GetExtendRewardInfo().ProgressQueue;
+  K0i() {
+    var e = this.$Tt.GetRewardInfo(),
+      t = this.$Tt.GetExtendRewardInfo().ProgressQueue;
     t &&
       0 !== t.length &&
-      this.Hgi.Refresh(e.ProgressBarTitle, t, e.ProgressBarAnimationTime);
+      this.H0i.Refresh(e.ProgressBarTitle, t, e.ProgressBarAnimationTime);
   }
 }
 exports.CompositeRewardView = CompositeRewardView;

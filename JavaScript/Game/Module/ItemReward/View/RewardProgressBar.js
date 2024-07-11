@@ -10,12 +10,12 @@ const UE = require("ue"),
 class RewardProgressBar extends UiPanelBase_1.UiPanelBase {
   constructor(t) {
     super(),
-      (this.x0i = -0),
-      (this.w0i = -0),
-      (this.B0i = -0),
-      (this.b0i = -0),
-      (this.q0i = void 0),
-      (this.G0i = []),
+      (this.xfi = -0),
+      (this.wfi = -0),
+      (this.Bfi = -0),
+      (this.bfi = -0),
+      (this.qfi = void 0),
+      (this.Gfi = []),
       this.CreateThenShowByActor(t);
   }
   OnRegisterComponent() {
@@ -27,66 +27,66 @@ class RewardProgressBar extends UiPanelBase_1.UiPanelBase {
       (this.BtnBindInfo = []);
   }
   Clear() {
-    (this.q0i = 0), (this.G0i.length = 0);
+    (this.qfi = 0), (this.Gfi.length = 0);
   }
   Refresh(t, i, s = ANIMATION_LENGTH) {
     var e;
-    this.LBt(t),
+    this.Ubt(t),
       i &&
         0 !== i.length &&
         (s <= 0
           ? (t = i[i.length - 1]) &&
             ((e = t.ToProgress),
             (t = t.MaxProgress),
-            this.N0i(e, t),
-            this.dkt(e, t))
+            this.Nfi(e, t),
+            this.C2t(e, t))
           : this.PlayProgressAnimation(i, s));
   }
   PlayProgressAnimation(t, i = ANIMATION_LENGTH) {
-    this.G0i = t;
+    this.Gfi = t;
     var s,
       e,
-      t = this.G0i.shift();
+      t = this.Gfi.shift();
     t &&
       ((s = t.FromProgress),
       (e = t.ToProgress),
       (t = t.MaxProgress),
-      this.N0i(s, t),
-      this.dkt(s, t),
-      this.O0i(s, e, t, i));
+      this.Nfi(s, t),
+      this.C2t(s, t),
+      this.Ofi(s, e, t, i));
   }
-  O0i(t, i, s, e) {
+  Ofi(t, i, s, e) {
     s < i
-      ? (this.N0i(i, s), this.k0i(), this.dkt(i, s))
-      : ((this.b0i = e),
-        (this.q0i = e),
-        (this.x0i = t),
-        (this.w0i = i),
-        (this.B0i = s));
+      ? (this.Nfi(i, s), this.kfi(), this.C2t(i, s))
+      : ((this.bfi = e),
+        (this.qfi = e),
+        (this.xfi = t),
+        (this.wfi = i),
+        (this.Bfi = s));
   }
   Tick(t) {
     var i;
-    void 0 !== this.q0i &&
-      ((i = 1 - this.q0i / this.b0i),
-      (i = MathUtils_1.MathUtils.Lerp(this.x0i, this.w0i, i)),
-      this.N0i(Math.ceil(Math.min(i, this.w0i)), this.B0i),
-      this.dkt(Math.min(i, this.w0i), this.B0i),
-      this.q0i < 0 ? this.k0i() : (this.q0i -= t));
+    void 0 !== this.qfi &&
+      ((i = 1 - this.qfi / this.bfi),
+      (i = MathUtils_1.MathUtils.Lerp(this.xfi, this.wfi, i)),
+      this.Nfi(Math.ceil(Math.min(i, this.wfi)), this.Bfi),
+      this.C2t(Math.min(i, this.wfi), this.Bfi),
+      this.qfi < 0 ? this.kfi() : (this.qfi -= t));
   }
-  k0i() {
-    (this.q0i = void 0),
-      0 < this.G0i.length && this.PlayProgressAnimation(this.G0i, this.b0i);
+  kfi() {
+    (this.qfi = void 0),
+      0 < this.Gfi.length && this.PlayProgressAnimation(this.Gfi, this.bfi);
   }
-  LBt(t) {
+  Ubt(t) {
     var i = this.GetText(0);
     StringUtils_1.StringUtils.IsEmpty(t)
       ? i.SetUIActive(!1)
       : (LguiUtil_1.LguiUtil.SetLocalTextNew(i, t), i.SetUIActive(!0));
   }
-  N0i(t, i) {
+  Nfi(t, i) {
     this.GetText(1).SetText(Math.min(i, t) + "/" + i);
   }
-  dkt(t, i) {
+  C2t(t, i) {
     this.GetSprite(2).SetFillAmount(t / i);
   }
 }

@@ -9,14 +9,14 @@ const Log_1 = require("../../../Core/Common/Log"),
 class ComponentForceTickController extends ControllerBase_1.ControllerBase {
   static OnInit() {
     return (
-      (this.Tgr = [123]),
-      (this.Lgr = [44, 57, 123, 94, 140, 142, 133, 131, 135, 143]),
-      (this.Dgr = [54, 57, 142]),
+      (this.S0r = [125]),
+      (this.y0r = [45, 59, 125, 96, 142, 144, 135, 133, 137, 145]),
+      (this.I0r = [55, 59, 144]),
       !0
     );
   }
   static RegisterPreTick(o, e) {
-    this.Rgr(o)
+    this.T0r(o)
       ? Core_1.Core.RegisterPreTick(e)
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
@@ -27,8 +27,8 @@ class ComponentForceTickController extends ControllerBase_1.ControllerBase {
         );
   }
   static RegisterTick(o, e) {
-    this.Ugr(o)
-      ? this.Agr.has(o)
+    this.L0r(o)
+      ? this.D0r.has(o)
         ? Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "TickController",
@@ -36,7 +36,7 @@ class ComponentForceTickController extends ControllerBase_1.ControllerBase {
             "[ComponentForceTickController.RegisterTick] 当前Comp已经注册过ForceTick",
             ["Comp", o.toString()],
           )
-        : this.Agr.set(o, e)
+        : this.D0r.set(o, e)
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "TickController",
@@ -46,8 +46,8 @@ class ComponentForceTickController extends ControllerBase_1.ControllerBase {
         );
   }
   static RegisterAfterTick(o, e) {
-    this.Pgr(o)
-      ? this.ZEt.has(o)
+    this.R0r(o)
+      ? this._It.has(o)
         ? Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "TickController",
@@ -55,7 +55,7 @@ class ComponentForceTickController extends ControllerBase_1.ControllerBase {
             "[ComponentForceTickController.RegisterAfterTick] 当前Comp已经注册过ForceAfterTick",
             ["Comp", o.toString()],
           )
-        : this.ZEt.set(o, e)
+        : this._It.set(o, e)
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "TickController",
@@ -65,8 +65,8 @@ class ComponentForceTickController extends ControllerBase_1.ControllerBase {
         );
   }
   static UnregisterTick(o) {
-    this.Agr.has(o)
-      ? this.Agr.delete(o)
+    this.D0r.has(o)
+      ? this.D0r.delete(o)
       : Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn(
           "TickController",
@@ -76,8 +76,8 @@ class ComponentForceTickController extends ControllerBase_1.ControllerBase {
         );
   }
   static UnregisterAfterTick(o) {
-    this.ZEt.has(o)
-      ? this.ZEt.delete(o)
+    this._It.has(o)
+      ? this._It.delete(o)
       : Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn(
           "TickController",
@@ -90,15 +90,15 @@ class ComponentForceTickController extends ControllerBase_1.ControllerBase {
     Core_1.Core.UnRegisterPreTick(o);
   }
   static OnTick(o) {
-    for (var [e, r] of this.Agr)
+    for (var [e, r] of this.D0r)
       if (e.Active)
         try {
           this.m6(
-            this.xgr,
+            this.U0r,
             e.constructor.name,
             "ComponentForceTickController.OnTick.",
           );
-          r(o * this.EW);
+          r(o * this.SW);
         } catch (o) {
           o instanceof Error
             ? Log_1.Log.CheckError() &&
@@ -121,15 +121,15 @@ class ComponentForceTickController extends ControllerBase_1.ControllerBase {
         }
   }
   static OnAfterTick(o) {
-    for (var [e, r] of this.ZEt)
+    for (var [e, r] of this._It)
       try {
         e.Active &&
           (this.m6(
-            this.wgr,
+            this.A0r,
             e.constructor.name,
             "ComponentForceTickController.OnAfterTick.",
           ),
-          r(o * this.EW));
+          r(o * this.SW));
       } catch (o) {
         o instanceof Error
           ? Log_1.Log.CheckError() &&
@@ -151,19 +151,19 @@ class ComponentForceTickController extends ControllerBase_1.ControllerBase {
             );
       }
   }
-  static Rgr(e) {
+  static T0r(e) {
     return Boolean(
-      this.Tgr.find((o) => (0, RegisterComponent_1.isComponentInstance)(e, o)),
+      this.S0r.find((o) => (0, RegisterComponent_1.isComponentInstance)(e, o)),
     );
   }
-  static Ugr(e) {
+  static L0r(e) {
     return Boolean(
-      this.Lgr.find((o) => (0, RegisterComponent_1.isComponentInstance)(e, o)),
+      this.y0r.find((o) => (0, RegisterComponent_1.isComponentInstance)(e, o)),
     );
   }
-  static Pgr(e) {
+  static R0r(e) {
     return Boolean(
-      this.Dgr.find((o) => (0, RegisterComponent_1.isComponentInstance)(e, o)),
+      this.I0r.find((o) => (0, RegisterComponent_1.isComponentInstance)(e, o)),
     );
   }
   static m6(e, r, o) {
@@ -173,16 +173,16 @@ class ComponentForceTickController extends ControllerBase_1.ControllerBase {
     }
   }
   static SetTimeDilation(o) {
-    ComponentForceTickController.EW = o;
+    ComponentForceTickController.SW = o;
   }
 }
-((exports.ComponentForceTickController = ComponentForceTickController).Lgr =
+((exports.ComponentForceTickController = ComponentForceTickController).y0r =
   []),
-  (ComponentForceTickController.Dgr = []),
-  (ComponentForceTickController.Tgr = []),
-  (ComponentForceTickController.xgr = new Map()),
-  (ComponentForceTickController.wgr = new Map()),
-  (ComponentForceTickController.EW = 1),
-  (ComponentForceTickController.Agr = new Map()),
-  (ComponentForceTickController.ZEt = new Map());
+  (ComponentForceTickController.I0r = []),
+  (ComponentForceTickController.S0r = []),
+  (ComponentForceTickController.U0r = new Map()),
+  (ComponentForceTickController.A0r = new Map()),
+  (ComponentForceTickController.SW = 1),
+  (ComponentForceTickController.D0r = new Map()),
+  (ComponentForceTickController._It = new Map());
 //# sourceMappingURL=ComponentForceTickController.js.map

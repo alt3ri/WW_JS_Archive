@@ -30,7 +30,7 @@ class RbNode {
 }
 class RbTree {
   constructor(i) {
-    (this.S7 = i),
+    (this.E7 = i),
       (this.q7 = new Array()),
       (this.G7 = new Map()),
       (this.t6 = 0),
@@ -73,7 +73,7 @@ class RbTree {
     if ((++this.t6, this.G7.set(t.Item, t), this.gc)) {
       let i = this.gc;
       for (;;)
-        if (this.S7(t.Item, i.Item) < 0) {
+        if (this.E7(t.Item, i.Item) < 0) {
           if (!i.Left) {
             (i.Left = t).Parent = i;
             break;

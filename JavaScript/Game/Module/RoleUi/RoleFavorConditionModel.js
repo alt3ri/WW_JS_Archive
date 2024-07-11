@@ -4,18 +4,18 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const ModelBase_1 = require("../../../Core/Framework/ModelBase");
 class RoleFavorConditionModel extends ModelBase_1.ModelBase {
   constructor() {
-    super(...arguments), (this.Cbi = new Map());
+    super(...arguments), (this.Cqi = new Map());
   }
   UpdateRoleFavorCondtion(e, o) {
-    var r = this.Cbi.get(e) ?? new Map(),
-      t = o.wLs;
+    var r = this.Cqi.get(e) ?? new Map(),
+      t = o.JPs;
     for (const f of Object.keys(t)) {
       var s = Number(f),
-        a = t[s].ULs,
+        a = t[s].YPs,
         i = r.get(s) ?? new Map();
       for (const u of Object.keys(a)) {
         var n = Number(u),
-          d = a[n].PLs,
+          d = a[n].XPs,
           l = i.get(n) ?? [],
           v = d.length;
         for (let e = 0; e < v; e++) {
@@ -26,10 +26,10 @@ class RoleFavorConditionModel extends ModelBase_1.ModelBase {
       }
       r.set(s, i);
     }
-    this.Cbi.set(e, r);
+    this.Cqi.set(e, r);
   }
   IsCondtionFinish(e, o, r, t) {
-    e = this.Cbi.get(e);
+    e = this.Cqi.get(e);
     if (e) {
       e = e.get(o);
       if (e) {

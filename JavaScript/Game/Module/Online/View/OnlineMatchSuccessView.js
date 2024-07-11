@@ -16,30 +16,31 @@ const UE = require("ue"),
 class OnlineMatchSuccessView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
-      (this.EGi = -1),
-      (this.yGi = -1),
-      (this.Q2t = void 0),
-      (this.pGi = void 0),
-      (this.eNi = !0),
-      (this.G$e = () => {
+      (this.SNi = -1),
+      (this.yNi = -1),
+      (this.XFt = void 0),
+      (this.pNi = void 0),
+      (this.eOi = !0),
+      (this.$Ye = () => {
         var e =
           ModelManager_1.ModelManager.InstanceDungeonEntranceModel.GetMatchingState();
         3 === e
-          ? this.tNi()
+          ? this.tOi()
           : (1 === e &&
               ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
                 "MatchingOtherCancel",
               ),
+            (this.eOi = !1),
             this.CloseMe());
       }),
-      (this.MGi = () => {
+      (this.MNi = () => {
         InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.MatchConfirmRequest(
           !0,
         ),
-          (this.eNi = !1),
-          this.tNi();
+          (this.eOi = !1),
+          this.tOi();
       }),
-      (this.J9e = () => {
+      (this.uHe = () => {
         InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.MatchConfirmRequest(
           !1,
         ),
@@ -60,21 +61,23 @@ class OnlineMatchSuccessView extends UiTickViewBase_1.UiTickViewBase {
       [8, UE.UIButtonComponent],
       [9, UE.UIItem],
       [10, UE.UIItem],
+      [11, UE.UIItem],
     ]),
       (this.BtnBindInfo = [
-        [2, this.MGi],
-        [8, this.J9e],
+        [2, this.MNi],
+        [8, this.uHe],
       ]);
   }
   OnStart() {
-    this.GetButton(8).GetRootComponent().SetUIActive(!0),
-      (this.Q2t = this.GetText(5)),
-      (this.pGi = this.GetSprite(6));
+    this.GetItem(11)?.SetUIActive(!1),
+      this.GetButton(8).GetRootComponent().SetUIActive(!0),
+      (this.XFt = this.GetText(5)),
+      (this.pNi = this.GetSprite(6));
     var e = CommonParamById_1.configCommonParamById.GetIntConfig(
       "match_confirm_time_out_seconds",
     );
-    (this.EGi = e),
-      (this.yGi = e),
+    (this.SNi = e),
+      (this.yNi = e),
       this.GetItem(9).SetUIActive(!0),
       this.GetItem(10).SetUIActive(!1),
       this.Og();
@@ -82,22 +85,22 @@ class OnlineMatchSuccessView extends UiTickViewBase_1.UiTickViewBase {
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnMatchingChange,
-      this.G$e,
+      this.$Ye,
     );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnMatchingChange,
-      this.G$e,
+      this.$Ye,
     );
   }
   OnTick(e) {
-    this.eNi &&
-      ((this.EGi -= e * TimeUtil_1.TimeUtil.Millisecond),
-      this.EGi <= 0
-        ? this.CloseMe()
-        : (this.Q2t.SetText(TimeUtil_1.TimeUtil.GetCoolDown(this.EGi)),
-          this.pGi.SetFillAmount(this.EGi / this.yGi)));
+    this.eOi &&
+      ((this.SNi -= e * TimeUtil_1.TimeUtil.Millisecond),
+      this.SNi <= 0
+        ? ((this.eOi = !1), this.CloseMe())
+        : (this.XFt.SetText(TimeUtil_1.TimeUtil.GetCoolDown(this.SNi)),
+          this.pNi.SetFillAmount(this.SNi / this.yNi)));
   }
   Og() {
     var e = this.GetItem(3),
@@ -114,17 +117,17 @@ class OnlineMatchSuccessView extends UiTickViewBase_1.UiTickViewBase {
             .MapName,
         ) ?? "";
     i.SetText(e),
-      this.Q2t.SetText(TimeUtil_1.TimeUtil.GetCoolDown(this.EGi)),
-      this.pGi.SetFillAmount(this.EGi / this.yGi);
+      this.XFt.SetText(TimeUtil_1.TimeUtil.GetCoolDown(this.SNi)),
+      this.pNi.SetFillAmount(this.SNi / this.yNi);
   }
-  tNi() {
+  tOi() {
     this.GetButton(8).GetRootComponent().SetUIActive(!1),
       this.GetButton(2).GetRootComponent().SetUIActive(!1);
     var e = this.GetText(1);
     LguiUtil_1.LguiUtil.SetLocalText(e, "MatchingTeleport"),
       this.GetText(7).SetUIActive(!1),
-      this.Q2t.SetUIActive(!1),
-      this.pGi.SetUIActive(!1);
+      this.XFt.SetUIActive(!1),
+      this.pNi.SetUIActive(!1);
   }
 }
 exports.OnlineMatchSuccessView = OnlineMatchSuccessView;

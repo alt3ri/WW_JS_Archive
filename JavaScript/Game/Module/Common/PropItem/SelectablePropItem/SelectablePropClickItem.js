@@ -8,7 +8,7 @@ const UE = require("ue"),
 class RoleHead extends UiPanelBase_1.UiPanelBase {
   constructor(t) {
     super(),
-      (this.Ewt = this.CreateThenShowByResourceIdAsync(
+      (this.TBt = this.CreateThenShowByResourceIdAsync(
         "UiItem_ItemRole",
         t,
         !0,
@@ -26,7 +26,7 @@ class RoleHead extends UiPanelBase_1.UiPanelBase {
   }
   async Update(t) {
     var e;
-    await this.Ewt,
+    await this.TBt,
       0 === t.RoleId
         ? this.SetActive(!1)
         : (this.SetActive(!0),
@@ -40,10 +40,10 @@ exports.RoleHead = RoleHead;
 class SelectablePropClickItem extends SelectablePropItemBase_1.SelectablePropItemBase {
   constructor(t = 1, e = !1) {
     super(t),
-      (this.U4e = void 0),
-      (this.ywt = void 0),
-      (this.Iwt = !1),
-      (this.Twt = void 0),
+      (this.j5e = void 0),
+      (this.LBt = void 0),
+      (this.DBt = !1),
+      (this.RBt = void 0),
       (this.IsSelectableProp = !0),
       (this.OnToggleClick = (t) => {
         1 === t &&
@@ -53,47 +53,47 @@ class SelectablePropClickItem extends SelectablePropItemBase_1.SelectablePropIte
             !0,
           );
       }),
-      (this.T7e = () => {
-        var t = this.ywt?.(this.PropData.IncId, this.Iwt) ?? !1;
-        return (this.Iwt = !1), t;
+      (this.Lke = () => {
+        var t = this.LBt?.(this.PropData.IncId, this.DBt) ?? !1;
+        return (this.DBt = !1), t;
       }),
-      (this.Lwt = e);
+      (this.UBt = e);
   }
   OnStart() {
     this.GetControlItem()?.SetUIActive(!1),
       this.GetSelectItem()?.SetUIActive(!1),
-      this.GetSelectableToggle().CanExecuteChange.Bind(this.T7e),
-      this.Lwt && (this.Twt = new RoleHead(this.GetRootItem()));
+      this.GetSelectableToggle().CanExecuteChange.Bind(this.Lke),
+      this.UBt && (this.RBt = new RoleHead(this.GetRootItem()));
   }
   SetToggleStateForce(t, e = !1) {
     var s = this.GetSelectableToggle();
-    s && (t !== s.GetToggleState() && (this.Iwt = !0), s.SetToggleState(t, e));
+    s && (t !== s.GetToggleState() && (this.DBt = !0), s.SetToggleState(t, e));
   }
   OnBeforeDestroy() {
     this.GetSelectableToggle()?.CanExecuteChange.Unbind(),
-      this.Twt?.Destroy(),
-      (this.Twt = void 0);
+      this.RBt?.Destroy(),
+      (this.RBt = void 0);
   }
   OnRefresh(t, e) {
     this.SetToggleStateForce(t ? 1 : 0),
       this.ShowDefaultDownText(),
       this.RefreshRightDownLockSprite(this.PropData.GetIsLock()),
-      this.Twt?.Update(this.PropData);
+      this.RBt?.Update(this.PropData);
   }
   OnSelected(t) {
     t &&
       (this.SetToggleStateForce(1),
       this.SetRoleIconState(),
-      this.U4e?.(this.PropData.IncId));
+      this.j5e?.(this.PropData.IncId));
   }
   OnDeselected(t) {
     t && (this.SetToggleStateForce(0), this.SetRoleIconState());
   }
   SetToggleFunction(t) {
-    this.U4e = t;
+    this.j5e = t;
   }
   SetCanExecuteChange(t) {
-    this.ywt = t;
+    this.LBt = t;
   }
   GetPropData() {
     return this.PropData;

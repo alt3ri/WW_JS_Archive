@@ -10,17 +10,16 @@ class FixedSceneGamePlayMarkItemView extends ConfigMarkItemView_1.ConfigMarkItem
   OnInitialize() {
     super.OnInitialize(), this.OnIconPathChanged(this.Holder.IconPath);
   }
-  OnUpdate(e, r, a) {
-    super.OnUpdate(e, r);
-    var e = this.Holder,
-      r = e.IconPath,
-      i = ModelManager_1.ModelManager.LevelPlayModel.GetLevelPlayInfo(
-        e.MarkConfig.RelativeId,
+  OnSafeUpdate(e, a, r) {
+    var i = this.Holder,
+      t = i.IconPath,
+      s = ModelManager_1.ModelManager.LevelPlayModel.GetLevelPlayInfo(
+        i.MarkConfig.RelativeId,
       );
-    !i || i.IsClose
-      ? (e.IconPath = e.MarkConfig.LockMarkPic)
-      : ((e.IconPath = e.MarkConfig.UnlockMarkPic),
-        r !== e.IconPath && this.OnIconPathChanged(e.IconPath));
+    !s || s.IsClose
+      ? (i.IconPath = i.MarkConfig.LockMarkPic)
+      : ((i.IconPath = i.MarkConfig.UnlockMarkPic),
+        t !== i.IconPath && this.OnIconPathChanged(i.IconPath));
   }
 }
 exports.FixedSceneGamePlayMarkItemView = FixedSceneGamePlayMarkItemView;

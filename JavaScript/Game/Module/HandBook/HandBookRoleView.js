@@ -21,38 +21,38 @@ class HandBookRoleView extends UiViewBase_1.UiViewBase {
     super(...arguments),
       (this.RoleScrollView = void 0),
       (this.lqe = void 0),
-      (this.w5i = void 0),
-      (this.ami = void 0),
-      (this.s5i = void 0),
-      (this.ggo = []),
-      (this.pgo = (e) => {
-        (this.ggo = e), this.vgo(e);
+      (this.xVi = void 0),
+      (this.adi = void 0),
+      (this.nVi = void 0),
+      (this.m0o = []),
+      (this.C0o = (e) => {
+        (this.m0o = e), this.g0o(e);
       }),
-      (this.z9e = () => {
+      (this.cHe = () => {
         var e = new HandBookRoleMediumItemGird_1.HandBookRoleMediumItemGird();
         return (
-          e.BindOnExtendToggleStateChanged(this.U4e),
-          e.BindOnCanExecuteChange(this.OBt),
+          e.BindOnExtendToggleStateChanged(this.j5e),
+          e.BindOnCanExecuteChange(this.Vbt),
           e
         );
       }),
-      (this.U4e = (e) => {
+      (this.j5e = (e) => {
         var i = e.State,
           e = e.Data;
         1 === i &&
-          (this.RoleScrollView.DeselectCurrentGridProxy(), this.Mgo(e));
+          (this.RoleScrollView.DeselectCurrentGridProxy(), this.f0o(e));
       }),
-      (this.OBt = (e, i, t) => {
+      (this.Vbt = (e, i, t) => {
         return !(
           (UiCameraAnimationManager_1.UiCameraAnimationManager.IsPlayingAnimation() &&
-            void 0 !== this.s5i &&
+            void 0 !== this.nVi &&
             0 === t) ||
-          (1 === t && this.s5i === e.GetDataId())
+          (1 === t && this.nVi === e.GetDataId())
         );
       }),
-      (this.Zho = () => {
+      (this.$lo = () => {
         var e = [
-          ConfigManager_1.ConfigManager.RoleConfig?.GetRoleConfig(this.s5i)
+          ConfigManager_1.ConfigManager.RoleConfig?.GetRoleConfig(this.nVi)
             ?.TrialRole,
         ];
         ControllerHolder_1.ControllerHolder.RoleController.OpenRoleMainView(
@@ -74,25 +74,25 @@ class HandBookRoleView extends UiViewBase_1.UiViewBase {
       [5, UE.UIButtonComponent],
       [6, UE.UIText],
     ]),
-      (this.BtnBindInfo = [[5, this.Zho]]);
+      (this.BtnBindInfo = [[5, this.$lo]]);
   }
   OnBeforeCreate() {
-    this.w5i = UiSceneManager_1.UiSceneManager.InitRoleSystemRoleActor(1);
+    this.xVi = UiSceneManager_1.UiSceneManager.InitRoleSystemRoleActor(1);
   }
   OnStart() {
     (this.RoleScrollView = new LoopScrollView_1.LoopScrollView(
       this.GetLoopScrollViewComponent(2),
       this.GetItem(3).GetOwner(),
-      this.z9e,
+      this.cHe,
     )),
       (this.lqe = new PopupCaptionItem_1.PopupCaptionItem(this.GetItem(0))),
       this.lqe.SetCloseCallBack(() => {
         this.CloseMe();
       }),
       this.lqe.SetTitleLocalText("HandBookRoleTitle"),
-      (this.ami = new FilterSortEntrance_1.FilterSortEntrance(
+      (this.adi = new FilterSortEntrance_1.FilterSortEntrance(
         this.GetItem(4),
-        this.pgo,
+        this.C0o,
       ));
     var e = [];
     for (const t of ConfigManager_1.ConfigManager.RoleConfig?.GetRoleList().filter(
@@ -106,7 +106,7 @@ class HandBookRoleView extends UiViewBase_1.UiViewBase {
     e.push(
       ModelManager_1.ModelManager.RoleModel.GetCurSelectMainRoleInstance(),
     ),
-      this.ami.UpdateData(21, e),
+      this.adi.UpdateData(21, e),
       this.InitRole();
   }
   OnHandleLoadScene() {
@@ -117,36 +117,36 @@ class HandBookRoleView extends UiViewBase_1.UiViewBase {
       .Model?.CheckGetComponent(1)
       ?.SetTransformByTag("RoleCase");
   }
-  vgo(t) {
+  g0o(t) {
     this.RoleScrollView.DeselectCurrentGridProxy(),
       this.RoleScrollView.RefreshByData(t, !1, () => {
         let e = 0;
         for (const i of t) {
-          if (i.GetDataId() === this.s5i)
+          if (i.GetDataId() === this.nVi)
             return (
               this.RoleScrollView.ScrollToGridIndex(e),
               void this.RoleScrollView.SelectGridProxy(e)
             );
           e++;
         }
-        this.Mgo(this.ggo[0], !0);
+        this.f0o(this.m0o[0], !0);
       });
   }
-  Mgo(e, i = !1) {
-    var t = this.ggo.indexOf(e);
+  f0o(e, i = !1) {
+    var t = this.m0o.indexOf(e);
     0 <= t &&
       (i && this.RoleScrollView.ScrollToGridIndex(t),
       this.RoleScrollView.SelectGridProxy(t),
-      this.Sgo(e));
+      this.p0o(e));
   }
-  Sgo(e) {
+  p0o(e) {
     var i,
       t,
       o = e.GetDataId(),
-      r = this.s5i ?? 0;
-    this.s5i !== o &&
-      ((this.s5i = o),
-      this.CNt(e.GetName()),
+      r = this.nVi ?? 0;
+    this.nVi !== o &&
+      ((this.nVi = o),
+      this.gOt(e.GetName()),
       (i = this.GetText(6)),
       (t = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
         "HandBookRoleGetDate",
@@ -164,7 +164,7 @@ class HandBookRoleView extends UiViewBase_1.UiViewBase {
           ))
         : i.SetUIActive(!1),
       ControllerHolder_1.ControllerHolder.RoleController.OnSelectedRoleChange(
-        this.s5i,
+        this.nVi,
       ),
       ControllerHolder_1.ControllerHolder.RoleController.PlayRoleMontage(
         3,
@@ -172,11 +172,11 @@ class HandBookRoleView extends UiViewBase_1.UiViewBase {
         0 < r,
       ));
   }
-  CNt(e) {
+  gOt(e) {
     this.GetText(1).SetText(e);
   }
   OnBeforeDestroy() {
-    UiSceneManager_1.UiSceneManager.DestroyRoleSystemRoleActor(this.w5i),
+    UiSceneManager_1.UiSceneManager.DestroyRoleSystemRoleActor(this.xVi),
       (this.RoleScrollView = void 0);
   }
 }

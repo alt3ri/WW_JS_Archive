@@ -7,7 +7,7 @@ class TsTaskSneakFail extends TsTaskAbortImmediatelyBase_1.default {
   ReceiveExecuteAI(e, s) {
     e.AiController
       ? (ActorUtils_1.ActorUtils.GetEntityByActor(s)
-          ?.Entity?.GetComponent(185)
+          ?.Entity?.GetComponent(188)
           ?.TagContainer?.UpdateExactTag(3, -1951091619, 0),
         this.FinishExecute(!0))
       : (Log_1.Log.CheckError() &&

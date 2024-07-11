@@ -9,15 +9,20 @@ class ExploreAreaMissionData {
       (this.QuestNameId = void 0),
       (this.QuestStatus = void 0),
       (this.QuestType = void 0),
-      (this.SortIndex = 0),
       (this.AreaId = s.Area),
-      (this.QuestId = s.Id),
-      (this.SortIndex = s.SortIndex);
+      (this.QuestId = s.Id);
     var s = ModelManager_1.ModelManager.QuestNewModel,
       t = s.GetQuestConfig(this.QuestId);
     (this.QuestStatus = s.GetQuestState(this.QuestId)),
       (this.QuestNameId = t?.TidName),
       (this.QuestType = t?.Type);
+  }
+  IsQuestVisible() {
+    var s = ModelManager_1.ModelManager.QuestNewModel.GetQuest(this.QuestId);
+    return !!s && s.CanShowInUiPanel();
+  }
+  IsBranchQuest() {
+    return 2 === this.QuestType;
   }
 }
 exports.ExploreAreaMissionData = ExploreAreaMissionData;

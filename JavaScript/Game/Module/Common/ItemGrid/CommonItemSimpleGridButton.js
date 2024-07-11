@@ -3,27 +3,27 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CommonItemSimpleGridButton = void 0);
 const UE = require("ue"),
   CustomPromise_1 = require("../../../../Core/Common/CustomPromise"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract"),
-  LguiUtil_1 = require("../../Util/LguiUtil"),
-  ControllerHolder_1 = require("../../../Manager/ControllerHolder");
+  LguiUtil_1 = require("../../Util/LguiUtil");
 class CommonItemSimpleGridButton extends GridProxyAbstract_1.GridProxyAbstract {
   constructor(t = void 0) {
     super(),
-      (this.PIt = 0),
-      (this.JUt = "ShowCount"),
-      (this.xIt = void 0),
-      (this.wIt = (t) => {
+      (this.qTt = 0),
+      (this.tPt = "ShowCount"),
+      (this.GTt = void 0),
+      (this.NTt = (t) => {
         ControllerHolder_1.ControllerHolder.ItemController.OpenItemTipsByItemId(
           t,
         );
       }),
-      (this.j7e = () => {
-        this.wIt && this.wIt(this.PIt);
+      (this.ije = () => {
+        this.NTt && this.NTt(this.qTt);
       }),
       t && this.CreateThenShowByActor(t);
   }
   get ItemId() {
-    return this.PIt;
+    return this.qTt;
   }
   OnRegisterComponent() {
     (this.ComponentRegisterInfos = [
@@ -37,14 +37,14 @@ class CommonItemSimpleGridButton extends GridProxyAbstract_1.GridProxyAbstract {
       [7, UE.UIItem],
       [8, UE.UISprite],
     ]),
-      (this.BtnBindInfo = [[4, this.j7e]]);
+      (this.BtnBindInfo = [[4, this.ije]]);
   }
   OnStart() {}
   OnBeforeDestroy() {}
-  qIt() {
+  FTt() {
     var t = this.GetTexture(1),
-      t = (this.SetItemIcon(t, this.PIt, this.xIt), this.GetSprite(0));
-    this.SetItemQualityIcon(t, this.PIt, this.xIt, "BackgroundSprite");
+      t = (this.SetItemIcon(t, this.qTt, this.GTt), this.GetSprite(0));
+    this.SetItemQualityIcon(t, this.qTt, this.GTt, "BackgroundSprite");
   }
   Refresh(t, i, e) {
     var s = t[0],
@@ -64,17 +64,17 @@ class CommonItemSimpleGridButton extends GridProxyAbstract_1.GridProxyAbstract {
     this.GetItem(7).SetUIActive(t);
   }
   SetBelongViewName(t) {
-    this.xIt = t;
+    this.GTt = t;
   }
   RefreshItem(t, i = 0) {
-    (this.PIt = t), this.qIt(), this.SetCount(i);
+    (this.qTt = t), this.FTt(), this.SetCount(i);
   }
   BindClickCallback(t) {
-    this.wIt = t;
+    this.NTt = t;
   }
   SetCount(t = 0) {
     t
-      ? (LguiUtil_1.LguiUtil.SetLocalText(this.GetCountText(), this.JUt, t),
+      ? (LguiUtil_1.LguiUtil.SetLocalText(this.GetCountText(), this.tPt, t),
         this.GetCountItem().SetUIActive(!0))
       : this.GetCountItem().SetUIActive(!1);
   }
@@ -85,22 +85,22 @@ class CommonItemSimpleGridButton extends GridProxyAbstract_1.GridProxyAbstract {
     return this.GetItem(3);
   }
   SetCountTextId(t) {
-    this.JUt = t;
+    this.tPt = t;
   }
   async RefreshItemAsync(t, i = 0) {
-    (this.PIt = t), await this.NIt(), this.SetCount(i);
+    (this.qTt = t), await this.HTt(), this.SetCount(i);
   }
-  async NIt() {
+  async HTt() {
     const t = new CustomPromise_1.CustomPromise(),
       i =
-        (this.SetItemIcon(this.GetTexture(1), this.PIt, void 0, () => {
+        (this.SetItemIcon(this.GetTexture(1), this.qTt, void 0, () => {
           t.SetResult(void 0);
         }),
         await t.Promise,
         new CustomPromise_1.CustomPromise());
     this.SetItemQualityIcon(
       this.GetSprite(0),
-      this.PIt,
+      this.qTt,
       void 0,
       "BackgroundSprite",
       () => {

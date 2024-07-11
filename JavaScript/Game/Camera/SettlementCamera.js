@@ -5,6 +5,7 @@ const puerts_1 = require("puerts"),
   UE = require("ue"),
   Log_1 = require("../../Core/Common/Log"),
   QueryTypeDefine_1 = require("../../Core/Define/QueryTypeDefine"),
+  Macro_1 = require("../../Core/Preprocessor/Macro"),
   MathCommon_1 = require("../../Core/Utils/Math/MathCommon"),
   Rotator_1 = require("../../Core/Utils/Math/Rotator"),
   Vector_1 = require("../../Core/Utils/Math/Vector"),
@@ -33,6 +34,8 @@ const puerts_1 = require("puerts"),
   FLAT_ANGLE = 180,
   PROFILE_KEY = "FightCameraLogicComponent_TraceValidRange_Camera",
   DEBUG_DRAW_DURATION = 10,
+  DEBUG_DRAW_RADIUS = 10,
+  DEBUG_DRAW_SEGMENTS = 12,
   THICKNESS = 5;
 class YawRange {
   constructor(t, i) {
@@ -56,6 +59,7 @@ class SettlementCamera {
       (this.Bme = RIGHT_YAW_RANGE_MIN),
       (this.bme = RIGHT_YAW_RANGE_MAX),
       (this.qme = MIN_VALID_YAW_RANGE),
+      (this.bzs = Vector_1.Vector.Create()),
       (this.Gme = 0),
       (this.Nme = void 0),
       (this.Ome = new Rotator_1.Rotator()),
@@ -209,7 +213,8 @@ class SettlementCamera {
               58,
               "【结算镜头】没有配置CameraModifier名称，将自动修正为 SettlementCamera",
             ),
-          (this.Lme.Settings.Name = "SettlementCamera")))
+          (this.Lme.Settings.Name = "SettlementCamera")),
+        this.bzs.DeepCopy(this.Tme.CharacterOffset))
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error("Camera", 58, "无结算镜头配置数据");
   }
@@ -247,8 +252,9 @@ class SettlementCamera {
         ),
         this.UpdateRotator(this.Fse.HitResult),
         this.PlaySettlementCameraInternal(),
-        this.EnableDebugDraw) &&
-        (this.Xme(), this.$me(), this.Yme()));
+        Macro_1.NOT_SHIPPING_ENVIRONMENT) &&
+        this.EnableDebugDraw &&
+        this.qzs());
   }
   UpdateRotator(t) {
     this.Jme(t), this.zme(t), this.Zme(), this.UpdateFinalRotator();
@@ -281,6 +287,10 @@ class SettlementCamera {
         this.Ome.Yaw,
         this.Ome.Roll,
       )),
+      (this.Lme.Settings.ArmOffset =
+        this.Hh.Character.CharacterActorComponent.ActorTransform.TransformVectorNoScale(
+          this.bzs.ToUeVector(),
+        )),
       this.Hh.CameraModifyController.ApplyCameraModify(
         void 0,
         this.Lme.Duration,
@@ -396,125 +406,125 @@ class SettlementCamera {
       [i, e] = this.tde(t, i);
     let a = 0,
       r = 0;
-    var o,
-      A,
+    var A,
+      o,
       T = Vector_1.Vector.Create(),
-      n = Vector_1.Vector.Create(),
+      M = Vector_1.Vector.Create(),
       i =
         (h.Y >= -e && h.Y <= e
-          ? ((E = e + h.Y),
-            (o = e - h.Y),
-            (A = s.X - h.X),
+          ? ((I = e + h.Y),
+            (A = e - h.Y),
+            (o = s.X - h.X),
             (a =
-              _ * _ < E * E + A * A ? h.Y - Math.sqrt(_ * _ - A * A) : h.Y - E),
+              _ * _ < I * I + o * o ? h.Y - Math.sqrt(_ * _ - o * o) : h.Y - I),
             (r =
-              _ * _ < o * o + A * A ? h.Y + Math.sqrt(_ * _ - A * A) : h.Y + o),
+              _ * _ < A * A + o * o ? h.Y + Math.sqrt(_ * _ - o * o) : h.Y + A),
             (T.X = s.X),
             (T.Y = h.X <= 0 ? a : r),
             (T.Z = s.Z),
-            (n.X = s.X),
-            (n.Y = 0 < h.X ? a : r),
-            (n.Z = s.Z))
+            (M.X = s.X),
+            (M.Y = 0 < h.X ? a : r),
+            (M.Z = s.Z))
           : h.X >= -i && h.X <= i
-            ? ((E = i - h.X),
-              (A = i + h.X),
-              (o = s.Y - h.Y),
+            ? ((I = i - h.X),
+              (o = i + h.X),
+              (A = s.Y - h.Y),
               (a =
-                _ * _ < E * E + o * o
-                  ? h.X + Math.sqrt(_ * _ - o * o)
-                  : h.X + E),
+                _ * _ < I * I + A * A
+                  ? h.X + Math.sqrt(_ * _ - A * A)
+                  : h.X + I),
               (r =
-                _ * _ < A * A + o * o
-                  ? h.X - Math.sqrt(_ * _ - o * o)
-                  : h.X - A),
+                _ * _ < o * o + A * A
+                  ? h.X - Math.sqrt(_ * _ - A * A)
+                  : h.X - o),
               (T.X = h.Y <= 0 ? a : r),
               (T.Y = s.Y),
               (T.Z = s.Z),
-              (n.X = 0 < h.Y ? a : r),
-              (n.Y = s.Y),
-              (n.Z = s.Z))
+              (M.X = 0 < h.Y ? a : r),
+              (M.Y = s.Y),
+              (M.Z = s.Z))
             : h.Y < -e && h.X < -i
-              ? ((E = i - h.X),
-                (o = e - h.Y),
-                (A = s.X - h.X),
-                (M = s.Y - h.Y),
+              ? ((I = i - h.X),
+                (A = e - h.Y),
+                (o = s.X - h.X),
+                (E = s.Y - h.Y),
                 (a =
-                  _ * _ < E * E + M * M
-                    ? h.X + Math.sqrt(_ * _ - M * M)
-                    : h.X + E),
+                  _ * _ < I * I + E * E
+                    ? h.X + Math.sqrt(_ * _ - E * E)
+                    : h.X + I),
                 (r =
-                  _ * _ < o * o + A * A
-                    ? h.Y + Math.sqrt(_ * _ - A * A)
-                    : h.Y + o),
+                  _ * _ < A * A + o * o
+                    ? h.Y + Math.sqrt(_ * _ - o * o)
+                    : h.Y + A),
                 (T.X = a),
                 (T.Y = s.Y),
                 (T.Z = s.Z),
-                (n.X = s.X),
-                (n.Y = r),
-                (n.Z = s.Z))
+                (M.X = s.X),
+                (M.Y = r),
+                (M.Z = s.Z))
               : h.Y > e && h.X < -i
-                ? ((M = i - h.X),
-                  (E = e + h.Y),
-                  (A = s.X - h.X),
-                  (o = s.Y - h.Y),
+                ? ((E = i - h.X),
+                  (I = e + h.Y),
+                  (o = s.X - h.X),
+                  (A = s.Y - h.Y),
                   (a =
-                    _ * _ < M * M + o * o
-                      ? h.X + Math.sqrt(_ * _ - o * o)
-                      : h.X + M),
-                  (r =
                     _ * _ < E * E + A * A
-                      ? h.Y - Math.sqrt(_ * _ - A * A)
-                      : h.Y - E),
-                  (n.X = a),
-                  (n.Y = s.Y),
-                  (n.Z = s.Z),
+                      ? h.X + Math.sqrt(_ * _ - A * A)
+                      : h.X + E),
+                  (r =
+                    _ * _ < I * I + o * o
+                      ? h.Y - Math.sqrt(_ * _ - o * o)
+                      : h.Y - I),
+                  (M.X = a),
+                  (M.Y = s.Y),
+                  (M.Z = s.Z),
                   (T.X = s.X),
                   (T.Y = r),
                   (T.Z = s.Z))
                 : h.Y < -e && h.X > i
-                  ? ((o = i + h.X),
-                    (M = e - h.Y),
-                    (A = s.X - h.X),
-                    (E = s.Y - h.Y),
+                  ? ((A = i + h.X),
+                    (E = e - h.Y),
+                    (o = s.X - h.X),
+                    (I = s.Y - h.Y),
                     (a =
-                      _ * _ < o * o + E * E
-                        ? h.X - Math.sqrt(_ * _ - E * E)
-                        : h.X - o),
+                      _ * _ < A * A + I * I
+                        ? h.X - Math.sqrt(_ * _ - I * I)
+                        : h.X - A),
                     (r =
-                      _ * _ < M * M + A * A
-                        ? h.Y + Math.sqrt(_ * _ - A * A)
-                        : h.Y + M),
+                      _ * _ < E * E + o * o
+                        ? h.Y + Math.sqrt(_ * _ - o * o)
+                        : h.Y + E),
                     (T.X = s.X),
                     (T.Y = r),
                     (T.Z = s.Z),
-                    (n.X = a),
-                    (n.Y = s.Y),
-                    (n.Z = s.Z))
+                    (M.X = a),
+                    (M.Y = s.Y),
+                    (M.Z = s.Z))
                   : h.Y > e &&
                     h.X > i &&
-                    ((E = i + h.X),
-                    (o = e + h.Y),
-                    (A = s.X - h.X),
-                    (M = s.Y - h.Y),
+                    ((I = i + h.X),
+                    (A = e + h.Y),
+                    (o = s.X - h.X),
+                    (E = s.Y - h.Y),
                     (a =
-                      _ * _ < E * E + M * M
-                        ? h.X - Math.sqrt(_ * _ - M * M)
-                        : h.X - E),
+                      _ * _ < I * I + E * E
+                        ? h.X - Math.sqrt(_ * _ - E * E)
+                        : h.X - I),
                     (r =
-                      _ * _ < o * o + A * A
-                        ? h.Y - Math.sqrt(_ * _ - A * A)
-                        : h.Y - o),
+                      _ * _ < A * A + o * o
+                        ? h.Y - Math.sqrt(_ * _ - o * o)
+                        : h.Y - A),
                     (T.X = a),
                     (T.Y = s.Y),
                     (T.Z = s.Z),
-                    (n.X = s.X),
-                    (n.Y = r),
-                    (n.Z = s.Z)),
+                    (M.X = s.X),
+                    (M.Y = r),
+                    (M.Z = s.Z)),
         t.TransformPositionNoScale(T.ToUeVector())),
-      e = t.TransformPositionNoScale(n.ToUeVector()),
-      M = this.sde(i),
-      E = this.sde(e);
-    return new YawRange(M, E);
+      e = t.TransformPositionNoScale(M.ToUeVector()),
+      E = this.sde(i),
+      I = this.sde(e);
+    return new YawRange(E, I);
   }
   Zme() {
     (this.Wme.length = 0),
@@ -530,10 +540,10 @@ class SettlementCamera {
         e = 0,
         a = 0,
         r = 0,
-        o = 0,
         A = 0,
+        o = 0,
         T = 0,
-        n = 0;
+        M = 0;
       t < 0 && i < 0
         ? t < i
           ? ((T = 1), (s = t), (h = i))
@@ -542,41 +552,41 @@ class SettlementCamera {
             (h = i),
             (_ = t),
             (e = 0),
-            (n = 1),
+            (M = 1),
             (a = 0),
             (r = FLAT_ANGLE))
         : 0 < t && 0 < i
           ? t < i
-            ? ((n = 1), (a = t), (r = i))
-            : ((n = 2),
+            ? ((M = 1), (a = t), (r = i))
+            : ((M = 2),
               (a = 0),
               (r = i),
-              (o = t),
-              (A = FLAT_ANGLE),
+              (A = t),
+              (o = FLAT_ANGLE),
               (T = 1),
               (s = MINUS_FLAT_ANGLE),
               (h = 0))
           : t < 0 && 0 < i
-            ? ((T = 1), (n = 1), (s = t), (h = 0), (a = 0), (r = i))
+            ? ((T = 1), (M = 1), (s = t), (h = 0), (a = 0), (r = i))
             : 0 < t &&
               i < 0 &&
               ((T = 1),
-              (n = 1),
+              (M = 1),
               (s = MINUS_FLAT_ANGLE),
               (h = i),
               (a = t),
               (r = FLAT_ANGLE));
       for (let i = this.Wme.length - 1; 0 <= i; --i) {
         let t = !0;
-        var M,
-          E,
+        var E,
+          I,
           C = this.Wme[i];
         2 <= T &&
           (C.Min > e ||
             C.Max < _ ||
-            ((M = Math.max(C.Min, _)),
-            (E = Math.min(C.Max, e)),
-            this.Wme.push(new YawRange(M, E)))),
+            ((E = Math.max(C.Min, _)),
+            (I = Math.min(C.Max, e)),
+            this.Wme.push(new YawRange(E, I)))),
           1 <= T &&
             (C.Min > h ||
               C.Max < s ||
@@ -587,21 +597,21 @@ class SettlementCamera {
       }
       for (let i = this.Kme.length - 1; 0 <= i; --i) {
         let t = !0;
-        var I,
-          R,
-          N = this.Kme[i];
-        2 <= n &&
-          (N.Min > A ||
-            N.Max < o ||
-            ((I = Math.max(N.Min, o)),
-            (R = Math.min(N.Max, A)),
-            this.Kme.push(new YawRange(I, R)))),
-          1 <= n &&
-            (N.Min > r ||
-              N.Max < a ||
+        var n,
+          N,
+          R = this.Kme[i];
+        2 <= M &&
+          (R.Min > o ||
+            R.Max < A ||
+            ((n = Math.max(R.Min, A)),
+            (N = Math.min(R.Max, o)),
+            this.Kme.push(new YawRange(n, N)))),
+          1 <= M &&
+            (R.Min > r ||
+              R.Max < a ||
               ((t = !1),
-              (N.Min = Math.max(N.Min, a)),
-              (N.Max = Math.min(N.Max, r)))),
+              (R.Min = Math.max(R.Min, a)),
+              (R.Max = Math.min(R.Max, r)))),
           t && this.Kme.splice(i, 1);
       }
     }
@@ -629,94 +639,19 @@ class SettlementCamera {
       this.Lz.HeadingAngle() * MathUtils_1.MathUtils.RadToDeg
     );
   }
-  SetDrawDebugEnable(t) {
-    t
-      ? (this.Fse.SetDrawDebugTrace(2), (this.Fse.DrawTime = 10))
-      : (this.Fse.SetDrawDebugTrace(0), (this.Fse.DrawTime = 0)),
-      (this.EnableDebugDraw = t);
-  }
-  Xme() {
-    for (const _ of this.jme) {
-      var i = _.Min,
-        s = _.Max,
-        h = Vector_1.Vector.Create();
-      let t = s - i;
-      t < 0 && (t += 360),
-        new Rotator_1.Rotator(0, t / 2 + i, 0).Vector(h),
-        UE.KismetSystemLibrary.DrawDebugCone(
-          GlobalData_1.GlobalData.World,
-          this.Nme.ToUeVector(),
-          h.ToUeVector(),
-          this.Hh.FinalCameraDistance,
-          (MathCommon_1.MathCommon.UnwindDegrees(s - i) *
-            MathUtils_1.MathUtils.DegToRad) /
-            2,
-          0,
-          100,
-          ColorUtils_1.ColorUtils.LinearRed,
-          DEBUG_DRAW_DURATION,
-          1,
-        );
-    }
-  }
-  $me() {
-    for (const o of this.Wme) {
-      var t = o.Min + this.Gme,
-        i = o.Max + this.Gme,
-        s = new Rotator_1.Rotator(0, (i + t) / 2, 0),
-        h = Vector_1.Vector.Create();
-      s.Vector(h),
-        UE.KismetSystemLibrary.DrawDebugCone(
-          GlobalData_1.GlobalData.World,
-          this.Hh.PlayerLocation.ToUeVector(),
-          h.ToUeVector(),
-          this.Hh.FinalCameraDistance,
-          (MathCommon_1.MathCommon.UnwindDegrees(i - t) *
-            MathUtils_1.MathUtils.DegToRad) /
-            2,
-          0,
-          100,
-          ColorUtils_1.ColorUtils.LinearCyan,
-          DEBUG_DRAW_DURATION,
-          1,
-        );
-    }
-    for (const A of this.Kme) {
-      var _ = A.Min + this.Gme,
-        e = A.Max + this.Gme,
-        a = new Rotator_1.Rotator(0, (e + _) / 2, 0),
-        r = Vector_1.Vector.Create();
-      a.Vector(r),
-        UE.KismetSystemLibrary.DrawDebugCone(
-          GlobalData_1.GlobalData.World,
-          this.Hh.PlayerLocation.ToUeVector(),
-          r.ToUeVector(),
-          this.Hh.FinalCameraDistance,
-          (MathCommon_1.MathCommon.UnwindDegrees(e - _) *
-            MathUtils_1.MathUtils.DegToRad) /
-            2,
-          0,
-          100,
-          ColorUtils_1.ColorUtils.LinearCyan,
-          DEBUG_DRAW_DURATION,
-          1,
-        );
-    }
-  }
-  Yme() {
-    var t = Vector_1.Vector.Create(),
-      i = (this.Ome.Vector(t), Vector_1.Vector.Create());
-    t.MultiplyEqual(this.Hh.FinalCameraDistance),
-      t.Addition(this.Nme, i),
-      UE.KismetSystemLibrary.DrawDebugArrow(
-        GlobalData_1.GlobalData.World,
-        this.Nme.ToUeVector(),
-        i.ToUeVector(),
-        this.Hh.FinalCameraDistance,
-        ColorUtils_1.ColorUtils.LinearRed,
-        DEBUG_DRAW_DURATION,
-        THICKNESS,
+  qzs() {
+    var t =
+      this.Hh.Character.CharacterActorComponent.ActorTransform.TransformPositionNoScale(
+        this.bzs.ToUeVector(),
       );
+    UE.KismetSystemLibrary.DrawDebugSphere(
+      GlobalData_1.GlobalData.World,
+      t,
+      DEBUG_DRAW_RADIUS,
+      DEBUG_DRAW_SEGMENTS,
+      void 0,
+      DEBUG_DRAW_DURATION,
+    );
   }
   Clear() {
     this.Fse && (this.Fse.Dispose(), (this.Fse = void 0)),

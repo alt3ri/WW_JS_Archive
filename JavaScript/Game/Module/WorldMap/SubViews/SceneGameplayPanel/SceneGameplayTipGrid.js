@@ -9,10 +9,10 @@ class SceneGameplayTipGrid extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
       (this.OnClickPreviewCall = void 0),
-      (this.d2o = void 0),
-      (this.a1i = !1),
-      (this.h1i = []),
-      (this._2o = () => {
+      (this.uFo = void 0),
+      (this.a_i = !1),
+      (this.h_i = []),
+      (this.aFo = () => {
         this.OnClickPreviewCall?.();
       });
   }
@@ -27,50 +27,50 @@ class SceneGameplayTipGrid extends UiPanelBase_1.UiPanelBase {
       [3, ue_1.UIButtonComponent],
       [4, ue_1.UIItem],
     ]),
-      (this.BtnBindInfo = [[3, this._2o]]);
+      (this.BtnBindInfo = [[3, this.aFo]]);
   }
   OnStart() {
     this.GetItem(2).SetUIActive(!1);
   }
   OnBeforeDestroy() {
-    (this.h1i.length = 0), (this.OnClickPreviewCall = void 0);
+    (this.h_i.length = 0), (this.OnClickPreviewCall = void 0);
   }
   Refresh(i, t, e = !1, s = !1, r = !1) {
-    (this.d2o = i),
-      e ? this.C2o(t) : this.qMi(t),
+    (this.uFo = i),
+      e ? this.cFo(t) : this.qEi(t),
       this.GetItem(4)?.SetUIActive(r),
-      this.Yhi(s);
+      this.Yli(s);
   }
   SetBtnPreviewVisible(i) {
     this.GetButton(3).RootUIComp.SetUIActive(i);
   }
-  Yhi(e = !1) {
-    this.a1i = !!this.d2o && 0 < this.d2o.size;
+  Yli(e = !1) {
+    this.a_i = !!this.uFo && 0 < this.uFo.size;
     let s = 0;
-    if (this.a1i) {
+    if (this.a_i) {
       var r = this.GetItem(2).GetOwner(),
         h = this.GetItem(1);
       let t = 0;
-      for (const l of this.d2o) {
-        let i = this.h1i[t];
+      for (const l of this.uFo) {
+        let i = this.h_i[t];
         i ||
           ((i =
             new CommonItemSmallItemGrid_1.CommonItemSmallItemGrid()).Initialize(
             LguiUtil_1.LguiUtil.DuplicateActor(r, h),
           ),
-          this.h1i.push(i)),
+          this.h_i.push(i)),
           i.RefreshByConfigId(l[0], l[1], void 0, e),
           i.SetActive(!0),
           t++;
       }
-      s = this.d2o.size;
+      s = this.uFo.size;
     }
-    for (let i = s; i < this.h1i.length; ++i) this.h1i[i].SetActive(!1);
+    for (let i = s; i < this.h_i.length; ++i) this.h_i[i].SetActive(!1);
   }
-  qMi(i) {
+  qEi(i) {
     LguiUtil_1.LguiUtil.SetLocalText(this.GetText(0), i);
   }
-  C2o(i) {
+  cFo(i) {
     LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(0), i);
   }
 }

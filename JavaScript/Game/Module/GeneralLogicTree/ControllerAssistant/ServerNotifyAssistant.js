@@ -5,162 +5,169 @@ const Log_1 = require("../../../../Core/Common/Log"),
   Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
   Net_1 = require("../../../../Core/Net/Net"),
   MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   ActionTask_1 = require("../../../World/Task/ActionTask"),
   DelayTask_1 = require("../../../World/Task/DelayTask"),
   TaskSystem_1 = require("../../../World/Task/TaskSystem"),
-  LevelLoadingController_1 = require("../../LevelLoading/LevelLoadingController"),
+  ConfirmBoxController_1 = require("../../ConfirmBox/ConfirmBoxController"),
+  ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine"),
   GeneralLogicTreeDefine_1 = require("../Define/GeneralLogicTreeDefine"),
   ControllerAssistantBase_1 = require("./ControllerAssistantBase");
 class ServerNotifyAssistant extends ControllerAssistantBase_1.ControllerAssistantBase {
   constructor() {
     super(...arguments),
-      (this.XXt = (e) => {
-        var t = MathUtils_1.MathUtils.LongToBigInt(e.L5n),
-          r =
+      (this.X$t = (e) => {
+        var r = MathUtils_1.MathUtils.LongToBigInt(e.s9n),
+          o =
             ModelManager_1.ModelManager.GeneralLogicTreeModel.GetBehaviorTree(
-              t,
+              r,
             );
-        r
+        o
           ? (Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "Quest",
                 19,
                 "行为树节点状态更新",
-                ["树Id", r.TreeConfigId],
-                ["节点Id", e.Jkn],
+                ["树Id", o.TreeConfigId],
+                ["节点Id", e.L5n],
                 [
                   "节点状态",
-                  GeneralLogicTreeDefine_1.btNodeStatusLogString[e.n3n],
+                  GeneralLogicTreeDefine_1.btNodeStatusLogString[e.w6n],
                 ],
               ),
-            r.UpdateNodeState(0, e.Jkn, e.n3n))
+            o.UpdateNodeState(0, e.L5n, e.w6n))
           : Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "GeneralLogicTree",
               19,
               "收到节点状态更新协议时：行为树不存在，1.检查本地配置是否正确 2.服务端检查协议下发顺序",
-              ["treeId", t],
+              ["treeId", r],
             );
       }),
-      (this.$Xt = (e) => {
-        var t = MathUtils_1.MathUtils.LongToBigInt(e.L5n),
+      (this.$$t = (e) => {
+        var r = MathUtils_1.MathUtils.LongToBigInt(e.s9n),
+          o =
+            ModelManager_1.ModelManager.GeneralLogicTreeModel.GetBehaviorTree(
+              r,
+            );
+        o
+          ? (Log_1.Log.CheckDebug() &&
+              Log_1.Log.Debug(
+                "Quest",
+                19,
+                "行为树节点进度更新",
+                ["树Id", o.TreeConfigId],
+                ["节点Id", e.L5n],
+              ),
+            o.UpdateNodeProgress(e.L5n, e.zfs))
+          : Log_1.Log.CheckError() &&
+            Log_1.Log.Error(
+              "GeneralLogicTree",
+              19,
+              "收到节点进度更新协议时：行为树不存在，1.检查本地配置是否正确 2.服务端检查协议下发顺序",
+              ["treeId", r],
+            );
+      }),
+      (this.Y$t = (e) => {
+        var r = MathUtils_1.MathUtils.LongToBigInt(e.s9n),
           r =
             ModelManager_1.ModelManager.GeneralLogicTreeModel.GetBehaviorTree(
-              t,
+              r,
             );
         r
           ? (Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "Quest",
                 19,
-                "行为树节点进度更新",
-                ["树Id", r.TreeConfigId],
-                ["节点Id", e.Jkn],
-              ),
-            r.UpdateNodeProgress(e.Jkn, e.Gms))
-          : Log_1.Log.CheckError() &&
-            Log_1.Log.Error(
-              "GeneralLogicTree",
-              19,
-              "收到节点进度更新协议时：行为树不存在，1.检查本地配置是否正确 2.服务端检查协议下发顺序",
-              ["treeId", t],
-            );
-      }),
-      (this.YXt = (e) => {
-        var t = MathUtils_1.MathUtils.LongToBigInt(e.L5n),
-          t =
-            ModelManager_1.ModelManager.GeneralLogicTreeModel.GetBehaviorTree(
-              t,
-            );
-        t
-          ? (Log_1.Log.CheckInfo() &&
-              Log_1.Log.Info(
-                "Quest",
-                19,
                 "行为树ChildQuest节点状态更新",
-                ["树Id", t.TreeConfigId],
-                ["节点Id", e.Jkn],
+                ["树Id", r.TreeConfigId],
+                ["节点Id", e.L5n],
                 [
                   "ChildQuest子节点状态",
                   GeneralLogicTreeDefine_1.btChildQuestNodeStatusLogString[
-                    e.n3n
+                    e.w6n
                   ],
                 ],
               ),
-            t.UpdateChildQuestNodeState(e.Jkn, e.n3n, 0))
+            r.UpdateChildQuestNodeState(e.L5n, e.w6n, 0))
           : Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "GeneralLogicTree",
               19,
               "收到子任务节点状态更新协议时：行为树不存在，1.检查本地配置是否正确 2.服务端检查协议下发顺序",
-              ["treeId", e.L5n],
+              ["treeId", e.s9n],
             );
       }),
-      (this.JXt = (e) => {
-        var t = MathUtils_1.MathUtils.LongToBigInt(e.L5n),
-          t =
+      (this.J$t = (e) => {
+        var r = MathUtils_1.MathUtils.LongToBigInt(e.s9n),
+          r =
             ModelManager_1.ModelManager.GeneralLogicTreeModel.GetBehaviorTree(
-              t,
+              r,
             );
-        t
+        r
           ? (Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "GeneralLogicTree",
                 19,
                 "服务器通知客户端做回退准备",
-                ["treeConfigId", t.TreeConfigId],
+                ["treeConfigId", r.TreeConfigId],
               ),
-            t.PrepareRollback(e.gvs))
+            r.PrepareRollback(e.xEs, e.wEs))
           : Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "GeneralLogicTree",
               19,
               "服务器通知回退准备时：行为树不存在，1.检查本地配置是否正确 2.服务端检查协议下发顺序",
-              ["treeId", e.L5n],
+              ["treeId", e.s9n],
             );
       }),
-      (this.zXt = (e) => {
-        (e.fvs || e.vvs) &&
+      (this.z$t = (e) => {
+        (e.bEs || e.BEs) &&
           ((e = new DelayTask_1.DelayTask(
             "OnBtRollbackStartNotify",
             void 0,
             () => (
-              LevelLoadingController_1.LevelLoadingController.OpenLoading(3, 3),
+              ControllerHolder_1.ControllerHolder.LevelLoadingController.OpenLoading(
+                3,
+                3,
+              ),
               !0
             ),
           )),
           TaskSystem_1.TaskSystem.AddTask(e),
           TaskSystem_1.TaskSystem.Run());
       }),
-      (this.ZXt = (e) => {
-        var t,
-          r,
-          o = MathUtils_1.MathUtils.LongToBigInt(e.L5n),
-          a =
+      (this.Z$t = (e) => {
+        var r,
+          o,
+          t = MathUtils_1.MathUtils.LongToBigInt(e.s9n),
+          _ =
             ModelManager_1.ModelManager.GeneralLogicTreeModel.GetBehaviorTree(
-              o,
+              t,
             );
-        a
+        _
           ? (Log_1.Log.CheckInfo() &&
               Log_1.Log.Info("GeneralLogicTree", 19, "服务器通知行为树回退", [
                 "treeConfigId",
-                a.TreeConfigId,
+                _.TreeConfigId,
               ]),
-            (r = ModelManager_1.ModelManager.GeneralLogicTreeModel),
-            (t = a.IsTracking()),
-            r.RemoveBehaviorTree(o),
-            (r = r.CreateBehaviorTree(e.pvs)),
-            t &&
-              (a.BtType === Protocol_1.Aki.Protocol.NCs.Proto_BtTypeLevelPlay
+            (o = ModelManager_1.ModelManager.GeneralLogicTreeModel),
+            (r = _.IsTracking()),
+            o.RemoveBehaviorTree(t),
+            (o = o.CreateBehaviorTree(e.qEs)),
+            r &&
+              (_.BtType === Protocol_1.Aki.Protocol.tps.Proto_BtTypeLevelPlay
                 ? ModelManager_1.ModelManager.LevelPlayModel.SetTrackLevelPlayId(
                     0,
                   )
-                : r.SetTrack(!0)),
+                : o.SetTrack(!0)),
             (e = new ActionTask_1.ActionTask(
               "OnRollbackInfoNotify",
               () => (
-                LevelLoadingController_1.LevelLoadingController.CloseLoading(3),
+                ControllerHolder_1.ControllerHolder.LevelLoadingController.CloseLoading(
+                  3,
+                ),
                 !0
               ),
             )),
@@ -171,113 +178,143 @@ class ServerNotifyAssistant extends ControllerAssistantBase_1.ControllerAssistan
                 "GeneralLogicTree",
                 19,
                 "收到服务器回退通知时：行为树不存在，1.检查本地配置是否正确 2.服务端检查协议下发顺序",
-                ["treeId", o],
+                ["treeId", t],
               ),
-            LevelLoadingController_1.LevelLoadingController.CloseLoading(3));
+            ControllerHolder_1.ControllerHolder.LevelLoadingController.CloseLoading(
+              3,
+            ));
       }),
-      (this.e$t = (e) => {
-        var t = MathUtils_1.MathUtils.LongToBigInt(e.L5n),
-          r =
+      (this.eYt = (e) => {
+        var r = MathUtils_1.MathUtils.LongToBigInt(e.s9n),
+          o =
             ModelManager_1.ModelManager.GeneralLogicTreeModel.GetBehaviorTree(
-              t,
+              r,
             );
-        r
-          ? r.UpdateOccupations(e)
+        o
+          ? o.UpdateOccupations(e)
           : Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "GeneralLogicTree",
               19,
               "收到服务器挂起通知时：行为树不存在，1.检查本地配置是否正确 2.服务端检查协议下发顺序",
-              ["treeId", t],
+              ["treeId", r],
             );
       }),
-      (this.i$t = (e) => {
-        var t = MathUtils_1.MathUtils.LongToBigInt(e.L5n),
-          r =
+      (this.iYt = (e) => {
+        var r = MathUtils_1.MathUtils.LongToBigInt(e.s9n),
+          o =
             ModelManager_1.ModelManager.GeneralLogicTreeModel.GetBehaviorTree(
-              t,
+              r,
             );
-        r
-          ? r.UpdateTimer(e.Mvs)
+        o
+          ? o.UpdateTimer(e.GEs)
           : Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "GeneralLogicTree",
               19,
               "服务器通知更新定时器时：行为树不存在，1.检查本地配置是否正确 2.服务端检查协议下发顺序",
-              ["treeId", t],
+              ["treeId", r],
             );
       }),
-      (this.o$t = (e) => {
-        var t = MathUtils_1.MathUtils.LongToBigInt(e.L5n),
-          r =
+      (this.oYt = (e) => {
+        var r = MathUtils_1.MathUtils.LongToBigInt(e.s9n),
+          o =
             ModelManager_1.ModelManager.GeneralLogicTreeModel.GetBehaviorTree(
-              t,
+              r,
             );
-        r ||
+        o ||
           (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "GeneralLogicTree",
               32,
               "服务器通知更新变量时：行为树不存在，1.检查本地配置是否正确 2.服务端检查协议下发顺序",
-              ["treeId", t],
+              ["treeId", r],
             )),
-          r.UpdateTreeVars(e);
+          o.UpdateTreeVars(e);
       }),
-      (this.r$t = (e) => {
-        e = e.Vfs;
+      (this.rYt = (e) => {
+        e = e.nEs;
         if (e && 0 !== e.length)
-          for (const t of e)
+          for (const r of e)
             ModelManager_1.ModelManager.GeneralLogicTreeModel.CreateBehaviorTree(
-              t,
+              r,
             );
       }),
-      (this.n$t = (e) => {
-        e = e.$fs;
+      (this.nYt = (e) => {
+        e = e.sEs;
         if (e && 0 !== e.length)
-          for (const r of e) {
-            var t = MathUtils_1.MathUtils.LongToBigInt(r);
+          for (const o of e) {
+            var r = MathUtils_1.MathUtils.LongToBigInt(o);
             ModelManager_1.ModelManager.GeneralLogicTreeModel.RemoveBehaviorTree(
-              t,
+              r,
             );
           }
       }),
-      (this.s$t = (e) => {
-        (ModelManager_1.ModelManager.AutoRunModel.ShouldFastSkip = e.$Us),
+      (this.sYt = (e) => {
+        (ModelManager_1.ModelManager.AutoRunModel.ShouldFastSkip = e.h2s),
           ModelManager_1.ModelManager.AutoRunModel.SetAutoRunMode(
-            e.$Us ? "ServerControlledSkip" : "Disabled",
+            e.h2s ? "ServerControlledSkip" : "Disabled",
           ),
           ModelManager_1.ModelManager.AutoRunModel.SetAutoRunState(
-            e.$Us ? "Running" : "Stopped",
+            e.h2s ? "Running" : "Stopped",
           );
+      }),
+      (this.Z0a = (e) => {
+        var r = ModelManager_1.ModelManager.PlayerInfoModel.GetId();
+        (r && e.q5n !== r) ||
+          ((r = new ConfirmBoxDefine_1.ConfirmBoxDataNew(
+            e.wLa,
+          )).FunctionMap.set(1, () => {
+            this.efa(0, e.T5n);
+          }),
+          r.FunctionMap.set(2, () => {
+            this.efa(1, e.T5n);
+          }),
+          ConfirmBoxController_1.ConfirmBoxController.ShowConfirmBoxNew(r));
       });
   }
   OnDestroy() {}
   OnRegisterNetEvent() {
-    Net_1.Net.Register(24771, this.XXt),
-      Net_1.Net.Register(23037, this.$Xt),
-      Net_1.Net.Register(28799, this.YXt),
-      Net_1.Net.Register(22847, this.JXt),
-      Net_1.Net.Register(24775, this.zXt),
-      Net_1.Net.Register(24972, this.ZXt),
-      Net_1.Net.Register(19395, this.e$t),
-      Net_1.Net.Register(12992, this.i$t),
-      Net_1.Net.Register(21356, this.o$t),
-      Net_1.Net.Register(21616, this.r$t),
-      Net_1.Net.Register(12452, this.n$t),
-      Net_1.Net.Register(23608, this.s$t);
+    Net_1.Net.Register(11514, this.X$t),
+      Net_1.Net.Register(11219, this.$$t),
+      Net_1.Net.Register(26861, this.Y$t),
+      Net_1.Net.Register(16518, this.J$t),
+      Net_1.Net.Register(28010, this.z$t),
+      Net_1.Net.Register(27466, this.Z$t),
+      Net_1.Net.Register(8158, this.eYt),
+      Net_1.Net.Register(22708, this.iYt),
+      Net_1.Net.Register(17191, this.oYt),
+      Net_1.Net.Register(8222, this.rYt),
+      Net_1.Net.Register(28911, this.nYt),
+      Net_1.Net.Register(5528, this.sYt),
+      Net_1.Net.Register(8854, this.Z0a);
   }
   OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(24771),
-      Net_1.Net.UnRegister(23037),
-      Net_1.Net.UnRegister(28799),
-      Net_1.Net.UnRegister(22847),
-      Net_1.Net.UnRegister(24972),
-      Net_1.Net.UnRegister(19395),
-      Net_1.Net.UnRegister(12992),
-      Net_1.Net.UnRegister(21356),
-      Net_1.Net.UnRegister(21616),
-      Net_1.Net.UnRegister(12452),
-      Net_1.Net.UnRegister(23608);
+    Net_1.Net.UnRegister(11514),
+      Net_1.Net.UnRegister(11219),
+      Net_1.Net.UnRegister(26861),
+      Net_1.Net.UnRegister(16518),
+      Net_1.Net.UnRegister(27466),
+      Net_1.Net.UnRegister(8158),
+      Net_1.Net.UnRegister(22708),
+      Net_1.Net.UnRegister(17191),
+      Net_1.Net.UnRegister(8222),
+      Net_1.Net.UnRegister(28911),
+      Net_1.Net.UnRegister(5528),
+      Net_1.Net.UnRegister(8854);
+  }
+  efa(e, r) {
+    var o = ModelManager_1.ModelManager.PlayerInfoModel.GetId(),
+      o = Protocol_1.Aki.Protocol.nLa.create({ q5n: o, b7n: e, T5n: r });
+    Net_1.Net.Call(23222, o, (e) => {
+      e.hvs !== Protocol_1.Aki.Protocol.O4n.NRs &&
+        ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
+          e.hvs,
+          3852,
+          void 0,
+          !1,
+        );
+    });
   }
 }
 exports.ServerNotifyAssistant = ServerNotifyAssistant;

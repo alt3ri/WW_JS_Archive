@@ -8,7 +8,7 @@ const UE = require("ue"),
   Paragraph_1 = require("./Paragraph");
 class HelpView extends UiViewBase_1.UiViewBase {
   constructor() {
-    super(...arguments), (this.cei = new Array());
+    super(...arguments), (this.cti = new Array());
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -29,7 +29,7 @@ class HelpView extends UiViewBase_1.UiViewBase {
       var s,
         a = t.length,
         n =
-          (this.cei.forEach((e) => {
+          (this.cti.forEach((e) => {
             e.SetActive(!1);
           }),
           this.GetItem(2)),
@@ -37,11 +37,11 @@ class HelpView extends UiViewBase_1.UiViewBase {
       let r = 0;
       for (let i = 0; i < a; i++) {
         let e = void 0;
-        r > this.cei.length - 1
+        r > this.cti.length - 1
           ? ((s = LguiUtil_1.LguiUtil.CopyItem(n, h)),
             (e = new Paragraph_1.Paragraph(s.GetOwner())),
-            this.cei.push(e))
-          : (e = this.cei[r]),
+            this.cti.push(e))
+          : (e = this.cti[r]),
           e.Refresh(t[i]),
           e.SetActive(!0),
           r++;

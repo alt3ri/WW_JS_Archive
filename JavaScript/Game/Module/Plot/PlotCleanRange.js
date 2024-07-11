@@ -6,7 +6,6 @@ const Log_1 = require("../../../Core/Common/Log"),
   Vector_1 = require("../../../Core/Utils/Math/Vector"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
-  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../Manager/ModelManager"),
   SimpleNpcController_1 = require("../../NewWorld/Character/SimpleNpc/Logics/SimpleNpcController");
 class Range {
@@ -16,24 +15,19 @@ class Range {
 }
 class PlotCleanRange {
   constructor() {
-    (this.PGn = !1),
-      (this.j$i = !1),
-      (this.wGn = new Map()),
-      (this.qGn = !1),
-      (this.g6s = []),
+    (this.ONn = !1),
+      (this.VYi = !1),
+      (this.kNn = new Map()),
+      (this.VNn = !1),
+      (this.Hjs = []),
       (this.Lz = Vector_1.Vector.Create()),
       (this.Jpe = (e, t) => {
         var o;
-        this.OGn(t) &&
+        this.jNn(t) &&
           (void 0 !==
             (o = t.Entity?.Disable(
               "PlotCleanRange.OnCreateEntity.DisableEntity",
-            )) && this.wGn.set(t, o),
-          ControllerHolder_1.ControllerHolder.CreatureController.SetEntityEnable(
-            t.Entity,
-            !1,
-            "PlotCleanRange.OnCreateEntity",
-          ),
+            )) && this.kNn.set(t, o),
           Log_1.Log.CheckInfo()) &&
           Log_1.Log.Info(
             "Plot",
@@ -45,26 +39,21 @@ class PlotCleanRange {
       });
   }
   Open(e) {
-    this.PGn = !0;
+    this.ONn = !0;
     const t = new Set();
     e.EntityIds.forEach((e) => {
       t.add(e);
     }),
-      this.qGn || (this.qGn = !e.IsCleanPasserByNpc);
+      this.VNn || (this.VNn = !e.IsCleanPasserByNpc);
     var o,
       n = Vector_1.Vector.Create(),
-      l = (n.FromConfigVector(e.Center), new Range(n, e.Radius * e.Radius, t));
-    this.g6s.push(l), this.NGn(e.IsCleanSimpleNpc);
-    for (const i of ModelManager_1.ModelManager.CreatureModel.GetAllEntities())
-      this.OGn(i, l) &&
-        (void 0 !==
-          (o = i.Entity?.Disable("PlotCleanRange.Open.DisableEntity")) &&
-          this.wGn.set(i, o),
-        ControllerHolder_1.ControllerHolder.CreatureController.SetEntityEnable(
-          i.Entity,
-          !1,
-          "PlotCleanRange.Open",
-        ));
+      i = (n.FromConfigVector(e.Center), new Range(n, e.Radius * e.Radius, t));
+    this.Hjs.push(i), this.WNn(e.IsCleanSimpleNpc);
+    for (const r of ModelManager_1.ModelManager.CreatureModel.GetAllEntities())
+      this.jNn(r, i) &&
+        void 0 !==
+          (o = r.Entity?.Disable("PlotCleanRange.Open.DisableEntity")) &&
+        this.kNn.set(r, o);
     EventSystem_1.EventSystem.Has(
       EventDefine_1.EEventName.CreateEntity,
       this.Jpe,
@@ -73,57 +62,50 @@ class PlotCleanRange {
         EventDefine_1.EEventName.CreateEntity,
         this.Jpe,
       );
-    const r = [];
-    this.wGn.forEach((e, t) => {
-      r.push([t.PbDataId, t.CreatureDataId]);
+    const l = [];
+    this.kNn.forEach((e, t) => {
+      l.push([t.PbDataId, t.CreatureDataId]);
     }),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("Plot", 27, "[PlotCleanRange] 剧情清场隐藏范围内实体", [
           "list",
-          r,
+          l,
         ]);
   }
   Close() {
-    if (this.PGn) {
-      this.kGn(),
+    if (this.ONn) {
+      this.KNn(),
         EventSystem_1.EventSystem.Remove(
           EventDefine_1.EEventName.CreateEntity,
           this.Jpe,
         );
-      for (var [e, t] of this.wGn)
-        e.Valid &&
-          e.Entity &&
-          (e.Entity.Enable(t, "PlotCleanRange.Close"),
-          ControllerHolder_1.ControllerHolder.CreatureController.SetEntityEnable(
-            e.Entity,
-            !0,
-            "PlotCleanRange",
-          ));
-      (this.g6s.length = 0),
-        (this.qGn = !1),
-        this.wGn.clear(),
-        (this.PGn = !1),
+      for (var [e, t] of this.kNn)
+        e.Valid && e.Entity && e.Entity.Enable(t, "PlotCleanRange.Close");
+      (this.Hjs.length = 0),
+        (this.VNn = !1),
+        this.kNn.clear(),
+        (this.ONn = !1),
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("Plot", 27, "[PlotCleanRange] 恢复清场");
     }
   }
-  NGn(e) {
-    this.j$i ||
+  WNn(e) {
+    this.VYi ||
       (e &&
-        ((this.j$i = !0),
+        ((this.VYi = !0),
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("Plot", 27, "[PlotCleanRange] 演出清理SimpleNPC"),
         SimpleNpcController_1.SimpleNpcController.SetClearOutState(0, !0)));
   }
-  kGn() {
-    this.j$i &&
+  KNn() {
+    this.VYi &&
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("Plot", 27, "[PlotCleanRange] 演出恢复SimpleNPC"),
       SimpleNpcController_1.SimpleNpcController.SetClearOutState(0, !1),
-      (this.j$i = !1));
+      (this.VYi = !1));
   }
-  OGn(e, t) {
-    if (this.wGn.has(e)) return !1;
+  jNn(e, t) {
+    if (this.kNn.has(e)) return !1;
     if (!e.Entity?.Valid)
       return (
         Log_1.Log.CheckDebug() &&
@@ -149,7 +131,7 @@ class PlotCleanRange {
           ),
         !1
       );
-    if (o.GetEntityType() === Protocol_1.Aki.Protocol.HBs.Proto_Player)
+    if (o.GetEntityType() === Protocol_1.Aki.Protocol.wks.Proto_Player)
       return (
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
@@ -176,7 +158,7 @@ class PlotCleanRange {
       );
     if (2 === o.GetSubEntityType())
       return (
-        !this.qGn ||
+        !this.VNn ||
         (Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Plot",
@@ -187,9 +169,9 @@ class PlotCleanRange {
           ),
         !1)
       );
-    if (e.Entity.GetComponent(189))
+    if (e.Entity.GetComponent(194))
       return (
-        !this.qGn ||
+        !this.VNn ||
         (Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Plot",
@@ -220,17 +202,17 @@ class PlotCleanRange {
         );
       this.Lz.FromConfigVector(n.Pos);
     }
-    let l = !1;
-    if (t) l = this.van(e, o, t);
+    let i = !1;
+    if (t) i = this.zsn(e, o, t);
     else
-      for (const t of this.g6s)
-        if (this.van(e, o, t)) {
-          l = !0;
+      for (const t of this.Hjs)
+        if (this.zsn(e, o, t)) {
+          i = !0;
           break;
         }
-    return !!l;
+    return !!i;
   }
-  van(e, t, o) {
+  zsn(e, t, o) {
     return o.IgnoreList.has(t.GetPbDataId())
       ? (Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(

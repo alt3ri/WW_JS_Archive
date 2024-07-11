@@ -11,13 +11,13 @@ const UE = require("ue"),
 class RenderAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
   constructor() {
     super(...arguments),
-      (this.Cto = !1),
-      (this.gto = !1),
-      (this.fto = new UE.FName("LightDisableSwitch")),
-      (this.pto = 0);
+      (this.uio = !1),
+      (this.cio = !1),
+      (this.mio = new UE.FName("LightDisableSwitch")),
+      (this.dio = 0);
   }
   PreAllPlay() {
-    (this.pto = UE.KismetSystemLibrary.GetConsoleVariableFloatValue(
+    (this.dio = UE.KismetSystemLibrary.GetConsoleVariableFloatValue(
       "r.Mobile.EnableKuroSpotlightsShadow",
     )),
       RenderUtil_1.RenderUtil.CloseToonSceneShadow(),
@@ -43,30 +43,32 @@ class RenderAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
       UE.KismetMaterialLibrary.SetScalarParameterValue(
         GlobalData_1.GlobalData.World,
         RenderDataManager_1.RenderDataManager.Get().GetEyesParameterMaterialParameterCollection(),
-        this.fto,
+        this.mio,
         0,
       ),
-      (this.gto = !0);
+      UE.KuroSequencePerformanceManager.OpenKuroPerformanceMode(),
+      RenderUtil_1.RenderUtil.BeginPSOSyncMode(),
+      (this.cio = !0);
   }
   PreEachPlay() {
     var t = this.Model.GetCurrentSequence();
     UE.KuroSequenceRuntimeFunctionLibrary.HandleSeqTexStreaming(t, !0),
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("Plot", 39, "关闭纹理流送", ["Seq", t.GetName()]),
-      (this.Cto = !0);
+      (this.uio = !0);
   }
   EachStop() {
     var t = this.Model.GetCurrentSequence();
     UE.KuroSequenceRuntimeFunctionLibrary.HandleSeqTexStreaming(t, !1),
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("Plot", 39, "开启纹理流送", ["Seq", t.GetName()]),
-      (this.Cto = !1);
+      (this.uio = !1);
   }
   AllStop() {
     RenderUtil_1.RenderUtil.OpenToonSceneShadow(),
       UE.KismetSystemLibrary.ExecuteConsoleCommand(
         GlobalData_1.GlobalData.World,
-        "r.Mobile.EnableKuroSpotlightsShadow " + this.pto,
+        "r.Mobile.EnableKuroSpotlightsShadow " + this.dio,
       ),
       GameQualitySettingsManager_1.GameQualitySettingsManager.Get()
         .GetCurrentQualityInfo()
@@ -85,22 +87,24 @@ class RenderAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
       UE.KismetMaterialLibrary.SetScalarParameterValue(
         GlobalData_1.GlobalData.World,
         RenderDataManager_1.RenderDataManager.Get().GetEyesParameterMaterialParameterCollection(),
-        this.fto,
+        this.mio,
         1,
       ),
+      UE.KuroSequencePerformanceManager.CloseKuroPerformanceMode(),
       this.ReleaseSeqStreamingData(),
-      (this.gto = !1);
+      RenderUtil_1.RenderUtil.EndPSOSyncMode(),
+      (this.cio = !1);
   }
   End() {
-    this.Cto && this.EachStop(), this.gto && this.AllStop();
+    this.uio && this.EachStop(), this.cio && this.AllStop();
   }
   CheckSeqStreamingData() {
-    let a = !0;
-    var e = this.Model.SequenceData;
-    for (let t = 0; t < e.剧情资源.Num(); t++) {
-      var i = e.剧情资源.Get(t);
+    let e = !0;
+    var a = this.Model.SequenceData;
+    for (let t = 0; t < a.剧情资源.Num(); t++) {
+      var i = a.剧情资源.Get(t);
       UE.KuroSequenceRuntimeFunctionLibrary.HandleSeqTexStreaming(i, !0) ||
-        (a = !1);
+        (e = !1);
     }
     return (
       this.Model.SequenceData.NeedSwitchMainCharacter &&
@@ -108,18 +112,18 @@ class RenderAssistant extends SeqBaseAssistant_1.SeqBaseAssistant {
         (UE.KuroMeshTextureFunctionLibrary.IsSkeletalMeshComponentStreamingComplete(
           this.Model.MainSeqCharacterMesh,
         ) ||
-          (a = !1)),
+          (e = !1)),
       Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("Plot", 39, "检查手动流送", ["是否流送完成", a]),
-      a
+        Log_1.Log.Debug("Plot", 39, "检查手动流送", ["是否流送完成", e]),
+      e
     );
   }
   ReleaseSeqStreamingData() {
-    if (this.Cto) {
-      var a = this.Model.SequenceData;
-      for (let t = 0; t < a.剧情资源.Num(); t++) {
-        var e = a.剧情资源.Get(t);
-        UE.KuroSequenceRuntimeFunctionLibrary.HandleSeqTexStreaming(e, !1);
+    if (this.uio) {
+      var e = this.Model.SequenceData;
+      for (let t = 0; t < e.剧情资源.Num(); t++) {
+        var a = e.剧情资源.Get(t);
+        UE.KuroSequenceRuntimeFunctionLibrary.HandleSeqTexStreaming(a, !1);
       }
       this.Model.SequenceData.NeedSwitchMainCharacter &&
         this.Model.MainSeqCharacterMesh &&

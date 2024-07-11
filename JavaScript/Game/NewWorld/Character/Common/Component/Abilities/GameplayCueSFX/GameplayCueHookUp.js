@@ -7,12 +7,12 @@ const UE = require("ue"),
   GameplayCueBase_1 = require("./GameplayCueBase");
 class GameplayCueHookUp extends GameplayCueBase_1.GameplayCueBase {
   constructor() {
-    super(...arguments), (this.zXo = void 0);
+    super(...arguments), (this.$$o = void 0);
   }
   OnInit() {}
   OnTick(e) {}
   OnCreate() {
-    this.zXo =
+    this.$$o =
       GameplayCueController_1.GameplayCueController.SpawnGameplayCueHook(
         this.ActorInternal,
         FNameUtil_1.FNameUtil.GetDynamicFName(this.CueConfig.Socket),
@@ -22,12 +22,16 @@ class GameplayCueHookUp extends GameplayCueBase_1.GameplayCueBase {
   }
   OnDestroy() {
     GameplayCueController_1.GameplayCueController.DestroyGameplayCueHook(
-      this.zXo,
+      this.$$o,
     );
   }
   GetTargetPosition() {
     return this.ActorInternal.GetTransform().TransformPositionNoScale(
-      new UE.Vector(this.CueConfig.Location.X, 0, this.CueConfig.Location.Z),
+      new UE.Vector(
+        this.CueConfig.Location.X,
+        this.CueConfig.Location.Y,
+        this.CueConfig.Location.Z,
+      ),
     );
   }
 }

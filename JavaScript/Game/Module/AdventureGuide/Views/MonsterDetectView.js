@@ -30,34 +30,34 @@ const UE = require("ue"),
 class MonsterDetectView extends UiTabViewBase_1.UiTabViewBase {
   constructor() {
     super(...arguments),
-      (this.TVe = void 0),
-      (this.LVe = void 0),
-      (this.DFe = void 0),
-      (this.DVe = 0),
-      (this.RVe = void 0),
-      (this.UVe = void 0),
-      (this.AVe = void 0),
-      (this.PVe = -1),
-      (this.xVe = void 0),
-      (this.wVe = void 0),
-      (this.BVe = !0),
-      (this.cVe = 0),
-      (this.bVe = void 0),
-      (this.EPe = void 0),
-      (this.q5e = () => {
+      (this.O6e = void 0),
+      (this.k6e = void 0),
+      (this.H3e = void 0),
+      (this.F6e = 0),
+      (this.V6e = void 0),
+      (this.H6e = void 0),
+      (this.j6e = void 0),
+      (this.W6e = -1),
+      (this.K6e = void 0),
+      (this.Q6e = void 0),
+      (this.X6e = !0),
+      (this.L6e = 0),
+      (this.$6e = void 0),
+      (this.SPe = void 0),
+      (this.YVe = () => {
         return new CommonItemSmallItemGrid_1.CommonItemSmallItemGrid();
       }),
-      (this.qVe = () => {
-        this.GVe();
+      (this.Y6e = () => {
+        this.J6e();
       }),
       (this.RefreshByDetectingId = (e, t) => {
-        this.UVe && this.UVe !== t && this.UVe.SetToggleState(0),
-          this.EPe?.StopCurrentSequence(!1, !0),
-          this.EPe?.PlayLevelSequenceByName("Switch"),
+        this.H6e && this.H6e !== t && this.H6e.SetToggleState(0),
+          this.SPe?.StopCurrentSequence(!1, !0),
+          this.SPe?.PlayLevelSequenceByName("Switch"),
           (ModelManager_1.ModelManager.AdventureGuideModel.CurrentMonsterId =
             e),
-          (this.UVe = t),
-          (this.DVe = e);
+          (this.H6e = t),
+          (this.F6e = e);
         var t =
             ModelManager_1.ModelManager.AdventureGuideModel.GetMonsterDetectData(
               e,
@@ -77,15 +77,15 @@ class MonsterDetectView extends UiTabViewBase_1.UiTabViewBase {
             IconHidden: t.IsLock,
           },
           r =
-            (this.bVe?.Apply(r),
-            this.bVe?.SetToggleInteractive(!1),
+            (this.$6e?.Apply(r),
+            this.$6e?.SetToggleInteractive(!1),
             MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
               TextById_1.configTextById.GetConfig(
                 AdventureGuideController_1.DETECT,
               ).Text,
             )),
           r =
-            (this.AVe.SetText(r),
+            (this.j6e.SetText(r),
             t.IsLock
               ? (LguiUtil_1.LguiUtil.SetLocalText(
                   this.GetText(4),
@@ -100,7 +100,7 @@ class MonsterDetectView extends UiTabViewBase_1.UiTabViewBase {
                   this.GetText(5),
                   t.Conf.AttributesDescriptionUnlock,
                 ),
-                this.GVe()),
+                this.J6e()),
             ConfigManager_1.ConfigManager.AdventureModuleConfig.GetSecondaryGuideDataConf(
               t.Conf.DangerType,
             ));
@@ -112,74 +112,50 @@ class MonsterDetectView extends UiTabViewBase_1.UiTabViewBase {
         ),
           this.SetSpriteByPath(r.Icon, this.GetSprite(6), !1),
           t.Conf.ShowReward
-            ? (this.GetItem(9).SetUIActive(!0), this.NVe(t.Conf.ShowReward, !1))
+            ? (this.GetItem(9).SetUIActive(!0), this.z6e(t.Conf.ShowReward, !1))
             : this.GetItem(9).SetUIActive(!1),
           ControllerHolder_1.ControllerHolder.AdventureGuideController.NormalMonsterManualInfoRequest(
             e,
           );
       }),
-      (this.OVe = (e) => {
+      (this.Z6e = (e) => {
         var t = new Array();
         for (const i of e) t.push(i);
-        this.kVe(t);
+        this.e8e(t);
       }),
-      (this.FVe = () => {
-        if (
-          !(
-            Time_1.Time.Now - this.cVe <=
-            TimeUtil_1.TimeUtil.InverseMillisecond
-          )
-        )
-          if (
-            ((this.cVe = Time_1.Time.Now),
-            ModelManager_1.ModelManager.CreatureModel.GetInstanceId() !==
-              AdventureDefine_1.BigWorldID)
-          )
-            ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
-              "DungeonDetection",
-            );
-          else {
-            var t =
-              ModelManager_1.ModelManager.AdventureGuideModel.GetAllDetectMonsters().get(
-                this.DVe,
-              );
-            let e =
-              ControllerHolder_1.ControllerHolder.AdventureGuideController.GetValidMonsterEntityIdsOfDetectConf(
-                t.Conf,
-              );
-            if (!e.length) {
-              t = t.Conf.EntityConfigId;
-              if (!t)
-                return void ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
-                  "NoMonster",
-                );
-              e = [t];
-            }
-            t = this.GetCurrentId();
-            Log_1.Log.CheckInfo() &&
-              Log_1.Log.Info("AdventureGuide", 5, "手动探测怪物", [
-                "探测Id",
-                t,
-              ]),
+      (this.t8e = () => {
+        var e;
+        Time_1.Time.Now - this.L6e <= TimeUtil_1.TimeUtil.InverseMillisecond ||
+          ((this.L6e = Time_1.Time.Now),
+          ModelManager_1.ModelManager.CreatureModel.GetInstanceId() !==
+          AdventureDefine_1.BigWorldID
+            ? ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
+                "DungeonDetection",
+              )
+            : ((e = this.GetCurrentId()),
+              Log_1.Log.CheckInfo() &&
+                Log_1.Log.Info("AdventureGuide", 5, "手动探测怪物", [
+                  "探测Id",
+                  e,
+                ]),
               ModelManager_1.ModelManager.AdventureGuideModel.SetFromManualDetect(
                 !0,
               ),
               ControllerHolder_1.ControllerHolder.AdventureGuideController.RequestForDetection(
-                Protocol_1.Aki.Protocol.d3n.Proto_NormalMonster,
-                e,
-                this.DVe,
-              );
-          }
+                Protocol_1.Aki.Protocol.X6n.Proto_NormalMonster,
+                [],
+                this.F6e,
+              )));
       }),
-      (this.VVe = () => {
+      (this.i8e = () => {
         HelpController_1.HelpController.OpenHelpById(LEFT_TIME_HELP);
       });
   }
   GetCurrentId() {
-    return this.DVe;
+    return this.F6e;
   }
   GetCurrentToggle() {
-    return this.UVe;
+    return this.H6e;
   }
   OnRegisterComponent() {
     (this.ComponentRegisterInfos = [
@@ -202,12 +178,12 @@ class MonsterDetectView extends UiTabViewBase_1.UiTabViewBase {
       [16, UE.UIButtonComponent],
     ]),
       (this.BtnBindInfo = [
-        [1, this.FVe],
-        [16, this.VVe],
+        [1, this.t8e],
+        [16, this.i8e],
       ]);
   }
   OnStart() {
-    (this.TVe = new LoopScrollView_1.LoopScrollView(
+    (this.O6e = new LoopScrollView_1.LoopScrollView(
       this.GetLoopScrollViewComponent(7),
       this.GetItem(2).GetOwner(),
       () => {
@@ -215,26 +191,25 @@ class MonsterDetectView extends UiTabViewBase_1.UiTabViewBase {
         return e.BindCallback(this.RefreshByDetectingId), e;
       },
     )),
-      (this.bVe = new CommonItemSmallItemGrid_1.CommonItemSmallItemGrid()),
-      this.bVe.Initialize(this.GetItem(14).GetOwner()),
-      (this.LVe = new Array()),
-      (this.DFe = new GenericScrollViewNew_1.GenericScrollViewNew(
+      (this.$6e = new CommonItemSmallItemGrid_1.CommonItemSmallItemGrid()),
+      this.$6e.Initialize(this.GetItem(14).GetOwner()),
+      (this.k6e = new Array()),
+      (this.H3e = new GenericScrollViewNew_1.GenericScrollViewNew(
         this.GetScrollViewWithScrollbar(8),
-        this.q5e,
+        this.YVe,
       )),
-      (this.RVe = new FilterSortEntrance_1.FilterSortEntrance(
+      (this.V6e = new FilterSortEntrance_1.FilterSortEntrance(
         this.GetItem(0),
-        this.OVe,
+        this.Z6e,
       )),
-      (this.AVe = this.GetText(10)),
-      this.AVe.OnSelfLanguageChange.Bind(this.qVe),
-      (this.wVe = this.GetButton(1)),
-      (this.DVe =
+      (this.j6e = this.GetText(10)),
+      this.j6e.OnSelfLanguageChange.Bind(this.Y6e),
+      (this.Q6e = this.GetButton(1)),
+      (this.F6e =
         ModelManager_1.ModelManager.AdventureGuideModel.GetCurDetectingMonsterConfId()),
-      (this.EPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem));
+      (this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem));
     var e =
-      ConfigManager_1.ConfigManager.CalabashConfig.GetIntensifyCaptureGuarantee() -
-      ModelManager_1.ModelManager.CalabashModel.GetIdentifyGuaranteeCount();
+      ModelManager_1.ModelManager.CalabashModel.GetLeftIntensifyCaptureGuarantee();
     LguiUtil_1.LguiUtil.SetLocalTextNew(
       this.GetText(15),
       "UpAbsorptionTimeWithTagText",
@@ -245,44 +220,44 @@ class MonsterDetectView extends UiTabViewBase_1.UiTabViewBase {
     var e = this.ExtraParams,
       e = "MonsterDetectView" === e[0] ? e[1] : void 0;
     let t = void 0;
-    void 0 !== e && (0 < e ? (t = Number(e)) : (this.xVe = -Number(e))),
-      (this.PVe = t),
+    void 0 !== e && (0 < e ? (t = Number(e)) : (this.K6e = -Number(e))),
+      (this.W6e = t),
       (ModelManager_1.ModelManager.AdventureGuideModel.CurrentMonsterId = t),
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("AdventureGuide", 28, "当前拾音辑录默认选择怪物", [
           "id",
           t,
         ]),
-      this.RVe.UpdateData(
+      this.V6e.UpdateData(
         16,
         Array.from(
           ModelManager_1.ModelManager.AdventureGuideModel.GetAllDetectMonsters().values(),
         ),
       ),
-      this.EPe?.StopCurrentSequence(),
-      this.EPe?.PlayLevelSequenceByName("Start"),
+      this.SPe?.StopCurrentSequence(),
+      this.SPe?.PlayLevelSequenceByName("Start"),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.AdventureHelpBtn,
         MONSTER_HELP,
       );
   }
   OnBeforeDestroy() {
-    (this.DFe = void 0),
-      this.TVe && (this.TVe.ClearGridProxies(), (this.TVe = void 0)),
-      this.AVe.OnSelfLanguageChange.Unbind(),
-      this.EPe?.Clear(),
-      (this.EPe = void 0);
+    (this.H3e = void 0),
+      this.O6e && (this.O6e.ClearGridProxies(), (this.O6e = void 0)),
+      this.j6e.OnSelfLanguageChange.Unbind(),
+      this.SPe?.Clear(),
+      (this.SPe = void 0);
   }
-  kVe(e) {
-    this.LVe.length = 0;
+  e8e(e) {
+    this.k6e.length = 0;
     for (const t of e)
-      this.LVe.push(t),
-        -1 !== this.PVe && this.PVe === t.Conf.Id && (this.PVe = -1);
+      this.k6e.push(t),
+        -1 !== this.W6e && this.W6e === t.Conf.Id && (this.W6e = -1);
     ModelManager_1.ModelManager.AdventureGuideModel.CurrentMonsterId ||
-      ((e = this.HVe()),
+      ((e = this.o8e()),
       (ModelManager_1.ModelManager.AdventureGuideModel.CurrentMonsterId = e));
-    this.TVe.RefreshByData(
-      this.LVe,
+    this.O6e.RefreshByData(
+      this.k6e,
       !1,
       () => {
         this.JumpToTarget(
@@ -292,15 +267,15 @@ class MonsterDetectView extends UiTabViewBase_1.UiTabViewBase {
       !0,
     );
   }
-  HVe() {
-    var e = this.xVe,
-      t = ((this.xVe = void 0), this.LVe[0].Conf.Id);
+  o8e() {
+    var e = this.K6e,
+      t = ((this.K6e = void 0), this.k6e[0].Conf.Id);
     if (void 0 !== e)
-      for (const i of this.LVe)
+      for (const i of this.k6e)
         if (!i.IsLock && i.Conf.DangerType === e) return i.Conf.Id;
     return t;
   }
-  GVe() {
+  J6e() {
     var e,
       t,
       i = this.GetCurrentId();
@@ -315,32 +290,32 @@ class MonsterDetectView extends UiTabViewBase_1.UiTabViewBase {
         ? (t = i.Conf.LockCon) &&
           ((t = ConditionGroupById_1.configConditionGroupById.GetConfig(t)),
           LguiUtil_1.LguiUtil.SetLocalTextNew(e, t.HintText))
-        : (this.wVe.RootUIComp.SetUIActive(!0),
+        : (this.Q6e.RootUIComp.SetUIActive(!0),
           i.IsLock ||
-            this.BVe ||
-            (this.wVe.SetSelfInteractive(!0), (this.BVe = !0))));
+            this.X6e ||
+            (this.Q6e.SetSelfInteractive(!0), (this.X6e = !0))));
   }
   Tick(e) {
-    this.GVe();
+    this.J6e();
   }
-  NVe(e, t) {
+  z6e(e, t) {
     var i =
         ConfigManager_1.ConfigManager.AdventureModuleConfig.GetDropShowInfo(e),
       r = new Array();
-    for (const n of i.keys()) {
-      var o = [{ IncId: 0, ItemId: n }, i.get(n)];
+    for (const s of i.keys()) {
+      var o = [{ IncId: 0, ItemId: s }, i.get(s)];
       r.push(o);
     }
-    this.DFe.RefreshByData(r);
+    this.H3e.RefreshByData(r);
   }
   JumpToTarget(e) {
     let t = 0,
       i = !1;
-    for (const r of this.LVe) {
+    for (const r of this.k6e) {
       if (e === r.Conf.Id) {
-        this.TVe.DeselectCurrentGridProxy(),
-          this.TVe.ScrollToGridIndex(t, !0),
-          this.TVe.SelectGridProxy(t),
+        this.O6e.DeselectCurrentGridProxy(),
+          this.O6e.ScrollToGridIndex(t, !0),
+          this.O6e.SelectGridProxy(t),
           (i = !0);
         break;
       }

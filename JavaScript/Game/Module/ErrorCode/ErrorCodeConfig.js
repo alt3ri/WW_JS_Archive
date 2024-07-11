@@ -10,10 +10,10 @@ const Info_1 = require("../../../Core/Common/Info"),
   ConfigManager_1 = require("../../Manager/ConfigManager");
 class ErrorCodeConfig extends ConfigBase_1.ConfigBase {
   constructor() {
-    super(...arguments), (this.Q4t = 0);
+    super(...arguments), (this.Q5t = 0);
   }
   SetForceShowDebugErrorType(r) {
-    this.Q4t = r;
+    this.Q5t = r;
   }
   GetConfigByCode(r) {
     var e = ErrorCodeById_1.configErrorCodeById.GetConfig(r);
@@ -27,7 +27,7 @@ class ErrorCodeConfig extends ConfigBase_1.ConfigBase {
   GetTextByErrorId(r) {
     r = this.GetConfigByCode(r);
     return r
-      ? Info_1.Info.IsBuildDevelopmentOrDebug && 0 === this.Q4t
+      ? Info_1.Info.IsBuildDevelopmentOrDebug && 0 === this.Q5t
         ? r.DebugText
         : StringUtils_1.StringUtils.IsEmpty(r.Text)
           ? ConfigManager_1.ConfigManager.TextConfig.GetTextById(

@@ -15,12 +15,12 @@ class FullScreenEffectView {
       (this.RootActor = void 0),
       (this.Priority = 0),
       (this.Path = ""),
-      (this.O8t = !0),
-      (this.k8t = void 0),
-      (this.F8t = new Set()),
+      (this.O9t = !0),
+      (this.k9t = void 0),
+      (this.F9t = new Set()),
       (this.hJ = 0),
-      (this.V8t = () => {
-        this.F8t.clear();
+      (this.V9t = () => {
+        this.F9t.clear();
       });
   }
   async Init(e, i) {
@@ -31,7 +31,7 @@ class FullScreenEffectView {
           this.Path,
           UiLayer_1.UiLayer.GetLayerRootUiItem(UiLayerType_1.ELayerType.Pop),
           (e) => {
-            this.H8t(e), t.SetResult(void 0);
+            this.H9t(e), t.SetResult(void 0);
           },
         )),
       (this.Priority = i),
@@ -42,24 +42,24 @@ class FullScreenEffectView {
   SetEffectVisibility(e, i) {
     i &&
       (e
-        ? (this.k8t = TimerSystem_1.TimerSystem.Delay(this.V8t, DELAY_TIME))
-        : this.j8t()),
-      this.O8t !== e && (this.RootItem.SetIsUIActive(e), (this.O8t = e));
+        ? (this.k9t = TimerSystem_1.TimerSystem.Delay(this.V9t, DELAY_TIME))
+        : this.j9t()),
+      this.O9t !== e && (this.RootItem.SetIsUIActive(e), (this.O9t = e));
   }
-  H8t(e) {
+  H9t(e) {
     var i = e.GetComponentByClass(UE.UIItem.StaticClass());
     (this.RootActor = e), (this.RootItem = i);
   }
   Destroy() {
     LguiResourceManager_1.LguiResourceManager.CancelLoadPrefab(this.hJ),
-      this.F8t.clear(),
+      this.F9t.clear(),
       ActorSystem_1.ActorSystem.Put(this.RootActor);
   }
-  j8t() {
-    TimerSystem_1.TimerSystem.Has(this.k8t) &&
-      TimerSystem_1.TimerSystem.Remove(this.k8t),
-      this.F8t.clear(),
-      (this.k8t = void 0);
+  j9t() {
+    TimerSystem_1.TimerSystem.Has(this.k9t) &&
+      TimerSystem_1.TimerSystem.Remove(this.k9t),
+      this.F9t.clear(),
+      (this.k9t = void 0);
   }
   DeActive() {
     var i = UE.LGUIBPLibrary.GetComponentsInChildren(

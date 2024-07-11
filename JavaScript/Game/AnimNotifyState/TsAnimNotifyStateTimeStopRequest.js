@@ -20,7 +20,7 @@ class TsAnimNotifyStateTimeStopRequest extends UE.KuroAnimNotifyState {
     for (const n of ModelManager_1.ModelManager.CreatureModel?.GetAllEntities() ??
       [])
       n.IsInit &&
-        n.Entity?.GetComponent(157)?.AddPauseLock("ANS AbsoluteTimeStop");
+        n.Entity?.GetComponent(159)?.AddPauseLock("ANS AbsoluteTimeStop");
     FormationAttributeController_1.FormationAttributeController.AddPauseLock(
       "ANS AbsoluteTimeStop",
     ),
@@ -29,9 +29,9 @@ class TsAnimNotifyStateTimeStopRequest extends UE.KuroAnimNotifyState {
       e = e.CharacterActorComponent?.Entity;
     return (
       e &&
-        (((r = Protocol_1.Aki.Protocol.VNn.create()).Mkn = !0),
-        (r.Skn = o * TimeUtil_1.TimeUtil.InverseMillisecond),
-        CombatMessage_1.CombatNet.Call(4085, e, r)),
+        (((r = Protocol_1.Aki.Protocol.f4n.create()).$4n = !0),
+        (r.Y4n = o * TimeUtil_1.TimeUtil.InverseMillisecond),
+        CombatMessage_1.CombatNet.Call(11181, e, r)),
       Info_1.Info.IsBuildDevelopmentOrDebug &&
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.OnAbsoluteTimeStop,
@@ -44,21 +44,20 @@ class TsAnimNotifyStateTimeStopRequest extends UE.KuroAnimNotifyState {
     var o,
       e = e?.GetOwner();
     if (!(e instanceof TsBaseCharacter_1.default)) return !1;
-    if (ModelManager_1.ModelManager.GameModeModel?.IsMulti) return !1;
     ModelManager_1.ModelManager.GeneralLogicTreeModel.TimeStop = !1;
     for (const r of ModelManager_1.ModelManager.CreatureModel?.GetAllEntities() ??
       [])
-      r.Entity?.GetComponent(157)?.RemovePauseLock("ANS AbsoluteTimeStop");
+      r.Entity?.GetComponent(159)?.RemovePauseLock("ANS AbsoluteTimeStop");
     return (
       FormationAttributeController_1.FormationAttributeController.RemovePauseLock(
         "ANS AbsoluteTimeStop",
       ),
       SkillCdController_1.SkillCdController.Pause(0, !1),
       e.CharacterActorComponent?.Entity &&
-        (((o = Protocol_1.Aki.Protocol.VNn.create()).Mkn = !1),
-        (o.Skn = 0),
+        (((o = Protocol_1.Aki.Protocol.f4n.create()).$4n = !1),
+        (o.Y4n = 0),
         CombatMessage_1.CombatNet.Call(
-          4085,
+          11181,
           e.CharacterActorComponent.Entity,
           o,
         )),

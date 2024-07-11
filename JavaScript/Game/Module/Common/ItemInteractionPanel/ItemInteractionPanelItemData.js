@@ -5,35 +5,35 @@ const ModelManager_1 = require("../../../Manager/ModelManager");
 class ItemInteractionPanelItemData {
   constructor(t, e) {
     (this.ItemConfigId = 0),
-      (this.kAt = 0),
-      (this.rAt = 0),
-      (this.FAt = 0),
+      (this.HPt = 0),
+      (this.hPt = 0),
+      (this.jPt = 0),
       (this.NeedCount = 0),
       (this.IsSelected = !1),
       (this.ItemConfigId = t.ItemConfigId),
-      (this.kAt = t.CurrentCount);
+      (this.HPt = t.CurrentCount);
     t = t.NeedCount;
     t && (this.NeedCount = t),
-      (this.FAt = e),
-      (this.rAt =
+      (this.jPt = e),
+      (this.hPt =
         ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
           this.ItemConfigId,
         ));
   }
   SetCurrentCount(t) {
-    this.kAt = t;
+    this.HPt = t;
   }
   GetCurrentCount() {
-    return this.kAt;
+    return this.HPt;
   }
   GetItemCount() {
-    return this.rAt;
+    return this.hPt;
   }
   IsEnable() {
-    return this.rAt >= this.NeedCount;
+    return this.hPt >= this.NeedCount;
   }
   GetQualityId() {
-    return this.FAt;
+    return this.jPt;
   }
 }
 exports.ItemInteractionPanelItemData = ItemInteractionPanelItemData;

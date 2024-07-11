@@ -11,7 +11,7 @@ const Log_1 = require("../../../../../../../Core/Common/Log"),
   CharacterAttributeTypes_1 = require("../CharacterAttributeTypes"),
   ExtraEffectBase_1 = require("./ExtraEffectBase");
 class SnapModifier {
-  static WQo(t, s, i) {
+  static VXo(t, s, i) {
     var e = new Map(),
       r = new Map(),
       h = s.Attacker.OwnerBuffComponent.BuffEffectManager,
@@ -26,17 +26,17 @@ class SnapModifier {
         [1, 46],
         (t) => t.TargetType === u && t.NeedCheckCritical === i,
       );
-      this.KQo(t, s, c, o, u);
+      this.HXo(t, s, c, o, u);
     }
-    this.QQo(e, s.AttackerSnapshot), this.QQo(r, s.TargetSnapshot);
+    this.jXo(e, s.AttackerSnapshot), this.jXo(r, s.TargetSnapshot);
   }
   static PreCriticalModify(t, s) {
-    this.WQo(t, s, !1);
+    this.VXo(t, s, !1);
   }
   static PostCriticalModify(t, s) {
-    this.WQo(t, s, !0);
+    this.VXo(t, s, !0);
   }
-  static KQo(t, s, i, e, r) {
+  static HXo(t, s, i, e, r) {
     let h = void 0;
     switch (r) {
       case 0:
@@ -49,7 +49,7 @@ class SnapModifier {
     }
     for (const a of e) a.TryExecute(t, h, i, s);
   }
-  static QQo(t, s) {
+  static jXo(t, s) {
     for (var [i, e] of t.entries()) {
       var i = CharacterAttributeTypes_1.EAttributeId[i],
         r = s.BaseValues[i],
@@ -69,7 +69,7 @@ class SnapModifyBuffEffect extends ExtraEffectBase_1.BuffEffect {
     return !1;
   }
   GetAttrValue(t, s, i, e) {
-    t = this.XQo(t, e);
+    t = this.WXo(t, e);
     return t
       ? 0 === i
         ? t.GetBaseValue(s)
@@ -82,12 +82,12 @@ class SnapModifyBuffEffect extends ExtraEffectBase_1.BuffEffect {
           ),
         0);
   }
-  XQo(t, s) {
+  WXo(t, s) {
     switch (s) {
       case 1:
-        return this.OwnerEntity?.CheckGetComponent(156);
+        return this.OwnerEntity?.CheckGetComponent(158);
       case 0:
-        return this.InstigatorEntity?.Entity?.CheckGetComponent(156);
+        return this.InstigatorEntity?.Entity?.CheckGetComponent(158);
       case 2:
         return t.AttackerSnapshot;
       case 3:
@@ -220,7 +220,7 @@ class ShieldSnapshotModify extends SnapModifyBuffEffect {
         : this.OwnerEntity;
     if (h) {
       var a,
-        h = h.CheckGetComponent(64)?.GetShieldValue(this.ShieldId) ?? 0;
+        h = h.CheckGetComponent(66)?.GetShieldValue(this.ShieldId) ?? 0;
       let t = h >= this.ConvertThreshold,
         s = h;
       0 < this.ConvertLimit && (s = Math.min(s, this.ConvertLimit)),

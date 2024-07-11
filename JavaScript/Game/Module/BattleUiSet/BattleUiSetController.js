@@ -15,14 +15,14 @@ class BattleUiSetController extends UiControllerBase_1.UiControllerBase {
     return !0;
   }
   static OnRegisterNetEvent() {
-    Net_1.Net.Register(20372, BattleUiSetController.Jdt);
+    Net_1.Net.Register(1037, BattleUiSetController.lgt);
   }
   static OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(20372);
+    Net_1.Net.UnRegister(1037);
   }
   static MobileButtonSettingUpdateRequest(e) {
-    var t = new Protocol_1.Aki.Protocol.x_s();
-    (t.R3n = e),
+    var t = new Protocol_1.Aki.Protocol.Dms();
+    (t._8n = e),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "BattleUiSet",
@@ -30,36 +30,36 @@ class BattleUiSetController extends UiControllerBase_1.UiControllerBase {
           "MobileButtonSettingUpdateRequest 客户端请求移动端键位设置",
           ["request", t],
         ),
-      Net_1.Net.Call(23115, Protocol_1.Aki.Protocol.x_s.create(t), this.zdt);
+      Net_1.Net.Call(25139, Protocol_1.Aki.Protocol.Dms.create(t), this._gt);
   }
 }
-((exports.BattleUiSetController = BattleUiSetController).Jdt = (e) => {
+((exports.BattleUiSetController = BattleUiSetController).lgt = (e) => {
   Log_1.Log.CheckInfo() &&
     Log_1.Log.Info("BattleUiSet", 8, "SettingNotify 通知移动端按键设置", [
       "notify",
       e,
     ]);
-  e = e.R3n;
+  e = e._8n;
   if (e) {
     var t = ModelManager_1.ModelManager.BattleUiSetModel;
     for (const r of e) {
-      var o = r.Ekn,
+      var o = r.J4n,
         o = t.GetPanelItemDataByConfigId(o);
       if (!o) return;
-      (o.Size = r.x3n),
-        (o.EditSize = r.x3n),
-        (o.Alpha = r.P3n),
-        (o.EditAlpha = r.P3n),
-        (o.OffsetX = r.B3n),
-        (o.EditOffsetX = r.B3n),
-        (o.OffsetY = r.w3n),
-        (o.EditOffsetY = r.w3n),
-        (o.HierarchyIndex = r.b3n),
-        (o.EditorHierarchyIndex = r.b3n);
+      (o.Size = r.u8n),
+        (o.EditSize = r.u8n),
+        (o.Alpha = r.c8n),
+        (o.EditAlpha = r.c8n),
+        (o.OffsetX = r.m8n),
+        (o.EditOffsetX = r.m8n),
+        (o.OffsetY = r.d8n),
+        (o.EditOffsetY = r.d8n),
+        (o.HierarchyIndex = r.C8n),
+        (o.EditorHierarchyIndex = r.C8n);
     }
   }
 }),
-  (BattleUiSetController.zdt = (e) => {
+  (BattleUiSetController._gt = (e) => {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "BattleUiSet",
@@ -67,7 +67,7 @@ class BattleUiSetController extends UiControllerBase_1.UiControllerBase {
         "MobileButtonSettingUpdateResponse 服务端返回移动端键位设置",
         ["response", e],
       ),
-      e.lkn === Protocol_1.Aki.Protocol.lkn.Sys &&
+      e.O4n === Protocol_1.Aki.Protocol.O4n.NRs &&
         ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
           "SaveButton",
         );

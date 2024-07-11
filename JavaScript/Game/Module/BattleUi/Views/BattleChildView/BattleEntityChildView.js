@@ -9,10 +9,10 @@ class BattleEntityChildView extends BattleChildView_1.BattleChildView {
   constructor() {
     super(...arguments),
       (this.Jh = void 0),
-      (this.T$e = new Map()),
-      (this.L$e = []),
-      (this.jQe = []),
-      (this.D$e = []);
+      (this.GYe = new Map()),
+      (this.NYe = []),
+      (this.i$e = []),
+      (this.OYe = []);
   }
   Reset() {
     this.Deactivate(this.Jh), super.Reset();
@@ -48,7 +48,7 @@ class BattleEntityChildView extends BattleChildView_1.BattleChildView {
   OnDeactivate() {}
   AddEntityEvents(t) {}
   RemoveEntityEvents(t) {
-    this.R$e(t), this.U$e(), this.A$e(), this.P$e();
+    this.kYe(t), this.FYe(), this.VYe(), this.HYe();
   }
   GetEntity() {
     return this.Jh;
@@ -60,19 +60,19 @@ class BattleEntityChildView extends BattleChildView_1.BattleChildView {
     return ObjectSystem_1.ObjectSystem.IsValid(this.Jh);
   }
   ListenForAttributeChanged(t, e, i) {
-    t = t.GetComponent(156);
-    t && (t.AddListener(e, i), this.T$e.set(e, i));
+    t = t.GetComponent(158);
+    t && (t.AddListener(e, i), this.GYe.set(e, i));
   }
   RemoveListenAttributeChanged(t, e, i) {
-    t = t.GetComponent(156);
-    t && (t.RemoveListener(e, i), this.T$e.delete(e));
+    t = t.GetComponent(158);
+    t && (t.RemoveListener(e, i), this.GYe.delete(e));
   }
-  R$e(t) {
-    var e = t.GetComponent(156);
-    if (e) for (var [i, s] of this.T$e) e.RemoveListener(i, s);
+  kYe(t) {
+    var e = t.GetComponent(158);
+    if (e) for (var [i, s] of this.GYe) e.RemoveListener(i, s);
   }
   ListenForTagCountChanged(e, i, s) {
-    e = e.GetComponent(185);
+    e = e.GetComponent(188);
     if (e) {
       let t = void 0;
       "number" == typeof i
@@ -80,33 +80,33 @@ class BattleEntityChildView extends BattleChildView_1.BattleChildView {
         : "string" == typeof i &&
           (t = GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(i));
       i = e.ListenForTagAnyCountChanged(t, s);
-      this.L$e.push(i);
+      this.NYe.push(i);
     }
   }
-  U$e() {
-    if (this.L$e) {
-      for (const t of this.L$e) t.EndTask();
-      this.L$e.length = 0;
+  FYe() {
+    if (this.NYe) {
+      for (const t of this.NYe) t.EndTask();
+      this.NYe.length = 0;
     }
   }
   ListenForTagSignificantChanged(t, e, i) {
-    var t = t.GetComponent(185);
-    t && ((t = t.ListenForTagAddOrRemove(e, i)), this.jQe.push(t));
+    var t = t.GetComponent(188);
+    t && ((t = t.ListenForTagAddOrRemove(e, i)), this.i$e.push(t));
   }
   ListenForTagAddNewOrRemovedWithTag(t, e, i, s) {
     t = t.ListenForTagAddOrRemove(e, i, s);
-    this.jQe.push(t);
+    this.i$e.push(t);
   }
-  A$e() {
-    if (this.jQe) {
-      for (const t of this.jQe) t.EndTask();
-      this.jQe.length = 0;
+  VYe() {
+    if (this.i$e) {
+      for (const t of this.i$e) t.EndTask();
+      this.i$e.length = 0;
     }
   }
-  P$e() {
-    if (this.D$e) {
-      for (const t of this.D$e) t.EndTask();
-      this.D$e.length = 0;
+  HYe() {
+    if (this.OYe) {
+      for (const t of this.OYe) t.EndTask();
+      this.OYe.length = 0;
     }
   }
 }

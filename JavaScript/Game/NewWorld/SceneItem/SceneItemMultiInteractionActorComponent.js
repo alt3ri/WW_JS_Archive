@@ -50,49 +50,49 @@ let SceneItemMultiInteractionActorComponent = class SceneItemMultiInteractionAct
   constructor() {
     super(...arguments),
       (this.Hte = void 0),
-      (this.TXr = void 0),
+      (this.nXr = void 0),
       (this.gU = !1),
-      (this.Uvn = !1),
+      (this.hvn = !1),
       (this.Ixe = void 0),
-      (this.Pvn = void 0),
-      (this.xvn = new Map()),
-      (this.wvn = void 0),
-      (this.Bvn = new Map()),
-      (this.bvn = new Map()),
-      (this.qvn = new Map()),
-      (this.Gvn = new Map()),
-      (this.ynn = new Map()),
-      (this.UEn = !1),
-      (this.Nvn = new Queue_1.Queue()),
+      (this.lvn = void 0),
+      (this._vn = new Map()),
+      (this.uvn = void 0),
+      (this.cvn = new Map()),
+      (this.mvn = new Map()),
+      (this.dvn = new Map()),
+      (this.Cvn = new Map()),
+      (this.rnn = new Map()),
+      (this.qyn = !1),
+      (this.gvn = new Queue_1.Queue()),
       (this.gIe = (t, e) => {
         for (const s of [1408918695, -1278190765]) {
           if (t.includes(s))
-            for (var [i] of this.qvn)
+            for (var [i] of this.dvn)
               this.AddTagsByIndex(
                 SceneItemJigsawBaseComponent_1.JigsawIndex.GenObjFromKey(i),
                 s,
               );
           if (e.includes(s))
-            for (var [r] of this.qvn)
+            for (var [r] of this.dvn)
               this.RemoveTagsByIndex(
                 SceneItemJigsawBaseComponent_1.JigsawIndex.GenObjFromKey(r),
                 s,
               );
         }
       }),
-      (this.Ovn = () => {
+      (this.fvn = () => {
         let t = 0;
-        if (this.Pvn)
+        if (this.lvn)
           for (; t < MAX_GEN_TIME; ) {
-            if (this.Pvn.length <= 0)
+            if (this.lvn.length <= 0)
               return (
-                this.kvn(),
+                this.pvn(),
                 void ComponentForceTickController_1.ComponentForceTickController.UnregisterTick(
                   this,
                 )
               );
-            var e = this.Pvn.shift();
-            this.Fvn(e, this.Ixe.MainActor), t++;
+            var e = this.lvn.shift();
+            this.vvn(e, this.Ixe.MainActor), t++;
           }
         else
           ComponentForceTickController_1.ComponentForceTickController.UnregisterTick(
@@ -101,11 +101,11 @@ let SceneItemMultiInteractionActorComponent = class SceneItemMultiInteractionAct
       });
   }
   OnStart() {
-    return (this.Hte = this.Entity.GetComponent(182)), !0;
+    return (this.Hte = this.Entity.GetComponent(185)), !0;
   }
-  kvn() {
-    for (this.Uvn = !0; !this.Nvn.Empty; ) {
-      var t = this.Nvn.Pop();
+  pvn() {
+    for (this.hvn = !0; !this.gvn.Empty; ) {
+      var t = this.gvn.Pop();
       t.Func(t.Index, t.TagIds);
     }
     var e = UE.NewArray(UE.Transform),
@@ -114,7 +114,7 @@ let SceneItemMultiInteractionActorComponent = class SceneItemMultiInteractionAct
       i = i.CollisionActors?.Get(0);
       if (i)
         if (i.StaticMeshComponent?.StaticMesh) {
-          for (var [, r] of this.qvn) {
+          for (var [, r] of this.dvn) {
             var s = this.Hte?.ActorTransform,
               r = r.GetTransform().GetRelativeTransform(s);
             e.Add(r);
@@ -146,13 +146,13 @@ let SceneItemMultiInteractionActorComponent = class SceneItemMultiInteractionAct
         EventDefine_1.EEventName.OnLevelTagChanged,
         this.gIe,
       );
-    for (var [, t] of this.qvn)
+    for (var [, t] of this.dvn)
       MultiInteractionActorController_1.MultiInteractionActorController.AddWaitDestroyActor(
         t,
       );
     var e;
     return (
-      this.qvn.clear(),
+      this.dvn.clear(),
       this.Ixe?.MainActor?.IsValid() &&
         ((e = this.Ixe.MainActor),
         MultiInteractionActorController_1.MultiInteractionActorController.AddWaitDestroyActor(
@@ -161,8 +161,8 @@ let SceneItemMultiInteractionActorComponent = class SceneItemMultiInteractionAct
       !0
     );
   }
-  Fvn(i, t) {
-    var e = this.wvn(i);
+  vvn(i, t) {
+    var e = this.uvn(i);
     const r = UE.KuroStaticLibrary.SpawnActorFromAnother(t, this.Hte.Owner);
     if (r?.IsValid()) {
       AttachToActorController_1.AttachToActorController.AttachToActor(
@@ -179,32 +179,32 @@ let SceneItemMultiInteractionActorComponent = class SceneItemMultiInteractionAct
       );
       t = t.K2_GetActorRotation();
       r.K2_SetActorLocationAndRotation(e.ToUeVector(), t, !1, void 0, !0),
-        this.Bvn.clear(),
-        this.Vvn(r),
-        this.Hvn(r),
-        this.jvn(r, r);
+        this.cvn.clear(),
+        this.Mvn(r),
+        this.Evn(r),
+        this.Svn(r, r);
       const s = i.GetKey();
-      this.qvn.set(s, r),
+      this.dvn.set(s, r),
         GlobalData_1.GlobalData.IsPlayInEditor && (r.ActorLabel = s),
         TimerSystem_1.TimerSystem.Next(() => {
-          if ((this.tsn(i), this.xvn.has(s))) {
-            const e = this.xvn.get(s);
-            this.xvn.delete(s);
-            let t = this.Gvn.get(s);
-            (t = (t = t || []).concat(e)), this.Gvn.set(s, t);
+          if ((this.qnn(i), this._vn.has(s))) {
+            const e = this._vn.get(s);
+            this._vn.delete(s);
+            let t = this.Cvn.get(s);
+            (t = (t = t || []).concat(e)), this.Cvn.set(s, t);
           }
-          const e = this.Gvn.get(s);
+          const e = this.Cvn.get(s);
           if (void 0 !== e)
             for (const t of e)
               r.PlayExtraEffectOnTagsChange(
                 GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(t),
               ),
-                this.Wvn(i, t, !0);
+                this.yvn(i, t, !0);
         });
     }
   }
-  Kvn(t) {
-    var e = this.TXr.场景交互物状态列表;
+  Ivn(t) {
+    var e = this.nXr.场景交互物状态列表;
     for (const r of t) {
       var i = GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(r),
         i = e.Get(i);
@@ -212,41 +212,41 @@ let SceneItemMultiInteractionActorComponent = class SceneItemMultiInteractionAct
     }
     return 21;
   }
-  Vvn(t) {
+  Mvn(t) {
     var e = (0, puerts_1.$ref)(UE.NewArray(UE.Actor)),
       i = (t.GetAttachedActors(e, !0), (0, puerts_1.$unref)(e));
-    for (let t = 0; t < i.Num(); t++) this.Vvn(i.Get(t));
-    this.Bvn.set(t.GetOwner(), t);
+    for (let t = 0; t < i.Num(); t++) this.Mvn(i.Get(t));
+    this.cvn.set(t.GetOwner(), t);
   }
-  Hvn(e) {
+  Evn(e) {
     for (let t = 0; t < e.States.Num(); t++) {
       var i,
         r = e.States.GetKey(t),
         s = e.States.Get(r);
       for (let t = 0; t < s.Effects.Num(); t++) {
         const e = s.Effects.Get(t);
-        this.Bvn.has(e) && ((i = this.Bvn.get(e)), s.Effects.Set(t, i));
+        this.cvn.has(e) && ((i = this.cvn.get(e)), s.Effects.Set(t, i));
       }
       for (let t = 0; t < s.Actors.Num(); t++) {
         const e = s.Actors.Get(t);
-        this.Bvn.has(e) && s.Actors.Set(t, this.Bvn.get(e));
+        this.cvn.has(e) && s.Actors.Set(t, this.cvn.get(e));
       }
       for (let t = 0; t < s.HideActors.Num(); t++) {
         const e = s.HideActors.Get(t);
-        this.Bvn.has(e) && s.HideActors.Set(t, this.Bvn.get(e));
+        this.cvn.has(e) && s.HideActors.Set(t, this.cvn.get(e));
       }
       for (let t = 0; t < s.MaterialControllers.Num(); t++) {
         var o = s.MaterialControllers.Get(t);
         for (let t = 0; t < o.Actors.Num(); t++) {
           const e = o.Actors.Get(t);
-          this.Bvn.has(e) && o.Actors.Set(t, this.Bvn.get(e));
+          this.cvn.has(e) && o.Actors.Set(t, this.cvn.get(e));
         }
       }
       for (let t = 0; t < s.StateBasedEffect.Num(); t++) {
         var n,
           a = s.StateBasedEffect.Get(t);
         const e = a.StateBasedEffect;
-        this.Bvn.has(e) && ((n = this.Bvn.get(e)), (a.StateBasedEffect = n));
+        this.cvn.has(e) && ((n = this.cvn.get(e)), (a.StateBasedEffect = n));
       }
     }
     for (let t = 0; t < e.Effects.Num(); t++) {
@@ -254,58 +254,58 @@ let SceneItemMultiInteractionActorComponent = class SceneItemMultiInteractionAct
         l = e.Effects.Get(h);
       for (let t = 0; t < l.Material.Actors.Num(); t++) {
         const e = l.Material.Actors.Get(t);
-        this.Bvn.has(e) && l.Material.Actors.Set(t, this.Bvn.get(e));
+        this.cvn.has(e) && l.Material.Actors.Set(t, this.cvn.get(e));
       }
-      this.Bvn.has(l.Effect) && ((h = this.Bvn.get(l.Effect)), (l.Effect = h));
+      this.cvn.has(l.Effect) && ((h = this.cvn.get(l.Effect)), (l.Effect = h));
     }
     for (let t = 0; t < e.TagsAndCorrespondingEffects.Num(); t++) {
       var c = e.TagsAndCorrespondingEffects.GetKey(t),
         v = e.TagsAndCorrespondingEffects.Get(c);
       for (let t = 0; t < v.Actors.Num(); t++) {
         const e = v.Actors.Get(t);
-        this.Bvn.has(e) && v.Actors.Set(t, this.Bvn.get(e));
+        this.cvn.has(e) && v.Actors.Set(t, this.cvn.get(e));
       }
       for (let t = 0; t < v.Effects.Num(); t++) {
         var _ = v.Effects.Get(t);
-        this.Bvn.has(_) && ((_ = this.Bvn.get(_)), v.Effects.Set(t, _));
+        this.cvn.has(_) && ((_ = this.cvn.get(_)), v.Effects.Set(t, _));
       }
       for (let t = 0; t < v.HideActors.Num(); t++) {
         var f = v.HideActors.Get(t);
-        this.Bvn.has(f) && v.HideActors.Set(t, this.Bvn.get(f));
+        this.cvn.has(f) && v.HideActors.Set(t, this.cvn.get(f));
       }
       for (let t = 0; t < v.MaterialControllers.Num(); t++) {
         var m = v.MaterialControllers.Get(t);
         for (let t = 0; t < m.Actors.Num(); t++) {
           var u = m.Actors.Get(t);
-          this.Bvn.has(u) && m.Actors.Set(t, this.Bvn.get(u));
+          this.cvn.has(u) && m.Actors.Set(t, this.cvn.get(u));
         }
       }
     }
-    this.bvn.set(e, new InteractionData(e.States, e.Effects));
+    this.mvn.set(e, new InteractionData(e.States, e.Effects));
   }
-  jvn(t, e) {
+  Svn(t, e) {
     var i = (0, puerts_1.$ref)(UE.NewArray(UE.Actor)),
       r = (t.GetAttachedActors(i, !0), (0, puerts_1.$unref)(i));
-    for (let t = 0; t < r.Num(); t++) this.jvn(r.Get(t), e);
+    for (let t = 0; t < r.Num(); t++) this.Svn(r.Get(t), e);
     t.Owner = e;
   }
   InitGenerateInfo(t, e, i, r) {
-    (this.TXr = DataTableUtil_1.DataTableUtil.GetDataTableRowFromName(0, t)),
-      (this.Pvn = e),
-      (this.wvn = i),
-      void 0 !== r && (this.Gvn = r),
+    (this.nXr = DataTableUtil_1.DataTableUtil.GetDataTableRowFromName(0, t)),
+      (this.lvn = e),
+      (this.uvn = i),
+      void 0 !== r && (this.Cvn = r),
       this.InitLevelDynamic(this.Hte.ActorLocation, this.Hte.ActorRotation),
       (this.gU = !0);
   }
   InitLevelDynamic(t, e) {
     var i = GlobalData_1.GlobalData.World;
-    let r = this.TXr.场景交互物.AssetPathName?.toString();
+    let r = this.nXr.场景交互物.AssetPathName?.toString();
     r.includes(".") && (r = r.split(".")[0]);
     var s = (0, puerts_1.$ref)(!1),
       i = UE.LevelStreamingDynamic.LoadLevelInstance(i, r, t, e, s),
       s = (0, puerts_1.$unref)(s),
       o = GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(defaultTagId),
-      o = this.TXr.场景交互物状态列表.Get(o);
+      o = this.nXr.场景交互物状态列表.Get(o);
     s &&
       i &&
       ((this.Ixe = new SceneInteractionLevel_1.SceneInteractionLevel()),
@@ -337,88 +337,88 @@ let SceneItemMultiInteractionActorComponent = class SceneItemMultiInteractionAct
           r.SetActorEnableCollision(!1));
       }
     this.Active
-      ? this.Pvn &&
+      ? this.lvn &&
         ComponentForceTickController_1.ComponentForceTickController.RegisterTick(
           this,
-          this.Ovn,
+          this.fvn,
         )
-      : (this.UEn = !0);
+      : (this.qyn = !0);
   }
   OnEnable() {
-    this.UEn &&
-      this.Pvn &&
+    this.qyn &&
+      this.lvn &&
       (ComponentForceTickController_1.ComponentForceTickController.RegisterTick(
         this,
-        this.Ovn,
+        this.fvn,
       ),
-      (this.UEn = !1));
+      (this.qyn = !1));
   }
   IsChildrenActor(t) {
-    return this.bvn.has(t.Owner);
+    return this.mvn.has(t.Owner);
   }
   GetInteractionActorByIndex(t) {
-    return this.qvn.get(t.GetKey());
+    return this.dvn.get(t.GetKey());
   }
   AddTagsByIndex(i, r) {
-    var s = this.qvn.get(i.GetKey());
-    if (s?.IsValid() || !this.Uvn) {
-      var o = this.Uvn ? this.Gvn : this.xvn;
+    var s = this.dvn.get(i.GetKey());
+    if (s?.IsValid() || !this.hvn) {
+      var o = this.hvn ? this.Cvn : this._vn;
       let t = o.get(i.GetKey()),
         e = (t || ((t = []), o.set(i.GetKey(), t)), -1);
       if (Array.isArray(r))
         for (const n of r)
           (e = t.indexOf(n)) < 0 &&
-            (t.push(n), this.Uvn) &&
+            (t.push(n), this.hvn) &&
             (s.PlayExtraEffectOnTagsChange(
               GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(n),
             ),
-            this.Wvn(i, n, !0));
+            this.yvn(i, n, !0));
       else
         (e = t.indexOf(r)) < 0 &&
-          (t.push(r), this.Uvn) &&
+          (t.push(r), this.hvn) &&
           (s.PlayExtraEffectOnTagsChange(
             GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(r),
           ),
-          this.Wvn(i, r, !0));
-      this.Uvn && this.tsn(i);
+          this.yvn(i, r, !0));
+      this.hvn && this.qnn(i);
     }
   }
   RemoveTagsByIndex(i, r) {
-    var s = this.qvn.get(i.GetKey());
-    if (s?.IsValid() || !this.Uvn) {
-      var o = this.Uvn ? this.Gvn : this.xvn;
+    var s = this.dvn.get(i.GetKey());
+    if (s?.IsValid() || !this.hvn) {
+      var o = this.hvn ? this.Cvn : this._vn;
       let t = o.get(i.GetKey()),
         e = (t || ((t = []), o.set(i.GetKey(), t)), -1);
       if (Array.isArray(r))
         for (const n of r)
           -1 < (e = t.indexOf(n)) &&
-            (t.splice(e, 1), this.Uvn) &&
+            (t.splice(e, 1), this.hvn) &&
             (s.StopExtraEffectOnTagsChange(
               GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(n),
             ),
-            this.Wvn(i, n, !1));
+            this.yvn(i, n, !1));
       else
         -1 < (e = t.indexOf(r)) &&
-          (t.splice(e, 1), this.Uvn) &&
+          (t.splice(e, 1), this.hvn) &&
           (s.StopExtraEffectOnTagsChange(
             GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(r),
           ),
-          this.Wvn(i, r, !1));
-      this.Uvn && this.tsn(i);
+          this.yvn(i, r, !1));
+      this.hvn && this.qnn(i);
     }
   }
   HasTagByIndex(t, e) {
-    t = (this.Uvn ? this.Gvn : this.xvn).get(t.GetKey());
+    t = (this.hvn ? this.Cvn : this._vn).get(t.GetKey());
     return !!t && -1 < t.indexOf(e);
   }
-  Wvn(t, e, i) {
-    let r = this.ynn.get(t.GetKey());
-    var s = this.qvn.get(t.GetKey());
+  yvn(t, e, i) {
+    let r = this.rnn.get(t.GetKey());
+    var s = this.dvn.get(t.GetKey());
     i
-      ? (void 0 === r && ((r = new Map()), this.ynn.set(t.GetKey(), r)),
+      ? (void 0 === r && ((r = new Map()), this.rnn.set(t.GetKey(), r)),
         r.has(e) ||
           ((i = GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(e)),
-          void 0 !== (t = this.TXr.场景交互物特效列表.Get(i)) &&
+          void 0 !== (t = this.nXr.场景交互物特效列表.Get(i)) &&
             (s.PlayIndependentEffect(t), r.set(e, t))))
       : void 0 !== r &&
         0 !== r.size &&
@@ -428,25 +428,25 @@ let SceneItemMultiInteractionActorComponent = class SceneItemMultiInteractionAct
         s.EndIndependentEffect(i),
         s.PlayIndependentEndEffect(i));
   }
-  tsn(t) {
+  qnn(t) {
     var t = t.GetKey(),
-      e = this.qvn.get(t);
+      e = this.dvn.get(t);
     let i = [],
       r = 21;
-    this.Gvn.has(t) && (i = this.Gvn.get(t)),
-      21 === (r = 0 < i?.length ? this.Kvn(i) : r) &&
+    this.Cvn.has(t) && (i = this.Cvn.get(t)),
+      21 === (r = 0 < i?.length ? this.Ivn(i) : r) &&
         ((t =
           GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(defaultTagId)),
-        (r = this.TXr.场景交互物状态列表.Get(t))),
+        (r = this.nXr.场景交互物状态列表.Get(t))),
       e.SetState(r, !0, !1);
   }
   DynamicRemoveActorByIndex(t) {
     var e, i;
-    this.Uvn
+    this.hvn
       ? ((e = t.GetKey()),
-        void 0 !== (i = this.qvn.get(e)) &&
-          (this.qvn.delete(e), i.DestroySelf()))
-      : this.Nvn.Push({
+        void 0 !== (i = this.dvn.get(e)) &&
+          (this.dvn.delete(e), i.DestroySelf()))
+      : this.gvn.Push({
           Func: (t) => {
             this.DynamicRemoveActorByIndex(t);
           },
@@ -455,14 +455,14 @@ let SceneItemMultiInteractionActorComponent = class SceneItemMultiInteractionAct
         });
   }
   DynamicAddActorByIndex(e, i) {
-    if (this.Uvn) {
+    if (this.hvn) {
       var r = e.GetKey();
-      let t = this.Gvn.get(r);
+      let t = this.Cvn.get(r);
       (t = (t = t || []).concat(i)),
-        this.Gvn.set(r, t),
-        this.Fvn(e, this.Ixe.MainActor);
+        this.Cvn.set(r, t),
+        this.vvn(e, this.Ixe.MainActor);
     } else
-      this.Nvn.Push({
+      this.gvn.Push({
         Func: (t, e) => {
           this.DynamicAddActorByIndex(t, e);
         },
@@ -474,14 +474,14 @@ let SceneItemMultiInteractionActorComponent = class SceneItemMultiInteractionAct
     return this.gU;
   }
   GetIsFinish() {
-    return this.Uvn;
+    return this.hvn;
   }
   SetIsFinish(t) {
-    this.Uvn = t;
+    this.hvn = t;
   }
 };
 (SceneItemMultiInteractionActorComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(143)],
+  [(0, RegisterComponent_1.RegisterComponent)(145)],
   SceneItemMultiInteractionActorComponent,
 )),
   (exports.SceneItemMultiInteractionActorComponent =

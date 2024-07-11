@@ -30,10 +30,10 @@ let TriggerComponent = (TriggerComponent_1 = class TriggerComponent extends (
 ) {
   constructor() {
     super(...arguments),
-      (this.SIe = void 0),
-      (this.ktn = void 0),
+      (this.EIe = void 0),
+      (this.vtn = void 0),
       (this.Lo = void 0),
-      (this.K$o = 0);
+      (this.HYo = 0);
   }
   get Actions() {
     return this.Lo?.Actions;
@@ -44,23 +44,23 @@ let TriggerComponent = (TriggerComponent_1 = class TriggerComponent extends (
   OnInitData(e) {
     var e = e.GetParam(TriggerComponent_1)[0],
       e = e || void 0,
-      t = this.Entity.GetComponent(106);
+      t = this.Entity.GetComponent(108);
     return (
       t && !t.LogicRange && t.SetLogicRange(300),
       (this.Lo = e),
-      (this.SIe = this.Entity.GetComponent(0)),
-      (this.K$o = this.SIe.GetPbDataId()),
+      (this.EIe = this.Entity.GetComponent(0)),
+      (this.HYo = this.EIe.GetPbDataId()),
       !0
     );
   }
   OnStart() {
     return (
-      (this.ktn = this.Entity.GetComponent(74)),
-      !!this.ktn ||
+      (this.vtn = this.Entity.GetComponent(76)),
+      !!this.vtn ||
         (Log_1.Log.CheckError() &&
           Log_1.Log.Error("SceneItem", 40, "[TriggerComponent] RangeComp缺失", [
             "ConfigId",
-            this.K$o,
+            this.HYo,
           ]),
         !1)
     );
@@ -74,7 +74,7 @@ let TriggerComponent = (TriggerComponent_1 = class TriggerComponent extends (
 });
 (TriggerComponent = TriggerComponent_1 =
   __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(75)],
+    [(0, RegisterComponent_1.RegisterComponent)(77)],
     TriggerComponent,
   )),
   (exports.TriggerComponent = TriggerComponent);

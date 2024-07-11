@@ -11,17 +11,17 @@ const UE = require("ue"),
 class HandBookPhotoView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.WZt = void 0),
-      (this.KZt = 0),
+      (this.Wei = void 0),
+      (this.Kei = 0),
       (this.tNe = () => {
-        this.WZt && 0 !== this.KZt && ((this.KZt = this.KZt - 1), this.bl());
+        this.Wei && 0 !== this.Kei && ((this.Kei = this.Kei - 1), this.bl());
       }),
       (this.iNe = () => {
-        this.WZt &&
-          this.KZt !== this.WZt.TextureList.length - 1 &&
-          ((this.KZt = this.KZt + 1), this.bl());
+        this.Wei &&
+          this.Kei !== this.Wei.TextureList.length - 1 &&
+          ((this.Kei = this.Kei + 1), this.bl());
       }),
-      (this.JSt = () => {
+      (this.lyt = () => {
         this.CloseMe();
       });
   }
@@ -43,78 +43,78 @@ class HandBookPhotoView extends UiViewBase_1.UiViewBase {
       (this.BtnBindInfo = [
         [9, this.tNe],
         [10, this.iNe],
-        [2, this.JSt],
-        [11, this.JSt],
+        [2, this.lyt],
+        [11, this.lyt],
       ]);
   }
   OnStart() {
-    (this.WZt = this.OpenParam),
-      this.WZt && ((this.KZt = this.WZt.Index), this.QZt(this.KZt));
+    (this.Wei = this.OpenParam),
+      this.Wei && ((this.Kei = this.Wei.Index), this.Qei(this.Kei));
   }
-  QZt(t) {
-    var i = this.WZt.TextureList.length,
+  Qei(t) {
+    var i = this.Wei.TextureList.length,
       i =
         (this.GetButton(9).RootUIComp.SetUIActive(!(0 === t)),
         this.GetButton(10).RootUIComp.SetUIActive(!(t === i - 1)),
         this.GetText(6)),
       i =
-        (this.WZt.DateText
+        (this.Wei.DateText
           ? (i.SetUIActive(!0),
             LguiUtil_1.LguiUtil.SetLocalText(
               i,
               "DateOfAcquisition",
-              this.WZt.DateText[t],
+              this.Wei.DateText[t],
             ))
           : i.SetUIActive(!1),
         this.GetText(5)),
       i =
-        (this.WZt.NameText
-          ? (i.SetUIActive(!0), i.SetText(this.WZt.NameText[t]))
+        (this.Wei.NameText
+          ? (i.SetUIActive(!0), i.SetText(this.Wei.NameText[t]))
           : i.SetUIActive(!1),
         this.GetText(4)),
       i =
-        (this.WZt.TypeText
-          ? (i.SetUIActive(!0), i.SetText(this.WZt.TypeText[t]))
+        (this.Wei.TypeText
+          ? (i.SetUIActive(!0), i.SetText(this.Wei.TypeText[t]))
           : i.SetUIActive(!1),
         this.GetText(8)),
       i =
-        (this.WZt.DescrtptionText
-          ? (i.SetUIActive(!0), i.SetText(this.WZt.DescrtptionText[t]))
+        (this.Wei.DescrtptionText
+          ? (i.SetUIActive(!0), i.SetText(this.Wei.DescrtptionText[t]))
           : i.SetUIActive(!1),
         this.GetTexture(3));
-    this.WZt.TextureList
-      ? (i.SetUIActive(!0), this.IIt(this.WZt.TextureList[t]))
+    this.Wei.TextureList
+      ? (i.SetUIActive(!0), this.UTt(this.Wei.TextureList[t]))
       : i.SetUIActive(!1);
   }
-  IIt(t) {
+  UTt(t) {
     this.SetTextureByPath(t, this.GetTexture(3));
   }
   bl() {
-    2 === this.WZt.HandBookType
-      ? this.XZt(this.KZt)
-      : 6 === this.WZt.HandBookType
-        ? this.$Zt(this.KZt)
-        : 7 === this.WZt.HandBookType && this.YZt(this.KZt);
+    2 === this.Wei.HandBookType
+      ? this.Xei(this.Kei)
+      : 6 === this.Wei.HandBookType
+        ? this.$ei(this.Kei)
+        : 7 === this.Wei.HandBookType && this.Yei(this.Kei);
   }
-  $Zt(t) {
-    t = this.WZt.TextureList[t];
-    this.IIt(t);
+  $ei(t) {
+    t = this.Wei.TextureList[t];
+    this.UTt(t);
   }
-  XZt(t) {
-    this.JZt(t), this.QZt(t);
+  Xei(t) {
+    this.Jei(t), this.Qei(t);
   }
-  JZt(t) {
-    var t = this.WZt.ConfigId[t],
+  Jei(t) {
+    var t = this.Wei.ConfigId[t],
       i = ModelManager_1.ModelManager.HandBookModel.GetHandBookInfo(2, t);
     i &&
       !i.IsRead &&
       HandBookController_1.HandBookController.SendIllustratedReadRequest(2, t);
   }
-  YZt(t) {
-    this.zZt(t), this.QZt(t);
+  Yei(t) {
+    this.zei(t), this.Qei(t);
   }
-  zZt(t) {
-    var t = this.WZt.ConfigId[t],
+  zei(t) {
+    var t = this.Wei.ConfigId[t],
       i = ModelManager_1.ModelManager.HandBookModel.GetHandBookInfo(7, t);
     i &&
       !i.IsRead &&
@@ -123,10 +123,10 @@ class HandBookPhotoView extends UiViewBase_1.UiViewBase {
   OnBeforeDestroy() {
     EventSystem_1.EventSystem.Emit(
       EventDefine_1.EEventName.OnPhotoSelect,
-      this.WZt.ConfigId[this.KZt],
+      this.Wei.ConfigId[this.Kei],
     ),
-      (this.WZt = void 0),
-      (this.KZt = 0);
+      (this.Wei = void 0),
+      (this.Kei = 0);
   }
 }
 exports.HandBookPhotoView = HandBookPhotoView;

@@ -3,11 +3,11 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GrapplingHookPoint = void 0);
 const puerts_1 = require("puerts"),
   UE = require("ue"),
+  Info_1 = require("../../../../../Core/Common/Info"),
   TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem"),
   EventDefine_1 = require("../../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../../Common/Event/EventSystem"),
   Global_1 = require("../../../../Global"),
-  ModelManager_1 = require("../../../../Manager/ModelManager"),
   UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase"),
   InputMappingsDefine_1 = require("../../../../Ui/InputDistribute/InputMappingsDefine"),
   UiLayer_1 = require("../../../../Ui/UiLayer"),
@@ -20,26 +20,26 @@ class GrapplingHookPoint extends UiPanelBase_1.UiPanelBase {
   constructor(e, t) {
     super(),
       (this.Due = new UE.Vector()),
-      (this._Xe = (0, puerts_1.$ref)(void 0)),
-      (this.gXe = void 0),
-      (this.xat = !1),
-      (this.wat = !1),
-      (this.Bat = void 0),
-      (this.bat = void 0),
-      (this.EPe = void 0),
-      (this.xet = void 0),
-      (this.qat = (e) => {
-        this.Gat();
+      (this.S$e = (0, puerts_1.$ref)(void 0)),
+      (this.R$e = void 0),
+      (this.jht = !1),
+      (this.Wht = !1),
+      (this.Kht = void 0),
+      (this.Qht = void 0),
+      (this.SPe = void 0),
+      (this.Qtt = void 0),
+      (this.Xht = (e) => {
+        this.$ht();
       }),
-      (this.Nat = (e) => {
-        this.Oat();
+      (this.Yht = (e) => {
+        this.Jht();
       }),
-      (this.kat = () => {
-        TimerSystem_1.TimerSystem.Has(this.Bat) &&
-          TimerSystem_1.TimerSystem.Remove(this.Bat),
-          this.bat && this.bat();
+      (this.zht = () => {
+        TimerSystem_1.TimerSystem.Has(this.Kht) &&
+          TimerSystem_1.TimerSystem.Remove(this.Kht),
+          this.Qht && this.Qht();
       }),
-      (this.gXe = Global_1.Global.CharacterController),
+      (this.R$e = Global_1.Global.CharacterController),
       (this.Due.X = e.X),
       (this.Due.Y = e.Y),
       (this.Due.Z = e.Z),
@@ -52,112 +52,112 @@ class GrapplingHookPoint extends UiPanelBase_1.UiPanelBase {
       [2, UE.UIItem],
       [3, UE.UINiagara],
     ]),
-      ModelManager_1.ModelManager.PlatformModel.IsMobile() ||
+      Info_1.Info.IsInTouch() ||
         this.ComponentRegisterInfos.push([4, UE.UIItem]);
   }
   async OnBeforeStartAsync() {
     var e;
-    ModelManager_1.ModelManager.PlatformModel.IsMobile() ||
+    Info_1.Info.IsInTouch() ||
       ((e = this.GetItem(4)).SetUIActive(!1),
-      (this.xet = new CombineKeyItem_1.CombineKeyItem()),
-      await this.xet.CreateByActorAsync(e.GetOwner()),
-      this.xet.RefreshAction(InputMappingsDefine_1.actionMappings.幻象1));
+      (this.Qtt = new CombineKeyItem_1.CombineKeyItem()),
+      await this.Qtt.CreateByActorAsync(e.GetOwner()),
+      this.Qtt.RefreshAction(InputMappingsDefine_1.actionMappings.幻象1));
   }
   OnStart() {
-    (this.EPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem)),
-      this.Oat(),
+    (this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem)),
+      this.Jht(),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.PlotNetworkStart,
-        this.qat,
+        this.Xht,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.PlotNetworkEnd,
-        this.Nat,
+        this.Yht,
       );
   }
-  Oat() {
+  Jht() {
     this.GetItem(0).SetUIActive(!1),
       this.GetItem(1).SetUIActive(!1),
       this.GetItem(2).SetUIActive(!1),
-      this.xet?.GetRootItem().SetUIActive(!0),
-      this.Fat(START_SEQUENCE_NAME),
-      this.Fat(CLOST_SEQUENCE_NAME),
-      TimerSystem_1.TimerSystem.Has(this.Bat) &&
-        TimerSystem_1.TimerSystem.Remove(this.Bat),
-      (this.xat = !0),
-      (this.wat = !1);
+      this.Qtt?.GetRootItem().SetUIActive(!0),
+      this.Zht(START_SEQUENCE_NAME),
+      this.Zht(CLOST_SEQUENCE_NAME),
+      TimerSystem_1.TimerSystem.Has(this.Kht) &&
+        TimerSystem_1.TimerSystem.Remove(this.Kht),
+      (this.jht = !0),
+      (this.Wht = !1);
   }
-  Gat() {
+  $ht() {
     this.GetItem(0).SetUIActive(!1),
       this.GetItem(1).SetUIActive(!1),
       this.GetItem(2).SetUIActive(!1),
-      this.xet?.GetRootItem().SetUIActive(!1),
-      this.Fat(START_SEQUENCE_NAME),
-      this.Fat(CLOST_SEQUENCE_NAME),
-      TimerSystem_1.TimerSystem.Has(this.Bat) &&
-        TimerSystem_1.TimerSystem.Remove(this.Bat),
-      (this.xat = !1),
-      (this.wat = !0);
+      this.Qtt?.GetRootItem().SetUIActive(!1),
+      this.Zht(START_SEQUENCE_NAME),
+      this.Zht(CLOST_SEQUENCE_NAME),
+      TimerSystem_1.TimerSystem.Has(this.Kht) &&
+        TimerSystem_1.TimerSystem.Remove(this.Kht),
+      (this.jht = !1),
+      (this.Wht = !0);
   }
   Interrupt() {
     this.GetItem(0).SetUIActive(!1),
       this.GetItem(1).SetUIActive(!1),
-      (this.wat = !0),
-      (this.Bat = TimerSystem_1.TimerSystem.Delay(
-        this.kat,
+      (this.Wht = !0),
+      (this.Kht = TimerSystem_1.TimerSystem.Delay(
+        this.zht,
         INTERRUPT_DELAY_TIME,
       ));
   }
   BindOnInterruptCompleted(e) {
-    this.bat = e;
+    this.Qht = e;
   }
   GetIsActivateHook() {
-    return this.xat;
+    return this.jht;
   }
   GetIsInterrupting() {
-    return this.wat;
+    return this.Wht;
   }
   OnBeforeDestroy() {
-    this.EPe && (this.EPe.Clear(), (this.EPe = void 0)),
-      (this.wat = !1),
-      (this.xat = !1),
-      TimerSystem_1.TimerSystem.Has(this.Bat) &&
-        TimerSystem_1.TimerSystem.Remove(this.Bat),
+    this.SPe && (this.SPe.Clear(), (this.SPe = void 0)),
+      (this.Wht = !1),
+      (this.jht = !1),
+      TimerSystem_1.TimerSystem.Has(this.Kht) &&
+        TimerSystem_1.TimerSystem.Remove(this.Kht),
       EventSystem_1.EventSystem.Has(
         EventDefine_1.EEventName.PlotNetworkStart,
-        this.qat,
+        this.Xht,
       ) &&
         EventSystem_1.EventSystem.Remove(
           EventDefine_1.EEventName.PlotNetworkStart,
-          this.qat,
+          this.Xht,
         ),
       EventSystem_1.EventSystem.Has(
         EventDefine_1.EEventName.PlotNetworkEnd,
-        this.Nat,
+        this.Yht,
       ) &&
         EventSystem_1.EventSystem.Remove(
           EventDefine_1.EEventName.PlotNetworkEnd,
-          this.Nat,
+          this.Yht,
         );
   }
   AfterTick() {
     var e;
-    this.xat && (e = this.Vat(this.Due)) && this.Ad(e);
+    this.jht && (e = this.elt(this.Due)) && this.Ad(e);
   }
   Ad(e) {
     this.RootItem.SetAnchorOffset(e);
   }
-  Vat(e) {
-    if (UE.GameplayStatics.ProjectWorldToScreen(this.gXe, e, this._Xe))
+  elt(e) {
+    if (UE.GameplayStatics.ProjectWorldToScreen(this.R$e, e, this.S$e))
       return (
-        (e = (0, puerts_1.$unref)(this._Xe)),
+        (e = (0, puerts_1.$unref)(this.S$e)),
         UiLayer_1.UiLayer.UiRootItem.GetCanvasScaler().ConvertPositionFromViewportToLGUICanvas(
           e,
         )
       );
   }
-  Fat(e) {
-    this.EPe.StopSequenceByKey(e);
+  Zht(e) {
+    this.SPe.StopSequenceByKey(e);
   }
 }
 exports.GrapplingHookPoint = GrapplingHookPoint;

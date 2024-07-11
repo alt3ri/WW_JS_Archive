@@ -7,7 +7,7 @@ const UE = require("ue"),
   LockReasonItem_1 = require("./LockReasonItem");
 class QuestLockPreview extends UiViewBase_1.UiViewBase {
   constructor() {
-    super(...arguments), (this.xro = void 0), (this.wro = void 0);
+    super(...arguments), (this.Rno = void 0), (this.Uno = void 0);
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -17,20 +17,20 @@ class QuestLockPreview extends UiViewBase_1.UiViewBase {
     ];
   }
   OnBeforeCreate() {
-    this.xro = this.OpenParam;
+    this.Rno = this.OpenParam;
   }
   OnStart() {
-    super.OnStart(), this.Bro();
+    super.OnStart(), this.Ano();
   }
-  Bro() {
-    if (this.xro && 0 !== this.xro.length) {
-      this.wro = [];
+  Ano() {
+    if (this.Rno && 0 !== this.Rno.length) {
+      this.Uno = [];
       var e = this.GetItem(2),
         i = this.GetItem(1);
-      for (const o of this.xro) {
+      for (const o of this.Rno) {
         var t = LguiUtil_1.LguiUtil.CopyItem(e, i),
           s = new LockReasonItem_1.LockReasonItem(o);
-        s.CreateThenShowByActorAsync(t.GetOwner()), this.wro.push(s);
+        s.CreateThenShowByActorAsync(t.GetOwner()), this.Uno.push(s);
       }
       e.SetUIActive(!1);
     }

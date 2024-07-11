@@ -31,15 +31,15 @@ let UiModelRenderingMaterialComponent = class UiModelRenderingMaterialComponent 
     super(...arguments),
       (this.ActorComponent = void 0),
       (this.UiModelDataComponent = void 0),
-      (this.TBr = new Map()),
-      (this.LBr = 0),
-      (this.DBr = new Set()),
+      (this.tBr = new Map()),
+      (this.iBr = 0),
+      (this.oBr = new Set()),
       (this.OnModelLoadComplete = () => {
         this.m8();
       });
   }
-  get rWt() {
-    return this.LBr++;
+  get rKt() {
+    return this.iBr++;
   }
   OnInit() {
     (this.ActorComponent = this.Owner.CheckGetComponent(1)),
@@ -58,41 +58,41 @@ let UiModelRenderingMaterialComponent = class UiModelRenderingMaterialComponent 
       EventDefine_1.EEventName.OnUiModelLoadComplete,
       this.OnModelLoadComplete,
     );
-    for (const t of this.TBr.values()) {
+    for (const t of this.tBr.values()) {
       var e = t.HandleId;
       e &&
         e !== ResourceSystem_1.ResourceSystem.InvalidId &&
         ResourceSystem_1.ResourceSystem.CancelAsyncLoad(e);
     }
-    this.TBr.clear(),
+    this.tBr.clear(),
       this.ActorComponent.CharRenderingComponent?.ResetAllRenderingState();
   }
   SetRenderingMaterial(e) {
-    var t = this.rWt,
+    var t = this.rKt,
       e = {
         EffectId: e,
         HandleId: ResourceSystem_1.ResourceSystem.InvalidId,
         RenderingId: ResourceSystem_1.ResourceSystem.InvalidId,
       };
-    return this.TBr.set(t, e), this.DBr.add(t), this.m8(), t;
+    return this.tBr.set(t, e), this.oBr.add(t), this.m8(), t;
   }
   AddRenderingMaterialByData(e) {
-    var t = this.rWt,
+    var t = this.rKt,
       e = {
         MaterialAssetData: e,
         HandleId: ResourceSystem_1.ResourceSystem.InvalidId,
         RenderingId: ResourceSystem_1.ResourceSystem.InvalidId,
       };
-    return this.TBr.set(t, e), this.DBr.add(t), this.m8(), t;
+    return this.tBr.set(t, e), this.oBr.add(t), this.m8(), t;
   }
   m8() {
     if (2 === this.UiModelDataComponent?.GetModelLoadState()) {
-      for (const e of this.DBr) this.RBr(e);
-      this.DBr.clear();
+      for (const e of this.oBr) this.rBr(e);
+      this.oBr.clear();
     }
   }
-  RBr(e) {
-    const t = this.TBr.get(e);
+  rBr(e) {
+    const t = this.tBr.get(e);
     var i,
       e = (e) => {
         t.RenderingId =
@@ -111,7 +111,7 @@ let UiModelRenderingMaterialComponent = class UiModelRenderingMaterialComponent 
   }
   RemoveRenderingMaterial(e) {
     var t,
-      i = this.TBr.get(e);
+      i = this.tBr.get(e);
     i &&
       ((t = i.HandleId) &&
         t !== ResourceSystem_1.ResourceSystem.InvalidId &&
@@ -121,11 +121,11 @@ let UiModelRenderingMaterialComponent = class UiModelRenderingMaterialComponent 
         this.ActorComponent.CharRenderingComponent.RemoveMaterialControllerData(
           t,
         ),
-      this.TBr.delete(e));
+      this.tBr.delete(e));
   }
   RemoveRenderingMaterialWithEnding(e) {
     var t,
-      i = this.TBr.get(e);
+      i = this.tBr.get(e);
     i &&
       ((t = i.HandleId) &&
         t !== ResourceSystem_1.ResourceSystem.InvalidId &&
@@ -135,7 +135,7 @@ let UiModelRenderingMaterialComponent = class UiModelRenderingMaterialComponent 
         this.ActorComponent.CharRenderingComponent.RemoveMaterialControllerDataWithEnding(
           t,
         ),
-      this.TBr.delete(e));
+      this.tBr.delete(e));
   }
 };
 (UiModelRenderingMaterialComponent = __decorate(

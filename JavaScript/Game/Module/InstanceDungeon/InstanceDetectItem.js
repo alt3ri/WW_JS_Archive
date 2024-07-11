@@ -13,21 +13,22 @@ const UE = require("ue"),
   ModelManager_1 = require("../../Manager/ModelManager"),
   UiPanelBase_1 = require("../../Ui/Base/UiPanelBase"),
   ActivityMowingController_1 = require("../Activity/ActivityContent/Mowing/ActivityMowingController"),
+  TowerDefenceController_1 = require("../TowerDefence/TowerDefenceController"),
   LguiUtil_1 = require("../Util/LguiUtil");
 class InstanceDetectItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
       (this.Data = void 0),
-      (this.qsi = void 0),
-      (this.Gsi = void 0),
-      (this.Nsi = void 0),
-      (this.Osi = void 0),
-      (this.ksi = void 0),
-      (this.Fsi = void 0),
-      (this.Vsi = void 0);
+      (this.qai = void 0),
+      (this.Gai = void 0),
+      (this.Nai = void 0),
+      (this.Oai = void 0),
+      (this.kai = void 0),
+      (this.Fai = void 0),
+      (this.Vai = void 0);
   }
   async Init(i) {
-    await super.CreateByActorAsync(i.GetOwner(), void 0, !0), await this.Wzt();
+    await super.CreateByActorAsync(i.GetOwner(), void 0, !0), await this.WZt();
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -37,20 +38,20 @@ class InstanceDetectItem extends UiPanelBase_1.UiPanelBase {
       [3, UE.UIItem],
     ];
   }
-  async Wzt() {
-    (this.qsi = new InstanceSeriesItem()),
-      (this.Gsi = new InstanceItem()),
-      (this.Nsi = new InstanceSeriesItem()),
-      (this.Osi = new InstanceItem()),
-      this.AddChild(this.Gsi),
-      this.AddChild(this.qsi),
-      this.AddChild(this.Nsi),
-      this.AddChild(this.Osi),
+  async WZt() {
+    (this.qai = new InstanceSeriesItem()),
+      (this.Gai = new InstanceItem()),
+      (this.Nai = new InstanceSeriesItem()),
+      (this.Oai = new InstanceItem()),
+      this.AddChild(this.Gai),
+      this.AddChild(this.qai),
+      this.AddChild(this.Nai),
+      this.AddChild(this.Oai),
       await Promise.all([
-        this.qsi.CreateByActorAsync(this.GetItem(0).GetOwner()),
-        this.Gsi.CreateByActorAsync(this.GetItem(1).GetOwner()).finally(),
-        this.Nsi.CreateByActorAsync(this.GetItem(2).GetOwner()),
-        this.Osi.CreateByActorAsync(this.GetItem(3).GetOwner()).finally(),
+        this.qai.CreateByActorAsync(this.GetItem(0).GetOwner()),
+        this.Gai.CreateByActorAsync(this.GetItem(1).GetOwner()).finally(),
+        this.Nai.CreateByActorAsync(this.GetItem(2).GetOwner()),
+        this.Oai.CreateByActorAsync(this.GetItem(3).GetOwner()).finally(),
       ]);
   }
   GetUsingItem(i) {
@@ -71,52 +72,52 @@ class InstanceDetectItem extends UiPanelBase_1.UiPanelBase {
       !ModelManager_1.ModelManager.InstanceDungeonEntranceModel.CheckInstanceUnlock(
         i.InstanceGirdId,
       );
-    let e = this.qsi,
-      h = this.Gsi;
-    this.qsi.SetUiActive(!s),
-      this.Gsi.SetUiActive(!s),
-      this.Nsi.SetUiActive(s),
-      this.Osi.SetUiActive(s),
-      s && ((h = this.Osi), (e = this.Nsi)),
+    let e = this.qai,
+      h = this.Gai;
+    this.qai.SetUiActive(!s),
+      this.Gai.SetUiActive(!s),
+      this.Nai.SetUiActive(s),
+      this.Oai.SetUiActive(s),
+      s && ((h = this.Oai), (e = this.Nai)),
       i.InstanceSeriesTitle
         ? (h.SetUiActive(!1),
           e.SetUiActive(!0),
           (e.CurrentData = i).IsOnlyOneGrid
-            ? (e.BindClickCallbackOnlyOneGrid(this.Fsi),
+            ? (e.BindClickCallbackOnlyOneGrid(this.Fai),
               e.Update(i.InstanceGirdId, i.IsSelect, !0))
-            : (e.BindClickCallback(this.ksi),
+            : (e.BindClickCallback(this.kai),
               e.Update(i.InstanceSeriesTitle, i.IsSelect)))
         : (e.SetUiActive(!1),
           h.SetUiActive(!0),
-          h.BindClickCallback(this.Fsi),
-          h.BindCanExecuteChange(this.Vsi),
+          h.BindClickCallback(this.Fai),
+          h.BindCanExecuteChange(this.Vai),
           h.Update(i.InstanceGirdId, i.IsSelect, i.IsShow));
   }
   GetActiveNameText() {
     return (
-      this.qsi.IsUiActiveInHierarchy()
-        ? this.qsi
-        : this.Gsi.IsUiActiveInHierarchy()
-          ? this.Gsi
-          : this.Nsi.IsUiActiveInHierarchy()
-            ? this.Nsi
-            : this.Osi
+      this.qai.IsUiActiveInHierarchy()
+        ? this.qai
+        : this.Gai.IsUiActiveInHierarchy()
+          ? this.Gai
+          : this.Nai.IsUiActiveInHierarchy()
+            ? this.Nai
+            : this.Oai
     ).GetTitleText();
   }
   BindClickSeriesCallback(i) {
-    this.ksi = i;
+    this.kai = i;
   }
   BindClickInstanceCallback(i) {
-    this.Fsi = i;
+    this.Fai = i;
   }
   BindCanExecuteChange(i) {
-    this.Vsi = i;
+    this.Vai = i;
   }
   ClearItem() {
     this.Destroy();
   }
   GetExtendToggleForGuide() {
-    if (this.Gsi.GetActive()) return this.Gsi.ExtendToggle;
+    if (this.Gai.GetActive()) return this.Gai.ExtendToggle;
     Log_1.Log.CheckWarn() &&
       Log_1.Log.Warn(
         "Guide",
@@ -129,35 +130,35 @@ exports.InstanceDetectItem = InstanceDetectItem;
 class InstanceSeriesItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(),
-      (this.b5e = void 0),
+      (this.$Ve = void 0),
       (this.Zqe = void 0),
-      (this.Hsi = void 0),
+      (this.Hai = void 0),
       (this.TDe = void 0),
-      (this.jsi = 0),
-      (this.Wsi = !1),
-      (this.Ksi = !1),
-      (this.Qsi = void 0),
-      (this.Xsi = !1),
+      (this.jai = 0),
+      (this.Wai = !1),
+      (this.Kai = !1),
+      (this.Qai = void 0),
+      (this.Xai = !1),
       (this.CurrentData = void 0),
-      (this.$si = () => {
+      (this.$ai = () => {
         var i =
           ActivityMowingController_1.ActivityMowingController.GetMowingActivityData();
         i &&
-          ((i = i.GetActivityLevelCountdownText(this.jsi)),
+          ((i = i.GetActivityLevelCountdownText(this.jai)),
           this.GetText(8).SetText(i),
           StringUtils_1.StringUtils.IsEmpty(i)) &&
-          ((this.Xsi = !1), this.Update(this.jsi, this.Wsi, this.Ksi));
+          ((this.Xai = !1), this.Update(this.jai, this.Wai, this.Kai));
       }),
       (this.OnClickExtendToggle = (i) => {
         1 === i &&
-          ((this.Wsi = !0),
-          this.Zqe && this.Zqe(this.jsi, this.b5e, this.Wsi),
-          this.Hsi) &&
-          this.Hsi(this.jsi, this.b5e, this.CurrentData);
+          ((this.Wai = !0),
+          this.Zqe && this.Zqe(this.jai, this.$Ve, this.Wai),
+          this.Hai) &&
+          this.Hai(this.jai, this.$Ve, this.CurrentData);
       }),
-      (this.Ysi = (i) => {
+      (this.Yai = (i) => {
         i = 1 === i;
-        (this.Wsi = i), this.GetItem(5)?.SetUIActive(i);
+        (this.Wai = i), this.GetItem(5)?.SetUIActive(i);
       });
   }
   OnRegisterComponent() {
@@ -175,40 +176,40 @@ class InstanceSeriesItem extends UiPanelBase_1.UiPanelBase {
       (this.BtnBindInfo = [[0, this.OnClickExtendToggle]]);
   }
   OnStart() {
-    (this.b5e = this.GetExtendToggle(0)),
-      this.b5e.SetToggleState(0),
-      this.b5e.OnStateChange.Add(this.Ysi),
+    (this.$Ve = this.GetExtendToggle(0)),
+      this.$Ve.SetToggleState(0),
+      this.$Ve.OnStateChange.Add(this.Yai),
       (this.TDe = TimerSystem_1.TimerSystem.Forever(() => {
-        this.E9e();
+        this.q7e();
       }, TimeUtil_1.TimeUtil.InverseMillisecond));
   }
   OnBeforeDestroy() {
     void 0 !== this.TDe &&
       (TimerSystem_1.TimerSystem.Remove(this.TDe), (this.TDe = void 0));
   }
-  E9e() {
-    this.Xsi && this.Qsi?.();
+  q7e() {
+    this.Xai && this.Qai?.();
   }
   GetTitleText() {
     return this.GetText(3);
   }
   Update(i, s, t = !1) {
     if (
-      ((this.jsi = i),
-      (this.Wsi = s),
-      (this.Ksi = t),
-      this.b5e.SetToggleStateForce(s ? 1 : 0),
+      ((this.jai = i),
+      (this.Wai = s),
+      (this.Kai = t),
+      this.$Ve.SetToggleStateForce(s ? 1 : 0),
       this.GetItem(5)?.SetUIActive(s),
       this.GetSprite(2)?.SetUIActive(!1),
       this.GetItem(1)?.SetUIActive(!1),
       t)
     ) {
       var i = ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(
-          this.jsi,
+          this.jai,
         ),
         s =
           (LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(3), i.MapName),
-          s && this.Hsi && this.Hsi(this.jsi, this.b5e, this.CurrentData),
+          s && this.Hai && this.Hai(this.jai, this.$Ve, this.CurrentData),
           i.DifficultyIcon),
         s =
           (this.GetSprite(2)?.SetUIActive(!0),
@@ -225,7 +226,7 @@ class InstanceSeriesItem extends UiPanelBase_1.UiPanelBase {
           : 2 === i &&
             ((s =
               ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetRecommendLevel(
-                this.jsi,
+                this.jai,
                 ModelManager_1.ModelManager.WorldLevelModel.CurWorldLevel,
               )),
             LguiUtil_1.LguiUtil.SetLocalTextNew(
@@ -234,13 +235,35 @@ class InstanceSeriesItem extends UiPanelBase_1.UiPanelBase {
               s,
             ));
       } else
-        LguiUtil_1.LguiUtil.SetLocalTextNew(
-          this.GetText(8),
-          i.SubInstanceTitle,
-        );
+        TowerDefenceController_1.TowerDefenseController.CheckInUiFlow()
+          ? TowerDefenceController_1.TowerDefenseController.CheckIsInstanceUnlock(
+              this.jai,
+            )
+            ? ((s =
+                TowerDefenceController_1.TowerDefenseController.GetRecordByInstanceId(
+                  this.jai,
+                )),
+              LguiUtil_1.LguiUtil.SetLocalTextNew(
+                this.GetText(8),
+                "TowerDefence_GPint",
+                s,
+              ))
+            : ((s =
+                TowerDefenceController_1.TowerDefenseController.GetTotalScoreLimitByInstanceId(
+                  this.jai,
+                )),
+              LguiUtil_1.LguiUtil.SetLocalTextNew(
+                this.GetText(8),
+                "TowerDefence_PintOnlyMore",
+                s,
+              ))
+          : LguiUtil_1.LguiUtil.SetLocalTextNew(
+              this.GetText(8),
+              i.SubInstanceTitle,
+            );
     } else {
       (s = ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetTitleConfig(
-        this.jsi,
+        this.jai,
       )),
         (i =
           (LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(3), s.CommonText),
@@ -251,9 +274,9 @@ class InstanceSeriesItem extends UiPanelBase_1.UiPanelBase {
         this.GetItem(1)?.SetUIActive(!0),
         this.SetTextureByPath(i, this.GetTexture(2)));
     }
-    (this.Xsi = this.Jsi(this.jsi)), this.Xsi && this.Qsi?.(), this.zsi(t);
+    (this.Xai = this.Jai(this.jai)), this.Xai && this.Qai?.(), this.zai(t);
   }
-  Jsi(i) {
+  Jai(i) {
     if (
       ActivityMowingController_1.ActivityMowingController.IsMowingInstanceDungeon(
         i,
@@ -262,7 +285,7 @@ class InstanceSeriesItem extends UiPanelBase_1.UiPanelBase {
       var t =
         ActivityMowingController_1.ActivityMowingController.GetMowingActivityData();
       if (!t) return !1;
-      this.Qsi = this.$si;
+      this.Qai = this.$ai;
       var s = t.GetActivityLevelUnlockState(i);
       return (
         s &&
@@ -280,19 +303,19 @@ class InstanceSeriesItem extends UiPanelBase_1.UiPanelBase {
     this.Zqe = i;
   }
   BindClickCallbackOnlyOneGrid(i) {
-    this.Hsi = i;
+    this.Hai = i;
   }
-  zsi(i) {
+  zai(i) {
     var t =
       !ModelManager_1.ModelManager.InstanceDungeonEntranceModel.CheckInstanceUnlock(
-        this.jsi,
+        this.jai,
       );
     this.GetItem(4).SetUIActive(!i),
       i &&
         (t
           ? (this.GetItem(7).SetUIActive(!0), this.GetItem(6).SetUIActive(!1))
           : ModelManager_1.ModelManager.ExchangeRewardModel.IsFinishInstance(
-                this.jsi,
+                this.jai,
               )
             ? (this.GetItem(7).SetUIActive(!1), this.GetItem(6).SetUIActive(!0))
             : (this.GetItem(7).SetUIActive(!1),
@@ -305,9 +328,9 @@ class InstanceItem extends UiPanelBase_1.UiPanelBase {
     super(),
       (this.ExtendToggle = void 0),
       (this.Zqe = void 0),
-      (this.Vsi = void 0),
+      (this.Vai = void 0),
       (this.NUe = 0),
-      (this.T7e = () => !this.Vsi || this.Vsi(this.NUe)),
+      (this.Lke = () => !this.Vai || this.Vai(this.NUe)),
       (this.OnClickExtendToggle = (i) => {
         1 === i && this.Zqe && this.Zqe(this.NUe, this.ExtendToggle, void 0);
       });
@@ -333,11 +356,11 @@ class InstanceItem extends UiPanelBase_1.UiPanelBase {
     (this.NUe = i),
       this.ExtendToggle.SetToggleStateForce(t ? 1 : 0),
       this.ExtendToggle.CanExecuteChange.Unbind(),
-      this.ExtendToggle.CanExecuteChange.Bind(this.T7e),
+      this.ExtendToggle.CanExecuteChange.Bind(this.Lke),
       t && this.Zqe && this.Zqe(this.NUe, this.ExtendToggle, void 0),
-      s && (this.zsi(), this.Zsi(), this.eai());
+      s && (this.zai(), this.Zai(), this.ehi());
   }
-  zsi() {
+  zai() {
     ModelManager_1.ModelManager.InstanceDungeonEntranceModel.CheckInstanceUnlock(
       this.NUe,
     )
@@ -348,7 +371,7 @@ class InstanceItem extends UiPanelBase_1.UiPanelBase {
         : (this.GetItem(3).SetUIActive(!1), this.GetItem(4).SetUIActive(!1))
       : (this.GetItem(3).SetUIActive(!0), this.GetItem(4).SetUIActive(!1));
   }
-  Zsi() {
+  Zai() {
     var s = ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(
         this.NUe,
       ),
@@ -376,7 +399,7 @@ class InstanceItem extends UiPanelBase_1.UiPanelBase {
         e,
       );
   }
-  eai() {
+  ehi() {
     var i = ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(
       this.NUe,
     ).DifficultyIcon;
@@ -386,7 +409,7 @@ class InstanceItem extends UiPanelBase_1.UiPanelBase {
     this.Zqe = i;
   }
   BindCanExecuteChange(i) {
-    this.Vsi = i;
+    this.Vai = i;
   }
 }
 exports.InstanceItem = InstanceItem;

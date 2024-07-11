@@ -11,28 +11,28 @@ class ChatRoom {
   constructor(t, e) {
     (this.ChatRoomType = 0),
       (this.ChatContentList = []),
-      (this.VMt = -1),
-      (this.HMt = !1),
+      (this.eSt = -1),
+      (this.tSt = !1),
       (this.Mne = 0),
       (this.EarliestHistoryContentUniqueId = ""),
-      (this.R2e = !1),
+      (this.jFe = !1),
       (this.LocalSaveMsgLimit = 0),
       (this.ChatCd = 0),
       (this.ChatRoomType = t),
       (this.Mne = e),
-      (this.R2e = !1);
+      (this.jFe = !1);
     t = ConfigManager_1.ConfigManager.ChatConfig.GetChatConfig(this.Mne);
     t &&
       ((this.LocalSaveMsgLimit = t.LocalSaveMsgLimit),
       (this.ChatCd = t.ChatCd));
   }
   Reset() {
-    (this.ChatContentList.length = 0), (this.VMt = -1), (this.R2e = !1);
+    (this.ChatContentList.length = 0), (this.eSt = -1), (this.jFe = !1);
   }
   Open() {
-    this.R2e ||
-      ((this.VMt = TimeUtil_1.TimeUtil.GetServerTime()),
-      (this.R2e = !0),
+    this.jFe ||
+      ((this.eSt = TimeUtil_1.TimeUtil.GetServerTime()),
+      (this.jFe = !0),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("Chat", 8, " 打开聊天室", [
           "uniqueId",
@@ -40,10 +40,10 @@ class ChatRoom {
         ]));
   }
   Close() {
-    this.R2e &&
+    this.jFe &&
       ((this.ChatContentList.length = 0),
-      (this.VMt = -1),
-      (this.R2e = !1),
+      (this.eSt = -1),
+      (this.jFe = !1),
       Log_1.Log.CheckInfo()) &&
       Log_1.Log.Info("Chat", 8, " 关闭聊天室", [
         "uniqueId",
@@ -51,13 +51,13 @@ class ChatRoom {
       ]);
   }
   GetIsOpen() {
-    return this.R2e;
+    return this.jFe;
   }
   SetIsShowRedDot(t) {
-    this.HMt = t;
+    this.tSt = t;
   }
   GetIsShowRedDot() {
-    return this.HMt;
+    return this.tSt;
   }
   GetConfigId() {
     return this.Mne;
@@ -75,10 +75,10 @@ class ChatRoom {
     return this.EarliestHistoryContentUniqueId;
   }
   GetCreateTimeStamp() {
-    return this.VMt;
+    return this.eSt;
   }
   ClearCreateTime() {
-    this.VMt = -1;
+    this.eSt = -1;
   }
   GetLastTimeStamp() {
     var t = this.ChatContentList.length - 1;
@@ -140,7 +140,7 @@ class ChatRoom {
         r,
         h,
         o,
-        Protocol_1.Aki.Protocol.FGs.Proto_None,
+        Protocol_1.Aki.Protocol.PFs.Proto_None,
         n,
         t,
         e,

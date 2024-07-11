@@ -6,7 +6,7 @@ const ModelManager_1 = require("../../../../../../Manager/ModelManager"),
 class CalabashCollectSort extends CommonSort_1.CommonSort {
   constructor() {
     super(...arguments),
-      (this.VLt = (e, t, r) => {
+      (this.KDt = (e, t, r) => {
         (e = e.DevelopRewardData.MonsterId),
           (e =
             ModelManager_1.ModelManager.PhantomBattleModel.GetMonsterRarity(e)),
@@ -15,16 +15,16 @@ class CalabashCollectSort extends CommonSort_1.CommonSort {
             ModelManager_1.ModelManager.PhantomBattleModel.GetMonsterRarity(t));
         return e !== t ? (e - t) * (r ? -1 : 1) : 0;
       }),
-      (this.jLt = (e, t, r) => {
+      (this.XDt = (e, t, r) => {
         (e = e.DevelopRewardData.SortId), (t = t.DevelopRewardData.SortId);
         return e !== t ? (e - t) * (r ? -1 : 1) : 0;
       }),
-      (this.WLt = (e, t, r) => {
+      (this.$Dt = (e, t, r) => {
         (e = e.DevelopRewardData.MonsterId),
           (t = t.DevelopRewardData.MonsterId);
         return e !== t ? (e - t) * (r ? -1 : 1) : 0;
       }),
-      (this.KLt = (e, t, r) => {
+      (this.YDt = (e, t, r) => {
         (e = e.DevelopRewardData.MonsterId),
           (t = t.DevelopRewardData.MonsterId),
           (e =
@@ -37,7 +37,7 @@ class CalabashCollectSort extends CommonSort_1.CommonSort {
             ));
         return e !== t ? (e - t) * (r ? 1 : -1) : 0;
       }),
-      (this.QLt = (e, t, r) => {
+      (this.JDt = (e, t, r) => {
         (e = e.DevelopRewardData.MonsterId),
           (t = t.DevelopRewardData.MonsterId),
           (e =
@@ -52,11 +52,11 @@ class CalabashCollectSort extends CommonSort_1.CommonSort {
       });
   }
   OnInitSortMap() {
-    this.SortMap.set(1, this.VLt),
-      this.SortMap.set(2, this.jLt),
-      this.SortMap.set(3, this.WLt),
-      this.SortMap.set(4, this.KLt),
-      this.SortMap.set(5, this.QLt);
+    this.SortMap.set(1, this.KDt),
+      this.SortMap.set(2, this.XDt),
+      this.SortMap.set(3, this.$Dt),
+      this.SortMap.set(4, this.YDt),
+      this.SortMap.set(5, this.JDt);
   }
 }
 exports.CalabashCollectSort = CalabashCollectSort;

@@ -29,31 +29,31 @@ const ActorSystem_1 = require("../../Core/Actor/ActorSystem"),
 let FightCameraDisplayComponent = class FightCameraDisplayComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments),
-      (this.bPr = void 0),
+      (this.uPr = void 0),
       (this.nye = () => {
         ModelManager_1.ModelManager.SeamlessTravelModel.IsSeamlessTravel
           ? CameraController_1.CameraController.ReturnLockOnCameraMode(0)
-          : ((this.bPr =
+          : ((this.uPr =
               CameraController_1.CameraController.SpawnCameraActor()),
             0 === CameraController_1.CameraController.Model.CameraMode &&
               CameraController_1.CameraController.SetViewTarget(
-                this.bPr,
+                this.uPr,
                 "FightCamera.OnWorldDone",
               ));
       }),
       (this.uMe = () => {
         ModelManager_1.ModelManager.SeamlessTravelModel.IsSeamlessTravel
           ? CameraController_1.CameraController.ReturnLockOnCameraMode(0)
-          : this.bPr &&
-            (ActorSystem_1.ActorSystem.Put(this.bPr), (this.bPr = void 0));
+          : this.uPr &&
+            (ActorSystem_1.ActorSystem.Put(this.uPr), (this.uPr = void 0));
       });
   }
   get CameraActor() {
-    return this.bPr;
+    return this.uPr;
   }
   OnInit() {
     return (
-      (this.bPr = CameraController_1.CameraController.SpawnCameraActor()),
+      (this.uPr = CameraController_1.CameraController.SpawnCameraActor()),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.WorldDone,
         this.nye,
@@ -67,8 +67,8 @@ let FightCameraDisplayComponent = class FightCameraDisplayComponent extends Enti
   }
   OnClear() {
     return (
-      this.bPr &&
-        (ActorSystem_1.ActorSystem.Put(this.bPr), (this.bPr = void 0)),
+      this.uPr &&
+        (ActorSystem_1.ActorSystem.Put(this.uPr), (this.uPr = void 0)),
       EventSystem_1.EventSystem.Has(
         EventDefine_1.EEventName.WorldDone,
         this.nye,
@@ -89,7 +89,7 @@ let FightCameraDisplayComponent = class FightCameraDisplayComponent extends Enti
     );
   }
   OnChangeTimeDilation(e) {
-    this.bPr?.IsValid() && (this.bPr.CustomTimeDilation = e);
+    this.uPr?.IsValid() && (this.uPr.CustomTimeDilation = e);
   }
 };
 (FightCameraDisplayComponent = __decorate(

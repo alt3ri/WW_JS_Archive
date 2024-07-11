@@ -2,7 +2,9 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RouletteMainView = void 0);
 const UE = require("ue"),
+  Info_1 = require("../../../../Core/Common/Info"),
   Log_1 = require("../../../../Core/Common/Log"),
+  CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
@@ -16,70 +18,64 @@ const UE = require("ue"),
 class RouletteMainView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
-      (this.oPi = 0),
-      (this.M0o = 0),
-      (this.v0o = 0),
-      (this.gfo = !1),
-      (this.E0o = void 0),
-      (this.ffo = void 0),
-      (this.pfo = void 0),
+      (this.ffo = 0),
+      (this.gfo = 0),
+      (this.mpo = !1),
       (this.vfo = void 0),
-      (this.X0o = () => {
+      (this.dpo = void 0),
+      (this.Cpo = void 0),
+      (this.gpo = void 0),
+      (this.Wfo = () => {
         this.CloseMe();
       }),
-      (this.Mfo = (t, e) => {
+      (this.fpo = (t, e) => {
         var i;
-        1 === this.oPi &&
+        Info_1.Info.IsInGamepad() &&
           1 === e &&
-          this.gfo &&
-          (([e, i] = this.S0o.GetCurrentIndexAndAngle()),
-          this.Sfo(),
-          this.Efo(),
-          this.S0o.Refresh(e, i),
-          this.yfo());
+          this.mpo &&
+          (([e, i] = this.pfo.GetCurrentIndexAndAngle()),
+          this.ppo(),
+          this.vpo(),
+          this.pfo.Refresh(e, i),
+          this.Mpo());
       }),
-      (this.dKe = (t, e, i) => {
-        var s = this.B0o();
-        this.oPi !== s &&
-          (Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info("Phantom", 38, "检测到轮盘输入变化,关闭自身", [
-              "新输入类型",
-              s,
-            ]),
-          this.X0o());
+      (this.Ffa = () => {
+        Log_1.Log.CheckInfo() &&
+          Log_1.Log.Info("Phantom", 38, "检测到轮盘输入变化,关闭自身", [
+            "新输入类型",
+            Info_1.Info.InputControllerType,
+          ]),
+          this.Wfo();
       }),
-      (this.Ifo = (t) => {
+      (this.Epo = (t) => {
         ModelManager_1.ModelManager.InputDistributeModel.IsTagMatchAnyCurrentInputTag(
           InputDistributeDefine_1.inputDistributeTagDefine.UiInputRoot
             .ShortcutKeyTag,
-        ) || this.X0o();
+        ) || this.Wfo();
       });
   }
-  get S0o() {
-    switch (this.M0o) {
+  get pfo() {
+    switch (this.ffo) {
       case 0:
         return (
-          this.pfo ||
-            ((this.pfo =
+          this.Cpo ||
+            ((this.Cpo =
               new RouletteComponentMain_1.RouletteComponentMainExplore()),
-            this.pfo.SetRootActor(this.ffo.GetOwner(), !0)),
-          this.pfo
+            this.Cpo.SetRootActor(this.dpo.GetOwner(), !0)),
+          this.Cpo
         );
       case 1:
         return (
-          this.vfo ||
-            ((this.vfo =
+          this.gpo ||
+            ((this.gpo =
               new RouletteComponentMain_1.RouletteComponentMainFunction()),
-            this.vfo.SetRootActor(this.ffo.GetOwner(), !0)),
-          this.vfo
+            this.gpo.SetRootActor(this.dpo.GetOwner(), !0)),
+          this.gpo
         );
     }
   }
   OnRegisterComponent() {
-    switch (
-      ((this.v0o = ModelManager_1.ModelManager.PlatformModel.OperationType),
-      this.v0o)
-    ) {
+    switch (((this.gfo = Info_1.Info.OperationType), this.gfo)) {
       case 2:
         this.ComponentRegisterInfos = [
           [0, UE.UIItem],
@@ -94,41 +90,39 @@ class RouletteMainView extends UiTickViewBase_1.UiTickViewBase {
     }
   }
   OnStart() {
-    (this.oPi = this.B0o()),
-      (this.M0o =
-        ModelManager_1.ModelManager.RouletteModel.CurrentRouletteType);
+    this.ffo = ModelManager_1.ModelManager.RouletteModel.CurrentRouletteType;
     var t = ModelManager_1.ModelManager.RouletteModel.IsExploreRouletteOpen(),
       e = ModelManager_1.ModelManager.RouletteModel.IsFunctionRouletteOpen();
-    switch (((this.gfo = t && e), (this.ffo = this.GetItem(0)), this.oPi)) {
-      case 1:
-        ((1 === this.M0o && !e && t) || (0 === this.M0o && e && !t)) &&
-          this.Sfo();
-        break;
-      case 0:
-      case 2:
-        1 === this.M0o && this.Sfo();
+    if (
+      ((this.mpo = t && e),
+      (this.dpo = this.GetItem(0)),
+      Info_1.Info.IsInGamepad()
+        ? ((1 === this.ffo && !e && t) || (0 === this.ffo && e && !t)) &&
+          this.ppo()
+        : 1 === this.ffo && this.ppo(),
+      2 === this.gfo)
+    ) {
+      const i = Info_1.Info.IsInGamepad();
+      e = this.mpo;
+      this.GetItem(1).SetUIActive(i && e), i && e && this.Mpo();
     }
-    if (2 === this.v0o) {
-      const s = 1 === this.oPi;
-      var i = this.gfo;
-      this.GetItem(1).SetUIActive(s && i), s && i && this.yfo();
-    }
-    this.Efo(),
-      (this.E0o = new RouletteInputManager_1.rouletteInputManager[this.oPi](
-        void 0,
-        void 0,
-        this.OpenParam,
-      )),
-      this.E0o.BindEvent(),
-      this.E0o.OnInit(),
-      (this.E0o.RouletteViewType = 1),
-      this.E0o.SetEndInputEvent(this.X0o),
-      this.Tfo(),
-      this.E0o.ActivateInput(!0);
-    const s = 1 === this.oPi;
-    InputManager_1.InputManager.SetShowCursor(!s, !1);
+    this.vpo();
+    t = CommonParamById_1.configCommonParamById.GetFloatConfig(
+      "Roulette_Main_Gamepad_DeadLimit",
+    );
+    (this.vfo = new RouletteInputManager_1.rouletteInputManager[
+      Info_1.Info.InputControllerMainType
+    ](void 0, void 0, this.OpenParam, t)),
+      this.vfo.BindEvent(),
+      this.vfo.OnInit(),
+      (this.vfo.RouletteViewType = 1),
+      this.vfo.SetEndInputEvent(this.Wfo),
+      this.Spo(),
+      this.vfo.ActivateInput(!0);
+    const i = Info_1.Info.IsInGamepad();
+    InputManager_1.InputManager.SetShowCursor(!i, !1);
   }
-  Tfo() {
+  Spo() {
     ModelManager_1.ModelManager.BattleUiModel.ChildViewData.SetChildrenVisible(
       10,
       [19],
@@ -140,16 +134,16 @@ class RouletteMainView extends UiTickViewBase_1.UiTickViewBase {
       );
   }
   OnBeforeDestroy() {
-    (this.ffo = void 0),
-      this.S0o && (this.Lfo(!1), this.S0o.Destroy()),
-      (this.pfo = void 0),
-      (this.vfo = void 0),
-      this.E0o && (this.E0o.Destroy(), (this.E0o = void 0));
+    (this.dpo = void 0),
+      this.pfo && (this.pfo.TryEmitCurrentGridSelectOn(), this.pfo.Destroy()),
+      (this.Cpo = void 0),
+      (this.gpo = void 0),
+      this.vfo && (this.vfo.Destroy(), (this.vfo = void 0));
   }
   OnAfterDestroy() {
-    this.Dfo();
+    this.Ipo();
   }
-  Dfo() {
+  Ipo() {
     ModelManager_1.ModelManager.BattleUiModel.ChildViewData.SetChildrenVisible(
       10,
       [19],
@@ -162,83 +156,63 @@ class RouletteMainView extends UiTickViewBase_1.UiTickViewBase {
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
-      EventDefine_1.EEventName.OnPlatformChanged,
-      this.dKe,
+      EventDefine_1.EEventName.InputControllerMainTypeChange,
+      this.Ffa,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnInputDistributeTagChanged,
-        this.Ifo,
+        this.Epo,
       ),
       InputDistributeController_1.InputDistributeController.BindAction(
         InputMappingsDefine_1.actionMappings.UI键盘E手柄RB,
-        this.Mfo,
+        this.fpo,
       );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
-      EventDefine_1.EEventName.OnPlatformChanged,
-      this.dKe,
+      EventDefine_1.EEventName.InputControllerMainTypeChange,
+      this.Ffa,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnInputDistributeTagChanged,
-        this.Ifo,
+        this.Epo,
       ),
       InputDistributeController_1.InputDistributeController.UnBindAction(
         InputMappingsDefine_1.actionMappings.UI键盘E手柄RB,
-        this.Mfo,
+        this.fpo,
       );
   }
   OnTick(t) {
     var e;
     super.OnTick(t),
       this.IsHideOrHiding ||
-        (([t, e] = this.E0o.Tick(t)), this.S0o.Refresh(t, e));
+        (([t, e] = this.vfo.Tick(t)), this.pfo.Refresh(t, e));
   }
-  Lfo(t) {
-    this.S0o.EmitCurrentGridSelectOn(t);
-  }
-  yfo() {
-    var t = 0 === this.M0o;
+  Mpo() {
+    var t = 0 === this.ffo;
     this.GetExtendToggle(2).SetToggleState(t ? 1 : 0),
       this.GetExtendToggle(3).SetToggleState(t ? 0 : 1);
   }
-  Efo() {
-    this.tfo(),
-      this.ifo(),
-      this.ofo(),
-      this.S0o.SetAllGridToggleSelfInteractive(!1);
+  vpo() {
+    this.zfo(),
+      this.Zfo(),
+      this.epo(),
+      this.pfo.SetAllGridToggleSelfInteractive(!1);
   }
-  ofo() {
-    this.S0o.RefreshRouletteType();
+  epo() {
+    this.pfo.RefreshRouletteType();
   }
-  ifo() {
-    this.S0o.RefreshRoulettePlatformType(this.v0o);
+  Zfo() {
+    this.pfo.RefreshRoulettePlatformType(this.gfo);
   }
-  tfo() {
-    this.S0o.RefreshRouletteInputType(this.oPi);
+  zfo() {
+    this.pfo.RefreshRouletteInputType();
   }
-  Sfo() {
-    var t,
-      e = 0 === this.M0o;
-    e &&
-      (t = this.S0o.GetCurrentGrid()?.Data) &&
-      0 !== t.Id &&
-      void 0 !== t.Id &&
-      this.Lfo(!0),
-      (this.M0o = e ? 1 : 0),
+  ppo() {
+    var t = 0 === this.ffo;
+    (this.ffo = t ? 1 : 0),
       (ModelManager_1.ModelManager.RouletteModel.CurrentRouletteType =
-        this.M0o);
-  }
-  B0o() {
-    let t = void 0;
-    return (
-      ModelManager_1.ModelManager.PlatformModel.IsGamepad()
-        ? (t = 1)
-        : ModelManager_1.ModelManager.PlatformModel.IsPc()
-          ? (t = 0)
-          : ModelManager_1.ModelManager.PlatformModel.IsMobile() && (t = 2),
-      t
-    );
+        this.ffo);
   }
 }
 exports.RouletteMainView = RouletteMainView;

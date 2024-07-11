@@ -9,13 +9,13 @@ const UE = require("ue"),
   EffectUtil_1 = require("../../../Utils/EffectUtil");
 class UiSceneActorEffectsManagementComponent {
   constructor() {
-    (this.Clo = new Array()),
-      (this.glo = new UE.Transform(
+    (this.u1o = new Array()),
+      (this.c1o = new UE.Transform(
         new UE.Rotator(0, 0, 0),
         new UE.Vector(0, 0, 0),
         new UE.Vector(1, 1, 1),
       )),
-      (this.flo = CharacterNameDefines_1.CharacterNameDefines.ROOT);
+      (this.m1o = CharacterNameDefines_1.CharacterNameDefines.ROOT);
   }
   PlayEffect(e, t, f, c, a) {
     e = EffectUtil_1.EffectUtil.GetEffectPath(e);
@@ -24,7 +24,7 @@ class UiSceneActorEffectsManagementComponent {
   PlayEffectByPath(e, t, f, c, a) {
     f = EffectSystem_1.EffectSystem.SpawnEffect(
       GlobalData_1.GlobalData.World,
-      f ?? this.glo,
+      f ?? this.c1o,
       e,
       "[RoleAnimStateEffectManager.PlayEffect]",
       new EffectContext_1.EffectContext(void 0, t),
@@ -32,10 +32,10 @@ class UiSceneActorEffectsManagementComponent {
       void 0,
       a,
     );
-    EffectSystem_1.EffectSystem.IsValid(f) && this.Clo.push(f);
+    EffectSystem_1.EffectSystem.IsValid(f) && this.u1o.push(f);
     let r = c;
     return (
-      (r = r || this.flo),
+      (r = r || this.m1o),
       EffectSystem_1.EffectSystem.IsValid(f) &&
         EffectSystem_1.EffectSystem.GetEffectActor(f)?.K2_AttachToComponent(
           t,
@@ -56,19 +56,19 @@ class UiSceneActorEffectsManagementComponent {
       }
   }
   AttachEffect(e) {
-    this.Clo.push(e);
+    this.u1o.push(e);
   }
   DestroyEffect() {
-    this.Clo &&
-      0 !== this.Clo.length &&
-      (this.Clo.forEach((e) => {
+    this.u1o &&
+      0 !== this.u1o.length &&
+      (this.u1o.forEach((e) => {
         EffectSystem_1.EffectSystem.StopEffectById(
           e,
           "[RoleAnimStateEffectManager.RecycleEffect]",
           !0,
         );
       }),
-      (this.Clo.length = 0));
+      (this.u1o.length = 0));
   }
   StopEffect(e) {
     EffectSystem_1.EffectSystem.StopEffectById(

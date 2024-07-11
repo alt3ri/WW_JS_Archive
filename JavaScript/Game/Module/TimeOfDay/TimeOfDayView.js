@@ -24,10 +24,10 @@ const ue_1 = require("ue"),
   TodTimeAdjustingAnimation_1 = require("./TodTimeAdjustingAnimation");
 class UiItemSwitcher {
   constructor(i, t) {
-    (this.NIo = t), (this.OIo = i);
+    (this.bTo = t), (this.qTo = i);
   }
   SwitchTo(i) {
-    this.NIo.SetUIActive(i), this.OIo.SetUIActive(!i);
+    this.bTo.SetUIActive(i), this.qTo.SetUIActive(!i);
   }
 }
 class TodTimeAdjustingClock {
@@ -141,84 +141,84 @@ class TodTimeAdjustingClock {
 class TimeOfDayView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
-      (this.kIo = Vector_1.Vector.Create()),
-      (this.FIo = Vector_1.Vector.Create()),
+      (this.GTo = Vector_1.Vector.Create()),
+      (this.NTo = Vector_1.Vector.Create()),
       (this.gme = Vector_1.Vector.Create()),
       (this.fz = Vector_1.Vector.Create()),
-      (this.VIo = Vector_1.Vector.Create()),
-      (this.HIo = Rotator_1.Rotator.Create()),
-      (this.jIo = Rotator_1.Rotator.Create(0, 0, 180)),
-      (this.WIo = new Map()),
-      (this.KIo = void 0),
-      (this.QIo = void 0),
-      (this.XIo = void 0),
-      (this.$Io = void 0),
-      (this.NFt = void 0),
-      (this.YIo = () => {
-        if (!this.QIo.IsAdjusting) {
+      (this.OTo = Vector_1.Vector.Create()),
+      (this.kTo = Rotator_1.Rotator.Create()),
+      (this.FTo = Rotator_1.Rotator.Create(0, 0, 180)),
+      (this.VTo = new Map()),
+      (this.HTo = void 0),
+      (this.jTo = void 0),
+      (this.WTo = void 0),
+      (this.KTo = void 0),
+      (this.O3t = void 0),
+      (this.QTo = () => {
+        if (!this.jTo.IsAdjusting) {
           var i =
             ModelManager_1.ModelManager.TimeOfDayModel.GameTime
               .HourMinuteString;
           this.GetText(0).SetText(i), this.GetText(4).SetText(i);
           const e =
             ModelManager_1.ModelManager.TimeOfDayModel.GameTime.DayState;
-          this.WIo.forEach((i, t) => {
+          this.VTo.forEach((i, t) => {
             i.SwitchTo(t === e);
           }),
-            (this.HIo.Yaw = this.JIo(
+            (this.kTo.Yaw = this.XTo(
               ModelManager_1.ModelManager.TimeOfDayModel.GameTime.Second,
             )),
-            this.GetTexture(16).SetUIRelativeRotation(this.HIo.ToUeRotator()),
-            this.GetItem(17).SetUIRelativeRotation(this.HIo.ToUeRotator()),
-            this.GetItem(25).SetUIRelativeRotation(this.HIo.ToUeRotator()),
-            this.GetItem(18).SetUIRelativeRotation(this.jIo.ToUeRotator()),
-            this.GetItem(19).SetUIRelativeRotation(this.jIo.ToUeRotator());
+            this.GetTexture(16).SetUIRelativeRotation(this.kTo.ToUeRotator()),
+            this.GetItem(17).SetUIRelativeRotation(this.kTo.ToUeRotator()),
+            this.GetItem(25).SetUIRelativeRotation(this.kTo.ToUeRotator()),
+            this.GetItem(18).SetUIRelativeRotation(this.FTo.ToUeRotator()),
+            this.GetItem(19).SetUIRelativeRotation(this.FTo.ToUeRotator());
         }
       }),
-      (this.zIo = (i) => {
-        this.QIo.IsAdjusting ||
-          (this.QIo.Start(),
-          this.kIo.DeepCopy(i.pointerPosition),
-          this.FIo.DeepCopy(i.pointerPosition),
-          (this.jIo.Yaw = this.JIo(this.QIo.StartSecond)),
-          this.GetItem(19).SetUIRelativeRotation(this.jIo.ToUeRotator()),
-          this.GetItem(18).SetUIRelativeRotation(this.jIo.ToUeRotator()),
+      (this.$To = (i) => {
+        this.jTo.IsAdjusting ||
+          (this.jTo.Start(),
+          this.GTo.DeepCopy(i.pointerPosition),
+          this.NTo.DeepCopy(i.pointerPosition),
+          (this.FTo.Yaw = this.XTo(this.jTo.StartSecond)),
+          this.GetItem(19).SetUIRelativeRotation(this.FTo.ToUeRotator()),
+          this.GetItem(18).SetUIRelativeRotation(this.FTo.ToUeRotator()),
           this.GetTexture(2).SetFillDirectionFlip(!1),
           this.GetTexture(3).SetFillDirectionFlip(!1));
       }),
-      (this.ZIo = (i) => {
+      (this.YTo = (i) => {
         var t, e;
-        this.FIo.IsZero() || this.kIo.IsZero()
-          ? (this.FIo.DeepCopy(i.pointerPosition),
-            this.kIo.DeepCopy(i.pointerPosition))
+        this.NTo.IsZero() || this.GTo.IsZero()
+          ? (this.NTo.DeepCopy(i.pointerPosition),
+            this.GTo.DeepCopy(i.pointerPosition))
           : ((i = Vector_1.Vector.Create(i.pointerPosition)),
-            (t = this.eTo(this.FIo, i)),
-            (e = this.tTo(this.FIo, i)),
-            (e = this.iTo(e)),
-            (e = this.QIo.AdjustToSecond(e, t))[0]
-              ? this.FIo.DeepCopy(i)
+            (t = this.JTo(this.NTo, i)),
+            (e = this.zTo(this.NTo, i)),
+            (e = this.ZTo(e)),
+            (e = this.jTo.AdjustToSecond(e, t))[0]
+              ? this.NTo.DeepCopy(i)
               : e[1] &&
-                (this.QIo.AdjustToSecond(e[1], t), this.FIo.DeepCopy(this.kIo)),
-            this.oTo());
+                (this.jTo.AdjustToSecond(e[1], t), this.NTo.DeepCopy(this.GTo)),
+            this.eLo());
       }),
-      (this.rTo = (i) => {
-        this.FIo.DeepCopy(Vector_1.Vector.ZeroVectorProxy),
-          this.kIo.DeepCopy(Vector_1.Vector.ZeroVectorProxy);
+      (this.tLo = (i) => {
+        this.NTo.DeepCopy(Vector_1.Vector.ZeroVectorProxy),
+          this.GTo.DeepCopy(Vector_1.Vector.ZeroVectorProxy);
       }),
-      (this.nTo = (i, t) => {
+      (this.iLo = (i, t) => {
         t &&
-          (this.kIo.DeepCopy(Vector_1.Vector.ZeroVectorProxy),
-          this.FIo.DeepCopy(Vector_1.Vector.ZeroVectorProxy),
+          (this.GTo.DeepCopy(Vector_1.Vector.ZeroVectorProxy),
+          this.NTo.DeepCopy(Vector_1.Vector.ZeroVectorProxy),
           (t = ue_1.LGUIBPLibrary.GetUIItemPositionInViewPort(
             GlobalData_1.GlobalData.World,
             this.GetItem(17),
           )),
-          (this.KIo = Vector_1.Vector.Create(t.X, t.Y, 0)));
+          (this.HTo = Vector_1.Vector.Create(t.X, t.Y, 0)));
       }),
-      (this.Lli = () => {
+      (this.L1i = () => {
         TimeOfDayController_1.TimeOfDayController.AdjustTime(
-          this.QIo.ToSecond,
-          Protocol_1.Aki.Protocol.pOs.Proto_PlayerOperate,
+          this.jTo.ToSecond,
+          Protocol_1.Aki.Protocol.h4s.Proto_PlayerOperate,
         ),
           TimeOfDayController_1.TimeOfDayController.PauseTime(),
           UiLayer_1.UiLayer.SetShowNormalMaskLayer(!0),
@@ -236,7 +236,7 @@ class TimeOfDayView extends UiTickViewBase_1.UiTickViewBase {
             "TimeCameraBlendDataName",
           ),
           t =
-            ((this.NFt =
+            ((this.O3t =
               UiCameraAnimationManager_1.UiCameraAnimationManager.PlayCameraAnimationFromCurrent(
                 i.toString(),
                 t.toString(),
@@ -244,39 +244,39 @@ class TimeOfDayView extends UiTickViewBase_1.UiTickViewBase {
             ConfigManager_1.ConfigManager.UiCameraAnimationConfig.GetUiCameraAnimationConfig(
               i.toString(),
             ));
-        this.sTo(),
-          (this.$Io = TimerSystem_1.TimerSystem.Delay(() => {
-            this.aTo(), this.XIo.Play(this.QIo.StartSecond, this.QIo.ToSecond);
+        this.oLo(),
+          (this.KTo = TimerSystem_1.TimerSystem.Delay(() => {
+            this.rLo(), this.WTo.Play(this.jTo.StartSecond, this.jTo.ToSecond);
           }, CommonDefine_1.MILLIONSECOND_PER_SECOND * t.BlendInTime));
       }),
-      (this.xhi = () => {
+      (this.xli = () => {
         this.CloseMe();
       }),
-      (this.aTo = () => {
-        (this.jIo.Yaw = this.JIo(this.QIo.ToSecond)),
+      (this.rLo = () => {
+        (this.FTo.Yaw = this.XTo(this.jTo.ToSecond)),
           this.GetTexture(2).SetFillDirectionFlip(!0),
           this.GetTexture(3).SetFillDirectionFlip(!0),
-          this.GetItem(18).SetUIRelativeRotation(this.jIo.ToUeRotator()),
-          this.GetItem(19).SetUIRelativeRotation(this.jIo.ToUeRotator()),
+          this.GetItem(18).SetUIRelativeRotation(this.FTo.ToUeRotator()),
+          this.GetItem(19).SetUIRelativeRotation(this.FTo.ToUeRotator()),
           this.GetItem(23).SetUIActive(!1),
           this.GetItem(24).SetUIActive(!1);
       }),
-      (this.hTo = (i) => {
-        this.QIo.AdjustStartSecond(i);
+      (this.nLo = (i) => {
+        this.jTo.AdjustStartSecond(i);
         var t,
-          e = this.QIo.StartSecondOneDay;
-        this.QIo.IsAdjustingMoreThanOneDay
+          e = this.jTo.StartSecondOneDay;
+        this.jTo.IsAdjustingMoreThanOneDay
           ? (this.GetTexture(2).SetFillAmount(1),
-            (t = this.QIo.IsAdjustingToMaxLimit ? 1 : this.QIo.DeltaDayOneDay),
+            (t = this.jTo.IsAdjustingToMaxLimit ? 1 : this.jTo.DeltaDayOneDay),
             this.GetTexture(3).SetFillAmount(t))
-          : (this.GetTexture(2).SetFillAmount(this.QIo.DeltaDayOneDay),
+          : (this.GetTexture(2).SetFillAmount(this.jTo.DeltaDayOneDay),
             this.GetTexture(3).SetFillAmount(0));
         const s = TimeOfDayModel_1.TodDayTime.ConvertToDayState(e);
-        this.WIo.forEach((i, t) => {
+        this.VTo.forEach((i, t) => {
           i.SwitchTo(t === s);
         }),
-          (this.HIo.Yaw = this.JIo(e)),
-          this.GetTexture(16).SetUIRelativeRotation(this.HIo.ToUeRotator()),
+          (this.kTo.Yaw = this.XTo(e)),
+          this.GetTexture(16).SetUIRelativeRotation(this.kTo.ToUeRotator()),
           this.GetText(0).SetText(
             TimeOfDayModel_1.TodDayTime.ConvertToHourMinuteString(e),
           ),
@@ -284,18 +284,18 @@ class TimeOfDayView extends UiTickViewBase_1.UiTickViewBase {
             TimeOfDayModel_1.TodDayTime.ConvertToOneDaySecond(i),
           );
       }),
-      (this.lTo = () => {
+      (this.sLo = () => {
         UiLayer_1.UiLayer.SetShowNormalMaskLayer(!1);
         var i = CommonParamById_1.configCommonParamById.GetIntConfig(
           "TimeCameraBlendDataName",
         );
         UiCameraAnimationManager_1.UiCameraAnimationManager.PlayCameraAnimationFromCurrent(
-          this.NFt.GetHandleName(),
+          this.O3t.GetHandleName(),
           i.toString(),
         ),
           TimeOfDayController_1.TimeOfDayController.ResumeTimeScale(),
-          this.QIo.Reset(),
-          this.O8e();
+          this.jTo.Reset(),
+          this.Z9e();
       });
   }
   OnRegisterComponent() {
@@ -328,53 +328,53 @@ class TimeOfDayView extends UiTickViewBase_1.UiTickViewBase {
       [25, ue_1.UIItem],
     ]),
       (this.BtnBindInfo = [
-        [1, this.Lli],
-        [15, this.xhi],
+        [1, this.L1i],
+        [15, this.xli],
       ]);
   }
   OnStart() {
-    this.WIo.set(0, new UiItemSwitcher(this.GetItem(6), this.GetItem(7))),
-      this.WIo.set(1, new UiItemSwitcher(this.GetItem(8), this.GetItem(9))),
-      this.WIo.set(2, new UiItemSwitcher(this.GetItem(10), this.GetItem(11))),
-      this.WIo.set(3, new UiItemSwitcher(this.GetItem(12), this.GetItem(13)));
+    this.VTo.set(0, new UiItemSwitcher(this.GetItem(6), this.GetItem(7))),
+      this.VTo.set(1, new UiItemSwitcher(this.GetItem(8), this.GetItem(9))),
+      this.VTo.set(2, new UiItemSwitcher(this.GetItem(10), this.GetItem(11))),
+      this.VTo.set(3, new UiItemSwitcher(this.GetItem(12), this.GetItem(13)));
     var i = ue_1.LGUIBPLibrary.GetUIItemPositionInViewPort(
       GlobalData_1.GlobalData.World,
       this.GetItem(17),
     );
-    (this.KIo = Vector_1.Vector.Create(i.X, i.Y, 0)),
-      (this.QIo = new TodTimeAdjustingClock()),
-      (this.XIo = new TodTimeAdjustingAnimation_1.TodTimeAdjustingAnimation(
+    (this.HTo = Vector_1.Vector.Create(i.X, i.Y, 0)),
+      (this.jTo = new TodTimeAdjustingClock()),
+      (this.WTo = new TodTimeAdjustingAnimation_1.TodTimeAdjustingAnimation(
         ConfigManager_1.ConfigManager.TimeOfDayConfig.GetMaxV(),
         ConfigManager_1.ConfigManager.TimeOfDayConfig.GetA(),
-        this.hTo,
-        this.lTo,
+        this.nLo,
+        this.sLo,
       )),
-      this.O8e(),
-      this.YIo();
+      this.Z9e(),
+      this.QTo();
   }
   OnBeforeDestroy() {
-    this.QIo.Reset(), this.XIo.Stop(), this.sTo();
+    this.jTo.Reset(), this.WTo.Stop(), this.oLo();
   }
   OnTick(i) {
-    this.XIo?.Tick(i);
+    this.WTo?.Tick(i);
   }
   OnAddEventListener() {
     var i = this.GetDraggable(14);
     i.OnPointerBeginDragCallBack.Bind((i) => {
-      this.zIo(i);
+      this.$To(i);
     }),
       i.OnPointerDragCallBack.Bind((i) => {
-        this.ZIo(i);
+        this.YTo(i);
       }),
       i.OnPointerEndDragCallBack.Bind((i) => {
-        this.rTo(i);
+        this.tLo(i);
       }),
       i.OnUIDimensionsChangedCallBack.Bind((i, t) => {
-        this.nTo(i, t);
+        this.iLo(i, t);
       }),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.TodTimeChange,
-        this.YIo,
+        this.QTo,
       );
   }
   OnRemoveEventListener() {
@@ -385,51 +385,51 @@ class TimeOfDayView extends UiTickViewBase_1.UiTickViewBase {
       i.OnUIDimensionsChangedCallBack.Unbind(),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.TodTimeChange,
-        this.YIo,
+        this.QTo,
       );
   }
-  sTo() {
-    TimerSystem_1.TimerSystem.Has(this.$Io) &&
-      TimerSystem_1.TimerSystem.Remove(this.$Io),
-      (this.$Io = void 0);
+  oLo() {
+    TimerSystem_1.TimerSystem.Has(this.KTo) &&
+      TimerSystem_1.TimerSystem.Remove(this.KTo),
+      (this.KTo = void 0);
   }
-  O8e() {
+  Z9e() {
     this.GetTexture(2).SetFillAmount(0),
       this.GetTexture(3).SetFillAmount(0),
       this.GetItem(18).SetUIActive(!0),
       this.GetItem(19).SetUIActive(!0),
       this.GetItem(23).SetUIActive(!0),
       this.GetItem(24).SetUIActive(!0),
-      this._To(!1),
-      this.GetText(5).ShowTextNew(this.QIo.DayTextId);
+      this.aLo(!1),
+      this.GetText(5).ShowTextNew(this.jTo.DayTextId);
   }
-  oTo() {
+  eLo() {
     var i;
-    this.QIo.IsAdjustingMoreThanOneDay
+    this.jTo.IsAdjustingMoreThanOneDay
       ? (this.GetTexture(2).SetFillAmount(1),
-        (i = this.QIo.IsAdjustingToMaxLimit ? 1 : this.QIo.DeltaDayOneDay),
+        (i = this.jTo.IsAdjustingToMaxLimit ? 1 : this.jTo.DeltaDayOneDay),
         this.GetTexture(3).SetFillAmount(i))
-      : (this.GetTexture(2).SetFillAmount(this.QIo.DeltaDayOneDay),
+      : (this.GetTexture(2).SetFillAmount(this.jTo.DeltaDayOneDay),
         this.GetTexture(3).SetFillAmount(0)),
-      this.GetText(5).ShowTextNew(this.QIo.DayTextId),
-      this._To(this.QIo.IsAdjustingMoreThanMinLimit),
-      (this.HIo.Yaw = this.JIo(this.QIo.ToSecondOneDay)),
-      this.GetItem(17).SetUIRelativeRotation(this.HIo.ToUeRotator()),
-      this.GetItem(25).SetUIRelativeRotation(this.HIo.ToUeRotator()),
+      this.GetText(5).ShowTextNew(this.jTo.DayTextId),
+      this.aLo(this.jTo.IsAdjustingMoreThanMinLimit),
+      (this.kTo.Yaw = this.XTo(this.jTo.ToSecondOneDay)),
+      this.GetItem(17).SetUIRelativeRotation(this.kTo.ToUeRotator()),
+      this.GetItem(25).SetUIRelativeRotation(this.kTo.ToUeRotator()),
       this.GetText(4).SetText(
         TimeOfDayModel_1.TodDayTime.ConvertToHourMinuteString(
-          this.QIo.ToSecondOneDay,
+          this.jTo.ToSecondOneDay,
         ),
       );
   }
-  _To(i) {
+  aLo(i) {
     this.GetInteractionGroup(22).SetInteractable(i);
     i = i ? "TimeOfDayConfirmTextOn" : "TimeOfDayConfirmTextOff";
     this.GetText(21).ShowTextNew(
       ConfigManager_1.ConfigManager.TextConfig.GetTextContentIdById(i),
     );
   }
-  JIo(i) {
+  XTo(i) {
     return (
       -(
         TimeOfDayModel_1.TodDayTime.ConvertToOneDaySecond(i) /
@@ -437,24 +437,24 @@ class TimeOfDayView extends UiTickViewBase_1.UiTickViewBase {
       ) * TimeOfDayDefine_1.TOD_CIRCLE_ANGLE
     );
   }
-  iTo(i) {
+  ZTo(i) {
     return (
       (i / TimeOfDayDefine_1.TOD_CIRCLE_ANGLE) *
       TimeOfDayDefine_1.TOD_SECOND_PER_DAY
     );
   }
-  tTo(i, t) {
-    i.Subtraction(this.KIo, this.gme), t.Subtraction(this.KIo, this.fz);
+  zTo(i, t) {
+    i.Subtraction(this.HTo, this.gme), t.Subtraction(this.HTo, this.fz);
     t = this.gme.CosineAngle2D(this.fz);
     let e = Math.acos(t) * MathUtils_1.MathUtils.RadToDeg;
     return (e = i.X < 0 ? TimeOfDayDefine_1.TOD_CIRCLE_ANGLE - e : e);
   }
-  eTo(i, t) {
+  JTo(i, t) {
     return (
-      i.Subtraction(this.KIo, this.gme),
-      t.Subtraction(this.KIo, this.fz),
-      Vector_1.Vector.CrossProduct(this.gme, this.fz, this.VIo),
-      0 < this.VIo.Z
+      i.Subtraction(this.HTo, this.gme),
+      t.Subtraction(this.HTo, this.fz),
+      Vector_1.Vector.CrossProduct(this.gme, this.fz, this.OTo),
+      0 < this.OTo.Z
     );
   }
 }

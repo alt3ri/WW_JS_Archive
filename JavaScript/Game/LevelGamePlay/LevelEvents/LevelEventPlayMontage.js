@@ -9,8 +9,10 @@ const UE = require("ue"),
   ObjectUtils_1 = require("../../../Core/Utils/ObjectUtils"),
   StringUtils_1 = require("../../../Core/Utils/StringUtils"),
   ModelManager_1 = require("../../Manager/ModelManager"),
+  WaitEntityTask_1 = require("../../World/Define/WaitEntityTask"),
   LevelGeneralBase_1 = require("../LevelGeneralBase"),
-  DEFAULT_FINISHED_TIME = 6e4;
+  DEFAULT_FINISHED_TIME = 6e4,
+  DEFAULT_WAIT_ENTITY_TIMEOUT = 1e4;
 class LevelEventPlayMontage extends LevelGeneralBase_1.LevelEventBase {
   constructor() {
     super(...arguments),
@@ -19,6 +21,7 @@ class LevelEventPlayMontage extends LevelGeneralBase_1.LevelEventBase {
       (this.E0 = 0),
       (this.sDe = void 0),
       (this.gLe = void 0),
+      (this.$ca = !1),
       (this.Kue = (e, t) => {
         this.Cfe = Time_1.Time.WorldTime;
       });
@@ -42,7 +45,9 @@ class LevelEventPlayMontage extends LevelGeneralBase_1.LevelEventBase {
           ),
           this.FinishExecute(!1);
       else {
-        if (((this.E0 = e.EntityId), (this.gLe = e), 1 === t.Type)) {
+        if (
+          ((this.E0 = e.EntityId), (this.gLe = e), !this.E0 && 1 === t.Type)
+        ) {
           e = EntitySystem_1.EntitySystem.Get(t.EntityId ?? 0)
             ?.GetComponent(1)
             ?.CreatureData.GetPbDataId();
@@ -59,7 +64,41 @@ class LevelEventPlayMontage extends LevelGeneralBase_1.LevelEventBase {
             );
           this.E0 = e;
         }
-        this.CreateWaitEntityTask(this.E0);
+        this.E0
+          ? ((this.sDe =
+              ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(
+                this.E0,
+              )),
+            this.sDe?.Entity?.IsInit
+              ? this.Xca()
+              : ((this.$ca = !0),
+                WaitEntityTask_1.WaitEntityTask.CreateWithPbDataId(
+                  this.E0,
+                  (e) => {
+                    e
+                      ? this.Xca()
+                      : (Log_1.Log.CheckError() &&
+                          Log_1.Log.Error(
+                            "Event",
+                            51,
+                            "[LevelEventPlayMontage] 等待实体加载超时",
+                            ["PbDataId", this.E0],
+                            ["Timeout", DEFAULT_WAIT_ENTITY_TIMEOUT],
+                          ),
+                        this.FinishExecute(!1));
+                  },
+                  !1,
+                  DEFAULT_WAIT_ENTITY_TIMEOUT,
+                  !1,
+                )))
+          : (Log_1.Log.CheckError() &&
+              Log_1.Log.Error(
+                "LevelEvent",
+                51,
+                "[LevelEventPlayMontage] 无法获取执行Montage的实体",
+                ["PbDataId", this.E0],
+              ),
+            this.FinishExecute(!1));
       }
     else
       Log_1.Log.CheckError() &&
@@ -70,13 +109,14 @@ class LevelEventPlayMontage extends LevelGeneralBase_1.LevelEventBase {
         ),
         this.FinishExecute(!1);
   }
-  ExecuteWhenEntitiesReady() {
+  Xca() {
     var e;
-    (this.sDe = ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(
-      this.gLe.EntityId,
-    )),
+    (this.$ca = !1),
+      (this.sDe = ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(
+        this.E0,
+      )),
       this.sDe?.Valid
-        ? this.sDe.Entity.GetComponent(38)?.IsAiDriver
+        ? this.sDe.Entity.GetComponent(39)?.IsAiDriver
           ? ((e = this.sDe.Entity.GetComponent(1)),
             Log_1.Log.CheckError() &&
               Log_1.Log.Error(
@@ -87,7 +127,7 @@ class LevelEventPlayMontage extends LevelGeneralBase_1.LevelEventBase {
                 ["Name", e.Owner.GetName()],
               ),
             this.FinishExecute(!0))
-          : ((this.oRe = this.sDe.Entity.GetComponent(35)),
+          : ((this.oRe = this.sDe.Entity.GetComponent(36)),
             ObjectUtils_1.ObjectUtils.IsValid(this.oRe?.MainAnimInstance)
               ? ((this.Cfe =
                   (this.gLe.Duration ?? DEFAULT_FINISHED_TIME) +
@@ -122,19 +162,17 @@ class LevelEventPlayMontage extends LevelGeneralBase_1.LevelEventBase {
                   ),
                 this.FinishExecute(!1)))
         : (Log_1.Log.CheckError() &&
-            Log_1.Log.Error(
-              "LevelEvent",
-              51,
-              "播放蒙太奇的Entity还未创建，请检查是否使用当前实体驱动其他实体播放蒙太奇",
-              ["InteractEntity", this.E0],
-              ["PlayMontageEntity", this.gLe.EntityId],
-            ),
+            Log_1.Log.Error("LevelEvent", 51, "播放蒙太奇时找不到Entity", [
+              "PbDataId",
+              this.E0,
+            ]),
           this.FinishExecute(!1));
   }
   OnTick(e) {
-    this.Cfe < Time_1.Time.WorldTime &&
-      (this.oRe && this.oRe.RemoveOnMontageEnded(this.Kue),
-      this.FinishExecute(!0));
+    this.$ca ||
+      (this.Cfe < Time_1.Time.WorldTime &&
+        (this.oRe && this.oRe.RemoveOnMontageEnded(this.Kue),
+        this.FinishExecute(!0)));
   }
   OnReset() {
     this.Cfe = 0;

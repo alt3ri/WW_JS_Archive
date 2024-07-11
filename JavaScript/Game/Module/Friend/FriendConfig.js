@@ -10,7 +10,7 @@ const CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParam
 class FriendConfig extends ConfigBase_1.ConfigBase {
   constructor() {
     super(...arguments),
-      (this.DVt = (e, r) => {
+      (this.D6t = (e, r) => {
         (e = PersonalTipsById_1.configPersonalTipsById.GetConfig(e)),
           (r = PersonalTipsById_1.configPersonalTipsById.GetConfig(r));
         return e.Sort - r.Sort;
@@ -53,7 +53,7 @@ class FriendConfig extends ConfigBase_1.ConfigBase {
       e.forEach((e) => {
         r.push(e.Id);
       }),
-      r.sort(this.DVt),
+      r.sort(this.D6t),
       r
     );
   }

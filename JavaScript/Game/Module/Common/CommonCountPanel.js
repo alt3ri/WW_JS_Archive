@@ -10,30 +10,30 @@ const UE = require("ue"),
 class CommonItemCountPanel extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this._It = ""),
-      (this.uIt = void 0),
-      (this.cIt = void 0),
-      (this.EPe = void 0),
-      (this.lut = (t) => {
+      (this.fTt = ""),
+      (this.pTt = void 0),
+      (this.vTt = void 0),
+      (this.SPe = void 0),
+      (this.Tct = (t) => {
         "Close" === t && this.SetActive(!1);
       }),
-      (this.mIt = () => {
+      (this.m2e = () => {
         this.PlayCloseSequence();
       }),
-      (this.dIt = () => {
-        this.cIt?.(parseInt(this.t6)), this.PlayCloseSequence();
+      (this.Mke = () => {
+        this.vTt?.(parseInt(this.t6)), this.PlayCloseSequence();
       }),
-      (this.CIt = () => {
+      (this.MTt = () => {
         this.t6 = this.t6.substr(0, this.t6.length - 1);
       });
   }
   get t6() {
-    return this._It;
+    return this.fTt;
   }
   set t6(t) {
-    (this._It = t),
-      this.GetText(0).SetText(this._It),
-      this.GetInteractionGroup(4).SetInteractable(0 < this._It.length);
+    (this.fTt = t),
+      this.GetText(0).SetText(this.fTt),
+      this.GetInteractionGroup(4).SetInteractable(0 < this.fTt.length);
   }
   OnRegisterComponent() {
     (this.ComponentRegisterInfos = [
@@ -55,27 +55,27 @@ class CommonItemCountPanel extends UiPanelBase_1.UiPanelBase {
       [15, UE.UIText],
     ]),
       (this.BtnBindInfo = [
-        [1, this.mIt],
-        [3, this.dIt],
-        [2, this.CIt],
+        [1, this.m2e],
+        [3, this.Mke],
+        [2, this.MTt],
       ]);
   }
   OnStart() {
-    this.uIt = [];
+    this.pTt = [];
     for (let t = 0; t <= KEYCOUNT; t++) {
       var e = this.GetButton(5 + t);
-      this.uIt.push(e);
+      this.pTt.push(e);
     }
     for (let t = 0; t <= KEYCOUNT; t++)
-      this.uIt[t].OnClickCallBack.Bind(() => {
+      this.pTt[t].OnClickCallBack.Bind(() => {
         this.t6.length < MAX_DIGIT ? (this.t6 += t) : (this.t6 = MAX_NUMBER);
       });
-    (this.EPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem)),
-      this.EPe.BindSequenceCloseEvent(this.lut);
+    (this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem)),
+      this.SPe.BindSequenceCloseEvent(this.Tct);
   }
   OnBeforeDestroy() {
-    this.EPe.Clear(), (this.EPe = void 0);
-    for (const t of this.uIt) t.OnClickCallBack.Unbind();
+    this.SPe.Clear(), (this.SPe = void 0);
+    for (const t of this.pTt) t.OnClickCallBack.Unbind();
   }
   UpdateView(t) {
     (this.t6 = t.toString()),
@@ -87,14 +87,14 @@ class CommonItemCountPanel extends UiPanelBase_1.UiPanelBase {
   }
   PlayStartSequence(t) {
     this.SetActive(!0),
-      this.EPe.PlayLevelSequenceByName("Start"),
+      this.SPe.PlayLevelSequenceByName("Start"),
       this.UpdateView(t);
   }
   PlayCloseSequence() {
-    this.EPe.PlayLevelSequenceByName("Close");
+    this.SPe.PlayLevelSequenceByName("Close");
   }
   SetConfirmFunction(t) {
-    this.cIt = t;
+    this.vTt = t;
   }
 }
 exports.CommonItemCountPanel = CommonItemCountPanel;

@@ -7,13 +7,13 @@ const MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTex
   ServerMarkItem_1 = require("./ServerMarkItem");
 class TreasureBoxMarkItem extends ServerMarkItem_1.ServerMarkItem {
   constructor(e, r, t, i) {
-    super(e, r, t, i), (this.DetectorId = 0), (this.NLi = !1);
+    super(e, r, t, i), (this.DetectorId = 0), (this.NDi = !1);
   }
   get MarkType() {
     return 18;
   }
   get IsNewCustomMarkItem() {
-    return this.NLi;
+    return this.NDi;
   }
   Initialize() {
     super.Initialize();
@@ -35,7 +35,7 @@ class TreasureBoxMarkItem extends ServerMarkItem_1.ServerMarkItem {
     this.OnAfterSetConfigId(e);
   }
   SetIsNew(e) {
-    this.NLi = e;
+    this.NDi = e;
   }
   GetTitleText() {
     var e = ConfigManager_1.ConfigManager.MapConfig.GetTreasureBoxMarkConfig(

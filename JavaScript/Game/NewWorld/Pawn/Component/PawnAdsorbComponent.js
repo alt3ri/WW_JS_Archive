@@ -25,10 +25,10 @@ const Log_1 = require("../../../../Core/Common/Log"),
   Time_1 = require("../../../../Core/Common/Time"),
   Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
   EntityComponent_1 = require("../../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../../Core/Entity/RegisterComponent"),
   Vector_1 = require("../../../../Core/Utils/Math/Vector"),
   MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
   IComponent_1 = require("../../../../UniverseEditor/Interface/IComponent"),
-  RegisterComponent_1 = require("../../../../Core/Entity/RegisterComponent"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
   TimeUtil_1 = require("../../../Common/TimeUtil"),
@@ -47,53 +47,53 @@ let PawnAdsorbComponent =
     constructor() {
       super(...arguments),
         (this.Hte = void 0),
-        (this.Jsn = void 0),
-        (this.zsn = void 0),
-        (this.Zsn = -0),
-        (this.ean = -0),
-        (this.ian = -0),
-        (this.oan = void 0),
-        (this.nCt = void 0),
-        (this.ran = !1),
-        (this.nan = !1),
-        (this.san = !1),
-        (this.aan = void 0),
-        (this.U7o = void 0),
-        (this.han = void 0),
-        (this.lan = -0),
-        (this._an = -0),
-        (this.uan = !1),
-        (this.can = -0),
-        (this.Izr = void 0),
+        (this.xsn = void 0),
+        (this.wsn = void 0),
+        (this.Bsn = -0),
+        (this.bsn = -0),
+        (this.qsn = -0),
+        (this.Gsn = void 0),
+        (this.fgt = void 0),
+        (this.Nsn = !1),
+        (this.Osn = !1),
+        (this.ksn = !1),
+        (this.Fsn = void 0),
+        (this.LHo = void 0),
+        (this.Vsn = void 0),
+        (this.Hsn = -0),
+        (this.jsn = -0),
+        (this.Wsn = !1),
+        (this.Ksn = -0),
+        (this.rzr = void 0),
         (this.IsInSensoryRange = !1),
-        (this.RHt = !1),
+        (this.Rjt = !1),
         (this.Mne = 0),
-        (this.man = void 0),
-        (this.dan = 0),
-        (this.Can = !1),
-        (this.gan = !1),
-        (this.fan = () => {
+        (this.Qsn = void 0),
+        (this.Xsn = 0),
+        (this.$sn = !1),
+        (this.Ysn = !1),
+        (this.Jsn = () => {
           this.IsInSensoryRange = !0;
         }),
-        (this.Ozr = () => {
+        (this.vzr = () => {
           this.IsInSensoryRange = !1;
         }),
         (this.gIe = (t, i) => {
-          !this.ran &&
-            this.zsn &&
+          !this.Nsn &&
+            this.wsn &&
             (t.includes(-662723379)
-              ? ((this.RHt = !0), this.xk())
-              : i.includes(-662723379) && ((this.RHt = !1), this.xk()));
+              ? ((this.Rjt = !0), this.xk())
+              : i.includes(-662723379) && ((this.Rjt = !1), this.xk()));
         });
     }
     OnInitData(t) {
       t = t.GetParam(PawnAdsorbComponent_1)[0];
       return (
-        (this.Zsn = t.Range),
-        (this.ean = t.StartVelocity),
-        (this.ian = t.Acceleration),
-        (this.Izr = this.Entity.GetComponent(106)),
-        this.Izr.SetLogicRange(SENSORY_RANGE),
+        (this.Bsn = t.Range),
+        (this.bsn = t.StartVelocity),
+        (this.qsn = t.Acceleration),
+        (this.rzr = this.Entity.GetComponent(108)),
+        this.rzr.SetLogicRange(SENSORY_RANGE),
         this.Ore(),
         !0
       );
@@ -109,7 +109,7 @@ let PawnAdsorbComponent =
             ),
           !1
         );
-      if (((this.Jsn = this.Entity.GetComponent(103)), !this.Jsn))
+      if (((this.xsn = this.Entity.GetComponent(105)), !this.xsn))
         return (
           Log_1.Log.CheckError() &&
             Log_1.Log.Error(
@@ -136,9 +136,9 @@ let PawnAdsorbComponent =
       this.Mne = t.GetPbDataId();
       t = t.GetBaseInfo();
       if (
-        ((this.man = t.OnlineInteractType ?? 0),
-        (this.zsn = this.Entity.GetComponent(177)),
-        !this.zsn)
+        ((this.Qsn = t.OnlineInteractType ?? 0),
+        (this.wsn = this.Entity.GetComponent(180)),
+        !this.wsn)
       )
         return (
           Log_1.Log.CheckError() &&
@@ -150,59 +150,59 @@ let PawnAdsorbComponent =
             ),
           !1
         );
-      this.zsn.HasTag(-662723379) && (this.RHt = !0);
-      t = ((this.can = 0), IComponent_1.getComponent)(
+      this.wsn.HasTag(-662723379) && (this.Rjt = !0);
+      t = ((this.Ksn = 0), IComponent_1.getComponent)(
         i.ComponentsData,
         "InteractComponent",
       );
       return (
-        t && (this.can = t.Range * t.Range),
-        (this.nCt = Vector_1.Vector.Create()),
-        (this.aan = Vector_1.Vector.Create()),
-        (this.U7o = Vector_1.Vector.Create()),
-        (this.han = Vector_1.Vector.Create()),
-        (this.lan = 0),
-        !(this._an = 0)
+        t && (this.Ksn = t.Range * t.Range),
+        (this.fgt = Vector_1.Vector.Create()),
+        (this.Fsn = Vector_1.Vector.Create()),
+        (this.LHo = Vector_1.Vector.Create()),
+        (this.Vsn = Vector_1.Vector.Create()),
+        (this.Hsn = 0),
+        !(this.jsn = 0)
       );
     }
     OnTick(t) {
-      this.RHt ||
-        this.san ||
-        (this.van() &&
-          this.Man() &&
-          (this.ran || this.San(),
-          this.Ean(t),
+      this.Rjt ||
+        this.ksn ||
+        (this.zsn() &&
+          this.Zsn() &&
+          (this.Nsn || this.ean(),
+          this.ian(t),
           Vector_1.Vector.DistSquared(
             this.Hte.ActorLocationProxy,
-            this.oan.ActorLocationProxy,
-          ) < this.can) &&
-          (this.yan(), this.Ian(), this.Tan(), this.Jsn.ForceUpdate()));
+            this.Gsn.ActorLocationProxy,
+          ) < this.Ksn) &&
+          (this.oan(), this.ran(), this.nan(), this.xsn.ForceUpdate()));
     }
-    Tan() {
-      var t = Protocol_1.Aki.Protocol.els.create(),
-        i = ((t.m4n = new Array()), Protocol_1.Aki.Protocol.hOs.create()),
+    nan() {
+      var t = Protocol_1.Aki.Protocol.Qus.create(),
+        i = ((t.Q8n = new Array()), Protocol_1.Aki.Protocol.JFs.create()),
         e =
-          ((i.$kn = Protocol_1.Aki.Protocol.VBs.create()),
-          (i.D3n = Protocol_1.Aki.Protocol.iws.create()),
+          ((i.y5n = Protocol_1.Aki.Protocol.Pks.create()),
+          (i.a8n = Protocol_1.Aki.Protocol.S2s.create()),
           this.Hte.ActorLocationProxy),
         s = this.Hte.ActorRotationProxy;
-      (i.$kn.X = e.X),
-        (i.$kn.Y = e.Y),
-        (i.$kn.Z = e.Z),
-        (i.D3n.Pitch = s.Pitch),
-        (i.D3n.Roll = s.Roll),
-        (i.D3n.Yaw = s.Yaw),
-        (i.h4n = Time_1.Time.NowSeconds),
-        t.m4n.push(i),
-        CombatMessage_1.CombatNet.Send(26540, this.Entity, t);
+      (i.y5n.X = e.X),
+        (i.y5n.Y = e.Y),
+        (i.y5n.Z = e.Z),
+        (i.a8n.Pitch = s.Pitch),
+        (i.a8n.Roll = s.Roll),
+        (i.a8n.Yaw = s.Yaw),
+        (i.V8n = Time_1.Time.NowSeconds),
+        t.Q8n.push(i),
+        CombatMessage_1.CombatNet.Send(4439, this.Entity, t);
     }
     OnEnd() {
       return this.kre(), !0;
     }
-    van() {
+    zsn() {
       var t, i;
       return (
-        !(!this.ran && !this.Can) ||
+        !(!this.Nsn && !this.$sn) ||
         (!(
           !this.Hte ||
           !Global_1.Global.BaseCharacter ||
@@ -211,25 +211,25 @@ let PawnAdsorbComponent =
           ((i = this.Hte.ActorLocationProxy),
           (t = t.ActorLocationProxy),
           (i = Vector_1.Vector.DistSquared(i, t)),
-          (this.uan = i <= this.Zsn * this.Zsn),
-          this.uan))
+          (this.Wsn = i <= this.Bsn * this.Bsn),
+          this.Wsn))
       );
     }
-    Lan() {
+    san() {
       return (
         ModelManager_1.ModelManager.PlayerInfoModel.GetId() ===
         ModelManager_1.ModelManager.CreatureModel.GetWorldOwner()
       );
     }
-    Man() {
+    Zsn() {
       if (!ModelManager_1.ModelManager.GameModeModel.IsMulti) return !0;
-      switch (this.man) {
+      switch (this.Qsn) {
         case 2:
           return !1;
         case 0:
-          return this.Lan();
+          return this.san();
         case 1:
-          return this.Dan(), this.gan;
+          return this.aan(), this.Ysn;
         default:
           return (
             Log_1.Log.CheckError() &&
@@ -242,90 +242,90 @@ let PawnAdsorbComponent =
           );
       }
     }
-    Dan() {
+    aan() {
       var t = TimeUtil_1.TimeUtil.GetServerTimeStamp();
-      t - this.dan > CONDITION_CHECK_TIME &&
-        ((this.Can = !0),
+      t - this.Xsn > CONDITION_CHECK_TIME &&
+        ((this.$sn = !0),
         LevelGamePlayController_1.LevelGamePlayController.EntityAdsorbRequest(
           this.Mne,
           (t) => {
             t &&
-              (t.lkn === Protocol_1.Aki.Protocol.lkn.Sys && (this.gan = !0),
-              (this.Can = !1));
+              (t.O4n === Protocol_1.Aki.Protocol.O4n.NRs && (this.Ysn = !0),
+              (this.$sn = !1));
           },
         ),
-        (this.dan = t));
+        (this.Xsn = t));
     }
-    San() {
-      if (!this.ran && !this.san) {
+    ean() {
+      if (!this.Nsn && !this.ksn) {
         if (!Global_1.Global.BaseCharacter) return !1;
         if (
-          ((this.oan = Global_1.Global.BaseCharacter.CharacterActorComponent),
-          !this.Hte.Owner.IsValid() || !this.oan.Owner.IsValid())
+          ((this.Gsn = Global_1.Global.BaseCharacter.CharacterActorComponent),
+          !this.Hte.Owner.IsValid() || !this.Gsn.Owner.IsValid())
         )
           return !1;
         var t = this.Hte.ActorLocationProxy;
-        this.oan.ActorLocationProxy.Subtraction(t, this.nCt),
-          this.nCt.Normalize(NORMALIZE),
-          (this.han = this.nCt.MultiplyEqual(this.ean)),
-          (this.lan = this.ean),
-          (this._an = 0),
-          (this.ran = !0);
+        this.Gsn.ActorLocationProxy.Subtraction(t, this.fgt),
+          this.fgt.Normalize(NORMALIZE),
+          (this.Vsn = this.fgt.MultiplyEqual(this.bsn)),
+          (this.Hsn = this.bsn),
+          (this.jsn = 0),
+          (this.Nsn = !0);
       }
       return !0;
     }
-    Ean(t) {
+    ian(t) {
       var i;
-      this.ran &&
-        !this.san &&
+      this.Nsn &&
+        !this.ksn &&
         Global_1.Global.BaseCharacter &&
-        ((this.oan = Global_1.Global.BaseCharacter.CharacterActorComponent),
+        ((this.Gsn = Global_1.Global.BaseCharacter.CharacterActorComponent),
         this.Hte.Owner.IsValid()) &&
-        this.oan.Owner.IsValid() &&
+        this.Gsn.Owner.IsValid() &&
         ((i = this.Hte.ActorLocationProxy),
-        this.oan.ActorLocationProxy.Subtraction(i, this.nCt),
-        this.nCt.Normalize(NORMALIZE),
+        this.Gsn.ActorLocationProxy.Subtraction(i, this.fgt),
+        this.fgt.Normalize(NORMALIZE),
         (i = t * MathUtils_1.MathUtils.MillisecondToSecond),
-        (this._an = this.ian * i),
-        (this.lan += this._an),
-        this.han.DeepCopy(this.nCt),
-        this.lan > MAX_SPEED
-          ? ((this.lan = MAX_SPEED), this.han.MultiplyEqual(MAX_SPEED))
-          : this.han.MultiplyEqual(this.lan),
-        this.han.Multiply(i, this.aan),
-        (t = this.Entity.GetComponent(36))
-          ? t.MoveCharacter(this.aan, i, "Pawn吸附更新")
+        (this.jsn = this.qsn * i),
+        (this.Hsn += this.jsn),
+        this.Vsn.DeepCopy(this.fgt),
+        this.Hsn > MAX_SPEED
+          ? ((this.Hsn = MAX_SPEED), this.Vsn.MultiplyEqual(MAX_SPEED))
+          : this.Vsn.MultiplyEqual(this.Hsn),
+        this.Vsn.Multiply(i, this.Fsn),
+        (t = this.Entity.GetComponent(37))
+          ? t.MoveCharacter(this.Fsn, i, "Pawn吸附更新")
           : this.Hte.AddActorWorldOffset(
-              this.aan.ToUeVector(),
+              this.Fsn.ToUeVector(),
               "Pawn吸附更新",
               !0,
             ));
     }
-    Ian() {
-      this.nan || (this.zsn?.AddTag(1286772724), (this.nan = !0));
+    ran() {
+      this.Osn || (this.wsn?.AddTag(1286772724), (this.Osn = !0));
     }
-    yan() {
+    oan() {
       Global_1.Global.BaseCharacter &&
-        ((this.oan = Global_1.Global.BaseCharacter.CharacterActorComponent),
+        ((this.Gsn = Global_1.Global.BaseCharacter.CharacterActorComponent),
         this.Hte.Owner.IsValid()) &&
-        this.oan.Owner.IsValid() &&
-        (this.Hte.Owner.K2_AttachToActor(this.oan.Owner, void 0, 2, 1, 1, !1),
-        this.nCt.DeepCopy(Vector_1.Vector.ZeroVectorProxy),
-        this.han.DeepCopy(Vector_1.Vector.ZeroVectorProxy),
-        (this.lan = 0),
-        (this._an = 0),
-        (this.san = !0));
+        this.Gsn.Owner.IsValid() &&
+        (this.Hte.Owner.K2_AttachToActor(this.Gsn.Owner, void 0, 2, 1, 1, !1),
+        this.fgt.DeepCopy(Vector_1.Vector.ZeroVectorProxy),
+        this.Vsn.DeepCopy(Vector_1.Vector.ZeroVectorProxy),
+        (this.Hsn = 0),
+        (this.jsn = 0),
+        (this.ksn = !0));
     }
     Ore() {
       EventSystem_1.EventSystem.AddWithTarget(
         this.Entity,
         EventDefine_1.EEventName.EnterLogicRange,
-        this.fan,
+        this.Jsn,
       ),
         EventSystem_1.EventSystem.AddWithTarget(
           this.Entity,
           EventDefine_1.EEventName.LeaveLogicRange,
-          this.Ozr,
+          this.vzr,
         ),
         EventSystem_1.EventSystem.AddWithTarget(
           this.Entity,
@@ -337,12 +337,12 @@ let PawnAdsorbComponent =
       EventSystem_1.EventSystem.RemoveWithTarget(
         this.Entity,
         EventDefine_1.EEventName.EnterLogicRange,
-        this.fan,
+        this.Jsn,
       ),
         EventSystem_1.EventSystem.RemoveWithTarget(
           this.Entity,
           EventDefine_1.EEventName.LeaveLogicRange,
-          this.Ozr,
+          this.vzr,
         ),
         EventSystem_1.EventSystem.RemoveWithTarget(
           this.Entity,
@@ -351,17 +351,17 @@ let PawnAdsorbComponent =
         );
     }
     xk() {
-      this.nCt.DeepCopy(Vector_1.Vector.ZeroVectorProxy),
-        this.aan.DeepCopy(Vector_1.Vector.ZeroVectorProxy),
-        this.U7o.DeepCopy(Vector_1.Vector.ZeroVectorProxy),
-        this.han.DeepCopy(Vector_1.Vector.ZeroVectorProxy),
-        (this.lan = 0),
-        (this._an = 0);
+      this.fgt.DeepCopy(Vector_1.Vector.ZeroVectorProxy),
+        this.Fsn.DeepCopy(Vector_1.Vector.ZeroVectorProxy),
+        this.LHo.DeepCopy(Vector_1.Vector.ZeroVectorProxy),
+        this.Vsn.DeepCopy(Vector_1.Vector.ZeroVectorProxy),
+        (this.Hsn = 0),
+        (this.jsn = 0);
     }
   });
 (PawnAdsorbComponent = PawnAdsorbComponent_1 =
   __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(100)],
+    [(0, RegisterComponent_1.RegisterComponent)(102)],
     PawnAdsorbComponent,
   )),
   (exports.PawnAdsorbComponent = PawnAdsorbComponent);

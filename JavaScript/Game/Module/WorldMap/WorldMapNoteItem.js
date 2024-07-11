@@ -7,10 +7,10 @@ const UE = require("ue"),
 class WorldMapNoteItem extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
-      (this.hdt = 0),
-      (this.wIt = void 0),
-      (this.Kyt = () => {
-        this.wIt(this.hdt);
+      (this.MCt = 0),
+      (this.NTt = void 0),
+      (this.eTt = () => {
+        this.NTt(this.MCt);
       }),
       e.SetUIActive(!0),
       this.CreateThenShowByActor(e.GetOwner());
@@ -21,7 +21,7 @@ class WorldMapNoteItem extends UiPanelBase_1.UiPanelBase {
       [1, UE.UIText],
       [2, UE.UIButtonComponent],
     ]),
-      (this.BtnBindInfo = [[2, this.Kyt]]);
+      (this.BtnBindInfo = [[2, this.eTt]]);
   }
   OnStart() {}
   OnBeforeDestroy() {}
@@ -30,7 +30,7 @@ class WorldMapNoteItem extends UiPanelBase_1.UiPanelBase {
       e = MapNoteById_1.configMapNoteById.GetConfig(e),
       i = (this.SetSpriteByPath(e.Icon, i, !0), this.GetText(1)),
       e = e.Desc;
-    i.ShowTextNew(e), (this.hdt = s), (this.wIt = t);
+    i.ShowTextNew(e), (this.MCt = s), (this.NTt = t);
   }
 }
 exports.WorldMapNoteItem = WorldMapNoteItem;

@@ -12,53 +12,53 @@ class PersonalRoleShowView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
       (this.xqe = void 0),
-      (this.n4t = void 0),
-      (this.s5i = 0),
-      (this.R5i = 0),
-      (this.U5i = 0),
-      (this.A5i = void 0),
-      (this.nNt = () => {
+      (this.Wke = void 0),
+      (this.nVi = 0),
+      (this.DVi = 0),
+      (this.RVi = 0),
+      (this.UVi = void 0),
+      (this.sOt = () => {
         var i = ModelManager_1.ModelManager.PersonalModel.GetRoleShowList(),
           t = i.length,
           s = [];
-        if (0 === this.U5i) {
+        if (0 === this.RVi) {
           for (let e = 0; e < t; e++) {
             var r = i[e];
-            s.push(r.l3n);
+            s.push(r.O6n);
           }
-          s.push(this.s5i);
-        } else if (2 === this.U5i)
+          s.push(this.nVi);
+        } else if (2 === this.RVi)
           for (let e = 0; e < t; e++) {
             var h = i[e];
-            h.l3n !== this.s5i && s.push(h.l3n);
+            h.O6n !== this.nVi && s.push(h.O6n);
           }
-        else if (1 === this.U5i)
+        else if (1 === this.RVi)
           for (let e = 0; e < t; e++) {
             var o = i[e];
-            o.l3n === this.s5i
-              ? s.push(this.R5i)
-              : o.l3n === this.R5i
-                ? s.push(this.s5i)
-                : s.push(o.l3n);
+            o.O6n === this.nVi
+              ? s.push(this.DVi)
+              : o.O6n === this.DVi
+                ? s.push(this.nVi)
+                : s.push(o.O6n);
           }
         PersonalController_1.PersonalController.SendRoleShowListUpdateRequest(
           s,
         ),
           this.CloseMe();
       }),
-      (this.Hke = (e, i, t) => {
+      (this.nFe = (e, i, t) => {
         var s = new PersonalRoleMediumItemGrid_1.PersonalRoleMediumItemGrid();
         return (
           s.Initialize(i.GetOwner()),
           s.Refresh(e, !1, t),
-          s.BindOnExtendToggleStateChanged(this.a5i),
+          s.BindOnExtendToggleStateChanged(this.sVi),
           { Key: t, Value: s }
         );
       }),
-      (this.a5i = (e) => {
-        this.A5i?.SetSelected(!1),
-          (this.A5i = e.MediumItemGrid),
-          this.A5i?.SetSelected(!0);
+      (this.sVi = (e) => {
+        this.UVi?.SetSelected(!1),
+          (this.UVi = e.MediumItemGrid),
+          this.UVi?.SetSelected(!0);
         e = e.Data;
         this.Refresh(e);
       });
@@ -69,34 +69,34 @@ class PersonalRoleShowView extends UiViewBase_1.UiViewBase {
       [1, UE.UIButtonComponent],
       [2, UE.UIText],
     ]),
-      (this.BtnBindInfo = [[1, this.nNt]]);
+      (this.BtnBindInfo = [[1, this.sOt]]);
   }
   OnStart() {
-    (this.R5i = this.OpenParam),
+    (this.DVi = this.OpenParam),
       (this.xqe = new GenericScrollView_1.GenericScrollView(
         this.GetScrollViewWithScrollbar(0),
-        this.Hke,
+        this.nFe,
       ));
   }
   Refresh(e) {
-    this.s5i = e;
-    var e = this.R5i === this.s5i,
+    this.nVi = e;
+    var e = this.DVi === this.nVi,
       i = ModelManager_1.ModelManager.PersonalModel.GetRoleShowList(),
       t =
         (this.GetButton(1).RootUIComp.SetUIActive(!0),
-        this.IsRoleInShow(this.s5i));
+        this.IsRoleInShow(this.nVi));
     1 === i.length && t
       ? this.GetButton(1).RootUIComp.SetUIActive(!1)
-      : void 0 === this.R5i
+      : void 0 === this.DVi
         ? t
-          ? this.omi(2)
-          : this.omi(0)
+          ? this.odi(2)
+          : this.odi(0)
         : e
-          ? this.omi(2)
-          : this.omi(1);
+          ? this.odi(2)
+          : this.odi(1);
   }
-  omi(e) {
-    this.U5i = e;
+  odi(e) {
+    this.RVi = e;
     var i = this.GetText(2);
     switch (e) {
       case 0:
@@ -114,20 +114,20 @@ class PersonalRoleShowView extends UiViewBase_1.UiViewBase {
       t = i.length;
     let s = !1;
     for (let e = 0; e < t; e++)
-      if (i[e].l3n === this.s5i) {
+      if (i[e].O6n === this.nVi) {
         s = !0;
         break;
       }
     return s;
   }
   OnAfterShow() {
-    (this.n4t = ModelManager_1.ModelManager.RoleModel.GetRoleIdList()),
-      0 < this.n4t.length &&
-        (this.xqe.RefreshByData(this.n4t),
-        (this.s5i = this.n4t[0]),
-        (this.A5i = this.xqe.GetScrollItemList()[0]),
-        this.A5i.SetSelected(!0),
-        this.Refresh(this.s5i));
+    (this.Wke = ModelManager_1.ModelManager.RoleModel.GetRoleIdList()),
+      0 < this.Wke.length &&
+        (this.xqe.RefreshByData(this.Wke),
+        (this.nVi = this.Wke[0]),
+        (this.UVi = this.xqe.GetScrollItemList()[0]),
+        this.UVi.SetSelected(!0),
+        this.Refresh(this.nVi));
   }
   OnBeforeDestroy() {
     this.xqe && (this.xqe.ClearChildren(), (this.xqe = void 0));

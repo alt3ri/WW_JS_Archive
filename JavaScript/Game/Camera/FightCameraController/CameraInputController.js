@@ -3,11 +3,11 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CameraInputController = void 0);
 const cpp_1 = require("cpp"),
   UE = require("ue"),
+  Info_1 = require("../../../Core/Common/Info"),
   Log_1 = require("../../../Core/Common/Log"),
   QueryTypeDefine_1 = require("../../../Core/Define/QueryTypeDefine"),
   FNameUtil_1 = require("../../../Core/Utils/FNameUtil"),
   Quat_1 = require("../../../Core/Utils/Math/Quat"),
-  Transform_1 = require("../../../Core/Utils/Math/Transform"),
   Vector_1 = require("../../../Core/Utils/Math/Vector"),
   MathUtils_1 = require("../../../Core/Utils/MathUtils"),
   TraceElementCommon_1 = require("../../../Core/Utils/TraceElementCommon"),
@@ -26,7 +26,10 @@ const cpp_1 = require("cpp"),
   SHORT_AIM_START_TIME = 0.4,
   AIM_RANGE_TOLERANT = 1.05,
   MIN_PHYSICAL_DENSITY_DPI = 160,
-  DEFAULT_DPI = 180;
+  DEFAULT_DPI = 180,
+  MAX_PITCH_DELTA_TIME = 0.033,
+  NORMALIZED_FRAME_RATE = 30,
+  MAX_SMOOTH_DELTA_TIME = 0.3;
 class CameraInputController extends CameraControllerBase_1.CameraControllerBase {
   constructor() {
     super(...arguments),
@@ -37,6 +40,10 @@ class CameraInputController extends CameraControllerBase_1.CameraControllerBase 
       (this.SmoothFactorMax = 0),
       (this.SmoothFactorRange = 0),
       (this.SmoothFactorCurve = void 0),
+      (this.GamePadSmoothFactorMin = 0),
+      (this.GamePadSmoothFactorMax = 0),
+      (this.GamePadSmoothFactorRange = 0),
+      (this.GamePadSmoothFactorCurve = void 0),
       (this.SensitivityYawMin = 0),
       (this.SensitivityYawMax = 0),
       (this.SensitivityYawRange = 0),
@@ -76,19 +83,20 @@ class CameraInputController extends CameraControllerBase_1.CameraControllerBase 
       (this.z_e = Vector_1.Vector.Create()),
       (this.az = Quat_1.Quat.Create()),
       (this.KJ = Quat_1.Quat.Create()),
-      (this.Z_e = Transform_1.Transform.Create()),
       (this.eue = []),
       (this.tue = new Array()),
-      (this.ybn = 0),
-      (this.Ibn = 0),
-      (this.Tbn = 0),
-      (this.Lbn = 0),
-      (this.Dbn = 0),
-      (this.Abn = 0),
-      (this.Ubn = 0);
+      (this.EOn = 0),
+      (this.yOn = 0),
+      (this.IOn = 0),
+      (this.TOn = 0),
+      (this.LOn = 0),
+      (this.DOn = 0),
+      (this.UOn = 0);
   }
   get IsAiming() {
-    return this.Camera.ContainsTag(428837378);
+    return (
+      this.Camera.ContainsTag(428837378) || this.Camera.ContainsTag(-1058855731)
+    );
   }
   Name() {
     return "InputController";
@@ -101,6 +109,10 @@ class CameraInputController extends CameraControllerBase_1.CameraControllerBase 
       this.SetConfigMap(3, "SmoothFactorMax"),
       this.SetConfigMap(4, "SmoothFactorRange"),
       this.SetCurveConfigMap(4, "SmoothFactorCurve"),
+      this.SetConfigMap(21, "GamePadSmoothFactorMin"),
+      this.SetConfigMap(22, "GamePadSmoothFactorMax"),
+      this.SetConfigMap(23, "GamePadSmoothFactorRange"),
+      this.SetCurveConfigMap(23, "GamePadSmoothFactorCurve"),
       this.SetConfigMap(7, "SensitivityYawMin"),
       this.SetConfigMap(8, "SensitivityYawMax"),
       this.SetConfigMap(9, "SensitivityYawRange"),
@@ -147,7 +159,7 @@ class CameraInputController extends CameraControllerBase_1.CameraControllerBase 
         this.uoe,
         ColorUtils_1.ColorUtils.LinearRed,
       ),
-      ModelManager_1.ModelManager.PlatformModel.IsMobile()
+      Info_1.Info.IsMobilePlatform()
         ? ((t = (i = cpp_1.KuroScreen.GetPhysicalScreenResolution()).X),
           (i = i.Y),
           (s =
@@ -156,44 +168,45 @@ class CameraInputController extends CameraControllerBase_1.CameraControllerBase 
           (h =
             GameQualitySettingsManager_1.GameQualitySettingsManager.Get().GetDefaultScreenResolution()
               .Y),
-          (this.ybn = Math.max(s, h)),
-          (this.Ibn = Math.min(s, h)),
-          (this.Tbn = Math.max(t, i)),
-          (this.Lbn = Math.min(t, i)),
-          1 === ModelManager_1.ModelManager.PlatformModel.PlatformType
-            ? (this.Dbn = Math.max(
+          (this.EOn = Math.max(s, h)),
+          (this.yOn = Math.min(s, h)),
+          (this.IOn = Math.max(t, i)),
+          (this.TOn = Math.min(t, i)),
+          1 === Info_1.Info.PlatformType
+            ? (this.LOn = Math.max(
                 cpp_1.KuroScreen.ComputePhysicalScreenDensity(),
                 MIN_PHYSICAL_DENSITY_DPI,
               ))
-            : (this.Dbn = Math.max(
+            : (this.LOn = Math.max(
                 cpp_1.KuroScreen.GetPhysicalScreenDensityDPI(),
                 MIN_PHYSICAL_DENSITY_DPI,
               )),
-          (MathUtils_1.MathUtils.IsNearlyEqual(this.Tbn, 0) ||
-            MathUtils_1.MathUtils.IsNearlyEqual(this.Lbn, 0)) &&
-            ((this.Tbn = this.ybn), (this.Lbn = this.Ibn)),
-          (this.Abn = this.Tbn / (this.ybn * this.Dbn)),
-          (this.Ubn = this.Lbn / (this.Ibn * this.Dbn)),
+          (MathUtils_1.MathUtils.IsNearlyEqual(this.IOn, 0) ||
+            MathUtils_1.MathUtils.IsNearlyEqual(this.TOn, 0)) &&
+            ((this.IOn = this.EOn), (this.TOn = this.yOn)),
+          (this.DOn = this.IOn / (this.EOn * this.LOn)),
+          (this.UOn = this.TOn / (this.yOn * this.LOn)),
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "Camera",
               58,
               "CameraInputController",
-              ["GameScreenWidth", this.ybn],
-              ["GameScreenHeight", this.Ibn],
-              ["PhysicalScreenWidth", this.Tbn],
-              ["PhysicalScreenHeight", this.Lbn],
-              ["PhysicalDensityDpi", this.Dbn],
-              ["MobileDensityYawScale", this.Abn],
-              ["MobileDensityPitchScale", this.Ubn],
+              ["GameScreenWidth", this.EOn],
+              ["GameScreenHeight", this.yOn],
+              ["PhysicalScreenWidth", this.IOn],
+              ["PhysicalScreenHeight", this.TOn],
+              ["PhysicalDensityDpi", this.LOn],
+              ["MobileDensityYawScale", this.DOn],
+              ["MobileDensityPitchScale", this.UOn],
             ))
-        : ((this.Abn = 1 / DEFAULT_DPI), (this.Ubn = 1 / DEFAULT_DPI));
+        : ((this.DOn = 1 / DEFAULT_DPI), (this.UOn = 1 / DEFAULT_DPI));
   }
   OnDisable() {
-    this.K_e = 0;
+    (this.K_e = 0), (this.W_e = 0), (this.j_e = 0);
   }
   UpdateInternal(t) {
-    this.Camera.ContainsAnyTag([-1150819426, 1260125908]) || this.iue(t),
+    (this.Camera.TargetEntity && this.Camera.IsTargetLocationValid) ||
+      this.iue(t),
       this.oue(t),
       this.rue();
   }
@@ -226,13 +239,13 @@ class CameraInputController extends CameraControllerBase_1.CameraControllerBase 
         if (this.N_e.Active) {
           var a = e.GetControlRotation(),
             r = this.Camera.CurrentCamera.ArmRotation;
-          let [t, i] = h.Entity.GetComponent(52).GetCameraInput();
-          ModelManager_1.ModelManager.PlatformModel.IsGamepad()
+          let [t, i] = h.Entity.GetComponent(53).GetCameraInput();
+          Info_1.Info.IsInGamepad()
             ? ((t *= this.GamepadInputRate), (i *= this.GamepadInputRate))
-            : ModelManager_1.ModelManager.PlatformModel.IsPc()
+            : Info_1.Info.IsInKeyBoard()
               ? ((t /= DEFAULT_FPS), (i /= DEFAULT_FPS))
-              : ModelManager_1.ModelManager.PlatformModel.IsMobile() &&
-                ((t *= DEFAULT_DPI * this.Abn), (i *= DEFAULT_DPI * this.Ubn));
+              : Info_1.Info.IsInTouch() &&
+                ((t *= DEFAULT_DPI * this.DOn), (i *= DEFAULT_DPI * this.UOn));
           var h = ModelManager_1.ModelManager.CameraModel,
             h =
               (this.IsAiming
@@ -257,20 +270,14 @@ class CameraInputController extends CameraControllerBase_1.CameraControllerBase 
                   this.SensitivityPitchCurve.GetCurrentValue(
                     h / this.SensitivityPitchRange,
                   ),
-                ) * s),
+                ) * Math.min(s, MAX_PITCH_DELTA_TIME)),
               (this.X_e = !1),
               this.nue(s, !(!t && !i))),
             h =
               (_ &&
                 ((t *= 1 - this.AimAssistDamping),
                 (i *= 1 - this.AimAssistDamping)),
-              MathUtils_1.MathUtils.Lerp(
-                this.SmoothFactorMin,
-                this.SmoothFactorMax,
-                this.SmoothFactorCurve.GetCurrentValue(
-                  h / this.SmoothFactorRange,
-                ),
-              ));
+              this.fga(h, s));
           (this.j_e = this.j_e * h + t * (1 - h)),
             (this.W_e = this.W_e * h + i * (1 - h)),
             (this.j_e = MathUtils_1.MathUtils.Clamp(
@@ -303,7 +310,7 @@ class CameraInputController extends CameraControllerBase_1.CameraControllerBase 
                 MathUtils_1.MathUtils.KindaSmallNumber,
               )) ||
               ((this.Camera.DesiredCamera.ArmRotation.Yaw = a.Yaw),
-              (this.Camera.IsModifiedArmRotation = !0),
+              (this.Camera.IsModifiedArmRotationYaw = !0),
               (this.Camera.FadeArmRotationYaw = !1)),
             0 !== this.k_e.size ||
               MathUtils_1.MathUtils.IsNearlyZero(
@@ -317,7 +324,7 @@ class CameraInputController extends CameraControllerBase_1.CameraControllerBase 
                 MathUtils_1.MathUtils.KindaSmallNumber,
               )) ||
               ((this.Camera.DesiredCamera.ArmRotation.Pitch = a.Pitch),
-              (this.Camera.IsModifiedArmRotation = !0),
+              (this.Camera.IsModifiedArmRotationPitch = !0),
               (this.Camera.FadeArmRotationPitch = !1)),
             _ && this.sue(s);
         } else this.K_e = 0;
@@ -331,7 +338,7 @@ class CameraInputController extends CameraControllerBase_1.CameraControllerBase 
       (!this.N_e.Active ||
         0 < this.F_e.size ||
         this.Camera.IsModifiedArmLength ||
-        ((i = -i.Entity.GetComponent(52).GetZoomInput() * t) &&
+        ((i = -i.Entity.GetComponent(53).GetZoomInput() * t) &&
           ((t =
             (i * this.ZoomSpeed) /
             (this.Camera.DesiredCamera.MaxArmLength -
@@ -373,35 +380,31 @@ class CameraInputController extends CameraControllerBase_1.CameraControllerBase 
   }
   SetAimAssistTarget(i, s) {
     var h = this.Camera.CharacterEntityHandle.Entity.GetComponent(3),
-      t = h.Actor.Camp,
-      e = i.Entity.GetComponent(3);
+      e = h.Actor.Camp,
+      i = i.Entity.GetComponent(3);
     if (
-      e &&
-      2 === CampUtils_1.CampUtils.GetCampRelationship(t, e.Actor.Camp) &&
-      CameraUtility_1.CameraUtility.TargetCanBeSelect(e)
+      i &&
+      2 === CampUtils_1.CampUtils.GetCampRelationship(e, i.Actor.Camp) &&
+      CameraUtility_1.CameraUtility.TargetCanBeSelect(i)
     ) {
       let t = this.AimAssistRange;
-      if (!FNameUtil_1.FNameUtil.IsEmpty(s) && e.LockOnParts.size) {
-        i = e.LockOnParts.get(s.toString());
+      if (!FNameUtil_1.FNameUtil.IsEmpty(s) && i.LockOnParts.size) {
+        e = i.LockOnParts.get(s.toString());
         if (
-          (i?.AimPartBoneName
-            ? (this.Q_e = e.AimParts.get(i.AimPartBoneName))
-            : (this.Q_e = e.AimParts.get(s.toString())),
+          (e?.AimPartBoneName
+            ? (this.Q_e = i.AimParts.get(e.AimPartBoneName))
+            : (this.Q_e = i.AimParts.get(s.toString())),
           this.Q_e)
         )
           return (
-            this.Z_e.FromUeTransform(
-              e.Actor.Mesh.GetSocketTransform(this.Q_e.BoneName),
-            ),
-            this.Z_e.TransformPosition(this.Q_e.Offset, this.J_e),
+            this.Q_e.GetAimPointLocation(this.J_e),
             this.J_e.Subtraction(this.Camera.CameraLocation, this.z_e),
             this.$_e.DeepCopy(this.J_e),
             void this.Y_e.DeepCopy(this.J_e)
           );
       } else this.Q_e = void 0;
-      for (var [, a] of e.AimParts) {
-        this.Z_e.FromUeTransform(e.Actor.Mesh.GetSocketTransform(a.BoneName)),
-          this.Z_e.TransformPosition(a.Offset, this.J_e),
+      for (var [, a] of i.AimParts) {
+        a.GetAimPointLocation(this.J_e),
           this.J_e.Subtraction(this.Camera.CameraLocation, this.z_e);
         var r = this.z_e.DotProduct(this.Camera.CameraForward);
         r < 0 ||
@@ -432,82 +435,56 @@ class CameraInputController extends CameraControllerBase_1.CameraControllerBase 
             return !1;
         }
         var h = ModelManager_1.ModelManager.CameraModel.AimAssistDebugDraw,
-          e = this.Camera.CharacterEntityHandle.Entity.GetComponent(3),
-          a = e.Actor;
-        if (!i && this.hue(t, a))
-          return (
-            h &&
-              UE.KismetSystemLibrary.DrawDebugSphere(
-                this.Q_e.Owner.Actor,
-                this.$_e.ToUeVector(),
-                this.Q_e.GetRadius(s),
-                DEFAULT_SEGMENT,
-                ColorUtils_1.ColorUtils.LinearGreen,
-              ),
-            !0
-          );
-        var r,
-          i = this.AimAssistRange * RANGE_TO_RADIUS,
-          _ =
-            (this.Lz.DeepCopy(this.Camera.CameraForward),
-            this.Lz.MultiplyEqual(i),
-            this.Lz.AdditionEqual(this.Camera.PlayerLocation),
-            ModelManager_1.ModelManager.CreatureModel.GetEntitiesInRangeWithLocation(
-              this.Lz,
-              i,
-              2,
-              this.eue,
-            ),
-            (this.Q_e = void 0),
-            a.Camp);
-        this.tue.length = 0;
-        for (const M of this.eue)
-          if (M.Entity?.Active) {
-            var o,
-              n = M.Entity.GetComponent(3);
-            if (
-              n &&
-              2 ===
-                CampUtils_1.CampUtils.GetCampRelationship(_, n.Actor.Camp) &&
-              CameraUtility_1.CameraUtility.TargetCanBeSelect(n)
-            )
-              for ([, o] of n.AimParts) {
-                this.Z_e.FromUeTransform(
-                  n.Actor.Mesh.GetSocketTransform(o.BoneName),
+          e = this.Camera.CharacterEntityHandle.Entity.GetComponent(3);
+        if (e) {
+          var a = e.Actor;
+          if (!i && this.hue(t, a))
+            return (
+              h &&
+                UE.KismetSystemLibrary.DrawDebugSphere(
+                  this.Q_e.OwnerBase.Owner,
+                  this.$_e.ToUeVector(),
+                  this.Q_e.GetRadius(s),
+                  DEFAULT_SEGMENT,
+                  ColorUtils_1.ColorUtils.LinearGreen,
                 ),
-                  this.Z_e.TransformPosition(o.Offset, this.J_e),
-                  h &&
-                    UE.KismetSystemLibrary.DrawDebugSphere(
-                      n.Actor,
-                      this.J_e.ToUeVector(),
-                      o.GetRadius(s),
-                      DEFAULT_SEGMENT,
-                      ColorUtils_1.ColorUtils.LinearGreen,
-                    ),
-                  this.J_e.Subtraction(this.Camera.CameraLocation, this.z_e);
-                var l = this.z_e.DotProduct(this.Camera.CameraForward);
-                l < 0 ||
-                  l > this.AimAssistRange ||
-                  this.z_e.SizeSquared() - MathUtils_1.MathUtils.Square(l) >
-                    MathUtils_1.MathUtils.Square(o.GetRadius(s)) ||
-                  (this.J_e.Subtraction(e.ActorLocationProxy, this.Lz),
-                  this.Lz.Normalize(),
-                  (l = Math.acos(
-                    this.Lz.DotProduct(this.Camera.CameraForward),
-                  )) > MAX_AIM_ASSIST_ANGLE) ||
-                  this.tue.push([l, o]);
-              }
-          }
-        this.tue.sort((t, i) => t[0] - i[0]);
-        for ([, r] of this.tue)
-          if (
-            (this.Z_e.FromUeTransform(
-              r.Owner.Actor.Mesh.GetSocketTransform(r.BoneName),
-            ),
-            this.Z_e.TransformPosition(r.Offset, this.J_e),
-            this.lue(a, this.J_e, r))
-          )
-            return this.$_e.DeepCopy(this.J_e), (this.Q_e = r), (this.X_e = !0);
+              !0
+            );
+          var r,
+            i = this.AimAssistRange * RANGE_TO_RADIUS,
+            _ =
+              (this.Lz.DeepCopy(this.Camera.CameraForward),
+              this.Lz.MultiplyEqual(i),
+              this.Lz.AdditionEqual(this.Camera.PlayerLocation),
+              ModelManager_1.ModelManager.CreatureModel.GetEntitiesInRangeWithLocation(
+                this.Lz,
+                i,
+                3,
+                this.eue,
+              ),
+              (this.Q_e = void 0),
+              a.Camp);
+          this.tue.length = 0;
+          for (const l of this.eue)
+            if (l.Entity?.Active) {
+              var o = l.Entity.GetComponent(3);
+              if (
+                o &&
+                2 ===
+                  CampUtils_1.CampUtils.GetCampRelationship(_, o.Actor.Camp) &&
+                CameraUtility_1.CameraUtility.TargetCanBeSelect(o)
+              )
+                for (var [, n] of o.AimParts) this.Yca(n, s, e);
+              o = l.Entity.GetComponent(140);
+              if (o) for (const M of o.AimParts) this.Yca(M, s, e);
+            }
+          this.tue.sort((t, i) => t[0] - i[0]);
+          for ([, r] of this.tue)
+            if ((r.GetAimPointLocation(this.J_e), this.lue(a, this.J_e, r)))
+              return (
+                this.$_e.DeepCopy(this.J_e), (this.Q_e = r), (this.X_e = !0)
+              );
+        }
       } else
         this.K_e &&
           Log_1.Log.CheckInfo() &&
@@ -515,6 +492,28 @@ class CameraInputController extends CameraControllerBase_1.CameraControllerBase 
           (this.K_e = 0),
           (this.Q_e = void 0);
     return !1;
+  }
+  Yca(t, i, s) {
+    t.GetAimPointLocation(this.J_e),
+      ModelManager_1.ModelManager.CameraModel.AimAssistDebugDraw &&
+        UE.KismetSystemLibrary.DrawDebugSphere(
+          t.OwnerBase.Owner,
+          this.J_e.ToUeVector(),
+          t.GetRadius(i),
+          DEFAULT_SEGMENT,
+          ColorUtils_1.ColorUtils.LinearGreen,
+        ),
+      this.J_e.Subtraction(this.Camera.CameraLocation, this.z_e);
+    var h = this.z_e.DotProduct(this.Camera.CameraForward);
+    h < 0 ||
+      h > this.AimAssistRange ||
+      this.z_e.SizeSquared() - MathUtils_1.MathUtils.Square(h) >
+        MathUtils_1.MathUtils.Square(t.GetRadius(i)) ||
+      (this.J_e.Subtraction(s.ActorLocationProxy, this.Lz),
+      this.Lz.Normalize(),
+      (h = Math.acos(this.Lz.DotProduct(this.Camera.CameraForward))) >
+        MAX_AIM_ASSIST_ANGLE) ||
+      this.tue.push([h, t]);
   }
   lue(t, i, s) {
     (this.uoe.WorldContextObject = t),
@@ -538,9 +537,16 @@ class CameraInputController extends CameraControllerBase_1.CameraControllerBase 
             QueryTypeDefine_1.KuroCollisionChannel.Bullet,
           )
         ) {
-          if (a.GetOwner() !== s.Owner.Actor || (e && a.GetName() !== e))
-            return !1;
-          break;
+          if (s.OwnerCharacter) {
+            if (a.GetOwner() === s.OwnerBase.Owner && (!e || a.GetName() === e))
+              break;
+          } else if (s.SceneItemHit) {
+            var r = s.OwnerBase.Owner;
+            let t = a.GetOwner();
+            for (; t && t !== r; ) t = t.GetAttachParentActor();
+            if (t) break;
+          }
+          return !1;
         }
       }
     }
@@ -549,17 +555,12 @@ class CameraInputController extends CameraControllerBase_1.CameraControllerBase 
   hue(t, i) {
     if (
       !this.Q_e ||
-      !CameraUtility_1.CameraUtility.TargetCanBeSelect(this.Q_e.Owner)
+      !CameraUtility_1.CameraUtility.TargetCanBeSelect(this.Q_e.OwnerBase)
     )
       return !1;
-    var s = this.Q_e,
-      s =
-        (this.Z_e.FromUeTransform(
-          s.Owner.Actor.Mesh.GetSocketTransform(s.BoneName),
-        ),
-        this.Z_e.TransformPosition(s.Offset, this.$_e),
-        this.$_e.Subtraction(this.Camera.CameraLocation, this.z_e),
-        this.z_e.DotProduct(this.Camera.CameraForward));
+    this.Q_e.GetAimPointLocation(this.$_e),
+      this.$_e.Subtraction(this.Camera.CameraLocation, this.z_e);
+    var s = this.z_e.DotProduct(this.Camera.CameraForward);
     if (s < 0 || s > this.AimAssistRange * AIM_RANGE_TOLERANT) return !1;
     this.Y_e.Subtraction(this.Camera.CameraLocation, this.Lz);
     s = this.Lz.SizeSquared() * this.z_e.SizeSquared();
@@ -580,7 +581,8 @@ class CameraInputController extends CameraControllerBase_1.CameraControllerBase 
       (this.$_e.Subtraction(this.Camera.CameraLocation, this.z_e),
       !this.z_e.IsNearlyZero())
     ) {
-      this.Camera.IsModifiedArmRotation = !0;
+      (this.Camera.IsModifiedArmRotationPitch = !0),
+        (this.Camera.IsModifiedArmRotationYaw = !0);
       var h = this.Camera.DesiredCamera.ArmRotation,
         e =
           (this.X_e ||
@@ -633,6 +635,32 @@ class CameraInputController extends CameraControllerBase_1.CameraControllerBase 
           this.KJ.Rotator(h);
       }
     }
+  }
+  fga(t, i) {
+    var s = UE.GameUserSettings.GetGameUserSettings().GetFrameRateLimit(),
+      t = MathUtils_1.MathUtils.Lerp(
+        Info_1.Info.IsInGamepad()
+          ? this.GamePadSmoothFactorMin
+          : this.SmoothFactorMin,
+        Info_1.Info.IsInGamepad()
+          ? this.GamePadSmoothFactorMax
+          : this.SmoothFactorMax,
+        Info_1.Info.IsInGamepad()
+          ? this.GamePadSmoothFactorCurve.GetCurrentValue(
+              t / this.GamePadSmoothFactorRange,
+            )
+          : this.SmoothFactorCurve.GetCurrentValue(t / this.SmoothFactorRange),
+      );
+    return (
+      (t +=
+        (((1 - t) / (s / NORMALIZED_FRAME_RATE)) *
+          (s - NORMALIZED_FRAME_RATE)) /
+        NORMALIZED_FRAME_RATE),
+      Math.pow(t, Math.max(1, Math.min(MAX_SMOOTH_DELTA_TIME, i * s)))
+    );
+  }
+  ResetCameraInput() {
+    (this.W_e = 0), (this.j_e = 0);
   }
 }
 exports.CameraInputController = CameraInputController;

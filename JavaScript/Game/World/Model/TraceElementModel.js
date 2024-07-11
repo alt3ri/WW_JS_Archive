@@ -10,22 +10,22 @@ const UE = require("ue"),
 class TraceElementModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
-      (this.eJo = void 0),
+      (this.JJo = void 0),
       (this.uoe = void 0),
       (this.CommonStartLocation = Vector_1.Vector.Create()),
       (this.CommonEndLocation = Vector_1.Vector.Create()),
       (this.CommonHitLocation = Vector_1.Vector.Create()),
-      (this.bMr = void 0),
-      (this.qMr = void 0);
+      (this.xEr = void 0),
+      (this.wEr = void 0);
   }
   GetActorTrace() {
-    return this.eJo || this.tJo(), this.eJo;
+    return this.JJo || this.zJo(), this.JJo;
   }
   ClearActorTrace() {
-    this.eJo &&
-      ((this.eJo.WorldContextObject = void 0), this.eJo.ActorsToIgnore.Empty());
+    this.JJo &&
+      ((this.JJo.WorldContextObject = void 0), this.JJo.ActorsToIgnore.Empty());
   }
-  tJo() {
+  zJo() {
     var e = UE.NewObject(UE.TraceSphereElement.StaticClass());
     (e.bIsSingle = !1),
       (e.bIgnoreSelf = !0),
@@ -38,16 +38,16 @@ class TraceElementModel extends ModelBase_1.ModelBase {
         e,
         ColorUtils_1.ColorUtils.LinearRed,
       ),
-      (this.eJo = e);
+      (this.JJo = e);
   }
   GetLineTrace() {
-    return this.uoe || this.GMr(), this.uoe;
+    return this.uoe || this.BEr(), this.uoe;
   }
   ClearLineTrace() {
     this.uoe &&
       ((this.uoe.WorldContextObject = void 0), this.uoe.ActorsToIgnore.Empty());
   }
-  GMr() {
+  BEr() {
     var e = UE.NewObject(UE.TraceLineElement.StaticClass());
     (e.bIsSingle = !0),
       (e.bIgnoreSelf = !0),
@@ -63,13 +63,13 @@ class TraceElementModel extends ModelBase_1.ModelBase {
       (this.uoe = e);
   }
   GetBoxTrace() {
-    return this.bMr || this.NMr(), this.bMr;
+    return this.xEr || this.bEr(), this.xEr;
   }
   ClearBoxTrace() {
-    this.bMr &&
-      ((this.bMr.WorldContextObject = void 0), this.bMr.ActorsToIgnore.Empty());
+    this.xEr &&
+      ((this.xEr.WorldContextObject = void 0), this.xEr.ActorsToIgnore.Empty());
   }
-  NMr() {
+  bEr() {
     var e = UE.NewObject(UE.TraceBoxElement.StaticClass());
     (e.bIsSingle = !0),
       (e.bIgnoreSelf = !0),
@@ -82,16 +82,16 @@ class TraceElementModel extends ModelBase_1.ModelBase {
         e,
         ColorUtils_1.ColorUtils.LinearRed,
       ),
-      (this.bMr = e);
+      (this.xEr = e);
   }
   GetCapsuleTrace() {
-    return this.qMr || this.OMr(), this.qMr;
+    return this.wEr || this.qEr(), this.wEr;
   }
   ClearCapsuleTrace() {
-    this.qMr &&
-      ((this.qMr.WorldContextObject = void 0), this.qMr.ActorsToIgnore.Empty());
+    this.wEr &&
+      ((this.wEr.WorldContextObject = void 0), this.wEr.ActorsToIgnore.Empty());
   }
-  OMr() {
+  qEr() {
     var e = UE.NewObject(UE.TraceCapsuleElement.StaticClass());
     (e.bIsSingle = !0),
       (e.bIgnoreSelf = !0),
@@ -104,7 +104,7 @@ class TraceElementModel extends ModelBase_1.ModelBase {
         e,
         ColorUtils_1.ColorUtils.LinearRed,
       ),
-      (this.qMr = e);
+      (this.wEr = e);
   }
 }
 exports.TraceElementModel = TraceElementModel;

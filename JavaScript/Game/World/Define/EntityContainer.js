@@ -21,7 +21,7 @@ class EntityContainer {
       !!i &&
       (this.EntityMap.Remove(t),
       this.EntityIdMap.delete(i.Id),
-      i.ConfigType === Protocol_1.Aki.Protocol.USs.r3n &&
+      i.ConfigType === Protocol_1.Aki.Protocol.YTs.P6n &&
         this.PbDataIdMap.delete(i.PbDataId),
       !0)
     );
@@ -42,7 +42,7 @@ class EntityContainer {
   }
   CheckSetPrefabEntity(t) {
     t = t.Entity.GetComponent(0);
-    t.GetEntityConfigType() === Protocol_1.Aki.Protocol.USs.r3n &&
+    t.GetEntityConfigType() === Protocol_1.Aki.Protocol.YTs.P6n &&
       this.PbDataIdMap.set(t.GetPbDataId(), t.GetCreatureDataId());
   }
   GetCreatureDataIdByPbDataId(t) {

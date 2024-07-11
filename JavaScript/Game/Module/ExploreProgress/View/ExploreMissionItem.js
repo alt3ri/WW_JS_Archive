@@ -2,7 +2,6 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ExploreMissionItem = void 0);
 const UE = require("ue"),
-  ModelManager_1 = require("../../../Manager/ModelManager"),
   UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
   UiManager_1 = require("../../../Ui/UiManager"),
   SkipTaskManager_1 = require("../../SkipInterface/SkipTaskManager"),
@@ -13,10 +12,10 @@ class ExploreMissionItem extends UiPanelBase_1.UiPanelBase {
       (this.ScrollViewDelegate = void 0),
       (this.GridIndex = 0),
       (this.DisplayIndex = 0),
-      (this.xTn = void 0),
-      (this.bTn = () => {
-        this.xTn &&
-          (SkipTaskManager_1.SkipTaskManager.Run(7, this.xTn.QuestId),
+      (this.kHs = void 0),
+      (this.FHs = () => {
+        this.kHs &&
+          (SkipTaskManager_1.SkipTaskManager.Run(7, this.kHs.QuestId),
           UiManager_1.UiManager.CloseView("ExploreMissionView"));
       });
   }
@@ -30,21 +29,19 @@ class ExploreMissionItem extends UiPanelBase_1.UiPanelBase {
       [5, UE.UISprite],
       [6, UE.UIText],
     ]),
-      (this.BtnBindInfo = [[3, this.bTn]]);
+      (this.BtnBindInfo = [[3, this.FHs]]);
   }
-  Refresh(e, i, s) {
-    var t = 2 === (this.xTn = e).QuestType,
-      r = ModelManager_1.ModelManager.QuestNewModel.GetQuest(
-        e.QuestId,
-      )?.CanShowInUiPanel();
-    LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(2), e.QuestNameId),
+  Refresh(i, e, s) {
+    var t = (this.kHs = i).IsBranchQuest(),
+      r = i.IsQuestVisible();
+    LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(2), i.QuestNameId),
       this.GetSprite(1)?.SetUIActive(!t),
       this.GetSprite(0)?.SetUIActive(t),
       r
         ? (this.GetItem(4)?.SetUIActive(!0),
           this.GetText(6)?.SetUIActive(!1),
           this.GetSprite(5)?.SetUIActive(!1))
-        : 3 === e.QuestStatus
+        : 3 === i.QuestStatus
           ? (this.GetItem(4)?.SetUIActive(!1),
             this.GetText(6)?.SetUIActive(!1),
             this.GetSprite(5)?.SetUIActive(!0))
@@ -53,9 +50,9 @@ class ExploreMissionItem extends UiPanelBase_1.UiPanelBase {
             this.GetSprite(5)?.SetUIActive(!1));
   }
   Clear() {}
-  OnSelected(e) {}
-  OnDeselected(e) {}
-  GetKey(e, i) {
+  OnSelected(i) {}
+  OnDeselected(i) {}
+  GetKey(i, e) {
     return this.GridIndex;
   }
 }

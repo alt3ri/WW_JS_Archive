@@ -12,25 +12,25 @@ const Log_1 = require("../../../../Core/Common/Log"),
   InfluenceInstance_1 = require("./InfluenceInstance");
 class InfluenceReputationModel extends ModelBase_1.ModelBase {
   constructor() {
-    super(...arguments), (this.Xri = new Map()), (this.$ri = new Set());
+    super(...arguments), (this.Xni = new Map()), (this.$ni = new Set());
   }
   SetInfluenceInfoList(e) {
     for (const t of e) {
-      var n = this.Xri.get(t.w5n);
+      var n = this.Xni.get(t.d9n);
       n
-        ? (n.SetRelation(t.$Rs), n.SetReceiveReward(t.b5n))
-        : this.Xri.set(
-            t.w5n,
-            new InfluenceInstance_1.InfluenceInstance(t.w5n, t.b5n, t.$Rs),
+        ? (n.SetRelation(t.hws), n.SetReceiveReward(t.C9n))
+        : this.Xni.set(
+            t.d9n,
+            new InfluenceInstance_1.InfluenceInstance(t.d9n, t.C9n, t.hws),
           ),
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.RedDotInfluence,
-          t.w5n,
+          t.d9n,
         );
     }
   }
   UpdateInfluenceRewardIndex(e, n) {
-    var t = this.Xri.get(e);
+    var t = this.Xni.get(e);
     return t
       ? (t.SetReceiveReward(n), !0)
       : (Log_1.Log.CheckError() &&
@@ -43,7 +43,7 @@ class InfluenceReputationModel extends ModelBase_1.ModelBase {
         !1);
   }
   GetInfluenceInstance(e) {
-    return this.Xri.get(e);
+    return this.Xni.get(e);
   }
   GetCanReceiveReward(e) {
     if (e !== InfluenceReputationDefine_1.RAMDOM_INFLUENCE_ID) {
@@ -81,13 +81,13 @@ class InfluenceReputationModel extends ModelBase_1.ModelBase {
     return { Current: t, Max: n };
   }
   SetUnLockCountry(t) {
-    for (let e = 0, n = t.length; e < n; e++) this.$ri.add(t[e]);
+    for (let e = 0, n = t.length; e < n; e++) this.$ni.add(t[e]);
   }
   GetUnLockCountry() {
-    return Array.from(this.$ri);
+    return Array.from(this.$ni);
   }
   IsCountryUnLock(e) {
-    return this.$ri.has(e);
+    return this.$ni.has(e);
   }
   FilterUnLockInfluence(t, r) {
     var o = [];
@@ -96,7 +96,7 @@ class InfluenceReputationModel extends ModelBase_1.ModelBase {
         i,
         u = t[e];
       u !== InfluenceReputationDefine_1.RAMDOM_INFLUENCE_ID &&
-        this.Xri.has(u) &&
+        this.Xni.has(u) &&
         ((a =
           ConfigManager_1.ConfigManager.InfluenceConfig.GetInfluenceTitle(u)),
         (i = new RegExp(r, "i")),
@@ -125,7 +125,7 @@ class InfluenceReputationModel extends ModelBase_1.ModelBase {
     );
   }
   HasRedDotExcludeCurrentCountry(e) {
-    for (const n of this.$ri)
+    for (const n of this.$ni)
       if (n !== e) if (this.HasRedDotInCurrentCountry(n)) return !0;
     return !1;
   }

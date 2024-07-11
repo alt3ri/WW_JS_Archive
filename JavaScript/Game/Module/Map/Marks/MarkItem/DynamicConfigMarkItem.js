@@ -10,9 +10,9 @@ class DynamicConfigMarkItem extends MarkItem_1.MarkItem {
   constructor(t, e, i, r, s, n = 1) {
     super(i, r, s, n),
       (this.MarkConfig = void 0),
-      (this.OLi = 0),
+      (this.ODi = 0),
       (this.ConditionShouldShow = !0),
-      (this.OLi = t),
+      (this.ODi = t),
       (this.ShowPriority = e.ShowPriority),
       (this.MarkConfig = e),
       (this.IconPath = this.MarkConfig.LockMarkPic),
@@ -29,7 +29,7 @@ class DynamicConfigMarkItem extends MarkItem_1.MarkItem {
     );
   }
   get MarkId() {
-    return this.OLi;
+    return this.ODi;
   }
   get MarkConfigId() {
     return this.MarkConfig.MarkId;
@@ -85,7 +85,7 @@ class DynamicConfigMarkItem extends MarkItem_1.MarkItem {
           e
       );
   }
-  GLi(t) {
+  GDi(t) {
     return this.MarkConfig.ShowRange[0] < t && this.MarkConfig.ShowRange[1] > t;
   }
   InitShowCondition() {
@@ -102,7 +102,7 @@ class DynamicConfigMarkItem extends MarkItem_1.MarkItem {
         !this.IsFogUnlock
       ) &&
       ((t = this.GetCurrentMapShowScale()),
-      (t = this.GLi(t)),
+      (t = this.GDi(t) || this.IsTracked),
       2 !== e ||
         (this.IsCanShowViewIntermediately !==
           (e = t || this.IsIgnoreScaleShow) &&

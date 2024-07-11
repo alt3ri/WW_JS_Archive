@@ -35,8 +35,8 @@ class CameraSpecialGameplayController extends CameraControllerBase_1.CameraContr
               e,
             )()),
           this.wce.OnInit(this.CameraActor))
-        : Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Camera", 58, "[特殊玩法相机] 未找到特殊玩法", [
+        : Log_1.Log.CheckDebug() &&
+          Log_1.Log.Debug("Camera", 58, "[特殊玩法相机] 使用空相机", [
             "gameplayId",
             e,
           ]),

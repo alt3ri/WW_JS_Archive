@@ -8,41 +8,41 @@ class ItemModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
       (this.LastCloseTimeStamp = 0),
-      (this.Xdi = new Array()),
-      (this.$di = []);
+      (this.XCi = new Array()),
+      (this.$Ci = []);
   }
   OnInit() {
     return !(this.LastCloseTimeStamp = 0);
   }
   OnClear() {
-    return (this.Xdi.length = 0), !(this.$di.length = 0);
+    return (this.XCi.length = 0), !(this.$Ci.length = 0);
   }
   LoadGetItemConfigIdList() {
-    this.$di =
+    this.$Ci =
       LocalStorage_1.LocalStorage.GetPlayer(
         LocalStorageDefine_1.ELocalStoragePlayerKey.GetItemConfigListSaveKey,
       ) ?? [];
   }
   AddGetItemConfigIdList(e) {
-    this.$di.push(e), this.SaveGetItemConfigIdList();
+    this.$Ci.push(e), this.SaveGetItemConfigIdList();
   }
   IsGotItem(e) {
-    return this.$di.includes(e);
+    return this.$Ci.includes(e);
   }
   SaveGetItemConfigIdList() {
     LocalStorage_1.LocalStorage.SetPlayer(
       LocalStorageDefine_1.ELocalStoragePlayerKey.GetItemConfigListSaveKey,
-      this.$di,
+      this.$Ci,
     );
   }
   IsWaitItemListEmpty() {
-    return 0 === this.Xdi.length;
+    return 0 === this.XCi.length;
   }
   PushWaitItemList(e) {
-    this.Xdi.push(e);
+    this.XCi.push(e);
   }
   ShiftWaitItemList() {
-    return this.Xdi.shift();
+    return this.XCi.shift();
   }
 }
 exports.ItemModel = ItemModel;

@@ -10,51 +10,51 @@ const Log_1 = require("../../../Core/Common/Log"),
   UiControllerBase_1 = require("../../Ui/Base/UiControllerBase"),
   CDKEY_USE_INTERVAL = 5e3;
 class CdKeyInputController extends UiControllerBase_1.UiControllerBase {
-  static Qvt() {
-    (this.d4s = !0),
-      (this.Xvt = 0),
-      (this.$vt = TimerSystem_1.TimerSystem.Forever(
-        this.Yvt,
+  static nEt() {
+    (this.c9s = !0),
+      (this.sEt = 0),
+      (this.aEt = TimerSystem_1.TimerSystem.Forever(
+        this.hEt,
         TimeUtil_1.TimeUtil.InverseMillisecond,
       ));
   }
-  static Jvt() {
-    TimerSystem_1.TimerSystem.Has(this.$vt) &&
-      TimerSystem_1.TimerSystem.Remove(this.$vt),
-      (this.d4s = !1),
-      (this.Xvt = 0),
-      (this.$vt = void 0);
+  static lEt() {
+    TimerSystem_1.TimerSystem.Has(this.aEt) &&
+      TimerSystem_1.TimerSystem.Remove(this.aEt),
+      (this.c9s = !1),
+      (this.sEt = 0),
+      (this.aEt = void 0);
   }
   static OnClear() {
-    return this.Jvt(), !0;
+    return this.lEt(), !0;
   }
   static CheckInCdKeyUseCd() {
-    return this.d4s;
+    return this.c9s;
   }
   static GetCdKeyUseCd() {
     var e = Math.ceil(
-      (CDKEY_USE_INTERVAL - this.Xvt) / TimeUtil_1.TimeUtil.InverseMillisecond,
+      (CDKEY_USE_INTERVAL - this.sEt) / TimeUtil_1.TimeUtil.InverseMillisecond,
     );
     return Math.max(1, e);
   }
 }
 (exports.CdKeyInputController = CdKeyInputController),
-  ((_a = CdKeyInputController).$vt = void 0),
-  (CdKeyInputController.d4s = !1),
-  (CdKeyInputController.Xvt = 0),
-  (CdKeyInputController.Yvt = (e) => {
-    (CdKeyInputController.Xvt += e),
-      CdKeyInputController.Xvt >= CDKEY_USE_INTERVAL &&
-        CdKeyInputController.Jvt();
+  ((_a = CdKeyInputController).aEt = void 0),
+  (CdKeyInputController.c9s = !1),
+  (CdKeyInputController.sEt = 0),
+  (CdKeyInputController.hEt = (e) => {
+    (CdKeyInputController.sEt += e),
+      CdKeyInputController.sEt >= CDKEY_USE_INTERVAL &&
+        CdKeyInputController.lEt();
   }),
   (CdKeyInputController.RequestCdKey = async (e) => {
-    var t = new Protocol_1.Aki.Protocol.bQn(),
+    var t = new Protocol_1.Aki.Protocol.Dzn(),
       e =
-        ((t.F3n = e),
+        ((t.S8n = e),
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("Functional", 38, "请求CdKey兑换", ["CdKey", e]),
-        CdKeyInputController.Qvt(),
-        await Net_1.Net.CallAsync(18692, t));
-    if (e) return e.lkn;
+        CdKeyInputController.nEt(),
+        await Net_1.Net.CallAsync(9027, t));
+    if (e) return e.O4n;
   });
 //# sourceMappingURL=CdKeyInputController.js.map

@@ -4,7 +4,6 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.DELAY_REFRESH_ELEMENT_BALL =
     exports.bossStateViewResourceIdMap =
     exports.hideInputTagMap =
-    exports.UI_EFFECT_CUE_TYPE =
     exports.elementTagToElementType =
     exports.elementTypeToElementTag =
     exports.AREAL_BOX_WIETH_C =
@@ -76,7 +75,6 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     [-1939505546, 5],
     [-967538492, 6],
   ])),
-  (exports.UI_EFFECT_CUE_TYPE = 2),
   (exports.hideInputTagMap = new Map([
     [4, -1823030825],
     [6, -1949137153],

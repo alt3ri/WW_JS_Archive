@@ -9,8 +9,8 @@ class LevelEventModifyActorMaterial extends LevelGeneralBase_1.LevelEventBase {
     e
       ? (t = t)
         ? (t = EntitySystem_1.EntitySystem.Get(t.EntityId))?.Valid
-          ? t.GetComponent(182)?.Owner
-            ? (t = t.GetComponent(147)) && t.HandleActorMaterial(e)
+          ? t.GetComponent(185)?.Owner
+            ? (t = t.GetComponent(149)) && t.HandleActorMaterial(e)
             : Log_1.Log.CheckError() &&
               Log_1.Log.Error("LevelEvent", 34, "状态控制actor不存在")
           : Log_1.Log.CheckError() &&

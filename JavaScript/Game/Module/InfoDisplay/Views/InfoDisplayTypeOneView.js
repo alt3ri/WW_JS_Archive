@@ -11,11 +11,11 @@ const UE = require("ue"),
 class InfoDisplayTypeOneView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
-      (this.nsi = void 0),
-      (this.Opt = () => {
+      (this.sai = void 0),
+      (this.Jvt = () => {
         this.CloseMe();
       }),
-      (this.lsi = () => {
+      (this._ai = () => {
         var e =
             ModelManager_1.ModelManager.InfoDisplayModel.CurrentInformationId(),
           e =
@@ -44,28 +44,28 @@ class InfoDisplayTypeOneView extends UiTickViewBase_1.UiTickViewBase {
       [10, UE.UITexture],
     ]),
       (this.BtnBindInfo = [
-        [0, this.lsi],
-        [3, this.Opt],
+        [0, this._ai],
+        [3, this.Jvt],
       ]);
   }
   OnStart() {
-    this.nsi = new InfoDisplayAudioPlayer_1.InfoDisplayAudioPlayer();
+    this.sai = new InfoDisplayAudioPlayer_1.InfoDisplayAudioPlayer();
     var e = this.GetItem(8),
       e =
-        (this.nsi.Initialize(e.GetOwner()),
-        this.nsi.SetShowTextComponent(this.GetText(6)),
+        (this.sai.Initialize(e.GetOwner()),
+        this.sai.SetShowTextComponent(this.GetText(6)),
         ModelManager_1.ModelManager.InfoDisplayModel.CurrentInformationId());
-    this.OPt(e),
-      this.nsi.Refresh(
+    this.Hxt(e),
+      this.sai.Refresh(
         ConfigManager_1.ConfigManager.InfoDisplayModuleConfig.GetInfoDisplayAudio(
           e,
         ),
       );
   }
-  OPt(e) {
-    this._si(e), this.$8e(e), this.usi(e), this.msi(e);
+  Hxt(e) {
+    this.uai(e), this.l7e(e), this.cai(e), this.mai(e);
   }
-  _si(e) {
+  uai(e) {
     e =
       ConfigManager_1.ConfigManager.InfoDisplayModuleConfig.GetInfoDisplayPictures(
         e,
@@ -84,7 +84,7 @@ class InfoDisplayTypeOneView extends UiTickViewBase_1.UiTickViewBase {
       }
     }
   }
-  $8e(e) {
+  l7e(e) {
     var i =
         ConfigManager_1.ConfigManager.InfoDisplayModuleConfig.GetInfoDisplayTitle(
           e,
@@ -96,24 +96,24 @@ class InfoDisplayTypeOneView extends UiTickViewBase_1.UiTickViewBase {
         ));
     this.GetText(4).SetText(i);
   }
-  usi(e) {
+  cai(e) {
     e =
       ConfigManager_1.ConfigManager.InfoDisplayModuleConfig.GetInfoDisplayBgStamp(
         e,
       );
     "" !== e && this.SetTextureByPath(e, this.GetTexture(7));
   }
-  msi(e) {
+  mai(e) {
     "" !==
     ConfigManager_1.ConfigManager.InfoDisplayModuleConfig.GetInfoDisplayAudio(e)
       ? (this.GetItem(8).SetUIActive(!0), this.GetItem(9).SetUIActive(!0))
       : (this.GetItem(8).SetUIActive(!1), this.GetItem(9).SetUIActive(!1));
   }
   OnTick(e) {
-    this.nsi?.OnTick(e);
+    this.sai?.OnTick(e);
   }
   OnBeforeDestroy() {
-    this.nsi.Destroy();
+    this.sai.Destroy();
     var e = ModelManager_1.ModelManager.InfoDisplayModel.CurrentInformationId();
     InfoDisplayController_1.InfoDisplayController.RequestReadDisplayInfo(e);
   }

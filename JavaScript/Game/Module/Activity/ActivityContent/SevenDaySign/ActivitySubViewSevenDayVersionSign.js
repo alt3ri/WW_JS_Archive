@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ActivitySubViewSevenDayVersionSign = void 0);
 const UE = require("ue"),
   Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
   ActivitySubViewBase_1 = require("../../View/SubView/ActivitySubViewBase"),
   ActivityTitleTypeA_1 = require("../UniversalComponents/Title/ActivityTitleTypeA"),
   ActivitySevenDaySignController_1 = require("./ActivitySevenDaySignController"),
@@ -14,8 +15,8 @@ class ActivitySubViewSevenDayVersionSign extends ActivitySubViewBase_1.ActivityS
       (this.LNe = void 0),
       (this.ItemList = void 0),
       (this.ActivitySignData = void 0),
-      (this.IFe = (i) => {
-        this.TFe(i) &&
+      (this.k3e = (i) => {
+        this.F3e(i) &&
           ActivitySevenDaySignController_1.ActivitySevenDaySignController.GetRewardByDay(
             this.ActivitySignData.Id,
             i,
@@ -32,6 +33,7 @@ class ActivitySubViewSevenDayVersionSign extends ActivitySubViewBase_1.ActivityS
       [5, UE.UIItem],
       [6, UE.UIItem],
       [7, UE.UIItem],
+      [8, UE.UIItem],
     ];
   }
   OnSetData() {
@@ -44,23 +46,30 @@ class ActivitySubViewSevenDayVersionSign extends ActivitySubViewBase_1.ActivityS
         await this.LNe.CreateThenShowByActorAsync(i.GetOwner()),
         (this.ItemList = []),
         []);
-    for (const s of [1, 2, 3, 4, 5, 6, 7]) {
-      var t = this.GetItem(s),
+    for (const n of [1, 2, 3, 4, 5, 6, 7]) {
+      var t = this.GetItem(n),
         r = new ActivitySevenDaySignDefine_1.VersionSignRewardItem();
       this.ItemList.push(r),
-        (r.OnClickToGet = this.IFe),
+        (r.OnClickToGet = this.k3e),
         e.push(r.CreateThenShowByActorAsync(t.GetOwner()));
     }
-    await Promise.all(e);
+    var i = this.GetItem(8),
+      s =
+        ConfigManager_1.ConfigManager.ActivitySevenDaySignConfig.GetActivitySignById(
+          this.ActivitySignData.Id,
+        );
+    s &&
+      ((s = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
+        s.PrefabResource,
+      )),
+      e.push(this.LoadPrefabAsync(s, i))),
+      await Promise.all(e);
   }
   OnStart() {
-    this.LNe.SetTitleByText(this.ActivityBaseData.GetTitle());
+    this.LNe.SetTitleByText(this.ActivitySignData.GetTitle());
   }
   OnRefreshView() {
     this.jqe();
-  }
-  OnTimer(i) {
-    this.FNe();
   }
   jqe() {
     for (let i = 0; i < SIGN_DAY_COUNT; i++) {
@@ -73,14 +82,17 @@ class ActivitySubViewSevenDayVersionSign extends ActivitySubViewBase_1.ActivityS
         ((e = this.ItemList[i]) && e.RefreshByData(t[0], r, i));
     }
   }
-  FNe() {
-    var [i, e] = this.GetTimeVisibleAndRemainTime();
+  OnTimer(i) {
+    var [e, t] = this.GetTimeVisibleAndRemainTime();
+    this.RefreshTimerText(e, t);
+  }
+  RefreshTimerText(i, e) {
     this.LNe.SetTimeTextVisible(i), i && this.LNe.SetTimeTextByText(e);
   }
-  TFe(i) {
+  F3e(i) {
     return (
       this.ActivitySignData.GetRewardStateByDay(i) ===
-      Protocol_1.Aki.Protocol.D0s.j0s
+      Protocol_1.Aki.Protocol.jps.hMs
     );
   }
 }

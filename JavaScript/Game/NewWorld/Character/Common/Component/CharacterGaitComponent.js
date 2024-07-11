@@ -29,21 +29,21 @@ let CharacterGaitComponent = class CharacterGaitComponent extends EntityComponen
     super(...arguments),
       (this.Hte = void 0),
       (this.Gce = void 0),
-      (this.mbr = void 0);
+      (this.HBr = void 0);
   }
   OnStart() {
     return (
       (this.Hte = this.Entity.GetComponent(3)),
-      (this.Gce = this.Entity.GetComponent(161)),
-      (this.mbr = this.Entity.GetComponent(158)),
-      !(!this.Hte || !this.Gce || !this.mbr)
+      (this.Gce = this.Entity.GetComponent(163)),
+      (this.HBr = this.Entity.GetComponent(160)),
+      !(!this.Hte || !this.Gce || !this.HBr)
     );
   }
   OnTick(e) {
     var t, i;
     this.Hte.IsAutonomousProxy &&
-      ((t = this.mbr.MoveState),
-      (i = this.mbr.PositionState),
+      ((t = this.HBr.MoveState),
+      (i = this.HBr.PositionState),
       this.Gce.HasMoveInput || this.UpdateMoveReleasing(i, t));
   }
   UpdateMoveReleasing(e, t) {
@@ -53,7 +53,7 @@ let CharacterGaitComponent = class CharacterGaitComponent extends EntityComponen
         case CharacterUnifiedStateTypes_1.ECharMoveState.RunStop:
         case CharacterUnifiedStateTypes_1.ECharMoveState.SprintStop:
           this.Gce.Speed < STOP_SPEED &&
-            this.mbr.SetMoveState(
+            this.HBr.SetMoveState(
               CharacterUnifiedStateTypes_1.ECharMoveState.Other,
             );
           break;
@@ -62,9 +62,9 @@ let CharacterGaitComponent = class CharacterGaitComponent extends EntityComponen
       }
   }
   SetRunStop() {
-    switch (this.mbr.MoveState) {
+    switch (this.HBr.MoveState) {
       case CharacterUnifiedStateTypes_1.ECharMoveState.Walk:
-        this.mbr.SetMoveState(
+        this.HBr.SetMoveState(
           CharacterUnifiedStateTypes_1.ECharMoveState.WalkStop,
         );
         break;
@@ -75,17 +75,17 @@ let CharacterGaitComponent = class CharacterGaitComponent extends EntityComponen
         this.Gce.Speed <
         this.Gce.MovementData.FaceDirection.Standing.SprintSpeed -
           TsBaseRoleConfig_1.tsBaseRoleConfig.MaxRunStopSpeed
-          ? this.mbr.SetMoveState(
+          ? this.HBr.SetMoveState(
               CharacterUnifiedStateTypes_1.ECharMoveState.RunStop,
             )
-          : this.mbr.SetMoveState(
+          : this.HBr.SetMoveState(
               CharacterUnifiedStateTypes_1.ECharMoveState.SprintStop,
             );
     }
   }
 };
 (CharacterGaitComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(49)],
+  [(0, RegisterComponent_1.RegisterComponent)(50)],
   CharacterGaitComponent,
 )),
   (exports.CharacterGaitComponent = CharacterGaitComponent);

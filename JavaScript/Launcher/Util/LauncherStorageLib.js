@@ -6,7 +6,7 @@ const puerts_1 = require("puerts"),
   LauncherLog_1 = require("./LauncherLog");
 var ELauncherStorageGlobalKey;
 !(function (e) {
-  (e[(e.PlayMenuInfo = 0)] = "PlayMenuInfo"),
+  (e[(e.MenuData = 0)] = "MenuData"),
     (e[(e.CacheP4Version = 1)] = "CacheP4Version"),
     (e[(e.PatchP4Version = 2)] = "PatchP4Version"),
     (e[(e.PatchVersion = 3)] = "PatchVersion"),
@@ -97,12 +97,12 @@ class LauncherStorageLib {
   }
   static cde() {
     var e;
-    LauncherStorageLib.Ede ||
+    LauncherStorageLib.Sde ||
       ((e = UE.KismetSystemLibrary.GetProjectSavedDirectory()),
-      (LauncherStorageLib.Ede = e + DBPATH + DBSUFFIX));
+      (LauncherStorageLib.Sde = e + DBPATH + DBSUFFIX));
   }
   static mde() {
-    let r = LauncherStorageLib.Ede,
+    let r = LauncherStorageLib.Sde,
       t = UE.KuroSqliteLibrary.OpenCreateDB(r, USE_THREAD);
     if (!t) {
       LauncherLog_1.LauncherLog.Error("打开DB失败！", ["dbFilePath", r]);
@@ -112,7 +112,7 @@ class LauncherStorageLib {
           ((r = a + DBPATH + e + DBSUFFIX),
           (t = UE.KuroSqliteLibrary.OpenCreateDB(r, USE_THREAD)))
         ) {
-          LauncherStorageLib.Ede = r;
+          LauncherStorageLib.Sde = r;
           break;
         }
       }
@@ -131,7 +131,7 @@ class LauncherStorageLib {
     );
   }
   static Ide() {
-    var e = LauncherStorageLib.Ede,
+    var e = LauncherStorageLib.Sde,
       r = `create table if not exists ${TABLENAME}(key text primary key not null , value text not null)`,
       e = UE.KuroSqliteLibrary.Execute(e, r);
     return (
@@ -139,7 +139,7 @@ class LauncherStorageLib {
     );
   }
   static fde(e) {
-    var r = LauncherStorageLib.Ede,
+    var r = LauncherStorageLib.Sde,
       e = `SELECT value FROM ${TABLENAME} WHERE key ='${e}'`,
       t = (0, puerts_1.$ref)(void 0),
       r = UE.KuroSqliteLibrary.QueryValue(r, e, t);
@@ -150,14 +150,14 @@ class LauncherStorageLib {
         : [!0, (0, puerts_1.$unref)(t)];
   }
   static vde(e, r) {
-    var t = LauncherStorageLib.Ede,
+    var t = LauncherStorageLib.Sde,
       e = `insert into ${TABLENAME} (key,value) values('${e}' , '${r}') on CONFLICT(key) do update set value = '${r}'`;
     return USE_THREAD
       ? (UE.KuroSqliteLibrary.ExecuteAsync(t, e), !0)
       : UE.KuroSqliteLibrary.Execute(t, e);
   }
   static Mde(e) {
-    var r = LauncherStorageLib.Ede,
+    var r = LauncherStorageLib.Sde,
       e = `delete from ${TABLENAME} where key = '${e}'`;
     return USE_THREAD
       ? (UE.KuroSqliteLibrary.ExecuteAsync(r, e), !0)
@@ -208,7 +208,7 @@ class LauncherStorageLib {
     }
   }
 }
-((exports.LauncherStorageLib = LauncherStorageLib).Ede = void 0),
+((exports.LauncherStorageLib = LauncherStorageLib).Sde = void 0),
   (LauncherStorageLib.gU = !1),
   (LauncherStorageLib.Dde = (e, r) => {
     if (void 0 === r) return "___undefined___";

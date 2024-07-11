@@ -16,15 +16,15 @@ const UE = require("ue"),
 class ActivityRunSuccessView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.w2e = void 0),
-      (this.B2e = void 0),
+      (this.$Fe = void 0),
+      (this.YFe = void 0),
       (this.ButtonMap = void 0),
-      (this.b2e = () => {
+      (this.JFe = () => {
         ActivityRunController_1.ActivityRunController.RequestTransToParkourChallenge(
-          this.B2e.CurrentChallengeId,
+          this.YFe.CurrentChallengeId,
         );
       }),
-      (this.q2e = () => {
+      (this.zFe = () => {
         this.CloseMe();
       });
   }
@@ -44,12 +44,12 @@ class ActivityRunSuccessView extends UiViewBase_1.UiViewBase {
     ];
   }
   async OnBeforeStartAsync() {
-    (this.ButtonMap = new Map()), await this.G2e();
+    (this.ButtonMap = new Map()), await this.ZFe();
   }
-  async G2e() {
+  async ZFe() {
     this.GetItem(5)?.SetUIActive(!1);
-    var e = this.k2e(this.GetItem(5), 0, this.q2e),
-      i = this.k2e(this.GetItem(5), 1, this.b2e),
+    var e = this.i3e(this.GetItem(5), 0, this.zFe),
+      i = this.i3e(this.GetItem(5), 1, this.JFe),
       e = (await Promise.all([e, i]), this.ButtonMap.get(0)),
       i = this.ButtonMap.get(1);
     e.SetBtnText("Leave"),
@@ -59,7 +59,7 @@ class ActivityRunSuccessView extends UiViewBase_1.UiViewBase {
       ),
       i.SetBtnText("ChallengeAgain");
   }
-  async k2e(e, i, t) {
+  async i3e(e, i, t) {
     var s = this.GetItem(5),
       r = this.GetItem(4),
       s = LguiUtil_1.LguiUtil.DuplicateActor(s.GetOwner(), r),
@@ -67,38 +67,38 @@ class ActivityRunSuccessView extends UiViewBase_1.UiViewBase {
     this.ButtonMap.set(i, r), await r.InitializeAsync(s, t), r.SetActive(!0);
   }
   OnStart() {
-    this.B2e = this.OpenParam;
+    this.YFe = this.OpenParam;
   }
   OnBeforeShow() {
-    this.O2e(), this.Q2e(), this.X2e(), this.$2e(), this.N2e();
+    this.t3e(), this.l3e(), this._3e(), this.u3e(), this.e3e();
   }
-  F2e() {
-    TimerSystem_1.TimerSystem.Has(this.w2e) &&
-      TimerSystem_1.TimerSystem.Remove(this.w2e),
-      (this.w2e = void 0);
+  o3e() {
+    TimerSystem_1.TimerSystem.Has(this.$Fe) &&
+      TimerSystem_1.TimerSystem.Remove(this.$Fe),
+      (this.$Fe = void 0);
   }
-  N2e() {
+  e3e() {
     let e = LEAVETIME + 1;
-    this.w2e = TimerSystem_1.TimerSystem.Forever(() => {
+    this.$Fe = TimerSystem_1.TimerSystem.Forever(() => {
       e <= 0
-        ? (TimerSystem_1.TimerSystem.Remove(this.w2e), this.q2e())
+        ? (TimerSystem_1.TimerSystem.Remove(this.$Fe), this.zFe())
         : this.ButtonMap.get(0).SetFloatText(
             "InstanceDungeonLeftTimeToAutoLeave",
             (e--).toString(),
           );
     }, CommonDefine_1.MILLIONSECOND_PER_SECOND);
   }
-  $2e() {
-    var e = TimeUtil_1.TimeUtil.GetTimeString(this.B2e.CurrentTime);
+  u3e() {
+    var e = TimeUtil_1.TimeUtil.GetTimeString(this.YFe.CurrentTime);
     this.GetText(10).SetText(e);
   }
   OnBeforeDestroy() {
-    this.F2e();
+    this.o3e();
   }
-  X2e() {
-    this.GetItem(9).SetUIActive(this.B2e.IfNewRecord);
+  _3e() {
+    this.GetItem(9).SetUIActive(this.YFe.IfNewRecord);
   }
-  O2e() {
+  t3e() {
     this.GetItem(12).SetUIActive(!0),
       this.GetItem(13).SetUIActive(!0),
       this.GetText(14).SetUIActive(!1);
@@ -110,8 +110,8 @@ class ActivityRunSuccessView extends UiViewBase_1.UiViewBase {
     e.SetColor(UE.Color.FromHex("FFFFFFFF")),
       e.ShowTextNew("GenericPromptTypes_3_GeneralText");
   }
-  Q2e() {
-    this.GetText(8).SetText(this.B2e.CurrentScore.toString());
+  l3e() {
+    this.GetText(8).SetText(this.YFe.CurrentScore.toString());
   }
 }
 exports.ActivityRunSuccessView = ActivityRunSuccessView;

@@ -21,14 +21,14 @@ class RogueShopTabView extends UiTabViewBase_1.UiTabViewBase {
       (this.PayShopGoodsList = []),
       (this.CurrentSelectTabId = 0),
       (this.LoopScrollView = void 0),
-      (this._Fi = 0),
+      (this._3i = 0),
       (this.TDe = void 0),
-      (this.tFi = (e, t, i) => {
-        this._Fi === t &&
+      (this.t3i = (e, t, i) => {
+        this._3i === t &&
           this.CurrentSelectTabId === i &&
           this.LoopScrollView.RefreshAllGridProxies();
       }),
-      (this.iFi = (e) => {
+      (this.i3i = (e) => {
         this.RefreshLoopScroll(this.CurrentSelectTabId);
       }),
       (this.InitItem = () => {
@@ -39,7 +39,7 @@ class RogueShopTabView extends UiTabViewBase_1.UiTabViewBase {
       }),
       (this.pqe = (e) => {
         var t = ModelManager_1.ModelManager.PayShopModel.GetPayShopTabIdList(
-          this._Fi,
+          this._3i,
         );
         (this.CurrentSelectTabId = t[e]),
           this.RefreshLoopScroll(this.CurrentSelectTabId);
@@ -62,21 +62,21 @@ class RogueShopTabView extends UiTabViewBase_1.UiTabViewBase {
   AddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.GoodsSoldOut,
-      this.iFi,
+      this.i3i,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.RefreshGoods,
-        this.tFi,
+        this.t3i,
       );
   }
   RemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.GoodsSoldOut,
-      this.iFi,
+      this.i3i,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.RefreshGoods,
-        this.tFi,
+        this.t3i,
       );
   }
   OnStart() {
@@ -105,7 +105,7 @@ class RogueShopTabView extends UiTabViewBase_1.UiTabViewBase {
   }
   RefreshLoopScroll(e) {
     (this.PayShopGoodsList =
-      ModelManager_1.ModelManager.PayShopModel.GetPayShopTabData(this._Fi, e)),
+      ModelManager_1.ModelManager.PayShopModel.GetPayShopTabData(this._3i, e)),
       this.LoopScrollView.ReloadProxyData(
         this.GetProxyData,
         this.PayShopGoodsList.length,
@@ -117,46 +117,46 @@ class RogueShopTabView extends UiTabViewBase_1.UiTabViewBase {
       this.GetItem(8).SetUIActive(this.PayShopGoodsList.length <= 0);
   }
   OnAfterShow() {
-    this._Fi = this.Params;
+    this._3i = this.Params;
     let e = 0;
     if (this.ExtraParams) {
       const i = this.ExtraParams;
       var t = ModelManager_1.ModelManager.PayShopModel.GetPayShopTabIdList(
-        this._Fi,
+        this._3i,
       );
       (e = t.findIndex((e) => e === i)),
         (e = MathUtils_1.MathUtils.Clamp(e, 0, t.length - 1));
     }
     this.GetText(5).SetUIActive(!1),
-      this.t7e(e),
-      this.Tit(),
+      this.CHe(e),
+      this.kot(),
       this.OnDiscountShopAfterShow();
   }
   OnDiscountShopAfterShow() {}
-  Tit() {
+  kot() {
     this.TDe = TimerSystem_1.TimerSystem.Forever(() => {
-      this.oFi();
+      this.o3i();
     }, TIMEGAP);
   }
-  p7e() {
+  xHe() {
     void 0 !== this.TDe &&
       (TimerSystem_1.TimerSystem.Remove(this.TDe), (this.TDe = void 0));
   }
-  oFi() {
+  o3i() {
     EventSystem_1.EventSystem.Emit(
       EventDefine_1.EEventName.DiscountShopTimerRefresh,
     );
   }
-  t7e(i) {
+  CHe(i) {
     const s = ModelManager_1.ModelManager.PayShopModel.GetPayShopTabIdList(
-      this._Fi,
+      this._3i,
     );
     var e = s.length;
     this.TabGroup.ResetLastSelectTab();
     this.TabGroup.RefreshTabItemByLength(e, () => {
       var e, t;
       for ([e, t] of this.TabGroup.GetTabItemMap())
-        t.UpdateView(this._Fi, s[e]), t.BindRedDot("PayShopTab", s[e]);
+        t.UpdateView(this._3i, s[e]), t.BindRedDot("PayShopTab", s[e]);
       this.TabGroup.SelectToggleByIndex(i, !0);
     });
   }
@@ -164,7 +164,7 @@ class RogueShopTabView extends UiTabViewBase_1.UiTabViewBase {
     "number" != typeof e && this.RefreshLoopScroll(this.CurrentSelectTabId);
   }
   OnBeforeHide() {
-    this.p7e();
+    this.xHe();
   }
   OnBeforeDestroy() {
     this.TabGroup.Destroy(), this.LoopScrollView.ClearGridProxies();

@@ -2,44 +2,43 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PcAndGamepadProgressBar = void 0);
 const UE = require("ue"),
-  ModelManager_1 = require("../../../Manager/ModelManager"),
+  Info_1 = require("../../../../Core/Common/Info"),
   UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
 class ProgressBar extends UiPanelBase_1.UiPanelBase {
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [[0, UE.UITexture]];
   }
-  SetPercent(e) {
-    this.GetTexture(0)?.SetFillAmount(e);
+  SetPercent(s) {
+    this.GetTexture(0)?.SetFillAmount(s);
   }
 }
 class PcAndGamepadProgressBar {
   constructor() {
-    (this.Sxo = void 0), (this.Exo = void 0);
+    (this.pwo = void 0), (this.vwo = void 0);
   }
-  async Init(e, s) {
-    (this.Sxo = new ProgressBar()),
-      (this.Exo = new ProgressBar()),
+  async Init(s, e) {
+    (this.pwo = new ProgressBar()),
+      (this.vwo = new ProgressBar()),
       await Promise.all([
-        this.Sxo.CreateByActorAsync(e.GetOwner()),
-        this.Exo.CreateByActorAsync(s.GetOwner()),
+        this.pwo.CreateByActorAsync(s.GetOwner()),
+        this.vwo.CreateByActorAsync(e.GetOwner()),
       ]),
       this.SetProgressPercent(0);
   }
-  SetProgressPercent(e) {
-    (ModelManager_1.ModelManager.PlatformModel?.IsGamepad()
-      ? this.Exo
-      : this.Sxo
-    )?.SetPercent(e),
-      this.Wgi();
+  SetProgressPercent(s) {
+    this.SetPercent(s), this.W0i();
   }
-  SetProgressVisible(e) {
-    e ? this.Wgi() : (this.Sxo?.SetActive(!1), this.Exo?.SetActive(!1));
+  SetPercent(s) {
+    (Info_1.Info.IsInGamepad() ? this.vwo : this.pwo)?.SetPercent(s);
   }
-  Wgi() {
-    var e = ModelManager_1.ModelManager.PlatformModel.IsGamepad(),
-      s = !e;
-    this.Sxo?.GetActive() !== s && this.Sxo?.SetActive(s),
-      this.Exo?.GetActive() !== e && this.Exo?.SetActive(e);
+  SetProgressVisible(s) {
+    s ? this.W0i() : (this.pwo?.SetActive(!1), this.vwo?.SetActive(!1));
+  }
+  W0i() {
+    var s = Info_1.Info.IsInGamepad(),
+      e = !s;
+    this.pwo?.GetActive() !== e && this.pwo?.SetActive(e),
+      this.vwo?.GetActive() !== s && this.vwo?.SetActive(s);
   }
 }
 exports.PcAndGamepadProgressBar = PcAndGamepadProgressBar;

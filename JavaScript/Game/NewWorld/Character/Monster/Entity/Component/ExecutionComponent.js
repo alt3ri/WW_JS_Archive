@@ -36,23 +36,23 @@ const Log_1 = require("../../../../../../Core/Common/Log"),
 let ExecutionComponent = class ExecutionComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments),
-      (this.jtn = void 0),
-      (this.Wtn = void 0),
-      (this.SJi = void 0),
-      (this.Ktn = void 0),
-      (this.Qtn = (e, t) => {
-        var o = this.Entity.GetComponent(178);
+      (this.ytn = void 0),
+      (this.Itn = void 0),
+      (this.vzi = void 0),
+      (this.Ttn = void 0),
+      (this.Ltn = (e, t) => {
+        var o = this.Entity.GetComponent(181);
         o
-          ? ((this.SJi = o.GetInteractController()),
-            this.SJi
+          ? ((this.vzi = o.GetInteractController()),
+            this.vzi
               ? t
-                ? this.Xtn()
-                  ? this.$tn()
+                ? this.Dtn()
+                  ? this.Rtn()
                   : Log_1.Log.CheckDebug() &&
                     Log_1.Log.Debug("Battle", 4, "队伍内没有符合处决条件的角色")
-                : this.Wtn &&
-                  (this.SJi.RemoveClientInteractOption(this.Wtn),
-                  (this.Wtn = void 0))
+                : this.Itn &&
+                  (this.vzi.RemoveClientInteractOption(this.Itn),
+                  (this.Itn = void 0))
               : Log_1.Log.CheckError() &&
                 Log_1.Log.Error("Battle", 4, "Can not find interactController"))
           : Log_1.Log.CheckError() &&
@@ -67,12 +67,12 @@ let ExecutionComponent = class ExecutionComponent extends EntityComponent_1.Enti
     return !0;
   }
   OnActivate() {
-    var e = this.Entity.GetComponent(185),
+    var e = this.Entity.GetComponent(188),
       t = this.Entity.GetComponent(0),
       o = t.GetMonsterComponent().FightConfigId;
-    (this.Ktn =
+    (this.Ttn =
       MonsterBattleConfById_1.configMonsterBattleConfById.GetConfig(o)),
-      (this.jtn = e.ListenForTagAddOrRemove(-121513115, this.Qtn)),
+      (this.ytn = e.ListenForTagAddOrRemove(-121513115, this.Ltn)),
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "Battle",
@@ -81,18 +81,18 @@ let ExecutionComponent = class ExecutionComponent extends EntityComponent_1.Enti
           ["EntityId", this.Entity.Id],
           ["CreatureDataId", t.GetCreatureDataId()],
           ["PbDataId", t.GetPbDataId()],
-          ["ExecutionId", this.Ktn.ExecutionId],
+          ["ExecutionId", this.Ttn.ExecutionId],
         );
   }
-  Ytn() {
+  Utn() {
     var e =
       ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity.Entity.GetComponent(
         0,
       )?.GetPbDataId();
-    for (const r of this.Ktn.ExecutionId) {
+    for (const r of this.Ttn.ExecutionId) {
       var t = ExecutionConfById_1.configExecutionConfById.GetConfig(r);
       if (t) {
-        if (t.ExecutionRoleId === e || this.Jtn(e, t.ExecutionRoleId)) return t;
+        if (t.ExecutionRoleId === e || this.Atn(e, t.ExecutionRoleId)) return t;
         for (const i of ModelManager_1.ModelManager.SceneTeamModel.GetTeamItems()) {
           var o = i.GetConfigId;
           if (o > MAX_CHARACTERID) {
@@ -120,14 +120,14 @@ let ExecutionComponent = class ExecutionComponent extends EntityComponent_1.Enti
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug("Battle", 4, "不存在合适的处决配置项", [
         "MonsterBattleConfigId",
-        this.Ktn.Id,
+        this.Ttn.Id,
       ]);
   }
-  $tn() {
+  Rtn() {
     var e,
       t,
       o = new LevelGameplayActionsDefine_1.ActionExecution(),
-      n = this.Ytn(),
+      n = this.Utn(),
       r = new CodeDefineLevelConditionInfo_1.LevelConditionGroup();
     r.Type = 0;
     for (const i of n.LimitExecutionTags)
@@ -139,18 +139,18 @@ let ExecutionComponent = class ExecutionComponent extends EntityComponent_1.Enti
           e),
         (t.IsContain = !1),
         r.Conditions.push(t));
-    this.Wtn = this.SJi.AddClientInteractOption(
+    this.Itn = this.vzi.AddClientInteractOption(
       o,
       r,
       "Direct",
-      this.Ktn.ExecutionRadius,
+      this.Ttn.ExecutionRadius,
       void 0,
       1,
     );
   }
-  Xtn() {
+  Dtn() {
     var e = ModelManager_1.ModelManager.SceneTeamModel.GetTeamItems();
-    for (const n of this.Ktn.ExecutionId) {
+    for (const n of this.Ttn.ExecutionId) {
       var t = ExecutionConfById_1.configExecutionConfById.GetConfig(n);
       if (t) {
         if (
@@ -177,23 +177,23 @@ let ExecutionComponent = class ExecutionComponent extends EntityComponent_1.Enti
     return !1;
   }
   OnEnd() {
-    return this.jtn?.EndTask(), !0;
+    return this.ytn?.EndTask(), !0;
   }
   StartExecution() {
     let t = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
     var e = t.Entity.GetComponent(0)?.GetPbDataId();
     let o = !1;
-    for (const l of this.Ktn.ExecutionId) {
+    for (const l of this.Ttn.ExecutionId) {
       var n = ExecutionConfById_1.configExecutionConfById.GetConfig(l);
       if (n) {
-        if (n.ExecutionRoleId === e || this.Jtn(e, n.ExecutionRoleId)) {
+        if (n.ExecutionRoleId === e || this.Atn(e, n.ExecutionRoleId)) {
           if (
-            !this.ztn(
+            !this.Ptn(
               ModelManager_1.ModelManager.SceneTeamModel.GetCurrentTeamItem.GetCreatureDataId(),
             )
           )
             return;
-          this.Ztn(t.Entity, n), (o = !0);
+          this.xtn(t.Entity, n), (o = !0);
           break;
         }
         var r = ModelManager_1.ModelManager.SceneTeamModel.GetTeamItem(
@@ -201,16 +201,16 @@ let ExecutionComponent = class ExecutionComponent extends EntityComponent_1.Enti
           { ParamType: 0 },
         )?.GetCreatureDataId();
         if (r) {
-          if (!this.ztn(r)) return;
-          SceneTeamController_1.SceneTeamController.RequestChangeRole(
-            r,
-            !1,
-            !0,
-          ),
+          if (!this.Ptn(r)) return;
+          SceneTeamController_1.SceneTeamController.RequestChangeRole(r, {
+            FilterSameRole: !1,
+            GoDownWaitSkillEnd: !0,
+            ForceInheritTransform: !1,
+          }),
             (t = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity),
-            this.ein(t.Entity),
-            this.Ztn(t.Entity, n) ||
-              this.tin(
+            this.wtn(t.Entity),
+            this.xtn(t.Entity, n) ||
+              this.btn(
                 ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity
                   .Entity,
               ),
@@ -226,24 +226,27 @@ let ExecutionComponent = class ExecutionComponent extends EntityComponent_1.Enti
               a = ModelManager_1.ModelManager.SceneTeamModel.GetTeamItem(i, {
                 ParamType: 0,
               })?.GetCreatureDataId();
-              if (!this.ztn(a)) return;
+              if (!this.Ptn(a)) return;
               let e = !1;
               (t = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity),
                 ModelManager_1.ModelManager.SceneTeamModel.GetCurrentTeamItem.GetCreatureDataId() !==
                   a &&
                   (SceneTeamController_1.SceneTeamController.RequestChangeRole(
                     a,
-                    !1,
-                    !0,
+                    {
+                      FilterSameRole: !1,
+                      GoDownWaitSkillEnd: !0,
+                      ForceInheritTransform: !1,
+                    },
                   ),
                   (t =
                     ModelManager_1.ModelManager.SceneTeamModel
                       .GetCurrentEntity),
-                  this.ein(t.Entity),
+                  this.wtn(t.Entity),
                   (e = !0)),
-                !this.Ztn(t.Entity, n) &&
+                !this.xtn(t.Entity, n) &&
                   e &&
-                  this.tin(
+                  this.btn(
                     ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity
                       .Entity,
                   ),
@@ -263,17 +266,17 @@ let ExecutionComponent = class ExecutionComponent extends EntityComponent_1.Enti
       (Log_1.Log.CheckError() &&
         Log_1.Log.Error("Battle", 4, "Execution can not find execution role", [
           "MonsterBattleConfigId",
-          this.Ktn.Id,
+          this.Ttn.Id,
         ]));
   }
-  Jtn(e, t) {
+  Atn(e, t) {
     return !(
       t <= MAX_CHARACTERID ||
       !(t = ConfigManager_1.ConfigManager.RoleConfig.GetTrialRoleConfig(t)) ||
       t.ParentId !== e
     );
   }
-  ztn(e) {
+  Ptn(e) {
     var t = ModelManager_1.ModelManager.SceneTeamModel.GetTeamItem(e, {
       ParamType: 3,
     });
@@ -295,7 +298,7 @@ let ExecutionComponent = class ExecutionComponent extends EntityComponent_1.Enti
           ]),
         !1);
   }
-  Ztn(e, t) {
+  xtn(e, t) {
     t = e
       .GetComponent(33)
       ?.BeginSkill(t.ExecutionSkillId, {
@@ -314,15 +317,15 @@ let ExecutionComponent = class ExecutionComponent extends EntityComponent_1.Enti
       t ?? !1
     );
   }
-  ein(e) {
-    e = e.GetComponent(157);
+  wtn(e) {
+    e = e.GetComponent(159);
     e?.AddBuff(CharacterBuffIds_1.buffId.ChangeRoleBuff, {
       InstigatorId: e?.CreatureDataId,
       Reason: "处决换人",
     });
   }
-  tin(e) {
-    e.GetComponent(157)?.RemoveBuff(
+  btn(e) {
+    e.GetComponent(159)?.RemoveBuff(
       CharacterBuffIds_1.buffId.ChangeRoleBuff,
       -1,
       "处决换人失败",
@@ -330,7 +333,7 @@ let ExecutionComponent = class ExecutionComponent extends EntityComponent_1.Enti
   }
 };
 (ExecutionComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(76)],
+  [(0, RegisterComponent_1.RegisterComponent)(78)],
   ExecutionComponent,
 )),
   (exports.ExecutionComponent = ExecutionComponent);

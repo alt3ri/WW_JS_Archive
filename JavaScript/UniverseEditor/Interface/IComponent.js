@@ -51,7 +51,10 @@ var EInteractPlayerDiractionType,
   EJigsawCompleteCondition,
   EExploreSkillInteractType,
   EFanInteractType,
-  EFanGearType;
+  EFanGearType,
+  EAiGearStrategy,
+  EPickInteraction,
+  EDetectionFrequency;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.EPatrolCycleMode =
     exports.EPatrolMoveState =
@@ -104,7 +107,10 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.componentInterfaceMap =
     exports.componentMap =
       void 0),
-  (exports.levelPrefabBpPathConfig =
+  (exports.EDetectionFrequency =
+    exports.EPickInteraction =
+    exports.EAiGearStrategy =
+    exports.levelPrefabBpPathConfig =
     exports.EFanGearType =
     exports.EFanInteractType =
     exports.EExploreSkillInteractType =
@@ -230,6 +236,16 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     PortalComponent: void 0,
     EffectAreaComponent: void 0,
     PhysicsConstraintComponent: void 0,
+    FollowShooterComponent: void 0,
+    ConnectorComponent: void 0,
+    CharacterConnectorComponent: void 0,
+    HitComponent: void 0,
+    DynamicPortalCreatorComponent: void 0,
+    AiGearStrategyComponent: void 0,
+    PickInteractComponent: void 0,
+    ClientTriggerComponent: void 0,
+    LocationSafetyComponent: void 0,
+    BatchBulletCasterComponent: void 0,
   }),
   (exports.componentInterfaceMap = exports.componentMap),
   (exports.componentList = Object.keys(exports.componentInterfaceMap).sort()),
@@ -510,7 +526,8 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (function (o) {
     (o.ActivateAllCorrectPiece = "ActivateAllCorrectPiece"),
       (o.ActivateSpecifiedPiece = "ActivateSpecifiedPiece"),
-      (o.PutInTheSpecifiedPiece = "PutInTheSpecifiedPiece");
+      (o.PutInTheSpecifiedPiece = "PutInTheSpecifiedPiece"),
+      (o.ActivateRenjuPiece = "ActivateRenjuPiece");
   })(
     (EJigsawCompleteCondition =
       exports.EJigsawCompleteCondition ||
@@ -535,5 +552,20 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
       "/Game/Aki/GamePlay/InteractiveObject/BP_InteractedBox.BP_InteractedBox_C",
     PhysicsItem:
       "/Game/Aki/GamePlay/InteractiveObject/BP_PhysicsItem.BP_PhysicsItem_C",
-  });
+  }),
+  ((EAiGearStrategy =
+    exports.EAiGearStrategy || (exports.EAiGearStrategy = {})).RenjuStrategy =
+    "RenjuStrategy"),
+  ((EPickInteraction =
+    exports.EPickInteraction ||
+    (exports.EPickInteraction = {})).ChessmanInteract = "ChessmanInteract"),
+  (function (o) {
+    (o.Low = "Low"),
+      (o.Medium = "Medium"),
+      (o.High = "High"),
+      (o.SuperHigh = "SuperHigh");
+  })(
+    (EDetectionFrequency =
+      exports.EDetectionFrequency || (exports.EDetectionFrequency = {})),
+  );
 //# sourceMappingURL=IComponent.js.map

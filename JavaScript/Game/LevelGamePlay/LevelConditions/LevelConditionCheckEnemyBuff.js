@@ -23,7 +23,7 @@ class LevelConditionCheckEnemyBuff extends LevelGeneralBase_1.LevelConditionBase
           ? ((o = o[0]),
             0 <
               (EntitySystem_1.EntitySystem.Get(o)
-                ?.GetComponent(157)
+                ?.GetComponent(159)
                 ?.GetBuffTotalStackById(t) ?? 0))
           : (Log_1.Log.CheckError() &&
               Log_1.Log.Error(

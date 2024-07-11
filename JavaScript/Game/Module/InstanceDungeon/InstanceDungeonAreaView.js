@@ -9,7 +9,7 @@ const UE = require("ue"),
 class InstanceDungeonAreaView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.Ije = () => {
+      (this.qWe = () => {
         var e;
         this.GetText(0) &&
           (e =
@@ -28,7 +28,7 @@ class InstanceDungeonAreaView extends UiViewBase_1.UiViewBase {
     });
   }
   OnBeforeShow() {
-    this.Ije();
+    this.qWe();
   }
 }
 exports.InstanceDungeonAreaView = InstanceDungeonAreaView;

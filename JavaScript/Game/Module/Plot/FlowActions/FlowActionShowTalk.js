@@ -21,29 +21,29 @@ class FlowActionShowTalk extends FlowActionBase_1.FlowActionBase {
     ) {
       case "LevelA":
       case "LevelB":
-        this.l$i();
+        this.aYi();
         break;
       case "LevelC":
-        this._$i();
+        this.hYi();
         break;
       case "LevelD":
       case "Prompt":
         FormationDataController_1.FormationDataController.GlobalIsInFight &&
         ModelManager_1.ModelManager.PlotModel.PlotConfig.SkipTalkWhenFighting
           ? this.FinishExecute(!0)
-          : this._$i();
+          : this.hYi();
     }
   }
-  _$i() {
+  hYi() {
     var e = this.ActionInfo.Params,
       t = this.Context,
       s = this.Runner;
     this.FinishExecute(!0, !1), s.FlowShowTalk.Start(e, t);
   }
-  l$i() {
+  aYi() {
     var e, t, s;
     this.Context.IsBackground
-      ? this._$i()
+      ? this.hYi()
       : (e = this.ActionInfo.Params)?.SequenceDataAsset
         ? ((t = this.Runner),
           (s = this.Context),

@@ -31,9 +31,9 @@ const AudioDefine_1 = require("../../../../../Core/Audio/AudioDefine"),
 let CharacterTimeScaleComponent = class CharacterTimeScaleComponent extends PawnTimeScaleComponent_1.PawnTimeScaleComponent {
   constructor() {
     super(...arguments),
-      (this.BKr = 1),
-      (this.bKr = 1),
-      (this.qKr = 1),
+      (this.dKr = 1),
+      (this.CKr = 1),
+      (this.gKr = 1),
       (this.TimeStopEntitySet = new Set());
   }
   OnStart() {
@@ -67,7 +67,7 @@ let CharacterTimeScaleComponent = class CharacterTimeScaleComponent extends Pawn
             n.EndTime - n.StartTime >=
             AudioDefine_1.ENTITY_TIMESCALE_ENABLE_THRESHOLD
               ? i
-              : this.bKr);
+              : this.CKr);
         break;
       }
       this.TimeScaleMap.delete(n.Id), this.TimeScaleList.Pop();
@@ -78,9 +78,9 @@ let CharacterTimeScaleComponent = class CharacterTimeScaleComponent extends Pawn
         (!this.ActorComp ||
           this.ActorComp.IsMoveAutonomousProxy ||
           (a && a.IsDead()) ||
-          ((i = this.qKr), (r = this.qKr)),
+          ((i = this.gKr), (r = this.gKr)),
         r * this.Entity.TimeDilation);
-    a !== this.BKr &&
+    a !== this.dKr &&
       ((s = this.ActorComp?.Actor)
         ? (AudioSystem_1.AudioSystem.SetRtpcValue(
             "entity_time_scale_combat",
@@ -88,13 +88,13 @@ let CharacterTimeScaleComponent = class CharacterTimeScaleComponent extends Pawn
             { Actor: s },
           ),
           a < AudioDefine_1.ENTITY_TIMESCALE_PAUSE_THRESHOLD &&
-            this.BKr >= AudioDefine_1.ENTITY_TIMESCALE_PAUSE_THRESHOLD &&
+            this.dKr >= AudioDefine_1.ENTITY_TIMESCALE_PAUSE_THRESHOLD &&
             AudioSystem_1.AudioSystem.PostEvent("time_scale_pause", s))
         : a >= AudioDefine_1.ENTITY_TIMESCALE_PAUSE_THRESHOLD &&
-          this.BKr < AudioDefine_1.ENTITY_TIMESCALE_PAUSE_THRESHOLD &&
+          this.dKr < AudioDefine_1.ENTITY_TIMESCALE_PAUSE_THRESHOLD &&
           AudioSystem_1.AudioSystem.PostEvent("time_scale_resume", s)),
-      (this.BKr = a),
-      (this.bKr = r),
+      (this.dKr = a),
+      (this.CKr = r),
       i !== this.TimeScaleInternal &&
         (Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
@@ -116,11 +116,11 @@ let CharacterTimeScaleComponent = class CharacterTimeScaleComponent extends Pawn
         this.Entity.SetTimeDilation(this.TimeDilation));
   }
   SetMoveSyncTimeScale(e) {
-    this.qKr = e;
+    this.gKr = e;
   }
 };
 (CharacterTimeScaleComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(162)],
+  [(0, RegisterComponent_1.RegisterComponent)(164)],
   CharacterTimeScaleComponent,
 )),
   (exports.CharacterTimeScaleComponent = CharacterTimeScaleComponent);

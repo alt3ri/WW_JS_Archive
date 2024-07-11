@@ -30,10 +30,12 @@ class BulletMoveInfo {
       (this.V0 = Vector_1.Vector.Create()),
       (this.MinFollowHeight = 0),
       (this.SpeedFollowTarget = 1),
+      (this.FollowTargetBottom = !0),
       (this.LocationFollowTarget = Vector_1.Vector.Create()),
       (this.ObstaclesOffset = Vector_1.Vector.Create()),
       (this.LastFramePosition = Vector_1.Vector.Create()),
-      (this.AimedLineTraceElement = void 0);
+      (this.AimedLineTraceElement = void 0),
+      (this.ActorRotateParabola = !1);
   }
   Clear() {
     this.SocketTransform.Reset(),
@@ -60,12 +62,14 @@ class BulletMoveInfo {
       this.V0.Reset(),
       (this.MinFollowHeight = 0),
       (this.SpeedFollowTarget = 0),
+      (this.FollowTargetBottom = !0),
       this.ObstaclesOffset.Reset(),
       this.LastFramePosition.Reset(),
       BulletTraceElementPool_1.BulletTraceElementPool.RecycleTraceLineElement(
         this.AimedLineTraceElement,
       ),
-      (this.AimedLineTraceElement = void 0);
+      (this.AimedLineTraceElement = void 0),
+      (this.ActorRotateParabola = !1);
   }
 }
 ((exports.BulletMoveInfo = BulletMoveInfo).TempTransform1 =

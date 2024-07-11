@@ -4,22 +4,22 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const LauncherLog_1 = require("../../Util/LauncherLog");
 class HotFixSequencePlayer {
   constructor(e) {
-    (this.HPt = void 0),
-      (this.jPt = void 0),
-      (this.VPt = new Map()),
-      (this.jPt = e),
-      (this.HPt = e.GetOwner());
+    (this.Qxt = void 0),
+      (this.Xxt = void 0),
+      (this.Kxt = new Map()),
+      (this.Xxt = e),
+      (this.Qxt = e.GetOwner());
   }
-  JPt(e) {
-    let t = this.VPt.get(e);
+  twt(e) {
+    let t = this.Kxt.get(e);
     if (!t) {
-      if (!(t = this.HPt.GetSequencePlayContextOfKey(e))) return;
-      (t.bIsAsync = !1), this.VPt.set(e, t);
+      if (!(t = this.Qxt.GetSequencePlayContextOfKey(e))) return;
+      (t.bIsAsync = !1), this.Kxt.set(e, t);
     }
     return t;
   }
   PlaySequence(e, t = void 0) {
-    const i = this.JPt(e);
+    const i = this.twt(e);
     return i
       ? (i.OnFinish.Bind(() => {
           i.OnFinish.Unbind(), t?.();
@@ -32,11 +32,11 @@ class HotFixSequencePlayer {
   StopSequence(e, t = !1, i = void 0) {
     var s, r;
     return !(
-      !this.jPt.LevelSequences.Get(e) ||
-      !(s = this.HPt.GetSequencePlayerByKey(e)) ||
-      !(r = this.VPt.get(e)) ||
+      !this.Xxt.LevelSequences.Get(e) ||
+      !(s = this.Qxt.GetSequencePlayerByKey(e)) ||
+      !(r = this.Kxt.get(e)) ||
       (t &&
-        this.HPt.SequenceJumpToSecondByKey(
+        this.Qxt.SequenceJumpToSecondByKey(
           e,
           s.SequencePlayer.GetDuration().Time,
         ),
@@ -46,10 +46,10 @@ class HotFixSequencePlayer {
     );
   }
   ClearSequence() {
-    this.VPt.clear(),
-      this.HPt.ClearAllSequence(),
-      (this.HPt = void 0),
-      (this.jPt = void 0);
+    this.Kxt.clear(),
+      this.Qxt.ClearAllSequence(),
+      (this.Qxt = void 0),
+      (this.Xxt = void 0);
   }
 }
 exports.HotFixSequencePlayer = HotFixSequencePlayer;

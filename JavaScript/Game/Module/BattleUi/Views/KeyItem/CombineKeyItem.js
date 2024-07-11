@@ -8,7 +8,7 @@ const UE = require("ue"),
   KeyItemBase_1 = require("./KeyItemBase");
 class CombineKeyItem extends KeyItemBase_1.KeyItemBase {
   constructor() {
-    super(...arguments), (this.__t = "");
+    super(...arguments), (this.Tut = ""), (this.LIa = void 0);
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -17,17 +17,19 @@ class CombineKeyItem extends KeyItemBase_1.KeyItemBase {
       [2, UE.UITexture],
     ];
   }
+  Reset() {
+    super.Reset(), (this.LIa = void 0);
+  }
   GetKeyText() {}
   GetKeyTexture() {
     return this.GetTexture(0);
   }
   RefreshAction(t) {
-    super.RefreshAction(t),
-      this.ActionName !== t &&
-        (this.UnBindAction(),
-        (this.ActionName = t),
-        (this.AxisName = void 0),
-        this.BindAction());
+    this.ActionName !== t &&
+      (this.UnBindAction(),
+      (this.ActionName = t),
+      (this.AxisName = void 0),
+      this.BindAction());
     var e =
       InputSettingsManager_1.InputSettingsManager.GetCombinationActionBindingByActionName(
         this.ActionName,
@@ -35,10 +37,10 @@ class CombineKeyItem extends KeyItemBase_1.KeyItemBase {
     if (e) {
       var i = new Map();
       if ((e.GetCurrentPlatformKeyNameMap(i), i))
-        for (var [s, r] of i)
+        for (var [s, n] of i)
           return (
             this.RefreshKey(InputSettings_1.InputSettings.GetKey(s)),
-            this.RefreshSubKey(InputSettings_1.InputSettings.GetKey(r)),
+            this.RefreshSubKey(InputSettings_1.InputSettings.GetKey(n)),
             this.GetTexture(2).SetUIActive(!0),
             void this.GetText(1).SetUIActive(!0)
           );
@@ -51,16 +53,17 @@ class CombineKeyItem extends KeyItemBase_1.KeyItemBase {
   }
   RefreshSubKey(t) {
     var e = t.GetKeyName();
-    if (this.__t !== e) {
-      t = t.GetKeyIconPath();
-      if (!StringUtils_1.StringUtils.IsEmpty(t)) {
-        const i = this.GetTexture(2);
-        i.SetUIActive(!1),
-          this.SetTextureByPath(t, i, void 0, () => {
-            i.SetSizeFromTexture(), i.SetUIActive(!0);
+    if (this.Tut !== e) {
+      const i = t.GetKeyIconPath();
+      if (!StringUtils_1.StringUtils.IsEmpty(i)) {
+        const s = this.GetTexture(2);
+        s.SetUIActive(!1),
+          (this.LIa = i),
+          this.SetTextureByPath(i, s, void 0, () => {
+            this.LIa === i && (s.SetSizeFromTexture(), s.SetUIActive(!0));
           });
       }
-      this.__t = e;
+      this.Tut = e;
     }
   }
   OnSetGray() {

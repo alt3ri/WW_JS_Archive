@@ -9,19 +9,19 @@ const UE = require("ue"),
 class LordGymItem extends UiPanelBase_1.UiPanelBase {
   constructor(e, i) {
     super(),
-      (this.sEi = -1),
-      (this.X3e = void 0),
-      (this.aEi = void 0),
-      (this.hEi = void 0),
+      (this.syi = -1),
+      (this._5e = void 0),
+      (this.ayi = void 0),
+      (this.hyi = void 0),
       (this.ScrollViewDelegate = void 0),
       (this.GridIndex = 0),
       (this.DisplayIndex = 0),
-      (this.lEi = () => {
-        this.X3e && this.X3e(this.sEi);
+      (this.lyi = () => {
+        this._5e && this._5e(this.syi);
       }),
-      (this.T7e = () => !this.aEi || this.aEi(this.sEi)),
-      (this.X3e = e),
-      (this.aEi = i);
+      (this.Lke = () => !this.ayi || this.ayi(this.syi)),
+      (this._5e = e),
+      (this.ayi = i);
   }
   OnRegisterComponent() {
     (this.ComponentRegisterInfos = [
@@ -31,37 +31,37 @@ class LordGymItem extends UiPanelBase_1.UiPanelBase {
       [3, UE.UIItem],
       [4, UE.UIItem],
     ]),
-      (this.BtnBindInfo = [[0, this.lEi]]);
+      (this.BtnBindInfo = [[0, this.lyi]]);
   }
   OnStart() {
-    (this.hEi = this.GetExtendToggle(0)),
-      this.hEi.CanExecuteChange.Bind(this.T7e);
+    (this.hyi = this.GetExtendToggle(0)),
+      this.hyi.CanExecuteChange.Bind(this.Lke);
   }
   OnBeforeDestroy() {
-    (this.X3e = void 0), (this.sEi = -1);
+    (this._5e = void 0), (this.syi = -1);
   }
   Refresh(e, i, t) {
-    this.RefreshByLordId(e), this.hEi.SetToggleState(i ? 1 : 0, !1);
+    this.RefreshByLordId(e), this.hyi.SetToggleState(i ? 1 : 0, !1);
   }
   Clear() {}
   OnSelected(e) {
-    this.hEi.SetToggleState(1, e);
+    this.hyi.SetToggleState(1, e);
   }
   OnDeselected(e) {
-    this.hEi.SetToggleState(0, e);
+    this.hyi.SetToggleState(0, e);
   }
   GetKey(e, i) {
-    return this.sEi;
+    return this.syi;
   }
   RefreshByLordId(e) {
-    (this.sEi = e),
+    (this.syi = e),
       this.GetItem(3).SetUIActive(
         !ModelManager_1.ModelManager.LordGymModel.GetLordGymIsUnLock(
-          this.sEi,
+          this.syi,
         ) ||
-          !ModelManager_1.ModelManager.LordGymModel.GetLastGymFinish(this.sEi),
+          !ModelManager_1.ModelManager.LordGymModel.GetLastGymFinish(this.syi),
       );
-    e = ConfigManager_1.ConfigManager.LordGymConfig.GetLordGymConfig(this.sEi);
+    e = ConfigManager_1.ConfigManager.LordGymConfig.GetLordGymConfig(this.syi);
     this.GetItem(4).SetUIActive(
       !ModelManager_1.ModelManager.ExchangeRewardModel.GetRewardIfCanExchange(
         e.RewardId,

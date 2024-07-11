@@ -16,24 +16,24 @@ class Blackboard extends BehaviorTreeTagComponent_1.BehaviorTreeTagContainer {
   constructor(e, t, r, i, s) {
     switch (
       (super(),
-      (this.gKt = 0),
-      (this.fKt = 0),
+      (this.gQt = 0),
+      (this.fQt = 0),
       (this.MarkType = 12),
       (this.TrackSource = void 0),
       (this.MapMarkResident = !1),
       (this.CurrentDungeonId = 0),
       (this.IsTracking = !1),
       (this.IsSleeping = !1),
-      (this.BtType = Protocol_1.Aki.Protocol.NCs.Proto_BtTypeInvalid),
+      (this.BtType = Protocol_1.Aki.Protocol.tps.Proto_BtTypeInvalid),
       (this.TreeIncId = BigInt(0)),
       (this.TreeConfigId = 0),
       (this.PreparingRollbackNodes = void 0),
       (this.fZ = void 0),
-      (this.pKt = void 0),
-      (this.vKt = void 0),
+      (this.pQt = void 0),
+      (this.vQt = void 0),
       (this.UiTrackTextInfo = void 0),
       (this.SilentAreaShowInfo = []),
-      (this.x5s = void 0),
+      (this.EWs = void 0),
       (this.TrackViewModel = "All"),
       (this.GetNodeConfig = (e) => {
         var t = GeneralLogicTreeUtil_1.GeneralLogicTreeUtil.GetNodeConfig(
@@ -61,40 +61,40 @@ class Blackboard extends BehaviorTreeTagComponent_1.BehaviorTreeTagContainer {
       (this.BtType = e),
       (this.TreeIncId = t),
       (this.TreeConfigId = r),
-      (this.gKt = i),
+      (this.gQt = i),
       (this.CurrentDungeonId = i),
       (this.PreparingRollbackNodes = []),
       (this.fZ = new Map()),
-      (this.pKt = new Map()),
-      (this.vKt = new Map()),
+      (this.pQt = new Map()),
+      (this.vQt = new Map()),
       (this.UiTrackTextInfo =
         new GeneralLogicTreeDefine_1.TreeTrackTextExpressionInfo()),
-      (this.x5s = new Map()),
-      (this.fKt = s),
+      (this.EWs = new Map()),
+      (this.fQt = s),
       (this.MarkType = 12),
       this.BtType)
     ) {
-      case Protocol_1.Aki.Protocol.NCs.Proto_BtTypeQuest:
+      case Protocol_1.Aki.Protocol.tps.Proto_BtTypeQuest:
         this.TrackSource = 5;
         break;
-      case Protocol_1.Aki.Protocol.NCs.Proto_BtTypeLevelPlay:
+      case Protocol_1.Aki.Protocol.tps.Proto_BtTypeLevelPlay:
         this.TrackSource = 4;
         break;
-      case Protocol_1.Aki.Protocol.NCs.Proto_BtTypeInst:
+      case Protocol_1.Aki.Protocol.tps.Proto_BtTypeInst:
         this.TrackSource = 2;
     }
   }
   get TaskMarkTableId() {
-    return this.BtType !== Protocol_1.Aki.Protocol.NCs.Proto_BtTypeQuest &&
+    return this.BtType !== Protocol_1.Aki.Protocol.tps.Proto_BtTypeQuest &&
       this.IsChallengeUi()
       ? GeneralLogicTreeDefine_1.CHALLENGELEVELPLAY_TRACKICONID
-      : this.fKt;
+      : this.fQt;
   }
   get DungeonId() {
     return this.CurrentDungeonId;
   }
   set DungeonId(e) {
-    this.CurrentDungeonId = e ?? this.gKt;
+    this.CurrentDungeonId = e ?? this.gQt;
   }
   get IsOccupied() {
     var e = ModelManager_1.ModelManager.GeneralLogicTreeModel;
@@ -104,28 +104,28 @@ class Blackboard extends BehaviorTreeTagComponent_1.BehaviorTreeTagContainer {
     );
   }
   Dispose() {
-    (this.PreparingRollbackNodes = void 0), this.SKt();
+    (this.PreparingRollbackNodes = void 0), this.EQt();
   }
   AddNode(e, t) {
     this.fZ.set(e, t);
   }
-  EKt(e) {
+  SQt(e) {
     var t = new Map();
-    return this.pKt.set(e, t), t;
+    return this.pQt.set(e, t), t;
   }
   AddNodeToStatusGroup(e, t) {
     t = this.GetGroupIdByStatus(t);
     let r = this.GetNodesByGroupId(t);
-    (r = r || this.EKt(t)).set(e.NodeId, e);
+    (r = r || this.SQt(t)).set(e.NodeId, e);
   }
   UpdateTreeVar(e, t) {
-    this.vKt.set(e, t);
+    this.vQt.set(e, t);
   }
   GetTreeVar(e) {
-    return this.vKt.get(e);
+    return this.vQt.get(e);
   }
   ClearTreeVars() {
-    this.vKt.clear();
+    this.vQt.clear();
   }
   UpdateNodeInStatusGroup(e, t, r) {
     t !== r &&
@@ -140,7 +140,7 @@ class Blackboard extends BehaviorTreeTagComponent_1.BehaviorTreeTagContainer {
     return this.fZ.get(e);
   }
   GetNodesByGroupId(e) {
-    return this.pKt.get(e);
+    return this.pQt.get(e);
   }
   GetCurrentActiveChildQuestNode() {
     var t = this.GetNodesByGroupId(1);
@@ -163,27 +163,27 @@ class Blackboard extends BehaviorTreeTagComponent_1.BehaviorTreeTagContainer {
       return r;
     }
   }
-  SKt() {
+  EQt() {
     for (var [, e] of this.fZ) e.Destroy();
-    this.fZ.clear(), this.pKt.clear();
+    this.fZ.clear(), this.pQt.clear();
   }
   GetGroupIdByStatus(e) {
     let t = 0;
     switch (e) {
-      case Protocol_1.Aki.Protocol.N2s.Proto_NotActive:
+      case Protocol_1.Aki.Protocol.DNs.Proto_NotActive:
         break;
-      case Protocol_1.Aki.Protocol.N2s.Lkn:
-      case Protocol_1.Aki.Protocol.N2s.Proto_Completing:
+      case Protocol_1.Aki.Protocol.DNs.t5n:
+      case Protocol_1.Aki.Protocol.DNs.Proto_Completing:
         t = 1;
         break;
-      case Protocol_1.Aki.Protocol.N2s.Proto_CompletedSuccess:
+      case Protocol_1.Aki.Protocol.DNs.Proto_CompletedSuccess:
         t = 2;
         break;
-      case Protocol_1.Aki.Protocol.N2s.Proto_CompletedFailed:
-      case Protocol_1.Aki.Protocol.N2s.Proto_Destroy:
+      case Protocol_1.Aki.Protocol.DNs.Proto_CompletedFailed:
+      case Protocol_1.Aki.Protocol.DNs.Proto_Destroy:
         t = 3;
         break;
-      case Protocol_1.Aki.Protocol.N2s.Proto_Suspend:
+      case Protocol_1.Aki.Protocol.DNs.Proto_Suspend:
         t = 4;
     }
     return t;
@@ -194,14 +194,14 @@ class Blackboard extends BehaviorTreeTagComponent_1.BehaviorTreeTagContainer {
   RemovePreparingRollbackNode(e) {
     e = this.PreparingRollbackNodes.indexOf(e);
     0 <= e && this.PreparingRollbackNodes.splice(e, 1),
-      0 === this.PreparingRollbackNodes.length && this.RemoveTag(6),
+      0 === this.PreparingRollbackNodes.length && this.RemoveTag(7),
       EventSystem_1.EventSystem.EmitWithTarget(
         this,
         EventDefine_1.EEventName.GeneralLogicTreeRemovePrepareRollbackNode,
       );
   }
   IsSuspend() {
-    return this.ContainTag(9);
+    return this.ContainTag(10);
   }
   GetCurrentCommunicateId() {
     var e = this.GetCurrentActiveChildQuestNode();
@@ -209,7 +209,7 @@ class Blackboard extends BehaviorTreeTagComponent_1.BehaviorTreeTagContainer {
       return e?.CommunicateId;
   }
   IsChallengeUi() {
-    return this.ContainTag(10);
+    return this.ContainTag(11);
   }
   CreateShowBridge() {
     return BehaviorTreeShowBridge_1.BehaviorTreeShowBridge.Create(this);
@@ -247,19 +247,19 @@ class Blackboard extends BehaviorTreeTagComponent_1.BehaviorTreeTagContainer {
     e < 0 || this.SilentAreaShowInfo.splice(e, 1);
   }
   IsNeedScaledTrackMark(e) {
-    return this.ContainTag(10) && this.UiTrackTextInfo.IsSubTitle(e);
+    return this.ContainTag(11) && this.UiTrackTextInfo.IsSubTitle(e);
   }
   AddRefOccupationId(e, t) {
-    let r = this.x5s.get(t);
-    r || ((r = []), this.x5s.set(t, r)), r.push(e);
+    let r = this.EWs.get(t);
+    r || ((r = []), this.EWs.set(t, r)), r.push(e);
   }
   RemoveRefOccupationId(t, e) {
     var r,
-      e = this.x5s.get(e);
+      e = this.EWs.get(e);
     !e || (r = e.findIndex((e) => e === t)) < 0 || e.splice(r, 1);
   }
   HasRefOccupiedEntity() {
-    for (var [e] of this.x5s) {
+    for (var [e] of this.EWs) {
       var t =
         ModelManager_1.ModelManager.GeneralLogicTreeModel.IsOccupationExist(e);
       if (t)
@@ -274,7 +274,7 @@ class Blackboard extends BehaviorTreeTagComponent_1.BehaviorTreeTagContainer {
   }
   GetRefOccupiedEntityText() {
     if (this.HasRefOccupiedEntity())
-      for (var [e] of this.x5s) {
+      for (var [e] of this.EWs) {
         var t =
             ModelManager_1.ModelManager.GeneralLogicTreeModel.GetOccupationQuestName(
               e,

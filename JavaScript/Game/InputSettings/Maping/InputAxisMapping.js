@@ -8,7 +8,7 @@ const Log_1 = require("../../../Core/Common/Log"),
   InputAxisBinding_1 = require("../Binding/InputAxisBinding");
 class InputAxisMapping {
   constructor() {
-    (this.XSe = new Map()), (this.$Se = new Map());
+    (this.XEe = new Map()), (this.$Ee = new Map());
   }
   Initialize() {
     var e =
@@ -16,36 +16,36 @@ class InputAxisMapping {
     if (e) for (const i of e) this.NewAxisBinding(i);
   }
   Clear() {
-    for (const e of this.XSe.values()) e.Clear();
-    this.XSe.clear(), this.$Se.clear();
+    for (const e of this.XEe.values()) e.Clear();
+    this.XEe.clear(), this.$Ee.clear();
   }
   NewAxisBinding(e) {
     var i = e.AxisName,
       t = new InputAxisBinding_1.InputAxisBinding(),
-      e = (t.Initialize(e), this.XSe.set(i, t), t.GetAxisMappingType());
-    let n = this.$Se.get(e);
-    n || ((n = new Set()), this.$Se.set(e, n)), n.add(t);
+      e = (t.Initialize(e), this.XEe.set(i, t), t.GetAxisMappingType());
+    let n = this.$Ee.get(e);
+    n || ((n = new Set()), this.$Ee.set(e, n)), n.add(t);
   }
   RemoveAxisBinding(e) {
     var i,
-      t = this.XSe.get(e);
+      t = this.XEe.get(e);
     t &&
       ((i = t.GetAxisMappingType()),
-      this.$Se.get(i)?.delete(t),
-      this.XSe.delete(e),
+      this.$Ee.get(i)?.delete(t),
+      this.XEe.delete(e),
       t.Clear());
   }
   ClearAllAxisKeys() {
-    for (const e of this.XSe.values()) e.ClearAllKeys();
+    for (const e of this.XEe.values()) e.ClearAllKeys();
   }
   GetAxisBinding(e) {
-    return this.XSe.get(e);
+    return this.XEe.get(e);
   }
   GetAxisBindingByAxisMappingType(e) {
-    return this.$Se.get(e);
+    return this.$Ee.get(e);
   }
   SetKeys(e, i) {
-    var t = this.XSe.get(e);
+    var t = this.XEe.get(e);
     t
       ? (t.SetKeys(i),
         EventSystem_1.EventSystem.Emit(
@@ -60,7 +60,7 @@ class InputAxisMapping {
         ]);
   }
   RefreshKeys(e, i) {
-    var t = this.XSe.get(e);
+    var t = this.XEe.get(e);
     t
       ? (t.RefreshKeys(i),
         EventSystem_1.EventSystem.Emit(
@@ -75,7 +75,7 @@ class InputAxisMapping {
         ]);
   }
   AddKeys(e, i) {
-    var t = this.XSe.get(e);
+    var t = this.XEe.get(e);
     t
       ? (t.AddKeys(i),
         EventSystem_1.EventSystem.Emit(
@@ -90,7 +90,7 @@ class InputAxisMapping {
         ]);
   }
   RemoveKeys(e, i) {
-    var t = this.XSe.get(e);
+    var t = this.XEe.get(e);
     t
       ? (t.RemoveKeys(i),
         EventSystem_1.EventSystem.Emit(
@@ -105,7 +105,7 @@ class InputAxisMapping {
         ]);
   }
   RemoveKeysByCondition(e, i) {
-    var t = this.XSe.get(e);
+    var t = this.XEe.get(e);
     t
       ? (t.RemoveKeysByCondition(i),
         EventSystem_1.EventSystem.Emit(

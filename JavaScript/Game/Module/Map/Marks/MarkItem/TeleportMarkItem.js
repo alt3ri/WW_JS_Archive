@@ -11,21 +11,23 @@ class TeleportMarkItem extends ConfigMarkItem_1.ConfigMarkItem {
   constructor(e, t, i, s, r, n = 1) {
     super(e, t, i, s, r, n),
       (this.IsSelectThisFloor = !1),
+      (this.InnerView = void 0),
       (this.IsDirty = !1),
-      (this.Dwn = (e) => {
+      (this.$Ca = void 0),
+      (this.jbn = (e) => {
         var t;
         2 === this.MapType &&
           ((t = this.MarkMultiMapId === e), this.IsSelectThisFloor !== t) &&
           ((this.IsSelectThisFloor = this.MarkMultiMapId === e),
           this.InnerView?.OnIconPathChanged(this.IconPath));
       }),
-      (this.WDi = (e) => {
+      (this.WRi = (e) => {
         this.InnerView?.IsShowOrShowing &&
           this.InnerView?.OnMarkItemStateChange(e);
       }),
-      (this.uDi = (e) => {
+      (this.uRi = (e) => {
         this.MarkConfig.MarkId === e &&
-          (this.cDi(), this.View?.OnIconPathChanged(this.IconPath));
+          (this.cRi(), this.View?.OnIconPathChanged(this.IconPath));
       });
   }
   get IsFogUnlock() {
@@ -39,47 +41,41 @@ class TeleportMarkItem extends ConfigMarkItem_1.ConfigMarkItem {
     );
   }
   Initialize() {
-    super.Initialize(),
-      this.cDi(),
-      this.AddEventListener(),
-      this.UpdateMultiMapFloorSelectState(!0);
+    super.Initialize(), this.cRi(), this.AddEventListener();
   }
   OnCreateView() {
     this.InnerView = new TeleportMarkItemView_1.TeleportMarkItemView(this);
   }
   OnDestroy() {
-    super.OnDestroy(), this.RemoveEventListener();
+    super.OnDestroy(), (this.$Ca = void 0), this.RemoveEventListener();
   }
   AddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.UnlockTeleport,
-      this.uDi,
+      this.uRi,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnMarkItemShowStateChange,
-        this.WDi,
+        this.WRi,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.WorldMapSelectMultiMap,
-        this.Dwn,
+        this.jbn,
       );
   }
   RemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.UnlockTeleport,
-      this.uDi,
+      this.uRi,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnMarkItemShowStateChange,
-        this.WDi,
+        this.WRi,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.WorldMapSelectMultiMap,
-        this.Dwn,
+        this.jbn,
       );
-  }
-  LogicUpdate(e) {
-    super.LogicUpdate(e), this.UpdateMultiMapFloorSelectState();
   }
   ViewUpdate(e, t = !1, i = !1) {
     super.ViewUpdate(e, t, i);
@@ -99,7 +95,14 @@ class TeleportMarkItem extends ConfigMarkItem_1.ConfigMarkItem {
       e === this.IsSelectThisFloor) ||
       (this.IsDirty = !0);
   }
-  cDi() {
+  CheckIfUpdateIcon() {
+    1 === this.MapType &&
+      this.$Ca !== this.IsLocked &&
+      ((this.$Ca = this.IsLocked),
+      this.cRi(),
+      this.View?.OnIconPathChanged(this.IconPath));
+  }
+  cRi() {
     this.IconPath = this.IsLocked
       ? this.MarkConfig.LockMarkPic
       : this.MarkConfig.UnlockMarkPic;

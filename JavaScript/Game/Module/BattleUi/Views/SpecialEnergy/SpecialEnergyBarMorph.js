@@ -25,12 +25,12 @@ const UE = require("ue"),
 class SpecialEnergyBarMorph extends SpecialEnergyBarBase_1.SpecialEnergyBarBase {
   constructor() {
     super(...arguments),
-      (this.Cmt = new SpecialEnergyBaIconHandle_1.SpecialEnergyBaIconHandle()),
+      (this.Ddt = new SpecialEnergyBaIconHandle_1.SpecialEnergyBaIconHandle()),
       (this.BarItem = void 0),
-      (this.fmt = 0),
-      (this.Ent = void 0),
-      (this.gGn = !1),
-      (this.fGn = !1),
+      (this.Udt = 0),
+      (this.bst = void 0),
+      (this.SNn = !1),
+      (this.ENn = !1),
       (this.NeedExtraEffectOnKeyEnable = !1),
       (this.KeyEnableNiagaraIndex = 0);
   }
@@ -59,14 +59,14 @@ class SpecialEnergyBarMorph extends SpecialEnergyBarBase_1.SpecialEnergyBarBase 
   }
   OnStart() {
     var i = [this.GetSprite(0)];
-    this.Cmt.Init(i),
+    this.Ddt.Init(i),
       this.Config?.EnableIconPath
-        ? (this.gGn = !0)
-        : ((this.gGn = !1),
-          this.Config?.IconPath && this.Cmt.SetIcon(this.Config.IconPath)),
-      0 === this.fmt && this.GetUiNiagara(2).SetUIActive(!1),
+        ? (this.SNn = !0)
+        : ((this.SNn = !1),
+          this.Config?.IconPath && this.Ddt.SetIcon(this.Config.IconPath)),
+      0 === this.Udt && this.GetUiNiagara(2).SetUIActive(!1),
       this.Config?.BuffId &&
-        (this.Ent = this.RoleData?.BuffComponent?.GetBuffById(
+        (this.bst = this.RoleData?.BuffComponent?.GetBuffById(
           this.Config.BuffId,
         )),
       (this.KeyEnableNiagaraIndex = this.Config?.KeyEnableNiagaraIndex ?? -1),
@@ -80,13 +80,13 @@ class SpecialEnergyBarMorph extends SpecialEnergyBarBase_1.SpecialEnergyBarBase 
   OnChangeVisibleByTagChange(i) {
     i
       ? (this.Config?.BuffId &&
-          (this.Ent = this.RoleData?.BuffComponent?.GetBuffById(
+          (this.bst = this.RoleData?.BuffComponent?.GetBuffById(
             this.Config.BuffId,
           )),
         this.IsShowOrShowing &&
           (this.GetUiNiagara(2).SetUIActive(!0),
-          (this.fmt = EFFECT_DURATION + Time_1.Time.Now)))
-      : ((this.Ent = void 0), this.Cmt.PlayEndAnim(!1));
+          (this.Udt = EFFECT_DURATION + Time_1.Time.Now)))
+      : ((this.bst = void 0), this.Ddt.PlayEndAnim(!1));
   }
   async InitBarItem() {
     var i = this.GetSpecialEnergyBarClass();
@@ -106,7 +106,7 @@ class SpecialEnergyBarMorph extends SpecialEnergyBarBase_1.SpecialEnergyBarBase 
     return specialEnergyBarClassList[this.Config.PrefabType];
   }
   OnBeforeDestroy() {
-    super.OnBeforeDestroy(), this.Cmt.OnBeforeDestroy();
+    super.OnBeforeDestroy(), this.Ddt.OnBeforeDestroy();
   }
   RefreshBarPercent(i = !1) {
     var t = this.GetKeyEnable();
@@ -115,16 +115,16 @@ class SpecialEnergyBarMorph extends SpecialEnergyBarBase_1.SpecialEnergyBarBase 
       this.KeyItem?.RefreshKeyEnable(t, i);
   }
   RefreshIcon(t) {
-    if (this.gGn) {
+    if (this.SNn) {
       let i = this.Config.IconPath;
       t && this.Config.EnableIconPath && (i = this.Config.EnableIconPath),
-        this.Cmt.SetIcon(i);
+        this.Ddt.SetIcon(i);
     }
   }
   RefreshExtraEffectOnKeyEnable(i) {
     this.NeedExtraEffectOnKeyEnable &&
-      this.fGn !== i &&
-      ((this.fGn = i), this.GetUiNiagara(3).SetUIActive(i));
+      this.ENn !== i &&
+      ((this.ENn = i), this.GetUiNiagara(3).SetUIActive(i));
   }
   OnBarPercentChanged() {
     this.RefreshBarPercent();
@@ -135,12 +135,20 @@ class SpecialEnergyBarMorph extends SpecialEnergyBarBase_1.SpecialEnergyBarBase 
   Tick(i) {
     super.Tick(i),
       this.BarItem?.Tick(i),
-      0 < this.fmt &&
-        this.fmt <= Time_1.Time.Now &&
-        (this.GetUiNiagara(2).SetUIActive(!1), (this.fmt = 0)),
-      this.Ent &&
-        this.Ent.GetRemainDuration() < this.Config.ExtraFloatParams[0] &&
-        this.Cmt.PlayEndAnim(!0);
+      0 < this.Udt &&
+        this.Udt <= Time_1.Time.Now &&
+        (this.GetUiNiagara(2).SetUIActive(!1), (this.Udt = 0)),
+      this.bst ||
+        (this.Config?.BuffId &&
+          (this.bst = this.RoleData?.BuffComponent?.GetBuffById(
+            this.Config.BuffId,
+          ))),
+      this.bst &&
+        this.bst.GetRemainDuration() < this.Config.ExtraFloatParams[0] &&
+        this.Ddt.PlayEndAnim(!0);
+  }
+  ReplaceFullEffect(i) {
+    this.BarItem.ReplaceFullEffect(i);
   }
 }
 exports.SpecialEnergyBarMorph = SpecialEnergyBarMorph;

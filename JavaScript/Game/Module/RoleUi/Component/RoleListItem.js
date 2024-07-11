@@ -21,7 +21,7 @@ class RoleListItem extends GridProxyAbstract_1.GridProxyAbstract {
       (this.RoleIconItem = void 0),
       (this.ToggleCallBack = void 0),
       (this.CanToggleExecuteChange = void 0),
-      (this.Yke = () => {
+      (this.cFe = () => {
         this.ToggleCallBack && this.ToggleCallBack(this.GridIndex);
       }),
       (this.CanToggleExecuteChangeInternal = () =>
@@ -38,7 +38,7 @@ class RoleListItem extends GridProxyAbstract_1.GridProxyAbstract {
       [5, UE.UIItem],
       [6, UE.UIItem],
     ]),
-      (this.BtnBindInfo = [[0, this.Yke]]);
+      (this.BtnBindInfo = [[0, this.cFe]]);
   }
   async OnBeforeStartAsync() {
     var t = this.GetItem(1);
@@ -51,13 +51,13 @@ class RoleListItem extends GridProxyAbstract_1.GridProxyAbstract {
       (t.CanExecuteChange.Unbind(),
       t.CanExecuteChange.Bind(this.CanToggleExecuteChangeInternal));
   }
-  _lo(t, e = !0) {
+  s1o(t, e = !0) {
     this.RoleIconItem.Refresh(t),
       e
         ? this.GetItem(4).SetUIActive(t.IsTrialRole())
         : this.GetItem(4).SetUIActive(!1);
   }
-  ulo(e) {
+  a1o(e) {
     var i = ModelManager_1.ModelManager.SceneTeamModel.GetTeamItems(!0);
     let s = void 0,
       o = 1;
@@ -85,8 +85,8 @@ class RoleListItem extends GridProxyAbstract_1.GridProxyAbstract {
   Refresh(t, e, i) {
     this.DataId = t.RoleDataId;
     var s = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(this.DataId);
-    this._lo(s, t.NeedShowTrial),
-      this.ulo(this.DataId),
+    this.s1o(s, t.NeedShowTrial),
+      this.a1o(this.DataId),
       t.NeedRedDot
         ? RedDotController_1.RedDotController.BindRedDot(
             "RoleSystemRoleList",
@@ -124,9 +124,9 @@ class RoleIconItem extends UiPanelBase_1.UiPanelBase {
       t.GetRoleId(),
       "RoleRootView",
     ),
-      this.Jke(t.GetRoleConfig().QualityId);
+      this.mFe(t.GetRoleConfig().QualityId);
   }
-  Jke(t) {
+  mFe(t) {
     var e = this.GetSprite(1),
       i = this.GetSprite(2),
       s = this.GetSprite(3),

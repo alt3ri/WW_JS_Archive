@@ -7,7 +7,7 @@ const EventDefine_1 = require("../../../Common/Event/EventDefine"),
 class FlowActionSetHeadIconVisible extends FlowActionBase_1.FlowActionBase {
   constructor() {
     super(...arguments),
-      (this.JXi = () => {
+      (this.$$i = () => {
         this.FinishExecute(!0);
       });
   }
@@ -16,7 +16,7 @@ class FlowActionSetHeadIconVisible extends FlowActionBase_1.FlowActionBase {
     EventSystem_1.EventSystem.Emit(
       EventDefine_1.EEventName.UpdatePortraitVisible,
       e,
-      this.JXi,
+      this.$$i,
     );
   }
   OnInterruptExecute() {}

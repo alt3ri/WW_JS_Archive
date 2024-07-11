@@ -29,17 +29,17 @@ class CameraRotatorController extends CameraControllerBase_1.CameraControllerBas
     (this.vce = o), this.Mce(t, i, s, r, h, a);
   }
   PlayCameraEulerRotator(t, i) {
-    this.Sce(t, i, 0, 1);
+    this.Ece(t, i, 0, 1);
   }
   PlayCameraEulerRotatorWithCurve(t, i, s, r, h) {
-    (this.vce = h), this.Sce(t, i, s, r);
+    (this.vce = h), this.Ece(t, i, s, r);
   }
   nce(t) {
     var i, s;
     this.dce &&
       (([s, i] =
         this.Camera.CharacterEntityHandle.Entity.GetComponent(
-          52,
+          53,
         ).GetCameraInput()),
       0 < Math.abs(s) ||
         0 < Math.abs(i) ||
@@ -52,7 +52,7 @@ class CameraRotatorController extends CameraControllerBase_1.CameraControllerBas
         )),
         (this.Cce += t),
         this.Cce >= this.Ql)) &&
-      this.Ece();
+      this.Sce();
   }
   Mce(t, i, s, r, h, a) {
     (this.dce = !0),
@@ -67,7 +67,7 @@ class CameraRotatorController extends CameraControllerBase_1.CameraControllerBas
       (this.pce = a),
       MathUtils_1.MathUtils.ComposeRotator(this.mce, s, this.mce);
   }
-  Sce(t, i, s, r) {
+  Ece(t, i, s, r) {
     (this.dce = !0),
       this.cce.FromUeRotator(this.Camera.CurrentCamera.ArmRotation),
       this.mce.Set(t.Pitch, t.Yaw, t.Roll),
@@ -77,7 +77,7 @@ class CameraRotatorController extends CameraControllerBase_1.CameraControllerBas
       (this.fce = s),
       (this.pce = r);
   }
-  Ece() {
+  Sce() {
     (this.dce = !1), (this.vce = void 0);
   }
   UpdateInternal(t) {

@@ -12,28 +12,28 @@ const CustomPromise_1 = require("../../../../Core/Common/CustomPromise"),
 class KeyBaseComponent extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this.mxo = !1),
-      (this.dxo = void 0),
-      (this.Cxo = void 0),
-      (this.HSe = ""),
-      (this.gxo = !1),
-      (this.ySo = "");
+      (this._wo = !1),
+      (this.uwo = void 0),
+      (this.cwo = void 0),
+      (this.HEe = ""),
+      (this.mwo = !1),
+      (this.MSo = "");
   }
   async OnBeforeStartAsync() {
-    this.gxo &&
-      ((this.Cxo = new PcAndGamepadProgressBar_1.PcAndGamepadProgressBar()),
-      await this.Cxo.Init(this.GetSquareItem(), this.GetCircleItem())),
-      this.HSe && (await this.fxo(this.HSe)),
-      this.p_t(this.gxo);
+    this.mwo &&
+      ((this.cwo = new PcAndGamepadProgressBar_1.PcAndGamepadProgressBar()),
+      await this.cwo.Init(this.GetSquareItem(), this.GetCircleItem())),
+      this.HEe && (await this.dwo(this.HEe)),
+      this.But(this.mwo);
   }
   SetKeyName(e) {
-    this.HSe = e;
+    this.HEe = e;
   }
   SetIsNeedLongPress(e) {
-    this.gxo = e;
+    this.mwo = e;
   }
   RefreshKeyIcon(e) {
-    this.SetKeyName(e), this.pxo(e);
+    this.SetKeyName(e), this.Cwo(e);
   }
   RefreshNameText(e) {
     !StringUtils_1.StringUtils.IsEmpty(e) &&
@@ -42,35 +42,35 @@ class KeyBaseComponent extends UiPanelBase_1.UiPanelBase {
       ? (this.SetNameTextById(e), this.SetNameTextVisible(!0))
       : this.SetNameTextVisible(!1);
   }
-  pxo(e) {
-    this.fxo(e);
+  Cwo(e) {
+    this.dwo(e);
   }
-  async fxo(e) {
+  async dwo(e) {
     const t = this.GetKeyTexture();
     if (t && !StringUtils_1.StringUtils.IsEmpty(e)) {
       e = InputSettings_1.InputSettings.GetKey(e);
       if (e) {
         e = e.GetKeyIconPath();
-        if (!StringUtils_1.StringUtils.IsEmpty(e) && e !== this.ySo) {
-          this.ySo = e;
+        if (!StringUtils_1.StringUtils.IsEmpty(e) && e !== this.MSo) {
+          this.MSo = e;
           const i = new CustomPromise_1.CustomPromise();
-          this.vxo(!1),
+          this.gwo(!1),
             this.SetTextureByPath(e, t, void 0, () => {
               t.SetSizeFromTexture(), i.SetResult();
             }),
             await i.Promise,
-            this.vxo(!0);
+            this.gwo(!0);
         }
       }
     }
   }
-  vxo(e) {
+  gwo(e) {
     var t = this.GetKeyTexture();
     t && t.SetUIActive(e);
   }
   SetNameTextById(e) {
     var t;
-    this.mxo ||
+    this._wo ||
       ((t = this.GetNameText()) && LguiUtil_1.LguiUtil.SetLocalTextNew(t, e));
   }
   SetNameText(e) {
@@ -78,34 +78,34 @@ class KeyBaseComponent extends UiPanelBase_1.UiPanelBase {
     t && t.SetText(e);
   }
   SetNameTextForce(e) {
-    this.mxo = e;
+    this._wo = e;
   }
   GetIsForceSetText() {
-    return this.mxo;
+    return this._wo;
   }
   SetNameTextVisible(e) {
     var t = this.GetNameText();
     t && t.SetUIActive(e);
   }
-  p_t(e) {
+  But(e) {
     var t = this.GetLongPressItem();
     t && t.bIsUIActive !== e && t.SetUIActive(e);
   }
   SetLongPressState(e) {
-    this.v_t(e), this.Mxo(0 === e);
+    this.but(e), this.fwo(0 === e);
   }
-  v_t(e) {
-    this.Cxo && this.Cxo.SetProgressPercent(e);
+  but(e) {
+    this.cwo && this.cwo.SetProgressPercent(e);
   }
-  Mxo(e) {
+  fwo(e) {
     var t = this.GetLongPressTipTexture();
     t && t.SetUIActive(e);
   }
   SetHotKeyType(e) {
-    this.dxo = e;
+    this.uwo = e;
   }
   SetActive(e) {
-    super.SetActive(e), this.dxo?.KeyItemNotifySetActive(e);
+    super.SetActive(e), this.uwo?.KeyItemNotifySetActive(e);
   }
 }
 exports.KeyBaseComponent = KeyBaseComponent;

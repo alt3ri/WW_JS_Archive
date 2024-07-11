@@ -4,56 +4,56 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const DragonPoolById_1 = require("../../../Core/Define/ConfigQuery/DragonPoolById");
 class MingSuInstance {
   constructor(t) {
-    (this.RBi = 0),
-      (this.ABi = 0),
-      (this.PBi = 0),
-      (this.xBi = 0),
-      (this.DBi = void 0),
-      (this.UBi = void 0),
-      (this.RBi = t),
-      (this.UBi = DragonPoolById_1.configDragonPoolById.GetConfig(this.RBi)),
-      (this.ABi = 0),
-      (this.PBi = 0),
-      (this.xBi = 0);
+    (this.Rbi = 0),
+      (this.Abi = 0),
+      (this.Pbi = 0),
+      (this.xbi = 0),
+      (this.Dbi = void 0),
+      (this.Ubi = void 0),
+      (this.Rbi = t),
+      (this.Ubi = DragonPoolById_1.configDragonPoolById.GetConfig(this.Rbi)),
+      (this.Abi = 0),
+      (this.Pbi = 0),
+      (this.xbi = 0);
   }
   SetDragonPoolLevel(t) {
-    this.PBi = t;
+    this.Pbi = t;
   }
   GetDragonPoolLevel() {
-    return this.PBi;
+    return this.Pbi;
   }
   SetDragonPoolState(t) {
-    this.ABi = t;
+    this.Abi = t;
   }
   GetDragonPoolState() {
-    return this.ABi;
+    return this.Abi;
   }
   SetHadCoreCount(t) {
-    this.xBi = t;
+    this.xbi = t;
   }
   GetHadCoreCount() {
-    return this.xBi;
+    return this.xbi;
   }
   GetDragonPoolMaxLevel() {
-    return this.UBi.Goal.length;
+    return this.Ubi.Goal.length;
   }
   GetNeedCoreCount(t) {
-    return this.UBi.Goal[t];
+    return this.Ubi.Goal[t];
   }
   GetGoalList() {
-    return this.UBi.Goal;
+    return this.Ubi.Goal;
   }
   GetRewardId(t) {
-    return this.UBi.DropIds[t];
+    return this.Ubi.DropIds[t];
   }
   GetCoreId() {
-    return this.UBi.CoreId;
+    return this.Ubi.CoreId;
   }
   SetDropItemList(t) {
-    this.DBi = t;
+    this.Dbi = t;
   }
   GetDropItemList() {
-    return this.DBi;
+    return this.Dbi;
   }
 }
 exports.MingSuInstance = MingSuInstance;

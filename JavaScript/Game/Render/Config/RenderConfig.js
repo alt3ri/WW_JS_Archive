@@ -7,8 +7,8 @@ exports.INVALID_SECTION_INDEX = 99999;
 class RenderConfig {
   static GetBodyTypeByName(e) {
     return (
-      this.Xhr ||
-        (this.Xhr = new Map([
+      this.Wlr ||
+        (this.Wlr = new Map([
           ["CharacterMesh0", 0],
           ["WeaponCase0", 1],
           ["WeaponCase1", 1],
@@ -22,28 +22,28 @@ class RenderConfig {
           ["OtherCase3", 3],
           ["OtherCase4", 3],
         ])),
-      this.Xhr.get(e)
+      this.Wlr.get(e)
     );
   }
   static GetEntityRenderPriority(e, n) {
     if (e) return 3;
-    this.$hr ||
-      (this.$hr = new Map([
-        [Protocol_1.Aki.Protocol.HBs.Proto_Player, 1],
-        [Protocol_1.Aki.Protocol.HBs.Proto_Npc, 2],
-        [Protocol_1.Aki.Protocol.HBs.Proto_Monster, 4],
-        [Protocol_1.Aki.Protocol.HBs.Proto_Vision, 5],
-        [Protocol_1.Aki.Protocol.HBs.Proto_Animal, 6],
-        [Protocol_1.Aki.Protocol.HBs.Proto_SceneItem, 7],
-        [Protocol_1.Aki.Protocol.HBs.Proto_Custom, 8],
+    this.Klr ||
+      (this.Klr = new Map([
+        [Protocol_1.Aki.Protocol.wks.Proto_Player, 1],
+        [Protocol_1.Aki.Protocol.wks.Proto_Npc, 2],
+        [Protocol_1.Aki.Protocol.wks.Proto_Monster, 4],
+        [Protocol_1.Aki.Protocol.wks.Proto_Vision, 5],
+        [Protocol_1.Aki.Protocol.wks.Proto_Animal, 6],
+        [Protocol_1.Aki.Protocol.wks.Proto_SceneItem, 7],
+        [Protocol_1.Aki.Protocol.wks.Proto_Custom, 8],
       ]));
-    e = this.$hr.get(n);
+    e = this.Klr.get(n);
     return e || 0;
   }
   static GetBodyNamesByBodyType(e) {
     return (
-      this.Yhr ||
-        (this.Yhr = new Map([
+      this.Qlr ||
+        (this.Qlr = new Map([
           [0, RenderConfig.MaterialControlAllCaseArray],
           [1, RenderConfig.MaterialControlBodyCaseArray],
           [2, RenderConfig.MaterialControlWeaponCaseArray],
@@ -51,7 +51,7 @@ class RenderConfig {
           [5, RenderConfig.MaterialControlOtherCaseArray],
           [4, RenderConfig.MaterialControlWeaponAndHuluCaseArray],
         ])),
-      this.Yhr.get(e)
+      this.Qlr.get(e)
     );
   }
   static GetMaterialSlotType(e) {

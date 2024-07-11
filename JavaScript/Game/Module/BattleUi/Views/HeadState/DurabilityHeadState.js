@@ -6,9 +6,9 @@ const UE = require("ue"),
 class DurabilityHeadState extends HeadStateViewBase_1.HeadStateViewBase {
   constructor() {
     super(...arguments),
-      (this.srt = -0),
-      (this.Bht = (t) => {
-        this.bht(!0);
+      (this.pnt = -0),
+      (this.Qlt = (t) => {
+        this.Xlt(!0);
       });
   }
   OnRegisterComponent() {
@@ -24,42 +24,42 @@ class DurabilityHeadState extends HeadStateViewBase_1.HeadStateViewBase {
   ActiveBattleHeadState(t) {
     super.ActiveBattleHeadState(t),
       t.OriginalHp && (this.CurrentBarPercent = t.OriginalHp / this.GetMaxHp()),
-      this.bht(!0);
+      this.Xlt(!0);
   }
   OnStart() {
-    this.srt = this.GetSprite(2).GetParentAsUIItem().GetWidth();
+    this.pnt = this.GetSprite(2).GetParentAsUIItem().GetWidth();
   }
   BindCallback() {
     super.BindCallback(),
-      this.HeadStateData.BindOnSceneItemDurabilityChange(this.Bht);
+      this.HeadStateData.BindOnSceneItemDurabilityChange(this.Qlt);
   }
-  bht(t = !1) {
+  Xlt(t = !1) {
     var e = this.GetHp(),
       i = e / this.GetMaxHp();
-    this.int(i),
+    this.Cst(i),
       t ? this.PlayBarAnimation(i) : this.StopBarLerpAnimation(),
       this.HeadStateData?.SetOriginalHp(e);
   }
-  int(t) {
+  Cst(t) {
     this.GetSprite(0).SetFillAmount(t);
   }
   OnBeginBarAnimation(t) {
-    this.Xrt(t);
+    this.ast(t);
   }
   StopBarLerpAnimation() {
     super.StopBarLerpAnimation(), this.GetSprite(1).SetUIActive(!1);
   }
   OnLerpBarBufferPercent(t) {
-    this.Xrt(t);
+    this.ast(t);
   }
-  Xrt(t) {
+  ast(t) {
     var e = this.GetSprite(1),
       e =
         (e.SetFillAmount(t),
         e.IsUIActiveSelf() || e.SetUIActive(!0),
         this.GetSprite(2));
-    e.SetStretchLeft(this.srt * this.CurrentBarPercent - 2),
-      e.SetStretchRight(this.srt * (1 - t) - 2);
+    e.SetStretchLeft(this.pnt * this.CurrentBarPercent - 2),
+      e.SetStretchRight(this.pnt * (1 - t) - 2);
   }
   GetMaxHp() {
     return this.HeadStateData.GetMaxDurable();

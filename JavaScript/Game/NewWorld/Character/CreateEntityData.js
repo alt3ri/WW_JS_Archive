@@ -18,7 +18,7 @@ class CreateEntityData {
       (this.PbEntityInitData = void 0),
       (this.PbModelConfigId = void 0),
       (this.IsConcealed = !1),
-      (this.vZo = void 0),
+      (this.ger = void 0),
       (this.Priority = 0),
       (this.ComponentParamMap = void 0),
       (this.RegisterToGameBudgetController = !0),
@@ -31,11 +31,11 @@ class CreateEntityData {
   Init(t) {
     return (
       (this.EntityData = t),
-      (this.CreatureDataId = MathUtils_1.MathUtils.LongToNumber(t.Ekn)),
-      (this.EntityType = this.EntityData.cVn),
-      (this.PbDataId = this.EntityData.R5n),
-      (this.ConfigType = this.EntityData.mVn),
-      (this.PrefabId = this.EntityData.ivs),
+      (this.CreatureDataId = MathUtils_1.MathUtils.LongToNumber(t.J4n)),
+      (this.EntityType = this.EntityData.HHn),
+      (this.PbDataId = this.EntityData._9n),
+      (this.ConfigType = this.EntityData.jHn),
+      (this.PrefabId = this.EntityData.pEs),
       this.InitPbEntityData()
         ? !!this.InitComponentData()
         : (Log_1.Log.CheckError() &&
@@ -55,7 +55,7 @@ class CreateEntityData {
     let t = void 0,
       e = void 0;
     switch (this.ConfigType) {
-      case Protocol_1.Aki.Protocol.USs.Proto_Global:
+      case Protocol_1.Aki.Protocol.YTs.Proto_Global:
         (t = ModelManager_1.ModelManager.CreatureModel.GetDynamicEntityData(
           this.PbDataId,
         )),
@@ -63,7 +63,7 @@ class CreateEntityData {
             t.BlueprintType,
           ));
         break;
-      case Protocol_1.Aki.Protocol.USs.r3n:
+      case Protocol_1.Aki.Protocol.YTs.P6n:
         if (
           !(t = ModelManager_1.ModelManager.CreatureModel.GetEntityData(
             this.PbDataId,
@@ -83,7 +83,7 @@ class CreateEntityData {
           t.BlueprintType,
         );
         break;
-      case Protocol_1.Aki.Protocol.USs.Proto_Template:
+      case Protocol_1.Aki.Protocol.YTs.Proto_Template:
         if (
           !(e = ModelManager_1.ModelManager.CreatureModel.GetEntityTemplate(
             this.PbDataId,
@@ -105,7 +105,7 @@ class CreateEntityData {
           );
         t = { BlueprintType: e.BlueprintType, Name: e.Name, Id: e.Id };
         break;
-      case Protocol_1.Aki.Protocol.USs.NMs:
+      case Protocol_1.Aki.Protocol.YTs.iTs:
         if (
           (t = ModelManager_1.ModelManager.CreatureModel.GetEntityPrefab(
             this.PrefabId,
@@ -138,10 +138,10 @@ class CreateEntityData {
   }
   InitComponentData() {
     this.ComponentDataMap.clear();
-    var t = this.EntityData.Dvs;
+    var t = this.EntityData.jEs;
     if (t)
       for (const i of t) {
-        var e = i.Mqs;
+        var e = i.h3s;
         this.ComponentDataMap.set(e, i);
       }
     return !0;
@@ -183,11 +183,11 @@ class CreateEntityData {
   GetPbModelConfig() {
     if (this.PbModelConfigId)
       return (
-        this.vZo ||
-          (this.vZo = ModelManager_1.ModelManager.CreatureModel.GetEntityModel(
+        this.ger ||
+          (this.ger = ModelManager_1.ModelManager.CreatureModel.GetEntityModel(
             this.PbModelConfigId,
           )),
-        this.vZo
+        this.ger
       );
   }
   static GetBaseInfo(t) {
@@ -209,6 +209,9 @@ class CreateEntityData {
       e = (0, IComponent_1.getComponent)(t.ComponentsData, "InteractComponent"),
       t = (0, IComponent_1.getComponent)(t.ComponentsData, "BubbleComponent");
     return !(!e || !t);
+  }
+  static IsFollowShooter(t) {
+    return !!t.ComponentDataMap.get("Oys");
   }
   static GetMonsterComponent(t) {
     if (t.PbEntityInitData)

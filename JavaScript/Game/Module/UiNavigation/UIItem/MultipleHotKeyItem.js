@@ -11,9 +11,9 @@ class MultipleHotKeyItem extends HotKeyItem_1.HotKeyItem {
   constructor() {
     super(...arguments),
       (this.eGe = void 0),
-      (this.Gbo = 0),
-      (this.Nbo = []),
-      (this.qbo = (e, t, o) => {
+      (this.Bqo = 0),
+      (this.bqo = []),
+      (this.wqo = (e, t, o) => {
         return {
           Key: e,
           Value: HotKeyTypeCreator_1.HotKeyTypeCreator.CreateHotKeyType(
@@ -33,19 +33,19 @@ class MultipleHotKeyItem extends HotKeyItem_1.HotKeyItem {
   async OnBeforeStartAsync() {
     (this.eGe = new GenericLayoutNew_1.GenericLayoutNew(
       this.GetLayoutBase(0),
-      this.qbo,
+      this.wqo,
       this.GetItem(1),
     )),
-      (this.Gbo = this.OpenParam),
-      await this.Obo();
+      (this.Bqo = this.OpenParam),
+      await this.qqo();
   }
   OnClear() {
-    for (const e of this.Nbo) e.Clear();
+    for (const e of this.bqo) e.Clear();
   }
-  async Obo() {
+  async qqo() {
     var e =
       ConfigManager_1.ConfigManager.UiNavigationConfig.GetHotKeyViewConfig(
-        this.Gbo,
+        this.Bqo,
       );
     e &&
       (e.FunctionButtonArray.length <= 0 &&
@@ -56,11 +56,11 @@ class MultipleHotKeyItem extends HotKeyItem_1.HotKeyItem {
           "快捷键界面配置错误, 快捷键类型的数量为0",
         ),
       this.eGe.RebuildLayoutByDataNew(e.FunctionButtonArray),
-      (this.Nbo = await Promise.all(this.eGe.GetLayoutItemList())));
+      (this.bqo = await Promise.all(this.eGe.GetLayoutItemList())));
   }
   GetHotKeyComponentArray() {
     var e = [];
-    for (const t of this.Nbo) e.push(...t.GetHotKeyComponents());
+    for (const t of this.bqo) e.push(...t.GetHotKeyComponents());
     return e;
   }
 }

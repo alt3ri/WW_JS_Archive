@@ -38,12 +38,12 @@ class TipPanel extends UiPanelBase_1.UiPanelBase {
 class ElementPanel extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this.rao = void 0),
-      (this.Mhi = void 0),
-      (this.jhi = () => {
+      (this.eho = void 0),
+      (this.Mli = void 0),
+      (this.jli = () => {
         return new ElementItem_1.ElementItem();
       }),
-      (this.nao = (e) => {
+      (this.tho = (e) => {
         switch (e) {
           case 1:
             this.GetExtendToggle(0).SetToggleState(1),
@@ -54,7 +54,7 @@ class ElementPanel extends UiPanelBase_1.UiPanelBase {
               this.GetItem(4).SetUIActive(!1);
         }
       }),
-      (this.sao = (e) => {
+      (this.iho = (e) => {
         switch (e) {
           case 1:
             this.GetExtendToggle(5).SetToggleState(1),
@@ -76,18 +76,18 @@ class ElementPanel extends UiPanelBase_1.UiPanelBase {
       [5, UE.UIExtendToggle],
     ]),
       (this.BtnBindInfo = [
-        [5, this.nao],
-        [0, this.sao],
+        [5, this.tho],
+        [0, this.iho],
       ]);
   }
   async OnBeforeStartAsync() {
-    (this.rao = new TipPanel()),
-      await this.rao.CreateThenShowByActorAsync(this.GetItem(4).GetOwner());
+    (this.eho = new TipPanel()),
+      await this.eho.CreateThenShowByActorAsync(this.GetItem(4).GetOwner());
   }
   OnStart() {
-    (this.Mhi = new GenericLayout_1.GenericLayout(
+    (this.Mli = new GenericLayout_1.GenericLayout(
       this.GetHorizontalLayout(2),
-      this.jhi,
+      this.jli,
     )),
       this.GetExtendToggle(5).SetToggleState(0, !0),
       this.GetItem(4).SetUIActive(!1);
@@ -102,7 +102,7 @@ class ElementPanel extends UiPanelBase_1.UiPanelBase {
       let e = t.get(n);
       (e = e || new RoguelikeDefine_1.ElementInfo(n, 0)), i.push(e);
     }
-    this.Mhi.RefreshByData(i);
+    this.Mli.RefreshByData(i);
     let s = 0;
     i.forEach((e) => {
       7 !== e.ElementId && (s += e.Count);
@@ -114,7 +114,7 @@ class ElementPanel extends UiPanelBase_1.UiPanelBase {
             RoguelikeDefine_1.ROGUELIKEVIEW_17_TEXT,
             s.toString(),
           ),
-      this.rao.UpdateNum(s);
+      this.eho.UpdateNum(s);
   }
 }
 exports.ElementPanel = ElementPanel;

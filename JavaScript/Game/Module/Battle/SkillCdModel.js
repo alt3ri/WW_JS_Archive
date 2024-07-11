@@ -9,38 +9,38 @@ const ModelBase_1 = require("../../../Core/Framework/ModelBase"),
 class SkillCdModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
-      (this.iKe = new SkillCdData_1.WorldSkillCdData()),
-      (this.oKe = new PassiveSkillCdData_1.WorldPassiveSkillCdData()),
-      (this.rKe = new SkillCdData_1.WorldSkillCdData()),
-      (this.nKe = new PassiveSkillCdData_1.WorldPassiveSkillCdData());
+      (this.dQe = new SkillCdData_1.WorldSkillCdData()),
+      (this.CQe = new PassiveSkillCdData_1.WorldPassiveSkillCdData()),
+      (this.gQe = new SkillCdData_1.WorldSkillCdData()),
+      (this.fQe = new PassiveSkillCdData_1.WorldPassiveSkillCdData());
   }
   OnInit() {
     return !0;
   }
   OnLeaveLevel() {
-    return this.rKe.Clear(), this.nKe.Clear(), !0;
+    return this.gQe.Clear(), this.fQe.Clear(), !0;
   }
   OnClear() {
     return (
-      this.iKe.Clear(), this.oKe.Clear(), this.rKe.Clear(), this.nKe.Clear(), !0
+      this.dQe.Clear(), this.CQe.Clear(), this.gQe.Clear(), this.fQe.Clear(), !0
     );
   }
   Tick(e) {
-    this.iKe.Tick(e), this.oKe.Tick(e), this.rKe.Tick(e), this.nKe.Tick(e);
+    this.dQe.Tick(e), this.CQe.Tick(e), this.gQe.Tick(e), this.fQe.Tick(e);
   }
   GetCurWorldSkillCdData() {
-    return this.sKe() ? this.iKe : this.rKe;
+    return this.pQe() ? this.dQe : this.gQe;
   }
   GetCurWorldPassiveSkillCdData() {
-    return this.sKe() ? this.oKe : this.nKe;
+    return this.pQe() ? this.CQe : this.fQe;
   }
   HandlePlayerSkillInfoPbNotify(e) {
-    this.iKe.HandlePlayerSkillInfoPbNotify(e);
+    this.dQe.HandlePlayerSkillInfoPbNotify(e);
   }
   HandlePassiveSkillNotify(e) {
-    this.oKe.HandlePassiveSkillNotify(e);
+    this.CQe.HandlePassiveSkillNotify(e);
   }
-  sKe() {
+  pQe() {
     var e = ModelManager_1.ModelManager.InstanceDungeonEntranceModel.InstanceId;
     if (
       0 !== e &&

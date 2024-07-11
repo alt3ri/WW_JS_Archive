@@ -5,11 +5,8 @@ const Log_1 = require("../../../Core/Common/Log"),
   CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById"),
   Protocol_1 = require("../../../Core/Define/Net/Protocol"),
   ModelBase_1 = require("../../../Core/Framework/ModelBase"),
-  StringUtils_1 = require("../../../Core/Utils/StringUtils"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
-  LocalStorage_1 = require("../../Common/LocalStorage"),
-  LocalStorageDefine_1 = require("../../Common/LocalStorageDefine"),
   ModelManager_1 = require("../../Manager/ModelManager"),
   ChatController_1 = require("./ChatController"),
   ChatDefine_1 = require("./ChatDefine"),
@@ -21,16 +18,15 @@ const Log_1 = require("../../../Core/Common/Log"),
 class ChatModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
-      (this.RMt = new Map()),
-      (this.AMt = []),
-      (this.PMt = 0),
-      (this.xMt = new Map()),
-      (this.wMt = void 0),
-      (this.BMt = void 0),
-      (this.bMt = void 0),
-      (this.qMt = []),
+      (this.kEt = new Map()),
+      (this.VEt = []),
+      (this.HEt = 0),
+      (this.jEt = new Map()),
+      (this.WEt = void 0),
+      (this.KEt = void 0),
+      (this.QEt = void 0),
+      (this.XEt = []),
       (this.IsOpenedChatView = !1),
-      (this.GMt = new Map()),
       (this.ShowTimeDifferent = 0);
   }
   OnInit() {
@@ -43,293 +39,109 @@ class ChatModel extends ModelBase_1.ModelBase {
     );
   }
   OnClear() {
-    this.SaveChatSaveContent();
-    for (const t of this.xMt.values()) t.Reset();
+    for (const t of this.jEt.values()) t.Reset();
     return (
-      this.xMt.clear(),
-      (this.AMt.length = 0),
-      (this.qMt.length = 0),
-      (this.bMt = void 0),
+      this.jEt.clear(),
+      (this.VEt.length = 0),
+      (this.XEt.length = 0),
+      (this.QEt = void 0),
       this.ClearChatPlayerData(),
       !0
     );
   }
-  OnLeaveLevel() {
-    return this.SaveChatSaveContent(), !0;
-  }
   AddChatPlayerData(t) {
     var e = new ChatPlayerData_1.ChatPlayerData(t);
-    return this.RMt.set(t, e), e;
+    return this.kEt.set(t, e), e;
   }
   GetChatPlayerData(t) {
-    return this.RMt.get(t);
+    return this.kEt.get(t);
   }
-  RefreshChatPlayerData(t, e, o) {
-    let a = this.GetChatPlayerData(t);
-    var i = (a = a || this.AddChatPlayerData(t)).GetPlayerIcon(),
-      r = a.GetPlayerName(),
+  RefreshChatPlayerData(t, e, a) {
+    let o = this.GetChatPlayerData(t);
+    var i = (o = o || this.AddChatPlayerData(t)).GetPlayerIcon(),
+      r = o.GetPlayerName(),
       n = ModelManager_1.ModelManager.PersonalModel,
       h = n.GetPersonalInfoData();
     h && h.PlayerId === t
-      ? (a.SetPlayerIcon(n.GetHeadPhotoId()), a.SetPlayerName(h.Name))
-      : (a.SetPlayerIcon(e), a.SetPlayerName(o)),
-      (i === e && r === o) ||
+      ? (o.SetPlayerIcon(n.GetHeadPhotoId()), o.SetPlayerName(h.Name))
+      : (o.SetPlayerIcon(e), o.SetPlayerName(a)),
+      (i === e && r === a) ||
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.OnChatPlayerInfoChanged,
           t,
         );
   }
   ClearChatPlayerData() {
-    this.RMt.clear();
+    this.kEt.clear();
   }
-  AddChatContent(t, e, o, a, i, r, n, h, s, C, _) {
-    n = t.AddChatContent(e, o, a, i, r, n, h, s, C, _);
-    let v = 0,
-      m = 0;
+  AddChatContent(t, e, a, o, i, r, n, h, s, C, m) {
+    e = t.AddChatContent(e, a, o, i, r, n, h, s, C, m);
+    let _ = 0,
+      v = 0;
     t instanceof PrivateChatRoom_1.PrivateChatRoom
-      ? ((v = t.GetTargetPlayerId()),
-        this.AddAndSavePrivateChatContent(t, i, a, e, !1, o, h),
-        (m = 1))
+      ? ((_ = t.GetTargetPlayerId()), (v = 1))
       : t instanceof TeamChatRoom_1.TeamChatRoom
-        ? (m = 2)
-        : t instanceof WorldTeamChatRoom_1.WorldChatRoom && (m = 3),
-      o !== ModelManager_1.ModelManager.PlayerInfoModel.GetId() &&
+        ? (v = 2)
+        : t instanceof WorldTeamChatRoom_1.WorldChatRoom && (v = 3),
+      a !== ModelManager_1.ModelManager.PlayerInfoModel.GetId() &&
         this.SetChatRoomRedDot(t, !0),
-      r === Protocol_1.Aki.Protocol.FGs.Proto_None &&
-        this.AddChatRowData(o, a, i, !1, m, h, v, C, _),
-      this.NMt(),
+      r === Protocol_1.Aki.Protocol.PFs.Proto_None &&
+        this.AddChatRowData(a, o, i, !1, v, h, _, C, m),
+      this.YEt(),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnAddChatContent,
         t,
-        n,
+        e,
       ),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnRefreshChatRedDot,
       );
   }
-  NMt() {
-    for (const t of this.xMt.values()) t.ClearCreateTime();
-  }
-  LoadAllChatSaveContent() {
-    var t = LocalStorage_1.LocalStorage.GetPlayer(
-      LocalStorageDefine_1.ELocalStoragePlayerKey.Chat,
-    );
-    if (t) {
-      var e,
-        o,
-        a = LocalStorage_1.LocalStorage.GetPlayer(
-          LocalStorageDefine_1.ELocalStoragePlayerKey.IsErrorChatReplace,
-          !1,
-        );
-      Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info(
-          "Chat",
-          8,
-          "加载所有聊天室本地聊天记录时，判断是否已将错误的聊天记录替换",
-          ["isErrorChatReplace", a],
-        );
-      for ([e, o] of t) {
-        Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info(
-            "Chat",
-            8,
-            "加载所有聊天室本地聊天记录",
-            ["ChatUniqueId", e],
-            ["SaveNum", o.ChatRows.length],
-          );
-        for (const r of o.ChatRows)
-          if (
-            (Log_1.Log.CheckDebug() &&
-              Log_1.Log.Debug(
-                "Chat",
-                8,
-                "加载所有聊天室本地聊天记录",
-                ["ChatUniqueId", e],
-                ["Content", r.Content],
-              ),
-            !a)
-          )
-            for (const n of o.ChatRows)
-              n.Content = n.Content.replace(/'/g, "''");
-        var i = Number(e);
-        this.GMt.set(i, o);
-      }
-      a ||
-        (LocalStorage_1.LocalStorage.SetPlayer(
-          LocalStorageDefine_1.ELocalStoragePlayerKey.Chat,
-          this.GMt,
-        ) &&
-          (Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info("Chat", 8, "已替换所有错误的聊天信息"),
-          LocalStorage_1.LocalStorage.SetPlayer(
-            LocalStorageDefine_1.ELocalStoragePlayerKey.IsErrorChatReplace,
-            !0,
-          )));
-    } else
-      LocalStorage_1.LocalStorage.SetPlayer(
-        LocalStorageDefine_1.ELocalStoragePlayerKey.IsErrorChatReplace,
-        !0,
-      );
-  }
-  AddAndSavePrivateChatContent(t, e, o, a, i, r, n) {
-    (e = {
-      ChatContentType: e,
-      Content: o,
-      MsgId: a,
-      OfflineMsg: i,
-      SenderUid: r,
-      UtcTime: n,
-    }),
-      (o = t.LocalSaveMsgLimit);
-    this.AddChatSaveContent(t.GetUniqueId(), e, o), this.SaveChatSaveContent();
-  }
-  AddChatSaveContent(t, e, o) {
-    let a = this.GMt.get(t);
-    var i;
-    a
-      ? ((i = a.ChatRows).length >= o && i.shift(),
-        (e.Content = e.Content.replace(/'/g, "''")),
-        i.push(e))
-      : ((e.Content = e.Content.replace(/'/g, "''")),
-        (a = { ChatRows: [e] }),
-        this.GMt.set(t, a)),
-      Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info(
-          "Chat",
-          8,
-          "添加本地缓存的聊天记录",
-          ["chatRoomUniqueId", t],
-          ["length", a.ChatRows.length],
-          ["content", e.Content],
-        );
-  }
-  RemoveChatSaveContent(t) {
-    Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("Chat", 8, "删除本地缓存的聊天记录", [
-        "chatRoomUniqueId",
-        t,
-      ]),
-      this.GMt.delete(t),
-      this.SaveChatSaveContent();
-  }
-  SaveChatSaveContent() {
-    Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("Chat", 8, "------保存本地缓存的聊天记录-----");
-    for (var [t, e] of this.GMt) {
-      Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info(
-          "Chat",
-          8,
-          "保存的聊天室唯一Id",
-          ["chatRoomUniqueId", t],
-          ["length", e.ChatRows.length],
-        );
-      for (const a of e.ChatRows)
-        Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug(
-            "Chat",
-            8,
-            "保存的聊天室本地聊天记录",
-            ["content", a.Content],
-            ["uniqueId", a.MsgId],
-          );
-    }
-    var o = LocalStorage_1.LocalStorage.SetPlayer(
-      LocalStorageDefine_1.ELocalStoragePlayerKey.Chat,
-      this.GMt,
-    );
-    Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("Chat", 8, "------保存本地缓存的聊天记录结束-----", [
-        "bSuccess",
-        o,
-      ]);
-  }
-  GetChatRoomSaveInfo(t, o, a) {
-    t = this.GMt.get(t);
-    if (t) {
-      var i = t.ChatRows;
-      let e = -1;
-      for (let t = i.length - 1; 0 < t; t--) {
-        var r = i[t];
-        if (r) {
-          if (r.MsgId === o) {
-            e = t;
-            break;
-          }
-          r.Content = r.Content.replace(/''/g, "'");
-        }
-      }
-      if (!(e < 0)) return (t = Math.max(0, e - a)), i.slice(t, e);
-    }
+  YEt() {
+    for (const t of this.jEt.values()) t.ClearCreateTime();
   }
   RequestPrivateRoomLocalHistory(t) {
     var e = t.GetUniqueId(),
-      o = t.GetEarliestHistoryContentUniqueId();
-    if (
-      (Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info(
-          "Chat",
-          8,
-          "===开始请求私人本地历史聊天记录===",
-          ["chatUniqueId", e],
-          ["fromContentUniqueId", o],
-        ),
-      !StringUtils_1.StringUtils.IsEmpty(o))
-    ) {
-      e = this.GetChatRoomSaveInfo(e, o, ChatDefine_1.READ_HISTORY_COUNT);
-      if (e) {
-        var a = [];
-        for (const r of e) {
-          Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info("Chat", 8, "读取本地聊天记录:", [
-              "content",
-              r.Content,
-            ]);
-          var i = new Protocol_1.Aki.Protocol.BGs();
-          (i.U3n = r.ChatContentType),
-            (i.H3n = r.Content),
-            (i.X3n = r.MsgId),
-            (i.z3n = r.OfflineMsg),
-            (i.Y3n = r.SenderUid),
-            (i.J3n = r.UtcTime),
-            a.push(i);
-        }
-        this.AddPrivateHistoryChatContent(t, a);
-      } else
-        Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("Chat", 8, "本地记录读取已读取结束");
-    }
+      t = t.GetEarliestHistoryContentUniqueId();
+    Log_1.Log.CheckInfo() &&
+      Log_1.Log.Info(
+        "Chat",
+        8,
+        "===目前暂时屏蔽聊天本地缓存的请求===",
+        ["chatUniqueId", e],
+        ["fromContentUniqueId", t],
+      );
   }
-  AddChatRowData(t, e, o, a, i, r, n, h, s, C = !0) {
-    this.OMt(t, e, o, a, i, r, n, h, s),
-      C && this.AMt.length > ChatDefine_1.CHAT_CONTENT_QUEUE_SIZE && this.kMt();
+  AddChatRowData(t, e, a, o, i, r, n, h, s, C = !0) {
+    this.JEt(t, e, a, o, i, r, n, h, s),
+      C && this.VEt.length > ChatDefine_1.CHAT_CONTENT_QUEUE_SIZE && this.zEt();
   }
   SortChatRowData() {
-    this.AMt.sort((t, e) => t.TimeStamp - e.TimeStamp);
+    this.VEt.sort((t, e) => t.TimeStamp - e.TimeStamp);
   }
   ClampChatRowDataListLength() {
-    var t = this.AMt.length;
+    var t = this.VEt.length;
     t <= ChatDefine_1.CHAT_CONTENT_QUEUE_SIZE ||
-      (this.AMt = this.AMt.slice(
+      (this.VEt = this.VEt.slice(
         Math.max(t - ChatDefine_1.CHAT_CONTENT_QUEUE_SIZE, 0),
       ));
   }
   SetTeamChatRowDataVisible(t) {
-    for (const o of this.AMt) {
-      var e = o.ContentChatRoomType;
-      (2 !== e && 3 !== e) || (o.IsVisible = t);
+    for (const a of this.VEt) {
+      var e = a.ContentChatRoomType;
+      (2 !== e && 3 !== e) || (a.IsVisible = t);
     }
   }
-  OMt(t, e, o, a, i, r, n, h, s) {
-    t = new ChatRowData_1.ChatRowData(this.PMt++, t, e, o, a, i, r, n, h, s);
-    this.AMt.push(t),
+  JEt(t, e, a, o, i, r, n, h, s) {
+    t = new ChatRowData_1.ChatRowData(this.HEt++, t, e, a, o, i, r, n, h, s);
+    this.VEt.push(t),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnPushChatRowData,
         t,
       );
   }
   ClearChatRowData() {
-    this.AMt.length = 0;
+    this.VEt.length = 0;
   }
   RemoveChatRowDataByChatRoomType(...e) {
     Log_1.Log.CheckInfo() &&
@@ -338,63 +150,63 @@ class ChatModel extends ModelBase_1.ModelBase {
         8,
         "[ChatDebug]删除主界面聊天数据---开始",
         ["chatRoomType", e],
-        ["chatRowDataListLength", this.AMt.length],
+        ["chatRowDataListLength", this.VEt.length],
       );
-    var o = [];
-    for (let t = 0; t < this.AMt.length; t++) {
-      var a = this.AMt[t];
+    var a = [];
+    for (let t = 0; t < this.VEt.length; t++) {
+      var o = this.VEt[t];
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Chat",
           8,
           "[ChatDebug]删除主界面聊天数据---打印当前聊天记录",
-          ["Content", a.Content],
-          ["TimeStamp", a.TimeStamp],
+          ["Content", o.Content],
+          ["TimeStamp", o.TimeStamp],
         ),
-        e.includes(a.ContentChatRoomType) && o.push(t);
+        e.includes(o.ContentChatRoomType) && a.push(t);
     }
-    for (const t of o) this.AMt.splice(t, 1);
+    for (const t of a) this.VEt.splice(t, 1);
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "Chat",
         8,
         "[ChatDebug]删除主界面聊天数据---结束",
-        ["removeIndexList", o],
-        ["chatRowDataListLength", this.AMt.length],
+        ["removeIndexList", a],
+        ["chatRowDataListLength", this.VEt.length],
       );
   }
-  kMt() {
-    var t = this.AMt.shift();
+  zEt() {
+    var t = this.VEt.shift();
     EventSystem_1.EventSystem.Emit(
       EventDefine_1.EEventName.OnPopChatRowData,
       t,
     );
   }
   GetChatRowDataList() {
-    return this.AMt;
+    return this.VEt;
   }
   HasOfflineMassage() {
-    for (const t of this.AMt) if (t.IsOfflineMassage) return !0;
+    for (const t of this.VEt) if (t.IsOfflineMassage) return !0;
     return !1;
   }
   AddPrivateHistoryChatContent(t, e) {
-    var o = [];
+    var a = [];
     for (const r of e) {
-      var a = r.Y3n,
+      var o = r.R8n,
         i = {
-          UtcTime: r.J3n,
-          MsgId: r.X3n,
-          SenderUid: a,
-          Content: r.H3n,
-          ChatContentType: r.U3n,
-          OfflineMsg: r.z3n,
+          UtcTime: r.x8n,
+          MsgId: r.U8n,
+          SenderUid: o,
+          Content: r.y8n,
+          ChatContentType: r.l8n,
+          OfflineMsg: r.P8n,
         },
         i =
-          (o.push(i),
-          ModelManager_1.ModelManager.FriendModel?.GetFriendById(a));
-      i && this.RefreshChatPlayerData(a, i.PlayerHeadPhoto, i.PlayerName);
+          (a.push(i),
+          ModelManager_1.ModelManager.FriendModel?.GetFriendById(o));
+      i && this.RefreshChatPlayerData(o, i.PlayerHeadPhoto, i.PlayerName);
     }
-    t.AddHistoryChatContent(o),
+    t.AddHistoryChatContent(a),
       t.Open(),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnAddHistoryChatContentCompleted,
@@ -402,20 +214,20 @@ class ChatModel extends ModelBase_1.ModelBase {
       );
   }
   AddTeamHistoryChatContent(t, e) {
-    var o = [];
+    var a = [];
     for (const i of e) {
-      var a = {
-        SenderPlayerId: i.uEs,
-        SenderPlayerName: i.dEs,
-        UtcTime: i.CEs,
-        SenderIcon: i.cEs,
-        Content: i.H3n,
-        ChatContentType: i.U3n,
-        NoticeType: i.mEs,
+      var o = {
+        SenderPlayerId: i.PLs,
+        SenderPlayerName: i.wLs,
+        UtcTime: i.bLs,
+        SenderIcon: i.ULs,
+        Content: i.y8n,
+        ChatContentType: i.l8n,
+        NoticeType: i.xLs,
       };
-      o.push(a);
+      a.push(o);
     }
-    t.AddHistoryChatContent(o),
+    t.AddHistoryChatContent(a),
       t.Open(),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnAddHistoryChatContentCompleted,
@@ -429,7 +241,7 @@ class ChatModel extends ModelBase_1.ModelBase {
         Log_1.Log.Info("Chat", 8, " 加入聊天室", ["UniqueId", t.GetUniqueId()]),
       t.GetIsOpen())
     )
-      (this.bMt = t),
+      (this.QEt = t),
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.OnJoinChatRoom,
           t,
@@ -445,34 +257,34 @@ class ChatModel extends ModelBase_1.ModelBase {
             ["UniqueId", t.GetUniqueId()],
           )
         );
-      (this.bMt = t), this.RequestOpenPrivateChatRoom(t);
-    } else (this.bMt = t), this.RequestOpenChatRoom(t);
+      (this.QEt = t), this.RequestOpenPrivateChatRoom(t);
+    } else (this.QEt = t), this.RequestOpenChatRoom(t);
     EventSystem_1.EventSystem.Emit(
       EventDefine_1.EEventName.OnRefreshChatRedDot,
     );
   }
   LeaveCurrentChatRoom() {
-    this.bMt = void 0;
+    this.QEt = void 0;
   }
   RemovePrivateChatRoom(t) {
-    this.bMt instanceof PrivateChatRoom_1.PrivateChatRoom &&
-      this.bMt.GetTargetPlayerId() === t &&
+    this.QEt instanceof PrivateChatRoom_1.PrivateChatRoom &&
+      this.QEt.GetTargetPlayerId() === t &&
       this.LeaveCurrentChatRoom();
     var e = this.GetPrivateChatRoom(t);
     e &&
       (e.Reset(),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("Chat", 8, " 删除私人聊天室", ["PlayerId", t]),
-      this.xMt.delete(t),
+      this.jEt.delete(t),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnRemovePrivateChatRoom,
         t,
       ));
   }
   ClosePrivateChatRoom(t) {
-    this.bMt instanceof PrivateChatRoom_1.PrivateChatRoom &&
-      this.bMt.GetTargetPlayerId() === t &&
-      (this.bMt = void 0);
+    this.QEt instanceof PrivateChatRoom_1.PrivateChatRoom &&
+      this.QEt.GetTargetPlayerId() === t &&
+      (this.QEt = void 0);
     var e = this.GetPrivateChatRoom(t);
     e &&
       (e.Close(),
@@ -531,11 +343,11 @@ class ChatModel extends ModelBase_1.ModelBase {
             ));
   }
   GetJoinedChatRoom() {
-    return this.bMt;
+    return this.QEt;
   }
   HasRedDot() {
-    for (const t of this.xMt.values()) if (t.GetIsShowRedDot()) return !0;
-    return !!this.wMt?.GetIsShowRedDot() || !!this.BMt?.GetIsShowRedDot();
+    for (const t of this.jEt.values()) if (t.GetIsShowRedDot()) return !0;
+    return !!this.WEt?.GetIsShowRedDot() || !!this.KEt?.GetIsShowRedDot();
   }
   TryGetPrivateChatRoom(t) {
     let e = this.GetPrivateChatRoom(t);
@@ -544,7 +356,7 @@ class ChatModel extends ModelBase_1.ModelBase {
   NewPrivateChatRoom(t) {
     var e = new PrivateChatRoom_1.PrivateChatRoom(t, 1);
     return (
-      this.xMt.set(t, e),
+      this.jEt.set(t, e),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnCreatePrivateChatRoom,
         t,
@@ -553,50 +365,44 @@ class ChatModel extends ModelBase_1.ModelBase {
     );
   }
   NewTeamChatRoom() {
-    return (this.wMt = new TeamChatRoom_1.TeamChatRoom(2)), this.wMt;
+    return (this.WEt = new TeamChatRoom_1.TeamChatRoom(2)), this.WEt;
   }
   NewWorldChatRoom() {
-    return (this.BMt = new WorldTeamChatRoom_1.WorldChatRoom(2)), this.BMt;
+    return (this.KEt = new WorldTeamChatRoom_1.WorldChatRoom(2)), this.KEt;
   }
   SelectedPrivateChatFriend(t) {
     t = this.TryGetPrivateChatRoom(t);
     t.CanChat() && this.JoinChatRoom(t);
   }
   GetPrivateChatRoom(t) {
-    return this.xMt.get(t);
+    return this.jEt.get(t);
   }
   GetTeamChatRoom() {
-    return this.wMt;
+    return this.WEt;
   }
   SetTeamChatRoom(t) {
-    this.wMt = t;
+    this.WEt = t;
   }
   GetWorldChatRoom() {
-    return this.BMt;
+    return this.KEt;
   }
   SetWorldChatRoom(t) {
-    this.BMt = t;
+    this.KEt = t;
   }
   GetAllSortedChatRoom() {
     var t = [];
-    for (const o of this.xMt.values())
-      o.GetIsOpen() && o.CanChat() && t.push(o);
+    for (const a of this.jEt.values())
+      a.GetIsOpen() && a.CanChat() && t.push(a);
     t.sort((t, e) => {
-      var o = t.GetIsShowRedDot() ? 1 : 0,
-        a = e.GetIsShowRedDot() ? 1 : 0;
-      return o != a
-        ? a - o
-        : (a = t.IsOnline() ? 1 : 0) != (o = e.IsOnline() ? 1 : 0)
-          ? o - a
-          : ((o = t.GetLastTimeStamp()),
-            (a = e.GetLastTimeStamp()),
-            0 === o
-              ? -1
-              : 0 === a
-                ? 1
-                : o !== a
-                  ? a - o
-                  : e.GetCreateTimeStamp() - t.GetCreateTimeStamp());
+      var a = t.GetLastTimeStamp(),
+        o = e.GetLastTimeStamp();
+      return 0 === a
+        ? -1
+        : 0 === o
+          ? 1
+          : a !== o
+            ? o - a
+            : e.GetCreateTimeStamp() - t.GetCreateTimeStamp();
     });
     var e = this.GetTeamChatRoom();
     return e ? t.unshift(e) : (e = this.GetWorldChatRoom()) && t.unshift(e), t;
@@ -606,26 +412,26 @@ class ChatModel extends ModelBase_1.ModelBase {
     return !!t && t.GetIsOpen();
   }
   AddMutePlayer(t) {
-    this.qMt.push(t),
+    this.XEt.push(t),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnAddMutePlayer,
         t,
       );
   }
   RemoveMutePlayer(t) {
-    var e = this.qMt.indexOf(t);
+    var e = this.XEt.indexOf(t);
     e < 0 ||
-      (this.qMt.splice(e, 1),
+      (this.XEt.splice(e, 1),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnRemoveMutePlayer,
         t,
       ));
   }
   ClearAllMutePlayer() {
-    this.qMt.length = 0;
+    this.XEt.length = 0;
   }
   IsInMute(t) {
-    return 0 <= this.qMt.indexOf(t);
+    return 0 <= this.XEt.indexOf(t);
   }
 }
 exports.ChatModel = ChatModel;

@@ -14,24 +14,24 @@ const UE = require("ue"),
 class ChatExpressionView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.$9e = void 0),
-      (this.JMt = new Map()),
-      (this.zMt = void 0),
-      (this.z9e = () => {
+      (this.lHe = void 0),
+      (this.lSt = new Map()),
+      (this._St = void 0),
+      (this.cHe = () => {
         var e = new ChatExpressionItem_1.ChatExpressionItem();
-        return e.BindOnClicked(this.ZMt), e;
+        return e.BindOnClicked(this.uSt), e;
       }),
-      (this.eSt = (e) => {
-        this.tSt(e);
+      (this.cSt = (e) => {
+        this.mSt(e);
       }),
-      (this.ZMt = (e) => {
+      (this.uSt = (e) => {
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.OnSelectExpression,
           e,
         ),
           UiManager_1.UiManager.CloseView("ChatExpressionView");
       }),
-      (this.iSt = () => {
+      (this.dSt = () => {
         UiManager_1.UiManager.CloseView("ChatExpressionView");
       });
   }
@@ -44,60 +44,60 @@ class ChatExpressionView extends UiViewBase_1.UiViewBase {
       [4, UE.UIItem],
       [5, UE.UIButtonComponent],
     ]),
-      (this.BtnBindInfo = [[5, this.iSt]]);
+      (this.BtnBindInfo = [[5, this.dSt]]);
   }
   OnStart() {
     var e = this.GetItem(1),
       i = this.GetItem(0),
       t = i.GetOwner();
-    (this.$9e = new LoopScrollView_1.LoopScrollView(
+    (this.lHe = new LoopScrollView_1.LoopScrollView(
       this.GetLoopScrollViewComponent(3),
       t,
-      this.z9e,
+      this.cHe,
     )),
       i.SetUIActive(!1),
       e.SetUIActive(!1),
       this.bl();
   }
   OnBeforeDestroy() {
-    this.oSt(), this.JMt.clear(), (this.zMt = void 0), (this.$9e = void 0);
+    this.CSt(), this.lSt.clear(), (this._St = void 0), (this.lHe = void 0);
   }
   bl() {
-    this.oSt();
+    this.CSt();
     var e =
       ConfigManager_1.ConfigManager.ChatConfig.GetAllExpressionGroupConfig();
     if (e) {
-      for (const i of e) this.rSt(i);
+      for (const i of e) this.gSt(i);
       var e = e[0];
-      e && ((e = e?.Id), this.tSt(e));
+      e && ((e = e?.Id), this.mSt(e));
     }
   }
-  tSt(e) {
-    this.zMt && this.zMt.SetState(0);
-    var i = this.nSt(e),
+  mSt(e) {
+    this._St && this._St.SetState(0);
+    var i = this.fSt(e),
       i =
         (i.SetState(1),
-        (this.zMt = i),
+        (this._St = i),
         ConfigManager_1.ConfigManager.ChatConfig.GetAllExpressionConfigByGroupId(
           e,
         ));
-    this.$9e.ReloadData(i);
+    this.lHe.ReloadData(i);
   }
-  rSt(e) {
+  gSt(e) {
     var i = this.GetItem(1).GetOwner(),
       i = LguiUtil_1.LguiUtil.DuplicateActor(i, this.GetItem(4)),
       i = new ChatExpressionGroupItem_1.ChatExpressionGroupItem(i);
     i.Refresh(e),
       i.SetState(0),
-      i.BindOnClicked(this.eSt),
+      i.BindOnClicked(this.cSt),
       i.SetActive(!0),
-      this.JMt.set(e.Id, i);
+      this.lSt.set(e.Id, i);
   }
-  nSt(e) {
-    return this.JMt.get(e);
+  fSt(e) {
+    return this.lSt.get(e);
   }
-  oSt() {
-    for (const e of this.JMt.values()) e.Destroy();
+  CSt() {
+    for (const e of this.lSt.values()) e.Destroy();
   }
 }
 exports.ChatExpressionView = ChatExpressionView;

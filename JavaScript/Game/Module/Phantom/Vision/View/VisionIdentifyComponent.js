@@ -12,14 +12,14 @@ class LevelUpIdentifyComponent extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
       (this.Layout = void 0),
-      (this.T7i = void 0),
-      (this.L7i = void 0),
-      (this.D7i = void 0),
+      (this.IHi = void 0),
+      (this.THi = void 0),
+      (this.LHi = void 0),
       (this.sGe = () => new VisionIdentifyItem_1.VisionIdentifyItem()),
-      (this.T7i = e);
+      (this.IHi = e);
   }
   async Init(e) {
-    (this.L7i = e), await this.CreateByActorAsync(this.T7i.GetOwner(), void 0);
+    (this.THi = e), await this.CreateByActorAsync(this.IHi.GetOwner(), void 0);
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -35,7 +35,7 @@ class LevelUpIdentifyComponent extends UiPanelBase_1.UiPanelBase {
       this.GetItem(1).SetUIActive(!1);
   }
   async PlayUpdateAnimation(e) {
-    await this.D7i?.Promise;
+    await this.LHi?.Promise;
     let t = 0;
     const i = [],
       s =
@@ -47,14 +47,14 @@ class LevelUpIdentifyComponent extends UiPanelBase_1.UiPanelBase {
       await Promise.all(i);
   }
   Update(e, i) {
-    if (((this.D7i = new CustomPromise_1.CustomPromise()), 0 < e.length)) {
+    if (((this.LHi = new CustomPromise_1.CustomPromise()), 0 < e.length)) {
       const s = new Array();
       e.forEach((e) => {
         var t = new PhantomDataBase_1.VisionSubPropViewData();
-        (t.Data = e), (t.SourceView = this.L7i), (t.IfPreCache = i), s.push(t);
+        (t.Data = e), (t.SourceView = this.THi), (t.IfPreCache = i), s.push(t);
       }),
         this.Layout.RefreshByData(s, () => {
-          this.D7i?.IsFulfilled() || this.D7i.SetResult(!0);
+          this.LHi?.IsFulfilled() || this.LHi.SetResult(!0);
         });
     }
   }

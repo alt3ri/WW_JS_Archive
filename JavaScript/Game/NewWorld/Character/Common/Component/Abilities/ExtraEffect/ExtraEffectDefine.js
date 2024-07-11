@@ -16,6 +16,7 @@ const ExtraEffectAbnormal_1 = require("./ExtraEffectAbnormal"),
   ExtraEffectFormationAttribute_1 = require("./ExtraEffectFormationAttribute"),
   ExtraEffectLevelBuff_1 = require("./ExtraEffectLevelBuff"),
   ExtraEffectMisc_1 = require("./ExtraEffectMisc"),
+  ExtraEffectModifyCd_1 = require("./ExtraEffectModifyCd"),
   ExtraEffectRemoveBuff_1 = require("./ExtraEffectRemoveBuff"),
   ExtraEffectShieldToAttribute_1 = require("./ExtraEffectShieldToAttribute"),
   ExtraEffectSkillLimitCount_1 = require("./ExtraEffectSkillLimitCount"),
@@ -104,6 +105,8 @@ function getBuffEffectClass(e) {
       return ExtraEffectAbnormal_1.AbnormalLight;
     case 1006:
       return ExtraEffectAbnormal_1.AbnormalDark;
+    case 49:
+      return ExtraEffectModifyCd_1.ModifyCd;
     default:
       return;
   }
@@ -132,6 +135,10 @@ function getBuffExecutionClass(e) {
       return ExtraExecutionEffect_1.AddFormationAttributeExecution;
     case 102:
       return ExtraExecutionEffect_1.AddEnergyExecution;
+    case 48:
+      return ExtraExecutionEffect_1.PredictLockOnExecution;
+    case 52:
+      return ExtraExecutionEffect_1.QteExecution;
     default:
       return;
   }

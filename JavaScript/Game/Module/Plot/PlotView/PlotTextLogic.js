@@ -25,14 +25,14 @@ const puerts_1 = require("puerts"),
   PlotPortraitItem_1 = require("./PlotPortraitItem"),
   MAX_LOAD_AUDIO_TIME = 3e3,
   BREAK_TIME = 1e3,
-  OptionHeight_Offset = 265;
+  OPTIONHEIGHT_OFFSET = 265;
 exports.PLAY_FLAG = 8;
 class PlotAudioDelegate {
   constructor() {
     (this.AudioDelegate = void 0),
       (this.AudioDelegateEnable = !1),
       (this.Callback = void 0),
-      (this.lzi = (t, i) => {
+      (this.sZi = (t, i) => {
         this.AudioDelegateEnable
           ? 3 === t &&
             ((t = i),
@@ -51,12 +51,12 @@ class PlotAudioDelegate {
   }
   Enable() {
     this.AudioDelegateEnable ||
-      ((this.AudioDelegate = (0, puerts_1.toManualReleaseDelegate)(this.lzi)),
+      ((this.AudioDelegate = (0, puerts_1.toManualReleaseDelegate)(this.sZi)),
       (this.AudioDelegateEnable = !0));
   }
   Disable() {
     void 0 !== this.AudioDelegate &&
-      ((0, puerts_1.releaseManualReleaseDelegate)(this.lzi),
+      ((0, puerts_1.releaseManualReleaseDelegate)(this.sZi),
       (this.AudioDelegate = void 0)),
       (this.AudioDelegateEnable = !1);
   }
@@ -72,41 +72,41 @@ class PlotTextCommonLogic {
       (this.TextScrollView = h),
       (this.OptionAdjustItem = r),
       (this.CurrentContent = void 0),
-      (this.ywn = ""),
-      (this.OVs = 0),
+      (this.kbn = ""),
+      (this.Mta = 0),
       (this.PlayDelayTime = void 0),
-      (this.Bqn = void 0),
-      (this.czi = -1),
-      (this.dzi = void 0),
-      (this.wqn = 1),
-      (this.bqn = !1),
-      (this.yXt = !1),
-      (this.qqn = !1),
-      (this.Gqn = void 0),
-      (this.Cwn = 0),
-      (this.gwn = 0),
-      (this.fwn = void 0),
-      (this.pwn = void 0),
-      (this.vwn = () => {
-        if (((this.Gqn = void 0), this.Mwn(), this.TextScrollView)) {
+      (this.G2n = void 0),
+      (this.lZi = -1),
+      (this.uZi = void 0),
+      (this.O2n = 1),
+      (this.N2n = !1),
+      (this.y$t = !1),
+      (this.k2n = !1),
+      (this.F2n = void 0),
+      (this.Pbn = 0),
+      (this.wbn = 0),
+      (this.Bbn = void 0),
+      (this.bbn = void 0),
+      (this.qbn = () => {
+        if (((this.F2n = void 0), this.Gbn(), this.TextScrollView)) {
           var o = this.PlotContent.GetTextRenderSize().Y,
             s = this.TextScrollView.GetRootComponent();
-          if (o <= s.GetHeight())
-            s.SetHeight(this.OVs),
-              this.OptionAdjustItem?.SetHeight(this.OVs + OptionHeight_Offset);
+          if (o <= this.Mta)
+            s.SetHeight(this.Mta),
+              this.OptionAdjustItem?.SetHeight(this.Mta + OPTIONHEIGHT_OFFSET);
           else {
             var h = this.PlotContent.GetRenderLineNum(),
               r = this.PlotContent.GetFontSpaceFinal().Y;
             if (h <= 6)
               s.SetHeight(o + r),
-                this.OptionAdjustItem?.SetHeight(o + r + OptionHeight_Offset);
+                this.OptionAdjustItem?.SetHeight(o + r + OPTIONHEIGHT_OFFSET);
             else {
               let i = 0;
               for (let t = 1; t <= 6; t++)
                 i += this.PlotContent.GetRenderLineHeight(t) + r;
               s.SetHeight(i),
-                this.OptionAdjustItem?.SetHeight(i + OptionHeight_Offset);
-              o = this.Swn();
+                this.OptionAdjustItem?.SetHeight(i + OPTIONHEIGHT_OFFSET);
+              o = this.Obn();
               let t =
                 CommonParamById_1.configCommonParamById.GetIntConfig(
                   "PlotAutoScrollDelayCharNum",
@@ -119,81 +119,81 @@ class PlotTextCommonLogic {
                 s = s - t;
               let e = s;
               1 < h && (e = s - this.PlotContent.GetRenderLineCharNum(0)),
-                (this.Cwn = (e / o) * 1e3),
-                (this.pwn = TimerSystem_1.TimerSystem.Delay(this.Ewn, l));
+                (this.Pbn = (e / o) * 1e3),
+                (this.bbn = TimerSystem_1.TimerSystem.Delay(this.Nbn, l));
             }
           }
         }
       }),
-      (this.Ewn = () => {
-        this.gwn = 0;
-        this.fwn = TimerSystem_1.TimerSystem.Forever(() => {
-          var t = this.gwn / this.Cwn;
+      (this.Nbn = () => {
+        this.wbn = 0;
+        this.Bbn = TimerSystem_1.TimerSystem.Forever(() => {
+          var t = this.wbn / this.Pbn;
           this.TextScrollView?.SetScrollProgress(t),
             1 <= t &&
-              TimerSystem_1.TimerSystem.Has(this.fwn) &&
-              TimerSystem_1.TimerSystem.Remove(this.fwn),
-            (this.gwn += 100);
+              TimerSystem_1.TimerSystem.Has(this.Bbn) &&
+              TimerSystem_1.TimerSystem.Remove(this.Bbn),
+            (this.wbn += 100);
         }, 100);
       }),
-      (this.Czi = void 0),
-      (this.gzi = void 0),
+      (this.cZi = void 0),
+      (this.mZi = void 0),
       (this.SubtitleAnimationTimer = void 0),
       (this.IsInteraction = !1),
       (this.IsTextAnimPlaying = !1),
-      (this.fzi = void 0),
-      (this.pzi = () => {
+      (this.dZi = void 0),
+      (this.CZi = () => {
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("Plot", 27, "[PlotTextLogic] 打字机结束"),
-          (this.Czi.GetPlayTween().from = 1),
-          this.vzi(),
+          (this.cZi.GetPlayTween().from = 1),
+          this.gZi(),
           (this.IsTextAnimPlaying = !1),
-          (this.yXt = !0),
-          this.fzi?.();
+          (this.y$t = !0),
+          this.dZi?.();
       }),
-      (this.Mzi = void 0),
+      (this.fZi = void 0),
       this.PlotItem.SetUIActive(!1),
       this.LineItem.SetUIActive(!1),
-      (this.Czi = this.PlotContent.GetOwner().GetComponentByClass(
+      (this.cZi = this.PlotContent.GetOwner().GetComponentByClass(
         UE.LGUIPlayTweenComponent.StaticClass(),
       )),
-      (this.gzi = this.PlotContent.GetOwner().GetComponentByClass(
+      (this.mZi = this.PlotContent.GetOwner().GetComponentByClass(
         UE.UIEffectTextAnimation.StaticClass(),
       )),
-      (this.ywn = LanguageSystem_1.LanguageSystem.PackageAudio),
-      (this.OVs = h?.GetRootComponent()?.GetHeight() ?? 174);
+      (this.kbn = LanguageSystem_1.LanguageSystem.PackageAudio),
+      (this.Mta = h?.GetRootComponent()?.GetHeight() ?? 174);
   }
   Clear() {
-    this.vzi(),
+    this.gZi(),
       this.ClearCurPlayAudio(),
       ModelManager_1.ModelManager.PlotModel.IsShowingHeadIcon &&
         ((ModelManager_1.ModelManager.PlotModel.IsShowingHeadIcon = !1),
-        this.Mzi?.Destroy(),
-        (this.Mzi = void 0)),
-      this.Gqn?.Remove(),
-      (this.Gqn = void 0),
-      this.Mwn();
+        this.fZi?.Destroy(),
+        (this.fZi = void 0)),
+      this.F2n?.Remove(),
+      (this.F2n = void 0),
+      this.Gbn();
   }
   UpdatePlotSubtitle(t) {
     this.ClearPlotContent(), (this.IsInteraction = !1), this.PlaySubtitle(t);
   }
   ClearPlotContent() {
-    (this.dzi = void 0),
-      (this.bqn = !1),
-      (this.yXt = !1),
+    (this.uZi = void 0),
+      (this.N2n = !1),
+      (this.y$t = !1),
       (this.IsInteraction = !1),
-      (this.qqn = !1),
-      (this.wqn = 1),
-      this.vzi(),
+      (this.k2n = !1),
+      (this.O2n = 1),
+      this.gZi(),
       this.ClearCurPlayAudio(),
-      this.Mwn(),
-      this.Gqn?.Remove(),
-      (this.Gqn = void 0),
+      this.Gbn(),
+      this.F2n?.Remove(),
+      (this.F2n = void 0),
       (this.CurrentContent = void 0);
   }
-  Szi() {
-    if (!this.qqn && this.CurrentContent.UniversalTone) {
-      var t = this.CurrentContent.UniversalTone.TimberId ?? this.dzi?.TimberId,
+  pZi() {
+    if (!this.k2n && this.CurrentContent.UniversalTone) {
+      var t = this.CurrentContent.UniversalTone.TimberId ?? this.uZi?.TimberId,
         i = this.CurrentContent.UniversalTone.UniversalToneId;
       if (t && i) {
         var e =
@@ -201,7 +201,7 @@ class PlotTextCommonLogic {
             t,
             i,
           );
-        if (e) return this.Ezi(e), !0;
+        if (e) return this.vZi(e), !0;
       }
       Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn(
@@ -214,7 +214,7 @@ class PlotTextCommonLogic {
     }
     return !1;
   }
-  yzi() {
+  MZi() {
     var t,
       i,
       e = this.CurrentContent.TalkAkEvent;
@@ -236,27 +236,27 @@ class PlotTextCommonLogic {
                 e,
               ])));
   }
-  Izi() {
-    if (this.qqn) return !1;
+  EZi() {
+    if (this.k2n) return !1;
     if (
-      (this.ywn !== LanguageSystem_1.LanguageSystem.PackageAudio &&
+      (this.kbn !== LanguageSystem_1.LanguageSystem.PackageAudio &&
         (Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Plot",
             27,
             "[PlotTextLogic] 恢复时：音频切换了语言，重播",
           ),
-        (this.ywn = LanguageSystem_1.LanguageSystem.PackageAudio),
+        (this.kbn = LanguageSystem_1.LanguageSystem.PackageAudio),
         this.ClearCurPlayAudio()),
-      -1 !== this.czi)
+      -1 !== this.lZi)
     )
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("Plot", 27, "[PlotTextLogic] 恢复时：恢复音频播放"),
-        AudioSystem_1.AudioSystem.ExecuteAction(this.czi, 2, {
+        AudioSystem_1.AudioSystem.ExecuteAction(this.lZi, 2, {
           TransitionDuration: BREAK_TIME,
         }),
-        this.uzi();
-    else if (this.Bqn) this.Bqn.Resume();
+        this.hZi();
+    else if (this.G2n) this.G2n.Resume();
     else {
       var t = this.CurrentContent.PlayVoice
         ? PlotAudioById_1.configPlotAudioById.GetConfig(
@@ -273,14 +273,14 @@ class PlotTextCommonLogic {
         t.FileName,
       ]);
       t = (0, AudioSystem_1.parseAudioEventPath)(i.AudioEventPath);
-      PlotTextCommonLogic.Iwn++;
-      const o = PlotTextCommonLogic.Iwn;
-      (this.czi = AudioSystem_1.AudioSystem.PostEvent(t, void 0, {
+      PlotTextCommonLogic.Fbn++;
+      const o = PlotTextCommonLogic.Fbn;
+      (this.lZi = AudioSystem_1.AudioSystem.PostEvent(t, void 0, {
         ExternalSourceName: i.ExternalSrcName,
         ExternalSourceMediaName: e,
         CallbackMask: 1048584,
         CallbackHandler: (t, i) => {
-          o !== PlotTextCommonLogic.Iwn
+          o !== PlotTextCommonLogic.Fbn
             ? Log_1.Log.CheckWarn() &&
               Log_1.Log.Warn(
                 "Plot",
@@ -296,9 +296,9 @@ class PlotTextCommonLogic {
                     "mediaName",
                     e,
                   ]),
-                (this.qqn = !0),
-                (this.czi = -1),
-                PlotTextCommonLogic.Iwn++)
+                (this.k2n = !0),
+                (this.lZi = -1),
+                PlotTextCommonLogic.Fbn++)
               : 3 === t &&
                 ((this.PlayDelayTime = i.Duration),
                 Log_1.Log.CheckDebug() &&
@@ -309,11 +309,11 @@ class PlotTextCommonLogic {
                     ["mediaName", e],
                     ["duration", this.PlayDelayTime],
                   ),
-                this._zi(),
-                this.bqn || this.uzi());
+                this.aZi(),
+                this.N2n || this.hZi());
         },
       })),
-        (this.Bqn = TimerSystem_1.TimerSystem.Delay(() => {
+        (this.G2n = TimerSystem_1.TimerSystem.Delay(() => {
           Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
               "Plot",
@@ -322,38 +322,38 @@ class PlotTextCommonLogic {
             ),
             this.ClearCurPlayAudio(),
             (this.PlayDelayTime = void 0),
-            this.uzi();
+            this.hZi();
         }, MAX_LOAD_AUDIO_TIME));
     }
     return !0;
   }
-  Ezi(t) {
-    if (this.Bqn) this.Bqn.Resume();
+  vZi(t) {
+    if (this.G2n) this.G2n.Resume();
     else if (
-      (this.ywn !== LanguageSystem_1.LanguageSystem.PackageAudio &&
+      (this.kbn !== LanguageSystem_1.LanguageSystem.PackageAudio &&
         (Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Plot",
             27,
             "[PlotTextLogic] 恢复时：音频切换了语言，重播",
           ),
-        (this.ywn = LanguageSystem_1.LanguageSystem.PackageAudio),
+        (this.kbn = LanguageSystem_1.LanguageSystem.PackageAudio),
         this.ClearCurPlayAudio()),
-      -1 !== this.czi)
+      -1 !== this.lZi)
     )
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("Plot", 27, "[PlotTextLogic] 恢复时：恢复音频播放"),
-        AudioSystem_1.AudioSystem.ExecuteAction(this.czi, 2, {
+        AudioSystem_1.AudioSystem.ExecuteAction(this.lZi, 2, {
           TransitionDuration: BREAK_TIME,
         }),
-        this.uzi();
+        this.hZi();
     else {
       const e = (0, AudioSystem_1.parseAudioEventPath)(t.AkEvent),
-        o = PlotTextCommonLogic.Iwn;
-      (this.czi = AudioSystem_1.AudioSystem.PostEvent(e, void 0, {
+        o = PlotTextCommonLogic.Fbn;
+      (this.lZi = AudioSystem_1.AudioSystem.PostEvent(e, void 0, {
         CallbackMask: 1048584,
         CallbackHandler: (t, i) => {
-          o !== PlotTextCommonLogic.Iwn
+          o !== PlotTextCommonLogic.Fbn
             ? Log_1.Log.CheckWarn() &&
               Log_1.Log.Warn(
                 "Plot",
@@ -369,9 +369,9 @@ class PlotTextCommonLogic {
                     "eventName",
                     e,
                   ]),
-                (this.qqn = !0),
-                (this.czi = -1),
-                PlotTextCommonLogic.Iwn++)
+                (this.k2n = !0),
+                (this.lZi = -1),
+                PlotTextCommonLogic.Fbn++)
               : 3 === t &&
                 ((this.PlayDelayTime = i.Duration),
                 Log_1.Log.CheckDebug() &&
@@ -382,11 +382,11 @@ class PlotTextCommonLogic {
                     ["eventName", e],
                     ["duration", this.PlayDelayTime],
                   ),
-                this._zi(),
-                this.bqn || this.uzi());
+                this.aZi(),
+                this.N2n || this.hZi());
         },
       })),
-        (this.Bqn = TimerSystem_1.TimerSystem.Delay(() => {
+        (this.G2n = TimerSystem_1.TimerSystem.Delay(() => {
           Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
               "Plot",
@@ -395,76 +395,76 @@ class PlotTextCommonLogic {
             ),
             this.ClearCurPlayAudio(),
             (this.PlayDelayTime = void 0),
-            this.uzi();
+            this.hZi();
         }, MAX_LOAD_AUDIO_TIME));
     }
   }
   ClearCurPlayAudio() {
-    this._zi(),
-      PlotTextCommonLogic.Iwn++,
-      AudioSystem_1.AudioSystem.ExecuteAction(this.czi, 0, {
+    this.aZi(),
+      PlotTextCommonLogic.Fbn++,
+      AudioSystem_1.AudioSystem.ExecuteAction(this.lZi, 0, {
         TransitionDuration: 0,
       }),
-      (this.czi = -1);
+      (this.lZi = -1);
   }
-  _zi() {
-    TimerSystem_1.TimerSystem.Has(this.Bqn) &&
-      TimerSystem_1.TimerSystem.Remove(this.Bqn),
-      (this.Bqn = void 0);
+  aZi() {
+    TimerSystem_1.TimerSystem.Has(this.G2n) &&
+      TimerSystem_1.TimerSystem.Remove(this.G2n),
+      (this.G2n = void 0);
   }
   PlaySubtitle(t) {
     (this.CurrentContent = t),
-      this.yzi(),
+      this.MZi(),
       "Option" === this.CurrentContent.Type
         ? this.PlotItem.SetUIActive(!1)
         : ((t = this.CurrentContent.CaptionParams),
-          (this.dzi = SpeakerById_1.configSpeakerById.GetConfig(
+          (this.uZi = SpeakerById_1.configSpeakerById.GetConfig(
             this.CurrentContent.WhoId,
           )),
           t
-            ? this.uzi(t.TotalTime, t.IntervalTime)
-            : this.Izi() || this.Szi() || this.uzi());
+            ? this.hZi(t.TotalTime, t.IntervalTime)
+            : this.EZi() || this.pZi() || this.hZi());
   }
   PauseSubtitle() {
     this.CurrentContent &&
       (Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("Plot", 27, "[PlotTextLogic] 暂停字幕"),
-      (this.bqn = !0),
-      this.Bqn
-        ? (this.Bqn.Pause(),
+      (this.N2n = !0),
+      this.G2n
+        ? (this.G2n.Pause(),
           Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug("Plot", 27, "[PlotTextLogic] 暂停时：音频加载中"))
-        : (-1 !== this.czi &&
-            (AudioSystem_1.AudioSystem.ExecuteAction(this.czi, 1, {
+        : (-1 !== this.lZi &&
+            (AudioSystem_1.AudioSystem.ExecuteAction(this.lZi, 1, {
               TransitionDuration: BREAK_TIME,
             }),
             Log_1.Log.CheckDebug()) &&
             Log_1.Log.Debug("Plot", 27, "[PlotTextLogic] 暂停时：音频播放中"),
-          this.Gqn?.Remove(),
-          (this.Gqn = void 0),
-          this.Mwn(),
+          this.F2n?.Remove(),
+          (this.F2n = void 0),
+          this.Gbn(),
           this.SubtitleAnimationTimer &&
-            ((this.wqn = this.gzi.GetSelectorOffset()),
-            this.Czi.Stop(),
+            ((this.O2n = this.mZi.GetSelectorOffset()),
+            this.cZi.Stop(),
             this.SubtitleAnimationTimer.Pause(),
             Log_1.Log.CheckDebug()) &&
             Log_1.Log.Debug(
               "Plot",
               27,
               "[PlotTextLogic] 暂停时：打字机播放中",
-              ["offset", this.wqn],
+              ["offset", this.O2n],
             )));
   }
   ResumeSubtitle(t) {
-    (this.bqn = !1), this.PlaySubtitle(t);
+    (this.N2n = !1), this.PlaySubtitle(t);
   }
-  uzi(t, i) {
-    this.Tzi(),
-      this.Lzi(),
-      this.Dzi(t, i),
-      (this.Gqn = TimerSystem_1.TimerSystem.Next(this.vwn));
+  hZi(t, i) {
+    this.SZi(),
+      this.yZi(),
+      this.IZi(t, i),
+      (this.F2n = TimerSystem_1.TimerSystem.Next(this.qbn));
   }
-  Tzi() {
+  SZi() {
     var t;
     this.PlotItem.SetUIActive(!0),
       (this.CurrentContent.Type && "Talk" !== this.CurrentContent.Type) ||
@@ -473,16 +473,16 @@ class PlotTextCommonLogic {
           this.NpcName.SetUIActive(!1),
           this.NpcTitle.SetUIActive(!1))
         : (this.LineItem.SetUIActive(!0),
-          (t = PublicUtil_1.PublicUtil.GetConfigTextByTable(0, this.dzi.Id)),
+          (t = PublicUtil_1.PublicUtil.GetConfigTextByTable(0, this.uZi.Id)),
           StringUtils_1.StringUtils.IsEmpty(t)
             ? this.NpcName.SetUIActive(!1)
             : (this.NpcName.SetUIActive(!0), this.NpcName.SetText(t)),
-          (t = PublicUtil_1.PublicUtil.GetConfigTextByTable(1, this.dzi.Id)),
+          (t = PublicUtil_1.PublicUtil.GetConfigTextByTable(1, this.uZi.Id)),
           StringUtils_1.StringUtils.IsEmpty(t)
             ? this.NpcTitle.SetUIActive(!1)
             : (this.NpcTitle.SetUIActive(!0), this.NpcTitle.SetText(t)));
   }
-  Lzi() {
+  yZi() {
     let t = PublicUtil_1.PublicUtil.GetFlowConfigLocalText(
       this.CurrentContent.TidTalk,
     );
@@ -491,11 +491,13 @@ class PlotTextCommonLogic {
         "id",
         this.CurrentContent.TidTalk,
       ]),
-      (t = this.CurrentContent.TidTalk)),
-      (t = ModelManager_1.ModelManager.PlotModel.PlotTextReplacer.Replace(t)),
+      (t = this.CurrentContent.TidTalk));
+    var i =
+      "LevelD" === ModelManager_1.ModelManager.PlotModel.PlotConfig.PlotLevel;
+    (t = ModelManager_1.ModelManager.PlotModel.PlotTextReplacer.Replace(t, i)),
       this.PlotContent.SetText(t);
   }
-  Swn() {
+  Obn() {
     return this.IsInteraction
       ? ModelManager_1.ModelManager.PlotModel.PlotGlobalConfig
           .TextAnimSpeedInteraction
@@ -505,20 +507,20 @@ class PlotTextCommonLogic {
         : ModelManager_1.ModelManager.PlotModel.PlotGlobalConfig
             .TextAnimSpeedLevelD;
   }
-  Mwn() {
-    TimerSystem_1.TimerSystem.Has(this.fwn) &&
-      TimerSystem_1.TimerSystem.Remove(this.fwn),
-      TimerSystem_1.TimerSystem.Has(this.pwn) &&
-        TimerSystem_1.TimerSystem.Remove(this.pwn);
+  Gbn() {
+    TimerSystem_1.TimerSystem.Has(this.Bbn) &&
+      TimerSystem_1.TimerSystem.Remove(this.Bbn),
+      TimerSystem_1.TimerSystem.Has(this.bbn) &&
+        TimerSystem_1.TimerSystem.Remove(this.bbn);
   }
-  Dzi(i, e) {
+  IZi(i, e) {
     if (
       (Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("Plot", 39, "CD级", [
           "字幕：",
           this.PlotContent.GetText(),
         ]),
-      this.Czi)
+      this.cZi)
     )
       if (this.SubtitleAnimationTimer)
         Log_1.Log.CheckDebug() &&
@@ -526,16 +528,16 @@ class PlotTextCommonLogic {
             "Plot",
             27,
             "[PlotTextLogic] 恢复时：恢复打字机动画",
-            ["offset", this.wqn],
+            ["offset", this.O2n],
           ),
           this.SubtitleAnimationTimer.Resume(),
-          (this.Czi.GetPlayTween().from = this.wqn),
-          (this.Czi.GetPlayTween().duration *= this.wqn),
-          this.Czi.Play();
-      else if (this.yXt) this.gzi.SetSelectorOffset(0);
+          (this.cZi.GetPlayTween().from = this.O2n),
+          (this.cZi.GetPlayTween().duration *= this.O2n),
+          this.cZi.Play();
+      else if (this.y$t) this.mZi.SetSelectorOffset(0);
       else {
         var o = this.PlotContent.GetDisplayCharLength();
-        this.Czi.Stop();
+        this.cZi.Stop();
         let t = 1;
         (t =
           i ||
@@ -551,9 +553,9 @@ class PlotTextCommonLogic {
               : o /
                 ModelManager_1.ModelManager.PlotModel.PlotGlobalConfig
                   .TextAnimSpeedLevelD)),
-          this.gzi.SetSelectorOffset(1),
-          (this.Czi.GetPlayTween().duration = t),
-          this.Czi.Play(),
+          this.mZi.SetSelectorOffset(1),
+          (this.cZi.GetPlayTween().duration = t),
+          this.cZi.Play(),
           (this.IsTextAnimPlaying = !0),
           (t *= CommonDefine_1.MILLIONSECOND_PER_SECOND),
           e
@@ -561,64 +563,64 @@ class PlotTextCommonLogic {
             : this.PlayDelayTime
               ? (this.PlayDelayTime = this.PlayDelayTime - t)
               : (this.PlayDelayTime = 0),
-          this.Rzi(t);
+          this.TZi(t);
       }
     else
       Log_1.Log.CheckWarn() && Log_1.Log.Warn("Plot", 19, "找不到字幕动画组件"),
-        this.pzi();
+        this.CZi();
   }
-  Rzi(t) {
+  TZi(t) {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug("Plot", 27, "[PlotTextLogic] 打字机开始", [
         "duration",
         t,
       ]),
-      this.vzi();
+      this.gZi();
     t = Math.max(t, TimerSystem_1.MIN_TIME);
-    this.SubtitleAnimationTimer = TimerSystem_1.TimerSystem.Delay(this.pzi, t);
+    this.SubtitleAnimationTimer = TimerSystem_1.TimerSystem.Delay(this.CZi, t);
   }
-  vzi() {
+  gZi() {
     TimerSystem_1.TimerSystem.Has(this.SubtitleAnimationTimer) &&
       TimerSystem_1.TimerSystem.Remove(this.SubtitleAnimationTimer),
       (this.SubtitleAnimationTimer = void 0);
   }
   SetPlotContentAnimFinishCallback(t) {
-    this.fzi = t;
+    this.dZi = t;
   }
   ForceSkipPlotContentAnim() {
-    this.Czi.Stop(),
-      this.gzi.SetSelectorOffset(0),
-      this.Mwn(),
+    this.cZi.Stop(),
+      this.mZi.SetSelectorOffset(0),
+      this.Gbn(),
       this.TextScrollView?.SetScrollProgress(1),
-      this.pzi();
+      this.CZi();
   }
   GetPlotContentAnimDuration() {
-    return this.Czi.GetPlayTween().duration;
+    return this.cZi.GetPlayTween().duration;
   }
   HandlePortraitVisible(t, i, e) {
     i &&
       e &&
       (i.Visible && !ModelManager_1.ModelManager.PlotModel.IsShowingHeadIcon
         ? ((ModelManager_1.ModelManager.PlotModel.IsShowingHeadIcon = !0),
-          (this.Mzi = new PlotPortraitItem_1.PlotPortraitItem()),
-          this.Mzi.OpenAsync(t, i.HeadStyleConfig).finally(e))
+          (this.fZi = new PlotPortraitItem_1.PlotPortraitItem()),
+          this.fZi.OpenAsync(t, i.HeadStyleConfig).finally(e))
         : i.Visible && ModelManager_1.ModelManager.PlotModel.IsShowingHeadIcon
-          ? (this.Mzi.CloseAsync(),
-            (this.Mzi = new PlotPortraitItem_1.PlotPortraitItem()),
-            this.Mzi.OpenAsync(t, i.HeadStyleConfig).finally(e))
+          ? (this.fZi.CloseAsync(),
+            (this.fZi = new PlotPortraitItem_1.PlotPortraitItem()),
+            this.fZi.OpenAsync(t, i.HeadStyleConfig).finally(e))
           : !i.Visible &&
               ModelManager_1.ModelManager.PlotModel.IsShowingHeadIcon
             ? ((ModelManager_1.ModelManager.PlotModel.IsShowingHeadIcon = !1),
-              this.Mzi.CloseAsync().finally(e),
-              (this.Mzi = void 0))
+              this.fZi.CloseAsync().finally(e),
+              (this.fZi = void 0))
             : e());
   }
   async DestroyPortraitItem() {
     ModelManager_1.ModelManager.PlotModel.IsShowingHeadIcon &&
       ((ModelManager_1.ModelManager.PlotModel.IsShowingHeadIcon = !1),
-      await this.Mzi.CloseAsync(),
-      (this.Mzi = void 0));
+      await this.fZi.CloseAsync(),
+      (this.fZi = void 0));
   }
 }
-(exports.PlotTextCommonLogic = PlotTextCommonLogic).Iwn = 0;
+(exports.PlotTextCommonLogic = PlotTextCommonLogic).Fbn = 0;
 //# sourceMappingURL=PlotTextLogic.js.map

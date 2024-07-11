@@ -13,19 +13,19 @@ const UE = require("ue"),
 class TowerFloorItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(),
-      (this.DLo = void 0),
-      (this.RLo = -1),
-      (this.RHt = !1),
-      (this.GLo = -1),
+      (this.IDo = void 0),
+      (this.TDo = -1),
+      (this.Rjt = !1),
+      (this.BDo = -1),
       (this.$be = void 0),
-      (this.Nke = void 0),
+      (this.tFe = void 0),
       (this.kqe = (e) => {
-        this.DLo && 1 === e && this.DLo(this.RLo, this.RHt);
+        this.IDo && 1 === e && this.IDo(this.TDo, this.Rjt);
       }),
-      (this.sAt = () => {
+      (this.vke = () => {
         return new TowerStarsSimpleItem_1.TowerStarsSimpleItem();
       }),
-      (this.Hke = () => {
+      (this.nFe = () => {
         return new TowerRoleSimpleItem_1.TowerRoleSimpleItem();
       });
   }
@@ -43,42 +43,42 @@ class TowerFloorItem extends GridProxyAbstract_1.GridProxyAbstract {
   OnStart() {
     (this.$be = new GenericLayout_1.GenericLayout(
       this.GetHorizontalLayout(3),
-      this.sAt,
+      this.vke,
     )),
-      (this.Nke = new GenericLayout_1.GenericLayout(
+      (this.tFe = new GenericLayout_1.GenericLayout(
         this.GetHorizontalLayout(4),
-        this.Hke,
+        this.nFe,
       )),
       this.SetToggleState(0);
   }
   Refresh(e, t, i) {
-    (this.RLo = e),
-      (this.RHt = !ModelManager_1.ModelManager.TowerModel.GetFloorIsUnlock(
-        this.RLo,
+    (this.TDo = e),
+      (this.Rjt = !ModelManager_1.ModelManager.TowerModel.GetFloorIsUnlock(
+        this.TDo,
       ));
     var r = ConfigManager_1.ConfigManager.TowerClimbConfig.GetTowerInfo(e),
       o =
         (this.GetText(2).SetText("" + r.Floor),
-        ModelManager_1.ModelManager.TowerModel.GetFloorData(this.RLo)),
-      s = ((this.GLo = o?.Star ?? 0), []);
-    for (let e = 1; e <= TowerModel_1.FLOOR_STAR; e++) s.push(this.GLo >= e);
+        ModelManager_1.ModelManager.TowerModel.GetFloorData(this.TDo)),
+      s = ((this.BDo = o?.Star ?? 0), []);
+    for (let e = 1; e <= TowerModel_1.FLOOR_STAR; e++) s.push(this.BDo >= e);
     this.$be.RefreshByData(s);
     var h = [];
-    if (o) for (const a of o.Formation) h.push(a.l3n);
+    if (o) for (const a of o.Formation) h.push(a.O6n);
     for (; h.length < TowerData_1.TOWER_TEAM_MAX_NUMBER; ) h.push(0);
-    this.Nke.RefreshByData(h),
+    this.tFe.RefreshByData(h),
       this.SetTextureByPath(r.ItemBgPath, this.GetTexture(1)),
-      this.RHt
+      this.Rjt
         ? this.GetExtendToggle(5).SetToggleState(2)
         : this.GetExtendToggle(5).SetToggleState(0),
       ModelManager_1.ModelManager.TowerModel.DefaultFloor === e &&
         this.SetToggleState(1);
   }
   BindOnClickToggle(e) {
-    this.DLo = e;
+    this.IDo = e;
   }
   OnBeforeDestroy() {
-    (this.DLo = void 0), (this.$be = void 0), (this.Nke = void 0);
+    (this.IDo = void 0), (this.$be = void 0), (this.tFe = void 0);
   }
   SetToggleState(e) {
     this.GetExtendToggle(0).SetToggleState(e);

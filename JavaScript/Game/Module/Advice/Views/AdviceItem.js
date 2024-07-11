@@ -12,15 +12,15 @@ const UE = require("ue"),
 class AdviceItem extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
-      (this.S8e = void 0),
-      (this.S7e = (e) => {
-        e === this.S8e.GetAdviceId() && this.Og();
+      (this.b9e = void 0),
+      (this.bHe = (e) => {
+        e === this.b9e.GetAdviceId() && this.Og();
       }),
-      (this.E7e = () => {
+      (this.qHe = () => {
         var e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(92);
         e.FunctionMap.set(2, () => {
           AdviceController_1.AdviceController.RequestDeleteAdvice(
-            this.S8e.GetAdviceId(),
+            this.b9e.GetAdviceId(),
           );
         }),
           ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
@@ -38,40 +38,40 @@ class AdviceItem extends UiPanelBase_1.UiPanelBase {
       [4, UE.UITexture],
       [5, UE.UISprite],
     ]),
-      (this.BtnBindInfo = [[0, this.E7e]]);
+      (this.BtnBindInfo = [[0, this.qHe]]);
   }
   OnStart() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnModifyAdviceSuccess,
-      this.S7e,
+      this.bHe,
     );
   }
   Update(e) {
-    (this.S8e = e), this.Og();
+    (this.b9e = e), this.Og();
   }
   Og() {
-    this.hke(), this.v7e(), this.u7e(), this.y7e();
+    this.T2e(), this.wHe(), this.THe(), this.GHe();
   }
-  hke() {
-    this.GetText(1).SetText(this.S8e.GetAdviceShowText());
+  T2e() {
+    this.GetText(1).SetText(this.b9e.GetAdviceShowText());
   }
-  v7e() {
+  wHe() {
     var e,
-      t = 0 < this.S8e.GetAdviceExpressionId();
+      t = 0 < this.b9e.GetAdviceExpressionId();
     t &&
       ((e = ConfigManager_1.ConfigManager.ChatConfig.GetExpressionConfig(
-        this.S8e.GetAdviceExpressionId(),
+        this.b9e.GetAdviceExpressionId(),
       )),
       this.SetTextureByPath(e.ExpressionTexturePath, this.GetTexture(4))),
       this.GetSprite(5).SetUIActive(!t),
       this.GetTexture(4).SetUIActive(t);
   }
-  u7e() {
-    var e = this.S8e.GetVote();
+  THe() {
+    var e = this.b9e.GetVote();
     this.GetText(2).SetText(e.toString());
   }
-  y7e() {
-    var e = this.S8e.GetAreaId(),
+  GHe() {
+    var e = this.b9e.GetAreaId(),
       e = ConfigManager_1.ConfigManager.AreaConfig.GetAreaInfo(e),
       e = ConfigManager_1.ConfigManager.AreaConfig.GetAreaLocalName(e.Title);
     this.GetText(3).SetText(e);
@@ -79,7 +79,7 @@ class AdviceItem extends UiPanelBase_1.UiPanelBase {
   OnBeforeDestroy() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnModifyAdviceSuccess,
-      this.S7e,
+      this.bHe,
     );
   }
 }

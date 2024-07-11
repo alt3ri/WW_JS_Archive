@@ -2,22 +2,22 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.MissionPanel = void 0);
 const UE = require("ue"),
+  Log_1 = require("../../../../../Core/Common/Log"),
   Stats_1 = require("../../../../../Core/Common/Stats"),
   Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem"),
   EventDefine_1 = require("../../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../../Manager/ModelManager"),
+  LevelSequencePlayer_1 = require("../../../Common/LevelSequencePlayer"),
   GeneralLogicTreeUtil_1 = require("../../../GeneralLogicTree/GeneralLogicTreeUtil"),
+  QuestController_1 = require("../../../QuestNew/Controller/QuestController"),
   LguiUtil_1 = require("../../../Util/LguiUtil"),
   BattleQuestUpdateTipsView_1 = require("../MissionView/BattleQuestUpdateTipsView"),
   BehaviorTreeView_1 = require("../MissionView/BehaviorTreeView"),
   BattleChildViewPanel_1 = require("./BattleChildViewPanel"),
-  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
-  LevelSequencePlayer_1 = require("../../../Common/LevelSequencePlayer"),
-  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
-  TimerSystem_1 = require("../../../../../Core/Timer/TimerSystem"),
-  QuestController_1 = require("../../../QuestNew/Controller/QuestController"),
-  Log_1 = require("../../../../../Core/Common/Log"),
   MISSION_IN = "MissionIn",
   MISSION_OUT = "MissionOut";
 class PendingProcess {
@@ -52,36 +52,36 @@ class ShowQuestUpdateTipsProcess extends PendingProcess {
 class MissionPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
   constructor() {
     super(...arguments),
-      (this.Pze = void 0),
-      (this.xze = void 0),
-      (this.wze = void 0),
-      (this.Bze = void 0),
-      (this.bze = void 0),
+      (this.HZe = void 0),
+      (this.jZe = void 0),
+      (this.WZe = void 0),
+      (this.KZe = void 0),
+      (this.QZe = void 0),
       (this.SequencePlayer = void 0),
-      (this.iAn = 0),
-      (this.V_t = void 0),
-      (this.b4e = !1),
-      (this.qze = (e, t) => {
-        this.GetActive() || this.Gze(e.TreeIncId),
-          this.Nze(new TreeViewStartTrackProcess(e, t));
+      (this.axn = 0),
+      (this.rct = void 0),
+      (this.$5e = !1),
+      (this.XZe = (e, t) => {
+        this.GetActive() || this.$Ze(e.TreeIncId),
+          this.YZe(new TreeViewStartTrackProcess(e, t));
       }),
-      (this.Oze = (e, t) => {
-        this.GetActive() || this.Gze(e),
-          this.Nze(new TreeViewEndTrackProcess(e, t));
+      (this.JZe = (e, t) => {
+        this.GetActive() || this.$Ze(e),
+          this.YZe(new TreeViewEndTrackProcess(e, t));
       }),
-      (this.kze = (e) => {
-        this.Nze(new TreeViewUpdateShowProcess(e));
+      (this.zZe = (e) => {
+        this.YZe(new TreeViewUpdateShowProcess(e));
       }),
-      (this.Fze = (e) => {
-        this.Nze(new ShowQuestUpdateTipsProcess(e));
+      (this.ZZe = (e) => {
+        this.YZe(new ShowQuestUpdateTipsProcess(e));
       }),
       (this.nye = () => {
-        this.b4e = !0;
+        this.$5e = !0;
       }),
-      (this.rAn = (e) => {
-        this.bze && e === this.bze.ProcessId && this.Jze(e);
+      (this.hxn = (e) => {
+        this.QZe && e === this.QZe.ProcessId && this._et(e);
       }),
-      (this.Vze = (e) => {
+      (this.eet = (e) => {
         var t = e.ShowBridge,
           i = t.TreeIncId,
           s =
@@ -90,88 +90,88 @@ class MissionPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
             );
         if (s) {
           var r = s.BtType,
-            h = this.Hze(r, e.Reason);
+            h = this.tet(r, e.Reason);
           switch (h) {
             case 0:
               if (
                 ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance()
               )
                 break;
-              return this.Pze.get(h).StartShow(e.ProcessId, t);
+              return this.HZe.get(h).StartShow(e.ProcessId, t);
             case 1:
-              return this.jze(e.ProcessId, r, i, s.TreeConfigId, t);
+              return this.iet(e.ProcessId, r, i, s.TreeConfigId, t);
           }
         }
         return !0;
       }),
-      (this.Wze = (e) => {
-        var t = this.Pze.get(0),
+      (this.oet = (e) => {
+        var t = this.HZe.get(0),
           i = e.TreeIncId;
         return i === t.TreeIncId
           ? t.EndShow(e.ProcessId, e.Reason)
-          : (t = this.Kze(i)) < 0 ||
-              ((i = this.Pze.get(1)),
-              this.wze.splice(t, 1),
-              0 === this.wze.length
+          : (t = this.ret(i)) < 0 ||
+              ((i = this.HZe.get(1)),
+              this.WZe.splice(t, 1),
+              0 === this.WZe.length
                 ? i.EndShow(e.ProcessId)
-                : this.Qze(e.ProcessId));
+                : this.net(e.ProcessId));
       }),
-      (this.ZPt = (e) => {
+      (this.owt = (e) => {
         switch (e) {
           case MISSION_IN:
-            var t = this.bze;
-            1 === this.iAn
-              ? (Log_1.Log.CheckDebug() &&
-                  Log_1.Log.Debug(
+            var t = this.QZe;
+            1 === this.axn
+              ? (Log_1.Log.CheckInfo() &&
+                  Log_1.Log.Info(
                     "Log",
                     19,
                     "MissionPanel:QuestUpdateStart - MISSION_IN Start",
                   ),
-                this.xze.OnBeforePlayShowSequence(t.Info),
+                this.jZe.OnBeforePlayShowSequence(t.Info),
                 this.GetItem(1)?.SetUIActive(!0),
                 this.GetItem(2)?.SetUIActive(!1))
-              : 3 === this.iAn &&
-                (Log_1.Log.CheckDebug() &&
-                  Log_1.Log.Debug(
+              : 3 === this.axn &&
+                (Log_1.Log.CheckInfo() &&
+                  Log_1.Log.Info(
                     "Log",
                     19,
                     "MissionPanel:QuestUpdateEnd - MISSION_IN Start",
                   ),
                 (t = t.Info.ShowBridge),
-                this.Xze(t),
+                this.aet(t),
                 this.GetItem(1)?.SetUIActive(!1),
                 this.GetItem(2)?.SetUIActive(!0));
             break;
           case MISSION_OUT:
-            1 === this.iAn
-              ? (Log_1.Log.CheckDebug() &&
-                  Log_1.Log.Debug(
+            1 === this.axn
+              ? (Log_1.Log.CheckInfo() &&
+                  Log_1.Log.Info(
                     "Log",
                     19,
                     "MissionPanel:VerticalLayout - MISSION_OUT 开始播放",
                   ),
                 this.GetItem(1)?.SetUIActive(!1),
                 this.GetItem(2)?.SetUIActive(!0))
-              : 3 === this.iAn &&
-                (Log_1.Log.CheckDebug() &&
-                  Log_1.Log.Debug(
+              : 3 === this.axn &&
+                (Log_1.Log.CheckInfo() &&
+                  Log_1.Log.Info(
                     "Log",
                     19,
                     "MissionPanel:QuestUpdateEnd - MISSION_OUT Start",
                   ),
                 this.GetItem(1)?.SetUIActive(!0),
                 this.GetItem(2)?.SetUIActive(!1),
-                this.xze.OnBeforePlayHideSequence());
+                this.jZe.OnBeforePlayHideSequence());
         }
       }),
-      (this.aut = (e) => {
+      (this.yct = (e) => {
         switch (e) {
           case MISSION_IN:
-            var t = this.bze;
-            if (1 === this.iAn) {
-              (this.iAn = 2),
-                Log_1.Log.CheckDebug() &&
-                  Log_1.Log.Debug(
+            var t = this.QZe;
+            if (1 === this.axn) {
+              (this.axn = 2),
+                Log_1.Log.CheckInfo() &&
+                  Log_1.Log.Info(
                     "Log",
                     19,
                     "MissionPanel:QuestUpdateStart - MISSION_IN End",
@@ -183,65 +183,65 @@ class MissionPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
                     i.QuestType,
                   );
                 (e = e || TimerSystem_1.MIN_TIME),
-                  Log_1.Log.CheckDebug() &&
-                    Log_1.Log.Debug(
+                  Log_1.Log.CheckInfo() &&
+                    Log_1.Log.Info(
                       "Log",
                       19,
                       "MissionPanel:QuestUpdateStay - Stay",
                     ),
-                  (this.V_t = TimerSystem_1.TimerSystem.Delay(
-                    this.oAn,
+                  (this.rct = TimerSystem_1.TimerSystem.Delay(
+                    this.lxn,
                     1e3 * e,
                   ));
-              } else this.oAn();
+              } else this.lxn();
             } else
-              3 === this.iAn &&
-                (Log_1.Log.CheckDebug() &&
-                  Log_1.Log.Debug(
+              3 === this.axn &&
+                (Log_1.Log.CheckInfo() &&
+                  Log_1.Log.Info(
                     "Log",
                     19,
                     "MissionPanel:QuestUpdateEnd - MISSION_IN End",
                   ),
-                this.nAn(t));
+                this._xn(t));
             break;
           case MISSION_OUT:
-            1 === this.iAn
+            1 === this.axn
               ? this.SequencePlayer.PlayLevelSequenceByName(MISSION_IN)
-              : 3 === this.iAn &&
-                (Log_1.Log.CheckDebug() &&
-                  Log_1.Log.Debug(
+              : 3 === this.axn &&
+                (Log_1.Log.CheckInfo() &&
+                  Log_1.Log.Info(
                     "Log",
                     19,
                     "MissionPanel:QuestUpdateEnd - MISSION_OUT End",
                   ),
                 this.SequencePlayer.PlayLevelSequenceByName(MISSION_IN),
-                this.sAn()) &&
+                this.uxn()) &&
                 this.SequencePlayer.StopCurrentSequence(!0, !0);
         }
       }),
-      (this.Awn = () => {
+      (this.hqn = () => {
         switch (
-          (Log_1.Log.CheckDebug() &&
-            Log_1.Log.Debug("Log", 19, "MissionPanel:Press Track"),
-          this.iAn)
+          (Log_1.Log.CheckInfo() &&
+            Log_1.Log.Info("Log", 19, "MissionPanel:Press Track"),
+          this.axn)
         ) {
           case 1:
             this.SequencePlayer.StopCurrentSequence(!1, !0);
             break;
           case 2:
-            TimerSystem_1.TimerSystem.Has(this.V_t) &&
-              TimerSystem_1.TimerSystem.Remove(this.V_t);
+            TimerSystem_1.TimerSystem.Has(this.rct) &&
+              TimerSystem_1.TimerSystem.Remove(this.rct);
         }
-        this.oAn();
+        this.lxn();
       }),
-      (this.oAn = () => {
-        Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug(
+      (this.lxn = () => {
+        Log_1.Log.CheckInfo() &&
+          Log_1.Log.Info(
             "Log",
             19,
             "MissionPanel:切换到QuestUpdateEnd - MISSION_OUT 开始播放",
           ),
-          (this.iAn = 3),
+          (this.axn = 3),
           this.SequencePlayer.PlayLevelSequenceByName(MISSION_OUT);
       });
   }
@@ -258,7 +258,7 @@ class MissionPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
       this.GetItem(2).SetUIActive(!0);
   }
   async OnBeforeStartAsync() {
-    await super.OnBeforeStartAsync(), (this.Pze = new Map());
+    await super.OnBeforeStartAsync(), (this.HZe = new Map());
     var e = this.GetItem(0),
       t = await this.NewDynamicChildViewAsync(
         e.GetOwner(),
@@ -266,68 +266,68 @@ class MissionPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
       ),
       t =
         (t.SetActive(!1),
-        this.Pze.set(0, t),
+        this.HZe.set(0, t),
         LguiUtil_1.LguiUtil.CopyItem(e, e.GetParentAsUIItem())),
       e = await this.NewDynamicChildViewAsync(
         t.GetOwner(),
         BehaviorTreeView_1.BehaviorTreeView,
       );
     e.SetActive(!1),
-      this.Pze.set(1, e),
+      this.HZe.set(1, e),
       (this.SequencePlayer = new LevelSequencePlayer_1.LevelSequencePlayer(
         this.RootItem,
       )),
-      this.SequencePlayer.BindSequenceStartEvent(this.ZPt),
-      this.SequencePlayer.BindSequenceCloseEvent(this.aut);
+      this.SequencePlayer.BindSequenceStartEvent(this.owt),
+      this.SequencePlayer.BindSequenceCloseEvent(this.yct);
   }
   InitializeTemp() {
-    (this.wze = []), (this.Bze = []);
+    (this.WZe = []), (this.KZe = []);
   }
   async InitializeAsync() {
     var e = this.GetItem(1);
-    this.xze = await this.NewDynamicChildViewAsync(
+    this.jZe = await this.NewDynamicChildViewAsync(
       e.GetOwner(),
       BattleQuestUpdateTipsView_1.BattleQuestUpdateTipsView,
     );
   }
   Reset() {
-    (this.wze = void 0), this.xze?.Destroy(), (this.xze = void 0);
-    for (var [, e] of this.Pze) e.Destroy();
-    this.Pze.clear(), super.Reset();
+    (this.WZe = void 0), this.jZe?.Destroy(), (this.jZe = void 0);
+    for (var [, e] of this.HZe) e.Destroy();
+    this.HZe.clear(), super.Reset();
   }
   OnShowBattleChildViewPanel() {
-    for (var [, e] of this.Pze) e.OnPanelShow();
-    this.xze.OnPanelShow(),
+    for (var [, e] of this.HZe) e.OnPanelShow();
+    this.jZe.OnPanelShow(),
       this.SequencePlayer.GetCurrentSequence() &&
         this.SequencePlayer.ResumeSequence(),
-      TimerSystem_1.TimerSystem.Has(this.V_t) &&
-        TimerSystem_1.TimerSystem.IsPause(this.V_t) &&
-        TimerSystem_1.TimerSystem.Resume(this.V_t);
+      TimerSystem_1.TimerSystem.Has(this.rct) &&
+        TimerSystem_1.TimerSystem.IsPause(this.rct) &&
+        TimerSystem_1.TimerSystem.Resume(this.rct);
   }
   OnHideBattleChildViewPanel() {
-    for (var [, e] of this.Pze) e.OnPanelHide();
-    this.xze.OnPanelHide(),
+    for (var [, e] of this.HZe) e.OnPanelHide();
+    this.jZe.OnPanelHide(),
       this.SequencePlayer.GetCurrentSequence() &&
         this.SequencePlayer.PauseSequence(),
-      TimerSystem_1.TimerSystem.Has(this.V_t) &&
-        TimerSystem_1.TimerSystem.Pause(this.V_t);
+      TimerSystem_1.TimerSystem.Has(this.rct) &&
+        TimerSystem_1.TimerSystem.Pause(this.rct);
   }
   AddEvents() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.GeneralLogicTreeStartShowTrackText,
-      this.qze,
+      this.XZe,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.GeneralLogicTreeEndShowTrackText,
-        this.Oze,
+        this.JZe,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.GeneralLogicTreeUpdateShowTrackText,
-        this.kze,
+        this.zZe,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.QuestUpdateInfoAdd,
-        this.Fze,
+        this.ZZe,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.WorldDoneAndCloseLoading,
@@ -335,29 +335,29 @@ class MissionPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.MissionPanelProcessEnd,
-        this.rAn,
+        this.hxn,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.QuestUpdateTipsClickTrack,
-        this.Awn,
+        this.hqn,
       );
   }
   RemoveEvents() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.GeneralLogicTreeStartShowTrackText,
-      this.qze,
+      this.XZe,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.GeneralLogicTreeEndShowTrackText,
-        this.Oze,
+        this.JZe,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.GeneralLogicTreeUpdateShowTrackText,
-        this.kze,
+        this.zZe,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.QuestUpdateInfoAdd,
-        this.Fze,
+        this.ZZe,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.WorldDoneAndCloseLoading,
@@ -365,17 +365,17 @@ class MissionPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.MissionPanelProcessEnd,
-        this.rAn,
+        this.hxn,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.QuestUpdateTipsClickTrack,
-        this.Awn,
+        this.hqn,
       );
   }
-  Gze(i) {
-    if (0 !== this.Bze.length)
-      for (let t = 0; t < this.Bze.length; t++) {
-        var s = this.Bze[t];
+  $Ze(i) {
+    if (0 !== this.KZe.length)
+      for (let t = 0; t < this.KZe.length; t++) {
+        var s = this.KZe[t];
         let e = !1;
         switch (s.ProcessType) {
           case 0:
@@ -388,74 +388,74 @@ class MissionPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
           case 3:
             e = s.Info.TreeIncId === i;
         }
-        var r = this.bze && this.bze.ProcessId === s.ProcessId;
-        e && !r && this.Bze.splice(t, 1);
+        var r = this.QZe && this.QZe.ProcessId === s.ProcessId;
+        e && !r && this.KZe.splice(t, 1);
       }
   }
-  Nze(e) {
-    this.Bze.push(e);
+  YZe(e) {
+    this.KZe.push(e);
   }
-  Nbn(e) {
-    this.Bze.unshift(e);
+  NOn(e) {
+    this.KZe.unshift(e);
   }
   OnTickBattleChildViewPanel(e) {
-    this.b4e && (this.kbn(), this.Fbn(e));
+    this.$5e && (this.kOn(), this.FOn(e));
   }
-  kbn() {
-    if (0 !== this.Bze.length && !this.bze) {
-      switch (((this.bze = this.Bze[0]), this.bze.ProcessType)) {
+  kOn() {
+    if (0 !== this.KZe.length && !this.QZe) {
+      switch (((this.QZe = this.KZe[0]), this.QZe.ProcessType)) {
         case 0:
-          this.bze.Finished = this.Vze(this.bze);
+          this.QZe.Finished = this.eet(this.QZe);
           break;
         case 1:
-          this.bze.Finished = this.Wze(this.bze);
+          this.QZe.Finished = this.oet(this.QZe);
           break;
         case 2:
-          this.bze.Finished = this.$ze(this.bze);
+          this.QZe.Finished = this.het(this.QZe);
           break;
         case 3:
-          this.bze.Finished = this.Yze(this.bze);
+          this.QZe.Finished = this.let(this.QZe);
       }
-      this.bze?.Finished && this.Jze(this.bze.ProcessId);
+      this.QZe?.Finished && this._et(this.QZe.ProcessId);
     }
   }
-  Fbn(e) {
-    if (this.Pze)
-      for (var [, t] of this.Pze) t.OnRefresh(e, this.bze?.ProcessId ?? 0);
+  FOn(e) {
+    if (this.HZe)
+      for (var [, t] of this.HZe) t.OnRefresh(e, this.QZe?.ProcessId ?? 0);
   }
-  Jze(e) {
-    0 !== this.Bze.length &&
-      this.Bze[0].ProcessId === e &&
-      (this.Bze.shift(), (this.bze = void 0));
+  _et(e) {
+    0 !== this.KZe.length &&
+      this.KZe[0].ProcessId === e &&
+      (this.KZe.shift(), (this.QZe = void 0));
   }
-  Hze(e, t) {
+  tet(e, t) {
     let i = 1;
     switch (e) {
-      case Protocol_1.Aki.Protocol.NCs.Proto_BtTypeQuest:
+      case Protocol_1.Aki.Protocol.tps.Proto_BtTypeQuest:
         i = 1 === t ? 1 : 0;
         break;
-      case Protocol_1.Aki.Protocol.NCs.Proto_BtTypeLevelPlay:
-      case Protocol_1.Aki.Protocol.NCs.Proto_BtTypeInst:
+      case Protocol_1.Aki.Protocol.tps.Proto_BtTypeLevelPlay:
+      case Protocol_1.Aki.Protocol.tps.Proto_BtTypeInst:
         i = 1;
     }
     return i;
   }
-  $ze(e) {
-    this.Xze(e.ShowBridge);
-    for (var [, t] of this.Pze)
+  het(e) {
+    this.aet(e.ShowBridge);
+    for (var [, t] of this.HZe)
       if (t.TreeIncId === e.ShowBridge.TreeIncId)
         return t.OnLogicTreeUpdateShow(e.ProcessId, e.ShowBridge);
     return !0;
   }
-  Xze(t) {
-    var e = this.wze.find((e) => e.ShowBridge.TreeIncId === t.TreeIncId);
+  aet(t) {
+    var e = this.WZe.find((e) => e.ShowBridge.TreeIncId === t.TreeIncId);
     e && (e.ShowBridge = t);
   }
-  Kze(t) {
-    return this.wze.findIndex((e) => e.ShowBridge.TreeIncId === t);
+  ret(t) {
+    return this.WZe.findIndex((e) => e.ShowBridge.TreeIncId === t);
   }
-  zze() {
-    this.wze.sort((e, t) =>
+  uet() {
+    this.WZe.sort((e, t) =>
       e.ShowPriority !== t.ShowPriority
         ? e.ShowPriority > t.ShowPriority
           ? 1
@@ -469,14 +469,14 @@ class MissionPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
             : -1,
     );
   }
-  jze(e, t, i, s, r) {
-    return !this.Zze(t, i, s, r) || this.Qze(e);
+  iet(e, t, i, s, r) {
+    return !this.cet(t, i, s, r) || this.net(e);
   }
-  Zze(e, t, i, s) {
+  cet(e, t, i, s) {
     return (
-      this.Pze.get(1).TreeIncId !== t &&
+      this.HZe.get(1).TreeIncId !== t &&
       !(
-        0 <= this.Kze(t) ||
+        0 <= this.ret(t) ||
         ((t = {
           ShowPriority:
             GeneralLogicTreeUtil_1.GeneralLogicTreeUtil.GetLogicTreeContainer(
@@ -486,17 +486,17 @@ class MissionPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
           BtType: e,
           ShowBridge: s,
         }),
-        this.wze.push(t),
+        this.WZe.push(t),
         0)
       )
     );
   }
-  Qze(e) {
-    this.zze();
-    var t = this.wze[this.wze.length - 1];
-    return this.Pze.get(1).StartShow(e, t.ShowBridge);
+  net(e) {
+    this.uet();
+    var t = this.WZe[this.WZe.length - 1];
+    return this.HZe.get(1).StartShow(e, t.ShowBridge);
   }
-  Yze(e) {
+  let(e) {
     var t,
       i,
       s = e.Info;
@@ -513,36 +513,36 @@ class MissionPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
         s.IsGmFinished
           ? (t !== i &&
               QuestController_1.QuestNewController.RequestTrackQuest(i, !0, 0),
-            this.nAn(e),
+            this._xn(e),
             0)
           : t === i
-            ? (this.nAn(e), 0)
-            : (this.sAn()
-                ? ((this.iAn = 1),
-                  Log_1.Log.CheckDebug() &&
-                    Log_1.Log.Debug("Log", 19, "MissionPanel: In 开始"),
+            ? (this._xn(e), 0)
+            : (this.uxn()
+                ? ((this.axn = 1),
+                  Log_1.Log.CheckInfo() &&
+                    Log_1.Log.Info("Log", 19, "MissionPanel: In 开始"),
                   this.SequencePlayer.PlayLevelSequenceByName(MISSION_IN))
-                : ((this.iAn = 1),
-                  Log_1.Log.CheckDebug() &&
-                    Log_1.Log.Debug("Log", 19, "MissionPanel: Out 开始"),
+                : ((this.axn = 1),
+                  Log_1.Log.CheckInfo() &&
+                    Log_1.Log.Info("Log", 19, "MissionPanel: Out 开始"),
                   this.SequencePlayer.PlayLevelSequenceByName(MISSION_OUT)),
               1))
       )
     );
   }
-  nAn(e) {
-    Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug("Log", 19, "MissionPanel:QuestUpdateTipsEnd -  AllOver"),
-      this.xze.OnAfterPlayHideSequence(),
-      this.rAn(e.ProcessId),
-      this.Nbn(new TreeViewUpdateShowProcess(e.Info.ShowBridge)),
-      (this.iAn = 0);
+  _xn(e) {
+    Log_1.Log.CheckInfo() &&
+      Log_1.Log.Info("Log", 19, "MissionPanel:QuestUpdateTipsEnd -  AllOver"),
+      this.jZe.OnAfterPlayHideSequence(),
+      this.hxn(e.ProcessId),
+      this.NOn(new TreeViewUpdateShowProcess(e.Info.ShowBridge)),
+      (this.axn = 0);
   }
-  sAn() {
-    for (var [, e] of this.Pze)
+  uxn() {
+    for (var [, e] of this.HZe)
       if (e.IsShowingBehaviorTreeView && e.CheckVisible()) return !1;
     return !0;
   }
 }
-(exports.MissionPanel = MissionPanel).aYe = void 0;
+(exports.MissionPanel = MissionPanel).vJe = void 0;
 //# sourceMappingURL=MissionPanel.js.map

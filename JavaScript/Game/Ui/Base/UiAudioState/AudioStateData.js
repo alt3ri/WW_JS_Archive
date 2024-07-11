@@ -4,19 +4,19 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const MathUtils_1 = require("../../../../Core/Utils/MathUtils");
 class AudioStateData {
   constructor() {
-    (this.U1r = 0), (this.jqi = 0);
+    (this.L_r = 0), (this.jGi = 0);
   }
   set Alpha(t) {
-    this.U1r = t;
+    this.L_r = t;
   }
   set Level(t) {
-    this.jqi = t;
+    this.jGi = t;
   }
   get Alpha() {
-    return MathUtils_1.MathUtils.Clamp(this.U1r, 0, 1);
+    return MathUtils_1.MathUtils.Clamp(this.L_r, 0, 1);
   }
   get Level() {
-    return MathUtils_1.MathUtils.Clamp(this.jqi, 0, 1);
+    return MathUtils_1.MathUtils.Clamp(this.jGi, 0, 1);
   }
 }
 exports.AudioStateData = AudioStateData;

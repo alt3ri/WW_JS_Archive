@@ -6,7 +6,7 @@ const UE = require("ue"),
   PopupCaptionItem_1 = require("./PopupCaptionItem");
 class PopupTypeLargeItem extends CommonPopViewBehaviourBase_1.CommonPopViewBase {
   constructor() {
-    super(...arguments), (this.nVt = void 0);
+    super(...arguments), (this.n6t = void 0);
   }
   GetAttachParent() {
     return this.GetItem(1);
@@ -24,19 +24,19 @@ class PopupTypeLargeItem extends CommonPopViewBehaviourBase_1.CommonPopViewBase 
       (this.BtnBindInfo = [[0, this.OnClickCloseBtn]]);
   }
   OnStart() {
-    (this.nVt = new PopupCaptionItem_1.PopupCaptionItem(this.GetItem(3))),
-      this.nVt.SetCloseCallBack(() => {
+    (this.n6t = new PopupCaptionItem_1.PopupCaptionItem(this.GetItem(3))),
+      this.n6t.SetCloseCallBack(() => {
         this.TryHideSelf();
       });
   }
   OnSetHelpButtonActive(t) {
-    this.nVt.SetHelpBtnActive(t);
+    this.n6t.SetHelpBtnActive(t);
   }
   OnSetTitleByTextIdAndArg(t, ...e) {
-    this.nVt.SetTitleByTextIdAndArg(t, e);
+    this.n6t.SetTitleByTextIdAndArg(t, e);
   }
   OnSetBackBtnShowState(t) {
-    this.nVt.SetCloseBtnActive(t);
+    this.n6t.SetCloseBtnActive(t);
   }
   OnSetCloseBtnInteractive(t) {}
   OnRefreshCost(t) {

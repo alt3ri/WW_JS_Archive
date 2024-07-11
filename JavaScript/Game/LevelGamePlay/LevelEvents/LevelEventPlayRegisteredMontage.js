@@ -74,7 +74,7 @@ class LevelEventPlayRegisteredMontage extends LevelGeneralBase_1.LevelEventBase 
       this.gLe.EntityId,
     );
     if (e)
-      if (((this.E0 = e.Id), e.Entity.GetComponent(38)?.IsAiDriver))
+      if (((this.E0 = e.Id), e.Entity.GetComponent(39)?.IsAiDriver))
         (t = e.Entity.GetComponent(1)),
           Log_1.Log.CheckError() &&
             Log_1.Log.Error(
@@ -86,7 +86,7 @@ class LevelEventPlayRegisteredMontage extends LevelGeneralBase_1.LevelEventBase 
             ),
           this.FinishExecute(!0);
       else if (
-        ((this.rRe = e.Entity.GetComponent(160)?.MainAnimInstance),
+        ((this.rRe = e.Entity.GetComponent(162)?.MainAnimInstance),
         ObjectUtils_1.ObjectUtils.IsValid(this.rRe))
       ) {
         let e = void 0;

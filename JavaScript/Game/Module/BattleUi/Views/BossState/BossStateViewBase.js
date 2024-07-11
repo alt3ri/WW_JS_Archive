@@ -7,13 +7,13 @@ const Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
   ConfigManager_1 = require("../../../../Manager/ConfigManager"),
   BattleUiControl_1 = require("../../BattleUiControl"),
   BattleEntityChildView_1 = require("../BattleChildView/BattleEntityChildView");
-var EAttributeId = Protocol_1.Aki.Protocol.KBs;
+var EAttributeId = Protocol_1.Aki.Protocol.Bks;
 const PERCENT_RATE = 100;
 class BossStateViewBase extends BattleEntityChildView_1.BattleEntityChildView {
   constructor() {
     super(...arguments),
-      (this.qot = void 0),
-      (this.Got = void 0),
+      (this.Xrt = void 0),
+      (this.$rt = void 0),
       (this.HardnessAttributeId = EAttributeId.Proto_EAttributeType_None),
       (this.MaxHardnessAttributeId = EAttributeId.Proto_EAttributeType_None),
       (this.BossStateViewConfig = void 0),
@@ -22,7 +22,7 @@ class BossStateViewBase extends BattleEntityChildView_1.BattleEntityChildView {
       (this.HasFightTag = !1),
       (this.OnlyShowInBattleState = !1),
       (this.OnBossHeathChanged = (t, i, e) => {}),
-      (this.ZQe = (t) => {
+      (this.u$e = (t) => {
         this.IsValid() && this.OnBossShieldChanged(t);
       }),
       (this.OnTimeScale = (t, i) => {
@@ -31,25 +31,25 @@ class BossStateViewBase extends BattleEntityChildView_1.BattleEntityChildView {
       (this.OnLanguageChange = () => {
         this.IsValid() && this.OnBossLanguageChange();
       }),
-      (this.Not = (t, i) => {
+      (this.Yrt = (t, i) => {
         this.OnBossHardnessActivated(i);
       }),
-      (this.Oot = (t, i) => {
+      (this.Jrt = (t, i) => {
         (this.HasHiddenTag = i), this.RefreshHidden();
       }),
-      (this.kot = (t, i) => {
+      (this.zrt = (t, i) => {
         (this.HasFallDownTag = i), this.OnFallDownVisibleChanged(i);
       }),
-      (this.Fot = (t, i) => {
+      (this.Zrt = (t, i) => {
         this.OnHardnessAttributeChanged();
       }),
-      (this.Vot = (t, i) => {
+      (this.ent = (t, i) => {
         this.OnHardnessAttributeChanged();
       }),
-      (this.$Ke = (t, i) => {
+      (this.aXe = (t, i) => {
         (this.HasFightTag = i), this.RefreshHidden();
       }),
-      (this.Hot = (t, i, e) => {
+      (this.tnt = (t, i, e) => {
         this.OnBossHardnessChanged(i);
       }),
       (this.OnBossMaxHealthChanged = (t, i, e) => {}),
@@ -59,8 +59,8 @@ class BossStateViewBase extends BattleEntityChildView_1.BattleEntityChildView {
   Initialize(t) {
     super.Initialize(t);
     t = ConfigManager_1.ConfigManager.BattleUiConfig;
-    (this.qot = t.GetBufferAnimationSpeed()),
-      (this.Got = t.GetHardnessPercentList()),
+    (this.Xrt = t.GetBufferAnimationSpeed()),
+      (this.$rt = t.GetHardnessPercentList()),
       this.RefreshHiddenTagState(),
       this.RefreshHidden();
   }
@@ -74,8 +74,8 @@ class BossStateViewBase extends BattleEntityChildView_1.BattleEntityChildView {
   }
   OnDeactivate() {
     (this.BossStateViewConfig = void 0),
-      (this.qot = void 0),
-      (this.Got = void 0);
+      (this.Xrt = void 0),
+      (this.$rt = void 0);
   }
   DestroyOverride() {
     return (
@@ -93,7 +93,7 @@ class BossStateViewBase extends BattleEntityChildView_1.BattleEntityChildView {
     EventSystem_1.EventSystem.AddWithTarget(
       t,
       EventDefine_1.EEventName.CharShieldChange,
-      this.ZQe,
+      this.u$e,
     ),
       EventSystem_1.EventSystem.AddWithTarget(
         t,
@@ -109,15 +109,16 @@ class BossStateViewBase extends BattleEntityChildView_1.BattleEntityChildView {
         242005298,
         this.OnVulnerabilityActivated,
       ),
-      this.ListenForTagSignificantChanged(t, 1261361093, this.Not),
-      this.ListenForTagSignificantChanged(t, -13489149, this.Oot),
-      this.ListenForTagSignificantChanged(t, 1922078392, this.kot),
-      this.ListenForTagSignificantChanged(t, -1109506297, this.Fot),
-      this.ListenForTagSignificantChanged(t, -1838149281, this.Vot),
+      this.ListenForTagSignificantChanged(t, 1261361093, this.Yrt),
+      this.ListenForTagSignificantChanged(t, -13489149, this.Jrt),
+      this.ListenForTagSignificantChanged(t, 1922078392, this.zrt),
+      this.ListenForTagSignificantChanged(t, -1109506297, this.Zrt),
+      this.ListenForTagSignificantChanged(t, -1838149281, this.ent),
       this.OnlyShowInBattleState &&
-        this.ListenForTagSignificantChanged(t, 1996802261, this.$Ke),
-      this.ListenForAttributeChanged(t, EAttributeId.Proto_Hardness, this.Hot),
-      this.ListenForAttributeChanged(t, EAttributeId.Proto_Rage, this.Hot),
+        this.ListenForTagSignificantChanged(t, 1996802261, this.aXe),
+      this.ListenForAttributeChanged(t, EAttributeId.Proto_Hardness, this.tnt),
+      this.ListenForAttributeChanged(t, EAttributeId.Proto_Rage, this.tnt),
+      this.ListenForAttributeChanged(t, EAttributeId.Proto_RageMax, this.tnt),
       this.ListenForAttributeChanged(
         t,
         EAttributeId.Proto_Lv,
@@ -130,7 +131,7 @@ class BossStateViewBase extends BattleEntityChildView_1.BattleEntityChildView {
       ),
       this.ListenForAttributeChanged(
         t,
-        EAttributeId.Tkn,
+        EAttributeId.e5n,
         this.OnBossMaxHealthChanged,
       );
   }
@@ -143,7 +144,7 @@ class BossStateViewBase extends BattleEntityChildView_1.BattleEntityChildView {
       EventSystem_1.EventSystem.RemoveWithTarget(
         t,
         EventDefine_1.EEventName.CharShieldChange,
-        this.ZQe,
+        this.u$e,
       ),
       EventSystem_1.EventSystem.RemoveWithTarget(
         t,
@@ -160,7 +161,7 @@ class BossStateViewBase extends BattleEntityChildView_1.BattleEntityChildView {
     this.RefreshHardnessAttributeId();
   }
   RefreshHardnessAttributeId() {
-    this.GetEntity().GetComponent(185).HasTag(-1838149281)
+    this.GetEntity().GetComponent(188).HasTag(-1838149281)
       ? ((this.HardnessAttributeId = EAttributeId.Proto_Rage),
         (this.MaxHardnessAttributeId = EAttributeId.Proto_RageMax))
       : ((this.HardnessAttributeId = EAttributeId.Proto_Hardness),
@@ -175,7 +176,7 @@ class BossStateViewBase extends BattleEntityChildView_1.BattleEntityChildView {
   OnBossHardnessChanged(t) {}
   OnBossLanguageChange() {}
   RefreshHiddenTagState() {
-    var t = this.GetEntity()?.GetComponent(185);
+    var t = this.GetEntity()?.GetComponent(188);
     (this.HasHiddenTag = t?.HasTag(-13489149)),
       (this.HasFallDownTag = t?.HasTag(1922078392)),
       (this.HasFightTag = t?.HasTag(1996802261) ?? !1);
@@ -196,26 +197,26 @@ class BossStateViewBase extends BattleEntityChildView_1.BattleEntityChildView {
   }
   GetHardnessStrength(t) {
     var i = t * PERCENT_RATE;
-    for (const e of this.Got) if (e[0] <= i) return e[1];
+    for (const e of this.$rt) if (e[0] <= i) return e[1];
     return 0;
   }
   GetHpAndShieldPercent() {
     if (!this.IsValid()) return [0, 0];
     var t = this.GetCurrentAttributeValueById(EAttributeId.Proto_Life),
-      i = this.GetCurrentAttributeValueById(EAttributeId.Tkn),
+      i = this.GetCurrentAttributeValueById(EAttributeId.e5n),
       e = this.GetBossShield();
     let s = e <= i ? e / i : 1;
     return [t / i, s];
   }
   GetAttributeComponent() {
-    return this.GetEntity().CheckGetComponent(156);
+    return this.GetEntity().CheckGetComponent(158);
   }
   GetCurrentAttributeValueById(t) {
     return this.GetAttributeComponent().GetCurrentValue(t);
   }
   GetBossShield() {
     return this.IsValid()
-      ? this.GetEntity().CheckGetComponent(64).ShieldTotal
+      ? this.GetEntity().CheckGetComponent(66).ShieldTotal
       : 0;
   }
   GetMonsterConfig() {
@@ -237,7 +238,7 @@ class BossStateViewBase extends BattleEntityChildView_1.BattleEntityChildView {
     }
   }
   get BarBufferAnimLength() {
-    return this.qot;
+    return this.Xrt;
   }
   GetResourceId() {
     return "UiItem_BossState_Prefab";

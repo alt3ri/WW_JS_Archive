@@ -23,7 +23,7 @@ class SceneInteractionLevel {
       (this.IsDestroyed = !1),
       (this.TempForce = !1),
       (this.OnLevelStreamingCompleteCallback = void 0),
-      (this.r1r = !1);
+      (this.t_r = !1);
   }
   Init(t, i, e, s, h, r, o, n, c = !1) {
     (this.LevelStreamingDynamic = t),
@@ -33,7 +33,7 @@ class SceneInteractionLevel {
       (this.HandleId = h),
       (this.CurrentState = r),
       (this.HasTempState = !1),
-      (this.r1r = c),
+      (this.t_r = c),
       (this.LevelStreamingDynamic.bInitiallyLoaded = !0),
       (this.LevelStreamingDynamic.bInitiallyVisible = !0),
       this.LevelStreamingDynamic.SetShouldBeLoaded(!0),
@@ -42,17 +42,26 @@ class SceneInteractionLevel {
       (this.IsDestroyed = !1),
       (this.OnLevelStreamingCompleteCallback = o),
       this.LevelStreamingDynamic.OnLevelShown.Add(() => {
-        this.n1r();
+        this.i_r();
       });
   }
-  ToggleLevelVisible(t, i = void 0) {
-    this.LevelStreamingDynamic?.IsValid() &&
-      (this.LevelStreamingDynamic.SetShouldBeVisible(t), t) &&
-      ((this.OnLevelStreamingCompleteCallback = i),
-      this.LevelStreamingDynamic.OnLevelShown.Clear(),
-      this.LevelStreamingDynamic.OnLevelShown.Add(() => {
-        this.n1r();
-      }));
+  ToggleLevelVisible(t, i, e = void 0) {
+    if (this.LevelStreamingDynamic?.IsValid()) {
+      var s = this.GetAllActorsInLevel();
+      if (s && !t && i)
+        for (let t = 0, i = s.Num(); t < i; t++) {
+          var h = s.Get(t);
+          h instanceof UE.Actor && h.SetActorHiddenInGame(!0);
+        }
+      this.LevelStreamingDynamic.SetShouldBeVisible(t),
+        t
+          ? ((this.OnLevelStreamingCompleteCallback = e),
+            this.LevelStreamingDynamic.OnLevelShown.Clear(),
+            this.LevelStreamingDynamic.OnLevelShown.Add(() => {
+              this.i_r();
+            }))
+          : this.InteractionActor?.TryStopCurrentState();
+    }
   }
   get MainActor() {
     return this.InteractionActor;
@@ -91,7 +100,7 @@ class SceneInteractionLevel {
   }
   SwitchToState(t, i, e, s) {
     return this.InteractionActor
-      ? this.s1r(t, i, e, s)
+      ? this.o_r(t, i, e, s)
       : ((this.HasTempState = !0),
         (this.TempTargetState = t),
         (this.TempNeedTransition = i),
@@ -129,7 +138,7 @@ class SceneInteractionLevel {
     if (this.LoadingLevelComplete && this.InteractionActor?.IsValid())
       return this.InteractionActor.GetRefActorsByTag(t);
   }
-  s1r(t, i, e, s) {
+  o_r(t, i, e, s) {
     return (
       !!this.InteractionActor?.IsValid() &&
       (e || this.CurrentState !== t
@@ -159,7 +168,7 @@ class SceneInteractionLevel {
   PlaySceneEndEffect(t) {
     this.InteractionActor && this.InteractionActor.PlayIndependentEndEffect(t);
   }
-  n1r() {
+  i_r() {
     var t;
     this.LevelStreamingDynamic
       ? ((this.LoadingLevelComplete = !0),
@@ -171,16 +180,16 @@ class SceneInteractionLevel {
         (this.InteractionActor = t),
         this.InteractionActor?.IsValid()
           ? (this.InteractionActor.Init(this.HandleId, this.LevelName),
-            this.s1r(this.CurrentState, !1, !0, !this.r1r),
+            this.o_r(this.CurrentState, !1, !0, !this.t_r),
             this.OnLevelStreamingCompleteCallback &&
               this.OnLevelStreamingCompleteCallback(),
             (this.OnLevelStreamingCompleteCallback = void 0),
             this.HasTempState &&
-              (this.s1r(
+              (this.o_r(
                 this.TempTargetState,
                 this.TempNeedTransition,
                 this.TempForce,
-                !this.r1r,
+                !this.t_r,
               ),
               (this.HasTempState = !1)))
           : Log_1.Log.CheckError() &&

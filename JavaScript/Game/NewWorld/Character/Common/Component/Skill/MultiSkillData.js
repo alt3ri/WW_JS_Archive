@@ -95,15 +95,41 @@ class MultiSkillData {
       (e.IsReset = t.IsReset),
       (e.IsResetOnChangeRole = t.IsResetOnChangeRole),
       0 === e.NextSkillId
-        ? this.RJo(e)
+        ? this.Tzo(e)
         : ((e.StartTime = t.StartTime),
           (e.RemainingStartTime = e.StartTime),
           (e.StopTime = t.StopTime),
           (e.RemainingStopTime = e.StopTime),
           this.MultiSkillInfoMap.set(e.NextSkillId, e),
-          this.RJo(e)),
+          this.Tzo(e)),
       !0
     );
+  }
+  InitMultiSkillInfo(e) {
+    for (var [s, l] of e) {
+      l = l.SkillInfo;
+      if (l && !l.CooldownConfig.SectionCount) {
+        l = l.CooldownConfig;
+        if (l.SectionCount - l.SectionRemaining == 1) {
+          var o = new MultiSkillInfo();
+          (o.FirstSkillId = s),
+            this.MultiSkillInfoMap.set(s, o),
+            this.MultiSkillInfos.push(o);
+          let t = l.NextSkillId,
+            i = l.SectionCount - 1;
+          for (; 0 < i; ) {
+            i--;
+            var n = e.get(t);
+            if (!n) break;
+            if (
+              (this.MultiSkillInfoMap.set(t, o),
+              !(t = n?.SkillInfo?.CooldownConfig.NextSkillId ?? 0))
+            )
+              break;
+          }
+        }
+      }
+    }
   }
   OnTick(t) {
     var i = t * TimeUtil_1.TimeUtil.Millisecond;
@@ -111,10 +137,10 @@ class MultiSkillData {
       0 !== e.NextSkillId &&
         (0 < e.RemainingStartTime &&
           ((e.RemainingStartTime -= i), e.RemainingStartTime <= 0) &&
-          this.UJo(e),
+          this.Lzo(e),
         (e.RemainingStopTime -= i),
         e.RemainingStopTime <= 0) &&
-        ((e.NextSkillId = 0), this.RJo(e));
+        ((e.NextSkillId = 0), this.Tzo(e));
   }
   ResetMultiSkills(t, i = !1) {
     var e = this.MultiSkillInfoMap.get(t);
@@ -127,7 +153,7 @@ class MultiSkillData {
       (e.RemainingStopTime = 0),
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("Battle", 18, "多段技能被打断", ["技能Id", t]),
-      this.RJo(e));
+      this.Tzo(e));
   }
   ResetOnChangeRole() {
     for (const t of this.MultiSkillInfos)
@@ -140,7 +166,7 @@ class MultiSkillData {
             "vision",
             t.FirstSkillId,
           ]),
-        this.RJo(t));
+        this.Tzo(t));
   }
   ClearAllSkill() {
     for (const t of this.MultiSkillInfos)
@@ -153,7 +179,7 @@ class MultiSkillData {
             "vision",
             this.VisionEntityId,
           ]),
-        this.RJo(t));
+        this.Tzo(t));
   }
   GetNextMultiSkillId(t) {
     var i = this.MultiSkillInfoMap.get(t);
@@ -162,7 +188,7 @@ class MultiSkillData {
   GetMultiSkillInfo(t) {
     return this.MultiSkillInfoMap.get(t);
   }
-  RJo(t) {
+  Tzo(t) {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug(
         "Battle",
@@ -178,7 +204,7 @@ class MultiSkillData {
         this.VisionEntityId,
       );
   }
-  UJo(t) {
+  Lzo(t) {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug(
         "Battle",

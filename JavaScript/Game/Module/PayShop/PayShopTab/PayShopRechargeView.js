@@ -13,15 +13,15 @@ const EventDefine_1 = require("../../../Common/Event/EventDefine"),
 class PayShopRechargeView extends DiscountShopView_1.DiscountShopView {
   constructor() {
     super(...arguments),
-      (this.rFi = !1),
+      (this.r3i = !1),
       (this.InitItem = () => {
         return new PayShopRechargeItem_1.PayShopRechargeItem();
       }),
       (this.GetProxyData = (e) => this.PayShopGoodsList[e]),
-      (this.UEe = (e) => {}),
-      (this.lFi = () => {
+      (this.USe = (e) => {}),
+      (this.l3i = () => {
         var e;
-        this.rFi
+        this.r3i
           ? this.RefreshLoopScroll(this.CurrentSelectTabId)
           : ((e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(
               138,
@@ -31,7 +31,7 @@ class PayShopRechargeView extends DiscountShopView_1.DiscountShopView {
             ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
               e,
             )),
-          (this.rFi = !1);
+          (this.r3i = !1);
       });
   }
   GetScrollItem() {
@@ -41,22 +41,22 @@ class PayShopRechargeView extends DiscountShopView_1.DiscountShopView {
     super.AddEventListener(),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.RefreshPayItemList,
-        this.lFi,
+        this.l3i,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnPayItemSuccess,
-        this.UEe,
+        this.USe,
       );
   }
   RemoveEventListener() {
     super.RemoveEventListener(),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.RefreshPayItemList,
-        this.lFi,
+        this.l3i,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnPayItemSuccess,
-        this.UEe,
+        this.USe,
       );
   }
   RefreshLoopScroll(e) {
@@ -78,7 +78,7 @@ class PayShopRechargeView extends DiscountShopView_1.DiscountShopView {
   OnBeforeShow() {
     this.GetItem(4).SetUIActive(!1),
       this.TabGroup.SetActive(!1),
-      (this.rFi = !0),
+      (this.r3i = !0),
       this.GetLoopScrollViewComponent(1).RootUIComp.SetUIActive(!1),
       PayItemController_1.PayItemController.SendPayItemInfoRequest();
   }

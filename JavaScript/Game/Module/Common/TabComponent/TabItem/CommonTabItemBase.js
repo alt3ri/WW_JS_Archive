@@ -18,14 +18,14 @@ class CommonTabItemBase extends UiPanelBase_1.UiPanelBase {
       (this.GridIndex = 0),
       (this.DisplayIndex = 0),
       (this.CurrentData = void 0),
-      (this.NBt = !1),
+      (this.Fbt = !1),
       (this.SelectedCallBack = void 0),
-      (this.OBt = void 0),
-      (this.T7e = () => {
+      (this.Vbt = void 0),
+      (this.Lke = () => {
         var t;
         return (
-          !this.OBt ||
-          ((t = this.OBt(this.GridIndex, this.NBt)), (this.NBt = !1), t)
+          !this.Vbt ||
+          ((t = this.Vbt(this.GridIndex, this.Fbt)), (this.Fbt = !1), t)
         );
       });
   }
@@ -44,19 +44,19 @@ class CommonTabItemBase extends UiPanelBase_1.UiPanelBase {
   }
   InitTabItem() {}
   OnStart() {
-    this.GetTabToggle().CanExecuteChange.Bind(this.T7e);
+    this.GetTabToggle().CanExecuteChange.Bind(this.Lke);
   }
   SetSelectedCallBack(t) {
     this.SelectedCallBack = t;
   }
   SetCanExecuteChange(t) {
-    this.OBt = t;
+    this.Vbt = t;
   }
   UpdateTabIcon(t) {
     this.OnUpdateTabIcon(t);
   }
   SetForceSwitch(t, e = !1) {
-    (this.NBt = !0), this.SetToggleState(t, e);
+    (this.Fbt = !0), this.SetToggleState(t, e);
   }
   SetToggleState(t, e = !1) {
     this.OnSetToggleState(t, e);

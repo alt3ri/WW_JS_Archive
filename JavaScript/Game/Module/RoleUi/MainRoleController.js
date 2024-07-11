@@ -19,14 +19,14 @@ class MainRoleController extends UiControllerBase_1.UiControllerBase {
   static OnAddOpenViewCheckFunction() {
     UiManager_1.UiManager.AddOpenViewCheckFunction(
       "RoleGenderChangeView",
-      MainRoleController.V4e,
+      MainRoleController.iVe,
       "MainRoleController.CanOpenView",
     );
   }
   static OnRemoveOpenViewCheckFunction() {
     UiManager_1.UiManager.RemoveOpenViewCheckFunction(
       "RoleGenderChangeView",
-      MainRoleController.V4e,
+      MainRoleController.iVe,
     );
   }
   static IsCanChangeRole(r) {
@@ -39,46 +39,46 @@ class MainRoleController extends UiControllerBase_1.UiControllerBase {
     return !!ModelManager_1.ModelManager.RoleModel.IsMainRole(e);
   }
   static SendRoleSexChangeRequest(e) {
-    var r = Protocol_1.Aki.Protocol.Ths.create();
-    (r.x6n = e),
-      Net_1.Net.Call(16423, r, (e) => {
+    var r = Protocol_1.Aki.Protocol.pus.create();
+    (r._7n = e),
+      Net_1.Net.Call(14311, r, (e) => {
         e &&
-          (e.lkn === Protocol_1.Aki.Protocol.lkn.Sys
-            ? ((ModelManager_1.ModelManager.WorldLevelModel.Sex = e.x6n),
-              this.wlo(),
+          (e.O4n === Protocol_1.Aki.Protocol.O4n.NRs
+            ? ((ModelManager_1.ModelManager.WorldLevelModel.Sex = e._7n),
+              this.U1o(),
               EventSystem_1.EventSystem.Emit(
                 EventDefine_1.EEventName.OnRoleChangeEnd,
               ))
             : ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-                e.lkn,
-                5627,
+                e.O4n,
+                13763,
               ));
       });
   }
   static SendRoleElementChangeRequest(e) {
-    var r = Protocol_1.Aki.Protocol.Rhs.create();
-    (r.K8n = e),
-      Net_1.Net.Call(27889, r, (e) => {
+    var r = Protocol_1.Aki.Protocol.Sus.create();
+    (r.THn = e),
+      Net_1.Net.Call(19457, r, (e) => {
         e &&
-          (e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys
+          (e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs
             ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-                e.lkn,
-                15230,
+                e.O4n,
+                11383,
               )
             : (EventSystem_1.EventSystem.Emit(
                 EventDefine_1.EEventName.OnRoleChangeEnd,
               ),
-              this.wlo()));
+              this.U1o()));
       });
   }
-  static wlo() {
+  static U1o() {
     EditFormationController_1.EditFormationController.RefreshMainRoleInfo(),
       EditBattleTeamController_1.EditBattleTeamController.RefreshMainRoleInfo();
   }
   static OnRegisterNetEvent() {
-    Net_1.Net.Register(29747, (e) => {
-      var r = e.QDs,
-        e = e.j5n;
+    Net_1.Net.Register(28710, (e) => {
+      var r = e.dxs,
+        e = e.V6n;
       ModelManager_1.ModelManager.PhantomBattleModel.DeleteBattleData(r),
         ModelManager_1.ModelManager.RoleModel.RoleChange(r, e),
         Log_1.Log.CheckDebug() &&
@@ -87,24 +87,24 @@ class MainRoleController extends UiControllerBase_1.UiControllerBase {
             44,
             "角色转换成功: ",
             ["sourceRoleId", r],
-            ["roleInfo!.Proto_RoleId", e.l3n],
+            ["roleInfo!.Proto_RoleId", e.O6n],
           );
     }),
-      Net_1.Net.Register(2480, (e) => {
+      Net_1.Net.Register(10788, (e) => {
         e &&
           ModelManager_1.ModelManager.RoleModel.UpdateCanChangeRoleIdList(
-            e.XDs,
+            e.mxs,
           );
       });
   }
   static OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(29747), Net_1.Net.UnRegister(2480);
+    Net_1.Net.UnRegister(28710), Net_1.Net.UnRegister(10788);
   }
 }
-(exports.MainRoleController = MainRoleController).V4e = (e) => {
+(exports.MainRoleController = MainRoleController).iVe = (e) => {
   var r =
       Global_1.Global.BaseCharacter?.CharacterActorComponent.Entity.GetComponent(
-        185,
+        188,
       )?.HasTag(1996802261),
     o = ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance();
   return r

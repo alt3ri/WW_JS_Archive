@@ -18,7 +18,7 @@ class TsAnimNotifyStateCounterAttack extends UE.KuroAnimNotifyState {
       t = t.CharacterActorComponent?.Entity;
       if (!t?.Valid) return !1;
       var e = t.GetComponent(33),
-        t = t.GetComponent(51);
+        t = t.GetComponent(52);
       if (!e?.Valid || !t?.Valid) return !1;
       if (!this.弹反设置) return !1;
       if (
@@ -73,7 +73,7 @@ class TsAnimNotifyStateCounterAttack extends UE.KuroAnimNotifyState {
       var e = s.CharacterActorComponent?.Entity;
       if (!e?.Valid) return !1;
       var r = e.GetComponent(33),
-        e = e.GetComponent(51);
+        e = e.GetComponent(52);
       if (!r?.Valid || !e?.Valid) return !1;
       var h = e.IsTriggerCounterAttack;
       if ((e.CounterAttackEnd(), !h)) {

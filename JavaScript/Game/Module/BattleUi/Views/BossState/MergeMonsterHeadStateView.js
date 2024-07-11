@@ -17,27 +17,27 @@ class MergeMonsterHeadStateView extends BattleChildView_1.BattleChildView {
   constructor() {
     super(...arguments),
       (this.Info = void 0),
-      (this.EPe = void 0),
-      (this.Wot = void 0),
-      (this.Qot = -0),
-      (this.Xot = 1),
-      (this.ert = new HpBufferStateMachine_1.HpBufferStateMachine()),
-      (this.ort = void 0),
-      (this.rrt = -1),
-      (this.nrt = -0),
-      (this.srt = 0),
-      (this.frt = !1),
-      (this.Art = new Map()),
-      (this.Prt = (i) => {
+      (this.SPe = void 0),
+      (this.ont = void 0),
+      (this.nnt = -0),
+      (this.snt = 1),
+      (this.cnt = new HpBufferStateMachine_1.HpBufferStateMachine()),
+      (this.Cnt = void 0),
+      (this.gnt = -1),
+      (this.fnt = -0),
+      (this.pnt = 0),
+      (this.Ant = !1),
+      (this.Hnt = new Map()),
+      (this.jnt = (i) => {
         i || this.Hide();
       }),
-      (this.xrt = (i) => {
+      (this.Wnt = (i) => {
         i
-          ? this.EPe.PlaySequencePurely("ShowView")
-          : this.EPe.PlaySequencePurely("CloseView");
+          ? this.SPe.PlaySequencePurely("ShowView")
+          : this.SPe.PlaySequencePurely("CloseView");
       }),
-      (this.wrt = (i) => {
-        this.EPe.StopCurrentSequence();
+      (this.Knt = (i) => {
+        this.SPe.StopCurrentSequence();
       });
   }
   OnRegisterComponent() {
@@ -75,147 +75,147 @@ class MergeMonsterHeadStateView extends BattleChildView_1.BattleChildView {
       [30, UE.UIItem],
       [31, UE.UIItem],
     ]),
-      (this.nrt =
+      (this.fnt =
         CommonParamById_1.configCommonParamById.GetIntConfig(
           "HitEffectDuration",
         ));
   }
   OnStart() {
-    (this.EPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem)),
-      this.Brt(),
-      (this.Qot =
+    (this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem)),
+      this.Qnt(),
+      (this.nnt =
         CommonParamById_1.configCommonParamById.GetIntConfig(
           "HitLargeBufferPercent",
         ) / 1e4),
-      (this.Wot = new VisibleAnimMachine_1.VisibleAnimMachine()),
-      this.Wot.InitCallback(this.Prt, this.xrt, this.wrt),
-      this.Wot.InitVisible(!1),
-      this.cnt();
+      (this.ont = new VisibleAnimMachine_1.VisibleAnimMachine()),
+      this.ont.InitCallback(this.jnt, this.Wnt, this.Knt),
+      this.ont.InitVisible(!1),
+      this.Tst();
     var i = UE.Color.FromHex("ED601BFF");
     this.GetText(1).SetColor(i);
   }
-  cnt() {
+  Tst() {
     this.GetSprite(10).SetUIActive(!1), this.GetItem(11).SetUIActive(!1);
   }
   OnBeforeDestroy() {
-    this.EPe.Clear(),
-      (this.EPe = void 0),
-      this.Wot.Reset(),
-      (this.Wot = void 0);
+    this.SPe.Clear(),
+      (this.SPe = void 0),
+      this.ont.Reset(),
+      (this.ont = void 0);
   }
   OnBeforeShow() {
-    this.mnt(), this.Wot.SetVisible(!0, SHOW_VIEW_ANIM_TIME);
+    this.Lst(), this.ont.SetVisible(!0, SHOW_VIEW_ANIM_TIME);
   }
   Refresh(i) {
     (this.Info = i),
-      this.IsShowOrShowing && (void 0 === i ? this.Hrt() : this.mnt());
+      this.IsShowOrShowing && (void 0 === i ? this.ist() : this.Lst());
   }
-  mnt() {
-    this.vrt(), this.dnt(), this.Cnt();
+  Lst() {
+    this.xnt(), this.Dst(), this.Rst();
   }
   Initialize(i) {
     super.Initialize(i),
-      (this.srt = this.GetItem(8).GetParentAsUIItem().GetWidth()),
+      (this.pnt = this.GetItem(8).GetParentAsUIItem().GetWidth()),
       ResourceSystem_1.ResourceSystem.LoadAsync(
         "/LGUI/MPC_UIShader.MPC_UIShader",
         UE.MaterialParameterCollection,
         (i) => {
-          this.ort = i;
+          this.Cnt = i;
         },
         103,
       );
   }
   OnHealthChanged() {
-    this.Cnt(!0);
+    this.Rst(!0);
   }
   OnLanguageChange() {
-    this.dnt();
+    this.Dst();
   }
   Tick(i) {
     var t;
     this.IsShowOrShowing &&
-      (this.frt &&
-        ((t = this.ert.UpdatePercent(i)) < 0
-          ? this.Hrt()
-          : t <= 1 && this.Xrt(t)),
-      this.rrt > this.nrt && (this.$rt(0), (this.rrt = -1)),
-      0 <= this.rrt) &&
-      (this.rrt += i);
+      (this.Ant &&
+        ((t = this.cnt.UpdatePercent(i)) < 0
+          ? this.ist()
+          : t <= 1 && this.ast(t)),
+      this.gnt > this.fnt && (this.hst(0), (this.gnt = -1)),
+      0 <= this.gnt) &&
+      (this.gnt += i);
   }
-  Cnt(i = !1) {
+  Rst(i = !1) {
     var t;
     this.Info.TotalHpMax <= 0 ||
       ((t = this.Info.TotalHp / this.Info.TotalHpMax),
-      this.int(t),
-      i ? this.rnt(t) : this.Hrt(),
-      (this.Xot = t));
+      this.Cst(t),
+      i ? this.fst(t) : this.ist(),
+      (this.snt = t));
   }
-  rnt(i) {
+  fst(i) {
     var t;
-    i < this.Xot &&
-      ((t = this.ert.IsOriginState()),
-      this.ert.GetHit(i, this.Xot),
-      t && !this.ert.IsOriginState() && this.Xrt(this.Xot),
-      (this.frt = !0),
-      this.Xot - i < this.Qot
-        ? this.Ert(25)
-        : (this.Ert(26), (this.rrt = 0), this.$rt(1)));
+    i < this.snt &&
+      ((t = this.cnt.IsOriginState()),
+      this.cnt.GetHit(i, this.snt),
+      t && !this.cnt.IsOriginState() && this.ast(this.snt),
+      (this.Ant = !0),
+      this.snt - i < this.nnt
+        ? this.bnt(25)
+        : (this.bnt(26), (this.gnt = 0), this.hst(1)));
   }
-  $rt(i) {
-    this.ort &&
+  hst(i) {
+    this.Cnt &&
       UE.KismetMaterialLibrary.SetScalarParameterValue(
         GlobalData_1.GlobalData.GameInstance.GetWorld(),
-        this.ort,
+        this.Cnt,
         rgbSplitProgress,
         i,
       );
   }
-  Hrt() {
-    this.GetItem(8).SetUIActive(!1), this.ert.Reset(), (this.frt = !1);
+  ist() {
+    this.GetItem(8).SetUIActive(!1), this.cnt.Reset(), (this.Ant = !1);
   }
-  int(i) {
+  Cst(i) {
     this.GetSprite(7).SetFillAmount(i);
   }
-  Xrt(i) {
-    var t = this.srt * this.Xot,
-      i = this.srt * i,
+  ast(i) {
+    var t = this.pnt * this.snt,
+      i = this.pnt * i,
       t = i - t,
-      i = i - (this.srt + t) / 2,
+      i = i - (this.pnt + t) / 2,
       e = this.GetItem(8);
     e.SetAnchorOffsetX(i),
       e.SetWidth(t),
       e.SetUIActive(!0),
       this.GetSprite(9).SetAnchorOffsetX(-i);
   }
-  vrt() {
+  xnt() {
     var i = this.GetText(0);
     i && i.SetUIActive(!1);
   }
-  dnt() {
+  Dst() {
     var i = this.Info.MonsterGroupName,
       t = this.GetText(1);
     i
       ? t.SetText(PublicUtil_1.PublicUtil.GetConfigTextByKey(i))
       : t.SetText("");
   }
-  Brt() {
-    this.hnt(25), this.hnt(26);
+  Qnt() {
+    this.Est(25), this.Est(26);
   }
-  hnt(i) {
+  Est(i) {
     var t = [],
       e = this.GetItem(i)
         .GetOwner()
         .K2_GetComponentsByClass(UE.LGUIPlayTweenComponent.StaticClass()),
       s = e.Num();
     for (let i = 0; i < s; i++) t.push(e.Get(i));
-    this.Art.set(i, t);
+    this.Hnt.set(i, t);
   }
-  Ert(i) {
-    i = this.Art.get(i);
+  bnt(i) {
+    i = this.Hnt.get(i);
     if (i) for (const t of i) t.Play();
   }
   HideWithAnim() {
-    this.Wot.SetVisible(!1, CLOSE_VIEW_ANIM_TIME);
+    this.ont.SetVisible(!1, CLOSE_VIEW_ANIM_TIME);
   }
   GetResourceId() {
     return "UiItem_BossState_Prefab";

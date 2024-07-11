@@ -9,21 +9,21 @@ class CombineMeshTool {
     t &&
       i &&
       s &&
-      (this.BWo(i, s),
-      this.bWo(t, e, i, s.Skel_Hair, s),
-      this.qWo(t, e, i, s.Skel_Face, s),
+      (this.PKo(i, s),
+      this.xKo(t, e, i, s.Skel_Hair, s),
+      this.wKo(t, e, i, s.Skel_Face, s),
       1 === s.NpcSetupType
-        ? (this.GWo(t, e, i, s.Skel_BodyUp, s),
-          this.NWo(t, e, i, s.Skel_BodyDown, s))
-        : this.OWo(t, e, i, s.Skel_Body, s),
-      this.kWo(t, i, s.Hook_Arm, s.Hook_Arm_Socket, s),
-      this.kWo(t, i, s.Hook_Back, s.Hook_Back_Socket, s),
-      this.kWo(t, i, s.Hook_Leg, s.Hook_Leg_Socket, s),
-      this.kWo(t, i, s.Hook_Waist, s.Hook_Waist_Socket, s),
-      this.kWo(t, i, s.Hook_Weapon, s.Hook_Weapon_Socket, s),
-      this.kWo(t, i, s.Hook_Head, s.Hook_Head_Socket, s));
+        ? (this.BKo(t, e, i, s.Skel_BodyUp, s),
+          this.bKo(t, e, i, s.Skel_BodyDown, s))
+        : this.qKo(t, e, i, s.Skel_Body, s),
+      this.GKo(t, i, s.Hook_Arm, s.Hook_Arm_Socket, s),
+      this.GKo(t, i, s.Hook_Back, s.Hook_Back_Socket, s),
+      this.GKo(t, i, s.Hook_Leg, s.Hook_Leg_Socket, s),
+      this.GKo(t, i, s.Hook_Waist, s.Hook_Waist_Socket, s),
+      this.GKo(t, i, s.Hook_Weapon, s.Hook_Weapon_Socket, s),
+      this.GKo(t, i, s.Hook_Head, s.Hook_Head_Socket, s));
   }
-  static BWo(t, e) {
+  static PKo(t, e) {
     t.SetSkeletalMesh(void 0),
       t.SetVisibility(!0, !1),
       (t.bRenderInMainPass = !1),
@@ -31,7 +31,7 @@ class CombineMeshTool {
       ObjectUtils_1.ObjectUtils.IsValid(e.Skel_Main) &&
         t.SetSkeletalMesh(e.Skel_Main, !0);
   }
-  static FWo(t, e, i, s, o, h, a = !1) {
+  static NKo(t, e, i, s, o, h, a = !1) {
     if (
       o &&
       ObjectUtils_1.ObjectUtils.IsValid(o) &&
@@ -53,68 +53,68 @@ class CombineMeshTool {
         if (((r.CastShadow = !1), o))
           return (
             a && r.K2_SetRelativeTransform(i, !1, void 0, !1),
-            r.ComponentTags.Add(this.VWo),
+            r.ComponentTags.Add(this.OKo),
             r
           );
         r.K2_DestroyComponent(e);
       }
     }
   }
-  static bWo(t, e, i, s, o) {
-    t = this.FWo(o, t, e, i, s, this.HWo);
+  static xKo(t, e, i, s, o) {
+    t = this.NKo(o, t, e, i, s, this.kKo);
     t &&
       o.bDyeColor &&
       (((e = new UE.LinearColor(o.Skel_Hair_Color)).A = 1),
-      this.jWo(t, o.SkinDyeColor, e));
+      this.FKo(t, o.SkinDyeColor, e));
   }
-  static qWo(t, e, i, s, o) {
-    e = this.FWo(o, t, e, i, s, this.WWo);
+  static wKo(t, e, i, s, o) {
+    e = this.NKo(o, t, e, i, s, this.VKo);
     e &&
       (t.IsA(UE.BP_BaseNPC_C.StaticClass()) && (t.CombineFaceMesh = e),
       o.bDyeColor) &&
-      this.jWo(e, o.SkinDyeColor);
+      this.FKo(e, o.SkinDyeColor);
   }
-  static GWo(t, e, i, s, o) {
-    t = this.FWo(o, t, e, i, s, this.KWo);
+  static BKo(t, e, i, s, o) {
+    t = this.NKo(o, t, e, i, s, this.HKo);
     t &&
       o.bDyeColor &&
       (((e = new UE.LinearColor(o.Skel_BodyUp_Color)).A = 1),
-      this.jWo(t, o.SkinDyeColor, e));
+      this.FKo(t, o.SkinDyeColor, e));
   }
-  static NWo(t, e, i, s, o) {
-    t = this.FWo(o, t, e, i, s, this.QWo);
+  static bKo(t, e, i, s, o) {
+    t = this.NKo(o, t, e, i, s, this.jKo);
     t &&
       o.bDyeColor &&
       (((e = new UE.LinearColor(o.Skel_BodyDown_Color)).A = 1),
-      this.jWo(t, o.SkinDyeColor, e));
+      this.FKo(t, o.SkinDyeColor, e));
   }
-  static OWo(t, e, i, s, o) {
-    t = this.FWo(o, t, e, i, s, this.XWo);
+  static qKo(t, e, i, s, o) {
+    t = this.NKo(o, t, e, i, s, this.WKo);
     t &&
       o.bDyeColor &&
       (((e = new UE.LinearColor(o.Body_Dyecolor01)).A = 1),
       ((i = new UE.LinearColor(o.Body_Dyecolor02)).A = 1),
-      this.jWo(t, o.SkinDyeColor, e, i));
+      this.FKo(t, o.SkinDyeColor, e, i));
   }
-  static jWo(i, s, o, h) {
+  static FKo(i, s, o, h) {
     var a = i.GetMaterials();
     for (let t = 0, e = a.Num(); t < e; t++) {
       var r = i.CreateDynamicMaterialInstance(t, a.Get(t));
       r &&
-        (r.SetVectorParameterValue(this.$Wo, s),
-        o && r.SetVectorParameterValue(this.YWo, o),
+        (r.SetVectorParameterValue(this.KKo, s),
+        o && r.SetVectorParameterValue(this.QKo, o),
         h) &&
-        r.SetVectorParameterValue(this.JWo, h);
+        r.SetVectorParameterValue(this.XKo, h);
     }
   }
-  static kWo(i, s, o, h, a) {
+  static GKo(i, s, o, h, a) {
     if (h && o && 0 !== o.Num())
       if (s.DoesSocketExist(h))
         for (let t = 0, e = o.Num(); t < e; t++) {
           var r = o.Get(t),
             n = r.Transform,
             r = r.Mesh;
-          this.FWo(a, i, n, s, r, h, !0);
+          this.NKo(a, i, n, s, r, h, !0);
         }
       else
         Log_1.Log.CheckError() &&
@@ -127,15 +127,15 @@ class CombineMeshTool {
           );
   }
 }
-((exports.CombineMeshTool = CombineMeshTool).VWo = new UE.FName(
+((exports.CombineMeshTool = CombineMeshTool).OKo = new UE.FName(
   "PartMeshComp",
 )),
-  (CombineMeshTool.$Wo = new UE.FName("5BaseColorTint")),
-  (CombineMeshTool.YWo = new UE.FName("1BaseColorTint")),
-  (CombineMeshTool.JWo = new UE.FName("2BaseColorTint")),
-  (CombineMeshTool.WWo = new UE.FName("Face")),
-  (CombineMeshTool.HWo = new UE.FName("Hair")),
-  (CombineMeshTool.XWo = new UE.FName("Body")),
-  (CombineMeshTool.KWo = new UE.FName("BodyUp")),
-  (CombineMeshTool.QWo = new UE.FName("BodyDown"));
+  (CombineMeshTool.KKo = new UE.FName("5BaseColorTint")),
+  (CombineMeshTool.QKo = new UE.FName("1BaseColorTint")),
+  (CombineMeshTool.XKo = new UE.FName("2BaseColorTint")),
+  (CombineMeshTool.VKo = new UE.FName("Face")),
+  (CombineMeshTool.kKo = new UE.FName("Hair")),
+  (CombineMeshTool.WKo = new UE.FName("Body")),
+  (CombineMeshTool.HKo = new UE.FName("BodyUp")),
+  (CombineMeshTool.jKo = new UE.FName("BodyDown"));
 //# sourceMappingURL=CombineMeshTool.js.map

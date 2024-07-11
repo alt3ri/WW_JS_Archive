@@ -13,15 +13,15 @@ const ModelBase_1 = require("../../../Core/Framework/ModelBase"),
 class CookModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
-      (this.Wbt = -1),
+      (this.Xqt = -1),
       (this.LastExp = 0),
       (this.CurrentInteractCreatureDataLongId = void 0),
-      (this.Kbt = 0),
-      (this.Qbt = 0),
-      (this.Xbt = void 0),
-      (this.$bt = new Map()),
-      (this.Ybt = void 0),
-      (this.Jbt = (t, e) => {
+      (this.$qt = 0),
+      (this.Yqt = 0),
+      (this.Jqt = void 0),
+      (this.zqt = new Map()),
+      (this.Zqt = void 0),
+      (this.eGt = (t, e) => {
         var i = t.IsUnLock ? 1 : 0,
           o = e.IsUnLock ? 1 : 0;
         return 1 == i && i == o
@@ -36,19 +36,19 @@ class CookModel extends ModelBase_1.ModelBase {
               : t.Quality - e.Quality
             : o - i;
       }),
-      (this.zbt = 0),
-      (this.Zbt = void 0),
-      (this.eqt = void 0),
-      (this.tqt = void 0),
-      (this.iqt = void 0),
-      (this.oqt = void 0),
-      (this.rqt = void 0),
-      (this.nqt = void 0),
-      (this.sqt = (t, e) =>
+      (this.tGt = 0),
+      (this.iGt = void 0),
+      (this.oGt = void 0),
+      (this.rGt = void 0),
+      (this.nGt = void 0),
+      (this.sGt = void 0),
+      (this.aGt = void 0),
+      (this.hGt = void 0),
+      (this.lGt = (t, e) =>
         t.IsBuff === e.IsBuff ? t.RoleId - e.RoleId : t.IsBuff ? -1 : 1),
-      (this.aqt = 0),
+      (this._Gt = 0),
       (this.E0 = void 0),
-      (this.hqt = void 0);
+      (this.uGt = void 0);
   }
   OnInit() {
     return !0;
@@ -57,19 +57,19 @@ class CookModel extends ModelBase_1.ModelBase {
     return this.ClearCookRoleItemDataList(), !0;
   }
   set CurrentCookViewType(t) {
-    this.Kbt = t;
+    this.$qt = t;
   }
   get CurrentCookViewType() {
-    return this.Kbt;
+    return this.$qt;
   }
   set CurrentCookListType(t) {
-    this.Qbt = t;
+    this.Yqt = t;
   }
   get CurrentCookListType() {
-    return this.Qbt;
+    return this.Yqt;
   }
   SaveLimitRefreshTime(t) {
-    this.Wbt =
+    this.Xqt =
       MathUtils_1.MathUtils.LongToNumber(t) * TimeUtil_1.TimeUtil.Millisecond;
   }
   CheckCanCook(t) {
@@ -108,8 +108,8 @@ class CookModel extends ModelBase_1.ModelBase {
       o,
       r,
       s,
-      n = this.Xbt,
-      a = this.$bt;
+      n = this.Jqt,
+      a = this.zqt;
     for ([t, e] of a) a.set(t, e - 1);
     let h = !1;
     for (const l of n)
@@ -125,7 +125,7 @@ class CookModel extends ModelBase_1.ModelBase {
     return h;
   }
   CreateCookingDataList(t) {
-    this.Xbt || (this.Xbt = new Array()), (this.Xbt.length = 0);
+    this.Jqt || (this.Jqt = new Array()), (this.Jqt.length = 0);
     var e = ConfigManager_1.ConfigManager.CookConfig.GetCookFormula() ?? [],
       i = new Map();
     for (const a of e) {
@@ -148,103 +148,103 @@ class CookModel extends ModelBase_1.ModelBase {
         ExistEndTime: 0,
         IsUnLock: !1,
       };
-      i.set(r.ItemId, r), this.Xbt.push(r);
+      i.set(r.ItemId, r), this.Jqt.push(r);
     }
     let r = void 0;
     for (const h of t) {
       var s = ConfigManager_1.ConfigManager.CookConfig.GetCookFormulaById(
-          h.Ekn,
+          h.J4n,
         ),
         n = ConfigManager_1.ConfigManager.ItemConfig.GetConfig(s.FoodItemId);
-      i.has(h.Ekn)
-        ? (((r = i.get(h.Ekn)).CookCount = h.O4n),
+      i.has(h.J4n)
+        ? (((r = i.get(h.J4n)).CookCount = h.pVn),
           (r.IsNew = ModelManager_1.ModelManager.NewFlagModel.HasNewFlag(
             LocalStorageDefine_1.ELocalStoragePlayerKey.CookerLevelKey,
-            h.Ekn,
+            h.J4n,
           )),
-          (r.LastRoleId = h.NTs),
+          (r.LastRoleId = h.nPs),
           (r.IsCook = 0),
-          (r.LimitTotalCount = h.FTs),
-          (r.LimitedCount = h.VTs),
+          (r.LimitTotalCount = h.sPs),
+          (r.LimitedCount = h.aPs),
           (r.DataId = s.FoodItemId),
           (r.ExistStartTime =
-            MathUtils_1.MathUtils.LongToNumber(h.$Ts) *
+            MathUtils_1.MathUtils.LongToNumber(h.hPs) *
             TimeUtil_1.TimeUtil.Millisecond),
           (r.ExistEndTime =
-            MathUtils_1.MathUtils.LongToNumber(h.HTs) *
+            MathUtils_1.MathUtils.LongToNumber(h.lPs) *
             TimeUtil_1.TimeUtil.Millisecond),
           (r.IsUnLock = !0))
         : ((r = {
             MainType: 0,
             SubType: 0,
             UniqueId: 0,
-            ItemId: h.Ekn,
-            CookCount: h.O4n,
+            ItemId: h.J4n,
+            CookCount: h.pVn,
             IsNew: ModelManager_1.ModelManager.NewFlagModel.HasNewFlag(
               LocalStorageDefine_1.ELocalStoragePlayerKey.CookerLevelKey,
-              h.Ekn,
+              h.J4n,
             ),
-            LastRoleId: h.NTs,
+            LastRoleId: h.nPs,
             IsCook: 0,
             Quality: n.QualityId,
             EffectType: s.TypeId,
             DataId: s.FoodItemId,
-            LimitTotalCount: h.FTs,
-            LimitedCount: h.VTs,
+            LimitTotalCount: h.sPs,
+            LimitedCount: h.aPs,
             ExistStartTime:
-              MathUtils_1.MathUtils.LongToNumber(h.$Ts) *
+              MathUtils_1.MathUtils.LongToNumber(h.hPs) *
               TimeUtil_1.TimeUtil.Millisecond,
             ExistEndTime:
-              MathUtils_1.MathUtils.LongToNumber(h.HTs) *
+              MathUtils_1.MathUtils.LongToNumber(h.lPs) *
               TimeUtil_1.TimeUtil.Millisecond,
             IsUnLock: !0,
           }),
-          this.Xbt.push(r)),
-        (r.IsCook = this.CheckCanCook(h.Ekn) ? 1 : 0);
+          this.Jqt.push(r)),
+        (r.IsCook = this.CheckCanCook(h.J4n) ? 1 : 0);
     }
   }
   UpdateCookingDataList(t) {
-    this.Xbt || this.CreateCookingDataList(t);
+    this.Jqt || this.CreateCookingDataList(t);
     for (const i of t)
-      for (const o of this.Xbt) {
+      for (const o of this.Jqt) {
         var e;
-        i.Ekn === o.ItemId &&
-          ((o.CookCount = i.O4n),
-          (o.LimitedCount = i.VTs),
+        i.J4n === o.ItemId &&
+          ((o.CookCount = i.pVn),
+          (o.LimitedCount = i.aPs),
           o.IsUnLock ||
             ((e = ConfigManager_1.ConfigManager.CookConfig.GetCookFormulaById(
-              i.Ekn,
+              i.J4n,
             )),
             (o.IsNew = !0),
             (o.IsUnLock = !0),
             (o.DataId = e.FoodItemId),
             (o.ExistStartTime =
-              MathUtils_1.MathUtils.LongToNumber(i.$Ts) *
+              MathUtils_1.MathUtils.LongToNumber(i.hPs) *
               TimeUtil_1.TimeUtil.Millisecond),
             (o.ExistEndTime =
-              MathUtils_1.MathUtils.LongToNumber(i.HTs) *
+              MathUtils_1.MathUtils.LongToNumber(i.lPs) *
               TimeUtil_1.TimeUtil.Millisecond),
             ModelManager_1.ModelManager.NewFlagModel.AddNewFlag(
               LocalStorageDefine_1.ELocalStoragePlayerKey.CookerLevelKey,
-              i.Ekn,
+              i.J4n,
             ),
             ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
               "FormulaLearned",
             )),
-          (o.IsCook = this.CheckCanCook(i.Ekn) ? 1 : 0));
+          (o.IsCook = this.CheckCanCook(i.J4n) ? 1 : 0));
       }
   }
   UpdateCookingDataByServerConfig(t) {
     for (const r of t) {
       var e =
-          MathUtils_1.MathUtils.LongToNumber(r.$Ts) *
+          MathUtils_1.MathUtils.LongToNumber(r.hPs) *
           TimeUtil_1.TimeUtil.Millisecond,
         i =
-          MathUtils_1.MathUtils.LongToNumber(r.HTs) *
+          MathUtils_1.MathUtils.LongToNumber(r.lPs) *
           TimeUtil_1.TimeUtil.Millisecond,
-        o = this.Xbt.findIndex((t) => t.ItemId === r.Ekn);
+        o = this.Jqt.findIndex((t) => t.ItemId === r.J4n);
       -1 !== o &&
-        ((this.Xbt[o].ExistStartTime = e), (this.Xbt[o].ExistEndTime = i));
+        ((this.Jqt[o].ExistStartTime = e), (this.Jqt[o].ExistEndTime = i));
     }
   }
   UnlockCookMenuData(t) {
@@ -252,17 +252,17 @@ class CookModel extends ModelBase_1.ModelBase {
     let i = 0;
     for (
       ;
-      i < this.Xbt.length &&
-      (6e4 !== this.Xbt[i].SubType || this.Xbt[i].ItemId !== e.FormulaItemId);
+      i < this.Jqt.length &&
+      (6e4 !== this.Jqt[i].SubType || this.Jqt[i].ItemId !== e.FormulaItemId);
       i++
     );
-    this.Xbt.splice(i, 1);
+    this.Jqt.splice(i, 1);
   }
   GetCookingDataList() {
-    return this.Xbt;
+    return this.Jqt;
   }
   GetCookingDataById(t) {
-    for (const e of this.Xbt) if (t === e.ItemId) return e;
+    for (const e of this.Jqt) if (t === e.ItemId) return e;
   }
   GetCookRoleId(t) {
     t = this.GetCookingDataById(t);
@@ -271,7 +271,7 @@ class CookModel extends ModelBase_1.ModelBase {
       : ModelManager_1.ModelManager.PlayerInfoModel.GetPlayerRoleId() ?? 1502;
   }
   CreateMachiningDataList() {
-    this.Ybt || (this.Ybt = new Array());
+    this.Zqt || (this.Zqt = new Array());
     for (const e of ConfigManager_1.ConfigManager.CookConfig.GetCookProcessed()) {
       var t = ConfigManager_1.ConfigManager.ItemConfig.GetConfig(e.FinalItemId),
         t = {
@@ -289,24 +289,24 @@ class CookModel extends ModelBase_1.ModelBase {
             : 0,
           Quality: t.QualityId,
         };
-      this.Ybt.push(t);
+      this.Zqt.push(t);
     }
-    this.Ybt.sort(this.Jbt);
+    this.Zqt.sort(this.eGt);
   }
   UpdateMachiningDataList(t, e) {
     for (const s of t)
-      for (const n of this.Ybt)
-        if (s.Ekn === n.ItemId) {
+      for (const n of this.Zqt)
+        if (s.J4n === n.ItemId) {
           let t = [];
           var i = [],
             o = ConfigManager_1.ConfigManager.CookConfig.GetCookProcessedById(
-              s.Ekn,
+              s.J4n,
             );
-          if (s.jTs) {
+          if (s._Ps) {
             for (const a of o.ConsumeItemsId) i.push(a.ItemId);
             t = o.InterationId;
           } else
-            for (const h of (t = s.WTs)) {
+            for (const h of (t = s.uPs)) {
               var r = o.InterationId.indexOf(h);
               0 <= r && ((r = o.ConsumeItemsId[r].ItemId), i.push(r));
             }
@@ -314,7 +314,7 @@ class CookModel extends ModelBase_1.ModelBase {
             (n.InteractiveList = t),
             (n.UnlockList = i),
             (n.IsMachining = CookController_1.CookController.CheckCanProcessed(
-              s.Ekn,
+              s.J4n,
             )
               ? 1
               : 0),
@@ -322,51 +322,51 @@ class CookModel extends ModelBase_1.ModelBase {
               ((n.IsNew = e),
               ModelManager_1.ModelManager.NewFlagModel.AddNewFlag(
                 LocalStorageDefine_1.ELocalStoragePlayerKey.CookerLevelKey,
-                s.Ekn,
+                s.J4n,
               ),
-              s.jTs) &&
+              s._Ps) &&
               ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
                 "FormulaLearned",
               );
           break;
         }
-    this.Ybt.sort(this.Jbt);
+    this.Zqt.sort(this.eGt);
   }
   GetMachiningDataList() {
-    return this.Ybt;
+    return this.Zqt;
   }
   GetMachiningDataById(t) {
-    for (const e of this.Ybt) if (t === e.ItemId) return e;
+    for (const e of this.Zqt) if (t === e.ItemId) return e;
   }
   set SelectedCookerLevel(t) {
-    this.zbt = t;
+    this.tGt = t;
   }
   get SelectedCookerLevel() {
-    return this.zbt;
+    return this.tGt;
   }
   CreateCookerInfo(t) {
-    this.UpdateCookerInfo(t), (this.Zbt = new Map());
+    this.UpdateCookerInfo(t), (this.iGt = new Map());
     for (const e of ConfigManager_1.ConfigManager.CookConfig.GetCookLevel())
-      this.Zbt.set(e.Id, e);
+      this.iGt.set(e.Id, e);
   }
   UpdateCookerInfo(t) {
     let e = 0;
-    this.eqt &&
-      ((this.LastExp = this.eqt.TotalProficiencys),
-      (e = t.kTs - this.eqt.TotalProficiencys)),
-      (this.eqt = { CookingLevel: t.OTs, TotalProficiencys: t.kTs, AddExp: e });
+    this.oGt &&
+      ((this.LastExp = this.oGt.TotalProficiencys),
+      (e = t.oPs - this.oGt.TotalProficiencys)),
+      (this.oGt = { CookingLevel: t.rPs, TotalProficiencys: t.oPs, AddExp: e });
   }
   GetCookerInfo() {
-    return this.eqt;
+    return this.oGt;
   }
   CleanAddExp() {
-    this.eqt.AddExp = 0;
+    this.oGt.AddExp = 0;
   }
   GetCookLevelByLevel(t) {
-    return this.Zbt.get(t);
+    return this.iGt.get(t);
   }
   GetCookerMaxLevel() {
-    return this.Zbt.size;
+    return this.iGt.size;
   }
   GetSumExpByLevel(t) {
     var e = this.GetCookerMaxLevel();
@@ -380,61 +380,61 @@ class CookModel extends ModelBase_1.ModelBase {
       : this.GetCookLevelByLevel(t).DropIds;
   }
   CreateTmpMachiningItemList(t) {
-    this.tqt || (this.tqt = new Array()),
-      (this.tqt.length = 0),
-      this.iqt || (this.iqt = new Array()),
-      (this.iqt.length = 0),
-      this.oqt || (this.oqt = new Map()),
-      this.oqt.clear(),
-      (this.tqt.length = 0),
-      (this.iqt.length = 0);
-    for (const e of t) this.tqt.push(e), e.m3n || this.iqt.push(e);
+    this.rGt || (this.rGt = new Array()),
+      (this.rGt.length = 0),
+      this.nGt || (this.nGt = new Array()),
+      (this.nGt.length = 0),
+      this.sGt || (this.sGt = new Map()),
+      this.sGt.clear(),
+      (this.rGt.length = 0),
+      (this.nGt.length = 0);
+    for (const e of t) this.rGt.push(e), e.G6n || this.nGt.push(e);
   }
   UpdateTmpMachiningItemList(t, e) {
-    this.tqt[t] = e;
+    this.rGt[t] = e;
   }
   SubOneTmpMachiningItemSelectNum(e) {
-    if (this.tqt[e]) {
-      e = this.tqt[e];
-      if (this.oqt.has(e.G3n)) {
-        var i = this.oqt.get(e.G3n) - 1;
-        if ((this.oqt.set(e.G3n, i), !(0 < i))) {
-          this.oqt.delete(e.G3n);
+    if (this.rGt[e]) {
+      e = this.rGt[e];
+      if (this.sGt.has(e.f8n)) {
+        var i = this.sGt.get(e.f8n) - 1;
+        if ((this.sGt.set(e.f8n, i), !(0 < i))) {
+          this.sGt.delete(e.f8n);
           var o = function (t, e) {
-              (t.m3n = e.m3n), (t.G3n = e.G3n);
+              (t.G6n = e.G6n), (t.f8n = e.f8n);
             },
-            i = { m3n: (e.m3n = !1), G3n: 0, k4n: 0 };
+            i = { G6n: (e.G6n = !1), f8n: 0, MVn: 0 };
           o(i, e);
-          let t = this.iqt.indexOf(e);
-          for (; t < this.iqt.length - 1; t++) {
-            var r = this.iqt[t + 1];
-            o(this.iqt[t], r);
+          let t = this.nGt.indexOf(e);
+          for (; t < this.nGt.length - 1; t++) {
+            var r = this.nGt[t + 1];
+            o(this.nGt[t], r);
           }
-          o(this.iqt[t], i);
+          o(this.nGt[t], i);
         }
       }
     }
   }
   ClearTmpMachiningItemList() {
-    (this.tqt.length = 0), (this.iqt.length = 0), this.oqt.clear();
+    (this.rGt.length = 0), (this.nGt.length = 0), this.sGt.clear();
   }
   SetEmptyBySelectedItem(t, e, i, o) {
-    t = this.iqt[t];
-    t && (i && ((t.G3n = i), o) && this.oqt.set(i, o), (t.m3n = e));
+    t = this.nGt[t];
+    t && (i && ((t.f8n = i), o) && this.sGt.set(i, o), (t.G6n = e));
   }
   IsSelectNumFromEmpty(t) {
     let e = !1,
       i = 0;
-    return this.oqt.has(t) && ((e = !0), (i = this.oqt.get(t))), [e, i];
+    return this.sGt.has(t) && ((e = !0), (i = this.sGt.get(t))), [e, i];
   }
   CheckCanProcessedNew(t) {
-    if (0 === this.oqt.size)
+    if (0 === this.sGt.size)
       return CookController_1.CookController.CheckCanProcessed(t);
     let e = !0;
-    for (const o of this.tqt)
-      if (this.oqt.has(o.G3n)) {
-        var i = this.oqt.get(o.G3n);
-        if (o.k4n > i) {
+    for (const o of this.rGt)
+      if (this.sGt.has(o.f8n)) {
+        var i = this.sGt.get(o.f8n);
+        if (o.MVn > i) {
           e = !1;
           break;
         }
@@ -442,21 +442,21 @@ class CookModel extends ModelBase_1.ModelBase {
     return e;
   }
   GetTmpMachiningItemList() {
-    return this.tqt;
+    return this.rGt;
   }
   GetEmptyMachiningItemListNum() {
-    return this.iqt.length;
+    return this.nGt.length;
   }
   set CurrentCookRoleId(t) {
-    this.rqt = t;
+    this.aGt = t;
   }
   get CurrentCookRoleId() {
-    return this.rqt;
+    return this.aGt;
   }
   UpdateCookRoleItemDataList() {
-    this.nqt || (this.nqt = new Array()), (this.nqt.length = 0);
+    this.hGt || (this.hGt = new Array()), (this.hGt.length = 0);
     for (const t of ModelManager_1.ModelManager.RoleModel.GetRoleList())
-      this.nqt.push({
+      this.hGt.push({
         RoleId: t.GetRoleId(),
         RoleName: t.GetRoleRealName(),
         RoleIcon: t.GetRoleConfig().RoleHeadIcon,
@@ -465,14 +465,14 @@ class CookModel extends ModelBase_1.ModelBase {
       });
   }
   ClearCookRoleItemDataList() {
-    this.nqt = void 0;
+    this.hGt = void 0;
   }
   GetCookRoleItemDataList(t) {
-    this.nqt || this.UpdateCookRoleItemDataList();
-    for (const e of this.nqt)
+    this.hGt || this.UpdateCookRoleItemDataList();
+    for (const e of this.hGt)
       (e.ItemId = t),
         (e.IsBuff = CookController_1.CookController.CheckIsBuff(e.RoleId, t));
-    return this.nqt.sort(this.sqt);
+    return this.hGt.sort(this.lGt);
   }
   GetCookMaterialList(t, e) {
     var i = new Array();
@@ -480,16 +480,16 @@ class CookModel extends ModelBase_1.ModelBase {
       for (const r of ConfigManager_1.ConfigManager.CookConfig.GetCookFormulaById(
         t,
       ).ConsumeItems)
-        i.push({ G3n: r.ItemId, k4n: r.Count, m3n: !0 });
+        i.push({ f8n: r.ItemId, MVn: r.Count, G6n: !0 });
     else {
       var o = this.GetMachiningDataById(t);
       for (const s of ConfigManager_1.ConfigManager.CookConfig.GetCookProcessedById(
         t,
       ).ConsumeItemsId)
         i.push({
-          G3n: s.ItemId,
-          k4n: s.Count,
-          m3n: o.UnlockList.includes(s.ItemId),
+          f8n: s.ItemId,
+          MVn: s.Count,
+          G6n: o.UnlockList.includes(s.ItemId),
         });
     }
     return i;
@@ -501,31 +501,31 @@ class CookModel extends ModelBase_1.ModelBase {
       t,
     ).ConsumeItemsId) {
       var o = i.UnlockList.includes(r.ItemId);
-      e.push({ G3n: o ? r.ItemId : 0, k4n: r.Count, m3n: o });
+      e.push({ f8n: o ? r.ItemId : 0, MVn: r.Count, G6n: o });
     }
     return e;
   }
   GetRefreshLimitTime() {
     var t;
-    if (0 !== this.Wbt)
+    if (0 !== this.Xqt)
       return (
         (t = TimeUtil_1.TimeUtil.GetServerTime()),
-        TimeUtil_1.TimeUtil.GetRemainTimeDataFormat(this.Wbt - t).CountDownText
+        TimeUtil_1.TimeUtil.GetRemainTimeDataFormat(this.Xqt - t).CountDownText
       );
   }
   GetRefreshLimitTimeValue() {
     var t;
-    return this.Wbt <= 0
+    return this.Xqt <= 0
       ? 1
       : ((t = TimeUtil_1.TimeUtil.GetServerTime()),
-        TimeUtil_1.TimeUtil.GetRemainTimeDataFormat(this.Wbt - t)
+        TimeUtil_1.TimeUtil.GetRemainTimeDataFormat(this.Xqt - t)
           .RemainingTime);
   }
   set CurrentFixId(t) {
-    this.aqt = t;
+    this._Gt = t;
   }
   get CurrentFixId() {
-    return this.aqt;
+    return this._Gt;
   }
   set CurrentEntityId(t) {
     this.E0 = t;
@@ -534,11 +534,11 @@ class CookModel extends ModelBase_1.ModelBase {
     return this.E0;
   }
   UpdateCookItemList(t) {
-    this.hqt || (this.hqt = new Array()), (this.hqt.length = 0);
-    for (const e of t) this.hqt.push({ ItemId: e.G3n, ItemNum: e.k4n });
+    this.uGt || (this.uGt = new Array()), (this.uGt.length = 0);
+    for (const e of t) this.uGt.push({ ItemId: e.f8n, ItemNum: e.MVn });
   }
   GetCookItemList() {
-    return this.hqt;
+    return this.uGt;
   }
 }
 exports.CookModel = CookModel;

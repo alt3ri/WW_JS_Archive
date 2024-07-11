@@ -25,8 +25,8 @@ class CameraDialogueController extends CameraControllerBase_1.CameraControllerBa
       (this.v1e = -0),
       (this.M1e = !1),
       (this.State = 0),
-      (this.S1e = Vector_1.Vector.Create()),
       (this.E1e = Vector_1.Vector.Create()),
+      (this.S1e = Vector_1.Vector.Create()),
       (this.y1e = Vector_1.Vector.Create()),
       (this.I1e = Vector_1.Vector.Create()),
       (this.T1e = !1),
@@ -68,8 +68,8 @@ class CameraDialogueController extends CameraControllerBase_1.CameraControllerBa
               h = isNaN(h) ? 1 : h,
               e =
                 (Vector_1.Vector.VectorBlendEaseIn(
-                  this.S1e,
                   this.E1e,
+                  this.S1e,
                   h,
                   this.FadeInExp,
                   this.I1e,
@@ -97,7 +97,8 @@ class CameraDialogueController extends CameraControllerBase_1.CameraControllerBa
                 r,
                 0,
               )),
-              (this.Camera.IsModifiedArmRotation = !0);
+              (this.Camera.IsModifiedArmRotationPitch = !0),
+              (this.Camera.IsModifiedArmRotationYaw = !0);
             e = MathUtils_1.MathUtils.BlendEaseIn(
               this.L1e,
               this.DefaultArmLength,
@@ -107,11 +108,11 @@ class CameraDialogueController extends CameraControllerBase_1.CameraControllerBa
             (this.Camera.DesiredCamera.ArmLength = e),
               (this.Camera.IsModifiedArmLength = !0),
               this.v1e === this.FadeInDuration &&
-                ((this.State = 2), this.Camera.SetArmLocation(this.E1e));
+                ((this.State = 2), this.Camera.SetArmLocation(this.S1e));
           }
           break;
         case 2:
-          this.Camera.SetArmLocation(this.E1e);
+          this.Camera.SetArmLocation(this.S1e);
           break;
         case 3:
           this.y1e.IsNearlyZero()
@@ -135,11 +136,11 @@ class CameraDialogueController extends CameraControllerBase_1.CameraControllerBa
       (this.T1e = !1),
       (this.v1e = 0),
       i || !t
-        ? this.E1e.DeepCopy(this.Camera.CurrentCamera.ArmLocation)
+        ? this.S1e.DeepCopy(this.Camera.CurrentCamera.ArmLocation)
         : ((this.State = 1),
-          this.S1e.DeepCopy(this.Camera.CurrentCamera.ArmLocation),
+          this.E1e.DeepCopy(this.Camera.CurrentCamera.ArmLocation),
           (this.L1e = this.Camera.CurrentCamera.ArmLength),
-          (i = t ?? this.S1e),
+          (i = t ?? this.E1e),
           this.D1e(i),
           this.R1e(i)));
   }
@@ -161,7 +162,7 @@ class CameraDialogueController extends CameraControllerBase_1.CameraControllerBa
     let h = this.OffsetRate;
     i * this.OffsetRate > this.OffsetLengthMax &&
       (h = this.OffsetLengthMax / i),
-      Vector_1.Vector.Lerp(s, t, h, this.E1e);
+      Vector_1.Vector.Lerp(s, t, h, this.S1e);
   }
   R1e(t, i = !0, s = !0) {
     var h,
@@ -212,8 +213,8 @@ class CameraDialogueController extends CameraControllerBase_1.CameraControllerBa
       (this.v1e = 0),
       (this.State = 1),
       t &&
-        (this.S1e.DeepCopy(this.Camera.CurrentCamera.ArmLocation),
-        this.E1e.Set(t.X ?? 0, t.Y ?? 0, t.Z ?? 0));
+        (this.E1e.DeepCopy(this.Camera.CurrentCamera.ArmLocation),
+        this.S1e.Set(t.X ?? 0, t.Y ?? 0, t.Z ?? 0));
     t = this.Camera.CameraActor.K2_GetActorRotation();
     void 0 !== i &&
       ((this.ile = !0), (this.ole = t.Pitch), (this.rle = this.AdjustPitchMin)),

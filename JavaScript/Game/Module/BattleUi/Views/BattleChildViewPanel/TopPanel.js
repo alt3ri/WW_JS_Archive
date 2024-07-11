@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TopPanel = void 0);
 const UE = require("ue"),
+  Info_1 = require("../../../../../Core/Common/Info"),
   Log_1 = require("../../../../../Core/Common/Log"),
   Stats_1 = require("../../../../../Core/Common/Stats"),
   BaseConfigController_1 = require("../../../../../Launcher/BaseConfig/BaseConfigController"),
@@ -16,127 +17,140 @@ const UE = require("ue"),
   InstanceDungeonGuideController_1 = require("../../../InstanceDungeon/InstanceDungeonGuideController"),
   OnlineController_1 = require("../../../Online/OnlineController"),
   RoguelikeController_1 = require("../../../Roguelike/RoguelikeController"),
+  TowerDefenceController_1 = require("../../../TowerDefence/TowerDefenceController"),
+  TowerDefenceInBattleView_1 = require("../../../TowerDefence/View/TowerDefenceInBattleView"),
   TowerController_1 = require("../../../TowerDetailUi/TowerController"),
   BattleEntranceButton_1 = require("../BattleChildView/BattleEntranceButton"),
   BattleOnlineButton_1 = require("../BattleChildView/BattleOnlineButton"),
+  BattleQuestButton_1 = require("../BattleChildView/BattleQuestButton"),
   BattleTowerButton_1 = require("../BattleChildView/BattleTowerButton"),
   MiniMapView_1 = require("../MiniMapView"),
   SilentAreaInfoView_1 = require("../SilentAreaView/SilentAreaInfoView"),
   BattleChildViewPanel_1 = require("./BattleChildViewPanel"),
-  BattleQuestButton_1 = require("../BattleChildView/BattleQuestButton"),
   battleUiChildren = [4, 3, 2, 1];
 class TopPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
   constructor() {
     super(...arguments),
-      (this.TZe = void 0),
-      (this.LZe = void 0),
-      (this.DZe = void 0),
-      (this.RZe = void 0),
-      (this.UZe = void 0),
-      (this.AZe = void 0),
-      (this.PZe = void 0),
-      (this.xZe = void 0),
-      (this.wZe = void 0),
-      (this.BZe = void 0),
-      (this.bZe = void 0),
-      (this.qZe = void 0),
-      (this.DLn = void 0),
-      (this.DJe = !1),
-      (this.Vze = (t) => {
+      (this.Vet = void 0),
+      (this.Het = void 0),
+      (this.jet = void 0),
+      (this.Wet = void 0),
+      (this.Ket = void 0),
+      (this.Qet = void 0),
+      (this.Xet = void 0),
+      (this.$et = void 0),
+      (this.Yet = void 0),
+      (this.Jet = void 0),
+      (this.zet = void 0),
+      (this.gca = void 0),
+      (this.Zet = void 0),
+      (this.fDn = void 0),
+      (this.Oze = !1),
+      (this.eet = (t) => {
         var e =
           ModelManager_1.ModelManager.GeneralLogicTreeModel.GetBehaviorTree(
             t.TreeIncId,
           );
-        e && e.GetSilentAreaShowInfo() && this.bZe.StartShow(t.TreeIncId, e);
+        e && e.GetSilentAreaShowInfo() && this.zet.StartShow(t.TreeIncId, e);
       }),
-      (this.Wze = (t, e) => {
-        this.bZe?.Id === t && this.bZe.EndShow();
+      (this.oet = (t, e) => {
+        this.zet?.Id === t && this.zet.EndShow();
       }),
-      (this.GZe = () => {
-        this.qZe?.SetOtherHide(!1), this.bZe.EndShow();
+      (this.ett = () => {
+        this.Zet?.SetOtherHide(!1), this.zet.EndShow();
       }),
-      (this.NZe = (t) => {
-        for (const e of this.LZe) e.SetGmHide(!t);
-        this.DZe.SetGmHide(!t), this.UZe.SetGmHide(!t);
+      (this.fca = (t) => {
+        t ? this.gca?.StartShow() : this.gca?.EndShow();
       }),
-      (this.dKe = (t, e, i) => {
-        (this.DJe = ModelManager_1.ModelManager.PlatformModel.IsGamepad()),
-          this.TZe && this.TZe.RefreshOnPlatformChanged();
-        for (const n of this.LZe) n.SetGamepadHide(this.DJe);
-        this.AZe.RefreshButtonState();
+      (this.ttt = (t) => {
+        for (const e of this.Het) e.SetGmHide(!t);
+        this.jet.SetGmHide(!t), this.Ket.SetGmHide(!t);
       }),
-      (this.OZe = () => {
-        this.kZe();
+      (this.XBo = () => {
+        (this.Oze = Info_1.Info.IsInGamepad()),
+          this.Vet && this.Vet.RefreshOnPlatformChanged();
+        for (const t of this.Het) t.SetGamepadHide(this.Oze);
+        this.Qet.RefreshButtonState();
       }),
-      (this.FZe = () => {
-        ModelManager_1.ModelManager.InstanceDungeonGuideModel.GetHaveGuide()
-          ? (this.PZe.SetOtherHide(!0), this.xZe.SetOtherHide(!1))
-          : (this.PZe.SetOtherHide(!1), this.xZe.SetOtherHide(!0));
-        var t = ModelManager_1.ModelManager.RoguelikeModel.CheckInRoguelike();
-        t && (this.PZe.SetOtherHide(!0), this.xZe.SetOtherHide(!0));
+      (this.itt = () => {
+        this.ott();
+      }),
+      (this.ntt = () => {
+        var t =
+            ModelManager_1.ModelManager.InstanceDungeonGuideModel.GetHaveGuide(),
+          e =
+            (t
+              ? (this.Xet.SetOtherHide(!0), this.$et.SetOtherHide(!1))
+              : (this.Xet.SetOtherHide(!1), this.$et.SetOtherHide(!0)),
+            ModelManager_1.ModelManager.RoguelikeModel.CheckInRoguelike());
+        e && (this.Xet.SetOtherHide(!0), this.$et.SetOtherHide(!0)),
+          ModelManager_1.ModelManager.BattleUiModel.EnvironmentKeyData.SetEnvironmentKeyVisible(
+            3,
+            t && !e,
+          );
       }),
       (this.xie = () => {
-        this.AZe.RefreshButtonState();
+        this.Qet.RefreshButtonState();
       }),
-      (this.gKe = (t, e) => {
-        for (const i of this.LZe) i.SetFunctionOpen(t, e);
+      (this.RQe = (t, e) => {
+        for (const i of this.Het) i.SetFunctionOpen(t, e);
       }),
-      (this.VZe = () => {
+      (this.stt = () => {
         UiManager_1.UiManager.OpenView("FunctionView");
       }),
-      (this.HZe = () => {
+      (this.att = () => {
         FunctionController_1.FunctionController.OpenFunctionRelateView(10009);
       }),
-      (this.jZe = () =>
+      (this.htt = () =>
         !ModelManager_1.ModelManager.ActivityModel.GetIfShowActivity()),
-      (this.WZe = () => {
+      (this.ltt = () => {
         InstanceDungeonController_1.InstanceDungeonController.OnClickInstanceDungeonExitButton();
       }),
-      (this.B$e = () => {
+      (this.KYe = () => {
         var t = ModelManager_1.ModelManager.GameModeModel.IsMulti,
           e = ModelManager_1.ModelManager.OnlineModel.IsOnlineDisabled();
         !t && e
           ? OnlineController_1.OnlineController.ShowTipsWhenOnlineDisabled()
           : UiManager_1.UiManager.OpenView("OnlineWorldHallView");
       }),
-      (this.KZe = () => {
+      (this._tt = () => {
         FunctionController_1.FunctionController.OpenFunctionRelateView(10002);
       }),
-      (this.QZe = () => {
+      (this.utt = () => {
         FunctionController_1.FunctionController.OpenFunctionRelateView(10040);
       }),
-      (this.XZe = () => {
+      (this.ctt = () => {
         ActivityController_1.ActivityController.OpenActivityById(0, 1);
       }),
-      (this.$Ze = () => {
+      (this.mtt = () => {
         FunctionController_1.FunctionController.OpenFunctionRelateView(10001);
       }),
-      (this.YZe = () => {
+      (this.dtt = () => {
         FunctionController_1.FunctionController.OpenFunctionRelateView(10023);
       }),
-      (this.JZe = () => {
+      (this.Ctt = () => {
         UiManager_1.UiManager.OpenView("QuestView");
       }),
-      (this.zZe = () => {
+      (this.gtt = () => {
         InstanceDungeonGuideController_1.InstanceDungeonGuideController.StartReplayGuide();
       }),
-      (this.ZZe = () => {
+      (this.ftt = () => {
         TowerController_1.TowerController.OpenTowerGuide();
       }),
-      (this.eet = () => {
+      (this.ptt = () => {
         RoguelikeController_1.RoguelikeController.OpenRogueInfoView();
       }),
-      (this.tet = () =>
+      (this.vtt = () =>
         ModelManager_1.ModelManager.RoguelikeModel.CheckInRoguelike()),
-      (this.RLn = () => {
+      (this.pDn = () => {
         FunctionController_1.FunctionController.OpenFunctionRelateView(10019);
       }),
-      (this.ALn = () =>
+      (this.vDn = () =>
         ModelManager_1.ModelManager.RoguelikeModel.CheckInRoguelike()),
-      (this.iet = () => {
+      (this.Mtt = () => {
         FunctionController_1.FunctionController.OpenFunctionRelateView(10007);
       }),
-      (this.oet = () => {
+      (this.Ett = () => {
         var t = this.GetExtendToggle(18).ToggleState;
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
@@ -176,31 +190,33 @@ class TopPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
       [15, UE.UIItem],
       [18, UE.UIExtendToggle],
       [19, UE.UIItem],
+      [20, UE.UIItem],
     ]),
-      (this.BtnBindInfo = [[18, this.oet]]);
+      (this.BtnBindInfo = [[18, this.Ett]]);
   }
   async InitializeAsync() {
-    (this.LZe = []),
+    (this.Het = []),
       await Promise.all([
-        this.ret(),
-        this.net(),
-        this.aet(),
-        this.het(),
-        this.let(),
-        this._et(),
-        this.uet(),
-        this.cet(),
-        this.met(),
-        this.det(),
-        this.Cet(),
-        this.fet(),
-        this.pet(),
-        this.ULn(),
-        this.vet(),
-        this.Met(),
-        this.Eet(),
+        this.Stt(),
+        this.ytt(),
+        this.Itt(),
+        this.Ttt(),
+        this.Ltt(),
+        this.Dtt(),
+        this.Rtt(),
+        this.Utt(),
+        this.Att(),
+        this.Ptt(),
+        this.xtt(),
+        this.wtt(),
+        this.Btt(),
+        this.MDn(),
+        this.btt(),
+        this.qtt(),
+        this.Gtt(),
+        this.pca(),
       ]),
-      this.yet();
+      this.Ntt();
   }
   OnShowBattleChildViewPanel() {
     ModelManager_1.ModelManager.BattleUiModel.ChildViewData.SetChildrenVisible(
@@ -208,10 +224,11 @@ class TopPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
       battleUiChildren,
       !0,
     ),
-      this.TZe.ShowBattleVisibleChildView();
-    for (const t of this.LZe) t.ShowBattleVisibleChildView();
-    this.bZe.ShowBattleVisibleChildView(),
-      this.qZe.ShowBattleVisibleChildView();
+      this.Vet.ShowBattleVisibleChildView();
+    for (const t of this.Het) t.ShowBattleVisibleChildView();
+    this.zet.ShowBattleVisibleChildView(),
+      this.Zet.ShowBattleVisibleChildView(),
+      this.gca.ShowBattleVisibleChildView();
   }
   OnHideBattleChildViewPanel() {
     ModelManager_1.ModelManager.BattleUiModel?.ChildViewData.SetChildrenVisible(
@@ -219,24 +236,26 @@ class TopPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
       battleUiChildren,
       !1,
     ),
-      this.TZe.HideBattleVisibleChildView();
-    for (const t of this.LZe) t.HideBattleVisibleChildView();
-    this.bZe.HideBattleVisibleChildView();
+      this.Vet.HideBattleVisibleChildView();
+    for (const t of this.Het) t.HideBattleVisibleChildView();
+    this.zet.HideBattleVisibleChildView(),
+      this.gca.HideBattleVisibleChildView();
   }
-  yet() {
-    this.DJe = ModelManager_1.ModelManager.PlatformModel.IsGamepad();
-    for (const t of this.LZe) t.SetGamepadHide(this.DJe);
-    this.Iet(),
-      this.kZe(),
-      this.Tet(),
-      this.Let(),
-      this.PLn(),
+  Ntt() {
+    this.Oze = Info_1.Info.IsInGamepad();
+    for (const t of this.Het) t.SetGamepadHide(this.Oze);
+    this.Ott(),
+      this.ott(),
+      this.ktt(),
+      this.vca(),
+      this.Ftt(),
+      this.EDn(),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("BattleUiSet", 28, "IOS 审核音乐Toggle", [
           " BaseConfigController.GetIosAuditFirstDownloadTip()",
           BaseConfigController_1.BaseConfigController.GetIosAuditFirstDownloadTip(),
         ]),
-      1 === ModelManager_1.ModelManager.PlatformModel.PlatformType &&
+      1 === Info_1.Info.PlatformType &&
         BaseConfigController_1.BaseConfigController.GetIosAuditFirstDownloadTip() &&
         (this.GetExtendToggle(18)?.RootUIComp.SetUIActive(!0),
         this.GetExtendToggle(18)?.SetToggleState(0),
@@ -244,23 +263,23 @@ class TopPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
         Log_1.Log.Info("BattleUiSet", 28, "初始化IOS 背景播放按钮");
   }
   Reset() {
-    this.TZe.Reset(), (this.TZe = void 0), (this.LZe = void 0), super.Reset();
+    this.Vet.Reset(), (this.Vet = void 0), (this.Het = void 0), super.Reset();
   }
   OnTickBattleChildViewPanel(t) {
-    this.TZe.RefreshShow();
+    this.Vet.RefreshShow();
   }
   AddEvents() {
     EventSystem_1.EventSystem.Add(
-      EventDefine_1.EEventName.OnPlatformChanged,
-      this.dKe,
+      EventDefine_1.EEventName.InputControllerChange,
+      this.XBo,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnActivityUpdate,
-        this.OZe,
+        this.itt,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.DungeonGuideChange,
-        this.FZe,
+        this.ntt,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.BattleUiCurRoleDataChanged,
@@ -268,41 +287,45 @@ class TopPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnFunctionOpenSet,
-        this.gKe,
+        this.RQe,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnFunctionOpenUpdate,
-        this.gKe,
+        this.RQe,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.GmOnlyShowMiniMap,
-        this.NZe,
+        this.ttt,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.GeneralLogicTreeStartShowTrackText,
-        this.Vze,
+        this.eet,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.GeneralLogicTreeEndShowTrackText,
-        this.Wze,
+        this.oet,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnShowTowerGuideButton,
-        this.GZe,
+        this.ett,
+      ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.TowerDefenseShowInBattleView,
+        this.fca,
       );
   }
   RemoveEvents() {
     EventSystem_1.EventSystem.Remove(
-      EventDefine_1.EEventName.OnPlatformChanged,
-      this.dKe,
+      EventDefine_1.EEventName.InputControllerChange,
+      this.XBo,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnActivityUpdate,
-        this.OZe,
+        this.itt,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.DungeonGuideChange,
-        this.FZe,
+        this.ntt,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.BattleUiCurRoleDataChanged,
@@ -310,79 +333,88 @@ class TopPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnFunctionOpenSet,
-        this.gKe,
+        this.RQe,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnFunctionOpenUpdate,
-        this.gKe,
+        this.RQe,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.GmOnlyShowMiniMap,
-        this.NZe,
+        this.ttt,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.GeneralLogicTreeStartShowTrackText,
-        this.Vze,
+        this.eet,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.GeneralLogicTreeEndShowTrackText,
-        this.Wze,
+        this.oet,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnShowTowerGuideButton,
-        this.GZe,
+        this.ett,
+      ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.TowerDefenseShowInBattleView,
+        this.fca,
       );
   }
-  Iet() {
-    this.DZe.SetOtherHide(
+  Ott() {
+    this.jet.SetOtherHide(
       !ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance(),
     );
   }
-  kZe() {
-    this.UZe.SetOtherHide(
+  ott() {
+    this.Ket.SetOtherHide(
       !ModelManager_1.ModelManager.ActivityModel.GetIfShowActivity(),
     );
   }
-  Tet() {
-    this.qZe.SetOtherHide(
+  ktt() {
+    this.Zet.SetOtherHide(
       !ModelManager_1.ModelManager.TowerModel.CheckInTower(),
     );
   }
-  Let() {
+  vca() {
+    TowerDefenceController_1.TowerDefenseController.CheckInInstanceDungeon()
+      ? this.gca?.StartShow()
+      : this.gca?.EndShow();
+  }
+  Ftt() {
     var t = ModelManager_1.ModelManager.RoguelikeModel.CheckInRoguelike();
     t &&
-      (this.LZe.forEach((t) => {
+      (this.Het.forEach((t) => {
         t.SetOtherHide(!0);
       }),
-      this.DZe.SetOtherHide(!1)),
-      this.TZe.SetRoguelikeVisible(!t),
-      this.wZe.SetOtherHide(!t);
+      this.jet.SetOtherHide(!1)),
+      this.Vet.SetRoguelikeVisible(!t),
+      this.Yet.SetOtherHide(!t);
   }
-  PLn() {
+  EDn() {
     var t = ModelManager_1.ModelManager.RoguelikeModel.CheckInRoguelike();
-    this.DLn.SetOtherHide(!t);
+    this.fDn.SetOtherHide(!t);
   }
-  async ret() {
+  async Stt() {
     var t = this.GetItem(1);
-    (this.RZe = await this.Det(t, "BattleViewMenu", void 0, !1, !0, 2)),
-      this.RZe.BindOnClicked(this.VZe);
+    (this.Wet = await this.Vtt(t, "BattleViewMenu", void 0, !1, !0, 2)),
+      this.Wet.BindOnClicked(this.stt);
   }
-  async net() {
+  async ytt() {
     var t = this.GetItem(3);
-    (await this.Det(t, "BattleViewGachaButton", 10009)).BindOnClicked(this.HZe);
+    (await this.Vtt(t, "BattleViewGachaButton", 10009)).BindOnClicked(this.att);
   }
-  async aet() {
+  async Itt() {
     var t = this.GetItem(2);
-    (this.DZe = await this.Det(t, void 0, void 0, !1, !1, 1)),
-      this.DZe.BindOnClicked(this.WZe);
+    (this.jet = await this.Vtt(t, void 0, void 0, !1, !1, 1)),
+      this.jet.BindOnClicked(this.ltt);
   }
-  async det() {
+  async Ptt() {
     var t = this.GetItem(10);
-    (this.UZe = await this.Det(t, "ActivityEntrance", 10053)),
-      this.UZe.SetGetOtherHideCallCall(this.jZe),
-      this.UZe.BindOnClicked(this.XZe);
+    (this.Ket = await this.Vtt(t, "ActivityEntrance", 10053)),
+      this.Ket.SetGetOtherHideCallCall(this.htt),
+      this.Ket.BindOnClicked(this.ctt);
   }
-  async het() {
+  async Ttt() {
     var t = this.GetItem(4),
       e = {
         RedDotName: void 0,
@@ -391,49 +423,56 @@ class TopPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
         HideInGamepad: !0,
         HideByRoleConfig: !0,
       };
-    (this.AZe = await this.NewStaticChildViewAsync(
+    (this.Qet = await this.NewStaticChildViewAsync(
       t.GetOwner(),
       BattleOnlineButton_1.BattleOnlineButton,
       e,
     )),
-      this.LZe.push(this.AZe),
-      this.AZe.BindOnClicked(this.B$e);
+      this.Het.push(this.Qet),
+      this.Qet.BindOnClicked(this.KYe);
   }
-  async _et() {
+  async Dtt() {
     var t = this.GetItem(6);
-    (await this.Det(t, "FunctionInventory", void 0, !0)).BindOnClicked(
-      this.KZe,
+    (await this.Vtt(t, "FunctionInventory", void 0, !0)).BindOnClicked(
+      this._tt,
     );
   }
-  async uet() {
+  async Rtt() {
     var t = this.GetItem(7);
-    (await this.Det(t, "BattlePass", 10040)).BindOnClicked(this.QZe);
+    (await this.Vtt(t, "BattlePass", 10040)).BindOnClicked(this.utt);
   }
-  async cet() {
+  async Utt() {
     var t = this.GetItem(8);
-    (await this.Det(t, "FunctionRole", 10001, !0)).BindOnClicked(this.$Ze);
+    (await this.Vtt(t, "FunctionRole", 10001, !0)).BindOnClicked(this.mtt);
   }
-  async met() {
+  async Att() {
     var t = this.GetItem(9);
-    (await this.Det(t, "AdventureBattleButton", 10023, !0)).BindOnClicked(
-      this.YZe,
+    (await this.Vtt(t, "AdventureBattleButton", 10023, !1)).BindOnClicked(
+      this.dtt,
     );
   }
-  async let() {
+  async Ltt() {
     var t = this.GetItem(0);
-    this.TZe = await this.NewStaticChildViewAsync(
+    this.Vet = await this.NewStaticChildViewAsync(
       t.GetOwner(),
       MiniMapView_1.MiniMapView,
     );
   }
-  async Met() {
+  async qtt() {
     var t = this.GetItem(15);
-    this.bZe = await this.NewDynamicChildViewAsync(
+    this.zet = await this.NewDynamicChildViewAsync(
       t.GetOwner(),
       SilentAreaInfoView_1.SilentAreaView,
     );
   }
-  async Eet() {
+  async pca() {
+    var t = this.GetItem(20);
+    this.gca = await this.NewDynamicChildViewAsync(
+      t.GetOwner(),
+      TowerDefenceInBattleView_1.TowerDefenseInBattleView,
+    );
+  }
+  async Gtt() {
     var t = this.GetItem(16),
       e = {
         RedDotName: void 0,
@@ -442,14 +481,14 @@ class TopPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
         HideInGamepad: !1,
         HideByRoleConfig: !0,
       };
-    (this.qZe = await this.NewStaticChildViewAsync(
+    (this.Zet = await this.NewStaticChildViewAsync(
       t.GetOwner(),
       BattleTowerButton_1.BattleTowerButton,
       e,
     )),
-      this.qZe.BindOnClicked(this.ZZe);
+      this.Zet.BindOnClicked(this.ftt);
   }
-  async Det(t, e = void 0, i = void 0, n = !1, s = !0, o = 3) {
+  async Vtt(t, e = void 0, i = void 0, n = !1, s = !0, o = 3) {
     (e = {
       RedDotName: e,
       FunctionType: i,
@@ -462,11 +501,11 @@ class TopPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
         BattleEntranceButton_1.BattleEntranceButton,
         e,
       ));
-    return this.LZe.push(i), i;
+    return this.Het.push(i), i;
   }
-  async Cet() {
+  async xtt() {
     var t = this.GetItem(11);
-    (this.PZe = await this.NewStaticChildViewAsync(
+    (this.Xet = await this.NewStaticChildViewAsync(
       t.GetOwner(),
       BattleQuestButton_1.BattleQuestButton,
       {
@@ -477,31 +516,31 @@ class TopPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
         HideByRoleConfig: !0,
       },
     )),
-      this.LZe.push(this.PZe),
-      this.PZe.BindOnClicked(this.JZe);
+      this.Het.push(this.Xet),
+      this.Xet.BindOnClicked(this.Ctt);
   }
-  async fet() {
+  async wtt() {
     var t = this.GetItem(12);
-    (this.xZe = await this.Det(t, void 0, void 0)),
-      this.xZe.BindOnClicked(this.zZe);
+    (this.$et = await this.Vtt(t, void 0, void 0)),
+      this.$et.BindOnClicked(this.gtt);
   }
-  async pet() {
+  async Btt() {
     var t = this.GetItem(13);
-    (this.wZe = await this.Det(t, void 0, void 0)),
-      this.wZe.BindOnClicked(this.eet),
-      this.wZe.SetGetOtherHideCallCall(this.tet);
+    (this.Yet = await this.Vtt(t, void 0, void 0)),
+      this.Yet.BindOnClicked(this.ptt),
+      this.Yet.SetGetOtherHideCallCall(this.vtt);
   }
-  async ULn() {
+  async MDn() {
     var t = this.GetItem(19);
-    (this.DLn = await this.Det(t, void 0, void 0)),
-      this.DLn.BindOnClicked(this.RLn),
-      this.DLn.SetGetOtherHideCallCall(this.ALn);
+    (this.fDn = await this.Vtt(t, void 0, void 0)),
+      this.fDn.BindOnClicked(this.pDn),
+      this.fDn.SetGetOtherHideCallCall(this.vDn);
   }
-  async vet() {
+  async btt() {
     var t = this.GetItem(17);
-    (this.BZe = await this.Det(t, void 0, 10007, !0)),
-      this.BZe.BindOnClicked(this.iet);
+    (this.Jet = await this.Vtt(t, void 0, 10007, !0)),
+      this.Jet.BindOnClicked(this.Mtt);
   }
 }
-(exports.TopPanel = TopPanel).aYe = void 0;
+(exports.TopPanel = TopPanel).vJe = void 0;
 //# sourceMappingURL=TopPanel.js.map

@@ -41,7 +41,7 @@ const AnimalHandBookAll_1 = require("../../../Core/Define/ConfigQuery/AnimalHand
   ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
 class HandBookConfig extends ConfigBase_1.ConfigBase {
   constructor() {
-    super(...arguments), (this.RZt = void 0);
+    super(...arguments), (this.Rei = void 0);
   }
   GetPhantomHandBookConfig() {
     return PhantomHandBookAll_1.configPhantomHandBookAll.GetConfigList();
@@ -101,12 +101,12 @@ class HandBookConfig extends ConfigBase_1.ConfigBase {
     return AnimalHandBookById_1.configAnimalHandBookById.GetConfig(o);
   }
   GetAnimalHandBookConfigByMeshId(o) {
-    if (!this.RZt) {
-      this.RZt = new Map();
+    if (!this.Rei) {
+      this.Rei = new Map();
       for (const e of AnimalHandBookAll_1.configAnimalHandBookAll.GetConfigList())
-        this.RZt.set(e.MeshId, e.Id);
+        this.Rei.set(e.MeshId, e.Id);
     }
-    if (this.RZt.get(o))
+    if (this.Rei.get(o))
       return AnimalHandBookByMeshId_1.configAnimalHandBookByMeshId.GetConfig(o);
   }
   GetAllChipHandBookConfig() {

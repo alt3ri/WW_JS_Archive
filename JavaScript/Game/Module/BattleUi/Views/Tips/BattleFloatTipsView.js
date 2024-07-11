@@ -14,30 +14,30 @@ const UE = require("ue"),
 class BattleFloatTipsView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.edt = void 0),
-      (this.tdt = 0),
+      (this.cCt = void 0),
+      (this.mCt = 0),
       (this.j3 = void 0),
       (this.OnTimerUpdate = () => {
         var e;
-        !this.edt || this.edt.EndTime <= Time_1.Time.WorldTimeSeconds
-          ? this.idt()
-          : 1 === this.edt.Type &&
+        !this.cCt || this.cCt.EndTime <= Time_1.Time.WorldTimeSeconds
+          ? this.dCt()
+          : 1 === this.cCt.Type &&
             (e = Math.max(
               Math.ceil(
-                this.edt.CountdownEndTime - Time_1.Time.WorldTimeSeconds,
+                this.cCt.CountdownEndTime - Time_1.Time.WorldTimeSeconds,
               ),
               0,
-            )) !== this.tdt &&
-            ((this.tdt = e),
+            )) !== this.mCt &&
+            ((this.mCt = e),
             LguiUtil_1.LguiUtil.SetLocalText(
               this.GetText(1),
               COUNTDOWN_TEXT_KEY,
-              this.tdt,
+              this.mCt,
             ));
       }),
-      (this.odt = () => {
+      (this.CCt = () => {
         var e = ModelManager_1.ModelManager.BattleUiModel.FloatTipsData;
-        (this.edt = e.CurTip), this.rdt();
+        (this.cCt = e.CurTip), this.gCt();
       });
   }
   OnRegisterComponent() {
@@ -56,7 +56,7 @@ class BattleFloatTipsView extends UiViewBase_1.UiViewBase {
     var e = ModelManager_1.ModelManager.BattleUiModel.FloatTipsData;
     let t = e.CurTip;
     (t = e.CheckIsExpired(t) ? e.GetNextFloatTip() : t) &&
-      ((this.edt = t), this.rdt());
+      ((this.cCt = t), this.gCt());
   }
   OnBeforeDestroy() {
     void 0 !== this.j3 &&
@@ -65,37 +65,37 @@ class BattleFloatTipsView extends UiViewBase_1.UiViewBase {
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.BattleUiFloatTipUpdate,
-      this.odt,
+      this.CCt,
     );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.BattleUiFloatTipUpdate,
-      this.odt,
+      this.CCt,
     );
   }
-  idt() {
+  dCt() {
     var e =
       ModelManager_1.ModelManager.BattleUiModel.FloatTipsData.GetNextFloatTip();
-    e ? ((this.edt = e), this.rdt()) : this.CloseMe();
+    e ? ((this.cCt = e), this.gCt()) : this.CloseMe();
   }
-  rdt() {
-    switch (this.edt.Type) {
+  gCt() {
+    switch (this.cCt.Type) {
       case 0:
-        LguiUtil_1.LguiUtil.SetLocalText(this.GetText(0), this.edt.TextKey),
+        LguiUtil_1.LguiUtil.SetLocalText(this.GetText(0), this.cCt.TextKey),
           this.GetText(1).SetText(""),
           this.GetItem(2).SetUIActive(!1);
         break;
       case 1:
-        (this.tdt = Math.max(
-          Math.ceil(this.edt.CountdownEndTime - Time_1.Time.WorldTimeSeconds),
+        (this.mCt = Math.max(
+          Math.ceil(this.cCt.CountdownEndTime - Time_1.Time.WorldTimeSeconds),
           0,
         )),
-          LguiUtil_1.LguiUtil.SetLocalText(this.GetText(0), this.edt.TextKey),
+          LguiUtil_1.LguiUtil.SetLocalText(this.GetText(0), this.cCt.TextKey),
           LguiUtil_1.LguiUtil.SetLocalText(
             this.GetText(1),
             COUNTDOWN_TEXT_KEY,
-            this.tdt,
+            this.mCt,
           ),
           this.GetItem(2).SetUIActive(!0);
     }

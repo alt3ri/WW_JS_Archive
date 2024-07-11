@@ -14,17 +14,18 @@ const UE = require("ue"),
   TsBaseCharacter_1 = require("../../../../../Character/TsBaseCharacter"),
   EventDefine_1 = require("../../../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../../../Common/Event/EventSystem"),
+  Global_1 = require("../../../../../Global"),
   ControllerHolder_1 = require("../../../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../../../Manager/ModelManager"),
   FormationAttributeController_1 = require("../../../../../Module/Abilities/FormationAttributeController"),
   LogReportController_1 = require("../../../../../Module/LogReport/LogReportController"),
   LogReportDefine_1 = require("../../../../../Module/LogReport/LogReportDefine"),
   PhantomUtil_1 = require("../../../../../Module/Phantom/PhantomUtil"),
-  PhotographController_1 = require("../../../../../Module/Photograph/PhotographController"),
   ActorUtils_1 = require("../../../../../Utils/ActorUtils"),
   CombatDebugController_1 = require("../../../../../Utils/CombatDebugController"),
   BulletTypes_1 = require("../../../../Bullet/BulletTypes"),
   SceneItemDynamicAttachTargetComponent_1 = require("../../../../SceneItem/Common/Component/SceneItemDynamicAttachTargetComponent"),
+  PortalController_1 = require("../../../../SceneItem/Controller/PortalController"),
   EntityHandle_1 = require("../../../EntityHandle"),
   AbilityUtils_1 = require("../../Component/Abilities/AbilityUtils"),
   CharacterBuffIds_1 = require("../../Component/Abilities/CharacterBuffIds"),
@@ -33,32 +34,46 @@ const UE = require("ue"),
   LockOnDebug_1 = require("../../Component/LockOn/LockOnDebug");
 class TsGameplayBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
   static ContainsTag(t, e) {
-    t = EntitySystem_1.EntitySystem.GetComponent(t, 185);
+    t = EntitySystem_1.EntitySystem.GetComponent(t, 188);
     return !(!t?.Valid || !e) && t.HasTag(e.TagId);
   }
   static AddTag(t, e) {
-    t = EntitySystem_1.EntitySystem.GetComponent(t, 185);
+    t = EntitySystem_1.EntitySystem.GetComponent(t, 188);
     t?.Valid && e && t.AddTag(e.TagId);
   }
   static AddTagWithDuration(t, e, i) {
-    t = EntitySystem_1.EntitySystem.GetComponent(t, 157);
+    t = EntitySystem_1.EntitySystem.GetComponent(t, 159);
     !t?.Valid || !i || e <= 0 || t.AddTagWithReturnHandle([i.TagId], e);
   }
   static AddTagByName(t, e) {
-    t = EntitySystem_1.EntitySystem.GetComponent(t, 185);
-    t?.Valid &&
+    var i = EntitySystem_1.EntitySystem.GetComponent(t, 188);
+    i?.Valid &&
       void 0 !== (e = GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(e)) &&
-      t.AddTag(e);
+      (i.AddTag(e),
+      (i = ModelManager_1.ModelManager.CreatureModel.GetCreatureDataId(t)),
+      (t = StringUtils_1.StringUtils.Format(
+        "GmAddTag {0} {1} 1",
+        i.toString(),
+        e.toString(),
+      )),
+      EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.RunGm, t));
   }
   static RemoveTag(t, e) {
-    t = EntitySystem_1.EntitySystem.GetComponent(t, 185);
+    t = EntitySystem_1.EntitySystem.GetComponent(t, 188);
     t?.Valid && e && t.RemoveTag(e.TagId);
   }
   static RemoveTagByName(t, e) {
-    t = EntitySystem_1.EntitySystem.GetComponent(t, 185);
-    t?.Valid &&
+    var i = EntitySystem_1.EntitySystem.GetComponent(t, 188);
+    i?.Valid &&
       void 0 !== (e = GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(e)) &&
-      t.RemoveTag(e);
+      (i.RemoveTag(e),
+      (i = ModelManager_1.ModelManager.CreatureModel.GetCreatureDataId(t)),
+      (t = StringUtils_1.StringUtils.Format(
+        "GmRemoveTag {0} {1}",
+        i.toString(),
+        e.toString(),
+      )),
+      EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.RunGm, t));
   }
   static IsLogicAutonomousProxy(t) {
     return (
@@ -66,11 +81,11 @@ class TsGameplayBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
     );
   }
   static RemoveActiveGameplayEffect(t, e, i = -1) {
-    t = EntitySystem_1.EntitySystem.GetComponent(t, 157);
+    t = EntitySystem_1.EntitySystem.GetComponent(t, 159);
     return !!t?.Valid && 0 < t.RemoveBuffByHandle(e.Handle, i);
   }
   static RemoveBuffByTag(t, e) {
-    t = EntitySystem_1.EntitySystem.GetComponent(t, 157);
+    t = EntitySystem_1.EntitySystem.GetComponent(t, 159);
     t?.Valid && e && t.RemoveBuffByTag(e.TagId, "蓝图通过Tag移除Buff");
   }
   static AddPassiveSkill(t, e) {
@@ -86,7 +101,7 @@ class TsGameplayBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
     var n,
       t = ModelManager_1.ModelManager.CreatureModel.GetCreatureDataId(t);
     t &&
-      ((n = EntitySystem_1.EntitySystem.GetComponent(e, 157))
+      ((n = EntitySystem_1.EntitySystem.GetComponent(e, 159))
         ? n.AddBuffForDebug(i, { InstigatorId: t, Reason: "AddBuffForDebug" })
         : Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
@@ -119,9 +134,10 @@ class TsGameplayBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
       var y,
         o = ModelManager_1.ModelManager.CreatureModel.GetCreatureDataId(e);
       if (o) {
-        let t = EntitySystem_1.EntitySystem.GetComponent(e, 33)?.GetSkill(
-          Number(s),
-        )?.CombatMessageId;
+        let t = EntitySystem_1.EntitySystem.GetComponent(
+          e,
+          33,
+        )?.GetLoadingSkill(Number(s))?.CombatMessageId;
         t ||
           ((y = EntitySystem_1.EntitySystem.GetComponent(e, 0).GetSummonerId()),
           (t = (
@@ -131,10 +147,10 @@ class TsGameplayBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
                 )?.Entity?.GetComponent(33)
               : PhantomUtil_1.PhantomUtil.GetSummonedEntity(
                   EntitySystem_1.EntitySystem.Get(e),
-                  Protocol_1.Aki.Protocol.Oqs
+                  Protocol_1.Aki.Protocol.Summon.L3s
                     .Proto_ESummonTypeConcomitantCustom,
                 )?.Entity?.GetComponent(33)
-          )?.GetSkill(Number(s))?.CombatMessageId)),
+          )?.GetLoadingSkill(Number(s))?.CombatMessageId)),
           t ||
             (Log_1.Log.CheckWarn() &&
               Log_1.Log.Warn(
@@ -146,7 +162,7 @@ class TsGameplayBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
                 ["BuffId", n],
               )),
           i instanceof TsBaseCharacter_1.default &&
-            ((y = i.CharacterActorComponent.Entity.CheckGetComponent(157))
+            ((y = i.CharacterActorComponent.Entity.CheckGetComponent(159))
               ? y.AddBuff(n, {
                   InstigatorId: o,
                   Reason: "AddBuffFromGA",
@@ -165,15 +181,15 @@ class TsGameplayBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
     }
   }
   static RemoveBuffById(t, e, i) {
-    t = EntitySystem_1.EntitySystem.GetComponent(t, 157);
+    t = EntitySystem_1.EntitySystem.GetComponent(t, 159);
     t?.Valid && t.RemoveBuff(e, i, "从蓝图移除Buff");
   }
   static GetBuffCountById(t, e, i) {
-    t = EntitySystem_1.EntitySystem.Get(t).GetComponent(187);
+    t = EntitySystem_1.EntitySystem.Get(t).GetComponent(192);
     return t?.Valid ? t.GetBuffTotalStackById(e, i) : 0;
   }
   static AddGameplayCueLocal(t, e, i) {
-    t = EntitySystem_1.EntitySystem.GetComponent(t, 187);
+    t = EntitySystem_1.EntitySystem.GetComponent(t, 192);
     t?.Valid && t.AddGameplayCue([i], e, "蓝图AddGameplayCueLocal");
   }
   static GetGeDebugString(t) {
@@ -205,11 +221,11 @@ class TsGameplayBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
   }
   static GetShieldValue(t, e) {
     return (
-      EntitySystem_1.EntitySystem.GetComponent(t, 64)?.GetShieldValue(e) ?? 0
+      EntitySystem_1.EntitySystem.GetComponent(t, 66)?.GetShieldValue(e) ?? 0
     );
   }
   static GetBuffDebugStringsNoBlueprint(t, e = "") {
-    var i = EntitySystem_1.EntitySystem.GetComponent(t, 157),
+    var i = EntitySystem_1.EntitySystem.GetComponent(t, 159),
       t = EntitySystem_1.EntitySystem.GetComponent(t, 20);
     return (
       (i?.GetDebugBuffString(e) ?? "未找到buff组件") +
@@ -358,41 +374,41 @@ class TsGameplayBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
   }
   static RefreshBuffListView(t, e, i = "") {
     var n = [...i.matchAll(/[0-9]+/g)].map((t) => t[0] ?? ""),
-      r = EntitySystem_1.EntitySystem.Get(t)?.GetComponent(187);
+      r = EntitySystem_1.EntitySystem.Get(t)?.GetComponent(192);
     if (r) {
       var a,
         s,
         y = e.GetListItems(),
         o = new Set();
       for (let t = y.Num() - 1; 0 <= t; t--) {
-        var c = y.Get(t);
-        const l = r.GetBuffByHandle(Number(c.GetName().split(",")[1]));
-        void 0 === l ||
-        o.has(l.Handle) ||
-        (0 < n.length && !n.some((t) => String(l.Id).startsWith(t)))
-          ? e.RemoveItem(c)
-          : o.add(l.Handle);
+        var l = y.Get(t);
+        const c = r.GetBuffByHandle(Number(l.GetName().split(",")[1]));
+        void 0 === c ||
+        o.has(c.Handle) ||
+        (0 < n.length && !n.some((t) => String(c.Id).startsWith(t)))
+          ? e.RemoveItem(l)
+          : o.add(c.Handle);
       }
       for (const u of r.GetAllBuffs())
         o.has(u.Handle) ||
           (0 < n.length && !n.some((t) => String(u.Id).startsWith(t))) ||
           ((a = new UE.Layer(e, t + "," + u.Handle)), e.AddItem(a));
       if (
-        (0, RegisterComponent_1.isComponentInstance)(r, 171) &&
+        (0, RegisterComponent_1.isComponentInstance)(r, 174) &&
         r.GetFormationBuffComp()
       )
-        for (const S of r.GetFormationBuffComp().GetAllBuffs())
-          o.has(S.Handle) ||
-            (0 < n.length && !n.some((t) => String(S.Id).startsWith(t))) ||
-            ((s = new UE.Layer(e, t + "," + S.Handle)), e.AddItem(s));
+        for (const m of r.GetFormationBuffComp().GetAllBuffs())
+          o.has(m.Handle) ||
+            (0 < n.length && !n.some((t) => String(m.Id).startsWith(t))) ||
+            ((s = new UE.Layer(e, t + "," + m.Handle)), e.AddItem(s));
     } else e.ClearListItems();
   }
   static GetDebugBuff(t, e) {
-    var t = EntitySystem_1.EntitySystem.Get(t)?.GetComponent(187),
+    var t = EntitySystem_1.EntitySystem.Get(t)?.GetComponent(192),
       i = t?.GetBuffByHandle(e);
     return (
       i ||
-      (!i && (0, RegisterComponent_1.isComponentInstance)(t, 171)
+      (!i && (0, RegisterComponent_1.isComponentInstance)(t, 174)
         ? t.GetFormationBuffComp().GetBuffByHandle(e)
         : void 0)
     );
@@ -410,7 +426,7 @@ class TsGameplayBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
       (e = t?.Config?.Desc ?? "Invalid");
     return (0, RegisterComponent_1.isComponentInstance)(
       t?.GetOwnerBuffComponent(),
-      180,
+      183,
     )
       ? `【编队buff】
 ` + e
@@ -490,17 +506,17 @@ class TsGameplayBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
           );
         switch (t.CalculationPolicy[0]) {
           case 0:
-            n += `属性${Protocol_1.Aki.Protocol.KBs[t.AttributeId]}增加${t.Value1}
+            n += `属性${Protocol_1.Aki.Protocol.Bks[t.AttributeId]}增加${t.Value1}
 `;
             break;
           case 1:
-            n += `属性${Protocol_1.Aki.Protocol.KBs[t.AttributeId]}增加${(0.01 * e).toFixed(1)}%
+            n += `属性${Protocol_1.Aki.Protocol.Bks[t.AttributeId]}增加${(0.01 * e).toFixed(1)}%
 `;
             break;
           case 2:
           case 4:
             (n +=
-              `属性${Protocol_1.Aki.Protocol.KBs[t.AttributeId]}${2 === t.CalculationPolicy[0] ? "增加" : "覆盖为"}${1 === t.CalculationPolicy[2] ? "施加者" : "持有者"}${Protocol_1.Aki.Protocol.KBs[t.CalculationPolicy[1]]}${["基础值", "当前值", "附加值"][t.CalculationPolicy[3]]}的${(0.01 * e).toFixed(1)}%+` +
+              `属性${Protocol_1.Aki.Protocol.Bks[t.AttributeId]}${2 === t.CalculationPolicy[0] ? "增加" : "覆盖为"}${1 === t.CalculationPolicy[2] ? "施加者" : "持有者"}${Protocol_1.Aki.Protocol.Bks[t.CalculationPolicy[1]]}${["基础值", "当前值", "附加值"][t.CalculationPolicy[3]]}的${(0.01 * e).toFixed(1)}%+` +
               i +
               (t.CalculationPolicy[4] ? "(快照)" : "")),
               t.CalculationPolicy[5] &&
@@ -512,11 +528,11 @@ class TsGameplayBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
               (n += "\n");
             break;
           case 3:
-            n += `属性${Protocol_1.Aki.Protocol.KBs[t.AttributeId]}覆盖为${t.Value1}
+            n += `属性${Protocol_1.Aki.Protocol.Bks[t.AttributeId]}覆盖为${t.Value1}
 `;
             break;
           default:
-            n += "修改属性" + Protocol_1.Aki.Protocol.KBs[t.AttributeId];
+            n += "修改属性" + Protocol_1.Aki.Protocol.Bks[t.AttributeId];
         }
       }),
       n.trimEnd()
@@ -535,41 +551,41 @@ class TsGameplayBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
     EntitySystem_1.EntitySystem.GetComponent(t, 20)?.DebugResetBaseValue(e, i);
   }
   static GetAttributeCurrentValue(t, e) {
-    return EntitySystem_1.EntitySystem.GetComponent(t, 156)?.GetCurrentValue(e);
+    return EntitySystem_1.EntitySystem.GetComponent(t, 158)?.GetCurrentValue(e);
   }
   static GetAttributeBaseValue(t, e) {
-    return EntitySystem_1.EntitySystem.GetComponent(t, 156)?.GetBaseValue(e);
+    return EntitySystem_1.EntitySystem.GetComponent(t, 158)?.GetBaseValue(e);
   }
   static SetRageModeId(t, e) {
-    EntitySystem_1.EntitySystem.GetComponent(t, 51)?.SetRageModeId(e);
+    EntitySystem_1.EntitySystem.GetComponent(t, 52)?.SetRageModeId(e);
   }
   static SetHardnessModeId(t, e) {
-    EntitySystem_1.EntitySystem.GetComponent(t, 51)?.SetHardnessModeId(e);
+    EntitySystem_1.EntitySystem.GetComponent(t, 52)?.SetHardnessModeId(e);
   }
   static OnHit(t, e) {
-    (t = EntitySystem_1.EntitySystem.GetComponent(t, 51)),
+    (t = EntitySystem_1.EntitySystem.GetComponent(t, 52)),
       (e = BulletTypes_1.HitInformation.FromUeHitInformation(e));
     t?.OnHit(e, !0, void 0, !1, !1, void 0, void 0, void 0);
   }
   static SetBeHitIgnoreRotate(t, e) {
-    EntitySystem_1.EntitySystem.GetComponent(t, 51)?.SetBeHitIgnoreRotate(e);
+    EntitySystem_1.EntitySystem.GetComponent(t, 52)?.SetBeHitIgnoreRotate(e);
   }
   static CheckHasPart(t) {
-    return EntitySystem_1.EntitySystem.GetComponent(t, 58)?.IsMultiPart ?? !1;
+    return EntitySystem_1.EntitySystem.GetComponent(t, 60)?.IsMultiPart ?? !1;
   }
   static GetPartRemainedLife(t, e) {
-    t = EntitySystem_1.EntitySystem.GetComponent(t, 58);
+    t = EntitySystem_1.EntitySystem.GetComponent(t, 60);
     return t?.IsMultiPart ? t.GetPartByTag(e).RemainedLife() : -1;
   }
   static ResetPartLife(t, e) {
-    t = EntitySystem_1.EntitySystem.GetComponent(t, 58);
+    t = EntitySystem_1.EntitySystem.GetComponent(t, 60);
     t?.IsMultiPart && t.GetPartByTag(e).ResetLife();
   }
   static ActiveStiff(t) {
-    EntitySystem_1.EntitySystem.GetComponent(t, 51)?.ActiveStiff(1);
+    EntitySystem_1.EntitySystem.GetComponent(t, 52)?.ActiveStiff(1);
   }
   static DeActiveStiff(t) {
-    EntitySystem_1.EntitySystem.GetComponent(t, 51)?.DeActiveStiff(
+    EntitySystem_1.EntitySystem.GetComponent(t, 52)?.DeActiveStiff(
       "蓝图退出硬直",
     );
   }
@@ -577,78 +593,78 @@ class TsGameplayBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
     return (
       EntitySystem_1.EntitySystem.GetComponent(
         t,
-        51,
+        52,
       )?.GetAcceptedNewBeHitAndReset() ?? !1
     );
   }
   static GetEnterFkAndReset(t) {
     return (
-      EntitySystem_1.EntitySystem.GetComponent(t, 51)?.GetEnterFkAndReset() ??
+      EntitySystem_1.EntitySystem.GetComponent(t, 52)?.GetEnterFkAndReset() ??
       !1
     );
   }
   static IsStiff(t) {
-    return EntitySystem_1.EntitySystem.GetComponent(t, 51)?.IsStiff() ?? !1;
+    return EntitySystem_1.EntitySystem.GetComponent(t, 52)?.IsStiff() ?? !1;
   }
   static GetRageModeId(t) {
-    return EntitySystem_1.EntitySystem.GetComponent(t, 51)?.RageModeId;
+    return EntitySystem_1.EntitySystem.GetComponent(t, 52)?.RageModeId;
   }
   static GetHardnessModeId(t) {
-    return EntitySystem_1.EntitySystem.GetComponent(t, 51)?.HardnessModeId;
+    return EntitySystem_1.EntitySystem.GetComponent(t, 52)?.HardnessModeId;
   }
   static GetBeHitBone(t) {
-    t = EntitySystem_1.EntitySystem.GetComponent(t, 51);
+    t = EntitySystem_1.EntitySystem.GetComponent(t, 52);
     return t?.BeHitBones && 0 < t?.BeHitBones?.length
       ? t.BeHitBones[0]
       : FNameUtil_1.FNameUtil.EMPTY;
   }
   static GetToughDecreaseValue(t) {
-    return EntitySystem_1.EntitySystem.GetComponent(t, 51)?.ToughDecreaseValue;
+    return EntitySystem_1.EntitySystem.GetComponent(t, 52)?.ToughDecreaseValue;
   }
   static GetCounterAttackInfoInternal(t) {
-    return EntitySystem_1.EntitySystem.GetComponent(t, 51)
+    return EntitySystem_1.EntitySystem.GetComponent(t, 52)
       ?.CounterAttackInfoInternal;
   }
   static GetVisionCounterAttackInfoInternal(t) {
-    return EntitySystem_1.EntitySystem.GetComponent(t, 51)
+    return EntitySystem_1.EntitySystem.GetComponent(t, 52)
       ?.VisionCounterAttackInfoInternal;
   }
   static GetBeHitTime(t) {
-    return EntitySystem_1.EntitySystem.GetComponent(t, 51)?.BeHitTime;
+    return EntitySystem_1.EntitySystem.GetComponent(t, 52)?.BeHitTime;
   }
   static GetBeHitAnim(t) {
-    t = EntitySystem_1.EntitySystem.GetComponent(t, 51);
+    t = EntitySystem_1.EntitySystem.GetComponent(t, 52);
     return t ? t.BeHitAnim : 0;
   }
   static GetEnterFk(t) {
-    return EntitySystem_1.EntitySystem.GetComponent(t, 51)?.EnterFk ?? !1;
+    return EntitySystem_1.EntitySystem.GetComponent(t, 52)?.EnterFk ?? !1;
   }
   static GetBeHitDirect(t) {
     return EntitySystem_1.EntitySystem.GetComponent(
       t,
-      51,
+      52,
     )?.BeHitDirect.ToUeVector();
   }
   static GetBeHitLocation(t) {
     return EntitySystem_1.EntitySystem.GetComponent(
       t,
-      51,
+      52,
     )?.BeHitLocation.ToUeVector();
   }
   static AddCheckBuffList(t, e) {}
   static ClearCheckBuffList(t) {}
   static CounterAttackEnd(t) {
-    EntitySystem_1.EntitySystem.GetComponent(t, 51)?.CounterAttackEnd();
+    EntitySystem_1.EntitySystem.GetComponent(t, 52)?.CounterAttackEnd();
   }
   static VisionCounterAttackEnd(t) {
-    EntitySystem_1.EntitySystem.GetComponent(t, 51)?.VisionCounterAttackEnd();
+    EntitySystem_1.EntitySystem.GetComponent(t, 52)?.VisionCounterAttackEnd();
   }
   static SetCounterAttackEndTime(t, e) {
-    EntitySystem_1.EntitySystem.GetComponent(t, 51)?.SetCounterAttackEndTime(e);
+    EntitySystem_1.EntitySystem.GetComponent(t, 52)?.SetCounterAttackEndTime(e);
   }
   static IsTriggerCounterAttack(t) {
     return (
-      EntitySystem_1.EntitySystem.GetComponent(t, 51)?.IsTriggerCounterAttack ??
+      EntitySystem_1.EntitySystem.GetComponent(t, 52)?.IsTriggerCounterAttack ??
       !1
     );
   }
@@ -679,58 +695,58 @@ class TsGameplayBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
     LockOnDebug_1.LockOnDebug.IsShowDebugLine = e;
   }
   static ManipulateValid(t) {
-    return EntitySystem_1.EntitySystem.GetComponent(t, 55)?.Valid ?? !1;
+    return EntitySystem_1.EntitySystem.GetComponent(t, 56)?.Valid ?? !1;
   }
   static ManipulateGetDrawTarget(t) {
-    t = EntitySystem_1.EntitySystem.GetComponent(t, 55);
+    t = EntitySystem_1.EntitySystem.GetComponent(t, 56);
     if (t?.Valid) return t.GetDrawTarget();
   }
   static ManipulateGetCastTarget(t) {
-    t = EntitySystem_1.EntitySystem.GetComponent(t, 55);
+    t = EntitySystem_1.EntitySystem.GetComponent(t, 56);
     if (t?.Valid) return t.GetCastTarget();
   }
   static ManipulateGetDrawTargetChantTime(t) {
-    t = EntitySystem_1.EntitySystem.GetComponent(t, 55);
+    t = EntitySystem_1.EntitySystem.GetComponent(t, 56);
     return t?.Valid ? t.GetDrawTargetChantTime() : 0;
   }
   static ManipulateChant(t, e) {
-    t = EntitySystem_1.EntitySystem.GetComponent(t, 55);
+    t = EntitySystem_1.EntitySystem.GetComponent(t, 56);
     return !!t?.Valid && t.Chant(e);
   }
   static ManipulateDraw(t) {
-    t = EntitySystem_1.EntitySystem.GetComponent(t, 55);
+    t = EntitySystem_1.EntitySystem.GetComponent(t, 56);
     return !!t?.Valid && t.Draw();
   }
   static ManipulateCast(t, e) {
-    t = EntitySystem_1.EntitySystem.GetComponent(t, 55);
+    t = EntitySystem_1.EntitySystem.GetComponent(t, 56);
     return !!t?.Valid && t.Precast(e);
   }
   static ManipulateReset(t) {
-    t = EntitySystem_1.EntitySystem.GetComponent(t, 55);
+    t = EntitySystem_1.EntitySystem.GetComponent(t, 56);
     t?.Valid && t.Reset();
   }
   static ManipulateChangeToProjectileState(t) {
-    t = EntitySystem_1.EntitySystem.GetComponent(t, 55);
+    t = EntitySystem_1.EntitySystem.GetComponent(t, 56);
     return !!t?.Valid && t.ChangeToProjectileState();
   }
   static ManipulateChangeToNormalState(t) {
-    t = EntitySystem_1.EntitySystem.GetComponent(t, 55);
+    t = EntitySystem_1.EntitySystem.GetComponent(t, 56);
     return !!t?.Valid && t.ChangeToNormalState();
   }
   static GetHoldingActor(t) {
-    t = EntitySystem_1.EntitySystem.GetComponent(t, 55);
+    t = EntitySystem_1.EntitySystem.GetComponent(t, 56);
     if (t?.Valid) return t.GetHoldingActor();
   }
   static SetDebugDraw(t, e) {
-    t = EntitySystem_1.EntitySystem.GetComponent(t, 55);
+    t = EntitySystem_1.EntitySystem.GetComponent(t, 56);
     t?.Valid && (t.DebugDrawSphereAndArrow = e);
   }
   static ExtraAction(t) {
-    t = EntitySystem_1.EntitySystem.GetComponent(t, 55);
+    t = EntitySystem_1.EntitySystem.GetComponent(t, 56);
     t?.Valid && t.ExtraAction();
   }
   static SetQtePosition(t, e, i, n, r, a, s, y = 0) {
-    EntitySystem_1.EntitySystem.GetComponent(t, 86)?.SetQtePosition({
+    EntitySystem_1.EntitySystem.GetComponent(t, 88)?.SetQtePosition({
       Rotate: e,
       Length: i,
       Height: n,
@@ -872,31 +888,43 @@ class TsGameplayBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
     t?.Valid && t.RollingGrounded();
   }
   static ActivateAbilityVision(t, e) {
-    t = EntitySystem_1.EntitySystem.GetComponent(t, 34);
+    t = EntitySystem_1.EntitySystem.GetComponent(t, 35);
     return !!t?.Valid && t.ActivateAbilityVision(e);
   }
   static EndAbilityVision(t, e) {
-    t = EntitySystem_1.EntitySystem.GetComponent(t, 34);
+    t = EntitySystem_1.EntitySystem.GetComponent(t, 35);
     return !!t?.Valid && t.EndAbilityVision(e);
   }
   static GetVisionIdList(t) {
-    t = EntitySystem_1.EntitySystem.GetComponent(t, 34);
+    t = EntitySystem_1.EntitySystem.GetComponent(t, 35);
     return t?.Valid ? t.GetVisionIdList() : UE.NewArray(UE.BuiltinInt);
   }
   static ExitMultiSkillStateOfMorphVision(t) {
-    t = EntitySystem_1.EntitySystem.GetComponent(t, 34);
-    t?.Valid && t.ExitMultiSkillStateOfMorphVision();
+    PhantomUtil_1.PhantomUtil.GetSummonedEntityByOwnerId(
+      t,
+      Protocol_1.Aki.Protocol.Summon.L3s.Proto_ESummonTypeConcomitantVision,
+    )
+      ?.Entity.GetComponent(34)
+      ?.ExitMultiSkillState();
   }
   static SetKeepMultiSkillState(t, e, i) {
-    t = EntitySystem_1.EntitySystem.GetComponent(t, 34);
-    t?.Valid && t.SetKeepMultiSkillState(e, i);
+    PhantomUtil_1.PhantomUtil.GetSummonedEntityByOwnerId(
+      t,
+      Protocol_1.Aki.Protocol.Summon.L3s.Proto_ESummonTypeConcomitantVision,
+    )
+      ?.Entity.GetComponent(34)
+      ?.SetKeepMultiSkillState(e, i);
   }
   static SetEnableAttackInputActionOfMorphVision(t, e) {
-    t = EntitySystem_1.EntitySystem.GetComponent(t, 34);
-    t?.Valid && t.SetEnableAttackInputActionOfMorphVision(e);
+    PhantomUtil_1.PhantomUtil.GetSummonedEntityByOwnerId(
+      t,
+      Protocol_1.Aki.Protocol.Summon.L3s.Proto_ESummonTypeConcomitantVision,
+    )
+      ?.Entity.GetComponent(34)
+      ?.SetEnableAttackInputAction(e);
   }
   static GetVisionLevelList(t) {
-    t = EntitySystem_1.EntitySystem.GetComponent(t, 34);
+    t = EntitySystem_1.EntitySystem.GetComponent(t, 35);
     return t?.Valid ? t.GetVisionLevelList() : UE.NewArray(UE.BuiltinInt);
   }
   static GetVisionSkillId(t, e, i) {
@@ -943,35 +971,35 @@ class TsGameplayBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
     t?.Valid && t.EndSkillMontage(Number(e), i);
   }
   static CanActivateFixHook(t) {
-    t = EntitySystem_1.EntitySystem.GetComponent(t, 87);
+    t = EntitySystem_1.EntitySystem.GetComponent(t, 89);
     return !!t?.Valid && t.CanActivateFixHook();
   }
   static FixHookTargetLocation(t) {
-    t = EntitySystem_1.EntitySystem.GetComponent(t, 87);
+    t = EntitySystem_1.EntitySystem.GetComponent(t, 89);
     if (t?.Valid) return t.GetCurrentTargetLocation();
   }
   static FixHookTargetActor(t) {
-    t = EntitySystem_1.EntitySystem.GetComponent(t, 87);
+    t = EntitySystem_1.EntitySystem.GetComponent(t, 89);
     if (t?.Valid) return t.GetCurrentTargetActor();
   }
   static FixHookTargetIsSuiGuangType(t) {
-    t = EntitySystem_1.EntitySystem.GetComponent(t, 87);
+    t = EntitySystem_1.EntitySystem.GetComponent(t, 89);
     return !!t?.Valid && t.GetTargetIsSuiGuangType();
   }
   static FixHookTargetForward(t) {
-    t = EntitySystem_1.EntitySystem.GetComponent(t, 87);
+    t = EntitySystem_1.EntitySystem.GetComponent(t, 89);
     if (t?.Valid) return t.GetCurrentTargetForward();
   }
   static NextFixHookTargetLocation(t) {
-    t = EntitySystem_1.EntitySystem.GetComponent(t, 87);
+    t = EntitySystem_1.EntitySystem.GetComponent(t, 89);
     if (t?.Valid) return t.GetNextTargetLocation();
   }
   static FixHookTargetInheritSpeed(t) {
-    t = EntitySystem_1.EntitySystem.GetComponent(t, 87);
+    t = EntitySystem_1.EntitySystem.GetComponent(t, 89);
     return !!t?.Valid && t.GetInheritSpeed();
   }
   static FixHookTargetIsClimb(t) {
-    t = EntitySystem_1.EntitySystem.GetComponent(t, 87);
+    t = EntitySystem_1.EntitySystem.GetComponent(t, 89);
     return !!t?.Valid && t.GetIsClimb();
   }
   static SetIgnoreSocketName(t, e) {
@@ -988,39 +1016,39 @@ class TsGameplayBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
     return t?.Valid ? t.GetTargetDistance() : -1;
   }
   static SetPredictProjectileInfo(t, e, i, n, r) {
-    t = EntitySystem_1.EntitySystem.GetComponent(t, 67);
+    t = EntitySystem_1.EntitySystem.GetComponent(t, 69);
     t?.Valid && t.SetPredictProjectileInfo(e, i, n, r);
   }
   static SetVisible(t, e) {
-    t = EntitySystem_1.EntitySystem.GetComponent(t, 67);
+    t = EntitySystem_1.EntitySystem.GetComponent(t, 69);
     t?.Valid && t.SetVisible(e);
   }
   static GetCharUnifiedMoveState(t) {
-    return EntitySystem_1.EntitySystem.GetComponent(t, 89)?.MoveState;
+    return EntitySystem_1.EntitySystem.GetComponent(t, 91)?.MoveState;
   }
   static GetCharUnifiedPositionState(t) {
-    return EntitySystem_1.EntitySystem.GetComponent(t, 89)?.PositionState;
+    return EntitySystem_1.EntitySystem.GetComponent(t, 91)?.PositionState;
   }
   static ExitHitState(t) {
-    EntitySystem_1.EntitySystem.GetComponent(t, 158)?.ExitHitState();
+    EntitySystem_1.EntitySystem.GetComponent(t, 160)?.ExitHitState();
   }
   static SetDirectionState(t, e) {
-    EntitySystem_1.EntitySystem.GetComponent(t, 89)?.SetDirectionState(e);
+    EntitySystem_1.EntitySystem.GetComponent(t, 91)?.SetDirectionState(e);
   }
   static GetDirectionState(t) {
-    return EntitySystem_1.EntitySystem.GetComponent(t, 89)?.DirectionState;
+    return EntitySystem_1.EntitySystem.GetComponent(t, 91)?.DirectionState;
   }
   static GetIsInGame(t) {
-    return EntitySystem_1.EntitySystem.GetComponent(t, 89)?.IsInGame ?? !1;
+    return EntitySystem_1.EntitySystem.GetComponent(t, 91)?.IsInGame ?? !1;
   }
   static SprintPress(t) {
-    EntitySystem_1.EntitySystem.GetComponent(t, 158)?.SprintPress();
+    EntitySystem_1.EntitySystem.GetComponent(t, 160)?.SprintPress();
   }
   static SprintRelease(t) {
-    EntitySystem_1.EntitySystem.GetComponent(t, 158)?.SprintRelease();
+    EntitySystem_1.EntitySystem.GetComponent(t, 160)?.SprintRelease();
   }
   static StandPress(t) {
-    var e = EntitySystem_1.EntitySystem.GetComponent(t, 89);
+    var e = EntitySystem_1.EntitySystem.GetComponent(t, 91);
     e &&
       e.PositionState ===
         CharacterUnifiedStateTypes_1.ECharPositionState.Ground &&
@@ -1028,36 +1056,34 @@ class TsGameplayBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
       e.SetMoveState(CharacterUnifiedStateTypes_1.ECharMoveState.Stand);
   }
   static SwingPress(t) {
-    EntitySystem_1.EntitySystem.GetComponent(t, 158)?.SwingPress();
+    EntitySystem_1.EntitySystem.GetComponent(t, 160)?.SwingPress();
   }
   static SwingRelease(t) {
-    EntitySystem_1.EntitySystem.GetComponent(t, 158)?.SwingRelease();
+    EntitySystem_1.EntitySystem.GetComponent(t, 160)?.SwingRelease();
   }
   static CustomSetWalkOrRun(t, e) {
-    EntitySystem_1.EntitySystem.GetComponent(t, 158)?.CustomSetWalkOrRun(e);
+    EntitySystem_1.EntitySystem.GetComponent(t, 160)?.CustomSetWalkOrRun(e);
   }
   static EnterAimStatus(t, e) {
-    EntitySystem_1.EntitySystem.GetComponent(t, 158)?.EnterAimStatus(e);
+    EntitySystem_1.EntitySystem.GetComponent(t, 160)?.EnterAimStatus(e);
   }
   static ExitAimStatus(t) {
-    EntitySystem_1.EntitySystem.GetComponent(t, 158)?.ExitAimStatus();
+    EntitySystem_1.EntitySystem.GetComponent(t, 160)?.ExitAimStatus();
   }
   static EnableEntity(t, e) {}
   static UpdateAnimInfoHit(t, e) {
     var i,
       n,
-      r = EntitySystem_1.EntitySystem.GetComponent(t, 160);
+      r = EntitySystem_1.EntitySystem.GetComponent(t, 162);
     r?.Valid &&
-      (t = EntitySystem_1.EntitySystem.GetComponent(t, 51)) &&
+      (t = EntitySystem_1.EntitySystem.GetComponent(t, 52)) &&
       ((e = e),
       (r = r.AnimLogicParamsSetter),
       (i = t.GetAcceptedNewBeHitAndReset()),
       r.AcceptedNewBeHit !== i &&
-        ((r.AcceptedNewBeHit = i),
-        (e.AcceptedNewBeHitRef = i),
-        (n = t.BeHitAnim),
-        r.BeHitAnim !== n) &&
-        ((r.BeHitAnim = n), (e.BeHitAnimRef = n)),
+        ((r.AcceptedNewBeHit = i), (e.AcceptedNewBeHitRef = i)),
+      (n = t.BeHitAnim),
+      r.BeHitAnim !== n && ((r.BeHitAnim = n), (e.BeHitAnimRef = n)),
       (i = t.GetEnterFkAndReset()),
       r.EnterFk !== i && ((r.EnterFk = i), (e.EnterFkRef = i)),
       (i = t.GetDoubleHitInAir()),
@@ -1065,9 +1091,9 @@ class TsGameplayBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
       ((r.DoubleHitInAir = i), (e.DoubleHitInAirRef = i));
   }
   static UpdateAnimInfoFk(e, i) {
-    var n = EntitySystem_1.EntitySystem.GetComponent(e, 160);
+    var n = EntitySystem_1.EntitySystem.GetComponent(e, 162);
     if (n?.Valid) {
-      e = EntitySystem_1.EntitySystem.GetComponent(e, 51);
+      e = EntitySystem_1.EntitySystem.GetComponent(e, 52);
       if (e) {
         n = n.AnimLogicParamsSetter;
         let t = e.BeHitDirect;
@@ -1082,9 +1108,9 @@ class TsGameplayBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
   }
   static UpdateAnimInfoUnifiedState(t, e) {
     var i,
-      n = EntitySystem_1.EntitySystem.GetComponent(t, 160);
+      n = EntitySystem_1.EntitySystem.GetComponent(t, 162);
     n?.Valid &&
-      (t = EntitySystem_1.EntitySystem.GetComponent(t, 89)) &&
+      (t = EntitySystem_1.EntitySystem.GetComponent(t, 91)) &&
       ((e = e),
       (n = n.AnimLogicParamsSetter),
       (i = t.MoveState),
@@ -1098,20 +1124,17 @@ class TsGameplayBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
       ((n.CharCameraState = i), (e.CharCameraStateRef = i));
   }
   static UpdateAnimInfoUnifiedStateRoleNpc(t, e) {
-    var i = EntitySystem_1.EntitySystem.GetComponent(t, 160);
+    var i = EntitySystem_1.EntitySystem.GetComponent(t, 162);
     i?.Valid &&
-      (t = EntitySystem_1.EntitySystem.GetComponent(t, 89)) &&
+      (t = EntitySystem_1.EntitySystem.GetComponent(t, 91)) &&
       ((e = e),
       (i = i.AnimLogicParamsSetter),
       (t = t.MoveState),
       i.CharMoveState !== t) &&
       ((i.CharMoveState = t), (e.CharMoveStateRef = t));
   }
-  static ChangeCameraToEntityCamera() {
-    PhotographController_1.PhotographController.CameraCaptureType = 1;
-  }
   static GetIsCharRotateWithCameraWhenManipulate(t) {
-    t = EntitySystem_1.EntitySystem.GetComponent(t, 55);
+    t = EntitySystem_1.EntitySystem.GetComponent(t, 56);
     return !!t?.Valid && t.GetIsCharRotateWithCameraWhenManipulate();
   }
   static GetIsUseCatapultUpAnim(t) {
@@ -1119,19 +1142,19 @@ class TsGameplayBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
     return !!t?.Valid && t.IsUseCatapultUpAnim;
   }
   static GetNextMultiSkillId(t, e) {
-    t = EntitySystem_1.EntitySystem.GetComponent(t, 186);
+    t = EntitySystem_1.EntitySystem.GetComponent(t, 190);
     return t?.Valid ? t.GetNextMultiSkillId(e) : 0;
   }
   static StartManipulateInteract(t) {
-    t = EntitySystem_1.EntitySystem.GetComponent(t, 56);
+    t = EntitySystem_1.EntitySystem.GetComponent(t, 57);
     return !!t && t.StartInteract();
   }
   static EndManipulateInteract(t) {
-    t = EntitySystem_1.EntitySystem.GetComponent(t, 56);
+    t = EntitySystem_1.EntitySystem.GetComponent(t, 57);
     t && t.EndInteract();
   }
   static GetManipulateInteractLocation(t) {
-    t = EntitySystem_1.EntitySystem.GetComponent(t, 56);
+    t = EntitySystem_1.EntitySystem.GetComponent(t, 57);
     if (t) return t.GetTargetLocation().ToUeVector();
   }
   static EnvironmentInfoDetect(t, e) {
@@ -1150,7 +1173,7 @@ class TsGameplayBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
       t.LockOnSpecifyTarget(new EntityHandle_1.EntityHandle(e));
   }
   static IsSkillInCd(t, e) {
-    t = EntitySystem_1.EntitySystem.GetComponent(t, 186);
+    t = EntitySystem_1.EntitySystem.GetComponent(t, 190);
     return !!t?.Valid && t.IsSkillInCd(e);
   }
   static SendHookSkillUseLogData(t, e) {
@@ -1191,7 +1214,7 @@ class TsGameplayBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
   }
   static DynamicAttachEntityToActor(e, i, n) {
     var r = EntitySystem_1.EntitySystem.Get(e),
-      e = EntitySystem_1.EntitySystem.GetComponent(e, 110);
+      e = EntitySystem_1.EntitySystem.GetComponent(e, 112);
     if (r && e) {
       let t = new UE.Transform();
       var a,
@@ -1209,27 +1232,21 @@ class TsGameplayBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
             t.GetRotation().Rotator(),
           ),
         void 0 !== (a = i?.GetComponent(0)?.GetCreatureDataId())) &&
-        (((s =
+        (((n =
           new SceneItemDynamicAttachTargetComponent_1.AttachParam()).PosAttachType =
           1),
-        (s.RotAttachType = 1),
-        (s.AttachSocketName = n),
+        (n.RotAttachType = 1),
         e.RegEntityTargetByCreatureDataId(
           a,
           void 0,
-          s,
+          n,
           "DynamicAttachEntityToActor",
         ));
     }
   }
-  static DynamicDetachEntityFromActor(t) {
-    var e = EntitySystem_1.EntitySystem.Get(t),
-      t = EntitySystem_1.EntitySystem.GetComponent(t, 110);
-    e &&
-      t &&
-      t.UnRegTarget(
-        "TsGameplayBlueprintFunctionLibrary.DynamicDetachEntityFromActor",
-      );
+  static TryGenerateDynamicPortal() {
+    Global_1.Global.BaseCharacter?.IsValid() &&
+      PortalController_1.PortalController.TryGenerateDynamicPortal();
   }
   static SetEntityEnable(t, e, i, n) {
     i?.IsValid()
@@ -1247,6 +1264,45 @@ class TsGameplayBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
           29,
           "调用SetEntityEnable失败，因为callObject为空",
         );
+  }
+  static SetSkillTargetDirection(t, e) {
+    t = EntitySystem_1.EntitySystem.GetComponent(t, 33);
+    t?.Valid && t.SetSkillTargetDirection(e);
+  }
+  static ChangeAiControllerDebugDraw(t, e) {
+    var i = EntitySystem_1.EntitySystem.GetComponent(t, 39);
+    i?.Valid
+      ? i.TsAiController.SetDebugDraw(e ? 1 : 0)
+      : Log_1.Log.CheckError() &&
+        Log_1.Log.Error("AI", 43, "实体不含AiComp", ["entityId", t]);
+  }
+  static TryGetDebugMovementComp(t) {
+    let e = 0;
+    try {
+      e = Number(t);
+    } catch {
+      return void (
+        Log_1.Log.CheckError() &&
+        Log_1.Log.Error("AI", 43, "添加监听输入的PbDataId转number异常", [
+          "pbDataId",
+          t,
+        ])
+      );
+    }
+    if (0 !== e) {
+      var t = new Array();
+      if (
+        (ModelManager_1.ModelManager.CreatureModel.GetEntitiesWithPbDataId(
+          e,
+          t,
+        ),
+        0 !== t.length)
+      )
+        return (
+          (t = t[0]?.Entity?.GetComponent(3)?.DebugMovementComp)?.SetDebug(!0),
+          t?.UeDebugComp
+        );
+    }
   }
 }
 exports.default = TsGameplayBlueprintFunctionLibrary;

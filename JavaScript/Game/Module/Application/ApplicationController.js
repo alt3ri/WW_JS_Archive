@@ -8,11 +8,11 @@ class ApplicationController extends ControllerBase_1.ControllerBase {
     return (
       Application_1.Application.AddApplicationHandler(
         2,
-        ApplicationController.LHe,
+        ApplicationController.Nje,
       ),
       Application_1.Application.AddApplicationHandler(
         1,
-        ApplicationController.DHe,
+        ApplicationController.Oje,
       ),
       !0
     );
@@ -21,16 +21,16 @@ class ApplicationController extends ControllerBase_1.ControllerBase {
     return (
       Application_1.Application.RemoveApplicationHandler(
         2,
-        ApplicationController.LHe,
+        ApplicationController.Nje,
       ),
       Application_1.Application.RemoveApplicationHandler(
         1,
-        ApplicationController.DHe,
+        ApplicationController.Oje,
       ),
       !0
     );
   }
 }
-((exports.ApplicationController = ApplicationController).LHe = () => {}),
-  (ApplicationController.DHe = () => {});
+((exports.ApplicationController = ApplicationController).Nje = () => {}),
+  (ApplicationController.Oje = () => {});
 //# sourceMappingURL=ApplicationController.js.map

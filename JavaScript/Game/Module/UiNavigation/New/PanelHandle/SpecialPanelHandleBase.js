@@ -8,10 +8,10 @@ const UE = require("ue"),
 class SpecialPanelHandleBase {
   constructor(t) {
     (this.DefaultNavigationListener = []),
-      (this._wo = new Set()),
-      (this.Ffo = new Map()),
-      (this.S9 = "Default"),
-      (this.S9 = t);
+      (this.hBo = new Set()),
+      (this.Npo = new Map()),
+      (this.E9 = "Default"),
+      (this.E9 = t);
   }
   SetNavigationGroupDefaultListener(t) {
     var e = this.GetNavigationGroup(t.GroupName);
@@ -27,21 +27,24 @@ class SpecialPanelHandleBase {
         );
   }
   GetNavigationGroup(t) {
-    if (!StringUtils_1.StringUtils.IsEmpty(t)) return this.Ffo.get(t);
+    if (!StringUtils_1.StringUtils.IsEmpty(t)) return this.Npo.get(t);
   }
   SetGroupMap(t) {
-    this.Ffo = t;
+    this.Npo = t;
   }
   AddListener(t) {
-    this._wo.add(t);
+    this.hBo.add(t);
   }
   DeleteListener(t) {
-    this._wo.delete(t);
+    this.hBo.delete(t);
   }
   GetListenerListByTag(t) {
     var e = [];
-    for (const i of this._wo) i.TagArray.Contains(t) && e.push(i);
+    for (const i of this.hBo) i.TagArray.Contains(t) && e.push(i);
     return e;
+  }
+  GetListenerSet() {
+    return this.hBo;
   }
   SetDefaultNavigationListenerList(t) {
     this.OnDefaultNavigationListenerList(t);
@@ -62,7 +65,7 @@ class SpecialPanelHandleBase {
     return this.OnGetLoopOrLayoutListener(t);
   }
   ResetGroupConfigMemory() {
-    for (const t of this.Ffo.values())
+    for (const t of this.Npo.values())
       t.SelectableMemory && (t.LastSelectListener = void 0);
   }
   OnGetSuitableNavigationListenerList(t) {
@@ -88,10 +91,10 @@ class SpecialPanelHandleBase {
   }
   OnNotifyFindResult(t) {}
   Clear() {
-    this.OnClear(), this.Ffo.clear(), this._wo?.clear();
+    this.OnClear(), this.Npo.clear(), this.hBo?.clear();
   }
   GetType() {
-    return this.S9;
+    return this.E9;
   }
   OnClear() {}
 }

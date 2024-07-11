@@ -12,19 +12,12 @@ class HudUnitBase extends UiPanelBase_1.UiPanelBase {
       (this.VisibleState = 0),
       (this.TweenAnimMap = void 0);
   }
-  async Initialize(i, t) {
-    (this.ResourceId = i),
-      t
-        ? await this.CreateThenShowByResourceIdAsync(
-            i,
-            UiLayer_1.UiLayer.GetBattleViewUnit(1),
-            !0,
-          )
-        : await this.CreateByResourceIdAsync(
-            i,
-            UiLayer_1.UiLayer.GetBattleViewUnit(1),
-            !0,
-          );
+  async Initialize(i, t, e) {
+    this.ResourceId = i;
+    e = UiLayer_1.UiLayer.GetBattleViewUnit(e ? 3 : 1);
+    t
+      ? await this.CreateThenShowByResourceIdAsync(i, e, !0)
+      : await this.CreateByResourceIdAsync(i, e, !0);
   }
   Tick(i) {}
   AfterTick(i) {}

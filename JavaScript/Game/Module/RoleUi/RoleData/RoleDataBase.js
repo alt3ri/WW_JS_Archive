@@ -15,8 +15,8 @@ const Log_1 = require("../../../../Core/Common/Log"),
 class RoleDataBase {
   constructor(e) {
     (this.RoleModelConfig = void 0),
-      (this.n1o = new Map()),
-      (this.s1o = [
+      (this.t_o = new Map()),
+      (this.i_o = [
         RoleLevelData_1.RoleLevelData,
         RoleAttributeData_1.RoleAttributeData,
         RoleSkillData_1.RoleSkillData,
@@ -34,32 +34,32 @@ class RoleDataBase {
       (this.Name = ConfigManager_1.ConfigManager.RoleConfig.GetRoleName(
         this.GetRoleConfig().Name,
       )),
-      this.a1o();
+      this.o_o();
   }
-  a1o() {
+  o_o() {
     var e = this.GetRoleId();
-    for (const a of this.s1o) this.n1o.set(a, new a(e));
+    for (const a of this.i_o) this.t_o.set(a, new a(e));
   }
   GetLevelData() {
-    return this.n1o.get(RoleLevelData_1.RoleLevelData);
+    return this.t_o.get(RoleLevelData_1.RoleLevelData);
   }
   GetAttributeData() {
-    return this.n1o.get(RoleAttributeData_1.RoleAttributeData);
+    return this.t_o.get(RoleAttributeData_1.RoleAttributeData);
   }
   GetSkillData() {
-    return this.n1o.get(RoleSkillData_1.RoleSkillData);
+    return this.t_o.get(RoleSkillData_1.RoleSkillData);
   }
   GetResonanceData() {
-    return this.n1o.get(RoleResonanceData_1.RoleResonanceData);
+    return this.t_o.get(RoleResonanceData_1.RoleResonanceData);
   }
   GetPhantomData() {
-    return this.n1o.get(RolePhantomData_1.RolePhantomData);
+    return this.t_o.get(RolePhantomData_1.RolePhantomData);
   }
   GetAudioData() {
-    return this.n1o.get(RoleAudioData_1.RoleAudioData);
+    return this.t_o.get(RoleAudioData_1.RoleAudioData);
   }
   GetFavorData() {
-    return this.n1o.get(RoleFavorData_1.RoleFavorData);
+    return this.t_o.get(RoleFavorData_1.RoleFavorData);
   }
   GetElementInfo() {
     var e = this.GetRoleConfig();
@@ -99,7 +99,7 @@ class RoleDataBase {
           ParamType: 0,
           OnlyMyRole: !0,
         }),
-        r = a ? a.EntityHandle.Entity.GetComponent(156) : void 0;
+        r = a ? a.EntityHandle.Entity.GetComponent(158) : void 0;
       for (const i of e)
         if (i.IsShow) {
           let e = 0,
@@ -130,7 +130,7 @@ class RoleDataBase {
         ParamType: 0,
         OnlyMyRole: !0,
       }),
-      t = t ? t.EntityHandle.Entity.GetComponent(156) : void 0;
+      t = t ? t.EntityHandle.Entity.GetComponent(158) : void 0;
     let r = 0;
     return (
       t
@@ -160,7 +160,7 @@ class RoleDataBase {
         ParamType: 0,
         OnlyMyRole: !0,
       }),
-      a = a ? a.EntityHandle.Entity.GetComponent(156) : void 0;
+      a = a ? a.EntityHandle.Entity.GetComponent(158) : void 0;
     let t = 0;
     return (t = a
       ? a.GetBaseValue(e)

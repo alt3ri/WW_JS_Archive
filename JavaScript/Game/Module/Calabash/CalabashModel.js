@@ -15,21 +15,21 @@ class CalabashDevelopRewardData {
   constructor(e, t) {
     (this.DevelopReward = e),
       (this.SkillName = t),
-      (this.O0t = !1),
-      (this.k0t = 0),
-      (this.F0t = new Map());
+      (this.Jft = !1),
+      (this.zft = 0),
+      (this.Zft = new Map());
   }
   set UnlockData(e) {
-    this.O0t = e;
+    this.Jft = e;
   }
   get UnlockData() {
-    return this.O0t;
+    return this.Jft;
   }
   set RewardNumData(e) {
-    this.k0t = e;
+    this.zft = e;
   }
   get RewardNumData() {
-    return this.k0t;
+    return this.zft;
   }
   get DevelopRewardData() {
     return this.DevelopReward;
@@ -38,16 +38,16 @@ class CalabashDevelopRewardData {
     return this.DevelopRewardData.DevelopCondition.length;
   }
   SetUnlockConditionMap(e) {
-    for (const t of e) this.F0t.set(t.FSs, t.VSs);
+    for (const t of e) this.Zft.set(t.sLs, t.aLs);
   }
   GetUnlockConditionMap() {
-    return this.F0t;
+    return this.Zft;
   }
   get UnlockSize() {
-    return this.F0t.size;
+    return this.Zft.size;
   }
   CheckCanGetReward() {
-    for (const e of this.F0t.values()) if (!e) return !0;
+    for (const e of this.Zft.values()) if (!e) return !0;
     return !1;
   }
 }
@@ -58,33 +58,33 @@ class CalabashModel extends ModelBase_1.ModelBase {
       (this.OnlyShowBattleFettersTab = !1),
       (this.OnlyShowPhantomFetterGroupIdList = void 0),
       (this.Me = void 0),
-      (this.V0t = void 0),
-      (this.H0t = void 0),
-      (this.j0t = void 0),
+      (this.ept = void 0),
+      (this.tpt = void 0),
+      (this.ipt = void 0),
       (this.HideVisionRecoveryConfirmBox = !1),
-      (this.W0t = new Array());
+      (this.opt = new Array());
   }
-  K0t() {
+  rpt() {
     (this.CalabashInstance = new CalabashInstance_1.CalabashInstance()),
-      this.Q0t(),
+      this.npt(),
       this.InitMonsterIdRecord();
   }
-  Q0t() {
+  npt() {
     var e =
       ConfigManager_1.ConfigManager.CalabashConfig.GetCalabashDevelopList();
-    this.V0t || (this.V0t = new Map());
+    this.ept || (this.ept = new Map());
     for (const a of e) {
       var t =
           ConfigManager_1.ConfigManager.MonsterInfoConfig.GetMonsterInfoConfig(
             a.MonsterInfoId,
           ),
         t = new CalabashDevelopRewardData(a, t.Name);
-      a.IsShow && this.V0t.set(a.MonsterId, t);
+      a.IsShow && this.ept.set(a.MonsterId, t);
     }
   }
   UpdateCalabashDevelopRewardData() {
     for (const t of this.GetUnlockCalabashDevelopRewards()) {
-      var e = this.V0t.get(t[0]);
+      var e = this.ept.get(t[0]);
       (e.UnlockData = !0),
         e.SetUnlockConditionMap(t[1]),
         (e.RewardNumData = t[1].length);
@@ -93,22 +93,22 @@ class CalabashModel extends ModelBase_1.ModelBase {
   }
   GetCalabashDevelopRewardSortData() {
     var e = new Array();
-    for (const t of this.V0t.values()) e.push(t);
+    for (const t of this.ept.values()) e.push(t);
     return e.sort((e, t) => e.DevelopReward.SortId - t.DevelopReward.SortId), e;
   }
   SetCalabashInstanceBaseInfo(e) {
-    this.CalabashInstance || this.K0t(), this.CalabashInstance.SetBaseInfo(e);
+    this.CalabashInstance || this.rpt(), this.CalabashInstance.SetBaseInfo(e);
   }
   SetCalabashInstanceConfigInfo(e) {
-    this.CalabashInstance || this.K0t(), this.CalabashInstance.SetConfigInfo(e);
+    this.CalabashInstance || this.rpt(), this.CalabashInstance.SetConfigInfo(e);
   }
   InitMonsterIdRecord() {
-    (this.j0t =
+    (this.ipt =
       LocalStorage_1.LocalStorage.GetPlayer(
         LocalStorageDefine_1.ELocalStoragePlayerKey.CalabashCollect,
       ) ?? []),
-      (this.H0t = new Set());
-    for (const e of this.j0t) this.H0t.add(e);
+      (this.tpt = new Set());
+    for (const e of this.ipt) this.tpt.add(e);
   }
   SetCalabashLevel(e) {
     (this.CalabashInstance.CalabashCurrentLevel = e),
@@ -124,6 +124,12 @@ class CalabashModel extends ModelBase_1.ModelBase {
   }
   GetIdentifyGuaranteeCount() {
     return this.CalabashInstance.IdentifyGuaranteeCount;
+  }
+  GetLeftIntensifyCaptureGuarantee() {
+    var e =
+      ConfigManager_1.ConfigManager.CalabashConfig.GetIntensifyCaptureGuarantee() -
+      ModelManager_1.ModelManager.CalabashModel.GetIdentifyGuaranteeCount();
+    return e <= 0 ? 0 : e;
   }
   SetCurrentExp(e) {
     this.CalabashInstance.CalabashCurrentExp = e;
@@ -141,7 +147,7 @@ class CalabashModel extends ModelBase_1.ModelBase {
     return "CalabashCatchGain_" + e;
   }
   GetCalabashDevelopRewardInfoData(e) {
-    var t = this.V0t.get(e);
+    var t = this.ept.get(e);
     if (t) {
       var a = new Array();
       for (const n of t.DevelopReward.DevelopCondition) {
@@ -163,7 +169,7 @@ class CalabashModel extends ModelBase_1.ModelBase {
   }
   GetCalabashDevelopRewardExpByMonsterId(e) {
     let t = 0;
-    var a = this.V0t.get(e);
+    var a = this.ept.get(e);
     if (a)
       for (const n of a.DevelopReward.DevelopCondition) {
         var r =
@@ -180,12 +186,12 @@ class CalabashModel extends ModelBase_1.ModelBase {
   }
   GetCalabashAllSchedule() {
     let e = 0;
-    for (const t of this.V0t.values()) e += t.RewardSumNumData;
+    for (const t of this.ept.values()) e += t.RewardSumNumData;
     return e;
   }
   GetCalabashOwnSchedule() {
     let e = 0;
-    for (const t of this.V0t.values()) e += t.UnlockSize;
+    for (const t of this.ept.values()) e += t.UnlockSize;
     return e;
   }
   set CalabashInstance(e) {
@@ -195,7 +201,7 @@ class CalabashModel extends ModelBase_1.ModelBase {
     return this.Me;
   }
   get CalabashUnlockTipsList() {
-    return this.W0t;
+    return this.opt;
   }
   SetCalabashLevelsReward(e) {
     this.CalabashInstance.SetRewardedLevelsSet(e),
@@ -239,24 +245,25 @@ class CalabashModel extends ModelBase_1.ModelBase {
     return this.CalabashInstance.GetCatchGainByLevel(e) ?? 0;
   }
   CheckCanReceiveReward() {
-    for (let e = 1; e <= this.CalabashInstance.CalabashCurrentLevel; ++e)
-      if (2 === this.GetReceiveRewardStateByLevel(e)) return !0;
+    if (void 0 !== this.CalabashInstance)
+      for (let e = 1; e <= this.CalabashInstance.CalabashCurrentLevel; ++e)
+        if (2 === this.GetReceiveRewardStateByLevel(e)) return !0;
     return !1;
   }
   RecordMonsterId(e) {
     return (
-      !this.H0t?.has(e) &&
-      (this.H0t?.add(e),
-      this.j0t?.push(e),
+      !this.tpt?.has(e) &&
+      (this.tpt?.add(e),
+      this.ipt?.push(e),
       LocalStorage_1.LocalStorage.SetPlayer(
         LocalStorageDefine_1.ELocalStoragePlayerKey.CalabashCollect,
-        this.j0t,
+        this.ipt,
       ),
       !0)
     );
   }
   CheckMonsterIdInRecord(e) {
-    return this.H0t.has(e);
+    return this.tpt.has(e);
   }
   CheckSimpleStateSave() {
     void 0 ===

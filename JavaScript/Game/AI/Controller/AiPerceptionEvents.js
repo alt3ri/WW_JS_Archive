@@ -7,7 +7,7 @@ const UE = require("ue"),
   Vector_1 = require("../../../Core/Utils/Math/Vector"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
-  CombatDebugController_1 = require("../../Utils/CombatDebugController");
+  CombatLog_1 = require("../../Utils/CombatLog");
 class AiPerceptionEvents {
   constructor(t) {
     (this.Bte = t),
@@ -85,7 +85,7 @@ class AiPerceptionEvents {
     }
     if (0 < this.ere.length) {
       this.Mre("超出距离被伤害没添加仇恨事件广播", this.ere, void 0),
-        this.Sre(this.ere, this.are);
+        this.Ere(this.ere, this.are);
       for (const s of this._re)
         s.Callback.Broadcast(this.are, void 0, void 0, 0);
       this.ere.splice(0, this.ere.length), this.are.Empty();
@@ -99,11 +99,11 @@ class AiPerceptionEvents {
       if (t)
         if (i) {
           this.Mre("仇恨广播", this.Xoe, this.$oe),
-            this.Sre(this.Xoe, this.tre),
-            this.Sre(this.$oe, this.ire),
-            this.Ere(this.Yoe, this.ore),
-            Log_1.Log.CheckInfo() &&
-              Log_1.Log.Info("AI", 6, "CallHate Other", [
+            this.Ere(this.Xoe, this.tre),
+            this.Ere(this.$oe, this.ire),
+            this.Sre(this.Yoe, this.ore),
+            Log_1.Log.CheckDebug() &&
+              Log_1.Log.Debug("AI", 6, "CallHate Other", [
                 "Count",
                 this.hre.length,
               ]);
@@ -121,9 +121,9 @@ class AiPerceptionEvents {
             this.ore.Empty();
         } else {
           this.Mre("仇恨广播", this.Xoe, void 0),
-            this.Sre(this.Xoe, this.tre),
-            Log_1.Log.CheckInfo() &&
-              Log_1.Log.Info("AI", 6, "CallHate no remove", [
+            this.Ere(this.Xoe, this.tre),
+            Log_1.Log.CheckDebug() &&
+              Log_1.Log.Debug("AI", 6, "CallHate no remove", [
                 "Count",
                 this.hre.length,
               ]);
@@ -137,17 +137,17 @@ class AiPerceptionEvents {
         }
       else {
         this.Mre("仇恨广播", void 0, this.$oe),
-          this.Sre(this.$oe, this.ire),
-          this.Ere(this.Yoe, this.ore),
-          Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info("AI", 6, "CallHate no add", [
+          this.Ere(this.$oe, this.ire),
+          this.Sre(this.Yoe, this.ore),
+          Log_1.Log.CheckDebug() &&
+            Log_1.Log.Debug("AI", 6, "CallHate no add", [
               "Count",
               this.hre.length,
             ]);
-        for (const r of this.hre)
+        for (const o of this.hre)
           Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug("AI", 6, "Before Hatred Callback"),
-            r.Callback.Broadcast(void 0, this.ire, this.ore, s),
+            o.Callback.Broadcast(void 0, this.ire, this.ore, s),
             Log_1.Log.CheckDebug() &&
               Log_1.Log.Debug("AI", 6, "After Hatred Callback");
         this.$oe.splice(0, this.$oe.length),
@@ -165,9 +165,9 @@ class AiPerceptionEvents {
       if (t)
         if (i) {
           this.Mre("感知广播", this.Joe, this.zoe),
-            this.Sre(this.Joe, this.rre),
-            this.Sre(this.zoe, this.nre),
-            this.Ere(this.Zoe, this.sre);
+            this.Ere(this.Joe, this.rre),
+            this.Ere(this.zoe, this.nre),
+            this.Sre(this.Zoe, this.sre);
           for (const h of this.lre)
             h.Callback.Broadcast(this.rre, this.nre, this.sre, s);
           this.Joe.splice(0, this.Joe.length),
@@ -177,17 +177,17 @@ class AiPerceptionEvents {
             this.Zoe.splice(0, this.Zoe.length),
             this.sre.Empty();
         } else {
-          this.Mre("感知广播", this.Joe, void 0), this.Sre(this.Joe, this.rre);
+          this.Mre("感知广播", this.Joe, void 0), this.Ere(this.Joe, this.rre);
           for (const e of this.lre)
             e.Callback.Broadcast(this.rre, void 0, void 0, s);
           this.Joe.splice(0, this.Joe.length), this.rre.Empty();
         }
       else {
         this.Mre("感知广播", void 0, this.zoe),
-          this.Sre(this.zoe, this.nre),
-          this.Ere(this.Zoe, this.sre);
-        for (const r of this.lre)
-          r.Callback.Broadcast(void 0, this.nre, this.sre, s);
+          this.Ere(this.zoe, this.nre),
+          this.Sre(this.Zoe, this.sre);
+        for (const o of this.lre)
+          o.Callback.Broadcast(void 0, this.nre, this.sre, s);
         this.zoe.splice(0, this.zoe.length),
           this.nre.Empty(),
           this.Zoe.splice(0, this.Zoe.length),
@@ -195,14 +195,14 @@ class AiPerceptionEvents {
       }
     }
   }
-  Sre(t, i) {
+  Ere(t, i) {
     for (const h of t) {
       var s = EntitySystem_1.EntitySystem.Get(h);
       s && s.Active && s.Valid && (s = s.GetComponent(1)?.Owner) && i.Add(s);
     }
     t.splice(0, t.length);
   }
-  Ere(t, i) {
+  Sre(t, i) {
     for (const s of t) i.Add(s);
   }
   AddAiHateEvent(t) {
@@ -331,12 +331,12 @@ class AiPerceptionEvents {
     var i;
     this.dre &&
       !this.gre.has(t.Entity.Id) &&
-      (i = t.Entity.GetComponent(90))?.Valid &&
+      (i = t.Entity.GetComponent(92))?.Valid &&
       i.IsDestroyed &&
       (this.gre.add(t.Entity.Id), this.dre.Callback.Broadcast(t.Owner, !0));
   }
   Mre(t, i, s) {
-    CombatDebugController_1.CombatDebugController.CombatInfo(
+    CombatLog_1.CombatLog.Info(
       "Ai",
       this.Bte.CharActorComp.Entity,
       t,

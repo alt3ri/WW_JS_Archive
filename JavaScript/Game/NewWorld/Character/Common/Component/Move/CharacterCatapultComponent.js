@@ -23,13 +23,13 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharacterCatapultComponent = void 0);
 const Log_1 = require("../../../../../../Core/Common/Log"),
   EntityComponent_1 = require("../../../../../../Core/Entity/EntityComponent"),
+  RegisterComponent_1 = require("../../../../../../Core/Entity/RegisterComponent"),
   Vector_1 = require("../../../../../../Core/Utils/Math/Vector"),
   MathUtils_1 = require("../../../../../../Core/Utils/MathUtils"),
   EventDefine_1 = require("../../../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../../../Common/Event/EventSystem"),
   BigJumpUnit_1 = require("./BigJumpUnit"),
   CustomMovementDefine_1 = require("./CustomMovementDefine"),
-  RegisterComponent_1 = require("../../../../../../Core/Entity/RegisterComponent"),
   MODEL_BUFFER_TIME_LENGTH = 200,
   SUPER_CATAPULT_SKILL_ID = 400107;
 let CharacterCatapultComponent =
@@ -40,36 +40,36 @@ let CharacterCatapultComponent =
       super(...arguments),
         (this.Hte = void 0),
         (this.Gce = void 0),
-        (this.J$r = -0),
-        (this.z$r = void 0),
+        (this.P$r = -0),
+        (this.x$r = void 0),
         (this.LockRotator = !1),
-        (this.Z$r = !1),
-        (this.eYr = (t) => {
+        (this.w$r = !1),
+        (this.B$r = (t) => {
           t < MathUtils_1.MathUtils.SmallNumber ||
-            (this.z$r.GetOffset(this.J$r, t, CharacterCatapultComponent_1.Lz),
-            (this.J$r += t),
+            (this.x$r.GetOffset(this.P$r, t, CharacterCatapultComponent_1.Lz),
+            (this.P$r += t),
             this.Gce.MoveCharacter(CharacterCatapultComponent_1.Lz, t),
-            this.LockRotator && this.Hte?.SetInputRotator(this.z$r.Rotator),
-            this.J$r > this.z$r.TimeLength &&
+            this.LockRotator && this.Hte?.SetInputRotator(this.x$r.Rotator),
+            this.P$r > this.x$r.TimeLength &&
               (this.Gce.CharacterMovement.SetMovementMode(3),
-              this.z$r.GetSpeed(this.J$r, CharacterCatapultComponent_1.Lz),
+              this.x$r.GetSpeed(this.P$r, CharacterCatapultComponent_1.Lz),
               this.Gce.SetForceSpeed(CharacterCatapultComponent_1.Lz)));
         });
     }
     static get Dependencies() {
-      return [3, 161];
+      return [3, 163];
     }
     OnInitData() {
-      return (this.z$r = new BigJumpUnit_1.BigJumpUnit()), !0;
+      return (this.x$r = new BigJumpUnit_1.BigJumpUnit()), !0;
     }
     OnStart() {
       return (
         (this.Hte = this.Entity.GetComponent(3)),
-        (this.Gce = this.Entity.GetComponent(161)),
+        (this.Gce = this.Entity.GetComponent(163)),
         EventSystem_1.EventSystem.AddWithTarget(
           this.Entity,
           EventDefine_1.EEventName.CustomMoveCatapult,
-          this.eYr,
+          this.B$r,
         ),
         !0
       );
@@ -79,7 +79,7 @@ let CharacterCatapultComponent =
         EventSystem_1.EventSystem.RemoveWithTarget(
           this.Entity,
           EventDefine_1.EEventName.CustomMoveCatapult,
-          this.eYr,
+          this.B$r,
         ),
         !0
       );
@@ -94,29 +94,29 @@ let CharacterCatapultComponent =
       s = void 0,
       a = !1,
     ) {
-      (this.Z$r = a),
+      (this.w$r = a),
         (this.LockRotator = 0 < o),
-        this.z$r.SetAll(t, e, i, n, r, o, s);
+        this.x$r.SetAll(t, e, i, n, r, o, s);
     }
     StartCatapult() {
-      this.z$r.SetStartPoint(this.Hte.ActorLocationProxy),
-        this.z$r.Init(),
-        (this.J$r = 0),
+      this.x$r.SetStartPoint(this.Hte.ActorLocationProxy),
+        this.x$r.Init(),
+        (this.P$r = 0),
         this.Gce.CharacterMovement.SetMovementMode(
           6,
           CustomMovementDefine_1.CUSTOM_MOVEMENTMODE_LEISURE,
         );
       var t,
         e,
-        i = this.Entity.GetComponent(160);
+        i = this.Entity.GetComponent(162);
       i &&
         i.SetLocationAndRotatorWithModelBuffer(
           this.Hte.ActorLocationProxy.ToUeVector(),
-          this.z$r.Rotator.ToUeRotator(),
+          this.x$r.Rotator.ToUeRotator(),
           MODEL_BUFFER_TIME_LENGTH,
           "Catapult Start",
         ),
-        this.Z$r &&
+        this.w$r &&
           ((t = this.Entity.GetComponent(33).GetSkillMontageInstance(
             Number(SUPER_CATAPULT_SKILL_ID),
             0,
@@ -124,7 +124,7 @@ let CharacterCatapultComponent =
           i?.MainAnimInstance) &&
           t?.IsValid() &&
           ((e = i.MainAnimInstance.Montage_GetPosition(t)),
-          (e = (t.SequenceLength - e) / this.z$r.RisingTime),
+          (e = (t.SequenceLength - e) / this.x$r.RisingTime),
           i.MainAnimInstance.Montage_SetPlayRate(t, e)),
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
@@ -132,8 +132,8 @@ let CharacterCatapultComponent =
             6,
             "StartCatapult",
             ["Actor", this.Hte.Actor.GetName()],
-            ["CatapultUnit", this.z$r],
-            ["IsSuperCatapult", this.Z$r],
+            ["CatapultUnit", this.x$r],
+            ["IsSuperCatapult", this.w$r],
           );
     }
   });

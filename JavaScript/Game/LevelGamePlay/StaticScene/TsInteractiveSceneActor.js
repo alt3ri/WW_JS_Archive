@@ -122,7 +122,7 @@ class TsInteractiveSceneActor extends UE.Actor {
   ApplyInteractionConfig(t) {
     var i = EntitySystem_1.EntitySystem.Get(this.EntityId);
     if (i?.Valid) {
-      var s = i.GetComponent(177);
+      var s = i.GetComponent(180);
       if (s?.Valid) {
         for (let e = 0; e <= this.Configs.Num(); e++)
           if (this.Configs?.IsValidIndex(e)) {
@@ -259,7 +259,7 @@ class TsInteractiveSceneActor extends UE.Actor {
     var t;
     e?.Valid &&
       (t = e.Entity.GetComponent(0))?.Valid &&
-      t.GetEntityType() === Protocol_1.Aki.Protocol.HBs.Proto_SceneItem &&
+      t.GetEntityType() === Protocol_1.Aki.Protocol.wks.Proto_SceneItem &&
       t.GetPbDataId() === this.EntityConfigId &&
       ((this.EntityId = e.Id),
       this.ApplyInteractionConfig(!0),
@@ -269,7 +269,7 @@ class TsInteractiveSceneActor extends UE.Actor {
     var t;
     e?.Valid &&
       (t = e.Entity.GetComponent(0))?.Valid &&
-      t.GetEntityType() === Protocol_1.Aki.Protocol.HBs.Proto_SceneItem &&
+      t.GetEntityType() === Protocol_1.Aki.Protocol.wks.Proto_SceneItem &&
       t.GetPbDataId() === this.EntityConfigId &&
       ((this.EntityId = 0), this.SafeRemoveEntityGameplayTagEvent(e));
   }

@@ -9,9 +9,11 @@ const UE = require("ue"),
   EventDefine_1 = require("../../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../../Common/Event/EventSystem"),
   TimeUtil_1 = require("../../../../Common/TimeUtil"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
   UiViewBase_1 = require("../../../../Ui/Base/UiViewBase"),
   PopupCaptionItem_1 = require("../../../../Ui/Common/PopupCaptionItem"),
   PageDot_1 = require("../../../Common/PageDot"),
+  ConfirmBoxDefine_1 = require("../../../ConfirmBox/ConfirmBoxDefine"),
   HelpController_1 = require("../../../Help/HelpController"),
   GenericLayout_1 = require("../../../Util/Layout/GenericLayout"),
   LguiUtil_1 = require("../../../Util/LguiUtil"),
@@ -48,22 +50,22 @@ class LongShanView extends UiViewBase_1.UiViewBase {
       (this.HOe = () => new PageDot_1.PageDot()),
       (this.jOe = (e, i) => {
         var t, n;
-        return e.H0s !== i.H0s
-          ? e.H0s
+        return e.aMs !== i.aMs
+          ? e.aMs
             ? 1
             : -1
-          : e.$0s !== i.$0s
-            ? e.$0s
+          : e.sMs !== i.sMs
+            ? e.sMs
               ? -1
               : 1
             : (t = LongShanTaskById_1.configLongShanTaskById.GetConfig(
-                  e.Ekn,
+                  e.J4n,
                 ).SortId) !==
                 (n = LongShanTaskById_1.configLongShanTaskById.GetConfig(
-                  i.Ekn,
+                  i.J4n,
                 ).SortId)
               ? t - n
-              : e.Ekn - i.Ekn;
+              : e.J4n - i.J4n;
       }),
       (this.WOe = () => {
         var e =
@@ -76,7 +78,7 @@ class LongShanView extends UiViewBase_1.UiViewBase {
               "LongShanStage_ProgressPercentage",
               t,
             ),
-            e.GetStageInfoById(i).V0s);
+            e.GetStageInfoById(i).nMs);
         t.sort(this.jOe), this.OOe?.RefreshByData(t, void 0, !0);
       }),
       (this.KOe = () => {
@@ -99,6 +101,22 @@ class LongShanView extends UiViewBase_1.UiViewBase {
       }),
       (this.$Oe = () => {
         this.CloseMe();
+      }),
+      (this.g3e = (e) => {
+        var i =
+          ActivityLongShanController_1.ActivityLongShanController.GetActivityData();
+        e.has(i.Id) &&
+          ((e = () => {
+            this.CloseMe();
+          }),
+          (i = new ConfirmBoxDefine_1.ConfirmBoxDataNew(115)).FunctionMap.set(
+            1,
+            e,
+          ),
+          i.FunctionMap.set(0, e),
+          ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
+            i,
+          ));
       });
   }
   OnRegisterComponent() {
@@ -123,13 +141,21 @@ class LongShanView extends UiViewBase_1.UiViewBase {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.LongShanUpdate,
       this.WOe,
-    );
+    ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.OnActivityClose,
+        this.g3e,
+      );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.LongShanUpdate,
       this.WOe,
-    );
+    ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.OnActivityClose,
+        this.g3e,
+      );
   }
   async OnBeforeStartAsync() {
     (this.lqe = new PopupCaptionItem_1.PopupCaptionItem(this.GetItem(0))),

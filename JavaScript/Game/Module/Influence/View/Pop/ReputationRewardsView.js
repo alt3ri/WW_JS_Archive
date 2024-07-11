@@ -10,10 +10,10 @@ class ReputationRewardsView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
       (this.xqe = void 0),
-      (this.wni = void 0),
+      (this.Bsi = void 0),
       (this.sGe = (e, i, r) => {
         var i = new InfluenceRewardItem_1.InfluenceRewardItem(i),
-          t = this.wni.RewardIndex >= r;
+          t = this.Bsi.RewardIndex >= r;
         return i.UpdateItem(e, t), { Key: r, Value: i };
       });
   }
@@ -22,7 +22,7 @@ class ReputationRewardsView extends UiViewBase_1.UiViewBase {
   }
   OnBeforeCreate() {
     var e = this.OpenParam;
-    this.wni =
+    this.Bsi =
       ModelManager_1.ModelManager.InfluenceReputationModel.GetInfluenceInstance(
         e,
       );
@@ -34,7 +34,7 @@ class ReputationRewardsView extends UiViewBase_1.UiViewBase {
     );
   }
   OnAfterShow() {
-    this.xqe.RefreshByData(this.wni.GetReward());
+    this.xqe.RefreshByData(this.Bsi.GetReward());
   }
   OnBeforeDestroy() {
     this.xqe.ClearChildren(), (this.xqe = void 0);

@@ -11,7 +11,7 @@ class MultiEffectBuffBall extends MultiEffectBase_1.default {
       (this.BaseNum = 0),
       (this.SpinSpeed = -0),
       (this.Radius = -0),
-      (this.ilr = -0),
+      (this.Zlr = -0),
       (this.BaseAngle = -0),
       (this.TempUeVector = void 0);
   }
@@ -21,11 +21,11 @@ class MultiEffectBuffBall extends MultiEffectBase_1.default {
       (this.SpinSpeed = t.get("SpinSpeed")),
       (this.Radius = t.get("Radius")),
       (this.TempUeVector = new UE.Vector()),
-      (this.ilr = 0.01),
+      (this.Zlr = 0.01),
       (this.BaseAngle = 0);
   }
   GetDesiredNum(t) {
-    return Math.ceil(this.BaseNum * t - this.ilr);
+    return Math.ceil(this.BaseNum * t - this.Zlr);
   }
   Update(t, s, e) {
     var i = e.length,

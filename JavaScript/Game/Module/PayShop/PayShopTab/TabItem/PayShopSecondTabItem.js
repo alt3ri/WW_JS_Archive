@@ -11,10 +11,10 @@ class PayShopSecondTabItem extends UiPanelBase_1.UiPanelBase {
       (this.IsSelected = !1),
       (this.ToggleFunction = void 0),
       (this.Toggle = void 0),
-      (this.x4e = (t) => {
+      (this.Bke = (t) => {
         1 === t && ((this.IsSelected = !0), this.ToggleFunction?.(this.TabId));
       }),
-      (this.T7e = () => {
+      (this.Lke = () => {
         var t = this.Toggle.GetToggleState();
         return !this.IsSelected || 1 !== t;
       }),
@@ -25,11 +25,11 @@ class PayShopSecondTabItem extends UiPanelBase_1.UiPanelBase {
       [2, UE.UIExtendToggle],
       [0, UE.UIText],
     ]),
-      (this.BtnBindInfo = [[2, this.x4e]]);
+      (this.BtnBindInfo = [[2, this.Bke]]);
   }
   OnStart() {
     (this.Toggle = this.GetExtendToggle(2)),
-      this.Toggle.CanExecuteChange.Bind(this.T7e),
+      this.Toggle.CanExecuteChange.Bind(this.Lke),
       this.SetToggleState(!1);
   }
   OnBeforeDestroy() {

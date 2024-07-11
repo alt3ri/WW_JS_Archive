@@ -9,18 +9,18 @@ class TutorialModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
       (this.RewardInfo = void 0),
-      (this.NDo = new Map()),
-      (this.ODo = new Map());
+      (this.bRo = new Map()),
+      (this.qRo = new Map());
   }
   OnInit() {
     for (const t in TutorialDefine_1.ETutorialType) {
       var e = Number(t);
-      isNaN(e) || this.NDo.set(e, new Map());
+      isNaN(e) || this.bRo.set(e, new Map());
     }
     return !0;
   }
   InitTutorialTotalData() {
-    for (const r of Array.from(this.ODo.values())) {
+    for (const r of Array.from(this.qRo.values())) {
       var e = new TutorialDefine_1.TutorialSaveData(),
         t =
           ((e.TimeStamp = r.TimeStamp),
@@ -28,41 +28,41 @@ class TutorialModel extends ModelBase_1.ModelBase {
           (e.HasRedDot = r.HasRedDot),
           e.TutorialData.TutorialType),
         i = e.TutorialData.Id;
-      this.NDo.get(t).set(i, e),
-        this.NDo.get(TutorialDefine_1.ETutorialType.All).set(i, e),
-        this.ODo.set(i, e);
+      this.bRo.get(t).set(i, e),
+        this.bRo.get(TutorialDefine_1.ETutorialType.All).set(i, e),
+        this.qRo.set(i, e);
     }
   }
   OnClear() {
-    for (const e of this.NDo.values()) e.clear();
-    return this.NDo.clear(), !0;
+    for (const e of this.bRo.values()) e.clear();
+    return this.bRo.clear(), !0;
   }
   InitUnlockTutorials(e) {
     for (const r of e) {
       var t = new TutorialDefine_1.TutorialSaveData(),
         i =
-          ((t.TimeStamp = r.BRs),
-          (t.TutorialId = r.Ekn),
-          (t.HasRedDot = !r._bs),
+          ((t.TimeStamp = r.ews),
+          (t.TutorialId = r.J4n),
+          (t.HasRedDot = !r.zGs),
           t.TutorialData.TutorialType);
       Object.values(TutorialDefine_1.ETutorialType).includes(i) &&
-        (this.NDo.get(i).has(t.TutorialId) ||
-          (this.NDo.get(i).set(t.TutorialId, t), this.ODo.set(t.TutorialId, t)),
+        (this.bRo.get(i).has(t.TutorialId) ||
+          (this.bRo.get(i).set(t.TutorialId, t), this.qRo.set(t.TutorialId, t)),
         this.InvokeTutorialRedDot(t));
     }
   }
   UpdateUnlockTutorials(e) {
     var t = new TutorialDefine_1.TutorialSaveData(),
       e =
-        ((t.TimeStamp = e.BRs),
-        (t.TutorialId = e.Ekn),
-        (t.HasRedDot = !e._bs),
+        ((t.TimeStamp = e.ews),
+        (t.TutorialId = e.J4n),
+        (t.HasRedDot = !e.zGs),
         t.TutorialData.TutorialType);
     Object.values(TutorialDefine_1.ETutorialType).includes(e) &&
-      !this.NDo.get(e).has(t.TutorialId) &&
-      (this.NDo.get(e).set(t.TutorialId, t),
-      this.NDo.get(TutorialDefine_1.ETutorialType.All).set(t.TutorialId, t),
-      this.ODo.set(t.TutorialId, t),
+      !this.bRo.get(e).has(t.TutorialId) &&
+      (this.bRo.get(e).set(t.TutorialId, t),
+      this.bRo.get(TutorialDefine_1.ETutorialType.All).set(t.TutorialId, t),
+      this.qRo.set(t.TutorialId, t),
       this.InvokeUpdateTutorials(),
       this.InvokeTutorialRedDot(t));
   }
@@ -70,7 +70,7 @@ class TutorialModel extends ModelBase_1.ModelBase {
     var e,
       t,
       i = [];
-    for (const n of this.NDo.get(o).values()) {
+    for (const n of this.bRo.get(o).values()) {
       var r = {
         IsTypeTitle: !1,
         TextId: n.TutorialData.GroupName,
@@ -109,11 +109,11 @@ class TutorialModel extends ModelBase_1.ModelBase {
     return i.slice(0, a);
   }
   RemoveRedDotTutorialId(e) {
-    this.ODo.has(e) &&
-      (((e = this.ODo.get(e)).HasRedDot = !1), this.InvokeTutorialRedDot(e));
+    this.qRo.has(e) &&
+      (((e = this.qRo.get(e)).HasRedDot = !1), this.InvokeTutorialRedDot(e));
   }
   RedDotCheckIsNewTutorial(e) {
-    return this.ODo.get(e)?.HasRedDot ?? !1;
+    return this.qRo.get(e)?.HasRedDot ?? !1;
   }
   InvokeUpdateTutorials() {
     EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.OnTutorialUpdate);
@@ -131,8 +131,8 @@ class TutorialModel extends ModelBase_1.ModelBase {
         );
   }
   RedDotCheckIsNewTutorialType(e) {
-    if (this.NDo.has(e))
-      for (const t of this.NDo.get(e).values()) if (t.HasRedDot) return !0;
+    if (this.bRo.has(e))
+      for (const t of this.bRo.get(e).values()) if (t.HasRedDot) return !0;
     return !1;
   }
   MakeSearchList(e, t) {
@@ -144,10 +144,10 @@ class TutorialModel extends ModelBase_1.ModelBase {
       return { ItemData: r, HasTutorial: !1 };
     }
     let o = !1;
-    for (const s of Array.from(this.NDo.keys()).sort((e) => (e === t ? -1 : 1)))
+    for (const s of Array.from(this.bRo.keys()).sort((e) => (e === t ? -1 : 1)))
       if (s !== TutorialDefine_1.ETutorialType.All) {
         var a = [];
-        for (const u of this.NDo.get(s).values()) {
+        for (const u of this.bRo.get(s).values()) {
           var n = u.GetTutorialTitle();
           n.search(i) < 0 ||
             ((n = {
@@ -174,7 +174,7 @@ class TutorialModel extends ModelBase_1.ModelBase {
     return { ItemData: r, HasTutorial: o };
   }
   GetSavedDataById(e) {
-    return this.ODo.get(e);
+    return this.qRo.get(e);
   }
 }
 exports.TutorialModel = TutorialModel;

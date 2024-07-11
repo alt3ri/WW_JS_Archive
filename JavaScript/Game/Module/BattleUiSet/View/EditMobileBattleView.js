@@ -8,11 +8,11 @@ const UE = require("ue"),
 class EditMobileBattleView extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
-      (this.Pit = new Map()),
+      (this.Kot = new Map()),
       this.CreateThenShowByResourceIdAsync("UiView_FightEdit", e);
   }
   async OnBeforeStartAsync() {
-    await this.xCt();
+    await this.jgt();
   }
   OnAfterShow() {
     var e = ModelManager_1.ModelManager.BattleUiSetModel;
@@ -22,7 +22,7 @@ class EditMobileBattleView extends UiPanelBase_1.UiPanelBase {
         break;
       }
   }
-  async xCt() {
+  async jgt() {
     var t = ModelManager_1.ModelManager.BattleUiSetModel.GetPanelDataMap(),
       a = this.RootActor.GetComponentByClass(
         UE.LGUIComponentsRegistry.StaticClass(),
@@ -42,32 +42,32 @@ class EditMobileBattleView extends UiPanelBase_1.UiPanelBase {
           r,
         )),
         i.push(n),
-        this.Pit.set(e, s));
+        this.Kot.set(e, s));
     }
     await Promise.all(i);
   }
   ResetAllPanelItem() {
-    for (const e of this.Pit.values()) e.ResetAllPanelItem();
+    for (const e of this.Kot.values()) e.ResetAllPanelItem();
   }
   SavePanelItem() {
-    for (const e of this.Pit.values()) e.SavePanelItem();
+    for (const e of this.Kot.values()) e.SavePanelItem();
   }
   GetPanel(e) {
-    return this.Pit.get(e);
+    return this.Kot.get(e);
   }
   GetPanelItem(e) {
-    var t = this.Pit.get(e.PanelIndex);
+    var t = this.Kot.get(e.PanelIndex);
     if (t) return t.GetPanelItem(e.PanelItemIndex);
   }
   RefreshHierarchyIndex() {
-    for (const a of this.Pit.values()) {
+    for (const a of this.Kot.values()) {
       var e = a.PanelData,
         t = a.GetRootItem();
       e && ((e = t.GetHierarchyIndex()), a.RefreshHierarchyIndex(e));
     }
   }
   IsAnyItemOverlap(e) {
-    for (const t of this.Pit.values()) if (t.IsAnyItemOverlap(e)) return !0;
+    for (const t of this.Kot.values()) if (t.IsAnyItemOverlap(e)) return !0;
     return !1;
   }
 }

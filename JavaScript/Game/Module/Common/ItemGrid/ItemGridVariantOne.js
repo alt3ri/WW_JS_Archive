@@ -105,7 +105,7 @@ class StarLayoutItem extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
       (this.StarLayout = void 0),
-      (this.sAt = (e, t, s) => {
+      (this.vke = (e, t, s) => {
         return { Key: s, Value: new StarItem(t) };
       }),
       this.CreateThenShowByActor(e.GetOwner());
@@ -119,7 +119,7 @@ class StarLayoutItem extends UiPanelBase_1.UiPanelBase {
   OnStart() {
     this.StarLayout = new GenericLayoutNew_1.GenericLayoutNew(
       this.GetVerticalLayout(0),
-      this.sAt,
+      this.vke,
       this.GetItem(1),
     );
   }

@@ -9,10 +9,10 @@ const UE = require("ue"),
 class ComposeItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
-      (this.dqt = void 0),
-      (this.Wgt = void 0),
-      (this.UIt = (s) => {
-        this.Wgt && (this.Wgt(this.dqt), this.xqt());
+      (this.fGt = void 0),
+      (this.oft = void 0),
+      (this.BTt = (s) => {
+        this.oft && (this.oft(this.fGt), this.bGt());
       });
   }
   OnRegisterComponent() {
@@ -25,93 +25,93 @@ class ComposeItem extends GridProxyAbstract_1.GridProxyAbstract {
       [9, UE.UIItem],
       [12, UE.UIText],
     ]),
-      (this.BtnBindInfo = [[6, this.UIt]]);
+      (this.BtnBindInfo = [[6, this.BTt]]);
   }
   Refresh(s, i, t) {
-    (this.dqt = s),
-      this.C4e(),
-      this.Pqt(),
+    (this.fGt = s),
+      this.P5e(),
+      this.BGt(),
       this.Kbe(),
-      this.IPt(),
-      this.wqt(),
-      this.xqt(),
-      this.IVe(i, !1);
+      this.Rxt(),
+      this.qGt(),
+      this.bGt(),
+      this.N6e(i, !1);
   }
-  C4e() {
+  P5e() {
     var s = ConfigManager_1.ConfigManager.ComposeConfig.GetSynthesisFormulaById(
-        this.dqt.ItemId,
+        this.fGt.ItemId,
       ),
       s = ConfigManager_1.ConfigManager.ComposeConfig.GetLocalText(s.Name);
     this.GetText(12).SetText(s);
   }
-  Pqt() {
-    switch (this.dqt.MainType) {
+  BGt() {
+    switch (this.fGt.MainType) {
       case 1:
-        if (35 === this.dqt.SubType)
+        if (35 === this.fGt.SubType)
           return void this.SetItemQualityIcon(
             this.GetSprite(10),
-            this.dqt.ItemId,
+            this.fGt.ItemId,
           );
         break;
       case 2:
-        if (37 === this.dqt.SubType)
+        if (37 === this.fGt.SubType)
           return void this.SetItemQualityIcon(
             this.GetSprite(10),
-            this.dqt.ItemId,
+            this.fGt.ItemId,
           );
     }
     var s = ConfigManager_1.ConfigManager.ComposeConfig.GetSynthesisFormulaById(
-      this.dqt.ItemId,
+      this.fGt.ItemId,
     );
     this.SetItemQualityIcon(this.GetSprite(10), s.ItemId);
   }
   Kbe() {
-    switch (this.dqt.MainType) {
+    switch (this.fGt.MainType) {
       case 1:
-        if (0 === this.dqt.SubType)
+        if (0 === this.fGt.SubType)
           return (
             (s =
               ConfigManager_1.ConfigManager.ComposeConfig.GetSynthesisFormulaById(
-                this.dqt.ItemId,
+                this.fGt.ItemId,
               )),
             void this.SetItemIcon(this.GetTexture(11), s.ItemId)
           );
-        this.SetItemIcon(this.GetTexture(11), this.dqt.ItemId);
+        this.SetItemIcon(this.GetTexture(11), this.fGt.ItemId);
         break;
       case 2:
-        if (0 === this.dqt.SubType)
+        if (0 === this.fGt.SubType)
           return (
             (s =
               ConfigManager_1.ConfigManager.ComposeConfig.GetSynthesisFormulaById(
-                this.dqt.ItemId,
+                this.fGt.ItemId,
               )),
             void this.SetItemIcon(this.GetTexture(11), s.ItemId)
           );
-        this.SetItemIcon(this.GetTexture(11), this.dqt.ItemId);
+        this.SetItemIcon(this.GetTexture(11), this.fGt.ItemId);
         break;
       case 3:
         var s =
           ConfigManager_1.ConfigManager.ComposeConfig.GetSynthesisFormulaById(
-            this.dqt.ItemId,
+            this.fGt.ItemId,
           );
         this.SetItemIcon(this.GetTexture(11), s.ItemId);
     }
   }
-  IPt() {
-    switch (this.dqt.MainType) {
+  Rxt() {
+    switch (this.fGt.MainType) {
       case 1:
       case 2:
         this.GetItem(7).SetUIActive(!1);
         break;
       case 3:
-        var s = this.dqt;
+        var s = this.fGt;
         this.GetItem(7).SetUIActive(!s.IsUnlock);
     }
   }
-  wqt() {
-    switch (this.dqt.MainType) {
+  qGt() {
+    switch (this.fGt.MainType) {
       case 1:
-        var s = this.dqt;
+        var s = this.fGt;
         35 === s.SubType
           ? this.GetItem(8).SetUIActive(!1)
           : ((s =
@@ -121,7 +121,7 @@ class ComposeItem extends GridProxyAbstract_1.GridProxyAbstract {
             this.GetItem(8).SetUIActive(!s));
         break;
       case 2:
-        var s = this.dqt;
+        var s = this.fGt;
         37 === s.SubType
           ? this.GetItem(8).SetUIActive(!1)
           : ((s = ComposeController_1.ComposeController.CheckCanStructure(
@@ -130,7 +130,7 @@ class ComposeItem extends GridProxyAbstract_1.GridProxyAbstract {
             this.GetItem(8).SetUIActive(!s));
         break;
       case 3:
-        s = this.dqt;
+        s = this.fGt;
         0 !==
         ModelManager_1.ModelManager.ComposeModel.GetPurificationDataById(
           s.ItemId,
@@ -142,19 +142,19 @@ class ComposeItem extends GridProxyAbstract_1.GridProxyAbstract {
           : this.GetItem(8).SetUIActive(!0);
     }
   }
-  xqt() {
-    this.GetItem(9).SetUIActive(this.dqt.IsNew);
+  bGt() {
+    this.GetItem(9).SetUIActive(this.fGt.IsNew);
   }
   BindOnClickedCallback(s) {
-    this.Wgt = s;
+    this.oft = s;
   }
   OnSelected(s) {
-    this.IVe(!0);
+    this.N6e(!0);
   }
   OnDeselected(s) {
-    this.IVe(!1);
+    this.N6e(!1);
   }
-  IVe(s, i = !0) {
+  N6e(s, i = !0) {
     var t = this.GetExtendToggle(6);
     s ? t.SetToggleState(1, i) : t.SetToggleState(0, !1);
   }

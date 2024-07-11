@@ -8,12 +8,12 @@ const UE = require("ue"),
 class RoleFavorPreciousItemComponent extends UiPanelBase_1.UiPanelBase {
   constructor(t, i, s = !1) {
     super(),
-      (this.UBt = void 0),
-      (this.S_o = void 0),
-      (this.E_o = void 0),
-      (this.y_o = void 0),
-      (this.I_o = i),
-      (this.RHt = s),
+      (this.xbt = void 0),
+      (this.fuo = void 0),
+      (this.puo = void 0),
+      (this.vuo = void 0),
+      (this.Muo = i),
+      (this.Rjt = s),
       t && this.CreateThenShowByActor(t.GetOwner());
   }
   OnRegisterComponent() {
@@ -26,36 +26,36 @@ class RoleFavorPreciousItemComponent extends UiPanelBase_1.UiPanelBase {
     ];
   }
   OnStart() {
-    this.I_o &&
-      ((this.UBt = this.GetTexture(0)),
-      (this.S_o = this.GetItem(2)),
-      (this.E_o = this.GetItem(3)),
-      (this.y_o = this.GetItem(4)),
-      this.SetTextureByPath(this.I_o.Pic, this.UBt),
-      this.T_o(this.RHt));
+    this.Muo &&
+      ((this.xbt = this.GetTexture(0)),
+      (this.fuo = this.GetItem(2)),
+      (this.puo = this.GetItem(3)),
+      (this.vuo = this.GetItem(4)),
+      this.SetTextureByPath(this.Muo.Pic, this.xbt),
+      this.Euo(this.Rjt));
   }
   OnBeforeDestroy() {
-    (this.I_o = void 0),
-      (this.RHt = !1),
-      (this.UBt = void 0),
-      (this.S_o = void 0),
-      (this.E_o = void 0),
-      (this.y_o = void 0);
+    (this.Muo = void 0),
+      (this.Rjt = !1),
+      (this.xbt = void 0),
+      (this.fuo = void 0),
+      (this.puo = void 0),
+      (this.vuo = void 0);
   }
   Refresh(t, i = !1) {
-    (this.I_o = t),
-      (this.RHt = i),
-      this.SetTextureByPath(this.I_o.Pic, this.UBt),
-      this.T_o(this.RHt);
+    (this.Muo = t),
+      (this.Rjt = i),
+      this.SetTextureByPath(this.Muo.Pic, this.xbt),
+      this.Euo(this.Rjt);
   }
-  T_o(t) {
+  Euo(t) {
     t
-      ? this.UBt.SetColor(UE.Color.FromHex(GRAY_COLOR))
-      : this.UBt.SetColor(UE.Color.FromHex(NORMAL_COLOR)),
-      this.UBt.SetUIActive(!t),
-      this.S_o.SetUIActive(!1),
-      this.E_o.SetUIActive(!1),
-      this.y_o.SetUIActive(!1);
+      ? this.xbt.SetColor(UE.Color.FromHex(GRAY_COLOR))
+      : this.xbt.SetColor(UE.Color.FromHex(NORMAL_COLOR)),
+      this.xbt.SetUIActive(!t),
+      this.fuo.SetUIActive(!1),
+      this.puo.SetUIActive(!1),
+      this.vuo.SetUIActive(!1);
   }
 }
 exports.RoleFavorPreciousItemComponent = RoleFavorPreciousItemComponent;

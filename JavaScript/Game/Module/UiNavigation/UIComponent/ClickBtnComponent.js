@@ -7,9 +7,9 @@ const StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
   HotKeyComponent_1 = require("./HotKeyComponent");
 class ClickBtnComponent extends HotKeyComponent_1.HotKeyComponent {
   OnPress(e) {
-    this.m6i(e.BindButtonTag);
+    this.c8i(e.BindButtonTag);
   }
-  m6i(e) {
+  c8i(e) {
     e === HotKeyViewDefine_1.EXIT_TAG
       ? UiNavigationNewController_1.UiNavigationNewController.HotKeyCloseView()
       : UiNavigationNewController_1.UiNavigationNewController.ClickButton(e);

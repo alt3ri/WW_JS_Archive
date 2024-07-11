@@ -8,41 +8,41 @@ const ModelBase_1 = require("../../../../../Core/Framework/ModelBase"),
 class ManipulaterModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
-      (this.B$o = 0),
-      (this.b$o = Vector_1.Vector.ZeroVectorProxy),
+      (this.PYo = 0),
+      (this.xYo = Vector_1.Vector.ZeroVectorProxy),
       (this.ExitHoldingStateCameraLocation = void 0),
-      (this.q$o = 0),
-      (this.G$o = new Set());
+      (this.wYo = 0),
+      (this.BYo = new Set());
   }
   SetManipulateMode(e) {
-    this.B$o = e;
+    this.PYo = e;
   }
   GetManipulateMode() {
-    return this.B$o;
+    return this.PYo;
   }
   SetTargetPartLocation(e) {
-    this.b$o = e;
+    this.xYo = e;
   }
   GetTargetPartLocation() {
-    return this.b$o;
+    return this.xYo;
   }
   NeedShowLandTips() {
-    return 0 < this.q$o;
+    return 0 < this.wYo;
   }
   AddShowLandTipsCount(e) {
-    this.G$o.has(e) ||
-      (0 === this.q$o &&
+    this.BYo.has(e) ||
+      (0 === this.wYo &&
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.OnManipulateShowLandTips,
           !0,
         ),
-      this.q$o++,
-      this.G$o.add(e));
+      this.wYo++,
+      this.BYo.add(e));
   }
   RemoveShowLandTipsCount(e) {
-    this.G$o.has(e) &&
-      0 !== this.q$o &&
-      (this.G$o.delete(e), this.q$o--, 0 === this.q$o) &&
+    this.BYo.has(e) &&
+      0 !== this.wYo &&
+      (this.BYo.delete(e), this.wYo--, 0 === this.wYo) &&
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnManipulateShowLandTips,
         !1,

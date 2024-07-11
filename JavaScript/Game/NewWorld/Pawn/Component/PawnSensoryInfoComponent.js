@@ -2,10 +2,10 @@
 var __decorate =
   (this && this.__decorate) ||
   function (t, e, n, i) {
-    var o,
-      s = arguments.length,
+    var s,
+      o = arguments.length,
       r =
-        s < 3
+        o < 3
           ? e
           : null === i
             ? (i = Object.getOwnPropertyDescriptor(e, n))
@@ -14,8 +14,8 @@ var __decorate =
       r = Reflect.decorate(t, e, n, i);
     else
       for (var h = t.length - 1; 0 <= h; h--)
-        (o = t[h]) && (r = (s < 3 ? o(r) : 3 < s ? o(e, n, r) : o(e, n)) || r);
-    return 3 < s && r && Object.defineProperty(e, n, r), r;
+        (s = t[h]) && (r = (o < 3 ? s(r) : 3 < o ? s(e, n, r) : s(e, n)) || r);
+    return 3 < o && r && Object.defineProperty(e, n, r), r;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PawnSensoryInfoComponent = void 0);
@@ -30,15 +30,16 @@ const cpp_1 = require("cpp"),
 let PawnSensoryInfoComponent = class PawnSensoryInfoComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments),
-      (this.zhn = 0),
-      (this.Zhn = !1),
-      (this.eln = !1),
-      (this.tln = Number.MAX_VALUE),
-      (this.iln = void 0),
-      (this.oln = void 0),
-      (this.rln = () => {
-        (this.Zhn = !0),
-          this.eln || this.nln(),
+      (this.whn = 0),
+      (this.Bhn = !1),
+      (this.bhn = !1),
+      (this.qhn = Number.MAX_VALUE),
+      (this.Ghn = void 0),
+      (this.kTa = new Set()),
+      (this.Nhn = void 0),
+      (this.Ohn = () => {
+        (this.Bhn = !0),
+          this.bhn || this.khn(),
           EventSystem_1.EventSystem.EmitWithTarget(
             this.Entity,
             EventDefine_1.EEventName.EnterLogicRange,
@@ -48,8 +49,8 @@ let PawnSensoryInfoComponent = class PawnSensoryInfoComponent extends EntityComp
             this.Entity.Id,
           );
       }),
-      (this.sln = () => {
-        (this.Zhn = !1),
+      (this.Fhn = () => {
+        (this.Bhn = !1),
           EventSystem_1.EventSystem.EmitWithTarget(
             this.Entity,
             EventDefine_1.EEventName.LeaveLogicRange,
@@ -59,77 +60,71 @@ let PawnSensoryInfoComponent = class PawnSensoryInfoComponent extends EntityComp
             this.Entity.Id,
           );
       }),
-      (this.vVs = () => {
-        this.iln &&
-          (EnvironmentalPerceptionController_1.EnvironmentalPerceptionController.DestroyPlayerPerceptionEvent(
-            this.iln,
-          ),
-          (this.iln = void 0));
-      }),
-      (this.MVs = () => {
-        this.oln &&
-          (EnvironmentalPerceptionController_1.EnvironmentalPerceptionController.DestroyPlayerPerceptionEvent(
-            this.oln,
-          ),
-          (this.oln = void 0));
-      }),
-      (this.nln = () => {
-        this.eln ||
-          ((this.eln = !0),
+      (this.khn = () => {
+        this.bhn ||
+          ((this.bhn = !0),
           EventSystem_1.EventSystem.EmitWithTarget(
             this.Entity,
             EventDefine_1.EEventName.EnterPresentationInitRange,
           ),
-          this.iln &&
-            (EnvironmentalPerceptionController_1.EnvironmentalPerceptionController.DestroyPlayerPerceptionEvent(
-              this.iln,
-            ),
-            (this.iln = void 0)));
+          this.Ghn &&
+            (this.DeletePerceptionEvent(this.Ghn), (this.Ghn = void 0)));
       });
+  }
+  CreatePerceptionEvent() {
+    var t =
+      EnvironmentalPerceptionController_1.EnvironmentalPerceptionController.CreatePlayerPerceptionEvent();
+    return this.kTa.add(t), t;
+  }
+  DeletePerceptionEvent(t) {
+    this.kTa.delete(t),
+      EnvironmentalPerceptionController_1.EnvironmentalPerceptionController.DestroyPlayerPerceptionEvent(
+        t,
+      );
+  }
+  NTa() {
+    for (const t of this.kTa)
+      EnvironmentalPerceptionController_1.EnvironmentalPerceptionController.DestroyPlayerPerceptionEvent(
+        t,
+      );
+    this.kTa.clear();
+  }
+  RegisterPerceptionEvent() {
+    var t = this.Entity.GameBudgetManagedToken;
+    if (t) for (const e of this.kTa) e.IsValid() || e.Register(t);
   }
   OnActivate() {
     var t = this.Entity.GetComponent(0),
       e = this.Entity?.GameBudgetManagedToken;
     return (
-      t.GetEntityType() === Protocol_1.Aki.Protocol.HBs.Proto_Player
-        ? this.nln()
-        : (this.iln &&
-            (EnvironmentalPerceptionController_1.EnvironmentalPerceptionController.DestroyPlayerPerceptionEvent(
-              this.iln,
-            ),
-            (this.iln = void 0)),
-          (this.iln =
-            EnvironmentalPerceptionController_1.EnvironmentalPerceptionController.CreatePlayerPerceptionEvent()),
-          this.iln.Init(
-            PERCEPTION_SEARCH_RANGE,
-            e,
-            this.nln,
-            void 0,
-            this.vVs,
-          )),
-      !this.oln &&
-        0 < this.zhn &&
-        ((this.oln =
-          EnvironmentalPerceptionController_1.EnvironmentalPerceptionController.CreatePlayerPerceptionEvent()),
-        this.oln.Init(this.zhn, e, this.rln, this.sln, this.MVs)),
+      t.GetEntityType() === Protocol_1.Aki.Protocol.wks.Proto_Player
+        ? this.khn()
+        : (this.Ghn &&
+            (this.DeletePerceptionEvent(this.Ghn), (this.Ghn = void 0)),
+          (this.Ghn = this.CreatePerceptionEvent()),
+          this.Ghn.Init(PERCEPTION_SEARCH_RANGE, e, this.khn)),
+      !this.Nhn &&
+        0 < this.whn &&
+        ((this.Nhn = this.CreatePerceptionEvent()),
+        this.Nhn.Init(this.whn, e, this.Ohn, this.Fhn)),
       !0
     );
   }
   SetLogicRange(t) {
     var e;
-    t > this.zhn &&
-      ((this.zhn = t),
-      this.oln
-        ? this.oln.UpdateDistance(t)
+    t > this.whn &&
+      ((this.whn = t),
+      this.Nhn
+        ? this.Nhn.UpdateDistance(t)
         : (e = this.Entity?.GameBudgetManagedToken) &&
-          ((this.oln =
-            EnvironmentalPerceptionController_1.EnvironmentalPerceptionController.CreatePlayerPerceptionEvent()),
-          this.oln.Init(t, e, this.rln, this.sln, this.MVs)));
+          ((this.Nhn = this.CreatePerceptionEvent()),
+          this.Nhn.Init(t, e, this.Ohn, this.Fhn)));
   }
   OnEnd() {
     return (
-      this.vVs(),
-      this.MVs(),
+      (this.Nhn = void 0),
+      (this.Ghn = void 0),
+      this.NTa(),
       EventSystem_1.EventSystem.EmitWithTarget(
         this.Entity,
         EventDefine_1.EEventName.LeaveLogicRange,
@@ -142,36 +137,36 @@ let PawnSensoryInfoComponent = class PawnSensoryInfoComponent extends EntityComp
     );
   }
   get PlayerDistSquared() {
-    return this.tln;
+    return this.qhn;
   }
   get PlayerDist() {
-    return Math.sqrt(this.tln);
+    return Math.sqrt(this.qhn);
   }
   get LogicRange() {
-    return this.zhn;
+    return this.whn;
   }
   get IsInLogicRange() {
-    return this.Zhn;
+    return this.Bhn;
   }
   GetDebugString() {
     let t = "";
     return (
       (t =
-        (t += `DefaultRangeToken: ${this.iln?.EventToken ?? "undefined"}
+        (t += `DefaultRangeToken: ${this.Ghn?.EventToken ?? "undefined"}
 `) +
-        `LogicRangeToken: ${this.oln?.EventToken ?? "undefined"}; LogicRange: ${this.zhn}; IsInRangeInternal: ${this.IsInLogicRange}
+        `LogicRangeToken: ${this.Nhn?.EventToken ?? "undefined"}; LogicRange: ${this.whn}; IsInRangeInternal: ${this.IsInLogicRange}
 LogicRangeInfo:
 `),
-      this.oln &&
+      this.Nhn &&
         (t += cpp_1.FKuroPerceptionInterface.GetPlayerPerceptionDebugString(
-          this.oln.EventToken,
+          this.Nhn.EventToken,
         )),
       t
     );
   }
 };
 (PawnSensoryInfoComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(106)],
+  [(0, RegisterComponent_1.RegisterComponent)(108)],
   PawnSensoryInfoComponent,
 )),
   (exports.PawnSensoryInfoComponent = PawnSensoryInfoComponent);

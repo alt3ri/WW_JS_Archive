@@ -52,7 +52,7 @@ class GameplayCueRecorderHook extends (exports.GameplayCueRecorderObject =
   GameplayCueRecorderObject) {
   constructor(e, t, r, i) {
     super(e, r, i),
-      (this.psr = new UE.Vector()),
+      (this.gar = new UE.Vector()),
       (this.n8 = ""),
       e.RootComponent ||
         e.AddComponentByClass(
@@ -67,7 +67,7 @@ class GameplayCueRecorderHook extends (exports.GameplayCueRecorderObject =
         "GameplayCue " + this.Actor.GetName(),
       ),
       (this.n8 = t.Paths[0]),
-      (this.psr = t.TargetPosition);
+      (this.gar = t.TargetPosition);
   }
   StopRecorder(e) {
     this.Recorder.AddStaticStrPropertyTrack(
@@ -80,7 +80,7 @@ class GameplayCueRecorderHook extends (exports.GameplayCueRecorderObject =
       this.Recorder.AddStaticVectorPropertyTrack(
         this.Actor,
         new UE.FName("Position0"),
-        this.psr,
+        this.gar,
         0,
         e,
       ),

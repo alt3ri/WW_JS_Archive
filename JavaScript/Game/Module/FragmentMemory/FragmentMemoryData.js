@@ -13,7 +13,7 @@ const MathUtils_1 = require("../../../Core/Utils/MathUtils"),
   ModelManager_1 = require("../../Manager/ModelManager");
 class FragmentMemoryCollectData {
   constructor() {
-    (this.xe = 0), (this.ige = 0), (this.IUn = void 0), (this._be = 0);
+    (this.xe = 0), (this.ige = 0), (this.iwn = void 0), (this._be = 0);
   }
   GetId() {
     return this.xe;
@@ -28,7 +28,7 @@ class FragmentMemoryCollectData {
     return 1 == (1 & this.ige);
   }
   GetTopicData() {
-    return this.IUn;
+    return this.iwn;
   }
   GetIfGetReward() {
     return 1 == ((this.ige >> 1) & 1);
@@ -49,9 +49,9 @@ class FragmentMemoryCollectData {
     return this.GetConfig().Rank;
   }
   Phrase(e) {
-    (this.xe = e.Ekn),
-      (this.ige = e.Mkn),
-      (this._be = Number(MathUtils_1.MathUtils.LongToBigInt(e.dUs)) / 1e3),
+    (this.xe = e.J4n),
+      (this.ige = e.$4n),
+      (this._be = Number(MathUtils_1.MathUtils.LongToBigInt(e.wBs)) / 1e3),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.FragmentRewardRedDot,
         this.xe,
@@ -61,7 +61,7 @@ class FragmentMemoryCollectData {
     return 0 === this._be ? "" : TimeUtil_1.TimeUtil.DateFormatString(this._be);
   }
   BindSourceTopic(e) {
-    this.IUn = e;
+    this.iwn = e;
   }
   GetClueEntrance() {
     return ConfigManager_1.ConfigManager.FragmentMemoryConfig.GetClueEntrance(
@@ -110,50 +110,50 @@ class FragmentMemoryCollectData {
   }
   GetBgResource() {
     var e = ModelManager_1.ModelManager.PlayerInfoModel.GetPlayerGender();
-    return 1 === e ? this.TUn() : 0 === e ? this.LUn() : "";
+    return 1 === e ? this.rwn() : 0 === e ? this.own() : "";
   }
-  TUn() {
+  rwn() {
     return this.GetConfig().BgResourceM;
   }
-  LUn() {
+  own() {
     return this.GetConfig().BgResourceF;
   }
 }
 exports.FragmentMemoryCollectData = FragmentMemoryCollectData;
 class FragmentMemoryTopicData {
   constructor() {
-    (this.xe = 0), (this.DUn = []), (this.AUn = !0);
+    (this.xe = 0), (this.nwn = []), (this.swn = !0);
   }
   GetId() {
     return this.xe;
   }
   Phrase(t) {
-    (this.xe = t.Ekn), (this.DUn = []);
-    for (const i of t.mUs) {
+    (this.xe = t.J4n), (this.nwn = []);
+    for (const i of t.xBs) {
       var e = new FragmentMemoryCollectData(),
         r =
           (e.Phrase(i),
           ConfigManager_1.ConfigManager.FragmentMemoryConfig.GetPhotoMemoryCollectById(
-            i.Ekn,
+            i.J4n,
           ));
-      e.PhraseFromConfig(r), e.BindSourceTopic(this), this.DUn.push(e);
+      e.PhraseFromConfig(r), e.BindSourceTopic(this), this.nwn.push(e);
     }
     var n;
     for (const t of ConfigManager_1.ConfigManager.FragmentMemoryConfig.GetPhotoMemoryCollectConfigListByTopicId(
       this.xe,
     ))
-      this.DUn.find((e) => e.GetId() === t.Id) ||
+      this.nwn.find((e) => e.GetId() === t.Id) ||
         ((n = new FragmentMemoryCollectData()).PhraseFromConfig(t),
         n.BindSourceTopic(this),
-        this.DUn.push(n));
-    this.DUn.sort((e, t) => e.GetRank() - t.GetRank()),
+        this.nwn.push(n));
+    this.nwn.sort((e, t) => e.GetRank() - t.GetRank()),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.FragmentRewardTopicRedDot,
         this.xe,
       );
   }
   GetRedDotState() {
-    for (const e of this.DUn) if (e.GetIfCanGetReward()) return !0;
+    for (const e of this.nwn) if (e.GetIfCanGetReward()) return !0;
     return !1;
   }
   GetClueEntrance() {
@@ -171,22 +171,22 @@ class FragmentMemoryTopicData {
     );
   }
   GetCollectDataList() {
-    return this.DUn;
+    return this.nwn;
   }
   GetMemoryCollectNum() {
-    return this.DUn.length;
+    return this.nwn.length;
   }
   GetFinishCollectNum() {
     let e = 0;
-    for (const t of this.DUn) t.GetIfUnlock() && e++;
+    for (const t of this.nwn) t.GetIfUnlock() && e++;
     return e;
   }
   GetAllCollectState() {
-    for (const e of this.DUn) if (!e.GetIfUnlock()) return !1;
+    for (const e of this.nwn) if (!e.GetIfUnlock()) return !1;
     return !0;
   }
   GetUnlockState() {
-    return this.AUn;
+    return this.swn;
   }
   GetConfig() {
     return ConfigManager_1.ConfigManager.FragmentMemoryConfig.GetPhotoMemoryTopicById(

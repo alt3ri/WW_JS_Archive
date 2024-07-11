@@ -14,13 +14,13 @@ const UE = require("ue"),
 class CookSuccessView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.$qt = void 0),
-      (this.S9 = 0),
-      (this.ZGt = void 0),
-      (this.dIt = () => {
-        this.mIt();
+      (this.zGt = void 0),
+      (this.E9 = 0),
+      (this.eOt = void 0),
+      (this.Mke = () => {
+        this.m2e();
       }),
-      (this.mIt = () => {
+      (this.m2e = () => {
         this.CloseMe();
       }),
       (this.JGe = (e, i, t) => {
@@ -39,37 +39,37 @@ class CookSuccessView extends UiViewBase_1.UiViewBase {
       [6, UE.UIButtonComponent],
     ]),
       (this.BtnBindInfo = [
-        [5, this.mIt],
-        [6, this.dIt],
+        [5, this.m2e],
+        [6, this.Mke],
       ]);
   }
   OnStart() {
     var e = this.OpenParam;
-    (this.S9 = e.CookRewardPopType),
-      (this.$qt = new GenericScrollView_1.GenericScrollView(
+    (this.E9 = e.CookRewardPopType),
+      (this.zGt = new GenericScrollView_1.GenericScrollView(
         this.GetScrollViewWithScrollbar(3),
         this.JGe,
       )),
       this.GetButton(5).GetRootComponent().SetUIActive(!1),
-      (this.ZGt = new ExpSliderItem(this.GetItem(4)));
+      (this.eOt = new ExpSliderItem(this.GetItem(4)));
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.FixSuccess,
-      this.mIt,
+      this.m2e,
     );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.FixSuccess,
-      this.mIt,
+      this.m2e,
     );
   }
   OnAfterShow() {
-    this.mGe(), this.bqe(), this.eNt();
+    this.mGe(), this.bqe(), this.tOt();
   }
   mGe() {
-    switch (this.S9) {
+    switch (this.E9) {
       case 1:
       case 2:
         LguiUtil_1.LguiUtil.SetLocalText(this.GetText(0), "GetItem");
@@ -81,19 +81,19 @@ class CookSuccessView extends UiViewBase_1.UiViewBase {
       e = [{ IncId: 0, ItemId: e.ItemId }, e.ItemNum];
       i.push(e);
     }),
-      this.$qt.RefreshByData(i);
+      this.zGt.RefreshByData(i);
   }
-  eNt() {
-    switch (this.S9) {
+  tOt() {
+    switch (this.E9) {
       case 1:
-        this.ZGt.SetActive(!0), this.ZGt.Update();
+        this.eOt.SetActive(!0), this.eOt.Update();
         break;
       case 2:
-        this.ZGt.SetActive(!1);
+        this.eOt.SetActive(!1);
     }
   }
   OnBeforeDestroy() {
-    this.$qt.ClearChildren();
+    this.zGt.ClearChildren();
   }
 }
 exports.CookSuccessView = CookSuccessView;

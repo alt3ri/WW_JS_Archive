@@ -41,39 +41,39 @@ let SceneItemConveyorBeltComponent =
   ) {
     constructor() {
       super(...arguments),
-        (this.tCn = void 0),
-        (this.iCn = void 0),
-        (this.ktn = void 0),
-        (this.oCn = void 0),
-        (this.rCn = void 0),
-        (this.nCn = []),
-        (this.sCn = new Map()),
-        (this.aCn = !1),
-        (this.hCn = !1),
-        (this.yun = Vector_1.Vector.Create(0, 0, 0)),
-        (this.Qrr = 0),
-        (this.jVr = 0),
-        (this.Pun = 0),
+        (this.Bdn = void 0),
+        (this.bdn = void 0),
+        (this.vtn = void 0),
+        (this.qdn = void 0),
+        (this.Gdn = void 0),
+        (this.Ndn = []),
+        (this.Odn = new Map()),
+        (this.kdn = !1),
+        (this.Fdn = !1),
+        (this.iun = Vector_1.Vector.Create(0, 0, 0)),
+        (this.jnr = 0),
+        (this.yVr = 0),
+        (this.lun = 0),
         (this.cz = Vector_1.Vector.Create(0, 0, 0)),
         (this.kRe = Vector_1.Vector.Create(0, 0, 0)),
-        (this.cjr = (t) => {
-          if (this.hCn && this.tCn) {
-            (!this.Pun || Math.abs(t - this.Pun) > DELTATIMECHANGEVALUE) &&
-              (this.Pun = t);
+        (this.KHr = (t) => {
+          if (this.Fdn && this.Bdn) {
+            (!this.lun || Math.abs(t - this.lun) > DELTATIMECHANGEVALUE) &&
+              (this.lun = t);
             var e,
               i,
               o,
               s =
-                this.tCn.FieldType.Type ===
+                this.Bdn.FieldType.Type ===
                 IComponent_1.EConveyorBeltFieldType.PointField,
               n = s ? this.Entity.GetComponent(1).ActorLocationProxy : void 0,
-              h = this.Pun * MathUtils_1.MathUtils.MillisecondToSecond;
-            for (const r of this.nCn)
+              h = this.lun * MathUtils_1.MathUtils.MillisecondToSecond;
+            for (const r of this.Ndn)
               s &&
-                (r.ActorLocationProxy.Subtraction(n, this.yun),
-                this.yun.Normalize(NORMALIZE),
-                this.yun.MultiplyEqual(this.Qrr)),
-                this.cz.DeepCopy(this.yun),
+                (r.ActorLocationProxy.Subtraction(n, this.iun),
+                this.iun.Normalize(NORMALIZE),
+                this.iun.MultiplyEqual(this.jnr)),
+                this.cz.DeepCopy(this.iun),
                 this.cz.MultiplyEqual(h),
                 this.kRe.DeepCopy(r.ActorLocationProxy),
                 this.kRe.AdditionEqual(this.cz),
@@ -83,18 +83,18 @@ let SceneItemConveyorBeltComponent =
                       "loc",
                       r.ActorLocationProxy,
                     ]));
-            for ([e, i] of this.sCn)
+            for ([e, i] of this.Odn)
               e.Valid &&
                 (s &&
                   (e.Entity.GetComponent(1).ActorLocationProxy.Subtraction(
                     n,
-                    this.yun,
+                    this.iun,
                   ),
-                  this.yun.Normalize(NORMALIZE),
-                  this.yun.MultiplyEqual(this.Qrr),
-                  (e.DeltaConveyBeltSpeed = this.yun.ToUeVector())),
+                  this.iun.Normalize(NORMALIZE),
+                  this.iun.MultiplyEqual(this.jnr),
+                  (e.DeltaConveyBeltSpeed = this.iun.ToUeVector())),
                 (o = e.SetAddMoveWorld(
-                  this.yun.ToUeVector(),
+                  this.iun.ToUeVector(),
                   h,
                   void 0,
                   i,
@@ -102,65 +102,65 @@ let SceneItemConveyorBeltComponent =
                   void 0,
                   void 0,
                 )),
-                this.sCn.set(e, o));
-            this.aCn &&
-              this.oCn &&
-              this.oCn.Valid &&
-              this.rCn.PositionState ===
+                this.Odn.set(e, o));
+            this.kdn &&
+              this.qdn &&
+              this.qdn.Valid &&
+              this.Gdn.PositionState ===
                 CharacterUnifiedStateTypes_1.ECharPositionState.Ground &&
               (s &&
-                (this.oCn.Entity.GetComponent(1).ActorLocationProxy.Subtraction(
+                (this.qdn.Entity.GetComponent(1).ActorLocationProxy.Subtraction(
                   n,
-                  this.yun,
+                  this.iun,
                 ),
-                this.yun.Normalize(NORMALIZE),
-                this.yun.MultiplyEqual(this.Qrr),
-                (this.oCn.DeltaConveyBeltSpeed = this.yun.ToUeVector())),
-              (this.jVr = this.oCn.SetAddMoveWorld(
-                this.yun.ToUeVector(),
+                this.iun.Normalize(NORMALIZE),
+                this.iun.MultiplyEqual(this.jnr),
+                (this.qdn.DeltaConveyBeltSpeed = this.iun.ToUeVector())),
+              (this.yVr = this.qdn.SetAddMoveWorld(
+                this.iun.ToUeVector(),
                 h,
                 void 0,
-                this.jVr,
+                this.yVr,
                 void 0,
                 void 0,
                 void 0,
               )));
           }
         }),
-        (this.lCn = (t, e) => {
+        (this.Vdn = (t, e) => {
           e = e.Entity;
           const i = e.GetComponent(1);
           var o = i?.CreatureData.GetEntityType();
-          if (o === Protocol_1.Aki.Protocol.HBs.Proto_Player)
-            (this.aCn = t)
-              ? ((this.oCn = e.GetComponent(161)),
-                (this.rCn = e.GetComponent(89)),
-                (this.oCn.DeltaConveyBeltSpeed = this.yun.ToUeVector()))
-              : ((this.oCn.DeltaConveyBeltSpeed = void 0),
-                (this.oCn = void 0),
-                (this.rCn = void 0));
+          if (o === Protocol_1.Aki.Protocol.wks.Proto_Player)
+            (this.kdn = t)
+              ? ((this.qdn = e.GetComponent(163)),
+                (this.Gdn = e.GetComponent(91)),
+                (this.qdn.DeltaConveyBeltSpeed = this.iun.ToUeVector()))
+              : ((this.qdn.DeltaConveyBeltSpeed = void 0),
+                (this.qdn = void 0),
+                (this.Gdn = void 0));
           else if (
-            o === Protocol_1.Aki.Protocol.HBs.Proto_Npc ||
-            o === Protocol_1.Aki.Protocol.HBs.Proto_Monster ||
-            o === Protocol_1.Aki.Protocol.HBs.Proto_Animal ||
-            o === Protocol_1.Aki.Protocol.HBs.Proto_Vision
+            o === Protocol_1.Aki.Protocol.wks.Proto_Npc ||
+            o === Protocol_1.Aki.Protocol.wks.Proto_Monster ||
+            o === Protocol_1.Aki.Protocol.wks.Proto_Animal ||
+            o === Protocol_1.Aki.Protocol.wks.Proto_Vision
           ) {
-            var s = e.GetComponent(36);
+            var s = e.GetComponent(37);
             s &&
-              ((n = this.sCn.get(s)),
-              t ? n || this.sCn.set(s, -1) : n && this.sCn.delete(s));
-          } else if (o === Protocol_1.Aki.Protocol.HBs.Proto_SceneItem)
-            if (e.GetComponent(140)) {
+              ((n = this.Odn.get(s)),
+              t ? n || this.Odn.set(s, -1) : n && this.Odn.delete(s));
+          } else if (o === Protocol_1.Aki.Protocol.wks.Proto_SceneItem)
+            if (e.GetComponent(142)) {
               const i = e.GetComponent(1);
-              var n = this.nCn.indexOf(i);
+              var n = this.Ndn.indexOf(i);
               t
-                ? -1 === n && this.nCn.push(i)
-                : -1 !== n && this.nCn.splice(n, 1);
+                ? -1 === n && this.Ndn.push(i)
+                : -1 !== n && this.Ndn.splice(n, 1);
             }
-          this._Cn();
+          this.Hdn();
         }),
-        (this.uCn = (t, e) => {
-          (-1152559349 !== t && -3775711 !== t) || this.cCn();
+        (this.jdn = (t, e) => {
+          (-1152559349 !== t && -3775711 !== t) || this.Wdn();
         });
     }
     OnInitData(t) {
@@ -172,7 +172,7 @@ let SceneItemConveyorBeltComponent =
             Log_1.Log.Error("SceneItem", 36, "状态组配置数量不对", ["num", i]),
           !1
         );
-      this.iCn = e.StateGroups;
+      this.bdn = e.StateGroups;
       for (let t = 0; t < i; t++) {
         var o = e.StateGroups[t];
         Log_1.Log.CheckDebug() &&
@@ -185,37 +185,37 @@ let SceneItemConveyorBeltComponent =
     }
     OnStart() {
       return (
-        (this.ktn = this.Entity.GetComponent(74)),
-        this.ktn && this.ktn.AddOnEntityOverlapCallback(this.lCn),
+        (this.vtn = this.Entity.GetComponent(76)),
+        this.vtn && this.vtn.AddOnEntityOverlapCallback(this.Vdn),
         EventSystem_1.EventSystem.AddWithTarget(
           this.Entity,
           EventDefine_1.EEventName.OnSceneItemStateChange,
-          this.uCn,
+          this.jdn,
         ),
-        this.cCn(),
+        this.Wdn(),
         !0
       );
     }
     OnClear() {
       return (
-        this.ktn && this.ktn.RemoveOnEntityOverlapCallback(this.lCn),
+        this.vtn && this.vtn.RemoveOnEntityOverlapCallback(this.Vdn),
         EventSystem_1.EventSystem.RemoveWithTarget(
           this.Entity,
           EventDefine_1.EEventName.OnSceneItemStateChange,
-          this.uCn,
+          this.jdn,
         ),
         !0
       );
     }
     OnForceTick(t) {
-      this.cjr(t);
+      this.KHr(t);
     }
     OnActivate() {
       !Info_1.Info.EnableForceTick &&
         this.Active &&
         ComponentForceTickController_1.ComponentForceTickController.RegisterTick(
           this,
-          this.cjr,
+          this.KHr,
         );
     }
     OnEnable() {
@@ -223,7 +223,7 @@ let SceneItemConveyorBeltComponent =
         this.Entity?.IsInit &&
         ComponentForceTickController_1.ComponentForceTickController.RegisterTick(
           this,
-          this.cjr,
+          this.KHr,
         );
     }
     OnEnd() {
@@ -241,44 +241,44 @@ let SceneItemConveyorBeltComponent =
           this,
         );
     }
-    _Cn() {
-      (this.hCn = 0 < this.nCn.length || this.aCn || 0 < this.sCn.size),
-        this.hCn || (this.Pun = 0);
+    Hdn() {
+      (this.Fdn = 0 < this.Ndn.length || this.kdn || 0 < this.Odn.size),
+        this.Fdn || (this.lun = 0);
     }
-    mCn() {
-      this.tCn = void 0;
-      var t = this.Entity.GetComponent(117).State;
+    Kdn() {
+      this.Bdn = void 0;
+      var t = this.Entity.GetComponent(119).State;
       let e = "";
       1 === t ? (e = "常态") : 2 === t && (e = "激活");
-      for (const i of this.iCn) i.EntityState.includes(e) && (this.tCn = i);
-      this.tCn ||
+      for (const i of this.bdn) i.EntityState.includes(e) && (this.Bdn = i);
+      this.Bdn ||
         (Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn("SceneItem", 36, "传送带静止"));
     }
-    cCn() {
+    Wdn() {
       var t, e;
-      this.mCn(),
-        this.tCn &&
-          ((t = this.tCn.FieldType.Type) ===
+      this.Kdn(),
+        this.Bdn &&
+          ((t = this.Bdn.FieldType.Type) ===
           IComponent_1.EConveyorBeltFieldType.DirectionalField
-            ? ((this.Qrr = this.tCn.MoveType.Speed),
-              (e = this.tCn.FieldType.Direction),
-              (this.yun.X = e.X ?? 0),
-              (this.yun.Y = e.Y ?? 0),
-              (this.yun.Z = e.Z ?? 0),
+            ? ((this.jnr = this.Bdn.MoveType.Speed),
+              (e = this.Bdn.FieldType.Direction),
+              (this.iun.X = e.X ?? 0),
+              (this.iun.Y = e.Y ?? 0),
+              (this.iun.Z = e.Z ?? 0),
               (e = this.Entity.GetComponent(1).ActorRotation.RotateVector(
-                this.yun.ToUeVector(),
+                this.iun.ToUeVector(),
               )),
-              this.yun.FromUeVector(e),
-              this.yun.Normalize(NORMALIZE),
-              this.yun.MultiplyEqual(this.Qrr))
+              this.iun.FromUeVector(e),
+              this.iun.Normalize(NORMALIZE),
+              this.iun.MultiplyEqual(this.jnr))
             : t === IComponent_1.EConveyorBeltFieldType.PointField &&
-              (this.Qrr = this.tCn.MoveType.Speed));
+              (this.jnr = this.Bdn.MoveType.Speed));
     }
   });
 (SceneItemConveyorBeltComponent = SceneItemConveyorBeltComponent_1 =
   __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(131)],
+    [(0, RegisterComponent_1.RegisterComponent)(133)],
     SceneItemConveyorBeltComponent,
   )),
   (exports.SceneItemConveyorBeltComponent = SceneItemConveyorBeltComponent);

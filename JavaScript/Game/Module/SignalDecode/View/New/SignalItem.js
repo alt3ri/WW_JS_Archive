@@ -18,25 +18,25 @@ const UE = require("ue"),
 class SignalItem extends SignalItemBase_1.SignalItemBase {
   constructor() {
     super(...arguments),
-      (this.ngo = void 0),
-      (this.pMo = void 0),
-      (this.vMo = void 0),
-      (this.MMo = void 0),
-      (this.SMo = void 0),
-      (this.EMo = void 0),
-      (this.yMo = void 0),
-      (this.IMo = void 0),
-      (this.xxn = void 0),
+      (this.i0o = void 0),
+      (this.CEo = void 0),
+      (this.gEo = void 0),
+      (this.fEo = void 0),
+      (this.pEo = void 0),
+      (this.vEo = void 0),
+      (this.MEo = void 0),
+      (this.EEo = void 0),
+      (this._Bn = void 0),
       (this.LevelSequencePlayer = void 0),
       (this.ac = 0);
   }
   Init(t) {
     this.SetRootActor(t.GetOwner(), !0),
       (this.Width = this.RootItem.Width),
-      (this.EMo = UE.Color.FromHex("E8CD74")),
-      (this.IMo = UE.Color.FromHex("FF6A6A")),
-      (this.yMo = UE.Color.FromHex("9DED87")),
-      (this.xxn = UE.Color.FromHex("FF6827"));
+      (this.vEo = UE.Color.FromHex("E8CD74")),
+      (this.EEo = UE.Color.FromHex("FF6A6A")),
+      (this.MEo = UE.Color.FromHex("9DED87")),
+      (this._Bn = UE.Color.FromHex("FF6827"));
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -48,35 +48,35 @@ class SignalItem extends SignalItemBase_1.SignalItemBase {
     ];
   }
   OnStart() {
-    (this.ngo = this.GetSprite(0)),
-      (this.pMo = this.GetSprite(4)),
-      (this.vMo = this.GetUiNiagara(1)),
-      (this.MMo = this.GetUiNiagara(2)),
-      (this.SMo = this.GetSprite(3)),
+    (this.i0o = this.GetSprite(0)),
+      (this.CEo = this.GetSprite(4)),
+      (this.gEo = this.GetUiNiagara(1)),
+      (this.fEo = this.GetUiNiagara(2)),
+      (this.pEo = this.GetSprite(3)),
       (this.LevelSequencePlayer = new LevelSequencePlayer_1.LevelSequencePlayer(
         this.RootItem,
       ));
   }
   OnReset() {
-    this.ngo.SetFillAmount(1),
-      this.ngo.SetAlpha(1),
-      this.ngo.SetUIActive(!0),
-      this.pMo.SetFillAmount(0);
+    this.i0o.SetFillAmount(1),
+      this.i0o.SetAlpha(1),
+      this.i0o.SetUIActive(!0),
+      this.CEo.SetFillAmount(0);
     var t = ModelManager_1.ModelManager.SignalDecodeModel.CurrentGameplayType;
-    let i = 2 === t ? this.yMo : this.EMo;
-    3 === t && ((i = this.xxn), this.ngo.SetColor(i)),
-      this.pMo.SetColor(i),
-      this.ngo.SetAlpha(1),
-      this.pMo.SetUIActive(!1),
-      this.vMo?.SetUIActive(1 === t),
-      this.vMo.SetUIItemScale(Vector_1.Vector.OneVector),
-      this.vMo.SetAlpha(1),
-      this.MMo.SetNiagaraVarFloat(NIAGARA_PARAM_NAME, 1),
-      this.MMo.SetUIActive(!0),
-      this.MMo.SetUIItemScale(Vector_1.Vector.OneVector),
-      this.MMo.SetAlpha(1),
-      this.TMo(),
-      this.SMo.SetAlpha(0),
+    let i = 2 === t ? this.MEo : this.vEo;
+    3 === t && ((i = this._Bn), this.i0o.SetColor(i)),
+      this.CEo.SetColor(i),
+      this.i0o.SetAlpha(1),
+      this.CEo.SetUIActive(!1),
+      this.gEo?.SetUIActive(1 === t),
+      this.gEo.SetUIItemScale(Vector_1.Vector.OneVector),
+      this.gEo.SetAlpha(1),
+      this.fEo.SetNiagaraVarFloat(NIAGARA_PARAM_NAME, 1),
+      this.fEo.SetUIActive(!0),
+      this.fEo.SetUIItemScale(Vector_1.Vector.OneVector),
+      this.fEo.SetAlpha(1),
+      this.SEo(),
+      this.pEo.SetAlpha(0),
       (this.ac = 0);
   }
   InitByGameplayType(t) {
@@ -85,28 +85,28 @@ class SignalItem extends SignalItemBase_1.SignalItemBase {
       2 === t ? "SP_SignalNoteSolidLineGreen" : "SP_SignalNoteSolidLineYellow";
     3 === t && (i = "SP_SignalNoteSolidLineOrange");
     t = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(i);
-    this.SetSpriteByPath(t, this.SMo, !1), this.Reset();
+    this.SetSpriteByPath(t, this.pEo, !1), this.Reset();
   }
-  TMo() {
+  SEo() {
     let t =
       2 === this.GameplayType ? NIAGARA_GREEN_COLOR : NIAGARA_YELLOW_COLOR;
     3 === this.GameplayType && (t = NIAGARA_ORANGE_COLOR),
-      this.MMo.SetColor(UE.Color.FromHex(t));
+      this.fEo.SetColor(UE.Color.FromHex(t));
   }
   OnUpdate() {
-    super.OnUpdate(), this.UpdateState(), 1 === this.ac && this.LMo();
+    super.OnUpdate(), this.UpdateState(), 1 === this.ac && this.yEo();
   }
   UpdateState() {
     var t = -this.StartDecisionSize / 2;
     this.CurrentRelativeX < t
-      ? this.qxt(0)
+      ? this.Owt(0)
       : ((this.EndDecisionSize / 2 < this.CurrentRelativeX - this.Width &&
           2 !== this.ac) ||
           ((t = this.StartDecisionSize / 2),
           this.CurrentRelativeX > t && 0 === this.ac)) &&
-        this.qxt(3);
+        this.Owt(3);
   }
-  qxt(t) {
+  Owt(t) {
     if (this.ac !== t)
       switch ((this.ac = t)) {
         case 1:
@@ -115,66 +115,66 @@ class SignalItem extends SignalItemBase_1.SignalItemBase {
           );
           break;
         case 2:
-          this.tMo(),
+          this.zMo(),
             EventSystem_1.EventSystem.Emit(
               EventDefine_1.EEventName.OnSignalCatchSuccess,
             );
           break;
         case 3:
-          this.oMo(),
+          this.eEo(),
             EventSystem_1.EventSystem.Emit(
               EventDefine_1.EEventName.OnSignalCatchFailed,
             );
       }
   }
-  LMo() {
+  yEo() {
     var t = this.GetProgress();
-    this.MMo.SetNiagaraVarFloat(NIAGARA_PARAM_NAME, 1 - t),
-      this.pMo.SetUIActive(!0),
-      this.ngo.SetFillAmount(1 - t),
-      this.pMo.SetFillAmount(t);
+    this.fEo.SetNiagaraVarFloat(NIAGARA_PARAM_NAME, 1 - t),
+      this.CEo.SetUIActive(!0),
+      this.i0o.SetFillAmount(1 - t),
+      this.CEo.SetFillAmount(t);
   }
-  oMo() {
+  eEo() {
     switch (this.Type) {
       case 1:
-        this.DMo();
+        this.IEo();
         break;
       case 2:
-        if (this.pMo.bIsUIActive)
-          this.pMo.SetColor(this.IMo),
-            this.MMo.SetColor(UE.Color.FromHex(NIAGARA_RED_COLOR));
+        if (this.CEo.bIsUIActive)
+          this.CEo.SetColor(this.EEo),
+            this.fEo.SetColor(UE.Color.FromHex(NIAGARA_RED_COLOR));
         else if (
           2 ===
           ModelManager_1.ModelManager.SignalDecodeModel.CurrentGameplayType
         ) {
-          this.DMo();
+          this.IEo();
           break;
         }
         this.LevelSequencePlayer.PlayLevelSequenceByName("Trans");
     }
   }
-  tMo() {
-    this.MMo.SetNiagaraVarFloat(NIAGARA_PARAM_NAME, 0),
-      this.MMo.SetUIActive(!0),
-      this.vMo.SetUIActive(!1),
-      this.ngo.SetUIActive(!1),
-      this.pMo.SetUIActive(!1),
-      this.SMo.SetAlpha(0);
+  zMo() {
+    this.fEo.SetNiagaraVarFloat(NIAGARA_PARAM_NAME, 0),
+      this.fEo.SetUIActive(!0),
+      this.gEo.SetUIActive(!1),
+      this.i0o.SetUIActive(!1),
+      this.CEo.SetUIActive(!1),
+      this.pEo.SetAlpha(0);
   }
   OnCatchBtnDown() {
-    super.OnCatchBtnDown(), 0 === this.ac && this.RMo() && this.qxt(1);
+    super.OnCatchBtnDown(), 0 === this.ac && this.TEo() && this.Owt(1);
   }
   OnCatchBtnUp() {
     var t;
     super.OnCatchBtnUp(),
-      1 === this.ac && ((t = this.UMo()), this.qxt(t ? 2 : 3));
+      1 === this.ac && ((t = this.LEo()), this.Owt(t ? 2 : 3));
   }
-  RMo() {
+  TEo() {
     var t = -this.StartDecisionSize / 2,
       i = this.StartDecisionSize / 2;
     return this.RelativeXWhenCatchDown > t && this.RelativeXWhenCatchDown < i;
   }
-  UMo() {
+  LEo() {
     var t = this.EndDecisionSize / 2,
       i = -this.EndDecisionSize / 2,
       e = this.RelativeXWhenCatchUp - this.Width;
@@ -200,12 +200,12 @@ class SignalItem extends SignalItemBase_1.SignalItemBase {
     }
     return t;
   }
-  DMo() {
-    this.pMo.SetUIActive(!1),
-      this.MMo.SetUIActive(!1),
-      this.vMo.SetUIActive(!1),
-      this.ngo.SetUIActive(!1),
-      this.SMo.SetAlpha(1);
+  IEo() {
+    this.CEo.SetUIActive(!1),
+      this.fEo.SetUIActive(!1),
+      this.gEo.SetUIActive(!1),
+      this.i0o.SetUIActive(!1),
+      this.pEo.SetAlpha(1);
   }
   TestCanBtnDown() {
     var t, i;

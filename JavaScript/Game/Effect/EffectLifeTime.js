@@ -215,7 +215,13 @@ class EffectLifeTime {
   Oge(i) {
     if (i > TimerSystem_1.MIN_TIME)
       return (
-        (i = TimerSystem_1.TimerSystem.Delay(this.Nge, i)) &&
+        (i = TimerSystem_1.TimerSystem.Delay(
+          this.Nge,
+          i,
+          void 0,
+          "EffectLifeTime",
+          !1,
+        )) &&
           1 !== this.bge &&
           (0 < this.bge
             ? TimerSystem_1.TimerSystem.ChangeDilation(i, this.bge)

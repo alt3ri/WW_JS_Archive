@@ -7,60 +7,60 @@ const UE = require("ue"),
 class MediumItemGridReduceButtonComponent extends MediumItemGridComponent_1.MediumItemGridComponent {
   constructor() {
     super(...arguments),
-      (this.Wgt = void 0),
-      (this.Ixt = void 0),
-      (this.Txt = void 0),
-      (this.Lxt = void 0),
-      (this.Dxt = (t) => {
-        this.Txt && this.Txt(t);
+      (this.oft = void 0),
+      (this.Dwt = void 0),
+      (this.Rwt = void 0),
+      (this.Uwt = void 0),
+      (this.Awt = (t) => {
+        this.Rwt && this.Rwt(t);
       }),
-      (this.Rxt = () => {
-        this.Wgt && this.Wgt();
+      (this.Pwt = () => {
+        this.oft && this.oft();
       });
   }
   OnRegisterComponent() {
     (this.ComponentRegisterInfos = [[0, UE.UIButtonComponent]]),
-      (this.BtnBindInfo = [[0, this.Rxt]]);
+      (this.BtnBindInfo = [[0, this.Pwt]]);
   }
   GetResourceId() {
     return "UiItem_ItemBtnReduce";
   }
   OnInitialize() {
-    this.Ixt = new LongPressButtonItem_1.LongPressButtonItem();
+    this.Dwt = new LongPressButtonItem_1.LongPressButtonItem();
   }
   OnStart() {
     var t = this.GetButton(0);
-    this.Ixt.Initialize(t, this.Dxt);
+    this.Dwt.Initialize(t, this.Awt);
   }
   OnDeactivate() {
     var t = this.GetButton(0);
     t.OnPointDownCallBack.Unbind(),
       t.OnPointUpCallBack.Unbind(),
-      this.Ixt?.Clear(),
-      (this.Ixt = void 0),
-      (this.Lxt = void 0),
-      (this.Wgt = void 0);
+      this.Dwt?.Clear(),
+      (this.Dwt = void 0),
+      (this.Uwt = void 0),
+      (this.oft = void 0);
   }
   OnRefresh(t) {
     var e = t.IsVisible,
       t = t.LongPressConfigId;
-    (this.Lxt = t),
+    (this.Uwt = t),
       this.SetActive(e),
-      void 0 === this.Lxt ||
-        this.Ixt.IsActivate() ||
-        this.Ixt.Activate(this.Lxt);
+      void 0 === this.Uwt ||
+        this.Dwt.IsActivate() ||
+        this.Dwt.Activate(this.Uwt);
   }
   BindReduceButtonCallback(t) {
-    this.Wgt = t;
+    this.oft = t;
   }
   UnBindReduceButtonCallback() {
-    this.Wgt = void 0;
+    this.oft = void 0;
   }
   BindLongPressCallback(t) {
-    this.Txt = t;
+    this.Rwt = t;
   }
   UnBindLongPressCallback() {
-    (this.Txt = void 0), this.Ixt.Deactivate();
+    (this.Rwt = void 0), this.Dwt.Deactivate();
   }
   GetReduceButton() {
     return this.GetButton(0);

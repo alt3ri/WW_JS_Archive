@@ -11,33 +11,33 @@ const UE = require("ue"),
 class GameplayAbilityVisionExplore extends GameplayAbilityVisionBase_1.GameplayAbilityVisionBase {
   constructor() {
     super(...arguments),
-      (this.yzo = void 0),
-      (this.Vzo = void 0),
-      (this.Hzo = void 0),
-      (this.jzo = (i) => {
+      (this.MZo = void 0),
+      (this.OZo = void 0),
+      (this.kZo = void 0),
+      (this.FZo = (i) => {
         -1140906579 ===
           i.BulletDataMain.Execution.SendGameplayEventTagToAttackerOnEnd
-            .TagId && this.Wzo(i.MoveInfo.LastFramePosition.ToUeVector());
+            .TagId && this.VZo(i.MoveInfo.LastFramePosition.ToUeVector());
       });
   }
   OnCreate() {
     EventSystem_1.EventSystem.AddWithTarget(
       this.Entity,
       EventDefine_1.EEventName.BulletDestroy,
-      this.jzo,
+      this.FZo,
     );
   }
   OnDestroy() {
     EventSystem_1.EventSystem.RemoveWithTarget(
       this.Entity,
       EventDefine_1.EEventName.BulletDestroy,
-      this.jzo,
+      this.FZo,
     );
   }
   OnActivateAbility() {
     return (
-      !!this.Kzo() &&
-      (this.Qzo(),
+      !!this.HZo() &&
+      (this.jZo(),
       this.SkillComponent.PlaySkillMontage(!1, 0, "", 0, () => {
         this.SkillComponent.EndSkill(
           this.SkillComponent.CurrentSkill.SkillId,
@@ -47,21 +47,21 @@ class GameplayAbilityVisionExplore extends GameplayAbilityVisionBase_1.GameplayA
       !0)
     );
   }
-  Kzo() {
+  HZo() {
     return (
-      (this.yzo = PhantomUtil_1.PhantomUtil.GetSummonedEntity(
+      (this.MZo = PhantomUtil_1.PhantomUtil.GetSummonedEntity(
         this.VisionComponent.Entity,
-        Protocol_1.Aki.Protocol.Oqs.Proto_ESummonTypeConcomitantVision,
+        Protocol_1.Aki.Protocol.Summon.L3s.Proto_ESummonTypeConcomitantVision,
       )),
-      !this.yzo.Entity.Active &&
-        ((this.Vzo = this.yzo.Entity.GetComponent(3)),
-        (this.Hzo = this.yzo.Entity.GetComponent(33)),
+      !this.MZo.Entity.Active &&
+        ((this.OZo = this.MZo.Entity.GetComponent(3)),
+        (this.kZo = this.MZo.Entity.GetComponent(33)),
         !0)
     );
   }
-  Wzo(i) {
-    var t = new UE.Vector(0, 0, this.Vzo.ScaledHalfHeight);
-    this.Vzo.SetActorLocationAndRotation(
+  VZo(i) {
+    var t = new UE.Vector(0, 0, this.OZo.ScaledHalfHeight);
+    this.OZo.SetActorLocationAndRotation(
       i.op_Addition(t),
       this.ActorComponent.ActorRotation,
       "召唤展示生成位置",
@@ -70,18 +70,18 @@ class GameplayAbilityVisionExplore extends GameplayAbilityVisionBase_1.GameplayA
         this.VisionComponent.Entity,
         !0,
       ),
-      this.Hzo.SetSkillAcceptInput(!0),
-      this.Hzo.BeginSkill(GameplayAbilityVisionMisc_1.EXPLORE_SKILL_ID, {
+      this.kZo.SetSkillAcceptInput(!0),
+      this.kZo.BeginSkill(GameplayAbilityVisionMisc_1.EXPLORE_SKILL_ID, {
         Context: "GameplayAbilityVisionExplore.PostSummon",
       });
   }
-  Qzo() {
-    this.Vzo.Actor.CapsuleComponent.IgnoreActorWhenMoving(
+  jZo() {
+    this.OZo.Actor.CapsuleComponent.IgnoreActorWhenMoving(
       this.ActorComponent.Actor,
       !1,
     ),
       this.ActorComponent.Actor.CapsuleComponent.IgnoreActorWhenMoving(
-        this.Vzo.Actor,
+        this.OZo.Actor,
         !1,
       );
   }

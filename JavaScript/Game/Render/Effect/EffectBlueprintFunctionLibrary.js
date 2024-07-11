@@ -13,7 +13,6 @@ const UE = require("ue"),
   SceneCharacterInteraction_1 = require("../Scene/Interaction/SceneCharacterInteraction"),
   FoliageClusteredEffectManager_1 = require("./ClusteredStuff/FoliageClusteredEffectManager"),
   EffectGlobal_1 = require("./EffectGlobal"),
-  LensFlareManager_1 = require("./LensFlare/LensFlareManager"),
   ScreenEffectSystem_1 = require("./ScreenEffectSystem/ScreenEffectSystem");
 class EffectBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
   static SetMaterialControllerDataSync(e, t, a) {
@@ -47,11 +46,11 @@ class EffectBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
                   ]);
             },
           );
-      var r = Protocol_1.Aki.Protocol.eNn.create();
-      (r.f4n = new Protocol_1.Aki.Protocol.f4n()),
-        (r.f4n.g4n = t),
-        (r.f4n.p4n = a),
-        CombatMessage_1.CombatNet.Call(23488, e.Entity, r, () => {});
+      var r = Protocol_1.Aki.Protocol.U3n.create();
+      (r.J8n = new Protocol_1.Aki.Protocol.J8n()),
+        (r.J8n.Y8n = t),
+        (r.J8n.z8n = a),
+        CombatMessage_1.CombatNet.Call(15751, e.Entity, r, () => {});
     }
   }
   static RecycleEffect(e) {}
@@ -159,9 +158,6 @@ class EffectBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
   }
   static GetScreenEffectSystem() {
     return ScreenEffectSystem_1.ScreenEffectSystem.GetInstance();
-  }
-  static GiTickLensFlare(e, t, a, r, c) {
-    LensFlareManager_1.LensFlareManager.Get().Tick(e, t, a, r, c);
   }
 }
 exports.default = EffectBlueprintFunctionLibrary;

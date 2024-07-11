@@ -6,6 +6,8 @@ const ModelManager_1 = require("../../../../Manager/ModelManager"),
   SpecialEnergyBarJianXin_1 = require("./Role/SpecialEnergyBarJianXin"),
   SpecialEnergyBarJinXi_1 = require("./Role/SpecialEnergyBarJinXi"),
   SpecialEnergyBarSanHua_1 = require("./Role/SpecialEnergyBarSanHua"),
+  SpecialEnergyBarXiangLiYao_1 = require("./Role/SpecialEnergyBarXiangLiYao"),
+  SpecialEnergyBarZheZhi_1 = require("./Role/SpecialEnergyBarZheZhi"),
   SpecialEnergyBarMorph_1 = require("./SpecialEnergyBarMorph"),
   SpecialEnergyBarMorphCountDown_1 = require("./SpecialEnergyBarMorphCountDown"),
   SpecialEnergyBarPoint_1 = require("./SpecialEnergyBarPoint"),
@@ -23,45 +25,47 @@ const ModelManager_1 = require("../../../../Manager/ModelManager"),
     SpecialEnergyBarChiXia_1.SpecialEnergyBarChiXia,
     SpecialEnergyBarMorphCountDown_1.SpecialEnergyBarMorphCountDown,
     SpecialEnergyBarJinXi_1.SpecialEnergyBarMorphJinXi,
+    SpecialEnergyBarXiangLiYao_1.SpecialEnergyBarXiangLiYao,
+    SpecialEnergyBarZheZhi_1.SpecialEnergyBarZheZhi,
   ];
 class RoleSpecialEnergyBar {
   constructor() {
-    (this.wnt = void 0),
-      (this.Yct = new Map()),
-      (this.Jct = []),
+    (this.Wst = void 0),
+      (this.hdt = new Map()),
+      (this.ldt = []),
       (this.lne = (e, r) => {
-        this.zct(!0);
+        this._dt(!0);
       });
   }
   async InitAsync(e, r) {
-    this.wnt = r;
-    var a = this.Zct(r);
+    this.Wst = r;
+    var a = this.udt(r);
     if (a) {
       var i = [];
-      if ((i.push(this.emt(e, r, 0, a)), a.TagEnergyBarIdMap))
-        for (var [n, t] of a.TagEnergyBarIdMap) {
-          this.tmt(n, this.lne);
-          t =
+      if ((i.push(this.cdt(e, r, 0, a)), a.TagEnergyBarIdMap))
+        for (var [n, o] of a.TagEnergyBarIdMap) {
+          this.mdt(n, this.lne);
+          o =
             ModelManager_1.ModelManager.BattleUiModel.SpecialEnergyBarData.GetSpecialEnergyBarInfo(
-              t,
+              o,
             );
-          t && i.push(this.emt(e, r, n, t));
+          o && i.push(this.cdt(e, r, n, o));
         }
-      this.zct(), await Promise.all(i);
+      this._dt(), await Promise.all(i);
     }
   }
   SetVisible(e) {
-    for (const r of this.Yct.values()) r.SetVisible(e, 0);
+    for (const r of this.hdt.values()) r.SetVisible(e, 0);
   }
   Destroy() {
-    this.U$e();
-    for (const e of this.Yct.values()) e.Destroy();
-    this.Yct.clear();
+    this.FYe();
+    for (const e of this.hdt.values()) e.Destroy();
+    this.hdt.clear();
   }
   Tick(e) {
-    for (const r of this.Yct.values()) r.Tick(e);
+    for (const r of this.hdt.values()) r.Tick(e);
   }
-  Zct(e) {
+  udt(e) {
     if (e?.EntityHandle?.Valid) {
       e = e.RoleConfig;
       if (e) {
@@ -73,38 +77,38 @@ class RoleSpecialEnergyBar {
       }
     }
   }
-  async emt(e, r, a, i) {
+  async cdt(e, r, a, i) {
     var n = new specialEnergyBarClassList[i.PrefabType]();
     n.InitData(r, i),
-      this.Yct.set(a, n),
+      this.hdt.set(a, n),
       await n.InitByPathAsync(e, i.PrefabPath);
   }
-  zct(r = !1) {
-    if (this.Yct.size <= 1) this.Yct.get(0)?.SetVisible(!0, 1);
+  _dt(r = !1) {
+    if (this.hdt.size <= 1) this.hdt.get(0)?.SetVisible(!0, 1);
     else {
       var a,
         i,
-        n = this.wnt?.GameplayTagComponent;
+        n = this.Wst?.GameplayTagComponent;
       let e = 0;
-      for (const o of this.Yct.keys())
-        if (0 !== o && n?.HasTag(o)) {
-          e = o;
+      for (const t of this.hdt.keys())
+        if (0 !== t && n?.HasTag(t)) {
+          e = t;
           break;
         }
-      for ([a, i] of this.Yct) {
-        var t = a === e;
-        i.SetVisible(t, 1), r && i.OnChangeVisibleByTagChange(t);
+      for ([a, i] of this.hdt) {
+        var o = a === e;
+        i.SetVisible(o, 1), r && i.OnChangeVisibleByTagChange(o);
       }
     }
   }
-  tmt(e, r) {
-    var a = this.wnt?.GameplayTagComponent;
-    a && ((a = a.ListenForTagAddOrRemove(e, r)), this.Jct.push(a));
+  mdt(e, r) {
+    var a = this.Wst?.GameplayTagComponent;
+    a && ((a = a.ListenForTagAddOrRemove(e, r)), this.ldt.push(a));
   }
-  U$e() {
-    if (this.Jct) {
-      for (const e of this.Jct) e.EndTask();
-      this.Jct.length = 0;
+  FYe() {
+    if (this.ldt) {
+      for (const e of this.ldt) e.EndTask();
+      this.ldt.length = 0;
     }
   }
 }

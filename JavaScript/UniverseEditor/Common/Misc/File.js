@@ -8,6 +8,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.checkNeedUpdateByModifyTime =
     exports.readUassetInfo =
     exports.getRelativePathToDir =
+    exports.isPathEqual =
     exports.joinPath =
     exports.getAbsolutePath =
     exports.removeFile =
@@ -112,6 +113,10 @@ function getAbsolutePath(t) {
 function joinPath(...t) {
   return getAbsolutePath(t.join("/"));
 }
+function isPathEqual(t, e) {
+  (t = getAbsolutePath(t)), (e = getAbsolutePath(e));
+  return t.toLowerCase() === e.toLowerCase();
+}
 function getRelativePathToDir(t, e) {
   return (0, Platform_1.getPlatform)().GetRelativePathToDir(t, e);
 }
@@ -154,6 +159,7 @@ function readJsRootNameFromIni() {
   (exports.removeFile = removeFile),
   (exports.getAbsolutePath = getAbsolutePath),
   (exports.joinPath = joinPath),
+  (exports.isPathEqual = isPathEqual),
   (exports.getRelativePathToDir = getRelativePathToDir),
   (exports.readUassetInfo = readUassetInfo),
   (exports.checkNeedUpdateByModifyTime = checkNeedUpdateByModifyTime);

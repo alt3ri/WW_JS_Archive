@@ -10,14 +10,14 @@ class ReviveSmallItemGrid extends SmallItemGrid_1.SmallItemGrid {
     super(...arguments),
       (this.ItemId = void 0),
       (this.j3 = void 0),
-      (this.q2t = -1),
-      (this.Rgt = 1),
-      (this.F2t = () => {
-        this.q2t <= 0
+      (this.GFt = -1),
+      (this.k0t = 1),
+      (this.VFt = () => {
+        this.GFt <= 0
           ? (void 0 !== this.j3 && TimerSystem_1.TimerSystem.Remove(this.j3),
             (this.j3 = void 0))
           : (this.RefreshCoolDown(),
-            (this.q2t -=
+            (this.GFt -=
               TimerSystem_1.MIN_TIME /
               CommonDefine_1.MILLIONSECOND_PER_SECOND));
       });
@@ -33,14 +33,14 @@ class ReviveSmallItemGrid extends SmallItemGrid_1.SmallItemGrid {
       BottomText: 0 < i ? "" + i : "",
       CoolDownTime: t,
     }),
-      (this.q2t = t),
-      (this.Rgt =
+      (this.GFt = t),
+      (this.k0t =
         ModelManager_1.ModelManager.BuffItemModel.GetBuffItemTotalCdTime(
           this.ItemId,
         )),
       void 0 !== this.j3 && TimerSystem_1.TimerSystem.Remove(this.j3),
       (this.j3 = TimerSystem_1.TimerSystem.Forever(
-        this.F2t,
+        this.VFt,
         TimerSystem_1.MIN_TIME,
       ));
   }
@@ -48,14 +48,14 @@ class ReviveSmallItemGrid extends SmallItemGrid_1.SmallItemGrid {
     var e = ModelManager_1.ModelManager.BuffItemModel.GetBuffItemRemainCdTime(
       this.ItemId,
     );
-    this.SetCoolDown(e, this.Rgt);
+    this.SetCoolDown(e, this.k0t);
   }
   OnDestroyed() {
     (this.ItemId = void 0) !== this.j3 &&
       TimerSystem_1.TimerSystem.Remove(this.j3),
       (this.j3 = void 0),
-      (this.q2t = -1),
-      (this.Rgt = 1);
+      (this.GFt = -1),
+      (this.k0t = 1);
   }
 }
 exports.ReviveSmallItemGrid = ReviveSmallItemGrid;

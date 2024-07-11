@@ -10,8 +10,8 @@ const UE = require("ue"),
 class TowerRecommendView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.aDo = void 0),
-      (this.sBi = () => {
+      (this.rRo = void 0),
+      (this.sbi = () => {
         return new TowerRecommendItem_1.TowerRecommendItem();
       });
   }
@@ -22,27 +22,27 @@ class TowerRecommendView extends UiViewBase_1.UiViewBase {
     ];
   }
   OnStart() {
-    (this.aDo = new GenericScrollViewNew_1.GenericScrollViewNew(
+    (this.rRo = new GenericScrollViewNew_1.GenericScrollViewNew(
       this.GetScrollViewWithScrollbar(0),
-      this.sBi,
+      this.sbi,
     )),
       this.Og();
   }
   OnBeforeDestroy() {
-    this.aDo = void 0;
+    this.rRo = void 0;
   }
   Og() {
     ModelManager_1.ModelManager.TowerModel.RecommendFormation &&
     0 < ModelManager_1.ModelManager.TowerModel.RecommendFormation?.length
-      ? (this.aDo.SetActive(!0),
-        this.aDo.RefreshByData(
+      ? (this.rRo.SetActive(!0),
+        this.rRo.RefreshByData(
           ModelManager_1.ModelManager.TowerModel.RecommendFormation,
         ),
         LguiUtil_1.LguiUtil.SetLocalTextNew(
           this.GetText(1),
           "Text_DataFromOther_Text",
         ))
-      : (this.aDo.SetActive(!1),
+      : (this.rRo.SetActive(!1),
         LguiUtil_1.LguiUtil.SetLocalTextNew(
           this.GetText(1),
           "Text_DataCollation_Text",

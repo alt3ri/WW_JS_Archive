@@ -9,14 +9,14 @@ class TemporaryTeleportMarkItem extends ServerMarkItem_1.ServerMarkItem {
   constructor(e, r, t, i) {
     super(e, r, t, i),
       (this.TeleportId = 0),
-      (this.NLi = !1),
+      (this.NDi = !1),
       (this.TeleportId = e.TeleportId ?? 0);
   }
   get MarkType() {
     return 15;
   }
   get IsNewCustomMarkItem() {
-    return this.NLi;
+    return this.NDi;
   }
   Initialize() {
     super.Initialize();
@@ -40,7 +40,7 @@ class TemporaryTeleportMarkItem extends ServerMarkItem_1.ServerMarkItem {
     this.OnAfterSetConfigId(e);
   }
   SetIsNew(e) {
-    this.NLi = e;
+    this.NDi = e;
   }
   GetTitleText() {
     var e =

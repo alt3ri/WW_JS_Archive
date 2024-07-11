@@ -8,7 +8,7 @@ const ConfigCommon_1 = require("../../../Core/Config/ConfigCommon"),
   ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
 class DynamicTabConfig extends ConfigBase_1.ConfigBase {
   constructor() {
-    super(...arguments), (this.VFt = (e, i) => e.TabIndex - i.TabIndex);
+    super(...arguments), (this.H3t = (e, i) => e.TabIndex - i.TabIndex);
   }
   GetViewTabList(e) {
     e = ConfigCommon_1.ConfigCommon.ToList(
@@ -16,7 +16,7 @@ class DynamicTabConfig extends ConfigBase_1.ConfigBase {
         e,
       ),
     );
-    return e.sort(this.VFt), e;
+    return e.sort(this.H3t), e;
   }
   GetTabViewNameList(e) {
     var i = [];

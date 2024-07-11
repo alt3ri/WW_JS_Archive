@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiImageSettingModule = void 0);
 const UE = require("ue"),
+  CustomPromise_1 = require("../../Core/Common/CustomPromise"),
   Log_1 = require("../../Core/Common/Log"),
   ResourceSystem_1 = require("../../Core/Resource/ResourceSystem"),
   GlobalData_1 = require("../GlobalData"),
@@ -59,6 +60,50 @@ class UiImageSettingModule extends UiResourceLoadModule_1.UiResourceLoadModule {
       )),
       this.SetResourceId(i, e));
   }
+  async SetSpriteAsync(e, i, o) {
+    if (GlobalData_1.GlobalData.World && i && i.IsValid()) {
+      this.CancelResource(i);
+      const n = new CustomPromise_1.CustomPromise();
+      e = ResourceSystem_1.ResourceSystem.LoadAsync(
+        e,
+        UE.LGUISpriteData_BaseObject,
+        (e, t) => {
+          n.SetResult(),
+            this.DeleteResourceHandle(i),
+            i.IsValid() &&
+              (e && e.IsValid()
+                ? i.SetSprite(e, o)
+                : Log_1.Log.CheckError() &&
+                  Log_1.Log.Error(
+                    "UiImageSetting",
+                    11,
+                    "设置Sprite失败，图片加载失败",
+                    ["图片路径", t],
+                  ));
+        },
+        102,
+      );
+      this.SetResourceId(i, e), await n.Promise;
+    }
+  }
+  async SetSpriteTransitionByPath(e, i, o = 5) {
+    if (GlobalData_1.GlobalData.World && i && i.IsValid()) {
+      this.CancelResource(i);
+      const n = new CustomPromise_1.CustomPromise();
+      e = ResourceSystem_1.ResourceSystem.LoadAsync(
+        e,
+        UE.LGUISpriteData_BaseObject,
+        (e, t) => {
+          n.SetResult(),
+            this.DeleteResourceHandle(i),
+            i.IsValid() &&
+              (5 === o ? i.SetAllTransitionSprite(e) : i.SetStateSprite(o, e));
+        },
+        102,
+      );
+      this.SetResourceId(i, e), await n.Promise;
+    }
+  }
   SetItemQualityIconSync(e, t, i, o = "BackgroundSprite", n = void 0) {
     t = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(t);
     this.SetQualityIconByIdSync(e, t.QualityId, i, o, n);
@@ -67,7 +112,7 @@ class UiImageSettingModule extends UiResourceLoadModule_1.UiResourceLoadModule {
     t = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(t);
     this.SetQualityIconByIdAsync(e, t.QualityId, i, o);
   }
-  cdr(e, t, i) {
+  lCr(e, t, i) {
     var t = ConfigManager_1.ConfigManager.CommonConfig.GetItemQualityById(t),
       e = e.ComponentTags;
     return 0 === e.Num()
@@ -91,11 +136,11 @@ class UiImageSettingModule extends UiResourceLoadModule_1.UiResourceLoadModule {
           : t[e]);
   }
   SetQualityIconByIdSync(e, t, i, o = "BackgroundSprite", n = void 0) {
-    t = this.cdr(e, t, o);
+    t = this.lCr(e, t, o);
     this.SetSpriteByPathSync(t, e, !1, i, n);
   }
   SetQualityIconByIdAsync(e, t, i = "BackgroundSprite", o = void 0) {
-    t = this.cdr(e, t, i);
+    t = this.lCr(e, t, i);
     this.SetSpriteByPathAsync(t, e, !1, o);
   }
   SetTextureByPathSync(e, t, i, o = void 0) {
@@ -145,7 +190,33 @@ class UiImageSettingModule extends UiResourceLoadModule_1.UiResourceLoadModule {
       )),
       this.SetResourceId(i, e));
   }
-  mdr(e, t) {
+  async SetTextureAsync(e, i) {
+    if (GlobalData_1.GlobalData.World && i && i.IsValid()) {
+      this.CancelResource(i);
+      const o = new CustomPromise_1.CustomPromise();
+      e = ResourceSystem_1.ResourceSystem.LoadAsync(
+        e,
+        UE.Texture,
+        (e, t) => {
+          o.SetResult(),
+            this.DeleteResourceHandle(i),
+            i.IsValid() &&
+              (e && e.IsValid()
+                ? i.SetTexture(e)
+                : Log_1.Log.CheckError() &&
+                  Log_1.Log.Error(
+                    "UiImageSetting",
+                    11,
+                    "设置Texture失败，图片加载失败",
+                    ["图片路径", t],
+                  ));
+        },
+        102,
+      );
+      this.SetResourceId(i, e), await o.Promise;
+    }
+  }
+  _Cr(e, t) {
     var i,
       t = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(t),
       e = e.ComponentTags;
@@ -168,14 +239,18 @@ class UiImageSettingModule extends UiResourceLoadModule_1.UiResourceLoadModule {
           : t[i]);
   }
   SetItemIconSync(e, t, i, o = void 0) {
-    t = this.mdr(e, t);
+    t = this._Cr(e, t);
     this.SetTextureByPathSync(t, e, i, o);
   }
   SetItemIconAsync(e, t, i = void 0) {
-    t = this.mdr(e, t);
+    t = this._Cr(e, t);
     this.SetTextureByPathAsync(t, e, i);
   }
-  ddr(e, t, i) {
+  async SetItemIconTextureAsync(e, t) {
+    t = this._Cr(e, t);
+    await this.SetTextureAsync(t, e);
+  }
+  uCr(e, t, i) {
     var t = t.ComponentTags;
     return 0 === t.Num()
       ? e
@@ -197,14 +272,14 @@ class UiImageSettingModule extends UiResourceLoadModule_1.UiResourceLoadModule {
           : e[t]);
   }
   SetRoleIconSync(e, t, i, o, n) {
-    e = this.ddr(e, t, i);
+    e = this.uCr(e, t, i);
     this.SetTextureByPathSync(e, t, o, n);
   }
   SetRoleIconAsync(e, t, i, o) {
-    e = this.ddr(e, t, i);
+    e = this.uCr(e, t, i);
     this.SetTextureByPathAsync(e, t, o);
   }
-  Cdr(e, t, i) {
+  cCr(e, t, i) {
     var t = t.ComponentTags;
     return 0 === t.Num()
       ? e
@@ -229,14 +304,14 @@ class UiImageSettingModule extends UiResourceLoadModule_1.UiResourceLoadModule {
           : e[t]);
   }
   SetElementIconSync(e, t, i, o) {
-    e = this.Cdr(e, t, i);
+    e = this.cCr(e, t, i);
     this.SetTextureByPathSync(e, t, o);
   }
   SetElementIcon(e, t, i) {
-    e = this.Cdr(e, t, i);
+    e = this.cCr(e, t, i);
     this.SetTextureByPathAsync(e, t);
   }
-  gdr(e, t, i) {
+  mCr(e, t, i) {
     var o,
       t = t.ComponentTags;
     return 0 !== t.Num() && i
@@ -264,14 +339,14 @@ class UiImageSettingModule extends UiResourceLoadModule_1.UiResourceLoadModule {
       : e;
   }
   SetMonsterIconSync(e, t, i, o) {
-    e = this.gdr(e, t, i);
+    e = this.mCr(e, t, i);
     this.SetTextureByPathSync(e, t, o);
   }
   SetMonsterIconAsync(e, t, i) {
-    e = this.gdr(e, t, i);
+    e = this.mCr(e, t, i);
     this.SetTextureByPathAsync(e, t);
   }
-  fdr(e, t, i) {
+  dCr(e, t, i) {
     var o,
       t = t.ComponentTags;
     return 0 !== t.Num() && i
@@ -299,11 +374,11 @@ class UiImageSettingModule extends UiResourceLoadModule_1.UiResourceLoadModule {
       : e;
   }
   SetDungeonEntranceIconSync(e, t, i, o) {
-    e = this.fdr(e, t, i);
+    e = this.dCr(e, t, i);
     this.SetTextureByPathSync(e, t, o);
   }
   SetDungeonEntranceIconAsync(e, t, i) {
-    e = this.fdr(e, t, i);
+    e = this.dCr(e, t, i);
     this.SetTextureByPathAsync(e, t);
   }
   SetNiagaraTextureAsync(e, i, o, n, a) {

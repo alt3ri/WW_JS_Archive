@@ -14,11 +14,11 @@ class ActivitySubViewRun extends ActivitySubViewBase_1.ActivitySubViewBase {
   constructor() {
     super(...arguments),
       (this.bOe = void 0),
-      (this.T4e = !1),
+      (this.F5e = !1),
       (this.JGe = () => {
         return new CommonItemSmallItemGrid_1.CommonItemSmallItemGrid();
       }),
-      (this._Fe = () => {
+      (this.L3e = () => {
         this.ActivityBaseData.GetPreGuideQuestFinishState()
           ? (ActivityController_1.ActivityController.RequestReadActivity(
               this.ActivityBaseData,
@@ -48,7 +48,7 @@ class ActivitySubViewRun extends ActivitySubViewBase_1.ActivitySubViewBase {
       [
         3,
         () => {
-          this._Fe();
+          this.L3e();
         },
       ],
     ];
@@ -59,16 +59,16 @@ class ActivitySubViewRun extends ActivitySubViewBase_1.ActivitySubViewBase {
   }
   OnRefreshView() {
     this.FNe(),
-      this.mke(),
+      this.A2e(),
       this.mGe(),
-      this.L4e(),
+      this.Dke(),
       this.BindRedPoint(),
-      this.rFe(),
-      this.D4e();
+      this.M3e(),
+      this.V5e();
   }
   BindRedPoint() {
-    this.T4e ||
-      ((this.T4e = !0),
+    this.F5e ||
+      ((this.F5e = !0),
       RedDotController_1.RedDotController.BindRedDot(
         "CommonActivityPage",
         this.GetItem(6),
@@ -82,17 +82,17 @@ class ActivitySubViewRun extends ActivitySubViewBase_1.ActivitySubViewBase {
   mGe() {
     this.GetText(0).SetText(this.ActivityBaseData.GetTitle());
   }
-  L4e() {
+  Dke() {
     this.GetText(1).ShowTextNew(this.ActivityBaseData.LocalConfig.Desc),
       this.ActivityBaseData.IsUnLock() &&
       this.ActivityBaseData.GetPreGuideQuestFinishState()
         ? this.GetText(5).ShowTextNew("ReadyToFightText")
         : this.GetText(5).ShowTextNew("JumpToQuestText");
   }
-  rFe() {
+  M3e() {
     this.GetButton(3).RootUIComp.SetUIActive(this.ActivityBaseData.IsUnLock());
   }
-  mke() {
+  A2e() {
     var t = this.ActivityBaseData.GetPreviewReward();
     this.bOe.RefreshByData(t);
   }
@@ -100,7 +100,7 @@ class ActivitySubViewRun extends ActivitySubViewBase_1.ActivitySubViewBase {
     var [t, i] = this.GetTimeVisibleAndRemainTime();
     this.GetText(2).SetUIActive(t), t && this.GetText(2).SetText(i);
   }
-  D4e() {
+  V5e() {
     var t = this.GetText(7),
       i =
         !this.ActivityBaseData.IsUnLock() ||

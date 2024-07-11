@@ -7,7 +7,7 @@ const UE = require("ue"),
   UiCameraStructure_1 = require("./UiCameraStructure");
 class UiCameraSpringStructure extends UiCameraStructure_1.UiCameraStructure {
   constructor() {
-    super(...arguments), (this.tUo = void 0);
+    super(...arguments), (this.zUo = void 0);
   }
   OnSpawnStructureActor() {
     var t = GlobalData_1.GlobalData.World,
@@ -24,18 +24,18 @@ class UiCameraSpringStructure extends UiCameraStructure_1.UiCameraStructure {
     return (
       t.SetTickableWhenPaused(!0),
       UE.GameplayStatics.FinishSpawningActor(t, r),
-      (this.tUo = t),
-      this.tUo.SpringArm?.SetTickableWhenPaused(!0),
-      this.tUo.Camera?.SetTickableWhenPaused(!0),
+      (this.zUo = t),
+      this.zUo.SpringArm?.SetTickableWhenPaused(!0),
+      this.zUo.Camera?.SetTickableWhenPaused(!0),
       t
     );
   }
   OnSetSpringArmComponent() {
-    return this.tUo.SpringArm;
+    return this.zUo.SpringArm;
   }
   OnInitialize() {}
   OnDestroy() {
-    ActorSystem_1.ActorSystem.Put(this.tUo), (this.tUo = void 0);
+    ActorSystem_1.ActorSystem.Put(this.zUo), (this.zUo = void 0);
   }
   OnActivate() {
     this.CameraActorAttachToSpringActor();
@@ -44,14 +44,14 @@ class UiCameraSpringStructure extends UiCameraStructure_1.UiCameraStructure {
     this.CameraActorDetachFromSpringActor();
   }
   CameraActorAttachToSpringActor() {
-    var t = this.tUo.Camera;
+    var t = this.zUo.Camera;
     this.AttachToComponent(t);
   }
   CameraActorDetachFromSpringActor() {
     this.DetachFromComponent();
   }
   GetSpringActor() {
-    return this.tUo;
+    return this.zUo;
   }
 }
 exports.UiCameraSpringStructure = UiCameraSpringStructure;

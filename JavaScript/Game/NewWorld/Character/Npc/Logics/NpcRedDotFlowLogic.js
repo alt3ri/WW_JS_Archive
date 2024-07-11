@@ -3,19 +3,19 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.NpcRedDotFlowLogic = void 0);
 class NpcRedDotFlowLogic {
   constructor() {
-    (this.OZo = !1), (this.kZo = !1);
+    (this.qer = !1), (this.Ger = !1);
   }
   GetRedDotActive() {
-    return this.kZo || this.FZo(), this.OZo;
+    return this.Ger || this.Ner(), this.qer;
   }
-  FZo() {
-    this.OZo = !1;
+  Ner() {
+    this.qer = !1;
   }
   ManualControlRedDotActive(t, i) {
-    (this.kZo = t), this.kZo ? (this.OZo = i) : (this.OZo = !1);
+    (this.Ger = t), this.Ger ? (this.qer = i) : (this.qer = !1);
   }
   Clear() {
-    (this.OZo = !1), (this.kZo = !1);
+    (this.qer = !1), (this.Ger = !1);
   }
 }
 exports.NpcRedDotFlowLogic = NpcRedDotFlowLogic;

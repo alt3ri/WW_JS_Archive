@@ -10,23 +10,23 @@ class KeySettingRowContainerItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
       (this.KeySettingRowData = void 0),
-      (this.DAi = void 0),
-      (this.RAi = void 0),
-      (this.EAi = void 0),
-      (this.s_i = void 0),
-      (this.t_i = void 0),
-      (this.i_i = void 0),
-      (this.UAi = (t) => {
-        this.s_i && this.s_i(this, t);
+      (this.DPi = void 0),
+      (this.RPi = void 0),
+      (this.SPi = void 0),
+      (this.sui = void 0),
+      (this.tui = void 0),
+      (this.iui = void 0),
+      (this.UPi = (t) => {
+        this.sui && this.sui(this, t);
       }),
-      (this.__i = () => {
-        this.t_i && this.t_i(this.KeySettingRowData);
+      (this._ui = () => {
+        this.tui && this.tui(this.KeySettingRowData);
       }),
-      (this.u_i = () => {
-        this.i_i && this.i_i(this.KeySettingRowData);
+      (this.uui = () => {
+        this.iui && this.iui(this.KeySettingRowData);
       }),
-      (this.LAi = (t, i) => {
-        this.EAi && this.EAi(t, i, this);
+      (this.LPi = (t, i) => {
+        this.SPi && this.SPi(t, i, this);
       });
   }
   OnRegisterComponent() {
@@ -38,35 +38,35 @@ class KeySettingRowContainerItem extends UiPanelBase_1.UiPanelBase {
   }
   OnStart() {
     var t = this.GetExtendToggle(0);
-    t?.OnStateChange.Add(this.UAi),
-      t?.OnHover.Add(this.__i),
-      t?.OnUnHover.Add(this.u_i),
+    t?.OnStateChange.Add(this.UPi),
+      t?.OnHover.Add(this._ui),
+      t?.OnUnHover.Add(this.uui),
       this.SetActive(!0);
   }
   OnBeforeDestroy() {
     (this.KeySettingRowData = void 0),
-      (this.DAi = void 0),
-      (this.RAi = void 0),
-      (this.EAi = void 0);
+      (this.DPi = void 0),
+      (this.RPi = void 0),
+      (this.SPi = void 0);
     var t = this.GetExtendToggle(0);
-    t?.OnStateChange.Remove(this.UAi),
-      t?.OnHover.Remove(this.__i),
-      t?.OnUnHover.Remove(this.u_i);
+    t?.OnStateChange.Remove(this.UPi),
+      t?.OnHover.Remove(this._ui),
+      t?.OnUnHover.Remove(this.uui);
   }
   BindOnToggleStateChanged(t) {
-    this.s_i = t;
+    this.sui = t;
   }
   BindOnHover(t) {
-    this.t_i = t;
+    this.tui = t;
   }
   BindOnUnHover(t) {
-    this.i_i = t;
+    this.iui = t;
   }
   async Init(t) {
     await Promise.all([
       this.CreateByActorAsync(t.GetOwner(), void 0, !0),
-      this.AAi(),
-      this.PAi(),
+      this.APi(),
+      this.PPi(),
     ]);
   }
   ClearItem() {
@@ -77,33 +77,33 @@ class KeySettingRowContainerItem extends UiPanelBase_1.UiPanelBase {
     switch ((this.KeySettingRowData = t).GetRowType()) {
       case 2:
         this.GetExtendToggle(0)?.SetSelfInteractive(!0),
-          this.DAi.Refresh(t, e),
+          this.DPi.Refresh(t, e),
           this.GetItem(2).SetUIActive(!0),
           this.GetItem(1).SetUIActive(!1);
         break;
       case 1:
         this.GetExtendToggle(0)?.SetSelfInteractive(!1),
-          this.RAi.Refresh(t),
+          this.RPi.Refresh(t),
           this.GetItem(2).SetUIActive(!1),
           this.GetItem(1).SetUIActive(!0);
     }
-    this.SetSelected(!1), this.fRt(t.IsExpandDetail);
+    this.SetSelected(!1), this.EUt(t.IsExpandDetail);
   }
-  async PAi() {
+  async PPi() {
     var t = this.GetItem(2)?.GetOwner();
     t &&
-      ((this.DAi = new KeySettingRowKeyItem_1.KeySettingRowKeyItem()),
-      this.DAi.BindOnWaitInput(this.LAi),
-      await this.DAi.CreateThenShowByActorAsync(t));
+      ((this.DPi = new KeySettingRowKeyItem_1.KeySettingRowKeyItem()),
+      this.DPi.BindOnWaitInput(this.LPi),
+      await this.DPi.CreateThenShowByActorAsync(t));
   }
   BindOnWaitInput(t) {
-    this.EAi = t;
+    this.SPi = t;
   }
-  async AAi() {
+  async APi() {
     var t = this.GetItem(1)?.GetOwner();
     t &&
-      ((this.RAi = new KeySettingRowTypeItem_1.KeySettingRowTypeItem()),
-      await this.RAi.CreateThenShowByActorAsync(t));
+      ((this.RPi = new KeySettingRowTypeItem_1.KeySettingRowTypeItem()),
+      await this.RPi.CreateThenShowByActorAsync(t));
   }
   GetUsingItem(t) {
     switch (t.GetRowType()) {
@@ -116,12 +116,12 @@ class KeySettingRowContainerItem extends UiPanelBase_1.UiPanelBase {
     }
   }
   SetSelected(t) {
-    this.DAi?.SetSelected(t);
+    this.DPi?.SetSelected(t);
   }
   SetDetailItemVisible(t) {
-    this.DAi?.SetDetailItemVisible(t), this.fRt(t);
+    this.DPi?.SetDetailItemVisible(t), this.EUt(t);
   }
-  fRt(t) {
+  EUt(t) {
     this.GetExtendToggle(0)?.SetToggleState(t ? 1 : 0);
   }
 }

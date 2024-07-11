@@ -29,93 +29,93 @@ const Log_1 = require("../../../../../Core/Common/Log"),
 let UiModelAnimationComponent = class UiModelAnimationComponent extends UiModelComponentBase_1.UiModelComponentBase {
   constructor() {
     super(...arguments),
-      (this.Qwr = void 0),
-      (this.nXt = void 0),
-      (this.sBr = void 0),
-      (this.aBr = void 0),
-      (this.hBr = void 0),
-      (this.lBr = !0),
-      (this._Br = void 0),
-      (this.uBr = () => {
+      (this.ywr = void 0),
+      (this.n$t = void 0),
+      (this.qwr = void 0),
+      (this.Gwr = void 0),
+      (this.Nwr = void 0),
+      (this.Owr = !0),
+      (this.kwr = void 0),
+      (this.Fwr = () => {
         this.UpdateAnimInstance(),
-          this.aBr && (this.PlayMontage(this.aBr), (this.aBr = void 0)),
-          this.hBr &&
-            (this.PlayAnimation(this.hBr, this.lBr), (this.hBr = void 0)),
-          this._Br && (this.SetAnimationMode(this._Br), (this._Br = void 0));
+          this.Gwr && (this.PlayMontage(this.Gwr), (this.Gwr = void 0)),
+          this.Nwr &&
+            (this.PlayAnimation(this.Nwr, this.Owr), (this.Nwr = void 0)),
+          this.kwr && (this.SetAnimationMode(this.kwr), (this.kwr = void 0));
       });
   }
   OnInit() {
-    (this.nXt = this.Owner.CheckGetComponent(1)),
-      (this.Qwr = this.Owner.CheckGetComponent(0));
+    (this.n$t = this.Owner.CheckGetComponent(1)),
+      (this.ywr = this.Owner.CheckGetComponent(0));
   }
   OnStart() {
     EventSystem_1.EventSystem.AddWithTarget(
       this.Owner,
       EventDefine_1.EEventName.OnUiModelLoadComplete,
-      this.uBr,
+      this.Fwr,
     );
   }
   OnEnd() {
     EventSystem_1.EventSystem.RemoveWithTarget(
       this.Owner,
       EventDefine_1.EEventName.OnUiModelLoadComplete,
-      this.uBr,
+      this.Fwr,
     );
   }
-  cBr() {
-    var t = this.nXt?.MainMeshComponent;
+  Vwr() {
+    var t = this.n$t?.MainMeshComponent;
     t?.GetLinkedAnimGraphInstanceByTag(FNameUtil_1.FNameUtil.NONE) &&
       Log_1.Log.CheckError() &&
       Log_1.Log.Error(
         "Character",
         44,
         "检测出该Actor有空的动画LinkGraph节点,将会影响同步,GAS等功能,请找对应策划修复",
-        ["Actor", this.nXt?.Actor?.GetName()],
+        ["Actor", this.n$t?.Actor?.GetName()],
         ["AnimInstance", t?.GetAnimInstance()?.GetName()],
       );
   }
   UpdateAnimInstance() {
-    var t = this.nXt?.MainMeshComponent;
+    var t = this.n$t?.MainMeshComponent;
     t &&
-      (this.cBr(),
-      (this.sBr = t.GetLinkedAnimGraphInstanceByTag(
+      (this.Vwr(),
+      (this.qwr = t.GetLinkedAnimGraphInstanceByTag(
         CharacterNameDefines_1.CharacterNameDefines.ABP_BASE,
       )),
-      this.sBr || (this.sBr = t.GetAnimInstance()));
+      this.qwr || (this.qwr = t.GetAnimInstance()));
   }
   IsMontagePlaying() {
-    return this.sBr?.IsAnyMontagePlaying() ?? !1;
+    return this.qwr?.IsAnyMontagePlaying() ?? !1;
   }
   PlayMontage(t) {
-    2 !== this.Qwr?.GetModelLoadState()
-      ? (this.aBr = t)
-      : this.sBr.Montage_Play(t);
+    2 !== this.ywr?.GetModelLoadState()
+      ? (this.Gwr = t)
+      : this.qwr.Montage_Play(t);
   }
   StopMontage(t = 0) {
-    2 !== this.Qwr?.GetModelLoadState()
-      ? (this.aBr = void 0)
-      : this.sBr.Montage_Stop(t);
+    2 !== this.ywr?.GetModelLoadState()
+      ? (this.Gwr = void 0)
+      : this.qwr.Montage_Stop(t);
   }
   GetCurrentSection() {
-    return this.sBr?.Montage_GetCurrentSection();
+    return this.qwr?.Montage_GetCurrentSection();
   }
   IsAnimationPlaying() {
-    return this.nXt?.MainMeshComponent?.IsPlaying() ?? !1;
+    return this.n$t?.MainMeshComponent?.IsPlaying() ?? !1;
   }
   PlayAnimation(t, e = !0) {
-    2 !== this.Qwr?.GetModelLoadState()
-      ? ((this.hBr = t), (this.lBr = e))
-      : this.nXt.MainMeshComponent.PlayAnimation(t, e);
+    2 !== this.ywr?.GetModelLoadState()
+      ? ((this.Nwr = t), (this.Owr = e))
+      : this.n$t.MainMeshComponent.PlayAnimation(t, e);
   }
   StopAnimation() {
-    2 !== this.Qwr?.GetModelLoadState()
-      ? (this.hBr = void 0)
-      : this.nXt.MainMeshComponent.Stop();
+    2 !== this.ywr?.GetModelLoadState()
+      ? (this.Nwr = void 0)
+      : this.n$t.MainMeshComponent.Stop();
   }
   SetAnimationMode(t) {
-    2 !== this.Qwr?.GetModelLoadState()
-      ? (this._Br = t)
-      : this.nXt.MainMeshComponent.SetAnimationMode(t);
+    2 !== this.ywr?.GetModelLoadState()
+      ? (this.kwr = t)
+      : this.n$t.MainMeshComponent.SetAnimationMode(t);
   }
 };
 (UiModelAnimationComponent = __decorate(

@@ -31,51 +31,51 @@ class SimpleNpcFlowConditionChecker {
   static CheckCondition(e) {
     switch (e.CheckType) {
       case 1:
-        return this.eir(e.CheckValue);
+        return this.eor(e.CheckValue);
       case 2:
-        return this.tir(e.CheckValue);
+        return this.tor(e.CheckValue);
       case 3:
-        return this.iir(0);
+        return this.ior(0);
       case 4:
-        return this.iir(1);
+        return this.ior(1);
       case 5:
-        return this.iir(2);
+        return this.ior(2);
       case 6:
-        return this.iir(3);
+        return this.ior(3);
       case 7:
-        return this.oir(e.CheckValue);
+        return this.oor(e.CheckValue);
       case 8:
-        return this.rir(e.CheckValue);
+        return this.ror(e.CheckValue);
     }
     return !0;
   }
-  static eir(e) {
+  static eor(e) {
     return !0;
   }
-  static tir(e) {
+  static tor(e) {
     return !0;
   }
-  static iir(e) {
+  static ior(e) {
     return ModelManager_1.ModelManager.TimeOfDayModel.GameTime.DayState === e;
   }
-  static oir(e) {
+  static oor(e) {
     return (
       0 === e ||
       2 === ModelManager_1.ModelManager.QuestNewModel.GetQuestState(e)
     );
   }
-  static rir(e) {
+  static ror(e) {
     return (
       0 === e || ModelManager_1.ModelManager.QuestNewModel.CheckQuestFinished(e)
     );
   }
   static CheckFirstEnter(e) {
-    return !this.nir.has(e);
+    return !this.nor.has(e);
   }
   static SetFirstEnter(e) {
-    this.nir.add(e);
+    this.nor.add(e);
   }
 }
-(exports.SimpleNpcFlowConditionChecker = SimpleNpcFlowConditionChecker).nir =
+(exports.SimpleNpcFlowConditionChecker = SimpleNpcFlowConditionChecker).nor =
   new Set();
 //# sourceMappingURL=SimpleNpcFlowConditionChecker.js.map

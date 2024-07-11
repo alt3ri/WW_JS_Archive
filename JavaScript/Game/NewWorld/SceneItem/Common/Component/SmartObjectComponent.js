@@ -32,93 +32,93 @@ let SmartObjectComponent = class SmartObjectComponent extends EntityComponent_1.
   constructor() {
     super(...arguments),
       (this.Hte = void 0),
-      (this.ktn = void 0),
-      (this.aun = void 0),
-      (this.hun = []),
-      (this.lun = !1),
-      (this._un = (t, e) => {
+      (this.vtn = void 0),
+      (this.k_n = void 0),
+      (this.F_n = []),
+      (this.V_n = !1),
+      (this.H_n = (t, e) => {
         var i,
           e = e.Entity;
         0 <=
-          this.aun.ExcludeEntities?.indexOf(e.GetComponent(0).GetPbDataId()) ||
-          (this.uun(e) &&
-            ((i = this.hun.indexOf(e)),
-            t ? i < 0 && this.hun.push(e) : 0 <= i && this.hun.splice(i, 1)));
+          this.k_n.ExcludeEntities?.indexOf(e.GetComponent(0).GetPbDataId()) ||
+          (this.j_n(e) &&
+            ((i = this.F_n.indexOf(e)),
+            t ? i < 0 && this.F_n.push(e) : 0 <= i && this.F_n.splice(i, 1)));
       }),
-      (this.cun = () => {
+      (this.W_n = () => {
         var t, e;
-        this.lun &&
-          void 0 !== (t = this.aun.AlertSound) &&
+        this.V_n &&
+          void 0 !== (t = this.k_n.AlertSound) &&
           ((e = Global_1.Global.BaseCharacter),
           AudioController_1.AudioController.PostEvent(t, e));
       }),
-      (this.mun = (t, e) => {
+      (this.K_n = (t, e) => {
         e === CharacterUnifiedStateTypes_1.ECharMoveState.WalkStop ||
         e === CharacterUnifiedStateTypes_1.ECharMoveState.RunStop ||
         e === CharacterUnifiedStateTypes_1.ECharMoveState.SprintStop
-          ? (this.lun = !1)
+          ? (this.V_n = !1)
           : (e !== CharacterUnifiedStateTypes_1.ECharMoveState.Walk &&
               e !== CharacterUnifiedStateTypes_1.ECharMoveState.Run &&
               e !== CharacterUnifiedStateTypes_1.ECharMoveState.Sprint) ||
-            (this.lun = !0);
+            (this.V_n = !0);
       });
   }
   OnStart() {
     var t;
     return (
       (this.Hte = this.Entity.GetComponent(1)),
-      (this.ktn = this.Entity.GetComponent(74)),
+      (this.vtn = this.Entity.GetComponent(76)),
       this.Hte &&
         (t = this.Hte.CreatureData?.GetPbEntityInitData()?.ComponentsData) &&
-        ((this.aun = (0, IComponent_1.getComponent)(
+        ((this.k_n = (0, IComponent_1.getComponent)(
           t,
           "AiAlertNotifyComponent",
         )),
-        this.aun) &&
-        this.dun(),
+        this.k_n) &&
+        this.Q_n(),
       !0
     );
   }
-  dun() {
-    for (var [, t] of this.ktn.GetEntitiesInRangeLocal()) {
+  Q_n() {
+    for (var [, t] of this.vtn.GetEntitiesInRangeLocal()) {
       if (
-        this.aun.ExcludeEntities?.length &&
-        0 < this.aun.ExcludeEntities?.length
+        this.k_n.ExcludeEntities?.length &&
+        0 < this.k_n.ExcludeEntities?.length
       )
         if (
           0 <=
-          this.aun.ExcludeEntities?.indexOf(
+          this.k_n.ExcludeEntities?.indexOf(
             t.Entity.GetComponent(0).GetPbDataId(),
           )
         )
           continue;
-      this.uun(t.Entity) && this.hun.push(t.Entity);
+      this.j_n(t.Entity) && this.F_n.push(t.Entity);
     }
-    this.ktn.AddOnEntityOverlapCallback(this._un), this.Cun();
+    this.vtn.AddOnEntityOverlapCallback(this.H_n), this.X_n();
   }
-  uun(t) {
-    var t = t.GetComponent(38);
+  j_n(t) {
+    var t = t.GetComponent(39);
     return !!t && !!(t = t.AiController?.AiAlert) && !!t.AiAlertConfig;
   }
   OnEnd() {
-    return this.ktn.RemoveOnEntityOverlapCallback(this._un), this.gun(), !0;
+    return this.vtn.RemoveOnEntityOverlapCallback(this.H_n), this.$_n(), !0;
   }
   OnTick(t) {
-    this.fun(t);
+    this.Y_n(t);
   }
-  fun(e) {
-    if (void 0 !== this.aun && !(this.hun.length <= 0)) {
+  Y_n(e) {
+    if (void 0 !== this.k_n && !(this.F_n.length <= 0)) {
       let t = 0;
-      if (this.lun) {
-        var i = this.aun.ExtraAiAlert.MoveAlert;
+      if (this.V_n) {
+        var i = this.k_n.ExtraAiAlert.MoveAlert;
         if (!i) return;
         t = i * e * TimeUtil_1.TimeUtil.Millisecond;
       } else {
-        i = this.aun.ExtraAiAlert.StopAlert;
+        i = this.k_n.ExtraAiAlert.StopAlert;
         if (!i) return;
         t = i * e * TimeUtil_1.TimeUtil.Millisecond;
       }
-      for (const r of this.hun)
+      for (const r of this.F_n)
         EventSystem_1.EventSystem.EmitWithTarget(
           r,
           EventDefine_1.EEventName.SmartObjectAiAlterNotify,
@@ -126,31 +126,31 @@ let SmartObjectComponent = class SmartObjectComponent extends EntityComponent_1.
         );
     }
   }
-  Cun() {
+  X_n() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnCharFootOnTheGround,
-      this.cun,
+      this.W_n,
     ),
       EventSystem_1.EventSystem.AddWithTarget(
         Global_1.Global.BaseCharacter.CharacterActorComponent.Entity,
         EventDefine_1.EEventName.CharOnUnifiedMoveStateChanged,
-        this.mun,
+        this.K_n,
       );
   }
-  gun() {
+  $_n() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnCharFootOnTheGround,
-      this.cun,
+      this.W_n,
     ),
       EventSystem_1.EventSystem.RemoveWithTarget(
         Global_1.Global.BaseCharacter.CharacterActorComponent.Entity,
         EventDefine_1.EEventName.CharOnUnifiedMoveStateChanged,
-        this.mun,
+        this.K_n,
       );
   }
 };
 (SmartObjectComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(120)],
+  [(0, RegisterComponent_1.RegisterComponent)(122)],
   SmartObjectComponent,
 )),
   (exports.SmartObjectComponent = SmartObjectComponent);

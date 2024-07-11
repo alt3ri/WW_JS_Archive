@@ -16,43 +16,43 @@ const LanguageSystem_1 = require("../../../Core/Common/LanguageSystem"),
   ConfigManager_1 = require("../../Manager/ConfigManager");
 class AdviceData {
   constructor() {
-    (this.u8e = void 0),
-      (this.c8e = 0),
-      (this.m8e = 0),
-      (this.d8e = new Array()),
-      (this.C8e = 0),
-      (this.g8e = 0),
-      (this.f8e = ""),
-      (this.p8e = "");
+    (this.T9e = void 0),
+      (this.L9e = 0),
+      (this.D9e = 0),
+      (this.R9e = new Array()),
+      (this.U9e = 0),
+      (this.A9e = 0),
+      (this.P9e = ""),
+      (this.x9e = "");
   }
   Phrase(t) {
-    (this.u8e = MathUtils_1.MathUtils.LongToBigInt(t.Ekn)),
-      (this.c8e = t.wFn),
-      this.PhraseUpDownData(t.Tgs),
-      (this.d8e = new Array()),
-      t.E3n.forEach((t) => {
+    (this.T9e = MathUtils_1.MathUtils.LongToBigInt(t.J4n)),
+      (this.L9e = t.l6n),
+      this.PhraseUpDownData(t.VMs),
+      (this.R9e = new Array()),
+      t.i8n.forEach((t) => {
         var e = new AdviceContentData();
-        e.Phrase(t), this.d8e.push(e);
+        e.Phrase(t), this.R9e.push(e);
       }),
-      this.PhraseContentInfo(this.d8e);
+      this.PhraseContentInfo(this.R9e);
   }
   PhraseData(t) {
-    (this.d8e = new Array()),
+    (this.R9e = new Array()),
       t.forEach((t) => {
         var e = new AdviceContentData();
-        e.PhraseData(t), this.d8e.push(e);
+        e.PhraseData(t), this.R9e.push(e);
       }),
-      this.PhraseContentInfo(this.d8e);
+      this.PhraseContentInfo(this.R9e);
   }
   PhraseUpDownData(t) {
-    this.m8e = t;
+    this.D9e = t;
   }
   PhraseContentInfo(t) {
-    this.p8e = LanguageSystem_1.LanguageSystem.PackageLanguage;
+    this.x9e = LanguageSystem_1.LanguageSystem.PackageLanguage;
     const s = new StringBuilder_1.StringBuilder();
     t.forEach((i) => {
       switch (i.GetType()) {
-        case Protocol_1.Aki.Protocol.FBs.Proto_Sentence:
+        case Protocol_1.Aki.Protocol.Aks.Proto_Sentence:
           {
             var t =
               ConfigManager_1.ConfigManager.AdviceConfig.GetAdviceSentenceText(
@@ -71,30 +71,30 @@ class AdviceData {
             });
           }
           break;
-        case Protocol_1.Aki.Protocol.FBs.Proto_Conjunction:
+        case Protocol_1.Aki.Protocol.Aks.Proto_Conjunction:
           t =
             ConfigManager_1.ConfigManager.AdviceConfig.GetAdviceConjunctionText(
               i.GetId(),
             );
           s.Append(t);
           break;
-        case Protocol_1.Aki.Protocol.FBs.Proto_Expression:
-          this.C8e = i.GetId();
+        case Protocol_1.Aki.Protocol.Aks.Proto_Expression:
+          this.U9e = i.GetId();
           break;
-        case Protocol_1.Aki.Protocol.FBs.y3n:
-          this.g8e = i.GetId();
+        case Protocol_1.Aki.Protocol.Aks.r8n:
+          this.A9e = i.GetId();
       }
     }),
-      (this.f8e = s.ToString());
+      (this.P9e = s.ToString());
   }
   PhraseShowText(e, i = 0) {
-    this.p8e = LanguageSystem_1.LanguageSystem.PackageLanguage;
+    this.x9e = LanguageSystem_1.LanguageSystem.PackageLanguage;
     var s = new StringBuilder_1.StringBuilder(),
       r = e.length;
     for (let t = 0; t < r; t++) {
       var a = e[t],
         n = a.GetType();
-      if (n === Protocol_1.Aki.Protocol.FBs.Proto_Sentence) {
+      if (n === Protocol_1.Aki.Protocol.Aks.Proto_Sentence) {
         var o,
           h = ConfigManager_1.ConfigManager.AdviceConfig.GetAdviceSentenceText(
             a.GetId(),
@@ -123,7 +123,7 @@ class AdviceData {
                       )),
                 s.Append(t));
           }
-      } else if (n === Protocol_1.Aki.Protocol.FBs.Proto_Conjunction) {
+      } else if (n === Protocol_1.Aki.Protocol.Aks.Proto_Conjunction) {
         let t = "";
         0 < a.GetId()
           ? ((n =
@@ -141,26 +141,26 @@ class AdviceData {
             s.Append(t));
       }
     }
-    this.f8e = s.ToString();
+    this.P9e = s.ToString();
   }
   GetAdviceShowText() {
     return (
-      this.p8e !== LanguageSystem_1.LanguageSystem.PackageLanguage &&
-        this.PhraseContentInfo(this.d8e),
-      this.f8e
+      this.x9e !== LanguageSystem_1.LanguageSystem.PackageLanguage &&
+        this.PhraseContentInfo(this.R9e),
+      this.P9e
     );
   }
   GetAdviceId() {
-    return MathUtils_1.MathUtils.BigIntToLong(this.u8e);
+    return MathUtils_1.MathUtils.BigIntToLong(this.T9e);
   }
   GetAdviceBigId() {
-    return this.u8e;
+    return this.T9e;
   }
   GetAreaId() {
-    return this.c8e;
+    return this.L9e;
   }
   GetVote() {
-    let t = this.m8e;
+    let t = this.D9e;
     var e;
     return (
       t <= 0
@@ -172,13 +172,13 @@ class AdviceData {
     );
   }
   GetAdviceContentData() {
-    return this.d8e;
+    return this.R9e;
   }
   GetAdviceExpressionId() {
-    return this.C8e;
+    return this.U9e;
   }
   GetAdviceMotionId() {
-    return this.g8e;
+    return this.A9e;
   }
 }
 exports.AdviceData = AdviceData;
@@ -193,53 +193,53 @@ class LogAdviceData {
 exports.LogAdviceData = LogAdviceData;
 class AdviceContentData {
   constructor() {
-    (this.xe = 0), (this.v8e = 0), (this.S9 = void 0);
+    (this.xe = 0), (this.w9e = 0), (this.E9 = void 0);
   }
   Phrase(t) {
-    (this.xe = t.Ekn), (this.v8e = t.I3n), (this.S9 = t.Ikn);
+    (this.xe = t.J4n), (this.w9e = t.o8n), (this.E9 = t.Z4n);
   }
   PhraseData(t) {
     t instanceof AdviceContentData
-      ? ((this.xe = t.xe), (this.v8e = t.v8e), (this.S9 = t.S9))
-      : t instanceof Protocol_1.Aki.Protocol.NBs &&
-        ((this.xe = t.Ekn), (this.v8e = t.I3n), (this.S9 = t.Ikn));
+      ? ((this.xe = t.xe), (this.w9e = t.w9e), (this.E9 = t.E9))
+      : t instanceof Protocol_1.Aki.Protocol.Dks &&
+        ((this.xe = t.J4n), (this.w9e = t.o8n), (this.E9 = t.Z4n));
   }
   SetData(t, e, i) {
-    (this.xe = t), (this.v8e = e), (this.S9 = i);
+    (this.xe = t), (this.w9e = e), (this.E9 = i);
   }
   GetId() {
     return this.xe;
   }
   GetWord() {
-    return this.v8e;
+    return this.w9e;
   }
   GetType() {
-    return this.S9;
+    return this.E9;
   }
   ConvertToPb() {
-    var t = new Protocol_1.Aki.Protocol.NBs();
-    return (t.Ekn = this.xe), (t.Ikn = this.S9), (t.I3n = this.v8e), t;
+    var t = new Protocol_1.Aki.Protocol.Dks();
+    return (t.J4n = this.xe), (t.Z4n = this.E9), (t.o8n = this.w9e), t;
   }
 }
 exports.AdviceContentData = AdviceContentData;
 class AdviceEntityData {
   constructor() {
-    (this.j8 = 0), (this.M8e = ""), (this.S8e = void 0);
+    (this.j8 = 0), (this.B9e = ""), (this.b9e = void 0);
   }
   Phrase(t) {
-    (this.S8e = new AdviceData()),
-      (this.j8 = t.aFn),
-      (this.M8e = t.Rgs),
-      this.S8e.Phrase(t.Lgs);
+    (this.b9e = new AdviceData()),
+      (this.j8 = t.q5n),
+      (this.B9e = t.HMs),
+      this.b9e.Phrase(t.$Ms);
   }
   PhraseVote(t) {
-    this.S8e.PhraseUpDownData(t),
+    this.b9e.PhraseUpDownData(t),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnAdviceEntityNotify,
       );
   }
   PhraseContent(t) {
-    this.S8e.PhraseData(t),
+    this.b9e.PhraseData(t),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnAdviceEntityNotify,
       );
@@ -248,10 +248,10 @@ class AdviceEntityData {
     return this.j8;
   }
   GetPlayerName() {
-    return this.M8e;
+    return this.B9e;
   }
   GetAdviceData() {
-    return this.S8e;
+    return this.b9e;
   }
 }
 exports.AdviceEntityData = AdviceEntityData;

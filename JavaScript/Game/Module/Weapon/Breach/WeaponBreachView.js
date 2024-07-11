@@ -24,32 +24,32 @@ class WeaponBreachView extends UiTabViewBase_1.UiTabViewBase {
   constructor() {
     super(...arguments),
       (this.AttributeLayout = void 0),
-      (this.Olo = void 0),
+      (this.b1o = void 0),
       (this.StarLayout = void 0),
-      (this.PNo = 0),
-      (this.xNo = void 0),
-      (this.ANo = 0),
-      (this.Nki = void 0),
-      (this.Oki = void 0),
-      (this.pco = void 0),
-      (this.wNo = () => {
-        0 === this.PNo
+      (this.ROo = 0),
+      (this.UOo = void 0),
+      (this.DOo = 0),
+      (this.N2i = void 0),
+      (this.O2i = void 0),
+      (this.dmo = void 0),
+      (this.AOo = () => {
+        0 === this.ROo
           ? ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
               "WeaponBreachNoEnoughMaterialText",
             )
-          : 1 === this.PNo
+          : 1 === this.ROo
             ? ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
                 "WeaponBreachNoEnoughMoneyText",
               )
-            : ((this.Nki = UiSceneManager_1.UiSceneManager.GetWeaponObserver()),
-              (this.Oki =
+            : ((this.N2i = UiSceneManager_1.UiSceneManager.GetWeaponObserver()),
+              (this.O2i =
                 UiSceneManager_1.UiSceneManager.GetWeaponScabbardObserver()),
-              (this.pco =
+              (this.dmo =
                 UiSceneManager_1.UiSceneManager.GetRoleSystemRoleActor()),
               WeaponController_1.WeaponController.SendPbWeaponBreachRequest(
-                this.ANo,
+                this.DOo,
                 (e) => {
-                  var i = this.Nki.Model,
+                  var i = this.N2i.Model,
                     i =
                       (UiModelUtil_1.UiModelUtil.PlayEffectAtRootComponent(
                         i,
@@ -57,18 +57,18 @@ class WeaponBreachView extends UiTabViewBase_1.UiTabViewBase {
                       ),
                       WeaponController_1.WeaponController.PlayWeaponRenderingMaterial(
                         "WeaponBreachMaterialController",
-                        this.Nki,
-                        this.Oki,
+                        this.N2i,
+                        this.O2i,
                       ),
                       ConfigManager_1.ConfigManager.RoleConfig.GetWeaponBreachDaDelayTime());
                   TimerSystem_1.TimerSystem.Delay(() => {
-                    this.Nki?.Model?.CheckGetComponent(
+                    this.N2i?.Model?.CheckGetComponent(
                       19,
                     )?.RefreshWeaponBreachDa(e),
-                      this.Oki?.Model?.CheckGetComponent(
+                      this.O2i?.Model?.CheckGetComponent(
                         19,
                       )?.RefreshWeaponBreachDa(e),
-                      this.pco?.Model?.CheckGetComponent(14)?.RefreshWeaponDa();
+                      this.dmo?.Model?.CheckGetComponent(14)?.RefreshWeaponDa();
                   }, i);
                 },
               ));
@@ -87,10 +87,10 @@ class WeaponBreachView extends UiTabViewBase_1.UiTabViewBase {
             e,
           );
       }),
-      (this.sAt = () => {
+      (this.vke = () => {
         return new StarItem_1.StarItem();
       }),
-      (this.Flo = () => new AttributeItem_1.AttributeItem());
+      (this.G1o = () => new AttributeItem_1.AttributeItem());
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -106,27 +106,27 @@ class WeaponBreachView extends UiTabViewBase_1.UiTabViewBase {
   OnStart() {
     (this.StarLayout = new GenericLayout_1.GenericLayout(
       this.GetHorizontalLayout(2),
-      this.sAt,
+      this.vke,
     )),
-      (this.Olo = new CostItemGridComponent_1.CostItemGridComponent(
+      (this.b1o = new CostItemGridComponent_1.CostItemGridComponent(
         this.GetItem(4),
-        this.wNo,
+        this.AOo,
         this.LevelUpLockTipClick,
       )),
-      this.Olo.SetMaxItemActive(!1),
-      this.Olo.SetButtonItemLocalText("RoleBreakup"),
+      this.b1o.SetMaxItemActive(!1),
+      this.b1o.SetButtonItemLocalText("RoleBreakup"),
       (this.AttributeLayout = new GenericLayout_1.GenericLayout(
         this.GetVerticalLayout(3),
-        this.Flo,
+        this.G1o,
         this.GetItem(5).GetOwner(),
       ));
   }
   OnBeforeShow() {
-    (this.ANo = this.ExtraParams), this.qIt(), this.C4e();
+    (this.DOo = this.ExtraParams), this.FTt(), this.P5e();
   }
-  qIt() {
+  FTt() {
     var e = ModelManager_1.ModelManager.WeaponModel.GetWeaponDataByIncId(
-        this.ANo,
+        this.DOo,
       ),
       i = e.GetBreachConfig(),
       t = e.GetWeaponConfig(),
@@ -137,20 +137,20 @@ class WeaponBreachView extends UiTabViewBase_1.UiTabViewBase {
       r = (this.GetText(0).SetText(r.LevelLimit.toString()), t.BreachId),
       t = ModelManager_1.ModelManager.WeaponModel.GetWeaponBreachMaxLevel(r),
       o =
-        (this.kPt(e.GetBreachLevel(), t),
-        (this.PNo =
+        (this.jxt(e.GetBreachLevel(), t),
+        (this.ROo =
           ModelManager_1.ModelManager.WeaponModel.GetWeaponBreachState(
-            this.ANo,
+            this.DOo,
           )),
-        3 === this.PNo
+        3 === this.ROo
           ? ((r =
               LevelGeneralCommons_1.LevelGeneralCommons.GetConditionGroupHintText(
                 i.ConditionId,
               )),
-            this.Olo.SetButtonItemActive(!1),
-            this.Olo.SetLockItemActive(!0),
-            this.Olo.SetLockLocalText(r ?? ""))
-          : (this.Olo.SetButtonItemActive(!0), this.Olo.SetLockItemActive(!1)),
+            this.b1o.SetButtonItemActive(!1),
+            this.b1o.SetLockItemActive(!0),
+            this.b1o.SetLockLocalText(r ?? ""))
+          : (this.b1o.SetButtonItemActive(!0), this.b1o.SetLockItemActive(!1)),
         []),
       t = i.Consume;
     if (t)
@@ -167,19 +167,19 @@ class WeaponBreachView extends UiTabViewBase_1.UiTabViewBase {
         o.push(a);
       }
     r = i.GoldConsume;
-    this.Olo.Update(o, ItemDefines_1.EItemId.Gold, r),
+    this.b1o.Update(o, ItemDefines_1.EItemId.Gold, r),
       LguiUtil_1.LguiUtil.SetLocalText(
         this.GetText(1),
         "RoleBreakUpLevel",
         e.GetBreachLevel() + 1,
       ),
-      this.jlo();
+      this.k1o();
   }
-  kPt(i, t) {
+  jxt(i, t) {
     this.StarLayout ||
       (this.StarLayout = new GenericLayout_1.GenericLayout(
         this.GetHorizontalLayout(2),
-        this.sAt,
+        this.vke,
       ));
     var r = new Array(t);
     for (let e = 0; e < t; ++e) {
@@ -195,13 +195,13 @@ class WeaponBreachView extends UiTabViewBase_1.UiTabViewBase {
     }
     this.StarLayout.RefreshByData(r);
   }
-  jlo() {
+  k1o() {
     var e = ModelManager_1.ModelManager.WeaponModel.GetWeaponDataByIncId(
-        this.ANo,
+        this.DOo,
       ),
       i = e.GetWeaponConfig(),
       t =
-        ((this.xNo =
+        ((this.UOo =
           ModelManager_1.ModelManager.WeaponModel.GetWeaponAttributeParamList(
             i,
           )),
@@ -209,7 +209,7 @@ class WeaponBreachView extends UiTabViewBase_1.UiTabViewBase {
       r = t + 1,
       o = e.GetLevel(),
       a = [];
-    for (const _ of this.xNo) {
+    for (const _ of this.UOo) {
       var n = _.CurveId,
         s = _.PropId,
         l = s.Value,
@@ -229,9 +229,9 @@ class WeaponBreachView extends UiTabViewBase_1.UiTabViewBase {
     }
     this.AttributeLayout.RefreshByData(a);
   }
-  C4e() {
+  P5e() {
     var e = ModelManager_1.ModelManager.WeaponModel.GetWeaponDataByIncId(
-        this.ANo,
+        this.DOo,
       ).GetWeaponConfig(),
       i = e.WeaponName,
       e = ConfigManager_1.ConfigManager.ItemConfig.GetQualityConfig(
@@ -241,7 +241,7 @@ class WeaponBreachView extends UiTabViewBase_1.UiTabViewBase {
     this.GetText(6).SetColor(e), this.GetText(6).ShowTextNew(i);
   }
   OnBeforeDestroy() {
-    this.Olo.Destroy();
+    this.b1o.Destroy();
   }
 }
 exports.WeaponBreachView = WeaponBreachView;

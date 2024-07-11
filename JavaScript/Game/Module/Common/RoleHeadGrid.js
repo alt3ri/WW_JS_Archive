@@ -6,26 +6,26 @@ const UE = require("ue"),
   UiPanelBase_1 = require("../../Ui/Base/UiPanelBase");
 class RoleHeadGrid extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
-    super(), (this.zke = 0), this.CreateThenShowByActor(e);
+    super(), (this.dFe = 0), this.CreateThenShowByActor(e);
   }
   get Lo() {
-    return this.zke
-      ? ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(this.zke)
+    return this.dFe
+      ? ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(this.dFe)
       : void 0;
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [[0, UE.UITexture]];
   }
-  dBt() {
+  fbt() {
     var e,
       i = this.Lo;
     i &&
       (e = this.GetTexture(0)) &&
       "" !== (i = i.RoleHeadIconBig) &&
-      this.SetRoleIcon(i, e, this.zke);
+      this.SetRoleIcon(i, e, this.dFe);
   }
   Refresh(e) {
-    (this.zke = e), this.dBt();
+    (this.dFe = e), this.fbt();
   }
 }
 exports.RoleHeadGrid = RoleHeadGrid;

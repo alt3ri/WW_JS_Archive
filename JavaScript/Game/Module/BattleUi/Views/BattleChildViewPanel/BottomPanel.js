@@ -7,51 +7,47 @@ const UE = require("ue"),
   EventDefine_1 = require("../../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../../Common/Event/EventSystem"),
   ModelManager_1 = require("../../../../Manager/ModelManager"),
-  BattleUiDefine_1 = require("../../BattleUiDefine"),
   ConcertoResponseItem_1 = require("../ConcertoResponseItem"),
   RoleBuffView_1 = require("../RoleBuffView"),
   RoleStateView_1 = require("../RoleStateView"),
   SpecialEnergyBarContainer_1 = require("../SpecialEnergy/SpecialEnergyBarContainer"),
   BattleChildViewPanel_1 = require("./BattleChildViewPanel");
-var EAttributeId = Protocol_1.Aki.Protocol.KBs;
+var EAttributeId = Protocol_1.Aki.Protocol.Bks;
 class BottomPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
   constructor() {
     super(...arguments),
-      (this.J$e = void 0),
-      (this.z$e = void 0),
-      (this.Z$e = void 0),
-      (this.eYe = void 0),
-      (this.tYe = (e) => {
-        this.Z$e?.RefreshVisible();
+      (this.lJe = void 0),
+      (this._Je = void 0),
+      (this.uJe = void 0),
+      (this.cJe = void 0),
+      (this.mJe = (e) => {
+        this.uJe?.RefreshVisible();
       }),
       (this.xie = () => {
         var e = ModelManager_1.ModelManager.BattleUiModel.GetCurRoleData();
         e &&
           (e.IsPhantom() && 0 < e.RoleConfig.SpecialEnergyBarId
-            ? (this.J$e.Refresh(void 0), this.Z$e.Refresh(void 0))
-            : (this.J$e.Refresh(e), this.Z$e.Refresh(e)),
-          this.z$e.Refresh(e),
-          this.eYe.OnChangeRole(e));
+            ? (this.lJe.Refresh(void 0), this.uJe.Refresh(void 0))
+            : (this.lJe.Refresh(e), this.uJe.Refresh(e)),
+          this._Je.Refresh(e),
+          this.cJe.OnChangeRole(e));
       }),
       (this.zpe = (e) => {
-        this.J$e.GetEntityId() === e.Id && this.J$e.Refresh(void 0),
-          this.Z$e.GetEntityId() === e.Id && this.Z$e.Refresh(void 0),
-          this.z$e.GetEntityId() === e.Id && this.z$e.Refresh(void 0),
-          this.eYe.OnRemoveEntity(e.Id);
+        this.lJe.GetEntityId() === e.Id && this.lJe.Refresh(void 0),
+          this.uJe.GetEntityId() === e.Id && this.uJe.Refresh(void 0),
+          this._Je.GetEntityId() === e.Id && this._Je.Refresh(void 0),
+          this.cJe.OnRemoveEntity(e.Id);
       }),
-      (this.iYe = (e, t) => {
+      (this.dJe = (e, t) => {
         var i = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
         if (i?.Valid && t && i.Id === e)
-          for (const s of t.dfs)
-            s.Ugs === EAttributeId.Proto_Life &&
-              this.J$e.RefreshHpAndShield(!0);
+          for (const s of t.PSs)
+            s.QMs === EAttributeId.Proto_Life &&
+              this.lJe.RefreshHpAndShield(!0);
       }),
-      (this.pKe = (e, t, i, s) => {
-        this.z$e.GetEntityId() === e &&
-          t.CueType === BattleUiDefine_1.UI_EFFECT_CUE_TYPE &&
-          (i
-            ? this.z$e.AddBuffItem(t, s, !0)
-            : this.z$e.DeactivateBuffItem(s, !0));
+      (this.AQe = (e, t, i, s) => {
+        this._Je.GetEntityId() === e &&
+          (i ? this._Je.AddBuff(t, s) : this._Je.RemoveBuff(t, s));
       });
   }
   OnRegisterComponent() {
@@ -64,57 +60,57 @@ class BottomPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
     ];
   }
   async InitializeAsync() {
-    await Promise.all([this.oYe(), this.rYe(), this.nYe(), this.sYe()]);
+    await Promise.all([this.CJe(), this.gJe(), this.fJe(), this.pJe()]);
     var e = ModelManager_1.ModelManager.BattleUiModel.GetCurRoleData();
-    this.J$e.Refresh(e),
-      this.Z$e.Refresh(e),
-      this.z$e.Refresh(e),
-      this.eYe.OnChangeRole(e);
+    this.lJe.Refresh(e),
+      this.uJe.Refresh(e),
+      this._Je.Refresh(e),
+      this.cJe.OnChangeRole(e);
   }
   Reset() {
-    (this.J$e = void 0),
-      (this.Z$e = void 0),
-      (this.z$e = void 0),
-      (this.eYe = void 0),
+    (this.lJe = void 0),
+      (this.uJe = void 0),
+      (this._Je = void 0),
+      (this.cJe = void 0),
       super.Reset();
   }
   OnShowBattleChildViewPanel() {
-    this.J$e?.SetNiagaraActive(!1);
+    this.lJe?.SetNiagaraActive(!1);
   }
   OnTickBattleChildViewPanel(e) {
-    this.J$e?.Tick(e), this.z$e?.Tick(e), this.eYe?.Tick(e);
+    this.lJe?.Tick(e), this._Je?.Tick(e), this.cJe?.Tick(e);
   }
-  async oYe() {
+  async CJe() {
     var e = this.GetItem(0);
-    (this.J$e = await this.NewStaticChildViewAsync(
+    (this.lJe = await this.NewStaticChildViewAsync(
       e.GetOwner(),
       RoleStateView_1.RoleStateView,
     )),
-      await this.J$e.ShowAsync();
+      await this.lJe.ShowAsync();
   }
-  async nYe() {
+  async fJe() {
     var e = this.GetItem(1);
-    this.Z$e = await this.NewStaticChildViewAsync(
+    this.uJe = await this.NewStaticChildViewAsync(
       e.GetOwner(),
       ConcertoResponseItem_1.ConcertoResponseItem,
     );
   }
-  async rYe() {
+  async gJe() {
     var e = this.GetItem(3);
-    (this.z$e = await this.NewStaticChildViewAsync(
+    (this._Je = await this.NewStaticChildViewAsync(
       e.GetOwner(),
       RoleBuffView_1.RoleBuffView,
     )),
-      await this.z$e.ShowAsync();
+      await this._Je.ShowAsync();
   }
-  async sYe() {
+  async pJe() {
     var e = this.GetItem(2);
-    (this.eYe = await this.NewStaticChildViewAsync(
+    (this.cJe = await this.NewStaticChildViewAsync(
       e.GetOwner(),
       SpecialEnergyBarContainer_1.SpecialEnergyBarContainer,
       this.GetItem(4),
     )),
-      await this.eYe.ShowAsync();
+      await this.cJe.ShowAsync();
   }
   AddEvents() {
     EventSystem_1.EventSystem.Add(
@@ -127,15 +123,15 @@ class BottomPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.CharOnBuffAddUITexture,
-        this.pKe,
+        this.AQe,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnServerAttributeChange,
-        this.iYe,
+        this.dJe,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnConcertoResponseOpen,
-        this.tYe,
+        this.mJe,
       );
   }
   RemoveEvents() {
@@ -149,17 +145,17 @@ class BottomPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnServerAttributeChange,
-        this.iYe,
+        this.dJe,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.CharOnBuffAddUITexture,
-        this.pKe,
+        this.AQe,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnConcertoResponseOpen,
-        this.tYe,
+        this.mJe,
       );
   }
 }
-((exports.BottomPanel = BottomPanel).aYe = void 0), (BottomPanel.RKe = void 0);
+((exports.BottomPanel = BottomPanel).vJe = void 0), (BottomPanel.kQe = void 0);
 //# sourceMappingURL=BottomPanel.js.map

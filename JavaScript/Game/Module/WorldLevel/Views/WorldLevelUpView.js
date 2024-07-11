@@ -17,13 +17,13 @@ const UE = require("ue"),
 class WorldLevelUpView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
-      (this.opi = 0),
+      (this.rvi = 0),
       (this.Ql = 0),
-      (this.Hvt = CommonParamById_1.configCommonParamById.GetIntConfig(
+      (this.tEt = CommonParamById_1.configCommonParamById.GetIntConfig(
         "WorldLevelDisplayTime",
       )),
-      (this.lko = () => {
-        this.odo();
+      (this.s2o = () => {
+        this.eCo();
       });
   }
   OnRegisterComponent() {
@@ -34,21 +34,21 @@ class WorldLevelUpView extends UiTickViewBase_1.UiTickViewBase {
     ];
   }
   OnStart() {
-    this.odo(), this._ko();
+    this.eCo(), this.a2o();
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.WorldLevelUpViewRefresh,
-      this.lko,
+      this.s2o,
     );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.WorldLevelUpViewRefresh,
-      this.lko,
+      this.s2o,
     );
   }
-  odo() {
+  eCo() {
     var e = ModelManager_1.ModelManager.WorldLevelModel.OriginWorldLevel,
       t =
         (this.GetText(0).SetText(e.toString()),
@@ -69,16 +69,16 @@ class WorldLevelUpView extends UiTickViewBase_1.UiTickViewBase {
   OnTick(e) {
     this.Ql < 0 ||
       ((this.Ql = this.Ql + e),
-      this.Ql > this.Hvt &&
+      this.Ql > this.tEt &&
         (this.$Oe(), (this.Ql = CommonDefine_1.INVALID_VALUE)));
   }
   $Oe() {
     this.CloseMe();
   }
   OnBeforeDestroy() {
-    this.lpi();
+    this._vi();
   }
-  _ko() {
+  a2o() {
     var e, t, i, r;
     Global_1.Global.BaseCharacter &&
       (e = EffectUtil_1.EffectUtil.GetEffectPath("WorldLevelUpEffect")) &&
@@ -87,21 +87,21 @@ class WorldLevelUpView extends UiTickViewBase_1.UiTickViewBase {
       (i = i.CapsuleComponent.CapsuleHalfHeight),
       ((r = t.GetLocation()).Z -= i),
       t.SetLocation(r),
-      (this.opi = EffectSystem_1.EffectSystem.SpawnUnloopedEffect(
+      (this.rvi = EffectSystem_1.EffectSystem.SpawnUnloopedEffect(
         GlobalData_1.GlobalData.World,
         t,
         e,
         "[WorldLevelUpView.PlayWorldLevelUpEffect]",
       )));
   }
-  lpi() {
-    EffectSystem_1.EffectSystem.IsValid(this.opi) &&
+  _vi() {
+    EffectSystem_1.EffectSystem.IsValid(this.rvi) &&
       (EffectSystem_1.EffectSystem.StopEffectById(
-        this.opi,
+        this.rvi,
         "[WorldLevelUpView.RecycleEffect]",
         !0,
       ),
-      (this.opi = 0));
+      (this.rvi = 0));
   }
 }
 exports.WorldLevelUpView = WorldLevelUpView;

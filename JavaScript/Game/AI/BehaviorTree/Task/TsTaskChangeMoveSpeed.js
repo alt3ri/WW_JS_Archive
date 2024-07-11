@@ -26,9 +26,9 @@ class TsTaskChangeMoveSpeed extends TsTaskAbortImmediatelyBase_1.default {
     i
       ? ((i = i.CharActorComp) &&
           (i = ActorUtils_1.ActorUtils.GetEntityByActor(i.Actor)) &&
-          (t = i.Entity.GetComponent(36)) &&
+          (t = i.Entity.GetComponent(37)) &&
           (this.TsResetDefault
-            ? ((i = i.Entity.GetComponent(158).MoveState), t.ResetMaxSpeed(i))
+            ? ((i = i.Entity.GetComponent(160).MoveState), t.ResetMaxSpeed(i))
             : (t.SetMaxSpeed(this.TsMoveSpeed), t.SetSpeedLock())),
         this.FinishExecute(!0))
       : (Log_1.Log.CheckError() &&

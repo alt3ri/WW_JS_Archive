@@ -4,35 +4,47 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const UE = require("ue"),
   Log_1 = require("../../../Core/Common/Log"),
   MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang"),
+  TimerSystem_1 = require("../../../Core/Timer/TimerSystem"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
   GameQualitySettingsManager_1 = require("../../GameQualitySettings/GameQualitySettingsManager"),
   InputSettings_1 = require("../../InputSettings/InputSettings"),
+  InputSettingsManager_1 = require("../../InputSettings/InputSettingsManager"),
   ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../Manager/ModelManager"),
   UiControllerBase_1 = require("../../Ui/Base/UiControllerBase"),
+  InputMappingsDefine_1 = require("../../Ui/InputDistribute/InputMappingsDefine"),
   UiManager_1 = require("../../Ui/UiManager"),
   AdviceController_1 = require("../Advice/AdviceController"),
   CommonInputViewController_1 = require("../Common/InputView/Controller/CommonInputViewController"),
   LogReportController_1 = require("../LogReport/LogReportController"),
   LogReportDefine_1 = require("../LogReport/LogReportDefine"),
   MenuDefine_1 = require("./MenuDefine"),
-  MenuFunction_1 = require("./MenuFunction");
+  MenuFunction_1 = require("./MenuFunction"),
+  CHECK_MENUDATA_SAVE_INTERVAL = 6e4;
 class MenuController extends UiControllerBase_1.UiControllerBase {
   static OnInit() {
     return (
-      MenuController.r2e(),
+      MenuController.MFe(),
       MenuController.RefreshCurrentSetting(),
       MenuController.AutoDoConfigFunction(),
+      MenuController.StartCheckEditedMenuDataSave(),
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("Menu", 8, "设置系统Controller初始化"),
       !0
     );
   }
-  static RefreshCurrentSetting() {
-    MenuController.JPi();
+  static OnClear() {
+    return (
+      MenuController.StopCheckEditedMenueDataSave(),
+      MenuController.SaveLocalConfig(),
+      !0
+    );
   }
-  static JPi() {
+  static RefreshCurrentSetting() {
+    MenuController.Jxi();
+  }
+  static Jxi() {
     var e = ModelManager_1.ModelManager.MenuModel;
     if (e) {
       var n = UE.GameUserSettings.GetGameUserSettings().GetFullscreenMode(),
@@ -86,18 +98,18 @@ class MenuController extends UiControllerBase_1.UiControllerBase {
     MenuController.CheckIfServerConfig(e)
       ? MenuController.DoSetServerConfigFunction(e)
       : (e = this.GetTargetMenuData(e)) &&
-        (this.yOn(e, n) &&
+        (this.nfa(e, n) &&
           ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
             "SettingSystem1",
           ),
-        this.IOn(e, n));
+        this.sfa(e, n));
   }
-  static yOn(e, n) {
-    var t = this.TOn(e, n),
-      a = this.LOn(e, n);
-    return this.DOn(e, n), t || a;
+  static nfa(e, n) {
+    var t = this.afa(e, n),
+      a = this.hfa(e, n);
+    return this.lfa(e, n), t || a;
   }
-  static IOn(e, n) {
+  static sfa(e, n) {
     e = e.ValueTipsMap.get(n);
     void 0 !== e &&
       ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
@@ -107,7 +119,17 @@ class MenuController extends UiControllerBase_1.UiControllerBase {
   static GetTargetConfig(e) {
     return this.CheckIfServerConfig(e)
       ? this.GetServerConfigValue(e)
-      : ModelManager_1.ModelManager.MenuModel.GetTargetConfig(e) ?? 0;
+      : this.CheckIfGameQualityConfig(e)
+        ? this.Ykn(e)
+        : ModelManager_1.ModelManager.MenuModel.GetTargetConfig(e) ?? 0;
+  }
+  static Ykn(e) {
+    e = ModelManager_1.ModelManager.MenuModel.FunctionIdToGameQualityKey(e);
+    return void 0 !== e
+      ? GameQualitySettingsManager_1.GameQualitySettingsManager.Get()
+          .GetCurrentQualityInfo()
+          .GetDataByStorageKey(e) ?? 0
+      : 0;
   }
   static SetRestartMap(e, n) {
     ModelManager_1.ModelManager.MenuModel.SetRestartMap(e, n);
@@ -136,7 +158,10 @@ class MenuController extends UiControllerBase_1.UiControllerBase {
   static CheckIfServerConfig(e) {
     return 59 === e;
   }
-  static zPi() {
+  static CheckIfGameQualityConfig(e) {
+    return ModelManager_1.ModelManager.MenuModel.IsGameQualityTarget(e);
+  }
+  static zxi() {
     var e = GameQualitySettingsManager_1.GameQualitySettingsManager.Get(),
       n = this.GetTargetConfig(6);
     return e.GetResolutionByList(n).ToString();
@@ -145,7 +170,7 @@ class MenuController extends UiControllerBase_1.UiControllerBase {
     var e = new LogReportDefine_1.SettingMenuLogEvent();
     (e.i_image_quality = this.GetTargetConfig(10)),
       (e.i_display_mode = this.GetTargetConfig(5)),
-      (e.s_resolution = this.zPi()),
+      (e.s_resolution = this.zxi()),
       (e.i_brightness = this.GetTargetConfig(7)),
       (e.i_highest_fps = this.GetTargetConfig(11)),
       (e.i_shadow_quality = this.GetTargetConfig(54)),
@@ -179,7 +204,7 @@ class MenuController extends UiControllerBase_1.UiControllerBase {
       ((e = !ModelManager_1.ModelManager.AdviceModel.GetAdviceShowSetting()),
       AdviceController_1.AdviceController.RequestSetAdviceShowState(e));
   }
-  static DoConfigFunction(e) {
+  static DoConfigFunction(e, n) {
     switch (e) {
       case 1:
       case 2:
@@ -196,37 +221,37 @@ class MenuController extends UiControllerBase_1.UiControllerBase {
         MenuFunction_1.MenuFunction.SetHighFps(e);
         break;
       case 54:
-        MenuFunction_1.MenuFunction.SetShadowQuality(e);
+        MenuFunction_1.MenuFunction.SetShadowQuality(e, n);
         break;
       case 55:
-        MenuFunction_1.MenuFunction.SetNiagaraQuality(e);
+        MenuFunction_1.MenuFunction.SetNiagaraQuality(e, n);
         break;
       case 56:
-        MenuFunction_1.MenuFunction.SetImageDetail(e);
+        MenuFunction_1.MenuFunction.SetImageDetail(e, n);
         break;
       case 57:
-        MenuFunction_1.MenuFunction.SetAntiAliasing(e);
+        MenuFunction_1.MenuFunction.SetAntiAliasing(e, n);
         break;
       case 58:
-        MenuFunction_1.MenuFunction.SetSceneAo(e);
+        MenuFunction_1.MenuFunction.SetSceneAo(e, n);
         break;
       case 63:
-        MenuFunction_1.MenuFunction.SetVolumeFog(e);
+        MenuFunction_1.MenuFunction.SetVolumeFog(e, n);
         break;
       case 64:
-        MenuFunction_1.MenuFunction.SetVolumeLight(e);
+        MenuFunction_1.MenuFunction.SetVolumeLight(e, n);
         break;
       case 65:
-        MenuFunction_1.MenuFunction.SetMotionBlur(e);
+        MenuFunction_1.MenuFunction.SetMotionBlur(e, n);
         break;
       case 66:
-        MenuFunction_1.MenuFunction.SetPcVsync(e);
+        MenuFunction_1.MenuFunction.SetPcVsync(e, n);
         break;
       case 67:
-        MenuFunction_1.MenuFunction.SetMobileResolution(e);
+        MenuFunction_1.MenuFunction.SetMobileResolution(e, n);
         break;
       case 68:
-        MenuFunction_1.MenuFunction.SetSuperResolution(e);
+        MenuFunction_1.MenuFunction.SetSuperResolution(e, n);
         break;
       case 51:
         MenuFunction_1.MenuFunction.SetTextLanguage(e);
@@ -235,34 +260,34 @@ class MenuController extends UiControllerBase_1.UiControllerBase {
         MenuFunction_1.MenuFunction.SetLanguageAudio(e);
         break;
       case 5:
-        MenuFunction_1.MenuFunction.SetDisplayMode(e);
+        MenuFunction_1.MenuFunction.SetDisplayMode(e, n);
         break;
       case 7:
-        MenuFunction_1.MenuFunction.SetBrightness(e);
+        MenuFunction_1.MenuFunction.SetBrightness(e, n);
         break;
       case 6:
         MenuFunction_1.MenuFunction.SetResolution(e);
         break;
       case 79:
-        MenuFunction_1.MenuFunction.SetNpcDensity(e);
+        MenuFunction_1.MenuFunction.SetNpcDensity(e, n);
         break;
       case 81:
-        MenuFunction_1.MenuFunction.SetNvidiaSuperSamplingEnable(e);
+        MenuFunction_1.MenuFunction.SetNvidiaSuperSamplingEnable(e, n);
         break;
       case 82:
-        MenuFunction_1.MenuFunction.SetNvidiaSuperSamplingFrameGenerate(e);
+        MenuFunction_1.MenuFunction.SetNvidiaSuperSamplingFrameGenerate(e, n);
         break;
       case 83:
         MenuFunction_1.MenuFunction.SetNvidiaSuperSamplingMode(e);
         break;
       case 84:
-        MenuFunction_1.MenuFunction.SetNvidiaSuperSamplingSharpness(e);
+        MenuFunction_1.MenuFunction.SetNvidiaSuperSamplingSharpness(e, n);
         break;
       case 85:
         MenuFunction_1.MenuFunction.SetNvidiaReflex(e);
         break;
       case 87:
-        MenuFunction_1.MenuFunction.SetFsrEnable(e);
+        MenuFunction_1.MenuFunction.SetFsrEnable(e, n);
         break;
       case 125:
         MenuFunction_1.MenuFunction.SetXessEnable(e);
@@ -280,76 +305,91 @@ class MenuController extends UiControllerBase_1.UiControllerBase {
         MenuFunction_1.MenuFunction.SetBloomEnable(e);
         break;
       case 89:
-        MenuFunction_1.MenuFunction.SetHorizontalViewSensitivity(e);
+        MenuFunction_1.MenuFunction.SetHorizontalViewSensitivity(e, n);
         break;
       case 90:
-        MenuFunction_1.MenuFunction.SetVerticalViewSensitivity(e);
+        MenuFunction_1.MenuFunction.SetVerticalViewSensitivity(e, n);
         break;
       case 91:
-        MenuFunction_1.MenuFunction.SetAimHorizontalViewSensitivity(e);
+        MenuFunction_1.MenuFunction.SetAimHorizontalViewSensitivity(e, n);
         break;
       case 92:
-        MenuFunction_1.MenuFunction.SetAimVerticalViewSensitivity(e);
+        MenuFunction_1.MenuFunction.SetAimVerticalViewSensitivity(e, n);
         break;
       case 93:
-        MenuFunction_1.MenuFunction.SetCameraShakeStrength(e);
+        MenuFunction_1.MenuFunction.SetCameraShakeStrength(e, n);
         break;
       case 94:
-        MenuFunction_1.MenuFunction.SetMobileHorizontalViewSensitivity(e);
+        MenuFunction_1.MenuFunction.SetMobileHorizontalViewSensitivity(e, n);
         break;
       case 95:
-        MenuFunction_1.MenuFunction.SetMobileVerticalViewSensitivity(e);
+        MenuFunction_1.MenuFunction.SetMobileVerticalViewSensitivity(e, n);
         break;
       case 96:
-        MenuFunction_1.MenuFunction.SetMobileAimHorizontalViewSensitivity(e);
+        MenuFunction_1.MenuFunction.SetMobileAimHorizontalViewSensitivity(e, n);
         break;
       case 97:
-        MenuFunction_1.MenuFunction.SetMobileAimVerticalViewSensitivity(e);
+        MenuFunction_1.MenuFunction.SetMobileAimVerticalViewSensitivity(e, n);
         break;
       case 98:
-        MenuFunction_1.MenuFunction.SetMobileCameraShakeStrength(e);
+        MenuFunction_1.MenuFunction.SetMobileCameraShakeStrength(e, n);
         break;
       case 99:
-        MenuFunction_1.MenuFunction.SetCommonSpringArmLength(e);
+        MenuFunction_1.MenuFunction.SetCommonSpringArmLength(e, n);
         break;
       case 100:
-        MenuFunction_1.MenuFunction.SetFightSpringArmLength(e);
+        MenuFunction_1.MenuFunction.SetFightSpringArmLength(e, n);
         break;
       case 101:
-        MenuFunction_1.MenuFunction.SetResetFocusEnable(e);
+        MenuFunction_1.MenuFunction.SetResetFocusEnable(e, n);
         break;
       case 102:
-        MenuFunction_1.MenuFunction.SetIsSidestepCameraEnable(e);
+        MenuFunction_1.MenuFunction.SetIsSidestepCameraEnable(e, n);
         break;
       case 103:
-        MenuFunction_1.MenuFunction.SetIsSoftLockCameraEnable(e);
+        MenuFunction_1.MenuFunction.SetIsSoftLockCameraEnable(e, n);
         break;
       case 104:
-        MenuFunction_1.MenuFunction.SetJoystickShakeStrength(e);
+        MenuFunction_1.MenuFunction.SetJoystickShakeStrength(e, n);
         break;
       case 105:
-        MenuFunction_1.MenuFunction.SetJoystickShakeType(e);
+        MenuFunction_1.MenuFunction.SetJoystickShakeType(e, n);
         break;
       case 106:
-        MenuFunction_1.MenuFunction.SetWalkOrRunRate(e);
+        MenuFunction_1.MenuFunction.SetWalkOrRunRate(e, n);
         break;
       case 108:
-        MenuFunction_1.MenuFunction.SetJoystickMode(e);
+        MenuFunction_1.MenuFunction.SetJoystickMode(e, n);
         break;
       case 109:
-        MenuFunction_1.MenuFunction.SetSkillButtonMode(e);
+        MenuFunction_1.MenuFunction.SetSkillButtonMode(e, n);
         break;
       case 121:
         MenuFunction_1.MenuFunction.SetPushEnableState(e);
         break;
       case 122:
-        MenuFunction_1.MenuFunction.SetAimAssistEnable(e);
+        MenuFunction_1.MenuFunction.SetAimAssistEnable(e, n);
+        break;
+      case 129:
+        MenuFunction_1.MenuFunction.SetKeyboardLockEnemyMode(n);
         break;
       case 130:
-        MenuFunction_1.MenuFunction.SetHorizontalViewRevert(e);
+        MenuFunction_1.MenuFunction.SetHorizontalViewRevert(n);
         break;
       case 131:
-        MenuFunction_1.MenuFunction.SetVerticalViewRevert(e);
+        MenuFunction_1.MenuFunction.SetVerticalViewRevert(n);
+        break;
+      case 133:
+        MenuFunction_1.MenuFunction.SetSkillLockEnemyMode(n);
+        break;
+      case 134:
+        MenuFunction_1.MenuFunction.SetGamepadLockEnemyMode(n);
+        break;
+      case 135:
+        MenuFunction_1.MenuFunction.SetEnemyHitDisplayMode(n);
+        break;
+      case 136:
+        MenuFunction_1.MenuFunction.SetPlayStationOnlyMode(n);
     }
   }
   static AutoDoConfigFunction() {
@@ -403,7 +443,7 @@ class MenuController extends UiControllerBase_1.UiControllerBase {
         );
     }
   }
-  static LOn(e, n) {
+  static hfa(e, n) {
     if (!e) return !1;
     if (!e.CanAffectedFunction(n)) return !1;
     let t = !1;
@@ -420,7 +460,7 @@ class MenuController extends UiControllerBase_1.UiControllerBase {
     for (const [r, n] of a) {
       var i = this.GetTargetMenuData(r);
       i &&
-        (this.yOn(i, n) && (t = !0),
+        (this.nfa(i, n) && (t = !0),
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.ChangeConfigValue,
           r,
@@ -429,7 +469,7 @@ class MenuController extends UiControllerBase_1.UiControllerBase {
     }
     return t;
   }
-  static TOn(e, n) {
+  static afa(e, n) {
     e = e.MenuDataFunctionId;
     return (
       Log_1.Log.CheckInfo() &&
@@ -440,17 +480,23 @@ class MenuController extends UiControllerBase_1.UiControllerBase {
           ["functionId", e],
           ["value", n],
         ),
-      MenuDefine_1.needRestart.includes(e)
-        ? !!MenuController.CheckRestartValueChange(e, n) &&
-          (MenuController.SetRestartMap(e, n),
-          MenuController.SetTargetConfig(e, n),
-          !0)
-        : (MenuController.SetTargetConfig(e, n),
-          MenuController.DoConfigFunction(e),
-          !1)
+      MenuController.CheckIfGameQualityConfig(e)
+        ? (MenuController.DoConfigFunction(e, n),
+          !(
+            !MenuDefine_1.needRestart.includes(e) ||
+            !MenuController.CheckRestartValueChange(e, n)
+          ))
+        : MenuDefine_1.needRestart.includes(e)
+          ? !!MenuController.CheckRestartValueChange(e, n) &&
+            (MenuController.SetRestartMap(e, n),
+            MenuController.SetTargetConfig(e, n),
+            !0)
+          : (MenuController.SetTargetConfig(e, n),
+            MenuController.DoConfigFunction(e, n),
+            !1)
     );
   }
-  static DOn(e, n) {
+  static lfa(e, n) {
     if (e && e.HasDisableFunction()) {
       var t = !e.IsAffectedDisable(n),
         a = e.DisableFunction;
@@ -488,7 +534,7 @@ class MenuController extends UiControllerBase_1.UiControllerBase {
     MenuFunction_1.MenuFunction.ApplyNvidiaSuperSamplingMode();
   }
   static GetResolutionList(e) {
-    var n = MenuController.ZPi(e),
+    var n = MenuController.Zxi(e),
       t =
         GameQualitySettingsManager_1.GameQualitySettingsManager.Get().GetResolutionList(),
       a = [];
@@ -497,21 +543,9 @@ class MenuController extends UiControllerBase_1.UiControllerBase {
         i = i.X + "*" + i.Y;
       n.includes(i) && a.push(e);
     }
-    return (
-      Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info(
-          "Menu",
-          8,
-          "获得当前设置面板分辨率列表",
-          ["optionsNameList", e],
-          ["resultOptionsNameList", n],
-          ["resolutionList", t],
-          ["data", a],
-        ),
-      a
-    );
+    return a;
   }
-  static ZPi(e) {
+  static Zxi(e) {
     var n = [];
     for (const a of e) {
       var t = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(a);
@@ -519,9 +553,9 @@ class MenuController extends UiControllerBase_1.UiControllerBase {
     }
     return n;
   }
-  static r2e() {
-    this.OpenViewFuncMap.set("LogUploadView", this.exi),
-      this.OpenViewFuncMap.set("CdKeyInputView", this.txi);
+  static MFe() {
+    this.OpenViewFuncMap.set("LogUploadView", this.ewi),
+      this.OpenViewFuncMap.set("CdKeyInputView", this.twi);
   }
   static IsInputControllerTypeIncludeKey(e, n) {
     switch (e) {
@@ -536,12 +570,101 @@ class MenuController extends UiControllerBase_1.UiControllerBase {
         return !1;
     }
   }
+  static StartCheckEditedMenuDataSave() {
+    ModelManager_1.ModelManager.MenuModel.CheckEditedMenuDataSaveTimerId =
+      TimerSystem_1.TimerSystem.Forever(() => {
+        ModelManager_1.ModelManager.MenuModel.IsEdited &&
+          MenuController.SaveLocalConfig();
+      }, CHECK_MENUDATA_SAVE_INTERVAL);
+  }
+  static StopCheckEditedMenueDataSave() {
+    var e =
+      ModelManager_1.ModelManager.MenuModel.CheckEditedMenuDataSaveTimerId;
+    void 0 !== e &&
+      (TimerSystem_1.TimerSystem.Remove(e),
+      (ModelManager_1.ModelManager.MenuModel.CheckEditedMenuDataSaveTimerId =
+        void 0));
+  }
+  static OpenChangeLockView() {
+    var e,
+      n,
+      t,
+      a,
+      i = InputSettingsManager_1.InputSettingsManager.GetActionBinding(
+        InputMappingsDefine_1.actionMappings.锁定目标,
+      );
+    i &&
+      ((t = []),
+      i.GetPcKeyNameList((n = [])),
+      i.GetGamepadKeyNameList(t),
+      (i = n[0]),
+      (n = t[0]),
+      (i = {
+        RowSpriteResourceId: "SP_SwitchType1",
+        DescriptionA: "LockEnemyModeText_1",
+        DescriptionParametersA: [
+          `<texture=${(t = InputSettings_1.InputSettings.GetKeyIconPath(i))}/>`,
+        ],
+        DescriptionB: "LockEnemyModeText_3",
+        DescriptionParametersB: [`<texture=${t}/>`],
+      }),
+      (t = {
+        RowSpriteResourceId: "SP_SwitchType2",
+        DescriptionA: "LockEnemyModeText_2",
+        DescriptionParametersA: [`<texture=${t}/>`],
+        DescriptionB: "LockEnemyModeText_4",
+      }),
+      (e = {
+        RowSpriteResourceId: "SP_SwitchType1",
+        DescriptionA: "LockEnemyModeText_1",
+        DescriptionParametersA: [
+          `<texture=${(n = InputSettings_1.InputSettings.GetKeyIconPath(n))}/>`,
+        ],
+        DescriptionB: "LockEnemyModeText_3",
+        DescriptionParametersB: [`<texture=${n}/>`],
+      }),
+      (n = {
+        RowSpriteResourceId: "SP_SwitchType2",
+        DescriptionA: "LockEnemyModeText_2",
+        DescriptionParametersA: [`<texture=${n}/>`],
+        DescriptionB: "LockEnemyModeText_6",
+      }),
+      (i = {
+        GroupName: "LockEnemyModeType_1",
+        DefaultKeyModeRowIndex: (a =
+          GameQualitySettingsManager_1.GameQualitySettingsManager.Get().GetCurrentQualityInfo())
+          .KeyboardLockEnemyMode,
+        ChangeKeyModeRowList: [i, t],
+      }),
+      (t = {
+        GroupName: "LockEnemyModeType_2",
+        DefaultKeyModeRowIndex: a.GamepadLockEnemyMode,
+        ChangeKeyModeRowList: [e, n],
+      }),
+      (a = {
+        TitleName: "LockEnemyModeTitle",
+        DefaultGroupIndex:
+          2 ===
+          ModelManager_1.ModelManager.MenuModel.KeySettingInputControllerType
+            ? 1
+            : 0,
+        ChangeKeyModeGroupList: [i, t],
+        OnConfirmCallback: this.Zzs,
+      }),
+      UiManager_1.UiManager.OpenView("ChangeModeTipsView", a));
+  }
 }
 ((exports.MenuController = MenuController).OpenViewFuncMap = new Map()),
-  (MenuController.exi = () => {
+  (MenuController.ewi = () => {
     UiManager_1.UiManager.OpenView("LogUploadView", 2);
   }),
-  (MenuController.txi = () => {
+  (MenuController.twi = () => {
     CommonInputViewController_1.CommonInputViewController.OpenCdKeyInputView();
+  }),
+  (MenuController.Zzs = (e) => {
+    for (var [n, t] of e)
+      0 === n
+        ? MenuFunction_1.MenuFunction.SetKeyboardLockEnemyMode(t)
+        : 1 === n && MenuFunction_1.MenuFunction.SetGamepadLockEnemyMode(t);
   });
 //# sourceMappingURL=MenuController.js.map

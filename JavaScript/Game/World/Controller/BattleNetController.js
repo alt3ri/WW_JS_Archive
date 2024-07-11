@@ -11,18 +11,18 @@ const Log_1 = require("../../../Core/Common/Log"),
 class BattleNetController {
   static async RequestCaptureEntity(e) {
     var t = Time_1.Time.Now;
-    if (t - this.pgr < REQUEST_TIME_GAP) return !1;
-    this.pgr = t;
+    if (t - this.C0r < REQUEST_TIME_GAP) return !1;
+    this.C0r = t;
     var r,
       t = ModelManager_1.ModelManager.CreatureModel.GetCreatureDataId(e);
     return ModelManager_1.ModelManager.CreatureModel.GetEntity(t)
-      ? (((r = Protocol_1.Aki.Protocol.rls.create()).Ekn =
+      ? (((r = Protocol_1.Aki.Protocol.Jus.create()).J4n =
           MathUtils_1.MathUtils.NumberToLong(t)),
         !(
-          !(r = await Net_1.Net.CallAsync(7703, r)) ||
-          (0 !== r.X5n &&
-            (Log_1.Log.CheckError() &&
-              Log_1.Log.Error("Level", 30, "幻象收复失败", ["ErrCode", r.X5n]),
+          !(r = await Net_1.Net.CallAsync(10338, r)) ||
+          (0 !== r.A9n &&
+            (Log_1.Log.CheckWarn() &&
+              Log_1.Log.Warn("Level", 30, "幻象收复失败", ["ErrCode", r.A9n]),
             1))
         ))
       : (Log_1.Log.CheckError() &&
@@ -36,5 +36,5 @@ class BattleNetController {
         !1);
   }
 }
-(exports.BattleNetController = BattleNetController).pgr = 0;
+(exports.BattleNetController = BattleNetController).C0r = 0;
 //# sourceMappingURL=BattleNetController.js.map

@@ -1,21 +1,21 @@
 "use strict";
 var __decorate =
   (this && this.__decorate) ||
-  function (t, e, i, o) {
-    var r,
-      s = arguments.length,
+  function (t, i, e, o) {
+    var s,
+      r = arguments.length,
       n =
-        s < 3
-          ? e
+        r < 3
+          ? i
           : null === o
-            ? (o = Object.getOwnPropertyDescriptor(e, i))
+            ? (o = Object.getOwnPropertyDescriptor(i, e))
             : o;
     if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
-      n = Reflect.decorate(t, e, i, o);
+      n = Reflect.decorate(t, i, e, o);
     else
       for (var h = t.length - 1; 0 <= h; h--)
-        (r = t[h]) && (n = (s < 3 ? r(n) : 3 < s ? r(e, i, n) : r(e, i)) || n);
-    return 3 < s && n && Object.defineProperty(e, i, n), n;
+        (s = t[h]) && (n = (r < 3 ? s(n) : 3 < r ? s(i, e, n) : s(i, e)) || n);
+    return 3 < r && n && Object.defineProperty(i, e, n), n;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharacterFlowComponent =
@@ -29,7 +29,6 @@ const Time_1 = require("../../../../../../Core/Common/Time"),
   IComponent_1 = require("../../../../../../UniverseEditor/Interface/IComponent"),
   Global_1 = require("../../../../../Global"),
   ConfigManager_1 = require("../../../../../Manager/ConfigManager"),
-  ModelManager_1 = require("../../../../../Manager/ModelManager"),
   CharacterFlowLogic_1 = require("./CharacterFlowLogic"),
   DynamicFlowController_1 = require("./DynamicFlowController");
 (exports.DEFAULT_BUBBLE_ENTER_RANGE = 500),
@@ -55,18 +54,18 @@ let CharacterFlowComponent = class CharacterFlowComponent extends EntityComponen
         "BubbleComponent",
       )),
         this.InitFlowLogic(this.FlowData);
-      t = this.ActorComp.CreatureData.ComponentDataMap.get("mps")?.mps?.oMs;
+      t = this.ActorComp.CreatureData.ComponentDataMap.get("Uys")?.Uys?.MIs;
       if (t)
-        for (const i of t) {
-          var e = ConfigManager_1.ConfigManager.BubbleConfig.GetBubbleData(
-            i.rMs,
+        for (const e of t) {
+          var i = ConfigManager_1.ConfigManager.BubbleConfig.GetBubbleData(
+            e.pIs,
           );
-          if (e) {
-            e =
+          if (i) {
+            i =
               DynamicFlowController_1.DynamicFlowController.CreateCharacterFlowData(
-                e,
+                i,
               );
-            DynamicFlowController_1.DynamicFlowController.AddDynamicFlow(e);
+            DynamicFlowController_1.DynamicFlowController.AddDynamicFlow(i);
             break;
           }
         }
@@ -93,12 +92,12 @@ let CharacterFlowComponent = class CharacterFlowComponent extends EntityComponen
     );
   }
   ResetBaseInfo() {
-    var t, e;
+    var t, i;
     this.FlowData &&
       ((t = this.FlowData.EnterRange),
-      (e = this.FlowData.LeaveRange),
+      (i = this.FlowData.LeaveRange),
       (this.MinRangeSquared = t * t),
-      (this.MaxRangeSquared = e * e));
+      (this.MaxRangeSquared = i * i));
   }
   InitFlowLogic(t) {
     t &&
@@ -113,14 +112,14 @@ let CharacterFlowComponent = class CharacterFlowComponent extends EntityComponen
       (this.IsEnter = !1),
       (this.IsInit = !0));
   }
-  InitFlowLogicRange(t, e) {
+  InitFlowLogicRange(t, i) {
     return !(
       !this.FlowData ||
       !this.FlowLogic ||
       ((t = t ?? exports.DEFAULT_BUBBLE_ENTER_RANGE),
-      (e = e ?? exports.DEFAULT_BUBBLE_LEAVE_RANGE),
+      (i = i ?? exports.DEFAULT_BUBBLE_LEAVE_RANGE),
       (this.MinRangeSquared = t * t),
-      (this.MaxRangeSquared = e * e),
+      (this.MaxRangeSquared = i * i),
       0)
     );
   }
@@ -130,22 +129,22 @@ let CharacterFlowComponent = class CharacterFlowComponent extends EntityComponen
       !!this.IsInit &&
       !(
         (!this.FlowLogic.HasValidFlow() && !this.IsPlayDynamicFlow) ||
-        !this.ActorComp ||
+        !this.ActorComp?.Owner?.IsValid() ||
         !Global_1.Global.BaseCharacter ||
-        ((ModelManager_1.ModelManager.PlotModel.IsInPlot ||
+        ((this.ActorComp.Owner.bHidden ||
           !this.FlowLogic.GetUiRootItemState()) &&
           (this.ForceStopFlow(), 1))
       )
     );
   }
   OnTick(t) {
-    var e;
+    var i;
     this.CheckCondition() &&
-      ((e =
+      ((i =
         Global_1.Global.BaseCharacter.CharacterActorComponent
           .ActorLocationProxy),
-      (e = Vector_1.Vector.DistSquared2D(
-        e,
+      (i = Vector_1.Vector.DistSquared2D(
+        i,
         this.ActorComp.ActorLocationProxy,
       )) < this.MinRangeSquared
         ? (this.IsEnter ||
@@ -153,13 +152,13 @@ let CharacterFlowComponent = class CharacterFlowComponent extends EntityComponen
             (this.FlowLogic.EnableUpdate = !0),
           (this.IsEnter = !0),
           (this.FlowLogic.IsPause = !1))
-        : e < this.MaxRangeSquared
+        : i < this.MaxRangeSquared
           ? ((this.IsEnter = !1), (this.FlowLogic.IsPause = !0))
           : this.ForceStopFlow(),
       this.FlowLogic.Tick(Time_1.Time.DeltaTimeSeconds));
   }
   RemoveFlowActions() {
-    this.Entity.GetComponent(70).HideDialogueText();
+    this.Entity.GetComponent(72).HideDialogueText();
   }
   ResetFlowPlayCoolDownTime() {
     this.FlowLogic && this.FlowLogic.ResetWaitTime();

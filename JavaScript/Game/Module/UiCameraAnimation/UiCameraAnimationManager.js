@@ -59,88 +59,88 @@ class UiCameraAnimationManager {
         CommonParamById_1.configCommonParamById.GetFloatConfig(
           "LoadingViewAperture",
         )),
-      this.hAo();
+      this.nPo();
   }
   static Clear() {
-    this.ClearDisplay(), this.lAo();
+    this.ClearDisplay(), this.sPo();
   }
-  static hAo() {
+  static nPo() {
     for (const t of ConfigManager_1.ConfigManager.UiCameraAnimationConfig.GetAllUiCameraMappingConfig()) {
       var a = new UiCameraMappingData_1.UiCameraMappingData(t, !1);
-      this._Ao.set(t.ViewName, a);
+      this.aPo.set(t.ViewName, a);
     }
     for (const i of ConfigManager_1.ConfigManager.UiCameraAnimationConfig.GetAllChildUiCameraMappingConfig()) {
       var e = new UiCameraMappingData_1.UiCameraMappingData(i, !0);
-      this._Ao.set(i.ViewName, e);
+      this.aPo.set(i.ViewName, e);
     }
   }
   static GetCameraMappingData(a) {
-    return this._Ao.get(a);
+    return this.aPo.get(a);
   }
-  static lAo() {
-    this._Ao.clear();
+  static sPo() {
+    this.aPo.clear();
   }
-  static uAo(a) {
-    this.cAo.Push(a);
+  static hPo(a) {
+    this.lPo.Push(a);
   }
-  static mAo(a) {
-    let e = this.cAo.Peek();
+  static _Po(a) {
+    let e = this.lPo.Peek();
     for (var t = a.UniqueId; e && e.UniqueId !== t; )
-      this.cAo.Pop(), (e = this.cAo.Peek());
-    return this.cAo.Pop(), this.GetLastHandleData();
+      this.lPo.Pop(), (e = this.lPo.Peek());
+    return this.lPo.Pop(), this.GetLastHandleData();
   }
-  static dAo(a) {
-    let e = this.cAo.Peek();
+  static uPo(a) {
+    let e = this.lPo.Peek();
     for (var t = a.UniqueId; e && e.UniqueId !== t; )
-      this.cAo.Pop(), (e = this.cAo.Peek());
+      this.lPo.Pop(), (e = this.lPo.Peek());
     return this.GetLastHandleData();
   }
-  static CAo(a) {
-    const e = this.gAo(a);
+  static cPo(a) {
+    const e = this.mPo(a);
     if (!e) return !1;
     var t = ConfigManager_1.ConfigManager.DynamicTabConfig.GetViewTabList(
         e.ViewName,
       ),
       i = [];
     let r = !1;
-    for (const e of this.cAo)
+    for (const e of this.lPo)
       if (e.UniqueId === a) i.push(e), (r = !0);
       else if (r) {
-        if (!this.fAo(t, e.ViewName)) break;
+        if (!this.dPo(t, e.ViewName)) break;
         i.push(e);
       }
-    for (const e of i) this.cAo.Delete(e);
+    for (const e of i) this.lPo.Delete(e);
     return !0;
   }
-  static fAo(a, e) {
+  static dPo(a, e) {
     for (const t of a) if (t.ChildViewName === e) return !0;
     return !1;
   }
-  static gAo(a) {
-    for (const e of this.cAo) if (e.UniqueId === a) return e;
+  static mPo(a) {
+    for (const e of this.lPo) if (e.UniqueId === a) return e;
   }
   static GetLastHandleData() {
-    return this.cAo.Peek();
+    return this.lPo.Peek();
   }
-  static pAo() {
+  static CPo() {
     var a = new UiCameraAnimationHandle_1.UiCameraAnimationHandle();
     return a.Initialize(), a;
   }
-  static vAo(a, e = !0, t = !0) {
+  static gPo(a, e = !0, t = !0) {
     this.CurrentCameraHandle
       ? this.CurrentCameraHandle.Deactivate()
-      : (this.CurrentCameraHandle = this.pAo()),
+      : (this.CurrentCameraHandle = this.CPo()),
       this.CurrentCameraHandle.Activate(a, e, t);
   }
-  static MAo(e, t = !0, i = !0) {
+  static fPo(e, t = !0, i = !0) {
     this.IsPlayingAnimation()
-      ? this.SAo.WaitCameraAnimationFinished().then(
+      ? this.pPo.WaitCameraAnimationFinished().then(
           (a) => {
-            0 === a.FinishType && this.vAo(e, t, i);
+            0 === a.FinishType && this.gPo(e, t, i);
           },
           () => {},
         )
-      : this.vAo(e, t, i);
+      : this.gPo(e, t, i);
   }
   static PushCameraHandleByOpenView(e, t, i = !0) {
     if (UiCameraAnimationManager.CanPushCameraHandle(e)) {
@@ -157,7 +157,7 @@ class UiCameraAnimationManager {
       else {
         var n = UiCameraHandleData_1.UiCameraHandleData.NewByView(e);
         if (t) {
-          t = this.gAo(t);
+          t = this.mPo(t);
           if (t)
             return (
               Log_1.Log.CheckInfo() &&
@@ -167,7 +167,7 @@ class UiCameraAnimationManager {
                   "此界面已经入栈,则抛出之后的所有界面镜头状态",
                   ["PushHandleData", t.ToString()],
                 ),
-              void this.dAo(t)
+              void this.uPo(t)
             );
         }
         let a = void 0;
@@ -228,7 +228,7 @@ class UiCameraAnimationManager {
         ["PushHandleData", a.ToString()],
         ["LastTopHandleData", o?.ToString()],
       ),
-      r && this.EAo(a)
+      r && this.vPo(a)
         ? Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "CameraAnimation",
@@ -240,15 +240,15 @@ class UiCameraAnimationManager {
             ],
             ["NewHandleData", a.ToString()],
           )
-        : (this.uAo(a),
+        : (this.hPo(a),
           this.StopUiCameraAnimation(),
-          this.yAo(a, o, e, t, i, n));
+          this.MPo(a, o, e, t, i, n));
   }
   static PopCameraHandleByCloseView(a, e, t, i = !0) {
     UiCameraAnimationManager.CanPushCameraHandle(a) &&
       (i
         ? ((i = this.GetBlendName(a, e)),
-          (e = this.gAo(t)),
+          (e = this.mPo(t)),
           this.PopCameraHandle(e, i))
         : (Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
@@ -258,12 +258,12 @@ class UiCameraAnimationManager {
               ["closeViewName", a],
               ["closeViewId", t],
             ),
-          this.CAo(t)));
+          this.cPo(t)));
   }
   static PopCameraHandle(a, e) {
     var t;
     a
-      ? ((t = this.mAo(a)),
+      ? ((t = this._Po(a)),
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "CameraAnimation",
@@ -274,22 +274,22 @@ class UiCameraAnimationManager {
             ["blendName", e],
           ),
         this.StopUiCameraAnimation(),
-        this.yAo(t, a, void 0 !== e, !0, e))
+        this.MPo(t, a, void 0 !== e, !0, e))
       : this.ClearDisplay();
   }
-  static EAo(a) {
+  static vPo(a) {
     var e;
     return (
       !!this.CurrentCameraHandle &&
       !(
-        !(e = this.cAo.Peek()) ||
+        !(e = this.lPo.Peek()) ||
         !this.UiCamera?.GetIsEntered() ||
         !e.IsEqual(a) ||
         (this.CurrentCameraHandle.SetHandleData(a), 0)
       )
     );
   }
-  static yAo(a, e, t = !0, i = !0, r, n = void 0) {
+  static MPo(a, e, t = !0, i = !0, r, n = void 0) {
     var o;
     return (
       (this.UiCamera = UiCameraManager_1.UiCameraManager.Get()),
@@ -299,11 +299,11 @@ class UiCameraAnimationManager {
       (this.UiCameraSequenceComponent = this.UiCamera.GetUiCameraComponent(
         UiCameraSequenceComponent_1.UiCameraSequenceComponent,
       )),
-      this.IAo &&
-        (this.IAo.StopSequence(), (this.IAo = void 0), this.UiCamera.Exit()),
+      this.EPo &&
+        (this.EPo.StopSequence(), (this.EPo = void 0), this.UiCamera.Exit()),
       a
         ? (a.Refresh(),
-          this.TAo(a),
+          this.SPo(a),
           StringUtils_1.StringUtils.IsEmpty(r)
             ? (Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info(
@@ -313,7 +313,7 @@ class UiCameraAnimationManager {
                   ["PushHandleData", a.ToString()],
                   ["blendName", r],
                 ),
-              this.MAo(a, t, i),
+              this.fPo(a, t, i),
               3)
             : e
               ? t
@@ -328,7 +328,7 @@ class UiCameraAnimationManager {
                         "没有混合配置或播放界面摄像机动画时间<=0，直接激活镜头",
                         ["blendName", r],
                       ),
-                    this.vAo(a, !1, !1),
+                    this.gPo(a, !1, !1),
                     3)
                   : (UiCameraAnimationManager.AsyncPlayCameraAnimation(
                       e,
@@ -336,7 +336,7 @@ class UiCameraAnimationManager {
                       r,
                     ).then(
                       (a) => {
-                        this.HFt(a, n);
+                        this.j3t(a, n);
                       },
                       () => {},
                     ),
@@ -349,25 +349,25 @@ class UiCameraAnimationManager {
                       ["LastHandleData", e.ToString()],
                       ["PushHandleData", a.ToString()],
                     ),
-                  this.vAo(a, !1, !1),
+                  this.gPo(a, !1, !1),
                   3)
-              : (this.MAo(a, t, i), 3))
+              : (this.fPo(a, t, i), 3))
         : ((o = this.GetCurrentCameraHandle())
-            ? (this.IAo = o).Revert(!0, () => {
+            ? (this.EPo = o).Revert(!0, () => {
                 this.ClearDisplay();
               })
             : this.ClearDisplay(),
           2)
     );
   }
-  static TAo(a) {
+  static SPo(a) {
     this.UiCameraSpringStructure?.IsValid() ||
       a.IsEmptyState ||
       (this.UiCameraSpringStructure = this.UiCamera.PushStructure(
         UiCameraSpringStructure_1.UiCameraSpringStructure,
       ));
   }
-  static HFt(a, e = void 0) {
+  static j3t(a, e = void 0) {
     var t = a.FromHandleData,
       i = a.ToHandleData;
     0 === a.FinishType
@@ -380,7 +380,7 @@ class UiCameraAnimationManager {
             ["PushHandleData", i.ToString()],
             ["FinishType", a.FinishType],
           ),
-        this.vAo(i, !1, !1))
+        this.gPo(i, !1, !1))
       : Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "CameraAnimation",
@@ -427,7 +427,7 @@ class UiCameraAnimationManager {
     if (a) return a.GetToBlendName(e);
   }
   static IsPlayingAnimation() {
-    return !!this.SAo && this.SAo.IsPlaying();
+    return !!this.pPo && this.pPo.IsPlaying();
   }
   static IsPlayingBlendInSequence() {
     return (
@@ -437,31 +437,31 @@ class UiCameraAnimationManager {
   }
   static ClearDisplay() {
     this.StopUiCameraAnimation(),
-      this.LAo(),
+      this.yPo(),
       UiCameraManager_1.UiCameraManager.Destroy();
-    for (const a of this.cAo) a.Reset();
-    this.cAo.Clear(),
+    for (const a of this.lPo) a.Reset();
+    this.lPo.Clear(),
       this.CurrentCameraHandle?.Reset(),
       (this.UiCamera = void 0),
       (this.UiCameraSpringStructure = void 0),
       (this.UiCameraPostEffectComponent = void 0),
       (this.CurrentCameraHandle = void 0),
-      (this.IAo = void 0),
-      this.DAo.clear(),
-      this.RAo.clear();
+      (this.EPo = void 0),
+      this.IPo.clear(),
+      this.TPo.clear();
   }
   static GenerateHandleDataUniqueId() {
-    return this.UAo++;
+    return this.LPo++;
   }
   static async AsyncPlayCameraAnimation(a, e, t) {
     return (
-      this.SAo
-        ? this.SAo.StopUiCameraAnimation()
-        : (this.SAo = new UiCameraAnimation_1.UiCameraAnimation()),
+      this.pPo
+        ? this.pPo.StopUiCameraAnimation()
+        : (this.pPo = new UiCameraAnimation_1.UiCameraAnimation()),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnPlayCameraAnimationStart,
       ),
-      this.SAo.AsyncPlayUiCameraAnimation(a, e, t)
+      this.pPo.AsyncPlayUiCameraAnimation(a, e, t)
     );
   }
   static PlayCameraAnimationFromCurrent(a, e) {
@@ -483,19 +483,19 @@ class UiCameraAnimationManager {
               "没有混合配置或播放界面摄像机动画时间<=0，直接激活镜头",
               ["blendName", a],
             ),
-          this.vAo(e, !1, !1))
+          this.gPo(e, !1, !1))
         : this.AsyncPlayCameraAnimation(e, e, a).then(
             (a) => {
-              0 === a.FinishType && this.vAo(e);
+              0 === a.FinishType && this.gPo(e);
             },
             () => {},
           ));
   }
   static StopUiCameraAnimation() {
-    this.SAo && (this.SAo.StopUiCameraAnimation(), (this.SAo = void 0));
+    this.pPo && (this.pPo.StopUiCameraAnimation(), (this.pPo = void 0));
   }
   static Tick(a) {
-    this.SAo && this.SAo.Tick(a),
+    this.pPo && this.pPo.Tick(a),
       this.CurrentCameraHandle && this.CurrentCameraHandle.Tick(a);
   }
   static BroadUiCameraSequenceEvent(a) {
@@ -510,10 +510,10 @@ class UiCameraAnimationManager {
       );
   }
   static IsActivate() {
-    return 0 < this.cAo.Size;
+    return 0 < this.lPo.Size;
   }
   static GetHandleDataStack() {
-    return this.cAo;
+    return this.lPo;
   }
   static GetTargetActor(a) {
     switch (a) {
@@ -612,7 +612,7 @@ class UiCameraAnimationManager {
         return;
     }
   }
-  static LAo() {
+  static yPo() {
     this.EnablePlayerActor(),
       this.EnableCustomCreatureActor(),
       Global_1.Global.BaseCharacter?.SetDitherEffect(1, 2);
@@ -627,17 +627,17 @@ class UiCameraAnimationManager {
             Log_1.Log.Info("CameraAnimation", 8, "Ui镜头隐藏玩家Actor"),
           (a = t.GetComponent(1)) &&
             ((e = t.Id),
-            this.DAo.has(e)
+            this.IPo.has(e)
               ? Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info(
                   "CameraAnimation",
                   8,
                   "已经隐藏过对应的玩家Actor",
                   ["entityId", e],
-                  ["PlayerActorDisableHandleIdMap", this.DAo],
+                  ["PlayerActorDisableHandleIdMap", this.IPo],
                 )
               : ((e = a.DisableActor("Ui镜头Sequence中隐藏角色")),
-                this.DAo.set(t.Id, e))))
+                this.IPo.set(t.Id, e))))
         : Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "CameraAnimation",
@@ -652,15 +652,15 @@ class UiCameraAnimationManager {
         );
   }
   static IsDisablePlayer() {
-    return this.IsActivate() && 0 < this.DAo.size;
+    return this.IsActivate() && 0 < this.IPo.size;
   }
   static EnablePlayerActor() {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info("CameraAnimation", 8, "Ui镜头在清理表现时显示玩家Actor", [
         "DisableHandleId",
-        this.DAo,
+        this.IPo,
       ]);
-    for (var [a, e] of this.DAo) {
+    for (var [a, e] of this.IPo) {
       var t = EntitySystem_1.EntitySystem.Get(a);
       if (!t?.Valid)
         return void (
@@ -683,7 +683,7 @@ class UiCameraAnimationManager {
             ["EntityId", a],
           );
     }
-    this.DAo.clear();
+    this.IPo.clear();
   }
   static DisableCustomCreatureActor(e) {
     var t = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
@@ -706,9 +706,11 @@ class UiCameraAnimationManager {
                   ["customServerEntityIds", i],
                   ["customEntity", r.Id],
                 );
-              i = n.DisableActor("Ui镜头Sequence中隐藏角色伴生物");
-              let a = this.RAo.get(t);
-              a || ((a = new Map()), this.RAo.set(t, a)), a.set(e, i);
+              let a = this.TPo.get(t);
+              a || ((a = new Map()), this.TPo.set(t, a)),
+                a.has(e) ||
+                  ((i = n.DisableActor("Ui镜头Sequence中隐藏角色伴生物")),
+                  a.set(e, i));
             }
           }
         }
@@ -716,7 +718,7 @@ class UiCameraAnimationManager {
     }
   }
   static EnableCustomCreatureActor() {
-    for (var [a, e] of this.RAo) {
+    for (var [a, e] of this.TPo) {
       a = EntitySystem_1.EntitySystem.Get(a).GetComponent(0);
       if (!a) return;
       var t,
@@ -739,7 +741,7 @@ class UiCameraAnimationManager {
           o.EnableActor(i);
       }
     }
-    this.RAo.clear();
+    this.TPo.clear();
   }
   static ResetFightCameraRotation() {
     var a;
@@ -753,17 +755,17 @@ class UiCameraAnimationManager {
       a.ResetFightCameraLogic(!1));
   }
 }
-(UiCameraAnimationManager.UAo = 0),
-  (UiCameraAnimationManager._Ao = new Map()),
-  (UiCameraAnimationManager.cAo = new Stack_1.Stack()),
+(UiCameraAnimationManager.LPo = 0),
+  (UiCameraAnimationManager.aPo = new Map()),
+  (UiCameraAnimationManager.lPo = new Stack_1.Stack()),
   (UiCameraAnimationManager.CurrentCameraHandle = void 0),
-  (UiCameraAnimationManager.SAo = void 0),
-  (UiCameraAnimationManager.IAo = void 0),
+  (UiCameraAnimationManager.pPo = void 0),
+  (UiCameraAnimationManager.EPo = void 0),
   (UiCameraAnimationManager.LoadingViewCameraAnimationLength = 0),
   (UiCameraAnimationManager.LoadingViewManualFocusDistance = 0),
   (UiCameraAnimationManager.LoadingViewAperture = void 0),
-  (UiCameraAnimationManager.DAo = new Map()),
-  (UiCameraAnimationManager.RAo = new Map()),
+  (UiCameraAnimationManager.IPo = new Map()),
+  (UiCameraAnimationManager.TPo = new Map()),
   (UiCameraAnimationManager.UiCamera = void 0),
   (UiCameraAnimationManager.UiCameraSpringStructure = void 0),
   (UiCameraAnimationManager.UiCameraPostEffectComponent = void 0),

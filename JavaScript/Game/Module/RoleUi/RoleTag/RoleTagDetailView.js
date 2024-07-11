@@ -12,10 +12,10 @@ class RoleTagDetailView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
       (this.lqe = void 0),
-      (this.Yho = void 0),
-      (this.Nmo = void 0),
-      (this.Omo = () => new RoleTagDetailItem_1.RoleTagDetailItem()),
-      (this.qBt = () => {
+      (this.Klo = void 0),
+      (this.bdo = void 0),
+      (this.qdo = () => new RoleTagDetailItem_1.RoleTagDetailItem()),
+      (this.Obt = () => {
         this.CloseMe();
       });
   }
@@ -33,20 +33,20 @@ class RoleTagDetailView extends UiViewBase_1.UiViewBase {
       ? Log_1.Log.CheckError() &&
         Log_1.Log.Error("Role", 59, "RoleTagDetailView无效tagList")
       : ((this.lqe = new PopupCaptionItem_1.PopupCaptionItem(this.GetItem(0))),
-        this.lqe.SetCloseCallBack(this.qBt),
-        (this.Yho = new GenericLayout_1.GenericLayout(
+        this.lqe.SetCloseCallBack(this.Obt),
+        (this.Klo = new GenericLayout_1.GenericLayout(
           this.GetVerticalLayout(1),
-          this.Omo,
+          this.qdo,
           this.GetItem(3).GetOwner(),
         )),
-        (this.Nmo = new GenericLayout_1.GenericLayout(
+        (this.bdo = new GenericLayout_1.GenericLayout(
           this.GetVerticalLayout(2),
-          this.Omo,
+          this.qdo,
           this.GetItem(3).GetOwner(),
         )),
-        this.Yho.RefreshByData(e),
+        this.Klo.RefreshByData(e),
         (e = ConfigManager_1.ConfigManager.RoleConfig.GetAllRoleTagList()),
-        this.Nmo.RefreshByData(e));
+        this.bdo.RefreshByData(e));
   }
 }
 exports.RoleTagDetailView = RoleTagDetailView;

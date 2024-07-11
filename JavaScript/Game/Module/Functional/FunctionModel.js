@@ -19,36 +19,36 @@ class FunctionModel extends ModelBase_1.ModelBase {
       (this.PlayerAttributeNum = new Map()),
       (this.PlayerAttributeString = new Map()),
       (this.PlayerId = 0),
-      (this.I9t = new Map()),
-      (this.T9t = []),
-      (this.L9t = new Map()),
-      (this.D9t = () =>
+      (this.I7t = new Map()),
+      (this.T7t = []),
+      (this.L7t = new Map()),
+      (this.D7t = () =>
         ModelManager_1.ModelManager.ActivityModel.GetIfShowActivity()),
-      (this.R9t = () =>
+      (this.R7t = () =>
         ControllerHolder_1.ControllerHolder.KuroSdkController.NeedShowCustomerService()),
-      (this.U9t = () =>
+      (this.U7t = () =>
         ChannelController_1.ChannelController.CheckKuroStreetOpen());
   }
   OnInit() {
     return (
-      this.L9t.set(10053, this.D9t),
-      this.L9t.set(10028, this.R9t),
-      this.L9t.set(10058, this.U9t),
+      this.L7t.set(10053, this.D7t),
+      this.L7t.set(10028, this.R7t),
+      this.L7t.set(10058, this.U7t),
       !0
     );
   }
   SetFunctionOpenInfo(e) {
-    for (const t of e.gRs) {
-      var n = new FunctionInstance_1.FunctionInstance(t.Mkn, t.Ekn),
+    for (const t of e.BUs) {
+      var n = new FunctionInstance_1.FunctionInstance(t.$4n, t.J4n),
         n =
-          (this.I9t.set(
-            t.Ekn,
-            new FunctionInstance_1.FunctionInstance(t.Mkn, t.Ekn),
+          (this.I7t.set(
+            t.J4n,
+            new FunctionInstance_1.FunctionInstance(t.$4n, t.J4n),
           ),
           n.GetIsOpen());
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnFunctionOpenSet,
-        t.Ekn,
+        t.J4n,
         n,
       ),
         Log_1.Log.CheckInfo() &&
@@ -56,33 +56,33 @@ class FunctionModel extends ModelBase_1.ModelBase {
             "Functional",
             11,
             "功能数据添加",
-            ["Id", t.Ekn],
+            ["Id", t.J4n],
             ["IsOpen", n],
           );
     }
   }
   UpdateFunctionOpenInfo(e) {
-    for (const o of e.gRs) {
+    for (const o of e.BUs) {
       var n,
-        t = this.I9t.get(o.Ekn);
+        t = this.I7t.get(o.J4n);
       t
-        ? (t.SetFlag(o.Mkn),
+        ? (t.SetFlag(o.$4n),
           (n =
             ((t = t.GetIsOpen()) &&
               Log_1.Log.CheckInfo() &&
-              Log_1.Log.Info("Functional", 11, "功能数据更新", ["Id", o.Ekn]),
+              Log_1.Log.Info("Functional", 11, "功能数据更新", ["Id", o.J4n]),
             EventSystem_1.EventSystem.Emit(
               EventDefine_1.EEventName.OnFunctionOpenUpdate,
-              o.Ekn,
+              o.J4n,
               t,
             ),
             FunctionConditionByFunctionId_1.configFunctionConditionByFunctionId.GetConfig(
-              o.Ekn,
+              o.J4n,
             ))),
           t &&
             1 === n.ShowUIType &&
             !ModelManager_1.ModelManager.SundryModel.IsBlockTips &&
-            this.T9t.push(n),
+            this.T7t.push(n),
           ModelManager_1.ModelManager.SundryModel.IsBlockTips &&
             Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
@@ -93,7 +93,7 @@ class FunctionModel extends ModelBase_1.ModelBase {
         : Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("Functional", 11, "当前刷新的功能id不在功能列表中", [
             "功能Id",
-            o.Ekn,
+            o.J4n,
           ]);
     }
     EventSystem_1.EventSystem.Emit(
@@ -103,7 +103,7 @@ class FunctionModel extends ModelBase_1.ModelBase {
   RefreshInfoManualState(e) {
     for (const o of e) {
       var n,
-        t = this.I9t.get(o);
+        t = this.I7t.get(o);
       t
         ? ((n =
             FunctionConditionByFunctionId_1.configFunctionConditionByFunctionId.GetConfig(
@@ -111,7 +111,7 @@ class FunctionModel extends ModelBase_1.ModelBase {
             )),
           t.GetIsOpen() &&
             !ModelManager_1.ModelManager.SundryModel.IsBlockTips &&
-            this.T9t.push(n),
+            this.T7t.push(n),
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info("Functional", 11, "手动开启功能开启界面成功", [
               "FunctionId",
@@ -134,24 +134,24 @@ class FunctionModel extends ModelBase_1.ModelBase {
   PopNewOpenFunctionList() {
     var e;
     if (this.IsExistNewOpenFunction())
-      return (e = this.T9t[0]), this.T9t.splice(0, 1), e;
+      return (e = this.T7t[0]), this.T7t.splice(0, 1), e;
   }
   IsExistNewOpenFunction() {
-    return 0 < this.T9t.length;
+    return 0 < this.T7t.length;
   }
   ClearNewOpenFunctionList() {
-    this.T9t = [];
+    this.T7t = [];
   }
   GetNewOpenFunctionIdList() {
     var e = [];
-    for (const n of this.T9t) e.push(n.FunctionId);
+    for (const n of this.T7t) e.push(n.FunctionId);
     return e;
   }
   UpdatePlayerAttributeNumberInfo(e) {
     let n = 0,
       t = void 0;
-    e.has(Protocol_1.Aki.Protocol.U2s.r3n) && (n = this.GetPlayerLevel()),
-      e.has(Protocol_1.Aki.Protocol.U2s.k3n) && (t = this.GetPlayerExp()),
+    e.has(Protocol_1.Aki.Protocol.pNs.P6n) && (n = this.GetPlayerLevel()),
+      e.has(Protocol_1.Aki.Protocol.pNs.M8n) && (t = this.GetPlayerExp()),
       e.forEach((e, n) => {
         this.PlayerAttributeNum.set(n, e);
       });
@@ -167,7 +167,7 @@ class FunctionModel extends ModelBase_1.ModelBase {
         ((o = i[0]),
         (r = i[i.length - 1]),
         (o = o.PlayerExp),
-        (i = this.A9t(i, t, e)),
+        (i = this.A7t(i, t, e)),
         (r = r.PlayerExp),
         ControllerHolder_1.ControllerHolder.KuroSdkController.PostKuroSdkEvent(
           4,
@@ -192,7 +192,7 @@ class FunctionModel extends ModelBase_1.ModelBase {
           i,
         ));
   }
-  A9t(e, n, t) {
+  A7t(e, n, t) {
     let o = 0;
     for (const r of e) o += r.PlayerExp;
     return o - n + t;
@@ -201,27 +201,27 @@ class FunctionModel extends ModelBase_1.ModelBase {
     this.PlayerId = e;
   }
   GetPlayerName() {
-    return this.PlayerAttributeString.get(Protocol_1.Aki.Protocol.U2s.e4n);
+    return this.PlayerAttributeString.get(Protocol_1.Aki.Protocol.pNs.w8n);
   }
   SetPlayerName(e) {
-    this.PlayerAttributeString.set(Protocol_1.Aki.Protocol.U2s.e4n, e),
+    this.PlayerAttributeString.set(Protocol_1.Aki.Protocol.pNs.w8n, e),
       EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.OnNameChange);
   }
   GetPlayerLevel() {
-    return this.PlayerAttributeNum.get(Protocol_1.Aki.Protocol.U2s.r3n);
+    return this.PlayerAttributeNum.get(Protocol_1.Aki.Protocol.pNs.P6n);
   }
   GetPlayerExp() {
-    return this.PlayerAttributeNum.get(Protocol_1.Aki.Protocol.U2s.k3n);
+    return this.PlayerAttributeNum.get(Protocol_1.Aki.Protocol.pNs.M8n);
   }
   GetPlayerCashCoin() {
     var e = this.PlayerAttributeString.get(
-      Protocol_1.Aki.Protocol.U2s.Proto_CashCoin,
+      Protocol_1.Aki.Protocol.pNs.Proto_CashCoin,
     );
     return e || "0";
   }
   GetWorldPermission() {
     return this.PlayerAttributeNum.get(
-      Protocol_1.Aki.Protocol.U2s.Proto_WorldPermission,
+      Protocol_1.Aki.Protocol.pNs.Proto_WorldPermission,
     );
   }
   UpdatePlayerAttributeStringInfo(e) {
@@ -230,14 +230,14 @@ class FunctionModel extends ModelBase_1.ModelBase {
     });
   }
   IsOpen(e) {
-    return 0 === e || (!!(e = this.I9t.get(e)) && e.GetIsOpen());
+    return 0 === e || (!!(e = this.I7t.get(e)) && e.GetIsOpen());
   }
   IsShow(e) {
-    e = this.I9t.get(e);
+    e = this.I7t.get(e);
     return !!e && e.GetIsShow();
   }
   GetFunctionInstance(e) {
-    return this.I9t.get(e);
+    return this.I7t.get(e);
   }
   GetShowFunctionIdList() {
     var e = new Array(),
@@ -247,9 +247,9 @@ class FunctionModel extends ModelBase_1.ModelBase {
     n.sort((e, n) => e.SortIndex - n.SortIndex);
     for (const r of n) {
       var t,
-        o = this.I9t.get(r.FunctionId);
+        o = this.I7t.get(r.FunctionId);
       o &&
-        ((t = !(t = this.L9t.get(r.FunctionId)) || t()), o.GetIsOpen()) &&
+        ((t = !(t = this.L7t.get(r.FunctionId)) || t()), o.GetIsOpen()) &&
         t &&
         e.push(r.FunctionId);
     }
@@ -287,6 +287,8 @@ class FunctionModel extends ModelBase_1.ModelBase {
         return "FunctionViewQuestBtn";
       case 10028:
         return "CustomerService";
+      case 10026:
+        return "FunctionPhantomExploreSet";
     }
   }
   RedDotFunctionPhantomCondition() {

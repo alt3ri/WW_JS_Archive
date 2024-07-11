@@ -11,6 +11,7 @@ const puerts_1 = require("puerts"),
   ConfigManager_1 = require("../../Manager/ConfigManager"),
   LoginDefine_1 = require("../Login/Data/LoginDefine"),
   UiModelUtil_1 = require("../UiModel/UiModelUtil"),
+  UiModelResourcesManager_1 = require("./UiModelResourcesManager"),
   UiSceneRoleActorManager_1 = require("./UiSceneRoleActorManager"),
   SEQUENCE_CAMERA_TAG = new UE.FName("SequenceCamera"),
   CINEMATIC_TICK_TAG = new UE.FName("CinematicTick"),
@@ -18,7 +19,7 @@ const puerts_1 = require("puerts"),
   SPOT_LIGHT2_TAG = new UE.FName("SpotLight2");
 class UiLoginSceneManager {
   static GetRoleObserver(e) {
-    let n = UiLoginSceneManager.iPo.get(e);
+    let n = UiLoginSceneManager.ZPo.get(e);
     return (
       !n &&
         GlobalData_1.GlobalData.World &&
@@ -26,77 +27,96 @@ class UiLoginSceneManager {
           UiSceneRoleActorManager_1.UiSceneRoleActorManager.CreateUiSceneRoleActor(
             0,
           )),
-        UiLoginSceneManager.iPo.set(e, n)),
+        UiLoginSceneManager.ZPo.set(e, n)),
       n
     );
   }
-  static oPo() {
-    for (var [, e] of UiLoginSceneManager.iPo) {
+  static exo() {
+    for (var [, e] of UiLoginSceneManager.ZPo) {
       e = e.GetRoleActorIndex();
       UiSceneRoleActorManager_1.UiSceneRoleActorManager.DestroyUiSceneRoleActor(
         e,
       );
     }
-    (UiLoginSceneManager.rPo = []), UiLoginSceneManager.iPo.clear();
+    for (const n of this.xTa)
+      UiModelResourcesManager_1.UiModelResourcesManager.ReleaseMeshesComponentsBundleStreaming(
+        n,
+      );
+    (UiLoginSceneManager.txo = []), UiLoginSceneManager.ZPo.clear();
   }
   static InitCinematicTick() {
-    (UiLoginSceneManager.nPo = ActorSystem_1.ActorSystem.Get(
+    (UiLoginSceneManager.ixo = ActorSystem_1.ActorSystem.Get(
       UE.BP_Cinematics_Tick_C.StaticClass(),
       new UE.Transform(),
     )),
-      (UiLoginSceneManager.sPo = ActorSystem_1.ActorSystem.Get(
+      (UiLoginSceneManager.oxo = ActorSystem_1.ActorSystem.Get(
         UE.SpotLight.StaticClass(),
         new UE.Transform(),
       )),
-      (UiLoginSceneManager.aPo = ActorSystem_1.ActorSystem.Get(
+      (UiLoginSceneManager.rxo = ActorSystem_1.ActorSystem.Get(
         UE.SpotLight.StaticClass(),
         new UE.Transform(),
       ));
   }
-  static hPo() {
+  static nxo() {
     var e =
         ConfigManager_1.ConfigManager.CreateCharacterConfig.GetInitialRoles(),
       n = e[LoginDefine_1.ELoginSex.Girl],
       e = e[LoginDefine_1.ELoginSex.Boy];
-    (UiLoginSceneManager.nPo.UISceneRole_2 = this.lPo(e)),
-      (UiLoginSceneManager.nPo.UISceneRole = this.lPo(n)),
-      (UiLoginSceneManager.nPo.Is_Tick = 1);
+    (UiLoginSceneManager.ixo.UISceneRole_2 = this.sxo(e)),
+      (UiLoginSceneManager.ixo.UISceneRole = this.sxo(n)),
+      (UiLoginSceneManager.ixo.Is_Tick = 1);
   }
-  static lPo(e) {
-    return UiLoginSceneManager.iPo.get(e).Model?.CheckGetComponent(1)
+  static sxo(e) {
+    return UiLoginSceneManager.ZPo.get(e).Model?.CheckGetComponent(1)
       ?.MainMeshComponent;
   }
-  static _Po() {
-    UiLoginSceneManager.nPo &&
-      (ActorSystem_1.ActorSystem.Put(UiLoginSceneManager.nPo),
-      (UiLoginSceneManager.nPo = void 0)),
-      UiLoginSceneManager.sPo &&
-        (ActorSystem_1.ActorSystem.Put(UiLoginSceneManager.sPo),
-        (UiLoginSceneManager.sPo = void 0)),
-      UiLoginSceneManager.aPo &&
-        (ActorSystem_1.ActorSystem.Put(UiLoginSceneManager.aPo),
-        (UiLoginSceneManager.aPo = void 0));
+  static axo() {
+    UiLoginSceneManager.ixo &&
+      (ActorSystem_1.ActorSystem.Put(UiLoginSceneManager.ixo),
+      (UiLoginSceneManager.ixo = void 0)),
+      UiLoginSceneManager.oxo &&
+        (ActorSystem_1.ActorSystem.Put(UiLoginSceneManager.oxo),
+        (UiLoginSceneManager.oxo = void 0)),
+      UiLoginSceneManager.rxo &&
+        (ActorSystem_1.ActorSystem.Put(UiLoginSceneManager.rxo),
+        (UiLoginSceneManager.rxo = void 0));
   }
   static InitRoleObservers() {
-    UiLoginSceneManager.oPo();
+    UiLoginSceneManager.exo();
     var e =
         ConfigManager_1.ConfigManager.CreateCharacterConfig.GetInitialRoles(),
       n = e[LoginDefine_1.ELoginSex.Girl],
       n =
-        (UiLoginSceneManager.uPo(n, "GirlCase"),
+        (UiLoginSceneManager.hxo(n, "GirlCase"),
         e[LoginDefine_1.ELoginSex.Boy]);
-    UiLoginSceneManager.uPo(n, "BoyCase");
+    UiLoginSceneManager.hxo(n, "BoyCase");
   }
-  static uPo(e, n) {
+  static hxo(e, n) {
     const i = UiLoginSceneManager.GetRoleObserver(e),
       a = i.Model;
-    a.CheckGetComponent(12)?.LoadModelByRoleConfigId(e, !1, () => {
+    var r = a.CheckGetComponent(12);
+    const o = () => {
       UiModelUtil_1.UiModelUtil.SetVisible(a, !0),
         a.CheckGetComponent(15).SetActive(!0),
         a.CheckGetComponent(13)?.SetState(11),
         i.Model?.CheckGetComponent(1)?.SetTransformByTag(n),
-        UiLoginSceneManager.rPo.push(e),
-        2 <= UiLoginSceneManager.rPo.length && UiLoginSceneManager.hPo();
+        UiLoginSceneManager.txo.push(e),
+        2 <= UiLoginSceneManager.txo.length && UiLoginSceneManager.nxo();
+    };
+    r?.LoadModelByRoleConfigId(e, !1, () => {
+      var e = a
+          .CheckGetComponent(15)
+          .GetHuluHandle()
+          .Model.CheckGetComponent(2)
+          .GetModelAllMesh(),
+        e =
+          UiModelResourcesManager_1.UiModelResourcesManager.LoadMeshesComponentsBundleStreaming(
+            e,
+            void 0,
+            o,
+          );
+      this.xTa.push(e);
     });
   }
   static PlayRoleMontage(e, n) {
@@ -131,10 +151,10 @@ class UiLoginSceneManager {
       .RemoveRenderingMaterialWithEnding(n);
   }
   static SetBurstEyeMaterialId(e) {
-    this.cPo = e;
+    this.lxo = e;
   }
   static GetBurstEyeMaterialId() {
-    return this.cPo;
+    return this.lxo;
   }
   static LoadSequenceAsync(e, a = void 0, r = !1, o = void 0) {
     const g = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(e);
@@ -156,18 +176,18 @@ class UiLoginSceneManager {
                 12,
               ).CineCamera),
             e.AddBindingByTag(SEQUENCE_CAMERA_TAG, i)),
-          UiLoginSceneManager.nPo &&
+          UiLoginSceneManager.ixo &&
             n.HasBindingTag(CINEMATIC_TICK_TAG, !0) &&
-            e.AddBindingByTag(CINEMATIC_TICK_TAG, UiLoginSceneManager.nPo),
-          UiLoginSceneManager.sPo &&
+            e.AddBindingByTag(CINEMATIC_TICK_TAG, UiLoginSceneManager.ixo),
+          UiLoginSceneManager.oxo &&
             n.HasBindingTag(SPOT_LIGHT1_TAG, !0) &&
-            e.AddBindingByTag(SPOT_LIGHT1_TAG, UiLoginSceneManager.sPo),
-          UiLoginSceneManager.aPo &&
+            e.AddBindingByTag(SPOT_LIGHT1_TAG, UiLoginSceneManager.oxo),
+          UiLoginSceneManager.rxo &&
             n.HasBindingTag(SPOT_LIGHT2_TAG, !0) &&
-            e.AddBindingByTag(SPOT_LIGHT2_TAG, UiLoginSceneManager.aPo),
+            e.AddBindingByTag(SPOT_LIGHT2_TAG, UiLoginSceneManager.rxo),
           a && e.SequencePlayer.OnFinished.Add(a),
           r ? e.SequencePlayer.PlayReverse() : e.SequencePlayer.Play(),
-          this.mPo && (this.mPo.SequencePlayer.StopAtCurrentTime(), this.dPo()))
+          this._xo && (this._xo.SequencePlayer.StopAtCurrentTime(), this.uxo()))
         : (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "UiLoginSceneManager",
@@ -193,14 +213,14 @@ class UiLoginSceneManager {
             new UE.MovieSceneSequencePlaybackSettings(),
             n,
           ),
-          (UiLoginSceneManager.mPo = (0, puerts_1.$unref)(n)),
-          UiLoginSceneManager.mPo.ResetBindings(),
+          (UiLoginSceneManager._xo = (0, puerts_1.$unref)(n)),
+          UiLoginSceneManager._xo.ResetBindings(),
           (e =
             CameraController_1.CameraController.WidgetCamera.GetComponent(
               12,
             ).CineCamera),
-          UiLoginSceneManager.mPo.AddBindingByTag(SEQUENCE_CAMERA_TAG, e),
-          UiLoginSceneManager.mPo.SequencePlayer.PlayLooping(),
+          UiLoginSceneManager._xo.AddBindingByTag(SEQUENCE_CAMERA_TAG, e),
+          UiLoginSceneManager._xo.SequencePlayer.PlayLooping(),
           CameraController_1.CameraController.EnterCameraMode(2),
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info("UiLoginSceneManager", 11, "播放进入循环缓动镜头"))
@@ -213,7 +233,7 @@ class UiLoginSceneManager {
           );
     });
   }
-  static dPo() {
+  static uxo() {
     var e,
       n = UE.GameplayStatics.GetPlayerController(
         GlobalData_1.GlobalData.World,
@@ -233,18 +253,19 @@ class UiLoginSceneManager {
         );
   }
   static Destroy() {
-    UiLoginSceneManager.oPo(),
-      UiLoginSceneManager._Po(),
-      UiLoginSceneManager.mPo &&
-        (UiLoginSceneManager.mPo.K2_DestroyActor(),
-        (UiLoginSceneManager.mPo = void 0));
+    UiLoginSceneManager.exo(),
+      UiLoginSceneManager.axo(),
+      UiLoginSceneManager._xo &&
+        (UiLoginSceneManager._xo.K2_DestroyActor(),
+        (UiLoginSceneManager._xo = void 0));
   }
 }
-((exports.UiLoginSceneManager = UiLoginSceneManager).iPo = new Map()),
-  (UiLoginSceneManager.nPo = void 0),
-  (UiLoginSceneManager.sPo = void 0),
-  (UiLoginSceneManager.aPo = void 0),
-  (UiLoginSceneManager.cPo = 0),
-  (UiLoginSceneManager.rPo = []),
-  (UiLoginSceneManager.mPo = void 0);
+((exports.UiLoginSceneManager = UiLoginSceneManager).ZPo = new Map()),
+  (UiLoginSceneManager.ixo = void 0),
+  (UiLoginSceneManager.oxo = void 0),
+  (UiLoginSceneManager.rxo = void 0),
+  (UiLoginSceneManager.lxo = 0),
+  (UiLoginSceneManager.txo = []),
+  (UiLoginSceneManager.xTa = []),
+  (UiLoginSceneManager._xo = void 0);
 //# sourceMappingURL=UiLoginSceneManager.js.map

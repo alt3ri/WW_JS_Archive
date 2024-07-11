@@ -7,9 +7,9 @@ class LongShanStageInfo {
       ((this.ProtoStageInfo = void 0),
       (this.TaskInfoMap = new Map()),
       (this.ProtoStageInfo = t),
-      this.ProtoStageInfo.V0s)
+      this.ProtoStageInfo.nMs)
     )
-      for (const o of t.V0s) this.TaskInfoMap.set(o.Ekn, o);
+      for (const o of t.nMs) this.TaskInfoMap.set(o.J4n, o);
   }
 }
 exports.LongShanStageInfo = LongShanStageInfo;

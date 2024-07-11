@@ -9,8 +9,8 @@ const UE = require("ue"),
 class RoleDescribeComponent extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this.cjt = 0),
-      (this.EPe = void 0),
+      (this.cWt = 0),
+      (this.SPe = void 0),
       (this.$be = void 0),
       (this.OpenRolePreview = () => {});
   }
@@ -25,8 +25,8 @@ class RoleDescribeComponent extends UiPanelBase_1.UiPanelBase {
     ];
   }
   OnStart() {
-    (this.EPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem)),
-      this.EPe.PlayLevelSequenceByName("Start"),
+    (this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem)),
+      this.SPe.PlayLevelSequenceByName("Start"),
       (this.$be = new SimpleGenericLayout_1.SimpleGenericLayout(
         this.GetHorizontalLayout(2),
       )),
@@ -34,11 +34,11 @@ class RoleDescribeComponent extends UiPanelBase_1.UiPanelBase {
       this.GetSprite(5)?.SetUIActive(!1);
   }
   Update(e, i = !1) {
-    this.cjt = e;
+    this.cWt = e;
     var t,
       s,
       r,
-      e = ConfigManager_1.ConfigManager.GachaConfig.GetRoleInfoById(this.cjt);
+      e = ConfigManager_1.ConfigManager.GachaConfig.GetRoleInfoById(this.cWt);
     e &&
       (this.GetText(0).ShowTextNew(e.Name),
       (t = ConfigManager_1.ConfigManager.CommonConfig.GetElementConfig(
@@ -48,10 +48,10 @@ class RoleDescribeComponent extends UiPanelBase_1.UiPanelBase {
       (r = this.GetSprite(4)),
       this.SetTextureByPath(t.Icon, s),
       this.SetSpriteByPath(t.GachaElementBgSpritePath, r, !1),
-      this.HFe(e.QualityId),
+      this.n4e(e.QualityId),
       this.GetItem(1).SetUIActive(i));
   }
-  HFe(e) {
+  n4e(e) {
     this.$be.RebuildLayout(e);
   }
 }

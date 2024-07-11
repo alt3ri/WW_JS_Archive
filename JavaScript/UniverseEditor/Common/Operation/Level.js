@@ -4,6 +4,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.getLevelRewardWhiteList =
     exports.getDefaultLevelId =
     exports.getEntityPathNew =
+    exports.getLevelIdByEntityPath =
     exports.getEntityPathByIdAndName =
     exports.getEntityPath =
     exports.getLevelAssetPath =
@@ -195,6 +196,11 @@ function getEntityPathByIdAndName(e, t, n) {
     `/${e}/${(0, SegmentIdGenerator_1.getCreatorById)(t)}/${t}_${n}.json`
   );
 }
+function getLevelIdByEntityPath(e) {
+  var t = (0, File_1.getProjectPath)(IGlobal_1.globalConfig.LevelsDir),
+    e = (0, File_1.getRelativePathToDir)(e, t).split("/")[0];
+  if (e) return parseInt(e, 10);
+}
 function getEntityPathNew(e, t) {
   return getEntityPathByIdAndName(e, t.Id, t.Name);
 }
@@ -243,6 +249,7 @@ function getSetEntityVisibleWhiteList() {
   (exports.getLevelAssetPath = getLevelAssetPath),
   (exports.getEntityPath = getEntityPath),
   (exports.getEntityPathByIdAndName = getEntityPathByIdAndName),
+  (exports.getLevelIdByEntityPath = getLevelIdByEntityPath),
   (exports.getEntityPathNew = getEntityPathNew),
   (exports.getDefaultLevelId = getDefaultLevelId),
   (exports.getLevelRewardWhiteList = getLevelRewardWhiteList),

@@ -13,7 +13,10 @@ const puerts_1 = require("puerts"),
   Global_1 = require("../../Global"),
   ModelManager_1 = require("../../Manager/ModelManager"),
   EffectModelHelper_1 = require("../../Render/Effect/Data/EffectModelHelper"),
-  EffectSpec_1 = require("./EffectSpec");
+  EffectSpec_1 = require("./EffectSpec"),
+  materialCameraCameraForwardRightParameterName = new UE.FName(
+    "CameraForwardRight",
+  );
 class EffectModelPostProcessSpec extends EffectSpec_1.EffectSpec {
   constructor() {
     super(...arguments),
@@ -28,13 +31,13 @@ class EffectModelPostProcessSpec extends EffectSpec_1.EffectSpec {
       (this.$0e = void 0),
       (this.Y0e = void 0),
       (this.J0e = 0),
-      (this.XDn = new UE.FName("EffectActorLocation")),
-      (this.$Dn = new UE.LinearColor()),
-      (this.HEn = !1),
-      (this.jEn = (t) => {
+      (this.tAn = new UE.FName("EffectActorLocation")),
+      (this.iAn = new UE.LinearColor()),
+      (this.$yn = !1),
+      (this.Yyn = (t) => {
         this.PostProcessComponent?.IsValid() &&
           (this.PostProcessComponent.bEnabled = !t),
-          (this.HEn = t);
+          (this.$yn = t);
       });
   }
   OnInit() {
@@ -42,23 +45,23 @@ class EffectModelPostProcessSpec extends EffectSpec_1.EffectSpec {
       (this.MaterialIndex = -1),
       Stats_1.Stat.Enable &&
         ((this.$0e = void 0),
-        EffectModelPostProcessSpec.E0e ||
-          ((EffectModelPostProcessSpec.E0e = void 0),
+        EffectModelPostProcessSpec.S0e ||
+          ((EffectModelPostProcessSpec.S0e = void 0),
           (EffectModelPostProcessSpec.z0e = void 0)));
     var t = this.Handle.GetSureEffectActor(),
-      s = this.Handle.Parent,
-      s = s ? s.GetEffectSpec()?.GetSceneComponent() : void 0,
-      s = EffectModelHelper_1.EffectModelHelper.AddSceneComponent(
+      e = this.Handle.Parent,
+      e = e ? e.GetEffectSpec()?.GetSceneComponent() : void 0,
+      e = EffectModelHelper_1.EffectModelHelper.AddSceneComponent(
         t,
         UE.KuroPostProcessComponent.StaticClass(),
-        s,
+        e,
         void 0,
         !1,
         this.EffectModel,
       );
     return (
-      (this.PostProcessComponent = s),
-      (this.SceneComponent = s),
+      (this.PostProcessComponent = e),
+      (this.SceneComponent = e),
       (this.t0e = this.PostProcessComponent.IsComponentTickEnabled()),
       this.PostProcessComponent.SetComponentTickEnabled(!1),
       (this.CachedLocationCurve = this.EffectModel.Location),
@@ -112,22 +115,22 @@ class EffectModelPostProcessSpec extends EffectSpec_1.EffectSpec {
         this.LifeTime.PassTime,
       ),
       (t = this.PostProcessComponent.K2_GetComponentLocation()),
-      (this.$Dn.R = t.X),
-      (this.$Dn.G = t.Y),
-      (this.$Dn.B = t.Z),
-      this.Y0e.SetVectorParameterValue(this.XDn, this.$Dn));
+      (this.iAn.R = t.X),
+      (this.iAn.G = t.Y),
+      (this.iAn.B = t.Z),
+      this.Y0e.SetVectorParameterValue(this.tAn, this.iAn));
   }
   OnEnterPool() {
     EventSystem_1.EventSystem.Has(
       EventDefine_1.EEventName.OnEnterOrExitUltraSkill,
-      this.jEn,
+      this.Yyn,
     ) &&
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnEnterOrExitUltraSkill,
-        this.jEn,
+        this.Yyn,
       );
   }
-  OnStop(t, s) {
+  OnStop(t, e) {
     this.PostProcessComponent?.IsValid() &&
       (this.Y0e &&
         UE.KuroRenderingRuntimeBPPluginBPLibrary.RemovePostprocessMaterial(
@@ -147,56 +150,65 @@ class EffectModelPostProcessSpec extends EffectSpec_1.EffectSpec {
     );
   }
   static efe(t) {
-    var s;
+    var e;
     return (
       !t ||
       !(t = ModelManager_1.ModelManager.CharacterModel.GetHandle(t))?.Valid ||
       !(
-        ((s = (t = t.Entity).GetComponent(0)).GetEntityType() ===
-          Protocol_1.Aki.Protocol.HBs.Proto_Player &&
+        ((e = (t = t.Entity).GetComponent(0)).GetEntityType() ===
+          Protocol_1.Aki.Protocol.wks.Proto_Player &&
           !t.GetComponent(3).IsAutonomousProxy) ||
-        ((s = ModelManager_1.ModelManager.CreatureModel.GetEntityId(
-          s.GetSummonerId(),
+        ((e = ModelManager_1.ModelManager.CreatureModel.GetEntityId(
+          e.GetSummonerId(),
         )),
-        (s = EntitySystem_1.EntitySystem.Get(s)?.GetComponent(0)) &&
-          s.GetEntityType() === Protocol_1.Aki.Protocol.HBs.Proto_Player &&
+        (e = EntitySystem_1.EntitySystem.Get(e)?.GetComponent(0)) &&
+          e.GetEntityType() === Protocol_1.Aki.Protocol.wks.Proto_Player &&
           !t.GetComponent(3).IsAutonomousProxy)
       )
     );
   }
-  WEn(t) {
+  Jyn(t) {
     return (
       !t ||
       !(t = ModelManager_1.ModelManager.CharacterModel.GetHandle(t))?.Valid ||
       (t = t.Entity).GetComponent(0).GetEntityType() !==
-        Protocol_1.Aki.Protocol.HBs.Proto_Player ||
+        Protocol_1.Aki.Protocol.wks.Proto_Player ||
       !t.GetComponent(3).IsAutonomousProxy
     );
   }
   OnPlay() {
-    var t;
+    var t, e, i;
     this.PostProcessComponent?.IsValid() &&
       ((t = this.Handle?.GetContext()),
       EffectModelPostProcessSpec.efe(t?.EntityId)) &&
       (this.PostProcessComponent.SetComponentTickEnabled(this.t0e),
       this.PostProcessComponent.SetPriority(this.EffectModel.WeatherPriority),
       this.Y0e &&
-        (this.J0e =
+        ((this.J0e =
           UE.KuroRenderingRuntimeBPPluginBPLibrary.AddPostprocessMaterial(
             this.PostProcessComponent,
             this.Y0e,
             this.EffectModel.WeatherPriority,
           )),
+        Global_1.Global.CharacterCameraManager) &&
+        ((e = Global_1.Global.CharacterCameraManager.GetActorForwardVector()),
+        (i = new UE.Vector(0, 0, 1)),
+        (e = UE.Vector.CrossProduct(e, i)),
+        (i = UE.Vector.CrossProduct(i, e)),
+        this.Y0e.SetVectorParameterValue(
+          materialCameraCameraForwardRightParameterName,
+          new UE.LinearColor(i.X, i.Y, e.X, e.Y),
+        )),
       this.r0e(!0),
       this.Z0e(),
       0 === this.GetEffectType()) &&
-      this.WEn(t?.EntityId) &&
+      this.Jyn(t?.EntityId) &&
       (EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnEnterOrExitUltraSkill,
-        this.jEn,
+        this.Yyn,
       ),
       ModelManager_1.ModelManager.RoleModel.InUltraSkill()) &&
-      (this.HEn = !0);
+      (this.$yn = !0);
   }
   Z0e() {
     let t = 0;
@@ -210,20 +222,20 @@ class EffectModelPostProcessSpec extends EffectSpec_1.EffectSpec {
             )
           : this.EffectModel.VolumeHardnessCurve.Constant
         : this.EffectModel.VolumeHardness;
-      var e = Math.max(t, 1e-4);
-      let s = e;
+      var s = Math.max(t, 1e-4);
+      let e = s;
       if (this.EffectModel.EnableVolume) {
         let t = void 0;
         (t = i
           ? i.GetCameraLocation()
-          : ((o = (0, puerts_1.$ref)(Vector_1.Vector.ZeroVector)),
+          : ((r = (0, puerts_1.$ref)(Vector_1.Vector.ZeroVector)),
             (h = (0, puerts_1.$ref)(new UE.Rotator(0, 0, 0))),
             UE.KuroRenderingRuntimeBPPluginBPLibrary.GetLevelEditorCameraLocationAndForward(
               this.Handle.GetSureEffectActor(),
-              o,
+              r,
               h,
             ),
-            (0, puerts_1.$unref)(o))),
+            (0, puerts_1.$unref)(r))),
           i ||
             UE.KismetSystemLibrary.DrawDebugSphere(
               this.Handle.GetSureEffectActor(),
@@ -235,10 +247,10 @@ class EffectModelPostProcessSpec extends EffectSpec_1.EffectSpec {
               0,
             );
         var h = this.PostProcessComponent.K2_GetComponentLocation(),
-          o = UE.KismetMathLibrary.Subtract_VectorVector(t, h),
-          i = o.Size();
-        s =
-          UE.KismetMathLibrary.Vector_GetAbsMax(o) >=
+          r = UE.KismetMathLibrary.Subtract_VectorVector(t, h),
+          i = r.Size();
+        e =
+          UE.KismetMathLibrary.Vector_GetAbsMax(r) >=
             this.EffectModel.VolumeRadius || i >= this.EffectModel.VolumeRadius
             ? ((this.PostProcessComponent.bEnabled = !1), 0)
             : ((h = MathCommon_1.MathCommon.Clamp(
@@ -247,41 +259,41 @@ class EffectModelPostProcessSpec extends EffectSpec_1.EffectSpec {
                 0,
                 1,
               )),
-              Math.min(h / e, 1));
+              Math.min(h / s, 1));
       }
-      (this.PostProcessComponent.BlendWeight = s),
-        (this.PostProcessComponent.bEnabled = 0 < s && !this.HEn);
+      (this.PostProcessComponent.BlendWeight = e),
+        (this.PostProcessComponent.bEnabled = 0 < e && !this.$yn);
     }
   }
-  UpdateRadialBlur(t, s) {
+  UpdateRadialBlur(t, e) {
     var i,
-      e = Global_1.Global.CharacterController,
+      s = Global_1.Global.CharacterController,
       h = Global_1.Global.BaseCharacter;
-    let o = this.EffectModel.ScreenPosition;
+    let r = this.EffectModel.ScreenPosition;
     this.EffectModel.UseWorldPosition &&
-      (e &&
+      (s &&
       h &&
       ((h = h.K2_GetActorLocation()),
       (i = (0, puerts_1.$ref)(new UE.Vector2D(0, 0))),
-      UE.GameplayStatics.ProjectWorldToScreen(e, h, i, !1))
-        ? ((e = UE.WidgetLayoutLibrary.GetViewportSize(
+      UE.GameplayStatics.ProjectWorldToScreen(s, h, i, !1))
+        ? ((s = UE.WidgetLayoutLibrary.GetViewportSize(
             this.Handle.GetSureEffectActor(),
           )),
-          (o = UE.KismetMathLibrary.Divide_Vector2DVector2D(
+          (r = UE.KismetMathLibrary.Divide_Vector2DVector2D(
             (0, puerts_1.$unref)(i),
-            e,
+            s,
           )),
-          (this.X0e = o))
-        : (o = this.X0e)),
-      (s.KuroRadialBlurIntensity = t),
-      (s.KuroRadialBlurCenter = o),
-      (s.KuroRadialBlurMask = this.EffectModel.RadialBlurMask),
-      (s.KuroRadialBlurMaskScale = this.EffectModel.RadialBlurMaskScale),
-      (s.KuroRadialBlurHardness = UE.KuroCurveLibrary.GetValue_Float(
+          (this.X0e = r))
+        : (r = this.X0e)),
+      (e.KuroRadialBlurIntensity = t),
+      (e.KuroRadialBlurCenter = r),
+      (e.KuroRadialBlurMask = this.EffectModel.RadialBlurMask),
+      (e.KuroRadialBlurMaskScale = this.EffectModel.RadialBlurMaskScale),
+      (e.KuroRadialBlurHardness = UE.KuroCurveLibrary.GetValue_Float(
         this.EffectModel.RadialBlurHardness,
         this.LifeTime.PassTime,
       )),
-      (s.KuroRadialBlurRadius = UE.KuroCurveLibrary.GetValue_Float(
+      (e.KuroRadialBlurRadius = UE.KuroCurveLibrary.GetValue_Float(
         this.EffectModel.RadialBlurRadius,
         this.LifeTime.PassTime,
       ));
@@ -290,10 +302,10 @@ class EffectModelPostProcessSpec extends EffectSpec_1.EffectSpec {
     return !0;
   }
   OnReplay() {
-    this.X0e && ((this.X0e.X = 0.5), (this.X0e.Y = 0.5)), (this.HEn = !1);
+    this.X0e && ((this.X0e.X = 0.5), (this.X0e.Y = 0.5)), (this.$yn = !1);
   }
 }
-((exports.EffectModelPostProcessSpec = EffectModelPostProcessSpec).E0e =
+((exports.EffectModelPostProcessSpec = EffectModelPostProcessSpec).S0e =
   void 0),
   (EffectModelPostProcessSpec.z0e = void 0);
 //# sourceMappingURL=EffectModelPostProcessSpec.js.map

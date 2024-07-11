@@ -6,6 +6,7 @@ const UE = require("ue"),
   Protocol_1 = require("../../../Core/Define/Net/Protocol"),
   Net_1 = require("../../../Core/Net/Net"),
   ResourceSystem_1 = require("../../../Core/Resource/ResourceSystem"),
+  DataTableUtil_1 = require("../../../Core/Utils/DataTableUtil"),
   Rotator_1 = require("../../../Core/Utils/Math/Rotator"),
   Transform_1 = require("../../../Core/Utils/Math/Transform"),
   Vector_1 = require("../../../Core/Utils/Math/Vector"),
@@ -23,81 +24,81 @@ class WeaponController extends UiControllerBase_1.UiControllerBase {
   static OnAddEvents() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnAddWeaponItem,
-      this.Qdi,
+      this.QCi,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnResponseWeaponItem,
-        this.EOo,
+        this.vko,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnRemoveWeaponItem,
-        this.Gmi,
+        this.Gdi,
       );
   }
   static OnRemoveEvents() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnAddWeaponItem,
-      this.Qdi,
+      this.QCi,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnResponseWeaponItem,
-        this.EOo,
+        this.vko,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnRemoveWeaponItem,
-        this.Gmi,
+        this.Gdi,
       );
   }
   static OnRegisterNetEvent() {
-    Net_1.Net.Register(24360, (e) => {
-      e && ModelManager_1.ModelManager.WeaponModel.WeaponRoleLoadEquip(e.uAs);
+    Net_1.Net.Register(14571, (e) => {
+      e && ModelManager_1.ModelManager.WeaponModel.WeaponRoleLoadEquip(e.Pxs);
     }),
-      Net_1.Net.Register(28145, (e) => {
-        var o = MathUtils_1.MathUtils.LongToNumber(e.rkn),
+      Net_1.Net.Register(8599, (e) => {
+        var o = MathUtils_1.MathUtils.LongToNumber(e.P4n),
           o =
             ModelManager_1.ModelManager.CreatureModel.GetEntity(
               o,
-            ).Entity.GetComponent(69);
+            ).Entity.GetComponent(71);
         o && o.OnEquipWeaponForRoleNotify(e);
       });
   }
   static OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(24360), Net_1.Net.UnRegister(28145);
+    Net_1.Net.UnRegister(14571), Net_1.Net.UnRegister(8599);
   }
   static SendPbWeaponLevelUpRequest(e, o) {
-    var t = Protocol_1.Aki.Protocol.Tcs.create();
-    t.Ykn = e;
-    for (const n of o) {
-      var r = Protocol_1.Aki.Protocol.Y3s.create();
-      (r.I5n = n.SelectedCount),
-        (r.Ykn = n.IncId),
-        (r.G3n = n.ItemId),
-        t.m8n.push(r);
+    var t = Protocol_1.Aki.Protocol.M0s.create();
+    t.T5n = e;
+    for (const a of o) {
+      var r = Protocol_1.Aki.Protocol.V8s.create();
+      (r.o9n = a.SelectedCount),
+        (r.T5n = a.IncId),
+        (r.f8n = a.ItemId),
+        t.K7n.push(r);
     }
-    Net_1.Net.Call(25449, t, (e) => {
+    Net_1.Net.Call(29101, t, (e) => {
       e &&
-        (e.lkn === Protocol_1.Aki.Protocol.lkn.Sys
+        (e.O4n === Protocol_1.Aki.Protocol.O4n.NRs
           ? ModelManager_1.ModelManager.WeaponModel.WeaponLevelUpResponse(e)
           : ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-              e.lkn,
-              21506,
+              e.O4n,
+              26619,
             ));
     });
   }
   static SendPbWeaponBreachRequest(t, r) {
-    var e = Protocol_1.Aki.Protocol.Rcs.create();
-    (e.Ykn = t),
-      Net_1.Net.Call(28957, e, (e) => {
+    var e = Protocol_1.Aki.Protocol.E0s.create();
+    (e.T5n = t),
+      Net_1.Net.Call(5805, e, (e) => {
         var o;
         e &&
-          (e.lkn === Protocol_1.Aki.Protocol.lkn.Sys
-            ? ((o = e.TVn),
+          (e.O4n === Protocol_1.Aki.Protocol.O4n.NRs
+            ? ((o = e.ijn),
               ModelManager_1.ModelManager.WeaponModel.SetWeaponBreachData(t, o),
               r(o),
               UiManager_1.UiManager.OpenView("WeaponBreachSuccessView", t))
             : ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-                e.lkn,
-                1225,
+                e.O4n,
+                15967,
               ));
       });
   }
@@ -105,18 +106,18 @@ class WeaponController extends UiControllerBase_1.UiControllerBase {
     if (
       !RoleController_1.RoleController.CheckCharacterInBattleTagAndShowTips()
     ) {
-      var t = Protocol_1.Aki.Protocol.Acs.create();
-      (t.Ykn = o), (t.LVn = e);
+      var t = Protocol_1.Aki.Protocol.I0s.create();
+      (t.T5n = o), (t.rjn = e);
       const r =
         ModelManager_1.ModelManager.WeaponModel.GetWeaponDataByIncId(
           o,
         ).GetResonanceLevel();
-      Net_1.Net.Call(19174, t, (e) => {
+      Net_1.Net.Call(5842, t, (e) => {
         e &&
-          (e.lkn === Protocol_1.Aki.Protocol.lkn.Sys
+          (e.O4n === Protocol_1.Aki.Protocol.O4n.NRs
             ? (ModelManager_1.ModelManager.WeaponModel.SetWeaponResonanceData(
-                e.Ykn,
-                e.dbs,
+                e.T5n,
+                e.tOs,
               ),
               EventSystem_1.EventSystem.Emit(
                 EventDefine_1.EEventName.WeaponResonanceSuccess,
@@ -124,8 +125,8 @@ class WeaponController extends UiControllerBase_1.UiControllerBase {
                 r,
               ))
             : ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-                e.lkn,
-                27374,
+                e.O4n,
+                16492,
               ));
       });
     }
@@ -135,76 +136,83 @@ class WeaponController extends UiControllerBase_1.UiControllerBase {
     RoleController_1.RoleController.CheckCharacterInBattleTagAndShowTips() ||
       !e ||
       e <= 0 ||
-      (((r = Protocol_1.Aki.Protocol.lis.create()).Kkn =
-        Protocol_1.Aki.Protocol.ENs.create()),
-      (r.Kkn.DVn = e),
-      (r.Kkn.M3n = o),
-      (r.Kkn.AVn = t),
-      Net_1.Net.Call(22138, r, (e) => {
+      (((r = Protocol_1.Aki.Protocol.nss.create()).S5n =
+        Protocol_1.Aki.Protocol.u6s.create()),
+      (r.S5n.ojn = e),
+      (r.S5n.e8n = o),
+      (r.S5n.njn = t),
+      Net_1.Net.Call(4652, r, (e) => {
         e &&
-          (e.lkn === Protocol_1.Aki.Protocol.lkn.Sys
-            ? ModelManager_1.ModelManager.WeaponModel.WeaponRoleLoadEquip(e.uAs)
+          (e.O4n === Protocol_1.Aki.Protocol.O4n.NRs
+            ? ModelManager_1.ModelManager.WeaponModel.WeaponRoleLoadEquip(e.Pxs)
             : ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-                e.lkn,
-                22403,
+                e.O4n,
+                5632,
               ));
       }));
   }
-  static OnSelectedWeaponChange(e, o, t) {
-    const r = o.Model;
-    if (r) {
+  static OnSelectedWeaponChange(e, o, t, a = !1) {
+    const n = o.Model;
+    if (n) {
       o = e.GetWeaponConfig();
-      const a =
+      let r = DataTableUtil_1.DataTableUtil.GetDataTableRowFromName(
+        21,
+        e.GetItemId().toString(),
+      );
+      void 0 === r &&
+        (r =
           ConfigManager_1.ConfigManager.WeaponConfig.GetWeaponModelTransformData(
             o.TransformId,
-          ),
-        l = (r.CheckGetComponent(18)?.SetWeaponData(e), r.CheckGetComponent(1));
+          )),
+        n.CheckGetComponent(18)?.SetWeaponData(e);
+      const l = n.CheckGetComponent(1);
       l?.SetTransformByTag("WeaponCase");
-      r.CheckGetComponent(2)?.LoadModelByModelId(o.ModelId, !1, () => {
-        UiModelUtil_1.UiModelUtil.SetVisible(r, !0);
-        var e = Vector_1.Vector.Create(
-            a.Location.X,
-            a.Location.Y,
-            a.Location.Z,
-          ),
-          o = Rotator_1.Rotator.Create(
-            a.Rotation.Y,
-            a.Rotation.Z,
-            a.Rotation.X,
-          ),
-          t = Vector_1.Vector.Create(a.Size, a.Size, a.Size),
-          e = Transform_1.Transform.Create(o.Quaternion(), e, t),
-          t =
-            (l?.MainMeshComponent?.K2_SetRelativeTransform(
-              e.ToUeTransform(),
-              !1,
-              void 0,
-              !1,
+      n.CheckGetComponent(0)?.SetLoadingIconFollowState(a),
+        n.CheckGetComponent(2)?.LoadModelByModelId(o.ModelId, a, () => {
+          UiModelUtil_1.UiModelUtil.SetVisible(n, !0);
+          var e = Vector_1.Vector.Create(
+              r.Location.X,
+              r.Location.Y,
+              r.Location.Z,
             ),
-            UiModelUtil_1.UiModelUtil.SetRenderingMaterial(
-              r,
-              "WeaponRootWeaponMaterialController",
+            o = Rotator_1.Rotator.Create(
+              r.Rotation.Y,
+              r.Rotation.Z,
+              r.Rotation.X,
             ),
-            UiModelUtil_1.UiModelUtil.PlayEffectOnRoot(
-              r,
-              "WeaponRootWeaponShowHideEffect",
-            ),
-            r.CheckGetComponent(9));
-        t.SetRotateParam(a.RotateTime),
-          t.StartRotate(),
-          o.Set(a.AxisRotate.Y, a.AxisRotate.Z, a.AxisRotate.X),
-          l?.Actor?.K2_SetActorRotation(o.ToUeRotator(), !1);
-      });
+            t = Vector_1.Vector.Create(r.Size, r.Size, r.Size),
+            e = Transform_1.Transform.Create(o.Quaternion(), e, t),
+            t =
+              (l?.MainMeshComponent?.K2_SetRelativeTransform(
+                e.ToUeTransform(),
+                !1,
+                void 0,
+                !1,
+              ),
+              UiModelUtil_1.UiModelUtil.SetRenderingMaterial(
+                n,
+                "WeaponRootWeaponMaterialController",
+              ),
+              UiModelUtil_1.UiModelUtil.PlayEffectOnRoot(
+                n,
+                "WeaponRootWeaponShowHideEffect",
+              ),
+              n.CheckGetComponent(9));
+          t.SetRotateParam(r.RotateTime),
+            t.StartRotate(),
+            o.Set(r.AxisRotate.Y, r.AxisRotate.Z, r.AxisRotate.X),
+            l?.Actor?.K2_SetActorRotation(o.ToUeRotator(), !1);
+        });
       const i = t.Model;
       if (i) {
         o = i.CheckGetComponent(18);
-        if (a.ShowScabbard) {
-          t = e.GetWeaponConfig().Models;
-          if (1 < t.length) {
+        if (r.ShowScabbard) {
+          a = e.GetWeaponConfig().Models;
+          if (1 < a.length) {
             const _ = i.CheckGetComponent(1);
-            var n = i.CheckGetComponent(2);
+            t = i.CheckGetComponent(2);
             o.SetWeaponData(e);
-            n.LoadModelByModelId(t[1], !1, () => {
+            t.LoadModelByModelId(a[1], !1, () => {
               _.Actor.K2_AttachToActor(l.Actor, void 0, 2, 1, 1, !1),
                 _.SetTransformByTag("WeaponScabbardCase"),
                 _.Actor?.K2_SetActorRelativeLocation(
@@ -214,7 +222,7 @@ class WeaponController extends UiControllerBase_1.UiControllerBase {
                   !1,
                 );
               var e = Transform_1.Transform.Create();
-              e.SetLocation(a.ScabbardOffset),
+              e.SetLocation(r.ScabbardOffset),
                 _.MainMeshComponent?.K2_SetRelativeTransform(
                   e.ToUeTransform(),
                   !1,
@@ -275,13 +283,13 @@ class WeaponController extends UiControllerBase_1.UiControllerBase {
     });
   }
 }
-((exports.WeaponController = WeaponController).Qdi = (e) => {
+((exports.WeaponController = WeaponController).QCi = (e) => {
   ModelManager_1.ModelManager.WeaponModel.AddWeaponData(e);
 }),
-  (WeaponController.EOo = (e) => {
+  (WeaponController.vko = (e) => {
     ModelManager_1.ModelManager.WeaponModel.AddWeaponData(e);
   }),
-  (WeaponController.Gmi = (e) => {
+  (WeaponController.Gdi = (e) => {
     for (const o of e)
       ModelManager_1.ModelManager.WeaponModel.RemoveWeaponData(o);
   });

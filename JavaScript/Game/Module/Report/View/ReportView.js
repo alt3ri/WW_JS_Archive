@@ -12,31 +12,31 @@ const UE = require("ue"),
 class ReportView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.nso = void 0),
-      (this.sso = -1),
-      (this.aso = void 0),
-      (this.hso = void 0),
+      (this.tao = void 0),
+      (this.iao = -1),
+      (this.oao = void 0),
+      (this.rao = void 0),
       (this.CreateGrid = () => {
         var i = new ReportRowView_1.ReportRowView();
-        return i.SetToggleFunction(this.I6e), i;
+        return i.SetToggleFunction(this.N8e), i;
       }),
-      (this.J9e = () => {
+      (this.uHe = () => {
         UiManager_1.UiManager.CloseView("ReportView");
       }),
-      (this._Fe = () => {
+      (this.L3e = () => {
         var i = this.GetInputText(2);
-        -1 === this.sso
+        -1 === this.iao
           ? ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
               "ReportReasonNotSelect",
             )
           : ReportController_1.ReportController.ReportPlayerRequest(
-              this.nso,
-              this.sso,
+              this.tao,
+              this.iao,
               i.GetText(),
             );
       }),
-      (this.I6e = (i) => {
-        this.sso = i;
+      (this.N8e = (i) => {
+        this.iao = i;
       });
   }
   OnRegisterComponent() {
@@ -49,25 +49,25 @@ class ReportView extends UiViewBase_1.UiViewBase {
         [4, UE.UIItem],
       ]),
       (this.BtnBindInfo = [
-        [0, this.J9e],
-        [1, this._Fe],
+        [0, this.uHe],
+        [1, this.L3e],
       ]);
   }
   OnStart() {
-    (this.nso = this.OpenParam),
-      (this.hso =
+    (this.tao = this.OpenParam),
+      (this.rao =
         ConfigManager_1.ConfigManager.ReportConfig.GetReportConfigList()),
-      void 0 === this.hso && (this.hso = []),
-      (this.aso = new LoopScrollView_1.LoopScrollView(
+      void 0 === this.rao && (this.rao = []),
+      (this.oao = new LoopScrollView_1.LoopScrollView(
         this.GetLoopScrollViewComponent(3),
         this.GetItem(4).GetOwner(),
         this.CreateGrid,
       )),
-      0 < this.hso.length && (this.sso = this.hso[0].Id),
-      this.aso.ReloadData(this.hso);
+      0 < this.rao.length && (this.iao = this.rao[0].Id),
+      this.oao.ReloadData(this.rao);
   }
   OnBeforeDestroy() {
-    this.aso && this.aso.ClearGridProxies();
+    this.oao && this.oao.ClearGridProxies();
   }
 }
 exports.ReportView = ReportView;

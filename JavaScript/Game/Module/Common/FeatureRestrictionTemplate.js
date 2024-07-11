@@ -4,43 +4,43 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const ConfigManager_1 = require("../../Manager/ConfigManager");
 class FeatureRestrictionTemplate {
   constructor(t, e = 0) {
-    (this.Yqn = 0),
-      (this.Jqn = 0),
-      (this.zqn = 2),
-      (this.Zqn = 0),
-      (this.zqn = t),
-      (this.Zqn = e);
+    (this.eNn = 0),
+      (this.tNn = 0),
+      (this.iNn = 2),
+      (this.rNn = 0),
+      (this.iNn = t),
+      (this.rNn = e);
   }
-  eGn(t) {
-    this.Yqn = this.Yqn | t;
+  oNn(t) {
+    this.eNn = this.eNn | t;
   }
-  tGn(t, e) {
+  nNn(t, e) {
     return (t & e) === e;
   }
-  iGn() {
+  sNn() {
     let t = 0;
     return (
       ConfigManager_1.ConfigManager.CommonConfig?.GetPioneerFlag() && (t |= 8),
       t
     );
   }
-  rGn() {
+  aNn() {
     return 0;
   }
   Check() {
-    switch (this.Zqn) {
+    switch (this.rNn) {
       case 1:
         return !0;
       case 2:
         return !1;
     }
-    switch (this.zqn) {
+    switch (this.iNn) {
       case 0:
-        return this.tGn(this.iGn(), this.Yqn);
+        return this.nNn(this.sNn(), this.eNn);
       case 1:
-        return this.tGn(this.rGn(), this.Jqn);
+        return this.nNn(this.aNn(), this.tNn);
       case 2:
-        return this.tGn(this.iGn(), this.Yqn) && this.tGn(this.rGn(), this.Jqn);
+        return this.nNn(this.sNn(), this.eNn) && this.nNn(this.aNn(), this.tNn);
       default:
         return !1;
     }
@@ -48,11 +48,11 @@ class FeatureRestrictionTemplate {
   static get TemplateForPioneerClient() {
     var t;
     return (
-      FeatureRestrictionTemplate.oGn ||
-      ((t = new FeatureRestrictionTemplate(0)).eGn(8),
-      (FeatureRestrictionTemplate.oGn = t))
+      FeatureRestrictionTemplate.hNn ||
+      ((t = new FeatureRestrictionTemplate(0)).oNn(8),
+      (FeatureRestrictionTemplate.hNn = t))
     );
   }
 }
-(exports.FeatureRestrictionTemplate = FeatureRestrictionTemplate).oGn = void 0;
+(exports.FeatureRestrictionTemplate = FeatureRestrictionTemplate).hNn = void 0;
 //# sourceMappingURL=FeatureRestrictionTemplate.js.map

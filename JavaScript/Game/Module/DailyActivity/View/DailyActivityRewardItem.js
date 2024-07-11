@@ -11,18 +11,18 @@ const UE = require("ue"),
 class DailyActivityRewardItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
-      (this.YOt = 0),
+      (this.Jkt = 0),
       (this.DailyActiveState = void 0),
-      (this.JOt = () => {
+      (this.zkt = () => {
         switch (this.DailyActiveState) {
           case 2:
-            this.zOt(!1);
+            this.Zkt(!1);
             break;
           case 1:
-            this.ZOt();
+            this.e2t();
             break;
           case 3:
-            this.zOt(!0);
+            this.Zkt(!0);
         }
       });
   }
@@ -38,16 +38,16 @@ class DailyActivityRewardItem extends GridProxyAbstract_1.GridProxyAbstract {
       [7, UE.UINiagara],
       [8, UE.UIItem],
     ]),
-      (this.BtnBindInfo = [[1, this.JOt]]);
+      (this.BtnBindInfo = [[1, this.zkt]]);
   }
   OnStart() {
     this.GetUiNiagara(6).SetAlpha(0), this.GetUiNiagara(7).SetUIActive(!1);
   }
   OnBeforeDestroy() {}
   Refresh(e, t, i) {
-    this.YOt = e;
+    this.Jkt = e;
     e = ModelManager_1.ModelManager.DailyActivityModel.DailyActivityGoalMap.get(
-      this.YOt,
+      this.Jkt,
     );
     e &&
       (this.SetRewardGoalValue(e.Goal),
@@ -56,7 +56,7 @@ class DailyActivityRewardItem extends GridProxyAbstract_1.GridProxyAbstract {
         : 3 === this.DailyActiveState && this.GetUiNiagara(7).SetUIActive(!1));
   }
   RefreshSelf() {
-    this.Refresh(this.YOt, !1, 0);
+    this.Refresh(this.Jkt, !1, 0);
   }
   SetRewardGoalValue(e) {
     this.GetText(0).SetText(e.toString());
@@ -79,13 +79,13 @@ class DailyActivityRewardItem extends GridProxyAbstract_1.GridProxyAbstract {
       (this.GetText(0).useChangeColor = 2 !== t),
       (this.DailyActiveState = t);
   }
-  ZOt() {
+  e2t() {
     DailyActivityController_1.DailyActivityController.RequestAllAvailableActivityReward();
   }
-  zOt(e) {
+  Zkt(e) {
     var t = [];
     for (const s of ModelManager_1.ModelManager.DailyActivityModel.GetActivityRewardById(
-      this.YOt,
+      this.Jkt,
     )) {
       var i = { Id: s[0].ItemId, Num: s[1], Received: e };
       t.push(i);

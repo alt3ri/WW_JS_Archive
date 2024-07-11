@@ -6,30 +6,30 @@ const UE = require("ue"),
   ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   UiManager_1 = require("../../../Ui/UiManager"),
   SmallItemGrid_1 = require("../../Common/SmallItemGrid/SmallItemGrid"),
+  RoleController_1 = require("../../RoleUi/RoleController"),
   GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract"),
   LguiUtil_1 = require("../../Util/LguiUtil"),
-  WeaponTrialData_1 = require("../../Weapon/Data/WeaponTrialData"),
-  RoleController_1 = require("../../RoleUi/RoleController");
+  WeaponTrialData_1 = require("../../Weapon/Data/WeaponTrialData");
 class GachaResultItemNew extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
-      (this.gIt = 0),
-      (this.Pjt = 0),
-      (this.xjt = void 0),
-      (this.IHt = () => {
+      (this.ETt = 0),
+      (this.PWt = 0),
+      (this.xWt = void 0),
+      (this.Ijt = () => {
         var e;
         switch (
-          ConfigManager_1.ConfigManager.GachaConfig.GetItemIdType(this.gIt)
+          ConfigManager_1.ConfigManager.GachaConfig.GetItemIdType(this.ETt)
         ) {
           case 1:
-            RoleController_1.RoleController.OpenRoleMainView(1, this.Pjt, [
-              this.Pjt,
+            RoleController_1.RoleController.OpenRoleMainView(1, this.PWt, [
+              this.PWt,
             ]);
             break;
           case 2:
-            0 < this.Pjt &&
+            0 < this.PWt &&
               ((e = new WeaponTrialData_1.WeaponTrialData()).SetTrialId(
-                this.Pjt,
+                this.PWt,
               ),
               (e = { WeaponDataList: [e], SelectedIndex: 0 }),
               UiManager_1.UiManager.OpenView("WeaponPreviewView", e));
@@ -51,18 +51,18 @@ class GachaResultItemNew extends GridProxyAbstract_1.GridProxyAbstract {
       [8, UE.UITexture],
       [11, UE.UINiagara],
     ]),
-      (this.BtnBindInfo = [[2, this.IHt]]);
+      (this.BtnBindInfo = [[2, this.Ijt]]);
   }
   async OnBeforeStartAsync() {
-    (this.xjt = new SmallItemGrid_1.SmallItemGrid()),
-      await this.xjt.CreateThenShowByActorAsync(this.GetItem(7).GetOwner()),
-      this.xjt.BindOnExtendToggleClicked((e) => {
+    (this.xWt = new SmallItemGrid_1.SmallItemGrid()),
+      await this.xWt.CreateThenShowByActorAsync(this.GetItem(7).GetOwner()),
+      this.xWt.BindOnExtendToggleClicked((e) => {
         e = e.Data;
         ControllerHolder_1.ControllerHolder.ItemController.OpenItemTipsByItemId(
           e,
         );
       }),
-      this.xjt.BindOnCanExecuteChange(() => !1);
+      this.xWt.BindOnCanExecuteChange(() => !1);
   }
   UpdateQuality(t) {
     for (let e = 0; e < t - 1; e++)
@@ -91,44 +91,55 @@ class GachaResultItemNew extends GridProxyAbstract_1.GridProxyAbstract {
       : e.SetUIActive(!1);
   }
   Update(e) {
-    var t = e.u5n.G3n,
+    var t = e.WVn.f8n,
       i =
-        ((this.gIt = t),
+        ((this.ETt = t),
         ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(t)),
       a = ConfigManager_1.ConfigManager.GachaConfig.GetGachaTextureInfo(t),
-      r = ((this.Pjt = a.TrialId), e.v5n),
-      r =
+      r = ((this.PWt = a.TrialId), e.ZVn),
+      s =
         (r && 0 < r?.length
           ? (this.GetItem(6).SetUIActive(!0),
-            (r = {
+            (s = {
               Type: 4,
-              Data: (r = r[0]).G3n,
+              Data: (r = r[0]).f8n,
               QualityId: 0,
-              ItemConfigId: r.G3n,
-              BottomText: r.g5n.toString(),
+              ItemConfigId: r.f8n,
+              BottomText: r.YVn.toString(),
             }),
-            this.xjt?.Apply(r))
-          : (this.xjt?.SetUiActive(!1), this.GetItem(6).SetUIActive(!e.IsNew)),
+            this.xWt?.Apply(s),
+            this.xWt?.SetBottomTextVisible(1 < r.YVn))
+          : (this.xWt?.SetUiActive(!1), this.GetItem(6).SetUIActive(!e.IsNew)),
         ConfigManager_1.ConfigManager.GachaConfig.GetItemIdType(t));
-    let s = 0;
-    var o;
-    1 === r
+    let o = 0;
+    var h;
+    1 === s
       ? (this.GetItem(3).SetUIActive(!0),
         (r = ConfigManager_1.ConfigManager.GachaConfig.GetRoleInfoById(t)),
-        (t = ConfigManager_1.ConfigManager.CommonConfig.GetElementConfig(
+        (s = ConfigManager_1.ConfigManager.CommonConfig.GetElementConfig(
           r.ElementId,
         )) &&
-          ((o = this.GetTexture(4)),
-          this.SetTextureByPath(t.Icon, o),
-          (t = UE.Color.FromHex(t.ElementColor)),
-          o.SetColor(t)),
-        (s = r.QualityId),
+          ((h = this.GetTexture(4)),
+          this.SetTextureByPath(s.Icon, h),
+          (s = UE.Color.FromHex(s.ElementColor)),
+          h.SetColor(s)),
+        (o = r.QualityId),
         this.GetItem(5).SetUIActive(e.IsNew))
-      : (this.GetItem(3).SetUIActive(!1),
-        (s = i.QualityId),
+      : (this.GetItem(3).SetUIActive(!0),
+        (h =
+          ConfigManager_1.ConfigManager.WeaponConfig.GetWeaponConfigByItemId(
+            t,
+          )),
+        (s =
+          ConfigManager_1.ConfigManager.GachaConfig.GetGachaWeaponTransformConfig(
+            h?.WeaponType,
+          )) && this.SetTextureByPath(s.WeaponTypeTexture, this.GetTexture(4)),
+        (o = i.QualityId),
         this.GetItem(5).SetUIActive(e.IsNew),
-        this.GetItem(6).SetUIActive(!1)),
-      this.UpdateQuality(s),
+        this.GetItem(6).SetUIActive(!1),
+        (r = new UE.Vector(0.8, 0.8, 0.8)),
+        this.GetTexture(8).SetUIItemScale(r)),
+      this.UpdateQuality(o),
       this.SetTextureByPath(
         a.GachaResultViewTexture,
         this.GetTexture(8),

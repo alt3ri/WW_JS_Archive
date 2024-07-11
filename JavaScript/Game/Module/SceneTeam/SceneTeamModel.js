@@ -28,21 +28,21 @@ const puerts_1 = require("puerts"),
 class SceneTeamModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
-      (this.Jfo = void 0),
-      (this.zfo = new Map()),
-      (this.PPr = new Array()),
-      (this.epo = new Set()),
+      (this.Xpo = void 0),
+      (this.$po = new Map()),
+      (this.aPr = new Array()),
+      (this.Jpo = new Set()),
       (this.CurrentGroupType = void 0),
-      (this.Wfo = void 0),
-      (this.tpo = void 0),
-      (this.Ywi = void 0),
+      (this.Vpo = void 0),
+      (this.zpo = void 0),
+      (this.YBi = void 0),
       (this.IsTeamReady = !1),
       (this.GoBattleInvincible = !1),
       (this.ChangingRole = !1),
       (this.IsPhantomTeam = !1),
       (this.ChangeCreatureDataIdCache = 0),
       (this.ChangeRoleCooldown = -0),
-      (this.ipo = void 0),
+      (this.Zpo = void 0),
       (this.LastEntityIsOnGround = !0),
       (this.LoadTeamPromise = void 0);
   }
@@ -52,30 +52,30 @@ class SceneTeamModel extends ModelBase_1.ModelBase {
         CommonParamById_1.configCommonParamById.GetFloatConfig(
           "change_role_cooldown",
         )),
-      !(this.Jfo = void 0)
+      !(this.Xpo = void 0)
     );
   }
   OnLeaveLevel() {
-    return this.opo(), !0;
+    return this.evo(), !0;
   }
   OnChangeMode() {
-    return this.opo(), !0;
+    return this.evo(), !0;
   }
-  opo() {
-    (this.ChangeCreatureDataIdCache = 0), (this.ipo = void 0);
-    for (const e of this.zfo.values()) e.Clear();
-    this.zfo.clear();
-    for (const t of this.PPr) t.Reset();
-    (this.PPr.length = 0),
-      this.epo.clear(),
-      (this.Wfo = void 0),
-      (this.Ywi = void 0),
+  evo() {
+    (this.ChangeCreatureDataIdCache = 0), (this.Zpo = void 0);
+    for (const e of this.$po.values()) e.Clear();
+    this.$po.clear();
+    for (const t of this.aPr) t.Reset();
+    (this.aPr.length = 0),
+      this.Jpo.clear(),
+      (this.Vpo = void 0),
+      (this.YBi = void 0),
       (this.IsPhantomTeam = !1),
-      (this.tpo = void 0);
+      (this.zpo = void 0);
   }
   SwitchGroup(e, t, r = !1) {
     var o,
-      i = this.zfo.get(e);
+      i = this.$po.get(e);
     i
       ? (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
@@ -90,70 +90,116 @@ class SceneTeamModel extends ModelBase_1.ModelBase {
           i.SwitchGroup(t),
           e === ModelManager_1.ModelManager.PlayerInfoModel?.GetId() &&
             ((this.CurrentGroupType = t), (this.IsPhantomTeam = 2 === t)),
-          this.rpo(o, r)))
+          EventSystem_1.EventSystem.Emit(
+            EventDefine_1.EEventName.OnUpdateTeamGroupType,
+          ),
+          this.tvo(o, r)))
       : Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn("SceneTeam", 49, "切换编队组玩家不存在", [
           "PlayerId",
           e,
         ]);
   }
-  UpdateAllPlayerGroup(e) {
-    for (const t of this.zfo.values()) t.ResetServerGroupData();
-    for (const r of e) this.ZEn(r);
-    this.rpo();
+  UpdateGroupData(e, t) {
+    let r = this.$po.get(e);
+    r || ((r = SceneTeamData_1.SceneTeamPlayer.Create(e)), this.$po.set(e, r)),
+      r.UpdateGroup(
+        t.GroupType,
+        t.GroupRoleList,
+        t.CurrentRoleId,
+        t.LivingState ?? 1,
+        t.IsFixedLocation ?? !1,
+        t.IsRetain ?? !1,
+      ),
+      r.RefreshEntityVisible(),
+      t.GroupType === this.$po.get(e)?.GetCurrentGroupType() && this.tvo();
   }
-  UpdateGroup(e) {
-    this.ZEn(e),
-      e.GroupType === this.zfo.get(e.PlayerId)?.GetCurrentGroupType() &&
-        this.rpo();
+  UpdateAllPlayerData(t) {
+    var r = [];
+    for (const a of this.$po.keys()) {
+      let e = !1;
+      for (const n of t)
+        if (n.PlayerId === a) {
+          e = !0;
+          break;
+        }
+      e || r.push(a);
+    }
+    for (const s of r) this.$po.get(s)?.Clear(), this.$po.delete(s);
+    var e = this.CurrentGroupType;
+    for (const l of t) {
+      var o = l.PlayerId;
+      let e = this.$po.get(o);
+      e ||
+        ((e = SceneTeamData_1.SceneTeamPlayer.Create(o)), this.$po.set(o, e));
+      var i = l.CurrentGroupType;
+      e.SwitchGroup(i),
+        o === ModelManager_1.ModelManager.PlayerInfoModel?.GetId() &&
+          ((this.CurrentGroupType = i), (this.IsPhantomTeam = 2 === i));
+      for (const _ of l.Groups)
+        e.UpdateGroup(
+          _.GroupType,
+          _.GroupRoleList,
+          _.CurrentRoleId,
+          _.LivingState ?? 1,
+          _.IsFixedLocation ?? !1,
+          _.IsRetain ?? !1,
+        );
+      e.RefreshEntityVisible();
+    }
+    EventSystem_1.EventSystem.Emit(
+      EventDefine_1.EEventName.OnUpdateTeamGroupType,
+    ),
+      this.tvo(e);
   }
-  ZEn({
-    PlayerId: e,
-    GroupType: t,
-    GroupRoleList: r,
-    CurrentRoleId: o,
-    IsRetain: i = !1,
-  }) {
-    let a = this.zfo.get(e);
-    a || ((a = SceneTeamData_1.SceneTeamPlayer.Create(e)), this.zfo.set(e, a)),
-      a.UpdateGroup(t, r, o, i);
+  UpdateGroupLivingStates(e, t) {
+    var r = this.$po.get(e);
+    if (r) for (var [o, i] of t) r.GetGroup(o)?.UpdateLivingState(i);
   }
-  rpo(n = this.CurrentGroupType ?? 0, s = !1) {
+  tvo(i = this.CurrentGroupType ?? 0, a = !1) {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info("SceneTeam", 49, "刷新出战编队，开始"),
       (this.IsTeamReady = !1),
       this.RefreshLastTransform(),
-      (this.PPr.length = 0),
-      this.epo.clear(),
+      (this.aPr.length = 0),
+      this.Jpo.clear(),
       this.LoadTeamPromise ||
         (this.LoadTeamPromise = new GameModePromise_1.GameModePromise()),
-      this.Wfo &&
+      this.Vpo &&
         (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("SceneTeam", 49, "刷新出战编队，中断等待"),
-        this.Wfo.Cancel());
-    let l = void 0;
+        this.Vpo.Cancel());
+    let n = void 0,
+      s = !1;
     var e = [];
-    const _ = ModelManager_1.ModelManager.CreatureModel.GetPlayerId();
+    const l = ModelManager_1.ModelManager.CreatureModel.GetPlayerId();
     for (const c of ModelManager_1.ModelManager.GameModeModel.IsMulti
       ? ModelManager_1.ModelManager.OnlineModel.GetAllWorldTeamPlayer()
-      : [_]) {
-      var t = this.zfo.get(c)?.GetCurrentGroup(),
+      : [l]) {
+      var t = this.$po.get(c)?.GetCurrentGroup(),
         r = t?.GetRoleList();
       if (r && 0 !== r.length) {
+        c === l && (s = !t.IsFixedLocation);
         var o = t.GetGroupType(),
-          i = t.GetCurrentRole();
-        for (const f of r) {
-          var a,
-            h,
-            m = f.CreatureDataId;
-          m <= 0 ||
-            ((h = f.RoleId),
-            (a = f === i),
-            (h = SceneTeamItem_1.SceneTeamItem.Create(o, c, h, m)),
-            this.PPr.push(h),
-            this.epo.add(c),
-            e.push(m),
-            h.IsMyRole() ? a && (l = h) : h.SetRemoteIsControl(a));
+          _ = t.GetCurrentRole();
+        for (const d of r) {
+          var h,
+            m,
+            f = d.CreatureDataId;
+          f <= 0 ||
+            ((m = d.RoleId),
+            (h = d === _),
+            (m = SceneTeamItem_1.SceneTeamItem.Create(o, c, m, f)),
+            this.aPr.push(m),
+            this.Jpo.add(c),
+            e.push(f),
+            m.IsMyRole()
+              ? h &&
+                (f = (n = m).EntityHandle?.Entity)?.Valid &&
+                f.Active &&
+                f.GetComponent(188)?.HasAnyTag([-1384309247, -1388400236]) &&
+                (s = !1)
+              : m.SetRemoteIsControl(h));
         }
       }
     }
@@ -162,7 +208,7 @@ class SceneTeamModel extends ModelBase_1.ModelBase {
         Log_1.Log.Warn("SceneTeam", 49, "刷新出战编队，当前玩家无角色实体")
       : (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("SceneTeam", 49, "刷新出战编队，等待加载开始"),
-        (this.Wfo = WaitEntityTask_1.WaitEntityTask.Create(
+        (this.Vpo = WaitEntityTask_1.WaitEntityTask.Create(
           e,
           (e) => {
             e ||
@@ -170,27 +216,26 @@ class SceneTeamModel extends ModelBase_1.ModelBase {
                 Log_1.Log.Warn("SceneTeam", 49, "刷新出战编队，加载角色失败")),
               Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info("SceneTeam", 49, "刷新出战编队，等待加载结束");
-            for (const i of this.PPr) i.UpdateEntityHandle();
-            var e = this.CurrentGroupType,
-              t = e && e !== n,
-              r = this.Ywi?.EntityHandle?.Entity;
-            const o = l?.EntityHandle?.Entity;
-            r = r && r.Id !== o?.Id;
+            for (const t of this.aPr) t.UpdateEntityHandle();
+            this.RefreshLastTransform();
+            e = this.CurrentGroupType;
             if (
-              (t &&
-                r &&
-                ((t = o?.CheckGetComponent(81)),
-                SceneTeamDefine_1.innerGroupType.includes(n) ||
-                SceneTeamDefine_1.innerGroupType.includes(e)
-                  ? t?.SetTeamTag(2)
-                  : (t?.SetTeamTag(0), (this.Ywi = void 0))),
-              l && !l.IsDead())
+              (!e ||
+                e === i ||
+                SceneTeamDefine_1.innerGroupType.includes(i) ||
+                SceneTeamDefine_1.innerGroupType.includes(e) ||
+                (this.YBi = void 0),
+              this.YBi?.EntityHandle?.Valid || (this.YBi = void 0),
+              n && !n.IsDead())
             ) {
-              const o = l.EntityHandle;
-              o && o.Id === this.Ywi?.EntityHandle?.Id
-                ? (this.Ywi = l)
-                : this.ChangeRole(l.GetCreatureDataId(), s),
-                void this.H4s();
+              const r = n.EntityHandle;
+              r && r.Id === this.YBi?.EntityHandle?.Id
+                ? (this.YBi = n)
+                : this.ChangeRole(n.GetCreatureDataId(), {
+                    UseGoBattleSkill: a,
+                    AllowRefreshTransform: s,
+                  }),
+                void this.sHs();
             } else {
               Log_1.Log.CheckWarn() &&
                 Log_1.Log.Warn(
@@ -198,56 +243,64 @@ class SceneTeamModel extends ModelBase_1.ModelBase {
                   49,
                   "刷新出战编队，当前角色不可上阵",
                 );
-              for (const a of this.PPr)
-                if (a.IsMyRole() && !a.IsDead())
+              for (const o of this.aPr)
+                if (o.IsMyRole() && !o.IsDead())
                   return (
                     ControllerHolder_1.ControllerHolder.SceneTeamController.RequestChangeRole(
-                      a.GetCreatureDataId(),
-                      !1,
+                      o.GetCreatureDataId(),
+                      { FilterSameRole: !1 },
                     ),
-                    void this.H4s()
+                    void this.sHs()
                   );
-              Log_1.Log.CheckWarn() &&
-                Log_1.Log.Warn("SceneTeam", 49, "刷新出战编队，未找到存活角色"),
-                l
-                  ? (this.ChangeRole(l.GetCreatureDataId(), !1, 0, !1, !0),
-                    o &&
-                      ControllerHolder_1.ControllerHolder.CreatureController.SetEntityEnable(
-                        o,
-                        !1,
-                        "SceneTeamControl.SwitchRoleAllDead",
-                      ))
-                  : Log_1.Log.CheckWarn() &&
-                    Log_1.Log.Warn(
-                      "SceneTeam",
-                      49,
-                      "刷新出战编队，数据错误，当前玩家找不到可上阵角色",
-                      [
-                        "CurrentRole",
-                        this.zfo.get(_)?.GetCurrentGroup()?.GetCurrentRole(),
-                      ],
-                    ),
-                this.H4s();
+              if (
+                (Log_1.Log.CheckWarn() &&
+                  Log_1.Log.Warn(
+                    "SceneTeam",
+                    49,
+                    "刷新出战编队，未找到存活角色",
+                  ),
+                n)
+              ) {
+                this.ChangeRole(n.GetCreatureDataId(), { ForceChangeRole: !0 });
+                const r = n.EntityHandle?.Entity;
+                r &&
+                  ControllerHolder_1.ControllerHolder.CreatureController.SetEntityEnable(
+                    r,
+                    !1,
+                    "SceneTeamControl.SwitchRoleAllDead",
+                  );
+              } else
+                Log_1.Log.CheckWarn() &&
+                  Log_1.Log.Warn(
+                    "SceneTeam",
+                    49,
+                    "刷新出战编队，数据错误，当前玩家找不到可上阵角色",
+                    [
+                      "CurrentRole",
+                      this.$po.get(l)?.GetCurrentGroup()?.GetCurrentRole(),
+                    ],
+                  );
+              this.sHs();
             }
           },
           !0,
           -1,
         )));
   }
-  H4s() {
-    (this.Wfo = void 0),
+  sHs() {
+    (this.Vpo = void 0),
       (this.IsTeamReady = !0),
       this.LoadTeamPromise?.SetResult(!0),
       (this.LoadTeamPromise = void 0),
-      this.npo(),
+      this.ivo(),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("SceneTeam", 49, "刷新出战编队，结束");
   }
-  npo() {
+  ivo() {
     var e = this.CurrentGroupType;
     if (e && !SceneTeamDefine_1.innerGroupType.includes(e)) {
       if (!ModelManager_1.ModelManager.GameModeModel.IsMulti && 1 === e) {
-        var t = this.tpo ?? [],
+        var t = this.zpo ?? [],
           r = [];
         for (const a of this.GetTeamItems()) r.push(a.GetConfigId);
         for (let e = 0; e < SceneTeamDefine_1.SCENE_TEAM_MAX_NUM; e++) {
@@ -265,7 +318,7 @@ class SceneTeamModel extends ModelBase_1.ModelBase {
               i,
             );
         }
-        this.tpo = r;
+        this.zpo = r;
       }
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnUpdateSceneTeam,
@@ -277,7 +330,7 @@ class SceneTeamModel extends ModelBase_1.ModelBase {
   AddEntity(e) {
     if (ModelManager_1.ModelManager.GameModeModel.IsMulti) {
       e = e.Entity.GetComponent(0);
-      if (e.GetEntityType() === Protocol_1.Aki.Protocol.HBs.Proto_Player) {
+      if (e.GetEntityType() === Protocol_1.Aki.Protocol.wks.Proto_Player) {
         var t,
           r,
           o = e.GetCreatureDataId(),
@@ -293,33 +346,33 @@ class SceneTeamModel extends ModelBase_1.ModelBase {
               "模拟端加载中，暂时隐藏实体",
             );
         if (ModelManager_1.ModelManager.SceneTeamModel.IsTeamReady)
-          for (const n of this.PPr)
+          for (const n of this.aPr)
             if (n.GetCreatureDataId() === o) {
               Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info("SceneTeam", 49, "更新联机场景队伍"),
                 n.UpdateEntityHandle(),
-                this.npo();
+                this.ivo();
               break;
             }
       }
     }
   }
   get GetCurrentTeamItem() {
-    return this.Ywi;
+    return this.YBi;
   }
   get GetCurrentEntity() {
-    return this.Ywi?.EntityHandle;
+    return this.YBi?.EntityHandle;
   }
   GetTeamLength() {
-    return this.PPr.length;
+    return this.aPr.length;
   }
   GetTeamPlayerSize() {
-    return this.epo.size;
+    return this.Jpo.size;
   }
   GetTeamItem(e, t) {
-    for (const r of this.PPr) if (this.spo(r, e, t)) return r;
+    for (const r of this.aPr) if (this.ovo(r, e, t)) return r;
   }
-  spo(e, t, r) {
+  ovo(e, t, r) {
     if (r.OnlyMyRole && !e.IsMyRole()) return !1;
     if (r.IsControl && !e.IsControl()) return !1;
     switch (r.ParamType) {
@@ -337,24 +390,24 @@ class SceneTeamModel extends ModelBase_1.ModelBase {
   }
   GetTeamItems(e = !1) {
     var t = [];
-    for (const r of this.PPr) (e && !r.IsMyRole()) || t.push(r);
+    for (const r of this.aPr) (e && !r.IsMyRole()) || t.push(r);
     return t;
   }
   GetTeamItemsByPlayer(e) {
     var t = [];
-    for (const r of this.PPr) r.GetPlayerId() === e && t.push(r);
+    for (const r of this.aPr) r.GetPlayerId() === e && t.push(r);
     return t;
   }
   GetTeamEntities(e = !1) {
     var t,
       r = [];
-    for (const o of this.PPr)
+    for (const o of this.aPr)
       (e && !o.IsMyRole()) || ((t = o.EntityHandle) && r.push(t));
     return r;
   }
   GetAllGroupEntities(e) {
     var t = [],
-      e = this.zfo.get(e);
+      e = this.$po.get(e);
     if (e) {
       var r = ModelManager_1.ModelManager.CreatureModel;
       for (const i of e.GetGroupList())
@@ -369,7 +422,7 @@ class SceneTeamModel extends ModelBase_1.ModelBase {
     var r,
       o = [],
       i = t * t;
-    for (const a of this.PPr)
+    for (const a of this.aPr)
       a.EntityHandle?.Entity &&
         (r = ModelManager_1.ModelManager.CreatureModel.GetScenePlayerData(
           a.GetPlayerId(),
@@ -378,58 +431,74 @@ class SceneTeamModel extends ModelBase_1.ModelBase {
         o.push(a);
     return o;
   }
-  ChangeRole(e, t, r = 0, o = !1, i = !1) {
+  GetTeamPlayerData(e) {
+    return this.$po.get(e);
+  }
+  ChangeRole(e, t = void 0) {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info("SceneTeam", 49, "开始切换角色", ["CreatureDataId", e]);
-    var a = this.GetTeamItem(e, { ParamType: 3 });
-    if (a && a.IsMyRole())
-      if (!i && a.IsDead())
+    var r = this.GetTeamItem(e, { ParamType: 3 });
+    if (r && r.IsMyRole()) {
+      var o = t?.UseGoBattleSkill ?? !1,
+        i = t?.CoolDown ?? 0,
+        a = t?.GoDownWaitSkillEnd ?? !1,
+        n = t?.AllowRefreshTransform ?? !0,
+        s = t?.ForceInheritTransform ?? !0;
+      if (!(t?.ForceChangeRole ?? !1) && r.IsDead())
         Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn("SceneTeam", 49, "角色已经死亡", [
             "CreatureDataId",
             e,
           ]);
       else {
-        var n,
-          i = this.GetCurrentTeamItem,
-          s = i?.EntityHandle,
-          l = a.EntityHandle;
-        if (l)
+        var l,
+          t = this.GetCurrentTeamItem,
+          _ = t?.EntityHandle,
+          h = r.EntityHandle;
+        if (h)
           return (
             Log_1.Log.CheckInfo() &&
               Log_1.Log.Info("SceneTeam", 49, "角色上阵", [
                 "CreatureDataId",
                 e,
               ]),
-            (n = ModelManager_1.ModelManager.PlayerInfoModel.GetId()),
+            (l = ModelManager_1.ModelManager.PlayerInfoModel.GetId()),
             ModelManager_1.ModelManager.CreatureModel.GetScenePlayerData(
-              n,
-            )?.ControlRole(a.GetCreatureDataId()),
-            this.zfo
-              .get(n)
+              l,
+            )?.ControlRole(r.GetCreatureDataId()),
+            this.$po
+              .get(l)
               ?.GetCurrentGroup()
-              ?.SetCurrentRole(a.GetCreatureDataId()),
+              ?.SetCurrentRole(r.GetCreatureDataId()),
             Log_1.Log.CheckDebug() &&
               Log_1.Log.Debug(
                 "SceneTeam",
                 49,
                 "替换队伍当前角色",
-                ["LastEntity", s?.Id],
-                ["NewEntity", l.Id],
+                ["LastEntity", _?.Id],
+                ["NewEntity", h.Id],
               ),
-            (this.Ywi = a),
-            RoleTeamComponent_1.RoleTeamComponent.OnChangeRole(s, l, t, r, o),
-            s &&
+            (this.YBi = r),
+            RoleTeamComponent_1.RoleTeamComponent.OnChangeRole(
+              _,
+              h,
+              o,
+              i,
+              a,
+              n,
+              s,
+            ),
+            _ &&
               EventSystem_1.EventSystem.Emit(
                 EventDefine_1.EEventName.OnRoleGoDown,
-                s.Id,
+                _.Id,
               ),
             EventSystem_1.EventSystem.Emit(
               EventDefine_1.EEventName.OnChangeRole,
-              l,
-              s,
+              h,
+              _,
             ),
-            i
+            t
           );
         Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn("SceneTeam", 49, "角色实体无效", [
@@ -437,7 +506,7 @@ class SceneTeamModel extends ModelBase_1.ModelBase {
             e,
           ]);
       }
-    else
+    } else
       Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn("SceneTeam", 49, "队伍实例不存在或非本机角色", [
           "CreatureDataId",
@@ -445,14 +514,14 @@ class SceneTeamModel extends ModelBase_1.ModelBase {
         ]);
   }
   OtherPlayerChangeRole(e, t) {
-    this.zfo.get(e)?.GetCurrentGroup()?.SetCurrentRole(t);
+    this.$po.get(e)?.GetCurrentGroup()?.SetCurrentRole(t);
   }
   RefreshLastTransform() {
     var e = this.GetCurrentEntity;
     e?.Valid
       ? (e = CharacterController_1.CharacterController.GetActor(e))?.IsValid()
         ? ((e = e.GetTransform()),
-          (this.ipo = e),
+          (this.Zpo = e),
           Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug("SceneTeam", 8, "刷新上一个角色的位置信息成功", [
               "transform",
@@ -472,10 +541,10 @@ class SceneTeamModel extends ModelBase_1.ModelBase {
         );
   }
   SetLastTransform(e) {
-    this.ipo = e;
+    this.Zpo = e;
   }
   GetSpawnTransform() {
-    var r = this.ipo;
+    var r = this.Zpo;
     if (r) return r;
     r = this.GetCurrentEntity;
     if (r?.Valid) return r.Entity.GetComponent(3).Actor.GetTransform();
@@ -507,13 +576,78 @@ class SceneTeamModel extends ModelBase_1.ModelBase {
       return o;
     }
   }
+  RoleDeathEnded(e) {
+    Log_1.Log.CheckInfo() &&
+      Log_1.Log.Info("SceneTeam", 49, "开始执行队伍角色死亡逻辑", [
+        "EntityId",
+        e,
+      ]);
+    var e = this.GetTeamItem(e, { ParamType: 1 }),
+      t = e?.EntityHandle?.Entity;
+    if (t) {
+      var r = e.GetGroupType(),
+        e = e.GetPlayerId(),
+        e = this.$po.get(e)?.GetCurrentGroup();
+      if (e && r === e.GetGroupType())
+        if (2 === e.GetLivingState())
+          Log_1.Log.CheckInfo() &&
+            Log_1.Log.Info("SceneTeam", 49, "隐藏死亡角色"),
+            ControllerHolder_1.ControllerHolder.CreatureController.SetEntityEnable(
+              t,
+              !1,
+              "SceneTeamControl.RoleDeathEnded",
+            );
+        else if (t.GetComponent(3)?.IsAutonomousProxy) {
+          t = this.GetCurrentTeamItem;
+          if (t)
+            if (t.IsDead()) {
+              for (const i of this.GetTeamItems(!0))
+                if (!i.IsDead()) {
+                  var o = i.GetCreatureDataId();
+                  Log_1.Log.CheckInfo() &&
+                    Log_1.Log.Info("SceneTeam", 49, "前台角色死亡进行切人", [
+                      "CreatureDataId",
+                      o,
+                    ]),
+                    (this.GoBattleInvincible = !0),
+                    ControllerHolder_1.ControllerHolder.SceneTeamController.RequestChangeRole(
+                      o,
+                    );
+                  break;
+                }
+            } else
+              Log_1.Log.CheckInfo() &&
+                Log_1.Log.Info("SceneTeam", 49, "当前角色未死亡");
+          else
+            Log_1.Log.CheckInfo() &&
+              Log_1.Log.Info("SceneTeam", 49, "死亡时编队无当前角色");
+        } else
+          Log_1.Log.CheckInfo() &&
+            Log_1.Log.Info("SceneTeam", 49, "非逻辑主控死亡不进行切人");
+      else
+        Log_1.Log.CheckInfo() &&
+          Log_1.Log.Info(
+            "SceneTeam",
+            49,
+            "死亡角色非玩家当前编队",
+            ["DeadGroupType", r],
+            ["CurrentGroupType", e?.GetGroupType()],
+          );
+    } else
+      Log_1.Log.CheckInfo() &&
+        Log_1.Log.Info("SceneTeam", 49, "无法获取死亡角色Entity");
+  }
   IsAllDid() {
-    for (const e of this.PPr) if (!e.IsDead()) return !1;
+    for (const e of this.aPr) if (!e.IsDead()) return !1;
     return !0;
   }
-  IsAnyRoleDead() {
-    for (const e of this.PPr) if (e.IsDead()) return !0;
-    return !1;
+  GetCurrentGroupLivingState(e) {
+    e = this.$po.get(e)?.GetCurrentGroup();
+    return e ? e.GetLivingState() : 0;
+  }
+  GetGroupLivingState(e, t) {
+    e = this.$po.get(e)?.GetGroup(t);
+    return e ? e.GetLivingState() : 0;
   }
   InitializeOfflineSceneTeam(e, t, r) {
     if (1 !== UE.Actor.GetKuroNetMode()) {
@@ -531,47 +665,47 @@ class SceneTeamModel extends ModelBase_1.ModelBase {
         let t = s;
         for (let e = 1; e <= s; ++e) {
           var l = o[e - 1];
-          const c = ModelManager_1.ModelManager.CreatureModel.GetPlayerId();
+          const f = ModelManager_1.ModelManager.CreatureModel.GetPlayerId();
           var _ = a[e - 1],
-            h = Protocol_1.Aki.Protocol.fqs.create();
-          (h.Ekn = MathUtils_1.MathUtils.NumberToLong(l)),
-            (h.M3n = WorldGlobal_1.WorldGlobal.ToTsVector(n.GetLocation())),
-            (h.S3n = WorldGlobal_1.WorldGlobal.ToTsRotator(
+            h = Protocol_1.Aki.Protocol.n3s.create();
+          (h.J4n = MathUtils_1.MathUtils.NumberToLong(l)),
+            (h.e8n = WorldGlobal_1.WorldGlobal.ToTsVector(n.GetLocation())),
+            (h.t8n = WorldGlobal_1.WorldGlobal.ToTsRotator(
               n.GetRotation().Rotator(),
             )),
-            (h.d4n = !0),
-            (h.aFn = ModelManager_1.ModelManager.CreatureModel.GetPlayerId()),
-            (h.cVn = Protocol_1.Aki.Protocol.HBs.Proto_Player),
-            (h.mVn = Protocol_1.Aki.Protocol.USs.Proto_Character),
-            (h.R5n = a[e - 1]);
-          const f =
+            (h.X8n = !0),
+            (h.q5n = ModelManager_1.ModelManager.CreatureModel.GetPlayerId()),
+            (h.HHn = Protocol_1.Aki.Protocol.wks.Proto_Player),
+            (h.jHn = Protocol_1.Aki.Protocol.YTs.Proto_Character),
+            (h._9n = a[e - 1]);
+          const c =
             ControllerHolder_1.ControllerHolder.CreatureController.CreateEntity(
               h,
+              "InitializeOfflineSceneTeam",
             );
           h = new SceneTeamData_1.SceneTeamRole();
           (h.CreatureDataId = l),
             (h.RoleId = _),
             m.push(h),
             ControllerHolder_1.ControllerHolder.CreatureController.LoadEntityAsync(
-              f,
+              c,
               (e) => {
                 e &&
                   (t--,
-                  (e = f?.Entity) &&
-                    (e.CheckGetComponent(81)?.SetTeamTag(2),
+                  (e = c?.Entity) &&
+                    (e.CheckGetComponent(83)?.SetTeamTag(2),
                     ControllerHolder_1.ControllerHolder.CreatureController.SetEntityEnable(
                       e,
                       !1,
                       "InitOfflineTeam",
                     )),
                   0 === t) &&
-                  (this.UpdateGroup({
-                    PlayerId: c,
+                  (this.UpdateGroupData(f, {
                     GroupType: 1,
                     GroupRoleList: m,
                     CurrentRoleId: m[0].RoleId,
                   }),
-                  this.SwitchGroup(c, 1));
+                  this.SwitchGroup(f, 1));
               },
             );
         }

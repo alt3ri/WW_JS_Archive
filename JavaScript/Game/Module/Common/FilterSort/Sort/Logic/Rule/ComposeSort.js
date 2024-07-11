@@ -5,12 +5,12 @@ const CommonSort_1 = require("./CommonSort");
 class ComposeSort extends CommonSort_1.CommonSort {
   constructor() {
     super(...arguments),
-      (this.$Lt = (t, o, r) => {
+      (this.ZDt = (t, o, r) => {
         return t.SubType !== o.SubType
           ? (o.SubType - t.SubType) * (r ? -1 : 1)
           : 0;
       }),
-      (this.XLt = (t, o, r) => {
+      (this.zDt = (t, o, r) => {
         var s;
         return o.IsUnlock !== t.IsUnlock
           ? ((s = o.IsUnlock - t.IsUnlock), r ? s : -s)
@@ -18,7 +18,7 @@ class ComposeSort extends CommonSort_1.CommonSort {
             ? ((s = o.IsCompose - t.IsCompose), r ? s : -s)
             : 0;
       }),
-      (this.VLt = (t, o, r) => {
+      (this.KDt = (t, o, r) => {
         var s;
         return o.IsUnlock !== t.IsUnlock
           ? ((s = o.IsUnlock - t.IsUnlock), r ? s : -s)
@@ -28,9 +28,9 @@ class ComposeSort extends CommonSort_1.CommonSort {
       });
   }
   OnInitSortMap() {
-    this.SortMap.set(1, this.$Lt),
-      this.SortMap.set(2, this.XLt),
-      this.SortMap.set(3, this.VLt);
+    this.SortMap.set(1, this.ZDt),
+      this.SortMap.set(2, this.zDt),
+      this.SortMap.set(3, this.KDt);
   }
 }
 exports.ComposeSort = ComposeSort;

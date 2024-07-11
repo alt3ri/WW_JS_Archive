@@ -21,49 +21,68 @@ const Log_1 = require("../../../../../../Core/Common/Log"),
   MarkItemUtil_1 = require("../../../Marks/MarkItemUtil");
 class MapMarkMgr {
   constructor(t, e, i, r) {
-    (this.tRi = void 0),
-      (this.iRi = new WorldMapDefine_1.MarkPriority2HierarchyIndexHelper()),
-      (this.oRi = new WorldMapDefine_1.MarkPriority2HierarchyIndexHelper()),
+    (this.tUi = void 0),
+      (this.iUi = new WorldMapDefine_1.MarkPriority2HierarchyIndexHelper()),
+      (this.oUi = new WorldMapDefine_1.MarkPriority2HierarchyIndexHelper()),
       (this.MapType = 2),
-      (this.rRi = new Map()),
-      (this.nRi = new Map()),
-      (this.sRi = new Set()),
-      (this.aRi = new Set()),
-      (this.hRi = new Map()),
-      (this.lRi = 1),
-      (this._Ri = 0),
-      (this.uRi = (t) => {
-        this.cRi(t);
+      (this.rUi = new Map()),
+      (this.nUi = new Map()),
+      (this.sUi = new Set()),
+      (this.aUi = new Set()),
+      (this.hUi = new Map()),
+      (this.lUi = 1),
+      (this._Ui = 0),
+      (this.uUi = (t) => {
+        this.cUi(t);
       }),
-      (this.mRi = (t) => {
-        this.dRi(t);
+      (this.mUi = (t) => {
+        this.dUi(t);
+      }),
+      (this.qIa = (t) => {
+        if (t === this.MapType) {
+          var i = this.GetMarkItemsByType(9);
+          let e = `---自定义标记信息---地图类型:${t}
+`;
+          i?.forEach((t) => {
+            e =
+              "" +
+              e +
+              `MarkId:${t.MarkId},
+UiPosition:${t.UiPosition.ToString()},
+WorldPosition:${t.WorldPosition.ToString()}
+
+`;
+          }),
+            Log_1.Log.CheckDebug() && Log_1.Log.Debug("Map", 64, e);
+        }
       }),
       (this.CreateDynamicMark = (t) => {
-        if (t.MapId === this._Ri) {
+        if (t.MapId === this._Ui) {
           t = MarkItemUtil_1.MarkItemUtil.Create(
             t,
             this.MapType,
-            this.lRi,
-            this.tRi,
+            this.lUi,
+            this.tUi,
           );
           if (t) return this.AddMarkItem(t.MarkType, t), t;
         }
       }),
-      (this.CRi = (t, e, i) => {
+      (this.CUi = (t, e, i) => {
         e = this.GetMarkItem(t, e);
         e &&
           e instanceof CustomMarkItem_1.CustomMarkItem &&
           (e.SetConfigId(i), e.IsTracked) &&
-          (this.gRi(t, e.MarkId, !1), this.gRi(t, e.MarkId, !0));
+          (this.gUi(t, e.MarkId, !1), this.gUi(t, e.MarkId, !0));
       }),
-      (this.fRi = (t, e) => {
+      (this.fUi = (t, e) => {
         var i = this.GetMarkItem(t, e);
         i &&
-          (this.gRi(t, i.MarkId, !1),
-          this.hRi.has(e) && this.hRi.delete(e),
-          this.RemoveMarkItem(t, e)?.Destroy());
+          (this.gUi(t, i.MarkId, !1),
+          this.hUi.has(e) && this.hUi.delete(e),
+          void 0 !== (i = this.RemoveMarkItem(t, e))) &&
+          i.Destroy();
       }),
-      (this.gRi = (t, e, i, r = !1) => {
+      (this.gUi = (t, e, i, r = !1) => {
         var s,
           t = this.GetMarkItem(t, e);
         t &&
@@ -79,32 +98,32 @@ class MapMarkMgr {
                   IconPath: t.IconPath,
                   TrackTarget: t.TrackTarget,
                 }),
-                this.sRi.add(t))
+                this.sUi.add(t))
               : (TrackController_1.TrackController.EndTrack(t.TrackSource, e),
-                this.aRi.add(t),
-                this.sRi.delete(t))));
+                this.aUi.add(t),
+                this.sUi.delete(t))));
       }),
-      (this.Qdt = (t) => {
-        t = this.GetMarkItem(0, t.Id);
+      (this.ngt = (t) => {
+        t = this.GetMarkItem(t.MarkType ?? 0, t.Id);
         t &&
           !t.IsTracked &&
           t.LogicUpdate(
             GeneralLogicTreeUtil_1.GeneralLogicTreeUtil.GetPlayerLocation(),
           ),
-          ((t && t.View) ?? t?.IsTracked) && this.sRi.add(t);
+          ((t && t.View) ?? t?.IsTracked) && this.sUi.add(t);
       }),
-      (this.Xdt = (t) => {
-        t = this.GetMarkItem(0, t.Id);
-        t && t.View && (this.sRi.delete(t), this.aRi.add(t));
+      (this.sgt = (t) => {
+        t = this.GetMarkItem(t.MarkType ?? 0, t.Id);
+        t && t.View && (this.sUi.delete(t), this.aUi.add(t));
       }),
-      (this._Qt = () => {
-        this.sRi.clear();
+      (this._Xt = () => {
+        this.sUi.clear();
       }),
-      (this.pRi = (t) => {
+      (this.pUi = (t) => {
         var e = this.GetMarkItemsByType(11);
-        e && 0 < e.size && this.vRi(11), this.MRi(t);
+        e && 0 < e.size && this.vUi(11), this.MUi(t);
       }),
-      (this.uDi = (t) => {
+      (this.uRi = (t) => {
         let e = this.GetMarkItem(5, t);
         (e = e || this.GetMarkItem(6, t)) &&
           e instanceof TeleportMarkItem_1.TeleportMarkItem &&
@@ -119,19 +138,19 @@ class MapMarkMgr {
         var r = e.Entity.GetComponent(0),
           s = r.GetPbEntityInitData(),
           n = r.GetEntityConfigType();
-        n === Protocol_1.Aki.Protocol.USs.Proto_OldEntity ||
-          n === Protocol_1.Aki.Protocol.USs.Proto_Character ||
+        n === Protocol_1.Aki.Protocol.YTs.Proto_OldEntity ||
+          n === Protocol_1.Aki.Protocol.YTs.Proto_Character ||
           MapUtil_1.MapUtil.IsTemporaryTeleportEntity(s) ||
-          ((n = r.GetBaseInfo())?.MapIcon && this.SRi(n.MapIcon, e.Id, i));
+          ((n = r.GetBaseInfo())?.MapIcon && this.EUi(n.MapIcon, e.Id, i));
       }),
       (this.zpe = (t, e) => {
-        this.hRi.has(e.Id) && this.hRi.delete(e.Id),
+        this.hUi.has(e.Id) && this.hUi.delete(e.Id),
           this.RemoveMarkItem(7, e.Id)?.Destroy();
       }),
       (this.MapType = t),
-      (this.lRi = r),
-      (this.tRi = e),
-      (this._Ri =
+      (this.lUi = r),
+      (this.tUi = e),
+      (this._Ui =
         2 === t
           ? MapDefine_1.BIG_WORLD_MAP_ID
           : ModelManager_1.ModelManager.GameModeModel.InstanceDungeon
@@ -141,14 +160,14 @@ class MapMarkMgr {
     this.dde();
   }
   Dispose() {
-    this.Cde(), this.vRi();
+    this.Cde(), this.vUi();
   }
   OnMapSetup() {
-    this.vRi(),
-      this.ERi(),
-      this.yRi(),
-      this.MRi(ModelManager_1.ModelManager.CreatureModel.GetAllScenePlayers());
-    for (var [, t] of this.rRi)
+    this.vUi(),
+      this.SUi(),
+      this.yUi(),
+      this.MUi(ModelManager_1.ModelManager.CreatureModel.GetAllScenePlayers());
+    for (var [, t] of this.rUi)
       for (var [, e] of t)
         e.IsTracked &&
           12 !== e.MarkType &&
@@ -157,7 +176,7 @@ class MapMarkMgr {
             e.MarkId,
           ]);
   }
-  IRi(t) {
+  IUi(t) {
     var e = Math.floor(Math.round(0.01 * t.X) / MapDefine_1.MARK_SCOPE),
       t = Math.floor(Math.round(0.01 * t.Y) / MapDefine_1.MARK_SCOPE);
     return e * MapDefine_1.MARK_HASH_XY_PANDING + t;
@@ -165,7 +184,7 @@ class MapMarkMgr {
   dde() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.MapReplaceMarkResponse,
-      this.CRi,
+      this.CUi,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.CreateMapMark,
@@ -173,31 +192,31 @@ class MapMarkMgr {
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.RemoveMapMark,
-        this.fRi,
+        this.fUi,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.TrackMapMark,
-        this.gRi,
+        this.gUi,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.TrackMark,
-        this.Qdt,
+        this.ngt,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.UnTrackMark,
-        this.Xdt,
+        this.sgt,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.ClearTrackMark,
-        this._Qt,
+        this._Xt,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.ScenePlayerChanged,
-        this.pRi,
+        this.pUi,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.UnlockTeleport,
-        this.uDi,
+        this.uRi,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.AddEntity,
@@ -209,17 +228,21 @@ class MapMarkMgr {
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnMarkItemViewCreate,
-        this.uRi,
+        this.uUi,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnMarkItemViewDestroy,
-        this.mRi,
+        this.mUi,
+      ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.LogCustomMarkInfo,
+        this.qIa,
       );
   }
   Cde() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.MapReplaceMarkResponse,
-      this.CRi,
+      this.CUi,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.CreateMapMark,
@@ -227,27 +250,27 @@ class MapMarkMgr {
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.RemoveMapMark,
-        this.fRi,
+        this.fUi,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.TrackMapMark,
-        this.gRi,
+        this.gUi,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.TrackMark,
-        this.Qdt,
+        this.ngt,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.ClearTrackMark,
-        this._Qt,
+        this._Xt,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.ScenePlayerChanged,
-        this.pRi,
+        this.pUi,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.UnlockTeleport,
-        this.uDi,
+        this.uRi,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.AddEntity,
@@ -259,101 +282,105 @@ class MapMarkMgr {
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.UnTrackMark,
-        this.Xdt,
+        this.sgt,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnMarkItemViewCreate,
-        this.uRi,
+        this.uUi,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnMarkItemViewDestroy,
-        this.mRi,
+        this.mUi,
+      ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.LogCustomMarkInfo,
+        this.qIa,
       );
   }
-  vRi(t) {
+  vUi(t) {
     if (t) {
-      t = this.rRi.get(t);
+      t = this.rUi.get(t);
       if (t) {
         for (var [, e] of t)
-          this.hRi.delete(e.MarkId),
+          this.hUi.delete(e.MarkId),
             this.RemoveMarkItem(e.MarkType, e.MarkId),
             e.Destroy();
         t.clear();
       }
     } else {
-      for (var [, i] of this.rRi)
-        for (var [, r] of i) this.hRi.delete(r.MarkId), r.Destroy();
-      this.rRi.clear(),
-        this.sRi.clear(),
-        this.nRi.clear(),
-        this.iRi.ClearData(),
-        this.oRi.ClearData();
+      for (var [, i] of this.rUi)
+        for (var [, r] of i) this.hUi.delete(r.MarkId), r.Destroy();
+      this.rUi.clear(),
+        this.sUi.clear(),
+        this.nUi.clear(),
+        this.iUi.ClearData(),
+        this.oUi.ClearData();
     }
   }
-  TRi(t) {
+  TUi(t) {
     var e,
       i = t.WorldPosition;
     i &&
-      ((i = this.IRi(i)),
-      (e = this.nRi.get(i))
+      ((i = this.IUi(i)),
+      (e = this.nUi.get(i))
         ? e.add(t)
-        : ((e = new Set().add(t)), this.nRi.set(i, e)),
+        : ((e = new Set().add(t)), this.nUi.set(i, e)),
       (t.GridId = i));
   }
-  LRi(t) {
+  LUi(t) {
     var e = t.GridId,
-      e = this.nRi.get(e);
+      e = this.nUi.get(e);
     e && e.delete(t);
   }
   AddMarkItem(e, i) {
     if (i) {
       let t = this.GetMarkItemsByType(e);
-      t || ((t = new Map()), this.rRi.set(e, t)),
+      t || ((t = new Map()), this.rUi.set(e, t)),
         t.set(i.MarkId, i),
-        this.TRi(i);
+        this.TUi(i);
     }
   }
   RemoveMarkItem(t, e) {
     t = this.GetMarkItemsByType(t);
     if (t && 0 !== t.size) {
       var i = t.get(e);
-      if ((t.delete(e), this.hRi.delete(e), i))
+      if ((t.delete(e), this.hUi.delete(e), i))
         return (
-          this.LRi(i),
+          this.LUi(i),
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info("Map", 50, "移除标记_MarkMgr", ["MarkId", e]),
           i
         );
     }
   }
-  DRi(t, e, i) {
+  DUi(t, e, i) {
     var r = t.Holder;
     r &&
       this.MapType === r.MapType &&
       void 0 !== e &&
       t.GetRootItem() &&
       (t.GetRootItem().SetUIParent(e),
-      t.SetScale(this.lRi),
+      t.SetScale(this.lUi),
       (e = i.AddMarkItem(r.MarkType, r.ShowPriority)),
       t.GetRootItem().SetHierarchyIndex(e));
   }
-  RRi(t, e, i) {
+  RUi(t, e, i) {
     var r = t.Holder;
     r &&
       this.MapType === r.MapType &&
       t.GetRootItem() &&
       e === t.GetRootItem().GetParentAsUIItem() &&
       (i.RemoveMarkItem(t.Holder.MarkType, t.Holder.ShowPriority),
-      t.SetScale(this.lRi));
+      t.SetScale(this.lUi));
   }
-  cRi(t) {
-    this.DRi(t, this.tRi, this.iRi);
+  cUi(t) {
+    this.DUi(t, this.tUi, this.iUi);
   }
-  dRi(t) {
-    this.RRi(t, this.tRi, this.iRi);
+  dUi(t) {
+    this.RUi(t, this.tUi, this.iUi);
   }
   GetMarkItemsByType(t) {
-    return this.rRi.get(t);
+    return this.rUi.get(t);
   }
   GetMarkItem(t, e) {
     if (0 === t) {
@@ -365,13 +392,13 @@ class MapMarkMgr {
     if (i) return i.get(e);
   }
   GetAllMarkItems() {
-    return this.rRi;
+    return this.rUi;
   }
   GetAllMarkItemsByMapId(t) {
     var e,
       i,
       r = new Map();
-    for ([e, i] of this.rRi)
+    for ([e, i] of this.rUi)
       for (var [s, n] of i)
         if (n.MapId === t) {
           let t = r.get(e);
@@ -381,15 +408,15 @@ class MapMarkMgr {
   }
   GetMarkItemsByClickPosition(t) {
     var t = MapUtil_1.MapUtil.UiPosition2WorldPosition(t),
-      t = this.IRi(t),
+      t = this.IUi(t),
       e = [];
-    for (const r of this.URi(t)) {
-      var i = this.nRi.get(r);
+    for (const r of this.UUi(t)) {
+      var i = this.nUi.get(r);
       i && e.push(...i);
     }
     return e;
   }
-  URi(t) {
+  UUi(t) {
     return new Set([
       t,
       t + MapDefine_1.MARK_HASH_XY_PANDING,
@@ -404,23 +431,23 @@ class MapMarkMgr {
   }
   UpdateNearbyMarkItem(t, e, i) {
     var r,
-      t = this.IRi(t),
-      s = this.URi(t);
+      t = this.IUi(t),
+      s = this.UUi(t);
     for (const _ of s) {
-      const n = this.nRi.get(_);
+      const n = this.nUi.get(_);
       if (n)
         for (const M of n)
-          this.hRi.has(M.MarkId) ||
+          this.hUi.has(M.MarkId) ||
             M instanceof PlayerMarkItem_1.PlayerMarkItem ||
-            this.hRi.set(M.MarkId, M);
+            this.hUi.set(M.MarkId, M);
     }
     const n = this.GetMarkItemsByType(11);
-    if (n) for (var [, a] of n) this.hRi.set(a.MarkId, a);
-    for ([, r] of this.hRi)
-      e(r), r.IsCanShowView || (this.aRi.add(r), this.hRi.delete(r.MarkId));
-    for (const f of this.sRi) e(f);
-    if (0 !== this.aRi.size) {
-      for (const v of this.aRi) {
+    if (n) for (var [, a] of n) this.hUi.set(a.MarkId, a);
+    for ([, r] of this.hUi)
+      e(r), r.IsCanShowView || (this.aUi.add(r), this.hUi.delete(r.MarkId));
+    for (const f of this.sUi) e(f);
+    if (0 !== this.aUi.size) {
+      for (const v of this.aUi) {
         var h = v.GridId;
         s.has(h) ||
           (v.LogicUpdate(
@@ -428,29 +455,29 @@ class MapMarkMgr {
           ),
           i(v));
       }
-      this.aRi.clear();
+      this.aUi.clear();
     }
     for (const l of s) {
-      var o = this.nRi.get(l);
+      var o = this.nUi.get(l);
       if (o) for (const m of o) e(m);
     }
   }
-  ERi() {
-    let t = ConfigManager_1.ConfigManager.MapConfig.GetConfigMarks(this._Ri);
+  SUi() {
+    let t = ConfigManager_1.ConfigManager.MapConfig.GetConfigMarks(this._Ui);
     0 === t.length &&
-      this._Ri !== MapDefine_1.BIG_WORLD_MAP_ID &&
+      this._Ui !== MapDefine_1.BIG_WORLD_MAP_ID &&
       2 === this.MapType &&
-      ((this._Ri = MapDefine_1.BIG_WORLD_MAP_ID),
-      (t = ConfigManager_1.ConfigManager.MapConfig.GetConfigMarks(this._Ri)));
+      ((this._Ui = MapDefine_1.BIG_WORLD_MAP_ID),
+      (t = ConfigManager_1.ConfigManager.MapConfig.GetConfigMarks(this._Ui)));
     for (const n of t) {
       var e;
-      1 !== n.MarkId &&
+      7 !== n.ObjectType &&
         ((e = MarkItemUtil_1.MarkItemUtil.CreateConfigMark(
           n.MarkId,
           n,
           this.MapType,
-          this.lRi,
-          this.tRi,
+          this.lUi,
+          this.tUi,
         )),
         this.AddMarkItem(n.ObjectType, e));
     }
@@ -461,7 +488,7 @@ class MapMarkMgr {
     ] of ModelManager_1.ModelManager.MapModel.GetEntityPendingList()) {
       var s = EntitySystem_1.EntitySystem.Get(i);
       s
-        ? ((s = s.GetComponent(1)?.Owner), this.SRi(r, i, s))
+        ? ((s = s.GetComponent(1)?.Owner), this.EUi(r, i, s))
         : Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("Map", 50, "找不到实体对象", [
             "实体ID",
@@ -469,12 +496,12 @@ class MapMarkMgr {
           ]);
     }
   }
-  yRi() {
+  yUi() {
     for (const t of ModelManager_1.ModelManager.MapModel.GetAllDynamicMarks().values())
       for (const e of t.values())
-        e.MapId === this._Ri && this.CreateDynamicMark(e);
+        e.MapId === this._Ui && this.CreateDynamicMark(e);
   }
-  MRi(t) {
+  MUi(t) {
     if (ModelManager_1.ModelManager.OnlineModel.GetIsTeamModel())
       for (const i of t) {
         var e;
@@ -492,22 +519,22 @@ class MapMarkMgr {
           (e = MarkItemUtil_1.MarkItemUtil.Create(
             e,
             this.MapType,
-            this.lRi,
-            this.tRi,
+            this.lUi,
+            this.tUi,
           )),
-          this._Ri === MapDefine_1.BIG_WORLD_MAP_ID && (e.IsInAoiRange = !0),
+          this._Ui === MapDefine_1.BIG_WORLD_MAP_ID && (e.IsInAoiRange = !0),
           this.AddMarkItem(11, e));
       }
   }
-  SRi(t, e, i) {
+  EUi(t, e, i) {
     ObjectUtils_1.ObjectUtils.IsValid(i) &&
       ((e = MarkItemUtil_1.MarkItemUtil.CreateEntityMark(
         e,
         t,
-        this.tRi,
+        this.tUi,
         i,
         this.MapType,
-        this.lRi,
+        this.lUi,
       )),
       this.AddMarkItem(7, e));
   }

@@ -21,21 +21,21 @@ class RoguelikeInstanceEntrySelectView extends UiViewBase_1.UiViewBase {
       (this.RightLayout = void 0),
       (this.TextChangeAnimationTimerHandle = void 0),
       (this.CurRate = 0),
-      (this.Yao = () => {
+      (this.Qho = () => {
         RoguelikeController_1.RoguelikeController.RoguelikePopularEntriesChangeRequest(
-          this.OpenParam.vFn,
+          this.OpenParam.X5n,
           Array.from(RoguelikeInstanceEntrySelectView.SelectIndexList),
         ).then(() => {
           this.CloseMe();
         });
       }),
-      (this.Twn = (e) => {
+      (this.Vbn = (e) => {
         return (
           1 === e.GetToggleState() ||
           ((e =
             ConfigManager_1.ConfigManager.RoguelikeConfig.GetRoguePopularEntrieArg(
-              ModelManager_1.ModelManager.RoguelikeModel.CurrSeasonData.F8n,
-              this.OpenParam.vFn,
+              ModelManager_1.ModelManager.RoguelikeModel.CurrSeasonData.MHn,
+              this.OpenParam.X5n,
             ).Slot),
           !(
             RoguelikeInstanceEntrySelectView.SelectIndexList.size >= e &&
@@ -46,16 +46,16 @@ class RoguelikeInstanceEntrySelectView extends UiViewBase_1.UiViewBase {
           ))
         );
       }),
-      (this.Jao = (e, t, i) => {
+      (this.Xho = (e, t, i) => {
         t
           ? RoguelikeInstanceEntrySelectView.SelectIndexList.add(e)
           : RoguelikeInstanceEntrySelectView.SelectIndexList.delete(e),
           this.RefreshBuffTxt();
       }),
-      (this.zao = () => {
+      (this.$ho = () => {
         var e = new RoguelikeInstanceEntrySelectItem();
         return (
-          (e.OnSelectBuff = this.Jao), (e.CheckCanExecuteChange = this.Twn), e
+          (e.OnSelectBuff = this.Xho), (e.CheckCanExecuteChange = this.Vbn), e
         );
       });
   }
@@ -67,24 +67,24 @@ class RoguelikeInstanceEntrySelectView extends UiViewBase_1.UiViewBase {
       [3, UE.UIText],
       [4, UE.UIButtonComponent],
     ]),
-      (this.BtnBindInfo = [[4, this.Yao]]);
+      (this.BtnBindInfo = [[4, this.Qho]]);
   }
   async OnBeforeStartAsync() {
     (RoguelikeInstanceEntrySelectView.SelectIndexList = new Set(
-      this.OpenParam.W8n,
+      this.OpenParam.IHn,
     )),
       (this.LeftLayout = new GenericLayout_1.GenericLayout(
         this.GetVerticalLayout(0),
-        this.zao,
+        this.$ho,
       )),
       (this.RightLayout = new GenericLayout_1.GenericLayout(
         this.GetVerticalLayout(1),
-        this.zao,
+        this.$ho,
       ));
     var e = [],
       t = [];
     for (const i of ConfigManager_1.ConfigManager.RoguelikeConfig.GetRoguelikePopularEntries())
-      i.Insts.includes(this.OpenParam.vFn) &&
+      i.Insts.includes(this.OpenParam.X5n) &&
         (0 === i.Category ? t.push(i) : 1 === i.Category && e.push(i));
     await this.LeftLayout.RefreshByDataAsync(e),
       await this.RightLayout.RefreshByDataAsync(t),
@@ -152,8 +152,8 @@ class RoguelikeInstanceEntrySelectView extends UiViewBase_1.UiViewBase {
     }
     var e =
       ConfigManager_1.ConfigManager.RoguelikeConfig?.GetRoguePopularEntrieArg(
-        ModelManager_1.ModelManager.RoguelikeModel.CurrSeasonData.F8n,
-        this.OpenParam.vFn,
+        ModelManager_1.ModelManager.RoguelikeModel.CurrSeasonData.MHn,
+        this.OpenParam.X5n,
       );
     e &&
       ((e = e.Slot),

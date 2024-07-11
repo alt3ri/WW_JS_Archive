@@ -10,6 +10,9 @@ class RouletteComponentAssembly extends RouletteComponent_1.RouletteComponentBas
   IsCurrentEquippedId(e) {
     return !1;
   }
+  GamepadReturnEmptyGrid() {
+    this.IsEmptyChoose = !1;
+  }
   JudgeGridStateByData(e, t) {
     return void 0 !== e && 0 !== e ? 1 : 2;
   }
@@ -23,10 +26,11 @@ class RouletteComponentAssembly extends RouletteComponent_1.RouletteComponentBas
     return (
       (e.State = this.JudgeGridStateByData(e.Id, e.GridType)),
       (e.ShowIndex = !0),
+      (e.ShowRedDot = !1),
       e
     );
   }
-  Lgo(e, t) {
+  y0o(e, t) {
     switch (t) {
       case 0:
         var o =
@@ -44,7 +48,7 @@ class RouletteComponentAssembly extends RouletteComponent_1.RouletteComponentBas
     for (const o of this.RouletteGridList) {
       o.SetGridEquipped(!1), o.SetGridToggleState(!1);
       var e = o.Data,
-        t = ((e.Name = void 0), this.Lgo(e.DataIndex, e.GridType));
+        t = ((e.Name = void 0), this.y0o(e.DataIndex, e.GridType));
       (e.Id = t ?? e.Id),
         (e.State = this.JudgeGridStateByData(e.Id, e.GridType)),
         o.RefreshGrid(e);

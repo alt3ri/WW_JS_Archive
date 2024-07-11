@@ -12,15 +12,15 @@ const UE = require("ue"),
   TRIGGER_HALF_HEIGHT_DEVIATION = 0;
 class RoleTriggerController extends ControllerBase_1.ControllerBase {
   static GetMyRoleTrigger() {
-    return this.Rtr;
+    return this.Lir;
   }
   static DebugTestWorldDone() {
     this.nye();
   }
   static OnInit() {
     return (
-      (this.Utr = !1),
-      (this.Atr = !1),
+      (this.Rir = !1),
+      (this.Uir = !1),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.ClearWorld,
         this.uMe,
@@ -50,22 +50,22 @@ class RoleTriggerController extends ControllerBase_1.ControllerBase {
         EventDefine_1.EEventName.OnChangeRole,
         this.xie,
       ),
-      this.Ptr(),
+      this.Pir(),
       !0
     );
   }
-  static Ptr() {
-    (this.Utr = !1),
-      (this.Atr = !1),
-      this.Rtr?.IsValid() &&
-        (ActorSystem_1.ActorSystem.Put(this.Rtr), (this.Rtr = void 0)),
-      (this.xtr = void 0);
+  static Pir() {
+    (this.Rir = !1),
+      (this.Uir = !1),
+      this.Lir?.IsValid() &&
+        (ActorSystem_1.ActorSystem.Put(this.Lir), (this.Lir = void 0)),
+      (this.xir = void 0);
   }
   static OnTick(e) {
-    this.Utr &&
-      this.Rtr?.IsValid() &&
+    this.Rir &&
+      this.Lir?.IsValid() &&
       Global_1.Global.BaseCharacter &&
-      this.Rtr.K2_SetActorTransform(
+      this.Lir.K2_SetActorTransform(
         Global_1.Global.BaseCharacter.GetTransform(),
         !1,
         void 0,
@@ -74,25 +74,25 @@ class RoleTriggerController extends ControllerBase_1.ControllerBase {
   }
   static OnChangeMode() {
     return (
-      this.Utr &&
-        this.Rtr?.IsValid() &&
+      this.Rir &&
+        this.Lir?.IsValid() &&
         Global_1.Global.BaseCharacter &&
-        ((RoleTriggerController.Atr = !0),
-        RoleTriggerController.xtr.SetCollisionEnabled(0)),
+        ((RoleTriggerController.Uir = !0),
+        RoleTriggerController.xir.SetCollisionEnabled(0)),
       !0
     );
   }
 }
-((exports.RoleTriggerController = RoleTriggerController).Utr = !1),
-  (RoleTriggerController.Atr = !1),
-  (RoleTriggerController.Rtr = void 0),
-  (RoleTriggerController.xtr = void 0),
+((exports.RoleTriggerController = RoleTriggerController).Rir = !1),
+  (RoleTriggerController.Uir = !1),
+  (RoleTriggerController.Lir = void 0),
+  (RoleTriggerController.xir = void 0),
   (RoleTriggerController.uMe = () => {
-    RoleTriggerController.Ptr();
+    RoleTriggerController.Pir();
   }),
   (RoleTriggerController.nye = () => {
-    if (!RoleTriggerController.Utr) {
-      RoleTriggerController.Utr = !0;
+    if (!RoleTriggerController.Rir) {
+      RoleTriggerController.Rir = !0;
       let e = void 0,
         r = 77 + TRIGGER_HALF_HEIGHT_DEVIATION,
         t = 25;
@@ -103,40 +103,40 @@ class RoleTriggerController extends ControllerBase_1.ControllerBase {
             TRIGGER_HALF_HEIGHT_DEVIATION),
           (t = Global_1.Global.BaseCharacter.CapsuleComponent.CapsuleRadius))
         : (e = new UE.Transform()),
-        (RoleTriggerController.Rtr = ActorSystem_1.ActorSystem.Get(
+        (RoleTriggerController.Lir = ActorSystem_1.ActorSystem.Get(
           UE.Actor.StaticClass(),
           e,
         )),
-        (RoleTriggerController.xtr =
-          RoleTriggerController.Rtr.AddComponentByClass(
+        (RoleTriggerController.xir =
+          RoleTriggerController.Lir.AddComponentByClass(
             UE.CapsuleComponent.StaticClass(),
             !1,
             MathUtils_1.MathUtils.DefaultTransform,
             !1,
           )),
-        RoleTriggerController.Rtr.SetActorHiddenInGame(!0),
-        RoleTriggerController.xtr.SetCapsuleHalfHeight(r, !1),
-        RoleTriggerController.xtr.SetCapsuleRadius(t, !1),
-        RoleTriggerController.xtr.SetCollisionProfileName(
+        RoleTriggerController.Lir.SetActorHiddenInGame(!0),
+        RoleTriggerController.xir.SetCapsuleHalfHeight(r, !1),
+        RoleTriggerController.xir.SetCapsuleRadius(t, !1),
+        RoleTriggerController.xir.SetCollisionProfileName(
           CharacterNameDefines_1.CharacterNameDefines.ROLE_TRIGGER_NAME,
           !1,
         );
     }
   }),
   (RoleTriggerController.xie = (e, r) => {
-    RoleTriggerController.Utr &&
+    RoleTriggerController.Rir &&
       e?.Valid &&
       (e = e.Entity.GetComponent(3)?.Actor)?.IsValid() &&
-      (RoleTriggerController.xtr?.SetCapsuleHalfHeight(
+      (RoleTriggerController.xir?.SetCapsuleHalfHeight(
         e.CapsuleComponent.CapsuleHalfHeight + TRIGGER_HALF_HEIGHT_DEVIATION,
         !1,
       ),
-      RoleTriggerController.xtr?.SetCapsuleRadius(
+      RoleTriggerController.xir?.SetCapsuleRadius(
         e.CapsuleComponent.CapsuleRadius,
         !1,
       ),
-      RoleTriggerController.Atr) &&
-      ((RoleTriggerController.Atr = !1),
-      RoleTriggerController.xtr?.SetCollisionEnabled(1));
+      RoleTriggerController.Uir) &&
+      ((RoleTriggerController.Uir = !1),
+      RoleTriggerController.xir?.SetCollisionEnabled(1));
   });
 //# sourceMappingURL=RoleTriggerController.js.map

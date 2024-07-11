@@ -20,30 +20,30 @@ class GameModeModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
       (this.IsSilentLogin = !1),
-      (this.kvr = !1),
-      (this.Fvr = void 0),
-      (this.Vvr = void 0),
-      (this.Hvr = !1),
-      (this.jvr = !1),
-      (this.Wvr = !1),
-      (this.Kvr = !1),
-      (this.Qvr = ""),
-      (this.Xvr = new Array()),
-      (this.u9s = void 0),
-      (this.$vr = void 0),
-      (this.Yvr = void 0),
-      (this.Jvr = 0),
-      (this.zvr = 0),
-      (this.Zvr = void 0),
-      (this.eMr = !1),
-      (this.tMr = !1),
-      (this.Yyo = !1),
-      (this.iMr = !1),
-      (this.oMr = void 0),
-      (this.rMr = !1),
-      (this.nMr = !1),
+      (this.GMr = !1),
+      (this.NMr = void 0),
+      (this.OMr = void 0),
+      (this.kMr = !1),
+      (this.FMr = !1),
+      (this.VMr = !1),
+      (this.HMr = !1),
+      (this.jMr = ""),
+      (this.WMr = new Array()),
+      (this.sia = void 0),
+      (this.KMr = void 0),
+      (this.QMr = void 0),
+      (this.XMr = 0),
+      (this.$Mr = 0),
+      (this.YMr = void 0),
+      (this.JMr = !1),
+      (this.zMr = !1),
+      (this.QIo = !1),
+      (this.ZMr = !1),
+      (this.eEr = void 0),
+      (this.tEr = !1),
+      (this.iEr = !1),
       (this.ShowCenterTextFlow = void 0),
-      (this.sMr = !1),
+      (this.oEr = !1),
       (this.PreloadLevelMap = new Map()),
       (this.ForceDisableGamePaused = !1),
       (this.GamePausedReasons = new Set()),
@@ -51,8 +51,8 @@ class GameModeModel extends ModelBase_1.ModelBase {
       (this.UnloadLevelMap = new Map()),
       (this.DataLayerSet = new Set()),
       (this.MaterialParameterCollectionMap = new Map()),
-      (this.aMr = void 0),
-      (this.hMr = 0),
+      (this.rEr = void 0),
+      (this.nEr = 0),
       (this.LoadWorldProfiler = new LogProfiler_1.LogProfiler("加载世界")),
       (this.OpenLoadingProfiler =
         this.LoadWorldProfiler.CreateChild("打开Loading")),
@@ -88,87 +88,86 @@ class GameModeModel extends ModelBase_1.ModelBase {
         this.LoadWorldProfiler.CreateChild("打开剧情界面")),
       (this.CloseLoadingProfiler =
         this.LoadWorldProfiler.CreateChild("关闭Loading界面")),
-      (this.lMr = void 0),
-      (this._Mr = void 0),
-      (this.uMr = void 0),
-      (this.cMr = void 0),
-      (this.sAr = void 0),
-      (this.mMr = void 0),
-      (this.tIo = void 0),
-      (this.k6s = void 0),
-      (this.fMr = void 0),
-      (this.pMr = void 0),
-      (this.vMr = void 0),
-      (this.tIn = void 0),
-      (this.MMr = void 0),
-      (this.SMr = void 0),
-      (this.EMr = void 0),
-      (this.FPn = void 0),
-      (this.yMr = void 0),
-      (this.IMr = void 0),
-      (this.TMr = !1);
+      (this.sEr = void 0),
+      (this.aEr = void 0),
+      (this.hEr = void 0),
+      (this.lEr = void 0),
+      (this.yAr = void 0),
+      (this._Er = void 0),
+      (this.zIo = void 0),
+      (this.fKs = void 0),
+      (this.dEr = void 0),
+      (this.CEr = void 0),
+      (this.gEr = void 0),
+      (this.ETn = void 0),
+      (this.fEr = void 0),
+      (this.vEr = void 0),
+      (this.Mbn = void 0),
+      (this.MEr = void 0),
+      (this.EEr = void 0),
+      (this.SEr = !1);
   }
   get JoinSceneInfo() {
-    return this.aMr;
+    return this.rEr;
   }
   set JoinSceneInfo(e) {
-    this.aMr = e;
+    this.rEr = e;
   }
   get LoadingPhase() {
-    return this.hMr;
+    return this.nEr;
   }
   set LoadingPhase(e) {
-    this.hMr = e;
+    this.nEr = e;
   }
   get Loading() {
-    return 1 < this.hMr;
+    return 1 < this.nEr;
   }
   get HasGameModeData() {
-    return this.kvr;
+    return this.GMr;
   }
   set HasGameModeData(e) {
-    this.kvr = e;
+    this.GMr = e;
   }
   get Mode() {
-    return this.Fvr;
+    return this.NMr;
   }
   set Mode(e) {
-    this.Fvr = e;
+    this.NMr = e;
   }
   get MapPath() {
-    return this.Qvr;
+    return this.jMr;
   }
   set MapPath(e) {
-    this.Qvr = e;
+    this.jMr = e;
   }
   AddLoadMapHandle(e) {
-    this.Vvr || (this.Vvr = new Map());
-    var t = this.Vvr.get(e);
+    this.OMr || (this.OMr = new Map());
+    var t = this.OMr.get(e);
     return (
-      t ? this.Vvr.set(e, ++t) : this.Vvr.set(e, 1),
+      t ? this.OMr.set(e, ++t) : this.OMr.set(e, 1),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "World",
           3,
           "添加LoadMapHandle",
           ["添加的Handle", e],
-          ["Size", this.Vvr.size],
+          ["Size", this.OMr.size],
         ),
       !0
     );
   }
   RemoveLoadMapHandle(e) {
     var t;
-    return this.Vvr?.has(e)
-      ? ((t = this.Vvr.get(e)),
-        --t ? this.Vvr.set(e, t) : this.Vvr.delete(e),
+    return this.OMr?.has(e)
+      ? ((t = this.OMr.get(e)),
+        --t ? this.OMr.set(e, t) : this.OMr.delete(e),
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "World",
             3,
             "删除LoadMapHandle",
             ["删除的Handle", e],
-            ["Size", this.Vvr.size],
+            ["Size", this.OMr.size],
           ),
         !0)
       : (Log_1.Log.CheckError() &&
@@ -177,151 +176,156 @@ class GameModeModel extends ModelBase_1.ModelBase {
             3,
             "删除LoadManHandle失败",
             ["Handle", e],
-            ["Size", this.Vvr?.size],
+            ["Size", this.OMr?.size],
           ),
         !1);
   }
   get MapDone() {
-    return !!this.Vvr && 0 === this.Vvr.size;
+    return !!this.OMr && 0 === this.OMr.size;
   }
   get NavMeshDone() {
-    return this.Hvr;
+    return this.kMr;
   }
   set NavMeshDone(e) {
-    this.Hvr = e;
+    this.kMr = e;
   }
   get WorldDone() {
-    return this.jvr;
+    return this.FMr;
   }
   set WorldDone(e) {
-    this.jvr = e;
+    this.FMr = e;
   }
   get WorldDoneAndLoadingClosed() {
-    return this.Wvr;
+    return this.VMr;
   }
   set WorldDoneAndLoadingClosed(e) {
-    this.Wvr = e;
+    this.VMr = e;
   }
   get PlayerStarts() {
-    return this.Xvr;
+    return this.WMr;
   }
   get MapConfig() {
-    return this.Yvr;
+    return this.QMr;
   }
   set MapConfig(e) {
-    this.Yvr = e;
+    this.QMr = e;
   }
   get InstanceDungeon() {
-    return InstanceDungeonById_1.configInstanceDungeonById.GetConfig(this.Jvr);
+    return InstanceDungeonById_1.configInstanceDungeonById.GetConfig(this.XMr);
   }
   SetInstanceDungeon(e) {
-    this.Jvr = e;
+    this.XMr = e;
   }
   get MapId() {
-    return this.zvr;
+    return this.$Mr;
   }
   set MapId(e) {
-    this.zvr = e;
+    this.$Mr = e;
   }
   get InstanceType() {
-    return this.Zvr;
+    return this.YMr;
   }
   set InstanceType(e) {
-    this.Zvr = e;
+    this.YMr = e;
   }
   get IsMulti() {
-    return this.eMr;
+    return this.JMr;
   }
   set IsMulti(e) {
-    this.eMr = e;
+    this.JMr = e;
   }
   get ChangeModeState() {
-    return this.Kvr;
+    return this.HMr;
   }
   set ChangeModeState(e) {
-    this.Kvr = e;
+    this.HMr = e;
   }
   get PlayTravelMp4() {
-    return this.iMr;
+    return this.ZMr;
   }
   set PlayTravelMp4(e) {
-    this.iMr = e;
+    this.ZMr = e;
   }
   get TravelMp4Path() {
-    return this.oMr;
+    return this.eEr;
   }
   set TravelMp4Path(e) {
-    this.oMr = e;
+    this.eEr = e;
   }
   get UseShowCenterText() {
-    return this.nMr;
+    return this.iEr;
   }
   set UseShowCenterText(e) {
-    this.nMr = e;
+    this.iEr = e;
   }
   get TravelMp4Playing() {
-    return this.rMr;
+    return this.tEr;
   }
   set TravelMp4Playing(e) {
-    this.rMr = e;
+    this.tEr = e;
   }
   get DataLayerSwitching() {
-    return this.sMr;
+    return this.oEr;
   }
   set DataLayerSwitching(e) {
-    this.sMr = e;
+    this.oEr = e;
   }
   AddPlayerStart(e) {
-    this.Xvr.push(e);
+    this.WMr.push(e);
   }
   ClearPlayerStart() {
-    this.Xvr.length = 0;
+    this.WMr.length = 0;
   }
   get VoxelStreamingSource() {
-    return this.u9s;
+    return this.sia;
   }
   get StreamingSource() {
-    return this.$vr;
+    return this.KMr;
   }
   get UseWorldPartition() {
-    return this.tMr;
+    return this.zMr;
   }
   set UseWorldPartition(e) {
-    this.tMr = e;
+    this.zMr = e;
   }
   get IsTeleport() {
-    return this.Yyo;
+    return this.QIo;
   }
   set IsTeleport(e) {
-    this.Yyo = e;
+    this.QIo = e;
   }
   get BornLocation() {
-    return this.lMr;
+    return this.sEr;
   }
   get BornRotator() {
-    return this._Mr;
+    return this.aEr;
   }
   get RoleLocation() {
-    return this.uMr;
+    return this.hEr;
   }
-  static c9s(e, t, i) {
-    var s = ActorSystem_1.ActorSystem.Get(UE.Actor.StaticClass(), e),
-      o =
-        (s.AddComponentByClass(
+  static aia(e, t, i, s) {
+    var o = ActorSystem_1.ActorSystem.Get(UE.Actor.StaticClass(), e),
+      r =
+        (o.AddComponentByClass(
           UE.SceneComponent.StaticClass(),
           !1,
           MathUtils_1.MathUtils.DefaultTransform,
           !1,
         ),
-        s.K2_SetActorLocation(e.GetLocation(), !1, void 0, !1),
-        s.AddComponentByClass(
+        o.K2_SetActorLocation(e.GetLocation(), !1, void 0, !1),
+        o.AddComponentByClass(
           UE.WorldPartitionStreamingSourceComponent.StaticClass(),
           !1,
           MathUtils_1.MathUtils.DefaultTransform,
           !1,
         ));
-    if (((o.TargetBehavior = t), i)) for (const r of i) o.TargetGrids.Add(r);
-    return o.DisableStreamingSource(), s;
+    if (((r.Priority = t), (r.TargetBehavior = i), s))
+      for (const h of s) r.TargetGrids.Add(h);
+    return (
+      (r.bStreamingSourceShouldBlockOnSlowStreaming = !0),
+      r.DisableStreamingSource(),
+      o
+    );
   }
   InitStreamingSources() {
     var e = new UE.Transform(
@@ -330,8 +334,8 @@ class GameModeModel extends ModelBase_1.ModelBase {
         new UE.Vector(1, 1, 1),
       ),
       t = [WorldDefine_1.VOXEL_GRID_NAME];
-    (this.u9s = GameModeModel.c9s(e, 0, t)),
-      (this.$vr = GameModeModel.c9s(e, 1, t)),
+    (this.sia = GameModeModel.aia(e, 64, 0, t)),
+      (this.KMr = GameModeModel.aia(e, 128, 1, t)),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Level",
@@ -342,12 +346,12 @@ class GameModeModel extends ModelBase_1.ModelBase {
         );
   }
   SetBornInfo(e, t) {
-    (this.lMr = e ? new UE.Vector(e.X, e.Y, e.Z) : void 0),
-      (this.uMr = e ? Vector_1.Vector.Create(e) : void 0),
-      (this._Mr = t ? new UE.Rotator(t.Pitch, t.Yaw, t.Roll) : void 0);
+    (this.sEr = e ? new UE.Vector(e.X, e.Y, e.Z) : void 0),
+      (this.hEr = e ? Vector_1.Vector.Create(e) : void 0),
+      (this.aEr = t ? new UE.Rotator(t.Pitch, t.Yaw, t.Roll) : void 0);
   }
   UpdateBornLocation(e) {
-    this.uMr.Set(e.X, e.Y, e.Z);
+    this.hEr.Set(e.X, e.Y, e.Z);
   }
   AddSubLevel(e) {
     var t;
@@ -467,106 +471,100 @@ class GameModeModel extends ModelBase_1.ModelBase {
         !1);
   }
   get BeginLoadMapPromise() {
-    return this.cMr;
+    return this.lEr;
   }
   get AfterJoinSceneNotifyPromise() {
-    return this.sAr;
+    return this.yAr;
   }
   get OpenLevelPromise() {
-    return this.mMr;
+    return this._Er;
   }
   get StreamingCompleted() {
-    return this.tIo;
+    return this.zIo;
   }
   get VoxelStreamingCompleted() {
-    return this.k6s;
+    return this.fKs;
   }
   get LoadMultiFormationPromise() {
-    return this.fMr;
+    return this.dEr;
   }
   set LoadMultiFormationPromise(e) {
-    this.fMr = e;
+    this.dEr = e;
   }
   get PreloadPromise() {
-    return this.pMr;
+    return this.CEr;
   }
   get ApplyMaterialParameterCollectionPromise() {
-    return this.vMr;
+    return this.gEr;
   }
   get ChangeSceneModeEndNotifyPromise() {
-    return this.tIn;
+    return this.ETn;
   }
   get CheckStreamingCompletedTimerId() {
-    return this.MMr;
+    return this.fEr;
   }
   set CheckStreamingCompletedTimerId(e) {
-    this.MMr = e;
-  }
-  get CheckSpecialStreamingCompletedTimerId() {
-    return this.SMr;
-  }
-  set CheckSpecialStreamingCompletedTimerId(e) {
-    this.SMr = e;
+    this.fEr = e;
   }
   get CheckRenderAssetsStreamingCompletedTimerId() {
-    return this.EMr;
+    return this.vEr;
   }
   set CheckRenderAssetsStreamingCompletedTimerId(e) {
-    this.EMr = e;
+    this.vEr = e;
   }
   get CheckRenderAssetsTimeoutId() {
-    return this.FPn;
+    return this.Mbn;
   }
   set CheckRenderAssetsTimeoutId(e) {
-    this.FPn = e;
+    this.Mbn = e;
   }
   get VideoStartPromise() {
-    return this.yMr;
+    return this.MEr;
   }
   get VideoEndPromise() {
-    return this.IMr;
+    return this.EEr;
   }
   get RenderAssetDone() {
-    return this.TMr;
+    return this.SEr;
   }
   set RenderAssetDone(e) {
-    this.TMr = e;
+    this.SEr = e;
   }
   CreatePromise() {
-    (this.cMr = new GameModePromise_1.GameModePromise()),
-      (this.sAr = new GameModePromise_1.GameModePromise()),
-      (this.mMr = new GameModePromise_1.GameModePromise()),
-      (this.tIo = new GameModePromise_1.GameModePromise()),
-      (this.k6s = new GameModePromise_1.GameModePromise()),
-      (this.pMr = new GameModePromise_1.GameModePromise()),
-      (this.yMr = new GameModePromise_1.GameModePromise()),
-      (this.IMr = new GameModePromise_1.GameModePromise()),
-      (this.vMr = new GameModePromise_1.GameModePromise());
+    (this.lEr = new GameModePromise_1.GameModePromise()),
+      (this.yAr = new GameModePromise_1.GameModePromise()),
+      (this._Er = new GameModePromise_1.GameModePromise()),
+      (this.zIo = new GameModePromise_1.GameModePromise()),
+      (this.fKs = new GameModePromise_1.GameModePromise()),
+      (this.CEr = new GameModePromise_1.GameModePromise()),
+      (this.MEr = new GameModePromise_1.GameModePromise()),
+      (this.EEr = new GameModePromise_1.GameModePromise()),
+      (this.gEr = new GameModePromise_1.GameModePromise());
   }
   ResetPromise() {
-    (this.cMr = void 0),
-      (this.sAr = void 0),
-      (this.mMr = void 0),
-      (this.tIo = void 0),
-      (this.k6s = void 0),
-      (this.pMr = void 0),
-      (this.fMr = void 0),
-      (this.yMr = void 0),
-      (this.IMr = void 0),
-      (this.vMr = void 0);
+    (this.lEr = void 0),
+      (this.yAr = void 0),
+      (this._Er = void 0),
+      (this.zIo = void 0),
+      (this.fKs = void 0),
+      (this.CEr = void 0),
+      (this.dEr = void 0),
+      (this.MEr = void 0),
+      (this.EEr = void 0),
+      (this.gEr = void 0);
   }
   CreateChangeModePromise() {
-    this.tIn = new GameModePromise_1.GameModePromise();
+    this.ETn = new GameModePromise_1.GameModePromise();
   }
   ResetChangeModePromise() {
-    this.tIn = void 0;
+    this.ETn = void 0;
   }
-  LMr() {
-    this.tMr &&
-      (this.$vr?.IsValid() &&
-        (ActorSystem_1.ActorSystem.Put(this.$vr), (this.$vr = void 0)),
-      this.u9s?.IsValid()) &&
-      (ActorSystem_1.ActorSystem.Put(this.u9s), (this.u9s = void 0));
+  yEr() {
+    this.zMr &&
+      (this.KMr?.IsValid() &&
+        (ActorSystem_1.ActorSystem.Put(this.KMr), (this.KMr = void 0)),
+      this.sia?.IsValid()) &&
+      (ActorSystem_1.ActorSystem.Put(this.sia), (this.sia = void 0));
   }
   OnLeaveLevel() {
     var e,
@@ -579,28 +577,27 @@ class GameModeModel extends ModelBase_1.ModelBase {
       (i.length = 0),
       this.DataLayerSet.clear(),
       this.MaterialParameterCollectionMap.clear(),
-      this.LMr(),
+      this.yEr(),
       void 0 !== this.CheckStreamingCompletedTimerId &&
         (TimerSystem_1.TimerSystem.Remove(this.CheckStreamingCompletedTimerId),
         (this.CheckStreamingCompletedTimerId = void 0)),
-      (this.Vvr = void 0),
-      (this.Hvr = !1),
-      (this.jvr = !1),
-      (this.Wvr = !1),
-      (this.Qvr = ""),
-      (this.zvr = 0),
-      (this.eMr = !1),
-      (this.Zvr = Protocol_1.Aki.Protocol.sOs.Proto_NoneInstance),
-      (this.Yvr = void 0),
-      (this.Jvr = 0),
-      (this.tMr = !1),
-      (this.Yyo = !1),
+      (this.OMr = void 0),
+      (this.kMr = !1),
+      (this.FMr = !1),
+      (this.VMr = !1),
+      (this.jMr = ""),
+      (this.$Mr = 0),
+      (this.JMr = !1),
+      (this.YMr = Protocol_1.Aki.Protocol.XFs.Proto_NoneInstance),
+      (this.QMr = void 0),
+      (this.XMr = 0),
+      (this.zMr = !1),
+      (this.QIo = !1),
       (this.RenderAssetDone = !1),
       this.ResetPromise(),
-      (this.MMr = void 0),
-      (this.SMr = void 0),
-      (this.EMr = void 0),
-      !(this.FPn = void 0)
+      (this.fEr = void 0),
+      (this.vEr = void 0),
+      !(this.Mbn = void 0)
     );
   }
   OnChangeMode() {

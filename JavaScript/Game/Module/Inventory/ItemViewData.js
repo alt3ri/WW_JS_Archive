@@ -7,22 +7,22 @@ const UiPlayItemById_1 = require("../../../Core/Define/ConfigQuery/UiPlayItemByI
   ControllerHolder_1 = require("../../Manager/ControllerHolder");
 class ItemViewData {
   constructor(e) {
-    this.Lci = e;
+    this.Lmi = e;
   }
   SetItemViewInfo(e) {
-    this.Lci = e;
+    this.Lmi = e;
   }
   GetItemViewInfo() {
-    return this.Lci;
+    return this.Lmi;
   }
-  Dci(e) {
-    this.Lci.IsNewItem = e;
+  Dmi(e) {
+    this.Lmi.IsNewItem = e;
   }
   SetIsLock(e) {
-    this.Lci.IsLock = e;
+    this.Lmi.IsLock = e;
   }
   SetHasRedDot(e) {
-    this.Lci.HasRedDot = e;
+    this.Lmi.HasRedDot = e;
   }
   GetRedDotDisableRule() {
     var e = this.GetConfigId(),
@@ -30,7 +30,7 @@ class ItemViewData {
     return e ? e.RedDotDisableRule : 0;
   }
   GetConfigId() {
-    return this.Lci.ConfigId;
+    return this.Lmi.ConfigId;
   }
   GetUniqueId() {
     return this.GetItemDataBase()?.GetUniqueId();
@@ -39,34 +39,34 @@ class ItemViewData {
     return this.GetItemDataBase()?.GetQuality();
   }
   SetCount(e) {
-    this.Lci.Count = e;
+    this.Lmi.Count = e;
   }
   GetCount() {
-    return this.Lci.Count;
+    return this.Lmi.Count;
   }
   SetStackId(e) {
-    this.Lci.StackId = e;
+    this.Lmi.StackId = e;
   }
   GetStackId() {
-    return this.Lci.StackId;
+    return this.Lmi.StackId;
   }
   SetSelectOn(e) {
-    this.Lci.IsSelectOn = e;
+    this.Lmi.IsSelectOn = e;
   }
   GetSelectOn() {
-    return this.Lci.IsSelectOn;
+    return this.Lmi.IsSelectOn;
   }
   SetSelectNum(e) {
-    this.Lci.SelectOnNum = e;
+    this.Lmi.SelectOnNum = e;
   }
   GetSelectNum() {
-    return this.Lci.SelectOnNum;
+    return this.Lmi.SelectOnNum;
   }
   GetItemDataBase() {
-    return this.Lci.ItemDataBase;
+    return this.Lmi.ItemDataBase;
   }
   GetItemDataType() {
-    return this.Lci.ItemDataType;
+    return this.Lmi.ItemDataType;
   }
   GetSortIndex() {
     return this.GetItemDataBase().GetSortIndex();
@@ -77,7 +77,7 @@ class ItemViewData {
       r = this.GetConfigId(),
       i = this.GetUniqueId();
     0 === t ? e.RemoveNewCommonItem(r, i) : e.RemoveNewAttributeItem(i),
-      this.Dci(!1);
+      this.Dmi(!1);
   }
   RemoveRedDotItem() {
     var e = ModelManager_1.ModelManager.InventoryModel,
@@ -120,7 +120,7 @@ class ItemViewData {
         : 0;
   }
   GetItemOperationType() {
-    return this.Lci.ItemOperationMode;
+    return this.Lmi.ItemOperationMode;
   }
   IsItemCanDestroy() {
     switch (this.GetItemDataType()) {

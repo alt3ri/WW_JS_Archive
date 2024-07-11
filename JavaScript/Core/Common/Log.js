@@ -9,7 +9,7 @@ const cpp_1 = require("cpp"),
   LogCaptureController_1 = require("./LogCaptureController"),
   Time_1 = require("./Time"),
   levelTrace =
-    (UE.KuroStaticLibrary.IsBuildShipping() &&
+    (cpp_1.FKuroUtilityForPuerts.IsBuildShipping() &&
       (cpp_1.KuroLoggingLibrary.RegisterTerminateDelegate(),
       cpp_1.KuroLoggingLibrary.PromoteGlobalLogVerbosity(4)),
     { [0]: !0, 1: !1, 2: !1, 3: !1 }),

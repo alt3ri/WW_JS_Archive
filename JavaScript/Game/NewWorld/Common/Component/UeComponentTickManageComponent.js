@@ -30,27 +30,27 @@ let UeComponentTickManageComponent =
     EntityComponent_1.EntityComponent
   ) {
     constructor() {
-      super(...arguments), (this.Nsn = new Array()), (this.QFr = new Array());
+      super(...arguments), (this.vsn = new Array()), (this.LFr = new Array());
     }
     static get Dependencies() {
       return [1];
     }
     OnInitData(e) {
       for (const t of e.GetParam(UeComponentTickManageComponent_1))
-        t instanceof UE.Class && this.Nsn.push(t);
+        t instanceof UE.Class && this.vsn.push(t);
       return !0;
     }
     OnActivate() {
       const t = this.Entity.GetComponent(1);
-      if (0 < this.Nsn.length)
-        for (const e of this.Nsn) {
+      if (0 < this.vsn.length)
+        for (const e of this.vsn) {
           var n = t.Owner.K2_GetComponentsByClass(e),
             o = n.Num();
           for (let e = 0; e < o; ++e) {
             const t = n.Get(e);
             t instanceof UE.SkeletalMeshComponent ||
               !t.IsComponentTickEnabled() ||
-              (this.QFr.push(t), t.SetComponentTickEnabled(!1));
+              (this.LFr.push(t), t.SetComponentTickEnabled(!1));
           }
         }
       else {
@@ -62,19 +62,19 @@ let UeComponentTickManageComponent =
           const t = i.Get(e);
           t instanceof UE.SkeletalMeshComponent ||
             !t.IsComponentTickEnabled() ||
-            (this.QFr.push(t), t.SetComponentTickEnabled(!1));
+            (this.LFr.push(t), t.SetComponentTickEnabled(!1));
         }
       }
     }
     OnTick(e) {
       var t = this.Entity.GetComponent(2).Actor.CustomTimeDilation,
         n = e * MathUtils_1.MathUtils.MillisecondToSecond * t;
-      for (const o of this.QFr) o.KuroTickComponentOutside(n);
+      for (const o of this.LFr) o.KuroTickComponentOutside(n);
     }
   });
 (UeComponentTickManageComponent = UeComponentTickManageComponent_1 =
   __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(97)],
+    [(0, RegisterComponent_1.RegisterComponent)(99)],
     UeComponentTickManageComponent,
   )),
   (exports.UeComponentTickManageComponent = UeComponentTickManageComponent);

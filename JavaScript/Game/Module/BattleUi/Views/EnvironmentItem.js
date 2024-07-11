@@ -2,6 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.EnvironmentItem = void 0);
 const UE = require("ue"),
+  CustomPromise_1 = require("../../../../Core/Common/CustomPromise"),
+  Log_1 = require("../../../../Core/Common/Log"),
   ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   ScreenEffectSystem_1 = require("../../../Render/Effect/ScreenEffectSystem/ScreenEffectSystem"),
@@ -9,17 +11,19 @@ const UE = require("ue"),
 class EnvironmentItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this.Art = void 0),
-      (this.S0 = 0),
-      (this.knt = void 0),
-      (this.Snt = 0),
-      (this.Fnt = -1),
-      (this.dce = !1),
-      (this.Vnt = void 0),
+      (this.EMa = []),
       (this.Hnt = void 0),
-      (this.jnt = 0),
-      (this.Wnt = -1),
-      (this.Knt = 0.8);
+      (this.zst = void 0),
+      (this.Bst = 0),
+      (this.Zst = -1),
+      (this.dce = !1),
+      (this.eat = void 0),
+      (this.tat = void 0),
+      (this.iat = 0),
+      (this.oat = -1),
+      (this.rat = 0.8),
+      (this.qte = 0),
+      (this.BY = 0);
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -34,154 +38,179 @@ class EnvironmentItem extends UiPanelBase_1.UiPanelBase {
       [8, UE.UIItem],
       [9, UE.UIItem],
       [10, UE.UIItem],
+      [11, UE.UISprite],
     ];
   }
+  InitPropertyId(t) {
+    Log_1.Log.CheckDebug() &&
+      Log_1.Log.Debug("Battle", 18, "初始化环境叙事球", ["propertyId", t]),
+      (this.zst =
+        ModelManager_1.ModelManager.BattleUiModel.FormationData.GetUiEnvironmentProperty(
+          t,
+        )),
+      (this.rat = this.zst.WarningPercent);
+  }
+  async OnCreateAsync() {
+    var t, s, i, e;
+    this.zst &&
+      ((t = this.zst.IconFrame.AssetPathName.toString()),
+      (s = this.zst.Icon.AssetPathName.toString()),
+      (i = this.zst.IconFull.AssetPathName.toString()),
+      (e = []).push(this.yMa(t, 0)),
+      e.push(this.yMa(s, 1)),
+      e.push(this.yMa(i, 2)),
+      await Promise.all(e));
+  }
+  async yMa(t, s) {
+    const i = new CustomPromise_1.CustomPromise();
+    ResourceSystem_1.ResourceSystem.LoadAsync(
+      t,
+      UE.LGUISpriteData_BaseObject,
+      (t) => {
+        t.IsValid() && (this.EMa[s] = t), i.SetResult(!0);
+      },
+    ),
+      await i.Promise;
+  }
   OnStart() {
-    this.GetSprite(2)?.SetUIActive(!1),
-      this.hnt(6),
-      this.hnt(7),
-      this.hnt(8),
-      this.hnt(9),
-      this.hnt(10);
+    this.IMa(1, 0), this.IMa(4, 1), this.IMa(5, 2), (this.EMa.length = 0);
+    var t,
+      s = this.zst?.SceneEffect.ToAssetPathName(),
+      s =
+        (this.tat !== s && (this.nat(), (this.tat = s), this.sat()),
+        this.GetSprite(2)),
+      i = this.GetSprite(11);
+    this.zst &&
+      2 <= (t = this.zst.Colors).Num() &&
+      (s.SetColor(t.Get(0)), i.SetColor(t.Get(1))),
+      s.SetUIActive(!1),
+      this.Est(6),
+      this.Est(7),
+      this.Est(8),
+      this.Est(9),
+      this.Est(10);
   }
-  UpdatePropertyId(t) {
-    if (t !== this.S0) {
-      (this.S0 = t),
-        (this.knt =
-          ModelManager_1.ModelManager.BattleUiModel.FormationData.GetUiEnvironmentProperty(
-            t,
-          )),
-        (this.Knt = this.knt.WarningPercent);
-      var t = this.knt.IconFrame.AssetPathName?.toString(),
-        i = this.knt.Icon.AssetPathName?.toString(),
-        s = this.knt.IconFull.AssetPathName?.toString(),
-        e = this.knt.SceneEffect.ToAssetPathName(),
-        h = this.GetSprite(1);
-      const r = this.GetSprite(4),
-        n = this.GetSprite(5);
-      this.SetSpriteByPath(t, h, !1),
-        r?.SetAlpha(0),
-        this.SetSpriteByPath(i, r, !1, void 0, () => {
-          r?.SetAlpha(1);
-        }),
-        n?.SetAlpha(0),
-        this.SetSpriteByPath(s, n, !1, void 0, () => {
-          n?.SetAlpha(1);
-        }),
-        this.Hnt !== e && (this.Qnt(), (this.Hnt = e), this.Xnt());
-    }
+  IMa(t, s) {
+    (t = this.GetSprite(t)), (s = this.EMa[s]);
+    s && t?.SetSprite(s, !1);
   }
-  SetPercent(s, e) {
-    if (s <= 0 || e <= 0) (this.Snt = 0), this.$nt(!1);
-    else if (this.knt) {
-      s = Math.min(1, Math.max(0, s / e));
-      if (this.Snt !== s) {
-        (this.Snt = s), this.$nt(!0);
+  OnBeforeShow() {
+    this.TMa(this.qte, this.BY);
+  }
+  SetPercent(t, s) {
+    (this.qte = t), (this.BY = s), this.IsShowOrShowing && this.TMa(t, s);
+  }
+  TMa(i, e) {
+    if (i <= 0 || e <= 0) (this.Bst = 0), this.aat(!1);
+    else if (this.zst) {
+      i = Math.min(1, Math.max(0, i / e));
+      if (this.Bst !== i) {
+        (this.Bst = i), this.aat(!0);
         let t = 0,
-          i = -1;
-        s < this.Knt ? (t = 0) : (i = s < 1 ? ((t = 1), 7) : ((t = 2), 8));
+          s = -1;
+        i < this.rat ? (t = 0) : (s = i < 1 ? ((t = 1), 7) : ((t = 2), 8));
         var e = this.GetSprite(3);
-        e.SetFillAmount(s),
-          this.Fnt !== t &&
-            ((this.Fnt = t),
-            (s = this.knt.BgColors).Num() > t &&
-              this.GetSprite(0).SetColor(s.Get(t)),
-            (s = this.knt.BarColors).Num() > t && e.SetColor(s.Get(t)),
+        e.SetFillAmount(i),
+          this.Zst !== t &&
+            ((this.Zst = t),
+            (i = this.zst.BgColors).Num() > t &&
+              this.GetSprite(0).SetColor(i.Get(t)),
+            (i = this.zst.BarColors).Num() > t && e.SetColor(i.Get(t)),
             (e = this.GetSprite(4)),
-            (s = this.GetSprite(5)),
+            (i = this.GetSprite(5)),
             2 === t
-              ? (e.SetUIActive(!1), s.SetUIActive(!0))
-              : (e.SetUIActive(!0), s.SetUIActive(!1))),
-          this.Wnt !== i &&
-            (0 <= this.Wnt && this.Irt(this.Wnt),
-            0 <= (this.Wnt = i)
-              ? (this.Ert(this.Wnt),
+              ? (e.SetUIActive(!1), i.SetUIActive(!0))
+              : (e.SetUIActive(!0), i.SetUIActive(!1))),
+          this.oat !== s &&
+            (0 <= this.oat && this.Gnt(this.oat),
+            0 <= (this.oat = s)
+              ? (this.bnt(this.oat),
                 this.GetSprite(2)?.SetAlpha(0),
                 this.GetSprite(2)?.SetUIActive(!0))
               : this.GetSprite(2)?.SetUIActive(!1),
             2 === t) &&
-            this.Ert(9),
-          this.Ynt();
+            this.bnt(9),
+          this.hat();
       }
     }
   }
-  $nt(t) {
+  aat(t) {
     t !== this.dce &&
-      ((this.dce = t), this.Vnt) &&
+      ((this.dce = t), this.eat) &&
       (this.dce
         ? (ScreenEffectSystem_1.ScreenEffectSystem.GetInstance().PlayScreenEffect(
-            this.Vnt,
+            this.eat,
           ),
-          this.Irt(10),
-          this.Ert(6))
+          this.Gnt(10),
+          this.bnt(6))
         : (ScreenEffectSystem_1.ScreenEffectSystem.GetInstance().EndScreenEffect(
-            this.Vnt,
+            this.eat,
           ),
-          this.Irt(6),
-          0 <= this.Wnt &&
-            (this.Irt(this.Wnt),
+          this.Gnt(6),
+          0 <= this.oat &&
+            (this.Gnt(this.oat),
             this.GetSprite(2)?.SetUIActive(!1),
-            (this.Wnt = -1)),
-          this.Ert(10)));
+            (this.oat = -1)),
+          this.bnt(10)));
   }
-  Xnt() {
-    if (this.Hnt && !(this.Hnt.length <= 0)) {
-      let i = !0;
-      (this.jnt = ResourceSystem_1.ResourceSystem.LoadAsync(
-        this.Hnt,
+  sat() {
+    if (this.tat && !(this.tat.length <= 0)) {
+      let s = !0;
+      (this.iat = ResourceSystem_1.ResourceSystem.LoadAsync(
+        this.tat,
         UE.EffectScreenPlayData_C,
         (t) => {
-          (this.jnt = 0),
-            (i = !1),
-            (this.Vnt = t),
+          (this.iat = 0),
+            (s = !1),
+            (this.eat = t),
             this.dce &&
               (ScreenEffectSystem_1.ScreenEffectSystem.GetInstance().PlayScreenEffect(
-                this.Vnt,
+                this.eat,
               ),
-              this.Ynt());
+              this.hat());
         },
         102,
       )),
-        i || (this.jnt = 0);
+        s || (this.iat = 0);
     }
   }
-  Ynt() {
-    this.Vnt &&
+  hat() {
+    this.eat &&
       ScreenEffectSystem_1.ScreenEffectSystem.GetInstance().UpdateSEEnvironmentFactor(
-        this.Vnt,
-        this.Snt,
+        this.eat,
+        this.Bst,
       );
   }
-  Qnt() {
-    0 < this.jnt &&
-      (ResourceSystem_1.ResourceSystem.CancelAsyncLoad(this.jnt),
-      (this.jnt = 0)),
-      this.Vnt &&
+  nat() {
+    0 < this.iat &&
+      (ResourceSystem_1.ResourceSystem.CancelAsyncLoad(this.iat),
+      (this.iat = 0)),
+      this.eat &&
         (ScreenEffectSystem_1.ScreenEffectSystem.GetInstance().EndScreenEffect(
-          this.Vnt,
+          this.eat,
         ),
-        (this.Vnt = void 0)),
-      (this.Hnt = void 0);
+        (this.eat = void 0)),
+      (this.tat = void 0);
   }
   OnBeforeDestroy() {
-    super.OnBeforeDestroy(), this.Qnt();
+    super.OnBeforeDestroy(), this.nat();
   }
-  hnt(t) {
-    var i = [],
-      s = this.GetItem(t)
+  Est(t) {
+    var s = [],
+      i = this.GetItem(t)
         .GetOwner()
         .K2_GetComponentsByClass(UE.LGUIPlayTweenComponent.StaticClass()),
-      e = s.Num();
-    for (let t = 0; t < e; t++) i.push(s.Get(t));
-    this.Art || (this.Art = new Map()), this.Art.set(t, i);
+      e = i.Num();
+    for (let t = 0; t < e; t++) s.push(i.Get(t));
+    this.Hnt || (this.Hnt = new Map()), this.Hnt.set(t, s);
   }
-  Ert(t) {
-    t = this.Art?.get(t);
-    if (t) for (const i of t) i.Play();
+  bnt(t) {
+    t = this.Hnt?.get(t);
+    if (t) for (const s of t) s.Play();
   }
-  Irt(t) {
-    t = this.Art?.get(t);
-    if (t) for (const i of t) i.Stop();
+  Gnt(t) {
+    t = this.Hnt?.get(t);
+    if (t) for (const s of t) s.Stop();
   }
 }
 exports.EnvironmentItem = EnvironmentItem;

@@ -108,31 +108,31 @@ let CharacterPhysicsAssetComponent =
   ) {
     constructor() {
       super(...arguments),
-        (this.jjr = !1),
-        (this.Wjr = void 0),
-        (this.Kjr = void 0),
+        (this.Ijr = !1),
+        (this.Tjr = void 0),
+        (this.Ljr = void 0),
         (this.Hte = void 0),
         (this.Lie = void 0),
         (this.oRe = void 0),
-        (this.pZo = new Array()),
-        (this.Qjr = 0),
+        (this.Cer = new Array()),
+        (this.Djr = 0),
         (this.Ype = !1),
-        (this.W3r = (t) => {
-          t = t.GetComponent(61);
-          t.Wjr.ClearAnimState();
+        (this.I3r = (t) => {
+          t = t.GetComponent(63);
+          t.Tjr.ClearAnimState();
         }),
-        (this.Xjr = (t, e) => {
-          e ? this.Qjr++ : this.Qjr--,
-            0 === this.Qjr ? this.$jr(!1) : this.$jr(!0);
+        (this.Rjr = (t, e) => {
+          e ? this.Djr++ : this.Djr--,
+            0 === this.Djr ? this.Ujr(!1) : this.Ujr(!0);
         });
     }
     static get Dependencies() {
-      return [3, 185, 160];
+      return [3, 188, 162];
     }
     OnInitData() {
       return (
-        (this.Wjr = new PhysicsState()),
-        (this.Kjr = new PhysicsAssetLoader()),
+        (this.Tjr = new PhysicsState()),
+        (this.Ljr = new PhysicsAssetLoader()),
         !0
       );
     }
@@ -140,54 +140,54 @@ let CharacterPhysicsAssetComponent =
       if (
         ((this.Hte = this.Entity.GetComponent(3)),
         this.Hte.CreatureData?.GetEntityType() !==
-          Protocol_1.Aki.Protocol.HBs.Proto_Player ||
+          Protocol_1.Aki.Protocol.wks.Proto_Player ||
           !this.Hte.IsAutonomousProxy)
       )
-        return (this.jjr = !1), !(this.Hte = void 0);
-      (this.Lie = this.Entity.GetComponent(185)),
-        (this.oRe = this.Entity.GetComponent(160));
+        return (this.Ijr = !1), !(this.Hte = void 0);
+      (this.Lie = this.Entity.GetComponent(188)),
+        (this.oRe = this.Entity.GetComponent(162));
       var t = this.Hte.CreatureData.GetRoleConfig().RoleBody,
         t =
           ConfigManager_1.ConfigManager.EntityPhysicsAssetConfig.GetPhysicsAssetConfigByRoleBody(
             t,
           );
-      for (const e of CharacterPhysicsAssetComponent_1.Yjr)
-        this.Lie.HasTag(e) && this.Qjr++;
+      for (const e of CharacterPhysicsAssetComponent_1.Ajr)
+        this.Lie.HasTag(e) && this.Djr++;
       if (
-        (this.Wjr.InitBaseState(0 < this.Qjr),
-        (this.jjr = this.Kjr.SetDataAndLoadAsset(this.Hte, t, () => {
-          this.$jr(this.Wjr.Active, !0);
+        (this.Tjr.InitBaseState(0 < this.Djr),
+        (this.Ijr = this.Ljr.SetDataAndLoadAsset(this.Hte, t, () => {
+          this.Ujr(this.Tjr.Active, !0);
         })),
-        this.jjr)
+        this.Ijr)
       ) {
         if (this.Lie?.Valid)
-          for (const s of CharacterPhysicsAssetComponent_1.Yjr)
-            this.Lie.HasTag(s) && this.Qjr++,
-              this.pZo.push(this.Lie.ListenForTagAddOrRemove(s, this.Xjr));
+          for (const s of CharacterPhysicsAssetComponent_1.Ajr)
+            this.Lie.HasTag(s) && this.Djr++,
+              this.Cer.push(this.Lie.ListenForTagAddOrRemove(s, this.Rjr));
         EventSystem_1.EventSystem.AddWithTarget(
           this.Entity,
           EventDefine_1.EEventName.RoleOnStateInherit,
-          this.W3r,
+          this.I3r,
         );
       }
       return !0;
     }
     OnClear() {
-      for (const t of this.pZo) t.EndTask();
+      for (const t of this.Cer) t.EndTask();
       return (
-        (this.pZo.length = 0),
-        this.Kjr.ClearData(),
-        this.jjr &&
+        (this.Cer.length = 0),
+        this.Ljr.ClearData(),
+        this.Ijr &&
           EventSystem_1.EventSystem.RemoveWithTarget(
             this.Entity,
             EventDefine_1.EEventName.RoleOnStateInherit,
-            this.W3r,
+            this.I3r,
           ),
         !0
       );
     }
-    $jr(e, t = !1) {
-      if ((this.Wjr.Active !== e || t) && this.Kjr.LoadSuccess) {
+    Ujr(e, t = !1) {
+      if ((this.Tjr.Active !== e || t) && this.Ljr.LoadSuccess) {
         let t = !0;
         if (e) {
           if (!(t = this.Hte.SetMeshCollisionEnabled(2, "布娃娃效果")))
@@ -211,7 +211,7 @@ let CharacterPhysicsAssetComponent =
               )
             );
           this.Hte.Actor.Mesh.bEnableShearAnim = !1;
-          for (const s of this.Kjr.BoneNames)
+          for (const s of this.Ljr.BoneNames)
             this.Hte.Actor.Mesh.SetAllBodiesBelowSimulatePhysics(
               FNameUtil_1.FNameUtil.GetDynamicFName(s),
               !0,
@@ -248,12 +248,12 @@ let CharacterPhysicsAssetComponent =
               ]),
             this.oRe.MainAnimInstance.SavePoseSnapshot(ragDoll);
         }
-        this.Wjr.SetNewState(e);
+        this.Tjr.SetNewState(e);
       }
     }
     GetRagRollQuitState() {
-      var t = this.Wjr.QuitCache;
-      return (this.Wjr.QuitCache = !1), t;
+      var t = this.Tjr.QuitCache;
+      return (this.Tjr.QuitCache = !1), t;
     }
     SetDebug(t) {
       (this.Ype = t),
@@ -261,18 +261,18 @@ let CharacterPhysicsAssetComponent =
           ((t = `
             ------------------------角色物理资产管理组件开启Debug----------------------
             -物理资产: ${this.Hte.Actor.Mesh.PhysicsAssetOverride?.GetName()}
-            -驱动骨骼：${this.Kjr.BoneNames}
-            -脚本组件管理状态 是否激活：${this.Wjr.Active}
+            -驱动骨骼：${this.Ljr.BoneNames}
+            -脚本组件管理状态 是否激活：${this.Tjr.Active}
             -------------------------------------------------------------------------
             `),
           Log_1.Log.CheckInfo()) &&
           Log_1.Log.Info("Character", 58, t);
     }
   });
-(CharacterPhysicsAssetComponent.Yjr = [-648310348]),
+(CharacterPhysicsAssetComponent.Ajr = [-648310348]),
   (CharacterPhysicsAssetComponent = CharacterPhysicsAssetComponent_1 =
     __decorate(
-      [(0, RegisterComponent_1.RegisterComponent)(61)],
+      [(0, RegisterComponent_1.RegisterComponent)(63)],
       CharacterPhysicsAssetComponent,
     )),
   (exports.CharacterPhysicsAssetComponent = CharacterPhysicsAssetComponent);

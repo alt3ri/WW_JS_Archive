@@ -1,8 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GachaController = void 0);
-const LanguageSystem_1 = require("../../../Core/Common/LanguageSystem"),
-  Log_1 = require("../../../Core/Common/Log"),
+const Log_1 = require("../../../Core/Common/Log"),
   Protocol_1 = require("../../../Core/Define/Net/Protocol"),
   Net_1 = require("../../../Core/Net/Net"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
@@ -25,7 +24,7 @@ class GachaController extends UiControllerBase_1.UiControllerBase {
     return (
       InputManager_1.InputManager.RegisterOpenViewFunc(
         "GachaMainView",
-        GachaController.Y7t,
+        GachaController.YHt,
       ),
       !0
     );
@@ -33,15 +32,15 @@ class GachaController extends UiControllerBase_1.UiControllerBase {
   static OnAddEvents() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnFunctionOpenSet,
-      this.J7t,
+      this.JHt,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnFunctionOpenUpdate,
-        this.J7t,
+        this.JHt,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.CrossDay,
-        this.z7t,
+        this.zHt,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.AfterCloseGachaScene,
@@ -51,15 +50,15 @@ class GachaController extends UiControllerBase_1.UiControllerBase {
   static OnRemoveEvents() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnFunctionOpenSet,
-      this.J7t,
+      this.JHt,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnFunctionOpenUpdate,
-        this.J7t,
+        this.JHt,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.CrossDay,
-        this.z7t,
+        this.zHt,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.AfterCloseGachaScene,
@@ -67,10 +66,10 @@ class GachaController extends UiControllerBase_1.UiControllerBase {
       );
   }
   static OnRegisterNetEvent() {
-    Net_1.Net.Register(10183, GachaController.OnGachaResultNotify);
+    Net_1.Net.Register(7832, GachaController.OnGachaResultNotify);
   }
   static OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(10183);
+    Net_1.Net.UnRegister(7832);
   }
   static CanCloseView() {
     return (
@@ -85,50 +84,59 @@ class GachaController extends UiControllerBase_1.UiControllerBase {
   }
   static GachaHistoryRequest(e) {}
   static IsNewRole(e) {
-    var a = !GachaController.Z7t.has(e);
-    return a && GachaController.Z7t.add(e), a;
+    var a = !GachaController.ZHt.has(e);
+    return a && GachaController.ZHt.add(e), a;
   }
   static async GachaRequest(e, a) {
-    var r = Protocol_1.Aki.Protocol.YZn.create();
-    (r.c5n = e), (r.m5n = a);
+    var r = Protocol_1.Aki.Protocol.Hrs.create();
+    (r.KVn = e), (r.QVn = a);
     ModelManager_1.ModelManager.RoleModel.GetRoleList().forEach((e) => {
-      e && GachaController.Z7t.add(e.GetDataId());
+      e && GachaController.ZHt.add(e.GetDataId());
     });
-    var n,
-      r = await Net_1.Net.CallAsync(8315, r);
+    var o,
+      r = await Net_1.Net.CallAsync(16605, r);
     r &&
-      (r.lkn === Protocol_1.Aki.Protocol.lkn.Proto_ErrGachaIsNotInOpenTime
-        ? ((n = new ConfirmBoxDefine_1.ConfirmBoxDataNew(67)),
+      (r.O4n === Protocol_1.Aki.Protocol.O4n.Proto_ErrGachaIsNotInOpenTime
+        ? ((o = new ConfirmBoxDefine_1.ConfirmBoxDataNew(67)),
           ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
-            n,
+            o,
           ),
-          this.z7t())
-        : r.lkn !== Protocol_1.Aki.Protocol.lkn.Sys
+          this.zHt())
+        : r.O4n !== Protocol_1.Aki.Protocol.O4n.NRs
           ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-              r.lkn,
-              15058,
+              r.O4n,
+              16172,
             )
           : (ModelManager_1.ModelManager.GachaModel.UpdateCount(e, a),
-            (ModelManager_1.ModelManager.GachaModel.CurGachaResult = r.ARs),
+            (ModelManager_1.ModelManager.GachaModel.CurGachaResult = r.QUs),
             UiManager_1.UiManager.OpenView("DrawMainView")));
   }
+  static async GachaPoolDetailRequestAsync(e) {
+    var a = Protocol_1.Aki.Protocol.tLa.create(),
+      e = ((a.$Vn = e), await Net_1.Net.CallAsync(13147, a));
+    return (
+      e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs &&
+        ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
+          e.O4n,
+          1889,
+        ),
+      e
+    );
+  }
   static GachaInfoRequest(a, e = 0) {
-    var r = TimeUtil_1.TimeUtil.GetServerTime() - this.eHt;
-    (this.eHt = TimeUtil_1.TimeUtil.GetServerTime()),
-      r < this.tHt
+    var r = TimeUtil_1.TimeUtil.GetServerTime() - this.ejt;
+    (this.ejt = TimeUtil_1.TimeUtil.GetServerTime()),
+      r < this.tjt
         ? a &&
           !UiManager_1.UiManager.IsViewOpen("GachaMainView") &&
           UiManager_1.UiManager.OpenView("GachaMainView")
-        : (((r = Protocol_1.Aki.Protocol.QZn.create()).d5n =
-            LanguageSystem_1.LanguageSystem.GetLanguageDefineByCode(
-              LanguageSystem_1.LanguageSystem.PackageLanguage,
-            ).LanguageType),
-          Net_1.Net.Call(12776, r, (e) => {
+        : ((r = Protocol_1.Aki.Protocol.Vrs.create()),
+          Net_1.Net.Call(12155, r, (e) => {
             e
-              ? e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys
+              ? e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs
                 ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-                    e.lkn,
-                    20889,
+                    e.O4n,
+                    16631,
                   )
                 : ModelManager_1.ModelManager.LoadingModel?.IsLoading
                   ? Log_1.Log.CheckInfo() &&
@@ -143,11 +151,11 @@ class GachaController extends UiControllerBase_1.UiControllerBase {
                         JSON.stringify(e),
                       ]),
                     ModelManager_1.ModelManager.GachaModel.InitGachaInfoMap(
-                      e.LRs,
+                      e.jUs,
                     ),
                     (ModelManager_1.ModelManager.GachaModel.TodayResultCount =
-                      e.RRs),
-                    (ModelManager_1.ModelManager.GachaModel.RecordId = e.DRs),
+                      e.WUs),
+                    (ModelManager_1.ModelManager.GachaModel.RecordId = e.KUs),
                     EventSystem_1.EventSystem.Emit(
                       EventDefine_1.EEventName.RefreshGachaMainView,
                     ),
@@ -162,15 +170,15 @@ class GachaController extends UiControllerBase_1.UiControllerBase {
           }));
   }
   static GachaUsePoolRequest(a, r) {
-    var e = Protocol_1.Aki.Protocol.ZZn.create();
-    (e.c5n = a),
-      (e.C5n = r),
-      Net_1.Net.Call(8527, e, (e) => {
+    var e = Protocol_1.Aki.Protocol.Krs.create();
+    (e.KVn = a),
+      (e.$Vn = r),
+      Net_1.Net.Call(4321, e, (e) => {
         e
-          ? e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys
+          ? e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs
             ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-                e.lkn,
-                11845,
+                e.O4n,
+                28954,
               )
             : (e = ModelManager_1.ModelManager.GachaModel.GetGachaInfo(a))
               ? ((e.UsePoolId = r),
@@ -187,31 +195,31 @@ class GachaController extends UiControllerBase_1.UiControllerBase {
   }
   static PreloadGachaResultResource(e) {
     const i = [],
-      _ = new Map();
+      l = new Map();
     ModelManager_1.ModelManager.GachaModel.CurGachaResult.forEach((e, a) => {
-      var r = e.u5n.G3n;
-      let n;
+      var r = e.WVn.f8n;
+      let o;
       switch (ConfigManager_1.ConfigManager.GachaConfig.GetItemIdType(r)) {
         case 1:
-          var o = ConfigManager_1.ConfigManager.GachaConfig.GetRoleInfoById(r),
+          var n = ConfigManager_1.ConfigManager.GachaConfig.GetRoleInfoById(r),
             t =
-              (_.get(r) ||
-                (_.set(r, !0),
+              (l.get(r) ||
+                (l.set(r, !0),
                 i.push(
                   ...UiModelResourcesManager_1.UiModelResourcesManager.GetRoleResourcesPath(
-                    o.Id,
+                    n.Id,
                   ),
                 )),
               ModelManager_1.ModelManager.WeaponModel.GetWeaponIdByRoleDataId(
-                o.Id,
+                n.Id,
               )),
             t =
-              ((n =
+              ((o =
                 UiModelResourcesManager_1.UiModelResourcesManager.GetWeaponResourcesPath(
                   t,
                 )),
-              _.get(r) || (_.set(r, !0), i.push(...n)),
-              ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(o.Id));
+              l.get(r) || (l.set(r, !0), i.push(...o)),
+              ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(n.Id));
           i.push(
             ...UiModelResourcesManager_1.UiModelResourcesManager.GetHuluResourcesPath(
               t.PartyId * HULU_PARTY_ID + HULU_BASE_ID + 1,
@@ -219,11 +227,11 @@ class GachaController extends UiControllerBase_1.UiControllerBase {
           );
           break;
         case 2:
-          (n =
+          (o =
             UiModelResourcesManager_1.UiModelResourcesManager.GetWeaponResourcesPath(
               r,
             )),
-            _.get(r) || (_.set(r, !0), i.push(...n));
+            l.get(r) || (l.set(r, !0), i.push(...o));
       }
     }),
       UiModelResourcesManager_1.UiModelResourcesManager.LoadUiModelResources(
@@ -232,17 +240,17 @@ class GachaController extends UiControllerBase_1.UiControllerBase {
       );
   }
   static CommonShowRoleResult(e, a, r) {
-    var n, o, t;
+    var o, n, t;
     1 ===
       ConfigManager_1.ConfigManager.InventoryConfig.GetItemDataTypeByConfigId(
         e,
       ) &&
-      ((n = new Array()),
-      (o = new GachaModel_1.GachaResult()),
-      ((t = new Protocol_1.Aki.Protocol.u5n()).G3n = e),
-      (t.g5n = 1),
-      (o.u5n = t),
-      n.push(o),
+      ((o = new Array()),
+      (n = new GachaModel_1.GachaResult()),
+      ((t = new Protocol_1.Aki.Protocol.WVn()).f8n = e),
+      (t.YVn = 1),
+      (n.WVn = t),
+      o.push(n),
       (e = {
         SkipOnLoadResourceFinish: a,
         ResultViewHideExtraReward: r,
@@ -251,29 +259,29 @@ class GachaController extends UiControllerBase_1.UiControllerBase {
       UiManager_1.UiManager.IsViewOpen("DrawMainView")
         ? ModelManager_1.ModelManager.GachaModel.CacheGachaInfo({
             ResultViewData: e,
-            GachaResult: n,
+            GachaResult: o,
           })
-        : ((ModelManager_1.ModelManager.GachaModel.CurGachaResult = n),
+        : ((ModelManager_1.ModelManager.GachaModel.CurGachaResult = o),
           e.SkipOnLoadResourceFinish
             ? UiManager_1.UiManager.OpenView("GachaScanView", e)
             : UiManager_1.UiManager.OpenView("DrawMainView", e)));
   }
 }
-((exports.GachaController = GachaController).Z7t = new Set()),
-  (GachaController.Y7t = () => {
+((exports.GachaController = GachaController).ZHt = new Set()),
+  (GachaController.YHt = () => {
     GachaController.OpenGachaMainView(!0);
   }),
   (GachaController.OnGachaResultNotify = (e) => {
-    (ModelManager_1.ModelManager.GachaModel.CurGachaResult = e.ARs),
+    (ModelManager_1.ModelManager.GachaModel.CurGachaResult = e.QUs),
       UiManager_1.UiManager.OpenView("DrawMainView");
   }),
-  (GachaController.J7t = (e, a) => {
+  (GachaController.JHt = (e, a) => {
     10009 === e &&
       a &&
       (ModelManager_1.ModelManager.GachaModel.InitGachaPoolOpenRecord(),
       GachaController.GachaInfoRequest(!1));
   }),
-  (GachaController.z7t = () => {
+  (GachaController.zHt = () => {
     UiManager_1.UiManager.IsViewOpen("GachaMainView") &&
       GachaController.GachaInfoRequest(!1);
   }),
@@ -282,8 +290,8 @@ class GachaController extends UiControllerBase_1.UiControllerBase {
       ? GachaController.GachaInfoRequest(!0, e)
       : Log_1.Log.CheckError() && Log_1.Log.Error("Gacha", 9, "抽奖未开启");
   }),
-  (GachaController.eHt = 0),
-  (GachaController.tHt = 1),
+  (GachaController.ejt = 0),
+  (GachaController.tjt = 1),
   (GachaController.OnAfterCloseGachaScent = () => {
     var e = ModelManager_1.ModelManager.GachaModel.GetCachedGachaInfo();
     e &&

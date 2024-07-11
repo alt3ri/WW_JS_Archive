@@ -10,42 +10,42 @@ const UE = require("ue"),
 class EditMobileBattleViewPanelItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this.wit = new UE.Vector()),
-      (this.aCt = void 0),
-      (this.sCt = void 0),
-      (this.pCt = (t) => {
+      (this.Xot = new UE.Vector()),
+      (this.vgt = void 0),
+      (this.pgt = void 0),
+      (this.Agt = (t) => {
         var i, s;
         !this.PanelItemData ||
-          !this.sCt ||
+          !this.pgt ||
           2 <=
             ModelManager_1.ModelManager.BattleUiSetModel.GetTouchFingerDataCount() ||
           ((i = t.GetLocalPointInPlane()),
           (t = t.dragComponent.GetOwner().GetActorScale3D()),
-          (s = (i.X - this.sCt.X) * t.X),
-          (t = (i.Y - this.sCt.Y) * t.Z),
+          (s = (i.X - this.pgt.X) * t.X),
+          (t = (i.Y - this.pgt.Y) * t.Z),
           0 != s &&
             0 != t &&
-            ((this.aCt.X += s),
-            (this.aCt.Y += t),
-            (this.aCt.Z = 0),
-            this.SetRelativeLocation(this.aCt),
-            (this.sCt = i)));
+            ((this.vgt.X += s),
+            (this.vgt.Y += t),
+            (this.vgt.Z = 0),
+            this.SetRelativeLocation(this.vgt),
+            (this.pgt = i)));
       }),
-      (this.vCt = (t) => {
+      (this.Pgt = (t) => {
         this.PanelItemData &&
           this.PanelItemData.CanEdit &&
-          ((this.sCt = t.GetLocalPointInPlane()),
-          (this.aCt = this.RootItem.RelativeLocation),
+          ((this.pgt = t.GetLocalPointInPlane()),
+          (this.vgt = this.RootItem.RelativeLocation),
           ModelManager_1.ModelManager.BattleUiSetModel.SetPanelItemSelected(
             this.PanelItemData,
           ));
       }),
-      (this.MCt = () => {
-        this.sCt = void 0;
+      (this.xgt = () => {
+        this.pgt = void 0;
       }),
-      (this.GCt = () => {
+      (this.$gt = () => {
         this.PanelItemData && this.PanelItemData.CanEdit
-          ? ((this.sCt = void 0),
+          ? ((this.pgt = void 0),
             ModelManager_1.ModelManager.BattleUiSetModel.SetPanelItemSelected(
               this.PanelItemData,
             ))
@@ -53,10 +53,10 @@ class EditMobileBattleViewPanelItem extends UiPanelBase_1.UiPanelBase {
               "NotEdit",
             );
       }),
-      (this.NCt = () => {
-        this.sCt = void 0;
+      (this.Ygt = () => {
+        this.pgt = void 0;
       }),
-      (this.OCt = (t) => {
+      (this.Jgt = (t) => {
         this.PanelItemData &&
           this.PanelItemData.CanEdit &&
           1 === t &&
@@ -64,7 +64,7 @@ class EditMobileBattleViewPanelItem extends UiPanelBase_1.UiPanelBase {
             this.PanelItemData,
           );
       }),
-      (this.kCt = () => {
+      (this.zgt = () => {
         var t;
         return this.PanelItemData && this.PanelItemData.CanEdit
           ? !(t =
@@ -84,14 +84,14 @@ class EditMobileBattleViewPanelItem extends UiPanelBase_1.UiPanelBase {
   aGe(t, i, s) {
     (this.PanelItemData = t),
       (this.PanelItem = i),
-      (this.qCt = s),
-      (this.FCt = this.RootActor.GetComponentByClass(
+      (this.Xgt = s),
+      (this.Zgt = this.RootActor.GetComponentByClass(
         UE.UIDraggableComponent.StaticClass(),
       )),
-      (this.VCt = this.RootActor.GetComponentByClass(
+      (this.e0t = this.RootActor.GetComponentByClass(
         UE.UIButtonComponent.StaticClass(),
       )),
-      (this.b5e = this.RootActor.GetComponentByClass(
+      (this.$Ve = this.RootActor.GetComponentByClass(
         UE.UIExtendToggle.StaticClass(),
       )),
       this.Ore(),
@@ -100,54 +100,54 @@ class EditMobileBattleViewPanelItem extends UiPanelBase_1.UiPanelBase {
   OnBeforeDestroy() {
     this.kre(),
       (this.PanelItemData = void 0),
-      (this.FCt = void 0),
-      (this.VCt = void 0),
-      (this.wit = void 0),
-      (this.b5e = void 0),
-      (this.qCt = void 0),
+      (this.Zgt = void 0),
+      (this.e0t = void 0),
+      (this.Xot = void 0),
+      (this.$Ve = void 0),
+      (this.Xgt = void 0),
       (this.PanelItem = void 0);
   }
   Ore() {
-    this.FCt &&
-      (this.FCt.OnPointerDragCallBack.Bind(this.pCt),
-      this.FCt.OnPointerBeginDragCallBack.Bind(this.vCt),
-      this.FCt.OnPointerEndDragCallBack.Bind(this.MCt)),
-      this.VCt &&
-        (this.VCt.OnPointDownCallBack.Bind(this.GCt),
-        this.VCt.OnPointUpCallBack.Bind(this.NCt)),
-      this.b5e &&
-        (this.b5e.OnStateChange.Add(this.OCt),
-        this.b5e.CanExecuteChange.Bind(this.kCt));
+    this.Zgt &&
+      (this.Zgt.OnPointerDragCallBack.Bind(this.Agt),
+      this.Zgt.OnPointerBeginDragCallBack.Bind(this.Pgt),
+      this.Zgt.OnPointerEndDragCallBack.Bind(this.xgt)),
+      this.e0t &&
+        (this.e0t.OnPointDownCallBack.Bind(this.$gt),
+        this.e0t.OnPointUpCallBack.Bind(this.Ygt)),
+      this.$Ve &&
+        (this.$Ve.OnStateChange.Add(this.Jgt),
+        this.$Ve.CanExecuteChange.Bind(this.zgt));
   }
   kre() {
-    this.FCt && this.FCt.OnPointerDragCallBack.Unbind(),
-      this.VCt &&
-        (this.VCt.OnPointDownCallBack.Unbind(),
-        this.VCt.OnPointUpCallBack.Unbind()),
-      this.b5e &&
-        (this.b5e.OnStateChange.Remove(this.OCt),
-        this.b5e.CanExecuteChange.Unbind());
+    this.Zgt && this.Zgt.OnPointerDragCallBack.Unbind(),
+      this.e0t &&
+        (this.e0t.OnPointDownCallBack.Unbind(),
+        this.e0t.OnPointUpCallBack.Unbind()),
+      this.$Ve &&
+        (this.$Ve.OnStateChange.Remove(this.Jgt),
+        this.$Ve.CanExecuteChange.Unbind());
   }
   SetRelativeLocation(t) {
-    t = this.HCt(t);
+    t = this.t0t(t);
     (this.PanelItemData.EditOffsetX = this.RootItem.GetAnchorOffsetX()),
       (this.PanelItemData.EditOffsetY = this.RootItem.GetAnchorOffsetY()),
       this.RootItem.K2_SetRelativeLocation(t, !1, void 0, !1);
   }
   GetRelativeLocation() {
-    return this.aCt;
+    return this.vgt;
   }
   OnSave() {
     this.PanelItemData &&
       ((this.PanelItemData.EditOffsetX = this.RootItem.GetAnchorOffsetX()),
       (this.PanelItemData.EditOffsetY = this.RootItem.GetAnchorOffsetY()));
   }
-  HCt(t) {
+  t0t(t) {
     var i = this.RootActor.GetActorScale3D().X,
       s = this.RootItem.GetPivot(),
       h = s.Y,
       s = s.X,
-      e = this.qCt.GetUIItem(),
+      e = this.Xgt.GetUIItem(),
       r = e.Width / 2,
       e = e.Height / 2,
       a = this.RootItem.Width * i,
@@ -166,33 +166,33 @@ class EditMobileBattleViewPanelItem extends UiPanelBase_1.UiPanelBase {
     var t;
     this.PanelItemData &&
       ((t = this.PanelItemData.Size),
-      (this.wit.X = t),
-      (this.wit.Y = t),
-      (this.wit.Z = t),
-      this.RootItem.SetUIItemScale(this.wit),
+      (this.Xot.X = t),
+      (this.Xot.Y = t),
+      (this.Xot.Z = t),
+      this.RootItem.SetUIItemScale(this.Xot),
       this.RootItem.SetAnchorOffsetX(this.PanelItemData.OffsetX),
       this.RootItem.SetAnchorOffsetY(this.PanelItemData.OffsetY),
       this.RootItem.SetUIItemAlpha(this.PanelItemData.Alpha),
       this.RootItem.SetHierarchyIndex(this.PanelItemData.HierarchyIndex),
-      (this.aCt = this.RootItem.RelativeLocation));
+      (this.vgt = this.RootItem.RelativeLocation));
   }
   Reset() {
     var t;
     this.PanelItemData &&
       ((t = this.PanelItemData.SourceSize),
-      (this.wit.X = t),
-      (this.wit.Y = t),
-      (this.wit.Z = t),
-      this.RootItem.SetUIItemScale(this.wit),
+      (this.Xot.X = t),
+      (this.Xot.Y = t),
+      (this.Xot.Z = t),
+      this.RootItem.SetUIItemScale(this.Xot),
       this.RootItem.SetAnchorOffsetX(this.PanelItemData.SourceOffsetX),
       this.RootItem.SetAnchorOffsetY(this.PanelItemData.SourceOffsetY),
       this.RootItem.SetUIItemAlpha(this.PanelItemData.SourceAlpha),
       this.RootItem.SetHierarchyIndex(this.PanelItemData.SourceHierarchyIndex),
-      (this.aCt = this.RootItem.RelativeLocation));
+      (this.vgt = this.RootItem.RelativeLocation));
   }
   SetSelected(t) {
-    this.b5e &&
-      (t ? this.b5e.SetToggleState(1, !1) : this.b5e.SetToggleState(0, !1));
+    this.$Ve &&
+      (t ? this.$Ve.SetToggleState(1, !1) : this.$Ve.SetToggleState(0, !1));
   }
   ApplyTopIndex() {
     this.GetRootItem().SetHierarchyIndex(

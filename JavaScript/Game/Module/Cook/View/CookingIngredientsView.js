@@ -14,28 +14,28 @@ const UE = require("ue"),
 class CookingIngredientsView extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this.dqt = void 0),
-      (this.JNt = void 0),
-      (this.nNt = () => {
+      (this.fGt = void 0),
+      (this.zOt = void 0),
+      (this.sOt = () => {
         this.GetButton(3).IsSelfInteractive
           ? 0 === ModelManager_1.ModelManager.CookModel.CurrentCookListType
             ? (ModelManager_1.ModelManager.CookModel.CleanAddExp(),
               CookController_1.CookController.SendCookFoodRequest(
-                this.dqt.ItemId,
+                this.fGt.ItemId,
                 ModelManager_1.ModelManager.CookModel.CurrentCookRoleId,
-                this.JNt.CurrentSetCount,
+                this.zOt.CurrentSetCount,
               ))
             : CookController_1.CookController.SendFoodProcessRequest(
-                this.dqt.ItemId,
+                this.fGt.ItemId,
                 ModelManager_1.ModelManager.CookModel.GetTmpMachiningItemList(),
-                this.JNt.CurrentSetCount,
+                this.zOt.CurrentSetCount,
               )
           : ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
               "MaterialShort",
             );
       }),
-      (this.zNt = () => {
-        this.ZNt();
+      (this.ZOt = () => {
+        this.ekt();
       });
   }
   OnRegisterComponent() {
@@ -49,105 +49,105 @@ class CookingIngredientsView extends UiPanelBase_1.UiPanelBase {
       [6, UE.UIItem],
       [7, UE.UIText],
     ]),
-      (this.BtnBindInfo = [[3, this.nNt]]);
+      (this.BtnBindInfo = [[3, this.sOt]]);
   }
   async OnBeforeStartAsync() {
-    (this.JNt =
+    (this.zOt =
       new CookingIngredientsVerticalView_1.CookingIngredientsVerticalView()),
-      await this.JNt.CreateByActorAsync(this.GetItem(4).GetOwner()),
-      this.JNt.SetActive(!0);
+      await this.zOt.CreateByActorAsync(this.GetItem(4).GetOwner()),
+      this.zOt.SetActive(!0);
   }
   OnStart() {
-    (this.JNt.OnChangeMaterialSelectionDelegate = this.zNt),
+    (this.zOt.OnChangeMaterialSelectionDelegate = this.ZOt),
       this.GetButton(3).SetCanClickWhenDisable(!0);
   }
   RefreshTips(e) {
-    if (((this.dqt = e), this.dqt))
-      switch ((this.eOt(), e.MainType)) {
+    if (((this.fGt = e), this.fGt))
+      switch ((this.tkt(), e.MainType)) {
         case 0:
-          this.aNt();
+          this.RefreshCooking();
           break;
         case 1:
-          this.hNt();
+          this.lOt();
       }
   }
   OnSecondTimerRefresh() {
-    this.dqt && this.JNt?.OnSecondTimerRefresh();
+    this.fGt && this.zOt?.OnSecondTimerRefresh();
   }
   RefreshTipsWithSavedData() {
-    this.RefreshTips(this.dqt);
+    this.RefreshTips(this.fGt);
   }
-  eOt() {
-    this.C4e();
+  tkt() {
+    this.P5e();
   }
-  C4e() {
+  P5e() {
     var e;
-    0 === this.dqt.MainType
+    0 === this.fGt.MainType
       ? ((e = ConfigManager_1.ConfigManager.CookConfig.GetCookFormulaById(
-          this.dqt.ItemId,
+          this.fGt.ItemId,
         )),
         (e =
           ConfigManager_1.ConfigManager.ItemConfig.GetItemName(e.FoodItemId) ??
           ""),
         this.GetText(0).SetText(e))
       : ((e = ConfigManager_1.ConfigManager.CookConfig.GetCookProcessedById(
-          this.dqt.ItemId,
+          this.fGt.ItemId,
         )),
         (e =
           ConfigManager_1.ConfigManager.ItemConfig.GetItemName(e.FinalItemId) ??
           ""),
         this.GetText(0).SetText(e));
   }
-  hNt() {
+  lOt() {
     var e = ConfigManager_1.ConfigManager.CookConfig.GetCookProcessedById(
-        this.dqt.ItemId,
+        this.fGt.ItemId,
       ),
       e = ModelManager_1.ModelManager.InventoryModel.GetCommonItemCount(
         e.FinalItemId,
       );
     LguiUtil_1.LguiUtil.SetLocalText(this.GetText(1), "Have", e),
-      this.JNt.RefreshMachining(this.dqt),
-      this.ZNt(),
-      this.dqt.IsUnLock
+      this.zOt.RefreshMachining(this.fGt),
+      this.ekt(),
+      this.fGt.IsUnLock
         ? LguiUtil_1.LguiUtil.SetLocalText(this.GetText(5), "CookButtonText")
         : LguiUtil_1.LguiUtil.SetLocalText(this.GetText(5), "Research");
   }
-  aNt() {
+  RefreshCooking() {
     var e = ConfigManager_1.ConfigManager.CookConfig.GetCookFormulaById(
-        this.dqt.ItemId,
+        this.fGt.ItemId,
       ),
       e = ModelManager_1.ModelManager.InventoryModel.GetCommonItemCount(
         e.FoodItemId,
       );
     LguiUtil_1.LguiUtil.SetLocalText(this.GetText(1), "Have", e),
-      this.JNt.RefreshCooking(this.dqt),
-      this.ZNt(),
+      this.zOt.RefreshCooking(this.fGt),
+      this.ekt(),
       LguiUtil_1.LguiUtil.SetLocalText(this.GetText(5), "CookButtonText");
   }
-  ZNt() {
-    var e = this.dqt.IsUnLock;
+  ekt() {
+    var e = this.fGt.IsUnLock;
     let i = !1,
       t = !0,
       r = !0;
     if (0 === ModelManager_1.ModelManager.CookModel.CurrentCookListType) {
       var a = ModelManager_1.ModelManager.CookModel;
-      (i = a.CheckMaterialEnough(this.dqt.ItemId)),
-        (t = a.CheckCoinEnough(this.dqt.ItemId)),
-        (r = a.CheckLimitCount(this.dqt.ItemId));
+      (i = a.CheckMaterialEnough(this.fGt.ItemId)),
+        (t = a.CheckCoinEnough(this.fGt.ItemId)),
+        (r = a.CheckLimitCount(this.fGt.ItemId));
     } else {
       let e = !0;
       for (const s of ModelManager_1.ModelManager.CookModel.GetTmpMachiningItemList())
-        s.m3n || (e = !1);
+        s.G6n || (e = !1);
       i =
         ModelManager_1.ModelManager.CookModel.CheckCanProcessedNew(
-          this.dqt.ItemId,
+          this.fGt.ItemId,
         ) && e;
     }
-    this.GetText(7).SetText(this.tOt(e, i, t, r)),
+    this.GetText(7).SetText(this.ikt(e, i, t, r)),
       this.GetItem(6).SetUIActive(!(i && r && e)),
       this.GetButton(3).RootUIComp.SetUIActive(i && r && e);
   }
-  tOt(e, i, t, r) {
+  ikt(e, i, t, r) {
     return e
       ? i
         ? r

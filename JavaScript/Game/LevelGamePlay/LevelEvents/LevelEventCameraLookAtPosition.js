@@ -64,27 +64,17 @@ class LevelEventCameraLookAtPosition extends LevelGeneralBase_1.LevelEventBase {
   ExecuteNew(t, e) {
     const i = t;
     if (i) {
-      var t = i.Pos.X,
-        r = i.Pos.Y,
-        o = i.Pos.Z,
+      var t = i.Pos.X ?? 0,
+        r = i.Pos.Y ?? 0,
+        o = i.Pos.Z ?? 0,
         a = i.FadeInTime,
         s = i.StayTime,
         n = i.FadeOutTime,
         l = i.CameraPos?.X,
         m = i.CameraPos?.Y,
         _ = i.CameraPos?.Z,
-        C = i.Fov;
-      if (
-        !t ||
-        !r ||
-        !o ||
-        isNaN(t) ||
-        isNaN(r) ||
-        isNaN(o) ||
-        isNaN(a) ||
-        isNaN(s) ||
-        isNaN(n)
-      )
+        u = i.Fov;
+      if (isNaN(t) || isNaN(r) || isNaN(o) || isNaN(a) || isNaN(s) || isNaN(n))
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Camera",
@@ -99,7 +89,7 @@ class LevelEventCameraLookAtPosition extends LevelGeneralBase_1.LevelEventBase {
             ["endPositionX", l],
             ["endPositionY", m],
             ["endPositionZ", _],
-            ["fov", C],
+            ["fov", u],
           ),
           this.FinishExecute(!1);
       else {
@@ -109,7 +99,8 @@ class LevelEventCameraLookAtPosition extends LevelGeneralBase_1.LevelEventBase {
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.ForceReleaseInput,
             this.pLe,
-          )),
+          ),
+          InputDistributeController_1.InputDistributeController.RefreshInputTag()),
           i.HideUi &&
             ModelManager_1.ModelManager.BattleUiModel.ChildViewData.HideBattleView(
               1,

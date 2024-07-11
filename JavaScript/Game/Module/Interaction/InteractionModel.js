@@ -10,8 +10,6 @@ const puerts_1 = require("puerts"),
   MathUtils_1 = require("../../../Core/Utils/MathUtils"),
   IAction_1 = require("../../../UniverseEditor/Interface/IAction"),
   IGlobal_1 = require("../../../UniverseEditor/Interface/IGlobal"),
-  EventDefine_1 = require("../../Common/Event/EventDefine"),
-  EventSystem_1 = require("../../Common/Event/EventSystem"),
   LocalStorage_1 = require("../../Common/LocalStorage"),
   LocalStorageDefine_1 = require("../../Common/LocalStorageDefine"),
   PublicUtil_1 = require("../../Common/PublicUtil"),
@@ -29,17 +27,17 @@ class SameTipInteract {
 class InteractionModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
-      (this.S1i = void 0),
-      (this.E1i = !1),
-      (this.y1i = void 0),
-      (this.I1i = void 0),
-      (this.T1i = 0),
-      (this.L1i = !1),
-      (this.D1i = new Array()),
-      (this.R1i = new Array()),
-      (this.U1i = new Map()),
-      (this.A1i = 0),
-      (this.P1i = 0),
+      (this.E_i = void 0),
+      (this.S_i = !1),
+      (this.y_i = void 0),
+      (this.I_i = void 0),
+      (this.T_i = 0),
+      (this.L_i = !1),
+      (this.D_i = new Array()),
+      (this.R_i = new Array()),
+      (this.U_i = new Map()),
+      (this.A_i = 0),
+      (this.P_i = 0),
       (this.IsInteractionTurning = !1),
       (this.LockInteractionEntity = void 0),
       (this.InteractingEntity = void 0),
@@ -50,7 +48,7 @@ class InteractionModel extends ModelBase_1.ModelBase {
       (this.ShowLongPressTime = 0),
       (this.AutoInteractionGuideCount = 0),
       (this.AutoInteractionGuideAppearCount = 0),
-      (this.x1i = 0);
+      (this.x_i = 0);
   }
   OnInit() {
     return (
@@ -76,12 +74,12 @@ class InteractionModel extends ModelBase_1.ModelBase {
   }
   OnClear() {
     return (
-      this.S1i?.clear(),
-      (this.y1i = void 0),
-      (this.I1i = void 0),
-      (this.D1i.length = 0),
-      (this.R1i.length = 0),
-      this.U1i?.clear(),
+      this.E_i?.clear(),
+      (this.y_i = void 0),
+      (this.I_i = void 0),
+      (this.D_i.length = 0),
+      (this.R_i.length = 0),
+      this.U_i?.clear(),
       TsInteractionUtils_1.TsInteractionUtils.Clear(),
       !0
     );
@@ -138,23 +136,23 @@ class InteractionModel extends ModelBase_1.ModelBase {
       this.AutoInteractionGuideAppearCount < this.AutoInteractionGuideCount
     );
   }
-  w1i() {
-    (this.y1i =
+  w_i() {
+    (this.y_i =
       TsInteractionUtils_1.TsInteractionUtils.GetInteractionConfig(
         "Common_Exit",
       )),
-      !this.y1i || this.y1i.交互选项组.Num() <= 0
+      !this.y_i || this.y_i.交互选项组.Num() <= 0
         ? Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Interaction",
             18,
             "获取交互默认退出选项失败，请检查配置InteractionConfig是否有Common_Exit",
           )
-        : (this.I1i = this.y1i.交互选项组.Get(0));
+        : (this.I_i = this.y_i.交互选项组.Get(0));
   }
   GetInteractEntitiesCount() {
     let t = 0;
-    for (const e of this.R1i)
+    for (const e of this.R_i)
       e
         ? (t +=
             1 < e.DirectOptionInstanceIds.length
@@ -165,7 +163,7 @@ class InteractionModel extends ModelBase_1.ModelBase {
   }
   GetInteractEntityByIndex(t) {
     let e = 0;
-    for (const i of this.R1i)
+    for (const i of this.R_i)
       if (
         (i && 1 < i.DirectOptionInstanceIds.length
           ? (e += i.DirectOptionInstanceIds.length)
@@ -177,7 +175,7 @@ class InteractionModel extends ModelBase_1.ModelBase {
   }
   RefreshInteractEntities(e) {
     let t = 0;
-    for (const n of this.R1i)
+    for (const n of this.R_i)
       if (n) {
         var i = n.GetEntity();
         if (i?.Valid) {
@@ -190,10 +188,10 @@ class InteractionModel extends ModelBase_1.ModelBase {
         }
       }
     return (
-      (this.x1i = e.length),
+      (this.x_i = e.length),
       e.sort((t, e) => {
-        (t = t.GetComponent(178)),
-          (e = e.GetComponent(178)),
+        (t = t.GetComponent(181)),
+          (e = e.GetComponent(181)),
           (t = t.GetInteractController().InteractEntity.Priority);
         return e.GetInteractController().InteractEntity.Priority - t;
       }),
@@ -201,15 +199,16 @@ class InteractionModel extends ModelBase_1.ModelBase {
     );
   }
   GetInteractItemCount() {
-    return this.x1i;
+    return this.x_i;
   }
   CanAutoPickUp(t) {
     var e;
     return (
       !!t?.Valid &&
+      !t.GetComponent(207)?.GetIsDisableOneClickCollection() &&
       !(
-        !(e = t.GetComponent(178))?.IsPawnInteractive() ||
-        (!t.GetComponent(102)?.IsDropItem() &&
+        !(e = t.GetComponent(181))?.IsPawnInteractive() ||
+        (!t.GetComponent(104)?.IsDropItem() &&
           !e.IsCollection() &&
           (!e.IsAnimationItem() ||
             !(e = t.GetComponent(0))?.Valid ||
@@ -221,7 +220,7 @@ class InteractionModel extends ModelBase_1.ModelBase {
   }
   GetOptionInstanceIdByIndex(t) {
     let e = t;
-    for (const i of this.R1i)
+    for (const i of this.R_i)
       if (i && 0 < i.DirectOptionInstanceIds.length) {
         if (e < i.DirectOptionInstanceIds.length)
           return i.DirectOptionInstanceIds[e];
@@ -231,34 +230,34 @@ class InteractionModel extends ModelBase_1.ModelBase {
   }
   GetOptionNameByIndex(t) {
     let e = t;
-    for (const i of this.R1i)
+    for (const i of this.R_i)
       if (i && !i.IsAdvice && 0 < i.DirectOptionInstanceIds.length) {
         if (e < i.DirectOptionNames.length) return i.DirectOptionNames[e];
         e -= i.DirectOptionNames.length;
       } else e--;
   }
   GetCommonExitOption() {
-    return this.I1i || this.w1i(), this.I1i;
+    return this.I_i || this.w_i(), this.I_i;
   }
   EnterInteractCd(t = DEFAULT_CD) {
-    this.T1i = TimeUtil_1.TimeUtil.GetServerTime() + t;
+    this.T_i = TimeUtil_1.TimeUtil.GetServerTime() + t;
   }
   InInteractCd() {
-    return this.T1i > TimeUtil_1.TimeUtil.GetServerTime();
+    return this.T_i > TimeUtil_1.TimeUtil.GetServerTime();
   }
   HandleInteractionHint(t, e, i = void 0, r = -1, n = void 0) {
     if (t) {
       let t = !1;
-      if ((t = !i || this.B1i(e, i, r))) {
+      if ((t = !i || this.B_i(e, i, r))) {
         if (t)
-          if (this.D1i.includes(e)) {
+          if (this.D_i.includes(e)) {
             if (
               TsInteractionUtils_1.TsInteractionUtils.IsInteractHintViewOpened()
             )
               return;
-          } else this.D1i.push(e), this.R1i.push(n);
+          } else this.D_i.push(e), this.R_i.push(n);
         TsInteractionUtils_1.TsInteractionUtils.IsInteractHintViewOpened()
-          ? 0 < this.D1i.length &&
+          ? 0 < this.D_i.length &&
             TsInteractionUtils_1.TsInteractionUtils.UpdateInteractHintView()
           : TsInteractionUtils_1.TsInteractionUtils.OpenInteractHintView();
       } else
@@ -269,35 +268,35 @@ class InteractionModel extends ModelBase_1.ModelBase {
             "[交互界面提前返回] bAllowPush为false",
           );
     } else {
-      t = this.D1i.indexOf(e);
+      t = this.D_i.indexOf(e);
       -1 < t &&
-        (this.D1i.splice(t, 1),
-        this.R1i.splice(t, 1),
-        0 < this.D1i.length
+        (this.D_i.splice(t, 1),
+        this.R_i.splice(t, 1),
+        0 < this.D_i.length
           ? TsInteractionUtils_1.TsInteractionUtils.UpdateInteractHintView()
           : TsInteractionUtils_1.TsInteractionUtils.CloseInteractHintView());
     }
   }
-  B1i(t, e = void 0, i = -1) {
+  B_i(t, e = void 0, i = -1) {
     let r = !1;
     if (1 === e.CustomOptionType) return !1;
     if (!e.IsUniqueness) return !0;
     if (e.UniequenessType === IAction_1.EInteractUniqueness.Closest) {
       if ("" === e.TidContent || -1 === i) return !0;
       var n,
-        o = this.U1i.get(e.TidContent);
+        o = this.U_i.get(e.TidContent);
       if (!o)
         return (
           ((n = new SameTipInteract()).EntityId = t),
           (n.CurrentDistance = i),
-          this.U1i.set(e.TidContent, n),
+          this.U_i.set(e.TidContent, n),
           !0
         );
-      this.D1i.includes(o.EntityId)
+      this.D_i.includes(o.EntityId)
         ? o.CurrentDistance > i && t !== o.EntityId
           ? ((r = !0),
-            -1 < (e = this.D1i.indexOf(o.EntityId)) &&
-              (this.D1i.splice(e, 1), this.R1i.splice(e, 1)),
+            -1 < (e = this.D_i.indexOf(o.EntityId)) &&
+              (this.D_i.splice(e, 1), this.R_i.splice(e, 1)),
             (o.EntityId = t),
             (o.CurrentDistance = i))
           : t === o.EntityId && (o.CurrentDistance = i)
@@ -305,11 +304,11 @@ class InteractionModel extends ModelBase_1.ModelBase {
     } else r = !0;
     return r;
   }
-  AddInteractOption(t, e, i, r) {
+  AddInteractOption(t, e, i, r, n) {
     t = this.GetInteractController(t);
     return t
       ? (e = this.GetDynamicConfig(e))
-        ? t.AddDynamicInteractOption(e, i, r)
+        ? t.AddDynamicInteractOption(e, i, r, n)
         : (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Interaction",
@@ -329,37 +328,37 @@ class InteractionModel extends ModelBase_1.ModelBase {
   }
   GetInteractController(t) {
     if (t) {
-      t = t.GetComponent(178);
+      t = t.GetComponent(181);
       if (t) return t.GetInteractController();
     }
   }
   SetInteractTarget(t) {
-    this.A1i !== t &&
-      ((this.A1i = t),
-      Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("Interaction", 37, "切换交互目标", ["entityId", t]),
+    this.A_i !== t &&
+      ((this.A_i = t),
+      Log_1.Log.CheckDebug() &&
+        Log_1.Log.Debug("Interaction", 37, "切换交互目标", ["entityId", t]),
       InputDistributeController_1.InputDistributeController.RefreshInputTag());
   }
   get CurrentInteractEntityId() {
-    return this.A1i;
+    return this.A_i;
   }
   SetInterctCreatureDataId(t) {
-    this.P1i = t;
+    this.P_i = t;
   }
   get InteractCreatureDataId() {
-    return this.P1i;
+    return this.P_i;
   }
   get InteractCreatureDataLongId() {
-    if (void 0 !== this.P1i)
-      return MathUtils_1.MathUtils.NumberToLong(this.P1i);
+    if (void 0 !== this.P_i)
+      return MathUtils_1.MathUtils.NumberToLong(this.P_i);
   }
   get CurrentInteractUeActor() {
-    if (this.A1i) {
-      var t = EntitySystem_1.EntitySystem.Get(this.A1i);
+    if (this.A_i) {
+      var t = EntitySystem_1.EntitySystem.Get(this.A_i);
       if (t) return t.GetComponent(1)?.Owner;
     }
   }
-  b1i() {
+  b_i() {
     var t = (0, puerts_1.$ref)("");
     let e = (0, PublicUtil_1.getConfigPath)(
       IGlobal_1.globalConfig.InteractOptionConfigPath,
@@ -375,9 +374,9 @@ class InteractionModel extends ModelBase_1.ModelBase {
         (UE.KuroStaticLibrary.LoadFileToString(t, e),
         (t = (0, puerts_1.$unref)(t)))
       ) {
-        this.S1i = new Map();
+        this.E_i = new Map();
         t = JSON.parse(t);
-        if (t) for (const i of t) i.Guid, this.S1i.set(i.Guid, i);
+        if (t) for (const i of t) i.Guid, this.E_i.set(i.Guid, i);
       }
     } else
       Log_1.Log.CheckWarn() &&
@@ -388,7 +387,7 @@ class InteractionModel extends ModelBase_1.ModelBase {
   }
   GetDynamicConfig(t) {
     if (PublicUtil_1.PublicUtil.UseDbConfig()) {
-      if ((this.S1i || (this.S1i = new Map()), !this.S1i.get(t))) {
+      if ((this.E_i || (this.E_i = new Map()), !this.E_i.get(t))) {
         var e =
           ConfigManager_1.ConfigManager.InteractOptionConfig.GetInteractionConfig(
             t,
@@ -411,24 +410,24 @@ class InteractionModel extends ModelBase_1.ModelBase {
           e.Duration &&
             "" !== e.Duration &&
             (i.Duration = JSON.parse(e.Duration)),
-          this.S1i.set(t, i);
+          this.E_i.set(t, i);
       }
-    } else this.E1i || (this.b1i(), (this.E1i = !0));
-    return this.S1i.get(t);
+    } else this.S_i || (this.b_i(), (this.S_i = !0));
+    return this.E_i.get(t);
   }
   SetInteractionHintDisable(t) {
-    (this.L1i = t) &&
+    (this.L_i = t) &&
       TsInteractionUtils_1.TsInteractionUtils.CloseInteractHintView();
   }
   get IsHideInteractHint() {
-    return this.L1i;
+    return this.L_i;
   }
   LockInteraction(t, e) {
-    t = t?.GetComponent(178);
+    t = t?.GetComponent(181);
     t && t.Valid && t.SetServerLockInteract(e, "Interacting Notify");
   }
   GetInteractEntityIds() {
-    return this.D1i;
+    return this.D_i;
   }
   LockInteract(t) {
     ModelManager_1.ModelManager.InteractionModel.LockInteractionEntity
@@ -452,14 +451,10 @@ class InteractionModel extends ModelBase_1.ModelBase {
     this.LockInteractionEntity &&
       ((t = EntitySystem_1.EntitySystem.GetComponent(
         this.LockInteractionEntity,
-        178,
+        181,
       )),
       (this.LockInteractionEntity = void 0),
       ModelManager_1.ModelManager.BattleUiModel.ChildViewData.ShowBattleView(1),
-      EventSystem_1.EventSystem.Emit(
-        EventDefine_1.EEventName.SetActiveBattleViewSkill,
-        !0,
-      ),
       t?.AfterUnlockInteractionEntity(),
       InputDistributeController_1.InputDistributeController.RefreshInputTag());
   }

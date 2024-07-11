@@ -8,13 +8,13 @@ const UE = require("ue"),
   GlobalData_1 = require("../GlobalData");
 class UiPrefabLoadModule {
   constructor() {
-    this.sCr = new Map();
+    this.ogr = new Map();
   }
   async LoadPrefabAsync(e, r) {
     if (GlobalData_1.GlobalData.World) {
       const s = new CustomPromise_1.CustomPromise();
-      Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("UiPrefabLoad", 11, "资源加载开始", ["路径", e]);
+      Log_1.Log.CheckDebug() &&
+        Log_1.Log.Debug("UiPrefabLoad", 11, "资源加载开始", ["路径", e]);
       var o = ResourceSystem_1.ResourceSystem.LoadAsync(
           e,
           UE.PrefabAsset,
@@ -25,24 +25,27 @@ class UiPrefabLoadModule {
               r,
             );
             s.SetResult(e),
-              Log_1.Log.CheckInfo() &&
-                Log_1.Log.Info("UiPrefabLoad", 11, "资源加载完成", ["路径", o]);
+              Log_1.Log.CheckDebug() &&
+                Log_1.Log.Debug("UiPrefabLoad", 11, "资源加载完成", [
+                  "路径",
+                  o,
+                ]);
           },
           102,
         ),
         e =
           (o !== ResourceSystem_1.ResourceSystem.InvalidId &&
-            this.sCr.set(o, e),
+            this.ogr.set(o, e),
           await s.Promise);
-      return this.sCr.delete(o), e;
+      return this.ogr.delete(o), e;
     }
   }
   Clear() {
-    for (var [e, o] of this.sCr)
+    for (var [e, o] of this.ogr)
       ResourceSystem_1.ResourceSystem.CancelAsyncLoad(e),
-        Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("UiPrefabLoad", 11, "资源加载取消", ["路径", o]);
-    this.sCr.clear();
+        Log_1.Log.CheckDebug() &&
+          Log_1.Log.Debug("UiPrefabLoad", 11, "资源加载取消", ["路径", o]);
+    this.ogr.clear();
   }
 }
 exports.UiPrefabLoadModule = UiPrefabLoadModule;

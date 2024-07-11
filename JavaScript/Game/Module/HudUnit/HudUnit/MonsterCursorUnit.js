@@ -8,12 +8,12 @@ const UE = require("ue"),
 class MonsterCursorUnit extends HudUnitBase_1.HudUnitBase {
   constructor() {
     super(...arguments),
-      (this.lti = void 0),
-      (this.zei = new UE.Rotator()),
-      (this.wit = new UE.Vector2D()),
-      (this._ti = 0),
-      (this.uti = 1),
-      (this.cti = (t, s) => {
+      (this.lii = void 0),
+      (this.zti = new UE.Rotator()),
+      (this.Xot = new UE.Vector2D()),
+      (this._ii = 0),
+      (this.uii = 1),
+      (this.cii = (t, s) => {
         this._Oe();
       });
   }
@@ -28,56 +28,56 @@ class MonsterCursorUnit extends HudUnitBase_1.HudUnitBase {
     ];
   }
   Activate(t) {
-    (this.lti = t),
-      (this.wit.X = 0),
-      (this.wit.Y = 0),
+    (this.lii = t),
+      (this.Xot.X = 0),
+      (this.Xot.Y = 0),
       this.AddEntityEvents(),
       this._Oe(),
       this.GetActive() && this.SetActive(!1);
   }
   Deactivate() {
-    this.lti &&
-      (this.lti.ClearAllTagCountChangedCallback(), (this.lti = void 0));
+    this.lii &&
+      (this.lii.ClearAllTagCountChangedCallback(), (this.lii = void 0));
   }
   AddEntityEvents() {
-    this.lti.ListenForTagCountChanged(1996624497, this.cti),
-      this.lti.ListenForTagCountChanged(704115290, this.cti),
-      this.lti.ListenForTagCountChanged(1922078392, this.cti);
+    this.lii.ListenForTagCountChanged(1996624497, this.cii),
+      this.lii.ListenForTagCountChanged(704115290, this.cii),
+      this.lii.ListenForTagCountChanged(1922078392, this.cii);
   }
   GetEntityId() {
-    return this.lti?.GetId();
+    return this.lii?.GetId();
   }
   IsValid() {
-    return void 0 !== this.lti;
+    return void 0 !== this.lii;
   }
   GetHudEntityData() {
-    return this.lti;
+    return this.lii;
   }
   Refresh(t, s) {
-    t !== this.uti &&
-      ((this.uti = t),
-      this.GetUiNiagara(3 + this._ti).SetNiagaraVarFloat("Scale", t)),
-      (this.zei.Yaw = Math.atan2(s.Y, s.X) * RAD_2_DEG - 90),
-      (this.zei.Roll = 0),
-      (this.zei.Pitch = 0),
-      this.RootItem.SetUIRelativeRotation(this.zei),
+    t !== this.uii &&
+      ((this.uii = t),
+      this.GetUiNiagara(3 + this._ii).SetNiagaraVarFloat("Scale", t)),
+      (this.zti.Yaw = Math.atan2(s.Y, s.X) * RAD_2_DEG - 90),
+      (this.zti.Roll = 0),
+      (this.zti.Pitch = 0),
+      this.RootItem.SetUIRelativeRotation(this.zti),
       this.RootItem.SetAnchorOffsetX(s.X),
       this.RootItem.SetAnchorOffsetY(s.Y);
   }
   _Oe() {
     let s = 0;
     if (
-      ((s = this.lti.ContainsTagById(1922078392)
+      ((s = this.lii.ContainsTagById(1922078392)
         ? 2
-        : this.lti.ContainsTagById(-1371021686)
+        : this.lii.ContainsTagById(-1371021686)
           ? 1
           : 0),
-      this._ti !== s)
+      this._ii !== s)
     ) {
-      this._ti = s;
+      this._ii = s;
       for (let t = 0; t < CURSOR_NUM; t++)
         this.GetItem(0 + t).SetUIActive(t === s);
-      this.GetUiNiagara(3 + s).SetNiagaraVarFloat("Scale", this.uti);
+      this.GetUiNiagara(3 + s).SetNiagaraVarFloat("Scale", this.uii);
     }
   }
 }

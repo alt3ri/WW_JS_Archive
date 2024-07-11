@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FriendModel = exports.LocalFriendApplication = void 0);
 const Log_1 = require("../../../Core/Common/Log"),
+  CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById"),
   ModelBase_1 = require("../../../Core/Framework/ModelBase"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
@@ -19,31 +20,35 @@ exports.LocalFriendApplication = LocalFriendApplication;
 class FriendModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
-      (this.JVt = new Map()),
-      (this.zVt = new Map()),
-      (this.ZVt = new Map()),
-      (this.e6t = new Map()),
+      (this.J6t = new Map()),
+      (this.z6t = new Map()),
+      (this.Z6t = new Map()),
+      (this.e8t = new Map()),
       (this.FreshFriendApplicationIds = new Set()),
       (this.RecentlyTeamList = new Map()),
-      (this.t6t = void 0),
-      (this.i6t = void 0),
-      (this.o6t = void 0),
+      (this.t8t = void 0),
+      (this.i8t = void 0),
+      (this.o8t = void 0),
       (this.TestDataLoaded = !1),
       (this.CachePlayerData = void 0),
-      (this.r6t = new Set()),
-      (this.n6t = new Set()),
-      (this.s6t = new Set());
+      (this.r8t = new Set()),
+      (this.n8t = new Set()),
+      (this.s8t = new Set()),
+      (this.ApplyCdTime =
+        CommonParamById_1.configCommonParamById.GetIntConfig(
+          "apply_valid_time",
+        ));
   }
   OnClear() {
     return (
-      (this.t6t = void 0),
-      (this.i6t = void 0),
-      (this.o6t = void 0),
-      this.ZVt.clear(),
-      this.r6t.clear(),
-      this.n6t.clear(),
-      this.s6t.clear(),
-      this.a6t(),
+      (this.t8t = void 0),
+      (this.i8t = void 0),
+      (this.o8t = void 0),
+      this.Z6t.clear(),
+      this.r8t.clear(),
+      this.n8t.clear(),
+      this.s8t.clear(),
+      this.a8t(),
       !0
     );
   }
@@ -53,7 +58,7 @@ class FriendModel extends ModelBase_1.ModelBase {
         LocalStorage_1.LocalStorage.GetPlayer(
           LocalStorageDefine_1.ELocalStoragePlayerKey.LocalFriendApplication,
         ) ?? new Map();
-    for (const i of this.zVt.values())
+    for (const i of this.z6t.values())
       t.has(i.ApplyPlayerData.PlayerId) &&
         (e = t.get(i.ApplyPlayerData.PlayerId)).CreatedTime ===
           i.ApplyCreatedTime &&
@@ -61,12 +66,12 @@ class FriendModel extends ModelBase_1.ModelBase {
         i.Fresh ||
           this.FreshFriendApplicationIds.delete(i.ApplyPlayerData.PlayerId));
   }
-  a6t() {
+  a8t() {
     var e = new Map();
-    for (const i of this.zVt.keys()) {
+    for (const i of this.z6t.keys()) {
       var t = new LocalFriendApplication();
-      (t.Fresh = this.zVt.get(i).Fresh),
-        (t.CreatedTime = this.zVt.get(i).ApplyCreatedTime),
+      (t.Fresh = this.z6t.get(i).Fresh),
+        (t.CreatedTime = this.z6t.get(i).ApplyCreatedTime),
         e.set(i, t);
     }
     LocalStorage_1.LocalStorage.SetPlayer(
@@ -75,11 +80,14 @@ class FriendModel extends ModelBase_1.ModelBase {
     );
   }
   GetFriendListCount() {
-    return this.JVt.size;
+    return this.J6t.size;
+  }
+  GetFriendApplyCount() {
+    return this.z6t.size;
   }
   GetFriendSortedListIds() {
     var e = new Array();
-    for (const t of this.JVt.keys()) e.push(t);
+    for (const t of this.J6t.keys()) e.push(t);
     return FriendController_1.FriendController.GetSortedFriendListByRules(
       e,
       FriendController_1.FriendController.FriendListSortHook,
@@ -87,7 +95,7 @@ class FriendModel extends ModelBase_1.ModelBase {
   }
   GetFriendApplyListIds() {
     var e = new Array();
-    for (const t of this.zVt.keys()) e.push(t);
+    for (const t of this.z6t.keys()) e.push(t);
     return FriendController_1.FriendController.GetSortedBlackOrApplyList(e);
   }
   GetRecentlyTeamIds() {
@@ -106,7 +114,7 @@ class FriendModel extends ModelBase_1.ModelBase {
   }
   GetFriendSearchResultListIds() {
     var e = new Array();
-    for (const t of this.ZVt.values()) e.push(t.PlayerId);
+    for (const t of this.Z6t.values()) e.push(t.PlayerId);
     return (
       e.sort((e, t) => {
         (e = this.GetFriendById(e)), (t = this.GetFriendById(t));
@@ -117,32 +125,32 @@ class FriendModel extends ModelBase_1.ModelBase {
   }
   GetBlackListIds() {
     var e = new Array();
-    for (const t of this.e6t.keys()) e.push(t);
+    for (const t of this.e8t.keys()) e.push(t);
     return FriendController_1.FriendController.GetSortedBlackOrApplyList(e);
   }
   GetFriendById(e) {
-    if (e) return this.JVt.get(e);
+    if (e) return this.J6t.get(e);
     Log_1.Log.CheckError() &&
       Log_1.Log.Error("Friend", 28, "获取选中玩家时id不存在");
   }
   GetFriendDataInApplicationById(e) {
-    if (this.zVt.has(e)) return this.zVt.get(e).ApplyPlayerData;
+    if (this.z6t.has(e)) return this.z6t.get(e).ApplyPlayerData;
   }
   GetBlockedPlayerById(e) {
-    return this.e6t.get(e);
+    return this.e8t.get(e);
   }
   GetFriendSearchResultById(e) {
-    return this.ZVt.get(e);
+    return this.Z6t.get(e);
   }
   AddFriend(e) {
-    this.JVt.set(e.PlayerId, e);
+    this.J6t.set(e.PlayerId, e);
   }
   HasFriend(e) {
-    return this.JVt.has(e);
+    return this.J6t.has(e);
   }
   DeleteFriend(e) {
-    this.JVt.has(e) &&
-      (this.JVt.delete(e),
+    this.J6t.has(e) &&
+      (this.J6t.delete(e),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnRemoveFriend,
         e,
@@ -152,45 +160,45 @@ class FriendModel extends ModelBase_1.ModelBase {
       );
   }
   IsMyFriend(e) {
-    return this.JVt.has(e);
+    return this.J6t.has(e);
   }
   AddFriendApplication(e) {
-    this.zVt.set(e.ApplyPlayerData.PlayerId, e),
+    this.z6t.set(e.ApplyPlayerData.PlayerId, e),
       this.FreshFriendApplicationIds.add(e.ApplyPlayerData.PlayerId);
   }
   HasFriendApplication(e) {
-    return this.zVt.has(e);
+    return this.z6t.has(e);
   }
   DeleteFriendApplication(e) {
-    this.zVt.has(e) &&
-      (this.zVt.delete(e), this.FreshFriendApplicationIds.has(e)) &&
+    this.z6t.has(e) &&
+      (this.z6t.delete(e), this.FreshFriendApplicationIds.has(e)) &&
       this.FreshFriendApplicationIds.delete(e),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.UpdateFriendViewShow,
       );
   }
   MarkDirtyNewApplications() {
-    for (const e of this.zVt.values())
+    for (const e of this.z6t.values())
       (e.Fresh = !1),
         this.FreshFriendApplicationIds.delete(e.ApplyPlayerData.PlayerId);
   }
   AddFriendSearchResults(e) {
-    this.ZVt.set(e.PlayerId, e);
+    this.Z6t.set(e.PlayerId, e);
   }
   ClearFriendSearchResults() {
-    this.ZVt.clear();
+    this.Z6t.clear();
   }
   AddToBlackList(e) {
-    this.e6t.set(e.GetBlockedPlayerData.PlayerId, e);
+    this.e8t.set(e.GetBlockedPlayerData.PlayerId, e);
   }
   HasBlockedPlayer(e) {
-    return this.e6t.has(e);
+    return this.e8t.has(e);
   }
   DeleteBlockedPlayer(e) {
-    this.e6t.delete(e);
+    this.e8t.delete(e);
   }
   GetSelectedPlayerOrItemInstance(e) {
-    var t = e ?? this.t6t;
+    var t = e ?? this.t8t;
     if (this.ShowingView)
       switch (this.ShowingView) {
         case "FriendView":
@@ -233,42 +241,42 @@ class FriendModel extends ModelBase_1.ModelBase {
   }
   ClearTestFriendData() {
     if (this.TestDataLoaded) {
-      for (const e of this.JVt.keys())
-        this.JVt.get(e).Debug && this.JVt.delete(e);
-      for (const t of this.zVt.keys())
-        this.zVt.get(t).ApplyPlayerData.Debug &&
-          (this.zVt.delete(t), this.FreshFriendApplicationIds.has(t)) &&
+      for (const e of this.J6t.keys())
+        this.J6t.get(e).Debug && this.J6t.delete(e);
+      for (const t of this.z6t.keys())
+        this.z6t.get(t).ApplyPlayerData.Debug &&
+          (this.z6t.delete(t), this.FreshFriendApplicationIds.has(t)) &&
           this.FreshFriendApplicationIds.delete(t);
-      for (const i of this.e6t.keys())
-        this.e6t.get(i).GetBlockedPlayerData.Debug && this.e6t.delete(i);
-      for (const r of this.ZVt.keys())
-        this.ZVt.get(r).Debug && this.ZVt.delete(r);
+      for (const i of this.e8t.keys())
+        this.e8t.get(i).GetBlockedPlayerData.Debug && this.e8t.delete(i);
+      for (const r of this.Z6t.keys())
+        this.Z6t.get(r).Debug && this.Z6t.delete(r);
       this.TestDataLoaded = !1;
     }
   }
   CurrentApplyFriendListHasPlayer(e) {
-    return this.r6t.has(e);
+    return this.r8t.has(e);
   }
   AddPlayerToApplyFriendList(e) {
-    this.r6t.has(e) || this.r6t.add(e);
+    this.r8t.has(e) || this.r8t.add(e);
   }
   ClearApplyFriendList() {
-    this.r6t.clear();
+    this.r8t.clear();
   }
   CurrentApproveFriendListHasPlayer(e) {
-    return this.n6t.has(e);
+    return this.n8t.has(e);
   }
   AddPlayerToApproveFriendList(e) {
-    this.n6t.has(e) || this.n6t.add(e);
+    this.n8t.has(e) || this.n8t.add(e);
   }
   ClearApproveFriendList() {
-    this.n6t.clear();
+    this.n8t.clear();
   }
   CurrentRefuseFriendListHasPlayer(e) {
-    return this.s6t.has(e);
+    return this.s8t.has(e);
   }
   AddPlayerToRefuseFriendList(e) {
-    this.s6t.has(e) || this.s6t.add(e);
+    this.s8t.has(e) || this.s8t.add(e);
   }
   static GetOfflineStrAndGap(e) {
     e = TimeUtil_1.TimeUtil.CalculateDayTimeStampGapBetweenNow(e, !1);
@@ -298,25 +306,31 @@ class FriendModel extends ModelBase_1.ModelBase {
     return this.RecentlyTeamList.get(e);
   }
   ClearRefuseFriendList() {
-    this.s6t.clear();
+    this.s8t.clear();
+  }
+  GetApplyViewDataList(e) {
+    var t = [];
+    if (e) for (const r of e) this.z6t.has(r) && t.push(this.z6t.get(r));
+    else for (var [, i] of this.z6t) t.push(i);
+    return t;
   }
   get SelectedPlayerId() {
-    return this.t6t;
+    return this.t8t;
   }
   set SelectedPlayerId(e) {
-    this.t6t = e;
+    this.t8t = e;
   }
   get FilterState() {
-    return this.i6t;
+    return this.i8t;
   }
   set FilterState(e) {
-    this.i6t = e;
+    this.i8t = e;
   }
   get ShowingView() {
-    return this.o6t;
+    return this.o8t;
   }
   set ShowingView(e) {
-    this.o6t = e;
+    this.o8t = e;
   }
 }
 exports.FriendModel = FriendModel;

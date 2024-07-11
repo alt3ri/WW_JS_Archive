@@ -3,14 +3,14 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ConfigUtil = void 0);
 const Log_1 = require("../../../Core/Common/Log");
 class ConfigUtil {
-  static Qbo(o) {
-    o.size > ConfigUtil.Xbo && o.clear();
+  static jqo(o) {
+    o.size > ConfigUtil.Wqo && o.clear();
   }
   static GetConfigTemplate(o, t, e, i = 0) {
     var s = o.get(e);
     return (
       s ||
-      (ConfigUtil.Qbo(o),
+      (ConfigUtil.jqo(o),
       s
         ? (o.set(e, s), s)
         : void (
@@ -26,5 +26,5 @@ class ConfigUtil {
     );
   }
 }
-(exports.ConfigUtil = ConfigUtil).Xbo = 50;
+(exports.ConfigUtil = ConfigUtil).Wqo = 50;
 //# sourceMappingURL=ConfigUtil.js.map

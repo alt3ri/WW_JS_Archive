@@ -10,7 +10,7 @@ class LevelConditionMoveStateCheck extends LevelGeneralBase_1.LevelConditionBase
     if (!e.LimitParams || !r) return !1;
     r = Global_1.Global.BaseCharacter;
     if (!r) return !1;
-    r = r.CharacterActorComponent.Entity.GetComponent(158);
+    r = r.CharacterActorComponent.Entity.GetComponent(160);
     if (!r) return !1;
     switch (r.PositionState) {
       case CharacterUnifiedStateTypes_1.ECharPositionState.Air:

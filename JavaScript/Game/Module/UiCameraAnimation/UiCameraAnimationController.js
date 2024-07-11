@@ -15,19 +15,19 @@ class UiCameraAnimationController extends ControllerBase_1.ControllerBase {
     return (
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OpenTabView,
-        this.kUo,
+        this.GAo,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnViewLoadCompleted,
-        this.FUo,
+        this.NAo,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.BeforeLoadMap,
-        this.I$i,
+        this.SYi,
       ),
       EventSystem_1.EventSystem.Add(
-        EventDefine_1.EEventName.ResetModuleByResetToBattleView,
-        this.VUo,
+        EventDefine_1.EEventName.ResetModuleAfterResetToBattleView,
+        this.LMa,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.ActiveBattleView,
@@ -35,7 +35,7 @@ class UiCameraAnimationController extends ControllerBase_1.ControllerBase {
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.DestroyAllUiCameraAnimationHandles,
-        this.HUo,
+        this.kAo,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.RemoveEntity,
@@ -47,11 +47,11 @@ class UiCameraAnimationController extends ControllerBase_1.ControllerBase {
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnSelectedRoleChanged,
-        this.wke,
+        this.Y2e,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.UiSceneLoaded,
-        this.jUo,
+        this.FAo,
       ),
       UiCameraAnimationManager_1.UiCameraAnimationManager.Initialize(),
       !0
@@ -61,19 +61,19 @@ class UiCameraAnimationController extends ControllerBase_1.ControllerBase {
     return (
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OpenTabView,
-        this.kUo,
+        this.GAo,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnViewLoadCompleted,
-        this.FUo,
+        this.NAo,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.BeforeLoadMap,
-        this.I$i,
+        this.SYi,
       ),
       EventSystem_1.EventSystem.Remove(
-        EventDefine_1.EEventName.ResetModuleByResetToBattleView,
-        this.VUo,
+        EventDefine_1.EEventName.ResetModuleAfterResetToBattleView,
+        this.LMa,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.ActiveBattleView,
@@ -81,7 +81,7 @@ class UiCameraAnimationController extends ControllerBase_1.ControllerBase {
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.DestroyAllUiCameraAnimationHandles,
-        this.HUo,
+        this.kAo,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.RemoveEntity,
@@ -93,45 +93,45 @@ class UiCameraAnimationController extends ControllerBase_1.ControllerBase {
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnSelectedRoleChanged,
-        this.wke,
+        this.Y2e,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.UiSceneLoaded,
-        this.jUo,
+        this.FAo,
       ),
-      this.WUo(),
+      this.VAo(),
       UiCameraAnimationManager_1.UiCameraAnimationManager.ClearDisplay(),
       !0
     );
   }
   static OnLeaveLevel() {
     return (
-      this.WUo(),
+      this.VAo(),
       UiCameraAnimationManager_1.UiCameraAnimationManager.ClearDisplay(),
       !0
     );
   }
-  static KUo(e, a, i) {
+  static HAo(e, a, i) {
     UiCameraAnimationManager_1.UiCameraAnimationManager.CanPushCameraHandle(
       a,
     ) &&
-      (this.WUo(),
-      (this.QUo = a),
-      (this.XUo = i),
-      (this.$Uo = TimerSystem_1.TimerSystem.Delay(this.YUo, e)));
+      (this.VAo(),
+      (this.jAo = a),
+      (this.WAo = i),
+      (this.KAo = TimerSystem_1.TimerSystem.Delay(this.QAo, e)));
   }
-  static WUo() {
-    TimerSystem_1.TimerSystem.Has(this.$Uo) &&
-      (TimerSystem_1.TimerSystem.Remove(this.$Uo),
-      (this.QUo = void 0),
-      (this.XUo = void 0),
-      (this.$Uo = void 0));
+  static VAo() {
+    TimerSystem_1.TimerSystem.Has(this.KAo) &&
+      (TimerSystem_1.TimerSystem.Remove(this.KAo),
+      (this.jAo = void 0),
+      (this.WAo = void 0),
+      (this.KAo = void 0));
   }
 }
 (exports.UiCameraAnimationController = UiCameraAnimationController),
-  ((_a = UiCameraAnimationController).QUo = ""),
-  (UiCameraAnimationController.XUo = void 0),
-  (UiCameraAnimationController.$Uo = void 0),
+  ((_a = UiCameraAnimationController).jAo = ""),
+  (UiCameraAnimationController.WAo = void 0),
+  (UiCameraAnimationController.KAo = void 0),
   (UiCameraAnimationController.PushCameraHandle = (e, a, i = !0) => {
     if ("BattleView" === e) {
       if (UiCameraAnimationManager_1.UiCameraAnimationManager.IsActivate()) {
@@ -168,8 +168,8 @@ class UiCameraAnimationController extends ControllerBase_1.ControllerBase {
             ["delayTime", n],
           ),
         0 < n
-          ? UiCameraAnimationController.KUo(n, e, a)
-          : (UiCameraAnimationController.WUo(),
+          ? UiCameraAnimationController.HAo(n, e, a)
+          : (UiCameraAnimationController.VAo(),
             UiCameraAnimationManager_1.UiCameraAnimationManager.PushCameraHandleByOpenView(
               e,
               a,
@@ -177,7 +177,7 @@ class UiCameraAnimationController extends ControllerBase_1.ControllerBase {
             )));
     }
   }),
-  (UiCameraAnimationController.kUo = (e) => {
+  (UiCameraAnimationController.GAo = (e) => {
     var a =
       UiCameraAnimationManager_1.UiCameraAnimationManager.GetCameraMappingData(
         e,
@@ -193,8 +193,8 @@ class UiCameraAnimationController extends ControllerBase_1.ControllerBase {
           ["delayTime", a],
         ),
       0 < a
-        ? UiCameraAnimationController.KUo(a, e)
-        : (UiCameraAnimationController.WUo(),
+        ? UiCameraAnimationController.HAo(a, e)
+        : (UiCameraAnimationController.VAo(),
           UiCameraAnimationManager_1.UiCameraAnimationManager.PushCameraHandleByOpenView(
             e,
           )));
@@ -202,7 +202,7 @@ class UiCameraAnimationController extends ControllerBase_1.ControllerBase {
   (UiCameraAnimationController.PopCameraHandle = (e, a, i, n = !0) => {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info("CameraAnimation", 8, "当隐藏界面时", ["viewName", e]),
-      UiCameraAnimationController.WUo(),
+      UiCameraAnimationController.VAo(),
       UiCameraAnimationManager_1.UiCameraAnimationManager.PopCameraHandleByCloseView(
         e,
         a?.Name,
@@ -210,7 +210,7 @@ class UiCameraAnimationController extends ControllerBase_1.ControllerBase {
         n,
       );
   }),
-  (UiCameraAnimationController.FUo = (e) => {
+  (UiCameraAnimationController.NAo = (e) => {
     var a =
       UiCameraAnimationManager_1.UiCameraAnimationManager.GetCurrentCameraHandle();
     a &&
@@ -229,26 +229,26 @@ class UiCameraAnimationController extends ControllerBase_1.ControllerBase {
         !0,
       ));
   }),
-  (UiCameraAnimationController.YUo = () => {
+  (UiCameraAnimationController.QAo = () => {
     UiCameraAnimationManager_1.UiCameraAnimationManager.PushCameraHandleByOpenView(
-      UiCameraAnimationController.QUo,
-      _a.XUo,
+      UiCameraAnimationController.jAo,
+      _a.WAo,
     ),
-      UiCameraAnimationController.WUo();
+      UiCameraAnimationController.VAo();
   }),
-  (UiCameraAnimationController.I$i = () => {
+  (UiCameraAnimationController.SYi = () => {
     UiCameraAnimationManager_1.UiCameraAnimationManager.ClearDisplay();
   }),
-  (UiCameraAnimationController.VUo = () => {
-    UiCameraAnimationController.WUo(),
+  (UiCameraAnimationController.LMa = () => {
+    UiCameraAnimationController.VAo(),
       UiCameraAnimationManager_1.UiCameraAnimationManager.ClearDisplay(),
       CameraController_1.CameraController.ExitCameraMode(2);
   }),
   (UiCameraAnimationController.JDe = () => {
-    UiCameraAnimationController.WUo();
+    UiCameraAnimationController.VAo();
   }),
-  (UiCameraAnimationController.HUo = () => {
-    UiCameraAnimationController.WUo(),
+  (UiCameraAnimationController.kAo = () => {
+    UiCameraAnimationController.VAo(),
       UiCameraAnimationManager_1.UiCameraAnimationManager.ClearDisplay(),
       CameraController_1.CameraController.ExitCameraMode(2);
   }),
@@ -270,7 +270,7 @@ class UiCameraAnimationController extends ControllerBase_1.ControllerBase {
         ),
       UiCameraAnimationManager_1.UiCameraAnimationManager.ReactivateCameraHandle());
   }),
-  (UiCameraAnimationController.wke = () => {
+  (UiCameraAnimationController.Y2e = () => {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "CameraAnimation",
@@ -279,7 +279,7 @@ class UiCameraAnimationController extends ControllerBase_1.ControllerBase {
       ),
       UiCameraAnimationManager_1.UiCameraAnimationManager.ReactivateCameraHandle();
   }),
-  (UiCameraAnimationController.jUo = () => {
+  (UiCameraAnimationController.FAo = () => {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "CameraAnimation",

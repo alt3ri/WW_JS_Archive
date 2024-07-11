@@ -14,13 +14,13 @@ class TemporaryTeleportMarkItemView extends ServerMarkItemView_1.ServerMarkItemV
       this.OnIconPathChanged(this.Holder.IconPath),
       (ModelManager_1.ModelManager.MapModel?.GetMarkExtraShowState(
         this.Holder.MarkId,
-      )).ShowFlag === Protocol_1.Aki.Protocol.BNs.Proto_ShowDisable &&
+      )).ShowFlag === Protocol_1.Aki.Protocol.I6s.Proto_ShowDisable &&
         this.GetSprite(2).SetUIActive(!0);
   }
   OnSelectedStateChange(e) {
     (ModelManager_1.ModelManager.MapModel?.GetMarkExtraShowState(
       this.Holder.MarkId,
-    )).ShowFlag === Protocol_1.Aki.Protocol.BNs.Proto_ShowDisable &&
+    )).ShowFlag === Protocol_1.Aki.Protocol.I6s.Proto_ShowDisable &&
       ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
         "Map_TeleportMark_Disable_Tips",
       );

@@ -147,7 +147,10 @@ class EffectModelStaticMeshSpec extends EffectSpec_1.EffectSpec {
     this.StaticMeshComponent?.IsValid() &&
       (this.StaticMeshComponent.SetComponentTickEnabled(this.t0e),
       this.StaticMeshComponent.SetVisibility(!0),
-      this.r0e(!0));
+      this.r0e(!0),
+      0 === this.GetHandle().GetEffectType()
+        ? this.StaticMeshComponent.SetRenderInBurst(!0)
+        : this.StaticMeshComponent.SetRenderInBurst(!1));
   }
   OnEffectTypeChange() {
     this.StaticMeshComponent?.IsValid() &&

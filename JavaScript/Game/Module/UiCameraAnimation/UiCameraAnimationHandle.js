@@ -11,48 +11,48 @@ const UE = require("ue"),
   UiCameraLoadingAnimation_1 = require("./UiCameraLoadingAnimation");
 class UiCameraAnimationHandle {
   constructor() {
-    (this.JUo = void 0),
-      (this.zUo = void 0),
-      (this.iRo = !1),
-      (this.ZUo = void 0),
-      (this.eAo = void 0),
+    (this.XAo = void 0),
+      (this.$Ao = void 0),
+      (this.ZRo = !1),
+      (this.YAo = void 0),
+      (this.JAo = void 0),
       (this.IsViewInLoading = !1),
-      (this.tAo = !1),
-      (this.iAo = !1),
-      (this.oAo = () => {
-        this.rAo();
+      (this.zAo = !1),
+      (this.ZAo = !1),
+      (this.ePo = () => {
+        this.tPo();
       });
   }
   Initialize() {
-    (this.eAo = new UiCameraLoadingAnimation_1.UiCameraLoadingAnimation()),
-      this.eAo.Initialize(),
-      (this.iRo = !1);
+    (this.JAo = new UiCameraLoadingAnimation_1.UiCameraLoadingAnimation()),
+      this.JAo.Initialize(),
+      (this.ZRo = !1);
   }
   Reset() {
     this.Deactivate(),
-      (this.zUo = void 0),
-      (this.JUo = void 0),
-      (this.eAo = void 0),
+      (this.$Ao = void 0),
+      (this.XAo = void 0),
+      (this.JAo = void 0),
       (this.IsViewInLoading = !1),
-      (this.tAo = !1),
-      (this.ZUo = void 0);
+      (this.zAo = !1),
+      (this.YAo = void 0);
   }
   Tick(i) {
-    this.eAo?.Tick(i);
+    this.JAo?.Tick(i);
   }
   SetHandleData(i) {
-    this.zUo = i;
+    this.$Ao = i;
   }
   Activate(i, a = !0, e = !0) {
-    (this.zUo = i),
+    (this.$Ao = i),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("CameraAnimation", 8, "激活界面镜头状态", [
           "HandleData",
-          this.zUo.ToString(),
+          this.$Ao.ToString(),
         ]);
     var t,
       n,
-      r = this.zUo.GetUiCameraAnimationConfig();
+      r = this.$Ao.GetUiCameraAnimationConfig();
     r
       ? i.IsEmptyState
         ? (Log_1.Log.CheckInfo() &&
@@ -60,74 +60,74 @@ class UiCameraAnimationHandle {
               "CameraAnimation",
               8,
               "激活界面镜头状态时，激活了一个空状态",
-              ["HandleData", this.zUo.ToString()],
+              ["HandleData", this.$Ao.ToString()],
             ),
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.OnActivateUiCameraAnimationHandle,
             i,
           ))
-        : ((this.JUo = r),
-          (this.iAo = !1),
+        : ((this.XAo = r),
+          (this.ZAo = !1),
           2 ===
-          (n = this.nAo(
+          (n = this.iPo(
             r.BlendInCameraSequence,
             r.BlendInCameraSequencePlayRate,
             r.bRevertBlendInCameraSequence,
             () => {
-              (this.iAo = !1),
+              (this.ZAo = !1),
                 EventSystem_1.EventSystem.Emit(
                   EventDefine_1.EEventName.OnUiBlendInCameraSequenceFinished,
                   i,
                 );
             },
           ))
-            ? ((this.iAo = !1),
+            ? ((this.ZAo = !1),
               Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info(
                   "CameraAnimation",
                   8,
                   "激活界面镜头状态时，填了BlendInCameraSequence，但是目标Actor无法找到，直接休眠UI相机状态",
-                  ["HandleData", this.zUo.ToString()],
+                  ["HandleData", this.$Ao.ToString()],
                 ),
               EventSystem_1.EventSystem.Emit(
                 EventDefine_1.EEventName.OnActivateUiCameraAnimationHandleFail,
-                this.zUo,
+                this.$Ao,
               ),
               this.Deactivate())
             : 0 === n
-              ? ((this.iAo = !0),
+              ? ((this.ZAo = !0),
                 Log_1.Log.CheckInfo() &&
                   Log_1.Log.Info(
                     "CameraAnimation",
                     8,
                     "激活界面镜头状态时，填了BlendInCameraSequence，会直接播放Sequence而不会进行其他线性变化计算",
-                    ["HandleData", this.zUo.ToString()],
+                    ["HandleData", this.$Ao.ToString()],
                   ),
                 EventSystem_1.EventSystem.Emit(
                   EventDefine_1.EEventName.OnActivateUiCameraAnimationHandle,
                   i,
                 ))
               : UiCameraAnimationManager_1.UiCameraAnimationManager.UiCamera
-                ? ((this.tAo = !1),
-                  (n = this.zUo.GetTargetLocation()),
-                  (t = this.zUo.GetTargetRotation()),
+                ? ((this.zAo = !1),
+                  (n = this.$Ao.GetTargetLocation()),
+                  (t = this.$Ao.GetTargetRotation()),
                   n && t
                     ? (this.StopSequence(),
                       this.SetUiCameraAnimationRotation(t),
                       this.SetUiCameraAnimationLocation(n),
-                      this.SetSpringArmLength(this.zUo.GetTargetArmLength()),
+                      this.SetSpringArmLength(this.$Ao.GetTargetArmLength()),
                       this.SetSpringArmRelativeLocation(
-                        this.zUo.GetTargetArmOffsetLocation(),
+                        this.$Ao.GetTargetArmOffsetLocation(),
                       ),
                       this.SetSprintArmRelativeRotation(
-                        this.zUo.GetTargetArmOffsetRotation(),
+                        this.$Ao.GetTargetArmOffsetRotation(),
                       ),
-                      this.sAo(this.zUo.GetTargetArmCollisionTest()),
+                      this.oPo(this.$Ao.GetTargetArmCollisionTest()),
                       this.SetCameraFieldOfView(
-                        this.zUo.GetTargetFieldOfView(),
+                        this.$Ao.GetTargetFieldOfView(),
                       ),
                       this.SetCameraPostProcessBlendWeight(
-                        this.zUo.GetTargetPostProcessBlendWeight(),
+                        this.$Ao.GetTargetPostProcessBlendWeight(),
                       ),
                       this.SetWidgetCameraAttachToAnimationActor(),
                       UiCameraAnimationManager_1.UiCameraAnimationManager.UiCamera.Enter(
@@ -135,10 +135,10 @@ class UiCameraAnimationHandle {
                         r.BlendInFunction,
                         r.BlendInExp,
                       ),
-                      this.JUo.bResetCameraTransform &&
+                      this.XAo.bResetCameraTransform &&
                         UiCameraAnimationManager_1.UiCameraAnimationManager.ResetFightCameraRotation(),
-                      (t = this.zUo.ViewName),
-                      (n = this.zUo.UiCameraMappingConfig),
+                      (t = this.$Ao.ViewName),
+                      (n = this.$Ao.UiCameraMappingConfig),
                       t &&
                       UiManager_1.UiManager.IsViewCreating(t) &&
                       n?.bPlayLoadingCameraAnimation
@@ -147,9 +147,9 @@ class UiCameraAnimationHandle {
                               "CameraAnimation",
                               8,
                               "激活界面镜头状态时，当前界面在加载中，过渡到模糊镜头效果",
-                              ["HandleData", this.zUo.ToString()],
+                              ["HandleData", this.$Ao.ToString()],
                             ),
-                          this.eAo.Play(
+                          this.JAo.Play(
                             UiCameraAnimationManager_1.UiCameraAnimationManager
                               .LoadingViewCameraAnimationLength,
                             UiCameraAnimationManager_1.UiCameraAnimationManager
@@ -163,21 +163,21 @@ class UiCameraAnimationHandle {
                               "CameraAnimation",
                               8,
                               "激活界面镜头状态时，当前界面不在加载中，所以停止模糊效果",
-                              ["HandleData", this.zUo.ToString()],
+                              ["HandleData", this.$Ao.ToString()],
                             ),
                           (this.IsViewInLoading = !1),
-                          this.eAo.Stop(),
+                          this.JAo.Stop(),
                           this.SetCameraFocalDistance(
-                            this.zUo.GetTargetFocalDistance(),
+                            this.$Ao.GetTargetFocalDistance(),
                           ),
-                          this.SetCameraAperture(this.zUo.GetTargetAperture()),
+                          this.SetCameraAperture(this.$Ao.GetTargetAperture()),
                           e &&
-                            this.aAo(
+                            this.rPo(
                               r.BlendInSequence,
                               r.BlendInPlayRate,
                               r.bBlendInSequenceReverse,
                             )),
-                      (this.iRo = !0),
+                      (this.ZRo = !0),
                       EventSystem_1.EventSystem.Emit(
                         EventDefine_1.EEventName
                           .OnActivateUiCameraAnimationHandle,
@@ -188,38 +188,38 @@ class UiCameraAnimationHandle {
                           "CameraAnimation",
                           8,
                           "激活界面镜头状态时，找不到对应位置或旋转，可能是对应目标无法找到",
-                          ["HandleData", this.zUo.ToString()],
-                          ["ReplaceCameraTag", this.zUo.ReplaceCameraTag],
+                          ["HandleData", this.$Ao.ToString()],
+                          ["ReplaceCameraTag", this.$Ao.ReplaceCameraTag],
                           [
                             "ReplaceCameraIsValid",
-                            this.zUo.GetReplaceCameraActor()?.IsValid(),
+                            this.$Ao.GetReplaceCameraActor()?.IsValid(),
                           ],
                         ),
                       EventSystem_1.EventSystem.Emit(
                         EventDefine_1.EEventName
                           .OnActivateUiCameraAnimationHandleFail,
-                        this.zUo,
+                        this.$Ao,
                       ),
                       this.Deactivate()))
                 : (EventSystem_1.EventSystem.Emit(
                     EventDefine_1.EEventName
                       .OnActivateUiCameraAnimationHandleFail,
-                    this.zUo,
+                    this.$Ao,
                   ),
                   this.Deactivate()))
       : EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.OnActivateUiCameraAnimationHandleFail,
-          this.zUo,
+          this.$Ao,
         );
   }
   Deactivate() {
-    this.iRo && (this.eAo?.IsPlaying && this.eAo.Stop(), (this.iRo = !1));
+    this.ZRo && (this.JAo?.IsPlaying && this.JAo.Stop(), (this.ZRo = !1));
   }
   GetHandleData() {
-    return this.zUo;
+    return this.$Ao;
   }
   GetIsActivate() {
-    return this.iRo;
+    return this.ZRo;
   }
   Revert(i = !0, a = void 0) {
     var e,
@@ -228,34 +228,34 @@ class UiCameraAnimationHandle {
       r,
       s,
       m,
-      o = this.zUo.GetUiCameraAnimationConfig();
+      o = this.$Ao.GetUiCameraAnimationConfig();
     o
-      ? ((e = (this.JUo = o).BlendOutCameraSequence),
+      ? ((e = (this.XAo = o).BlendOutCameraSequence),
         (t = o.BlendOutCameraSequencePlayRate),
         (o = o.bRevertBlendOutCameraSequence),
-        (this.ZUo = a),
+        (this.YAo = a),
         0 ===
-        this.nAo(e, t, o, () => {
-          this.rAo();
+        this.iPo(e, t, o, () => {
+          this.tPo();
         })
           ? Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "CameraAnimation",
               8,
               "还原界面镜头状态时，填了BlendOutCameraSequence，会直接播放Sequence而不会进行其他线性变化计算",
-              ["HandleData", this.zUo.ToString()],
+              ["HandleData", this.$Ao.ToString()],
             )
-          : ((e = this.JUo.BlendOutTime),
-            (t = this.JUo.BlendOutFunction),
-            (o = this.JUo.BlendOutExp),
-            (n = this.JUo.bResetCameraTransform),
-            (r = this.JUo.BlendOutSequence),
-            (s = this.JUo.bBlendOutSequenceReverse),
-            (m = this.JUo.BlendOutPlayRate),
+          : ((e = this.XAo.BlendOutTime),
+            (t = this.XAo.BlendOutFunction),
+            (o = this.XAo.BlendOutExp),
+            (n = this.XAo.bResetCameraTransform),
+            (r = this.XAo.BlendOutSequence),
+            (s = this.XAo.bBlendOutSequenceReverse),
+            (m = this.XAo.BlendOutPlayRate),
             Log_1.Log.CheckInfo() &&
               Log_1.Log.Info("CameraAnimation", 8, "还原镜头至战斗镜头", [
                 "HandleData",
-                this.zUo.ToString(),
+                this.$Ao.ToString(),
               ]),
             n &&
               UiCameraAnimationManager_1.UiCameraAnimationManager.ResetFightCameraRotation(),
@@ -264,37 +264,37 @@ class UiCameraAnimationHandle {
               t,
               o,
             ),
-            (this.tAo = !0),
+            (this.zAo = !0),
             i && UE.KismetSystemLibrary.IsValidSoftObjectReference(r)
-              ? this.aAo(r, m, s).then(
+              ? this.rPo(r, m, s).then(
                   () => {
                     UiCameraAnimationManager_1.UiCameraAnimationManager.UiCameraSequenceComponent.AddUiCameraSequenceFinishedCallback(
-                      this.oAo,
+                      this.ePo,
                     );
                   },
                   () => {},
                 )
-              : this.rAo()))
+              : this.tPo()))
       : (Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "CameraAnimation",
             8,
             "找不到镜头配置，强制还原镜头至战斗镜头",
-            ["HandleData", this.zUo.ToString()],
+            ["HandleData", this.$Ao.ToString()],
           ),
         a && a(),
         this.Reset());
   }
-  rAo() {
-    this.zUo
+  tPo() {
+    this.$Ao
       ? (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "CameraAnimation",
             8,
             "界面镜头状态 Revert(BlendOut) 完成",
-            ["HandleData", this.zUo.ToString()],
+            ["HandleData", this.$Ao.ToString()],
           ),
-        this.ZUo && this.ZUo(),
+        this.YAo && this.YAo(),
         this.Reset())
       : Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
@@ -304,7 +304,7 @@ class UiCameraAnimationHandle {
         );
   }
   GetIsPendingRevert() {
-    return this.tAo;
+    return this.zAo;
   }
   StopSequence() {
     UiCameraAnimationManager_1.UiCameraAnimationManager
@@ -315,22 +315,22 @@ class UiCameraAnimationHandle {
       );
   }
   GetViewName() {
-    return this.zUo?.ViewName;
+    return this.$Ao?.ViewName;
   }
   GetIsPlayingBlendInSequence() {
-    return this.iAo;
+    return this.ZAo;
   }
   get GetUiCameraAnimationActor() {
     return UiCameraAnimationManager_1.UiCameraAnimationManager.UiCameraSpringStructure.GetOwnActor();
   }
-  nAo(i, a, e, t) {
+  iPo(i, a, e, t) {
     var n;
     return UE.KismetSystemLibrary.IsValidSoftObjectReference(i)
-      ? (n = this.zUo.GetTargetActor())?.IsValid()
+      ? (n = this.$Ao.GetTargetActor())?.IsValid()
         ? (this.SetWidgetCameraDetachFromAnimationActor(),
-          this.aAo(i, a, e, n).then(
+          this.rPo(i, a, e, n).then(
             () => {
-              var i = this.zUo.GetUiCameraAnimationConfig();
+              var i = this.$Ao.GetUiCameraAnimationConfig();
               UiCameraAnimationManager_1.UiCameraAnimationManager.UiCamera.Enter(
                 i.BlendInTime,
                 i.BlendInFunction,
@@ -376,7 +376,7 @@ class UiCameraAnimationHandle {
       i,
     );
   }
-  sAo(i) {
+  oPo(i) {
     UiCameraAnimationManager_1.UiCameraAnimationManager.UiCameraSpringStructure.SetCollisionTest(
       i,
     );
@@ -410,7 +410,7 @@ class UiCameraAnimationHandle {
   SetWidgetCameraDetachFromAnimationActor() {
     UiCameraAnimationManager_1.UiCameraAnimationManager.UiCameraSpringStructure.CameraActorDetachFromSpringActor();
   }
-  async aAo(i, a, e, t) {
+  async rPo(i, a, e, t) {
     if (UE.KismetSystemLibrary.IsValidSoftObjectReference(i))
       return (
         this.StopSequence(),

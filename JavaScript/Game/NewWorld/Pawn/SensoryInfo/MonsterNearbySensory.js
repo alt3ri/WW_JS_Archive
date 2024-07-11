@@ -27,7 +27,7 @@ class MonsterNearbySensory extends BaseSensoryInfo_1.BaseSensoryInfo {
   CheckEntity(s) {
     s = s.GetComponent(0);
     return (
-      !!s && s.IsMonster() && MonsterNearbySensory.irr.has(s.GetEntityCamp())
+      !!s && s.IsMonster() && MonsterNearbySensory.Zrr.has(s.GetEntityCamp())
     );
   }
   EnterRange(s) {
@@ -47,5 +47,5 @@ class MonsterNearbySensory extends BaseSensoryInfo_1.BaseSensoryInfo {
     for (const t of this.CacheEntityList) this.LastFindEntities.add(t);
   }
 }
-(exports.MonsterNearbySensory = MonsterNearbySensory).irr = new Set([1, 3, 7]);
+(exports.MonsterNearbySensory = MonsterNearbySensory).Zrr = new Set([1, 3, 7]);
 //# sourceMappingURL=MonsterNearbySensory.js.map

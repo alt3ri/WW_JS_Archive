@@ -28,7 +28,7 @@ class EnvironmentalPerceptionController extends ControllerBase_1.ControllerBase 
         EventDefine_1.EEventName.OnChangeRole,
         this.xie,
       ),
-      !(this.evr = void 0)
+      !(this.Jvr = void 0)
     );
   }
   static OnClear() {
@@ -37,7 +37,7 @@ class EnvironmentalPerceptionController extends ControllerBase_1.ControllerBase 
         EventDefine_1.EEventName.OnChangeRole,
         this.xie,
       ),
-      this.Lie && this.Lie.RemoveTagAddOrRemoveListener(1996802261, this.n9e),
+      this.Lie && this.Lie.RemoveTagAddOrRemoveListener(1996802261, this.v7e),
       (this.Lie = void 0),
       !(this.Gce = void 0)
     );
@@ -46,22 +46,22 @@ class EnvironmentalPerceptionController extends ControllerBase_1.ControllerBase 
     return !0;
   }
   static OnTick(e) {
-    (this.tvr -= e),
+    (this.zvr -= e),
       Global_1.Global.BaseCharacter &&
         this.Gce &&
         this.Gce.CharacterMovement &&
         (this.Gce.IsMoving &&
-          (this.ivr
-            ? (this.tvr -= e * TICK_DAMPING_RATIO_INFIGHT)
-            : (this.tvr -= e * TICK_DAMPING_RATIO)),
+          (this.Zvr
+            ? (this.zvr -= e * TICK_DAMPING_RATIO_INFIGHT)
+            : (this.zvr -= e * TICK_DAMPING_RATIO)),
         this.Gce.GetLastUpdateVelocity().Size() > FORCE_UPDATE_SPEED &&
-          (this.tvr = -1),
-        this.tvr < 0) &&
-        ((this.tvr = TICK_INTERNVAL),
+          (this.zvr = -1),
+        this.zvr < 0) &&
+        ((this.zvr = TICK_INTERNVAL),
         SimpleNpcController_1.SimpleNpcController.UpdateDistanceLogic(),
-        this.ovr());
+        this.eMr());
   }
-  static ovr() {
+  static eMr() {
     var e = Global_1.Global.BaseCharacter;
     e &&
       (e = e.CharacterActorComponent) &&
@@ -72,50 +72,53 @@ class EnvironmentalPerceptionController extends ControllerBase_1.ControllerBase 
   static InitializeEnvironment() {
     var e = UE.NewMap(UE.BuiltinName, UE.BuiltinInt);
     e.Add(new UE.FName("NormalEntity"), 1),
+      e.Add(new UE.FName("BossEntity"), 2),
       e.Add(new UE.FName("CharacterEntity"), 2),
+      e.Add(new UE.FName("SimpleNpcEntity"), 2),
+      e.Add(new UE.FName("NormalNpcEntity"), 2),
       e.Add(new UE.FName("PlayerAlwaysTickGroup"), 4),
       cpp_1.FKuroPerceptionInterface.InitializeEnvironment(3e3, 3e3, e, !0);
   }
   static CreatePlayerPerceptionEvent() {
-    var e = this.rvr.Get();
-    return e || this.rvr.Create();
+    var e = this.tMr.Get();
+    return e || this.tMr.Create();
   }
   static DestroyPlayerPerceptionEvent(e) {
-    e && (e.Clear(), this.rvr.Put(e));
+    e && (e.Clear(), this.tMr.Put(e));
   }
   static CreatePerceptionRange() {
-    var e = this.nvr.Get();
-    return e || this.nvr.Create();
+    var e = this.iMr.Get();
+    return e || this.iMr.Create();
   }
   static DestroyPerceptionRange(e) {
-    e && (e.Clear(), this.nvr.Put(e));
+    e && (e.Clear(), this.iMr.Put(e));
   }
 }
 (exports.EnvironmentalPerceptionController = EnvironmentalPerceptionController),
-  ((_a = EnvironmentalPerceptionController).tvr = TICK_INTERNVAL),
+  ((_a = EnvironmentalPerceptionController).zvr = TICK_INTERNVAL),
   (EnvironmentalPerceptionController.Gce = void 0),
   (EnvironmentalPerceptionController.Lie = void 0),
-  (EnvironmentalPerceptionController.evr = void 0),
+  (EnvironmentalPerceptionController.Jvr = void 0),
   (EnvironmentalPerceptionController.xie = (e, t) => {
-    _a.Lie && _a.Lie.RemoveTagAddOrRemoveListener(1996802261, _a.n9e),
-      (_a.Gce = EntitySystem_1.EntitySystem.GetComponent(e.Id, 161)),
-      (_a.Lie = EntitySystem_1.EntitySystem.GetComponent(e.Id, 185)),
-      _a.Lie?.AddTagAddOrRemoveListener(1996802261, _a.n9e);
+    _a.Lie && _a.Lie.RemoveTagAddOrRemoveListener(1996802261, _a.v7e),
+      (_a.Gce = EntitySystem_1.EntitySystem.GetComponent(e.Id, 163)),
+      (_a.Lie = EntitySystem_1.EntitySystem.GetComponent(e.Id, 188)),
+      _a.Lie?.AddTagAddOrRemoveListener(1996802261, _a.v7e);
   }),
-  (EnvironmentalPerceptionController.ivr = !1),
-  (EnvironmentalPerceptionController.n9e = (e, t) => {
-    _a.ivr = t;
+  (EnvironmentalPerceptionController.Zvr = !1),
+  (EnvironmentalPerceptionController.v7e = (e, t) => {
+    _a.Zvr = t;
   }),
-  (EnvironmentalPerceptionController.svr = () =>
+  (EnvironmentalPerceptionController.oMr = () =>
     new PlayerPerceptionEvent_1.PlayerPerceptionEvent()),
-  (EnvironmentalPerceptionController.rvr = new Pool_1.Pool(
+  (EnvironmentalPerceptionController.tMr = new Pool_1.Pool(
     PERCEPTION_EVENT_POOL_CAPACITY,
-    _a.svr,
+    _a.oMr,
   )),
-  (EnvironmentalPerceptionController.avr = () =>
+  (EnvironmentalPerceptionController.rMr = () =>
     new PerceptionRange_1.PerceptionRange()),
-  (EnvironmentalPerceptionController.nvr = new Pool_1.Pool(
+  (EnvironmentalPerceptionController.iMr = new Pool_1.Pool(
     PERCEPTION_EVENT_POOL_CAPACITY,
-    _a.avr,
+    _a.rMr,
   ));
 //# sourceMappingURL=EnvironmentalPerceptionController.js.map

@@ -2,7 +2,8 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleHandBookSelectionView = exports.ROLE_HAND_BOOK_BLENDNAME =
     void 0);
-const EventDefine_1 = require("../../Common/Event/EventDefine"),
+const ConfigCommon_1 = require("../../../Core/Config/ConfigCommon"),
+  EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
   EffectContext_1 = require("../../Effect/EffectContext/EffectContext"),
   EffectSystem_1 = require("../../Effect/EffectSystem"),
@@ -14,24 +15,23 @@ const EventDefine_1 = require("../../Common/Event/EventDefine"),
   RoleDefine_1 = require("../RoleUi/RoleDefine"),
   UiCameraAnimationManager_1 = require("../UiCameraAnimation/UiCameraAnimationManager"),
   UiSceneManager_1 = require("../UiComponent/UiSceneManager"),
-  RoleHandBookSelectionComponent_1 = require("./RoleHandBookSelectionComponent"),
-  ConfigCommon_1 = require("../../../Core/Config/ConfigCommon");
+  RoleHandBookSelectionComponent_1 = require("./RoleHandBookSelectionComponent");
 exports.ROLE_HAND_BOOK_BLENDNAME = "10061";
 class RoleHandBookSelectionView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
       (this.RoleSelectionComponent = void 0),
-      (this.Fho = 0),
+      (this.Nlo = 0),
       (this.RoleList = void 0),
-      (this.w5i = void 0),
+      (this.xVi = void 0),
       (this.RoleRootUiCameraHandleData = void 0),
-      (this.MIt = () => {
+      (this.TTt = () => {
         var e;
         this.RoleSelectionComponent &&
           (e = this.RoleSelectionComponent.GetCurSelectRoleId()) &&
           this.RoleSelectionComponent.UpdateItemByRoleId(e);
       }),
-      (this.Vho = (e) => {
+      (this.Olo = (e) => {
         this.RoleSelectionComponent &&
           (RoleController_1.RoleController.ShowUiSceneActorAndShadow(!1),
           this.SetActive(!1),
@@ -87,22 +87,22 @@ class RoleHandBookSelectionView extends UiViewBase_1.UiViewBase {
     super.OnAddEventListener(),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.RoleHandBookActive,
-        this.Vho,
+        this.Olo,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnAddCommonItemList,
-        this.MIt,
+        this.TTt,
       );
   }
   OnRemoveEventListener() {
     super.OnRemoveEventListener(),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.RoleHandBookActive,
-        this.Vho,
+        this.Olo,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnAddCommonItemList,
-        this.MIt,
+        this.TTt,
       );
   }
   InitRoleList() {
@@ -121,7 +121,7 @@ class RoleHandBookSelectionView extends UiViewBase_1.UiViewBase {
   LoadFloorEffect() {
     var e = UiSceneManager_1.UiSceneManager.GetActorByTag("RoleFloorCase");
     e &&
-      (this.Fho = EffectUtil_1.EffectUtil.SpawnUiEffect(
+      (this.Nlo = EffectUtil_1.EffectUtil.SpawnUiEffect(
         "RoleSystemFloorEffect",
         "[RoleHandBookSelectionView.LoadFloorEffect]",
         e.GetTransform(),
@@ -129,25 +129,25 @@ class RoleHandBookSelectionView extends UiViewBase_1.UiViewBase {
       ));
   }
   OnAfterHide() {
-    EffectSystem_1.EffectSystem.IsValid(this.Fho) &&
+    EffectSystem_1.EffectSystem.IsValid(this.Nlo) &&
       EffectSystem_1.EffectSystem.StopEffectById(
-        this.Fho,
+        this.Nlo,
         "[RoleHandBookSelectionView.OnHide]",
         !1,
       );
   }
   OnBeforeCreate() {
-    this.w5i = UiSceneManager_1.UiSceneManager.InitRoleSystemRoleActor(1);
+    this.xVi = UiSceneManager_1.UiSceneManager.InitRoleSystemRoleActor(1);
   }
   OnBeforeDestroy() {
-    UiSceneManager_1.UiSceneManager.DestroyRoleSystemRoleActor(this.w5i),
-      EffectSystem_1.EffectSystem.IsValid(this.Fho) &&
+    UiSceneManager_1.UiSceneManager.DestroyRoleSystemRoleActor(this.xVi),
+      EffectSystem_1.EffectSystem.IsValid(this.Nlo) &&
         (EffectSystem_1.EffectSystem.StopEffectById(
-          this.Fho,
+          this.Nlo,
           "[RoleHandBookSelectionView.OnDestroy]",
           !0,
         ),
-        (this.Fho = 0)),
+        (this.Nlo = 0)),
       (this.RoleList = void 0);
   }
 }

@@ -10,18 +10,18 @@ const UE = require("ue"),
 class SilentAreaView extends BattleVisibleChildView_1.BattleVisibleChildView {
   constructor() {
     super(...arguments),
-      (this.qct = void 0),
-      (this.Gct = BigInt(0)),
-      (this.Nsr = void 0),
+      (this.Xmt = void 0),
+      (this.$mt = BigInt(0)),
+      (this.Gar = void 0),
       (this.kqe = (e) => {
         var t;
         e
           ? ((e = this.GetItem(1)),
-            (t = this.Nsr?.GetSilentAreaShowInfo()),
-            this.qct.CreateAndShow("UiItem_HoverTipsC", e, t))
-          : this.qct.EndShow();
+            (t = this.Gar?.GetSilentAreaShowInfo()),
+            this.Xmt.CreateAndShow("UiItem_HoverTipsC", e, t))
+          : this.Xmt.EndShow();
       }),
-      (this.Oct = () => {
+      (this.Jmt = () => {
         var e = this.GetExtendToggle(0);
         e &&
           (1 === e.GetToggleState()
@@ -30,13 +30,13 @@ class SilentAreaView extends BattleVisibleChildView_1.BattleVisibleChildView {
       });
   }
   get Id() {
-    return this.Gct;
+    return this.$mt;
   }
   Initialize(e) {
     super.Initialize(e),
       this.InitChildType(4),
       this.SetVisible(1, !1),
-      (this.qct = new SilentAreaInfoPanel_1.SilentAreaInfoPanel()),
+      (this.Xmt = new SilentAreaInfoPanel_1.SilentAreaInfoPanel()),
       this.Ore();
   }
   Reset() {
@@ -52,19 +52,19 @@ class SilentAreaView extends BattleVisibleChildView_1.BattleVisibleChildView {
   Ore() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.BattleUiToggleSilentAreaInfoView,
-      this.Oct,
+      this.Jmt,
     );
   }
   kre() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.BattleUiToggleSilentAreaInfoView,
-      this.Oct,
+      this.Jmt,
     );
   }
   StartShow(e, t) {
-    (this.Gct = e),
-      (this.Nsr = t),
-      this.qct.UpdateInfo(t.GetSilentAreaShowInfo()),
+    (this.$mt = e),
+      (this.Gar = t),
+      this.Xmt.UpdateInfo(t.GetSilentAreaShowInfo()),
       this.SetVisible(1, !0),
       ModelManager_1.ModelManager.BattleUiModel?.EnvironmentKeyData?.SetEnvironmentKeyVisible(
         1,
@@ -72,7 +72,7 @@ class SilentAreaView extends BattleVisibleChildView_1.BattleVisibleChildView {
       );
   }
   EndShow() {
-    this.qct.EndShow(),
+    this.Xmt.EndShow(),
       this.GetExtendToggle(0)?.SetToggleState(0, !0),
       this.SetVisible(1, !1),
       ModelManager_1.ModelManager.BattleUiModel?.EnvironmentKeyData?.SetEnvironmentKeyVisible(

@@ -5,12 +5,12 @@ const Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
   Net_1 = require("../../../../Core/Net/Net"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   UiControllerBase_1 = require("../../../Ui/Base/UiControllerBase"),
   UiManager_1 = require("../../../Ui/UiManager"),
   ItemRewardController_1 = require("../../ItemReward/ItemRewardController"),
-  RewardItemData_1 = require("../../ItemReward/RewardData/RewardItemData"),
-  ControllerHolder_1 = require("../../../Manager/ControllerHolder");
+  RewardItemData_1 = require("../../ItemReward/RewardData/RewardItemData");
 class InfluenceReputationController extends UiControllerBase_1.UiControllerBase {
   static OnAddEvents() {
     EventSystem_1.EventSystem.Add(
@@ -25,31 +25,31 @@ class InfluenceReputationController extends UiControllerBase_1.UiControllerBase 
     );
   }
   static OnRegisterNetEvent() {
-    Net_1.Net.Register(23256, InfluenceReputationController.jri);
+    Net_1.Net.Register(3474, InfluenceReputationController.jni);
   }
   static OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(23256);
+    Net_1.Net.UnRegister(3474);
   }
   static RequestInfluenceReward(e) {
-    var t = Protocol_1.Aki.Protocol.Aes.create();
-    (t.w5n = e),
-      Net_1.Net.Call(26578, t, (e) => {
-        e.Kms !== Protocol_1.Aki.Protocol.lkn.Sys
+    var t = Protocol_1.Aki.Protocol.Ios.create();
+    (t.d9n = e),
+      Net_1.Net.Call(26646, t, (e) => {
+        e.hvs !== Protocol_1.Aki.Protocol.O4n.NRs
           ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-              e.Kms,
-              4626,
+              e.hvs,
+              8920,
             )
           : ModelManager_1.ModelManager.InfluenceReputationModel.UpdateInfluenceRewardIndex(
-              e.w5n,
-              e.b5n,
+              e.d9n,
+              e.C9n,
             ) &&
-            (InfluenceReputationController.Wri(e.HRs),
+            (InfluenceReputationController.Wni(e.lws),
             EventSystem_1.EventSystem.Emit(
               EventDefine_1.EEventName.ReceiveReputationReward,
             ));
       });
   }
-  static Wri(e) {
+  static Wni(e) {
     var t = [];
     for (const o of Object.keys(e)) {
       var n = Number.parseInt(o),
@@ -62,32 +62,32 @@ class InfluenceReputationController extends UiControllerBase_1.UiControllerBase 
   static OnAddOpenViewCheckFunction() {
     UiManager_1.UiManager.AddOpenViewCheckFunction(
       "InfluenceReputationView",
-      InfluenceReputationController.V4e,
+      InfluenceReputationController.iVe,
       "InfluenceReputationController.CanOpenView",
     );
   }
   static OnRemoveOpenViewCheckFunction() {
     UiManager_1.UiManager.RemoveOpenViewCheckFunction(
       "InfluenceReputationView",
-      InfluenceReputationController.V4e,
+      InfluenceReputationController.iVe,
     );
   }
 }
-((exports.InfluenceReputationController = InfluenceReputationController).jri = (
+((exports.InfluenceReputationController = InfluenceReputationController).jni = (
   e,
 ) => {
-  e = e.VRs;
+  e = e.aws;
   ModelManager_1.ModelManager.InfluenceReputationModel.SetInfluenceInfoList(e);
 }),
   (InfluenceReputationController.RequestInfluenceInfo = () => {
-    var e = Protocol_1.Aki.Protocol.Les.create();
-    Net_1.Net.Call(10411, e, (e) => {
-      e = e.VRs;
+    var e = Protocol_1.Aki.Protocol.Sos.create();
+    Net_1.Net.Call(5566, e, (e) => {
+      e = e.aws;
       ModelManager_1.ModelManager.InfluenceReputationModel.SetInfluenceInfoList(
         e,
       );
     });
   }),
-  (InfluenceReputationController.V4e = (e) =>
+  (InfluenceReputationController.iVe = (e) =>
     ModelManager_1.ModelManager.FunctionModel.IsOpen(10029));
 //# sourceMappingURL=InfluenceReputationController.js.map

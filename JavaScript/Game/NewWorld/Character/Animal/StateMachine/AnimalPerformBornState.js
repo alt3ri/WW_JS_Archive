@@ -10,7 +10,7 @@ class AnimalPerformBornState extends AnimalPerformStateBase_1.AnimalPerformState
     WaitEntityTask_1.WaitEntityTask.Create(t.GetCreatureDataId(), (t) => {
       t &&
         ObjectSystem_1.ObjectSystem.IsValid(this.Owner) &&
-        (this.Owner.GetComponent(185).AddTag(1900394806),
+        (this.Owner.GetComponent(188).AddTag(1900394806),
         this.StateMachine.Switch(1));
     });
   }

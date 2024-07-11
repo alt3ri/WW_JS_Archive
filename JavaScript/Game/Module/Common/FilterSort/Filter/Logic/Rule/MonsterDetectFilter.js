@@ -5,15 +5,15 @@ const CommonFilter_1 = require("./CommonFilter");
 class MonsterDetectFilter extends CommonFilter_1.CommonFilter {
   constructor() {
     super(...arguments),
-      (this.YTt = (t) => {
+      (this.eDt = (t) => {
         return t.Conf.DangerType;
       }),
-      (this.JTt = (t) => {
+      (this.tDt = (t) => {
         return t.Conf.TypeDescription2;
       });
   }
   OnInitFilterMap() {
-    this.FilterMap.set(7, this.YTt), this.FilterMap.set(17, this.JTt);
+    this.FilterMap.set(7, this.eDt), this.FilterMap.set(17, this.tDt);
   }
 }
 exports.MonsterDetectFilter = MonsterDetectFilter;

@@ -10,15 +10,15 @@ const UE = require("ue"),
 class SortItem extends UiPanelBase_1.UiPanelBase {
   constructor(t) {
     super(),
-      (this.dLt = 0),
-      (this.CRt = 1),
+      (this.pDt = 0),
+      (this.vUt = 1),
       (this.he = ""),
-      (this.U4e = void 0),
-      (this.gRt = void 0),
-      (this.cLt = (t) => {
-        1 === t && this.U4e?.(this.dLt, this.he);
+      (this.j5e = void 0),
+      (this.MUt = void 0),
+      (this.gDt = (t) => {
+        1 === t && this.j5e?.(this.pDt, this.he);
       }),
-      (this.T7e = () => !this.gRt || this.gRt(this.dLt)),
+      (this.Lke = () => !this.MUt || this.MUt(this.pDt)),
       this.CreateThenShowByActor(t.GetOwner());
   }
   OnRegisterComponent() {
@@ -27,25 +27,25 @@ class SortItem extends UiPanelBase_1.UiPanelBase {
       [1, UE.UIExtendToggle],
       [2, UE.UITexture],
     ]),
-      (this.BtnBindInfo = [[1, this.cLt]]);
+      (this.BtnBindInfo = [[1, this.gDt]]);
   }
   OnStart() {
-    this.GetExtendToggle(1).CanExecuteChange.Bind(this.T7e);
+    this.GetExtendToggle(1).CanExecuteChange.Bind(this.Lke);
   }
   OnBeforeDestroy() {
     this.GetExtendToggle(1).CanExecuteChange.Unbind();
   }
-  Ije() {
+  qWe() {
     (this.he = ConfigManager_1.ConfigManager.SortConfig.GetSortRuleName(
-      this.dLt,
-      this.CRt,
+      this.pDt,
+      this.vUt,
     )),
       this.GetText(0).SetText(this.he);
   }
-  IIt() {
+  UTt() {
     var t = ConfigManager_1.ConfigManager.SortConfig.GetSortRuleAttributeId(
-        this.dLt,
-        this.CRt,
+        this.pDt,
+        this.vUt,
       ),
       i = 0 < t,
       t = i
@@ -53,8 +53,8 @@ class SortItem extends UiPanelBase_1.UiPanelBase {
             t,
           )
         : ConfigManager_1.ConfigManager.SortConfig.GetSortRuleIcon(
-            this.dLt,
-            this.CRt,
+            this.pDt,
+            this.vUt,
           ),
       e = this.GetTexture(2);
     StringUtils_1.StringUtils.IsBlank(t)
@@ -64,19 +64,19 @@ class SortItem extends UiPanelBase_1.UiPanelBase {
         e.SetChangeColor(i, e.changeColor));
   }
   SetToggleFunction(t) {
-    this.U4e = t;
+    this.j5e = t;
   }
   SetCanExecuteChange(t) {
-    this.gRt = t;
+    this.MUt = t;
   }
   SetToggleStateForce(t) {
     this.GetExtendToggle(1).SetToggleStateForce(t ? 1 : 0);
   }
   ShowSortItem(t, i, e) {
-    (this.dLt = t),
-      (this.CRt = i),
-      this.Ije(),
-      this.IIt(),
+    (this.pDt = t),
+      (this.vUt = i),
+      this.qWe(),
+      this.UTt(),
       this.SetToggleStateForce(e);
   }
 }
@@ -84,22 +84,22 @@ class BaseSortGroup extends UiPanelBase_1.UiPanelBase {
   constructor(t) {
     super(),
       (this.eGe = void 0),
-      (this.DRt = void 0),
+      (this.PUt = void 0),
       (this.Mne = 0),
-      (this.CRt = 1),
-      (this.MRt = (t, i, e) => {
+      (this.vUt = 1),
+      (this.IUt = (t, i, e) => {
         i = new SortItem(i);
         return (
-          i.SetToggleFunction(this.SRt),
-          i.SetCanExecuteChange(this.T7e),
-          i.ShowSortItem(t, this.CRt, this.DRt[0] === t),
+          i.SetToggleFunction(this.TUt),
+          i.SetCanExecuteChange(this.Lke),
+          i.ShowSortItem(t, this.vUt, this.PUt[0] === t),
           { Key: t, Value: i }
         );
       }),
-      (this.SRt = (t, i) => {
-        this.RRt(), (this.DRt = [t, i]);
+      (this.TUt = (t, i) => {
+        this.xUt(), (this.PUt = [t, i]);
       }),
-      (this.T7e = (t) => this.DRt[0] !== t),
+      (this.Lke = (t) => this.PUt[0] !== t),
       this.CreateThenShowByActor(t.GetOwner());
   }
   OnRegisterComponent() {
@@ -111,41 +111,39 @@ class BaseSortGroup extends UiPanelBase_1.UiPanelBase {
   OnStart() {
     this.eGe = new GenericLayoutNew_1.GenericLayoutNew(
       this.GetLayoutBase(0),
-      this.MRt,
+      this.IUt,
       this.GetItem(1),
     );
   }
-  OnBeforeDestroy() {
-    this.eGe.ClearChildren();
+  OnBeforeDestroy() {}
+  xUt() {
+    this.eGe.GetLayoutItemByKey(this.PUt[0]).SetToggleStateForce(!1);
   }
-  RRt() {
-    this.eGe.GetLayoutItemByKey(this.DRt[0]).SetToggleStateForce(!1);
-  }
-  URt() {
+  wUt() {
     var t = ModelManager_1.ModelManager.SortModel.GetSortResultData(this.Mne);
-    this.DRt = t.GetSelectBaseSort();
+    this.PUt = t.GetSelectBaseSort();
   }
-  LRt() {
+  AUt() {
     var t = ConfigManager_1.ConfigManager.SortConfig.GetSortConfig(this.Mne);
-    (this.CRt = t.DataId), this.eGe.RebuildLayoutByDataNew(t.BaseSortList);
+    (this.vUt = t.DataId), this.eGe.RebuildLayoutByDataNew(t.BaseSortList);
   }
   Init(t) {
-    (this.Mne = t), this.URt(), this.LRt();
+    (this.Mne = t), this.wUt(), this.AUt();
   }
   Reset() {
     var t,
       i,
       e = ConfigManager_1.ConfigManager.SortConfig.GetSortConfig(this.Mne)
         .BaseSortList[0],
-      s = ConfigManager_1.ConfigManager.SortConfig.GetSortRuleName(e, this.CRt),
-      s = ((this.DRt = [e, s]), this.eGe.GetLayoutItemMap());
+      s = ConfigManager_1.ConfigManager.SortConfig.GetSortRuleName(e, this.vUt),
+      s = ((this.PUt = [e, s]), this.eGe.GetLayoutItemMap());
     for ([t, i] of s) {
       var h = t;
-      i.ShowSortItem(h, this.CRt, e === h);
+      i.ShowSortItem(h, this.vUt, e === h);
     }
   }
   GetTempSelect() {
-    return this.DRt;
+    return this.PUt;
   }
 }
 exports.BaseSortGroup = BaseSortGroup;

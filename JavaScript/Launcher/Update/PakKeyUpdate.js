@@ -22,12 +22,12 @@ class PakKeyUpdate {
       (PakKeyUpdate.Pt = e.GetPatchSaveDir() + "PakData");
   }
   static $ne(e) {
-    (PakKeyUpdate.Myr = !1),
+    (PakKeyUpdate.fIr = !1),
       (PakKeyUpdate.Lo = void 0),
-      (PakKeyUpdate.Syr = 0),
+      (PakKeyUpdate.pIr = 0),
       e &&
-        void (PakKeyUpdate.pk = 0) !== PakKeyUpdate.Eyr &&
-        (PakKeyUpdate.Eyr(), (PakKeyUpdate.Eyr = void 0));
+        void (PakKeyUpdate.pk = 0) !== PakKeyUpdate.vIr &&
+        (PakKeyUpdate.vIr(), (PakKeyUpdate.vIr = void 0));
   }
   static async CheckPakKey(e, a) {
     var t, o;
@@ -37,24 +37,24 @@ class PakKeyUpdate {
         0 < PakKeyUpdate.pk && o < MIN_UPDATE_INTERVAL
           ? (LauncherLog_1.LauncherLog.Info("尝试更新过于频繁..."), !1)
           : ((PakKeyUpdate.pk = t),
-            PakKeyUpdate.Myr
+            PakKeyUpdate.fIr
               ? (LauncherLog_1.LauncherLog.Info("已经在更新中..."), !1)
-              : ((PakKeyUpdate.Myr = !0),
-                (await PakKeyUpdate.yyr())
+              : ((PakKeyUpdate.fIr = !0),
+                (await PakKeyUpdate.MIr())
                   ? !!(await PakKeyUpdate.TryDownloadFile(e, a)) &&
                     (PakKeyUpdate.$ne(!0), void 0 !== e && e(), !0)
                   : (PakKeyUpdate.$ne(!1), void 0 !== a && a(), !1))))
       : (void 0 !== e && e(), !0);
   }
-  static async yyr(e = 0) {
+  static async MIr(e = 0) {
     var a = UE.KuroLauncherLibrary.GetPlatform(),
       t = RemoteConfig_1.RemoteInfo.Config.PackageVersion,
       a =
         BaseConfigController_1.BaseConfigController.GetMixUri() +
         `/${a}/KeyList_${t}.json`;
-    PakKeyUpdate.Syr++;
+    PakKeyUpdate.pIr++;
     let o = e;
-    PakKeyUpdate.Syr > KEYLIST_TRY_COUNT && (o++, (PakKeyUpdate.Syr = 1));
+    PakKeyUpdate.pIr > KEYLIST_TRY_COUNT && (o++, (PakKeyUpdate.pIr = 1));
     t = UrlPrefixDownload_1.UrlPrefixSelector.GetAllPrefixList();
     if (o >= t.length)
       return (
@@ -75,7 +75,7 @@ class PakKeyUpdate {
         (LauncherLog_1.LauncherLog.Info(
           "开始获取KeyList配置文件",
           ["fullUrl", d],
-          ["tryCount", PakKeyUpdate.Syr],
+          ["tryCount", PakKeyUpdate.pIr],
         ),
         new PakKeyLogReport_1.PakKeyLog()),
       e = new Date(),
@@ -83,7 +83,7 @@ class PakKeyUpdate {
         ((t.event_time = e.getTime().toString()),
         (t.s_url_prefix = r),
         (t.s_step_id = "start_download_pak_key_list"),
-        (t.i_try_count = PakKeyUpdate.Syr.toString()),
+        (t.i_try_count = PakKeyUpdate.pIr.toString()),
         (t.s_file_name = a),
         HotPatchLogReport_1.HotPatchLogReport.Report(t),
         await (0, UrlPrefixHttpRequest_1.httpRequest)(d));
@@ -93,17 +93,17 @@ class PakKeyUpdate {
           "获取KeyList配置失败",
           ["reason", e.Result],
           ["errorCode", e.Code],
-          ["tryCount", PakKeyUpdate.Syr],
+          ["tryCount", PakKeyUpdate.pIr],
         ),
         (a = new PakKeyLogReport_1.PakKeyLog()),
         (t = new Date()),
         (a.event_time = t.getTime().toString()),
         (a.s_url_prefix = r),
         (a.s_step_id = "end_download_pak_key_list"),
-        (a.i_try_count = PakKeyUpdate.Syr.toString()),
+        (a.i_try_count = PakKeyUpdate.pIr.toString()),
         (a.s_step_result = "failed"),
         HotPatchLogReport_1.HotPatchLogReport.Report(a),
-        await PakKeyUpdate.yyr(o)
+        await PakKeyUpdate.MIr(o)
       );
     LauncherLog_1.LauncherLog.Info("获取KeyList配置文件成功");
     (d = new PakKeyLogReport_1.PakKeyLog()),
@@ -130,7 +130,7 @@ class PakKeyUpdate {
           BaseConfigController_1.BaseConfigController.GetMixUri() +
           `/${d}/client_key/${p}/${o}/PakData`;
       if ("" === _ && "" === r) return !0;
-      if (_ === PakKeyUpdate.Iyr)
+      if (_ === PakKeyUpdate.EIr)
         return (
           LauncherLog_1.LauncherLog.Info("无需更新PakData", ["hash", _]), !0
         );
@@ -158,7 +158,7 @@ class PakKeyUpdate {
         const n = (e) => {
           (0, puerts_1.releaseManualReleaseDelegate)(n),
             UE.KuroPakKeyLibrary.UnbindCallback(),
-            e && (PakKeyUpdate.Iyr = _),
+            e && (PakKeyUpdate.EIr = _),
             UE.BlueprintPathsLibrary.FileExists(PakKeyUpdate.Pt) &&
               UE.KuroLauncherLibrary.DeleteFile(PakKeyUpdate.Pt),
             LauncherLog_1.LauncherLog.Info("PakData文件数据读取结束~");
@@ -176,7 +176,7 @@ class PakKeyUpdate {
           (o.s_step_id = "end_download_pak_data"),
           (o.s_step_result = "success"),
           HotPatchLogReport_1.HotPatchLogReport.Report(o),
-          void 0 !== e && (PakKeyUpdate.Eyr = e),
+          void 0 !== e && (PakKeyUpdate.vIr = e),
           UE.KuroPakKeyLibrary.SetRSAPublicKey(r),
           UE.KuroPakKeyLibrary.SetCompleteCallback(
             (0, puerts_1.toManualReleaseDelegate)(n),
@@ -195,13 +195,13 @@ class PakKeyUpdate {
     return !1;
   }
 }
-((exports.PakKeyUpdate = PakKeyUpdate).Myr = !1),
+((exports.PakKeyUpdate = PakKeyUpdate).fIr = !1),
   (PakKeyUpdate.pk = 0),
   (PakKeyUpdate.NeedExtPakKeys = !1),
   (PakKeyUpdate.UpdateCheckInterval = -1),
-  (PakKeyUpdate.Syr = 0),
-  (PakKeyUpdate.Iyr = ""),
+  (PakKeyUpdate.pIr = 0),
+  (PakKeyUpdate.EIr = ""),
   (PakKeyUpdate.Pt = ""),
   (PakKeyUpdate.Lo = void 0),
-  (PakKeyUpdate.Eyr = void 0);
+  (PakKeyUpdate.vIr = void 0);
 //# sourceMappingURL=PakKeyUpdate.js.map

@@ -11,8 +11,8 @@ class FilterSortEntrance extends UiPanelBase_1.UiPanelBase {
   constructor(e, r) {
     super(),
       (this.UpdateList = r),
-      (this.aft = void 0),
-      (this.hft = void 0),
+      (this.vpt = void 0),
+      (this.Mpt = void 0),
       this.CreateThenShowByActor(e.GetOwner());
   }
   OnRegisterComponent() {
@@ -22,17 +22,17 @@ class FilterSortEntrance extends UiPanelBase_1.UiPanelBase {
     ];
   }
   OnStart() {
-    (this.aft = new FilterEntrance_1.FilterEntrance(
+    (this.vpt = new FilterEntrance_1.FilterEntrance(
       this.GetItem(0),
       this.UpdateList,
     )),
-      (this.hft = new SortEntrance_1.SortEntrance(
+      (this.Mpt = new SortEntrance_1.SortEntrance(
         this.GetItem(1),
         this.UpdateList,
       ));
   }
   UpdateData(e, r) {
-    this.aft.UpdateData(e, r), this.hft.UpdateData(e, r);
+    this.vpt.UpdateData(e, r), this.Mpt.UpdateData(e, r);
   }
   ClearData(e) {
     var r = ConfigManager_1.ConfigManager.FilterConfig.GetFilterId(e),

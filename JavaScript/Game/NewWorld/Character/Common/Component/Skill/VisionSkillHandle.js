@@ -7,9 +7,8 @@ const Log_1 = require("../../../../../../Core/Common/Log"),
   EventSystem_1 = require("../../../../../Common/Event/EventSystem"),
   InputEnums_1 = require("../../../../../Input/InputEnums"),
   ModelManager_1 = require("../../../../../Manager/ModelManager"),
-  PhantomUtil_1 = require("../../../../../Module/Phantom/PhantomUtil"),
-  useNextSkillTagId = 718290459,
-  morphTagId = -2100129479;
+  CombatDebugController_1 = require("../../../../../Utils/CombatDebugController"),
+  useNextSkillTagId = 718290459;
 class VisionSkillHandle {
   constructor() {
     (this.Mzo = void 0),
@@ -47,7 +46,13 @@ class VisionSkillHandle {
               Context: "VisionSkillHandle.OnCharInputPress",
             })
               ? this.Izo.StartMultiSkill(s, !0) && (this.Tzo = t)
-              : this.Azo()));
+              : CombatDebugController_1.CombatDebugController.CombatInfo(
+                  "Skill",
+                  this.Ezo?.Entity,
+                  "角色幻象变身中使用下一段技能失败",
+                  ["技能Id", s?.SkillId],
+                  ["技能名", s?.SkillName],
+                )));
       });
   }
   Init(t, i) {
@@ -93,17 +98,18 @@ class VisionSkillHandle {
   BeginSkill(t, i, s = "") {
     var e = this.cBe.GetSkill(t);
     let h = t;
-    (e = this.Izo.IsMultiSkill(e.SkillInfo)),
-      e && (h = this.Izo.GetNextMultiSkillId(t)),
-      Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug("Battle", 18, "使用幻象技能", ["skillId", h]),
-      (t = this.cBe.BeginSkill(h, {
-        Target: i,
-        SocketName: s,
-        Context: "VisionSkillHandle.BeginSkill",
-      }));
+    var n = this.Izo.IsMultiSkill(e.SkillInfo),
+      t =
+        (n && (h = this.Izo.GetNextMultiSkillId(t)),
+        Log_1.Log.CheckDebug() &&
+          Log_1.Log.Debug("Battle", 18, "使用幻象技能", ["skillId", h]),
+        this.cBe.BeginSkill(h, {
+          Target: i,
+          SocketName: s,
+          Context: "VisionSkillHandle.BeginSkill",
+        }));
     return t
-      ? (e &&
+      ? (n &&
           (EventSystem_1.EventSystem.HasWithTarget(
             this.Ezo.Entity,
             EventDefine_1.EEventName.CharInputPress,
@@ -118,7 +124,14 @@ class VisionSkillHandle {
           this.Izo.StartMultiSkill(i)) &&
           (this.Tzo = h),
         (this.Lzo = !0))
-      : (this.Azo(), !1);
+      : (CombatDebugController_1.CombatDebugController.CombatInfo(
+          "Skill",
+          this.Ezo?.Entity,
+          "角色开始幻象变身技能失败",
+          ["技能Id", e?.SkillId],
+          ["技能名", e?.SkillName],
+        ),
+        !1);
   }
   OnMorphEnd(t) {
     this.Dzo || this.Pzo(), (this.Lzo = !1);
@@ -147,6 +160,11 @@ class VisionSkillHandle {
       ((t = this.cBe.GetSkill(t.NextSkillId)), !this.Izo.CanStartMultiSkill(t))
     );
   }
+  IsSummonerInMultiSkill() {
+    return !(
+      this.Tzo <= 0 || !this.Izo.GetMultiSkillInfo(this.Tzo)?.NextSkillId
+    );
+  }
   Pzo() {
     0 !== this.Tzo && (this.Izo.ResetMultiSkills(this.Tzo, !0), (this.Tzo = 0)),
       EventSystem_1.EventSystem.HasWithTarget(
@@ -158,16 +176,6 @@ class VisionSkillHandle {
           this.Ezo.Entity,
           EventDefine_1.EEventName.CharInputPress,
           this.Uzo,
-        );
-  }
-  Azo() {
-    PhantomUtil_1.PhantomUtil.SetVisionEnable(this.Ezo.Entity, !1);
-    var t = this.Ezo?.Entity?.CheckGetComponent(185);
-    t && t.RemoveTag(morphTagId),
-      this.cBe.CurrentSkill?.Active &&
-        this.cBe.EndSkill(
-          this.cBe.CurrentSkill.SkillId,
-          "VisionSkillHandle.HandleSkillFail",
         );
   }
 }

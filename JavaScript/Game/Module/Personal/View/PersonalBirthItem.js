@@ -11,18 +11,18 @@ class PersonalBirthItem extends AutoAttachExhibitionItem_1.AutoAttachExhibitionI
     super(...arguments),
       (this.Dates = void 0),
       (this.kG = new UE.Vector(0)),
-      (this.Mnt = void 0),
-      (this.EVe = void 0);
+      (this.wst = void 0),
+      (this.q6e = void 0);
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [[0, UE.UIText]];
   }
   OnBeforeDestroy() {
-    this.Mnt = void 0;
+    this.wst = void 0;
   }
   RefreshItem() {
-    (this.Mnt = this.Dates[this.GetShowItemIndex()]),
-      this.GetText(0).SetText(String(this.Mnt));
+    (this.wst = this.Dates[this.GetShowItemIndex()]),
+      this.GetText(0).SetText(String(this.wst));
   }
   SetData(t) {
     this.Dates = t;
@@ -39,10 +39,10 @@ class PersonalBirthItem extends AutoAttachExhibitionItem_1.AutoAttachExhibitionI
       this.GetText(0).SetAlpha(i);
   }
   BindOnSelected(t) {
-    this.EVe = t;
+    this.q6e = t;
   }
   OnSelect() {
-    this.EVe && this.EVe(this.Mnt);
+    this.q6e && this.q6e(this.wst);
   }
 }
 exports.PersonalBirthItem = PersonalBirthItem;

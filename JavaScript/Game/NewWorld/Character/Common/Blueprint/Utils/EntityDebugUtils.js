@@ -14,16 +14,16 @@ const cpp_1 = require("cpp"),
 class EntityDebugUtils {
   static GetDebugEntityNameList() {
     return (
-      this.zWo ||
-        ((this.zWo = UE.NewArray(UE.BuiltinString)),
-        (this.ZWo = new Map()),
-        (this.eKo = new Map())),
-      this.tKo(),
-      this.zWo
+      this.$Ko ||
+        ((this.$Ko = UE.NewArray(UE.BuiltinString)),
+        (this.YKo = new Map()),
+        (this.JKo = new Map())),
+      this.zKo(),
+      this.$Ko
     );
   }
-  static tKo() {
-    this.zWo.Empty(), this.ZWo.clear(), this.eKo.clear();
+  static zKo() {
+    this.$Ko.Empty(), this.YKo.clear(), this.JKo.clear();
     var t = [],
       e = Global_1.Global.BaseCharacter.CharacterActorComponent;
     if (ModelManager_1.ModelManager?.GameModeModel?.WorldDone) {
@@ -33,11 +33,11 @@ class EntityDebugUtils {
             i = n?.GetEntityType();
           if (i)
             switch (i) {
-              case Protocol_1.Aki.Protocol.HBs.Proto_Npc:
-              case Protocol_1.Aki.Protocol.HBs.Proto_Monster:
-              case Protocol_1.Aki.Protocol.HBs.Proto_SceneItem:
-              case Protocol_1.Aki.Protocol.HBs.Proto_Custom:
-              case Protocol_1.Aki.Protocol.HBs.Proto_Animal:
+              case Protocol_1.Aki.Protocol.wks.Proto_Npc:
+              case Protocol_1.Aki.Protocol.wks.Proto_Monster:
+              case Protocol_1.Aki.Protocol.wks.Proto_SceneItem:
+              case Protocol_1.Aki.Protocol.wks.Proto_Custom:
+              case Protocol_1.Aki.Protocol.wks.Proto_Animal:
                 var r = Vector_1.Vector.Create(),
                   r =
                     ((
@@ -52,21 +52,21 @@ class EntityDebugUtils {
         }
       t.sort((t, e) => t.Distance - e.Distance),
         t.forEach((t) => {
-          this.iKo(t.Entity);
+          this.ZKo(t.Entity);
         });
     }
   }
-  static iKo(t) {
+  static ZKo(t) {
     var e = t.GetComponent(1),
       n = t.GetComponent(0),
       e = `[${n?.GetPbDataId() ?? "?"}] ` + (e?.Owner?.GetName() ?? "?");
-    (e += ` (${t.GetComponent(102)?.PawnName ?? n?.GetBaseInfo()?.TidName ?? "无名字"})`),
-      this.zWo.Add(e),
-      this.ZWo.set(e, t.Id),
-      this.eKo.set(t.Id, e);
+    (e += ` (${t.GetComponent(104)?.PawnName ?? n?.GetBaseInfo()?.TidName ?? "无名字"})`),
+      this.$Ko.Add(e),
+      this.YKo.set(e, t.Id),
+      this.JKo.set(t.Id, e);
   }
   static GetSelectedEntityId(t) {
-    return (t && this.ZWo && this.ZWo.get(t)) || 0;
+    return (t && this.YKo && this.YKo.get(t)) || 0;
   }
   static GetDebugBaseInfo(t) {
     var e = EntitySystem_1.EntitySystem.Get(t);
@@ -75,7 +75,7 @@ class EntityDebugUtils {
     if (!n) return "无";
     if (!e?.IsInit) return "实体尚未完成Init";
     var i = e.GetComponent(1),
-      r = e.GetComponent(102),
+      r = e.GetComponent(104),
       a = e.GameBudgetManagedToken
         ? cpp_1.FKuroGameBudgetAllocatorInterface.GetGameBudgetDebugString(
             e.GameBudgetManagedToken,
@@ -108,7 +108,7 @@ class EntityDebugUtils {
 ${a} `) + "\n\nEntityTag: \n") +
       this.GetEntityCommonTagDebugString(t) +
       "\n\n";
-    e.GetComponent(74) &&
+    e.GetComponent(76) &&
       (o =
         (o =
           (o =
@@ -124,7 +124,7 @@ ${a} `) + "\n\nEntityTag: \n") +
 `) +
         this.GetInRangeOnlineEntityListDebugString(t) +
         "\n\n");
-    var r = e.GetComponent(106),
+    var r = e.GetComponent(108),
       a =
         (r &&
           (o =
@@ -136,7 +136,7 @@ ${a} `) + "\n\nEntityTag: \n") +
             "PlayerDistance: " +
             r.PlayerDist +
             "\n\n"),
-        e.GetComponent(115)),
+        e.GetComponent(117)),
       t =
         (a &&
           (o =
@@ -148,7 +148,7 @@ ${a} `) + "\n\nEntityTag: \n") +
             "IsMoving: " +
             a.IsMoving +
             "\n\n"),
-        e.GetComponent(140)),
+        e.GetComponent(142)),
       r =
         (t &&
           (o =
@@ -156,7 +156,7 @@ ${a} `) + "\n\nEntityTag: \n") +
             "State: " +
             t.State +
             "\n\n"),
-        e.GetComponent(178)),
+        e.GetComponent(181)),
       a =
         (r &&
           (o =
@@ -164,7 +164,7 @@ ${a} `) + "\n\nEntityTag: \n") +
             "定时器开启: " +
             r.DebugTimerRunning +
             "\n\n"),
-        e.GetComponent(90)),
+        e.GetComponent(92)),
       t =
         (a &&
           (o =
@@ -199,12 +199,12 @@ ${a} `) + "\n\nEntityTag: \n") +
         ((a = r?.GetVelocity()),
         (o =
           (o += `Self Velocity: [${a.X}, ${a.Y}, ${a.Z}]`) +
-          this.oKo(r) +
+          this.eQo(r) +
           "\n\n")),
       o
     );
   }
-  static oKo(t, n = 1) {
+  static eQo(t, n = 1) {
     let i = "";
     var e = (0, puerts_1.$ref)(UE.NewArray(UE.Actor)),
       r = (t.GetAttachedActors(e, !0), (0, puerts_1.$unref)(e));
@@ -217,7 +217,7 @@ ${a} `) + "\n\nEntityTag: \n") +
       i =
         (i =
           (i += `[${UE.KismetSystemLibrary.GetDisplayName(a)}] Velocity: `) +
-          `[${o.X}, ${o.Y}, ${o.Z}]`) + this.oKo(a, n + 1);
+          `[${o.X}, ${o.Y}, ${o.Z}]`) + this.eQo(a, n + 1);
     }
     return i;
   }
@@ -225,9 +225,9 @@ ${a} `) + "\n\nEntityTag: \n") +
     t = EntitySystem_1.EntitySystem.Get(t);
     if (!t) return "无";
     let e = "";
-    var n = t.GetComponent(106),
-      n = (n && (e += n.GetDebugString()), t.GetComponent(104)),
-      n = (n && (e += n.GetDebugString()), (e += "\n"), t.GetComponent(178));
+    var n = t.GetComponent(108),
+      n = (n && (e += n.GetDebugString()), t.GetComponent(106)),
+      n = (n && (e += n.GetDebugString()), (e += "\n"), t.GetComponent(181));
     return n && (t = n.GetInteractController())
       ? e + t.GetInteractionDebugInfos()
       : e;
@@ -235,20 +235,20 @@ ${a} `) + "\n\nEntityTag: \n") +
   static GetEntityCommonTagDebugString(t) {
     t = EntitySystem_1.EntitySystem.Get(t);
     if (!t) return "无";
-    let e = t.GetComponent(185)?.GetTagDebugStrings()?.trim();
+    let e = t.GetComponent(188)?.GetTagDebugStrings()?.trim();
     return (e = e && 0 !== e.length ? e : "无");
   }
   static GetInRangeLocalEntityListDebugString(t) {
     var e = EntitySystem_1.EntitySystem.Get(t);
     if (!e) return "无";
-    t = e.GetComponent(74)?.GetEntitiesInRangeLocal();
+    t = e.GetComponent(76)?.GetEntitiesInRangeLocal();
     let n = "";
     if (t?.size) {
       for (var [, i] of t) {
         var r = i.Entity?.GetComponent(1),
           i = i.Entity?.GetComponent(0),
           r = `[${i?.GetPbDataId() ?? "?"}] ` + (r?.Owner?.GetName() ?? "?");
-        (r += ` (${e.GetComponent(102)?.PawnName ?? i?.GetBaseInfo()?.TidName ?? "无名字"})`),
+        (r += ` (${e.GetComponent(104)?.PawnName ?? i?.GetBaseInfo()?.TidName ?? "无名字"})`),
           (n +=
             r +
             `
@@ -261,14 +261,14 @@ ${a} `) + "\n\nEntityTag: \n") +
   static GetInRangeOnlineEntityListDebugString(t) {
     var e = EntitySystem_1.EntitySystem.Get(t);
     if (!e) return "无";
-    t = e.GetComponent(74)?.GetEntitiesInRangeOnline();
+    t = e.GetComponent(76)?.GetEntitiesInRangeOnline();
     let n = "";
     if (t?.size) {
       for (var [, i] of t) {
         var r = i.Entity?.GetComponent(1),
           i = i.Entity?.GetComponent(0),
           r = `[${i?.GetPbDataId() ?? "?"}] ` + (r?.Owner?.GetName() ?? "?");
-        (r += ` (${e.GetComponent(102)?.PawnName ?? i?.GetBaseInfo()?.TidName ?? "无名字"})`),
+        (r += ` (${e.GetComponent(104)?.PawnName ?? i?.GetBaseInfo()?.TidName ?? "无名字"})`),
           (n +=
             r +
             `
@@ -281,7 +281,7 @@ ${a} `) + "\n\nEntityTag: \n") +
   static GetInRangeActorListDebugString(t) {
     t = EntitySystem_1.EntitySystem.Get(t);
     if (!t) return "无";
-    t = t.GetComponent(74)?.GetActorsInRangeLocal();
+    t = t.GetComponent(76)?.GetActorsInRangeLocal();
     let e = "";
     if (t?.size) {
       for (const n of t)
@@ -296,7 +296,7 @@ ${a} `) + "\n\nEntityTag: \n") +
   }
   static GetDebugEntityActor(t) {
     if (
-      (this.eKo || EntityDebugUtils.GetDebugEntityNameList(), this.eKo.has(t))
+      (this.JKo || EntityDebugUtils.GetDebugEntityNameList(), this.JKo.has(t))
     ) {
       t = EntitySystem_1.EntitySystem.Get(t);
       if (t) {
@@ -307,7 +307,7 @@ ${a} `) + "\n\nEntityTag: \n") +
   }
   static GetDebugEntityName(t) {
     return (
-      this.eKo || EntityDebugUtils.GetDebugEntityNameList(), this.eKo.get(t)
+      this.JKo || EntityDebugUtils.GetDebugEntityNameList(), this.JKo.get(t)
     );
   }
   static GetEntityPbDataId(t) {

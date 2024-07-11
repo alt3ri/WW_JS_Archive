@@ -10,8 +10,8 @@ const puerts_1 = require("puerts"),
   ConfigManager_1 = require("../../Manager/ConfigManager"),
   EffectUtil_1 = require("../../Utils/EffectUtil");
 class UiModelResourcesManager {
-  static get CPo() {
-    return UiModelResourcesManager.gPo++;
+  static get cxo() {
+    return UiModelResourcesManager.mxo++;
   }
   static LoadUiModelResources(r, a) {
     if (!r || 0 === r.length)
@@ -27,22 +27,22 @@ class UiModelResourcesManager {
       );
     const s = [],
       t = [],
-      l = UiModelResourcesManager.CPo;
-    var e = [];
-    const i = new Map();
+      l = UiModelResourcesManager.cxo,
+      i = new Map();
     ResourceSystem_1.ResourceSystem.SetLoadModeInLoading(
       GlobalData_1.GlobalData.World,
       "UiModelResourcesManager.LoadUiModelResources",
-    );
-    for (const u of r) {
-      var o = ResourceSystem_1.ResourceSystem.LoadAsync(
-        u,
+    ),
+      UiModelResourcesManager.dxo.set(l, []);
+    for (const o of r) {
+      var e = ResourceSystem_1.ResourceSystem.LoadAsync(
+        o,
         UE.Object,
         (e, o) => {
           e && (s.push(o), i.set(o, e)),
             t.push(o),
             t.length === r.length &&
-              (UiModelResourcesManager.fPo.delete(l),
+              (UiModelResourcesManager.dxo.delete(l),
               s.length !== t.length ? a?.(3) : a?.(2, i),
               ResourceSystem_1.ResourceSystem.SetLoadModeInGame(
                 GlobalData_1.GlobalData.World,
@@ -50,9 +50,10 @@ class UiModelResourcesManager {
               ));
         },
       );
-      e.push(o);
+      UiModelResourcesManager.dxo.has(l) &&
+        UiModelResourcesManager.dxo.get(l).push(e);
     }
-    return UiModelResourcesManager.fPo.set(l, e), l;
+    return l;
   }
   static LoadUiRoleAllResourceByRoleConfigId(e, o) {
     var r = [];
@@ -66,7 +67,7 @@ class UiModelResourcesManager {
   }
   static CancelUiModelResourceLoad(e) {
     if (e !== UiModelResourcesManager.InvalidValue) {
-      var o = UiModelResourcesManager.fPo.get(e);
+      var o = UiModelResourcesManager.dxo.get(e);
       if (o) {
         for (const e of o) ResourceSystem_1.ResourceSystem.CancelAsyncLoad(e);
         ResourceSystem_1.ResourceSystem.SetLoadModeInGame(
@@ -117,8 +118,8 @@ class UiModelResourcesManager {
     UE.KuroMeshTextureFunctionLibrary.StopMeshesBundleStreamingInAllMips(e);
   }
 }
-((exports.UiModelResourcesManager = UiModelResourcesManager).fPo = new Map()),
-  (UiModelResourcesManager.gPo = 0),
+((exports.UiModelResourcesManager = UiModelResourcesManager).dxo = new Map()),
+  (UiModelResourcesManager.mxo = 0),
   (UiModelResourcesManager.InvalidValue = 0),
   (UiModelResourcesManager.StreamingInvalidValue = -1);
 //# sourceMappingURL=UiModelResourcesManager.js.map

@@ -56,7 +56,7 @@ class LevelEventCheckBattleState extends LevelGeneralBase_1.LevelEventBase {
     var e;
     return this.sDe?.Valid
       ? ((e = this.lDe.Type),
-        this.sDe.Entity.GetComponent(185)?.HasTag(
+        this.sDe.Entity.GetComponent(188)?.HasTag(
           GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(e),
         ))
       : (Log_1.Log.CheckInfo() &&

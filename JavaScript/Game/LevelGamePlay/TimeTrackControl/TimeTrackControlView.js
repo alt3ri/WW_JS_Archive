@@ -36,19 +36,20 @@ class TimeTrackControlView extends UiTickViewBase_1.UiTickViewBase {
       (this.pwe = -0),
       (this.vwe = !1),
       (this.Mwe = !1),
-      (this.IAr = !1),
-      (this.Swe = -0),
-      (this.Ewe = void 0),
+      (this.$Ar = !1),
+      (this.Ewe = -0),
+      (this.Swe = void 0),
       (this.ywe = void 0),
       (this.Iwe = void 0),
       (this.Twe = void 0),
-      (this.Lwe = () => {
-        TimeTrackController_1.TimeTrackController.HandleTimeTrackControlViewClose(),
-          (this.IAr = !0),
-          this.CloseMe();
+      (this.Lwe = (t, i) => {
+        0 === t.CalculateType &&
+          (TimeTrackController_1.TimeTrackController.HandleTimeTrackControlViewClose(),
+          (this.$Ar = !0),
+          this.CloseMe());
       }),
       (this.Dwe = (t, i) => {
-        i === Protocol_1.Aki.Protocol.lkn.Proto_ErrTimelineMove
+        i === Protocol_1.Aki.Protocol.O4n.Proto_ErrTimelineMove
           ? this.Rwe()
           : this.dwe !== t &&
             (this.uwe && this.uwe[this.dwe].ToggleSelected(!1),
@@ -56,7 +57,7 @@ class TimeTrackControlView extends UiTickViewBase_1.UiTickViewBase {
             (this.fwe = this.Uwe(t)),
             (this.pwe =
               (this.fwe - this.gwe) /
-              this.Swe /
+              this.Ewe /
               CommonDefine_1.MILLIONSECOND_PER_SECOND),
             (this.vwe = !0),
             AudioSystem_1.AudioSystem.PostEvent(LOOP_AKEVENT));
@@ -91,16 +92,16 @@ class TimeTrackControlView extends UiTickViewBase_1.UiTickViewBase {
     (this.cwe = ANGLE_RANGE),
       (this.Cwe =
         ModelManager_1.ModelManager.TimeTrackControlModel.GetConfigStatesCounts()),
-      (this.Swe =
+      (this.Ewe =
         ModelManager_1.ModelManager.TimeTrackControlModel.GetConfigSegmentTime()),
       (this._we = this.Cwe - 2 ? this.Cwe - 2 : 0),
       this._we ? this.Bwe() : ((this.mwe = this.cwe), (this._we = 0)),
       (this.dwe =
         ModelManager_1.ModelManager.TimeTrackControlModel.ControlPoint),
       (this.gwe = this.Uwe(this.dwe)),
-      (this.Ewe = this.GetItem(5)),
+      (this.Swe = this.GetItem(5)),
       (this.ywe = Rotator_1.Rotator.Create(0, this.gwe, 0)),
-      this.Ewe.SetUIRelativeRotation(this.ywe.ToUeRotator()),
+      this.Swe.SetUIRelativeRotation(this.ywe.ToUeRotator()),
       (this.vwe = !1);
     var i = this.GetItem(4);
     (this.lwe = this.GetItem(3)), (this.uwe = new Array()), i.SetUIActive(!1);
@@ -180,7 +181,7 @@ class TimeTrackControlView extends UiTickViewBase_1.UiTickViewBase {
       (this.uwe = void 0),
       AudioSystem_1.AudioSystem.ExecuteAction(LOOP_AKEVENT, 0),
       this.Mwe ||
-        this.IAr ||
+        this.$Ar ||
         TimeTrackController_1.TimeTrackController.HandleTimeTrackControlViewClose();
   }
   OnTick(t) {
@@ -189,13 +190,13 @@ class TimeTrackControlView extends UiTickViewBase_1.UiTickViewBase {
       (this.gwe += t),
       Math.abs(this.fwe - this.gwe) < Math.abs(t) && this.qwe(),
       (this.ywe.Yaw = this.gwe),
-      this.Ewe.SetUIRelativeRotation(this.ywe.ToUeRotator()));
+      this.Swe.SetUIRelativeRotation(this.ywe.ToUeRotator()));
   }
   qwe() {
     if (
       ((this.gwe = this.fwe),
       (this.ywe.Yaw = this.gwe),
-      this.Ewe.SetUIRelativeRotation(this.ywe.ToUeRotator()),
+      this.Swe.SetUIRelativeRotation(this.ywe.ToUeRotator()),
       AudioSystem_1.AudioSystem.ExecuteAction(LOOP_AKEVENT, 0),
       (this.vwe = !1),
       this.uwe)

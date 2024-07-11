@@ -13,10 +13,10 @@ const UE = require("ue"),
 class MonthCardRewardView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.YOt = 0),
-      (this.Yki = 0),
-      (this.Jki = () => {
-        var e = new RewardItemData_1.RewardItemData(this.YOt, this.Yki),
+      (this.Jkt = 0),
+      (this.Y2i = 0),
+      (this.J2i = () => {
+        var e = new RewardItemData_1.RewardItemData(this.Jkt, this.Y2i),
           r = new Array(),
           e =
             (r.push(e),
@@ -33,7 +33,7 @@ class MonthCardRewardView extends UiViewBase_1.UiViewBase {
       [0, UE.UIButtonComponent],
       [1, UE.UIText],
     ]),
-      (this.BtnBindInfo = [[0, this.Jki]]);
+      (this.BtnBindInfo = [[0, this.J2i]]);
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
@@ -49,8 +49,8 @@ class MonthCardRewardView extends UiViewBase_1.UiViewBase {
   }
   OnBeforeShow() {
     var e = ModelManager_1.ModelManager.MonthCardModel.LocalDailyReward;
-    (this.YOt = e[0].ItemId),
-      (this.Yki = e[1]),
+    (this.Jkt = e[0].ItemId),
+      (this.Y2i = e[1]),
       this.Og(),
       this.UiViewSequence.PlaySequence("Loop");
   }

@@ -4,8 +4,18 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const UE = require("ue"),
   MultiTextLang_1 = require("../../../../../Core/Define/ConfigQuery/MultiTextLang"),
   StringUtils_1 = require("../../../../../Core/Utils/StringUtils"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
+  LocalStorage_1 = require("../../../../Common/LocalStorage"),
+  LocalStorageDefine_1 = require("../../../../Common/LocalStorageDefine"),
+  TimeUtil_1 = require("../../../../Common/TimeUtil"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../../Manager/ModelManager"),
+  RedDotController_1 = require("../../../../RedDot/RedDotController"),
   UiManager_1 = require("../../../../Ui/UiManager"),
+  PayShopViewData_1 = require("../../../PayShop/PayShopData/PayShopViewData"),
+  ScrollingTipsController_1 = require("../../../ScrollingTips/ScrollingTipsController"),
   ActivitySubViewBase_1 = require("../../View/SubView/ActivitySubViewBase"),
   ActivityDescriptionTypeA_1 = require("../UniversalComponents/Content/ActivityDescriptionTypeA"),
   ActivityRewardList_1 = require("../UniversalComponents/Content/ActivityRewardList"),
@@ -20,10 +30,51 @@ class ActivitySubViewRogue extends ActivitySubViewBase_1.ActivitySubViewBase {
       (this.DNe = void 0),
       (this.UNe = void 0),
       (this.ANe = void 0),
-      (this.u2e = () => {
+      (this.OnBtnAchievement = () => {
+        2 ===
+        ActivityRogueController_1.ActivityRogueController.GetCurrentActivityData().GetRogueActivityState()
+          ? ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
+              "Rogue_Function_End_Tip",
+            )
+          : UiManager_1.UiManager.OpenView("RoguelikeAchievementView");
+      }),
+      (this.OnBtnShop = () => {
+        var i, e;
+        2 ===
+        ActivityRogueController_1.ActivityRogueController.GetCurrentActivityData().GetRogueActivityState()
+          ? ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
+              "Rogue_Function_End_Tip",
+            )
+          : void 0 !==
+              (e = ModelManager_1.ModelManager.RoguelikeModel.CurrSeasonData) &&
+            ((e =
+              ConfigManager_1.ConfigManager.RoguelikeConfig.GetRogueSeasonConfigById(
+                e.MHn,
+              )),
+            ((i = new PayShopViewData_1.PayShopViewData()).ShowShopIdList = [
+              e.ShopId,
+            ]),
+            (i.PayShopId = e.ShopId),
+            ModelManager_1.ModelManager.RoguelikeModel?.RecordRoguelikeShopRedDot(
+              !0,
+            ),
+            (e = TimeUtil_1.TimeUtil.GetNextDayTimeStamp()),
+            LocalStorage_1.LocalStorage.SetPlayer(
+              LocalStorageDefine_1.ELocalStoragePlayerKey
+                .RoguelikeShopNextTimeStamp,
+              e,
+            ),
+            EventSystem_1.EventSystem.Emit(
+              EventDefine_1.EEventName.RoguelikeDataUpdate,
+            ),
+            ControllerHolder_1.ControllerHolder.PayShopController.OpenPayShopView(
+              i,
+            ));
+      }),
+      (this.DFe = () => {
         var i = this.ActivityBaseData.GetPreGuideQuestFinishState(),
-          t = this.ActivityBaseData.GetRogueActivityState();
-        i || 0 !== t
+          e = this.ActivityBaseData.GetRogueActivityState();
+        i || 0 !== e
           ? ActivityRogueController_1.ActivityRogueController.ActivityFunctionExecute(
               this.ActivityBaseData.Id,
             )
@@ -37,12 +88,22 @@ class ActivitySubViewRogue extends ActivitySubViewBase_1.ActivitySubViewBase {
       });
   }
   OnRegisterComponent() {
-    this.ComponentRegisterInfos = [
+    (this.ComponentRegisterInfos = [
       [0, UE.UIItem],
       [1, UE.UIItem],
       [2, UE.UIItem],
       [3, UE.UIItem],
-    ];
+      [4, UE.UIButtonComponent],
+      [5, UE.UIButtonComponent],
+      [6, UE.UIItem],
+      [7, UE.UIItem],
+      [8, UE.UIItem],
+      [9, UE.UIItem],
+    ]),
+      (this.BtnBindInfo = [
+        [4, this.OnBtnAchievement],
+        [5, this.OnBtnShop],
+      ]);
   }
   OnSetData() {}
   async OnBeforeStartAsync() {
@@ -64,31 +125,49 @@ class ActivitySubViewRogue extends ActivitySubViewBase_1.ActivitySubViewBase {
   }
   OnStart() {
     var i,
-      t = this.ActivityBaseData.LocalConfig,
-      e = this.ActivityBaseData.GetExtraConfig();
-    t &&
-      e &&
-      ((e = t.DescTheme),
-      (i = !StringUtils_1.StringUtils.IsEmpty(e)),
+      e = this.ActivityBaseData.LocalConfig,
+      t = this.ActivityBaseData.GetExtraConfig();
+    e &&
+      t &&
+      ((t = e.DescTheme),
+      (i = !StringUtils_1.StringUtils.IsEmpty(t)),
       this.LNe.SetSubTitleVisible(i),
-      i && this.LNe.SetSubTitleByTextId(e),
+      i && this.LNe.SetSubTitleByTextId(t),
       this.LNe.SetTitleByText(this.ActivityBaseData.GetTitle()),
-      (i = t.Desc),
+      (i = e.Desc),
       this.DNe.SetContentByTextId(i),
-      this.DNe.SetTitleVisible(!1),
-      (e = this.ActivityBaseData.GetPreviewReward()),
+      (t = this.ActivityBaseData.GetPreviewReward()),
       this.UNe.SetTitleByTextId("CollectActivity_reward"),
       this.UNe.InitGridLayout(this.UNe.InitCommonGridItem),
-      this.UNe.RefreshItemLayout(e),
-      this.ANe.FunctionButton?.BindCallback(this.u2e),
-      (t = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
+      this.UNe.RefreshItemLayout(t),
+      this.ANe.FunctionButton?.BindCallback(this.DFe),
+      (e = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
         "CollectActivity_Button_ahead",
       )),
-      this.ANe.FunctionButton.SetText(t),
+      this.ANe.FunctionButton.SetText(e),
       this.OnRefreshView());
   }
+  OnBeforeShow() {
+    RedDotController_1.RedDotController.BindRedDot(
+      "RoguelikeAchievement",
+      this.GetItem(6),
+    ),
+      RedDotController_1.RedDotController.BindRedDot(
+        "RoguelikeShop",
+        this.GetItem(7),
+        (i) => {
+          this.GetItem(7)?.SetUIActive(i);
+        },
+      );
+    var i = this.ActivityBaseData.GetPreGuideQuestFinishState();
+    this.GetItem(8).SetUIActive(i), this.GetItem(9).SetUIActive(i);
+  }
+  OnBeforeHide() {
+    RedDotController_1.RedDotController.UnBindRedDot("RoguelikeAchievement"),
+      RedDotController_1.RedDotController.UnBindRedDot("RoguelikeShop");
+  }
   OnRefreshView() {
-    this.Xke(), this.FNe(), this.BNe();
+    this._Fe(), this.FNe(), this.BNe();
   }
   OnTimer(i) {
     this.OnRefreshView();
@@ -103,14 +182,14 @@ class ActivitySubViewRogue extends ActivitySubViewBase_1.ActivitySubViewBase {
         this.LNe.SetTimeTextByText(i))
       : this.LNe.SetTimeTextByTextId("Rogue_Function_End_Tip");
   }
-  Xke() {
+  _Fe() {
     var i,
-      t = this.ActivityBaseData.GetExtraConfig();
-    t &&
+      e = this.ActivityBaseData.GetExtraConfig();
+    e &&
       ((i = this.ActivityBaseData.IsUnLock()),
-      (t = 0 === t.FunctionType),
+      (e = 0 === e.FunctionType),
       i
-        ? t
+        ? e
           ? (this.ANe.FunctionButton?.SetUiActive(!1),
             this.ANe.SetPanelConditionVisible(!1))
           : ((i = this.ActivityBaseData.GetRogueActivityState()),
@@ -118,8 +197,8 @@ class ActivitySubViewRogue extends ActivitySubViewBase_1.ActivitySubViewBase {
             this.ANe.SetPanelConditionVisible(2 === i),
             this.ANe.SetLockTextByTextId("Rogue_Function_End_Tip"))
         : (this.ANe.FunctionButton?.SetUiActive(!1),
-          (t = this.GetCurrentLockConditionText()),
-          this.ANe.SetLockTextByTextId(t),
+          (e = this.GetCurrentLockConditionText()),
+          this.ANe.SetLockTextByTextId(e),
           this.ANe.SetPanelConditionVisible(!0)));
   }
 }

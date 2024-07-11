@@ -1,41 +1,41 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.VisionMediumItemGrid = void 0);
-const ModelManager_1 = require("../../../../Manager/ModelManager"),
-  LoopScrollMediumItemGrid_1 = require("../../../Common/MediumItemGrid/LoopScrollMediumItemGrid"),
-  ControllerHolder_1 = require("../../../../Manager/ControllerHolder");
+const ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
+  ModelManager_1 = require("../../../../Manager/ModelManager"),
+  LoopScrollMediumItemGrid_1 = require("../../../Common/MediumItemGrid/LoopScrollMediumItemGrid");
 class VisionMediumItemGrid extends LoopScrollMediumItemGrid_1.LoopScrollMediumItemGrid {
   constructor() {
     super(...arguments),
-      (this.Y6i = void 0),
+      (this.$8i = void 0),
       (this.NOe = 0),
-      (this.kHi = void 0),
-      (this.FHi = void 0),
-      (this.VHi = void 0),
-      (this.HHi = void 0),
-      (this.jHi = () => {
-        this.VHi?.(this, this.Y6i);
+      (this.Nji = void 0),
+      (this.Oji = void 0),
+      (this.kji = void 0),
+      (this.Fji = void 0),
+      (this.Vji = () => {
+        this.kji?.(this, this.$8i);
       }),
-      (this.WHi = () => {
-        this.HHi?.(this, this.Y6i);
+      (this.Hji = () => {
+        this.Fji?.(this, this.$8i);
       }),
-      (this.c2e = () => {
-        this.kHi?.(this.Y6i, this.NOe);
+      (this.RFe = () => {
+        this.Nji?.(this.$8i, this.NOe);
       });
   }
   OnStart() {
-    this.BindOnExtendToggleStateChanged(this.c2e),
-      this.BindOnExtendTogglePress(this.jHi),
-      this.BindOnExtendToggleRelease(this.WHi);
+    this.BindOnExtendToggleStateChanged(this.RFe),
+      this.BindOnExtendTogglePress(this.Vji),
+      this.BindOnExtendToggleRelease(this.Hji);
   }
   SetOnPointDownCallBack(e) {
-    this.VHi = e;
+    this.kji = e;
   }
   SetOnPointUpCallBack(e) {
-    this.HHi = e;
+    this.Fji = e;
   }
   SetClickToggleEvent(e) {
-    this.kHi = e;
+    this.Nji = e;
   }
   OnSelected(e) {
     1 !== this.GetItemGridExtendToggle().ToggleState &&
@@ -43,11 +43,11 @@ class VisionMediumItemGrid extends LoopScrollMediumItemGrid_1.LoopScrollMediumIt
       this.SetNewVisible(!1),
       this.SetRedDotVisible(
         ModelManager_1.ModelManager.PhantomBattleModel.GetMonsterSkinListHasNew(
-          this.Y6i.GetConfigId(),
+          this.$8i.GetConfigId(),
         ),
       ),
       ModelManager_1.ModelManager.InventoryModel.RemoveNewAttributeItem(
-        this.Y6i.GetUniqueId(),
+        this.$8i.GetUniqueId(),
       ),
       ModelManager_1.ModelManager.InventoryModel.SaveNewAttributeItemUniqueIdList();
   }
@@ -56,13 +56,13 @@ class VisionMediumItemGrid extends LoopScrollMediumItemGrid_1.LoopScrollMediumIt
       this.SetSelected(!1, !0);
   }
   SetOnRefreshEvent(e) {
-    this.FHi = e;
+    this.Oji = e;
   }
   CheckSelectedState(e) {
-    return e === this.Y6i;
+    return e === this.$8i;
   }
   OnRefresh(e, t, i) {
-    (this.Y6i = e), (this.NOe = i);
+    (this.$8i = e), (this.NOe = i);
     var i = ModelManager_1.ModelManager.InventoryModel,
       s = e.GetUniqueId(),
       o = i.IsNewAttributeItem(s),
@@ -117,7 +117,7 @@ class VisionMediumItemGrid extends LoopScrollMediumItemGrid_1.LoopScrollMediumIt
       this.Apply(d),
       0 !== this.GetItemGridExtendToggle().ToggleState &&
         this.SetSelected(!1, !0),
-      this.FHi?.(this);
+      this.Oji?.(this);
   }
 }
 exports.VisionMediumItemGrid = VisionMediumItemGrid;

@@ -21,16 +21,16 @@ class InstanceDungeonVictoryView extends CommonResultView_1.CommonResultView {
   constructor() {
     super(...arguments),
       (this.NUe = 0),
-      (this.Xli = new Map()),
+      (this.X1i = new Map()),
       (this.sOe = void 0),
-      (this.q2e = () => {
+      (this.zFe = () => {
         InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.LeaveInstanceDungeon().finally(
           () => {
             UiManager_1.UiManager.IsViewShow(this.Info.Name) && this.CloseMe();
           },
         );
       }),
-      (this.nli = () => {
+      (this.n1i = () => {
         var e, n;
         ModelManager_1.ModelManager.GameModeModel.IsMulti
           ? ModelManager_1.ModelManager.OnlineModel.AllowInitiate
@@ -52,7 +52,7 @@ class InstanceDungeonVictoryView extends CommonResultView_1.CommonResultView {
                       ) && e
                   ? OnlineController_1.OnlineController.InviteRechallengeRequest()
                   : OnlineController_1.OnlineController.ApplyRechallengeRequest(
-                      Protocol_1.Aki.Protocol.h3s.Proto_Settle,
+                      Protocol_1.Aki.Protocol.J6s.Proto_Settle,
                     ))
             : ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
                 "CannotInvite",
@@ -64,12 +64,12 @@ class InstanceDungeonVictoryView extends CommonResultView_1.CommonResultView {
               },
             );
       }),
-      (this.$li = (e, n) => {
-        e = this.Xli.get(e);
-        e && this.Yli(n, e);
+      (this.$1i = (e, n) => {
+        e = this.X1i.get(e);
+        e && this.Y1i(n, e);
       });
   }
-  get Khi() {
+  get Kli() {
     return this.NUe
       ? ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(this.NUe)
       : void 0;
@@ -83,25 +83,25 @@ class InstanceDungeonVictoryView extends CommonResultView_1.CommonResultView {
       super.OnStart(),
       UiManager_1.UiManager.IsViewShow("ReviveView") &&
         UiManager_1.UiManager.CloseView("ReviveView"),
-      ModelManager_1.ModelManager.GameModeModel.IsMulti && this.Jli();
+      ModelManager_1.ModelManager.GameModeModel.IsMulti && this.J1i();
   }
-  zli() {
+  z1i() {
     var e = new Array();
-    return e.push(this.Zli()), e.push(this.e1i()), e;
+    return e.push(this.Z1i()), e.push(this.e_i()), e;
   }
-  Zli() {
+  Z1i() {
     var e = new CommonResultButtonData_1.CommonResultButtonData();
     return (
       e.SetRefreshCallBack((e) => {
         e.SetBtnText("ButtonTextExit");
-        var n = this.Khi.AutoLeaveTime;
+        var n = this.Kli.AutoLeaveTime;
         e.SetFloatTextWithTimer(n, !0, "InstanceDungeonLeftTimeToAutoLeave");
       }),
-      e.SetClickCallBack(this.q2e),
+      e.SetClickCallBack(this.zFe),
       e
     );
   }
-  e1i() {
+  e_i() {
     var e = new CommonResultButtonData_1.CommonResultButtonData();
     return (
       e.SetRefreshCallBack((e) => {
@@ -110,13 +110,13 @@ class InstanceDungeonVictoryView extends CommonResultView_1.CommonResultView {
             (ModelManager_1.ModelManager.CreatureModel.IsMyWorld()
               ? e.SetBtnText("ContinueChallenge")
               : e.SetBtnText("SuggestContinueChallenge")),
-          this.t1i(e);
+          this.t_i(e);
       }),
-      e.SetClickCallBack(this.nli),
+      e.SetClickCallBack(this.n1i),
       e
     );
   }
-  t1i(e) {
+  t_i(e) {
     var n,
       t =
         ModelManager_1.ModelManager.InstanceDungeonEntranceModel.GetInstancePowerCost(
@@ -127,41 +127,41 @@ class InstanceDungeonVictoryView extends CommonResultView_1.CommonResultView {
       ((n = ModelManager_1.ModelManager.PowerModel.PowerCount),
       e.SetTipsItem(ItemDefines_1.EItemId.Power, n.toString()),
       t <= n
-        ? e.SetTipsItemTextColor(InstanceDungeonVictoryView.i1i)
-        : e.SetTipsItemTextColor(InstanceDungeonVictoryView.o1i));
+        ? e.SetTipsItemTextColor(InstanceDungeonVictoryView.i_i)
+        : e.SetTipsItemTextColor(InstanceDungeonVictoryView.o_i));
   }
   OnAfterShow() {
-    this.qIt();
+    this.FTt();
   }
   OnBeforeDestroy() {
     ModelManager_1.ModelManager.ItemHintModel.CleanItemRewardList(),
-      this.Xli && this.Xli.clear();
+      this.X1i && this.X1i.clear();
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.PlayerChallengeStateChange,
-      this.$li,
+      this.$1i,
     );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.PlayerChallengeStateChange,
-      this.$li,
+      this.$1i,
     );
   }
-  qIt() {
-    this.Yhi();
+  FTt() {
+    this.Yli();
   }
-  Yhi() {
+  Yli() {
     (this.sOe =
       ModelManager_1.ModelManager.InstanceDungeonEntranceModel.SettleRewardItemList),
       this.RewardLayout.RebuildLayoutByDataNew(this.sOe);
   }
   SetupButtonFormat() {
-    var e = this.zli();
+    var e = this.z1i();
     this.RefreshButtonList(e);
   }
-  Jli() {
+  J1i() {
     var e = ModelManager_1.ModelManager.CreatureModel.GetAllScenePlayers();
     if (e.length <= 1) this.GetItem(5).SetUIActive(!1);
     else {
@@ -182,19 +182,19 @@ class InstanceDungeonVictoryView extends CommonResultView_1.CommonResultView {
             )),
           n.bIsUIActive
             ? t.bIsUIActive ||
-              (t.SetUIActive(!0), this.Yli(i, t), this.Xli.set(o, t))
-            : (n.SetUIActive(!0), this.Yli(i, n), this.Xli.set(o, n)));
+              (t.SetUIActive(!0), this.Y1i(i, t), this.X1i.set(o, t))
+            : (n.SetUIActive(!0), this.Y1i(i, n), this.X1i.set(o, n)));
       }
     }
   }
-  Yli(e, n) {
+  Y1i(e, n) {
     e = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
       OnlineModel_1.onlineContinuingChallengeIcon[e],
     );
     StringUtils_1.StringUtils.IsEmpty(e) || this.SetSpriteByPath(e, n, !1);
   }
 }
-((exports.InstanceDungeonVictoryView = InstanceDungeonVictoryView).o1i =
+((exports.InstanceDungeonVictoryView = InstanceDungeonVictoryView).o_i =
   new ue_1.Color(246, 93, 88, 255)),
-  (InstanceDungeonVictoryView.i1i = new ue_1.Color(255, 255, 255, 255));
+  (InstanceDungeonVictoryView.i_i = new ue_1.Color(255, 255, 255, 255));
 //# sourceMappingURL=InstanceDungeonVictoryView.js.map

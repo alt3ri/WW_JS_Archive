@@ -12,6 +12,7 @@ const UE = require("ue"),
   AiContollerLibrary_1 = require("../../Controller/AiContollerLibrary"),
   TsAiController_1 = require("../../Controller/TsAiController"),
   TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase"),
+  GravityUtils_1 = require("../../../Utils/GravityUtils"),
   PI = 3.14,
   NAVIGATION_END_TIME = 5e3,
   NAVIGATION_COMPLETE_DISTANCE = 20;
@@ -66,8 +67,8 @@ class TsTaskTerritoryWander extends TsTaskAbortImmediatelyBase_1.default {
         var s = this.ActorComp.Entity,
           h = s.GetComponent(0);
         if (
-          ((this.MoveComp = s.GetComponent(161)),
-          (this.UnifiedStateComp = s.GetComponent(89)),
+          ((this.MoveComp = s.GetComponent(163)),
+          (this.UnifiedStateComp = s.GetComponent(91)),
           !this.RangeCenter)
         )
           if (this.TsRangeCenterKey) {
@@ -123,7 +124,10 @@ class TsTaskTerritoryWander extends TsTaskAbortImmediatelyBase_1.default {
           this.ActorComp.ActorLocationProxy,
           this.CacheVector,
         ),
-        (this.CacheVector.Z = 0),
+        GravityUtils_1.GravityUtils.ConvertToPlanarVector(
+          this.ActorComp,
+          this.CacheVector,
+        ),
         (t = this.CacheVector.Size()),
         this.CacheVector.Normalize(),
         this.CurrentNavigationIndex === this.NavigationPath.length - 1 &&

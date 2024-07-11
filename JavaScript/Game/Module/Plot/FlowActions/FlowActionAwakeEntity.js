@@ -11,7 +11,7 @@ class FlowActionAwakeEntity extends FlowActionServerAction_1.FlowActionServerAct
   constructor() {
     super(...arguments),
       (this.Task = void 0),
-      (this.QXi = (t) => {
+      (this.W$i = (t) => {
         this.Task = void 0;
         var o = this.ActionInfo.Params,
           e =
@@ -60,7 +60,7 @@ class FlowActionAwakeEntity extends FlowActionServerAction_1.FlowActionServerAct
           ? (this.RequestServerAction(!1), this.FinishExecute(!0))
           : (this.Task = WaitEntityTask_1.WaitEntityTask.CreateWithPbDataId(
               o.EntityIds,
-              this.QXi,
+              this.W$i,
               !0,
               FlowActionUtils_1.WAIT_ENTITY_TIME,
               !1,

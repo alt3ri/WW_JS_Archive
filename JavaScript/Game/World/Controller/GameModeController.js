@@ -36,7 +36,6 @@ const cpp_1 = require("cpp"),
   CameraUtility_1 = require("../../Camera/CameraUtility"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
-  EffectSystem_1 = require("../../Effect/EffectSystem"),
   GameQualitySettingsManager_1 = require("../../GameQualitySettings/GameQualitySettingsManager"),
   Global_1 = require("../../Global"),
   GlobalData_1 = require("../../GlobalData"),
@@ -45,7 +44,6 @@ const cpp_1 = require("cpp"),
   ConfigManager_1 = require("../../Manager/ConfigManager"),
   ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../Manager/ModelManager"),
-  FormationDataController_1 = require("../../Module/Abilities/FormationDataController"),
   BattleUiControl_1 = require("../../Module/BattleUi/BattleUiControl"),
   BlackScreenController_1 = require("../../Module/BlackScreen/BlackScreenController"),
   LevelSequencePlayer_1 = require("../../Module/Common/LevelSequencePlayer"),
@@ -56,10 +54,8 @@ const cpp_1 = require("cpp"),
   LogReportDefine_1 = require("../../Module/LogReport/LogReportDefine"),
   SeamlessTravelController_1 = require("../../Module/SeamlessTravel/SeamlessTravelController"),
   TeleportController_1 = require("../../Module/Teleport/TeleportController"),
-  TimeOfDayController_1 = require("../../Module/TimeOfDay/TimeOfDayController"),
   VideoLauncher_1 = require("../../Module/Video/VideoLauncher"),
-  BulletController_1 = require("../../NewWorld/Bullet/BulletController"),
-  CharacterController_1 = require("../../NewWorld/Character/CharacterController"),
+  PerfSightController_1 = require("../../PerfSight/PerfSightController"),
   PreloadDefine_1 = require("../../Preload/PreloadDefine"),
   RenderModuleController_1 = require("../../Render/Manager/RenderModuleController"),
   InputDistributeController_1 = require("../../Ui/InputDistribute/InputDistributeController"),
@@ -70,7 +66,6 @@ const cpp_1 = require("cpp"),
   AsyncTask_1 = require("../Task/AsyncTask"),
   TaskSystem_1 = require("../Task/TaskSystem"),
   WorldGlobal_1 = require("../WorldGlobal"),
-  ComponentForceTickController_1 = require("./ComponentForceTickController"),
   PreloadController_1 = require("./PreloadController"),
   PreloadControllerNew_1 = require("./PreloadControllerNew"),
   TOP_CONSUMING_COUNT = 20,
@@ -82,12 +77,11 @@ const cpp_1 = require("cpp"),
   CHECK_STREAMING_END_PROGRESS = 75,
   CREATE_ENTITY_END_PROGRESS = 80,
   WORLD_DONE_END_PROGRESS = 90,
-  cellNum =
+  cellProgress =
     ((exports.LOAD_FINISHED_PROGRESS = 100),
     (exports.LOADED_SPEED_RATE = 2),
     (exports.BASE_SPEED = 25),
-    (0, puerts_1.$ref)(0)),
-  matchCellNum = (0, puerts_1.$ref)(0);
+    (0, puerts_1.$ref)(0));
 class SubLevelInfo {
   constructor(e, o, a, r, t, l) {
     (this.UnloadLevels = void 0),
@@ -115,41 +109,41 @@ class SubLevelInfo {
 class GameModeController extends ControllerBase_1.ControllerBase {
   static OnInit() {
     return (
-      (Info_1.Info.IsMobile() || Info_1.Info.IsGamepad()) &&
+      (Info_1.Info.IsMobilePlatform() || Info_1.Info.IsGamepadPlatform()) &&
         (Application_1.Application.AddApplicationHandler(
           0,
-          GameModeController.JVs,
+          GameModeController.Xea,
         ),
         Application_1.Application.AddApplicationHandler(
           1,
-          GameModeController.DHe,
+          GameModeController.Oje,
         )),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.ClearWorld,
         this.uMe,
       ),
-      (this.g5s = new Queue_1.Queue()),
+      (this.Njs = new Queue_1.Queue()),
       !0
     );
   }
   static OnClear() {
     return (
-      (Info_1.Info.IsMobile() || Info_1.Info.IsGamepad()) &&
+      (Info_1.Info.IsMobilePlatform() || Info_1.Info.IsGamepadPlatform()) &&
         (Application_1.Application.RemoveApplicationHandler(
           0,
-          GameModeController.JVs,
+          GameModeController.Xea,
         ),
         Application_1.Application.RemoveApplicationHandler(
           1,
-          GameModeController.DHe,
+          GameModeController.Oje,
         )),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.ClearWorld,
         this.uMe,
       ),
-      this.NVs(),
-      this.g5s?.Clear(),
-      !(this.g5s = void 0)
+      this.bZs(),
+      this.Njs?.Clear(),
+      !(this.Njs = void 0)
     );
   }
   static SetGameModeData(e, o) {
@@ -162,7 +156,7 @@ class GameModeController extends ControllerBase_1.ControllerBase {
         ))
         ? ((r.HasGameModeData = !0),
           (r.MapPath = a.MapPath.toString()),
-          (r.IsMulti = o === Protocol_1.Aki.Protocol.oOs.Proto_Multi),
+          (r.IsMulti = o === Protocol_1.Aki.Protocol.KFs.Proto_Multi),
           (r.Mode = o),
           (r.InstanceType = t.InstType),
           (r.MapConfig = a),
@@ -219,17 +213,22 @@ class GameModeController extends ControllerBase_1.ControllerBase {
           ModelManager_1.ModelManager.SeamlessTravelModel.IsSeamlessTravel;
         e = new AsyncTask_1.AsyncTask("GameModeController.Load", async () => {
           (t.LoadingPhase = 3),
+            PerfSightController_1.PerfSightController.StartPersistentOrDungeon(
+              !1,
+            ),
+            UE.PerfSightHelper.BeginExtTag("Load"),
+            UE.PerfSightHelper.BeginExtTag("Load.OpenLoading"),
             LoadingController_1.LoadingController.SetProgress(0, void 0, 1, !0),
             this.m6("GameModeController.Load:OpenLoading Start"),
-            await GameModeController.S0r(),
+            await GameModeController.pfr(),
             this.m6("GameModeController.Load:OpenLoading End"),
             (t.LoadingPhase = 4),
+            UE.PerfSightHelper.EndExtTag("Load.OpenLoading"),
+            UE.PerfSightHelper.BeginExtTag("Load.OpenLevel"),
             (t.LoadingPhase = 5),
             EventSystem_1.EventSystem.Emit(
               EventDefine_1.EEventName.BeforeLoadMap,
             ),
-            (Global_1.Global.CharacterController.bShowMouseCursor = !0),
-            this._4s(),
             this.m6("GameModeController.Load:SetLoadModeInLoading Start"),
             ResourceSystem_1.ResourceSystem.SetLoadModeInLoading(
               GlobalData_1.GlobalData.World,
@@ -239,7 +238,7 @@ class GameModeController extends ControllerBase_1.ControllerBase {
             UE.Actor.SetKuroNetMode(1),
             Log_1.Log.CheckInfo() &&
               Log_1.Log.Info("GameMode", 11, "加载场景:暂停网络消息处理并缓存"),
-            (Net_1.Net.IsConsumeNotifyPaused = !0),
+            Net_1.Net.PauseAllCallback(),
             UiManager_1.UiManager.LockOpen(),
             Log_1.Log.CheckInfo() &&
               Log_1.Log.Info("GameMode", 3, "加载场景:加载地图(开始)"),
@@ -269,7 +268,6 @@ class GameModeController extends ControllerBase_1.ControllerBase {
             ),
             await t.BeginLoadMapPromise.Promise,
             (ActorSystem_1.ActorSystem.State = 1),
-            EffectSystem_1.EffectSystem.ClearPool(),
             Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "GameMode",
@@ -284,7 +282,7 @@ class GameModeController extends ControllerBase_1.ControllerBase {
             UiManager_1.UiManager.UnLockOpen(),
             Log_1.Log.CheckInfo() &&
               Log_1.Log.Info("GameMode", 11, "加载场景:恢复网络消息处理"),
-            (Net_1.Net.IsConsumeNotifyPaused = !1),
+            Net_1.Net.ResumeAllCallback(),
             LevelSequencePlayer_1.LevelSequencePlayer.SetBanned(!1),
             LguiEventSystemManager_1.LguiEventSystemManager.RefreshCurrentInputModule(),
             Log_1.Log.CheckInfo() &&
@@ -305,9 +303,11 @@ class GameModeController extends ControllerBase_1.ControllerBase {
                 "GameMode",
                 3,
                 "加载场景:等待AfterJoinSceneNotify(完成)",
-              );
+              ),
+            UE.PerfSightHelper.EndExtTag("Load.OpenLevel");
           {
-            (t.LoadingPhase = 7),
+            UE.PerfSightHelper.BeginExtTag("Load.Preload"),
+              (t.LoadingPhase = 7),
               Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info("GameMode", 3, "加载场景:预加载(开始)"),
               this.m6("GameModeController.Load:Preload Start"),
@@ -323,7 +323,7 @@ class GameModeController extends ControllerBase_1.ControllerBase {
                   "GameModeController.Load:ApplyMaterialParameterCollection Start",
                 ),
                 t.PreloadApplyMaterialParameterCollectionProfiler.Restart(),
-                this.E0r(r),
+                this.vfr(r),
                 !0
               ),
               async () => t.ApplyMaterialParameterCollectionPromise.Promise,
@@ -353,7 +353,7 @@ class GameModeController extends ControllerBase_1.ControllerBase {
                     ),
                   this.m6("GameModeController.Load:CommonAndEntityAsset Start"),
                   t.PreloadCommonAndEntityProfiler.Restart(),
-                  this.y0r(() => {
+                  this.Mfr(() => {
                     ModelManager_1.ModelManager.WorldModel.SetMapDone(!0),
                       ModelManager_1.ModelManager.GameModeModel.RemoveLoadMapHandle(
                         "GameModeController.Load",
@@ -454,14 +454,16 @@ class GameModeController extends ControllerBase_1.ControllerBase {
               LoadingController_1.LoadingController.SetProgress(
                 PRELOAD_END_PROGRESS,
               ),
-              (t.LoadingPhase = 8);
+              (t.LoadingPhase = 8),
+              UE.PerfSightHelper.EndExtTag("Load.Preload");
           }
-          (t.LoadingPhase = 9),
+          UE.PerfSightHelper.BeginExtTag("Load.SetDataLayerAndLoadSubLevel"),
+            (t.LoadingPhase = 9),
             Log_1.Log.CheckInfo() &&
               Log_1.Log.Info("GameMode", 3, "加载场景:检测加载DataLayer(开始)"),
             this.m6("GameModeController.Load:LoadDataLayer Start"),
             t.LoadDataLayerProfiler.Restart(),
-            this.I0r(r),
+            this.Efr(r),
             t.LoadDataLayerProfiler.Stop(),
             this.m6("GameModeController.Load:LoadDataLayer End"),
             Log_1.Log.CheckInfo() &&
@@ -472,7 +474,7 @@ class GameModeController extends ControllerBase_1.ControllerBase {
               Log_1.Log.Info("GameMode", 3, "加载场景:检测加载子关卡(开始)"),
             this.m6("GameModeController.Load:LoadSubLevel Start"),
             t.LoadSubLevelProfiler.Start(),
-            await this.T0r(r),
+            await this.Sfr(r),
             t.LoadSubLevelProfiler.Stop(),
             this.m6("GameModeController.Load:LoadSubLevel End"),
             Log_1.Log.CheckInfo() &&
@@ -481,6 +483,8 @@ class GameModeController extends ControllerBase_1.ControllerBase {
               SETDATALAYER_AND_LOADSUBLEVEL_END_PROGRESS,
             ),
             (t.LoadingPhase = 10),
+            UE.PerfSightHelper.EndExtTag("Load.SetDataLayerAndLoadSubLevel"),
+            UE.PerfSightHelper.BeginExtTag("Load.CheckVoxelStreaming"),
             (t.LoadingPhase = 11),
             Log_1.Log.CheckInfo() &&
               Log_1.Log.Info("GameMode", 3, "加载场景:检测体素流送(开始)"),
@@ -493,7 +497,7 @@ class GameModeController extends ControllerBase_1.ControllerBase {
               "GameModeController.Load:CheckVoxelStreamingCompleted Start",
             ),
             t.CheckVoxelStreamingSourceProfiler.Restart(),
-            await this.V6s(
+            await this.pKs(
               CHECK_VOXEL_STREAMING_END_PROGRESS -
                 SETDATALAYER_AND_LOADSUBLEVEL_END_PROGRESS,
               CHECK_VOXEL_STREAMING_END_PROGRESS,
@@ -507,12 +511,14 @@ class GameModeController extends ControllerBase_1.ControllerBase {
               CHECK_VOXEL_STREAMING_END_PROGRESS,
             ),
             (t.LoadingPhase = 12),
+            UE.PerfSightHelper.EndExtTag("Load.CheckVoxelStreaming"),
+            UE.PerfSightHelper.BeginExtTag("Load.CheckStreaming"),
             (t.LoadingPhase = 13),
             Log_1.Log.CheckInfo() &&
               Log_1.Log.Info("GameMode", 7, "加载场景:检测场景流送(开始)"),
             this.m6("GameModeController.Load:CheckStreamingCompleted Start"),
             t.CheckStreamingSourceProfiler.Restart(),
-            await this.Kyo(
+            await this.HIo(
               CHECK_STREAMING_END_PROGRESS - CHECK_VOXEL_STREAMING_END_PROGRESS,
               CHECK_STREAMING_END_PROGRESS,
             ),
@@ -524,6 +530,8 @@ class GameModeController extends ControllerBase_1.ControllerBase {
               CHECK_STREAMING_END_PROGRESS,
             ),
             (t.LoadingPhase = 14),
+            UE.PerfSightHelper.EndExtTag("Load.CheckStreaming"),
+            UE.PerfSightHelper.BeginExtTag("Load.CreateEntity"),
             (t.LoadingPhase = 15),
             CameraController_1.CameraController.ReturnLockOnCameraMode(),
             ResourceSystem_1.ResourceSystem.SetLoadModeInGame(
@@ -533,7 +541,7 @@ class GameModeController extends ControllerBase_1.ControllerBase {
             this.m6("GameModeController.Load:CreateEntities Start"),
             t.CreateEntitiesProfiler.Restart(),
             ControllerHolder_1.ControllerHolder.CreatureController.CreateEntityFromPending(
-              Protocol_1.Aki.Protocol.jBs.Proto_SceneInit,
+              Protocol_1.Aki.Protocol.xks.Proto_SceneInit,
             ),
             Log_1.Log.CheckInfo() &&
               Log_1.Log.Info("GameMode", 3, "加载场景:加载编队(开始)"),
@@ -548,6 +556,8 @@ class GameModeController extends ControllerBase_1.ControllerBase {
             LoadingController_1.LoadingController.SetProgress(
               CREATE_ENTITY_END_PROGRESS,
             ),
+            UE.PerfSightHelper.EndExtTag("Load.CreateEntity"),
+            UE.PerfSightHelper.BeginExtTag("Load.CheckRenderAssets"),
             t.WaitRenderAssetsProfiler.Restart(),
             await this.CheckRenderAssetsStreamingCompleted(
               t.BornLocation,
@@ -567,7 +577,7 @@ class GameModeController extends ControllerBase_1.ControllerBase {
               ? SeamlessTravelController_1.SeamlessTravelController.FixBornLocation(
                   l,
                 )
-              : this.D0r(),
+              : this.Ifr(),
             Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "GameMode",
@@ -575,6 +585,8 @@ class GameModeController extends ControllerBase_1.ControllerBase {
                 "加载场景:修正主控玩家地面位置(完成)",
               ),
             (t.LoadingPhase = 16),
+            UE.PerfSightHelper.EndExtTag("Load.CheckRenderAssets"),
+            UE.PerfSightHelper.BeginExtTag("Load.WorldDone"),
             (t.LoadingPhase = 17),
             (t.WorldDone = !0),
             ModelManager_1.ModelManager.CreatureModel.SetIsLoadingScene(!1),
@@ -606,9 +618,11 @@ class GameModeController extends ControllerBase_1.ControllerBase {
             LoadingController_1.LoadingController.SetProgress(
               WORLD_DONE_END_PROGRESS,
             ),
-            (t.LoadingPhase = 18);
+            (t.LoadingPhase = 18),
+            UE.PerfSightHelper.EndExtTag("Load.WorldDone");
           {
-            (t.LoadingPhase = 19),
+            UE.PerfSightHelper.BeginExtTag("Load.CloseLoading"),
+              (t.LoadingPhase = 19),
               ModelManager_1.ModelManager.SeamlessTravelModel.IsSeamlessTravel
                 ? (SeamlessTravelController_1.SeamlessTravelController.FinishSeamlessTravel(),
                   ModelManager_1.ModelManager.LoadingModel.SetIsLoading(!1))
@@ -691,7 +705,7 @@ class GameModeController extends ControllerBase_1.ControllerBase {
                 "GameModeController.Load:SceneLoadingFinishRequest Start",
               ),
               await ControllerHolder_1.ControllerHolder.CreatureController.SceneLoadingFinishRequest(
-                r.W7n,
+                r.IKn,
               ),
               this.m6("GameModeController.Load:SceneLoadingFinishRequest End"),
               Log_1.Log.CheckInfo() &&
@@ -700,13 +714,13 @@ class GameModeController extends ControllerBase_1.ControllerBase {
                   3,
                   "加载场景:通知服务端加载完成（完成）",
                 ),
+              PerfSightController_1.PerfSightController.MarkLevelLoadCompleted(),
               (t.WorldDoneAndLoadingClosed = !0),
               (t.LoadingPhase = 1),
               EventSystem_1.EventSystem.Emit(
                 EventDefine_1.EEventName.WorldDoneAndCloseLoading,
               ),
               t.ResetPromise(),
-              this.u4s(),
               ModelManager_1.ModelManager.GameModeModel.LoadWorldProfiler.Stop(),
               this.m6("GameModeController.Load: End"),
               Log_1.Log.CheckInfo() &&
@@ -725,7 +739,9 @@ class GameModeController extends ControllerBase_1.ControllerBase {
                     ModelManager_1.ModelManager.GameModeModel.LoadWorldProfiler.Time.toString(),
                   s_device_type: e,
                 }));
-            LogReportController_1.LogReportController.LogReport(o);
+            LogReportController_1.LogReportController.LogReport(o),
+              UE.PerfSightHelper.EndExtTag("Load.CloseLoading"),
+              UE.PerfSightHelper.EndExtTag("Load");
           }
           return !0;
         });
@@ -739,7 +755,7 @@ class GameModeController extends ControllerBase_1.ControllerBase {
   }
   static m6(e) {}
   static async Change(e) {
-    var o = e.w6n;
+    var o = e.m7n;
     const r = ModelManager_1.ModelManager.GameModeModel;
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
@@ -752,8 +768,8 @@ class GameModeController extends ControllerBase_1.ControllerBase {
         ["MapPath", r.MapConfig.MapPath],
       ),
       (r.ChangeModeState = !0),
-      (r.IsMulti = o === Protocol_1.Aki.Protocol.oOs.Proto_Multi),
-      ModelManager_1.ModelManager.CreatureModel.SetSceneId(e.W7n),
+      (r.IsMulti = o === Protocol_1.Aki.Protocol.KFs.Proto_Multi),
+      ModelManager_1.ModelManager.CreatureModel.SetSceneId(e.IKn),
       this.ChangeGameMode(),
       EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.ChangeMode),
       r.CreateChangeModePromise();
@@ -790,12 +806,12 @@ class GameModeController extends ControllerBase_1.ControllerBase {
               3,
               "改变场景模式:请求服务器SceneModeChangeFinishRequest(开始)",
             ),
-          Protocol_1.Aki.Protocol.nms.create()),
-        o = await Net_1.Net.CallAsync(8583, o);
-      return o && o.lkn !== Protocol_1.Aki.Protocol.lkn.Sys
+          Protocol_1.Aki.Protocol.gfs.create()),
+        o = await Net_1.Net.CallAsync(5731, o);
+      return o && o.O4n !== Protocol_1.Aki.Protocol.O4n.NRs
         ? (ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-            o.lkn,
-            22338,
+            o.O4n,
+            13398,
           ),
           !1)
         : (Log_1.Log.CheckInfo() &&
@@ -852,24 +868,24 @@ class GameModeController extends ControllerBase_1.ControllerBase {
     for (const r of e)
       o.SubLevelMap.has(r) || o.PreloadLevelMap.has(r) || a.push(r);
     return (
-      a?.length && (await GameModeController.Hxn(a, !1)),
+      a?.length && (await GameModeController.SBn(a, !1)),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("GameMode", 30, "预加载子关卡:(完成)"),
       !0
     );
   }
   static ChangeSubLevel(e, o, a, r, t, l) {
-    this.U0r(e, o, a, r, t, l);
+    this.Lfr(e, o, a, r, t, l);
   }
-  static f5s(e) {
-    e && this.g5s?.Push(e);
+  static kjs(e) {
+    e && this.Njs?.Push(e);
   }
-  static p5s() {
-    if (this.g5s && !(this.g5s.Size <= 0))
-      for (; 0 < this.g5s.Size; ) {
-        var e = this.g5s.Front;
+  static Fjs() {
+    if (this.Njs && !(this.Njs.Size <= 0))
+      for (; 0 < this.Njs.Size; ) {
+        var e = this.Njs.Front;
         e
-          ? (this.g5s.Pop(),
+          ? (this.Njs.Pop(),
             this.ChangeSubLevel(
               e.UnloadLevels,
               e.Levels,
@@ -878,10 +894,10 @@ class GameModeController extends ControllerBase_1.ControllerBase {
               e.Rotator,
               e.Callback,
             ))
-          : this.g5s.Pop();
+          : this.Njs.Pop();
       }
   }
-  static async U0r(e, o, a, r, t, l) {
+  static async Lfr(e, o, a, r, t, l) {
     var n = ModelManager_1.ModelManager.GameModeModel,
       _ = ModelManager_1.ModelManager.SubLevelLoadingModel;
     if (n.WorldDone)
@@ -892,7 +908,7 @@ class GameModeController extends ControllerBase_1.ControllerBase {
             3,
             "当前正在加载子关卡，等所有子关卡加载完成才能继续加载新的子关卡。",
           ),
-          this.f5s(new SubLevelInfo(e, o, a, r, t, l));
+          this.kjs(new SubLevelInfo(e, o, a, r, t, l));
       else {
         if (
           (Log_1.Log.CheckInfo() &&
@@ -937,7 +953,7 @@ class GameModeController extends ControllerBase_1.ControllerBase {
               30,
               "切换子关卡:等待之前的子关卡列表卸载(开始)",
             ),
-          await this.jxn(),
+          await this.EBn(),
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "GameMode",
@@ -950,7 +966,7 @@ class GameModeController extends ControllerBase_1.ControllerBase {
               30,
               "切换子关卡:等待之前的子关卡列表加载(开始)",
             ),
-          await this.Wxn(),
+          await this.yBn(),
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "GameMode",
@@ -962,17 +978,17 @@ class GameModeController extends ControllerBase_1.ControllerBase {
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info("GameMode", 3, "切换子关卡:卸载子关卡列表(开始)");
           for (const i of e) n.RemoveSubLevel(i);
-          await this.jxn(),
+          await this.EBn(),
             Log_1.Log.CheckInfo() &&
               Log_1.Log.Info("GameMode", 3, "切换子关卡:卸载子关卡列表(完成)");
         }
         o?.length &&
           (Log_1.Log.CheckInfo() &&
             Log_1.Log.Info("GameMode", 3, "切换子关卡:加载子关卡列表(开始)"),
-          await this.R0r(o),
+          await this.Tfr(o),
           Log_1.Log.CheckInfo()) &&
           Log_1.Log.Info("GameMode", 3, "切换子关卡:加载子关卡列表(完成)"),
-          GameModeController.A0r(r, t),
+          GameModeController.Dfr(r, t),
           ResourceSystem_1.ResourceSystem.SetLoadModeInGame(
             GlobalData_1.GlobalData.World,
             "GameModeController.ChangeSubLevelInternal",
@@ -998,7 +1014,7 @@ class GameModeController extends ControllerBase_1.ControllerBase {
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info("GameMode", 3, "切换子关卡:(完成)"),
           l?.(!0),
-          this.p5s();
+          this.Fjs();
       }
     else
       Log_1.Log.CheckError() &&
@@ -1009,7 +1025,7 @@ class GameModeController extends ControllerBase_1.ControllerBase {
         ),
         l?.(!1);
   }
-  static async Wxn() {
+  static async yBn() {
     var e = ModelManager_1.ModelManager.GameModeModel;
     if (e.SubLevelMap.size) {
       var o,
@@ -1023,7 +1039,7 @@ class GameModeController extends ControllerBase_1.ControllerBase {
     }
     return !0;
   }
-  static async jxn() {
+  static async EBn() {
     var e = ModelManager_1.ModelManager.GameModeModel;
     if (e.UnloadLevelMap.size) {
       var o,
@@ -1033,7 +1049,7 @@ class GameModeController extends ControllerBase_1.ControllerBase {
     }
     return !0;
   }
-  static A0r(e, o) {
+  static Dfr(e, o) {
     e &&
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
@@ -1050,7 +1066,7 @@ class GameModeController extends ControllerBase_1.ControllerBase {
         Global_1.Global.BaseCharacter.CharacterActorComponent.Entity,
         EventDefine_1.EEventName.TeleportStartEntity,
       ),
-      this.D0r(e),
+      this.Ifr(e),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.TeleportComplete,
         0,
@@ -1086,9 +1102,17 @@ class GameModeController extends ControllerBase_1.ControllerBase {
         ]);
   }
   static SwitchDataLayer(e, o, a, r, t) {
-    this.P0r(e, o, a, r, t);
+    ModelManager_1.ModelManager.AutoRunModel?.IsInLogicTreeGmMode()
+      ? (Log_1.Log.CheckDebug() &&
+          Log_1.Log.Debug(
+            "GameMode",
+            40,
+            "切换DataLayer:遇到不应执行切换DataLayer的情况，使用伪切换DataLayer替代",
+          ),
+        this.SWs(e, o, a, r, t))
+      : this.Rfr(e, o, a, r, t);
   }
-  static async P0r(o, a, r, t, l) {
+  static async Rfr(o, a, r, t, l) {
     var n = ModelManager_1.ModelManager.GameModeModel;
     if (n.DataLayerSwitching)
       Log_1.Log.CheckError() &&
@@ -1118,20 +1142,19 @@ class GameModeController extends ControllerBase_1.ControllerBase {
       ) {
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("GameMode", 30, "切换DataLayer:卸载DataLayer(开始)");
-        for (const _ of o) GameModeController.x0r(_);
+        for (const _ of o) GameModeController.Ufr(_);
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("GameMode", 30, "切换DataLayer:卸载DataLayer(完成)");
       }
       if (a?.length) {
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("GameMode", 30, "切换DataLayer:加载DataLayer(开始)");
-        for (const i of a) GameModeController.w0r(i);
+        for (const i of a) GameModeController.Afr(i);
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("GameMode", 30, "切换DataLayer:加载DataLayer(完成)");
       }
       let e = r;
       e ||
-        ModelManager_1.ModelManager.AutoRunModel?.IsInLogicTreeGmMode() ||
         ((o = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity),
         (e = o?.Entity?.GetComponent(3)?.ActorLocationProxy.ToUeVector())),
         e &&
@@ -1139,7 +1162,7 @@ class GameModeController extends ControllerBase_1.ControllerBase {
             Log_1.Log.Info("GameMode", 30, "切换DataLayer:检测场景流送(开始)"),
           n.CheckStreamingSourceProfiler.Restart(),
           this.m6("GameModeController.SwitchDataLayer:CheckStreaming Start"),
-          await this.B0r(e),
+          await this.Pfr(e),
           this.m6("GameModeController.SwitchDataLayer:CheckStreaming End"),
           n.CheckStreamingSourceProfiler.Stop(),
           Log_1.Log.CheckInfo()) &&
@@ -1152,9 +1175,9 @@ class GameModeController extends ControllerBase_1.ControllerBase {
           "SwitchDataLayerInternal",
         ),
         ControllerHolder_1.ControllerHolder.CreatureController.CreateEntityFromPending(
-          Protocol_1.Aki.Protocol.jBs.Proto_Normal,
+          Protocol_1.Aki.Protocol.xks.Proto_Normal,
         ),
-        GameModeController.b0r(r ? Vector_1.Vector.Create(r) : void 0, t),
+        GameModeController.xfr(r ? Vector_1.Vector.Create(r) : void 0, t),
         r &&
           (this.AddOrRemoveRenderAssetsQueryViewInfo(
             r,
@@ -1162,13 +1185,49 @@ class GameModeController extends ControllerBase_1.ControllerBase {
           ),
           await this.CheckRenderAssetsStreamingCompleted(r, "切换DataLayer:")),
         (n.DataLayerSwitching = !1),
-        GameModeController.q0r(),
+        GameModeController.wfr(),
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("GameMode", 30, "切换DataLayer:(完成)"),
         l?.(!0);
     }
   }
-  static b0r(e, o) {
+  static SWs(e, o, a, r, t) {
+    ModelManager_1.ModelManager.GameModeModel.DataLayerSwitching
+      ? (Log_1.Log.CheckWarn() &&
+          Log_1.Log.Warn(
+            "GameMode",
+            30,
+            "伪切换DataLayer: 当前正在切换DataLayer",
+          ),
+        t?.(!1))
+      : (Log_1.Log.CheckInfo() &&
+          Log_1.Log.Info(
+            "GameMode",
+            30,
+            "伪切换DataLayer:(开始)",
+            ["卸载的DataLayer", e?.join()],
+            ["加载的DataLayer", o?.join()],
+            ["位置", a],
+            ["旋转", r],
+          ),
+        Log_1.Log.CheckInfo() &&
+          Log_1.Log.Info(
+            "GameMode",
+            40,
+            "伪切换DataLayer:更新缓存的DataLayer变更信息",
+          ),
+        ModelManager_1.ModelManager.AutoRunModel?.UpdateCachedDataLayerInfo(
+          o,
+          e,
+        ),
+        Log_1.Log.CheckInfo() &&
+          Log_1.Log.Info("GameMode", 40, "伪切换DataLayer:通知服务器切换完成"),
+        GameModeController.wfr(),
+        Log_1.Log.CheckInfo() &&
+          Log_1.Log.Info("GameMode", 30, "伪切换DataLayer:(完成)"),
+        t?.(!0));
+  }
+  static xfr(e, o) {
     e &&
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
@@ -1181,7 +1240,7 @@ class GameModeController extends ControllerBase_1.ControllerBase {
         EventDefine_1.EEventName.TeleportStart,
         !0,
       ),
-      this.D0r(e),
+      this.Ifr(e),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.TeleportComplete,
         0,
@@ -1224,7 +1283,7 @@ class GameModeController extends ControllerBase_1.ControllerBase {
   static IsInInstance() {
     return (
       ModelManager_1.ModelManager.GameModeModel.InstanceType >=
-      Protocol_1.Aki.Protocol.sOs.Proto_NormalInstance
+      Protocol_1.Aki.Protocol.XFs.Proto_NormalInstance
     );
   }
   static CanLoadEntity() {
@@ -1461,18 +1520,24 @@ class GameModeController extends ControllerBase_1.ControllerBase {
       o =
         (o || (Time_1.Time.OriginTimeDilation = a),
         Time_1.Time.SetTimeDilation(a),
-        TimeOfDayController_1.TimeOfDayController.ChangeTimeScale(a),
-        CharacterController_1.CharacterController.SetTimeDilation(a),
-        FormationDataController_1.FormationDataController.SetTimeDilation(a),
-        BulletController_1.BulletController.SetTimeDilation(a),
+        ControllerHolder_1.ControllerHolder.TimeOfDayController.ChangeTimeScale(
+          a,
+        ),
+        ControllerHolder_1.ControllerHolder.CharacterController.SetTimeDilation(
+          a,
+        ),
+        ControllerHolder_1.ControllerHolder.FormationDataController.SetTimeDilation(
+          a,
+        ),
+        ControllerHolder_1.ControllerHolder.BulletController.SetTimeDilation(a),
         CameraController_1.CameraController.SetTimeDilation(a),
-        ComponentForceTickController_1.ComponentForceTickController.SetTimeDilation(
+        ControllerHolder_1.ControllerHolder.ComponentForceTickController.SetTimeDilation(
           a,
         ),
         (EffectEnvironment_1.EffectEnvironment.GlobalTimeScale = a),
-        Protocol_1.Aki.Protocol.Bus.create());
-    (o.L7n = e),
-      Net_1.Net.Send(4768, o),
+        Protocol_1.Aki.Protocol.PCs.create());
+    (o.nKn = e),
+      Net_1.Net.Send(25430, o),
       0 === e &&
         EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.PauseGame, 1),
       1 === e &&
@@ -1481,7 +1546,7 @@ class GameModeController extends ControllerBase_1.ControllerBase {
         EventDefine_1.EEventName.TriggerUiTimeDilation,
       );
   }
-  static D0r(e = void 0) {
+  static Ifr(e = void 0) {
     var o;
     Global_1.Global.BaseCharacter &&
       (e
@@ -1495,21 +1560,21 @@ class GameModeController extends ControllerBase_1.ControllerBase {
       Global_1.Global.BaseCharacter.CharacterMovement.SetMovementMode(1),
       (o = (e =
         Global_1.Global.BaseCharacter.CharacterActorComponent
-          .Entity).GetComponent(160)) &&
+          .Entity).GetComponent(162)) &&
         o.MainAnimInstance?.SyncAnimStates(void 0),
-      e.GetComponent(161)?.StopAllAddMove(),
-      e.GetComponent(158)?.ResetCharState());
+      e.GetComponent(163)?.StopAllAddMove(),
+      e.GetComponent(160)?.ResetCharState());
   }
-  static async T0r(e) {
+  static async Sfr(e) {
     var o = ModelManager_1.ModelManager.GameModeModel;
     let a = void 0;
     return (
-      !(a = e.nys?.length ? e.nys : o.InstanceDungeon.SubLevels) ||
+      !(a = e.IRs?.length ? e.IRs : o.InstanceDungeon.SubLevels) ||
       !a.length ||
-      this.R0r(a)
+      this.Tfr(a)
     );
   }
-  static async Hxn(e, o = !0) {
+  static async SBn(e, o = !0) {
     var a = ModelManager_1.ModelManager.GameModeModel;
     if ("string" == typeof e) {
       var r = a.AddPreloadSubLevel(e);
@@ -1560,7 +1625,7 @@ class GameModeController extends ControllerBase_1.ControllerBase {
     }
     return await Promise.all(l), !0;
   }
-  static async R0r(o, a = !0) {
+  static async Tfr(o, a = !0) {
     var r = ModelManager_1.ModelManager.GameModeModel;
     if ("string" == typeof o) {
       var t,
@@ -1628,9 +1693,9 @@ class GameModeController extends ControllerBase_1.ControllerBase {
     }
     return !0;
   }
-  static I0r(e) {
-    if (e?.hys)
-      for (const a of e.hys) {
+  static Efr(e) {
+    if (e?.RRs)
+      for (const a of e.RRs) {
         var o = DataLayerById_1.configDataLayerById.GetConfig(a);
         o
           ? (Log_1.Log.CheckInfo() &&
@@ -1638,7 +1703,7 @@ class GameModeController extends ControllerBase_1.ControllerBase {
                 "DataLayer",
                 o.DataLayer,
               ]),
-            GameModeController.w0r(o.DataLayer))
+            GameModeController.Afr(o.DataLayer))
           : Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "GameMode",
@@ -1648,35 +1713,35 @@ class GameModeController extends ControllerBase_1.ControllerBase {
             );
       }
   }
-  static w0r(e) {
+  static Afr(e) {
     ModelManager_1.ModelManager.GameModeModel.AddDataLayer(e),
       RenderModuleController_1.RenderModuleController.SetWorldPartitionDataLayerState(
         e,
         !0,
       );
   }
-  static x0r(e) {
+  static Ufr(e) {
     ModelManager_1.ModelManager.GameModeModel.RemoveDataLayer(e),
       RenderModuleController_1.RenderModuleController.SetWorldPartitionDataLayerState(
         e,
         !1,
       );
   }
-  static q0r() {
-    var e = Protocol_1.Aki.Protocol.a_s.create();
-    (e.vFn = ModelManager_1.ModelManager.GameModeModel.InstanceDungeon.Id),
-      Net_1.Net.Call(28313, e, (e) => {
-        e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys &&
+  static wfr() {
+    var e = Protocol_1.Aki.Protocol.ims.create();
+    (e.X5n = ModelManager_1.ModelManager.GameModeModel.InstanceDungeon.Id),
+      Net_1.Net.Call(29872, e, (e) => {
+        e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs &&
           ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-            e.lkn,
-            11481,
+            e.O4n,
+            7706,
           );
       });
   }
-  static E0r(e) {
+  static vfr(e) {
     ModelManager_1.ModelManager.GameModeModel.MaterialParameterCollectionMap.clear();
-    for (const a of Object.keys(e.lys)) {
-      var o = e.lys[a],
+    for (const a of Object.keys(e.DRs)) {
+      var o = e.DRs[a],
         o = AreaMpcById_1.configAreaMpcById.GetConfig(o).MpcData;
       o && "None" !== o && "Empty" !== o
         ? ModelManager_1.ModelManager.GameModeModel.MaterialParameterCollectionMap.set(
@@ -1716,11 +1781,11 @@ class GameModeController extends ControllerBase_1.ControllerBase {
                 r,
                 !0,
               ),
-              GameModeController.G0r();
+              GameModeController.Bfr();
           },
         );
   }
-  static G0r() {
+  static Bfr() {
     let e = !0;
     for (const o of ModelManager_1.ModelManager.GameModeModel.MaterialParameterCollectionMap.values())
       e = o && e;
@@ -1729,7 +1794,7 @@ class GameModeController extends ControllerBase_1.ControllerBase {
         !0,
       );
   }
-  static async B0r(e) {
+  static async Pfr(e) {
     var o, a;
     e &&
       ((o = ModelManager_1.ModelManager.GameModeModel),
@@ -1762,61 +1827,82 @@ class GameModeController extends ControllerBase_1.ControllerBase {
               "[CheckWorldPartitionStreamingCompleted] 检查场景流送",
               ["Location", e],
             ),
+          (e =
+            ModelManager_1.ModelManager.GameModeModel.VoxelStreamingSource.GetComponentByClass(
+              UE.WorldPartitionStreamingSourceComponent.StaticClass(),
+            )),
           (a = new CustomPromise_1.CustomPromise()),
-          (o.CheckStreamingCompletedTimerId = this.N6s(e, a)),
+          (o.CheckStreamingCompletedTimerId = this.gKs(e, a)),
+          await a.Promise,
+          (e =
+            ModelManager_1.ModelManager.GameModeModel.StreamingSource.GetComponentByClass(
+              UE.WorldPartitionStreamingSourceComponent.StaticClass(),
+            )),
+          (a = new CustomPromise_1.CustomPromise()),
+          (o.CheckStreamingCompletedTimerId = this.gKs(e, a)),
           await a.Promise,
           (o.CheckStreamingCompletedTimerId = void 0)));
   }
-  static N6s(e, a, o, r, t) {
+  static gKs(a, r, t, l, n = !1) {
+    var e = a.TargetGrids;
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "World",
         61,
         "[CheckTargetStreamingCompleted] 检测参数",
-        ["dataLayers", null != o && 0 < o.Num() ? o.Get(0).toString() : void 0],
+        [
+          "dataLayers",
+          void 0 !== t && 0 < t.Num() ? t.Get(0).toString() : void 0,
+        ],
         [
           "targetGrids",
-          null != r && 0 < r.Num() ? r.Get(0).toString() : void 0,
+          void 0 !== e && 0 < e.Num() ? e.Get(0).toString() : void 0,
         ],
       );
-    e = new UE.WorldPartitionStreamingQuerySource(
-      e,
-      ResourceSystem_1.STREAMING_SOURCE_RADIUS,
-      !1,
-      null != o && 0 < o.Num(),
-      o,
-      !1,
-      !0,
-      r,
-    );
-    const l = UE.NewArray(UE.WorldPartitionStreamingQuerySource),
-      n =
-        (l.Add(e),
-        UE.KuroRenderingRuntimeBPPluginBPLibrary.GetSubsystem(
-          GlobalData_1.GlobalData.World,
-          UE.WorldPartitionSubsystem.StaticClass(),
-        )),
-      _ = TimerSystem_1.TimerSystem.Forever(() => {
+    let _ = !1;
+    const i = TimerSystem_1.TimerSystem.Forever(() => {
+      if (!_) {
         var e,
-          o = n.IsStreamingCompleted(2, l, !0, cellNum, matchCellNum, !0);
-        t &&
-          ((e =
-            (0, puerts_1.$unref)(matchCellNum) /
-            Math.max((0, puerts_1.$unref)(cellNum), 1)),
-          t(e)),
-          o && (TimerSystem_1.TimerSystem.Remove(_), a.SetResult(!0));
-      }, ResourceSystem_1.CHECK_STREAMING_INTERVAL);
-    return _;
+          o = a.IsStreamingCompletedForLayers(
+            t,
+            !1,
+            ResourceSystem_1.STREAMING_SOURCE_RADIUS,
+            !0,
+            cellProgress,
+            !1,
+          );
+        if ((l && ((e = (0, puerts_1.$unref)(cellProgress)), l(e)), !o)) return;
+        (_ = n) &&
+          Log_1.Log.CheckInfo() &&
+          Log_1.Log.Info("GameMode", 61, "加载场景:检测场景物理体(开始)");
+      }
+      if (_) {
+        if (
+          !a.IsStreamingCompletedForLayers(
+            t,
+            !1,
+            ResourceSystem_1.STREAMING_SOURCE_RADIUS,
+            !1,
+            cellProgress,
+            !0,
+          )
+        )
+          return;
+        Log_1.Log.CheckInfo() &&
+          Log_1.Log.Info("GameMode", 61, "加载场景:检测场景物理体(结束)");
+      }
+      TimerSystem_1.TimerSystem.Remove(i), r.SetResult(!0);
+    }, ResourceSystem_1.CHECK_STREAMING_INTERVAL);
+    return i;
   }
-  static async V6s(o, a) {
+  static async pKs(o, a) {
     var e,
       r,
-      t,
-      l = ModelManager_1.ModelManager.GameModeModel;
+      t = ModelManager_1.ModelManager.GameModeModel;
     GlobalData_1.GlobalData.World.GetWorld().K2_GetWorldSettings()
       .bEnableWorldPartition
-      ? ((l.UseWorldPartition = !0),
-        (e = l.BornLocation)
+      ? ((t.UseWorldPartition = !0),
+        (e = t.BornLocation)
           ? (Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "World",
@@ -1824,39 +1910,33 @@ class GameModeController extends ControllerBase_1.ControllerBase {
                 "[SoloGameMode.CheckVoxelStreamingCompleted] 玩家出生点。",
                 ["Location", e],
               ),
-            l.InitStreamingSources(),
-            ModelManager_1.ModelManager.GameModeModel.VoxelStreamingSource.GetComponentByClass(
-              UE.WorldPartitionStreamingSourceComponent.StaticClass(),
-            ).EnableStreamingSource(),
-            (r = UE.NewSet(UE.BuiltinName)).Add(WorldDefine_1.VOXEL_GRID_NAME),
-            (t = l.VoxelStreamingCompleted),
-            (l.CheckStreamingCompletedTimerId = this.N6s(
-              e,
-              t,
-              void 0,
-              r,
-              (e) => {
-                LoadingController_1.LoadingController.AddProgress(
-                  Math.min(e * o, o),
-                  a,
-                );
-              },
-            )),
-            await t.Promise,
-            (l.CheckStreamingCompletedTimerId = void 0))
+            t.InitStreamingSources(),
+            (e =
+              ModelManager_1.ModelManager.GameModeModel.VoxelStreamingSource.GetComponentByClass(
+                UE.WorldPartitionStreamingSourceComponent.StaticClass(),
+              )).EnableStreamingSource(),
+            (r = t.VoxelStreamingCompleted),
+            (t.CheckStreamingCompletedTimerId = this.gKs(e, r, void 0, (e) => {
+              LoadingController_1.LoadingController.AddProgress(
+                Math.min(e * o, o),
+                a,
+              );
+            })),
+            await r.Promise,
+            (t.CheckStreamingCompletedTimerId = void 0))
           : Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "GameMode",
               3,
               "[SoloGameMode.CheckVoxelStreamingCompleted] 无法找到出生点。",
-              ["地图Id", l.MapConfig.MapId],
-              ["副本Id", l.InstanceDungeon.Id],
+              ["地图Id", t.MapConfig.MapId],
+              ["副本Id", t.InstanceDungeon.Id],
             ))
-      : ((l.UseWorldPartition = !1),
-        l.VoxelStreamingCompleted.SetResult(!0),
+      : ((t.UseWorldPartition = !1),
+        t.VoxelStreamingCompleted.SetResult(!0),
         LoadingController_1.LoadingController.AddProgress(o, a));
   }
-  static async Kyo(a, r) {
+  static async HIo(a, r) {
     cpp_1.FKuroGameBudgetAllocatorInterface.SetGlobalCavernMode(1);
     var e = ModelManager_1.ModelManager.GameModeModel,
       t = ModelManager_1.ModelManager.WorldModel;
@@ -1870,10 +1950,11 @@ class GameModeController extends ControllerBase_1.ControllerBase {
             "[SoloGameMode.CheckStreamingCompleted] 玩家出生点。",
             ["Location", t],
           );
-        ModelManager_1.ModelManager.GameModeModel.StreamingSource.GetComponentByClass(
-          UE.WorldPartitionStreamingSourceComponent.StaticClass(),
-        ).EnableStreamingSource();
-        var l = UE.NewArray(UE.BuiltinName);
+        var l =
+            ModelManager_1.ModelManager.GameModeModel.StreamingSource.GetComponentByClass(
+              UE.WorldPartitionStreamingSourceComponent.StaticClass(),
+            ),
+          n = (l.EnableStreamingSource(), UE.NewArray(UE.BuiltinName));
         let o =
           ControllerHolder_1.ControllerHolder.WorldController.EnvironmentInfoUpdate(
             t,
@@ -1881,13 +1962,13 @@ class GameModeController extends ControllerBase_1.ControllerBase {
             !0,
           );
         if (o) {
-          var n = (0, puerts_1.$ref)(void 0);
+          t = (0, puerts_1.$ref)(void 0);
           UE.KuroRenderingRuntimeBPPluginBPLibrary.GetWorldPartitionDataLayerNameByLabel(
             GlobalData_1.GlobalData.World,
             o,
-            n,
+            t,
           ),
-            l.Add((0, puerts_1.$unref)(n));
+            n.Add((0, puerts_1.$unref)(t));
         } else {
           let e = !0;
           if (
@@ -1911,17 +1992,23 @@ class GameModeController extends ControllerBase_1.ControllerBase {
                   o,
                   _,
                 ),
-                l.Add((0, puerts_1.$unref)(_));
+                n.Add((0, puerts_1.$unref)(_));
             }
         }
-        n = e.StreamingCompleted;
-        (e.CheckStreamingCompletedTimerId = this.N6s(t, n, l, void 0, (e) => {
-          LoadingController_1.LoadingController.AddProgress(
-            Math.min(e * a, a),
-            r,
-          );
-        })),
-          await n.Promise,
+        t = e.StreamingCompleted;
+        (e.CheckStreamingCompletedTimerId = this.gKs(
+          l,
+          t,
+          n,
+          (e) => {
+            LoadingController_1.LoadingController.AddProgress(
+              Math.min(e * a, a),
+              r,
+            );
+          },
+          !0,
+        )),
+          await t.Promise,
           (e.CheckStreamingCompletedTimerId = void 0);
       } else
         Log_1.Log.CheckError() &&
@@ -1948,7 +2035,7 @@ class GameModeController extends ControllerBase_1.ControllerBase {
         : Log_1.Log.CheckError() &&
           Log_1.Log.Error("World", 3, "viewOrigin参数无效", ["坐标", e]));
   }
-  static NVs(e, o, a) {
+  static bZs(e, o, a) {
     var r = ModelManager_1.ModelManager.GameModeModel;
     r.CheckRenderAssetsStreamingCompletedTimerId?.Valid() &&
       (TimerSystem_1.TimerSystem.Remove(
@@ -2010,7 +2097,7 @@ class GameModeController extends ControllerBase_1.ControllerBase {
           void 0,
         )),
       n =
-        (this.NVs(t, l, !0),
+        (this.bZs(t, l, !0),
         r.CheckRenderAssetsTimeoutId?.Valid() &&
           (TimerSystem_1.TimerSystem.Remove(r.CheckRenderAssetsTimeoutId),
           (r.CheckRenderAssetsTimeoutId = void 0)),
@@ -2018,37 +2105,43 @@ class GameModeController extends ControllerBase_1.ControllerBase {
     let _ = !1;
     return (
       !GlobalData_1.GlobalData.IsPlayInEditor &&
-        Info_1.Info.IsPc() &&
-        (r.CheckRenderAssetsTimeoutId = TimerSystem_1.TimerSystem.Delay(() => {
-          r.RenderAssetDone ||
-            (Log_1.Log.CheckError() &&
-              Log_1.Log.Error(
-                "World",
-                3,
-                "检查渲染资源(完成)",
-                ["Reason", a],
-                ["是否超时:", !0],
-                ["坐标", o],
-                [
-                  "画质",
-                  GameQualitySettingsManager_1.GameQualitySettingsManager.Get()
-                    .GetCurrentQualityInfo()
-                    .GetGameQualitySettingLevel(),
-                ],
-                [
-                  "相机位置",
-                  CameraController_1.CameraController.CameraLocation.ToString(),
-                ],
-                [
-                  "相机旋转",
-                  CameraController_1.CameraController.CameraRotator.ToString(),
-                ],
-              ),
-            this.NVs(t, l),
-            (r.RenderAssetDone = !0),
-            n.SetResult(!0),
-            this.AddOrRemoveRenderAssetsQueryViewInfo(o, 0));
-        }, ResourceSystem_1.RENDER_ASSETS_TIMEOUT)),
+        Info_1.Info.IsPcOrGamepadPlatform() &&
+        (r.CheckRenderAssetsTimeoutId = TimerSystem_1.TimerSystem.Delay(
+          () => {
+            r.RenderAssetDone ||
+              (Log_1.Log.CheckError() &&
+                Log_1.Log.Error(
+                  "World",
+                  3,
+                  "检查渲染资源(完成)",
+                  ["Reason", a],
+                  ["是否超时:", !0],
+                  ["坐标", o],
+                  [
+                    "画质",
+                    GameQualitySettingsManager_1.GameQualitySettingsManager.Get()
+                      .GetCurrentQualityInfo()
+                      .GetGameQualitySettingLevel(),
+                  ],
+                  [
+                    "相机位置",
+                    CameraController_1.CameraController.CameraLocation.ToString(),
+                  ],
+                  [
+                    "相机旋转",
+                    CameraController_1.CameraController.CameraRotator.ToString(),
+                  ],
+                ),
+              this.bZs(t, l),
+              (r.RenderAssetDone = !0),
+              n.SetResult(!0),
+              this.AddOrRemoveRenderAssetsQueryViewInfo(o, 0));
+          },
+          ResourceSystem_1.RENDER_ASSETS_TIMEOUT,
+          void 0,
+          "GameModeController.CheckRenderAssetsStreamingCompleted",
+          !1,
+        )),
       (r.CheckRenderAssetsStreamingCompletedTimerId =
         TimerSystem_1.TimerSystem.Forever(() => {
           var e;
@@ -2078,7 +2171,7 @@ class GameModeController extends ControllerBase_1.ControllerBase {
       n.Promise
     );
   }
-  static y0r(o, a) {
+  static Mfr(o, a) {
     PreloadDefine_1.PreloadSetting.UseNewPreload
       ? PreloadControllerNew_1.PreloadControllerNew.DoPreload((e) => {
           o?.(e);
@@ -2098,7 +2191,7 @@ class GameModeController extends ControllerBase_1.ControllerBase {
           },
         );
   }
-  static async S0r() {
+  static async pfr() {
     var e = new GameModePromise_1.GameModePromise();
     return (
       ModelManager_1.ModelManager.SeamlessTravelModel.IsSeamlessTravel
@@ -2269,55 +2362,37 @@ class GameModeController extends ControllerBase_1.ControllerBase {
           ],
         );
   }
-  static _4s() {
-    var e = Global_1.Global.CharacterController;
-    this.a4s ||
-      UE.KuroInputFunctionLibrary.HasInputModeReply(this.a4s) ||
-      (this.a4s = UE.KuroInputFunctionLibrary.SetGameAndUIInputMode(
-        e,
-        "GameModeController设置输入模式",
-      ));
-  }
-  static u4s() {
-    var e;
-    this.a4s &&
-      ((e = Global_1.Global.CharacterController),
-      UE.KuroInputFunctionLibrary.ReplyInputMode(e, this.a4s),
-      (this.a4s = void 0));
-  }
 }
-((exports.GameModeController = GameModeController).a4s = void 0),
-  (GameModeController.g5s = void 0),
-  (GameModeController.JVs = () => {
-    var e = Protocol_1.Aki.Protocol.Bus.create();
-    (e.L7n = 0),
-      Net_1.Net.Send(4768, e),
-      Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info(
-          "GameMode",
-          55,
-          "ApplicationHasDeactivated 发生时停协议",
-          ["TimeDilation", Time_1.Time.TimeDilation],
-        );
+((exports.GameModeController = GameModeController).Njs = void 0),
+  (GameModeController.Xea = () => {
+    var e;
+    Net_1.Net.IsServerConnected() &&
+      (((e = Protocol_1.Aki.Protocol.PCs.create()).nKn = 0),
+      Net_1.Net.Send(25430, e),
+      Log_1.Log.CheckInfo()) &&
+      Log_1.Log.Info("GameMode", 55, "ApplicationHasDeactivated 发生时停协议", [
+        "TimeDilation",
+        Time_1.Time.TimeDilation,
+      ]);
   }),
-  (GameModeController.DHe = () => {
-    var e = Protocol_1.Aki.Protocol.Bus.create();
-    (e.L7n = Time_1.Time.TimeDilation),
-      Net_1.Net.Send(4768, e),
-      Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info(
-          "GameMode",
-          55,
-          "ApplicationHasReactivated 发生时停协议",
-          ["TimeDilation", Time_1.Time.TimeDilation],
-        );
+  (GameModeController.Oje = () => {
+    var e;
+    Net_1.Net.IsServerConnected() &&
+      (((e = Protocol_1.Aki.Protocol.PCs.create()).nKn =
+        Time_1.Time.TimeDilation),
+      Net_1.Net.Send(25430, e),
+      Log_1.Log.CheckInfo()) &&
+      Log_1.Log.Info("GameMode", 55, "ApplicationHasReactivated 发生时停协议", [
+        "TimeDilation",
+        Time_1.Time.TimeDilation,
+      ]);
   }),
   (GameModeController.uMe = () => {
     ModelManager_1.ModelManager.GameModeModel.RenderAssetDone = !1;
   });
 class LoadGroup {
   constructor(e) {
-    (this.Name = e), (this.N0r = new Array()), (this.nK = new Array());
+    (this.Name = e), (this.bfr = new Array()), (this.nK = new Array());
   }
   async Run() {
     for (const t of this.nK) {
@@ -2329,9 +2404,9 @@ class LoadGroup {
       e.then((e) => {
         l?.(e);
       }),
-        this.N0r.push(e);
+        this.bfr.push(e);
     }
-    var a = await Promise.all(this.N0r);
+    var a = await Promise.all(this.bfr);
     for (let e = 0; e < a.length; ++e) {
       var r = this.nK[e][0];
       if (!a[e])

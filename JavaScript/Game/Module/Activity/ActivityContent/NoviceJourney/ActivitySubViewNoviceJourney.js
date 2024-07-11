@@ -20,7 +20,7 @@ class ActivitySubViewNoviceJourney extends ActivitySubViewBase_1.ActivitySubView
         var e = new NoviceJourneyItem_1.NoviceJourneyItem();
         return e.SetActivityData(this.CNe), e;
       }),
-      (this.vke = (e) => {
+      (this.q2e = (e) => {
         this.eGe.GetLayoutItemByKey(e).RefreshCurrentState();
       });
   }
@@ -51,13 +51,13 @@ class ActivitySubViewNoviceJourney extends ActivitySubViewBase_1.ActivitySubView
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.NoticeJourneyReceive,
-      this.vke,
+      this.q2e,
     );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.NoticeJourneyReceive,
-      this.vke,
+      this.q2e,
     );
   }
   OnStart() {

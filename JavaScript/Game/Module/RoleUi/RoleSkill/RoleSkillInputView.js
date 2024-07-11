@@ -9,9 +9,9 @@ const UE = require("ue"),
 class RoleSkillInputView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.Pco = void 0),
+      (this.Dmo = void 0),
       (this.lqe = void 0),
-      (this.i2e = () => {
+      (this.pFe = () => {
         UiManager_1.UiManager.CloseView("RoleSkillInputView");
       });
   }
@@ -22,15 +22,15 @@ class RoleSkillInputView extends UiViewBase_1.UiViewBase {
     ];
   }
   async OnBeforeStartAsync() {
-    this.Pco = new RoleSkillInputPanel_1.RoleSkillInputPanel();
+    this.Dmo = new RoleSkillInputPanel_1.RoleSkillInputPanel();
     var e = this.GetItem(1).GetOwner();
-    await this.Pco.CreateThenShowByActorAsync(e);
+    await this.Dmo.CreateThenShowByActorAsync(e);
   }
   OnStart() {
     var e = this.OpenParam;
-    this.Pco.RefreshUi(e),
+    this.Dmo.RefreshUi(e),
       (this.lqe = new PopupCaptionItem_1.PopupCaptionItem(this.GetItem(0))),
-      this.lqe.SetCloseCallBack(this.i2e);
+      this.lqe.SetCloseCallBack(this.pFe);
   }
 }
 exports.RoleSkillInputView = RoleSkillInputView;

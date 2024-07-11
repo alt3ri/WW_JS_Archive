@@ -23,40 +23,40 @@ class ItemGridConsumeComponent extends UiPanelBase_1.UiPanelBase {
       (this.StrengthItem = void 0),
       (this.ScrollView = void 0),
       (this.ConsumeList = []),
-      (this.ZIt = 3),
+      (this.rLt = 3),
       (this.MaxCount = 0),
       (this.EnoughMoney = !0),
-      (this.XVe = void 0),
-      (this.e6e = void 0),
-      (this.eTt = void 0),
+      (this.h8e = void 0),
+      (this.d8e = void 0),
+      (this.nLt = void 0),
       (this.wqe = void 0),
-      (this.ZVe = (t) => new OneTextDropDownItem_1.OneTextDropDownItem(t)),
-      (this.zVe = (t) => new OneTextTitleItem_1.OneTextTitleItem(t)),
-      (this.i6e = (t) => {
+      (this.m8e = (t) => new OneTextDropDownItem_1.OneTextDropDownItem(t)),
+      (this.c8e = (t) => new OneTextTitleItem_1.OneTextTitleItem(t)),
+      (this.g8e = (t) => {
         return new LguiUtil_1.TableTextArgNew(t.ConsumeFilterText);
       }),
-      (this.YIt = () => {
+      (this.tLt = () => {
         this.HasSelect()
           ? this.ConsumeFunction.DeleteSelectFunction?.()
           : this.ConsumeFunction.AutoFunction &&
-            this.ConsumeFunction.AutoFunction(this.ZIt);
+            this.ConsumeFunction.AutoFunction(this.rLt);
       }),
-      (this.t6e = (t) => {
-        this.ZIt = t;
+      (this.C8e = (t) => {
+        this.rLt = t;
         var e =
           LocalStorage_1.LocalStorage.GetPlayer(
             LocalStorageDefine_1.ELocalStoragePlayerKey.ItemGridDropDown,
           ) ?? new Map();
-        e.set(this.eTt, t),
+        e.set(this.nLt, t),
           LocalStorage_1.LocalStorage.SetPlayer(
             LocalStorageDefine_1.ELocalStoragePlayerKey.ItemGridDropDown,
             e,
           ),
-          this.e6e?.(t);
+          this.d8e?.(t);
       }),
       (this.sGe = () => {
         var t = new ConsumeMediumItemGrid_1.ConsumeMediumItemGrid();
-        return this.tTt(t), t;
+        return this.sLt(t), t;
       }),
       (this.wqe = t);
   }
@@ -80,28 +80,28 @@ class ItemGridConsumeComponent extends UiPanelBase_1.UiPanelBase {
       [12, UE.UIItem],
       [15, UE.UIText],
     ]),
-      (this.BtnBindInfo = [[3, this.YIt]]);
+      (this.BtnBindInfo = [[3, this.tLt]]);
   }
   async OnBeforeStartAsync() {
-    (this.XVe = new CommonDropDown_1.CommonDropDown(
+    (this.h8e = new CommonDropDown_1.CommonDropDown(
       this.GetItem(2),
-      this.ZVe,
-      this.zVe,
+      this.m8e,
+      this.c8e,
     )),
-      await this.XVe.Init();
+      await this.h8e.Init();
   }
   InitFilter(t, e) {
-    (this.e6e = e), (this.eTt = t);
+    (this.d8e = e), (this.nLt = t);
     (e =
       LocalStorage_1.LocalStorage.GetPlayer(
         LocalStorageDefine_1.ELocalStoragePlayerKey.ItemGridDropDown,
       ) ?? new Map()),
-      e.has(t) && (this.ZIt = e.get(t)),
+      e.has(t) && (this.rLt = e.get(t)),
       (e = QualityInfoAll_1.configQualityInfoAll.GetConfigList());
-    this.XVe.SetOnSelectCall(this.t6e),
-      this.XVe.SetShowType(1),
-      this.XVe.InitScroll(e, this.i6e, this.ZIt),
-      this.e6e(this.ZIt),
+    this.h8e.SetOnSelectCall(this.C8e),
+      this.h8e.SetShowType(1),
+      this.h8e.InitScroll(e, this.g8e, this.rLt),
+      this.d8e(this.rLt),
       this.GetItem(2).SetUIActive(!0);
   }
   HasSelect() {
@@ -116,7 +116,7 @@ class ItemGridConsumeComponent extends UiPanelBase_1.UiPanelBase {
       }
     return t;
   }
-  iTt() {
+  aLt() {
     this.HasSelect()
       ? LguiUtil_1.LguiUtil.SetLocalText(this.GetText(15), "DeleteSelect")
       : LguiUtil_1.LguiUtil.SetLocalText(this.GetText(15), "AutoSelect");
@@ -134,9 +134,9 @@ class ItemGridConsumeComponent extends UiPanelBase_1.UiPanelBase {
         ConfigManager_1.ConfigManager.WeaponConfig.GetMaterialItemMaxCount());
   }
   GetCurrentDropDownSelectIndex() {
-    return this.ZIt;
+    return this.rLt;
   }
-  tTt(t) {
+  sLt(t) {
     t.BindReduceLongPress((t, e, i) => {
       void 0 !== i &&
         this.ConsumeFunction.ReduceItemFunction(i[0].IncId, i[0].ItemId);
@@ -153,7 +153,7 @@ class ItemGridConsumeComponent extends UiPanelBase_1.UiPanelBase {
   OnBeforeDestroy() {
     this.StrengthItem &&
       (this.StrengthItem.Destroy(), (this.StrengthItem = void 0)),
-      this.XVe?.Destroy();
+      this.h8e?.Destroy();
   }
   UpdateComponent(t, e, i) {
     (this.ConsumeList = i), this.ScrollView.RefreshByData(this.ConsumeList);
@@ -169,7 +169,7 @@ class ItemGridConsumeComponent extends UiPanelBase_1.UiPanelBase {
     i.SetText(e.toString()),
       (this.EnoughMoney = e <= t),
       i.SetChangeColor(!(e <= t), i.changeColor),
-      this.iTt();
+      this.aLt();
   }
   SetMaxState(t) {
     this.GetItem(6).SetUIActive(!t),

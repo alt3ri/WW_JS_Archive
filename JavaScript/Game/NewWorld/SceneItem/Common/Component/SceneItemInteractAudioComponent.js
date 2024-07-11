@@ -34,40 +34,40 @@ const AudioController_1 = require("../../../../../Core/Audio/AudioController"),
 let SceneItemInteractAudioComponent = class SceneItemInteractAudioComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments),
-      (this.nXt = void 0),
-      (this.Qln = void 0),
-      (this.Xln = !1),
+      (this.n$t = void 0),
+      (this.Rln = void 0),
+      (this.Uln = !1),
       (this.Mass = -0),
-      (this.$ln = -0),
+      (this.Aln = -0),
       (this.BY = -0),
       (this.bY = -0),
-      (this.Yln = -0),
-      (this.wrr = Vector_1.Vector.Create()),
-      (this.Jln = -0),
-      (this.zln = Vector_1.Vector.Create()),
-      (this.Zln = ""),
-      (this.e1n = "physical_obj_mass"),
-      (this.t1n = "physical_obj_velocity");
+      (this.Pln = -0),
+      (this.Anr = Vector_1.Vector.Create()),
+      (this.xln = -0),
+      (this.wln = Vector_1.Vector.Create()),
+      (this.Bln = ""),
+      (this.bln = "physical_obj_mass"),
+      (this.qln = "physical_obj_velocity");
   }
   static get Dependencies() {
-    return [182, 0];
+    return [185, 0];
   }
   OnStart() {
     return (
-      this.BFr(),
-      this.Xln
-        ? ((this.nXt = this.Entity.GetComponent(182)),
-          (this.Qln = this.nXt.StaticMesh),
-          this.Qln &&
-            this.Qln.OnComponentHit.Add((t, e, i, o, s) => {
-              this.i1n(s);
+      this.mFr(),
+      this.Uln
+        ? ((this.n$t = this.Entity.GetComponent(185)),
+          (this.Rln = this.n$t.StaticMesh),
+          this.Rln &&
+            this.Rln.OnComponentHit.Add((t, e, i, o, s) => {
+              this.Gln(s);
             }))
         : Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("Audio", 34, "未开启控物碰撞音效"),
       !0
     );
   }
-  BFr() {
+  mFr() {
     var t,
       e = this.Entity.GetComponent(0),
       i = e.GetPbEntityInitData(),
@@ -82,15 +82,15 @@ let SceneItemInteractAudioComponent = class SceneItemInteractAudioComponent exte
           InteractAudioMaterialByCollisionMaterial_1.configInteractAudioMaterialByCollisionMaterial.GetConfig(
             i,
           ))
-          ? ((this.Xln = t.IsActiveImpacter),
+          ? ((this.Uln = t.IsActiveImpacter),
             (this.Mass = t.ImpactMass),
-            (this.$ln =
+            (this.Aln =
               t.MinimumTimeBetweenAkevent *
               CommonDefine_1.MILLIONSECOND_PER_SECOND),
             (this.BY = t.Maxforce),
             (this.bY = t.MinimumPosteventForce),
-            (this.Zln = t.AudioEvent),
-            AudioController_1.AudioController.SetRTPCValue(this.Mass, this.e1n))
+            (this.Bln = t.AudioEvent),
+            AudioController_1.AudioController.SetRTPCValue(this.Mass, this.bln))
           : Log_1.Log.CheckError() &&
             Log_1.Log.Error("Audio", 34, "该类型未配置在 交互材质音频表 中", [
               "type",
@@ -102,48 +102,48 @@ let SceneItemInteractAudioComponent = class SceneItemInteractAudioComponent exte
           e.GetPbDataId(),
         ]);
   }
-  i1n(t) {
+  Gln(t) {
     var e = new Date().getTime();
-    this.Yln && e - this.Yln < this.$ln
+    this.Pln && e - this.Pln < this.Aln
       ? Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "Audio",
           34,
           "跳过该次碰撞音效",
-          ["LastTime", this.Yln],
+          ["LastTime", this.Pln],
           ["CurTime", e],
-          ["Interval", this.$ln],
+          ["Interval", this.Aln],
         )
-      : ((this.Yln = e),
-        (e = t.Actor) !== this.nXt.Owner &&
+      : ((this.Pln = e),
+        (e = t.Actor) !== this.n$t.Owner &&
           (this.GetVelocity(),
-          (this.Jln = this.wrr.Size()),
-          this.Jln < this.bY
+          (this.xln = this.Anr.Size()),
+          this.xln < this.bY
             ? Log_1.Log.CheckDebug() &&
               Log_1.Log.Debug("Audio", 34, "速度太小 不触发碰撞音效", [
                 "Velocity",
-                this.Jln,
+                this.xln,
               ])
-            : (this.wrr.MultiplyEqual(this.Mass),
-              (this.Jln = this.wrr.Size()),
+            : (this.Anr.MultiplyEqual(this.Mass),
+              (this.xln = this.Anr.Size()),
               e instanceof TsBaseItem_1.default &&
                 ((t = ActorUtils_1.ActorUtils.GetEntityByActor(e)),
-                (this.zln = Vector_1.Vector.Create(
-                  t.Entity.GetComponent(112).GetVelocity(),
+                (this.wln = Vector_1.Vector.Create(
+                  t.Entity.GetComponent(114).GetVelocity(),
                 )),
-                this.zln.MultiplyEqual(t.Entity.GetComponent(112).Mass)),
+                this.wln.MultiplyEqual(t.Entity.GetComponent(114).Mass)),
               Log_1.Log.CheckDebug() &&
                 Log_1.Log.Debug(
                   "Audio",
                   34,
                   "碰撞物及被碰撞物动量",
-                  ["myMomentum", this.Jln],
-                  ["otherMomentum", this.zln.Size()],
+                  ["myMomentum", this.xln],
+                  ["otherMomentum", this.wln.Size()],
                 ),
-              this.wrr.AdditionEqual(this.zln),
-              (this.Jln = this.wrr.Size()),
+              this.Anr.AdditionEqual(this.wln),
+              (this.xln = this.Anr.Size()),
               (e = MathUtils_1.MathUtils.RangeClamp(
-                this.Jln,
+                this.xln,
                 0,
                 this.BY,
                 0,
@@ -154,25 +154,25 @@ let SceneItemInteractAudioComponent = class SceneItemInteractAudioComponent exte
                   "Audio",
                   34,
                   "总动量及Rtpc值",
-                  ["totalMomentum", this.Jln],
+                  ["totalMomentum", this.xln],
                   ["rtpcValue", e],
                 ),
-              (t = this.nXt.Owner),
-              AudioController_1.AudioController.SetRTPCValue(e, this.t1n),
-              AudioController_1.AudioController.PostEvent(this.Zln, t))));
+              (t = this.n$t.Owner),
+              AudioController_1.AudioController.SetRTPCValue(e, this.qln),
+              AudioController_1.AudioController.PostEvent(this.Bln, t))));
   }
   GetVelocity() {
-    var t = this.nXt.Owner;
+    var t = this.n$t.Owner;
     return t?.IsValid()
-      ? (this.wrr.FromUeVector(t.GetVelocity()), this.wrr)
+      ? (this.Anr.FromUeVector(t.GetVelocity()), this.Anr)
       : Vector_1.Vector.ZeroVectorProxy;
   }
   OnClear() {
-    return this.Qln?.OnComponentHit.Clear(), !0;
+    return this.Rln?.OnComponentHit.Clear(), !0;
   }
 };
 (SceneItemInteractAudioComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(112)],
+  [(0, RegisterComponent_1.RegisterComponent)(114)],
   SceneItemInteractAudioComponent,
 )),
   (exports.SceneItemInteractAudioComponent = SceneItemInteractAudioComponent);

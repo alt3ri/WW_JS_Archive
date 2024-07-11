@@ -26,45 +26,45 @@ let BaseFrozenComponent = class BaseFrozenComponent extends EntityComponent_1.En
   constructor() {
     super(...arguments),
       (this.ActorComponent = void 0),
-      (this.vqr = void 0),
-      (this.Qbr = void 0),
-      (this.Xbr = void 0),
       (this.$br = void 0),
-      (this.Ybr = (t, e) => {
+      (this.ybr = void 0),
+      (this.Ibr = void 0),
+      (this.Tbr = void 0),
+      (this.Lbr = (t, e) => {
         e && this.ActorComponent.Actor.StopAnimMontage();
       }),
-      (this.Jbr = new Map()),
+      (this.Dbr = new Map()),
       (this.FrozenLockSet = new Set());
   }
   OnStart() {
     return (
       (this.ActorComponent = this.Entity.CheckGetComponent(3)),
-      (this.vqr = this.Entity.CheckGetComponent(51)),
-      (this.Qbr = this.Entity.CheckGetComponent(107)),
-      this.Zbr(),
+      (this.$br = this.Entity.CheckGetComponent(52)),
+      (this.ybr = this.Entity.CheckGetComponent(109)),
+      this.Ubr(),
       !0
     );
   }
   OnEnd() {
     return (
-      this.Xbr && (this.Xbr.EndTask(), (this.Xbr = void 0)),
-      this.$br && (this.$br.EndTask(), (this.$br = void 0)),
+      this.Ibr && (this.Ibr.EndTask(), (this.Ibr = void 0)),
+      this.Tbr && (this.Tbr.EndTask(), (this.Tbr = void 0)),
       !0
     );
   }
-  Zbr() {
-    var t = this.Entity.CheckGetComponent(185);
-    this.Xbr = t.ListenForTagAddOrRemove(2118071836, this.Ybr);
+  Ubr() {
+    var t = this.Entity.CheckGetComponent(188);
+    this.Ibr = t.ListenForTagAddOrRemove(2118071836, this.Lbr);
   }
   AddTimeScaleByBuff(t, e, i, s, o) {
-    this.Jbr.has(t) ||
-      this.vqr.IsImmuneTimeScaleEffect() ||
-      ((e = this.Qbr.SetTimeScale(e, i, o, s ?? ETERNAL_DURATION, 6)),
-      this.Jbr.set(t, e));
+    this.Dbr.has(t) ||
+      this.$br.IsImmuneTimeScaleEffect() ||
+      ((e = this.ybr.SetTimeScale(e, i, o, s ?? ETERNAL_DURATION, 6)),
+      this.Dbr.set(t, e));
   }
   RemoveTimeScaleByBuff(t) {
-    var e = this.Jbr.get(t);
-    e && this.Qbr.RemoveTimeScale(e), this.Jbr.delete(t);
+    var e = this.Dbr.get(t);
+    e && this.ybr.RemoveTimeScale(e), this.Dbr.delete(t);
   }
   IsFrozen() {
     return !1;

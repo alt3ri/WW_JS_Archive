@@ -12,26 +12,26 @@ const UE = require("ue"),
 class InputMultiKeyItem extends UiPanelBase_1.UiPanelBase {
   constructor(e = !0, s = !0, t) {
     super(),
-      (this.sUt = void 0),
-      (this.aUt = void 0),
-      (this.hUt = void 0),
-      (this.lUt = void 0),
+      (this._At = void 0),
+      (this.uAt = void 0),
+      (this.cAt = void 0),
+      (this.mAt = void 0),
       (this.vq = !1),
-      (this._Ut = !0),
-      (this.uUt = !0),
-      (this.RIt = void 0),
-      (this.dKe = (e, s, t, i) => {
-        e !== i && this.lUt && this.cUt(this.lUt);
+      (this.dAt = !0),
+      (this.CAt = !0),
+      (this.wTt = void 0),
+      (this.XBo = () => {
+        this.mAt && this.gAt(this.mAt);
       }),
-      (this.c_t = (e) => {
-        this.lUt && this.lUt.ActionOrAxisName === e && this.cUt(this.lUt);
+      (this.Dut = (e) => {
+        this.mAt && this.mAt.ActionOrAxisName === e && this.gAt(this.mAt);
       }),
-      (this.m_t = (e) => {
-        this.lUt && this.lUt.ActionOrAxisName === e && this.cUt(this.lUt);
+      (this.Rut = (e) => {
+        this.mAt && this.mAt.ActionOrAxisName === e && this.gAt(this.mAt);
       }),
-      (this._Ut = e),
-      (this.uUt = s),
-      (this.RIt = t);
+      (this.dAt = e),
+      (this.CAt = s),
+      (this.wTt = t);
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -41,97 +41,97 @@ class InputMultiKeyItem extends UiPanelBase_1.UiPanelBase {
     ];
   }
   async OnBeforeStartAsync() {
-    (this.sUt = new InputKeyItem_1.InputKeyItem(
-      void 0 !== this.RIt ? this.RIt + "_1" : void 0,
+    (this._At = new InputKeyItem_1.InputKeyItem(
+      void 0 !== this.wTt ? this.wTt + "_1" : void 0,
     )),
-      (this.aUt = new InputKeyItem_1.InputKeyItem(
-        void 0 !== this.RIt ? this.RIt + "_2" : void 0,
+      (this.uAt = new InputKeyItem_1.InputKeyItem(
+        void 0 !== this.wTt ? this.wTt + "_2" : void 0,
       )),
       await Promise.all([
-        this.sUt.CreateByActorAsync(this.GetItem(1).GetOwner(), !0),
-        this.aUt.CreateByActorAsync(this.GetItem(2).GetOwner(), !0),
+        this._At.CreateByActorAsync(this.GetItem(1).GetOwner(), !0),
+        this.uAt.CreateByActorAsync(this.GetItem(2).GetOwner(), !0),
       ]);
   }
   OnStart() {
-    this.hUt = new InputKeyDisplayData_1.InputKeyDisplayData();
+    this.cAt = new InputKeyDisplayData_1.InputKeyDisplayData();
   }
   OnBeforeDestroy() {
-    this.hUt?.Reset(), (this.sUt = void 0), (this.aUt = void 0);
+    this.cAt?.Reset(), (this._At = void 0), (this.uAt = void 0);
   }
   OnBeforeShow() {
-    this._Ut &&
+    this.dAt &&
       EventSystem_1.EventSystem.Add(
-        EventDefine_1.EEventName.OnPlatformChanged,
-        this.dKe,
+        EventDefine_1.EEventName.InputControllerChange,
+        this.XBo,
       ),
-      this.uUt &&
+      this.CAt &&
         (EventSystem_1.EventSystem.Add(
           EventDefine_1.EEventName.OnActionKeyChanged,
-          this.c_t,
+          this.Dut,
         ),
         EventSystem_1.EventSystem.Add(
           EventDefine_1.EEventName.OnAxisKeyChanged,
-          this.m_t,
+          this.Rut,
         )),
-      this.lUt && this.cUt(this.lUt);
+      this.mAt && this.gAt(this.mAt);
   }
   OnAfterHide() {
-    this._Ut &&
+    this.dAt &&
       EventSystem_1.EventSystem.Remove(
-        EventDefine_1.EEventName.OnPlatformChanged,
-        this.dKe,
+        EventDefine_1.EEventName.InputControllerChange,
+        this.XBo,
       ),
-      this.uUt &&
+      this.CAt &&
         (EventSystem_1.EventSystem.Remove(
           EventDefine_1.EEventName.OnActionKeyChanged,
-          this.c_t,
+          this.Dut,
         ),
         EventSystem_1.EventSystem.Remove(
           EventDefine_1.EEventName.OnAxisKeyChanged,
-          this.m_t,
+          this.Rut,
         ));
   }
   RefreshByKeyList(e, s) {
-    this.mUt(e, s), (this.lUt = void 0);
+    this.fAt(e, s), (this.mAt = void 0);
   }
-  mUt(e, s, t) {
-    e && (this.sUt?.Refresh(e), this.sUt?.SetActive(!0)), (e = this.GetText(0));
+  fAt(e, s, t) {
+    e && (this._At?.Refresh(e), this._At?.SetActive(!0)), (e = this.GetText(0));
     s
-      ? (this.aUt?.Refresh(s),
-        this.aUt?.SetActive(!0),
+      ? (this.uAt?.Refresh(s),
+        this.uAt?.SetActive(!0),
         e.SetText(t ?? "+"),
         e.SetUIActive(!0))
-      : (e.SetUIActive(!1), this.aUt?.SetActive(!1));
+      : (e.SetUIActive(!1), this.uAt?.SetActive(!1));
   }
   RefreshByKey(e) {
-    this.dUt(e), (this.lUt = void 0);
+    this.pAt(e), (this.mAt = void 0);
   }
-  dUt(e) {
-    this.sUt?.Refresh(e),
+  pAt(e) {
+    this._At?.Refresh(e),
       this.GetText(0)?.SetUIActive(!1),
-      this.aUt?.SetActive(!1);
+      this.uAt?.SetActive(!1);
   }
   RefreshByActionOrAxis(e) {
-    (this.lUt = e), this.cUt(e);
+    (this.mAt = e), this.gAt(e);
   }
-  cUt(s) {
-    if (this.hUt) {
+  gAt(s) {
+    if (this.cAt) {
       var t,
         i = s.ActionOrAxisName;
-      this.hUt.Reset();
+      this.cAt.Reset();
       let e =
         InputSettingsManager_1.InputSettingsManager.GetActionKeyDisplayData(
-          this.hUt,
+          this.cAt,
           i,
         );
       (e =
         e ||
         InputSettingsManager_1.InputSettingsManager.GetAxisKeyDisplayData(
-          this.hUt,
+          this.cAt,
           i,
         )) &&
         ((i = s.Index ?? 0),
-        !(i = this.hUt.GetDisplayKeyNameList(i)) ||
+        !(i = this.cAt.GetDisplayKeyNameList(i)) ||
           i.length <= 0 ||
           (1 === i.length &&
             ((t = {
@@ -143,11 +143,13 @@ class InputMultiKeyItem extends UiPanelBase_1.UiPanelBase {
               IsShowLongPressWhenPress: s.IsShowLongPressWhenPress,
               IsShowLongPressWhenRelease: s.IsShowLongPressWhenRelease,
               IsTextArrowVisible: s.IsTextArrowVisible,
+              IsUpArrowVisible: s.IsUpArrowVisible,
+              IsDownArrowVisible: s.IsDownArrowVisible,
               IsShowTextArrowWhenPress: s.IsShowTextArrowWhenPress,
               IsShowTextArrowWhenRelease: s.IsShowTextArrowWhenRelease,
               DescriptionId: s.DescriptionId,
             }),
-            this.mUt(t)),
+            this.fAt(t)),
           2 === i.length &&
             ((t = { KeyName: i[0] }),
             (i = {
@@ -157,11 +159,13 @@ class InputMultiKeyItem extends UiPanelBase_1.UiPanelBase {
               IsShowLongPressWhenPress: s.IsShowLongPressWhenPress,
               IsShowLongPressWhenRelease: s.IsShowLongPressWhenRelease,
               IsTextArrowVisible: s.IsTextArrowVisible,
+              IsUpArrowVisible: s.IsUpArrowVisible,
+              IsDownArrowVisible: s.IsDownArrowVisible,
               IsShowTextArrowWhenPress: s.IsShowTextArrowWhenPress,
               IsShowTextArrowWhenRelease: s.IsShowTextArrowWhenRelease,
               DescriptionId: s.DescriptionId,
             }),
-            this.mUt(t, i, s.LinkString))));
+            this.fAt(t, i, s.LinkString))));
     }
   }
   SetEnable(e, s = !1) {
@@ -172,17 +176,17 @@ class InputMultiKeyItem extends UiPanelBase_1.UiPanelBase {
       (this.vq = e));
   }
   SetLongPressDisable(e) {
-    this.lUt && (this.lUt.IsLongPressDisable = e),
-      this.sUt?.SetLongPressDisable(e),
-      this.aUt?.SetLongPressDisable(e);
+    this.mAt && (this.mAt.IsLongPressDisable = e),
+      this._At?.SetLongPressDisable(e),
+      this.uAt?.SetLongPressDisable(e);
   }
   SetLongPressTime(e) {
-    this.sUt?.SetLongPressTime(e),
-      this.aUt?.SetLongPressTime(e),
-      this.lUt && (this.lUt.LongPressTime = e);
+    this._At?.SetLongPressTime(e),
+      this.uAt?.SetLongPressTime(e),
+      this.mAt && (this.mAt.LongPressTime = e);
   }
-  Reset() {
-    this.sUt?.DeactivateLongPress(), this.aUt?.DeactivateLongPress();
+  ResetLongPress() {
+    this._At?.ResetLongPress(), this.uAt?.ResetLongPress();
   }
 }
 exports.InputMultiKeyItem = InputMultiKeyItem;

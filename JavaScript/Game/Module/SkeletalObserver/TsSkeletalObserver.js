@@ -25,10 +25,10 @@ class TsSkeletalObserver extends UE.Actor {
     this.Model?.Tick(e);
   }
   Destroy() {
-    this.Model?.End(),
+    ActorSystem_1.ActorSystem.Put(this),
+      this.Model?.End(),
       this.Model?.Clear(),
-      (this.Model = void 0),
-      ActorSystem_1.ActorSystem.Put(this);
+      (this.Model = void 0);
   }
 }
 (exports.TsSkeletalObserver = TsSkeletalObserver),

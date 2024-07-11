@@ -19,12 +19,12 @@ const UE = require("ue"),
 class MenuScrollSettingContainerItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this.S9 = void 0),
+      (this.E9 = void 0),
       (this.Pe = void 0),
       (this.IGe = void 0),
-      (this.Ywi = void 0),
-      (this.EPe = void 0),
-      (this.UOn = () => {
+      (this.YBi = void 0),
+      (this.SPe = void 0),
+      (this.ufa = () => {
         if (this.Pe) {
           var e = this.Pe.ClickedTips;
           if (e && !StringUtils_1.StringUtils.IsBlank(e)) {
@@ -39,23 +39,22 @@ class MenuScrollSettingContainerItem extends UiPanelBase_1.UiPanelBase {
           }
         }
       }),
-      (this.Jwi = (e) => {
+      (this.JBi = (e) => {
         void 0 !== this.Pe && this.Pe.MenuDataFunctionId === e && this.bNe();
       }),
-      (this.ROn = (e, t) => {
+      (this.cfa = (e, t) => {
         this.Pe &&
           e === this.Pe.MenuDataFunctionId &&
-          this.Zwi(this.Pe.IsEnable);
+          this.ZBi(this.Pe.IsEnable);
       }),
-      (this.tBi = (e) => {
-        this.EPe.PlayLevelSequenceByName(e);
+      (this.tbi = (e) => {
+        this.SPe.PlayLevelSequenceByName(e);
       }),
-      (this.iBi = (e) => {
+      (this.ibi = (e) => {
         MenuController_1.MenuController.ApplyTargetConfig(
           this.Pe.MenuDataFunctionId,
           e,
         ),
-          MenuController_1.MenuController.SaveLocalConfig(),
           (ModelManager_1.ModelManager.MenuModel.IsEdited = !0);
       });
   }
@@ -74,38 +73,38 @@ class MenuScrollSettingContainerItem extends UiPanelBase_1.UiPanelBase {
       (this.BtnBindInfo = []);
   }
   OnStart() {
-    void 0 === this.EPe &&
-      (this.EPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem)),
+    void 0 === this.SPe &&
+      (this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem)),
       this.AddEventListener();
   }
   AddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.RefreshMenuSetting,
-      this.Jwi,
+      this.JBi,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnMenuDataEnableChanged,
-        this.ROn,
+        this.cfa,
       ),
-      this.GetExtendToggle(0).OnPointUpCallBack.Bind(this.UOn);
+      this.GetExtendToggle(0).OnPointUpCallBack.Bind(this.ufa);
   }
   RemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.RefreshMenuSetting,
-      this.Jwi,
+      this.JBi,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnMenuDataEnableChanged,
-        this.ROn,
+        this.cfa,
       ),
       this.GetExtendToggle(0).OnPointUpCallBack.Unbind();
   }
   OnBeforeDestroy() {
     this.RemoveEventListener(),
-      this.EPe?.Clear(),
-      (this.EPe = void 0),
-      this.Ywi?.ClearItem(),
-      (this.Ywi = void 0),
+      this.SPe?.Clear(),
+      (this.SPe = void 0),
+      this.YBi?.ClearItem(),
+      (this.YBi = void 0),
       this.gPe();
   }
   ClearItem() {
@@ -113,7 +112,7 @@ class MenuScrollSettingContainerItem extends UiPanelBase_1.UiPanelBase {
   }
   gPe() {
     this.IGe && (this.IGe = void 0),
-      this.S9 && (this.S9 = void 0),
+      this.E9 && (this.E9 = void 0),
       this.Pe && (this.Pe = void 0);
   }
   GetUsingItem(e) {
@@ -135,74 +134,74 @@ class MenuScrollSettingContainerItem extends UiPanelBase_1.UiPanelBase {
     return void 0 !== t ? t.GetOwner() : void 0;
   }
   Update(e, t) {
-    (this.S9 = e.Type), (this.Pe = e.Data), this.oBi(), this.rBi(e);
+    (this.E9 = e.Type), (this.Pe = e.Data), this.obi(), this.rbi(e);
   }
-  async rBi(e) {
-    this.Ywi && (this.Ywi.Clear(), await this.Ywi.ClearAsync()),
-      (this.Ywi = this.nBi(e)),
-      this.Ywi && (await this.Ywi.Init(), this.sBi(this.Ywi, e));
+  async rbi(e) {
+    this.YBi && (this.YBi.Clear(), await this.YBi.ClearAsync()),
+      (this.YBi = this.nbi(e)),
+      this.YBi && (await this.YBi.Init(), this.sbi(this.YBi, e));
   }
-  sBi(e, t) {
+  sbi(e, t) {
     var i;
     e &&
       ((i = t.Data),
       e.SetActive(!0),
       e.Update(i),
-      0 !== t.Type ? this.Zwi(i.IsEnable) : this.Zwi(!1));
+      0 !== t.Type ? this.ZBi(i.IsEnable) : this.ZBi(!1));
   }
-  nBi(e) {
+  nbi(e) {
     if (0 === e.Type)
-      return this.aBi(
+      return this.abi(
         1,
         MenuScrollSettingTitleItem_1.MenuScrollSettingTitleItem,
       );
     switch (e.Data.MenuDataSetType) {
       case 1:
-        return this.aBi(
+        return this.abi(
           4,
           MenuScrollSettingSliderItem_1.MenuScrollSettingSliderItem,
         );
       case 2:
-        return this.aBi(
+        return this.abi(
           3,
           MenuScrollSettingSwitchItem_1.MenuScrollSettingSwitchItem,
         );
       case 3:
-        return this.aBi(
+        return this.abi(
           2,
           MenuScrollSettingKeyMapItem_1.MenuScrollSettingKeyMapItem,
         );
       case 4:
-        return this.aBi(
+        return this.abi(
           2,
           MenuScrollSettingButtonItem_1.MenuScrollSettingButtonItem,
         );
       case 5:
-        return this.aBi(
+        return this.abi(
           5,
           MenuScrollSettingDropDown_1.MenuScrollSettingDropDown,
         );
     }
   }
-  aBi(e, t) {
+  abi(e, t) {
     t = new t();
-    return t.Initialize(this.GetItem(e), this.iBi, this.tBi), t;
+    return t.Initialize(this.GetItem(e), this.ibi, this.tbi), t;
   }
   bNe() {
-    this.Ywi && this.Ywi.Update(this.Pe);
+    this.YBi && this.YBi.Update(this.Pe);
   }
-  oBi() {
+  obi() {
     this.GetItem(1).SetUIActive(!1),
       this.GetItem(4).SetUIActive(!1),
       this.GetItem(3).SetUIActive(!1),
       this.GetItem(2).SetUIActive(!1),
       this.GetItem(5).SetUIActive(!1);
   }
-  Zwi(e) {
+  ZBi(e) {
     var t = this.GetExtendToggle(0);
     t.SetToggleState(e ? 0 : 2, !1),
       t.SetSelfInteractive(e),
-      0 !== this.S9 && this.Ywi && this.Ywi.SetInteractionActive(e);
+      0 !== this.E9 && this.YBi && this.YBi.SetInteractionActive(e);
   }
 }
 exports.MenuScrollSettingContainerItem = MenuScrollSettingContainerItem;

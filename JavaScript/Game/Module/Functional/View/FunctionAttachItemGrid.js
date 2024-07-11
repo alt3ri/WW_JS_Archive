@@ -9,13 +9,13 @@ const UE = require("ue"),
   FunctionItem_1 = require("./FunctionItem");
 class FunctionAttachItemGrid extends AutoAttachItem_1.AutoAttachItem {
   constructor() {
-    super(...arguments), (this.P9t = !1);
+    super(...arguments), (this.P7t = !1);
   }
   OnRefreshItem(t) {
     t &&
-      (this.Layout?.SetNeedAnim(this.P9t),
+      (this.Layout?.SetNeedAnim(this.P7t),
       this.Layout?.RebuildLayoutByDataNew(t),
-      (this.P9t = !1));
+      (this.P7t = !1));
   }
   OnSelect() {
     EventSystem_1.EventSystem.Emit(
@@ -34,16 +34,16 @@ class FunctionAttachItemGrid extends AutoAttachItem_1.AutoAttachItem {
   OnStart() {
     this.Layout = new GenericLayoutNew_1.GenericLayoutNew(
       this.GetLayoutBase(0),
-      (t, e, n) => this.x9t(t, e, n),
+      (t, e, n) => this.x7t(t, e, n),
       this.GetItem(1),
     );
   }
-  x9t(t, e, n) {
+  x7t(t, e, n) {
     e = new FunctionItem_1.FunctionItem(e);
     return e.UpdateItem(t), { Key: t, Value: e };
   }
   SetNeedAnim(t) {
-    this.P9t = t;
+    this.P7t = t;
   }
   OnBeforeDestroy() {
     this.Layout.ClearGridController();

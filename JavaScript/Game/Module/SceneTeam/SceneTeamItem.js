@@ -5,72 +5,75 @@ const ModelManager_1 = require("../../Manager/ModelManager"),
   SceneTeamDefine_1 = require("./SceneTeamDefine");
 class SceneTeamItem {
   constructor() {
-    (this.Qfo = !1),
-      (this.Vfo = 0),
+    (this.jpo = !1),
+      (this.Opo = 0),
       (this.j8 = 0),
       (this.Mne = 0),
-      (this.Xfo = 0),
-      (this.$fo = void 0),
-      (this.Yfo = !1);
+      (this.Wpo = 0),
+      (this.Kpo = void 0),
+      (this.Qpo = !1);
   }
   static Create(e, t, r, i) {
     var s = new SceneTeamItem();
     return (
-      (s.Vfo = e),
-      (s.Qfo = t === ModelManager_1.ModelManager.CreatureModel.GetPlayerId()),
+      (s.Opo = e),
+      (s.jpo = t === ModelManager_1.ModelManager.CreatureModel.GetPlayerId()),
       (s.j8 = t),
       (s.Mne = r),
-      (s.Xfo = i),
+      (s.Wpo = i),
       s
     );
   }
   Reset() {
-    (this.Xfo = 0), (this.$fo = void 0);
+    (this.Wpo = 0), (this.Kpo = void 0);
   }
   GetGroupType() {
-    return this.Vfo;
+    return this.Opo;
   }
   GetPlayerId() {
     return this.j8;
   }
   IsMyRole() {
-    return this.Qfo;
+    return this.jpo;
   }
   IsControl() {
     var e;
-    return this.Qfo
+    return this.jpo
       ? !(
           !(e = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity) ||
           !this.EntityHandle
         ) && e.Id === this.EntityHandle.Id
-      : this.Yfo;
+      : this.Qpo;
   }
   get GetConfigId() {
     return this.Mne;
   }
   GetCreatureDataId() {
-    return this.Xfo;
+    return this.Wpo;
   }
   UpdateEntityHandle() {
-    this.$fo = ModelManager_1.ModelManager.CreatureModel.GetEntity(this.Xfo);
+    this.Kpo = ModelManager_1.ModelManager.CreatureModel.GetEntity(this.Wpo);
   }
   get EntityHandle() {
-    if (!this.$fo || !this.$fo.Valid) {
-      var e = ModelManager_1.ModelManager.CreatureModel.GetEntity(this.Xfo);
+    if (!this.Kpo || !this.Kpo.Valid) {
+      var e = ModelManager_1.ModelManager.CreatureModel.GetEntity(this.Wpo);
       if (!e || !e.Valid) return;
-      this.$fo = e;
+      this.Kpo = e;
     }
-    if (this.$fo.IsInit) return this.$fo;
+    if (this.Kpo.IsInit) return this.Kpo;
   }
   IsDead() {
     var e = this.EntityHandle?.Entity;
     return !e || !(e = e.GetComponent(15)) || e.IsDead();
   }
   CanGoBattle() {
+    var e;
     return this.EntityHandle
       ? this.IsDead()
         ? 4
-        : this.EntityHandle.Entity.CheckGetComponent(185).HasTag(-2100129479)
+        : (e = this.EntityHandle.Entity.CheckGetComponent(188)).HasTag(
+              -2100129479,
+            ) && !e.HasTag(781722537)
           ? 2
           : 0
       : 1;
@@ -78,7 +81,7 @@ class SceneTeamItem {
   CanGoDown(e) {
     var t;
     return this.EntityHandle
-      ? (t = this.EntityHandle.Entity.CheckGetComponent(185)).HasTag(
+      ? (t = this.EntityHandle.Entity.CheckGetComponent(188)).HasTag(
           -1697149502,
         )
         ? 6
@@ -94,7 +97,7 @@ class SceneTeamItem {
       : 1;
   }
   SetRemoteIsControl(e) {
-    this.Yfo = e;
+    this.Qpo = e;
   }
 }
 exports.SceneTeamItem = SceneTeamItem;

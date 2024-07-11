@@ -55,15 +55,15 @@ class TsTaskFindNearestInteractiveTarget extends TsTaskAbortImmediatelyBase_1.de
         var o = i.Entity.GetComponent(1);
         let e = !1;
         switch (o.CreatureData.GetEntityType()) {
-          case Protocol_1.Aki.Protocol.HBs.Proto_Npc:
-          case Protocol_1.Aki.Protocol.HBs.Proto_SceneItem:
+          case Protocol_1.Aki.Protocol.wks.Proto_Npc:
+          case Protocol_1.Aki.Protocol.wks.Proto_SceneItem:
             e = !0;
             break;
           default:
             e = !1;
         }
         e &&
-          o.Entity.GetComponent(91)?.IsInit &&
+          o.Entity.GetComponent(93)?.IsInit &&
           (o = Vector_1.Vector.Dist(
             t.ActorLocationProxy,
             o.ActorLocationProxy,

@@ -29,25 +29,25 @@ const EntityComponent_1 = require("../../../../Core/Entity/EntityComponent"),
 let DurabilityComponent = class DurabilityComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments),
-      (this.zht = void 0),
+      (this.u1t = void 0),
       (this.ac = void 0),
-      (this.ect = void 0),
-      (this.Bht = void 0),
+      (this.cmt = void 0),
+      (this.Qlt = void 0),
       (this.DeadActions = void 0);
   }
   get IsDestroyed() {
     return 1 <= this.ac;
   }
   OnInit() {
-    (this.zht = this.Entity.GetComponent(0)),
+    (this.u1t = this.Entity.GetComponent(0)),
       (this.ac = 0),
-      (this.ect = void 0);
-    var t = this.zht.GetPbEntityInitData(),
+      (this.cmt = void 0);
+    var t = this.u1t.GetPbEntityInitData(),
       t = (0, IComponent_1.getComponent)(t.ComponentsData, "DestructibleItem");
     return (
       t.DurabilityStateConfig?.NonDestructable ||
         (this.DeadActions = t.DestructionActions),
-      this.Entity.GetComponent(106).SetLogicRange(
+      this.Entity.GetComponent(108).SetLogicRange(
         ConfigManager_1.ConfigManager.ManipulateConfig.SearchRange,
       ),
       !0
@@ -55,36 +55,36 @@ let DurabilityComponent = class DurabilityComponent extends EntityComponent_1.En
   }
   OnStart() {
     return (
-      (this.Bht = (t) => {
-        this.dnn();
+      (this.Qlt = (t) => {
+        this.$rn();
       }),
       EventSystem_1.EventSystem.AddWithTarget(
         this.Entity,
         EventDefine_1.EEventName.OnSceneItemDurabilityChange,
-        this.Bht,
+        this.Qlt,
       ),
-      this.dnn(),
+      this.$rn(),
       !0
     );
   }
   OnEnd() {
     return (
-      void 0 !== this.Bht &&
+      void 0 !== this.Qlt &&
         (EventSystem_1.EventSystem.RemoveWithTarget(
           this.Entity,
           EventDefine_1.EEventName.OnSceneItemDurabilityChange,
-          this.Bht,
+          this.Qlt,
         ),
-        (this.Bht = void 0)),
-      (this.ac = void 0) !== this.ect &&
-        TimerSystem_1.TimerSystem.Has(this.ect) &&
-        TimerSystem_1.TimerSystem.Remove(this.ect),
-      !(this.ect = void 0)
+        (this.Qlt = void 0)),
+      (this.ac = void 0) !== this.cmt &&
+        TimerSystem_1.TimerSystem.Has(this.cmt) &&
+        TimerSystem_1.TimerSystem.Remove(this.cmt),
+      !(this.cmt = void 0)
     );
   }
-  dnn() {
+  $rn() {
     0 !== this.ac ||
-      0 < this.zht.GetDurabilityValue() ||
+      0 < this.u1t.GetDurabilityValue() ||
       (EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnSceneItemDestroy,
         this.Entity,
@@ -93,7 +93,7 @@ let DurabilityComponent = class DurabilityComponent extends EntityComponent_1.En
   }
 };
 (DurabilityComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(90)],
+  [(0, RegisterComponent_1.RegisterComponent)(92)],
   DurabilityComponent,
 )),
   (exports.DurabilityComponent = DurabilityComponent);

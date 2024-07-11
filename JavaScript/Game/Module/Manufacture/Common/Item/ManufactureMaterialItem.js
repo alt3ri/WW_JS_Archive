@@ -8,21 +8,21 @@ const CommonDefine_1 = require("../../../../../Core/Define/CommonDefine"),
   LoopScrollMediumItemGrid_1 = require("../../../Common/MediumItemGrid/LoopScrollMediumItemGrid");
 class ManufactureMaterialItem extends LoopScrollMediumItemGrid_1.LoopScrollMediumItemGrid {
   constructor() {
-    super(...arguments), (this.dqt = void 0), (this.Byi = 0);
+    super(...arguments), (this.fGt = void 0), (this.BIi = 0);
   }
   OnRefresh(e, t, i) {
-    var r = { Type: 4, Data: (this.dqt = e), BottomText: this.byi() };
-    e.m3n && (r.ItemConfigId = e.G3n),
+    var r = { Type: 4, Data: (this.fGt = e), BottomText: this.bIi() };
+    e.G6n && (r.ItemConfigId = e.f8n),
       this.Apply(r),
-      this.SetIsPhantomLock(!e.m3n),
+      this.SetIsPhantomLock(!e.G6n),
       this.SetSelected(!1);
   }
-  byi() {
-    if (!this.dqt) return "";
-    if (this.dqt.m3n) {
-      var t = this.dqt.k4n * this.Byi,
+  bIi() {
+    if (!this.fGt) return "";
+    if (this.fGt.G6n) {
+      var t = this.fGt.MVn * this.BIi,
         i = ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
-          this.dqt.G3n,
+          this.fGt.f8n,
         );
       let e = "";
       return (e =
@@ -43,7 +43,7 @@ class ManufactureMaterialItem extends LoopScrollMediumItemGrid_1.LoopScrollMediu
     );
   }
   SetTimes(e) {
-    (this.Byi = e), this.SetBottomText(this.byi());
+    (this.BIi = e), this.SetBottomText(this.bIi());
   }
   OnSelected(e) {
     this.SetSelected(!0);

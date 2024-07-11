@@ -12,23 +12,23 @@ const UE = require("ue"),
   GlobalData_1 = require("../../../GlobalData");
 class FlowConfig extends ConfigBase_1.ConfigBase {
   constructor() {
-    super(...arguments), (this.JQi = void 0);
+    super(...arguments), (this.$Xi = void 0);
   }
   OnInit() {
     return (
-      (this.JQi = new Map()),
+      (this.$Xi = new Map()),
       PublicUtil_1.PublicUtil.UseDbConfig() ||
         ((FlowListData.AudioCache = new Set()), this.lte()),
       !0
     );
   }
   OnClear() {
-    return (this.JQi = void 0), !(FlowListData.AudioCache = void 0);
+    return (this.$Xi = void 0), !(FlowListData.AudioCache = void 0);
   }
   GetRandomFlow(t, e, o, i) {
     let l = void 0;
     if (
-      (l = (l = i ? this.GetFlowStateActions(t, e, i) : l) || this.zQi(t, e, o))
+      (l = (l = i ? this.GetFlowStateActions(t, e, i) : l) || this.YXi(t, e, o))
     )
       return l.find((t) => "ShowTalk" === t.Name)?.Params;
     Log_1.Log.CheckError() &&
@@ -42,21 +42,21 @@ class FlowConfig extends ConfigBase_1.ConfigBase {
   }
   GetFlowStateActions(t, e, o) {
     if (PublicUtil_1.PublicUtil.UseDbConfig()) {
-      const i = this.ZQi(t, e, o);
+      const i = this.JXi(t, e, o);
       return i ? JSON.parse(i.Actions) : void 0;
     }
-    const i = this.eXi(t, e, o);
+    const i = this.zXi(t, e, o);
     if (i) return i.Actions;
   }
   GetFlowStateKeepMusic(t, e, o) {
     if (PublicUtil_1.PublicUtil.UseDbConfig()) {
-      const i = this.ZQi(t, e, o);
+      const i = this.JXi(t, e, o);
       return i?.KeepBgm;
     }
-    const i = this.eXi(t, e, o);
+    const i = this.zXi(t, e, o);
     return i?.KeepBgm;
   }
-  ZQi(t, e, o) {
+  JXi(t, e, o) {
     (t = t + `_${e}_` + o),
       (e = FlowStateByStateKey_1.configFlowStateByStateKey.GetConfig(t));
     return (
@@ -69,7 +69,7 @@ class FlowConfig extends ConfigBase_1.ConfigBase {
       e
     );
   }
-  zQi(t, e, o) {
+  YXi(t, e, o) {
     if (PublicUtil_1.PublicUtil.UseDbConfig()) {
       var i = t + "_" + e;
       const l = FlowById_1.configFlowById.GetConfig(i);
@@ -87,7 +87,7 @@ class FlowConfig extends ConfigBase_1.ConfigBase {
             )
           );
     }
-    const l = this.tXi(t, e, o);
+    const l = this.ZXi(t, e, o);
     if (l && l.States && 0 !== l.States.length) {
       i = ObjectUtils_1.ObjectUtils.GetRandomArrayItem(l.States);
       if (i) return i.Actions;
@@ -109,8 +109,8 @@ class FlowConfig extends ConfigBase_1.ConfigBase {
           ["flowId", e],
         );
   }
-  eXi(t, e, o, i) {
-    t = this.tXi(t, e, i);
+  zXi(t, e, o, i) {
+    t = this.ZXi(t, e, i);
     if (t)
       return (
         (i = t.States.find((t) => t.Id === o)) ||
@@ -125,9 +125,9 @@ class FlowConfig extends ConfigBase_1.ConfigBase {
         i
       );
   }
-  iXi(t, e) {
-    this.JQi || (this.JQi = new Map());
-    let o = this.JQi.get(t);
+  e$i(t, e) {
+    this.$Xi || (this.$Xi = new Map());
+    let o = this.$Xi.get(t);
     if (!o) {
       var i = PublicUtil_1.PublicUtil.GetFlowListInfo(t);
       if (!i || !i.Flows || 0 === i.Flows.length)
@@ -142,13 +142,13 @@ class FlowConfig extends ConfigBase_1.ConfigBase {
           )
         );
       (o = new FlowListData()).Init(i),
-        this.JQi.set(t, o),
+        this.$Xi.set(t, o),
         PublicUtil_1.PublicUtil.RegisterFlowTextLocalConfig(t);
     }
     return o.UpdateTime(), o;
   }
-  tXi(t, e, o) {
-    t = this.iXi(t, o);
+  ZXi(t, e, o) {
+    t = this.e$i(t, o);
     if (t)
       return (
         (o = t.GetFlowInfo(e)) ||
@@ -191,7 +191,7 @@ class FlowConfig extends ConfigBase_1.ConfigBase {
     }
   }
   ResetLocalFlowConfig() {
-    this.JQi?.clear();
+    this.$Xi?.clear();
   }
 }
 exports.FlowConfig = FlowConfig;

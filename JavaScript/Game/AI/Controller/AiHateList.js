@@ -45,8 +45,8 @@ class AiHateList {
     (this.Bte = t),
       (this.vie = void 0),
       (this.Mie = 0),
-      (this.Sie = 0),
       (this.Eie = 0),
+      (this.Sie = 0),
       (this.yie = 0),
       (this.Iie = 0),
       (this.Tie = 0),
@@ -56,7 +56,7 @@ class AiHateList {
       (this.Uie = (t, e, i, s, r, h, n) => {
         0 !== s.CalculateType ||
           (this.Lie?.Valid && this.Lie.HasTag(-893996770)) ||
-          ((s = t.GetComponent(185))?.Valid && s.HasTag(-1566015933)) ||
+          ((s = t.GetComponent(188))?.Valid && s.HasTag(-1566015933)) ||
           ((s = t.CheckGetComponent(3))?.Valid &&
             2 ===
               CampUtils_1.CampUtils.GetCampRelationship(
@@ -93,7 +93,7 @@ class AiHateList {
           void 0 !== (i = this.Aie.get(e?.Id))) &&
           (this.wie(t.Id, i, "ChangeRole"), this.Bie(e.Id, "InActive"));
       }),
-      (this.$4s = (t, e) => {
+      (this.ZHs = (t, e) => {
         this.vie &&
           void 0 !== (e = this.Aie.get(e?.Id)) &&
           this.wie(t.Id, e, "VisionMorph");
@@ -112,7 +112,7 @@ class AiHateList {
   set AiHate(t) {
     var e, i;
     this.vie !== t &&
-      ((e = this.Bte.CharActorComp.Entity.GetComponent(161)) &&
+      ((e = this.Bte.CharActorComp.Entity.GetComponent(163)) &&
         ((i = this.Fie()) &&
           BlackboardController_1.BlackboardController.SetVectorValueByEntity(
             this.Bte.CharActorComp.Entity.Id,
@@ -128,10 +128,10 @@ class AiHateList {
               t.ExcludeTag,
             )),
           t.SwornHatredTag &&
-            (this.Sie = GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(
+            (this.Eie = GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(
               t.SwornHatredTag,
             )),
-          (this.Eie =
+          (this.Sie =
             t.DisengageDistanceRange.Min * t.DisengageDistanceRange.Min),
           (this.yie =
             t.DisengageDistanceRange.Max * t.DisengageDistanceRange.Max),
@@ -151,7 +151,7 @@ class AiHateList {
             )));
   }
   RefreshAbilityComp() {
-    this.Lie = this.Bte.CharAiDesignComp?.Entity?.GetComponent(185);
+    this.Lie = this.Bte.CharAiDesignComp?.Entity?.GetComponent(188);
   }
   GetHatredMap() {
     return this.Aie;
@@ -197,7 +197,7 @@ class AiHateList {
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.VisionMorphBegin,
-        this.$4s,
+        this.ZHs,
       ));
   }
   UnBindEvents() {
@@ -222,11 +222,11 @@ class AiHateList {
         ),
       EventSystem_1.EventSystem.Has(
         EventDefine_1.EEventName.VisionMorphBegin,
-        this.$4s,
+        this.ZHs,
       ) &&
         EventSystem_1.EventSystem.Remove(
           EventDefine_1.EEventName.VisionMorphBegin,
-          this.$4s,
+          this.ZHs,
         );
   }
   Clear(t = !0) {
@@ -555,9 +555,9 @@ class AiHateList {
   }
   Qie(t, e) {
     if (!t?.Active) return 0;
-    var i = t.GetComponent(158);
+    var i = t.GetComponent(160);
     if (i?.Valid && !i.IsInGame) return 0;
-    i = t.GetComponent(185);
+    i = t.GetComponent(188);
     if (i) {
       if (this.Mie && i.HasTag(this.Mie)) return 1;
       if (i.HasTag(1008164187)) return 2;
@@ -565,7 +565,7 @@ class AiHateList {
       e = t.GetComponent(0).GetPlayerId();
       if (!OnlineController_1.OnlineController.CheckPlayerNetHealthy(e))
         return 3;
-      if (this.Sie && i.HasTag(this.Sie)) return 5;
+      if (this.Eie && i.HasTag(this.Eie)) return 5;
     } else {
       e = t.GetComponent(0).GetPlayerId();
       if (!OnlineController_1.OnlineController.CheckPlayerNetHealthy(e))
@@ -575,7 +575,7 @@ class AiHateList {
   }
   Kie(t, e, i) {
     return (
-      t < this.Eie &&
+      t < this.Sie &&
       MathUtils_1.MathUtils.InRange(e, this.vie.DisengageHeightRange) &&
       i < this.Iie
     );

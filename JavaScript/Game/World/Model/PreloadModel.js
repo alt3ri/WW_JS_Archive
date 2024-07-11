@@ -9,6 +9,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const UE = require("ue"),
   Log_1 = require("../../../Core/Common/Log"),
   ModelBase_1 = require("../../../Core/Framework/ModelBase"),
+  Macro_1 = require("../../../Core/Preprocessor/Macro"),
   PreCreateEffect_1 = require("../../Effect/PreCreateEffect"),
   GlobalData_1 = require("../../GlobalData"),
   ModelManager_1 = require("../../Manager/ModelManager");
@@ -96,7 +97,7 @@ class AssetElement {
     );
   }
   Clear() {
-    this.AssetForIndexMap.clear(),
+    Macro_1.NOT_SHIPPING_ENVIRONMENT && this.AssetForIndexMap.clear(),
       this.AssetPathSet.clear(),
       this.OtherAssetSet.clear(),
       this.MaterialAssetSet.clear(),
@@ -113,31 +114,34 @@ class AssetElement {
 }
 class CommonAssetElement extends (exports.AssetElement = AssetElement) {
   AddObject(t, e) {
-    this.AssetForIndexMap.set(
-      t,
-      ModelManager_1.ModelManager.PreloadModel.HoldPreloadObject.CommonAssets.Num(),
-    ),
+    Macro_1.NOT_SHIPPING_ENVIRONMENT &&
+      this.AssetForIndexMap.set(
+        t,
+        ModelManager_1.ModelManager.PreloadModel.HoldPreloadObject.CommonAssets.Num(),
+      ),
       ModelManager_1.ModelManager.PreloadModel.HoldPreloadObject.AddCommonAsset(
         e,
       );
   }
   PrintDebugInfo() {
-    var e =
-      ModelManager_1.ModelManager.PreloadModel.HoldPreloadObject.CommonAssets;
-    let s = `
-预加载的公共资源列表如下(数量:${e.Num()}):
+    if (Macro_1.NOT_SHIPPING_ENVIRONMENT) {
+      var s =
+        ModelManager_1.ModelManager.PreloadModel.HoldPreloadObject.CommonAssets;
+      let e = `
+预加载的公共资源列表如下(数量:${s.Num()}):
 `;
-    var t,
-      i,
-      h = new Map();
-    for ([t, i] of this.AssetForIndexMap) h.set(i, t);
-    for (let t = 0; t < e.Num(); ++t) {
-      var r = e.Get(t),
-        a = h.get(t);
-      s += `    索引:${t}, Path:${a}, IsValid:${r?.IsValid()}, Name:${r?.IsValid() ? r.GetName() : void 0}
+      var t,
+        i,
+        r = new Map();
+      for ([t, i] of this.AssetForIndexMap) r.set(i, t);
+      for (let t = 0; t < s.Num(); ++t) {
+        var h = s.Get(t),
+          a = r.get(t);
+        e += `    索引:${t}, Path:${a}, IsValid:${h?.IsValid()}, Name:${h?.IsValid() ? h.GetName() : void 0}
 `;
+      }
+      Log_1.Log.CheckDebug() && Log_1.Log.Debug("Preload", 3, e);
     }
-    Log_1.Log.CheckDebug() && Log_1.Log.Debug("Preload", 3, s);
   }
   Clear() {
     ModelManager_1.ModelManager.PreloadModel.HoldPreloadObject.ClearCommonAsset(),
@@ -148,17 +152,17 @@ exports.CommonAssetElement = CommonAssetElement;
 class EntityAssetElement extends AssetElement {
   constructor(t) {
     super(),
-      (this.DMr = 100),
-      (this.dsr = 0),
+      (this.IEr = 100),
+      (this.uar = 0),
       (this.CreatureDataComponent = void 0),
-      (this.Csr = !1),
-      (this.$fo = void 0),
-      (this.gsr = void 0),
-      (this.RMr = void 0),
-      (this.UMr = void 0),
-      (this.AMr = void 0),
+      (this.car = !1),
+      (this.Kpo = void 0),
+      (this.mar = void 0),
+      (this.TEr = void 0),
+      (this.LEr = void 0),
+      (this.DEr = void 0),
       (this.IsDestroy = !1),
-      (this.$fo = t),
+      (this.Kpo = t),
       (this.CreatureDataComponent = t.Entity.GetComponent(0)),
       (ModelManager_1.ModelManager.PreloadModel.LoadingNeedWaitEntitySet.has(
         t.Id,
@@ -166,62 +170,63 @@ class EntityAssetElement extends AssetElement {
         (this.CreatureDataComponent.IsRole() &&
           this.CreatureDataComponent.GetPlayerId() ===
             ModelManager_1.ModelManager.CreatureModel.GetPlayerId())) &&
-        (this.DMr = 101),
-      (t.Priority = this.DMr);
+        (this.IEr = 101),
+      (t.Priority = this.IEr);
   }
   get LoadState() {
-    return this.dsr;
+    return this.uar;
   }
   set LoadState(t) {
-    this.dsr = t;
+    this.uar = t;
   }
   get CollectMinorAsset() {
-    return this.Csr;
+    return this.car;
   }
   set CollectMinorAsset(t) {
-    this.Csr = t;
+    this.car = t;
   }
   get Entity() {
-    return this.$fo?.Entity;
+    return this.Kpo?.Entity;
   }
   get EntityHandle() {
-    return this.$fo;
+    return this.Kpo;
   }
   get BlueprintClassPath() {
-    return this.gsr;
+    return this.mar;
   }
   set BlueprintClassPath(t) {
-    this.gsr = t;
+    this.mar = t;
   }
   get CharacterPath() {
-    return this.RMr;
+    return this.TEr;
   }
   set CharacterPath(t) {
-    this.RMr = t;
+    this.TEr = t;
   }
   get PartHitEffectPath() {
-    return this.UMr;
+    return this.LEr;
   }
   set PartHitEffectPath(t) {
-    this.UMr = t;
+    this.LEr = t;
   }
   get SkillDataTable() {
-    return this.AMr;
+    return this.DEr;
   }
   set SkillDataTable(t) {
-    this.AMr = t;
+    this.DEr = t;
   }
   AddObject(t, e) {
     var s;
-    this.$fo?.Valid &&
-      ((s =
-        ModelManager_1.ModelManager.PreloadModel.HoldPreloadObject.EntityAssetMap.Get(
-          this.$fo.Id,
-        ))
-        ? this.AssetForIndexMap.set(t, s.Assets.Num())
-        : this.AssetForIndexMap.set(t, 0),
+    this.Kpo?.Valid &&
+      (Macro_1.NOT_SHIPPING_ENVIRONMENT &&
+        ((s =
+          ModelManager_1.ModelManager.PreloadModel.HoldPreloadObject.EntityAssetMap.Get(
+            this.Kpo.Id,
+          ))
+          ? this.AssetForIndexMap.set(t, s.Assets.Num())
+          : this.AssetForIndexMap.set(t, 0)),
       ModelManager_1.ModelManager.PreloadModel.HoldPreloadObject.AddEntityAsset(
-        this.$fo.Id,
+        this.Kpo.Id,
         e,
       ));
   }
@@ -230,38 +235,40 @@ class EntityAssetElement extends AssetElement {
       this.Entity.Id,
     ),
       this.MajorAssets.clear(),
-      (this.AMr = void 0),
-      (this.RMr = void 0),
-      (this.gsr = void 0),
-      (this.$fo = void 0),
+      (this.DEr = void 0),
+      (this.TEr = void 0),
+      (this.mar = void 0),
+      (this.Kpo = void 0),
       (this.CreatureDataComponent = void 0),
-      (this.Csr = !1),
-      (this.dsr = 0),
+      (this.car = !1),
+      (this.uar = 0),
       (this.IsDestroy = !0),
       super.Clear();
   }
   GetLoadPriority() {
-    return this.DMr;
+    return this.IEr;
   }
   PrintDebugInfo() {
-    var e =
-      ModelManager_1.ModelManager.PreloadModel.HoldPreloadObject.EntityAssetMap.Get(
-        this.Entity.Id,
-      ).Assets;
-    let s = `
-预加载的实体资源列表如下:(CreatureDataId:${this.CreatureDataComponent.GetCreatureDataId()}, 数量:${e.Num()}):
+    if (Macro_1.NOT_SHIPPING_ENVIRONMENT) {
+      var s =
+        ModelManager_1.ModelManager.PreloadModel.HoldPreloadObject.EntityAssetMap.Get(
+          this.Entity.Id,
+        ).Assets;
+      let e = `
+预加载的实体资源列表如下:(CreatureDataId:${this.CreatureDataComponent.GetCreatureDataId()}, 数量:${s.Num()}):
 `;
-    var t,
-      i,
-      h = new Map();
-    for ([t, i] of this.AssetForIndexMap) h.set(i, t);
-    for (let t = 0; t < e.Num(); ++t) {
-      var r = e.Get(t),
-        a = h.get(t);
-      s += `    索引:${t}, Path:${a}, IsValid:${r?.IsValid()}, Name:${r?.IsValid() ? r.GetName() : void 0}
+      var t,
+        i,
+        r = new Map();
+      for ([t, i] of this.AssetForIndexMap) r.set(i, t);
+      for (let t = 0; t < s.Num(); ++t) {
+        var h = s.Get(t),
+          a = r.get(t);
+        e += `    索引:${t}, Path:${a}, IsValid:${h?.IsValid()}, Name:${h?.IsValid() ? h.GetName() : void 0}
 `;
+      }
+      Log_1.Log.CheckDebug() && Log_1.Log.Debug("Preload", 3, e);
     }
-    Log_1.Log.CheckDebug() && Log_1.Log.Debug("Preload", 3, s);
   }
 }
 exports.EntityAssetElement = EntityAssetElement;
@@ -272,8 +279,8 @@ class PreloadModel extends ModelBase_1.ModelBase {
       (this.CommonAssetElement = new CommonAssetElement()),
       (this.PreloadAssetMap = new Map()),
       (this.AllEntityAssetMap = new Map()),
-      (this.PMr = void 0),
-      (this.xMr = !0),
+      (this.REr = void 0),
+      (this.UEr = !0),
       (this.LoadAssetOneByOneState = !1),
       (this.UseEntityProfilerInternal = !0),
       (this.ResourcesLoadTime = new Array()),
@@ -281,16 +288,16 @@ class PreloadModel extends ModelBase_1.ModelBase {
   }
   OnInit() {
     return (
-      GlobalData_1.GlobalData.IsPlayInEditor || (this.xMr = !0),
+      GlobalData_1.GlobalData.IsPlayInEditor || (this.UEr = !0),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Preload",
           3,
           "预加载信息",
-          ["是否开启预加载", this.xMr],
+          ["是否开启预加载", this.UEr],
           ["是否使用LoadOneByOne", this.LoadAssetOneByOneState],
         ),
-      (this.PMr = UE.NewObject(
+      (this.REr = UE.NewObject(
         UE.HoldPreloadObject.StaticClass(),
         GlobalData_1.GlobalData.GameInstance,
       )),
@@ -302,16 +309,16 @@ class PreloadModel extends ModelBase_1.ModelBase {
   OnClear() {
     return (
       (this.ResourcesLoadTime.length = 0),
-      this.PMr.Clear(),
-      this.PMr?.IsValid() && this.PMr.Clear(),
-      (this.PMr = void 0),
+      this.REr.Clear(),
+      this.REr?.IsValid() && this.REr.Clear(),
+      (this.REr = void 0),
       this.PreCreateEffect.UnregisterTick(),
       this.PreCreateEffect.Clear(),
       !0
     );
   }
   get HoldPreloadObject() {
-    return this.PMr;
+    return this.REr;
   }
   AddPreloadResource(t) {
     var e;
@@ -330,7 +337,7 @@ class PreloadModel extends ModelBase_1.ModelBase {
   }
   ClearPreloadResource() {
     this.PreloadAssetMap.clear(),
-      this.PMr.Clear(),
+      this.REr.Clear(),
       this.LoadingNeedWaitEntitySet.clear();
   }
   AddEntityAsset(t, e) {
@@ -345,10 +352,10 @@ class PreloadModel extends ModelBase_1.ModelBase {
     this.AllEntityAssetMap.clear();
   }
   get IsUsePreload() {
-    return this.xMr;
+    return this.UEr;
   }
   set IsUsePreload(t) {
-    this.xMr = t;
+    this.UEr = t;
   }
   AddResourcesLoadTime(t) {
     this.ResourcesLoadTime.push(t);

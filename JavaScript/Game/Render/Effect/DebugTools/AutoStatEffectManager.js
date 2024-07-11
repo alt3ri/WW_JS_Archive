@@ -57,15 +57,15 @@ EffectStatData.CsvHeader =
 class AutoStatEffectDataMgr {
   constructor() {
     (this.BasePaths = void 0),
-      (this.opi = 0),
-      (this.olr = -0),
+      (this.rvi = 0),
+      (this.e1r = -0),
       (this.ac = 0),
-      (this.rlr = void 0),
-      (this.nlr = -0),
-      (this.slr = void 0),
-      (this.alr = !1),
+      (this.t1r = void 0),
+      (this.i1r = -0),
+      (this.o1r = void 0),
+      (this.r1r = !1),
       (this.r6 = (t) => {
-        this.Rni(t);
+        this.Usi(t);
       }),
       (this.TickId = TickSystem_1.TickSystem.InvalidId);
   }
@@ -74,7 +74,7 @@ class AutoStatEffectDataMgr {
       this.Instance ||
         ((this.Instance = new AutoStatEffectDataMgr()),
         (this.Dpe = void 0),
-        (this.hlr = void 0)),
+        (this.n1r = void 0)),
       this.Instance
     );
   }
@@ -87,19 +87,19 @@ class AutoStatEffectDataMgr {
     this.TickId !== TickSystem_1.TickSystem.InvalidId &&
       (TickSystem_1.TickSystem.Remove(this.TickId),
       (this.TickId = TickSystem_1.TickSystem.InvalidId)),
-      EffectSystem_1.EffectSystem.IsValid(this.opi) &&
+      EffectSystem_1.EffectSystem.IsValid(this.rvi) &&
         (EffectSystem_1.EffectSystem.StopEffectById(
-          this.opi,
+          this.rvi,
           "[AutoStatEffectDataMgr.Reset]",
           !1,
         ),
-        (this.opi = 0)),
-      (this.rlr = new Array()),
-      (this.olr = 0),
+        (this.rvi = 0)),
+      (this.t1r = new Array()),
+      (this.e1r = 0),
       (this.ac = 1),
-      (this.nlr = 0),
-      (this.alr = !1),
-      (this.slr = void 0),
+      (this.i1r = 0),
+      (this.r1r = !1),
+      (this.o1r = void 0),
       (EffectGlobal_1.EffectGlobal.AllowEffectInPool = !1),
       (EffectGlobal_1.EffectGlobal.AllowEffectOutPool = !1);
   }
@@ -129,8 +129,8 @@ class AutoStatEffectDataMgr {
                   ["特效数量", this.BasePaths.length],
                   ["开始索引", s],
                   ["结束索引", i],
-                  ["最大播放时长(ms)", AutoStatEffectDataMgr.llr],
-                  ["播放间歇时长(ms)", AutoStatEffectDataMgr._lr],
+                  ["最大播放时长(ms)", AutoStatEffectDataMgr.s1r],
+                  ["播放间歇时长(ms)", AutoStatEffectDataMgr.a1r],
                 );
           },
         ))
@@ -148,7 +148,7 @@ class AutoStatEffectDataMgr {
           GlobalData_1.GlobalData.World,
           "Trace.Start",
         ),
-        (this.alr = !0),
+        (this.r1r = !0),
         (this.BasePaths = []),
         (this.TickId = TickSystem_1.TickSystem.Add(
           this.r6,
@@ -160,54 +160,54 @@ class AutoStatEffectDataMgr {
             41,
             "",
             ["特效数量", this.BasePaths.length],
-            ["最大播放时长(ms)", AutoStatEffectDataMgr.llr],
-            ["播放间歇时长(ms)", AutoStatEffectDataMgr._lr],
+            ["最大播放时长(ms)", AutoStatEffectDataMgr.s1r],
+            ["播放间歇时长(ms)", AutoStatEffectDataMgr.a1r],
           ))
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error("RenderEffect", 41, "shipping 包或test 包");
   }
-  Rni(t) {
-    switch (((this.olr += t), this.ac)) {
+  Usi(t) {
+    switch (((this.e1r += t), this.ac)) {
       case 0:
-        !EffectSystem_1.EffectSystem.IsValid(this.opi) ||
-        this.olr >= AutoStatEffectDataMgr.llr
-          ? (this.ulr(), this.Soi(1))
-          : this.clr(t);
+        !EffectSystem_1.EffectSystem.IsValid(this.rvi) ||
+        this.e1r >= AutoStatEffectDataMgr.s1r
+          ? (this.h1r(), this.yri(1))
+          : this.l1r(t);
         break;
       case 1:
-        this.olr >= AutoStatEffectDataMgr._lr &&
-          (this.mlr(), this.Soi(0), this.clr(t));
+        this.e1r >= AutoStatEffectDataMgr.a1r &&
+          (this._1r(), this.yri(0), this.l1r(t));
     }
   }
-  Soi(t) {
-    (this.ac = t), (this.olr = 0);
+  yri(t) {
+    (this.ac = t), (this.e1r = 0);
   }
-  clr(t) {
+  l1r(t) {
     var e;
-    EffectSystem_1.EffectSystem.IsValid(this.opi) &&
+    EffectSystem_1.EffectSystem.IsValid(this.rvi) &&
       ((e =
         PerformanceController_1.PerformanceController.ConsumeTickTime(
           "NiagaraDebugTick",
         )),
-      this.rlr[this.rlr.length - 1].UpdateTimeArray.push(1e3 * e));
+      this.t1r[this.t1r.length - 1].UpdateTimeArray.push(1e3 * e));
   }
-  ulr() {
-    EffectSystem_1.EffectSystem.IsValid(this.opi) &&
+  h1r() {
+    EffectSystem_1.EffectSystem.IsValid(this.rvi) &&
       (EffectSystem_1.EffectSystem.StopEffectById(
-        this.opi,
+        this.rvi,
         "[AutoStatEffectDataMgr.StopCurrent]",
         !0,
       ),
-      (this.opi = 0)),
-      this.rlr[this.rlr.length - 1].OnStop(this.olr);
+      (this.rvi = 0)),
+      this.t1r[this.t1r.length - 1].OnStop(this.e1r);
   }
-  mlr() {
+  _1r() {
     if (0 === this.BasePaths.length) {
       this.TickId !== TickSystem_1.TickSystem.InvalidId &&
         (TickSystem_1.TickSystem.Remove(this.TickId),
         (this.TickId = TickSystem_1.TickSystem.InvalidId));
       var t = new Array();
-      for (const i of this.rlr.values()) t.push(i.ToCsv());
+      for (const i of this.t1r.values()) t.push(i.ToCsv());
       var e = `${UE.KismetSystemLibrary.GetProjectSavedDirectory()}Profiling/${Date.now()}_EffectStats.csv`,
         e =
           (Log_1.Log.CheckDebug() &&
@@ -217,8 +217,8 @@ class AutoStatEffectDataMgr {
             e,
           )),
         e =
-          ((this.rlr.length = 0),
-          this.alr &&
+          ((this.t1r.length = 0),
+          this.r1r &&
             UE.KismetSystemLibrary.ExecuteConsoleCommand(
               GlobalData_1.GlobalData.World,
               "Trace.Stop",
@@ -232,14 +232,14 @@ class AutoStatEffectDataMgr {
     } else {
       e = Global_1.Global.BaseCharacter;
       e
-        ? (this.nlr++,
-          (!this.slr || this.nlr > AutoStatEffectDataMgr.dlr) &&
-            ((this.slr = this.BasePaths.pop()), (this.nlr = 1)),
+        ? (this.i1r++,
+          (!this.o1r || this.i1r > AutoStatEffectDataMgr.u1r) &&
+            ((this.o1r = this.BasePaths.pop()), (this.i1r = 1)),
           (s = AutoStatEffectDataMgr.GetMicrosecond()),
-          (this.opi = EffectSystem_1.EffectSystem.SpawnEffect(
+          (this.rvi = EffectSystem_1.EffectSystem.SpawnEffect(
             GlobalData_1.GlobalData.World,
             e.GetTransform(),
-            this.slr,
+            this.o1r,
             "[AutoStatEffectDataMgr.PlayNext]",
             void 0,
             3,
@@ -247,22 +247,22 @@ class AutoStatEffectDataMgr {
               EffectSystem_1.EffectSystem.DebugUpdate(t, !0);
             },
           )),
-          EffectSystem_1.EffectSystem.IsValid(this.opi)
+          EffectSystem_1.EffectSystem.IsValid(this.rvi)
             ? ((e = AutoStatEffectDataMgr.GetMicrosecond()),
               Log_1.Log.CheckDebug() &&
-                Log_1.Log.Debug("RenderEffect", 41, "", ["测试特效", this.slr]),
-              this.rlr.push(new EffectStatData(this.slr, e - s)))
+                Log_1.Log.Debug("RenderEffect", 41, "", ["测试特效", this.o1r]),
+              this.t1r.push(new EffectStatData(this.o1r, e - s)))
             : Log_1.Log.CheckDebug() &&
               Log_1.Log.Debug("RenderEffect", 41, "", [
                 "播放特效失败",
-                this.slr,
+                this.o1r,
               ]))
         : Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("RenderEffect", 41, "未找到主角位置");
     }
   }
 }
-((exports.AutoStatEffectDataMgr = AutoStatEffectDataMgr).dlr = 1),
-  (AutoStatEffectDataMgr.llr = 5e3),
-  (AutoStatEffectDataMgr._lr = 1e3);
+((exports.AutoStatEffectDataMgr = AutoStatEffectDataMgr).u1r = 1),
+  (AutoStatEffectDataMgr.s1r = 5e3),
+  (AutoStatEffectDataMgr.a1r = 1e3);
 //# sourceMappingURL=AutoStatEffectManager.js.map

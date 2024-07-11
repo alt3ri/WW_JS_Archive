@@ -21,34 +21,34 @@ const UE = require("ue"),
 class DailyActivityView extends UiTabViewBase_1.UiTabViewBase {
   constructor() {
     super(...arguments),
-      (this.vkt = void 0),
-      (this.bOt = void 0),
-      (this.Mkt = void 0),
-      (this.Skt = void 0),
-      (this.Ekt = void 0),
-      (this.$Ve = void 0),
-      (this.ykt = 0),
-      (this.Ikt = () => {
+      (this.M2t = void 0),
+      (this.qkt = void 0),
+      (this.E2t = void 0),
+      (this.S2t = void 0),
+      (this.y2t = void 0),
+      (this.l8e = void 0),
+      (this.I2t = 0),
+      (this.T2t = () => {
         var e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(122);
         ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
           e,
         );
       }),
-      (this.Tkt = () => {
-        this.Skt.SetActive(!1), this.Lkt(), this.Dkt(), this.Mkt.Init();
+      (this.L2t = () => {
+        this.S2t.SetActive(!1), this.D2t(), this.R2t(), this.E2t.Init();
       }),
-      (this.Rkt = () => {
-        this.Lkt();
+      (this.U2t = () => {
+        this.D2t();
       }),
-      (this.Ukt = (e) => {
-        this.Akt();
+      (this.A2t = (e) => {
+        this.P2t();
       }),
       (this.VOe = () => {
         return new DailyActivityTaskItem_1.DailyActivityTaskItem();
       }),
-      (this.Pkt = () => {
+      (this.x2t = () => {
         var e = ModelManager_1.ModelManager.DailyActivityModel.RewardData;
-        this.Skt.Refresh(e);
+        this.S2t.Refresh(e);
       });
   }
   OnRegisterComponent() {
@@ -64,67 +64,67 @@ class DailyActivityView extends UiTabViewBase_1.UiTabViewBase {
     await DailyActivityController_1.DailyActivityController.RequestDailyActivityData();
   }
   OnStart() {
-    (this.Mkt = new DailyActivityRewardPanel_1.DailyActivityRewardPanel(
+    (this.E2t = new DailyActivityRewardPanel_1.DailyActivityRewardPanel(
       this.GetItem(4),
     )),
-      (this.vkt = new LoopScrollView_1.LoopScrollView(
+      (this.M2t = new LoopScrollView_1.LoopScrollView(
         this.GetLoopScrollViewComponent(0),
         this.GetItem(1).GetOwner(),
         this.VOe,
       )),
-      (this.$Ve = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem)),
-      (this.Skt = new CommonRewardPopup_1.CommonRewardPopup(this.RootItem));
+      (this.l8e = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem)),
+      (this.S2t = new CommonRewardPopup_1.CommonRewardPopup(this.RootItem));
   }
   OnBeforeDestroy() {
-    this.Mkt.Destroy(),
-      (this.Mkt = void 0),
-      this.$Ve?.Clear(),
-      (this.$Ve = void 0),
-      this.Skt && (this.Skt = void 0),
-      (this.bOt = []);
+    this.E2t.Destroy(),
+      (this.E2t = void 0),
+      this.l8e?.Clear(),
+      (this.l8e = void 0),
+      this.S2t && (this.S2t = void 0),
+      (this.qkt = []);
   }
   AddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.DailyActivityRefresh,
-      this.Tkt,
+      this.L2t,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.DailyActivityTaskUpdate,
-        this.Rkt,
+        this.U2t,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.RefreshActivityRewardPopUp,
-        this.Pkt,
+        this.x2t,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.DailyActivityValueChange,
-        this.Ukt,
+        this.A2t,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.DailyUpdateNotify,
-        this.Ikt,
+        this.T2t,
       );
   }
   RemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.DailyActivityRefresh,
-      this.Tkt,
+      this.L2t,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.DailyActivityTaskUpdate,
-        this.Rkt,
+        this.U2t,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.RefreshActivityRewardPopUp,
-        this.Pkt,
+        this.x2t,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.DailyActivityValueChange,
-        this.Ukt,
+        this.A2t,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.DailyUpdateNotify,
-        this.Ikt,
+        this.T2t,
       );
   }
   OnBeforeShow() {
@@ -132,23 +132,23 @@ class DailyActivityView extends UiTabViewBase_1.UiTabViewBase {
       EventDefine_1.EEventName.AdventureHelpBtn,
       DailyActivityDefine_1.DAILY_ACTIVITY_HELP,
     ),
-      this.xkt(),
-      this.Lkt(),
-      this.wkt(!0),
-      this.$Ve?.PlayLevelSequenceByName("Start");
+      this.w2t(),
+      this.D2t(),
+      this.B2t(!0),
+      this.l8e?.PlayLevelSequenceByName("Start");
   }
   OnBeforeHide() {
-    this.Skt.SetActive(!1);
+    this.S2t.SetActive(!1);
   }
   OnTickUiTabViewBase(e) {
-    this.Mkt.OnTickRefresh(e), this.wkt();
+    this.E2t.OnTickRefresh(e), this.B2t();
   }
-  wkt(e = !1) {
+  B2t(e = !1) {
     var i,
       t,
       n = ModelManager_1.ModelManager.DailyActivityModel.DayEndTime;
-    0 === n && "" !== this.Ekt
-      ? (this.Ekt = "")
+    0 === n && "" !== this.y2t
+      ? (this.y2t = "")
       : ((i = TimeUtil_1.TimeUtil.GetServerTime()),
         (i =
           (n = Math.max(n - i, TimeUtil_1.TimeUtil.TimeDeviation)) >=
@@ -161,48 +161,48 @@ class DailyActivityView extends UiTabViewBase_1.UiTabViewBase {
           i,
           t,
         ).CountDownText),
-        (this.Ekt === n && !e) ||
-          ((this.Ekt = n),
+        (this.y2t === n && !e) ||
+          ((this.y2t = n),
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.DailyActivityCountDownUpdate,
             n,
           )));
   }
-  Lkt() {
-    (this.bOt =
+  D2t() {
+    (this.qkt =
       ModelManager_1.ModelManager.DailyActivityModel.DailyActivityTaskList),
-      this.vkt.RefreshByData(this.bOt);
+      this.M2t.RefreshByData(this.qkt);
   }
-  xkt() {
+  w2t() {
     this.GetText(3).SetText("0"),
-      (this.ykt = ModelManager_1.ModelManager.DailyActivityModel.ActivityValue),
-      this.GetText(2).SetText(this.ykt.toString()),
-      this.Mkt.Init();
+      (this.I2t = ModelManager_1.ModelManager.DailyActivityModel.ActivityValue),
+      this.GetText(2).SetText(this.I2t.toString()),
+      this.E2t.Init();
   }
-  Dkt() {
+  R2t() {
     var e = ModelManager_1.ModelManager.DailyActivityModel.ActivityValue;
     return (
       this.GetText(2).SetText(e.toString()),
-      e > this.ykt &&
+      e > this.I2t &&
         (this.UiViewSequence.HasSequenceNameInPlaying("Refresh")
           ? this.UiViewSequence.ReplaySequence("Refresh")
           : this.UiViewSequence.PlaySequence("Refresh")),
-      (this.ykt = e)
+      (this.I2t = e)
     );
   }
-  Akt() {
-    var e = this.Dkt();
-    this.Mkt.RefreshProgressBarDynamic(e);
+  P2t() {
+    var e = this.R2t();
+    this.E2t.RefreshProgressBarDynamic(e);
   }
   GetGuideUiItemAndUiItemForShowEx(e) {
     if (2 <= e.length) {
       var i = String(e[0]),
         t = Number(e[1]);
       if ("Task" === i) {
-        var n = this.vkt.GetGridByDisplayIndex(t);
+        var n = this.M2t.GetGridByDisplayIndex(t);
         if (n) return [n, n];
       } else if ("Gift" === i) {
-        n = this.Mkt.GetRewardItemByIndex(t);
+        n = this.E2t.GetRewardItemByIndex(t);
         if (n) return [n, n];
       }
     }

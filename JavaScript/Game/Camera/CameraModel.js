@@ -22,7 +22,7 @@ const UE = require("ue"),
   CAMERA_MIN_SENSITIVITY = 0,
   CAMERA_DEFAULT_SENSITIVITY_MODIFIER = 1,
   CAMERA_MAX_SENSITIVITY_MODIFIER = 2,
-  CAMERA_MIN_SENSITIVITY_MODIFIER = 0.5,
+  CAMERA_MIN_SENSITIVITY_MODIFIER = 0.1,
   MOTION_BLUR_DEFAULT_VALUE = 50,
   MOTION_BLUR_MAX_VALUE = 100,
   MOTION_BLUR_MIN_VALUE = 0,
@@ -74,13 +74,15 @@ class CameraModel extends ModelBase_1.ModelBase {
       (this.phe = void 0),
       (this.vhe = void 0),
       (this.Mhe = void 0),
-      (this.She = new Array()),
       (this.Ehe = new Array()),
+      (this.She = new Array()),
       (this.yhe = new Array()),
       (this.Ihe = !1),
       (this.The = void 0),
       (this.Lhe = 1),
-      (this.Dhe = 1),
+      (this.gTa = 1),
+      (this.fTa = new Map()),
+      (this.pTa = this.gTa),
       (this.Rhe = CAMERA_DEFAULT_SENSITIVITY),
       (this.Uhe = CAMERA_DEFAULT_SENSITIVITY),
       (this.Ahe = CAMERA_DEFAULT_SENSITIVITY),
@@ -219,7 +221,7 @@ class CameraModel extends ModelBase_1.ModelBase {
         );
   }
   get AimAssistMode() {
-    return this.Dhe;
+    return this.pTa;
   }
   get FightCamera() {
     return this.dhe;
@@ -263,8 +265,21 @@ class CameraModel extends ModelBase_1.ModelBase {
     ),
       (this.Mhe = t);
   }
+  RefreshAimAssetMode() {
+    if (0 === this.fTa.size) this.pTa = this.gTa;
+    else {
+      this.pTa = 0;
+      for (var [, t] of this.fTa) this.pTa = Math.max(this.pTa, t);
+    }
+  }
   SetAimAssistMode(t) {
-    this.Dhe = t;
+    (this.gTa = t), this.RefreshAimAssetMode();
+  }
+  SetAimAssistModeWithKey(t, i) {
+    this.fTa.set(t, i), this.RefreshAimAssetMode();
+  }
+  ClearAimAssistModeWithKey(t) {
+    this.fTa.delete(t), this.RefreshAimAssetMode();
   }
   SetIsCameraResetPitch(t) {
     this.qhe = t;
@@ -332,16 +347,16 @@ class CameraModel extends ModelBase_1.ModelBase {
     this.The = t;
   }
   EnableMode(t) {
-    this.She[t] = !0;
+    this.Ehe[t] = !0;
   }
   DisableMode(t) {
-    this.She[t] = !1;
+    this.Ehe[t] = !1;
   }
   IsModeEnabled(t) {
-    return this.She[t];
+    return this.Ehe[t];
   }
   GetNextMode() {
-    for (const t of this.Ehe) if (this.She[t]) return t;
+    for (const t of this.She) if (this.Ehe[t]) return t;
     return 0;
   }
   IsInHigherMode(t) {
@@ -395,15 +410,15 @@ class CameraModel extends ModelBase_1.ModelBase {
       EntitySystem_1.EntitySystem.Activate(this.vhe),
       this.vhe.SetTimeDilation(Time_1.Time.TimeDilation),
       (this.CameraTransform = new UE.Transform());
-    for (let t = 0; t < 5; ++t) this.She.push(!1), this.yhe.push(0);
-    (this.She[0] = !0),
-      this.Ehe.push(1),
-      this.Ehe.push(2),
-      this.Ehe.push(3),
-      this.Ehe.push(4),
-      this.Ehe.push(0);
-    for (let t = 0; t < this.Ehe.length; ++t)
-      this.yhe[this.Ehe[t]] = this.Ehe.length - t;
+    for (let t = 0; t < 5; ++t) this.Ehe.push(!1), this.yhe.push(0);
+    (this.Ehe[0] = !0),
+      this.She.push(1),
+      this.She.push(2),
+      this.She.push(3),
+      this.She.push(4),
+      this.She.push(0);
+    for (let t = 0; t < this.She.length; ++t)
+      this.yhe[this.She[t]] = this.She.length - t;
     return (
       (this.Nhe = void 0),
       this.dhe.Valid &&

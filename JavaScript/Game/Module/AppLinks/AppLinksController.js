@@ -10,20 +10,20 @@ const Log_1 = require("../../../Core/Common/Log"),
   FunctionController_1 = require("../Functional/FunctionController");
 class AppLinksController extends ControllerBase_1.ControllerBase {
   static OnInit() {
-    return this.$bn(), super.OnInit();
+    return this.ZOn(), super.OnInit();
   }
   static OnClear() {
-    return this.Xbn(), super.OnClear();
+    return this.e2n(), super.OnClear();
   }
-  static $bn() {
-    AppLinks_1.AppLinks.SetDeepValueHandle("10009", this.Ybn),
-      AppLinks_1.AppLinks.SetDeepValueHandle("10053", this.a3e);
+  static ZOn() {
+    AppLinks_1.AppLinks.SetDeepValueHandle("10009", this.t2n),
+      AppLinks_1.AppLinks.SetDeepValueHandle("10053", this.y4e);
   }
-  static Xbn() {
+  static e2n() {
     AppLinks_1.AppLinks.RemoveDeepValueHandle("10009"),
       AppLinks_1.AppLinks.RemoveDeepValueHandle("10053");
   }
-  static V4e() {
+  static iVe() {
     return !(
       !ModelManager_1.ModelManager.GameModeModel.WorldDone ||
       ModelManager_1.ModelManager.GameModeModel.Loading ||
@@ -32,16 +32,16 @@ class AppLinksController extends ControllerBase_1.ControllerBase {
   }
 }
 (exports.AppLinksController = AppLinksController),
-  ((_a = AppLinksController).Ybn = (e, r) => {
-    _a.V4e()
+  ((_a = AppLinksController).t2n = (e, r) => {
+    _a.iVe()
       ? (Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("Functional", 22, "打开抽卡界面"),
         FunctionController_1.FunctionController.OpenFunctionRelateView(10009))
       : Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("Functional", 22, "未完成游戏登录");
   }),
-  (AppLinksController.a3e = (e, r) => {
-    _a.V4e()
+  (AppLinksController.y4e = (e, r) => {
+    _a.iVe()
       ? (Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("Functional", 22, "打开活动界面"),
         FunctionController_1.FunctionController.OpenFunctionRelateView(10053))

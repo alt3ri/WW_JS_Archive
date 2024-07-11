@@ -14,15 +14,16 @@ const UE = require("ue"),
 class RoguelikeSpecialDetailView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.URn = void 0),
+      (this.nPn = void 0),
+      (this.Qra = void 0),
       (this.$be = void 0),
       (this.zbe = () =>
         new RoguelikeSelectSpecialStarItem_1.RoguelikeSelectSpecialStarItem()),
-      (this.PRn = () => {
-        this.Hqe(this.URn);
+      (this.sPn = () => {
+        this.Hqe(this.nPn);
       }),
-      (this.Opt = () => {
-        this.CloseMe();
+      (this.Jvt = () => {
+        this.CloseMe(this.Qra);
       });
   }
   OnRegisterComponent() {
@@ -38,30 +39,31 @@ class RoguelikeSpecialDetailView extends UiViewBase_1.UiViewBase {
       [8, UE.UINiagara],
       [9, UE.UINiagara],
     ]),
-      (this.BtnBindInfo = [[7, this.Opt]]);
+      (this.BtnBindInfo = [[7, this.Jvt]]);
   }
   OnStart() {
     var e = this.OpenParam;
     void 0 === e
       ? Log_1.Log.CheckError() &&
         Log_1.Log.Error("Roguelike", 59, "RoguelikeSpecialDetailView无效输入")
-      : ((this.URn = e),
+      : ((this.nPn = e[0]),
+        (this.Qra = e[1]),
         (this.$be = new GenericLayout_1.GenericLayout(
           this.GetHorizontalLayout(3),
           this.zbe,
         )),
-        this.Hqe(e));
+        this.Hqe(this.nPn));
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.RoguelikeDataUpdate,
-      this.PRn,
+      this.sPn,
     );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.RoguelikeDataUpdate,
-      this.PRn,
+      this.sPn,
     );
   }
   Hqe(e) {
@@ -70,10 +72,10 @@ class RoguelikeSpecialDetailView extends UiViewBase_1.UiViewBase {
         e.ConfigId,
       );
     if (void 0 !== i) {
-      const r = this.GetTexture(0);
-      r.SetUIActive(!1),
-        this.SetTextureByPath(i.Icon, r, void 0, () => {
-          r.SetUIActive(!0);
+      const s = this.GetTexture(0);
+      s.SetUIActive(!1),
+        this.SetTextureByPath(i.Icon, s, void 0, () => {
+          s.SetUIActive(!0);
         }),
         LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(2), i.Name);
       var t =
@@ -97,12 +99,12 @@ class RoguelikeSpecialDetailView extends UiViewBase_1.UiViewBase {
     }
   }
   Zbe(i, t) {
-    var r = [];
+    var s = [];
     for (let e = 0; e < t; e++) {
-      var s = i > e;
-      r.push(s);
+      var r = i > e;
+      s.push(r);
     }
-    this.$be.RefreshByData(r);
+    this.$be.RefreshByData(s);
   }
 }
 exports.RoguelikeSpecialDetailView = RoguelikeSpecialDetailView;

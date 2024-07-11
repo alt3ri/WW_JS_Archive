@@ -30,21 +30,21 @@ const Log_1 = require("../../../../Core/Common/Log"),
 let BulletActorComponent = class BulletActorComponent extends BaseActorComponent_1.BaseActorComponent {
   constructor() {
     super(...arguments),
-      (this.NHo = void 0),
+      (this.bjo = void 0),
       (this.NeedDetach = !1),
       (this.ChildrenAttached = []),
-      (this.cbr = !1);
+      (this.VBr = !1);
   }
   OnStart() {
     var t = this.Entity.GetBulletInfo(),
       o = t.BulletDataMain,
       o =
-        ((this.NHo = o.Base.Shape),
-        (this.cbr = o.Move.IsLockScale),
-        BulletActorPool_1.BulletActorPool.Get(this.NHo));
+        ((this.bjo = o.Base.Shape),
+        (this.VBr = o.Move.IsLockScale),
+        BulletActorPool_1.BulletActorPool.Get(this.bjo));
     return (
       GlobalData_1.GlobalData.IsPlayInEditor &&
-        (o.ActorLabel = `BulletActor_${this.NHo}_` + t.BulletRowName),
+        (o.ActorLabel = `BulletActor_${this.bjo}_` + t.BulletRowName),
       (o.EntityId = this.Entity.Id),
       (t.Actor = o),
       (this.ActorInternal = t.Actor),
@@ -55,7 +55,7 @@ let BulletActorComponent = class BulletActorComponent extends BaseActorComponent
   OnClear() {
     if (this.ActorInternal) {
       if (
-        (this.cbr && this.ActorInternal.RootComponent.SetAbsolute(!1, !1, !1),
+        (this.VBr && this.ActorInternal.RootComponent.SetAbsolute(!1, !1, !1),
         0 < this.ChildrenAttached.length)
       )
         for (const e of this.ChildrenAttached)
@@ -107,12 +107,12 @@ let BulletActorComponent = class BulletActorComponent extends BaseActorComponent
           ),
         BulletActorPool_1.BulletActorPool.Recycle(
           this.ActorInternal,
-          this.NHo,
+          this.bjo,
           this.NeedDetach,
         );
     }
     return (
-      (this.NHo = void 0),
+      (this.bjo = void 0),
       (this.ChildrenAttached.length = 0),
       (this.NeedDetach = !1),
       super.OnClear()
@@ -131,7 +131,7 @@ let BulletActorComponent = class BulletActorComponent extends BaseActorComponent
   }
 };
 (BulletActorComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(152)],
+  [(0, RegisterComponent_1.RegisterComponent)(154)],
   BulletActorComponent,
 )),
   (exports.BulletActorComponent = BulletActorComponent);

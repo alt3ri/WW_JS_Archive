@@ -13,8 +13,8 @@ const Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
 class ActivityTowerGuideController extends ActivityControllerBase_1.ActivityControllerBase {
   constructor() {
     super(...arguments),
-      (this.NFe = (e, t) => {
-        var r = ActivityTowerGuideController.OFe();
+      (this.e4e = (e, t) => {
+        var r = ActivityTowerGuideController.t4e();
         r && r.RefreshRewardState(t);
       });
   }
@@ -34,39 +34,39 @@ class ActivityTowerGuideController extends ActivityControllerBase_1.ActivityCont
   OnAddEvents() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnTowerRecordUpdate,
-      this.NFe,
+      this.e4e,
     );
   }
   OnRemoveEvents() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnTowerRecordUpdate,
-      this.NFe,
+      this.e4e,
     );
   }
-  static OFe() {
+  static t4e() {
     return ModelManager_1.ModelManager.ActivityModel.GetActivityById(
       ActivityTowerGuideController.CurrentActivityId,
     );
   }
   static RequestTowerReward(e) {
-    var t = new Protocol_1.Aki.Protocol.ucs();
-    (t.c3n = e),
-      Net_1.Net.Call(12627, t, (e) => {
+    var t = new Protocol_1.Aki.Protocol.s0s();
+    (t.Q6n = e),
+      Net_1.Net.Call(17911, t, (e) => {
         e &&
-          (e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys
+          (e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs
             ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-                e.lkn,
-                2530,
+                e.O4n,
+                21283,
               )
             : ActivityTowerGuideController.RequestTowerRewardInfo());
       });
   }
   static RequestTowerRewardInfo() {
-    var e = new Protocol_1.Aki.Protocol.dcs();
-    Net_1.Net.Call(6707, e, (e) => {
+    var e = new Protocol_1.Aki.Protocol.h0s();
+    Net_1.Net.Call(6788, e, (e) => {
       if (e) {
-        var t = ActivityTowerGuideController.OFe();
-        if (t) for (const r of e.c3n) t.SetRewardClaimed(r, !0);
+        var t = ActivityTowerGuideController.t4e();
+        if (t) for (const r of e.Q6n) t.SetRewardClaimed(r, !0);
       }
     });
   }

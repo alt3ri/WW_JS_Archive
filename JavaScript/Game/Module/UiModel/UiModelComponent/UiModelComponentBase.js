@@ -3,13 +3,13 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiModelComponentBase = void 0);
 class UiModelComponentBase {
   constructor() {
-    (this.NeedTick = !1), (this.qPo = void 0);
+    (this.NeedTick = !1), (this.wxo = void 0);
   }
   get Owner() {
-    return this.qPo;
+    return this.wxo;
   }
   Create(t) {
-    (this.qPo = t), this.OnCreate();
+    (this.wxo = t), this.OnCreate();
   }
   Init() {
     this.OnInit();

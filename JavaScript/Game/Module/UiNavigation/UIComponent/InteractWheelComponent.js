@@ -7,19 +7,19 @@ const UiNavigationNewController_1 = require("../New/UiNavigationNewController"),
 class InteractWheelComponent extends HotKeyComponent_1.HotKeyComponent {
   constructor() {
     super(...arguments),
-      (this.F1i = 0),
-      (this.V1i = 0),
-      (this.j1i = 0),
+      (this.F_i = 0),
+      (this.V_i = 0),
+      (this.j_i = 0),
       (this.IsPress = !1),
-      (this.Q1i = !1);
+      (this.Q_i = !1);
   }
   OnInputAxis(t, i) {
     var e = -i,
       e =
-        (this.j1i * e < 0 && (this.j1i = 0),
-        (this.j1i += e),
-        (0 < e ? 1 : -1) * Math.floor(Math.abs(this.j1i / ZOOM_THRESHOLD))),
-      e = ((this.j1i -= ZOOM_THRESHOLD * e), 0 !== i);
+        (this.j_i * e < 0 && (this.j_i = 0),
+        (this.j_i += e),
+        (0 < e ? 1 : -1) * Math.floor(Math.abs(this.j_i / ZOOM_THRESHOLD))),
+      e = ((this.j_i -= ZOOM_THRESHOLD * e), 0 !== i);
     this.IsPress !== e &&
       ((this.IsPress = e),
       0 < i
@@ -31,17 +31,17 @@ class InteractWheelComponent extends HotKeyComponent_1.HotKeyComponent {
     (this.IsAction = !1), super.OnRefreshMode();
   }
   UpdateIndex(t) {
-    var i = this.V1i;
-    return this.X1i(t), this.V1i !== i;
+    var i = this.V_i;
+    return this.X_i(t), this.V_i !== i;
   }
-  X1i(t) {
-    t && (this.F1i = t),
-      this.F1i &&
-        (this.V1i < 0 || this.V1i >= this.F1i) &&
-        (this.Q1i
-          ? ((this.V1i = this.V1i % this.F1i),
-            this.V1i < 0 && (this.V1i = this.F1i + this.V1i))
-          : (this.V1i = Math.max(0, Math.min(this.V1i, this.F1i - 1))));
+  X_i(t) {
+    t && (this.F_i = t),
+      this.F_i &&
+        (this.V_i < 0 || this.V_i >= this.F_i) &&
+        (this.Q_i
+          ? ((this.V_i = this.V_i % this.F_i),
+            this.V_i < 0 && (this.V_i = this.F_i + this.V_i))
+          : (this.V_i = Math.max(0, Math.min(this.V_i, this.F_i - 1))));
   }
 }
 exports.InteractWheelComponent = InteractWheelComponent;

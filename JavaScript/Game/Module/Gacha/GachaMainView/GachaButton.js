@@ -8,7 +8,6 @@ const UE = require("ue"),
   ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
-  UiManager_1 = require("../../../Ui/UiManager"),
   ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine"),
   CommonExchangeData_1 = require("../../ItemExchange/View/CommonExchangeData"),
   ScrollingTipsController_1 = require("../../ScrollingTips/ScrollingTipsController"),
@@ -19,43 +18,38 @@ const UE = require("ue"),
 class GachaButton extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
-      (this.oHt = void 0),
+      (this.ojt = void 0),
       (this.Times = 0),
-      (this.rHt = 0),
-      (this.nHt = 0),
-      (this.sHt = () => {
-        var e = this.oHt.GachaInfo;
+      (this.rjt = 0),
+      (this.njt = 0),
+      (this.sjt = () => {
+        var e = this.ojt.GachaInfo;
         if (e)
           if (0 === e.UsePoolId)
             ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
               "GachaNoOption",
             );
           else {
-            if (0 !== this.nHt)
-              if (Time_1.Time.Now - this.nHt <= CLICKCD) return;
-            this.nHt = Time_1.Time.Now;
+            if (0 !== this.njt)
+              if (Time_1.Time.Now - this.njt <= CLICKCD) return;
+            this.njt = Time_1.Time.Now;
             var r = ModelManager_1.ModelManager.GachaModel.CheckCountIsEnough(
               e,
               this.Times,
             );
             if (r[0]) {
-              var i =
+              var o =
                 ModelManager_1.ModelManager.InventoryModel.GetCommonItemCount(
                   e.ItemId,
                 );
-              if (5 === e.Id && 0 === i)
-                ((o = new ConfirmBoxDefine_1.ConfirmBoxDataNew(
-                  195,
-                )).IsEscViewTriggerCallBack = !1),
-                  o.FunctionMap.set(2, () => {
-                    UiManager_1.UiManager.OpenView("MailBoxView");
-                  }),
+              if (5 === e.Id && o <= 0)
+                (i = new ConfirmBoxDefine_1.ConfirmBoxDataNew(195)),
                   ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
-                    o,
+                    i,
                   );
               else {
-                var o = this.rHt - i;
-                if (o <= 0)
+                var i = this.rjt - o;
+                if (i <= 0)
                   GachaController_1.GachaController.GachaRequest(
                     e.Id,
                     this.Times,
@@ -66,7 +60,7 @@ class GachaButton extends UiPanelBase_1.UiPanelBase {
                   const n =
                     ModelManager_1.ModelManager.ItemExchangeModel.CalculateConsume(
                       e.ItemId,
-                      o,
+                      i,
                       0,
                       !0,
                     );
@@ -74,22 +68,22 @@ class GachaButton extends UiPanelBase_1.UiPanelBase {
                     const a = new CommonExchangeData_1.CommonExchangeData();
                     a.InitByItemId(e.ItemId),
                       ConfigManager_1.ConfigManager.CommonConfig?.GetBetaBlockRecharge()
-                        ? ((i = new ConfirmBoxDefine_1.ConfirmBoxDataNew(
+                        ? ((o = new ConfirmBoxDefine_1.ConfirmBoxDataNew(
                             166,
                           )).SetTextArgs(a.GetDestName()),
                           ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
-                            i,
+                            o,
                           ))
                         : ((e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(
                             61,
                           )).SetTextArgs(
-                            o.toString(),
+                            i.toString(),
                             a.GetDestName(),
                             n.ConsumeCount.toString(),
                             a.GetSrcName(),
                           ),
                           e.FunctionMap.set(2, () => {
-                            this.aHt(a, n.ExChangeTime, n.ConsumeCount);
+                            this.ajt(a, n.ExChangeTime, n.ConsumeCount);
                           }),
                           ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
                             e,
@@ -104,10 +98,10 @@ class GachaButton extends UiPanelBase_1.UiPanelBase {
                 }
               }
             } else
-              (i = r[1]),
-                (o = new ConfirmBoxDefine_1.ConfirmBoxDataNew(i)),
+              (o = r[1]),
+                (i = new ConfirmBoxDefine_1.ConfirmBoxDataNew(o)),
                 ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
-                  o,
+                  i,
                 );
           }
         else
@@ -126,42 +120,42 @@ class GachaButton extends UiPanelBase_1.UiPanelBase {
       [5, UE.UIText],
       [6, UE.UISprite],
     ]),
-      (this.BtnBindInfo = [[0, this.sHt]]);
+      (this.BtnBindInfo = [[0, this.sjt]]);
   }
-  aHt(o, n, e) {
+  ajt(i, n, e) {
     var r = ModelManager_1.ModelManager.InventoryModel.GetCommonItemCount(
-      o.GetSrcItemId(),
+      i.GetSrcItemId(),
     );
     if (e <= r)
       ControllerHolder_1.ControllerHolder.ItemExchangeController.ItemExchangeRequest(
-        o.GetDestItemId(),
+        i.GetDestItemId(),
         n,
         !1,
         (e, r) => {
-          var i = ModelManager_1.ModelManager.InventoryModel.GetCommonItemCount(
-            o.GetDestItemId(),
+          var o = ModelManager_1.ModelManager.InventoryModel.GetCommonItemCount(
+            i.GetDestItemId(),
           );
-          n <= i &&
+          n <= o &&
             GachaController_1.GachaController.GachaRequest(
-              this.oHt.GachaInfo.Id,
+              this.ojt.GachaInfo.Id,
               this.Times,
             );
         },
       );
     else {
-      const i = ModelManager_1.ModelManager.ItemExchangeModel.CalculateConsume(
-        o.GetSrcItemId(),
+      const o = ModelManager_1.ModelManager.ItemExchangeModel.CalculateConsume(
+        i.GetSrcItemId(),
         e - r,
         0,
         !0,
       );
-      if (i) {
+      if (o) {
         const a = new CommonExchangeData_1.CommonExchangeData();
-        a.InitByItemId(o.GetSrcItemId());
+        a.InitByItemId(i.GetSrcItemId());
         e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(62);
         e.SetTextArgs(a.GetDestName(), a.GetSrcName(), a.GetDestName()),
           e.FunctionMap.set(2, () => {
-            this.hHt(a, i.ExChangeTime, i.ConsumeCount);
+            this.hjt(a, o.ExChangeTime, o.ConsumeCount);
           }),
           ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
             e,
@@ -169,8 +163,8 @@ class GachaButton extends UiPanelBase_1.UiPanelBase {
       }
     }
   }
-  hHt(e, r, i) {
-    i <=
+  hjt(e, r, o) {
+    o <=
     ModelManager_1.ModelManager.InventoryModel.GetCommonItemCount(
       e.GetSrcItemId(),
     )
@@ -182,11 +176,11 @@ class GachaButton extends UiPanelBase_1.UiPanelBase {
       : ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowFirstCurrencyConfirm();
   }
   Refresh(e, r) {
-    (this.oHt = e), (this.rHt = r);
+    (this.ojt = e), (this.rjt = r);
     var r = e.GachaInfo;
-    for (const i of r.GachaConsumes)
-      if (i.fRs === this.Times) {
-        this.rHt = i.vRs;
+    for (const o of r.GachaConsumes)
+      if (o.qUs === this.Times) {
+        this.rjt = o.GUs;
         break;
       }
     ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(r.ItemId) &&
@@ -194,7 +188,7 @@ class GachaButton extends UiPanelBase_1.UiPanelBase {
       LguiUtil_1.LguiUtil.SetLocalTextNew(
         this.GetText(2),
         "Text_GachaExChangeCountDescribe_Text",
-        this.rHt,
+        this.rjt,
       ),
       LguiUtil_1.LguiUtil.SetLocalText(
         this.GetText(3),

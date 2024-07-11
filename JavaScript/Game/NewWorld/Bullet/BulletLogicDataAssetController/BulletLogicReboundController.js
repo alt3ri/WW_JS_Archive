@@ -14,10 +14,10 @@ const UE = require("ue"),
 class BulletLogicReboundController extends BulletLogicController_1.BulletLogicController {
   constructor(t, e) {
     super(t, e),
-      (this.nXt = void 0),
-      (this._9o = void 0),
-      (this.nXt = e.GetComponent(152)),
-      (this._9o = this.Bullet.GetBulletInfo());
+      (this.n$t = void 0),
+      (this.a7o = void 0),
+      (this.n$t = e.GetComponent(154)),
+      (this.a7o = this.Bullet.GetBulletInfo());
   }
   OnInit() {
     this.Bullet.GetBulletInfo().BulletDataMain.Execution.ReboundBitMask |=
@@ -30,7 +30,7 @@ class BulletLogicReboundController extends BulletLogicController_1.BulletLogicCo
         UE.KismetSystemLibrary.IsValidSoftObjectReference(
           this.LogicController.EffectRebound,
         ) &&
-        ((t = (e = t.Attacker).GetComponent(51)),
+        ((t = (e = t.Attacker).GetComponent(52)),
         (e = e.GetComponent(3)),
         (r = UE.KismetMathLibrary.TransformLocation(
           e.ActorTransform,
@@ -75,26 +75,26 @@ class BulletLogicReboundController extends BulletLogicController_1.BulletLogicCo
           );
       var r,
         o = this.LogicController.BulletRowName.Num(),
-        l = this._9o.ContextId;
+        l = this.a7o.ContextId;
       for (let t = 0; t < o; t++) {
         var i = this.LogicController.BulletRowName.Get(t),
           i = BulletController_1.BulletController.CreateBulletCustomTarget(
-            this._9o.AttackerActorComp.Actor,
+            this.a7o.AttackerActorComp.Actor,
             i,
-            this.nXt.ActorTransform,
+            this.n$t.ActorTransform,
             {
               SyncType: 1,
               ParentId: this.Bullet.Id,
-              SkillId: this._9o.BulletInitParams.SkillId,
-              Source: Protocol_1.Aki.Protocol.LOs.Proto_ReboundSource,
-              DtType: this._9o.BulletInitParams.DtType,
+              SkillId: this.a7o.BulletInitParams.SkillId,
+              Source: Protocol_1.Aki.Protocol.C4s.Proto_ReboundSource,
+              DtType: this.a7o.BulletInitParams.DtType,
             },
             l,
           );
         i?.Valid &&
           (i = i.GetBulletInfo()).BulletDataMain.Render.HandOverParentEffect &&
           BulletStaticFunction_1.BulletStaticFunction.HandOverEffects(
-            this._9o,
+            this.a7o,
             i,
           );
       }

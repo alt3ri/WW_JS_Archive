@@ -39,7 +39,7 @@ class LinkingEmptyToggle extends UiPanelBase_1.UiPanelBase {
       (this.XAe = () => {
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("Temp", 36, "OnTogglePress", ["index", this.Xy]),
-          this.WAe.SetLight(!0),
+          this.WAe.OnPressed(!0),
           SignalDeviceController_1.SignalDeviceController.OnDotPressed(
             this.Xy,
             this.lRe,
@@ -63,18 +63,18 @@ class LinkingEmptyToggle extends UiPanelBase_1.UiPanelBase {
       (this.JAe = (e, i) => {
         e &&
           i.includes(this.Xy) &&
-          (this.WAe?.SetLight(!0),
+          (this.WAe?.OnLinked(),
           this.WAe?.SetFxBoost(!0),
           this.GetExtendToggle(0).SetEnable(!1)),
           !e &&
             i.includes(this.Xy) &&
-            (this.WAe?.SetLight(!1),
+            (this.WAe?.OnPressed(!1),
             this.WAe?.RotateLine(!1),
             this.KAe?.Destroy());
       }),
       (this.zAe = () => {
         this.GetExtendToggle(0).SetEnable(!0),
-          this.WAe?.SetLight(!1),
+          this.WAe?.ResetIcon(),
           this.WAe?.RotateLine(!1),
           this.KAe?.Destroy();
       });

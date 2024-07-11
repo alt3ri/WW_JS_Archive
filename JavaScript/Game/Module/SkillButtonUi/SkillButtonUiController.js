@@ -1,9 +1,11 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SkillButtonUiController = void 0);
-const Stats_1 = require("../../../Core/Common/Stats"),
+const Info_1 = require("../../../Core/Common/Info"),
+  Stats_1 = require("../../../Core/Common/Stats"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../Manager/ConfigManager"),
   ModelManager_1 = require("../../Manager/ModelManager"),
   UiControllerBase_1 = require("../../Ui/Base/UiControllerBase"),
   InputDistributeController_1 = require("../../Ui/InputDistribute/InputDistributeController"),
@@ -25,8 +27,8 @@ class SkillButtonUiController extends UiControllerBase_1.UiControllerBase {
         this.kpe,
       ),
       EventSystem_1.EventSystem.Add(
-        EventDefine_1.EEventName.OnPlatformChanged,
-        this.dKe,
+        EventDefine_1.EEventName.InputControllerChange,
+        this.XBo,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.RemoveEntity,
@@ -34,36 +36,52 @@ class SkillButtonUiController extends UiControllerBase_1.UiControllerBase {
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnMultiSkillIdChanged,
-        this.xEo,
+        this.Uyo,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnMultiSkillEnable,
-        this.wEo,
+        this.Ayo,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnChangeSelectedExploreId,
-        this.DYe,
+        this.OJe,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.CharSkillCountChanged,
-        this.BEo,
+        this.Pyo,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.CharSkillRemainCdChanged,
-        this.bEo,
+        this.xyo,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnAimStateChanged,
-        this.gZe,
+        this.Pet,
+      ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.BattleUiFollowerAimStateChanged,
+        this.Pet,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnActionKeyChanged,
-        this.c_t,
+        this.Dut,
       ),
-      ModelManager_1.ModelManager.PlatformModel?.IsMobile() ||
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.BattleInputEnableChanged,
+        this.cna,
+      ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.BattleInputVisibleChanged,
+        this.mna,
+      ),
+      EventSystem_1.EventSystem.Add(
+        EventDefine_1.EEventName.BattleUiFollowerAimStateChanged,
+        this.HRn,
+      ),
+      Info_1.Info.IsInTouch() ||
         (EventSystem_1.EventSystem.Add(
           EventDefine_1.EEventName.OpenView,
-          this.UKe,
+          this.FQe,
         ),
         EventSystem_1.EventSystem.Add(
           EventDefine_1.EEventName.CloseView,
@@ -71,7 +89,7 @@ class SkillButtonUiController extends UiControllerBase_1.UiControllerBase {
         )),
       InputDistributeController_1.InputDistributeController.BindAction(
         InputMappingsDefine_1.actionMappings.组合主键,
-        this.gze,
+        this.RZe,
       );
   }
   static OnRemoveEvents() {
@@ -84,8 +102,8 @@ class SkillButtonUiController extends UiControllerBase_1.UiControllerBase {
         this.kpe,
       ),
       EventSystem_1.EventSystem.Remove(
-        EventDefine_1.EEventName.OnPlatformChanged,
-        this.dKe,
+        EventDefine_1.EEventName.InputControllerChange,
+        this.XBo,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.RemoveEntity,
@@ -93,39 +111,55 @@ class SkillButtonUiController extends UiControllerBase_1.UiControllerBase {
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnMultiSkillIdChanged,
-        this.xEo,
+        this.Uyo,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnMultiSkillEnable,
-        this.wEo,
+        this.Ayo,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnChangeSelectedExploreId,
-        this.DYe,
+        this.OJe,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.CharSkillCountChanged,
-        this.BEo,
+        this.Pyo,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.CharSkillRemainCdChanged,
-        this.bEo,
+        this.xyo,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnAimStateChanged,
-        this.gZe,
+        this.Pet,
+      ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.BattleUiFollowerAimStateChanged,
+        this.Pet,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnActionKeyChanged,
-        this.c_t,
+        this.Dut,
+      ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.BattleInputEnableChanged,
+        this.cna,
+      ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.BattleInputVisibleChanged,
+        this.mna,
+      ),
+      EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.BattleUiFollowerAimStateChanged,
+        this.HRn,
       ),
       EventSystem_1.EventSystem.Has(
         EventDefine_1.EEventName.OpenView,
-        this.UKe,
+        this.FQe,
       ) &&
         EventSystem_1.EventSystem.Remove(
           EventDefine_1.EEventName.OpenView,
-          this.UKe,
+          this.FQe,
         ),
       EventSystem_1.EventSystem.Has(
         EventDefine_1.EEventName.CloseView,
@@ -137,11 +171,11 @@ class SkillButtonUiController extends UiControllerBase_1.UiControllerBase {
         ),
       InputDistributeController_1.InputDistributeController.UnBindAction(
         InputMappingsDefine_1.actionMappings.组合主键,
-        this.gze,
+        this.RZe,
       );
   }
-  static qEo(e, t = 4) {
-    var n = 2 === ModelManager_1.ModelManager.PlatformModel.OperationType;
+  static wyo(e, t = 4) {
+    var n = 2 === Info_1.Info.OperationType;
     ModelManager_1.ModelManager.SkillButtonUiModel.RefreshSkillButtonData(
       e,
       n,
@@ -149,25 +183,22 @@ class SkillButtonUiController extends UiControllerBase_1.UiControllerBase {
     );
   }
   static GetRoleId(e) {
-    var t,
-      e = e.GetComponent(0);
+    var e = e.GetComponent(0);
     return e
       ? ((e = e.GetRoleId()),
-        (t = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(e))
-          ? t.GetRoleId()
-          : e)
+        ConfigManager_1.ConfigManager.RoleConfig.GetBaseRoleId(e))
       : 0;
   }
 }
-((exports.SkillButtonUiController = SkillButtonUiController).RKe = void 0),
-  (SkillButtonUiController.xEo = (e, t, n) => {
+((exports.SkillButtonUiController = SkillButtonUiController).kQe = void 0),
+  (SkillButtonUiController.Uyo = (e, t, n) => {
     ModelManager_1.ModelManager.SkillButtonUiModel.ExecuteMultiSkillIdChanged(
       e,
       t,
       n,
     );
   }),
-  (SkillButtonUiController.wEo = (e, t, n) => {
+  (SkillButtonUiController.Ayo = (e, t, n) => {
     ModelManager_1.ModelManager.SkillButtonUiModel.ExecuteMultiSkillEnable(
       e,
       t,
@@ -175,36 +206,47 @@ class SkillButtonUiController extends UiControllerBase_1.UiControllerBase {
     );
   }),
   (SkillButtonUiController.xie = (e, t) => {
-    SkillButtonUiController.qEo(e, 1);
+    SkillButtonUiController.wyo(e, 1);
   }),
   (SkillButtonUiController.kpe = () => {
     ModelManager_1.ModelManager.SkillButtonUiModel.CreateAllSkillButtonEntityData();
   }),
-  (SkillButtonUiController.dKe = (e, t, n) => {
-    var i = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
-    i && SkillButtonUiController.qEo(i);
+  (SkillButtonUiController.XBo = () => {
+    var e = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
+    e && SkillButtonUiController.wyo(e);
   }),
   (SkillButtonUiController.zpe = (e, t) => {
     ModelManager_1.ModelManager.SkillButtonUiModel.OnRemoveEntity(t);
   }),
-  (SkillButtonUiController.DYe = () => {
+  (SkillButtonUiController.OJe = () => {
     ModelManager_1.ModelManager.SkillButtonUiModel.RefreshSkillButtonExplorePhantomSkillId(
       7,
     );
   }),
-  (SkillButtonUiController.BEo = (e) => {
+  (SkillButtonUiController.Pyo = (e) => {
     ModelManager_1.ModelManager.SkillButtonUiModel.OnSkillCdChanged(e);
   }),
-  (SkillButtonUiController.bEo = (e) => {
+  (SkillButtonUiController.xyo = (e) => {
     ModelManager_1.ModelManager.SkillButtonUiModel.OnSkillCdChanged(e);
   }),
-  (SkillButtonUiController.gZe = () => {
+  (SkillButtonUiController.Pet = () => {
     ModelManager_1.ModelManager.SkillButtonUiModel.OnAimStateChanged();
   }),
-  (SkillButtonUiController.c_t = (e) => {
+  (SkillButtonUiController.Dut = (e) => {
     ModelManager_1.ModelManager.SkillButtonUiModel.OnActionKeyChanged(e);
   }),
-  (SkillButtonUiController.UKe = (e) => {
+  (SkillButtonUiController.cna = (e, t) => {
+    ModelManager_1.ModelManager.SkillButtonUiModel.OnInputEnableChanged(e, t);
+  }),
+  (SkillButtonUiController.HRn = (e) => {
+    ModelManager_1.ModelManager.SkillButtonUiModel.SkillButtonFormationData?.RefreshOnFollowerAimStateChange(
+      e,
+    );
+  }),
+  (SkillButtonUiController.mna = (e, t) => {
+    ModelManager_1.ModelManager.SkillButtonUiModel.OnInputVisibleChanged(e, t);
+  }),
+  (SkillButtonUiController.FQe = (e) => {
     "MenuView" === e &&
       ModelManager_1.ModelManager.SkillButtonUiModel.OnOpenMenuView();
   }),
@@ -212,7 +254,7 @@ class SkillButtonUiController extends UiControllerBase_1.UiControllerBase {
     "MenuView" === e &&
       ModelManager_1.ModelManager.SkillButtonUiModel.OnCloseMenuView();
   }),
-  (SkillButtonUiController.gze = (e, t) => {
+  (SkillButtonUiController.RZe = (e, t) => {
     t = 0 === t;
     ModelManager_1.ModelManager.SkillButtonUiModel.GamepadData?.SetIsPressCombineButton(
       t,

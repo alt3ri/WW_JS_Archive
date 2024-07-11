@@ -11,7 +11,6 @@ const Log_1 = require("../../../Core/Common/Log"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
   TimeUtil_1 = require("../../Common/TimeUtil"),
-  UiManager_1 = require("../../Ui/UiManager"),
   SignalDeviceController_1 = require("./SignalDeviceController");
 exports.ROWNUM = 5;
 class SignalDeviceModel extends ModelBase_1.ModelBase {
@@ -22,6 +21,7 @@ class SignalDeviceModel extends ModelBase_1.ModelBase {
       (this.cPe = []),
       (this.CurrentColor = IAction_1.EPieceColorType.White),
       (this.CacheRotator = Rotator_1.Rotator.Create(0, 0, 0)),
+      (this.ViewType = 0),
       (this.RotateMap = new Map([
         [0, 0],
         [4, -90],
@@ -30,59 +30,59 @@ class SignalDeviceModel extends ModelBase_1.ModelBase {
         [2, 0],
       ]));
   }
-  InitData(t) {
+  InitData(e) {
     this.uPe = new Array(this.GridNum);
-    for (let e = 0; e < this.GridNum; e++)
-      this.uPe[e] = { IsFinished: !1, Color: t[e].Color };
+    for (let t = 0; t < this.GridNum; t++)
+      this.uPe[t] = { IsFinished: !1, Color: e[t].Color };
     this.mPe();
   }
   ResetData() {
-    for (const e of this.uPe) e.IsFinished = !1;
+    for (const t of this.uPe) t.IsFinished = !1;
     this.mPe(),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnSignalDeviceReset,
       );
   }
-  IsGridFinished(e) {
-    return this.uPe[e]?.IsFinished;
+  IsGridFinished(t) {
+    return this.uPe[t]?.IsFinished;
   }
-  GetGridColor(e) {
-    return this.uPe[e]?.Color;
+  GetGridColor(t) {
+    return this.uPe[t]?.Color;
   }
-  LinkingStart(e, t) {
-    (this.CurrentColor = t), (this.cPe = [e]);
+  LinkingStart(t, e) {
+    (this.CurrentColor = e), (this.cPe = [t]);
   }
-  Linking(e) {
-    var t = this.cPe[this.cPe.length - 1];
-    !this.cPe.includes(e) && 0 !== this.NeighboringType(t, e) && this.dPe(e)
-      ? (this.cPe.push(e),
+  Linking(t) {
+    var e = this.cPe[this.cPe.length - 1];
+    !this.cPe.includes(t) && 0 !== this.NeighboringType(e, t) && this.dPe(t)
+      ? (this.cPe.push(t),
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.OnSignalDeviceLinking,
           !0,
-          t,
-          this.uPe[t].Color === this.CurrentColor,
           e,
           this.uPe[e].Color === this.CurrentColor,
+          t,
+          this.uPe[t].Color === this.CurrentColor,
         ),
-        this.uPe[e].Color === this.CurrentColor && this.CheckLinking(e))
-      : 1 < this.cPe.length && this.cPe.indexOf(e) === this.cPe.length - 2
+        this.uPe[t].Color === this.CurrentColor && this.CheckLinking(t))
+      : 1 < this.cPe.length && this.cPe.indexOf(t) === this.cPe.length - 2
         ? (this.cPe.pop(),
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.OnSignalDeviceLinking,
             !1,
-            t,
-            this.uPe[t].Color === this.CurrentColor,
             e,
             this.uPe[e].Color === this.CurrentColor,
+            t,
+            this.uPe[t].Color === this.CurrentColor,
           ))
         : Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug("Temp", 36, "Linking Fail", ["index", e]);
+          Log_1.Log.Debug("Temp", 36, "Linking Fail", ["index", t]);
   }
-  NeighboringType(e, t) {
-    var i = e - t;
+  NeighboringType(t, e) {
+    var i = t - e;
     if (
-      (-1 == i && t % exports.ROWNUM == 0) ||
-      (1 == i && e % exports.ROWNUM == 0)
+      (-1 == i && e % exports.ROWNUM == 0) ||
+      (1 == i && t % exports.ROWNUM == 0)
     )
       return 0;
     switch (i) {
@@ -98,18 +98,18 @@ class SignalDeviceModel extends ModelBase_1.ModelBase {
         return 0;
     }
   }
-  dPe(e) {
+  dPe(t) {
     return (
-      (this.uPe[e].Color === IAction_1.EPieceColorType.White &&
-        !this.uPe[e].IsFinished) ||
-      this.uPe[e].Color === this.CurrentColor
+      (this.uPe[t].Color === IAction_1.EPieceColorType.White &&
+        !this.uPe[t].IsFinished) ||
+      this.uPe[t].Color === this.CurrentColor
     );
   }
-  CheckLinking(e) {
-    var t;
+  CheckLinking(t) {
+    var e;
     0 !== this.cPe.length &&
-      ((t = this.cPe[this.cPe.length - 1]),
-      this.GetGridColor(t) !== this.CurrentColor || 1 === this.cPe.length
+      ((e = this.cPe[this.cPe.length - 1]),
+      this.GetGridColor(e) !== this.CurrentColor || 1 === this.cPe.length
         ? this.CancelCurrentLinking()
         : this.MarkCurrentLinking());
   }
@@ -119,8 +119,8 @@ class SignalDeviceModel extends ModelBase_1.ModelBase {
       !0,
       Array.from(this.cPe),
     );
-    for (const e of this.cPe) this.uPe[e].IsFinished = !0;
-    this.mPe(), this.CPe() && this.SDe();
+    for (const t of this.cPe) this.uPe[t].IsFinished = !0;
+    this.mPe(), this.CPe() && this.EDe();
   }
   CancelCurrentLinking() {
     EventSystem_1.EventSystem.Emit(
@@ -131,24 +131,23 @@ class SignalDeviceModel extends ModelBase_1.ModelBase {
       this.mPe();
   }
   CPe() {
-    for (const e of this.uPe)
-      if (e.Color !== IAction_1.EPieceColorType.White && !e.IsFinished)
+    for (const t of this.uPe)
+      if (t.Color !== IAction_1.EPieceColorType.White && !t.IsFinished)
         return !1;
     return !0;
   }
-  SDe() {
+  EDe() {
     EventSystem_1.EventSystem.Emit(
       EventDefine_1.EEventName.OnSignalDeviceFinish,
     ),
       TimerSystem_1.TimerSystem.Delay(() => {
-        var e = Protocol_1.Aki.Protocol.UKn.create();
-        (e.ykn = "0"),
-          (e.Ikn = Protocol_1.Aki.Protocol.dqs.Proto_SignalDevice),
-          Net_1.Net.Call(19172, e, (e) => {
-            e.uvs === Protocol_1.Aki.Protocol.lkn.Sys &&
+        var t = Protocol_1.Aki.Protocol.TJn.create();
+        (t.z4n = "0"),
+          (t.Z4n = Protocol_1.Aki.Protocol.t3s.Proto_SignalDevice),
+          Net_1.Net.Call(5703, t, (t) => {
+            t.DEs === Protocol_1.Aki.Protocol.O4n.NRs &&
               (this.gPe(),
-              SignalDeviceController_1.SignalDeviceController.CallFinishCallback(),
-              UiManager_1.UiManager.CloseView("SignalDeviceView"));
+              SignalDeviceController_1.SignalDeviceController.CallFinishCallback());
           });
       }, 1.7 * TimeUtil_1.TimeUtil.InverseMillisecond);
   }

@@ -1,29 +1,29 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ExecutionItem = void 0);
-const ConfigManager_1 = require("../../../../Manager/ConfigManager"),
-  ModelManager_1 = require("../../../../Manager/ModelManager"),
+const Info_1 = require("../../../../../Core/Common/Info"),
+  ConfigManager_1 = require("../../../../Manager/ConfigManager"),
   BattleSkillItem_1 = require("../BattleSkillItem");
 class ExecutionItem extends BattleSkillItem_1.BattleSkillItem {
   constructor() {
     super(...arguments), (this.B7 = void 0);
   }
-  Init(e) {
-    (this.B7 = e), this.IsShowOrShowing || this.Show();
+  Init(t) {
+    (this.B7 = t), this.IsShowOrShowing || this.Show();
   }
-  RefreshKeyByActionName(e) {
-    var t = ModelManager_1.ModelManager.PlatformModel.OperationType;
-    2 !== t ||
-      (this.KeyActionName === e && this.KeyOperationType === t) ||
+  RefreshKeyByActionName(t) {
+    var e = Info_1.Info.OperationType;
+    2 !== e ||
+      (this.KeyActionName === t && this.KeyOperationType === e) ||
       (this.KeyItem &&
-        (this.KeyItem.RefreshByActionOrAxis({ ActionOrAxisName: e }),
+        (this.KeyItem.RefreshByActionOrAxis({ ActionOrAxisName: t }),
         this.KeyItem.SetActive(!0)),
-      (this.KeyOperationType = t),
-      (this.KeyActionName = e));
+      (this.KeyOperationType = e),
+      (this.KeyActionName = t));
   }
-  RefreshSkillIconByResId(e) {
-    e = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(e);
-    this.SetSkillIcon(e);
+  RefreshSkillIconByResId(t) {
+    t = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(t);
+    this.SetSkillIcon(t);
   }
   OnSkillButtonPressed() {
     this.B7?.();

@@ -7,6 +7,7 @@ const Log_1 = require("../../../../Core/Common/Log"),
   MathUtils_1 = require("../../../../Core/Utils/MathUtils"),
   GlobalData_1 = require("../../../GlobalData"),
   CharacterUnifiedStateTypes_1 = require("../../../NewWorld/Character/Common/Component/Abilities/CharacterUnifiedStateTypes"),
+  GravityUtils_1 = require("../../../Utils/GravityUtils"),
   AiLibrary_1 = require("../../Common/AiLibrary"),
   AiContollerLibrary_1 = require("../../Controller/AiContollerLibrary"),
   TsAiController_1 = require("../../Controller/TsAiController"),
@@ -64,8 +65,8 @@ class TsTaskSkillWander extends TsTaskAbortImmediatelyBase_1.default {
     i = i.AiController;
     if (i) {
       this.TsWalkOff ||
-        i.CharActorComp.Entity.GetComponent(161)?.SetWalkOffLedgeRecord(!1);
-      var s = i.CharActorComp.Entity.CheckGetComponent(158);
+        i.CharActorComp.Entity.GetComponent(163)?.SetWalkOffLedgeRecord(!1);
+      var s = i.CharActorComp.Entity.CheckGetComponent(160);
       if (s.Valid)
         switch (this.TsMoveState) {
           case 1:
@@ -142,7 +143,11 @@ class TsTaskSkillWander extends TsTaskAbortImmediatelyBase_1.default {
                 (this.TmpVector.Y = -this.TmpVector.Y),
                 (this.PreForward = !1))
               : ((i = 2 === this.TsMoveState ? i : l.TurnSpeeds[0]),
-                (this.PreForward = !0));
+                (this.PreForward = !0)),
+            GravityUtils_1.GravityUtils.ConvertToPlanarVector(
+              h,
+              this.TmpVector,
+            );
           if (!r && this.NavigationInterval > NAV_INTERVAL_TIME) {
             if (
               ((this.NavigationInterval = 0),
@@ -161,9 +166,9 @@ class TsTaskSkillWander extends TsTaskAbortImmediatelyBase_1.default {
               ]),
               this.StopMoveToLocation(h);
           }
-          s = h.Entity.GetComponent(36);
+          s = h.Entity.GetComponent(37);
           (s && s.MoveController.IsMovingToLocation()) ||
-            (h.Entity.GetComponent(89)?.MoveState !==
+            (h.Entity.GetComponent(91)?.MoveState !==
             CharacterUnifiedStateTypes_1.ECharMoveState.Walk
               ? (AiContollerLibrary_1.AiControllerLibrary.TurnToDirect(
                   h,
@@ -191,7 +196,7 @@ class TsTaskSkillWander extends TsTaskAbortImmediatelyBase_1.default {
         this.FinishExecute(!1);
   }
   StopMoveToLocation(i) {
-    i = i.Entity.GetComponent(36);
+    i = i.Entity.GetComponent(37);
     i &&
       i.MoveController.IsMovingToLocation() &&
       i?.MoveController.StopMoveToLocation(),
@@ -200,11 +205,11 @@ class TsTaskSkillWander extends TsTaskAbortImmediatelyBase_1.default {
   SetMoveToLocation(i, t, s, e) {
     this.TmpVector2.DeepCopy(i),
       this.TmpVector2.AdditionEqual(t.ActorLocationProxy);
-    i = t.Entity.GetComponent(36);
+    i = t.Entity.GetComponent(37);
     return (
       !!i &&
       ((!this.LastDestination.IsNearlyZero() ||
-        Vector_1.Vector.Dist2D(this.LastDestination, this.TmpVector2) < 100) &&
+        Vector_1.Vector.Dist(this.LastDestination, this.TmpVector2) < 100) &&
       i.MoveController.IsMovingToLocation()
         ? (this.LastDestination.DeepCopy(this.TmpVector2), !0)
         : (this.LastDestination.DeepCopy(this.TmpVector2),
@@ -223,7 +228,7 @@ class TsTaskSkillWander extends TsTaskAbortImmediatelyBase_1.default {
   }
   FindArea(i, t, s, e, h) {
     var r = i.CharAiDesignComp.Entity.CheckGetComponent(33),
-      o = r.Entity.GetComponent(185);
+      o = r.Entity.GetComponent(188);
     this.TmpForward.DeepCopy(h),
       (this.TmpForward.Z = 0),
       this.TmpForward.Normalize(),
@@ -356,7 +361,7 @@ class TsTaskSkillWander extends TsTaskAbortImmediatelyBase_1.default {
     this.AIOwner instanceof TsAiController_1.default &&
       ((i =
         this.AIOwner.AiController.CharActorComp.Entity.GetComponent(
-          36,
+          37,
         ))?.MoveController.StopMoveToLocation(),
       this.LastDestination?.Reset(),
       AiContollerLibrary_1.AiControllerLibrary.ClearInput(this.AIOwner),

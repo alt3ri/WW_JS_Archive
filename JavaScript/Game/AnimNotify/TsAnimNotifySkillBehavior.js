@@ -22,15 +22,16 @@ class TsAnimNotifySkillBehavior extends UE.KuroAnimNotify {
       if (
         SkillBehaviorCondition_1.SkillBehaviorCondition.Satisfy(
           l.SkillBehaviorConditionGroup,
+          l.SkillBehaviorConditionFormula,
           t,
-        )
-      ) {
-        SkillBehaviorAction_1.SkillBehaviorAction.Begin(
+        ) &&
+        (SkillBehaviorAction_1.SkillBehaviorAction.Begin(
           l.SkillBehaviorActionGroup,
           t,
-        );
+        ),
+        !l.SkillBehaviorContinue)
+      )
         break;
-      }
     }
     return !0;
   }

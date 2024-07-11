@@ -18,32 +18,32 @@ const Log_1 = require("../../../Core/Common/Log"),
 class EditBattleTeamModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
-      (this.$Ft = new Map()),
-      (this.YFt = void 0),
-      (this.JFt = void 0),
-      (this.zFt = void 0),
-      (this.ZFt = new Map()),
-      (this.e3t = void 0),
-      (this.t3t = !0),
-      (this.i3t = !1);
+      (this.Y3t = new Map()),
+      (this.J3t = void 0),
+      (this.z3t = void 0),
+      (this.Z3t = void 0),
+      (this.e4t = new Map()),
+      (this.t4t = void 0),
+      (this.i4t = !0),
+      (this.o4t = !1);
   }
   get NeedEntrance() {
-    return this.t3t;
+    return this.i4t;
   }
   set NeedEntrance(e) {
-    this.t3t = e;
+    this.i4t = e;
   }
   get InstanceMultiEnter() {
-    return this.i3t;
+    return this.o4t;
   }
   set InstanceMultiEnter(e) {
-    this.i3t = e;
+    this.o4t = e;
   }
   SetInstanceDungeonId(e) {
-    this.JFt = e;
+    this.z3t = e;
   }
   get GetInstanceDungeonId() {
-    return this.JFt;
+    return this.z3t;
   }
   get GetAllRoleConfigIdList() {
     var t = [];
@@ -89,10 +89,10 @@ class EditBattleTeamModel extends ModelBase_1.ModelBase {
         "PlayerId",
         e,
       ]),
-      (this.zFt = e);
+      (this.Z3t = e);
   }
   get GetLeaderPlayerId() {
-    return this.zFt;
+    return this.Z3t;
   }
   get GetLeaderIsSelf() {
     return (
@@ -110,25 +110,25 @@ class EditBattleTeamModel extends ModelBase_1.ModelBase {
     return { CanAdd: !0, LimitRoleId: 0 };
   }
   InitTrailRoleInstance() {
-    this.ZFt.clear();
+    this.e4t.clear();
     var e,
       t = this.GetCurrentFightFormation.TrialRole,
       r = ModelManager_1.ModelManager.RoleModel;
     for (const i of t)
-      this.ZFt.has(i) ||
+      this.e4t.has(i) ||
         ((e = r.GetRoleDataById(
           ConfigManager_1.ConfigManager.RoleConfig.GetTrialRoleIdConfigByGroupId(
             i,
           ),
         )),
-        this.ZFt.set(i, e));
+        this.e4t.set(i, e));
   }
   GetRoleList() {
     var t = ModelManager_1.ModelManager.RoleModel,
       r = [],
       e = t.GetRoleMap();
-    if (this.o3t())
-      for (const s of this.r3t()) {
+    if (this.r4t())
+      for (const s of this.n4t()) {
         var i,
           o = t.GetRoleDataById(s);
         o && ((i = o.GetDataId()), this.CanAddRoleToEditTeam(i)) && r.push(o);
@@ -138,40 +138,40 @@ class EditBattleTeamModel extends ModelBase_1.ModelBase {
         var a = l.GetDataId();
         this.CanAddRoleToEditTeam(a) && r.push(l);
       }
-      for (const f of this.ZFt.values()) r.push(f);
+      for (const f of this.e4t.values()) r.push(f);
     }
-    if (!this.e3t) {
-      this.e3t = new Array();
+    if (!this.t4t) {
+      this.t4t = new Array();
       (e = ModelManager_1.ModelManager.WorldLevelModel.Sex),
         (e = ConfigManager_1.ConfigManager.RoleConfig.GetMainRoleByGender(e));
-      if (e) for (const h of e) this.e3t.push(h.Id);
+      if (e) for (const h of e) this.t4t.push(h.Id);
     }
     for (let e = 0; e < r.length; ) {
       var n = r[e].GetRoleId();
-      t.IsMainRole(n) && !this.e3t.includes(n) ? r.splice(e, 1) : e++;
+      t.IsMainRole(n) && !this.t4t.includes(n) ? r.splice(e, 1) : e++;
     }
     return r;
   }
   HasAnyLimit() {
-    return !!(this.o3t() || this.n3t() || this.s3t() || this.a3t());
+    return !!(this.r4t() || this.s4t() || this.a4t() || this.h4t());
   }
-  r3t() {
+  n4t() {
     var e = this.GetCurrentFightFormation;
     if (e) return e.LimitRole;
   }
-  o3t() {
-    var e = this.r3t();
+  r4t() {
+    var e = this.n4t();
     return !!e && 0 < e.length;
   }
-  n3t() {
+  s4t() {
     var e = this.GetCurrentFightFormation;
     return !!e && (e = e.LimitCount.length) !== LIMIT_COUNT_MAX_LENGTH && 0 < e;
   }
-  s3t() {
+  a4t() {
     var e = this.GetCurrentFightFormation;
     return !!e && 0 < e.LitmitElement.length;
   }
-  a3t() {
+  h4t() {
     return !!ModelManager_1.ModelManager.InstanceDungeonEntranceModel.IsMowingInstanceDungeon();
   }
   CanAddRoleToEditTeam(e) {
@@ -228,17 +228,17 @@ class EditBattleTeamModel extends ModelBase_1.ModelBase {
   CreateAllRoleSlotData() {
     for (let e = 1; e <= SceneTeamDefine_1.SCENE_TEAM_MAX_NUM; e++) {
       var t = new EditBattleRoleSlotData_1.EditBattleRoleSlotData(e);
-      this.$Ft.set(e, t);
+      this.Y3t.set(e, t);
     }
   }
   ResetAllRoleSlotData() {
-    for (const e of this.$Ft.values()) e.ResetRoleData();
-    this.ZFt.clear(),
+    for (const e of this.Y3t.values()) e.ResetRoleData();
+    this.e4t.clear(),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("Formation", 8, "[EditBattleTeam]还原所有战前编队数据");
   }
   HasSameConfigIdInAnyOwnRoleSlot(e) {
-    for (const r of this.$Ft.values()) {
+    for (const r of this.Y3t.values()) {
       var t = r.GetRoleData;
       if (t && t.IsSelf && r.GetRoleConfigId === e) return !0;
     }
@@ -246,7 +246,7 @@ class EditBattleTeamModel extends ModelBase_1.ModelBase {
   }
   GetPlayerRoleNumber(e) {
     let t = 0;
-    for (var [, r] of this.$Ft) e === r.GetRoleData?.PlayerId && t++;
+    for (var [, r] of this.Y3t) e === r.GetRoleData?.PlayerId && t++;
     return t;
   }
   GetParentRolePositionInEditBattleTeam(e) {
@@ -267,7 +267,7 @@ class EditBattleTeamModel extends ModelBase_1.ModelBase {
   }
   get GetOwnRoleCountInRoleSlot() {
     let e = 0;
-    for (const r of this.$Ft.values()) {
+    for (const r of this.Y3t.values()) {
       var t = r.GetRoleData;
       t && t.IsSelf && e++;
     }
@@ -275,7 +275,7 @@ class EditBattleTeamModel extends ModelBase_1.ModelBase {
   }
   GetRoleCountInRoleSlot() {
     let e = 0;
-    for (const t of this.$Ft.values()) t.GetRoleData && e++;
+    for (const t of this.Y3t.values()) t.GetRoleData && e++;
     return e;
   }
   PrintRoleSlotsDebugString() {
@@ -301,14 +301,14 @@ class EditBattleTeamModel extends ModelBase_1.ModelBase {
     }
   }
   SetCurrentEditPosition(e) {
-    this.YFt = e;
+    this.J3t = e;
   }
   get GetCurrentEditRoleSlotData() {
-    if (this.YFt) return this.GetRoleSlotData(this.YFt);
+    if (this.J3t) return this.GetRoleSlotData(this.J3t);
   }
   IsInEditBattleTeam(e, t = !1) {
     var r = ModelManager_1.ModelManager.PlayerInfoModel.GetId();
-    for (const o of this.$Ft.values()) {
+    for (const o of this.Y3t.values()) {
       var i = o.GetRoleData;
       if (i && (!t || r === i.PlayerId) && i.ConfigId === e) return !0;
     }
@@ -319,7 +319,7 @@ class EditBattleTeamModel extends ModelBase_1.ModelBase {
     return e ? e.GetPosition : -1;
   }
   GetSlotDataByConfigId(e) {
-    for (const r of this.$Ft.values()) {
+    for (const r of this.Y3t.values()) {
       var t = r.GetRoleData;
       if (t && t.ConfigId === e) return r;
     }
@@ -334,16 +334,16 @@ class EditBattleTeamModel extends ModelBase_1.ModelBase {
       : this.InitAllSingleRoleData();
   }
   GetRoleSlotData(e) {
-    return this.$Ft.get(e);
+    return this.Y3t.get(e);
   }
   RefreshAllEmptySlotData() {
-    for (let t = 1; t <= this.$Ft.size; t++) {
-      var r = this.$Ft.get(t);
+    for (let t = 1; t <= this.Y3t.size; t++) {
+      var r = this.Y3t.get(t);
       if (r) {
         var e = r.GetRoleData;
         if (!e)
-          for (let e = t + 1; e <= this.$Ft.size; e++) {
-            var i = this.$Ft.get(e);
+          for (let e = t + 1; e <= this.Y3t.size; e++) {
+            var i = this.Y3t.get(e);
             if (i) {
               var o = i.GetRoleData;
               if (o) {
@@ -357,11 +357,11 @@ class EditBattleTeamModel extends ModelBase_1.ModelBase {
   }
   get GetAllRoleSlotData() {
     var e = [];
-    for (const t of this.$Ft.values()) e.push(t);
+    for (const t of this.Y3t.values()) e.push(t);
     return e;
   }
   SetPlayerReady(e, t) {
-    for (var [, r] of this.$Ft) {
+    for (var [, r] of this.Y3t) {
       var i;
       r.HasRole &&
         (i = r.GetRoleData).PlayerId === e &&
@@ -407,7 +407,7 @@ class EditBattleTeamModel extends ModelBase_1.ModelBase {
     return !1;
   }
   IsRoleConflict(e, t) {
-    for (var [, r] of this.$Ft)
+    for (var [, r] of this.Y3t)
       if (r && r.GetRoleData?.PlayerId !== e && r.GetRoleConfigId === t)
         return !0;
     return !1;
@@ -423,11 +423,12 @@ class EditBattleTeamModel extends ModelBase_1.ModelBase {
         ModelManager_1.ModelManager.InstanceDungeonModel.GetPrewarFormationDataList(),
       r = t.length;
     for (let e = 0; e < LIMIT_COUNT_MAX_LENGTH; e++) {
-      var i = this.$Ft.get(e + 1);
+      var i = this.Y3t.get(e + 1);
       e + 1 > r ? i.ResetRoleData() : i.SetRoleDataByPrewarInfo(t[e]);
     }
     EventSystem_1.EventSystem.Emit(
       EventDefine_1.EEventName.OnRefreshEditBattleRoleSlotData,
+      "刷新所有多人联机的战前编队角色数据",
     );
   }
   InitAllMultiRoleData(e) {
@@ -463,6 +464,7 @@ class EditBattleTeamModel extends ModelBase_1.ModelBase {
       this.SetLeaderPlayerId(e)),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnRefreshEditBattleRoleSlotData,
+        "初始化所有多人联机的战前编队角色数据",
       ),
       this.PrintRoleSlotsDebugString();
   }
@@ -484,7 +486,7 @@ class EditBattleTeamModel extends ModelBase_1.ModelBase {
         var i,
           o = this.GetRoleSlotData(e);
         o &&
-          ((i = this.ZFt.get(d))
+          ((i = this.e4t.get(d))
             ? ((i = this.CreateRoleDataFromRoleInstance(i)),
               o.SetRoleData(i),
               e++)
@@ -498,6 +500,7 @@ class EditBattleTeamModel extends ModelBase_1.ModelBase {
       }
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnRefreshEditBattleRoleSlotData,
+        "自动上阵指定临时角色",
       ),
         void this.PrintRoleSlotsDebugString();
     } else if (this.HasAnyLimit())
@@ -554,6 +557,7 @@ class EditBattleTeamModel extends ModelBase_1.ModelBase {
       }
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnRefreshEditBattleRoleSlotData,
+        "初始化所有单人的战前编队角色数据",
       ),
         this.PrintRoleSlotsDebugString();
     }
@@ -585,7 +589,7 @@ class EditBattleTeamModel extends ModelBase_1.ModelBase {
   ChangeMainRoleData() {
     if (!ModelManager_1.ModelManager.GameModeModel.IsMulti) {
       var e = ModelManager_1.ModelManager.RoleModel;
-      for (const o of this.$Ft.values()) {
+      for (const o of this.Y3t.values()) {
         var t,
           r = o.GetRoleData,
           i = r?.ConfigId;
@@ -598,6 +602,7 @@ class EditBattleTeamModel extends ModelBase_1.ModelBase {
       }
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnRefreshEditBattleRoleSlotData,
+        "单机更换主角色",
       );
     }
   }

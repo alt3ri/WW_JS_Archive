@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InputKeyDisplayData = void 0);
+const InputSettings_1 = require("./InputSettings");
 class InputKeyDisplayData {
   constructor() {
     (this.ActionOrAxisName = void 0),
@@ -22,6 +23,17 @@ class InputKeyDisplayData {
     if (0 < this.KeyNameMap.size)
       for (var [s, i] of this.KeyNameMap) return [s, i];
     if (0 < this.KeyNameList.length) return [this.KeyNameList[t]];
+  }
+  GetDisplayKeyIconPathList(t = 0) {
+    t = this.GetDisplayKeyNameList(t);
+    if (void 0 !== t) {
+      var s = [];
+      for (const e of t) {
+        var i = InputSettings_1.InputSettings.GetKey(e);
+        s.push(i?.GetKeyIconPath() ?? "");
+      }
+      return s;
+    }
   }
   IsValid() {
     return void 0 !== this.ActionOrAxisName;

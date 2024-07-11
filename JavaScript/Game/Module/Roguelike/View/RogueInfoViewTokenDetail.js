@@ -14,18 +14,18 @@ const UE = require("ue"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
+  UiViewSequence_1 = require("../../../Ui/Base/UiViewSequence"),
   LoopScrollMediumItemGrid_1 = require("../../Common/MediumItemGrid/LoopScrollMediumItemGrid"),
   MediumItemGridComponent_1 = require("../../Common/MediumItemGrid/MediumItemGridComponent/MediumItemGridComponent"),
   GenericLayout_1 = require("../../Util/Layout/GenericLayout"),
   LguiUtil_1 = require("../../Util/LguiUtil"),
   LoopScrollView_1 = require("../../Util/ScrollView/LoopScrollView"),
-  CommonSelectItem_1 = require("./CommonSelectItem"),
-  UiViewSequence_1 = require("../../../Ui/Base/UiViewSequence");
+  CommonSelectItem_1 = require("./CommonSelectItem");
 class RogueInfoViewTokenElement extends MediumItemGridComponent_1.MediumItemGridComponent {
   constructor() {
     super(...arguments),
-      (this.E_i = void 0),
-      (this.Wso = () => {
+      (this.Sui = void 0),
+      (this.Fao = () => {
         return new CommonSelectItem_1.CommonElementItem();
       });
   }
@@ -36,9 +36,9 @@ class RogueInfoViewTokenElement extends MediumItemGridComponent_1.MediumItemGrid
     this.ComponentRegisterInfos = [[0, UE.UIVerticalLayout]];
   }
   OnActivate() {
-    this.E_i = new GenericLayout_1.GenericLayout(
+    this.Sui = new GenericLayout_1.GenericLayout(
       this.GetVerticalLayout(0),
-      this.Wso,
+      this.Fao,
     );
   }
   OnRefresh(e) {
@@ -46,7 +46,7 @@ class RogueInfoViewTokenElement extends MediumItemGridComponent_1.MediumItemGrid
     e.length <= 0 ||
       ((e = e[0]),
       (e = new Array(e.Count).fill(e.ElementId)),
-      this.E_i?.RefreshByData(e));
+      this.Sui?.RefreshByData(e));
   }
 }
 exports.RogueInfoViewTokenElement = RogueInfoViewTokenElement;
@@ -100,7 +100,7 @@ class RogueInfoViewShopDiscount extends MediumItemGridComponent_1.MediumItemGrid
 exports.RogueInfoViewShopDiscount = RogueInfoViewShopDiscount;
 class RogueInfoViewTokenDetailGridBottom extends MediumItemGridComponent_1.MediumItemGridComponent {
   constructor() {
-    super(...arguments), (this.oao = void 0);
+    super(...arguments), (this.Zao = void 0);
   }
   GetResourceId() {
     return "UiItem_ItemRogue";
@@ -112,14 +112,14 @@ class RogueInfoViewTokenDetailGridBottom extends MediumItemGridComponent_1.Mediu
     ];
   }
   OnActivate() {
-    (this.oao = new CommonSelectItem_1.CommonElementItem()),
-      this.oao.CreateThenShowByActorAsync(this.GetItem(0).GetOwner());
+    (this.Zao = new CommonSelectItem_1.CommonElementItem()),
+      this.Zao.CreateThenShowByActorAsync(this.GetItem(0).GetOwner());
   }
   OnRefresh(e) {
     e = e.GetSortElementInfoArrayByCount();
     e.length <= 0 ||
-      (this.oao.Update(e[0].ElementId),
-      this.oao.RefreshPanel(),
+      (this.Zao.Update(e[0].ElementId),
+      this.Zao.RefreshPanel(),
       this.GetText(1).SetText(e[0].Count.toString()));
   }
 }
@@ -144,10 +144,10 @@ class RogueInfoViewTokenDetailGrid extends LoopScrollMediumItemGrid_1.LoopScroll
         IconPath: o.BuffIcon,
         QualityId: o.Quality,
         QualityType: "MediumItemGridQualitySpritePath",
+        IsDisable: e.IsSell,
       },
       o =
         (this.Apply(o),
-        this.SetIsDisable(e.IsSell),
         this.SetSelected(t),
         t && this.OnSelected(!0),
         this.RefreshComponent(RogueInfoViewTokenElement, !0, e)),
@@ -193,7 +193,7 @@ class RogueInfoViewTokenDetail extends UiPanelBase_1.UiPanelBase {
       (this.LoopScrollView = void 0),
       (this.DetailItem = void 0),
       (this.UiViewSequence = void 0),
-      (this.Hao = () => {
+      (this.Oho = () => {
         return new RogueInfoViewTokenDetailGrid();
       });
   }
@@ -216,7 +216,7 @@ class RogueInfoViewTokenDetail extends UiPanelBase_1.UiPanelBase {
       (this.LoopScrollView = new LoopScrollView_1.LoopScrollView(
         this.GetLoopScrollViewComponent(0),
         this.GetItem(1).GetOwner(),
-        this.Hao,
+        this.Oho,
       ));
     var e = ModelManager_1.ModelManager.RoguelikeModel.RogueInfo.BuffEntryList;
     e.sort((e, t) => {

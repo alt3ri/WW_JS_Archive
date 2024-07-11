@@ -11,132 +11,132 @@ const Log_1 = require("../../../Core/Common/Log"),
   UiConfig_1 = require("../Define/UiConfig");
 class UiTimeDilation {
   static set GmSwitch(i) {
-    UiTimeDilation.R4s = i;
+    UiTimeDilation.U7s = i;
   }
   static get GmSwitch() {
-    return UiTimeDilation.R4s;
+    return UiTimeDilation.U7s;
   }
-  static get Qht() {
-    return UiTimeDilation.x4s?.TimeDilation ?? 1;
+  static get s1t() {
+    return UiTimeDilation.R7s?.TimeDilation ?? 1;
   }
-  static get P4s() {
-    return UiTimeDilation.x4s?.ViewId ?? 0;
+  static get x7s() {
+    return UiTimeDilation.R7s?.ViewId ?? 0;
   }
-  static get B4s() {
-    return UiTimeDilation.x4s?.DebugName;
+  static get P7s() {
+    return UiTimeDilation.R7s?.DebugName;
   }
   static get pLe() {
-    return UiTimeDilation.x4s?.Reason ?? "UiTimeDilation";
+    return UiTimeDilation.R7s?.Reason ?? "UiTimeDilation";
   }
   static Init() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OpenView,
-      UiTimeDilation.T_r,
+      UiTimeDilation.Sur,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.CloseView,
-        UiTimeDilation.L_r,
+        UiTimeDilation.yur,
       ),
       EventSystem_1.EventSystem.Add(
-        EventDefine_1.EEventName.ResetModuleByResetToBattleView,
-        UiTimeDilation.D_r,
+        EventDefine_1.EEventName.ResetModuleAfterResetToBattleView,
+        UiTimeDilation.Iur,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.ClearWorld,
-        UiTimeDilation.D_r,
+        UiTimeDilation.Iur,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.ChangeMode,
-        UiTimeDilation.R_r,
+        UiTimeDilation.Tur,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.UpdatePanelQteWorldTimeDilation,
-        UiTimeDilation.U_r,
+        UiTimeDilation.Lur,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.ReConnectSuccess,
-        UiTimeDilation.A_r,
+        UiTimeDilation.Dur,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnSequenceCameraStatus,
-        UiTimeDilation.P_r,
+        UiTimeDilation.Rur,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.EnterGameSuccess,
-        UiTimeDilation.A_r,
+        UiTimeDilation.Dur,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnStartLoadingState,
-        UiTimeDilation.Jxn,
+        UiTimeDilation.RBn,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnFinishLoadingState,
-        UiTimeDilation.zxn,
+        UiTimeDilation.xBn,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.LevelLoadingLockTimeDilation,
-        UiTimeDilation.w4s,
+        UiTimeDilation.B7s,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.LevelLoadingUnlockDilation,
-        UiTimeDilation.b4s,
+        UiTimeDilation.w7s,
       );
   }
   static Destroy() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OpenView,
-      UiTimeDilation.T_r,
+      UiTimeDilation.Sur,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.CloseView,
-        UiTimeDilation.L_r,
+        UiTimeDilation.yur,
       ),
       EventSystem_1.EventSystem.Remove(
-        EventDefine_1.EEventName.ResetModuleByResetToBattleView,
-        UiTimeDilation.D_r,
+        EventDefine_1.EEventName.ResetModuleAfterResetToBattleView,
+        UiTimeDilation.Iur,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.ClearWorld,
-        UiTimeDilation.D_r,
+        UiTimeDilation.Iur,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.ChangeMode,
-        UiTimeDilation.R_r,
+        UiTimeDilation.Tur,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.UpdatePanelQteWorldTimeDilation,
-        UiTimeDilation.U_r,
+        UiTimeDilation.Lur,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.ReConnectSuccess,
-        UiTimeDilation.A_r,
+        UiTimeDilation.Dur,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnSequenceCameraStatus,
-        UiTimeDilation.P_r,
+        UiTimeDilation.Rur,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.EnterGameSuccess,
-        UiTimeDilation.A_r,
+        UiTimeDilation.Dur,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnStartLoadingState,
-        UiTimeDilation.Jxn,
+        UiTimeDilation.RBn,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnFinishLoadingState,
-        UiTimeDilation.zxn,
+        UiTimeDilation.xBn,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.LevelLoadingLockTimeDilation,
-        UiTimeDilation.w4s,
+        UiTimeDilation.B7s,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.LevelLoadingUnlockDilation,
-        UiTimeDilation.b4s,
+        UiTimeDilation.w7s,
       );
   }
-  static w_r(i, e) {
+  static Aur(i, e) {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "UiTimeDilation",
@@ -146,8 +146,8 @@ class UiTimeDilation {
         ["是否触发真时停", i < MathUtils_1.MathUtils.KindaSmallNumber],
       );
   }
-  static q4s(i) {
-    (UiTimeDilation.F_r && 1 !== UiTimeDilation.F_r.TimeDilation) ||
+  static b7s(i) {
+    (UiTimeDilation.Nur && 1 !== UiTimeDilation.Nur.TimeDilation) ||
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "UiTimeDilation",
@@ -156,11 +156,11 @@ class UiTimeDilation {
           ["触发界面", i.DebugName],
           ["界面Id", i.ViewId],
         ),
-      (UiTimeDilation.F_r = i));
+      (UiTimeDilation.Nur = i));
   }
-  static G4s(i) {
+  static q7s(i) {
     return ModelManager_1.ModelManager.GameModeModel
-      ? UiTimeDilation.O_r()
+      ? UiTimeDilation.qur()
         ? (Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "UiTimeDilation",
@@ -170,7 +170,7 @@ class UiTimeDilation {
               ["界面Id", i.ViewId],
             ),
           !1)
-        : (UiTimeDilation.B_r(i),
+        : (UiTimeDilation.Pur(i),
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "UiTimeDilation",
@@ -191,12 +191,12 @@ class UiTimeDilation {
           ),
         !1);
   }
-  static B_r(i) {
+  static Pur(i) {
     var e = i.TimeDilation;
-    (UiTimeDilation.x4s = 1 !== e ? i : void 0),
-      UiTimeDilation.w_r(e, i.Reason),
-      UiTimeDilation.q_r
-        ? ((UiTimeDilation.G_r = e < MathUtils_1.MathUtils.KindaSmallNumber),
+    (UiTimeDilation.R7s = 1 !== e ? i : void 0),
+      UiTimeDilation.Aur(e, i.Reason),
+      UiTimeDilation.wur
+        ? ((UiTimeDilation.Bur = e < MathUtils_1.MathUtils.KindaSmallNumber),
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "UiTimeDilation",
@@ -205,7 +205,7 @@ class UiTimeDilation {
             ))
         : UiTimeDilation.GmSwitch
           ? ControllerHolder_1.ControllerHolder.GameModeController.SetTimeDilation(
-              e * UiTimeDilation.O4s,
+              e * UiTimeDilation.G7s,
             )
           : e < MathUtils_1.MathUtils.KindaSmallNumber
             ? ControllerHolder_1.ControllerHolder.GameModeController.SetGamePaused(
@@ -215,13 +215,13 @@ class UiTimeDilation {
             : ControllerHolder_1.ControllerHolder.GameModeController.SetGamePaused(
                 !1,
                 "UiTimeDilation",
-                e * UiTimeDilation.O4s,
+                e * UiTimeDilation.G7s,
               );
   }
   static SetGameTimeDilation(i) {
     return (
-      Net_1.Net.IsServerConnected() || UiTimeDilation.S_r("ServerConnect"),
-      UiTimeDilation.k_r()
+      Net_1.Net.IsServerConnected() || UiTimeDilation.pur("ServerConnect"),
+      UiTimeDilation.Gur()
         ? (Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "UiTimeDilation",
@@ -229,14 +229,14 @@ class UiTimeDilation {
               "有需要等待设置时停的tag,不允许设置界面时停",
               ["触发界面", i.DebugName],
               ["界面Id", i.ViewId],
-              ["Tag", UiTimeDilation.E_r],
+              ["Tag", UiTimeDilation.vur],
             ),
-          UiTimeDilation.q4s(i),
+          UiTimeDilation.b7s(i),
           !1)
-        : UiTimeDilation.G4s(i)
+        : UiTimeDilation.q7s(i)
     );
   }
-  static O_r() {
+  static qur() {
     return ModelManager_1.ModelManager.GameModeModel.IsMulti;
   }
   static SetTimeDilationHighLevel(i, e) {
@@ -248,7 +248,7 @@ class UiTimeDilation {
         ["时停参数", i],
         ["Reason", e],
       ),
-      (UiTimeDilation.q_r = !0),
+      (UiTimeDilation.wur = !0),
       UiTimeDilation.GmSwitch
         ? ControllerHolder_1.ControllerHolder.GameModeController.SetTimeDilation(
             i,
@@ -267,12 +267,12 @@ class UiTimeDilation {
   static ResetTimeDilationHighLevel(i) {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info("UiTimeDilation", 11, "恢复高级别时停"),
-      (UiTimeDilation.q_r = !1),
+      (UiTimeDilation.wur = !1),
       ControllerHolder_1.ControllerHolder.GameModeController.SetGamePaused(
-        UiTimeDilation.G_r,
+        UiTimeDilation.Bur,
         "UiTimeDilation",
       );
-    var e = UiTimeDilation.Qht;
+    var e = UiTimeDilation.s1t;
     UiTimeDilation.GmSwitch
       ? ControllerHolder_1.ControllerHolder.GameModeController.SetTimeDilation(
           e,
@@ -288,29 +288,29 @@ class UiTimeDilation {
             e,
           );
   }
-  static V_r() {
+  static Our() {
     var i;
-    UiTimeDilation.F_r &&
-      (UiTimeDilation.H_r !== UiTimeDilation.F_r.ViewId
-        ? (UiTimeDilation.F_r = void 0)
-        : UiTimeDilation.SetGameTimeDilation(UiTimeDilation.F_r) &&
-          ((UiTimeDilation.H_r = UiTimeDilation.F_r.ViewId),
-          (i = UiTimeDilation.F_r.DebugName),
-          (UiTimeDilation.F_r = void 0),
+    UiTimeDilation.Nur &&
+      (UiTimeDilation.kur !== UiTimeDilation.Nur.ViewId
+        ? (UiTimeDilation.Nur = void 0)
+        : UiTimeDilation.SetGameTimeDilation(UiTimeDilation.Nur) &&
+          ((UiTimeDilation.kur = UiTimeDilation.Nur.ViewId),
+          (i = UiTimeDilation.Nur.DebugName),
+          (UiTimeDilation.Nur = void 0),
           Log_1.Log.CheckInfo()) &&
           Log_1.Log.Info(
             "UiTimeDilation",
             11,
             "缓存数据设置成功",
             ["界面", i],
-            ["界面Id", UiTimeDilation.H_r],
+            ["界面Id", UiTimeDilation.kur],
           ));
   }
   static AddViewData(i, e) {
     i = UiConfig_1.UiConfig.TryGetViewInfo(i);
     i.TimeDilation < 1 &&
-      (UiTimeDilation.j_r.push(e),
-      UiTimeDilation.W_r.set(e, {
+      (UiTimeDilation.Fur.push(e),
+      UiTimeDilation.Vur.set(e, {
         ViewId: e,
         TimeDilation: i.TimeDilation,
         DebugName: i.Name,
@@ -318,16 +318,16 @@ class UiTimeDilation {
       }));
   }
   static RemoveViewData(i) {
-    UiTimeDilation.W_r.delete(i) &&
-      ((i = UiTimeDilation.j_r.indexOf(i)), UiTimeDilation.j_r.splice(i, 1));
+    UiTimeDilation.Vur.delete(i) &&
+      ((i = UiTimeDilation.Fur.indexOf(i)), UiTimeDilation.Fur.splice(i, 1));
   }
   static SetNextViewTimeDilation() {
     var i,
-      e = UiTimeDilation.j_r.shift();
+      e = UiTimeDilation.Fur.shift();
     e &&
-      ((i = UiTimeDilation.W_r.get(e)),
+      ((i = UiTimeDilation.Vur.get(e)),
       UiTimeDilation.SetGameTimeDilation(i)) &&
-      ((UiTimeDilation.H_r = e), Log_1.Log.CheckInfo()) &&
+      ((UiTimeDilation.kur = e), Log_1.Log.CheckInfo()) &&
       Log_1.Log.Info(
         "UiTimeDilation",
         11,
@@ -336,14 +336,14 @@ class UiTimeDilation {
         ["界面Id", e],
       );
   }
-  static S_r(i) {
-    UiTimeDilation.E_r.add(i),
+  static pur(i) {
+    UiTimeDilation.vur.add(i),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("UiTimeDilation", 11, "添加等待设置时停的tag", [
           "Tag",
           i,
         ]),
-      UiTimeDilation.x4s &&
+      UiTimeDilation.R7s &&
         (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "UiTimeDilation",
@@ -351,38 +351,33 @@ class UiTimeDilation {
             "目前存在界面正在时停中,缓存并且临时恢复",
             ["Tag", i],
           ),
-        UiTimeDilation.q4s(UiTimeDilation.x4s),
-        UiTimeDilation.G4s({
-          ViewId: UiTimeDilation.x4s.ViewId,
+        UiTimeDilation.b7s(UiTimeDilation.R7s),
+        UiTimeDilation.q7s({
+          ViewId: UiTimeDilation.R7s.ViewId,
           TimeDilation: 1,
-          DebugName: UiTimeDilation.x4s.DebugName,
-          Reason: UiTimeDilation.x4s.Reason,
+          DebugName: UiTimeDilation.R7s.DebugName,
+          Reason: UiTimeDilation.R7s.Reason,
         }));
   }
-  static y_r(i) {
-    UiTimeDilation.E_r.delete(i) &&
+  static Mur(i) {
+    UiTimeDilation.vur.delete(i) &&
       Log_1.Log.CheckInfo() &&
       Log_1.Log.Info("UiTimeDilation", 11, "删除等待设置时停的tag", ["Tag", i]),
-      UiTimeDilation.V_r();
+      UiTimeDilation.Our();
   }
-  static I_r() {
-    UiTimeDilation.E_r.clear(),
-      Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("UiTimeDilation", 11, "清理等待设置时停的tag");
-  }
-  static k_r() {
-    return 0 < UiTimeDilation.E_r.size;
+  static Gur() {
+    return 0 < UiTimeDilation.vur.size;
   }
 }
-((exports.UiTimeDilation = UiTimeDilation).R4s = !1),
-  (UiTimeDilation.H_r = 0),
-  (UiTimeDilation.G_r = !1),
-  (UiTimeDilation.q_r = !1),
-  (UiTimeDilation.F_r = void 0),
-  (UiTimeDilation.x4s = void 0),
-  (UiTimeDilation.T_r = (i, e) => {
+((exports.UiTimeDilation = UiTimeDilation).U7s = !1),
+  (UiTimeDilation.kur = 0),
+  (UiTimeDilation.Bur = !1),
+  (UiTimeDilation.wur = !1),
+  (UiTimeDilation.Nur = void 0),
+  (UiTimeDilation.R7s = void 0),
+  (UiTimeDilation.Sur = (i, e) => {
     i &&
-      (UiTimeDilation.AddViewData(i, e), 0 === UiTimeDilation.H_r) &&
+      (UiTimeDilation.AddViewData(i, e), 0 === UiTimeDilation.kur) &&
       1 !== (i = UiConfig_1.UiConfig.TryGetViewInfo(i)).TimeDilation &&
       UiTimeDilation.SetGameTimeDilation({
         ViewId: e,
@@ -390,12 +385,12 @@ class UiTimeDilation {
         DebugName: i.Name,
         Reason: "UiTimeDilation",
       }) &&
-      (UiTimeDilation.H_r = e);
+      (UiTimeDilation.kur = e);
   }),
-  (UiTimeDilation.L_r = (i, e) => {
+  (UiTimeDilation.yur = (i, e) => {
     UiTimeDilation.RemoveViewData(e),
-      UiTimeDilation.F_r?.ViewId === e
-        ? ((UiTimeDilation.F_r = void 0),
+      UiTimeDilation.Nur?.ViewId === e
+        ? ((UiTimeDilation.Nur = void 0),
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "UiTimeDilation",
@@ -404,15 +399,15 @@ class UiTimeDilation {
               ["恢复界面", i],
               ["界面Id", e],
             ),
-          UiTimeDilation.H_r === e && (UiTimeDilation.H_r = 0))
-        : e === UiTimeDilation.H_r &&
+          UiTimeDilation.kur === e && (UiTimeDilation.kur = 0))
+        : e === UiTimeDilation.kur &&
           UiTimeDilation.SetGameTimeDilation({
             ViewId: e,
             TimeDilation: 1,
             DebugName: i,
             Reason: "UiTimeDilation",
           }) &&
-          ((UiTimeDilation.H_r = 0),
+          ((UiTimeDilation.kur = 0),
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "UiTimeDilation",
@@ -423,13 +418,13 @@ class UiTimeDilation {
             ),
           UiTimeDilation.SetNextViewTimeDilation());
   }),
-  (UiTimeDilation.D_r = () => {
+  (UiTimeDilation.Iur = () => {
     !ModelManager_1.ModelManager.GameModeModel ||
-      UiTimeDilation.O_r() ||
-      (Net_1.Net.IsServerConnected() && UiTimeDilation.R_r());
+      UiTimeDilation.qur() ||
+      (Net_1.Net.IsServerConnected() && UiTimeDilation.Tur());
   }),
-  (UiTimeDilation.R_r = () => {
-    (UiTimeDilation.x4s = void 0),
+  (UiTimeDilation.Tur = () => {
+    (UiTimeDilation.R7s = void 0),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("UiTimeDilation", 11, "时停强制重置为1"),
       UiTimeDilation.GmSwitch
@@ -441,44 +436,43 @@ class UiTimeDilation {
             "UiTimeDilation",
             1,
           ),
-      (UiTimeDilation.F_r = void 0),
-      UiTimeDilation.I_r(),
-      (UiTimeDilation.H_r = 0),
-      (UiTimeDilation.G_r = !1);
+      (UiTimeDilation.Nur = void 0),
+      (UiTimeDilation.kur = 0),
+      (UiTimeDilation.Bur = !1);
   }),
-  (UiTimeDilation.O4s = 1),
-  (UiTimeDilation.U_r = (i) => {
-    UiTimeDilation.O4s !== i &&
-      ((UiTimeDilation.O4s = i), 0 !== UiTimeDilation.Qht) &&
-      ((i = UiTimeDilation.x4s ?? {
-        ViewId: UiTimeDilation.P4s,
-        TimeDilation: UiTimeDilation.Qht,
-        DebugName: UiTimeDilation.B4s,
+  (UiTimeDilation.G7s = 1),
+  (UiTimeDilation.Lur = (i) => {
+    UiTimeDilation.G7s !== i &&
+      ((UiTimeDilation.G7s = i), 0 !== UiTimeDilation.s1t) &&
+      ((i = UiTimeDilation.R7s ?? {
+        ViewId: UiTimeDilation.x7s,
+        TimeDilation: UiTimeDilation.s1t,
+        DebugName: UiTimeDilation.P7s,
         Reason: UiTimeDilation.pLe,
       }),
-      UiTimeDilation.B_r(i));
+      UiTimeDilation.Pur(i));
   }),
-  (UiTimeDilation.A_r = () => {
-    UiTimeDilation.y_r("ServerConnect");
+  (UiTimeDilation.Dur = () => {
+    UiTimeDilation.Mur("ServerConnect");
   }),
-  (UiTimeDilation.P_r = (i) => {
+  (UiTimeDilation.Rur = (i) => {
     i
-      ? UiTimeDilation.S_r("CameraSequence")
-      : UiTimeDilation.y_r("CameraSequence");
+      ? UiTimeDilation.pur("CameraSequence")
+      : UiTimeDilation.Mur("CameraSequence");
   }),
-  (UiTimeDilation.Jxn = () => {
-    UiTimeDilation.S_r("Loading");
+  (UiTimeDilation.RBn = () => {
+    UiTimeDilation.pur("Loading");
   }),
-  (UiTimeDilation.zxn = () => {
-    UiTimeDilation.y_r("Loading");
+  (UiTimeDilation.xBn = () => {
+    UiTimeDilation.Mur("Loading");
   }),
-  (UiTimeDilation.w4s = () => {
-    UiTimeDilation.S_r("LevelLoading");
+  (UiTimeDilation.B7s = () => {
+    UiTimeDilation.pur("LevelLoading");
   }),
-  (UiTimeDilation.b4s = () => {
-    UiTimeDilation.y_r("LevelLoading");
+  (UiTimeDilation.w7s = () => {
+    UiTimeDilation.Mur("LevelLoading");
   }),
-  (UiTimeDilation.j_r = []),
-  (UiTimeDilation.W_r = new Map()),
-  (UiTimeDilation.E_r = new Set());
+  (UiTimeDilation.Fur = []),
+  (UiTimeDilation.Vur = new Map()),
+  (UiTimeDilation.vur = new Set());
 //# sourceMappingURL=UiTimeDilation.js.map

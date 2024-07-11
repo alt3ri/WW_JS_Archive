@@ -24,29 +24,29 @@ const UE = require("ue"),
 class LordGymPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
   constructor() {
     super(...arguments),
-      (this.Nct = void 0),
-      (this.dko = void 0),
-      (this.Vko = void 0),
-      (this.Hko = void 0),
-      (this.jko = void 0),
-      (this.Wko = void 0),
+      (this.Ymt = void 0),
+      (this.u2o = void 0),
+      (this.O2o = void 0),
+      (this.k2o = void 0),
+      (this.F2o = void 0),
+      (this.V2o = void 0),
       (this.IRe = void 0),
-      (this.Kko = void 0),
-      (this.$Ut = void 0),
-      (this.Qko = !1),
+      (this.H2o = void 0),
+      (this.ZAt = void 0),
+      (this.j2o = !1),
       (this.OnCreateDifficultyItem = () => new DifficultyItem()),
-      (this.gko = () => {
-        var e = this.dko.IsTracked;
+      (this.m2o = () => {
+        var e = this.u2o.IsTracked;
         MapController_1.MapController.RequestTrackMapMark(
-          this.dko.MarkType,
-          this.dko.MarkId,
+          this.u2o.MarkType,
+          this.u2o.MarkId,
           !e,
         ),
           this.Close();
       }),
       (this.UOe = () => {
         var e = ModelManager_1.ModelManager.MapModel.IsLevelPlayOccupied(
-          this.Nct.Id,
+          this.Ymt.Id,
         );
         e.IsOccupied &&
           ((e =
@@ -67,35 +67,35 @@ class LordGymPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
   OnStart() {
     this.RootItem.SetRaycastTarget(!1),
       this.GetItem(14).SetUIActive(!0),
-      (this.Kko = new GenericLayout_1.GenericLayout(
+      (this.H2o = new GenericLayout_1.GenericLayout(
         this.GetVerticalLayout(16),
         this.OnCreateDifficultyItem,
       )),
-      this.Kko.SetActive(!0),
-      (this.$Ut = new ButtonItem_1.ButtonItem(this.GetButton(11).RootUIComp)),
-      this.$Ut.SetFunction(this.gko);
+      this.H2o.SetActive(!0),
+      (this.ZAt = new ButtonItem_1.ButtonItem(this.GetButton(11).RootUIComp)),
+      this.ZAt.SetFunction(this.m2o);
   }
   OnBeforeDestroy() {
-    this.Kko.ClearChildren(),
-      this.AddChild(this.$Ut),
-      this.Vko && (this.AddChild(this.Vko), (this.Vko = void 0)),
-      this.Hko && (this.AddChild(this.Hko), (this.Hko = void 0)),
-      (this.jko = void 0),
-      (this.Wko = void 0);
+    this.H2o.ClearChildren(),
+      this.AddChild(this.ZAt),
+      this.O2o && (this.AddChild(this.O2o), (this.O2o = void 0)),
+      this.k2o && (this.AddChild(this.k2o), (this.k2o = void 0)),
+      (this.F2o = void 0),
+      (this.V2o = void 0);
   }
   OnShowWorldMapSecondaryUi(e) {
     e
-      ? ((this.dko = e),
-        this.SetSpriteByPath(this.dko.IconPath, this.GetSprite(0), !1),
-        (this.Nct = ModelManager_1.ModelManager.LevelPlayModel.GetLevelPlayInfo(
+      ? ((this.u2o = e),
+        this.SetSpriteByPath(this.u2o.IconPath, this.GetSprite(0), !1),
+        (this.Ymt = ModelManager_1.ModelManager.LevelPlayModel.GetLevelPlayInfo(
           e.MarkConfig.RelativeId,
         )),
-        this.Nct ||
-          ((this.Nct = new LevelPlay_1.LevelPlayInfo(e.MarkConfig.RelativeId)),
-          this.Nct.InitConfig()),
+        this.Ymt ||
+          ((this.Ymt = new LevelPlay_1.LevelPlayInfo(e.MarkConfig.RelativeId)),
+          this.Ymt.InitConfig()),
         (this.IRe = void 0),
-        this.h7e(),
-        this.l1i())
+        this.SHe(),
+        this.l_i())
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "SceneGameplay",
@@ -107,55 +107,55 @@ class LordGymPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
     this.IRe &&
       (TimerSystem_1.TimerSystem.Remove(this.IRe), (this.IRe = void 0));
   }
-  h7e() {
+  SHe() {
     var e,
       i,
-      t = this.dko.MarkConfigId,
+      t = this.u2o.MarkConfigId,
       r = MapMarkByMarkId_1.configMapMarkByMarkId.GetConfig(t);
     r
       ? (this.GetText(1).ShowTextNew(r.MarkTitle),
         this.GetText(4).ShowTextNew(r.MarkDesc),
-        (r = this.dko.GetAreaText()) && this.GetText(3).SetText(r),
+        (r = this.u2o.GetAreaText()) && this.GetText(3).SetText(r),
         (r =
           ConfigManager_1.ConfigManager.LordGymConfig?.GetLordGymEntranceConfigByMarkId(
-            this.dko.MarkId,
+            this.u2o.MarkId,
           )),
         (e =
           ConfigManager_1.ConfigManager.LordGymConfig?.GetLordGymEntranceLordList(
             r.Id,
           )),
         (i = ModelManager_1.ModelManager.LevelPlayModel.GetLevelPlayConfig(
-          this.Nct.Id,
+          this.Ymt.Id,
         )?.LevelPlayRewardConfig),
         (r =
           ModelManager_1.ModelManager.LordGymModel.GetMaxDifficultyLordGymEntranceCanFight(
             r.Id,
           ) ?? 1),
-        (this.jko = ExchangeRewardById_1.configExchangeRewardById.GetConfig(
+        (this.F2o = ExchangeRewardById_1.configExchangeRewardById.GetConfig(
           i.RewardConfig[r - 1].RewardId,
         )),
-        (this.Wko = this.Nct.FirstRewardId
+        (this.V2o = this.Ymt.FirstRewardId
           ? ExchangeRewardById_1.configExchangeRewardById.GetConfig(
-              this.Nct.FirstRewardId,
+              this.Ymt.FirstRewardId,
             )
           : void 0),
         (i = e[r - 1]),
-        (this.Qko =
+        (this.j2o =
           ModelManager_1.ModelManager.LordGymModel.GetLordGymIsFinish(i)),
-        this.Kko.RefreshByData(e),
+        this.H2o.RefreshByData(e),
         this.GetItem(9).SetUIActive(!1),
         this.GetItem(12).SetUIActive(!1),
         this.GetItem(8).SetUIActive(!1),
         this.InitRewards(),
-        this.Xko())
+        this.W2o())
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error("SceneGameplay", 18, "缺少标记配置", ["MarkId", t]);
   }
-  Xko() {
+  W2o() {
     var e = ModelManager_1.ModelManager.MapModel.IsLevelPlayOccupied(
-      this.Nct.Id,
+      this.Ymt.Id,
     );
-    this.$Ut.SetActive(!e.IsOccupied),
+    this.ZAt.SetActive(!e.IsOccupied),
       this.GetItem(12).SetUIActive(e.IsOccupied),
       e.IsOccupied &&
         ((e = ModelManager_1.ModelManager.GeneralLogicTreeModel.GetBehaviorTree(
@@ -173,21 +173,21 @@ class LordGymPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
         this.GetText(13).SetText(e));
   }
   InitRewards() {
-    this.Vko ||
+    this.O2o ||
       ((i = this.GetItem(8).GetOwner()),
       (e = this.GetVerticalLayout(7).RootUIComp),
-      (this.Hko = new SceneGameplayTipGrid_1.SceneGameplayTipGrid()),
-      this.Hko.Initialize(LguiUtil_1.LguiUtil.DuplicateActor(i, e)),
-      (this.Vko = new SceneGameplayTipGrid_1.SceneGameplayTipGrid()),
-      this.Vko.Initialize(LguiUtil_1.LguiUtil.DuplicateActor(i, e)));
+      (this.k2o = new SceneGameplayTipGrid_1.SceneGameplayTipGrid()),
+      this.k2o.Initialize(LguiUtil_1.LguiUtil.DuplicateActor(i, e)),
+      (this.O2o = new SceneGameplayTipGrid_1.SceneGameplayTipGrid()),
+      this.O2o.Initialize(LguiUtil_1.LguiUtil.DuplicateActor(i, e)));
     var e,
       i = ModelManager_1.ModelManager.WorldLevelModel.CurWorldLevel;
-    this.Nct.IsFirstPass
-      ? this.$ko(this.Hko, void 0, 0, "", this.Qko)
-      : this.$ko(this.Hko, this.Wko, i, "FirstPassReward"),
-      this.$ko(this.Vko, this.jko, i, "FirstPassReward", this.Qko);
+    this.Ymt.IsFirstPass
+      ? this.K2o(this.k2o, void 0, 0, "", this.j2o)
+      : this.K2o(this.k2o, this.V2o, i, "FirstPassReward"),
+      this.K2o(this.O2o, this.F2o, i, "FirstPassReward", this.j2o);
   }
-  $ko(e, r, a, i, s = !1) {
+  K2o(e, r, a, i, s = !1) {
     if (r) {
       var n = r.PreviewReward;
       let t = void 0;
@@ -234,12 +234,12 @@ class LordGymPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
           e.SetActive(!1));
     } else e.SetActive(!1);
   }
-  l1i() {
+  l_i() {
     let e = "";
-    (e = this.dko.IsTracked
+    (e = this.u2o.IsTracked
       ? "InstanceDungeonEntranceCancelTrack"
       : "InstanceDungeonEntranceTrack"),
-      this.$Ut.SetLocalText(e);
+      this.ZAt.SetLocalText(e);
   }
 }
 exports.LordGymPanel = LordGymPanel;

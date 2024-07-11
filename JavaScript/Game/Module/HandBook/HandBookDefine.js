@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
-  (exports.noSelectColor =
+  (exports.HandBookChipDynamicData =
+    exports.noSelectColor =
     exports.selectColor =
     exports.HandBookQuestViewOpenParam =
     exports.HandBookPlotDynamicData =
@@ -95,4 +96,12 @@ class HandBookQuestViewOpenParam {
 (exports.HandBookQuestViewOpenParam = HandBookQuestViewOpenParam),
   (exports.selectColor = UE.Color.FromHex("ECE5D8FF")),
   (exports.noSelectColor = UE.Color.FromHex("ADADADFF"));
+class HandBookChipDynamicData {
+  constructor() {
+    (this.HandBookChipConfigId = 0),
+      (this.HandBookCommonItemData = void 0),
+      (this.IsShowContent = !1);
+  }
+}
+exports.HandBookChipDynamicData = HandBookChipDynamicData;
 //# sourceMappingURL=HandBookDefine.js.map

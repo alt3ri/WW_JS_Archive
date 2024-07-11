@@ -19,22 +19,21 @@ const UE = require("ue"),
 class BossRushSubView extends ActivitySubViewBase_1.ActivitySubViewBase {
   constructor() {
     super(...arguments),
-      (this.CPr = void 0),
+      (this.pyn = void 0),
       (this.LNe = void 0),
       (this.DNe = void 0),
       (this.UNe = void 0),
       (this.ANe = void 0),
-      (this.yLn = () => {
+      (this.lDn = () => {
         this.BNe();
       }),
-      (this.uke = () => {
-        this.CPr.RebuildData(),
-          UiManager_1.UiManager.OpenView(
-            "ActivityRewardPopUpView",
-            this.CPr.GetRewardViewData(),
-          );
+      (this.R2e = () => {
+        UiManager_1.UiManager.OpenView(
+          "ActivityRewardPopUpView",
+          this.pyn.GetRewardPopUpViewData(),
+        );
       }),
-      (this.u2e = () => {
+      (this.DFe = () => {
         var i;
         this.ActivityBaseData.GetPreGuideQuestFinishState()
           ? ((i = {
@@ -65,13 +64,13 @@ class BossRushSubView extends ActivitySubViewBase_1.ActivitySubViewBase {
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.BossRushDataUpdate,
-      this.yLn,
+      this.lDn,
     );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.BossRushDataUpdate,
-      this.yLn,
+      this.lDn,
     );
   }
   async OnBeforeStartAsync() {
@@ -92,17 +91,18 @@ class BossRushSubView extends ActivitySubViewBase_1.ActivitySubViewBase {
         this.UNe.CreateThenShowByActorAsync(t.GetOwner()),
         this.ANe.CreateThenShowByActorAsync(s.GetOwner()),
       ]),
-      this.ANe.FunctionButton.SetFunction(this.u2e),
-      this.ANe.SetRewardButtonFunction(this.uke);
+      this.UNe.InitGridLayout(this.UNe.InitCommonGridItem),
+      this.ANe.FunctionButton.SetFunction(this.DFe),
+      this.ANe.SetRewardButtonFunction(this.R2e);
   }
   OnStart() {
-    this.CPr = this.ActivityBaseData;
+    this.pyn = this.ActivityBaseData;
   }
   OnBeforeShow() {
-    this.x6e();
+    this.K8e();
   }
   OnBeforeHide() {
-    this.ILn();
+    this._Dn();
   }
   OnRefreshView() {
     this.ActivityBaseData.LocalConfig &&
@@ -112,18 +112,18 @@ class BossRushSubView extends ActivitySubViewBase_1.ActivitySubViewBase {
       this.VNe(),
       this.BNe(),
       this._Oe(),
-      this.pPr());
+      this.Eyn());
   }
-  x6e() {
-    this.ANe.BindRewardRedDot("BossRushReward", this.CPr.Id);
+  K8e() {
+    this.ANe.BindRewardRedDot("BossRushReward", this.pyn.Id);
   }
-  ILn() {
-    this.ANe.UnbindRewardRedDotById("BossRushReward", this.CPr.Id);
+  _Dn() {
+    this.ANe.UnbindRewardRedDotById("BossRushReward", this.pyn.Id);
   }
-  pPr() {
+  Eyn() {
     var i;
-    this.CPr.GetNewUnlockState() &&
-      (this.CPr.CacheNewUnlock(),
+    this.pyn.GetNewUnlockState() &&
+      (this.pyn.CacheNewUnlock(),
       ((i = new DifficultUnlockTipView_1.DifficultUnlockTipsData()).Text =
         "BossRushUnlockTips"),
       UiManager_1.UiManager.OpenView("DifficultUnlockTipView", i));
@@ -144,14 +144,13 @@ class BossRushSubView extends ActivitySubViewBase_1.ActivitySubViewBase {
       e = i.DescTheme,
       i = i.Desc,
       t = !StringUtils_1.StringUtils.IsEmpty(e);
-    this.DNe.SetTitleVisible(t),
-      t && this.DNe.SetTitleByTextId(e),
+    this.LNe.SetSubTitleVisible(t),
+      t && this.LNe.SetSubTitleByTextId(e),
       this.DNe.SetContentByTextId(i);
   }
   jqe() {
     var i = this.ActivityBaseData.GetPreviewReward();
     this.UNe.SetTitleByTextId("BossRushCollectReward"),
-      this.UNe.InitGridLayout(this.UNe.InitCommonGridItem),
       this.UNe.RefreshItemLayout(i);
   }
   OnTimer(i) {
@@ -163,8 +162,8 @@ class BossRushSubView extends ActivitySubViewBase_1.ActivitySubViewBase {
     this.ANe.FunctionButton.SetText(i);
   }
   BNe() {
-    var i = this.CPr.EntranceRedDot(),
-      e = this.CPr.GetPreGuideQuestFinishState();
+    var i = this.pyn.EntranceRedDot(),
+      e = this.pyn.GetPreGuideQuestFinishState();
     this.ANe.FunctionButton.SetRedDotVisible(e && i);
   }
 }

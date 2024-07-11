@@ -11,7 +11,7 @@ class AttributeItem extends GridProxyAbstract_1.GridProxyAbstract {
       (this.NextItem = void 0),
       (this.qte = ""),
       (this.xe = 0),
-      (this.Fyt = !1);
+      (this.zIt = !1);
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -35,14 +35,14 @@ class AttributeItem extends GridProxyAbstract_1.GridProxyAbstract {
     e && this.SetTextureByPath(t.Icon, e);
   }
   UpdateParam(t, e) {
-    (this.xe = t), (this.Fyt = e), this.InitCommon();
+    (this.xe = t), (this.zIt = e), this.InitCommon();
   }
   SetCurrentValue(t) {
     t =
       ModelManager_1.ModelManager.AttributeModel.GetFormatAttributeValueString(
         this.xe,
         t,
-        this.Fyt,
+        this.zIt,
       );
     (this.qte = t), this.GetText(1)?.SetText(this.qte);
   }
@@ -51,7 +51,7 @@ class AttributeItem extends GridProxyAbstract_1.GridProxyAbstract {
       ModelManager_1.ModelManager.AttributeModel.GetFormatAttributeValueString(
         this.xe,
         t,
-        this.Fyt,
+        this.zIt,
       );
     this.qte && this.qte === t
       ? this.SetNextItemActive(!1)

@@ -6,7 +6,7 @@ const ModelManager_1 = require("../../../../../../Manager/ModelManager"),
 class VisionFetterSort extends CommonSort_1.CommonSort {
   constructor() {
     super(...arguments),
-      (this.oRt = (e, r, t) => {
+      (this.aUt = (e, r, t) => {
         var o = e,
           s = r,
           e = ModelManager_1.ModelManager.RoleModel?.GetCurSelectMainRoleId();
@@ -34,15 +34,15 @@ class VisionFetterSort extends CommonSort_1.CommonSort {
           }
         return 0;
       }),
-      (this.rRt = (e, r, t) => 0),
-      (this.zLt = (e, r, t) => {
+      (this.hUt = (e, r, t) => 0),
+      (this.iRt = (e, r, t) => {
         return e.Id !== r.Id ? (e.Id - r.Id) * (t ? -1 : 1) : 0;
       });
   }
   OnInitSortMap() {
-    this.SortMap.set(1, this.oRt),
-      this.SortMap.set(2, this.rRt),
-      this.SortMap.set(3, this.zLt);
+    this.SortMap.set(1, this.aUt),
+      this.SortMap.set(2, this.hUt),
+      this.SortMap.set(3, this.iRt);
   }
 }
 exports.VisionFetterSort = VisionFetterSort;

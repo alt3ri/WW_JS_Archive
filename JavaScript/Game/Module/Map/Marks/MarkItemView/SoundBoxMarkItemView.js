@@ -7,35 +7,34 @@ const UE = require("ue"),
   ServerMarkItemView_1 = require("./ServerMarkItemView");
 class SoundBoxMarkItemView extends ServerMarkItemView_1.ServerMarkItemView {
   constructor(e) {
-    super(e), (this.GDi = void 0), (this.Lwn = !1);
+    super(e), (this.GRi = void 0), (this.Hbn = !1);
   }
   async OnCreateAsync() {
     var e, t;
-    !this.GDi &&
+    !this.GRi &&
       ((e = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
         "UiItem_Mark_Radar_Effect",
       )),
       (e = await this.LoadPrefabAsync(e)),
-      (this.GDi = e.GetComponentByClass(UE.UIItem.StaticClass())),
+      (this.GRi = e.GetComponentByClass(UE.UIItem.StaticClass())),
       (e = 2 === this.Holder.MapType),
-      (t = this.GDi.GetChildComponent(0))) &&
+      (t = this.GRi.GetChildComponent(0))) &&
       ((t.bAdaptPosAndSizeChanged = e), (t.bResetNiagara = !0));
   }
   OnInitialize() {
     super.OnInitialize(),
       this.OnIconPathChanged(this.Holder.IconPath),
-      this.GDi?.SetUIParent(this.GetRootItem());
+      this.GRi?.SetUIParent(this.GetRootItem());
   }
-  OnUpdate(e, t, i) {
-    super.OnUpdate(e, t, i);
-    e = this.Holder.GetSoundBoxEntityId();
-    e &&
-      ((t = EntitySystem_1.EntitySystem.Get(e)),
-      this.SwitchSleepState(void 0 === t));
+  OnSafeUpdate(e, t, i) {
+    var r = this.Holder.GetSoundBoxEntityId();
+    r &&
+      ((r = EntitySystem_1.EntitySystem.Get(r)),
+      this.SwitchSleepState(void 0 === r));
   }
   SwitchSleepState(e) {
-    this.Lwn !== e &&
-      ((this.Lwn = e)
+    this.Hbn !== e &&
+      ((this.Hbn = e)
         ? (this.SetSpriteByPath(
             ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
               e ? "SP_MarkSleep" : "SP_MarkNormal",
@@ -50,9 +49,9 @@ class SoundBoxMarkItemView extends ServerMarkItemView_1.ServerMarkItemView {
     return !1;
   }
   OnBeforeDestroy() {
-    this.GDi &&
-      UE.LGUIBPLibrary.DestroyActorWithHierarchy(this.GDi.GetOwner(), !0),
-      (this.GDi = void 0),
+    this.GRi &&
+      UE.LGUIBPLibrary.DestroyActorWithHierarchy(this.GRi.GetOwner(), !0),
+      (this.GRi = void 0),
       super.OnBeforeDestroy();
   }
 }

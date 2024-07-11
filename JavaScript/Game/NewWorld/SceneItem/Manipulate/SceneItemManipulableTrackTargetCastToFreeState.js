@@ -14,72 +14,72 @@ const puerts_1 = require("puerts"),
 class SceneItemManipulableTrackTargetCastToFreeState extends SceneItemManipulableCastState_1.SceneItemManipulableCastState {
   constructor(e, t) {
     super(e, t),
-      (this.xnr = void 0),
-      (this.wnr = void 0),
-      (this.Bnr = void 0),
-      (this.bnr = void 0),
-      (this.qnr = void 0),
-      (this.Gnr = !1),
-      (this.Qrr = 0),
+      (this.Usr = void 0),
+      (this.Asr = void 0),
+      (this.Psr = void 0),
+      (this.xsr = void 0),
+      (this.wsr = void 0),
+      (this.Bsr = !1),
+      (this.jnr = 0),
       (this.StateType = "BeCastingFree");
   }
   SetStartCameraLocation(e) {
-    this.xnr = e;
+    this.Usr = e;
   }
   OnEnter() {
     var e, t;
     super.OnEnter(),
-      void 0 !== this.xnr &&
-        ((this.Gnr = !1),
-        (this.wnr = Vector_1.Vector.Create(
+      void 0 !== this.Usr &&
+        ((this.Bsr = !1),
+        (this.Asr = Vector_1.Vector.Create(
           this.SceneItem.ActorComp.ActorLocationProxy,
         )),
         (t = this.SceneItem.Config.ThrowCfg.MotionConfig),
-        (this.Qrr = t.Velocity),
-        (this.qnr = MAX_DISTANCE),
+        (this.jnr = t.Velocity),
+        (this.wsr = MAX_DISTANCE),
         (t = Vector_1.Vector.Create(0, 0, 0)),
         CameraController_1.CameraController.CameraRotator.Vector(t),
-        void 0 === SceneItemManipulableTrackTargetCastToFreeState.Nnr &&
+        void 0 === SceneItemManipulableTrackTargetCastToFreeState.bsr &&
           this.koe(),
-        (e = Vector_1.Vector.Create(this.xnr)).AdditionEqual(
+        (e = Vector_1.Vector.Create(this.Usr)).AdditionEqual(
           t.MultiplyEqual(MAX_DISTANCE),
         ),
         TraceElementCommon_1.TraceElementCommon.SetStartLocation(
-          SceneItemManipulableTrackTargetCastToFreeState.Nnr,
-          this.xnr,
+          SceneItemManipulableTrackTargetCastToFreeState.bsr,
+          this.Usr,
         ),
         TraceElementCommon_1.TraceElementCommon.SetEndLocation(
-          SceneItemManipulableTrackTargetCastToFreeState.Nnr,
+          SceneItemManipulableTrackTargetCastToFreeState.bsr,
           e,
         ),
         (t = TraceElementCommon_1.TraceElementCommon.SphereTrace(
-          SceneItemManipulableTrackTargetCastToFreeState.Nnr,
+          SceneItemManipulableTrackTargetCastToFreeState.bsr,
           PROFILE_KEY,
         )),
-        (this.Bnr = Vector_1.Vector.Create(e)),
+        (this.Psr = Vector_1.Vector.Create(e)),
         t &&
-          SceneItemManipulableTrackTargetCastToFreeState.Nnr.HitResult
+          SceneItemManipulableTrackTargetCastToFreeState.bsr.HitResult
             .bBlockingHit &&
           (TraceElementCommon_1.TraceElementCommon.GetHitLocation(
-            SceneItemManipulableTrackTargetCastToFreeState.Nnr.HitResult,
+            SceneItemManipulableTrackTargetCastToFreeState.bsr.HitResult,
             0,
-            this.Bnr,
+            this.Psr,
           ),
-          (this.qnr = Vector_1.Vector.Dist(this.wnr, this.Bnr))),
-        (this.bnr = Vector_1.Vector.Create(this.Bnr)),
-        this.bnr.SubtractionEqual(this.wnr),
-        this.bnr.Normalize(),
+          (this.wsr = Vector_1.Vector.Dist(this.Asr, this.Psr))),
+        (this.xsr = Vector_1.Vector.Create(this.Psr)),
+        this.xsr.SubtractionEqual(this.Asr),
+        this.xsr.Normalize(),
         this.EnterCallback && this.EnterCallback(),
         (this.SceneItem.ActorComp.PhysicsMode = 0));
   }
   koe() {
-    (SceneItemManipulableTrackTargetCastToFreeState.Nnr = UE.NewObject(
+    (SceneItemManipulableTrackTargetCastToFreeState.bsr = UE.NewObject(
       UE.TraceSphereElement.StaticClass(),
     )),
-      (SceneItemManipulableTrackTargetCastToFreeState.Nnr.WorldContextObject =
+      (SceneItemManipulableTrackTargetCastToFreeState.bsr.WorldContextObject =
         this.SceneItem.ActorComp.Owner),
-      (SceneItemManipulableTrackTargetCastToFreeState.Nnr.bIsSingle = !0),
-      (SceneItemManipulableTrackTargetCastToFreeState.Nnr.bIgnoreSelf = !0);
+      (SceneItemManipulableTrackTargetCastToFreeState.bsr.bIsSingle = !0),
+      (SceneItemManipulableTrackTargetCastToFreeState.bsr.bIgnoreSelf = !0);
     var e = UE.NewArray(UE.BuiltinByte),
       e =
         (e.Add(QueryTypeDefine_1.KuroObjectTypeQuery.WorldStatic),
@@ -87,41 +87,41 @@ class SceneItemManipulableTrackTargetCastToFreeState extends SceneItemManipulabl
         e.Add(QueryTypeDefine_1.KuroObjectTypeQuery.PawnMonster),
         e.Add(QueryTypeDefine_1.KuroObjectTypeQuery.Destructible),
         (0, puerts_1.$ref)(e));
-    SceneItemManipulableTrackTargetCastToFreeState.Nnr.SetObjectTypesQuery(e),
-      (SceneItemManipulableTrackTargetCastToFreeState.Nnr.Radius =
+    SceneItemManipulableTrackTargetCastToFreeState.bsr.SetObjectTypesQuery(e),
+      (SceneItemManipulableTrackTargetCastToFreeState.bsr.Radius =
         SPHERE_TRACE_RADIUS),
-      (SceneItemManipulableTrackTargetCastToFreeState.Nnr.DrawTime = 5);
+      (SceneItemManipulableTrackTargetCastToFreeState.bsr.DrawTime = 5);
   }
   OnExit() {
-    super.OnExit(), (this.xnr = void 0);
+    super.OnExit(), (this.Usr = void 0);
   }
   OnTick(e) {
     var t = Vector_1.Vector.Create(this.SceneItem.ActorComp.ActorLocationProxy),
       t = Vector_1.Vector.Create(t);
-    let a = Vector_1.Vector.Create(this.bnr);
+    let a = Vector_1.Vector.Create(this.xsr);
     if (
-      (t.AdditionEqual(a.MultiplyEqual(this.Qrr * e)),
-      this.Gnr ||
+      (t.AdditionEqual(a.MultiplyEqual(this.jnr * e)),
+      this.Bsr ||
         this.SceneItem.ActorComp.SetActorLocation(
           t.ToUeVector(),
           "[SceneItemManipulableTrackTargetCastToFreeState.UpdateLocation]",
         ),
-      (this.qnr -= this.Qrr * e),
-      !this.Gnr && this.qnr <= 0)
+      (this.wsr -= this.jnr * e),
+      !this.Bsr && this.wsr <= 0)
     ) {
       if (this.SceneItem?.CurrentState !== this) return !0;
-      (this.Gnr = !0),
+      (this.Bsr = !0),
         this.SceneItem.TryEnableTick(),
         (this.SceneItem.ActorComp.PhysicsMode = 3),
-        (a = Vector_1.Vector.Create(this.bnr)),
+        (a = Vector_1.Vector.Create(this.xsr)),
         this.SceneItem.ActorComp.GetPrimitiveComponent().SetPhysicsLinearVelocity(
-          a.MultiplyEqual(this.Qrr).ToUeVector(),
+          a.MultiplyEqual(this.jnr).ToUeVector(),
         );
     }
     return (
       this.SceneItem.ManipulateBaseConfig.随速度调整朝向 &&
         !this.AfterHit &&
-        ((t = Vector_1.Vector.Create(this.bnr.ToUeVector()).ToUeVector()),
+        ((t = Vector_1.Vector.Create(this.xsr.ToUeVector()).ToUeVector()),
         (e = UE.KismetMathLibrary.FindLookAtRotation(
           this.SceneItem.ActorComp.ActorLocation,
           this.SceneItem.ActorComp.ActorLocation.op_Addition(t),
@@ -136,5 +136,5 @@ class SceneItemManipulableTrackTargetCastToFreeState extends SceneItemManipulabl
   }
 }
 (exports.SceneItemManipulableTrackTargetCastToFreeState =
-  SceneItemManipulableTrackTargetCastToFreeState).Nnr = void 0;
+  SceneItemManipulableTrackTargetCastToFreeState).bsr = void 0;
 //# sourceMappingURL=SceneItemManipulableTrackTargetCastToFreeState.js.map

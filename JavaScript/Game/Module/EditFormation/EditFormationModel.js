@@ -15,25 +15,25 @@ class EditingRoleData {
 class EditFormationModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
-      (this.s4t = new Map()),
-      (this.a4t = void 0),
-      (this.h4t = new Map());
+      (this.s5t = new Map()),
+      (this.a5t = void 0),
+      (this.h5t = new Map());
   }
   UpdatePlayerFormations(t) {
-    this.s4t.clear();
+    this.s5t.clear();
     let o = 0;
     var r = new Map();
     for (const u of t) {
-      var e = u.aFn,
+      var e = u.q5n,
         i = e === ModelManager_1.ModelManager.PlayerInfoModel.GetId();
-      for (const h of u.J4n) {
-        var a = h.$4n;
+      for (const h of u.xVn) {
+        var a = h.AVn;
         if (i || !(0 < a)) {
-          i && h.X4n && (o = a);
+          i && h.UVn && (o = a);
           let t = r.get(a);
           t || ((t = new Array()), r.set(a, t));
-          for (const g of h.FLs) {
-            var n = i && g.l3n === h.Y4n;
+          for (const g of h.sUs) {
+            var n = i && g.O6n === h.RVn;
             t.push([g, e, n]);
           }
         }
@@ -42,19 +42,19 @@ class EditFormationModel extends ModelBase_1.ModelBase {
     for (const c of r) {
       var s = c[0],
         f = new EditFormationData_1.EditFormationData(s);
-      this.s4t.set(s, f);
+      this.s5t.set(s, f);
       for (const m of c[1]) {
         var d = m[0],
           l = m[1],
           M = m[2];
-        f.AddRoleData(d.l3n, d.r3n, l, M);
+        f.AddRoleData(d.O6n, d.P6n, l, M);
       }
-      s === o && (this.a4t = f);
+      s === o && (this.a5t = f);
     }
   }
   ChangeEditedMainRole() {
     var t = ModelManager_1.ModelManager.RoleModel;
-    for (const e of this.h4t.values())
+    for (const e of this.h5t.values())
       for (const i of e) {
         var o,
           r = i.RoleId;
@@ -65,8 +65,8 @@ class EditFormationModel extends ModelBase_1.ModelBase {
       }
   }
   InitEditingFormationMap() {
-    this.h4t.clear();
-    for (const o of this.s4t.values()) {
+    this.h5t.clear();
+    for (const o of this.s5t.values()) {
       var t = o.FormationId;
       for (const r of o.GetRoleDataMap().values())
         this.SetEditingRoleId(t, r.Position, r.ConfigId);
@@ -85,9 +85,9 @@ class EditFormationModel extends ModelBase_1.ModelBase {
   SetEditingRoleId(t, o, r = 0, e = !0) {
     if (o > EditFormationDefine_1.EDITE_FORAMTION_MAX_NUM || o <= 0) return !1;
     if (!this.IsMyPosition(o)) return !1;
-    let i = this.h4t.get(t);
+    let i = this.h5t.get(t);
     if (!i) {
-      (i = new Array()), this.h4t.set(t, i);
+      (i = new Array()), this.h5t.set(t, i);
       for (let t = 1; t <= EditFormationDefine_1.EDITE_FORAMTION_MAX_NUM; t++)
         i.push(new EditingRoleData(t));
     }
@@ -105,18 +105,18 @@ class EditFormationModel extends ModelBase_1.ModelBase {
     return !0;
   }
   GetEditingRoleId(t, o) {
-    t = this.h4t.get(t);
+    t = this.h5t.get(t);
     if (t) for (const r of t) if (r.Position === o) return r.RoleId;
     return 0;
   }
   GetEditingRolePosition(t, o) {
-    t = this.h4t.get(t);
+    t = this.h5t.get(t);
     if (t) for (const r of t) if (r.RoleId === o) return r.Position;
     return -1;
   }
   GetEditingRoleIdList(t) {
     var o = new Array(),
-      t = this.h4t.get(t);
+      t = this.h5t.get(t);
     if (t)
       for (const e of t) {
         var r = e.RoleId;
@@ -128,7 +128,7 @@ class EditFormationModel extends ModelBase_1.ModelBase {
     var t,
       o,
       r = new Map();
-    for ([t, o] of this.h4t) {
+    for ([t, o] of this.h5t) {
       var e = [];
       for (const a of o) {
         var i = a.RoleId;
@@ -142,16 +142,16 @@ class EditFormationModel extends ModelBase_1.ModelBase {
     return 0 < this.GetEditingRolePosition(t, o);
   }
   GetFormationData(t) {
-    return this.s4t.get(t);
+    return this.s5t.get(t);
   }
   get GetCurrentFormationData() {
-    return this.a4t;
+    return this.a5t;
   }
   get GetCurrentFormationId() {
-    return this.a4t?.FormationId;
+    return this.a5t?.FormationId;
   }
   ApplyCurrentFormationData(t) {
-    t = this.s4t.get(t);
+    t = this.s5t.get(t);
     t &&
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
@@ -160,7 +160,7 @@ class EditFormationModel extends ModelBase_1.ModelBase {
           "设置当前编队数据 [ApplyCurrentFormationData]",
           ["data", t],
         ),
-      (this.a4t = t));
+      (this.a5t = t));
   }
   IsMyPosition(t) {
     var o;

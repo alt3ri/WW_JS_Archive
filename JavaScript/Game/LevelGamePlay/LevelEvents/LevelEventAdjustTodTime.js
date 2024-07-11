@@ -12,33 +12,34 @@ const Protocol_1 = require("../../../Core/Define/Net/Protocol"),
 class LevelEventAdjustTodTime extends LevelGeneralBase_1.LevelEventBase {
   ExecuteNew(e, r, o) {
     if (e) {
-      const t = TimeOfDayModel_1.TodDayTime.ConvertFromHourMinute(
+      const i = TimeOfDayModel_1.TodDayTime.ConvertFromHourMinute(
         e.Hour,
         e.Min,
       );
-      t < 0
+      i < 0
         ? this.FinishExecute(!1)
         : e.ShowUi
-          ? (EventSystem_1.EventSystem.Emit(
-              EventDefine_1.EEventName.ResetToBattleView,
-            ),
-            UiManager_1.UiManager.OpenView(
-              "TimeOfDaySecondView",
-              void 0,
-              () => {
-                EventSystem_1.EventSystem.Emit(
-                  EventDefine_1.EEventName.AdjustTimeInAnim,
-                  ModelManager_1.ModelManager.TimeOfDayModel.GameTime.Second,
-                  t,
+          ? UiManager_1.UiManager.ResetToBattleView((e) => {
+              e &&
+                UiManager_1.UiManager.OpenView(
+                  "TimeOfDaySecondView",
+                  void 0,
                   () => {
-                    this.FinishExecute(!0);
+                    EventSystem_1.EventSystem.Emit(
+                      EventDefine_1.EEventName.AdjustTimeInAnim,
+                      ModelManager_1.ModelManager.TimeOfDayModel.GameTime
+                        .Second,
+                      i,
+                      () => {
+                        this.FinishExecute(!0);
+                      },
+                    );
                   },
                 );
-              },
-            ))
+            })
           : (TimeOfDayController_1.TimeOfDayController.AdjustTime(
-              t,
-              Protocol_1.Aki.Protocol.pOs.Proto_LevelPlayAuto,
+              i,
+              Protocol_1.Aki.Protocol.h4s.Proto_LevelPlayAuto,
             ),
             this.FinishExecute(!0));
     } else this.FinishExecute(!1);

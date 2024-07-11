@@ -48,30 +48,30 @@ let SceneItemTimeStopMachineComponent =
     constructor() {
       super(...arguments),
         (this.Lo = void 0),
-        (this.wlr = void 0),
-        (this.zht = void 0),
-        (this.fSn = new Map()),
-        (this.pSn = new Set()),
+        (this.A1r = void 0),
+        (this.u1t = void 0),
+        (this.$Mn = new Map()),
+        (this.YMn = new Set()),
         (this.gIe = (e, t) => {
-          t?.includes(this.wlr) &&
+          t?.includes(this.A1r) &&
             (Log_1.Log.CheckDebug() &&
               Log_1.Log.Debug("Temp", 32, "[结束时停]"),
-            this.vSn()),
-            e?.includes(this.wlr) &&
+            this.JMn()),
+            e?.includes(this.A1r) &&
               (Log_1.Log.CheckDebug() &&
                 Log_1.Log.Debug("Temp", 32, "[开始时停]"),
-              this.MSn());
+              this.zMn());
         }),
         (this.Fm = (e, t) => {
-          this.fSn.has(t) && (this.SSn(t), this.fSn.delete(t));
+          this.$Mn.has(t) && (this.ZMn(t), this.$Mn.delete(t));
         }),
-        (this.ESn = (e, t, i) => {
+        (this.eEn = (e, t, i) => {
           var n = t.Entity.GetComponent(0).GetPbDataId();
-          this.pSn.has(n) &&
-            (this.pSn.delete(n), this.ySn(t), 0 === this.pSn.size) &&
+          this.YMn.has(n) &&
+            (this.YMn.delete(n), this.tEn(t), 0 === this.YMn.size) &&
             EventSystem_1.EventSystem.Remove(
               EventDefine_1.EEventName.AddEntity,
-              this.ESn,
+              this.eEn,
             );
         });
     }
@@ -79,7 +79,7 @@ let SceneItemTimeStopMachineComponent =
       e = e.GetParam(SceneItemTimeStopMachineComponent_1)[0];
       return (
         (this.Lo = e),
-        (this.wlr = GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(
+        (this.A1r = GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(
           this.Lo.ActiveState,
         )),
         !0
@@ -87,15 +87,15 @@ let SceneItemTimeStopMachineComponent =
     }
     OnStart() {
       return (
-        (this.zht = this.Entity.CheckGetComponent(0)),
+        (this.u1t = this.Entity.CheckGetComponent(0)),
         this.dde(),
-        this.fSn.clear(),
-        this.pSn.clear(),
+        this.$Mn.clear(),
+        this.YMn.clear(),
         !0
       );
     }
     OnEnd() {
-      return this.Cde(), this.fSn.clear(), this.pSn.clear(), !0;
+      return this.Cde(), this.$Mn.clear(), this.YMn.clear(), !0;
     }
     dde() {
       EventSystem_1.EventSystem.AddWithTarget(
@@ -120,26 +120,26 @@ let SceneItemTimeStopMachineComponent =
         ),
         EventSystem_1.EventSystem.Has(
           EventDefine_1.EEventName.AddEntity,
-          this.ESn,
+          this.eEn,
         ) &&
           EventSystem_1.EventSystem.Remove(
             EventDefine_1.EEventName.AddEntity,
-            this.ESn,
+            this.eEn,
           );
     }
-    MSn() {
+    zMn() {
       var e = this.Lo?.Target.EntityIds;
       if (e)
         for (const i of e) {
           var t =
             ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(i);
-          t?.Valid ? this.ySn(t) : (this.pSn.add(i), this.ISn());
+          t?.Valid ? this.tEn(t) : (this.YMn.add(i), this.iEn());
         }
     }
-    ySn(e) {
+    tEn(e) {
       var t,
         i,
-        n = e.Entity?.GetComponent(107);
+        n = e.Entity?.GetComponent(109);
       n &&
         ((t = n.SetTimeScale(
           1,
@@ -149,61 +149,61 @@ let SceneItemTimeStopMachineComponent =
           7,
         )),
         (i = e.Entity.GetComponent(0).GetEntityType()) ===
-        Protocol_1.Aki.Protocol.HBs.Proto_SceneItem
-          ? e.Entity.GetComponent(177)?.AddTag(-1201477412)
-          : e.Entity.GetComponent(187)?.AddBuff(timeStopBuffId, {
-              InstigatorId: this.zht.GetCreatureDataId(),
+        Protocol_1.Aki.Protocol.wks.Proto_SceneItem
+          ? e.Entity.GetComponent(180)?.AddTag(-1201477412)
+          : e.Entity.GetComponent(192)?.AddBuff(timeStopBuffId, {
+              InstigatorId: this.u1t.GetCreatureDataId(),
               Level: 1,
               Reason: "TimeStopMachine",
             }),
-        this.fSn.set(
+        this.$Mn.set(
           e,
           new TimeStopData(
             n,
             t,
-            i === Protocol_1.Aki.Protocol.HBs.Proto_SceneItem,
+            i === Protocol_1.Aki.Protocol.wks.Proto_SceneItem,
           ),
         ));
     }
-    vSn() {
-      for (var [e] of this.fSn) this.SSn(e);
-      this.fSn.clear(),
+    JMn() {
+      for (var [e] of this.$Mn) this.ZMn(e);
+      this.$Mn.clear(),
         EventSystem_1.EventSystem.Has(
           EventDefine_1.EEventName.AddEntity,
-          this.ESn,
+          this.eEn,
         ) &&
           (EventSystem_1.EventSystem.Remove(
             EventDefine_1.EEventName.AddEntity,
-            this.ESn,
+            this.eEn,
           ),
-          this.pSn.clear());
+          this.YMn.clear());
     }
-    SSn(e) {
-      var t = this.fSn.get(e);
+    ZMn(e) {
+      var t = this.$Mn.get(e);
       t &&
         (t.TimeScaleComponent.RemoveTimeScale(t.TimeScaleId),
         t.IsSceneItem
-          ? e.Entity.GetComponent(177)?.RemoveTag(-1201477412)
-          : e.Entity.GetComponent(187)?.RemoveBuff(
+          ? e.Entity.GetComponent(180)?.RemoveTag(-1201477412)
+          : e.Entity.GetComponent(192)?.RemoveBuff(
               timeStopBuffId,
               -1,
               "TimeStopMachine",
             ));
     }
-    ISn() {
+    iEn() {
       EventSystem_1.EventSystem.Has(
         EventDefine_1.EEventName.AddEntity,
-        this.ESn,
+        this.eEn,
       ) ||
         EventSystem_1.EventSystem.Add(
           EventDefine_1.EEventName.AddEntity,
-          this.ESn,
+          this.eEn,
         );
     }
   });
 (SceneItemTimeStopMachineComponent = SceneItemTimeStopMachineComponent_1 =
   __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(191)],
+    [(0, RegisterComponent_1.RegisterComponent)(196)],
     SceneItemTimeStopMachineComponent,
   )),
   (exports.SceneItemTimeStopMachineComponent =

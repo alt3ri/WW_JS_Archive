@@ -20,25 +20,25 @@ const UE = require("ue"),
 class BattlePassPayView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.KOi = void 0),
-      (this.QOi = void 0),
-      (this.XOi = void 0),
-      (this.$Oi = void 0),
-      (this.MOi = 0),
+      (this.Xki = void 0),
+      (this.$ki = void 0),
+      (this.Yki = void 0),
+      (this.Jki = void 0),
+      (this.Eki = 0),
       (this.TDe = void 0),
-      (this.YOi = () => {
-        this.JOi();
+      (this.zki = () => {
+        this.Zki();
       }),
       (this.DSi = () => {
         this.CloseMe();
       }),
-      (this.zOi = () => {
+      (this.e2i = () => {
         BattlePassController_1.BattlePassController.PayPrimaryBattlePass();
       }),
-      (this.ZOi = () => {
+      (this.t2i = () => {
         BattlePassController_1.BattlePassController.PayHighBattlePass();
       }),
-      (this.eki = () => {
+      (this.i2i = () => {
         var e = {
           WeaponDataList:
             ModelManager_1.ModelManager.BattlePassModel.GetWeaponDataList(),
@@ -51,7 +51,7 @@ class BattlePassPayView extends UiViewBase_1.UiViewBase {
         new CommonItemSmallItemGrid_1.CommonItemSmallItemGrid()),
       (this.RefreshLeftTime = () => {
         var e = TimeUtil_1.TimeUtil.GetServerTime(),
-          e = this.MOi - e;
+          e = this.Eki - e;
         e < 0 ||
           ((e = TimeUtil_1.TimeUtil.GetRemainTimeDataFormat(e)),
           LguiUtil_1.LguiUtil.SetLocalTextNew(
@@ -78,10 +78,10 @@ class BattlePassPayView extends UiViewBase_1.UiViewBase {
       [12, UE.UIItem],
     ]),
       (this.BtnBindInfo = [
-        [3, this.zOi],
-        [6, this.ZOi],
+        [3, this.e2i],
+        [6, this.t2i],
         [0, this.DSi],
-        [8, this.eki],
+        [8, this.i2i],
       ]);
   }
   async OnBeforeStartAsync() {
@@ -94,7 +94,7 @@ class BattlePassPayView extends UiViewBase_1.UiViewBase {
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnQueryProductInfo,
-        this.YOi,
+        this.zki,
       );
   }
   OnRemoveEventListener() {
@@ -104,40 +104,40 @@ class BattlePassPayView extends UiViewBase_1.UiViewBase {
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnQueryProductInfo,
-        this.YOi,
+        this.zki,
       );
   }
   OnStart() {
-    (this.XOi = []),
-      (this.$Oi = []),
+    (this.Yki = []),
+      (this.Jki = []),
       ConfigManager_1.ConfigManager.BattlePassConfig.GetBattlePassUnlockReward(
         1,
-        this.XOi,
+        this.Yki,
       ),
       ConfigManager_1.ConfigManager.BattlePassConfig.GetBattlePassUnlockReward(
         3,
-        this.$Oi,
+        this.Jki,
       ),
-      (this.KOi = new GenericLayout_1.GenericLayout(
+      (this.Xki = new GenericLayout_1.GenericLayout(
         this.GetGridLayout(1),
         this.rOe,
       )),
-      (this.QOi = new GenericLayout_1.GenericLayout(
+      (this.$ki = new GenericLayout_1.GenericLayout(
         this.GetGridLayout(4),
         this.rOe,
       )),
-      this.KOi.RefreshByData(this.XOi),
-      this.QOi.RefreshByData(this.$Oi),
-      (this.MOi =
+      this.Xki.RefreshByData(this.Yki),
+      this.$ki.RefreshByData(this.Jki),
+      (this.Eki =
         ModelManager_1.ModelManager.BattlePassModel.GetBattlePassEndTime()),
       (this.TDe = TimerSystem_1.TimerSystem.Forever(
         this.RefreshLeftTime,
         CommonDefine_1.MILLIONSECOND_PER_SECOND,
       )),
       this.RefreshLeftTime(),
-      this.JOi();
+      this.Zki();
     const t = new Array();
-    this.tki().forEach((e) => {
+    this.o2i().forEach((e) => {
       e = ModelManager_1.ModelManager.PayGiftModel.GetPayGiftDataById(e);
       t.push(e.ProductId.toString());
     }),
@@ -145,7 +145,7 @@ class BattlePassPayView extends UiViewBase_1.UiViewBase {
         t,
       );
   }
-  tki() {
+  o2i() {
     return [
       ModelManager_1.ModelManager.BattlePassModel.GetPrimaryBattlePassGoodsId(),
       ModelManager_1.ModelManager.BattlePassModel.GetHighBattlePassGoodsId(),
@@ -153,29 +153,29 @@ class BattlePassPayView extends UiViewBase_1.UiViewBase {
     ];
   }
   OnBeforeDestroy() {
-    (this.XOi.length = 0),
-      (this.XOi = void 0),
-      (this.$Oi.length = 0),
-      (this.$Oi = void 0),
-      (this.KOi = void 0),
-      (this.QOi = void 0),
+    (this.Yki.length = 0),
+      (this.Yki = void 0),
+      (this.Jki.length = 0),
+      (this.Jki = void 0),
+      (this.Xki = void 0),
+      (this.$ki = void 0),
       this.TDe.Remove(),
       (this.TDe = void 0);
   }
-  JOi() {
+  Zki() {
     var e,
       t = ModelManager_1.ModelManager.BattlePassModel.PayType;
-    this.GetItem(9).SetUIActive(t === Protocol_1.Aki.Protocol.B2s.Proto_NoPaid),
+    this.GetItem(9).SetUIActive(t === Protocol_1.Aki.Protocol.yNs.Proto_NoPaid),
       this.GetItem(11).SetUIActive(
-        t !== Protocol_1.Aki.Protocol.B2s.Proto_NoPaid,
+        t !== Protocol_1.Aki.Protocol.yNs.Proto_NoPaid,
       ),
       this.GetItem(10).SetUIActive(
-        t !== Protocol_1.Aki.Protocol.B2s.Proto_Advanced,
+        t !== Protocol_1.Aki.Protocol.yNs.Proto_Advanced,
       ),
       this.GetItem(12).SetUIActive(
-        t === Protocol_1.Aki.Protocol.B2s.Proto_Advanced,
+        t === Protocol_1.Aki.Protocol.yNs.Proto_Advanced,
       ),
-      t === Protocol_1.Aki.Protocol.B2s.Proto_NoPaid
+      t === Protocol_1.Aki.Protocol.yNs.Proto_NoPaid
         ? ((e = ModelManager_1.ModelManager.PayGiftModel.GetPayShopGoodsById(
             ModelManager_1.ModelManager.BattlePassModel.GetPrimaryBattlePassGoodsId(),
           )?.GetDirectPriceText()),
@@ -184,7 +184,7 @@ class BattlePassPayView extends UiViewBase_1.UiViewBase {
             ModelManager_1.ModelManager.BattlePassModel.GetHighBattlePassGoodsId(),
           )?.GetDirectPriceText()),
           this.GetText(5).SetText(e ?? ""))
-        : t === Protocol_1.Aki.Protocol.B2s.Proto_Paid &&
+        : t === Protocol_1.Aki.Protocol.yNs.Proto_Paid &&
           ((e = ModelManager_1.ModelManager.PayGiftModel.GetPayShopGoodsById(
             ModelManager_1.ModelManager.BattlePassModel.GetSupplyBattlePassGoodsId(),
           )?.GetDirectPriceText()),

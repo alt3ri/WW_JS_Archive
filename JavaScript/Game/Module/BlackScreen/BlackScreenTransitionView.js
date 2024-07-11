@@ -11,19 +11,19 @@ const UE = require("ue"),
 class BlackScreenTransitionView extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this.EPe = void 0),
-      (this.ggt = "None"),
-      (this.fgt = "None"),
-      (this.ogt = new BlackScreenViewData_1.BlackScreenViewData()),
-      (this.ngt = (e) => {
-        e === this.ggt
+      (this.SPe = void 0),
+      (this.R0t = "None"),
+      (this.U0t = "None"),
+      (this.C0t = new BlackScreenViewData_1.BlackScreenViewData()),
+      (this.f0t = (e) => {
+        e === this.R0t
           ? (Log_1.Log.CheckInfo() &&
               Log_1.Log.Info("BlackScreen", 11, "开始动画结束", [
                 "动画名称",
                 e,
               ]),
             BlackScreenGlobalData_1.BlackScreenGlobalData.FinishShowPromise())
-          : e === this.fgt &&
+          : e === this.U0t &&
             (Log_1.Log.CheckInfo() &&
               Log_1.Log.Info("BlackScreen", 11, "关闭动画结束", [
                 "动画名称",
@@ -33,68 +33,68 @@ class BlackScreenTransitionView extends UiPanelBase_1.UiPanelBase {
             this.GetTexture(0).SetAlpha(1),
             this.SetUiActive(!1));
       }),
-      (this.pgt = () => {
+      (this.A0t = () => {
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("BlackScreen", 11, "开始显示黑屏"),
           this.SetUiActive(!0),
           BlackScreenGlobalData_1.BlackScreenGlobalData.FinishShowPromise();
       }),
-      (this.sgt = () => {
+      (this.p0t = () => {
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("BlackScreen", 11, "开始显示黑屏", [
             "动画名称",
-            this.ggt.toString(),
+            this.R0t.toString(),
           ]),
           this.SetUiActive(!0),
-          this.EPe.PlayLevelSequenceByName(this.ggt.toString());
+          this.SPe.PlayLevelSequenceByName(this.R0t.toString());
       }),
-      (this.vgt = () => {
-        this.EPe.StopCurrentSequence(!0, !0),
+      (this.P0t = () => {
+        this.SPe.StopCurrentSequence(!0, !0),
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info("BlackScreen", 11, "开始隐藏黑屏"),
           this.GetTexture(0).SetAlpha(1),
           this.SetUiActive(!1),
           BlackScreenGlobalData_1.BlackScreenGlobalData.FinishHidePromise();
       }),
-      (this.hgt = () => {
-        this.EPe.StopCurrentSequence(!0, !0),
+      (this.M0t = () => {
+        this.SPe.StopCurrentSequence(!0, !0),
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info("BlackScreen", 11, "开始隐藏黑屏", [
               "动画名称",
-              this.fgt.toString(),
+              this.U0t.toString(),
             ]),
-          this.EPe.PlayLevelSequenceByName(this.fgt.toString());
+          this.SPe.PlayLevelSequenceByName(this.U0t.toString());
       });
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [[0, UE.UITexture]];
   }
   OnStart() {
-    (this.EPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem)),
-      this.EPe.BindSequenceCloseEvent(this.ngt),
-      this.ogt.RegisterStateDelegate(1, this.pgt),
-      this.ogt.RegisterStateDelegate(2, this.sgt),
-      this.ogt.RegisterStateDelegate(3, this.vgt),
-      this.ogt.RegisterStateDelegate(4, this.hgt),
+    (this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem)),
+      this.SPe.BindSequenceCloseEvent(this.f0t),
+      this.C0t.RegisterStateDelegate(1, this.A0t),
+      this.C0t.RegisterStateDelegate(2, this.p0t),
+      this.C0t.RegisterStateDelegate(3, this.P0t),
+      this.C0t.RegisterStateDelegate(4, this.M0t),
       this.GetTexture(0).SetAlpha(1),
       LguiUtil_1.LguiUtil.SetActorIsPermanent(this.RootActor, !0, !0),
-      this.ogt.TriggerCurrentStateDelegate();
+      this.C0t.TriggerCurrentStateDelegate();
   }
   OnBeforeDestroy() {
     BlackScreenGlobalData_1.BlackScreenGlobalData.ResetGlobalData(),
-      this.EPe?.Clear();
+      this.SPe?.Clear();
   }
   ShowTemp(e) {
     BlackScreenGlobalData_1.BlackScreenGlobalData.CreateShowPromise();
-    var t = this.ggt,
-      e = "None" !== (this.ggt = e);
-    this.ogt.SwitchState(e ? 2 : 1) || (this.ggt = t);
+    var t = this.R0t,
+      e = "None" !== (this.R0t = e);
+    this.C0t.SwitchState(e ? 2 : 1) || (this.R0t = t);
   }
   HideTemp(e) {
     BlackScreenGlobalData_1.BlackScreenGlobalData.CreateHidePromise();
-    var t = this.fgt,
-      e = "None" !== (this.fgt = e);
-    this.ogt.SwitchState(e ? 4 : 3) || (this.fgt = t);
+    var t = this.U0t,
+      e = "None" !== (this.U0t = e);
+    this.C0t.SwitchState(e ? 4 : 3) || (this.U0t = t);
   }
 }
 exports.BlackScreenTransitionView = BlackScreenTransitionView;

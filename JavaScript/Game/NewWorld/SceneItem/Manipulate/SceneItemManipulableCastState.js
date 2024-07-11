@@ -13,7 +13,7 @@ const UE = require("ue"),
 class SceneItemManipulableCastState extends SceneItemManipulableBaseState_1.SceneItemManipulableBaseState {
   constructor(t, i) {
     super(t),
-      (this.M$i = void 0),
+      (this.pYi = void 0),
       (this.CastDuration = -0),
       (this.CastRotAxis = void 0),
       (this.StartLoc = void 0),
@@ -23,14 +23,14 @@ class SceneItemManipulableCastState extends SceneItemManipulableBaseState_1.Scen
       (this.CastDirection = void 0),
       (this.FinishCallback = void 0),
       (this.HitCallback = void 0),
-      (this.Jrr = Vector_1.Vector.Create()),
-      (this.zrr = Vector_1.Vector.Create()),
+      (this.Xnr = Vector_1.Vector.Create()),
+      (this.$nr = Vector_1.Vector.Create()),
       (this.AfterHit = !1),
       (this.NeedResetPhysicsMode = !0),
-      (this.Zrr = () => {
+      (this.Ynr = () => {
         this.AfterHit = !0;
       }),
-      (this.M$i = i);
+      (this.pYi = i);
   }
   SetFinishCallback(t) {
     this.FinishCallback = t;
@@ -42,13 +42,13 @@ class SceneItemManipulableCastState extends SceneItemManipulableBaseState_1.Scen
     this.EnterCallback = t;
   }
   OnEnter() {
-    this.StartCameraShake(this.M$i),
+    this.StartCameraShake(this.pYi),
       (this.Timer = 0),
       (this.AfterHit = !1),
       this.SceneItem.ActorComp.Owner.OnActorHit.Clear(),
       this.HitCallback &&
         (this.SceneItem.ActorComp.Owner.OnActorHit.Add(this.HitCallback),
-        this.SceneItem.ActorComp.Owner.OnActorHit.Add(this.Zrr)),
+        this.SceneItem.ActorComp.Owner.OnActorHit.Add(this.Ynr)),
       (this.SceneItem.NeedRemoveControllerId = !0),
       LevelGamePlayController_1.LevelGamePlayController.ManipulatableBeCastOrDrop2Server(
         this.SceneItem.Entity.Id,
@@ -105,10 +105,10 @@ class SceneItemManipulableCastState extends SceneItemManipulableBaseState_1.Scen
         (this.CastDirection = Vector_1.Vector.Create(t)),
         Vector_1.Vector.Create());
     this.CastDirection.CrossProduct(Vector_1.Vector.UpVectorProxy, t),
-      t.CrossProduct(this.CastDirection, this.zrr),
-      this.zrr.Normalize(),
-      this.zrr.CrossProduct(this.CastDirection, this.Jrr),
-      this.Jrr.Normalize();
+      t.CrossProduct(this.CastDirection, this.$nr),
+      this.$nr.Normalize(),
+      this.$nr.CrossProduct(this.CastDirection, this.Xnr),
+      this.Xnr.Normalize();
   }
   UpdateRotationAccordingToVelocity() {
     var t;
@@ -142,8 +142,8 @@ class SceneItemManipulableCastState extends SceneItemManipulableBaseState_1.Scen
           (s = Vector_1.Vector.Create()),
           (h = Vector_1.Vector.Create()),
           this.CastDirection.Multiply(a.X, e),
-          this.Jrr.Multiply(a.Y, s),
-          this.zrr.Multiply(a.Z, h),
+          this.Xnr.Multiply(a.Y, s),
+          this.$nr.Multiply(a.Z, h),
           i.AdditionEqual(e).AdditionEqual(s).AdditionEqual(h),
           i.AdditionEqual(this.StartLoc))
         : ((a = UE.KismetMathLibrary.Ease(0, 1, t, 6, 3)),

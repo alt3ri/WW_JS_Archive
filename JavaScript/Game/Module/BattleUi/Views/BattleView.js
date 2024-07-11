@@ -14,7 +14,6 @@ const UE = require("ue"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase"),
-  OnlineInstanceDungeonDeathPanel_1 = require("../../Online/View/OnlineInstanceDungeonDeathPanel"),
   BottomPanel_1 = require("./BattleChildViewPanel/BottomPanel"),
   CenterPanel_1 = require("./BattleChildViewPanel/CenterPanel"),
   ChatPanel_1 = require("./BattleChildViewPanel/ChatPanel"),
@@ -33,48 +32,47 @@ const UE = require("ue"),
 class BattleView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
-      (this.Lit = void 0),
-      (this.Dit = void 0),
-      (this.Rit = void 0),
-      (this.Uit = void 0),
-      (this.Ait = !1),
-      (this.Pit = new Map()),
-      (this.xit = []),
-      (this.wit = new UE.Vector()),
-      (this.Bit = void 0),
-      (this.bit = 0),
-      (this.qit = !1),
-      (this.Git = void 0),
-      (this.Nit = () => {
-        this.Lit.RefreshCurrentRole();
+      (this.Fot = void 0),
+      (this.Vot = void 0),
+      (this.Hot = void 0),
+      (this.jot = void 0),
+      (this.Wot = !1),
+      (this.Kot = new Map()),
+      (this.Qot = []),
+      (this.Xot = new UE.Vector()),
+      (this.Yot = 0),
+      (this.Jot = !1),
+      (this.zot = void 0),
+      (this.Zot = () => {
+        this.Fot.RefreshCurrentRole();
       }),
-      (this.Oit = () => {
+      (this.ert = () => {
         var e = ModelManager_1.ModelManager.BattleUiModel.GetCurRoleData();
-        e?.RoleConfig && this.kit(2 === e.RoleConfig.RoleType);
+        e?.RoleConfig && this.trt(2 === e.RoleConfig.RoleType);
       }),
-      (this.o7e = () => {
-        this.Lit.RefreshCurrentRole();
+      (this.fHe = () => {
+        this.Fot.RefreshCurrentRole();
       }),
-      (this.Fit = () => {
+      (this.irt = () => {
         this.IsShow && this.SetActive(!0);
       }),
       (this.Jpe = (e, t, i) => {
         t?.Valid &&
-          (this.Lit.OnCreateEntity(t.Entity),
-          this.Dit.OnCreateEntity(t.Entity));
+          (this.Fot.OnCreateEntity(t.Entity),
+          this.Vot.OnCreateEntity(t.Entity));
       }),
       (this.zpe = (e, t) => {
         t?.Valid &&
-          (this.Lit.OnRemoveEntity(t.Entity),
-          this.Dit.DestroyPartStateFromRole(t.Entity));
+          (this.Fot.OnRemoveEntity(t.Entity),
+          this.Vot.DestroyPartStateFromRole(t.Entity));
       }),
-      (this.UYe = (e) => {
-        var t = this.Vit(6).GetRootItem(),
-          i = this.Vit(7).GetRootItem(),
+      (this.FJe = (e) => {
+        var t = this.ort(6).GetRootItem(),
+          i = this.ort(7).GetRootItem(),
           n = t.GetHierarchyIndex(),
           i = i.GetHierarchyIndex();
         (e && i <= n) ||
-          (void 0 !== (n = e ? i : this.bit) && t.SetHierarchyIndex(n),
+          (void 0 !== (n = e ? i : this.Yot) && t.SetHierarchyIndex(n),
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "BattleUiSet",
@@ -84,7 +82,7 @@ class BattleView extends UiTickViewBase_1.UiTickViewBase {
               ["panelUiIndex", n],
             ));
       }),
-      (this.jit = (e) => {
+      (this.rrt = (e) => {
         var t = ConfigManager_1.ConfigManager.AudioConfig.GetAudioPath(e);
         t && "" !== t.Path
           ? AudioController_1.AudioController.PostEventByUi(
@@ -94,41 +92,90 @@ class BattleView extends UiTickViewBase_1.UiTickViewBase {
           : Log_1.Log.CheckError() &&
             Log_1.Log.Error("Audio", 18, "获取Audio配表信息错误", ["id", e]);
       }),
-      (this.Wit = () => {
-        this.Bit
-          ? this.Bit.SetActive(!0)
-          : (this.Bit =
-              new OnlineInstanceDungeonDeathPanel_1.OnlineInstanceDungeonDeathPanel(
-                this.GetItem(10),
-              ));
-      }),
-      (this.Kit = () => {
-        this.Bit && this.Bit.SetActive(!1);
-      }),
-      (this.dKe = (e, t, i) => {
-        !this.Ait &&
-          ModelManager_1.ModelManager.PlatformModel.IsGamepad() &&
-          this.Qit().then(() => {
+      (this.XBo = () => {
+        !this.Wot &&
+          Info_1.Info.IsInGamepad() &&
+          this.art().then(() => {
             this.IsDestroyOrDestroying ||
-              (this.Rit.ShowBattleChildViewPanel(),
-              this.Rit.RefreshOnDelayShow(),
-              this.Uit.ShowBattleChildViewPanel());
+              (this.Hot.ShowBattleChildViewPanel(),
+              this.Hot.RefreshOnDelayShow(),
+              this.jot.ShowBattleChildViewPanel());
           });
       }),
-      (this.NZe = (e) => {
-        for (var [t, i] of this.Pit)
+      (this.ttt = (e) => {
+        for (var [t, i] of this.Kot)
           5 !== t &&
             (e
               ? i.GetVisible() && i.GetRootItem().SetUIActive(!0)
               : i.GetRootItem().SetUIActive(!1));
       }),
-      (this.PYe = (e) => {
-        for (var [t, i] of this.Pit)
+      (this.HJe = (e) => {
+        for (var [t, i] of this.Kot)
           6 !== t &&
             (e
               ? i.GetVisible() && i.GetRootItem().SetUIActive(!0)
               : i.GetRootItem().SetUIActive(!1));
-      });
+      }),
+      (this.bsa = () => {
+        var e = this.Kot.get(6);
+        return (e = e && e.GetExecutionItem()) ? [e, e] : void 0;
+      }),
+      (this.qsa = (e) => {
+        var t = this.Kot.get(3);
+        if (t)
+          return t.GetBattleSkillItemByButtonType(Number(e[1]))?.GetGuideItem();
+      }),
+      (this.Gsa = (t) => {
+        var i = this.Kot.get(Number(t[0]))
+          ?.GetUiActorForGuide()
+          ?.GetComponentByClass(UE.GuideHookRegistry.StaticClass());
+        if (i) {
+          var n = t[2],
+            s = i.GuideHookComponents.Get(n),
+            s =
+              (s ||
+                (Log_1.Log.CheckError() &&
+                  Log_1.Log.Error(
+                    "Guide",
+                    17,
+                    "战斗界面挂接组件(GuideHookRegistry)不存在该挂接点名称，请检查聚焦引导配置或挂接组件",
+                  )),
+              s.GetUIItem());
+          let e = t[1];
+          StringUtils_1.StringUtils.IsEmpty(e) && (e = n);
+          (t = i.GuideHookComponents.Get(e)),
+            (n =
+              (t ||
+                (Log_1.Log.CheckError() &&
+                  Log_1.Log.Error(
+                    "Guide",
+                    17,
+                    "战斗界面挂接组件(GuideHookRegistry)不存在该挂接点（展示用）名称，请检查聚焦引导配置或挂接组件",
+                  )),
+              t.GetUIItem()));
+          return [s, n];
+        }
+        Log_1.Log.CheckError() &&
+          Log_1.Log.Error(
+            "Guide",
+            17,
+            "战斗界面挂接组件(GuideHookRegistry)缺失",
+          );
+      }),
+      (this.Osa = () => {
+        var e,
+          t = this.ort(2);
+        if (t)
+          for (const i of t.GetFormationItemList())
+            if (!i.FormationIns?.IsMyRole())
+              return (e = i.GetRootItem()) ? [e, e] : void 0;
+      }),
+      (this.Nsa = new Map([
+        ["Execution", this.bsa],
+        ["Skill", this.qsa],
+        ["Default", this.Gsa],
+        ["Teammate", this.Osa],
+      ]));
   }
   OnRegisterComponent() {
     (this.ComponentRegisterInfos = [
@@ -144,39 +191,39 @@ class BattleView extends UiTickViewBase_1.UiTickViewBase {
       [9, UE.UIItem],
       [10, UE.UIItem],
     ]),
-      ModelManager_1.ModelManager.PlatformModel.IsMobile() ||
+      Info_1.Info.IsInTouch() ||
         (this.ComponentRegisterInfos.push([11, UE.UIItem]),
         this.ComponentRegisterInfos.push([12, UE.UIItem]));
   }
   async OnBeforeStartAsync() {
     await Promise.all([
-      this.Xit(2, FormationPanel_1.FormationPanel, !0, 7),
-      this.Xit(3, SkillButtonPanel_1.SkillButtonPanel, !0, 9),
-      this.Qit(),
-      this.Xit(0, BossStatePanel_1.BossStatePanel, !0, 13),
-      this.Xit(5, TopPanel_1.TopPanel, !0, 24),
-      this.Xit(4, BottomPanel_1.BottomPanel, !0, 11),
-      this.Xit(1, MissionPanel_1.MissionPanel, !0, 5),
-      this.Xit(6, CenterPanel_1.CenterPanel, !0, 24),
-      this.Xit(7, ChatPanel_1.ChatPanel, !1, 6),
-      this.Xit(8, FullScreenPanel_1.FullScreenPanel, !0, 23),
-      this.Xit(9, PositionPanel_1.PositionPanel, !0),
+      this.hrt(2, FormationPanel_1.FormationPanel, !0, 7),
+      this.hrt(3, SkillButtonPanel_1.SkillButtonPanel, !0, 9),
+      this.art(),
+      this.hrt(0, BossStatePanel_1.BossStatePanel, !0, 13),
+      this.hrt(5, TopPanel_1.TopPanel, !0, 24),
+      this.hrt(4, BottomPanel_1.BottomPanel, !0, 11),
+      this.hrt(1, MissionPanel_1.MissionPanel, !0, 5),
+      this.hrt(6, CenterPanel_1.CenterPanel, !0, 24),
+      this.hrt(7, ChatPanel_1.ChatPanel, !1, 6),
+      this.hrt(8, FullScreenPanel_1.FullScreenPanel, !0, 23),
+      this.hrt(9, PositionPanel_1.PositionPanel, !0),
     ]),
-      this.$it(),
-      this.Yit(),
+      this.lrt(),
+      this._rt(),
       this.Ore(),
-      this.UiViewSequence.AddSequenceStartEvent("ShowView", this.Fit),
+      this.UiViewSequence.AddSequenceStartEvent("ShowView", this.irt),
       ModelManager_1.ModelManager.BattleUiModel.UpdateViewPortSize(),
-      this.Jit();
+      this.urt();
   }
-  async Qit() {
-    !ModelManager_1.ModelManager.PlatformModel.IsGamepad() ||
-      this.Ait ||
+  async art() {
+    !Info_1.Info.IsInGamepad() ||
+      this.Wot ||
       (ModelManager_1.ModelManager.SkillButtonUiModel.GamepadData?.RefreshButtonData(),
-      (this.Ait = !0),
-      (this.Rit = await this.Xit(11, FormationPanel_1.FormationPanel, !0, 8)),
-      this.Rit.SetIsGamepad(),
-      (this.Uit = await this.Xit(
+      (this.Wot = !0),
+      (this.Hot = await this.hrt(11, FormationPanel_1.FormationPanel, !0, 8)),
+      this.Hot.SetIsGamepad(),
+      (this.jot = await this.hrt(
         12,
         GamepadSkillButtonPanel_1.GamepadSkillButtonPanel,
         !0,
@@ -184,11 +231,11 @@ class BattleView extends UiTickViewBase_1.UiTickViewBase {
       )));
   }
   OnTick(e) {
-    for (const t of this.xit) t.GetVisible() && t.OnTickBattleChildViewPanel(e);
-    this.Lit.Tick(e), this.Dit.Tick(e);
+    for (const t of this.Qot) t.GetVisible() && t.OnTickBattleChildViewPanel(e);
+    this.Fot.Tick(e), this.Vot.Tick(e);
   }
   OnAfterTick(e) {
-    for (const t of this.xit)
+    for (const t of this.Qot)
       t.GetVisible() && t.OnAfterTickBattleChildViewPanel(e);
   }
   OnBeforeShow() {
@@ -204,8 +251,8 @@ class BattleView extends UiTickViewBase_1.UiTickViewBase {
           "[battleView]OnBeforeShow Cancel Because Destroy",
         );
     else {
-      this.zit();
-      for (const e of this.Pit.values()) e.ShowBattleChildViewPanel();
+      this.crt();
+      for (const e of this.Kot.values()) e.ShowBattleChildViewPanel();
     }
   }
   OnAfterShow() {
@@ -224,10 +271,7 @@ class BattleView extends UiTickViewBase_1.UiTickViewBase {
             battleUiChildren,
             !0,
           ),
-          (!ModelManager_1.ModelManager.PlotModel.IsInPlot ||
-            (ModelManager_1.ModelManager.PlotModel.IsInPlot &&
-              "LevelD" ===
-                ModelManager_1.ModelManager.PlotModel.PlotConfig.PlotLevel)) &&
+          ModelManager_1.ModelManager.PlotModel.IsInHighLevelPlot() ||
             AudioController_1.AudioController.SetState(
               AudioDefine_1.STATEGROUP,
               AudioDefine_1.STATENORMAL,
@@ -259,8 +303,8 @@ class BattleView extends UiTickViewBase_1.UiTickViewBase {
   OnAfterHide() {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug("Battle", 18, "[battleView]OnAfterHide");
-    for (const e of this.Pit.values()) e.HideBattleChildViewPanel();
-    ModelManager_1.ModelManager.PlotModel.IsInPlot ||
+    for (const e of this.Kot.values()) e.HideBattleChildViewPanel();
+    ModelManager_1.ModelManager.PlotModel.IsInHighLevelPlot() ||
       AudioController_1.AudioController.SetState(
         AudioDefine_1.STATEGROUP,
         AudioDefine_1.STATEBACKGROUND,
@@ -270,16 +314,15 @@ class BattleView extends UiTickViewBase_1.UiTickViewBase {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug("Battle", 18, "[battleView]OnBeforeDestroy"),
       this.kre(),
-      this.Zit(),
-      this.eot(),
-      this.tot(),
-      this.iot(),
-      (this.wit = void 0),
+      this.mrt(),
+      this.drt(),
+      this.Crt(),
+      (this.Xot = void 0),
       Info_1.Info.IsBuildDevelopmentOrDebug &&
-        (this.Git = TimerSystem_1.TimerSystem.Forever(() => {
+        (this.zot = TimerSystem_1.TimerSystem.Forever(() => {
           ModelManager_1.ModelManager.GameModeModel.WorldDone &&
-            (TimerSystem_1.TimerSystem.Remove(this.Git),
-            (this.Git = void 0),
+            (TimerSystem_1.TimerSystem.Remove(this.zot),
+            (this.zot = void 0),
             Log_1.Log.CheckError()) &&
             Log_1.Log.Error(
               "Battle",
@@ -289,23 +332,23 @@ class BattleView extends UiTickViewBase_1.UiTickViewBase {
         }, CHECK_DESTROY_TIME));
   }
   OnAfterDestroy() {
-    this.Git &&
-      (TimerSystem_1.TimerSystem.Remove(this.Git), (this.Git = void 0)),
+    this.zot &&
+      (TimerSystem_1.TimerSystem.Remove(this.zot), (this.zot = void 0)),
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("Battle", 18, "[battleView]OnAfterDestroy");
   }
   Ore() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnChangeRole,
-      this.o7e,
+      this.fHe,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnUpdateSceneTeam,
-        this.Nit,
+        this.Zot,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.BattleUiAllRoleDataChanged,
-        this.Oit,
+        this.ert,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.AddEntity,
@@ -316,47 +359,39 @@ class BattleView extends UiTickViewBase_1.UiTickViewBase {
         this.zpe,
       ),
       EventSystem_1.EventSystem.Add(
-        EventDefine_1.EEventName.OpenOnlineInstanceDeath,
-        this.Wit,
-      ),
-      EventSystem_1.EventSystem.Add(
-        EventDefine_1.EEventName.PlayerRevive,
-        this.Kit,
-      ),
-      EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.GmOnlyShowMiniMap,
-        this.NZe,
+        this.ttt,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.GmOnlyShowJoyStick,
-        this.PYe,
+        this.HJe,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnRouletteViewVisibleChanged,
-        this.UYe,
+        this.FJe,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.BattleUiPlayAudio,
-        this.jit,
+        this.rrt,
       ),
-      ModelManager_1.ModelManager.PlatformModel.IsMobile() ||
+      Info_1.Info.IsInTouch() ||
         EventSystem_1.EventSystem.Add(
-          EventDefine_1.EEventName.OnPlatformChanged,
-          this.dKe,
+          EventDefine_1.EEventName.InputControllerChange,
+          this.XBo,
         );
   }
   kre() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnChangeRole,
-      this.o7e,
+      this.fHe,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnUpdateSceneTeam,
-        this.Nit,
+        this.Zot,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.BattleUiAllRoleDataChanged,
-        this.Oit,
+        this.ert,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.AddEntity,
@@ -367,86 +402,75 @@ class BattleView extends UiTickViewBase_1.UiTickViewBase {
         this.zpe,
       ),
       EventSystem_1.EventSystem.Remove(
-        EventDefine_1.EEventName.OpenOnlineInstanceDeath,
-        this.Wit,
-      ),
-      EventSystem_1.EventSystem.Remove(
-        EventDefine_1.EEventName.PlayerRevive,
-        this.Kit,
-      ),
-      EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.GmOnlyShowMiniMap,
-        this.NZe,
+        this.ttt,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.GmOnlyShowJoyStick,
-        this.PYe,
+        this.HJe,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnRouletteViewVisibleChanged,
-        this.UYe,
+        this.FJe,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.BattleUiPlayAudio,
-        this.jit,
+        this.rrt,
       ),
       EventSystem_1.EventSystem.Has(
-        EventDefine_1.EEventName.OnPlatformChanged,
-        this.dKe,
+        EventDefine_1.EEventName.InputControllerChange,
+        this.XBo,
       ) &&
         EventSystem_1.EventSystem.Remove(
-          EventDefine_1.EEventName.OnPlatformChanged,
-          this.dKe,
+          EventDefine_1.EEventName.InputControllerChange,
+          this.XBo,
         );
   }
-  kit(e) {
-    this.qit !== e &&
-      ((this.qit = e), this.IsShow) &&
+  trt(e) {
+    this.Jot !== e &&
+      ((this.Jot = e), this.IsShow) &&
       this.UiViewSequence?.PlaySequencePurely("Switch");
   }
-  $it() {
-    this.Lit = new BattleHeadStatePanel_1.BattleHeadStatePanel();
+  lrt() {
+    this.Fot = new BattleHeadStatePanel_1.BattleHeadStatePanel();
   }
-  eot() {
-    this.Lit && (this.Lit.ResetAllHeadStates(), (this.Lit = void 0));
+  drt() {
+    this.Fot && (this.Fot.ResetAllHeadStates(), (this.Fot = void 0));
   }
-  Yit() {
-    (this.Dit = new PartStatePanel_1.PartStatePanel()),
-      this.Dit.InitializePartStatePanel();
+  _rt() {
+    (this.Vot = new PartStatePanel_1.PartStatePanel()),
+      this.Vot.InitializePartStatePanel();
   }
-  tot() {
-    this.Dit && (this.Dit.ResetPartStatePanel(), (this.Dit = void 0));
+  Crt() {
+    this.Vot && (this.Vot.ResetPartStatePanel(), (this.Vot = void 0));
   }
-  iot() {
-    this.Bit && (this.Bit.ResetData(), (this.Bit = void 0));
-  }
-  async Xit(e, t, i = !1, n = 0) {
+  async hrt(e, t, i = !1, n = 0) {
     var s = this.GetItem(e),
       t = new t();
     return (
       await t.CreateThenShowByActorAsync(s.GetOwner(), n),
-      this.Pit.set(e, t),
-      i && this.xit.push(t),
+      this.Kot.set(e, t),
+      i && this.Qot.push(t),
       t
     );
   }
-  Vit(e) {
-    return this.Pit.get(e);
+  ort(e) {
+    return this.Kot.get(e);
   }
-  Jit() {
-    var e = this.Vit(6).GetRootItem();
-    this.bit = e.GetHierarchyIndex();
+  urt() {
+    var e = this.ort(6).GetRootItem();
+    this.Yot = e.GetHierarchyIndex();
   }
-  Zit() {
-    for (const e of this.Pit.values()) void 0 !== e && e.Reset();
-    this.Pit.clear(), (this.xit.length = 0);
+  mrt() {
+    for (const e of this.Kot.values()) void 0 !== e && e.Reset();
+    this.Kot.clear(), (this.Qot.length = 0);
   }
-  zit() {
-    if (ModelManager_1.ModelManager.PlatformModel.IsMobile()) {
+  crt() {
+    if (Info_1.Info.IsInTouch()) {
       var e = ModelManager_1.ModelManager.BattleUiSetModel.GetPanelDataMap();
       if (e)
         for (var [t, i] of e) {
-          var n = this.Vit(t);
+          var n = this.ort(t);
           if (n) {
             var s,
               a,
@@ -454,23 +478,23 @@ class BattleView extends UiTickViewBase_1.UiTickViewBase {
               r,
               i = i.GetPanelItemDataMap();
             if (i)
-              for (var [_, l] of i)
-                if (l.IsInitialized()) {
+              for (var [_, h] of i)
+                if (h.IsInitialized()) {
                   let e = n.GetItem(_);
                   (e = -1 === _ ? n.GetRootItem() : e)
-                    ? ((s = l.Size),
-                      (a = l.Alpha),
-                      (o = l.OffsetX),
-                      (r = l.OffsetY),
-                      (l = l.HierarchyIndex),
-                      (this.wit.X = s),
-                      (this.wit.Y = s),
-                      (this.wit.Z = s),
-                      e.SetUIItemScale(this.wit),
+                    ? ((s = h.Size),
+                      (a = h.Alpha),
+                      (o = h.OffsetX),
+                      (r = h.OffsetY),
+                      (h = h.HierarchyIndex),
+                      (this.Xot.X = s),
+                      (this.Xot.Y = s),
+                      (this.Xot.Z = s),
+                      e.SetUIItemScale(this.Xot),
                       e.SetAnchorOffsetX(o),
                       e.SetAnchorOffsetY(r),
                       e.SetUIItemAlpha(a),
-                      e.SetHierarchyIndex(l))
+                      e.SetHierarchyIndex(h))
                     : Log_1.Log.CheckError() &&
                       Log_1.Log.Error(
                         "BattleUiSet",
@@ -484,47 +508,16 @@ class BattleView extends UiTickViewBase_1.UiTickViewBase {
         }
     }
   }
-  GetGuideUiItemAndUiItemForShowEx(t) {
-    if ("Execution" === t[0])
-      return (i = this.Pit.get(6)) && (i = i.GetExecutionItem())
-        ? [i, i]
-        : void 0;
-    if ("Skill" === t[0])
-      return (i = this.Pit.get(3))
-        ? i.GetBattleSkillItemByButtonType(Number(t[1]))?.GetGuideItem()
-        : void 0;
-    var i = this.Pit.get(Number(t[0]))
-      ?.GetUiActorForGuide()
-      ?.GetComponentByClass(UE.GuideHookRegistry.StaticClass());
-    if (i) {
-      var n = t[2],
-        s = i.GuideHookComponents.Get(n),
-        s =
-          (s ||
-            (Log_1.Log.CheckError() &&
-              Log_1.Log.Error(
-                "Guide",
-                17,
-                "战斗界面挂接组件(GuideHookRegistry)不存在该挂接点名称，请检查聚焦引导配置或挂接组件",
-              )),
-          s.GetUIItem());
-      let e = t[1];
-      StringUtils_1.StringUtils.IsEmpty(e) && (e = n);
-      (t = i.GuideHookComponents.Get(e)),
-        (n =
-          (t ||
-            (Log_1.Log.CheckError() &&
-              Log_1.Log.Error(
-                "Guide",
-                17,
-                "战斗界面挂接组件(GuideHookRegistry)不存在该挂接点（展示用）名称，请检查聚焦引导配置或挂接组件",
-              )),
-          t.GetUIItem()));
-      return [s, n];
-    }
+  GetGuideUiItemAndUiItemForShowEx(e) {
+    if (0 !== e.length)
+      return (this.Nsa.get(e[0]) || this.Nsa.get("Default"))(e);
     Log_1.Log.CheckError() &&
-      Log_1.Log.Error("Guide", 17, "战斗界面挂接组件(GuideHookRegistry)缺失");
+      Log_1.Log.Error(
+        "Guide",
+        65,
+        "BattleView相关的引导Extra参数设置错误，不能为空",
+      );
   }
 }
-(exports.BattleView = BattleView).aYe = void 0;
+(exports.BattleView = BattleView).vJe = void 0;
 //# sourceMappingURL=BattleView.js.map

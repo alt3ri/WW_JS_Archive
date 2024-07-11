@@ -4,7 +4,6 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const Log_1 = require("../../Core/Common/Log"),
   Time_1 = require("../../Core/Common/Time"),
   CommonDefine_1 = require("../../Core/Define/CommonDefine"),
-  Net_1 = require("../../Core/Net/Net"),
   MathUtils_1 = require("../../Core/Utils/MathUtils"),
   StringBuilder_1 = require("../../Core/Utils/StringBuilder"),
   StringUtils_1 = require("../../Core/Utils/StringUtils"),
@@ -24,7 +23,6 @@ class TimeUtil {
   static SetServerTimeStamp(e) {
     Time_1.Time.SetServerTimeStamp(
       Number(MathUtils_1.MathUtils.LongToBigInt(e)),
-      Net_1.Net.RttMs,
     ),
       void 0 === this.kde && this.InitNextDayTimeStamp();
   }
@@ -287,6 +285,14 @@ class TimeUtil {
   static IsInTimeSpan(e, t) {
     var i = TimeUtil.GetServerTime();
     return e <= i && i <= t;
+  }
+  static GetCurrentCrossDayStamp() {
+    var e = new Date();
+    return (
+      e.getHours() < TimeUtil.CrossDayHour && e.setDate(e.getDate() - 1),
+      e.setHours(TimeUtil.CrossDayHour, 0, 0, 0),
+      e.getTime()
+    );
   }
 }
 ((exports.TimeUtil = TimeUtil).OneDayHourCount = 24),

@@ -13,36 +13,36 @@ const ue_1 = require("ue"),
 class MissionPanelChildStep extends TreeStepWithStatus_1.TreeStepWithStatus {
   constructor() {
     super(),
-      (this.Lut = void 0),
-      (this.Dut = void 0),
-      (this.Rut = void 0),
+      (this.Oct = void 0),
+      (this.kct = void 0),
+      (this.Fct = void 0),
       (this.LevelSequencePlayer = void 0),
-      (this.Uut = void 0),
-      (this.Aut = void 0),
-      (this.xut = IQuest_1.EQuestScheduleType.None),
-      (this.G_t = 0),
-      (this.gAn = void 0),
-      (this.ZPt = (e) => {
+      (this.Vct = void 0),
+      (this.Hct = void 0),
+      (this.jct = IQuest_1.EQuestScheduleType.None),
+      (this.Zut = 0),
+      (this.Sxn = void 0),
+      (this.owt = (e) => {
         "Start" === e && this.SetActive(!0);
       }),
-      (this.aut = (e) => {
+      (this.yct = (e) => {
         switch (e) {
           case "Success":
-            this.DescribeTextComp?.SetColor(this.Uut);
+            this.DescribeTextComp?.SetColor(this.Vct);
             break;
           case "Fail":
-            this.DescribeTextComp?.SetColor(this.Aut);
+            this.DescribeTextComp?.SetColor(this.Hct);
             break;
           case "Start":
-            this.hut();
+            this.Ict();
             break;
           case "Close":
-            this.SetActive(!1), this.gAn ? this.gAn() : this.hut();
+            this.SetActive(!1), this.Sxn ? this.Sxn() : this.Ict();
         }
       }),
-      (this.Lut = ue_1.Color.FromHex("ECE5D8FF")),
-      (this.Dut = ue_1.Color.FromHex("ADADADFF")),
-      (this.Rut = ue_1.Color.FromHex("C9F797FF"));
+      (this.Oct = ue_1.Color.FromHex("ECE5D8FF")),
+      (this.kct = ue_1.Color.FromHex("ADADADFF")),
+      (this.Fct = ue_1.Color.FromHex("C9F797FF"));
   }
   OnRegisterComponent() {
     super.OnRegisterComponent(),
@@ -53,19 +53,19 @@ class MissionPanelChildStep extends TreeStepWithStatus_1.TreeStepWithStatus {
       (this.LevelSequencePlayer = new LevelSequencePlayer_1.LevelSequencePlayer(
         this.RootItem,
       )),
-      this.LevelSequencePlayer.BindSequenceStartEvent(this.ZPt),
-      this.LevelSequencePlayer.BindSequenceCloseEvent(this.aut),
+      this.LevelSequencePlayer.BindSequenceStartEvent(this.owt),
+      this.LevelSequencePlayer.BindSequenceCloseEvent(this.yct),
       this.GetItem(5)?.SetUIActive(!1);
   }
   DisableUi(e) {
     this.SetUiActive(e), e || this.GetItem(5)?.SetAlpha(0);
   }
-  wut() {
+  Wct() {
     var t = this.Config.QuestScheduleType;
-    if (this.xut !== t.Type)
-      switch (((this.xut = t.Type), t.Type)) {
+    if (this.jct !== t.Type)
+      switch (((this.jct = t.Type), t.Type)) {
         case IQuest_1.EQuestScheduleType.ChildQuestCompleted:
-          (this.Uut = this.Rut), (this.Aut = this.Dut);
+          (this.Vct = this.Fct), (this.Hct = this.kct);
           var s =
               ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
                 "SP_MissionState",
@@ -86,8 +86,8 @@ class MissionPanelChildStep extends TreeStepWithStatus_1.TreeStepWithStatus {
         case IQuest_1.EQuestScheduleType.TimeLeft: {
           let e = void 0;
           (e = (t.Type, IQuest_1.EQuestScheduleType.Condition, t)),
-            (this.Uut = this.Lut),
-            (this.Aut = this.Dut);
+            (this.Vct = this.Oct),
+            (this.Hct = this.kct);
           (s = 1 === e.IconType ? "SP_DailyTowerStarBg" : "SP_ComStateOffline"),
             (i =
               ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
@@ -107,37 +107,37 @@ class MissionPanelChildStep extends TreeStepWithStatus_1.TreeStepWithStatus {
       }
   }
   UpdateStepInfo() {
-    this.wut();
+    this.Wct();
     var e = super.UpdateStepInfo();
     return (
       this.StepSuccess?.IsUIActiveInHierarchy()
-        ? this.DescribeTextComp.SetColor(this.Uut)
+        ? this.DescribeTextComp.SetColor(this.Vct)
         : this.StepLose?.IsUIActiveInHierarchy()
-          ? this.DescribeTextComp.SetColor(this.Aut)
-          : this.DescribeTextComp.SetColor(this.Lut),
+          ? this.DescribeTextComp.SetColor(this.Hct)
+          : this.DescribeTextComp.SetColor(this.Oct),
       e
     );
   }
   OnSuccessNodeActive(e) {
     if (e)
-      switch (this.xut) {
+      switch (this.jct) {
         case IQuest_1.EQuestScheduleType.ChildQuestCompleted:
           this.LevelSequencePlayer.PlayLevelSequenceByName("Success");
           break;
         case IQuest_1.EQuestScheduleType.TimeLeft:
         case IQuest_1.EQuestScheduleType.Condition:
-          this.aut("Success");
+          this.yct("Success");
       }
   }
   OnLoseNodeActive(e) {
     if (e)
-      switch (this.xut) {
+      switch (this.jct) {
         case IQuest_1.EQuestScheduleType.ChildQuestCompleted:
           this.LevelSequencePlayer.PlayLevelSequenceByName("Fail");
           break;
         case IQuest_1.EQuestScheduleType.TimeLeft:
         case IQuest_1.EQuestScheduleType.Condition:
-          this.aut("Fail");
+          this.yct("Fail");
       }
   }
   OnStepDescribeUpdate(e) {
@@ -145,38 +145,38 @@ class MissionPanelChildStep extends TreeStepWithStatus_1.TreeStepWithStatus {
     this.GetItem(5)?.SetUIActive(!e);
   }
   PlayStartSequence(e) {
-    (this.G_t = e),
+    (this.Zut = e),
       this.LevelSequencePlayer.StopCurrentSequence(!0, !0),
       this.LevelSequencePlayer?.PlayLevelSequenceByName("Start");
     var e =
         "Disabled" !==
         ModelManager_1.ModelManager.AutoRunModel.GetAutoRunMode(),
-      t = this.fAn();
+      t = this.Exn();
     (!e && t) || this.LevelSequencePlayer.StopCurrentSequence(!0, !0);
   }
   PlayCloseSequence(e, t) {
-    (this.G_t = e),
+    (this.Zut = e),
       this.LevelSequencePlayer.StopCurrentSequence(!0, !0),
       this.LevelSequencePlayer?.PlayLevelSequenceByName("Close"),
-      (this.gAn = t);
+      (this.Sxn = t);
     (e =
       "Disabled" !== ModelManager_1.ModelManager.AutoRunModel.GetAutoRunMode()),
-      (t = this.fAn());
+      (t = this.Exn());
     return !(
       (!e && t) ||
       (this.LevelSequencePlayer.StopCurrentSequence(!0, !0), 0)
     );
   }
-  fAn() {
+  Exn() {
     return void 0 !== this.Config;
   }
-  hut() {
-    this.G_t &&
+  Ict() {
+    this.Zut &&
       (EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.MissionPanelProcessEnd,
-        this.G_t,
+        this.Zut,
       ),
-      (this.G_t = 0));
+      (this.Zut = 0));
   }
 }
 exports.MissionPanelChildStep = MissionPanelChildStep;

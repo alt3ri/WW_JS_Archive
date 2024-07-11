@@ -35,50 +35,50 @@ const UE = require("ue"),
 class WeaponLevelUpView extends UiTabViewBase_1.UiTabViewBase {
   constructor() {
     super(...arguments),
-      (this.gHi = void 0),
-      (this.SHi = new SelectableExpData_1.SelectableExpData()),
+      (this.dji = void 0),
+      (this.vji = new SelectableExpData_1.SelectableExpData()),
       (this.WeaponInstance = void 0),
-      (this.xNo = void 0),
-      (this.fHi = void 0),
-      (this.iuo = []),
-      (this.BNo = void 0),
-      (this.MHi = void 0),
-      (this.EHi = void 0),
-      (this.Qft = void 0),
-      (this.Nki = void 0),
-      (this.Oki = void 0),
-      (this.bNo = () => {
-        this.uuo(),
-          this.gHi.PlayExpTween(this.SHi),
-          (this.BNo.length = 0),
-          this.LHi(),
-          this.fHi.UpdateComponent(ItemDefines_1.EItemId.Gold, 0, this.MHi),
-          this.fHi.SetMaxState(this.WeaponInstance.IsLevelMax());
+      (this.UOo = void 0),
+      (this.Cji = void 0),
+      (this.zuo = []),
+      (this.POo = void 0),
+      (this.pji = void 0),
+      (this.Mji = void 0),
+      (this.nvt = void 0),
+      (this.N2i = void 0),
+      (this.O2i = void 0),
+      (this.xOo = () => {
+        this.aco(),
+          this.dji.PlayExpTween(this.vji),
+          (this.POo.length = 0),
+          this.Iji(),
+          this.Cji.UpdateComponent(ItemDefines_1.EItemId.Gold, 0, this.pji),
+          this.Cji.SetMaxState(this.WeaponInstance.IsLevelMax());
       }),
-      (this.qNo = (e) => {
-        this.iuo = e;
+      (this.wOo = (e) => {
+        this.zuo = e;
       }),
-      (this.GNo = (e) => this.WeaponInstance.GetLevelExp(e)),
-      (this.BHi = (e) => {
+      (this.BOo = (e) => this.WeaponInstance.GetLevelExp(e)),
+      (this.xji = (e) => {
         return ModelManager_1.ModelManager.WeaponModel.GetWeaponItemExp(
           e.IncId,
           e.ItemId,
         );
       }),
-      (this.nuo = () => {
-        this.NNo(), this.jlo();
+      (this.tco = () => {
+        this.bOo(), this.k1o();
       }),
-      (this.tpt = () => new AttributeItem_1.AttributeItem()),
-      (this.UHi = () => {
-        if (!this.BNo || this.BNo.length <= 0)
+      (this.mvt = () => new AttributeItem_1.AttributeItem()),
+      (this.Dji = () => {
+        if (!this.POo || this.POo.length <= 0)
           ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
             "WeaponSelectMaterialTipsText",
           );
-        else if (this.fHi.GetEnoughMoney()) {
+        else if (this.Cji.GetEnoughMoney()) {
           let e = !1,
             t = !1,
             i = !1;
-          for (const a of this.BNo) {
+          for (const a of this.POo) {
             var s =
               ModelManager_1.ModelManager.WeaponModel.GetWeaponDataByIncId(
                 a.IncId,
@@ -136,26 +136,26 @@ class WeaponLevelUpView extends UiTabViewBase_1.UiTabViewBase {
                 ...n,
               ),
               o.FunctionMap.set(2, () => {
-                this.ONo();
+                this.qOo();
               }),
               ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
                 o,
               ))
-            : this.ONo();
+            : this.qOo();
         } else
           ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
             "WeaponNoEnoughMoneyText",
           );
       }),
-      (this.ONo = () => {
+      (this.qOo = () => {
         var e = () => {
             var e = this.WeaponInstance.GetIncId();
             WeaponController_1.WeaponController.SendPbWeaponLevelUpRequest(
               e,
-              this.BNo,
+              this.POo,
             );
           },
-          t = this.SHi.GetOverExp();
+          t = this.vji.GetOverExp();
         if (0 < t) {
           var i,
             t =
@@ -174,22 +174,22 @@ class WeaponLevelUpView extends UiTabViewBase_1.UiTabViewBase {
         }
         e();
       }),
-      (this.GHi = (e, t) => {
+      (this.bji = (e, t) => {
         var i = new CommonItemSelectView_1.CommonItemSelectViewOpenViewData(),
           r = ModelManager_1.ModelManager.WeaponModel.GetWeaponExpItemList(
             this.WeaponInstance.GetIncId(),
           ),
           s = new CommonIntensifyPropExpData_1.CommonIntensifyPropExpData(),
           o =
-            ((s.CurrentExp = this.SHi.GetCurrentExp()),
-            (s.CurrentLevel = this.SHi.GetCurrentLevel()),
-            (s.CurrentMaxLevel = this.SHi.GetCurrentMaxLevel()),
-            (s.MaxExpFunction = this.GNo),
-            (s.GetItemExpFunction = this.BHi),
-            this.BNo),
+            ((s.CurrentExp = this.vji.GetCurrentExp()),
+            (s.CurrentLevel = this.vji.GetCurrentLevel()),
+            (s.CurrentMaxLevel = this.vji.GetCurrentMaxLevel()),
+            (s.MaxExpFunction = this.BOo),
+            (s.GetItemExpFunction = this.xji),
+            this.POo),
           n = new SelectableComponent_1.SelectableComponentData();
         (n.IsSingleSelected = !1),
-          (n.OnChangeSelectedFunction = this.pvt),
+          (n.OnChangeSelectedFunction = this.AMt),
           (i.ItemDataBaseList = r),
           (i.SelectedDataList = o),
           (i.ExpData = s),
@@ -197,23 +197,23 @@ class WeaponLevelUpView extends UiTabViewBase_1.UiTabViewBase {
           (i.UseWayId = 2),
           UiManager_1.UiManager.OpenView("CommonItemSelectViewRight", i);
       }),
-      (this.pvt = (e, t) => {
-        (this.BNo = e), (this.SHi = t), this.xHi();
+      (this.AMt = (e, t) => {
+        (this.POo = e), (this.vji = t), this.Aji();
       }),
-      (this.qHi = () => {
-        this.GHi(0, 0);
+      (this.Bji = () => {
+        this.bji(0, 0);
       }),
-      (this.PHi = () => {
-        (this.BNo = []), this.xHi();
+      (this.Uji = () => {
+        (this.POo = []), this.Aji();
       }),
-      (this.wHi = () => {
+      (this.Pji = () => {
         var e,
           t =
             ModelManager_1.ModelManager.WeaponModel.GetWeaponExpItemListUseToAuto(
               this.WeaponInstance.GetIncId(),
             ),
           i = [],
-          r = this.kNo(this.EHi);
+          r = this.GOo(this.Mji);
         for (const s of t)
           s.GetQuality() > r ||
             ((e = {
@@ -227,35 +227,35 @@ class WeaponLevelUpView extends UiTabViewBase_1.UiTabViewBase {
           ? ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
               "RoleNoMaterial",
             )
-          : ((t = this.SHi.GetExpDistanceToMax()),
+          : ((t = this.vji.GetExpDistanceToMax()),
             (t = ModelManager_1.ModelManager.WeaponModel.AutoAddExpItem(
               t,
               ITEM_MAX_COUNT,
               i,
-              this.BHi,
+              this.xji,
             )),
-            (this.BNo = t),
-            this.BNo.sort((e, t) => {
+            (this.POo = t),
+            this.POo.sort((e, t) => {
               e = 0 < e.IncId;
               return e != 0 < t.IncId ? (e ? 1 : -1) : 0;
             }),
-            this.xHi());
+            this.Aji());
       }),
-      (this.bHi = (t, i) => {
-        for (let e = this.BNo.length - 1; 0 <= e; e--)
-          this.BNo[e].ItemId === i &&
-            this.BNo[e].IncId === t &&
-            (this.BNo[e].SelectedCount--, 0 === this.BNo[e].SelectedCount) &&
-            this.BNo.splice(e, 1);
-        this.xHi();
+      (this.wji = (t, i) => {
+        for (let e = this.POo.length - 1; 0 <= e; e--)
+          this.POo[e].ItemId === i &&
+            this.POo[e].IncId === t &&
+            (this.POo[e].SelectedCount--, 0 === this.POo[e].SelectedCount) &&
+            this.POo.splice(e, 1);
+        this.Aji();
       }),
-      (this.zIt = (e) => {
-        (this.EHi = e), this.FNo();
+      (this.oLt = (e) => {
+        (this.Mji = e), this.NOo();
       }),
-      (this.luo = () => {
-        if (0 < this.iuo.length) {
+      (this.nco = () => {
+        if (0 < this.zuo.length) {
           var e = [];
-          for (const r of this.iuo) {
+          for (const r of this.zuo) {
             var t = r[0],
               i = r[1],
               i = new RewardItemData_1.RewardItemData(t.ItemId, i, t.IncId);
@@ -283,86 +283,86 @@ class WeaponLevelUpView extends UiTabViewBase_1.UiTabViewBase {
   async OnBeforeStartAsync() {
     var e =
       new CommonMultipleConsumeComponent_1.CommonMultipleConsumeFunction();
-    (e.StrengthFunction = this.UHi),
-      (e.MaterialItemFunction = this.GHi),
-      (e.ItemClickFunction = this.qHi),
-      (e.ReduceItemFunction = this.bHi),
-      (e.AutoFunction = this.wHi),
-      (e.DeleteSelectFunction = this.PHi),
-      (this.fHi = new ItemGridConsumeComponent_1.ItemGridConsumeComponent(
+    (e.StrengthFunction = this.Dji),
+      (e.MaterialItemFunction = this.bji),
+      (e.ItemClickFunction = this.Bji),
+      (e.ReduceItemFunction = this.wji),
+      (e.AutoFunction = this.Pji),
+      (e.DeleteSelectFunction = this.Uji),
+      (this.Cji = new ItemGridConsumeComponent_1.ItemGridConsumeComponent(
         this.GetItem(2),
         e,
       )),
-      await this.fHi.Init(),
-      this.fHi.SetActive(!0);
+      await this.Cji.Init(),
+      this.Cji.SetActive(!0);
   }
   OnStart() {
     var e = this.ExtraParams;
     (this.WeaponInstance =
       ModelManager_1.ModelManager.WeaponModel.GetWeaponDataByIncId(e)),
-      this.VNo(),
-      this.wao(),
-      this.HNo();
+      this.OOo(),
+      this.Uho(),
+      this.kOo();
   }
   OnBeforeDestroy() {
-    this.gHi.Destroy(), this.fHi.Destroy();
+    this.dji.Destroy(), this.Cji.Destroy();
   }
   OnBeforeShow() {
-    this.NNo(), this.C4e(), this.jlo(), this.jNo();
+    this.bOo(), this.P5e(), this.k1o(), this.FOo();
   }
   AddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.WeaponLevelUp,
-      this.bNo,
+      this.xOo,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.WeaponLevelUpReceiveItem,
-        this.qNo,
+        this.wOo,
       );
   }
   RemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.WeaponLevelUp,
-      this.bNo,
+      this.xOo,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.WeaponLevelUpReceiveItem,
-        this.qNo,
+        this.wOo,
       );
   }
   OnHideUiTabViewBase(e) {
     e && UiManager_1.UiManager.CloseView("CommonItemSelectViewRight");
   }
-  VNo() {
-    (this.gHi = new ExpComponent_1.ExpComponent(this.GetItem(0), !1)),
-      this.gHi.Init(),
-      this.gHi.SetLevelFormatText("LevelNumber"),
-      this.gHi.BindPlayCompleteCallBack(this.nuo),
-      this.SHi.SetMaxExpFunction(this.GNo);
+  OOo() {
+    (this.dji = new ExpComponent_1.ExpComponent(this.GetItem(0), !1)),
+      this.dji.Init(),
+      this.dji.SetLevelFormatText("LevelNumber"),
+      this.dji.BindPlayCompleteCallBack(this.tco),
+      this.vji.SetMaxExpFunction(this.BOo);
   }
-  NNo() {
-    this.WNo(), this.gHi.UpdateInitState(this.SHi);
+  bOo() {
+    this.VOo(), this.dji.UpdateInitState(this.vji);
   }
-  WNo() {
+  VOo() {
     var e = this.WeaponInstance.GetLevel(),
       t = this.WeaponInstance.GetCurrentMaxLevel(),
       i = this.WeaponInstance.GetExp(),
       r = this.WeaponInstance.GetMaxLevel();
-    this.SHi.UpdateComponent(e, t, i, r);
+    this.vji.UpdateComponent(e, t, i, r);
   }
-  uuo() {
-    var t = this.SHi.GetCurrentLevel(),
+  aco() {
+    var t = this.vji.GetCurrentLevel(),
       i = this.WeaponInstance.GetLevel(),
       r =
-        ((this.Nki = UiSceneManager_1.UiSceneManager.GetWeaponObserver()),
-        (this.Oki =
+        ((this.N2i = UiSceneManager_1.UiSceneManager.GetWeaponObserver()),
+        (this.O2i =
           UiSceneManager_1.UiSceneManager.GetWeaponScabbardObserver()),
         WeaponController_1.WeaponController.PlayWeaponRenderingMaterial(
           "WeaponLevelUpMaterialController",
-          this.Nki,
-          this.Oki,
+          this.N2i,
+          this.O2i,
         ),
-        this.Nki.Model);
+        this.N2i.Model);
     if (
       (UiModelUtil_1.UiModelUtil.PlayEffectAtRootComponent(
         r,
@@ -370,7 +370,7 @@ class WeaponLevelUpView extends UiTabViewBase_1.UiTabViewBase {
       ),
       t !== i)
     ) {
-      r = this.duo(t, i);
+      r = this._co(t, i);
       let e = void 0;
       (e = this.WeaponInstance.CanGoBreach()
         ? {
@@ -383,7 +383,7 @@ class WeaponLevelUpView extends UiTabViewBase_1.UiTabViewBase {
             },
             AttributeInfo: r,
             ClickText: "Text_TurnToBreach_Text",
-            ClickFunction: this.luo,
+            ClickFunction: this.nco,
           }
         : {
             Title: "Text_WeaponLevelUpSuccessText_Text",
@@ -408,24 +408,24 @@ class WeaponLevelUpView extends UiTabViewBase_1.UiTabViewBase {
         }, t));
     }
   }
-  wao() {
-    this.Qft = new GenericLayout_1.GenericLayout(
+  Uho() {
+    this.nvt = new GenericLayout_1.GenericLayout(
       this.GetVerticalLayout(1),
-      this.tpt,
+      this.mvt,
     );
   }
-  jlo() {
+  k1o() {
     var e = this.WeaponInstance.GetWeaponConfig(),
       t =
-        ((this.xNo =
+        ((this.UOo =
           ModelManager_1.ModelManager.WeaponModel.GetWeaponAttributeParamList(
             e,
           )),
         this.WeaponInstance.GetBreachLevel()),
-      i = this.SHi.GetCurrentLevel(),
-      r = this.SHi.GetArrivedLevel(),
+      i = this.vji.GetCurrentLevel(),
+      r = this.vji.GetArrivedLevel(),
       s = [];
-    for (const h of this.xNo) {
+    for (const h of this.UOo) {
       var o = h.CurveId,
         n = h.PropId.Value,
         a = ModelManager_1.ModelManager.WeaponModel.GetCurveValue(o, n, i, t);
@@ -442,12 +442,12 @@ class WeaponLevelUpView extends UiTabViewBase_1.UiTabViewBase {
       };
       s.push(o);
     }
-    this.Qft.RefreshByData(s);
+    this.nvt.RefreshByData(s);
   }
-  duo(e, t) {
+  _co(e, t) {
     var i = [],
       r = this.WeaponInstance.GetBreachLevel();
-    for (const n of this.xNo) {
+    for (const n of this.UOo) {
       var s = ModelManager_1.ModelManager.WeaponModel.GetCurveValue(
           n.CurveId,
           n.PropId.Value,
@@ -477,49 +477,49 @@ class WeaponLevelUpView extends UiTabViewBase_1.UiTabViewBase {
     }
     return i;
   }
-  HNo() {
-    this.fHi.InitFilter(2, this.zIt),
-      this.fHi.SetConsumeTexture(ItemDefines_1.EItemId.Gold),
-      (this.EHi = this.fHi.GetCurrentDropDownSelectIndex()),
-      this.EHi && this.FNo();
-    var t = this.fHi.GetMaxCount();
-    this.MHi = new Array(t);
-    for (let e = 0; e < t; e++) this.MHi[e] = [{ IncId: 0, ItemId: 0 }, 0];
+  kOo() {
+    this.Cji.InitFilter(2, this.oLt),
+      this.Cji.SetConsumeTexture(ItemDefines_1.EItemId.Gold),
+      (this.Mji = this.Cji.GetCurrentDropDownSelectIndex()),
+      this.Mji && this.NOo();
+    var t = this.Cji.GetMaxCount();
+    this.pji = new Array(t);
+    for (let e = 0; e < t; e++) this.pji[e] = [{ IncId: 0, ItemId: 0 }, 0];
   }
-  jNo() {
-    this.xHi(), this.fHi.SetMaxState(this.WeaponInstance.IsLevelMax());
+  FOo() {
+    this.Aji(), this.Cji.SetMaxState(this.WeaponInstance.IsLevelMax());
   }
-  FNo() {
-    var e = this.kNo(this.EHi);
-    this.fHi.RefreshConditionText(
+  NOo() {
+    var e = this.GOo(this.Mji);
+    this.Cji.RefreshConditionText(
       ConfigManager_1.ConfigManager.CommonConfig.GetItemQualityById(e)
         .ConsumeFilterText,
     );
   }
-  kNo(e) {
+  GOo(e) {
     var t = ConfigManager_1.ConfigManager.CommonConfig.GetItemQualityList();
     return t[MathUtils_1.MathUtils.Clamp(e, 0, t.length - 1)].Id;
   }
-  xHi() {
+  Aji() {
     let t = 0;
-    if ((this.LHi(), this.BNo))
-      for (let e = 0; e < this.BNo.length; e++) {
-        var i = this.BNo[e],
-          r = this.MHi[e];
+    if ((this.Iji(), this.POo))
+      for (let e = 0; e < this.POo.length; e++) {
+        var i = this.POo[e],
+          r = this.pji[e];
         (r[0].IncId = i.IncId),
           (r[0].ItemId = i.ItemId),
           (r[1] = i.SelectedCount),
-          (t += this.BHi(i) * i.SelectedCount);
+          (t += this.xji(i) * i.SelectedCount);
       }
     var e = ModelManager_1.ModelManager.WeaponModel.GetWeaponExpItemListCost(
-      this.MHi,
+      this.pji,
     );
-    this.fHi.UpdateComponent(ItemDefines_1.EItemId.Gold, e, this.MHi),
-      this.SHi.UpdateExp(t),
-      this.gHi.Update(this.SHi),
-      this.jlo();
+    this.Cji.UpdateComponent(ItemDefines_1.EItemId.Gold, e, this.pji),
+      this.vji.UpdateExp(t),
+      this.dji.Update(this.vji),
+      this.k1o();
   }
-  C4e() {
+  P5e() {
     var e = this.WeaponInstance.GetWeaponConfig(),
       t = e.WeaponName,
       e = ConfigManager_1.ConfigManager.ItemConfig.GetQualityConfig(
@@ -528,8 +528,8 @@ class WeaponLevelUpView extends UiTabViewBase_1.UiTabViewBase {
       e = UE.Color.FromHex(e.DropColor);
     this.GetText(4).SetColor(e), this.GetText(4).ShowTextNew(t);
   }
-  LHi() {
-    this.MHi.forEach((e) => {
+  Iji() {
+    this.pji.forEach((e) => {
       (e[0].IncId = 0), (e[0].ItemId = 0), (e[1] = 0);
     });
   }

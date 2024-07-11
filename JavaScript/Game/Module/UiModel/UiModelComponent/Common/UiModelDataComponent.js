@@ -31,17 +31,19 @@ let UiModelDataComponent = class UiModelDataComponent extends UiModelComponentBa
       (this.ModelActorType = void 0),
       (this.ModelUseWay = void 0),
       (this.ModelType = void 0),
-      (this.pBr = 0),
+      (this.Xwr = 0),
       (this.yne = !1),
-      (this.o5s = !1),
-      (this.n5s = !1),
-      (this.vBr = 1);
+      (this.mjs = !1),
+      (this.Qfa = void 0),
+      (this.djs = !1),
+      (this.$wr = 1),
+      (this.vjs = !1);
   }
   GetModelLoadState() {
-    return this.pBr;
+    return this.Xwr;
   }
   SetModelLoadState(e) {
-    1 === (this.pBr = e)
+    1 === (this.Xwr = e)
       ? EventSystem_1.EventSystem.EmitWithTarget(
           this.Owner,
           EventDefine_1.EEventName.BeforeUiModelLoadStart,
@@ -55,52 +57,57 @@ let UiModelDataComponent = class UiModelDataComponent extends UiModelComponentBa
   GetVisible() {
     return this.yne;
   }
-  SetVisible(e, t = !1) {
-    return this.yne === e
-      ? (this.s5s(), !1)
-      : t
-        ? ((this.o5s = !0), (this.n5s = e), (this.NeedTick = !0))
-        : (this.s5s(),
-          Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info(
-              "Character",
-              59,
-              "UiModelDataComponent_SetVisible",
-              ["visible", e],
-              ["ModelType", this.ModelType],
-            ),
-          (this.yne = e),
-          EventSystem_1.EventSystem.EmitWithTarget(
-            this.Owner,
-            EventDefine_1.EEventName.OnUiModelVisibleChange,
-            e,
-          ),
-          !0);
+  GetLoadingVisible() {
+    return this.Qfa;
   }
-  s5s() {
-    (this.o5s = !1), (this.n5s = !1);
+  ClearLoadingVisible() {
+    this.Qfa = void 0;
+  }
+  SetVisible(e, t = !1) {
+    if (1 === this.Xwr) this.Qfa = e;
+    else {
+      if (this.yne === e) return this.Cjs(), !1;
+      if (t) return (this.mjs = !0), (this.djs = e), (this.NeedTick = !0);
+      this.Cjs(),
+        Log_1.Log.CheckInfo() &&
+          Log_1.Log.Info(
+            "Character",
+            59,
+            "UiModelDataComponent_SetVisible",
+            ["visible", e],
+            ["ModelType", this.ModelType],
+          ),
+        (this.yne = e),
+        EventSystem_1.EventSystem.EmitWithTarget(
+          this.Owner,
+          EventDefine_1.EEventName.OnUiModelVisibleChange,
+          e,
+        );
+    }
+    return !0;
+  }
+  Cjs() {
+    (this.mjs = !1), (this.djs = !1);
   }
   GetDitherEffectValue() {
-    return this.vBr;
+    return this.$wr;
   }
   SetDitherEffect(e) {
-    (this.vBr = e),
-      Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info(
-          "Character",
-          59,
-          "UiModelDataComponent_SetDither",
-          ["value", e],
-          ["ModelType", this.ModelType],
-        ),
+    (this.$wr = e),
       EventSystem_1.EventSystem.EmitWithTarget(
         this.Owner,
         EventDefine_1.EEventName.OnUiModelSetDitherEffect,
         e,
       );
   }
+  GetLoadingIconFollowState() {
+    return this.vjs;
+  }
+  SetLoadingIconFollowState(e) {
+    this.vjs = e;
+  }
   OnTick(e) {
-    this.o5s && this.SetVisible(this.n5s), (this.NeedTick = !1);
+    this.mjs && this.SetVisible(this.djs), (this.NeedTick = !1);
   }
 };
 (UiModelDataComponent = __decorate(

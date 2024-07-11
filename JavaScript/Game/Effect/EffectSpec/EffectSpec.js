@@ -46,8 +46,8 @@ class EffectSpec {
       (this.pfe = void 0),
       (this.Visible = !0),
       (this.Enable = !0),
-      (this.sbn = !1),
-      (this.abn = !1);
+      (this.$Gn = !1),
+      (this.YGn = !1);
   }
   GetHandle() {
     return this.Handle;
@@ -139,7 +139,7 @@ class EffectSpec {
   SetStoppingTime(t) {
     this.StoppingTimeInternal = t;
   }
-  RDn() {
+  LUn() {
     var t;
     this.SetStoppingTime(!0),
       this.GetIgnoreTimeScale() ||
@@ -225,11 +225,13 @@ class EffectSpec {
       t && t.RegisterBodyEffect(this.Handle);
   }
   UpdateBodyEffect(t, i) {
-    (this.BodyEffectOpacity = t),
-      (this.BodyEffectVisible = i),
+    Info_1.Info.IsInCg() ||
+      ((this.BodyEffectOpacity = t),
       this.Handle.IsRoot() &&
-        this.Handle.GetSureEffectActor().SetActorHiddenInGame(!i),
-      i && this.OnBodyEffectChanged(this.BodyEffectOpacity);
+        this.BodyEffectVisible !== i &&
+        ((this.BodyEffectVisible = i),
+        this.Handle.GetSureEffectActor().SetActorHiddenInGame(!i)),
+      i && this.OnBodyEffectChanged(this.BodyEffectOpacity));
   }
   GetHideOnBurstSkill() {
     return this.mfe;
@@ -287,7 +289,7 @@ class EffectSpec {
         this.LifeTime.IsAfterStart &&
           this.LifeTime.TotalPassTime >=
             this.Handle.GetGlobalStoppingPlayTime() &&
-          this.RDn();
+          this.LUn();
       }
       let t = i;
       var s, e;
@@ -300,13 +302,13 @@ class EffectSpec {
           e > LARGER_ONE) &&
         (t = i * s * e),
         this._fe && this.OnTick(t),
-        !this.sbn &&
+        !this.$Gn &&
           this.LifeTime.IsAfterStart &&
-          ((this.sbn = !0),
+          ((this.$Gn = !0),
           this.VisibilityChanged(!this.Handle || this.Handle.HandleVisible)),
-        !this.abn &&
+        !this.YGn &&
           this.HasBounds() &&
-          ((this.abn = !0),
+          ((this.YGn = !0),
           this.VisibilityChanged(!this.Handle || this.Handle.HandleVisible)),
         this.LifeTime.Tick(t);
     }
@@ -413,8 +415,8 @@ class EffectSpec {
       (this.Visible = !0),
       (this.Enable = !0),
       (this.StoppingTimeInternal = !1),
-      (this.sbn = !1),
-      (this.abn = !1),
+      (this.$Gn = !1),
+      (this.YGn = !1),
       this.OnReplay();
   }
   Play(t) {
@@ -449,7 +451,8 @@ class EffectSpec {
     16 & this.ige ||
       ((this.ige |= 16),
       (this.lfe = !1),
-      this.SetStopping(!i),
+      this.Stopping && (this.Stopping = !1),
+      i && this.LifeTime.Clear(),
       (this.LastStopTime =
         EffectEnvironment_1.EffectEnvironment.GameTimeInSeconds),
       EventSystem_1.EventSystem.Emit(
@@ -461,11 +464,12 @@ class EffectSpec {
       this.IsValid() && this.OnStop(t, i));
   }
   OnEnterPool() {}
+  OnSeekTime(t) {}
   SeekTo(t, i = !0, s = !1, e = 0) {
-    (t !== this.LifeTime.GetPassTime && this.LifeTime.SeekTo(t, s, !1, i)) ||
-      (this._fe &&
-        ((s = 0 !== e ? e : t - this.LifeTime.GetPassTime),
-        this.OnTick(0 < s ? s : 0)));
+    e = 0 !== e ? e : t - this.LifeTime.GetPassTime;
+    this.OnSeekTime(e),
+      (t !== this.LifeTime.GetPassTime && this.LifeTime.SeekTo(t, s, !1, i)) ||
+        (this._fe && this.OnTick(0 < e ? e : 0));
   }
   SeekDelta(t, i = !0, s = !1, e = 0) {
     t = this.LifeTime.PassTime + t;
@@ -491,6 +495,11 @@ class EffectSpec {
   IsUseBoundsCalculateDistance() {
     return !1;
   }
+  FreezeEffect(t) {
+    t ? this.OnEnterFreeze() : this.OnExitFreeze();
+  }
+  OnEnterFreeze() {}
+  OnExitFreeze() {}
 }
 exports.EffectSpec = EffectSpec;
 //# sourceMappingURL=EffectSpec.js.map

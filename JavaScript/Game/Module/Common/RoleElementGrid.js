@@ -6,11 +6,11 @@ const UE = require("ue"),
   UiPanelBase_1 = require("../../Ui/Base/UiPanelBase");
 class RoleElementGrid extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
-    super(), (this.Vyt = 0), this.CreateThenShowByActor(e);
+    super(), (this.ZIt = 0), this.CreateThenShowByActor(e);
   }
   get Lo() {
-    return this.Vyt
-      ? ConfigManager_1.ConfigManager.ElementInfoConfig.GetElementInfo(this.Vyt)
+    return this.ZIt
+      ? ConfigManager_1.ConfigManager.ElementInfoConfig.GetElementInfo(this.ZIt)
       : void 0;
   }
   OnRegisterComponent() {
@@ -19,7 +19,7 @@ class RoleElementGrid extends UiPanelBase_1.UiPanelBase {
       [1, UE.UISprite],
     ];
   }
-  mBt() {
+  gbt() {
     var e,
       t,
       i = this.GetTexture(0),
@@ -32,10 +32,10 @@ class RoleElementGrid extends UiPanelBase_1.UiPanelBase {
       s.SetColor(t),
       "" !== (s = e.Icon)) &&
       0 !== s.length &&
-      this.SetElementIcon(s, i, this.Vyt);
+      this.SetElementIcon(s, i, this.ZIt);
   }
   Refresh(e) {
-    (this.Vyt = e), this.mBt();
+    (this.ZIt = e), this.gbt();
   }
 }
 exports.RoleElementGrid = RoleElementGrid;

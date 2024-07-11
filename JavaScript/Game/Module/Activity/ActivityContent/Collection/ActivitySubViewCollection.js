@@ -36,7 +36,7 @@ class ActivitySubViewCollection extends ActivitySubViewBase_1.ActivitySubViewBas
       (this.wNe = (t) => {
         t === this.ActivityBaseData.Id && this.BNe();
       }),
-      (this.DEe = (t) => {
+      (this.DSe = (t) => {
         this.ActivityBaseData.QuestStateMap.get(t) &&
           (this.bNe(), this.qNe(), this.GNe());
       }),
@@ -150,7 +150,7 @@ class ActivitySubViewCollection extends ActivitySubViewBase_1.ActivitySubViewBas
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnQuestStateChange,
-      this.DEe,
+      this.DSe,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.RefreshCommonActivityRedDot,
@@ -160,7 +160,7 @@ class ActivitySubViewCollection extends ActivitySubViewBase_1.ActivitySubViewBas
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnQuestStateChange,
-      this.DEe,
+      this.DSe,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.RefreshCommonActivityRedDot,

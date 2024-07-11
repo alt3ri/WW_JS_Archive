@@ -6,34 +6,34 @@ const UiNavigationViewManager_1 = require("../UiNavigationViewManager"),
 class NavigationToggle extends NavigationSelectableBase_1.NavigationSelectableBase {
   constructor() {
     super(...arguments),
-      (this.pwo = (t) => {
+      (this.gBo = (t) => {
         UiNavigationViewManager_1.UiNavigationViewManager.RefreshCurrentHotKeyTextId();
       }),
-      (this.x4e = (t) => {
+      (this.Bke = (t) => {
         this.OnToggleClick(t);
       });
   }
   OnInit() {
-    this.vwo(), this.Mwo();
+    this.fBo(), this.pBo();
   }
   OnClear() {
-    this.Swo(), this.Ewo();
+    this.vBo(), this.MBo();
   }
-  vwo() {
+  fBo() {
     var t = this.Selectable;
     0 < this.Listener.HotKeyTipsTextIdMap.Num() &&
-      t.OnStateChange.Add(this.pwo);
+      t.OnStateChange.Add(this.gBo);
   }
-  Swo() {
+  vBo() {
     var t = this.Selectable;
     0 < this.Listener.HotKeyTipsTextIdMap.Num() &&
-      t.OnStateChange.Remove(this.pwo);
+      t.OnStateChange.Remove(this.gBo);
   }
-  Mwo() {
-    this.NeedAddToggleClick() && this.Selectable.OnStateChange.Add(this.x4e);
+  pBo() {
+    this.NeedAddToggleClick() && this.Selectable.OnStateChange.Add(this.Bke);
   }
-  Ewo() {
-    this.NeedAddToggleClick() && this.Selectable.OnStateChange.Remove(this.x4e);
+  MBo() {
+    this.NeedAddToggleClick() && this.Selectable.OnStateChange.Remove(this.Bke);
   }
   OnToggleClick(t) {}
   NeedAddToggleClick() {

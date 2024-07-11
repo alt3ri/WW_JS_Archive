@@ -23,16 +23,16 @@ const UiModelComponentDefine_1 = require("../../Define/UiModelComponentDefine"),
   UiModelComponentBase_1 = require("../UiModelComponentBase");
 let UiWeaponDataComponent = class UiWeaponDataComponent extends UiModelComponentBase_1.UiModelComponentBase {
   constructor() {
-    super(...arguments), (this.ebr = void 0);
+    super(...arguments), (this.ABr = void 0);
   }
   get WeaponConfigId() {
-    return this.ebr?.GetItemId() ?? 0;
+    return this.ABr?.GetItemId() ?? 0;
   }
   get WeaponData() {
-    return this.ebr;
+    return this.ABr;
   }
   SetWeaponData(e) {
-    this.ebr = e;
+    this.ABr = e;
   }
 };
 (UiWeaponDataComponent = __decorate(

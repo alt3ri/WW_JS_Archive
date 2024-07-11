@@ -9,11 +9,11 @@ const UE = require("ue"),
 class CookRoleItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
-      (this.dqt = void 0),
-      (this.Wgt = void 0),
-      (this.Xgt = void 0),
-      (this.Kyt = (t) => {
-        this.Wgt && this.Wgt(this.dqt.RoleId);
+      (this.fGt = void 0),
+      (this.oft = void 0),
+      (this.sft = void 0),
+      (this.eTt = (t) => {
+        this.oft && this.oft(this.fGt.RoleId);
       });
   }
   OnRegisterComponent() {
@@ -23,40 +23,40 @@ class CookRoleItem extends GridProxyAbstract_1.GridProxyAbstract {
       [2, UE.UIText],
       [3, UE.UIItem],
     ]),
-      (this.BtnBindInfo = [[0, this.Kyt]]);
+      (this.BtnBindInfo = [[0, this.eTt]]);
   }
   OnStart() {
-    (this.Xgt = new SmallItemGrid_1.SmallItemGrid()),
-      this.Xgt.Initialize(this.GetItem(3).GetOwner());
+    (this.sft = new SmallItemGrid_1.SmallItemGrid()),
+      this.sft.Initialize(this.GetItem(3).GetOwner());
   }
   Refresh(t, e, i) {
     t = {
       Type: 2,
-      Data: (this.dqt = t),
+      Data: (this.fGt = t),
       ItemConfigId: t.RoleId,
       IsCookUp: t.IsBuff,
     };
-    this.Xgt.Apply(t),
-      this.Ije(),
-      this.nGt(),
-      this.IVe(e, !1),
+    this.sft.Apply(t),
+      this.qWe(),
+      this.aNt(),
+      this.N6e(e, !1),
       this.GetText(2).OnSelfLanguageChange.Bind(() => {
-        this.nGt();
+        this.aNt();
       });
   }
   Clear() {
     this.GetText(2).OnSelfLanguageChange.Unbind();
   }
   OnBeforeDestroy() {
-    this.Xgt.Destroy(), (this.Xgt = void 0);
+    this.sft.Destroy(), (this.sft = void 0);
   }
-  nGt() {
+  aNt() {
     var t;
     CookController_1.CookController.CheckIsBuff(
-      this.dqt.RoleId,
-      this.dqt.ItemId,
+      this.fGt.RoleId,
+      this.fGt.ItemId,
     )
-      ? ((t = CookController_1.CookController.GetCookInfoText(this.dqt.RoleId)),
+      ? ((t = CookController_1.CookController.GetCookInfoText(this.fGt.RoleId)),
         this.GetText(2).SetText(t))
       : ((t =
           ConfigManager_1.ConfigManager.TextConfig.GetTextById(
@@ -64,19 +64,19 @@ class CookRoleItem extends GridProxyAbstract_1.GridProxyAbstract {
           )),
         this.GetText(2).SetText(t));
   }
-  Ije() {
-    this.GetText(1).SetText(this.dqt.RoleName);
+  qWe() {
+    this.GetText(1).SetText(this.fGt.RoleName);
   }
   BindOnClickedCallback(t) {
-    this.Wgt = t;
+    this.oft = t;
   }
   OnSelected(t) {
-    this.IVe(!0);
+    this.N6e(!0);
   }
   OnDeselected(t) {
-    this.IVe(!1);
+    this.N6e(!1);
   }
-  IVe(t, e = !0) {
+  N6e(t, e = !0) {
     var i = this.GetExtendToggle(0);
     t ? i.SetToggleState(1, e) : i.SetToggleState(0, !1);
   }

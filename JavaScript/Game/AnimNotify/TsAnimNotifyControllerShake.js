@@ -1,9 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
 const UE = require("ue"),
+  Info_1 = require("../../Core/Common/Info"),
   TsBaseCharacter_1 = require("../Character/TsBaseCharacter"),
-  Global_1 = require("../Global"),
-  ModelManager_1 = require("../Manager/ModelManager");
+  Global_1 = require("../Global");
 class TsAnimNotifyControllerShake extends UE.KuroAnimNotify {
   constructor() {
     super(...arguments),
@@ -13,9 +13,9 @@ class TsAnimNotifyControllerShake extends UE.KuroAnimNotify {
       (this.IsIgnoreTimeDilation = !1),
       (this.IsPlayWhilePaused = !1);
   }
-  K2_Notify(e, r) {
+  K2_Notify(e, t) {
     return (
-      ModelManager_1.ModelManager.PlatformModel?.IsGamepad() &&
+      Info_1.Info.IsInGamepad() &&
         (e = e.GetOwner()) instanceof TsBaseCharacter_1.default &&
         e.CharacterActorComponent?.IsAutonomousProxy &&
         Global_1.Global.CharacterController &&

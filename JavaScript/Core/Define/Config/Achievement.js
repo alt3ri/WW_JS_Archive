@@ -35,6 +35,9 @@ class Achievement {
   get ClientTrigger() {
     return this.clienttrigger();
   }
+  get ThirdPartyTrophyId() {
+    return this.thirdpartytrophyid();
+  }
   __init(t, i) {
     return (this.z7 = t), (this.J7 = i), this;
   }
@@ -83,6 +86,10 @@ class Achievement {
   clienttrigger() {
     var t = this.J7.__offset(this.z7, 22);
     return !!t && !!this.J7.readInt8(this.z7 + t);
+  }
+  thirdpartytrophyid() {
+    var t = this.J7.__offset(this.z7, 24);
+    return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
 }
 exports.Achievement = Achievement;

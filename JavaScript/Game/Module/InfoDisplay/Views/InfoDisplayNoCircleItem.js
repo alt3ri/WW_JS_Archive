@@ -15,8 +15,8 @@ class InfoDisplayNoCircleItem extends AutoAttachExhibitionItem_1.AutoAttachExhib
   constructor() {
     super(...arguments),
       (this.Pe = void 0),
-      (this.osi = ""),
-      (this.rsi = new UE.Vector(ANIMAL_SCALE, ANIMAL_SCALE, ANIMAL_SCALE));
+      (this.rai = ""),
+      (this.nai = new UE.Vector(ANIMAL_SCALE, ANIMAL_SCALE, ANIMAL_SCALE));
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -33,14 +33,14 @@ class InfoDisplayNoCircleItem extends AutoAttachExhibitionItem_1.AutoAttachExhib
     ];
   }
   RefreshItem() {
-    (this.osi = this.Pe[this.GetShowItemIndex()]),
-      this.osi && (this.Aqe(), this.GetRootItem().SetHierarchyIndex(0));
+    (this.rai = this.Pe[this.GetShowItemIndex()]),
+      this.rai && (this.Aqe(), this.GetRootItem().SetHierarchyIndex(0));
   }
   SetData(t) {
     this.Pe = t;
   }
   Aqe() {
-    "" !== this.osi && this.SetTextureByPath(this.osi, this.GetTexture(1));
+    "" !== this.rai && this.SetTextureByPath(this.rai, this.GetTexture(1));
   }
   OnMoveItem(t) {
     var i,
@@ -60,7 +60,7 @@ class InfoDisplayNoCircleItem extends AutoAttachExhibitionItem_1.AutoAttachExhib
             (s = new UE.Vector(i, i, i)),
             e.SetUIItemScale(s)),
         this.GetRootItem().SetHierarchyIndex(FRONT_HIERACHY))
-      : r.X !== this.rsi.X && e.SetUIItemScale(this.rsi);
+      : r.X !== this.nai.X && e.SetUIItemScale(this.nai);
   }
   jbe() {
     var t = this.GetAttachItem().ExhibitionView.ItemActor.GetWidth(),
@@ -68,7 +68,7 @@ class InfoDisplayNoCircleItem extends AutoAttachExhibitionItem_1.AutoAttachExhib
     t >= LEFT_RANGE &&
       t <= RIGHT_RANGE &&
       (ModelManager_1.ModelManager.InfoDisplayModel.SetCurrentOpenInformationTexture(
-        this.osi,
+        this.rai,
       ),
       InfoDisplayController_1.InfoDisplayController.OpenInfoDisplayImgView());
   }

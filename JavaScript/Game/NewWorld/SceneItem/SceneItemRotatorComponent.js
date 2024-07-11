@@ -37,25 +37,25 @@ let SceneItemRotatorComponent =
   ) {
     constructor() {
       super(...arguments),
-        (this.SIe = void 0),
+        (this.EIe = void 0),
         (this.Hte = void 0),
         (this.mBe = void 0),
         (this.Lie = void 0),
-        (this.tSn = void 0),
-        (this.iSn = void 0),
-        (this.oSn = void 0),
-        (this.rSn = void 0),
-        (this.nSn = void 0),
-        (this.sSn = !1),
-        (this.aSn = !1),
-        (this.hSn = !1),
-        (this.c_n = 0),
-        (this.lSn = void 0),
-        (this._Sn = (t, e) => {
-          if ((this.nSn.delete(e), t)) {
-            if ((this.oSn.set(e, t), !(0 < this.nSn.size))) {
-              for (var [, o] of this.oSn) if (!o) return;
-              (this.sSn = !0), this.aSn && this.uSn();
+        (this.wMn = void 0),
+        (this.BMn = void 0),
+        (this.bMn = void 0),
+        (this.qMn = void 0),
+        (this.GMn = void 0),
+        (this.NMn = !1),
+        (this.OMn = !1),
+        (this.kMn = !1),
+        (this.W1n = 0),
+        (this.FMn = void 0),
+        (this.VMn = (t, e) => {
+          if ((this.GMn.delete(e), t)) {
+            if ((this.bMn.set(e, t), !(0 < this.GMn.size))) {
+              for (var [, o] of this.bMn) if (!o) return;
+              (this.NMn = !0), this.OMn && this.HMn();
             }
           } else
             Log_1.Log.CheckError() &&
@@ -64,13 +64,13 @@ let SceneItemRotatorComponent =
                 40,
                 "[SceneItemRotatorComponent] 曲线加载失败，请检查实体配置",
                 ["CurvePath", e],
-                ["PbDataId", this.SIe?.GetPbDataId()],
+                ["PbDataId", this.EIe?.GetPbDataId()],
               );
         }),
-        (this.cSn = () => {
+        (this.jMn = () => {
           var t = this.Hte.GetInteractionMainActor();
           if (t) {
-            for (var [e] of this.rSn ?? []) {
+            for (var [e] of this.qMn ?? []) {
               var o = this.Hte?.GetActorInSceneInteraction(e);
               if (!o)
                 return void (
@@ -80,42 +80,42 @@ let SceneItemRotatorComponent =
                     40,
                     "[SceneItemRotatorComponent] 找不到对应的旋转Actor，请检查实体配置和预制体",
                     ["ActorKey", e],
-                    ["PbDataId", this.SIe?.GetPbDataId()],
+                    ["PbDataId", this.EIe?.GetPbDataId()],
                   )
                 );
-              this.rSn.set(e, o);
+              this.qMn.set(e, o);
             }
-            this.lSn || (this.lSn = new Map()),
-              this.lSn.set(
+            this.FMn || (this.FMn = new Map()),
+              this.FMn.set(
                 t,
                 Rotator_1.Rotator.Create(
                   t.RootComponent.GetRelativeTransform().Rotator(),
                 ),
               );
-            for (var [, i] of this.rSn ?? [])
-              this.lSn.set(
+            for (var [, i] of this.qMn ?? [])
+              this.FMn.set(
                 i,
                 Rotator_1.Rotator.Create(
                   i.RootComponent.GetRelativeTransform().Rotator(),
                 ),
               );
-            (this.aSn = !0), this.sSn && this.uSn();
+            (this.OMn = !0), this.NMn && this.HMn();
           } else
             Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "SceneItem",
                 40,
                 "[SceneItemRotatorComponent] 找不到对应的场景交互物MainActor，请检查实体配置和预制体",
-                ["PbDataId", this.SIe?.GetPbDataId()],
+                ["PbDataId", this.EIe?.GetPbDataId()],
               );
         }),
-        (this.G_n = (t, e) => {
-          this.hSn && this.mSn(t);
+        (this.g_n = (t, e) => {
+          this.kMn && this.WMn(t);
         });
     }
     OnInitData(t) {
       t = t.GetParam(SceneItemRotatorComponent_1)[0];
-      (this.SIe = this.Entity.GetComponent(0)), (this.iSn = new Map());
+      (this.EIe = this.Entity.GetComponent(0)), (this.BMn = new Map());
       for (const o of t.Config) {
         var e = GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(o.State);
         if (!e)
@@ -125,7 +125,7 @@ let SceneItemRotatorComponent =
                 "SceneItem",
                 40,
                 `[SceneItemRotatorComponent] 配置出错，找不到${o.State}对应的状态Id`,
-                ["PbDataId", this.SIe?.GetPbDataId()],
+                ["PbDataId", this.EIe?.GetPbDataId()],
               ),
             !1
           );
@@ -135,39 +135,39 @@ let SceneItemRotatorComponent =
               "SceneItem",
               40,
               "[SceneItemRotatorComponent] 该状态的旋转配置列表为空，跳过该状态的配置",
-              ["PbDataId", this.SIe?.GetPbDataId()],
+              ["PbDataId", this.EIe?.GetPbDataId()],
               ["State", o.State],
             )
-          : this.iSn.set(e, o);
+          : this.BMn.set(e, o);
       }
       return !0;
     }
     OnStart() {
       return (
-        (this.Hte = this.Entity.GetComponent(182)),
+        (this.Hte = this.Entity.GetComponent(185)),
         this.Hte
           ? this.Hte.Owner
-            ? ((this.tSn = this.Hte.Owner.GetComponentByClass(
+            ? ((this.wMn = this.Hte.Owner.GetComponentByClass(
                 UE.KuroSceneItemMoveComponent.StaticClass(),
               )),
-              this.tSn?.IsValid() ||
-              ((this.tSn = this.Hte.Owner.AddComponentByClass(
+              this.wMn?.IsValid() ||
+              ((this.wMn = this.Hte.Owner.AddComponentByClass(
                 UE.KuroSceneItemMoveComponent.StaticClass(),
                 !1,
                 new UE.Transform(),
                 !1,
               )),
-              this.tSn?.IsValid())
-                ? ((this.mBe = this.Entity.GetComponent(117)),
+              this.wMn?.IsValid())
+                ? ((this.mBe = this.Entity.GetComponent(119)),
                   this.mBe
-                    ? ((this.Lie = this.Entity.GetComponent(177)),
+                    ? ((this.Lie = this.Entity.GetComponent(180)),
                       !!this.Lie ||
                         (Log_1.Log.CheckError() &&
                           Log_1.Log.Error(
                             "SceneItem",
                             40,
                             "[SceneItemRotatorComponent] 实体缺少LevelTagComponent",
-                            ["PbDataId", this.SIe?.GetPbDataId()],
+                            ["PbDataId", this.EIe?.GetPbDataId()],
                           ),
                         !1))
                     : (Log_1.Log.CheckError() &&
@@ -175,7 +175,7 @@ let SceneItemRotatorComponent =
                           "SceneItem",
                           40,
                           "[SceneItemRotatorComponent] 实体缺少SceneItemStateComponent",
-                          ["PbDataId", this.SIe?.GetPbDataId()],
+                          ["PbDataId", this.EIe?.GetPbDataId()],
                         ),
                       !1))
                 : (Log_1.Log.CheckError() &&
@@ -183,7 +183,7 @@ let SceneItemRotatorComponent =
                       "SceneItem",
                       40,
                       "[SceneItemRotatorComponent] 实体Actor缺少KuroSceneItemMoveComponent，且动态创建失败",
-                      ["PbDataId", this.SIe?.GetPbDataId()],
+                      ["PbDataId", this.EIe?.GetPbDataId()],
                     ),
                   !1))
             : (Log_1.Log.CheckError() &&
@@ -191,7 +191,7 @@ let SceneItemRotatorComponent =
                   "SceneItem",
                   40,
                   "[SceneItemRotatorComponent] 实体的SceneItemActorComponent.Owner不可用",
-                  ["PbDataId", this.SIe?.GetPbDataId()],
+                  ["PbDataId", this.EIe?.GetPbDataId()],
                 ),
               !1)
           : (Log_1.Log.CheckError() &&
@@ -199,66 +199,66 @@ let SceneItemRotatorComponent =
                 "SceneItem",
                 40,
                 "[SceneItemRotatorComponent] 实体缺少SceneItemActorComponent",
-                ["PbDataId", this.SIe?.GetPbDataId()],
+                ["PbDataId", this.EIe?.GetPbDataId()],
               ),
             !1)
       );
     }
     OnActivate() {
       return (
-        (this.sSn = !1),
-        (this.aSn = !1),
-        this.dSn(),
-        this.CSn(),
-        !this.hSn && this.sSn && this.aSn && this.uSn(),
+        (this.NMn = !1),
+        (this.OMn = !1),
+        this.KMn(),
+        this.QMn(),
+        !this.kMn && this.NMn && this.OMn && this.HMn(),
         !0
       );
     }
-    dSn() {
-      this.sSn = !0;
-      for (var [, t] of this.iSn)
+    KMn() {
+      this.NMn = !0;
+      for (var [, t] of this.BMn)
         for (const s of t.RotationConfig) {
           var e;
           s.Curve &&
             "" !== s.Curve &&
-            (this.oSn || (this.oSn = new Map()),
-            this.oSn.has(s.Curve) ||
+            (this.bMn || (this.bMn = new Map()),
+            this.bMn.has(s.Curve) ||
               ((e = ResourceSystem_1.ResourceSystem.GetLoadedAsset(
                 s.Curve,
                 UE.CurveFloat,
               ))
-                ? this.oSn.set(s.Curve, e)
-                : (this.oSn.set(s.Curve, void 0), (this.sSn = !1))));
+                ? this.bMn.set(s.Curve, e)
+                : (this.bMn.set(s.Curve, void 0), (this.NMn = !1))));
         }
-      if (!this.sSn) {
-        this.nSn || (this.nSn = new Map());
-        for (var [o, i] of this.oSn)
+      if (!this.NMn) {
+        this.GMn || (this.GMn = new Map());
+        for (var [o, i] of this.bMn)
           i ||
             ((i = ResourceSystem_1.ResourceSystem.LoadAsync(
               o,
               UE.CurveFloat,
-              this._Sn,
+              this.VMn,
             )),
-            this.nSn.set(o, i));
+            this.GMn.set(o, i));
       }
     }
-    CSn() {
-      this.aSn = !1;
-      for (var [, t] of this.iSn)
+    QMn() {
+      this.OMn = !1;
+      for (var [, t] of this.BMn)
         t.RotatePoint &&
-          (this.rSn || (this.rSn = new Map()),
-          this.rSn.has(t.RotatePoint) || this.rSn.set(t.RotatePoint, void 0));
+          (this.qMn || (this.qMn = new Map()),
+          this.qMn.has(t.RotatePoint) || this.qMn.set(t.RotatePoint, void 0));
       this.Hte.GetIsSceneInteractionLoadCompleted()
-        ? this.cSn()
+        ? this.jMn()
         : EventSystem_1.EventSystem.HasWithTarget(
             this.Entity,
             EventDefine_1.EEventName.OnSceneInteractionLoadCompleted,
-            this.cSn,
+            this.jMn,
           ) ||
           EventSystem_1.EventSystem.AddWithTarget(
             this.Entity,
             EventDefine_1.EEventName.OnSceneInteractionLoadCompleted,
-            this.cSn,
+            this.jMn,
           );
     }
     OnEnd() {
@@ -266,33 +266,33 @@ let SceneItemRotatorComponent =
         (EventSystem_1.EventSystem.HasWithTarget(
           this.Entity,
           EventDefine_1.EEventName.OnSceneItemStateChange,
-          this.G_n,
+          this.g_n,
         ) &&
           EventSystem_1.EventSystem.RemoveWithTarget(
             this.Entity,
             EventDefine_1.EEventName.OnSceneItemStateChange,
-            this.G_n,
+            this.g_n,
           ),
         EventSystem_1.EventSystem.HasWithTarget(
           this.Entity,
           EventDefine_1.EEventName.OnSceneInteractionLoadCompleted,
-          this.cSn,
+          this.jMn,
         ) &&
           EventSystem_1.EventSystem.RemoveWithTarget(
             this.Entity,
             EventDefine_1.EEventName.OnSceneInteractionLoadCompleted,
-            this.cSn,
+            this.jMn,
           ),
-        this.nSn)
+        this.GMn)
       )
-        for (var [, t] of this.nSn)
+        for (var [, t] of this.GMn)
           t && ResourceSystem_1.ResourceSystem.CancelAsyncLoad(t);
       return !0;
     }
-    uSn() {
-      if (!this.hSn && this.sSn && this.aSn) {
+    HMn() {
+      if (!this.kMn && this.NMn && this.OMn) {
         let t = 0;
-        for (var [e] of this.iSn)
+        for (var [e] of this.BMn)
           if (this.Lie.HasTag(e)) {
             t = e;
             break;
@@ -300,31 +300,31 @@ let SceneItemRotatorComponent =
         EventSystem_1.EventSystem.HasWithTarget(
           this.Entity,
           EventDefine_1.EEventName.OnSceneItemStateChange,
-          this.G_n,
+          this.g_n,
         ) ||
           EventSystem_1.EventSystem.AddWithTarget(
             this.Entity,
             EventDefine_1.EEventName.OnSceneItemStateChange,
-            this.G_n,
+            this.g_n,
           ),
-          (this.hSn = !0),
-          this.mSn(t);
+          (this.kMn = !0),
+          this.WMn(t);
       }
     }
-    mSn(s) {
+    WMn(s) {
       if (
-        this.hSn &&
-        this.c_n !== s &&
-        (this.tSn.IsRotating() && this.tSn.StopRotate(0), (this.c_n = s)) &&
-        this.iSn.has(s) &&
-        !this.tSn.IsRotating()
+        this.kMn &&
+        this.W1n !== s &&
+        (this.wMn.IsRotating() && this.wMn.StopRotate(0), (this.W1n = s)) &&
+        this.BMn.has(s) &&
+        !this.wMn.IsRotating()
       ) {
-        var n = this.iSn.get(s),
+        var n = this.BMn.get(s),
           t = n.RotatePoint
-            ? this.rSn.get(n.RotatePoint)
+            ? this.qMn.get(n.RotatePoint)
             : this.Hte.GetInteractionMainActor();
-        if (this.tSn.InitRotationData(t, n.IsLoop)) {
-          var h = this.lSn.get(t);
+        if (this.wMn.InitRotationData(t, n.IsLoop)) {
+          var h = this.FMn.get(t);
           let i = Rotator_1.Rotator.Create(
             t.RootComponent.GetRelativeTransform().Rotator(),
           );
@@ -332,7 +332,7 @@ let SceneItemRotatorComponent =
             var r,
               a = n.RotationConfig[o],
               m = Vector_1.Vector.Create(a.Axis.X, a.Axis.Y, a.Axis.Z),
-              _ = a.Curve ? this.oSn.get(a.Curve) : void 0;
+              _ = a.Curve ? this.bMn.get(a.Curve) : void 0;
             let t = void 0,
               e = void 0;
             "Relative" === a.Type
@@ -356,7 +356,7 @@ let SceneItemRotatorComponent =
                 (i = e)),
               (t &&
                 e &&
-                this.tSn.AddRotationStep(
+                this.wMn.AddRotationStep(
                   t.ToUeRotator(),
                   e.ToUeRotator(),
                   a.Time,
@@ -370,10 +370,10 @@ let SceneItemRotatorComponent =
                     "[SceneItemRotatorComponent] 添加旋转步骤失败",
                     ["StateId", s],
                     ["StepIndex", o],
-                    ["PbDataId", this.SIe?.GetPbDataId()],
+                    ["PbDataId", this.EIe?.GetPbDataId()],
                   ));
           }
-          this.tSn.StartRotate();
+          this.wMn.StartRotate();
         } else
           Log_1.Log.CheckError() &&
             Log_1.Log.Error(
@@ -381,14 +381,14 @@ let SceneItemRotatorComponent =
               40,
               "[SceneItemRotatorComponent] 初始化旋转数据失败",
               ["StateId", s],
-              ["PbDataId", this.SIe?.GetPbDataId()],
+              ["PbDataId", this.EIe?.GetPbDataId()],
             );
       }
     }
   });
 (SceneItemRotatorComponent = SceneItemRotatorComponent_1 =
   __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(150)],
+    [(0, RegisterComponent_1.RegisterComponent)(152)],
     SceneItemRotatorComponent,
   )),
   (exports.SceneItemRotatorComponent = SceneItemRotatorComponent);

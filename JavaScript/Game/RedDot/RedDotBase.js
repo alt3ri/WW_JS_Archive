@@ -11,28 +11,28 @@ const Log_1 = require("../../Core/Common/Log"),
   STAT_MODE = !0;
 class RedDotData {
   constructor() {
-    (this.Dsr = 0), (this.Rsr = new Set());
+    (this.Tar = 0), (this.Lar = new Set());
   }
   get State() {
-    return 0 < this.Dsr;
+    return 0 < this.Tar;
   }
   get StateCount() {
-    return this.Dsr;
+    return this.Tar;
   }
   set StateCount(t) {
-    (this.Dsr = t), this.Dsr < 0 && (this.Dsr = 0);
+    (this.Tar = t), this.Tar < 0 && (this.Tar = 0);
   }
   GetUiItemSet() {
-    return this.Rsr;
+    return this.Lar;
   }
   ClearUiItem() {
-    this.Rsr.clear();
+    this.Lar.clear();
   }
   SetUiItem(t) {
-    this.Rsr.add(t);
+    this.Lar.add(t);
   }
   DeleteUiItem(t) {
-    this.Rsr.delete(t);
+    this.Lar.delete(t);
   }
   TryChangeState(t) {
     return (
@@ -44,7 +44,7 @@ class RedDotData {
     this.SetUIItemActive(this.State);
   }
   SetUIItemActive(t) {
-    for (const e of this.Rsr) e.IsValid() && e.SetUIActive(t);
+    for (const e of this.Lar) e.IsValid() && e.SetUIActive(t);
   }
   OnChildrenStateChange(t) {
     var e = this.State;
@@ -60,33 +60,33 @@ class RedDotBase {
     (this.Name = void 0),
       (this.dce = !0),
       (this.NQ = new Map()),
-      (this.Usr = void 0),
-      (this.Asr = () => {
-        this.Psr(!0);
+      (this.Dar = void 0),
+      (this.Rar = () => {
+        this.Uar(!0);
       }),
-      (this.xsr = () => {
-        this.Psr(!1);
+      (this.Aar = () => {
+        this.Uar(!1);
       }),
-      (this.wsr = (...t) => {
+      (this.Par = (...t) => {
         let e = 0;
         t && "number" == typeof t[0] && this.IsAllEventParamAsUId()
           ? ((e = t[0]),
-            this.Bsr(e),
-            RedDotSystem_1.RedDotSystem.PushToEventQueue(this.bsr, e))
+            this.xar(e),
+            RedDotSystem_1.RedDotSystem.PushToEventQueue(this.war, e))
           : this.IsMultiple()
             ? this.NQ.forEach((t, e) => {
-                RedDotSystem_1.RedDotSystem.PushToEventQueue(this.bsr, e);
+                RedDotSystem_1.RedDotSystem.PushToEventQueue(this.war, e);
               })
-            : (this.Bsr(e),
-              RedDotSystem_1.RedDotSystem.PushToEventQueue(this.bsr, e));
+            : (this.xar(e),
+              RedDotSystem_1.RedDotSystem.PushToEventQueue(this.war, e));
       }),
-      (this.bsr = (t = 0) => {
+      (this.war = (t = 0) => {
         STAT_MODE;
         var e = this.OnCheck(t),
-          i = this.wGo(t);
+          i = this.ANo(t);
         i
           ? (i.TryChangeState(e) &&
-              (this.Usr && this.Usr(i.State, t), this.qsr(e, t)),
+              (this.Dar && this.Dar(i.State, t), this.bar(e, t)),
             DEBUG_MODE &&
               Log_1.Log.CheckWarn() &&
               Log_1.Log.Warn(
@@ -107,91 +107,91 @@ class RedDotBase {
               ["uId", t],
             );
       }),
-      this.Gsr();
+      this.qar();
     var t = this.GetActiveEvents();
-    if (t) for (const e of t) EventSystem_1.EventSystem.Add(e, this.Asr);
+    if (t) for (const e of t) EventSystem_1.EventSystem.Add(e, this.Rar);
     t = this.GetDisActiveEvents();
-    if (t) for (const i of t) EventSystem_1.EventSystem.Add(i, this.xsr);
+    if (t) for (const i of t) EventSystem_1.EventSystem.Add(i, this.Aar);
   }
-  get Nsr() {
+  get Gar() {
     return ModelManager_1.ModelManager.RedDotModel.GetRedDotTree(this.Name);
   }
-  Gsr() {
-    for (const t of this.Osr()) EventSystem_1.EventSystem.Add(t, this.wsr);
+  qar() {
+    for (const t of this.Nar()) EventSystem_1.EventSystem.Add(t, this.Par);
   }
-  ksr(t) {
-    if ((this.dce = t)) this.Gsr();
+  Oar(t) {
+    if ((this.dce = t)) this.qar();
     else {
       var e;
-      for (const s of this.Osr()) EventSystem_1.EventSystem.Remove(s, this.wsr);
+      for (const s of this.Nar()) EventSystem_1.EventSystem.Remove(s, this.Par);
       for ([, e] of this.NQ) e.SetUIItemActive(!1);
     }
     var i;
-    for ([i] of this.Nsr.ChildMap) i.ksr(t);
+    for ([i] of this.Gar.ChildMap) i.Oar(t);
   }
-  Fsr(t) {
-    if (void 0 !== this.Nsr.Parent && !this.Nsr.Parent.Element.dce && t)
+  kar(t) {
+    if (void 0 !== this.Gar.Parent && !this.Gar.Parent.Element.dce && t)
       return !1;
     return !0;
   }
-  Psr(t) {
+  Uar(t) {
     t !== this.dce &&
-      this.Fsr(t) &&
-      (this.ksr(t), t && this.Vsr(), void 0 !== this.Nsr.Parent) &&
-      this.Nsr.Parent.Element.Hsr(this, t);
+      this.kar(t) &&
+      (this.Oar(t), t && this.Far(), void 0 !== this.Gar.Parent) &&
+      this.Gar.Parent.Element.Har(this, t);
   }
-  Hsr(t, e) {
+  Har(t, e) {
     for (var [i, s] of t.NQ) {
       i = this.NQ.get(i);
       i &&
         (e ? (i.StateCount += s.StateCount) : (i.StateCount -= s.StateCount)),
         i.UpdateRedDotUIActive();
     }
-    void 0 !== this.Nsr.Parent && this.Nsr.Parent.Element.Hsr(t, e);
+    void 0 !== this.Gar.Parent && this.Gar.Parent.Element.Har(t, e);
   }
-  Vsr() {
+  Far() {
     for (var [t, e] of this.NQ) {
       var i = this.OnCheck(t);
-      (e.StateCount = i ? 1 : 0), i && (e.SetUIItemActive(!0), this.qsr(i, t));
+      (e.StateCount = i ? 1 : 0), i && (e.SetUIItemActive(!0), this.bar(i, t));
     }
     var s;
-    for ([s] of this.Nsr.ChildMap) s.Vsr();
+    for ([s] of this.Gar.ChildMap) s.Far();
   }
-  qsr(t, e = 0) {
+  bar(t, e = 0) {
     var i,
-      s = this.Nsr.Parent?.Element;
+      s = this.Gar.Parent?.Element;
     s &&
       ((e = s.IsMultiple() ? e : 0),
-      s.Bsr(e),
-      (i = s.wGo(e)).OnChildrenStateChange(t)) &&
-      (s.Usr && s.Usr(i.State, e), s.qsr(t, e));
+      s.xar(e),
+      (i = s.ANo(e)).OnChildrenStateChange(t)) &&
+      (s.Dar && s.Dar(i.State, e), s.bar(t, e));
   }
-  wGo(t) {
+  ANo(t) {
     return this.NQ.get(t);
   }
-  Bsr(t = 0) {
+  xar(t = 0) {
     let e = this.NQ.get(t);
-    return e || ((e = new RedDotData()), this.NQ.set(t, e), this.bsr(t)), e;
+    return e || ((e = new RedDotData()), this.NQ.set(t, e), this.war(t)), e;
   }
-  Osr() {
+  Nar() {
     return this.OnGetEvents() ?? [];
   }
   BindUi(t = 0, e, i) {
-    this.Bsr(t), this.wGo(t).SetUiItem(e), (this.Usr = i), this.UpdateState(t);
+    this.xar(t), this.ANo(t).SetUiItem(e), (this.Dar = i), this.UpdateState(t);
   }
   UnBindGivenUi(t = 0, e) {
-    t = this.wGo(t);
+    t = this.ANo(t);
     t && t.DeleteUiItem(e);
   }
   UnBindUi() {
     this.NQ.forEach((t) => {
       t.ClearUiItem();
     }),
-      (this.Usr = void 0);
+      (this.Dar = void 0);
   }
   UpdateState(t = 0) {
-    var e = this.wGo(t);
-    e.UpdateRedDotUIActive(), this.Usr && this.Usr(e.State, t);
+    var e = this.ANo(t);
+    e.UpdateRedDotUIActive(), this.Dar && this.Dar(e.State, t);
   }
   IsRedDotActive() {
     for (const t of this.NQ.values()) if (t.State) return !0;
@@ -228,9 +228,9 @@ class RedDotBase {
     }
     var h,
       o = new StringBuilder_1.StringBuilder();
-    for ([h] of this.Nsr.ChildMap) o.Append(h.Name + ", ");
+    for ([h] of this.Gar.ChildMap) o.Append(h.Name + ", ");
     return (
-      i.Append(`[红点:${this.Name} 父红点:${this.Nsr.Parent?.Element.Name} 子红点:{${o.ToString()}}  数据:{ ${s.ToString()} }]
+      i.Append(`[红点:${this.Name} 父红点:${this.Gar.Parent?.Element.Name} 子红点:{${o.ToString()}}  数据:{ ${s.ToString()} }]
 `),
       i.ToString()
     );
@@ -267,5 +267,5 @@ class RedDotBase {
       ]);
   }
 }
-(exports.RedDotBase = RedDotBase).MBo = void 0;
+(exports.RedDotBase = RedDotBase).fbo = void 0;
 //# sourceMappingURL=RedDotBase.js.map

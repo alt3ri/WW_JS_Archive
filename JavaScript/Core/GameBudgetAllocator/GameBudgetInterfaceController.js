@@ -14,13 +14,16 @@ const cpp_1 = require("cpp"),
   GameBudgetTimeEstimationFramesOffset_1 = require("./GameBudgetTimeEstimationFramesOffset");
 class GameBudgetInterfaceController extends ControllerBase_1.ControllerBase {
   static get CenterRole() {
-    return this.SK;
+    return this.EK;
+  }
+  static get CurrentGlobalMode() {
+    return this.KIa;
   }
   static OnInit() {
     return (
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnChangeRole,
-        this.EK,
+        this.SK,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnBattleStateChanged,
@@ -38,7 +41,7 @@ class GameBudgetInterfaceController extends ControllerBase_1.ControllerBase {
     return (
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnChangeRole,
-        this.EK,
+        this.SK,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnBattleStateChanged,
@@ -54,6 +57,7 @@ class GameBudgetInterfaceController extends ControllerBase_1.ControllerBase {
   }
   static InitializeEnvironment(e) {
     cpp_1.FKuroGameBudgetAllocatorInterface.InitializeEnvironment(e),
+      cpp_1.FKuroGameBudgetAllocatorInterface.SetUpdateCompensateEnable(0),
       this.DK &&
         cpp_1.FKuroGameBudgetAllocatorInterface.UpdateMinUpdateFIFOBudgetTime(
           this.DK,
@@ -77,23 +81,23 @@ class GameBudgetInterfaceController extends ControllerBase_1.ControllerBase {
   static UpdateBudgetTime(e) {
     this.RK.UpdateBudgetTime(e);
   }
-  static RegisterTick(e, t, r, a, i = !0) {
-    return this.UK.has(r)
+  static RegisterTick(e, t, a, r, i = !0) {
+    return this.UK.has(a)
       ? (Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn("Game", 25, "Object has already added!"),
-        this.UK.get(r))
+        this.UK.get(a))
       : ((e = cpp_1.FKuroGameBudgetAllocatorInterface.RegisterFunction(
           e,
           t,
-          a,
-          r.ScheduledTick,
-          r.ScheduledAfterTick,
-          r.OnEnabledChange,
-          i ? r.OnWasRecentlyRenderedOnScreenChange : void 0,
-          r.LocationProxyFunction,
           r,
+          a.ScheduledTick,
+          a.ScheduledAfterTick,
+          a.OnEnabledChange,
+          i ? a.OnWasRecentlyRenderedOnScreenChange : void 0,
+          a.LocationProxyFunction,
+          a,
         )),
-        this.UK.set(r, e),
+        this.UK.set(a, e),
         e);
   }
   static UnregisterTick(e) {
@@ -103,10 +107,10 @@ class GameBudgetInterfaceController extends ControllerBase_1.ControllerBase {
         cpp_1.FKuroGameBudgetAllocatorInterface.UnregisterFunction(t))
       : Log_1.Log.CheckWarn() && Log_1.Log.Warn("Game", 25, "Not found error!");
   }
-  static UpdateRegisterActor(e, t, r) {
-    cpp_1.FKuroGameBudgetAllocatorInterface.UpdateActor(e, t, r);
+  static UpdateRegisterActor(e, t, a) {
+    cpp_1.FKuroGameBudgetAllocatorInterface.UpdateActor(e, t, a);
   }
-  static ComputeDistanceScore(e, t, r, a) {
+  static ComputeDistanceScore(e, t, a, r) {
     var e = new UE.Vector(e[0], e[1], e[2]),
       t = new UE.Vector(t[0], t[1], t[2]),
       i =
@@ -115,25 +119,25 @@ class GameBudgetInterfaceController extends ControllerBase_1.ControllerBase {
           GameBudgetAllocatorConfigCreator_1.GameBudgetAllocatorConfigCreator.CreateCharacterEntityConfigOnly(),
         GameBudgetAllocatorConfigCreator_1.GameBudgetAllocatorConfigCreator
           .TsCharacterDtailConfig),
-      a = a ? i.Normal_Render : i.Normal_NotRendered;
+      r = r ? i.Normal_Render : i.Normal_NotRendered;
     return cpp_1.FKuroGameBudgetAllocatorInterface.ComputeDistanceScore(
       e,
       t,
-      0.01 * a.TickReductionStartSize,
-      0.01 * a.TickReductionIntervalSize,
-      a.MaxInterval,
-      r,
+      0.01 * r.TickReductionStartSize,
+      0.01 * r.TickReductionIntervalSize,
+      r.MaxInterval,
+      a,
     );
   }
-  static RegisterOnceTaskDefaultGroup(e, t, r) {
+  static RegisterOnceTaskDefaultGroup(e, t, a) {
     cpp_1.FKuroGameBudgetAllocatorInterface.RegisterOnceTaskDefaultGroup(
       e,
       t,
-      r,
+      a,
     );
   }
-  static ProduceOnceTaskOnDefaultGroup(e, t, r) {
-    cpp_1.FKuroGameBudgetAllocatorInterface.ProduceOnceTask(e, t, r);
+  static ProduceOnceTaskOnDefaultGroup(e, t, a) {
+    cpp_1.FKuroGameBudgetAllocatorInterface.ProduceOnceTask(e, t, a);
   }
   static RegisterOnceTaskCustomGroup(e) {
     cpp_1.FKuroGameBudgetAllocatorInterface.RegisterOnceTaskCustomGroup(
@@ -146,26 +150,36 @@ class GameBudgetInterfaceController extends ControllerBase_1.ControllerBase {
   }
   static SetCenterRole(e) {
     e &&
-      this.SK !== e &&
+      this.EK !== e &&
       (cpp_1.FKuroGameBudgetAllocatorInterface.SetCenterActor(e),
-      (this.SK = e));
+      (this.EK = e));
   }
-  static SetUseBoundsCalculateDistance(e, t, r) {
+  static SetUseBoundsCalculateDistance(e, t, a) {
     cpp_1.FKuroGameBudgetAllocatorInterface.SetUseBoundsCalculateDistance(
       e,
       t,
-      r,
+      a,
     );
   }
   static SetPerformanceLimitMode(e) {
     (this.AK = e), this.PK();
   }
   static SetPlotMode(e) {
-    (this.xK = e), this.PK();
+    (this.IsInPlot = e), this.PK();
   }
   static PK() {
-    var e = this.xK ? 2 : this.wK && !this.AK ? 1 : 0;
-    cpp_1.FKuroGameBudgetAllocatorInterface.SetGlobalMode(e);
+    var e = this.IsInPlot ? 2 : this.IsInFight && !this.AK ? 1 : 0;
+    (this.KIa = e),
+      cpp_1.FKuroGameBudgetAllocatorInterface.SetGlobalMode(e),
+      Log_1.Log.CheckInfo() &&
+        Log_1.Log.Info(
+          "Game",
+          37,
+          "[GameBudget]RefreshGlobalMode",
+          ["IsInPlot", this.IsInPlot],
+          ["IsInFight", this.IsInFight],
+          ["IsPerformanceLimitMode", this.AK],
+        );
   }
   static BK(e) {
     this.TK !== e &&
@@ -206,17 +220,27 @@ class GameBudgetInterfaceController extends ControllerBase_1.ControllerBase {
     "TsGlobalFifoTaskGroup",
   )),
   (GameBudgetInterfaceController.TsGlobalFifoTaskSignificanceGroup = 2),
-  (GameBudgetInterfaceController.SK = void 0),
+  (GameBudgetInterfaceController.EK = void 0),
   (GameBudgetInterfaceController.DK = void 0),
-  (GameBudgetInterfaceController.xK = !1),
-  (GameBudgetInterfaceController.wK = !1),
+  (GameBudgetInterfaceController.IsInPlot = !1),
+  (GameBudgetInterfaceController.IsInFight = !1),
   (GameBudgetInterfaceController.AK = !1),
+  (GameBudgetInterfaceController.KIa = 0),
   (GameBudgetInterfaceController.RK =
     new GameBudgetTimeEstimationFramesOffset_1.GameBudgetTimeEstimationFramesOffset()),
   (GameBudgetInterfaceController.yK = (e) => {
-    (_a.wK = e), _a.PK();
+    (_a.IsInFight = e),
+      _a.IsInFight &&
+        _a.IsInPlot &&
+        ((_a.IsInPlot = !1), Log_1.Log.CheckError()) &&
+        Log_1.Log.Error(
+          "Game",
+          37,
+          "[GameBudget]进入战斗时时间预算管理仍然处于剧情模式",
+        ),
+      _a.PK();
   }),
-  (GameBudgetInterfaceController.EK = (e, t) => {
+  (GameBudgetInterfaceController.SK = (e, t) => {
     _a.SetCenterRole(Global_1.Global.BaseCharacter);
   }),
   (GameBudgetInterfaceController.TK = 0),

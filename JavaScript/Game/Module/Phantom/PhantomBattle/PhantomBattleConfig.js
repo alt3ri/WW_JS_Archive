@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
-  (exports.PhantomBattleConfig = void 0);
-const Log_1 = require("../../../../Core/Common/Log"),
+  (exports.PhantomBattleConfig = exports.COSTLIST = void 0);
+const Info_1 = require("../../../../Core/Common/Info"),
+  Log_1 = require("../../../../Core/Common/Log"),
   CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById"),
   ItemInfoById_1 = require("../../../../Core/Define/ConfigQuery/ItemInfoById"),
   MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang"),
@@ -29,12 +30,12 @@ const Log_1 = require("../../../../Core/Common/Log"),
   TrailPhantomPropById_1 = require("../../../../Core/Define/ConfigQuery/TrailPhantomPropById"),
   TrialPhantomPropItemById_1 = require("../../../../Core/Define/ConfigQuery/TrialPhantomPropItemById"),
   ConfigBase_1 = require("../../../../Core/Framework/ConfigBase"),
-  ModelManager_1 = require("../../../Manager/ModelManager"),
   COST3 = 3,
   COST1 = 1;
+exports.COSTLIST = [1, 3, 4];
 class PhantomBattleConfig extends ConfigBase_1.ConfigBase {
   constructor() {
-    super(...arguments), (this.W5i = new Map());
+    super(...arguments), (this.jVi = new Map());
   }
   GetPhantomItemList() {
     var e = PhantomItemAll_1.configPhantomItemAll.GetConfigList();
@@ -438,14 +439,14 @@ class PhantomBattleConfig extends ConfigBase_1.ConfigBase {
     );
   }
   GetVisionScrollerOffsetX() {
-    return ModelManager_1.ModelManager.PlatformModel.IsMobile()
+    return Info_1.Info.IsInTouch()
       ? CommonParamById_1.configCommonParamById.GetFloatConfig(
           "VisionScrollerOffsetX",
         )
       : 0;
   }
   GetVisionScrollerOffsetY() {
-    return ModelManager_1.ModelManager.PlatformModel.IsMobile()
+    return Info_1.Info.IsInTouch()
       ? CommonParamById_1.configCommonParamById.GetFloatConfig(
           "VisionScrollerOffsetY",
         )
@@ -604,7 +605,7 @@ class PhantomBattleConfig extends ConfigBase_1.ConfigBase {
     );
   }
   OnClear() {
-    return this.W5i.clear(), !0;
+    return this.jVi.clear(), !0;
   }
 }
 exports.PhantomBattleConfig = PhantomBattleConfig;

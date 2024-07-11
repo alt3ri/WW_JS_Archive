@@ -15,8 +15,8 @@ class CipherCircleItem extends AutoAttachExhibitionItem_1.AutoAttachExhibitionIt
       (this.Pe = void 0),
       (this.vye = UE.Color.FromHex(WRONG_COLOR)),
       (this.Mye = UE.Color.FromHex(RIGHT_COLOR)),
-      (this.Sye = UE.Color.FromHex(NORMAL_COLOR)),
-      (this.Eye = void 0);
+      (this.Eye = UE.Color.FromHex(NORMAL_COLOR)),
+      (this.Sye = void 0);
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [[0, UE.UIText]];
@@ -32,18 +32,18 @@ class CipherCircleItem extends AutoAttachExhibitionItem_1.AutoAttachExhibitionIt
         this.pye,
       ),
       (this.GetText(0).useChangeColor = !1),
-      this.Eye && this.Eye(this.pye);
+      this.Sye && this.Sye(this.pye);
   }
   OnUnSelect() {
     super.OnUnSelect(),
-      this.GetText(0).SetColor(this.Sye),
+      this.GetText(0).SetColor(this.Eye),
       (this.GetText(0).useChangeColor = !0);
   }
   SetData(t) {
     this.Pe = t;
   }
   InitItem(t, i) {
-    (this.fye = t), (this.Eye = i);
+    (this.fye = t), (this.Sye = i);
   }
   HandleConfirm(t) {
     let i = this.vye;

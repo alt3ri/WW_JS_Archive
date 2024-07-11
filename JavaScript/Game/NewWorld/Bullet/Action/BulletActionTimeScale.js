@@ -10,11 +10,11 @@ const Time_1 = require("../../../../Core/Common/Time"),
   BulletActionBase_1 = require("./BulletActionBase");
 class BulletActionTimeScale extends BulletActionBase_1.BulletActionBase {
   constructor() {
-    super(...arguments), (this.V5o = -0), (this.H5o = void 0), (this.j5o = -0);
+    super(...arguments), (this.OVo = -0), (this.kVo = void 0), (this.FVo = -0);
   }
   OnExecute() {
     if (this.BulletInfo.BulletDataMain.TimeScale.TimeScaleWithAttacker)
-      this.H5o = this.BulletInfo.Attacker.GetComponent(107);
+      this.kVo = this.BulletInfo.Attacker.GetComponent(109);
     else {
       (this.BulletInfo.TimeScaleList = new PriorityQueue_1.PriorityQueue(
         PawnTimeScaleComponent_1.PawnTimeScaleComponent.CompareScalePriority,
@@ -56,15 +56,15 @@ class BulletActionTimeScale extends BulletActionBase_1.BulletActionBase {
       e = this.BulletInfo.Entity.TimeDilation;
     if (this.BulletInfo.BulletDataMain.TimeScale.TimeScaleWithAttacker)
       return (
-        (i = this.H5o),
-        (this.V5o = i.Active ? i.CurrentTimeScale : 1),
-        this.j5o === this.V5o
+        (i = this.kVo),
+        (this.OVo = i.Active ? i.CurrentTimeScale : 1),
+        this.FVo === this.OVo
           ? void 0
-          : ((this.j5o = this.V5o),
-            (this.BulletInfo.Actor.CustomTimeDilation = this.V5o),
+          : ((this.FVo = this.OVo),
+            (this.BulletInfo.Actor.CustomTimeDilation = this.OVo),
             void BulletStaticFunction_1.BulletStaticFunction.SetBulletEffectTimeScale(
               this.BulletInfo.EffectInfo,
-              this.V5o * e,
+              this.OVo * e,
             ))
       );
     for (
@@ -78,19 +78,19 @@ class BulletActionTimeScale extends BulletActionBase_1.BulletActionBase {
       this.BulletInfo.TimeScaleMap.delete(o.Id);
     }
     this.BulletInfo.TimeScaleList.Empty
-      ? (this.V5o = 1)
-      : (this.V5o = this.BulletInfo.TimeScaleList.Top.CalculateTimeScale()),
-      (e *= this.V5o),
-      this.j5o !== e &&
-        ((this.j5o = e),
-        (this.BulletInfo.Actor.CustomTimeDilation = this.V5o),
+      ? (this.OVo = 1)
+      : (this.OVo = this.BulletInfo.TimeScaleList.Top.CalculateTimeScale()),
+      (e *= this.OVo),
+      this.FVo !== e &&
+        ((this.FVo = e),
+        (this.BulletInfo.Actor.CustomTimeDilation = this.OVo),
         BulletStaticFunction_1.BulletStaticFunction.SetBulletEffectTimeScale(
           this.BulletInfo.EffectInfo,
           e,
         ));
   }
   Clear() {
-    super.Clear(), (this.V5o = 0), (this.H5o = void 0), (this.j5o = 0);
+    super.Clear(), (this.OVo = 0), (this.kVo = void 0), (this.FVo = 0);
   }
 }
 exports.BulletActionTimeScale = BulletActionTimeScale;

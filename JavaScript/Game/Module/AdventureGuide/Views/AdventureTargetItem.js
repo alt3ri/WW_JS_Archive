@@ -20,26 +20,26 @@ class AdventureTargetItem extends GridProxyAbstract_1.GridProxyAbstract {
       (this.eGe = void 0),
       (this.AdventureId = 0),
       (this.Pe = void 0),
-      (this.b5e = void 0),
-      (this.q5e = () => {
+      (this.$Ve = void 0),
+      (this.YVe = () => {
         return new CommonItemSmallItemGrid_1.CommonItemSmallItemGrid();
       }),
       (this.qOe = () => {
-        this.G5e ||
-          ((this.G5e = !0),
-          this.Pe.Status === Protocol_1.Aki.Protocol.bBs.Proto_Finish &&
+        this.JVe ||
+          ((this.JVe = !0),
+          this.Pe.Status === Protocol_1.Aki.Protocol.Eks.Proto_Finish &&
             ControllerHolder_1.ControllerHolder.AdventureGuideController.RequestForAdventureReward(
               this.AdventureId,
             ).finally(() => {
-              this.G5e = !1;
+              this.JVe = !1;
             }));
       }),
-      (this.G5e = !1),
-      (this.N5e = () => {
-        this.G5e ||
-          ((this.G5e = !0),
-          this.Pe.Status === Protocol_1.Aki.Protocol.bBs.Proto_UnFinish &&
-            (this.Ju(), (this.G5e = !1)));
+      (this.JVe = !1),
+      (this.zVe = () => {
+        this.JVe ||
+          ((this.JVe = !0),
+          this.Pe.Status === Protocol_1.Aki.Protocol.Eks.Proto_UnFinish &&
+            (this.Ju(), (this.JVe = !1)));
       });
   }
   OnRegisterComponent() {
@@ -56,30 +56,30 @@ class AdventureTargetItem extends GridProxyAbstract_1.GridProxyAbstract {
       [9, UE.UIButtonComponent],
     ]),
       (this.BtnBindInfo = [
-        [2, this.N5e],
+        [2, this.zVe],
         [9, this.qOe],
       ]);
   }
   OnStart() {
     (this.eGe = new GenericLayout_1.GenericLayout(
       this.GetHorizontalLayout(3),
-      this.q5e,
+      this.YVe,
     )),
-      (this.b5e = this.GetItem(1)
+      (this.$Ve = this.GetItem(1)
         .GetOwner()
         .GetComponentByClass(UE.UIExtendToggle.StaticClass())),
-      this.b5e.OnPostAudioEvent.Bind((e) => {
+      this.$Ve.OnPostAudioEvent.Bind((e) => {
         e && this.PostClickAudioEvent(e);
       }),
-      this.b5e.OnPostAudioStateEvent.Bind((e, t) => {
+      this.$Ve.OnPostAudioStateEvent.Bind((e, t) => {
         t && this.PostClickAudioEvent(t);
       });
   }
   OnBeforeDestroy() {
-    this.b5e.OnPostAudioEvent.Unbind(), this.b5e.OnPostAudioStateEvent.Unbind();
+    this.$Ve.OnPostAudioEvent.Unbind(), this.$Ve.OnPostAudioStateEvent.Unbind();
   }
   Refresh(t, e, r) {
-    this.G5e = !1;
+    this.JVe = !1;
     var i = (this.Pe = t).AdventureTaskBase,
       o =
         ((this.AdventureId = t.AdventureTaskBase.Id),
@@ -107,42 +107,42 @@ class AdventureTargetItem extends GridProxyAbstract_1.GridProxyAbstract {
     this.eGe.RefreshByDataAsync(l).then(() => {
       for (const e of this.eGe.GetLayoutItemList())
         e.SetReceivedVisible(
-          t.Status === Protocol_1.Aki.Protocol.bBs.Proto_Received,
+          t.Status === Protocol_1.Aki.Protocol.Eks.Proto_Received,
         );
       this.GetScrollViewWithScrollbar(6).ScrollTo(this.eGe.GetGrid(0));
     }),
       this.RootItem.SetUIActive(!0),
-      this.O5e(
+      this.ZVe(
         t.Status,
         !this.Pe.AdventureTaskBase.JumpTo ||
           0 !== t.AdventureTaskBase.JumpTo?.size,
       );
   }
-  O5e(e, t) {
-    this.k5e(e), this.F5e(e), this.V5e(e, t), this.H5e(e), this.j5e(e, t);
+  ZVe(e, t) {
+    this.e6e(e), this.t6e(e), this.i6e(e, t), this.o6e(e), this.r6e(e, t);
   }
-  j5e(e, t) {
+  r6e(e, t) {
     this.GetItem(7).SetUIActive(
-      e === Protocol_1.Aki.Protocol.bBs.Proto_UnFinish && !t,
+      e === Protocol_1.Aki.Protocol.Eks.Proto_UnFinish && !t,
     );
   }
-  k5e(e) {
+  e6e(e) {
     this.GetItem(8).SetUIActive(
-      e === Protocol_1.Aki.Protocol.bBs.Proto_Received,
+      e === Protocol_1.Aki.Protocol.Eks.Proto_Received,
     );
   }
-  F5e(e) {
+  t6e(e) {
     this.GetButton(9).RootUIComp.SetUIActive(
-      e === Protocol_1.Aki.Protocol.bBs.Proto_Finish,
+      e === Protocol_1.Aki.Protocol.Eks.Proto_Finish,
     );
   }
-  V5e(e, t) {
+  i6e(e, t) {
     this.GetButton(2).RootUIComp.SetUIActive(
-      e === Protocol_1.Aki.Protocol.bBs.Proto_UnFinish && t,
+      e === Protocol_1.Aki.Protocol.Eks.Proto_UnFinish && t,
     );
   }
-  H5e(e) {
-    this.GetItem(4).SetUIActive(e === Protocol_1.Aki.Protocol.bBs.Proto_Finish);
+  o6e(e) {
+    this.GetItem(4).SetUIActive(e === Protocol_1.Aki.Protocol.Eks.Proto_Finish);
   }
   Ju() {
     if (this.Pe?.AdventureTaskBase.JumpTo) {

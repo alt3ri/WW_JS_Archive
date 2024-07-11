@@ -99,55 +99,55 @@ let SceneItemDropItemComponent =
   ) {
     constructor() {
       super(...arguments),
-        (this.Vpr = void 0),
+        (this.Ovr = void 0),
         (this.Hte = void 0),
-        (this.pCn = !1),
-        (this.vCn = !1),
-        (this.MCn = 0),
-        (this.dqt = void 0),
-        (this.SCn = void 0),
-        (this.ECn = void 0),
-        (this.yCn = void 0),
-        (this.ICn = Vector_1.Vector.Create()),
-        (this.cjr = (t) => {
-          this.dqt &&
-            !this.dqt.DropFinished &&
-            this.dqt.MeshIsInited &&
+        (this.Jdn = !1),
+        (this.zdn = !1),
+        (this.Zdn = 0),
+        (this.fGt = void 0),
+        (this.eCn = void 0),
+        (this.tCn = void 0),
+        (this.iCn = void 0),
+        (this.oCn = Vector_1.Vector.Create()),
+        (this.KHr = (t) => {
+          this.fGt &&
+            !this.fGt.DropFinished &&
+            this.fGt.MeshIsInited &&
             ((t = t / CommonDefine_1.MILLIONSECOND_PER_SECOND),
             this.CheckDropRotation(t),
-            this.TCn(t));
+            this.rCn(t));
         }),
-        (this.LCn = () => {
+        (this.nCn = () => {
           0 <= this.Hte.StaticMesh.GetComponentVelocity().Z ||
-            ((this.dqt.DropState = 1),
-            this.ICn.DeepCopy(this.Hte.ActorLocationProxy),
+            ((this.fGt.DropState = 1),
+            this.oCn.DeepCopy(this.Hte.ActorLocationProxy),
             this.Hte.StaticMesh.SetNotifyRigidBodyCollision(!1));
         }),
-        (this.DCn = () => {
+        (this.sCn = () => {
           var t = this.Hte.StaticMesh.GetComponentVelocity(),
             e =
               ConfigManager_1.ConfigManager.RewardConfig.GetFallToGroundSpeed();
-          (!this.RCn() &&
-            (this.ICn.DeepCopy(this.Hte.ActorLocationProxy),
+          (!this.aCn() &&
+            (this.oCn.DeepCopy(this.Hte.ActorLocationProxy),
             t.Size() >= Math.pow(e, 2))) ||
             (this.Hte.StaticMesh.SetSimulatePhysics(!1),
             this.Hte.StaticMesh.SetUseCCD(!1),
-            EffectSystem_1.EffectSystem.IsValid(this.MCn) &&
+            EffectSystem_1.EffectSystem.IsValid(this.Zdn) &&
               EffectSystem_1.EffectSystem.StopEffectById(
-                this.MCn,
+                this.Zdn,
                 "[SceneItemDropItemComponent.DownProcess]",
                 !0,
               ),
-            (this.MCn = EffectSystem_1.EffectSystem.SpawnEffect(
+            (this.Zdn = EffectSystem_1.EffectSystem.SpawnEffect(
               GlobalData_1.GlobalData.World,
               this.Hte.ActorTransform,
-              BORN_EFFECTS[this.dqt.QualityIndex],
+              BORN_EFFECTS[this.fGt.QualityIndex],
               "[SceneItemDropItemComponent.DownProcess]",
               new EffectContext_1.EffectContext(this.Entity.Id),
             )),
-            EffectSystem_1.EffectSystem.IsValid(this.MCn) &&
+            EffectSystem_1.EffectSystem.IsValid(this.Zdn) &&
               EffectSystem_1.EffectSystem.GetEffectActor(
-                this.MCn,
+                this.Zdn,
               )?.K2_AttachToComponent(
                 this.Hte.StaticMesh,
                 FNameUtil_1.FNameUtil.EMPTY,
@@ -156,22 +156,22 @@ let SceneItemDropItemComponent =
                 0,
                 !0,
               ),
-            (this.dqt.DropState = 2));
+            (this.fGt.DropState = 2));
         }),
-        (this.ACn = (t) => {
-          0 === this.dqt.AdsorptionType
-            ? (this.dqt.DropState = 4)
-            : ((this.dqt.AdsorptionProtectTime -= t),
-              0 < this.dqt.AdsorptionProtectTime ||
-                (this.UCn(), (this.dqt.DropState = 3)));
+        (this.hCn = (t) => {
+          0 === this.fGt.AdsorptionType
+            ? (this.fGt.DropState = 4)
+            : ((this.fGt.AdsorptionProtectTime -= t),
+              0 < this.fGt.AdsorptionProtectTime ||
+                (this.lCn(), (this.fGt.DropState = 3)));
         }),
-        (this.PCn = (t) => {
-          this.dqt.AdsorptionTime += t;
+        (this._Cn = (t) => {
+          this.fGt.AdsorptionTime += t;
           var e,
             i,
             o = ConfigManager_1.ConfigManager.RewardConfig.GetMaxAdsorption();
-          this.dqt.AdsorptionTime > o
-            ? this.xCn()
+          this.fGt.AdsorptionTime > o
+            ? this.uCn()
             : (o = Global_1.Global.BaseCharacter) &&
               ((e = SceneItemDropItemComponent_1.cz),
               (i = MathUtils_1.MathUtils.CommonTempVector).FromUeVector(
@@ -182,10 +182,10 @@ let SceneItemDropItemComponent =
               (i =
                 ConfigManager_1.ConfigManager.RewardConfig.GetPickUpInBagRange()),
               o < Math.pow(i, 2)
-                ? this.xCn()
-                : o > Math.pow(this.dqt.StartSpeed * t, 2) &&
+                ? this.uCn()
+                : o > Math.pow(this.fGt.StartSpeed * t, 2) &&
                   (e.Normalize(),
-                  e.MultiplyEqual(this.dqt.StartSpeed * t),
+                  e.MultiplyEqual(this.fGt.StartSpeed * t),
                   e.AdditionEqual(this.Hte.ActorLocationProxy),
                   this.Hte.StaticMesh.K2_SetWorldLocation(
                     e.ToUeVector(),
@@ -195,9 +195,9 @@ let SceneItemDropItemComponent =
                   ),
                   (i =
                     ConfigManager_1.ConfigManager.RewardConfig.GetDropItemAcceleration()),
-                  (this.dqt.StartSpeed = this.dqt.StartSpeed + i)));
+                  (this.fGt.StartSpeed = this.fGt.StartSpeed + i)));
         }),
-        (this.wCn = () => {
+        (this.cCn = () => {
           var t,
             e,
             i = Global_1.Global.BaseCharacter;
@@ -210,60 +210,60 @@ let SceneItemDropItemComponent =
             (i =
               ConfigManager_1.ConfigManager.RewardConfig.GetDropItemPickUpRange()),
             t.SizeSquared() > Math.pow(i, 2)) &&
-            this.xCn();
+            this.uCn();
         });
     }
     get DropItemConfig() {
-      return this.dqt;
+      return this.fGt;
     }
     OnClear() {
       return (
-        EffectSystem_1.EffectSystem.IsValid(this.MCn) &&
+        EffectSystem_1.EffectSystem.IsValid(this.Zdn) &&
           (EffectSystem_1.EffectSystem.StopEffectById(
-            this.MCn,
+            this.Zdn,
             "[SceneItemDropItemComponent.OnClear]",
             !0,
           ),
-          (this.MCn = 0)),
-        this.yCn &&
-          (TimerSystem_1.TimerSystem.Remove(this.yCn), (this.yCn = void 0)),
-        this.ECn &&
+          (this.Zdn = 0)),
+        this.iCn &&
+          (TimerSystem_1.TimerSystem.Remove(this.iCn), (this.iCn = void 0)),
+        this.tCn &&
           (EventSystem_1.EventSystem.Has(
             EventDefine_1.EEventName.DropItemStarted,
-            this.ECn,
+            this.tCn,
           ) &&
             EventSystem_1.EventSystem.Remove(
               EventDefine_1.EEventName.DropItemStarted,
-              this.ECn,
+              this.tCn,
             ),
-          (this.ECn = void 0)),
+          (this.tCn = void 0)),
         !0
       );
     }
     OnInitData() {
-      this.Vpr = this.Entity.GetComponent(0);
-      var t = this.Vpr.ComponentDataMap.get("Yvs");
+      this.Ovr = this.Entity.GetComponent(0);
+      var t = this.Ovr.ComponentDataMap.get("dys");
       return (
         !!t &&
-        (this.pie(t.Yvs), !!this.dqt) &&
-        (this.BCn(t.Yvs) && (this.pCn = !0), !0)
+        (this.pie(t.dys), !!this.fGt) &&
+        (this.mCn(t.dys) && (this.Jdn = !0), !0)
       );
     }
     OnStart() {
       return (
-        (this.Hte = this.Entity.GetComponent(182)),
+        (this.Hte = this.Entity.GetComponent(185)),
         this.InitDropStateFunction(),
         !0
       );
     }
     OnActivate() {
-      (this.vCn = !0),
-        this.pCn && (this.bCn(), this.Hte?.Owner?.SetActorHiddenInGame(!1)),
+      (this.zdn = !0),
+        this.Jdn && (this.dCn(), this.Hte?.Owner?.SetActorHiddenInGame(!1)),
         !Info_1.Info.EnableForceTick &&
           this.Active &&
           ComponentForceTickController_1.ComponentForceTickController.RegisterTick(
             this,
-            this.cjr,
+            this.KHr,
           );
     }
     OnEnable() {
@@ -271,7 +271,7 @@ let SceneItemDropItemComponent =
         this.Entity?.IsInit &&
         ComponentForceTickController_1.ComponentForceTickController.RegisterTick(
           this,
-          this.cjr,
+          this.KHr,
         );
     }
     OnDisable(t) {
@@ -291,29 +291,29 @@ let SceneItemDropItemComponent =
     }
     pie(t) {
       var e,
-        i = t.G3n,
+        i = t.f8n,
         o = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
           i,
           !0,
         );
       o
         ? o.Mesh
-          ? ((this.dqt = new DropItemData()),
-            (this.dqt.ConfigId = i),
-            (this.dqt.Config = o),
-            (this.dqt.ItemCount = t.g5n),
-            (this.dqt.ShowPlanId = t.r6n),
+          ? ((this.fGt = new DropItemData()),
+            (this.fGt.ConfigId = i),
+            (this.fGt.Config = o),
+            (this.fGt.ItemCount = t.YVn),
+            (this.fGt.ShowPlanId = t.q9n),
             (t = (e =
               ConfigManager_1.ConfigManager.RewardConfig).GetDropShowPlan(
-              t.r6n,
+              t.q9n,
             )),
-            (this.dqt.AdsorptionType = t?.Adsorption),
-            (this.dqt.StartSpeed = e.GetSpeed()),
-            (this.dqt.RotationProtectTime = e.GetDropRotationProtectTime()),
+            (this.fGt.AdsorptionType = t?.Adsorption),
+            (this.fGt.StartSpeed = e.GetSpeed()),
+            (this.fGt.RotationProtectTime = e.GetDropRotationProtectTime()),
             (t = ConfigManager_1.ConfigManager.ItemConfig.GetQualityConfig(
               o.QualityId,
             )),
-            (this.dqt.QualityIndex = t.Id - 1))
+            (this.fGt.QualityIndex = t.Id - 1))
           : Log_1.Log.CheckError() &&
             Log_1.Log.Error("World", 11, "掉落配置查询Mesh字段配置为空", [
               "道具id",
@@ -322,57 +322,57 @@ let SceneItemDropItemComponent =
         : Log_1.Log.CheckError() &&
           Log_1.Log.Error("World", 11, "掉落配置查询数据为空", ["道具id", i]);
     }
-    BCn(t) {
-      if (!t.jkn) return !0;
-      t = ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(t.jkn);
+    mCn(t) {
+      if (!t.v5n) return !0;
+      t = ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(t.v5n);
       if (!t) return !0;
       if (
         t.Entity.GetComponent(0).GetEntityType() !==
-        Protocol_1.Aki.Protocol.HBs.Proto_Monster
+        Protocol_1.Aki.Protocol.wks.Proto_Monster
       )
         return !0;
       var e = CommonParamById_1.configCommonParamById.GetFloatConfig(
         "drop_item_show_time",
       );
       e &&
-        (this.yCn = TimerSystem_1.TimerSystem.Delay(() => {
-          (this.yCn = void 0), this.qCn();
+        (this.iCn = TimerSystem_1.TimerSystem.Delay(() => {
+          (this.iCn = void 0), this.CCn();
         }, e * CommonDefine_1.MILLIONSECOND_PER_SECOND));
       const i = t.Id;
       return (
-        (this.ECn = (t) => {
-          i === t && this.qCn();
+        (this.tCn = (t) => {
+          i === t && this.CCn();
         }),
         EventSystem_1.EventSystem.Add(
           EventDefine_1.EEventName.DropItemStarted,
-          this.ECn,
+          this.tCn,
         ),
         !1
       );
     }
-    qCn() {
-      this.yCn &&
-        (TimerSystem_1.TimerSystem.Remove(this.yCn), (this.yCn = void 0)),
+    CCn() {
+      this.iCn &&
+        (TimerSystem_1.TimerSystem.Remove(this.iCn), (this.iCn = void 0)),
         EventSystem_1.EventSystem.Has(
           EventDefine_1.EEventName.DropItemStarted,
-          this.ECn,
+          this.tCn,
         ) &&
           (EventSystem_1.EventSystem.Remove(
             EventDefine_1.EEventName.DropItemStarted,
-            this.ECn,
+            this.tCn,
           ),
-          (this.ECn = void 0)),
-        this.pCn ||
-          ((this.pCn = !0),
-          this.vCn &&
-            (this.bCn(), this.Entity?.IsInit) &&
+          (this.tCn = void 0)),
+        this.Jdn ||
+          ((this.Jdn = !0),
+          this.zdn &&
+            (this.dCn(), this.Entity?.IsInit) &&
             this.Hte?.Owner &&
             this.Hte.Owner.SetActorHiddenInGame(!1));
     }
-    bCn() {
-      this.uln(), this.GCn(), this.NCn();
+    dCn() {
+      this.Khn(), this.gCn(), this.fCn();
     }
-    OCn() {
+    pCn() {
       var t = this.Hte.Owner.GetComponentByClass(
           UE.SphereComponent.StaticClass(),
         ),
@@ -387,7 +387,7 @@ let SceneItemDropItemComponent =
             "World",
             7,
             "掉落初始位置修正前",
-            ["CreatureDataId", this.Vpr.GetCreatureDataId()],
+            ["CreatureDataId", this.Ovr.GetCreatureDataId()],
             ["EntityId", this.Entity.Id],
             ["Location", s],
             ["Radius", t],
@@ -400,22 +400,22 @@ let SceneItemDropItemComponent =
             "World",
             7,
             "掉落初始位置修正后",
-            ["CreatureDataId", this.Vpr.GetCreatureDataId()],
+            ["CreatureDataId", this.Ovr.GetCreatureDataId()],
             ["EntityId", this.Entity.Id],
             ["Location", s],
             ["zOffset", i],
           );
     }
-    uln() {
+    Khn() {
       ResourceSystem_1.ResourceSystem.LoadAsync(
-        this.dqt.Config.Mesh,
+        this.fGt.Config.Mesh,
         UE.Object,
         (t, e) => {
           var i = this.Hte?.StaticMesh;
           i?.IsValid() &&
             t?.IsValid() &&
-            (this.OCn(),
-            (this.dqt.MeshIsInited = !0),
+            (this.pCn(),
+            (this.fGt.MeshIsInited = !0),
             t instanceof UE.StaticMesh &&
               (i.SetStaticMesh(t), i.SetReceivesDecals(!1)),
             i.SetLinearDamping(LINEARDAMPING),
@@ -430,7 +430,7 @@ let SceneItemDropItemComponent =
             i.SetCollisionEnabled(2),
             i.SetSimulatePhysics(!0),
             i.SetCollisionProfileName(COLLISION_PROFILE_NAME),
-            (t = this.Vpr.GetRotation().Yaw),
+            (t = this.Ovr.GetRotation().Yaw),
             (t = this.GetRandomForce(t)),
             i.AddImpulse(t.ToUeVector(), FNameUtil_1.FNameUtil.EMPTY, !0),
             (i.BodyInstance.bLockXRotation = !0),
@@ -455,17 +455,17 @@ let SceneItemDropItemComponent =
           },
         );
     }
-    GCn() {
+    gCn() {
       var t = this.Hte.StaticMesh.GetRelativeTransform();
-      (this.MCn = EffectSystem_1.EffectSystem.SpawnUnloopedEffect(
+      (this.Zdn = EffectSystem_1.EffectSystem.SpawnUnloopedEffect(
         GlobalData_1.GlobalData.World,
         t,
         PARABOLIC_EFFECT,
         "[SceneItemDropItemComponent.InitEffects]",
       )),
-        EffectSystem_1.EffectSystem.IsValid(this.MCn) &&
+        EffectSystem_1.EffectSystem.IsValid(this.Zdn) &&
           EffectSystem_1.EffectSystem.GetEffectActor(
-            this.MCn,
+            this.Zdn,
           )?.K2_AttachToComponent(
             this.Hte.StaticMesh,
             FNameUtil_1.FNameUtil.EMPTY,
@@ -475,9 +475,9 @@ let SceneItemDropItemComponent =
             !0,
           );
     }
-    NCn() {
+    fCn() {
       var t,
-        e = this.Entity.GetComponent(178);
+        e = this.Entity.GetComponent(181);
       e &&
         (e = e.GetInteractController()) &&
         (((t =
@@ -486,21 +486,21 @@ let SceneItemDropItemComponent =
         e.AddClientInteractOption(t));
     }
     OnForceTick(t) {
-      this.cjr(t);
+      this.KHr(t);
     }
     InitDropStateFunction() {
-      (this.SCn = new Map()),
-        this.SCn.set(0, this.LCn),
-        this.SCn.set(1, this.DCn),
-        this.SCn.set(2, this.ACn),
-        this.SCn.set(3, this.PCn),
-        this.SCn.set(4, this.wCn);
+      (this.eCn = new Map()),
+        this.eCn.set(0, this.nCn),
+        this.eCn.set(1, this.sCn),
+        this.eCn.set(2, this.hCn),
+        this.eCn.set(3, this._Cn),
+        this.eCn.set(4, this.cCn);
     }
     GetRandomForce(t) {
       var e,
         i,
         o,
-        s = this.dqt.ShowPlanId,
+        s = this.fGt.ShowPlanId,
         s = ConfigManager_1.ConfigManager.RewardConfig.GetDropShowPlan(s);
       return s
         ? (((e = MathUtils_1.MathUtils.CommonTempRotator).Pitch = 0),
@@ -518,30 +518,30 @@ let SceneItemDropItemComponent =
           i.MultiplyEqual(Math.random() * (t - o) + o))
         : Vector_1.Vector.UpVectorProxy;
     }
-    TCn(t) {
+    rCn(t) {
       var e;
       this.Hte.SetActorLocation(this.Hte.StaticMesh.K2_GetComponentLocation()),
-        this.kCn()
-          ? this.xCn()
-          : (e = this.SCn.get(this.dqt.DropState)) && e(t);
+        this.vCn()
+          ? this.uCn()
+          : (e = this.eCn.get(this.fGt.DropState)) && e(t);
     }
-    UCn() {
+    lCn() {
       this.Hte.StaticMesh.SetCollisionEnabled(0),
-        EffectSystem_1.EffectSystem.IsValid(this.MCn) &&
+        EffectSystem_1.EffectSystem.IsValid(this.Zdn) &&
           EffectSystem_1.EffectSystem.StopEffectById(
-            this.MCn,
+            this.Zdn,
             "[SceneItemDropItemComponent.CreateAutoAttachEffect]",
             !0,
           ),
-        (this.MCn = EffectSystem_1.EffectSystem.SpawnEffect(
+        (this.Zdn = EffectSystem_1.EffectSystem.SpawnEffect(
           GlobalData_1.GlobalData.World,
           this.Hte.ActorTransform,
-          TRAIL_EFFECTS[this.dqt.QualityIndex],
+          TRAIL_EFFECTS[this.fGt.QualityIndex],
           "[SceneItemDropItemComponent.CreateAutoAttachEffect]",
           new EffectContext_1.EffectContext(this.Entity.Id),
         )),
         EffectSystem_1.EffectSystem.GetEffectActor(
-          this.MCn,
+          this.Zdn,
         )?.K2_AttachToComponent(
           this.Hte.StaticMesh,
           FNameUtil_1.FNameUtil.EMPTY,
@@ -552,12 +552,12 @@ let SceneItemDropItemComponent =
         );
     }
     CheckDropRotation(t) {
-      0 < this.dqt.RotationProtectTime &&
-        ((this.dqt.RotationProtectTime -= t),
-        this.dqt.RotationProtectTime <= 0) &&
+      0 < this.fGt.RotationProtectTime &&
+        ((this.fGt.RotationProtectTime -= t),
+        this.fGt.RotationProtectTime <= 0) &&
         this.Hte.StaticMesh.SetConstraintMode(0);
     }
-    kCn() {
+    vCn() {
       var t,
         e = Global_1.Global.BaseCharacter;
       return !(
@@ -568,20 +568,20 @@ let SceneItemDropItemComponent =
         0 < this.Hte.StaticMesh.GetComponentVelocity().Z
       );
     }
-    RCn() {
+    aCn() {
       var t = this.Hte.ActorLocationProxy,
         e = this.Hte.Owner.GetComponentByClass(
           UE.SphereComponent.StaticClass(),
         ).GetScaledSphereRadius();
       return (
         !!ModelManager_1.ModelManager.RewardModel.CheckWaterHit(
-          this.ICn,
+          this.oCn,
           t,
           CHECK_WATER_OFFSET_Z,
           e,
         ) &&
-        ((this.dqt.DropFinished = !0),
-        (this.dqt.DropState = 5),
+        ((this.fGt.DropFinished = !0),
+        (this.fGt.DropState = 5),
         (t = this.Hte.StaticMesh).SetCollisionEnabled(0),
         t.SetConstraintMode(6),
         t.SetEnableGravity(!1),
@@ -596,17 +596,17 @@ let SceneItemDropItemComponent =
           !1,
           this.Hte.Entity.Id,
         ),
-        EffectSystem_1.EffectSystem.IsValid(this.MCn) &&
+        EffectSystem_1.EffectSystem.IsValid(this.Zdn) &&
           (EffectSystem_1.EffectSystem.StopEffectById(
-            this.MCn,
+            this.Zdn,
             "[SceneItemDropItemComponent.DestroyWithEffect]",
             !0,
           ),
-          (this.MCn = 0));
+          (this.Zdn = 0));
       var t = EffectSystem_1.EffectSystem.SpawnEffect(
         GlobalData_1.GlobalData.World,
         this.Hte.ActorTransform,
-        DESTROY_EFFECTS[this.dqt.QualityIndex],
+        DESTROY_EFFECTS[this.fGt.QualityIndex],
         "[SceneItemDropItemComponent.DestroyWithEffect]",
         new EffectContext_1.EffectContext(this.Entity.Id),
       );
@@ -627,19 +627,19 @@ let SceneItemDropItemComponent =
           this.Entity,
         );
     }
-    xCn() {
-      (this.dqt.DropState = 5),
+    uCn() {
+      (this.fGt.DropState = 5),
         RewardController_1.RewardController.PickUpFightDrop(
-          this.Vpr.GetCreatureDataId(),
-          this.Vpr.GetPbDataId(),
+          this.Ovr.GetCreatureDataId(),
+          this.Ovr.GetPbDataId(),
         ),
-        (this.dqt.DropFinished = !0);
+        (this.fGt.DropFinished = !0);
     }
   });
 (SceneItemDropItemComponent.cz = Vector_1.Vector.Create()),
   (SceneItemDropItemComponent = SceneItemDropItemComponent_1 =
     __decorate(
-      [(0, RegisterComponent_1.RegisterComponent)(133)],
+      [(0, RegisterComponent_1.RegisterComponent)(135)],
       SceneItemDropItemComponent,
     )),
   (exports.SceneItemDropItemComponent = SceneItemDropItemComponent);

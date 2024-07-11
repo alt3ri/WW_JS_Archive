@@ -15,32 +15,32 @@ class TutorialController extends UiControllerBase_1.UiControllerBase {
   static OnAddEvents() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnLoadingNetDataDone,
-      this.w4e,
+      this.Q5e,
     );
   }
   static OnRemoveEvents() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnLoadingNetDataDone,
-      this.w4e,
+      this.Q5e,
     );
   }
   static OnRegisterNetEvent() {
-    Net_1.Net.Register(16903, this.BDo);
+    Net_1.Net.Register(17135, this.PRo);
   }
   static OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(16903);
+    Net_1.Net.UnRegister(17135);
   }
   static OnAddOpenViewCheckFunction() {
     UiManager_1.UiManager.AddOpenViewCheckFunction(
       "TutorialView",
-      TutorialController.V4e,
+      TutorialController.iVe,
       "TutorialController.CanOpenView",
     );
   }
   static OnRemoveOpenViewCheckFunction() {
     UiManager_1.UiManager.RemoveOpenViewCheckFunction(
       "TutorialView",
-      TutorialController.V4e,
+      TutorialController.iVe,
     );
   }
   static OnTutorialTipExistChanged(e) {
@@ -50,45 +50,45 @@ class TutorialController extends UiControllerBase_1.UiControllerBase {
     );
   }
   static GmUnlockOneTutorial(e) {
-    var t = Protocol_1.Aki.Protocol.Mcs.create();
-    (t.Ekn = e),
-      Net_1.Net.Call(1832, t, (e) => {
+    var t = Protocol_1.Aki.Protocol.C0s.create();
+    (t.J4n = e),
+      Net_1.Net.Call(29738, t, (e) => {
         e &&
-          e.lkn === Protocol_1.Aki.Protocol.lkn.Sys &&
+          e.O4n === Protocol_1.Aki.Protocol.O4n.NRs &&
           ModelManager_1.ModelManager.TutorialModel.UpdateUnlockTutorials(
-            e.cbs,
+            e.eOs,
           );
       });
   }
   static RemoveRedDotTutorialId(e) {
     ModelManager_1.ModelManager.TutorialModel.RemoveRedDotTutorialId(e),
-      this.bDo(e);
+      this.xRo(e);
   }
-  static bDo(o) {
-    var e = Protocol_1.Aki.Protocol.Mcs.create();
-    (e.Ekn = o),
-      Net_1.Net.Call(20188, e, (e) => {
+  static xRo(o) {
+    var e = Protocol_1.Aki.Protocol.C0s.create();
+    (e.J4n = o),
+      Net_1.Net.Call(11656, e, (e) => {
         var t;
         e &&
-          e.lkn === Protocol_1.Aki.Protocol.lkn.Sys &&
-          ((t = Number(Object.keys(e.Vms)[0])),
-          (e = e.Vms[t]),
+          e.O4n === Protocol_1.Aki.Protocol.O4n.NRs &&
+          ((t = Number(Object.keys(e.rvs)[0])),
+          (e = e.rvs[t]),
           ModelManager_1.ModelManager.TutorialModel.RewardInfo
-            ? (ModelManager_1.ModelManager.TutorialModel.RewardInfo.Y5n[0].I5n +=
+            ? (ModelManager_1.ModelManager.TutorialModel.RewardInfo.U9n[0].o9n +=
                 e)
             : ((t = {
-                $Fn: ConfigManager_1.ConfigManager.TutorialConfig.GetTutorial(o)
+                y6n: ConfigManager_1.ConfigManager.TutorialConfig.GetTutorial(o)
                   .DropId,
-                Y5n: [
+                U9n: [
                   {
-                    r6n: TutorialDefine_1.TutorialUtils.FixedDropDropShowPlanId,
-                    G3n: t,
-                    I5n: e,
-                    Q5n: 0,
+                    q9n: TutorialDefine_1.TutorialUtils.FixedDropDropShowPlanId,
+                    f8n: t,
+                    o9n: e,
+                    L9n: 0,
                   },
                 ],
-                V5n: 0,
-                W5n: 1,
+                E9n: 0,
+                I9n: 1,
               }),
               (ModelManager_1.ModelManager.TutorialModel.RewardInfo = t)));
       });
@@ -104,27 +104,27 @@ class TutorialController extends UiControllerBase_1.UiControllerBase {
     var o;
     ModelManager_1.ModelManager.TutorialModel.GetSavedDataById(e)
       ? t(!0)
-      : (((o = Protocol_1.Aki.Protocol.Mcs.create()).Ekn = e),
-        Net_1.Net.Call(1832, o, (e) => {
-          !e || e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys
+      : (((o = Protocol_1.Aki.Protocol.C0s.create()).J4n = e),
+        Net_1.Net.Call(29738, o, (e) => {
+          !e || e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs
             ? t(!1)
             : (ModelManager_1.ModelManager.TutorialModel.UpdateUnlockTutorials(
-                e.cbs,
+                e.eOs,
               ),
               t(!0));
         }));
   }
 }
-((exports.TutorialController = TutorialController).BDo = (e) => {
+((exports.TutorialController = TutorialController).PRo = (e) => {
   if (e)
-    for (const t of e.ubs)
+    for (const t of e.ZGs)
       ModelManager_1.ModelManager.TutorialModel.UpdateUnlockTutorials(t);
 }),
-  (TutorialController.w4e = () => {
-    var e = Protocol_1.Aki.Protocol.fcs.create();
-    Net_1.Net.Call(1137, e, (e) => {
+  (TutorialController.Q5e = () => {
+    var e = Protocol_1.Aki.Protocol.c0s.create();
+    Net_1.Net.Call(12127, e, (e) => {
       e &&
-        (ModelManager_1.ModelManager.TutorialModel.InitUnlockTutorials(e.ubs),
+        (ModelManager_1.ModelManager.TutorialModel.InitUnlockTutorials(e.ZGs),
         (e =
           ModelManager_1.ModelManager.TutorialModel.GetUnlockedTutorialDataByType(
             TutorialDefine_1.ETutorialType.All,
@@ -135,7 +135,7 @@ class TutorialController extends UiControllerBase_1.UiControllerBase {
         ModelManager_1.ModelManager.TutorialModel.InitTutorialTotalData());
     });
   }),
-  (TutorialController.V4e = (e) =>
+  (TutorialController.iVe = (e) =>
     !(
       !ModelManager_1.ModelManager.FunctionModel.IsOpen(10022) ||
       (UiManager_1.UiManager.IsViewOpen("GuideTutorialTipsView") &&

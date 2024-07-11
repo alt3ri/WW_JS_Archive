@@ -32,8 +32,8 @@ class CommonSelectView extends RogueSelectBaseView_1.RogueSelectBaseView {
       (this.CurSelectItem = void 0),
       (this.LastRefreshTime = 0),
       (this.IsFirstOpen = !0),
-      (this.m6t = () => {
-        var e = this.tao();
+      (this.m8t = () => {
+        var e = this.Jao();
         e &&
           ((ModelManager_1.ModelManager.RoguelikeModel.CurrentRogueGainEntry =
             e.RogueGainEntry),
@@ -41,7 +41,7 @@ class CommonSelectView extends RogueSelectBaseView_1.RogueSelectBaseView {
             1,
           ));
       }),
-      (this.iao = () => {
+      (this.zao = () => {
         var e = TimeUtil_1.TimeUtil.GetServerTime();
         (e - this.LastRefreshTime < 1 && 0 !== this.LastRefreshTime) ||
           ((this.LastRefreshTime = e),
@@ -55,17 +55,17 @@ class CommonSelectView extends RogueSelectBaseView_1.RogueSelectBaseView {
       }),
       (this.RoguelikeChooseDataResult = (e, i, t, s, o) => {
         if (t && s === this.RoguelikeChooseData?.Index) {
-          t = this.tao();
+          t = this.Jao();
           if (t) {
             var h = new RogueSelectResult_1.RogueSelectResult(
                 e,
                 i,
                 t.RogueGainEntry,
               ),
-              s = 0 < o.Aws.length;
+              s = 0 < o.Q2s.length;
             if (s) {
               h.IsShowCommon = !0;
-              for (const r of o.Aws) {
+              for (const r of o.Q2s) {
                 h.ExtraRogueGainEntry = new RogueGainEntry_1.RogueGainEntry(r);
                 break;
               }
@@ -122,7 +122,7 @@ class CommonSelectView extends RogueSelectBaseView_1.RogueSelectBaseView {
       [8, UE.UIText],
     ];
   }
-  tao() {
+  Jao() {
     for (const e of this.CommonSelectItemLayout.GetLayoutItemList())
       if (e.IsSelect()) return e;
   }
@@ -150,11 +150,11 @@ class CommonSelectView extends RogueSelectBaseView_1.RogueSelectBaseView {
       (this.ButtonItem = new ButtonItem_1.ButtonItem(
         this.GetButton(5).GetRootComponent(),
       )),
-      this.ButtonItem.SetFunction(this.m6t),
+      this.ButtonItem.SetFunction(this.m8t),
       (this.RefreshButtonItem = new ButtonItem_1.ButtonItem(
         this.GetButton(6).GetRootComponent(),
       )),
-      this.RefreshButtonItem.SetFunction(this.iao),
+      this.RefreshButtonItem.SetFunction(this.zao),
       (this.CommonSelectItemLayout = new GenericLayout_1.GenericLayout(
         this.GetHorizontalLayout(2),
         this.CreateCommonSelectItem,
@@ -245,14 +245,14 @@ class CommonSelectView extends RogueSelectBaseView_1.RogueSelectBaseView {
       ((s = s[0]),
       (i = (e =
         ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
-          s.Ekn,
-        ) >= s.I5n)
+          s.J4n,
+        ) >= s.o9n)
         ? "RogueSpecialRefreshCost"
         : "RogueSpecialRefreshCost_Not"),
-      LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(8), i, s.I5n),
+      LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(8), i, s.o9n),
       this.RefreshButtonItem.SetEnableClick(0 < t && e),
       (i = ConfigManager_1.ConfigManager.RoguelikeConfig.GetRogueCurrencyConfig(
-        s.Ekn,
+        s.J4n,
       )),
       this.SetTextureByPath(i.IconSmall, this.GetTexture(7)));
   }

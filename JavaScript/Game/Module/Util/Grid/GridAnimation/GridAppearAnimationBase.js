@@ -10,13 +10,13 @@ const Log_1 = require("../../../../../Core/Common/Log"),
 class GridAppearAnimationBase {
   constructor(t) {
     (this.GridPreserver = void 0),
-      (this.tqo = void 0),
+      (this.zqo = void 0),
       (this.DisplayGridNum = 0),
-      (this.Xje = TickSystem_1.TickSystem.InvalidId),
+      (this.sKe = TickSystem_1.TickSystem.InvalidId),
       (this.IsInGridAppearAnimation = !1),
       (this.HasShowFirstGrid = !1),
-      (this.iqo = new Map()),
-      (this.Zmt = () => {
+      (this.Zqo = new Map()),
+      (this.uCt = () => {
         this.GridPreserver.NotifyAnimationEnd();
       }),
       (this.Tick = (t) => {
@@ -39,33 +39,33 @@ class GridAppearAnimationBase {
     return !this.IsInGridAppearAnimation;
   }
   PlayGridAnim(t, e = !1) {
-    this.tqo
-      ? (this.GridPreserver.NotifyAnimationStart(), this.tqo.Play("", t, e))
+    this.zqo
+      ? (this.GridPreserver.NotifyAnimationStart(), this.zqo.Play("", t, e))
       : this.GridPreserver.GetGridAnimationInterval() <= 0 &&
           this.GridPreserver.GetGridAnimationStartTime() <= 0
         ? this.GridPreserver.NotifyAnimationEnd()
-        : (this.oqo(), this.il());
+        : (this.eGo(), this.il());
   }
   Clear() {
-    this.tqo
-      ? (this.tqo.OnFinish.Unbind(), this.GridPreserver.NotifyAnimationEnd())
+    this.zqo
+      ? (this.zqo.OnFinish.Unbind(), this.GridPreserver.NotifyAnimationEnd())
       : (this.GridPreserver.GetGridAnimationInterval() <= 0 &&
           this.GridPreserver.GetGridAnimationStartTime() <= 0) ||
-        this.oqo();
+        this.eGo();
   }
   RegisterAnimController() {
-    (this.tqo = this.GridPreserver.GetUiAnimController()),
-      this.tqo &&
-        (this.tqo.SetTickableWhenPaused(!0), this.tqo.OnFinish.Bind(this.Zmt));
+    (this.zqo = this.GridPreserver.GetUiAnimController()),
+      this.zqo &&
+        (this.zqo.SetTickableWhenPaused(!0), this.zqo.OnFinish.Bind(this.uCt));
   }
-  oqo() {
+  eGo() {
     this.GridPreserver.NotifyAnimationEnd(),
       this.RemoveTimer(),
       this.OnInterrupt();
   }
   il() {
     (this.DisplayGridNum = this.GridPreserver.GetDisplayGridNum()),
-      this.rqo(),
+      this.tGo(),
       this.OnStart();
   }
   OnStart() {}
@@ -82,15 +82,15 @@ class GridAppearAnimationBase {
   }
   OnEnd() {}
   OnInterrupt() {
-    for (const t of this.iqo.values()) t.StopSequenceByKey("Start"), t.Clear();
-    this.iqo.clear();
+    for (const t of this.Zqo.values()) t.StopSequenceByKey("Start"), t.Clear();
+    this.Zqo.clear();
   }
   ShowGrid(t, e) {
     t.SetUIActive(!0);
-    let i = this.iqo.get(t);
+    let i = this.Zqo.get(t);
     i ||
       ((i = new LevelSequencePlayer_1.LevelSequencePlayer(t)),
-      this.iqo.set(t, i)),
+      this.Zqo.set(t, i)),
       i.StopSequenceByKey("Start"),
       i.PlayLevelSequenceByName("Start"),
       EventSystem_1.EventSystem.Emit(
@@ -99,9 +99,9 @@ class GridAppearAnimationBase {
         t,
       );
   }
-  rqo() {
-    this.Xje === TickSystem_1.TickSystem.InvalidId &&
-      (this.Xje = TickSystem_1.TickSystem.Add(
+  tGo() {
+    this.sKe === TickSystem_1.TickSystem.InvalidId &&
+      (this.sKe = TickSystem_1.TickSystem.Add(
         this.Tick,
         "GridAppearAnimation",
         0,
@@ -109,9 +109,9 @@ class GridAppearAnimationBase {
       ).Id);
   }
   RemoveTimer() {
-    this.Xje !== TickSystem_1.TickSystem.InvalidId &&
-      (TickSystem_1.TickSystem.Remove(this.Xje),
-      (this.Xje = TickSystem_1.TickSystem.InvalidId));
+    this.sKe !== TickSystem_1.TickSystem.InvalidId &&
+      (TickSystem_1.TickSystem.Remove(this.sKe),
+      (this.sKe = TickSystem_1.TickSystem.InvalidId));
   }
 }
 exports.GridAppearAnimationBase = GridAppearAnimationBase;

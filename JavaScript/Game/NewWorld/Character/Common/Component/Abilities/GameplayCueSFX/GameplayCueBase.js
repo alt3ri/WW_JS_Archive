@@ -4,16 +4,16 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const Log_1 = require("../../../../../../../Core/Common/Log");
 class GameplayCueBase {
   constructor(t, i, s, e, h, a) {
-    (this.Entity = t),
-      (this.CueConfig = i),
+    (this.CueConfig = t),
+      (this.Entity = i),
       (this.ActorInternal = s),
       (this.CueComp = e),
       (this.BeginCallback = h),
       (this.EndCallback = a),
-      (this.IsActive = !1),
       (this.BuffId = void 0),
       (this.IsInstant = !1),
-      (this.ActiveHandleId = 0);
+      (this.ActiveHandleId = 0),
+      (this.IsActive = !1);
   }
   OnInit() {}
   OnTick(t) {}
@@ -24,8 +24,8 @@ class GameplayCueBase {
   OnChangeTimeDilation(t) {}
   static Spawn(t) {
     var i = new this(
-      t.Entity,
       t.CueConfig,
+      t.Entity,
       t.Actor,
       t.CueComp,
       t.BeginCallback,

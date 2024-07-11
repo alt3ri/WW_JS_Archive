@@ -14,9 +14,9 @@ const UE = require("ue"),
 class JoinTeamView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.V0i = void 0),
-      (this.H0i = !1),
-      (this.j0i = () => {
+      (this.Vfi = void 0),
+      (this.Hfi = !1),
+      (this.jfi = () => {
         var e = ModelManager_1.ModelManager.RoleModel,
           i = ModelManager_1.ModelManager.JoinTeamModel.GetRoleDescriptionId(),
           i = ConfigManager_1.ConfigManager.JoinTeamConfig.GetRoleConfigId(i),
@@ -25,11 +25,11 @@ class JoinTeamView extends UiViewBase_1.UiViewBase {
           e &&
             RoleController_1.RoleController.OpenRoleMainView(0, e.GetRoleId());
       }),
-      (this.ACt = () => {
+      (this.Vgt = () => {
         JoinTeamController_1.JoinTeamController.CloseJoinTeamView();
       }),
-      (this.W0i = () => {
-        this.K0i();
+      (this.Wfi = () => {
+        this.Kfi();
       });
   }
   OnRegisterComponent() {
@@ -44,33 +44,33 @@ class JoinTeamView extends UiViewBase_1.UiViewBase {
       [7, UE.UIItem],
     ]),
       (this.BtnBindInfo = [
-        [4, this.j0i],
-        [6, this.ACt],
+        [4, this.jfi],
+        [6, this.Vgt],
       ]);
   }
   OnStart(e = !1) {
-    (this.H0i = e),
+    (this.Hfi = e),
       this.GetTexture(1)?.SetUIActive(!1),
       this.GetButton(4)?.RootUIComp.SetUIActive(!e),
-      this.K0i(),
+      this.Kfi(),
       this.Ore();
   }
   OnBeforeDestroy() {
-    this.kre(), this.V0i && (this.V0i.Destroy(), (this.V0i = void 0));
+    this.kre(), this.Vfi && (this.Vfi.Destroy(), (this.Vfi = void 0));
   }
   Ore() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnRefreshJoinTeamRole,
-      this.W0i,
+      this.Wfi,
     );
   }
   kre() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnRefreshJoinTeamRole,
-      this.W0i,
+      this.Wfi,
     );
   }
-  K0i() {
+  Kfi() {
     var e,
       i,
       t,
@@ -83,30 +83,30 @@ class JoinTeamView extends UiViewBase_1.UiViewBase {
       (i = r.GetRoleTexturePath(s)),
       (t = r.GetRoleElementId(s)),
       (r = r.GetRoleDescriptionId(s)),
-      this.Q0i(t),
-      this.X0i(i),
-      this.$0i(e),
-      this.Y0i(r),
+      this.Qfi(t),
+      this.Xfi(i),
+      this.$fi(e),
+      this.Yfi(r),
       this.GetUiNiagara(2).ActivateSystem(!0),
-      this.J0i());
+      this.Jfi());
   }
-  Q0i(e) {
+  Qfi(e) {
     var i = this.GetItem(5).GetOwner();
-    this.V0i = new MiniElementItem_1.MiniElementItem(e, void 0, i);
+    this.Vfi = new MiniElementItem_1.MiniElementItem(e, void 0, i);
   }
-  $0i(e) {
+  $fi(e) {
     this.GetText(0).ShowTextNew(e);
   }
-  X0i(e) {
+  Xfi(e) {
     ResourceSystem_1.ResourceSystem.LoadAsync(e, UE.Texture, (e) => {
       this.GetTexture(1)?.SetTexture(e), this.GetTexture(1)?.SetUIActive(!0);
     });
   }
-  Y0i(e) {
+  Yfi(e) {
     this.GetText(3).ShowTextNew(e);
   }
-  J0i() {
-    this.GetItem(7)?.SetUIActive(this.H0i);
+  Jfi() {
+    this.GetItem(7)?.SetUIActive(this.Hfi);
   }
 }
 exports.JoinTeamView = JoinTeamView;

@@ -5,7 +5,7 @@ const CookLevelView_1 = require("../../Cook/View/CookLevelView"),
   GenericLayoutNew_1 = require("../../Util/Layout/GenericLayoutNew");
 class StarLevelComponent {
   constructor(e) {
-    (this.Gqt = (e, o, t) => {
+    (this.kGt = (e, o, t) => {
       var r = new CookLevelView_1.StarItem();
       return (
         r.CreateThenShowByActor(o.GetOwner()),
@@ -13,7 +13,7 @@ class StarLevelComponent {
         { Key: t, Value: r }
       );
     }),
-      (this.$be = new GenericLayoutNew_1.GenericLayoutNew(e, this.Gqt));
+      (this.$be = new GenericLayoutNew_1.GenericLayoutNew(e, this.kGt));
   }
   ShowLevel(o, e) {
     var t = new Array(e);

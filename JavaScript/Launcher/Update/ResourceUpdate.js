@@ -18,7 +18,16 @@ class DownloadViewInfo {
     (this.Name = ""), (this.Size = void 0), (this.SavedSize = void 0);
   }
 }
-exports.DownloadViewInfo = DownloadViewInfo;
+var EKuroCheckResult;
+(exports.DownloadViewInfo = DownloadViewInfo),
+  (function (e) {
+    (e[(e.None = -1)] = "None"),
+      (e[(e.Success = 0)] = "Success"),
+      (e[(e.Continue = 1)] = "Continue"),
+      (e[(e.Rename = 2)] = "Rename"),
+      (e[(e.DeleteTemp = 3)] = "DeleteTemp"),
+      (e[(e.Fail = 4)] = "Fail");
+  })((EKuroCheckResult = EKuroCheckResult || {}));
 class PatchFileInfo {
   constructor() {
     (this.Name = ""),
@@ -40,24 +49,24 @@ class PatchFileInfo {
 exports.PatchFileInfo = PatchFileInfo;
 class ResourceUpdate {
   constructor(e = void 0, t = void 0, i = void 0, s = void 0, r = !1) {
-    (this.Tyr = ""),
-      (this.Lyr = !1),
-      (this.Dyr = void 0),
-      (this.Ryr = !1),
-      (this.Uyr = void 0),
-      (this.Ayr = void 0),
-      (this.Pyr = void 0),
-      (this.xyr = 0n),
-      (this.zSr = 0n),
-      (this.PSr = e),
-      (this.wyr = t),
-      (this.Byr = i),
-      (this.$Sr = s),
-      (this.byr = r),
-      (this.Tyr = i.GetResType());
+    (this.SIr = ""),
+      (this.yIr = !1),
+      (this.IIr = void 0),
+      (this.TIr = !1),
+      (this.LIr = void 0),
+      (this.DIr = void 0),
+      (this.RIr = void 0),
+      (this.UIr = 0n),
+      (this.$Sr = 0n),
+      (this.RSr = e),
+      (this.AIr = t),
+      (this.PIr = i),
+      (this.KSr = s),
+      (this.xIr = r),
+      (this.SIr = i.GetResType());
   }
   ResetWorldContext(e) {
-    this.PSr = e;
+    this.RSr = e;
   }
   static ReadPatchInfoList(t, i, s, r) {
     var o = [];
@@ -72,74 +81,74 @@ class ResourceUpdate {
       );
     for (let e = 0; e < t.length; e++) {
       var n = t[e],
-        h = i[e],
-        a = (0, puerts_1.$ref)(void 0);
-      if (!UE.KuroStaticLibrary.LoadFileToString(a, n))
+        a = i[e],
+        h = (0, puerts_1.$ref)(void 0);
+      if (!UE.KuroStaticLibrary.LoadFileToString(h, n))
         return (
           LauncherLog_1.LauncherLog.Warn("index文件不存在", ["file", n]),
           [!1, o]
         );
       var c = (0, puerts_1.$ref)(void 0);
-      if (!UE.KuroLauncherLibrary.Decrypt((0, puerts_1.$unref)(a), c))
+      if (!UE.KuroLauncherLibrary.Decrypt((0, puerts_1.$unref)(h), c))
         return (
           LauncherLog_1.LauncherLog.Warn("index文件内容无法解析", ["file", n]),
           [!1, o]
         );
-      a = (0, puerts_1.$unref)(c).trim();
-      if (a && !(a.length <= 0)) {
-        c = JSON.parse(a);
+      h = (0, puerts_1.$unref)(c).trim();
+      if (h && !(h.length <= 0)) {
+        c = JSON.parse(h);
         if (!(Object.keys(c).length <= 0)) {
           var u,
-            d,
             l,
+            d,
             _,
-            a = c[h];
-          if (!a)
+            h = c[a];
+          if (!h)
             return (
               LauncherLog_1.LauncherLog.Warn(
                 "index文件内容取不到版本信息",
                 ["file", n],
-                ["version", h],
+                ["version", a],
               ),
               [!1, o]
             );
-          for (const L of a)
+          for (const L of h)
             L &&
               0 !== L.length &&
               ((u = L.split(",")).length < 12 ||
-                (((d = new PatchFileInfo()).Name = u[0].substring(
+                (((l = new PatchFileInfo()).Name = u[0].substring(
                   0,
                   u[0].length - 4,
                 )),
-                (d.NeedRestart = "1" === u[1]),
-                (d.MountType = Number(u[2])),
-                (l = s.GetPackageVersion()),
+                (l.NeedRestart = "1" === u[1]),
+                (l.MountType = Number(u[2])),
+                (d = s.GetPackageVersion()),
                 (_ = BaseConfigController_1.BaseConfigController.GetResUri()),
-                (d.FileUrl = `${_}/${r.GetPlatform()}/` + d.Name),
-                (d.SavePath =
+                (l.FileUrl = `${_}/${r.GetPlatform()}/` + l.Name),
+                (l.SavePath =
                   "" +
                   r.GetPatchSaveDir() +
-                  l +
+                  d +
                   `/${s.GetResType()}/` +
-                  d.Name),
-                (d.PakSize = BigInt(u[4])),
-                (d.PakSha1 = u[5]),
-                (d.MountOrder = Number(u[3])),
-                (d.UtocSize = BigInt(u[6])),
-                (d.UtocSha1 = u[7]),
-                (d.UcasSize = BigInt(u[8])),
-                (d.UcasSha1 = u[9]),
-                (d.SigSize = BigInt(u[10])),
-                (d.SigSha1 = u[11]),
-                o.push(d)));
+                  l.Name),
+                (l.PakSize = BigInt(u[4])),
+                (l.PakSha1 = u[5]),
+                (l.MountOrder = Number(u[3])),
+                (l.UtocSize = BigInt(u[6])),
+                (l.UtocSha1 = u[7]),
+                (l.UcasSize = BigInt(u[8])),
+                (l.UcasSha1 = u[9]),
+                (l.SigSize = BigInt(u[10])),
+                (l.SigSha1 = u[11]),
+                o.push(l)));
         }
       }
     }
     return [!0, o];
   }
-  qyr() {
+  wIr() {
     var t = new Map(),
-      e = this.Byr.GetMountFilePath();
+      e = this.PIr.GetMountFilePath();
     if (UE.BlueprintPathsLibrary.FileExists(e)) {
       var i = UE.KuroStaticLibrary.LoadFileToStringArray(e),
         s = i.Num();
@@ -148,7 +157,7 @@ class ResourceUpdate {
           o = i.Get(e).split(",");
         o.length < 9 ||
           (((r = new PatchFileInfo()).Name =
-            o[1] === this.Byr.GetResType() ? o[0] : o[0] + "_" + o[1]),
+            o[1] === this.PIr.GetResType() ? o[0] : o[0] + "_" + o[1]),
           (r.PakSha1 = o[4]),
           (r.SigSha1 = o[5]),
           (r.UtocSha1 = o[6]),
@@ -159,13 +168,13 @@ class ResourceUpdate {
     }
     return t;
   }
-  Gyr() {
+  BIr() {
     let e = "";
-    for (const t of this.Dyr)
-      e += `${t.Name},${this.Byr.GetResType()},${t.NeedRestart ? "1" : "0"},${t.MountType},${t.PakSha1},${t.SigSha1},${t.UtocSha1},${t.UcasSha1},${t.MountOrder}\n`;
-    UE.KuroStaticLibrary.SaveStringToFile(e, this.Byr.GetMountFilePath());
+    for (const t of this.IIr)
+      e += `${t.Name},${this.PIr.GetResType()},${t.NeedRestart ? "1" : "0"},${t.MountType},${t.PakSha1},${t.SigSha1},${t.UtocSha1},${t.UcasSha1},${t.MountOrder}\n`;
+    UE.KuroStaticLibrary.SaveStringToFile(e, this.PIr.GetMountFilePath());
   }
-  Nyr(e, t) {
+  bIr(e, t) {
     switch (t) {
       case ".pak":
         return [e.PakSize, e.PakSha1];
@@ -178,75 +187,86 @@ class ResourceUpdate {
     }
     return [0n, ""];
   }
-  Oyr(t, i, s, r) {
-    var [o, n] = this.Nyr(t, r);
-    if (o <= 0n) return 0n;
-    let h = 0n;
-    var a = "" + t.SavePath + r,
-      c = "" + t.SavePath + r + UrlPrefixDownload_1.DOWNLOAD_SUFFIX;
-    let e = !0;
-    var u = UE.KuroLauncherLibrary.CheckFileSha1(a, n);
-    if (
-      (e =
-        (e = u ? !1 : e) &&
+  qIr(e, t, i, s) {
+    var [r, o] = this.bIr(e, s);
+    if (r <= 0n) return 0n;
+    let n = 0n;
+    var a = "" + e.SavePath + s,
+      h = "" + e.SavePath + s + UrlPrefixDownload_1.DOWNLOAD_SUFFIX,
+      c = new HotPatchLogReport_1.HotPatchLog(),
+      u =
+        ((c.s_step_id = "HotPatchCheckResHash"),
+        { FileName: a, Infos: new Array() }),
+      l = { success: !1, info: u };
+    let d = !0,
+      _ = !1,
+      L =
+        (UE.KuroLauncherLibrary.GetFileSize(a) === r &&
+          ((_ = UE.KuroLauncherLibrary.CheckFileSha1(a, o))
+            ? (d = !1)
+            : u.Infos.push("file size equal and sha1 different.")),
+        UE.KuroLauncherLibrary.GetFileSize(h));
+    return (
+      d &&
         (UE.BlueprintPathsLibrary.FileExists(a) &&
           UE.KuroLauncherLibrary.DeleteFile(a),
-        UE.KuroLauncherLibrary.CheckFileSha1(c, n)) &&
-        UE.KuroLauncherLibrary.MoveFile(a, c)
-          ? !1
-          : e)
-    ) {
-      let e = UE.KuroLauncherLibrary.GetFileSize(c);
-      e >= o && (UE.KuroLauncherLibrary.DeleteFile(c), (e = 0n)),
-        (e = 0n <= e ? e : 0n),
-        (this.zSr += o - e);
-      (u = new UrlPrefixDownload_1.RequestFileInfo()),
-        (c =
-          ((u.FileName = "" + t.Name + r),
-          (u.Url = "" + t.FileUrl + r),
-          (u.SavePath = a),
-          (u.HashString = n),
-          (u.Size = o),
-          (u.bUseDownloadCache = !0),
-          (h += o),
-          i.push(u),
-          new DownloadViewInfo()));
-      (c.Name = u.FileName),
-        (c.Size = u.Size),
-        (c.SavedSize = 0n),
-        s.set(c.Name, c);
-    }
-    return h;
+        L > r
+          ? (UE.KuroLauncherLibrary.DeleteFile(h), (L = 0n))
+          : L === r &&
+            ((_ = UE.KuroLauncherLibrary.CheckFileSha1(h, o))
+              ? UE.KuroLauncherLibrary.MoveFile(a, h) && (d = !1)
+              : (UE.KuroLauncherLibrary.DeleteFile(h), (L = 0n)))),
+      d &&
+        ((L = 0n <= L ? L : 0n),
+        (this.$Sr += r - L),
+        ((h = new UrlPrefixDownload_1.RequestFileInfo()).FileName =
+          "" + e.Name + s),
+        (h.Url = "" + e.FileUrl + s),
+        (h.SavePath = a),
+        (h.HashString = o),
+        (h.Size = r),
+        (h.bUseDownloadCache = !0),
+        (n += r),
+        t.push(h),
+        ((e = new DownloadViewInfo()).Name = h.FileName),
+        (e.Size = h.Size),
+        (e.SavedSize = 0n),
+        i.set(e.Name, e)),
+      0 < u.Infos.length &&
+        ((c.s_step_result = LauncherSerialize_1.LauncherJson.Stringify(l)),
+        HotPatchLogReport_1.HotPatchLogReport.Report(c)),
+      n
+    );
   }
-  kyr(e, t, i) {
+  GIr(e, t, i) {
     var s = 0n,
       s =
         (s =
-          (s = (s += this.Oyr(e, t, i, ".pak")) + this.Oyr(e, t, i, ".utoc")) +
-          this.Oyr(e, t, i, ".ucas")) + this.Oyr(e, t, i, ".sig");
-    return !this.Lyr && 0n < s && (this.Lyr = e.NeedRestart), s;
+          (s = (s += this.qIr(e, t, i, ".pak")) + this.qIr(e, t, i, ".utoc")) +
+          this.qIr(e, t, i, ".ucas")) + this.qIr(e, t, i, ".sig");
+    return !this.yIr && 0n < s && (this.yIr = e.NeedRestart), s;
   }
   CheckResourceVersion() {
-    var e = this.Byr.HasNewResourceVersionBaseOnPackage(),
-      t = this.Byr.IsBasePackageSplited(),
+    var e = this.PIr.HasNewResourceVersionBaseOnPackage(),
+      t = this.PIr.IsBasePackageSplited(),
       i = new HotPatchLogReport_1.HotPatchLog();
     if (
       ((i.s_step_id = "check_resource_version"),
-      (i.s_update_type = this.Tyr),
+      (i.s_update_type = this.SIr),
       !e && !t)
     ) {
-      this.Byr.HasUpdated() || this.Byr.UpdateVersion(this.PSr),
-        this.Byr.IsFirstUpdateResources() &&
-          this.Byr.UpdateSavedVersion(this.PSr),
+      this.PIr.HasUpdated() || this.PIr.UpdateVersion(this.RSr),
+        this.PIr.IsFirstUpdateResources() &&
+          this.PIr.UpdateSavedVersion(this.RSr),
         LauncherLog_1.LauncherLog.Info(
           "原始包版本，直接可进入游戏",
-          ["Type", this.Tyr],
-          ["PackageVersion", this.Byr.GetPackageVersion()],
-          ["LatestVersion", this.Byr.GetLatestVersion()],
+          ["Type", this.SIr],
+          ["PackageVersion", this.PIr.GetPackageVersion()],
+          ["LatestVersion", this.PIr.GetLatestVersion()],
         );
       const s = {
-        PackageVersion: this.Byr.GetPackageVersion(),
-        LatestVersion: this.Byr.GetLatestVersion(),
+        PackageVersion: this.PIr.GetPackageVersion(),
+        LatestVersion: this.PIr.GetLatestVersion(),
         NeedUpdate: !1,
         BasePackageSplited: t,
       };
@@ -254,8 +274,8 @@ class ResourceUpdate {
         HotPatchLogReport_1.HotPatchLogReport.Report(i);
     }
     const s = {
-      PackageVersion: this.Byr.GetPackageVersion(),
-      LatestVersion: this.Byr.GetLatestVersion(),
+      PackageVersion: this.PIr.GetPackageVersion(),
+      LatestVersion: this.PIr.GetLatestVersion(),
       NeedUpdate: !0,
       BasePackageSplited: t,
     };
@@ -266,56 +286,56 @@ class ResourceUpdate {
     );
   }
   async DownloadIndexFile() {
-    var t = this.Byr.GetIndexSha1s(),
-      i = this.Byr.GetIndexSavePaths(this.$Sr),
-      s = this.Byr.GetIndexFileNames();
+    var t = this.PIr.GetIndexSha1s(),
+      i = this.PIr.GetIndexSavePaths(this.KSr),
+      s = this.PIr.GetIndexFileNames();
     let r = !1;
     var e,
       o,
       n,
-      h = new Array(),
-      a = new Array();
+      a = new Array(),
+      h = new Array();
     for (let e = 0; e < i.length; e++) {
       var c,
         u,
-        d = i[e],
-        l = t[e],
+        l = i[e],
+        d = t[e],
         _ = s[e];
-      UE.KuroLauncherLibrary.CheckFileSha1(d, l)
-        ? LauncherLog_1.LauncherLog.Info("已下载过index文件", ["file", d])
+      UE.KuroLauncherLibrary.CheckFileSha1(l, d)
+        ? LauncherLog_1.LauncherLog.Info("已下载过index文件", ["file", l])
         : ((r = !0),
-          UE.BlueprintPathsLibrary.FileExists(d) &&
-            UE.KuroLauncherLibrary.DeleteFile(d),
-          LauncherLog_1.LauncherLog.Info("开始下载index文件", ["file", d]),
+          UE.BlueprintPathsLibrary.FileExists(l) &&
+            UE.KuroLauncherLibrary.DeleteFile(l),
+          LauncherLog_1.LauncherLog.Info("开始下载index文件", ["file", l]),
           (c =
-            `${BaseConfigController_1.BaseConfigController.GetResUri()}/${this.$Sr.GetPlatform()}/` +
+            `${BaseConfigController_1.BaseConfigController.GetResUri()}/${this.KSr.GetPlatform()}/` +
             _),
-          ((u = new UrlPrefixDownload_1.RequestFileInfo()).HashString = l),
+          ((u = new UrlPrefixDownload_1.RequestFileInfo()).HashString = d),
           (u.Size = 0n),
           (u.bUseDownloadCache = !1),
           (u.Url = c),
-          (u.SavePath = d),
-          a.push(u),
-          h.push(_));
+          (u.SavePath = l),
+          h.push(u),
+          a.push(_));
     }
     return r
       ? (((e = new HotPatchLogReport_1.HotPatchLog()).s_step_id =
           "start_download_index"),
-        (e.s_update_type = this.Tyr),
-        (e.s_step_result = LauncherSerialize_1.LauncherJson.Stringify(h)),
+        (e.s_update_type = this.SIr),
+        (e.s_step_result = LauncherSerialize_1.LauncherJson.Stringify(a)),
         HotPatchLogReport_1.HotPatchLogReport.Report(e),
-        (e = await this.wyr.RequestFiles(a, !0, 3)),
+        (e = await this.AIr.RequestFiles(h, !0, 3)),
         ((o = new HotPatchLogReport_1.HotPatchLog()).s_step_id =
           "end_download_index"),
-        (o.s_update_type = this.Tyr),
+        (o.s_update_type = this.SIr),
         e.Success
           ? (LauncherLog_1.LauncherLog.Info("下载indexes文件成功"),
-            this.Byr.UpdateVersion(this.PSr))
+            this.PIr.UpdateVersion(this.RSr))
           : LauncherLog_1.LauncherLog.Error("下载index文件失败!", [
               "resType",
-              this.Tyr,
+              this.SIr,
             ]),
-        (n = { success: e.Success, info: h }),
+        (n = { success: e.Success, info: a }),
         (o.s_step_result = LauncherSerialize_1.LauncherJson.Stringify(n)),
         HotPatchLogReport_1.HotPatchLogReport.Report(o),
         e)
@@ -329,121 +349,197 @@ class ResourceUpdate {
   ResolveIndexFile() {
     var e, t, i;
     return (
-      !!this.byr ||
-      ((i = this.Byr.GetIndexSavePaths(this.$Sr)),
-      (e = this.Byr.GetUpdatePreVersions()),
+      !!this.xIr ||
+      ((i = this.PIr.GetIndexSavePaths(this.KSr)),
+      (e = this.PIr.GetUpdatePreVersions()),
       (t = !1),
-      ([t, this.Dyr] = ResourceUpdate.ReadPatchInfoList(
+      ([t, this.IIr] = ResourceUpdate.ReadPatchInfoList(
         i,
         e,
-        this.Byr,
-        this.$Sr,
+        this.PIr,
+        this.KSr,
       )),
       ((i = new HotPatchLogReport_1.HotPatchLog()).s_step_id = "resolve_index"),
-      (i.s_update_type = this.Tyr),
+      (i.s_update_type = this.SIr),
       (i.s_step_result = t ? "success" : "failed"),
       HotPatchLogReport_1.HotPatchLogReport.Report(i),
       t)
     );
   }
-  async CheckResourceFiles(i) {
-    if (!this.byr) {
-      var s = this.qyr(),
-        r = this.Dyr.length === s.size;
-      let e = !r;
-      (this.Ayr = new Array()), (this.Pyr = new Map()), (this.xyr = 0n);
-      var o = this.Dyr ? this.Dyr.length : 0;
-      let t = 0;
-      this.zSr = 0n;
-      for (const c of this.Dyr) {
-        if (((this.xyr += this.kyr(c, this.Ayr, this.Pyr)), r && !e)) {
-          var n = s.get(c.Name);
-          if (!n) {
-            e = !0;
-            break;
+  async CheckResourceFiles(s) {
+    if (!this.xIr) {
+      var r = this.wIr();
+      let e = !(this.IIr.length === r.size);
+      (this.DIr = new Array()), (this.RIr = new Map()), (this.UIr = 0n);
+      var o = this.IIr ? this.IIr.length : 0;
+      let t = 0,
+        i = ((this.$Sr = 0n), void 0);
+      BaseConfigController_1.BaseConfigController.IsUseThreadCheck() &&
+        ((i = new UE.KuroCheckFiles()).TmpSuffix =
+          UrlPrefixDownload_1.DOWNLOAD_SUFFIX);
+      var n,
+        a,
+        h = (e, t) => {
+          var i,
+            [s, r] = this.bIr(e, t);
+          if (!(s <= 0n))
+            return (
+              ((i = new UE.KuroCheckInfoEntry()).FileName = "" + e.Name + t),
+              (i.FilePath = "" + e.SavePath + t),
+              (i.Url = "" + e.FileUrl + t),
+              (i.Hash = r),
+              (i.Size = s),
+              (i.Result = -1),
+              i
+            );
+        };
+      for (const L of this.IIr)
+        BaseConfigController_1.BaseConfigController.IsUseThreadCheck()
+          ? (void 0 !== (n = h(L, ".pak")) && i.CheckList.Add(n),
+            void 0 !== (n = h(L, ".sig")) && i.CheckList.Add(n),
+            void 0 !== (n = h(L, ".ucas")) && i.CheckList.Add(n),
+            void 0 !== (n = h(L, ".utoc")) && i.CheckList.Add(n))
+          : ((this.UIr += this.GIr(L, this.DIr, this.RIr)),
+            (n = (t * HUNDRED_PERCENT) / o),
+            t++,
+            s && (await s(n))),
+          e ||
+            ((a = r.get(L.Name)),
+            (e =
+              !a ||
+              a.PakSha1 !== L.PakSha1 ||
+              a.SigSha1 !== L.SigSha1 ||
+              a.UtocSha1 !== L.UtocSha1 ||
+              a.UcasSha1 !== L.UcasSha1 ||
+              a.MountOrder !== L.MountOrder));
+      if (BaseConfigController_1.BaseConfigController.IsUseThreadCheck()) {
+        await new Promise((e) => {
+          i.ProgressDelegate.Add((e, t) => {
+            s && ((e = (e * HUNDRED_PERCENT) / t), s(e));
+          }),
+            i.CompleteDelegate.Add(() => {
+              s && s(HUNDRED_PERCENT), e();
+            }),
+            i.Check();
+        });
+        var c = i.CheckList.Num();
+        for (let e = 0; e < c; e++) {
+          var u = i.CheckList.Get(e);
+          if (u.Result === EKuroCheckResult.None)
+            throw (
+              (LauncherLog_1.LauncherLog.Error(
+                "检测文件哈希值出错，结果未知",
+                ["file", u.FilePath],
+                ["hash", u.Hash],
+                ["size", u.Size],
+              ),
+              new Error("检测文件哈希值出错"))
+            );
+          if (
+            u.Result !== EKuroCheckResult.Success &&
+            u.Result !== EKuroCheckResult.Rename
+          ) {
+            let e = 0n;
+            u.Result === EKuroCheckResult.Continue &&
+              (e =
+                0n <=
+                (e = UE.KuroLauncherLibrary.GetFileSize(
+                  "" + u.FilePath + UrlPrefixDownload_1.DOWNLOAD_SUFFIX,
+                ))
+                  ? e
+                  : 0n),
+              (this.$Sr += u.Size - e),
+              (this.UIr += u.Size),
+              this.yIr || (this.yIr = u.NeedRestart);
+            var l = new UrlPrefixDownload_1.RequestFileInfo(),
+              u =
+                ((l.FileName = u.FileName),
+                (l.Url = u.Url),
+                (l.SavePath = u.FilePath),
+                (l.HashString = u.Hash),
+                (l.Size = u.Size),
+                (l.bUseDownloadCache = !0),
+                this.DIr.push(l),
+                new DownloadViewInfo());
+            (u.Name = l.FileName),
+              (u.Size = l.Size),
+              (u.SavedSize = 0n),
+              this.RIr.set(u.Name, u);
           }
-          e =
-            n.PakSha1 !== c.PakSha1 ||
-            n.SigSha1 !== c.SigSha1 ||
-            n.UtocSha1 !== c.UtocSha1 ||
-            n.UcasSha1 !== c.UcasSha1 ||
-            n.MountOrder !== c.MountOrder;
         }
-        n = (t * HUNDRED_PERCENT) / o;
-        t++, i && (await i(n));
-      }
-      i && (await i(HUNDRED_PERCENT)),
-        e &&
-          ((this.Ryr = !0),
-          this.Gyr(),
-          this.Byr.IsFirstUpdateResources() ||
-            UE.KuroLauncherLibrary.SetRestartApp(2)),
-        LauncherLog_1.LauncherLog.Info("需要更新文件大小", ["size", this.xyr]);
-      var h = new HotPatchLogReport_1.HotPatchLog(),
-        a =
-          ((h.s_step_id = "check_resource_files"),
-          (h.s_update_type = this.Tyr),
+        i.Clear();
+      } else s && (await s(HUNDRED_PERCENT));
+      e &&
+        ((this.TIr = !0),
+        this.BIr(),
+        this.PIr.IsFirstUpdateResources() ||
+          UE.KuroLauncherLibrary.SetRestartApp(2)),
+        LauncherLog_1.LauncherLog.Info("需要更新文件大小", ["size", this.UIr]);
+      var d = new HotPatchLogReport_1.HotPatchLog(),
+        _ =
+          ((d.s_step_id = "check_resource_files"),
+          (d.s_update_type = this.SIr),
           {
-            NeedDownloadSize: this.xyr.toString(),
-            NeedFilesCount: this.Ayr?.length,
+            NeedDownloadSize: this.UIr.toString(),
+            NeedFilesCount: this.DIr?.length,
           });
-      (h.s_step_result = LauncherSerialize_1.LauncherJson.Stringify(a)),
-        HotPatchLogReport_1.HotPatchLogReport.Report(h);
+      (d.s_step_result = LauncherSerialize_1.LauncherJson.Stringify(_)),
+        HotPatchLogReport_1.HotPatchLogReport.Report(d);
     }
     return !0;
   }
-  async DownloadResourceFiles(a, c = void 0) {
+  async DownloadResourceFiles(h, c = void 0) {
     let u = 0,
-      d = 0,
-      l = 0n,
+      l = 0,
+      d = 0n,
       _ = -1,
       L = 0n;
     var e = new HotPatchLogReport_1.HotPatchLog(),
       e =
         ((e.s_step_id = "start_download_paks"),
-        (e.s_update_type = this.Tyr),
+        (e.s_update_type = this.SIr),
         HotPatchLogReport_1.HotPatchLogReport.Report(e),
         LauncherLog_1.LauncherLog.Info("开始下载补丁文件"),
         new Date()),
       e =
         ((u = e.getTime()),
-        (d = u),
-        await this.wyr.RequestFiles(
-          this.Ayr,
+        (l = u),
+        await this.AIr.RequestFiles(
+          this.DIr,
           !1,
           3,
           (e, t, i, s, r) => {
             var o,
               n,
-              e = this.Pyr.get(e);
+              e = this.RIr.get(e);
             e && (e.SavedSize = r);
-            let h = 0n;
-            for ([o, n] of this.Pyr) h += n.SavedSize;
+            let a = 0n;
+            for ([o, n] of this.RIr) a += n.SavedSize;
             L += i;
-            (e = new Date().getTime()), (r = e - d);
+            (e = new Date().getTime()), (r = e - l);
             (_ -= r) < 0 &&
               e !== u &&
               ((_ = 500),
-              (l = (1000n * L) / (BigInt(e) - BigInt(u))),
+              (d = (1000n * L) / (BigInt(e) - BigInt(u))),
               (L = 0n),
               (u = e)),
-              (d = e),
-              c && c(i, h, this.xyr, l),
-              a && a(t, l, h, this.xyr);
+              (l = e),
+              c && c(i, a, this.UIr, d),
+              h && h(t, d, a, this.UIr);
           },
           !0,
         )),
       t = new HotPatchLogReport_1.HotPatchLog();
     return (
       (t.s_step_id = "end_download_paks"),
-      (t.s_update_type = this.Tyr),
+      (t.s_update_type = this.SIr),
       e.Success
         ? (LauncherLog_1.LauncherLog.Info("补丁下载完成，并校验成功"),
           (t.s_step_result = "success"),
           HotPatchLogReport_1.HotPatchLogReport.Report(t))
         : (LauncherLog_1.LauncherLog.Error("下载补丁失败!", [
             "resType",
-            this.Tyr,
+            this.SIr,
           ]),
           (t.s_step_result = "failed"),
           HotPatchLogReport_1.HotPatchLogReport.Report(t)),
@@ -451,89 +547,89 @@ class ResourceUpdate {
     );
   }
   CheckNeedRestartApp() {
-    (this.Ryr = 0 < this.Ayr.length),
-      (this.Uyr = 0),
-      this.Byr.IsFirstUpdateResources()
-        ? (this.Byr.UpdateSavedVersion(this.PSr), (this.Uyr = 1))
-        : (this.Uyr = 2),
+    (this.TIr = 0 < this.DIr.length),
+      (this.LIr = 0),
+      this.PIr.IsFirstUpdateResources()
+        ? (this.PIr.UpdateSavedVersion(this.RSr), (this.LIr = 1))
+        : (this.LIr = 2),
       LauncherLog_1.LauncherLog.Info("检测是否需要重启");
     var e =
       0 < UE.KuroLauncherLibrary.NeedRestartApp() ||
-      this.Lyr ||
+      this.yIr ||
       !UE.KuroLauncherLibrary.IsFirstIntoLauncher();
     return (
       LauncherLog_1.LauncherLog.Info(
         "开始检测下载的pak是否需要重启",
         ["LastSetNeedRestart", UE.KuroLauncherLibrary.NeedRestartApp()],
-        ["bNeedRestart", this.Lyr],
+        ["bNeedRestart", this.yIr],
         ["firstIntoLauncher", UE.KuroLauncherLibrary.IsFirstIntoLauncher()],
       ),
       e &&
         (LauncherLog_1.LauncherLog.Info("检测到下载的资源需要重启！"),
-        UE.KuroLauncherLibrary.SetRestartApp(this.Uyr)),
+        UE.KuroLauncherLibrary.SetRestartApp(this.LIr)),
       LauncherLog_1.LauncherLog.Info("完成检测是否需要重启"),
       !0
     );
   }
   GetRevertInfo() {
-    var e = this.Byr.NeedRevert(),
-      t = this.Byr.GetRevertVersions(),
+    var e = this.PIr.NeedRevert(),
+      t = this.PIr.GetRevertVersions(),
       i = new Set(),
       s = new Set(),
       r = { NeedRevert: e, Paks: i, Files: s };
     if (e) {
       var o =
           "" +
-          this.$Sr.GetPatchSaveDir() +
-          this.Byr.GetPackageVersion() +
-          `/${this.Byr.GetResType()}/`,
+          this.KSr.GetPatchSaveDir() +
+          this.PIr.GetPackageVersion() +
+          `/${this.PIr.GetResType()}/`,
         n = UE.KuroStaticLibrary.GetFiles(o, "*"),
-        h = n.Num();
-      for (let e = 0; e < h; e++) {
-        var a,
+        a = n.Num();
+      for (let e = 0; e < a; e++) {
+        var h,
           c,
           u = n.Get(e),
-          d = u.toLowerCase(),
-          d = d.endsWith(".download") ? d.substring(0, d.lastIndexOf(".")) : d;
-        d.endsWith(".txt")
-          ? ((a = d.substring(d.lastIndexOf("_") + 1, d.lastIndexOf("."))),
-            t.has(a) && s.add(o + u))
-          : (d.endsWith(".pak") ||
-              d.endsWith(".sig") ||
-              d.endsWith(".utoc") ||
-              d.endsWith(".ucas")) &&
-            ((a = d.lastIndexOf("-")),
-            (c = d.substring(d.lastIndexOf("-", a - 1) + 1, a)),
+          l = u.toLowerCase(),
+          l = l.endsWith(".download") ? l.substring(0, l.lastIndexOf(".")) : l;
+        l.endsWith(".txt")
+          ? ((h = l.substring(l.lastIndexOf("_") + 1, l.lastIndexOf("."))),
+            t.has(h) && s.add(o + u))
+          : (l.endsWith(".pak") ||
+              l.endsWith(".sig") ||
+              l.endsWith(".utoc") ||
+              l.endsWith(".ucas")) &&
+            ((h = l.lastIndexOf("-")),
+            (c = l.substring(l.lastIndexOf("-", h - 1) + 1, h)),
             t.has(c)) &&
-            (s.add((c = o + u)), d.endsWith(".pak")) &&
+            (s.add((c = o + u)), l.endsWith(".pak")) &&
             i.add(c);
       }
     }
     return r;
   }
   GetUpdateSize() {
-    return this.xyr;
+    return this.UIr;
   }
   GetPakList() {
-    return this.Dyr;
+    return this.IIr;
   }
   GetViewInfoList() {
-    return this.Pyr;
+    return this.RIr;
   }
   GetRequestList() {
-    return this.Ayr;
+    return this.DIr;
   }
   GetNeedRemount() {
-    return this.Ryr;
+    return this.TIr;
   }
   GetNeedRestart() {
     return 0 < UE.KuroLauncherLibrary.NeedRestartApp();
   }
   GetResType() {
-    return this.Tyr;
+    return this.SIr;
   }
   GetNeedSpace() {
-    return this.zSr;
+    return this.$Sr;
   }
 }
 exports.ResourceUpdate = ResourceUpdate;

@@ -293,12 +293,12 @@ class TsEffectFunctionLibrary extends UE.BlueprintFunctionLibrary {
         }
       }
       if (n) {
-        var L = (0, puerts_1.$unref)(n),
-          S = L.Num();
-        if (0 < S) {
+        var S = (0, puerts_1.$unref)(n),
+          L = S.Num();
+        if (0 < L) {
           a.MaterialParameterFloat = [];
-          for (let e = 0; e < S; ++e)
-            a.MaterialParameterFloat.push([L.Get(e).Name, L.Get(e).Value]);
+          for (let e = 0; e < L; ++e)
+            a.MaterialParameterFloat.push([S.Get(e).Name, S.Get(e).Value]);
         }
       }
       if (o) {
@@ -397,6 +397,12 @@ class TsEffectFunctionLibrary extends UE.BlueprintFunctionLibrary {
   }
   static SetGlobalStoppingTime(e, t) {
     EffectSystem_1.EffectSystem.SetGlobalStoppingTime(e, t);
+  }
+  static SetPublicToSequence(e, t) {
+    EffectSystem_1.EffectSystem.SetPublicToSequence(e, t);
+  }
+  static SetSimulateFromSequence(e, t) {
+    EffectSystem_1.EffectSystem.SetSimulateFromSequence(e, t);
   }
 }
 exports.default = TsEffectFunctionLibrary;

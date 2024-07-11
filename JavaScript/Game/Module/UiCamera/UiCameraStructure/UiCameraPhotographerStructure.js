@@ -10,7 +10,7 @@ const UE = require("ue"),
   UiCameraStructure_1 = require("./UiCameraStructure");
 class UiCameraPhotographerStructure extends UiCameraStructure_1.UiCameraStructure {
   constructor() {
-    super(...arguments), (this.zRo = void 0);
+    super(...arguments), (this.$Uo = void 0);
   }
   OnSpawnStructureActor() {
     var t = new UE.Transform(
@@ -25,44 +25,44 @@ class UiCameraPhotographerStructure extends UiCameraStructure_1.UiCameraStructur
       );
     return (
       r?.SetTickableWhenPaused(!0),
-      (this.zRo = UE.GameplayStatics.FinishSpawningActor(r, t)),
-      this.zRo.Initialize(),
-      this.zRo.CameraArm.SetTickableWhenPaused(!0),
-      this.zRo
+      (this.$Uo = UE.GameplayStatics.FinishSpawningActor(r, t)),
+      this.$Uo.Initialize(),
+      this.$Uo.CameraArm.SetTickableWhenPaused(!0),
+      this.$Uo
     );
   }
   OnSetSpringArmComponent() {
-    return this.zRo.CameraArm;
+    return this.$Uo.CameraArm;
   }
   OnDestroy() {
-    this.ZRo();
+    this.YUo();
   }
   OnActivate() {
-    var t = this.eUo(),
-      r = this.Uji(),
+    var t = this.JUo(),
+      r = this.DWi(),
       e = Global_1.Global.BaseCharacter,
       r =
         (r.SetIsDitherEffectEnable(!1),
         e.SetDitherEffect(1, 1),
         e.Mesh.GetSocketLocation(PhotographDefine_1.SPAWN_SOCKET_NAME)),
       e = t.GetTransform();
-    this.zRo.SetPlayerSourceLocation(r),
-      this.zRo.SetCameraInitializeTransform(e),
-      this.zRo.ActivateCamera(this.CameraActor);
+    this.$Uo.SetPlayerSourceLocation(r),
+      this.$Uo.SetCameraInitializeTransform(e),
+      this.$Uo.ActivateCamera(this.CameraActor);
   }
   OnDeactivate() {
-    this.zRo.DeactivateCamera();
+    this.$Uo.DeactivateCamera();
   }
-  ZRo() {
-    this.zRo?.IsValid() &&
-      (this.zRo.DeactivateCamera(), ActorSystem_1.ActorSystem.Put(this.zRo)),
-      (this.zRo = void 0);
+  YUo() {
+    this.$Uo?.IsValid() &&
+      (this.$Uo.DeactivateCamera(), ActorSystem_1.ActorSystem.Put(this.$Uo)),
+      (this.$Uo = void 0);
   }
-  Uji() {
+  DWi() {
     var t = CameraController_1.CameraController.FightCamera;
     if (t) return t.GetComponent(5);
   }
-  eUo() {
+  JUo() {
     var t = CameraController_1.CameraController.FightCamera;
     if (t) {
       t = t.GetComponent(4);
@@ -70,40 +70,40 @@ class UiCameraPhotographerStructure extends UiCameraStructure_1.UiCameraStructur
     }
   }
   SetPlayerSourceLocation(t) {
-    this.zRo.SetPlayerSourceLocation(t);
+    this.$Uo.SetPlayerSourceLocation(t);
   }
   SetCameraInitializeTransform(t) {
-    this.zRo.SetCameraInitializeTransform(t);
+    this.$Uo.SetCameraInitializeTransform(t);
   }
   GetCameraInitializeTransform() {
-    return this.zRo.GetCameraInitializeTransform();
+    return this.$Uo.GetCameraInitializeTransform();
   }
   SetCameraTransform(t) {
-    this.zRo.SetCameraTransform(t);
+    this.$Uo.SetCameraTransform(t);
   }
   AddCameraArmPitchInput(t) {
-    this.zRo.AddCameraArmPitchInput(t);
+    this.$Uo.AddCameraArmPitchInput(t);
   }
   AddCameraArmYawInput(t) {
-    this.zRo.AddCameraArmYawInput(t);
+    this.$Uo.AddCameraArmYawInput(t);
   }
   AddPhotographerYawInput(t) {
-    this.zRo.AddPhotographerYawInput(t);
+    this.$Uo.AddPhotographerYawInput(t);
   }
   AddSourceYawInput(t) {
-    this.zRo.AddSourceYawInput(t);
+    this.$Uo.AddSourceYawInput(t);
   }
   AddSourcePitchInput(t) {
-    this.zRo.AddSourcePitchInput(t);
+    this.$Uo.AddSourcePitchInput(t);
   }
   SetFov(t) {
-    this.zRo.SetFov(t);
+    this.$Uo.SetFov(t);
   }
   GetFov() {
-    return this.zRo.GetFov();
+    return this.$Uo.GetFov();
   }
   ResetCamera() {
-    this.zRo.ResetCamera();
+    this.$Uo.ResetCamera();
   }
 }
 exports.UiCameraPhotographerStructure = UiCameraPhotographerStructure;

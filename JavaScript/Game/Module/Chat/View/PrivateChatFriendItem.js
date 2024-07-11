@@ -13,13 +13,13 @@ const UE = require("ue"),
 class ChatRoomItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
-      (this.lEt = void 0),
+      (this.Eyt = void 0),
       (this.fye = 0),
-      (this.sSt = void 0),
-      (this.WMt = void 0),
-      (this.Wgt = void 0),
-      (this._Et = (t) => {
-        1 === t && this.Wgt && this.Wgt(this.lEt, this.fye);
+      (this.pSt = void 0),
+      (this.oSt = void 0),
+      (this.oft = void 0),
+      (this.Syt = (t) => {
+        1 === t && this.oft && this.oft(this.Eyt, this.fye);
       });
   }
   OnRegisterComponent() {
@@ -33,14 +33,14 @@ class ChatRoomItem extends GridProxyAbstract_1.GridProxyAbstract {
       [6, UE.UIItem],
       [7, UE.UIItem],
     ]),
-      (this.BtnBindInfo = [[0, this._Et]]);
+      (this.BtnBindInfo = [[0, this.Syt]]);
   }
   OnStart() {
     var t = this.GetItem(4);
-    this.WMt = new PlayerHeadItem_1.PlayerHeadItem(t.GetOwner());
+    this.oSt = new PlayerHeadItem_1.PlayerHeadItem(t.GetOwner());
   }
   OnBeforeDestroy() {
-    (this.sSt = void 0), (this.lEt = void 0), (this.fye = 0);
+    (this.pSt = void 0), (this.Eyt = void 0), (this.fye = 0);
   }
   Clear() {}
   Refresh(t, i, e) {
@@ -52,24 +52,24 @@ class ChatRoomItem extends GridProxyAbstract_1.GridProxyAbstract {
     ) {
       var s = t.GetTargetPlayerId();
       if (
-        ((this.sSt = ModelManager_1.ModelManager.FriendModel.GetFriendById(s)),
-        !this.sSt)
+        ((this.pSt = ModelManager_1.ModelManager.FriendModel.GetFriendById(s)),
+        !this.pSt)
       )
         return;
-      (this.lEt = 1), (this.fye = this.sSt.PlayerId), this.RefreshIsOnline(t);
+      (this.Eyt = 1), (this.fye = this.pSt.PlayerId), this.RefreshIsOnline(t);
     } else
       t instanceof TeamChatRoom_1.TeamChatRoom
-        ? ((this.sSt = void 0),
-          (this.lEt = 2),
+        ? ((this.pSt = void 0),
+          (this.Eyt = 2),
           (this.fye = ModelManager_1.ModelManager.PlayerInfoModel.GetId()))
         : t instanceof WorldTeamChatRoom_1.WorldChatRoom &&
-          ((this.sSt = void 0),
-          (this.lEt = 3),
+          ((this.pSt = void 0),
+          (this.Eyt = 3),
           (this.fye = ModelManager_1.ModelManager.PlayerInfoModel.GetId()));
     s = t.GetIsShowRedDot();
     this.GetItem(2)?.SetUIActive(s),
       this.RefreshPlayerTexture(),
-      this.x9e(),
+      this.K7e(),
       this.RefreshMuteItem(),
       i ? this.SetToggleState(1) : this.SetToggleState(0);
   }
@@ -85,48 +85,48 @@ class ChatRoomItem extends GridProxyAbstract_1.GridProxyAbstract {
     i.SetUIActive(!t),
       this.GetSprite(5).SetIsGray(!t),
       this.GetItem(7).SetUIActive(t),
-      this.WMt.SetIsGray(!t);
+      this.oSt.SetIsGray(!t);
   }
   RefreshPlayerTexture() {
     var t,
       i = this.GetSprite(5);
-    2 === this.lEt || 3 === this.lEt
-      ? (i.SetUIActive(!0), this.WMt.SetActive(!1))
+    2 === this.Eyt || 3 === this.Eyt
+      ? (i.SetUIActive(!0), this.oSt.SetActive(!1))
       : (i?.SetUIActive(!1),
         (i =
-          this.sSt?.PlayerId ??
+          this.pSt?.PlayerId ??
           ModelManager_1.ModelManager.PlayerInfoModel.GetId())
           ? (t =
               ModelManager_1.ModelManager.ChatModel.GetChatPlayerData(
                 i,
               )?.GetPlayerIcon())
-            ? this.WMt.RefreshByRoleIdUseCard(t)
-            : this.WMt.RefreshByPlayerId(i, !0)
-          : this.WMt.SetActive(!1));
+            ? this.oSt.RefreshByRoleIdUseCard(t)
+            : this.oSt.RefreshByPlayerId(i, !0)
+          : this.oSt.SetActive(!1));
   }
-  x9e() {
+  K7e() {
     var t,
       i,
       e = this.GetText(1);
-    2 === this.lEt || 3 === this.lEt
+    2 === this.Eyt || 3 === this.Eyt
       ? LguiUtil_1.LguiUtil.SetLocalText(e, "CurrentTeam")
-      : ((t = this.sSt.FriendRemark),
+      : ((t = this.pSt.FriendRemark),
         StringUtils_1.StringUtils.IsEmpty(t)
-          ? ((i = this.sSt.PlayerName), e.SetText(i))
+          ? ((i = this.pSt.PlayerName), e.SetText(i))
           : e.SetText(t));
   }
   RefreshMuteItem() {
     var t,
       i = this.GetItem(3);
-    this.sSt
+    this.pSt
       ? ((t = ModelManager_1.ModelManager.ChatModel.IsInMute(
-          this.sSt.PlayerId,
+          this.pSt.PlayerId,
         )),
         i.SetUIActive(t))
       : i.SetUIActive(!1);
   }
   BindOnClicked(t) {
-    this.Wgt = t;
+    this.oft = t;
   }
   SetToggleState(t) {
     var i = this.GetExtendToggle(0);

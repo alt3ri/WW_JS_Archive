@@ -54,84 +54,84 @@ let CharacterManipulateInteractComponent =
       super(...arguments),
         (this.Hte = void 0),
         (this.Lie = void 0),
-        (this.zJo = void 0),
-        (this.SIe = void 0),
-        (this.CHr = new Set()),
-        (this.doi = void 0),
-        (this.Nnr = void 0),
-        (this.gHr = void 0),
-        (this.fHr = void 0),
-        (this.pHr = !0),
-        (this.vHr = !0),
-        (this.Hnt = void 0),
-        (this.EHr = void 0),
-        (this.hwn = void 0),
-        (this.yHr = !1),
-        (this.IHr = void 0),
-        (this.THr = void 0),
-        (this.DHr = (t, e) => {
-          this.THr = e ? this.gHr : void 0;
+        (this.$zo = void 0),
+        (this.EIe = void 0),
+        (this.$7r = new Set()),
+        (this.gri = void 0),
+        (this.bsr = void 0),
+        (this.Y7r = void 0),
+        (this.J7r = void 0),
+        (this.z7r = !0),
+        (this.Z7r = !0),
+        (this.tat = void 0),
+        (this.iHr = void 0),
+        (this.Tbn = void 0),
+        (this.oHr = !1),
+        (this.rHr = void 0),
+        (this.nHr = void 0),
+        (this.aHr = (t, e) => {
+          this.nHr = e ? this.Y7r : void 0;
         });
     }
-    set RHr(t) {
-      this.AHr(void 0 !== t && this.pHr),
-        (this.gHr === t && this.vHr === this.pHr) ||
+    set hHr(t) {
+      this.lHr(void 0 !== t && this.z7r),
+        (this.Y7r === t && this.Z7r === this.z7r) ||
           (EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.OnManipulateSwitchToNewTarget,
-            void 0 !== t && this.pHr,
+            void 0 !== t && this.z7r,
             t?.Entity,
             !1,
           ),
-          this.gHr?.ChangeManipulateInteractPointState(0),
-          (this.gHr = t),
-          (this.vHr = this.pHr),
-          this.gHr?.ChangeManipulateInteractPointState(this.pHr ? 1 : 2)),
-        (this.pHr = !0);
+          this.Y7r?.ChangeManipulateInteractPointState(0),
+          (this.Y7r = t),
+          (this.Z7r = this.z7r),
+          this.Y7r?.ChangeManipulateInteractPointState(this.z7r ? 1 : 2)),
+        (this.z7r = !0);
     }
-    get RHr() {
-      return this.gHr;
+    get hHr() {
+      return this.Y7r;
     }
     OnStart() {
       return (
         (this.Hte = this.Entity.GetComponent(3)),
-        (this.Lie = this.Entity.GetComponent(185)),
-        (this.zJo = this.Entity.GetComponent(157)),
-        (this.SIe = this.Entity.GetComponent(0)),
-        (this.doi =
+        (this.Lie = this.Entity.GetComponent(188)),
+        (this.$zo = this.Entity.GetComponent(159)),
+        (this.EIe = this.Entity.GetComponent(0)),
+        (this.gri =
           CameraController_1.CameraController.FightCamera.GetComponent(5)),
-        (this.Hnt = CommonParamById_1.configCommonParamById.GetStringConfig(
+        (this.tat = CommonParamById_1.configCommonParamById.GetStringConfig(
           "ManipulateInteractEffectPath",
         )),
-        (this.hwn = ModelManager_1.ModelManager.ManipulateInteractModel),
+        (this.Tbn = ModelManager_1.ModelManager.ManipulateInteractModel),
         this.InitTraceInfo(),
         this.dde(),
         !0
       );
     }
     OnTick(t) {
-      this.UHr(-581520176, 0 < this.hwn.InRangePoints.size),
-        this.PHr()
-          ? this.xHr()
-          : (this.wHr(),
-            this.Lie.HasTag(-581520176) && this.UHr(-1734324611, !0));
+      this._Hr(-581520176, 0 < this.Tbn.InRangePoints.size),
+        this.uHr()
+          ? this.cHr()
+          : (this.mHr(),
+            this.Lie.HasTag(-581520176) && this._Hr(-1734324611, !0));
     }
-    xHr() {
-      if (this.hwn.InRangePoints.size <= 0)
-        (this.RHr = void 0), this.UHr(-1734324611, !1);
+    cHr() {
+      if (this.Tbn.InRangePoints.size <= 0)
+        (this.hHr = void 0), this._Hr(-1734324611, !1);
       else {
-        this.CHr.clear(),
+        this.$7r.clear(),
           TraceElementCommon_1.TraceElementCommon.SetStartLocation(
-            this.Nnr,
+            this.bsr,
             this.Hte.ActorLocation,
           );
-        for (const r of this.hwn.InRangePoints)
+        for (const r of this.Tbn.InRangePoints)
           r.IsLocked ||
             (r.CheckCondition()
-              ? this.CHr.add(r)
-              : this.RHr === r && this.wHr());
+              ? this.$7r.add(r)
+              : this.hHr === r && this.mHr());
         let t = MathUtils_1.MathUtils.MaxFloat,
           e = void 0;
-        for (const a of this.CHr) {
+        for (const a of this.$7r) {
           var i = Vector_1.Vector.DistSquared(
             a.Location,
             this.Hte.ActorLocationProxy,
@@ -142,63 +142,63 @@ let CharacterManipulateInteractComponent =
           if (this.ProjectWorldLocationToScreenPosition(e.Location))
             return (
               TraceElementCommon_1.TraceElementCommon.SetEndLocation(
-                this.Nnr,
+                this.bsr,
                 e.Location.ToUeVector(),
               ),
               TraceElementCommon_1.TraceElementCommon.SphereTrace(
-                this.Nnr,
+                this.bsr,
                 PROFILE_KEY,
-              ) && (this.pHr = !1),
-              this.UHr(-1734324611, !this.pHr),
-              this.UHr(-611134292, this.pHr),
-              void (this.RHr = e)
+              ) && (this.z7r = !1),
+              this._Hr(-1734324611, !this.z7r),
+              this._Hr(-611134292, this.z7r),
+              void (this.hHr = e)
             );
-        this.RHr = void 0;
+        this.hHr = void 0;
       }
     }
     ProjectWorldLocationToScreenPosition(t) {
-      return this.doi.CheckPositionInScreen(
+      return this.gri.CheckPositionInScreen(
         t,
-        this.doi.CameraAdjustController.CheckInScreenMinX,
-        this.doi.CameraAdjustController.CheckInScreenMaxX,
-        this.doi.CameraAdjustController.CheckInScreenMinY,
-        this.doi.CameraAdjustController.CheckInScreenMaxY,
+        this.gri.CameraAdjustController.CheckInScreenMinX,
+        this.gri.CameraAdjustController.CheckInScreenMaxX,
+        this.gri.CameraAdjustController.CheckInScreenMinY,
+        this.gri.CameraAdjustController.CheckInScreenMaxY,
       );
     }
-    PHr() {
+    uHr() {
       return !(
         Global_1.Global.BaseCharacter !== this.Hte.Actor ||
-        (CharacterManipulateInteractComponent_1.BHr
+        (CharacterManipulateInteractComponent_1.dHr
           ? this.Lie.HasTag(283451623) ||
             !this.Lie.HasTag(-1898186757) ||
             ModelManager_1.ModelManager.SceneTeamModel.IsPhantomTeam
           : (ModelManager_1.ModelManager.RouletteModel.UnlockExploreSkillDataMap.has(
               MANIPULATE_VISION_ID,
-            ) && (CharacterManipulateInteractComponent_1.BHr = !0),
+            ) && (CharacterManipulateInteractComponent_1.dHr = !0),
             1))
       );
     }
-    wHr() {
-      this.RHr = void 0;
+    mHr() {
+      this.hHr = void 0;
     }
     InitTraceInfo() {
-      (this.Nnr = UE.NewObject(UE.TraceSphereElement.StaticClass())),
-        (this.Nnr.WorldContextObject = this.Hte.Owner),
-        (this.Nnr.bIsSingle = !0),
-        (this.Nnr.bIgnoreSelf = !0),
-        this.Nnr.SetTraceTypeQuery(
+      (this.bsr = UE.NewObject(UE.TraceSphereElement.StaticClass())),
+        (this.bsr.WorldContextObject = this.Hte.Owner),
+        (this.bsr.bIsSingle = !0),
+        (this.bsr.bIgnoreSelf = !0),
+        this.bsr.SetTraceTypeQuery(
           QueryTypeDefine_1.KuroTraceTypeQuery.Visible,
         ),
-        (this.Nnr.Radius = SPHERE_TRACE_RADIUS);
+        (this.bsr.Radius = SPHERE_TRACE_RADIUS);
     }
     dde() {
       this.Lie?.Valid &&
-        (this.IHr = this.Lie?.ListenForTagAddOrRemove(-182189170, this.DHr));
+        (this.rHr = this.Lie?.ListenForTagAddOrRemove(-182189170, this.aHr));
     }
     Cde() {
-      this.IHr && this.IHr.EndTask();
+      this.rHr && this.rHr.EndTask();
     }
-    AHr(t) {
+    lHr(t) {
       t
         ? this.Lie.HasTag(-611134292) || this.Lie.AddTag(-611134292)
         : this.Lie.HasTag(-611134292) && this.Lie.RemoveTag(-611134292);
@@ -207,8 +207,8 @@ let CharacterManipulateInteractComponent =
       return (this.Hte = void 0), (this.Lie = void 0), this.Cde(), !0;
     }
     StartInteract() {
-      if (!this.vHr) return !1;
-      if (!this.THr?.Valid && !this.gHr?.Valid)
+      if (!this.Z7r) return !1;
+      if (!this.nHr?.Valid && !this.Y7r?.Valid)
         return (
           Log_1.Log.CheckError() &&
             Log_1.Log.Error(
@@ -218,7 +218,7 @@ let CharacterManipulateInteractComponent =
             ),
           !1
         );
-      if (this.yHr)
+      if (this.oHr)
         return (
           Log_1.Log.CheckError() &&
             Log_1.Log.Error(
@@ -228,18 +228,18 @@ let CharacterManipulateInteractComponent =
             ),
           !1
         );
-      (this.yHr = !0),
+      (this.oHr = !0),
         this.Lie.AddTag(-1408007765),
-        (this.fHr = this.THr ?? this.gHr),
-        this.fHr?.ChangeManipulateInteractPointState(3);
+        (this.J7r = this.nHr ?? this.Y7r),
+        this.J7r?.ChangeManipulateInteractPointState(3);
       var t = this.Hte.CreatureData.GetRoleConfig().RoleBody;
       return (
-        (this.EHr =
+        (this.iHr =
           "MaleXL" === t
             ? CharacterBuffIds_1.buffId.ManipulateInteractBuffIdMaleX
             : CharacterBuffIds_1.buffId.ManipulateInteractBuffId),
-        this.zJo.AddBuff(this.EHr, {
-          InstigatorId: this.SIe.GetCreatureDataId(),
+        this.$zo.AddBuff(this.iHr, {
+          InstigatorId: this.EIe.GetCreatureDataId(),
           Level: 1,
           Reason: "[CharacterManipulateInteractComponent]",
         }),
@@ -247,26 +247,26 @@ let CharacterManipulateInteractComponent =
       );
     }
     EndInteract() {
-      (this.yHr = !1),
+      (this.oHr = !1),
         this.Lie.RemoveTag(-1408007765),
-        this.NKt(),
-        this.EHr &&
+        this.NQt(),
+        this.iHr &&
           TimerSystem_1.TimerSystem.Delay(() => {
-            this.zJo &&
-              this.EHr &&
-              (this.zJo.RemoveBuff(
-                this.EHr,
+            this.$zo &&
+              this.iHr &&
+              (this.$zo.RemoveBuff(
+                this.iHr,
                 -1,
                 "[CharacterManipulateInteractComponent]",
               ),
-              (this.EHr = void 0));
+              (this.iHr = void 0));
           }, 200),
-        this.fHr?.ChangeManipulateInteractPointState(0),
-        this.bHr();
+        this.J7r?.ChangeManipulateInteractPointState(0),
+        this.CHr();
     }
-    NKt() {
+    NQt() {
       var t,
-        e = this.fHr?.Entity.GetComponent(1)?.ActorTransform;
+        e = this.J7r?.Entity.GetComponent(1)?.ActorTransform;
       e &&
         (t = this.Hte?.ActorLocation) &&
         (e.SetRotation(
@@ -277,43 +277,43 @@ let CharacterManipulateInteractComponent =
         EffectSystem_1.EffectSystem.SpawnEffect(
           GlobalData_1.GlobalData.World,
           e,
-          this.Hnt,
+          this.tat,
           "[CharacterManipulateInteractComponent.SpawnEffect]",
           new EffectContext_1.EffectContext(this.Entity.Id),
         ));
     }
-    bHr() {
+    CHr() {
       var t,
-        e = this.fHr?.CreatureDataId;
+        e = this.J7r?.CreatureDataId;
       void 0 !== e &&
-        (((t = Protocol_1.Aki.Protocol.pJn.create()).rkn =
+        (((t = Protocol_1.Aki.Protocol.dts.create()).P4n =
           MathUtils_1.MathUtils.NumberToLong(e)),
-        Net_1.Net.Call(7307, t, (t) => {
-          (this.fHr = void 0),
-            t.Kms !== Protocol_1.Aki.Protocol.lkn.Sys &&
+        Net_1.Net.Call(13295, t, (t) => {
+          (this.J7r = void 0),
+            t.hvs !== Protocol_1.Aki.Protocol.O4n.NRs &&
               ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-                t.Kms,
-                3259,
+                t.hvs,
+                16251,
               );
         }));
     }
     GetTargetLocation() {
-      return this.fHr?.Location ?? this.RHr.Location;
+      return this.J7r?.Location ?? this.hHr.Location;
     }
-    UHr(t, e) {
+    _Hr(t, e) {
       !this.Lie.HasTag(t) && e
         ? this.Lie.AddTag(t)
         : this.Lie.HasTag(t) && !e && this.Lie.RemoveTag(t);
     }
     ClearTarget() {
-      this.RHr = void 0;
+      this.hHr = void 0;
     }
   });
-(CharacterManipulateInteractComponent.BHr = !1),
+(CharacterManipulateInteractComponent.dHr = !1),
   (CharacterManipulateInteractComponent =
     CharacterManipulateInteractComponent_1 =
       __decorate(
-        [(0, RegisterComponent_1.RegisterComponent)(56)],
+        [(0, RegisterComponent_1.RegisterComponent)(57)],
         CharacterManipulateInteractComponent,
       )),
   (exports.CharacterManipulateInteractComponent =

@@ -25,7 +25,7 @@ class AudioDelegate {
       (this.Callback = void 0),
       (this.Entity = void 0),
       (this.Config = void 0),
-      (this.lzi = (i, t) => {
+      (this.sZi = (i, t) => {
         this.AudioDelegateEnable
           ? 3 === i && this.Callback(t.Duration, this.Entity, this.Config)
           : Log_1.Log.CheckError() &&
@@ -43,12 +43,12 @@ class AudioDelegate {
   }
   Enable() {
     this.AudioDelegateEnable ||
-      ((this.AudioDelegate = (0, puerts_1.toManualReleaseDelegate)(this.lzi)),
+      ((this.AudioDelegate = (0, puerts_1.toManualReleaseDelegate)(this.sZi)),
       (this.AudioDelegateEnable = !0));
   }
   Disable() {
     void 0 !== this.AudioDelegate &&
-      ((0, puerts_1.releaseManualReleaseDelegate)(this.lzi),
+      ((0, puerts_1.releaseManualReleaseDelegate)(this.sZi),
       (this.AudioDelegate = void 0)),
       (this.AudioDelegateEnable = !1);
   }
@@ -60,12 +60,12 @@ exports.AudioDelegate = AudioDelegate;
 class NpcFlowLogic extends CharacterFlowLogic_1.CharacterFlowLogic {
   constructor() {
     super(...arguments),
-      (this.BZo = new AudioController_1.PlayResult()),
-      (this.Yzt = new AudioDelegate()),
-      (this.bZo = !1),
-      (this.qZo = void 0),
-      (this.lZt = (i, t, e) => {
-        (this.bZo = !1),
+      (this.Per = new AudioController_1.PlayResult()),
+      (this.YZt = new AudioDelegate()),
+      (this.xer = !1),
+      (this.wer = void 0),
+      (this.lei = (i, t, e) => {
+        (this.xer = !1),
           (this.WaitSecondsRemain =
             0 < i ? TimeUtil_1.TimeUtil.SetTimeSecond(i) : DEFAULT_WAIT_TIME);
         i = this.GetFlowText(e.TidTalk);
@@ -74,13 +74,13 @@ class NpcFlowLogic extends CharacterFlowLogic_1.CharacterFlowLogic {
             e.WaitTime && 0 < e.WaitTime
               ? e.WaitTime + 0.05
               : this.WaitSecondsRemain + 0.05),
-          t.GetComponent(70).SetDialogueText(i, e));
+          t.GetComponent(72).SetDialogueText(i, e));
       });
   }
   get RedDotLogic() {
     return (
-      this.qZo || (this.qZo = new NpcRedDotFlowLogic_1.NpcRedDotFlowLogic()),
-      this.qZo
+      this.wer || (this.wer = new NpcRedDotFlowLogic_1.NpcRedDotFlowLogic()),
+      this.wer
     );
   }
   ResetFlowState() {
@@ -98,25 +98,25 @@ class NpcFlowLogic extends CharacterFlowLogic_1.CharacterFlowLogic {
   }
   HandleTalkAction(i, t) {
     if (!i) return !1;
-    this.yzi(t?.TalkAkEvent),
-      (this.bZo = !1),
+    this.MZi(t?.TalkAkEvent),
+      (this.xer = !1),
       t.Montage &&
-        i.GetComponent(167)?.TryPlayMontage(t.Montage.ActionMontage.Path);
+        i.GetComponent(169)?.TryPlayMontage(t.Montage.ActionMontage.Path);
     var e = t.PlayVoice
       ? PlotAudioById_1.configPlotAudioById.GetConfig(t.TidTalk)
       : void 0;
-    if (e) this.GZo(e, t, i);
+    if (e) this.Ber(e, t, i);
     else {
       if (t.UniversalTone) {
         var e = t.UniversalTone.UniversalToneId,
-          o = t.UniversalTone.TimberId ?? i.GetComponent(167)?.GetTimberId();
+          o = t.UniversalTone.TimberId ?? i.GetComponent(169)?.GetTimberId();
         if (o && e) {
           var r =
             InterjectionByTimberIdAndUniversalToneId_1.configInterjectionByTimberIdAndUniversalToneId.GetConfig(
               o,
               e,
             );
-          if (r) return this.NZo(r, t, i), !0;
+          if (r) return this.ber(r, t, i), !0;
         }
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
@@ -132,7 +132,7 @@ class NpcFlowLogic extends CharacterFlowLogic_1.CharacterFlowLogic {
         (o =
           ((this.WaitSecondsRemain = this.GetWaitSeconds(t)),
           this.WaitSecondsRemain + 0.05));
-      i.GetComponent(70).SetDialogueText(
+      i.GetComponent(72).SetDialogueText(
         r,
         o,
         this.RedDotLogic.GetRedDotActive(),
@@ -140,8 +140,8 @@ class NpcFlowLogic extends CharacterFlowLogic_1.CharacterFlowLogic {
     }
     return !0;
   }
-  GZo(i, t, e) {
-    (this.bZo = !0), (this.WaitSecondsRemain = LOAD_AUDIO_TIME);
+  Ber(i, t, e) {
+    (this.xer = !0), (this.WaitSecondsRemain = LOAD_AUDIO_TIME);
     var o =
         ExternalSourceSettingById_1.configExternalSourceSettingById.GetConfig(
           i.ExternalSourceSetting,
@@ -151,35 +151,35 @@ class NpcFlowLogic extends CharacterFlowLogic_1.CharacterFlowLogic {
         i.FileName,
       ]),
       t =
-        (this.Yzt.Init(this.lZt, e, t),
-        this.Yzt.Enable(),
+        (this.YZt.Init(this.lei, e, t),
+        this.YZt.Enable(),
         e.GetComponent(3)?.Actor);
     AudioController_1.AudioController.PostEventByExternalSources(
       o.AudioEventPath,
       t,
       i,
       o.ExternalSrcName,
-      this.BZo,
+      this.Per,
       void 0,
       PLAY_FLAG,
-      this.Yzt.AudioDelegate,
+      this.YZt.AudioDelegate,
     );
   }
-  NZo(i, t, e) {
-    (this.bZo = !0),
+  ber(i, t, e) {
+    (this.xer = !0),
       (this.WaitSecondsRemain = LOAD_AUDIO_TIME),
-      this.Yzt.Init(this.lZt, e, t),
-      this.Yzt.Enable();
+      this.YZt.Init(this.lei, e, t),
+      this.YZt.Enable();
     t = e.GetComponent(3)?.Actor;
     AudioController_1.AudioController.PostEvent(
       i.AkEvent,
       t,
-      this.BZo,
+      this.Per,
       PLAY_FLAG,
-      this.Yzt.AudioDelegate,
+      this.YZt.AudioDelegate,
     );
   }
-  yzi(i) {
+  MZi(i) {
     var t, e, o;
     i &&
       (i.Type === IAction_1.EPostAkEvent.Global
@@ -216,12 +216,12 @@ class NpcFlowLogic extends CharacterFlowLogic_1.CharacterFlowLogic {
   Tick(i) {
     this.EnableUpdate &&
       ((this.WaitSecondsRemain -= i), this.WaitSecondsRemain <= 0) &&
-      (this.bZo
+      (this.xer
         ? (Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn("Level", 27, "冒泡音频加载超时"),
-          (this.bZo = !1),
+          (this.xer = !1),
           this.ClearAudio(),
-          this.Yzt.ManualExec(0))
+          this.YZt.ManualExec(0))
         : this.IsExecuteFlowEnd
           ? this.IsPause
             ? (this.EnableUpdate = !1)
@@ -229,11 +229,11 @@ class NpcFlowLogic extends CharacterFlowLogic_1.CharacterFlowLogic {
           : this.PlayTalk(this.CurrentTalkId + 1));
   }
   ClearAudio() {
-    (this.bZo = !1),
-      this.Yzt && this.Yzt.Disable(),
-      this.BZo &&
+    (this.xer = !1),
+      this.YZt && this.YZt.Disable(),
+      this.Per &&
         AudioController_1.AudioController.StopEvent(
-          this.BZo,
+          this.Per,
           !0,
           BREAK_TIME * TimeUtil_1.TimeUtil.InverseMillisecond,
         );

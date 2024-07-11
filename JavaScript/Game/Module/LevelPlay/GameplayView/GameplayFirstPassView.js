@@ -25,15 +25,15 @@ class GameplayFirstPassView extends UiViewBase_1.UiViewBase {
         i.InfoId ?? "",
       )),
       (i = PublicUtil_1.PublicUtil.GetConfigTextByKey(i.TitleId ?? "")),
-      this.Ifi(e, i));
+      this.Tpi(e, i));
   }
-  Ifi(e, i) {
+  Tpi(e, i) {
     this.GetText(0).SetText(e ?? ""), this.GetText(1).SetText(i);
   }
   OnAfterPlayStartSequence() {
-    this.TBt();
+    this.Rbt();
   }
-  TBt() {
+  Rbt() {
     this.TimerId = TimerSystem_1.TimerSystem.Delay(() => {
       this.$Oe();
     }, GameplayViewDefine_1.DelayCloseTime);

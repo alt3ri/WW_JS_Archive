@@ -13,69 +13,69 @@ exports.channelDebugName = {
 };
 class TagContainer {
   constructor() {
-    (this.BKo = new Map()),
-      (this.bKo = new Map()),
-      (this.qKo = new Map()),
-      (this.GKo = new Set()),
-      (this.NKo = new Set()),
-      (this.OKo = void 0);
+    (this.PQo = new Map()),
+      (this.xQo = new Map()),
+      (this.wQo = new Map()),
+      (this.BQo = new Set()),
+      (this.bQo = new Set()),
+      (this.qQo = void 0);
   }
   GetAllExactTags() {
-    return this.bKo.keys();
+    return this.xQo.keys();
   }
   GetAllChannels() {
-    return this.BKo.keys();
+    return this.PQo.keys();
   }
   BindTsTagContainer(t) {
-    if ((this.OKo = t)) {
-      for (const a of this.bKo.keys()) {
+    if ((this.qQo = t)) {
+      for (const a of this.xQo.keys()) {
         var r = GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(a);
-        r && t.UpdateTagMap(r, this.bKo.get(a) ?? 0);
+        r && t.UpdateTagMap(r, this.xQo.get(a) ?? 0);
       }
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("Character", 20, "绑定UE Actor并复制Tag", [
           "tags",
-          this.bKo,
+          this.xQo,
         ]);
     }
   }
   Clear() {
     return (
-      this.bKo.clear(),
-      this.BKo.clear(),
-      this.qKo.clear(),
-      this.GKo.clear(),
-      this.NKo.clear(),
-      !(this.OKo = void 0)
+      this.xQo.clear(),
+      this.PQo.clear(),
+      this.wQo.clear(),
+      this.BQo.clear(),
+      this.bQo.clear(),
+      !(this.qQo = void 0)
     );
   }
   ClearObject() {
     return this.Clear();
   }
-  kKo(t, r) {
+  GQo(t, r) {
     if (!r) return [];
-    const a = this.bKo.get(t) ?? 0,
+    const a = this.xQo.get(t) ?? 0,
       s = Math.max(0, a + r);
     r = s - a;
     var i = [];
     if (a === s) return [];
-    s <= 0 ? this.bKo.delete(t) : this.bKo.set(t, s);
+    s <= 0 ? this.xQo.delete(t) : this.xQo.set(t, s);
     let e = GameplayTagUtils_1.GameplayTagUtils.GetParentTag(t);
     for (i.push([t, s, a, !0]); e; ) {
-      const a = this.qKo.get(e) ?? 0,
+      const a = this.wQo.get(e) ?? 0,
         s = Math.max(0, a + r);
-      s <= 0 ? this.qKo.delete(e) : this.qKo.set(e, s),
+      s <= 0 ? this.wQo.delete(e) : this.wQo.set(e, s),
         i.push([e, s, a, !1]),
         (e = GameplayTagUtils_1.GameplayTagUtils.GetParentTag(e));
     }
     t = GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagById(t);
-    return t && this.OKo?.UpdateTagMap(t, r), i;
+    return t && this.qQo?.UpdateTagMap(t, r), i;
   }
-  FKo(t) {
+  NQo(t) {
     if (t && !(t.length <= 0))
       for (var [r, a, s, i] of t) {
         if (i)
-          for (const e of this.NKo)
+          for (const e of this.bQo)
             try {
               e(r, a, s);
             } catch (t) {
@@ -94,7 +94,7 @@ class TagContainer {
                     t,
                   ]);
             }
-        for (const o of this.GKo)
+        for (const o of this.BQo)
           try {
             o(r, a, s);
           } catch (t) {
@@ -116,78 +116,78 @@ class TagContainer {
       }
   }
   AddExactTag(t, r) {
-    let a = this.BKo.get(t);
-    a || this.BKo.set(t, (a = new Map())), a.set(r, (a.get(r) ?? 0) + 1);
-    t = this.kKo(r, 1);
-    this.FKo(t);
+    let a = this.PQo.get(t);
+    a || this.PQo.set(t, (a = new Map())), a.set(r, (a.get(r) ?? 0) + 1);
+    t = this.GQo(r, 1);
+    this.NQo(t);
   }
   RemoveTag(t, r) {
-    var a = this.BKo.get(t);
+    var a = this.PQo.get(t);
     if (a) {
       const o = a.get(r) ?? 0;
       a.delete(r);
-      var s = this.kKo(r, -o) ?? [];
-      if (0 < this.qKo.get(r)) {
+      var s = this.GQo(r, -o) ?? [];
+      if (0 < this.wQo.get(r)) {
         var i = [];
         for (const n of a.keys())
           GameplayTagUtils_1.GameplayTagUtils.IsChildTag(n, r) && i.push(n);
         for (const h of i) {
           const o = a.get(h) ?? 0;
           a.delete(h);
-          var e = this.kKo(h, -o);
+          var e = this.GQo(h, -o);
           e && s.push(...e);
         }
       }
-      0 === a.size && this.BKo.delete(t), this.FKo(s);
+      0 === a.size && this.PQo.delete(t), this.NQo(s);
     }
   }
   RemoveExactTag(r, a) {
-    var s = this.BKo.get(r);
+    var s = this.PQo.get(r);
     if (s) {
       var i = s.get(a) ?? 0;
       let t = void 0;
-      0 < i && ((t = this.kKo(a, -i)), s.delete(a)),
-        0 === s.size && this.BKo.delete(r),
-        this.FKo(t);
+      0 < i && ((t = this.GQo(a, -i)), s.delete(a)),
+        0 === s.size && this.PQo.delete(r),
+        this.NQo(t);
     }
   }
   UpdateExactTag(t, r, a) {
-    let s = this.BKo.get(t);
+    let s = this.PQo.get(t);
     if (!s) {
       if (!(0 < a)) return;
-      this.BKo.set(t, (s = new Map()));
+      this.PQo.set(t, (s = new Map()));
     }
     var i = s.get(r) ?? 0,
       a = Math.max(0, i + a),
-      r = (0 < a ? s.set(r, a) : s.delete(r), this.kKo(r, a - i));
-    0 === s.size && this.BKo.delete(t), this.FKo(r);
+      r = (0 < a ? s.set(r, a) : s.delete(r), this.GQo(r, a - i));
+    0 === s.size && this.PQo.delete(t), this.NQo(r);
   }
   ContainsTag(t) {
-    return this.bKo.has(t) || this.qKo.has(t);
+    return this.xQo.has(t) || this.wQo.has(t);
   }
   ContainsExactTag(t) {
-    return this.bKo.has(t);
+    return this.xQo.has(t);
   }
   GetRowTagCount(t, r) {
-    return this.BKo.get(t)?.get(r) ?? 0;
+    return this.PQo.get(t)?.get(r) ?? 0;
   }
   GetTagCount(t) {
-    return (this.bKo.get(t) ?? 0) + (this.qKo.get(t) ?? 0);
+    return (this.xQo.get(t) ?? 0) + (this.wQo.get(t) ?? 0);
   }
   GetExactTagCount(t) {
-    return this.bKo.get(t) ?? 0;
+    return this.xQo.get(t) ?? 0;
   }
   AddAnyTagListener(t) {
-    this.GKo.add(t);
+    this.BQo.add(t);
   }
   RemoveAnyTagListener(t) {
-    this.GKo.delete(t);
+    this.BQo.delete(t);
   }
   AddAnyExactTagListener(t) {
-    this.NKo.add(t);
+    this.bQo.add(t);
   }
   RemoveExactAnyTagListener(t) {
-    this.NKo.delete(t);
+    this.bQo.delete(t);
   }
   GetDebugString() {
     var t = "汇总tag:\n";
@@ -195,7 +195,7 @@ class TagContainer {
       t +
       this.GetExactTagsDebugString() +
       "\n\n父tag:\n" +
-      [...this.qKo.entries()]
+      [...this.wQo.entries()]
         .map(
           ([t, r]) =>
             GameplayTagUtils_1.GameplayTagUtils.GetNameByTagId(t) +
@@ -207,12 +207,12 @@ class TagContainer {
     );
   }
   GetExactTagsDebugString() {
-    return [...this.bKo.entries()]
+    return [...this.xQo.entries()]
       .map(([t, r]) => {
         let a =
           GameplayTagUtils_1.GameplayTagUtils.GetNameByTagId(t) + ` x ${r}(`;
-        for (const i of this.BKo.keys()) {
-          var s = this.BKo.get(i)?.get(t);
+        for (const i of this.PQo.keys()) {
+          var s = this.PQo.get(i)?.get(t);
           s && (a += exports.channelDebugName[i] + " x " + s);
         }
         return a + ")\n";

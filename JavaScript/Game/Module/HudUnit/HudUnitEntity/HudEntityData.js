@@ -8,11 +8,11 @@ const Log_1 = require("../../../../Core/Common/Log"),
 class HudEntityData {
   constructor() {
     (this.Jh = void 0),
-      (this._At = new Map()),
-      (this.L$e = []),
-      (this.eii = void 0),
-      (this.tii = (t, e) => {
-        this.eii && this.eii(this, e);
+      (this.mPt = new Map()),
+      (this.NYe = []),
+      (this.eoi = void 0),
+      (this.toi = (t, e) => {
+        this.eoi && this.eoi(this, e);
       });
   }
   Initialize(t) {
@@ -20,16 +20,16 @@ class HudEntityData {
   }
   Destroy() {
     (this.Jh = void 0),
-      this._At.clear(),
-      (this.eii = void 0),
+      this.mPt.clear(),
+      (this.eoi = void 0),
       this.ClearAllTagCountChangedCallback();
   }
   SetComponent(t) {
     var e = this.Jh.GetComponent(t);
-    this._At.set(t, e);
+    this.mPt.set(t, e);
   }
   GetComponent(t) {
-    t = this._At.get(t);
+    t = this.mPt.get(t);
     return (
       t ||
         (Log_1.Log.CheckError() &&
@@ -51,20 +51,20 @@ class HudEntityData {
     return this.Jh.Id;
   }
   ListenForTagCountChanged(t, e) {
-    var r = this.GetComponent(185);
+    var r = this.GetComponent(188);
     r &&
-      ((this.eii = e),
-      (e = r.ListenForTagAddOrRemove(t, this.tii)),
-      this.L$e.push(e));
+      ((this.eoi = e),
+      (e = r.ListenForTagAddOrRemove(t, this.toi)),
+      this.NYe.push(e));
   }
   ClearAllTagCountChangedCallback() {
-    if (this.L$e) {
-      for (const t of this.L$e) t.EndTask();
-      this.L$e.length = 0;
+    if (this.NYe) {
+      for (const t of this.NYe) t.EndTask();
+      this.NYe.length = 0;
     }
   }
   ContainsTagById(t) {
-    return this.GetComponent(185).HasTag(t);
+    return this.GetComponent(188).HasTag(t);
   }
   GetLocationProxy() {
     return this.GetComponent(1).ActorLocationProxy;

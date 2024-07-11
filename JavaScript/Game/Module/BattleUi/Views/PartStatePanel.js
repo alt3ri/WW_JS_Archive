@@ -10,8 +10,8 @@ const Log_1 = require("../../../../Core/Common/Log"),
   PartState_1 = require("./PartState");
 class PartStatePanel {
   constructor() {
-    (this.Xut = new Map()),
-      (this.$ut = (t, e, r) => {
+    (this.smt = new Map()),
+      (this.amt = (t, e, r) => {
         var i = EntitySystem_1.EntitySystem.Get(t);
         if (FNameUtil_1.FNameUtil.IsNothing(e))
           i &&
@@ -20,7 +20,7 @@ class PartStatePanel {
               : this.DestroyPartStateFromRole(i));
         else if (i) {
           var s,
-            a = i.GetComponent(58).Parts;
+            a = i.GetComponent(60).Parts;
           if (!(a.length <= 0))
             for (const o of a)
               o.BoneName.op_Equality(e) &&
@@ -39,18 +39,18 @@ class PartStatePanel {
   Ore() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnSetPartStateVisible,
-      this.$ut,
+      this.amt,
     );
   }
   kre() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnSetPartStateVisible,
-      this.$ut,
+      this.amt,
     );
   }
   OnCreateEntity(t) {
     if (t) {
-      var e = t.GetComponent(58);
+      var e = t.GetComponent(60);
       if (e) {
         e = e.Parts;
         if (e && 0 !== e.length) {
@@ -74,51 +74,51 @@ class PartStatePanel {
   }
   ActivatePartStateByRole(t) {
     if (t) {
-      var e = t.GetComponent(58).Parts;
+      var e = t.GetComponent(60).Parts;
       if (0 !== e.length) for (const r of e) this.ActivatePartState(t, r);
     }
   }
   ActivatePartState(t, e) {
     var r = this.GetPartState(t.Id, e.Index);
-    r ? r.InitializePartState(t, e) : this.Yut(t, e);
+    r ? r.InitializePartState(t, e) : this.hmt(t, e);
   }
   DestroyAllParStates() {
-    for (const t of this.Xut.values()) for (const e of t.values()) e.Destroy();
-    this.Xut.clear();
+    for (const t of this.smt.values()) for (const e of t.values()) e.Destroy();
+    this.smt.clear();
   }
   DestroyPartStateFromRole(t) {
     var t = t.Id,
       e = this.GetAllPartStates(t);
     if (e) {
       for (const r of e.values()) r.Destroy();
-      this.Xut.get(t).clear();
+      this.smt.get(t).clear();
     }
   }
   DestroyPartState(t, e) {
     var r = this.GetPartState(t, e);
-    r && (r.Destroy(), (r = this.Xut.get(t))) && r.delete(e);
+    r && (r.Destroy(), (r = this.smt.get(t))) && r.delete(e);
   }
   Tick(t) {
-    for (const e of this.Xut.values()) for (const r of e.values()) r.Tick(t);
+    for (const e of this.smt.values()) for (const r of e.values()) r.Tick(t);
   }
-  Yut(t, e) {
+  hmt(t, e) {
     var r = t.Id,
       t = new PartState_1.PartState(t, e);
-    let i = this.Xut.get(r);
+    let i = this.smt.get(r);
     return (
       i
         ? i.set(e.Index, t)
-        : ((i = new Map()).set(e.Index, t), this.Xut.set(r, i)),
+        : ((i = new Map()).set(e.Index, t), this.smt.set(r, i)),
       t
     );
   }
   GetPartState(t, e) {
-    t = this.Xut.get(t);
+    t = this.smt.get(t);
     if (t) return t.get(e);
   }
   GetAllPartStates(t) {
-    return this.Xut.get(t);
+    return this.smt.get(t);
   }
 }
-(exports.PartStatePanel = PartStatePanel).aYe = void 0;
+(exports.PartStatePanel = PartStatePanel).vJe = void 0;
 //# sourceMappingURL=PartStatePanel.js.map

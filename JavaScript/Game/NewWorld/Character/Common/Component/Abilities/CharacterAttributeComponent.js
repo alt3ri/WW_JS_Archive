@@ -2,10 +2,10 @@
 var __decorate =
   (this && this.__decorate) ||
   function (t, e, r, i) {
-    var o,
-      s = arguments.length,
+    var s,
+      o = arguments.length,
       a =
-        s < 3
+        o < 3
           ? e
           : null === i
             ? (i = Object.getOwnPropertyDescriptor(e, r))
@@ -14,12 +14,13 @@ var __decorate =
       a = Reflect.decorate(t, e, r, i);
     else
       for (var n = t.length - 1; 0 <= n; n--)
-        (o = t[n]) && (a = (s < 3 ? o(a) : 3 < s ? o(e, r, a) : o(e, r)) || a);
-    return 3 < s && a && Object.defineProperty(e, r, a), a;
+        (s = t[n]) && (a = (o < 3 ? s(a) : 3 < o ? s(e, r, a) : s(e, r)) || a);
+    return 3 < o && a && Object.defineProperty(e, r, a), a;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharacterAttributeComponent = void 0);
-const MathUtils_1 = require("../../../../../../Core/Utils/MathUtils"),
+const RegisterComponent_1 = require("../../../../../../Core/Entity/RegisterComponent"),
+  MathUtils_1 = require("../../../../../../Core/Utils/MathUtils"),
   EventDefine_1 = require("../../../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../../../Common/Event/EventSystem"),
   ModelManager_1 = require("../../../../../Manager/ModelManager"),
@@ -27,7 +28,6 @@ const MathUtils_1 = require("../../../../../../Core/Utils/MathUtils"),
   CombatMessage_1 = require("../../../../../Module/CombatMessage/CombatMessage"),
   BaseAttributeComponent_1 = require("./BaseAttributeComponent"),
   CharacterAttributeTypes_1 = require("./CharacterAttributeTypes"),
-  RegisterComponent_1 = require("../../../../../../Core/Entity/RegisterComponent"),
   energyAttrIds = [
     CharacterAttributeTypes_1.EAttributeId.Proto_Energy,
     CharacterAttributeTypes_1.EAttributeId.Proto_SpecialEnergy1,
@@ -38,17 +38,16 @@ const MathUtils_1 = require("../../../../../../Core/Utils/MathUtils"),
 let CharacterAttributeComponent = class CharacterAttributeComponent extends BaseAttributeComponent_1.BaseAttributeComponent {
   constructor() {
     super(...arguments),
-      (this.elt = void 0),
-      (this.zht = void 0),
-      (this.sqr = (e, t, r) => {
+      (this.m1t = void 0),
+      (this.qbr = (e, t, r) => {
         (CharacterAttributeTypes_1.stateAttributeIds.has(e) ||
           [...CharacterAttributeTypes_1.attributeIdsWithMax.values()].some(
             (t) => t === e,
           )) &&
-          this.aqr?.InternalApplyModToAttribute(e, 3, r);
+          this.Gbr?.InternalApplyModToAttribute(e, 3, r);
       }),
-      (this.aqr = void 0),
-      (this.hqr = (t, e, r) => {
+      (this.Gbr = void 0),
+      (this.Nbr = (t, e, r) => {
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.CharOnHealthChanged,
           this.Entity.Id,
@@ -56,7 +55,7 @@ let CharacterAttributeComponent = class CharacterAttributeComponent extends Base
           r,
         );
       }),
-      (this.lqr = (t, e, r) => {
+      (this.Obr = (t, e, r) => {
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.CharOnHealthMaxChanged,
           this.Entity.Id,
@@ -64,7 +63,7 @@ let CharacterAttributeComponent = class CharacterAttributeComponent extends Base
           r,
         );
       }),
-      (this._qr = (t, e, r) => {
+      (this.kbr = (t, e, r) => {
         EventSystem_1.EventSystem.EmitWithTarget(
           this.Entity,
           EventDefine_1.EEventName.CharOnEnergyChanged,
@@ -75,51 +74,49 @@ let CharacterAttributeComponent = class CharacterAttributeComponent extends Base
       });
   }
   OnInitData() {
-    var t = this.Entity.GetComponent(0).ComponentDataMap.get("qvs");
     return (
-      t && this.InitAttributesFromPbData(t.qvs?.Gps ?? void 0),
+      this.Pia(),
       this.AddListener(
         CharacterAttributeTypes_1.EAttributeId.Proto_Life,
-        this.hqr,
+        this.Nbr,
       ),
-      this.AddListener(CharacterAttributeTypes_1.EAttributeId.Tkn, this.lqr),
-      this.AddListeners(energyAttrIds, this._qr),
-      this.AddGeneralListener(this.sqr),
+      this.AddListener(CharacterAttributeTypes_1.EAttributeId.e5n, this.Obr),
+      this.AddListeners(energyAttrIds, this.kbr),
+      this.AddGeneralListener(this.qbr),
       !0
     );
   }
   OnActivate() {
-    var t = this.Entity.GetComponent(0)?.ComponentDataMap.get("qvs")?.qvs?.Gps;
-    if (t)
-      for (const e of t)
-        void 0 !== e.Ugs &&
-          CharacterAttributeTypes_1.stateAttributeIds.has(e.Ugs) &&
-          (e.NFn = e.Pgs),
-          e.Ugs ===
-            CharacterAttributeTypes_1.EAttributeId.Proto_ParalysisTime &&
-            (e.NFn = e.Pgs),
-          e.Ugs && this.SyncValueFromServer(e.Ugs, e.Pgs, e.NFn);
+    this.Pia();
   }
-  InitAttributesFromPbData(t) {
-    if (void 0 !== t)
-      for (const e of t)
-        void 0 !== e.Ugs &&
-          CharacterAttributeTypes_1.stateAttributeIds.has(e.Ugs) &&
-          (e.NFn = e.Pgs),
-          e.Ugs ===
-            CharacterAttributeTypes_1.EAttributeId.Proto_ParalysisTime &&
-            (e.NFn = e.Pgs),
-          e.Ugs && this.InitValueFromServer(e.Ugs, e.Pgs, e.NFn);
+  Pia() {
+    var t =
+      this.Entity.CheckGetComponent(0)?.ComponentDataMap.get("ZEs")?.ZEs?.sra;
+    if (void 0 !== t) {
+      var e = new Map(),
+        r = [],
+        i = this.Init();
+      for (const n of t) {
+        var s = n.QMs,
+          o = n.ora,
+          a = n.nra ?? 0;
+        0 !== a ? e.set(s, a) : r.push(s),
+          (this.BaseValues[s] = o),
+          i || (this.CurrentValues[s] = o + a);
+      }
+      if (i) for (const h of r) this.UpdateCurrentValue(h);
+      this.m1t?.Init() && this.m1t.UpdateSysGrowBuff(e);
+    }
   }
   static AttributeChangedNotify(t, e) {
-    var r = MathUtils_1.MathUtils.LongToNumber(e.Ekn),
+    var r = MathUtils_1.MathUtils.LongToNumber(e.J4n),
       r = ModelManager_1.ModelManager.CreatureModel.GetEntity(r),
-      i = r?.Entity?.GetComponent(156);
+      i = r?.Entity?.GetComponent(158);
     if (r && i) {
-      for (const o of e.dfs)
-        CharacterAttributeTypes_1.stateAttributeIds.has(o.Ugs) &&
-          (o.NFn = o.Pgs),
-          o.Ugs && i.SyncValueFromServer(o.Ugs, o.Pgs, o.NFn);
+      for (const s of e.PSs)
+        CharacterAttributeTypes_1.stateAttributeIds.has(s.QMs) &&
+          (s.d6n = s.KMs),
+          s.QMs && i.SyncValueFromServer(s.QMs, s.KMs, s.d6n);
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnServerAttributeChange,
         r.Id,
@@ -128,54 +125,41 @@ let CharacterAttributeComponent = class CharacterAttributeComponent extends Base
     }
   }
   static RecoverPropChangedNotify(t, e) {
-    var r = MathUtils_1.MathUtils.LongToNumber(e.Ekn),
+    var r = MathUtils_1.MathUtils.LongToNumber(e.J4n),
       i =
         ModelManager_1.ModelManager.CreatureModel.GetEntity(
           r,
-        )?.Entity?.GetComponent(156);
+        )?.Entity?.GetComponent(158);
     if (i) {
-      var o =
+      var s =
         FormationAttributeController_1.FormationAttributeController.GetPredictedServerStopTime() -
-        Number(MathUtils_1.MathUtils.LongToBigInt(e.GFn));
-      for (const s of e.dfs)
-        i.SyncRecoverPropFromServer(s.OFn, s.NFn, s.kFn, s.VFn, Number(o));
+        Number(MathUtils_1.MathUtils.LongToBigInt(e.c6n));
+      for (const o of e.PSs)
+        i.SyncRecoverPropFromServer(o.m6n, o.d6n, o.C6n, o.f6n, Number(s));
     }
   }
   OnInit() {
-    return (
-      (this.elt = this.Entity.CheckGetComponent(157)),
-      (this.zht = this.Entity.CheckGetComponent(0)),
-      !0
-    );
+    return (this.m1t = this.Entity.CheckGetComponent(159)), !0;
   }
   OnStart() {
-    var t = this.zht?.ComponentDataMap.get("qvs")?.qvs,
-      t = (t && this.uqr(t.Gps), this.Entity.CheckGetComponent(3));
-    this.aqr = t?.Actor.AbilitySystemComponent;
+    this.Pia();
+    var t = this.Entity.CheckGetComponent(3);
+    this.Gbr = t?.Actor.AbilitySystemComponent;
     for (const e of CharacterAttributeTypes_1.stateAttributeIds.values())
-      this.aqr?.InternalApplyModToAttribute(e, 3, this.GetCurrentValue(e));
+      this.Gbr?.InternalApplyModToAttribute(e, 3, this.GetCurrentValue(e));
     for (const r of CharacterAttributeTypes_1.attributeIdsWithMax.values())
-      this.aqr?.InternalApplyModToAttribute(r, 3, this.GetCurrentValue(r));
+      this.Gbr?.InternalApplyModToAttribute(r, 3, this.GetCurrentValue(r));
     return !0;
-  }
-  uqr(t) {
-    var e = new Map();
-    for (const o of t) {
-      var r = o.Ugs,
-        i = o.NFn - o.Pgs;
-      0 != i && e.set(r, i);
-    }
-    this.elt?.UpdateSysGrowBuff(e);
   }
   OnEnd() {
     return (
       this.RemoveListener(
         CharacterAttributeTypes_1.EAttributeId.Proto_Life,
-        this.hqr,
+        this.Nbr,
       ),
-      this.RemoveListener(CharacterAttributeTypes_1.EAttributeId.Tkn, this.lqr),
-      this.RemoveListeners(energyAttrIds, this._qr),
-      this.RemoveGeneralListener(this.sqr),
+      this.RemoveListener(CharacterAttributeTypes_1.EAttributeId.e5n, this.Obr),
+      this.RemoveListeners(energyAttrIds, this.kbr),
+      this.RemoveGeneralListener(this.qbr),
       !0
     );
   }
@@ -184,19 +168,19 @@ let CharacterAttributeComponent = class CharacterAttributeComponent extends Base
   }
 };
 __decorate(
-  [CombatMessage_1.CombatNet.SyncHandle("e2n")],
+  [CombatMessage_1.CombatNet.SyncHandle("UFn")],
   CharacterAttributeComponent,
   "AttributeChangedNotify",
   null,
 ),
   __decorate(
-    [CombatMessage_1.CombatNet.SyncHandle("b2n")],
+    [CombatMessage_1.CombatNet.SyncHandle("_3n")],
     CharacterAttributeComponent,
     "RecoverPropChangedNotify",
     null,
   ),
   (CharacterAttributeComponent = __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(156)],
+    [(0, RegisterComponent_1.RegisterComponent)(158)],
     CharacterAttributeComponent,
   )),
   (exports.CharacterAttributeComponent = CharacterAttributeComponent);

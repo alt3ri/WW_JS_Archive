@@ -14,7 +14,6 @@ const UE = require("ue"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   RoleDefine_1 = require("../../RoleUi/RoleDefine"),
   SceneTeamController_1 = require("../../SceneTeam/SceneTeamController"),
-  SceneTeamDefine_1 = require("../../SceneTeam/SceneTeamDefine"),
   BattleUiDefine_1 = require("../BattleUiDefine"),
   BattleUiRoleData_1 = require("../BattleUiRoleData"),
   BattleChildView_1 = require("./BattleChildView/BattleChildView"),
@@ -22,8 +21,9 @@ const UE = require("ue"),
   FormationOnlineItem_1 = require("./FormationOnlineItem"),
   FormationTrialItem_1 = require("./FormationTrialItem"),
   CombineKeyItem_1 = require("./KeyItem/CombineKeyItem");
-var EAttributeId = Protocol_1.Aki.Protocol.KBs;
-const CharacterBuffIds_1 = require("../../../NewWorld/Character/Common/Component/Abilities/CharacterBuffIds"),
+var EAttributeId = Protocol_1.Aki.Protocol.Bks;
+const Info_1 = require("../../../../Core/Common/Info"),
+  CharacterBuffIds_1 = require("../../../NewWorld/Character/Common/Component/Abilities/CharacterBuffIds"),
   REFRESH_COOLDOWN_INTERVAL = 100,
   CURE_DELAY = 1e3,
   LOW_HP_PERCENT = 0.2,
@@ -31,81 +31,81 @@ const CharacterBuffIds_1 = require("../../../NewWorld/Character/Common/Component
 class FormationItem extends BattleChildView_1.BattleChildView {
   constructor() {
     super(...arguments),
-      (this.Art = void 0),
+      (this.Hnt = void 0),
       (this.RoleData = void 0),
       (this.EntityId = void 0),
       (this.FormationIns = void 0),
       (this.RoleConfig = void 0),
-      (this.jQe = []),
-      (this.ast = 0),
-      (this.hst = 0),
-      (this.lst = 0),
-      (this._st = void 0),
-      (this.ust = void 0),
-      (this.cst = void 0),
-      (this.mst = ""),
-      (this.dst = !1),
-      (this.Cst = void 0),
-      (this.gst = 0),
-      (this.xet = void 0),
-      (this.fst = void 0),
-      (this.pst = void 0),
-      (this.vst = void 0),
-      (this.Mst = !1),
-      (this.Sst = !1),
-      (this.Est = !1),
-      (this.yst = (t) => {
-        2 === ModelManager_1.ModelManager.PlatformModel.OperationType &&
-          ((t = t * TimeUtil_1.TimeUtil.InverseMillisecond), this.Ist(t, t));
+      (this.i$e = []),
+      (this.vat = 0),
+      (this.Eat = 0),
+      (this.Sat = 0),
+      (this.yat = void 0),
+      (this.Iat = void 0),
+      (this.Tat = void 0),
+      (this.Lat = ""),
+      (this.Dat = !1),
+      (this.Rat = void 0),
+      (this.Uat = 0),
+      (this.Qtt = void 0),
+      (this.Aat = void 0),
+      (this.Pat = void 0),
+      (this.xat = void 0),
+      (this.wat = !1),
+      (this.Bat = !1),
+      (this.bat = !1),
+      (this.qat = (t) => {
+        2 === Info_1.Info.OperationType &&
+          ((t = t * TimeUtil_1.TimeUtil.InverseMillisecond), this.Gat(t, t));
       }),
-      (this.ZQe = () => {
+      (this.u$e = () => {
         this.RoleData && this.RefreshRoleHealthPercent();
       }),
-      (this.YKe = (t) => {
+      (this.hXe = (t) => {
         this.RoleData && this.EntityId === t && this.RefreshRoleHealthPercent();
       }),
-      (this.Tst = () => {
-        this.Lst();
+      (this.Nat = () => {
+        this.Oat();
       }),
-      (this.XQe = (t, e, i) => {
+      (this.s$e = (t, i, e) => {
         !this.FormationIns ||
           (ModelManager_1.ModelManager.GameModeModel.IsMulti &&
             1 <
               ModelManager_1.ModelManager.OnlineModel.GetAllWorldTeamPlayer()
                 .length) ||
-          this.Dst();
+          this.kat();
       }),
-      (this.QQe = (t, e, i) => {
+      (this.n$e = (t, i, e) => {
         this.RefreshQteActive();
       }),
-      (this.$Qe = (t, e, i) => {
+      (this.a$e = (t, i, e) => {
         this.RefreshQteActive();
       }),
-      (this.Rst = (t, e) => {
+      (this.Fat = (t, i) => {
         this.RefreshQteActive();
       }),
       (this.Zpe = () => {
         this.RefreshQteActive();
       }),
-      (this.Ust = (t, e) => {
-        this.FormationIns && this.Ast();
+      (this.Vat = (t, i) => {
+        this.FormationIns && this.Hat();
       }),
-      (this.Pst = (t, e) => {
-        this.xst();
+      (this.jat = (t, i) => {
+        this.Wat();
       }),
-      (this.wst = () => {
-        this.Bst();
+      (this.Kat = () => {
+        this.Qat();
       }),
-      (this.bst = () => {
+      (this.Xat = () => {
         this.GetItem(4).SetUIActive(!1);
       }),
-      (this.qst = () => {
-        this.Gst();
+      (this.$at = () => {
+        this.Yat();
       }),
-      (this.WQe = (t, e, i) => {
-        t === this.EntityId && e === this.ust && this.RoleData && this.Gnt(i);
+      (this.o$e = (t) => {
+        t === this.EntityId && this.KSa();
       }),
-      (this.KQe = (t, e, i) => {
+      (this.r$e = (t, i, e) => {
         t === this.EntityId && this.RefreshElementVisible();
       });
   }
@@ -132,12 +132,12 @@ class FormationItem extends BattleChildView_1.BattleChildView {
       [18, UE.UIItem],
       [19, UE.UIItem],
     ]),
-      ModelManager_1.ModelManager.PlatformModel.IsMobile() ||
+      Info_1.Info.IsInTouch() ||
         this.ComponentRegisterInfos.push([20, UE.UIItem]);
   }
   Initialize(t) {
     super.Initialize(t),
-      (this.gst =
+      (this.Uat =
         ModelManager_1.ModelManager.BattleUiModel.ConcertoChangeEffectDelay),
       this.GetTexture(9).SetUIActive(!1),
       Log_1.Log.CheckDebug() &&
@@ -145,64 +145,69 @@ class FormationItem extends BattleChildView_1.BattleChildView {
       this.Ore();
   }
   async InitializeAsync(t) {
-    var e;
-    ModelManager_1.ModelManager.PlatformModel.IsMobile() ||
-      (this.hnt(18),
-      this.hnt(19),
-      (e = this.GetItem(20)),
-      (this.xet = new CombineKeyItem_1.CombineKeyItem()),
-      await this.xet.CreateByActorAsync(e.GetOwner()));
+    var i;
+    Info_1.Info.IsInTouch() ||
+      (this.Est(18),
+      this.Est(19),
+      (i = this.GetItem(20)),
+      (this.Qtt = new CombineKeyItem_1.CombineKeyItem()),
+      await this.Qtt.CreateByActorAsync(i.GetOwner()));
   }
-  RefreshOtherSceneRole(t, e, i) {
+  RefreshOtherSceneRole(t, i, e) {
     this.ClearRoleData(),
       (this.FormationIns = void 0),
       (this.RoleConfig =
         ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(t)),
-      this.Nst(),
+      this.Jat(),
       this.RefreshRoleHealthPercent(),
       this.GetItem(14).SetUIActive(!1),
       this.GetSprite(17).SetUIActive(!1),
-      this.vst ||
-        (this.vst = new FormationOnlineItem_1.FormationOnlineItem(
+      this.xat ||
+        (this.xat = new FormationOnlineItem_1.FormationOnlineItem(
           this.RootItem,
         ));
-    t = ModelManager_1.ModelManager.OnlineModel.GetCurrentTeamListById(e);
-    this.vst.SetOnlineNumber(t?.PlayerNumber ?? -1),
-      this.vst.SetNameText(t?.Name ?? ""),
-      this.vst.SetIsGrayByOtherControl(!i),
+    t = ModelManager_1.ModelManager.OnlineModel.GetCurrentTeamListById(i);
+    this.xat.SetOnlineNumber(t?.PlayerNumber ?? -1),
+      this.xat.SetNameText(t?.Name ?? ""),
+      this.xat.SetIsGrayByOtherControl(!e),
       this.SetActive(!0);
   }
-  Refresh(t) {
-    this.ClearRoleData(),
-      t
-        ? (this.FormationIns !== t &&
-            ((this.FormationIns = t),
-            (this.RoleConfig =
-              ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(
-                this.FormationIns.GetConfigId,
-              )),
-            this.Nst(),
-            this.RefreshRoleName()),
-          this.RefreshOnlineItem(),
-          (t = this.FormationIns.EntityHandle?.Entity) &&
-            ((this.EntityId = t.Id),
-            (this.RoleData =
-              ModelManager_1.ModelManager.BattleUiModel.GetRoleData(
-                this.EntityId,
-              )),
-            (this.Mst =
-              this.RoleData?.GameplayTagComponent.HasTag(-2107968822) ?? !1),
-            this.eXe(t)),
-          this.RefreshRoleHealthPercent(),
-          this.Ost(),
-          this.Lst(),
-          this.kst(),
-          this.Fst(),
-          this.Vst(),
-          this.RefreshQteActive(!0),
-          this.Hst(),
-          this.SetActive(!0))
-        : ((this.FormationIns = void 0), this.SetActive(!1));
+  Refresh(i) {
+    if ((this.ClearRoleData(), i)) {
+      var e = i.EntityHandle?.Entity;
+      let t = void 0;
+      if (e) {
+        var s = (t = ModelManager_1.ModelManager.BattleUiModel.GetRoleData(
+          e.Id,
+        ))?.RoleBattleViewInfo;
+        if (s && !s.FormationVisible)
+          return (this.FormationIns = void 0), void this.SetActive(!1);
+      }
+      this.FormationIns !== i &&
+        ((this.FormationIns = i),
+        (this.RoleConfig =
+          ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(
+            this.FormationIns.GetConfigId,
+          )),
+        this.Jat(),
+        this.RefreshRoleName()),
+        this.RefreshOnlineItem(),
+        e &&
+          ((this.EntityId = e.Id),
+          (this.RoleData = t),
+          (this.wat =
+            this.RoleData?.GameplayTagComponent.HasTag(-2107968822) ?? !1),
+          this.c$e(e)),
+        this.RefreshRoleHealthPercent(),
+        this.zat(),
+        this.Oat(),
+        this.Zat(),
+        this.eht(),
+        this.tht(),
+        this.RefreshQteActive(!0),
+        this.iht(),
+        this.SetActive(!0);
+    } else (this.FormationIns = void 0), this.SetActive(!1);
   }
   ClearRoleData() {
     var t = this.RoleData?.EntityHandle?.Entity;
@@ -211,38 +216,38 @@ class FormationItem extends BattleChildView_1.BattleChildView {
       (this.EntityId = void 0);
   }
   Ore() {
-    this.GetExtendToggle(0).OnPointDownCallBack.Bind(this.wst),
+    this.GetExtendToggle(0).OnPointDownCallBack.Bind(this.Kat),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.BattleUiElementEnergyChanged,
-        this.WQe,
+        this.o$e,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.BattleUiElementHideTagChanged,
-        this.KQe,
+        this.r$e,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.BattleUiHealthChanged,
-        this.YKe,
+        this.hXe,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.BattleUiShieldChanged,
-        this.ZQe,
+        this.u$e,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.BattleUiQteEnableTagChanged,
-        this.XQe,
+        this.s$e,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.BattleUiDeadTagChanged,
-        this.QQe,
+        this.n$e,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.BattleUiQteCdTagChanged,
-        this.$Qe,
+        this.a$e,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.CharInQteChanged,
-        this.Rst,
+        this.Fat,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnBattleStateChanged,
@@ -253,189 +258,195 @@ class FormationItem extends BattleChildView_1.BattleChildView {
     this.GetExtendToggle(0).OnPointDownCallBack.Unbind(),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.BattleUiElementEnergyChanged,
-        this.WQe,
+        this.o$e,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.BattleUiElementHideTagChanged,
-        this.KQe,
+        this.r$e,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.BattleUiHealthChanged,
-        this.YKe,
+        this.hXe,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.BattleUiShieldChanged,
-        this.ZQe,
+        this.u$e,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.BattleUiQteEnableTagChanged,
-        this.XQe,
+        this.s$e,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.BattleUiDeadTagChanged,
-        this.QQe,
+        this.n$e,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.BattleUiQteCdTagChanged,
-        this.$Qe,
+        this.a$e,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.CharInQteChanged,
-        this.Rst,
+        this.Fat,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnBattleStateChanged,
         this.Zpe,
       );
   }
-  eXe(t) {
-    var e;
+  c$e(t) {
+    var i;
     EventSystem_1.EventSystem.AddWithTarget(
       t,
       EventDefine_1.EEventName.OnChangeRoleCoolDownChanged,
-      this.yst,
+      this.qat,
     ),
       EventSystem_1.EventSystem.AddWithTarget(
         t,
         EventDefine_1.EEventName.CharHitLocal,
-        this.Tst,
+        this.Nat,
       ),
       EventSystem_1.EventSystem.AddWithTarget(
         t,
         EventDefine_1.EEventName.CharUseSkill,
-        this.Tst,
+        this.Nat,
       ),
       EventSystem_1.EventSystem.AddWithTarget(
         t,
         EventDefine_1.EEventName.OnSkillEnd,
-        this.Tst,
+        this.Nat,
       ),
       this.FormationIns?.IsMyRole()
-        ? this.Mst &&
-          ((e = t.GetComponent(185)), this.iXe(e, 1414093614, this.Pst))
-        : ((e = t.GetComponent(185)), this.iXe(e, 166024319, this.Ust));
+        ? this.wat &&
+          ((i = t.GetComponent(188)), this.d$e(i, 1414093614, this.jat))
+        : ((i = t.GetComponent(188)), this.d$e(i, 166024319, this.Vat));
   }
   RemoveEntityEvents(t) {
     EventSystem_1.EventSystem.RemoveWithTarget(
       t,
       EventDefine_1.EEventName.OnChangeRoleCoolDownChanged,
-      this.yst,
+      this.qat,
     ),
       EventSystem_1.EventSystem.RemoveWithTarget(
         t,
         EventDefine_1.EEventName.CharHitLocal,
-        this.Tst,
+        this.Nat,
       ),
       EventSystem_1.EventSystem.RemoveWithTarget(
         t,
         EventDefine_1.EEventName.CharUseSkill,
-        this.Tst,
+        this.Nat,
       ),
       EventSystem_1.EventSystem.RemoveWithTarget(
         t,
         EventDefine_1.EEventName.OnSkillEnd,
-        this.Tst,
+        this.Nat,
       ),
-      this.jst();
+      this.oht();
   }
-  iXe(t, e, i) {
-    t = t.ListenForTagAddOrRemove(e, i);
-    t && this.jQe.push(t);
+  d$e(t, i, e) {
+    t = t.ListenForTagAddOrRemove(i, e);
+    t && this.i$e.push(t);
   }
-  jst() {
-    for (const t of this.jQe) t?.EndTask();
-    this.jQe.length = 0;
+  oht() {
+    for (const t of this.i$e) t?.EndTask();
+    this.i$e.length = 0;
   }
   OnShowBattleChildView() {
-    this.Wst(!1);
+    this.rht(!1);
   }
   Reset() {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug("Battle", 18, "FormationItem Reset"),
-      (this.xet = void 0),
+      (this.Qtt = void 0),
       this.kre(),
-      (this.ast = 0),
-      this.Kst(),
-      this.Gst(),
-      TimerSystem_1.TimerSystem.Has(this._st) &&
-        TimerSystem_1.TimerSystem.Remove(this._st),
-      this.pst && (this.pst.Destroy(), (this.pst = void 0)),
-      this.fst && (this.fst.Destroy(), (this.fst = void 0)),
-      this.vst && (this.vst.Destroy(), (this.vst = void 0)),
+      (this.vat = 0),
+      this.nht(),
+      this.Yat(),
+      TimerSystem_1.TimerSystem.Has(this.yat) &&
+        TimerSystem_1.TimerSystem.Remove(this.yat),
+      this.Pat && (this.Pat.Destroy(), (this.Pat = void 0)),
+      this.Aat && (this.Aat.Destroy(), (this.Aat = void 0)),
+      this.xat && (this.xat.Destroy(), (this.xat = void 0)),
       super.Reset();
   }
   OnTick(t) {
-    0 < this.ast &&
-      ((this.hst -= t * Time_1.Time.TimeDilation),
-      this.hst <= 0
-        ? ((this.hst = 0), (this.ast = 0), this.Kst())
-        : (Math.abs(this.lst - this.hst) >
+    0 < this.vat &&
+      ((this.Eat -= t * Time_1.Time.TimeDilation),
+      this.Eat <= 0
+        ? ((this.Eat = 0), (this.vat = 0), this.nht())
+        : (Math.abs(this.Sat - this.Eat) >
             BattleUiDefine_1.CHANGE_COOLDOWN_INTERVAL &&
-            ((this.lst -= REFRESH_COOLDOWN_INTERVAL), this.Qst()),
-          this.Xst()));
+            ((this.Sat -= REFRESH_COOLDOWN_INTERVAL), this.sht()),
+          this.aht()));
   }
   RefreshTimeRate() {}
   ResetAllConcertoNiagara() {
-    this.$st(!1, !0, !1);
+    this.hht(!1, !0, !1);
   }
   RefreshQteActive(t = 0) {
     this.FormationIns &&
       (ModelManager_1.ModelManager.GameModeModel.IsMulti &&
       1 < ModelManager_1.ModelManager.OnlineModel.GetAllWorldTeamPlayer().length
-        ? this.Ast()
-        : this.Dst());
+        ? this.Hat()
+        : this.kat());
   }
-  Dst(e = !1) {
+  kat(i = !1) {
     if (this.FormationIns) {
       let t = !1;
-      var i;
-      this.dst &&
-        (i =
+      var e;
+      this.Dat &&
+        (e =
           ModelManager_1.ModelManager.BattleUiModel.GetCurRoleData()
             ?.EntityHandle) &&
         this.RoleData &&
-        this.RoleData.EntityHandle !== i &&
-        (t = this.RoleData.RoleQteComponent.IsQteReady(i)),
-        this.$st(t, e, !1);
+        this.RoleData.EntityHandle !== e &&
+        (t = this.RoleData.RoleQteComponent.IsQteReady(e)),
+        this.hht(t, i, !1);
     } else this.ResetAllConcertoNiagara();
   }
-  Ast(e = !1) {
+  Hat(i = !1) {
     if (!this.FormationIns || this.FormationIns.IsMyRole())
       this.ResetAllConcertoNiagara();
     else {
       let t = !1;
-      var i =
+      var e =
           ModelManager_1.ModelManager.BattleUiModel.GetCurRoleData()
             ?.EntityHandle,
         s = this.FormationIns?.EntityHandle;
-      i && s && (t = i.Entity.GetComponent(86).IsQteReady(s)),
-        this.$st(t, e, !0);
+      e && s && (t = e.Entity.GetComponent(88).IsQteReady(s)),
+        this.hht(t, i, !0);
     }
   }
-  $st(t, e, i) {
+  hht(t, i, e) {
     var s;
-    this.Sst !== t &&
-      ((this.Sst = t),
+    this.Bat !== t &&
+      ((this.Bat = t),
       (s = this.GetUiNiagara(5)).SetUIActive(t),
       t
         ? (s.ActivateSystem(!0),
-          e || ModelManager_1.ModelManager.BattleUiModel.AudioData.PlayAudio(0))
+          i ||
+            ((t = this.wat ? 1 : 0),
+            (i = Info_1.Info.IsInGamepad() ? 8 : 7),
+            ModelManager_1.ModelManager.BattleUiModel.AudioData.PlayAudio(
+              t,
+              i,
+            )))
         : s.Deactivate(),
-      this.Yst()),
-      this.Jst();
+      this.lht()),
+      this._ht();
   }
-  Vst() {
-    var t = this.RoleData?.EntityHandle?.Entity?.GetComponent(81);
-    !t || (t = t.GetChangeRoleCoolDown()) <= 0 || this.Ist(t, t);
+  tht() {
+    var t = this.RoleData?.EntityHandle?.Entity?.GetComponent(83);
+    !t || (t = t.GetChangeRoleCoolDown()) <= 0 || this.Gat(t, t);
   }
-  zst(t) {
-    this.Est !== t &&
-      ((this.Est = t)
-        ? (this.Irt(19), this.Ert(18))
-        : (this.Irt(18), this.Ert(19)));
+  uht(t) {
+    this.bat !== t &&
+      ((this.bat = t)
+        ? (this.Gnt(19), this.bnt(18))
+        : (this.Gnt(18), this.bnt(19)));
   }
-  Bst() {
-    var t, e;
+  Qat() {
+    var t, i;
     this.FormationIns
       ? ((t = this.FormationIns.GetCreatureDataId()),
         Log_1.Log.CheckInfo() &&
@@ -443,11 +454,11 @@ class FormationItem extends BattleChildView_1.BattleChildView {
             "CreatureDataId",
             t,
           ]),
-        (e = this.FormationIns.EntityHandle)?.Valid
+        (i = this.FormationIns.EntityHandle)?.Valid
           ? GlobalData_1.GlobalData.GameInstance &&
             (this.FormationIns.IsMyRole()
               ? SceneTeamController_1.SceneTeamController.TryChangeRoleOrQte(t)
-              : SceneTeamController_1.SceneTeamController.TryUseMultiQte(e))
+              : SceneTeamController_1.SceneTeamController.TryUseMultiQte(i))
           : Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
               "Formation",
@@ -458,101 +469,101 @@ class FormationItem extends BattleChildView_1.BattleChildView {
       : Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn("Formation", 8, "当点击阵容头像按钮时，阵容实例不存在");
   }
-  Kst() {
+  nht() {
     Log_1.Log.CheckInfo() && Log_1.Log.Info("Battle", 8, "重置换人冷却表现"),
-      this.Wst(!1);
+      this.rht(!1);
   }
   LevelUp(t) {
     t = t.toString();
-    this.fst
-      ? this.fst.SetActive(!0)
-      : (this.fst = new FormationLevelUpItem_1.FormationLevelUpItem(
+    this.Aat
+      ? this.Aat.SetActive(!0)
+      : (this.Aat = new FormationLevelUpItem_1.FormationLevelUpItem(
           this.RootItem,
         )),
-      this.fst.SetLevelText(t),
-      this.Zst();
+      this.Aat.SetLevelText(t),
+      this.cht();
   }
   RefreshConcertoResponseModule(t) {
-    (this.dst = t), this.RefreshElementVisible();
+    (this.Dat = t), this.RefreshElementVisible();
   }
   CureRole() {
     !this.RoleData ||
       this.FormationIns.IsControl() ||
       this.FormationIns.IsDead() ||
-      this.eat();
+      this.mht();
   }
-  Zst() {
+  cht() {
     TimerSystem_1.TimerSystem.Delay(() => {
-      this.fst && this.fst.SetActive(!1);
+      this.Aat && this.Aat.SetActive(!1);
     }, LEVE_UP_TIME);
   }
   PlayReviveSequence() {}
-  eat() {
+  mht() {
     this.GetItem(4).SetUIActive(!0),
-      (this._st = TimerSystem_1.TimerSystem.Delay(this.bst, CURE_DELAY));
+      (this.yat = TimerSystem_1.TimerSystem.Delay(this.Xat, CURE_DELAY));
   }
-  tat(t, e) {
-    const i = this.GetTexture(9);
-    if (i) {
+  dht(t, i) {
+    const e = this.GetTexture(9);
+    if (e) {
       const s = this.GetTexture(2);
       s &&
-        (this.SetRoleIcon(t, i, e, void 0, () => {
-          i.SetUIActive(!0);
+        (this.SetRoleIcon(t, e, i, void 0, () => {
+          e.SetUIActive(!0);
         }),
         s.SetUIActive(!1),
-        this.SetRoleIcon(t, s, e, void 0, () => {
+        this.SetRoleIcon(t, s, i, void 0, () => {
           s.SetUIActive(!0);
         }));
     }
   }
-  iat(t) {
-    let e = void 0;
+  Cht(t) {
+    let i = void 0;
     t <= LOW_HP_PERCENT
-      ? ((e = this.GetSprite(13)),
+      ? ((i = this.GetSprite(13)),
         this.GetSprite(12).SetUIActive(!1),
         this.GetSprite(13).SetUIActive(!0))
-      : ((e = this.GetSprite(12)),
+      : ((i = this.GetSprite(12)),
         this.GetSprite(12).SetUIActive(!0),
         this.GetSprite(13).SetUIActive(!1)),
-      e && e.SetFillAmount(t);
+      i && i.SetFillAmount(t);
   }
   RefreshRoleName() {
     if (this.FormationIns) {
-      var e = this.FormationIns.GetConfigId;
-      if (e <= RoleDefine_1.ROBOT_DATA_MIN_ID) this.pst?.SetActive(!1);
+      var i = this.FormationIns.GetConfigId;
+      if (i <= RoleDefine_1.ROBOT_DATA_MIN_ID) this.Pat?.SetActive(!1);
       else if (
-        ConfigManager_1.ConfigManager.RoleConfig?.GetTrialRoleConfig(e)
+        ConfigManager_1.ConfigManager.RoleConfig?.GetTrialRoleConfig(i)
           ?.HideTrialLabel
       )
-        this.pst?.SetActive(!1);
+        this.Pat?.SetActive(!1);
       else {
-        this.pst
-          ? this.pst.SetActive(!0)
-          : (this.pst = new FormationTrialItem_1.FormationTrialItem(
+        this.Pat
+          ? this.Pat.SetActive(!0)
+          : (this.Pat = new FormationTrialItem_1.FormationTrialItem(
               this.RootItem,
             ));
         let t = "";
         (t = this.FormationIns.IsMyRole()
-          ? ModelManager_1.ModelManager.RoleModel.GetRoleName(e)
+          ? ModelManager_1.ModelManager.RoleModel.GetRoleName(i)
           : ModelManager_1.ModelManager.OnlineModel.GetCurrentTeamListById(
               this.FormationIns.GetPlayerId(),
             )?.Name ?? ""),
-          this.pst.SetNameText(t);
+          this.Pat.SetNameText(t);
       }
     }
   }
-  SetRoleSelected(e) {
-    if (2 === ModelManager_1.ModelManager.PlatformModel.OperationType) {
+  SetRoleSelected(i) {
+    if (2 === Info_1.Info.OperationType) {
       let t = !1;
-      1 < ModelManager_1.ModelManager.SceneTeamModel.GetTeamLength() && (t = e),
-        this.zst(t);
-    } else this.zst(e);
-    this.Lst();
+      1 < ModelManager_1.ModelManager.SceneTeamModel.GetTeamLength() && (t = i),
+        this.uht(t);
+    } else this.uht(i);
+    this.Oat();
   }
   RefreshCoolDownOnShow() {
-    this.RoleData && (this.Vst(), this.xst());
+    this.RoleData && (this.tht(), this.Wat());
   }
-  Ist(t, e) {
+  Gat(t, i) {
     t <= 0
       ? (Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
@@ -561,40 +572,40 @@ class FormationItem extends BattleChildView_1.BattleChildView {
             "播放换人冷却CD时，CD时间小于0，不会播放换人冷却CD表现",
             ["coolDownTime", t],
           ),
-        this.Kst())
-      : ((this.ast = t),
-        (this.hst = e),
-        (this.lst = this.hst),
-        this.Qst(),
-        this.Xst(),
-        this.Wst(!0));
+        this.nht())
+      : ((this.vat = t),
+        (this.Eat = i),
+        (this.Sat = this.Eat),
+        this.sht(),
+        this.aht(),
+        this.rht(!0));
   }
-  Xst() {
+  aht() {
     var t;
-    this.ast <= 0 ||
-      ((t = this.hst / this.ast), this.GetTexture(2).SetFillAmount(t));
+    this.vat <= 0 ||
+      ((t = this.Eat / this.vat), this.GetTexture(2).SetFillAmount(t));
   }
-  Qst() {
+  sht() {
     this.GetText(3)?.SetText(
-      (this.lst * TimeUtil_1.TimeUtil.Millisecond).toFixed(1),
+      (this.Sat * TimeUtil_1.TimeUtil.Millisecond).toFixed(1),
     );
   }
-  Wst(t) {
+  rht(t) {
     this.GetItem(1)?.SetUIActive(t);
   }
-  Nst() {
+  Jat() {
     var t;
     this.RoleConfig &&
       (t = this.RoleConfig.RoleHeadIconBig) &&
       0 !== t.length &&
-      this.tat(t, this.RoleConfig.Id);
+      this.dht(t, this.RoleConfig.Id);
   }
   RefreshSelectedRole() {
     var t;
     this.FormationIns &&
       this.RoleData?.AttributeComponent &&
       (!this.FormationIns.IsMyRole() ||
-      (this.Fst(),
+      (this.eht(),
       this.RoleData.AttributeComponent.GetCurrentValue(
         EAttributeId.Proto_Life,
       ) <= 0)
@@ -603,46 +614,46 @@ class FormationItem extends BattleChildView_1.BattleChildView {
           this.SetRoleSelected(t),
           this.RefreshElementVisible()));
   }
-  ActivateConcertoChangeEffect(t, e) {
+  ActivateConcertoChangeEffect(t, i) {
     this.GetText(8).SetUIActive(!1);
     this.GetUiNiagara(7).ActivateSystem(!0);
-    var i = this.GetItem(6);
-    i.IsUIActiveSelf() || i.SetUIActive(!0),
-      (this.Cst = TimerSystem_1.TimerSystem.Delay(this.qst, this.gst));
+    var e = this.GetItem(6);
+    e.IsUIActiveSelf() || e.SetUIActive(!0),
+      (this.Rat = TimerSystem_1.TimerSystem.Delay(this.$at, this.Uat));
   }
-  Gst() {
+  Yat() {
     var t = this.GetItem(6);
     t.IsUIActiveSelf() && t.SetUIActive(!1),
       this.GetUiNiagara(7).DeactivateSystem(),
-      this.Cst &&
-        TimerSystem_1.TimerSystem.Has(this.Cst) &&
-        (TimerSystem_1.TimerSystem.Remove(this.Cst), (this.Cst = void 0));
+      this.Rat &&
+        TimerSystem_1.TimerSystem.Has(this.Rat) &&
+        (TimerSystem_1.TimerSystem.Remove(this.Rat), (this.Rat = void 0));
   }
-  Hst() {
-    this.GetItem(10).SetUIActive(!this.Mst), this.Yst(), this.xst();
+  iht() {
+    this.GetItem(10).SetUIActive(!this.wat), this.lht(), this.Wat();
   }
-  Yst() {}
-  xst() {
-    var t, e;
-    this.Mst &&
+  lht() {}
+  Wat() {
+    var t, i;
+    this.wat &&
       (!(this.RoleData?.GameplayTagComponent.HasTag(1414093614) ?? !1) ||
       ((t =
-        (e = this.RoleData?.BuffComponent.GetBuffById(
+        (i = this.RoleData?.BuffComponent.GetBuffById(
           CharacterBuffIds_1.buffId.QteAssistCd,
         ))?.GetRemainDuration() ?? 0),
-      (e = e?.Duration ?? 0),
+      (i = i?.Duration ?? 0),
       t <= 0) ||
-      e <= 0
-        ? this.Kst()
-        : this.Ist(
-            e * TimeUtil_1.TimeUtil.InverseMillisecond,
+      i <= 0
+        ? this.nht()
+        : this.Gat(
+            i * TimeUtil_1.TimeUtil.InverseMillisecond,
             t * TimeUtil_1.TimeUtil.InverseMillisecond,
           ));
   }
   RefreshRoleHealthPercent() {
     var t,
-      e,
       i,
+      e,
       s,
       h = this.GetExtendToggle(0);
     h &&
@@ -650,43 +661,43 @@ class FormationItem extends BattleChildView_1.BattleChildView {
         this.RoleData?.AttributeComponent?.GetCurrentValue(
           EAttributeId.Proto_Life,
         ) ?? 1),
-      (e =
-        this.RoleData?.AttributeComponent?.GetCurrentValue(EAttributeId.Tkn) ??
+      (i =
+        this.RoleData?.AttributeComponent?.GetCurrentValue(EAttributeId.e5n) ??
         1),
-      (i = this.RoleData?.ShieldComponent.ShieldTotal ?? 0),
-      t <= 0 || e <= 0
+      (e = this.RoleData?.ShieldComponent.ShieldTotal ?? 0),
+      t <= 0 || i <= 0
         ? (h.SetToggleState(2, !1),
           this.GetTexture(9).SetIsGray(!0),
           this.GetTexture(2)?.SetIsGray(!0),
           this.GetSprite(11).SetUIActive(!1),
-          this.iat(0))
-        : (0 < i
-            ? ((s = this.GetSprite(11)).SetUIActive(!0), s.SetFillAmount(i / e))
+          this.Cht(0))
+        : (0 < e
+            ? ((s = this.GetSprite(11)).SetUIActive(!0), s.SetFillAmount(e / i))
             : this.GetSprite(11).SetUIActive(!1),
           h.SetToggleState(0, !1),
           this.GetTexture(9).SetIsGray(!1),
           this.GetTexture(2)?.SetIsGray(!1),
-          this.iat(t / e),
+          this.Cht(t / i),
           this.RefreshSelectedRole()));
   }
-  Lst() {
+  Oat() {
     var t;
-    2 === ModelManager_1.ModelManager.PlatformModel.OperationType
+    2 === Info_1.Info.OperationType
       ? this.RoleData?.IsCurEntity
         ? this.GetSprite(17).SetUIActive(!1)
-        : ((t = this.oat()), this.GetSprite(17).SetUIActive(t))
-      : ((t = this.oat()), this.GetSprite(17).SetUIActive(t));
+        : ((t = this.ght()), this.GetSprite(17).SetUIActive(t))
+      : ((t = this.ght()), this.GetSprite(17).SetUIActive(t));
   }
-  kst() {
+  Zat() {
     var t = this.RoleData?.ElementConfig;
     t &&
-      this.mst !== t.UltimateSkillColor &&
-      ((this.mst = t.UltimateSkillColor),
+      this.Lat !== t.UltimateSkillColor &&
+      ((this.Lat = t.UltimateSkillColor),
       this.GetSprite(17).SetColor(this.RoleData.UltimateSkillColor));
   }
-  Fst() {
+  eht() {
     var t;
-    2 === ModelManager_1.ModelManager.PlatformModel.OperationType &&
+    2 === Info_1.Info.OperationType &&
       (!this.FormationIns ||
       (this.RoleData && this.RoleData.IsCurEntity) ||
       (t =
@@ -694,47 +705,47 @@ class FormationItem extends BattleChildView_1.BattleChildView {
           this.FormationIns.GetPlayerId(),
           this.FormationIns.GetConfigId,
         ) ?? 0) <= 0
-        ? this.xet.SetActive(!1)
-        : (this.xet.RefreshAction("切换角色" + t), this.xet.SetActive(!0)));
+        ? this.Qtt.SetActive(!1)
+        : (this.Qtt.RefreshAction("切换角色" + t), this.Qtt.SetActive(!0)));
   }
-  Jst() {
-    if (this.xet) {
+  _ht() {
+    if (this.Qtt) {
       let t = !1;
-      this.FormationIns?.IsMyRole() || (t = !this.Sst), this.xet.SetGray(t);
+      this.FormationIns?.IsMyRole() || (t = !this.Bat), this.Qtt.SetGray(t);
     }
   }
-  oat() {
+  ght() {
     var t,
-      e = this.RoleData?.AttributeComponent;
+      i = this.RoleData?.AttributeComponent;
     return (
-      !!e &&
-      ((t = e.GetCurrentValue(EAttributeId.Proto_Energy)),
-      e.GetCurrentValue(EAttributeId.Proto_EnergyMax) <= t)
+      !!i &&
+      ((t = i.GetCurrentValue(EAttributeId.Proto_Energy)),
+      i.GetCurrentValue(EAttributeId.Proto_EnergyMax) <= t)
     );
   }
-  Ost() {
+  zat() {
     this.RoleData
-      ? (this.ust !== this.RoleData.ElementType &&
-          ((this.ust = this.RoleData.ElementType),
-          (this.cst = this.RoleData.ElementConfig),
-          this.Ont(this.cst, this.ust)),
-        this.Gnt(this.GetElementValue()),
+      ? (this.Iat !== this.RoleData.ElementType &&
+          ((this.Iat = this.RoleData.ElementType),
+          (this.Tat = this.RoleData.ElementConfig),
+          this.Jst(this.Tat, this.Iat)),
+        this.KSa(),
         this.RefreshElementVisible())
       : this.GetItem(14).SetUIActive(!1);
   }
   RefreshElementVisible() {
     if (this.RoleData) {
       var t = this.GetItem(14);
-      if (this.dst)
+      if (this.Dat)
         if (2 === this.RoleData.RoleConfig?.RoleType)
           t.SetUIActive(!1), this.ResetAllConcertoNiagara();
         else {
-          var e = ModelManager_1.ModelManager.PlatformModel.OperationType;
-          if (2 === e && this.RoleData.IsCurEntity) t.SetUIActive(!1);
+          var i = Info_1.Info.OperationType;
+          if (2 === i && this.RoleData.IsCurEntity) t.SetUIActive(!1);
           else {
-            for (const i of BattleUiRoleData_1.BattleUiRoleData
+            for (const e of BattleUiRoleData_1.BattleUiRoleData
               .HideElementTagList)
-              if (this.RoleData.GameplayTagComponent?.HasTag(i))
+              if (this.RoleData.GameplayTagComponent?.HasTag(e))
                 return void t.SetUIActive(!1);
             t.SetUIActive(!0);
           }
@@ -742,66 +753,61 @@ class FormationItem extends BattleChildView_1.BattleChildView {
       else t.SetUIActive(!1);
     }
   }
-  Ont(t, e) {
+  Jst(t, i) {
     var t = t.Icon5,
-      i = this.GetSprite(16),
+      e = this.GetSprite(16),
       s = this.GetTexture(15);
-    this.SetElementIcon(t, s, e),
+    this.SetElementIcon(t, s, i),
       s.SetColor(this.RoleData.ElementColor),
-      i.SetColor(this.RoleData.ElementColor);
+      e.SetColor(this.RoleData.ElementColor);
   }
-  Gnt(t) {
-    var e = this.GetSprite(16),
-      t = t / SceneTeamDefine_1.MAX_ELEMENT_ENERGY;
-    e.SetFillAmount(t);
+  KSa() {
+    this.GetSprite(16).SetFillAmount(this.GetElementPercent());
   }
-  GetElementValue() {
-    var t;
-    return this.RoleData && (t = this.RoleData.GetElementAttributeId())
-      ? this.RoleData.AttributeComponent.GetCurrentValue(t)
-      : 0;
+  GetElementPercent() {
+    return this.RoleData ? this.RoleData.GetElementAttributePercent() : 0;
   }
   RefreshOnlineItem() {
-    var t, e;
+    var t, i;
     ModelManager_1.ModelManager.GameModeModel.IsMulti
       ? (t = this.FormationIns) &&
-        (this.vst ||
-          (this.vst = new FormationOnlineItem_1.FormationOnlineItem(
+        (this.xat ||
+          (this.xat = new FormationOnlineItem_1.FormationOnlineItem(
             this.RootItem,
           )),
-        (e = ModelManager_1.ModelManager.OnlineModel.GetCurrentTeamListById(
+        (i = ModelManager_1.ModelManager.OnlineModel.GetCurrentTeamListById(
           t.GetPlayerId(),
-        )) && this.RefreshPlayerPingState(e.PingState),
+        )) && this.RefreshPlayerPingState(i.PingState),
         t.IsMyRole()
-          ? (this.vst.SetOnlineNumber(-1), this.vst.SetNameText(""))
-          : (this.vst.SetOnlineNumber(e?.PlayerNumber ?? -1),
-            this.vst.SetNameText(e?.Name ?? ""),
-            this.vst.SetIsGrayByOtherControl(!t.IsControl())))
-      : (this.vst?.Destroy(), (this.vst = void 0));
+          ? (this.xat.SetOnlineNumber(-1), this.xat.SetNameText(""))
+          : (this.xat.SetOnlineNumber(i?.PlayerNumber ?? -1),
+            this.xat.SetNameText(i?.Name ?? ""),
+            this.xat.SetIsGrayByOtherControl(!t.IsControl())))
+      : (this.xat?.Destroy(), (this.xat = void 0));
   }
   RefreshPlayerPingState(t) {
-    t === Protocol_1.Aki.Protocol.oFs.Proto_POOR
-      ? (this.vst.SetNetWeak(!0), this.vst.SetNetDisconnect(!1))
-      : t === Protocol_1.Aki.Protocol.oFs.Proto_UNKNOWN
-        ? (this.vst.SetNetDisconnect(!0), this.vst.SetNetWeak(!1))
-        : (this.vst.SetNetWeak(!1), this.vst.SetNetDisconnect(!1));
+    t === Protocol_1.Aki.Protocol.Y8s.Proto_POOR
+      ? (this.xat.SetNetWeak(!0), this.xat.SetNetDisconnect(!1))
+      : t === Protocol_1.Aki.Protocol.Y8s.Proto_UNKNOWN
+        ? (this.xat.SetNetDisconnect(!0), this.xat.SetNetWeak(!1))
+        : (this.xat.SetNetWeak(!1), this.xat.SetNetDisconnect(!1));
   }
-  hnt(t) {
-    var e = [],
-      i = this.GetItem(t)
+  Est(t) {
+    var i = [],
+      e = this.GetItem(t)
         .GetOwner()
         .K2_GetComponentsByClass(UE.LGUIPlayTweenComponent.StaticClass()),
-      s = i.Num();
-    for (let t = 0; t < s; t++) e.push(i.Get(t));
-    this.Art || (this.Art = new Map()), this.Art.set(t, e);
+      s = e.Num();
+    for (let t = 0; t < s; t++) i.push(e.Get(t));
+    this.Hnt || (this.Hnt = new Map()), this.Hnt.set(t, i);
   }
-  Ert(t) {
-    t = this.Art?.get(t);
-    if (t) for (const e of t) e.Play();
+  bnt(t) {
+    t = this.Hnt?.get(t);
+    if (t) for (const i of t) i.Play();
   }
-  Irt(t) {
-    t = this.Art?.get(t);
-    if (t) for (const e of t) e.Stop();
+  Gnt(t) {
+    t = this.Hnt?.get(t);
+    if (t) for (const i of t) i.Stop();
   }
 }
 exports.FormationItem = FormationItem;

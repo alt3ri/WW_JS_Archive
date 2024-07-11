@@ -9,18 +9,18 @@ class ExploreAreaParentItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
       (this.Data = void 0),
-      (this.z5t = void 0),
+      (this.zVt = void 0),
       (this.ExploreAreaItem = void 0),
-      (this.Z5t = void 0),
-      (this.eVt = void 0),
-      (this.tVt = (t, e, i) => {
-        this.Z5t && this.Z5t(t, e, i);
+      (this.ZVt = void 0),
+      (this.e6t = void 0),
+      (this.t6t = (t, e, i) => {
+        this.ZVt && this.ZVt(t, e, i);
       }),
-      (this.iVt = (t, e, i) => {
-        this.eVt && this.eVt(t, e, i);
+      (this.i6t = (t, e, i) => {
+        this.e6t && this.e6t(t, e, i);
       }),
-      (this.oVt = () => !0),
-      (this.rVt = () => !0);
+      (this.o6t = () => !0),
+      (this.r6t = () => !0);
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -40,34 +40,34 @@ class ExploreAreaParentItem extends UiPanelBase_1.UiPanelBase {
     await super.CreateByActorAsync(t.GetOwner(), void 0, !0);
   }
   OnStart() {
-    (this.z5t = new ExploreCountryItem_1.ExploreCountryItem()),
-      this.z5t.Initialize(this.GetItem(0)),
+    (this.zVt = new ExploreCountryItem_1.ExploreCountryItem()),
+      this.zVt.Initialize(this.GetItem(0)),
       (this.ExploreAreaItem = new ExploreAreaItem_1.ExploreAreaItem()),
       this.ExploreAreaItem.Initialize(this.GetItem(1));
   }
   Update(t, e) {
     var i = (this.Data = t).IsCountry;
     (i
-      ? (this.z5t.BindOnSelected(this.tVt),
-        this.z5t.BindCanExecuteChange(this.oVt),
-        this.z5t)
-      : (this.ExploreAreaItem.BindOnSelected(this.iVt),
-        this.ExploreAreaItem.BindCanExecuteChange(this.rVt),
+      ? (this.zVt.BindOnSelected(this.t6t),
+        this.zVt.BindCanExecuteChange(this.o6t),
+        this.zVt)
+      : (this.ExploreAreaItem.BindOnSelected(this.i6t),
+        this.ExploreAreaItem.BindCanExecuteChange(this.r6t),
         this.ExploreAreaItem)
     ).Refresh(t),
-      this.z5t.SetActive(i),
+      this.zVt.SetActive(i),
       this.ExploreAreaItem.SetActive(!i);
   }
   BindOnCountrySelected(t) {
-    this.Z5t = t;
+    this.ZVt = t;
   }
   BindOnAreaSelected(t) {
-    this.eVt = t;
+    this.e6t = t;
   }
   ClearItem() {
     (this.Data = void 0),
-      this.z5t?.Destroy(),
-      (this.z5t = void 0),
+      this.zVt?.Destroy(),
+      (this.zVt = void 0),
       this.ExploreAreaItem?.Destroy(),
       (this.ExploreAreaItem = void 0);
   }

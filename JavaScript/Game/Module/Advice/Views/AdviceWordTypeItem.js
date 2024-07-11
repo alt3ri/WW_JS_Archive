@@ -10,18 +10,18 @@ const UE = require("ue"),
 class AdviceWordTypeItem extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
-      (this.K7e = 0),
-      (this.b7e = () => {
+      (this.rje = 0),
+      (this.QHe = () => {
         this.Og();
       }),
-      (this.T7e = () =>
+      (this.Lke = () =>
         ModelManager_1.ModelManager.AdviceModel.PreSelectSortTypeId !==
-        this.K7e),
-      (this.j7e = () => {
+        this.rje),
+      (this.ije = () => {
         ModelManager_1.ModelManager.AdviceModel.PreSelectSortTypeId !==
-          this.K7e &&
+          this.rje &&
           ((ModelManager_1.ModelManager.AdviceModel.PreSelectSortTypeId =
-            this.K7e),
+            this.rje),
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.OnClickAdviceSort,
           ));
@@ -41,36 +41,36 @@ class AdviceWordTypeItem extends UiPanelBase_1.UiPanelBase {
   OnStart() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnClickAdviceSort,
-      this.b7e,
+      this.QHe,
     );
     var e = this.GetExtendToggle(0);
-    e.CanExecuteChange.Unbind(), e.CanExecuteChange.Bind(this.T7e);
+    e.CanExecuteChange.Unbind(), e.CanExecuteChange.Bind(this.Lke);
   }
   UpdateItem(e) {
     this.GetExtendToggle(0).OnStateChange.Clear(),
-      this.GetExtendToggle(0).OnStateChange.Add(this.j7e),
-      (this.K7e = e),
+      this.GetExtendToggle(0).OnStateChange.Add(this.ije),
+      (this.rje = e),
       this.Og(),
-      this.Q7e();
+      this.nje();
   }
   Og() {
     var e = this.GetExtendToggle(0).ToggleState,
       t =
-        ModelManager_1.ModelManager.AdviceModel.PreSelectSortTypeId !== this.K7e
+        ModelManager_1.ModelManager.AdviceModel.PreSelectSortTypeId !== this.rje
           ? 0
           : 1;
     e !== t && this.GetExtendToggle(0).SetToggleStateForce(t, !1);
   }
-  Q7e() {
+  nje() {
     var e = ConfigManager_1.ConfigManager.AdviceConfig.GetAdviceTypeText(
-      this.K7e,
+      this.rje,
     );
     this.GetText(4).SetText(e);
   }
   OnBeforeDestroy() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnClickAdviceSort,
-      this.b7e,
+      this.QHe,
     );
   }
 }

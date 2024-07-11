@@ -7,77 +7,77 @@ const Log_1 = require("../../../../Core/Common/Log"),
   UiTabViewStorage_1 = require("../../../Ui/UiTabViewStorage");
 class TabViewComponent {
   constructor(e) {
-    (this.kBt = e),
-      (this.IVe = void 0),
+    (this.Hbt = e),
+      (this.N6e = void 0),
       (this.y9 = void 0),
-      (this.FBt = new Map()),
-      (this.VBt = (e, t) => {
-        var i = this.IVe ?? this.y9;
+      (this.jbt = new Map()),
+      (this.Wbt = (e, t) => {
+        var i = this.N6e ?? this.y9;
         t.DynamicTabName === i &&
-          (t = this.FBt.get(i)) &&
+          (t = this.jbt.get(i)) &&
           e.ViewData.SetAttachedView(t);
       }),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.GuideFocusNeedUiTabView,
-        this.VBt,
+        this.Wbt,
       );
   }
-  HBt(e, t) {
+  Kbt(e, t) {
     e?.RegisterViewModule?.(t);
   }
-  jBt() {
-    for (const e of this.FBt.values()) e.Destroy();
-    this.FBt.clear();
+  Qbt() {
+    for (const e of this.jbt.values()) e.Destroy();
+    this.jbt.clear();
   }
-  WBt() {
-    var e = this.FBt.get(this.IVe);
+  Xbt() {
+    var e = this.jbt.get(this.N6e);
     e &&
-      (e.InAsyncLoading() &&
-        (Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("UiTabModule", 11, "取消页签异步加载", [
+      (e.IsCreateOrCreating || e.IsStarting
+        ? Log_1.Log.CheckInfo() &&
+          Log_1.Log.Info("UiTabModule", 11, "异步加载中,不执行页签隐藏", [
             "TabViewName",
-            this.IVe,
-          ]),
-        e.CancelAsyncLoad(),
-        this.FBt.delete(this.IVe)),
-      e.HideUiTabView(!0));
+            this.N6e,
+          ])
+        : e.HideUiTabView(!0));
   }
   ToggleCallBack(e, t, i = void 0, s = void 0) {
-    void 0 !== this.IVe && this.WBt(), (this.IVe = t);
-    let r = this.FBt.get(t);
+    void 0 !== this.N6e && this.Xbt(), (this.N6e = t);
+    let r = this.jbt.get(t);
     var o;
     r ||
       ((o = UiTabViewStorage_1.UiTabViewStorage.GetUiTabViewBase(t)),
       (r = new o.CreateUiTabView()).SetTabViewName(t),
-      this.HBt(i, r),
-      this.FBt.set(t, r),
-      r.CreateThenShowByResourceIdAsync(o.ResourceId, this.kBt)),
+      this.Kbt(i, r),
+      this.jbt.set(t, r),
+      r.CreateByResourceIdAsync(o.ResourceId, this.Hbt).then(() => {
+        this.N6e === t ? r?.ShowUiTabViewFromToggle() : r?.HideUiTabView(!0);
+      })),
       r.SetParams(e),
       r.SetExtraParams(s),
-      r.InAsyncLoading() || r.ShowUiTabViewFromToggle();
+      r.IsCreateOrCreating || r.IsStarting || r.ShowUiTabViewFromToggle();
   }
   GetCurrentTabViewName() {
-    return this.IVe;
+    return this.N6e;
   }
   GetCurrentTabView() {
-    return this.GetTabViewByTabName(this.IVe);
+    return this.GetTabViewByTabName(this.N6e);
   }
   GetTabViewByTabName(e) {
-    return this.FBt.get(e);
+    return this.jbt.get(e);
   }
   SetCurrentTabViewState(e) {
     var t;
-    this.IVe &&
-      (t = this.FBt.get(this.IVe)) &&
+    this.N6e &&
+      (t = this.jbt.get(this.N6e)) &&
       (e && t.IsHideOrHiding
         ? t.ShowUiTabViewFromView()
         : e || t.IsHideOrHiding || t.HideUiTabView(!1));
   }
   DestroyTabViewComponent() {
-    this.jBt(),
+    this.Qbt(),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.GuideFocusNeedUiTabView,
-        this.VBt,
+        this.Wbt,
       );
   }
 }

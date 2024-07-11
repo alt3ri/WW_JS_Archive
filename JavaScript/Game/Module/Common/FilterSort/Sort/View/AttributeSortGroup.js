@@ -11,17 +11,17 @@ const UE = require("ue"),
 class SortItem extends UiPanelBase_1.UiPanelBase {
   constructor(t) {
     super(),
-      (this.dLt = 0),
+      (this.pDt = 0),
       (this.he = ""),
-      (this.CRt = 1),
-      (this.U4e = void 0),
-      (this.gRt = void 0),
-      (this.cLt = (t) => {
-        this.U4e?.(t, this.dLt, this.he);
+      (this.vUt = 1),
+      (this.j5e = void 0),
+      (this.MUt = void 0),
+      (this.gDt = (t) => {
+        this.j5e?.(t, this.pDt, this.he);
       }),
-      (this.T7e = () => {
+      (this.Lke = () => {
         return (
-          1 === this.GetExtendToggle(1).ToggleState || !this.gRt || this.gRt()
+          1 === this.GetExtendToggle(1).ToggleState || !this.MUt || this.MUt()
         );
       }),
       this.CreateThenShowByActor(t.GetOwner());
@@ -33,25 +33,25 @@ class SortItem extends UiPanelBase_1.UiPanelBase {
       [2, UE.UITexture],
       [3, UE.UIText],
     ]),
-      (this.BtnBindInfo = [[1, this.cLt]]);
+      (this.BtnBindInfo = [[1, this.gDt]]);
   }
   OnStart() {
-    this.GetExtendToggle(1).CanExecuteChange.Bind(this.T7e);
+    this.GetExtendToggle(1).CanExecuteChange.Bind(this.Lke);
   }
   OnBeforeDestroy() {
     this.GetExtendToggle(1).CanExecuteChange.Unbind();
   }
-  Ije() {
+  qWe() {
     (this.he = ConfigManager_1.ConfigManager.SortConfig.GetSortRuleName(
-      this.dLt,
-      this.CRt,
+      this.pDt,
+      this.vUt,
     )),
       this.GetText(0).SetText(this.he);
   }
-  IIt() {
+  UTt() {
     var t = ConfigManager_1.ConfigManager.SortConfig.GetSortRuleAttributeId(
-        this.dLt,
-        this.CRt,
+        this.pDt,
+        this.vUt,
       ),
       i = 0 < t,
       t = i
@@ -59,8 +59,8 @@ class SortItem extends UiPanelBase_1.UiPanelBase {
             t,
           )
         : ConfigManager_1.ConfigManager.SortConfig.GetSortRuleIcon(
-            this.dLt,
-            this.CRt,
+            this.pDt,
+            this.vUt,
           ),
       e = this.GetTexture(2);
     StringUtils_1.StringUtils.IsBlank(t)
@@ -69,21 +69,21 @@ class SortItem extends UiPanelBase_1.UiPanelBase {
         this.SetTextureByPath(t, e),
         e.SetChangeColor(i, e.changeColor));
   }
-  fRt(t) {
+  EUt(t) {
     this.GetExtendToggle(1).SetToggleStateForce(t ? 1 : 0);
   }
   SetToggleFunction(t) {
-    this.U4e = t;
+    this.j5e = t;
   }
   SetCanExecuteChange(t) {
-    this.gRt = t;
+    this.MUt = t;
   }
   ShowSortItem(t, i, e) {
-    (this.dLt = t),
-      (this.CRt = i),
-      this.Ije(),
-      this.IIt(),
-      this.fRt(0 < e),
+    (this.pDt = t),
+      (this.vUt = i),
+      this.qWe(),
+      this.UTt(),
+      this.EUt(0 < e),
       this.RefreshIndex(e);
   }
   RefreshIndex(t) {
@@ -95,24 +95,24 @@ class AttributeSortGroup extends UiPanelBase_1.UiPanelBase {
   constructor(t) {
     super(),
       (this.eGe = void 0),
-      (this.pRt = new Map()),
+      (this.SUt = new Map()),
       (this.Mne = 0),
-      (this.CRt = 1),
-      (this.vRt = 0),
-      (this.MRt = (t, i, e) => {
+      (this.vUt = 1),
+      (this.yUt = 0),
+      (this.IUt = (t, i, e) => {
         var i = new SortItem(i),
           s =
-            (i.SetToggleFunction(this.SRt),
-            i.SetCanExecuteChange(this.T7e),
-            this.ERt(t));
-        return i.ShowSortItem(t, this.CRt, s + 1), { Key: t, Value: i };
+            (i.SetToggleFunction(this.TUt),
+            i.SetCanExecuteChange(this.Lke),
+            this.LUt(t));
+        return i.ShowSortItem(t, this.vUt, s + 1), { Key: t, Value: i };
       }),
-      (this.SRt = (t, i, e) => {
-        1 === t ? this.pRt.set(i, e) : (this.pRt.delete(i), this.yRt(i)),
-          this.IRt(),
-          this.ILt();
+      (this.TUt = (t, i, e) => {
+        1 === t ? this.SUt.set(i, e) : (this.SUt.delete(i), this.DUt(i)),
+          this.RUt(),
+          this.RDt();
       }),
-      (this.T7e = () => 0 === this.vRt || this.pRt.size < this.vRt),
+      (this.Lke = () => 0 === this.yUt || this.SUt.size < this.yUt),
       this.CreateThenShowByActor(t.GetOwner());
   }
   OnRegisterComponent() {
@@ -125,66 +125,64 @@ class AttributeSortGroup extends UiPanelBase_1.UiPanelBase {
   OnStart() {
     this.eGe = new GenericLayoutNew_1.GenericLayoutNew(
       this.GetLayoutBase(1),
-      this.MRt,
+      this.IUt,
       this.GetItem(2),
     );
   }
-  OnBeforeDestroy() {
-    this.eGe.ClearChildren();
-  }
-  ERt(t) {
+  OnBeforeDestroy() {}
+  LUt(t) {
     let i = 0;
-    for (const e of this.pRt.keys()) {
+    for (const e of this.SUt.keys()) {
       if (e === t) return i;
       i++;
     }
     return -1;
   }
-  yRt(t) {
+  DUt(t) {
     this.eGe.GetLayoutItemByKey(t).RefreshIndex(0);
   }
-  IRt() {
+  RUt() {
     let t = 0;
-    for (const i of this.pRt.keys())
+    for (const i of this.SUt.keys())
       this.eGe.GetLayoutItemByKey(i).RefreshIndex(t + 1), t++;
   }
-  TRt() {
+  UUt() {
     var t = ModelManager_1.ModelManager.SortModel.GetSortResultData(
       this.Mne,
     ).GetSelectAttributeSort();
-    if (t) for (var [i, e] of t) this.pRt.set(i, e);
+    if (t) for (var [i, e] of t) this.SUt.set(i, e);
   }
-  LRt() {
+  AUt() {
     var t = ConfigManager_1.ConfigManager.SortConfig.GetSortConfig(this.Mne);
-    (this.vRt = t.LimitNum),
-      (this.CRt = t.DataId),
+    (this.yUt = t.LimitNum),
+      (this.vUt = t.DataId),
       this.eGe.RebuildLayoutByDataNew(t.AttributeSortList);
   }
-  ILt() {
+  RDt() {
     var t = this.GetText(0);
-    0 === this.vRt
+    0 === this.yUt
       ? LguiUtil_1.LguiUtil.SetLocalText(t, "AttributeSortName")
       : LguiUtil_1.LguiUtil.SetLocalText(
           t,
           "AttributeSortLimitName",
-          this.pRt.size,
-          this.vRt,
+          this.SUt.size,
+          this.yUt,
         );
   }
   Init(t) {
-    (this.Mne = t), this.TRt(), this.LRt(), this.ILt();
+    (this.Mne = t), this.UUt(), this.AUt(), this.RDt();
   }
   Reset() {
     var t, i;
-    this.pRt.clear();
+    this.SUt.clear();
     for ([t, i] of this.eGe.GetLayoutItemMap()) {
       var e = t;
-      i.ShowSortItem(e, this.CRt, 0);
+      i.ShowSortItem(e, this.vUt, 0);
     }
-    this.ILt();
+    this.RDt();
   }
   GetTempSelectMap() {
-    return this.pRt;
+    return this.SUt;
   }
 }
 exports.AttributeSortGroup = AttributeSortGroup;

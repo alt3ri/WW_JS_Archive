@@ -5,6 +5,7 @@ const UE = require("ue"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
   ButtonItem_1 = require("../../Common/Button/ButtonItem"),
@@ -12,20 +13,19 @@ const UE = require("ue"),
   MediumItemGrid_1 = require("../../Common/MediumItemGrid/MediumItemGrid"),
   ScrollingTipsController_1 = require("../../ScrollingTips/ScrollingTipsController"),
   LguiUtil_1 = require("../../Util/LguiUtil"),
-  RoleController_1 = require("../RoleController"),
-  ControllerHolder_1 = require("../../../Manager/ControllerHolder");
+  RoleController_1 = require("../RoleController");
 class ResonanceChainInfoItem extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
-      (this.zke = 0),
-      (this.Buo = void 0),
-      (this.p8t = void 0),
-      (this.buo = void 0),
-      (this.Gft = void 0),
-      (this.quo = () => {
+      (this.dFe = 0),
+      (this.Aco = void 0),
+      (this.p9t = void 0),
+      (this.Pco = void 0),
+      (this.$pt = void 0),
+      (this.xco = () => {
         var e =
           ConfigManager_1.ConfigManager.RoleResonanceConfig.GetRoleResonanceById(
-            this.Buo,
+            this.Aco,
           );
         if (e) {
           let i = !0;
@@ -36,14 +36,14 @@ class ResonanceChainInfoItem extends UiPanelBase_1.UiPanelBase {
           }),
             i
               ? RoleController_1.RoleController.SendResonanceUnlockRequest(
-                  this.zke,
+                  this.dFe,
                 )
               : ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
                   "ResonanceItemNotEnough",
                 );
         }
       }),
-      (this.Mft = () => {
+      (this.xpt = () => {
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.OnRoleInternalViewQuit,
         );
@@ -67,36 +67,32 @@ class ResonanceChainInfoItem extends UiPanelBase_1.UiPanelBase {
       [8, UE.UIText],
       [9, UE.UIButtonComponent],
     ]),
-      (this.BtnBindInfo = [[9, this.Mft]]);
+      (this.BtnBindInfo = [[9, this.xpt]]);
   }
   OnStart() {
-    (this.p8t = new ButtonItem_1.ButtonItem(this.GetItem(5))),
-      this.p8t.SetFunction(this.quo),
-      (this.buo = new MediumItemGrid_1.MediumItemGrid()),
-      this.buo.Initialize(this.GetItem(4).GetOwner()),
-      (this.Gft = new LevelSequencePlayer_1.LevelSequencePlayer(
+    (this.p9t = new ButtonItem_1.ButtonItem(this.GetItem(5))),
+      this.p9t.SetFunction(this.xco),
+      (this.Pco = new MediumItemGrid_1.MediumItemGrid()),
+      this.Pco.Initialize(this.GetItem(4).GetOwner()),
+      (this.$pt = new LevelSequencePlayer_1.LevelSequencePlayer(
         this.GetRootItem(),
       ));
   }
   async ShowItem() {
-    await this.LoadPromise,
-      this.Gft.StopCurrentSequence(),
-      this.Gft.PlayLevelSequenceByName("Start");
+    await this.LoadPromise, this.$pt.PlayLevelSequenceByName("Start");
   }
   async HideItem() {
-    await this.LoadPromise,
-      this.Gft.StopCurrentSequence(),
-      this.Gft.PlayLevelSequenceByName("Close");
+    await this.LoadPromise, this.$pt.PlayLevelSequenceByName("Close");
   }
   async Refresh(e = !1) {
     await this.LoadPromise;
     var t,
       i =
         ConfigManager_1.ConfigManager.RoleResonanceConfig.GetRoleResonanceById(
-          this.Buo,
+          this.Aco,
         );
     i &&
-      ((t = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(this.zke)),
+      ((t = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(this.dFe)),
       (t = ModelManager_1.ModelManager.RoleModel.GetRoleResonanceState(
         t,
         i.GroupIndex,
@@ -104,7 +100,7 @@ class ResonanceChainInfoItem extends UiPanelBase_1.UiPanelBase {
       this.GetItem(5).SetUIActive(1 === t && !e),
       this.GetItem(6).SetUIActive(2 === t && !e),
       this.GetItem(7).SetUIActive(0 === t && !e),
-      this.buo.GetRootItem().SetUIActive(2 !== t && !e),
+      this.Pco.GetRootItem().SetUIActive(2 !== t && !e),
       this.GetItem(10).SetUIActive(2 !== t && !e),
       this.GetText(0).ShowTextNew(i.NodeName),
       LguiUtil_1.LguiUtil.SetLocalTextNew(
@@ -115,10 +111,10 @@ class ResonanceChainInfoItem extends UiPanelBase_1.UiPanelBase {
       this.GetText(8).ShowTextNew(i.BgDescription),
       (t =
         ModelManager_1.ModelManager.RoleModel.RedDotResonanceTabHoleCondition(
-          this.zke,
+          this.dFe,
           i.GroupIndex,
         )),
-      this.p8t.SetRedDotVisible(t),
+      this.p9t.SetRedDotVisible(t),
       e ||
         i.ActivateConsume.forEach((e, t) => {
           var i = { Type: 4, ItemConfigId: t },
@@ -127,9 +123,9 @@ class ResonanceChainInfoItem extends UiPanelBase_1.UiPanelBase {
           (i.BottomTextId = "Text_ItemEnoughText_Text"),
             n < e && (i.BottomTextId = "Text_ItemNotEnoughText_Text"),
             (i.BottomTextParameter = [n, e]),
-            this.buo.Apply(i),
-            this.buo.BindOnCanExecuteChange(() => !1),
-            this.buo.BindOnExtendToggleClicked(() => {
+            this.Pco.Apply(i),
+            this.Pco.BindOnCanExecuteChange(() => !1),
+            this.Pco.BindOnExtendToggleClicked(() => {
               ControllerHolder_1.ControllerHolder.ItemController.OpenItemTipsByItemId(
                 t,
               );
@@ -137,13 +133,13 @@ class ResonanceChainInfoItem extends UiPanelBase_1.UiPanelBase {
         }));
   }
   Update(e, t, i = !1) {
-    (this.zke = e), (this.Buo = t), this.Refresh(i);
+    (this.dFe = e), (this.Aco = t), this.Refresh(i);
   }
   GetResonanceId() {
-    return this.Buo;
+    return this.Aco;
   }
   GetUiItemForGuide() {
-    return this.p8t
+    return this.p9t
       ?.GetBtn()
       ?.GetOwner()
       .GetComponentByClass(UE.UIItem.StaticClass());

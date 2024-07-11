@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiBlueprintFunctionLibrary = void 0);
 const puerts_1 = require("puerts"),
   UE = require("ue"),
+  Info_1 = require("../../../Core/Common/Info"),
   Json_1 = require("../../../Core/Common/Json"),
   Log_1 = require("../../../Core/Common/Log"),
   Protocol_1 = require("../../../Core/Define/Net/Protocol"),
@@ -342,7 +343,7 @@ class UiBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
                 ModelManager_1.ModelManager.LoginModel.SetMultiMapId(9),
                 (ModelManager_1.ModelManager.LoginModel.BornMode =
                   UiBlueprintFunctionLibrary.TestSceneLoadNetMode() ? 0 : 1),
-                new Protocol_1.Aki.Protocol.VBs()),
+                new Protocol_1.Aki.Protocol.Pks()),
               i =
                 ((i.X = UiBlueprintFunctionLibrary.TempLocation.X),
                 (i.Y = UiBlueprintFunctionLibrary.TempLocation.Y),
@@ -359,7 +360,7 @@ class UiBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
                 (ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(
                   i,
                 )?.InstType ===
-                  Protocol_1.Aki.Protocol.sOs.Proto_NormalInstance &&
+                  Protocol_1.Aki.Protocol.XFs.Proto_NormalInstance &&
                   UiBlueprintFunctionLibrary.TestLoadSceneData()
                     .IsDisableTeleportDungeon &&
                   ModelManager_1.ModelManager.SundryModel.BlockTpDungeonCount++,
@@ -542,10 +543,10 @@ class UiBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
     return ModelManager_1.ModelManager.WeaponModel.GetCurSelectViewName();
   }
   static IsGamepadNow() {
-    return ModelManager_1.ModelManager.PlatformModel.IsGamepad();
+    return Info_1.Info.IsInGamepad();
   }
   static IsMobileNow() {
-    return ModelManager_1.ModelManager.PlatformModel.IsMobile();
+    return Info_1.Info.IsInTouch();
   }
   static IsLongPressExploreButton() {
     return ModelManager_1.ModelManager.BattleUiModel.IsLongPressExploreButton;

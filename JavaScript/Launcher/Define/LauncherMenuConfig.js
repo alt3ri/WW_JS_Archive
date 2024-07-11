@@ -7,13 +7,13 @@ class LauncherMenuConfig {
     (this.FunctionId = e), (this.OptionsDefault = n);
   }
   static GetTableName() {
-    return LauncherMenuConfig.mSr;
+    return LauncherMenuConfig._Sr;
   }
   static GetLanguageTableName() {
-    return LauncherMenuConfig.dSr;
+    return LauncherMenuConfig.uSr;
   }
   static GetTableFile() {
-    return LauncherMenuConfig.CSr;
+    return LauncherMenuConfig.cSr;
   }
   static Parse(e) {
     var n = (0, puerts_1.$ref)(void 0);
@@ -38,9 +38,9 @@ class LauncherMenuConfig {
     }
   }
 }
-((exports.LauncherMenuConfig = LauncherMenuConfig).mSr = "MenuConfig"),
-  (LauncherMenuConfig.dSr = "LanguageDefine"),
-  (LauncherMenuConfig.CSr = "s.设置系统.xlsx");
+((exports.LauncherMenuConfig = LauncherMenuConfig)._Sr = "MenuConfig"),
+  (LauncherMenuConfig.uSr = "LanguageDefine"),
+  (LauncherMenuConfig.cSr = "s.设置系统.xlsx");
 class LaunchLanguageDefineConfig {
   constructor(e, n) {
     (this.LanguageType = e), (this.IsShow = n);

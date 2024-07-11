@@ -1,6 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
-  (exports.TipsCharacterData =
+  (exports.TipsOverPowerData =
+    exports.TipsCharacterData =
     exports.TipsVisionData =
     exports.TipsWeaponData =
     exports.TipsMaterialData =
@@ -11,35 +12,35 @@ const MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLa
   StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
   TimeUtil_1 = require("../../../Common/TimeUtil"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   VisionDetailDescComponent_1 = require("../../Phantom/Vision/View/VisionDetailDescComponent"),
   VisionDetailInfoComponent_1 = require("../../Phantom/Vision/View/VisionDetailInfoComponent"),
-  SkipTaskManager_1 = require("../../SkipInterface/SkipTaskManager"),
-  ControllerHolder_1 = require("../../../Manager/ControllerHolder");
+  SkipTaskManager_1 = require("../../SkipInterface/SkipTaskManager");
 class ItemTipsData {
-  constructor(i, t) {
+  constructor(t, i) {
     (this.ItemType = 0),
       (this.GetWayData = void 0),
       (this.LimitTimeTxt = void 0),
-      (this.CanClickLockButton = (i) => !0);
-    var e = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(i),
+      (this.CanClickLockButton = (t) => !0);
+    var e = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(t),
       a =
-        ((this.IncId = t || 0),
-        (this.ConfigId = i),
+        ((this.IncId = i || 0),
+        (this.ConfigId = t),
         (this.Title = e.Name),
         (this.QualityId = e.QualityId),
         []);
     if (e.ItemAccess && 0 < e.ItemAccess?.length)
-      for (const o of e.ItemAccess) {
-        var s = ConfigManager_1.ConfigManager.GetWayConfig.GetConfigById(o);
+      for (const r of e.ItemAccess) {
+        var s = ConfigManager_1.ConfigManager.GetWayConfig.GetConfigById(r);
         s &&
           ((s = {
-            Id: o,
+            Id: r,
             Type: s?.Type,
             Text: s?.Description,
             SortIndex: s?.SortIndex,
             Function: () => {
-              SkipTaskManager_1.SkipTaskManager.RunByConfigId(o);
+              SkipTaskManager_1.SkipTaskManager.RunByConfigId(r);
             },
           }),
           a.push(s));
@@ -48,58 +49,58 @@ class ItemTipsData {
   }
 }
 class TipsMaterialData extends (exports.ItemTipsData = ItemTipsData) {
-  constructor(i, t) {
-    super(i, t), (this.FunctionSpritePath = void 0), (this.ItemType = 0);
-    var e = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(i),
+  constructor(t, i) {
+    super(t, i), (this.FunctionSpritePath = void 0), (this.ItemType = 0);
+    var e = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(t),
       a =
         ((this.MaterialType = e.TypeDescription),
-        (this.FunctionSpritePath = this.lPt(e?.ItemBuffType)),
+        (this.FunctionSpritePath = this.cxt(e?.ItemBuffType)),
         ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
-          i,
           t,
+          i,
         )),
       a =
         ((this.Num = a),
         (this.TxtEffect = e.AttributesDescription),
         (this.TxtDescription = e.BgDescription),
-        ModelManager_1.ModelManager.InventoryModel.GetCommonItemData(i, t));
+        ModelManager_1.ModelManager.InventoryModel.GetCommonItemData(t, i));
     a?.IsLimitTimeItem() &&
       ((e = a.GetEndTime()),
-      (i = TimeUtil_1.TimeUtil.GetDataFromTimeStamp(
+      (t = TimeUtil_1.TimeUtil.GetDataFromTimeStamp(
         e * TimeUtil_1.TimeUtil.Millisecond,
       )),
-      (t = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
+      (i = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
         "Text_ItemExpired_text",
       )),
       (this.LimitTimeTxt = StringUtils_1.StringUtils.Format(
-        t,
-        i.Month,
-        i.Day,
-        i.Hour + ":" + i.Minute,
+        i,
+        t.Month,
+        t.Day,
+        t.Hour + ":" + t.Minute,
       )));
   }
-  lPt(i) {
-    var t = ModelManager_1.ModelManager.MediumItemGridModel;
-    switch (i) {
+  cxt(t) {
+    var i = ModelManager_1.ModelManager.MediumItemGridModel;
+    switch (t) {
       case 0:
         break;
       case 1:
-        return t.AttackBuffSpritePath;
+        return i.AttackBuffSpritePath;
       case 2:
-        return t.DefenseBuffSpritePath;
+        return i.DefenseBuffSpritePath;
       case 3:
-        return t.RestoreHealthBuffSpritePath;
+        return i.RestoreHealthBuffSpritePath;
       case 4:
-        return t.RechargeBuffSpritePath;
+        return i.RechargeBuffSpritePath;
       case 5:
-        return t.ResurrectionBuffSpritePath;
+        return i.ResurrectionBuffSpritePath;
     }
   }
 }
 exports.TipsMaterialData = TipsMaterialData;
 class TipsWeaponData extends ItemTipsData {
-  constructor(i, t) {
-    super(i, t),
+  constructor(t, i) {
+    super(t, i),
       (this.WeaponType = ""),
       (this.WeaponLevel = 0),
       (this.WeaponLimitLevel = 0),
@@ -116,105 +117,105 @@ class TipsWeaponData extends ItemTipsData {
     var e,
       a,
       s,
-      o,
       r,
-      n = ModelManager_1.ModelManager.InventoryModel.GetAttributeItemData(t),
-      n = t
+      o,
+      n = ModelManager_1.ModelManager.InventoryModel.GetAttributeItemData(i),
+      n = i
         ? n.GetConfig()
-        : ConfigManager_1.ConfigManager.InventoryConfig.GetWeaponItemConfig(i);
+        : ConfigManager_1.ConfigManager.InventoryConfig.GetWeaponItemConfig(t);
     void 0 !== n &&
-      ((t = (i = t
-        ? ModelManager_1.ModelManager.WeaponModel.GetWeaponDataByIncId(t)
+      ((i = (t = i
+        ? ModelManager_1.ModelManager.WeaponModel.GetWeaponDataByIncId(i)
         : void 0)
-        ? i.GetWeaponConfig()
+        ? t.GetWeaponConfig()
         : ConfigManager_1.ConfigManager.WeaponConfig.GetWeaponConfigByItemId(
             n.ItemId,
           )),
-      (n = i ? i.GetBreachLevel() : 0),
-      (o = i ? i.GetResonanceLevel() : 1),
-      (e = i
-        ? i.GetBreachConfig()
+      (n = t ? t.GetBreachLevel() : 0),
+      (r = t ? t.GetResonanceLevel() : 1),
+      (e = t
+        ? t.GetBreachConfig()
         : ConfigManager_1.ConfigManager.WeaponConfig.GetWeaponBreach(
-            t.BreachId,
+            i.BreachId,
             n,
           )),
-      (s = t.BreachId),
+      (s = i.BreachId),
       (a = ConfigManager_1.ConfigManager.WeaponConfig.GetWeaponResonanceConfig(
-        t.ResonId,
-        o,
+        i.ResonId,
+        r,
       )),
       (this.ItemType = 1),
       (this.WeaponType =
         ConfigManager_1.ConfigManager.WeaponConfig.GetWeaponTypeName(
-          t.WeaponType,
+          i.WeaponType,
         )),
-      (r = i ? i.GetLevel() : 1),
+      (o = t ? t.GetLevel() : 1),
       (e = e.LevelLimit),
-      (this.WeaponLevel = r),
+      (this.WeaponLevel = o),
       (this.WeaponLimitLevel = e),
       (this.BreachLevel = n),
       (e = ModelManager_1.ModelManager.WeaponModel.GetWeaponBreachMaxLevel(s)),
       (this.BreachMaxLevel = e),
-      (this.WeaponStage = o),
+      (this.WeaponStage = r),
       (this.WeaponSkillName = a.Name),
-      (this.WeaponEffect = t.Desc),
+      (this.WeaponEffect = i.Desc),
       (s = ModelManager_1.ModelManager.WeaponModel.GetWeaponConfigDescParams(
-        t,
-        o,
+        i,
+        r,
       )),
       (this.WeaponEffectParam = s),
-      (this.WeaponDescription = t.AttributesDescription),
+      (this.WeaponDescription = i.AttributesDescription),
       (e = []),
-      (a = t.FirstPropId.Id),
-      (o =
+      (a = i.FirstPropId.Id),
+      (r =
         ConfigManager_1.ConfigManager.PropertyIndexConfig.GetPropertyIndexInfo(
           a,
         )),
       (s = ModelManager_1.ModelManager.WeaponModel.GetCurveValue(
-        t.FirstCurve,
-        t.FirstPropId.Value,
-        r,
+        i.FirstCurve,
+        i.FirstPropId.Value,
+        o,
         n,
       )),
       (a = {
         Id: a,
         IsMainAttribute: !0,
-        Name: o.Name,
-        IconPath: o.Icon,
+        Name: r.Name,
+        IconPath: r.Icon,
         Value: s,
-        IsRatio: t.FirstPropId.IsRatio,
+        IsRatio: i.FirstPropId.IsRatio,
       }),
-      (s = t.SecondPropId.Id),
-      (o =
+      (s = i.SecondPropId.Id),
+      (r =
         ConfigManager_1.ConfigManager.PropertyIndexConfig.GetPropertyIndexInfo(
           s,
         )),
-      (r = ModelManager_1.ModelManager.WeaponModel.GetCurveValue(
-        t.SecondCurve,
-        t.SecondPropId.Value,
-        r,
+      (o = ModelManager_1.ModelManager.WeaponModel.GetCurveValue(
+        i.SecondCurve,
+        i.SecondPropId.Value,
+        o,
         n,
       )),
       (n = {
         Id: s,
         IsMainAttribute: !0,
-        Name: o.Name,
-        IconPath: o.Icon,
-        Value: r,
-        IsRatio: t.SecondPropId.IsRatio,
+        Name: r.Name,
+        IconPath: r.Icon,
+        Value: o,
+        IsRatio: i.SecondPropId.IsRatio,
       }),
       e.push(a),
       e.push(n),
       (this.AttributeData = e),
-      i) &&
-      ((this.EquippedId = i.GetRoleId()),
+      t) &&
+      ((this.EquippedId = t.GetRoleId()),
       (this.IsEquip = 0 !== this.EquippedId));
   }
 }
 exports.TipsWeaponData = TipsWeaponData;
 class TipsVisionData extends ItemTipsData {
-  constructor(i, t) {
-    super(i, t),
+  constructor(t, i) {
+    super(t, i),
       (this.VisionId = 0),
       (this.VisionType = ""),
       (this.Cost = 0),
@@ -228,14 +229,14 @@ class TipsVisionData extends ItemTipsData {
       (this.IsEquip = !1),
       (this.EquippedId = void 0),
       (this.VisionDetailInfoComponentData = void 0);
-    var e = ModelManager_1.ModelManager.InventoryModel.GetAttributeItemData(t),
-      i = ConfigManager_1.ConfigManager.InventoryConfig.GetPhantomItemConfig(i),
-      e = t ? e.GetConfig() : i;
+    var e = ModelManager_1.ModelManager.InventoryModel.GetAttributeItemData(i),
+      t = ConfigManager_1.ConfigManager.InventoryConfig.GetPhantomItemConfig(t),
+      e = i ? e.GetConfig() : t;
     if (void 0 !== e) {
       var a = ModelManager_1.ModelManager.PhantomBattleModel,
-        a = t ? a.GetPhantomBattleData(t) : void 0,
+        a = i ? a.GetPhantomBattleData(i) : void 0,
         s = a ? a.GetPhantomLevel() : 0,
-        o = a ? a.GetQuality() : 1,
+        r = a ? a.GetQuality() : 1,
         e = ((this.ItemType = 2), (this.VisionId = e.MonsterId), e.Rarity),
         e =
           ((this.VisionType =
@@ -248,22 +249,22 @@ class TipsVisionData extends ItemTipsData {
       this.UpgradeLevel = StringUtils_1.StringUtils.Format(e, s.toString());
       const M = new VisionDetailInfoComponent_1.VisionDetailInfoComponentData();
       var e = ConfigManager_1.ConfigManager.PhantomBattleConfig,
-        r =
-          (i &&
+        o =
+          (t &&
             !a &&
-            ((i = i.SkillId),
-            (g = e.GetPhantomSkillBySkillId(i)),
+            ((t = t.SkillId),
+            (g = e.GetPhantomSkillBySkillId(t)),
             (this.MainSkillText = g.DescriptionEx),
             (this.MainSkillParams =
-              e.GetPhantomSkillDescExByPhantomSkillIdAndQuality(i, o)),
+              e.GetPhantomSkillDescExByPhantomSkillIdAndQuality(t, r)),
             VisionDetailDescComponent_1.VisionDetailDesc.ConvertVisionSkillDescToDescData(
               g,
               s,
               !0,
               !0,
-              o,
-            ).forEach((i) => {
-              M.AddDescData(i);
+              r,
+            ).forEach((t) => {
+              M.AddDescData(t);
             })),
           []),
         e = a?.GetMainPropShowAttributeList(1);
@@ -281,11 +282,11 @@ class TipsVisionData extends ItemTipsData {
               Value: l.BaseValue,
               IsRatio: l.IsRatio,
             };
-          r.push(n);
+          o.push(n);
         }
-      i = a?.GetSubPropShowAttributeList(1);
-      if (void 0 !== i)
-        for (const _ of i) {
+      t = a?.GetSubPropShowAttributeList(1);
+      if (void 0 !== t)
+        for (const _ of t) {
           var h =
               ConfigManager_1.ConfigManager.PropertyIndexConfig.GetPropertyIndexInfo(
                 _.Id,
@@ -298,12 +299,12 @@ class TipsVisionData extends ItemTipsData {
               Value: _.BaseValue,
               IsRatio: _.IsRatio,
             };
-          r.push(h);
+          o.push(h);
         }
-      this.AttributeData = r;
+      this.AttributeData = o;
       var g =
           ControllerHolder_1.ControllerHolder.PhantomBattleController.GetEquipRole(
-            t,
+            i,
           ),
         s =
           (g && ((this.EquippedId = g), (this.IsEquip = 0 !== this.EquippedId)),
@@ -314,16 +315,16 @@ class TipsVisionData extends ItemTipsData {
           a.GetPhantomLevel(),
           !0,
           !0,
-          o,
-        ).forEach((i) => {
-          M.AddDescData(i);
+          r,
+        ).forEach((t) => {
+          M.AddDescData(t);
         }),
         s &&
           VisionDetailDescComponent_1.VisionDetailDesc.ConvertVisionFetterDataToDetailDescData(
             s,
             !1,
-          ).forEach((i) => {
-            M.AddDescData(i);
+          ).forEach((t) => {
+            M.AddDescData(t);
           }),
         (this.VisionDetailInfoComponentData = M);
     }
@@ -331,34 +332,40 @@ class TipsVisionData extends ItemTipsData {
 }
 exports.TipsVisionData = TipsVisionData;
 class TipsCharacterData extends ItemTipsData {
-  constructor(i, t) {
-    super(i, t),
-      (this._Pt = ""),
-      (this.bnt = void 0),
-      (this.uPt = ""),
-      (this.cPt = ""),
+  constructor(t, i) {
+    super(t, i),
+      (this.mxt = ""),
+      (this.Qst = void 0),
+      (this.dxt = ""),
+      (this.Cxt = ""),
       (this.ItemType = 3);
-    t = ConfigManager_1.ConfigManager.RoleConfig;
-    let e = t.GetRoleConfig(i);
-    (i = e.ParentId), (t = (e = 0 < i ? t.GetRoleConfig(i) : e).ElementId);
-    (this._Pt = e.Name),
-      (this.bnt =
-        ConfigManager_1.ConfigManager.ElementInfoConfig.GetElementInfo(t)),
-      (this.uPt = e.RoleHeadIconBig),
-      (this.cPt = e.Introduction);
+    i = ConfigManager_1.ConfigManager.RoleConfig;
+    let e = i.GetRoleConfig(t);
+    (t = e.ParentId), (i = (e = 0 < t ? i.GetRoleConfig(t) : e).ElementId);
+    (this.mxt = e.Name),
+      (this.Qst =
+        ConfigManager_1.ConfigManager.ElementInfoConfig.GetElementInfo(i)),
+      (this.dxt = e.RoleHeadIconBig),
+      (this.Cxt = e.Introduction);
   }
   GetRoleName() {
-    return this._Pt;
+    return this.mxt;
   }
   GetElementConfig() {
-    return this.bnt;
+    return this.Qst;
   }
   GetHeadTexutePath() {
-    return this.uPt;
+    return this.dxt;
   }
   GetRoleIntroduction() {
-    return this.cPt;
+    return this.Cxt;
   }
 }
 exports.TipsCharacterData = TipsCharacterData;
+class TipsOverPowerData extends ItemTipsData {
+  constructor(t, i) {
+    super(t, i), (this.ItemType = 4);
+  }
+}
+exports.TipsOverPowerData = TipsOverPowerData;
 //# sourceMappingURL=ItemTipsDefine.js.map

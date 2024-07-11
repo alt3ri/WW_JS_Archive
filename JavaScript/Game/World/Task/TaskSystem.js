@@ -6,7 +6,7 @@ const CustomPromise_1 = require("../../../Core/Common/CustomPromise"),
   Queue_1 = require("../../../Core/Container/Queue");
 class TaskSystem {
   static get Promise() {
-    return this.$Mr?.Promise;
+    return this.KEr?.Promise;
   }
   static Initialize() {
     return (this.Ife = !0);
@@ -15,35 +15,35 @@ class TaskSystem {
     return (
       !!this.Ife &&
       (this.Running
-        ? this.$Mr.Promise
-        : ((this.YMr = s),
+        ? this.KEr.Promise
+        : ((this.QEr = s),
           (this.Running = !0),
-          (this.$Mr = new CustomPromise_1.CustomPromise()),
-          this.JMr()))
+          (this.KEr = new CustomPromise_1.CustomPromise()),
+          this.XEr()))
     );
   }
   static AddTask(s) {
-    this.Ife && s.Init() && this.zMr.Push(s);
+    this.Ife && s.Init() && this.$Er.Push(s);
   }
   static Clear() {
     (this.Ife = !1), this.AW();
   }
   static AW() {
-    this.zMr.Clear(),
-      (this.YMr = void 0),
+    this.$Er.Clear(),
+      (this.QEr = void 0),
       (this.HasLoadingTask = !1),
       (this.Running = !1);
   }
-  static async JMr() {
+  static async XEr() {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info("World", 3, "TaskSystem:开始", [
         "Task个数",
-        this.zMr.Size,
+        this.$Er.Size,
       ]);
     let s = !0,
       t = -1;
-    for (; this.zMr.Size; ) {
-      var e = this.zMr.Pop(),
+    for (; this.$Er.Size; ) {
+      var e = this.$Er.Pop(),
         i =
           (t++,
           Log_1.Log.CheckInfo() &&
@@ -53,7 +53,7 @@ class TaskSystem {
               "TaskSystem:执行Task前",
               ["Index", t],
               ["Name", e.Name],
-              ["剩余Task个数", this.zMr.Size],
+              ["剩余Task个数", this.$Er.Size],
             ),
           await e.Run());
       if (
@@ -65,7 +65,7 @@ class TaskSystem {
             ["Index", t],
             ["Name", e.Name],
             ["Result", i],
-            ["剩余Task个数", this.zMr.Size],
+            ["剩余Task个数", this.$Er.Size],
           ),
         !this.Ife)
       )
@@ -90,12 +90,12 @@ class TaskSystem {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info("World", 3, "TaskSystem:结束", ["Success", s]),
       (this.Running = !1),
-      this.$Mr.SetResult(s);
-    var a = this.YMr;
+      this.KEr.SetResult(s);
+    var a = this.QEr;
     return this.AW(), a?.(s), s;
   }
 }
-((exports.TaskSystem = TaskSystem).zMr = new Queue_1.Queue()),
+((exports.TaskSystem = TaskSystem).$Er = new Queue_1.Queue()),
   (TaskSystem.HasLoadingTask = !1),
   (TaskSystem.Running = !1),
   (TaskSystem.Ife = !1);

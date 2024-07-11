@@ -118,10 +118,10 @@ class FoleySynthModel1Handler extends FoleySynthHandlerBase_1.FoleySynthHandlerB
 exports.FoleySynthModel1Handler = FoleySynthModel1Handler;
 class FoleySynthModel2Handler extends FoleySynthHandlerBase_1.FoleySynthHandlerBase {
   constructor() {
-    super(...arguments), (this.VelocityMaxCount = 0), (this.y$o = new Array());
+    super(...arguments), (this.VelocityMaxCount = 0), (this.MYo = new Array());
   }
   OnInit(e) {
-    for (const o of e) this.FoleySynthModelConfigs.push(o), this.y$o.push(-1);
+    for (const o of e) this.FoleySynthModelConfigs.push(o), this.MYo.push(-1);
   }
   OnParseBoneSpeedForAudio() {
     var t = [],
@@ -129,7 +129,7 @@ class FoleySynthModel2Handler extends FoleySynthHandlerBase_1.FoleySynthHandlerB
     for (let e = 0; e < this.FoleySynthModelConfigs.length; ++e)
       t.push(0), i.push(0);
     for (let o = 0; o < this.FoleySynthModelConfigs.length; ++o)
-      if (-1 === this.y$o[o]) {
+      if (-1 === this.MYo[o]) {
         var e = this.FoleySynthModelConfigs[o];
         if (this.GetCurrentRecord(o).Speed > e.Ceil) {
           AudioController_1.AudioController.PostEventByComponent(
@@ -157,12 +157,12 @@ class FoleySynthModel2Handler extends FoleySynthHandlerBase_1.FoleySynthHandlerB
           }
           this.UeAkComp.SetRTPCValue(e.RtpcVelMax, t[o], 0, ""),
             this.UeAkComp.SetRTPCValue(e.RtpcAccMax, i[o], 0, ""),
-            (this.y$o[o] = t[o]);
+            (this.MYo[o] = t[o]);
         }
       } else {
         var e = this.FoleySynthModelConfigs[o],
           h = this.GetCurrentRecord(o).Speed;
-        h < e.Floor || h < this.y$o[o] * e.FloorPrecent
+        h < e.Floor || h < this.MYo[o] * e.FloorPrecent
           ? (AudioController_1.AudioController.PostEventByComponent(
               e.FloorEvent,
               this.UeAkComp,
@@ -183,7 +183,7 @@ class FoleySynthModel2Handler extends FoleySynthHandlerBase_1.FoleySynthHandlerB
               e.FloorInterpolation,
               "",
             ),
-            (this.y$o[o] = -1))
+            (this.MYo[o] = -1))
           : this.UeAkComp.SetRTPCValue(
               e.RtpcVelDur,
               h,

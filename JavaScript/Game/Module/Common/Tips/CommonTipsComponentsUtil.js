@@ -206,7 +206,7 @@ class CommonTipsComponentUtil {
       for (const h of i) {
         var C =
             ConfigManager_1.ConfigManager.PhantomBattleConfig.GetPhantomMainPropertyItemId(
-              h.IDs,
+              h.$ws,
             ),
           C =
             ConfigManager_1.ConfigManager.PropertyIndexConfig.GetPropertyIndexInfo(
@@ -214,7 +214,7 @@ class CommonTipsComponentUtil {
             ),
           M = !!C.IsPercent;
         t.MainAttributeList.push(
-          new CommonComponentDefine_1.TipsAttributeData(C.Id, h.gkn, M),
+          new CommonComponentDefine_1.TipsAttributeData(C.Id, h.W4n, M),
         );
       }
     s = o?.GetPhantomSubProp();
@@ -229,10 +229,10 @@ class CommonTipsComponentUtil {
       for (const _ of s) {
         var p =
           ConfigManager_1.ConfigManager.PhantomBattleConfig.GetPhantomSubPropertyById(
-            _.IDs,
+            _.$ws,
           ).AddType === CommonComponentDefine_1.RATIO;
         t.SubAttributeList.push(
-          new CommonComponentDefine_1.TipsAttributeData(_.IDs, _.gkn, p),
+          new CommonComponentDefine_1.TipsAttributeData(_.$ws, _.W4n, p),
         );
       }
     }

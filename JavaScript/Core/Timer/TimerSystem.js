@@ -8,44 +8,43 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
       void 0);
 const Log_1 = require("../Common/Log"),
   Stats_1 = require("../Common/Stats"),
-  Time_1 = require("../Common/Time"),
   PriorityQueue_1 = require("../Container/PriorityQueue"),
   MAX_LOOP = ((exports.MIN_TIME = 20), (exports.MAX_TIME = 9e4), 10),
   FOREVER = 0;
 class TimerHandle {
-  constructor() {
-    (this.Id = 0), (this.Id = ++TimerHandle.o6);
+  constructor(t) {
+    (this.Me = t), (this.Id = 0), (this.Id = ++TimerHandle.o6);
   }
   Valid() {
-    return TimerSystem.Has(this);
+    return this.Me?.Has(this) ?? !1;
   }
   Remove() {
-    return TimerSystem.Remove(this);
+    return this.Me?.Remove(this) ?? !1;
   }
   IsPause() {
-    return TimerSystem.IsPause(this);
+    return this.Me?.IsPause(this) ?? !1;
   }
   Pause() {
-    return TimerSystem.Pause(this);
+    return this.Me?.Pause(this) ?? !1;
   }
   Resume() {
-    return TimerSystem.Resume(this);
+    return this.Me?.Resume(this) ?? !1;
   }
   ChangeDilation(t) {
-    return TimerSystem.ChangeDilation(this, t);
+    return this.Me?.ChangeDilation(this, t) ?? !1;
   }
 }
 (exports.TimerHandle = TimerHandle).o6 = 0;
 class Timer {
-  constructor(t, i, e, s, r, o, n, h) {
+  constructor(t, i, e, s, r, o, h, n) {
     (this.Id = t),
       (this.IO = i),
       (this.Interval = e),
       (this.kC = s),
       (this.Dilation = r),
       (this.Handle = o),
-      (this.MJ = n),
-      (this.Reason = h),
+      (this.MJ = h),
+      (this.Reason = n),
       (this.Now = -0),
       (this.Next = -0),
       (this.t6 = 0),
@@ -136,20 +135,20 @@ class TimerSystemInstance {
   Has(t) {
     return void 0 !== t && this.Timers.has(t.Id);
   }
-  Loop(t, i, e, s = 1, r = void 0, o = void 0) {
+  Loop(t, i, e, s = 1, r = void 0, o = void 0, h = !0) {
     if (
-      TimerSystemInstance.j6(i) &&
+      TimerSystemInstance.j6(i, o, h) &&
       TimerSystemInstance.yJ(e) &&
       TimerSystemInstance.IJ(s)
     )
       return this.fK(t, i, e, s, r, o);
   }
-  Forever(t, i, e = 1, s = void 0, r = void 0) {
-    if (TimerSystemInstance.j6(i) && TimerSystemInstance.IJ(e))
+  Forever(t, i, e = 1, s = void 0, r = void 0, o = !0) {
+    if (TimerSystemInstance.j6(i, r, o) && TimerSystemInstance.IJ(e))
       return this.fK(t, i, FOREVER, e, s, r);
   }
-  Delay(t, i, e = void 0, s = void 0) {
-    if (TimerSystemInstance.j6(i, s)) return this.fK(t, i, 1, 1, e, s);
+  Delay(t, i, e = void 0, s = void 0, r = !0) {
+    if (TimerSystemInstance.j6(i, s, r)) return this.fK(t, i, 1, 1, e, s);
   }
   Next(t, i = void 0, e = void 0) {
     return this.fK(t, 1, 1, 1, i, e);
@@ -204,9 +203,9 @@ class TimerSystemInstance {
         : ((i.Next = i.Next + this.Now), (i.State = 0), this.Queue.Push(i), !0))
     );
   }
-  ChangeInterval(t, i) {
-    if (!TimerSystemInstance.j6(i)) return !1;
-    var e = this.TJ(t);
+  ChangeInterval(t, i, e, s = !0) {
+    if (!TimerSystemInstance.j6(i, e, s)) return !1;
+    e = this.TJ(t);
     if (!e) return !1;
     if (
       (2 === e.State &&
@@ -220,7 +219,7 @@ class TimerSystemInstance {
         ),
       e.Interval !== i)
     ) {
-      var s = this.Now;
+      s = this.Now;
       if (1 === e.State) {
         const o = e.Next + i - e.Interval;
         (e.Next = o < 0 ? 0 : o), (e.Interval = i);
@@ -293,18 +292,18 @@ class TimerSystemInstance {
         Log_1.Log.Error("Timer", 1, "计时器句柄不存在", ["id", t]);
     }
   }
-  fK(i, e, s, r, o, n) {
+  fK(i, e, s, r, o, h) {
     if (i) {
       let t = void 0;
       o ||
         (t = this.StatWeakMap.get(i)) ||
         ((t = void 0), this.StatWeakMap.set(i, t));
-      var h = this.Now,
-        a = new TimerHandle(),
-        s = new Timer(a.Id, i, e, s, r, a, o ?? t, n);
+      var n = this.Now,
+        a = new TimerHandle(this),
+        s = new Timer(a.Id, i, e, s, r, a, o ?? t, h);
       return (
-        (s.Now = h),
-        (s.Next = h + e / r),
+        (s.Now = n),
+        (s.Next = n + e / r),
         this.Timers.set(a.Id, s),
         this.Queue.Push(s),
         this.Registry.register(a, s, s),
@@ -323,7 +322,7 @@ class TimerSystemInstance {
       !0
     );
   }
-  static j6(t, i = void 0) {
+  static j6(t, i = void 0, e = !0) {
     return t < exports.MIN_TIME
       ? (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
@@ -335,7 +334,8 @@ class TimerSystemInstance {
             ["interval", t],
           ),
         !1)
-      : (t > exports.MAX_TIME &&
+      : (e &&
+          t > exports.MAX_TIME &&
           (i
             ? Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
@@ -386,72 +386,6 @@ class TimerSystemInstance {
     );
   }
 }
-class TimerSystemImplement {
-  static get Instance() {
-    Log_1.Log.CheckError() &&
-      Log_1.Log.Error("Timer", 17, "get Instance not implement");
-  }
-  static TickImplement(t) {
-    this.Instance?.Tick(t);
-  }
-  static Has(t) {
-    return this.Instance?.Has(t) ?? !1;
-  }
-  static Loop(t, i, e, s = 1, r = void 0, o = void 0) {
-    return this.Instance?.Loop(t, i, e, s, r, o);
-  }
-  static Forever(t, i, e = 1, s = void 0, r = void 0) {
-    return this.Instance?.Forever(t, i, e, s, r);
-  }
-  static Delay(t, i, e = void 0, s = void 0) {
-    return this.Instance?.Delay(t, i, e, s);
-  }
-  static Next(t, i = void 0, e = void 0) {
-    return this.Instance?.Next(t, i, e);
-  }
-  static Remove(t) {
-    return this.Instance?.Remove(t) ?? !1;
-  }
-  static IsPause(t) {
-    return this.Instance?.IsPause(t) ?? !1;
-  }
-  static Pause(t) {
-    return this.Instance?.Pause(t) ?? !1;
-  }
-  static Resume(t) {
-    return this.Instance?.Resume(t) ?? !1;
-  }
-  static ChangeInterval(t, i) {
-    return this.Instance?.ChangeInterval(t, i) ?? !1;
-  }
-  static ChangeDilation(t, i) {
-    return this.Instance?.ChangeDilation(t, i) ?? !1;
-  }
-  static async Wait(t, i = void 0) {
-    return this.Instance?.Wait(t, i) ?? Promise.resolve();
-  }
-}
-class TimerSystem extends TimerSystemImplement {
-  static get Instance() {
-    return this.InstanceInternal;
-  }
-  static Tick(t) {
-    this.TickImplement(t);
-  }
-}
-(exports.TimerSystem = TimerSystem).InstanceInternal =
-  new TimerSystemInstance();
-class RealTimeTimerSystem extends TimerSystemImplement {
-  static get Instance() {
-    return this.InstanceInternal;
-  }
-  static Tick() {
-    var t = Time_1.Time.ServerTimeStamp,
-      i = t - this.e8s;
-    (this.e8s = t), this.TickImplement(i);
-  }
-}
-((exports.RealTimeTimerSystem = RealTimeTimerSystem).InstanceInternal =
-  new TimerSystemInstance()),
-  (RealTimeTimerSystem.e8s = 0);
+(exports.TimerSystem = new TimerSystemInstance()),
+  (exports.RealTimeTimerSystem = new TimerSystemInstance());
 //# sourceMappingURL=TimerSystem.js.map

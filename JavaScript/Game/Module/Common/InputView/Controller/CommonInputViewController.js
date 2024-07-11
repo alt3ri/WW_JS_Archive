@@ -28,7 +28,7 @@ class CommonInputViewController extends UiControllerBase_1.UiControllerBase {
         IsCheckNone: !0,
         NeedFunctionButton: !1,
       };
-    UiManager_1.UiManager.OpenView("CommonSingleInputView", n);
+    UiManager_1.UiManager.OpenView("CommonModifyNameInputView", n);
   }
   static OpenSetPlayerRemarkNameInputView() {
     let e =

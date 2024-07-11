@@ -10,13 +10,13 @@ const UE = require("ue"),
 class AdviceExpressionItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
-      (this.C8e = 0),
-      (this.H9e = () => {
-        this.j9e(), this.W9e();
+      (this.U9e = 0),
+      (this.oHe = () => {
+        this.rHe(), this.nHe();
       }),
-      (this.K9e = () => {
+      (this.sHe = () => {
         (ModelManager_1.ModelManager.AdviceModel.PreSelectExpressionId =
-          this.C8e),
+          this.U9e),
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.OnClickAdviceExpression,
           );
@@ -29,41 +29,41 @@ class AdviceExpressionItem extends GridProxyAbstract_1.GridProxyAbstract {
       [2, UE.UITexture],
       [3, UE.UIItem],
     ]),
-      (this.BtnBindInfo = [[0, this.K9e]]);
+      (this.BtnBindInfo = [[0, this.sHe]]);
   }
   OnStart() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnClickAdviceExpression,
-      this.H9e,
+      this.oHe,
     );
   }
   Refresh(e, t, s) {
-    this.C8e = e.Id;
+    this.U9e = e.Id;
     var r = e.ExpressionTexturePath,
       r =
         (ResourceSystem_1.ResourceSystem.LoadAsync(r, UE.Texture, (e, t) => {
           this.GetRootActor()?.IsValid() && this.GetTexture(2).SetTexture(e);
         }),
         e.Name);
-    this.GetText(1).ShowTextNew(r), this.j9e(), this.W9e();
+    this.GetText(1).ShowTextNew(r), this.rHe(), this.nHe();
   }
-  W9e() {
+  nHe() {
     var e = this.GetExtendToggle(0).ToggleState,
       t =
         ModelManager_1.ModelManager.AdviceModel.PreSelectExpressionId ===
-        this.C8e
+        this.U9e
           ? 1
           : 0;
     e !== t && this.GetExtendToggle(0).SetToggleStateForce(t, !1);
   }
-  j9e() {
+  rHe() {
     var e = ModelManager_1.ModelManager.AdviceModel.CurrentExpressionId;
-    this.GetItem(3).SetUIActive(e === this.C8e);
+    this.GetItem(3).SetUIActive(e === this.U9e);
   }
   OnBeforeDestroy() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnClickAdviceExpression,
-      this.H9e,
+      this.oHe,
     );
   }
 }

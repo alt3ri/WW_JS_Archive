@@ -1,34 +1,43 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CommonCurrencyItemListComponent = void 0);
-const CommonCurrencyItem_1 = require("./CommonCurrencyItem");
+const ModelManager_1 = require("../../Manager/ModelManager"),
+  PowerCurrencyItem_1 = require("../Power/SubViews/PowerCurrencyItem"),
+  CommonCurrencyItem_1 = require("./CommonCurrencyItem");
 class CommonCurrencyItemListComponent {
-  constructor(t) {
-    (this.LIt = void 0), (this.DIt = void 0), (this.DIt = t);
+  constructor(e) {
+    (this.PTt = void 0), (this.xTt = void 0), (this.xTt = e);
   }
-  async SetCurrencyItemList(e) {
-    this.LIt || (this.LIt = new Array());
-    let r = void 0;
+  pQs(e) {
+    return new (
+      ModelManager_1.ModelManager.PowerModel.CheckItemIfPowerItem(e)
+        ? PowerCurrencyItem_1.PowerCurrencyItem
+        : CommonCurrencyItem_1.CommonCurrencyItem
+    )();
+  }
+  async SetCurrencyItemList(r) {
+    this.PTt || (this.PTt = new Array());
+    let t = void 0;
     var o = [];
-    for (let t = this.LIt.length; t < e.length; t++) {
-      const r = new CommonCurrencyItem_1.CommonCurrencyItem();
-      this.LIt.push(r);
-      var s = r.CreateThenShowByResourceIdAsync(
+    for (let e = this.PTt.length; e < r.length; e++) {
+      const t = this.pQs(r[e]);
+      this.PTt.push(t);
+      var n = t.CreateThenShowByResourceIdAsync(
         "UIItem_CommonCurrencyItem",
-        this.DIt,
+        this.xTt,
       );
-      o.push(s);
+      o.push(n);
     }
     await Promise.all(o);
-    for (let t = 0; t < e.length; t++) {
-      const r = this.LIt[t];
-      r.RefreshTemp(e[t]), r.SetActive(!0), r.SetPayShopButtonActive();
+    for (let e = 0; e < r.length; e++) {
+      const t = this.PTt[e];
+      t.RefreshTemp(r[e]), t.SetActive(!0), t.RefreshAddButtonActive();
     }
-    for (let t = e.length; t < this.LIt.length; t++)
-      (r = this.LIt[t]).SetActive(!1);
+    for (let e = r.length; e < this.PTt.length; e++)
+      (t = this.PTt[e]).SetActive(!1);
   }
   GetCurrencyItemList() {
-    return this.LIt;
+    return this.PTt;
   }
 }
 exports.CommonCurrencyItemListComponent = CommonCurrencyItemListComponent;

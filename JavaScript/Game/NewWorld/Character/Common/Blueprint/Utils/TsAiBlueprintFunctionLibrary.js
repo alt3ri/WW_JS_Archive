@@ -24,20 +24,20 @@ class TsAiBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
     var r = Global_1.Global.BaseCharacter;
     return (
       !!r &&
-      !!(r = r.CharacterActorComponent.Entity.GetComponent(185)) &&
+      !!(r = r.CharacterActorComponent.Entity.GetComponent(188)) &&
       r.HasTag(e?.TagId)
     );
   }
   static RestartBehaviorTree(t) {
-    t = EntitySystem_1.EntitySystem.GetComponent(t, 38);
+    t = EntitySystem_1.EntitySystem.GetComponent(t, 39);
     t && t.RestartBehaviorTree();
   }
   static SetAiEnabled(t, e, r) {
-    t = EntitySystem_1.EntitySystem.GetComponent(t, 38);
+    t = EntitySystem_1.EntitySystem.GetComponent(t, 39);
     t && ((r = "EcologicalBridge_" + r), e ? t.EnableAi(r) : t.DisableAi(r));
   }
   static NeedCheckPlayerImpact(t) {
-    var t = EntitySystem_1.EntitySystem.GetComponent(t, 38);
+    var t = EntitySystem_1.EntitySystem.GetComponent(t, 39);
     return (
       !!t &&
       !!(t = t.TsAiController.AiController.NpcDecision) &&
@@ -48,7 +48,7 @@ class TsAiBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
     return TsAiBlueprintFunctionLibrary.NeedCheckPlayerAttackNoBlueprint(t);
   }
   static NeedCheckPlayerAttackNoBlueprint(t) {
-    var t = EntitySystem_1.EntitySystem.GetComponent(t, 38);
+    var t = EntitySystem_1.EntitySystem.GetComponent(t, 39);
     return (
       !!t &&
       !!(t = t.TsAiController.AiController.NpcDecision) &&
@@ -56,35 +56,35 @@ class TsAiBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
     );
   }
   static UpdateInteractionComponent(t) {
-    t = EntitySystem_1.EntitySystem.GetComponent(t, 103);
+    t = EntitySystem_1.EntitySystem.GetComponent(t, 105);
     t && t.ForceUpdate();
   }
   static OnPlayerAttack(t) {
-    t = EntitySystem_1.EntitySystem.GetComponent(t, 168);
+    t = EntitySystem_1.EntitySystem.GetComponent(t, 170);
     t && t.OnPlayerAttack();
   }
   static OnPlayerImpact(t) {
-    t = EntitySystem_1.EntitySystem.GetComponent(t, 168);
+    t = EntitySystem_1.EntitySystem.GetComponent(t, 170);
     t && t.OnPlayerImpact();
   }
   static OnPlayerAttackBegin(t) {
-    t = EntitySystem_1.EntitySystem.GetComponent(t, 168);
+    t = EntitySystem_1.EntitySystem.GetComponent(t, 170);
     t && t.OnPlayerAttackBegin();
   }
   static OnPlayerImpactBegin(t) {
-    t = EntitySystem_1.EntitySystem.GetComponent(t, 168);
+    t = EntitySystem_1.EntitySystem.GetComponent(t, 170);
     t && t.OnPlayerImpactBegin();
   }
   static OnPlayerAttackEnd(t) {
-    t = EntitySystem_1.EntitySystem.GetComponent(t, 168);
+    t = EntitySystem_1.EntitySystem.GetComponent(t, 170);
     t && t.OnPlayerAttackEnd();
   }
   static OnPlayerImpactEnd(t) {
-    t = EntitySystem_1.EntitySystem.GetComponent(t, 168);
+    t = EntitySystem_1.EntitySystem.GetComponent(t, 170);
     t && t.OnPlayerImpactEnd();
   }
   static UpdateNpcPerformData(t, e, r, a, i) {
-    t = EntitySystem_1.EntitySystem.GetComponent(t, 168);
+    t = EntitySystem_1.EntitySystem.GetComponent(t, 170);
     t &&
       ((0, puerts_1.$set)(e, t.IsBeingAttacked),
       (0, puerts_1.$set)(r, t.IsBeingImpacted),
@@ -92,26 +92,26 @@ class TsAiBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
       (0, puerts_1.$set)(i, t.CollisionStrength));
   }
   static IsAiDriver(t) {
-    t = EntitySystem_1.EntitySystem.GetComponent(t, 38);
+    t = EntitySystem_1.EntitySystem.GetComponent(t, 39);
     return !!t && t.IsAiDriver;
   }
   static GetRoleActor(t) {
-    return EntitySystem_1.EntitySystem.GetComponent(t, 47)?.GetRoleActor();
+    return EntitySystem_1.EntitySystem.GetComponent(t, 48)?.GetRoleActor();
   }
   static SetFollowData(t, e, r) {
-    EntitySystem_1.EntitySystem.GetComponent(t, 47)?.SetFollowData(e, r);
+    EntitySystem_1.EntitySystem.GetComponent(t, 48)?.SetFollowData(e, r);
   }
   static GetFollowActor(t) {
-    return EntitySystem_1.EntitySystem.GetComponent(t, 47)?.GetFollowActor();
+    return EntitySystem_1.EntitySystem.GetComponent(t, 48)?.GetFollowActor();
   }
   static Reset(t, e) {
-    EntitySystem_1.EntitySystem.GetComponent(t, 47)?.Reset(e);
+    EntitySystem_1.EntitySystem.GetComponent(t, 48)?.Reset(e);
   }
   static GetToRoleDistance(t) {
-    return EntitySystem_1.EntitySystem.GetComponent(t, 47)?.GetToRoleDistance();
+    return EntitySystem_1.EntitySystem.GetComponent(t, 48)?.GetToRoleDistance();
   }
   static GetSummonType(t) {
-    return EntitySystem_1.EntitySystem.GetComponent(t, 47)?.SummonType;
+    return EntitySystem_1.EntitySystem.GetComponent(t, 48)?.SummonType;
   }
   static TsLogInfo(t) {
     Log_1.Log.CheckInfo() && Log_1.Log.Info("AI", 6, t);

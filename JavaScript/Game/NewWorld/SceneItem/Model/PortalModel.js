@@ -4,22 +4,22 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const ModelBase_1 = require("../../../../Core/Framework/ModelBase");
 class PortalModel extends ModelBase_1.ModelBase {
   constructor() {
-    super(...arguments), (this.Vnr = void 0);
+    super(...arguments), (this.Osr = void 0);
   }
   OnInit() {
-    return (this.Vnr = new Map()), !0;
+    return (this.Osr = new Map()), !0;
   }
   AddPortalPair(e, t) {
-    this.Vnr.has(e) || this.Vnr.set(e, t);
+    this.Osr.has(e) || this.Osr.set(e, t);
   }
   RemovePortalPair(e) {
-    this.Vnr.delete(e);
+    this.Osr.delete(e);
   }
   GetPortal(e) {
-    return this.Vnr.get(e);
+    return this.Osr.get(e);
   }
   OnClear() {
-    return !(this.Vnr = void 0);
+    return !(this.Osr = void 0);
   }
 }
 exports.PortalModel = PortalModel;

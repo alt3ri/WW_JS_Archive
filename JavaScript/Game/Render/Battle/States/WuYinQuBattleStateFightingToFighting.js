@@ -12,30 +12,30 @@ class WuYinQuBattleStateFightingToFighting extends WuYinQuBattleStateBase_1.defa
       (this.Timer = 0),
       (this.LastUseFlowmapSky = !1),
       (this.CurrentUseFlowmapSky = !1),
-      (this.Jsr = void 0),
-      (this.zsr = ResourceSystem_1.ResourceSystem.InvalidId);
+      (this.Jar = void 0),
+      (this.zar = ResourceSystem_1.ResourceSystem.InvalidId);
   }
   OnEnter(e) {
     const t = this.Owner.GetKuroLevelSequenceActor();
     t &&
     UE.KismetSystemLibrary.IsValid(t) &&
     UE.KismetSystemLibrary.IsValid(t.SequencePlayer)
-      ? ((this.Jsr = t?.GetSequence()),
-        UE.KismetSystemLibrary.IsValid(this.Jsr)
-          ? (t.SetSequence(this.Jsr), this.Zsr())
+      ? ((this.Jar = t?.GetSequence()),
+        UE.KismetSystemLibrary.IsValid(this.Jar)
+          ? (t.SetSequence(this.Jar), this.Zar())
           : (Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "RenderBattle",
                 39,
                 "进入战斗过渡状态时没有Sequence资源，开始资源加载。",
               ),
-            (this.zsr = ResourceSystem_1.ResourceSystem.LoadAsync(
+            (this.zar = ResourceSystem_1.ResourceSystem.LoadAsync(
               t.LevelSequence.AssetPathName.toString(),
               UE.LevelSequence,
               (e) => {
-                (this.zsr = ResourceSystem_1.ResourceSystem.InvalidId),
+                (this.zar = ResourceSystem_1.ResourceSystem.InvalidId),
                   UE.KismetSystemLibrary.IsValid(e)
-                    ? ((this.Jsr = e), t.SetSequence(this.Jsr), this.Zsr())
+                    ? ((this.Jar = e), t.SetSequence(this.Jar), this.Zar())
                     : Log_1.Log.CheckError() &&
                       Log_1.Log.Error(
                         "RenderBattle",
@@ -45,15 +45,15 @@ class WuYinQuBattleStateFightingToFighting extends WuYinQuBattleStateBase_1.defa
                       );
               },
             ))))
-      : Log_1.Log.CheckError() &&
-        Log_1.Log.Error(
+      : Log_1.Log.CheckDebug() &&
+        Log_1.Log.Debug(
           "RenderBattle",
           39,
           "进入战斗过渡状态时没有SequencePlayer",
           ["WuYinQuBattleActor", this.Owner?.GetName()],
         );
   }
-  Zsr() {
+  Zar() {
     this.Timer = 0;
     var e = this.Owner.GetLastBattleState(),
       t = this.Owner.GetCurrentBattleState();
@@ -135,10 +135,10 @@ class WuYinQuBattleStateFightingToFighting extends WuYinQuBattleStateBase_1.defa
   OnExit(e) {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info("RenderBattle", 12, "退出战斗过度阶段"),
-      (this.Jsr = void 0),
-      this.zsr !== ResourceSystem_1.ResourceSystem.InvalidId &&
-        (ResourceSystem_1.ResourceSystem.CancelAsyncLoad(this.zsr),
-        (this.zsr = ResourceSystem_1.ResourceSystem.InvalidId),
+      (this.Jar = void 0),
+      this.zar !== ResourceSystem_1.ResourceSystem.InvalidId &&
+        (ResourceSystem_1.ResourceSystem.CancelAsyncLoad(this.zar),
+        (this.zar = ResourceSystem_1.ResourceSystem.InvalidId),
         Log_1.Log.CheckError()) &&
         Log_1.Log.Error(
           "RenderBattle",

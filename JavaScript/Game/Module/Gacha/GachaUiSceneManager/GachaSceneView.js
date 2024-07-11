@@ -11,12 +11,12 @@ class GachaSceneView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
       (this.CloseViewEvent = () => {
-        this.wWt();
+        this.wKt();
       }),
-      (this.wWt = () => {
-        this.BWt(!0);
+      (this.wKt = () => {
+        this.BKt(!0);
       }),
-      (this.BWt = (e) => {
+      (this.BKt = (e) => {
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("Gacha", 28, "GachaScene被关闭"),
           e &&

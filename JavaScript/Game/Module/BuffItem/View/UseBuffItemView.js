@@ -18,14 +18,14 @@ const UE = require("ue"),
 class UseBuffItemView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
-      (this.h0t = []),
-      (this.l0t = void 0),
-      (this._0t = void 0),
+      (this.Mft = []),
+      (this.Eft = void 0),
+      (this.Sft = void 0),
       (this.WGe = void 0),
-      (this.u0t = void 0),
-      (this.c0t = () => {
-        if (this._0t) {
-          var e = this._0t.UseItemConfigId;
+      (this.yft = void 0),
+      (this.Ift = () => {
+        if (this.Sft) {
+          var e = this.Sft.UseItemConfigId;
           if (
             0 <
             ModelManager_1.ModelManager.BuffItemModel.GetBuffItemRemainCdTime(e)
@@ -34,7 +34,7 @@ class UseBuffItemView extends UiTickViewBase_1.UiTickViewBase {
               "UseBuffCdText",
             );
           else {
-            if (this._0t.CurrentAttribute <= 0) {
+            if (this.Sft.CurrentAttribute <= 0) {
               if (
                 !ConfigManager_1.ConfigManager.BuffItemConfig.IsResurrectionItem(
                   e,
@@ -49,18 +49,18 @@ class UseBuffItemView extends UiTickViewBase_1.UiTickViewBase {
               return void ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
                 "UseBuffToAliveRole",
               );
-            var e = this._0t.CurrentAttribute,
-              t = this._0t.GetAddAttribute(),
-              i = this._0t.MaxAttribute;
+            var e = this.Sft.CurrentAttribute,
+              t = this.Sft.GetAddAttribute(),
+              i = this.Sft.MaxAttribute;
             i < e + t
-              ? ((t = this._0t.RoleName),
+              ? ((t = this.Sft.RoleName),
                 (i = new ConfirmBoxDefine_1.ConfirmBoxDataNew(
                   i <= e ? 37 : 170,
                 )).SetTextArgs(t),
                 i.FunctionMap.set(2, () => {
                   this.UiViewSequence.StopSequenceByKey("Popup"),
                     this.UiViewSequence.SequencePlayReverseByKey("Popup", !1),
-                    this.m0t();
+                    this.Tft();
                 }),
                 i.FunctionMap.set(1, () => {
                   this.UiViewSequence.StopSequenceByKey("Popup"),
@@ -72,12 +72,12 @@ class UseBuffItemView extends UiTickViewBase_1.UiTickViewBase {
                 ),
                 this.UiViewSequence.StopSequenceByKey("Popup"),
                 this.UiViewSequence.PlaySequence("Popup"))
-              : this.m0t();
+              : this.Tft();
           }
-        } else this.d0t();
+        } else this.Lft();
       }),
-      (this.C0t = () => {
-        this.d0t();
+      (this.Dft = () => {
+        this.Lft();
       }),
       (this.KGe = (e) => {
         var t =
@@ -87,16 +87,16 @@ class UseBuffItemView extends UiTickViewBase_1.UiTickViewBase {
         return new LguiUtil_1.TableTextArgNew(t, e);
       }),
       (this.QGe = (e) => {
-        this._0t.SetUseItemCount(e), this.g0t();
+        this.Sft.SetUseItemCount(e), this.Rft();
       }),
-      (this.f0t = (e, t) => {
-        this.l0t && this.p0t();
+      (this.Uft = (e, t) => {
+        this.Eft && this.Aft();
       }),
-      (this.v0t = (e) => {
-        this.M0t(e);
+      (this.Pft = (e) => {
+        this.xft(e);
       }),
-      (this.S0t = () => {
-        this.p0t();
+      (this.wft = () => {
+        this.Aft();
       });
   }
   OnRegisterComponent() {
@@ -110,25 +110,25 @@ class UseBuffItemView extends UiTickViewBase_1.UiTickViewBase {
       [6, UE.UIItem],
     ]),
       (this.BtnBindInfo = [
-        [4, this.c0t],
-        [5, this.C0t],
+        [4, this.Ift],
+        [5, this.Dft],
       ]);
   }
-  E0t(e) {
-    this.y0t(), this.I0t();
+  Bft(e) {
+    this.bft(), this.qft();
     var t = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
     let i = !1;
-    for (const r of this.h0t) {
+    for (const r of this.Mft) {
       var s = r.GetUseBuffItemRoleData();
       if (s && s.GetEntityId() === t.Id) {
-        this.M0t(r), (i = !0);
+        this.xft(r), (i = !0);
         break;
       }
     }
-    i || this.M0t(this.h0t[0]);
+    i || this.xft(this.Mft[0]);
   }
-  T0t() {
-    var e = this._0t.UseItemConfigId;
+  Gft() {
+    var e = this.Sft.UseItemConfigId;
     return ConfigManager_1.ConfigManager.BuffItemConfig.IsResurrectionItem(e) ||
       ((e =
         ConfigManager_1.ConfigManager.BuffItemConfig.GetBuffItemTotalCdTime(
@@ -136,126 +136,126 @@ class UseBuffItemView extends UiTickViewBase_1.UiTickViewBase {
         )) &&
         0 < e)
       ? 1
-      : this._0t.GetUseItemMaxCount();
+      : this.Sft.GetUseItemMaxCount();
   }
   rNe() {
     (this.WGe = new NumberSelectComponent_1.NumberSelectComponent(
       this.GetItem(6),
     )),
-      (this.u0t = {
-        MaxNumber: this.T0t(),
+      (this.yft = {
+        MaxNumber: this.Gft(),
         GetExchangeTableText: this.KGe,
         ValueChangeFunction: this.QGe,
       }),
-      this.WGe.Init(this.u0t);
+      this.WGe.Init(this.yft);
   }
   OnStart() {
     var e = this.OpenParam;
-    void 0 !== e && (this.E0t(e), this.rNe());
+    void 0 !== e && (this.Bft(e), this.rNe());
   }
   OnBeforeDestroy() {
     this.ResetUseBuffItemView(),
       this.WGe.Destroy(),
-      (this.u0t = void 0),
+      (this.yft = void 0),
       (this.WGe = void 0),
       ControllerHolder_1.ControllerHolder.ConfirmBoxController.CloseConfirmBoxView();
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnUseBuffItem,
-      this.f0t,
+      this.Uft,
     );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnUseBuffItem,
-      this.f0t,
+      this.Uft,
     );
   }
   OnTick(e) {
-    for (const t of this.h0t) t.Tick(e);
+    for (const t of this.Mft) t.Tick(e);
   }
-  d0t() {
+  Lft() {
     UiManager_1.UiManager.CloseView("UseBuffItemView");
   }
   ResetUseBuffItemView() {
-    for (const e of this.h0t) e.ResetBuffTargetRoleItem();
-    (this.h0t.length = 0),
-      (this._0t = void 0),
-      (this.l0t = void 0),
+    for (const e of this.Mft) e.ResetBuffTargetRoleItem();
+    (this.Mft.length = 0),
+      (this.Sft = void 0),
+      (this.Eft = void 0),
       ModelManager_1.ModelManager.BuffItemModel.ClearAllUseBuffItemRoleData();
   }
-  y0t() {
+  bft() {
     for (const i of [this.GetItem(1), this.GetItem(2), this.GetItem(3)]) {
       var e = i.GetOwner(),
         t = new BuffTargetRoleItem_1.BuffTargetRoleItem();
       t.Initialize(e),
-        t.BindOnClickedBuffTargetRoleItem(this.v0t),
-        t.BindOnUseItemAnimationFinished(this.S0t),
-        this.h0t.push(t);
+        t.BindOnClickedBuffTargetRoleItem(this.Pft),
+        t.BindOnUseItemAnimationFinished(this.wft),
+        this.Mft.push(t);
     }
   }
-  M0t(e) {
+  xft(e) {
     var t = e.GetUseBuffItemRoleData();
     t
       ? e.IsSelected() ||
         (e.SetSelected(!0),
-        this._0t && this._0t.SetUseItemCount(0),
-        this.l0t && this.l0t.SetSelected(!1),
-        (this._0t = t),
-        (this.l0t = e),
+        this.Sft && this.Sft.SetUseItemCount(0),
+        this.Eft && this.Eft.SetSelected(!1),
+        (this.Sft = t),
+        (this.Eft = e),
         t.SetUseItemCount(1),
-        this.g0t(),
-        this.L0t(),
-        this.u0t && this.WGe?.Init(this.u0t))
+        this.Rft(),
+        this.Nft(),
+        this.yft && this.WGe?.Init(this.yft))
       : ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
           "NoneRole",
         );
   }
-  p0t() {
+  Aft() {
     var e = ModelManager_1.ModelManager.InventoryModel,
-      t = this._0t.UseItemConfigId;
+      t = this.Sft.UseItemConfigId;
     e.GetItemCountByConfigId(t) < 1
-      ? this.d0t()
-      : ((e = this.T0t()), this.WGe.SetLimitMaxValue(e), this.WGe.Refresh(e));
+      ? this.Lft()
+      : ((e = this.Gft()), this.WGe.SetLimitMaxValue(e), this.WGe.Refresh(e));
   }
-  I0t() {
+  qft() {
     var t = ModelManager_1.ModelManager.BuffItemModel.GetAllUseBuffItemRole();
-    for (const e of this.h0t) e.SetActive(!1);
+    for (const e of this.Mft) e.SetActive(!1);
     let i = 0;
-    for (let e = 0; e < this.h0t.length; e++) {
+    for (let e = 0; e < this.Mft.length; e++) {
       var s = e + 1,
         s = t.get(s),
-        r = this.h0t[i];
+        r = this.Mft[i];
       s
         ? (r.RefreshBuffTargetRoleItem(s), r.SetActive(!0), i++)
         : r.RemoveRole();
     }
   }
-  g0t() {
+  Rft() {
     var e, t, i;
-    this._0t &&
-      this.l0t &&
-      ((e = this._0t.CurrentAttribute),
-      (t = this._0t.MaxAttribute),
-      (i = this._0t.GetAddAttribute()),
-      this.l0t.RefreshPreviewUseItem(e, t, i));
+    this.Sft &&
+      this.Eft &&
+      ((e = this.Sft.CurrentAttribute),
+      (t = this.Sft.MaxAttribute),
+      (i = this.Sft.GetAddAttribute()),
+      this.Eft.RefreshPreviewUseItem(e, t, i));
   }
-  L0t() {
+  Nft() {
     var e, t;
-    this._0t &&
-      ((e = this._0t.RoleName),
+    this.Sft &&
+      ((e = this.Sft.RoleName),
       (t = this.GetText(0)),
       LguiUtil_1.LguiUtil.SetLocalText(t, "UseBuffTitle", e));
   }
-  m0t() {
+  Tft() {
     var e, t, i;
-    this._0t
-      ? ((e = this._0t.UseItemConfigId),
-        (t = this._0t.UseItemCount),
-        (i = this._0t.RoleConfigId),
+    this.Sft
+      ? ((e = this.Sft.UseItemConfigId),
+        (t = this.Sft.UseItemCount),
+        (i = this.Sft.RoleConfigId),
         BuffItemControl_1.BuffItemControl.RequestUseBuffItem(e, t, i))
-      : this.d0t();
+      : this.Lft();
   }
 }
 exports.UseBuffItemView = UseBuffItemView;

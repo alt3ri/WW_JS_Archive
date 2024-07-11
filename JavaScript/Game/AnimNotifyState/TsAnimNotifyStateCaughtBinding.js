@@ -25,7 +25,7 @@ class TsAnimNotifyStateCaughtBinding extends UE.KuroAnimNotifyState {
       ((r = e.GetComponent(33)),
       (this.SkillId = r?.CurrentSkill?.SkillId ?? 0),
       r?.SetCurSkillAnIndex(this.exportIndex),
-      !!(r = e.GetComponent(43))) &&
+      !!(r = e.GetComponent(44))) &&
       (0 < this.DetectionRadius && this.CheckPosition(r),
       r.BeginCaught(this.CaughtIds, this.SkillId),
       !0)
@@ -60,7 +60,7 @@ class TsAnimNotifyStateCaughtBinding extends UE.KuroAnimNotifyState {
       if (!t) return;
       var c,
         n = r[0].GetComponent(0);
-      n?.GetEntityType() === Protocol_1.Aki.Protocol.HBs.Proto_Monster &&
+      n?.GetEntityType() === Protocol_1.Aki.Protocol.wks.Proto_Monster &&
         ((n = Vector_1.Vector.Create(n?.GetInitLocation())),
         (s = Vector_1.Vector.Create(s)),
         (c = Vector_1.Vector.Create()),
@@ -97,7 +97,7 @@ class TsAnimNotifyStateCaughtBinding extends UE.KuroAnimNotifyState {
       !(
         !e.CharacterActorComponent ||
         !(e = e.CharacterActorComponent.Entity) ||
-        ((i = e.GetComponent(43)),
+        ((i = e.GetComponent(44)),
         e.GetComponent(33)?.SetCurSkillAnIndex(this.exportIndex),
         !i) ||
         (i.EndCaught(), 0)

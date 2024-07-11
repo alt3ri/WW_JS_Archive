@@ -12,9 +12,9 @@ const UE = require("ue"),
 class AdviceSelectMotionItem extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
-      (this.F7e = void 0),
+      (this.ZHe = void 0),
       (this.OnClickBtnBtnCall = () => {}),
-      (this.V7e = () => {
+      (this.eje = () => {
         this.OnClickBtnBtnCall && this.OnClickBtnBtnCall();
       }),
       (this.Bqe = (e, t, i) => {
@@ -29,21 +29,21 @@ class AdviceSelectMotionItem extends UiPanelBase_1.UiPanelBase {
       [1, UE.UIText],
       [2, UE.UIScrollViewWithScrollbarComponent],
     ]),
-      (this.BtnBindInfo = [[0, this.V7e]]);
+      (this.BtnBindInfo = [[0, this.eje]]);
   }
   SetClickChangeRoleCall(e) {
     this.OnClickBtnBtnCall = e;
   }
   OnStart() {
-    this.F7e = new GenericScrollView_1.GenericScrollView(
+    this.ZHe = new GenericScrollView_1.GenericScrollView(
       this.GetScrollViewWithScrollbar(2),
       this.Bqe,
     );
   }
   RefreshView(e) {
-    this.F7e.RefreshByData(e), this.H7e();
+    this.ZHe.RefreshByData(e), this.tje();
   }
-  H7e() {
+  tje() {
     var e;
     0 < ModelManager_1.ModelManager.AdviceModel.PreSelectRoleId
       ? ((e = ConfigManager_1.ConfigManager.RoleConfig.GetRoleName(
@@ -55,7 +55,7 @@ class AdviceSelectMotionItem extends UiPanelBase_1.UiPanelBase {
       : this.GetText(1).SetText("");
   }
   OnBeforeDestroy() {
-    this.F7e.ClearChildren();
+    this.ZHe.ClearChildren();
   }
 }
 exports.AdviceSelectMotionItem = AdviceSelectMotionItem;
@@ -63,7 +63,7 @@ class AdviceSelectMotionContent extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
       (this.Pe = void 0),
-      (this.r7e = () => {
+      (this.pHe = () => {
         var e = this.Pe,
           t = ConfigManager_1.ConfigManager.MotionConfig.GetMotionRoleId(
             e.GetIndex(),
@@ -85,7 +85,7 @@ class AdviceSelectMotionContent extends UiPanelBase_1.UiPanelBase {
         }
         return !1;
       }),
-      (this.j7e = () => {
+      (this.ije = () => {
         (ModelManager_1.ModelManager.AdviceModel.PreSelectMotionId =
           this.Pe.GetIndex()),
           (ModelManager_1.ModelManager.AdviceModel.CurrentSelectMotionId =
@@ -94,7 +94,7 @@ class AdviceSelectMotionContent extends UiPanelBase_1.UiPanelBase {
             EventDefine_1.EEventName.OnClickAdviceMotion,
           );
       }),
-      (this.p9e = () => {
+      (this.x7e = () => {
         this.Oqe();
       }),
       this.CreateThenShowByActor(e.GetOwner());
@@ -105,15 +105,15 @@ class AdviceSelectMotionContent extends UiPanelBase_1.UiPanelBase {
       [1, UE.UISprite],
       [2, UE.UIText],
     ]),
-      (this.BtnBindInfo = [[0, this.j7e]]);
+      (this.BtnBindInfo = [[0, this.ije]]);
   }
   OnStart() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnClickAdviceMotion,
-      this.p9e,
+      this.x7e,
     );
     var e = this.GetExtendToggle(0);
-    e.CanExecuteChange.Unbind(), e.CanExecuteChange.Bind(this.r7e);
+    e.CanExecuteChange.Unbind(), e.CanExecuteChange.Bind(this.pHe);
   }
   RefreshView(e) {
     let t = "";
@@ -128,7 +128,7 @@ class AdviceSelectMotionContent extends UiPanelBase_1.UiPanelBase {
           e.GetIndex(),
         )),
         this.GetText(2).SetText(t)),
-      this.W7e(),
+      this.oje(),
       this.Oqe();
   }
   Oqe() {
@@ -140,7 +140,7 @@ class AdviceSelectMotionContent extends UiPanelBase_1.UiPanelBase {
           : 0;
     e !== t && this.GetExtendToggle(0).SetToggleStateForce(t, !1);
   }
-  W7e() {
+  oje() {
     var e,
       t = this.Pe;
     t.GetIndex() ===
@@ -160,7 +160,7 @@ class AdviceSelectMotionContent extends UiPanelBase_1.UiPanelBase {
   OnBeforeDestroy() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnClickAdviceMotion,
-      this.p9e,
+      this.x7e,
     );
   }
 }

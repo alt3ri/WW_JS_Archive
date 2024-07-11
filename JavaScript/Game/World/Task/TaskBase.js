@@ -8,7 +8,7 @@ class TaskBase {
       (this.LogPrefix = ""),
       (this.InitHandle = s),
       (this.FinishedCallback = e),
-      (this.XMr = new CustomPromise_1.CustomPromise());
+      (this.WEr = new CustomPromise_1.CustomPromise());
   }
   SetLogPrefix(t) {
     this.LogPrefix = t;
@@ -18,11 +18,11 @@ class TaskBase {
     return this.OnInit();
   }
   get Promise() {
-    return this.XMr.Promise;
+    return this.WEr.Promise;
   }
   async Run() {
     var t = await this.OnRun();
-    return this.OnExit(), this.XMr.SetResult(t), t;
+    return this.OnExit(), this.WEr.SetResult(t), t;
   }
   OnInit() {
     return !0;

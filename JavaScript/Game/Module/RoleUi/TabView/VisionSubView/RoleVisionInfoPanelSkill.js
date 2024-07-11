@@ -11,12 +11,12 @@ const UE = require("ue"),
 class RoleVisionInfoPanelSkill extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
-      (this.Jdo = void 0),
-      (this.W6i = void 0),
-      (this.v6i = (e) => {
-        e === this.W6i?.GetIncrId() && this.zdo(this.W6i);
+      (this.XCo = void 0),
+      (this.j8i = void 0),
+      (this.p8i = (e) => {
+        e === this.j8i?.GetIncrId() && this.$Co(this.j8i);
       }),
-      (this.Ewt = this.CreateThenShowByResourceIdAsync(
+      (this.TBt = this.CreateThenShowByResourceIdAsync(
         "UiItem_VisionIMainInfoB",
         e,
       ));
@@ -30,23 +30,23 @@ class RoleVisionInfoPanelSkill extends UiPanelBase_1.UiPanelBase {
   AddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.PhantomPersonalSkillActive,
-      this.v6i,
+      this.p8i,
     );
   }
   RemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.PhantomPersonalSkillActive,
-      this.v6i,
+      this.p8i,
     );
   }
   OnStart() {
-    (this.Jdo = new VisionAttributeItemOne_1.VisionAttributeItemOne(
+    (this.XCo = new VisionAttributeItemOne_1.VisionAttributeItemOne(
       this.GetItem(1),
     )),
       this.AddEventListener();
   }
   async Update(e) {
-    await this.Ewt;
+    await this.TBt;
     let i = 0,
       t = void 0;
     var n;
@@ -63,15 +63,15 @@ class RoleVisionInfoPanelSkill extends UiPanelBase_1.UiPanelBase {
             i,
           ))),
       t
-        ? (this.Jdo.SetActive(!0),
+        ? (this.XCo.SetActive(!0),
           this.GetTexture(0).SetUIActive(!0),
           (e = t),
-          (this.W6i = e),
-          this.zdo(e),
-          this.Jdo.Refresh(i))
-        : (this.Jdo.SetActive(!1), this.GetTexture(0).SetUIActive(!1));
+          (this.j8i = e),
+          this.$Co(e),
+          this.XCo.Refresh(i))
+        : (this.XCo.SetActive(!1), this.GetTexture(0).SetUIActive(!1));
   }
-  zdo(e) {
+  $Co(e) {
     var i = e?.GetCurrentSkillId(),
       e = e?.GetIfActivePersonalSkill(),
       i =

@@ -62,9 +62,9 @@ class RoleVisionCommonItem extends UiPanelBase_1.UiPanelBase {
   SetAniLightState(t) {}
   UpdateItem(t) {
     (this.CurrentData = t),
-      this.bdo(t),
+      this.xCo(t),
       this.Kbe(t),
-      this.Pqt(t),
+      this.BGt(t),
       this.OnUpdateItem(t);
   }
   Kbe(t) {
@@ -79,14 +79,14 @@ class RoleVisionCommonItem extends UiPanelBase_1.UiPanelBase {
           "VisionEquipmentView",
         ));
   }
-  Pqt(t) {
+  BGt(t) {
     this.GetVisionQualitySprite().SetUIActive(void 0 !== t);
   }
   PlaySequence(t) {
     this.OnPlaySequence(t);
   }
   OnPlaySequence(t) {}
-  bdo(t) {}
+  xCo(t) {}
   SetSelected() {
     this.OnSelected();
   }

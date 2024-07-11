@@ -47,23 +47,23 @@ let CharacterLogComponent =
   ) {
     constructor() {
       super(...arguments),
-        (this.sNr = void 0),
-        (this.aNr = []),
+        (this.qGr = void 0),
+        (this.GGr = []),
         (this.OnAggroChanged = (t, e) => {
           var r, a, o;
           ModelManager_1.ModelManager.GameModeModel.IsMulti ||
             ((r = e.CharActorComp.Entity.Id),
             (e = e.CharActorComp.Entity),
-            (a = CharacterLogComponent_1.hNr),
-            (o = CharacterLogComponent_1.lNr),
-            this.rje(r)
+            (a = CharacterLogComponent_1.NGr),
+            (o = CharacterLogComponent_1.OGr),
+            this.gWe(r)
               ? t
                 ? (a.add(r),
-                  CharacterLogComponent_1._Nr.set(r, this.uNr(r)),
+                  CharacterLogComponent_1.kGr.set(r, this.FGr(r)),
                   o.has(r) ||
-                    (((t = CharacterLogComponent_1.cNr(r)).i_monster_level =
+                    (((t = CharacterLogComponent_1.VGr(r)).i_monster_level =
                       e
-                        .GetComponent(156)
+                        .GetComponent(158)
                         ?.GetCurrentValue(
                           CharacterAttributeTypes_1.EAttributeId.Proto_Lv,
                         ) ?? 0),
@@ -73,38 +73,38 @@ let CharacterLogComponent =
                     (t.f_pos_z = e.Z),
                     (t.InitTime = TimeUtil_1.TimeUtil.GetServerTime())),
                   o.add(r))
-                : (CharacterLogComponent_1.mNr.add(r), a.delete(r))
+                : (CharacterLogComponent_1.HGr.add(r), a.delete(r))
               : a.delete(r));
         }),
-        (this.dNr = (t, e) => {
-          CharacterLogComponent_1.CNr() && (CharacterLogComponent_1.gNr += t),
-            e && (this.fNr = 2);
+        (this.jGr = (t, e) => {
+          CharacterLogComponent_1.WGr() && (CharacterLogComponent_1.KGr += t),
+            e && (this.QGr = 2);
         }),
-        (this.pNr = (t) => {
-          t && (this.fNr = 3);
+        (this.XGr = (t) => {
+          t && (this.QGr = 3);
         }),
-        (this.vNr = (t, e, r) => {
-          if (CharacterLogComponent_1.CNr()) {
+        (this.$Gr = (t, e, r) => {
+          if (CharacterLogComponent_1.WGr()) {
             switch (r) {
               case 6:
               case 11:
-                (CharacterLogComponent_1.MNr += 1),
-                  (CharacterLogComponent_1.SNr.i_acc_dodge_times += 1);
+                (CharacterLogComponent_1.YGr += 1),
+                  (CharacterLogComponent_1.JGr.i_acc_dodge_times += 1);
                 break;
               case 7:
-                (CharacterLogComponent_1.ENr += 1),
-                  (CharacterLogComponent_1.SNr.i_dodge_succ_times += 1);
+                (CharacterLogComponent_1.zGr += 1),
+                  (CharacterLogComponent_1.JGr.i_dodge_succ_times += 1);
                 break;
               case 4:
-                CharacterLogComponent_1.yNr += 1;
+                CharacterLogComponent_1.ZGr += 1;
             }
             var a = this.Entity.GetComponent(0);
             if (a.IsRole()) {
-              var o = CharacterLogComponent_1.INr(this.Entity.Id, e),
+              var o = CharacterLogComponent_1.eNr(this.Entity.Id, e),
                 n =
                   (o.use_count++,
                   (o.skill_type = r),
-                  CharacterLogComponent_1.TNr(this.Entity.Id));
+                  CharacterLogComponent_1.tNr(this.Entity.Id));
               switch (r) {
                 case 6:
                 case 11:
@@ -115,262 +115,262 @@ let CharacterLogComponent =
               }
             } else
               a.IsMonster() &&
-                CharacterLogComponent_1.LNr(this.Entity.Id, Number(e))
+                CharacterLogComponent_1.iNr(this.Entity.Id, Number(e))
                   .use_count++;
             o = this.Entity.Id.toFixed() + "-" + e;
-            CharacterLogComponent_1.DNr.set(o, !1);
+            CharacterLogComponent_1.oNr.set(o, !1);
           }
         }),
-        (this.RNr = (t, e) => {
-          CharacterLogComponent_1.CNr() &&
-            (CharacterLogComponent_1.TNr(this.Entity.Id)
+        (this.rNr = (t, e) => {
+          CharacterLogComponent_1.WGr() &&
+            (CharacterLogComponent_1.tNr(this.Entity.Id)
               .i_bullet_rebound_times++,
-            CharacterLogComponent_1.cNr(t.Id).i_bullet_rebound_times++,
-            CharacterLogComponent_1.LNr(t.Id, e).bullet_rebound_times++,
-            CharacterLogComponent_1.ANr++,
-            CharacterLogComponent_1.SNr.i_bullet_rebound_times++);
+            CharacterLogComponent_1.VGr(t.Id).i_bullet_rebound_times++,
+            CharacterLogComponent_1.iNr(t.Id, e).bullet_rebound_times++,
+            CharacterLogComponent_1.nNr++,
+            CharacterLogComponent_1.JGr.i_bullet_rebound_times++);
         }),
-        (this.UNr = (t, e, r) => {
-          CharacterLogComponent_1.CNr() &&
+        (this.sNr = (t, e, r) => {
+          CharacterLogComponent_1.WGr() &&
             r < e &&
-            (CharacterLogComponent_1.TNr(this.Entity.Id).l_acc_element +=
+            (CharacterLogComponent_1.tNr(this.Entity.Id).l_acc_element +=
               e - r);
         }),
-        (this.PNr = (t, e, r) => {
-          CharacterLogComponent_1.CNr() &&
+        (this.aNr = (t, e, r) => {
+          CharacterLogComponent_1.WGr() &&
             t === CharacterAttributeTypes_1.EAttributeId.Proto_Energy &&
             r < e &&
-            (((t = CharacterLogComponent_1.TNr(this.Entity.Id)).l_acc_energy +=
+            (((t = CharacterLogComponent_1.tNr(this.Entity.Id)).l_acc_energy +=
               e - r),
             e >=
-              this.Entity.GetComponent(156).GetCurrentValue(
+              this.Entity.GetComponent(158).GetCurrentValue(
                 CharacterAttributeTypes_1.EAttributeId.Proto_EnergyMax,
               ) -
                 Number.EPSILON) &&
             t.i_full_energy_times++;
         }),
         (this.hUe = () => {
-          this.Entity.GetComponent(158)?.IsInFightState() &&
-            CharacterLogComponent_1.xNr();
+          this.Entity.GetComponent(160)?.IsInFightState() &&
+            CharacterLogComponent_1.hNr();
         }),
-        (this.EYe = (t, e) => {
-          this.Entity.GetComponent(158)?.IsInFightState() &&
-            CharacterLogComponent_1.xNr();
+        (this.BJe = (t, e) => {
+          this.Entity.GetComponent(160)?.IsInFightState() &&
+            CharacterLogComponent_1.hNr();
         }),
-        (this.wNr = () => {
-          CharacterLogComponent_1.CNr() &&
+        (this.lNr = () => {
+          CharacterLogComponent_1.WGr() &&
             (this.Entity.GetComponent(0).IsRole() &&
-              ((CharacterLogComponent_1.BNr += 1),
-              (CharacterLogComponent_1.TNr(this.Entity.Id).i_revive_times +=
+              ((CharacterLogComponent_1._Nr += 1),
+              (CharacterLogComponent_1.tNr(this.Entity.Id).i_revive_times +=
                 1)),
-            CharacterLogComponent_1.SNr.i_revive_times++);
+            CharacterLogComponent_1.JGr.i_revive_times++);
         }),
-        (this.bNr = (t, e, r) => {
+        (this.uNr = (t, e, r) => {
           r -= e;
           r <= 0 ||
-            ((e = CharacterLogComponent_1.cNr(this.Entity.Id)) &&
+            ((e = CharacterLogComponent_1.VGr(this.Entity.Id)) &&
               ((e.l_acc_rage += r),
-              this.Entity.GetComponent(51)?.IsTriggerCounterAttack) &&
+              this.Entity.GetComponent(52)?.IsTriggerCounterAttack) &&
               (e.l_acc_rage_counter += r));
         }),
-        (this.fNr = 0),
-        (this.qNr = (t, e) => {
-          CharacterLogComponent_1.CNr() &&
+        (this.QGr = 0),
+        (this.cNr = (t, e) => {
+          CharacterLogComponent_1.WGr() &&
             e &&
-            CharacterLogComponent_1.cNr(this.Entity.Id).i_paralysis_times++;
+            CharacterLogComponent_1.VGr(this.Entity.Id).i_paralysis_times++;
         });
     }
     OnStart() {
       return (
-        CharacterLogComponent_1.GNr ||
-          ((CharacterLogComponent_1.GNr = !0),
+        CharacterLogComponent_1.mNr ||
+          ((CharacterLogComponent_1.mNr = !0),
           EventSystem_1.EventSystem.Add(
             EventDefine_1.EEventName.OnBattleStateChanged,
-            CharacterLogComponent_1.NNr,
+            CharacterLogComponent_1.dNr,
           ),
           EventSystem_1.EventSystem.Add(
             EventDefine_1.EEventName.OnChangeRole,
-            CharacterLogComponent_1.ONr,
+            CharacterLogComponent_1.CNr,
           ),
           EventSystem_1.EventSystem.Add(
-            EventDefine_1.EEventName.CharRecordTeamDeath,
-            CharacterLogComponent_1.kNr,
+            EventDefine_1.EEventName.OnTeamLivingStateChange,
+            CharacterLogComponent_1.gNr,
           ),
           EventSystem_1.EventSystem.Add(
             EventDefine_1.EEventName.CharOnRoleDead,
-            CharacterLogComponent_1.FNr,
+            CharacterLogComponent_1.fNr,
           ),
           EventSystem_1.EventSystem.Add(
             EventDefine_1.EEventName.WorldDone,
-            CharacterLogComponent_1.VNr,
+            CharacterLogComponent_1.pNr,
           ),
           EventSystem_1.EventSystem.Add(
             EventDefine_1.EEventName.LeaveInstanceDungeon,
-            CharacterLogComponent_1.HNr,
+            CharacterLogComponent_1.vNr,
           ),
           EventSystem_1.EventSystem.Add(
             EventDefine_1.EEventName.TriggerUiTimeDilation,
-            CharacterLogComponent_1.jNr,
+            CharacterLogComponent_1.MNr,
           ),
           EventSystem_1.EventSystem.Add(
             EventDefine_1.EEventName.OnInstResultNotify,
-            CharacterLogComponent_1.WNr,
+            CharacterLogComponent_1.ENr,
           ),
           EventSystem_1.EventSystem.Add(
             EventDefine_1.EEventName.OnTowerChallengeChangeTeamNotify,
-            CharacterLogComponent_1.KNr,
+            CharacterLogComponent_1.SNr,
           )),
-        this.QNr(),
+        this.yNr(),
         !0
       );
     }
     OnEnd() {
-      return this.XNr(), !0;
+      return this.INr(), !0;
     }
-    QNr() {
+    yNr() {
       EventSystem_1.EventSystem.AddWithTarget(
         this.Entity,
         EventDefine_1.EEventName.AiHateAddOrRemove,
         this.OnAggroChanged,
       ),
-        (this.sNr = this.Entity.CheckGetComponent(185).ListenForTagAddOrRemove(
+        (this.qGr = this.Entity.CheckGetComponent(188).ListenForTagAddOrRemove(
           1922078392,
-          this.qNr,
+          this.cNr,
         )),
         EventSystem_1.EventSystem.AddWithTarget(
           this.Entity,
           EventDefine_1.EEventName.CharRecordOperate,
-          this.vNr,
+          this.$Gr,
         );
       var t = this.Entity.GetComponent(0);
       t.IsRole()
         ? (EventSystem_1.EventSystem.AddWithTarget(
             this.Entity,
             EventDefine_1.EEventName.CharOnFallInjure,
-            this.dNr,
+            this.jGr,
           ),
           EventSystem_1.EventSystem.AddWithTarget(
             this.Entity,
             EventDefine_1.EEventName.CharOnRoleDrownInjure,
-            this.pNr,
+            this.XGr,
           ),
           EventSystem_1.EventSystem.AddWithTarget(
             this.Entity,
             EventDefine_1.EEventName.CharOnRevive,
-            this.wNr,
+            this.lNr,
           ),
           EventSystem_1.EventSystem.AddWithTarget(
             this.Entity,
             EventDefine_1.EEventName.BulletRebound,
-            this.RNr,
+            this.rNr,
           ),
           EventSystem_1.EventSystem.AddWithTarget(
             this.Entity,
             EventDefine_1.EEventName.CharOnElementEnergyChanged,
-            this.UNr,
+            this.sNr,
           ),
           EventSystem_1.EventSystem.AddWithTarget(
             this.Entity,
             EventDefine_1.EEventName.CharOnEnergyChanged,
-            this.PNr,
+            this.aNr,
           ),
           EventSystem_1.EventSystem.AddWithTarget(
             this.Entity,
             EventDefine_1.EEventName.CharOnUnifiedMoveStateChanged,
             this.hUe,
           ),
-          this.aNr.push(
-            this.Entity.CheckGetComponent(185).ListenForTagAddOrRemove(
+          this.GGr.push(
+            this.Entity.CheckGetComponent(188).ListenForTagAddOrRemove(
               -1371021686,
-              this.EYe,
+              this.BJe,
             ),
           ),
-          this.aNr.push(
-            this.Entity.CheckGetComponent(185).ListenForTagAddOrRemove(
+          this.GGr.push(
+            this.Entity.CheckGetComponent(188).ListenForTagAddOrRemove(
               -1800191060,
-              this.EYe,
+              this.BJe,
             ),
           ),
-          this.aNr.push(
-            this.Entity.CheckGetComponent(185).ListenForTagAddOrRemove(
+          this.GGr.push(
+            this.Entity.CheckGetComponent(188).ListenForTagAddOrRemove(
               -1221493771,
-              this.EYe,
+              this.BJe,
             ),
           ))
         : t.IsMonster() &&
-          this.Entity.GetComponent(156)?.AddListener(
+          this.Entity.GetComponent(158)?.AddListener(
             CharacterAttributeTypes_1.EAttributeId.Proto_Rage,
-            this.bNr,
+            this.uNr,
           );
     }
-    XNr() {
+    INr() {
       EventSystem_1.EventSystem.RemoveWithTarget(
         this.Entity,
         EventDefine_1.EEventName.AiHateAddOrRemove,
         this.OnAggroChanged,
       ),
-        this.sNr.EndTask(),
+        this.qGr.EndTask(),
         EventSystem_1.EventSystem.RemoveWithTarget(
           this.Entity,
           EventDefine_1.EEventName.CharRecordOperate,
-          this.vNr,
+          this.$Gr,
         );
       var t = this.Entity.GetComponent(0);
       if (t.IsRole()) {
         EventSystem_1.EventSystem.RemoveWithTarget(
           this.Entity,
           EventDefine_1.EEventName.CharOnFallInjure,
-          this.dNr,
+          this.jGr,
         ),
           EventSystem_1.EventSystem.RemoveWithTarget(
             this.Entity,
             EventDefine_1.EEventName.CharOnRoleDrownInjure,
-            this.pNr,
+            this.XGr,
           ),
           EventSystem_1.EventSystem.RemoveWithTarget(
             this.Entity,
             EventDefine_1.EEventName.CharOnRevive,
-            this.wNr,
+            this.lNr,
           ),
           EventSystem_1.EventSystem.RemoveWithTarget(
             this.Entity,
             EventDefine_1.EEventName.BulletRebound,
-            this.RNr,
+            this.rNr,
           ),
           EventSystem_1.EventSystem.RemoveWithTarget(
             this.Entity,
             EventDefine_1.EEventName.CharOnElementEnergyChanged,
-            this.UNr,
+            this.sNr,
           ),
           EventSystem_1.EventSystem.RemoveWithTarget(
             this.Entity,
             EventDefine_1.EEventName.CharOnEnergyChanged,
-            this.PNr,
+            this.aNr,
           ),
           EventSystem_1.EventSystem.RemoveWithTarget(
             this.Entity,
             EventDefine_1.EEventName.CharOnUnifiedMoveStateChanged,
             this.hUe,
           );
-        for (const e of this.aNr) e.EndTask();
-        this.aNr.length = 0;
+        for (const e of this.GGr) e.EndTask();
+        this.GGr.length = 0;
       } else if (t.IsMonster()) {
-        this.Entity.GetComponent(156)?.RemoveListener(
+        this.Entity.GetComponent(158)?.RemoveListener(
           CharacterAttributeTypes_1.EAttributeId.Proto_Rage,
-          this.bNr,
+          this.uNr,
         );
-        for (const r of this.aNr) r.EndTask();
-        this.aNr.length = 0;
+        for (const r of this.GGr) r.EndTask();
+        this.GGr.length = 0;
       }
     }
-    static CNr() {
+    static WGr() {
       return (
         !ModelManager_1.ModelManager.GameModeModel.IsMulti &&
-        !this.$Nr() &&
+        !this.TNr() &&
         0 < this.c9
       );
     }
-    static $Nr() {
+    static TNr() {
       var t = ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(
         ModelManager_1.ModelManager.CreatureModel.GetInstanceId(),
       ).FightFormationId;
@@ -381,7 +381,7 @@ let CharacterLogComponent =
         )?.TrialRole?.length ?? 0)
       );
     }
-    uNr(t) {
+    FGr(t) {
       var e,
         t = EntitySystem_1.EntitySystem.Get(t);
       if (t)
@@ -393,7 +393,7 @@ let CharacterLogComponent =
           e
         );
     }
-    rje(t) {
+    gWe(t) {
       t = EntitySystem_1.EntitySystem.Get(t);
       return (
         !!t &&
@@ -401,16 +401,16 @@ let CharacterLogComponent =
           t.GetComponent(3)?.CreatureData.GetBaseInfo()?.Category.MainType
       );
     }
-    YNr() {
-      var t = this.Entity.GetComponent(185);
+    LNr() {
+      var t = this.Entity.GetComponent(188);
       return t.HasTag(-1800191060) || t.HasTag(-1221493771)
         ? 7
         : t.HasTag(-1371021686)
           ? 6
           : void 0;
     }
-    JNr() {
-      switch (this.Entity.GetComponent(158).MoveState) {
+    DNr() {
+      switch (this.Entity.GetComponent(160).MoveState) {
         case CharacterUnifiedStateTypes_1.ECharMoveState.Walk:
         case CharacterUnifiedStateTypes_1.ECharMoveState.WalkStop:
         case CharacterUnifiedStateTypes_1.ECharMoveState.Run:
@@ -437,23 +437,23 @@ let CharacterLogComponent =
           return 0;
       }
     }
-    static zNr() {
+    static RNr() {
       if (void 0 === this.CurrentEntity)
-        for (const r of this.ZNr.values())
-          if (r.Entity.GetComponent(158)?.IsInFightState()) {
+        for (const r of this.UNr.values())
+          if (r.Entity.GetComponent(160)?.IsInFightState()) {
             this.CurrentEntity = r;
             break;
           }
       var t, e;
       return this.CurrentEntity
         ? void 0 !==
-          (e = (t = this.CurrentEntity.Entity.GetComponent(21))?.YNr())
+          (e = (t = this.CurrentEntity.Entity.GetComponent(21))?.LNr())
           ? e
-          : t?.JNr() ?? 0
+          : t?.DNr() ?? 0
         : 0;
     }
-    static eOr() {
-      var t = this.tOr,
+    static ANr() {
+      var t = this.PNr,
         t =
           ((t.i_move_duration = 0),
           (t.i_swim_duration = 0),
@@ -463,20 +463,20 @@ let CharacterLogComponent =
           (t.i_skill_duration = 0),
           (t.i_dash_duration = 0),
           (t.i_other_duration = 0),
-          this.zNr()),
+          this.RNr()),
         e = TimeUtil_1.TimeUtil.GetServerTime();
-      this.iOr = { State: t, StartTime: e };
+      this.xNr = { State: t, StartTime: e };
     }
-    static xNr() {
+    static hNr() {
       var t = TimeUtil_1.TimeUtil.GetServerTime(),
-        e = this.zNr(),
-        r = this.tOr;
-      if (void 0 === this.iOr)
-        (this.iOr = { State: e, StartTime: t }),
-          0 < this.oOr && (r.i_other_duration += t - this.oOr);
+        e = this.RNr(),
+        r = this.PNr;
+      if (void 0 === this.xNr)
+        (this.xNr = { State: e, StartTime: t }),
+          0 < this.wNr && (r.i_other_duration += t - this.wNr);
       else {
-        var a = this.iOr,
-          o = this.SNr,
+        var a = this.xNr,
+          o = this.JGr,
           n = t - a.StartTime;
         switch (a.State) {
           case 1:
@@ -506,59 +506,59 @@ let CharacterLogComponent =
         (a.State = e), (a.StartTime = t);
       }
     }
-    static rOr(t) {
+    static BNr(t) {
       return t?.Valid && (t = t.GetComponent(0))?.Valid ? t.GetRoleId() : -1;
     }
-    static get ZNr() {
+    static get UNr() {
       return ModelManager_1.ModelManager.SceneTeamModel.GetTeamEntities(!0);
     }
-    static nOr() {
+    static bNr() {
       (this.c9 = 0),
-        (this.sOr = 0),
-        (this.BNr = 0),
-        (this.aOr = 0),
-        (this.gNr = 0),
-        (this.hOr = 0),
-        (this.lOr = 0),
-        (this._Or = 0),
-        (this.uOr = 0),
-        (this.MNr = 0),
-        (this.ENr = 0),
-        (this.cOr = 0),
-        (this.mOr = 0),
-        (this.dOr = 0),
-        (this.yNr = 0),
-        (this.oOr = 0),
-        (this.COr = 0),
-        (this.gOr = 0),
-        (this.ANr = 0),
-        (this.iOr = void 0),
-        (this.tOr.s_monster_hate.length = 0),
-        (this.tOr.s_death_monster.length = 0),
-        (this.tOr.s_run_monster.length = 0),
-        (this.tOr.s_team_character.length = 0),
-        (this.tOr.s_team_hp_per.length = 0),
-        (this.tOr.i_move_duration = 0),
-        (this.tOr.i_swim_duration = 0),
-        (this.tOr.i_glide_duration = 0),
-        (this.tOr.i_climb_duration = 0),
-        (this.tOr.i_behit_duration = 0),
-        (this.tOr.i_skill_duration = 0),
-        (this.tOr.i_dash_duration = 0),
-        (this.tOr.i_other_duration = 0),
-        this.hNr.clear(),
-        this.lNr.clear(),
-        this.fOr.clear(),
-        this.mNr.clear(),
-        this._Nr.clear(),
-        this.DNr.clear();
+        (this.qNr = 0),
+        (this._Nr = 0),
+        (this.GNr = 0),
+        (this.KGr = 0),
+        (this.NNr = 0),
+        (this.ONr = 0),
+        (this.kNr = 0),
+        (this.FNr = 0),
+        (this.YGr = 0),
+        (this.zGr = 0),
+        (this.VNr = 0),
+        (this.HNr = 0),
+        (this.jNr = 0),
+        (this.ZGr = 0),
+        (this.wNr = 0),
+        (this.WNr = 0),
+        (this.KNr = 0),
+        (this.nNr = 0),
+        (this.xNr = void 0),
+        (this.PNr.s_monster_hate.length = 0),
+        (this.PNr.s_death_monster.length = 0),
+        (this.PNr.s_run_monster.length = 0),
+        (this.PNr.s_team_character.length = 0),
+        (this.PNr.s_team_hp_per.length = 0),
+        (this.PNr.i_move_duration = 0),
+        (this.PNr.i_swim_duration = 0),
+        (this.PNr.i_glide_duration = 0),
+        (this.PNr.i_climb_duration = 0),
+        (this.PNr.i_behit_duration = 0),
+        (this.PNr.i_skill_duration = 0),
+        (this.PNr.i_dash_duration = 0),
+        (this.PNr.i_other_duration = 0),
+        this.NGr.clear(),
+        this.OGr.clear(),
+        this.QNr.clear(),
+        this.HGr.clear(),
+        this.kGr.clear(),
+        this.oNr.clear();
     }
-    static TNr(t) {
-      let e = this.pOr.get(t);
+    static tNr(t) {
+      let e = this.XNr.get(t);
       return (
         e ||
           (EntitySystem_1.EntitySystem.Get(t)?.GetComponent(0)?.GetRoleId()
-            ? (e = this.vOr(t)) && this.pOr.set(t, e)
+            ? (e = this.$Nr(t)) && this.XNr.set(t, e)
             : Log_1.Log.CheckError() &&
               Log_1.Log.Error("Battle", 20, "无法获取entity的config Id", [
                 "entityId",
@@ -567,29 +567,29 @@ let CharacterLogComponent =
         e
       );
     }
-    static MOr() {
-      var t = this.ZNr,
+    static YNr() {
+      var t = this.UNr,
         e = new Array();
       for (const a of t) {
-        var r = this.TNr(a.Id);
+        var r = this.tNr(a.Id);
         e.push(r.i_role_id);
       }
       return e.toString();
     }
-    static INr(r, a) {
+    static eNr(r, a) {
       var o = r.toFixed() + "-" + a.toFixed();
-      let n = this.SOr.get(o);
+      let n = this.JNr.get(o);
       if (!n) {
-        (n = new LogReportDefine_1.RoleSkillRecord(a)), this.SOr.set(o, n);
-        let t = this.EOr.get(r),
+        (n = new LogReportDefine_1.RoleSkillRecord(a)), this.JNr.set(o, n);
+        let t = this.zNr.get(r),
           e =
-            (t || ((t = new Array()), this.EOr.set(r, t)),
+            (t || ((t = new Array()), this.zNr.set(r, t)),
             t.push(n),
-            this.yOr.get(r));
+            this.ZNr.get(r));
         e ||
-          ((a = this.rOr(EntitySystem_1.EntitySystem.Get(r))),
+          ((a = this.BNr(EntitySystem_1.EntitySystem.Get(r))),
           (o = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(a)),
-          ((e = this.IOr()
+          ((e = this.eOr()
             ? new LogReportDefine_1.InstRoleSkillReportLog(
                 ModelManager_1.ModelManager.InstanceDungeonEntranceModel.InstanceId,
                 ModelManager_1.ModelManager.CreatureModel.GetSceneId(),
@@ -602,18 +602,18 @@ let CharacterLogComponent =
           (e.i_role_id = a),
           (e.i_role_level = o.GetLevelData()?.GetLevel()),
           (e.i_role_quality = o.GetQualityConfig().Id),
-          this.yOr.set(r, e));
+          this.ZNr.set(r, e));
       }
       return n;
     }
-    static cNr(t) {
-      let e = this.TOr.get(t);
+    static VGr(t) {
+      let e = this.tOr.get(t);
       var r, a;
       return (
         e ||
           ((a = EntitySystem_1.EntitySystem.Get(t)) &&
             ((r = a.GetComponent(0)),
-            ((e = this.IOr()
+            ((e = this.eOr()
               ? new LogReportDefine_1.InstMonsterStateRecord(
                   r.GetPbDataId(),
                   r.EntityPbModelConfigId,
@@ -628,7 +628,7 @@ let CharacterLogComponent =
                 "0") +
               "_" +
               String(this.c9)),
-            (e.i_monster_score = this.LOr(t)),
+            (e.i_monster_score = this.iOr(t)),
             (r = a.GetComponent(0).GetPbDataId()),
             "Quest" ===
             (a = ModelManager_1.ModelManager.CreatureModel.GetEntityOwner(
@@ -637,23 +637,23 @@ let CharacterLogComponent =
             ))?.Type
               ? (e.i_from_quest = a.QuestId)
               : "LevelPlay" === a?.Type && (e.i_from_play = a.LevelPlayId),
-            this.TOr.set(t, e))),
+            this.tOr.set(t, e))),
         e
       );
     }
-    static LNr(r, a) {
+    static iNr(r, a) {
       var o = r.toFixed() + "-" + a.toFixed();
-      let n = this.DOr.get(o);
+      let n = this.oOr.get(o);
       if (!n) {
-        (n = new LogReportDefine_1.MonsterSkillRecord(a)), this.DOr.set(o, n);
-        let t = this.ROr.get(r),
+        (n = new LogReportDefine_1.MonsterSkillRecord(a)), this.oOr.set(o, n);
+        let t = this.rOr.get(r),
           e =
-            (t || ((t = new Array()), this.ROr.set(r, t)),
+            (t || ((t = new Array()), this.rOr.set(r, t)),
             t.push(n),
-            this.AOr.get(r));
+            this.nOr.get(r));
         e ||
           ((o = (a = EntitySystem_1.EntitySystem.Get(r)).GetComponent(0)),
-          ((e = this.IOr()
+          ((e = this.eOr()
             ? new LogReportDefine_1.InstMonsterSkillReportLog(
                 o.GetPbDataId(),
                 o.EntityPbModelConfigId,
@@ -670,19 +670,19 @@ let CharacterLogComponent =
             String(this.c9)),
           (e.i_monster_level =
             a
-              .GetComponent(156)
+              .GetComponent(158)
               ?.GetCurrentValue(
                 CharacterAttributeTypes_1.EAttributeId.Proto_Lv,
               ) ?? 0),
-          this.AOr.set(r, e));
+          this.nOr.set(r, e));
       }
       return n;
     }
-    static UOr() {
+    static sOr() {
       if (
         !(
           0 < this.c9 ||
-          this.IOr() ||
+          this.eOr() ||
           ((this.c9 = Math.floor(TimeUtil_1.TimeUtil.GetServerTime())),
           this.c9 <= 0)
         )
@@ -690,31 +690,27 @@ let CharacterLogComponent =
         var t = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity,
           e = t.Entity.GetComponent(3),
           t =
-            ((this.oOr = TimeUtil_1.TimeUtil.GetServerTime()),
-            this.eOr(),
+            ((this.wNr = TimeUtil_1.TimeUtil.GetServerTime()),
+            this.ANr(),
             t?.Valid &&
-              (((t = this.TNr(t.Id)).LastGoToBattleTimePoint =
+              (((t = this.tNr(t.Id)).LastGoToBattleTimePoint =
                 TimeUtil_1.TimeUtil.GetServerTime()),
               t.i_enter_times++),
-            this.ZNr),
+            this.UNr),
           r = new Array(),
           a = new Array();
-        for (const s of t) {
-          var o = this.TNr(s.Id),
-            n = s.Entity.GetComponent(156),
-            i =
-              ((o.i_begin_hp = n.GetCurrentValue(
-                CharacterAttributeTypes_1.EAttributeId.Proto_Life,
-              )),
-              (o.i_hp_max = n.GetCurrentValue(
-                CharacterAttributeTypes_1.EAttributeId.Tkn,
-              )),
-              (o.i_enter_battle_score = this.xOr(s.Id)),
-              r.push(o.i_role_id),
-              a.push(Math.round((o.i_begin_hp / o.i_hp_max) * 1e4)),
-              s.Entity.GetComponent(79));
-          i.RoleElementEnergy >= CharacterAttributeTypes_1.ELEMENT_POWER_MAX &&
-            o.i_full_element_times++,
+        for (const i of t) {
+          var o = this.tNr(i.Id),
+            n = i.Entity.GetComponent(158);
+          (o.i_begin_hp = n.GetCurrentValue(
+            CharacterAttributeTypes_1.EAttributeId.Proto_Life,
+          )),
+            (o.i_hp_max = n.GetCurrentValue(
+              CharacterAttributeTypes_1.EAttributeId.e5n,
+            )),
+            (o.i_enter_battle_score = this.hOr(i.Id)),
+            r.push(o.i_role_id),
+            a.push(Math.round((o.i_begin_hp / o.i_hp_max) * 1e4)),
             n.GetCurrentValue(
               CharacterAttributeTypes_1.EAttributeId.Proto_Energy,
             ) >=
@@ -722,20 +718,20 @@ let CharacterLogComponent =
                 CharacterAttributeTypes_1.EAttributeId.Proto_EnergyMax,
               ) && o.i_full_energy_times++;
         }
-        (this.wOr.i_area_id =
+        (this.lOr.i_area_id =
           ModelManager_1.ModelManager.AreaModel.AreaInfo.AreaId),
-          (this.wOr.f_x = e.ActorLocationProxy.X),
-          (this.wOr.f_y = e.ActorLocationProxy.Y),
-          (this.wOr.f_z = e.ActorLocationProxy.Z),
-          (this.wOr.s_battle_id =
+          (this.lOr.f_x = e.ActorLocationProxy.X),
+          (this.lOr.f_y = e.ActorLocationProxy.Y),
+          (this.lOr.f_z = e.ActorLocationProxy.Z),
+          (this.lOr.s_battle_id =
             (ModelManager_1.ModelManager.PlayerInfoModel.GetId()?.toString() ??
               "0") +
             "_" +
             String(this.c9)),
-          (this.wOr.s_team_character = r),
-          (this.wOr.s_team_hp_per = a),
+          (this.lOr.s_team_character = r),
+          (this.lOr.s_team_hp_per = a),
           0 < this.c9
-            ? LogController_1.LogController.LogBattleStartPush(this.wOr)
+            ? LogController_1.LogController.LogBattleStartPush(this.lOr)
             : Log_1.Log.CheckDebug() &&
               Log_1.Log.Debug("Battle", 4, "战斗ID不合法", [
                 "battle_id",
@@ -743,15 +739,15 @@ let CharacterLogComponent =
               ]);
       }
     }
-    static BOr() {
+    static _Or() {
       if (
         !ModelManager_1.ModelManager.GameModeModel.IsMulti &&
         0 !== this.c9 &&
-        !this.IOr()
+        !this.eOr()
       ) {
         var e = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity,
-          [r, a] = this.qOr(e.Entity);
-        const o = this.tOr;
+          [r, a] = this.cOr(e.Entity);
+        const o = this.PNr;
         o.i_area_id = ModelManager_1.ModelManager.AreaModel.AreaInfo.AreaId;
         e = e.Entity.GetComponent(3).ActorLocationProxy;
         (o.f_x = e.X),
@@ -764,50 +760,50 @@ let CharacterLogComponent =
               "0") +
             "_" +
             String(this.c9));
-        const n = this._Nr;
-        this.lNr.forEach((t) => {
+        const n = this.kGr;
+        this.OGr.forEach((t) => {
           o.s_monster_hate.push(n.get(t));
         }),
-          this.fOr.forEach((t) => {
+          this.QNr.forEach((t) => {
             o.s_death_monster.push(
               new LogReportDefine_1.MonsterInfoLogData(n.get(t)),
             );
           }),
-          this.lNr.forEach((t) => {
-            this.fOr.has(t) ||
+          this.OGr.forEach((t) => {
+            this.QNr.has(t) ||
               o.s_run_monster.push(
                 new LogReportDefine_1.MonsterInfoLogData(n.get(t)),
               );
           });
         e = o.s_run_monster.length;
-        let t = this.COr;
-        t !== Protocol_1.Aki.Protocol.qOs.Proto_Death &&
+        let t = this.WNr;
+        t !== Protocol_1.Aki.Protocol.T4s.Proto_Death &&
           (0 === e
-            ? (t = Protocol_1.Aki.Protocol.qOs.Proto_AllKill)
-            : e < this.lNr.size
-              ? (t = Protocol_1.Aki.Protocol.qOs.Hfs)
-              : e === this.lNr.size &&
-                (t = Protocol_1.Aki.Protocol.qOs.Proto_Run)),
+            ? (t = Protocol_1.Aki.Protocol.T4s.Proto_AllKill)
+            : e < this.OGr.size
+              ? (t = Protocol_1.Aki.Protocol.T4s.aEs)
+              : e === this.OGr.size &&
+                (t = Protocol_1.Aki.Protocol.T4s.Proto_Run)),
           (o.i_result = t),
-          (o.i_death_role_count = this.sOr),
-          (o.i_revive_times = this.BNr),
-          (o.l_acc_damage = this.hOr),
-          (o.l_acc_shield_damage = this.lOr),
-          (o.l_acc_self_damage = this.aOr),
-          (o.l_acc_skill_heal = this._Or),
-          (o.l_acc_item_heal = this.uOr),
-          (o.i_stop_times = this.cOr),
-          (o.i_damage_max = this.mOr),
-          (o.i_acc_dodge_times = this.MNr),
-          (o.i_dodge_succ_times = this.ENr),
-          (o.i_non_character_damage = this.gNr),
+          (o.i_death_role_count = this.qNr),
+          (o.i_revive_times = this._Nr),
+          (o.l_acc_damage = this.NNr),
+          (o.l_acc_shield_damage = this.ONr),
+          (o.l_acc_self_damage = this.GNr),
+          (o.l_acc_skill_heal = this.kNr),
+          (o.l_acc_item_heal = this.FNr),
+          (o.i_stop_times = this.VNr),
+          (o.i_damage_max = this.HNr),
+          (o.i_acc_dodge_times = this.YGr),
+          (o.i_dodge_succ_times = this.zGr),
+          (o.i_non_character_damage = this.KGr),
           (o.i_non_character_shield_damage = 0),
-          (o.i_change_character_times = this.dOr),
-          (o.i_qte_times = this.yNr),
-          (o.i_cost_time = TimeUtil_1.TimeUtil.GetServerTime() - this.oOr),
-          (o.i_counter_attack_times = this.gOr),
-          (o.i_bullet_rebound_times = this.ANr),
-          this.xNr(),
+          (o.i_change_character_times = this.jNr),
+          (o.i_qte_times = this.ZGr),
+          (o.i_cost_time = TimeUtil_1.TimeUtil.GetServerTime() - this.wNr),
+          (o.i_counter_attack_times = this.KNr),
+          (o.i_bullet_rebound_times = this.nNr),
+          this.hNr(),
           o.i_cost_time <= 0 || o.s_monster_hate.length <= 0
             ? Log_1.Log.CheckDebug() &&
               Log_1.Log.Debug("Battle", 4, "战斗时长为0,或者历史仇恨为0", [
@@ -815,21 +811,21 @@ let CharacterLogComponent =
                 o,
               ])
             : LogController_1.LogController.LogBattleEndPush(o, !0),
-          this.GOr(),
-          this.NOr(),
-          this.OOr(),
-          this.kOr(),
-          this.FOr(),
-          this.nOr();
+          this.mOr(),
+          this.dOr(),
+          this.COr(),
+          this.gOr(),
+          this.fOr(),
+          this.bNr();
       }
     }
-    static GOr() {
-      for (const t of this.pOr.values())
+    static mOr() {
+      for (const t of this.XNr.values())
         LogController_1.LogController.LogSingleCharacterStatusPush(t, !0);
-      this.pOr.clear();
+      this.XNr.clear();
     }
-    static NOr() {
-      for (const e of this.TOr.values()) {
+    static dOr() {
+      for (const e of this.tOr.values()) {
         e.i_acc_time <= 0 &&
           (e.i_acc_time = TimeUtil_1.TimeUtil.GetServerTime() - e.InitTime);
         var t = e.l_acc_rage;
@@ -837,21 +833,21 @@ let CharacterLogComponent =
           t - e.l_acc_rage_normal - e.l_acc_rage_counter - e.l_acc_rage_vision),
           LogController_1.LogController.LogSingleMonsterStatusPush(e, !0);
       }
-      this.TOr.clear();
+      this.tOr.clear();
     }
-    static OOr() {
-      for (const t of this.yOr.entries())
+    static COr() {
+      for (const t of this.ZNr.entries())
         LogController_1.LogController.LogRoleSkillReportPush(
           t[1],
-          this.EOr.get(t[0]),
+          this.zNr.get(t[0]),
           !0,
         );
-      this.EOr.clear(), this.SOr.clear(), this.yOr.clear();
+      this.zNr.clear(), this.JNr.clear(), this.ZNr.clear();
     }
-    static kOr() {
-      if (0 < this.VOr.size) {
+    static gOr() {
+      if (0 < this.pOr.size) {
         let t = void 0;
-        this.IOr()
+        this.eOr()
           ? (t = new LogReportDefine_1.InstReactionLogRecord(
               ModelManager_1.ModelManager.InstanceDungeonEntranceModel.InstanceId,
               ModelManager_1.ModelManager.CreatureModel.GetSceneId(),
@@ -861,56 +857,56 @@ let CharacterLogComponent =
                 "0") +
               "_" +
               String(this.c9)),
-          LogController_1.LogController.LogDoubleBallReport(t, this.VOr, !0);
+          LogController_1.LogController.LogDoubleBallReport(t, this.pOr, !0);
       }
-      this.VOr.clear(), this.HOr.clear();
+      this.pOr.clear(), this.vOr.clear();
     }
-    static jOr() {
-      this.WOr.Clear(),
-        this.SNr.Clear(),
-        (this.WOr.i_start_time = TimeUtil_1.TimeUtil.GetServerTime()),
-        (this.WOr.i_inst_id =
+    static MOr() {
+      this.EOr.Clear(),
+        this.JGr.Clear(),
+        (this.EOr.i_start_time = TimeUtil_1.TimeUtil.GetServerTime()),
+        (this.EOr.i_inst_id =
           ModelManager_1.ModelManager.InstanceDungeonEntranceModel.InstanceId),
-        (this.WOr.s_fight_id =
+        (this.EOr.s_fight_id =
           ModelManager_1.ModelManager.CreatureModel.GetSceneId()),
-        (this.WOr.s_fight_roles = this.MOr()),
-        (this.WOr.i_area_index = this.KOr),
-        LogController_1.LogController.LogInstFightStartPush(this.WOr);
+        (this.EOr.s_fight_roles = this.YNr()),
+        (this.EOr.i_area_index = this.SOr),
+        LogController_1.LogController.LogInstFightStartPush(this.EOr);
     }
-    static QOr() {
-      (this.SNr.i_inst_id =
+    static yOr() {
+      (this.JGr.i_inst_id =
         ModelManager_1.ModelManager.InstanceDungeonEntranceModel.InstanceId),
-        (this.SNr.s_fight_id =
+        (this.JGr.s_fight_id =
           ModelManager_1.ModelManager.CreatureModel.GetSceneId()),
-        this.qOr(
+        this.cOr(
           ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity.Entity,
         ),
-        (this.SNr.i_fight_use_time +=
-          TimeUtil_1.TimeUtil.GetServerTime() - this.oOr),
-        (this.SNr.i_inst_use_time =
-          TimeUtil_1.TimeUtil.GetServerTime() - this.WOr.i_start_time),
-        (this.SNr.s_fight_roles = this.MOr()),
-        (this.SNr.i_area_index = this.KOr),
-        this.GOr(),
-        this.NOr(),
-        this.OOr(),
-        this.kOr(),
-        this.FOr(),
-        this.nOr(),
-        LogController_1.LogController.LogInstFightEndPush(this.SNr),
-        this.WOr.Clear(),
-        this.SNr.Clear();
+        (this.JGr.i_fight_use_time +=
+          TimeUtil_1.TimeUtil.GetServerTime() - this.wNr),
+        (this.JGr.i_inst_use_time =
+          TimeUtil_1.TimeUtil.GetServerTime() - this.EOr.i_start_time),
+        (this.JGr.s_fight_roles = this.YNr()),
+        (this.JGr.i_area_index = this.SOr),
+        this.mOr(),
+        this.dOr(),
+        this.COr(),
+        this.gOr(),
+        this.fOr(),
+        this.bNr(),
+        LogController_1.LogController.LogInstFightEndPush(this.JGr),
+        this.EOr.Clear(),
+        this.JGr.Clear();
     }
-    static FOr() {
-      for (const t of this.AOr.entries())
+    static fOr() {
+      for (const t of this.nOr.entries())
         LogController_1.LogController.LogMonsterSkillReportPush(
           t[1],
-          this.ROr.get(t[0]),
+          this.rOr.get(t[0]),
           !0,
         );
-      this.DOr.clear(), this.ROr.clear(), this.AOr.clear();
+      this.oOr.clear(), this.rOr.clear(), this.nOr.clear();
     }
-    static XOr(t) {
+    static IOr(t) {
       var e = new Map(),
         t = ModelManager_1.ModelManager.SceneTeamModel.GetTeamItem(t, {
           ParamType: 1,
@@ -922,7 +918,7 @@ let CharacterLogComponent =
       }
       return Object.fromEntries(e);
     }
-    static $Or(t) {
+    static TOr(t) {
       const a = new Array();
       return (
         ModelManager_1.ModelManager.PhantomBattleModel.GetBattleDataById(t)
@@ -943,11 +939,11 @@ let CharacterLogComponent =
         a
       );
     }
-    static xOr(t) {
+    static hOr(t) {
       var e = 0,
         r = EntitySystem_1.EntitySystem.Get(t),
-        a = r.GetComponent(156),
-        r = r.GetComponent(79),
+        a = r.GetComponent(158),
+        r = r.GetComponent(81),
         r = CharacterDamageCalculations_1.Calculation.GetElementDamageBonus(
           a.TakeSnapshot(),
           r.RoleElementType,
@@ -989,7 +985,7 @@ let CharacterLogComponent =
         (1 +
           o.GetResonanceData().GetResonantChainGroupIndex() * RESONANT_CONST));
     }
-    static vOr(e) {
+    static $Nr(e) {
       var r =
           ModelManager_1.ModelManager.CreatureModel.GetEntityById(e)
             ?.Entity?.GetComponent(0)
@@ -999,7 +995,7 @@ let CharacterLogComponent =
         });
       if (a) {
         let t = void 0;
-        (t = this.IOr()
+        (t = this.eOr()
           ? new LogReportDefine_1.InstRoleStateRecord(
               r,
               ModelManager_1.ModelManager.InstanceDungeonEntranceModel.InstanceId,
@@ -1038,8 +1034,8 @@ let CharacterLogComponent =
           a &&
             ((t.i_vision_skill_id = a.GetConfigId()),
             (t.i_vision_skill_level = a.GetPhantomLevel())),
-          (t.s_role_skill = this.XOr(e)),
-          (t.s_phantom_battle_data = this.$Or(r)),
+          (t.s_role_skill = this.IOr(e)),
+          (t.s_phantom_battle_data = this.TOr(r)),
           (t.s_phantom_fetter_list = [
             ...ModelManager_1.ModelManager.PhantomBattleModel.GetTargetRoleFetterList(
               r,
@@ -1049,8 +1045,8 @@ let CharacterLogComponent =
         );
       }
     }
-    static LOr(t) {
-      var t = EntitySystem_1.EntitySystem.Get(t).GetComponent(156),
+    static iOr(t) {
+      var t = EntitySystem_1.EntitySystem.Get(t).GetComponent(158),
         e =
           (t.GetCurrentValue(
             CharacterAttributeTypes_1.EAttributeId.Proto_DamageResistancePhys,
@@ -1082,35 +1078,35 @@ let CharacterLogComponent =
           7 /
           CharacterAttributeTypes_1.PER_TEN_THOUSAND,
         t =
-          t.GetCurrentValue(CharacterAttributeTypes_1.EAttributeId.Tkn) /
+          t.GetCurrentValue(CharacterAttributeTypes_1.EAttributeId.e5n) /
           (1 - e) /
           0.5;
       let r = 0;
-      for (const o of this.ZNr) {
-        var a = this.TNr(o.Id);
+      for (const o of this.UNr) {
+        var a = this.tNr(o.Id);
         a.i_enter_battle_score > r && (r = a.i_enter_battle_score);
       }
       return t / r;
     }
-    static IOr() {
-      return 0 < this.WOr.i_start_time;
+    static eOr() {
+      return 0 < this.EOr.i_start_time;
     }
-    static qOr(t) {
+    static cOr(t) {
       t?.Valid &&
-        0 !== (t = this.TNr(t.Id)).LastGoToBattleTimePoint &&
+        0 !== (t = this.tNr(t.Id)).LastGoToBattleTimePoint &&
         (t.i_acc_time +=
           TimeUtil_1.TimeUtil.GetServerTime() - t.LastGoToBattleTimePoint);
-      var t = this.ZNr,
+      var t = this.UNr,
         e = new Array(),
         r = new Array();
       for (const n of t) {
-        var a = this.TNr(n.Id),
-          o = n.Entity.GetComponent(156);
+        var a = this.tNr(n.Id),
+          o = n.Entity.GetComponent(158);
         (a.i_end_hp = o.GetCurrentValue(
           CharacterAttributeTypes_1.EAttributeId.Proto_Life,
         )),
           (a.i_hp_max = o.GetCurrentValue(
-            CharacterAttributeTypes_1.EAttributeId.Tkn,
+            CharacterAttributeTypes_1.EAttributeId.e5n,
           )),
           e.push(a.i_role_id),
           r.push(Math.round((a.i_end_hp / a.i_hp_max) * 1e4));
@@ -1118,110 +1114,113 @@ let CharacterLogComponent =
       return [e, r];
     }
   });
-(CharacterLogComponent.GNr = !1),
-  (CharacterLogComponent.NNr = (t) => {
-    t ? CharacterLogComponent_1.UOr() : CharacterLogComponent_1.BOr();
+(CharacterLogComponent.mNr = !1),
+  (CharacterLogComponent.dNr = (t) => {
+    t ? CharacterLogComponent_1.sOr() : CharacterLogComponent_1._Or();
   }),
-  (CharacterLogComponent.VNr = () => {
+  (CharacterLogComponent.pNr = () => {
     1 < ModelManager_1.ModelManager.GameModeModel.InstanceType &&
       !ModelManager_1.ModelManager.GameModeModel.IsMulti &&
-      ((CharacterLogComponent_1.KOr = 0), CharacterLogComponent_1.jOr());
+      ((CharacterLogComponent_1.SOr = 0), CharacterLogComponent_1.MOr());
   }),
-  (CharacterLogComponent.HNr = () => {
+  (CharacterLogComponent.vNr = () => {
     1 < ModelManager_1.ModelManager.GameModeModel.InstanceType &&
       !ModelManager_1.ModelManager.GameModeModel.IsMulti &&
-      (CharacterLogComponent_1.QOr(), (CharacterLogComponent_1.KOr = 0));
+      (CharacterLogComponent_1.yOr(), (CharacterLogComponent_1.SOr = 0));
   }),
-  (CharacterLogComponent.jNr = () => {
+  (CharacterLogComponent.MNr = () => {
     ModelManager_1.ModelManager.GameModeModel.IsMulti ||
-      ((CharacterLogComponent_1.cOr += 1),
-      (CharacterLogComponent_1.SNr.i_stop_times += 1));
+      ((CharacterLogComponent_1.VNr += 1),
+      (CharacterLogComponent_1.JGr.i_stop_times += 1));
   }),
-  (CharacterLogComponent.iOr = void 0),
+  (CharacterLogComponent.xNr = void 0),
   (CharacterLogComponent.CurrentEntity = void 0),
-  (CharacterLogComponent.ONr = (t, e) => {
+  (CharacterLogComponent.CNr = (t, e) => {
     (CharacterLogComponent_1.CurrentEntity = t),
-      CharacterLogComponent_1.CNr() &&
-        ((CharacterLogComponent_1.dOr += 1),
-        (t = CharacterLogComponent_1.TNr(t?.Id)) &&
+      CharacterLogComponent_1.WGr() &&
+        ((CharacterLogComponent_1.jNr += 1),
+        (t = CharacterLogComponent_1.tNr(t?.Id)) &&
           ((t.LastGoToBattleTimePoint = TimeUtil_1.TimeUtil.GetServerTime()),
           t.i_enter_times++),
-        (t = CharacterLogComponent_1.TNr(e?.Id ?? 0)) &&
+        (t = CharacterLogComponent_1.tNr(e?.Id ?? 0)) &&
           ((t.i_leave_times += 1),
           0 !== t.LastGoToBattleTimePoint
             ? (t.i_acc_time +=
                 TimeUtil_1.TimeUtil.GetServerTime() - t.LastGoToBattleTimePoint)
             : (t.LastGoToBattleTimePoint =
                 TimeUtil_1.TimeUtil.GetServerTime())),
-        CharacterLogComponent_1.xNr());
+        CharacterLogComponent_1.hNr());
   }),
-  (CharacterLogComponent.kNr = () => {
-    CharacterLogComponent_1.CNr() &&
-      ((CharacterLogComponent_1.COr = Protocol_1.Aki.Protocol.qOs.Proto_Death),
-      CharacterLogComponent_1.NNr(!1));
+  (CharacterLogComponent.gNr = (t, e, r) => {
+    t &&
+      1 === e &&
+      1 !== r &&
+      CharacterLogComponent_1.WGr() &&
+      ((CharacterLogComponent_1.WNr = Protocol_1.Aki.Protocol.T4s.Proto_Death),
+      CharacterLogComponent_1.dNr(!1));
   }),
   (CharacterLogComponent.c9 = 0),
-  (CharacterLogComponent.sOr = 0),
-  (CharacterLogComponent.BNr = 0),
-  (CharacterLogComponent.aOr = 0),
-  (CharacterLogComponent.gNr = 0),
-  (CharacterLogComponent.lOr = 0),
-  (CharacterLogComponent.hOr = 0),
-  (CharacterLogComponent._Or = 0),
-  (CharacterLogComponent.uOr = 0),
-  (CharacterLogComponent.MNr = 0),
-  (CharacterLogComponent.ENr = 0),
-  (CharacterLogComponent.cOr = 0),
-  (CharacterLogComponent.mOr = 0),
-  (CharacterLogComponent.dOr = 0),
-  (CharacterLogComponent.yNr = 0),
-  (CharacterLogComponent.oOr = 0),
-  (CharacterLogComponent.COr = 0),
-  (CharacterLogComponent.gOr = 0),
-  (CharacterLogComponent.ANr = 0),
-  (CharacterLogComponent.hNr = new Set()),
-  (CharacterLogComponent.lNr = new Set()),
-  (CharacterLogComponent.fOr = new Set()),
-  (CharacterLogComponent.mNr = new Set()),
-  (CharacterLogComponent._Nr = new Map()),
-  (CharacterLogComponent.DNr = new Map()),
-  (CharacterLogComponent.WOr = new LogReportDefine_1.InstFightStartRecord()),
-  (CharacterLogComponent.SNr = new LogReportDefine_1.InstFightEndRecord()),
-  (CharacterLogComponent.KOr = 0),
+  (CharacterLogComponent.qNr = 0),
+  (CharacterLogComponent._Nr = 0),
+  (CharacterLogComponent.GNr = 0),
+  (CharacterLogComponent.KGr = 0),
+  (CharacterLogComponent.ONr = 0),
+  (CharacterLogComponent.NNr = 0),
+  (CharacterLogComponent.kNr = 0),
+  (CharacterLogComponent.FNr = 0),
+  (CharacterLogComponent.YGr = 0),
+  (CharacterLogComponent.zGr = 0),
+  (CharacterLogComponent.VNr = 0),
+  (CharacterLogComponent.HNr = 0),
+  (CharacterLogComponent.jNr = 0),
+  (CharacterLogComponent.ZGr = 0),
+  (CharacterLogComponent.wNr = 0),
+  (CharacterLogComponent.WNr = 0),
+  (CharacterLogComponent.KNr = 0),
+  (CharacterLogComponent.nNr = 0),
+  (CharacterLogComponent.NGr = new Set()),
+  (CharacterLogComponent.OGr = new Set()),
+  (CharacterLogComponent.QNr = new Set()),
+  (CharacterLogComponent.HGr = new Set()),
+  (CharacterLogComponent.kGr = new Map()),
+  (CharacterLogComponent.oNr = new Map()),
+  (CharacterLogComponent.EOr = new LogReportDefine_1.InstFightStartRecord()),
+  (CharacterLogComponent.JGr = new LogReportDefine_1.InstFightEndRecord()),
+  (CharacterLogComponent.SOr = 0),
+  (CharacterLogComponent.XNr = new Map()),
+  (CharacterLogComponent.JNr = new Map()),
+  (CharacterLogComponent.zNr = new Map()),
+  (CharacterLogComponent.ZNr = new Map()),
+  (CharacterLogComponent.tOr = new Map()),
+  (CharacterLogComponent.oOr = new Map()),
+  (CharacterLogComponent.rOr = new Map()),
+  (CharacterLogComponent.nOr = new Map()),
   (CharacterLogComponent.pOr = new Map()),
-  (CharacterLogComponent.SOr = new Map()),
-  (CharacterLogComponent.EOr = new Map()),
-  (CharacterLogComponent.yOr = new Map()),
-  (CharacterLogComponent.TOr = new Map()),
-  (CharacterLogComponent.DOr = new Map()),
-  (CharacterLogComponent.ROr = new Map()),
-  (CharacterLogComponent.AOr = new Map()),
-  (CharacterLogComponent.VOr = new Map()),
-  (CharacterLogComponent.HOr = new Map()),
-  (CharacterLogComponent.wOr = new LogReportDefine_1.BattleStartLogData()),
-  (CharacterLogComponent.POr = void 0),
-  (CharacterLogComponent.tOr = new LogReportDefine_1.BattleEndLogData()),
-  (CharacterLogComponent.bOr = void 0),
-  (CharacterLogComponent.FNr = (t) => {
+  (CharacterLogComponent.vOr = new Map()),
+  (CharacterLogComponent.lOr = new LogReportDefine_1.BattleStartLogData()),
+  (CharacterLogComponent.aOr = void 0),
+  (CharacterLogComponent.PNr = new LogReportDefine_1.BattleEndLogData()),
+  (CharacterLogComponent.uOr = void 0),
+  (CharacterLogComponent.fNr = (t) => {
     var e;
     ModelManager_1.ModelManager.GameModeModel.IsMulti ||
       ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance() ||
       ((t = EntitySystem_1.EntitySystem.Get(t))?.GetComponent(0)?.IsRole() &&
-        ((e = CharacterLogComponent_1.rOr(t)), (t = t.GetComponent(21)), e) &&
-        (LogController_1.LogController.LogCharacterDeathPush(e, t.fNr, !0),
-        (t.fNr = 0)),
-      CharacterLogComponent_1.SNr.i_death_role_count++);
+        ((e = CharacterLogComponent_1.BNr(t)), (t = t.GetComponent(21)), e) &&
+        (LogController_1.LogController.LogCharacterDeathPush(e, t.QGr, !0),
+        (t.QGr = 0)),
+      CharacterLogComponent_1.JGr.i_death_role_count++);
   }),
-  (CharacterLogComponent.WNr = (t) => {
-    t.U0s && (CharacterLogComponent_1.SNr.i_result = Number(t.U0s)),
-      t.V5n && (CharacterLogComponent_1.SNr.i_reason = t.V5n);
+  (CharacterLogComponent.ENr = (t) => {
+    t.Qps && (CharacterLogComponent_1.JGr.i_result = Number(t.Qps)),
+      t.E9n && (CharacterLogComponent_1.JGr.i_reason = t.E9n);
   }),
-  (CharacterLogComponent.KNr = () => {
+  (CharacterLogComponent.SNr = () => {
     1 < ModelManager_1.ModelManager.GameModeModel.InstanceType &&
       !ModelManager_1.ModelManager.GameModeModel.IsMulti &&
-      (CharacterLogComponent_1.KOr++,
-      CharacterLogComponent_1.QOr(),
-      CharacterLogComponent_1.jOr());
+      (CharacterLogComponent_1.SOr++,
+      CharacterLogComponent_1.yOr(),
+      CharacterLogComponent_1.MOr());
   }),
   (CharacterLogComponent = CharacterLogComponent_1 =
     __decorate(

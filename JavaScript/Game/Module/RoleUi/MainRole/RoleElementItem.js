@@ -7,8 +7,8 @@ const UE = require("ue"),
 class RoleElementItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
-      (this.plo = void 0),
-      (this.vlo = void 0),
+      (this.d1o = void 0),
+      (this.C1o = void 0),
       (this.OnToggleCallback = void 0),
       (this.CanToggleChange = void 0);
   }
@@ -35,9 +35,9 @@ class RoleElementItem extends GridProxyAbstract_1.GridProxyAbstract {
     );
   }
   Update(t) {
-    this.vlo = t;
+    this.C1o = t;
     var t = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(
-        this.vlo.Id,
+        this.C1o.Id,
       ).ElementId,
       e = ConfigManager_1.ConfigManager.ElementInfoConfig.GetElementInfo(t);
     this.GetText(2).ShowTextNew(e.Name),
@@ -46,11 +46,11 @@ class RoleElementItem extends GridProxyAbstract_1.GridProxyAbstract {
       this.RefreshState();
   }
   Refresh(t, e, i) {
-    (this.vlo = t), this.Update(t);
+    (this.C1o = t), this.Update(t);
   }
   RefreshState() {
-    var t = this.vlo.Id,
-      t = this.plo.GetCurSelectRoleId() === t;
+    var t = this.C1o.Id,
+      t = this.d1o.GetCurSelectRoleId() === t;
     this.GetItem(4).SetUIActive(t);
   }
   OnSelected(t) {
@@ -60,7 +60,7 @@ class RoleElementItem extends GridProxyAbstract_1.GridProxyAbstract {
     this.GetExtendToggle(3)?.SetToggleState(0);
   }
   SetRoleViewAgent(t) {
-    this.plo = t;
+    this.d1o = t;
   }
 }
 exports.RoleElementItem = RoleElementItem;

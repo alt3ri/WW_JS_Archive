@@ -24,20 +24,20 @@ const UE = require("ue"),
 class ShopItemInfoDetailPanel extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this.Dvo = void 0),
+      (this.IMo = void 0),
       (this.CommonTipsData = void 0),
       (this.t6 = 0),
-      (this.Rvo = void 0),
+      (this.TMo = void 0),
       (this.AttributeVertical = void 0),
-      (this.Uvo = void 0),
-      (this.Avo = void 0),
+      (this.LMo = void 0),
+      (this.DMo = void 0),
       (this.WGe = void 0),
-      (this.n3i = 0),
+      (this.n4i = 0),
       (this.QGe = (t) => {
-        this.s3i = t;
+        this.s4i = t;
       }),
       (this.hPe = () => new AttributeItem_1.AttributeItem()),
-      (this.lut = (t, i) => {
+      (this.Tct = (t, i) => {
         "CloseEvent" === i
           ? this.SetActive(!1)
           : "SleEvent" === i &&
@@ -45,18 +45,18 @@ class ShopItemInfoDetailPanel extends UiPanelBase_1.UiPanelBase {
               EventDefine_1.EEventName.CloseItemInfo,
             );
       }),
-      (this.Pvo = () => {
+      (this.RMo = () => {
         var t, i;
         ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
-          this.Dvo.CurrencyId,
+          this.IMo.CurrencyId,
         ) <
-        this.Dvo.SingleBuyPrice * this.t6
+        this.IMo.SingleBuyPrice * this.t6
           ? ((i = ConfigManager_1.ConfigManager.TextConfig.GetTextById(
               "ShopResourceNotEnough",
             )),
             (t =
               ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
-                this.Dvo.CurrencyId,
+                this.IMo.CurrencyId,
               )),
             EventSystem_1.EventSystem.Emit(
               EventDefine_1.EEventName.OnSubmitItemFail,
@@ -69,33 +69,33 @@ class ShopItemInfoDetailPanel extends UiPanelBase_1.UiPanelBase {
               ScrollingTipsController_1.ScrollingTipsController.ShowTipsByText(
                 i,
               )))
-          : this.Dvo.BuySuccessFunction(
-              this.Dvo.ItemId,
-              this.s3i,
-              this.Dvo.CurrencyId,
-              this.Dvo.ParamData,
+          : this.IMo.BuySuccessFunction(
+              this.IMo.ItemId,
+              this.s4i,
+              this.IMo.CurrencyId,
+              this.IMo.ParamData,
             );
       }),
-      (this.xvo = () => {
+      (this.UMo = () => {
         ControllerHolder_1.ControllerHolder.ItemController.OpenItemTipsByItemId(
-          this.Dvo.CurrencyId,
+          this.IMo.CurrencyId,
         );
       });
   }
-  get s3i() {
+  get s4i() {
     return this.t6;
   }
-  set s3i(t) {
-    this.t6 = Math.max(1, Math.min(t, this.n3i));
+  set s4i(t) {
+    this.t6 = Math.max(1, Math.min(t, this.n4i));
     var t =
         ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
-          this.Dvo.CurrencyId,
+          this.IMo.CurrencyId,
         ) >=
-        this.Dvo.SingleBuyPrice * this.t6,
+        this.IMo.SingleBuyPrice * this.t6,
       i = this.GetText(6),
       t =
-        (i.SetColor(t ? this.Avo : coinNotEnoughColor),
-        i.SetText("" + this.Dvo.SingleBuyPrice * this.t6),
+        (i.SetColor(t ? this.DMo : coinNotEnoughColor),
+        i.SetText("" + this.IMo.SingleBuyPrice * this.t6),
         ModelManager_1.ModelManager.ShopModel.OpenItemInfo);
     this.GetText(23).SetText(`<s>${t.GetOriginalPrice() * this.t6}</s>`),
       LguiUtil_1.LguiUtil.SetLocalTextNew(
@@ -138,17 +138,17 @@ class ShopItemInfoDetailPanel extends UiPanelBase_1.UiPanelBase {
       [29, UE.UIItem],
     ]),
       (this.BtnBindInfo = [
-        [7, this.Pvo],
-        [15, this.xvo],
+        [7, this.RMo],
+        [15, this.UMo],
       ]);
   }
   async OnBeforeStartAsync() {
-    (this.Rvo = new TipsWeaponItem_1.TipsWeaponItem()),
-      await this.Rvo.CreateThenShowByActorAsync(this.GetItem(17).GetOwner());
+    (this.TMo = new TipsWeaponItem_1.TipsWeaponItem()),
+      await this.TMo.CreateThenShowByActorAsync(this.GetItem(17).GetOwner());
   }
   OnStart() {
-    this.RootActor.OnSequencePlayEvent.Bind(this.lut),
-      (this.Avo = this.GetText(6).GetColor()),
+    this.RootActor.OnSequencePlayEvent.Bind(this.Tct),
+      (this.DMo = this.GetText(6).GetColor()),
       (this.AttributeVertical = new GenericLayout_1.GenericLayout(
         this.GetVerticalLayout(20),
         this.hPe,
@@ -157,33 +157,33 @@ class ShopItemInfoDetailPanel extends UiPanelBase_1.UiPanelBase {
     var t = this.GetItem(10);
     (this.WGe = new NumberSelectComponent_1.NumberSelectComponent(t)),
       this.WGe.SetNumberSelectTipsVisible(!1),
-      (this.Uvo = this.GetButton(7)
+      (this.LMo = this.GetButton(7)
         .GetOwner()
         .GetComponentByClass(UE.UIInteractionGroup.StaticClass())),
       this.GetItem(28).SetUIActive(!1),
       this.GetItem(29).SetUIActive(!1);
   }
-  jlo() {
+  k1o() {
     this.AttributeVertical.RefreshByData(this.CommonTipsData.AttributeList);
   }
   OnBeforeDestroy() {
     this.RootActor.OnSequencePlayEvent.Unbind(),
-      this.Rvo && (this.Rvo.Destroy(), (this.Rvo = void 0));
+      this.TMo && (this.TMo.Destroy(), (this.TMo = void 0));
   }
   UpdatePanel(t) {
-    (this.Dvo = t || this.Dvo),
+    (this.IMo = t || this.IMo),
       (this.CommonTipsData =
         CommonTipsComponentsUtil_1.CommonTipsComponentUtil.GetTipsDataByItemId(
           t.ItemId,
         )),
-      (this.n3i = this.GetMaxCanBuyCount()),
-      (this.s3i = 1);
-    var i = { MaxNumber: this.n3i, ValueChangeFunction: this.QGe },
+      (this.n4i = this.GetMaxCanBuyCount()),
+      (this.s4i = 1);
+    var i = { MaxNumber: this.n4i, ValueChangeFunction: this.QGe },
       i =
         (this.WGe.Init(i),
         this.WGe.SetAddReduceButtonActive(!0),
-        this.WGe.SetAddReduceButtonInteractive(this.n3i >= this.s3i),
-        this.WGe.SetReduceButtonInteractive(1 < this.s3i),
+        this.WGe.SetAddReduceButtonInteractive(this.n4i >= this.s4i),
+        this.WGe.SetReduceButtonInteractive(1 < this.s4i),
         ModelManager_1.ModelManager.ShopModel.OpenItemInfo),
       e = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
         t.ItemId,
@@ -219,7 +219,7 @@ class ShopItemInfoDetailPanel extends UiPanelBase_1.UiPanelBase {
             "Text_Have_Text",
             s,
           )),
-        this.GetText(23).SetText(`<s>${i.GetOriginalPrice() * this.s3i}</s>`),
+        this.GetText(23).SetText(`<s>${i.GetOriginalPrice() * this.s4i}</s>`),
         this.GetText(23).SetUIActive(-1 !== i.GetOriginalPrice()),
         this.GetItem(24).SetUIActive(0 !== i.EndTime),
         0 !== i.EndTime &&
@@ -244,25 +244,27 @@ class ShopItemInfoDetailPanel extends UiPanelBase_1.UiPanelBase {
                   "ShopItemLimitTimeOut",
                 )),
         this.UpdateLockState(t),
-        this.Uvo.SetInteractable(!0),
+        this.LMo.SetInteractable(!0),
         ConfigManager_1.ConfigManager.InventoryConfig.GetItemDataTypeByConfigId(
           t.ItemId,
         ));
     this.UpdateItemTips(h);
   }
   GetMaxCanBuyCount() {
-    var t = ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
-        this.Dvo.CurrencyId,
+    var t,
+      i = ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
+        this.IMo.CurrencyId,
       ),
-      t = Math.trunc(t / this.Dvo.SingleBuyPrice);
-    return 0 < this.Dvo.BuyLimit
-      ? Math.min(this.Dvo.BuyLimit - this.Dvo.BoughtCount, t)
-      : t;
+      i = Math.trunc(i / this.IMo.SingleBuyPrice);
+    return 0 < this.IMo.BuyLimit
+      ? ((t = Math.max(0, this.IMo.BuyLimit - this.IMo.BoughtCount)),
+        Math.min(t, i))
+      : i;
   }
   UpdateItemTips(t) {
     this.CloseUiItem(),
       2 === t
-        ? (this.SetWeaponTips(), this.jlo())
+        ? (this.SetWeaponTips(), this.k1o())
         : this.GetItem(22).SetUIActive(!0);
     var i = this.GetText(18);
     this.CommonTipsData?.LevelText
@@ -299,11 +301,12 @@ class ShopItemInfoDetailPanel extends UiPanelBase_1.UiPanelBase {
             this.GetItem(26).SetUIActive(!1))
           : (this.GetItem(26).SetUIActive(!0),
             0 < t.BuyLimit &&
-              (this.GetItem(8).SetUIActive(!0),
+              ((i = Math.max(0, t.BuyLimit - t.BoughtCount)),
+              this.GetItem(8).SetUIActive(!0),
               LguiUtil_1.LguiUtil.SetLocalText(
                 this.GetText(4),
                 "ShopItemLimitCount",
-                t.BuyLimit - t.BoughtCount,
+                i,
                 t.BuyLimit,
               )));
   }
@@ -314,10 +317,10 @@ class ShopItemInfoDetailPanel extends UiPanelBase_1.UiPanelBase {
       i = t.ConfigId,
       i = ConfigManager_1.ConfigManager.WeaponConfig.GetWeaponConfigByItemId(i),
       e = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(t.BgDescription);
-    this.Rvo.UpdateItem(i, t.ResonanceLevel, e);
+    this.TMo.UpdateItem(i, t.ResonanceLevel, e);
   }
   GetParams() {
-    return this.Dvo?.ParamData;
+    return this.IMo?.ParamData;
   }
 }
 exports.ShopItemInfoDetailPanel = ShopItemInfoDetailPanel;

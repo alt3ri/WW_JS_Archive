@@ -7,7 +7,7 @@ class LevelEventInteractFan extends LevelGeneralBase_1.LevelEventBase {
   ExecuteNew(e, t) {
     e &&
       ((e = e.EntityId),
-      (e = EntitySystem_1.EntitySystem.GetComponent(e, 135))) &&
+      (e = EntitySystem_1.EntitySystem.GetComponent(e, 137))) &&
       (e.ExecuteInteract(), this.FinishExecute(!0));
   }
 }

@@ -17,7 +17,7 @@ class BulletActionUpdateEffect extends BulletActionBase_1.BulletActionBase {
         ((t.EffectData = e.Render),
         (t.IsFinishAuto = t.EffectData.EffectStopInsteadDestroy),
         t.EffectData.SpecialEffect);
-    this.W5o(),
+    this.VVo(),
       4 === e.Base.Shape
         ? ((e = t.EffectData.EffectBulletParams.get(1)),
           (e = Number(e)),
@@ -53,7 +53,7 @@ class BulletActionUpdateEffect extends BulletActionBase_1.BulletActionBase {
             ).SetActorHiddenInGame(!0))
         : (this.IsFinish = !0);
   }
-  W5o() {
+  VVo() {
     var t,
       e,
       l,

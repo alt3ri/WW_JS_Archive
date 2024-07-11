@@ -16,27 +16,27 @@ const UE = require("ue"),
 class TowerAreaItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(),
-      (this.RHt = !0),
-      (this.rLo = -1),
-      (this.EPe = void 0),
-      (this.nLo = -1),
-      (this.sLo = () => {
-        this.RHt
+      (this.Rjt = !0),
+      (this.tDo = -1),
+      (this.SPe = void 0),
+      (this.iDo = -1),
+      (this.oDo = () => {
+        this.Rjt
           ? ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
               "NeedClearLastDifficulty",
             )
-          : (this.EPe.StopCurrentSequence(),
-            this.EPe.PlaySequencePurely("Click"));
+          : (this.SPe.StopCurrentSequence(),
+            this.SPe.PlaySequencePurely("Click", !0));
       }),
-      (this.WFt = (e) => {
+      (this.K3t = (e) => {
         "Click" === e &&
-          UiManager_1.UiManager.OpenView("TowerFloorView", this.rLo);
+          UiManager_1.UiManager.OpenView("TowerFloorView", this.tDo);
       }),
-      (this.aLo = () => {
+      (this.rDo = () => {
         var e = ConfigManager_1.ConfigManager.TowerClimbConfig.GetTowerInfo(
-          this.nLo,
+          this.iDo,
         );
-        this.hLo(e);
+        this.nDo(e);
       });
   }
   OnRegisterComponent() {
@@ -52,20 +52,20 @@ class TowerAreaItem extends GridProxyAbstract_1.GridProxyAbstract {
       [8, UE.UIItem],
       [9, UE.UIItem],
     ]),
-      (this.BtnBindInfo = [[4, this.sLo]]);
+      (this.BtnBindInfo = [[4, this.oDo]]);
   }
   OnStart() {
-    (this.EPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem)),
-      this.EPe.BindSequenceCloseEvent(this.WFt),
+    (this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem)),
+      this.SPe.BindSequenceCloseEvent(this.K3t),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnTowerRefresh,
-        this.aLo,
+        this.rDo,
       ),
       this.GetText(1).SetUIActive(!1);
   }
   Refresh(e) {
     var t = ConfigManager_1.ConfigManager.TowerClimbConfig.GetTowerInfo(e);
-    (this.nLo = e), (this.rLo = t.AreaNum);
+    (this.iDo = e), (this.tDo = t.AreaNum);
     let r = "";
     switch (t.AreaNum) {
       case 1:
@@ -86,19 +86,19 @@ class TowerAreaItem extends GridProxyAbstract_1.GridProxyAbstract {
       default:
         r = "Text_TowerOne_Text";
     }
-    LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(2), r), this.hLo(t);
+    LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(2), r), this.nDo(t);
   }
-  hLo(e) {
+  nDo(e) {
     var t = ModelManager_1.ModelManager.TowerModel.GetAreaAllStars(
         e.Difficulty,
         e.AreaNum,
       ),
       r = this.GetText(3);
     if (
-      ((this.RHt = ModelManager_1.ModelManager.TowerModel.CurrentTowerLock),
+      ((this.Rjt = ModelManager_1.ModelManager.TowerModel.CurrentTowerLock),
       this.GetItem(8)?.SetUIActive(!0),
       this.GetItem(9)?.SetUIActive(!1),
-      this.RHt)
+      this.Rjt)
     ) {
       this.GetItem(0).SetUIActive(!0),
         this.GetItem(5).SetUIActive(!1),
@@ -123,11 +123,11 @@ class TowerAreaItem extends GridProxyAbstract_1.GridProxyAbstract {
   OnBeforeDestroy() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnTowerRefresh,
-      this.aLo,
+      this.rDo,
     ),
-      (this.RHt = !0),
-      this.EPe?.Clear(),
-      (this.EPe = void 0);
+      (this.Rjt = !0),
+      this.SPe?.Clear(),
+      (this.SPe = void 0);
   }
 }
 exports.TowerAreaItem = TowerAreaItem;

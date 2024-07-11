@@ -42,7 +42,7 @@ class TsAnimNotifyStateCleanBurstCamera extends UE.KuroAnimNotifyState {
     return (
       this.TsNoHitEffect &&
         ((t = a.GetEntityNoBlueprint())
-          ? (t = t.GetComponent(185)) &&
+          ? (t = t.GetComponent(188)) &&
             t.TagContainer.UpdateExactTag(2, -1728163740, 1)
           : Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
@@ -66,7 +66,7 @@ class TsAnimNotifyStateCleanBurstCamera extends UE.KuroAnimNotifyState {
       (this.TsNoHitEffect &&
         (t = t.GetOwner()) instanceof TsBaseCharacter_1.default &&
         ((s = t.GetEntityNoBlueprint())
-          ? (s = s.GetComponent(185)) &&
+          ? (s = s.GetComponent(188)) &&
             s.TagContainer.UpdateExactTag(2, -1728163740, -1)
           : Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(

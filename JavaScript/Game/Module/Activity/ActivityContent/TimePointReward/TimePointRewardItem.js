@@ -13,17 +13,17 @@ class TimePointRewardItem extends GridProxyAbstract_1.GridProxyAbstract {
     super(...arguments),
       (this.Pe = void 0),
       (this.gOe = void 0),
-      (this.bni = void 0),
+      (this.qsi = void 0),
       (this.OnClickToGet = void 0),
-      (this.m2e = () => {
+      (this.UFe = () => {
         1 === this.Pe?.RewardState && this.OnClickToGet?.(this.Pe.Id);
       }),
-      (this.x8s = () => {
+      (this.CXs = () => {
         1 === this.Pe?.RewardState
           ? this.OnClickToGet?.(this.Pe.Id)
-          : this.bni &&
+          : this.qsi &&
             ControllerHolder_1.ControllerHolder.ItemController.OpenItemTipsByItemId(
-              this.bni[0].ItemId,
+              this.qsi[0].ItemId,
             );
       });
   }
@@ -36,13 +36,13 @@ class TimePointRewardItem extends GridProxyAbstract_1.GridProxyAbstract {
       [4, UE.UIText],
       [5, UE.UISprite],
     ]),
-      (this.BtnBindInfo = [[0, this.m2e]]);
+      (this.BtnBindInfo = [[0, this.UFe]]);
   }
   OnStart() {
     (this.gOe = new SmallItemGrid_1.SmallItemGrid()),
       this.gOe.Initialize(this.GetItem(1).GetOwner()),
       this.gOe.BindOnCanExecuteChange(() => !1),
-      this.gOe.BindOnExtendToggleClicked(this.x8s);
+      this.gOe.BindOnExtendToggleClicked(this.CXs);
   }
   Refresh(i, t, e) {
     this.Pe = i;
@@ -58,41 +58,41 @@ class TimePointRewardItem extends GridProxyAbstract_1.GridProxyAbstract {
         var o = [{ IncId: 0, ItemId: s }, h];
         a.push(o);
       }
-      this.bni = a[0];
+      this.qsi = a[0];
       var n = this.GetItem(3),
         d = this.GetText(4);
       switch (i.RewardState) {
         case 0:
           n.SetUIActive(!1),
             d.ShowTextNew("TimePointRewardActivity_RewardDesc01"),
-            this.P8s(!1);
+            this.gXs(!1);
           break;
         case 1:
           n.SetUIActive(!0),
             d.ShowTextNew("TimePointRewardActivity_RewardDesc02"),
-            this.P8s(!1);
+            this.gXs(!1);
           break;
         case 2:
           n.SetUIActive(!1),
             d.ShowTextNew("TimePointRewardActivity_RewardDesc03"),
-            this.P8s(!0);
+            this.gXs(!0);
       }
-      this.B8s(e + 1), this.w8s(this.Pe.RewardTime), this.cNe();
+      this.fXs(e + 1), this.pXs(this.Pe.RewardTime), this.cNe();
     }
   }
   cNe() {
     var i = {
       Data: this.Pe,
       Type: 4,
-      ItemConfigId: this.bni[0].ItemId,
-      BottomText: this.bni[1].toString(),
+      ItemConfigId: this.qsi[0].ItemId,
+      BottomText: this.qsi[1].toString(),
     };
     this.gOe.Apply(i),
       this.gOe.SetReceivableVisible(1 === this.Pe?.RewardState),
       this.gOe.SetLockVisible(0 === this.Pe?.RewardState),
       this.gOe.SetReceivedVisible(2 === this.Pe?.RewardState);
   }
-  w8s(i) {
+  pXs(i) {
     i = TimeUtil_1.TimeUtil.GetDataFromTimeStamp(
       i * TimeUtil_1.TimeUtil.Millisecond,
     );
@@ -103,7 +103,7 @@ class TimePointRewardItem extends GridProxyAbstract_1.GridProxyAbstract {
       i.Day,
     );
   }
-  B8s(i) {
+  fXs(i) {
     const t = this.GetSprite(5);
     t.SetUIActive(!1);
     (i = "SP_TimePointReward_Index0" + i),
@@ -112,7 +112,7 @@ class TimePointRewardItem extends GridProxyAbstract_1.GridProxyAbstract {
       t.SetUIActive(!0);
     });
   }
-  P8s(i) {
+  gXs(i) {
     this.GetText(4).SetChangeColor(i, this.GetText(4).changeColor);
   }
 }

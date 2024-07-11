@@ -9,8 +9,8 @@ const Log_1 = require("../../../../Core/Common/Log"),
 class ReconnectInputDistribute extends InputDistributeSetup_1.InputDistributeSetup {
   OnRefresh() {
     return (
-      !!this.bmr() &&
-      (this.qmr()
+      !!this.wdr() &&
+      (this.Bdr()
         ? (Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "Input",
@@ -35,12 +35,12 @@ class ReconnectInputDistribute extends InputDistributeSetup_1.InputDistributeSet
       !0)
     );
   }
-  qmr() {
+  Bdr() {
     return (
       void 0 !== UiManager_1.UiManager.GetViewByName("NetWorkConfirmBoxView")
     );
   }
-  bmr() {
+  wdr() {
     return (
       1 === ModelManager_1.ModelManager.ReConnectModel.GetReConnectStatus()
     );

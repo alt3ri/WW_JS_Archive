@@ -7,140 +7,174 @@ const ModelManager_1 = require("../../../../../../Manager/ModelManager"),
 class RoleSort extends CommonSort_1.CommonSort {
   constructor() {
     super(...arguments),
-      (this.ZLt = (t, i, e) => {
-        (t = t.GetLevelData()), (i = i.GetLevelData());
-        return t.GetLevel() !== i.GetLevel()
-          ? (i.GetLevel() - t.GetLevel()) * (e ? -1 : 1)
-          : t.GetBreachLevel() !== i.GetBreachLevel()
-            ? (i.GetBreachLevel() - t.GetBreachLevel()) * (e ? -1 : 1)
+      (this.oRt = (e, t, i) => {
+        (e = e.GetLevelData()), (t = t.GetLevelData());
+        return e.GetLevel() !== t.GetLevel()
+          ? (t.GetLevel() - e.GetLevel()) * (i ? -1 : 1)
+          : e.GetBreachLevel() !== t.GetBreachLevel()
+            ? (t.GetBreachLevel() - e.GetBreachLevel()) * (i ? -1 : 1)
             : void 0;
       }),
-      (this.VLt = (t, i, e) => {
-        (t = t.GetRoleConfig().QualityId), (i = i.GetRoleConfig().QualityId);
-        if (t !== i) return (i - t) * (e ? -1 : 1);
+      (this.KDt = (e, t, i) => {
+        (e = e.GetRoleConfig().QualityId), (t = t.GetRoleConfig().QualityId);
+        if (e !== t) return (t - e) * (i ? -1 : 1);
       }),
-      (this.jDt = (t, i, e) => {
-        var r = t,
-          s = i;
+      (this.XRt = (e, t, i) => {
+        var r = e,
+          s = t;
         let h = -1,
           o = -1;
         var n = ModelManager_1.ModelManager.SceneTeamModel.GetTeamItems();
-        for (let t = 0; t < n.length; t++) {
-          var a = n[t];
-          r.GetDataId() === a.GetConfigId && (h = t),
-            s.GetDataId() === a.GetConfigId && (o = t);
+        for (let e = 0; e < n.length; e++) {
+          var a = n[e];
+          r.GetDataId() === a.GetConfigId && (h = e),
+            s.GetDataId() === a.GetConfigId && (o = e);
         }
-        (t = void 0 !== n[h]), (i = void 0 !== n[o]);
-        if (t || i) return t != i ? (i ? 1 : 0) - (t ? 1 : 0) : h - o;
+        (e = void 0 !== n[h]), (t = void 0 !== n[o]);
+        if (e || t) return e != t ? (t ? 1 : 0) - (e ? 1 : 0) : h - o;
       }),
-      (this.WDt = (t, i, e) => {
-        if (t.GetRoleConfig().Priority !== i.GetRoleConfig().Priority)
+      (this.$Rt = (e, t, i) => {
+        if (e.GetRoleConfig().Priority !== t.GetRoleConfig().Priority)
           return (
-            (i.GetRoleConfig().Priority - t.GetRoleConfig().Priority) *
-            (e ? -1 : 1)
+            (t.GetRoleConfig().Priority - e.GetRoleConfig().Priority) *
+            (i ? -1 : 1)
           );
       }),
-      (this.KDt = (t, i, e) => {
-        (t = t.GetResonanceData()),
-          (i = i.GetResonanceData()),
-          (t = t.GetResonantChainGroupIndex()),
-          (i = i.GetResonantChainGroupIndex());
-        if (t !== i) return (i - t) * (e ? -1 : 1);
+      (this.YRt = (e, t, i) => {
+        (e = e.GetResonanceData()),
+          (t = t.GetResonanceData()),
+          (e = e.GetResonantChainGroupIndex()),
+          (t = t.GetResonantChainGroupIndex());
+        if (e !== t) return (t - e) * (i ? -1 : 1);
       }),
-      (this.QDt = (t, i, e) => {
-        (t = t.GetResonanceData()),
-          (i = i.GetResonanceData()),
-          (t = t.GetResonanceIncreaseLevel()),
-          (i = i.GetResonanceIncreaseLevel());
-        if (t !== i) return (i - t) * (e ? -1 : 1);
+      (this.JRt = (e, t, i) => {
+        (e = e.GetResonanceData()),
+          (t = t.GetResonanceData()),
+          (e = e.GetResonanceIncreaseLevel()),
+          (t = t.GetResonanceIncreaseLevel());
+        if (e !== t) return (t - e) * (i ? -1 : 1);
       }),
-      (this.XDt = (t, i, e) => {}),
-      (this.$Dt = (t, i, e) => {
-        var t = t.GetFavorData(),
-          i = i.GetFavorData(),
-          r = t.GetFavorLevel(),
-          s = i.GetFavorLevel();
-        if (t && i)
+      (this.zRt = (e, t, i) => {}),
+      (this.ZRt = (e, t, i) => {
+        var e = e.GetFavorData(),
+          t = t.GetFavorData(),
+          r = e.GetFavorLevel(),
+          s = t.GetFavorLevel();
+        if (e && t)
           return r !== s
-            ? (s - r) * (e ? -1 : 1)
-            : (s = t.GetFavorExp()) !== (r = i.GetFavorExp())
-              ? (r - s) * (e ? -1 : 1)
+            ? (s - r) * (i ? -1 : 1)
+            : (s = e.GetFavorExp()) !== (r = t.GetFavorExp())
+              ? (r - s) * (i ? -1 : 1)
               : void 0;
       }),
-      (this.YDt = (t, i, e) => {
-        (t = t.GetRoleCreateTime()), (i = i.GetRoleCreateTime());
-        if (t !== i) return (i - t) * (e ? -1 : 1);
+      (this.eUt = (e, t, i) => {
+        (e = e.GetRoleCreateTime()), (t = t.GetRoleCreateTime());
+        if (e !== t) return (t - e) * (i ? -1 : 1);
       }),
-      (this.JDt = (t, i, e) => {
-        (t = t.GetAttributeData()),
-          (i = i.GetAttributeData()),
-          (t = t.GetAttrValueById(RoleDefine_1.HP_ATTR_ID)),
-          (i = i.GetAttrValueById(RoleDefine_1.HP_ATTR_ID));
-        if (t !== i) return (i - t) * (e ? -1 : 1);
+      (this.tUt = (e, t, i) => {
+        (e = e.GetAttributeData()),
+          (t = t.GetAttributeData()),
+          (e = e.GetAttrValueById(RoleDefine_1.HP_ATTR_ID)),
+          (t = t.GetAttrValueById(RoleDefine_1.HP_ATTR_ID));
+        if (e !== t) return (t - e) * (i ? -1 : 1);
       }),
-      (this.zDt = (t, i, e) => {
-        (t = t.GetAttributeData()),
-          (i = i.GetAttributeData()),
-          (t = t.GetAttrValueById(RoleDefine_1.ATTACK_ATTR_ID)),
-          (i = i.GetAttrValueById(RoleDefine_1.ATTACK_ATTR_ID));
-        if (t !== i) return (i - t) * (e ? -1 : 1);
+      (this.iUt = (e, t, i) => {
+        (e = e.GetAttributeData()),
+          (t = t.GetAttributeData()),
+          (e = e.GetAttrValueById(RoleDefine_1.ATTACK_ATTR_ID)),
+          (t = t.GetAttrValueById(RoleDefine_1.ATTACK_ATTR_ID));
+        if (e !== t) return (t - e) * (i ? -1 : 1);
       }),
-      (this.ZDt = (t, i, e) => {
-        (t = t.GetAttributeData()),
-          (i = i.GetAttributeData()),
-          (t = t.GetAttrValueById(RoleDefine_1.DEF_ATTR_ID)),
-          (i = i.GetAttrValueById(RoleDefine_1.DEF_ATTR_ID));
-        if (t !== i) return (i - t) * (e ? -1 : 1);
+      (this.Bla = (e, t, i) => {
+        var r,
+          s =
+            ModelManager_1.ModelManager.RoguelikeModel.SelectRoleViewShowRoleList.includes(
+              e.GetRoleId(),
+            ) && 0 !== e.GetLevelData().GetLevel();
+        return s !==
+          (ModelManager_1.ModelManager.RoguelikeModel.SelectRoleViewShowRoleList.includes(
+            t.GetRoleId(),
+          ) && 0 !== t.GetLevelData().GetLevel()) ||
+          (s =
+            ModelManager_1.ModelManager.RoguelikeModel.SelectRoleViewRecommendRoleList.includes(
+              e.GetRoleId(),
+            )) !==
+            ModelManager_1.ModelManager.RoguelikeModel.SelectRoleViewRecommendRoleList.includes(
+              t.GetRoleId(),
+            )
+          ? s
+            ? -1
+            : 1
+          : (s = e.GetLevelData().GetLevel()) !==
+              (r = t.GetLevelData().GetLevel())
+            ? r < s
+              ? -1
+              : 1
+            : (r = e.GetRoleConfig().QualityId) !==
+                (s = t.GetRoleConfig().QualityId)
+              ? s < r
+                ? -1
+                : 1
+              : ((s = e.GetRoleId()),
+                (r = t.GetRoleId()) < s ? -1 : s < r ? 1 : 0);
       }),
-      (this.eRt = (t, i, e) => {
+      (this.oUt = (e, t, i) => {
+        (e = e.GetAttributeData()),
+          (t = t.GetAttributeData()),
+          (e = e.GetAttrValueById(RoleDefine_1.DEF_ATTR_ID)),
+          (t = t.GetAttrValueById(RoleDefine_1.DEF_ATTR_ID));
+        if (e !== t) return (t - e) * (i ? -1 : 1);
+      }),
+      (this.rUt = (e, t, i) => {
         var r = ModelManager_1.ModelManager.RoleSelectModel,
+          e = e.GetDataId(),
           t = t.GetDataId(),
-          i = i.GetDataId(),
-          t = r.GetRoleIndex(t),
-          r = r.GetRoleIndex(i);
-        return t <= 0 || r <= 0
-          ? (r ? 1 : 0) - (t ? 1 : 0)
-          : t !== r
-            ? t - r
+          e = r.GetRoleIndex(e),
+          r = r.GetRoleIndex(t);
+        return e <= 0 || r <= 0
+          ? (r ? 1 : 0) - (e ? 1 : 0)
+          : e !== r
+            ? e - r
             : void 0;
       }),
-      (this.tRt = (t, i, e) => {
-        (t = t.IsTrialRole()), (i = i.IsTrialRole());
-        if (t !== i) return ((i ? 1 : 0) - (t ? 1 : 0)) * (e ? -1 : 1);
+      (this.nUt = (e, t, i) => {
+        (e = e.IsTrialRole()), (t = t.IsTrialRole());
+        if (e !== t) return ((t ? 1 : 0) - (e ? 1 : 0)) * (i ? -1 : 1);
       }),
-      (this.iRt = (t, i, e) => {
+      (this.sUt = (e, t, i) => {
         var r =
           ModelManager_1.ModelManager.TowerModel.CurrentSelectDifficulties;
         return (
           (ModelManager_1.ModelManager.TowerModel.GetRoleRemainCost(
-            t.GetRoleId(),
+            e.GetRoleId(),
             r,
           ) -
             ModelManager_1.ModelManager.TowerModel.GetRoleRemainCost(
-              i.GetRoleId(),
+              t.GetRoleId(),
               r,
             )) *
-          (e ? -1 : 1)
+          (i ? -1 : 1)
         );
       });
   }
   OnInitSortMap() {
-    this.SortMap.set(1, this.ZLt),
-      this.SortMap.set(2, this.VLt),
-      this.SortMap.set(3, this.jDt),
-      this.SortMap.set(4, this.WDt),
-      this.SortMap.set(5, this.KDt),
-      this.SortMap.set(6, this.QDt),
-      this.SortMap.set(7, this.XDt),
-      this.SortMap.set(8, this.$Dt),
-      this.SortMap.set(9, this.YDt),
-      this.SortMap.set(10, this.JDt),
-      this.SortMap.set(11, this.zDt),
-      this.SortMap.set(12, this.ZDt),
-      this.SortMap.set(13, this.eRt),
-      this.SortMap.set(14, this.eRt),
-      this.SortMap.set(15, this.tRt),
-      this.SortMap.set(16, this.iRt);
+    this.SortMap.set(1, this.oRt),
+      this.SortMap.set(2, this.KDt),
+      this.SortMap.set(3, this.XRt),
+      this.SortMap.set(4, this.$Rt),
+      this.SortMap.set(5, this.YRt),
+      this.SortMap.set(6, this.JRt),
+      this.SortMap.set(7, this.zRt),
+      this.SortMap.set(8, this.ZRt),
+      this.SortMap.set(9, this.eUt),
+      this.SortMap.set(10, this.tUt),
+      this.SortMap.set(11, this.iUt),
+      this.SortMap.set(12, this.oUt),
+      this.SortMap.set(13, this.rUt),
+      this.SortMap.set(14, this.rUt),
+      this.SortMap.set(15, this.nUt),
+      this.SortMap.set(16, this.sUt),
+      this.SortMap.set(17, this.Bla);
   }
 }
 exports.RoleSort = RoleSort;

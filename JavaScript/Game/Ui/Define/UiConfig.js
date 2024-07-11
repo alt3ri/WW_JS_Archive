@@ -11,7 +11,7 @@ const Log_1 = require("../../../Core/Common/Log"),
   UiViewInfo_1 = require("./UiViewInfo");
 class UiConfig {
   static TryGetViewInfo(n) {
-    let r = UiConfig.ecr.get(n);
+    let r = UiConfig.Jcr.get(n);
     if (!r) {
       var o = ConfigManager_1.ConfigManager.UiViewConfig.GetUiShowConfig(n),
         a = UiViewStorage_1.UiViewStorage.GetUiTsInfo(n);
@@ -28,7 +28,7 @@ class UiConfig {
       var t = a.ResourceId;
       let e = "",
         i = "";
-      if (this.tcr(n))
+      if (this.zcr(n))
         (e = ConfigManager_1.ConfigManager.CommonConfig.GetDebugGmViewPath(n)),
           (i = e);
       else {
@@ -100,14 +100,14 @@ class UiConfig {
         f,
         o.ScenePointTag,
       )),
-        UiConfig.ecr.set(n, r);
+        UiConfig.Jcr.set(n, r);
     }
     return r;
   }
-  static tcr(e) {
+  static zcr(e) {
     return "GmView" === e || "LoginDebugView" === e;
   }
 }
-((exports.UiConfig = UiConfig).ecr = new Map()),
+((exports.UiConfig = UiConfig).Jcr = new Map()),
   (UiConfig.CanOpenWhileClearSceneViewNameSet = new Set(["LoadingView"]));
 //# sourceMappingURL=UiConfig.js.map

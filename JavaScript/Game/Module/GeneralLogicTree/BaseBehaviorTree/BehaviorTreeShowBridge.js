@@ -12,7 +12,7 @@ class BehaviorTreeShowBridge {
       (this.BtType = void 0),
       (this.TreeIncId = BigInt(0)),
       (this.TreeConfigId = 0),
-      (this.lKt = void 0),
+      (this.lQt = void 0),
       (this.QuestType = void 0),
       (this.TrackIconConfigId = 0),
       (this.ShowByCustom = !1),
@@ -29,14 +29,14 @@ class BehaviorTreeShowBridge {
   }
   static Recycle(i) {}
   get QuestName() {
-    return PublicUtil_1.PublicUtil.GetConfigTextByKey(this.lKt);
+    return PublicUtil_1.PublicUtil.GetConfigTextByKey(this.lQt);
   }
   Reset(i) {
     (this.Yre = i),
       (this.BtType = i.BtType),
       (this.TreeIncId = i.TreeIncId),
       (this.TreeConfigId = i.TreeConfigId),
-      (this.IsNewQuest = i.ContainTag(8)),
+      (this.IsNewQuest = i.ContainTag(9)),
       this.UpdateToNew();
   }
   UpdateToNew() {
@@ -49,20 +49,20 @@ class BehaviorTreeShowBridge {
         new GeneralLogicTreeDefine_1.TreeTrackTextExpressionInfo()),
         this.TrackTextConfig.SetMainTitle(i.MainTitle);
       for (const e of i.SubTitles) this.TrackTextConfig.AddSubTitle(e);
-      this.BtType === Protocol_1.Aki.Protocol.NCs.Proto_BtTypeQuest
+      this.BtType === Protocol_1.Aki.Protocol.tps.Proto_BtTypeQuest
         ? ((i = ModelManager_1.ModelManager.QuestNewModel.GetQuest(
             this.TreeConfigId,
           )),
-          (this.lKt = i?.QuestNameTid),
+          (this.lQt = i?.QuestNameTid),
           (this.QuestType = i?.Type))
-        : ((this.lKt = void 0), (this.QuestType = void 0));
+        : ((this.lQt = void 0), (this.QuestType = void 0));
     }
   }
   IsInTrackRange() {
-    return this.Yre.ContainTag(11);
+    return this.Yre.ContainTag(12);
   }
   IsRollbackWaiting() {
-    return this.Yre.ContainTag(5);
+    return this.Yre.ContainTag(6);
   }
   CheckShowConfigEmpty() {
     var i = this.TrackTextConfig;

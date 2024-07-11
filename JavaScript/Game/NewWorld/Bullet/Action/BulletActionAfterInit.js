@@ -20,13 +20,13 @@ class BulletActionAfterInit extends BulletActionBase_1.BulletActionBase {
       o,
       l,
       r = this.BulletInfo,
-      n = r.BulletDataMain.Execution.SendGameplayEventTagToAttackerOnStart,
-      a =
-        (n &&
-          n.TagName !== StringUtils_1.NONE_STRING &&
-          (a = r.AttackerActorComp?.Actor)?.IsValid() &&
+      a = r.BulletDataMain.Execution.SendGameplayEventTagToAttackerOnStart,
+      n =
+        (a &&
+          a.TagName !== StringUtils_1.NONE_STRING &&
+          (n = r.AttackerActorComp?.Actor)?.IsValid() &&
           (((e = new UE.GameplayEventData()).OptionalObject = r.Actor),
-          UE.AbilitySystemBlueprintLibrary.SendGameplayEventToActor(a, n, e)),
+          UE.AbilitySystemBlueprintLibrary.SendGameplayEventToActor(n, a, e)),
         Info_1.Info.IsBuildDevelopmentOrDebug &&
           EventSystem_1.EventSystem.EmitWithTarget(
             r.Attacker,
@@ -36,10 +36,10 @@ class BulletActionAfterInit extends BulletActionBase_1.BulletActionBase {
         (r.IsInit = !0),
         r.ActionLogicComponent.OnAfterInit(),
         {
-          y4n: r.BulletEntityId,
-          aFn: ModelManager_1.ModelManager.CreatureModel.GetPlayerId(),
+          rVn: r.BulletEntityId,
+          q5n: ModelManager_1.ModelManager.CreatureModel.GetPlayerId(),
         });
-    ModelManager_1.ModelManager.BulletModel.RegisterBullet(a, r.BulletEntityId),
+    ModelManager_1.ModelManager.BulletModel.RegisterBullet(n, r.BulletEntityId),
       (r.PreContextId = r.BulletInitParams.FromRemote
         ? 0n
         : r.BulletInitParams.ContextId),
@@ -53,37 +53,38 @@ class BulletActionAfterInit extends BulletActionBase_1.BulletActionBase {
             "bulletRowName",
             r.BulletRowName,
           ])
-        : ((n = 1 !== r.BulletInitParams.SyncType),
+        : ((a = 1 !== r.BulletInitParams.SyncType),
           (e = ModelManager_1.ModelManager.CreatureModel.GetCreatureDataId(
             r.TargetId,
           )),
           (t = r.GetActorLocation()),
           (o = r.MoveInfo.BeginSpeedRotator),
-          ((l = Protocol_1.Aki.Protocol.H2n.create()).E4n = a),
-          (l.wVn = MathUtils_1.MathUtils.NumberToLong(Number(r.BulletRowName))),
-          (l.vkn = r.BulletInitParams.SkillId),
-          (l.$kn = t),
-          (l.D3n = o),
-          (l.bVn = ModelManager_1.ModelManager.BulletModel.GetBulletHandleById(
+          ((l = Protocol_1.Aki.Protocol.p3n.create()).iVn = n),
+          (l.ujn = MathUtils_1.MathUtils.NumberToLong(Number(r.BulletRowName))),
+          (l.X4n = r.BulletInitParams.SkillId),
+          (l.y5n = t),
+          (l.a8n = o),
+          (l.cjn = ModelManager_1.ModelManager.BulletModel.GetBulletHandleById(
             r.BulletInitParams.ParentId,
           )),
-          (l.qVn = MathUtils_1.MathUtils.NumberToLong(
+          (l.mjn = MathUtils_1.MathUtils.NumberToLong(
             ModelManager_1.ModelManager.CreatureModel.GetCreatureDataId(
               r.BulletInitParams.BaseTransformId,
             ),
           )),
-          (l.GVn = MathUtils_1.MathUtils.NumberToLong(
+          (l.djn = MathUtils_1.MathUtils.NumberToLong(
             ModelManager_1.ModelManager.CreatureModel.GetCreatureDataId(
               r.BulletInitParams.BaseVelocityId,
             ),
           )),
-          (l.L4n = MathUtils_1.MathUtils.NumberToLong(e)),
-          (l.OVn = n),
-          (l.NVn = r.BulletInitParams.DtType),
-          (l.kVn = r.RandomPosOffset),
-          (l.FVn = r.RandomInitSpeedOffset),
+          (l.sVn = MathUtils_1.MathUtils.NumberToLong(e)),
+          (l.Cjn = a),
+          (l.gjn = r.BulletInitParams.DtType),
+          (l.fjn = r.RandomPosOffset),
+          (l.pjn = r.RandomInitSpeedOffset),
+          this.Yea(l),
           CombatMessage_1.CombatNet.Call(
-            7976,
+            18139,
             r.Attacker,
             l,
             (e) => {},
@@ -91,7 +92,7 @@ class BulletActionAfterInit extends BulletActionBase_1.BulletActionBase {
             r.ContextId,
           ),
           BulletConstant_1.BulletConstant.OpenCreateLog &&
-            (n
+            (a
               ? Log_1.Log.CheckDebug() &&
                 Log_1.Log.Debug("Bullet", 18, "创建本地子弹", [
                   "bulletRowName",
@@ -104,12 +105,22 @@ class BulletActionAfterInit extends BulletActionBase_1.BulletActionBase {
                   "创建同步子弹",
                   ["bulletRowName", r.BulletRowName],
                   ["skillId", r.BulletInitParams.SkillId],
-                  ["handleId", a.y4n],
-                  ["playerId", a.aFn],
+                  ["handleId", n.rVn],
+                  ["playerId", n.q5n],
                   ["Location", t],
                   ["Rotation", o],
                   ["TargetId", e],
                 )));
+  }
+  Yea(e) {
+    ModelManager_1.ModelManager.GameModeModel.IsMulti ||
+      ((e.y5n = void 0),
+      (e.a8n = void 0),
+      (e.cjn = void 0),
+      (e.djn = 0),
+      (e.gjn = 0),
+      (e.fjn = void 0),
+      (e.pjn = void 0));
   }
 }
 exports.BulletActionAfterInit = BulletActionAfterInit;

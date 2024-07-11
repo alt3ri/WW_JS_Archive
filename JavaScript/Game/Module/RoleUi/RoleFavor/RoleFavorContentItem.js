@@ -10,29 +10,29 @@ const puerts_1 = require("puerts"),
 class RoleFavorContentItem extends UiPanelBase_1.UiPanelBase {
   constructor(t, i) {
     super(),
-      (this.R4e = void 0),
-      (this.VCt = void 0),
-      (this.U4e = void 0),
-      (this.Qyt = void 0),
-      (this.S1o = 1),
-      (this.E1o = void 0),
+      (this.H5e = void 0),
+      (this.e0t = void 0),
+      (this.j5e = void 0),
+      (this.Gke = void 0),
+      (this.f_o = 1),
+      (this.p_o = void 0),
       (this.CloseAudioDelegate = void 0),
       (this.OnMontageCompleted = void 0),
       (this.ToggleClick = (t) => {
-        this.U4e &&
-          (this.VCt.RootUIComp.SetUIActive((t = 1 === t)),
-          this.U4e(t, this.ContentItemData, this));
+        this.j5e &&
+          (this.e0t.RootUIComp.SetUIActive((t = 1 === t)),
+          this.j5e(t, this.ContentItemData, this));
       }),
       (this.ButtonClick = () => {
-        this.Qyt && this.Qyt(this.ContentItemData, this);
+        this.Gke && this.Gke(this.ContentItemData, this);
       }),
-      (this.y1o = (t) =>
+      (this.v_o = (t) =>
         MultiTextLang_1.configMultiTextLang.GetLocalTextNew(t.Title)),
       (this.EndPlay = () => {
-        this.I1o(1);
+        this.M_o(1);
       }),
       (this.StartPlay = () => {
-        this.I1o(0);
+        this.M_o(0);
       }),
       (this.BNe = () => {
         let t = 0;
@@ -72,88 +72,88 @@ class RoleFavorContentItem extends UiPanelBase_1.UiPanelBase {
       ]);
   }
   SetToggleFunction(t) {
-    this.U4e = t;
+    this.j5e = t;
   }
   SetButtonFunction(t) {
-    this.Qyt = t;
+    this.Gke = t;
   }
   OnStart() {
-    (this.R4e = this.GetExtendToggle(4)),
-      (this.VCt = this.GetButton(6)),
-      this.VCt.RootUIComp.SetUIActive(!1),
+    (this.H5e = this.GetExtendToggle(4)),
+      (this.e0t = this.GetButton(6)),
+      this.e0t.RootUIComp.SetUIActive(!1),
       this.Refresh();
   }
   Refresh() {
     switch (this.ContentItemData.FavorTabType) {
       case 2:
-        this.T1o();
+        this.E_o();
         break;
       case 1:
-        this.L1o();
+        this.S_o();
         break;
       case 0:
-        this.D1o();
+        this.y_o();
         break;
       case 3:
-        this.R1o();
+        this.I_o();
     }
   }
-  U1o() {
+  T_o() {
     LguiUtil_1.LguiUtil.SetLocalText(this.GetText(3), "FavorBaseInfo"),
       this.SetLockItemActive(!1),
       this.GetItem(5).SetUIActive(!1),
-      (this.E1o = 2);
+      (this.p_o = 2);
   }
-  A1o() {
+  L_o() {
     LguiUtil_1.LguiUtil.SetLocalText(this.GetText(3), "FavorPowerFile"),
       this.SetLockItemActive(!1),
       this.GetItem(5).SetUIActive(!1),
-      (this.E1o = 2);
+      (this.p_o = 2);
   }
-  P1o() {
-    this.x1o();
+  D_o() {
+    this.R_o();
     var t = this.GetText(3),
       i = this.ContentItemData.Config,
-      i = this.y1o(i);
+      i = this.v_o(i);
     t.SetText(i), this.BNe();
   }
-  L1o() {
+  S_o() {
     1 === this.ContentItemData.TypeParam
-      ? this.U1o()
+      ? this.T_o()
       : 2 === this.ContentItemData.TypeParam
-        ? this.A1o()
-        : this.P1o();
+        ? this.L_o()
+        : this.D_o();
   }
-  T1o() {
-    this.x1o();
+  E_o() {
+    this.R_o();
     var t = this.GetText(3),
       i = this.ContentItemData.Config,
-      i = this.y1o(i);
-    2 === this.E1o && this.I1o(1), this.w1o(), t.SetText(i), this.BNe();
+      i = this.v_o(i);
+    2 === this.p_o && this.M_o(1), this.U_o(), t.SetText(i), this.BNe();
   }
-  D1o() {
-    this.x1o();
+  y_o() {
+    this.R_o();
     var t = this.ContentItemData.Config,
       i = this.GetText(3),
-      t = this.y1o(t);
-    2 === this.E1o && this.I1o(1), this.B1o(), i.SetText(t), this.BNe();
+      t = this.v_o(t);
+    2 === this.p_o && this.M_o(1), this.A_o(), i.SetText(t), this.BNe();
   }
-  R1o() {
-    this.x1o();
+  I_o() {
+    this.R_o();
     var t = this.GetText(3),
       i = this.ContentItemData.Config;
-    2 === this.E1o
-      ? ((i = this.y1o(i)), t.SetText(i))
+    2 === this.p_o
+      ? ((i = this.v_o(i)), t.SetText(i))
       : LguiUtil_1.LguiUtil.SetLocalText(t, "Unknown"),
       this.BNe();
   }
-  w1o() {
+  U_o() {
     this.OnMontageCompleted ||
       (this.OnMontageCompleted = (t, i) => {
         i || this.EndPlay();
       });
   }
-  B1o() {
+  A_o() {
     this.CloseAudioDelegate ||
       (this.CloseAudioDelegate = (0, puerts_1.toManualReleaseDelegate)(
         this.EndPlay,
@@ -161,18 +161,18 @@ class RoleFavorContentItem extends UiPanelBase_1.UiPanelBase {
   }
   OnBeforeDestroy() {
     (this.ContentItemData = void 0),
-      (this.R4e = void 0),
-      (this.VCt = void 0),
-      (this.U4e = void 0),
-      (this.Qyt = void 0),
-      (this.S1o = 1),
-      (this.E1o = 0),
+      (this.H5e = void 0),
+      (this.e0t = void 0),
+      (this.j5e = void 0),
+      (this.Gke = void 0),
+      (this.f_o = 1),
+      (this.p_o = 0),
       this.CloseAudioDelegate &&
         ((0, puerts_1.releaseManualReleaseDelegate)(this.EndPlay),
         (this.CloseAudioDelegate = void 0)),
       this.OnMontageCompleted && (this.OnMontageCompleted = void 0);
   }
-  x1o() {
+  R_o() {
     var t,
       i = this.ContentItemData.FavorTabType,
       s = this.ContentItemData.Config.Id;
@@ -184,39 +184,39 @@ class RoleFavorContentItem extends UiPanelBase_1.UiPanelBase {
           t.GetRoleId(),
           s,
         )),
-        (this.E1o = Number(t)),
-        this.SetLockItemActive(2 !== this.E1o))
+        (this.p_o = Number(t)),
+        this.SetLockItemActive(2 !== this.p_o))
       : ((t = ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(
           this.ContentItemData.RoleId,
         )
           .GetFavorData()
           .GetFavorItemState(s, i)),
         this.SetLockItemActive(0 === t),
-        (this.E1o = t));
+        (this.p_o = t));
   }
   SetLockItemActive(t) {
     this.GetItem(0).SetUIActive(t),
       this.GetItem(1).SetUIActive(!1),
       this.GetItem(2).SetUIActive(!1);
   }
-  I1o(t) {
+  M_o(t) {
     var i;
     !this.ContentItemData ||
       (2 !== (i = this.ContentItemData.FavorTabType) && 0 !== i) ||
-      (0 !== this.E1o &&
-        ((this.S1o = t),
+      (0 !== this.p_o &&
+        ((this.f_o = t),
         this.GetItem(0).SetUIActive(!1),
         this.GetItem(1).SetUIActive(0 === t),
         this.GetItem(2).SetUIActive(1 === t)));
   }
   GetCurVoiceState() {
-    return this.S1o;
+    return this.f_o;
   }
   SetToggleState(t) {
-    this.R4e && this.R4e.SetToggleState(t);
+    this.H5e && this.H5e.SetToggleState(t);
   }
   SetButtonActive(t) {
-    this.VCt && this.VCt.RootUIComp.SetUIActive(t);
+    this.e0t && this.e0t.RootUIComp.SetUIActive(t);
   }
   GetTog() {
     return this.GetExtendToggle(4);

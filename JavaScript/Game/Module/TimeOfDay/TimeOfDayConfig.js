@@ -12,24 +12,24 @@ const Log_1 = require("../../../Core/Common/Log"),
   TimeOfDayModel_1 = require("./TimeOfDayModel");
 class TimeOfDayConfig extends ConfigBase_1.ConfigBase {
   constructor() {
-    super(...arguments), (this.nIo = []), (this.sIo = []);
+    super(...arguments), (this.iTo = []), (this.oTo = []);
   }
-  aIo() {
+  rTo() {
     return TimeOfDayById_1.configTimeOfDayById.GetConfig(1);
   }
   GetInitTimeSecond() {
     return (
-      (this.aIo()?.InitTime ?? 0) * TimeOfDayDefine_1.TOD_SECOND_PER_MINUTE
+      (this.rTo()?.InitTime ?? 0) * TimeOfDayDefine_1.TOD_SECOND_PER_MINUTE
     );
   }
   GetMaxV() {
-    return TimeOfDayDefine_1.TOD_SECOND_PER_MINUTE * (this.aIo()?.V ?? 0);
+    return TimeOfDayDefine_1.TOD_SECOND_PER_MINUTE * (this.rTo()?.V ?? 0);
   }
   GetA() {
-    return TimeOfDayDefine_1.TOD_SECOND_PER_MINUTE * (this.aIo()?.A ?? 0);
+    return TimeOfDayDefine_1.TOD_SECOND_PER_MINUTE * (this.rTo()?.A ?? 0);
   }
   GetRate() {
-    var e = this.aIo()?.Rate;
+    var e = this.rTo()?.Rate;
     return (
       e ||
       (Log_1.Log.CheckError() &&
@@ -38,17 +38,17 @@ class TimeOfDayConfig extends ConfigBase_1.ConfigBase {
     );
   }
   InitDayStateTimeSpanList() {
-    var e = this.aIo()?.StateSpan;
+    var e = this.rTo()?.StateSpan;
     return !(
       !e ||
       e.size <= 0 ||
-      ((this.nIo = Array.from(e)),
-      this.nIo.sort((e, i) => (e[0] < i[0] ? 1 : 0)),
+      ((this.iTo = Array.from(e)),
+      this.iTo.sort((e, i) => (e[0] < i[0] ? 1 : 0)),
       0)
     );
   }
   GetDayStateByGameTimeMinute(t) {
-    if (0 === this.nIo.length && !this.InitDayStateTimeSpanList())
+    if (0 === this.iTo.length && !this.InitDayStateTimeSpanList())
       return (
         Log_1.Log.CheckError() &&
           Log_1.Log.Error("TimeOfDay", 17, "时间区间配置错误"),
@@ -56,7 +56,7 @@ class TimeOfDayConfig extends ConfigBase_1.ConfigBase {
       );
     let r = 0;
     return (
-      this.nIo.every(
+      this.iTo.every(
         (e, i) =>
           !TimeOfDayModel_1.TodDayTime.CheckInMinuteSpan(t, e) || ((r = i), !1),
       ),
@@ -68,18 +68,18 @@ class TimeOfDayConfig extends ConfigBase_1.ConfigBase {
     );
   }
   GetBanGamePlayTags() {
-    if (!(0 < this.sIo.length)) {
-      var e = this.aIo()?.BanTag;
+    if (!(0 < this.oTo.length)) {
+      var e = this.rTo()?.BanTag;
       if (e)
         for (const t of e) {
           var i = GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagByName(t);
-          i && this.sIo.push(i);
+          i && this.oTo.push(i);
         }
     }
-    return this.sIo;
+    return this.oTo;
   }
   GetTimePresets() {
-    return this.aIo()?.TimePreset ?? void 0;
+    return this.rTo()?.TimePreset ?? void 0;
   }
   GetDayTimeChangePresets() {
     return DaySelectPresetAll_1.configDaySelectPresetAll.GetConfigList();

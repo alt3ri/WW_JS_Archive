@@ -4,19 +4,16 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const UE = require("ue"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   BattleUiControl_1 = require("../BattleUiControl"),
-  BattleUiDefine_1 = require("../BattleUiDefine"),
   BattleChildView_1 = require("./BattleChildView/BattleChildView"),
-  BuffItem_1 = require("./BuffItem"),
+  BuffItemContainer_1 = require("./BuffItemContainer"),
   EnvironmentItem_1 = require("./EnvironmentItem");
 class RoleBuffView extends BattleChildView_1.BattleChildView {
   constructor() {
     super(...arguments),
-      (this.wnt = void 0),
+      (this.Wst = void 0),
       (this.E0 = void 0),
-      (this.Jut = new Map()),
-      (this.Jot = new Map()),
-      (this.zot = []),
-      (this.Zot = []);
+      (this.lmt = new Map()),
+      (this.okn = new BuffItemContainer_1.BuffItemContainer());
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -24,127 +21,63 @@ class RoleBuffView extends BattleChildView_1.BattleChildView {
       [1, UE.UIItem],
     ];
   }
-  Initialize(t) {
-    super.Initialize(t), this.Ore();
+  OnStart() {
+    super.OnStart(), this.okn.Init(this.GetItem(1));
   }
   OnBeforeDestroy() {
-    this.Refresh(void 0), this.zut();
+    this.Refresh(void 0), this._mt();
   }
-  Reset() {
-    this.kre(), super.Reset();
-  }
-  Refresh(t) {
-    t
-      ? ((this.wnt = t), (this.E0 = t?.EntityHandle?.Id), this.Vrt())
-      : ((this.wnt = void 0), (this.E0 = void 0), this.Wrt());
+  Refresh(e) {
+    e
+      ? ((this.Wst = e),
+        (this.E0 = e?.EntityHandle?.Id),
+        this.okn.RefreshBuff(e?.EntityHandle))
+      : ((this.Wst = void 0), (this.E0 = void 0), this.okn.ClearAll());
   }
   IsValid() {
-    return void 0 !== this.wnt?.EntityHandle;
+    return void 0 !== this.Wst?.EntityHandle;
   }
   GetEntityId() {
     return this.E0;
   }
-  Ore() {}
-  kre() {}
   Tick(e) {
-    for (const t of this.Jot.values()) t.Tick(e);
-    for (const s of this.zot) s.TickHiding(e);
-    for (let t = this.zot.length - 1; 0 <= t; t--) {
-      var i = this.zot[t];
-      i.TickHiding(e) || (this.zot.splice(t, 1), this.Zot.push(i));
-    }
-    this.Zut();
+    this.okn.Tick(e), this.umt();
   }
-  AddBuffItem(i, s, r = !1) {
-    if (!this.Jot.has(s)) {
-      let e = this.wnt?.BuffComponent?.GetBuffByHandle(s);
-      var t;
-      if (
-        (e ||
-          ((t = this.wnt?.EntityHandle?.Entity?.CheckGetComponent(171)) &&
-            (e = t.GetFormationBuffComp()?.GetBuffByHandle(s))),
-        e)
-      ) {
-        let t = this.zrt();
-        (t = t || this.Zrt()), this.ent(t, i, e, s, r);
-      }
-    }
+  AddBuff(e, t) {
+    this.okn.AddBuffByCue(e, t, !0);
   }
-  Zrt() {
-    var t = this.GetItem(1);
-    return new BuffItem_1.BuffItem(t);
+  RemoveBuff(e, t) {
+    this.okn.RemoveBuffByCue(e, t, !0);
   }
-  ent(t, e, i, s = 0, r = !1) {
-    var o = this.Jot.size;
-    t.Activate(e, i, r),
-      t.GetRootItem().SetHierarchyIndex(o),
-      this.Jot.set(s, t);
-  }
-  DeactivateBuffItem(t, e = !1) {
-    var i = this.tnt(t);
-    i &&
-      (this.Jot.delete(t),
-      (e
-        ? (i.DeactivateWithCloseAnim(), this.zot)
-        : (i.Deactivate(), this.Zot)
-      ).push(i));
-  }
-  zrt() {
-    var t;
-    if (!(this.Zot.length < 1))
-      return (t = this.Zot[0]), this.Zot.splice(0, 1), t;
-  }
-  tnt(t) {
-    return this.Jot.get(t);
-  }
-  Wrt() {
-    for (const t of this.Jot.values()) t.DestroyCompatible();
-    this.Jot.clear();
-    for (const e of this.zot) e.Deactivate(), e.DestroyCompatible();
-    this.zot.length = 0;
-    for (const i of this.Zot) i.DestroyCompatible();
-    this.Zot.length = 0;
-  }
-  Vrt() {
-    if ((this.Wrt(), this.IsValid()))
-      for (const e of this.wnt.EntityHandle.Entity.GetComponent(
-        19,
-      ).GetAllCurrentCueRef()) {
-        var t = e.CueConfig;
-        t.CueType === BattleUiDefine_1.UI_EFFECT_CUE_TYPE &&
-          this.AddBuffItem(t, e.ActiveHandleId);
-      }
-  }
-  Zut() {
-    let e = 0;
-    for (const r of ModelManager_1.ModelManager.BattleUiModel.FormationData
+  umt() {
+    let t = 0;
+    for (const n of ModelManager_1.ModelManager.BattleUiModel.FormationData
       .EnvironmentPropertyList) {
       var i,
-        s = ModelManager_1.ModelManager.FormationAttributeModel.GetValue(r);
-      s > e && (e = s);
-      let t = this.Jut.get(r);
-      void 0 === t
-        ? s <= 0 ||
+        r,
+        o = ModelManager_1.ModelManager.FormationAttributeModel.GetValue(n);
+      o > t && (t = o);
+      let e = this.lmt.get(n);
+      void 0 === e
+        ? o <= 0 ||
           ((i = this.GetItem(0)),
           (i = BattleUiControl_1.BattleUiControl.Pool.GetEnvironmentItem(i)),
-          (t = new EnvironmentItem_1.EnvironmentItem()).CreateThenShowByActor(
-            i,
-          ),
-          t.UpdatePropertyId(r),
-          (i = ModelManager_1.ModelManager.FormationAttributeModel.GetMax(r)),
-          t.SetPercent(s, i),
-          this.Jut.set(r, t))
-        : ((i = ModelManager_1.ModelManager.FormationAttributeModel.GetMax(r)),
-          t.SetPercent(s, i));
+          (e = new EnvironmentItem_1.EnvironmentItem()).InitPropertyId(n),
+          (r = ModelManager_1.ModelManager.FormationAttributeModel.GetMax(n)),
+          e.SetPercent(o, r),
+          e.CreateThenShowByActorAsync(i).catch(() => {}),
+          this.lmt.set(n, e))
+        : ((r = ModelManager_1.ModelManager.FormationAttributeModel.GetMax(n)),
+          e.SetPercent(o, r));
     }
   }
-  zut() {
-    for (const t of this.Jut.values())
+  _mt() {
+    for (const e of this.lmt.values())
       BattleUiControl_1.BattleUiControl.Pool.RecycleEnvironmentItem(
-        t.GetRootActor(),
+        e.GetRootActor(),
       ),
-        t.Destroy();
-    this.Jut.clear();
+        e.Destroy();
+    this.lmt.clear();
   }
 }
 exports.RoleBuffView = RoleBuffView;

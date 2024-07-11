@@ -15,11 +15,18 @@ class PakKeyManager {
     PakKeyUpdate_1.PakKeyUpdate.NeedExtPakKeys &&
       0 < PakKeyUpdate_1.PakKeyUpdate.UpdateCheckInterval &&
       ((e = 1e3 * PakKeyUpdate_1.PakKeyUpdate.UpdateCheckInterval),
-      (PakKeyManager.xBe = TimerSystem_1.TimerSystem.Forever(() => {
-        PakKeyUpdate_1.PakKeyUpdate.CheckPakKey(void 0, void 0).catch(
-          (e) => {},
-        );
-      }, e)));
+      (PakKeyManager.xBe = TimerSystem_1.TimerSystem.Forever(
+        () => {
+          PakKeyUpdate_1.PakKeyUpdate.CheckPakKey(void 0, void 0).catch(
+            (e) => {},
+          );
+        },
+        e,
+        1,
+        void 0,
+        void 0,
+        !1,
+      )));
   }
 }
 (exports.PakKeyManager = PakKeyManager).xBe = void 0;

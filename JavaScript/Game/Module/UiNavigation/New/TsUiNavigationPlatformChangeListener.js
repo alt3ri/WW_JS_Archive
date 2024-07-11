@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.TsUiNavigationPlatformChangeListener = void 0);
 const UE = require("ue"),
+  Info_1 = require("../../../../Core/Common/Info"),
   GlobalData_1 = require("../../../GlobalData"),
   ModelManager_1 = require("../../../Manager/ModelManager");
 class TsUiNavigationPlatformChangeListener extends UE.LGUIBehaviour {
@@ -20,7 +21,7 @@ class TsUiNavigationPlatformChangeListener extends UE.LGUIBehaviour {
       );
   }
   ChangeAlpha() {
-    ModelManager_1.ModelManager.PlatformModel?.IsInGamepad()
+    Info_1.Info.IsInGamepad()
       ? ((this.IsChangeAlpha = !0), this.GetRootComponent()?.SetAlpha(0))
       : this.IsChangeAlpha &&
         ((this.IsChangeAlpha = !1), this.GetRootComponent()?.SetAlpha(1));

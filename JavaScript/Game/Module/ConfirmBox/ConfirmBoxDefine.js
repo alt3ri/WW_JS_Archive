@@ -22,9 +22,9 @@ class ConfirmBoxDataNew extends UiPopViewData_1.UiPopViewData {
       (this.IsEscViewTriggerCallBack = !0),
       (this.ShowPowerItem = !1),
       (this.AttachView = void 0),
-      (this.ubt = void 0),
-      (this.cbt = void 0),
-      (this.U4e = void 0),
+      (this.dqt = void 0),
+      (this.Cqt = void 0),
+      (this.j5e = void 0),
       (this.FinishOpenFunction = void 0),
       (this.DestroyFunction = void 0),
       (this.BeforePlayCloseFunction = void 0),
@@ -40,22 +40,22 @@ class ConfirmBoxDataNew extends UiPopViewData_1.UiPopViewData {
     this.TextArgs = t;
   }
   SetCloseFunction(t) {
-    this.ubt = t;
+    this.dqt = t;
   }
   GetCloseFunction() {
-    return this.ubt;
+    return this.dqt;
   }
   SetToggleFunction(t) {
-    this.U4e = t;
+    this.j5e = t;
   }
   GetToggleFunction() {
-    return this.U4e;
+    return this.j5e;
   }
   SetAfterShowFunction(t) {
-    this.cbt = t;
+    this.Cqt = t;
   }
   GetAfterShowFunction() {
-    return this.cbt;
+    return this.Cqt;
   }
 }
 exports.ConfirmBoxDataNew = ConfirmBoxDataNew;

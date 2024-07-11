@@ -9,7 +9,7 @@ const EventDefine_1 = require("../../../Common/Event/EventDefine"),
 class FlowActionSetPlayerPos extends FlowActionServerAction_1.FlowActionServerAction {
   constructor() {
     super(...arguments),
-      (this.uht = () => {
+      (this.Ilt = () => {
         ModelManager_1.ModelManager.PlotModel.SetTemplatePlayerTransform({
           X: Global_1.Global.BaseCharacter.CharacterActorComponent
             ?.ActorLocationProxy.X,
@@ -27,13 +27,24 @@ class FlowActionSetPlayerPos extends FlowActionServerAction_1.FlowActionServerAc
     this.RequestServerAction(),
       EventSystem_1.EventSystem.Once(
         EventDefine_1.EEventName.TeleportComplete,
-        this.uht,
+        this.Ilt,
       );
   }
   OnBackgroundExecute() {
     ModelManager_1.ModelManager.AutoRunModel.IsInLogicTreeGmMode()
       ? this.FinishExecute(!0)
       : this.OnExecute();
+  }
+  OnInterruptExecute() {
+    EventSystem_1.EventSystem.Has(
+      EventDefine_1.EEventName.TeleportComplete,
+      this.Ilt,
+    ) &&
+      (EventSystem_1.EventSystem.Remove(
+        EventDefine_1.EEventName.TeleportComplete,
+        this.Ilt,
+      ),
+      this.Ilt());
   }
 }
 exports.FlowActionSetPlayerPos = FlowActionSetPlayerPos;

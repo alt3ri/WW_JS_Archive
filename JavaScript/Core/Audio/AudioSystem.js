@@ -8,48 +8,49 @@ const puerts_1 = require("puerts"),
   UE = require("ue"),
   Info_1 = require("../Common/Info"),
   Log_1 = require("../Common/Log"),
+  FNameUtil_1 = require("../Utils/FNameUtil"),
   AudioEventPool_1 = require("./AudioEventPool"),
   ExecutionQueue_1 = require("./ExecutionQueue"),
   INVALID_PLAYING_ID = 0;
-function instanceOf(t, e) {
-  return t.IsValid() && t.IsA(e.StaticClass());
+function instanceOf(e, t) {
+  return e.IsValid() && e.IsA(t.StaticClass());
 }
-function parseAudioEventPathInConfig(t) {
-  var e = /^\/Game\/Aki\/WwiseAudio\/Events\/(?<name>\w+)/.exec(t);
+function parseAudioEventPathInConfig(e) {
+  var t = /^\/Game\/Aki\/WwiseAudio\/Events\/(?<name>\w+)/.exec(e);
   return (
-    e ||
+    t ||
       (Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn(
           "Audio",
           57,
           "[Core.AudioSystem] 非法的 AudioEvent 路径",
-          ["path", t],
+          ["path", e],
           [
             "reason",
             "未在 /Game/Aki/WwiseAudio/Events/ 路径下或命名不符合规范",
           ],
         )),
-    e?.groups?.name
+    t?.groups?.name
   );
 }
-function parseAudioEventPath(t) {
-  t = "string" == typeof t ? t : t.ToAssetPathName();
-  return t ? t.split(".").at(-1)?.toLowerCase() : void 0;
+function parseAudioEventPath(e) {
+  e = "string" == typeof e ? e : e.ToAssetPathName();
+  return e ? e.split(".").at(-1)?.toLowerCase() : void 0;
 }
 (exports.parseAudioEventPathInConfig = parseAudioEventPathInConfig),
   (exports.parseAudioEventPath = parseAudioEventPath);
 class AudioSystem {
-  static Tick(t) {
-    this.a8.Tick(t);
+  static Tick(e) {
+    this.a8.Tick(e);
   }
   static PostEvent(i, o, n) {
-    return this.h8.Enqueue(async (t) => {
-      var e = await this.l8(i, o, n);
-      e && (this._8.set(t, e), this.u8.set(e, t));
+    return this.h8.Enqueue(async (e) => {
+      var t = await this.l8(i, o, n);
+      t && (this._8.set(e, t), this.u8.set(t, e));
     });
   }
-  static async l8(e, i, o = {}) {
-    var n = await this.a8.GetAudioEvent(e);
+  static async l8(t, i, o = {}) {
+    var n = await this.a8.GetAudioEvent(t);
     if (n) {
       var { ExternalSourceName: s, ExternalSourceMediaName: r } = o,
         { CallbackMask: s = 1, CallbackHandler: r } =
@@ -59,15 +60,15 @@ class AudioSystem {
           o),
         s = 1 | s,
         r = this.c8(r);
-      let t = void 0;
-      if (void 0 === i) t = n.PostOnActor(void 0, r, s, !1);
+      let e = void 0;
+      if (void 0 === i) e = n.PostOnActor(void 0, r, s, !1);
       else if (i instanceof UE.Transform) {
         var a = i.GetLocation(),
           u = i.GetRotation().Rotator();
-        t = n.PostAtLocation(a, u, r, s, Info_1.Info.World);
+        e = n.PostAtLocation(a, u, r, s, Info_1.Info.World);
       } else if (instanceOf(i, UE.Actor)) {
         var { StopWhenOwnerDestroyed: a = !1 } = o;
-        t = n.PostOnActor(i, r, s, a);
+        e = n.PostOnActor(i, r, s, a);
       } else {
         if (!instanceOf(i, UE.AkComponent))
           return void (
@@ -76,21 +77,21 @@ class AudioSystem {
               "Audio",
               57,
               "[Core.AudioSystem] PostEvent 执行失败",
-              ["Event", e],
+              ["Event", t],
               ["Args", o],
               ["Reason", "目标对象无效"],
             )
           );
         var { StopWhenOwnerDestroyed: u = !1 } = o;
-        t = n.PostOnComponent(i, r, s, u);
+        e = n.PostOnComponent(i, r, s, u);
       }
-      if (t !== INVALID_PLAYING_ID) return t;
+      if (e !== INVALID_PLAYING_ID) return e;
       Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Audio",
           57,
           "[Core.AudioSystem] PostEvent 执行失败",
-          ["Event", e],
+          ["Event", t],
           [
             "Target",
             void 0 === i
@@ -105,79 +106,85 @@ class AudioSystem {
     }
   }
   static c8(i) {
-    const o = (t, e) => {
-      i?.(t, e),
-        0 === t &&
+    const o = (e, t) => {
+      i?.(e, t),
+        0 === e &&
           ((0, puerts_1.releaseManualReleaseDelegate)(o),
-          (t = e.PlayingID),
-          (e = this.u8.get(t))) &&
-          (this.u8.delete(t), this._8.delete(e));
+          (e = t.PlayingID),
+          (t = this.u8.get(e))) &&
+          (this.u8.delete(e), this._8.delete(t));
     };
     return (0, puerts_1.toManualReleaseDelegate)(o);
   }
-  static ExecuteAction(...t) {
-    if ("string" == typeof t[0]) {
-      const [o, n, s = {}] = t;
+  static ExecuteAction(...e) {
+    if ("string" == typeof e[0]) {
+      const [o, n, s = {}] = e;
       this.h8.Enqueue(() => {
-        var { Actor: t, TransitionDuration: e, TransitionFadeCurve: i } = s;
-        UE.KuroAudioStatics.ExecuteActionOnEventName(o, n, t, e, i);
+        var { Actor: e, TransitionDuration: t, TransitionFadeCurve: i } = s;
+        UE.KuroAudioStatics.ExecuteActionOnEventName(o, n, e, t, i);
       });
     } else {
-      const [r, a, u = {}] = t;
+      const [r, a, u = {}] = e;
       (0 === a && this.h8.Cancel(r)) ||
         this.h8.Enqueue(() => {
-          var t,
-            e,
+          var e,
+            t,
             i = this._8.get(r);
           i &&
-            (({ TransitionDuration: t, TransitionFadeCurve: e } = u),
-            UE.KuroAudioStatics.ExecuteActionOnPlayingId(i, a, t, e));
+            (({ TransitionDuration: e, TransitionFadeCurve: t } = u),
+            UE.KuroAudioStatics.ExecuteActionOnPlayingId(i, a, e, t));
         });
     }
   }
-  static SeekOnEvent(t, e, i = {}) {
+  static SeekOnEvent(e, t, i = {}) {
     var o;
     void 0 === i.Handle
       ? UE.KuroAudioStatics.SeekOnEventName(
-          t,
           e,
+          t,
           i.Actor,
           void 0,
           i.SnapToMarker,
         )
       : (o = this._8.get(i.Handle)) &&
-        UE.KuroAudioStatics.SeekOnEventName(t, e, i.Actor, o, i.SnapToMarker);
+        UE.KuroAudioStatics.SeekOnEventName(e, t, i.Actor, o, i.SnapToMarker);
   }
-  static GetSourcePlayPosition(t) {
-    var t = this._8.get(t);
-    return !t || -1 === (t = UE.KuroAudioStatics.GetSourcePlayPosition(t))
+  static GetSourcePlayPosition(e) {
+    var e = this._8.get(e);
+    return !e || -1 === (e = UE.KuroAudioStatics.GetSourcePlayPosition(e))
       ? void 0
-      : t;
+      : e;
   }
-  static SetSwitch(t, e, i) {
-    UE.KuroAudioStatics.SetSwitch(t, e, i);
+  static SetSwitch(e, t, i) {
+    UE.KuroAudioStatics.SetSwitch(e, t, i);
   }
-  static SetState(t, e) {
-    UE.KuroAudioStatics.SetState(t, e);
+  static SetState(e, t) {
+    UE.KuroAudioStatics.SetState(e, t);
   }
-  static SetRtpcValue(t, e, i = {}) {
+  static SetRtpcValue(e, t, i = {}) {
     var { Actor: i, TransitionDuration: o, TransitionFadeCurve: n } = i;
-    UE.KuroAudioStatics.SetRtpcValue(t, e, i, o, n);
+    UE.KuroAudioStatics.SetRtpcValue(e, t, i, o, n);
   }
-  static StopAll(t) {
-    UE.KuroAudioStatics.StopAll(t);
+  static StopAll(e) {
+    UE.KuroAudioStatics.StopAll(e);
   }
-  static GetAkComponent(t, e = {}) {
-    var { SocketName: e, OnCreated: i } = e,
-      e = "string" == typeof e ? new UE.FName(e) : e,
-      o = (0, puerts_1.$ref)(!1);
+  static GetAkComponent(e, t = {}) {
+    var { SocketName: t, OnCreated: i } = t;
+    let o = void 0;
+    o =
+      "string" == typeof t
+        ? FNameUtil_1.FNameUtil.GetDynamicFName(0 < t.length ? t : "None")
+        : t && 0 < t.toString().length
+          ? t
+          : FNameUtil_1.FNameUtil.GetDynamicFName("None");
+    t = (0, puerts_1.$ref)(!1);
     let n = void 0;
     return (
-      instanceOf(t, UE.Actor)
-        ? (n = UE.KuroAudioStatics.GetAkComponent(t.RootComponent, e, o))
-        : instanceOf(t, UE.SceneComponent) &&
-          (n = UE.KuroAudioStatics.GetAkComponent(t, e, o)),
-      (0, puerts_1.$unref)(o) && ((t = n?.GetOwner()), i) && t && n && i(t, n),
+      instanceOf(e, UE.Actor)
+        ? (n = UE.KuroAudioStatics.GetAkComponent(e.RootComponent, o, t))
+        : instanceOf(e, UE.SceneComponent) &&
+          (n = UE.KuroAudioStatics.GetAkComponent(e, o, t)),
+      (0, puerts_1.$unref)(t) && ((e = n?.GetOwner()), i) && e && n && i(e, n),
       n
     );
   }

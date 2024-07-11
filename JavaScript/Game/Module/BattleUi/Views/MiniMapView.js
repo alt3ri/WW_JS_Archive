@@ -21,17 +21,17 @@ class MiniMapView extends BattleVisibleChildView_1.BattleVisibleChildView {
   constructor() {
     super(...arguments),
       (this.RealMinimapScale = 0),
-      (this.E_t = void 0),
-      (this.y_t = !1),
+      (this.Nut = void 0),
+      (this.Out = !1),
       (this.IRe = void 0),
       (this.cie = new UE.Rotator(0, 0, 0)),
-      (this.I_t = void 0),
-      (this.T_t = () => {
+      (this.kut = void 0),
+      (this.Fut = () => {
         WorldMapController_1.WorldMapController.OpenView(1, !0);
       }),
       (this.RefreshShow = () => {
         var e, i, t;
-        this.y_t &&
+        this.Out &&
           (t = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity)
             ?.Valid &&
           (t = t.Entity.GetComponent(3)) &&
@@ -46,12 +46,12 @@ class MiniMapView extends BattleVisibleChildView_1.BattleVisibleChildView {
           (this.cie.Yaw = t),
           i.SetUIRelativeRotation(this.cie));
       }),
-      (this.L_t = () => {
-        this.R_t();
+      (this.Vut = () => {
+        this.jut();
       });
   }
   Initialize(e) {
-    super.Initialize(e), this.InitChildType(4), (this.y_t = !1);
+    super.Initialize(e), this.InitChildType(4), (this.Out = !1);
   }
   async InitializeAsync() {
     var e,
@@ -60,36 +60,36 @@ class MiniMapView extends BattleVisibleChildView_1.BattleVisibleChildView {
       );
     i &&
       ((e = this.GetItem(0)),
-      (this.I_t = this.GetItem(4)),
+      (this.kut = this.GetItem(4)),
       (i = i ? i.LittleMapDefaultScale / 100 : 1),
-      (this.E_t = new MiniMap_1.MiniMap(
+      (this.Nut = new MiniMap_1.MiniMap(
         1,
-        this.I_t,
+        this.kut,
         i,
         CommonParamById_1.configCommonParamById.GetFloatConfig(
           "MiniMap_Mark_Scale",
         ),
       )),
-      await this.E_t.CreateThenShowByResourceIdAsync(
+      await this.Nut.CreateThenShowByResourceIdAsync(
         "UiItem_MiniMap_Prefab",
         e,
         !0,
       ),
       (this.RealMinimapScale =
-        this.E_t.GetRootActor().GetActorRelativeScale3D().X),
-      this.E_t.GetRootItem().SetUIActive(
+        this.Nut.GetRootActor().GetActorRelativeScale3D().X),
+      this.Nut.GetRootItem().SetUIActive(
         ConfigManager_1.ConfigManager.InstanceDungeonConfig.IsMiniMapShow(
           ModelManager_1.ModelManager.CreatureModel.GetInstanceId(),
         ),
       ),
-      (this.y_t = !0),
+      (this.Out = !0),
       (this.IRe = TimerSystem_1.TimerSystem.Forever(
-        this.L_t,
+        this.Vut,
         UPDATE_INTERVAL,
       )));
   }
   Reset() {
-    this.E_t.Destroy(),
+    this.Nut.Destroy(),
       this.IRe &&
         (TimerSystem_1.TimerSystem.Remove(this.IRe), (this.IRe = void 0)),
       super.Reset();
@@ -102,9 +102,9 @@ class MiniMapView extends BattleVisibleChildView_1.BattleVisibleChildView {
       [3, UE.UIButtonComponent],
       [4, UE.UIItem],
     ]),
-      (this.BtnBindInfo = [[3, this.T_t]]);
+      (this.BtnBindInfo = [[3, this.Fut]]);
   }
-  R_t() {
+  jut() {
     var e, i, t;
     this.IsUiActiveInHierarchy() &&
       (e = GeneralLogicTreeUtil_1.GeneralLogicTreeUtil.GetPlayerLocation()) &&
@@ -112,14 +112,14 @@ class MiniMapView extends BattleVisibleChildView_1.BattleVisibleChildView {
       (i = MapUtil_1.MapUtil.WorldPosition2UiPosition2D(i, i))
         .MultiplyEqual(this.RealMinimapScale)
         .UnaryNegation(i),
-      this.E_t.GetRootItem().SetAnchorOffset(i.ToUeVector2D(!0)),
-      this.E_t.UpdateMinimapTiles(e),
+      this.Nut.GetRootItem().SetAnchorOffset(i.ToUeVector2D(!0)),
+      this.Nut.UpdateMinimapTiles(e),
       (i = Vector2D_1.Vector2D.Create(
-        this.E_t.GetRootItem().GetAnchorOffset(),
+        this.Nut.GetRootItem().GetAnchorOffset(),
       )),
       (t = this.RealMinimapScale),
-      this.E_t.MiniMapUpdateMarkItems(i, t, e),
-      this.U_t());
+      this.Nut.MiniMapUpdateMarkItems(i, t, e),
+      this.Wut());
   }
   RefreshOnPlatformChanged() {
     EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.ModelReady);
@@ -127,14 +127,14 @@ class MiniMapView extends BattleVisibleChildView_1.BattleVisibleChildView {
   SetRoguelikeVisible(e) {
     this.SetVisible(1, e);
   }
-  U_t() {
-    var e = this.E_t.GetRootItem(),
+  Wut() {
+    var e = this.Nut.GetRootItem(),
       i = e.GetAnchorOffset(),
-      i = (this.I_t.SetAnchorOffset(i), e.RelativeScale3D);
-    this.I_t.SetRelativeScale3D(i),
-      this.I_t.SetWidth(e.Width),
-      this.I_t.SetHeight(e.Height);
+      i = (this.kut.SetAnchorOffset(i), e.RelativeScale3D);
+    this.kut.SetRelativeScale3D(i),
+      this.kut.SetWidth(e.Width),
+      this.kut.SetHeight(e.Height);
   }
 }
-(exports.MiniMapView = MiniMapView).D_t = void 0;
+(exports.MiniMapView = MiniMapView).Hut = void 0;
 //# sourceMappingURL=MiniMapView.js.map

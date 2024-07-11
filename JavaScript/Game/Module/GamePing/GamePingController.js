@@ -13,40 +13,40 @@ const ControllerBase_1 = require("../../../Core/Framework/ControllerBase"),
   MIN_PING_MS = 1;
 class GamePingController extends ControllerBase_1.ControllerBase {
   static OnInit() {
-    return this.OnAddEvents(), this.CFe(), !0;
+    return this.OnAddEvents(), this.P3e(), !0;
   }
   static OnClear() {
-    return this.OnRemoveEvents(), this.RVt(), !0;
+    return this.OnRemoveEvents(), this.R6t(), !0;
   }
   static OnAddEvents() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.WorldDoneAndCloseLoading,
-      this.Uje,
+      this.FWe,
     );
   }
   static OnRemoveEvents() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.WorldDoneAndCloseLoading,
-      this.Uje,
+      this.FWe,
     );
   }
-  static CFe() {
-    GamePingController.qWt = TimerSystem_1.TimerSystem.Forever(
-      GamePingController.GWt,
+  static P3e() {
+    GamePingController.qKt = TimerSystem_1.TimerSystem.Forever(
+      GamePingController.GKt,
       REFRESH_PING_INTERVAL_MS,
     );
   }
-  static RVt() {
-    void 0 !== GamePingController.qWt &&
-      (TimerSystem_1.TimerSystem.Remove(GamePingController.qWt),
-      (GamePingController.qWt = void 0));
+  static R6t() {
+    void 0 !== GamePingController.qKt &&
+      (TimerSystem_1.TimerSystem.Remove(GamePingController.qKt),
+      (GamePingController.qKt = void 0));
   }
 }
-((exports.GamePingController = GamePingController).qWt = void 0),
-  (GamePingController.Uje = () => {
+((exports.GamePingController = GamePingController).qKt = void 0),
+  (GamePingController.FWe = () => {
     UiManager_1.UiManager.OpenView("PingView");
   }),
-  (GamePingController.GWt = () => {
+  (GamePingController.GKt = () => {
     var e = Math.ceil(NetInfo_1.NetInfo.RttMs),
       e = Math.min(e, MAX_PING_MS);
     (e = Math.max(e, MIN_PING_MS)),

@@ -8,24 +8,24 @@ const StringUtils_1 = require("../../../../../../../Core/Utils/StringUtils"),
 class NavigationRoleSkillTreeToggle extends NavigationToggle_1.NavigationToggle {
   constructor() {
     super(...arguments),
-      (this.ywo = !1),
-      (this.Iwo = () => {
+      (this.EBo = !1),
+      (this.SBo = () => {
         var e = this.Selectable;
-        1 === e.GetToggleState() && (this.ywo = !0), (e.bToggleOnSelect = !1);
+        1 === e.GetToggleState() && (this.EBo = !0), (e.bToggleOnSelect = !1);
       });
   }
   OnInit() {
     super.OnInit(),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.SelectRoleTabOutside,
-        this.Iwo,
+        this.SBo,
       );
   }
   OnClear() {
     super.OnClear(),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.SelectRoleTabOutside,
-        this.Iwo,
+        this.SBo,
       );
   }
   OnToggleClick() {
@@ -34,7 +34,7 @@ class NavigationRoleSkillTreeToggle extends NavigationToggle_1.NavigationToggle 
       e.SetToggleSelectByGroupName(this.Listener.GroupName);
   }
   OnHandlePointerSelectInheritance(e) {
-    return !this.ywo || (this.ywo = !1);
+    return !this.EBo || (this.EBo = !1);
   }
 }
 exports.NavigationRoleSkillTreeToggle = NavigationRoleSkillTreeToggle;

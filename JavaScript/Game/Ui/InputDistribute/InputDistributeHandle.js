@@ -4,28 +4,28 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const InputEnums_1 = require("../../../Game/Input/InputEnums");
 class InputIdentification {
   constructor(t) {
-    (this.Kcr = InputEnums_1.EInputAction.None),
-      (this.Qcr = InputEnums_1.EInputAxis.None),
-      (this.Fqi = t);
+    (this.Hmr = InputEnums_1.EInputAction.None),
+      (this.jmr = InputEnums_1.EInputAxis.None),
+      (this.FGi = t);
   }
   get Name() {
-    return this.Fqi;
+    return this.FGi;
   }
   GetInputAction() {
     var t;
     return (
-      this.Kcr ||
-      ((t = this.Fqi)
-        ? ((this.Kcr = InputEnums_1.EInputAction[t]), this.Kcr)
+      this.Hmr ||
+      ((t = this.FGi)
+        ? ((this.Hmr = InputEnums_1.EInputAction[t]), this.Hmr)
         : void 0)
     );
   }
   GetInputAxis() {
     var t;
     return (
-      this.Qcr ||
-      ((t = this.Fqi)
-        ? ((this.Qcr = InputEnums_1.EInputAxis[t]), this.Qcr)
+      this.jmr ||
+      ((t = this.FGi)
+        ? ((this.jmr = InputEnums_1.EInputAxis[t]), this.jmr)
         : void 0)
     );
   }
@@ -33,39 +33,39 @@ class InputIdentification {
 exports.InputIdentification = InputIdentification;
 class InputCallback {
   constructor(t) {
-    (this.Myo = []),
-      (this.Xcr = []),
-      (this.$cr = !1),
-      (this.Ycr = new InputIdentification(t));
+    (this.fIo = []),
+      (this.Wmr = []),
+      (this.Kmr = !1),
+      (this.Qmr = new InputIdentification(t));
   }
   Call(t) {
-    this.$cr = !0;
-    for (const s of this.Myo) s(this.Ycr.Name, t, this.Ycr);
-    this.Jcr(), (this.$cr = !1);
+    this.Kmr = !0;
+    for (const s of this.fIo) s(this.Qmr.Name, t, this.Qmr);
+    this.Xmr(), (this.Kmr = !1);
   }
   Add(t) {
-    (this.$cr ? this.Xcr : this.Myo).push(t);
+    (this.Kmr ? this.Wmr : this.fIo).push(t);
   }
-  Jcr() {
-    if (!(this.Xcr.length <= 0)) {
-      for (const t of this.Xcr) this.Myo.push(t);
-      this.Xcr.length = 0;
+  Xmr() {
+    if (!(this.Wmr.length <= 0)) {
+      for (const t of this.Wmr) this.fIo.push(t);
+      this.Wmr.length = 0;
     }
   }
   Remove(t) {
-    t = this.Myo.indexOf(t);
-    t < 0 || this.Myo.splice(t, 1);
+    t = this.fIo.indexOf(t);
+    t < 0 || this.fIo.splice(t, 1);
   }
   Clear() {
-    (this.Ycr = void 0), (this.Myo.length = 0);
+    (this.Qmr = void 0), (this.fIo.length = 0);
   }
   Length() {
-    return this.Myo.length;
+    return this.fIo.length;
   }
 }
 class InputDistributeHandle {
   constructor(t, s) {
-    (this.zcr = t), (this.B7 = new InputCallback(s));
+    (this.$mr = t), (this.B7 = new InputCallback(s));
   }
   Reset() {
     this.B7.Clear(), (this.B7 = void 0);
@@ -83,7 +83,7 @@ class InputDistributeHandle {
     return this.B7.Length();
   }
   GetInputDistributeTag() {
-    return this.zcr;
+    return this.$mr;
   }
 }
 exports.InputDistributeHandle = InputDistributeHandle;

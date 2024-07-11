@@ -21,7 +21,7 @@ class FragmentMemoryController extends ControllerBase_1.ControllerBase {
   static OnAddEvents() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnLoadingNetDataDone,
-      this.POt,
+      this.xkt,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.ActiveBattleView,
@@ -29,21 +29,21 @@ class FragmentMemoryController extends ControllerBase_1.ControllerBase {
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnSpecialItemUse,
-        this.k6e,
+        this.e9e,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.CreateViewInstance,
-        this.g7e,
+        this.AHe,
       );
   }
   static OnRemoveEvents() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnSpecialItemUse,
-      this.k6e,
+      this.e9e,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnLoadingNetDataDone,
-        this.POt,
+        this.xkt,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.ActiveBattleView,
@@ -51,16 +51,16 @@ class FragmentMemoryController extends ControllerBase_1.ControllerBase {
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.CreateViewInstance,
-        this.g7e,
+        this.AHe,
       );
   }
   static OnRegisterNetEvent() {
-    Net_1.Net.Register(11253, this.EUn), Net_1.Net.Register(27525, this.yUn);
+    Net_1.Net.Register(14471, this.ewn), Net_1.Net.Register(9979, this.twn);
   }
   static OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(11253), Net_1.Net.UnRegister(27525);
+    Net_1.Net.UnRegister(14471), Net_1.Net.UnRegister(9979);
   }
-  static iVi() {
+  static t6i() {
     0 !==
       ModelManager_1.ModelManager.FragmentMemoryModel.CurrentUnlockCollectId &&
       !UiManager_1.UiManager.IsViewShow("ObtainFragmentView") &&
@@ -76,18 +76,18 @@ class FragmentMemoryController extends ControllerBase_1.ControllerBase {
       ));
   }
   static RequestPhotoMemory() {
-    Net_1.Net.Call(3571, Protocol_1.Aki.Protocol.ums.create(), (e) => {
+    Net_1.Net.Call(16136, Protocol_1.Aki.Protocol.Efs.create(), (e) => {
       ModelManager_1.ModelManager.FragmentMemoryModel.OnPhotoMemoryResponse(e);
     });
   }
   static RequestMemoryReward(e) {
-    var t = Protocol_1.Aki.Protocol.Cms.create();
-    (t.o5n = e),
-      Net_1.Net.Call(10748, t, (e) => {
-        e.K0s !== Protocol_1.Aki.Protocol.lkn.Sys &&
+    var t = Protocol_1.Aki.Protocol.Lfs.create();
+    (t.OVn = e),
+      Net_1.Net.Call(16567, t, (e) => {
+        e._Ms !== Protocol_1.Aki.Protocol.O4n.NRs &&
           ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-            e.K0s,
-            12270,
+            e._Ms,
+            5493,
           );
       });
   }
@@ -96,10 +96,10 @@ class FragmentMemoryController extends ControllerBase_1.ControllerBase {
   }
 }
 (exports.FragmentMemoryController = FragmentMemoryController),
-  ((_a = FragmentMemoryController).POt = () => {
+  ((_a = FragmentMemoryController).xkt = () => {
     _a.RequestPhotoMemory();
   }),
-  (FragmentMemoryController.EUn = (e) => {
+  (FragmentMemoryController.ewn = (e) => {
     const t = ModelManager_1.ModelManager.FragmentMemoryModel.GetCollectedIds();
     ModelManager_1.ModelManager.FragmentMemoryModel.OnPhotoMemoryUpdate(e);
     e =
@@ -109,21 +109,21 @@ class FragmentMemoryController extends ControllerBase_1.ControllerBase {
     0 < e.length &&
       (ModelManager_1.ModelManager.FragmentMemoryModel.CurrentUnlockCollectId =
         e[0]),
-      _a.iVi();
+      _a.t6i();
   }),
   (FragmentMemoryController.JDe = () => {
-    _a.iVi();
+    _a.t6i();
   }),
-  (FragmentMemoryController.yUn = (e) => {
+  (FragmentMemoryController.twn = (e) => {
     ModelManager_1.ModelManager.FragmentMemoryModel.OnPhotoMemoryCollectUpdate(
       e,
     ),
       ModelManager_1.ModelManager.FragmentMemoryModel.TryRemoveCurrentTrackEntity();
   }),
-  (FragmentMemoryController.k6e = (e, t) => {
+  (FragmentMemoryController.e9e = (e, t) => {
     e === exports.INFO_FRAGMENTMEMORYITEM && _a.OpenFragmentMemoryView();
   }),
-  (FragmentMemoryController.g7e = (e) => {
+  (FragmentMemoryController.AHe = (e) => {
     "CommonActivityView" === e.Info.Name &&
       (ModelManager_1.ModelManager.FragmentMemoryModel.ActivitySubViewTryPlayAnimation =
         "");

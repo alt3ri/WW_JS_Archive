@@ -14,12 +14,12 @@ class ActivityPageSelectContent extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
       (this.Pe = void 0),
-      (this.m4e = !1),
-      (this.e4e = () => {
+      (this.U5e = !1),
+      (this.g5e = () => {
         this.IsUiActiveInHierarchy() && this.Oqe();
       }),
-      (this.b8s = (t) => {
-        this.Pe?.Id && this.Pe.Id === t && (this.C4e(), this.$2e(), this.Kbe());
+      (this.vXs = (t) => {
+        this.Pe?.Id && this.Pe.Id === t && (this.P5e(), this.u3e(), this.Kbe());
       }),
       (this.jbe = (t) => {
         t &&
@@ -34,7 +34,7 @@ class ActivityPageSelectContent extends GridProxyAbstract_1.GridProxyAbstract {
             EventDefine_1.EEventName.OnSelectActivity,
           ));
       }),
-      (this.d4e = () =>
+      (this.A5e = () =>
         ModelManager_1.ModelManager.ActivityModel.GetCurrentSelectActivityId() !==
         this.Pe.Id);
   }
@@ -50,26 +50,26 @@ class ActivityPageSelectContent extends GridProxyAbstract_1.GridProxyAbstract {
       (this.BtnBindInfo = [[0, this.jbe]]);
   }
   OnStart() {
-    this.GetExtendToggle(0).CanExecuteChange.Bind(this.d4e);
+    this.GetExtendToggle(0).CanExecuteChange.Bind(this.A5e);
   }
   AddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnSelectActivity,
-      this.e4e,
+      this.g5e,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.RefreshActivityTab,
-        this.b8s,
+        this.vXs,
       );
   }
   RemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnSelectActivity,
-      this.e4e,
+      this.g5e,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.RefreshActivityTab,
-        this.b8s,
+        this.vXs,
       );
   }
   OnBeforeShow() {
@@ -98,21 +98,21 @@ class ActivityPageSelectContent extends GridProxyAbstract_1.GridProxyAbstract {
         void 0,
         t.Id,
       ),
-      (this.m4e = !0),
+      (this.U5e = !0),
       this.Oqe(),
-      this.C4e(),
-      this.$2e(),
+      this.P5e(),
+      this.u3e(),
       this.Kbe(),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.RefreshCommonActivityRedDot,
         t.Id,
       );
   }
-  C4e() {
+  P5e() {
     var t = this.Pe.GetTitle();
     this.GetText(1).SetText(t.replace(/<.*?>/g, ""));
   }
-  $2e() {
+  u3e() {
     var t, e;
     this.Pe.EndOpenTime <= 0 || !this.Pe.CheckIfInOpenTime()
       ? (this.GetText(3).SetUIActive(!1), this.GetItem(4).SetUIActive(!0))
@@ -145,13 +145,13 @@ class ActivityPageSelectContent extends GridProxyAbstract_1.GridProxyAbstract {
   }
   OnBeforeDestroy() {}
   OnClearItem() {
-    this.m4e &&
+    this.U5e &&
       (RedDotController_1.RedDotController.UnBindGivenUi(
         "CommonActivityPage",
         this.GetItem(2),
         this.Pe.Id,
       ),
-      (this.m4e = !1));
+      (this.U5e = !1));
   }
 }
 exports.ActivityPageSelectContent = ActivityPageSelectContent;

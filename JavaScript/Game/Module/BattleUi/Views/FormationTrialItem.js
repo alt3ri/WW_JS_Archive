@@ -6,17 +6,17 @@ const UE = require("ue"),
 class FormationTrialItem extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
-      (this.rat = void 0),
+      (this.fht = void 0),
       this.CreateThenShowByResourceIdAsync("UiItem_FigthRoleHeadTest", e);
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [[0, UE.UIText]];
   }
   OnStart() {
-    this.rat && this.GetText(0).SetText(this.rat), (this.rat = void 0);
+    this.fht && this.GetText(0).SetText(this.fht), (this.fht = void 0);
   }
   SetNameText(e) {
-    this.InAsyncLoading() ? (this.rat = e) : this.GetText(0).SetText(e);
+    this.InAsyncLoading() ? (this.fht = e) : this.GetText(0).SetText(e);
   }
 }
 exports.FormationTrialItem = FormationTrialItem;

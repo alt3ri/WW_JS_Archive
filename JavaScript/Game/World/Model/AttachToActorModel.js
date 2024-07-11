@@ -9,17 +9,17 @@ class AttachToActorModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
       (this.ShowLog = !0),
-      (this.yPn = new Map()),
-      (this.IPn = new Map()),
-      (this.tqn = 0);
+      (this.ibn = new Map()),
+      (this.rbn = new Map()),
+      (this.qNn = 0);
   }
   OnInit() {
     return (this.ShowLog = GlobalData_1.GlobalData.IsPlayInEditor), !0;
   }
   AddEntityActor(t, e, o, r, a) {
-    let c = this.yPn.get(t);
-    c || ((c = new AttachActorDefine_1.AttachActorEntry()), this.yPn.set(t, c));
-    var A = ++this.tqn;
+    let c = this.ibn.get(t);
+    c || ((c = new AttachActorDefine_1.AttachActorEntry()), this.ibn.set(t, c));
+    var A = ++this.qNn;
     return c.AddAttachActorItem(A, t, e, o, r, a)
       ? (this.ShowLog &&
           Log_1.Log.CheckInfo() &&
@@ -33,7 +33,7 @@ class AttachToActorModel extends ModelBase_1.ModelBase {
             ["ParentActorName", o.GetName()],
             ["Reason", r],
           ),
-        this.IPn.set(e, t),
+        this.rbn.set(e, t),
         !0)
       : (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
@@ -49,7 +49,7 @@ class AttachToActorModel extends ModelBase_1.ModelBase {
   }
   RemoveEntityActor(t, e, o) {
     var r,
-      a = this.yPn.get(t);
+      a = this.ibn.get(t);
     return (
       !!a &&
       (this.ShowLog &&
@@ -67,24 +67,24 @@ class AttachToActorModel extends ModelBase_1.ModelBase {
           ["Reason", o],
         ),
       !!a.RemoveAttachActorItem(e)) &&
-      (a.Size() || this.yPn.delete(t), this.IPn.delete(e), !0)
+      (a.Size() || this.ibn.delete(t), this.rbn.delete(e), !0)
     );
   }
   GetEntityIdByActor(t) {
-    return this.IPn.get(t) ?? 0;
+    return this.rbn.get(t) ?? 0;
   }
   GetAttachActorEntry(t) {
-    return this.yPn.get(t);
+    return this.ibn.get(t);
   }
   GetAttachActorItem(t, e) {
-    t = this.yPn.get(t);
+    t = this.ibn.get(t);
     if (t) return t.GetAttachActorItem(e);
   }
   ClearActorsByEntity(t) {
-    t = this.yPn.get(t);
+    t = this.ibn.get(t);
     if (t) {
       for (const e of t.GetAttachActorItems())
-        e.Actor?.IsValid() && this.IPn.delete(e.Actor),
+        e.Actor?.IsValid() && this.rbn.delete(e.Actor),
           this.ShowLog &&
             Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
@@ -101,7 +101,7 @@ class AttachToActorModel extends ModelBase_1.ModelBase {
     }
   }
   ClearEntityActor(t) {
-    for (var [, e] of this.yPn) {
+    for (var [, e] of this.ibn) {
       if (this.ShowLog)
         for (const o of e.GetAttachActorItems())
           Log_1.Log.CheckInfo() &&
@@ -118,7 +118,7 @@ class AttachToActorModel extends ModelBase_1.ModelBase {
             );
       e.Clear();
     }
-    this.yPn.clear(), this.IPn.clear();
+    this.ibn.clear(), this.rbn.clear();
   }
   OnLeaveLevel() {
     return this.ClearEntityActor("AttachToActorModel.OnLeaveLevel"), !0;

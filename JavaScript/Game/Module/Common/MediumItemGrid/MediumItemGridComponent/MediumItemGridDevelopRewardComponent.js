@@ -22,14 +22,14 @@ class MediumItemGridDevelopRewardComponent extends MediumItemGridComponent_1.Med
   constructor() {
     super(...arguments),
       (this.eGe = void 0),
-      (this.pxt = 0),
-      (this.vxt = 0),
+      (this.Swt = 0),
+      (this.ywt = 0),
       (this.sGe = (e, t, i) => {
         const s = new DevelopRewardItem();
         return (
           s.CreateByActorAsync(t.GetOwner()).then(
             () => {
-              s.SetIsUnlock(i < this.vxt), s.SetUiActive(!0);
+              s.SetIsUnlock(i < this.ywt), s.SetUiActive(!0);
             },
             () => {},
           ),
@@ -58,9 +58,9 @@ class MediumItemGridDevelopRewardComponent extends MediumItemGridComponent_1.Med
   }
   OnRefresh(e) {
     e && e.IsUnlock
-      ? ((this.pxt = e.DevelopRewardLevel),
-        (this.vxt = e.UnlockLevel),
-        this.eGe.RebuildLayoutByDataNew(void 0, this.pxt),
+      ? ((this.Swt = e.DevelopRewardLevel),
+        (this.ywt = e.UnlockLevel),
+        this.eGe.RebuildLayoutByDataNew(void 0, this.Swt),
         this.SetActive(!0))
       : this.SetActive(!1);
   }

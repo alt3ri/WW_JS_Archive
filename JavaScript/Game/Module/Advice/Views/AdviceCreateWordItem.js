@@ -11,9 +11,9 @@ class AdviceCreateWordItem extends UiPanelBase_1.UiPanelBase {
   constructor(t) {
     super(),
       (this.Xy = 0),
-      (this.G9e = new Array()),
-      (this.N9e = void 0),
-      (this.O9e = void 0),
+      (this.J7e = new Array()),
+      (this.z7e = void 0),
+      (this.Z7e = void 0),
       this.CreateThenShowByActor(t.GetOwner());
   }
   OnRegisterComponent() {
@@ -24,67 +24,67 @@ class AdviceCreateWordItem extends UiPanelBase_1.UiPanelBase {
     ];
   }
   OnStart() {
-    this.k9e(),
-      this.F9e(),
-      this.V9e(),
+    this.eHe(),
+      this.tHe(),
+      this.iHe(),
       this.GetItem(1).SetUIActive(!1),
       this.GetText(0).SetUIActive(!1);
   }
-  k9e() {
+  eHe() {
     for (let t = 0; t < 2; t++) {
       var e = LguiUtil_1.LguiUtil.CopyItem(this.GetText(0), this.RootItem);
-      this.G9e.push(e);
+      this.J7e.push(e);
     }
   }
-  F9e() {
+  tHe() {
     var t = this.GetItem(1),
       t = LguiUtil_1.LguiUtil.CopyItem(t, this.RootItem),
       t = new AdviceCreateWordBtnItem_1.AdviceCreateWordBtnItem(t);
-    (this.N9e = t), this.N9e.SetType(1);
+    (this.z7e = t), this.z7e.SetType(1);
   }
-  V9e() {
+  iHe() {
     var t = this.GetItem(1),
       t = LguiUtil_1.LguiUtil.CopyItem(t, this.RootItem),
       t = new AdviceCreateWordBtnItem_1.AdviceCreateWordBtnItem(t);
-    (this.O9e = t), this.O9e.SetType(0);
+    (this.Z7e = t), this.Z7e.SetType(0);
   }
   SetIndex(t) {
-    (this.Xy = t), this.N9e.SetIndex(t), this.O9e.SetIndex(t);
+    (this.Xy = t), this.z7e.SetIndex(t), this.Z7e.SetIndex(t);
   }
   RefreshView() {
-    this.O8e(), this.q9e();
+    this.Z9e(), this.Y7e();
   }
-  O8e() {
+  Z9e() {
     const e = this.GetItem(2);
-    this.G9e.forEach((t) => {
+    this.J7e.forEach((t) => {
       t.SetUIActive(!1), t.SetUIParent(e);
     }),
-      this.N9e.GetRootItem().SetUIParent(e),
-      this.O9e.GetRootItem().SetUIParent(e),
-      this.N9e.GetRootItem().SetUIActive(!1),
-      this.O9e.GetRootItem().SetUIActive(!1);
+      this.z7e.GetRootItem().SetUIParent(e),
+      this.Z7e.GetRootItem().SetUIParent(e),
+      this.z7e.GetRootItem().SetUIActive(!1),
+      this.Z7e.GetRootItem().SetUIActive(!1);
   }
-  q9e() {
+  Y7e() {
     var t = ModelManager_1.ModelManager.AdviceModel.CurrentSentenceWordMap.get(
       this.Xy,
     );
     if (!(t <= 0)) {
       0 < this.Xy &&
-        (this.N9e.GetRootItem().SetUIParent(this.RootItem),
-        this.N9e.GetRootItem().SetUIActive(!0),
-        this.N9e.RefreshView());
+        (this.z7e.GetRootItem().SetUIParent(this.RootItem),
+        this.z7e.GetRootItem().SetUIActive(!0),
+        this.z7e.RefreshView());
       var e =
         ConfigManager_1.ConfigManager.AdviceConfig.GetAdviceSentenceText(
           t,
         ).split("{}");
       for (let t = 0; t < e.length; t++)
-        this.G9e[t].SetText(e[t]),
-          this.G9e[t].SetUIParent(this.RootItem),
+        this.J7e[t].SetText(e[t]),
+          this.J7e[t].SetUIParent(this.RootItem),
           t + 1 < e.length &&
-            (this.O9e.GetRootItem().SetUIParent(this.RootItem),
-            this.O9e.GetRootItem().SetUIActive(!0),
-            this.O9e.RefreshView()),
-          this.G9e[t].SetUIActive(!0);
+            (this.Z7e.GetRootItem().SetUIParent(this.RootItem),
+            this.Z7e.GetRootItem().SetUIActive(!0),
+            this.Z7e.RefreshView()),
+          this.J7e[t].SetUIActive(!0);
     }
   }
 }

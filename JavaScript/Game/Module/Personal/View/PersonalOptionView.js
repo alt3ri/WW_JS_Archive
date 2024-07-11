@@ -13,23 +13,23 @@ const UE = require("ue"),
 class PersonalOptionView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.H6t = void 0),
-      (this.g6t = void 0),
-      (this.J6t = (e, t, i) => {
+      (this.H8t = void 0),
+      (this.g8t = void 0),
+      (this.J8t = (e, t, i) => {
         t = new PersonalOptionItem_1.PersonalOptionItem(t);
         return t.Refresh(e, !1, i), { Key: i, Value: t };
       }),
-      (this.m7t = () => {
+      (this.mHt = () => {
         this.RefreshOptions();
       }),
-      (this.l7t = () => {
+      (this.lHt = () => {
         this.Kbe();
       }),
-      (this.jUt = () => {
-        this.x9e();
+      (this.XAt = () => {
+        this.K7e();
       }),
-      (this.WUt = () => {
-        this.r8t();
+      (this.$At = () => {
+        this.r9t();
       });
   }
   OnRegisterComponent() {
@@ -51,46 +51,46 @@ class PersonalOptionView extends UiViewBase_1.UiViewBase {
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnBirthChange,
-      this.m7t,
+      this.mHt,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnHeadIconChange,
-        this.l7t,
+        this.lHt,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnNameChange,
-        this.jUt,
+        this.XAt,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnSignChange,
-        this.WUt,
+        this.$At,
       );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnBirthChange,
-      this.m7t,
+      this.mHt,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnHeadIconChange,
-        this.l7t,
+        this.lHt,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnNameChange,
-        this.jUt,
+        this.XAt,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnSignChange,
-        this.WUt,
+        this.$At,
       );
   }
   OnStart() {
-    (this.g6t = new PlayerHeadItem_1.PlayerHeadItem(
+    (this.g8t = new PlayerHeadItem_1.PlayerHeadItem(
       this.GetItem(0).GetOwner(),
     )),
       this.RefreshOptions(),
-      this.x9e(),
-      this.r8t();
+      this.K7e(),
+      this.r9t();
     var e = ModelManager_1.ModelManager.FunctionModel.GetPlayerLevel();
     e && this.GetText(5).SetText(String(e)),
       this.Kbe(),
@@ -100,13 +100,13 @@ class PersonalOptionView extends UiViewBase_1.UiViewBase {
   OnAfterShow() {}
   Kbe() {
     var e = ModelManager_1.ModelManager.PlayerInfoModel.GetHeadIconId();
-    this.g6t.RefreshByRoleId(e);
+    this.g8t.RefreshByRoleId(e);
   }
-  x9e() {
+  K7e() {
     var e = ModelManager_1.ModelManager.FunctionModel.GetPlayerName();
     e && this.GetText(2).SetText(e);
   }
-  r8t() {
+  r9t() {
     var e = ModelManager_1.ModelManager.PersonalModel.GetSignature(),
       t = this.GetText(11);
     e && "" !== e
@@ -121,16 +121,16 @@ class PersonalOptionView extends UiViewBase_1.UiViewBase {
       e.push(9),
       e.push(10),
       e.push(11),
-      this.H6t ||
-        (this.H6t = new GenericLayoutNew_1.GenericLayoutNew(
+      this.H8t ||
+        (this.H8t = new GenericLayoutNew_1.GenericLayoutNew(
           this.GetGridLayout(9),
-          this.J6t,
+          this.J8t,
         )),
-      this.H6t.ClearChildren(),
-      this.H6t.RebuildLayoutByDataNew(e);
+      this.H8t.ClearChildren(),
+      this.H8t.RebuildLayoutByDataNew(e);
   }
   OnBeforeDestroy() {
-    this.H6t && (this.H6t.ClearChildren(), (this.H6t = void 0));
+    this.H8t && (this.H8t.ClearChildren(), (this.H8t = void 0));
   }
 }
 exports.PersonalOptionView = PersonalOptionView;

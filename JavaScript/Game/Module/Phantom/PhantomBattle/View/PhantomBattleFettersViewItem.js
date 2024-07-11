@@ -25,62 +25,63 @@ const UE = require("ue"),
 class PhantomBattleFettersViewItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this.e6i = 14),
-      (this.t6i = void 0),
-      (this.i6i = void 0),
-      (this.aft = void 0),
-      (this.hft = void 0),
+      (this.Z6i = 14),
+      (this.e8i = void 0),
+      (this.t8i = void 0),
+      (this.vpt = void 0),
+      (this.Mpt = void 0),
       (this.eGe = void 0),
-      (this.Hli = void 0),
-      (this.EPe = void 0),
-      (this.o6i = 0),
-      (this.r6i = 0),
-      (this.n6i = !1),
+      (this.H1i = void 0),
+      (this.SPe = void 0),
+      (this.i8i = 0),
+      (this.dFe = 0),
+      (this.o8i = 0),
+      (this.r8i = !1),
       (this.OnFastFilter = void 0),
-      (this.s6i = () => {
+      (this.n8i = () => {
         return new VisionDetailMonsterItem();
       }),
       (this.sGe = () => {
         return new VisionFetterDescItem();
       }),
-      (this.z9e = () => {
+      (this.cHe = () => {
         var e = new PhantomBattleItemView_1.PhantomFettersItem();
-        return e.BindOnItemButtonClickedCallback(this.UIt), e;
+        return e.BindOnItemButtonClickedCallback(this.BTt), e;
       }),
-      (this.bpt = (e) => {
-        (this.i6i = e), this.Mni(), this.a6i(e);
+      (this.Qvt = (e) => {
+        (this.t8i = e), this.Esi(), this.s8i(e);
       }),
-      (this.Mni = () => {
-        if (this.i6i)
+      (this.Esi = () => {
+        if (this.t8i)
           if (
-            (this.t6i.DeselectCurrentGridProxy(),
-            this.t6i.ReloadData(this.i6i),
-            0 === this.r6i)
+            (this.e8i.DeselectCurrentGridProxy(),
+            this.e8i.ReloadData(this.t8i),
+            0 === this.o8i)
           )
-            this.t6i.SelectGridProxy(0), this.t6i.RefreshGridProxy(0);
+            this.e8i.SelectGridProxy(0), this.e8i.RefreshGridProxy(0);
           else {
             let t = 0;
-            var i = this.i6i.length;
+            var i = this.t8i.length;
             for (let e = 0; e < i; e++)
-              if (this.i6i[e].Id === this.r6i) {
+              if (this.t8i[e].Id === this.o8i) {
                 t = e;
                 break;
               }
-            this.t6i.ScrollToGridIndex(t, !0),
-              this.t6i.SelectGridProxy(t),
-              this.t6i.RefreshGridProxy(t);
+            this.e8i.ScrollToGridIndex(t, !0),
+              this.e8i.SelectGridProxy(t),
+              this.e8i.RefreshGridProxy(t);
           }
         else
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info("Phantom", 28, "没有羁绊幻象");
       }),
-      (this.UIt = (e) => {
-        this.t6i.DeselectCurrentGridProxy();
-        var t = this.i6i.indexOf(e);
-        this.t6i.IsGridDisplaying(t) &&
-          (this.h6i(e),
-          this.t6i.SelectGridProxy(t),
-          this.t6i.RefreshGridProxy(t));
+      (this.BTt = (e) => {
+        this.e8i.DeselectCurrentGridProxy();
+        var t = this.t8i.indexOf(e);
+        this.e8i.IsGridDisplaying(t) &&
+          (this.a8i(e),
+          this.e8i.SelectGridProxy(t),
+          this.e8i.RefreshGridProxy(t));
       });
   }
   OnRegisterComponent() {
@@ -100,41 +101,41 @@ class PhantomBattleFettersViewItem extends UiPanelBase_1.UiPanelBase {
       this.OnFastFilter && (this.BtnBindInfo = [[5, this.OnFastFilter]]);
   }
   OnStart() {
-    (this.EPe = new LevelSequencePlayer_1.LevelSequencePlayer(
+    (this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(
       this.GetRootItem(),
     )),
-      (this.t6i = new LoopScrollView_1.LoopScrollView(
+      (this.e8i = new LoopScrollView_1.LoopScrollView(
         this.GetLoopScrollViewComponent(0),
         this.GetItem(1).GetOwner(),
-        this.z9e,
+        this.cHe,
       )),
-      (this.aft = new FilterEntrance_1.FilterEntrance(
+      (this.vpt = new FilterEntrance_1.FilterEntrance(
         this.GetItem(6),
-        this.bpt,
+        this.Qvt,
       )),
-      (this.hft = new SortEntrance_1.SortEntrance(this.GetItem(7), this.bpt)),
+      (this.Mpt = new SortEntrance_1.SortEntrance(this.GetItem(7), this.Qvt)),
       (this.eGe = new GenericLayout_1.GenericLayout(
         this.GetVerticalLayout(3),
         this.sGe,
       )),
-      (this.Hli = new GenericLayout_1.GenericLayout(
+      (this.H1i = new GenericLayout_1.GenericLayout(
         this.GetGridLayout(9),
-        this.s6i,
+        this.n8i,
       )),
-      this.aft.SetUiActive(
+      this.vpt.SetUiActive(
         !ModelManager_1.ModelManager.CalabashModel.OnlyShowBattleFettersTab,
       ),
-      this.hft.SetUiActive(
+      this.Mpt.SetUiActive(
         !ModelManager_1.ModelManager.CalabashModel.OnlyShowBattleFettersTab,
       );
   }
   async PlayStartSequence() {
     var e = new CustomPromise_1.CustomPromise();
-    await this.EPe.PlaySequenceAsync("Start", e);
+    await this.SPe.PlaySequenceAsync("Start", e);
   }
   async PlayHideSequence() {
     var e = new CustomPromise_1.CustomPromise();
-    await this.EPe.PlaySequenceAsync("Close", e);
+    await this.SPe.PlaySequenceAsync("Close", e);
   }
   OnBeforeShow() {
     var e;
@@ -143,28 +144,29 @@ class PhantomBattleFettersViewItem extends UiPanelBase_1.UiPanelBase {
         UiSceneManager_1.UiSceneManager.GetVisionSkeletalHandle().Model?.CheckGetComponent(
           0,
         )),
-      (this.n6i = e?.GetVisible() ?? !1),
+      (this.r8i = e?.GetVisible() ?? !1),
       e?.SetVisible(!1)),
-      this.l6i();
+      this.h8i();
   }
-  l6i() {
+  h8i() {
     var e =
       ModelManager_1.ModelManager.CalabashModel.GetPhantomFetterGroupList();
-    this.aft.UpdateData(this.e6i, e), this.hft.UpdateData(this.e6i, e);
+    this.vpt.UpdateData(this.Z6i, e), this.Mpt.UpdateData(this.Z6i, e);
   }
-  a6i(e) {
+  s8i(e) {
     this.GetItem(8).SetUIActive(0 < e.length),
       this.GetButton(5).RootUIComp.SetUIActive(
         0 < e.length && void 0 !== this.OnFastFilter,
       );
   }
-  _6i(t) {
+  l8i(t) {
     var i = new Array(),
       r = t.length;
-    for (let e = 0; e < r; e++) i.push(new VisionDetailMonsterItemData(t[e]));
+    for (let e = 0; e < r; e++)
+      i.push(new VisionDetailMonsterItemData(t[e], 0, this.dFe));
     var e = 0 < r,
       e =
-        (e && this.Hli.RefreshByData(i),
+        (e && this.H1i.RefreshByData(i),
         this.GetGridLayout(9).RootUIComp.SetUIActive(e),
         ModelManager_1.ModelManager.PhantomBattleModel.GetMonsterFindCountByMonsterIdArray(
           t,
@@ -172,22 +174,25 @@ class PhantomBattleFettersViewItem extends UiPanelBase_1.UiPanelBase {
     this.GetText(10).SetText(e + "/" + t.length);
   }
   SelectByFetterId(t) {
-    var e = this.i6i.findIndex((e) => e.Id === t);
-    0 < e && (this.t6i.ScrollToGridIndex(e, !0), this.t6i.SelectGridProxy(e));
+    var e = this.t8i.findIndex((e) => e.Id === t);
+    0 < e && (this.e8i.ScrollToGridIndex(e, !0), this.e8i.SelectGridProxy(e));
   }
-  h6i(e) {
-    (this.o6i = e.Id),
-      this.C4e(e.FetterGroupName),
+  SetSelectRoleId(e) {
+    this.dFe = e;
+  }
+  a8i(e) {
+    (this.i8i = e.Id),
+      this.P5e(e.FetterGroupName),
       this.nOe(e.FetterMap),
-      this.u6i(e.FetterGroupDesc);
+      this._8i(e.FetterGroupDesc);
     (e =
       ModelManager_1.ModelManager.PhantomBattleModel.GetFetterGroupMonsterIdArray(
-        this.o6i,
+        this.i8i,
       )),
       (e = Array.from(e));
-    this._6i(e);
+    this.l8i(e);
   }
-  C4e(e) {
+  P5e(e) {
     this.GetText(2).ShowTextNew(e);
   }
   nOe(e) {
@@ -197,16 +202,16 @@ class PhantomBattleFettersViewItem extends UiPanelBase_1.UiPanelBase {
       (i.Key = t), (i.Value = e), r.push(i);
     }),
       this.eGe.RefreshByData(r, void 0, !0),
-      "Switch" === this.EPe?.GetCurrentSequence()
-        ? this.EPe?.ReplaySequenceByKey("Switch")
-        : (this.EPe?.StopCurrentSequence(),
-          this.EPe?.PlayLevelSequenceByName("Switch"));
+      "Switch" === this.SPe?.GetCurrentSequence()
+        ? this.SPe?.ReplaySequenceByKey("Switch")
+        : (this.SPe?.StopCurrentSequence(),
+          this.SPe?.PlayLevelSequenceByName("Switch"));
   }
-  u6i(e) {
+  _8i(e) {
     this.GetText(4).ShowTextNew(e);
   }
   GetCurrentSelectGroupId() {
-    return this.o6i;
+    return this.i8i;
   }
   OnBeforeDestroy() {
     var e;
@@ -215,8 +220,8 @@ class PhantomBattleFettersViewItem extends UiPanelBase_1.UiPanelBase {
       UiSceneManager_1.UiSceneManager.HasVisionSkeletalHandle() &&
         (e =
           UiSceneManager_1.UiSceneManager.GetVisionSkeletalHandle()?.Model) &&
-        UiModelUtil_1.UiModelUtil.SetVisible(e, this.n6i),
-      this.t6i && (this.t6i.ClearGridProxies(), (this.t6i = void 0));
+        UiModelUtil_1.UiModelUtil.SetVisible(e, this.r8i),
+      this.e8i && (this.e8i.ClearGridProxies(), (this.e8i = void 0));
   }
 }
 exports.PhantomBattleFettersViewItem = PhantomBattleFettersViewItem;
@@ -252,9 +257,9 @@ class VisionFetterDescItem extends UiPanelBase_1.UiPanelBase {
   }
   Update(e) {
     var t = e.Value;
-    this.L4e(t), this.C4e(t, e.Key);
+    this.Dke(t), this.P5e(t, e.Key);
   }
-  C4e(e, t) {
+  P5e(e, t) {
     (e =
       ConfigManager_1.ConfigManager.PhantomBattleConfig.GetPhantomFetterById(
         e,
@@ -268,7 +273,7 @@ class VisionFetterDescItem extends UiPanelBase_1.UiPanelBase {
         t.toString(),
       );
   }
-  L4e(e) {
+  Dke(e) {
     e =
       ConfigManager_1.ConfigManager.PhantomBattleConfig.GetPhantomFetterById(e);
     LguiUtil_1.LguiUtil.SetLocalTextNew(
@@ -279,22 +284,22 @@ class VisionFetterDescItem extends UiPanelBase_1.UiPanelBase {
   }
 }
 class VisionDetailMonsterItemData {
-  constructor(e = 0, t = 0) {
-    (this.MonsterId = e), (this.QualityId = t);
+  constructor(e = 0, t = 0, i = 0) {
+    (this.MonsterId = e), (this.QualityId = t), (this.RoleId = i);
   }
 }
 exports.VisionDetailMonsterItemData = VisionDetailMonsterItemData;
 class VisionDetailMonsterItem extends LoopScrollSmallItemGrid_1.LoopScrollSmallItemGrid {
   constructor() {
     super(...arguments),
-      (this.c6i = 0),
-      (this.c2e = () => {}),
-      (this.m6i = () => {
+      (this.u8i = 0),
+      (this.RFe = () => {}),
+      (this.c8i = () => {
         ModelManager_1.ModelManager.FunctionModel.IsOpen(10023)
           ? ControllerHolder_1.ControllerHolder.AdventureGuideController.JumpToTargetView(
               "MonsterDetectView",
               ConfigManager_1.ConfigManager.CalabashConfig.GetCalabashDevelopRewardByMonsterId(
-                this.c6i,
+                this.u8i,
               )?.MonsterProbeId,
             )
           : ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
@@ -303,10 +308,10 @@ class VisionDetailMonsterItem extends LoopScrollSmallItemGrid_1.LoopScrollSmallI
       });
   }
   OnStart() {
-    this.BindOnExtendToggleClicked(this.c2e);
+    this.BindOnExtendToggleClicked(this.RFe);
   }
   OnExtendToggleClicked() {
-    this.m6i();
+    this.c8i();
   }
   OnExtendToggleStateChanged(e) {
     this.SetSelected(!1, !1);
@@ -315,23 +320,23 @@ class VisionDetailMonsterItem extends LoopScrollSmallItemGrid_1.LoopScrollSmallI
     this.Refresh(e);
   }
   Refresh(t) {
-    this.c6i = t.MonsterId;
+    this.u8i = t.MonsterId;
     var i = ModelManager_1.ModelManager.HandBookModel.GetHandBookInfo(
         1,
-        this.c6i,
+        this.u8i,
       ),
-      e = ModelManager_1.ModelManager.RoleModel.GetCurSelectMainRoleInstance(),
+      e = ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(t.RoleId),
       r = e?.GetPhantomData()?.GetDataMap();
     let s = 0;
     if (r)
       for (var [, o] of r)
-        if (o?.GetConfig().MonsterId === this.c6i) {
+        if (o?.GetConfig().MonsterId === this.u8i) {
           s = e?.GetRoleId();
           break;
         }
     r =
       ConfigManager_1.ConfigManager.CalabashConfig.GetCalabashDevelopRewardByMonsterId(
-        this.c6i,
+        this.u8i,
       );
     if (r) {
       i = void 0 !== i;
@@ -339,7 +344,7 @@ class VisionDetailMonsterItem extends LoopScrollSmallItemGrid_1.LoopScrollSmallI
       0 < t.QualityId &&
         ((a =
           ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomItemIdArrayByMonsterId(
-            this.c6i,
+            this.u8i,
           )),
         (e = a[t.QualityId - 1]));
       var a = {

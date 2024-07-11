@@ -5,7 +5,7 @@ const EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem");
 class LogicTreeContainer {
   constructor() {
-    (this.BehaviorTree = void 0), (this.v$t = !1);
+    (this.BehaviorTree = void 0), (this.vYt = !1);
   }
   get Tree() {
     if (this.BehaviorTree) return this.BehaviorTree;
@@ -20,10 +20,10 @@ class LogicTreeContainer {
     this.RemoveBehaviorTree();
   }
   get IsBelongPlayer() {
-    return this.v$t;
+    return this.vYt;
   }
   SetUpBehaviorTree(e) {
-    (this.BehaviorTree = e) && (this.v$t = !0);
+    (this.BehaviorTree = e) && (this.vYt = !0);
   }
   RemoveBehaviorTree() {
     this.BehaviorTree &&
@@ -105,6 +105,12 @@ class LogicTreeContainer {
   }
   HasBehaviorTree() {
     return void 0 !== this.BehaviorTree;
+  }
+  CanShowGuideLine() {
+    return this.GetCurrentActiveChildQuestNode()?.ContainTag(4) ?? !1;
+  }
+  IsAlwaysShowGuideLine() {
+    return this.GetCurrentActiveChildQuestNode()?.ContainTag(5) ?? !1;
   }
 }
 exports.LogicTreeContainer = LogicTreeContainer;

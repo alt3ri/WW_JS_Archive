@@ -5,20 +5,20 @@ const UiNavigationGlobalData_1 = require("../UiNavigationGlobalData"),
   SpecialPanelHandleBase_1 = require("./SpecialPanelHandleBase");
 class VisionChooseMainPanelHandle extends SpecialPanelHandleBase_1.SpecialPanelHandleBase {
   constructor() {
-    super(...arguments), (this.lwo = void 0);
+    super(...arguments), (this.aBo = void 0);
   }
   OnGetSuitableNavigationListenerList(i) {
     return !i ||
       UiNavigationGlobalData_1.UiNavigationGlobalData
         .VisionReplaceViewFindDefault
       ? this.DefaultNavigationListener
-      : (this.lwo ||
-          ((this.lwo = [...this.DefaultNavigationListener]),
-          2 <= this.lwo.length &&
-            ((i = this.lwo[0]),
-            (this.lwo[0] = this.lwo[1]),
-            (this.lwo[1] = i))),
-        this.lwo);
+      : (this.aBo ||
+          ((this.aBo = [...this.DefaultNavigationListener]),
+          2 <= this.aBo.length &&
+            ((i = this.aBo[0]),
+            (this.aBo[0] = this.aBo[1]),
+            (this.aBo[1] = i))),
+        this.aBo);
   }
   OnNotifyFindResult(i) {
     i.IsInLoopingProcess() ||

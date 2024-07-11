@@ -22,12 +22,12 @@ class ActivitySubViewRoleGuide extends ActivitySubViewBase_1.ActivitySubViewBase
       (this.LNe = void 0),
       (this.DNe = void 0),
       (this.UNe = void 0),
-      (this.Dke = void 0),
+      (this.j2e = void 0),
       (this.ANe = void 0),
-      (this.Rke = () => {
+      (this.W2e = () => {
         return new ActivitySmallItemGrid_1.ActivitySmallItemGrid();
       }),
-      (this.Uke = () => {
+      (this.K2e = () => {
         var i = this.ActivityBaseData.ShowQuestId;
         2 === ModelManager_1.ModelManager.QuestNewModel.GetQuestState(i)
           ? UiManager_1.UiManager.OpenView("QuestView", i)
@@ -39,12 +39,12 @@ class ActivitySubViewRoleGuide extends ActivitySubViewBase_1.ActivitySubViewBase
                 i,
               ));
       }),
-      (this.Ake = () => {
+      (this.Q2e = () => {
         var i = this.ActivityBaseData.RoleQuestId;
         2 === ModelManager_1.ModelManager.QuestNewModel.GetQuestState(i) &&
           UiManager_1.UiManager.OpenView("QuestView", i);
       }),
-      (this.Pke = () => {
+      (this.X2e = () => {
         var i = [this.ActivityBaseData.RoleTrialId];
         RoleController_1.RoleController.OpenRoleMainView(1, 0, i);
       });
@@ -64,8 +64,8 @@ class ActivitySubViewRoleGuide extends ActivitySubViewBase_1.ActivitySubViewBase
       [10, UE.UIButtonComponent],
     ]),
       (this.BtnBindInfo = [
-        [8, this.Uke],
-        [10, this.Pke],
+        [8, this.K2e],
+        [10, this.X2e],
       ]);
   }
   OnSetData() {}
@@ -84,9 +84,9 @@ class ActivitySubViewRoleGuide extends ActivitySubViewBase_1.ActivitySubViewBase
         await this.UNe.CreateThenShowByActorAsync(i.GetOwner()),
         this.GetItem(4)),
       i =
-        ((this.Dke =
+        ((this.j2e =
           new ActivityRoleDescribeComponent_1.ActivityRoleDescribeComponent()),
-        await this.Dke.CreateThenShowByActorAsync(i.GetOwner()),
+        await this.j2e.CreateThenShowByActorAsync(i.GetOwner()),
         this.GetItem(3)),
       i =
         ((this.ANe = new ActivityFunctionalTypeA_1.ActivityFunctionalTypeA()),
@@ -99,24 +99,24 @@ class ActivitySubViewRoleGuide extends ActivitySubViewBase_1.ActivitySubViewBase
     var i = this.ActivityBaseData.LocalConfig,
       i =
         (this.LNe.SetTitleByText(this.ActivityBaseData.GetTitle()),
-        this.DNe.SetContentVisible(!StringUtils_1.StringUtils.IsEmpty(i?.Desc)),
-        i?.Desc && this.DNe.SetContentByTextId(i.Desc),
-        this.DNe.SetTitleVisible(
+        this.LNe.SetSubTitleVisible(
           !StringUtils_1.StringUtils.IsEmpty(i?.DescTheme),
         ),
-        i?.DescTheme && this.DNe.SetTitleByTextId(i.DescTheme),
+        i?.DescTheme && this.LNe.SetSubTitleByTextId(i.DescTheme),
+        this.DNe.SetContentVisible(!StringUtils_1.StringUtils.IsEmpty(i?.Desc)),
+        i?.Desc && this.DNe.SetContentByTextId(i.Desc),
         this.UNe.SetTitleByTextId("Activity_RoleGuideActivity_RewardDesc"),
-        this.UNe.InitGridLayout(this.Rke),
-        this.ANe.FunctionButton.BindCallback(this.Ake),
+        this.UNe.InitGridLayout(this.W2e),
+        this.ANe.FunctionButton.BindCallback(this.Q2e),
         MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
           "CollectActivity_Button_ahead",
         ));
     this.ANe.FunctionButton.SetText(i),
-      this.Dke.Update(this.ActivityBaseData.RoleId),
+      this.j2e.Update(this.ActivityBaseData.RoleId),
       this.OnRefreshView();
   }
   OnRefreshView() {
-    this.FNe(), this.xke(), this.jqe(), this._Oe();
+    this.FNe(), this.$2e(), this.jqe(), this._Oe();
   }
   OnTimer(i) {
     this.FNe();
@@ -125,7 +125,7 @@ class ActivitySubViewRoleGuide extends ActivitySubViewBase_1.ActivitySubViewBase
     var [i, t] = this.GetTimeVisibleAndRemainTime();
     this.LNe.SetTimeTextVisible(i), i && this.LNe.SetTimeTextByText(t);
   }
-  xke() {
+  $2e() {
     var i,
       t = this.ActivityBaseData?.ShowQuestId;
     t

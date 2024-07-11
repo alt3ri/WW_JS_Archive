@@ -43,7 +43,7 @@ let BaseUnifiedStateComponent =
         (this.CachedDirectionState =
           CharacterUnifiedStateTypes_1.ECharDirectionState.FaceDirection),
         (this.IsInFighting = !1),
-        (this.mnn = (e, t, i, a, n) => {
+        (this.Xrn = (e, t, i, a, n) => {
           switch (i) {
             case 0:
               this.SetPositionState(
@@ -123,13 +123,13 @@ let BaseUnifiedStateComponent =
     OnStart() {
       return (
         (this.ActorComponent = this.Entity.GetComponent(1)),
-        (this.TagComponent = this.Entity.GetComponent(185)),
+        (this.TagComponent = this.Entity.GetComponent(188)),
         (this.IsInGameInternal = !1),
         this.InitCharState(),
         EventSystem_1.EventSystem.AddWithTarget(
           this.Entity,
           EventDefine_1.EEventName.CharMovementModeChanged,
-          this.mnn,
+          this.Xrn,
         ),
         !0
       );
@@ -151,7 +151,7 @@ let BaseUnifiedStateComponent =
         EventSystem_1.EventSystem.RemoveWithTarget(
           this.Entity,
           EventDefine_1.EEventName.CharMovementModeChanged,
-          this.mnn,
+          this.Xrn,
         ),
         !0
       );
@@ -386,7 +386,7 @@ let BaseUnifiedStateComponent =
   (BaseUnifiedStateComponent.BaseNeedLoad = !0),
   (BaseUnifiedStateComponent = BaseUnifiedStateComponent_1 =
     __decorate(
-      [(0, RegisterComponent_1.RegisterComponent)(89)],
+      [(0, RegisterComponent_1.RegisterComponent)(91)],
       BaseUnifiedStateComponent,
     )),
   (exports.BaseUnifiedStateComponent = BaseUnifiedStateComponent);

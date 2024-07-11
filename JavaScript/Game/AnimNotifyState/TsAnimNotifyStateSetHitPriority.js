@@ -19,7 +19,7 @@ class TsAnimNotifyStateSetHitPriority extends UE.KuroAnimNotifyState {
       t instanceof TsBaseCharacter_1.default &&
       (t
         .GetEntityNoBlueprint()
-        .GetComponent(161)
+        .GetComponent(163)
         .ResetHitPriorityAndGoThrough(),
       !0)
     );

@@ -18,10 +18,10 @@ class ActivityRogueController extends ActivityControllerBase_1.ActivityControlle
     return !1;
   }
   OnOpenView(e) {
-    2 === this.o2e(e.Id) &&
+    2 === this.vFe(e.Id) &&
       ActivityRogueController.ActivityFunctionExecute(e.Id);
   }
-  o2e(e) {
+  vFe(e) {
     e =
       ConfigManager_1.ConfigManager.ActivityRogueConfig?.GetActivityUniversalConfig(
         e,
@@ -40,13 +40,13 @@ class ActivityRogueController extends ActivityControllerBase_1.ActivityControlle
   }
   OnCreateActivityData(e) {
     return (
-      (ActivityRogueController.ActivityId = e.Ekn),
+      (ActivityRogueController.ActivityId = e.J4n),
       new ActivityRogueData_1.ActivityRougeData()
     );
   }
   OnInit() {
     return (
-      ActivityRogueController.r2e(),
+      ActivityRogueController.MFe(),
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("Activity", 38, "初始化肉鸽活动"),
       !0
@@ -81,11 +81,11 @@ class ActivityRogueController extends ActivityControllerBase_1.ActivityControlle
           break;
         case 1: {
           let e = void 0;
-          o && 1 <= o.length && (e = Number(o[0])), this.n2e(e);
+          o && 1 <= o.length && (e = Number(o[0])), this.EFe(e);
           break;
         }
         case 2:
-          o.length < 1 || ((r = o[0]), (i = o.slice(1)), this.s2e(r, i));
+          o.length < 1 || ((r = o[0]), (i = o.slice(1)), this.SFe(r, i));
       }
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
@@ -103,21 +103,21 @@ class ActivityRogueController extends ActivityControllerBase_1.ActivityControlle
         );
     }
   }
-  static n2e(e) {
+  static EFe(e) {
     UiManager_1.UiManager.OpenView("QuestView", e);
   }
-  static s2e(e, t) {
+  static SFe(e, t) {
     var r = ActivityRogueController.OpenViewFuncMap.get(e);
     r ? r(t) : UiManager_1.UiManager.OpenView(e, t);
   }
-  static r2e() {
-    this.OpenViewFuncMap.set("WorldMapView", this.a2e),
-      this.OpenViewFuncMap.set("RoguelikeActivityView", this.h2e);
+  static MFe() {
+    this.OpenViewFuncMap.set("WorldMapView", this.yFe),
+      this.OpenViewFuncMap.set("RoguelikeActivityView", this.IFe);
   }
 }
 ((exports.ActivityRogueController = ActivityRogueController).ActivityId = 0),
   (ActivityRogueController.OpenViewFuncMap = new Map()),
-  (ActivityRogueController.a2e = (e) => {
+  (ActivityRogueController.yFe = (e) => {
     var t = e ? Number(e[0]) : void 0;
     if (
       void 0 !== t &&
@@ -129,7 +129,7 @@ class ActivityRogueController extends ActivityControllerBase_1.ActivityControlle
     t = { MarkId: e ? Number(e[0]) : void 0, MarkType: 0, OpenAreaId: 0 };
     WorldMapController_1.WorldMapController.OpenView(2, !1, t);
   }),
-  (ActivityRogueController.h2e = (e) => {
+  (ActivityRogueController.IFe = (e) => {
     RoguelikeController_1.RoguelikeController.OpenRoguelikeActivityView().then(
       void 0,
     );

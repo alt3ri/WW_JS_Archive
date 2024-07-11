@@ -11,13 +11,13 @@ const Log_1 = require("../../../Core/Common/Log"),
 class MapExploreToolModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
-      (this.BUi = new Map()),
-      (this.bUi = new Map()),
-      (this.qUi = new Map()),
-      (this.GUi = new Map()),
-      (this.NUi = !1),
-      (this.OUi = new Map()),
-      (this.kUi = (e) => {
+      (this.BAi = new Map()),
+      (this.bAi = new Map()),
+      (this.qAi = new Map()),
+      (this.GAi = new Map()),
+      (this.NAi = !1),
+      (this.OAi = new Map()),
+      (this.kAi = (e) => {
         switch (e.MarkType) {
           case 15:
             var o =
@@ -34,7 +34,7 @@ class MapExploreToolModel extends ModelBase_1.ModelBase {
             this.SetToolPlaceNum(1012, o, !0);
         }
       }),
-      (this.FUi = (e, o) => {
+      (this.FAi = (e, o) => {
         switch (e) {
           case 15:
             var t =
@@ -50,137 +50,141 @@ class MapExploreToolModel extends ModelBase_1.ModelBase {
   }
   OnInit() {
     return (
-      this.BUi.set(210015, 1010),
-      this.BUi.set(210016, 1011),
-      this.BUi.set(210017, 1012),
-      this.bUi.set(
+      this.BAi.set(210015, 1010),
+      this.BAi.set(210016, 1011),
+      this.BAi.set(210017, 1012),
+      this.bAi.set(
         1010,
         new Map([
           [
-            Protocol_1.Aki.Protocol.lkn.Proto_ErrPlayerNotInBigWorld,
+            Protocol_1.Aki.Protocol.O4n.Proto_ErrPlayerNotInBigWorld,
             "ExplorePositionError",
           ],
-          [Protocol_1.Aki.Protocol.lkn.Proto_ErrInFighting, "ExploreFighting"],
-          [Protocol_1.Aki.Protocol.lkn.Proto_ErrNotHostPlayer, "OnylHostUse"],
+          [Protocol_1.Aki.Protocol.O4n.Proto_ErrInFighting, "ExploreFighting"],
+          [Protocol_1.Aki.Protocol.O4n.Proto_ErrNotHostPlayer, "OnylHostUse"],
           [
-            Protocol_1.Aki.Protocol.lkn.Proto_ErrConsumeNotEnough,
+            Protocol_1.Aki.Protocol.O4n.Proto_ErrConsumeNotEnough,
             "ExploreTeleporterItemLack",
           ],
         ]),
       ),
-      this.bUi.set(
+      this.bAi.set(
         1011,
         new Map([
           [
-            Protocol_1.Aki.Protocol.lkn.Proto_ErrPlayerNotInBigWorld,
+            Protocol_1.Aki.Protocol.O4n.Proto_ErrPlayerNotInBigWorld,
             "ExplorePositionError",
           ],
-          [Protocol_1.Aki.Protocol.lkn.Proto_ErrInFighting, "ExploreFighting"],
-          [Protocol_1.Aki.Protocol.lkn.Proto_ErrNotHostPlayer, "OnylHostUse"],
+          [Protocol_1.Aki.Protocol.O4n.Proto_ErrInFighting, "ExploreFighting"],
+          [Protocol_1.Aki.Protocol.O4n.Proto_ErrNotHostPlayer, "OnylHostUse"],
           [
-            Protocol_1.Aki.Protocol.lkn.Proto_ErrNotHaveCountryAccess,
+            Protocol_1.Aki.Protocol.O4n.Proto_ErrNotHaveCountryAccess,
             "ExploreUnauthorized",
           ],
           [
-            Protocol_1.Aki.Protocol.lkn.Proto_ErrSkillIsEffect,
+            Protocol_1.Aki.Protocol.O4n.Proto_ErrSkillIsEffect,
             "ExploreActivating",
           ],
           [
-            Protocol_1.Aki.Protocol.lkn.Proto_ErrNoSoundBox,
+            Protocol_1.Aki.Protocol.O4n.Proto_ErrNoSoundBox,
+            "Exolore_ShengXiaNoDetect",
+          ],
+          [
+            Protocol_1.Aki.Protocol.O4n.Proto_SoundBoxExploreFull,
             "ExploreShengXiaCollectAll",
           ],
           [
-            Protocol_1.Aki.Protocol.lkn.Proto_ErrConsumeNotEnough,
+            Protocol_1.Aki.Protocol.O4n.Proto_ErrConsumeNotEnough,
             "ExploreShengXiaItemLack",
           ],
         ]),
       ),
-      this.bUi.set(
+      this.bAi.set(
         1012,
         new Map([
           [
-            Protocol_1.Aki.Protocol.lkn.Proto_ErrPlayerNotInBigWorld,
+            Protocol_1.Aki.Protocol.O4n.Proto_ErrPlayerNotInBigWorld,
             "ExplorePositionError",
           ],
-          [Protocol_1.Aki.Protocol.lkn.Proto_ErrInFighting, "ExploreFighting"],
-          [Protocol_1.Aki.Protocol.lkn.Proto_ErrNotHostPlayer, "OnylHostUse"],
+          [Protocol_1.Aki.Protocol.O4n.Proto_ErrInFighting, "ExploreFighting"],
+          [Protocol_1.Aki.Protocol.O4n.Proto_ErrNotHostPlayer, "OnylHostUse"],
           [
-            Protocol_1.Aki.Protocol.lkn.Proto_ErrNotHaveCountryAccess,
+            Protocol_1.Aki.Protocol.O4n.Proto_ErrNotHaveCountryAccess,
             "ExploreUnauthorized",
           ],
         ]),
       ),
-      this.qUi.set(
+      this.qAi.set(
         1011,
         new Set([
-          Protocol_1.Aki.Protocol.lkn.Sys,
-          Protocol_1.Aki.Protocol.lkn.Proto_ErrSkillIsEffect,
+          Protocol_1.Aki.Protocol.O4n.NRs,
+          Protocol_1.Aki.Protocol.O4n.Proto_ErrSkillIsEffect,
         ]),
       ),
-      this.qUi.set(
+      this.qAi.set(
         1012,
         new Set([
-          Protocol_1.Aki.Protocol.lkn.Sys,
-          Protocol_1.Aki.Protocol.lkn.Proto_ErrTreasureBoxAllActive,
+          Protocol_1.Aki.Protocol.O4n.NRs,
+          Protocol_1.Aki.Protocol.O4n.Proto_ErrTreasureBoxAllActive,
         ]),
       ),
-      this.qUi.set(1010, new Set([Protocol_1.Aki.Protocol.lkn.Sys])),
-      this.GUi.set(
+      this.qAi.set(1010, new Set([Protocol_1.Aki.Protocol.O4n.NRs])),
+      this.GAi.set(
         1011,
-        new Set([Protocol_1.Aki.Protocol.lkn.Proto_ExploreToolNotConfirm]),
+        new Set([Protocol_1.Aki.Protocol.O4n.Proto_ExploreToolNotConfirm]),
       ),
-      this.GUi.set(
+      this.GAi.set(
         1012,
         new Set([
-          Protocol_1.Aki.Protocol.lkn.Proto_ExploreToolNotConfirm,
-          Protocol_1.Aki.Protocol.lkn.Proto_ErrTreasureBoxAllActive,
+          Protocol_1.Aki.Protocol.O4n.Proto_ExploreToolNotConfirm,
+          Protocol_1.Aki.Protocol.O4n.Proto_ErrTreasureBoxAllActive,
         ]),
       ),
-      this.GUi.set(
+      this.GAi.set(
         1010,
-        new Set([Protocol_1.Aki.Protocol.lkn.Proto_ExploreToolNotConfirm]),
+        new Set([Protocol_1.Aki.Protocol.O4n.Proto_ExploreToolNotConfirm]),
       ),
-      (this.NUi = !1),
+      (this.NAi = !1),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.CreateMapMark,
-        this.kUi,
+        this.kAi,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.RemoveMapMark,
-        this.FUi,
+        this.FAi,
       ),
       !0
     );
   }
   OnClear() {
     return (
-      this.BUi.clear(),
-      this.bUi.clear(),
-      this.qUi.clear(),
-      this.OUi.clear(),
-      (this.NUi = !1),
+      this.BAi.clear(),
+      this.bAi.clear(),
+      this.qAi.clear(),
+      this.OAi.clear(),
+      (this.NAi = !1),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.CreateMapMark,
-        this.kUi,
+        this.kAi,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.RemoveMapMark,
-        this.FUi,
+        this.FAi,
       ),
       !0
     );
   }
   OnLeaveLevel() {
-    return !(this.NUi = !1);
+    return !(this.NAi = !1);
   }
   OnChangeMode() {
     return !0;
   }
   GetPhantomSkillIdBySkillId(e) {
-    return this.BUi.get(e);
+    return this.BAi.get(e);
   }
   GetRespTipsId(e, o) {
-    return this.bUi.get(e.PhantomSkillId)?.get(o.Kms);
+    return this.bAi.get(e.PhantomSkillId)?.get(o.hvs);
   }
   GetRespConfirmBoxId(e, o) {
     if (this.IsRespMeanCheckPass(e, o))
@@ -194,10 +198,10 @@ class MapExploreToolModel extends ModelBase_1.ModelBase {
       }
   }
   IsRespMeanSuccess(e, o) {
-    return this.qUi.get(e.PhantomSkillId)?.has(o.Kms) ?? !1;
+    return this.qAi.get(e.PhantomSkillId)?.has(o.hvs) ?? !1;
   }
   IsRespMeanCheckPass(e, o) {
-    return this.GUi.get(e.PhantomSkillId)?.has(o.Kms) ?? !1;
+    return this.GAi.get(e.PhantomSkillId)?.has(o.hvs) ?? !1;
   }
   SetCharExploreSkillBusy(e) {
     Log_1.Log.CheckInfo() &&
@@ -205,13 +209,13 @@ class MapExploreToolModel extends ModelBase_1.ModelBase {
         "Phantom",
         40,
         "[MapExploreTool] 设置CharExploreSkillBusy",
-        ["OldVal", this.NUi],
+        ["OldVal", this.NAi],
         ["NewVal", e],
       ),
-      (this.NUi = e);
+      (this.NAi = e);
   }
   GetCharExploreSkillBusy() {
-    return this.NUi ?? !1;
+    return this.NAi ?? !1;
   }
   GetToolPlaceLimit(e) {
     switch (e) {
@@ -229,10 +233,10 @@ class MapExploreToolModel extends ModelBase_1.ModelBase {
     return void 0 !== o && !!((e = this.GetToolPlaceNum(e)) && o <= e);
   }
   GetToolPlaceNum(e) {
-    return this.OUi.get(e);
+    return this.OAi.get(e);
   }
   SetToolPlaceNum(e, o, t) {
-    o !== this.OUi.get(e) &&
+    o !== this.OAi.get(e) &&
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Phantom",
@@ -241,7 +245,7 @@ class MapExploreToolModel extends ModelBase_1.ModelBase {
           ["PhantomSkillId", e],
           ["PlaceNum", o],
         ),
-      this.OUi.set(e, o),
+      this.OAi.set(e, o),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnMapExploreToolPlaceNumUpdated,
         e,

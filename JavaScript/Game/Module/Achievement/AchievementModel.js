@@ -20,8 +20,8 @@ class AchievementModel extends ModelBase_1.ModelBase {
       (this.CurrentFinishAchievementArray = new Array()),
       (this.CurrentCacheSearchData = void 0),
       (this.Mbe = new Map()),
-      (this.Sbe = new Map()),
-      (this.Ebe = new Array()),
+      (this.Ebe = new Map()),
+      (this.Sbe = new Array()),
       (this.ybe = new Map()),
       (this.Ibe = new Map()),
       (this.Tbe = new Map()),
@@ -37,7 +37,7 @@ class AchievementModel extends ModelBase_1.ModelBase {
       e = this.GetAchievementData(e.Id);
       t.push(e);
     }),
-      this.Sbe.set(e, t);
+      this.Ebe.set(e, t);
   }
   Abe(e) {
     var t =
@@ -52,11 +52,11 @@ class AchievementModel extends ModelBase_1.ModelBase {
       this.ybe.set(e, i);
   }
   Pbe() {
-    (this.Ebe = new Array()),
+    (this.Sbe = new Array()),
       ConfigManager_1.ConfigManager.AchievementConfig.GetAllAchievementCategory().forEach(
         (e) => {
           var t = new AchievementData_1.AchievementCategoryData(e.Id);
-          showFunctionList.includes(e.FunctionType) && this.Ebe.push(t);
+          showFunctionList.includes(e.FunctionType) && this.Sbe.push(t);
         },
       );
   }
@@ -94,10 +94,10 @@ class AchievementModel extends ModelBase_1.ModelBase {
       (this.Lbe = new Array()),
       (this.Dbe = new Array()),
       this.Ibe.clear(),
-      e.Nms.forEach((e) => {
-        this.GetAchievementGroupData(e.Oms.Ekn).Phrase(e.Oms),
-          e.kms.forEach((e) => {
-            var t = this.GetAchievementData(e.Ekn);
+      e.tvs.forEach((e) => {
+        this.GetAchievementGroupData(e.Zfs.J4n).Phrase(e.Zfs),
+          e.evs.forEach((e) => {
+            var t = this.GetAchievementData(e.J4n);
             t.Phrase(e),
               1 === t.GetFinishState()
                 ? this.xbe(t)
@@ -112,7 +112,7 @@ class AchievementModel extends ModelBase_1.ModelBase {
       );
   }
   OnAchievementProgressNotify(e) {
-    var t = this.GetAchievementData(e.Ekn),
+    var t = this.GetAchievementData(e.J4n),
       i = t.GetFinishState(),
       e = (t.Phrase(e), t.GetFinishState());
     e !== i &&
@@ -144,9 +144,9 @@ class AchievementModel extends ModelBase_1.ModelBase {
       );
   }
   OnAchievementGroupProgressNotify(e) {
-    var t = this.GetAchievementGroupData(e.Oms.Ekn),
+    var t = this.GetAchievementGroupData(e.Zfs.J4n),
       i = t.GetFinishState(),
-      e = (t.Phrase(e.Oms), t.GetFinishState());
+      e = (t.Phrase(e.Zfs), t.GetFinishState());
     e !== i &&
       (EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.RefreshAchievementRedPoint,
@@ -165,8 +165,8 @@ class AchievementModel extends ModelBase_1.ModelBase {
       );
   }
   GetGroupAchievements(e, t = !0) {
-    let i = this.Sbe.get(e);
-    if ((i || (this.Ube(e), (i = this.Sbe.get(e))), !t)) return i;
+    let i = this.Ebe.get(e);
+    if ((i || (this.Ube(e), (i = this.Ebe.get(e))), !t)) return i;
     var r = new Array();
     for (let e = 0; e < i.length; e++)
       i[e].GetShowState()
@@ -215,7 +215,7 @@ class AchievementModel extends ModelBase_1.ModelBase {
     return this.Ibe.get(t);
   }
   GetAchievementCategoryArray() {
-    return 0 === this.Ebe.length && this.Pbe(), this.Ebe;
+    return 0 === this.Sbe.length && this.Pbe(), this.Sbe;
   }
   GetCategory(t) {
     var i = this.GetAchievementCategoryArray();
@@ -298,8 +298,26 @@ class AchievementModel extends ModelBase_1.ModelBase {
     return t;
   }
   GetFinishedAchievementNum() {
-    var e = 0;
-    return (e += this.Dbe.length) + this.Lbe.length;
+    let t = 0;
+    return (
+      this.Dbe.forEach((e) => {
+        (e = this.GetAchievementGroupData(e.GetGroupId())),
+          (e =
+            ConfigManager_1.ConfigManager.AchievementConfig.GetCategoryFunctionType(
+              e.GetCategory(),
+            ));
+        showFunctionList.includes(e) && t++;
+      }),
+      this.Lbe.forEach((e) => {
+        (e = this.GetAchievementGroupData(e.GetGroupId())),
+          (e =
+            ConfigManager_1.ConfigManager.AchievementConfig.GetCategoryFunctionType(
+              e.GetCategory(),
+            ));
+        showFunctionList.includes(e) && t++;
+      }),
+      t
+    );
   }
   GetAchievementAllStar() {
     let t = 0;
@@ -311,15 +329,25 @@ class AchievementModel extends ModelBase_1.ModelBase {
     );
   }
   GetAchievementFinishedStar() {
-    let t = 0;
+    let i = 0;
     return (
       this.Dbe.forEach((e) => {
-        t += e.GetAchievementConfigStar();
+        var t = this.GetAchievementGroupData(e.GetGroupId()),
+          t =
+            ConfigManager_1.ConfigManager.AchievementConfig.GetCategoryFunctionType(
+              t.GetCategory(),
+            );
+        showFunctionList.includes(t) && (i += e.GetAchievementConfigStar());
       }),
       this.Lbe.forEach((e) => {
-        t += e.GetAchievementConfigStar();
+        var t = this.GetAchievementGroupData(e.GetGroupId()),
+          t =
+            ConfigManager_1.ConfigManager.AchievementConfig.GetCategoryFunctionType(
+              t.GetCategory(),
+            );
+        showFunctionList.includes(t) && (i += e.GetAchievementConfigStar());
       }),
-      t
+      i
     );
   }
   RefreshSearchResult() {

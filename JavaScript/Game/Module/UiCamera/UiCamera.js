@@ -10,9 +10,9 @@ class UiCamera {
   constructor() {
     (this.CameraActor = void 0),
       (this.CineCameraComponent = void 0),
-      (this.zDo = new Map()),
-      (this.ZDo = new Stack_1.Stack()),
-      (this.eRo = !1);
+      (this.$Ro = new Map()),
+      (this.YRo = new Stack_1.Stack()),
+      (this.JRo = !1);
   }
   Initialize() {
     var e = CameraController_1.CameraController.WidgetCamera;
@@ -54,7 +54,7 @@ class UiCamera {
   }
   Destroy(e = 0, t = 0, r = 0) {
     this.Exit(e, t, r),
-      this.tRo(),
+      this.zRo(),
       (this.CameraActor = void 0),
       (this.CineCameraComponent = void 0);
   }
@@ -66,7 +66,7 @@ class UiCamera {
     this.CameraActor?.IsValid() && this.CameraActor.K2_SetActorRotation(e, !1);
   }
   Enter(e = 0, t = 0, r = 0) {
-    if (this.eRo)
+    if (this.JRo)
       CameraController_1.CameraController.EnterCameraMode(2, e, t, r);
     else {
       Log_1.Log.CheckInfo() &&
@@ -78,13 +78,13 @@ class UiCamera {
           ["blendFunction", t],
           ["blendExp", r],
         );
-      for (const i of this.zDo.values()) i.Activate();
+      for (const i of this.$Ro.values()) i.Activate();
       CameraController_1.CameraController.EnterCameraMode(2, e, t, r),
-        (this.eRo = !0);
+        (this.JRo = !0);
     }
   }
   Exit(e = 0, t = 0, r = 0) {
-    if (this.eRo) {
+    if (this.JRo) {
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "UiCamera",
@@ -95,8 +95,8 @@ class UiCamera {
           ["blendExp", r],
         ),
         CameraController_1.CameraController.ExitCameraMode(2, e, t, r);
-      for (const i of this.zDo.values()) i.Deactivate();
-      this.ClearStructure(), (this.eRo = !1);
+      for (const i of this.$Ro.values()) i.Deactivate();
+      this.ClearStructure(), (this.JRo = !1);
     } else CameraController_1.CameraController.ExitCameraMode(2, e, t, r);
   }
   PushStructure(e) {
@@ -109,50 +109,50 @@ class UiCamera {
             "PushStructure:",
             [
               "this.UiCameraStructureStack.Peek()?.constructor.name",
-              this.ZDo.Peek()?.constructor.name,
+              this.YRo.Peek()?.constructor.name,
             ],
             ["uiCameraStructureClass.name", e.name],
           ),
-        this.ZDo.Peek()?.constructor.name === e.name
+        this.YRo.Peek()?.constructor.name === e.name
           ? (Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "UiCamera",
                 46,
                 "PushStructure时，已经有相同的UiCameraStructure，直接返回此UiCameraStructure:",
-                ["Name", this.ZDo.Peek()?.constructor.name],
+                ["Name", this.YRo.Peek()?.constructor.name],
               ),
-            this.ZDo.Peek())
-          : ((e = new e()).Initialize(this), e.Activate(), this.ZDo.Push(e), e)
+            this.YRo.Peek())
+          : ((e = new e()).Initialize(this), e.Activate(), this.YRo.Push(e), e)
       );
   }
   PopStructure() {
-    this.ZDo.Pop().Destroy(), this.ZDo.Peek()?.Activate();
+    this.YRo.Pop().Destroy(), this.YRo.Peek()?.Activate();
   }
   GetStructure() {
-    return this.ZDo.Peek();
+    return this.YRo.Peek();
   }
   ClearStructure() {
-    for (const e of this.ZDo) e.Destroy();
-    this.ZDo.Clear();
+    for (const e of this.YRo) e.Destroy();
+    this.YRo.Clear();
   }
   AddUiCameraComponent(e, t = !0) {
-    let r = this.zDo.get(e);
+    let r = this.$Ro.get(e);
     return (
-      r || ((r = new e()).Initialize(this), this.zDo.set(e, r)),
-      this.eRo && t && r.Activate(),
+      r || ((r = new e()).Initialize(this), this.$Ro.set(e, r)),
+      this.JRo && t && r.Activate(),
       r
     );
   }
   DestroyUiCameraComponent(e) {
-    var t = this.zDo.get(e);
-    t && (t.Destroy(), this.zDo.delete(e));
+    var t = this.$Ro.get(e);
+    t && (t.Destroy(), this.$Ro.delete(e));
   }
-  tRo() {
-    for (const e of this.zDo.values()) e.Destroy();
-    this.zDo.clear();
+  zRo() {
+    for (const e of this.$Ro.values()) e.Destroy();
+    this.$Ro.clear();
   }
   GetUiCameraComponent(e) {
-    return this.zDo.get(e);
+    return this.$Ro.get(e);
   }
   GetCameraActor() {
     return this.CameraActor;
@@ -161,7 +161,7 @@ class UiCamera {
     return this.CineCameraComponent;
   }
   GetIsEntered() {
-    return this.eRo;
+    return this.JRo;
   }
 }
 exports.UiCamera = UiCamera;

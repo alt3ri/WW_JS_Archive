@@ -5,8 +5,8 @@ const ConfigManager_1 = require("../../../Manager/ConfigManager");
 class PhantomBattleInstance {
   constructor(t) {
     (this.xe = 0),
-      (this.HNi = void 0),
-      (this.oVi = void 0),
+      (this.HOi = void 0),
+      (this.i6i = void 0),
       (this.PhantomId = t.MonsterId),
       (this.PhantomItem = t),
       (this.PhantomSkill =
@@ -21,19 +21,19 @@ class PhantomBattleInstance {
     return this.xe;
   }
   set PhantomItem(t) {
-    this.HNi = t;
+    this.HOi = t;
   }
   get PhantomItem() {
-    return this.HNi;
+    return this.HOi;
   }
   set PhantomSkill(t) {
-    this.oVi = t;
+    this.i6i = t;
   }
   get PhantomSkill() {
-    return this.oVi;
+    return this.i6i;
   }
   GetPhantomSkillId() {
-    return this.oVi[0].Id;
+    return this.i6i[0].Id;
   }
   GetPhantomSkillInfoByLevel() {
     return 0 < this.PhantomSkill.length ? this.PhantomSkill[0] : void 0;

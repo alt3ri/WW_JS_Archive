@@ -9,7 +9,7 @@ const UE = require("ue"),
   VisionFetterSuitItem_1 = require("./VisionFetterSuitItem");
 class VisionEquipmentDropDownItem extends DropDownItemBase_1.DropDownItemBase {
   constructor() {
-    super(...arguments), (this.PPt = void 0);
+    super(...arguments), (this.bxt = void 0);
   }
   OnRegisterComponent() {
     (this.ComponentRegisterInfos = [
@@ -24,10 +24,10 @@ class VisionEquipmentDropDownItem extends DropDownItemBase_1.DropDownItemBase {
     return this.GetExtendToggle(0);
   }
   OnShowDropDownItemBase(e) {
-    (this.PPt = new VisionFetterSuitItem_1.VisionFetterSuitItem(
+    (this.bxt = new VisionFetterSuitItem_1.VisionFetterSuitItem(
       this.GetItem(2),
     )),
-      this.PPt.Init();
+      this.bxt.Init();
     var t = e;
     let i = [],
       o = "";
@@ -58,10 +58,10 @@ class VisionEquipmentDropDownItem extends DropDownItemBase_1.DropDownItemBase {
     e = t
       ? ConfigManager_1.ConfigManager.PhantomBattleConfig.GetFetterGroupById(t)
       : void 0;
-    this.PPt.Update(e), this.PPt.SetActive(!0);
+    this.bxt.Update(e), this.bxt.SetActive(!0);
   }
   OnBeforeDestroy() {
-    this.PPt?.Destroy();
+    this.bxt?.Destroy();
   }
 }
 exports.VisionEquipmentDropDownItem = VisionEquipmentDropDownItem;

@@ -25,7 +25,7 @@ class NpcPerceptionReactionUtil {
         (o.Z = 0),
         o.Normalize(),
         Rotator_1.Rotator.Create()),
-      r = (o.ToOrientationRotator(i), e.GetComponent(36));
+      r = (o.ToOrientationRotator(i), e.GetComponent(37));
     r
       ? r.SmoothCharacterRotation(i, TURN_SPEED, Time_1.Time.DeltaTimeSeconds)
       : t.SetActorRotation(
@@ -35,7 +35,7 @@ class NpcPerceptionReactionUtil {
   }
   static ShowHeadDialog(e, t, r) {
     t < MathUtils_1.MathUtils.GetRandomFloatNumber(0, BUBBLE_RANDOM_MAX) ||
-      ((t = e.GetComponent(70)) &&
+      ((t = e.GetComponent(72)) &&
         (e = ConfigManager_1.ConfigManager.FlowConfig.GetRandomFlow(
           r.FlowListName,
           r.FlowId,

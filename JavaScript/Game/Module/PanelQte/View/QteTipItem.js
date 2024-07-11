@@ -6,7 +6,7 @@ const UE = require("ue"),
   LguiUtil_1 = require("../../Util/LguiUtil");
 class QteTipItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
-    super(...arguments), (this.WNi = "");
+    super(...arguments), (this.WOi = "");
   }
   Init(e) {
     this.CreateThenShowByResourceIdAsync("UiItem_QteTips", e);
@@ -15,10 +15,10 @@ class QteTipItem extends UiPanelBase_1.UiPanelBase {
     this.ComponentRegisterInfos = [[0, UE.UIText]];
   }
   OnStart() {
-    this.WNi && this.Refresh(this.WNi);
+    this.WOi && this.Refresh(this.WOi);
   }
   Refresh(e) {
-    (this.WNi = e),
+    (this.WOi = e),
       this.InAsyncLoading() ||
         LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(0), e);
   }

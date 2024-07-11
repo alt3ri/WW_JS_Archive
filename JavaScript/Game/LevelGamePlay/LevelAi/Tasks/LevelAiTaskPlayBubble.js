@@ -6,17 +6,14 @@ const CharacterFlowComponent_1 = require("../../../NewWorld/Character/Common/Com
   LevelAiTask_1 = require("../LevelAiTask");
 class LevelAiTaskPlayBubble extends LevelAiTask_1.LevelAiTask {
   ExecuteTask() {
-    var e = this.Params;
-    if (!e) return 1;
-    const o = e.EntityId;
-    e = this.BTe(o, e.Flow);
-    return (
-      (e.Callback = () => {
-        DynamicFlowController_1.DynamicFlowController.RemoveDynamicFlow(o);
-      }),
-      DynamicFlowController_1.DynamicFlowController.AddDynamicFlow(e),
-      0
-    );
+    var e,
+      o = this.Params;
+    return o
+      ? ((e = o.EntityId),
+        (e = this.BTe(e, o.Flow)),
+        DynamicFlowController_1.DynamicFlowController.AddDynamicFlow(e),
+        0)
+      : 1;
   }
   BTe(e, o) {
     var r = new DynamicFlowController_1.CharacterDynamicFlowData(),

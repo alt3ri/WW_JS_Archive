@@ -1,10 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.NpcPerformSystemUiState = void 0);
-const UE = require("ue"),
-  Log_1 = require("../../../../../Core/Common/Log"),
+const Log_1 = require("../../../../../Core/Common/Log"),
   Time_1 = require("../../../../../Core/Common/Time"),
-  ResourceSystem_1 = require("../../../../../Core/Resource/ResourceSystem"),
+  CommonParamById_1 = require("../../../../../Core/Define/ConfigCommon/CommonParamById"),
   StateBase_1 = require("../../../../../Core/Utils/StateMachine/StateBase"),
   StringUtils_1 = require("../../../../../Core/Utils/StringUtils"),
   IComponent_1 = require("../../../../../UniverseEditor/Interface/IComponent"),
@@ -18,164 +17,190 @@ const UE = require("ue"),
 class NpcPerformSystemUiState extends StateBase_1.StateBase {
   constructor() {
     super(...arguments),
-      (this.ser = void 0),
-      (this.Wer = IComponent_1.ENpcUiInteractType.AntiqueShop),
-      (this.Ker = void 0),
-      (this.Qer = []),
-      (this.mWo = !1),
-      (this.dWo = void 0),
-      (this.gvo = 0),
-      (this.Xer = -0),
-      (this.$er = -0),
-      (this.Yer = -0),
-      (this.Jer = -0),
+      (this.Htr = IComponent_1.ENpcUiInteractType.AntiqueShop),
+      (this.jtr = void 0),
+      (this.Wtr = []),
+      (this._Ko = !1),
+      (this.uKo = void 0),
+      (this.mMo = 0),
+      (this.Ktr = -0),
+      (this.Qtr = -0),
+      (this.Xtr = -0),
+      (this.$tr = -0),
       (this.ConfigId = 0),
-      (this.zer = ""),
-      (this.Zer = void 0),
-      (this.etr = void 0),
-      (this.ttr = void 0),
-      (this.itr = void 0),
-      (this.otr = ""),
-      (this.rtr = void 0),
-      (this.ntr = ""),
+      (this.Ytr = ""),
+      (this.Jtr = void 0),
+      (this.ztr = void 0),
+      (this.Ztr = void 0),
+      (this.eir = void 0),
+      (this.tir = ""),
+      (this.iir = void 0),
+      (this.oir = ""),
       (this.ShopSuccessMontage = void 0),
-      (this.str = ""),
-      (this.VDn = ""),
-      (this.Wqn = !1),
-      (this.atr = new Map()),
-      (this.UKe = (t) => {
-        this.dWo
-          ? this.dWo === t &&
-            ((this.mWo = !0),
+      (this.rir = ""),
+      (this.$Un = ""),
+      (this.$2n = !1),
+      (this.eCa = void 0),
+      (this.tCa = void 0),
+      (this.W7s = 0),
+      (this.K7s = 0),
+      (this.nir = new Map()),
+      (this.FQe = (t) => {
+        this.uKo
+          ? this.uKo === t &&
+            ((this._Ko = !0),
             EventSystem_1.EventSystem.Remove(
               EventDefine_1.EEventName.OpenView,
-              this.UKe,
+              this.FQe,
             ),
-            this.itr?.IsValid()) &&
-            (this.Wer === IComponent_1.ENpcUiInteractType.AntiqueShop ||
-            this.Wer === IComponent_1.ENpcUiInteractType.ChengXiaoShanShop
-              ? this.ser.Play(this.itr)
-              : this.ser.PlayOnce(this.itr))
+            this.eir?.IsValid()) &&
+            (this.Htr === IComponent_1.ENpcUiInteractType.AntiqueShop ||
+            this.Htr === IComponent_1.ENpcUiInteractType.ChengXiaoShanShop
+              ? this.eCa.Play(this.eir)
+              : this.eCa.PlayOnce(this.eir))
           : EventSystem_1.EventSystem.Remove(
               EventDefine_1.EEventName.OpenView,
-              this.UKe,
+              this.FQe,
             );
       }),
       (this.$Ge = (t) => {
-        this.dWo
-          ? this.dWo === t && (this.htr(), this.StateMachine.Switch(1))
+        this.uKo
+          ? this.uKo === t && (this.sir(), this.StateMachine.Switch(1))
           : this.kre();
       }),
-      (this.ltr = (t) => {
-        this.dWo &&
-          ((this.itr = t),
+      (this.air = (t, i) => {
+        this.uKo &&
+          ((this.eir = t),
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "NPC",
               8,
               "[NpcPerformSystemUiState]当打开界面时,播放进入界面的动作 EnterMontage",
               ["EntityId", this.Owner.Id],
-              ["ViewName", this.dWo],
+              ["ViewName", this.uKo],
             ),
-          this.mWo) &&
-          this.ser.Play(this.itr);
+          this._Ko) &&
+          this.eCa.Play(this.eir);
       }),
-      (this._tr = (t) => {
-        this.dWo && (this.rtr = t);
+      (this.hir = (t, i) => {
+        this.uKo && (this.iir = t);
       }),
-      (this.utr = (t) => {
-        this.dWo && (this.ShopSuccessMontage = t);
+      (this.lir = (t, i) => {
+        this.uKo && (this.ShopSuccessMontage = t);
       }),
-      (this.xmi = (t, e) => {
-        this.dWo &&
-          t === this.gvo &&
-          (Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info(
-              "NPC",
-              8,
-              "[NpcPerformSystemUiState]当购买成功时播放提交成功动作 ShopSuccessMontage",
-              ["EntityId", this.Owner.Id],
-            ),
-          this.ctr(this.etr, this.dWo, !0),
-          this.mtr());
+      (this.xdi = (t, i) => {
+        this.uKo &&
+          t === this.mMo &&
+          ((t = ModelManager_1.ModelManager.PlotModel).IsInPlot &&
+          "LevelD" === t.PlotConfig.PlotLevel
+            ? Log_1.Log.CheckInfo() &&
+              Log_1.Log.Info(
+                "NPC",
+                8,
+                "[NpcPerformSystemUiState]当前正在播放D级剧情，不会再播放购买成功的D级剧情",
+                ["EntityId", this.Owner.Id],
+              )
+            : (t = Time_1.Time.WorldTime) < this.K7s
+              ? Log_1.Log.CheckInfo() &&
+                Log_1.Log.Info(
+                  "NPC",
+                  8,
+                  "[NpcPerformSystemUiState]处于冷却间隔中，无法再次播放购买成功D级剧情",
+                  ["worldTime", t],
+                  ["CanPlayBuySuccessTimeStamp", this.K7s],
+                  ["BuySuccessNpcDialogueTimeInterval", this.W7s],
+                )
+              : ((this.K7s = t + this.W7s),
+                Log_1.Log.CheckInfo() &&
+                  Log_1.Log.Info(
+                    "NPC",
+                    8,
+                    "[NpcPerformSystemUiState]当购买成功时播放提交成功动作 ShopSuccessMontage",
+                    ["EntityId", this.Owner.Id],
+                    ["worldTime", t],
+                    ["BuySuccessNpcDialogueTimeInterval", this.W7s],
+                    ["CanPlayBuySuccessTimeStamp", this.K7s],
+                  ),
+                this._ir(this.ztr, this.uKo, !0),
+                this.uir()));
       }),
-      (this.dtr = () => {
-        this.dWo &&
+      (this.cir = () => {
+        this.uKo &&
           (Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "NPC",
               8,
               "[CollectionItemDisplay]当提交物品成功时,播放提交成功剧情 EnterFlow,播放提交成功动作 ShopSuccessMontage",
               ["EntityId", this.Owner.Id],
-              ["FlowId", this.Zer?.FlowId],
+              ["FlowId", this.Jtr?.FlowId],
             ),
-          this.ctr(this.etr, this.dWo, !0),
-          this.mtr());
+          this._ir(this.ztr, this.uKo, !0),
+          this.uir());
       }),
-      (this.Ctr = () => {
-        this.dWo &&
+      (this.mir = () => {
+        this.uKo &&
           (Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "NPC",
               8,
               "[CollectionItemDisplay]当提交物品失败时,播放提交物品失败剧情 ShopFailedFlow",
               ["EntityId", this.Owner.Id],
-              ["FlowId", this.ttr?.FlowId],
+              ["FlowId", this.Ztr?.FlowId],
             ),
-          this.ctr(this.ttr, this.dWo, !0));
+          this._ir(this.Ztr, this.uKo, !0));
       }),
-      (this.YBi = () => {
-        this.Wer !== IComponent_1.ENpcUiInteractType.AntiqueShop &&
-        this.Wer !== IComponent_1.ENpcUiInteractType.ChengXiaoShanShop
+      (this.Ybi = () => {
+        this.Htr !== IComponent_1.ENpcUiInteractType.AntiqueShop &&
+        this.Htr !== IComponent_1.ENpcUiInteractType.ChengXiaoShanShop
           ? Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "NPC",
               8,
               "[CollectionItemDisplay]当提交物品升级成功时,Npc类型不是ChengXiaoShanShop或AntiqueShop,播放失败",
-              ["NpcUiInteractType", this.Wer],
+              ["NpcUiInteractType", this.Htr],
             )
-          : StringUtils_1.StringUtils.IsEmpty(this.str) || "Empty" === this.otr
+          : StringUtils_1.StringUtils.IsEmpty(this.rir) || "Empty" === this.tir
             ? (Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info(
                   "NPC",
                   8,
                   "[CollectionItemDisplay]当提交物品升级成功时,UpgradeSequencePath为空或者StandByMontagePath为“Empth”,播放失败",
-                  ["NpcUiInteractType", this.Wer],
+                  ["NpcUiInteractType", this.Htr],
                 ),
               EventSystem_1.EventSystem.Emit(
                 EventDefine_1.EEventName.OnAntiqueShopUpgradeSequencePlayFail,
               ))
-            : (this.Ker ||
-                (this.Ker = new NpcPerformSequence_1.NpcPerformSequence()),
+            : (this.jtr ||
+                (this.jtr = new NpcPerformSequence_1.NpcPerformSequence()),
               Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info(
                   "NPC",
                   8,
                   "[CollectionItemDisplay]当提交物品升级成功时,开始加载对应Sequence",
-                  ["NpcUiInteractType", this.Wer],
-                  ["UpgradeSequencePath", this.str],
+                  ["NpcUiInteractType", this.Htr],
+                  ["UpgradeSequencePath", this.rir],
                 ),
-              this.Ker.Load(this.str, () => {
+              this.jtr.Load(this.rir, () => {
                 Log_1.Log.CheckInfo() &&
                   Log_1.Log.Info(
                     "NPC",
                     8,
                     "[CollectionItemDisplay]当提交物品升级成功时,开始播放对应Sequence",
-                    ["NpcUiInteractType", this.Wer],
-                    ["FinishDeliverySequence", this.str],
-                    ["ShowNpcWhilePlayingSequence", this.Wqn],
+                    ["NpcUiInteractType", this.Htr],
+                    ["FinishDeliverySequence", this.rir],
+                    ["ShowNpcWhilePlayingSequence", this.$2n],
                   ),
-                  this.Wqn || this.gtr(),
-                  this.Ker.Play(() => {
+                  this.$2n || this.Cir(),
+                  this.jtr.Play(() => {
                     Log_1.Log.CheckInfo() &&
                       Log_1.Log.Info(
                         "NPC",
                         8,
                         "[CollectionItemDisplay]当提交物品升级成功时,Sequence播放完成",
-                        ["NpcUiInteractType", this.Wer],
-                        ["FinishDeliverySequence", this.str],
+                        ["NpcUiInteractType", this.Htr],
+                        ["FinishDeliverySequence", this.rir],
                       ),
-                      this.ser?.PlayFromLoop(this.itr),
+                      this.eCa?.PlayFromLoop(this.eir),
                       this.SetNpcAndChildEnable(),
                       EventSystem_1.EventSystem.Emit(
                         EventDefine_1.EEventName
@@ -184,66 +209,66 @@ class NpcPerformSystemUiState extends StateBase_1.StateBase {
                   });
               }));
       }),
-      (this.HDn = () => {
+      (this.YUn = () => {
         if (
-          this.Wer !== IComponent_1.ENpcUiInteractType.AntiqueShop &&
-          this.Wer !== IComponent_1.ENpcUiInteractType.ChengXiaoShanShop
+          this.Htr !== IComponent_1.ENpcUiInteractType.AntiqueShop &&
+          this.Htr !== IComponent_1.ENpcUiInteractType.ChengXiaoShanShop
         )
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "NPC",
               8,
               "[CollectionItemDisplay]当提交物品等级升至满级时,Npc类型不是ChengXiaoShanShop,播放失败",
-              ["NpcUiInteractType", this.Wer],
+              ["NpcUiInteractType", this.Htr],
             );
         else {
-          let t = this.str;
-          this.Wer === IComponent_1.ENpcUiInteractType.ChengXiaoShanShop &&
-            (t = this.VDn),
-            StringUtils_1.StringUtils.IsEmpty(t) || "Empty" === this.otr
+          let t = this.rir;
+          this.Htr === IComponent_1.ENpcUiInteractType.ChengXiaoShanShop &&
+            (t = this.$Un),
+            StringUtils_1.StringUtils.IsEmpty(t) || "Empty" === this.tir
               ? (Log_1.Log.CheckInfo() &&
                   Log_1.Log.Info(
                     "NPC",
                     8,
                     "[CollectionItemDisplay]当提交物品等级升至满级时,FinishDeliverySequence为空或者StandByMontagePath为“Empth”,播放失败",
-                    ["NpcUiInteractType", this.Wer],
+                    ["NpcUiInteractType", this.Htr],
                     ["FinishDeliverySequence", t],
-                    ["StandByMontagePath", this.otr],
+                    ["StandByMontagePath", this.tir],
                   ),
                 EventSystem_1.EventSystem.Emit(
                   EventDefine_1.EEventName.OnAntiqueShopUpgradeSequencePlayFail,
                 ))
-              : (this.Ker ||
-                  (this.Ker = new NpcPerformSequence_1.NpcPerformSequence()),
+              : (this.jtr ||
+                  (this.jtr = new NpcPerformSequence_1.NpcPerformSequence()),
                 Log_1.Log.CheckInfo() &&
                   Log_1.Log.Info(
                     "NPC",
                     8,
                     "[CollectionItemDisplay]当提交物品等级升至满级时,开始加载对应Sequence",
-                    ["NpcUiInteractType", this.Wer],
+                    ["NpcUiInteractType", this.Htr],
                     ["FinishDeliverySequence", t],
-                    ["ShowNpcWhilePlayingSequence", this.Wqn],
+                    ["ShowNpcWhilePlayingSequence", this.$2n],
                   ),
-                this.Ker.Load(t, () => {
-                  this.Wqn || this.gtr(),
+                this.jtr.Load(t, () => {
+                  this.$2n || this.Cir(),
                     Log_1.Log.CheckInfo() &&
                       Log_1.Log.Info(
                         "NPC",
                         8,
                         "[CollectionItemDisplay]当提交物品等级升至满级时,开始播放对应Sequence",
-                        ["NpcUiInteractType", this.Wer],
+                        ["NpcUiInteractType", this.Htr],
                         ["FinishDeliverySequence", t],
                       ),
-                    this.Ker.Play(() => {
+                    this.jtr.Play(() => {
                       Log_1.Log.CheckInfo() &&
                         Log_1.Log.Info(
                           "NPC",
                           8,
                           "[CollectionItemDisplay]当提交物品等级升至满级时,Sequence播放完成",
-                          ["NpcUiInteractType", this.Wer],
+                          ["NpcUiInteractType", this.Htr],
                           ["FinishDeliverySequence", t],
                         ),
-                        this.ser?.PlayFromLoop(this.itr),
+                        this.eCa?.PlayFromLoop(this.eir),
                         this.SetNpcAndChildEnable(),
                         EventSystem_1.EventSystem.Emit(
                           EventDefine_1.EEventName
@@ -254,162 +279,153 @@ class NpcPerformSystemUiState extends StateBase_1.StateBase {
         }
       });
   }
-  get NpcMontageController() {
-    return this.ser;
-  }
-  set NpcMontageController(t) {
-    this.ser = t;
-  }
   get SystemUiViewName() {
-    return this.dWo;
+    return this.uKo;
   }
   set SystemUiViewName(t) {
-    this.dWo = t;
+    this.uKo = t;
   }
   get BoardId() {
-    return this.gvo;
+    return this.mMo;
   }
   set BoardId(t) {
-    this.gvo = t;
+    this.mMo = t;
   }
   OnCreate(t) {
     if (t?.ShowOnUiInteract) {
-      switch (((this.Wer = t.ShowOnUiInteract.Type), t.ShowOnUiInteract.Type)) {
+      switch (((this.Htr = t.ShowOnUiInteract.Type), t.ShowOnUiInteract.Type)) {
         case IComponent_1.ENpcUiInteractType.Shop:
-          (this.zer = t.ShowOnUiInteract.EnterMontage),
-            (this.Zer = t.ShowOnUiInteract.EnterFlow),
-            (this.etr = t.ShowOnUiInteract.ShopSuccessFlow),
-            (this.ttr = t.ShowOnUiInteract.ShopFailedFlow),
-            (this.otr = t.ShowOnUiInteract.StandByMontage),
-            (this.ntr = t.ShowOnUiInteract.ShopSuccessMontage),
-            (this.Wqn = !1);
+          (this.Ytr = t.ShowOnUiInteract.EnterMontage),
+            (this.Jtr = t.ShowOnUiInteract.EnterFlow),
+            (this.ztr = t.ShowOnUiInteract.ShopSuccessFlow),
+            (this.Ztr = t.ShowOnUiInteract.ShopFailedFlow),
+            (this.tir = t.ShowOnUiInteract.StandByMontage),
+            (this.oir = t.ShowOnUiInteract.ShopSuccessMontage),
+            (this.$2n = !1);
           break;
         case IComponent_1.ENpcUiInteractType.AntiqueShop:
-          (this.zer = t.ShowOnUiInteract.EnterMontage),
-            (this.Zer = t.ShowOnUiInteract.EnterFlow),
-            (this.etr = t.ShowOnUiInteract.ShopSuccessFlow),
-            (this.ttr = t.ShowOnUiInteract.ShopFailedFlow),
-            (this.otr = t.ShowOnUiInteract.StandByMontage),
-            (this.ntr = t.ShowOnUiInteract.ShopSuccessMontage),
-            (this.str = t.ShowOnUiInteract.UpgradeSequence),
-            (this.Wqn = !1);
+          (this.Ytr = t.ShowOnUiInteract.EnterMontage),
+            (this.Jtr = t.ShowOnUiInteract.EnterFlow),
+            (this.ztr = t.ShowOnUiInteract.ShopSuccessFlow),
+            (this.Ztr = t.ShowOnUiInteract.ShopFailedFlow),
+            (this.tir = t.ShowOnUiInteract.StandByMontage),
+            (this.oir = t.ShowOnUiInteract.ShopSuccessMontage),
+            (this.rir = t.ShowOnUiInteract.UpgradeSequence),
+            (this.$2n = !1);
           break;
         case IComponent_1.ENpcUiInteractType.ChengXiaoShanShop:
-          (this.zer = t.ShowOnUiInteract.EnterMontage),
-            (this.Zer = t.ShowOnUiInteract.EnterFlow),
-            (this.etr = t.ShowOnUiInteract.ShopSuccessFlow),
-            (this.ttr = t.ShowOnUiInteract.ShopFailedFlow),
-            (this.otr = t.ShowOnUiInteract.StandByMontage),
-            (this.ntr = t.ShowOnUiInteract.ShopSuccessMontage),
-            (this.str = t.ShowOnUiInteract.UpgradeSequence),
-            (this.VDn = t.ShowOnUiInteract.FinishDeliverySequence),
-            (this.Wqn = t.ShowOnUiInteract.ShowNpcWhilePlayingSequence ?? !1);
+          (this.Ytr = t.ShowOnUiInteract.EnterMontage),
+            (this.Jtr = t.ShowOnUiInteract.EnterFlow),
+            (this.ztr = t.ShowOnUiInteract.ShopSuccessFlow),
+            (this.Ztr = t.ShowOnUiInteract.ShopFailedFlow),
+            (this.tir = t.ShowOnUiInteract.StandByMontage),
+            (this.oir = t.ShowOnUiInteract.ShopSuccessMontage),
+            (this.rir = t.ShowOnUiInteract.UpgradeSequence),
+            (this.$Un = t.ShowOnUiInteract.FinishDeliverySequence),
+            (this.$2n = t.ShowOnUiInteract.ShowNpcWhilePlayingSequence ?? !1);
       }
       (this.ConfigId = this.Owner.Entity.GetComponent(0).GetPbDataId()),
-        this.atr.set("MingSuView", 3);
+        this.nir.set("MingSuView", 3);
     }
   }
   OnEnter(t) {
-    this.dWo &&
-      ((this.itr = void 0),
-      (this.rtr = void 0),
+    this.uKo &&
+      ((this.eCa = this.Owner?.Entity?.GetComponent(170)),
+      (this.eir = void 0),
+      (this.iir = void 0),
       (this.ShopSuccessMontage = void 0),
-      UiManager_1.UiManager.IsViewShow(this.dWo)
-        ? (this.mWo = !0)
-        : ((this.mWo = !1),
+      (this.W7s =
+        CommonParamById_1.configCommonParamById.GetIntConfig(
+          "BuySuccessNpcDialogueTimeInterval",
+        ) ?? 0),
+      UiManager_1.UiManager.IsViewShow(this.uKo)
+        ? (this._Ko = !0)
+        : ((this._Ko = !1),
           EventSystem_1.EventSystem.Add(
             EventDefine_1.EEventName.OpenView,
-            this.UKe,
+            this.FQe,
           )),
       this.Ore(),
-      this.ftr(!0),
-      StringUtils_1.StringUtils.IsEmpty(this.zer) ||
-        "Empty" === this.zer ||
-        ResourceSystem_1.ResourceSystem.LoadAsync(
-          this.zer,
-          UE.AnimMontage,
-          this.ltr,
-        ),
-      StringUtils_1.StringUtils.IsEmpty(this.otr) ||
-        "Empty" === this.otr ||
-        ResourceSystem_1.ResourceSystem.LoadAsync(
-          this.otr,
-          UE.AnimMontage,
-          this._tr,
-        ),
-      StringUtils_1.StringUtils.IsEmpty(this.ntr) ||
-        "Empty" === this.ntr ||
-        ResourceSystem_1.ResourceSystem.LoadAsync(
-          this.ntr,
-          UE.AnimMontage,
-          this.utr,
-        ),
+      this.gir(!0),
+      StringUtils_1.StringUtils.IsEmpty(this.Ytr) ||
+        "Empty" === this.Ytr ||
+        (this.tCa = this.eCa?.LoadAsync(this.Ytr, this.air)),
+      StringUtils_1.StringUtils.IsEmpty(this.tir) ||
+        "Empty" === this.tir ||
+        this.eCa?.LoadAsync(this.tir, this.hir),
+      StringUtils_1.StringUtils.IsEmpty(this.oir) ||
+        "Empty" === this.oir ||
+        this.eCa?.LoadAsync(this.oir, this.lir),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "NPC",
           8,
           "[NpcPerformSystemUiState]当打开界面时,播放进入界面的D级剧情 EnterFlow",
           ["EntityId", this.Owner.Id],
-          ["ViewName", this.dWo],
-          ["FlowId", this.Zer?.FlowId],
+          ["ViewName", this.uKo],
+          ["FlowId", this.Jtr?.FlowId],
         ),
-      this.ctr(this.Zer, this.dWo, !1),
-      (this.$er = Time_1.Time.WorldTimeSeconds),
-      (this.Xer = STAND_BY_MONTAGE_CD),
-      (this.Jer = Time_1.Time.WorldTimeSeconds),
-      (this.Yer = 0));
+      this._ir(this.Jtr, this.uKo, !1),
+      (this.Qtr = Time_1.Time.WorldTimeSeconds),
+      (this.Ktr = STAND_BY_MONTAGE_CD),
+      (this.$tr = Time_1.Time.WorldTimeSeconds),
+      (this.Xtr = 0));
   }
   OnUpdate(t) {
-    (this.Wer !== IComponent_1.ENpcUiInteractType.AntiqueShop &&
-      this.Wer !== IComponent_1.ENpcUiInteractType.ChengXiaoShanShop) ||
-      this.ptr();
+    this.Htr !== IComponent_1.ENpcUiInteractType.AntiqueShop &&
+      this.Htr !== IComponent_1.ENpcUiInteractType.ChengXiaoShanShop &&
+      this.fir();
   }
   OnExit(t) {
-    this.ftr(!1), this.SetNpcAndChildEnable();
+    this.gir(!1), this.SetNpcAndChildEnable();
+  }
+  CanChangeFrom(t) {
+    return 8 !== t;
   }
   OnDestroy() {
-    this.Ker && (this.Ker.Destroy(), (this.Ker = void 0)),
-      (this.ser = void 0),
-      (this.Qer.length = 0);
+    this.jtr && (this.jtr.Destroy(), (this.jtr = void 0)),
+      (this.tCa = void 0),
+      (this.eCa = void 0),
+      (this.Wtr.length = 0);
   }
-  htr() {
-    (this.Wer !== IComponent_1.ENpcUiInteractType.AntiqueShop &&
-      this.Wer !== IComponent_1.ENpcUiInteractType.ChengXiaoShanShop) ||
-      !this.itr ||
-      this.ser.PlayFromEnd(this.itr),
+  sir() {
+    (this.Htr !== IComponent_1.ENpcUiInteractType.AntiqueShop &&
+      this.Htr !== IComponent_1.ENpcUiInteractType.ChengXiaoShanShop) ||
+      !this.eir ||
+      this.eCa.PlayFromEnd(this.eir),
       this.SetNpcAndChildEnable(),
-      (this.mWo = !1),
-      (this.dWo = void 0),
-      (this.itr = void 0),
-      (this.rtr = void 0),
+      (this._Ko = !1),
+      (this.uKo = void 0),
+      (this.eir = void 0),
+      (this.iir = void 0),
       (this.ShopSuccessMontage = void 0),
-      (this.$er = 0),
-      (this.Xer = 0),
-      (this.Yer = 0),
-      (this.Jer = 0),
+      (this.Qtr = 0),
+      (this.Ktr = 0),
+      (this.Xtr = 0),
+      (this.$tr = 0),
       this.kre();
   }
   Ore() {
     EventSystem_1.EventSystem.Add(EventDefine_1.EEventName.CloseView, this.$Ge),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.BoughtItem,
-        this.xmi,
+        this.xdi,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnSubmitItemSuccess,
-        this.dtr,
+        this.cir,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnSubmitItemFail,
-        this.Ctr,
+        this.mir,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnSubmitItemLevelUp,
-        this.YBi,
+        this.Ybi,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnSubmitItemLevelMax,
-        this.HDn,
+        this.YUn,
       );
   }
   kre() {
@@ -419,86 +435,87 @@ class NpcPerformSystemUiState extends StateBase_1.StateBase {
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.BoughtItem,
-        this.xmi,
+        this.xdi,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnSubmitItemSuccess,
-        this.dtr,
+        this.cir,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnSubmitItemFail,
-        this.Ctr,
+        this.mir,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnSubmitItemLevelUp,
-        this.YBi,
+        this.Ybi,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnSubmitItemLevelMax,
-        this.HDn,
+        this.YUn,
       );
   }
-  gtr() {
-    if (this.Ker) {
+  Cir() {
+    if (this.jtr) {
       const s = this.Owner.Entity.Disable("播放Sequence隐藏Npc");
-      this.Qer.push({ HandleId: s, EntityHandle: this.Owner });
+      this.Wtr.push({ HandleId: s, EntityHandle: this.Owner });
       var t = this.Owner?.Entity.GetComponent(0);
       if (t?.Valid) {
         t = t.GetBaseInfo().ChildEntityIds;
         if (t && !(t.length < 1)) {
-          var e = ModelManager_1.ModelManager.CreatureModel;
+          var i = ModelManager_1.ModelManager.CreatureModel;
           for (const h of t) {
-            var i = e.GetEntityByPbDataId(h);
-            if (i?.Valid) {
-              const s = i.Entity.Disable("播放Sequence隐藏子实体");
-              this.Qer.push({ HandleId: s, EntityHandle: i });
+            var e = i.GetEntityByPbDataId(h);
+            if (e?.Valid) {
+              const s = e.Entity.Disable("播放Sequence隐藏子实体");
+              this.Wtr.push({ HandleId: s, EntityHandle: e });
             }
           }
         }
       }
     }
   }
-  ftr(t) {
-    var e = this.Owner?.Entity?.GetComponent(1);
-    e?.SkeletalMesh?.IsValid() && (e.SkeletalMesh.ForcedLodModel = t ? 1 : 0);
+  gir(t) {
+    var i = this.Owner?.Entity?.GetComponent(1);
+    i?.SkeletalMesh?.IsValid() && (i.SkeletalMesh.ForcedLodModel = t ? 1 : 0);
   }
   SetNpcAndChildEnable() {
-    for (const t of this.Qer)
+    for (const t of this.Wtr)
       t.EntityHandle.Entity.Enable(
         t.HandleId,
         "NpcPerformSystemUiState.SetNpcAndChildEnable",
       );
-    this.Qer.length = 0;
+    this.Wtr.length = 0;
   }
-  ctr(t, e, i) {
+  _ir(t, i, e) {
     t &&
-      ((e = { ViewName: e, Position: this.atr.get(e) ?? 2, TextWidth: 700 }),
+      ((i = { ViewName: i, Position: this.nir.get(i) ?? 2, TextWidth: 700 }),
       ControllerHolder_1.ControllerHolder.FlowController.StartFlowForView(
         t.FlowListName,
         t.FlowId,
         t.StateId,
-        e,
         i,
+        e,
       ));
   }
-  ptr() {
-    this.rtr &&
-      this.$er &&
-      Time_1.Time.WorldTimeSeconds > this.$er + this.Xer &&
-      (this.ser.PlayOnce(this.rtr),
-      (this.$er = Time_1.Time.WorldTimeSeconds),
-      (this.Xer = this.rtr.SequenceLength + STAND_BY_MONTAGE_CD));
+  fir() {
+    this.iir &&
+      this.Qtr &&
+      Time_1.Time.WorldTimeSeconds > this.Qtr + this.Ktr &&
+      (this.eCa.PlayOnce(this.iir),
+      (this.Qtr = Time_1.Time.WorldTimeSeconds),
+      (this.Ktr = this.iir.SequenceLength + STAND_BY_MONTAGE_CD));
   }
-  mtr() {
-    this.ShopSuccessMontage &&
-      this.mWo &&
-      Time_1.Time.WorldTimeSeconds > this.Jer + this.Yer &&
-      (this.ser.PlayOnce(this.ShopSuccessMontage),
-      (this.Jer = Time_1.Time.WorldTimeSeconds),
-      (this.Yer = this.ShopSuccessMontage.SequenceLength),
-      (this.$er = Time_1.Time.WorldTimeSeconds),
-      (this.Xer =
-        this.ShopSuccessMontage.SequenceLength + STAND_BY_MONTAGE_CD));
+  uir() {
+    (void 0 !== this.tCa && this.eCa && !this.eCa.IsPlayingMontage(this.tCa)) ||
+      (this.ShopSuccessMontage &&
+        this._Ko &&
+        Time_1.Time.WorldTimeSeconds > this.$tr + this.Xtr &&
+        (this.eCa.PlayOnce(this.ShopSuccessMontage),
+        (this.$tr = Time_1.Time.WorldTimeSeconds),
+        (this.Xtr = this.ShopSuccessMontage.SequenceLength),
+        (this.Qtr = Time_1.Time.WorldTimeSeconds),
+        (this.Ktr =
+          this.ShopSuccessMontage.SequenceLength + STAND_BY_MONTAGE_CD)));
   }
 }
 exports.NpcPerformSystemUiState = NpcPerformSystemUiState;

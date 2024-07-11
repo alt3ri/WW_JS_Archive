@@ -30,8 +30,8 @@ let SceneItemAdviceComponent = class SceneItemAdviceComponent extends EntityComp
   constructor() {
     super(...arguments),
       (this.Xte = void 0),
-      (this.z6e = void 0),
-      (this.Fmn = () => {
+      (this.c9e = void 0),
+      (this.Mmn = () => {
         this.jm(),
           this.Xte.HasTag(-3775711) &&
             (this.Xte.ChangeLocalLevelTag(-1152559349, -3775711),
@@ -44,15 +44,15 @@ let SceneItemAdviceComponent = class SceneItemAdviceComponent extends EntityComp
       });
   }
   OnActivate() {
-    var t = this.Entity.GetComponent(178);
+    var t = this.Entity.GetComponent(181);
     if (t && t.GetInteractController()) {
       t = this.Entity.GetComponent(0);
       if (t) {
         t = t.GetAdviceInfo();
         if (t) {
-          var i = this.Entity.GetComponent(102);
+          var i = this.Entity.GetComponent(104);
           if (i) {
-            this.Xte = this.Entity.GetComponent(177);
+            this.Xte = this.Entity.GetComponent(180);
             let e =
               ConfigManager_1.ConfigManager.AdviceConfig.GetAdviceInteractText();
             (e = e.replace("{PlayerName}", t.GetPlayerName())),
@@ -73,18 +73,18 @@ let SceneItemAdviceComponent = class SceneItemAdviceComponent extends EntityComp
           !1,
         ),
         this.jm(),
-        (this.z6e = TimerSystem_1.TimerSystem.Delay(this.Fmn, REVERTIME)));
+        (this.c9e = TimerSystem_1.TimerSystem.Delay(this.Mmn, REVERTIME)));
   }
   jm() {
-    void 0 !== this.z6e &&
-      (TimerSystem_1.TimerSystem.Remove(this.z6e), (this.z6e = void 0));
+    void 0 !== this.c9e &&
+      (TimerSystem_1.TimerSystem.Remove(this.c9e), (this.c9e = void 0));
   }
   OnEnd() {
     return this.jm(), !0;
   }
 };
 (SceneItemAdviceComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(127)],
+  [(0, RegisterComponent_1.RegisterComponent)(129)],
   SceneItemAdviceComponent,
 )),
   (exports.SceneItemAdviceComponent = SceneItemAdviceComponent);

@@ -10,47 +10,47 @@ const UE = require("ue"),
 class ReConnectModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
-      (this.Uno = !1),
-      (this.Ano = 0),
-      (this.Pno = 0),
-      (this.xno = 0),
-      (this.wno = 0),
-      (this.Bno = new Set()),
-      (this.bno = 0),
-      (this.qno = 0),
-      (this.Gno = 0),
-      (this.Nno = void 0),
-      (this.Ono = 1e3),
-      (this.kno = 60),
-      (this.Fno = void 0),
-      (this.Vno = ""),
-      (this.Hno = NetworkDefine_1.ENetworkType.None),
-      (this.jno = void 0);
+      (this.Tso = !1),
+      (this.Lso = 0),
+      (this.Dso = 0),
+      (this.Rso = 0),
+      (this.Uso = 0),
+      (this.Aso = new Set()),
+      (this.Pso = 0),
+      (this.xso = 0),
+      (this.wso = 0),
+      (this.Bso = void 0),
+      (this.bso = 1e3),
+      (this.qso = 60),
+      (this.Gso = void 0),
+      (this.Nso = ""),
+      (this.Oso = NetworkDefine_1.ENetworkType.None),
+      (this.kso = void 0);
   }
   OnInit() {
     return (
       this.ClearReconnectData(),
-      void 0 === this.wno && (this.wno = 0),
-      (this.bno =
+      void 0 === this.Uso && (this.Uso = 0),
+      (this.Pso =
         CommonParamById_1.configCommonParamById.GetIntConfig(
           "max_try_reconnect_count",
         ) ?? 3),
-      (this.qno =
+      (this.xso =
         CommonParamById_1.configCommonParamById.GetIntConfig(
           "reconnect_count_per_try",
         ) ?? 3),
-      (this.kno =
+      (this.qso =
         CommonParamById_1.configCommonParamById.GetIntConfig(
           "reconnect_channel_close_seconds",
         ) ?? 60),
-      (this.Ono =
+      (this.bso =
         CommonParamById_1.configCommonParamById.GetIntConfig(
           "reconnect_show_mask_timeout_ms",
         ) ?? 1e3),
       -1 ===
       UE.KismetSystemLibrary.GetCommandLine().search("-InfinityReconnect")
-        ? (this.Uno = !1)
-        : ((this.Uno = !0),
+        ? (this.Tso = !1)
+        : ((this.Tso = !0),
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "Reconnect",
@@ -64,93 +64,93 @@ class ReConnectModel extends ModelBase_1.ModelBase {
     return this.ClearReconnectData(), !0;
   }
   ClearReconnectData() {
-    (this.Ano = 0),
-      (this.Pno = 0),
+    (this.Lso = 0),
+      (this.Dso = 0),
       this.ResetReconnectStatus(),
       (this.ReconvTraceId = "");
   }
   get ServerChannelCloseTimeMs() {
-    return 1e3 * this.kno;
+    return 1e3 * this.qso;
   }
   AddRpc(e) {
-    this.Bno.add(e);
+    this.Aso.add(e);
   }
   DelRpc(e) {
-    this.Bno.delete(e);
+    this.Aso.delete(e);
   }
   IsRpcEmpty() {
-    return this.Bno.size <= 0;
+    return this.Aso.size <= 0;
   }
   GetUnResponsedRpcStr() {
     let e = "";
-    for (const t of this.Bno) e += `[${t}]`;
+    for (const t of this.Aso) e += `[${t}]`;
     return e;
   }
   IsReConnectMaxCount() {
-    return this.Ano > this.qno;
+    return this.Lso > this.xso;
   }
   GetReConnectCount() {
-    return this.Ano;
+    return this.Lso;
   }
   ReSetReConnectCount() {
-    this.Ano = 0;
+    this.Lso = 0;
   }
   AddReConnectCount() {
-    return this.Ano++, this.wno++, this.Ano;
+    return this.Lso++, this.Uso++, this.Lso;
   }
   IsTryMaxCount() {
-    return !this.Uno && this.Pno >= this.bno;
+    return !this.Tso && this.Dso >= this.Pso;
   }
   AddTryCount() {
-    this.Pno++;
+    this.Dso++;
   }
   GetTryCount() {
-    return this.Pno;
+    return this.Dso;
   }
   get GetTotalReConnectCount() {
-    return this.wno;
+    return this.Uso;
   }
   GetReConnectStatus() {
-    return this.xno;
+    return this.Rso;
   }
   ResetReconnectStatus() {
-    this.xno = 0;
+    this.Rso = 0;
   }
   SetReconnectDoing() {
-    this.xno = 1;
+    this.Rso = 1;
   }
   CancelShowMaskTimer() {
-    this.Nno &&
-      (TimerSystem_1.TimerSystem.Remove(this.Nno), (this.Nno = void 0));
+    this.Bso &&
+      (TimerSystem_1.TimerSystem.Remove(this.Bso), (this.Bso = void 0));
   }
   StartShowMaskTimer(e) {
-    this.Nno = TimerSystem_1.TimerSystem.Delay(() => {
-      e(), (this.Nno = void 0);
-    }, this.Ono);
+    this.Bso = TimerSystem_1.TimerSystem.Delay(() => {
+      e(), (this.Bso = void 0);
+    }, this.bso);
   }
   SetCurIncId() {
-    this.Gno = ReConnectModel.Wno;
+    this.wso = ReConnectModel.Fso;
   }
   IsReConnectIdSame() {
-    return this.Gno === ReConnectModel.Wno;
+    return this.wso === ReConnectModel.Fso;
   }
   static AddReConnectIncId() {
-    ReConnectModel.Wno++;
+    ReConnectModel.Fso++;
   }
   set DisconnectedFunction(e) {
-    this.Fno = e;
+    this.Gso = e;
   }
   get DisconnectedFunction() {
-    return this.Fno;
+    return this.Gso;
   }
   get ReconvTraceId() {
-    return this.Vno;
+    return this.Nso;
   }
   set ReconvTraceId(e) {
-    this.Vno = e;
+    this.Nso = e;
   }
   get LastNetworkType() {
-    return this.Hno;
+    return this.Oso;
   }
   set LastNetworkType(e) {
     Log_1.Log.CheckInfo() &&
@@ -158,14 +158,14 @@ class ReConnectModel extends ModelBase_1.ModelBase {
         "Reconnect",
         31,
         "set LastNetworkType",
-        ["old", this.Hno],
+        ["old", this.Oso],
         ["new", e],
       ),
-      (this.Hno = e);
+      (this.Oso = e);
   }
   get NetworkListener() {
-    return this.jno || (this.jno = new UE.KuroNetworkChange()), this.jno;
+    return this.kso || (this.kso = new UE.KuroNetworkChange()), this.kso;
   }
 }
-(exports.ReConnectModel = ReConnectModel).Wno = 0;
+(exports.ReConnectModel = ReConnectModel).Fso = 0;
 //# sourceMappingURL=ReConnectModel.js.map

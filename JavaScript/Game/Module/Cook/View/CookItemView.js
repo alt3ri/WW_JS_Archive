@@ -18,10 +18,10 @@ const UE = require("ue"),
 class CookItemView extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
-      (this.dqt = void 0),
-      (this.Wgt = void 0),
-      (this.UIt = (t) => {
-        this.Wgt && (this.Wgt(this.dqt), this.xqt());
+      (this.fGt = void 0),
+      (this.oft = void 0),
+      (this.BTt = (t) => {
+        this.oft && (this.oft(this.fGt), this.bGt());
       });
   }
   OnRegisterComponent() {
@@ -34,91 +34,91 @@ class CookItemView extends GridProxyAbstract_1.GridProxyAbstract {
       [9, UE.UIItem],
       [12, UE.UIText],
     ]),
-      (this.BtnBindInfo = [[6, this.UIt]]);
+      (this.BtnBindInfo = [[6, this.BTt]]);
   }
   Refresh(t, i, s) {
-    (this.dqt = t),
-      this.Pqt(),
+    (this.fGt = t),
+      this.BGt(),
       this.Kbe(),
-      this.IPt(),
-      this.wqt(),
-      this.xqt(),
-      this.C4e(),
-      this.IVe(i, !1);
+      this.Rxt(),
+      this.qGt(),
+      this.bGt(),
+      this.P5e(),
+      this.N6e(i, !1);
   }
-  Pqt() {
+  BGt() {
     var t;
-    0 === this.dqt.MainType
-      ? 0 === this.dqt.SubType
+    0 === this.fGt.MainType
+      ? 0 === this.fGt.SubType
         ? ((t = ConfigManager_1.ConfigManager.CookConfig.GetCookFormulaById(
-            this.dqt.ItemId,
+            this.fGt.ItemId,
           )),
           this.SetItemQualityIcon(this.GetSprite(10), t.FoodItemId))
-        : this.SetItemQualityIcon(this.GetSprite(10), this.dqt.ItemId)
+        : this.SetItemQualityIcon(this.GetSprite(10), this.fGt.ItemId)
       : ((t = ConfigManager_1.ConfigManager.CookConfig.GetCookProcessedById(
-          this.dqt.ItemId,
+          this.fGt.ItemId,
         )),
         this.SetItemQualityIcon(this.GetSprite(10), t.FinalItemId));
   }
   Kbe() {
     var t;
-    0 === this.dqt.MainType
-      ? 0 === this.dqt.SubType
+    0 === this.fGt.MainType
+      ? 0 === this.fGt.SubType
         ? ((t = ConfigManager_1.ConfigManager.CookConfig.GetCookFormulaById(
-            this.dqt.ItemId,
+            this.fGt.ItemId,
           )),
           this.SetItemIcon(this.GetTexture(11), t.FoodItemId))
-        : this.SetItemIcon(this.GetTexture(11), this.dqt.ItemId)
+        : this.SetItemIcon(this.GetTexture(11), this.fGt.ItemId)
       : ((t = ConfigManager_1.ConfigManager.CookConfig.GetCookProcessedById(
-          this.dqt.ItemId,
+          this.fGt.ItemId,
         )),
         this.SetItemIcon(this.GetTexture(11), t.FinalItemId));
   }
-  C4e() {
+  P5e() {
     var t;
-    this.dqt &&
-      (0 === this.dqt.MainType
+    this.fGt &&
+      (0 === this.fGt.MainType
         ? ((t = ConfigManager_1.ConfigManager.CookConfig.GetCookFormulaById(
-            this.dqt.ItemId,
+            this.fGt.ItemId,
           )),
           LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(12), t.Name))
         : ((t = ConfigManager_1.ConfigManager.CookConfig.GetCookProcessedById(
-            this.dqt.ItemId,
+            this.fGt.ItemId,
           )),
           LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(12), t.Name)));
   }
-  IPt() {
+  Rxt() {
     var t;
-    1 === this.dqt.MainType
-      ? ((t = this.dqt), this.GetItem(7).SetUIActive(!t.IsUnLock))
-      : ((t = this.dqt), this.GetItem(7).SetUIActive(!t.IsUnLock));
+    1 === this.fGt.MainType
+      ? ((t = this.fGt), this.GetItem(7).SetUIActive(!t.IsUnLock))
+      : ((t = this.fGt), this.GetItem(7).SetUIActive(!t.IsUnLock));
   }
-  wqt() {
+  qGt() {
     var t;
-    1 === this.dqt.MainType
-      ? ((t = this.dqt),
+    1 === this.fGt.MainType
+      ? ((t = this.fGt),
         (t =
           CookController_1.CookController.CheckCanProcessed(t.ItemId) &&
           t.IsUnLock),
         this.GetItem(8).SetUIActive(!t))
-      : 6e4 === (t = this.dqt).SubType
+      : 6e4 === (t = this.fGt).SubType
         ? this.GetItem(8).SetUIActive(!1)
         : ((t = CookController_1.CookController.CheckCanCook(t.ItemId)),
           this.GetItem(8).SetUIActive(!t));
   }
-  xqt() {
-    this.GetItem(9).SetUIActive(this.dqt.IsNew);
+  bGt() {
+    this.GetItem(9).SetUIActive(this.fGt.IsNew);
   }
   BindOnClickedCallback(t) {
-    this.Wgt = t;
+    this.oft = t;
   }
   OnSelected(t) {
-    this.IVe(!0);
+    this.N6e(!0);
   }
   OnDeselected(t) {
-    this.IVe(!1);
+    this.N6e(!1);
   }
-  IVe(t, i = !0) {
+  N6e(t, i = !0) {
     var s = this.GetExtendToggle(6);
     t ? s.SetToggleState(1, i) : s.SetToggleState(0, !1);
   }
@@ -130,9 +130,9 @@ class MaterialItem extends UiPanelBase_1.UiPanelBase {
       (this.ItemData = void 0),
       (this.ItemInfo = void 0),
       (this.Index = 0),
-      (this.Wgt = void 0),
+      (this.oft = void 0),
       (this.OnClick = (t) => {
-        this.Wgt && this.Wgt(this.ItemData, this.Index);
+        this.oft && this.oft(this.ItemData, this.Index);
       }),
       this.CreateThenShowByActor(t.GetOwner());
   }
@@ -149,46 +149,46 @@ class MaterialItem extends UiPanelBase_1.UiPanelBase {
   Update(t, i) {
     (this.ItemData = t),
       (this.Index = i),
-      0 !== this.ItemData.G3n
+      0 !== this.ItemData.f8n
         ? (this.ItemInfo = ConfigManager_1.ConfigManager.ItemConfig.GetConfig(
-            this.ItemData.G3n,
+            this.ItemData.f8n,
           ))
         : (this.ItemInfo = void 0),
       this.RefreshNeed(),
       this.RefreshHave(),
       this.Kbe(),
-      this.Pqt();
+      this.BGt();
   }
   RefreshNeed(t = 1) {
-    let i = this.ItemData.k4n;
+    let i = this.ItemData.MVn;
     1 !== t && (i *= t), this.GetText(2).SetText(i.toString());
   }
   RefreshHave() {
     var t = ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
-      this.ItemData.G3n,
+      this.ItemData.f8n,
     );
     let i = void 0;
-    (i = this.ItemData.m3n
-      ? t < this.ItemData.k4n
+    (i = this.ItemData.G6n
+      ? t < this.ItemData.MVn
         ? `<color=#dc0300>${t}</color>`
         : `<color=#ffffff>${t}</color>`
       : "<color=#ffffff>--</color>"),
       this.GetText(1).SetText(i);
   }
   Kbe() {
-    this.ItemData.m3n
+    this.ItemData.G6n
       ? (this.GetTexture(3).SetUIActive(!0),
         this.SetTextureByPath(this.ItemInfo.Icon, this.GetTexture(3)))
       : this.GetTexture(3).SetUIActive(!1);
   }
-  Pqt() {
-    this.ItemData.m3n
+  BGt() {
+    this.ItemData.G6n
       ? (this.GetSprite(4).SetUIActive(!0),
-        this.SetItemQualityIcon(this.GetSprite(4), this.ItemData.G3n))
+        this.SetItemQualityIcon(this.GetSprite(4), this.ItemData.f8n))
       : this.GetSprite(4).SetUIActive(!1);
   }
   BindOnClickedCallback(t) {
-    this.Wgt = t;
+    this.oft = t;
   }
 }
 exports.MaterialItem = MaterialItem;
@@ -237,9 +237,9 @@ exports.MachiningClueExItem = MachiningClueExItem;
 class ConfirmButtonCompose extends UiPanelBase_1.UiPanelBase {
   constructor(t) {
     super(),
-      (this.Bqt = void 0),
-      (this.Kyt = () => {
-        this.Bqt();
+      (this.GGt = void 0),
+      (this.eTt = () => {
+        this.GGt();
       }),
       this.CreateThenShowByActor(t.GetOwner());
   }
@@ -248,7 +248,7 @@ class ConfirmButtonCompose extends UiPanelBase_1.UiPanelBase {
       [0, UE.UIButtonComponent],
       [1, UE.UIText],
     ]),
-      (this.BtnBindInfo = [[0, this.Kyt]]);
+      (this.BtnBindInfo = [[0, this.eTt]]);
   }
   UpdateText(t) {
     this.GetText(1).SetText(t);
@@ -260,7 +260,7 @@ class ConfirmButtonCompose extends UiPanelBase_1.UiPanelBase {
       .SetInteractable(t);
   }
   BindClickFunction(t) {
-    this.Bqt = t;
+    this.GGt = t;
   }
 }
 exports.ConfirmButtonCompose = ConfirmButtonCompose;

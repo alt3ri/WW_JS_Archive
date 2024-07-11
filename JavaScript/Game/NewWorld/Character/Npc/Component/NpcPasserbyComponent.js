@@ -30,35 +30,35 @@ const Log_1 = require("../../../../../Core/Common/Log"),
   GameSplineComponent_1 = require("../../../../LevelGamePlay/Common/GameSplineComponent"),
   ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../../Manager/ModelManager"),
-  NPC_PB = "dps",
+  NPC_PB = "Pys",
   END_DISTANCE = 30,
   ENTITY_REMOVE_DELAY = 3,
   DEFUALT_MOVE_SPEED = 100;
 let NpcPasserbyComponent = class NpcPasserbyComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments),
-      (this._in = 0),
-      (this.uin = 0),
+      (this.Htn = 0),
+      (this.jtn = 0),
       (this.Hte = void 0),
       (this.Gce = void 0),
-      (this.cin = !1),
-      (this.lJo = !1),
+      (this.Wtn = !1),
+      (this.szo = !1),
       (this.tu = void 0),
-      (this.Qrr = void 0),
+      (this.jnr = void 0),
       (this.JLe = void 0),
-      (this.din = Vector_1.Vector.Create());
+      (this.Ktn = Vector_1.Vector.Create());
   }
   OnCreate(t) {
     return (
-      (this.cin = !1),
+      (this.Wtn = !1),
       (this.Hte = this.Entity.CheckGetComponent(2)),
-      (this.Gce = this.Entity.GetComponent(36)),
+      (this.Gce = this.Entity.GetComponent(37)),
       !(!this.Hte || !this.Gce)
     );
   }
   OnStart() {
     var t = this.Hte.CreatureData,
-      e = t.ComponentDataMap.get(NPC_PB)?.dps;
+      e = t.ComponentDataMap.get(NPC_PB)?.Pys;
     if (!e)
       return (
         Log_1.Log.CheckError() &&
@@ -68,16 +68,16 @@ let NpcPasserbyComponent = class NpcPasserbyComponent extends EntityComponent_1.
           ]),
         !1
       );
-    (this._in = e.HMs), (this.uin = e.qVn);
+    (this.Htn = e.sTs), (this.jtn = e.mjn);
     e = ModelManager_1.ModelManager.CreatureModel.GetCompleteEntityData(
-      this.uin,
+      this.jtn,
     );
     if (!e)
       return (
         Log_1.Log.CheckError() &&
           Log_1.Log.Error("NPC", 51, "特效NPC没有行人生成器相关配置数据", [
             "GeneratorEntityId",
-            this.uin,
+            this.jtn,
           ]),
         !1
       );
@@ -98,11 +98,11 @@ let NpcPasserbyComponent = class NpcPasserbyComponent extends EntityComponent_1.
         !1
       );
     for (const i of o.MoveConfig.Routes)
-      if (this._in === i.SplineEntityId) {
-        (this.lJo = !!i.IsLoop),
+      if (this.Htn === i.SplineEntityId) {
+        (this.szo = !!i.IsLoop),
           i.MoveState &&
             ((this.tu = i.MoveState.MoveState),
-            (this.Qrr = i.MoveState.MoveSpeed));
+            (this.jnr = i.MoveState.MoveSpeed));
         break;
       }
     t = this.Hte.Actor.CharacterMovement;
@@ -148,70 +148,70 @@ let NpcPasserbyComponent = class NpcPasserbyComponent extends EntityComponent_1.
         Position: a.Point,
         MoveState: this.tu ?? IComponent_1.EPatrolMoveState.Walk,
         MoveSpeed:
-          this.Qrr ??
+          this.jnr ??
           this.Gce?.CurrentMovementSettings?.WalkSpeed ??
           DEFUALT_MOVE_SPEED,
       };
       a.IsMain &&
-        (this.lJo ||
+        (this.szo ||
           s !== r - 2 ||
           (n.Callback = () => {
-            this.cin = !0;
+            this.Wtn = !0;
           }),
         s++),
         i.push(n);
     }
     t = i[i.length - 1].Position;
     return (
-      this.din.Set(t.X, t.Y, t.Z),
+      this.Ktn.Set(t.X, t.Y, t.Z),
       (this.JLe = {
         Points: i,
         Navigation: !1,
         IsFly: !1,
         DebugMode: !0,
-        Loop: this.lJo,
-        CircleMove: this.lJo,
+        Loop: this.szo,
+        CircleMove: this.szo,
         UsePreviousIndex: !0,
         UseNearestPoint: !0,
         ReturnFalseWhenNavigationFailed: !1,
       }),
-      this.lJo ||
+      this.szo ||
         (this.JLe.Callback = (t) => {
-          this.cin && this.Cin();
+          this.Wtn && this.Qtn();
         }),
       !0
     );
   }
   OnActivate() {
-    this.HC(this._in) && this.JLe && this.Gce.MoveAlongPath(this.JLe);
+    this.HC(this.Htn) && this.JLe && this.Gce.MoveAlongPath(this.JLe);
   }
   OnTick(t) {
     var e;
-    !this.lJo &&
-      this.cin &&
-      ((e = Vector_1.Vector.Dist(this.din, this.Hte.ActorLocationProxy)) <
+    !this.szo &&
+      this.Wtn &&
+      ((e = Vector_1.Vector.Dist(this.Ktn, this.Hte.ActorLocationProxy)) <
         this.Gce.Speed * ENTITY_REMOVE_DELAY ||
         e <= END_DISTANCE) &&
-      this.Cin();
+      this.Qtn();
   }
-  Cin() {
-    this.cin = !1;
-    var t = Protocol_1.Aki.Protocol.zYn.create();
-    (t.rkn = MathUtils_1.MathUtils.NumberToLong(
+  Qtn() {
+    this.Wtn = !1;
+    var t = Protocol_1.Aki.Protocol.Wes.create();
+    (t.P4n = MathUtils_1.MathUtils.NumberToLong(
       this.Hte.CreatureData.GetCreatureDataId(),
     )),
-      Net_1.Net.Call(11735, t, (t) => {
+      Net_1.Net.Call(2717, t, (t) => {
         t &&
-          t.Kms !== Protocol_1.Aki.Protocol.lkn.Sys &&
+          t.hvs !== Protocol_1.Aki.Protocol.O4n.NRs &&
           ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-            t.Kms,
-            14299,
+            t.hvs,
+            9341,
           );
       });
   }
 };
 (NpcPasserbyComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(78)],
+  [(0, RegisterComponent_1.RegisterComponent)(80)],
   NpcPasserbyComponent,
 )),
   (exports.NpcPasserbyComponent = NpcPasserbyComponent);

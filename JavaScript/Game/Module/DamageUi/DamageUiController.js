@@ -32,15 +32,15 @@ class DamageUiController extends ControllerBase_1.ControllerBase {
   static AddEvents() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnUpdateSceneTeam,
-      this.tje,
+      this.mWe,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnChangeRole,
-        this.o7e,
+        this.fHe,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnRoleGoDown,
-        this.bkt,
+        this.q2t,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.AddEntity,
@@ -56,30 +56,30 @@ class DamageUiController extends ControllerBase_1.ControllerBase {
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.CharOnBuffAddUIDamage,
-        this.qkt,
+        this.G2t,
       ),
       GlobalData_1.GlobalData.IsPlayInEditor &&
         EventSystem_1.EventSystem.Add(
-          EventDefine_1.EEventName.OnPlatformChanged,
-          this.Gkt,
+          EventDefine_1.EEventName.InputControllerChange,
+          this.XBo,
         ),
       ModelManager_1.ModelManager.BattleUiModel.ChildViewData.AddCallback(
         16,
-        this.j$e,
+        this.iJe,
       );
   }
   static RemoveEvents() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnUpdateSceneTeam,
-      this.tje,
+      this.mWe,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnChangeRole,
-        this.o7e,
+        this.fHe,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnRoleGoDown,
-        this.bkt,
+        this.q2t,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.AddEntity,
@@ -95,65 +95,65 @@ class DamageUiController extends ControllerBase_1.ControllerBase {
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.CharOnBuffAddUIDamage,
-        this.qkt,
+        this.G2t,
       ),
       GlobalData_1.GlobalData.IsPlayInEditor &&
         EventSystem_1.EventSystem.Remove(
-          EventDefine_1.EEventName.OnPlatformChanged,
-          this.Gkt,
+          EventDefine_1.EEventName.InputControllerChange,
+          this.XBo,
         ),
       ModelManager_1.ModelManager.BattleUiModel.ChildViewData.RemoveCallback(
         16,
-        this.j$e,
+        this.iJe,
       );
   }
-  static eXe(e) {
+  static c$e(e) {
     EventSystem_1.EventSystem.HasWithTarget(
       e,
       EventDefine_1.EEventName.CharBeDamage,
-      this.Nkt,
+      this.O2t,
     ) ||
       EventSystem_1.EventSystem.AddWithTarget(
         e,
         EventDefine_1.EEventName.CharBeDamage,
-        this.Nkt,
+        this.O2t,
       );
   }
-  static tXe(e) {
+  static m$e(e) {
     EventSystem_1.EventSystem.HasWithTarget(
       e,
       EventDefine_1.EEventName.CharBeDamage,
-      this.Nkt,
+      this.O2t,
     ) &&
       EventSystem_1.EventSystem.RemoveWithTarget(
         e,
         EventDefine_1.EEventName.CharBeDamage,
-        this.Nkt,
+        this.O2t,
       );
   }
 }
 ((exports.DamageUiController = DamageUiController).nye = () => {
   DamageUiManager_1.DamageUiManager.PreloadSequence();
 }),
-  (DamageUiController.tje = () => {
+  (DamageUiController.mWe = () => {
     var e = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
-    e && DamageUiController.eXe(e.Entity);
+    e && DamageUiController.c$e(e.Entity);
   }),
-  (DamageUiController.o7e = () => {
+  (DamageUiController.fHe = () => {
     var e = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
-    e && DamageUiController.eXe(e.Entity);
+    e && DamageUiController.c$e(e.Entity);
   }),
-  (DamageUiController.bkt = (e) => {
+  (DamageUiController.q2t = (e) => {
     e = EntitySystem_1.EntitySystem.Get(e);
-    e && DamageUiController.tXe(e);
+    e && DamageUiController.m$e(e);
   }),
   (DamageUiController.GUe = (e, t, a) => {
-    DamageUiController.eXe(t.Entity);
+    DamageUiController.c$e(t.Entity);
   }),
   (DamageUiController.zpe = (e, t) => {
-    DamageUiController.tXe(t.Entity);
+    DamageUiController.m$e(t.Entity);
   }),
-  (DamageUiController.Nkt = (e, t, a, n, i, r, _) => {
+  (DamageUiController.O2t = (e, t, a, n, i, r, _) => {
     switch (n.CalculateType) {
       case 0:
         ModelManager_1.ModelManager.BattleUiModel.ExploreModeData.BeHit(t),
@@ -181,7 +181,7 @@ class DamageUiController extends ControllerBase_1.ControllerBase {
         );
     }
   }),
-  (DamageUiController.qkt = (e, t, a) => {
+  (DamageUiController.G2t = (e, t, a) => {
     a &&
       ((e = (a = EntitySystem_1.EntitySystem.Get(e)).GetComponent(3)),
       DamageUiManager_1.DamageUiManager.ApplyDamage(
@@ -195,10 +195,10 @@ class DamageUiController extends ControllerBase_1.ControllerBase {
         t.Parameters[1],
       ));
   }),
-  (DamageUiController.Gkt = () => {
+  (DamageUiController.XBo = () => {
     DamageUiManager_1.DamageUiManager.OnEditorPlatformChanged();
   }),
-  (DamageUiController.j$e = () => {
+  (DamageUiController.iJe = () => {
     var e = UiLayer_1.UiLayer.GetBattleViewUnit(0),
       t =
         ModelManager_1.ModelManager.BattleUiModel.ChildViewData.GetChildVisible(

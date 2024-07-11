@@ -44,11 +44,11 @@ class GeneralLogicTreeUtil {
   static GetNodeConfig(e, r, o) {
     let t = void 0;
     switch (e) {
-      case Protocol_1.Aki.Protocol.NCs.Proto_BtTypeQuest:
+      case Protocol_1.Aki.Protocol.tps.Proto_BtTypeQuest:
         t = ModelManager_1.ModelManager.QuestNewModel.GetQuestNodeConfig(r, o);
         break;
-      case Protocol_1.Aki.Protocol.NCs.Proto_BtTypeLevelPlay:
-      case Protocol_1.Aki.Protocol.NCs.Proto_BtTypeInst:
+      case Protocol_1.Aki.Protocol.tps.Proto_BtTypeLevelPlay:
+      case Protocol_1.Aki.Protocol.tps.Proto_BtTypeInst:
         t = ModelManager_1.ModelManager.LevelPlayModel.GetLevelPlayNodeConfig(
           r,
           o,
@@ -59,16 +59,16 @@ class GeneralLogicTreeUtil {
   static GetLogicTreeContainer(e, r) {
     let o = void 0;
     switch (e) {
-      case Protocol_1.Aki.Protocol.NCs.Proto_BtTypeQuest:
+      case Protocol_1.Aki.Protocol.tps.Proto_BtTypeQuest:
         o = ModelManager_1.ModelManager.QuestNewModel.GetQuest(r);
         break;
-      case Protocol_1.Aki.Protocol.NCs.Proto_BtTypeLevelPlay:
+      case Protocol_1.Aki.Protocol.tps.Proto_BtTypeLevelPlay:
         o =
           ModelManager_1.ModelManager.LevelPlayModel.GetProcessingLevelPlayInfo(
             r,
           );
         break;
-      case Protocol_1.Aki.Protocol.NCs.Proto_BtTypeInst:
+      case Protocol_1.Aki.Protocol.tps.Proto_BtTypeInst:
         o =
           ModelManager_1.ModelManager.InstanceDungeonModel.GetInstanceDungeonInfo();
     }
@@ -98,30 +98,36 @@ class GeneralLogicTreeUtil {
   static OpenChapterViewV2(e, r, o = !1, t) {
     let a = 0;
     var i,
-      l = [r.toString()];
+      l,
+      n = [r.toString()];
     switch (e) {
       case 2:
-        (a = o ? 16 : 10), t && l.push(t);
+        (a = o ? 16 : 10), t && n.push(t);
         break;
       case 0:
         a = o ? 16 : 10;
         break;
       case 1:
         a = o ? 17 : 11;
-        var n =
+        var _ =
           ConfigManager_1.ConfigManager.TextConfig.GetTextById(
             "QuestChapterFinish",
           );
-        l.push(n);
+        n.push(_);
     }
     a
       ? ((i = QuestChapterById_1.configQuestChapterById.GetConfig(r)),
         (i = new LguiUtil_1.TableTextArgNew(i.ActName)),
+        (l = {}),
+        o && (l.CanOpenInPlot = !0),
         ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByItsType(
           a,
           i,
           void 0,
           [],
+          n,
+          void 0,
+          void 0,
           l,
         ),
         KuroSdkReport_1.KuroSdkReport.OnChapterStart(r, e))

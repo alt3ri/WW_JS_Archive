@@ -9,12 +9,12 @@ const UE = require("ue"),
 class KeySettingRowKeyItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this.uAi = void 0),
-      (this.oPi = 0),
-      (this.EAi = void 0),
-      (this.zbn = void 0),
-      (this.rPi = (t) => {
-        1 === t && this.uAi && this.EAi && this.EAi(this.uAi, this);
+      (this.uPi = void 0),
+      (this.oxi = 0),
+      (this.SPi = void 0),
+      (this.r2n = void 0),
+      (this.rxi = (t) => {
+        1 === t && this.uPi && this.SPi && this.SPi(this.uPi, this);
       });
   }
   OnRegisterComponent() {
@@ -29,62 +29,62 @@ class KeySettingRowKeyItem extends UiPanelBase_1.UiPanelBase {
       [7, UE.UISprite],
       [8, UE.UIItem],
     ]),
-      (this.BtnBindInfo = [[1, this.rPi]]);
+      (this.BtnBindInfo = [[1, this.rxi]]);
   }
   OnStart() {
-    this.zbn = new LevelSequencePlayer_1.LevelSequencePlayer(this.GetItem(8));
+    this.r2n = new LevelSequencePlayer_1.LevelSequencePlayer(this.GetItem(8));
   }
   OnBeforeDestroy() {
     this.ClearData(),
-      (this.EAi = void 0),
-      this.zbn?.Clear(),
-      (this.zbn = void 0);
+      (this.SPi = void 0),
+      this.r2n?.Clear(),
+      (this.r2n = void 0);
   }
   ClearData() {
-    (this.uAi = void 0), (this.oPi = 0);
+    (this.uPi = void 0), (this.oxi = 0);
   }
   BindOnWaitInput(t) {
-    this.EAi = t;
+    this.SPi = t;
   }
   Refresh(t, i) {
     2 === t.GetRowType() &&
-      ((this.uAi = t),
-      (this.oPi = i),
-      this.L0t(),
-      this.nPi(),
-      this.sPi(),
-      this.IPt(),
+      ((this.uPi = t),
+      (this.oxi = i),
+      this.Nft(),
+      this.nxi(),
+      this.sxi(),
+      this.Rxt(),
       this.SetDetailItemVisible(t.IsExpandDetail));
   }
-  L0t() {
+  Nft() {
     var t = this.GetText(0),
-      i = this.uAi.GetSettingName();
+      i = this.uPi.GetSettingName();
     StringUtils_1.StringUtils.IsEmpty(i)
-      ? t.SetText(this.uAi.GetActionOrAxisName())
+      ? t.SetText(this.uPi.GetActionOrAxisName())
       : LguiUtil_1.LguiUtil.SetLocalTextNew(t, i);
   }
-  nPi() {
-    var i = this.uAi.ButtonTextId;
+  nxi() {
+    var i = this.uPi.ButtonTextId;
     if (i && !StringUtils_1.StringUtils.IsBlank(i))
       LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(2), i);
     else {
       let t = "+";
-      (i = this.uAi.BothActionName),
+      (i = this.uPi.BothActionName),
         (i =
           (i && 1 < i.length && (t = "/"),
-          this.uAi.GetCurrentKeyNameRichText(this.oPi, t)));
+          this.uPi.GetCurrentKeyNameRichText(this.oxi, t)));
       this.GetText(2)?.SetText(i);
     }
   }
-  sPi() {
-    var t = this.uAi.DetailTextId;
+  sxi() {
+    var t = this.uPi.DetailTextId;
     StringUtils_1.StringUtils.IsEmpty(t)
       ? this.GetSprite(5)?.SetUIActive(!1)
       : (this.GetSprite(5)?.SetUIActive(!0),
         LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(4), t));
   }
-  IPt() {
-    var t = this.uAi.IsLock;
+  Rxt() {
+    var t = this.uPi.IsLock;
     this.GetSprite(6)?.SetUIActive(t),
       this.GetButton(1)?.SetSelfInteractive(!t);
   }
@@ -94,16 +94,16 @@ class KeySettingRowKeyItem extends UiPanelBase_1.UiPanelBase {
       this.GetText(2)?.SetUIActive(!t),
       this.GetItem(8)?.SetUIActive(t),
       t
-        ? this.zbn.PlayLevelSequenceByName("Loop")
-        : this.zbn.StopCurrentSequence();
+        ? this.r2n.PlayLevelSequenceByName("Loop")
+        : this.r2n.StopCurrentSequence();
   }
   SetDetailItemVisible(t) {
     var i,
       e = this.GetItem(3);
-    !this.uAi ||
-    ((i = this.uAi.DetailTextId), StringUtils_1.StringUtils.IsEmpty(i))
+    !this.uPi ||
+    ((i = this.uPi.DetailTextId), StringUtils_1.StringUtils.IsEmpty(i))
       ? e.SetUIActive(!1)
-      : (e.SetUIActive(t), (this.uAi.IsExpandDetail = t));
+      : (e.SetUIActive(t), (this.uPi.IsExpandDetail = t));
   }
 }
 exports.KeySettingRowKeyItem = KeySettingRowKeyItem;

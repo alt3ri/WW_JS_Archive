@@ -14,21 +14,21 @@ class RechargeInfo {
 exports.RechargeInfo = RechargeInfo;
 class RechargeModel extends ModelBase_1.ModelBase {
   constructor() {
-    super(...arguments), (this.tso = new Map());
+    super(...arguments), (this.Jso = new Map());
   }
   SetRechargeInfo(e, r, t) {
-    let o = this.tso.get(e);
-    (o = o || new RechargeInfo()).Init(e, this.iso(r), t), this.tso.set(e, o);
+    let o = this.Jso.get(e);
+    (o = o || new RechargeInfo()).Init(e, this.zso(r), t), this.Jso.set(e, o);
   }
   GetPayIdAmount(e) {
-    var r = this.tso.get(e);
+    var r = this.Jso.get(e);
     return r
       ? r.Amount
       : (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("Shop", 28, "获取PayId的服务器价格失败", ["id", e]),
         "0");
   }
-  iso(e) {
+  zso(e) {
     var r,
       t = parseFloat(e);
     return !isNaN(t) &&
@@ -38,7 +38,7 @@ class RechargeModel extends ModelBase_1.ModelBase {
       : e;
   }
   GetPayIdProductId(e) {
-    var r = this.tso.get(e);
+    var r = this.Jso.get(e);
     return r
       ? r.ProductId
       : (Log_1.Log.CheckInfo() &&

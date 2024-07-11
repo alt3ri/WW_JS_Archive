@@ -28,7 +28,6 @@ const Log_1 = require("../../../../../Core/Common/Log"),
   ModelManager_1 = require("../../../../Manager/ModelManager"),
   FormationDataController_1 = require("../../../../Module/Abilities/FormationDataController"),
   CombatMessage_1 = require("../../../../Module/CombatMessage/CombatMessage"),
-  SceneTeamController_1 = require("../../../../Module/SceneTeam/SceneTeamController"),
   TeleportController_1 = require("../../../../Module/Teleport/TeleportController"),
   BaseDeathComponent_1 = require("../../Common/Component/Abilities/BaseDeathComponent"),
   CharacterAttributeTypes_1 = require("../../Common/Component/Abilities/CharacterAttributeTypes"),
@@ -37,37 +36,37 @@ const Log_1 = require("../../../../../Core/Common/Log"),
 let RoleDeathComponent = class RoleDeathComponent extends BaseDeathComponent_1.BaseDeathComponent {
   constructor() {
     super(...arguments),
-      (this.nXt = void 0),
-      (this.zht = void 0),
+      (this.n$t = void 0),
+      (this.u1t = void 0),
       (this.Xte = void 0),
-      (this.rDr = void 0),
-      (this.elt = void 0),
-      (this.mbr = void 0),
-      (this.eon = void 0),
-      (this.ton = !1),
-      (this.Bhr = []),
+      (this.tRr = void 0),
+      (this.m1t = void 0),
+      (this.HBr = void 0),
+      (this.Bin = void 0),
+      (this.bin = !1),
+      (this.Plr = []),
       (this.OnDeathEnded = () => {
         var t,
           e = ModelManager_1.ModelManager.SceneTeamModel.GetTeamEntities(!0);
-        if (this.elt && this.elt.HasBuffAuthority()) {
-          this.elt.TriggerEvents(14, this.elt, {});
+        if (this.m1t && this.m1t.HasBuffAuthority()) {
+          this.m1t.TriggerEvents(14, this.m1t, {});
           for (const i of e.values())
             this.Entity.Id !== i.Id &&
               i.Valid &&
-              ((t = i.Entity.GetComponent(172)).IsDead() ||
-                t.elt?.TriggerEvents(15, this.elt, {}));
+              ((t = i.Entity.GetComponent(175)).IsDead() ||
+                t.m1t?.TriggerEvents(15, this.m1t, {}));
         }
         this.IsDead() &&
-          SceneTeamController_1.SceneTeamController.RoleDeathEnded(
+          ModelManager_1.ModelManager.SceneTeamModel.RoleDeathEnded(
             this.Entity.Id,
           );
       }),
-      (this.ion = () => {
+      (this.qin = () => {
         this.IsDead() || this.RemoveMaterials();
       }),
       (this.DrowningPunishment = () => {
-        this.elt.AddBuff(CharacterBuffIds_1.buffId.AfterDrownRecoverStrength, {
-          InstigatorId: this.elt.CreatureDataId,
+        this.m1t.AddBuff(CharacterBuffIds_1.buffId.AfterDrownRecoverStrength, {
+          InstigatorId: this.m1t.CreatureDataId,
           Reason: "溺水蒙太奇后添加",
         }),
           this.Xte.RemoveTag(191377386),
@@ -82,68 +81,68 @@ let RoleDeathComponent = class RoleDeathComponent extends BaseDeathComponent_1.B
           ),
           ModelManager_1.ModelManager.SceneTeamModel.IsAllDid() ||
             (ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance()
-              ? ((this.ton = !0),
-                CombatMessage_1.CombatNet.Call(14128, this.Entity, {}))
-              : TeleportController_1.TeleportController.TeleportToPositionNoLoading(
-                  ModelManager_1.ModelManager.FormationDataModel.LastPositionOnLand.ToUeVector(),
+              ? ((this.bin = !0),
+                CombatMessage_1.CombatNet.Call(21960, this.Entity, {}))
+              : (t =
+                  ModelManager_1.ModelManager.FormationDataModel.GetLastPositionOnLand()) &&
+                TeleportController_1.TeleportController.TeleportToPositionNoLoading(
+                  t.ToUeVector(),
                   void 0,
-                  "CharacterAttributeComponent.DrowningPunishment",
-                ).finally(this.ion)),
-          this.mbr.ResetCharState();
-        var t = this.Entity.CheckGetComponent(172);
+                  "DrowningPunishment",
+                ).finally(this.qin)),
+          this.HBr.ResetCharState();
+        var t = this.Entity.CheckGetComponent(175);
         t.IsDead() && t.OnDeathEnded();
       });
   }
   OnInitData() {
     return (
-      (this.nXt = this.Entity.GetComponent(3)),
-      (this.zht = this.Entity.CheckGetComponent(0)),
-      (this.Xte = this.Entity.GetComponent(185)),
-      (this.rDr = this.Entity.GetComponent(33)),
-      (this.elt = this.Entity.GetComponent(157)),
-      (this.mbr = this.Entity.GetComponent(158)),
-      (this.eon = this.Entity.GetComponent(22)),
+      (this.n$t = this.Entity.GetComponent(3)),
+      (this.u1t = this.Entity.CheckGetComponent(0)),
+      (this.Xte = this.Entity.GetComponent(188)),
+      (this.tRr = this.Entity.GetComponent(33)),
+      (this.m1t = this.Entity.GetComponent(159)),
+      (this.HBr = this.Entity.GetComponent(160)),
+      (this.Bin = this.Entity.GetComponent(22)),
       !0
     );
   }
   OnStart() {
     return (
-      this.zht.GetLivingStatus() === Protocol_1.Aki.Protocol.Rvs.Proto_Dead &&
+      this.u1t.GetLivingStatus() === Protocol_1.Aki.Protocol.HEs.Proto_Dead &&
         this.ExecuteDeath(),
       !0
     );
   }
   OnClear() {
-    return this.Bhr.splice(0, this.Bhr.length), !(this.ton = !1);
+    return this.Plr.splice(0, this.Plr.length), !(this.bin = !1);
   }
   ExecuteDeath() {
     if (!super.ExecuteDeath()) return !1;
     if (
-      (EventSystem_1.EventSystem.Emit(
-        EventDefine_1.EEventName.OnCharDeathLogicBegin,
-        this.Entity.Id,
-      ),
-      this.elt?.RemoveBuffByEffectType(36, "实体死亡移除冰冻buff"),
+      (this.m1t?.RemoveBuffByEffectType(36, "实体死亡移除冰冻buff"),
       this.Xte?.AddTag(1008164187),
-      this.rDr?.StopAllSkills("RoleDeathComponent.ExecuteDeath"),
-      this.mbr?.Valid && this.Entity.IsInit)
-    )
-      switch ((this.mbr.ResetCharState(), this.mbr.PositionState)) {
+      this.tRr?.StopAllSkills("RoleDeathComponent.ExecuteDeath"),
+      this.HBr?.Valid && this.Entity.IsInit)
+    ) {
+      switch ((this.HBr.ResetCharState(), this.HBr.PositionState)) {
         case CharacterUnifiedStateTypes_1.ECharPositionState.Air:
-          var t = this.mbr.MoveState;
+          var t = this.HBr.MoveState;
           t === CharacterUnifiedStateTypes_1.ECharMoveState.Glide
-            ? this.Entity.GetComponent(50)?.ExitGlideState()
+            ? this.Entity.GetComponent(51)?.ExitGlideState()
             : t === CharacterUnifiedStateTypes_1.ECharMoveState.Soar &&
-              this.Entity.GetComponent(50)?.ExitSoarState();
+              this.Entity.GetComponent(51)?.ExitSoarState();
           break;
         case CharacterUnifiedStateTypes_1.ECharPositionState.Climb:
-          this.Entity.GetComponent(161)?.CharacterMovement.SetMovementMode(
+          this.Entity.GetComponent(163)?.CharacterMovement.SetMovementMode(
             3,
             0,
           );
       }
+      this.HBr.ExitHitState("角色死亡");
+    }
     return (
-      this.elt?.RemoveAllDurationBuffs("实体死亡清理持续型buff"),
+      this.m1t?.RemoveAllDurationBuffs("实体死亡清理持续型buff"),
       this.PlayDeathAnimation(),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.CharOnRoleDead,
@@ -160,90 +159,77 @@ let RoleDeathComponent = class RoleDeathComponent extends BaseDeathComponent_1.B
     this.Xte?.HasTag(191377386) ||
       (!ModelManager_1.ModelManager.DeadReviveModel.SkipDeathAnim &&
       !this.Xte?.HasTag(-1943786195) &&
-      this.eon?.Valid &&
+      this.Bin?.Valid &&
       this.Entity.IsInit &&
       this.Entity.Active
-        ? this.mbr.PositionState ===
+        ? this.HBr.PositionState ===
           CharacterUnifiedStateTypes_1.ECharPositionState.Water
-          ? this.eon.PlayMontageWithCallBack(1, this.OnDeathEnded)
-          : this.eon.PlayMontageWithCallBack(0, this.OnDeathEnded)
+          ? this.Bin.PlayMontageWithCallBack(1, this.OnDeathEnded)
+          : this.Bin.PlayMontageWithCallBack(0, this.OnDeathEnded)
         : this.OnDeathEnded());
   }
-  ExecuteReviveRemote() {
-    this.nXt.IsAutonomousProxy ||
-      (this.IsDeadInternal
-        ? (Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info(
-              "Battle",
-              20,
-              "[DeathComponent]执行角色复活逻辑",
-              ["Entity", this.Entity.toString()],
-              ["PbDataId", this.Entity?.GetComponent(0)?.GetPbDataId()],
-            ),
-          (this.IsDeadInternal = !1),
-          this.Xte?.RemoveTag(1008164187),
-          this.RemoveMaterials(),
-          ControllerHolder_1.ControllerHolder.DeadReviveController.RoleReviveEnded(
-            this.Entity.Id,
-          ))
-        : Log_1.Log.CheckError() &&
-          Log_1.Log.Error("Character", 20, "实体重复复活", [
-            "entityId",
-            this.Entity.Id,
-          ]));
-  }
-  ExecuteReviveLocal() {
-    this.nXt?.IsAutonomousProxy &&
-      this.IsDeadInternal &&
-      ((this.IsDeadInternal = !1),
-      this.Xte?.RemoveTag(1008164187),
-      EventSystem_1.EventSystem.EmitWithTarget(
-        this.Entity,
-        EventDefine_1.EEventName.CharOnRevive,
-      ),
-      EventSystem_1.EventSystem.Emit(
-        EventDefine_1.EEventName.OnRevive,
-        this.Entity,
-      ),
-      this.mbr.TryClearInFightTags(),
-      this.mbr.RefreshFightState(
-        FormationDataController_1.FormationDataController.GlobalIsInFight,
-      ),
-      this.RemoveMaterials(),
-      ControllerHolder_1.ControllerHolder.DeadReviveController.RoleReviveEnded(
-        this.Entity.Id,
-      ));
+  ExecuteRevive() {
+    this.IsDeadInternal
+      ? (Log_1.Log.CheckInfo() &&
+          Log_1.Log.Info(
+            "Battle",
+            20,
+            "[DeathComponent]执行角色复活逻辑",
+            ["Entity", this.Entity.toString()],
+            ["PbDataId", this.Entity?.GetComponent(0)?.GetPbDataId()],
+          ),
+        (this.IsDeadInternal = !1),
+        this.Xte?.RemoveTag(1008164187),
+        this.RemoveMaterials(),
+        this.n$t?.IsAutonomousProxy &&
+          (EventSystem_1.EventSystem.EmitWithTarget(
+            this.Entity,
+            EventDefine_1.EEventName.CharOnRevive,
+          ),
+          EventSystem_1.EventSystem.Emit(
+            EventDefine_1.EEventName.OnRevive,
+            this.Entity,
+          ),
+          this.HBr.TryClearInFightTags(),
+          this.HBr.RefreshFightState(
+            FormationDataController_1.FormationDataController.GlobalIsInFight,
+          )))
+      : Log_1.Log.CheckInfo() &&
+        Log_1.Log.Info("Character", 20, "实体重复复活", [
+          "entityId",
+          this.Entity.Id,
+        ]);
   }
   AddMaterialHandle(t) {
-    this.Bhr.push(t);
+    this.Plr.push(t);
   }
   RemoveMaterials() {
-    var t = this.nXt?.Actor.CharRenderingComponent;
-    if (t) for (const e of this.Bhr) t.RemoveMaterialControllerData(e);
+    var t = this.n$t?.Actor.CharRenderingComponent;
+    if (t) for (const e of this.Plr) t.RemoveMaterialControllerData(e);
   }
   static DrownNotify(t, e) {
-    t = t?.CheckGetComponent(172);
+    t = t?.CheckGetComponent(175);
     t &&
-      (t.eon.PlayMontageWithCallBack(1), t.elt?.HasBuffAuthority()) &&
-      t.elt.RemoveBuffByEffectType(36, "溺水移除冰冻buff");
+      (t.Bin.PlayMontageWithCallBack(1), t.m1t?.HasBuffAuthority()) &&
+      t.m1t.RemoveBuffByEffectType(36, "溺水移除冰冻buff");
   }
   Drowning() {
     var t, e;
     this.IsDrowning() ||
-      (this.Entity.CheckGetComponent(185).AddTag(191377386),
-      (t = (e = this.Entity.CheckGetComponent(156)).GetCurrentValue(
+      (this.Entity.CheckGetComponent(188).AddTag(191377386),
+      (t = (e = this.Entity.CheckGetComponent(158)).GetCurrentValue(
         CharacterAttributeTypes_1.EAttributeId.Proto_Life,
       )),
-      this.elt.AddBuff(CharacterBuffIds_1.buffId.DrownPunishment, {
-        InstigatorId: this.elt.CreatureDataId,
+      this.m1t.AddBuff(CharacterBuffIds_1.buffId.DrownPunishment, {
+        InstigatorId: this.m1t.CreatureDataId,
         Reason: "溺水流程添加",
       }),
       (e = e.GetCurrentValue(
         CharacterAttributeTypes_1.EAttributeId.Proto_Life,
       )),
-      this.eon.PlayMontageWithCallBack(1, this.DrowningPunishment),
-      this.elt?.HasBuffAuthority() &&
-        this.elt.RemoveBuffByEffectType(36, "溺水移除冰冻buff"),
+      this.Bin.PlayMontageWithCallBack(1, this.DrowningPunishment),
+      this.m1t?.HasBuffAuthority() &&
+        this.m1t.RemoveBuffByEffectType(36, "溺水移除冰冻buff"),
       EventSystem_1.EventSystem.EmitWithTarget(
         this.Entity,
         EventDefine_1.EEventName.CharOnRoleDrownInjure,
@@ -253,23 +239,23 @@ let RoleDeathComponent = class RoleDeathComponent extends BaseDeathComponent_1.B
         EventDefine_1.EEventName.CharOnRoleDrown,
         !0,
       ),
-      CombatMessage_1.CombatNet.Call(8946, this.Entity, {});
+      CombatMessage_1.CombatNet.Call(24706, this.Entity, {});
   }
   IsDrowning() {
     return this.Xte?.HasTag(191377386) ?? !1;
   }
   ResetDrowning() {
-    this.ton && (this.ion(), (this.ton = !1));
+    this.bin && (this.qin(), (this.bin = !1));
   }
 };
 __decorate(
-  [CombatMessage_1.CombatNet.Listen("o2n", !0)],
+  [CombatMessage_1.CombatNet.Listen("BFn", !0)],
   RoleDeathComponent,
   "DrownNotify",
   null,
 ),
   (RoleDeathComponent = __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(172)],
+    [(0, RegisterComponent_1.RegisterComponent)(175)],
     RoleDeathComponent,
   )),
   (exports.RoleDeathComponent = RoleDeathComponent);

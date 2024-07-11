@@ -26,30 +26,30 @@ const EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent"),
 let DungeonEntranceComponent = class DungeonEntranceComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments),
-      (this.Ben = void 0),
-      (this.ben = void 0),
-      (this.qen = (t, e) => {
-        this.Nen();
+      (this.cen = void 0),
+      (this.men = void 0),
+      (this.den = (t, e) => {
+        this.Cen();
       }),
-      (this.Oen = (t) => {
-        this.Nen(t);
+      (this.gen = (t) => {
+        this.Cen(t);
       });
   }
   OnStart() {
     return (
-      (this.Ben = this.Entity.GetComponent(117)),
-      (this.ben = new Array()),
+      (this.cen = this.Entity.GetComponent(119)),
+      (this.men = new Array()),
       EventSystem_1.EventSystem.AddWithTarget(
         this.Entity,
         EventDefine_1.EEventName.OnSceneItemStateChange,
-        this.qen,
+        this.den,
       ),
       EventSystem_1.EventSystem.AddWithTarget(
         this.Entity,
         EventDefine_1.EEventName.OnSceneItemStatePrechangeInSequence,
-        this.Oen,
+        this.gen,
       ),
-      this.Nen(),
+      this.Cen(),
       !0
     );
   }
@@ -61,34 +61,34 @@ let DungeonEntranceComponent = class DungeonEntranceComponent extends EntityComp
       EventSystem_1.EventSystem.RemoveWithTarget(
         this.Entity,
         EventDefine_1.EEventName.OnSceneItemStateChange,
-        this.qen,
+        this.den,
       ),
       EventSystem_1.EventSystem.RemoveWithTarget(
         this.Entity,
         EventDefine_1.EEventName.OnSceneItemStatePrechangeInSequence,
-        this.Oen,
+        this.gen,
       ),
-      !(this.ben = void 0)
+      !(this.men = void 0)
     );
   }
   RegisterRestoreCb(t) {
-    this.ben.push(t);
+    this.men.push(t);
   }
   Restore() {
-    if (this.ben?.length) {
-      for (const t of this.ben) t();
-      this.ben.length = 0;
+    if (this.men?.length) {
+      for (const t of this.men) t();
+      this.men.length = 0;
     }
   }
-  Nen(t) {
+  Cen(t) {
     t
-      ? -3775711 === t && this.Ben.ChangePerformanceState(217251158, !1, !1)
-      : 2 === this.Ben?.State &&
-        this.Ben.ChangePerformanceState(217251158, !1, !1);
+      ? -3775711 === t && this.cen.ChangePerformanceState(217251158, !1, !1)
+      : 2 === this.cen?.State &&
+        this.cen.ChangePerformanceState(217251158, !1, !1);
   }
 };
 (DungeonEntranceComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(72)],
+  [(0, RegisterComponent_1.RegisterComponent)(74)],
   DungeonEntranceComponent,
 )),
   (exports.DungeonEntranceComponent = DungeonEntranceComponent);

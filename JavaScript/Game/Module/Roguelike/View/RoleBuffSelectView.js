@@ -19,19 +19,19 @@ class RoleBuffSelectItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
       (this.RogueGainEntry = void 0),
-      (this.yao = void 0),
-      (this.Iao = (e) => {
-        this.yao?.();
+      (this.vho = void 0),
+      (this.Mho = (e) => {
+        this.vho?.();
       });
   }
   Refresh(e, t, i) {
     this.Update(e), this.GetExtendToggle(0).SetToggleState(t ? 1 : 0);
   }
   Update(e) {
-    (this.RogueGainEntry = e), this.PWt();
+    (this.RogueGainEntry = e), this.PKt();
   }
   SetToggleStateChangeCallback(e) {
-    this.yao = e;
+    this.vho = e;
   }
   IsSelect() {
     return 1 === this.GetExtendToggle(0).GetToggleState();
@@ -44,9 +44,9 @@ class RoleBuffSelectItem extends GridProxyAbstract_1.GridProxyAbstract {
       [3, UE.UIText],
       [4, UE.UIItem],
     ]),
-      (this.BtnBindInfo = [[0, this.Iao]]);
+      (this.BtnBindInfo = [[0, this.Mho]]);
   }
-  PWt() {
+  PKt() {
     var e =
       ConfigManager_1.ConfigManager.RoguelikeConfig.GetRogueCharacterBuffConfig(
         this.RogueGainEntry.ConfigId,
@@ -68,13 +68,13 @@ exports.RoleBuffSelectItem = RoleBuffSelectItem;
 class RoleBuffSelectView extends RogueSelectBaseView_1.RogueSelectBaseView {
   constructor() {
     super(...arguments),
-      (this.dho = void 0),
-      (this.Cho = void 0),
+      (this.ulo = void 0),
+      (this.clo = void 0),
       (this.ButtonItem = void 0),
       (this.RoleBuffSelectLayout = void 0),
-      (this.m6t = () => {
+      (this.m8t = () => {
         var e;
-        this.dho.RogueGainEntryList.length <= 0
+        this.ulo.RogueGainEntryList.length <= 0
           ? RoguelikeController_1.RoguelikeController.RogueChooseDataResultRequest(
               3,
             )
@@ -89,26 +89,31 @@ class RoleBuffSelectView extends RogueSelectBaseView_1.RogueSelectBaseView {
       }),
       (this.RefreshBtnEnableClick = () => {
         var e;
-        this.dho.RogueGainEntryList?.length <= 0
+        this.ulo.RogueGainEntryList?.length <= 0
           ? this.ButtonItem.SetEnableClick(!0)
           : ((e = this.GetRoleBuffSelectItem()),
             this.ButtonItem.SetEnableClick(void 0 !== e));
       }),
-      (this.Rho = () => {
+      (this.Tlo = () => {
         var e = new RoleBuffSelectItem();
         return e.SetToggleStateChangeCallback(this.RefreshBtnEnableClick), e;
       }),
       (this.OnDescModelChange = () => {
-        this.PWt();
+        this.PKt();
       }),
       (this.RoguelikeChooseDataResult = (e, t, i, s) => {
         i &&
-          s === this.dho?.Index &&
+          s === this.ulo?.Index &&
           ((i = this.GetRoleBuffSelectItem()),
+          ((s = new RogueSelectResult_1.RogueSelectResult(
+            e,
+            t,
+            i?.RogueGainEntry,
+          )).CallBack = this.ulo.CallBack),
           UiManager_1.UiManager.CloseAndOpenView(
             this.Info.Name,
             "RogueRoleSelectResultView",
-            new RogueSelectResult_1.RogueSelectResult(e, t, i?.RogueGainEntry),
+            s,
           ));
       });
   }
@@ -127,9 +132,9 @@ class RoleBuffSelectView extends RogueSelectBaseView_1.RogueSelectBaseView {
       if (e.IsSelect()) return e;
   }
   async OnBeforeStartAsync() {
-    (this.Cho = new TopPanel_1.TopPanel()),
-      this.AddChild(this.Cho),
-      await this.Cho.CreateThenShowByActorAsync(this.GetItem(0).GetOwner());
+    (this.clo = new TopPanel_1.TopPanel()),
+      this.AddChild(this.clo),
+      await this.clo.CreateThenShowByActorAsync(this.GetItem(0).GetOwner());
     var e = ModelManager_1.ModelManager.RoguelikeModel.RogueInfo.RoleEntry;
     e &&
       ((e =
@@ -142,35 +147,35 @@ class RoleBuffSelectView extends RogueSelectBaseView_1.RogueSelectBaseView {
   }
   OnStart() {
     (ModelManager_1.ModelManager.RoguelikeModel.CurrentRogueGainEntry = void 0),
-      (this.dho = this.OpenParam),
-      (this.Cho.CloseCallback = this.CloseMySelf),
+      (this.ulo = this.OpenParam),
+      (this.clo.CloseCallback = this.CloseMySelf),
       (this.ButtonItem = new ButtonItem_1.ButtonItem(
         this.GetButton(4).GetRootComponent(),
       )),
-      this.ButtonItem.SetFunction(this.m6t),
+      this.ButtonItem.SetFunction(this.m8t),
       (this.RoleBuffSelectLayout = new GenericLayout_1.GenericLayout(
         this.GetVerticalLayout(2),
-        this.Rho,
+        this.Tlo,
       ));
   }
   OnBeforeDestroy() {
-    this.Cho.Destroy();
+    this.clo.Destroy();
   }
   OnBeforeShow() {
-    this.PWt();
+    this.PKt();
   }
-  PWt() {
-    this.Uho(), this.Aho(), this.RefreshBtnText(), this.RefreshBtnEnableClick();
+  PKt() {
+    this.Llo(), this.Dlo(), this.RefreshBtnText(), this.RefreshBtnEnableClick();
   }
-  Uho() {
-    this.Cho.RefreshTitle(RoguelikeDefine_1.ROGUELIKEVIEW_7_TEXT),
-      this.Cho.RefreshSelectTipsText(
+  Llo() {
+    this.clo.RefreshTitle(RoguelikeDefine_1.ROGUELIKEVIEW_7_TEXT),
+      this.clo.RefreshSelectTipsText(
         RoguelikeDefine_1.ROGUELIKEVIEW_8_TEXT,
         !0,
       );
   }
-  Aho() {
-    this.RoleBuffSelectLayout.RefreshByData(this.dho.RogueGainEntryList ?? []);
+  Dlo() {
+    this.RoleBuffSelectLayout.RefreshByData(this.ulo.RogueGainEntryList ?? []);
   }
   RefreshBtnText() {
     this.ButtonItem.SetShowText(RoguelikeDefine_1.ROGUELIKEVIEW_15_TEXT);

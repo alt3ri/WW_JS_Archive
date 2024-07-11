@@ -18,24 +18,24 @@ class SpaceUtils {
   static vz() {
     return this.Mz.length ? this.Mz.pop() : Vector_1.Vector.Create();
   }
-  static Sz(t) {
+  static Ez(t) {
     this.Mz.push(...t), (t.length = 0);
   }
   static IsComponentInRingArea(t, s, i) {
     var h = i.Bounds,
       e =
-        (this.Ez.FromUeVector(h.Origin),
+        (this.Sz.FromUeVector(h.Origin),
         this.yz.FromUeVector(h.BoxExtent),
         s.X * s.X);
     if (e < this.yz.X * this.yz.X || e < this.yz.Y * this.yz.Y)
       return (
-        (this.Ez.Z = 0),
+        (this.Sz.Z = 0),
         (this.yz.Z = 0),
-        this.y4s.Set(t.X, t.Y, 0),
-        this.I4s(this.Ez, this.yz, this.y4s, s.X)
+        this.g9s.Set(t.X, t.Y, 0),
+        this.f9s(this.Sz, this.yz, this.g9s, s.X)
       );
     this.Iz.FromUeQuat(i.K2_GetComponentQuaternion()),
-      this.Ez.Subtraction(t, this.Tz);
+      this.Sz.Subtraction(t, this.Tz);
     var r = s.Z,
       a = s.Y * s.Y;
     let o = 0,
@@ -55,25 +55,25 @@ class SpaceUtils {
     }
     return !1;
   }
-  static I4s(t, s, i, h) {
-    i.Subtraction(t, this.T4s),
-      this.T4s.X < 0 && (this.T4s.X = -this.T4s.X),
-      this.T4s.Y < 0 && (this.T4s.Y = -this.T4s.Y),
-      this.T4s.SubtractionEqual(s);
+  static f9s(t, s, i, h) {
+    i.Subtraction(t, this.p9s),
+      this.p9s.X < 0 && (this.p9s.X = -this.p9s.X),
+      this.p9s.Y < 0 && (this.p9s.Y = -this.p9s.Y),
+      this.p9s.SubtractionEqual(s);
     let e = !1;
-    if ((this.T4s.X < 0 && ((this.T4s.X = 0), (e = !0)), this.T4s.Y < 0)) {
+    if ((this.p9s.X < 0 && ((this.p9s.X = 0), (e = !0)), this.p9s.Y < 0)) {
       if (e) return !0;
-      this.T4s.Y = 0;
+      this.p9s.Y = 0;
     }
-    return this.T4s.DotProduct(this.T4s) <= h * h;
+    return this.p9s.DotProduct(this.p9s) <= h * h;
   }
   static IsComponentInSectorArea(t, s, i, h) {
     var e = h.Bounds,
       r =
-        (this.Ez.FromUeVector(e.Origin),
+        (this.Sz.FromUeVector(e.Origin),
         this.yz.FromUeVector(e.BoxExtent),
         this.Iz.FromUeQuat(h.K2_GetComponentQuaternion()),
-        this.Ez.Subtraction(t, this.Tz),
+        this.Sz.Subtraction(t, this.Tz),
         i.Inverse(this.Dz),
         s.X * s.X),
       a = MathUtils_1.MathUtils.DegToRad * s.Y * 0.5,
@@ -103,12 +103,12 @@ class SpaceUtils {
             : Math.abs(p) <= a && (u = 3)),
         3 === _ && 3 === n && 3 === u)
       )
-        return o && (this.Sz(this.Uz), this.Sz(this.Rz)), !0;
+        return o && (this.Ez(this.Uz), this.Ez(this.Rz)), !0;
     }
     if (o) {
       if (3 === _ && 3 === n && this.Az())
-        return this.Sz(this.Uz), this.Sz(this.Rz), !0;
-      this.Sz(this.Uz), this.Sz(this.Rz);
+        return this.Ez(this.Uz), this.Ez(this.Rz), !0;
+      this.Ez(this.Uz), this.Ez(this.Rz);
     }
     return !1;
   }
@@ -138,7 +138,7 @@ class SpaceUtils {
     }
   }
 }
-((exports.SpaceUtils = SpaceUtils).Ez = Vector_1.Vector.Create()),
+((exports.SpaceUtils = SpaceUtils).Sz = Vector_1.Vector.Create()),
   (SpaceUtils.yz = Vector_1.Vector.Create()),
   (SpaceUtils.Iz = Quat_1.Quat.Create()),
   (SpaceUtils.Lz = Vector_1.Vector.Create()),
@@ -147,6 +147,6 @@ class SpaceUtils {
   (SpaceUtils.Mz = new Array()),
   (SpaceUtils.Uz = new Array()),
   (SpaceUtils.Rz = new Array()),
-  (SpaceUtils.y4s = Vector_1.Vector.Create()),
-  (SpaceUtils.T4s = Vector_1.Vector.Create());
+  (SpaceUtils.g9s = Vector_1.Vector.Create()),
+  (SpaceUtils.p9s = Vector_1.Vector.Create());
 //# sourceMappingURL=SpaceUtils.js.map

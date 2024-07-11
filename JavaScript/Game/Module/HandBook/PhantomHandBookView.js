@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PhantomHandBookView = void 0);
 const Log_1 = require("../../../Core/Common/Log"),
+  ConfigCommon_1 = require("../../../Core/Config/ConfigCommon"),
   MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
@@ -18,17 +19,16 @@ const Log_1 = require("../../../Core/Common/Log"),
   HandBookController_1 = require("./HandBookController"),
   HandBookDefine_1 = require("./HandBookDefine"),
   HandBookFetterItem_1 = require("./HandBookFetterItem"),
-  HandBookPhantomItem_1 = require("./HandBookPhantomItem"),
-  ConfigCommon_1 = require("../../../Core/Config/ConfigCommon");
+  HandBookPhantomItem_1 = require("./HandBookPhantomItem");
 class PhantomHandBookView extends HandBookBaseView_1.HandBookBaseView {
   constructor() {
     super(...arguments),
-      (this.oei = []),
-      (this.rei = []),
-      (this.nei = []),
-      (this.Bzt = []),
-      (this.sei = void 0),
-      (this.bzt = void 0),
+      (this.oti = []),
+      (this.rti = []),
+      (this.nti = []),
+      (this.BZt = []),
+      (this.sti = void 0),
+      (this.bZt = void 0),
       (this.Refresh = () => {
         this.RefreshTabComponent(),
           this.RefreshPhantomTitle(),
@@ -38,9 +38,9 @@ class PhantomHandBookView extends HandBookBaseView_1.HandBookBaseView {
       }),
       (this.OnHandBookRead = (e, t) => {
         if (1 === e) {
-          var n = this.Bzt.length;
+          var n = this.BZt.length;
           for (let e = 0; e < n; e++) {
-            var o = this.Bzt[e],
+            var o = this.BZt[e],
               i = o.GetData();
             if (i.Config.Id === t) {
               (i.IsNew = !1), o.SetNewFlagVisible(!1);
@@ -51,15 +51,15 @@ class PhantomHandBookView extends HandBookBaseView_1.HandBookBaseView {
       }),
       (this.TabToggleCallBack = (e) => {
         this.SetDefaultState(), this.GetItem(0).SetUIActive(!0);
-        e = this.oei[e].Id;
-        0 === (this.sei = e)
+        e = this.oti[e].Id;
+        0 === (this.sti = e)
           ? (this.RefreshPhantomTitle(), this.RefreshPhantom())
           : (this.RefreshPhantomFetterTitle(), this.RefreshPhantomFetter());
       }),
       (this.InitHandBookCommonItem = () => {
         var e = new HandBookCommonItem_1.HandBookCommonItem();
         return (
-          this.Bzt.push(e),
+          this.BZt.push(e),
           e.BindOnExtendToggleStateChanged(this.OnToggleClick),
           e
         );
@@ -77,19 +77,19 @@ class PhantomHandBookView extends HandBookBaseView_1.HandBookBaseView {
       (this.TabItemProxyCreate = (e, t) => {
         return new CommonTabItem_1.CommonTabItem();
       }),
-      (this.aZt = (e, t) => e.Id - t.Id),
+      (this.aei = (e, t) => e.Id - t.Id),
       (this.InitHandBookPhantom = (e, t, n) => {
         var o = new HandBookPhantomItem_1.HandBookPhantomItem();
         return (
           o.Initialize(e, t),
           o.BindToggleCallback(this.OnPhantomToggleClick),
-          this.nei.push(o),
+          this.nti.push(o),
           { Key: n, Value: o }
         );
       }),
       (this.OnPhantomToggleClick = (e) => {
         var t, n;
-        0 !== this.sei &&
+        0 !== this.sti &&
           ((t = e.Config),
           this.SetLockState(!1),
           e.IsNew &&
@@ -104,7 +104,7 @@ class PhantomHandBookView extends HandBookBaseView_1.HandBookBaseView {
             ? e.IsLock ||
               HandBookController_1.HandBookController.SetPhantomMeshShow(
                 n.Id,
-                this.qzt,
+                this.qZt,
               )
             : Log_1.Log.CheckError() &&
               Log_1.Log.Error(
@@ -115,9 +115,9 @@ class PhantomHandBookView extends HandBookBaseView_1.HandBookBaseView {
       }),
       (this.InitHandBookFetterItem = () => {
         var e = new HandBookFetterItem_1.HandBookFetterItem();
-        return e.BindFetterToggleCallback(this.GZt), this.rei.push(e), e;
+        return e.BindFetterToggleCallback(this.Gei), this.rti.push(e), e;
       }),
-      (this.GZt = (e) => {
+      (this.Gei = (e) => {
         var t = e.GetGirdIndex(),
           t =
             (this.ScrollViewFetter.DeselectCurrentGridProxy(),
@@ -129,13 +129,13 @@ class PhantomHandBookView extends HandBookBaseView_1.HandBookBaseView {
           this.RefreshPhantomFetterLayout(t),
           this.RefreshHandBookPhantomLayout(t);
       }),
-      (this.qzt = void 0);
+      (this.qZt = void 0);
   }
   OnStart() {
     this.SetDefaultState(), this.Refresh();
   }
   OnAfterShow() {
-    this.bzt =
+    this.bZt =
       UiCameraAnimationManager_1.UiCameraAnimationManager.PushCameraHandleByHandleName(
         "1062",
       );
@@ -170,7 +170,7 @@ class PhantomHandBookView extends HandBookBaseView_1.HandBookBaseView {
   }
   RefreshPhantomContent(e) {
     var t, n, o, i;
-    1 !== this.sei &&
+    1 !== this.sti &&
       (this.GetVerticalLayout(18).RootUIComp.SetUIActive(!1),
       (i = e.Config),
       (n = ModelManager_1.ModelManager.HandBookModel.GetHandBookInfo(
@@ -192,7 +192,7 @@ class PhantomHandBookView extends HandBookBaseView_1.HandBookBaseView {
       this.InitInfoItemLayout(o),
       HandBookController_1.HandBookController.SetPhantomMeshShow(
         i.Id,
-        this.qzt,
+        this.qZt,
       ),
       (t = []),
       (e = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(i.Title1)),
@@ -239,7 +239,7 @@ class PhantomHandBookView extends HandBookBaseView_1.HandBookBaseView {
         (s.IsNew = a),
         n.push(s));
     }
-    (this.Bzt = []), this.InitScrollViewByCommonItem(n);
+    (this.BZt = []), this.InitScrollViewByCommonItem(n);
   }
   GetTabItemData(e) {
     var t = e.length,
@@ -263,14 +263,14 @@ class PhantomHandBookView extends HandBookBaseView_1.HandBookBaseView {
     this.SetLockText(e);
   }
   RefreshTabComponent() {
-    (this.oei = ConfigCommon_1.ConfigCommon.ToList(
+    (this.oti = ConfigCommon_1.ConfigCommon.ToList(
       ConfigManager_1.ConfigManager.HandBookConfig.GetPhantomHandBookPageConfig(),
     )),
-      this.oei.sort(this.aZt);
-    var t = this.oei.length,
+      this.oti.sort(this.aei);
+    var t = this.oti.length,
       n = [];
     for (let e = 0; e < t; e++) {
-      var o = this.oei[e];
+      var o = this.oti[e];
       n.push(new CommonTabData_1.CommonTabData(o.Icon, void 0));
     }
     this.InitTabComponent(n), this.SetTabToggleCallBack(this.TabToggleCallBack);
@@ -309,15 +309,15 @@ class PhantomHandBookView extends HandBookBaseView_1.HandBookBaseView {
           );
       n.push(i);
     }
-    (this.rei = []),
+    (this.rti = []),
       this.InitScrollViewByFetterItem(n),
       this.InitToggleState(),
       this.GetText(17).SetUIActive(!1);
   }
   InitToggleState() {
-    var t = this.rei.length;
+    var t = this.rti.length;
     for (let e = 0; e < t; e++) {
-      var n = this.rei[e];
+      var n = this.rti[e];
       0 === e
         ? (n.SetToggleStateForce(1), n.OnSelected(!0))
         : n.SetToggleStateForce(0);
@@ -328,10 +328,10 @@ class PhantomHandBookView extends HandBookBaseView_1.HandBookBaseView {
       this.RefreshHandBookPhantomItemToggleState();
   }
   RefreshHandBookPhantomItemToggleState() {
-    var t = this.nei.length;
+    var t = this.nti.length;
     if (0 !== t)
       for (let e = 0; e < t; e++) {
-        var n = this.nei[e];
+        var n = this.nti[e];
         0 === e
           ? (n.SetToggleStateForce(1), n.OnSelected(!0))
           : n.SetToggleStateForce(0);
@@ -359,20 +359,20 @@ class PhantomHandBookView extends HandBookBaseView_1.HandBookBaseView {
   }
   OnBeforePlayCloseSequence() {
     UiCameraAnimationManager_1.UiCameraAnimationManager.PopCameraHandle(
-      this.bzt,
+      this.bZt,
     );
   }
   OnBeforeCreate() {
     UiSceneManager_1.UiSceneManager.InitPhantomObserver(),
-      (this.qzt = UiSceneManager_1.UiSceneManager.GetPhantomObserver());
+      (this.qZt = UiSceneManager_1.UiSceneManager.GetPhantomObserver());
   }
   OnBeforeDestroy() {
     UiSceneManager_1.UiSceneManager.DestroyPhantomObserver(),
-      (this.qzt = void 0),
-      (this.oei = []),
-      (this.rei = []),
-      (this.nei = []),
-      (this.Bzt = []);
+      (this.qZt = void 0),
+      (this.oti = []),
+      (this.rti = []),
+      (this.nti = []),
+      (this.BZt = []);
   }
 }
 exports.PhantomHandBookView = PhantomHandBookView;

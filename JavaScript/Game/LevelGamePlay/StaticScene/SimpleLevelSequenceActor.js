@@ -112,32 +112,62 @@ class SimpleLevelSequenceActor {
     this.JPe = e ?? !1;
   }
   ForceSwitchSceneCamera(e) {
-    return (
-      !!this.qPe?.IsValid() &&
-      !!this.hxe &&
-      ((this.sxe = !0),
-      e
-        ? ((this.txe = !0),
-          this._xe(() => {
-            UiManager_1.UiManager.OpenView(
-              "TimeTrackControlView",
-              void 0,
-              (e) => {
-                e
-                  ? CameraController_1.CameraController.Model.IsToSceneCameraMode() ||
-                    (TsInteractionUtils_1.TsInteractionUtils.ClearCurrentOpenViewName(),
-                    TimeTrackController_1.TimeTrackController.HandleTimeTrackControlViewClose(),
-                    UiManager_1.UiManager.GetViewByName(
-                      "TimeTrackControlView",
-                    )?.CloseMe())
-                  : (TsInteractionUtils_1.TsInteractionUtils.ClearCurrentOpenViewName(),
-                    TimeTrackController_1.TimeTrackController.HandleTimeTrackControlViewClose());
-              },
-            );
-          }))
-        : ((this.txe = !1), this.dxe()),
-      !0)
-    );
+    return this.qPe?.IsValid()
+      ? this.hxe
+        ? ((this.sxe = !0),
+          e
+            ? ((this.txe = !0),
+              this._xe(() => {
+                UiManager_1.UiManager.OpenView(
+                  "TimeTrackControlView",
+                  void 0,
+                  (e) => {
+                    e
+                      ? CameraController_1.CameraController.Model.IsToSceneCameraMode() ||
+                        (Log_1.Log.CheckInfo() &&
+                          Log_1.Log.Info(
+                            "SceneGameplay",
+                            46,
+                            "时间控制装置启动请求:失败，IsToSceneCameraMode",
+                          ),
+                        TsInteractionUtils_1.TsInteractionUtils.ClearCurrentOpenViewName(),
+                        TimeTrackController_1.TimeTrackController.HandleTimeTrackControlViewClose(),
+                        UiManager_1.UiManager.GetViewByName(
+                          "TimeTrackControlView",
+                        )?.CloseMe(),
+                        TimeTrackController_1.TimeTrackController.FinishCallback(
+                          !1,
+                        ))
+                      : (Log_1.Log.CheckInfo() &&
+                          Log_1.Log.Info(
+                            "SceneGameplay",
+                            46,
+                            "时间控制装置启动请求:失败，OpenView(EUiViewName.TimeTrackControlView",
+                          ),
+                        TsInteractionUtils_1.TsInteractionUtils.ClearCurrentOpenViewName(),
+                        TimeTrackController_1.TimeTrackController.HandleTimeTrackControlViewClose(),
+                        TimeTrackController_1.TimeTrackController.FinishCallback(
+                          !1,
+                        ));
+                  },
+                );
+              }))
+            : ((this.txe = !1), this.dxe()),
+          !0)
+        : (Log_1.Log.CheckInfo() &&
+            Log_1.Log.Info(
+              "SceneGameplay",
+              46,
+              "时间控制装置启动请求:失败，!this.HasCameraTrack",
+            ),
+          !1)
+      : (Log_1.Log.CheckInfo() &&
+          Log_1.Log.Info(
+            "SceneGameplay",
+            46,
+            "时间控制装置启动请求:失败，!this.Director?.IsValid()",
+          ),
+        !1);
   }
   PlayToMarkOld(e, t, i, s) {
     this.Cxe(e) &&
@@ -279,7 +309,7 @@ class SimpleLevelSequenceActor {
       ]),
       this.XPe ||
         (1 !== this.WPe || this.sxe
-          ? this.Sxe()
+          ? this.Exe()
           : this.lxe(
               this.oxe,
               this.HPe,
@@ -293,7 +323,7 @@ class SimpleLevelSequenceActor {
                 );
               },
               () => {
-                this.Sxe();
+                this.Exe();
               },
             ));
   }
@@ -307,7 +337,7 @@ class SimpleLevelSequenceActor {
       ),
       this.XPe ||
         (1 !== this.WPe || this.sxe
-          ? this.Sxe()
+          ? this.Exe()
           : this.lxe(
               this.oxe,
               this.HPe,
@@ -321,11 +351,11 @@ class SimpleLevelSequenceActor {
                 );
               },
               () => {
-                this.Sxe();
+                this.Exe();
               },
             ));
   }
-  Sxe() {
+  Exe() {
     (Global_1.Global.CharacterCameraManager.FadeAmount = 0),
       !this.hxe ||
         (ModelManager_1.ModelManager.StaticSceneModel
@@ -361,7 +391,11 @@ class SimpleLevelSequenceActor {
     this.qPe?.IsValid()
       ? ModelManager_1.ModelManager.PlotModel.IsInHighLevelPlot()
         ? (Log_1.Log.CheckWarn() &&
-            Log_1.Log.Warn("Camera", 7, "演出中触发了场景镜头切换 请检查配置"),
+            Log_1.Log.Warn(
+              "Camera",
+              46,
+              "SimpleLevelSeqeunce:演出中触发了场景镜头切换 请检查配置",
+            ),
           e())
         : ((t = this.qPe.SequencePlayer.IsPlaying()),
           this.JPe ||
@@ -400,7 +434,13 @@ class SimpleLevelSequenceActor {
                       0,
                       0,
                       0,
-                      e,
+                      () => {
+                        CameraController_1.CameraController.Model.IsToSceneCameraMode()
+                          ? e()
+                          : (TsInteractionUtils_1.TsInteractionUtils.ClearCurrentOpenViewName(),
+                            TimeTrackController_1.TimeTrackController.HandleTimeTrackControlViewClose());
+                      },
+                      !0,
                     );
                   })
                 : CameraController_1.CameraController.EnterCameraMode(
@@ -408,7 +448,13 @@ class SimpleLevelSequenceActor {
                     this.NPe ?? 1,
                     0,
                     0,
-                    e,
+                    () => {
+                      CameraController_1.CameraController.Model.IsToSceneCameraMode()
+                        ? e()
+                        : (TsInteractionUtils_1.TsInteractionUtils.ClearCurrentOpenViewName(),
+                          TimeTrackController_1.TimeTrackController.HandleTimeTrackControlViewClose());
+                    },
+                    !0,
                   )
               : (this.YPe
                   ? Log_1.Log.CheckInfo() &&
@@ -434,8 +480,13 @@ class SimpleLevelSequenceActor {
                 ) || e(),
                 (this.YPe = !0),
                 (this.exe.IsBinding = !0)))
-      : Log_1.Log.CheckWarn() &&
-        Log_1.Log.Warn("UiCore", 46, "EnterSceneCamera Director为空");
+      : (Log_1.Log.CheckWarn() &&
+          Log_1.Log.Warn(
+            "UiCore",
+            46,
+            "SimpleLevelSeqeunce:EnterSceneCamera Director为空",
+          ),
+        e());
   }
   dxe() {
     this.qPe.ResetBindings(),
@@ -584,7 +635,7 @@ class SimpleLevelSequenceActor {
     var i = this.bPe.GetMovieScene();
     for (let e = 0; e < i.MarkedFrames.Num(); e++)
       if (i.MarkedFrames.Get(e).Label === t)
-        return this.Exe(i.MarkedFrames.Get(e).FrameNumber.Value);
+        return this.Sxe(i.MarkedFrames.Get(e).FrameNumber.Value);
   }
   CheckLatestWay() {
     var e, t, i, s;
@@ -600,7 +651,7 @@ class SimpleLevelSequenceActor {
       : Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("Interaction", 46, "检查最短路径，但movieScene为空");
   }
-  Exe(e) {
+  Sxe(e) {
     var t = this.bPe.GetMovieScene();
     return (e * t.DisplayRate.Numerator) / t.TickResolution.Numerator;
   }

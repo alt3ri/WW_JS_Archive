@@ -12,16 +12,16 @@ const UE = require("ue"),
 class FocusItemText extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
-      (this.XJt = 0),
-      (this.$Jt = !0),
-      (this.ZBt = void 0),
-      (this.YJt = void 0),
-      (this.OKt = void 0),
-      (this.JJt = () => {
-        this.XJt = 1;
+      (this.Xzt = 0),
+      (this.$zt = !0),
+      (this.iqt = void 0),
+      (this.Yzt = void 0),
+      (this.OQt = void 0),
+      (this.Jzt = () => {
+        this.Xzt = 1;
       }),
-      (this.OKt = e),
-      (this.YJt = e.Owner);
+      (this.OQt = e),
+      (this.Yzt = e.Owner);
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -40,11 +40,11 @@ class FocusItemText extends UiPanelBase_1.UiPanelBase {
     ];
   }
   OnStart() {
-    var e = this.YJt.TotalDuration,
+    var e = this.Yzt.TotalDuration,
       t = this.GetItem(8);
     0 < e
-      ? ((this.ZBt = new GuideCountDownItem_1.GuideCountDownItem(e)),
-        this.ZBt.Init(t),
+      ? ((this.iqt = new GuideCountDownItem_1.GuideCountDownItem(e)),
+        this.iqt.Init(t),
         t.SetUIActive(!0))
       : t.SetUIActive(!1),
       this.RootItem.SetAnchorOffset(Vector2D_1.Vector2D.ZeroVector);
@@ -52,11 +52,11 @@ class FocusItemText extends UiPanelBase_1.UiPanelBase {
   ShowText() {
     var e = this.GetText(7),
       e =
-        (this.GetHorizontalLayout(3).OnRebuildLayoutDelegate.Bind(this.JJt),
+        (this.GetHorizontalLayout(3).OnRebuildLayoutDelegate.Bind(this.Jzt),
         new GuideDescribeNew_1.GuideDescribeNew(e)),
-      t = this.YJt.GetFocusViewConf(),
+      t = this.Yzt.GetFocusViewConf(),
       i =
-        ((this.$Jt = t.TextInScreen),
+        ((this.$zt = t.TextInScreen),
         e.SetUpText(t.Content, ...t.Button),
         this.GetItem(1)),
       s = this.GetItem(2),
@@ -90,12 +90,12 @@ class FocusItemText extends UiPanelBase_1.UiPanelBase {
       : this.GetItem(10).SetUIActive(!1);
   }
   OnTick(e) {
-    this.zJt(), this.ZJt();
+    this.zzt(), this.Zzt();
   }
-  zJt() {
-    var e = this.OKt.RectItem,
+  zzt() {
+    var e = this.OQt.RectItem,
       t = this.GetHorizontalLayout(3),
-      i = this.YJt.GetFocusViewConf(),
+      i = this.Yzt.GetFocusViewConf(),
       s = t.RootUIComp.K2_GetComponentScale().X;
     let r = 0;
     var a = this.RootItem;
@@ -122,11 +122,11 @@ class FocusItemText extends UiPanelBase_1.UiPanelBase {
         a.K2_SetWorldLocation(h, !1, void 0, !1);
     }
     i = this.GetText(7);
-    i.GetWidth() > FocusItemText.ezt &&
-      (i.SetWidth(FocusItemText.ezt), i.SetOverflowType(1));
+    i.GetWidth() > FocusItemText.eZt &&
+      (i.SetWidth(FocusItemText.eZt), i.SetOverflowType(1));
   }
-  ZJt() {
-    if (!(!this.$Jt || this.XJt <= 0 || 0 < --this.XJt)) {
+  Zzt() {
+    if (!(!this.$zt || this.Xzt <= 0 || 0 < --this.Xzt)) {
       var r = this.GetHorizontalLayout(3).RootUIComp,
         a = r.K2_GetComponentLocation(),
         h = this.RootItem.K2_GetComponentLocation(),
@@ -141,10 +141,10 @@ class FocusItemText extends UiPanelBase_1.UiPanelBase {
         U = U / 2,
         _ = r.Width,
         x = r.Height;
-      let e = c.X - u + (r.GetPivot().X * _ + FocusItemText.tzt) * n,
-        t = c.X + u - ((1 - r.GetPivot().X) * _ + FocusItemText.tzt) * n,
-        i = c.Y - U + (r.GetPivot().Y * x + FocusItemText.izt) * o,
-        s = c.Y + U - ((1 - r.GetPivot().Y) * x + FocusItemText.izt) * o;
+      let e = c.X - u + (r.GetPivot().X * _ + FocusItemText.tZt) * n,
+        t = c.X + u - ((1 - r.GetPivot().X) * _ + FocusItemText.tZt) * n,
+        i = c.Y - U + (r.GetPivot().Y * x + FocusItemText.iZt) * o,
+        s = c.Y + U - ((1 - r.GetPivot().Y) * x + FocusItemText.iZt) * o;
       e > t && ((e += t), (t = e - t), (e -= t)),
         i > s && ((i += s), (s = i - s), (i -= s)),
         (a.X = MathUtils_1.MathUtils.Clamp(h.X, e, t)),
@@ -154,13 +154,13 @@ class FocusItemText extends UiPanelBase_1.UiPanelBase {
     }
   }
   OnDurationChange(e) {
-    this.ZBt && this.ZBt.OnDurationChange(e);
+    this.iqt && this.iqt.OnDurationChange(e);
   }
   OnBaseViewCloseWhenFinish() {
-    this.ZBt?.SetActive(!1), this.GetItem(9).SetUIActive(!0);
+    this.iqt?.SetActive(!1), this.GetItem(9).SetUIActive(!0);
   }
 }
-((exports.FocusItemText = FocusItemText).tzt = 80),
-  (FocusItemText.izt = 10),
-  (FocusItemText.ezt = 1120);
+((exports.FocusItemText = FocusItemText).tZt = 80),
+  (FocusItemText.iZt = 10),
+  (FocusItemText.eZt = 1120);
 //# sourceMappingURL=GuideFocusItemText.js.map

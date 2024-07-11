@@ -14,7 +14,7 @@ const Log_1 = require("../../../Core/Common/Log"),
 class LevelEventSceneItemMove extends LevelGeneralBase_1.LevelEventBase {
   constructor() {
     super(...arguments),
-      (this.qAt = void 0),
+      (this.OPt = void 0),
       (this.dRe = !1),
       (this.CRe = void 0),
       (this.TDe = void 0),
@@ -30,39 +30,49 @@ class LevelEventSceneItemMove extends LevelGeneralBase_1.LevelEventBase {
               Log_1.Log.Error("Event", 40, "SceneItemMove过程中MoveComp失效"),
             this.FinishExecute(!1));
       }),
-      (this.vUr = (e) => {
-        e.GetComponent(113)?.RemoveStopMoveCallbackWithEntity(this.vUr),
+      (this.nIn = (e) => {
+        e.GetComponent(115)?.RemoveStopMoveCallbackWithEntity(this.nIn),
           EventSystem_1.EventSystem.HasWithTarget(
             e,
             EventDefine_1.EEventName.OnSceneItemMoveEventBroken,
-            this.vUr,
+            this.nIn,
           ) &&
             EventSystem_1.EventSystem.RemoveWithTarget(
               e,
               EventDefine_1.EEventName.OnSceneItemMoveEventBroken,
-              this.vUr,
+              this.nIn,
             ),
           this.FinishExecute(!0);
       });
   }
+  ExecuteInGm(e, t) {
+    if (e) {
+      var i = e.EntityId;
+      if (
+        ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(i)?.Valid
+      )
+        return void this.ExecuteNew(e, t);
+    }
+    this.FinishExecute(!0);
+  }
   ExecuteNew(e, t) {
     e
-      ? ((this.qAt = e), this.CreateWaitEntityTask(this.qAt.EntityId))
+      ? ((this.OPt = e), this.CreateWaitEntityTask(this.OPt.EntityId))
       : (Log_1.Log.CheckError() && Log_1.Log.Error("Event", 34, "参数配置错误"),
         this.FinishExecute(!1));
   }
   ExecuteWhenEntitiesReady() {
-    if (this.qAt) {
-      var e = this.qAt.EntityId,
+    if (this.OPt) {
+      var e = this.OPt.EntityId,
         t = ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(e);
       if (t?.Valid) {
-        var i = t.Entity.GetComponent(113);
-        switch (((this.CRe = i), this.qAt.MoveConfig.Type)) {
+        var i = t.Entity.GetComponent(115);
+        switch (((this.CRe = i), this.OPt.MoveConfig.Type)) {
           case IAction_1.EMoveSceneItemType.MoveToPoint:
-            this.MUr(this.qAt, t);
+            this.sIn(this.OPt, t);
             break;
           case IAction_1.EMoveSceneItemType.CycleMoveToPoints:
-            this.SUr(this.qAt, t);
+            this.aIn(this.OPt, t);
         }
       } else
         Log_1.Log.CheckError() &&
@@ -70,7 +80,7 @@ class LevelEventSceneItemMove extends LevelGeneralBase_1.LevelEventBase {
           this.FinishExecute(!1);
     }
   }
-  MUr(e, t) {
+  sIn(e, t) {
     var i,
       s = e.MoveConfig;
     s &&
@@ -102,7 +112,7 @@ class LevelEventSceneItemMove extends LevelGeneralBase_1.LevelEventBase {
             ]),
           this.FinishExecute(!1)));
   }
-  SUr(e, t) {
+  aIn(e, t) {
     var i = e.MoveConfig;
     i &&
       (this.CRe?.Valid
@@ -116,7 +126,7 @@ class LevelEventSceneItemMove extends LevelGeneralBase_1.LevelEventBase {
           EventSystem_1.EventSystem.AddWithTarget(
             t.Entity,
             EventDefine_1.EEventName.OnSceneItemMoveEventBroken,
-            this.vUr,
+            this.nIn,
           ),
           ControllerHolder_1.ControllerHolder.SceneItemMoveController.AddSceneItemMove(
             t.Entity,
@@ -128,7 +138,7 @@ class LevelEventSceneItemMove extends LevelGeneralBase_1.LevelEventBase {
           this.IsAsync
             ? this.FinishExecute(!0)
             : (this.CRe.ClearStopMoveCallbackWithEntity(),
-              this.CRe.AddStopMoveCallbackWithEntity(this.vUr)))
+              this.CRe.AddStopMoveCallbackWithEntity(this.nIn)))
         : (Log_1.Log.CheckError() &&
             Log_1.Log.Error("Event", 32, "Entity找不到SceneItemMoveComponent", [
               "entityId",
@@ -139,7 +149,7 @@ class LevelEventSceneItemMove extends LevelGeneralBase_1.LevelEventBase {
   OnReset() {
     (this.dRe = !1),
       (this.CRe = void 0),
-      (this.qAt = void 0) !== this.TDe &&
+      (this.OPt = void 0) !== this.TDe &&
         (TimerSystem_1.TimerSystem.Remove(this.TDe), (this.TDe = void 0));
   }
 }

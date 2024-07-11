@@ -12,6 +12,9 @@ class RogueTalentTree {
   get SeasonId() {
     return this.seasonid();
   }
+  get TalentType() {
+    return this.talenttype();
+  }
   get Column() {
     return this.column();
   }
@@ -51,27 +54,31 @@ class RogueTalentTree {
     var t = this.J7.__offset(this.z7, 6);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  column() {
+  talenttype() {
     var t = this.J7.__offset(this.z7, 8);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
-  row() {
+  column() {
     var t = this.J7.__offset(this.z7, 10);
+    return t ? this.J7.readInt32(this.z7 + t) : 0;
+  }
+  row() {
+    var t = this.J7.__offset(this.z7, 12);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   GetPostidAt(t) {
     return this.postid(t);
   }
   postid(t) {
-    var s = this.J7.__offset(this.z7, 12);
+    var s = this.J7.__offset(this.z7, 14);
     return s ? this.J7.readInt32(this.J7.__vector(this.z7 + s) + 4 * t) : 0;
   }
   postidLength() {
-    var t = this.J7.__offset(this.z7, 12);
+    var t = this.J7.__offset(this.z7, 14);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   postidArray() {
-    var t = this.J7.__offset(this.z7, 12);
+    var t = this.J7.__offset(this.z7, 14);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,
@@ -81,22 +88,22 @@ class RogueTalentTree {
       : null;
   }
   condition() {
-    var t = this.J7.__offset(this.z7, 14);
+    var t = this.J7.__offset(this.z7, 16);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
   GetConsuleAt(t) {
     return this.consule(t);
   }
   consule(t) {
-    var s = this.J7.__offset(this.z7, 16);
+    var s = this.J7.__offset(this.z7, 18);
     return s ? this.J7.readInt32(this.J7.__vector(this.z7 + s) + 4 * t) : 0;
   }
   consuleLength() {
-    var t = this.J7.__offset(this.z7, 16);
+    var t = this.J7.__offset(this.z7, 18);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
   consuleArray() {
-    var t = this.J7.__offset(this.z7, 16);
+    var t = this.J7.__offset(this.z7, 18);
     return t
       ? new Int32Array(
           this.J7.bytes().buffer,
@@ -106,7 +113,7 @@ class RogueTalentTree {
       : null;
   }
   describe() {
-    var t = this.J7.__offset(this.z7, 18);
+    var t = this.J7.__offset(this.z7, 20);
     return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
 }

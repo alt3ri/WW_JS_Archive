@@ -4,23 +4,23 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const UE = require("ue"),
   QualityInfoById_1 = require("../../../../Core/Define/ConfigQuery/QualityInfoById"),
   StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   RedDotController_1 = require("../../../RedDot/RedDotController"),
   LguiUtil_1 = require("../../Util/LguiUtil"),
-  ItemGridAbstract_1 = require("./ItemGridAbstract"),
-  ControllerHolder_1 = require("../../../Manager/ControllerHolder");
+  ItemGridAbstract_1 = require("./ItemGridAbstract");
 class ItemGrid extends ItemGridAbstract_1.ItemGridAbstract {
   constructor() {
     super(...arguments),
-      (this.zUt = void 0),
-      (this.ZUt = void 0),
-      (this.eAt = ""),
-      (this.tAt = 0),
-      (this.iAt = () => {
+      (this.iPt = void 0),
+      (this.oPt = void 0),
+      (this.rPt = ""),
+      (this.nPt = 0),
+      (this.sPt = () => {
         var t;
-        this.zUt || this.ZUt
+        this.iPt || this.oPt
           ? ((t = this.GetClickToggle().ToggleState),
-            this.zUt?.(this.GetItemId(), this.GetItemConfig()),
-            this.ZUt?.(t))
+            this.iPt?.(this.GetItemId(), this.GetItemConfig()),
+            this.oPt?.(t))
           : ControllerHolder_1.ControllerHolder.ItemController.OpenItemTipsByItemId(
               this.GetItemId(),
             );
@@ -46,7 +46,7 @@ class ItemGrid extends ItemGridAbstract_1.ItemGridAbstract {
       [
         4,
         () => {
-          this.iAt();
+          this.sPt();
         },
       ],
     ];
@@ -81,7 +81,7 @@ class ItemGrid extends ItemGridAbstract_1.ItemGridAbstract {
       t && LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(2), e, ...i);
   }
   SetToggleClickEvent(i) {
-    this.zUt = (t, e) => {
+    this.iPt = (t, e) => {
       i(t, e);
     };
   }
@@ -89,12 +89,12 @@ class ItemGrid extends ItemGridAbstract_1.ItemGridAbstract {
     this.GetItem(5).SetUIActive(t);
   }
   SetToggleClickStateEvent(t) {
-    this.ZUt = t;
+    this.oPt = t;
   }
   BindRedPointWithKeyAndId(t, e) {
-    this.oAt(),
-      (this.eAt = t),
-      (this.tAt = e),
+    this.aPt(),
+      (this.rPt = t),
+      (this.nPt = e),
       RedDotController_1.RedDotController.BindRedDot(
         t,
         this.GetItem(6),
@@ -102,12 +102,12 @@ class ItemGrid extends ItemGridAbstract_1.ItemGridAbstract {
         e,
       );
   }
-  oAt() {
-    StringUtils_1.StringUtils.IsEmpty(this.eAt) ||
+  aPt() {
+    StringUtils_1.StringUtils.IsEmpty(this.rPt) ||
       RedDotController_1.RedDotController.UnBindGivenUi(
-        this.eAt,
+        this.rPt,
         this.GetItem(6),
-        this.tAt,
+        this.nPt,
       );
   }
   RefreshCdPanel(t, e, i) {
@@ -121,7 +121,7 @@ class ItemGrid extends ItemGridAbstract_1.ItemGridAbstract {
     this.GetSprite(11).SetUIActive(t);
   }
   OnBeforeDestroy() {
-    this.oAt();
+    this.aPt();
   }
 }
 exports.ItemGrid = ItemGrid;

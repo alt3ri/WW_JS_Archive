@@ -8,8 +8,8 @@ const UE = require("ue"),
 class AttributeView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.Lje = void 0),
-      (this.Dje = (e, t, i) => {
+      (this.NWe = void 0),
+      (this.OWe = (e, t, i) => {
         t = new CommonAttributeItem_1.CommonAttributeItem(t);
         return t.ShowTemp(e), { Key: i, Value: t };
       });
@@ -19,14 +19,14 @@ class AttributeView extends UiViewBase_1.UiViewBase {
   }
   OnStart() {
     var e = this.OpenParam;
-    (this.Lje = new GenericScrollView_1.GenericScrollView(
+    (this.NWe = new GenericScrollView_1.GenericScrollView(
       this.GetScrollViewWithScrollbar(0),
-      this.Dje,
+      this.OWe,
     )),
-      this.Lje.RefreshByData(e);
+      this.NWe.RefreshByData(e);
   }
   OnBeforeDestroy() {
-    this.Lje && (this.Lje.ClearChildren(), (this.Lje = void 0));
+    this.NWe && (this.NWe.ClearChildren(), (this.NWe = void 0));
   }
 }
 exports.AttributeView = AttributeView;

@@ -25,15 +25,15 @@ class EndShowProcess extends PendingProcess {
 class FailRangeTimer extends LogicTreeTimerBase_1.LogicTreeTimerBase {
   constructor(s, e, i) {
     super(s, e, !0, i),
-      (this.U$t = []),
-      (this.bze = void 0),
+      (this.UYt = []),
+      (this.QZe = void 0),
       (this.OnTick = (s) => {
-        if (0 !== this.U$t.length && !this.bze)
-          switch (((this.bze = this.U$t[0]), this.bze.ProcessType)) {
+        if (0 !== this.UYt.length && !this.QZe)
+          switch (((this.QZe = this.UYt[0]), this.QZe.ProcessType)) {
             case 0:
               UiManager_1.UiManager.OpenView(
                 "QuestFailRangeTipsView",
-                this.bze.EndTime,
+                this.QZe.EndTime,
                 this.HDe,
               );
               break;
@@ -45,20 +45,20 @@ class FailRangeTimer extends LogicTreeTimerBase_1.LogicTreeTimerBase {
           }
       }),
       (this.HDe = (s) => {
-        (this.bze.Finished = !0), this.U$t.shift(), (this.bze = void 0);
+        (this.QZe.Finished = !0), this.UYt.shift(), (this.QZe = void 0);
       }),
-      (this.bze = void 0);
+      (this.QZe = void 0);
   }
   Destroy() {
-    (this.U$t.length = 0),
+    (this.UYt.length = 0),
       UiManager_1.UiManager.CloseView("QuestFailRangeTipsView", this.HDe),
       super.Destroy();
   }
   StartShowTimer(s) {
-    this.U$t.push(new StartShowProcess(s));
+    this.UYt.push(new StartShowProcess(s));
   }
   EndShowTimer() {
-    this.U$t.push(new EndShowProcess());
+    this.UYt.push(new EndShowProcess());
   }
 }
 exports.FailRangeTimer = FailRangeTimer;

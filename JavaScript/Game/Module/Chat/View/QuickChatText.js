@@ -6,10 +6,10 @@ const UE = require("ue"),
 class QuickChatText extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
-      (this.uEt = ""),
-      (this.x$e = void 0),
-      (this.cEt = () => {
-        this.x$e && this.x$e(this.uEt);
+      (this.yyt = ""),
+      (this.jYe = void 0),
+      (this.Iyt = () => {
+        this.jYe && this.jYe(this.yyt);
       }),
       this.CreateThenShowByActor(e);
   }
@@ -18,16 +18,16 @@ class QuickChatText extends UiPanelBase_1.UiPanelBase {
       [0, UE.UIText],
       [1, UE.UIButtonComponent],
     ]),
-      (this.BtnBindInfo = [[1, this.cEt]]);
+      (this.BtnBindInfo = [[1, this.Iyt]]);
   }
   OnBeforeDestroy() {
-    this.x$e = void 0;
+    this.jYe = void 0;
   }
   Refresh(e) {
-    this.GetText(0).SetText(e), (this.uEt = e);
+    this.GetText(0).SetText(e), (this.yyt = e);
   }
   BindOnClicked(e) {
-    this.x$e = e;
+    this.jYe = e;
   }
 }
 exports.QuickChatText = QuickChatText;

@@ -4,24 +4,24 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const DURATION = 100;
 class FallDownPercentMachine {
   constructor() {
-    (this.lnt = 0), (this._nt = 0), (this.unt = 0);
+    (this.Sst = 0), (this.yst = 0), (this.Ist = 0);
   }
   SetTargetPercent(t) {
-    t !== this.lnt &&
-      (t > this.lnt && t < 1
-        ? ((this.lnt = t), (this.unt = (t - this._nt) / DURATION))
-        : ((this.lnt = t), (this._nt = t), (this.unt = 0)));
+    t !== this.Sst &&
+      (t > this.Sst && t < 1
+        ? ((this.Sst = t), (this.Ist = (t - this.yst) / DURATION))
+        : ((this.Sst = t), (this.yst = t), (this.Ist = 0)));
   }
   Update(t) {
     return (
-      0 !== this.unt &&
-      ((this._nt += this.unt * t),
-      this._nt >= this.lnt && ((this._nt = this.lnt), (this.unt = 0)),
+      0 !== this.Ist &&
+      ((this.yst += this.Ist * t),
+      this.yst >= this.Sst && ((this.yst = this.Sst), (this.Ist = 0)),
       !0)
     );
   }
   GetCurPercent() {
-    return this._nt;
+    return this.yst;
   }
 }
 exports.FallDownPercentMachine = FallDownPercentMachine;

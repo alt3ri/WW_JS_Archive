@@ -6,12 +6,17 @@ const UE = require("ue"),
   MathUtils_1 = require("../../Core/Utils/MathUtils"),
   EventDefine_1 = require("../Common/Event/EventDefine"),
   EventSystem_1 = require("../Common/Event/EventSystem"),
+  LocalStorage_1 = require("../Common/LocalStorage"),
+  LocalStorageDefine_1 = require("../Common/LocalStorageDefine"),
   GlobalData_1 = require("../GlobalData"),
   InputSettingsManager_1 = require("../InputSettings/InputSettingsManager"),
   ConfigManager_1 = require("../Manager/ConfigManager"),
   ControllerHolder_1 = require("../Manager/ControllerHolder"),
   ModelManager_1 = require("../Manager/ModelManager"),
+  FormationDataController_1 = require("../Module/Abilities/FormationDataController"),
+  MenuDefine_1 = require("../Module/Menu/MenuDefine"),
   RoleGaitStatic_1 = require("../NewWorld/Character/Role/Component/Define/RoleGaitStatic"),
+  PerfSightController_1 = require("../PerfSight/PerfSightController"),
   RenderConfig_1 = require("../Render/Config/RenderConfig"),
   RenderDataManager_1 = require("../Render/Data/RenderDataManager"),
   GameQualitySettingsManager_1 = require("./GameQualitySettingsManager"),
@@ -98,177 +103,752 @@ const UE = require("ue"),
   ]);
 class GameQualityInfo {
   constructor() {
-    (this.PcScreenResolution = void 0),
-      (this.PcFullScreenMode = 1),
-      (this.Brightness = 0),
-      (this.ShadowQuality = 0),
-      (this.NiagaraQuality = 0),
-      (this.ImageDetail = 0),
-      (this.AntiAliasing = 0),
-      (this.SceneAo = 0),
-      (this.VolumeFog = 0),
-      (this.VolumeLight = 0),
-      (this.MotionBlur = 0),
-      (this.StreamLevel = 1),
-      (this.PcVsync = 0),
-      (this.MobileResolution = 0),
-      (this.SuperResolution = 0),
-      (this.NvidiaSuperSamplingEnable = 0),
-      (this.NvidiaSuperSamplingFrameGenerate = 0),
-      (this.NvidiaSuperSamplingMode = 0),
-      (this.NvidiaSuperSamplingSharpness = 0),
-      (this.NvidiaReflex = 0),
-      (this.FsrEnable = 0),
-      (this.XessEnable = 0),
-      (this.XessQuality = 0),
-      (this.MetalFxEnable = 0),
-      (this.IrxEnable = 0),
-      (this.BloomEnable = 0),
-      (this.NpcDensity = 0),
-      (this.HorizontalViewSensitivity = 0),
-      (this.VerticalViewSensitivity = 0),
-      (this.AimHorizontalViewSensitivity = 0),
-      (this.AimVerticalViewSensitivity = 0),
-      (this.CameraShakeStrength = 0),
-      (this.MobileHorizontalViewSensitivity = 0),
-      (this.MobileVerticalViewSensitivity = 0),
-      (this.MobileAimHorizontalViewSensitivity = 0),
-      (this.MobileAimVerticalViewSensitivity = 0),
-      (this.MobileCameraShakeStrength = 0),
-      (this.CommonSpringArmLength = 0),
-      (this.FightSpringArmLength = 0),
-      (this.IsResetFocusEnable = 0),
-      (this.IsSidestepCameraEnable = 0),
-      (this.IsSoftLockCameraEnable = 0),
-      (this.JoystickShakeStrength = 0),
-      (this.JoystickShakeType = 0),
-      (this.WalkOrRunRate = 0),
+    (this.Gkn = new Map()),
+      (this.Uga = new Map()),
       (this.PerformanceLimitRunning = new Map()),
-      (this.JoystickMode = 0),
-      (this.IsAutoSwitchSkillButtonMode = 0),
-      (this.AimAssistEnable = 0),
-      (this.HorizontalViewRevert = 0),
-      (this.VerticalViewRevert = 0),
-      (this.Sve = void 0),
-      (this.Eve = 0),
       (this.yve = 0),
       (this.Ive = -0),
       (this.Tve = new Set());
   }
+  get PcScreenResolution() {
+    var e = this.Gkn.get(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.PcResolutionWidth,
+      ),
+      t = this.Gkn.get(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.PcResolutionHeight,
+      );
+    return new UE.IntPoint(e, t);
+  }
+  set PcScreenResolution(e) {
+    this.Gkn.set(
+      LocalStorageDefine_1.ELocalStorageGlobalKey.PcResolutionWidth,
+      e.X,
+    ),
+      this.Gkn.set(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.PcResolutionHeight,
+        e.Y,
+      );
+  }
+  get PcFullScreenMode() {
+    return (
+      this.Gkn.get(LocalStorageDefine_1.ELocalStorageGlobalKey.PcWindowMode) ??
+      1
+    );
+  }
+  set PcFullScreenMode(e) {
+    this.Gkn.set(LocalStorageDefine_1.ELocalStorageGlobalKey.PcWindowMode, e);
+  }
+  get Brightness() {
+    return (
+      this.Gkn.get(LocalStorageDefine_1.ELocalStorageGlobalKey.Brightness) ?? 0
+    );
+  }
+  set Brightness(e) {
+    this.Gkn.set(LocalStorageDefine_1.ELocalStorageGlobalKey.Brightness, e);
+  }
+  get ShadowQuality() {
+    return (
+      this.Gkn.get(LocalStorageDefine_1.ELocalStorageGlobalKey.ShadowQuality) ??
+      0
+    );
+  }
+  set ShadowQuality(e) {
+    this.Gkn.set(LocalStorageDefine_1.ELocalStorageGlobalKey.ShadowQuality, e);
+  }
+  get NiagaraQuality() {
+    return (
+      this.Gkn.get(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.NiagaraQuality,
+      ) ?? 0
+    );
+  }
+  set NiagaraQuality(e) {
+    this.Gkn.set(LocalStorageDefine_1.ELocalStorageGlobalKey.NiagaraQuality, e);
+  }
+  get ImageDetail() {
+    return (
+      this.Gkn.get(LocalStorageDefine_1.ELocalStorageGlobalKey.ImageDetail) ?? 0
+    );
+  }
+  set ImageDetail(e) {
+    this.Gkn.set(LocalStorageDefine_1.ELocalStorageGlobalKey.ImageDetail, e);
+  }
+  get AntiAliasing() {
+    return (
+      this.Gkn.get(LocalStorageDefine_1.ELocalStorageGlobalKey.AntiAliasing) ??
+      0
+    );
+  }
+  set AntiAliasing(e) {
+    this.Gkn.set(LocalStorageDefine_1.ELocalStorageGlobalKey.AntiAliasing, e);
+  }
+  get SceneAo() {
+    return (
+      this.Gkn.get(LocalStorageDefine_1.ELocalStorageGlobalKey.SceneAo) ?? 0
+    );
+  }
+  set SceneAo(e) {
+    this.Gkn.set(LocalStorageDefine_1.ELocalStorageGlobalKey.SceneAo, e);
+  }
+  get VolumeFog() {
+    return (
+      this.Gkn.get(LocalStorageDefine_1.ELocalStorageGlobalKey.VolumeFog) ?? 0
+    );
+  }
+  set VolumeFog(e) {
+    this.Gkn.set(LocalStorageDefine_1.ELocalStorageGlobalKey.VolumeFog, e);
+  }
+  get VolumeLight() {
+    return (
+      this.Gkn.get(LocalStorageDefine_1.ELocalStorageGlobalKey.VolumeLight) ?? 0
+    );
+  }
+  set VolumeLight(e) {
+    this.Gkn.set(LocalStorageDefine_1.ELocalStorageGlobalKey.VolumeLight, e);
+  }
+  get MotionBlur() {
+    return (
+      this.Gkn.get(LocalStorageDefine_1.ELocalStorageGlobalKey.MotionBlur) ?? 0
+    );
+  }
+  set MotionBlur(e) {
+    this.Gkn.set(LocalStorageDefine_1.ELocalStorageGlobalKey.MotionBlur, e);
+  }
+  get StreamLevel() {
+    return (
+      this.Gkn.get(LocalStorageDefine_1.ELocalStorageGlobalKey.StreamLevel) ?? 1
+    );
+  }
+  set StreamLevel(e) {
+    this.Gkn.set(LocalStorageDefine_1.ELocalStorageGlobalKey.StreamLevel, e);
+  }
+  get PcVsync() {
+    return (
+      this.Gkn.get(LocalStorageDefine_1.ELocalStorageGlobalKey.PcVsync) ?? 0
+    );
+  }
+  set PcVsync(e) {
+    this.Gkn.set(LocalStorageDefine_1.ELocalStorageGlobalKey.PcVsync, e);
+  }
+  get MobileResolution() {
+    return (
+      this.Gkn.get(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.MobileResolution,
+      ) ?? 0
+    );
+  }
+  set MobileResolution(e) {
+    this.Gkn.set(
+      LocalStorageDefine_1.ELocalStorageGlobalKey.MobileResolution,
+      e,
+    );
+  }
+  get SuperResolution() {
+    return (
+      this.Gkn.get(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.SuperResolution,
+      ) ?? 0
+    );
+  }
+  set SuperResolution(e) {
+    this.Gkn.set(
+      LocalStorageDefine_1.ELocalStorageGlobalKey.SuperResolution,
+      e,
+    );
+  }
+  get NvidiaSuperSamplingEnable() {
+    return (
+      this.Gkn.get(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.NvidiaSuperSamplingEnable,
+      ) ?? 0
+    );
+  }
+  set NvidiaSuperSamplingEnable(e) {
+    this.Gkn.set(
+      LocalStorageDefine_1.ELocalStorageGlobalKey.NvidiaSuperSamplingEnable,
+      e,
+    );
+  }
+  get NvidiaSuperSamplingFrameGenerate() {
+    return (
+      this.Gkn.get(
+        LocalStorageDefine_1.ELocalStorageGlobalKey
+          .NvidiaSuperSamplingFrameGenerate,
+      ) ?? 0
+    );
+  }
+  set NvidiaSuperSamplingFrameGenerate(e) {
+    this.Gkn.set(
+      LocalStorageDefine_1.ELocalStorageGlobalKey
+        .NvidiaSuperSamplingFrameGenerate,
+      e,
+    );
+  }
+  get NvidiaSuperSamplingMode() {
+    return (
+      this.Gkn.get(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.NvidiaSuperSamplingMode,
+      ) ?? 0
+    );
+  }
+  set NvidiaSuperSamplingMode(e) {
+    this.Gkn.set(
+      LocalStorageDefine_1.ELocalStorageGlobalKey.NvidiaSuperSamplingMode,
+      e,
+    );
+  }
+  get NvidiaSuperSamplingSharpness() {
+    return (
+      this.Gkn.get(
+        LocalStorageDefine_1.ELocalStorageGlobalKey
+          .NvidiaSuperSamplingSharpness,
+      ) ?? 0
+    );
+  }
+  set NvidiaSuperSamplingSharpness(e) {
+    this.Gkn.set(
+      LocalStorageDefine_1.ELocalStorageGlobalKey.NvidiaSuperSamplingSharpness,
+      e,
+    );
+  }
+  get NvidiaReflex() {
+    return (
+      this.Gkn.get(LocalStorageDefine_1.ELocalStorageGlobalKey.NvidiaReflex) ??
+      0
+    );
+  }
+  set NvidiaReflex(e) {
+    this.Gkn.set(LocalStorageDefine_1.ELocalStorageGlobalKey.NvidiaReflex, e);
+  }
+  get FsrEnable() {
+    return (
+      this.Gkn.get(LocalStorageDefine_1.ELocalStorageGlobalKey.FsrEnable) ?? 0
+    );
+  }
+  set FsrEnable(e) {
+    this.Gkn.set(LocalStorageDefine_1.ELocalStorageGlobalKey.FsrEnable, e);
+  }
+  get HorizontalViewSensitivity() {
+    return (
+      this.Gkn.get(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.HorizontalViewSensitivity,
+      ) ?? 0
+    );
+  }
+  set HorizontalViewSensitivity(e) {
+    this.Gkn.set(
+      LocalStorageDefine_1.ELocalStorageGlobalKey.HorizontalViewSensitivity,
+      e,
+    );
+  }
+  get VerticalViewSensitivity() {
+    return (
+      this.Gkn.get(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.VerticalViewSensitivity,
+      ) ?? 0
+    );
+  }
+  set VerticalViewSensitivity(e) {
+    this.Gkn.set(
+      LocalStorageDefine_1.ELocalStorageGlobalKey.VerticalViewSensitivity,
+      e,
+    );
+  }
+  get AimHorizontalViewSensitivity() {
+    return (
+      this.Gkn.get(
+        LocalStorageDefine_1.ELocalStorageGlobalKey
+          .AimHorizontalViewSensitivity,
+      ) ?? 0
+    );
+  }
+  set AimHorizontalViewSensitivity(e) {
+    this.Gkn.set(
+      LocalStorageDefine_1.ELocalStorageGlobalKey.AimHorizontalViewSensitivity,
+      e,
+    );
+  }
+  get AimVerticalViewSensitivity() {
+    return (
+      this.Gkn.get(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.AimVerticalViewSensitivity,
+      ) ?? 0
+    );
+  }
+  set AimVerticalViewSensitivity(e) {
+    this.Gkn.set(
+      LocalStorageDefine_1.ELocalStorageGlobalKey.AimVerticalViewSensitivity,
+      e,
+    );
+  }
+  get CameraShakeStrength() {
+    return (
+      this.Gkn.get(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.CameraShakeStrength,
+      ) ?? 0
+    );
+  }
+  set CameraShakeStrength(e) {
+    this.Gkn.set(
+      LocalStorageDefine_1.ELocalStorageGlobalKey.CameraShakeStrength,
+      e,
+    );
+  }
+  get MobileHorizontalViewSensitivity() {
+    return (
+      this.Gkn.get(
+        LocalStorageDefine_1.ELocalStorageGlobalKey
+          .MobileHorizontalViewSensitivity,
+      ) ?? 0
+    );
+  }
+  set MobileHorizontalViewSensitivity(e) {
+    this.Gkn.set(
+      LocalStorageDefine_1.ELocalStorageGlobalKey
+        .MobileHorizontalViewSensitivity,
+      e,
+    );
+  }
+  get MobileVerticalViewSensitivity() {
+    return (
+      this.Gkn.get(
+        LocalStorageDefine_1.ELocalStorageGlobalKey
+          .MobileVerticalViewSensitivity,
+      ) ?? 0
+    );
+  }
+  set MobileVerticalViewSensitivity(e) {
+    this.Gkn.set(
+      LocalStorageDefine_1.ELocalStorageGlobalKey.MobileVerticalViewSensitivity,
+      e,
+    );
+  }
+  get MobileAimHorizontalViewSensitivity() {
+    return (
+      this.Gkn.get(
+        LocalStorageDefine_1.ELocalStorageGlobalKey
+          .MobileAimHorizontalViewSensitivity,
+      ) ?? 0
+    );
+  }
+  set MobileAimHorizontalViewSensitivity(e) {
+    this.Gkn.set(
+      LocalStorageDefine_1.ELocalStorageGlobalKey
+        .MobileAimHorizontalViewSensitivity,
+      e,
+    );
+  }
+  get MobileAimVerticalViewSensitivity() {
+    return (
+      this.Gkn.get(
+        LocalStorageDefine_1.ELocalStorageGlobalKey
+          .MobileAimVerticalViewSensitivity,
+      ) ?? 0
+    );
+  }
+  set MobileAimVerticalViewSensitivity(e) {
+    this.Gkn.set(
+      LocalStorageDefine_1.ELocalStorageGlobalKey
+        .MobileAimVerticalViewSensitivity,
+      e,
+    );
+  }
+  get MobileCameraShakeStrength() {
+    return (
+      this.Gkn.get(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.MobileCameraShakeStrength,
+      ) ?? 0
+    );
+  }
+  set MobileCameraShakeStrength(e) {
+    this.Gkn.set(
+      LocalStorageDefine_1.ELocalStorageGlobalKey.MobileCameraShakeStrength,
+      e,
+    );
+  }
+  get CommonSpringArmLength() {
+    return (
+      this.Gkn.get(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.CommonSpringArmLength,
+      ) ?? 0
+    );
+  }
+  set CommonSpringArmLength(e) {
+    this.Gkn.set(
+      LocalStorageDefine_1.ELocalStorageGlobalKey.CommonSpringArmLength,
+      e,
+    );
+  }
+  get FightSpringArmLength() {
+    return (
+      this.Gkn.get(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.FightSpringArmLength,
+      ) ?? 0
+    );
+  }
+  set FightSpringArmLength(e) {
+    this.Gkn.set(
+      LocalStorageDefine_1.ELocalStorageGlobalKey.FightSpringArmLength,
+      e,
+    );
+  }
+  get IsResetFocusEnable() {
+    return (
+      this.Gkn.get(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.IsResetFocusEnable,
+      ) ?? 0
+    );
+  }
+  set IsResetFocusEnable(e) {
+    this.Gkn.set(
+      LocalStorageDefine_1.ELocalStorageGlobalKey.IsResetFocusEnable,
+      e,
+    );
+  }
+  get IsSidestepCameraEnable() {
+    return (
+      this.Gkn.get(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.IsSidestepCameraEnable,
+      ) ?? 0
+    );
+  }
+  set IsSidestepCameraEnable(e) {
+    this.Gkn.set(
+      LocalStorageDefine_1.ELocalStorageGlobalKey.IsSidestepCameraEnable,
+      e,
+    );
+  }
+  get IsSoftLockCameraEnable() {
+    return (
+      this.Gkn.get(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.IsSoftLockCameraEnable,
+      ) ?? 0
+    );
+  }
+  set IsSoftLockCameraEnable(e) {
+    this.Gkn.set(
+      LocalStorageDefine_1.ELocalStorageGlobalKey.IsSoftLockCameraEnable,
+      e,
+    );
+  }
+  get JoystickShakeStrength() {
+    return (
+      this.Gkn.get(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.JoystickShakeStrength,
+      ) ?? 0
+    );
+  }
+  set JoystickShakeStrength(e) {
+    this.Gkn.set(
+      LocalStorageDefine_1.ELocalStorageGlobalKey.JoystickShakeStrength,
+      e,
+    );
+  }
+  get JoystickShakeType() {
+    return (
+      this.Gkn.get(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.JoystickShakeType,
+      ) ?? 0
+    );
+  }
+  set JoystickShakeType(e) {
+    this.Gkn.set(
+      LocalStorageDefine_1.ELocalStorageGlobalKey.JoystickShakeType,
+      e,
+    );
+  }
+  get WalkOrRunRate() {
+    return (
+      this.Gkn.get(LocalStorageDefine_1.ELocalStorageGlobalKey.WalkOrRunRate) ??
+      0
+    );
+  }
+  set WalkOrRunRate(e) {
+    this.Gkn.set(LocalStorageDefine_1.ELocalStorageGlobalKey.WalkOrRunRate, e);
+  }
+  get XessEnable() {
+    return (
+      this.Gkn.get(LocalStorageDefine_1.ELocalStorageGlobalKey.XessEnable) ?? 0
+    );
+  }
+  set XessEnable(e) {
+    this.Gkn.set(LocalStorageDefine_1.ELocalStorageGlobalKey.XessEnable, e);
+  }
+  get XessQuality() {
+    return (
+      this.Gkn.get(LocalStorageDefine_1.ELocalStorageGlobalKey.XessQuality) ?? 0
+    );
+  }
+  set XessQuality(e) {
+    this.Gkn.set(LocalStorageDefine_1.ELocalStorageGlobalKey.XessQuality, e);
+  }
+  get MetalFxEnable() {
+    return (
+      this.Gkn.get(LocalStorageDefine_1.ELocalStorageGlobalKey.MetalFxEnable) ??
+      0
+    );
+  }
+  set MetalFxEnable(e) {
+    this.Gkn.set(LocalStorageDefine_1.ELocalStorageGlobalKey.MetalFxEnable, e);
+  }
+  get IrxEnable() {
+    return (
+      this.Gkn.get(LocalStorageDefine_1.ELocalStorageGlobalKey.IrxEnable) ?? 0
+    );
+  }
+  set IrxEnable(e) {
+    this.Gkn.set(LocalStorageDefine_1.ELocalStorageGlobalKey.IrxEnable, e);
+  }
+  get BloomEnable() {
+    return (
+      this.Gkn.get(LocalStorageDefine_1.ELocalStorageGlobalKey.BloomEnable) ?? 0
+    );
+  }
+  set BloomEnable(e) {
+    this.Gkn.set(LocalStorageDefine_1.ELocalStorageGlobalKey.BloomEnable, e);
+  }
+  get NpcDensity() {
+    return (
+      this.Gkn.get(LocalStorageDefine_1.ELocalStorageGlobalKey.NpcDensity) ?? 0
+    );
+  }
+  set NpcDensity(e) {
+    this.Gkn.set(LocalStorageDefine_1.ELocalStorageGlobalKey.NpcDensity, e);
+  }
+  get JoystickMode() {
+    return (
+      this.Gkn.get(LocalStorageDefine_1.ELocalStorageGlobalKey.JoystickMode) ??
+      0
+    );
+  }
+  set JoystickMode(e) {
+    this.Gkn.set(LocalStorageDefine_1.ELocalStorageGlobalKey.JoystickMode, e);
+  }
+  get IsAutoSwitchSkillButtonMode() {
+    return (
+      this.Gkn.get(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.IsAutoSwitchSkillButtonMode,
+      ) ?? 0
+    );
+  }
+  set IsAutoSwitchSkillButtonMode(e) {
+    this.Gkn.set(
+      LocalStorageDefine_1.ELocalStorageGlobalKey.IsAutoSwitchSkillButtonMode,
+      e,
+    );
+  }
+  get AimAssistEnable() {
+    return (
+      this.Gkn.get(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.AimAssistEnable,
+      ) ?? 0
+    );
+  }
+  set AimAssistEnable(e) {
+    this.Gkn.set(
+      LocalStorageDefine_1.ELocalStorageGlobalKey.AimAssistEnable,
+      e,
+    );
+  }
+  get KeyboardLockEnemyMode() {
+    return (
+      this.Gkn.get(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.KeyboardLockEnemyMode,
+      ) ?? 0
+    );
+  }
+  set KeyboardLockEnemyMode(e) {
+    this.Gkn.set(
+      LocalStorageDefine_1.ELocalStorageGlobalKey.KeyboardLockEnemyMode,
+      e,
+    );
+  }
+  get GamepadLockEnemyMode() {
+    return (
+      this.Gkn.get(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.GamepadLockEnemyMode,
+      ) ?? 0
+    );
+  }
+  set GamepadLockEnemyMode(e) {
+    this.Gkn.set(
+      LocalStorageDefine_1.ELocalStorageGlobalKey.GamepadLockEnemyMode,
+      e,
+    );
+  }
+  get HorizontalViewRevert() {
+    return (
+      this.Gkn.get(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.HorizontalViewRevert,
+      ) ?? 0
+    );
+  }
+  set HorizontalViewRevert(e) {
+    this.Gkn.set(
+      LocalStorageDefine_1.ELocalStorageGlobalKey.HorizontalViewRevert,
+      e,
+    );
+  }
+  get VerticalViewRevert() {
+    return (
+      this.Gkn.get(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.VerticalViewRevert,
+      ) ?? 0
+    );
+  }
+  set VerticalViewRevert(e) {
+    this.Gkn.set(
+      LocalStorageDefine_1.ELocalStorageGlobalKey.VerticalViewRevert,
+      e,
+    );
+  }
+  get SkillLockEnemyMode() {
+    return (
+      this.Gkn.get(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.SkillLockEnemyMode,
+      ) ?? 0
+    );
+  }
+  set SkillLockEnemyMode(e) {
+    this.Gkn.set(
+      LocalStorageDefine_1.ELocalStorageGlobalKey.SkillLockEnemyMode,
+      e,
+    );
+  }
+  get EnemyHitDisplayMode() {
+    return (
+      this.Gkn.get(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.EnemyHitDisplayMode,
+      ) ?? 0
+    );
+  }
+  set EnemyHitDisplayMode(e) {
+    this.Gkn.set(
+      LocalStorageDefine_1.ELocalStorageGlobalKey.EnemyHitDisplayMode,
+      e,
+    );
+  }
   Initialize(
     e,
     t,
-    a,
     i,
+    a,
+    o,
     r,
     l,
     s,
     n,
-    o,
     h,
-    m,
     S,
-    M,
-    _,
     g,
-    p,
-    y,
-    u,
-    E,
+    _,
     c,
-    G,
-    d,
     L,
-    A,
-    F,
-    b,
-    I,
-    C,
-    Q,
-    R,
-    U,
+    m,
     D,
     f,
+    u,
+    y,
+    M,
+    p,
+    E,
+    G,
+    d,
+    b,
+    A,
+    F,
+    C,
+    Q,
+    U,
     v,
-    T,
-    w,
+    I,
+    R,
     V,
+    w,
     P,
-    O,
+    T,
     N,
-    W,
-    q,
     k,
-    x,
+    O,
+    W,
     B,
-    X,
+    q,
     H,
+    x,
+    X,
     z,
     K,
     J,
     j,
     Y,
+    Z,
+    $,
   ) {
-    (this.Sve = e),
+    (this.Eve = e),
       this.SetFrameRate(t),
-      (this.ShadowQuality = a),
-      (this.NiagaraQuality = i),
-      (this.ImageDetail = r),
-      (this.AntiAliasing = l),
-      (this.SceneAo = s),
-      (this.VolumeFog = n),
-      (this.VolumeLight = o),
+      (this.ShadowQuality = i),
+      (this.NiagaraQuality = a),
+      (this.ImageDetail = o),
+      (this.AntiAliasing = r),
+      (this.SceneAo = l),
+      (this.VolumeFog = s),
+      (this.VolumeLight = n),
       (this.MotionBlur = h),
-      (this.StreamLevel = m),
-      (this.PcVsync = S),
-      (this.MobileResolution = M),
-      (this.SuperResolution = _),
-      (this.PcScreenResolution = g),
-      (this.PcFullScreenMode = p),
-      (this.Brightness = y),
-      (this.NvidiaSuperSamplingEnable = u),
-      (this.NvidiaSuperSamplingFrameGenerate = E),
-      (this.NvidiaSuperSamplingMode = c),
-      (this.NvidiaSuperSamplingSharpness = G),
-      (this.NvidiaReflex = d),
-      (this.FsrEnable = L),
-      (this.XessEnable = A),
-      (this.XessQuality = F),
+      (this.StreamLevel = S),
+      (this.PcVsync = g),
+      (this.MobileResolution = _),
+      (this.SuperResolution = c),
+      (this.PcScreenResolution = L),
+      (this.PcFullScreenMode = m),
+      (this.Brightness = D),
+      (this.NvidiaSuperSamplingEnable = f),
+      (this.NvidiaSuperSamplingFrameGenerate = u),
+      (this.NvidiaSuperSamplingMode = y),
+      (this.NvidiaSuperSamplingSharpness = M),
+      (this.NvidiaReflex = p),
+      (this.FsrEnable = E),
+      (this.XessEnable = G),
+      (this.XessQuality = d),
       (this.MetalFxEnable = b),
-      (this.IrxEnable = I),
-      (this.BloomEnable = C),
-      (this.NpcDensity = Q),
-      (this.HorizontalViewSensitivity = R),
+      (this.IrxEnable = A),
+      (this.BloomEnable = F),
+      (this.NpcDensity = C),
+      (this.HorizontalViewSensitivity = Q),
       (this.VerticalViewSensitivity = U),
-      (this.AimHorizontalViewSensitivity = D),
-      (this.AimVerticalViewSensitivity = f),
-      (this.CameraShakeStrength = v),
-      (this.MobileHorizontalViewSensitivity = T),
+      (this.AimHorizontalViewSensitivity = v),
+      (this.AimVerticalViewSensitivity = I),
+      (this.CameraShakeStrength = R),
+      (this.MobileHorizontalViewSensitivity = V),
       (this.MobileVerticalViewSensitivity = w),
-      (this.MobileAimHorizontalViewSensitivity = V),
-      (this.MobileAimVerticalViewSensitivity = P),
-      (this.MobileCameraShakeStrength = O),
-      (this.CommonSpringArmLength = N),
-      (this.FightSpringArmLength = W),
-      (this.IsResetFocusEnable = q),
-      (this.IsSidestepCameraEnable = k),
-      (this.IsSoftLockCameraEnable = x),
-      (this.JoystickShakeStrength = B),
-      (this.JoystickShakeType = X),
-      (this.WalkOrRunRate = H),
+      (this.MobileAimHorizontalViewSensitivity = P),
+      (this.MobileAimVerticalViewSensitivity = T),
+      (this.MobileCameraShakeStrength = N),
+      (this.CommonSpringArmLength = k),
+      (this.FightSpringArmLength = O),
+      (this.IsResetFocusEnable = W),
+      (this.IsSidestepCameraEnable = B),
+      (this.IsSoftLockCameraEnable = q),
+      (this.JoystickShakeStrength = H),
+      (this.JoystickShakeType = x),
+      (this.WalkOrRunRate = X),
       (this.JoystickMode = z),
       (this.IsAutoSwitchSkillButtonMode = K),
       (this.AimAssistEnable = J),
-      (this.HorizontalViewRevert = j),
-      (this.VerticalViewRevert = Y),
-      this.CancelAllPerformanceLimit();
+      (this.KeyboardLockEnemyMode = j),
+      (this.HorizontalViewRevert = Y),
+      (this.VerticalViewRevert = Z),
+      (this.GamepadLockEnemyMode = $),
+      this.Okn();
+  }
+  Okn() {
+    this.CancelAllPerformanceLimit(), this.xga();
   }
   Copy() {
     var e = new GameQualityInfo();
     return (
       e.Initialize(
-        this.Sve,
         this.Eve,
+        this.Sve,
         this.ShadowQuality,
         this.NiagaraQuality,
         this.ImageDetail,
@@ -317,14 +897,27 @@ class GameQualityInfo {
         this.JoystickMode,
         this.IsAutoSwitchSkillButtonMode,
         this.AimAssistEnable,
+        this.KeyboardLockEnemyMode,
         this.HorizontalViewRevert,
         this.VerticalViewRevert,
+        this.GamepadLockEnemyMode,
       ),
       e
     );
   }
+  get Eve() {
+    return this.Gkn.get(
+      LocalStorageDefine_1.ELocalStorageGlobalKey.GameQualityLevel,
+    );
+  }
+  set Eve(e) {
+    this.Gkn.set(
+      LocalStorageDefine_1.ELocalStorageGlobalKey.GameQualityLevel,
+      e ?? 0,
+    );
+  }
   GetGameQualitySettingLevel() {
-    return this.Sve;
+    return this.Eve;
   }
   GetQualitySettingScore() {
     var e =
@@ -333,9 +926,9 @@ class GameQualityInfo {
     t = e
       ? (this.PcScreenResolution.X * this.PcScreenResolution.Y) / 2073600
       : GameQualityInfo.Lve[this.MobileResolution];
-    e = this.Eve / 30;
+    e = this.Sve / 30;
     return (
-      (GameQualityInfo.Dve[this.Sve] +
+      (GameQualityInfo.Dve[this.Eve] +
         GameQualityInfo.Rve[
           MathUtils_1.MathUtils.Clamp(
             this.ShadowQuality,
@@ -403,19 +996,41 @@ class GameQualityInfo {
       e
     );
   }
+  get Sve() {
+    return (
+      this.Gkn.get(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.CustomFrameRate,
+      ) ?? 30
+    );
+  }
+  set Sve(e) {
+    this.Gkn.set(
+      LocalStorageDefine_1.ELocalStorageGlobalKey.CustomFrameRate,
+      e,
+    );
+  }
+  GetIsOverLoad() {
+    return (
+      !GameQualitySettingsManager_1.GameQualitySettingsManager.IsPcPlatform() &&
+      60 === this.Sve &&
+      3 === this.Eve
+    );
+  }
   GetFrameRateTemporary() {
     return this.yve;
   }
   SetFrameRate(e) {
-    (this.Eve = MathUtils_1.MathUtils.Clamp(e, 24, 120)),
-      (this.Ive = 1 / this.Eve);
+    (this.Sve = MathUtils_1.MathUtils.Clamp(e, 24, 120)),
+      (this.Ive = 1 / this.Sve);
   }
   ApplyFrameRate() {
     var e = UE.GameUserSettings.GetGameUserSettings();
-    let t = this.Eve;
+    let t = this.Sve;
     0 < this.yve && (t = this.yve),
       e.SetFrameRateLimit(t),
       e.ApplySettings(!0),
+      PerfSightController_1.PerfSightController.IsEnable &&
+        UE.PerfSightHelper.PostEvent(801, t.toString()),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.SettingFrameRateChanged,
         t,
@@ -427,10 +1042,14 @@ class GameQualityInfo {
   }
   SetSequenceFrameRateLimit() {
     GameQualitySettingsManager_1.GameQualitySettingsManager.IsIosPlatform()
-      ? 45 < this.Eve && (this.SetFrameRateTemploary(30), this.ApplyFrameRate())
+      ? 45 < this.Sve && (this.SetFrameRateTemploary(30), this.ApplyFrameRate())
       : GameQualitySettingsManager_1.GameQualitySettingsManager.IsAndroidPlatform() &&
-        40 < this.Eve &&
+        40 < this.Sve &&
         (this.SetFrameRateTemploary(30), this.ApplyFrameRate()),
+      UE.KismetSystemLibrary.ExecuteConsoleCommand(
+        GlobalData_1.GlobalData.World,
+        "r.Streaming.KuroMinFOVFactorForStreaming 0.2",
+      ),
       (GameQualitySettingsManager_1.GameQualitySettingsManager.IsIosPlatform() ||
         GameQualitySettingsManager_1.GameQualitySettingsManager.IsAndroidPlatform()) &&
         this.TryReduceCsmUpdateFrequency("Plot");
@@ -438,6 +1057,10 @@ class GameQualityInfo {
   CancleSequenceFrameRateLimit() {
     this.CancelFrameRateTemploary(),
       this.ApplyFrameRate(),
+      UE.KismetSystemLibrary.ExecuteConsoleCommand(
+        GlobalData_1.GlobalData.World,
+        "r.Streaming.KuroMinFOVFactorForStreaming 0.83333",
+      ),
       (GameQualitySettingsManager_1.GameQualitySettingsManager.IsIosPlatform() ||
         GameQualitySettingsManager_1.GameQualitySettingsManager.IsAndroidPlatform()) &&
         this.TryRestoreCsmUpdateFrequency("Plot");
@@ -457,43 +1080,46 @@ class GameQualityInfo {
       UE.KismetSystemLibrary.ExecuteConsoleCommand(
         GlobalData_1.GlobalData.World,
         'r.Shadow.CacheMode3CacheUpdateIntervalsOverride "3000,3000,3000,3000,3000,3000"',
+      ),
+      UE.KismetSystemLibrary.ExecuteConsoleCommand(
+        GlobalData_1.GlobalData.World,
+        "r.PSO.IOSCompilationTimeLimit 0.1",
       );
   }
   Nve() {
     UE.KismetSystemLibrary.ExecuteConsoleCommand(
       GlobalData_1.GlobalData.World,
       "r.Shadow.CSMMode3EnableUpdateIntervalOverride 0",
-    );
+    ),
+      UE.KismetSystemLibrary.ExecuteConsoleCommand(
+        GlobalData_1.GlobalData.World,
+        "r.PSO.IOSCompilationTimeLimit 2.0",
+      );
   }
   CancelFrameRateTemploary() {
-    (this.yve = 0), (this.Ive = 1 / this.Eve);
+    (this.yve = 0), (this.Ive = 1 / this.Sve);
   }
   RefreshPerformanceLimit(e) {
-    let a = 0,
-      i = 0;
+    let i = 0,
+      a = 0;
     this.PerformanceLimitRunning.forEach((e, t) => {
-      e.FrameLimit && a++, e.CacheWorldFrame && i++;
+      e.FrameLimit && i++, e.CacheWorldFrame && a++;
     }),
-      0 < a ? this.SetFrameRateTemploary(30) : this.CancelFrameRateTemploary(),
-      this.ApplyFrameRate(),
-      1 === i
+      GameQualitySettingsManager_1.GameQualitySettingsManager.IsPcPlatform() ||
+        (0 < i
+          ? this.SetFrameRateTemploary(30)
+          : this.CancelFrameRateTemploary(),
+        this.ApplyFrameRate()),
+      1 === a
         ? (UE.KismetSystemLibrary.ExecuteConsoleCommand(
             GlobalData_1.GlobalData.World,
-            "r.Mobile.StartCacheSceneColorOptimise",
-          ),
-          UE.KismetSystemLibrary.ExecuteConsoleCommand(
-            GlobalData_1.GlobalData.World,
-            "r.Mobile.EnableCacheSceneColorOptimise 1",
+            "r.CacheSceneColor.Start",
           ),
           (GameQualitySettingsManager_1.GameQualitySettingsManager.InCacheSceneColorMode = 1))
-        : 0 === i &&
+        : 0 === a &&
           (UE.KismetSystemLibrary.ExecuteConsoleCommand(
             GlobalData_1.GlobalData.World,
-            "r.Mobile.EnableCacheSceneColorOptimise 0",
-          ),
-          UE.KismetSystemLibrary.ExecuteConsoleCommand(
-            GlobalData_1.GlobalData.World,
-            "r.Mobile.StopCacheSceneColorOptimise",
+            "r.CacheSceneColor.Stop",
           ),
           (GameQualitySettingsManager_1.GameQualitySettingsManager.InCacheSceneColorMode = 0)),
       Log_1.Log.CheckDebug() &&
@@ -502,14 +1128,13 @@ class GameQualityInfo {
           48,
           "performanceControl:RefreshPerformanceLimit result",
           ["reason", e],
-          ["frameLimit", a],
-          ["cacheWorldFrame", i],
+          ["frameLimit", i],
+          ["cacheWorldFrame", a],
         );
   }
   ApplyPerformanceLimit(e) {
     var t;
     performanceLimitConfigs.has(e) &&
-      !GameQualitySettingsManager_1.GameQualitySettingsManager.IsPcPlatform() &&
       (t = performanceLimitConfigs.get(e)) &&
       (this.PerformanceLimitRunning.set(e, t),
       Log_1.Log.CheckDebug() &&
@@ -524,16 +1149,15 @@ class GameQualityInfo {
       this.RefreshPerformanceLimit(e));
   }
   CancelPerformanceLimit(e) {
-    GameQualitySettingsManager_1.GameQualitySettingsManager.IsPcPlatform() ||
-      (this.PerformanceLimitRunning.delete(e) &&
-        (Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug(
-            "Game",
-            48,
-            "performanceControl:CancelPerformanceLimit",
-            ["source", e],
-          ),
-        this.RefreshPerformanceLimit(e)));
+    this.PerformanceLimitRunning.delete(e) &&
+      (Log_1.Log.CheckDebug() &&
+        Log_1.Log.Debug(
+          "Game",
+          48,
+          "performanceControl:CancelPerformanceLimit",
+          ["source", e],
+        ),
+      this.RefreshPerformanceLimit(e));
   }
   ApplyPerformanceSeqLimit(e) {
     this.ApplyPerformanceLimit(e + PERFORMENCELIMIT_SEQ_TAIL);
@@ -546,6 +1170,31 @@ class GameQualityInfo {
       this.CancelFrameRateTemploary(),
       this.ApplyFrameRate(),
       this.RefreshPerformanceLimit("[CancelAll]");
+  }
+  xga() {
+    this.Uga.clear();
+    for (var [e, t] of MenuDefine_1.functionIdToGameQualityKeyMap)
+      this.Uga.set(t, e);
+  }
+  Pga(e) {
+    e = this.Uga.get(e);
+    if (void 0 !== e)
+      return ConfigManager_1.ConfigManager.MenuBaseConfig?.GetMenuConfigByFunctionId(
+        e,
+      );
+  }
+  wga(e, t) {
+    var i = this.Pga(e);
+    if (!i) return t ?? 0;
+    switch (i.SetType) {
+      case 1:
+        return i.SliderDefault;
+      case 2:
+      case 4:
+        return i.OptionsDefault;
+      default:
+        return t ?? 0;
+    }
   }
   ApplyFrameTimeParams() {}
   IsSupportDLSS3() {
@@ -563,7 +1212,11 @@ class GameQualityInfo {
   }
   ApplyScreenResolution() {
     var e = UE.GameUserSettings.GetGameUserSettings();
-    e.SetScreenResolution(this.PcScreenResolution), e.ApplySettings(!0);
+    e.SetScreenResolution(this.PcScreenResolution),
+      e.ApplySettings(!0),
+      PerfSightController_1.PerfSightController.IsEnable &&
+        ((e = this.PcScreenResolution.X * this.PcScreenResolution.Y),
+        UE.PerfSightHelper.PostEvent(803, e.toString()));
   }
   ApplyFullscreenMode() {
     var e = UE.GameUserSettings.GetGameUserSettings();
@@ -591,16 +1244,15 @@ class GameQualityInfo {
       );
   }
   ApplyShadowQuality() {
-    GameQualitySettingsManager_1.GameQualitySettingsManager.IsPcPlatform()
-      ? UE.KismetSystemLibrary.ExecuteConsoleCommand(
-          GlobalData_1.GlobalData.World,
-          "sg.ShadowQuality " +
-            (0 === this.ShadowQuality ? 1 : this.ShadowQuality),
-        )
-      : UE.KismetSystemLibrary.ExecuteConsoleCommand(
-          GlobalData_1.GlobalData.World,
-          "sg.ShadowQuality " + this.ShadowQuality,
-        );
+    UE.KismetSystemLibrary.ExecuteConsoleCommand(
+      GlobalData_1.GlobalData.World,
+      "sg.ShadowQuality " +
+        (this.GetIsOverLoad() && 1 < this.ShadowQuality
+          ? 1
+          : this.ShadowQuality),
+    ),
+      PerfSightController_1.PerfSightController.IsEnable &&
+        UE.PerfSightHelper.PostEvent(808, this.ShadowQuality.toString());
   }
   ApplyNiagaraQuality() {
     var e,
@@ -608,10 +1260,10 @@ class GameQualityInfo {
     GameQualitySettingsManager_1.GameQualitySettingsManager.IsPcPlatform()
       ? UE.KismetSystemLibrary.ExecuteConsoleCommand(
           GlobalData_1.GlobalData.World,
-          "fx.Niagara.QualityLevel " + Math.max(this.NiagaraQuality + 1, 2),
+          "fx.Niagara.QualityLevel " + (0 < this.NiagaraQuality ? 2 : 1),
         )
       : ((e =
-          3 === this.Sve &&
+          3 === this.Eve &&
           GameQualitySettingsManager_1.GameQualitySettingsManager.IsIosAndAndroidHighDevice()),
         UE.KismetSystemLibrary.ExecuteConsoleCommand(
           GlobalData_1.GlobalData.World,
@@ -619,54 +1271,28 @@ class GameQualityInfo {
         ),
         UE.KismetSystemLibrary.ExecuteConsoleCommand(
           GlobalData_1.GlobalData.World,
-          "fx.Niagara.QualityLevel " + Math.max(this.NiagaraQuality, 1),
+          "fx.Niagara.QualityLevel " + (0 < this.NiagaraQuality ? 1 : 0),
         )),
-      t.ApplySettings(!0);
+      t.ApplySettings(!0),
+      PerfSightController_1.PerfSightController.IsEnable &&
+        UE.PerfSightHelper.PostEvent(807, this.NiagaraQuality.toString());
   }
   ApplyImageDetail() {
     var e;
-    GameQualitySettingsManager_1.GameQualitySettingsManager.IsPcPlatform()
-      ? (UE.KismetSystemLibrary.ExecuteConsoleCommand(
-          GlobalData_1.GlobalData.World,
-          "r.Kuro.ToonOutlineDrawDistancePc " +
-            (1 < this.ImageDetail ? 4e3 : 2e3),
-        ),
-        UE.KismetSystemLibrary.ExecuteConsoleCommand(
-          GlobalData_1.GlobalData.World,
-          "r.Kuro.Foliage.GrassCullDistanceMax " +
-            (1 < this.ImageDetail ? 15e3 : 6e3),
-        ),
-        this.ImageDetail <= 0
-          ? UE.KismetSystemLibrary.ExecuteConsoleCommand(
-              GlobalData_1.GlobalData.World,
-              "r.Streaming.ForceKuroRuntimeLODBias 1",
-            )
-          : UE.KismetSystemLibrary.ExecuteConsoleCommand(
-              GlobalData_1.GlobalData.World,
-              "r.Streaming.ForceKuroRuntimeLODBias 0",
-            ))
-      : (UE.KismetSystemLibrary.ExecuteConsoleCommand(
-          GlobalData_1.GlobalData.World,
-          "r.Kuro.ToonOutlineDrawDistanceMobile " + (this.ImageDetail, 500),
-        ),
-        UE.KismetSystemLibrary.ExecuteConsoleCommand(
-          GlobalData_1.GlobalData.World,
-          "foliage.DensityType " + this.ImageDetail,
-        ),
-        (e =
-          GameQualitySettingsManager_1.GameQualitySettingsManager.IsAndroidPlatformScreenBetter()),
-        UE.KismetSystemLibrary.ExecuteConsoleCommand(
-          GlobalData_1.GlobalData.World,
-          "r.Mobile.SceneObjMobileSSR " + (1 < this.ImageDetail && e ? 1 : 0),
-        ),
-        (e = 3 === this.Sve && e),
-        UE.KismetSystemLibrary.ExecuteConsoleCommand(
-          GlobalData_1.GlobalData.World,
-          "r.Mobile.TreeRimLight " + (e ? 1 : 0),
-        ),
-        (GameQualitySettingsManager_1.GameQualitySettingsManager.IsIosPlatform() ||
-          GameQualitySettingsManager_1.GameQualitySettingsManager.IsAndroidPlatform()) &&
-          (this.ImageDetail < 1
+    PerfSightController_1.PerfSightController.IsEnable &&
+      UE.PerfSightHelper.PostEvent(805, this.ImageDetail.toString()),
+      GameQualitySettingsManager_1.GameQualitySettingsManager.IsPcPlatform()
+        ? (UE.KismetSystemLibrary.ExecuteConsoleCommand(
+            GlobalData_1.GlobalData.World,
+            "r.Kuro.ToonOutlineDrawDistancePc " +
+              (1 < this.ImageDetail ? 4e3 : 2e3),
+          ),
+          UE.KismetSystemLibrary.ExecuteConsoleCommand(
+            GlobalData_1.GlobalData.World,
+            "r.Kuro.Foliage.GrassCullDistanceMax " +
+              (1 < this.ImageDetail ? 15e3 : 6e3),
+          ),
+          this.ImageDetail <= 0
             ? UE.KismetSystemLibrary.ExecuteConsoleCommand(
                 GlobalData_1.GlobalData.World,
                 "r.Streaming.ForceKuroRuntimeLODBias 1",
@@ -674,19 +1300,52 @@ class GameQualityInfo {
             : UE.KismetSystemLibrary.ExecuteConsoleCommand(
                 GlobalData_1.GlobalData.World,
                 "r.Streaming.ForceKuroRuntimeLODBias 0",
-              )),
-        GameQualitySettingsManager_1.GameQualitySettingsManager.IsPSPlatform() &&
+              ))
+        : (UE.KismetSystemLibrary.ExecuteConsoleCommand(
+            GlobalData_1.GlobalData.World,
+            "r.Kuro.ToonOutlineDrawDistanceMobile " + (this.ImageDetail, 500),
+          ),
           UE.KismetSystemLibrary.ExecuteConsoleCommand(
             GlobalData_1.GlobalData.World,
-            "r.Streaming.ForceKuroRuntimeLODBias 0",
-          ));
+            "foliage.DensityType " + this.ImageDetail,
+          ),
+          (e =
+            GameQualitySettingsManager_1.GameQualitySettingsManager.IsAndroidPlatformScreenBetter() &&
+            !this.GetIsOverLoad()),
+          UE.KismetSystemLibrary.ExecuteConsoleCommand(
+            GlobalData_1.GlobalData.World,
+            "r.Mobile.SceneObjMobileSSR " + (1 < this.ImageDetail && e ? 1 : 0),
+          ),
+          (e = 3 === this.Eve && e),
+          UE.KismetSystemLibrary.ExecuteConsoleCommand(
+            GlobalData_1.GlobalData.World,
+            "r.Mobile.TreeRimLight " + (e ? 1 : 0),
+          ),
+          (GameQualitySettingsManager_1.GameQualitySettingsManager.IsIosPlatform() ||
+            GameQualitySettingsManager_1.GameQualitySettingsManager.IsAndroidPlatform()) &&
+            (this.ImageDetail < 1
+              ? UE.KismetSystemLibrary.ExecuteConsoleCommand(
+                  GlobalData_1.GlobalData.World,
+                  "r.Streaming.ForceKuroRuntimeLODBias 1",
+                )
+              : UE.KismetSystemLibrary.ExecuteConsoleCommand(
+                  GlobalData_1.GlobalData.World,
+                  "r.Streaming.ForceKuroRuntimeLODBias 0",
+                )),
+          GameQualitySettingsManager_1.GameQualitySettingsManager.IsPSPlatform() &&
+            UE.KismetSystemLibrary.ExecuteConsoleCommand(
+              GlobalData_1.GlobalData.World,
+              "r.Streaming.ForceKuroRuntimeLODBias 0",
+            ));
   }
   ApplyAntiAliasing() {
     GameQualitySettingsManager_1.GameQualitySettingsManager.IsPcPlatform(),
       UE.KismetSystemLibrary.ExecuteConsoleCommand(
         GlobalData_1.GlobalData.World,
         "r.DefaultFeature.AntiAliasing " + (0 === this.AntiAliasing ? 0 : 2),
-      );
+      ),
+      PerfSightController_1.PerfSightController.IsEnable &&
+        UE.PerfSightHelper.PostEvent(802, this.AntiAliasing.toString());
   }
   ApplySceneAo() {
     var e;
@@ -695,9 +1354,12 @@ class GameQualityInfo {
           GlobalData_1.GlobalData.World,
           "r.AmbientOcclusionLevels " + -this.SceneAo,
         ),
-        RenderDataManager_1.RenderDataManager.Get().SetGrassAo(this.SceneAo))
+        RenderDataManager_1.RenderDataManager.Get().SetGrassAo(this.SceneAo),
+        PerfSightController_1.PerfSightController.IsEnable &&
+          UE.PerfSightHelper.PostEvent(810, this.SceneAo.toString()))
       : ((e =
-          GameQualitySettingsManager_1.GameQualitySettingsManager.IsIosAndAndroidHighDevice()
+          GameQualitySettingsManager_1.GameQualitySettingsManager.IsAndroidPlatformScreenBetter() &&
+          !this.GetIsOverLoad()
             ? this.SceneAo
             : 0),
         UE.KismetSystemLibrary.ExecuteConsoleCommand(
@@ -705,14 +1367,34 @@ class GameQualityInfo {
           "r.Mobile.SSAO " + e,
         ),
         this.ApplyMaterialParameterCollectionAO(e),
-        RenderDataManager_1.RenderDataManager.Get().SetGrassAo(e));
+        RenderDataManager_1.RenderDataManager.Get().SetGrassAo(e),
+        PerfSightController_1.PerfSightController.IsEnable &&
+          UE.PerfSightHelper.PostEvent(810, e.toString()));
+  }
+  ApplySceneLightQuality() {
+    var e;
+    GameQualitySettingsManager_1.GameQualitySettingsManager.IsPcPlatform() ||
+      (GameQualitySettingsManager_1.GameQualitySettingsManager.IsIosAndAndroidHighDevice() &&
+      !this.GetIsOverLoad()
+        ? ((e = [1, 2, 3, 4]),
+          UE.KismetSystemLibrary.ExecuteConsoleCommand(
+            GlobalData_1.GlobalData.World,
+            "r.Kuro.GlobalLightQuality " + e[this.Eve],
+          ))
+        : ((e = [1, 2, 3, 3]),
+          UE.KismetSystemLibrary.ExecuteConsoleCommand(
+            GlobalData_1.GlobalData.World,
+            "r.Kuro.GlobalLightQuality " + e[this.Eve],
+          )));
   }
   ApplyVolumeFog() {
     GameQualitySettingsManager_1.GameQualitySettingsManager.Get().IsEnableVolumeFog() &&
-      UE.KismetSystemLibrary.ExecuteConsoleCommand(
+      (UE.KismetSystemLibrary.ExecuteConsoleCommand(
         GlobalData_1.GlobalData.World,
         "r.volumetricfog " + this.VolumeFog,
-      );
+      ),
+      PerfSightController_1.PerfSightController.IsEnable) &&
+      UE.PerfSightHelper.PostEvent(809, this.VolumeFog.toString());
   }
   ApplyVolumeLight() {
     var e;
@@ -722,7 +1404,8 @@ class GameQualityInfo {
           "r.lightShaftQuality " + this.VolumeLight,
         )
       : ((e =
-          GameQualitySettingsManager_1.GameQualitySettingsManager.IsIosAndAndroidHighDevice()),
+          GameQualitySettingsManager_1.GameQualitySettingsManager.IsIosAndAndroidHighDevice() &&
+          !this.GetIsOverLoad()),
         UE.KismetSystemLibrary.ExecuteConsoleCommand(
           GlobalData_1.GlobalData.World,
           "r.MobileLightShaft " + (e ? this.VolumeLight : 0),
@@ -778,18 +1461,38 @@ class GameQualityInfo {
     if (
       !GameQualitySettingsManager_1.GameQualitySettingsManager.IsPcPlatform()
     ) {
-      1 ===
-        GameQualitySettingsManager_1.GameQualitySettingsManager
-          .InCacheSceneColorMode &&
+      GameQualitySettingsManager_1.GameQualitySettingsManager.IsAndroidPlatform() &&
+        (0 === this.MobileResolution
+          ? UE.KismetSystemLibrary.ExecuteConsoleCommand(
+              GlobalData_1.GlobalData.World,
+              "r.TemporalAA.SharpenLimitDepth 50",
+            )
+          : UE.KismetSystemLibrary.ExecuteConsoleCommand(
+              GlobalData_1.GlobalData.World,
+              "r.TemporalAA.SharpenLimitDepth -1",
+            ),
+        GameQualitySettingsManager_1.GameQualitySettingsManager.IsAndroidPlatformScreenBetter() &&
+          UE.KismetSystemLibrary.ExecuteConsoleCommand(
+            GlobalData_1.GlobalData.World,
+            "r.TemporalAA.Sharpness 0.5",
+          ),
+        GameQualitySettingsManager_1.GameQualitySettingsManager.IsAndroidPlatformScreenBad()) &&
         UE.KismetSystemLibrary.ExecuteConsoleCommand(
           GlobalData_1.GlobalData.World,
-          "r.Mobile.StartCacheSceneColorOptimise",
-        );
+          "r.TemporalAA.Sharpness 0.1",
+        ),
+        1 ===
+          GameQualitySettingsManager_1.GameQualitySettingsManager
+            .InCacheSceneColorMode &&
+          UE.KismetSystemLibrary.ExecuteConsoleCommand(
+            GlobalData_1.GlobalData.World,
+            "r.CacheSceneColor.Start",
+          );
       let e = this.GetMobileResolutionByDeviceType();
       var t = UE.KismetSystemLibrary.GetConsoleVariableFloatValue(
           "r.MobileContentScaleFactor",
         ),
-        a = UE.KismetSystemLibrary.GetConsoleVariableFloatValue(
+        i = UE.KismetSystemLibrary.GetConsoleVariableFloatValue(
           "r.SecondaryScreenPercentage.GameViewport",
         );
       Log_1.Log.CheckDebug() &&
@@ -799,8 +1502,18 @@ class GameQualityInfo {
         ]),
         GameQualitySettingsManager_1.GameQualitySettingsManager.Get().GetDefaultScreenResolution()
           .Y < 750 &&
-          a < 70 &&
+          i < 70 &&
           (e = Math.min(1.5 * e, 100)),
+        PerfSightController_1.PerfSightController.IsEnable &&
+          ((i =
+            (((t =
+              GameQualitySettingsManager_1.GameQualitySettingsManager.Get().GetDefaultScreenResolution())
+              .X *
+              t.Y) /
+              1e4) *
+            e *
+            e),
+          UE.PerfSightHelper.PostEvent(803, i.toString())),
         UE.KismetSystemLibrary.ExecuteConsoleCommand(
           GlobalData_1.GlobalData.World,
           "r.ScreenPercentage " + e,
@@ -826,39 +1539,52 @@ class GameQualityInfo {
   ApplyNvidiaSuperSamplingEnable() {
     (GameQualitySettingsManager_1.GameQualitySettingsManager.IsInDLSSSuperFrameRateMode =
       !1),
-      GameQualitySettingsManager_1.GameQualitySettingsManager.IsDlssGpuDevice() &&
-        this.IsNvidiaDLSSPluginLoaded() &&
-        this.IsNvidiaStreamlinePluginLoaded() &&
-        (1 === this.NvidiaSuperSamplingEnable
-          ? (UE.KismetSystemLibrary.ExecuteConsoleCommand(
-              GlobalData_1.GlobalData.World,
-              "r.NGX.DLSS.Enable 1",
-            ),
+      GameQualitySettingsManager_1.GameQualitySettingsManager.IsPS5Platform() ||
+        (GameQualitySettingsManager_1.GameQualitySettingsManager.IsDlssGpuDevice() &&
+          this.IsNvidiaDLSSPluginLoaded() &&
+          this.IsNvidiaStreamlinePluginLoaded() &&
+          (1 === this.NvidiaSuperSamplingEnable
+            ? (UE.KismetSystemLibrary.ExecuteConsoleCommand(
+                GlobalData_1.GlobalData.World,
+                "r.NGX.DLSS.Enable 1",
+              ),
+              UE.KismetSystemLibrary.ExecuteConsoleCommand(
+                GlobalData_1.GlobalData.World,
+                "r.TemporalAASamples 8",
+              ),
+              UE.KismetSystemLibrary.ExecuteConsoleCommand(
+                GlobalData_1.GlobalData.World,
+                "r.TemporalAAFilterSize 1",
+              ),
+              UE.KismetSystemLibrary.ExecuteConsoleCommand(
+                GlobalData_1.GlobalData.World,
+                "r.FidelityFX.FSR.SecondaryUpscale 0",
+              ),
+              this.ApplyNvidiaSuperSamplingFrameGenerate(),
+              this.ApplyNvidiaReflex())
+            : (UE.KismetSystemLibrary.ExecuteConsoleCommand(
+                GlobalData_1.GlobalData.World,
+                "r.NGX.DLSS.Enable 0",
+              ),
+              UE.KismetSystemLibrary.ExecuteConsoleCommand(
+                GlobalData_1.GlobalData.World,
+                "r.TemporalAASamples 4",
+              ),
+              UE.StreamlineLibraryDLSSG.SetDLSSGMode(0),
+              UE.StreamlineLibraryReflex.SetReflexMode(0)),
+          this.ApplyPcVsync(),
+          1 ===
+            GameQualitySettingsManager_1.GameQualitySettingsManager
+              .InCacheSceneColorMode &&
             UE.KismetSystemLibrary.ExecuteConsoleCommand(
               GlobalData_1.GlobalData.World,
-              "r.TemporalAASamples 8",
+              "r.CacheSceneColor.Start",
             ),
-            UE.KismetSystemLibrary.ExecuteConsoleCommand(
-              GlobalData_1.GlobalData.World,
-              "r.TemporalAAFilterSize 1",
-            ),
-            UE.KismetSystemLibrary.ExecuteConsoleCommand(
-              GlobalData_1.GlobalData.World,
-              "r.FidelityFX.FSR.SecondaryUpscale 0",
-            ),
-            this.ApplyNvidiaSuperSamplingFrameGenerate(),
-            this.ApplyNvidiaReflex())
-          : (UE.KismetSystemLibrary.ExecuteConsoleCommand(
-              GlobalData_1.GlobalData.World,
-              "r.NGX.DLSS.Enable 0",
-            ),
-            UE.KismetSystemLibrary.ExecuteConsoleCommand(
-              GlobalData_1.GlobalData.World,
-              "r.TemporalAASamples 4",
-            ),
-            UE.StreamlineLibraryDLSSG.SetDLSSGMode(0),
-            UE.StreamlineLibraryReflex.SetReflexMode(0)),
-        this.ApplyPcVsync());
+          PerfSightController_1.PerfSightController.IsEnable) &&
+          UE.PerfSightHelper.PostEvent(
+            804,
+            this.NvidiaSuperSamplingEnable.toString(),
+          ));
   }
   ApplyNvidiaSuperSamplingFrameGenerate() {
     GameQualitySettingsManager_1.GameQualitySettingsManager.IsDlssGpuDevice() &&
@@ -869,7 +1595,12 @@ class GameQualityInfo {
     GameQualitySettingsManager_1.GameQualitySettingsManager.IsDlssGpuDevice() &&
       this.IsNvidiaDLSSPluginLoaded() &&
       UE.DLSSLibrary.GetDLSSMode() !== this.NvidiaSuperSamplingMode &&
-      UE.DLSSLibrary.SetDLSSMode(this.NvidiaSuperSamplingMode);
+      (UE.DLSSLibrary.SetDLSSMode(this.NvidiaSuperSamplingMode),
+      PerfSightController_1.PerfSightController.IsEnable) &&
+      UE.PerfSightHelper.PostEvent(
+        812,
+        this.NvidiaSuperSamplingMode.toString(),
+      );
   }
   ApplyNvidiaSuperSamplingSharpness() {
     GameQualitySettingsManager_1.GameQualitySettingsManager.IsDlssGpuDevice() &&
@@ -926,28 +1657,46 @@ class GameQualityInfo {
                 "r.TemporalAACurrentFrameWeight 0.25",
               )))
         : 1 === this.FsrEnable
-          ? UE.KismetSystemLibrary.ExecuteConsoleCommand(
+          ? (UE.KismetSystemLibrary.ExecuteConsoleCommand(
               GlobalData_1.GlobalData.World,
               "r.FidelityFX.FSR.PrimaryUpscale 1",
-            )
-          : UE.KismetSystemLibrary.ExecuteConsoleCommand(
+            ),
+            UE.KismetSystemLibrary.ExecuteConsoleCommand(
+              GlobalData_1.GlobalData.World,
+              "r.TemporalAA.ClampTolerant 0",
+            ))
+          : (UE.KismetSystemLibrary.ExecuteConsoleCommand(
               GlobalData_1.GlobalData.World,
               "r.FidelityFX.FSR.PrimaryUpscale 0",
-            ));
+            ),
+            UE.KismetSystemLibrary.ExecuteConsoleCommand(
+              GlobalData_1.GlobalData.World,
+              "r.TemporalAA.ClampTolerant 2",
+            )),
+      PerfSightController_1.PerfSightController.IsEnable &&
+        UE.PerfSightHelper.PostEvent(813, this.FsrEnable.toString()));
   }
   ApplyXessEnable() {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug("Game", 41, "ApplyXessEnable", [
         "XessEnable",
         this.XessEnable,
-      ]);
+      ]),
+      UE.KismetSystemLibrary.ExecuteConsoleCommand(
+        GlobalData_1.GlobalData.World,
+        "r.XeSS.Enabled " + this.XessEnable,
+      );
   }
   ApplyXessQuality() {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug("Game", 41, "ApplyXessQuality", [
         "XessQuality",
         this.XessQuality,
-      ]);
+      ]),
+      UE.KismetSystemLibrary.ExecuteConsoleCommand(
+        GlobalData_1.GlobalData.World,
+        "r.XeSS.Enabled " + this.XessQuality,
+      );
   }
   ApplyMetalFxEnable() {
     Log_1.Log.CheckDebug() &&
@@ -961,28 +1710,37 @@ class GameQualityInfo {
       );
   }
   ApplyIrxEnable() {
-    Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug("Game", 41, "ApplyIrxEnable", [
-        "IrxEnable",
-        this.IrxEnable,
-      ]);
+    GameQualitySettingsManager_1.GameQualitySettingsManager.IsPWSDKDevice() &&
+      (Log_1.Log.CheckDebug() &&
+        Log_1.Log.Debug("Game", 41, "ApplyIrxEnable", [
+          "IrxEnable",
+          this.IrxEnable,
+        ]),
+      this.IrxEnable);
   }
   ApplyBloomEnable() {
     UE.KismetSystemLibrary.ExecuteConsoleCommand(
       GlobalData_1.GlobalData.World,
       "r.Kuro.KuroBloomEnable " + this.BloomEnable,
-    );
+    ),
+      PerfSightController_1.PerfSightController.IsEnable &&
+        UE.PerfSightHelper.PostEvent(811, this.BloomEnable.toString());
   }
   ApplyNpcDensity() {
-    Log_1.Log.CheckDebug() &&
-      Log_1.Log.Debug("Game", 41, "ApplyNpcDensity", [
-        "NpcDensity",
-        this.NpcDensity,
-      ]),
-      ControllerHolder_1.ControllerHolder.CreatureController.RefreshDensityLevel();
+    GameQualitySettingsManager_1.GameQualitySettingsManager.IsLowMemoryDevice() &&
+      1 < this.NpcDensity &&
+      (this.NpcDensity = 1),
+      Log_1.Log.CheckDebug() &&
+        Log_1.Log.Debug("Game", 41, "ApplyNpcDensity", [
+          "NpcDensity",
+          this.NpcDensity,
+        ]),
+      ControllerHolder_1.ControllerHolder.CreatureController.RefreshDensityLevel(),
+      PerfSightController_1.PerfSightController.IsEnable &&
+        UE.PerfSightHelper.PostEvent(806, this.NpcDensity.toString());
   }
   GetFrameRate() {
-    return this.Eve;
+    return this.Sve;
   }
   GetFrameSeconds() {
     return this.Ive;
@@ -1235,6 +1993,14 @@ class GameQualityInfo {
       1 === this.AimAssistEnable,
     );
   }
+  SetKeyboardLockEnemyMode(e) {
+    this.KeyboardLockEnemyMode = e;
+  }
+  ApplyKeyboardLockEnemyMode() {
+    FormationDataController_1.FormationDataController.SetKeyboardLockEnemyMode(
+      this.KeyboardLockEnemyMode,
+    );
+  }
   SetHorizontalViewRevert(e) {
     this.HorizontalViewRevert = e;
   }
@@ -1244,7 +2010,7 @@ class GameQualityInfo {
         ConfigManager_1.ConfigManager.MenuBaseConfig?.GetAxisRevertConfigListByRevertType(
           0,
         );
-    t && ((e = 1 === this.HorizontalViewRevert), this.b9s(e, t));
+    t && ((e = 1 === this.HorizontalViewRevert), this.mea(e, t));
   }
   SetVerticalViewRevert(e) {
     this.VerticalViewRevert = e;
@@ -1255,32 +2021,570 @@ class GameQualityInfo {
         ConfigManager_1.ConfigManager.MenuBaseConfig?.GetAxisRevertConfigListByRevertType(
           1,
         );
-    t && ((e = 1 === this.VerticalViewRevert), this.b9s(e, t));
+    t && ((e = 1 === this.VerticalViewRevert), this.mea(e, t));
   }
-  b9s(t, e) {
+  mea(t, e) {
     for (const h of e) {
-      var a = h.AxisName,
-        a = InputSettingsManager_1.InputSettingsManager.GetAxisBinding(a);
-      if (a) {
-        var i = new Map(),
-          r = h.RevertInfo,
-          l = a.GetInputAxisKeyMap();
-        if (l) {
-          for (var [s, n] of r) {
-            var o = l.get(s);
-            if (o) {
+      var i = h.AxisName,
+        i = InputSettingsManager_1.InputSettingsManager.GetAxisBinding(i);
+      if (i) {
+        var a = new Map(),
+          o = h.RevertInfo,
+          r = i.GetInputAxisKeyMap();
+        if (r) {
+          for (var [l, s] of o) {
+            var n = r.get(l);
+            if (n) {
               let e = 0;
-              o = o.Scale;
-              0 === n && (e = t ? (0 < o ? -o : o) : 0 < o ? o : -o),
-                1 === n && (e = t ? (0 < o ? o : -o) : 0 < o ? -o : o),
-                i.set(s, e);
+              n = n.Scale;
+              0 === s && (e = t ? (0 < n ? -n : n) : 0 < n ? n : -n),
+                1 === s && (e = t ? (0 < n ? n : -n) : 0 < n ? -n : n),
+                a.set(l, e);
             }
           }
-          if (i.size <= 0) return;
-          a.SetKeys(i);
+          if (a.size <= 0) return;
+          i.SetKeys(a);
         }
       }
     }
+  }
+  SetSkillLockEnemyMode(e) {
+    this.SkillLockEnemyMode = e;
+  }
+  SetGamepadLockEnemyMode(e) {
+    this.GamepadLockEnemyMode = e;
+  }
+  ApplyGamepadLockEnemyMode() {
+    FormationDataController_1.FormationDataController.SetGamepadLockEnemyMode(
+      this.GamepadLockEnemyMode,
+    );
+  }
+  SetEnemyHitDisplayMode(e) {
+    this.EnemyHitDisplayMode = e;
+  }
+  ApplyEnemyHitDisplayMode() {
+    ModelManager_1.ModelManager.BulletModel.OpenHitMaterial =
+      1 === this.EnemyHitDisplayMode;
+  }
+  Load(e) {
+    this.Eve = this.LoadFromLocal(
+      LocalStorageDefine_1.ELocalStorageGlobalKey.GameQualityLevel,
+    );
+    var t = this.LoadFromLocal(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.CustomFrameRate,
+        this.wga(
+          LocalStorageDefine_1.ELocalStorageGlobalKey.CustomFrameRate,
+          30,
+        ),
+      ),
+      t =
+        (this.SetFrameRate(t),
+        (this.ShadowQuality = this.LoadFromLocal(
+          LocalStorageDefine_1.ELocalStorageGlobalKey.ShadowQuality,
+          this.wga(
+            LocalStorageDefine_1.ELocalStorageGlobalKey.ShadowQuality,
+            2,
+          ),
+        )),
+        (this.NiagaraQuality = this.LoadFromLocal(
+          LocalStorageDefine_1.ELocalStorageGlobalKey.NiagaraQuality,
+          this.wga(
+            LocalStorageDefine_1.ELocalStorageGlobalKey.NiagaraQuality,
+            1,
+          ),
+        )),
+        (this.ImageDetail = this.LoadFromLocal(
+          LocalStorageDefine_1.ELocalStorageGlobalKey.ImageDetail,
+          this.wga(LocalStorageDefine_1.ELocalStorageGlobalKey.ImageDetail, 2),
+        )),
+        (this.AntiAliasing = this.LoadFromLocal(
+          LocalStorageDefine_1.ELocalStorageGlobalKey.AntiAliasing,
+          this.wga(LocalStorageDefine_1.ELocalStorageGlobalKey.AntiAliasing, 1),
+        )),
+        (this.SceneAo = this.LoadFromLocal(
+          LocalStorageDefine_1.ELocalStorageGlobalKey.SceneAo,
+          this.wga(LocalStorageDefine_1.ELocalStorageGlobalKey.SceneAo, 1),
+        )),
+        (this.VolumeFog = this.LoadFromLocal(
+          LocalStorageDefine_1.ELocalStorageGlobalKey.VolumeFog,
+          this.wga(LocalStorageDefine_1.ELocalStorageGlobalKey.VolumeFog, 1),
+        )),
+        (this.VolumeLight = this.LoadFromLocal(
+          LocalStorageDefine_1.ELocalStorageGlobalKey.VolumeLight,
+          this.wga(LocalStorageDefine_1.ELocalStorageGlobalKey.VolumeLight, 1),
+        )),
+        (this.MotionBlur = this.LoadFromLocal(
+          LocalStorageDefine_1.ELocalStorageGlobalKey.MotionBlur,
+          this.wga(LocalStorageDefine_1.ELocalStorageGlobalKey.MotionBlur, 1),
+        )),
+        (this.StreamLevel = this.LoadFromLocal(
+          LocalStorageDefine_1.ELocalStorageGlobalKey.StreamLevel,
+          this.wga(LocalStorageDefine_1.ELocalStorageGlobalKey.StreamLevel, 1),
+        )),
+        (this.PcVsync = this.LoadFromLocal(
+          LocalStorageDefine_1.ELocalStorageGlobalKey.PcVsync,
+          this.wga(LocalStorageDefine_1.ELocalStorageGlobalKey.PcVsync, 0),
+        )),
+        (this.MobileResolution = this.LoadFromLocal(
+          LocalStorageDefine_1.ELocalStorageGlobalKey.MobileResolution,
+          this.wga(
+            LocalStorageDefine_1.ELocalStorageGlobalKey.MobileResolution,
+            0.85,
+          ),
+        )),
+        (this.SuperResolution = this.LoadFromLocal(
+          LocalStorageDefine_1.ELocalStorageGlobalKey.SuperResolution,
+          this.wga(
+            LocalStorageDefine_1.ELocalStorageGlobalKey.SuperResolution,
+            2,
+          ),
+        )),
+        this.LoadFromLocal(
+          LocalStorageDefine_1.ELocalStorageGlobalKey.PcResolutionWidth,
+          this.wga(
+            LocalStorageDefine_1.ELocalStorageGlobalKey.PcResolutionWidth,
+            e?.X,
+          ),
+        )),
+      e = this.LoadFromLocal(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.PcResolutionHeight,
+        this.wga(
+          LocalStorageDefine_1.ELocalStorageGlobalKey.PcResolutionHeight,
+          e?.Y,
+        ),
+      );
+    (this.PcScreenResolution = new UE.IntPoint(t, e)),
+      (this.PcFullScreenMode = this.LoadFromLocal(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.PcWindowMode,
+        this.wga(LocalStorageDefine_1.ELocalStorageGlobalKey.PcWindowMode, 1),
+      )),
+      (this.Brightness = this.LoadFromLocal(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.Brightness,
+        this.wga(LocalStorageDefine_1.ELocalStorageGlobalKey.Brightness, 0),
+      )),
+      (this.NvidiaSuperSamplingEnable = this.LoadFromLocal(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.NvidiaSuperSamplingEnable,
+        this.wga(
+          LocalStorageDefine_1.ELocalStorageGlobalKey.NvidiaSuperSamplingEnable,
+          GameQualitySettingsManager_1.GameQualitySettingsManager.IsDlssGpuDevice()
+            ? 1
+            : 0,
+        ),
+      )),
+      (this.NvidiaSuperSamplingFrameGenerate = this.LoadFromLocal(
+        LocalStorageDefine_1.ELocalStorageGlobalKey
+          .NvidiaSuperSamplingFrameGenerate,
+        this.wga(
+          LocalStorageDefine_1.ELocalStorageGlobalKey
+            .NvidiaSuperSamplingFrameGenerate,
+          1,
+        ),
+      )),
+      (this.NvidiaSuperSamplingMode = this.LoadFromLocal(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.NvidiaSuperSamplingMode,
+        this.wga(
+          LocalStorageDefine_1.ELocalStorageGlobalKey.NvidiaSuperSamplingMode,
+          1,
+        ),
+      )),
+      (this.NvidiaSuperSamplingSharpness = this.LoadFromLocal(
+        LocalStorageDefine_1.ELocalStorageGlobalKey
+          .NvidiaSuperSamplingSharpness,
+        this.wga(
+          LocalStorageDefine_1.ELocalStorageGlobalKey
+            .NvidiaSuperSamplingSharpness,
+          0,
+        ),
+      )),
+      (this.NvidiaReflex = this.LoadFromLocal(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.NvidiaReflex,
+        this.wga(LocalStorageDefine_1.ELocalStorageGlobalKey.NvidiaReflex, 1),
+      )),
+      (this.FsrEnable = this.LoadFromLocal(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.FsrEnable,
+        this.wga(
+          LocalStorageDefine_1.ELocalStorageGlobalKey.FsrEnable,
+          GameQualitySettingsManager_1.GameQualitySettingsManager.IsDlssGpuDevice()
+            ? 0
+            : 1,
+        ),
+      )),
+      (this.HorizontalViewSensitivity = this.LoadFromLocal(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.HorizontalViewSensitivity,
+        this.wga(
+          LocalStorageDefine_1.ELocalStorageGlobalKey.HorizontalViewSensitivity,
+          1,
+        ),
+      )),
+      (this.VerticalViewSensitivity = this.LoadFromLocal(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.VerticalViewSensitivity,
+        this.wga(
+          LocalStorageDefine_1.ELocalStorageGlobalKey.VerticalViewSensitivity,
+          1,
+        ),
+      )),
+      (this.AimHorizontalViewSensitivity = this.LoadFromLocal(
+        LocalStorageDefine_1.ELocalStorageGlobalKey
+          .AimHorizontalViewSensitivity,
+        this.wga(
+          LocalStorageDefine_1.ELocalStorageGlobalKey
+            .AimHorizontalViewSensitivity,
+          1,
+        ),
+      )),
+      (this.AimVerticalViewSensitivity = this.LoadFromLocal(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.AimVerticalViewSensitivity,
+        this.wga(
+          LocalStorageDefine_1.ELocalStorageGlobalKey
+            .AimVerticalViewSensitivity,
+          1,
+        ),
+      )),
+      (this.CameraShakeStrength = this.LoadFromLocal(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.CameraShakeStrength,
+        this.wga(
+          LocalStorageDefine_1.ELocalStorageGlobalKey.CameraShakeStrength,
+          1,
+        ),
+      )),
+      (this.MobileHorizontalViewSensitivity = this.LoadFromLocal(
+        LocalStorageDefine_1.ELocalStorageGlobalKey
+          .MobileHorizontalViewSensitivity,
+        this.wga(
+          LocalStorageDefine_1.ELocalStorageGlobalKey
+            .MobileHorizontalViewSensitivity,
+          1,
+        ),
+      )),
+      (this.MobileVerticalViewSensitivity = this.LoadFromLocal(
+        LocalStorageDefine_1.ELocalStorageGlobalKey
+          .MobileVerticalViewSensitivity,
+        this.wga(
+          LocalStorageDefine_1.ELocalStorageGlobalKey
+            .MobileVerticalViewSensitivity,
+          1,
+        ),
+      )),
+      (this.MobileAimHorizontalViewSensitivity = this.LoadFromLocal(
+        LocalStorageDefine_1.ELocalStorageGlobalKey
+          .MobileAimHorizontalViewSensitivity,
+        this.wga(
+          LocalStorageDefine_1.ELocalStorageGlobalKey
+            .MobileAimHorizontalViewSensitivity,
+          1,
+        ),
+      )),
+      (this.MobileAimVerticalViewSensitivity = this.LoadFromLocal(
+        LocalStorageDefine_1.ELocalStorageGlobalKey
+          .MobileAimVerticalViewSensitivity,
+        this.wga(
+          LocalStorageDefine_1.ELocalStorageGlobalKey
+            .MobileAimVerticalViewSensitivity,
+          1,
+        ),
+      )),
+      (this.MobileCameraShakeStrength = this.LoadFromLocal(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.MobileCameraShakeStrength,
+        this.wga(
+          LocalStorageDefine_1.ELocalStorageGlobalKey.MobileCameraShakeStrength,
+          1,
+        ),
+      )),
+      (this.CommonSpringArmLength = this.LoadFromLocal(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.CommonSpringArmLength,
+        this.wga(
+          LocalStorageDefine_1.ELocalStorageGlobalKey.CommonSpringArmLength,
+          0,
+        ),
+      )),
+      (this.FightSpringArmLength = this.LoadFromLocal(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.FightSpringArmLength,
+        this.wga(
+          LocalStorageDefine_1.ELocalStorageGlobalKey.FightSpringArmLength,
+          0,
+        ),
+      )),
+      (this.IsResetFocusEnable = this.LoadFromLocal(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.IsResetFocusEnable,
+        this.wga(
+          LocalStorageDefine_1.ELocalStorageGlobalKey.IsResetFocusEnable,
+          1,
+        ),
+      )),
+      (this.IsSidestepCameraEnable = this.LoadFromLocal(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.IsSidestepCameraEnable,
+        this.wga(
+          LocalStorageDefine_1.ELocalStorageGlobalKey.IsSidestepCameraEnable,
+          1,
+        ),
+      )),
+      (this.IsSoftLockCameraEnable = this.LoadFromLocal(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.IsSoftLockCameraEnable,
+        this.wga(
+          LocalStorageDefine_1.ELocalStorageGlobalKey.IsSoftLockCameraEnable,
+          1,
+        ),
+      )),
+      (this.JoystickShakeStrength = this.LoadFromLocal(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.JoystickShakeStrength,
+        this.wga(
+          LocalStorageDefine_1.ELocalStorageGlobalKey.JoystickShakeStrength,
+          50,
+        ),
+      )),
+      (this.JoystickShakeType = this.LoadFromLocal(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.JoystickShakeType,
+        this.wga(
+          LocalStorageDefine_1.ELocalStorageGlobalKey.JoystickShakeType,
+          0,
+        ),
+      )),
+      (this.WalkOrRunRate = this.LoadFromLocal(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.WalkOrRunRate,
+        this.wga(
+          LocalStorageDefine_1.ELocalStorageGlobalKey.WalkOrRunRate,
+          0.3,
+        ),
+      )),
+      (this.JoystickMode = this.LoadFromLocal(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.JoystickMode,
+        this.wga(LocalStorageDefine_1.ELocalStorageGlobalKey.JoystickMode, 0),
+      )),
+      (this.IsAutoSwitchSkillButtonMode = this.LoadFromLocal(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.IsAutoSwitchSkillButtonMode,
+        this.wga(
+          LocalStorageDefine_1.ELocalStorageGlobalKey
+            .IsAutoSwitchSkillButtonMode,
+          0,
+        ),
+      )),
+      (this.AimAssistEnable = this.LoadFromLocal(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.AimAssistEnable,
+        this.wga(
+          LocalStorageDefine_1.ELocalStorageGlobalKey.AimAssistEnable,
+          0,
+        ),
+      )),
+      (this.XessEnable = this.LoadFromLocal(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.XessEnable,
+        this.wga(LocalStorageDefine_1.ELocalStorageGlobalKey.XessEnable, 1),
+      )),
+      (this.XessQuality = this.LoadFromLocal(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.XessQuality,
+        this.wga(LocalStorageDefine_1.ELocalStorageGlobalKey.XessQuality, 1),
+      )),
+      (this.MetalFxEnable = this.LoadFromLocal(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.MetalFxEnable,
+        this.wga(LocalStorageDefine_1.ELocalStorageGlobalKey.MetalFxEnable, 1),
+      )),
+      (this.IrxEnable = this.LoadFromLocal(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.IrxEnable,
+        this.wga(LocalStorageDefine_1.ELocalStorageGlobalKey.IrxEnable, 1),
+      )),
+      (this.BloomEnable = this.LoadFromLocal(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.BloomEnable,
+        this.wga(LocalStorageDefine_1.ELocalStorageGlobalKey.BloomEnable, 1),
+      )),
+      (this.NpcDensity = this.LoadFromLocal(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.NpcDensity,
+        this.wga(LocalStorageDefine_1.ELocalStorageGlobalKey.NpcDensity, 0),
+      )),
+      (this.KeyboardLockEnemyMode = this.LoadFromLocal(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.KeyboardLockEnemyMode,
+        this.wga(
+          LocalStorageDefine_1.ELocalStorageGlobalKey.KeyboardLockEnemyMode,
+          0,
+        ),
+      )),
+      (this.HorizontalViewRevert = this.LoadFromLocal(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.HorizontalViewRevert,
+        this.wga(
+          LocalStorageDefine_1.ELocalStorageGlobalKey.HorizontalViewRevert,
+          0,
+        ),
+      )),
+      (this.VerticalViewRevert = this.LoadFromLocal(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.VerticalViewRevert,
+        this.wga(
+          LocalStorageDefine_1.ELocalStorageGlobalKey.VerticalViewRevert,
+          0,
+        ),
+      )),
+      (this.SkillLockEnemyMode = this.LoadFromLocal(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.SkillLockEnemyMode,
+        this.wga(
+          LocalStorageDefine_1.ELocalStorageGlobalKey.SkillLockEnemyMode,
+          0,
+        ),
+      )),
+      (this.GamepadLockEnemyMode = this.LoadFromLocal(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.GamepadLockEnemyMode,
+        this.wga(
+          LocalStorageDefine_1.ELocalStorageGlobalKey.GamepadLockEnemyMode,
+          0,
+        ),
+      )),
+      (this.EnemyHitDisplayMode = this.LoadFromLocal(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.EnemyHitDisplayMode,
+        this.wga(
+          LocalStorageDefine_1.ELocalStorageGlobalKey.EnemyHitDisplayMode,
+          0,
+        ),
+      )),
+      this.Okn();
+  }
+  Save() {
+    this.SaveByKey(
+      LocalStorageDefine_1.ELocalStorageGlobalKey.GameQualityLevel,
+    ),
+      this.SaveByKey(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.CustomFrameRate,
+      ),
+      this.SaveByKey(LocalStorageDefine_1.ELocalStorageGlobalKey.ShadowQuality),
+      this.SaveByKey(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.NiagaraQuality,
+      ),
+      this.SaveByKey(LocalStorageDefine_1.ELocalStorageGlobalKey.ImageDetail),
+      this.SaveByKey(LocalStorageDefine_1.ELocalStorageGlobalKey.AntiAliasing),
+      this.SaveByKey(LocalStorageDefine_1.ELocalStorageGlobalKey.SceneAo),
+      this.SaveByKey(LocalStorageDefine_1.ELocalStorageGlobalKey.VolumeFog),
+      this.SaveByKey(LocalStorageDefine_1.ELocalStorageGlobalKey.VolumeLight),
+      this.SaveByKey(LocalStorageDefine_1.ELocalStorageGlobalKey.MotionBlur),
+      this.SaveByKey(LocalStorageDefine_1.ELocalStorageGlobalKey.StreamLevel),
+      this.SaveByKey(LocalStorageDefine_1.ELocalStorageGlobalKey.PcVsync),
+      this.SaveByKey(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.MobileResolution,
+      ),
+      this.SaveByKey(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.SuperResolution,
+      ),
+      this.SaveByKey(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.PcResolutionWidth,
+      ),
+      this.SaveByKey(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.PcResolutionHeight,
+      ),
+      this.SaveByKey(LocalStorageDefine_1.ELocalStorageGlobalKey.PcWindowMode),
+      this.SaveByKey(LocalStorageDefine_1.ELocalStorageGlobalKey.Brightness),
+      this.SaveByKey(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.NvidiaSuperSamplingEnable,
+      ),
+      this.SaveByKey(
+        LocalStorageDefine_1.ELocalStorageGlobalKey
+          .NvidiaSuperSamplingFrameGenerate,
+      ),
+      this.SaveByKey(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.NvidiaSuperSamplingMode,
+      ),
+      this.SaveByKey(
+        LocalStorageDefine_1.ELocalStorageGlobalKey
+          .NvidiaSuperSamplingSharpness,
+      ),
+      this.SaveByKey(LocalStorageDefine_1.ELocalStorageGlobalKey.NvidiaReflex),
+      this.SaveByKey(LocalStorageDefine_1.ELocalStorageGlobalKey.FsrEnable),
+      this.SaveByKey(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.HorizontalViewSensitivity,
+      ),
+      this.SaveByKey(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.VerticalViewSensitivity,
+      ),
+      this.SaveByKey(
+        LocalStorageDefine_1.ELocalStorageGlobalKey
+          .AimHorizontalViewSensitivity,
+      ),
+      this.SaveByKey(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.AimVerticalViewSensitivity,
+      ),
+      this.SaveByKey(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.CameraShakeStrength,
+      ),
+      this.SaveByKey(
+        LocalStorageDefine_1.ELocalStorageGlobalKey
+          .MobileHorizontalViewSensitivity,
+      ),
+      this.SaveByKey(
+        LocalStorageDefine_1.ELocalStorageGlobalKey
+          .MobileVerticalViewSensitivity,
+      ),
+      this.SaveByKey(
+        LocalStorageDefine_1.ELocalStorageGlobalKey
+          .MobileAimHorizontalViewSensitivity,
+      ),
+      this.SaveByKey(
+        LocalStorageDefine_1.ELocalStorageGlobalKey
+          .MobileAimVerticalViewSensitivity,
+      ),
+      this.SaveByKey(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.MobileCameraShakeStrength,
+      ),
+      this.SaveByKey(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.CommonSpringArmLength,
+      ),
+      this.SaveByKey(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.FightSpringArmLength,
+      ),
+      this.SaveByKey(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.IsResetFocusEnable,
+      ),
+      this.SaveByKey(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.IsSidestepCameraEnable,
+      ),
+      this.SaveByKey(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.IsSoftLockCameraEnable,
+      ),
+      this.SaveByKey(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.JoystickShakeType,
+      ),
+      this.SaveByKey(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.JoystickShakeStrength,
+      ),
+      this.SaveByKey(LocalStorageDefine_1.ELocalStorageGlobalKey.WalkOrRunRate),
+      this.SaveByKey(LocalStorageDefine_1.ELocalStorageGlobalKey.JoystickMode),
+      this.SaveByKey(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.IsAutoSwitchSkillButtonMode,
+      ),
+      this.SaveByKey(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.AimAssistEnable,
+      ),
+      this.SaveByKey(LocalStorageDefine_1.ELocalStorageGlobalKey.XessEnable),
+      this.SaveByKey(LocalStorageDefine_1.ELocalStorageGlobalKey.XessQuality),
+      this.SaveByKey(LocalStorageDefine_1.ELocalStorageGlobalKey.MetalFxEnable),
+      this.SaveByKey(LocalStorageDefine_1.ELocalStorageGlobalKey.IrxEnable),
+      this.SaveByKey(LocalStorageDefine_1.ELocalStorageGlobalKey.BloomEnable),
+      this.SaveByKey(LocalStorageDefine_1.ELocalStorageGlobalKey.NpcDensity),
+      this.SaveByKey(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.KeyboardLockEnemyMode,
+      ),
+      this.SaveByKey(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.HorizontalViewRevert,
+      ),
+      this.SaveByKey(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.VerticalViewRevert,
+      ),
+      this.SaveByKey(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.SkillLockEnemyMode,
+      ),
+      this.SaveByKey(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.GamepadLockEnemyMode,
+      ),
+      this.SaveByKey(
+        LocalStorageDefine_1.ELocalStorageGlobalKey.EnemyHitDisplayMode,
+      );
+  }
+  GetDataByStorageKey(e) {
+    return this.Gkn.get(e);
+  }
+  LoadFromLocal(e, t) {
+    return LocalStorage_1.LocalStorage.GetGlobal(e, t ?? 0);
+  }
+  SaveToLocal(e, t) {
+    void 0 === t
+      ? LocalStorage_1.LocalStorage.DeleteGlobal(e)
+      : LocalStorage_1.LocalStorage.SetGlobal(e, t);
+  }
+  SaveByKey(e) {
+    var t = this.GetDataByStorageKey(e);
+    this.SaveToLocal(e, t);
   }
 }
 ((exports.GameQualityInfo = GameQualityInfo).Dve = [124, 138, 146, 152]),

@@ -43,9 +43,11 @@ class TsDecoratorBlackboardStringCompare extends UE.BTDecorator_BlueprintBase {
       r.Entity.Id,
       this.TsBlackboardKey,
     );
-    return this.TsExactly
-      ? o === this.TsCompareValue
-      : o.includes(this.TsCompareValue) === this.TsPositive;
+    return (
+      (this.TsExactly
+        ? o === this.TsCompareValue
+        : o.includes(this.TsCompareValue)) === this.TsPositive
+    );
   }
 }
 exports.default = TsDecoratorBlackboardStringCompare;

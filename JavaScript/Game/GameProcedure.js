@@ -7,6 +7,7 @@ const UE = require("ue"),
   LogAnalyzer_1 = require("../Core/Common/LogAnalyzer"),
   ResourceSystem_1 = require("../Core/Resource/ResourceSystem"),
   BaseConfigController_1 = require("../Launcher/BaseConfig/BaseConfigController"),
+  ThinkDataLaunchReporter_1 = require("../Launcher/ThinkDataReport/ThinkDataLaunchReporter"),
   GameUtils_1 = require("./GameUtils"),
   GlobalData_1 = require("./GlobalData");
 class GameProcedure {
@@ -18,6 +19,7 @@ class GameProcedure {
       );
     Log_1.Log.SetJsDebugId(r),
       LogAnalyzer_1.LogAnalyzer.Initialize(
+        ThinkDataLaunchReporter_1.ENABLE_THINKING_ANALYTICS,
         BaseConfigController_1.BaseConfigController.GetPackageConfigOrDefault(
           "Stream",
         ),

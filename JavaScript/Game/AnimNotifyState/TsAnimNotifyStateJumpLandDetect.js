@@ -143,7 +143,7 @@ class TsAnimNotifyStateJumpLandDetect extends UE.KuroAnimNotifyState {
     return (
       t instanceof TsBaseCharacter_1.default &&
       ((r = t.GetEntityIdNoBlueprint()), !!(r = this.ParamsMap.get(r))) &&
-      ((o = r.Entity.GetComponent(158)),
+      ((o = r.Entity.GetComponent(160)),
       r.NowTime <= r.TotalTime &&
         o.PositionState ===
           CharacterUnifiedStateTypes_1.ECharPositionState.Air &&
@@ -159,7 +159,7 @@ class TsAnimNotifyStateJumpLandDetect extends UE.KuroAnimNotifyState {
     return (
       t instanceof TsBaseCharacter_1.default &&
       ((t = t.GetEntityIdNoBlueprint()), !!(t = this.ParamsMap.get(t))) &&
-      (t.Entity.GetComponent(158).PositionState ===
+      (t.Entity.GetComponent(160).PositionState ===
       CharacterUnifiedStateTypes_1.ECharPositionState.Ground
         ? (t.TotalTime -= r)
         : t.NowTime <= t.TotalTime &&

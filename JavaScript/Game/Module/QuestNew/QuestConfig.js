@@ -194,6 +194,10 @@ class QuestNewConfig extends ConfigBase_1.ConfigBase {
     e = this.GetOccupationConfig(e);
     return e ? PublicUtil_1.PublicUtil.GetConfigTextByTable(4, e.Id) : "";
   }
+  GetOccupationType(e) {
+    e = this.GetOccupationConfig(e);
+    return e ? e.OccupationType : "";
+  }
   GetQuestConfig(e) {
     var r = QuestDataById_1.configQuestDataById.GetConfig(e, !1);
     return (

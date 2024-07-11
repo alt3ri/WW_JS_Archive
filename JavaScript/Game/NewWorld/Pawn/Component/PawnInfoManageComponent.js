@@ -32,27 +32,27 @@ let PawnInfoManageComponent = class PawnInfoManageComponent extends EntityCompon
   constructor() {
     super(...arguments),
       (this.he = ""),
-      (this.Vpr = void 0),
-      (this.Ran = void 0),
-      (this.Aan = void 0),
-      (this.Uan = -1),
-      (this.bor = void 0),
-      (this.d6s = void 0);
+      (this.Ovr = void 0),
+      (this.han = void 0),
+      (this.lan = void 0),
+      (this._an = -1),
+      (this.xrr = void 0),
+      (this.lKs = void 0);
   }
   OnInit() {
     return (
-      (this.Vpr = this.Entity.GetComponent(0)),
-      (this.Ran = this.Entity.GetComponent(133)),
+      (this.Ovr = this.Entity.GetComponent(0)),
+      (this.han = this.Entity.GetComponent(135)),
       !0
     );
   }
   get LockRange() {
-    return this.Uan;
+    return this._an;
   }
   get PawnName() {
     return (
-      this.bor !== LanguageSystem_1.LanguageSystem.PackageLanguage &&
-        this.sdo(),
+      this.xrr !== LanguageSystem_1.LanguageSystem.PackageLanguage &&
+        this.oCo(),
       this.he
     );
   }
@@ -60,70 +60,70 @@ let PawnInfoManageComponent = class PawnInfoManageComponent extends EntityCompon
     this.he = t;
   }
   SetPawnNameKey(t) {
-    (this.d6s = t), this.sdo();
+    (this.lKs = t), this.oCo();
   }
-  sdo() {
+  oCo() {
     var t;
-    (this.bor = LanguageSystem_1.LanguageSystem.PackageLanguage),
-      this.d6s
+    (this.xrr = LanguageSystem_1.LanguageSystem.PackageLanguage),
+      this.lKs
         ? (this.he = ConfigManager_1.ConfigManager.TextConfig.GetTextById(
-            this.d6s,
+            this.lKs,
           ))
-        : this.Ran?.DropItemConfig
-          ? ((t = this.Ran.DropItemConfig.Config),
+        : this.han?.DropItemConfig
+          ? ((t = this.han.DropItemConfig.Config),
             (this.he = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
               t.Name,
             )))
-          : this.Aan &&
-            ((t = this.Vpr.GetBaseInfo()),
+          : this.lan &&
+            ((t = this.Ovr.GetBaseInfo()),
             (this.he = PublicUtil_1.PublicUtil.GetConfigTextByKey(t.TidName)));
   }
   get DropItemId() {
-    return this.Ran?.DropItemConfig?.ConfigId;
+    return this.han?.DropItemConfig?.ConfigId;
   }
   get DropItemCount() {
-    return this.Ran?.DropItemConfig.ItemCount;
+    return this.han?.DropItemConfig.ItemCount;
   }
   get EntityId() {
     return this.Entity.Id;
   }
   get HasQuestOption() {
-    var t = this.Entity.GetComponent(178);
+    var t = this.Entity.GetComponent(181);
     return !!t && !!(t = t.GetInteractController()) && t.HasDynamicOption;
   }
-  Pan() {
+  uan() {
     var t;
     return (
-      (this.Aan = this.Vpr.GetPbEntityInitData()),
-      this.Aan
-        ? ((t = this.Vpr.GetBaseInfo()),
+      (this.lan = this.Ovr.GetPbEntityInitData()),
+      this.lan
+        ? ((t = this.Ovr.GetBaseInfo()),
           (this.he = PublicUtil_1.PublicUtil.GetConfigTextByKey(t.TidName)),
           (t = (0, IComponent_1.getComponent)(
-            this.Aan.ComponentsData,
+            this.lan.ComponentsData,
             "FightInteractComponent",
           )),
-          (this.Uan = t ? t.LockRange : -1),
+          (this._an = t ? t.LockRange : -1),
           !0)
         : (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Character",
               29,
               "[清理CDT_EntityConfig]该实体没有对应的Pb表信息",
-              ["CreatureDataId", this.Vpr.GetCreatureDataId()],
-              ["TidName", this.Vpr.GetBaseInfo()?.TidName],
-              ["PbDataId", this.Vpr.GetPbDataId()],
+              ["CreatureDataId", this.Ovr.GetCreatureDataId()],
+              ["TidName", this.Ovr.GetBaseInfo()?.TidName],
+              ["PbDataId", this.Ovr.GetPbDataId()],
             ),
           !1)
     );
   }
   OnStart() {
-    return this.Pan() && this.sdo(), !0;
+    return this.uan() && this.oCo(), !0;
   }
   IsDropItem() {
-    return void 0 !== this.Ran;
+    return void 0 !== this.han;
   }
   GetMessageId() {
-    var t = this.Vpr.GetBaseInfo();
+    var t = this.Ovr.GetBaseInfo();
     return t?.HeadInfo ? t.HeadInfo : 0;
   }
   GetHeadStateSocketName() {
@@ -133,7 +133,7 @@ let PawnInfoManageComponent = class PawnInfoManageComponent extends EntityCompon
     return t || SOCKET_NAME;
   }
   GetHeadStateOffset() {
-    var t = this.Vpr.GetBaseInfo()?.HeadStateViewConfig?.ZOffset;
+    var t = this.Ovr.GetBaseInfo()?.HeadStateViewConfig?.ZOffset;
     return (
       t ||
       ((t = this.Entity.GetComponent(0)?.GetModelConfig()) ? t.名字Z偏移 : 0)
@@ -141,7 +141,7 @@ let PawnInfoManageComponent = class PawnInfoManageComponent extends EntityCompon
   }
 };
 (PawnInfoManageComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(102)],
+  [(0, RegisterComponent_1.RegisterComponent)(104)],
   PawnInfoManageComponent,
 )),
   (exports.PawnInfoManageComponent = PawnInfoManageComponent);

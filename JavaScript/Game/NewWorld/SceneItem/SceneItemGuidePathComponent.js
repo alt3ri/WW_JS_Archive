@@ -61,77 +61,77 @@ let SceneItemGuidePathComponent =
         (this.Lo = void 0),
         (this.Hte = void 0),
         (this.Lie = void 0),
-        (this.Efn = void 0),
+        (this.tfn = void 0),
         (this.md = void 0),
-        (this.Uxr = void 0),
-        (this.yfn = void 0),
-        (this.Ifn = 0),
-        (this.Tfn = 0),
+        (this.sxr = void 0),
+        (this.ifn = void 0),
+        (this.ofn = 0),
+        (this.rfn = 0),
         (this.dce = !1),
-        (this.rXt = !1),
-        (this.opi = 0),
-        (this.Lfn = void 0),
-        (this.Dfn = void 0),
-        (this.Rfn = void 0),
-        (this.Afn = void 0),
-        (this.Ufn = !1),
-        (this.Pfn = 0),
-        (this.xfn = new Map()),
-        (this.wfn = (t, e = !1) => {
-          (this.Ufn && !e) ||
+        (this.r$t = !1),
+        (this.rvi = 0),
+        (this.nfn = void 0),
+        (this.sfn = void 0),
+        (this.afn = void 0),
+        (this.hfn = void 0),
+        (this.lfn = !1),
+        (this._fn = 0),
+        (this.ufn = new Map()),
+        (this.cfn = (t, e = !1) => {
+          (this.lfn && !e) ||
             (this.dce
-              ? this.Bfn(t)
-              : this.bfn(!1, () => {
-                  this.Bfn(t);
+              ? this.mfn(t)
+              : this.dfn(!1, () => {
+                  this.mfn(t);
                 }));
         }),
-        (this.ooo = (t, e) => {
+        (this.ero = (t, e) => {
           e !== exports.SCAN_SKILL_ID ||
             t !== Global_1.Global.BaseCharacter?.GetEntityIdNoBlueprint() ||
             ((e = Global_1.Global.BaseCharacter?.CharacterActorComponent),
             (t = Vector_1.Vector.Create(e?.ActorLocationProxy)),
             (e = Vector_1.Vector.Create(this.Hte?.ActorLocationProxy)),
-            Vector_1.Vector.Distance(t, e) > this.Pfn) ||
+            Vector_1.Vector.Distance(t, e) > this._fn) ||
             ((t = this.Entity.GetComponent(0)),
             (e =
               LevelGamePlayUtils_1.LevelGamePlayUtils.GetScanCompositeResult(
                 t,
               )),
-            this.wfn(e.Interval, !0));
+            this.cfn(e.Interval, !0));
         }),
         (this.gIe = (t, e) => {
           t.includes(1298716444)
-            ? ((this.rXt = !0),
+            ? ((this.r$t = !0),
               Info_1.Info.EnableForceTick
-                ? this.qfn(1, !0)
-                : (this.Efn.HasFinishTag = !0))
+                ? this.Cfn(1, !0)
+                : (this.tfn.HasFinishTag = !0))
             : t.includes(-3775711)
               ? ((this.dce = !0),
-                Info_1.Info.EnableForceTick || (this.Efn.HasActiveTag = !0),
-                this.bfn(!0))
+                Info_1.Info.EnableForceTick || (this.tfn.HasActiveTag = !0),
+                this.dfn(!0))
               : t.includes(-1152559349) &&
-                (this.rXt &&
-                  ((this.rXt = !1),
-                  Info_1.Info.EnableForceTick || (this.Efn.HasFinishTag = !1)),
+                (this.r$t &&
+                  ((this.r$t = !1),
+                  Info_1.Info.EnableForceTick || (this.tfn.HasFinishTag = !1)),
                 this.dce) &&
                 ((this.dce = !1),
-                Info_1.Info.EnableForceTick || (this.Efn.HasActiveTag = !1));
+                Info_1.Info.EnableForceTick || (this.tfn.HasActiveTag = !1));
         }),
-        (this.Gfn = (t, e) => {
+        (this.gfn = (t, e) => {
           Info_1.Info.EnableForceTick ||
             (5 === t &&
-              ((this.Uxr = this.Disable(
+              ((this.sxr = this.Disable(
                 "[SceneItemGuidePathComponent.OnEffectFinish] 特效加载完成，由C++组件接管tick",
               )),
-              (this.Efn.NiagaraComponent =
+              (this.tfn.NiagaraComponent =
                 EffectSystem_1.EffectSystem.GetNiagaraComponent(e)),
-              this.Efn.StartTick(
-                this.Dfn,
-                this.Rfn,
-                this.Afn,
+              this.tfn.StartTick(
+                this.sfn,
+                this.afn,
+                this.hfn,
                 colorString,
-                this.Tfn / 1e3,
-                this.Ifn / 1e3,
+                this.rfn / 1e3,
+                this.ofn / 1e3,
               )));
         });
     }
@@ -140,56 +140,56 @@ let SceneItemGuidePathComponent =
       if (((this.Lo = t), void 0 !== this.Lo.ColorChangeOption))
         switch (this.Lo.ColorChangeOption.Type) {
           case IComponent_1.EColorChangeStrategyOfSplineEffect.RGB:
-            if (this.Nfn(this.Lo.ColorChangeOption)) break;
+            if (this.ffn(this.Lo.ColorChangeOption)) break;
             return !1;
         }
       return (
         void 0 !== this.Lo.ScanOption &&
-          ((this.Ufn = !0), (this.Pfn = this.Lo.ScanOption.ResponseRange)),
+          ((this.lfn = !0), (this._fn = this.Lo.ScanOption.ResponseRange)),
         !0
       );
     }
-    Nfn(t) {
+    ffn(t) {
       var e = GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(t.RedState);
-      if (this.xfn.has(e)) return !1;
-      this.xfn.set(e, colorRed);
+      if (this.ufn.has(e)) return !1;
+      this.ufn.set(e, colorRed);
       e = GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(t.YellowState);
-      if (this.xfn.has(e)) return !1;
-      this.xfn.set(e, colorYellow);
+      if (this.ufn.has(e)) return !1;
+      this.ufn.set(e, colorYellow);
       e = GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(t.BlueState);
       return (
-        !this.xfn.has(e) &&
-        (this.xfn.set(e, colorBlue),
-        (this.Dfn = this.xfn.get(normalTag)),
-        (this.Afn = this.xfn.get(finishTag)),
-        (this.Rfn = this.Dfn.op_Subtraction(this.xfn.get(activatedTag))),
+        !this.ufn.has(e) &&
+        (this.ufn.set(e, colorBlue),
+        (this.sfn = this.ufn.get(normalTag)),
+        (this.hfn = this.ufn.get(finishTag)),
+        (this.afn = this.sfn.op_Subtraction(this.ufn.get(activatedTag))),
         !0)
       );
     }
     OnActivate() {
       return (
         (this.Hte = this.Entity.GetComponent(1)),
-        (this.Lie = this.Entity.GetComponent(177)),
-        (this.Uxr = this.Disable(
+        (this.Lie = this.Entity.GetComponent(180)),
+        (this.sxr = this.Disable(
           "[SceneItemGuidePathComponent.OnActivate] 默认Disable",
         )),
         Info_1.Info.EnableForceTick ||
-          ((this.Efn = this.Hte.Owner.GetComponentByClass(
+          ((this.tfn = this.Hte.Owner.GetComponentByClass(
             UE.KuroSceneItemGuidePathComponent.StaticClass(),
           )),
-          this.Efn?.IsValid() ||
-            (this.Efn = this.Hte.Owner.AddComponentByClass(
+          this.tfn?.IsValid() ||
+            (this.tfn = this.Hte.Owner.AddComponentByClass(
               UE.KuroSceneItemGuidePathComponent.StaticClass(),
               !1,
               new UE.Transform(),
               !1,
             )),
-          this.Efn.SetComponentTickEnabled(!1)),
-        this.Ofn(),
+          this.tfn.SetComponentTickEnabled(!1)),
+        this.pfn(),
         !0
       );
     }
-    kfn() {
+    vfn() {
       var t = this.Entity?.GetComponent(0).GetPbEntityInitData(),
         t = (0, IComponent_1.getComponent)(
           t.ComponentsData,
@@ -197,19 +197,19 @@ let SceneItemGuidePathComponent =
         ).StateChangeBehaviors;
       0 < t?.length &&
         (t = t[0].DelayChangeState) &&
-        (this.Tfn = t.Time * TimeUtil_1.TimeUtil.InverseMillisecond);
+        (this.rfn = t.Time * TimeUtil_1.TimeUtil.InverseMillisecond);
     }
     OnEnd() {
       return (
         EventSystem_1.EventSystem.HasWithTarget(
           this.Entity,
           EventDefine_1.EEventName.OnScanStart,
-          this.wfn,
+          this.cfn,
         ) &&
           EventSystem_1.EventSystem.RemoveWithTarget(
             this.Entity,
             EventDefine_1.EEventName.OnScanStart,
-            this.wfn,
+            this.cfn,
           ),
         EventSystem_1.EventSystem.HasWithTarget(
           this.Entity,
@@ -223,14 +223,14 @@ let SceneItemGuidePathComponent =
           ),
         EventSystem_1.EventSystem.Has(
           EventDefine_1.EEventName.CharUseSkill,
-          this.ooo,
+          this.ero,
         ) &&
           EventSystem_1.EventSystem.Remove(
             EventDefine_1.EEventName.CharUseSkill,
-            this.ooo,
+            this.ero,
           ),
         this.md?.IsValid() &&
-          (this.Ffn(),
+          (this.Mfn(),
           ModelManager_1.ModelManager.GameSplineModel.ReleaseSpline(
             this.Lo.SplineEntityId,
             this.Entity.GetComponent(0).GetPbDataId(),
@@ -239,24 +239,24 @@ let SceneItemGuidePathComponent =
       );
     }
     OnTick(t) {
-      Info_1.Info.EnableForceTick || this.Vfn(t);
+      Info_1.Info.EnableForceTick || this.Efn(t);
     }
     OnForceTick(t) {
-      this.Vfn(t);
+      this.Efn(t);
     }
-    Vfn(e) {
-      if (this.rXt) this.qfn(1, !0);
+    Efn(e) {
+      if (this.r$t) this.Cfn(1, !0);
       else {
         let t = this.dce ? 1 : 0;
         this.dce ||
-          0 === this.Tfn ||
-          ((this.Ifn -= e),
-          (this.Ifn = this.Ifn <= 0 ? 0 : this.Ifn),
-          (t = this.Ifn / this.Tfn)),
-          this.qfn(t, !1);
+          0 === this.rfn ||
+          ((this.ofn -= e),
+          (this.ofn = this.ofn <= 0 ? 0 : this.ofn),
+          (t = this.ofn / this.rfn)),
+          this.Cfn(t, !1);
       }
     }
-    Ofn() {
+    pfn() {
       var t,
         e = ModelManager_1.ModelManager.CreatureModel.GetCompleteEntityData(
           this.Lo.SplineEntityId,
@@ -292,13 +292,13 @@ let SceneItemGuidePathComponent =
                 ? EventSystem_1.EventSystem.AddWithTarget(
                     this.Entity,
                     EventDefine_1.EEventName.OnScanStart,
-                    this.wfn,
+                    this.cfn,
                   )
-                : this.Lzr(),
-              this.Ufn &&
+                : this.szr(),
+              this.lfn &&
                 EventSystem_1.EventSystem.Add(
                   EventDefine_1.EEventName.CharUseSkill,
-                  this.ooo,
+                  this.ero,
                 ),
               this.Lo.ColorChangeOption &&
                 (EventSystem_1.EventSystem.AddWithTarget(
@@ -306,8 +306,8 @@ let SceneItemGuidePathComponent =
                   EventDefine_1.EEventName.OnLevelTagChanged,
                   this.gIe,
                 ),
-                this.kfn(),
-                this.Hfn()))
+                this.vfn(),
+                this.Sfn()))
           : Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
               "Level",
@@ -323,84 +323,84 @@ let SceneItemGuidePathComponent =
             ["SplineEntityId", this.Lo.SplineEntityId],
           );
     }
-    bfn(e = !1, i = void 0) {
-      var t = Protocol_1.Aki.Protocol.M_s.create();
-      (t.rkn = MathUtils_1.MathUtils.NumberToLong(
+    dfn(e = !1, i = void 0) {
+      var t = Protocol_1.Aki.Protocol.Cms.create();
+      (t.P4n = MathUtils_1.MathUtils.NumberToLong(
         this.Hte.CreatureData.GetCreatureDataId(),
       )),
-        Net_1.Net.Call(11173, t, (t) => {
-          t.lkn !== Protocol_1.Aki.Protocol.lkn.Sys &&
+        Net_1.Net.Call(26421, t, (t) => {
+          t.O4n !== Protocol_1.Aki.Protocol.O4n.NRs &&
             ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-              t.lkn,
-              15876,
+              t.O4n,
+              25875,
             ),
-            (this.Ifn = t.REs),
+            (this.ofn = t.WLs),
             Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "SceneItem",
                 32,
                 "response",
-                ["entityID", t.rkn],
-                ["resetTime", t.REs],
+                ["entityID", t.P4n],
+                ["resetTime", t.WLs],
               ),
             e &&
-              this.Efn?.IsValid() &&
-              this.Efn.StartTick(
-                this.Dfn,
-                this.Rfn,
-                this.Afn,
+              this.tfn?.IsValid() &&
+              this.tfn.StartTick(
+                this.sfn,
+                this.afn,
+                this.hfn,
                 colorString,
-                this.Tfn / 1e3,
-                this.Ifn / 1e3,
+                this.rfn / 1e3,
+                this.ofn / 1e3,
               ),
             void 0 !== i && i();
         });
     }
-    Hfn() {
+    Sfn() {
       this.Lie.HasTag(-3775711) &&
         ((this.dce = !0),
-        Info_1.Info.EnableForceTick || (this.Efn.HasActiveTag = !0)),
+        Info_1.Info.EnableForceTick || (this.tfn.HasActiveTag = !0)),
         this.Lie.HasTag(1298716444) &&
-          ((this.rXt = !0),
-          Info_1.Info.EnableForceTick || (this.Efn.HasFinishTag = !0));
+          ((this.r$t = !0),
+          Info_1.Info.EnableForceTick || (this.tfn.HasFinishTag = !0));
     }
-    Bfn(t) {
-      this.Lzr(),
-        void 0 !== this.Uxr &&
-          this.Enable(this.Uxr, "SceneItemGuidePathComponent.ShowGuidePath"),
-        (this.Uxr = void 0) !== this.yfn &&
-          (TimerSystem_1.TimerSystem.Remove(this.yfn), (this.yfn = void 0)),
-        (this.yfn = TimerSystem_1.TimerSystem.Delay(() => {
-          this.Ffn(),
-            void 0 === this.Uxr &&
-              (this.Uxr = this.Disable(
+    mfn(t) {
+      this.szr(),
+        void 0 !== this.sxr &&
+          this.Enable(this.sxr, "SceneItemGuidePathComponent.ShowGuidePath"),
+        (this.sxr = void 0) !== this.ifn &&
+          (TimerSystem_1.TimerSystem.Remove(this.ifn), (this.ifn = void 0)),
+        (this.ifn = TimerSystem_1.TimerSystem.Delay(() => {
+          this.Mfn(),
+            void 0 === this.sxr &&
+              (this.sxr = this.Disable(
                 "[SceneItemGuidePathComponent.ShowGuidePath] 超时触发Disable",
               )),
-            (this.yfn = void 0);
+            (this.ifn = void 0);
         }, t * TimeUtil_1.TimeUtil.InverseMillisecond));
     }
-    Ffn() {
-      EffectSystem_1.EffectSystem.IsValid(this.opi) &&
-        (Info_1.Info.EnableForceTick || this.Efn.SetComponentTickEnabled(!1),
+    Mfn() {
+      EffectSystem_1.EffectSystem.IsValid(this.rvi) &&
+        (Info_1.Info.EnableForceTick || this.tfn.SetComponentTickEnabled(!1),
         EffectSystem_1.EffectSystem.StopEffectById(
-          this.opi,
+          this.rvi,
           "[SceneItemGuidePathComponent.HideEffect]",
           !1,
         ),
-        (this.opi = 0));
+        (this.rvi = 0));
     }
-    Lzr() {
-      this.opi || this.NKt();
+    szr() {
+      this.rvi || this.NQt();
     }
-    qfn(t, e) {
+    Cfn(t, e) {
       let i = void 0;
-      (i = e ? this.Afn : this.Dfn.op_Subtraction(this.Rfn.op_Multiply(t))),
-        this.Lfn?.IsValid() || this.jfn(),
-        this.Lfn?.SetColorParameter(colorString, i);
+      (i = e ? this.hfn : this.sfn.op_Subtraction(this.afn.op_Multiply(t))),
+        this.nfn?.IsValid() || this.yfn(),
+        this.nfn?.SetColorParameter(colorString, i);
     }
-    NKt() {
+    NQt() {
       var t = this.md.SplineData;
-      (this.opi = EffectSystem_1.EffectSystem.SpawnEffect(
+      (this.rvi = EffectSystem_1.EffectSystem.SpawnEffect(
         GlobalData_1.GlobalData.World,
         this.Hte.ActorTransform,
         t.Effect,
@@ -408,10 +408,10 @@ let SceneItemGuidePathComponent =
         new EffectContext_1.EffectContext(this.Entity.Id),
         3,
         void 0,
-        this.Gfn,
+        this.gfn,
       )),
-        EffectSystem_1.EffectSystem.IsValid(this.opi) &&
-          EffectSystem_1.EffectSystem.GetEffectActor(this.opi).K2_AttachToActor(
+        EffectSystem_1.EffectSystem.IsValid(this.rvi) &&
+          EffectSystem_1.EffectSystem.GetEffectActor(this.rvi).K2_AttachToActor(
             this.md,
             void 0,
             2,
@@ -419,18 +419,18 @@ let SceneItemGuidePathComponent =
             2,
             !1,
           ),
-        this.jfn();
+        this.yfn();
     }
-    jfn() {
-      EffectSystem_1.EffectSystem.IsValid(this.opi) &&
-        ((this.Lfn = EffectSystem_1.EffectSystem.GetNiagaraComponent(this.opi)),
-        this.Lfn?.IsValid()) &&
-        (this.Lfn.bForceSolo = !0);
+    yfn() {
+      EffectSystem_1.EffectSystem.IsValid(this.rvi) &&
+        ((this.nfn = EffectSystem_1.EffectSystem.GetNiagaraComponent(this.rvi)),
+        this.nfn?.IsValid()) &&
+        (this.nfn.bForceSolo = !0);
     }
   });
 (SceneItemGuidePathComponent = SceneItemGuidePathComponent_1 =
   __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(137)],
+    [(0, RegisterComponent_1.RegisterComponent)(139)],
     SceneItemGuidePathComponent,
   )),
   (exports.SceneItemGuidePathComponent = SceneItemGuidePathComponent);

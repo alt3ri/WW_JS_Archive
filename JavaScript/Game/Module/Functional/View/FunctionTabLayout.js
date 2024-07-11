@@ -18,10 +18,10 @@ class FunctionTabItem extends UiPanelBase_1.UiPanelBase {
 class FunctionTabLayout extends UiPanelBase_1.UiPanelBase {
   constructor(t) {
     super(),
-      (this.B9t = void 0),
-      (this.b9t = -1),
-      (this.q9t = 0),
-      (this.Z3e = (t, e, s) => {
+      (this.B7t = void 0),
+      (this.b7t = -1),
+      (this.q7t = 0),
+      (this.C5e = (t, e, s) => {
         return { Key: s, Value: new FunctionTabItem(e) };
       }),
       this.CreateThenShowByActor(t.GetOwner());
@@ -33,28 +33,28 @@ class FunctionTabLayout extends UiPanelBase_1.UiPanelBase {
     ];
   }
   OnStart() {
-    this.B9t = new GenericLayoutNew_1.GenericLayoutNew(
+    this.B7t = new GenericLayoutNew_1.GenericLayoutNew(
       this.GetLayoutBase(0),
-      this.Z3e,
+      this.C5e,
       this.GetItem(1),
     );
   }
   OnBeforeDestroy() {
-    this.B9t.ClearChildren();
+    this.B7t.ClearChildren();
   }
   RefreshTab(t) {
-    1 < (this.q9t = t)
-      ? (this.SetActive(!0), this.B9t.RebuildLayoutByDataNew(void 0, t))
+    1 < (this.q7t = t)
+      ? (this.SetActive(!0), this.B7t.RebuildLayoutByDataNew(void 0, t))
       : this.SetActive(!1);
   }
   SetToggleSelectByIndex(t) {
-    if (!(this.q9t <= 1) && this.b9t !== t) {
-      if (-1 !== this.b9t) {
-        const e = this.B9t.GetLayoutItemByKey(this.b9t);
+    if (!(this.q7t <= 1) && this.b7t !== t) {
+      if (-1 !== this.b7t) {
+        const e = this.B7t.GetLayoutItemByKey(this.b7t);
         e.SetToggleState(!1);
       }
-      const e = this.B9t.GetLayoutItemByKey(t);
-      e.SetToggleState(!0), (this.b9t = t);
+      const e = this.B7t.GetLayoutItemByKey(t);
+      e.SetToggleState(!0), (this.b7t = t);
     }
   }
 }

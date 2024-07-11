@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RedDotQuestViewTab = void 0);
-const EventDefine_1 = require("../../../Common/Event/EventDefine"),
+const Log_1 = require("../../../../Core/Common/Log"),
+  EventDefine_1 = require("../../../Common/Event/EventDefine"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   RedDotBase_1 = require("../../RedDotBase");
@@ -15,15 +16,25 @@ class RedDotQuestViewTab extends RedDotBase_1.RedDotBase {
     )) {
       var r = ModelManager_1.ModelManager.QuestNewModel.GetQuestsByType(n.Id);
       if (r)
-        for (const t of r)
-          if (t.CanShowInUiPanel())
+        for (const o of r)
+          if (o.CanShowInUiPanel())
             if (
               ModelManager_1.ModelManager.QuestNewModel.CheckQuestRedDotDataState(
-                t.Id,
+                o.Id,
               ) ??
               !1
             )
-              return !0;
+              return (
+                Log_1.Log.CheckInfo() &&
+                  Log_1.Log.Info(
+                    "Quest",
+                    19,
+                    "RedDotQuestViewTab：任务红点显示",
+                    ["mainTypeId", e],
+                    ["questId", o.Id],
+                  ),
+                !0
+              );
     }
     return !1;
   }

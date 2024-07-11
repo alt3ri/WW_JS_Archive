@@ -8,118 +8,118 @@ const ModelBase_1 = require("../../../Core/Framework/ModelBase"),
   ConfigManager_1 = require("../../Manager/ConfigManager"),
   ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../Manager/ModelManager"),
-  AdventureDefine_1 = require("../AdventureGuide/AdventureDefine"),
   InstanceDungeonData_1 = require("./Define/InstanceDungeonData");
 class InstanceDungeonEntranceModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
-      (this.qai = 0),
-      (this.Gai = 0),
-      (this.Nai = 0),
-      (this.Oai = 0),
-      (this.kai = void 0),
-      (this.Fai = new Array()),
-      (this.Vai = 0),
-      (this.Hai = new Map()),
-      (this.jai = new Map()),
-      (this.Wai = new Array()),
-      (this.Kai = 0),
-      (this.Qai = 0),
-      (this.Xai = void 0),
+      (this.qhi = 0),
+      (this.Ghi = 0),
+      (this.Nhi = 0),
+      (this.Ohi = 0),
+      (this.khi = void 0),
+      (this.Fhi = new Array()),
+      (this.Vhi = 0),
+      (this.Hhi = new Map()),
+      (this.jhi = new Map()),
+      (this.Whi = new Array()),
+      (this.Khi = 0),
+      (this.Qhi = 0),
+      (this.Xhi = void 0),
       (this.OnStopTimer = void 0),
       (this.OnStopHandle = void 0),
-      (this.$ai = 0),
-      (this.Yai = !1),
+      (this.$hi = 0),
+      (this.Yhi = !1),
       (this.E0 = 0);
   }
   OnLeaveLevel() {
     return this.CancelMatchingTimer(), !0;
   }
   get EntranceId() {
-    return this.qai;
+    return this.qhi;
   }
   set EntranceId(e) {
-    this.qai = e;
+    this.qhi = e;
   }
   get InstanceId() {
-    return this.Gai;
+    return this.Ghi;
   }
   set InstanceId(e) {
-    this.Gai = e;
+    this.Ghi = e;
   }
   get SelectInstanceId() {
-    return this.Nai;
+    return this.Nhi;
   }
   set SelectInstanceId(e) {
-    this.Nai = e;
+    (this.Nhi = e),
+      EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.OnSelectInstance);
   }
   get LastInstanceId() {
-    return this.Oai;
+    return this.Ohi;
   }
   set LastInstanceId(e) {
-    this.Oai = e;
+    this.Ohi = e;
   }
   get TransitionOption() {
-    return this.kai;
+    return this.khi;
   }
   set TransitionOption(e) {
-    this.kai = e;
+    this.khi = e;
   }
   get EntranceInstanceIdList() {
-    return this.Fai;
+    return this.Fhi;
   }
   set EntranceInstanceIdList(e) {
-    this.Fai = e;
+    this.Fhi = e;
   }
   get EntranceEndTime() {
-    return this.Vai;
+    return this.Vhi;
   }
   set EntranceEndTime(e) {
-    this.Vai = e;
+    this.Vhi = e;
   }
   GetInstanceResetTime(e) {
-    return this.Hai.get(e);
+    return this.Hhi.get(e);
   }
   SetInstanceResetTime(e, t) {
-    this.Hai.set(e, t);
+    this.Hhi.set(e, t);
   }
   get SettleRewardItemList() {
-    return this.Wai;
+    return this.Whi;
   }
   GetInstanceData(e) {
     var t;
     if (e)
       return (
-        this.jai.get(e) ||
+        this.jhi.get(e) ||
         ((t = new InstanceDungeonData_1.InstanceDungeonData(e)),
-        this.jai.set(e, t),
+        this.jhi.set(e, t),
         t)
       );
   }
   SetInstanceData(t) {
-    var n = t.Ekn;
+    var n = t.J4n;
     if (n) {
-      let e = this.jai.get(n);
+      let e = this.jhi.get(n);
       e ||
         ((e = new InstanceDungeonData_1.InstanceDungeonData(n)),
-        this.jai.set(n, e)),
-        (e.ChallengedTimes = t.WRs);
+        this.jhi.set(n, e)),
+        (e.ChallengedTimes = t.uws);
     }
   }
   get MatchingTime() {
-    return this.Qai;
+    return this.Qhi;
   }
   set MatchingTime(e) {
-    this.Qai = e;
+    this.Qhi = e;
   }
   MatchingTimeIncrease() {
-    this.Qai++;
+    this.Qhi++;
   }
   get MatchingTimer() {
-    return this.Xai;
+    return this.Xhi;
   }
   set MatchingTimer(e) {
-    this.Xai = e;
+    this.Xhi = e;
   }
   CancelMatchingTimer() {
     void 0 !== this.MatchingTimer &&
@@ -133,16 +133,16 @@ class InstanceDungeonEntranceModel extends ModelBase_1.ModelBase {
       EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.OnMatchingChange);
   }
   GetMatchingState() {
-    return this.Kai;
+    return this.Khi;
   }
   SetMatchingState(e) {
-    this.Kai = e;
+    this.Khi = e;
   }
   GetMatchingId() {
-    return this.$ai;
+    return this.$hi;
   }
   SetMatchingId(e) {
-    this.$ai = e;
+    this.$hi = e;
   }
   InitInstanceDataList(e) {
     if (e) for (const t of e) this.SetInstanceData(t);
@@ -164,19 +164,19 @@ class InstanceDungeonEntranceModel extends ModelBase_1.ModelBase {
       : 0;
   }
   get EditBattleTeamMatching() {
-    return this.Yai;
+    return this.Yhi;
   }
   SetEditBattleTeamMatching(e) {
-    (this.Yai = e),
+    (this.Yhi = e),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.MatchTeamFlagChange,
         e,
       );
   }
   SyncSettleRewardItemList(e) {
-    this.Wai.length = 0;
+    this.Whi.length = 0;
     for (const t of Object.keys(e))
-      this.Wai.push([{ IncId: 0, ItemId: Number.parseInt(t) }, e[t]]);
+      this.Whi.push([{ IncId: 0, ItemId: Number.parseInt(t) }, e[t]]);
   }
   GetSortedEntranceInstanceIdList(e) {
     e =
@@ -315,14 +315,17 @@ class InstanceDungeonEntranceModel extends ModelBase_1.ModelBase {
     return r && a ? (e ? [t, !1] : [n.concat(t), !1]) : a ? [t, !1] : [n, e];
   }
   IsMowingInstanceDungeon() {
-    let e = this.SelectInstanceId;
+    return this.IsSpecificInstanceDungeonBySubType(19);
+  }
+  IsSpecificInstanceDungeonBySubType(e) {
+    let t = this.SelectInstanceId;
     return (
-      !!(e =
+      !!(t =
         ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance()
           ? ModelManager_1.ModelManager.CreatureModel.GetInstanceId()
-          : e) &&
-      ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(e)
-        ?.InstSubType === AdventureDefine_1.EDungeonSubType.Mowing
+          : t) &&
+      ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(t)
+        ?.InstSubType === e
     );
   }
 }

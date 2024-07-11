@@ -19,22 +19,21 @@ const Log_1 = require("../../../../Core/Common/Log"),
 class QuestNewModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
-      (this.rro = void 0),
-      (this.nro = void 0),
-      (this.sro = void 0),
-      (this.aro = void 0),
-      (this.hro = void 0),
-      (this.lro = 0),
-      (this._ro = void 0),
-      (this.uro = void 0),
+      (this.eno = void 0),
+      (this.tno = void 0),
+      (this.ino = void 0),
+      (this.ono = void 0),
+      (this.rno = void 0),
+      (this.sno = void 0),
+      (this.ano = void 0),
       (this.CurShowUpdateTipsQuest = void 0),
       (this.ActivityIdsByQuestId = void 0),
-      (this.zfi = (e) => {
+      (this.Zpi = (e) => {
         for (const t of JSON.parse(e).Quests)
-          this.aro.set(t.Id, t),
+          this.ono.set(t.Id, t),
             t.Tree &&
               GeneralLogicTreeConfigUtil_1.GeneralLogicTreeConfigUtil.InitBehaviorNodeConfig(
-                this.hro,
+                this.rno,
                 t.Id,
                 t.Tree,
               );
@@ -42,12 +41,12 @@ class QuestNewModel extends ModelBase_1.ModelBase {
   }
   OnInit() {
     return (
-      (this.rro = new Map()),
-      (this.nro = new Map()),
-      (this.sro = new Map()),
-      (this.aro = new Map()),
-      (this.hro = new Map()),
-      (this.uro = new Map()),
+      (this.eno = new Map()),
+      (this.tno = new Map()),
+      (this.ino = new Map()),
+      (this.ono = new Map()),
+      (this.rno = new Map()),
+      (this.ano = new Map()),
       (this.ActivityIdsByQuestId = new Map()),
       this.InitQuestConfig(),
       PublicUtil_1.PublicUtil.RegisterEditorLocalConfig(),
@@ -55,20 +54,20 @@ class QuestNewModel extends ModelBase_1.ModelBase {
     );
   }
   OnClear() {
-    if (this.rro) {
-      for (var [, e] of this.rro) e.Destroy();
-      this.rro.clear(), (this.rro = void 0);
+    if (this.eno) {
+      for (var [, e] of this.eno) e.Destroy();
+      this.eno.clear(), (this.eno = void 0);
     }
     return (
-      (this._ro = void 0),
-      this.aro?.clear(),
-      (this.aro = void 0),
-      this.hro?.clear(),
-      (this.hro = void 0),
-      this.nro?.clear(),
-      (this.nro = void 0),
-      this.sro?.clear(),
-      (this.sro = void 0),
+      (this.sno = void 0),
+      this.ono?.clear(),
+      (this.ono = void 0),
+      this.rno?.clear(),
+      (this.rno = void 0),
+      this.tno?.clear(),
+      (this.tno = void 0),
+      this.ino?.clear(),
+      (this.ino = void 0),
       this.ActivityIdsByQuestId?.clear(),
       !(this.ActivityIdsByQuestId = void 0)
     );
@@ -79,14 +78,14 @@ class QuestNewModel extends ModelBase_1.ModelBase {
   InitQuestConfig() {
     var e;
     PublicUtil_1.PublicUtil.UseDbConfig() ||
-      (this.aro.clear(),
-      this.hro.clear(),
+      (this.ono.clear(),
+      this.rno.clear(),
       (e = (0, PublicUtil_1.getConfigPath)(
         IGlobal_1.globalConfig.QuestListDir,
       )),
       GeneralLogicTreeConfigUtil_1.GeneralLogicTreeConfigUtil.InitConfig(
         e,
-        this.zfi,
+        this.Zpi,
       ));
   }
   AddQuest(e) {
@@ -94,9 +93,9 @@ class QuestNewModel extends ModelBase_1.ModelBase {
       i = this.GetQuestConfig(e);
     if (i)
       return (
-        (t = this.rro.get(e)) ||
+        (t = this.eno.get(e)) ||
           ((t = (0, QuestTypeDefine_1.createQuestObj)(i)),
-          this.rro.set(e, t),
+          this.eno.set(e, t),
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.OnAddNewQuest,
             t,
@@ -113,36 +112,36 @@ class QuestNewModel extends ModelBase_1.ModelBase {
       );
   }
   RemoveQuest(e) {
-    var t = this.rro.get(e);
-    t && (t.Destroy(), this.rro.delete(e));
+    var t = this.eno.get(e);
+    t && (t.Destroy(), this.eno.delete(e));
   }
   AddFinishedQuest(e) {
-    this.sro.set(e, !0);
+    this.ino.set(e, !0);
   }
   GetCanAcceptQuest() {
-    return this.nro;
+    return this.tno;
   }
   AddCanAcceptQuest(e) {
-    this.nro.set(e, !0);
+    this.tno.set(e, !0);
   }
   RemoveCanAcceptQuest(e) {
-    this.nro.delete(e);
+    this.tno.delete(e);
   }
   IsTrackingQuest(e) {
     return this.GetCurTrackedQuest()?.Id === e;
   }
   GetCurTrackedQuest() {
-    return this._ro;
+    return this.sno;
   }
   SetQuestTrackState(e, t, i = 0) {
     if (t) {
       t = this.GetQuest(e);
       if (t?.IsProgressing) {
-        if (this._ro) {
-          if (this._ro.Id === t.Id) return;
-          this._ro.SetTrack(!1, i);
+        if (this.sno) {
+          if (this.sno.Id === t.Id) return;
+          this.sno.SetTrack(!1, i);
         }
-        (this._ro = t).SetTrack(!0, i);
+        (this.sno = t).SetTrack(!0, i);
       } else
         Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn("Quest", 19, "更新任务追踪时,找不到进行中的任务", [
@@ -150,10 +149,10 @@ class QuestNewModel extends ModelBase_1.ModelBase {
             e,
           ]);
     } else
-      this._ro &&
-        this._ro.Id === e &&
-        (this._ro.SetTrack(!1, i),
-        (this._ro = void 0),
+      this.sno &&
+        this.sno.Id === e &&
+        (this.sno.SetTrack(!1, i),
+        (this.sno = void 0),
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.CurTrackQuestUnTrackedCheck,
         ));
@@ -179,18 +178,18 @@ class QuestNewModel extends ModelBase_1.ModelBase {
     }
   }
   GetQuestConfig(e) {
-    if (!PublicUtil_1.PublicUtil.UseDbConfig()) return this.aro.get(e);
-    let t = this.aro.get(e);
+    if (!PublicUtil_1.PublicUtil.UseDbConfig()) return this.ono.get(e);
+    let t = this.ono.get(e);
     if (!t) {
       var i = ConfigManager_1.ConfigManager.QuestNewConfig.GetQuestConfig(e);
       if (!i) return;
-      (t = JSON.parse(i.Data)), this.aro.set(e, t);
+      (t = JSON.parse(i.Data)), this.ono.set(e, t);
     }
     return t;
   }
   GetQuestNodeConfig(e, t) {
-    if (!PublicUtil_1.PublicUtil.UseDbConfig()) return this.hro.get(e)?.get(t);
-    let i = this.hro.get(e),
+    if (!PublicUtil_1.PublicUtil.UseDbConfig()) return this.rno.get(e)?.get(t);
+    let i = this.rno.get(e),
       r = (i = i || new Map()).get(t);
     if (!r) {
       e = ConfigManager_1.ConfigManager.QuestNewConfig.GetQuestNodeConfig(e, t);
@@ -199,18 +198,12 @@ class QuestNewModel extends ModelBase_1.ModelBase {
     }
     return r;
   }
-  UpdateGuideLineStartShowTime() {
-    this.lro = TimeUtil_1.TimeUtil.GetServerTime();
-  }
-  GetGuideLineStartShowTime() {
-    return this.lro;
-  }
   GetQuest(e) {
-    return this.rro.get(e);
+    return this.eno.get(e);
   }
   GetQuestState(e) {
     var t = this.GetQuest(e);
-    return t ? t.Status : this.sro.get(e) ? 3 : this.nro.get(e) ? 1 : 0;
+    return t ? t.Status : this.ino.get(e) ? 3 : this.tno.get(e) ? 1 : 0;
   }
   CheckQuestFinished(e) {
     return 3 === this.GetQuestState(e);
@@ -218,7 +211,7 @@ class QuestNewModel extends ModelBase_1.ModelBase {
   GetQuestsByType(e) {
     var t,
       i = [];
-    for ([, t] of this.rro) t.Type === e && i.push(t);
+    for ([, t] of this.eno) t.Type === e && i.push(t);
     return i;
   }
   GetFirstShowQuestByType(e) {
@@ -299,9 +292,11 @@ class QuestNewModel extends ModelBase_1.ModelBase {
           r = [];
         for ([i] of t.DropPreview) {
           var s =
-              ConfigManager_1.ConfigManager.QuestNewConfig.GetItemInfoConfig(i),
+              ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
+                i,
+              ),
             n = t.DropPreview.get(i);
-          s && r.push([{ IncId: 0, ItemId: s.Id }, n]);
+          s && r.push([{ IncId: 0, ItemId: i }, n]);
         }
         return r;
       }
@@ -337,17 +332,25 @@ class QuestNewModel extends ModelBase_1.ModelBase {
     }
   }
   SetQuestRedDot(e, t) {
-    t ? this.uro.set(e, !0) : this.uro.delete(e),
+    t ? this.ano.set(e, !0) : this.ano.delete(e),
+      Log_1.Log.CheckInfo() &&
+        Log_1.Log.Info(
+          "Quest",
+          19,
+          "任务红点状态改变",
+          ["questId", e],
+          ["bAdd", t],
+        ),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnQuestRedDotStateChange,
         e,
       );
   }
   CheckQuestRedDotDataState(e) {
-    return this.uro.get(e);
+    return this.ano.get(e);
   }
   GetAllRedDotData() {
-    return this.uro;
+    return this.ano;
   }
   GetCurWorldLevelBreakQuest() {
     var e = CommonParamById_1.configCommonParamById.GetIntArrayConfig(

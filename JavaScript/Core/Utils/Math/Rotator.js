@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.Rotator = void 0);
 const UE = require("ue"),
+  Macro_1 = require("../../Preprocessor/Macro"),
   MathCommon_1 = require("./MathCommon"),
   Quat_1 = require("./Quat");
 class Rotator {
@@ -190,10 +191,21 @@ class Rotator {
       (h[2] += t[2]),
       MathCommon_1.MathCommon.VectorNormalizeRotator(r);
   }
+  static AxisLerp(t, o, a) {
+    o = (o = MathCommon_1.MathCommon.WrapAngle(o - t)) * a + t;
+    return MathCommon_1.MathCommon.WrapAngle(o);
+  }
 }
 ((exports.Rotator = Rotator).ZeroRotatorProxy = Rotator.Create(0, 0, 0)),
   (Rotator.ZeroRotator = Rotator.ZeroRotatorProxy.ToUeRotator()),
-  Object.defineProperty(Rotator.ZeroRotatorProxy.Tuple, "0", { writable: !1 }),
-  Object.defineProperty(Rotator.ZeroRotatorProxy.Tuple, "1", { writable: !1 }),
-  Object.defineProperty(Rotator.ZeroRotatorProxy.Tuple, "2", { writable: !1 });
+  Macro_1.NOT_SHIPPING_ENVIRONMENT &&
+    (Object.defineProperty(Rotator.ZeroRotatorProxy.Tuple, "0", {
+      writable: !1,
+    }),
+    Object.defineProperty(Rotator.ZeroRotatorProxy.Tuple, "1", {
+      writable: !1,
+    }),
+    Object.defineProperty(Rotator.ZeroRotatorProxy.Tuple, "2", {
+      writable: !1,
+    }));
 //# sourceMappingURL=Rotator.js.map

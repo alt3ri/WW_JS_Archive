@@ -13,17 +13,17 @@ const puerts_1 = require("puerts"),
 class BulletLogicShowMesh extends BulletLogicController_1.BulletLogicController {
   constructor(t, e) {
     super(t, e),
-      (this.$6e = void 0),
-      (this.F9o = void 0),
-      (this._9o = void 0),
-      (this.V9o = new Array()),
-      (this.u9o = t);
+      (this.l9e = void 0),
+      (this.N7o = void 0),
+      (this.a7o = void 0),
+      (this.O7o = new Array()),
+      (this.h7o = t);
   }
   BulletLogicAction(t = 0) {
-    (this._9o = this.Bullet.GetBulletInfo()),
-      this._9o
-        ? this._9o.Target
-          ? (this.H9o(), this.j9o(), this.W9o(), this.K9o())
+    (this.a7o = this.Bullet.GetBulletInfo()),
+      this.a7o
+        ? this.a7o.Target
+          ? (this.k7o(), this.F7o(), this.V7o(), this.H7o())
           : Log_1.Log.CheckError() &&
             Log_1.Log.Error("Battle", 4, "子弹没有目标，生成残影失败")
         : Log_1.Log.CheckError() &&
@@ -31,30 +31,30 @@ class BulletLogicShowMesh extends BulletLogicController_1.BulletLogicController 
   }
   OnBulletDestroy() {
     const e = this.Bullet.GetBulletInfo();
-    this.F9o && e.Actor.K2_DestroyComponent(this.F9o),
-      this.$6e && (e.Actor.K2_DestroyComponent(this.$6e), (this.$6e = void 0)),
-      this.V9o.forEach((t) => {
+    this.N7o && e.Actor.K2_DestroyComponent(this.N7o),
+      this.l9e && (e.Actor.K2_DestroyComponent(this.l9e), (this.l9e = void 0)),
+      this.O7o.forEach((t) => {
         t && e.Actor.K2_DestroyComponent(t);
       }),
-      (this.V9o.length = 0);
+      (this.O7o.length = 0);
   }
-  H9o() {
-    if (this._9o.Target) {
-      var t = this._9o.Target.GetComponent(3).Actor.Mesh;
-      if (((this.F9o = this.Q9o(t)), this.F9o))
+  k7o() {
+    if (this.a7o.Target) {
+      var t = this.a7o.Target.GetComponent(3).Actor.Mesh;
+      if (((this.N7o = this.j7o(t)), this.N7o))
         return (
           (t = (0, puerts_1.$ref)(new UE.HitResult())),
-          this.F9o.K2_SetWorldTransform(
-            this._9o.ActorComponent.ActorTransform,
+          this.N7o.K2_SetWorldTransform(
+            this.a7o.ActorComponent.ActorTransform,
             !1,
             t,
             !0,
           ),
-          this.F9o.CopyPoseFromSkeletalComponent(
-            this._9o.Target.GetComponent(3).Actor.Mesh,
+          this.N7o.CopyPoseFromSkeletalComponent(
+            this.a7o.Target.GetComponent(3).Actor.Mesh,
           ),
-          this.F9o.SetForcedLOD(MIN_LOD),
-          !(this.F9o.CastShadow = !1)
+          this.N7o.SetForcedLOD(MIN_LOD),
+          !(this.N7o.CastShadow = !1)
         );
       Log_1.Log.CheckError() &&
         Log_1.Log.Error("Battle", 4, "PoseComponent初始化失败");
@@ -63,11 +63,11 @@ class BulletLogicShowMesh extends BulletLogicController_1.BulletLogicController 
         Log_1.Log.Error("Battle", 4, "子弹没有目标，生成残影失败");
     return !1;
   }
-  Q9o(t) {
+  j7o(t) {
     var e = void 0;
     return (
       (e = EffectModelHelper_1.EffectModelHelper.AddSceneComponent(
-        this._9o.Actor,
+        this.a7o.Actor,
         UE.PoseableMeshComponent.StaticClass(),
         void 0,
         void 0,
@@ -76,23 +76,23 @@ class BulletLogicShowMesh extends BulletLogicController_1.BulletLogicController 
       e
     );
   }
-  j9o() {
-    this.$6e ||
-      (this.$6e = this._9o.Actor.AddComponentByClass(
+  F7o() {
+    this.l9e ||
+      (this.l9e = this.a7o.Actor.AddComponentByClass(
         UE.CharRenderingComponent_C.StaticClass(),
         !1,
         MathUtils_1.MathUtils.DefaultTransform,
         !1,
       )),
-      this.$6e
-        ? (this.$6e.Init(0), this.$6e.AddComponentByCase(0, this.F9o))
+      this.l9e
+        ? (this.l9e.Init(0), this.l9e.AddComponentByCase(0, this.N7o))
         : Log_1.Log.CheckError() &&
           Log_1.Log.Error("Battle", 4, "BulletLogicShowMesh中渲染组件添加失败");
   }
-  W9o() {
+  V7o() {
     var t = this.Bullet.GetBulletInfo().Target;
     if (t) {
-      var e = t.GetComponent(69);
+      var e = t.GetComponent(71);
       if (e) {
         (e = e.GetWeaponMesh()),
           (t = t.GetComponent(0).GetRoleConfig().WeaponScale);
@@ -104,7 +104,7 @@ class BulletLogicShowMesh extends BulletLogicController_1.BulletLogicController 
           t.WeaponHidden ||
             ((e = void 0),
             (e = EffectModelHelper_1.EffectModelHelper.AddSceneComponent(
-              this._9o.Actor,
+              this.a7o.Actor,
               UE.PoseableMeshComponent.StaticClass(),
               void 0,
               void 0,
@@ -113,23 +113,23 @@ class BulletLogicShowMesh extends BulletLogicController_1.BulletLogicController 
             e.CopyPoseFromSkeletalComponent(t.Mesh),
             e.SetForcedLOD(MIN_LOD),
             (e.CastShadow = !1),
-            this.X9o(e, t.BattleSocket, s.ToUeVector()),
-            this.$6e.AddComponentByCase(o[i + 1], e),
-            this.V9o.push(e)),
+            this.W7o(e, t.BattleSocket, s.ToUeVector()),
+            this.l9e.AddComponentByCase(o[i + 1], e),
+            this.O7o.push(e)),
             ++i;
         });
       }
     }
   }
-  K9o() {
-    const e = this.u9o.MaterialEffect.AssetPathName?.toString();
+  H7o() {
+    const e = this.h7o.MaterialEffect.AssetPathName?.toString();
     "" !== e &&
       ResourceSystem_1.ResourceSystem.LoadAsync(
         e,
         UE.PD_CharacterControllerData_C,
         (t) => {
           t
-            ? this.$6e.AddMaterialControllerData(t)
+            ? this.l9e.AddMaterialControllerData(t)
             : Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "Battle",
@@ -140,10 +140,10 @@ class BulletLogicShowMesh extends BulletLogicController_1.BulletLogicController 
         },
       );
   }
-  X9o(t, e, i) {
+  W7o(t, e, i) {
     var s = new UE.Transform();
     s.SetScale3D(i),
-      t.K2_AttachToComponent(this.F9o, e, 0, 0, 0, !0),
+      t.K2_AttachToComponent(this.N7o, e, 0, 0, 0, !0),
       t.K2_SetRelativeTransform(s, !1, void 0, !0);
   }
 }

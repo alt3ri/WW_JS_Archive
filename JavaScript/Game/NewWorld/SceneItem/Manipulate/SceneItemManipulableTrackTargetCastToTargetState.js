@@ -13,45 +13,45 @@ const UE = require("ue"),
 class SceneItemManipulableTrackTargetCastToTargetState extends SceneItemManipulableCastState_1.SceneItemManipulableCastState {
   constructor(t, e) {
     super(t, e),
-      (this.jAo = void 0),
-      (this.Xii = void 0),
-      (this.$ii = void 0),
-      (this.unt = void 0),
-      (this.Onr = void 0),
-      (this.knr = void 0),
-      (this.Fnr = void 0),
-      (this.$rr = void 0),
+      (this.FPo = void 0),
+      (this.$oi = void 0),
+      (this.Yoi = void 0),
+      (this.Ist = void 0),
+      (this.qsr = void 0),
+      (this.Gsr = void 0),
+      (this.Nsr = void 0),
+      (this.Knr = void 0),
       (this.StateType = "BeCastingToTarget");
   }
   SetTargetActorWithPart(t, e) {
-    (this.jAo = t),
+    (this.FPo = t),
       void 0 !== e &&
-        ((this.Xii = t?.Actor.Mesh), (this.$ii = e.PartSocketName));
+        ((this.$oi = t?.Actor.Mesh), (this.Yoi = e.PartSocketName));
   }
   OnEnter() {
     var t, e;
     super.OnEnter(),
-      this.jAo &&
+      this.FPo &&
         ((t = this.SceneItem.Config.ThrowCfg.MotionConfig),
-        (this.unt = t.Velocity),
+        (this.Ist = t.Velocity),
         StringUtils_1.StringUtils.IsEmpty(t.VelocityCurve) ||
           ResourceSystem_1.ResourceSystem.LoadAsync(
             t.VelocityCurve,
             UE.CurveFloat,
             (t) => {
-              this.Onr = t;
+              this.qsr = t;
             },
           ),
-        (this.knr = t.AngularVelocity),
+        (this.Gsr = t.AngularVelocity),
         StringUtils_1.StringUtils.IsEmpty(t.AngularVelocityCurve) ||
           ResourceSystem_1.ResourceSystem.LoadAsync(
             t.AngularVelocityCurve,
             UE.CurveFloat,
             (t) => {
-              this.Fnr = t;
+              this.Nsr = t;
             },
           ),
-        (this.$rr = Vector_1.Vector.Create()),
+        (this.Knr = Vector_1.Vector.Create()),
         (void 0 !== t.VelocityOffset
           ? ((t = Rotator_1.Rotator.Create(
               t.VelocityOffset.Y ?? 0,
@@ -64,36 +64,36 @@ class SceneItemManipulableTrackTargetCastToTargetState extends SceneItemManipula
             MathUtils_1.MathUtils.ComposeRotator(e, t, e),
             e)
           : CameraController_1.CameraController.CameraRotator
-        ).Vector(this.$rr),
-        this.$rr.Normalize());
+        ).Vector(this.Knr),
+        this.Knr.Normalize());
   }
   OnTick(t) {
     super.OnTick(t), (this.Timer += t);
-    let e = this.knr,
+    let e = this.Gsr,
       i =
-        (this.Fnr?.IsValid && (e *= this.Fnr.GetFloatValue(this.Timer)),
-        this.unt);
-    this.Onr?.IsValid && (i *= this.Onr.GetFloatValue(this.Timer)),
-      this.$rr.Normalize();
+        (this.Nsr?.IsValid && (e *= this.Nsr.GetFloatValue(this.Timer)),
+        this.Ist);
+    this.qsr?.IsValid && (i *= this.qsr.GetFloatValue(this.Timer)),
+      this.Knr.Normalize();
     var s = Vector_1.Vector.Create(),
       r =
-        (void 0 !== this.$ii
-          ? s.DeepCopy(this.Xii.GetSocketLocation(this.$ii))
-          : s.DeepCopy(this.jAo.ActorLocationProxy),
+        (void 0 !== this.Yoi
+          ? s.DeepCopy(this.$oi.GetSocketLocation(this.Yoi))
+          : s.DeepCopy(this.FPo.ActorLocationProxy),
         Vector_1.Vector.Create(this.SceneItem.ActorComp.ActorLocationProxy)),
       s = Vector_1.Vector.Create(s),
       o =
         (s.SubtractionEqual(r),
         s.Normalize(),
-        Vector_1.Vector.DotProduct(this.$rr, s)),
+        Vector_1.Vector.DotProduct(this.Knr, s)),
       o = Math.acos(o) * MathCommon_1.MathCommon.RadToDeg,
       o = MathUtils_1.MathUtils.Clamp(o, -e * t, e * t),
       a = Vector_1.Vector.Create(),
       s =
-        (Vector_1.Vector.CrossProduct(this.$rr, s, a),
-        this.$rr.RotateAngleAxis(o, a, this.$rr),
+        (Vector_1.Vector.CrossProduct(this.Knr, s, a),
+        this.Knr.RotateAngleAxis(o, a, this.Knr),
         Vector_1.Vector.Create(r)),
-      o = Vector_1.Vector.Create(this.$rr);
+      o = Vector_1.Vector.Create(this.Knr);
     return (
       o.MultiplyEqual(i * t),
       s.AdditionEqual(o),
@@ -103,7 +103,7 @@ class SceneItemManipulableTrackTargetCastToTargetState extends SceneItemManipula
         ((a = UE.KismetMathLibrary.FindLookAtRotation(
           this.SceneItem.ActorComp.ActorLocation,
           this.SceneItem.ActorComp.ActorLocation.op_Addition(
-            this.$rr.ToUeVector(),
+            this.Knr.ToUeVector(),
           ),
         )),
         this.SceneItem.ActorComp.SetActorRotation(

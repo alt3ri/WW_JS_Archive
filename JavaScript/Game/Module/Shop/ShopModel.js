@@ -12,7 +12,7 @@ class ShopModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
       (this.OpenItemInfo = void 0),
-      (this.Cvo = void 0),
+      (this.cMo = void 0),
       (this.Qre = ""),
       (this.InteractTarget = 0),
       (this.CurrentInteractCreatureDataLongId = void 0);
@@ -24,10 +24,10 @@ class ShopModel extends ModelBase_1.ModelBase {
     this.Qre = e;
   }
   OnInit() {
-    return (this.Cvo = new Map()), !0;
+    return (this.cMo = new Map()), !0;
   }
   GetShopInfo(e) {
-    return this.Cvo.get(e);
+    return this.cMo.get(e);
   }
   GetShopItem(e, t) {
     e = this.GetShopInfo(e);
@@ -40,18 +40,18 @@ class ShopModel extends ModelBase_1.ModelBase {
     for (const t of e) this.UpdateShopData(t);
   }
   UpdateShopData(e) {
-    let t = this.GetShopInfo(e.CVn);
+    let t = this.GetShopInfo(e.KHn);
     t
-      ? (t.UpdateRefreshTime(e.eAs), t.UpdateShopItemList(e.Dxs))
-      : ((t = new ShopDefine_1.Shop(e)), this.Cvo.set(e.CVn, t)),
+      ? (t.UpdateRefreshTime(e.pxs), t.UpdateShopItemList(e.Kqs))
+      : ((t = new ShopDefine_1.Shop(e)), this.cMo.set(e.KHn, t)),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.ShopUpdate,
-        e.CVn,
+        e.KHn,
       );
   }
   UpdateItemData(e) {
-    var t = this.GetShopItem(e.CVn, e.Ekn);
-    t && (t.s8n = e.s8n);
+    var t = this.GetShopItem(e.KHn, e.J4n);
+    t && (t.N7n = e.N7n);
   }
   IsOpen(e) {
     e = this.GetShopConfig(e);
@@ -64,7 +64,7 @@ class ShopModel extends ModelBase_1.ModelBase {
     if (t) {
       for (var [, r] of t.GetItemList()) {
         var n = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
-          r.G3n,
+          r.f8n,
           !0,
         );
         n &&

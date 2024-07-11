@@ -26,20 +26,20 @@ class CommonMultipleConsumeComponent extends UiPanelBase_1.UiPanelBase {
       (this.MaxCount = 0),
       (this.EnoughMoney = !0),
       (this.QualityId = 0),
-      (this.QIt = !0),
-      (this.XIt = "WeaponLevelUpText"),
-      (this.$It = void 0),
-      (this.YIt = () => {
+      (this.zTt = !0),
+      (this.ZTt = "WeaponLevelUpText"),
+      (this.eLt = void 0),
+      (this.tLt = () => {
         this.ConsumeFunction.AutoFunction &&
           this.ConsumeFunction.AutoFunction(this.QualityId);
       }),
-      (this.JIt = () => {
+      (this.iLt = () => {
         this.CommonConditionFilterComponent.UpdateComponent(this.QualityId);
       }),
-      (this.zIt = (t, i) => {
+      (this.oLt = (t, i) => {
         (this.QualityId = t),
           this.GetText(10).ShowTextNew(i),
-          this.$It && this.$It(t);
+          this.eLt && this.eLt(t);
       }),
       (this.sGe = () => {
         var t = new ConsumeItem_1.ConsumeItem(void 0, this.BelongView);
@@ -69,8 +69,8 @@ class CommonMultipleConsumeComponent extends UiPanelBase_1.UiPanelBase {
       [14, UE.UIItem],
     ]),
       (this.BtnBindInfo = [
-        [5, this.YIt],
-        [9, this.JIt],
+        [5, this.tLt],
+        [9, this.iLt],
       ]);
   }
   OnStart() {
@@ -84,7 +84,7 @@ class CommonMultipleConsumeComponent extends UiPanelBase_1.UiPanelBase {
         ((this.CommonConditionFilterComponent =
           new CommonConditionFilterComponent_1.CommonConditionFilterComponent(
             this.GetItem(11),
-            this.zIt,
+            this.oLt,
           )),
         this.CommonConditionFilterComponent.RefreshQualityList(
           ConfigManager_1.ConfigManager.CommonConfig.GetItemQualityList(),
@@ -125,17 +125,17 @@ class CommonMultipleConsumeComponent extends UiPanelBase_1.UiPanelBase {
   }
   SetMaxState(t) {
     this.GetItem(12).SetUIActive(!t),
-      this.QIt && this.GetItem(13).SetUIActive(!t),
+      this.zTt && this.GetItem(13).SetUIActive(!t),
       this.SetStrengthItemEnable(!t),
       t
         ? this.SetStrengthItemText("LevelUpMax")
-        : this.SetStrengthItemText(this.XIt);
+        : this.SetStrengthItemText(this.ZTt);
   }
   SetStrengthItemText(t) {
     this.StrengthItem.SetLocalText(t);
   }
   SetStrengthTextCode(t) {
-    this.XIt = t;
+    this.ZTt = t;
   }
   SetStrengthItemEnable(t) {
     this.StrengthItem.SetEnableClick(t);
@@ -147,7 +147,7 @@ class CommonMultipleConsumeComponent extends UiPanelBase_1.UiPanelBase {
     return this.EnoughMoney;
   }
   SetIsNeedShowMaterial(t) {
-    this.QIt = t;
+    this.zTt = t;
   }
   ShowMaterialItem(t) {
     this.GetItem(13).SetUIActive(t);
@@ -169,7 +169,7 @@ class CommonMultipleConsumeComponent extends UiPanelBase_1.UiPanelBase {
     return this.LoopScrollView;
   }
   SetConditionFilterFunction(t) {
-    this.$It = t;
+    this.eLt = t;
   }
 }
 exports.CommonMultipleConsumeComponent = CommonMultipleConsumeComponent;

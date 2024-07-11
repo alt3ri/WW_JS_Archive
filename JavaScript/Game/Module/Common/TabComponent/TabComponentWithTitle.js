@@ -10,19 +10,19 @@ class TabComponentWithTitle extends UiPanelBase_1.UiPanelBase {
   constructor(t, e) {
     super(),
       (this.TabTitle = void 0),
-      (this.cpt = void 0),
+      (this.Ivt = void 0),
       (this.xqe = void 0),
       (this.pqe = (t) => {
-        var e = this.bBt.GetCommonData(t);
+        var e = this.Nbt.GetCommonData(t);
         e &&
           (this.TabTitle.UpdateIcon(e.GetSmallIcon()),
           this.TabTitle.UpdateTitle(e.GetTitleData())),
-          this.bBt.ToggleCallBack(t);
+          this.Nbt.ToggleCallBack(t);
       }),
-      (this.dVe = (t, e) => {
-        return this.bBt.ProxyCreate(t, e);
+      (this.R6e = (t, e) => {
+        return this.Nbt.ProxyCreate(t, e);
       }),
-      (this.bBt = e),
+      (this.Nbt = e),
       this.CreateThenShowByActor(t.GetOwner());
   }
   OnRegisterComponent() {
@@ -33,61 +33,61 @@ class TabComponentWithTitle extends UiPanelBase_1.UiPanelBase {
   }
   OnStart() {
     (this.xqe = this.GetScrollViewWithScrollbar(1)),
-      (this.cpt = new TabComponent_1.TabComponent(
+      (this.Ivt = new TabComponent_1.TabComponent(
         this.xqe.ContentUIItem,
-        this.dVe,
+        this.R6e,
         this.pqe,
         void 0,
       )),
       (this.TabTitle = new CommonTabTitle_1.CommonTabTitle(this.GetItem(0)));
   }
   OnBeforeDestroy() {
-    this.cpt && (this.cpt.Destroy(), (this.cpt = void 0)),
+    this.Ivt && (this.Ivt.Destroy(), (this.Ivt = void 0)),
       this.TabTitle && (this.TabTitle.Destroy(), (this.TabTitle = void 0));
   }
   RefreshTabItem(e, t) {
     var s = new Array();
     for (let t = 0; t < e; t++) {
       var i = new CommonTabItemBase_1.CommonTabItemData();
-      (i.Index = t), (i.Data = this.bBt.GetCommonData(t)), s.push(i);
+      (i.Index = t), (i.Data = this.Nbt.GetCommonData(t)), s.push(i);
     }
-    this.cpt.RefreshTabItem(s, t);
+    this.Ivt.RefreshTabItem(s, t);
   }
   async RefreshTabItemAsync(e) {
     var s = new Array();
     for (let t = 0; t < e; t++) {
       var i = new CommonTabItemBase_1.CommonTabItemData();
-      (i.Index = t), (i.Data = this.bBt.GetCommonData(t)), s.push(i);
+      (i.Index = t), (i.Data = this.Nbt.GetCommonData(t)), s.push(i);
     }
     await this.RefreshTabItemByDataAsync(s);
   }
   async RefreshTabItemByDataAsync(t) {
-    await this.cpt.RefreshTabItemAsync(t);
+    await this.Ivt.RefreshTabItemAsync(t);
   }
   SelectToggleByIndex(t, e = !1) {
-    this.cpt.SelectToggleByIndex(t, e);
+    this.Ivt.SelectToggleByIndex(t, e);
   }
   GetSelectedIndex() {
-    return this.cpt.GetSelectedIndex();
+    return this.Ivt.GetSelectedIndex();
   }
   ScrollToToggleByIndex(t) {
-    t = this.cpt.GetTabItemByIndex(t);
+    t = this.Ivt.GetTabItemByIndex(t);
     this.xqe.ScrollTo(t.GetRootItem());
   }
   GetTabItemByIndex(t) {
-    return this.cpt.GetTabItemByIndex(t);
+    return this.Ivt.GetTabItemByIndex(t);
   }
   GetTabItemMap() {
-    return this.cpt.GetTabItemMap();
+    return this.Ivt.GetTabItemMap();
   }
   GetTabComponentData(t) {
-    return this.bBt.GetCommonData(t);
+    return this.Nbt.GetCommonData(t);
   }
   GetTabComponent() {
-    return this.cpt;
+    return this.Ivt;
   }
   SetCanChange(t) {
-    this.cpt.SetCanChange(t);
+    this.Ivt.SetCanChange(t);
   }
 }
 exports.TabComponentWithTitle = TabComponentWithTitle;

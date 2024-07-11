@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CommonConfig = void 0);
-const ConfigCommon_1 = require("../../../../Core/Config/ConfigCommon"),
+const Info_1 = require("../../../../Core/Common/Info"),
+  ConfigCommon_1 = require("../../../../Core/Config/ConfigCommon"),
   CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById"),
   ElementInfoById_1 = require("../../../../Core/Define/ConfigQuery/ElementInfoById"),
   LongPressConfigById_1 = require("../../../../Core/Define/ConfigQuery/LongPressConfigById"),
@@ -75,11 +76,19 @@ class CommonConfig extends ConfigBase_1.ConfigBase {
   }
   GetDebugGmViewPath(e) {
     return "GmView" === e
-      ? CommonParamById_1.configCommonParamById.GetStringConfig("GmViewPath")
-      : "LoginDebugView" === e
-        ? CommonParamById_1.configCommonParamById.GetStringConfig(
-            "GmLoginViewPath",
+      ? Info_1.Info.IsInTouch()
+        ? CommonParamById_1.configCommonParamById.GetStringConfig("GmViewPath")
+        : CommonParamById_1.configCommonParamById.GetStringConfig(
+            "GmPcViewPath",
           )
+      : "LoginDebugView" === e
+        ? Info_1.Info.IsInTouch()
+          ? CommonParamById_1.configCommonParamById.GetStringConfig(
+              "GmLoginViewPath",
+            )
+          : CommonParamById_1.configCommonParamById.GetStringConfig(
+              "GmPcLoginViewPath",
+            )
         : void 0;
   }
   GetNewMailGap() {

@@ -6,10 +6,10 @@ class ChatContentBase extends UiPanelBase_1.UiPanelBase {
   constructor(e, s, t, a) {
     super(),
       (this.ChatContentData = t),
-      (this.$Mt = a),
+      (this.aSt = a),
       this.CreateThenShowByResourceIdAsync(e, s, !0).then(
         () => {
-          this.$Mt && this.$Mt(this);
+          this.aSt && this.aSt(this);
         },
         () => {},
       );

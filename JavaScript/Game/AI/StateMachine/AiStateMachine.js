@@ -5,7 +5,7 @@ const Protocol_1 = require("../../../Core/Define/Net/Protocol"),
   StateMachineCommon_1 = require("../../../Core/Utils/StateMachine/StateMachineCommon"),
   ModelManager_1 = require("../../Manager/ModelManager"),
   CombatMessage_1 = require("../../Module/CombatMessage/CombatMessage"),
-  CombatDebugController_1 = require("../../Utils/CombatDebugController"),
+  CombatLog_1 = require("../../Utils/CombatLog"),
   AiStateMachineTransition_1 = require("./AiStateMachineTransition");
 function appendDepthSpace(i, s) {
   for (let t = 0; t < s; t++) i.Append("    ");
@@ -51,29 +51,29 @@ class AiStateMachineBase extends StateMachineCommon_1.StateMachineCommon {
       (this.WaitSwitchState = !1),
       (this.RemoteSwitchPending = void 0),
       (this.RemoteSwitchMessageId = void 0),
-      (this.MBn = void 0),
-      (this.SBn = void 0),
+      (this.bqn = void 0),
+      (this.qqn = void 0),
       i.Entity &&
         ((this.Entity = i.Entity),
-        (this.AiComponent = this.Entity.GetComponent(38)),
-        (this.TagComponent = this.Entity.GetComponent(185)),
-        (this.AttributeComponent = this.Entity.GetComponent(156)),
+        (this.AiComponent = this.Entity.GetComponent(39)),
+        (this.TagComponent = this.Entity.GetComponent(188)),
+        (this.AttributeComponent = this.Entity.GetComponent(158)),
         (this.SkillComponent = this.Entity.GetComponent(33)),
-        (this.BuffComponent = this.Entity.GetComponent(157)),
+        (this.BuffComponent = this.Entity.GetComponent(159)),
         (this.ActorComponent = this.Entity.GetComponent(3)),
         (this.MontageComponent = this.Entity.GetComponent(22)),
-        (this.AnimationComponent = this.Entity.GetComponent(160)),
-        (this.HitComponent = this.Entity.GetComponent(51)),
-        (this.TimeScaleComponent = this.Entity.GetComponent(107)),
+        (this.AnimationComponent = this.Entity.GetComponent(162)),
+        (this.HitComponent = this.Entity.GetComponent(52)),
+        (this.TimeScaleComponent = this.Entity.GetComponent(109)),
         (this.GameplayCueComponent = this.Entity.GetComponent(19)),
-        (this.MoveComponent = this.Entity.GetComponent(161)),
-        (this.FightStateComponent = this.Entity.GetComponent(46)),
+        (this.MoveComponent = this.Entity.GetComponent(163)),
+        (this.FightStateComponent = this.Entity.GetComponent(47)),
         (this.AiController = this.AiComponent.AiController),
         (s = this.Entity.GetComponent(0).GetSummonerId())) &&
         ((s =
           ModelManager_1.ModelManager.CreatureModel.GetEntity(
             s,
-          )?.Entity.GetComponent(38)),
+          )?.Entity.GetComponent(39)),
         (this.SummonerAiController = s?.AiController)),
       (this.Uuid = h.Uuid),
       (this.Name = h.Name);
@@ -86,7 +86,7 @@ class AiStateMachineBase extends StateMachineCommon_1.StateMachineCommon {
     ) {
       let t = this.Owner.GetNodeByUuid(s);
       (t = t || new AiStateMachineBase(i, void 0, this.Owner.GetNodeData(s))),
-        (this.MBn = t),
+        (this.bqn = t),
         void this.Owner.RegisterNode(this);
     } else {
       if (
@@ -102,11 +102,11 @@ class AiStateMachineBase extends StateMachineCommon_1.StateMachineCommon {
             )),
         h.BindStates?.length)
       )
-        for (const f of h.BindStates) {
+        for (const v of h.BindStates) {
           var t =
             ModelManager_1.ModelManager.AiStateMachineModel.AiStateMachineFactory.CreateState(
               this,
-              f,
+              v,
             );
           t && this.BindStates.push(t);
         }
@@ -120,63 +120,63 @@ class AiStateMachineBase extends StateMachineCommon_1.StateMachineCommon {
           o && this.OnEnterActions.push(o);
         }
       if (h.OnExitActions?.length)
-        for (const l of h.OnExitActions) {
+        for (const M of h.OnExitActions) {
           var e =
             ModelManager_1.ModelManager.AiStateMachineModel.AiStateMachineFactory.CreateAction(
               this,
-              l,
+              M,
             );
           e && this.OnExitActions.push(e);
         }
       if (h.Children?.length) {
         (this.Children = []), (this.ChildrenMap = new Map());
-        var r = h.Children.length;
-        for (let t = 0; t < r; t++) {
-          var a = new AiStateMachineBase(
+        var a = h.Children.length;
+        for (let t = 0; t < a; t++) {
+          var r = new AiStateMachineBase(
             i,
             this,
             this.Owner.GetNodeData(h.Children[t]),
           );
-          this.Children.push(a),
-            this.ChildrenMap.set(a.Name, a),
-            this.AddStateInstance(a.Name, a);
+          this.Children.push(r),
+            this.ChildrenMap.set(r.Name, r),
+            this.AddStateInstance(r.Name, r);
         }
       }
       if (h.Transitions)
-        for (const C of h.Transitions) {
+        for (const S of h.Transitions) {
           var n,
             d,
-            v = this.Owner.GetNodeByUuid(C.From);
-          v
-            ? (n = this.Owner.GetNodeByUuid(C.To))
+            f = this.Owner.GetNodeByUuid(S.From);
+          f
+            ? (n = this.Owner.GetNodeByUuid(S.To))
               ? (d = new AiStateMachineTransition_1.AiStateMachineTransition(
-                  v,
-                  C,
+                  f,
+                  S,
                 ))
                 ? ((this.HasTaskFinishCondition ||= d.HasTaskFinishCondition),
-                  v.TransitionMap || (v.TransitionMap = new Map()),
-                  v.TransitionMap.set(n.Uuid, d))
-                : CombatDebugController_1.CombatDebugController.CombatError(
+                  f.TransitionMap || (f.TransitionMap = new Map()),
+                  f.TransitionMap.set(n.Uuid, d))
+                : CombatLog_1.CombatLog.Error(
                     "StateMachineNew",
                     this.Entity,
                     "初始化状态机失败，条件创建失败",
                     ["node", this.Name],
-                    ["from", v.Name],
+                    ["from", f.Name],
                     ["to", n.Name],
                   )
-              : CombatDebugController_1.CombatDebugController.CombatError(
+              : CombatLog_1.CombatLog.Error(
                   "StateMachineNew",
                   this.Entity,
                   "初始化状态机失败，条件创建失败，to节点不存在",
                   ["node", this.Name],
-                  ["to", C.To],
+                  ["to", S.To],
                 )
-            : CombatDebugController_1.CombatDebugController.CombatError(
+            : CombatLog_1.CombatLog.Error(
                 "StateMachineNew",
                 this.Entity,
                 "初始化状态机失败，条件创建失败，from节点不存在",
                 ["node", this.Name],
-                ["from", C.From],
+                ["from", S.From],
               );
         }
       this.Owner.RegisterNode(this);
@@ -185,10 +185,10 @@ class AiStateMachineBase extends StateMachineCommon_1.StateMachineCommon {
   get MappingNode() {
     var t;
     return (
-      this.MBn ||
+      this.bqn ||
         ((t = this.Owner.NodeReferenceMap.get(this.Uuid)),
-        (this.MBn = this.Owner.GetNodeByUuid(t))),
-      this.MBn
+        (this.bqn = this.Owner.GetNodeByUuid(t))),
+      this.bqn
     );
   }
   get CurrentLeafNode() {
@@ -201,7 +201,7 @@ class AiStateMachineBase extends StateMachineCommon_1.StateMachineCommon {
     this.Owner.SwitchStateFrequencyMonitor?.Execute();
     (t = t ? `[${t?.Name}|${t?.Uuid}]` : "进入"),
       (i = i ? `[${i?.Name}|${i?.Uuid}]` : "退出");
-    CombatDebugController_1.CombatDebugController.CombatInfo(
+    CombatLog_1.CombatLog.Info(
       "StateMachineNew",
       this.Entity,
       `状态机切换 [${this.Name}|${this.Uuid}] : ${t} => ` + i,
@@ -251,14 +251,11 @@ class AiStateMachineBase extends StateMachineCommon_1.StateMachineCommon {
         this.TransitionMap)
       )
         for (var [, h] of this.TransitionMap) h.Enter();
-      this.HasTaskFinishCondition &&
-        this.Owner.ForceDisableAnimOptimization &&
-        this.AnimationComponent.StartForceDisableAnimOptimization(2),
-        this.Task &&
-          !this.Task.CanBeInterrupt &&
-          (this.Task.OnActivate(),
-          this.Owner.SetCurrentTaskNode(this),
-          (this.Hre = this.FightStateComponent?.TrySwitchState(8, 0, i)));
+      this.Task &&
+        !this.Task.CanBeInterrupt &&
+        (this.Task.OnActivate(),
+        this.Owner.SetCurrentTaskNode(this),
+        (this.Hre = this.FightStateComponent?.TrySwitchState(8, 0, i)));
       for (const o of this.BindStates) o.OnActivate(t);
     }
   }
@@ -278,21 +275,17 @@ class AiStateMachineBase extends StateMachineCommon_1.StateMachineCommon {
         this.TransitionMap)
       )
         for (var [, i] of this.TransitionMap) i.Exit();
-      this.HasTaskFinishCondition &&
-        (this.AnimationComponent.CancelForceDisableAnimOptimization(2),
-        (this.Owner.ForceDisableAnimOptimization = !1)),
-        this.Task &&
-          (this.Task.OnDeactivate(),
-          this.Owner.RemoveCurrentTaskNode(this),
-          void 0 !== this.Hre
-            ? (this.FightStateComponent?.ExitState(this.Hre),
-              (this.Hre = void 0))
-            : CombatDebugController_1.CombatDebugController.CombatWarn(
-                "StateMachineNew",
-                this.Entity,
-                "状态机退出主状态Handle清理失败",
-                ["node", this.Name],
-              ));
+      this.Task &&
+        (this.Task.OnDeactivate(),
+        this.Owner.RemoveCurrentTaskNode(this),
+        void 0 !== this.Hre
+          ? (this.FightStateComponent?.ExitState(this.Hre), (this.Hre = void 0))
+          : CombatLog_1.CombatLog.Warn(
+              "StateMachineNew",
+              this.Entity,
+              "状态机退出主状态Handle清理失败",
+              ["node", this.Name],
+            ));
       for (const s of this.BindStates) s.OnDeactivate(t);
     }
   }
@@ -301,21 +294,21 @@ class AiStateMachineBase extends StateMachineCommon_1.StateMachineCommon {
       var i,
         s = this.RootNode.Uuid;
       this.Task &&
-        (((i = Protocol_1.Aki.Protocol.QNn.create())._kn =
-          Protocol_1.Aki.Protocol.DGs.Proto_BT_Task),
-        (i.ukn = s),
-        (i.ckn = this.Uuid),
+        (((i = Protocol_1.Aki.Protocol.E4n.create()).N4n =
+          Protocol_1.Aki.Protocol.fFs.Proto_BT_Task),
+        (i.k4n = s),
+        (i.F4n = this.Uuid),
         (s = CombatMessage_1.CombatNet.Call(
-          13713,
+          21177,
           this.Entity,
           i,
           (t) => {
-            t.lkn !== Protocol_1.Aki.Protocol.lkn.Sys &&
-              CombatDebugController_1.CombatDebugController.CombatWarn(
+            t.O4n !== Protocol_1.Aki.Protocol.O4n.NRs &&
+              CombatLog_1.CombatLog.Warn(
                 "StateMachineNew",
                 this.Entity,
                 `FsmStateBehaviorRequest 节点Task行为失败 [${this.Name}|${this.Uuid}]`,
-                ["ErrorCode", t.lkn],
+                ["ErrorCode", t.O4n],
               );
           },
           this.RootNode.CurrentMessageIdCache,
@@ -354,7 +347,7 @@ class AiStateMachineBase extends StateMachineCommon_1.StateMachineCommon {
   OnControl() {
     1 === this.TakeControlType
       ? (this.OnEnter(),
-        CombatDebugController_1.CombatDebugController.CombatInfo(
+        CombatLog_1.CombatLog.Info(
           "StateMachineNew",
           this.Entity,
           "接管控制权，节点重入，执行相关行为",
@@ -363,14 +356,14 @@ class AiStateMachineBase extends StateMachineCommon_1.StateMachineCommon {
       : (this.ExecutedAction
           ? ((this.SkillEnd = !0),
             (this.TaskFinish = !0),
-            CombatDebugController_1.CombatDebugController.CombatInfo(
+            CombatLog_1.CombatLog.Info(
               "StateMachineNew",
               this.Entity,
               "接管控制权，状态已执行行为，标记技能结束",
               ["node", this.Name],
             ))
           : (this.OnEnter(),
-            CombatDebugController_1.CombatDebugController.CombatInfo(
+            CombatLog_1.CombatLog.Info(
               "StateMachineNew",
               this.Entity,
               "接管控制权，状态未执行行为，执行相关行为",
@@ -379,12 +372,12 @@ class AiStateMachineBase extends StateMachineCommon_1.StateMachineCommon {
         this.CurrentNode && this.CurrentNode.OnControl());
   }
   ActiveByReferenceNode(t) {
-    this.SBn || (this.SBn = new Set()),
-      this.SBn.add(t),
+    this.qqn || (this.qqn = new Set()),
+      this.qqn.add(t),
       this.Activated || this.Enter();
   }
   DeactiveByReferenceNode(t) {
-    this.SBn.delete(t), this.SBn && 0 === this.SBn.size && this.Exit();
+    this.qqn.delete(t), this.qqn && 0 === this.qqn.size && this.Exit();
   }
   ForceActive(t = !0) {
     var i;
@@ -395,62 +388,75 @@ class AiStateMachineBase extends StateMachineCommon_1.StateMachineCommon {
   }
   TrySwitch(i) {
     const s = this.Owner.GetNodeByUuid(i);
-    var t = Protocol_1.Aki.Protocol.INn.create();
-    (t.ukn = this.RootNode.Uuid),
-      (t.mkn = this.Uuid),
-      (t.dkn = s.Uuid),
+    var t = Protocol_1.Aki.Protocol.Z3n.create();
+    (t.k4n = this.RootNode.Uuid),
+      (t.V4n = this.Uuid),
+      (t.H4n = s.Uuid),
       (this.RootNode.WaitSwitchState = !0),
       (this.RootNode.LastState = this.CurrentLeafNode.Uuid),
       (this.RootNode.CurrentMessageIdCache = CombatMessage_1.CombatNet.Call(
-        4409,
+        15085,
         this.Entity,
         t,
         (t) => {
-          t.K0s.lkn === Protocol_1.Aki.Protocol.lkn.Sys
-            ? (CombatDebugController_1.CombatDebugController.CombatInfo(
+          if (this.Owner?.Entity) {
+            if (t._Ms.O4n === Protocol_1.Aki.Protocol.O4n.NRs)
+              CombatLog_1.CombatLog.Info(
                 "StateMachineNew",
                 this.Entity,
                 `客户端先行切换状态 成功 [${this.Name}|${this.Uuid}] => [${s?.Name}|${s?.Uuid}]`,
               ),
-              this.Wre())
-            : (CombatDebugController_1.CombatDebugController.CombatWarn(
+                this.Wre();
+            else if (
+              (CombatLog_1.CombatLog.Warn(
                 "StateMachineNew",
                 this.Entity,
                 `客户端先行切换状态 失败 [${this.Name}|${this.Uuid}] => [${s?.Name}|${s?.Uuid}]`,
-                ["ErrorCode", t.K0s],
+                ["ErrorCode", t._Ms],
               ),
-              this.RootNode.RemoteSwitchPending
-                ? ((t = this.Owner.GetNodeByUuid(
-                    this.RootNode.RemoteSwitchPending,
-                  )),
-                  CombatDebugController_1.CombatDebugController.CombatWarn(
-                    "StateMachineNew",
-                    this.Entity,
-                    `切换远端搁置状态 [${t.Name}|${t.Uuid}]`,
-                  ),
-                  (this.RootNode.CurrentMessageIdCache =
-                    this.RootNode.RemoteSwitchMessageId),
-                  t.ForceActive(!0),
-                  (this.RootNode.CurrentMessageIdCache = void 0),
-                  this.ActorComponent.IsAutonomousProxy &&
-                    (((t = Protocol_1.Aki.Protocol.TNn.create()).ukn =
-                      this.RootNode.Uuid),
-                    (t.ckn = i),
-                    CombatMessage_1.CombatNet.Call(28719, this.Entity, t)))
-                : ((t = this.Owner.GetNodeByUuid(this.RootNode.LastState)),
-                  CombatDebugController_1.CombatDebugController.CombatWarn(
-                    "StateMachineNew",
-                    this.Entity,
-                    `回退状态 [${t.Name}|${t.Uuid}]`,
-                  ),
-                  t.ForceActive(!1),
-                  (t.jre = !0))),
+              this.RootNode.RemoteSwitchPending)
+            ) {
+              var t = this.Owner.GetNodeByUuid(
+                this.RootNode.RemoteSwitchPending,
+              );
+              if (!t) return;
+              CombatLog_1.CombatLog.Warn(
+                "StateMachineNew",
+                this.Entity,
+                `切换远端搁置状态 [${t.Name}|${t.Uuid}]`,
+              ),
+                (this.RootNode.CurrentMessageIdCache =
+                  this.RootNode.RemoteSwitchMessageId),
+                t.ForceActive(!0),
+                (this.RootNode.CurrentMessageIdCache = void 0),
+                this.ActorComponent.IsAutonomousProxy &&
+                  (((t = Protocol_1.Aki.Protocol.e4n.create()).k4n =
+                    this.RootNode.Uuid),
+                  (t.F4n = i),
+                  CombatMessage_1.CombatNet.Call(14914, this.Entity, t));
+            } else {
+              t = this.Owner.GetNodeByUuid(this.RootNode.LastState);
+              if (!t) return;
+              CombatLog_1.CombatLog.Warn(
+                "StateMachineNew",
+                this.Entity,
+                `回退状态 [${t.Name}|${t.Uuid}]`,
+              ),
+                t.ForceActive(!1),
+                (t.jre = !0);
+            }
             (this.RootNode.WaitSwitchState = !1),
-            (this.RootNode.RemoteSwitchPending = void 0);
+              (this.RootNode.RemoteSwitchPending = void 0);
+          } else
+            CombatLog_1.CombatLog.Info(
+              "StateMachineNew",
+              this.Entity,
+              `客户端先行切换状态 失败，实体已被销毁 [${this.Name}|${this.Uuid}] => [${s?.Name}|${s?.Uuid}]`,
+            );
         },
         void 0,
       )),
-      CombatDebugController_1.CombatDebugController.CombatInfo(
+      CombatLog_1.CombatLog.Info(
         "StateMachineNew",
         this.Entity,
         "客户端先行切换状态",
@@ -465,7 +471,7 @@ class AiStateMachineBase extends StateMachineCommon_1.StateMachineCommon {
       for (const t of this.BindStates) t.OnExecuted();
     (this.ExecutedAction = !0),
       this.CurrentNode && this.CurrentNode.SetExecutedAction(),
-      CombatDebugController_1.CombatDebugController.CombatInfo(
+      CombatLog_1.CombatLog.Info(
         "StateMachineNew",
         this.Entity,
         "状态切换行为执行通知",
@@ -473,15 +479,15 @@ class AiStateMachineBase extends StateMachineCommon_1.StateMachineCommon {
       );
   }
   HandleServerDebugInfo(t) {
-    for (const i of t.ySs)
-      this.TransitionMap.get(i.ISs)?.HandleServerDebugInfo(i.TSs);
+    for (const i of t.VTs)
+      this.TransitionMap.get(i.$Ts)?.HandleServerDebugInfo(i.HTs);
   }
   OnCharSkillEnd(t) {
     this.Activated &&
       this.SkillId === t &&
       ((this.SkillEnd = !0),
       (this.TaskFinish = !0),
-      CombatDebugController_1.CombatDebugController.CombatInfo(
+      CombatLog_1.CombatLog.Info(
         "StateMachineNew",
         this.Entity,
         `监听技能完成 [${this.Name}]`,
@@ -500,13 +506,13 @@ class AiStateMachineBase extends StateMachineCommon_1.StateMachineCommon {
         s.Append(
           `${this.Name} [持续时长:${(this.ElapseTime / 1e3).toFixed(1)}]\n`,
         );
-      for (var [t, r] of this.TransitionMap) {
+      for (var [t, a] of this.TransitionMap) {
         appendDepthSpace(s, 1);
-        var a = this.Owner.GetNodeByUuid(t);
-        a
-          ? (s.Append(`目标：${a.Name} | ${a.Uuid}
+        var r = this.Owner.GetNodeByUuid(t);
+        r
+          ? (s.Append(`目标：${r.Name} | ${r.Uuid}
 `),
-            r.Condition.ToString(s, 2))
+            a.Condition.ToString(s, 2))
           : s.Append(`错误下标：${t}
 `);
       }

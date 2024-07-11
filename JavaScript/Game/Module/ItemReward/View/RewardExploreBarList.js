@@ -9,9 +9,9 @@ const UE = require("ue"),
 class RewardExploreBarList extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this._0i = void 0),
-      (this.u0i = void 0),
-      (this.Ygi = []);
+      (this._fi = void 0),
+      (this.ufi = void 0),
+      (this.Y0i = []);
   }
   OnRegisterComponent() {
     (this.ComponentRegisterInfos = [
@@ -21,35 +21,35 @@ class RewardExploreBarList extends UiPanelBase_1.UiPanelBase {
       (this.BtnBindInfo = []);
   }
   OnStart() {
-    (this.u0i = this.GetItem(0)),
-      (this._0i = this.GetItem(1)),
-      this._0i.SetUIActive(!1);
+    (this.ufi = this.GetItem(0)),
+      (this._fi = this.GetItem(1)),
+      this._fi.SetUIActive(!1);
   }
   OnBeforeDestroy() {
-    (this.u0i = void 0), (this._0i = void 0), this.c0i();
+    (this.ufi = void 0), (this._fi = void 0), this.cfi();
   }
   Refresh(i, e) {
     var t = !StringUtils_1.StringUtils.IsEmpty(i);
-    t && this.LBt(i), this.m0i(t), this.d0i(e);
+    t && this.Ubt(i), this.mfi(t), this.dfi(e);
   }
-  d0i(i) {
-    this.c0i();
+  dfi(i) {
+    this.cfi();
     var e = this.GetItem(0);
     if (i && 0 !== i.length) {
-      for (const t of i) this.C0i(t);
+      for (const t of i) this.Cfi(t);
       e.SetUIActive(!0);
     } else e.SetUIActive(!1);
   }
-  LBt(i) {}
-  m0i(i) {}
-  C0i(i) {
-    var e = LguiUtil_1.LguiUtil.CopyItem(this._0i, this.u0i),
+  Ubt(i) {}
+  mfi(i) {}
+  Cfi(i) {
+    var e = LguiUtil_1.LguiUtil.CopyItem(this._fi, this.ufi),
       e = new TrainingItem_1.TrainingItem(e);
-    e.SetData(i.TrainingData), e.SetActive(!0), this.Ygi.push(e);
+    e.SetData(i.TrainingData), e.SetActive(!0), this.Y0i.push(e);
   }
-  c0i() {
-    for (const i of this.Ygi) i.Destroy();
-    this.Ygi.length = 0;
+  cfi() {
+    for (const i of this.Y0i) i.Destroy();
+    this.Y0i.length = 0;
   }
 }
 exports.RewardExploreBarList = RewardExploreBarList;

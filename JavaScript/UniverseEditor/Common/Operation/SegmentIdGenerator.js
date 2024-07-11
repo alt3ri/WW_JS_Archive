@@ -5,6 +5,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.SegmentIdGeneratorManager =
     exports.SegmentIdGenerator =
     exports.isAdmin =
+    exports.isTd =
     exports.isDeveloper =
     exports.getLocalSegmentName =
     exports.getLocalSegmentId =
@@ -26,7 +27,23 @@ const Init_1 = require("../../Interface/Init"),
   EventSystem_1 = require("../Misc/EventSystem"),
   File_1 = require("../Misc/File"),
   Log_1 = require("../Misc/Log"),
-  Util_1 = require("../Misc/Util");
+  Util_1 = require("../Misc/Util"),
+  allTdMacAddressesMd5 = new Set([
+    "a7a01a9c53f1a5aab928a1b3b2605614",
+    "eed61ee88810fb5c0cca61ddb446a429",
+    "99726ce9dfae7c0d88a281f6b4b0b16e",
+    "7c05293179db60849d5ec793eb01bf4d",
+    "79c4b30c240881ce76ebb6e7c85dfe10",
+    "60eedcf4a15c8eb67e90b234842169f8",
+    "5673f8ad0072009bde600fe0d2d92557",
+    "9ad11427fad20e73b376520238465c76",
+    "6b8e466296007ce5d92d68fd92e0c3c4",
+    "ca31850594742f9ef02717e6d28d0cc3",
+    "868ec620028f92f0aae5022f27286a2d",
+    "db1c105cfc3ff20a5f7e703714ee7ddb",
+    "4affcc0f3aeb9e0220454a4ab67e5f6a",
+    "38fe296a1b6ef3cff0b501ccc0e63b0e",
+  ]);
 function getIdSegmentConfigPath() {
   return (0, Init_1.isUe5)()
     ? "Content/Editor/Config/IdSegmentConfig.json"
@@ -145,6 +162,12 @@ function getLocalSegmentName() {
 function isDeveloper() {
   return !!(0, Init_1.isUe5)() || !!getLocalSegmentRow()?.IsDevelop;
 }
+function isTd() {
+  return (
+    allTdMacAddressesMd5.has(Config_1.Config.Instance.MacAddressMd5) ||
+    allTdMacAddressesMd5.has(Config_1.Config.Instance.NetworkAddressMd5)
+  );
+}
 function isAdmin() {
   return !!(0, Init_1.isUe5)() || !!getLocalSegmentRow()?.IsAdmin;
 }
@@ -154,6 +177,7 @@ function isAdmin() {
   (exports.getLocalSegmentId = getLocalSegmentId),
   (exports.getLocalSegmentName = getLocalSegmentName),
   (exports.isDeveloper = isDeveloper),
+  (exports.isTd = isTd),
   (exports.isAdmin = isAdmin);
 class SegmentIdGenerator {
   constructor(e) {

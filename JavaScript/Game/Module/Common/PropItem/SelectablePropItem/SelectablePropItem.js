@@ -20,30 +20,30 @@ class SelectablePropItem extends SelectablePropItemBase_1.SelectablePropItemBase
       (this.PromptFunction = void 0),
       (this.CheckEnableFunction = void 0),
       (this.HideSelectNumberStateFunction = void 0),
-      (this.Xje = 0),
-      (this.Awt = !1),
-      (this.Pwt = !1),
+      (this.sKe = 0),
+      (this.wBt = !1),
+      (this.BBt = !1),
       (this.e8 = 0),
-      (this.K1t = 0),
-      (this.R4e = void 0),
-      (this.xwt = !1),
-      (this.wwt = !1),
-      (this.Bwt = !0),
+      (this.rut = 0),
+      (this.H5e = void 0),
+      (this.bBt = !1),
+      (this.qBt = !1),
+      (this.GBt = !0),
       (this.Mne = 1),
       (this.Lo = void 0),
       (this.IsSelectableProp = !0),
-      (this.bwt = (t) => {
-        this.Awt = !0;
+      (this.NBt = (t) => {
+        this.wBt = !0;
       }),
-      (this.qwt = (t) => {
+      (this.OBt = (t) => {
         (this.CheckEnableFunction &&
           !this.CheckEnableFunction(this.PropData, this.GridIndex)) ||
-          this.xwt ||
-          this.Gwt(),
-          (this.xwt = !1),
-          (this.Awt = !1);
+          this.bBt ||
+          this.kBt(),
+          (this.bBt = !1),
+          (this.wBt = !1);
       }),
-      (this.Nwt = (t) => {
+      (this.FBt = (t) => {
         1 ===
           LguiEventSystemManager_1.LguiEventSystemManager.GetPointerEventData(0)
             .inputType &&
@@ -55,19 +55,19 @@ class SelectablePropItem extends SelectablePropItemBase_1.SelectablePropItemBase
             !1,
           );
       }),
-      (this.T7e = () => {
-        var t = this.R4e.GetToggleState(),
+      (this.Lke = () => {
+        var t = this.H5e.GetToggleState(),
           i = this.GetSelectedNumber?.(this.PropData) ?? 0;
         return !((0 < i && 1 === t) || (i <= 0 && 0 === t));
       }),
-      (this.Owt = () => {
-        this.Pwt = !0;
+      (this.VBt = () => {
+        this.BBt = !0;
       }),
-      (this.kwt = () => {
+      (this.HBt = () => {
         this.CheckEnableFunction &&
         !this.CheckEnableFunction(this.PropData, this.GridIndex)
-          ? ((this.xwt = !1), (this.Awt = !1))
-          : (this.wwt || this.Fwt(), (this.wwt = !1), (this.Pwt = !1));
+          ? ((this.bBt = !1), (this.wBt = !1))
+          : (this.qBt || this.jBt(), (this.qBt = !1), (this.BBt = !1));
       }),
       (this.r6 = (t) => {
         this.LDe(t);
@@ -76,12 +76,12 @@ class SelectablePropItem extends SelectablePropItemBase_1.SelectablePropItemBase
   SetPressConfig(t = 1) {
     this.Mne = t;
   }
-  Gwt() {
+  kBt() {
     var t;
     return (
       this.PromptFunction && this.PromptFunction(this.PropData, this.GridIndex),
       !!this.AddFunction &&
-        ((t = this.AddFunction(this.PropData, this.GridIndex)) && this.Vwt(),
+        ((t = this.AddFunction(this.PropData, this.GridIndex)) && this.WBt(),
         this.ScrollViewDelegate &&
           this.ScrollViewDelegate.SelectGridProxy(
             this.GridIndex,
@@ -91,12 +91,12 @@ class SelectablePropItem extends SelectablePropItemBase_1.SelectablePropItemBase
         t)
     );
   }
-  Fwt() {
+  jBt() {
     var t;
     return (
       !!this.ReduceFunction &&
       ((t = this.ReduceFunction(this.PropData, this.GridIndex)) &&
-        (this.Vwt(), this.Hwt()),
+        (this.WBt(), this.KBt()),
       this.ScrollViewDelegate &&
         this.ScrollViewDelegate.SelectGridProxy(
           this.GridIndex,
@@ -108,19 +108,19 @@ class SelectablePropItem extends SelectablePropItemBase_1.SelectablePropItemBase
   }
   OnStart() {
     this.GetControlItem()?.SetUIActive(!1),
-      (this.R4e = this.GetSelectableToggle()),
-      this.R4e.OnPointDownCallBack.Bind(this.bwt),
-      this.R4e.OnPointUpCallBack.Bind(this.qwt),
-      this.R4e.OnPointEnterCallBack.Bind(this.Nwt),
-      this.R4e.CanExecuteChange.Bind(this.T7e);
+      (this.H5e = this.GetSelectableToggle()),
+      this.H5e.OnPointDownCallBack.Bind(this.NBt),
+      this.H5e.OnPointUpCallBack.Bind(this.OBt),
+      this.H5e.OnPointEnterCallBack.Bind(this.FBt),
+      this.H5e.CanExecuteChange.Bind(this.Lke);
     var t = this.GetReduceButton();
-    t.RootUIComp.SetUIActive(this.Bwt),
-      t.OnPointDownCallBack.Bind(this.Owt),
-      t.OnPointUpCallBack.Bind(this.kwt),
+    t.RootUIComp.SetUIActive(this.GBt),
+      t.OnPointDownCallBack.Bind(this.VBt),
+      t.OnPointUpCallBack.Bind(this.HBt),
       (this.Lo = ConfigManager_1.ConfigManager.CommonConfig.GetLongPressConfig(
         this.Mne,
       )),
-      (this.Xje = TickSystem_1.TickSystem.Add(
+      (this.sKe = TickSystem_1.TickSystem.Add(
         this.r6,
         "SelectablePropItem",
         0,
@@ -128,36 +128,36 @@ class SelectablePropItem extends SelectablePropItemBase_1.SelectablePropItemBase
       ).Id);
   }
   LDe(t) {
-    this.Awt || this.Pwt
+    this.wBt || this.BBt
       ? LguiEventSystemManager_1.LguiEventSystemManager.GetPointerEventData(0)
           .isDragging
-        ? ((this.xwt = this.Awt),
-          (this.wwt = this.Pwt),
-          (this.K1t = 0),
+        ? ((this.bBt = this.wBt),
+          (this.qBt = this.BBt),
+          (this.rut = 0),
           (this.e8 = 0))
-        : ((this.K1t += t),
-          this.K1t < this.Lo.PressTime[0] ||
-            ((this.e8 += t), (t = this.aIt()), this.e8 < t) ||
-            ((this.e8 -= t), this.Yyt(!1)))
-      : (this.K1t < this.Lo.PressTime[0] && 0 < this.K1t && this.Yyt(!0),
-        (this.K1t = 0),
+        : ((this.rut += t),
+          this.rut < this.Lo.PressTime[0] ||
+            ((this.e8 += t), (t = this.dTt()), this.e8 < t) ||
+            ((this.e8 -= t), this.oTt(!1)))
+      : (this.rut < this.Lo.PressTime[0] && 0 < this.rut && this.oTt(!0),
+        (this.rut = 0),
         (this.e8 = 0));
   }
-  aIt() {
+  dTt() {
     var i = this.Lo.PressTime.length;
     for (let t = 1; t < i; ++t)
-      if (this.K1t < this.Lo.PressTime[t]) {
+      if (this.rut < this.Lo.PressTime[t]) {
         const s = this.Lo.TriggerTime[t - 1];
         return ONE_SECOND_TO_MILLISECOND / s;
       }
     const s = this.Lo.TriggerTime[i - 1];
     return ONE_SECOND_TO_MILLISECOND / s;
   }
-  Yyt(t) {
-    this.Awt && ((this.xwt = !0), (this.Awt = this.Gwt())),
-      this.Pwt && ((this.wwt = !0), (this.Pwt = this.Fwt()));
+  oTt(t) {
+    this.wBt && ((this.bBt = !0), (this.wBt = this.kBt())),
+      this.BBt && ((this.qBt = !0), (this.BBt = this.jBt()));
   }
-  Vwt() {
+  WBt() {
     var t;
     this.HideSelectNumberStateFunction
       ? this.SetControllerState(
@@ -188,17 +188,17 @@ class SelectablePropItem extends SelectablePropItemBase_1.SelectablePropItemBase
   }
   Oqe() {
     0 < (this.GetSelectedNumber?.(this.PropData) ?? 0)
-      ? this.fRt(1)
-      : this.fRt(0);
+      ? this.EUt(1)
+      : this.EUt(0);
   }
-  fRt(t) {
-    this.R4e.SetToggleState(t);
+  EUt(t) {
+    this.H5e.SetToggleState(t);
   }
-  jwt() {
-    this.Vwt(), this.GetSelectItem()?.SetUIActive(!1);
+  QBt() {
+    this.WBt(), this.GetSelectItem()?.SetUIActive(!1);
   }
-  Hwt() {
-    (this.GetSelectedNumber?.(this.PropData) ?? 0) <= 0 && this.fRt(0);
+  KBt() {
+    (this.GetSelectedNumber?.(this.PropData) ?? 0) <= 0 && this.EUt(0);
   }
   OnBeforeDestroy() {
     var t = this.GetSelectableToggle(),
@@ -209,12 +209,12 @@ class SelectablePropItem extends SelectablePropItemBase_1.SelectablePropItemBase
         this.GetReduceButton());
     t?.OnPointDownCallBack.Unbind(),
       t?.OnPointUpCallBack.Unbind(),
-      this.Xje !== TickSystem_1.TickSystem.InvalidId &&
-        (TickSystem_1.TickSystem.Remove(this.Xje),
-        (this.Xje = TickSystem_1.TickSystem.InvalidId));
+      this.sKe !== TickSystem_1.TickSystem.InvalidId &&
+        (TickSystem_1.TickSystem.Remove(this.sKe),
+        (this.sKe = TickSystem_1.TickSystem.InvalidId));
   }
   OnRefresh(t, i) {
-    this.Vwt(), this.Oqe();
+    this.WBt(), this.Oqe();
     var s = this.GetSelectedSpriteActive?.(this.PropData, this.GridIndex) ?? !1,
       s =
         (this.GetSelectItem()?.SetUIActive(s),
@@ -225,10 +225,10 @@ class SelectablePropItem extends SelectablePropItemBase_1.SelectablePropItemBase
     this.GetSelectItem()?.SetUIActive(!0);
   }
   OnDeselected(t) {
-    this.jwt();
+    this.QBt();
   }
   Clear() {
-    this.Hwt(), this.jwt();
+    this.KBt(), this.QBt();
   }
   SetShowItemTipsFunction(t) {
     this.ShowItemTipsFunction = t;
@@ -249,7 +249,7 @@ class SelectablePropItem extends SelectablePropItemBase_1.SelectablePropItemBase
     this.GetGraySpriteActive = t;
   }
   SetReduceButtonActive(t) {
-    this.Bwt = t;
+    this.GBt = t;
   }
   SetPromptFunction(t) {
     this.PromptFunction = t;

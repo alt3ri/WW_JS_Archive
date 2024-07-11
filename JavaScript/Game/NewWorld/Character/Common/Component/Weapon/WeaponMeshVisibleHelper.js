@@ -44,7 +44,7 @@ class WeaponMeshVisibleHelper {
         (s = !0), i && (this.DefaultVisibleState.IsHidden = !0);
     }
     i || ((t = this.WeaponVisibleTable.get(t)) && (t.IsHidden = e));
-    t = this.dZo();
+    t = this.uer();
     return (
       t &&
         (0 === t.Priority && i && t.Active
@@ -57,7 +57,7 @@ class WeaponMeshVisibleHelper {
     e = this.WeaponVisibleTable.get(e);
     e && (e.Active = i);
   }
-  dZo() {
+  uer() {
     let e = -1,
       i = void 0;
     for (var [, t] of this.WeaponVisibleTable)

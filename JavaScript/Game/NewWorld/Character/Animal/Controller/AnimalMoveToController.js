@@ -6,6 +6,7 @@ const UE = require("ue"),
   Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
   MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
   AiContollerLibrary_1 = require("../../../../AI/Controller/AiContollerLibrary"),
+  GravityUtils_1 = require("../../../../Utils/GravityUtils"),
   CharacterNameDefines_1 = require("../../Common/CharacterNameDefines"),
   CharacterUnifiedStateTypes_1 = require("../../Common/Component/Abilities/CharacterUnifiedStateTypes"),
   DISTANCE_ERROR_THRESHOLD = 100,
@@ -13,59 +14,59 @@ const UE = require("ue"),
 class AnimalMoveToController {
   constructor(t) {
     (this.tu = CharacterUnifiedStateTypes_1.ECharMoveState.Other),
-      (this.iWo = !1),
-      (this.oWo = !1),
-      (this.rWo = void 0),
-      (this.nWo = 0),
-      (this.sWo = 0),
+      (this.ZWo = !1),
+      (this.eKo = !1),
+      (this.tKo = void 0),
+      (this.iKo = 0),
+      (this.oKo = 0),
       (this.IC = !1),
-      (this.aWo = !1),
+      (this.rKo = !1),
       (this.jye = Vector_1.Vector.Create()),
-      (this.hWo = 0),
+      (this.nKo = 0),
       (this.Hte = t.GetComponent(3)),
       UE.KuroStaticLibrary.IsObjectClassByName(
         this.Hte.Owner,
         CharacterNameDefines_1.CharacterNameDefines.BP_BASEANIMAL,
       )
-        ? (this.lWo = this.Hte.Owner.TurnSpeedCurve)
-        : (this.lWo = void 0),
-      (this.mBe = t.GetComponent(89)),
-      (this.Gce = t.GetComponent(161)),
-      (this._Wo = this.Gce.CharacterMovement.MaxAcceleration);
+        ? (this.sKo = this.Hte.Owner.TurnSpeedCurve)
+        : (this.sKo = void 0),
+      (this.mBe = t.GetComponent(91)),
+      (this.Gce = t.GetComponent(163)),
+      (this.aKo = this.Gce.CharacterMovement.MaxAcceleration);
   }
   Init(t, i) {
-    (this.tu = t), this.mBe.SetMoveState(t), (this.iWo = i), (this.IC = !0);
+    (this.tu = t), this.mBe.SetMoveState(t), (this.ZWo = i), (this.IC = !0);
   }
   Start(t, i, s, e = DISTANCE_ERROR_THRESHOLD) {
     this.IC &&
-      ((this.oWo = i),
-      (this.sWo = s),
-      (this.hWo = e),
-      (this.aWo = !1),
+      ((this.eKo = i),
+      (this.oKo = s),
+      (this.nKo = e),
+      (this.rKo = !1),
       this.tu !== CharacterUnifiedStateTypes_1.ECharMoveState.NormalSwim ||
-        this.iWo ||
-        (this.Gce.CharacterMovement.MaxAcceleration = this._Wo),
-      this.rWo ? (this.rWo.length = 0) : (this.rWo = new Array()),
-      this.oWo
+        this.ZWo ||
+        (this.Gce.CharacterMovement.MaxAcceleration = this.aKo),
+      this.tKo ? (this.tKo.length = 0) : (this.tKo = new Array()),
+      this.eKo
         ? AiContollerLibrary_1.AiControllerLibrary.NavigationFindPath(
             this.Hte.Owner.GetWorld(),
             this.Hte.ActorLocation,
             t.ToUeVector(),
-            this.rWo,
+            this.tKo,
           )
-          ? (this.nWo = 1)
+          ? (this.iKo = 1)
           : ((i = Vector_1.Vector.Create()).DeepCopy(t),
-            this.rWo.push(i),
-            (this.nWo = 0))
+            this.tKo.push(i),
+            (this.iKo = 0))
         : ((s = Vector_1.Vector.Create()).DeepCopy(t),
-          this.rWo.push(s),
-          (this.nWo = 0)));
+          this.tKo.push(s),
+          (this.iKo = 0)));
   }
   Update(t) {
     var i;
-    return this.aWo
+    return this.rKo
       ? 2
-      : (i = this.rWo[this.nWo]).ContainsNaN()
+      : (i = this.tKo[this.iKo]).ContainsNaN()
         ? (Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug(
               "Animal",
@@ -75,11 +76,11 @@ class AnimalMoveToController {
             ),
           2)
         : (i.Subtraction(this.Hte.ActorLocationProxy, this.jye),
-          (this.jye.Z = 0),
-          this.jye.Size() < this.hWo
-            ? this.nWo === this.rWo.length - 1
+          GravityUtils_1.GravityUtils.ConvertToPlanarVector(this.Hte, this.jye),
+          this.jye.Size() < this.nKo
+            ? this.iKo === this.tKo.length - 1
               ? 1
-              : (this.nWo++, 0)
+              : (this.iKo++, 0)
             : (this.jye.Normalize(),
               i.ContainsNaN()
                 ? (Log_1.Log.CheckDebug() &&
@@ -90,31 +91,31 @@ class AnimalMoveToController {
                       ["Input Direct", this.jye],
                     ),
                   2)
-                : (this.uWo(this.jye), 0)));
+                : (this.hKo(this.jye), 0)));
   }
   Stop() {
-    this.aWo = !0;
+    this.rKo = !0;
   }
   Finish() {
     this.tu !== CharacterUnifiedStateTypes_1.ECharMoveState.NormalSwim ||
-      this.iWo ||
+      this.ZWo ||
       (this.Hte?.ClearInput(),
       (this.Gce.CharacterMovement.MaxAcceleration =
         MathUtils_1.MathUtils.MaxFloat)),
       (this.IC = !1);
   }
-  uWo(t) {
+  hKo(t) {
     this.Hte.SetInputDirect(t);
-    let i = this.sWo;
+    let i = this.oKo;
     var s;
-    this.lWo &&
+    this.sKo &&
       ((s =
         MathUtils_1.MathUtils.GetAngleByVectorDot(
           this.Hte.ActorForwardProxy,
           t,
         ) * MathUtils_1.MathUtils.DegToRad),
-      (s = this.lWo.GetFloatValue(s)),
-      (i = MathUtils_1.MathUtils.Lerp(this.sWo, MAX_TURN_SPEED, s))),
+      (s = this.sKo.GetFloatValue(s)),
+      (i = MathUtils_1.MathUtils.Lerp(this.oKo, MAX_TURN_SPEED, s))),
       AiContollerLibrary_1.AiControllerLibrary.TurnToDirect(this.Hte, t, i, !1);
   }
 }

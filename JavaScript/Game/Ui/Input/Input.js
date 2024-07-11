@@ -13,48 +13,48 @@ exports.TouchData = TouchData;
 class Input {
   static Initialize(t) {
     t &&
-      (t.OnClickKey.Add(Input.ocr),
-      t.OnMiddleMouseScroll.Add(Input.rcr),
-      t.OnTouch.Add(Input.pbt),
-      t.OnTouchMove.Add(Input.ncr));
+      (t.OnClickKey.Add(Input.emr),
+      t.OnMiddleMouseScroll.Add(Input.tmr),
+      t.OnTouch.Add(Input.Eqt),
+      t.OnTouchMove.Add(Input.imr));
   }
   static IsKeyPress(t) {
-    t = Input.uSe.get(t);
+    t = Input.uEe.get(t);
     return void 0 !== t && t;
   }
   static GetAxisValue() {
-    return Input.scr;
+    return Input.omr;
   }
   static GetTouchMap() {
-    return Input.q2o;
+    return Input.wFo;
   }
 }
-((exports.Input = Input).uSe = new Map()),
-  (Input.q2o = new Map()),
-  (Input.scr = 0),
+((exports.Input = Input).uEe = new Map()),
+  (Input.wFo = new Map()),
+  (Input.omr = 0),
   (Input.OnlyRespondToKey = ""),
   (Input.Enable = !0),
-  (Input.ocr = (t, n) => {
+  (Input.emr = (t, n) => {
     var e = t.KeyName.toString();
-    Input.uSe.set(e, n),
+    Input.uEe.set(e, n),
       (StringUtils_1.StringUtils.IsEmpty(Input.OnlyRespondToKey) ||
         e === Input.OnlyRespondToKey ||
         e.includes("Mouse")) &&
         Input.Enable &&
-        (Input.uSe.set(e, n),
+        (Input.uEe.set(e, n),
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.KeyClick,
           n,
           t,
         ));
   }),
-  (Input.rcr = (t) => {
-    Input.Enable && (Input.scr = t);
+  (Input.tmr = (t) => {
+    Input.Enable && (Input.omr = t);
   }),
-  (Input.pbt = (t, n, e) => {
-    Input.Enable && void 0 === Input.q2o.get(n) && new TouchData(t, n, e);
+  (Input.Eqt = (t, n, e) => {
+    Input.Enable && void 0 === Input.wFo.get(n) && new TouchData(t, n, e);
   }),
-  (Input.ncr = (t, n) => {
-    Input.Enable && (t = Input.q2o.get(t)) && (t.TouchPosition = n);
+  (Input.imr = (t, n) => {
+    Input.Enable && (t = Input.wFo.get(t)) && (t.TouchPosition = n);
   });
 //# sourceMappingURL=Input.js.map

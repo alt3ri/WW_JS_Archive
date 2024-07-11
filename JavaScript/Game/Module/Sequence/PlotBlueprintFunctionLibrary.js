@@ -2,12 +2,12 @@
 Object.defineProperty(exports, "__esModule", { value: !0 });
 const UE = require("ue"),
   Log_1 = require("../../../Core/Common/Log"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../Manager/ModelManager"),
   CreateCharacterController_1 = require("../CreateCharacter/CreateCharacterController"),
   GeneralLogicTreeUtil_1 = require("../GeneralLogicTree/GeneralLogicTreeUtil"),
   PlotController_1 = require("../Plot/PlotController"),
   SequenceController_1 = require("../Plot/Sequence/SequenceController"),
-  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   FRAME_PER_SECOND = 30;
 class PlotBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
   static IsInSequence() {
@@ -63,6 +63,18 @@ class PlotBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
   }
   static ShowLogo(e) {
     SequenceController_1.SequenceController.ShowLogo(e);
+  }
+  static OpenUiView(e, r) {
+    switch (ModelManager_1.ModelManager.WorldLevelModel.Sex) {
+      case 0:
+        SequenceController_1.SequenceController.OpenUiView(r);
+        break;
+      case 1:
+        SequenceController_1.SequenceController.OpenUiView(e);
+    }
+  }
+  static CloseUiView() {
+    SequenceController_1.SequenceController.CloseUiView();
   }
   static ShowNameInput() {
     CreateCharacterController_1.CreateCharacterController.TriggerInputName();

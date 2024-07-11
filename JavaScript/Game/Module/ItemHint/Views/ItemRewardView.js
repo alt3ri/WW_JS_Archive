@@ -51,7 +51,7 @@ class ItemRewardView extends UiTickViewBase_1.UiTickViewBase {
         this.sGe,
         this.GetItem(1),
       )),
-      this.agi(!0),
+      this.a0i(!0),
       ModelManager_1.ModelManager.ItemHintModel.IsItemRewardListEmpty ||
         ((this.tGe =
           ModelManager_1.ModelManager.ItemHintModel.ShiftItemRewardListFirst()),
@@ -64,7 +64,7 @@ class ItemRewardView extends UiTickViewBase_1.UiTickViewBase {
             this.tGe.ItemReward,
           )),
         (e = ConfigManager_1.ConfigManager.RewardConfig.GetDropPackage(
-          this.tGe.ItemReward.$Fn,
+          this.tGe.ItemReward.y6n,
         ).Title),
         LguiUtil_1.LguiUtil.SetLocalText(
           this.GetText(2),
@@ -85,9 +85,9 @@ class ItemRewardView extends UiTickViewBase_1.UiTickViewBase {
           }));
   }
   OnBeforeDestroy() {
-    this.agi(!1), this.eGe.ClearChildren(), (this.tGe = void 0);
+    this.a0i(!1), this.eGe.ClearChildren(), (this.tGe = void 0);
   }
-  agi(e) {
+  a0i(e) {
     "ItemRewardView" !== this.Info.Name &&
       UiLayer_1.UiLayer.SetShowNormalMaskLayer(e);
   }

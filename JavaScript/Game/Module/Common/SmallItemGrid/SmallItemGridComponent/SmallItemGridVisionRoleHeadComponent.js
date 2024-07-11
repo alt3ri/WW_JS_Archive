@@ -26,17 +26,17 @@ class SmallItemGridVisionRoleHeadComponent extends SmallItemGridComponent_1.Smal
             this.SetRoleIcon(i, r, t, void 0, () => {
               r.SetUIActive(!0);
             }),
-            this.wxt(e),
-            this.Bxt(e),
+            this.qwt(e),
+            this.Gwt(e),
             this.SetActive(!0))
           : this.SetActive(!1);
       } else this.SetActive(!1);
     } else this.SetActive(!1);
   }
-  wxt(e) {
+  qwt(e) {
     this.GetSprite(2).SetUIActive(!1);
   }
-  Bxt(e) {
+  Gwt(e) {
     this.GetSprite(1).SetUIActive(!0);
   }
 }

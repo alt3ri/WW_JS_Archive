@@ -5,30 +5,30 @@ const UE = require("ue"),
   CustomPromise_1 = require("../../../../Core/Common/CustomPromise"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   GridProxyAbstract_1 = require("../../Util/Grid/GridProxyAbstract"),
-  LguiUtil_1 = require("../../Util/LguiUtil"),
-  ControllerHolder_1 = require("../../../Manager/ControllerHolder");
+  LguiUtil_1 = require("../../Util/LguiUtil");
 class CommonItemSimpleGrid extends GridProxyAbstract_1.GridProxyAbstract {
   constructor(t = void 0) {
     super(),
-      (this.PIt = 0),
-      (this.JUt = "ShowCount"),
-      (this.xIt = void 0),
-      (this.wIt = (t) => {
+      (this.qTt = 0),
+      (this.tPt = "ShowCount"),
+      (this.GTt = void 0),
+      (this.NTt = (t) => {
         ControllerHolder_1.ControllerHolder.ItemController.OpenItemTipsByItemId(
           t,
         );
       }),
-      (this.BIt = (t) => {
-        t === this.PIt && this.GetExtendToggle(4).SetToggleState(0, !1);
+      (this.OTt = (t) => {
+        t === this.qTt && this.GetExtendToggle(4).SetToggleState(0, !1);
       }),
-      (this.x4e = (t) => {
-        this.wIt && 1 === t && this.wIt(this.PIt);
+      (this.Bke = (t) => {
+        this.NTt && 1 === t && this.NTt(this.qTt);
       }),
       t && this.CreateThenShowByActor(t);
   }
   get ItemId() {
-    return this.PIt;
+    return this.qTt;
   }
   OnRegisterComponent() {
     (this.ComponentRegisterInfos = [
@@ -41,28 +41,28 @@ class CommonItemSimpleGrid extends GridProxyAbstract_1.GridProxyAbstract {
       [6, UE.UISprite],
       [7, UE.UIItem],
     ]),
-      (this.BtnBindInfo = [[4, this.x4e]]);
+      (this.BtnBindInfo = [[4, this.Bke]]);
   }
   OnStart() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.CloseItemTips,
-      this.BIt,
+      this.OTt,
     );
   }
   OnBeforeDestroy() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.CloseItemTips,
-      this.BIt,
+      this.OTt,
     );
   }
   ResetToggleClick() {
     this.GetExtendToggle(4).OnStateChange.Clear(),
-      this.GetExtendToggle(4).OnStateChange.Add(this.x4e);
+      this.GetExtendToggle(4).OnStateChange.Add(this.Bke);
   }
-  qIt() {
+  FTt() {
     var t = this.GetTexture(1),
-      t = (this.SetItemIcon(t, this.PIt, this.xIt), this.GetSprite(0));
-    this.SetItemQualityIcon(t, this.PIt, this.xIt, "BackgroundSprite");
+      t = (this.SetItemIcon(t, this.qTt, this.GTt), this.GetSprite(0));
+    this.SetItemQualityIcon(t, this.qTt, this.GTt, "BackgroundSprite");
   }
   Refresh(t, e, i) {
     var s = t[0],
@@ -82,17 +82,17 @@ class CommonItemSimpleGrid extends GridProxyAbstract_1.GridProxyAbstract {
     this.GetItem(7).SetUIActive(t);
   }
   SetBelongViewName(t) {
-    this.xIt = t;
+    this.GTt = t;
   }
   RefreshItem(t, e = 0) {
-    (this.PIt = t), this.qIt(), this.SetCount(e);
+    (this.qTt = t), this.FTt(), this.SetCount(e);
   }
   BindClickCallback(t) {
-    this.wIt = t;
+    this.NTt = t;
   }
   SetCount(t = 0) {
     t
-      ? (LguiUtil_1.LguiUtil.SetLocalText(this.GetCountText(), this.JUt, t),
+      ? (LguiUtil_1.LguiUtil.SetLocalText(this.GetCountText(), this.tPt, t),
         this.GetCountItem().SetUIActive(!0))
       : this.GetCountItem().SetUIActive(!1);
   }
@@ -103,22 +103,22 @@ class CommonItemSimpleGrid extends GridProxyAbstract_1.GridProxyAbstract {
     return this.GetItem(3);
   }
   SetCountTextId(t) {
-    this.JUt = t;
+    this.tPt = t;
   }
   async RefreshItemAsync(t, e = 0) {
-    (this.PIt = t), await this.NIt(), this.SetCount(e);
+    (this.qTt = t), await this.HTt(), this.SetCount(e);
   }
-  async NIt() {
+  async HTt() {
     const t = new CustomPromise_1.CustomPromise(),
       e =
-        (this.SetItemIcon(this.GetTexture(1), this.PIt, void 0, () => {
+        (this.SetItemIcon(this.GetTexture(1), this.qTt, void 0, () => {
           t.SetResult(void 0);
         }),
         await t.Promise,
         new CustomPromise_1.CustomPromise());
     this.SetItemQualityIcon(
       this.GetSprite(0),
-      this.PIt,
+      this.qTt,
       void 0,
       "BackgroundSprite",
       () => {

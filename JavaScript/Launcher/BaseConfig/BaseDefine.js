@@ -39,24 +39,24 @@ function isNan(t) {
 exports.BaseDefine = BaseDefine;
 class VersionInfo {
   constructor(t, e, s) {
-    (this.aSr = 0),
-      (this.hSr = 0),
-      (this.lSr = 0),
-      (this.aSr = t),
-      (this.hSr = e),
-      (this.lSr = s);
+    (this.rSr = 0),
+      (this.nSr = 0),
+      (this.sSr = 0),
+      (this.rSr = t),
+      (this.nSr = e),
+      (this.sSr = s);
   }
   get Major() {
-    return this.aSr;
+    return this.rSr;
   }
   get Minor() {
-    return this.hSr;
+    return this.nSr;
   }
   get Patch() {
-    return this.lSr;
+    return this.sSr;
   }
   ToString() {
-    return `${this.aSr}.${this.hSr}.` + this.lSr;
+    return `${this.rSr}.${this.nSr}.` + this.sSr;
   }
   static TryParse(t) {
     var e, s;
@@ -70,10 +70,10 @@ class VersionInfo {
       : [!0, new VersionInfo(e, s, t)];
   }
   static PackageEquals(t, e) {
-    return t && e && t.aSr === e.aSr && t.hSr === e.hSr;
+    return t && e && t.rSr === e.rSr && t.nSr === e.nSr;
   }
   static Equals(t, e) {
-    return t && e && t.aSr === e.aSr && t.hSr === e.hSr && t.lSr === e.lSr;
+    return t && e && t.rSr === e.rSr && t.nSr === e.nSr && t.sSr === e.sSr;
   }
 }
 exports.VersionInfo = VersionInfo;

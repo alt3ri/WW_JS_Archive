@@ -24,97 +24,97 @@ class FlowController extends ControllerWithAssistantBase_1.ControllerWithAssista
       this.AddAssistant(2, new FlowActionRunner_1.FlowActionRunner()),
       this.AddAssistant(3, new FlowLaunchCenter_1.FlowLaunchCenter());
   }
-  static c$t(t) {
+  static cYt(t) {
     if (this.Assistants) return this.Assistants.get(t);
   }
   static StartNotify(t) {
-    this.c$t(0).HandleFlowStartNotify(t);
+    this.cYt(0).HandleFlowStartNotify(t);
   }
   static EndNotify(t) {
-    this.c$t(0).HandleFlowEndNotify(t);
+    this.cYt(0).HandleFlowEndNotify(t);
   }
   static SkipBlackScreenNotify(t) {
-    this.c$t(0).HandleFlowSkipBlackScreenNotify(t);
+    this.cYt(0).HandleFlowSkipBlackScreenNotify(t);
   }
   static ClearOnLeaveOnlineWorld() {}
   static GetFlowAction(t) {
-    return this.c$t(1).GetFlowAction(t);
+    return this.cYt(1).GetFlowAction(t);
   }
   static ExecuteActions(t, i, e) {
-    this.c$t(2).ExecuteActions(t, i, e);
+    this.cYt(2).ExecuteActions(t, i, e);
   }
   static FinishFlow(t, i, e) {
-    this.c$t(2).FinishFlow(t, i, e);
+    this.cYt(2).FinishFlow(t, i, e);
   }
   static HasFlow(t, i, e) {
-    return this.c$t(2).HasFlow(t, i, e);
+    return this.cYt(2).HasFlow(t, i, e);
   }
   static BackgroundFlow(t, i = !0, e = !1) {
-    this.c$t(2).BackgroundActions(t, i, e);
+    this.cYt(2).BackgroundActions(t, i, e);
   }
   static RunNextAction() {
-    this.c$t(2).ExecuteNextAction();
+    this.cYt(2).ExecuteNextAction();
   }
   static FinishFlowByGm() {
-    this.c$t(2).ForceFinishActionsByGm();
+    this.cYt(2).ForceFinishActionsByGm();
   }
   static GetCurFlowAction() {
-    return this.c$t(2).GetCurActionName();
+    return this.cYt(2).GetCurActionName();
   }
   static IsInShowTalk() {
-    return this.c$t(2).IsInShowTalk();
+    return this.cYt(2).IsInShowTalk();
   }
   static ExecuteSubActions(t, i) {
-    this.c$t(2).ExecuteSubActions(t, i);
+    this.cYt(2).ExecuteSubActions(t, i);
   }
   static GetInteractPoint() {
-    return this.c$t(2).GetInteractPoint();
+    return this.cYt(2).GetInteractPoint();
   }
   static AddActionNext(t) {
-    this.c$t(2).AddActionNext(t);
+    this.cYt(2).AddActionNext(t);
   }
   static GetRecommendedOption(t) {
-    return this.c$t(2).GetOptionToSelect(t);
+    return this.cYt(2).GetOptionToSelect(t);
   }
   static SelectOption(t, i) {
-    this.c$t(2).RecordOption(t, i);
+    this.cYt(2).RecordOption(t, i);
   }
   static get FlowSequence() {
-    return this.c$t(2).FlowSequence;
+    return this.cYt(2).FlowSequence;
   }
   static get FlowShowTalk() {
-    return this.c$t(2).FlowShowTalk;
+    return this.cYt(2).FlowShowTalk;
   }
   static EnableSkip(t) {
-    this.c$t(2).EnableSkip(t);
+    this.cYt(2).EnableSkip(t);
   }
   static CheckCanSkipTmp() {
-    return this.c$t(2).CheckCanSkipTmp();
+    return this.cYt(2).CheckCanSkipTmp();
   }
   static CountDownSkip(t) {
-    this.c$t(2).TriggerCountDownSkip(t);
+    this.cYt(2).TriggerCountDownSkip(t);
   }
   static CheckDisableInput(t) {
-    this.c$t(2).HandleInputBeforePlay(t);
+    this.cYt(2).HandleInputBeforePlay(t);
   }
   static GetNextAction(t = !0) {
-    return this.c$t(2).GetNextAction(t);
+    return this.cYt(2).GetNextAction(t);
   }
   static LogError(t, ...i) {
-    this.c$t(2).LogError(t, ...i);
+    this.cYt(2).LogError(t, ...i);
   }
   static StartFlowByRes(t) {}
   static StartFlow(t, i, e, s, r, o, n, a, c) {
-    return this.c$t(3).StartFlow(t, i, e, s, r, o, n, void 0, void 0, a);
+    return this.cYt(3).StartFlow(t, i, e, s, r, o, n, void 0, void 0, a);
   }
   static StartFlowForView(t, i, e, s, r = !0) {
-    return this.c$t(3).StartFlow(t, i, e, void 0, void 0, !1, !1, s, r);
+    return this.cYt(3).StartFlow(t, i, e, void 0, void 0, !1, !1, s, r);
   }
   static StartPlotNetworkPending() {
-    this.c$t(3).StartPlotNetworkPending();
+    this.cYt(3).StartPlotNetworkPending();
   }
   static OnTick(t) {
-    this.c$t(3).Tick(t);
+    this.cYt(3).Tick(t);
   }
 }
 (exports.FlowController = FlowController).IsTickEvenPausedInternal = !0;

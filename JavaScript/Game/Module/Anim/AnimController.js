@@ -46,7 +46,7 @@ class AnimController extends ControllerBase_1.ControllerBase {
     var e,
       n,
       a,
-      r = EntitySystem_1.EntitySystem.GetComponent(t, 160);
+      r = EntitySystem_1.EntitySystem.GetComponent(t, 162);
     r?.Valid &&
       ((e = r.MainAnimInstance.LogicParams),
       (r = r.AnimLogicParamsSetter),
@@ -57,7 +57,7 @@ class AnimController extends ControllerBase_1.ControllerBase {
         (a = n.InputRotatorProxy),
         r.InputRotator.Equals(a) ||
           (r.InputRotator.DeepCopy(a), (e.InputRotatorRef = a.ToUeRotator()))),
-      (n = EntitySystem_1.EntitySystem.GetComponent(t, 36))?.Valid &&
+      (n = EntitySystem_1.EntitySystem.GetComponent(t, 37))?.Valid &&
         ((a = n.Acceleration),
         r.Acceleration.Equals(a) ||
           (r.Acceleration.DeepCopy(a), (e.AccelerationRef = a.ToUeVector())),
@@ -89,7 +89,7 @@ class AnimController extends ControllerBase_1.ControllerBase {
         (a = n.GetOnWallAngle()),
         r.ClimbOnWallAngle !== a) &&
         ((r.ClimbOnWallAngle = a), (e.ClimbOnWallAngleRef = a)),
-      (n = EntitySystem_1.EntitySystem.GetComponent(t, 66))?.Valid &&
+      (n = EntitySystem_1.EntitySystem.GetComponent(t, 68))?.Valid &&
         ((a = n.SprintSwimOffset),
         r.SprintSwimOffset !== a &&
           ((r.SprintSwimOffset = a), (e.SprintSwimOffsetRef = a)),
@@ -107,7 +107,7 @@ class AnimController extends ControllerBase_1.ControllerBase {
         (a = n.StandMode),
         r.SlideStandMode !== a) &&
         ((r.SlideStandMode = a), (e.SlideStandModeRef = a)),
-      (n = EntitySystem_1.EntitySystem.GetComponent(t, 95))?.Valid) &&
+      (n = EntitySystem_1.EntitySystem.GetComponent(t, 97))?.Valid) &&
       ((a = n.Active), r.IsInSplineMove !== a) &&
       ((r.IsInSplineMove = a), (e.bIsInSplineMove = a));
   }
@@ -115,7 +115,7 @@ class AnimController extends ControllerBase_1.ControllerBase {
     var e,
       n,
       a,
-      r = EntitySystem_1.EntitySystem.GetComponent(t, 160);
+      r = EntitySystem_1.EntitySystem.GetComponent(t, 162);
     r?.Valid &&
       ((e = r.MainAnimInstance.LogicParams),
       (n = r.AnimLogicParamsSetter),
@@ -128,39 +128,28 @@ class AnimController extends ControllerBase_1.ControllerBase {
       (a = r.GetTsSightDirect()),
       n.SightDirect.Equals(a) ||
         (n.SightDirect.DeepCopy(a), (e.SightDirectRef = a.ToUeVector())),
-      (r = EntitySystem_1.EntitySystem.GetComponent(t, 61))) &&
+      (r = EntitySystem_1.EntitySystem.GetComponent(t, 63))) &&
       ((a = r.GetRagRollQuitState()), n.RagQuitState !== a) &&
       ((n.RagQuitState = a), (e.RagQuitStateRef = a));
   }
-  static UpdateAnimInfoHit(t) {
-    var e,
-      n,
-      a,
-      r = EntitySystem_1.EntitySystem.GetComponent(t, 160);
-    r?.Valid &&
-      (t = EntitySystem_1.EntitySystem.GetComponent(t, 51)) &&
-      ((e = r.MainAnimInstance.LogicParams),
-      (r = r.AnimLogicParamsSetter),
-      (n = t.GetAcceptedNewBeHitAndReset()),
-      r.AcceptedNewBeHit !== n &&
-        ((r.AcceptedNewBeHit = n),
-        (e.AcceptedNewBeHitRef = n),
-        (a = t.BeHitAnim),
-        r.BeHitAnim !== a) &&
-        ((r.BeHitAnim = a), (e.BeHitAnimRef = a)),
-      (n = t.GetEnterFkAndReset()),
-      r.EnterFk !== n && ((r.EnterFk = n), (e.EnterFkRef = n)),
-      (n = t.GetDoubleHitInAir()),
-      r.DoubleHitInAir !== n) &&
-      ((r.DoubleHitInAir = n), (e.DoubleHitInAirRef = n));
-  }
-  static UpdateAnimInfoFk(e) {
-    var n = EntitySystem_1.EntitySystem.GetComponent(e, 160);
+  static UpdateAnimInfoHit(e) {
+    var n = EntitySystem_1.EntitySystem.GetComponent(e, 162);
     if (n?.Valid) {
-      e = EntitySystem_1.EntitySystem.GetComponent(e, 51);
+      e = EntitySystem_1.EntitySystem.GetComponent(e, 52);
       if (e) {
         var a = n.MainAnimInstance.LogicParams,
-          n = n.AnimLogicParamsSetter;
+          n = n.AnimLogicParamsSetter,
+          r = e.GetAcceptedNewBeHitAndReset(),
+          i =
+            (n.AcceptedNewBeHit !== r &&
+              ((n.AcceptedNewBeHit = r), (a.AcceptedNewBeHitRef = r)),
+            e.BeHitAnim);
+        n.BeHitAnim !== i && ((n.BeHitAnim = i), (a.BeHitAnimRef = i)),
+          (r = e.GetEnterFkAndReset()),
+          n.EnterFk !== r && ((n.EnterFk = r), (a.EnterFkRef = r)),
+          (r = e.GetDoubleHitInAir()),
+          n.DoubleHitInAir !== r &&
+            ((n.DoubleHitInAir = r), (a.DoubleHitInAirRef = r));
         let t = e.BeHitDirect;
         n.BeHitDirect.Equals(t) ||
           (n.BeHitDirect.DeepCopy(t), (a.BeHitDirectRef = t.ToUeVector())),
@@ -168,9 +157,9 @@ class AnimController extends ControllerBase_1.ControllerBase {
           n.BeHitLocation.Equals(t) ||
             (n.BeHitLocation.DeepCopy(t),
             (a.BeHitLocationRef = t.ToUeVector()));
-        e = e.BeHitSocketName;
-        n.BeHitSocketName.op_Equality(e) ||
-          ((n.BeHitSocketName = e), (a.BeHitSocketNameRef = e));
+        i = e.BeHitSocketName;
+        n.BeHitSocketName.op_Equality(i) ||
+          ((n.BeHitSocketName = i), (a.BeHitSocketNameRef = i));
       }
     }
   }
@@ -178,9 +167,9 @@ class AnimController extends ControllerBase_1.ControllerBase {
     var e,
       n,
       a,
-      r = EntitySystem_1.EntitySystem.GetComponent(t, 160);
+      r = EntitySystem_1.EntitySystem.GetComponent(t, 162);
     r?.Valid &&
-      (n = EntitySystem_1.EntitySystem.GetComponent(t, 158)) &&
+      (n = EntitySystem_1.EntitySystem.GetComponent(t, 160)) &&
       ((e = r.MainAnimInstance.LogicParams),
       (r = r.AnimLogicParamsSetter),
       (a = n.MoveState),
@@ -221,7 +210,7 @@ class AnimController extends ControllerBase_1.ControllerBase {
   static UpdateAnimInfoSceneInteract(t) {
     var e,
       n,
-      a = EntitySystem_1.EntitySystem.GetComponent(t, 160);
+      a = EntitySystem_1.EntitySystem.GetComponent(t, 162);
     a?.Valid &&
       (t = EntitySystem_1.EntitySystem.GetComponent(t, 26)) &&
       ((e = a.MainAnimInstance.LogicParams),
@@ -238,9 +227,8 @@ class AnimController extends ControllerBase_1.ControllerBase {
 (exports.AnimController = AnimController).UpdateAnimInfo = (t) => {
   AnimController.UpdateAnimInfoMove(t),
     AnimController.UpdateAnimInfoMeshAnim(t),
-    AnimController.UpdateAnimInfoHit(t),
     AnimController.UpdateAnimInfoUnifiedState(t),
-    AnimController.UpdateAnimInfoFk(t),
+    AnimController.UpdateAnimInfoHit(t),
     AnimController.UpdateAnimInfoSceneInteract(t);
 };
 //# sourceMappingURL=AnimController.js.map

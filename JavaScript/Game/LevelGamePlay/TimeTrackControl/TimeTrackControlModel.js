@@ -13,7 +13,7 @@ class TimeTrackControlModel extends ModelBase_1.ModelBase {
       (this.iwe = 0),
       (this.owe = !1),
       (this.rwe = 0),
-      (this.Zxn = 0),
+      (this.PBn = 0),
       (this.nwe = void 0),
       (this.swe = void 0);
   }
@@ -36,10 +36,10 @@ class TimeTrackControlModel extends ModelBase_1.ModelBase {
     this.rwe = t;
   }
   get RefTrueEntityId() {
-    return this.Zxn;
+    return this.PBn;
   }
   set RefTrueEntityId(t) {
-    this.Zxn = t;
+    this.PBn = t;
   }
   get ControllerEntity() {
     return this.zxe;
@@ -54,7 +54,7 @@ class TimeTrackControlModel extends ModelBase_1.ModelBase {
     var t;
     this.zxe &&
       void 0 !== this.Zxe &&
-      (t = this.zxe.Entity.GetComponent(118)) &&
+      (t = this.zxe.Entity.GetComponent(120)) &&
       (this.ewe = t.GetTimeTrackControlConfig(this.Zxe));
   }
   GetConfigStatesCounts() {
@@ -66,7 +66,7 @@ class TimeTrackControlModel extends ModelBase_1.ModelBase {
     return this.ewe ? this.ewe.SegmentTime ?? 0.5 : 0.5;
   }
   InitControlInfo(t) {
-    (this.iwe = t.GCs), (this.nwe = t.Wxs), this.UpdatePointsUsable();
+    (this.iwe = t.zvs), (this.nwe = t.uGs), this.UpdatePointsUsable();
   }
   UpdateControlInfo(t) {
     (this.iwe = t), this.UpdatePointsUsable();
@@ -76,14 +76,14 @@ class TimeTrackControlModel extends ModelBase_1.ModelBase {
     if (i) {
       this.swe ? this.swe.fill(!1) : (this.swe = new Array(i).fill(!1));
       var s = this.nwe[this.iwe];
-      this.swe[this.iwe] = (s.Hxs || s.jxs) ?? !1;
+      this.swe[this.iwe] = (s.lGs || s._Gs) ?? !1;
       for (let t = this.iwe - 1; 0 <= t; t--)
-        s.Hxs && this.swe[t + 1]
-          ? (this.swe[t] = this.nwe[t + 1].Hxs ?? !1)
+        s.lGs && this.swe[t + 1]
+          ? (this.swe[t] = this.nwe[t + 1].lGs ?? !1)
           : (this.swe[t] = !1);
       for (let t = this.iwe + 1; t < i; t++)
-        s.jxs && this.swe[t - 1]
-          ? (this.swe[t] = this.nwe[t - 1].jxs ?? !1)
+        s._Gs && this.swe[t - 1]
+          ? (this.swe[t] = this.nwe[t - 1]._Gs ?? !1)
           : (this.swe[t] = !1);
     }
   }

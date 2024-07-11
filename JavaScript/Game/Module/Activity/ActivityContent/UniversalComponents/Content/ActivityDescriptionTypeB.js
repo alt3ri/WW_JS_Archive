@@ -6,19 +6,7 @@ const UE = require("ue"),
   LguiUtil_1 = require("../../../../Util/LguiUtil");
 class ActivityDescriptionTypeB extends UiPanelBase_1.UiPanelBase {
   OnRegisterComponent() {
-    this.ComponentRegisterInfos = [
-      [0, UE.UIText],
-      [1, UE.UIText],
-    ];
-  }
-  SetTitleByTextId(e, ...t) {
-    LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(1), e, t);
-  }
-  SetTitleByText(e) {
-    this.GetText(1).SetText(e);
-  }
-  SetTitleVisible(e) {
-    this.GetText(1).SetUIActive(e);
+    this.ComponentRegisterInfos = [[0, UE.UIText]];
   }
   SetContentByTextId(e, ...t) {
     LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(0), e, t);

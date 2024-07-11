@@ -14,12 +14,12 @@ class CharMaterialController extends CharRenderBase_1.CharRenderBase {
     super(...arguments),
       (this.MaterialContainer = void 0),
       (this.AllMaterialControlRuntimeDataMap = void 0),
-      (this.xhr = 0),
-      (this.war = new Array()),
-      (this.ihr = ""),
+      (this.Ulr = 0),
+      (this.xhr = new Array()),
+      (this.Zhr = ""),
       (this.EnableDebug = !1),
       (this.DebugInfo = void 0),
-      (this.whr = void 0);
+      (this.Alr = void 0);
   }
   PrintCurrentInfo() {
     let t = "";
@@ -31,17 +31,17 @@ class CharMaterialController extends CharRenderBase_1.CharRenderBase {
         41,
         "",
         ["当前存在的角色特效DA", t],
-        ["Actor", this.ihr],
+        ["Actor", this.Zhr],
       );
   }
   Start() {
     super.Start(),
-      (this.war.length = 0),
-      (this.xhr = 0),
+      (this.xhr.length = 0),
+      (this.Ulr = 0),
       (this.EnableDebug = !1),
       (this.DebugInfo = new UE.PD_MaterialDebug_C()),
       (this.AllMaterialControlRuntimeDataMap = new Map()),
-      (this.ihr = this.GetRenderingComponent().GetOwner().GetName());
+      (this.Zhr = this.GetRenderingComponent().GetOwner().GetName());
     var t = this.RenderComponent.GetComponent(
       RenderConfig_1.RenderConfig.IdMaterialContainer,
     );
@@ -51,11 +51,11 @@ class CharMaterialController extends CharRenderBase_1.CharRenderBase {
           "RenderCharacter",
           14,
           "材质控制器初始化失败，不存在CharMaterialContainer",
-          ["Actor", this.ihr],
+          ["Actor", this.Zhr],
         )
       : ((this.MaterialContainer = t),
-        this.ihr,
-        (this.whr = void 0),
+        this.Zhr,
+        (this.Alr = void 0),
         this.OnInitSuccess());
   }
   GetRuntimeMaterialControllerInfo(t) {
@@ -67,7 +67,7 @@ class CharMaterialController extends CharRenderBase_1.CharRenderBase {
       var e = this.GetRenderingComponent().GetTimeDilation();
       r.UpdateState(t, e),
         r.UpdateEffect(this.MaterialContainer),
-        r.IsDead && this.war.push(r.Id);
+        r.IsDead && this.xhr.push(r.Id);
     }
     if (this.EnableDebug && this.DebugInfo) {
       this.DebugInfo.MaterialControllerList.Empty();
@@ -77,8 +77,8 @@ class CharMaterialController extends CharRenderBase_1.CharRenderBase {
           o[1].DataCache.DataName,
         );
     }
-    if (0 < this.war.length) {
-      for (const i of this.war)
+    if (0 < this.xhr.length) {
+      for (const i of this.xhr)
         this.AllMaterialControlRuntimeDataMap.get(i).Destroy(),
           this.AllMaterialControlRuntimeDataMap.delete(i),
           EventSystem_1.EventSystem.EmitWithTarget(
@@ -91,10 +91,10 @@ class CharMaterialController extends CharRenderBase_1.CharRenderBase {
           "RenderCharacter",
           14,
           "自动移除材质控制器",
-          ["Actor", this.ihr],
-          ["handle array", this.war.join()],
+          ["Actor", this.Zhr],
+          ["handle array", this.xhr.join()],
         ),
-        (this.war.length = 0);
+        (this.xhr.length = 0);
     }
   }
   SetEffectProgress(t, e) {
@@ -189,8 +189,8 @@ class CharMaterialController extends CharRenderBase_1.CharRenderBase {
         ["Actor", this.GetRenderingComponent().GetOwner().GetName()],
         ["添加的材质控制器名称", t.GetName()],
       ),
-      this.xhr++;
-    var r = this.xhr,
+      this.Ulr++;
+    var r = this.Ulr,
       o =
         new CharRuntimeMaterialControllerInfo_1.CharMaterialControlRuntimeData();
     return (

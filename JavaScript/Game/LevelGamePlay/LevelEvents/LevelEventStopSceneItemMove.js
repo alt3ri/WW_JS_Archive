@@ -15,37 +15,37 @@ const Log_1 = require("../../../Core/Common/Log"),
   LevelGeneralBase_1 = require("../LevelGeneralBase");
 class LevelEventStopSceneItemMove extends LevelGeneralBase_1.LevelEventBase {
   constructor() {
-    super(...arguments), (this.qAt = void 0);
+    super(...arguments), (this.OPt = void 0);
   }
   ExecuteNew(e, t) {
     e
-      ? ((this.qAt = e), (e = this.qAt.EntityIds), this.CreateWaitEntityTask(e))
+      ? ((this.OPt = e), (e = this.OPt.EntityIds), this.CreateWaitEntityTask(e))
       : (Log_1.Log.CheckError() && Log_1.Log.Error("Event", 32, "参数配置错误"),
         this.FinishExecute(!1));
   }
   ExecuteWhenEntitiesReady() {
-    if (this.qAt) {
-      var e = this.qAt.EntityIds,
+    if (this.OPt) {
+      var e = this.OPt.EntityIds,
         t = [],
-        o = Protocol_1.Aki.Protocol.e7s.create(),
+        o = Protocol_1.Aki.Protocol.eZs.create(),
         r =
-          ((o.i7s = []),
-          this.qAt.StopType === IAction_1.EStopSceneItemMoveType.StopAtNextPos);
+          ((o.rZs = []),
+          this.OPt.StopType === IAction_1.EStopSceneItemMoveType.StopAtNextPos);
       for (const a of e) {
-        var n = Protocol_1.Aki.Protocol.r7s.create(),
+        var n = Protocol_1.Aki.Protocol.nZs.create(),
           i = ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(a);
         if (i?.Valid) {
-          var s = i.Entity.GetComponent(113);
+          var s = i.Entity.GetComponent(115);
           if (s?.Valid) {
             let e = void 0;
             r && (e = s.GetNextTarget());
             var l = i.Entity.GetComponent(0),
               v = i.Entity.GetComponent(1),
               l =
-                ((n.rkn = MathUtils_1.MathUtils.NumberToLong(
+                ((n.P4n = MathUtils_1.MathUtils.NumberToLong(
                   l.GetCreatureDataId(),
                 )),
-                (n.$kn = v.ActorLocationProxy),
+                (n.y5n = v.ActorLocationProxy),
                 {
                   Entity: i.Entity,
                   Location: Vector_1.Vector.Create(v.ActorLocationProxy),
@@ -53,10 +53,10 @@ class LevelEventStopSceneItemMove extends LevelGeneralBase_1.LevelEventBase {
                 });
             r &&
               e.HasTarget &&
-              ((n.$kn = e.Target),
+              ((n.y5n = e.Target),
               (l.Location = Vector_1.Vector.Create(e.Target)),
               (l.Velocity = e.Velocity)),
-              s.IsMoving && o.i7s.push(n),
+              s.IsMoving && o.rZs.push(n),
               t.push(l);
           } else
             Log_1.Log.CheckError() &&
@@ -70,15 +70,15 @@ class LevelEventStopSceneItemMove extends LevelGeneralBase_1.LevelEventBase {
           Log_1.Log.CheckError() &&
             Log_1.Log.Error("Event", 32, "实体不合法", ["entityId", a]);
       }
-      Net_1.Net.Call(15916, o, (e) => {
-        e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys &&
+      Net_1.Net.Call(18221, o, (e) => {
+        e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs &&
           ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-            e.lkn,
-            27191,
+            e.O4n,
+            17217,
           );
       });
       for (const m of t) {
-        var _ = m.Entity.GetComponent(113),
+        var _ = m.Entity.GetComponent(115),
           c =
             (_.StopMove(),
             EventSystem_1.EventSystem.EmitWithTarget(
@@ -98,7 +98,7 @@ class LevelEventStopSceneItemMove extends LevelGeneralBase_1.LevelEventBase {
     }
   }
   OnReset() {
-    this.qAt = void 0;
+    this.OPt = void 0;
   }
 }
 exports.LevelEventStopSceneItemMove = LevelEventStopSceneItemMove;

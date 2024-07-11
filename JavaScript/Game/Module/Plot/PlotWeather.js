@@ -50,31 +50,31 @@ class PlotWeatherActorInfo {
 exports.PlotWeatherActorInfo = PlotWeatherActorInfo;
 class PlotWeather {
   constructor() {
-    (this.Heo = 0), (this.Uk = !1), (this.RHe = void 0), (this.UHe = void 0);
+    (this.Oto = 0), (this.Uk = !1), (this.kje = void 0), (this.Fje = void 0);
   }
   Init() {
-    (this.Heo = 0), (this.Uk = !1);
+    (this.Oto = 0), (this.Uk = !1);
   }
   Clear() {
-    (this.Heo = 0), (this.Uk = !1), this.jeo();
+    (this.Oto = 0), (this.Uk = !1), this.kto();
   }
   OnPlotEnd() {
     this.Uk &&
       ((this.Uk = !1),
-      WeatherController_1.WeatherController.RequestChangeWeather(this.Heo)),
-      this.jeo();
+      WeatherController_1.WeatherController.RequestChangeWeather(this.Oto)),
+      this.kto();
   }
   StopAllWeather() {
-    this.Uk && (this.RHe?.Disable(), this.UHe?.Disable());
+    this.Uk && (this.kje?.Disable(), this.Fje?.Disable());
   }
-  jeo() {
-    this.RHe?.Destroy(),
-      (this.RHe = void 0),
-      this.UHe?.Destroy(),
-      (this.UHe = void 0);
+  kto() {
+    this.kje?.Destroy(),
+      (this.kje = void 0),
+      this.Fje?.Destroy(),
+      (this.Fje = void 0);
   }
   OnTick(t) {
-    this.Z0e(this.UHe, t), this.Z0e(this.RHe, t);
+    this.Z0e(this.Fje, t), this.Z0e(this.kje, t);
   }
   Z0e(t, i) {
     if (t && t.IsLoadCompleted && t.CurBlendWeight !== t.TargetBlendWeight) {
@@ -120,55 +120,55 @@ class PlotWeather {
     }
   }
   ChangeWeather(t, i, s, h = PLOT_WEATHER_PRIORITY) {
-    (this.Heo = t), (this.Uk = i), this.RHe && (this.RHe.TargetBlendWeight = 0);
+    (this.Oto = t), (this.Uk = i), this.kje && (this.kje.TargetBlendWeight = 0);
     i = ConfigManager_1.ConfigManager.WeatherModuleConfig.GetWeatherConfig(t);
     i &&
-      (this.RHe
-        ? this.RHe.WeatherConfig?.Id === i.Id
-          ? ((this.RHe.TargetBlendWeight = 1),
-            this.Z0e(this.RHe, 0),
-            this.xHe(),
-            this.Weo(i, s),
-            this.Keo(h))
-          : this.UHe
-            ? ((t = this.UHe),
-              (this.UHe = this.RHe),
-              (this.RHe = t),
-              this.RHe.WeatherConfig?.Id === i.Id
-                ? ((this.RHe.TargetBlendWeight = 1),
-                  this.Z0e(this.RHe, 0),
-                  this.xHe(),
-                  this.Weo(i, s))
-                : (this.Weo(i, s), this.BHe()),
-              this.Keo(h))
-            : ((this.UHe = this.RHe),
-              (this.RHe = new PlotWeatherActorInfo()),
-              this.Weo(i, s),
-              this.Keo(h),
-              this.Qeo())
-        : ((this.RHe = new PlotWeatherActorInfo()),
-          this.Weo(i, s),
-          this.Keo(h),
-          this.Qeo()));
+      (this.kje
+        ? this.kje.WeatherConfig?.Id === i.Id
+          ? ((this.kje.TargetBlendWeight = 1),
+            this.Z0e(this.kje, 0),
+            this.jje(),
+            this.Fto(i, s),
+            this.Vto(h))
+          : this.Fje
+            ? ((t = this.Fje),
+              (this.Fje = this.kje),
+              (this.kje = t),
+              this.kje.WeatherConfig?.Id === i.Id
+                ? ((this.kje.TargetBlendWeight = 1),
+                  this.Z0e(this.kje, 0),
+                  this.jje(),
+                  this.Fto(i, s))
+                : (this.Fto(i, s), this.Kje()),
+              this.Vto(h))
+            : ((this.Fje = this.kje),
+              (this.kje = new PlotWeatherActorInfo()),
+              this.Fto(i, s),
+              this.Vto(h),
+              this.Hto())
+        : ((this.kje = new PlotWeatherActorInfo()),
+          this.Fto(i, s),
+          this.Vto(h),
+          this.Hto()));
   }
-  Weo(t, i) {
-    (this.RHe.WeatherConfig = t),
-      (this.RHe.ChangeSpeed =
+  Fto(t, i) {
+    (this.kje.WeatherConfig = t),
+      (this.kje.ChangeSpeed =
         0 < i ? 1 / (i * TimeUtil_1.TimeUtil.InverseMillisecond) : 0),
-      this.UHe && (this.UHe.ChangeSpeed = this.RHe.ChangeSpeed);
+      this.Fje && (this.Fje.ChangeSpeed = this.kje.ChangeSpeed);
   }
-  xHe() {
-    this.RHe &&
-      this.RHe.Actor?.IsValid() &&
+  jje() {
+    this.kje &&
+      this.kje.Actor?.IsValid() &&
       Global_1.Global.BaseCharacter &&
-      this.RHe.Actor.K2_SetActorLocation(
+      this.kje.Actor.K2_SetActorLocation(
         Global_1.Global.BaseCharacter.K2_GetActorLocation(),
         !1,
         void 0,
         !0,
       );
   }
-  Qeo() {
+  Hto() {
     let t = void 0;
     t = Global_1.Global.BaseCharacter
       ? Global_1.Global.BaseCharacter.GetTransform()
@@ -185,27 +185,27 @@ class PlotWeather {
       (s.bUnbound = !0),
       (s.BlendWeight = 0),
       (s.bEnabled = !1),
-      (this.RHe.Actor = i),
-      (this.RHe.KuroPostProcessComponent = s),
-      (this.RHe.TargetBlendWeight = 1),
-      (this.RHe.CurBlendWeight = 0),
-      (this.RHe.IsLoadCompleted = !1),
-      this.qHe();
+      (this.kje.Actor = i),
+      (this.kje.KuroPostProcessComponent = s),
+      (this.kje.TargetBlendWeight = 1),
+      (this.kje.CurBlendWeight = 0),
+      (this.kje.IsLoadCompleted = !1),
+      this.Xje();
   }
-  BHe() {
-    var t = this.RHe.KuroPostProcessComponent;
-    (this.RHe.TargetBlendWeight = 1),
-      (this.RHe.CurBlendWeight = 0),
-      (this.RHe.IsLoadCompleted = !1),
+  Kje() {
+    var t = this.kje.KuroPostProcessComponent;
+    (this.kje.TargetBlendWeight = 1),
+      (this.kje.CurBlendWeight = 0),
+      (this.kje.IsLoadCompleted = !1),
       (t.PPTODDataAsset = void 0),
       (t.WeatherDataAsset = void 0),
       (t.BlendWeight = 0),
       (t.bEnabled = !1),
-      this.xHe(),
-      this.qHe();
+      this.jje(),
+      this.Xje();
   }
-  qHe() {
-    const i = this.RHe.WeatherConfig,
+  Xje() {
+    const i = this.kje.WeatherConfig,
       s =
         (Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
@@ -215,26 +215,26 @@ class PlotWeather {
             ["id", i.Id],
             ["DA", i.DAPath],
           ),
-        this.RHe.KuroPostProcessComponent);
+        this.kje.KuroPostProcessComponent);
     ResourceSystem_1.ResourceSystem.LoadAsync(
       i.DAPath,
       UE.KuroWeatherDataAsset,
       (t) => {
         t?.IsValid() &&
-          this.RHe.WeatherConfig?.Id === i.Id &&
+          this.kje.WeatherConfig?.Id === i.Id &&
           ((s.WeatherDataAsset = t),
-          s.SetPriority(this.RHe.Priority),
-          (this.RHe.IsLoadCompleted = !0),
-          this.Z0e(this.RHe, 0));
+          s.SetPriority(this.kje.Priority),
+          (this.kje.IsLoadCompleted = !0),
+          this.Z0e(this.kje, 0));
       },
     );
   }
-  Keo(t) {
-    this.RHe &&
-      this.RHe.Priority !== t &&
-      ((this.RHe.Priority = t), this.RHe.IsLoadCompleted) &&
-      this.RHe.KuroPostProcessComponent?.IsValid() &&
-      this.RHe.KuroPostProcessComponent.SetPriority(t);
+  Vto(t) {
+    this.kje &&
+      this.kje.Priority !== t &&
+      ((this.kje.Priority = t), this.kje.IsLoadCompleted) &&
+      this.kje.KuroPostProcessComponent?.IsValid() &&
+      this.kje.KuroPostProcessComponent.SetPriority(t);
   }
 }
 exports.PlotWeather = PlotWeather;

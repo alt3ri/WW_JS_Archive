@@ -18,11 +18,11 @@ class LguiEventSystemController extends ControllerBase_1.ControllerBase {
         InputMappingsDefine_1.actionMappings.Ui左键点击,
         InputMappingsDefine_1.actionMappings.Ui右键点击,
       ],
-      this.kmr,
+      this.Ndr,
     ),
       InputDistributeController_1.InputDistributeController.BindAxis(
         InputMappingsDefine_1.axisMappings.WheelAxis,
-        this.cui,
+        this.cci,
       );
   }
   static kre() {
@@ -31,21 +31,21 @@ class LguiEventSystemController extends ControllerBase_1.ControllerBase {
         InputMappingsDefine_1.actionMappings.Ui左键点击,
         InputMappingsDefine_1.actionMappings.Ui右键点击,
       ],
-      this.kmr,
+      this.Ndr,
     ),
       InputDistributeController_1.InputDistributeController.UnBindAxis(
         InputMappingsDefine_1.axisMappings.WheelAxis,
-        this.cui,
+        this.cci,
       );
   }
 }
-((exports.LguiEventSystemController = LguiEventSystemController).kmr = (
+((exports.LguiEventSystemController = LguiEventSystemController).Ndr = (
   t,
   e,
 ) => {
   LguiEventSystemManager_1.LguiEventSystemManager.ClickedMouse(t, e);
 }),
-  (LguiEventSystemController.cui = (t, e) => {
+  (LguiEventSystemController.cci = (t, e) => {
     LguiEventSystemManager_1.LguiEventSystemManager.InputWheelAxis(t, e);
   });
 //# sourceMappingURL=LguiEventSystemController.js.map

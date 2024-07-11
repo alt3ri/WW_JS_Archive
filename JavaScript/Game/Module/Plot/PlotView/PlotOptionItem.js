@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PlotOptionItem = void 0);
 const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
   GlobalConfigFromCsvByName_1 = require("../../../../Core/Define/ConfigQuery/GlobalConfigFromCsvByName"),
   MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang"),
   TalkOptionIconById_1 = require("../../../../Core/Define/ConfigQuery/TalkOptionIconById"),
@@ -22,60 +23,73 @@ const UE = require("ue"),
 class PlotOptionItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor(t) {
     super(),
-      (this.$1i = void 0),
-      (this.vJi = 0),
+      (this.$_i = void 0),
+      (this.fzi = 0),
       (this.Option = void 0),
-      (this.MJi = ""),
-      (this.SJi = void 0),
-      (this.EJi = void 0),
-      (this.yJi = 0),
-      (this.t_i = void 0),
+      (this.pzi = ""),
+      (this.vzi = void 0),
+      (this.Mzi = void 0),
+      (this.Ezi = 0),
+      (this.tui = void 0),
       (this.OptionIndex = -1),
-      (this.IJi = !1),
-      (this.TJi = void 0),
-      (this.a_i = !1),
-      (this.T7e = () => {
-        var t = this.$1i.GetToggleItem().GetToggleState();
-        return !this.a_i || 1 !== t;
+      (this.Szi = !1),
+      (this.yzi = void 0),
+      (this.aui = !1),
+      (this.Lke = () => {
+        var t = this.$_i.GetToggleItem().GetToggleState();
+        return !this.aui || 1 !== t;
       }),
-      (this.__i = () => {
-        this.t_i && this.t_i(this);
+      (this._ui = () => {
+        this.tui && this.tui(this);
       }),
       (this.OptionClick = (t = !0) => {
-        if (
-          t &&
-          !this.a_i &&
-          ModelManager_1.ModelManager.PlotModel.OptionEnable
-        )
-          switch (((this.a_i = !0), this.vJi)) {
-            case 0:
-              this.SJi
-                ? (PlotController_1.PlotController.EndInteraction(
-                    "Flow" === this.EJi.Type.Type,
-                  ),
-                  TsInteractionUtils_1.TsInteractionUtils.HandleInteractionOptionNew(
-                    this.EJi,
-                    this.SJi,
-                  ))
-                : PlotController_1.PlotController.EndInteraction();
-              break;
-            case 1:
-              this.Option.ReadMarkEnabled &&
-                ModelManager_1.ModelManager.PlotModel.MarkGrayOption(
-                  this.yJi,
-                  this.OptionIndex,
-                ),
-                this.TJi instanceof PlotView_1.PlotView
-                  ? ControllerHolder_1.ControllerHolder.FlowController.FlowShowTalk.SelectOption(
-                      this.OptionIndex,
-                      this.Option.Actions,
-                    )
-                  : SequenceController_1.SequenceController.SelectOption(
-                      this.OptionIndex,
-                    );
-          }
+        t &&
+          !this.aui &&
+          (ModelManager_1.ModelManager.PlotModel.OptionEnable
+            ? ((ModelManager_1.ModelManager.PlotModel.OptionEnable = !1),
+              (this.aui = !0),
+              this.$_i.PlayReleaseSequence().then(
+                () => {
+                  switch (this.fzi) {
+                    case 0:
+                      this.vzi
+                        ? (PlotController_1.PlotController.EndInteraction(
+                            "Flow" === this.Mzi.Type.Type,
+                          ),
+                          TsInteractionUtils_1.TsInteractionUtils.HandleInteractionOptionNew(
+                            this.Mzi,
+                            this.vzi,
+                          ))
+                        : PlotController_1.PlotController.EndInteraction();
+                      break;
+                    case 1:
+                      ModelManager_1.ModelManager.PlotModel.MarkGrayOption(
+                        this.Ezi,
+                        this.OptionIndex,
+                      ),
+                        this.yzi instanceof PlotView_1.PlotView
+                          ? ControllerHolder_1.ControllerHolder.FlowController.FlowShowTalk.SelectOption(
+                              this.OptionIndex,
+                              this.Option.Actions,
+                            )
+                          : SequenceController_1.SequenceController.SelectOption(
+                              this.OptionIndex,
+                              this.Ezi,
+                            );
+                  }
+                },
+                () => {},
+              ))
+            : Log_1.Log.CheckWarn() &&
+              Log_1.Log.Warn(
+                "Plot",
+                27,
+                "剧情选项点击失效",
+                ["index", this.OptionIndex],
+                ["id", this.Ezi],
+              ));
       }),
-      (this.TJi = t);
+      (this.yzi = t);
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -83,75 +97,79 @@ class PlotOptionItem extends GridProxyAbstract_1.GridProxyAbstract {
       [1, UE.UIItem],
     ];
   }
+  async OnBeforeStartAsync() {
+    var t = this.GetItem(0);
+    (this.$_i = new ToggleActionItem_1.ToggleActionItem()),
+      await this.$_i.CreateThenShowByActorAsync(t.GetOwner());
+  }
   OnStart() {
-    (this.a_i = !1),
-      (this.$1i = new ToggleActionItem_1.ToggleActionItem(this.GetItem(0))),
-      this.$1i.SetFunction(this.OptionClick),
-      this.$1i.GetToggleItem().OnUndeterminedClicked.Add(this.OptionClick);
-    var t = this.$1i.GetToggleItem();
+    (this.aui = !1),
+      this.$_i.SetFunction(this.OptionClick),
+      this.$_i.GetToggleItem().OnUndeterminedClicked.Add(this.OptionClick);
+    var t = this.$_i.GetToggleItem();
     t.SetToggleState(1),
       t.SetToggleState(0),
-      t.CanExecuteChange.Bind(this.T7e),
-      this.LJi();
+      t.CanExecuteChange.Bind(this.Lke),
+      this.Izi();
   }
   OnBeforeDestroy() {
-    this.DJi(), this.$1i.Destroy();
+    this.Tzi(), this.$_i.Destroy();
   }
-  LJi() {
-    this.$1i.GetToggleItem().OnHover.Add(this.__i);
+  Izi() {
+    this.$_i.GetToggleItem().OnHover.Add(this._ui);
   }
-  DJi() {
-    this.$1i.GetToggleItem().OnHover.Clear();
+  Tzi() {
+    this.$_i.GetToggleItem().OnHover.Clear();
   }
   BindOnHover(t) {
-    this.t_i = t;
+    this.tui = t;
   }
   SetFollowItemActive(t) {
     this.GetItem(1).SetUIActive(t);
   }
   SetupSubtitleOption(t, e) {
-    (this.vJi = 1),
+    (this.fzi = 1),
       (this.Option = t),
-      (this.MJi = t.TidTalkOption),
-      (this.yJi = e),
+      (this.pzi = t.TidTalkOption),
+      (this.Ezi = e),
       (this.OptionIndex = ModelManager_1.ModelManager.PlotModel.GetOptionIndex(
         t,
         e,
       ));
-    t = PublicUtil_1.PublicUtil.GetFlowConfigLocalText(this.MJi);
-    this.RJi(this.f_i(), t);
+    t = PublicUtil_1.PublicUtil.GetFlowConfigLocalText(this.pzi);
+    this.Lzi(this.fui(), t);
   }
   SetupInteractiveOption(t, e) {
-    (this.vJi = 0), (this.EJi = t), (this.SJi = e);
+    (this.fzi = 0), (this.Mzi = t), (this.vzi = e);
     e = PublicUtil_1.PublicUtil.GetConfigTextByKey(t.TidContent);
-    this.RJi(this.f_i(), e);
+    this.Lzi(this.fui(), e);
   }
   SetupLeaveOption(t) {
-    (this.IJi = !0),
-      (this.vJi = 0),
-      (this.EJi = void 0),
-      (this.SJi = void 0),
-      this.RJi(this.f_i(), t);
+    (this.Szi = !0),
+      (this.fzi = 0),
+      (this.Mzi = void 0),
+      (this.vzi = void 0),
+      this.Lzi(this.fui(), t);
   }
-  f_i() {
+  fui() {
     let e = void 0;
-    switch (this.vJi) {
+    switch (this.fzi) {
       case 0: {
-        if (!this.EJi) {
+        if (!this.Mzi) {
           var i = this.IsLeaveItem() ? "Leave" : "Dialog";
-          e = this.UJi(i);
+          e = this.Dzi(i);
           break;
         }
         if (this.IsTask()) {
-          var r = this.EJi.Context;
-          if (!r) break;
+          var o = this.Mzi.Context;
+          if (!o) break;
           let t = void 0;
-          switch (r.Type) {
+          switch (o.Type) {
             case 2:
-              t = r.QuestId;
+              t = o.QuestId;
               break;
             case 6:
-              t = r.TreeConfigId;
+              t = o.TreeConfigId;
           }
           if (void 0 === t) break;
           i = ModelManager_1.ModelManager.QuestNewModel.GetQuest(t);
@@ -163,8 +181,8 @@ class PlotOptionItem extends GridProxyAbstract_1.GridProxyAbstract {
           break;
         }
         let t = "Dialog";
-        (t = 1 === this.Option?.OptionStyle ? "OS" : this.EJi.Icon ?? "Dialog"),
-          (e = this.UJi(t));
+        (t = 1 === this.Option?.OptionStyle ? "OS" : this.Mzi.Icon ?? "Dialog"),
+          (e = this.Dzi(t));
         break;
       }
       case 1:
@@ -175,14 +193,14 @@ class PlotOptionItem extends GridProxyAbstract_1.GridProxyAbstract {
     }
     return e ?? "";
   }
-  RJi(t, e) {
+  Lzi(t, e) {
     let i = e;
-    1 === this.vJi &&
+    1 === this.fzi &&
       (i = ModelManager_1.ModelManager.PlotModel.PlotTextReplacer.Replace(i)),
-      this.$1i.SetToggleTexture(t),
-      this.$1i.SetToggleText(i);
+      this.$_i.SetToggleTexture(t),
+      this.$_i.SetToggleText(i);
   }
-  UJi(t) {
+  Dzi(t) {
     t =
       GlobalConfigFromCsvByName_1.configGlobalConfigFromCsvByName.GetConfig(
         "EInteractIcon." + t,
@@ -193,62 +211,61 @@ class PlotOptionItem extends GridProxyAbstract_1.GridProxyAbstract {
     return void 0 === t ? "" : t.Value;
   }
   IsTask() {
-    var t = this.EJi?.Context;
+    var t = this.Mzi?.Context;
     return (
       !!t &&
       (2 === t.Type ||
         (6 === t.Type &&
-          t.BtType === Protocol_1.Aki.Protocol.NCs.Proto_BtTypeQuest))
+          t.BtType === Protocol_1.Aki.Protocol.tps.Proto_BtTypeQuest))
     );
   }
   IsOpenSystemBoard() {
-    if ("Actions" === this.EJi?.Type?.Type)
-      for (const t of (this.EJi?.Type).Actions)
+    if ("Actions" === this.Mzi?.Type?.Type)
+      for (const t of (this.Mzi?.Type).Actions)
         if ("OpenSystemBoard" === t.Name) return !0;
     return !1;
   }
   IsLeaveItem() {
-    return this.IJi;
+    return this.Szi;
   }
   SetToggleGray() {
-    this.CheckToggleGray() && this.$1i.GetToggleItem().SetToggleState(2);
+    this.Option?.ReadMarkEnabled &&
+      this.CheckToggleGray() &&
+      this.$_i.GetToggleItem().SetToggleState(2);
   }
   CheckToggleGray() {
-    return (
-      !!this.Option?.ReadMarkEnabled &&
-      ModelManager_1.ModelManager.PlotModel.IsOptionGray(
-        this.yJi,
-        this.OptionIndex,
-      )
+    return ModelManager_1.ModelManager.PlotModel.IsOptionGray(
+      this.Ezi,
+      this.OptionIndex,
     );
   }
   Refresh(t, e, i) {
     t
       ? t instanceof LevelGameplayActionsDefine_1.CommonInteractOption
-        ? this.AJi(t)
-        : this.PJi(t)
-      : this.xJi(),
-      (this.a_i = !1),
-      this.$1i.GetToggleItem().SetToggleState(0),
+        ? this.Rzi(t)
+        : this.Uzi(t)
+      : this.Azi(),
+      (this.aui = !1),
+      this.$_i.GetToggleItem().SetToggleState(0),
       this.SetToggleGray(),
       this.SetFollowItemActive(!1);
   }
-  AJi(t) {
-    this.TJi instanceof PlotSubtitleView_1.PlotSubtitleView ||
-      (this.SetupInteractiveOption(t, this.TJi.InteractController),
+  Rzi(t) {
+    this.yzi instanceof PlotSubtitleView_1.PlotSubtitleView ||
+      (this.SetupInteractiveOption(t, this.yzi.InteractController),
       this.SetActive(!0));
   }
-  xJi() {
+  Azi() {
     var t = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
       TextById_1.configTextById.GetConfig("Leave").Text,
     );
     this.SetupLeaveOption(t);
   }
-  PJi(t) {
-    this.SetupSubtitleOption(t, this.TJi.CurrentSubtitle.Id);
+  Uzi(t) {
+    this.SetupSubtitleOption(t, this.yzi.CurrentSubtitle.Id);
   }
   GetToggleItem() {
-    return this.$1i?.GetToggleItem();
+    return this.$_i?.GetToggleItem();
   }
 }
 exports.PlotOptionItem = PlotOptionItem;

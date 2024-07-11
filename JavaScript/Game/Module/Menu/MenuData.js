@@ -6,26 +6,26 @@ const GameQualitySettingsManager_1 = require("../../GameQualitySettings/GameQual
   FeatureRestrictionTemplate_1 = require("../Common/FeatureRestrictionTemplate");
 class MenuData {
   constructor(t) {
-    (this.ixi = 0),
-      (this.oxi = void 0),
+    (this.iwi = 0),
+      (this.owi = void 0),
       (this.he = void 0),
-      (this.rxi = 0),
-      (this.nxi = 0),
-      (this.sxi = 0),
-      (this.axi = 0),
-      (this.hxi = 0),
-      (this.lxi = []),
-      (this._xi = 0),
-      (this.uxi = 0),
-      (this.cxi = 0),
-      (this.mxi = []),
-      (this.dxi = []),
-      (this.Cxi = void 0),
-      (this.gxi = void 0),
-      (this.uSe = void 0),
-      (this.fxi = void 0),
-      (this.pxi = void 0),
-      (this.vxi = []),
+      (this.rwi = 0),
+      (this.nwi = 0),
+      (this.swi = 0),
+      (this.awi = 0),
+      (this.hwi = 0),
+      (this.lwi = []),
+      (this._wi = 0),
+      (this.uwi = 0),
+      (this.cwi = 0),
+      (this.mwi = []),
+      (this.dwi = []),
+      (this.Cwi = void 0),
+      (this.gwi = void 0),
+      (this.uEe = void 0),
+      (this.fwi = void 0),
+      (this.pwi = void 0),
+      (this.vwi = []),
       (this.YO = 0),
       (this.AffectedValueSet = new Set()),
       (this.AffectedFunction = new Map()),
@@ -35,25 +35,25 @@ class MenuData {
       (this.ValueTipsMap = new Map()),
       (this.ClickedTipsMap = new Map()),
       (this.ClickedTips = void 0),
-      (this.ixi = t.SubType),
-      (this.oxi = t.SubName),
+      (this.iwi = t.SubType),
+      (this.owi = t.SubName),
       (this.he = t.Name),
-      (this.rxi = t.Platform),
-      (this.nxi = t.FunctionSort),
-      (this.sxi = t.SubSort),
-      (this.axi = t.FunctionId),
-      (this.hxi = t.SetType),
-      (this.lxi = t.SliderRange),
-      (this._xi = t.SliderDefault),
-      (this.uxi = t.Digits),
-      (this.cxi = t.OptionsDefault),
-      (this.mxi = t.OptionsName),
-      (this.dxi = t.OptionsValue),
-      (this.Cxi = t.SubImage),
-      (this.gxi = t.FunctionImage),
-      (this.uSe = t.KeyMap),
-      (this.fxi = t.ButtonText),
-      (this.pxi = t.OpenView),
+      (this.rwi = t.Platform),
+      (this.nwi = t.FunctionSort),
+      (this.swi = t.SubSort),
+      (this.awi = t.FunctionId),
+      (this.hwi = t.SetType),
+      (this.lwi = t.SliderRange),
+      (this._wi = t.SliderDefault),
+      (this.uwi = t.Digits),
+      (this.cwi = t.OptionsDefault),
+      (this.mwi = t.OptionsName),
+      (this.dwi = t.OptionsValue),
+      (this.Cwi = t.SubImage),
+      (this.gwi = t.FunctionImage),
+      (this.uEe = t.KeyMap),
+      (this.fwi = t.ButtonText),
+      (this.pwi = t.OpenView),
       (this.YO = t.ConditionGroup),
       (this.AffectedFunction = t.AffectedFunction),
       (this.DisableFunction = t.DisableFunction),
@@ -63,72 +63,72 @@ class MenuData {
     for (const e of t.AffectedValue) this.AffectedValueSet.add(e);
     for (const i of t.DisableValue) this.DisableValueSet.add(i);
     6 === this.MenuDataFunctionId
-      ? (this.vxi = MenuData.Mxi)
-      : (this.vxi = t.RelationFunction),
+      ? (this.vwi = MenuData.Mwi)
+      : (this.vwi = t.RelationFunction),
       11 !== this.MenuDataFunctionId ||
-        "MenuConfig_6_OptionsName_4" !== this.mxi[this.mxi.length - 1] ||
-        GameQualitySettingsManager_1.GameQualitySettingsManager.IsDlssGpuDevice() ||
-        (this.mxi.pop(), this.dxi.pop());
+        "MenuConfig_6_OptionsName_4" !== this.mwi[this.mwi.length - 1] ||
+        GameQualitySettingsManager_1.GameQualitySettingsManager.IsFrameRate120Device() ||
+        (this.mwi.pop(), this.dwi.pop());
   }
   get MenuDataRelationFuncIds() {
-    return this.vxi;
+    return this.vwi;
   }
   get MenuDataSubType() {
-    return this.ixi;
+    return this.iwi;
   }
   get MenuDataSubName() {
-    return this.oxi;
+    return this.owi;
   }
   get MenuDataFunctionName() {
     return this.he;
   }
   get MenuDataPlatform() {
-    return this.rxi;
+    return this.rwi;
   }
   get MenuDataFunctionSort() {
-    return this.nxi;
+    return this.nwi;
   }
   get MenuDataSubSort() {
-    return this.sxi;
+    return this.swi;
   }
   get MenuDataFunctionId() {
-    return this.axi;
+    return this.awi;
   }
   get MenuDataSetType() {
-    return this.hxi;
+    return this.hwi;
   }
   get MenuDataSliderRange() {
-    return this.lxi;
+    return this.lwi;
   }
   get MenuDataSliderDefault() {
-    return this._xi;
+    return this._wi;
   }
   get MenuDataSliderDigits() {
-    return this.uxi;
+    return this.uwi;
   }
   get MenuDataOptionsDefault() {
-    return this.cxi;
+    return this.cwi;
   }
   get MenuDataOptionsNameList() {
-    return this.mxi;
+    return this.mwi;
   }
   get MenuDataOptionsValueList() {
-    return this.dxi;
+    return this.dwi;
   }
   get MenuDataSubImage() {
-    return this.Cxi;
+    return this.Cwi;
   }
   get MenuDataFunctionImage() {
-    return this.gxi;
+    return this.gwi;
   }
   get MenuDataFunctionKeyMap() {
-    return this.uSe;
+    return this.uEe;
   }
   get MenuDataButtonTextId() {
-    return this.fxi;
+    return this.fwi;
   }
   get MenuDataButtonViewName() {
-    return this.pxi;
+    return this.pwi;
   }
   GetConditionGroup() {
     return this.YO;
@@ -141,7 +141,7 @@ class MenuData {
           this.YO.toString(),
           void 0,
         )) ||
-      ((t = MenuData.nGn.get(this.MenuDataFunctionId)) && t.Check())
+      ((t = MenuData.lNn.get(this.MenuDataFunctionId)) && t.Check())
     );
   }
   CanAffectedFunction(t) {
@@ -154,19 +154,9 @@ class MenuData {
     return 0 < this.DisableFunction.length;
   }
 }
-((exports.MenuData = MenuData).Mxi = [5]),
+((exports.MenuData = MenuData).Mwi = [5]),
   (MenuData.KeySettingInputControllerType = 0),
-  (MenuData.nGn = new Map([
-    [
-      113,
-      FeatureRestrictionTemplate_1.FeatureRestrictionTemplate
-        .TemplateForPioneerClient,
-    ],
-    [
-      123,
-      FeatureRestrictionTemplate_1.FeatureRestrictionTemplate
-        .TemplateForPioneerClient,
-    ],
+  (MenuData.lNn = new Map([
     [
       112,
       FeatureRestrictionTemplate_1.FeatureRestrictionTemplate

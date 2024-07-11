@@ -5,41 +5,41 @@ const UE = require("ue"),
   MathUtils_1 = require("../../Core/Utils/MathUtils"),
   TsBaseCharacter_1 = require("../Character/TsBaseCharacter"),
   CharacterNameDefines_1 = require("../NewWorld/Character/Common/CharacterNameDefines"),
+  GravityUtils_1 = require("../Utils/GravityUtils"),
   MINUS_180 = -180,
   MAX_TURN_TIME = 1e4;
 class TurningParams {
-  constructor(t) {
+  constructor() {
     (this.NeedTurn = !1),
-      (this.TargetAngle = 0),
       (this.AddRate = 0),
       (this.StartAngle = 0),
       (this.EndAngle = 0),
       (this.PreFrameAngle = 0);
-    var e = t.Entity.GetComponent(160);
-    (this.TargetAngle = t.InputRotator.Yaw),
-      (this.EndAngle = e.MainAnimInstance.GetMainAnimsCurveValueWithDelta(
-        CharacterNameDefines_1.CharacterNameDefines.ROOT_LOOK,
-        MAX_TURN_TIME,
-      )),
-      (this.StartAngle = e.MainAnimInstance.GetMainAnimsCurveValueWithDelta(
-        CharacterNameDefines_1.CharacterNameDefines.ROOT_LOOK,
-        -MAX_TURN_TIME,
-      )),
-      Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info(
-          "Test",
-          6,
-          "TurnAdd 1058338",
-          ["EntityId", t.Entity.Id],
-          ["endAngle", this.EndAngle],
-          ["startAngle", this.StartAngle],
-        ),
-      this.Bse(t);
   }
-  Bse(e) {
-    var r = this.EndAngle - this.StartAngle;
+  CalcTurningRate(e) {
+    var r = e.Entity.GetComponent(162),
+      r =
+        ((this.EndAngle = r.MainAnimInstance.GetMainAnimsCurveValueWithDelta(
+          CharacterNameDefines_1.CharacterNameDefines.ROOT_LOOK,
+          MAX_TURN_TIME,
+        )),
+        (this.StartAngle = r.MainAnimInstance.GetMainAnimsCurveValueWithDelta(
+          CharacterNameDefines_1.CharacterNameDefines.ROOT_LOOK,
+          -MAX_TURN_TIME,
+        )),
+        Log_1.Log.CheckInfo() &&
+          Log_1.Log.Info(
+            "Test",
+            6,
+            "TurnAdd 1058338",
+            ["EntityId", e.Entity.Id],
+            ["endAngle", this.EndAngle],
+            ["startAngle", this.StartAngle],
+          ),
+        this.EndAngle - this.StartAngle);
     if (!MathUtils_1.MathUtils.IsNearlyZero(r)) {
-      let t = e.InputRotator.Yaw - e.ActorRotationProxy.Yaw - r;
+      let t =
+        GravityUtils_1.GravityUtils.GetAngleOffsetFromCurrentToInput(e) - r;
       for (; 180 < t; ) t -= 360;
       for (; t < MINUS_180; ) t += 360;
       (t /= r),
@@ -52,8 +52,8 @@ class TurningParams {
             "TurnAdd 1058338",
             ["EntityId", e.Entity.Id],
             ["needAdd", t],
-            ["Current", e.ActorRotationProxy.Yaw],
-            ["Input", e.InputRotator.Yaw],
+            ["Current", e.ActorForwardProxy],
+            ["Input", e.InputFacingProxy],
           );
     }
   }
@@ -66,9 +66,12 @@ class TsAnimNotifyStateTurnAdd extends UE.KuroAnimNotifyState {
     if (!i?.Valid) return !1;
     if (i.GetSequenceBinding()) return !1;
     if (!i.IsAutonomousProxy) return !1;
-    TsAnimNotifyStateTurnAdd.Initialize(),
-      TsAnimNotifyStateTurnAdd.CachedMap.set(t, new TurningParams(i));
-    t = i.Entity.GetComponent(163);
+    TsAnimNotifyStateTurnAdd.Initialize();
+    var n = new TurningParams(),
+      t =
+        (n.CalcTurningRate(i),
+        TsAnimNotifyStateTurnAdd.CachedMap.set(t, n),
+        i.Entity.GetComponent(165));
     return t && (t.IsTurning = !0), !0;
   }
   K2_NotifyTick(t, e, r) {
@@ -83,7 +86,7 @@ class TsAnimNotifyStateTurnAdd extends UE.KuroAnimNotifyState {
       !i.GetSequenceBinding() &&
       !(
         !i.IsAutonomousProxy ||
-        !(a = i.Entity.GetComponent(160))?.Valid ||
+        !(a = i.Entity.GetComponent(162))?.Valid ||
         !(t = TsAnimNotifyStateTurnAdd.CachedMap.get(t))?.NeedTurn ||
         ((n = t.AddRate),
         (a = a.MainAnimInstance.GetMainAnimsCurveValueWithDelta(
@@ -91,9 +94,8 @@ class TsAnimNotifyStateTurnAdd extends UE.KuroAnimNotifyState {
           0,
         )),
         (s = t.PreFrameAngle),
-        (TsAnimNotifyStateTurnAdd.TmpRotator.Yaw =
-          i.ActorRotation.Yaw + n * (a - s)),
-        i.SetActorRotation(
+        (TsAnimNotifyStateTurnAdd.TmpRotator.Yaw = n * (a - s)),
+        i.AddActorLocalRotation(
           TsAnimNotifyStateTurnAdd.TmpRotator,
           "TsAnimNotifyStateTurnAdd",
           !1,
@@ -111,7 +113,7 @@ class TsAnimNotifyStateTurnAdd extends UE.KuroAnimNotifyState {
     if (r.GetSequenceBinding()) return !1;
     if (!r.IsAutonomousProxy) return !1;
     TsAnimNotifyStateTurnAdd.CachedMap?.delete(t);
-    t = r.Entity.GetComponent(163);
+    t = r.Entity.GetComponent(165);
     return (
       t && (t.IsTurning = !1),
       Log_1.Log.CheckInfo() &&
@@ -120,8 +122,8 @@ class TsAnimNotifyStateTurnAdd extends UE.KuroAnimNotifyState {
           6,
           "TurnAdd End",
           ["EntityId", r.Entity.Id],
-          ["Current", r.ActorRotationProxy.Yaw],
-          ["Input", r.InputRotator.Yaw],
+          ["Current", r.ActorForwardProxy],
+          ["Input", r.InputFacingProxy],
         ),
       !0
     );

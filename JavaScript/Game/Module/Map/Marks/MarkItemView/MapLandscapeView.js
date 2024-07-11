@@ -6,25 +6,25 @@ const UE = require("ue"),
   MarkItemView_1 = require("./MarkItemView");
 class LandscapeMarkView extends MarkItemView_1.MarkItemView {
   constructor(e) {
-    super(e), (this.gDi = void 0);
+    super(e), (this.gRi = void 0);
   }
   OnInitialize() {
-    super.OnInitialize(), this.fDi();
+    super.OnInitialize(), this.fRi();
   }
   GetInteractiveFlag() {
     return !1;
   }
-  async fDi() {
+  async fRi() {
     var e = MarkEffectByMarkId_1.configMarkEffectByMarkId.GetConfig(
       this.Holder.MarkId,
     );
     e &&
       ((e = await this.LoadPrefabAsync(e.EffectResourcePath, this.RootItem)),
-      (this.gDi = e.GetComponentByClass(UE.UIItem.StaticClass())));
+      (this.gRi = e.GetComponentByClass(UE.UIItem.StaticClass())));
   }
   OnBeforeDestroy() {
-    this.gDi &&
-      UE.LGUIBPLibrary.DestroyActorWithHierarchy(this.gDi.GetOwner(), !0),
+    this.gRi &&
+      UE.LGUIBPLibrary.DestroyActorWithHierarchy(this.gRi.GetOwner(), !0),
       super.OnBeforeDestroy();
   }
 }

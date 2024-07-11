@@ -2,15 +2,15 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.OpenSystemGameSysOpen = void 0);
 const Log_1 = require("../../../../Core/Common/Log"),
-  FunctionController_1 = require("../../../Module/Functional/FunctionController"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   OpenSystemBase_1 = require("./OpenSystemBase");
 class OpenSystemGameSysOpen extends OpenSystemBase_1.OpenSystemBase {
-  async ExecuteOpenView(e, n) {
+  async ExecuteOpenView(e, o) {
     return (
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("Functional", 11, "行为节点触发功能开启"),
       e.BoardId
-        ? FunctionController_1.FunctionController.ManualOpenFunctionOpenView(
+        ? ControllerHolder_1.ControllerHolder.FunctionController.ManualOpenFunctionOpenView(
             e.BoardId,
           )
         : (Log_1.Log.CheckError() &&
@@ -18,7 +18,7 @@ class OpenSystemGameSysOpen extends OpenSystemBase_1.OpenSystemBase {
           !1)
     );
   }
-  GetViewName(e, n) {
+  GetViewName(e, o) {
     return "FunctionOpenView";
   }
 }

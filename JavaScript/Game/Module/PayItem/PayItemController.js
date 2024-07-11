@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PayItemController = void 0);
-const Log_1 = require("../../../Core/Common/Log"),
+const Info_1 = require("../../../Core/Common/Info"),
+  Log_1 = require("../../../Core/Common/Log"),
   Protocol_1 = require("../../../Core/Define/Net/Protocol"),
   Net_1 = require("../../../Core/Net/Net"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
@@ -14,22 +15,22 @@ const Log_1 = require("../../../Core/Common/Log"),
   ConfirmBoxDefine_1 = require("../ConfirmBox/ConfirmBoxDefine");
 class PayItemController extends UiControllerBase_1.UiControllerBase {
   static OnRegisterNetEvent() {
-    Net_1.Net.Register(3901, (e) => {
-      e = { PayItemId: e.Ekn, OrderId: e.$Ps, ItemId: e.G3n, ItemCount: e.g5n };
+    Net_1.Net.Register(5235, (e) => {
+      e = { PayItemId: e.J4n, OrderId: e.hBs, ItemId: e.f8n, ItemCount: e.YVn };
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnPayItemSuccess,
         e,
       ),
-        PayItemController.KNi(),
+        PayItemController.KOi(),
         ModelManager_1.ModelManager.PayItemModel.CleanPayingItemName();
     }),
-      Net_1.Net.Register(15810, PayItemController.QNi);
+      Net_1.Net.Register(27561, PayItemController.QOi);
   }
   static OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(15810), Net_1.Net.UnRegister(3901);
+    Net_1.Net.UnRegister(27561), Net_1.Net.UnRegister(5235);
   }
   static OnClear() {
-    return this.KNi(), !0;
+    return this.KOi(), !0;
   }
   static SendBuyPayItemRequest(r) {
     if (
@@ -42,25 +43,22 @@ class PayItemController extends UiControllerBase_1.UiControllerBase {
           e,
         )
       );
-    if (
-      this.CurrentBlockIosPayState &&
-      1 === ModelManager_1.ModelManager.PlatformModel.PlatformType
-    )
+    if (this.CurrentBlockIosPayState && 1 === Info_1.Info.PlatformType)
       return (
         (e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(134)),
         void ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
           e,
         )
       );
-    var e = Protocol_1.Aki.Protocol.$os.create();
-    (e.Ekn = r),
-      (e.o8n = ModelManager_1.ModelManager.PayItemModel.Version),
+    var e = Protocol_1.Aki.Protocol.khs.create();
+    (e.J4n = r),
+      (e.G7n = ModelManager_1.ModelManager.PayItemModel.Version),
       ModelManager_1.ModelManager.PayItemModel.UpdatePayingItemName(r),
-      Net_1.Net.Call(21780, e, (e) => {
-        e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys
+      Net_1.Net.Call(23357, e, (e) => {
+        e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs
           ? ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-              e.lkn,
-              19142,
+              e.O4n,
+              9045,
             )
           : (Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
@@ -71,32 +69,32 @@ class PayItemController extends UiControllerBase_1.UiControllerBase {
               ),
             (e = ModelManager_1.ModelManager.PayItemModel.CreateSdkPayment(
               r,
-              e.$Ps,
-              e.HPs,
+              e.hBs,
+              e.lBs,
             )),
             ControllerHolder_1.ControllerHolder.KuroSdkController.SdkPay(e));
       });
   }
-  static KNi() {
+  static KOi() {
     ControllerHolder_1.ControllerHolder.KuroSdkController.CancelCurrentWaitPayItemTimer();
   }
   static SendPayItemInfoRequest() {
-    var e = Protocol_1.Aki.Protocol.Fos.create();
-    (e.o8n = ModelManager_1.ModelManager.PayItemModel.Version),
-      Net_1.Net.Call(10022, e, (e) => {
+    var e = Protocol_1.Aki.Protocol.Ghs.create();
+    (e.G7n = ModelManager_1.ModelManager.PayItemModel.Version),
+      Net_1.Net.Call(4046, e, (e) => {
         if (
           e &&
-          (e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys &&
+          (e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs &&
             ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-              e.lkn,
-              17073,
+              e.O4n,
+              1708,
             ),
-          e.o8n) &&
-          e.cRs
+          e.G7n) &&
+          e.UUs
         ) {
-          (ModelManager_1.ModelManager.PayItemModel.Version = e.o8n),
+          (ModelManager_1.ModelManager.PayItemModel.Version = e.G7n),
             ModelManager_1.ModelManager.PayItemModel.InitDataListByServer(
-              e.cRs,
+              e.UUs,
             );
           var e = ModelManager_1.ModelManager.PayItemModel.GetDataList(),
             r = new Array();
@@ -113,7 +111,7 @@ class PayItemController extends UiControllerBase_1.UiControllerBase {
 }
 ((exports.PayItemController = PayItemController).CurrentBlockIosPayState = !1),
   (PayItemController.CurrentBlockBetaState = !0),
-  (PayItemController.QNi = (e) => {
-    ModelManager_1.ModelManager.PayItemModel.ResetSpecialBonus(e.j4n);
+  (PayItemController.QOi = (e) => {
+    ModelManager_1.ModelManager.PayItemModel.ResetSpecialBonus(e.IVn);
   });
 //# sourceMappingURL=PayItemController.js.map

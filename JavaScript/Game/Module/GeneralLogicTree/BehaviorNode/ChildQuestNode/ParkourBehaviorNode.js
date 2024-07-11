@@ -10,9 +10,9 @@ const EventDefine_1 = require("../../../../Common/Event/EventDefine"),
 class ParkourBehaviorNode extends ChildQuestNodeBase_1.ChildQuestNodeBase {
   constructor() {
     super(...arguments),
-      (this.sXt = 0),
-      (this.aXt = []),
-      (this.hXt = (e, r) => {
+      (this.s$t = 0),
+      (this.a$t = []),
+      (this.h$t = (e, r) => {
         if (e) {
           let e = void 0;
           if (r) {
@@ -34,28 +34,28 @@ class ParkourBehaviorNode extends ChildQuestNodeBase_1.ChildQuestNodeBase {
       ((e = e.Condition),
       (this.TrackTextRuleInner = 2),
       "Parkour" === e.Type) &&
-      ((this.sXt = e.SplineEntityId), (this.aXt = e.MatchRoleOption), !0)
+      ((this.s$t = e.SplineEntityId), (this.a$t = e.MatchRoleOption), !0)
     );
   }
   OnStart(e) {
     super.OnStart(e),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.ParkourFinished,
-        this.hXt,
+        this.h$t,
       ),
-      this.sXt &&
+      this.s$t &&
         ParkourController_1.ParkourController.StartParkour(
-          this.sXt,
+          this.s$t,
           this.Context,
-          this.aXt,
+          this.a$t,
         );
   }
   OnEnd(e) {
     super.OnEnd(e),
-      this.sXt && ParkourController_1.ParkourController.EndParkour(this.sXt),
+      this.s$t && ParkourController_1.ParkourController.EndParkour(this.s$t),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.ParkourFinished,
-        this.hXt,
+        this.h$t,
       );
   }
   OnDestroy() {
@@ -64,8 +64,8 @@ class ParkourBehaviorNode extends ChildQuestNodeBase_1.ChildQuestNodeBase {
   GetCustomTrackText(e) {
     let r = 0,
       t = 0;
-    if (this.sXt) {
-      var o = ModelManager_1.ModelManager.ParkourModel.GetParkour(this.sXt);
+    if (this.s$t) {
+      var o = ModelManager_1.ModelManager.ParkourModel.GetParkour(this.s$t);
       if (!o?.ParkourInfo) return e;
       if (-1 !== e.search("{show_only}"))
         return (

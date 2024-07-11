@@ -1,21 +1,21 @@
 "use strict";
 var __decorate =
   (this && this.__decorate) ||
-  function (e, t, f, r) {
-    var a,
+  function (e, t, f, a) {
+    var r,
       s = arguments.length,
-      o =
+      i =
         s < 3
           ? t
-          : null === r
-            ? (r = Object.getOwnPropertyDescriptor(t, f))
-            : r;
+          : null === a
+            ? (a = Object.getOwnPropertyDescriptor(t, f))
+            : a;
     if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
-      o = Reflect.decorate(e, t, f, r);
+      i = Reflect.decorate(e, t, f, a);
     else
-      for (var i = e.length - 1; 0 <= i; i--)
-        (a = e[i]) && (o = (s < 3 ? a(o) : 3 < s ? a(t, f, o) : a(t, f)) || o);
-    return 3 < s && o && Object.defineProperty(t, f, o), o;
+      for (var c = e.length - 1; 0 <= c; c--)
+        (r = e[c]) && (i = (s < 3 ? r(i) : 3 < s ? r(t, f, i) : r(t, f)) || i);
+    return 3 < s && i && Object.defineProperty(t, f, i), i;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PlayerExtraEffectManager =
@@ -23,7 +23,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.BaseExtraEffectManager =
       void 0);
 const Stats_1 = require("../../../../../../../Core/Common/Stats"),
-  CombatDebugController_1 = require("../../../../../../Utils/CombatDebugController"),
+  CombatLog_1 = require("../../../../../../Utils/CombatLog"),
   ExtraEffectLibrary_1 = require("./ExtraEffectLibrary");
 class BaseExtraEffectManager {
   constructor(e) {
@@ -32,20 +32,27 @@ class BaseExtraEffectManager {
       (this.ActivatedHandles = new Set());
   }
   static IsInitExecution(e) {
-    return 24 === e;
+    switch (e) {
+      case 24:
+      case 52:
+        return !0;
+      default:
+        return !1;
+    }
   }
   static IsPeriodExecution(e) {
     switch (e) {
       case 28:
       case 29:
+      case 102:
       case 34:
       case 26:
       case 4:
       case 5:
       case 30:
+      case 48:
       case 13:
       case 101:
-      case 102:
         return !0;
       default:
         return !1;
@@ -53,10 +60,10 @@ class BaseExtraEffectManager {
   }
   OnBuffAdded(e) {
     var t;
-    this.TQo(e) &&
+    this.SXo(e) &&
       ((t = e?.Config)
         ? t.HasBuffEffect && e.IsActive() && this.CreateBuffEffects(e)
-        : CombatDebugController_1.CombatDebugController.CombatError(
+        : CombatLog_1.CombatLog.Error(
             "Buff",
             this.BuffComponent?.Entity,
             "正在添加的buff额外效果未加载对应的buffRef",
@@ -67,28 +74,28 @@ class BaseExtraEffectManager {
   }
   OnBuffRemoved(e, t) {
     var f = e.Handle;
-    this.TQo(e) && e.IsActive() && this.RemoveBuffEffects(f, t);
+    this.SXo(e) && e.IsActive() && this.RemoveBuffEffects(f, t);
   }
-  OnStackIncreased(e, t, f, r) {
-    if (this.TQo(e))
-      for (const a of this.GetEffectsByHandle(e.Handle))
-        a.OnStackIncreased(t, f, r);
+  OnStackIncreased(e, t, f, a) {
+    if (this.SXo(e))
+      for (const r of this.GetEffectsByHandle(e.Handle))
+        r.OnStackIncreased(t, f, a);
   }
-  OnStackDecreased(e, t, f, r) {
-    if (this.TQo(e))
-      for (const a of this.GetEffectsByHandle(e.Handle))
-        a.OnStackDecreased(t, f, r);
+  OnStackDecreased(e, t, f, a) {
+    if (this.SXo(e))
+      for (const r of this.GetEffectsByHandle(e.Handle))
+        r.OnStackDecreased(t, f, a);
   }
   OnBuffInhibitedChanged(e, t) {
     var f = e.Handle;
-    this.TQo(e) &&
+    this.SXo(e) &&
       (t ? this.RemoveBuffEffects(f, !0) : this.CreateBuffEffects(e));
   }
-  TQo(e) {
+  SXo(e) {
     var t = e?.Config;
     return t
       ? !!t.HasBuffEffect
-      : (CombatDebugController_1.CombatDebugController.CombatError(
+      : (CombatLog_1.CombatLog.Error(
           "Buff",
           this.BuffComponent?.Entity,
           "处理buff额外效果逻辑时找不到对应的buffRef",
@@ -100,23 +107,23 @@ class BaseExtraEffectManager {
   }
   CreateBuffEffects(t) {
     var f = t.Handle;
-    const r = t.Id;
+    const a = t.Id;
     if (this.ActivatedHandles.has(f))
-      CombatDebugController_1.CombatDebugController.CombatError(
+      CombatLog_1.CombatLog.Error(
         "Buff",
         this.BuffComponent?.Entity,
         "重复创建Buff额外效果",
-        ["buffId", r],
+        ["buffId", a],
         ["handle", f],
       );
     else {
-      var a = t.GetInstigatorBuffComponent(),
+      var r = t.GetInstigatorBuffComponent(),
         s =
           (this.ActivatedHandles.add(f),
           t.Config.EffectInfos?.map((e) => [
             e,
             ExtraEffectLibrary_1.BuffExtraEffectLibrary.ResolveRequireAndLimits(
-              r,
+              a,
               e,
               t.Level,
             ),
@@ -124,21 +131,21 @@ class BaseExtraEffectManager {
         e = this.BuffComponent;
       if (s && e?.Valid)
         for (let e = 0; e < s.length; e++) {
-          var o = s[e][0],
-            i = s[e][1],
-            n = o.ExtraEffectId;
-          ExtraEffectManager.IsInitExecution(n) ||
-            ExtraEffectManager.IsPeriodExecution(n) ||
-            ((n = require("./ExtraEffectDefine")?.getBuffEffectClass(n)) &&
-              ((n = n.Create(f, e, i, this.BuffComponent, a, o)),
-              this.qp(n),
-              n.OnCreated()));
+          var i = s[e][0],
+            c = s[e][1],
+            o = i.ExtraEffectId;
+          ExtraEffectManager.IsInitExecution(o) ||
+            ExtraEffectManager.IsPeriodExecution(o) ||
+            ((o = require("./ExtraEffectDefine")?.getBuffEffectClass(o)) &&
+              ((o = o.Create(f, e, c, this.BuffComponent, r, i)),
+              this.qp(o),
+              o.OnCreated()));
         }
     }
   }
   RemoveBuffEffects(e, t) {
     this.ActivatedHandles.has(e) ||
-      CombatDebugController_1.CombatDebugController.CombatWarn(
+      CombatLog_1.CombatLog.Warn(
         "Buff",
         this.BuffComponent?.Entity,
         "尝试移除不存在的buff额外效果实例",
@@ -163,7 +170,7 @@ class BaseExtraEffectManager {
     var e,
       f = t.ActiveHandleId;
     f < 0
-      ? CombatDebugController_1.CombatDebugController.CombatWarn(
+      ? CombatLog_1.CombatLog.Warn(
           "Buff",
           this.BuffComponent?.Entity,
           "invalid handleId when trying to add effect in holder.",
@@ -171,7 +178,7 @@ class BaseExtraEffectManager {
         )
       : (this.EffectHolder.has(f) || this.EffectHolder.set(f, []),
         (e = this.EffectHolder.get(f)).some((e) => e === t)
-          ? CombatDebugController_1.CombatDebugController.CombatWarn(
+          ? CombatLog_1.CombatLog.Warn(
               "Buff",
               this.BuffComponent?.Entity,
               "duplicated handle when trying to add ExtraEffect.",
@@ -185,9 +192,9 @@ class BaseExtraEffectManager {
   *FilterById(e, t) {
     var f = [];
     if (e instanceof Array)
-      for (const a of e) {
-        var r = require("./ExtraEffectDefine")?.getBuffEffectClass(a);
-        r && f.push(r);
+      for (const r of e) {
+        var a = require("./ExtraEffectDefine")?.getBuffEffectClass(r);
+        a && f.push(a);
       }
     else {
       e = require("./ExtraEffectDefine")?.getBuffEffectClass(e);
@@ -196,10 +203,10 @@ class BaseExtraEffectManager {
     if (0 <= f.length)
       for (const s of this.EffectHolder.values())
         if (s)
-          for (const o of s)
-            for (const i of f)
-              if (o instanceof i && (!t || t(o))) {
-                yield o;
+          for (const i of s)
+            for (const c of f)
+              if (i instanceof c && (!t || t(i))) {
+                yield i;
                 break;
               }
   }

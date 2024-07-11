@@ -29,16 +29,16 @@ class RoguelikeShop extends UiViewBase_1.UiViewBase {
       (this.ShopIndex = 0),
       (this.LevelSequencePlayer = void 0),
       (this.CaptionItem = void 0),
-      (this.Eho = () => {
+      (this.vlo = () => {
         RoguelikeController_1.RoguelikeController.RoguelikeRefreshGainRequest(
-          Protocol_1.Aki.Protocol._3s.Proto_ShopBindId,
+          Protocol_1.Aki.Protocol.Z6s.Proto_ShopBindId,
         );
       }),
-      (this.yho = () => {
+      (this.Mlo = () => {
         RoguelikeController_1.RoguelikeController.OpenRogueInfoView();
       }),
-      (this.Iho = (e, i, t) => {
-        this.Tho(this.ShopIndex),
+      (this.Elo = (e, i, t) => {
+        this.Slo(this.ShopIndex),
           this.ElementPanel?.Refresh(),
           this.CaptionItem?.SetCurrencyItemList([
             RoguelikeDefine_1.INSIDE_CURRENCY_ID,
@@ -53,21 +53,21 @@ class RoguelikeShop extends UiViewBase_1.UiViewBase {
             ),
           );
       }),
-      (this.Oao = (e, i) => {
+      (this.bho = (e, i) => {
         (ModelManager_1.ModelManager.RoguelikeModel.CurrentRogueGainEntry = e),
           this.LoopScrollView.SelectGridProxy(i, !1),
           this.ShopDetailPanel.Refresh(e);
       }),
-      (this.Tho = (e) => {
+      (this.Slo = (e) => {
         (this.ShopIndex = e),
           (this.Data =
             ModelManager_1.ModelManager.RoguelikeModel.GetRoguelikeChooseDataById(
               e,
             )),
           this.UpdateItemList(),
-          this.GLn();
+          this.DDn();
       }),
-      (this.Hao = () => {
+      (this.Oho = () => {
         return new RogueInfoViewTokenDetail_1.RogueInfoViewTokenDetailGrid();
       });
   }
@@ -85,13 +85,13 @@ class RoguelikeShop extends UiViewBase_1.UiViewBase {
       [9, UE.UIButtonComponent],
     ]),
       (this.BtnBindInfo = [
-        [3, this.Eho],
-        [9, this.yho],
+        [3, this.vlo],
+        [9, this.Mlo],
       ]);
   }
   OnAfterShow() {
     this.LevelSequencePlayer.PlayLevelSequenceByName("Show"),
-      this.Tho(this.ShopIndex);
+      this.Slo(this.ShopIndex);
   }
   async OnBeforeStartAsync() {
     (this.ElementPanel = new ElementPanel_1.ElementPanel()),
@@ -117,7 +117,7 @@ class RoguelikeShop extends UiViewBase_1.UiViewBase {
       (this.LoopScrollView = new LoopScrollView_1.LoopScrollView(
         this.GetLoopScrollViewComponent(5),
         this.GetItem(6).GetOwner(),
-        this.Hao,
+        this.Oho,
       )),
       (this.Data = this.OpenParam),
       (this.ShopIndex = this.Data.Index),
@@ -125,7 +125,7 @@ class RoguelikeShop extends UiViewBase_1.UiViewBase {
         this.GetRootItem(),
       )),
       this.UpdateItemList(),
-      this.GLn();
+      this.DDn();
   }
   UpdateItemList() {
     var e = this.Data.RogueGainEntryList;
@@ -151,7 +151,7 @@ class RoguelikeShop extends UiViewBase_1.UiViewBase {
         this.LoopScrollView.SelectGridProxy(0, !1),
         this.ShopDetailPanel.Refresh(this.Data.RogueGainEntryList[0]));
   }
-  GLn() {
+  DDn() {
     var e = this.Data.UseTime,
       i = this.Data.MaxTime,
       t = this.GetButton(3),
@@ -165,13 +165,13 @@ class RoguelikeShop extends UiViewBase_1.UiViewBase {
       var i = i[0],
         o =
           ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
-            i.Ekn,
-          ) >= i.I5n;
+            i.J4n,
+          ) >= i.o9n;
       const s = o ? "RogueSpecialRefreshCost" : "RogueSpecialRefreshCost_Not";
-      LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(8), s, i.I5n),
+      LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(8), s, i.o9n),
         t.SetSelfInteractive(0 < e && o);
       t = ConfigManager_1.ConfigManager.RoguelikeConfig.GetRogueCurrencyConfig(
-        i.Ekn,
+        i.J4n,
       );
       this.SetTextureByPath(t.IconSmall, this.GetTexture(7));
     }
@@ -179,29 +179,29 @@ class RoguelikeShop extends UiViewBase_1.UiViewBase {
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.RoguelikeInfoSelectedToken,
-      this.Oao,
+      this.bho,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.RoguelikeRefreshGain,
-        this.Tho,
+        this.Slo,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.RoguelikeChooseDataResult,
-        this.Iho,
+        this.Elo,
       );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.RoguelikeInfoSelectedToken,
-      this.Oao,
+      this.bho,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.RoguelikeRefreshGain,
-        this.Tho,
+        this.Slo,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.RoguelikeChooseDataResult,
-        this.Iho,
+        this.Elo,
       );
   }
   OnBeforeHide() {

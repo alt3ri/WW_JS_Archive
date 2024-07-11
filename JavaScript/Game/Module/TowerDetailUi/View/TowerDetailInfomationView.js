@@ -14,23 +14,23 @@ const UE = require("ue"),
 class TowerDetailView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this._Lo = void 0),
-      (this.uLo = void 0),
-      (this.I7e = 0),
-      (this.cLo = (e, t, i) => {
+      (this.aDo = void 0),
+      (this.hDo = void 0),
+      (this.NHe = 0),
+      (this.lDo = (e, t, i) => {
         t = new TowerDetailInformationItem_1.TowerDetailInformationItem(t);
         return t.Update(e), { Key: i, Value: t };
       }),
-      (this.Bdo = (e, t, i) => {
+      (this.PCo = (e, t, i) => {
         t = new TowerDetailSwitchItem_1.TowerDetailSwitchItem(t);
         return t.Update(e), { Key: i, Value: t };
       }),
       (this.SortFunc = (e, t) => e.Priority - t.Priority),
-      (this.mLo = () => {
-        (this.I7e =
+      (this._Do = () => {
+        (this.NHe =
           ModelManager_1.ModelManager.TowerDetailModel.CurrentSelectDetailId),
-          this.dLo(),
-          this.CLo();
+          this.uDo(),
+          this.cDo();
       });
   }
   OnRegisterComponent() {
@@ -43,44 +43,44 @@ class TowerDetailView extends UiViewBase_1.UiViewBase {
     ];
   }
   OnStart() {
-    (this._Lo = new GenericScrollView_1.GenericScrollView(
+    (this.aDo = new GenericScrollView_1.GenericScrollView(
       this.GetScrollViewWithScrollbar(2),
-      this.cLo,
+      this.lDo,
     )),
-      (this.uLo = new GenericLayoutNew_1.GenericLayoutNew(
+      (this.hDo = new GenericLayoutNew_1.GenericLayoutNew(
         this.GetHorizontalLayout(4),
-        this.Bdo,
+        this.PCo,
       ));
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnClickSingleTimeTowerDetailSwitchBtn,
-      this.mLo,
+      this._Do,
     );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnClickSingleTimeTowerDetailSwitchBtn,
-      this.mLo,
+      this._Do,
     );
   }
   OnAfterShow() {
-    (this.I7e =
+    (this.NHe =
       ModelManager_1.ModelManager.TowerDetailModel.CurrentSelectDetailId),
       this.Og();
   }
   Og() {
-    this.gLo(), this.dLo(), this.CLo();
+    this.mDo(), this.uDo(), this.cDo();
   }
-  dLo() {
+  uDo() {
     var e = ModelManager_1.ModelManager.TowerDetailModel.SwitchData;
-    this.uLo.RebuildLayoutByDataNew(e);
+    this.hDo.RebuildLayoutByDataNew(e);
   }
-  CLo() {
+  cDo() {
     var e = ModelManager_1.ModelManager.TowerDetailModel.SwitchData;
     let t = void 0;
     e.forEach((e) => {
-      e.Index === this.I7e && (t = e);
+      e.Index === this.NHe && (t = e);
     });
     const i = new Array();
     ModelManager_1.ModelManager.TowerDetailModel.GetBuffs(t).forEach((e) => {
@@ -102,14 +102,14 @@ class TowerDetailView extends UiViewBase_1.UiViewBase {
         },
       ),
       i.sort(this.SortFunc),
-      this._Lo.RefreshByData(i);
+      this.aDo.RefreshByData(i);
   }
-  gLo() {
+  mDo() {
     var e = ModelManager_1.ModelManager.TowerDetailModel.TowerTitle;
     this.GetText(0).SetText(e);
   }
   OnBeforeDestroy() {
-    this._Lo.ClearChildren(), this.uLo.ClearChildren();
+    this.aDo.ClearChildren(), this.hDo.ClearChildren();
   }
 }
 exports.TowerDetailView = TowerDetailView;

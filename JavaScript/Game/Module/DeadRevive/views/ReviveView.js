@@ -3,7 +3,6 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ReviveView = void 0);
 const UE = require("ue"),
   Log_1 = require("../../../../Core/Common/Log"),
-  ReviveById_1 = require("../../../../Core/Define/ConfigQuery/ReviveById"),
   TimeUtil_1 = require("../../../Common/TimeUtil"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
   ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
@@ -20,49 +19,39 @@ const UE = require("ue"),
 class ReviveView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
-      (this.V2t = 0),
-      (this.H2t = 0),
-      (this.j2t = -1),
-      (this.W2t = 0),
-      (this.K2t = !1),
-      (this.Q2t = void 0),
-      (this.X2t = void 0),
-      (this.$2t = void 0),
-      (this.Y2t = void 0),
-      (this.J2t = void 0),
-      (this.z2t = !1),
-      (this.Z2t = void 0),
-      (this.eFt = !1),
-      (this.tFt = () => {
-        0 === this.j2t
+      (this.HFt = 0),
+      (this.jFt = 0),
+      (this.WFt = -1),
+      (this.KFt = 0),
+      (this.QFt = !1),
+      (this.XFt = void 0),
+      (this.$Ft = void 0),
+      (this.YFt = void 0),
+      (this.JFt = void 0),
+      (this.zFt = void 0),
+      (this.ZFt = !1),
+      (this.e3t = void 0),
+      (this.t3t = !1),
+      (this.i3t = () => {
+        0 === this.WFt
           ? ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
               "CannotRevive",
             )
-          : this.z2t
-            ? DeadReviveController_1.DeadReviveController.ReviveRequest(
-                !1,
-                (i) => {
-                  i && this.CloseMe();
-                },
-              )
+          : this.ZFt
+            ? DeadReviveController_1.DeadReviveController.ReviveRequest(!1)
             : Log_1.Log.CheckInfo() &&
               Log_1.Log.Info("Battle", 4, "Time Or Times Limit!!!");
       }),
-      (this.iFt = () => {
+      (this.o3t = () => {
         this.CloseMe(),
           InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.LeaveInstanceDungeon();
       }),
-      (this.oFt = () => {
+      (this.r3t = () => {
         var i = new ConfirmBoxDefine_1.ConfirmBoxDataNew(98);
-        i.SetTextArgs(this.Y2t, this.J2t),
+        i.SetTextArgs(this.JFt, this.zFt),
           i.FunctionMap.set(2, () => {
-            this.z2t
-              ? DeadReviveController_1.DeadReviveController.ReviveRequest(
-                  !0,
-                  (i) => {
-                    i && this.CloseMe();
-                  },
-                )
+            this.ZFt
+              ? DeadReviveController_1.DeadReviveController.ReviveRequest(!0)
               : Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info("Battle", 4, "Time Or Times Limit!!!");
           }),
@@ -88,24 +77,24 @@ class ReviveView extends UiTickViewBase_1.UiTickViewBase {
       [12, UE.UIText],
     ]),
       (this.BtnBindInfo = [
-        [2, this.tFt],
-        [3, this.iFt],
-        [8, this.oFt],
+        [2, this.i3t],
+        [3, this.o3t],
+        [8, this.r3t],
       ]);
   }
   OnStart() {
-    (this.Q2t = this.GetText(4)), (this.X2t = this.GetText(9));
+    (this.XFt = this.GetText(4)), (this.$Ft = this.GetText(9));
     var i = this.GetItem(0),
       e = this.GetItem(1),
       t = this.GetButton(3),
       s = this.GetButton(2),
       s =
-        ((this.$2t = s
+        ((this.YFt = s
           .GetOwner()
           .GetComponentByClass(UE.UIInteractionGroup.StaticClass())),
-        (this.eFt =
+        (this.t3t =
           ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance()),
-        this.eFt
+        this.t3t
           ? ModelManager_1.ModelManager.GameModeModel.IsMulti &&
             (this.GetButton(2).GetRootComponent().SetUIActive(!1),
             LguiUtil_1.LguiUtil.SetLocalText(this.GetText(12), "ExitInstance"),
@@ -117,55 +106,51 @@ class ReviveView extends UiTickViewBase_1.UiTickViewBase {
               .GetRootComponent()
               .SetAnchorOffset(t.GetRootComponent().GetAnchorOffset()),
             t.GetRootComponent().SetUIActive(!1),
-            this.rFt()),
-        ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(
-          ModelManager_1.ModelManager.CreatureModel.GetInstanceId(),
-        ).ReviveId),
-      t = ReviveById_1.configReviveById.GetConfig(s);
-    t && (this.j2t = t.ReviveTimes),
+            this.n3t()),
+        ModelManager_1.ModelManager.DeadReviveModel.ReviveConfig);
+    s && (this.WFt = s.ReviveTimes),
       e.SetUIActive(!0),
       i.SetUIActive(!1),
-      (this.H2t = ModelManager_1.ModelManager.DeadReviveModel.ReviveLimitTime);
-    let r = !(this.z2t = !1);
-    0 < this.H2t
-      ? (this.Q2t.SetText(this.H2t.toString() + "s"),
-        this.$2t.SetInteractable(!1))
-      : this.H2t <= 0
+      (this.jFt = ModelManager_1.ModelManager.DeadReviveModel.ReviveLimitTime);
+    let r = !(this.ZFt = !1);
+    0 < this.jFt
+      ? (this.XFt.SetText(this.jFt.toString() + "s"),
+        this.YFt.SetInteractable(!1))
+      : this.jFt <= 0
         ? ((r = !1),
-          (this.z2t = !0),
-          (this.W2t = AUTO_REVIVE_TIME),
+          (this.ZFt = !0),
+          (this.KFt = AUTO_REVIVE_TIME),
           ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance() ||
-            this.X2t.SetUIActive(!0),
+            this.$Ft.SetUIActive(!0),
           LguiUtil_1.LguiUtil.SetLocalText(
-            this.X2t,
+            this.$Ft,
             "ReviveItemTips",
-            this.W2t,
+            this.KFt,
           ))
-        : (LguiUtil_1.LguiUtil.SetLocalText(this.Q2t, "ReachReviveCount"),
-          this.$2t.SetInteractable(!1)),
-      this.Q2t.SetUIActive(r);
+        : (LguiUtil_1.LguiUtil.SetLocalText(this.XFt, "ReachReviveCount"),
+          this.YFt.SetInteractable(!1)),
+      this.XFt.SetUIActive(r);
     this.GetText(5).ShowTextNew(
       ModelManager_1.ModelManager.DeadReviveModel.ReviveConfig?.ReviveTitle ??
         "",
     );
-    s = this.GetText(6);
+    t = this.GetText(6);
     ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance() ||
       ModelManager_1.ModelManager.GameModeModel.IsMulti ||
-      s.ShowTextNew(
+      t.ShowTextNew(
         ModelManager_1.ModelManager.DeadReviveModel.ReviveConfig
           ?.ReviveContent ?? "",
       ),
-      (this.Z2t = new TrainingView_1.TrainingView()),
-      this.Z2t.Show(this.GetHorizontalLayout(7));
+      (this.e3t = new TrainingView_1.TrainingView()),
+      this.e3t.Show(this.GetHorizontalLayout(7));
   }
-  rFt() {
+  n3t() {
     let i = -1;
     var e,
       t,
       s,
       r,
-      o = ModelManager_1.ModelManager.GameModeModel.InstanceDungeon,
-      o = ReviveById_1.configReviveById.GetConfig(o.ReviveId),
+      o = ModelManager_1.ModelManager.DeadReviveModel.ReviveConfig,
       o =
         (o && (i = o.UseItemId),
         ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(i));
@@ -175,18 +160,18 @@ class ReviveView extends UiTickViewBase_1.UiTickViewBase {
       (t = this.GetText(11)),
       (s = ModelManager_1.ModelManager.BuffItemModel),
       this.SetItemIcon(r, i),
-      (this.Y2t = ConfigManager_1.ConfigManager.ItemConfig.GetItemName(i)),
+      (this.JFt = ConfigManager_1.ConfigManager.ItemConfig.GetItemName(i)),
       (r =
         ConfigManager_1.ConfigManager.BuffItemConfig.GetBuffItemTotalCdTime(
           i,
         )) < TimeUtil_1.TimeUtil.Minute
-        ? (this.J2t =
+        ? (this.zFt =
             r + ConfigManager_1.ConfigManager.TextConfig.GetTextById("Second"))
-        : ((this.J2t =
+        : ((this.zFt =
             Math.floor(r / TimeUtil_1.TimeUtil.Minute) +
             ConfigManager_1.ConfigManager.TextConfig.GetTextById("MinuteText")),
           0 < (r = r % TimeUtil_1.TimeUtil.Minute) &&
-            (this.J2t +=
+            (this.zFt +=
               r +
               ConfigManager_1.ConfigManager.TextConfig.GetTextById("Second"))),
       0 < s.GetBuffItemRemainCdTime(i)
@@ -198,46 +183,46 @@ class ReviveView extends UiTickViewBase_1.UiTickViewBase {
         : t.SetText(o.toString()));
   }
   OnTick(i) {
-    ((this.z2t || this.H2t < 0) && this.K2t) ||
-      ((this.V2t += i),
-      this.V2t >= TIME_SECOND && ((this.V2t = 0), this.nFt(), this.sFt()));
+    ((this.ZFt || this.jFt < 0) && this.QFt) ||
+      ((this.HFt += i),
+      this.HFt >= TIME_SECOND && ((this.HFt = 0), this.s3t(), this.a3t()));
   }
-  nFt() {
-    this.eFt ||
-      this.K2t ||
-      (this.W2t <= 0
-        ? ((this.K2t = !0),
+  s3t() {
+    this.t3t ||
+      this.QFt ||
+      (this.KFt <= 0
+        ? ((this.QFt = !0),
           ControllerHolder_1.ControllerHolder.ConfirmBoxController.CloseConfirmBoxView(),
-          this.tFt())
-        : (--this.W2t,
+          this.i3t())
+        : (--this.KFt,
           LguiUtil_1.LguiUtil.SetLocalText(
-            this.X2t,
+            this.$Ft,
             "ReviveItemTips",
-            this.W2t,
+            this.KFt,
           )));
   }
-  sFt() {
-    this.H2t <= 0
-      ? ((this.z2t = !0),
-        this.Q2t.SetUIActive(!1),
-        this.$2t.SetInteractable(!0))
-      : (--this.H2t, this.Q2t.SetText(this.H2t.toString() + "s"));
+  a3t() {
+    this.jFt <= 0
+      ? ((this.ZFt = !0),
+        this.XFt.SetUIActive(!1),
+        this.YFt.SetInteractable(!0))
+      : (--this.jFt, this.XFt.SetText(this.jFt.toString() + "s"));
   }
   OnBeforeDestroy() {
-    this.Z2t && this.Z2t.Clear(),
-      (this.Z2t = void 0),
-      (this.Q2t = void 0),
-      (this.X2t = void 0),
-      (this.$2t = void 0),
-      (this.Y2t = void 0),
-      (this.J2t = void 0),
-      (this.j2t = -1),
-      (this.V2t = 0),
-      (this.H2t = 0),
-      (this.W2t = 0),
-      (this.z2t = !1),
-      (this.eFt = !1),
-      (this.K2t = !1);
+    this.e3t && this.e3t.Clear(),
+      (this.e3t = void 0),
+      (this.XFt = void 0),
+      (this.$Ft = void 0),
+      (this.YFt = void 0),
+      (this.JFt = void 0),
+      (this.zFt = void 0),
+      (this.WFt = -1),
+      (this.HFt = 0),
+      (this.jFt = 0),
+      (this.KFt = 0),
+      (this.ZFt = !1),
+      (this.t3t = !1),
+      (this.QFt = !1);
   }
 }
 exports.ReviveView = ReviveView;

@@ -6,8 +6,10 @@ const Info_1 = require("../../../Core/Common/Info"),
   Entity_1 = require("../../../Core/Entity/Entity"),
   GameBudgetAllocatorConfigCreator_1 = require("../../World/Define/GameBudgetAllocatorConfigCreator"),
   CharacterGasDebugComponent_1 = require("../Character/Common/Component/Abilities/CharacterGasDebugComponent"),
+  BaseSkillCdComponent_1 = require("../Character/Common/Component/Skill/BaseSkillCdComponent"),
   PlayerAttributeComponent_1 = require("./Component/PlayerAttributeComponent"),
   PlayerBuffComponent_1 = require("./Component/PlayerBuffComponent"),
+  PlayerFollowerComponent_1 = require("./Component/PlayerFollowerComponent"),
   PlayerTagComponent_1 = require("./Component/PlayerTagComponent");
 class PlayerEntity extends Entity_1.Entity {
   constructor() {
@@ -24,28 +26,34 @@ class PlayerEntity extends Entity_1.Entity {
           "PlayerId",
           e?.PlayerId,
         ]),
-      !(
-        !this.AddComponent(
-          PlayerAttributeComponent_1.PlayerAttributeComponent,
-          void 0,
-          e,
-        ) ||
-        !this.AddComponent(
+      !!this.AddComponent(
+        PlayerAttributeComponent_1.PlayerAttributeComponent,
+        void 0,
+        e,
+      ) &&
+        !!this.AddComponent(
           PlayerTagComponent_1.PlayerTagComponent,
           void 0,
           e,
-        ) ||
-        !this.AddComponent(
-          PlayerBuffComponent_1.PlayerBuffComponent,
-          void 0,
-          e,
-        ) ||
-        (Info_1.Info.IsBuildDevelopmentOrDebug &&
+        ) &&
+        !(
           !this.AddComponent(
-            CharacterGasDebugComponent_1.CharacterGasDebugComponent,
-          )) ||
-        (this.RegisterToGameBudgetController(void 0), 0)
-      )
+            PlayerBuffComponent_1.PlayerBuffComponent,
+            void 0,
+            e,
+          ) ||
+          !this.AddComponent(
+            PlayerFollowerComponent_1.PlayerFollowerComponent,
+            void 0,
+            e,
+          ) ||
+          !this.AddComponent(BaseSkillCdComponent_1.BaseSkillCdComponent) ||
+          (Info_1.Info.IsBuildDevelopmentOrDebug &&
+            !this.AddComponent(
+              CharacterGasDebugComponent_1.CharacterGasDebugComponent,
+            )) ||
+          (this.RegisterToGameBudgetController(void 0), 0)
+        )
     );
   }
   OnClear() {

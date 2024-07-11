@@ -10,6 +10,7 @@ const UE = require("ue"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase"),
   UiManager_1 = require("../../../Ui/UiManager"),
+  BlackScreenController_1 = require("../../BlackScreen/BlackScreenController"),
   LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer"),
   SHOW_TIPS_DELAY = 2e3;
 class DrawMainViewNew extends UiTickViewBase_1.UiTickViewBase {
@@ -71,35 +72,48 @@ class DrawMainViewNew extends UiTickViewBase_1.UiTickViewBase {
           this.OnEndGacha();
       }),
       (this.OnEndGacha = () => {
-        if (((this.IsShowTips = !0), this.GachaBP.IsSkip))
-          if (5 === this.MaxQuality || this.HasNewItems) {
-            let e = this.OpenParam;
-            e
-              ? (e.IsOnlyShowGold = !0)
-              : (e = {
-                  SkipOnLoadResourceFinish: !1,
-                  ResultViewHideExtraReward: !1,
-                  IsOnlyShowGold: !0,
-                }),
-              UiManager_1.UiManager.OpenView("GachaScanView", e, () => {
-                UiManager_1.UiManager.CloseView(this.Info.Name);
-              });
-          } else
-            UiManager_1.UiManager.OpenView(
-              "GachaResultView",
-              this.OpenParam,
-              () => {
-                UiManager_1.UiManager.CloseView(this.Info.Name);
-              },
-            );
-        else
-          UiManager_1.UiManager.OpenView(
-            "GachaScanView",
-            this.OpenParam,
-            () => {
-              UiManager_1.UiManager.CloseView(this.Info.Name);
-            },
-          );
+        (this.IsShowTips = !0),
+          this.GachaBP.IsSkip
+            ? BlackScreenController_1.BlackScreenController.AddBlackScreenAsync(
+                "Start",
+                "GachaSkip",
+              ).finally(() => {
+                if (5 === this.MaxQuality || this.HasNewItems) {
+                  let e = this.OpenParam;
+                  e
+                    ? (e.IsOnlyShowGold = !0)
+                    : (e = {
+                        SkipOnLoadResourceFinish: !1,
+                        ResultViewHideExtraReward: !1,
+                        IsOnlyShowGold: !0,
+                      }),
+                    UiManager_1.UiManager.OpenView("GachaScanView", e, () => {
+                      BlackScreenController_1.BlackScreenController.RemoveBlackScreen(
+                        "Close",
+                        "GachaSkip",
+                      ),
+                        UiManager_1.UiManager.CloseView(this.Info.Name);
+                    });
+                } else
+                  UiManager_1.UiManager.OpenView(
+                    "GachaResultView",
+                    this.OpenParam,
+                    () => {
+                      BlackScreenController_1.BlackScreenController.RemoveBlackScreen(
+                        "Close",
+                        "GachaSkip",
+                      ),
+                        UiManager_1.UiManager.CloseView(this.Info.Name);
+                    },
+                  );
+              })
+            : UiManager_1.UiManager.OpenView(
+                "GachaScanView",
+                this.OpenParam,
+                () => {
+                  UiManager_1.UiManager.CloseView(this.Info.Name);
+                },
+              );
       }),
       (this.OnGachaInteractFinish = () => {
         (this.IsEnd = !0), this.IsShowTips;
@@ -120,14 +134,14 @@ class DrawMainViewNew extends UiTickViewBase_1.UiTickViewBase {
   async OnBeforeStartAsync() {
     var e = [];
     for (const i of ModelManager_1.ModelManager.GachaModel.CurGachaResult)
-      e.push(i.u5n.G3n);
+      e.push(i.WVn.f8n);
     await ModelManager_1.ModelManager.GachaModel.PreloadGachaSequence(e);
   }
   OnBeforeShow() {
     var e = ModelManager_1.ModelManager.GachaModel.CurGachaResult.length,
       i = ModelManager_1.ModelManager.GachaModel.CurGachaResult.reduce(
         (e, i) => {
-          var t = i.u5n.G3n,
+          var t = i.WVn.f8n,
             t =
               ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(t)
                 ?.QualityId ?? 0;

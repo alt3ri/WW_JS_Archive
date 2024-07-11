@@ -8,7 +8,7 @@ class TsAnimNotifyStateSetWalkOff extends UE.KuroAnimNotifyState {
     var e = e.GetOwner();
     return (
       e instanceof TsBaseCharacter_1.default &&
-      !!(e = e.CharacterActorComponent?.Entity.GetComponent(161))?.Valid &&
+      !!(e = e.CharacterActorComponent?.Entity.GetComponent(163))?.Valid &&
       (Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "Movement",
@@ -25,7 +25,7 @@ class TsAnimNotifyStateSetWalkOff extends UE.KuroAnimNotifyState {
     var e = e.GetOwner();
     return (
       e instanceof TsBaseCharacter_1.default &&
-      !!(e = e.CharacterActorComponent?.Entity.GetComponent(161))?.Valid &&
+      !!(e = e.CharacterActorComponent?.Entity.GetComponent(163))?.Valid &&
       (Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "Movement",

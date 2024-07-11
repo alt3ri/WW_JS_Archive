@@ -40,7 +40,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.DEFAULTPORT = "5500");
 class LoginQueueConfig {
   constructor() {
-    (this.o6n = 0), (this.n6n = 0);
+    (this.G9n = 0), (this.O9n = 0);
   }
 }
 exports.LoginQueueConfig = LoginQueueConfig;

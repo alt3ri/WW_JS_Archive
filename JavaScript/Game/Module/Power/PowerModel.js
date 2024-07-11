@@ -2,134 +2,160 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PowerModel = void 0);
 const Log_1 = require("../../../Core/Common/Log"),
+  ItemInfoById_1 = require("../../../Core/Define/ConfigQuery/ItemInfoById"),
   ModelBase_1 = require("../../../Core/Framework/ModelBase"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
-  TimeUtil_1 = require("../../Common/TimeUtil"),
   ConfigManager_1 = require("../../Manager/ConfigManager"),
   ModelManager_1 = require("../../Manager/ModelManager"),
-  PowerDefines_1 = require("./PowerDefines");
+  ItemDefines_1 = require("../Item/Data/ItemDefines"),
+  PowerData_1 = require("./PowerData"),
+  PowerDefines_1 = require("./PowerDefines"),
+  OVERPOWERSHOPID = 17;
 class PowerModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
-      (this.Cce = 0),
-      (this.gio = 0),
-      (this.pio = 0),
-      (this.G6s = 0),
-      (this.vio = !1),
-      (this.Mio = 0),
-      (this.Sio = 0),
-      (this.Eio = 0),
+      (this.IQs = new Map()),
+      (this.CurrentNeedPower = 0),
+      (this.PowerItemKeyArray = new Array(
+        ItemDefines_1.EItemId.Power,
+        ItemDefines_1.EItemId.OverPower,
+      )),
+      (this.TQs = new Map()),
+      (this.roo = void 0),
       (this.InnerConfirmBoxData = void 0),
-      (this.yio = 0);
+      (this.voo = 0);
+  }
+  get PowerItemInfoList() {
+    if (void 0 === this.roo) {
+      this.roo = [];
+      var e = ConfigManager_1.ConfigManager.PowerConfig.GetConfSortRule(),
+        t = new Array();
+      for (const f of e.keys()) {
+        var r = ItemInfoById_1.configItemInfoById.GetConfig(f);
+        r && t.push(r);
+      }
+      for (const h of t) {
+        var o = new PowerDefines_1.PowerItemInfo(h.Id);
+        (o.ItemName = h.Name),
+          (o.IsHideWhenZero = Boolean(e.get(o.ItemId))),
+          this.roo.push(o);
+      }
+      const a = Array.from(e.keys());
+      this.roo.sort((e, t) => {
+        return a.indexOf(e.ItemId) - a.indexOf(t.ItemId);
+      });
+    }
+    for (const _ of this.roo) {
+      var n,
+        i = ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
+          _.ItemId,
+        ),
+        i = ((_.StackValue = i || 0), this.Eoo(_.ShopId)),
+        s =
+          (-1 ===
+            i.findIndex((e, t, r) => !e.IsSoldOut() && e.Price.has(_.ItemId)) &&
+            ((n = i[i.length - 1]),
+            (_.RenewValue =
+              _.ItemId === ItemDefines_1.EItemId.OverPower
+                ? 0
+                : n.StackSize ?? 0),
+            (_.CostValue = n.GetPrice(_.ItemId)),
+            (_.GoodsId = n.Id),
+            (_.RemainCount =
+              _.ItemId === ItemDefines_1.EItemId.OverPower ? _.StackValue : 0)),
+          (n = i.findIndex(
+            (e, t, r) =>
+              e.IsUnlocked() && !e.IsSoldOut() && e.Price.has(_.ItemId),
+          )),
+          i[n]);
+      s &&
+        ((_.RenewValue =
+          _.ItemId === ItemDefines_1.EItemId.OverPower ? 0 : s.StackSize ?? 0),
+        (_.CostValue = s.GetPrice(_.ItemId)),
+        (_.GoodsId = s.Id),
+        (s = s.BuyLimit < 0 ? s.BuyLimit : i.length - n),
+        (_.RemainCount = s));
+    }
+    return this.roo;
+  }
+  GetPowerItemInfos(e) {
+    for (const t of this.PowerItemInfoList) if (t.ItemId === e) return t;
   }
   get NeedUpdateCountDown() {
-    return this.vio;
-  }
-  get RestTime() {
-    return this.Mio;
+    return this.GetPowerDataById(
+      ItemDefines_1.EItemId.Power,
+    ).GetNeedUpdateFlag();
   }
   get PowerCount() {
-    return this.Eio;
+    return this.GetPowerDataById(ItemDefines_1.EItemId.Power).GetCurrentPower();
   }
   get ConfirmBoxData() {
     return this.InnerConfirmBoxData;
   }
   get PowerShopCount() {
-    return this.yio;
+    return this.voo;
   }
   OnInit() {
-    return !0;
+    return (
+      this.IQs.set(10800, ItemDefines_1.EItemId.Power),
+      this.IQs.set(
+        ItemDefines_1.EItemId.OverPower,
+        ItemDefines_1.EItemId.OverPower,
+      ),
+      !0
+    );
   }
   OnClear() {
     return !0;
   }
   UpdatePowerRenewTimer() {
-    var e;
-    this.vio &&
-      ((this.Cce = TimeUtil_1.TimeUtil.GetServerTimeStamp()),
-      (e = this.pio - this.Cce),
-      (this.Mio = e * TimeUtil_1.TimeUtil.Millisecond),
-      this.Cce > this.G6s
-        ? (this.Iio(this.Eio + 1),
-          (this.G6s =
-            this.Cce +
-            ConfigManager_1.ConfigManager.PowerConfig.GetPowerIncreaseSpan() *
-              TimeUtil_1.TimeUtil.InverseMillisecond),
-          Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info("PowerModule", 5, "体力本地自增: " + this.Eio))
-        : EventSystem_1.EventSystem.Emit(
-            EventDefine_1.EEventName.OnPowerCountDownChanged,
-          ));
+    for (var [, e] of this.TQs) e.CheckPowerUpdate();
   }
-  RefreshPowerInfos(e, t) {
-    this.Iio(t), (this.Sio = e * TimeUtil_1.TimeUtil.InverseMillisecond);
-    t =
-      ConfigManager_1.ConfigManager.PowerConfig.GetPowerIncreaseSpan() *
-      TimeUtil_1.TimeUtil.InverseMillisecond;
-    (this.G6s = this.Sio + t),
-      (this.gio =
-        (ConfigManager_1.ConfigManager.PowerConfig.GetPowerNaturalLimit() -
-          this.Eio) *
-        t),
-      (this.pio = this.Sio + this.gio);
+  UpdatePowerData(e) {
+    if (e) {
+      Log_1.Log.CheckInfo() &&
+        Log_1.Log.Info("PowerModule", 28, "当前体力数据", ["data", e]);
+      for (const t of e) this.RefreshPowerInfos(t);
+    }
+  }
+  RefreshPowerInfos(e) {
+    var t;
+    e && ((t = e.J4n), this.GetPowerDataById(t).Phrase(t, e.IPs, e.TPs));
+  }
+  CheckItemIfPowerItem(e) {
+    return this.PowerItemKeyArray.includes(e);
+  }
+  GetPowerDataById(e) {
+    let t = e,
+      r = (this.IQs.has(e) && (t = this.IQs.get(e)), this.TQs.get(t));
+    return (
+      r ||
+        ((r = new (
+          e === ItemDefines_1.EItemId.OverPower
+            ? PowerData_1.OverPowerData
+            : PowerData_1.PowerData
+        )()),
+        this.TQs.set(t, r)),
+      r
+    );
   }
   CreateConfirmBoxData(e, t) {
     this.InnerConfirmBoxData = new PowerDefines_1.PowerConfirmBoxData(e, t);
   }
-  Iio(e) {
-    (this.Eio = e),
-      this.Eio >=
-      ConfigManager_1.ConfigManager.PowerConfig.GetPowerNaturalLimit()
-        ? (this.vio = !1)
-        : (this.vio = !0),
-      EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.OnPowerChanged);
-  }
   AddOnePowerShopCount(e) {
     var t = ConfigManager_1.ConfigManager.PowerConfig.GetPowerShopIds();
-    this.yio >= t.size ||
+    this.voo >= t.size ||
       (t.has(e) &&
-        ((this.yio += 1), this.yio >= t.size) &&
+        ((this.voo += 1), this.voo >= t.size) &&
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.PowerShopReady,
         ));
   }
   ResetPowerShopCount() {
-    this.yio = 0;
+    this.voo = 0;
   }
-  UpdatePowerItemWhenBuy() {
-    for (const r of ConfigManager_1.ConfigManager.PowerConfig
-      .PowerItemInfoList) {
-      let e = 0;
-      r.ItemId <= PowerDefines_1.PowerConst.MaxVirtualItemId
-        ? (e = ModelManager_1.ModelManager.PlayerInfoModel.GetNumberPropById(3))
-        : 0 ===
-            (e =
-              ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
-                r.ItemId,
-              ))
-          ? EventSystem_1.EventSystem.Emit(
-              EventDefine_1.EEventName.OnRemoveItem,
-              r.ItemId,
-            )
-          : e !== r.StackValue &&
-            EventSystem_1.EventSystem.Emit(
-              EventDefine_1.EEventName.OnRefreshItem,
-              r.ItemId,
-              !1,
-            ),
-        (r.StackValue = e || 0);
-      var t = this.Tio(r.ShopId);
-      -1 ===
-        t.findIndex((e, t, i) => !e.IsSoldOut() && e.Price.has(r.ItemId)) &&
-        ((t = t[t.length - 1]),
-        (r.RenewValue = t.StackSize ?? 0),
-        (r.CostValue = t.GetPrice(r.ItemId)),
-        (r.GoodsId = t.Id),
-        (r.RemainCount = 0));
-    }
-  }
-  Tio(e) {
+  Eoo(e) {
     e = ModelManager_1.ModelManager.ShopModel.GetShopItemList(e);
     return e && 0 !== e.length
       ? (e.sort((e, t) => e.Id - t.Id), e)
@@ -137,25 +163,20 @@ class PowerModel extends ModelBase_1.ModelBase {
           Log_1.Log.Error("PowerModule", 50, "体力系统获取商店数据失败"),
         []);
   }
-  UpdatePowerItemWhenGoodUnlock() {
-    for (const r of ConfigManager_1.ConfigManager.PowerConfig
-      .PowerItemInfoList) {
-      var e = this.Tio(r.ShopId),
-        t = e.findIndex(
-          (e, t, i) =>
-            e.IsUnlocked() && !e.IsSoldOut() && e.Price.has(r.ItemId),
-        ),
-        i = e[t];
-      i &&
-        ((r.RenewValue = i.StackSize ?? 0),
-        (r.CostValue = i.GetPrice(r.ItemId)),
-        (r.GoodsId = i.Id),
-        (i = i.BuyLimit < 0 ? i.BuyLimit : e.length - t),
-        (r.RemainCount = i));
-    }
-  }
   IsPowerEnough(e) {
     return !e || this.PowerCount >= e;
+  }
+  GetCurrentNeedPower(e) {
+    return !this.IsPowerEnough(e) && e ? e - this.PowerCount : 0;
+  }
+  GetOverPowerShopConfig() {
+    return ConfigManager_1.ConfigManager.ShopConfig.GetShopFixedInfoByItemId(
+      PowerDefines_1.EPowerShopType.BuyWithItem,
+      OVERPOWERSHOPID,
+    );
+  }
+  ClearConfirmBoxData() {
+    this.InnerConfirmBoxData = void 0;
   }
 }
 exports.PowerModel = PowerModel;

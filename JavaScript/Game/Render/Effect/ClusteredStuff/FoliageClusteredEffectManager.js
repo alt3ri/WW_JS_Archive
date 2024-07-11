@@ -31,9 +31,9 @@ class FoliageClusteredEffectManager {
   }
   static Get() {
     return (
-      this.tlr ||
-        ((this.tlr = new FoliageClusteredEffectManager()), this.tlr.AU()),
-      this.tlr
+      this.zlr ||
+        ((this.zlr = new FoliageClusteredEffectManager()), this.zlr.AU()),
+      this.zlr
     );
   }
   AU() {

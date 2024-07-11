@@ -8,25 +8,25 @@ const ControllerBase_1 = require("../../../Core/Framework/ControllerBase"),
 class HideActorController extends ControllerBase_1.ControllerBase {
   static OnInit() {
     return (
-      (this.dei = !1), (this.Cei = !1), this._Rn.clear(), this.uRn.clear(), !0
+      (this.dti = !1), (this.Cti = !1), this.jAn.clear(), this.WAn.clear(), !0
     );
   }
   static OnTick(t) {
-    if (this.Cei) for (const e of this._Rn) e.Valid && this.fei(e, !0);
+    if (this.Cti) for (const e of this.jAn) e.Valid && this.fti(e, !0);
   }
   static HideMesh() {
-    this.dei || ((this.dei = !0), this.pei(!0, !1));
+    this.dti || ((this.dti = !0), this.pti(!0, !1));
   }
   static HideEffect() {
-    this.Cei || ((this.Cei = !0), this.pei(!1, !0));
+    this.Cti || ((this.Cti = !0), this.pti(!1, !0));
   }
   static ShowMesh() {
-    this.dei && ((this.dei = !1), this.vei(!0, !1));
+    this.dti && ((this.dti = !1), this.vti(!0, !1));
   }
   static ShowEffect() {
-    this.Cei && ((this.Cei = !1), this.vei(!1, !0));
+    this.Cti && ((this.Cti = !1), this.vti(!1, !0));
   }
-  static pei(t, e) {
+  static pti(t, e) {
     if (Global_1.Global.BaseCharacter)
       for (const s of ModelManager_1.ModelManager.CreatureModel.GetAllEntities()) {
         var i, r;
@@ -41,32 +41,32 @@ class HideActorController extends ControllerBase_1.ControllerBase {
             ) &&
           (t &&
             ((r = i.DisableActor("[HideActorController] 隐藏Mesh")),
-            this.uRn.set(s, r)),
+            this.WAn.set(s, r)),
           e) &&
-          (this.fei(s, !0), this._Rn.add(s));
+          (this.fti(s, !0), this.jAn.add(s));
       }
   }
-  static vei(t, e) {
+  static vti(t, e) {
     if (t) {
-      for (var [i, r] of this.uRn)
+      for (var [i, r] of this.WAn)
         i.Valid && i.Entity.GetComponent(3).EnableActor(r);
-      this.uRn.clear();
+      this.WAn.clear();
     }
     if (e) {
-      for (const s of this._Rn) s.Valid && this.fei(s, !1);
-      this._Rn.clear();
+      for (const s of this.jAn) s.Valid && this.fti(s, !1);
+      this.jAn.clear();
     }
   }
-  static fei(t, e) {
+  static fti(t, e) {
     t.Entity.GetComponent(33)?.CurrentSkill?.SetEffectHidden(e),
       t.Entity.GetComponent(19)?.SetHidden(e);
   }
   static OnClear() {
-    return (this.dei = !1), (this.Cei = !1), this.vei(!0, !0), !0;
+    return (this.dti = !1), (this.Cti = !1), this.vti(!0, !0), !0;
   }
 }
-((exports.HideActorController = HideActorController).dei = !1),
-  (HideActorController.Cei = !1),
-  (HideActorController._Rn = new Set()),
-  (HideActorController.uRn = new Map());
+((exports.HideActorController = HideActorController).dti = !1),
+  (HideActorController.Cti = !1),
+  (HideActorController.jAn = new Set()),
+  (HideActorController.WAn = new Map());
 //# sourceMappingURL=HideActorController.js.map

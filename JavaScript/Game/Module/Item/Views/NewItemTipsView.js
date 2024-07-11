@@ -13,7 +13,7 @@ const UE = require("ue"),
   LguiUtil_1 = require("../../Util/LguiUtil");
 class NewItemTipsView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
-    super(...arguments), (this.EPe = void 0), (this.rCi = !1);
+    super(...arguments), (this.SPe = void 0), (this.rgi = !1);
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -46,9 +46,9 @@ class NewItemTipsView extends UiTickViewBase_1.UiTickViewBase {
           i.QualityId,
         );
         const s = UE.Color.FromHex(t.TextColor);
-        this.GetText(1).SetColor(s), (this.rCi = 5 === t?.Id);
+        this.GetText(1).SetColor(s), (this.rgi = 5 === t?.Id);
         var r = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
-            this.rCi ? "NS_Fx_LGUI_Item_Golden" : "NS_Fx_LGUI_Item_Other",
+            this.rgi ? "NS_Fx_LGUI_Item_Golden" : "NS_Fx_LGUI_Item_Other",
           ),
           r =
             (ResourceSystem_1.ResourceSystem.LoadAsync(
@@ -60,7 +60,7 @@ class NewItemTipsView extends UiTickViewBase_1.UiTickViewBase {
                   UiManager_1.UiManager.IsViewOpen("NewItemTipsView") &&
                   this.RootItem &&
                   ((i = this.GetUiNiagara(5)).SetNiagaraSystem(e),
-                  this.rCi ||
+                  this.rgi ||
                     (i.ColorParameter.Get("Color").Constant =
                       UE.LinearColor.FromSRGBColor(s)));
               },
@@ -75,10 +75,10 @@ class NewItemTipsView extends UiTickViewBase_1.UiTickViewBase {
               t.AcquireNewItemQualityTexPath,
               this.GetTexture(4),
             ),
-            (this.EPe = new LevelSequencePlayer_1.LevelSequencePlayer(
+            (this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(
               this.RootItem,
             )),
-            this.EPe.BindSequenceCloseEvent((e) => {
+            this.SPe.BindSequenceCloseEvent((e) => {
               ("Golden" !== e && "Start01" !== e) || this.CloseMe();
             }),
             ConfigManager_1.ConfigManager.ItemConfig.GetMainTypeConfig(
@@ -90,7 +90,7 @@ class NewItemTipsView extends UiTickViewBase_1.UiTickViewBase {
     }
   }
   OnAfterShow() {
-    this.EPe?.PlayLevelSequenceByName(this.rCi ? "Golden" : "Start01");
+    this.SPe?.PlayLevelSequenceByName(this.rgi ? "Golden" : "Start01");
   }
   OnBeforeDestroy() {
     ModelManager_1.ModelManager.ItemModel.LastCloseTimeStamp =

@@ -8,6 +8,7 @@ const Log_1 = require("../../../../Core/Common/Log"),
   AiContollerLibrary_1 = require("../../Controller/AiContollerLibrary"),
   TsAiController_1 = require("../../Controller/TsAiController"),
   AiStateMachineTask_1 = require("./AiStateMachineTask"),
+  GravityUtils_1 = require("../../../Utils/GravityUtils"),
   NAVIGATION_COMPLETE_DISTANCE = 10;
 class AiStateMachineTaskMoveToTarget extends AiStateMachineTask_1.AiStateMachineTask {
   constructor() {
@@ -42,7 +43,7 @@ class AiStateMachineTaskMoveToTarget extends AiStateMachineTask_1.AiStateMachine
     if (e) {
       var r = e.CharActorComp;
       if (
-        (this.WalkOff || r.Entity.GetComponent(36)?.SetWalkOffLedgeRecord(!1),
+        (this.WalkOff || r.Entity.GetComponent(37)?.SetWalkOffLedgeRecord(!1),
         (this._se = this.Node.Owner.GetBlackboard(2) ?? 0),
         this._se)
       ) {
@@ -53,7 +54,7 @@ class AiStateMachineTaskMoveToTarget extends AiStateMachineTask_1.AiStateMachine
           (this.sse.X = s.Transform.Pos.X),
             (this.sse.Y = s.Transform.Pos.Y),
             (this.sse.Z = s.Transform.Pos.Z);
-          var h = e.CharAiDesignComp?.Entity.GetComponent(158);
+          var h = e.CharAiDesignComp?.Entity.GetComponent(160);
           if (h?.Valid)
             switch (this.MoveState) {
               case 1:
@@ -97,7 +98,7 @@ class AiStateMachineTaskMoveToTarget extends AiStateMachineTask_1.AiStateMachine
         ? Vector_1.Vector.Create(this.hse[this.lse])
         : this.sse),
       (i = Vector_1.Vector.Create(t)).Subtraction(e, i),
-      (i.Z = 0),
+      GravityUtils_1.GravityUtils.ConvertToPlanarVector(r, i),
       (e = i.Size()),
       (this.NavigationOn && this.lse !== this.hse.length - 1) ||
         !(e < this.EndDistance))
@@ -109,10 +110,8 @@ class AiStateMachineTaskMoveToTarget extends AiStateMachineTask_1.AiStateMachine
           t,
           this.TurnSpeed,
         ),
-        (i.Z = 0),
-        (i.X /= e),
-        (i.Y /= e),
-        r.SetInputDirect(i));
+        i.DivisionEqual(e),
+        r.SetInputDirect(i, !0));
   }
   use(t, i) {
     this.NavigationOn
@@ -135,7 +134,7 @@ class AiStateMachineTaskMoveToTarget extends AiStateMachineTask_1.AiStateMachine
       (AiContollerLibrary_1.AiControllerLibrary.ClearInput(t),
       this.WalkOff ||
         t.AiController.CharActorComp.Entity.GetComponent(
-          36,
+          37,
         )?.SetWalkOffLedgeRecord(!0));
   }
 }

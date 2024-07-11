@@ -5,14 +5,14 @@ const CommonFilter_1 = require("./CommonFilter");
 class SilentAreaDetectFilter extends CommonFilter_1.CommonFilter {
   constructor() {
     super(...arguments),
-      (this.zTt = (e) => {
+      (this.iDt = (e) => {
         return e.SilentAreaDetectionData
           ? e.SilentAreaDetectionData.Conf.Secondary
           : e.SilentAreaTitleData.TypeDescription;
       });
   }
   OnInitFilterMap() {
-    this.FilterMap.set(8, this.zTt);
+    this.FilterMap.set(8, this.iDt);
   }
 }
 exports.SilentAreaDetectFilter = SilentAreaDetectFilter;

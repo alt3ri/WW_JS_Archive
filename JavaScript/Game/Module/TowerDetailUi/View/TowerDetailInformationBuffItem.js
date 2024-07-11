@@ -8,9 +8,9 @@ const UE = require("ue"),
 class TowerDetailInformationBuffItem extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
-      (this.fLo = void 0),
-      (this.pLo = void 0),
-      (this.vLo = (e, t, i) => {
+      (this.dDo = void 0),
+      (this.CDo = void 0),
+      (this.gDo = (e, t, i) => {
         t =
           new TowerDetailInformationBuffSubItem_1.TowerDetailInformationBuffSubItem(
             t,
@@ -26,19 +26,19 @@ class TowerDetailInformationBuffItem extends UiPanelBase_1.UiPanelBase {
     ];
   }
   OnStart() {
-    this.pLo = new GenericLayoutNew_1.GenericLayoutNew(
+    this.CDo = new GenericLayoutNew_1.GenericLayoutNew(
       this.GetVerticalLayout(1),
-      this.vLo,
+      this.gDo,
     );
   }
   Update(e) {
-    (this.fLo = e), this.Og();
+    (this.dDo = e), this.Og();
   }
   Og() {
-    this.pLo.RebuildLayoutByDataNew(this.fLo.Buffs);
+    this.CDo.RebuildLayoutByDataNew(this.dDo.Buffs);
   }
   OnBeforeDestroy() {
-    this.pLo.ClearChildren();
+    this.CDo.ClearChildren();
   }
 }
 exports.TowerDetailInformationBuffItem = TowerDetailInformationBuffItem;

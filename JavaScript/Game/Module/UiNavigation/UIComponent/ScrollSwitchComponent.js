@@ -6,19 +6,19 @@ const UiNavigationNewController_1 = require("../New/UiNavigationNewController"),
   THRESHOLD = 0.6;
 class ScrollSwitchComponent extends HotKeyComponent_1.HotKeyComponent {
   constructor() {
-    super(...arguments), (this.xbo = !1);
+    super(...arguments), (this.Uqo = !1);
   }
   OnPress(e) {
     UiNavigationNewController_1.UiNavigationNewController.FindScrollbar(!0);
   }
   OnInputAxis(e, t) {
-    this.xbo
-      ? 0 === t && (this.xbo = !1)
+    this.Uqo
+      ? 0 === t && (this.Uqo = !1)
       : Math.abs(t) <= THRESHOLD ||
         (UiNavigationNewController_1.UiNavigationNewController.FindScrollbar(
           t < 0,
         ),
-        (this.xbo = !0));
+        (this.Uqo = !0));
   }
   OnRefreshSelfHotKeyState(e) {
     e = e.GetScrollbarData();

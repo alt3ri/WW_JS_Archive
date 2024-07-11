@@ -1,23 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BattleChildViewPanel = void 0);
-const Log_1 = require("../../../../../Core/Common/Log"),
+const Info_1 = require("../../../../../Core/Common/Info"),
+  Log_1 = require("../../../../../Core/Common/Log"),
   ModelManager_1 = require("../../../../Manager/ModelManager"),
   UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase");
 class BattleChildViewPanel extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this.X$e = []),
-      (this.jQe = []),
+      (this.sJe = []),
+      (this.i$e = []),
       (this.ChildViewData = void 0),
       (this.ChildType = 0),
       (this.Visible = !1),
       (this.IsEnable = !1),
       (this.IsShowOnce = !1),
-      (this.j$e = () => {
+      (this.iJe = () => {
         var i = this.Visible;
         (this.Visible = this.ChildViewData.GetChildVisible(this.ChildType)),
-          this.Q$e(i);
+          this.nJe(i);
       });
   }
   async InitializeAsync() {}
@@ -30,29 +31,29 @@ class BattleChildViewPanel extends UiPanelBase_1.UiPanelBase {
       await this.InitializeAsync(),
       this.IsDestroyOrDestroying ||
         ((this.Visible = this.ChildViewData.GetChildVisible(this.ChildType)),
-        this.ChildViewData.AddCallback(this.ChildType, this.j$e),
+        this.ChildViewData.AddCallback(this.ChildType, this.iJe),
         this.AddEvents());
   }
   ShowBattleChildViewPanel() {
     (this.IsEnable = !0),
-      this.K$e(0, !0),
+      this.rJe(0, !0),
       this.SetActive(this.Visible),
-      this.Visible && this.$$e();
+      this.Visible && this.aJe();
   }
   HideBattleChildViewPanel() {
     this.IsEnable = !1;
     var i = this.Visible;
-    this.K$e(0, !1),
+    this.rJe(0, !1),
       this.SetActive(this.Visible),
       i && this.OnHideBattleChildViewPanel();
   }
   Reset() {
-    this.K$e(0, !1),
-      this.Y$e(),
+    this.rJe(0, !1),
+      this.hJe(),
       this.RemoveEvents(),
       this.ClearAllTagSignificantChangedCallback(),
       this.ChildViewData &&
-        (this.ChildViewData.RemoveCallback(this.ChildType, this.j$e),
+        (this.ChildViewData.RemoveCallback(this.ChildType, this.iJe),
         (this.ChildViewData = void 0));
   }
   SetActive(i) {
@@ -70,14 +71,14 @@ class BattleChildViewPanel extends UiPanelBase_1.UiPanelBase {
   }
   SetVisible(i, t) {
     var e = this.Visible;
-    this.K$e(i, t), this.Q$e(e);
+    this.rJe(i, t), this.nJe(e);
   }
-  Q$e(i) {
+  nJe(i) {
     this.IsEnable &&
       i !== (i = this.GetVisible()) &&
-      (this.SetActive(i), i ? this.$$e() : this.OnHideBattleChildViewPanel());
+      (this.SetActive(i), i ? this.aJe() : this.OnHideBattleChildViewPanel());
   }
-  K$e(i, t) {
+  rJe(i, t) {
     0 !== this.ChildType &&
       (this.Visible = this.ChildViewData.SetChildVisible(
         i,
@@ -86,7 +87,7 @@ class BattleChildViewPanel extends UiPanelBase_1.UiPanelBase {
         !1,
       ));
   }
-  $$e() {
+  aJe() {
     this.IsShowOnce
       ? this.OnShowBattleChildViewPanel(!1)
       : ((this.IsShowOnce = !0), this.OnShowBattleChildViewPanel(!0));
@@ -99,11 +100,11 @@ class BattleChildViewPanel extends UiPanelBase_1.UiPanelBase {
   RemoveEvents() {}
   async NewStaticChildViewAsync(i, t, e) {
     t = new t();
-    return await t.NewByRootActorAsync(i, e), this.X$e.push(t), t;
+    return await t.NewByRootActorAsync(i, e), this.sJe.push(t), t;
   }
-  Y$e() {
-    for (const i of this.X$e) i && i.DestroyCompatible();
-    this.X$e.length = 0;
+  hJe() {
+    for (const i of this.sJe) i && i.DestroyCompatible();
+    this.sJe.length = 0;
   }
   async NewDynamicChildViewByResourceId(i, t, e, s = !1, h) {
     e = new e();
@@ -167,20 +168,20 @@ class BattleChildViewPanel extends UiPanelBase_1.UiPanelBase {
     return await t.NewByRootActorAsync(i, e), t;
   }
   GetOperationType() {
-    return ModelManager_1.ModelManager.PlatformModel.OperationType;
+    return Info_1.Info.OperationType;
   }
   ListenForTagSignificantChanged(i, t, e) {
-    var i = i.Entity.GetComponent(185);
-    i && ((i = i.ListenForTagAddOrRemove(t, e)), this.jQe.push(i));
+    var i = i.Entity.GetComponent(188);
+    i && ((i = i.ListenForTagAddOrRemove(t, e)), this.i$e.push(i));
   }
   ClearAllTagSignificantChangedCallback() {
-    if (this.jQe) {
-      for (const i of this.jQe) i.EndTask();
-      this.jQe.length = 0;
+    if (this.i$e) {
+      for (const i of this.i$e) i.EndTask();
+      this.i$e.length = 0;
     }
   }
   ContainsTag(i, t) {
-    i = i.Entity.GetComponent(185);
+    i = i.Entity.GetComponent(188);
     return !!i && i.HasTag(t);
   }
   GetItem(i) {

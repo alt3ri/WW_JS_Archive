@@ -1,33 +1,33 @@
 "use strict";
 var __decorate =
   (this && this.__decorate) ||
-  function (t, i, e, s) {
+  function (t, i, s, e) {
     var h,
       o = arguments.length,
       r =
         o < 3
           ? i
-          : null === s
-            ? (s = Object.getOwnPropertyDescriptor(i, e))
-            : s;
+          : null === e
+            ? (e = Object.getOwnPropertyDescriptor(i, s))
+            : e;
     if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
-      r = Reflect.decorate(t, i, e, s);
+      r = Reflect.decorate(t, i, s, e);
     else
       for (var n = t.length - 1; 0 <= n; n--)
-        (h = t[n]) && (r = (o < 3 ? h(r) : 3 < o ? h(i, e, r) : h(i, e)) || r);
-    return 3 < o && r && Object.defineProperty(i, e, r), r;
+        (h = t[n]) && (r = (o < 3 ? h(r) : 3 < o ? h(i, s, r) : h(i, s)) || r);
+    return 3 < o && r && Object.defineProperty(i, s, r), r;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SimpleNpcAnimationComponent = void 0);
 const puerts_1 = require("puerts"),
   UE = require("ue"),
+  Info_1 = require("../../../../../Core/Common/Info"),
   Log_1 = require("../../../../../Core/Common/Log"),
   RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
   ResourceSystem_1 = require("../../../../../Core/Resource/ResourceSystem"),
   Quat_1 = require("../../../../../Core/Utils/Math/Quat"),
   Vector_1 = require("../../../../../Core/Utils/Math/Vector"),
   MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
-  ModelManager_1 = require("../../../../Manager/ModelManager"),
   PreloadConstants_1 = require("../../../../World/Controller/PreloadConstants"),
   BaseAnimationComponent_1 = require("../../Common/Component/BaseAnimationComponent"),
   TURN_SPEED = 0.36,
@@ -38,31 +38,31 @@ let SimpleNpcAnimationComponent = class SimpleNpcAnimationComponent extends Base
       (this.ActorComp = void 0),
       (this.SlopeStepPeriodicCurve = void 0),
       (this.SlopeStepSizeCurve = void 0),
-      (this.L3r = Vector_1.Vector.Create()),
-      (this.D3r = void 0),
+      (this.n3r = Vector_1.Vector.Create()),
+      (this.s3r = void 0),
       (this.az = Quat_1.Quat.Create()),
-      (this.A3r = Vector_1.Vector.Create()),
-      (this.U3r = Vector_1.Vector.Create()),
-      (this.G3r = 0),
-      (this.O3r = -1);
+      (this.h3r = Vector_1.Vector.Create()),
+      (this.l3r = Vector_1.Vector.Create()),
+      (this.g3r = 0),
+      (this.p3r = -1);
   }
   static get Dependencies() {
-    return [175, 0];
+    return [178, 0];
   }
-  Z3r() {
-    0 < this.O3r
-      ? this.O3r--
-      : 0 === this.O3r &&
-        (this.ActorComp.EnableActor(this.G3r),
+  x3r() {
+    0 < this.p3r
+      ? this.p3r--
+      : 0 === this.p3r &&
+        (this.ActorComp.EnableActor(this.g3r),
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("Character", 58, "人物上场隐藏一帧 【隐藏结束】", [
             "Entity:",
             this.Entity.Id,
           ]),
-        (this.G3r = void 0),
+        (this.g3r = void 0),
         (this.ActorComp.Actor.Mesh.VisibilityBasedAnimTickOption =
           this.DefaultVisibilityBasedAnimTickOption),
-        (this.O3r = -1));
+        (this.p3r = -1));
   }
   OnInit() {
     var t;
@@ -81,7 +81,7 @@ let SimpleNpcAnimationComponent = class SimpleNpcAnimationComponent extends Base
         !this.SlopeStepPeriodicCurve ||
         !this.SlopeStepSizeCurve ||
         ((t = this.Entity.GetComponent(0).GetModelConfig().注释时的抬升角度) &&
-          ((this.D3r = Quat_1.Quat.Create()),
+          ((this.s3r = Quat_1.Quat.Create()),
           Quat_1.Quat.FindBetween(
             Vector_1.Vector.ForwardVectorProxy,
             Vector_1.Vector.Create(
@@ -89,7 +89,7 @@ let SimpleNpcAnimationComponent = class SimpleNpcAnimationComponent extends Base
               0,
               Math.sin(t * MathUtils_1.MathUtils.DegToRad),
             ),
-            this.D3r,
+            this.s3r,
           )),
         0)
       )
@@ -97,7 +97,7 @@ let SimpleNpcAnimationComponent = class SimpleNpcAnimationComponent extends Base
   }
   OnStart() {
     return (
-      (this.ActorComp = this.Entity.CheckGetComponent(175)),
+      (this.ActorComp = this.Entity.CheckGetComponent(178)),
       this.ActorComp.Actor?.Mesh
         ? ((this.Actor = this.ActorComp.Actor),
           (this.Mesh = this.Actor.Mesh),
@@ -117,49 +117,49 @@ let SimpleNpcAnimationComponent = class SimpleNpcAnimationComponent extends Base
       this.SightDirect2.DeepCopy(Vector_1.Vector.RightVectorProxy),
       (this.IsPlayer = !1),
       (this.DefaultVisibilityBasedAnimTickOption = 3),
-      this.inn();
+      this.Grn();
   }
   OnActivate() {
     this.StartAnimInstance();
   }
   OnTick(t) {
-    this.Z3r(), this.i4r(t);
+    this.x3r(), this.b3r(t);
   }
   OnDisable() {
-    0 <= this.O3r &&
-      (this.ActorComp.EnableActor(this.G3r), Log_1.Log.CheckInfo()) &&
+    0 <= this.p3r &&
+      (this.ActorComp.EnableActor(this.g3r), Log_1.Log.CheckInfo()) &&
       Log_1.Log.Info(
         "Character",
         58,
         "人物上场隐藏一帧 【组件Disable 隐藏结束】",
         ["Entity:", this.Entity.Id],
       ),
-      (this.O3r = -1),
-      this.Entity.GetComponent(168)?.AnyIdleLoopMontagePlaying ||
+      (this.p3r = -1),
+      this.Entity.GetComponent(171)?.AnyIdleLoopMontagePlaying ||
         (this.MainAnimInstanceInternal?.IsValid() &&
           (this.StopMontage(),
           UE.KuroAnimLibrary.EndAnimNotifyStates(
             this.MainAnimInstanceInternal,
           )));
   }
-  i4r(t) {
+  b3r(t) {
     this.EnableSightDirectInternal &&
       (this.SightTargetItemId || this.SightTargetPoint
-        ? this.h4r(this.L3r)
-        : this.L3r.DeepCopy(this.ActorComp.ActorForwardProxy),
-      this.s4r(t));
+        ? this.F3r(this.n3r)
+        : this.n3r.DeepCopy(this.ActorComp.ActorForwardProxy),
+      this.O3r(t));
   }
-  s4r(t) {
-    this.A3r.FromUeVector(this.L3r),
+  O3r(t) {
+    this.h3r.FromUeVector(this.n3r),
       this.az.FromUeQuat(this.Mesh.K2_GetComponentQuaternion()),
       this.az.Inverse(this.az),
-      this.U3r.FromUeVector(this.L3r),
-      this.az.RotateVector(this.L3r, this.L3r),
-      this.ClampSightDirect(this.L3r, this.L3r),
-      (this.SightDirectIsEqual && this.L3r.Equals(this.SightDirect)) ||
+      this.l3r.FromUeVector(this.n3r),
+      this.az.RotateVector(this.n3r, this.n3r),
+      this.ClampSightDirect(this.n3r, this.n3r),
+      (this.SightDirectIsEqual && this.n3r.Equals(this.SightDirect)) ||
         (BaseAnimationComponent_1.BaseAnimationComponent.LerpDirect2dByMaxAngle(
           this.SightDirect2,
-          this.L3r,
+          this.n3r,
           t * TURN_SPEED,
           this.SightDirect2,
         ),
@@ -177,9 +177,9 @@ let SimpleNpcAnimationComponent = class SimpleNpcAnimationComponent extends Base
               "Character",
               6,
               "UpdateHeadRotation Contains Nan.",
-              ["BeforeRotate", this.A3r],
-              ["BeforeClamp", this.U3r],
-              ["TargetDirect", this.L3r],
+              ["BeforeRotate", this.h3r],
+              ["BeforeClamp", this.l3r],
+              ["TargetDirect", this.n3r],
               ["SightDirect", this.SightDirect],
               ["SightDirect2", this.SightDirect2],
               ["quatInverse", this.az],
@@ -190,45 +190,45 @@ let SimpleNpcAnimationComponent = class SimpleNpcAnimationComponent extends Base
           this.SightDirect.Set(0, 1, 0),
           this.SightDirect2.Set(0, 1, 0)));
   }
-  h4r(t) {
+  F3r(t) {
     var i = this.GetSightTargetItem();
     !i ||
     ((this.SightTargetPoint ?? i.ActorLocationProxy).Subtraction(
       this.ActorComp.ActorLocationProxy,
-      this.A3r,
+      this.h3r,
     ),
     (0, RegisterComponent_1.isComponentInstance)(i, 2)
-      ? (this.A3r.Z += i.ScaledHalfHeight - this.ActorComp.ScaledHalfHeight)
-      : (this.A3r.Z -= this.ActorComp.ScaledHalfHeight),
-    this.A3r.IsNearlyZero())
+      ? (this.h3r.Z += i.ScaledHalfHeight - this.ActorComp.ScaledHalfHeight)
+      : (this.h3r.Z -= this.ActorComp.ScaledHalfHeight),
+    this.h3r.IsNearlyZero())
       ? t.DeepCopy(this.ActorComp.ActorForwardProxy)
-      : (t.DeepCopy(this.A3r), this.u4r(t));
+      : (t.DeepCopy(this.h3r), this.j3r(t));
   }
-  u4r(t) {
-    this.D3r &&
+  j3r(t) {
+    this.s3r &&
       (this.ActorComp.ActorQuatProxy.Inverse(this.az),
       this.az.RotateVector(t, t),
-      this.D3r.RotateVector(t, t),
+      this.s3r.RotateVector(t, t),
       this.ActorComp.ActorQuatProxy.RotateVector(t, t));
   }
-  inn(t = !0) {
-    var i = ModelManager_1.ModelManager.PlatformModel.IsMobile(),
-      e = new UE.AnimUpdateRateParameters(),
-      s = this.Mesh.LODInfo.Num();
+  Grn(t = !0) {
+    var i = Info_1.Info.IsMobilePlatform(),
+      s = new UE.AnimUpdateRateParameters(),
+      e = this.Mesh.LODInfo.Num();
     if (t)
-      (e.bShouldUseDistanceMap = !0),
-        e.BaseVisibleDistanceThresholds.Empty(),
-        e.BaseVisibleDistanceThresholds.Add(i ? 50 : 800),
-        e.BaseVisibleDistanceThresholds.Add(i ? 200 : 1500),
-        e.BaseVisibleDistanceThresholds.Add(i ? 500 : 4e3),
-        e.BaseVisibleDistanceThresholds.Add(i ? 1500 : 5e3),
-        e.BaseVisibleDistanceThresholds.Add(i ? 2500 : 8e3);
+      (s.bShouldUseDistanceMap = !0),
+        s.BaseVisibleDistanceThresholds.Empty(),
+        s.BaseVisibleDistanceThresholds.Add(i ? 50 : 800),
+        s.BaseVisibleDistanceThresholds.Add(i ? 200 : 1500),
+        s.BaseVisibleDistanceThresholds.Add(i ? 500 : 4e3),
+        s.BaseVisibleDistanceThresholds.Add(i ? 1500 : 5e3),
+        s.BaseVisibleDistanceThresholds.Add(i ? 2500 : 8e3);
     else {
-      (e.bShouldUseLodMap = !0), e.LODToFrameSkipMap.Empty();
-      for (let t = 0; t < s; t++) e.LODToFrameSkipMap.Add(t, t < 2 ? 0 : t - 1);
+      (s.bShouldUseLodMap = !0), s.LODToFrameSkipMap.Empty();
+      for (let t = 0; t < e; t++) s.LODToFrameSkipMap.Add(t, t < 2 ? 0 : t - 1);
     }
-    (e.BaseNonRenderedUpdateRate = 8), (e.MaxEvalRateForInterpolation = 8);
-    var h = (0, puerts_1.$ref)(e),
+    (s.BaseNonRenderedUpdateRate = 8), (s.MaxEvalRateForInterpolation = 8);
+    var h = (0, puerts_1.$ref)(s),
       o = this.Actor.K2_GetComponentsByClass(
         UE.SkeletalMeshComponent.StaticClass(),
       );
@@ -243,7 +243,7 @@ let SimpleNpcAnimationComponent = class SimpleNpcAnimationComponent extends Base
   }
 };
 (SimpleNpcAnimationComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(176)],
+  [(0, RegisterComponent_1.RegisterComponent)(179)],
   SimpleNpcAnimationComponent,
 )),
   (exports.SimpleNpcAnimationComponent = SimpleNpcAnimationComponent);

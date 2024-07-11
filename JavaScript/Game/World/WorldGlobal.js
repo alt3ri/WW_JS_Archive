@@ -30,26 +30,26 @@ class WorldGlobal {
     )),
       GlobalData_1.GlobalData.GameInstance.场景加载通知器.Clear(),
       GlobalData_1.GlobalData.GameInstance.场景加载通知器.BindBeginTravelLoadMap(
-        (0, puerts_1.toManualReleaseDelegate)(WorldGlobal.ZMr),
+        (0, puerts_1.toManualReleaseDelegate)(WorldGlobal.YEr),
       ),
       GlobalData_1.GlobalData.GameInstance.场景加载通知器.BindBeginLoadMap(
-        (0, puerts_1.toManualReleaseDelegate)(WorldGlobal.eSr),
+        (0, puerts_1.toManualReleaseDelegate)(WorldGlobal.JEr),
       ),
       GlobalData_1.GlobalData.GameInstance.场景加载通知器.BindEndLoadMap(
-        (0, puerts_1.toManualReleaseDelegate)(WorldGlobal.tSr),
+        (0, puerts_1.toManualReleaseDelegate)(WorldGlobal.zEr),
       ),
       GlobalData_1.GlobalData.GameInstance.场景加载通知器.BindLoadStreamLevel(
-        (0, puerts_1.toManualReleaseDelegate)(WorldGlobal.iSr),
+        (0, puerts_1.toManualReleaseDelegate)(WorldGlobal.ZEr),
       ),
       GlobalData_1.GlobalData.GameInstance.场景加载通知器.BindUnLoadStreamLevel(
-        (0, puerts_1.toManualReleaseDelegate)(WorldGlobal.Kxn),
+        (0, puerts_1.toManualReleaseDelegate)(WorldGlobal.TBn),
       );
   }
   static Clear() {
-    (0, puerts_1.releaseManualReleaseDelegate)(WorldGlobal.eSr),
-      (0, puerts_1.releaseManualReleaseDelegate)(WorldGlobal.ZMr),
-      (0, puerts_1.releaseManualReleaseDelegate)(WorldGlobal.tSr),
-      (0, puerts_1.releaseManualReleaseDelegate)(WorldGlobal.iSr),
+    (0, puerts_1.releaseManualReleaseDelegate)(WorldGlobal.JEr),
+      (0, puerts_1.releaseManualReleaseDelegate)(WorldGlobal.YEr),
+      (0, puerts_1.releaseManualReleaseDelegate)(WorldGlobal.zEr),
+      (0, puerts_1.releaseManualReleaseDelegate)(WorldGlobal.ZEr),
       GlobalData_1.GlobalData.GameInstance.场景加载通知器.Clear();
   }
   static LoadFromMap(o) {
@@ -104,14 +104,14 @@ class WorldGlobal {
     for (; o.length < a; ) o.push(e);
   }
   static ToTsVector(o) {
-    var a = Protocol_1.Aki.Protocol.VBs.create();
+    var a = Protocol_1.Aki.Protocol.Pks.create();
     return (a.X = o.X), (a.Y = o.Y), (a.Z = o.Z), a;
   }
   static ToUeVector(o) {
     return o ? new UE.Vector(o.X, o.Y, o.Z) : Vector_1.Vector.ZeroVector;
   }
   static ToTsRotator(o) {
-    var a = Protocol_1.Aki.Protocol.iws.create();
+    var a = Protocol_1.Aki.Protocol.S2s.create();
     return (a.Pitch = o.Pitch), (a.Yaw = o.Yaw), (a.Roll = o.Roll), a;
   }
   static ToUeRotator(o) {
@@ -121,9 +121,9 @@ class WorldGlobal {
     var a = new UE.GameplayAttributeData();
     return (
       void 0 !== o &&
-        ((a.AttributeType = o.Ugs),
-        (a.BaseValue = o.Pgs),
-        (a.CurrentValue = o.NFn)),
+        ((a.AttributeType = o.QMs),
+        (a.BaseValue = o.KMs),
+        (a.CurrentValue = o.d6n)),
       a
     );
   }
@@ -192,16 +192,16 @@ class WorldGlobal {
       Log_1.Log.CheckDebug()) &&
       Log_1.Log.Debug("Stat", 34, "LoadTime统计结束");
   }),
-  (WorldGlobal.ZMr = (o) => {
+  (WorldGlobal.YEr = (o) => {
     EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.BeforeTravelMap);
   }),
-  (WorldGlobal.eSr = (o) => {
+  (WorldGlobal.JEr = (o) => {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug("World", 3, "地图开始加载", ["mapName", o]),
       ModelManager_1.ModelManager.GameModeModel.MapPath === o &&
         ControllerHolder_1.ControllerHolder.GameModeController.BeforeLoadMap();
   }),
-  (WorldGlobal.tSr = (o) => {
+  (WorldGlobal.zEr = (o) => {
     GlobalData_1.GlobalData.World?.IsValid()
       ? (Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("World", 3, "地图加载完成。", ["MapName", o]),
@@ -216,7 +216,7 @@ class WorldGlobal {
           o,
         ]);
   }),
-  (WorldGlobal.iSr = (o, a, e) => {
+  (WorldGlobal.ZEr = (o, a, e) => {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info("World", 3, "LoadStream完成。", [
         "LevelName",
@@ -229,7 +229,7 @@ class WorldGlobal {
           e,
         );
   }),
-  (WorldGlobal.Kxn = (o, a) => {
+  (WorldGlobal.TBn = (o, a) => {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "World",

@@ -11,17 +11,17 @@ const UE = require("ue"),
 class RoleBreachSuccessView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.zke = 0),
+      (this.dFe = 0),
       (this.SuccessStarItem = void 0),
       (this.StarLayout = void 0),
       (this.StarList = []),
       (this.MaskClick = () => {
         RoleController_1.RoleController.SendRoleLevelUpViewRequestWithOpenView(
-          this.zke,
+          this.dFe,
           "RoleBreachSuccessView",
         );
       }),
-      (this.sAt = () => {
+      (this.vke = () => {
         return new StarItem_1.StarItem();
       });
   }
@@ -35,9 +35,9 @@ class RoleBreachSuccessView extends UiViewBase_1.UiViewBase {
       (this.BtnBindInfo = [[1, this.MaskClick]]);
   }
   async OnBeforeStartAsync() {
-    this.zke = this.OpenParam;
+    this.dFe = this.OpenParam;
     var e = ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(
-        this.zke,
+        this.dFe,
       ).GetLevelData(),
       t = e.GetBreachLevel(),
       r = e.GetMaxBreachLevel(),
@@ -47,7 +47,7 @@ class RoleBreachSuccessView extends UiViewBase_1.UiViewBase {
       this.GetText(3).SetText(e.toString()),
       (this.StarLayout = new GenericLayout_1.GenericLayout(
         this.GetHorizontalLayout(0),
-        this.sAt,
+        this.vke,
       )),
       await this.UpdateStar(t, r);
   }

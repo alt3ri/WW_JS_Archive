@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SkillButtonUiModel = void 0);
-const Log_1 = require("../../../Core/Common/Log"),
+const Info_1 = require("../../../Core/Common/Info"),
+  Log_1 = require("../../../Core/Common/Log"),
   CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParamById"),
   SkillButtonTextAll_1 = require("../../../Core/Define/ConfigQuery/SkillButtonTextAll"),
   ModelBase_1 = require("../../../Core/Framework/ModelBase"),
@@ -11,6 +12,7 @@ const Log_1 = require("../../../Core/Common/Log"),
   ConfigManager_1 = require("../../Manager/ConfigManager"),
   ModelManager_1 = require("../../Manager/ModelManager"),
   SkillButtonEntityData_1 = require("./SkillButtonEntityData"),
+  SkillButtonFormationData_1 = require("./SkillButtonFormationData"),
   SkillButtonUiGamepadData_1 = require("./SkillButtonUiGamepadData"),
   behaviorIconResMap = new Map([
     [101, ["SP_IconAim", "SP_IconAimPre"]],
@@ -21,30 +23,34 @@ class SkillButtonUiModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
       (this.BehaviorIconPathMap = new Map()),
-      (this.myo = new Map()),
-      (this.dyo = void 0),
-      (this.Cyo = []),
+      (this._Io = new Map()),
+      (this.uIo = void 0),
+      (this.SkillButtonFormationData = void 0),
+      (this.cIo = []),
       (this.IsNormalButtonTypeList = !1),
       (this.SkillButtonRotationRate = 0),
       (this.GamepadData = void 0),
-      (this.gyo = void 0);
+      (this.mIo = void 0);
   }
   OnInit() {
     (this.SkillButtonRotationRate =
       CommonParamById_1.configCommonParamById.GetFloatConfig(
         "SkillButtonRotationRate",
       )),
+      (this.SkillButtonFormationData =
+        new SkillButtonFormationData_1.SkillButtonFormationData()),
+      this.SkillButtonFormationData.Init(),
       this.BehaviorIconPathMap.clear();
-    for (var [t, e] of behaviorIconResMap) {
-      var i = [];
-      for (const n of e)
-        i.push(
-          ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(n),
+    for (var [t, i] of behaviorIconResMap) {
+      var e = [];
+      for (const o of i)
+        e.push(
+          ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(o),
         );
-      this.BehaviorIconPathMap.set(t, i);
+      this.BehaviorIconPathMap.set(t, e);
     }
     return (
-      ModelManager_1.ModelManager.PlatformModel.IsMobile() ||
+      Info_1.Info.IsInTouch() ||
         ((this.GamepadData =
           new SkillButtonUiGamepadData_1.SkillButtonUiGamepadData()),
         this.GamepadData.Init()),
@@ -53,8 +59,10 @@ class SkillButtonUiModel extends ModelBase_1.ModelBase {
   }
   OnClear() {
     return (
+      this.SkillButtonFormationData?.Clear(),
+      (this.SkillButtonFormationData = void 0),
       this.ClearAllSkillButtonEntityData(),
-      (this.Cyo.length = 0),
+      (this.cIo.length = 0),
       this.GamepadData?.Clear(),
       (this.GamepadData = void 0),
       EventSystem_1.EventSystem.Emit(
@@ -67,107 +75,120 @@ class SkillButtonUiModel extends ModelBase_1.ModelBase {
     return !0;
   }
   GetSkillButtonEntityData(t) {
-    return this.myo.get(t);
+    return this._Io.get(t);
   }
   CreateAllSkillButtonEntityData() {
     var t = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity;
-    for (const e of ModelManager_1.ModelManager.SceneTeamModel.GetTeamEntities())
-      e === t
-        ? (this.dyo = this.CreateSkillButtonEntityData(e, !0))
-        : this.CreateSkillButtonEntityData(e, !1);
+    for (const i of ModelManager_1.ModelManager.SceneTeamModel.GetTeamEntities())
+      i === t
+        ? (this.uIo = this.CreateSkillButtonEntityData(i, !0))
+        : this.CreateSkillButtonEntityData(i, !1);
   }
-  CreateSkillButtonEntityData(t, e) {
-    var i = t.Entity.Id;
-    let n = this.myo.get(i);
+  CreateSkillButtonEntityData(t, i) {
+    var e = t.Entity.Id;
+    let o = this._Io.get(e);
     return (
-      n
-        ? n.IsCurEntity !== e && n.OnChangeRole(e)
-        : ((n = new SkillButtonEntityData_1.SkillButtonEntityData()).Init(t, e),
-          this.myo.set(i, n)),
-      n
+      o
+        ? o.IsCurEntity !== i && o.OnChangeRole(i)
+        : ((o = new SkillButtonEntityData_1.SkillButtonEntityData()).Init(t, i),
+          this._Io.set(e, o)),
+      o
     );
   }
   ClearAllSkillButtonEntityData() {
-    for (const t of this.myo.values()) t.Clear();
-    this.myo.clear(), (this.dyo = void 0);
+    for (const t of this._Io.values()) t.Clear();
+    this._Io.clear(), (this.uIo = void 0);
   }
   OnRemoveEntity(t) {
-    var e = this.myo.get(t.Id);
-    e &&
-      (this.myo.delete(t.Id), e.Clear(), e === this.dyo) &&
-      (this.dyo = void 0);
+    var i = this._Io.get(t.Id);
+    i &&
+      (this._Io.delete(t.Id), i.Clear(), i === this.uIo) &&
+      (this.uIo = void 0),
+      this.uIo === i && (this.uIo = void 0);
   }
-  RefreshSkillButtonData(e, t, i) {
+  RefreshSkillButtonData(i, t, e) {
     if (
-      (0 === i &&
+      (0 === e &&
         (this.ClearAllSkillButtonEntityData(),
         this.CreateAllSkillButtonEntityData()),
-      1 === i)
+      1 === e)
     ) {
       let t = !1;
-      for (const n of this.myo.values())
-        e === n.EntityHandle
-          ? (n.OnChangeRole(!0), (this.dyo = n), (t = !0))
-          : n.OnChangeRole(!1);
-      t || (this.dyo = this.CreateSkillButtonEntityData(e, !0));
+      for (const o of this._Io.values())
+        i === o.EntityHandle
+          ? (o.OnChangeRole(!0), (this.uIo = o), (t = !0))
+          : o.OnChangeRole(!1);
+      t || (this.uIo = this.CreateSkillButtonEntityData(i, !0));
     }
-    this.RefreshSkillButtonIndex(this.dyo.SkillButtonIndexConfig, e, t),
-      this.GamepadData?.RefreshSkillButtonData(i),
-      this.dyo.RefreshSkillButtonData(i);
+    this.RefreshSkillButtonIndex(this.uIo.SkillButtonIndexConfig, i, t),
+      this.GamepadData?.RefreshSkillButtonData(e),
+      this.uIo.RefreshSkillButtonData(e);
   }
   RefreshSkillButtonExplorePhantomSkillId(t) {
-    for (const e of this.myo.values())
-      e.RefreshSkillButtonExplorePhantomSkillId(t);
+    for (const i of this._Io.values())
+      i.RefreshSkillButtonExplorePhantomSkillId(t);
   }
   GetSkillButtonIndexByButton(t) {
-    return this.Cyo.indexOf(t);
+    return this.cIo.indexOf(t);
   }
   GetButtonTypeList() {
-    return this.Cyo;
+    return this.cIo;
   }
-  RefreshSkillButtonIndex(t, e, i) {
+  RefreshSkillButtonIndex(t, i, e) {
     if (((this.IsNormalButtonTypeList = !1), t)) {
-      var n,
-        o,
-        a = e.Entity.GetComponent(185);
-      for ([n, o] of i ? t.DesktopButtonTypeMap : t.PadButtonTypeMap)
-        if (a.HasTag(GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(n)))
-          return void (this.Cyo = o.ArrayInt);
-      (this.Cyo = i ? t.DesktopButtonTypeList : t.PadButtonTypeList),
+      var o,
+        n,
+        s = i.Entity.GetComponent(188);
+      for ([o, n] of e ? t.DesktopButtonTypeMap : t.PadButtonTypeMap)
+        if (s.HasTag(GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(o)))
+          return void (this.cIo = n.ArrayInt);
+      (this.cIo = e ? t.DesktopButtonTypeList : t.PadButtonTypeList),
         (this.IsNormalButtonTypeList = !0);
     } else
       Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn("Battle", 18, "刷新技能按钮索引时缺少配置"),
-        (this.Cyo = []);
+        (this.cIo = []);
   }
-  RefreshSkillButtonIndexByTag(t, e, i) {
+  RefreshSkillButtonIndexByTag(t, i, e) {
     (this.IsNormalButtonTypeList = !1),
       t
-        ? (e = (i ? t.DesktopButtonTypeMap : t.PadButtonTypeMap).get(e))
-          ? (this.Cyo = e.ArrayInt)
-          : ((this.Cyo = i ? t.DesktopButtonTypeList : t.PadButtonTypeList),
+        ? (i = (e ? t.DesktopButtonTypeMap : t.PadButtonTypeMap).get(i))
+          ? (this.cIo = i.ArrayInt)
+          : ((this.cIo = e ? t.DesktopButtonTypeList : t.PadButtonTypeList),
             (this.IsNormalButtonTypeList = !0))
         : (Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn("Battle", 18, "刷新技能按钮索引时缺少配置"),
-          (this.Cyo = []));
+          (this.cIo = []));
   }
-  ExecuteMultiSkillIdChanged(t, e, i) {
-    this.myo.get(t)?.ExecuteMultiSkillIdChanged(e, i);
+  ExecuteMultiSkillIdChanged(t, i, e) {
+    this._Io.get(t)?.ExecuteMultiSkillIdChanged(i, e);
   }
-  ExecuteMultiSkillEnable(t, e, i) {
-    this.myo.get(t)?.ExecuteMultiSkillEnable(e, i);
+  ExecuteMultiSkillEnable(t, i, e) {
+    this._Io.get(t)?.ExecuteMultiSkillEnable(i, e);
   }
   OnSkillCdChanged(t) {
-    for (const i of t.EntityIds) {
-      var e = this.myo.get(i);
-      if (e) for (const n of t.SkillCdInfoMap.keys()) e.RefreshSkillCd(n);
+    for (const e of t.EntityIds) {
+      var i = this._Io.get(e);
+      if (i) for (const o of t.SkillCdInfoMap.keys()) i.RefreshSkillCd(o);
     }
   }
   OnAimStateChanged() {
-    this.GamepadData?.RefreshAimState() && this.dyo?.RefreshSkillButtonData(3);
+    this.GamepadData?.RefreshAimState() && this.uIo?.RefreshSkillButtonData(3);
   }
   OnActionKeyChanged(t) {
     this.GamepadData?.OnActionKeyChanged(t);
+  }
+  OnInputEnableChanged(t, i) {
+    for (const e of this._Io.values()) e.RefreshEnableByInputEvent(t, i);
+  }
+  OnInputVisibleChanged(t, i) {
+    for (const e of this._Io.values()) e.RefreshVisibleByInputEvent(t, i);
+  }
+  RefreshEnableByButtonType(t) {
+    for (const i of this._Io.values()) i.RefreshEnableByButtonType(t);
+  }
+  RefreshVisibleByButtonType(t) {
+    for (const i of this._Io.values()) i.RefreshVisibleByButtonType(t);
   }
   OnOpenMenuView() {
     this.GamepadData?.OnOpenMenuView();
@@ -176,25 +197,25 @@ class SkillButtonUiModel extends ModelBase_1.ModelBase {
     this.GamepadData?.OnCloseMenuView();
   }
   GetCurSkillButtonEntityData() {
-    return this.dyo;
+    return this.uIo;
   }
   GetSkillButtonDataByButton(t) {
-    return this.dyo?.GetSkillButtonDataByButton(t);
+    return this.uIo?.GetSkillButtonDataByButton(t);
   }
   GetBehaviorButtonDataByButton(t) {
-    return this.dyo?.GetBehaviorButtonDataByButton(t);
+    return this.uIo?.GetBehaviorButtonDataByButton(t);
   }
   GetCurRoleConfig() {
-    return this.dyo?.RoleConfig;
+    return this.uIo?.RoleConfig;
   }
   GetSkillNameBySkillId(t) {
-    return this.fyo(), this.gyo.get(t);
+    return this.dIo(), this.mIo.get(t);
   }
-  fyo() {
-    if (!this.gyo) {
-      this.gyo = new Map();
+  dIo() {
+    if (!this.mIo) {
+      this.mIo = new Map();
       var t = SkillButtonTextAll_1.configSkillButtonTextAll.GetConfigList();
-      if (t) for (const e of t) this.gyo.set(e.Id, e.Name);
+      if (t) for (const i of t) this.mIo.set(i.Id, i.Name);
     }
   }
 }

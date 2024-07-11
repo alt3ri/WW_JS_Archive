@@ -1,12 +1,13 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 });
 const UE = require("ue"),
+  Info_1 = require("../../Core/Common/Info"),
   Global_1 = require("../Global"),
+  ControllerHolder_1 = require("../Manager/ControllerHolder"),
   ModelManager_1 = require("../Manager/ModelManager"),
   InputDistributeDefine_1 = require("../Ui/InputDistribute/InputDistributeDefine"),
   InputController_1 = require("./InputController"),
-  InputEnums_1 = require("./InputEnums"),
-  ControllerHolder_1 = require("../Manager/ControllerHolder");
+  InputEnums_1 = require("./InputEnums");
 class InputBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
   static PreProcessInput(t, e) {
     InputController_1.InputController.PreProcessInput(t, e);
@@ -36,7 +37,7 @@ class InputBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
     var t, e;
     return (
       !(
-        1 !== ModelManager_1.ModelManager.PlatformModel?.OperationType ||
+        1 !== Info_1.Info.OperationType ||
         !ModelManager_1.ModelManager.BattleUiModel?.IsPressJoyStick
       ) ||
       !!(
@@ -47,7 +48,7 @@ class InputBlueprintFunctionLibrary extends UE.BlueprintFunctionLibrary {
             0 !== t &&
             (e =
               Global_1.Global.BaseCharacter?.GetEntityNoBlueprint()?.GetComponent(
-                52,
+                53,
               )) &&
             (e.QueryInputAxis(InputEnums_1.EInputAxis.MoveForward) ||
               e.QueryInputAxis(InputEnums_1.EInputAxis.MoveRight))))

@@ -11,14 +11,14 @@ const EventDefine_1 = require("../../../Common/Event/EventDefine"),
 class LevelPlayPrepareTimer extends LogicTreeTimerBase_1.LogicTreeTimerBase {
   constructor() {
     super(...arguments),
-      (this.M$t = -0),
-      (this.y$t = !1),
+      (this.MYt = -0),
+      (this.yYt = !1),
       (this.$Ge = (e) => {
-        "PrepareCountdownFloatTips" === e && this.T$t();
+        "PrepareCountdownFloatTips" === e && this.TYt();
       });
   }
   StartShowTimer(e) {
-    (this.M$t = e),
+    (this.MYt = e),
       ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByItsType(
         13,
       ),
@@ -38,9 +38,9 @@ class LevelPlayPrepareTimer extends LogicTreeTimerBase_1.LogicTreeTimerBase {
       ),
       UiManager_1.UiManager.CloseView("PrepareCountdownFloatTips");
   }
-  T$t() {
-    this.y$t ||
-      ((this.y$t = !0),
+  TYt() {
+    this.yYt ||
+      ((this.yYt = !0),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.CloseView,
         this.$Ge,
@@ -51,7 +51,7 @@ class LevelPlayPrepareTimer extends LogicTreeTimerBase_1.LogicTreeTimerBase {
       ));
   }
   GetRemainTime() {
-    return (this.M$t - TimeUtil_1.TimeUtil.GetServerTimeStamp()) / 1e3;
+    return (this.MYt - TimeUtil_1.TimeUtil.GetServerTimeStamp()) / 1e3;
   }
 }
 exports.LevelPlayPrepareTimer = LevelPlayPrepareTimer;

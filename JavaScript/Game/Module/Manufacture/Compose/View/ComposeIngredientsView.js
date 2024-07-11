@@ -16,13 +16,13 @@ const UE = require("ue"),
 class ComposeIngredientsView extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this.yIi = void 0),
-      (this.JNt = void 0),
-      (this.nNt = () => {
+      (this.yTi = void 0),
+      (this.zOt = void 0),
+      (this.sOt = () => {
         this.GetButton(3).IsSelfInteractive
           ? CommonManager_1.CommonManager.SendManufacture(
-              this.yIi.ItemId,
-              this.JNt.GetManufactureCount(),
+              this.yTi.ItemId,
+              this.zOt.GetManufactureCount(),
             )
           : ComposeController_1.ComposeController.PlayCompositeFailDisplay(
               () => {
@@ -30,19 +30,19 @@ class ComposeIngredientsView extends UiPanelBase_1.UiPanelBase {
               },
             );
       }),
-      (this._9e = () => {
+      (this.I7e = () => {
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.OpenHelpRole,
-          this.yIi.ItemId,
+          this.yTi.ItemId,
         );
       }),
-      (this.IIi = () => {
-        1 === this.yIi.MainType
-          ? this.JNt.RefreshProficiencyAndHelpRole(this.yIi)
-          : this.JNt.RefreshHelpRole();
+      (this.ITi = () => {
+        1 === this.yTi.MainType
+          ? this.zOt.RefreshProficiencyAndHelpRole(this.yTi)
+          : this.zOt.RefreshHelpRole();
       }),
-      (this.TIi = () => {
-        this.RefreshTips(this.yIi);
+      (this.TTi = () => {
+        this.RefreshTips(this.yTi);
       });
   }
   OnRegisterComponent() {
@@ -56,64 +56,64 @@ class ComposeIngredientsView extends UiPanelBase_1.UiPanelBase {
       [6, UE.UIItem],
       [7, UE.UIText],
     ]),
-      (this.BtnBindInfo = [[3, this.nNt]]);
+      (this.BtnBindInfo = [[3, this.sOt]]);
   }
   async OnBeforeStartAsync() {
-    (this.JNt =
+    (this.zOt =
       new ComposeIngerdientsVerticalView_1.ComposeIngredientsVerticalView()),
-      await this.JNt.CreateByActorAsync(this.GetItem(4).GetOwner()),
-      this.JNt.SetActive(!0);
+      await this.zOt.CreateByActorAsync(this.GetItem(4).GetOwner()),
+      this.zOt.SetActive(!0);
   }
   OnStart() {
-    this.JNt.BindChangeClickCall(this._9e),
+    this.zOt.BindChangeClickCall(this.I7e),
       this.dde(),
       LguiUtil_1.LguiUtil.SetLocalText(this.GetText(5), "ComposeButtonText"),
       this.GetButton(3).SetCanClickWhenDisable(!0);
   }
   OnBeforeDestroy() {
-    this.JNt.Destroy(), this.Cde();
+    this.Cde();
   }
   dde() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.CloseHelpRole,
-      this.IIi,
+      this.ITi,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.UpgradeComposeLevel,
-        this.IIi,
+        this.ITi,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.ComposeSuccess,
-        this.TIi,
+        this.TTi,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.ComposeFail,
-        this.TIi,
+        this.TTi,
       );
   }
   Cde() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.CloseHelpRole,
-      this.IIi,
+      this.ITi,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.UpgradeComposeLevel,
-        this.IIi,
+        this.ITi,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.ComposeSuccess,
-        this.TIi,
+        this.TTi,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.ComposeFail,
-        this.TIi,
+        this.TTi,
       );
   }
   OnSecondTimerRefresh() {
-    this.yIi && this.JNt?.OnSecondTimerRefresh();
+    this.yTi && this.zOt?.OnSecondTimerRefresh();
   }
   RefreshTips(e) {
-    this.yIi = e;
+    this.yTi = e;
     var e = ConfigManager_1.ConfigManager.ComposeConfig.GetSynthesisFormulaById(
         e.ItemId,
       ),
@@ -125,30 +125,30 @@ class ComposeIngredientsView extends UiPanelBase_1.UiPanelBase {
         ));
     switch (
       (LguiUtil_1.LguiUtil.SetLocalText(this.GetText(1), "Have", t),
-      this.ZNt(),
-      this.yIi.MainType)
+      this.ekt(),
+      this.yTi.MainType)
     ) {
       case 1:
-        this.LIi();
+        this.LTi();
         break;
       case 2:
-        this.DIi();
+        this.DTi();
         break;
       case 3:
-        this.RIi();
+        this.RTi();
     }
   }
-  ZNt() {
+  ekt() {
     var e = ModelManager_1.ModelManager.ComposeModel,
-      t = e.CheckComposeMaterialEnough(this.yIi.ItemId),
-      i = e.CheckUnlock(this.yIi),
-      s = e.CheckCoinEnough(this.yIi.ItemId),
-      e = e.CheckLimitCount(this.yIi);
-    this.GetText(7).SetText(this.tOt(i, t, s, e)),
+      t = e.CheckComposeMaterialEnough(this.yTi.ItemId),
+      i = e.CheckUnlock(this.yTi),
+      s = e.CheckCoinEnough(this.yTi.ItemId),
+      e = e.CheckLimitCount(this.yTi);
+    this.GetText(7).SetText(this.ikt(i, t, s, e)),
       this.GetItem(6).SetUIActive(!(i && t && e)),
       this.GetButton(3).RootUIComp.SetUIActive(i && t && e);
   }
-  tOt(e, t, i, s) {
+  ikt(e, t, i, s) {
     return e
       ? t
         ? s
@@ -186,14 +186,14 @@ class ComposeIngredientsView extends UiPanelBase_1.UiPanelBase {
           "GenericPrompt_Unlocked_TipsText",
         );
   }
-  LIi() {
-    this.JNt.RefreshReagentProduction(this.yIi);
+  LTi() {
+    this.zOt.RefreshReagentProduction(this.yTi);
   }
-  DIi() {
-    this.JNt.RefreshStructure(this.yIi);
+  DTi() {
+    this.zOt.RefreshStructure(this.yTi);
   }
-  RIi() {
-    this.JNt.RefreshPurification(this.yIi);
+  RTi() {
+    this.zOt.RefreshPurification(this.yTi);
   }
 }
 exports.ComposeIngredientsView = ComposeIngredientsView;

@@ -84,6 +84,7 @@ class SignalDeviceGuideView extends UiViewBase_1.UiViewBase {
     (this.ComponentRegisterInfos = [
       [0, UE.UISprite],
       [1, UE.UIText],
+      [14, UE.UIText],
       [2, UE.UIButtonComponent],
       [3, UE.UIItem],
       [4, UE.UIItem],
@@ -143,6 +144,7 @@ class SignalDeviceGuideView extends UiViewBase_1.UiViewBase {
           this.GetButton(8).RootUIComp.SetUIActive(!0),
           this.GetItem(4).SetUIActive(!0),
           this.tPe.RebuildLayoutByDataNew(this.ZAe)),
+      this.GetText(14).SetUIActive(!1),
       this.Og(0);
   }
   OnBeforeShow() {

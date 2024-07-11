@@ -7,11 +7,11 @@ const UE = require("ue"),
 class SceneItemManipulableCastFreeState extends SceneItemManipulableCastState_1.SceneItemManipulableCastState {
   constructor(e, t) {
     super(e, t),
-      (this.jrr = new UE.Vector()),
+      (this.Fnr = new UE.Vector()),
       (this.StateType = "BeCastingFree");
   }
   SetForward(e) {
-    this.jrr = e;
+    this.Fnr = e;
   }
   OnEnter() {
     super.OnEnter();
@@ -25,7 +25,7 @@ class SceneItemManipulableCastFreeState extends SceneItemManipulableCastState_1.
         this.NeedResetPhysicsMode && (this.SceneItem.ActorComp.PhysicsMode = 3),
         UE.KismetMathLibrary.RandomUnitVector()),
       i = this.SceneItem.ActorComp.GetPrimitiveComponent();
-    i.SetPhysicsLinearVelocity(this.jrr.op_Multiply(e)),
+    i.SetPhysicsLinearVelocity(this.Fnr.op_Multiply(e)),
       i.SetPhysicsAngularVelocityInDegrees(s.op_Multiply(t)),
       (this.SceneItem.TargetActorComponent = void 0),
       (this.SceneItem.TargetOutletComponent = void 0),

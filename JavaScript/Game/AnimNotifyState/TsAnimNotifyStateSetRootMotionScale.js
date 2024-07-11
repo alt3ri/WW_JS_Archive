@@ -21,14 +21,14 @@ class TsAnimNotifyStateSetRootMotionScale extends UE.KuroAnimNotifyState {
       !(
         o.GetSequenceBinding() ||
         !o.IsAutonomousProxy ||
-        !o.Entity.GetComponent(185)?.HasTag(this.Tag.TagId) ||
+        !o.Entity.GetComponent(188)?.HasTag(this.Tag.TagId) ||
         (-451106150 === this.Tag?.TagId &&
-          ((a = (a = o.Entity.GetComponent(156))
-            ? a.GetCurrentValue(Protocol_1.Aki.Protocol.KBs.Proto_Jump) /
+          ((a = (a = o.Entity.GetComponent(158))
+            ? a.GetCurrentValue(Protocol_1.Aki.Protocol.Bks.Proto_Jump) /
               CharacterAttributeTypes_1.PER_TEN_THOUSAND
             : 1),
           t.SetAnimRootMotionTranslationScale(a),
-          (t = o.Entity.GetComponent(161))) &&
+          (t = o.Entity.GetComponent(163))) &&
           (t.JumpUpRate = MathUtils_1.MathUtils.Clamp(
             MIN_JUMP_UP_RATE + 1 / a,
             MIN_JUMP_UP_RATE,
@@ -47,7 +47,7 @@ class TsAnimNotifyStateSetRootMotionScale extends UE.KuroAnimNotifyState {
         !(r = t.CharacterActorComponent)?.Valid ||
         r.GetSequenceBinding() ||
         !r.IsAutonomousProxy ||
-        ((r = r.Entity.GetComponent(161)) && (r.JumpUpRate = 1),
+        ((r = r.Entity.GetComponent(163)) && (r.JumpUpRate = 1),
         t.SetAnimRootMotionTranslationScale(),
         0)
       )

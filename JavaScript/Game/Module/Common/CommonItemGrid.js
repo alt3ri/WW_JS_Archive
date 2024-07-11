@@ -6,24 +6,24 @@ const UE = require("ue"),
   StringUtils_1 = require("../../../Core/Utils/StringUtils"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   GridProxyAbstract_1 = require("../Util/Grid/GridProxyAbstract"),
-  LguiUtil_1 = require("../Util/LguiUtil"),
-  ControllerHolder_1 = require("../../Manager/ControllerHolder");
+  LguiUtil_1 = require("../Util/LguiUtil");
 class CommonItemGrid extends GridProxyAbstract_1.GridProxyAbstract {
   constructor(t = void 0) {
     super(),
-      (this.PIt = 0),
-      (this.xIt = void 0),
-      (this.wIt = (t) => {
+      (this.qTt = 0),
+      (this.GTt = void 0),
+      (this.NTt = (t) => {
         ControllerHolder_1.ControllerHolder.ItemController.OpenItemTipsByItemId(
           t,
         );
       }),
-      (this.BIt = (t) => {
-        t === this.PIt && this.GetExtendToggle(0).SetToggleState(0, !1);
+      (this.OTt = (t) => {
+        t === this.qTt && this.GetExtendToggle(0).SetToggleState(0, !1);
       }),
-      (this.x4e = (t) => {
-        this.wIt && 1 === t && this.wIt(this.PIt);
+      (this.Bke = (t) => {
+        this.NTt && 1 === t && this.NTt(this.qTt);
       }),
       t && this.CreateThenShowByActor(t);
   }
@@ -44,27 +44,27 @@ class CommonItemGrid extends GridProxyAbstract_1.GridProxyAbstract {
       [12, UE.UIItem],
       [13, UE.UIItem],
     ]),
-      (this.BtnBindInfo = [[0, this.x4e]]);
+      (this.BtnBindInfo = [[0, this.Bke]]);
   }
   OnStart() {
-    this.h7e(),
+    this.SHe(),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.CloseItemTips,
-        this.BIt,
+        this.OTt,
       );
   }
   OnBeforeDestroy() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.CloseItemTips,
-      this.BIt,
+      this.OTt,
     );
   }
-  h7e() {
-    this.SetEmpty(!1), this.SetLock(!1), this.SetRoleHead(), this.bIt();
+  SHe() {
+    this.SetEmpty(!1), this.SetLock(!1), this.SetRoleHead(), this.kTt();
   }
-  qIt() {
-    this.SetItemIcon(this.GetTexture(3), this.PIt, this.xIt),
-      this.SetItemQualityIcon(this.GetSprite(4), this.PIt, this.xIt);
+  FTt() {
+    this.SetItemIcon(this.GetTexture(3), this.qTt, this.GTt),
+      this.SetItemQualityIcon(this.GetSprite(4), this.qTt, this.GTt);
   }
   Refresh(t, i, e) {
     var s = t[0],
@@ -75,15 +75,15 @@ class CommonItemGrid extends GridProxyAbstract_1.GridProxyAbstract {
     this.GetSprite(4).SetUIActive(t);
   }
   SetBelongViewName(t) {
-    this.xIt = t;
+    this.GTt = t;
   }
   RefreshItem(t, i = 0) {
-    (this.PIt = t), this.qIt(), this.GIt(i);
+    (this.qTt = t), this.FTt(), this.VTt(i);
   }
   BindClickCallback(t) {
-    this.wIt = t;
+    this.NTt = t;
   }
-  GIt(t = 0) {
+  VTt(t = 0) {
     t
       ? (LguiUtil_1.LguiUtil.SetLocalText(this.GetText(10), "ShowCount", t),
         this.GetItem(12).SetUIActive(!0))
@@ -96,7 +96,7 @@ class CommonItemGrid extends GridProxyAbstract_1.GridProxyAbstract {
       ? (i.SetUIActive(!1), e.SetUIActive(!1))
       : (i.SetUIActive(!0), e.SetUIActive(!0), this.SetTextureByPath(t, i));
   }
-  bIt(t = 0) {
+  kTt(t = 0) {
     t
       ? (this.GetText(8).SetText(t.toFixed(0)), this.GetItem(9).SetUIActive(!0))
       : this.GetItem(9).SetUIActive(!1);
@@ -117,21 +117,21 @@ class CommonItemGrid extends GridProxyAbstract_1.GridProxyAbstract {
     this.GetItem(12).SetUIActive(t);
   }
   async RefreshItemAsync(t, i = 0) {
-    (this.PIt = t), await this.NIt(), this.GIt(i);
+    (this.qTt = t), await this.HTt(), this.VTt(i);
   }
-  async NIt() {
+  async HTt() {
     const t = new CustomPromise_1.CustomPromise(),
       i =
         (this.GetTexture(3).SetUIActive(!1),
-        this.SetItemIcon(this.GetTexture(3), this.PIt, this.xIt, () => {
+        this.SetItemIcon(this.GetTexture(3), this.qTt, this.GTt, () => {
           t.SetResult(void 0), this.GetTexture(3)?.SetUIActive(!0);
         }),
         await t.Promise,
         new CustomPromise_1.CustomPromise());
     this.SetItemQualityIcon(
       this.GetSprite(4),
-      this.PIt,
-      this.xIt,
+      this.qTt,
+      this.GTt,
       "BackgroundSprite",
       () => {
         i.SetResult(void 0);

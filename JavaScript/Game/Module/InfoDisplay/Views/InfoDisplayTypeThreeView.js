@@ -10,8 +10,8 @@ const UE = require("ue"),
 class InfoDisplayTypeThreeView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
-      (this.nsi = void 0),
-      (this.Opt = () => {
+      (this.sai = void 0),
+      (this.Jvt = () => {
         this.CloseMe();
       });
   }
@@ -26,32 +26,32 @@ class InfoDisplayTypeThreeView extends UiTickViewBase_1.UiTickViewBase {
       [6, UE.UIItem],
       [7, UE.UIItem],
     ]),
-      (this.BtnBindInfo = [[4, this.Opt]]);
+      (this.BtnBindInfo = [[4, this.Jvt]]);
   }
   OnStart() {
-    this.nsi = new InfoDisplayAudioPlayer_1.InfoDisplayAudioPlayer();
+    this.sai = new InfoDisplayAudioPlayer_1.InfoDisplayAudioPlayer();
     var e = this.GetItem(5),
       e =
-        (this.nsi.Initialize(e.GetOwner()),
-        this.nsi.SetShowTextComponent(this.GetText(3)),
+        (this.sai.Initialize(e.GetOwner()),
+        this.sai.SetShowTextComponent(this.GetText(3)),
         ModelManager_1.ModelManager.InfoDisplayModel.CurrentInformationId());
-    this.OPt(e),
-      this.nsi.Refresh(
+    this.Hxt(e),
+      this.sai.Refresh(
         ConfigManager_1.ConfigManager.InfoDisplayModuleConfig.GetInfoDisplayAudio(
           e,
         ),
       );
   }
-  OPt(e) {
-    this.$8e(e), this.usi(e), this.msi(e);
+  Hxt(e) {
+    this.l7e(e), this.cai(e), this.mai(e);
   }
-  msi(e) {
+  mai(e) {
     "" !==
     ConfigManager_1.ConfigManager.InfoDisplayModuleConfig.GetInfoDisplayAudio(e)
       ? (this.GetItem(5).SetUIActive(!0), this.GetItem(7).SetUIActive(!0))
       : (this.GetItem(5).SetUIActive(!1), this.GetItem(7).SetUIActive(!1));
   }
-  $8e(e) {
+  l7e(e) {
     var i =
         ConfigManager_1.ConfigManager.InfoDisplayModuleConfig.GetInfoDisplayTitle(
           e,
@@ -63,7 +63,7 @@ class InfoDisplayTypeThreeView extends UiTickViewBase_1.UiTickViewBase {
         ));
     this.GetText(2).SetText(i);
   }
-  usi(e) {
+  cai(e) {
     e =
       ConfigManager_1.ConfigManager.InfoDisplayModuleConfig.GetInfoDisplayBgStamp(
         e,
@@ -71,12 +71,12 @@ class InfoDisplayTypeThreeView extends UiTickViewBase_1.UiTickViewBase {
     "" !== e && this.SetTextureByPath(e, this.GetTexture(1));
   }
   OnBeforeDestroy() {
-    this.nsi.Destroy();
+    this.sai.Destroy();
     var e = ModelManager_1.ModelManager.InfoDisplayModel.CurrentInformationId();
     InfoDisplayController_1.InfoDisplayController.RequestReadDisplayInfo(e);
   }
   OnTick(e) {
-    this.nsi?.OnTick(e);
+    this.sai?.OnTick(e);
   }
 }
 exports.InfoDisplayTypeThreeView = InfoDisplayTypeThreeView;

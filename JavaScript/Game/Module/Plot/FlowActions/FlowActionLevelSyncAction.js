@@ -2,13 +2,17 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FlowActionLevelSyncAction = void 0);
 const LevelGeneralContextDefine_1 = require("../../../LevelGamePlay/LevelGeneralContextDefine"),
-  FlowActionBase_1 = require("./FlowActionBase"),
-  ControllerHolder_1 = require("../../../Manager/ControllerHolder");
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
+  FlowActionBase_1 = require("./FlowActionBase");
 class FlowActionLevelSyncAction extends FlowActionBase_1.FlowActionBase {
   OnExecute() {
+    var e = LevelGeneralContextDefine_1.PlotContext.Create(
+      this.Context.FlowIncId,
+      this.Context.Context?.SubType,
+    );
     ControllerHolder_1.ControllerHolder.LevelGeneralController.ExecuteActionsNew(
       [this.ActionInfo],
-      LevelGeneralContextDefine_1.GeneralContext.Copy(this.Context.Context),
+      e,
     );
   }
   OnBackgroundExecute() {

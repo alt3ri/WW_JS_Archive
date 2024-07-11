@@ -28,20 +28,23 @@ class BattlePassMainView extends UiViewBase_1.UiViewBase {
       (this.TabViewComponent = void 0),
       (this.TabComponent = void 0),
       (this.TabDataList = []),
-      (this.MOi = 0),
+      (this.Eki = 0),
       (this.TDe = void 0),
-      (this.dVe = (e, t) => {
+      (this.R6e = (e, t) => {
         return new CommonTabItem_1.CommonTabItem();
       }),
       (this.pqe = (e) => {
         var t = this.TabDataList[e],
           i = t.ChildViewName,
           e = this.TabComponent.GetTabItemByIndex(e);
-        this.TabViewComponent.ToggleCallBack(t, i, e, this.SOi),
+        this.TabViewComponent.ToggleCallBack(t, i, e, this.yki),
           this.GetItem(2).SetUIActive("BattlePassWeaponView" !== i),
           this.GetItem(4).SetUIActive("BattlePassWeaponView" !== i),
           this.GetItem(5).SetUIActive("BattlePassWeaponView" !== i),
           this.GetItem(6).SetUIActive("BattlePassWeaponView" !== i),
+          this.TabComponent?.SetPopupToggleVisible(
+            "BattlePassWeaponView" === i,
+          ),
           (ModelManager_1.ModelManager.AdventureGuideModel.CurrentGuideTabName =
             i);
       }),
@@ -52,18 +55,25 @@ class BattlePassMainView extends UiViewBase_1.UiViewBase {
           new CommonTabTitleData_1.CommonTabTitleData(e.TabName),
         );
       }),
-      (this.gpt = () => {
+      (this.Rvt = () => {
         this.CloseMe();
       }),
-      (this.EOi = () => {
+      (this.Iki = () => {
         let e = UiModel_1.UiModel.GetTopView(UiLayerType_1.ELayerType.Pop);
         (e = e || UiModel_1.UiModel.GetTopView(UiLayerType_1.ELayerType.Normal))
           .Info.Name === this.Info.Name &&
           BattlePassController_1.BattlePassController.TryShowUpLevelView(!1);
       }),
+      (this.cMa = (e) => {
+        var t;
+        "BattlePassWeaponView" ===
+          this.TabViewComponent.GetCurrentTabViewName() &&
+          void 0 !== (t = this.TabViewComponent.GetCurrentTabView()) &&
+          t.OnClickFullLevelToggle(e);
+      }),
       (this.RefreshLeftTime = () => {
         var e = TimeUtil_1.TimeUtil.GetServerTime(),
-          e = this.MOi - e;
+          e = this.Eki - e;
         e < 0
           ? this.WaitToDestroy ||
             BattlePassController_1.BattlePassController.ShowTimePassConfirm()
@@ -74,7 +84,7 @@ class BattlePassMainView extends UiViewBase_1.UiViewBase {
               e.CountDownText,
             ));
       }),
-      (this.SOi = void 0);
+      (this.yki = void 0);
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -93,7 +103,7 @@ class BattlePassMainView extends UiViewBase_1.UiViewBase {
         "BattlePassMainView",
       );
     var e = new CommonTabComponentData_1.CommonTabComponentData(
-      this.dVe,
+      this.R6e,
       this.pqe,
       this.yqe,
     );
@@ -101,15 +111,17 @@ class BattlePassMainView extends UiViewBase_1.UiViewBase {
       new TabComponentWithCaptionItem_1.TabComponentWithCaptionItem(
         this.GetItem(0),
         e,
-        this.gpt,
+        this.Rvt,
       )),
       await this.TabComponent.RefreshTabItemByLengthAsync(
         this.TabDataList.length,
       ),
+      await this.TabComponent.CreatePopupToggleTab(this.cMa),
+      this.TabComponent.SetPopupToggleName("PrefabTextItem_3652268202_Text"),
       (this.TabViewComponent = new TabViewComponent_1.TabViewComponent(
         this.GetItem(1),
       )),
-      (this.MOi =
+      (this.Eki =
         ModelManager_1.ModelManager.BattlePassModel.GetBattlePassEndTime()),
       (this.TDe = TimerSystem_1.TimerSystem.Forever(
         this.RefreshLeftTime,
@@ -123,20 +135,20 @@ class BattlePassMainView extends UiViewBase_1.UiViewBase {
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnBattlePassLevelUpEvent,
-      this.EOi,
+      this.Iki,
     );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnBattlePassLevelUpEvent,
-      this.EOi,
+      this.Iki,
     );
   }
   BindTabViewRed(t, e) {
     var i = this.TabDataList.findIndex((e) => e.ChildViewName === t);
     this.TabComponent.GetTabItemByIndex(i).BindRedDot(e);
   }
-  yOi(t) {
+  Tki(t) {
     var e = this.TabDataList.findIndex((e) => e.ChildViewName === t);
     this.TabComponent.GetTabItemByIndex(e).UnBindRedDot();
   }
@@ -150,8 +162,8 @@ class BattlePassMainView extends UiViewBase_1.UiViewBase {
       EventDefine_1.EEventName.BattlePassMainViewHide,
     ),
       this.TabViewComponent.SetCurrentTabViewState(!1),
-      this.yOi("BattlePassRewardView"),
-      this.yOi("BattlePassTaskView");
+      this.Tki("BattlePassRewardView"),
+      this.Tki("BattlePassTaskView");
   }
   OnBeforeDestroy() {
     this.TDe?.Remove(),
@@ -163,20 +175,19 @@ class BattlePassMainView extends UiViewBase_1.UiViewBase {
         (this.TabViewComponent = void 0)),
       (this.TabDataList = []),
       UiSceneManager_1.UiSceneManager.DestroyWeaponObserver(
-        this.SOi.WeaponObserver,
+        this.yki.WeaponObserver,
       ),
       UiSceneManager_1.UiSceneManager.DestroyWeaponScabbardObserver(
-        this.SOi.WeaponScabbardObserver,
+        this.yki.WeaponScabbardObserver,
       ),
-      (this.SOi = void 0);
+      (this.yki = void 0);
   }
   OnBeforeCreate() {
-    UiSceneManager_1.UiSceneManager.InitWeaponObserver(),
-      UiSceneManager_1.UiSceneManager.InitWeaponScabbardObserver(),
-      (this.SOi = new WeaponDefine_1.WeaponSkeletalObserverHandles(
-        UiSceneManager_1.UiSceneManager.GetWeaponObserver(),
-        UiSceneManager_1.UiSceneManager.GetWeaponScabbardObserver(),
-      ));
+    var e = UiSceneManager_1.UiSceneManager.InitWeaponObserver(!0),
+      t =
+        (e.Model?.CheckGetComponent(3)?.SetLoadingActive(!1),
+        UiSceneManager_1.UiSceneManager.InitWeaponScabbardObserver());
+    this.yki = new WeaponDefine_1.WeaponSkeletalObserverHandles(e, t);
   }
 }
 exports.BattlePassMainView = BattlePassMainView;

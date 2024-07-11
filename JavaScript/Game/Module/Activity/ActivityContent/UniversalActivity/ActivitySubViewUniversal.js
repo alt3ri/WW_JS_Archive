@@ -20,7 +20,7 @@ class ActivitySubViewUniversal extends ActivitySubViewBase_1.ActivitySubViewBase
       (this.DNe = void 0),
       (this.UNe = void 0),
       (this.ANe = void 0),
-      (this.u2e = () => {
+      (this.DFe = () => {
         var i;
         this.ActivityBaseData.GetPreGuideQuestFinishState()
           ? ActivityUniversalController_1.ActivityUniversalController.ActivityFunctionExecute(
@@ -66,32 +66,32 @@ class ActivitySubViewUniversal extends ActivitySubViewBase_1.ActivitySubViewBase
       e = this.ActivityBaseData.GetExtraConfig();
     t &&
       e &&
-      (this.LNe.SetTitleByText(this.ActivityBaseData.GetTitle()),
-      (e = t.DescTheme),
-      (t = t.Desc),
+      ((e = t.DescTheme),
       (i = !StringUtils_1.StringUtils.IsEmpty(e)),
-      this.DNe.SetTitleVisible(i),
-      i && this.DNe.SetTitleByTextId(e),
-      this.DNe.SetContentByTextId(t),
-      (i = this.ActivityBaseData.GetPreviewReward()),
+      this.LNe.SetTitleByText(this.ActivityBaseData.GetTitle()),
+      this.LNe.SetSubTitleVisible(i),
+      i && this.LNe.SetSubTitleByTextId(e),
+      (i = t.Desc),
+      this.DNe.SetContentByTextId(i),
+      (e = this.ActivityBaseData.GetPreviewReward()),
       this.UNe.SetTitleByTextId("CollectActivity_reward"),
       this.UNe.InitGridLayout(this.UNe.InitCommonGridItem),
-      this.UNe.RefreshItemLayout(i),
-      this.ANe.FunctionButton?.BindCallback(this.u2e),
-      (e = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
+      this.UNe.RefreshItemLayout(e),
+      this.ANe.FunctionButton?.BindCallback(this.DFe),
+      (t = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
         "CollectActivity_Button_ahead",
       )),
-      this.ANe.FunctionButton.SetText(e),
+      this.ANe.FunctionButton.SetText(t),
       this.OnRefreshView());
   }
   OnRefreshView() {
-    this.Xke(), this.FNe();
+    this._Fe(), this.FNe();
   }
   FNe() {
     var [i, t] = this.GetTimeVisibleAndRemainTime();
     this.LNe.SetTimeTextVisible(i), i && this.LNe.SetTimeTextByText(t);
   }
-  Xke() {
+  _Fe() {
     var i,
       t,
       e = this.ActivityBaseData.GetExtraConfig();

@@ -8,7 +8,7 @@ class TsAnimNotifyFightStand extends UE.KuroAnimNotify {
     return (
       e instanceof TsBaseCharacter_1.default &&
         e?.CharacterActorComponent?.Entity?.GetComponent(
-          160,
+          162,
         )?.EnterBattleIdle(),
       !0
     );

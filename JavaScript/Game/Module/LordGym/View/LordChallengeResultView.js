@@ -19,10 +19,10 @@ const UE = require("ue"),
 class LordChallengeResultView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.w2e = void 0),
-      (this.B2e = void 0),
+      (this.$Fe = void 0),
+      (this.YFe = void 0),
       (this.ButtonMap = void 0),
-      (this.q2e = () => {
+      (this.zFe = () => {
         this.CloseMe();
       });
   }
@@ -42,30 +42,30 @@ class LordChallengeResultView extends UiViewBase_1.UiViewBase {
     ];
   }
   async OnBeforeStartAsync() {
-    (this.ButtonMap = new Map()), await this.G2e();
+    (this.ButtonMap = new Map()), await this.ZFe();
   }
-  async G2e() {
+  async ZFe() {
     this.GetItem(5)?.SetUIActive(!1);
     const i = [];
     var e = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
         "ConfirmBox_41_ButtonText_0",
       ),
-      e = this.k2e(this.GetItem(5), CLOSE_BUTTON_KEY, e, this.q2e),
+      e = this.i3e(this.GetItem(5), CLOSE_BUTTON_KEY, e, this.zFe),
       e =
         (i.push(e),
-        this.B2e.ButtonList.forEach((e, t) => {
-          t = this.k2e(this.GetItem(5), t, e.Title, e.ClickFunc);
+        this.YFe.ButtonList.forEach((e, t) => {
+          t = this.i3e(this.GetItem(5), t, e.Title, e.ClickFunc);
           i.push(t);
         }),
         await Promise.all(i),
         this.ButtonMap.get(CLOSE_BUTTON_KEY)),
       t = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
         "Text_InstanceDungeonLeftTimeToAutoLeave_Text",
-        this.B2e.AutoCloseTime.toString(),
+        this.YFe.AutoCloseTime.toString(),
       );
     e.SetFloatText(t);
   }
-  async k2e(e, t, i, s) {
+  async i3e(e, t, i, s) {
     var o = this.GetItem(5),
       r = this.GetItem(4),
       o = LguiUtil_1.LguiUtil.DuplicateActor(o.GetOwner(), r),
@@ -76,22 +76,22 @@ class LordChallengeResultView extends UiViewBase_1.UiViewBase {
       r.SetBtnText(i);
   }
   OnStart() {
-    this.B2e = this.OpenParam;
+    this.YFe = this.OpenParam;
   }
   OnBeforeShow() {
-    this.O2e(), this.Q2e(), this.$2e(), this.N2e();
+    this.t3e(), this.l3e(), this.u3e(), this.e3e();
   }
-  F2e() {
-    TimerSystem_1.TimerSystem.Has(this.w2e) &&
-      TimerSystem_1.TimerSystem.Remove(this.w2e),
-      (this.w2e = void 0);
+  o3e() {
+    TimerSystem_1.TimerSystem.Has(this.$Fe) &&
+      TimerSystem_1.TimerSystem.Remove(this.$Fe),
+      (this.$Fe = void 0);
   }
-  N2e() {
-    let t = this.B2e.AutoCloseTime + 1;
-    this.w2e = TimerSystem_1.TimerSystem.Forever(() => {
+  e3e() {
+    let t = this.YFe.AutoCloseTime + 1;
+    this.$Fe = TimerSystem_1.TimerSystem.Forever(() => {
       var e;
       t <= 0
-        ? (TimerSystem_1.TimerSystem.Remove(this.w2e), this.q2e())
+        ? (TimerSystem_1.TimerSystem.Remove(this.$Fe), this.zFe())
         : ((e = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
             "Text_InstanceDungeonLeftTimeToAutoLeave_Text",
             (t--).toString(),
@@ -99,25 +99,25 @@ class LordChallengeResultView extends UiViewBase_1.UiViewBase {
           this.ButtonMap.get(CLOSE_BUTTON_KEY).SetFloatText(e));
     }, CommonDefine_1.MILLIONSECOND_PER_SECOND);
   }
-  $2e() {
-    var e = void 0 !== this.B2e.PassTime;
+  u3e() {
+    var e = void 0 !== this.YFe.PassTime;
     this.GetText(13)?.SetUIActive(e),
       e &&
-        ((e = TimeUtil_1.TimeUtil.GetTimeString(this.B2e.PassTime)),
+        ((e = TimeUtil_1.TimeUtil.GetTimeString(this.YFe.PassTime)),
         this.GetText(10).SetText(e));
   }
-  Q2e() {
-    var e = void 0 !== this.B2e?.Score;
+  l3e() {
+    var e = void 0 !== this.YFe?.Score;
     this.GetItem(12)?.SetUIActive(e),
       e &&
-        (this.GetText(8).SetText(this.B2e.Score.toString()),
-        this.GetItem(9).SetUIActive(this.B2e?.IsNewRecord ?? !1));
+        (this.GetText(8).SetText(this.YFe.Score.toString()),
+        this.GetItem(9).SetUIActive(this.YFe?.IsNewRecord ?? !1));
   }
   OnBeforeDestroy() {
-    this.F2e();
+    this.o3e();
   }
-  O2e() {
-    var e = 0 === this.B2e?.Result,
+  t3e() {
+    var e = 0 === this.YFe?.Result,
       t =
         (this.GetItem(12).SetUIActive(e),
         this.GetItem(13).SetUIActive(e),
@@ -139,9 +139,9 @@ exports.LordChallengeResultView = LordChallengeResultView;
 class Button extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this.c2e = void 0),
-      (this.m2e = () => {
-        this.c2e?.();
+      (this.RFe = void 0),
+      (this.UFe = () => {
+        this.RFe?.();
       });
   }
   OnRegisterComponent() {
@@ -151,13 +151,13 @@ class Button extends UiPanelBase_1.UiPanelBase {
       [2, UE.UIText],
       [3, UE.UIButtonComponent],
     ]),
-      (this.BtnBindInfo = [[3, this.m2e]]);
+      (this.BtnBindInfo = [[3, this.UFe]]);
   }
   OnBeforeShow() {
     this.GetText(0).SetText(""), this.GetText(2).SetText("");
   }
   async InitializeAsync(e, t) {
-    (this.c2e = t), await this.CreateByActorAsync(e);
+    (this.RFe = t), await this.CreateByActorAsync(e);
   }
   SetFloatText(e) {
     this.GetText(2).SetUIActive(!0), this.GetText(2).SetText(e);

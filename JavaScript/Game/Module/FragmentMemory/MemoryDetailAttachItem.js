@@ -12,10 +12,10 @@ const UE = require("ue"),
 class MemoryDetailAttachItem extends AutoAttachItem_1.AutoAttachItem {
   constructor() {
     super(...arguments),
-      (this.Y6i = void 0),
-      (this.I7e = 0),
-      (this.EPe = void 0),
-      (this.Nft = !1);
+      (this.$8i = void 0),
+      (this.NHe = 0),
+      (this.SPe = void 0),
+      (this.Ypt = !1);
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -32,32 +32,32 @@ class MemoryDetailAttachItem extends AutoAttachItem_1.AutoAttachItem {
         () => {
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.OnFragmentTopicClick,
-            this.I7e,
+            this.NHe,
           );
         },
       ],
     ];
   }
-  Sbn() {
-    void 0 === this.EPe &&
-      (this.EPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem));
+  MOn() {
+    void 0 === this.SPe &&
+      (this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem));
   }
   OnRefreshItem(e) {
-    this.Sbn(),
-      -1 === (this.I7e = e)
-        ? (this.Y6i = void 0)
+    this.MOn(),
+      -1 === (this.NHe = e)
+        ? (this.$8i = void 0)
         : ((e =
             ConfigManager_1.ConfigManager.FragmentMemoryConfig.GetPhotoMemoryTopicById(
               e,
             )),
-          (this.Y6i = e)),
-      this.k5e(),
-      this.KUn(),
+          (this.$8i = e)),
+      this.e6e(),
+      this.Iwn(),
       this.Wbe(),
-      this.J8e();
+      this.u7e();
   }
-  J8e() {
-    -1 === this.I7e
+  u7e() {
+    -1 === this.NHe
       ? (this.SetSpriteByPath(
           ConfigManager_1.ConfigManager.FragmentMemoryConfig.GetTopicNotOpenTexturePath(),
           this.GetSprite(0),
@@ -68,23 +68,23 @@ class MemoryDetailAttachItem extends AutoAttachItem_1.AutoAttachItem {
           this.GetSprite(1),
           !1,
         ))
-      : (this.SetSpriteByPath(this.Y6i.BgResource, this.GetSprite(0), !1),
-        this.SetSpriteByPath(this.Y6i.BgResourceLight, this.GetSprite(1), !1));
+      : (this.SetSpriteByPath(this.$8i.BgResource, this.GetSprite(0), !1),
+        this.SetSpriteByPath(this.$8i.BgResourceLight, this.GetSprite(1), !1));
   }
   Wbe() {
-    -1 === this.I7e || void 0 === this.Y6i
+    -1 === this.NHe || void 0 === this.$8i
       ? LguiUtil_1.LguiUtil.SetLocalTextNew(
           this.GetText(2),
           "FragmentMemoryNotOpen",
         )
-      : this.GetText(2)?.ShowTextNew(this.Y6i.Title);
+      : this.GetText(2)?.ShowTextNew(this.$8i.Title);
   }
-  KUn() {
-    if (-1 === this.I7e || void 0 === this.Y6i) this.GetText(3)?.SetText("");
+  Iwn() {
+    if (-1 === this.NHe || void 0 === this.$8i) this.GetText(3)?.SetText("");
     else {
       var t =
         ConfigManager_1.ConfigManager.FragmentMemoryConfig.GetPhotoMemoryCollectConfigListByTopicId(
-          this.Y6i.Id,
+          this.$8i.Id,
         );
       let e = 0;
       for (const s of t) {
@@ -102,11 +102,11 @@ class MemoryDetailAttachItem extends AutoAttachItem_1.AutoAttachItem {
       );
     }
   }
-  k5e() {
-    if (void 0 === this.Y6i) this.GetItem(4)?.SetUIActive(!1);
+  e6e() {
+    if (void 0 === this.$8i) this.GetItem(4)?.SetUIActive(!1);
     else {
       var t = ModelManager_1.ModelManager.FragmentMemoryModel.GetTopicDataById(
-        this.Y6i.Id,
+        this.$8i.Id,
       );
       let e = !1;
       t && t.GetAllCollectState() && (e = !0), this.GetItem(4)?.SetUIActive(e);
@@ -114,18 +114,18 @@ class MemoryDetailAttachItem extends AutoAttachItem_1.AutoAttachItem {
   }
   OnSelect() {
     this.GetExtendToggle(5)?.SetToggleState(1),
-      this.EPe?.StopCurrentSequence(),
-      this.EPe?.PlaySequencePurely("Select"),
+      this.SPe?.StopCurrentSequence(),
+      this.SPe?.PlaySequencePurely("Select"),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnFragmentTopicSelect,
-        this.I7e,
+        this.NHe,
       ),
-      (this.Nft = !0);
+      (this.Ypt = !0);
   }
   OnUnSelect() {
-    this.Nft && this.EPe?.PlaySequencePurely("Unselect"),
+    this.Ypt && this.SPe?.PlaySequencePurely("Unselect"),
       this.GetExtendToggle(5)?.SetToggleState(0),
-      (this.Nft = !1);
+      (this.Ypt = !1);
   }
   OnMoveItem() {}
 }

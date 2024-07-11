@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.GamepadSkillButtonPanel = void 0);
 const UE = require("ue"),
+  Info_1 = require("../../../../../Core/Common/Info"),
   EventDefine_1 = require("../../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../../Common/Event/EventSystem"),
   InputController_1 = require("../../../../Input/InputController"),
@@ -16,75 +17,71 @@ const UE = require("ue"),
 class GamepadSkillButtonPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
   constructor() {
     super(...arguments),
-      (this.YJe = void 0),
-      (this.JJe = []),
-      (this.zJe = void 0),
-      (this.ZJe = (t) => {
-        this.eze();
+      (this.hZe = void 0),
+      (this.lZe = []),
+      (this._Ze = void 0),
+      (this.uZe = (t) => {
+        this.cZe();
       }),
-      (this.tze = () => {
-        this.ize();
+      (this.mZe = () => {
+        this.dZe();
       }),
-      (this.oze = () => {
-        this.zJe.RefreshButtonData(), this.eze();
+      (this.CZe = () => {
+        this._Ze.RefreshButtonData(), this.cZe();
       }),
-      (this.rze = (t, e) => {
+      (this.gZe = (t, e) => {
         this.Visible &&
-          (t = this.nze(t)) &&
+          (t = this.fZe(t)) &&
           t.GetSkillButtonData() &&
           t.RefreshEnable();
       }),
-      (this.sze = (t) => {
-        t = this.nze(t);
+      (this.pZe = (t) => {
+        t = this.fZe(t);
         t
           ? (t.RefreshVisible(), t.RefreshKey())
-          : (this.zJe.RefreshButtonData(), this.eze());
+          : (this._Ze.RefreshButtonData(), this.cZe());
       }),
-      (this.aze = (t) => {
-        var e = this.nze(t);
-        e ? e.GetSkillButtonData() && e.RefreshDynamicEffect() : this.hze(t);
+      (this.vZe = (t) => {
+        var e = this.fZe(t);
+        e ? e.GetSkillButtonData() && e.RefreshDynamicEffect() : this.MZe(t);
       }),
-      (this.lze = (t) => {
+      (this.EZe = (t) => {
         var e,
           i =
             ModelManager_1.ModelManager.SkillButtonUiModel.GetSkillButtonDataByButton(
               t,
             );
-        i && ((e = this.nze(t)) ? e.Refresh(i) : this._ze(t));
+        i && ((e = this.fZe(t)) ? e.Refresh(i) : this.SZe(t));
       }),
-      (this.uze = (t) => {
-        t = this.nze(t);
+      (this.yZe = (t) => {
+        t = this.fZe(t);
         t && t.RefreshAttribute(!0);
       }),
-      (this.cze = (t) => {
-        t = this.nze(t);
+      (this.IZe = (t) => {
+        t = this.fZe(t);
         t && (t.RefreshSkillIcon(), t.RefreshSkillName());
       }),
-      (this.mze = (t) => {
-        var e = this.nze(t);
-        e ? e.RefreshSkillCoolDown() : this._ze(t);
+      (this.TZe = (t) => {
+        var e = this.fZe(t);
+        e ? e.RefreshSkillCoolDown() : this.SZe(t);
       }),
-      (this.dze = (t) => {
-        for (const e of this.JJe) e.PauseGame(t);
+      (this.LZe = (t) => {
+        for (const e of this.lZe) e.PauseGame(t);
       }),
-      (this.Cze = (t) => {
+      (this.DZe = (t) => {
         101 === t &&
-          (this.zJe.RefreshButtonData(),
-          this.zJe.RefreshAimButtonVisible(),
-          this.eze());
+          (this._Ze.RefreshButtonData(),
+          this._Ze.RefreshAimButtonVisible(),
+          this.cZe());
       }),
-      (this.kJe = () => {
-        for (const t of this.JJe) t.RefreshTimeDilation();
+      (this.zze = () => {
+        for (const t of this.lZe) t.RefreshTimeDilation();
       }),
-      (this.dKe = (t, e, i) => {
-        this.SetVisible(
-          5,
-          ModelManager_1.ModelManager.PlatformModel.IsGamepad(),
-        ),
-          this.eze();
+      (this.XBo = () => {
+        this.SetVisible(5, Info_1.Info.IsInGamepad()), this.cZe();
       }),
-      (this.gze = (t) => {
-        this.eze(), this.fze(), this.pze(t), this.vze();
+      (this.RZe = (t) => {
+        this.cZe(), this.UZe(), this.AZe(t), this.PZe();
       }),
       (this.bMe = (i, t) => {
         if (0 === t && i !== InputMappingsDefine_1.actionMappings.攻击) {
@@ -92,31 +89,31 @@ class GamepadSkillButtonPanel extends BattleChildViewPanel_1.BattleChildViewPane
             e = !1;
           if (i === InputMappingsDefine_1.actionMappings.手柄主攻击) t = 4;
           else if (i === InputMappingsDefine_1.actionMappings.手柄副攻击) {
-            if (!this.zJe.IsAim()) return;
+            if (!this._Ze.IsAim()) return;
             (t = 11), (e = !0);
-          } else t = this.zJe.GetButtonTypeByActionName(i);
-          this.nze(t)?.OnInputAction(e);
+          } else t = this._Ze.GetButtonTypeByActionName(i);
+          this.fZe(t)?.OnInputAction(e);
         }
       }),
-      (this.Mze = (t, e) => {
-        this.Sze() &&
+      (this.xZe = (t, e) => {
+        this.wZe() &&
           InputController_1.InputController.InputAxis(
             InputEnums_1.EInputAxis.LookUp,
             -e,
           );
       }),
-      (this.Eze = (t, e) => {
-        this.Sze() &&
+      (this.BZe = (t, e) => {
+        this.wZe() &&
           InputController_1.InputController.InputAxis(
             InputEnums_1.EInputAxis.Turn,
             e,
           );
       }),
-      (this.yze = (t) => {
-        "InteractionHintView" === t && this.Ize();
+      (this.bZe = (t) => {
+        "InteractionHintView" === t && this.qZe();
       }),
       (this.$Ge = (t) => {
-        "InteractionHintView" === t && this.Ize();
+        "InteractionHintView" === t && this.qZe();
       });
   }
   OnRegisterComponent() {
@@ -133,93 +130,93 @@ class GamepadSkillButtonPanel extends BattleChildViewPanel_1.BattleChildViewPane
     ];
   }
   InitializeTemp() {
-    this.zJe = ModelManager_1.ModelManager.SkillButtonUiModel.GamepadData;
+    this._Ze = ModelManager_1.ModelManager.SkillButtonUiModel.GamepadData;
   }
   async InitializeAsync() {
-    await this.Tze(),
+    await this.GZe(),
       await this.NewAllBattleSkillItems(),
-      this.Lze(),
-      this.eze(),
-      this.fze(),
-      this.Ize();
+      this.NZe(),
+      this.cZe(),
+      this.UZe(),
+      this.qZe();
   }
   Reset() {
-    (this.JJe.length = 0), super.Reset();
+    (this.lZe.length = 0), super.Reset();
   }
   OnAfterShow() {
-    for (const t of this.JJe) t.RefreshEnable(!0);
+    for (const t of this.lZe) t.RefreshEnable(!0);
   }
   OnShowBattleChildViewPanel() {
-    for (const t of this.JJe) t.RefreshSkillCoolDownOnShow();
-    this.vze();
+    for (const t of this.lZe) t.RefreshSkillCoolDownOnShow();
+    this.PZe();
   }
   OnTickBattleChildViewPanel(t) {
-    if (this.Visible) for (const e of this.JJe) e.Tick(t);
+    if (this.Visible) for (const e of this.lZe) e.Tick(t);
   }
   AddEvents() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnSkillButtonDataRefresh,
-      this.ZJe,
+      this.uZe,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnSkillButtonDataClear,
-        this.tze,
+        this.mZe,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnSkillButtonIndexRefresh,
-        this.oze,
+        this.CZe,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnSkillButtonEnableRefresh,
-        this.rze,
+        this.gZe,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnSkillButtonVisibleRefresh,
-        this.sze,
+        this.pZe,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnSkillButtonDynamicEffectRefresh,
-        this.aze,
+        this.vZe,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnSkillButtonSkillIdRefresh,
-        this.lze,
+        this.EZe,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnSkillButtonAttributeRefresh,
-        this.uze,
+        this.yZe,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnSkillButtonIconPathRefresh,
-        this.cze,
+        this.IZe,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnSkillButtonCdRefresh,
-        this.mze,
+        this.TZe,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnBehaviorButtonVisibleRefresh,
-        this.Cze,
+        this.DZe,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.PauseGame,
-        this.dze,
+        this.LZe,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.TriggerUiTimeDilation,
-        this.kJe,
+        this.zze,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.CharSkillCdPauseStateChanged,
-        this.kJe,
+        this.zze,
       ),
       EventSystem_1.EventSystem.Add(
-        EventDefine_1.EEventName.OnPlatformChanged,
-        this.dKe,
+        EventDefine_1.EEventName.InputControllerChange,
+        this.XBo,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnViewDone,
-        this.yze,
+        this.bZe,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.CloseView,
@@ -227,85 +224,85 @@ class GamepadSkillButtonPanel extends BattleChildViewPanel_1.BattleChildViewPane
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.BattleUiPressCombineButtonChanged,
-        this.gze,
+        this.RZe,
       ),
       InputDistributeController_1.InputDistributeController.BindActions(
-        this.zJe.GetAllActionNameList(),
+        this._Ze.GetAllActionNameList(),
         this.bMe,
       ),
       InputDistributeController_1.InputDistributeController.BindAxis(
         InputMappingsDefine_1.axisMappings.MoveForward,
-        this.Mze,
+        this.xZe,
       ),
       InputDistributeController_1.InputDistributeController.BindAxis(
         InputMappingsDefine_1.axisMappings.MoveRight,
-        this.Eze,
+        this.BZe,
       );
   }
   RemoveEvents() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnSkillButtonDataRefresh,
-      this.ZJe,
+      this.uZe,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnSkillButtonDataClear,
-        this.tze,
+        this.mZe,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnSkillButtonIndexRefresh,
-        this.oze,
+        this.CZe,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnSkillButtonEnableRefresh,
-        this.rze,
+        this.gZe,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnSkillButtonVisibleRefresh,
-        this.sze,
+        this.pZe,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnSkillButtonDynamicEffectRefresh,
-        this.aze,
+        this.vZe,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnSkillButtonSkillIdRefresh,
-        this.lze,
+        this.EZe,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnSkillButtonAttributeRefresh,
-        this.uze,
+        this.yZe,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnSkillButtonIconPathRefresh,
-        this.cze,
+        this.IZe,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnSkillButtonCdRefresh,
-        this.mze,
+        this.TZe,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnBehaviorButtonVisibleRefresh,
-        this.Cze,
+        this.DZe,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.PauseGame,
-        this.dze,
+        this.LZe,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.TriggerUiTimeDilation,
-        this.kJe,
+        this.zze,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.CharSkillCdPauseStateChanged,
-        this.kJe,
+        this.zze,
       ),
       EventSystem_1.EventSystem.Remove(
-        EventDefine_1.EEventName.OnPlatformChanged,
-        this.dKe,
+        EventDefine_1.EEventName.InputControllerChange,
+        this.XBo,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnViewDone,
-        this.yze,
+        this.bZe,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.CloseView,
@@ -313,72 +310,72 @@ class GamepadSkillButtonPanel extends BattleChildViewPanel_1.BattleChildViewPane
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.BattleUiPressCombineButtonChanged,
-        this.gze,
+        this.RZe,
       ),
       InputDistributeController_1.InputDistributeController.UnBindActions(
-        this.zJe.GetAllActionNameList(),
+        this._Ze.GetAllActionNameList(),
         this.bMe,
       ),
       InputDistributeController_1.InputDistributeController.UnBindAxis(
         InputMappingsDefine_1.axisMappings.MoveForward,
-        this.Mze,
+        this.xZe,
       ),
       InputDistributeController_1.InputDistributeController.UnBindAxis(
         InputMappingsDefine_1.axisMappings.MoveRight,
-        this.Eze,
+        this.BZe,
       );
   }
-  Lze() {
-    this.SetVisible(5, ModelManager_1.ModelManager.PlatformModel.IsGamepad()),
-      this.zJe.RefreshInteractBehaviorData(),
-      this.zJe.RefreshAimState();
+  NZe() {
+    this.SetVisible(5, Info_1.Info.IsInGamepad()),
+      this._Ze.RefreshInteractBehaviorData(),
+      this._Ze.RefreshAimState();
   }
-  eze() {
-    this.Dze(), this.Rze(), this.vze(), this.hze(7);
+  cZe() {
+    this.OZe(), this.kZe(), this.PZe(), this.MZe(7);
   }
-  Dze() {
+  OZe() {
     var e = ModelManager_1.ModelManager.SkillButtonUiModel,
-      i = this.zJe.CurButtonTypeList;
+      i = this._Ze.CurButtonTypeList;
     for (let t = 0; t < MAIN_KEY_NUM; t++) {
       var s,
         n = i[t],
-        h = this.JJe[t];
+        h = this.lZe[t];
       n
         ? (s = e.GetSkillButtonDataByButton(n))
           ? s.GetSkillId() && s.IsVisible()
             ? h.Refresh(s)
             : h.Refresh(void 0)
-          : (s = this.zJe.GetBehaviorButtonDataByButtonType(n))?.IsVisible
+          : (s = this._Ze.GetBehaviorButtonDataByButtonType(n))?.IsVisible
             ? h.RefreshByBehaviorButtonData(s)
             : h.Refresh(void 0)
         : h.Refresh(void 0);
     }
   }
-  Rze() {
+  kZe() {
     var e = ModelManager_1.ModelManager.SkillButtonUiModel,
-      i = this.zJe.CurButtonTypeList;
-    for (let t = MAIN_KEY_NUM; t < this.JJe.length; t++) {
+      i = this._Ze.CurButtonTypeList;
+    for (let t = MAIN_KEY_NUM; t < this.lZe.length; t++) {
       var s,
         n = i[t],
-        h = this.JJe[t];
+        h = this.lZe[t];
       n
         ? (s = e.GetSkillButtonDataByButton(n))
           ? s.GetSkillId()
             ? h.Refresh(s)
             : h.Deactivate()
-          : ((s = this.zJe.GetBehaviorButtonDataByButtonType(n)),
+          : ((s = this._Ze.GetBehaviorButtonDataByButtonType(n)),
             h.RefreshByBehaviorButtonData(s))
         : h.Deactivate();
     }
   }
-  vze() {
+  PZe() {
     var e = ModelManager_1.ModelManager.SkillButtonUiModel,
-      i = this.zJe.CurButtonTypeList,
-      s = this.zJe.MainSkillCombineButtonTypeList;
+      i = this._Ze.CurButtonTypeList,
+      s = this._Ze.MainSkillCombineButtonTypeList;
     for (let t = 0; t < MAIN_KEY_NUM; t++) {
       var n = i[t],
         h = s[t],
-        _ = this.JJe[t];
+        _ = this.lZe[t];
       h && n !== h
         ? (n = e.GetSkillButtonDataByButton(h))
           ? _.RefreshSecondCd(n)
@@ -386,8 +383,8 @@ class GamepadSkillButtonPanel extends BattleChildViewPanel_1.BattleChildViewPane
         : _.RefreshSecondCd(void 0);
     }
   }
-  ize() {
-    for (const t of this.JJe) t.Deactivate();
+  dZe() {
+    for (const t of this.lZe) t.Deactivate();
   }
   async NewAllBattleSkillItems() {
     var t = void 0,
@@ -403,79 +400,76 @@ class GamepadSkillButtonPanel extends BattleChildViewPanel_1.BattleChildViewPane
       ];
     await Promise.all(
       t.map(async (t, e) => {
-        t = await this.Uze(t, e);
-        t.IsMainButton || t.SetKeyName(this.zJe.ButtonKeyList[e]);
+        t = await this.FZe(t, e);
+        t.IsMainButton || t.SetKeyName(this._Ze.ButtonKeyList[e]);
       }),
     );
   }
-  async Tze() {
+  async GZe() {
     var t = this.GetItem(8)?.GetOwner();
     t &&
-      ((this.YJe = new BattleSkillCombineItem_1.BattleSkillCombineItem()),
-      await this.YJe.CreateByActorAsync(t));
+      ((this.hZe = new BattleSkillCombineItem_1.BattleSkillCombineItem()),
+      await this.hZe.CreateByActorAsync(t));
   }
-  async Uze(t, e) {
+  async FZe(t, e) {
     t = await this.NewStaticChildViewAsync(
       t,
       BattleSkillGamepadItem_1.BattleSkillGamepadItem,
       e,
     );
-    return (t.GamepadData = this.zJe), (this.JJe[e] = t);
+    return (t.GamepadData = this._Ze), (this.lZe[e] = t);
   }
-  Aze(t) {
-    return this.JJe[t];
+  VZe(t) {
+    return this.lZe[t];
   }
-  nze(t) {
+  fZe(t) {
     t =
       ModelManager_1.ModelManager.SkillButtonUiModel.GamepadData.CurButtonTypeList.indexOf(
         t,
       );
-    if (!(t < 0)) return this.Aze(t);
+    if (!(t < 0)) return this.VZe(t);
   }
-  _ze(t) {
+  SZe(t) {
     var e;
-    this.zJe.GetIsPressCombineButton() ||
-      (0 <= (e = this.zJe.MainSkillCombineButtonTypeList.indexOf(t)) &&
-        ((e = this.Aze(e)),
+    this._Ze.GetIsPressCombineButton() ||
+      (0 <= (e = this._Ze.MainSkillCombineButtonTypeList.indexOf(t)) &&
+        ((e = this.VZe(e)),
         (t =
           ModelManager_1.ModelManager.SkillButtonUiModel.GetSkillButtonDataByButton(
             t,
           )),
         e?.RefreshSecondCd(t)));
   }
-  hze(t) {
+  MZe(t) {
     7 === t &&
-      (!(0 < this.zJe.MainSkillButtonTypeList.indexOf(t)) &&
-      0 <= this.zJe.MainSkillCombineButtonTypeList.indexOf(t)
+      (!(0 < this._Ze.MainSkillButtonTypeList.indexOf(t)) &&
+      0 <= this._Ze.MainSkillCombineButtonTypeList.indexOf(t)
         ? ((t =
             ModelManager_1.ModelManager.SkillButtonUiModel.GetSkillButtonDataByButton(
               t,
             )),
-          this.YJe?.RefreshDynamicEffect(t))
-        : this.YJe?.RefreshDynamicEffect(void 0));
+          this.hZe?.RefreshDynamicEffect(t))
+        : this.hZe?.RefreshDynamicEffect(void 0));
   }
-  fze() {
-    this.YJe?.SetVisible(!this.zJe.GetIsPressCombineButton());
+  UZe() {
+    this.hZe?.SetVisible(!this._Ze.GetIsPressCombineButton());
   }
-  pze(t) {
+  AZe(t) {
     if (t)
       for (let t = 0; t < MAIN_KEY_NUM; t++)
-        this.zJe.MainSkillCombineButtonTypeList[t] !==
-          this.zJe.MainSkillButtonTypeList[t] &&
-          this.JJe[t].PlayPressCombineButtonSeq();
+        this._Ze.MainSkillCombineButtonTypeList[t] !==
+          this._Ze.MainSkillButtonTypeList[t] &&
+          this.lZe[t].PlayPressCombineButtonSeq();
     else
       for (let t = 0; t < MAIN_KEY_NUM; t++)
-        this.JJe[t].PlayReleaseCombineButtonSeq();
+        this.lZe[t].PlayReleaseCombineButtonSeq();
   }
-  Sze() {
-    return (
-      ModelManager_1.ModelManager.PlatformModel.IsGamepad() &&
-      this.zJe.ControlCameraByMoveAxis
-    );
+  wZe() {
+    return Info_1.Info.IsInGamepad() && this._Ze.ControlCameraByMoveAxis;
   }
-  Ize() {
-    this.zJe.RefreshInteractBehaviorData();
-    var t = this.nze(104);
+  qZe() {
+    this._Ze.RefreshInteractBehaviorData();
+    var t = this.fZe(104);
     t && (t.IsMainButton || t.RefreshVisible(), t.RefreshEnable());
   }
 }

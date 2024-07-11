@@ -28,29 +28,29 @@ const UE = require("ue"),
 class MemoryFragmentMainView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
-      (this.ixn = void 0),
+      (this.Bwn = void 0),
       (this.lqe = void 0),
       (this.xqe = void 0),
-      (this.q8i = 0),
-      (this.DFe = void 0),
-      (this.rxn = !1),
-      (this.oxn = !1),
-      (this.EPe = void 0),
-      (this.mGn = 0),
-      (this.zwn = () => {
+      (this.b9i = 0),
+      (this.H3e = void 0),
+      (this.bwn = !1),
+      (this.qwn = !1),
+      (this.SPe = void 0),
+      (this.pNn = 0),
+      (this.FGn = () => {
         var e = this.xqe.GetDisplayGridStartIndex(),
-          i = this.ixn.GetCollectDataList();
+          i = this.Bwn.GetCollectDataList();
         let r = 0;
         for (let t = 0; t < e; t++) i[t].GetIfCanGetReward() && (r = t);
         this.xqe?.ScrollToGridIndex(r);
-        var t = r !== this.q8i;
-        (this.q8i = r), this.Og(), t && this.hFe();
+        var t = r !== this.b9i;
+        (this.b9i = r), this.Og(), t && this.I3e();
       }),
-      (this.dGn = () => {
+      (this.vNn = () => {
         ModelManager_1.ModelManager.FragmentMemoryModel.TryRemoveCurrentTrackEntity(),
-          (this.mGn = 0);
-        var t = this.hxn().GetTraceEntityId(),
-          e = this.hxn().GetTraceMarkId(),
+          (this.pNn = 0);
+        var t = this.kwn().GetTraceEntityId(),
+          e = this.kwn().GetTraceMarkId(),
           t =
             ModelManager_1.ModelManager.CreatureModel.GetEntityData(t)
               ?.Transform?.Pos;
@@ -63,21 +63,21 @@ class MemoryFragmentMainView extends UiTickViewBase_1.UiTickViewBase {
               void 0,
               !0,
             )),
-            0 === this.mGn &&
-              (this.mGn =
+            0 === this.pNn &&
+              (this.pNn =
                 ModelManager_1.ModelManager.MapModel.CreateMapMark(t)),
-            (e = { MarkId: this.mGn, MarkType: 7 }),
+            (e = { MarkId: this.pNn, MarkType: 7 }),
             WorldMapController_1.WorldMapController.OpenView(2, !1, e),
             (ModelManager_1.ModelManager.FragmentMemoryModel.CurrentTrackMapMarkId =
-              this.mGn),
+              this.pNn),
             (ModelManager_1.ModelManager.FragmentMemoryModel.CurrentTrackFragmentId =
-              this.hxn().GetId()))
+              this.kwn().GetId()))
           : Log_1.Log.CheckInfo() &&
             Log_1.Log.Info("FragmentMemory", 28, "没有找到实体");
       }),
-      (this.Zwn = () => {
+      (this.VGn = () => {
         var e = this.xqe.GetDisplayGridEndIndex(),
-          i = this.ixn.GetCollectDataList();
+          i = this.Bwn.GetCollectDataList();
         let r = e;
         var s = i.length;
         for (let t = e; t <= s - 1; t++)
@@ -86,55 +86,55 @@ class MemoryFragmentMainView extends UiTickViewBase_1.UiTickViewBase {
             break;
           }
         this.xqe?.ScrollToGridIndex(r);
-        e = r !== this.q8i;
-        (this.q8i = r), this.Og(), e && this.hFe();
-      }),
-      (this.nxn = () => {
-        (this.ixn =
-          ModelManager_1.ModelManager.FragmentMemoryModel.GetTopicDataById(
-            this.ixn.GetId(),
-          )),
-          this.Og();
+        e = r !== this.b9i;
+        (this.b9i = r), this.Og(), e && this.I3e();
       }),
       (this.$Ge = () => {
-        this._wn();
+        this.Dbn();
       }),
-      (this.sxn = () => {
-        (this.ixn =
+      (this.Gwn = () => {
+        (this.Bwn =
           ModelManager_1.ModelManager.FragmentMemoryModel.GetTopicDataById(
-            this.ixn.GetId(),
+            this.Bwn.GetId(),
           )),
           this.Og();
       }),
-      (this.axn = () => {
-        var t = this.hxn();
+      (this.Own = () => {
+        (this.Bwn =
+          ModelManager_1.ModelManager.FragmentMemoryModel.GetTopicDataById(
+            this.Bwn.GetId(),
+          )),
+          this.Og();
+      }),
+      (this.Nwn = () => {
+        var t = this.kwn();
         FragmentMemoryController_1.FragmentMemoryController.RequestMemoryReward(
           [t.GetId()],
         );
       }),
-      (this.lxn = () => {
+      (this.Fwn = () => {
         PhotographController_1.PhotographController.ScreenShot({
           ScreenShot: !0,
           IsHiddenBattleView: !1,
           HandBookPhotoData: void 0,
           GachaData: void 0,
-          FragmentMemory: this.hxn(),
+          FragmentMemory: this.kwn(),
         });
       }),
-      (this._xn = () => {
-        UiManager_1.UiManager.OpenView("FragmentedCluesView", this.hxn());
+      (this.Vwn = () => {
+        UiManager_1.UiManager.OpenView("FragmentedCluesView", this.kwn());
       }),
-      (this.fvt = () => {
+      (this.UMt = () => {
         return new GridItem();
       }),
-      (this.uxn = () => new TabItem()),
-      (this.i2e = () => {
+      (this.Hwn = () => new TabItem()),
+      (this.pFe = () => {
         this.CloseMe();
       }),
-      (this.cxn = () => this.q8i),
-      (this.mxn = (t) => {
-        var e = t !== this.q8i;
-        (this.q8i = t), this.Og(!0), e && this.hFe();
+      (this.jwn = () => this.b9i),
+      (this.Wwn = (t) => {
+        var e = t !== this.b9i;
+        (this.b9i = t), this.Og(!0), e && this.I3e();
       });
   }
   OnRegisterComponent() {
@@ -159,38 +159,38 @@ class MemoryFragmentMainView extends UiTickViewBase_1.UiTickViewBase {
       [17, UE.UIButtonComponent],
     ]),
       (this.BtnBindInfo = [
-        [9, this.axn],
-        [13, this.lxn],
-        [14, this._xn],
-        [15, this.zwn],
-        [16, this.Zwn],
-        [17, this.dGn],
+        [9, this.Nwn],
+        [13, this.Fwn],
+        [14, this.Vwn],
+        [15, this.FGn],
+        [16, this.VGn],
+        [17, this.vNn],
       ]);
   }
   OnStart() {
-    (this.DFe = new GenericLayout_1.GenericLayout(
+    (this.H3e = new GenericLayout_1.GenericLayout(
       this.GetScrollViewWithScrollbar(8)
         .GetContent()
         .GetComponentByClass(UE.UILayoutBase.StaticClass()),
-      this.fvt,
+      this.UMt,
     )),
       (this.lqe = new PopupCaptionItem_1.PopupCaptionItem(this.GetItem(0))),
-      this.lqe.SetCloseCallBack(this.i2e),
+      this.lqe.SetCloseCallBack(this.pFe),
       this.lqe.SetHelpBtnActive(!1),
       (this.xqe = new LoopScrollView_1.LoopScrollView(
         this.GetLoopScrollViewComponent(2),
         this.GetItem(3).GetOwner(),
-        this.uxn,
+        this.Hwn,
       )),
       this.GetButton(15)?.RootUIComp.SetUIActive(!1),
       this.GetButton(16)?.RootUIComp.SetUIActive(!1),
-      (this.EPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem));
+      (this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem));
     var e = this.OpenParam;
-    if (((this.ixn = e.FragmentMemoryTopicData), 0 < e.CurrentSelectId)) {
-      var i = this.ixn.GetCollectDataList();
+    if (((this.Bwn = e.FragmentMemoryTopicData), 0 < e.CurrentSelectId)) {
+      var i = this.Bwn.GetCollectDataList();
       for (let t = 0; t < i.length; t++)
         if (i[t].GetId() === e.CurrentSelectId) {
-          this.q8i = t;
+          this.b9i = t;
           break;
         }
     }
@@ -198,11 +198,11 @@ class MemoryFragmentMainView extends UiTickViewBase_1.UiTickViewBase {
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnFragmentMemoryCollectUpdate,
-      this.sxn,
+      this.Own,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnFragmentMemoryDataUpdate,
-        this.nxn,
+        this.Gwn,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.CloseView,
@@ -212,33 +212,38 @@ class MemoryFragmentMainView extends UiTickViewBase_1.UiTickViewBase {
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnFragmentMemoryCollectUpdate,
-      this.sxn,
+      this.Own,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnFragmentMemoryDataUpdate,
-        this.nxn,
+        this.Gwn,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.CloseView,
         this.$Ge,
       );
   }
-  hxn() {
-    return this.ixn.GetCollectDataList()[this.q8i];
+  OnAfterHide() {
+    UE.LGUIBPLibrary.ResetGlobalBlurUIItem(
+      GlobalData_1.GlobalData.GameInstance.GetWorld(),
+    );
+  }
+  kwn() {
+    return this.Bwn.GetCollectDataList()[this.b9i];
   }
   OnBeforeShow() {
-    this.lqe?.SetTitleByTextIdAndArgNew(this.ixn.GetConfig().Title),
+    this.lqe?.SetTitleByTextIdAndArgNew(this.Bwn.GetConfig().Title),
       this.Og(),
       this.Nqe(),
-      this.Ebn(),
-      0 < this.q8i && this.xqe?.ScrollToGridIndex(this.q8i);
+      this.SOn(),
+      0 < this.b9i && this.xqe?.ScrollToGridIndex(this.b9i);
   }
-  Ebn() {
+  SOn() {
     StringUtils_1.StringUtils.IsEmpty(
       ModelManager_1.ModelManager.FragmentMemoryModel
         .MemoryFragmentMainViewTryPlayAnimation,
     ) ||
-      (this.EPe?.PlaySequencePurely(
+      (this.SPe?.PlaySequencePurely(
         ModelManager_1.ModelManager.FragmentMemoryModel
           .MemoryFragmentMainViewTryPlayAnimation,
       ),
@@ -246,25 +251,25 @@ class MemoryFragmentMainView extends UiTickViewBase_1.UiTickViewBase {
         ""));
   }
   OnAfterShow() {
-    this._wn();
+    this.Dbn();
   }
   Og(t = !1) {
-    this.Mni(t),
-      this.GFe(),
+    this.Esi(t),
+      this.Z3e(),
       this.mGe(),
       this.Aqe(),
       this.Pqe(),
-      this.dxn(),
-      this.k5e(),
-      this.Cxn(),
-      this.kIt(),
-      this.CWi(),
-      this.gxn(),
-      this.HFi(),
-      this._wn();
+      this.Kwn(),
+      this.e6e(),
+      this.Qwn(),
+      this.WTt(),
+      this.mKi(),
+      this.Xwn(),
+      this.H3i(),
+      this.Dbn();
   }
-  _wn() {
-    this.hxn()?.GetIfUnlock()
+  Dbn() {
+    this.kwn()?.GetIfUnlock()
       ? UE.LGUIBPLibrary.ResetGlobalBlurUIItem(
           GlobalData_1.GlobalData.GameInstance.GetWorld(),
         )
@@ -274,18 +279,18 @@ class MemoryFragmentMainView extends UiTickViewBase_1.UiTickViewBase {
     LguiUtil_1.LguiUtil.SetLocalTextNew(
       this.GetText(4),
       "FragmentCollectProgress",
-      this.ixn.GetFinishCollectNum(),
-      this.ixn.GetMemoryCollectNum(),
+      this.Bwn.GetFinishCollectNum(),
+      this.Bwn.GetMemoryCollectNum(),
     );
   }
-  Mni(t = !1) {
-    var e = this.ixn.GetCollectDataList();
+  Esi(t = !1) {
+    var e = this.Bwn.GetCollectDataList();
     const i = [];
     for (const s of e) {
       var r = new TabItemData();
       (r.FragmentCollectData = s),
-        (r.TabCallBack = this.mxn),
-        (r.GetCurrentSelectTabIndex = this.cxn),
+        (r.TabCallBack = this.Wwn),
+        (r.GetCurrentSelectTabIndex = this.jwn),
         (r.NeedSwitchAnimation = t),
         i.push(r);
     }
@@ -295,30 +300,30 @@ class MemoryFragmentMainView extends UiTickViewBase_1.UiTickViewBase {
       });
     });
   }
-  GFe() {
-    var t = this.hxn(),
+  Z3e() {
+    var t = this.kwn(),
       e = [];
     for (const r of t.GetPreviewReward()) {
       var i = new GridItemData();
       (i.Data = r), (i.GetRewardState = t.GetIfGetReward()), e.push(i);
     }
-    this.DFe?.RefreshByData(e);
+    this.H3e?.RefreshByData(e);
   }
-  hFe() {
-    "Switch" === this.EPe?.GetCurrentSequence()
-      ? this.EPe?.ReplaySequenceByKey("Switch")
-      : this.EPe?.PlayLevelSequenceByName("Switch");
+  I3e() {
+    "Switch" === this.SPe?.GetCurrentSequence()
+      ? this.SPe?.ReplaySequenceByKey("Switch")
+      : this.SPe?.PlayLevelSequenceByName("Switch");
   }
   mGe() {
     var t,
-      e = this.hxn();
+      e = this.kwn();
     void 0 !== e &&
       ((t = this.GetText(5)),
       LguiUtil_1.LguiUtil.SetLocalTextNew(t, e.GetTitle()));
   }
   Pqe() {
     var t,
-      e = this.hxn();
+      e = this.kwn();
     void 0 !== e &&
       ((t = this.GetText(7))?.SetUIActive(!0),
       e.GetIfUnlock()
@@ -327,25 +332,25 @@ class MemoryFragmentMainView extends UiTickViewBase_1.UiTickViewBase {
   }
   Aqe() {
     var t,
-      e = this.hxn();
+      e = this.kwn();
     void 0 !== e &&
       ((t = this.GetTexture(1)),
       this.SetTextureByPath(e.GetBgResource(), t, "MemoryFragmentMainView"),
       t?.SetChangeColor(!e.GetIfUnlock(), t.changeColor));
   }
-  dxn() {
-    var t = this.hxn();
+  Kwn() {
+    var t = this.kwn();
     void 0 !== t &&
       this.GetButton(9)?.RootUIComp.SetUIActive(
         !t.GetIfGetReward() && t.GetIfUnlock(),
       );
   }
-  k5e() {
-    var t = this.hxn();
+  e6e() {
+    var t = this.kwn();
     void 0 !== t && this.GetItem(10)?.SetUIActive(t.GetIfGetReward());
   }
-  Cxn() {
-    var e = this.hxn();
+  Qwn() {
+    var e = this.kwn();
     if (void 0 !== e) {
       var i = !e.GetIfGetReward() && !e.GetIfUnlock();
       let t = !1;
@@ -354,26 +359,26 @@ class MemoryFragmentMainView extends UiTickViewBase_1.UiTickViewBase {
         this.GetButton(17)?.RootUIComp.SetUIActive(i && t);
     }
   }
-  kIt() {
-    var t = this.hxn();
+  WTt() {
+    var t = this.kwn();
     void 0 !== t && this.GetItem(12)?.SetUIActive(!t.GetIfUnlock());
   }
-  CWi() {
-    var t = this.hxn();
+  mKi() {
+    var t = this.kwn();
     void 0 !== t && this.GetButton(13)?.RootUIComp.SetUIActive(t.GetIfUnlock());
   }
   OnTick(t) {
     var e = this.xqe.GetDisplayGridStartIndex(),
       i = this.xqe.GetDisplayGridEndIndex(),
-      r = this.ixn.GetCollectDataList();
+      r = this.Bwn.GetCollectDataList();
     let s = !1;
     for (let t = 0; t < e; t++)
       if (r[t].GetIfCanGetReward()) {
         s = !0;
         break;
       }
-    this.rxn !== s &&
-      (this.GetButton(15)?.RootUIComp.SetUIActive(s), (this.rxn = s));
+    this.bwn !== s &&
+      (this.GetButton(15)?.RootUIComp.SetUIActive(s), (this.bwn = s));
     let h = !1;
     var o = r.length;
     for (let t = i; t <= o - 1; t++)
@@ -381,18 +386,18 @@ class MemoryFragmentMainView extends UiTickViewBase_1.UiTickViewBase {
         h = !0;
         break;
       }
-    this.oxn !== h &&
-      (this.GetButton(16)?.RootUIComp.SetUIActive(h), (this.oxn = h));
+    this.qwn !== h &&
+      (this.GetButton(16)?.RootUIComp.SetUIActive(h), (this.qwn = h));
   }
-  HFi() {
-    var t = this.hxn();
+  H3i() {
+    var t = this.kwn();
     void 0 !== t &&
       this.GetButton(14)?.RootUIComp.SetUIActive(
         !t.GetIfUnlock() && 0 < t.GetClueId(),
       );
   }
-  gxn() {
-    var t = this.hxn();
+  Xwn() {
+    var t = this.kwn();
     void 0 === t
       ? this.GetText(6).SetText("")
       : LguiUtil_1.LguiUtil.SetLocalTextNew(
@@ -419,9 +424,9 @@ class TabItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
       (this.Pe = void 0),
-      (this.EPe = void 0),
-      (this.$Gn = !1),
-      (this.fxn = () => {
+      (this.SPe = void 0),
+      (this.ekn = !1),
+      (this.$wn = () => {
         this.Pe.TabCallBack(this.GridIndex);
       });
   }
@@ -436,15 +441,15 @@ class TabItem extends GridProxyAbstract_1.GridProxyAbstract {
       [6, UE.UIItem],
       [7, UE.UIText],
     ]),
-      (this.BtnBindInfo = [[0, this.fxn]]);
+      (this.BtnBindInfo = [[0, this.$wn]]);
   }
-  XGn() {
+  tkn() {
     return (
-      void 0 === this.EPe &&
-        (this.EPe = new LevelSequencePlayer_1.LevelSequencePlayer(
+      void 0 === this.SPe &&
+        (this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(
           this.RootItem,
         )),
-      this.EPe
+      this.SPe
     );
   }
   Refresh(t, e, i) {
@@ -462,35 +467,35 @@ class TabItem extends GridProxyAbstract_1.GridProxyAbstract {
       ),
       this.GetItem(3)?.SetUIActive(t.FragmentCollectData.GetIfGetReward()),
       this.BNe(),
-      this.pxn(),
-      this.h8i(),
-      this.vPn(),
-      this.$Gn !== r && this.YGn(s),
-      (this.$Gn = r);
+      this.Ywn(),
+      this.a9i(),
+      this.zBn(),
+      this.ekn !== r && this.ikn(s),
+      (this.ekn = r);
   }
-  YGn(t) {
+  ikn(t) {
     var e,
       t = 1 === t ? "Select" : "Unselect";
     this.Pe?.NeedSwitchAnimation
-      ? (e = this.XGn()).GetCurrentSequence() === t
+      ? (e = this.tkn()).GetCurrentSequence() === t
         ? e?.ReplaySequenceByKey(t)
         : e?.PlaySequencePurely(t)
-      : ((e = this.XGn())?.StopSequenceByKey("Select", !1, !1),
+      : ((e = this.tkn())?.StopSequenceByKey("Select", !1, !1),
         e?.PlaySequencePurely(t),
         e.StopSequenceByKey(t, !1, !0));
   }
-  vPn() {
+  zBn() {
     var t;
     this.Pe.FragmentCollectData.GetIfUnlock()
       ? ((t = (this.GridIndex + 1).toString().padStart(2, "0")),
         this.GetText(1)?.SetText(t))
       : this.GetText(1)?.SetText("");
   }
-  pxn() {
+  Ywn() {
     var t = this.Pe.FragmentCollectData.GetIfUnlock();
     this.GetItem(5)?.SetUIActive(t);
   }
-  h8i() {
+  a9i() {
     var t = !this.Pe.FragmentCollectData.GetIfUnlock();
     this.GetItem(6)?.SetUIActive(t);
   }

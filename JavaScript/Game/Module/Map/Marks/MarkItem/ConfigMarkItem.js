@@ -101,7 +101,7 @@ class ConfigMarkItem extends MarkItem_1.MarkItem {
         0 === i?.Father ? r + "-" + t : r + `-${e}-` + t
       );
   }
-  GLi(t) {
+  GDi(t) {
     return this.MarkConfig.ShowRange[0] < t && this.MarkConfig.ShowRange[1] > t;
   }
   get IsConditionShouldShow() {
@@ -134,7 +134,7 @@ class ConfigMarkItem extends MarkItem_1.MarkItem {
         !this.IsFogUnlock
       ) &&
       ((t = this.GetCurrentMapShowScale()),
-      (t = this.GLi(t)),
+      (t = this.GDi(t) || this.IsTracked),
       2 !== i ||
         (this.IsCanShowViewIntermediately !==
           (i = t || this.IsIgnoreScaleShow) &&

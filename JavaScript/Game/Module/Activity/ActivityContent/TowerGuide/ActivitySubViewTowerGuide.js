@@ -19,14 +19,14 @@ class ActivitySubViewTowerGuide extends ActivitySubViewBase_1.ActivitySubViewBas
   constructor() {
     super(...arguments),
       (this.ActivityBaseData = void 0),
-      (this.LFe = 0),
+      (this.V3e = 0),
       (this.ViewState = 0),
-      (this.DFe = void 0),
+      (this.H3e = void 0),
       (this.mNe = void 0),
       (this.dNe = !0),
-      (this.RFe = void 0),
-      (this.UFe = void 0),
-      (this.AFe = () => {
+      (this.j3e = void 0),
+      (this.W3e = void 0),
+      (this.K3e = () => {
         var e =
           new ActivityTowerGuideRewardGrid_1.ActivityTowerGuideRewardGrid();
         return (
@@ -43,22 +43,22 @@ class ActivitySubViewTowerGuide extends ActivitySubViewBase_1.ActivitySubViewBas
       (this.wNe = (e) => {
         e === this.ActivityBaseData.Id && this.OnRefreshView();
       }),
-      (this.Pke = () => {
-        RoleController_1.RoleController.OpenRoleMainView(1, 0, [this.LFe]);
+      (this.X2e = () => {
+        RoleController_1.RoleController.OpenRoleMainView(1, 0, [this.V3e]);
       }),
-      (this.PFe = () => {
+      (this.Q3e = () => {
         2 === this.ActivityBaseData.GetTowerProgressState(1) &&
           ActivityTowerGuideController_1.ActivityTowerGuideController.RequestTowerReward(
             1,
           );
       }),
-      (this.xFe = () => {
+      (this.X3e = () => {
         2 === this.ActivityBaseData.GetTowerProgressState(2) &&
           ActivityTowerGuideController_1.ActivityTowerGuideController.RequestTowerReward(
             2,
           );
       }),
-      (this.wFe = () => {
+      (this.$3e = () => {
         var e,
           i = this.ActivityBaseData.GetPreGuideQuestFinishState();
         i
@@ -103,22 +103,22 @@ class ActivitySubViewTowerGuide extends ActivitySubViewBase_1.ActivitySubViewBas
       [22, UE.UIText],
     ]),
       (this.BtnBindInfo = [
-        [5, this.Pke],
-        [16, this.Pke],
-        [6, this.PFe],
-        [11, this.xFe],
-        [12, this.wFe],
+        [5, this.X2e],
+        [16, this.X2e],
+        [6, this.Q3e],
+        [11, this.X3e],
+        [12, this.$3e],
       ]);
   }
   OnSetData() {}
   async OnBeforeStartAsync() {
-    (this.RFe = new TowerGuideProgress()),
-      await this.RFe.CreateByActorAsync(this.GetItem(4).GetOwner()),
-      (this.UFe = new TowerGuideProgress()),
-      await this.UFe.CreateByActorAsync(this.GetItem(10).GetOwner()),
-      (this.DFe = new GenericLayout_1.GenericLayout(
+    (this.j3e = new TowerGuideProgress()),
+      await this.j3e.CreateByActorAsync(this.GetItem(4).GetOwner()),
+      (this.W3e = new TowerGuideProgress()),
+      await this.W3e.CreateByActorAsync(this.GetItem(10).GetOwner()),
+      (this.H3e = new GenericLayout_1.GenericLayout(
         this.GetHorizontalLayout(9),
-        this.AFe,
+        this.K3e,
       )),
       (this.mNe = this.GetText(22));
   }
@@ -135,25 +135,25 @@ class ActivitySubViewTowerGuide extends ActivitySubViewBase_1.ActivitySubViewBas
     );
   }
   OnStart() {
-    this.BFe(), this.bFe(), this.OnRefreshView();
+    this.Y3e(), this.J3e(), this.OnRefreshView();
   }
   OnBeforeDestroy() {
-    for (const e of this.DFe.GetLayoutItemList()) this.AddChild(e);
+    for (const e of this.H3e.GetLayoutItemList()) this.AddChild(e);
   }
   OnRefreshView() {
     var e = this.ActivityBaseData.GetViewState();
-    this.fNe(), this.qFe(e);
+    this.fNe(), this.z3e(e);
   }
-  BFe() {
+  Y3e() {
     this.GetText(18).SetText(this.ActivityBaseData.GetTitle()),
       this.GetText(19).ShowTextNew(this.ActivityBaseData.LocalConfig.Desc);
   }
-  bFe() {
-    this.LFe = this.ActivityBaseData.TrialRoleId;
+  J3e() {
+    this.V3e = this.ActivityBaseData.TrialRoleId;
     var e = this.ActivityBaseData.GetTrialRoleData();
     e && this.GetText(17).SetText(e.GetName());
   }
-  qFe(e) {
+  z3e(e) {
     var i,
       t = 0 === (this.ViewState = e),
       r = 1 === e,
@@ -168,17 +168,17 @@ class ActivitySubViewTowerGuide extends ActivitySubViewBase_1.ActivitySubViewBas
         this.ActivityBaseData.GetTowerProgressState(1)),
       h = this.ActivityBaseData.GetTowerProgressState(2);
     if (
-      (this.GFe(t, 2 === h),
-      this.RFe.SetUiActive(1 === s),
+      (this.Z3e(t, 2 === h),
+      this.j3e.SetUiActive(1 === s),
       1 === s &&
         (([t, i] = this.ActivityBaseData.GetTowerProgress(1)),
-        this.RFe.Refresh(t, i)),
+        this.j3e.Refresh(t, i)),
       this.GetItem(3).SetUIActive(3 === s),
       this.GetButton(6).RootUIComp.SetUIActive(2 === s),
-      this.UFe.SetUiActive(1 === h),
+      this.W3e.SetUiActive(1 === h),
       1 === h &&
         (([t, i] = this.ActivityBaseData.GetTowerProgress(2)),
-        this.UFe.Refresh(t, i)),
+        this.W3e.Refresh(t, i)),
       this.GetItem(7).SetUIActive(3 === h),
       this.GetButton(11).RootUIComp.SetUIActive(2 === h),
       this.GetButton(12).RootUIComp.SetUIActive(r),
@@ -201,7 +201,7 @@ class ActivitySubViewTowerGuide extends ActivitySubViewBase_1.ActivitySubViewBas
     var [e, i] = this.GetTimeVisibleAndRemainTime();
     this.pNe(e), e && this.mNe.SetText(i);
   }
-  GFe(e, i) {
+  Z3e(e, i) {
     var t =
       ConfigManager_1.ConfigManager.ActivityTowerGuideConfig.GetTowerGuideById(
         2,
@@ -214,7 +214,7 @@ class ActivitySubViewTowerGuide extends ActivitySubViewBase_1.ActivitySubViewBas
         var o = [{ IncId: 0, ItemId: r }, s];
         h.push({ Item: o, IsLock: e, IsReceivableVisible: i });
       }
-      this.DFe.RefreshByData(h);
+      this.H3e.RefreshByData(h);
     }
   }
 }

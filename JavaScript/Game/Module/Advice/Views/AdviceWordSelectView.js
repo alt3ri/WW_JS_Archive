@@ -15,9 +15,9 @@ class AdviceWordSelectView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
       (this.xqe = void 0),
-      (this.eHe = !1),
-      (this.tHe = 0),
-      (this.hHe = new Array()),
+      (this.cje = !1),
+      (this.mje = 0),
+      (this.Mje = new Array()),
       (this.sGe = (e, i, t) => {
         i = new AdviceWordSelectItem_1.AdviceWordSelectItem(i);
         return (
@@ -28,7 +28,7 @@ class AdviceWordSelectView extends UiViewBase_1.UiViewBase {
           { Key: t, Value: i }
         );
       }),
-      (this._Fe = () => {
+      (this.L3e = () => {
         var e, i;
         0 === ModelManager_1.ModelManager.AdviceModel.CurrentChangeWordType
           ? ((e =
@@ -48,18 +48,18 @@ class AdviceWordSelectView extends UiViewBase_1.UiViewBase {
           ),
           this.CloseMe();
       }),
-      (this.J9e = () => {
+      (this.uHe = () => {
         this.CloseMe();
       }),
-      (this.nHe = (e) => {
+      (this.fje = (e) => {
         var i;
-        this.eHe &&
-          this.tHe >= WAITUPDATECOUNT &&
-          ((this.eHe = !1),
-          (i = this.sHe(this.hHe)),
+        this.cje &&
+          this.mje >= WAITUPDATECOUNT &&
+          ((this.cje = !1),
+          (i = this.pje(this.Mje)),
           this.GetScrollViewWithScrollbar(0).SetScrollProgress(i),
           this.xqe.UnBindLateUpdate()),
-          this.tHe++;
+          this.mje++;
       });
   }
   OnRegisterComponent() {
@@ -71,8 +71,8 @@ class AdviceWordSelectView extends UiViewBase_1.UiViewBase {
       [4, UE.UIText],
     ]),
       (this.BtnBindInfo = [
-        [3, this.J9e],
-        [2, this._Fe],
+        [3, this.uHe],
+        [2, this.L3e],
       ]);
   }
   OnStart() {
@@ -94,25 +94,25 @@ class AdviceWordSelectView extends UiViewBase_1.UiViewBase {
   }
   bqe() {
     var e = ModelManager_1.ModelManager.AdviceModel.CurrentChangeWordType;
-    (this.hHe = new Array()),
+    (this.Mje = new Array()),
       0 === e
         ? ConfigManager_1.ConfigManager.AdviceConfig.GetAdviceSentenceConfigs().forEach(
             (e) => {
-              this.hHe.push(e.Id);
+              this.Mje.push(e.Id);
             },
           )
         : ConfigManager_1.ConfigManager.AdviceConfig.GetAdviceConjunctionConfigs().forEach(
             (e) => {
-              this.hHe.push(e.Id);
+              this.Mje.push(e.Id);
             },
           ),
-      this.xqe.RefreshByData(this.hHe),
+      this.xqe.RefreshByData(this.Mje),
       this.xqe.UnBindLateUpdate(),
-      (this.eHe = !0),
-      (this.tHe = 0),
-      this.xqe.BindLateUpdate(this.nHe);
+      (this.cje = !0),
+      (this.mje = 0),
+      this.xqe.BindLateUpdate(this.fje);
   }
-  sHe(i) {
+  pje(i) {
     let t = 0;
     for (let e = 0; e < i.length; e++)
       if (

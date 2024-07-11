@@ -25,6 +25,7 @@ class BulletDataMain {
   constructor(t, e) {
     (this.Data = t),
       (this.BulletRowName = e),
+      (this.BulletFName = t.子弹名称),
       (this.BulletName = t.子弹名称?.toString()),
       (this.Base = new BulletDataBase_1.BulletDataBase(t.基础设置)),
       (this.Logic = new BulletDataLogic_1.BulletDataLogic(t.逻辑设置.预设)),
@@ -47,14 +48,14 @@ class BulletDataMain {
     }
     (this.Obstacle = new BulletDataObstacle_1.BulletDataObstacle(t.障碍检测)),
       (this.Interact = new BulletDataInteract_1.BulletDataInteract(t.环境交互)),
-      (this.SimpleBullet = BulletDataMain.x6o(this));
+      (this.SimpleBullet = BulletDataMain.U8o(this));
   }
-  static x6o(e) {
+  static U8o(e) {
     var t = e.Base;
     return !(
       0 < t.SpecialParams.size ||
       0 !== t.BornPositionStandard ||
-      t.BlackboardKey !== BulletDataMain.w6o ||
+      t.BlackboardKey !== BulletDataMain.A8o ||
       !t.CenterOffset.IsZero() ||
       !t.BornPositionRandom.IsZero() ||
       !t.Rotator.IsNearlyZero() ||
@@ -62,7 +63,7 @@ class BulletDataMain {
       0 < t.CollisionActiveDuration ||
       0 < t.CollisionActiveDelay ||
       2 !== t.HitType ||
-      t.DaHitTypePreset !== BulletDataMain.w6o ||
+      t.DaHitTypePreset !== BulletDataMain.A8o ||
       t.HitConditionTagId ||
       t.BanHitTagId ||
       -1 !== t.VictimCount ||
@@ -102,13 +103,13 @@ class BulletDataMain {
       0 < e.Children.length ||
       !e.Obstacle.Center.IsZero() ||
       0 < e.Obstacle.Radius ||
-      e.Interact.WaterInteract !== BulletDataMain.w6o
+      e.Interact.WaterInteract !== BulletDataMain.A8o
     );
   }
   CheckValid() {
-    return !!this.Logic?.Data && (this.B6o(), this.Yz(), this.b6o(), !0);
+    return !!this.Logic?.Data && (this.P8o(), this.Yz(), this.x8o(), !0);
   }
-  B6o() {
+  P8o() {
     switch (this.Base.Shape) {
       case 0:
         this.Base.IsOversizeForTrace = this.Base.Size.GetMax() > TRACE_SIZE_MAX;
@@ -138,22 +139,22 @@ class BulletDataMain {
       switch (this.Base.Shape) {
         case 0:
           this.Base.Size.GetMax() > SIZE_MAX &&
-            this.q6o("子弹大小超过20米，会引起性能问题");
+            this.w8o("子弹大小超过20米，会引起性能问题");
           break;
         case 1:
           this.Base.Size.X > RADIUS_MAX &&
-            this.q6o("子弹半径超过10米，会引起性能问题");
+            this.w8o("子弹半径超过10米，会引起性能问题");
           break;
         case 2:
         case 3:
           this.Base.Size.X > RADIUS_MAX &&
-            this.q6o("子弹半径超过10米，会引起性能问题"),
+            this.w8o("子弹半径超过10米，会引起性能问题"),
             this.Base.Size.Z > SIZE_MAX &&
-              this.q6o("子弹大小超过20米，会引起性能问题");
+              this.w8o("子弹大小超过20米，会引起性能问题");
           break;
         case 4:
           this.Base.Size.Z > RADIUS_MAX &&
-            this.q6o("子弹半径超过10米，会引起性能问题");
+            this.w8o("子弹半径超过10米，会引起性能问题");
           break;
         case 6:
         case 7:
@@ -162,15 +163,15 @@ class BulletDataMain {
           break;
         default:
           this.Base.Size.GetMax() > SIZE_MAX &&
-            this.q6o("子弹大小超过20米，会引起性能问题");
+            this.w8o("子弹大小超过20米，会引起性能问题");
       }
   }
-  b6o() {
+  x8o() {
     GlobalData_1.GlobalData.IsPlayInEditor &&
       this.Obstacle.Radius > TRACE_RADIUS_MAX &&
-      this.q6o("障碍检测配置的检测距离超过3米，会引起性能问题");
+      this.w8o("障碍检测配置的检测距离超过3米，会引起性能问题");
   }
-  q6o(e) {
+  w8o(e) {
     Log_1.Log.CheckWarn() &&
       Log_1.Log.Warn(
         "Bullet",
@@ -190,5 +191,5 @@ class BulletDataMain {
       this.Obstacle.Preload();
   }
 }
-(exports.BulletDataMain = BulletDataMain).w6o = "None";
+(exports.BulletDataMain = BulletDataMain).A8o = "None";
 //# sourceMappingURL=BulletDataMain.js.map

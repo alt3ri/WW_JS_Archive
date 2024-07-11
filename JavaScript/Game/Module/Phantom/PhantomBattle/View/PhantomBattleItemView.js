@@ -11,11 +11,11 @@ const UE = require("ue"),
 class PhantomFettersItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
-      (this.dqt = void 0),
-      (this.PPt = void 0),
-      (this.nmi = void 0),
-      (this.UIt = (t) => {
-        this.nmi && this.nmi(this.dqt);
+      (this.fGt = void 0),
+      (this.bxt = void 0),
+      (this.ndi = void 0),
+      (this.BTt = (t) => {
+        this.ndi && this.ndi(this.fGt);
       });
   }
   OnRegisterComponent() {
@@ -26,30 +26,30 @@ class PhantomFettersItem extends GridProxyAbstract_1.GridProxyAbstract {
       [3, UE.UIItem],
       [4, UE.UIText],
     ]),
-      (this.BtnBindInfo = [[0, this.UIt]]);
+      (this.BtnBindInfo = [[0, this.BTt]]);
   }
   OnStart() {
-    (this.PPt = new VisionFetterSuitItem_1.VisionFetterSuitItem(
+    (this.bxt = new VisionFetterSuitItem_1.VisionFetterSuitItem(
       this.GetItem(2),
     )),
-      this.PPt.Init().finally(() => {
-        this.PPt.SetActive(!0);
+      this.bxt.Init().finally(() => {
+        this.bxt.SetActive(!0);
       }),
       this.GetItem(3).SetUIActive(!1),
       this.GetExtendToggle(0).SetToggleState(0);
   }
   Refresh(t, e, i) {
-    (this.dqt = t),
+    (this.fGt = t),
       this.RefreshName(),
-      this.d6i(),
+      this.m8i(),
       this.RefreshUnlockText(),
-      this.IVe(e, !1);
+      this.N6e(e, !1);
   }
   RefreshName() {
-    this.GetText(1).ShowTextNew(this.dqt.FetterGroupName);
+    this.GetText(1).ShowTextNew(this.fGt.FetterGroupName);
   }
   RefreshUnlockText() {
-    var t = this.dqt.Id,
+    var t = this.fGt.Id,
       t =
         ModelManager_1.ModelManager.PhantomBattleModel.GetFetterGroupMonsterIdArray(
           t,
@@ -61,18 +61,18 @@ class PhantomFettersItem extends GridProxyAbstract_1.GridProxyAbstract {
     this.GetText(4).SetText(e + "/" + t.length);
   }
   BindOnItemButtonClickedCallback(t) {
-    this.nmi = t;
+    this.ndi = t;
   }
   OnSelected(t) {
-    this.IVe(!0);
+    this.N6e(!0);
   }
   OnDeselected(t) {
-    this.IVe(!1);
+    this.N6e(!1);
   }
-  d6i() {
-    this.PPt.Update(this.dqt);
+  m8i() {
+    this.bxt.Update(this.fGt);
   }
-  IVe(t, e = !0) {
+  N6e(t, e = !0) {
     var i = this.GetExtendToggle(0);
     t ? i.SetToggleState(1, e) : i.SetToggleState(0, !1);
   }
@@ -81,13 +81,13 @@ exports.PhantomFettersItem = PhantomFettersItem;
 class PhantomFettersObtainItem extends UiPanelBase_1.UiPanelBase {
   constructor(t) {
     super(),
-      (this.c6i = 0),
-      (this.nmi = void 0),
+      (this.u8i = 0),
+      (this.ndi = void 0),
       (this.wqe = void 0),
-      (this.C6i = () => {
-        this.nmi &&
+      (this.d8i = () => {
+        this.ndi &&
           (UiManager_1.UiManager.CloseView("PhantomBattleFettersObtainView"),
-          this.nmi(this.c6i));
+          this.ndi(this.u8i));
       }),
       (this.wqe = t);
   }
@@ -101,10 +101,10 @@ class PhantomFettersObtainItem extends UiPanelBase_1.UiPanelBase {
       [2, UE.UIText],
       [3, UE.UIButtonComponent],
     ]),
-      (this.BtnBindInfo = [[3, this.C6i]]);
+      (this.BtnBindInfo = [[3, this.d8i]]);
   }
   Update(t) {
-    (this.c6i = t.Id),
+    (this.u8i = t.Id),
       t.IsGet
         ? (this.SetTextureByPath(t.Icon, this.GetTexture(0)),
           this.GetText(1).ShowTextNew(t.Name))
@@ -116,7 +116,7 @@ class PhantomFettersObtainItem extends UiPanelBase_1.UiPanelBase {
       this.GetText(2).SetUIActive(!1);
   }
   BindOnItemButtonClickedCallback(t) {
-    this.nmi = t;
+    this.ndi = t;
   }
 }
 exports.PhantomFettersObtainItem = PhantomFettersObtainItem;

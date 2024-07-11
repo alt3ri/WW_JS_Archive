@@ -37,29 +37,29 @@ let SceneItemTreasureBoxComponent =
   ) {
     constructor() {
       super(...arguments),
-        (this.man = void 0),
-        (this.Pcn = void 0),
-        (this.xcn = void 0),
-        (this.B1n = () => {
-          this.wcn(),
-            this.Entity.CheckGetComponent(117).IsInState(2) && this.Bcn();
+        (this.Qsn = void 0),
+        (this._cn = void 0),
+        (this.ucn = void 0),
+        (this.m1n = () => {
+          this.ccn(),
+            this.Entity.CheckGetComponent(119).IsInState(2) && this.mcn();
         }),
-        (this.bcn = (e) => {
-          this.wcn();
+        (this.dcn = (e) => {
+          this.ccn();
         }),
-        (this.qcn = (e) => {
-          this.wcn();
+        (this.Ccn = (e) => {
+          this.ccn();
         });
     }
     OnInitData(e) {
       e = e.GetParam(SceneItemTreasureBoxComponent_1)[0];
-      return (this.Pcn = e?.TypeId), !0;
+      return (this._cn = e?.TypeId), !0;
     }
     OnStart() {
       var e = this.Entity.GetComponent(0),
         t = e?.GetBaseInfo();
       return t
-        ? ((this.man = t.OnlineInteractType ?? 2), !0)
+        ? ((this.Qsn = t.OnlineInteractType ?? 2), !0)
         : (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Level",
@@ -72,24 +72,36 @@ let SceneItemTreasureBoxComponent =
     }
     OnActivate() {
       return (
-        EventSystem_1.EventSystem.AddWithTarget(
+        EventSystem_1.EventSystem.HasWithTarget(
           this.Entity,
           EventDefine_1.EEventName.OnSceneItemStateChange,
-          this.B1n,
-        ),
-        2 === this.Pcn &&
+          this.m1n,
+        )
+          ? Log_1.Log.CheckError() &&
+            Log_1.Log.Error(
+              "Temp",
+              32,
+              "SceneItemTreasureBoxComponent.OnActivate: 重复添加事件",
+              ["PbDataId", this.Entity.GetComponent(0)?.GetPbDataId()],
+            )
+          : EventSystem_1.EventSystem.AddWithTarget(
+              this.Entity,
+              EventDefine_1.EEventName.OnSceneItemStateChange,
+              this.m1n,
+            ),
+        2 === this._cn &&
           (EventSystem_1.EventSystem.AddWithTarget(
             this.Entity,
             EventDefine_1.EEventName.OnSceneItemLockPropChange,
-            this.qcn,
+            this.Ccn,
           ),
           EventSystem_1.EventSystem.AddWithTarget(
             this.Entity,
             EventDefine_1.EEventName.OnSceneItemStatePreChange,
-            this.bcn,
+            this.dcn,
           )),
-        (this.xcn = void 0),
-        this.Entity.CheckGetComponent(117).IsInState(0) || this.B1n(),
+        (this.ucn = void 0),
+        this.Entity.CheckGetComponent(119).IsInState(0) || this.m1n(),
         !0
       );
     }
@@ -98,30 +110,30 @@ let SceneItemTreasureBoxComponent =
         EventSystem_1.EventSystem.RemoveWithTarget(
           this.Entity,
           EventDefine_1.EEventName.OnSceneItemStateChange,
-          this.B1n,
+          this.m1n,
         ),
-        2 === this.Pcn &&
+        2 === this._cn &&
           (EventSystem_1.EventSystem.RemoveWithTarget(
             this.Entity,
             EventDefine_1.EEventName.OnSceneItemLockPropChange,
-            this.qcn,
+            this.Ccn,
           ),
           EventSystem_1.EventSystem.RemoveWithTarget(
             this.Entity,
             EventDefine_1.EEventName.OnSceneItemStatePreChange,
-            this.bcn,
+            this.dcn,
           )),
         !0
       );
     }
-    wcn() {
-      var e = this.Entity.CheckGetComponent(117),
-        t = this.Entity.CheckGetComponent(177);
+    ccn() {
+      var e = this.Entity.CheckGetComponent(119),
+        t = this.Entity.CheckGetComponent(180);
       let n = void 0,
         r = void 0;
       switch (e.State) {
         case 1:
-          n = this.Entity.CheckGetComponent(115).IsLocked
+          n = this.Entity.CheckGetComponent(117).IsLocked
             ? ((r = -1107341031), -1491083225)
             : ((r = -1491083225), -1107341031);
           break;
@@ -129,37 +141,37 @@ let SceneItemTreasureBoxComponent =
           (r = -1107341031), (n = -1526657280);
       }
       void 0 !== n &&
-        this.xcn !== n &&
+        this.ucn !== n &&
         (t.NotifyLock++,
-        void 0 !== r && this.xcn === r && t.RemoveTag(r),
-        (this.xcn = n),
+        void 0 !== r && this.ucn === r && t.RemoveTag(r),
+        (this.ucn = n),
         t.AddTag(n),
         t.NotifyLock--);
     }
-    Bcn() {
+    mcn() {
       ModelManager_1.ModelManager.PlayerInfoModel.GetId() ===
         ModelManager_1.ModelManager.CreatureModel.GetWorldOwner() &&
         LevelGamePlayController_1.LevelGamePlayController.MultiplayerLimitTypeCheck(
-          this.man,
+          this.Qsn,
         ) &&
         LevelGamePlayController_1.LevelGamePlayController.GetRewardTreasureBoxRequest(
           this.Entity.Id,
         );
     }
     CloseAllCollisions() {
-      var e = this.Entity.GetComponent(182),
+      var e = this.Entity.GetComponent(185),
         n =
-          (SceneItemTreasureBoxComponent_1.Gcn(e.Owner),
+          (SceneItemTreasureBoxComponent_1.gcn(e.Owner),
           SceneInteractionManager_1.SceneInteractionManager.Get().GetSceneInteractionAllActorsInLevel(
             e.GetSceneInteractionLevelHandleId(),
           ));
       if (n)
         for (let e = 0, t = n.Num(); e < t; e++) {
           var r = n.Get(e);
-          SceneItemTreasureBoxComponent_1.Gcn(r);
+          SceneItemTreasureBoxComponent_1.gcn(r);
         }
     }
-    static Gcn(e) {
+    static gcn(e) {
       var n = e.K2_GetComponentsByClass(UE.PrimitiveComponent.StaticClass());
       if (n)
         for (let e = 0, t = n.Num(); e < t; e++) {
@@ -183,7 +195,7 @@ let SceneItemTreasureBoxComponent =
   });
 (SceneItemTreasureBoxComponent = SceneItemTreasureBoxComponent_1 =
   __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(125)],
+    [(0, RegisterComponent_1.RegisterComponent)(127)],
     SceneItemTreasureBoxComponent,
   )),
   (exports.SceneItemTreasureBoxComponent = SceneItemTreasureBoxComponent);

@@ -26,11 +26,11 @@ class SignRewardItemBase extends UiPanelBase_1.UiPanelBase {
   RefreshByData(t, e, i) {}
   GetRewardStateTextId(t) {
     switch (t) {
-      case Protocol_1.Aki.Protocol.D0s.h3n:
+      case Protocol_1.Aki.Protocol.jps.j6n:
         return "NeedSign";
-      case Protocol_1.Aki.Protocol.D0s.j0s:
+      case Protocol_1.Aki.Protocol.jps.hMs:
         return "CanGetReward";
-      case Protocol_1.Aki.Protocol.D0s.qms:
+      case Protocol_1.Aki.Protocol.jps.Jfs:
         return "CollectActivity_state_recived";
       default:
         return "NeedSign";
@@ -70,12 +70,12 @@ class ImportantRewardItem extends (exports.SignRewardItemBase =
     (this.Index = i),
       this.SetDayText(i + 1),
       this.SetStateText(this.GetRewardStateTextId(e));
-    var i = e === Protocol_1.Aki.Protocol.D0s.qms,
-      s = e === Protocol_1.Aki.Protocol.D0s.j0s,
+    var i = e === Protocol_1.Aki.Protocol.jps.Jfs,
+      s = e === Protocol_1.Aki.Protocol.jps.hMs,
       r = ((this.CanGetReward = s), this.GetText(4)),
       e =
         (r?.SetChangeColor(
-          e === Protocol_1.Aki.Protocol.D0s.h3n,
+          e === Protocol_1.Aki.Protocol.jps.j6n,
           r.changeColor,
         ),
         this.GetItem(6).SetUIActive(i),
@@ -95,9 +95,9 @@ exports.ImportantRewardItem = ImportantRewardItem;
 class NormalRewardItem extends SignRewardItemBase {
   constructor() {
     super(...arguments),
-      (this.vFe = void 0),
+      (this.b3e = void 0),
       (this.Mne = 0),
-      (this.MFe = () => {
+      (this.q3e = () => {
         this.CanGetReward
           ? this.OnClickToGet?.(this.Index)
           : ControllerHolder_1.ControllerHolder.ItemController.OpenItemTipsByItemId(
@@ -120,14 +120,14 @@ class NormalRewardItem extends SignRewardItemBase {
       (this.BtnBindInfo = [[3, this.OnClickToggle]]);
   }
   async OnBeforeStartAsync() {
-    (this.vFe = new SmallItemGrid_1.SmallItemGrid()),
-      (this.vFe.SkipDestroyActor = !0),
-      await this.vFe.CreateThenShowByActorAsync(this.GetItem(0).GetOwner()),
-      this.vFe.GetItemGridExtendToggle().CanExecuteChange.Bind(() => !1),
-      this.vFe.BindOnExtendToggleClicked(this.MFe);
+    (this.b3e = new SmallItemGrid_1.SmallItemGrid()),
+      (this.b3e.SkipDestroyActor = !0),
+      await this.b3e.CreateThenShowByActorAsync(this.GetItem(0).GetOwner()),
+      this.b3e.GetItemGridExtendToggle().CanExecuteChange.Bind(() => !1),
+      this.b3e.BindOnExtendToggleClicked(this.q3e);
   }
   OnBeforeDestroy() {
-    this.vFe && this.AddChild(this.vFe);
+    this.b3e && this.AddChild(this.b3e);
   }
   SetDayText(t) {
     LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(1), "DayNum", t);
@@ -140,12 +140,12 @@ class NormalRewardItem extends SignRewardItemBase {
       (this.Mne = t.ItemId),
       this.SetDayText(i + 1),
       this.SetStateText(this.GetRewardStateTextId(e));
-    var i = e === Protocol_1.Aki.Protocol.D0s.qms,
-      s = e === Protocol_1.Aki.Protocol.D0s.j0s,
+    var i = e === Protocol_1.Aki.Protocol.jps.Jfs,
+      s = e === Protocol_1.Aki.Protocol.jps.hMs,
       r = ((this.CanGetReward = s), this.GetText(2)),
       r =
         (r?.SetChangeColor(
-          e === Protocol_1.Aki.Protocol.D0s.h3n,
+          e === Protocol_1.Aki.Protocol.jps.j6n,
           r.changeColor,
         ),
         this.GetItem(4).SetUIActive(i),
@@ -166,9 +166,9 @@ class NormalRewardItem extends SignRewardItemBase {
         ConfigManager_1.ConfigManager.InventoryConfig.GetItemDataTypeByConfigId(
           this.Mne,
         ),
-      r = e === Protocol_1.Aki.Protocol.D0s.j0s,
-      o = e === Protocol_1.Aki.Protocol.D0s.h3n,
-      a = e === Protocol_1.Aki.Protocol.D0s.qms;
+      r = e === Protocol_1.Aki.Protocol.jps.hMs,
+      o = e === Protocol_1.Aki.Protocol.jps.j6n,
+      a = e === Protocol_1.Aki.Protocol.jps.Jfs;
     switch (s) {
       case 1:
         var h = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(
@@ -185,7 +185,7 @@ class NormalRewardItem extends SignRewardItemBase {
             IsLockVisible: o,
             IsReceivedVisible: a,
           };
-        this.vFe.Apply(h);
+        this.b3e.Apply(h);
         break;
       case 3:
         h = {
@@ -197,7 +197,7 @@ class NormalRewardItem extends SignRewardItemBase {
           IsLockVisible: o,
           IsReceivedVisible: a,
         };
-        this.vFe.Apply(h);
+        this.b3e.Apply(h);
         break;
       default:
         h = {
@@ -209,7 +209,7 @@ class NormalRewardItem extends SignRewardItemBase {
           IsLockVisible: o,
           IsReceivedVisible: a,
         };
-        this.vFe.Apply(h);
+        this.b3e.Apply(h);
     }
   }
 }
@@ -219,7 +219,7 @@ class VersionSignRewardItem extends SignRewardItemBase {
     super(...arguments),
       (this._Ne = void 0),
       (this.Mne = 0),
-      (this.SFe = () => {
+      (this.G3e = () => {
         this.CanGetReward
           ? this.OnClickToGet?.(this.Index)
           : ControllerHolder_1.ControllerHolder.ItemController.OpenItemTipsByItemId(
@@ -243,22 +243,22 @@ class VersionSignRewardItem extends SignRewardItemBase {
     (this._Ne = new SmallItemGrid_1.SmallItemGrid()),
       this._Ne.Initialize(this.GetItem(4).GetOwner()),
       this._Ne.BindOnCanExecuteChange(() => !1),
-      this._Ne.BindOnExtendToggleClicked(this.SFe);
+      this._Ne.BindOnExtendToggleClicked(this.G3e);
   }
   RefreshByData(t, e, i) {
-    (this.Index = i), (this.Mne = t.ItemId), this.EFe(i + 1);
-    var i = e === Protocol_1.Aki.Protocol.D0s.qms,
-      s = e === Protocol_1.Aki.Protocol.D0s.j0s;
+    (this.Index = i), (this.Mne = t.ItemId), this.N3e(i + 1);
+    var i = e === Protocol_1.Aki.Protocol.jps.Jfs,
+      s = e === Protocol_1.Aki.Protocol.jps.hMs;
     (this.CanGetReward = s),
-      this.yFe(this.GetRewardStateTextId(e)),
+      this.O3e(this.GetRewardStateTextId(e)),
       this.GetItem(1).SetUIActive(s),
       this.GetItem(2).SetUIActive(i),
       this.cNe(t, e);
   }
-  EFe(t) {
+  N3e(t) {
     this.GetText(5).SetText("0" + t.toString());
   }
-  yFe(t) {
+  O3e(t) {
     LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(3), t);
   }
   cNe(t, e) {
@@ -270,9 +270,9 @@ class VersionSignRewardItem extends SignRewardItemBase {
       r =
         ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfig(this.Mne)
           ?.QualityId ?? 1,
-      o = e === Protocol_1.Aki.Protocol.D0s.j0s,
-      a = e === Protocol_1.Aki.Protocol.D0s.h3n,
-      h = e === Protocol_1.Aki.Protocol.D0s.qms;
+      o = e === Protocol_1.Aki.Protocol.jps.hMs,
+      a = e === Protocol_1.Aki.Protocol.jps.j6n,
+      h = e === Protocol_1.Aki.Protocol.jps.Jfs;
     switch (s) {
       case 1:
         var l = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(

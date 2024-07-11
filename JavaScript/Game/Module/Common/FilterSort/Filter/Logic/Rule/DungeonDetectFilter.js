@@ -5,12 +5,12 @@ const CommonFilter_1 = require("./CommonFilter");
 class DungeonDetectFilter extends CommonFilter_1.CommonFilter {
   constructor() {
     super(...arguments),
-      (this.WTt = (e) => {
+      (this.$Lt = (e) => {
         return e.Conf.Secondary;
       });
   }
   OnInitFilterMap() {
-    this.FilterMap.set(9, this.WTt);
+    this.FilterMap.set(9, this.$Lt);
   }
 }
 exports.DungeonDetectFilter = DungeonDetectFilter;

@@ -29,43 +29,43 @@ const ActorSystem_1 = require("../../Core/Actor/ActorSystem"),
 let SequenceCameraDisplayComponent = class SequenceCameraDisplayComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments),
-      (this.Vxr = void 0),
+      (this.pxr = void 0),
       (this.nye = () => {
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("Camera", 58, "[SequenceCamera] Spawn OnWorldDone"),
-          (this.Vxr = CameraController_1.CameraController.SpawnCineCamera()),
+          (this.pxr = CameraController_1.CameraController.SpawnCineCamera()),
           1 === CameraController_1.CameraController.Model.CameraMode &&
             CameraController_1.CameraController.SetViewTarget(
-              this.Vxr,
+              this.pxr,
               "SequenceCamera.OnWorldDone",
             );
       }),
       (this.uMe = () => {
-        this.Vxr &&
+        this.pxr &&
           (Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug(
               "Camera",
               58,
               "[SequenceCamera] Clear OnClearWorld",
             ),
-          ActorSystem_1.ActorSystem.Put(this.Vxr),
-          (this.Vxr = void 0));
+          ActorSystem_1.ActorSystem.Put(this.pxr),
+          (this.pxr = void 0));
       });
   }
   get CineCamera() {
     return (
-      this.Vxr?.IsValid() ||
-        ((this.Vxr = CameraController_1.CameraController.SpawnCineCamera()),
+      this.pxr?.IsValid() ||
+        ((this.pxr = CameraController_1.CameraController.SpawnCineCamera()),
         Log_1.Log.CheckError() &&
           Log_1.Log.Error("Camera", 58, "[SequenceCamera] 保底生成CineCamera")),
-      this.Vxr
+      this.pxr
     );
   }
   OnInit() {
     return (
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("Camera", 58, "[SequenceCamera] Spawn OnInit"),
-      (this.Vxr = CameraController_1.CameraController.SpawnCineCamera()),
+      (this.pxr = CameraController_1.CameraController.SpawnCineCamera()),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.WorldDone,
         this.nye,
@@ -79,11 +79,11 @@ let SequenceCameraDisplayComponent = class SequenceCameraDisplayComponent extend
   }
   OnClear() {
     return (
-      this.Vxr &&
+      this.pxr &&
         (Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("Camera", 58, "[SequenceCamera] Clear OnClear"),
-        ActorSystem_1.ActorSystem.Put(this.Vxr),
-        (this.Vxr = void 0)),
+        ActorSystem_1.ActorSystem.Put(this.pxr),
+        (this.pxr = void 0)),
       EventSystem_1.EventSystem.Has(
         EventDefine_1.EEventName.WorldDone,
         this.nye,
@@ -104,7 +104,7 @@ let SequenceCameraDisplayComponent = class SequenceCameraDisplayComponent extend
     );
   }
   OnChangeTimeDilation(e) {
-    this.Vxr?.IsValid() && (this.Vxr.CustomTimeDilation = e);
+    this.pxr?.IsValid() && (this.pxr.CustomTimeDilation = e);
   }
 };
 (SequenceCameraDisplayComponent = __decorate(

@@ -16,14 +16,14 @@ const UE = require("ue"),
 class RoleSkillInputPanel extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this.zke = 0),
-      (this.Zke = void 0),
-      (this.Uco = void 0),
-      (this.t2e = (e, r, o) => {
+      (this.Wst = void 0),
+      (this.CFe = void 0),
+      (this.Tmo = void 0),
+      (this.fFe = (e, r, o) => {
         r = new RoleSkillInputItem_1.RoleSkillInputItem(r);
         return r.Update(e), r.SetBgActive(o % 2 == 0), { Key: o, Value: r };
       }),
-      (this.Aco = () => {
+      (this.Lmo = () => {
         if (
           ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance()
         )
@@ -42,7 +42,7 @@ class RoleSkillInputPanel extends UiPanelBase_1.UiPanelBase {
           );
         else {
           var e = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(
-              this.zke,
+              this.Wst.GetRoleId(),
             ),
             r = ConfigManager_1.ConfigManager.RoleConfig.GetRoleName(e.Name);
           const i = e.RoleGuide;
@@ -94,44 +94,42 @@ class RoleSkillInputPanel extends UiPanelBase_1.UiPanelBase {
       [4, UE.UIItem],
       [5, UE.UIButtonComponent],
     ]),
-      (this.BtnBindInfo = [[5, this.Aco]]);
+      (this.BtnBindInfo = [[5, this.Lmo]]);
   }
   OnStart() {
-    (this.Zke = new GenericScrollView_1.GenericScrollView(
+    (this.CFe = new GenericScrollView_1.GenericScrollView(
       this.GetScrollViewWithScrollbar(0),
-      this.t2e,
+      this.fFe,
     )),
-      (this.Uco = []),
-      this.Uco.push(this.GetText(2)),
-      this.Uco.push(this.GetText(3));
+      (this.Tmo = []),
+      this.Tmo.push(this.GetText(2)),
+      this.Tmo.push(this.GetText(3));
   }
   RefreshUi(e) {
-    this.zke = e;
-    var e = ModelManager_1.ModelManager.RoleModel?.GetRoleDataById(e),
-      r =
-        ConfigManager_1.ConfigManager.RoleSkillConfig.GetRoleSkillInputConfigById(
-          e.GetRoleId(),
-        );
+    this.Wst = e;
+    var r =
+      ConfigManager_1.ConfigManager.RoleSkillConfig.GetRoleSkillInputConfigById(
+        e.GetRoleId(),
+      );
     if (r) {
       var o = r.SkillInputIdList;
-      this.Zke.RefreshByData(o);
+      this.CFe.RefreshByData(o);
       const l = this.GetTexture(1);
       l.SetUIActive(!1),
         this.SetTextureByPath(r.Icon, this.GetTexture(1), void 0, () => {
           l.SetUIActive(!0);
-        }),
-        this.GetItem(4).SetUIActive(void 0 !== e);
-      var i = r.DescList;
-      for (let e = 0; e < this.Uco.length; e++) {
-        var n = this.Uco[e];
+        });
+      var o = e.IsTrialRole(),
+        i = (this.GetItem(4).SetUIActive(!o), r.DescList);
+      for (let e = 0; e < this.Tmo.length; e++) {
+        var n = this.Tmo[e];
         e < i.length
           ? (n.SetUIActive(!0), LguiUtil_1.LguiUtil.SetLocalTextNew(n, i[e]))
           : n.SetUIActive(!1);
       }
-      (o = e.IsTrialRole()),
-        (r = ModelManager_1.ModelManager.FunctionModel.IsShow(10043)),
-        (e = ModelManager_1.ModelManager.FunctionModel.IsOpen(10043));
-      r && e
+      (e = ModelManager_1.ModelManager.FunctionModel.IsShow(10043)),
+        (r = ModelManager_1.ModelManager.FunctionModel.IsOpen(10043));
+      e && r
         ? this.GetItem(4).SetUIActive(!o)
         : this.GetItem(4).SetUIActive(!1);
     }

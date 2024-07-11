@@ -6,7 +6,7 @@ const UE = require("ue"),
   PopupCaptionItem_1 = require("./PopupCaptionItem");
 class FullScreenViewItem extends CommonPopViewBehaviourBase_1.CommonPopViewBase {
   constructor() {
-    super(...arguments), (this.nVt = void 0);
+    super(...arguments), (this.n6t = void 0);
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -15,8 +15,8 @@ class FullScreenViewItem extends CommonPopViewBehaviourBase_1.CommonPopViewBase 
     ];
   }
   OnStart() {
-    (this.nVt = new PopupCaptionItem_1.PopupCaptionItem(this.GetItem(0))),
-      this.nVt.SetCloseCallBack(() => {
+    (this.n6t = new PopupCaptionItem_1.PopupCaptionItem(this.GetItem(0))),
+      this.n6t.SetCloseCallBack(() => {
         this.TryHideSelf();
       });
   }
@@ -24,13 +24,13 @@ class FullScreenViewItem extends CommonPopViewBehaviourBase_1.CommonPopViewBase 
     return this.GetItem(1);
   }
   SetCaptionTitleIconVisible(e) {
-    this.nVt.SetTitleIconVisible(e);
+    this.n6t.SetTitleIconVisible(e);
   }
   SetCaptionTitleVisible(e) {
-    this.nVt.SetTitleTextActive(e);
+    this.n6t.SetTitleTextActive(e);
   }
   OnSetTitleByTextIdAndArg(e, ...t) {
-    this.nVt.SetTitleByTextIdAndArg(e, t);
+    this.n6t.SetTitleByTextIdAndArg(e, t);
   }
 }
 exports.FullScreenViewItem = FullScreenViewItem;

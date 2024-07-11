@@ -15,49 +15,49 @@ class VisionFilterView extends UiViewBase_1.UiViewBase {
     super(...arguments),
       (this.Scroll = void 0),
       (this.SearchScroll = void 0),
-      (this.ogt = void 0),
+      (this.C0t = void 0),
       (this.gGe = ""),
-      (this.gLt = void 0),
-      (this.ALt = void 0),
+      (this.MDt = void 0),
+      (this.BDt = void 0),
       (this.dqe = void 0),
-      (this.PLt = !1),
-      (this.xLt = () => {
-        (this.gGe = ""), this.wLt(!1);
+      (this.bDt = !1),
+      (this.qDt = () => {
+        (this.gGe = ""), this.GDt(!1);
         for (const i of this.Scroll.GetScrollItemList())
-          i.SetSelectedDataMap(this.gLt),
+          i.SetSelectedDataMap(this.MDt),
             i.InitFilterSetData(),
             i.RefreshGroupItem(),
             i.RefreshSelectAllToggleState();
       }),
-      (this.BLt = (i) => {
-        (this.gGe = i), this.gLt.clear(), this.Og();
+      (this.NDt = (i) => {
+        (this.gGe = i), this.MDt.clear(), this.Og();
       }),
       (this.Mbe = (i) => {
-        this.BLt(i);
+        this.NDt(i);
       }),
       (this.Tqe = () => {
-        this.xLt();
+        this.qDt();
       }),
-      (this.MLt = (i, t, e) => {
+      (this.IDt = (i, t, e) => {
         var t = new FilterGroup_1.FilterItem(t),
-          s = (t.SetToggleFunction(this.SLt), this.gLt.has(i.FilterId));
+          s = (t.SetToggleFunction(this.TDt), this.MDt.has(i.FilterId));
         return t.ShowTemp(i, s), { Key: i, Value: t };
       }),
-      (this.SLt = (i, t, e) => {
-        1 === i ? this.gLt.set(t, e) : this.gLt.delete(t);
+      (this.TDt = (i, t, e) => {
+        1 === i ? this.MDt.set(t, e) : this.MDt.delete(t);
       }),
-      (this.ULt = (i, t, e) => {
+      (this.wDt = (i, t, e) => {
         (t = new FilterGroup_1.FilterGroup(t)),
-          t.SetSelectedDataMap(this.gLt),
-          t.SetToggleFunction(this.SLt),
-          t.SetOnSelectAllFunction(this.SLt),
-          t.ShowTemp(i, this.ogt.ConfigId),
+          t.SetSelectedDataMap(this.MDt),
+          t.SetToggleFunction(this.TDt),
+          t.SetOnSelectAllFunction(this.TDt),
+          t.ShowTemp(i, this.C0t.ConfigId),
           (i = t.GetFilterType());
         return { Key: i, Value: t };
       }),
-      (this.O8e = () => {
-        if (this.PLt) {
-          this.gLt.clear();
+      (this.Z9e = () => {
+        if (this.bDt) {
+          this.MDt.clear();
           for (const i of this.SearchScroll.GetScrollItemList())
             i.SetToggleState(!1);
         } else
@@ -66,16 +66,16 @@ class VisionFilterView extends UiViewBase_1.UiViewBase {
               t.RefreshGroupItem(),
               t.RefreshSelectAllToggleState();
       }),
-      (this.RLt = () => {
+      (this.xDt = () => {
         const s = ModelManager_1.ModelManager.FilterModel.GetFilterResultData(
-          this.ogt.ConfigId,
+          this.C0t.ConfigId,
         );
         s.ClearSelectRuleData(),
-          this.gLt.forEach((i, t) => {
-            var e = this.ALt.get(t);
+          this.MDt.forEach((i, t) => {
+            var e = this.BDt.get(t);
             s.AddSingleRuleData(e, t, i);
           }),
-          this.ogt.ConfirmFunction?.(),
+          this.C0t.ConfirmFunction?.(),
           UiManager_1.UiManager.CloseView(this.Info.Name);
       });
   }
@@ -88,66 +88,66 @@ class VisionFilterView extends UiViewBase_1.UiViewBase {
       [4, UE.UIItem],
     ]),
       (this.BtnBindInfo = [
-        [1, this.O8e],
-        [2, this.RLt],
+        [1, this.Z9e],
+        [2, this.xDt],
       ]);
   }
   OnStart() {
-    (this.ogt = this.OpenParam),
-      this.bLt(),
+    (this.C0t = this.OpenParam),
+      this.ODt(),
       (this.dqe = new CommonSearchComponent_1.CommonSearchComponent(
         this.GetItem(4),
         this.Mbe,
         this.Tqe,
       ));
   }
-  bLt() {
+  ODt() {
     (this.Scroll = new GenericScrollView_1.GenericScrollView(
       this.GetScrollViewWithScrollbar(0),
-      this.ULt,
+      this.wDt,
     )),
       (this.SearchScroll = new GenericScrollView_1.GenericScrollView(
         this.GetScrollViewWithScrollbar(3),
-        this.MLt,
+        this.IDt,
       ));
   }
-  qLt() {
+  kDt() {
     var i = ConfigManager_1.ConfigManager.FilterConfig.GetFilterConfig(
-      this.ogt.ConfigId,
+      this.C0t.ConfigId,
     );
-    this.Scroll.RefreshByData(i.RuleList), this.wLt(!1);
+    this.Scroll.RefreshByData(i.RuleList), this.GDt(!1);
   }
-  GLt() {
+  FDt() {
     var i,
       t,
       e = ConfigManager_1.ConfigManager.FilterConfig.GetFilterConfig(
-        this.ogt.ConfigId,
+        this.C0t.ConfigId,
       );
     const s = new Array();
     e.RuleList.forEach((i) => {
       ModelManager_1.ModelManager.FilterModel.GetFilterItemDataList(
         i,
-        this.ogt.ConfigId,
+        this.C0t.ConfigId,
       ).forEach((i) => {
         i.Content.includes(this.gGe) && s.push(i);
       });
     });
     for (const r of this.Scroll.GetScrollItemList())
-      for ([i, t] of r.GetTempFilterDataMap()) this.gLt.set(i, t);
-    this.SearchScroll.RefreshByData(s), this.wLt(!0);
+      for ([i, t] of r.GetTempFilterDataMap()) this.MDt.set(i, t);
+    this.SearchScroll.RefreshByData(s), this.GDt(!0);
   }
-  wLt(i) {
+  GDt(i) {
     this.GetScrollViewWithScrollbar(0).RootUIComp.SetUIActive(!i),
       this.GetScrollViewWithScrollbar(3).RootUIComp.SetUIActive(i),
-      (this.PLt = i);
+      (this.bDt = i);
   }
   Og() {
-    StringUtils_1.StringUtils.IsEmpty(this.gGe) ? this.qLt() : this.GLt();
+    StringUtils_1.StringUtils.IsEmpty(this.gGe) ? this.kDt() : this.FDt();
   }
   OnBeforeShow() {
-    (this.ALt = new Map()),
+    (this.BDt = new Map()),
       ConfigManager_1.ConfigManager.FilterConfig.GetFilterConfig(
-        this.ogt.ConfigId,
+        this.C0t.ConfigId,
       ).RuleList.forEach((i) => {
         const t =
           ConfigManager_1.ConfigManager.FilterConfig.GetFilterRuleConfig(
@@ -155,19 +155,19 @@ class VisionFilterView extends UiViewBase_1.UiViewBase {
           ).FilterType;
         ModelManager_1.ModelManager.FilterModel.GetFilterItemDataList(
           i,
-          this.ogt.ConfigId,
+          this.C0t.ConfigId,
         ).forEach((i) => {
-          this.ALt.set(i.FilterId, t);
+          this.BDt.set(i.FilterId, t);
         });
       }),
-      (this.gLt = new Map());
+      (this.MDt = new Map());
     var i = ModelManager_1.ModelManager.FilterModel.GetFilterResultData(
-      this.ogt.ConfigId,
+      this.C0t.ConfigId,
     )?.GetSelectRuleData();
     i &&
       i.forEach((i) => {
         i.forEach((i, t) => {
-          this.gLt?.set(t, i);
+          this.MDt?.set(t, i);
         });
       }),
       this.Og();

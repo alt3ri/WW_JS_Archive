@@ -37,7 +37,7 @@ class TsDecoratorBlackboardIntCompare extends UE.BTDecorator_BlueprintBase {
     if (!r) return !1;
     this.InitTsVariables();
     let s = void 0;
-    e = r.Entity.GetComponent(65);
+    e = r.Entity.GetComponent(67);
     switch (
       ((s =
         (s =

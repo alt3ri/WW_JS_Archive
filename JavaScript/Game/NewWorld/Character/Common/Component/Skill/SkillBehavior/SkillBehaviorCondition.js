@@ -1,129 +1,162 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SkillBehaviorCondition = void 0);
-const GameplayTagUtils_1 = require("../../../../../../../Core/Utils/GameplayTagUtils"),
+const Log_1 = require("../../../../../../../Core/Common/Log"),
+  GameplayTagUtils_1 = require("../../../../../../../Core/Utils/GameplayTagUtils"),
   Vector_1 = require("../../../../../../../Core/Utils/Math/Vector"),
   MathUtils_1 = require("../../../../../../../Core/Utils/MathUtils"),
-  SkillBehaviorMisc_1 = require("./SkillBehaviorMisc");
+  SkillBehaviorMisc_1 = require("./SkillBehaviorMisc"),
+  SkillConditionParser_1 = require("./SkillConditionParser");
 class SkillBehaviorCondition {
-  static Satisfy(i, e) {
-    for (let t = 0; t < i.Num(); t++) {
-      var r = i.Get(t);
-      switch (r.ConditionType) {
+  static Satisfy(r, t, e) {
+    var a = [];
+    let o = !1;
+    for (let i = 0; i < r.Num(); i++) {
+      var l = r.Get(i);
+      switch (l.ConditionType) {
         case 0:
-          if (this.dzo(r, e)) break;
-          return !1;
+          o = this.uZo(l, e);
+          break;
         case 1:
-          if (this.Czo(r, e)) break;
-          return !1;
+          o = this.cZo(l, e);
+          break;
         case 2:
-          if (this.gzo(r, e)) break;
-          return !1;
+          o = this.mZo(l, e);
+          break;
         case 3:
-          if (this.fzo(r, e)) break;
-          return !1;
+          o = this.dZo(l, e);
+          break;
         case 4:
-          if (this.pzo(r, e)) break;
-          return !1;
+          o = this.CZo(l, e);
+          break;
         case 5:
-          if (this.vzo(r, e)) break;
-          return !1;
+          o = this.gZo(l, e);
+          break;
         default:
           return !1;
       }
+      if (t) a.push(o);
+      else if (!o) return !1;
     }
+    if (a.length)
+      try {
+        var i = new SkillConditionParser_1.Parser(t).Parse();
+        return new SkillConditionParser_1.ConditionArray(a, i).Evaluate();
+      } catch (i) {
+        return (
+          i instanceof Error
+            ? Log_1.Log.CheckError() &&
+              Log_1.Log.ErrorWithStack(
+                "Battle",
+                29,
+                "条件公式解析异常",
+                i,
+                ["formula", t],
+                ["error", i.message],
+              )
+            : Log_1.Log.CheckError() &&
+              Log_1.Log.Error(
+                "Battle",
+                29,
+                "条件公式解析异常",
+                ["formula", t],
+                ["error", i],
+              ),
+          !1
+        );
+      }
     return !0;
   }
-  static dzo(t, i) {
-    let e = !1;
-    return i.SkillComponent.SkillTarget && (e = !0), t.Reverse ? !e : e;
+  static uZo(i, r) {
+    let t = !1;
+    return r.SkillComponent.SkillTarget && (t = !0), i.Reverse ? !t : t;
   }
-  static Czo(t, i) {
-    let e = !1;
-    var r;
+  static cZo(i, r) {
+    let t = !1;
+    var e;
     return (
-      i.SkillComponent.SkillTarget &&
-        ((r = i.Entity.GetComponent(1).ActorLocationProxy),
-        (i =
-          i.SkillComponent.SkillTarget.Entity.GetComponent(
+      r.SkillComponent.SkillTarget &&
+        ((e = r.Entity.GetComponent(1).ActorLocationProxy),
+        (r =
+          r.SkillComponent.SkillTarget.Entity.GetComponent(
             1,
           ).ActorLocationProxy),
-        (r = t.IgnoreZ
-          ? Vector_1.Vector.Dist2D(r, i)
-          : Vector_1.Vector.Distance(r, i)),
-        (e = (0, SkillBehaviorMisc_1.compare)(
-          t.ComparisonLogic,
+        (e = i.IgnoreZ
+          ? Vector_1.Vector.Dist2D(e, r)
+          : Vector_1.Vector.Distance(e, r)),
+        (t = (0, SkillBehaviorMisc_1.compare)(
+          i.ComparisonLogic,
+          e,
+          i.Value,
+          i.RangeL,
+          i.RangeR,
+        ))),
+      i.Reverse ? !t : t
+    );
+  }
+  static mZo(i, r) {
+    let t = !1;
+    var e, a, o;
+    return (
+      r.SkillComponent.SkillTarget &&
+        ((a = (e = r.Entity.GetComponent(1)).ActorLocationProxy),
+        (r =
+          r.SkillComponent.SkillTarget.Entity.GetComponent(
+            1,
+          ).ActorLocationProxy),
+        (o = Vector_1.Vector.Create()),
+        r.Subtraction(a, o),
+        i.IgnoreZ && (o.Z = 0),
+        o.Normalize(),
+        (r = MathUtils_1.MathUtils.GetAngleByVectorDot(o, e.ActorForwardProxy)),
+        (t = (0, SkillBehaviorMisc_1.compare)(
+          i.ComparisonLogic,
           r,
-          t.Value,
-          t.RangeL,
-          t.RangeR,
+          i.Value,
+          i.RangeL,
+          i.RangeR,
         ))),
-      t.Reverse ? !e : e
+      i.Reverse ? !t : t
     );
   }
-  static gzo(t, i) {
-    let e = !1;
-    var r, a, s;
-    return (
-      i.SkillComponent.SkillTarget &&
-        ((a = (r = i.Entity.GetComponent(1)).ActorLocationProxy),
-        (i =
-          i.SkillComponent.SkillTarget.Entity.GetComponent(
-            1,
-          ).ActorLocationProxy),
-        (s = Vector_1.Vector.Create()),
-        i.Subtraction(a, s),
-        t.IgnoreZ && (s.Z = 0),
-        s.Normalize(),
-        (i = MathUtils_1.MathUtils.GetAngleByVectorDot(s, r.ActorForwardProxy)),
-        (e = (0, SkillBehaviorMisc_1.compare)(
-          t.ComparisonLogic,
-          i,
-          t.Value,
-          t.RangeL,
-          t.RangeR,
-        ))),
-      t.Reverse ? !e : e
-    );
-  }
-  static fzo(t, i) {
-    (i = i.Entity.GetComponent(185)),
-      (i = t.AnyTag
-        ? i.HasAnyTag(
+  static dZo(i, r) {
+    (r = r.Entity.GetComponent(188)),
+      (r = i.AnyTag
+        ? r.HasAnyTag(
             GameplayTagUtils_1.GameplayTagUtils.ConvertFromUeContainer(
-              t.TagToCheck,
+              i.TagToCheck,
             ),
           )
-        : i.HasAllTag(
+        : r.HasAllTag(
             GameplayTagUtils_1.GameplayTagUtils.ConvertFromUeContainer(
-              t.TagToCheck,
+              i.TagToCheck,
             ),
           ));
-    return t.Reverse ? !i : i;
+    return i.Reverse ? !r : r;
   }
-  static pzo(t, i) {
-    var i = i.Entity.GetComponent(156),
-      e = i.GetCurrentValue(t.AttributeId1),
-      i = 0 < t.AttributeId2 ? i.GetCurrentValue(t.AttributeId2) : 0,
-      e = (0, SkillBehaviorMisc_1.compare)(
-        t.ComparisonLogic,
-        e,
-        t.Value + i * t.AttributeRate,
-        t.RangeL,
-        t.RangeR,
+  static CZo(i, r) {
+    var r = r.Entity.GetComponent(158),
+      t = r.GetCurrentValue(i.AttributeId1),
+      r = 0 < i.AttributeId2 ? r.GetCurrentValue(i.AttributeId2) : 0,
+      t = (0, SkillBehaviorMisc_1.compare)(
+        i.ComparisonLogic,
+        t,
+        i.Value + r * i.AttributeRate,
+        i.RangeL,
+        i.RangeR,
       );
-    return t.Reverse ? !e : e;
+    return i.Reverse ? !t : t;
   }
-  static vzo(t, i) {
-    (i = i.Entity.GetComponent(161).GetHeightAboveGround()),
-      (i = (0, SkillBehaviorMisc_1.compare)(
-        t.ComparisonLogic,
-        i,
-        t.Value,
-        t.RangeL,
-        t.RangeR,
+  static gZo(i, r) {
+    (r = r.Entity.GetComponent(163).GetHeightAboveGround()),
+      (r = (0, SkillBehaviorMisc_1.compare)(
+        i.ComparisonLogic,
+        r,
+        i.Value,
+        i.RangeL,
+        i.RangeR,
       ));
-    return t.Reverse ? !i : i;
+    return i.Reverse ? !r : r;
   }
 }
 exports.SkillBehaviorCondition = SkillBehaviorCondition;

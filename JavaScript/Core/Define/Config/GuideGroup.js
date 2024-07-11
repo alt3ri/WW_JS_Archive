@@ -33,6 +33,9 @@ class GuideGroup {
   get ResetInDungeon() {
     return this.resetindungeon();
   }
+  get OnlineMode() {
+    return this.onlinemode();
+  }
   __init(t, i) {
     return (this.z7 = t), (this.J7 = i), this;
   }
@@ -120,6 +123,10 @@ class GuideGroup {
   resetindungeon() {
     var t = this.J7.__offset(this.z7, 16);
     return !!t && !!this.J7.readInt8(this.z7 + t);
+  }
+  onlinemode() {
+    var t = this.J7.__offset(this.z7, 18);
+    return t ? this.J7.readInt32(this.z7 + t) : 1;
   }
 }
 exports.GuideGroup = GuideGroup;

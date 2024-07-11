@@ -7,9 +7,9 @@ const UE = require("ue"),
 class AdviceExpressionSwitchItem extends CommonTabItemBase_1.CommonTabItemBase {
   constructor() {
     super(...arguments),
-      (this.Q9e = 0),
-      (this.X9e = (e) => {
-        1 === e && this.SelectedCallBack(this.Q9e);
+      (this.aHe = 0),
+      (this.hHe = (e) => {
+        1 === e && this.SelectedCallBack(this.aHe);
       });
   }
   OnRegisterComponent() {
@@ -17,7 +17,7 @@ class AdviceExpressionSwitchItem extends CommonTabItemBase_1.CommonTabItemBase {
       [0, UE.UIExtendToggle],
       [1, UE.UITexture],
     ]),
-      (this.BtnBindInfo = [[0, this.X9e]]);
+      (this.BtnBindInfo = [[0, this.hHe]]);
   }
   OnStart() {
     super.OnStart(), this.GetExtendToggle(0).SetToggleState(0);
@@ -33,7 +33,7 @@ class AdviceExpressionSwitchItem extends CommonTabItemBase_1.CommonTabItemBase {
     return this.GetExtendToggle(0);
   }
   UpdateView(e) {
-    this.Q9e = e;
+    this.aHe = e;
     e =
       ConfigManager_1.ConfigManager.ChatConfig.GetExpressionGroupConfig(
         e,

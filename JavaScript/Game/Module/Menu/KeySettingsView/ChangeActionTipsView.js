@@ -7,21 +7,21 @@ const UE = require("ue"),
 class ChangeActionTipsView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.Xqt = void 0),
-      (this.uAi = void 0),
-      (this.cAi = void 0),
-      (this.mAi = void 0),
-      (this.dAi = !1),
-      (this.CAi = () => {
-        this.Xqt && this.Xqt(this.dAi), this.CloseMe();
+      (this.JGt = void 0),
+      (this.uPi = void 0),
+      (this.cPi = void 0),
+      (this.mPi = void 0),
+      (this.dPi = !1),
+      (this.CPi = () => {
+        this.JGt && this.JGt(this.dPi), this.CloseMe();
       }),
-      (this.gAi = () => {
+      (this.gPi = () => {
         this.CloseMe();
       }),
-      (this.fAi = (i, t) => {
-        this.cAi.SetSelected(this.cAi.IsRevert === t),
-          this.mAi.SetSelected(this.mAi.IsRevert === t),
-          (this.dAi = t);
+      (this.fPi = (i, t) => {
+        this.cPi.SetSelected(this.cPi.IsRevert === t),
+          this.mPi.SetSelected(this.mPi.IsRevert === t),
+          (this.dPi = t);
       });
   }
   OnRegisterComponent() {
@@ -32,32 +32,32 @@ class ChangeActionTipsView extends UiViewBase_1.UiViewBase {
       [3, UE.UIItem],
     ]),
       (this.BtnBindInfo = [
-        [0, this.CAi],
-        [1, this.gAi],
+        [0, this.CPi],
+        [1, this.gPi],
       ]);
   }
   async OnBeforeStartAsync() {
-    (this.cAi = new ChangeActionRowView_1.ChangeActionRowView()),
-      (this.mAi = new ChangeActionRowView_1.ChangeActionRowView()),
-      this.cAi.BindOnSelected(this.fAi),
-      this.mAi.BindOnSelected(this.fAi);
-    var i = this.cAi.CreateByActorAsync(this.GetItem(2).GetOwner()),
-      t = this.mAi.CreateByActorAsync(this.GetItem(3).GetOwner());
+    (this.cPi = new ChangeActionRowView_1.ChangeActionRowView()),
+      (this.mPi = new ChangeActionRowView_1.ChangeActionRowView()),
+      this.cPi.BindOnSelected(this.fPi),
+      this.mPi.BindOnSelected(this.fPi);
+    var i = this.cPi.CreateByActorAsync(this.GetItem(2).GetOwner()),
+      t = this.mPi.CreateByActorAsync(this.GetItem(3).GetOwner());
     await Promise.all([i, t]);
   }
   OnStart() {
     var i = this.OpenParam,
       t = i.InputControllerType;
-    (this.Xqt = i.OnConfirmCallback),
-      (this.uAi = i.KeySettingRowData),
-      this.cAi?.Refresh(this.uAi, t, !1),
-      this.mAi?.Refresh(this.uAi, t, !0),
-      this.cAi?.SetSelected(!0),
-      this.cAi?.SetActive(!0),
-      this.mAi?.SetActive(!0);
+    (this.JGt = i.OnConfirmCallback),
+      (this.uPi = i.KeySettingRowData),
+      this.cPi?.Refresh(this.uPi, t, !1),
+      this.mPi?.Refresh(this.uPi, t, !0),
+      this.cPi?.SetSelected(!0),
+      this.cPi?.SetActive(!0),
+      this.mPi?.SetActive(!0);
   }
   OnBeforeDestroy() {
-    (this.cAi = void 0), (this.mAi = void 0), (this.Xqt = void 0);
+    (this.cPi = void 0), (this.mPi = void 0), (this.JGt = void 0);
   }
 }
 exports.ChangeActionTipsView = ChangeActionTipsView;

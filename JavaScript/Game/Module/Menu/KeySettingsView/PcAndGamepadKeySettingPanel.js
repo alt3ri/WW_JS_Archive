@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PcAndGamepadKeySettingPanel = void 0);
 const UE = require("ue"),
+  Info_1 = require("../../../../Core/Common/Info"),
   Log_1 = require("../../../../Core/Common/Log"),
   TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
   StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
@@ -30,32 +31,32 @@ const UE = require("ue"),
 class PcAndGamepadKeySettingPanel extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this.aPi = void 0),
-      (this.hPi = void 0),
-      (this.lPi = []),
-      (this.gRn = []),
-      (this.zGn = new Map()),
-      (this.oPi = 0),
-      (this.cPi = void 0),
-      (this.mPi = void 0),
-      (this.dPi = void 0),
-      (this.CPi = new Map()),
-      (this.gPi = 0),
-      (this.fPi = []),
-      (this.pPi = void 0),
-      (this.vPi = void 0),
+      (this.axi = void 0),
+      (this.hxi = void 0),
+      (this.lxi = []),
+      (this.bAn = []),
+      (this.fkn = new Map()),
+      (this.oxi = 0),
+      (this.cxi = void 0),
+      (this.mxi = void 0),
+      (this.dxi = void 0),
+      (this.Cxi = new Map()),
+      (this.gxi = 0),
+      (this.fxi = []),
+      (this.pxi = void 0),
+      (this.vxi = void 0),
       (this.GamepadItem = void 0),
-      (this.MPi = void 0),
-      (this.Zbn = void 0),
-      (this.SPi = () => {
-        let t = this.oPi;
-        (t = 1 === this.gPi ? this.EPi(2) : this.EPi(1)), this.Refresh(t);
+      (this.Mxi = void 0),
+      (this.o2n = void 0),
+      (this.Exi = () => {
+        let t = this.oxi;
+        (t = 1 === this.gxi ? this.Sxi(2) : this.Sxi(1)), this.Refresh(t);
       }),
-      (this.yPi = () => {
-        let t = this.oPi;
-        (t = 1 === this.gPi ? this.EPi(2) : this.EPi(1)), this.Refresh(t);
+      (this.yxi = () => {
+        let t = this.oxi;
+        (t = 1 === this.gxi ? this.Sxi(2) : this.Sxi(1)), this.Refresh(t);
       }),
-      (this.IPi = () => {
+      (this.Ixi = () => {
         var t = new ConfirmBoxDefine_1.ConfirmBoxDataNew(179);
         t.FunctionMap.set(2, () => {
           InputSettingsManager_1.InputSettingsManager.ClearAllKeys(),
@@ -67,75 +68,88 @@ class PcAndGamepadKeySettingPanel extends UiPanelBase_1.UiPanelBase {
               !0,
             ),
             InputSettings_1.InputSettings.SaveKeyMappings(),
-            this.Refresh(this.oPi);
+            this.Refresh(this.oxi);
         }),
           ConfirmBoxController_1.ConfirmBoxController.ShowConfirmBoxNew(t);
       }),
-      (this.TPi = (t, i, e) => {
-        this.aPi?.SelectKeySettingRow(e);
+      (this.Txi = (t, i, e) => {
+        this.axi?.SelectKeySettingRow(e);
         var e = t.OpenViewType;
-        0 !== e
-          ? (1 === e &&
-              RouletteController_1.RouletteController.OpenAssemblyView(1),
-            this.LPi())
-          : t.IsLock
+        if (0 !== e) {
+          switch (e) {
+            case 1:
+              RouletteController_1.RouletteController.OpenAssemblyView(1);
+              break;
+            case 2:
+              MenuController_1.MenuController.OpenChangeLockView();
+          }
+          this.Lxi();
+        } else
+          t.IsLock
             ? (GenericPromptController_1.GenericPromptController.ShowPromptByCode(
                 "KeyLock",
               ),
-              this.LPi())
-            : ((this.cPi = t),
-              (this.mPi = i),
+              this.Lxi())
+            : ((this.cxi = t),
+              (this.mxi = i),
               2 === t.BothActionName.length
                 ? ((e = {
-                    InputControllerType: this.oPi,
+                    InputControllerType: this.oxi,
                     KeySettingRowData: t,
-                    OnConfirmCallback: this.DPi,
+                    OnConfirmCallback: this.Dxi,
                   }),
                   UiManager_1.UiManager.OpenView("ChangeActionTipsView", e),
-                  this.LPi())
-                : this.RPi());
+                  this.Lxi())
+                : this.Rxi());
       }),
-      (this.UPi = (t) => {
-        1 !== this.oPi && (this.MPi = t) && (t = t.GetDisplayKeyName(this.oPi))
+      (this.Uxi = (t) => {
+        1 !== this.oxi && (this.Mxi = t) && (t = t.GetDisplayKeyName(this.oxi))
           ? this.GamepadItem?.SetKeysEnable(t)
           : this.GamepadItem?.SetAllKeyDisable();
       }),
-      (this.APi = (t) => {
-        (1 !== this.oPi && this.MPi && this.MPi.ConfigId !== t?.ConfigId) ||
+      (this.Axi = (t) => {
+        (1 !== this.oxi && this.Mxi && this.Mxi.ConfigId !== t?.ConfigId) ||
           this.GamepadItem?.SetAllKeyDisable();
       }),
-      (this.PPi = (t, i, e) => {
-        this.hPi?.SelectKeySettingRow(e);
+      (this.Pxi = (t, i, e) => {
+        this.hxi?.SelectKeySettingRow(e);
         var e = t.OpenViewType;
-        0 !== e
-          ? (1 === e &&
-              RouletteController_1.RouletteController.OpenAssemblyView(1),
-            this.LPi())
-          : t.IsLock
+        if (0 !== e) {
+          switch (e) {
+            case 1:
+              RouletteController_1.RouletteController.OpenAssemblyView(1);
+              break;
+            case 2:
+              MenuController_1.MenuController.OpenChangeLockView();
+          }
+          this.Lxi();
+        } else
+          t.IsLock
             ? (GenericPromptController_1.GenericPromptController.ShowPromptByCode(
                 "KeyLock",
               ),
-              this.LPi())
-            : ((this.cPi = t),
-              (this.mPi = i),
+              this.Lxi())
+            : ((this.cxi = t),
+              (this.mxi = i),
               2 === t.BothActionName.length
                 ? ((e = {
-                    InputControllerType: this.oPi,
+                    InputControllerType: this.oxi,
                     KeySettingRowData: t,
-                    OnConfirmCallback: this.DPi,
+                    OnConfirmCallback: this.Dxi,
                   }),
                   UiManager_1.UiManager.OpenView("ChangeActionTipsView", e),
-                  this.LPi())
-                : this.RPi());
+                  this.Lxi())
+                : this.Rxi());
       }),
-      (this.DPi = (t) => {
-        this.cPi &&
+      (this.Dxi = (t) => {
+        this.cxi &&
           t &&
-          (this.cPi.ChangeBothAction(this.oPi),
-          this.mPi?.Refresh(this.cPi, this.oPi)),
-          this.LPi();
+          (this.cxi.ChangeBothAction(this.oxi),
+          this.mxi?.Refresh(this.cxi, this.oxi),
+          InputSettings_1.InputSettings.SaveKeyMappings()),
+          this.Lxi();
       }),
-      (this.eUt = (i, e) => {
+      (this.rAt = (i, e) => {
         if (
           !UiManager_1.UiManager.IsViewOpen("RepeatKeyTipsView") &&
           ModelManager_1.ModelManager.MenuModel.IsWaitForKeyInput
@@ -144,128 +158,128 @@ class PcAndGamepadKeySettingPanel extends UiPanelBase_1.UiPanelBase {
             s = InputSettingsManager_1.InputSettingsManager.GetActionBinding(
               InputMappingsDefine_1.actionMappings.放弃改键,
             );
-          if (s && s.HasKey(e)) this.LPi();
-          else if (this.cPi)
-            if (this.cPi.IsLock)
+          if (s && s.HasKey(e)) this.Lxi();
+          else if (this.cxi)
+            if (this.cxi.IsLock)
               GenericPromptController_1.GenericPromptController.ShowPromptByCode(
                 "KeyLock",
               ),
-                this.LPi();
-            else if (i) this.xPi(e);
+                this.Lxi();
+            else if (i) this.xxi(e);
             else {
-              if (1 < this.fPi.length) {
-                if (!this.cPi.CanCombination)
+              if (1 < this.fxi.length) {
+                if (!this.cxi.CanCombination)
                   return (
                     Log_1.Log.CheckInfo() &&
                       Log_1.Log.Info(
                         "Test",
                         8,
                         "[KeySetting]改键失败，原因：该输入在配置上不允许修改成组合键",
-                        ["ActionOrAxisName", this.cPi.GetActionOrAxisName()],
+                        ["ActionOrAxisName", this.cxi.GetActionOrAxisName()],
                       ),
                     GenericPromptController_1.GenericPromptController.ShowPromptByCode(
                       "ErrorKey",
                     ),
-                    void this.wPi()
+                    void this.wxi()
                   );
-                if (!this.cPi.IsAllowCombinationKey(this.fPi[0], this.fPi[1]))
+                if (!this.cxi.IsAllowCombinationKey(this.fxi[0], this.fxi[1]))
                   return (
                     Log_1.Log.CheckInfo() &&
                       Log_1.Log.Info(
                         "Test",
                         8,
                         "[KeySetting]改键失败，原因：尝试修改为组合输入，但不在允许设置的组合按键范围配置里内",
-                        ["ActionOrAxisName", this.cPi.GetActionOrAxisName()],
-                        ["MainKey", this.fPi[0]],
-                        ["SecondKey", this.fPi[1]],
+                        ["ActionOrAxisName", this.cxi.GetActionOrAxisName()],
+                        ["MainKey", this.fxi[0]],
+                        ["SecondKey", this.fxi[1]],
                       ),
                     GenericPromptController_1.GenericPromptController.ShowPromptByCode(
                       "ErrorKey",
                     ),
-                    void this.wPi()
+                    void this.wxi()
                   );
               } else {
-                if (!this.cPi.IsAllowKey(this.fPi[0]))
+                if (!this.cxi.IsAllowKey(this.fxi[0]))
                   return (
                     Log_1.Log.CheckInfo() &&
                       Log_1.Log.Info(
                         "Test",
                         8,
                         "[KeySetting]改键失败，原因：不在允许设置的组合按键范围配置里内",
-                        ["ActionOrAxisName", this.cPi.GetActionOrAxisName()],
-                        ["this.EditKeyNameList[0]", this.fPi[0]],
+                        ["ActionOrAxisName", this.cxi.GetActionOrAxisName()],
+                        ["this.EditKeyNameList[0]", this.fxi[0]],
                       ),
                     GenericPromptController_1.GenericPromptController.ShowPromptByCode(
                       "ErrorKey",
                     ),
-                    void this.wPi()
+                    void this.wxi()
                   );
                 if (
                   !MenuController_1.MenuController.IsInputControllerTypeIncludeKey(
-                    this.oPi,
-                    this.fPi[0],
+                    this.oxi,
+                    this.fxi[0],
                   )
                 )
                   return (
                     GenericPromptController_1.GenericPromptController.ShowPromptByCode(
                       "ErrorKey",
                     ),
-                    void this.wPi()
+                    void this.wxi()
                   );
               }
-              let t = this.gRn;
+              let t = this.bAn;
               (InputSettings_1.InputSettings.IsKeyboardKey(e) ||
                 InputSettings_1.InputSettings.IsMouseButton(e)) &&
-                (t = this.lPi);
-              const n = this.BPi(t, this.fPi, this.cPi);
-              if (n && n.IsCheckSameKey) {
-                const o = [this.fPi[0]];
-                (s = this.fPi[1]),
+                (t = this.lxi);
+              const h = this.Bxi(t, this.fxi, this.cxi);
+              if (h && h.IsCheckSameKey) {
+                const o = [this.fxi[0]];
+                (s = this.fxi[1]),
                   (i =
                     (s && o.push(s),
                     {
-                      InputControllerType: this.oPi,
-                      CurrentKeySettingRowData: this.cPi,
-                      RepeatKeySettingRowData: n,
+                      InputControllerType: this.oxi,
+                      CurrentKeySettingRowData: this.cxi,
+                      RepeatKeySettingRowData: h,
                       OnCloseCallback: (t) => {
-                        var i, e, s, r, h;
+                        var i, e, s, r, n;
                         t
-                          ? (this.LPi(),
-                            (t = this.cPi.GetCurrentKeyName(this.oPi)),
-                            n.IsActionOrAxis ||
-                            this.cPi.IsActionOrAxis ||
-                            n.GetActionOrAxisName() !==
-                              this.cPi.GetActionOrAxisName() ||
-                            n.IsCombination(this.oPi) ||
-                            this.cPi.IsCombination(this.oPi)
-                              ? (n.SetKey(t, this.oPi),
-                                this.cPi.SetKey(o, this.oPi))
-                              : ((i = this.cPi.GetAxisKeyScaleMap()),
-                                (h = o[0]),
+                          ? (this.Lxi(),
+                            (t = this.cxi.GetCurrentKeyName(this.oxi)),
+                            h.IsActionOrAxis ||
+                            this.cxi.IsActionOrAxis ||
+                            h.GetActionOrAxisName() !==
+                              this.cxi.GetActionOrAxisName() ||
+                            h.IsCombination(this.oxi) ||
+                            this.cxi.IsCombination(this.oxi)
+                              ? (h.SetKey(t, this.oxi),
+                                this.cxi.SetKey(o, this.oxi))
+                              : ((i = this.cxi.GetAxisKeyScaleMap()),
+                                (n = o[0]),
                                 (e = t[0]),
-                                (s = i.get(h)),
-                                (r = i.get(e)) && i.set(h, r),
+                                (s = i.get(n)),
+                                (r = i.get(e)) && i.set(n, r),
                                 s && i.set(e, s),
-                                this.cPi.SetAxisBindingKeys(i)),
-                            (h = this.bPi())?.RefreshRow(this.cPi),
-                            h?.RefreshRow(n),
-                            this.ZGn(this.cPi, o),
-                            this.ZGn(n, t),
+                                this.cxi.SetAxisBindingKeys(i)),
+                            (n = this.bxi())?.RefreshRow(this.cxi),
+                            n?.RefreshRow(h),
+                            this.pkn(this.cxi, o),
+                            this.pkn(h, t),
                             InputSettings_1.InputSettings.SaveKeyMappings())
-                          : this.qPi(!0);
+                          : this.qxi(!0);
                       },
                     }));
-                this.qPi(!1),
+                this.qxi(!1),
                   void UiManager_1.UiManager.OpenView("RepeatKeyTipsView", i);
               } else
-                0 < this.fPi.length &&
-                  (this.cPi.SetKey(this.fPi, this.oPi),
-                  this.mPi?.Refresh(this.cPi, this.oPi),
-                  this.ZGn(this.cPi, this.fPi),
+                0 < this.fxi.length &&
+                  (this.cxi.SetKey(this.fxi, this.oxi),
+                  this.mxi?.Refresh(this.cxi, this.oxi),
+                  this.pkn(this.cxi, this.fxi),
                   InputSettings_1.InputSettings.SaveKeyMappings(),
-                  this.LPi());
+                  this.Lxi());
             }
-          else this.LPi();
+          else this.Lxi();
         }
       });
   }
@@ -285,172 +299,172 @@ class PcAndGamepadKeySettingPanel extends UiPanelBase_1.UiPanelBase {
       [11, UE.UIItem],
     ]),
       (this.BtnBindInfo = [
-        [0, this.SPi],
-        [1, this.yPi],
-        [9, this.IPi],
+        [0, this.Exi],
+        [1, this.yxi],
+        [9, this.Ixi],
       ]);
   }
   async OnBeforeStartAsync() {
-    (this.aPi = new KeySettingPanel_1.KeySettingPanel()),
-      this.aPi.BindOnWaitInput(this.TPi),
-      this.aPi.BindOnHover(this.UPi),
-      this.aPi.BindOnUnHover(this.APi);
-    var t = this.aPi.CreateByActorAsync(this.GetItem(6).GetOwner()),
+    (this.axi = new KeySettingPanel_1.KeySettingPanel()),
+      this.axi.BindOnWaitInput(this.Txi),
+      this.axi.BindOnHover(this.Uxi),
+      this.axi.BindOnUnHover(this.Axi);
+    var t = this.axi.CreateByActorAsync(this.GetItem(6).GetOwner()),
       i =
-        ((this.hPi = new KeySettingPanel_1.KeySettingPanel()),
-        this.hPi.BindOnWaitInput(this.PPi),
-        this.hPi.BindOnHover(this.UPi),
-        this.hPi.BindOnUnHover(this.APi),
-        this.hPi.CreateByActorAsync(this.GetItem(5).GetOwner())),
+        ((this.hxi = new KeySettingPanel_1.KeySettingPanel()),
+        this.hxi.BindOnWaitInput(this.Pxi),
+        this.hxi.BindOnHover(this.Uxi),
+        this.hxi.BindOnUnHover(this.Axi),
+        this.hxi.CreateByActorAsync(this.GetItem(5).GetOwner())),
       e =
-        ((this.pPi = new XboxGamepadItem_1.XboxGamepadItem()),
-        this.pPi.CreateByResourceIdAsync(
+        ((this.pxi = new XboxGamepadItem_1.XboxGamepadItem()),
+        this.pxi.CreateByResourceIdAsync(
           "UiItem_HandleSetXBox",
           this.GetItem(10),
         )),
       s =
-        ((this.vPi = new PsGamepadItem_1.PsGamepadItem()),
-        this.vPi.CreateByResourceIdAsync(
+        ((this.vxi = new PsGamepadItem_1.PsGamepadItem()),
+        this.vxi.CreateByResourceIdAsync(
           "UiItem_HandleSetPs",
           this.GetItem(10),
         ));
-    (this.Zbn = new LevelSequencePlayer_1.LevelSequencePlayer(this.GetItem(7))),
+    (this.o2n = new LevelSequencePlayer_1.LevelSequencePlayer(this.GetItem(7))),
       await Promise.all([t, i, e, s]);
   }
   OnStart() {
     var t = ConfigManager_1.ConfigManager.MenuBaseConfig.GetAllKeyTypeConfig();
     t &&
-      (this.zGn.clear(),
-      this.GPi(),
-      this.NPi(t),
-      this.OPi(t),
-      this.FPi(),
+      (this.fkn.clear(),
+      this.Gxi(),
+      this.Nxi(t),
+      this.Oxi(t),
+      this.Fxi(),
       this.Ore());
   }
   OnBeforeDestroy() {
     this.kre(),
-      this.VPi(),
-      this.Zbn?.Clear(),
-      (this.Zbn = void 0),
-      (this.aPi = void 0),
-      (this.hPi = void 0),
-      (this.cPi = void 0),
-      (this.mPi = void 0),
-      (this.pPi = void 0),
-      (this.vPi = void 0),
+      this.Vxi(),
+      this.o2n?.Clear(),
+      (this.o2n = void 0),
+      (this.axi = void 0),
+      (this.hxi = void 0),
+      (this.cxi = void 0),
+      (this.mxi = void 0),
+      (this.pxi = void 0),
+      (this.vxi = void 0),
       (this.GamepadItem = void 0),
-      (this.MPi = void 0);
+      (this.Mxi = void 0);
   }
   Ore() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnInputAnyKey,
-      this.eUt,
+      this.rAt,
     );
   }
   kre() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnInputAnyKey,
-      this.eUt,
+      this.rAt,
     );
   }
-  eOn(t, i) {
+  vkn(t, i) {
     var e = [];
     let s = t.ConnectedKeySettingId;
     for (; 0 !== s; ) {
-      var r = this.tOn(s);
+      var r = this.Mkn(s);
       if (!r) return e;
-      r.SetKey(i, this.oPi), e.push(r), (s = r.ConnectedKeySettingId);
+      r.SetKey(i, this.oxi), e.push(r), (s = r.ConnectedKeySettingId);
     }
     return e;
   }
-  ZGn(t, i) {
-    var t = this.eOn(t, i),
-      e = this.bPi();
+  pkn(t, i) {
+    var t = this.vkn(t, i),
+      e = this.bxi();
     for (const s of t) e?.RefreshRow(s);
   }
-  GPi() {
-    this.CPi.set(1, { DeviceType: 1, NameTextId: "Text_KeyBoard_Text" }),
-      this.CPi.set(2, { DeviceType: 2, NameTextId: "Text_Handle_Text" });
+  Gxi() {
+    this.Cxi.set(1, { DeviceType: 1, NameTextId: "Text_KeyBoard_Text" }),
+      this.Cxi.set(2, { DeviceType: 2, NameTextId: "Text_Handle_Text" });
   }
-  NPi(t) {
-    this.lPi.length = 0;
+  Nxi(t) {
+    this.lxi.length = 0;
     var i = ConfigManager_1.ConfigManager.MenuBaseConfig;
-    for (const h of t) {
-      var e = h.TypeId,
+    for (const n of t) {
+      var e = n.TypeId,
         s = i.GetKeySettingConfigListByTypeIdAndInputControllerType(e, 1) ?? [],
         e = i.GetKeySettingConfigListByTypeIdAndInputControllerType(e, 0) ?? [],
         s = s.concat(e);
       if (!(s.length <= 0)) {
         e = new KeySettingRowData_1.KeySettingRowData();
-        e.InitializeKeyType(h), this.lPi.push(e), s.sort((t, i) => t.Id - i.Id);
-        for (const n of s) {
+        e.InitializeKeyType(n), this.lxi.push(e), s.sort((t, i) => t.Id - i.Id);
+        for (const h of s) {
           var r = new KeySettingRowData_1.KeySettingRowData();
-          r.InitializeKeySetting(n), this.lPi.push(r), this.zGn.set(n.Id, r);
+          r.InitializeKeySetting(h), this.lxi.push(r), this.fkn.set(h.Id, r);
         }
       }
     }
   }
-  OPi(t) {
-    this.gRn.length = 0;
+  Oxi(t) {
+    this.bAn.length = 0;
     var i = ConfigManager_1.ConfigManager.MenuBaseConfig;
-    for (const h of t) {
-      var e = h.TypeId,
+    for (const n of t) {
+      var e = n.TypeId,
         s = i.GetKeySettingConfigListByTypeIdAndInputControllerType(e, 2) ?? [],
         e = i.GetKeySettingConfigListByTypeIdAndInputControllerType(e, 0) ?? [],
         s = s.concat(e);
       if (!(s.length <= 0)) {
         e = new KeySettingRowData_1.KeySettingRowData();
-        e.InitializeKeyType(h), this.gRn.push(e), s.sort((t, i) => t.Id - i.Id);
-        for (const n of s) {
+        e.InitializeKeyType(n), this.bAn.push(e), s.sort((t, i) => t.Id - i.Id);
+        for (const h of s) {
           var r = new KeySettingRowData_1.KeySettingRowData();
-          r.InitializeKeySetting(n), this.gRn.push(r), this.zGn.set(n.Id, r);
+          r.InitializeKeySetting(h), this.bAn.push(r), this.fkn.set(h.Id, r);
         }
       }
     }
   }
   Refresh(t) {
-    this.oPi = t;
-    var i = this.HPi(t);
-    this.jPi(i), this.WPi(t), this.KPi(t);
+    this.oxi = t;
+    var i = this.Hxi(t);
+    this.jxi(i), this.Wxi(t), this.Kxi(t);
   }
-  jPi(t) {
-    this.gPi = t;
-    var t = this.CPi.get(t);
+  jxi(t) {
+    this.gxi = t;
+    var t = this.Cxi.get(t);
     t &&
       ((t = t.NameTextId),
       LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(2), t),
-      1 === this.gPi
+      1 === this.gxi
         ? (this.GetButton(0)?.SetSelfInteractive(!1),
           this.GetButton(1)?.SetSelfInteractive(!0))
         : (this.GetButton(0)?.SetSelfInteractive(!0),
           this.GetButton(1)?.SetSelfInteractive(!1)));
   }
-  WPi(t) {
+  Wxi(t) {
     switch (t) {
       case 1:
-        this.aPi?.Refresh(this.lPi, t),
-          this.aPi?.SetActive(!0),
-          this.hPi?.SetActive(!1),
+        this.axi?.Refresh(this.lxi, t),
+          this.axi?.SetActive(!0),
+          this.hxi?.SetActive(!1),
           this.GetItem(4)?.SetUIActive(!0),
           this.GetItem(3)?.SetUIActive(!1);
         break;
       case 2:
-        this.hPi?.Refresh(this.gRn, t),
-          this.hPi?.SetActive(!0),
-          this.aPi?.SetActive(!1),
+        this.hxi?.Refresh(this.bAn, t),
+          this.hxi?.SetActive(!0),
+          this.axi?.SetActive(!1),
           this.GetItem(4)?.SetUIActive(!1),
           this.GetItem(3)?.SetUIActive(!0);
     }
   }
-  KPi(t) {
+  Kxi(t) {
     (2 === t
-      ? 7 === ModelManager_1.ModelManager.PlatformModel.PlatformType
-        ? ((this.GamepadItem = this.vPi), this.vPi?.SetActive(!0), this.pPi)
-        : ((this.GamepadItem = this.pPi), this.pPi?.SetActive(!0), this.vPi)
-      : ((this.GamepadItem = void 0), this.vPi?.SetActive(!1), this.pPi)
+      ? Info_1.Info.IsPsGamepad()
+        ? ((this.GamepadItem = this.vxi), this.vxi?.SetActive(!0), this.pxi)
+        : ((this.GamepadItem = this.pxi), this.pxi?.SetActive(!0), this.vxi)
+      : ((this.GamepadItem = void 0), this.vxi?.SetActive(!1), this.pxi)
     )?.SetActive(!1);
   }
-  HPi(t) {
+  Hxi(t) {
     switch (t) {
       case 1:
         return 1;
@@ -459,79 +473,84 @@ class PcAndGamepadKeySettingPanel extends UiPanelBase_1.UiPanelBase {
     }
     return 0;
   }
-  EPi(t) {
+  Sxi(t) {
     return 1 === t ? 1 : 2;
   }
-  BPi(t, i, e) {
+  Bxi(t, i, e) {
     if (!(i.length <= 0))
-      for (const s of t) if (s !== e && s.HasKey(i, this.oPi)) return s;
+      for (const s of t) if (s !== e && s.HasKey(i, this.oxi)) return s;
   }
-  RPi() {
-    this.aPi?.StopScroll(),
-      this.hPi?.StopScroll(),
-      (this.dPi = TimerSystem_1.TimerSystem.Next(() => {
+  Rxi() {
+    this.axi?.StopScroll(),
+      this.hxi?.StopScroll(),
+      (this.dxi = TimerSystem_1.TimerSystem.Next(() => {
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("Test", 8, "[KeySetting]当等待键盘输入改键时"),
           this.GamepadItem?.SetAllKeyDisable(),
-          (this.MPi = void 0),
-          this.VPi(),
-          this.qPi(!0),
-          this.FPi("EditKey_Text");
+          (this.Mxi = void 0),
+          this.Vxi(),
+          this.qxi(!0),
+          this.Fxi("EditKey_Text");
       }));
   }
-  LPi() {
+  Lxi() {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info("Test", 8, "[KeySetting]当输入改键结束时"),
-      this.qPi(!1),
-      this.VPi(),
-      this.FPi(),
-      this.bPi()?.SelectKeySettingRow(void 0),
+      this.qxi(!1),
+      this.Vxi(),
+      this.Fxi(),
+      this.bxi()?.SelectKeySettingRow(void 0),
       UiLayer_1.UiLayer.SetShowMaskLayer("KeySettingMask", !1);
   }
-  xPi(t) {
-    this.fPi.push(t),
+  xxi(t) {
+    this.fxi.push(t),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("Test", 8, "[KeySetting]记录要设置的按键", [
           "EditKeyNameList",
-          this.fPi,
+          this.fxi,
         ]);
   }
-  qPi(t) {
+  qxi(t) {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info("Test", 8, "[KeySetting]设置是否允许输入", ["isWait", t]),
-      this.wPi(),
+      this.wxi(),
       (ModelManager_1.ModelManager.MenuModel.IsWaitForKeyInput = t),
       InputDistributeController_1.InputDistributeController.RefreshInputTag(),
       UiLayer_1.UiLayer.SetShowMaskLayer("KeySettingMask", t);
   }
-  wPi() {
-    this.fPi.length = 0;
+  wxi() {
+    this.fxi.length = 0;
   }
-  VPi() {
-    this.dPi &&
-      TimerSystem_1.TimerSystem.Has(this.dPi) &&
-      (TimerSystem_1.TimerSystem.Remove(this.dPi), (this.dPi = void 0));
+  Vxi() {
+    this.dxi &&
+      TimerSystem_1.TimerSystem.Has(this.dxi) &&
+      (TimerSystem_1.TimerSystem.Remove(this.dxi), (this.dxi = void 0));
   }
-  FPi(t) {
+  Fxi(t) {
     StringUtils_1.StringUtils.IsEmpty(t)
       ? (this.GetItem(7)?.SetUIActive(!1),
         this.GetItem(11)?.SetUIActive(!0),
-        this.Zbn.StopCurrentSequence())
+        this.o2n.StopCurrentSequence())
       : (LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(8), t),
         this.GetItem(7)?.SetUIActive(!0),
         this.GetItem(11)?.SetUIActive(!1),
-        this.Zbn.PlayLevelSequenceByName("Start"));
+        this.o2n.PlayLevelSequenceByName("Start"));
   }
-  tOn(t) {
-    return this.zGn.get(t);
+  Mkn(t) {
+    return this.fkn.get(t);
   }
-  bPi() {
-    switch (this.oPi) {
+  bxi() {
+    switch (this.oxi) {
       case 1:
-        return this.aPi;
+        return this.axi;
       case 2:
-        return this.hPi;
+        return this.hxi;
     }
+  }
+  GetGuideItemByKeySettingId(t, i) {
+    var e = this.bxi(),
+      t = this.Mkn(t);
+    if (e && t) return e.GetRowByData(t, i)?.GetRootItem();
   }
 }
 exports.PcAndGamepadKeySettingPanel = PcAndGamepadKeySettingPanel;

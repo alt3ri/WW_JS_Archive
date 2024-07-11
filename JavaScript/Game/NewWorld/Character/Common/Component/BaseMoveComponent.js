@@ -23,6 +23,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BaseMoveComponent = exports.GravityScale = void 0);
 const UE = require("ue"),
   Log_1 = require("../../../../../Core/Common/Log"),
+  Time_1 = require("../../../../../Core/Common/Time"),
   Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
   QueryTypeDefine_1 = require("../../../../../Core/Define/QueryTypeDefine"),
   EntityComponent_1 = require("../../../../../Core/Entity/EntityComponent"),
@@ -34,8 +35,11 @@ const UE = require("ue"),
   MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
   TraceElementCommon_1 = require("../../../../../Core/Utils/TraceElementCommon"),
   TsBaseCharacter_1 = require("../../../../Character/TsBaseCharacter"),
+  EventDefine_1 = require("../../../../Common/Event/EventDefine"),
+  EventSystem_1 = require("../../../../Common/Event/EventSystem"),
   GlobalData_1 = require("../../../../GlobalData"),
   ActorUtils_1 = require("../../../../Utils/ActorUtils"),
+  GravityUtils_1 = require("../../../../Utils/GravityUtils"),
   TsBaseItem_1 = require("../../../SceneItem/BaseItem/TsBaseItem"),
   CharacterNameDefines_1 = require("../CharacterNameDefines"),
   CharacterAttributeTypes_1 = require("./Abilities/CharacterAttributeTypes"),
@@ -52,7 +56,8 @@ const UE = require("ue"),
   INVALID_FORCE_SPEED = -1e8,
   OPEN_DEBUG = !1,
   DEFAULT_MAX_FALLING_VELOCITY_2D = 700,
-  DEFAULT_AIR_CONTROL = 0.05;
+  DEFAULT_AIR_CONTROL = 0.05,
+  WALK_OFF_LEDGE_DELAY_FRAME = 1;
 class VelocityAddition {
   constructor(t, i, e, s, h, o, r) {
     (this.ElapsedTime = -0),
@@ -173,7 +178,10 @@ let BaseMoveComponent = (BaseMoveComponent_1 = class BaseMoveComponent extends (
       )),
       (this.Acceleration = Vector_1.Vector.Create()),
       (this.PreviousVelocity = Vector_1.Vector.Create()),
+      (this.TmpVector = Vector_1.Vector.Create()),
       (this.TmpQuat = Quat_1.Quat.Create()),
+      (this.TmpQuat2 = Quat_1.Quat.Create()),
+      (this.TmpRotator = Rotator_1.Rotator.Create()),
       (this.PreviousAimYaw = 0),
       (this.AimYawRate = 0),
       (this.IsFallingIntoWater = !1),
@@ -181,18 +189,17 @@ let BaseMoveComponent = (BaseMoveComponent_1 = class BaseMoveComponent extends (
       (this.CharHeightAboveGround = -1),
       (this.CreatureProperty = void 0),
       (this.MovementData = void 0),
-      (this.rFr = void 0),
-      (this.nFr = new RotationSetting()),
+      (this.B2r = void 0),
+      (this.b2r = new RotationSetting()),
       (this.UnifiedStateComponent = void 0),
       (this.HasBaseMovement = !1),
       (this.OldMovementMode = void 0),
       (this.IsHidden = !1),
       (this.HasDeltaBaseMovementData = !1),
       (this.DeltaBaseMovementOffset = void 0),
-      (this.DeltaBaseMovementQuat = void 0),
       (this.DeltaBaseMovementSpeed = void 0),
       (this.DeltaConveyBeltSpeed = void 0),
-      (this.DeltaBaseMovementYaw = 0),
+      (this.DeltaBaseMovementQuat = Quat_1.Quat.Create()),
       (this.BasePrimitiveComponent = void 0),
       (this.IsDeltaBaseSpeedNeedZ = !1),
       (this.IsLockedRotation = !1),
@@ -210,7 +217,12 @@ let BaseMoveComponent = (BaseMoveComponent_1 = class BaseMoveComponent extends (
       (this.FallingHorizontalMaxSpeed = DEFAULT_MAX_FALLING_VELOCITY_2D),
       (this.DesireMaxAccelerationLerpTime = -0),
       (this.MaxAccelerationLerpTime = -0),
+      (this.wna = !1),
+      (this.Bna = 0),
       (this.TurnRate = 1),
+      (this.GravityDirectInternal = Vector_1.Vector.Create(0, 0, -1)),
+      (this.GravityUpInternal = Vector_1.Vector.Create(0, 0, 1)),
+      (this.IsStandardGravityInternal = !0),
       (this.OnDirectionStateChange = (t, i) => {
         this.ResetMovementSetting(i);
         i = this.UnifiedStateComponent?.MoveState;
@@ -237,8 +249,8 @@ let BaseMoveComponent = (BaseMoveComponent_1 = class BaseMoveComponent extends (
       (this.AddMoveOffset = void 0),
       (this.AddMoveRotation = Rotator_1.Rotator.Create()),
       (this.StartLocation = Vector_1.Vector.Create()),
-      (this.TempRotator = Rotator_1.Rotator.Create(0, 0, 0)),
-      (this.CurrentGravityScale = void 0);
+      (this.CurrentGravityScale = void 0),
+      (this.PauseLocks = new Map());
   }
   SetForceSpeed(t) {
     t.ContainsNaN() &&
@@ -256,10 +268,85 @@ let BaseMoveComponent = (BaseMoveComponent_1 = class BaseMoveComponent extends (
     return 0 < this.JumpFrameCount;
   }
   get CurrentMovementSettings() {
-    return this.rFr;
+    return this.B2r;
   }
   set CurrentMovementSettings(t) {
-    (this.rFr = t), this.nFr.UpdateSettings(t.ControllerRotationSpeedSetting);
+    (this.B2r = t), this.b2r.UpdateSettings(t.ControllerRotationSpeedSetting);
+  }
+  SetGravityDirectByNumber(t, i, e, s = !0) {
+    (this.TmpVector.X = t),
+      (this.TmpVector.Y = i),
+      (this.TmpVector.Z = e),
+      this.TmpVector.Normalize() &&
+        !this.GravityDirectInternal.Equals(this.TmpVector) &&
+        ((t =
+          (Math.acos(
+            Vector_1.Vector.DotProduct(
+              this.GravityDirectInternal,
+              this.TmpVector,
+            ),
+          ) /
+            Math.PI) *
+          500),
+        Quat_1.Quat.FindBetween(
+          this.GravityDirectInternal,
+          this.TmpVector,
+          this.TmpQuat,
+        ),
+        this.TmpQuat.Multiply(this.ActorComp.ActorQuatProxy, this.TmpQuat2),
+        this.TmpQuat.Rotator(this.TmpRotator),
+        (this.IsStandardGravityInternal =
+          Math.abs(this.TmpVector.Z + 1) < MathUtils_1.MathUtils.SmallNumber),
+        this.IsStandardGravityInternal
+          ? this.GravityDirectInternal.Set(0, 0, -1)
+          : this.GravityDirectInternal.DeepCopy(this.TmpVector),
+        this.GravityDirectInternal.UnaryNegation(this.GravityUpInternal),
+        this.CharacterMovement?.Kuro_SetGravityDirect(
+          this.GravityDirectInternal.ToUeVector(),
+        ),
+        this.AnimComp
+          ? this.AnimComp.SetLocationAndRotatorWithModelBuffer(
+              this.ActorComp.ActorLocationProxy.ToUeVector(),
+              this.TmpRotator.ToUeRotator(),
+              t,
+              "SetGravity",
+            )
+          : this.ActorComp.SetActorRotation(
+              this.TmpRotator.ToUeRotator(),
+              "SetGravity",
+            ),
+        this.TmpQuat.RotateVector(
+          this.ActorComp.InputDirectProxy,
+          this.TmpVector,
+        ),
+        this.ActorComp.SetInputDirect(this.TmpVector),
+        this.TmpQuat.RotateVector(
+          this.ActorComp.InputFacingProxy,
+          this.TmpVector,
+        ),
+        this.ActorComp.SetInputFacing(this.TmpVector),
+        s &&
+          this.UnifiedStateComponent?.PositionState ===
+            CharacterUnifiedStateTypes_1.ECharPositionState.Ground &&
+          this.CharacterMovement?.SetMovementMode(3),
+        EventSystem_1.EventSystem.EmitWithTarget(
+          this.Entity,
+          EventDefine_1.EEventName.CharGravityDirectChanged,
+          this.GravityDirect,
+          this.IsStandardGravity,
+        ));
+  }
+  SetGravityDirect(t) {
+    this.SetGravityDirectByNumber(t.X, t.Y, t.Z);
+  }
+  get GravityDirect() {
+    return this.GravityDirectInternal;
+  }
+  get GravityUp() {
+    return this.GravityUpInternal;
+  }
+  get IsStandardGravity() {
+    return this.IsStandardGravityInternal;
   }
   set AccelerationLerpTime(t) {
     (this.DesireMaxAccelerationLerpTime = t),
@@ -283,10 +370,18 @@ let BaseMoveComponent = (BaseMoveComponent_1 = class BaseMoveComponent extends (
         : (t = ActorUtils_1.ActorUtils.GetEntityByActor(
               this.BasePrimitiveComponent.GetOwner()?.GetAttachRootParentActor(),
               !1,
-            )?.Entity?.GetComponent(182))
+            )?.Entity?.GetComponent(185))
           ? t?.GetInteractionMainActor()?.BasePlatform
           : void 0;
     this.BasePrimitiveComponent = void 0;
+  }
+  OnInit(t) {
+    return (
+      (this.IsStandardGravityInternal = !0),
+      this.GravityDirectInternal.Set(0, 0, -1),
+      this.GravityUpInternal.Set(0, 0, 1),
+      !0
+    );
   }
   SetUseDebugMovementSetting(t) {
     this.UseDebugMovementSetting = t;
@@ -418,20 +513,20 @@ let BaseMoveComponent = (BaseMoveComponent_1 = class BaseMoveComponent extends (
   }
   InitBaseState() {
     switch (this.ActorComp.CreatureData.GetEntityType()) {
-      case Protocol_1.Aki.Protocol.HBs.Proto_Player:
+      case Protocol_1.Aki.Protocol.wks.Proto_Player:
         (this.CharacterMovement.bKuroAutoActiveNav = !1),
           (this.CharacterMovement.bKuroStillBlockInNav = !0),
           (this.CharacterMovement.bProjectNavMeshWalking = !1),
           (this.IsInputDrivenCharacter = !0);
         break;
-      case Protocol_1.Aki.Protocol.HBs.Proto_Monster:
-      case Protocol_1.Aki.Protocol.HBs.Proto_Vision:
+      case Protocol_1.Aki.Protocol.wks.Proto_Monster:
+      case Protocol_1.Aki.Protocol.wks.Proto_Vision:
         (this.CharacterMovement.bKuroAutoActiveNav = !1),
           (this.CharacterMovement.bKuroStillBlockInNav = !0),
           (this.CharacterMovement.bProjectNavMeshWalking = !1),
           (this.IsInputDrivenCharacter = !1);
         break;
-      case Protocol_1.Aki.Protocol.HBs.Proto_Npc:
+      case Protocol_1.Aki.Protocol.wks.Proto_Npc:
         (this.CharacterMovement.bKuroAutoActiveNav = !1),
           (this.CharacterMovement.bKuroStillBlockInNav = !1),
           (this.CharacterMovement.bProjectNavMeshWalking = !1),
@@ -525,30 +620,51 @@ let BaseMoveComponent = (BaseMoveComponent_1 = class BaseMoveComponent extends (
     var r;
     this.IsLockedRotation ||
       (r = this.ActorComp.ActorRotationProxy).Equals2(t) ||
-      (this.TempRotator.DeepCopy(t),
-      MathUtils_1.MathUtils.RotatorInterpConstantTo(
-        r,
-        this.TempRotator,
-        e,
-        (o ? this.SpeedScaled(i) : i) * this.TurnRate,
-        this.TempRotator,
-      ),
+      (this.IsStandardGravity
+        ? (this.TmpRotator.DeepCopy(t),
+          MathUtils_1.MathUtils.RotatorInterpConstantTo(
+            r,
+            this.TmpRotator,
+            e,
+            (o ? this.SpeedScaled(i) : i) * this.TurnRate,
+            this.TmpRotator,
+          ))
+        : (this.TmpRotator.DeepCopy(t),
+          this.TmpRotator.Quaternion(this.TmpQuat),
+          this.TmpQuat.RotateVector(
+            Vector_1.Vector.ForwardVectorProxy,
+            this.TmpVector,
+          ),
+          (r = Math.abs(
+            Vector_1.Vector.DotProduct(
+              this.TmpVector,
+              this.ActorComp.ActorForwardProxy,
+            ) * MathUtils_1.MathUtils.RadToDeg,
+          )),
+          (t = (o ? this.SpeedScaled(i) : i) * this.TurnRate * e) < r &&
+            Quat_1.Quat.Slerp(
+              this.ActorComp.ActorQuatProxy,
+              this.TmpQuat,
+              t / r,
+              this.TmpQuat,
+            ),
+          this.TmpQuat.Rotator(this.TmpRotator)),
       1 < this.Entity.GetTickInterval() &&
       this.AnimComp?.Valid &&
       this.ActorComp.Owner.WasRecentlyRenderedOnScreen()
-        ? ((t = this.AnimComp.GetMeshTransform()),
+        ? ((o = this.AnimComp.GetMeshTransform()),
           this.ActorComp.SetActorRotationWithPriority(
-            this.TempRotator.ToUeRotator(),
+            this.TmpRotator.ToUeRotator(),
             h,
             0,
             s,
           ),
           this.AnimComp.SetModelBuffer(
-            t,
+            o,
             e * MathUtils_1.MathUtils.SecondToMillisecond,
           ))
         : this.ActorComp.SetActorRotationWithPriority(
-            this.TempRotator.ToUeRotator(),
+            this.TmpRotator.ToUeRotator(),
             h,
             0,
             s,
@@ -668,7 +784,12 @@ let BaseMoveComponent = (BaseMoveComponent_1 = class BaseMoveComponent extends (
     this.VelocityAdditionMap.clear();
   }
   OnTick(t) {
-    this.CanMoveWithDistanceInternal = this.Entity.DistanceWithCamera <= 7e3;
+    (this.CanMoveWithDistanceInternal = this.Entity.DistanceWithCamera <= 7e3),
+      this.wna &&
+        this.Bna + WALK_OFF_LEDGE_DELAY_FRAME <= Time_1.Time.Frame &&
+        ((this.Bna = Time_1.Time.Frame),
+        this.SetWalkOffLedge(this.WalkOffCount <= 0),
+        (this.wna = !1));
   }
   OnTickGravityScale() {
     this.CurrentGravityScale.Duration < 0 ||
@@ -755,44 +876,44 @@ let BaseMoveComponent = (BaseMoveComponent_1 = class BaseMoveComponent extends (
         this.CharacterMovement.CustomMovementMode !== e.MovementMode
       )
         this.VelocityAdditionMap.delete(i);
-      else if (
-        ((e.ElapsedTime += h),
-        this.VelocityVector.FromUeVector(e.Velocity),
-        0 !== e.VelocityCurveType
-          ? ((s = e.VelocityCurveFunc(
-              0 < e.Duration ? e.ElapsedTime / e.Duration : 1,
-            )),
-            this.VelocityVector.FromUeVector(e.Velocity),
-            this.VelocityVector.MultiplyEqual(s))
-          : e.CurveFloat?.IsValid() &&
-            this.VelocityVector.MultiplyEqual(
-              e.CurveFloat.GetFloatValue(
+      else if (((e.ElapsedTime += h), !(0 < this.PauseLocks.size)))
+        if (
+          (this.VelocityVector.FromUeVector(e.Velocity),
+          0 !== e.VelocityCurveType
+            ? ((s = e.VelocityCurveFunc(
                 0 < e.Duration ? e.ElapsedTime / e.Duration : 1,
+              )),
+              this.VelocityVector.FromUeVector(e.Velocity),
+              this.VelocityVector.MultiplyEqual(s))
+            : e.CurveFloat?.IsValid() &&
+              this.VelocityVector.MultiplyEqual(
+                e.CurveFloat.GetFloatValue(
+                  0 < e.Duration ? e.ElapsedTime / e.Duration : 1,
+                ),
               ),
-            ),
-        0 < e.Duration &&
-          e.ElapsedTime > e.Duration &&
-          ((s = e.ElapsedTime - e.Duration),
-          this.VelocityVector.MultiplyEqual((h - s) / h)),
-        BaseMoveComponent_1.VelocityAdditionTotal.AdditionEqual(
-          this.VelocityVector,
-        ),
-        this.VelocityVector.ContainsNaN())
-      )
-        return (
-          Log_1.Log.CheckError() &&
-            Log_1.Log.Error(
-              "Movement",
-              6,
-              "VelocityVector NaN",
-              ["key", i],
-              ["VelocityVector", this.VelocityVector],
-              ["velocityAddition.Velocity", e.Velocity],
-              ["deltaTimeSeconds", h],
-            ),
-          this.VelocityAdditionMap.delete(i),
-          !1
-        );
+          0 < e.Duration &&
+            e.ElapsedTime > e.Duration &&
+            ((s = e.ElapsedTime - e.Duration),
+            this.VelocityVector.MultiplyEqual((h - s) / h)),
+          BaseMoveComponent_1.VelocityAdditionTotal.AdditionEqual(
+            this.VelocityVector,
+          ),
+          this.VelocityVector.ContainsNaN())
+        )
+          return (
+            Log_1.Log.CheckError() &&
+              Log_1.Log.Error(
+                "Movement",
+                6,
+                "VelocityVector NaN",
+                ["key", i],
+                ["VelocityVector", this.VelocityVector],
+                ["velocityAddition.Velocity", e.Velocity],
+                ["deltaTimeSeconds", h],
+              ),
+            this.VelocityAdditionMap.delete(i),
+            !1
+          );
     return (
       0 !== this.VelocityAdditionMap.size &&
       (this.ActorComp.IsRoleAndCtrlByMe &&
@@ -909,9 +1030,10 @@ let BaseMoveComponent = (BaseMoveComponent_1 = class BaseMoveComponent extends (
   SetWalkOffLedgeRecord(t) {
     t
       ? (--this.WalkOffCount,
-        0 === this.WalkOffCount && this.SetWalkOffLedge(!0))
+        0 === this.WalkOffCount &&
+          ((this.wna = !0), (this.Bna = Time_1.Time.Frame)))
       : (++this.WalkOffCount,
-        1 === this.WalkOffCount && this.SetWalkOffLedge(!1));
+        1 === this.WalkOffCount && ((this.wna = !1), this.SetWalkOffLedge(!1)));
   }
   SetWalkOffLedge(t) {
     t
@@ -944,17 +1066,16 @@ let BaseMoveComponent = (BaseMoveComponent_1 = class BaseMoveComponent extends (
   UpdateGroundedRotation() {
     let t = 0,
       i = "";
-    (i = this.ActorComp.UseControllerRotation.IsNearlyZero()
-      ? ((t = this.nFr.GetSpeed(
-          Math.abs(
-            this.ActorComp.InputRotator.Yaw -
-              this.ActorComp.ActorRotationProxy.Yaw,
-          ),
+    var e;
+    (i = this.ActorComp.UseControllerRotation
+      ? ((t = ROTATION_AIM), "Movement.UpdateGroundedRotation.ROTATION_AIM")
+      : ((e = GravityUtils_1.GravityUtils.GetAngleOffsetFromCurrentToInputAbs(
+          this.ActorComp,
         )),
-        "Movement.UpdateGroundedRotation.ROTATION_MEDIUM")
-      : ((t = ROTATION_AIM), "Movement.UpdateGroundedRotation.ROTATION_AIM")),
+        (t = this.b2r.GetSpeed(e)),
+        "Movement.UpdateGroundedRotation.ROTATION_MEDIUM")),
       this.SmoothCharacterRotation(
-        this.ActorComp.InputRotator,
+        this.ActorComp.InputRotatorProxy,
         t,
         this.DeltaTimeSeconds,
         !1,
@@ -977,16 +1098,13 @@ let BaseMoveComponent = (BaseMoveComponent_1 = class BaseMoveComponent extends (
           ((t = t.AttachParent?.GetOwner()) instanceof TsBaseCharacter_1.default
             ? ((this.IsDeltaBaseSpeedNeedZ = !1),
               (e = t.GetEntityNoBlueprint()) &&
-                e.GetComponent(99)?.SetTakeOverTick(!0))
+                e.GetComponent(101)?.SetTakeOverTick(!0))
             : t instanceof TsBaseItem_1.default &&
               (this.IsDeltaBaseSpeedNeedZ = !0))),
       this.HasBaseMovement && 2 === i?.MovementBase?.Mobility)
     ) {
-      var e = this.CharacterMovement.BaseDeltaQuat.Rotator();
-      (e.Roll = 0),
-        (e.Pitch = 0),
-        (this.DeltaBaseMovementQuat = e.Quaternion()),
-        (this.DeltaBaseMovementYaw = e.Yaw),
+      var e = this.CharacterMovement.BaseDeltaQuat;
+      this.DeltaBaseMovementQuat.FromUeQuat(e),
         (this.DeltaBaseMovementOffset =
           this.CharacterMovement.BaseDeltaPosition);
       let t = void 0;
@@ -1016,8 +1134,7 @@ let BaseMoveComponent = (BaseMoveComponent_1 = class BaseMoveComponent extends (
         (this.HasDeltaBaseMovementData = !0);
     } else
       (this.DeltaBaseMovementOffset = void 0),
-        (this.DeltaBaseMovementQuat = void 0),
-        (this.DeltaBaseMovementYaw = 0),
+        this.DeltaBaseMovementQuat.Reset(),
         (this.DeltaBaseMovementSpeed = void 0),
         (this.HasDeltaBaseMovementData = !1);
   }
@@ -1099,13 +1216,22 @@ let BaseMoveComponent = (BaseMoveComponent_1 = class BaseMoveComponent extends (
   ResetAirControl() {
     this.CharacterMovement.AirControl = DEFAULT_AIR_CONTROL;
   }
+  OnClear() {
+    return super.OnClear(), (this.wna = !1), !(this.Bna = 0);
+  }
+  AddPauseLock(t) {
+    this.PauseLocks.set(t, !0);
+  }
+  RemovePauseLock(t) {
+    this.PauseLocks.get(t) && this.PauseLocks.delete(t);
+  }
 });
 (BaseMoveComponent.BaseMoveInheritCurveInternal = void 0),
   (BaseMoveComponent.VelocityAdditionTotal = Vector_1.Vector.Create()),
   (BaseMoveComponent.VelocityAdditionDestination = Vector_1.Vector.Create()),
   (BaseMoveComponent = BaseMoveComponent_1 =
     __decorate(
-      [(0, RegisterComponent_1.RegisterComponent)(36)],
+      [(0, RegisterComponent_1.RegisterComponent)(37)],
       BaseMoveComponent,
     )),
   (exports.BaseMoveComponent = BaseMoveComponent);

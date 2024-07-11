@@ -12,10 +12,10 @@ const UE = require("ue"),
 class WorldLevelInfoView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
-      (this.iko = !1),
-      (this.oko = void 0),
-      (this.rko = void 0),
-      (this.nko = () => {
+      (this.Zko = !1),
+      (this.e2o = void 0),
+      (this.t2o = void 0),
+      (this.i2o = () => {
         ModelManager_1.ModelManager.GameModeModel.IsMulti
           ? ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
               "OnlineCantChangeLevel",
@@ -26,17 +26,17 @@ class WorldLevelInfoView extends UiTickViewBase_1.UiTickViewBase {
       });
   }
   get CanShowInteractCd() {
-    return this.iko;
+    return this.Zko;
   }
   set CanShowInteractCd(e) {
-    this.iko !== e &&
-      ((this.iko = e),
+    this.Zko !== e &&
+      ((this.Zko = e),
       this.GetItem(8).SetUIActive(
-        !this.iko &&
+        !this.Zko &&
           ModelManager_1.ModelManager.WorldLevelModel.OriginWorldLevel >=
-            this.oko,
+            this.e2o,
       ),
-      this.GetItem(4).SetUIActive(this.iko));
+      this.GetItem(4).SetUIActive(this.Zko));
   }
   OnRegisterComponent() {
     (this.ComponentRegisterInfos = [
@@ -50,44 +50,44 @@ class WorldLevelInfoView extends UiTickViewBase_1.UiTickViewBase {
       [7, UE.UIText],
       [8, UE.UIItem],
     ]),
-      (this.BtnBindInfo = [[5, this.nko]]);
+      (this.BtnBindInfo = [[5, this.i2o]]);
   }
   OnStart() {
-    (this.rko = ConfigManager_1.ConfigManager.WorldLevelConfig.GetCommonValue(
+    (this.t2o = ConfigManager_1.ConfigManager.WorldLevelConfig.GetCommonValue(
       "world_level_change_cd",
     )),
-      (this.oko = ConfigManager_1.ConfigManager.WorldLevelConfig.GetCommonValue(
+      (this.e2o = ConfigManager_1.ConfigManager.WorldLevelConfig.GetCommonValue(
         "world_level_change_conditon_level",
       )),
       this.GetItem(3).SetUIActive(!0),
       this.GetItem(8).SetUIActive(!0),
-      this.LBt(),
-      this.tko(),
-      this.sko();
+      this.Ubt(),
+      this.zko(),
+      this.o2o();
   }
   OnTick(e) {
-    this.ako();
+    this.r2o();
   }
-  LBt() {
+  Ubt() {
     this.GetText(0).SetText(
       ModelManager_1.ModelManager.WorldLevelModel.WorldLevelMultilingualText,
     );
   }
-  tko() {
+  zko() {
     var e =
       ConfigManager_1.ConfigManager.TextConfig.GetTextById("WorldLevelIntro");
     this.GetText(2).SetText(e);
   }
-  sko() {
-    var e = this.hko(),
-      e = 0 < Math.max(this.rko - e, 0);
-    ModelManager_1.ModelManager.WorldLevelModel.OriginWorldLevel < this.oko || e
+  o2o() {
+    var e = this.n2o(),
+      e = 0 < Math.max(this.t2o - e, 0);
+    ModelManager_1.ModelManager.WorldLevelModel.OriginWorldLevel < this.e2o || e
       ? this.GetItem(8).SetUIActive(!1)
-      : this.ako();
+      : this.r2o();
   }
-  ako() {
-    var i = this.hko(),
-      i = Math.max(this.rko - i, 0);
+  r2o() {
+    var i = this.n2o(),
+      i = Math.max(this.t2o - i, 0);
     if (((this.CanShowInteractCd = 0 < i), this.CanShowInteractCd))
       this.GetText(6).SetText(ShopUtils_1.ShopUtils.FormatTime(i));
     else {
@@ -111,7 +111,7 @@ class WorldLevelInfoView extends UiTickViewBase_1.UiTickViewBase {
         this.GetText(7).SetText(e);
     }
   }
-  hko() {
+  n2o() {
     return (
       TimeUtil_1.TimeUtil.GetServerTime() -
       ModelManager_1.ModelManager.WorldLevelModel.LastChangeWorldLevelTimeStamp

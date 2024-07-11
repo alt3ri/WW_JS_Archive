@@ -8,10 +8,10 @@ const UE = require("ue"),
 class PersonalRoleSmallItemGrid extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
-      (this.zke = 0),
-      (this.P5i = void 0),
-      (this.x5i = (e) => {
-        1 === e && this.P5i && this.P5i(this.zke);
+      (this.dFe = 0),
+      (this.AVi = void 0),
+      (this.PVi = (e) => {
+        1 === e && this.AVi && this.AVi(this.dFe);
       });
   }
   OnRegisterComponent() {
@@ -21,10 +21,10 @@ class PersonalRoleSmallItemGrid extends GridProxyAbstract_1.GridProxyAbstract {
       [2, UE.UIInteractionGroup],
       [3, UE.UIItem],
     ]),
-      (this.BtnBindInfo = [[1, this.x5i]]);
+      (this.BtnBindInfo = [[1, this.PVi]]);
   }
   Refresh(e, t, r) {
-    this.zke = e;
+    this.dFe = e;
     var i = ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(e),
       s = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(e),
       a = ModelManager_1.ModelManager.PlayerInfoModel.GetNumberPropById(4),
@@ -36,7 +36,7 @@ class PersonalRoleSmallItemGrid extends GridProxyAbstract_1.GridProxyAbstract {
     this.GetExtendToggle(1).SetToggleState(s);
   }
   BindToggleClickCallBack(e) {
-    this.P5i = e;
+    this.AVi = e;
   }
   OnSelected(e) {
     this.GetExtendToggle(1).SetToggleState(1);
@@ -45,10 +45,10 @@ class PersonalRoleSmallItemGrid extends GridProxyAbstract_1.GridProxyAbstract {
     this.GetExtendToggle(1).SetToggleState(0);
   }
   GetRoleId() {
-    return this.zke;
+    return this.dFe;
   }
   GetKey(e, t) {
-    return this.zke;
+    return this.dFe;
   }
 }
 exports.PersonalRoleSmallItemGrid = PersonalRoleSmallItemGrid;

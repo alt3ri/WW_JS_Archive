@@ -15,14 +15,14 @@ const puerts_1 = require("puerts"),
 class ParallaxBehaviorNode extends TickBehaviorNode_1.TickBehaviorNode {
   constructor() {
     super(...arguments),
-      (this.eXt = void 0),
-      (this.tXt = void 0),
-      (this.iXt = Vector2D_1.Vector2D.Create()),
-      (this.oXt = Vector2D_1.Vector2D.Create()),
+      (this.e$t = void 0),
+      (this.t$t = void 0),
+      (this.i$t = Vector2D_1.Vector2D.Create()),
+      (this.o$t = Vector2D_1.Vector2D.Create()),
       (this.Lo = void 0),
-      (this.$Bn = -0),
-      (this.rXt = !1),
-      (this.nXt = void 0);
+      (this.pGn = -0),
+      (this.r$t = !1),
+      (this.n$t = void 0);
   }
   OnCreate(t) {
     var i;
@@ -30,12 +30,12 @@ class ParallaxBehaviorNode extends TickBehaviorNode_1.TickBehaviorNode {
       !!super.OnCreate(t) &&
       "ParallaxAlign" === (i = t.Condition).Type &&
       ((this.Lo = i), !!this.Lo) &&
-      ((this.eXt = Vector_1.Vector.Create(
+      ((this.e$t = Vector_1.Vector.Create(
         this.Lo.SourcePos.X,
         this.Lo.SourcePos.Y,
         this.Lo.SourcePos.Z,
       )),
-      (this.tXt = Vector_1.Vector.Create(
+      (this.t$t = Vector_1.Vector.Create(
         this.Lo.TargetPos.X,
         this.Lo.TargetPos.Y,
         this.Lo.TargetPos.Z,
@@ -45,50 +45,50 @@ class ParallaxBehaviorNode extends TickBehaviorNode_1.TickBehaviorNode {
   }
   OnStart(t) {
     var i;
-    (this.rXt = !1),
+    (this.r$t = !1),
       this.Lo.BallEntity &&
         (i = ModelManager_1.ModelManager.CreatureModel?.GetEntityIdByPbDataId(
           this.Lo.BallEntity,
         )) &&
-        (this.nXt = EntitySystem_1.EntitySystem.GetComponent(i, 182)),
+        (this.n$t = EntitySystem_1.EntitySystem.GetComponent(i, 185)),
       super.OnStart(t);
   }
   OnEnd(t) {
-    (this.rXt = !0), super.OnEnd(t);
+    (this.r$t = !0), super.OnEnd(t);
   }
   OnTick(t) {
     var i, s, e, h, r, o, a;
-    this.rXt ||
+    this.r$t ||
       ((i = (0, puerts_1.$ref)(void 0)),
       !UE.GameplayStatics.ProjectWorldToScreen(
         Global_1.Global.CharacterController,
-        this.eXt.ToUeVector(),
+        this.e$t.ToUeVector(),
         i,
         !1,
       ) ||
-      (this.iXt.FromUeVector2D((0, puerts_1.$unref)(i)),
+      (this.i$t.FromUeVector2D((0, puerts_1.$unref)(i)),
       !UE.GameplayStatics.ProjectWorldToScreen(
         Global_1.Global.CharacterController,
-        this.tXt.ToUeVector(),
+        this.t$t.ToUeVector(),
         i,
         !1,
       )) ||
-      (this.oXt.FromUeVector2D((0, puerts_1.$unref)(i)),
-      !this.nXt &&
+      (this.o$t.FromUeVector2D((0, puerts_1.$unref)(i)),
+      !this.n$t &&
         this.Lo.BallEntity &&
         (i = ModelManager_1.ModelManager.CreatureModel?.GetEntityIdByPbDataId(
           this.Lo.BallEntity,
         )) &&
-        (this.nXt = EntitySystem_1.EntitySystem.GetComponent(i, 182)),
+        (this.n$t = EntitySystem_1.EntitySystem.GetComponent(i, 185)),
       (i = Global_1.Global.CharacterController),
       (s = (0, puerts_1.$ref)(void 0)),
       (e = (0, puerts_1.$ref)(void 0)),
       i.GetViewportSize(s, e),
       (i = Math.max(
-        Math.abs(this.iXt.X - this.oXt.X) / (0, puerts_1.$unref)(s),
-        Math.abs(this.iXt.Y - this.oXt.Y) / (0, puerts_1.$unref)(e),
+        Math.abs(this.i$t.X - this.o$t.X) / (0, puerts_1.$unref)(s),
+        Math.abs(this.i$t.Y - this.o$t.Y) / (0, puerts_1.$unref)(e),
       )),
-      this.nXt &&
+      this.n$t &&
         ((s = MathCommon_1.MathCommon.Clamp(
           (i - this.Lo.ErrorRange) /
             (this.Lo.BrightnessAdjustRange - this.Lo.ErrorRange),
@@ -120,7 +120,7 @@ class ParallaxBehaviorNode extends TickBehaviorNode_1.TickBehaviorNode {
               this.Lo.FinalColor.A,
               1 - s,
             )),
-            this.nXt.UpdateInteractionMaterialColorParam(
+            this.n$t.UpdateInteractionMaterialColorParam(
               EMISSION_PARAM_NAME,
               a,
               h,
@@ -128,19 +128,19 @@ class ParallaxBehaviorNode extends TickBehaviorNode_1.TickBehaviorNode {
               o,
             ))
           : ((a = MathCommon_1.MathCommon.Lerp(e, 1, 1 - s)),
-            this.nXt.UpdateInteractionMaterialColorParam(
+            this.n$t.UpdateInteractionMaterialColorParam(
               EMISSION_PARAM_NAME,
               a,
               a,
               a,
             ))),
       i > this.Lo.ErrorRange)
-        ? (this.$Bn = 0)
-        : ((this.$Bn += t),
+        ? (this.pGn = 0)
+        : ((this.pGn += t),
           (!this.Lo.FixationTime ||
-            this.$Bn >=
+            this.pGn >=
               this.Lo.FixationTime * CommonDefine_1.MILLIONSECOND_PER_SECOND) &&
-            (this.SubmitNode(), (this.rXt = !0))));
+            (this.SubmitNode(), (this.r$t = !0))));
   }
 }
 exports.ParallaxBehaviorNode = ParallaxBehaviorNode;

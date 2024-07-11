@@ -5,13 +5,13 @@ const puerts_1 = require("puerts"),
   Log_1 = require("../../../Core/Common/Log"),
   Stats_1 = require("../../../Core/Common/Stats"),
   Time_1 = require("../../../Core/Common/Time"),
+  EntitySystem_1 = require("../../../Core/Entity/EntitySystem"),
   Vector_1 = require("../../../Core/Utils/Math/Vector"),
   MathUtils_1 = require("../../../Core/Utils/MathUtils"),
   ObjectUtils_1 = require("../../../Core/Utils/ObjectUtils"),
   ConfigManager_1 = require("../../Manager/ConfigManager"),
   ModelManager_1 = require("../../Manager/ModelManager"),
   CharacterController_1 = require("../../NewWorld/Character/CharacterController"),
-  EntitySystem_1 = require("../../../Core/Entity/EntitySystem"),
   DRAW_ARROW_SIZE = 100,
   DRAW_LINE_THICKNESS = 3,
   ARROW_LENGTH_SUB = 20,
@@ -42,6 +42,9 @@ class TsAiController extends UE.KuroAIController {
   ChangeDebugDraw() {
     this.DebugDraw = this.DebugDraw ? 0 : 1;
   }
+  SetDebugDraw(t) {
+    (this.DebugDraw = t), (this.DebugDrawInternal = this.DebugDraw);
+  }
   get IsDebugDraw() {
     return (
       void 0 === this.DebugDrawInternal &&
@@ -61,9 +64,9 @@ class TsAiController extends UE.KuroAIController {
   InitAiController(t) {
     (this.CharAiDesignComp = t),
       (this.AiController = t.AiController),
-      (this.CharBuffComp = t.Entity.GetComponent(157)),
-      (this.CharTagComp = t.Entity.GetComponent(185)),
-      (this.CharStateMachineComp = t.Entity.GetComponent(65));
+      (this.CharBuffComp = t.Entity.GetComponent(159)),
+      (this.CharTagComp = t.Entity.GetComponent(188)),
+      (this.CharStateMachineComp = t.Entity.GetComponent(67));
   }
   DrawDebugLines(t) {
     var e, i, r;
@@ -226,7 +229,7 @@ class TsAiController extends UE.KuroAIController {
       });
   }
   AicApplyBuffToTarget(t, e) {
-    t = EntitySystem_1.EntitySystem.GetComponent(t, 187);
+    t = EntitySystem_1.EntitySystem.GetComponent(t, 192);
     t &&
       this.CharBuffComp?.Valid &&
       t.AddBuffFromAi(this.AiController.AiCombatMessageId, e, {
@@ -377,7 +380,7 @@ ${this.AiController.AiHateList.GetHatredMapDebugText()}
 等待切换主控：${this.AiController.IsWaitingSwitchControl()}
 感知：${this.AiController.AiPerception?.GetEnableAiSenseDebug()}
 怪物仇恨组： ${this.AiController.HatredGroupId}
-部位血量: ${this.CharBuffComp?.Entity?.GetComponent(58)?.GetDebugText()}
+部位血量: ${this.CharBuffComp?.Entity?.GetComponent(60)?.GetDebugText()}
 集群Id：${this.AiController.GetTeamLevelId()}
 `;
   }

@@ -20,7 +20,7 @@ class RogueInfoOverview extends UiPanelBase_1.UiPanelBase {
       (this.RoleItem = void 0),
       (this.AttributeItemList = []),
       (this.UiViewSequence = void 0),
-      (this.xao = () => {
+      (this.Rho = () => {
         var e = ModelManager_1.ModelManager.SceneTeamModel.GetTeamItems();
         e.length <= 0
           ? Log_1.Log.CheckError() &&
@@ -46,7 +46,7 @@ class RogueInfoOverview extends UiPanelBase_1.UiPanelBase {
       [3, UE.UIItem],
       [4, UE.UIButtonComponent],
     ]),
-      (this.BtnBindInfo = [[4, this.xao]]);
+      (this.BtnBindInfo = [[4, this.Rho]]);
   }
   OnBeforeCreateImplement() {
     (this.UiViewSequence = new UiViewSequence_1.UiBehaviorLevelSequence(this)),
@@ -80,9 +80,9 @@ class RogueInfoOverview extends UiPanelBase_1.UiPanelBase {
           ModelManager_1.ModelManager.RoguelikeModel.RogueInfo.RoleEntry
             .ConfigId,
         ));
-    this.RoleItem?.GetRootItem().SetUIActive(void 0 !== e), this.wao();
+    this.RoleItem?.GetRootItem().SetUIActive(void 0 !== e), this.Uho();
   }
-  wao() {
+  Uho() {
     var i = CommonParamById_1.configCommonParamById.GetIntArrayConfig(
         "RoleAttributeDisplay6",
       ),

@@ -16,13 +16,13 @@ const UE = require("ue"),
 class InventoryGiftView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.v5t = void 0),
-      (this.g4e = []),
-      (this.zci = []),
-      (this.Zci = void 0),
-      (this.emi = void 0),
-      (this.$Ut = void 0),
-      (this.tmi = void 0),
+      (this.vVt = void 0),
+      (this.x5e = []),
+      (this.zmi = []),
+      (this.Zmi = void 0),
+      (this.edi = void 0),
+      (this.ZAt = void 0),
+      (this.tdi = void 0),
       (this.ts = void 0),
       (this.HGe = void 0),
       (this.WGe = void 0),
@@ -31,19 +31,19 @@ class InventoryGiftView extends UiViewBase_1.UiViewBase {
       }),
       (this.OnClickConfirm = () => {
         var t = [],
-          e = this.zci.length;
+          e = this.zmi.length;
         for (let i = 0; i < e; i++) {
-          var s = this.zci[i][0];
+          var s = this.zmi[i][0];
           t.push(s.ItemId);
         }
         InventoryGiftController_1.InventoryGiftController.SendItemGiftUseRequest(
-          this.Zci.ConfigId,
+          this.Zmi.ConfigId,
           this.WGe?.GetSelectNumber() ?? 1,
           t,
         );
       }),
       (this.OnClickErrorConfirm = () => {
-        var i = this.Zci.GiftPackage.AvailableNum;
+        var i = this.Zmi.GiftPackage.AvailableNum;
         ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
           "SelectGiftItem",
           i,
@@ -65,28 +65,28 @@ class InventoryGiftView extends UiViewBase_1.UiViewBase {
           i
         );
       }),
-      (this.imi = (i) => {
-        return this.g4e[i];
+      (this.idi = (i) => {
+        return this.x5e[i];
       }),
       (this.OnToggleStateChangeFunction = (i, t, e, s) => {
-        var r = this.Zci.GiftPackage.AvailableNum;
+        var r = this.Zmi.GiftPackage.AvailableNum;
         if (e) {
-          if (this.zci.length === r)
+          if (this.zmi.length === r)
             return i.SetToggleState(0, !1), void t.RootUIComp.SetUIActive(!1);
-          this.zci.push(s);
+          this.zmi.push(s);
         } else {
-          e = this.zci.indexOf(s);
-          this.zci.splice(e, 1);
+          e = this.zmi.indexOf(s);
+          this.zmi.splice(e, 1);
         }
         this.RefreshSelectCountInfo();
       }),
       (this.OnReduceFunction = (i) => {
-        i = this.zci.indexOf(i);
-        -1 !== i && (this.zci.splice(i, 1), this.RefreshSelectCountInfo());
+        i = this.zmi.indexOf(i);
+        -1 !== i && (this.zmi.splice(i, 1), this.RefreshSelectCountInfo());
       }),
       (this.RefreshSelectCountInfo = () => {
-        var i = this.Zci.GiftPackage.AvailableNum,
-          t = this.zci.length,
+        var i = this.Zmi.GiftPackage.AvailableNum,
+          t = this.zmi.length,
           t =
             (LguiUtil_1.LguiUtil.SetLocalText(
               this.ts,
@@ -96,7 +96,7 @@ class InventoryGiftView extends UiViewBase_1.UiViewBase {
               i,
             ),
             t === i);
-        this.omi(t);
+        this.odi(t);
       });
   }
   OnRegisterComponent() {
@@ -117,23 +117,23 @@ class InventoryGiftView extends UiViewBase_1.UiViewBase {
       ]);
   }
   OnStart() {
-    (this.Zci = this.OpenParam),
-      (this.g4e = this.Zci.ItemList),
-      (this.v5t = new LoopScrollView_1.LoopScrollView(
+    (this.Zmi = this.OpenParam),
+      (this.x5e = this.Zmi.ItemList),
+      (this.vVt = new LoopScrollView_1.LoopScrollView(
         this.GetLoopScrollViewComponent(3),
         this.GetItem(4).GetOwner(),
         this.sGe,
       )),
-      this.v5t.ReloadProxyData(this.imi, this.g4e.length, !1),
-      (this.$Ut = this.GetButton(1)),
-      (this.tmi = this.GetButton(2)),
-      (this.emi = this.$Ut
-        .GetOwner()
-        .GetComponentByClass(UE.UIInteractionGroup.StaticClass())),
+      this.vVt.ReloadProxyData(this.idi, this.x5e.length, !1),
+      (this.ZAt = this.GetButton(1)),
+      (this.tdi = this.GetButton(2)),
+      (this.edi = this.ZAt.GetOwner().GetComponentByClass(
+        UE.UIInteractionGroup.StaticClass(),
+      )),
       (this.ts = this.GetText(5)),
       (this.HGe = this.GetText(0));
     var i = ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
-        this.Zci.ConfigId,
+        this.Zmi.ConfigId,
       ),
       i =
         (LguiUtil_1.LguiUtil.SetLocalTextNew(this.HGe, i.Name),
@@ -143,40 +143,39 @@ class InventoryGiftView extends UiViewBase_1.UiViewBase {
         {
           MaxNumber:
             ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
-              this.Zci.ConfigId,
+              this.Zmi.ConfigId,
             ),
           GetExchangeTableText: this.KGe,
           ValueChangeFunction: () => {},
         });
-    this.WGe.Init(i);
+    this.WGe.Init(i), this.RefreshSelectCountInfo();
   }
   OnAfterShow() {
     var i, t;
-    this.Zci
-      ? ((i = this.Zci.GiftPackage.AvailableNum),
-        (t = this.zci.length),
-        this.omi(t === i),
-        this.RefreshSelectCountInfo())
-      : this.omi(!1);
+    this.Zmi
+      ? ((i = this.Zmi.GiftPackage.AvailableNum),
+        (t = this.zmi.length),
+        this.odi(t === i))
+      : this.odi(!1);
   }
   OnAfterHide() {
     UiBlurLogic_1.UiBlurLogic.ResumeTopUiRenderAfterBlur();
   }
   OnBeforeDestroy() {
-    (this.v5t = void 0),
-      (this.g4e = []),
-      (this.zci = []),
-      (this.Zci = void 0),
-      (this.emi = void 0),
-      (this.$Ut = void 0),
-      (this.tmi = void 0),
+    (this.vVt = void 0),
+      (this.x5e = []),
+      (this.zmi = []),
+      (this.Zmi = void 0),
+      (this.edi = void 0),
+      (this.ZAt = void 0),
+      (this.tdi = void 0),
       (this.ts = void 0),
       (this.HGe = void 0),
       this.WGe?.Destroy(),
       (this.WGe = void 0);
   }
-  omi(i) {
-    this.emi.SetInteractable(i), this.tmi.RootUIComp.SetUIActive(!i);
+  odi(i) {
+    this.edi.SetInteractable(i), this.tdi.RootUIComp.SetUIActive(!i);
   }
 }
 exports.InventoryGiftView = InventoryGiftView;

@@ -21,85 +21,85 @@ class ManipulateCursorHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
   constructor() {
     super(...arguments),
       (this.ac = 0),
-      (this.aoi = void 0),
-      (this.hoi = void 0),
-      (this.loi = void 0),
-      (this._oi = void 0),
-      (this.uoi = (0, puerts_1.$ref)(void 0)),
-      (this.rti = !1),
-      (this.B8e = void 0),
-      (this.coi = void 0),
-      (this.moi = void 0),
-      (this.doi = void 0),
-      (this.Coi = void 0),
-      (this.goi = []),
-      (this.foi = []),
-      (this.poi = !0),
-      (this.o7e = (t, i) => {
-        (this.B8e = t),
-          (this.coi = this.B8e.Entity.GetComponent(1)),
-          (this.moi = this.B8e.Entity.GetComponent(55)),
-          (this.Coi = t.Entity.GetComponent(185)),
-          this.voi();
-        for (const s of this.goi) {
-          var e = this.Coi.ListenForTagAddOrRemove(
+      (this.hri = void 0),
+      (this.lri = void 0),
+      (this._ri = void 0),
+      (this.cri = void 0),
+      (this.mri = (0, puerts_1.$ref)(void 0)),
+      (this.rii = !1),
+      (this.X9e = void 0),
+      (this.dri = void 0),
+      (this.Cri = void 0),
+      (this.gri = void 0),
+      (this.fri = void 0),
+      (this.pri = []),
+      (this.vri = []),
+      (this.Mri = !0),
+      (this.fHe = (t, i) => {
+        (this.X9e = t),
+          (this.dri = this.X9e.Entity.GetComponent(1)),
+          (this.Cri = this.X9e.Entity.GetComponent(56)),
+          (this.fri = t.Entity.GetComponent(188)),
+          this.Eri();
+        for (const s of this.pri) {
+          var e = this.fri.ListenForTagAddOrRemove(
             s,
-            this.Moi,
-            ManipulateCursorHandle._$e,
+            this.Sri,
+            ManipulateCursorHandle.SYe,
           );
-          this.foi.push(e);
+          this.vri.push(e);
         }
       }),
-      (this.zii = (t, i) => {
-        (this.poi = !i || 0 === i.length),
-          this.Soi(2),
-          this.aoi?.StartProcess(t);
+      (this.Zoi = (t, i) => {
+        (this.Mri = !i || 0 === i.length),
+          this.yri(2),
+          this.hri?.StartProcess(t);
       }),
-      (this.Eoi = () => {
-        this.Soi(0);
+      (this.Iri = () => {
+        this.yri(0);
       }),
-      (this.yoi = () => {
-        this.Soi(3);
+      (this.Tri = () => {
+        this.yri(3);
       }),
-      (this.ooi = (t, i) => {
+      (this.rri = (t, i) => {
         t?.Valid
-          ? ((this.rti = !0), this.poi ? this.fii(t) : this.Soi(3))
-          : ((this.rti = !1), this.Soi(0));
+          ? ((this.rii = !0), this.Mri ? this.foi(t) : this.yri(3))
+          : ((this.rii = !1), this.yri(0));
       }),
-      (this.roi = () => {
-        (this.rti = !1), this.Soi(0);
+      (this.nri = () => {
+        (this.rii = !1), this.yri(0);
       }),
-      (this.noi = () => {
-        this.Soi(0);
+      (this.sri = () => {
+        this.yri(0);
       }),
-      (this.dKe = () => {
-        this.aoi?.RefreshKeyVisible();
+      (this.XBo = () => {
+        this.hri?.RefreshKeyVisible();
       }),
-      (this.Jii = (t, i, e) => {
-        (this.rti = e),
+      (this.zoi = (t, i, e) => {
+        (this.rii = e),
           t
             ? i?.Valid
-              ? this.rti && !this.poi
-                ? this.Soi(3)
-                : this.fii(i)
+              ? this.rii && !this.Mri
+                ? this.yri(3)
+                : this.foi(i)
               : e
-                ? this.Soi(3)
-                : this.Soi(0)
-            : this.Soi(0);
+                ? this.yri(3)
+                : this.yri(0)
+            : this.yri(0);
       }),
-      (this.Moi = (t, i) => {
-        i ? this.aoi?.SetActive(!1) : this.Ioi();
+      (this.Sri = (t, i) => {
+        i ? this.hri?.SetActive(!1) : this.Lri();
       });
   }
   OnInitialize() {
     if (
-      ((this.B8e = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity),
-      this.B8e?.Valid)
+      ((this.X9e = ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity),
+      this.X9e?.Valid)
     ) {
-      (this.Coi = this.B8e.Entity.GetComponent(185)),
-        (this.coi = this.B8e.Entity.GetComponent(1)),
-        (this.moi = this.B8e.Entity.GetComponent(55)),
-        (this.doi =
+      (this.fri = this.X9e.Entity.GetComponent(188)),
+        (this.dri = this.X9e.Entity.GetComponent(1)),
+        (this.Cri = this.X9e.Entity.GetComponent(56)),
+        (this.gri =
           CameraController_1.CameraController.FightCamera.GetComponent(5));
       var t = CommonParamById_1.configCommonParamById.GetStringConfig(
         "ManipulateAimVisibleTags",
@@ -107,235 +107,235 @@ class ManipulateCursorHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
       if (t)
         for (const e of t.split(",")) {
           var i = GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(e);
-          i && this.goi.push(i);
+          i && this.pri.push(i);
         }
     }
   }
   OnDestroyed() {
-    this.pii(),
-      this.voi(),
-      (this.uoi = void 0),
-      (this.B8e = void 0),
-      (this.coi = void 0),
-      (this.moi = void 0),
-      (this.Coi = void 0),
-      (this.goi.length = 0);
+    this.poi(),
+      this.Eri(),
+      (this.mri = void 0),
+      (this.X9e = void 0),
+      (this.dri = void 0),
+      (this.Cri = void 0),
+      (this.fri = void 0),
+      (this.pri.length = 0);
   }
   OnAddEvents() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnChangeRole,
-      this.o7e,
+      this.fHe,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnManipulateSwitchToNewTarget,
-        this.Jii,
+        this.zoi,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnManipulateStartChanting,
-        this.zii,
+        this.Zoi,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnManipulateCancelChanting,
-        this.Eoi,
+        this.Iri,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnManipulateCompleteChanting,
-        this.yoi,
+        this.Tri,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.ManipulateStartLockCastTarget,
-        this.ooi,
+        this.rri,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.ManipulateEndLockCastTarget,
-        this.roi,
+        this.nri,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.HiddenManipulateUI,
-        this.noi,
+        this.sri,
       ),
       EventSystem_1.EventSystem.Add(
-        EventDefine_1.EEventName.OnPlatformChanged,
-        this.dKe,
+        EventDefine_1.EEventName.InputControllerChange,
+        this.XBo,
       );
   }
   OnRemoveEvents() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnChangeRole,
-      this.o7e,
+      this.fHe,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnManipulateSwitchToNewTarget,
-        this.Jii,
+        this.zoi,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnManipulateStartChanting,
-        this.zii,
+        this.Zoi,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnManipulateCancelChanting,
-        this.Eoi,
+        this.Iri,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnManipulateCompleteChanting,
-        this.yoi,
+        this.Tri,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.ManipulateStartLockCastTarget,
-        this.ooi,
+        this.rri,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.ManipulateEndLockCastTarget,
-        this.roi,
+        this.nri,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.HiddenManipulateUI,
-        this.noi,
+        this.sri,
       ),
       EventSystem_1.EventSystem.Remove(
-        EventDefine_1.EEventName.OnPlatformChanged,
-        this.dKe,
+        EventDefine_1.EEventName.InputControllerChange,
+        this.XBo,
       );
   }
   OnAfterTick(t) {
     this.bl();
   }
-  Ioi() {
+  Lri() {
     var t;
     return (
-      !!this.aoi &&
-      !this.aoi.InAsyncLoading() &&
-      ((t = !this.Toi()),
-      this.aoi.GetActive() !== t && this.aoi.SetActive(t),
+      !!this.hri &&
+      !this.hri.InAsyncLoading() &&
+      ((t = !this.Dri()),
+      this.hri.GetActive() !== t && this.hri.SetActive(t),
       t)
     );
   }
-  Toi() {
-    if (0 !== this.goi.length)
-      for (const t of this.goi) if (this.Coi.HasTag(t)) return !0;
+  Dri() {
+    if (0 !== this.pri.length)
+      for (const t of this.pri) if (this.fri.HasTag(t)) return !0;
     return !1;
   }
-  Loi() {
-    this.aoi?.PlayActivateEffect();
+  Rri() {
+    this.hri?.PlayActivateEffect();
   }
-  fii(t) {
-    (this.hoi = t),
-      (this.loi = t.GetComponent(1)),
-      ((0, RegisterComponent_1.isComponentInstance)(this.loi, 182) &&
-        ((this._oi =
+  foi(t) {
+    (this.lri = t),
+      (this._ri = t.GetComponent(1)),
+      ((0, RegisterComponent_1.isComponentInstance)(this._ri, 185) &&
+        ((this.cri =
           SceneInteractionManager_1.SceneInteractionManager.Get().GetMainCollisionActor(
-            this.loi.GetSceneInteractionLevelHandleId(),
+            this._ri.GetSceneInteractionLevelHandleId(),
           )),
-        this._oi?.IsValid())) ||
-        (this._oi = this.loi.Owner),
-      this.Soi(1),
-      this.aoi ? (this.bl(), this.Ioi(), this.Loi()) : this.Doi();
+        this.cri?.IsValid())) ||
+        (this.cri = this._ri.Owner),
+      this.yri(1),
+      this.hri ? (this.bl(), this.Lri(), this.Rri()) : this.Uri();
   }
-  pii() {
-    this.DestroyHudUnit(this.aoi),
-      (this.aoi = void 0),
-      (this.hoi = void 0),
-      (this.loi = void 0),
-      (this._oi = void 0);
+  poi() {
+    this.DestroyHudUnit(this.hri),
+      (this.hri = void 0),
+      (this.lri = void 0),
+      (this._ri = void 0),
+      (this.cri = void 0);
   }
-  voi() {
-    for (const t of this.foi) t.EndTask();
-    this.foi.length = 0;
+  Eri() {
+    for (const t of this.vri) t.EndTask();
+    this.vri.length = 0;
   }
   bl() {
-    if (this.aoi && !this.aoi.InAsyncLoading() && this.aoi.GetActive()) {
-      var i = this.Roi();
+    if (this.hri && !this.hri.InAsyncLoading() && this.hri.GetActive()) {
+      var i = this.Ari();
       if (i) {
-        var e = this.xXe(),
+        var e = this.j$e(),
           [e, i] = this.GetInEllipsePosition(e, i.ToUeVector());
         let t = !1;
         i &&
-          (t = this.doi.GetScreenPositionIsInRange(
+          (t = this.gri.GetScreenPositionIsInRange(
             i,
-            this.doi.CameraAdjustController.CheckInScreenMinX,
-            this.doi.CameraAdjustController.CheckInScreenMaxX,
-            this.doi.CameraAdjustController.CheckInScreenMinY,
-            this.doi.CameraAdjustController.CheckInScreenMaxY,
+            this.gri.CameraAdjustController.CheckInScreenMinX,
+            this.gri.CameraAdjustController.CheckInScreenMaxX,
+            this.gri.CameraAdjustController.CheckInScreenMinY,
+            this.gri.CameraAdjustController.CheckInScreenMaxY,
           )),
-          this.aoi.Refresh(t, e, this.rti);
+          this.hri.Refresh(t, e, this.rii);
       }
     }
   }
-  xXe() {
-    return this.coi.ActorLocationProxy;
+  j$e() {
+    return this.dri.ActorLocationProxy;
   }
-  Roi() {
-    if (this.hoi?.Valid && this._oi?.IsValid()) {
-      this._oi.GetActorBounds(!1, this.uoi, void 0);
-      let t = Vector_1.Vector.Create((0, puerts_1.$unref)(this.uoi));
+  Ari() {
+    if (this.lri?.Valid && this.cri?.IsValid()) {
+      this.cri.GetActorBounds(!1, this.mri, void 0);
+      let t = Vector_1.Vector.Create((0, puerts_1.$unref)(this.mri));
       var i =
           ModelManager_1.ModelManager.ManipulaterModel.GetTargetPartLocation(),
         i =
           (i !== Vector_1.Vector.ZeroVectorProxy && (t = i),
-          this.hoi.GetComponent(132)),
+          this.lri.GetComponent(134)),
         i =
-          (void 0 !== i && this.rti && (t = i.GetHitPoint()),
-          this.hoi.GetComponent(145)),
+          (void 0 !== i && this.rii && (t = i.GetHitPoint()),
+          this.lri.GetComponent(147)),
         i =
           (void 0 !== i &&
-            this.rti &&
-            (t = i.GetSocketLocation(this.moi.GetHoldingEntity())),
-          this.hoi.GetComponent(124)),
+            this.rii &&
+            (t = i.GetSocketLocation(this.Cri.GetHoldingEntity())),
+          this.lri.GetComponent(126)),
         i =
-          (void 0 !== i && this.rti && (t = i.GetHitPoint()),
-          this.hoi.GetComponent(134));
+          (void 0 !== i && this.rii && (t = i.GetHitPoint()),
+          this.lri.GetComponent(136));
       return (t = void 0 !== i ? i.Location : t);
     }
   }
-  Doi() {
-    this.aoi = this.NewHudUnitWithReturn(
+  Uri() {
+    this.hri = this.NewHudUnitWithReturn(
       ManipulateCursorUnit_1.ManipulateCursorUnit,
       "UiItem_ObjControl",
       !0,
       () => {
         0 === this.ac
-          ? this.pii()
-          : (this.aoi?.SetCloseAnimCallback(() => {
-              this.pii();
+          ? this.poi()
+          : (this.hri?.SetCloseAnimCallback(() => {
+              this.poi();
             }),
             this.bl(),
-            this.Ioi(),
-            this.Loi());
+            this.Lri(),
+            this.Rri());
       },
     );
   }
-  Soi(t) {
+  yri(t) {
     if (this.ac !== t) {
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("Battle", 18, "控物UI状态改变", ["", t]);
       var i = this.ac;
-      if (((this.ac = t), this.aoi))
+      if (((this.ac = t), this.hri))
         switch (this.ac) {
           case 0:
             1 === i
-              ? (this.aoi.EndProcess(!0), this.aoi.PlayCloseAnim(0))
+              ? (this.hri.EndProcess(!0), this.hri.PlayCloseAnim(0))
               : 2 === i &&
-                (this.aoi.EndProcess(!0),
-                this.aoi.PlayInterruptedAnim(),
-                this.aoi.PlayCloseAnim(INTERRUPT_ANIM_TIME));
+                (this.hri.EndProcess(!0),
+                this.hri.PlayInterruptedAnim(),
+                this.hri.PlayCloseAnim(INTERRUPT_ANIM_TIME));
             break;
           case 1:
-            this.aoi.StopCloseAnim(),
-              this.aoi.EndProcess(!0),
-              this.aoi.Appear();
+            this.hri.StopCloseAnim(),
+              this.hri.EndProcess(!0),
+              this.hri.Appear();
             break;
           case 2:
-            this.aoi.PlayStartAnim(), this.aoi.PlayProcessAnim();
+            this.hri.PlayStartAnim(), this.hri.PlayProcessAnim();
             break;
           case 3:
             2 === i
-              ? (this.aoi.EndProcess(!1),
-                this.aoi.PlayCompleteAnim(),
-                this.aoi.PlayCloseAnim(COMPLETE_ANIM_TIME))
-              : this.aoi.PlayCloseAnim(0);
+              ? (this.hri.EndProcess(!1),
+                this.hri.PlayCompleteAnim(),
+                this.hri.PlayCloseAnim(COMPLETE_ANIM_TIME))
+              : this.hri.PlayCloseAnim(0);
         }
     }
   }
 }
-(exports.ManipulateCursorHandle = ManipulateCursorHandle)._$e = void 0;
+(exports.ManipulateCursorHandle = ManipulateCursorHandle).SYe = void 0;
 //# sourceMappingURL=ManipulateCursorHandle.js.map

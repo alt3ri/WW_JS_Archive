@@ -11,45 +11,45 @@ class ControllerWithAssistantBase extends ControllerBase_1.ControllerBase {
     return this.OnUnRegisterNetEvent(), this.OnRemoveEvents(), super.Clear();
   }
   static OnInit() {
-    return this.FXt(), !0;
+    return this.F$t(), !0;
   }
   static OnClear() {
-    return this.VXt(), super.OnClear();
+    return this.V$t(), super.OnClear();
   }
   static OnRegisterNetEvent() {
-    this.HXt();
+    this.H$t();
   }
   static OnUnRegisterNetEvent() {
-    this.jXt();
+    this.j$t();
   }
   static OnAddEvents() {
-    this.WXt();
+    this.W$t();
   }
   static OnRemoveEvents() {
-    this.KXt();
+    this.K$t();
   }
-  static FXt() {
+  static F$t() {
     (this.Assistants = new Map()), this.RegisterAssistant();
   }
   static RegisterAssistant() {}
-  static VXt() {
+  static V$t() {
     if (this.Assistants) {
       for (var [, t] of this.Assistants) t.Destroy();
       this.Assistants.clear(), (this.Assistants = void 0);
     }
   }
-  static HXt() {
+  static H$t() {
     if (this.Assistants)
       for (var [, t] of this.Assistants) t.OnRegisterNetEvent();
   }
-  static jXt() {
+  static j$t() {
     if (this.Assistants)
       for (var [, t] of this.Assistants) t.OnUnRegisterNetEvent();
   }
-  static WXt() {
+  static W$t() {
     if (this.Assistants) for (var [, t] of this.Assistants) t.OnAddEvents();
   }
-  static KXt() {
+  static K$t() {
     if (this.Assistants) for (var [, t] of this.Assistants) t.OnRemoveEvents();
   }
   static AddAssistant(t, s) {

@@ -17,7 +17,7 @@ class LevelEventRefreshInputTag extends LevelGeneralBase_1.LevelEventBase {
     var n = Global_1.Global.BaseCharacter?.CharacterActorComponent?.Entity,
       r = 477750727;
     n?.Valid &&
-      (n = n.GetComponent(185))?.HasTag(r) &&
+      (n = n.GetComponent(188))?.HasTag(r) &&
       (n.RemoveTag(r), Log_1.Log.CheckDebug()) &&
       Log_1.Log.Debug(
         "Test",

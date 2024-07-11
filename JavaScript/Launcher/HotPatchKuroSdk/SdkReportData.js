@@ -59,19 +59,19 @@ class HotPatchReportData {
       BaseConfigController_1.BaseConfigController.GetPublicValue("SdkArea")
     )
       return (
-        0 === this.VSr.size &&
-          (this.VSr.set(Number(0), SdkLogoReportData),
-          this.VSr.set(Number(1), SdkCheckVersionStart),
-          this.VSr.set(Number(2), SdkCheckVersionEnd),
-          this.VSr.set(Number(3), SdkCheckVersionFail),
-          this.VSr.set(Number(4), SdkResourceDownloadStart),
-          this.VSr.set(Number(5), SdkResourceDownloadEnd),
-          this.VSr.set(Number(6), SdkResourceDownloadFail)),
-        new (this.VSr.get(e))(t)
+        0 === this.OSr.size &&
+          (this.OSr.set(Number(0), SdkLogoReportData),
+          this.OSr.set(Number(1), SdkCheckVersionStart),
+          this.OSr.set(Number(2), SdkCheckVersionEnd),
+          this.OSr.set(Number(3), SdkCheckVersionFail),
+          this.OSr.set(Number(4), SdkResourceDownloadStart),
+          this.OSr.set(Number(5), SdkResourceDownloadEnd),
+          this.OSr.set(Number(6), SdkResourceDownloadFail)),
+        new (this.OSr.get(e))(t)
       );
   }
 }
-(exports.HotPatchReportData = HotPatchReportData).VSr = new Map();
+(exports.HotPatchReportData = HotPatchReportData).OSr = new Map();
 class SdkLogoReportData extends SdkReportData {
   GetEventName() {
     return this.IfGlobalSdk ? "Logo" : "";

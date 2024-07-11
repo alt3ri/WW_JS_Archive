@@ -34,16 +34,16 @@ class PayShopRootView extends UiTickViewBase_1.UiTickViewBase {
       (this.UpdateInterval = 0),
       (this.GoodsList = []),
       (this.AllowTick = !1),
-      (this.k2i = !1),
+      (this.kFi = !1),
       (this.PayShopViewData = void 0),
-      (this.F2i = () => {
+      (this.FFi = () => {
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("Shop", 11, "PayShop:Root 打开客服反馈"),
           ControllerHolder_1.ControllerHolder.KuroSdkController.OpenCustomerService(
             3,
           );
       }),
-      (this.W9t = () => {
+      (this.W7t = () => {
         this.CloseMe();
       }),
       (this.fqe = (e, t) => {
@@ -52,13 +52,15 @@ class PayShopRootView extends UiTickViewBase_1.UiTickViewBase {
       (this.pqe = (e) => {
         var e = this.TabShopList[e],
           t = ConfigManager_1.ConfigManager.PayShopConfig.GetPayShopConfig(e),
-          t = PayShopDefine_1.payShopTabView[t.ShopTabViewType];
+          t = ConfigManager_1.ConfigManager.DynamicTabConfig.GetTabViewConfById(
+            t.DynamicTabId,
+          ).ChildViewName;
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("Shop", 11, "PayShop:Root 点击切换界面", [
             "ViewName",
             t,
           ]),
-          this.V2i(e),
+          this.VFi(e),
           ControllerHolder_1.ControllerHolder.PayShopController.SendRequestPayShopUpdate(
             e,
             !0,
@@ -75,20 +77,22 @@ class PayShopRootView extends UiTickViewBase_1.UiTickViewBase {
           new CommonTabTitleData_1.CommonTabTitleData(e.TabName),
         );
       }),
-      (this.H2i = (e) => {
-        this.j2i(this.TabShopList, 0);
+      (this.HFi = (e) => {
+        this.jFi(this.TabShopList, 0);
       }),
-      (this.W2i = (e, t) => {
+      (this.WFi = (e, t) => {
         e = this.TabShopList.indexOf(e);
         this.TabComponent.SelectToggleByIndex(e);
       }),
-      (this.K2i = (e, t, i) => {
+      (this.KFi = (e, t, i) => {
         t === this.PayShopId &&
           this.TabViewComponent.GetCurrentTabView().RefreshView?.(i);
       }),
-      (this.Q2i = (e) => {
+      (this.QFi = (e) => {
         var t = ConfigManager_1.ConfigManager.PayShopConfig.GetPayShopConfig(e),
-          t = PayShopDefine_1.payShopTabView[t.ShopTabViewType],
+          t = ConfigManager_1.ConfigManager.DynamicTabConfig.GetTabViewConfById(
+            t.DynamicTabId,
+          ).ChildViewName,
           i =
             (Log_1.Log.CheckInfo() &&
               Log_1.Log.Info("Shop", 11, "PayShop:Root 切换界面", [
@@ -107,15 +111,16 @@ class PayShopRootView extends UiTickViewBase_1.UiTickViewBase {
           this.PayShopViewData?.SwitchId,
         ),
           this.UpdateGoodsList(),
+          this.Zra(),
           (this.UpdateInterval = 0),
           this.PayShopViewData && (this.PayShopViewData.SwitchId = void 0);
       }),
-      (this.X2i = (e, t) => {
+      (this.XFi = (e, t) => {
         t &&
           ((t = new ConfirmBoxDefine_1.ConfirmBoxDataNew(131)).FunctionMap.set(
             1,
             () => {
-              this.$2i();
+              this.$Fi();
             },
           ),
           ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
@@ -124,7 +129,7 @@ class PayShopRootView extends UiTickViewBase_1.UiTickViewBase {
           Log_1.Log.CheckInfo()) &&
           Log_1.Log.Info("Shop", 11, "PayShop:Root 商品数据不同步,打开弹窗");
       }),
-      (this.Y2i = (e) => {
+      (this.YFi = (e) => {
         var t = new ConfirmBoxDefine_1.ConfirmBoxDataNew(131);
         t.FunctionMap.set(1, () => {
           this.TabViewComponent.GetCurrentTabView().RefreshView?.(e),
@@ -134,7 +139,7 @@ class PayShopRootView extends UiTickViewBase_1.UiTickViewBase {
             t,
           );
       }),
-      (this.xGn = () => {
+      (this.GNn = () => {
         var e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(131);
         e.FunctionMap.set(1, () => {
           this.CloseMe();
@@ -149,7 +154,7 @@ class PayShopRootView extends UiTickViewBase_1.UiTickViewBase {
               "PayShop:Root 商品VersionCode不同步,打开弹窗",
             );
       }),
-      (this.J2i = (e) => {
+      (this.JFi = (e) => {
         e = e.get(this.PayShopId);
         e && this.TabViewComponent.GetCurrentTabView().RefreshView?.(e);
       });
@@ -167,8 +172,9 @@ class PayShopRootView extends UiTickViewBase_1.UiTickViewBase {
       [5, UE.UIItem],
       [6, UE.UIButtonComponent],
       [7, UE.UIItem],
+      [8, UE.UIItem],
     ]),
-      (this.BtnBindInfo = [[6, this.F2i]]);
+      (this.BtnBindInfo = [[6, this.FFi]]);
   }
   OnStart() {
     var e = new CommonTabComponentData_1.CommonTabComponentData(
@@ -180,27 +186,28 @@ class PayShopRootView extends UiTickViewBase_1.UiTickViewBase {
       new TabComponentWithCaptionItem_1.TabComponentWithCaptionItem(
         this.GetItem(0),
         e,
-        this.W9t,
+        this.W7t,
       )),
       (this.TabViewComponent = new TabViewComponent_1.TabViewComponent(
         this.GetItem(1),
       )),
-      this.z2i(),
+      this.zFi(),
       (this.PayShopId = void 0),
       this.GetButton(6).RootUIComp.SetRaycastTarget(!0),
       (this.CountDownText = this.GetText(3)),
       (this.CountDownTextActive = this.GetItem(2).bIsUIActive),
       this.TabComponent.SetTitle(""),
       this.TabComponent.SetTitleIconVisible(!1),
-      this.Z2i();
+      this.ZFi(),
+      this.Zra();
   }
-  Z2i() {
+  ZFi() {
     RedDotController_1.RedDotController.BindRedDot(
       "CustomerService",
       this.GetItem(7),
     );
   }
-  eFi() {
+  e3i() {
     RedDotController_1.RedDotController.UnBindGivenUi(
       "CustomerService",
       this.GetItem(7),
@@ -209,69 +216,69 @@ class PayShopRootView extends UiTickViewBase_1.UiTickViewBase {
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.RefreshAllPayShop,
-      this.H2i,
+      this.HFi,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.SwitchPayShopTabItem,
-        this.W2i,
+        this.WFi,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.RefreshGoods,
-        this.K2i,
+        this.KFi,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.SwitchPayShopView,
-        this.Q2i,
+        this.QFi,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.RefreshPayShop,
-        this.X2i,
+        this.XFi,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.RefreshGoodsList,
-        this.Y2i,
+        this.YFi,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.UnLockGoods,
-        this.J2i,
+        this.JFi,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.ShopVersionCodeChange,
-        this.xGn,
+        this.GNn,
       );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.RefreshAllPayShop,
-      this.H2i,
+      this.HFi,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.SwitchPayShopTabItem,
-        this.W2i,
+        this.WFi,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.RefreshGoods,
-        this.K2i,
+        this.KFi,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.SwitchPayShopView,
-        this.Q2i,
+        this.QFi,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.RefreshPayShop,
-        this.X2i,
+        this.XFi,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.RefreshGoodsList,
-        this.Y2i,
+        this.YFi,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.UnLockGoods,
-        this.J2i,
+        this.JFi,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.ShopVersionCodeChange,
-        this.xGn,
+        this.GNn,
       );
   }
   OnAfterShow() {
@@ -279,13 +286,13 @@ class PayShopRootView extends UiTickViewBase_1.UiTickViewBase {
       ? this.TabViewComponent.SetCurrentTabViewState(!0)
       : (this.SelectDefaultPayShop(), this.RefreshCountDownText());
   }
-  V2i(e) {
+  VFi(e) {
     var t = this.GetItem(5);
     ControllerHolder_1.ControllerHolder.KuroSdkController.NeedShowCustomerService()
       ? t.SetUIActive(100 === e)
       : t.SetUIActive(!1);
   }
-  z2i() {
+  zFi() {
     LguiUtil_1.LguiUtil.SetLocalText(
       this.GetText(4),
       "FriendMyUid",
@@ -296,7 +303,7 @@ class PayShopRootView extends UiTickViewBase_1.UiTickViewBase {
     this.TabViewComponent.SetCurrentTabViewState(!1);
   }
   OnBeforeDestroy() {
-    this.eFi(),
+    this.e3i(),
       this.TabComponent &&
         (this.TabComponent.Destroy(), (this.TabComponent = void 0)),
       this.TabViewComponent &&
@@ -310,7 +317,7 @@ class PayShopRootView extends UiTickViewBase_1.UiTickViewBase {
       this.TabComponent.GetCurrencyItemList().forEach((e) => {
         100 === this.PayShopId
           ? e.SetButtonActive(!1)
-          : e.SetPayShopButtonActive(),
+          : e.RefreshAddButtonActive(),
           e.SetToPayShopFunction();
       });
   }
@@ -323,9 +330,8 @@ class PayShopRootView extends UiTickViewBase_1.UiTickViewBase {
           (e) => {
             var t =
               ConfigManager_1.ConfigManager.PayShopConfig.GetPayShopConfig(e);
-            PayShopDefine_1.hideInPayShopViewTabType.includes(
-              t.ShopTabViewType,
-            ) || this.TabShopList.push(e);
+            PayShopDefine_1.payShopViewTabType.includes(t.ShopTabViewType) &&
+              this.TabShopList.push(e);
           },
         )),
       Log_1.Log.CheckInfo() &&
@@ -335,10 +341,10 @@ class PayShopRootView extends UiTickViewBase_1.UiTickViewBase {
         ]),
       this.PayShopViewData?.PayShopId
         ? ((e = this.TabShopList.indexOf(this.PayShopViewData.PayShopId)),
-          this.j2i(this.TabShopList, e))
-        : this.j2i(this.TabShopList, 0);
+          this.jFi(this.TabShopList, e))
+        : this.jFi(this.TabShopList, 0);
   }
-  j2i(e, n = 0) {
+  jFi(e, n = 0) {
     const h = e.length;
     this.TabComponent.RefreshTabItemByLength(h, () => {
       for (let e = 0; e < h; e++) {
@@ -355,7 +361,7 @@ class PayShopRootView extends UiTickViewBase_1.UiTickViewBase {
         this.TabComponent?.SelectToggleByIndex(n);
     });
   }
-  $2i() {
+  $Fi() {
     this.TabViewComponent.GetCurrentTabView().RefreshView?.(),
       this.UpdateGoodsList();
     var e = ModelManager_1.ModelManager.PayShopModel.GetPayShopCountDownData(
@@ -365,7 +371,7 @@ class PayShopRootView extends UiTickViewBase_1.UiTickViewBase {
       e.RemainingTime > TimeUtil_1.TimeUtil.TimeDeviation &&
       (this.UpdateInterval =
         e.RemainingTime * CommonDefine_1.MILLIONSECOND_PER_SECOND),
-      (this.k2i = !1);
+      (this.kFi = !1);
   }
   UpdateTime(e) {
     void 0 !== this.UpdateInterval &&
@@ -377,6 +383,11 @@ class PayShopRootView extends UiTickViewBase_1.UiTickViewBase {
           )) &&
             (this.UpdateInterval =
               e.RemainingTime * CommonDefine_1.MILLIONSECOND_PER_SECOND)));
+  }
+  Zra() {
+    var e = this.GetItem(8),
+      t = 4 === this.PayShopId;
+    e.SetUIActive(t);
   }
   RefreshCountDownText() {
     var e = ModelManager_1.ModelManager.PayShopModel.GetPayShopCountDownData(
@@ -391,14 +402,14 @@ class PayShopRootView extends UiTickViewBase_1.UiTickViewBase {
           this.GetItem(2).SetUIActive(!1),
           void 0 !== this.UpdateInterval &&
             this.UpdateInterval <= 0 &&
-            !this.k2i &&
+            !this.kFi &&
             (Log_1.Log.CheckDebug() &&
               Log_1.Log.Debug("Shop", 28, "发送协议请求商店"),
             ControllerHolder_1.ControllerHolder.PayShopController.SendRequestPayShopUpdate(
               this.PayShopId,
               !1,
             ),
-            (this.k2i = !0)),
+            (this.kFi = !0)),
           (this.UpdateInterval = void 0))
         : (this.CountDownTextActive ||
             (this.GetItem(2).SetUIActive(!0), (this.CountDownTextActive = !0)),

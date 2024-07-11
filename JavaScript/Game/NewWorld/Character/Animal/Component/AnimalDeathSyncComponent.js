@@ -32,13 +32,13 @@ let AnimalDeathSyncComponent = class AnimalDeathSyncComponent extends BaseDeathC
   constructor() {
     super(...arguments),
       (this.Xte = void 0),
-      (this.mbr = void 0),
+      (this.HBr = void 0),
       (this.MontageComponent = void 0),
       (this.gne = (e) => {
         e.ReBulletData.Base.DamageId === BigInt(0) ||
           this.Xte.HasTag(501201e3) ||
           this.Xte.HasTag(1008164187) ||
-          (this.Entity.GetComponent(38)?.DisableAi("动物死亡"),
+          (this.Entity.GetComponent(39)?.DisableAi("动物死亡"),
           this.Xte?.AddTag(1008164187),
           ControllerHolder_1.ControllerHolder.CreatureController.AnimalDieRequest(
             this.Entity.GetComponent(0).GetCreatureDataId(),
@@ -48,7 +48,7 @@ let AnimalDeathSyncComponent = class AnimalDeathSyncComponent extends BaseDeathC
       (this.ExecuteDeath = () =>
         !!super.ExecuteDeath() &&
         (this.Xte?.AddTag(1008164187),
-        this.mbr?.ResetCharState(),
+        this.HBr?.ResetCharState(),
         this.PlayDieAnimation(),
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.CharOnRoleDead,
@@ -67,7 +67,7 @@ let AnimalDeathSyncComponent = class AnimalDeathSyncComponent extends BaseDeathC
                 this.OnDeathEnded,
                 DISAPPEAR_REMOVE_DELAY,
               )
-            : this.mbr.PositionState ===
+            : this.HBr.PositionState ===
                 CharacterUnifiedStateTypes_1.ECharPositionState.Water
               ? this.MontageComponent.PlayMontageWithCallBack(
                   1,
@@ -90,8 +90,8 @@ let AnimalDeathSyncComponent = class AnimalDeathSyncComponent extends BaseDeathC
   }
   OnStart() {
     return (
-      (this.Xte = this.Entity.CheckGetComponent(185)),
-      (this.mbr = this.Entity.CheckGetComponent(89)),
+      (this.Xte = this.Entity.CheckGetComponent(188)),
+      (this.HBr = this.Entity.CheckGetComponent(91)),
       (this.MontageComponent = this.Entity.CheckGetComponent(22)),
       EventSystem_1.EventSystem.AddWithTarget(
         this.Entity,
@@ -99,7 +99,7 @@ let AnimalDeathSyncComponent = class AnimalDeathSyncComponent extends BaseDeathC
         this.gne,
       ),
       this.Entity.CheckGetComponent(0).GetLivingStatus() ===
-        Protocol_1.Aki.Protocol.Rvs.Proto_Dead &&
+        Protocol_1.Aki.Protocol.HEs.Proto_Dead &&
         TimerSystem_1.TimerSystem.Next(this.ExecuteDeath),
       !0
     );
@@ -116,7 +116,7 @@ let AnimalDeathSyncComponent = class AnimalDeathSyncComponent extends BaseDeathC
   }
 };
 (AnimalDeathSyncComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(153)],
+  [(0, RegisterComponent_1.RegisterComponent)(155)],
   AnimalDeathSyncComponent,
 )),
   (exports.AnimalDeathSyncComponent = AnimalDeathSyncComponent);

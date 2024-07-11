@@ -4,24 +4,24 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase");
 class GamepadItemBase extends UiPanelBase_1.UiPanelBase {
   constructor() {
-    super(...arguments), (this.pAi = new Map()), (this.vAi = new Map());
+    super(...arguments), (this.pPi = new Map()), (this.vPi = new Map());
   }
   AddKeySprite(e, s) {
-    this.pAi.set(e, s);
+    this.pPi.set(e, s);
   }
   SetKeysEnable(e) {
-    for (var [s, t] of this.vAi) e.includes(s) || t.SetUIActive(!1);
+    for (var [s, t] of this.vPi) e.includes(s) || t.SetUIActive(!1);
     for (const i of e) this.SetKeySpriteVisible(i, !0);
   }
   SetAllKeyDisable() {
-    for (const e of this.vAi.values()) e.SetUIActive(!1);
+    for (const e of this.vPi.values()) e.SetUIActive(!1);
   }
   SetKeySpriteVisible(e, s) {
-    var t = this.pAi.get(e);
-    t && (t.SetUIActive(s), s ? this.vAi.set(e, t) : this.vAi.delete(e));
+    var t = this.pPi.get(e);
+    t && (t.SetUIActive(s), s ? this.vPi.set(e, t) : this.vPi.delete(e));
   }
   OnBeforeDestroy() {
-    this.pAi.clear(), this.vAi.clear();
+    this.pPi.clear(), this.vPi.clear();
   }
 }
 exports.GamepadItemBase = GamepadItemBase;

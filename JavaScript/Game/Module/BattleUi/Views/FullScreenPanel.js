@@ -10,13 +10,13 @@ const puerts_1 = require("puerts"),
 class FullScreenPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
   constructor() {
     super(...arguments),
-      (this.dat = new Map()),
-      (this.Cat = new Set()),
-      (this.gat = void 0),
-      (this.fat = (s) => {
+      (this.Dht = new Map()),
+      (this.Rht = new Set()),
+      (this.Uht = void 0),
+      (this.Aht = (s) => {
         var e = s.UniqueId,
           t = s.NiagaraPath;
-        this.pat(e, t).then(
+        this.Pht(e, t).then(
           (e) => {
             if (e)
               for (var [t, i] of s.GetFloatParameterMap())
@@ -25,83 +25,83 @@ class FullScreenPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
           () => {},
         );
       }),
-      (this.vat = (e) => {
+      (this.xht = (e) => {
         e = e.UniqueId;
-        this.Sat(e), this.Eat(e);
+        this.wht(e), this.Bht(e);
       }),
-      (this.yat = () => {
-        this.Iat();
+      (this.bht = () => {
+        this.qht();
       }),
-      (this.Tat = (e, t, i) => {
-        e = this.Lat(e);
+      (this.Ght = (e, t, i) => {
+        e = this.Nht(e);
         e && e.SetNiagaraFloatValue(t, i);
       });
   }
   InitializeTemp() {
-    this.Dat();
+    this.Oht();
   }
   Reset() {
-    this.Iat(), this.Rat(), super.Reset();
+    this.qht(), this.kht(), super.Reset();
   }
   AddEvents() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnAddFullScreenEffect,
-      this.fat,
+      this.Aht,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnRemoveFullScreenEffect,
-        this.vat,
+        this.xht,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnClearFullScreenEffect,
-        this.yat,
+        this.bht,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnChangeFullScreenNiagaraFloatParameter,
-        this.Tat,
+        this.Ght,
       );
   }
   RemoveEvents() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnAddFullScreenEffect,
-      this.fat,
+      this.Aht,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnRemoveFullScreenEffect,
-        this.vat,
+        this.xht,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnClearFullScreenEffect,
-        this.yat,
+        this.bht,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnChangeFullScreenNiagaraFloatParameter,
-        this.Tat,
+        this.Ght,
       );
   }
-  Uat(e) {
-    this.Cat.add(e);
+  Fht(e) {
+    this.Rht.add(e);
   }
-  Sat(e) {
-    this.Cat.delete(e);
+  wht(e) {
+    this.Rht.delete(e);
   }
-  Aat(e) {
-    return this.Cat.has(e);
+  Vht(e) {
+    return this.Rht.has(e);
   }
-  async pat(e, t) {
-    let i = this.Lat(e);
-    i || (this.Uat(e), (i = await this.Pat(e)));
-    var s = this.Aat(e);
-    if ((this.Sat(e), s)) {
-      if ((this.dat.set(e, i), await i.LoadNiagara(t), i.GetRootItem()))
+  async Pht(e, t) {
+    let i = this.Nht(e);
+    i || (this.Fht(e), (i = await this.Hht(e)));
+    var s = this.Vht(e);
+    if ((this.wht(e), s)) {
+      if ((this.Dht.set(e, i), await i.LoadNiagara(t), i.GetRootItem()))
         return i.SetVisible(!0), i;
     } else i.Destroy();
   }
-  Eat(e) {
-    var t = this.Lat(e);
-    return !!t && (t.Destroy(), this.dat.delete(e), !0);
+  Bht(e) {
+    var t = this.Nht(e);
+    return !!t && (t.Destroy(), this.Dht.delete(e), !0);
   }
-  async Pat(e) {
+  async Hht(e) {
     return await this.NewDynamicChildViewByResourceId(
       this.RootItem,
       "UiItem_FullScreenNiagara",
@@ -109,25 +109,25 @@ class FullScreenPanel extends BattleChildViewPanel_1.BattleChildViewPanel {
       !0,
     );
   }
-  Lat(e) {
-    return this.dat.get(e);
+  Nht(e) {
+    return this.Dht.get(e);
   }
-  Iat() {
-    if (!(this.dat.size <= 0)) {
-      for (const e of this.dat.values()) e.Reset();
-      this.dat.clear(), this.Cat.clear();
+  qht() {
+    if (!(this.Dht.size <= 0)) {
+      for (const e of this.Dht.values()) e.Reset();
+      this.Dht.clear(), this.Rht.clear();
     }
   }
-  Dat() {
+  Oht() {
     var e = (0, puerts_1.$ref)(void 0),
       t = ScreenEffectSystem_1.ScreenEffectSystem.GetInstance();
     t?.IsValid() &&
       (t.GetScreenEffectFightRoot(e),
-      (this.gat = (0, puerts_1.$unref)(e)),
-      this.gat?.K2_AttachRootComponentTo(this.RootItem));
+      (this.Uht = (0, puerts_1.$unref)(e)),
+      this.Uht?.K2_AttachRootComponentTo(this.RootItem));
   }
-  Rat() {
-    this.gat?.IsValid() && this.gat.K2_DetachFromActor(), (this.gat = void 0);
+  kht() {
+    this.Uht?.IsValid() && this.Uht.K2_DetachFromActor(), (this.Uht = void 0);
   }
 }
 exports.FullScreenPanel = FullScreenPanel;

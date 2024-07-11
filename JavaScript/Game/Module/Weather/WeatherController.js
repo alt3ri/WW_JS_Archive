@@ -18,25 +18,25 @@ const Log_1 = require("../../../Core/Common/Log"),
   CHECKGAP = 300;
 class WeatherController extends ControllerBase_1.ControllerBase {
   static OnInit() {
-    return this.OnAddEvents(), this.OnRegisterNetEvent(), this.CFe(), !0;
+    return this.OnAddEvents(), this.OnRegisterNetEvent(), this.P3e(), !0;
   }
   static OnClear() {
     return (
       this.OnRemoveEvents(),
       this.OnUnRegisterNetEvent(),
-      this.QOo(),
-      this.RVt(),
+      this.jko(),
+      this.R6t(),
       !0
     );
   }
   static OnAddEvents() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.EnterGameSuccess,
-      WeatherController.hIo,
+      WeatherController.nTo,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.BeforeLoadMap,
-        WeatherController.I$i,
+        WeatherController.SYi,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.WorldDone,
@@ -44,17 +44,17 @@ class WeatherController extends ControllerBase_1.ControllerBase {
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.TeleportComplete,
-        this.uht,
+        this.Ilt,
       );
   }
   static OnRemoveEvents() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.EnterGameSuccess,
-      WeatherController.hIo,
+      WeatherController.nTo,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.BeforeLoadMap,
-        WeatherController.I$i,
+        WeatherController.SYi,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.WorldDone,
@@ -62,37 +62,37 @@ class WeatherController extends ControllerBase_1.ControllerBase {
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.TeleportComplete,
-        this.uht,
+        this.Ilt,
       );
   }
-  static CFe() {
-    WeatherController.XOo = TimerSystem_1.TimerSystem.Forever(
-      WeatherController.$Oo,
+  static P3e() {
+    WeatherController.Wko = TimerSystem_1.TimerSystem.Forever(
+      WeatherController.Kko,
       CHECKGAP,
     );
   }
-  static RVt() {
-    void 0 !== WeatherController.XOo &&
-      (TimerSystem_1.TimerSystem.Remove(WeatherController.XOo),
-      (WeatherController.XOo = void 0));
+  static R6t() {
+    void 0 !== WeatherController.Wko &&
+      (TimerSystem_1.TimerSystem.Remove(WeatherController.Wko),
+      (WeatherController.Wko = void 0));
   }
   static OnRegisterNetEvent() {
-    Net_1.Net.Register(13640, WeatherController.YOo);
+    Net_1.Net.Register(2925, WeatherController.Qko);
   }
   static OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(13640);
+    Net_1.Net.UnRegister(2925);
   }
-  static QOo() {
+  static jko() {
     WeatherModel_1.WeatherModel.GetWorldWeatherActor().Destroy();
   }
   static RequestChangeWeather(e) {
-    var t = new Protocol_1.Aki.Protocol.q1s();
-    (t.PVn = e),
-      Net_1.Net.Call(20738, t, (e) => {
-        e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys &&
+    var t = new Protocol_1.Aki.Protocol.Uds();
+    (t.ljn = e),
+      Net_1.Net.Call(9250, t, (e) => {
+        e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs &&
           ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-            e.lkn,
-            9384,
+            e.O4n,
+            18824,
           );
       });
   }
@@ -117,23 +117,23 @@ class WeatherController extends ControllerBase_1.ControllerBase {
   }
 }
 (exports.WeatherController = WeatherController),
-  ((_a = WeatherController).XOo = void 0),
-  (WeatherController.$Oo = () => {
+  ((_a = WeatherController).Wko = void 0),
+  (WeatherController.Kko = () => {
     WeatherModel_1.WeatherModel.GetWorldWeatherActor().SetActorState(
       !GlobalData_1.GlobalData.IsUiSceneOpen,
     );
   }),
-  (WeatherController.hIo = () => {}),
-  (WeatherController.I$i = () => {
+  (WeatherController.nTo = () => {}),
+  (WeatherController.SYi = () => {
     WeatherModel_1.WeatherModel.GetWorldWeatherActor().Destroy();
   }),
   (WeatherController.nye = () => {
-    _a.JOo();
+    _a.Xko();
   }),
-  (WeatherController.uht = () => {
-    _a.JOo();
+  (WeatherController.Ilt = () => {
+    _a.Xko();
   }),
-  (WeatherController.JOo = () => {
+  (WeatherController.Xko = () => {
     ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance() ||
       0 === ModelManager_1.ModelManager.WeatherModel.CurrentWeatherId ||
       WeatherModel_1.WeatherModel.GetWorldWeatherActor().ChangeWeather(
@@ -141,16 +141,16 @@ class WeatherController extends ControllerBase_1.ControllerBase {
         0,
       );
   }),
-  (WeatherController.YOo = (e) => {
+  (WeatherController.Qko = (e) => {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info("Weather", 28, "OnWeatherNotify", ["WeatherNotify", e]),
-      e.dIs
+      e.wDs
         ? WeatherController.ChangeCurrentWeather(
-            e.PVn,
+            e.ljn,
             CHANGE_WEATHER_SMOOTH_TIME_QUICK,
           )
         : WeatherController.ChangeCurrentWeather(
-            e.PVn,
+            e.ljn,
             CHANGE_WEATHER_SMOOTH_TIME,
           );
   });

@@ -10,20 +10,20 @@ class RoleAnimAudioData {
 }
 class RoleAudioData extends RoleModuleDataBase_1.RoleModuleDataBase {
   constructor(e) {
-    super(e), (this.Xlo = new Map()), this.$lo();
+    super(e), (this.j1o = new Map()), this.W1o();
   }
-  $lo() {
+  W1o() {
     var e = ConfigManager_1.ConfigManager.RoleConfig.GetRoleAudioMap(
       this.RoleId,
     );
     if (e)
       for (const t of e) {
         var a = new RoleAnimAudioData(t.CanInterrupt, t.AudioPath);
-        this.Xlo.set(t.ActionName, a);
+        this.j1o.set(t.ActionName, a);
       }
   }
   GetAudioPathByName(e) {
-    if (this.Xlo) return this.Xlo.get(e);
+    if (this.j1o) return this.j1o.get(e);
   }
 }
 exports.RoleAudioData = RoleAudioData;

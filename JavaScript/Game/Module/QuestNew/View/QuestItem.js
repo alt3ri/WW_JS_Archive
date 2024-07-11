@@ -6,6 +6,7 @@ const UE = require("ue"),
   CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById"),
   FunctionConditionByFunctionId_1 = require("../../../../Core/Define/ConfigQuery/FunctionConditionByFunctionId"),
   MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang"),
+  QuestTagById_1 = require("../../../../Core/Define/ConfigQuery/QuestTagById"),
   StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
@@ -16,18 +17,18 @@ const UE = require("ue"),
   UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
   GeneralLogicTreeController_1 = require("../../GeneralLogicTree/GeneralLogicTreeController"),
   LguiUtil_1 = require("../../Util/LguiUtil"),
-  TickInterval = 1e3;
+  TICK_INTERVAL = 1e3;
 class QuestItem extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
       (this.QuestId = 0),
       (this.TreeId = BigInt(0)),
       (this.QuestType = 0),
-      (this.Nwn = !1),
+      (this.DGn = !1),
       (this.e8 = 0),
-      (this.vro = void 0),
-      (this.Iro = void 0),
-      (this.vro = e);
+      (this.Cno = void 0),
+      (this.Mno = void 0),
+      (this.Cno = e);
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -42,39 +43,43 @@ class QuestItem extends UiPanelBase_1.UiPanelBase {
       [8, UE.UITexture],
       [9, UE.UISprite],
       [10, UE.UIText],
+      [11, UE.UIItem],
+      [12, UE.UISprite],
+      [13, UE.UIText],
     ];
   }
   OnStart() {
-    (this.Iro = this.GetItem(7)
+    (this.Mno = this.GetItem(7)
       .GetOwner()
       .GetComponentByClass(UE.UIExtendToggleSpriteTransition.StaticClass())),
-      this.Iro.SetEnable(!1),
+      this.Mno.SetEnable(!1),
       this.GetItem(7).SetColor(
-        this.Iro.TransitionState.CheckedHoverState.Color,
+        this.Mno.TransitionState.CheckedHoverState.Color,
       ),
       this.GetExtendToggle(4)?.SetToggleState(0);
   }
   OnTick(e) {
     this.QuestId &&
-      (this.e8 > TickInterval &&
-        ((this.e8 -= TickInterval), this.kwn(this.QuestId, !0)),
+      (this.e8 > TICK_INTERVAL &&
+        ((this.e8 -= TICK_INTERVAL), this.AGn(this.QuestId, !0)),
       (this.e8 += e));
   }
   UpdateItem(e, t) {
     (this.QuestId = e),
       (this.QuestType = t),
-      this.Mro(),
+      this.gno(),
       this.UpdateTrackIconActive();
     e = ModelManager_1.ModelManager.QuestNewModel.GetQuest(this.QuestId);
     e
       ? ((this.TreeId = e.TreeId ?? BigInt(0)),
-        this.Tro(e),
-        this.Lro(),
-        this.Dro(e),
-        this.Q_t(e),
-        this.Rro(e),
+        this.Eno(e),
+        this.Sno(),
+        this.yno(e),
+        this.lct(e),
+        this.Ino(e),
         this.UpdateFunctionIcon(e),
-        this.Uro(e),
+        this.Tno(e),
+        this.QCa(e),
         RedDotController_1.RedDotController.BindRedDot(
           "QuestViewItem",
           this.GetItem(6),
@@ -91,7 +96,7 @@ class QuestItem extends UiPanelBase_1.UiPanelBase {
     this.SetActive(e),
       e || RedDotController_1.RedDotController.UnBindRedDot("QuestViewItem");
   }
-  Tro(e) {
+  Eno(e) {
     var e = ConfigManager_1.ConfigManager.QuestNewConfig.GetQuestTypeColor(
         e.Type,
       ),
@@ -100,7 +105,7 @@ class QuestItem extends UiPanelBase_1.UiPanelBase {
       ? t.SetUIActive(!1)
       : (t.SetUIActive(!0), t.SetColor(UE.Color.FromHex(e)));
   }
-  Lro() {
+  Sno() {
     var e = ModelManager_1.ModelManager.QuestNewModel.GetQuestLockIconPath(
         this.QuestId,
       ),
@@ -111,7 +116,7 @@ class QuestItem extends UiPanelBase_1.UiPanelBase {
       ? t.SetUIActive(!1)
       : (this.SetSpriteByPath(e, t, !0), t.SetUIActive(!0));
   }
-  Dro(e) {
+  yno(e) {
     this.SetSpriteByPath(
       ConfigManager_1.ConfigManager.QuestNewConfig.GetQuestTypeMark(
         e.QuestMarkId,
@@ -122,21 +127,21 @@ class QuestItem extends UiPanelBase_1.UiPanelBase {
   }
   UpdateTrackIconActive() {
     var e = this.GetExtendToggle(4).ToggleState;
-    this.Aro(e),
+    this.Lno(e),
       this.GetSprite(0).SetUIActive(
         this.QuestId ===
           ModelManager_1.ModelManager.QuestNewModel.GetCurTrackedQuest()?.Id,
       );
   }
-  Mro() {
+  gno() {
     this.GetExtendToggle(4).OnStateChange.Add((e) => {
-      1 === e && this.vro(this.QuestId);
+      1 === e && this.Cno(this.QuestId);
     });
   }
-  Q_t(e) {
+  lct(e) {
     this.GetText(2).SetText(e.Name);
   }
-  Rro(e) {
+  Ino(e) {
     var t,
       i = this.GetText(3);
     e.IsSuspend() ||
@@ -168,28 +173,28 @@ class QuestItem extends UiPanelBase_1.UiPanelBase {
       : (t.SetUIActive(!1), i)
     ).SetUIActive(!1);
   }
-  Uro(i) {
-    this.Nwn = !1;
+  Tno(i) {
+    this.DGn = !1;
     var r = i.IsQuestCanPreShow(),
-      n = i.IsSuspend() ?? !1,
-      o = i.IsQuestHasRecommendPreQuest() ?? !1,
-      s = i.HasRefOccupiedEntity() ?? !1,
+      o = i.IsSuspend() ?? !1,
+      s = i.IsQuestHasRecommendPreQuest() ?? !1,
+      n = i.HasRefOccupiedEntity() ?? !1,
       a = this.GetText(10),
-      l = ModelManager_1.ModelManager.QuestNewModel.GetQuestBindingActivityId(
+      _ = ModelManager_1.ModelManager.QuestNewModel.GetQuestBindingActivityId(
         i.Id,
       );
-    if (r || n || o || s || l) {
+    if (r || o || s || n || _) {
       a.SetUIActive(!0);
       let e = "",
         t = "";
-      if (n)
+      if (o)
         (e = i.GetSuspendText()?.split("，")[0]),
           a.SetText(e),
           (t =
             CommonParamById_1.configCommonParamById.GetStringConfig(
               "TaskUnableColor",
             ) ?? "");
-      else if (s)
+      else if (n)
         (e = i.GetRefOccupiedEntityText()?.split("，")[0]),
           a.SetText(e),
           (t =
@@ -206,12 +211,12 @@ class QuestItem extends UiPanelBase_1.UiPanelBase {
             CommonParamById_1.configCommonParamById.GetStringConfig(
               "TaskUnableColor",
             ) ?? "");
-      else if (o) {
-        l = i.GetRecommendPreQuest();
+      else if (s) {
+        _ = i.GetRecommendPreQuest();
         let e = "";
-        l?.length &&
+        _?.length &&
           (e =
-            ModelManager_1.ModelManager.QuestNewModel.GetQuest(l[0])?.Name ??
+            ModelManager_1.ModelManager.QuestNewModel.GetQuest(_[0])?.Name ??
             ""),
           LguiUtil_1.LguiUtil.SetLocalText(a, "QuestRecommendTip", e),
           (t =
@@ -219,57 +224,83 @@ class QuestItem extends UiPanelBase_1.UiPanelBase {
               "TaskRemindColor",
             ) ?? "");
       } else
-        (this.Nwn = !0),
-          this.kwn(i.Id, !1),
+        (this.DGn = !0),
+          this.AGn(i.Id, !1),
           (t =
             CommonParamById_1.configCommonParamById.GetStringConfig(
               "TaskCountDownColor",
             ) ?? "");
-      n = UE.Color.FromHex(t);
-      a.SetColor(n);
+      o = UE.Color.FromHex(t);
+      a.SetColor(o);
     } else a.SetUIActive(!1);
   }
-  kwn(e, t) {
-    var i, r, n, o;
-    this.Nwn &&
+  AGn(e, t) {
+    var i, r, o, s;
+    this.DGn &&
       (ModelManager_1.ModelManager.QuestNewModel.GetQuest(this.QuestId)
         ? ((i = this.GetText(10)),
-          (n =
+          (o =
             ModelManager_1.ModelManager.QuestNewModel.GetQuestBindingActivityId(
               e,
             )),
-          (n = ModelManager_1.ModelManager.ActivityModel.GetActivityById(n)) &&
-          n.LocalConfig?.IfShowQuestLeftTime &&
+          (o = ModelManager_1.ModelManager.ActivityModel.GetActivityById(o)) &&
+          o.LocalConfig?.IfShowQuestLeftTime &&
           (r = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
             "ActivityRemainingTime",
           ))
-            ? ((o = TimeUtil_1.TimeUtil.GetServerTime()),
-              (n = n.EndOpenTime - o) < 0
-                ? t &&
-                  (EventSystem_1.EventSystem.Emit(
-                    EventDefine_1.EEventName.ActivityQuestCountdownEnd,
-                    e,
-                  ),
-                  (this.Nwn = !1))
-                : ((o =
+            ? o.CheckIfInOpenTime()
+              ? o.EndOpenTime
+                ? ((s = TimeUtil_1.TimeUtil.GetServerTime()),
+                  (o = o.EndOpenTime - s),
+                  (s =
                     ModelManager_1.ModelManager.QuestNewModel.GetActivityGuideQuestRemainTimeText(
-                      n,
+                      o,
                       r,
                     )),
-                  i.SetText(o)))
+                  i.SetText(s))
+                : i.SetUIActive(!1)
+              : t &&
+                (EventSystem_1.EventSystem.Emit(
+                  EventDefine_1.EEventName.ActivityQuestCountdownEnd,
+                  e,
+                ),
+                (this.DGn = !1))
             : i.SetUIActive(!1))
         : t &&
           (EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.ActivityQuestCountdownEnd,
             e,
           ),
-          (this.Nwn = !1)));
+          (this.DGn = !1)));
+  }
+  QCa(e) {
+    var t,
+      i,
+      r = this.GetItem(11);
+    r &&
+      (e.TagId
+        ? (t = QuestTagById_1.configQuestTagById.GetConfig(e.TagId))
+          ? ((i = this.GetSprite(12)) &&
+              (this.SetSpriteByPath(t.BgSpritePath, i, !0), i.SetUIActive(!0)),
+            (i = this.GetText(13)) &&
+              (LguiUtil_1.LguiUtil.SetLocalTextNew(i, t.Text),
+              i.SetUIActive(!0)),
+            r.SetUIActive(!0))
+          : Log_1.Log.CheckError() &&
+            Log_1.Log.Error(
+              "Quest",
+              19,
+              "找不到任务标签配置",
+              ["questId", e.Id],
+              ["TagId", e.TagId],
+            )
+        : r.SetUIActive(!1));
   }
   SetSelected(e) {
     var t = e ? 1 : 0;
-    this.GetExtendToggle(4).SetToggleState(t, !1), e && this.Pro(), this.Aro(t);
+    this.GetExtendToggle(4).SetToggleState(t, !1), e && this.Dno(), this.Lno(t);
   }
-  Aro(e) {
+  Lno(e) {
     var t = this.GetItem(7);
     1 === e
       ? (this.QuestId !==
@@ -284,7 +315,7 @@ class QuestItem extends UiPanelBase_1.UiPanelBase {
     var e = this.GetExtendToggle(4);
     e.RootUIComp.SetRaycastTarget(1 !== e.ToggleState);
   }
-  Pro() {
+  Dno() {
     EventSystem_1.EventSystem.Emit(
       EventDefine_1.EEventName.UpdateQuestDetails,
       this.QuestId,

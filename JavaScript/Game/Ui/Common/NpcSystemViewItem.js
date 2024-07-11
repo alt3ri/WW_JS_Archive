@@ -13,13 +13,13 @@ const UE = require("ue"),
 class NpcSystemViewItem extends CommonPopViewBehaviourBase_1.CommonPopViewBase {
   constructor() {
     super(...arguments),
-      (this.nVt = void 0),
-      (this.Mur = void 0),
-      (this.YZe = () => {
-        var t = this.Mur.HelpGroupId;
+      (this.n6t = void 0),
+      (this.fcr = void 0),
+      (this.dtt = () => {
+        var t = this.fcr.HelpGroupId;
         HelpController_1.HelpController.OpenHelpById(t);
       }),
-      (this.ACt = () => {
+      (this.Vgt = () => {
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("Test", 8, "[CloseCookRootView]当点击关闭按钮时", [
             "viewName",
@@ -45,7 +45,7 @@ class NpcSystemViewItem extends CommonPopViewBehaviourBase_1.CommonPopViewBase {
       (this.BtnBindInfo = [[6, this.OnClickMaskButton]]);
   }
   OnStart() {
-    this.nVt = new PopupCaptionItem_1.PopupCaptionItem(this.GetItem(5));
+    this.n6t = new PopupCaptionItem_1.PopupCaptionItem(this.GetItem(5));
     var t,
       i,
       e,
@@ -65,7 +65,7 @@ class NpcSystemViewItem extends CommonPopViewBehaviourBase_1.CommonPopViewBase {
           S,
         );
     U
-      ? ((h = (this.Mur = U).Title),
+      ? ((h = (this.fcr = U).Title),
         (t = U.TitleTexturePath),
         (i = U.TitleBgTexturePath),
         (e = U.TitleSymbolColor),
@@ -94,8 +94,8 @@ class NpcSystemViewItem extends CommonPopViewBehaviourBase_1.CommonPopViewBase {
         this.SetCurrencyItemVisible(p),
         p && this.SetCostItemList(r),
         this.SetHelpButtonVisible(U.IsHelpButtonVisible),
-        this.nVt.SetHelpCallBack(this.YZe),
-        this.nVt.SetCloseCallBack(this.ACt))
+        this.n6t.SetHelpCallBack(this.dtt),
+        this.n6t.SetCloseCallBack(this.Vgt))
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "Test",
@@ -105,7 +105,7 @@ class NpcSystemViewItem extends CommonPopViewBehaviourBase_1.CommonPopViewBase {
         );
   }
   OnBeforeDestroy() {
-    (this.Mur = void 0), (this.nVt = void 0);
+    (this.fcr = void 0), (this.n6t = void 0);
   }
   SetTitleVisible(t) {
     this.GetText(0).SetUIActive(t);
@@ -141,25 +141,25 @@ class NpcSystemViewItem extends CommonPopViewBehaviourBase_1.CommonPopViewBase {
     this.GetSprite(3).SetColor(UE.Color.FromHex(t));
   }
   SetCaptionTitleText(t) {
-    this.nVt.SetTitleLocalText(t);
+    this.n6t.SetTitleLocalText(t);
   }
   SetCaptionTitleVisible(t) {
-    this.nVt.SetTitleTextActive(t);
+    this.n6t.SetTitleTextActive(t);
   }
   SetCurrencyItemVisible(t) {
-    this.nVt.SetCurrencyItemVisible(t);
+    this.n6t.SetCurrencyItemVisible(t);
   }
   SetCaptionTitleSprite(t) {
-    this.nVt.SetTitleIcon(t);
+    this.n6t.SetTitleIcon(t);
   }
   SetCaptionTitleIconVisible(t) {
-    this.nVt.SetTitleIconVisible(t);
+    this.n6t.SetTitleIconVisible(t);
   }
   async SetCostItemList(t) {
-    await this.nVt.SetCurrencyItemList(t);
+    await this.n6t.SetCurrencyItemList(t);
   }
   SetHelpButtonVisible(t) {
-    this.nVt.SetHelpBtnActive(t);
+    this.n6t.SetHelpBtnActive(t);
   }
   SetTexBgVisible(t) {
     this.GetItem(7).SetUIActive(t);

@@ -59,8 +59,8 @@ exports.RegionAndIpSt = RegionAndIpSt;
 class LoginServerModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
-      (this.DMi = new Map()),
-      (this.RMi = new Map()),
+      (this.DEi = new Map()),
+      (this.REi = new Map()),
       (this.OnBeginSuggestServerData = void 0),
       (this.CurrentSelectServerData = void 0),
       (this.CurrentUiSelectSeverData = void 0);
@@ -142,32 +142,32 @@ class LoginServerModel extends ModelBase_1.ModelBase {
       );
   }
   AddRegionPingValue(e, r) {
-    this.RMi.set(e, r);
+    this.REi.set(e, r);
   }
   RefreshIpPing(r, o) {
-    var t = Array.from(this.RMi.keys()),
+    var t = Array.from(this.REi.keys()),
       i = t.length;
     for (let e = 0; e < i; e++)
       t[e].PingUrl === r &&
         (Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("Login", 28, "RefreshIpPing", [t[e].Region, 1e3 * o]),
-        this.RMi.set(t[e], 1e3 * o));
+        this.REi.set(t[e], 1e3 * o));
   }
   GetPlayerLoginInfo(e) {
-    return this.DMi.get(e);
+    return this.DEi.get(e);
   }
   SetPlayerLoginInfo(e, r) {
-    this.DMi.set(e, r);
+    this.DEi.set(e, r);
   }
   FindIpServerData(r) {
-    var o = Array.from(this.RMi.keys()),
+    var o = Array.from(this.REi.keys()),
       t = o.length;
     for (let e = 0; e < t; e++)
       if (o[e].ip === r.Ip && o[e].Region === r.Region) return o[e];
   }
   InitSuggestData(e, r) {
     this.CurrentSelectServerData = void 0;
-    var e = this.UMi(e);
+    var e = this.UEi(e);
     (this.CurrentSelectServerData = this.FindIpServerData(e)),
       (this.OnBeginSuggestServerData = this.CurrentSelectServerData),
       this.OnBeginSuggestServerData ||
@@ -177,8 +177,8 @@ class LoginServerModel extends ModelBase_1.ModelBase {
           (this.CurrentSelectServerData = e[0]))),
       r?.(this.CurrentSelectServerData);
   }
-  UMi(e) {
-    var r = Array.from(this.RMi.keys()),
+  UEi(e) {
+    var r = Array.from(this.REi.keys()),
       o = r.length,
       t =
         (Log_1.Log.CheckDebug() &&
@@ -194,7 +194,7 @@ class LoginServerModel extends ModelBase_1.ModelBase {
           e)
         : (Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug("Login", 28, "没有拿到服务器推荐返回低Ping"),
-          this.AMi(DEFAULTSERVERREGION));
+          this.AEi(DEFAULTSERVERREGION));
     let i = "";
     if (0 < t.UserInfos.length) {
       var n = t.UserInfos[0].LastOnlineTime,
@@ -204,7 +204,7 @@ class LoginServerModel extends ModelBase_1.ModelBase {
     }
     if ("" !== i) {
       var s,
-        e = this.PMi(i);
+        e = this.PEi(i);
       if (e)
         return (
           (s = new RegionAndIpSt()).Phrase(e.Region, e.ip),
@@ -219,14 +219,14 @@ class LoginServerModel extends ModelBase_1.ModelBase {
     var g = t.RecommendRegion;
     for (let e = 0; e < o; e++)
       if (r[e].Region === g) {
-        if (this.xMi())
+        if (this.xEi())
           return (
             Log_1.Log.CheckDebug() &&
               Log_1.Log.Debug("Login", 28, "PingHigh", [r[e].Region, r[e].ip]),
             (L = new RegionAndIpSt()).Phrase(r[e].Region, r[e].ip),
             L
           );
-        var L = this.RMi.get(r[e]);
+        var L = this.REi.get(r[e]);
         if (L && 100 < L)
           return (
             Log_1.Log.CheckDebug() &&
@@ -235,30 +235,30 @@ class LoginServerModel extends ModelBase_1.ModelBase {
                 28,
                 "this.RegionPingMap.get(keys[i]) > 100",
               ),
-            this.AMi(DEFAULTSERVERREGION)
+            this.AEi(DEFAULTSERVERREGION)
           );
         Log_1.Log.CheckDebug() && Log_1.Log.Debug("Login", 28, "返回推荐");
         var l = new RegionAndIpSt();
         return l.Phrase(r[e].Region, r[e].ip), l;
       }
-    return this.AMi(DEFAULTSERVERREGION);
+    return this.AEi(DEFAULTSERVERREGION);
   }
-  PMi(r) {
-    var o = Array.from(this.RMi.keys()),
+  PEi(r) {
+    var o = Array.from(this.REi.keys()),
       t = o.length;
     for (let e = 0; e < t; e++) if (o[e].Region === r) return o[e];
   }
-  xMi() {
-    var r = Array.from(this.RMi.keys()),
+  xEi() {
+    var r = Array.from(this.REi.keys()),
       o = r.length;
     for (let e = 0; e < o; e++) {
-      var t = this.RMi.get(r[e]);
+      var t = this.REi.get(r[e]);
       if (t && t < 100) return !1;
     }
     return !0;
   }
-  AMi(r) {
-    var o = Array.from(this.RMi.keys()),
+  AEi(r) {
+    var o = Array.from(this.REi.keys()),
       t = o.length;
     let i = exports.DEFAULTPING,
       n = "";
@@ -267,10 +267,10 @@ class LoginServerModel extends ModelBase_1.ModelBase {
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("Login", 28, "区域ping", [
           "ping",
-          this.RMi.get(o[e]).toString(),
+          this.REi.get(o[e]).toString(),
         ]),
-        i > this.RMi.get(o[e]) &&
-          ((i = this.RMi.get(o[e])),
+        i > this.REi.get(o[e]) &&
+          ((i = this.REi.get(o[e])),
           a.Phrase(o[e].Region, o[e].ip),
           Log_1.Log.CheckDebug()) &&
           Log_1.Log.Debug("Login", 28, "尝试选择低Ping", [o[e].Region, i]),
@@ -294,10 +294,10 @@ class LoginServerModel extends ModelBase_1.ModelBase {
     return (
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("Login", 28, "找不到ServerLevel", ["region", r]),
-      this.wMi(e, r)
+      this.wEi(e, r)
     );
   }
-  wMi(e, r) {
+  wEi(e, r) {
     var o = LocalStorage_1.LocalStorage.GetGlobal(
       LocalStorageDefine_1.ELocalStorageGlobalKey.SdkLevelData,
     );

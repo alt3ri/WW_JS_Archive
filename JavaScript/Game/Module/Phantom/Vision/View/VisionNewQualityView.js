@@ -15,27 +15,27 @@ const UE = require("ue"),
 class VisionNewQualityView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
-      (this.Tvt = 0),
-      (this.Lvt = void 0),
-      (this.Xgt = void 0),
+      (this.GMt = 0),
+      (this.NMt = void 0),
+      (this.sft = void 0),
       (this.eGe = void 0),
-      (this.KHi = void 0),
+      (this.jji = void 0),
       (this.sGe = () => new QualityStarItem()),
-      (this.Uvt = () => {
+      (this.FMt = () => {
         var e;
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("Calabash", 28, "跳转到鸣域终端收集页签", [
             "目标幻象Id",
-            this.Lvt.PhantomItem.MonsterId,
+            this.NMt.PhantomItem.MonsterId,
           ]),
           this.CloseViewOrShowNextData(),
-          0 === this.KHi.SkinId
+          0 === this.jji.SkinId
             ? CalabashController_1.CalabashController.JumpToCalabashCollectTabView(
-                this.Lvt.PhantomItem.MonsterId,
+                this.NMt.PhantomItem.MonsterId,
               )
             : ((e =
                 ModelManager_1.ModelManager.PhantomBattleModel.GetMonsterSkinMonsterIdMapByMonsterId(
-                  this.Lvt.PhantomItem.MonsterId,
+                  this.NMt.PhantomItem.MonsterId,
                 )),
               CalabashController_1.CalabashController.JumpToCalabashCollectTabView(
                 e,
@@ -54,13 +54,13 @@ class VisionNewQualityView extends UiTickViewBase_1.UiTickViewBase {
       [8, UE.UIItem],
       [9, UE.UIText],
     ]),
-      (this.BtnBindInfo = [[2, this.Uvt]]);
+      (this.BtnBindInfo = [[2, this.FMt]]);
   }
   OnBeforeCreate() {
-    (this.KHi = this.OpenParam),
-      (this.Lvt =
+    (this.jji = this.OpenParam),
+      (this.NMt =
         ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomInstanceByItemId(
-          this.KHi.MonsterItemId,
+          this.jji.MonsterItemId,
         ));
   }
   OnStart() {
@@ -68,91 +68,91 @@ class VisionNewQualityView extends UiTickViewBase_1.UiTickViewBase {
       this.GetHorizontalLayout(3),
       this.sGe,
     )),
-      (this.Xgt = new SmallItemGrid_1.SmallItemGrid()),
-      this.Xgt.Initialize(this.GetItem(1).GetOwner()),
+      (this.sft = new SmallItemGrid_1.SmallItemGrid()),
+      this.sft.Initialize(this.GetItem(1).GetOwner()),
       this.GetText(4).SetUIActive(
         !GameModeController_1.GameModeController.IsInInstance(),
       ),
       this.GetButton(2).RootUIComp.SetRaycastTarget(
         !GameModeController_1.GameModeController.IsInInstance(),
       ),
-      this.O8s();
+      this.jXs();
   }
   OnBeforeShow() {
     this.Og();
   }
   Refresh() {
-    (this.KHi =
+    (this.jji =
       ModelManager_1.ModelManager.PhantomBattleModel.QualityUnlockTipsList.shift()),
-      (this.Lvt =
+      (this.NMt =
         ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomInstanceByItemId(
-          this.KHi.MonsterItemId,
+          this.jji.MonsterItemId,
         )),
       this.Og();
   }
-  O8s() {
+  jXs() {
     this.GetText(0)?.SetUIActive(!1), this.GetText(9)?.SetUIActive(!1);
   }
   Og() {
-    this.O8s(), this.N8s()?.SetUIActive(!0);
+    this.jXs(), this.WXs()?.SetUIActive(!0);
     var e =
         ConfigManager_1.ConfigManager.CalabashConfig.GetCalabashDevelopRewardByMonsterId(
-          this.Lvt.PhantomItem.MonsterId,
+          this.NMt.PhantomItem.MonsterId,
         ),
       e = ConfigManager_1.ConfigManager.MonsterInfoConfig.GetMonsterInfoConfig(
         e.MonsterInfoId,
       ),
       e =
-        ((this.Tvt = ConfigManager_1.ConfigManager.CalabashConfig.MaxTipCd),
-        this.N8s().ShowTextNew(e.Name),
+        ((this.GMt = ConfigManager_1.ConfigManager.CalabashConfig.MaxTipCd),
+        this.WXs().ShowTextNew(e.Name),
         {
-          Data: this.Lvt.PhantomItem.ItemId,
+          Data: this.NMt.PhantomItem.ItemId,
           Type: 4,
-          ItemConfigId: this.Lvt.PhantomItem.ItemId,
+          ItemConfigId: this.NMt.PhantomItem.ItemId,
           IconPath: e.Icon,
         });
-    this.Xgt.Apply(e),
+    this.sft.Apply(e),
       this.aqe(),
-      this.Pvt(),
-      this.C6s(),
-      this.k8s(),
-      this.F8s();
+      this.HMt(),
+      this.FXs(),
+      this.QXs(),
+      this.KXs();
   }
-  N8s() {
-    var e = 0 === this.KHi.SkinId ? 0 : 9;
+  WXs() {
+    var e = 0 === this.jji.SkinId ? 0 : 9;
     return this.GetText(e);
   }
-  F8s() {
-    var e = 0 === this.KHi.SkinId;
+  KXs() {
+    var e = 0 === this.jji.SkinId;
     this.GetItem(7)?.SetUIActive(e);
   }
-  k8s() {
-    var e = 0 !== this.KHi.SkinId;
+  QXs() {
+    var e = 0 !== this.jji.SkinId;
     this.GetItem(8)?.SetUIActive(e);
   }
-  Pvt() {
+  HMt() {
     var e;
-    0 === this.KHi.SkinId &&
-      ((e = this.KHi.UnlockQuality),
+    0 === this.jji.SkinId &&
+      ((e = this.jji.UnlockQuality),
       (e =
         ConfigManager_1.ConfigManager.InventoryConfig.GetItemQualityConfig(
           e,
         ).DropColor),
-      this.N8s().SetColor(UE.Color.FromHex(e)));
+      this.WXs().SetColor(UE.Color.FromHex(e)));
   }
   aqe() {
-    var e = 0 === this.KHi.SkinId,
+    var e = 0 === this.jji.SkinId,
       i =
         (this.eGe?.SetActive(e),
         this.GetItem(5)?.SetUIActive(e),
-        this.KHi.UnlockQuality),
+        this.jji.UnlockQuality),
       t = new Array();
     for (let e = 0; e < i - 1; e++) t.push(e);
     this.eGe?.RefreshByData(t);
   }
-  C6s() {
+  FXs() {
     var e =
-      0 === this.KHi.SkinId ? "UnLockNewVisionQuality" : "UnLockNewVisionSkin";
+      0 === this.jji.SkinId ? "UnLockNewVisionQuality" : "UnLockNewVisionSkin";
     LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(6), e);
   }
   CloseViewOrShowNextData() {
@@ -165,8 +165,8 @@ class VisionNewQualityView extends UiTickViewBase_1.UiTickViewBase {
       : this.CloseMe();
   }
   OnTick(e) {
-    this.Tvt <= 0 ||
-      ((this.Tvt -= e), this.Tvt <= 0 && this.CloseViewOrShowNextData());
+    this.GMt <= 0 ||
+      ((this.GMt -= e), this.GMt <= 0 && this.CloseViewOrShowNextData());
   }
 }
 exports.VisionNewQualityView = VisionNewQualityView;

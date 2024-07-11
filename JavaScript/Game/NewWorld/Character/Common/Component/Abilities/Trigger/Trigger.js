@@ -3,25 +3,26 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.Trigger = void 0);
 const EntitySystem_1 = require("../../../../../../../Core/Entity/EntitySystem"),
   GameplayTagUtils_1 = require("../../../../../../../Core/Utils/GameplayTagUtils"),
+  Vector_1 = require("../../../../../../../Core/Utils/Math/Vector"),
   EventDefine_1 = require("../../../../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../../../../Common/Event/EventSystem"),
   FormationAttributeController_1 = require("../../../../../../Module/Abilities/FormationAttributeController"),
   SceneTeamEvent_1 = require("../../../../../../Module/SceneTeam/SceneTeamEvent"),
-  CombatDebugController_1 = require("../../../../../../Utils/CombatDebugController"),
+  CombatLog_1 = require("../../../../../../Utils/CombatLog"),
   ConditionFormula_1 = require("../../../../../../Utils/Trigger/ConditionFormula"),
   CharacterAttributeTypes_1 = require("../CharacterAttributeTypes"),
   TriggerType_1 = require("./TriggerType");
 class Trigger {
-  constructor(e, t, i, s, n) {
+  constructor(e, t, i, s, r) {
     if (
       ((this.Config = e),
       (this.Handle = t),
       (this.OwnerTriggerComp = i),
-      (this.Callback = n),
+      (this.Callback = r),
       (this.Formula = void 0),
       (this.TriggerType = void 0),
       (this.dce = !1),
-      (this.M$o = 0),
+      (this.fYo = 0),
       !e)
     )
       throw new Error("找不到对应的Trigger配置");
@@ -30,16 +31,16 @@ class Trigger {
       void 0 === this.TriggerType)
     )
       throw new Error("找不到对应的Trigger触发器类型");
-    (t = e.Formula), (n = e.Params?.length ? JSON.parse(e.Params) : {});
-    (n.Owner = i.Entity),
+    (t = e.Formula), (r = e.Params?.length ? JSON.parse(e.Params) : {});
+    (r.Owner = i.Entity),
       (this.Formula = new ConditionFormula_1.Formula(t)
         .SetBuiltinFunctions(s)
         .AddBuiltinFunction(
           "Accumulate",
           (e, t, i = !0) =>
-            !!i && ((this.M$o += e), this.M$o >= t) && !(this.M$o = 0),
+            !!i && ((this.fYo += e), this.fYo >= t) && !(this.fYo = 0),
         )
-        .SetDefaultParams(n));
+        .SetDefaultParams(r));
   }
   OnInitParams(e) {}
   SetActive(e) {
@@ -76,6 +77,10 @@ class Trigger {
         return DamageTrigger;
       case TriggerType_1.ETriggerEvent.BeDamageTrigger:
         return BeDamageTrigger;
+      case TriggerType_1.ETriggerEvent.GlobalDamageTrigger:
+        return GlobalDamageTrigger;
+      case TriggerType_1.ETriggerEvent.GameplayEventTrigger:
+        return GameplayEventTrigger;
     }
   }
 }
@@ -314,14 +319,14 @@ class AttributeChangedTrigger extends Trigger {
   }
   OnActive() {
     0 === this.TargetType &&
-      this.OwnerTriggerComp.Entity.GetComponent(156)?.AddListener(
+      this.OwnerTriggerComp.Entity.GetComponent(158)?.AddListener(
         this.AttributeId,
         this.OnEvent,
       );
   }
   OnInactive() {
     0 === this.TargetType &&
-      this.OwnerTriggerComp?.Entity.GetComponent(156)?.RemoveListener(
+      this.OwnerTriggerComp?.Entity.GetComponent(158)?.RemoveListener(
         this.AttributeId,
         this.OnEvent,
       );
@@ -371,7 +376,7 @@ class TagTrigger extends Trigger {
       e[0].trim(),
     )),
       void 0 === this.TagId &&
-        CombatDebugController_1.CombatDebugController.CombatError(
+        CombatLog_1.CombatLog.Error(
           "PassiveSkill",
           this.OwnerTriggerComp?.Entity,
           "被动技能的tag找不到对应的tagId",
@@ -382,13 +387,13 @@ class TagTrigger extends Trigger {
   OnActive() {
     void 0 !== this.TagId &&
       this.OwnerTriggerComp?.Entity.GetComponent(
-        185,
+        188,
       )?.AddTagAddOrRemoveListener(this.TagId, this.OnEvent);
   }
   OnInactive() {
     void 0 !== this.TagId &&
       this.OwnerTriggerComp?.Entity.GetComponent(
-        185,
+        188,
       )?.RemoveTagAddOrRemoveListener(this.TagId, this.OnEvent);
   }
 }
@@ -468,17 +473,17 @@ class SkillTrigger extends Trigger {
       (this.SkillId = void 0),
       (this.CheckEnd = !1),
       (this.OnSelfEvent = (e, t) => {
-        if (t === this.SkillId) {
+        if (!(this.SkillId && 0 <= this.SkillId && t !== this.SkillId)) {
           var i = EntitySystem_1.EntitySystem.Get(e)
             ?.GetComponent(33)
             ?.GetSkillInfo(t);
           if (i) {
             var s = [];
             for (let e = 0; e < i.SkillTag.Num(); e++) {
-              var n = i?.SkillTag.Get(e)?.TagName;
-              void 0 !== n && s.push(n);
+              var r = i?.SkillTag.Get(e)?.TagName;
+              void 0 !== r && s.push(r);
             }
-            e = { SkillType: i?.SkillGenre, SkillTags: s };
+            e = { SkillType: i?.SkillGenre, SkillTags: s, SkillID: t };
             this.Formula.Evaluate(e) &&
               this.Callback &&
               this.Callback(this.Formula.Params, e);
@@ -567,17 +572,18 @@ class DamageTrigger extends Trigger {
     super(...arguments),
       (this.TargetType = 0),
       (this.CalculateType = 0),
-      (this.OnEvent = (e, t, i, s, n) => {
+      (this.OnEvent = (e, t, i, s, r) => {
         s.CalculateType === this.CalculateType &&
           ((e = {
             Attacker: e,
             Victim: t,
-            SkillID: n?.SkillId ?? 0,
-            SkillType: n?.SkillGenre,
+            SkillID: r?.SkillId ?? 0,
+            SkillType: r?.SkillGenre,
             DamageType: s.Type,
+            DamageSubType: s.SubType,
             ElementType: s.Element,
             DamageValue: -i,
-            IsCritical: n.IsCritical,
+            IsCritical: r.IsCritical,
           }),
           this.Formula.Evaluate(e)) &&
           this?.Callback(this.Formula.Params, e);
@@ -636,22 +642,71 @@ class DamageTrigger extends Trigger {
       );
   }
 }
+class GlobalDamageTrigger extends Trigger {
+  constructor() {
+    super(...arguments),
+      (this.CalculateType = 0),
+      (this.DistSquared = 0),
+      (this.OnEvent = (e, t, i, s, r) => {
+        var n, a;
+        s.CalculateType === this.CalculateType &&
+          this.OwnerTriggerComp?.Entity.Valid &&
+          ((a =
+            this.OwnerTriggerComp?.Entity.GetComponent(3)?.ActorLocationProxy),
+          (n = t.GetComponent(3)?.ActorLocationProxy),
+          a) &&
+          n &&
+          (Vector_1.Vector.DistSquared(a, n) > this.DistSquared ||
+            ((a = {
+              Attacker: e,
+              Victim: t,
+              SkillID: r?.SkillId ?? 0,
+              SkillType: r?.SkillGenre,
+              DamageType: s.Type,
+              DamageSubType: s.SubType,
+              ElementType: s.Element,
+              DamageValue: -i,
+              IsCritical: r.IsCritical,
+            }),
+            this.Formula.Evaluate(a) &&
+              this?.Callback(this.Formula.Params, a)));
+      });
+  }
+  OnInitParams(e) {
+    this.CalculateType = Number(e[0] ?? 0);
+    e = Number(e[1] ?? 0);
+    this.DistSquared = e * e;
+  }
+  OnActive() {
+    EventSystem_1.EventSystem.Add(
+      EventDefine_1.EEventName.GlobalCharDamage,
+      this.OnEvent,
+    );
+  }
+  OnInactive() {
+    EventSystem_1.EventSystem.Remove(
+      EventDefine_1.EEventName.GlobalCharDamage,
+      this.OnEvent,
+    );
+  }
+}
 class BeDamageTrigger extends Trigger {
   constructor() {
     super(...arguments),
       (this.TargetType = 0),
       (this.CalculateType = 0),
-      (this.OnEvent = (e, t, i, s, n) => {
+      (this.OnEvent = (e, t, i, s, r) => {
         s.CalculateType === this.CalculateType &&
           ((e = {
             Attacker: e,
             Victim: t,
-            SkillID: n?.SkillId ?? 0,
-            SkillType: n?.SkillGenre,
+            SkillID: r?.SkillId ?? 0,
+            SkillType: r?.SkillGenre,
             DamageType: s.Type,
+            DamageSubType: s.SubType,
             ElementType: s.Element,
             DamageValue: -i,
-            IsCritical: n.IsCritical,
+            IsCritical: r.IsCritical,
           }),
           this.Formula.Evaluate(e)) &&
           this?.Callback(this.Formula.Params, e);
@@ -708,6 +763,41 @@ class BeDamageTrigger extends Trigger {
         EventDefine_1.EEventName.CharBeDamage,
         this.OnEvent,
       );
+  }
+}
+class GameplayEventTrigger extends Trigger {
+  constructor() {
+    super(...arguments),
+      (this.TagId = 0),
+      (this.OnEvent = (e) => {
+        var t = {};
+        this.Formula.Evaluate(t) && this?.Callback(this.Formula.Params, t);
+      });
+  }
+  OnInitParams(e) {
+    (this.TagId = GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(
+      e[0].trim(),
+    )),
+      void 0 === this.TagId &&
+        CombatLog_1.CombatLog.Error(
+          "PassiveSkill",
+          this.OwnerTriggerComp?.Entity,
+          "被动技能的GameplayEvent找不到对应的tagId",
+          ["GameplayEvent", e[1]],
+        );
+  }
+  OnActive() {
+    void 0 !== this.TagId &&
+      this.OwnerTriggerComp?.Entity.GetComponent(17)?.AddGameplayEventListener(
+        this.TagId,
+        this.OnEvent,
+      );
+  }
+  OnInactive() {
+    void 0 !== this.TagId &&
+      this.OwnerTriggerComp?.Entity.GetComponent(
+        17,
+      )?.RemoveGameplayEventListener(this.TagId, this.OnEvent);
   }
 }
 //# sourceMappingURL=Trigger.js.map

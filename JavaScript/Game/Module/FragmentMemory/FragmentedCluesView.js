@@ -9,21 +9,21 @@ const UE = require("ue"),
 class FragmentedCluesView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.wUn = void 0),
-      (this.BUn = void 0),
-      (this.bUn = void 0),
-      (this.iwo = 0),
-      (this.qUn = 0),
-      (this.GUn = () => {
-        this.OUn(), this.iwo--, this.iwo < 0 && (this.iwo = 0), this.Og();
+      (this.uwn = void 0),
+      (this.cwn = void 0),
+      (this.mwn = void 0),
+      (this.eBo = 0),
+      (this.dwn = 0),
+      (this.Cwn = () => {
+        this.gwn(), this.eBo--, this.eBo < 0 && (this.eBo = 0), this.Og();
       }),
-      (this.NUn = () => {
-        this.OUn(),
-          this.iwo++,
-          this.iwo > this.qUn - 1 && (this.iwo = this.qUn - 1),
+      (this.fwn = () => {
+        this.gwn(),
+          this.eBo++,
+          this.eBo > this.dwn - 1 && (this.eBo = this.dwn - 1),
           this.Og();
       }),
-      (this.kUn = () => new MemoryPageDot());
+      (this.pwn = () => new MemoryPageDot());
   }
   OnRegisterComponent() {
     (this.ComponentRegisterInfos = [
@@ -35,60 +35,60 @@ class FragmentedCluesView extends UiViewBase_1.UiViewBase {
       [5, UE.UIButtonComponent],
     ]),
       (this.BtnBindInfo = [
-        [4, this.GUn],
-        [5, this.NUn],
+        [4, this.Cwn],
+        [5, this.fwn],
       ]);
   }
-  OUn() {
-    this.wUn[this.iwo] = !1;
+  gwn() {
+    this.uwn[this.eBo] = !1;
   }
   OnStart() {
-    this.bUn = new GenericLayout_1.GenericLayout(
+    this.mwn = new GenericLayout_1.GenericLayout(
       this.GetHorizontalLayout(0),
-      this.kUn,
+      this.pwn,
     );
   }
   OnBeforeShow() {
-    (this.BUn = this.OpenParam), (this.wUn = []);
-    var i = this.BUn.GetClueContent().length;
-    for (let t = 0; t < i; t++) this.wUn?.push(!1);
-    (this.qUn = this.wUn.length),
-      (this.iwo = 0),
-      (this.wUn[this.iwo] = !0),
+    (this.cwn = this.OpenParam), (this.uwn = []);
+    var i = this.cwn.GetClueContent().length;
+    for (let t = 0; t < i; t++) this.uwn?.push(!1);
+    (this.dwn = this.uwn.length),
+      (this.eBo = 0),
+      (this.uwn[this.eBo] = !0),
       this.Og();
   }
   Og() {
-    this.FUn(), this.Aqe(), this.C4e(), this.d0o(), this.VUn(), this.HUn();
+    this.vwn(), this.Aqe(), this.P5e(), this.ufo(), this.Mwn(), this.Swn();
   }
-  jUn(t) {
-    return this.BUn.GetClueContent()[t].Texture;
+  Ewn(t) {
+    return this.cwn.GetClueContent()[t].Texture;
   }
-  WUn(t) {
-    return this.BUn.GetClueContent()[t].Desc;
+  ywn(t) {
+    return this.cwn.GetClueContent()[t].Desc;
   }
-  C4e() {
+  P5e() {
     LguiUtil_1.LguiUtil.SetLocalTextNew(
       this.GetText(3),
-      this.BUn.GetClueEntrance().Title,
+      this.cwn.GetClueEntrance().Title,
     );
   }
-  d0o() {
-    LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(2), this.WUn(this.iwo));
+  ufo() {
+    LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(2), this.ywn(this.eBo));
   }
-  VUn() {
-    var t = this.iwo < this.qUn - 1;
+  Mwn() {
+    var t = this.eBo < this.dwn - 1;
     this.GetButton(5)?.SetSelfInteractive(t);
   }
-  HUn() {
-    var t = 0 < this.iwo;
+  Swn() {
+    var t = 0 < this.eBo;
     this.GetButton(4)?.SetSelfInteractive(t);
   }
   Aqe() {
-    var t = this.jUn(this.iwo);
+    var t = this.Ewn(this.eBo);
     this.SetTextureByPath(t, this.GetTexture(1));
   }
-  FUn() {
-    (this.wUn[this.iwo] = !0), this.bUn.RefreshByData(this.wUn);
+  vwn() {
+    (this.uwn[this.eBo] = !0), this.mwn.RefreshByData(this.uwn);
   }
 }
 exports.FragmentedCluesView = FragmentedCluesView;

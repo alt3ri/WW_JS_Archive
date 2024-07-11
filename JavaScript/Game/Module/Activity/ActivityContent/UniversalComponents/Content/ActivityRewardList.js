@@ -8,8 +8,8 @@ const UE = require("ue"),
 class ActivityRewardList extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this.jFe = void 0),
-      (this.WFe = void 0),
+      (this.s4e = void 0),
+      (this.a4e = void 0),
       (this.InitCommonGridItem = () => {
         return new CommonItemSmallItemGrid_1.CommonItemSmallItemGrid();
       });
@@ -23,11 +23,12 @@ class ActivityRewardList extends UiPanelBase_1.UiPanelBase {
     ];
   }
   InitGridLayout(e) {
-    (this.WFe = e),
-      (this.jFe = new GenericLayout_1.GenericLayout(
-        this.GetHorizontalLayout(2),
-        this.WFe,
-      ));
+    (this.a4e = e),
+      void 0 === this.s4e &&
+        (this.s4e = new GenericLayout_1.GenericLayout(
+          this.GetHorizontalLayout(2),
+          this.a4e,
+        ));
   }
   SetTitleByTextId(e) {
     this.GetText(1).ShowTextNew(e);
@@ -39,13 +40,13 @@ class ActivityRewardList extends UiPanelBase_1.UiPanelBase {
     return this.GetTexture(0);
   }
   RefreshItemLayout(e, t) {
-    this.jFe.RefreshByData(e, t);
+    this.s4e.RefreshByData(e, t);
   }
   GetLayoutItemList() {
-    return this.jFe.GetLayoutItemList();
+    return this.s4e.GetLayoutItemList();
   }
   SetItemLayoutVisible(e) {
-    this.jFe.SetActive(e);
+    this.s4e.SetActive(e);
   }
 }
 exports.ActivityRewardList = ActivityRewardList;

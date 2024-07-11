@@ -39,13 +39,13 @@ class SelectableComponent extends UiPanelBase_1.UiPanelBase {
       (this.FirstOperationData = void 0),
       (this.ExpData = void 0),
       (this.LastSelectedIndex = 0),
-      (this.hwt = (t) => {
+      (this.uBt = (t) => {
         var t = this.ItemDataList[t],
           t =
             SelectablePropDataUtil_1.SelectablePropDataUtil.GetSelectablePropData(
               t,
             ),
-          e = this.lwt(t);
+          e = this.cBt(t);
         return (t.SelectedCount = e), t;
       }),
       (this.InitItem = () => {
@@ -79,16 +79,16 @@ class SelectableComponent extends UiPanelBase_1.UiPanelBase {
           return !1;
         this.Data.IsSingleSelected &&
           (this.DeleteLastData(i), this.CancelPropItemSelected(i)),
-          this._wt(i),
+          this.mBt(i),
           this.AddData(i),
           this.UpdateExp(),
-          this.uwt();
+          this.dBt();
         var s = this.GetSelectedData(i),
           s =
             ((i.SelectedCount = s.SelectedCount),
             e.RefreshCostCount(),
             { IsVisible: 0 < i.SelectedCount, LongPressConfigId: 1 });
-        return e.SetReduceButton(s), e.SetSelected(0 < i.SelectedCount), !0;
+        return e.SetReduceButton(s), e.SetSelected(0 < i.SelectedCount, !0), !0;
       }),
       (this.ReduceFunction = (t, e, i) => {
         this.SetPrevPropItemSelectedState(i);
@@ -96,11 +96,11 @@ class SelectableComponent extends UiPanelBase_1.UiPanelBase {
         if (!s) return !1;
         var r = s.SelectedCount;
         if (!r) return !1;
-        --r <= 0 ? this.cwt(i) : (s.SelectedCount = r),
+        --r <= 0 ? this.CBt(i) : (s.SelectedCount = r),
           (i.SelectedCount = r),
           this.Data.OtherFunction && this.Data.OtherFunction(),
           this.UpdateExp(),
-          this.uwt();
+          this.dBt();
         (s = e),
           s.RefreshCostCount(),
           s.SetSelected(0 < r),
@@ -127,12 +127,12 @@ class SelectableComponent extends UiPanelBase_1.UiPanelBase {
     this.MaxSize = t;
   }
   UpdateComponent(t, e, i = void 0) {
-    this.mwt(e),
+    this.gBt(e),
       i && ((this.ExpData = i), this.SetExpData(i), this.UpdateExp());
   }
-  mwt(t) {
+  gBt(t) {
     (this.SelectedDataList = t || []),
-      this.Data.IsSingleSelected && 0 < t.length && this._wt(t[0]);
+      this.Data.IsSingleSelected && 0 < t.length && this.mBt(t[0]);
   }
   GetCurrentSelectedData() {
     return this.SelectedDataList;
@@ -140,7 +140,7 @@ class SelectableComponent extends UiPanelBase_1.UiPanelBase {
   UpdateDataList(t) {
     (this.ItemDataList = t),
       this.LoopScrollView.ReloadProxyData(
-        this.hwt,
+        this.uBt,
         this.ItemDataList.length,
         !1,
       ),
@@ -156,9 +156,9 @@ class SelectableComponent extends UiPanelBase_1.UiPanelBase {
   OnBeforeDestroy() {}
   SetPrevPropItemSelectedState(t) {
     void 0 === this.LastSelectedPropData ||
-      this.dwt(t) ||
+      this.fBt(t) ||
       !this.LastAddData ||
-      (t = this.Cwt(this.LastAddData)) < 0 ||
+      (t = this.pBt(this.LastAddData)) < 0 ||
       (this.LoopScrollView.IsGridDisplaying(t) &&
         this.LoopScrollView.UnsafeGetGridProxy(t).OnDeselected(!1));
   }
@@ -194,7 +194,7 @@ class SelectableComponent extends UiPanelBase_1.UiPanelBase {
                 ))
           );
   }
-  dwt(t) {
+  fBt(t) {
     var e;
     return (
       !!this.LastAddData &&
@@ -203,7 +203,7 @@ class SelectableComponent extends UiPanelBase_1.UiPanelBase {
         : this.LastAddData.ItemId === t.ItemId)
     );
   }
-  Cwt(t) {
+  pBt(t) {
     var i = t.IncId,
       s = t.ItemId;
     if (0 < i || 0 < s)
@@ -216,20 +216,20 @@ class SelectableComponent extends UiPanelBase_1.UiPanelBase {
     return -1;
   }
   DeleteLastData(t) {
-    this.dwt(t) || this.cwt(this.LastAddData);
+    this.fBt(t) || this.CBt(this.LastAddData);
   }
-  cwt(t) {
+  CBt(t) {
     var e;
-    t && (0 < (e = t.IncId) ? this.gwt(e) : this.fwt(t.ItemId));
+    t && (0 < (e = t.IncId) ? this.vBt(e) : this.MBt(t.ItemId));
   }
-  gwt(e) {
+  vBt(e) {
     for (let t = 0; t < this.SelectedDataList.length; t++) {
       var i = this.SelectedDataList[t];
       if (i.IncId === e)
         return (i.SelectedCount = 0), void this.SelectedDataList.splice(t, 1);
     }
   }
-  fwt(e) {
+  MBt(e) {
     for (let t = 0; t < this.SelectedDataList.length; t++) {
       var i = this.SelectedDataList[t];
       if (i.ItemId === e)
@@ -238,22 +238,22 @@ class SelectableComponent extends UiPanelBase_1.UiPanelBase {
   }
   CancelPropItemSelected(t) {
     void 0 === this.LastAddData ||
-      this.dwt(t) ||
-      (t = this.Cwt(this.LastAddData)) < 0 ||
+      this.fBt(t) ||
+      (t = this.pBt(this.LastAddData)) < 0 ||
       (this.LoopScrollView.IsGridDisplaying(t) &&
         ((t = this.LoopScrollView.UnsafeGetGridProxy(t)).Clear(),
         t.SetSelected(!1, !0),
         t.SetReduceButton(void 0)));
   }
-  _wt(t) {
+  mBt(t) {
     this.LastAddData = t;
   }
   AddData(t) {
     var e = this.GetSelectedData(t);
-    e ? this.pwt(e) : (this.SelectedDataList.push(t), t.SelectedCount++),
+    e ? this.EBt(e) : (this.SelectedDataList.push(t), t.SelectedCount++),
       this.Data.OtherFunction && this.Data.OtherFunction();
   }
-  pwt(e) {
+  EBt(e) {
     var i = this.SelectedDataList.length;
     for (let t = 0; t < i; t++) {
       var s = this.SelectedDataList[t];
@@ -274,7 +274,7 @@ class SelectableComponent extends UiPanelBase_1.UiPanelBase {
       }
     }
   }
-  lwt(t) {
+  cBt(t) {
     t = this.GetSelectedData(t);
     return t ? t.SelectedCount : 0;
   }
@@ -286,7 +286,7 @@ class SelectableComponent extends UiPanelBase_1.UiPanelBase {
       this.SelectableExpData.UpdateExp(t);
     }
   }
-  uwt() {
+  dBt() {
     this.Data.OnChangeSelectedFunction?.(
       this.SelectedDataList,
       this.SelectableExpData,

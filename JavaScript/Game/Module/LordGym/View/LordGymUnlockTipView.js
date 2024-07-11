@@ -12,9 +12,9 @@ class LordGymUnlockTipView extends UiViewBase_1.UiViewBase {
   }
   OnBeforeShow() {
     var e = this.OpenParam;
-    this._Ei(e);
+    this._yi(e);
   }
-  _Ei(e) {
+  _yi(e) {
     (e = ConfigManager_1.ConfigManager.LordGymConfig.GetLordGymConfig(e)),
       (e = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(e.GymTitle));
     LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(0), "LordGymUnLock", e);

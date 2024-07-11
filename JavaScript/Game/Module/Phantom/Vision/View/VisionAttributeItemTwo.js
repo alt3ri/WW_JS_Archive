@@ -50,10 +50,10 @@ class AttributeItem extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
       (this.Layout = void 0),
-      (this.U6i = void 0),
+      (this.R8i = void 0),
       (this.sGe = (e, t, i) => {
         t = new AttributePhantomItem(t);
-        return t.Update(e, this.U6i), { Key: i, Value: t };
+        return t.Update(e, this.R8i), { Key: i, Value: t };
       }),
       this.CreateThenShowByActor(e.GetOwner());
   }
@@ -86,7 +86,7 @@ class AttributeItem extends UiPanelBase_1.UiPanelBase {
       ConfigManager_1.ConfigManager.PhantomBattleConfig.GetPhantomFetterById(
         e.FetterId,
       );
-    (this.U6i = t),
+    (this.R8i = t),
       LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(0), t.Name),
       LguiUtil_1.LguiUtil.SetLocalTextNew(
         this.GetText(2),
@@ -113,11 +113,11 @@ class AttributeItem extends UiPanelBase_1.UiPanelBase {
 class AttributePhantomItem extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
-      (this.U6i = void 0),
-      (this.m6i = () => {
+      (this.R8i = void 0),
+      (this.c8i = () => {
         UiManager_1.UiManager.OpenView(
           "PhantomBattleFettersObtainView",
-          this.U6i,
+          this.R8i,
         );
       }),
       this.CreateThenShowByActor(e.GetOwner());
@@ -134,13 +134,13 @@ class AttributePhantomItem extends UiPanelBase_1.UiPanelBase {
       [
         4,
         () => {
-          this.m6i();
+          this.c8i();
         },
       ],
     ];
   }
   Update(e, t) {
-    (this.U6i = t),
+    (this.R8i = t),
       ModelManager_1.ModelManager.PhantomBattleModel.GetIfHasMonsterInInventory(
         e,
       )

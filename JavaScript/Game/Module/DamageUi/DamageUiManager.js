@@ -49,32 +49,32 @@ class DamageUiManager {
           "MaxDamageOffsetDistance",
         )),
       (this.DamagePositionCache = Vector_1.Vector.Create()),
-      (this.Okt =
+      (this.k2t =
         ConfigManager_1.ConfigManager.DamageUiConfig.GetAllDamageTextConfig()),
       this.InitializeDamageViewData();
   }
   static InitializeDamageViewData() {
-    for (const e of this.Okt) {
+    for (const e of this.k2t) {
       var a = new DamageViewData_1.DamageViewData();
-      a.Initialize(e), this.kkt.set(e.Id, a);
+      a.Initialize(e), this.F2t.set(e.Id, a);
     }
   }
   static ClearDamageViewData() {
-    this.kkt.clear();
+    this.F2t.clear();
   }
   static GetDamageViewData(a) {
-    return this.kkt.get(a);
+    return this.F2t.get(a);
   }
   static PreloadDamageView() {
-    for (let a = this.Fkt.length; a < PRELOAD_DAMAGE_VIEW_COUNT; a++) {
+    for (let a = this.V2t.length; a < PRELOAD_DAMAGE_VIEW_COUNT; a++) {
       var e = new DamageView_1.DamageView();
-      e.Init(), this.TotalDamageViewNum++, this.Fkt.push(e);
+      e.Init(), this.TotalDamageViewNum++, this.V2t.push(e);
     }
   }
   static PreloadSequence() {}
   static ApplyDamage(e, i, t, r, g, n, o = -1, s = "") {
     if (
-      DamageUiManager.Vkt &&
+      DamageUiManager.H2t &&
       r.Active &&
       !(o < 0 || (1 === o && n && 0 === e))
     ) {
@@ -82,7 +82,7 @@ class DamageUiManager {
       if (m) {
         m = m.Id === r.Id;
         let a = void 0;
-        ((a = 0 < this.Hkt.length ? this.Hkt.pop() : new DamageInfo()).Damage =
+        ((a = 0 < this.j2t.length ? this.j2t.pop() : new DamageInfo()).Damage =
           e),
           (a.ElementId = i),
           (a.DamagePosition = t),
@@ -91,15 +91,15 @@ class DamageUiManager {
           (a.IsCure = n),
           (a.DamageTextId = o),
           (a.DamageText = s),
-          this.jkt.Push(a);
+          this.W2t.Push(a);
       }
     }
   }
-  static Wkt(a) {
+  static K2t(a) {
     var e, i, t, r;
-    DamageUiManager.Vkt &&
+    DamageUiManager.H2t &&
       ((e = Math.floor(Math.abs(a.Damage))),
-      (i = DamageUiManager.Kkt(
+      (i = DamageUiManager.Q2t(
         a.ElementId,
         a.IsCure,
         a.Damage,
@@ -120,7 +120,7 @@ class DamageUiManager {
             ? (r = this.ProjectWorldLocationToScreenPosition(
                 a.DamagePosition,
               )) &&
-              DamageUiManager.Qkt(
+              DamageUiManager.X2t(
                 e,
                 this.DamagePositionCache,
                 r,
@@ -137,13 +137,13 @@ class DamageUiManager {
               ])));
   }
   static Tick(a) {
-    for (const i of DamageUiManager.Xkt) i.Tick(a);
-    for (let a = 0; a < MAX_DAMAGE_PER_FRAME && !this.jkt.Empty; a++) {
-      var e = this.jkt.Pop();
-      this.Wkt(e), this.Hkt.push(e);
+    for (const i of DamageUiManager.$2t) i.Tick(a);
+    for (let a = 0; a < MAX_DAMAGE_PER_FRAME && !this.W2t.Empty; a++) {
+      var e = this.W2t.Pop();
+      this.K2t(e), this.j2t.push(e);
     }
   }
-  static Kkt(a, e, i, t = -1) {
+  static Q2t(a, e, i, t = -1) {
     let r = -1;
     return (r =
       t && -1 !== t
@@ -158,8 +158,8 @@ class DamageUiManager {
   }
   static ProjectWorldLocationToScreenPosition(a) {
     var e = Global_1.Global.CharacterController;
-    if (UE.GameplayStatics.ProjectWorldToScreen(e, a, this.$kt, !1)) {
-      e = (0, puerts_1.$unref)(this.$kt);
+    if (UE.GameplayStatics.ProjectWorldToScreen(e, a, this.Y2t, !1)) {
+      e = (0, puerts_1.$unref)(this.Y2t);
       if (e) {
         var a = e.X,
           i = e.Y;
@@ -172,49 +172,49 @@ class DamageUiManager {
       a,
     );
   }
-  static Qkt(a, e, i, t, r = !1, g = !1, n = !1, o = "") {
+  static X2t(a, e, i, t, r = !1, g = !1, n = !1, o = "") {
     let s = void 0;
     return (
-      0 < this.Fkt.length
-        ? (s = this.Fkt.pop())
+      0 < this.V2t.length
+        ? (s = this.V2t.pop())
         : ((s = new DamageView_1.DamageView()).Init(),
           this.TotalDamageViewNum++),
-      this.Xkt.add(s),
+      this.$2t.add(s),
       s.InitializeData(a, e, i, t, r, g, n, o),
       s
     );
   }
   static RemoveDamageView(a) {
-    this.Xkt.has(a) && (a.ClearData(), this.Xkt.delete(a), this.Fkt.push(a));
+    this.$2t.has(a) && (a.ClearData(), this.$2t.delete(a), this.V2t.push(a));
   }
   static OnEditorPlatformChanged() {
-    for (const a of DamageUiManager.Xkt) a.RefreshFontSize();
-    for (const e of DamageUiManager.Fkt) e.RefreshFontSize();
+    for (const a of DamageUiManager.$2t) a.RefreshFontSize();
+    for (const e of DamageUiManager.V2t) e.RefreshFontSize();
   }
   static OnLeaveLevel() {
-    for (const a of DamageUiManager.Xkt) a.ClearData(), a.Destroy();
-    DamageUiManager.Xkt.clear();
-    for (const e of DamageUiManager.Fkt) e.Destroy();
-    (DamageUiManager.Fkt.length = 0),
+    for (const a of DamageUiManager.$2t) a.ClearData(), a.Destroy();
+    DamageUiManager.$2t.clear();
+    for (const e of DamageUiManager.V2t) e.Destroy();
+    (DamageUiManager.V2t.length = 0),
       (DamageUiManager.TotalDamageViewNum = 0),
       DamageUiSequencePool_1.DamageUiSequencePool.Clear(),
-      DamageUiManager.jkt.Clear(),
-      (DamageUiManager.Hkt.length = 0);
+      DamageUiManager.W2t.Clear(),
+      (DamageUiManager.j2t.length = 0);
   }
   static Clear() {}
 }
-((exports.DamageUiManager = DamageUiManager).jkt = new Queue_1.Queue()),
-  (DamageUiManager.Hkt = []),
+((exports.DamageUiManager = DamageUiManager).W2t = new Queue_1.Queue()),
+  (DamageUiManager.j2t = []),
   (DamageUiManager.TotalDamageViewNum = 0),
-  (DamageUiManager.Xkt = new Set()),
-  (DamageUiManager.Fkt = new Array()),
-  (DamageUiManager.kkt = new Map()),
-  (DamageUiManager.Vkt = !0),
+  (DamageUiManager.$2t = new Set()),
+  (DamageUiManager.V2t = new Array()),
+  (DamageUiManager.F2t = new Map()),
+  (DamageUiManager.H2t = !0),
   (DamageUiManager.MinDamageOffsetScale = 0),
   (DamageUiManager.MaxDamageOffsetScale = 0),
   (DamageUiManager.MinDamageOffsetDistance = 0),
   (DamageUiManager.MaxDamageOffsetDistance = 0),
   (DamageUiManager.DamagePositionCache = void 0),
-  (DamageUiManager.Okt = void 0),
-  (DamageUiManager.$kt = (0, puerts_1.$ref)(void 0));
+  (DamageUiManager.k2t = void 0),
+  (DamageUiManager.Y2t = (0, puerts_1.$ref)(void 0));
 //# sourceMappingURL=DamageUiManager.js.map

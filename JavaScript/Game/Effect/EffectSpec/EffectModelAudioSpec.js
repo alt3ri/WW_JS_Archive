@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.EffectModelAudioSpec = void 0);
-const AudioSystem_1 = require("../../../Core/Audio/AudioSystem"),
+const UE = require("ue"),
+  AudioSystem_1 = require("../../../Core/Audio/AudioSystem"),
   Info_1 = require("../../../Core/Common/Info"),
   Log_1 = require("../../../Core/Common/Log"),
   EffectAudioContext_1 = require("../EffectContext/EffectAudioContext"),
@@ -58,8 +59,8 @@ class EffectModelAudioSpec extends EffectSpec_1.EffectSpec {
         (AudioSystem_1.AudioSystem.ExecuteAction(this.Zge, 0, {
           TransitionDuration: this.EffectModel.FadeOutTime,
         }),
-        Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info(
+        Log_1.Log.CheckDebug() &&
+          Log_1.Log.Debug(
             "Audio",
             57,
             "[Game.Effect] StopEvent",
@@ -69,16 +70,19 @@ class EffectModelAudioSpec extends EffectSpec_1.EffectSpec {
           ),
         (this.Zge = void 0)),
       (t = this.EffectModel?.TrailingAudioEvent)?.IsValid()) &&
-      this.e0e(t);
+      this.e0e(t, !0);
   }
-  e0e(t) {
+  e0e(t, e = !1) {
     t = t.GetName();
     this.zge &&
-      ((this.Zge = AudioSystem_1.AudioSystem.PostEvent(t, this.zge, {
-        StopWhenOwnerDestroyed: !Info_1.Info.IsGameRunning(),
-      })),
-      Log_1.Log.CheckInfo()) &&
-      Log_1.Log.Info(
+      (e
+        ? ((e = new UE.Transform(this.zge.K2_GetComponentLocation())),
+          AudioSystem_1.AudioSystem.PostEvent(t, e))
+        : (this.Zge = AudioSystem_1.AudioSystem.PostEvent(t, this.zge, {
+            StopWhenOwnerDestroyed: !Info_1.Info.IsGameRunning(),
+          })),
+      Log_1.Log.CheckDebug()) &&
+      Log_1.Log.Debug(
         "Audio",
         57,
         "[Game.Effect] PostEvent",

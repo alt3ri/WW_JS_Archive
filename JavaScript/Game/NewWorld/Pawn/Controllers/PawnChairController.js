@@ -15,7 +15,7 @@ class SubEntityInteractLogicController {
       (this.CreatureDataComp = t),
       (this.Entity = t.Entity),
       (this.InteractComp =
-        this.Entity.GetComponent(178)?.GetInteractController());
+        this.Entity.GetComponent(181)?.GetInteractController());
   }
   Possess(t, e = 0) {
     return !0;
@@ -39,7 +39,7 @@ class SubEntityInteractLogicController {
 class PawnChairController extends (exports.SubEntityInteractLogicController =
   SubEntityInteractLogicController) {
   constructor() {
-    super(...arguments), (this.mor = 40), (this.dor = void 0);
+    super(...arguments), (this.crr = 40), (this.mrr = void 0);
   }
   Possess(t, e) {
     return (this.MasterEntity = t), !0;
@@ -50,23 +50,23 @@ class PawnChairController extends (exports.SubEntityInteractLogicController =
       r = Vector_1.Vector.Create(),
       s = Vector_1.Vector.Create(t.ActorRightProxy),
       t = Vector_1.Vector.Create(t.ActorLocationProxy);
-    return s.Normalize(), s.Multiply(this.mor, r), t.Addition(r, e), e;
+    return s.Normalize(), s.Multiply(this.crr, r), t.Addition(r, e), e;
   }
   GetForwardDirection() {
     return this.Entity.GetComponent(1).ActorRightProxy;
   }
-  Cor(e) {
-    if (this.dor && this.MasterEntity) {
+  drr(e) {
+    if (this.mrr && this.MasterEntity) {
       var t,
         r = this.MasterEntity.GetComponent(2),
         s =
           (r.Actor.CapsuleComponent.SetCollisionResponseToChannel(2, e ? 0 : 2),
           (0, puerts_1.$ref)(void 0)),
-        o = (this.dor.Owner.GetAttachedActors(s), (0, puerts_1.$unref)(s)),
+        o = (this.mrr.Owner.GetAttachedActors(s), (0, puerts_1.$unref)(s)),
         i = o.Num();
       0 === i &&
         ((s = this.CreatureDataComp.GetPbDataId()),
-        (t = this.dor.CreatureData.GetPbDataId()),
+        (t = this.mrr.CreatureData.GetPbDataId()),
         Log_1.Log.CheckWarn()) &&
         Log_1.Log.Warn(
           "AI",
@@ -86,13 +86,13 @@ class PawnChairController extends (exports.SubEntityInteractLogicController =
     }
   }
   ResetCollision() {
-    this.Entity.GetComponent(182) && this.Cor(!1);
+    this.Entity.GetComponent(185) && this.drr(!1);
   }
   IgnoreCollision() {
-    this.Entity.GetComponent(182) && this.Cor(!0);
+    this.Entity.GetComponent(185) && this.drr(!0);
   }
   IsSceneInteractionLoadCompleted() {
-    var t = this.Entity.GetComponent(182);
+    var t = this.Entity.GetComponent(185);
     if (!t) return !1;
     var e = this.CreatureDataComp.GetPbDataId();
     const r = ModelManager_1.ModelManager.CreatureModel.GetOwnerEntity(e);
@@ -100,19 +100,19 @@ class PawnChairController extends (exports.SubEntityInteractLogicController =
       (r &&
         (e =
           ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(r)) &&
-        (this.dor = e.Entity.GetComponent(182)),
-      this.dor || (this.dor = t),
-      !this.dor.Owner)
+        (this.mrr = e.Entity.GetComponent(185)),
+      this.mrr || (this.mrr = t),
+      !this.mrr.Owner)
     )
       return !1;
     e = (0, puerts_1.$ref)(void 0);
     if (
-      (this.dor.Owner.GetAttachedActors(e), 0 !== (0, puerts_1.$unref)(e).Num())
+      (this.mrr.Owner.GetAttachedActors(e), 0 !== (0, puerts_1.$unref)(e).Num())
     )
       return !0;
     {
       t = this.CreatureDataComp.GetPbDataId();
-      const r = this.dor.CreatureData.GetPbDataId();
+      const r = this.mrr.CreatureData.GetPbDataId();
       return (
         Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(

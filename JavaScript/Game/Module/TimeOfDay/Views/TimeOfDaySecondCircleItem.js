@@ -29,10 +29,10 @@ class TimeOfDaySecondCircleItem extends AutoAttachExhibitionItem_1.AutoAttachExh
   constructor() {
     super(...arguments),
       (this.Pe = void 0),
-      (this.osi = void 0),
-      (this._it = Rotator_1.Rotator.Create()),
-      (this.rsi = new UE.Vector(ANIMAL_SCALE, ANIMAL_SCALE, ANIMAL_SCALE)),
-      (this.yTo = () => {});
+      (this.rai = void 0),
+      (this.Iot = Rotator_1.Rotator.Create()),
+      (this.nai = new UE.Vector(ANIMAL_SCALE, ANIMAL_SCALE, ANIMAL_SCALE)),
+      (this.MLo = () => {});
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -47,33 +47,33 @@ class TimeOfDaySecondCircleItem extends AutoAttachExhibitionItem_1.AutoAttachExh
       [
         3,
         () => {
-          this.yTo();
+          this.MLo();
         },
       ],
     ];
   }
   RefreshItem(E) {
     (this.CurrentShowItemIndex = E),
-      (this.osi = this.Pe[E]),
-      this.$8e(),
-      this.Cni();
+      (this.rai = this.Pe[E]),
+      this.l7e(),
+      this.gsi();
   }
-  $8e() {
+  l7e() {
     var E;
-    this.osi &&
-      (this.GetText(2).SetText(this.osi.ShowName),
+    this.rai &&
+      (this.GetText(2).SetText(this.rai.ShowName),
       (E = TimeOfDayModel_1.TodDayTime.ConvertToHourMinuteString(
-        this.osi.SetTime,
+        this.rai.SetTime,
       )),
       this.GetText(1).SetText(E));
   }
-  Cni() {
-    if (this.osi) {
-      let E = this.osi.SetTime / TimeOfDayDefine_1.TOD_SECOND_PER_HOUR;
+  gsi() {
+    if (this.rai) {
+      let E = this.rai.SetTime / TimeOfDayDefine_1.TOD_SECOND_PER_HOUR;
       E > MIDDLE_TIME && (E -= MIDDLE_TIME);
       var R = FULL_ANGLE - ONE_HOUR_ANGLE * E,
         _ = this.GetItem(0);
-      (this._it.Yaw = R), _.SetUIRelativeRotation(this._it.ToUeRotator());
+      (this.Iot.Yaw = R), _.SetUIRelativeRotation(this.Iot.ToUeRotator());
     }
   }
   SetData(E) {
@@ -123,12 +123,12 @@ class TimeOfDaySecondCircleItem extends AutoAttachExhibitionItem_1.AutoAttachExh
             (R = MathUtils_1.MathUtils.Lerp(1, ANIMAL_SCALE, 10 * D)),
             (_ = new UE.Vector(R, R, R)),
             t.SetUIItemScale(_))
-        : e.X !== this.rsi.X && t.SetUIItemScale(this.rsi);
+        : e.X !== this.nai.X && t.SetUIItemScale(this.nai);
   }
   OnUnSelect() {}
   OnSelect() {
     (ModelManager_1.ModelManager.TimeOfDayModel.CurrentSelectTimeItemSt =
-      this.osi),
+      this.rai),
       EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.OnSelectTimeItem);
   }
 }

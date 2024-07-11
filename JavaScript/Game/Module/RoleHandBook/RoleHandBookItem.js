@@ -11,36 +11,36 @@ const UE = require("ue"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
   TimeUtil_1 = require("../../Common/TimeUtil"),
   ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../Manager/ModelManager"),
   UiPanelBase_1 = require("../../Ui/Base/UiPanelBase"),
   UiManager_1 = require("../../Ui/UiManager"),
   ButtonItem_1 = require("../Common/Button/ButtonItem"),
   RoleController_1 = require("../RoleUi/RoleController"),
-  LguiUtil_1 = require("../Util/LguiUtil"),
-  ControllerHolder_1 = require("../../Manager/ControllerHolder");
+  LguiUtil_1 = require("../Util/LguiUtil");
 class RoleHandBookItem extends UiPanelBase_1.UiPanelBase {
   constructor(e, t) {
     super(),
-      (this.$Ut = void 0),
-      (this.D7t = void 0),
+      (this.ZAt = void 0),
+      (this.DHt = void 0),
       (this.PlaySequence = () => {
-        this.D7t?.SequencePlayer.Play();
+        this.DHt?.SequencePlayer.Play();
       }),
-      (this.xUt = () => {
+      (this.qAt = () => {
         this.IsCanRoleActive()
-          ? RoleController_1.RoleController.SendRoleActiveRequest(this.zke)
+          ? RoleController_1.RoleController.SendRoleActiveRequest(this.dFe)
           : UiManager_1.UiManager.OpenView(
               "RoleHandBookRootView",
               "RoleHandBookSelectionView",
             );
       }),
-      (this.MIt = () => {
+      (this.TTt = () => {
         this.UpdateCostInfo();
       }),
       (this.OnClickItem = () => {
         let e = void 0;
         for (const t of ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(
-          this.zke,
+          this.dFe,
         ).ExchangeConsume.keys()) {
           e = t;
           break;
@@ -49,7 +49,7 @@ class RoleHandBookItem extends UiPanelBase_1.UiPanelBase {
           e,
         );
       }),
-      (this.zke = e),
+      (this.dFe = e),
       t && this.CreateThenShowByActor(t.GetOwner());
   }
   OnRegisterComponent() {
@@ -71,36 +71,36 @@ class RoleHandBookItem extends UiPanelBase_1.UiPanelBase {
   AddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnAddCommonItemList,
-      this.MIt,
+      this.TTt,
     );
   }
   RemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnAddCommonItemList,
-      this.MIt,
+      this.TTt,
     );
   }
   OnStart() {
-    this.zke &&
-      ((this.$Ut = new ButtonItem_1.ButtonItem(this.GetItem(4))),
-      this.$Ut.SetFunction(this.xUt),
-      this.UpdateComponent(this.zke),
+    this.dFe &&
+      ((this.ZAt = new ButtonItem_1.ButtonItem(this.GetItem(4))),
+      this.ZAt.SetFunction(this.qAt),
+      this.UpdateComponent(this.dFe),
       this.AddEventListener());
   }
   UpdateComponent(e) {
-    this.zke = e;
-    var e = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(this.zke),
-      t = ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(this.zke),
+    this.dFe = e;
+    var e = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(this.dFe),
+      t = ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(this.dFe),
       i =
         (this.GetText(0).ShowTextNew(e.Name),
-        this.$Ut.UnBindRedDot(),
-        this.$Ut.BindRedDot("RoleHandBookActiveButton", this.zke),
+        this.ZAt.UnBindRedDot(),
+        this.ZAt.BindRedDot("RoleHandBookActiveButton", this.dFe),
         this.GetItem(7)),
       o = this.GetItem(8),
       r = this.GetItem(9);
     if (
       (this.IsRoleUnlock()
-        ? (this.$Ut.SetLocalText("Detail"),
+        ? (this.ZAt.SetLocalText("Detail"),
           LguiUtil_1.LguiUtil.SetLocalText(this.GetText(5), "ActiveTime"),
           this.GetText(6).SetText(
             TimeUtil_1.TimeUtil.DateFormat4(
@@ -113,19 +113,19 @@ class RoleHandBookItem extends UiPanelBase_1.UiPanelBase {
           o.SetUIActive(!1),
           r.SetUIActive(!1))
         : (this.IsCanRoleActive()
-            ? this.$Ut.SetLocalText("Tuning")
-            : this.$Ut.SetLocalText("Detail"),
+            ? this.ZAt.SetLocalText("Tuning")
+            : this.ZAt.SetLocalText("Detail"),
           this.UpdateCostInfo(),
           i.SetUIActive(!1),
           o.SetUIActive(!0),
           r.SetUIActive(!0)),
-      this.D7t)
+      this.DHt)
     ) {
-      const s = this.D7t;
+      const s = this.DHt;
       TimerSystem_1.TimerSystem.Next(() => {
         ActorSystem_1.ActorSystem.Put(s);
       }),
-        (this.D7t = void 0);
+        (this.DHt = void 0);
     }
     t =
       ConfigManager_1.ConfigManager.GachaConfig.GetGachaEffectConfigByTimesAndQuality(
@@ -141,24 +141,24 @@ class RoleHandBookItem extends UiPanelBase_1.UiPanelBase {
           ((e = e),
           ((t = new UE.MovieSceneSequencePlaybackSettings()).bRestoreState =
             !0),
-          (this.D7t = ActorSystem_1.ActorSystem.Get(
+          (this.DHt = ActorSystem_1.ActorSystem.Get(
             UE.LevelSequenceActor.StaticClass(),
             MathUtils_1.MathUtils.DefaultTransform,
             void 0,
             !1,
           )),
-          (this.D7t.PlaybackSettings = t),
-          this.D7t.SetSequence(e));
+          (this.DHt.PlaybackSettings = t),
+          this.DHt.SetSequence(e));
       },
     );
   }
   UpdateCostInfo() {
-    if (this.zke) {
+    if (this.dFe) {
       var i, o;
       let e = void 0,
         t = void 0;
       for ([i, o] of ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(
-        this.zke,
+        this.dFe,
       ).ExchangeConsume) {
         (e = ConfigManager_1.ConfigManager.ItemConfig.GetConfig(i)), (t = o);
         break;
@@ -174,13 +174,13 @@ class RoleHandBookItem extends UiPanelBase_1.UiPanelBase {
   IsRoleUnlock() {
     return (
       void 0 !==
-      ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(this.zke)
+      ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(this.dFe)
     );
   }
   IsCanRoleActive() {
     var e,
       t,
-      i = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(this.zke),
+      i = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(this.dFe),
       o = this.IsRoleUnlock();
     let r = void 0,
       s = void 0;
@@ -194,15 +194,15 @@ class RoleHandBookItem extends UiPanelBase_1.UiPanelBase {
   OnBeforeDestroy() {
     if (
       (this.RemoveEventListener(),
-      this.$Ut.UnBindRedDot(),
-      (this.zke = void 0),
-      this.D7t)
+      this.ZAt.UnBindRedDot(),
+      (this.dFe = void 0),
+      this.DHt)
     ) {
-      const e = this.D7t;
+      const e = this.DHt;
       TimerSystem_1.TimerSystem.Next(() => {
         ActorSystem_1.ActorSystem.Put(e);
       }),
-        (this.D7t = void 0);
+        (this.DHt = void 0);
     }
   }
 }

@@ -14,13 +14,13 @@ const UE = require("ue"),
 class HandBookQuestChildItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
-      (this.kzt = void 0),
-      (this.LZt = 0),
-      (this.mZt = () => {
-        var e = this.kzt?.Config;
-        e.QuestId ? this.tPn(e.Type) : this.qAn(e.Type);
+      (this.kZt = void 0),
+      (this.Lei = 0),
+      (this.mei = () => {
+        var e = this.kZt?.Config;
+        e.QuestId ? this.BBn(e.Type) : this.Fxn(e.Type);
       }),
-      (this.aZt = (e, t) => e.Id - t.Id);
+      (this.aei = (e, t) => e.Id - t.Id);
   }
   OnRegisterComponent() {
     (this.ComponentRegisterInfos = [
@@ -33,11 +33,11 @@ class HandBookQuestChildItem extends GridProxyAbstract_1.GridProxyAbstract {
       [7, UE.UITexture],
       [3, UE.UIExtendToggle],
     ]),
-      (this.BtnBindInfo = [[3, this.mZt]]);
+      (this.BtnBindInfo = [[3, this.mei]]);
   }
   Refresh(e, t, i) {
-    this.SetUiActive(!1), (this.kzt = e), (this.LZt = i);
-    var i = this.kzt.Config,
+    this.SetUiActive(!1), (this.kZt = e), (this.Lei = i);
+    var i = this.kZt.Config,
       r = e.IsNew,
       e = e.IsLock,
       o = ModelManager_1.ModelManager.PlayerInfoModel.GetPlayerGender();
@@ -64,19 +64,19 @@ class HandBookQuestChildItem extends GridProxyAbstract_1.GridProxyAbstract {
         : this.GetText(5)?.SetUIActive(!1);
   }
   GetData() {
-    return this.kzt;
+    return this.kZt;
   }
   SetNewState(e) {
     this.GetItem(2).SetUIActive(e);
   }
   SetToggleState(e) {
     this.GetExtendToggle(3).SetToggleStateForce(e, !1, !0),
-      1 === e && this.dZt();
+      1 === e && this.dei();
   }
-  dZt() {
+  dei() {
     var e, t;
-    this.kzt.IsNew &&
-      ((t = (e = this.kzt.Config).Type),
+    this.kZt.IsNew &&
+      ((t = (e = this.kZt.Config).Type),
       (t =
         ConfigManager_1.ConfigManager.HandBookConfig?.GetPlotTypeConfig(
           t,
@@ -87,23 +87,23 @@ class HandBookQuestChildItem extends GridProxyAbstract_1.GridProxyAbstract {
       ));
   }
   OnBeforeDestroy() {
-    this.kzt = void 0;
+    this.kZt = void 0;
   }
   GetTog() {
     return this.GetExtendToggle(3);
   }
   GetIsUnlock() {
-    return !!this.kzt && !this.kzt.IsLock;
+    return !!this.kZt && !this.kZt.IsLock;
   }
-  qAn(e) {
-    this.dZt();
+  Fxn(e) {
+    this.dei();
     var t = ConfigCommon_1.ConfigCommon.ToList(
         ConfigManager_1.ConfigManager.HandBookConfig.GetPlotHandBookConfigByType(
           e,
         ),
       ),
       i =
-        (t.sort(this.aZt),
+        (t.sort(this.aei),
         ConfigManager_1.ConfigManager.HandBookConfig.GetPlotTypeConfig(e)),
       r = t.length,
       o = [],
@@ -136,15 +136,15 @@ class HandBookQuestChildItem extends GridProxyAbstract_1.GridProxyAbstract {
       (e.TypeText = s),
       (e.NameText = a),
       (e.HandBookType = 7),
-      (e.Index = this.LZt),
+      (e.Index = this.Lei),
       (e.TextureList = o),
       (e.DateText = h),
       (e.ConfigId = g),
       UiManager_1.UiManager.OpenView("HandBookPhotoView", e);
   }
-  tPn(e) {
-    this.dZt();
-    var t = this.kzt?.Config.QuestId,
+  BBn(e) {
+    this.dei();
+    var t = this.kZt?.Config.QuestId,
       i = ConfigCommon_1.ConfigCommon.ToList(
         ConfigManager_1.ConfigManager.HandBookConfig.GetPlotHandBookConfigByType(
           e,

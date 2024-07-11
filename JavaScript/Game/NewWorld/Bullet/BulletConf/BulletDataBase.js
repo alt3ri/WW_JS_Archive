@@ -8,98 +8,100 @@ const UE = require("ue"),
   StringUtils_1 = require("../../../../Core/Utils/StringUtils");
 class BulletDataBase {
   constructor(t) {
-    (this.z5o = void 0),
-      (this.Z5o = void 0),
-      (this.eVo = void 0),
-      (this.tVo = void 0),
-      (this.iVo = void 0),
-      (this.oVo = void 0),
-      (this.rVo = void 0),
-      (this.nVo = void 0),
-      (this.sVo = void 0),
-      (this.aVo = void 0),
+    (this.$Vo = void 0),
+      (this.YVo = void 0),
+      (this.JVo = void 0),
+      (this.zVo = void 0),
+      (this.ZVo = void 0),
+      (this.e6o = void 0),
+      (this.t6o = void 0),
+      (this.i6o = void 0),
+      (this.o6o = void 0),
+      (this.r6o = void 0),
       (this.n6 = void 0),
       (this.IsOversizeForTrace = !1),
       (this.kJ = void 0),
-      (this.hVo = void 0),
-      (this.lVo = 0),
-      (this._Vo = !1),
-      (this.uVo = void 0),
-      (this.cVo = !1),
-      (this.mVo = ""),
+      (this.n6o = void 0),
+      (this.s6o = 0),
+      (this.a6o = !1),
+      (this.h6o = void 0),
+      (this.l6o = !1),
+      (this._6o = ""),
       (this.BulletCamp = void 0),
-      (this.dVo = void 0),
-      (this.CVo = void 0),
-      (this.gVo = void 0),
-      (this.fVo = 0),
-      (this.pVo = !1),
-      (this.vVo = void 0),
-      (this.MVo = void 0),
-      (this.SVo = !1),
-      (this.EVo = void 0),
-      (this.yVo = !1),
-      (this.IVo = void 0),
-      (this.TVo = void 0),
-      (this.LVo = void 0),
-      (this.DVo = void 0),
-      (this.RVo = !1),
-      (this.UVo = void 0),
-      (this.AVo = void 0),
-      (this.PVo = void 0),
-      (this.xVo = void 0),
-      (this.wVo = void 0),
-      (this.BVo = void 0),
-      (this.bVo = void 0),
-      (this.qVo = void 0),
-      (this.GVo = void 0),
-      (this.NVo = !1),
-      (this.OVo = void 0),
-      (this.kVo = 0),
-      (this.FVo = !1),
-      (this.VVo = void 0),
+      (this.u6o = void 0),
+      (this.c6o = void 0),
+      (this.m6o = void 0),
+      (this.d6o = 0),
+      (this.C6o = !1),
+      (this.g6o = void 0),
+      (this.f6o = void 0),
+      (this.p6o = !1),
+      (this.v6o = void 0),
+      (this.M6o = !1),
+      (this.E6o = void 0),
+      (this.S6o = void 0),
+      (this.y6o = void 0),
+      (this.I6o = void 0),
+      (this.T6o = !1),
+      (this.L6o = void 0),
+      (this.D6o = void 0),
+      (this.R6o = void 0),
+      (this.U6o = void 0),
+      (this.A6o = void 0),
+      (this.P6o = void 0),
+      (this.x6o = void 0),
+      (this.w6o = void 0),
+      (this.B6o = void 0),
+      (this.b6o = !1),
+      (this.q6o = void 0),
+      (this.G6o = 0),
+      (this.N6o = !1),
+      (this.O6o = void 0),
+      (this.Kfa = void 0),
+      (this.HitActorTypeInternal = void 0),
       (this.Pe = t);
   }
   get IgnoreGradient() {
-    return void 0 === this.z5o && (this.z5o = this.Pe.不适配坡度), this.z5o;
+    return void 0 === this.$Vo && (this.$Vo = this.Pe.不适配坡度), this.$Vo;
   }
   get CenterOffset() {
     return (
-      this.Z5o || (this.Z5o = Vector_1.Vector.Create(this.Pe.中心位置偏移)),
-      this.Z5o
+      this.YVo || (this.YVo = Vector_1.Vector.Create(this.Pe.中心位置偏移)),
+      this.YVo
     );
   }
   get DamageId() {
-    return void 0 === this.eVo && (this.eVo = this.Pe.伤害ID), this.eVo;
+    return void 0 === this.JVo && (this.JVo = this.Pe.伤害ID), this.JVo;
   }
   get EnablePartHitAudio() {
     return (
-      void 0 === this.tVo && (this.tVo = this.Pe.是否响应材质受击音效), this.tVo
+      void 0 === this.zVo && (this.zVo = this.Pe.是否响应材质受击音效), this.zVo
     );
   }
   get IntervalAfterHit() {
     return (
-      void 0 === this.iVo && (this.iVo = this.Pe.作用间隔基于个体), this.iVo
+      void 0 === this.ZVo && (this.ZVo = this.Pe.作用间隔基于个体), this.ZVo
     );
   }
   get Interval() {
-    return void 0 === this.oVo && (this.oVo = this.Pe.作用间隔), this.oVo;
+    return void 0 === this.e6o && (this.e6o = this.Pe.作用间隔), this.e6o;
   }
   get ShareCounter() {
-    return void 0 === this.rVo && (this.rVo = this.Pe.共享父子弹次数), this.rVo;
+    return void 0 === this.t6o && (this.t6o = this.Pe.共享父子弹次数), this.t6o;
   }
   get BornPosition() {
     return (
-      this.nVo || (this.nVo = Vector_1.Vector.Create(this.Pe.出生位置偏移)),
-      this.nVo
+      this.i6o || (this.i6o = Vector_1.Vector.Create(this.Pe.出生位置偏移)),
+      this.i6o
     );
   }
   get BornPositionStandard() {
-    return void 0 === this.sVo && (this.sVo = this.Pe.出生位置基准), this.sVo;
+    return void 0 === this.o6o && (this.o6o = this.Pe.出生位置基准), this.o6o;
   }
   get BornPositionRandom() {
     return (
-      this.aVo || (this.aVo = Vector_1.Vector.Create(this.Pe.出生位置随机)),
-      this.aVo
+      this.r6o || (this.r6o = Vector_1.Vector.Create(this.Pe.出生位置随机)),
+      this.r6o
     );
   }
   get Size() {
@@ -113,78 +115,78 @@ class BulletDataBase {
     );
   }
   get VictimCount() {
-    return void 0 === this.hVo && (this.hVo = this.Pe.命中个数), this.hVo;
+    return void 0 === this.n6o && (this.n6o = this.Pe.命中个数), this.n6o;
   }
   get HitConditionTagId() {
-    return this.HVo(), this.lVo;
+    return this.k6o(), this.s6o;
   }
-  HVo() {
+  k6o() {
     var t;
-    this._Vo ||
-      ((this._Vo = !0),
+    this.a6o ||
+      ((this.a6o = !0),
       (t = this.Pe.命中判定Tag)?.TagName !== StringUtils_1.NONE_STRING
-        ? (this.lVo = t.TagId)
-        : (this.lVo = 0));
+        ? (this.s6o = t.TagId)
+        : (this.s6o = 0));
   }
   get HitType() {
-    return void 0 === this.uVo && (this.uVo = this.Pe.命中判定类型), this.uVo;
+    return void 0 === this.h6o && (this.h6o = this.Pe.命中判定类型), this.h6o;
   }
   get DaHitTypePreset() {
-    return this.jVo(), this.mVo;
+    return this.F6o(), this._6o;
   }
-  jVo() {
+  F6o() {
     var t;
-    this.cVo ||
-      ((this.cVo = !0),
-      (this.mVo = this.Pe.命中判定类型预设.ToAssetPathName()),
-      0 < this.mVo?.length &&
+    this.l6o ||
+      ((this.l6o = !0),
+      (this._6o = this.Pe.命中判定类型预设.ToAssetPathName()),
+      0 < this._6o?.length &&
         ((t = ResourceSystem_1.ResourceSystem.GetLoadedAsset(
-          this.mVo,
+          this._6o,
           UE.BulletCampType_C,
         )),
         (this.BulletCamp = t?.阵营)));
   }
   get RelativeDirection() {
-    return void 0 === this.dVo && (this.dVo = this.Pe.子弹受击方向), this.dVo;
+    return void 0 === this.u6o && (this.u6o = this.Pe.子弹受击方向), this.u6o;
   }
   get Shape() {
-    return void 0 === this.CVo && (this.CVo = this.Pe.子弹形状), this.CVo;
+    return void 0 === this.c6o && (this.c6o = this.Pe.子弹形状), this.c6o;
   }
   get AttackDirection() {
     return (
-      this.gVo || (this.gVo = Rotator_1.Rotator.Create(this.Pe.子弹攻击方向)),
-      this.gVo
+      this.m6o || (this.m6o = Rotator_1.Rotator.Create(this.Pe.子弹攻击方向)),
+      this.m6o
     );
   }
   get TagId() {
-    return this.WVo(), this.fVo;
+    return this.V6o(), this.d6o;
   }
-  WVo() {
+  V6o() {
     var t;
-    this.pVo ||
-      ((this.pVo = !0),
+    this.C6o ||
+      ((this.C6o = !0),
       (t = this.Pe.子弹标签)?.TagName !== StringUtils_1.NONE_STRING
-        ? (this.fVo = t.TagId)
-        : (this.fVo = 0));
+        ? (this.d6o = t.TagId)
+        : (this.d6o = 0));
   }
   get BornRequireTagIds() {
-    return this.KVo(), this.vVo;
+    return this.H6o(), this.g6o;
   }
   get BornForbidTagIds() {
-    return this.KVo(), this.MVo;
+    return this.H6o(), this.f6o;
   }
-  KVo() {
-    if (!this.SVo) {
-      this.SVo = !0;
+  H6o() {
+    if (!this.p6o) {
+      this.p6o = !0;
       var t = this.Pe.子弹禁止生成Tag;
       if (t) {
         var i = t.GameplayTags,
           s = i.Num();
         if (0 < s) {
-          this.MVo = [];
+          this.f6o = [];
           for (let t = 0; t < s; t++) {
             var h = i.Get(t);
-            h?.TagId && this.MVo.push(h.TagId);
+            h?.TagId && this.f6o.push(h.TagId);
           }
         }
       }
@@ -193,10 +195,10 @@ class BulletDataBase {
         var e = t.GameplayTags,
           r = e.Num();
         if (0 < r) {
-          this.vVo = [];
+          this.g6o = [];
           for (let t = 0; t < r; t++) {
             var o = e.Get(t);
-            o?.TagId && this.vVo.push(o.TagId);
+            o?.TagId && this.g6o.push(o.TagId);
           }
         }
       }
@@ -204,89 +206,102 @@ class BulletDataBase {
   }
   get HitEffectWeakness() {
     return (
-      this.yVo || ((this.yVo = !0), (this.EVo = this.Pe.弱点被击效果)), this.EVo
+      this.M6o || ((this.M6o = !0), (this.v6o = this.Pe.弱点被击效果)), this.v6o
     );
   }
   get HitCountMax() {
-    return void 0 === this.IVo && (this.IVo = this.Pe.总作用次数限制), this.IVo;
+    return void 0 === this.E6o && (this.E6o = this.Pe.总作用次数限制), this.E6o;
   }
   get DestroyOnSkillEnd() {
     return (
-      void 0 === this.TVo && (this.TVo = this.Pe.技能结束是否销毁子弹), this.TVo
+      void 0 === this.S6o && (this.S6o = this.Pe.技能结束是否销毁子弹), this.S6o
     );
   }
   get Duration() {
-    return void 0 === this.LVo && (this.LVo = this.Pe.持续时间), this.LVo;
+    return void 0 === this.y6o && (this.y6o = this.Pe.持续时间), this.y6o;
   }
   get BlackboardKey() {
     return (
-      this.RVo || ((this.RVo = !0), (this.DVo = this.Pe.攻击者黑板Key值)),
-      this.DVo
+      this.T6o || ((this.T6o = !0), (this.I6o = this.Pe.攻击者黑板Key值)),
+      this.I6o
     );
   }
   get ContinuesCollision() {
-    return void 0 === this.UVo && (this.UVo = this.Pe.是否持续碰撞), this.UVo;
+    return void 0 === this.L6o && (this.L6o = this.Pe.是否持续碰撞), this.L6o;
   }
   get StickGround() {
-    return void 0 === this.PVo && (this.PVo = this.Pe.是否贴地子弹), this.PVo;
+    return void 0 === this.R6o && (this.R6o = this.Pe.是否贴地子弹), this.R6o;
   }
   get StickTraceLen() {
-    return void 0 === this.AVo && (this.AVo = this.Pe.贴地探测距离), this.AVo;
+    return void 0 === this.D6o && (this.D6o = this.Pe.贴地探测距离), this.D6o;
   }
   get HitCountPerVictim() {
     return (
-      void 0 === this.xVo && (this.xVo = this.Pe.每个单位总作用次数), this.xVo
+      void 0 === this.U6o && (this.U6o = this.Pe.每个单位总作用次数), this.U6o
     );
   }
   get SpecialParams() {
-    if (!this.wVo) {
-      this.wVo = new Map();
+    if (!this.A6o) {
+      this.A6o = new Map();
       var i = this.Pe.特殊参数;
       for (let t = 0; t < i.Num(); t++) {
         var s = i.GetKey(t);
-        this.wVo.set(s, i.Get(s));
+        this.A6o.set(s, i.Get(s));
       }
     }
-    return this.wVo;
+    return this.A6o;
   }
   get CollisionActiveDelay() {
-    return void 0 === this.BVo && (this.BVo = this.Pe.碰撞判定延迟), this.BVo;
+    return void 0 === this.P6o && (this.P6o = this.Pe.碰撞判定延迟), this.P6o;
   }
   get CollisionActiveDuration() {
-    return void 0 === this.bVo && (this.bVo = this.Pe.碰撞判定时长), this.bVo;
+    return void 0 === this.x6o && (this.x6o = this.Pe.碰撞判定时长), this.x6o;
   }
   get SyncType() {
-    return void 0 === this.qVo && (this.qVo = this.Pe.网络同步类型), this.qVo;
+    return void 0 === this.w6o && (this.w6o = this.Pe.网络同步类型), this.w6o;
   }
   get BeHitEffect() {
     return (
-      this.NVo || ((this.NVo = !0), (this.GVo = this.Pe.被击效果)), this.GVo
+      this.b6o || ((this.b6o = !0), (this.B6o = this.Pe.被击效果)), this.B6o
     );
   }
   get BornDistLimit() {
     return (
-      this.OVo || (this.OVo = Vector_1.Vector.Create(this.Pe.限制生成距离)),
-      this.OVo
+      this.q6o || (this.q6o = Vector_1.Vector.Create(this.Pe.限制生成距离)),
+      this.q6o
     );
   }
   get BanHitTagId() {
-    return this.QVo(), this.kVo;
+    return this.j6o(), this.G6o;
   }
-  QVo() {
+  j6o() {
     var t;
-    this.FVo ||
-      ((this.FVo = !0),
+    this.N6o ||
+      ((this.N6o = !0),
       (t = this.Pe.禁止命中Tag)?.TagName !== StringUtils_1.NONE_STRING
-        ? (this.kVo = t.TagId)
-        : (this.kVo = 0));
+        ? (this.G6o = t.TagId)
+        : (this.G6o = 0));
   }
   get DebugShowProgress() {
     return (
-      void 0 === this.VVo && (this.VVo = this.Pe.Debug显示子弹进度), this.VVo
+      void 0 === this.O6o && (this.O6o = this.Pe.Debug显示子弹进度), this.O6o
+    );
+  }
+  get BigRangeHitSceneItem() {
+    return (
+      void 0 === this.Kfa && (this.Kfa = this.Pe.大范围子弹对场景物件生效),
+      this.Kfa
+    );
+  }
+  get HitActorType() {
+    return (
+      void 0 === this.HitActorTypeInternal &&
+        (this.HitActorTypeInternal = this.Pe.命中实体类型),
+      this.HitActorTypeInternal
     );
   }
   Preload() {
-    this.jVo(), this.KVo(), this.HVo(), this.QVo();
+    this.F6o(), this.H6o(), this.k6o(), this.j6o();
     this.CenterOffset;
     return (
       this.Interval,
@@ -304,6 +319,7 @@ class BulletDataBase {
       this.CollisionActiveDuration,
       this.SyncType,
       this.BornDistLimit,
+      this.HitActorType,
       !0
     );
   }

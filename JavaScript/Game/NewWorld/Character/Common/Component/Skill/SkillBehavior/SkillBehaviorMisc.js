@@ -1,9 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.compare =
-    exports.getValidLocation =
-    exports.downTrace =
-    exports.forwardTrace =
+    exports.traceGround =
+    exports.traceWall =
     exports.getLocationAndDirection =
     exports.getEndSkillBehaviorParamList =
     exports.CONTEXT =
@@ -21,9 +20,9 @@ const UE = require("ue"),
   (exports.angles = [0, 270, 90, 180]),
   (exports.paramMap = new Map()),
   (exports.CONTEXT = "SkillBehaviorAction.SetLocation");
-let forwardLineTrace = void 0,
-  downLineTrace = void 0;
-const tempVector = Vector_1.Vector.Create();
+let lineTraceWall = void 0,
+  lineTraceGround = void 0,
+  lineTraceWater = void 0;
 function getEndSkillBehaviorParamList(e) {
   return (
     exports.paramMap.has(e) || exports.paramMap.set(e, []),
@@ -33,118 +32,138 @@ function getEndSkillBehaviorParamList(e) {
 function getLocationAndDirection(e) {
   return [e.K2_GetActorLocation(), e.GetActorForwardVector()];
 }
-function setupLineTrace(r, e, o, t) {
+function setupLineTrace(r, e, t, o) {
   (r.bIsSingle = !0),
     (r.bIgnoreSelf = !0),
     (r.DrawTime = 5),
     TraceElementCommon_1.TraceElementCommon.SetTraceColor(r, e),
-    TraceElementCommon_1.TraceElementCommon.SetTraceHitColor(r, o),
-    t instanceof Array
-      ? t.forEach((e) => {
+    TraceElementCommon_1.TraceElementCommon.SetTraceHitColor(r, t),
+    o instanceof Array
+      ? o.forEach((e) => {
           r.AddObjectTypeQuery(e);
         })
-      : r.SetTraceTypeQuery(t);
+      : r.SetTraceTypeQuery(o);
 }
-function getLineTrace(e, r, o) {
-  let t = void 0;
+function getLineTrace(e, r, t) {
+  let o = void 0;
+  switch (t) {
+    case 0:
+      lineTraceWall ||
+        setupLineTrace(
+          (lineTraceWall = UE.NewObject(UE.TraceLineElement.StaticClass())),
+          ColorUtils_1.ColorUtils.LinearGreen,
+          ColorUtils_1.ColorUtils.LinearRed,
+          [
+            QueryTypeDefine_1.KuroObjectTypeQuery.WorldStatic,
+            QueryTypeDefine_1.KuroObjectTypeQuery.WorldStaticIgnoreBullet,
+          ],
+        ),
+        (o = lineTraceWall);
+      break;
+    case 1:
+      lineTraceGround ||
+        setupLineTrace(
+          (lineTraceGround = UE.NewObject(UE.TraceLineElement.StaticClass())),
+          ColorUtils_1.ColorUtils.LinearWhite,
+          ColorUtils_1.ColorUtils.LinearBlack,
+          QueryTypeDefine_1.KuroTraceTypeQuery.IkGround,
+        ),
+        (o = lineTraceGround);
+      break;
+    case 2:
+      lineTraceWater ||
+        setupLineTrace(
+          (lineTraceWater = UE.NewObject(UE.TraceLineElement.StaticClass())),
+          ColorUtils_1.ColorUtils.LinearBlue,
+          ColorUtils_1.ColorUtils.LinearYellow,
+          QueryTypeDefine_1.KuroTraceTypeQuery.Water,
+        ),
+        (o = lineTraceWater);
+  }
   return (
-    0 === o
-      ? (downLineTrace ||
-          setupLineTrace(
-            (downLineTrace = UE.NewObject(UE.TraceLineElement.StaticClass())),
-            ColorUtils_1.ColorUtils.LinearBlue,
-            ColorUtils_1.ColorUtils.LinearYellow,
-            QueryTypeDefine_1.KuroTraceTypeQuery.IkGround,
-          ),
-        (t = downLineTrace))
-      : 1 === o &&
-        (forwardLineTrace ||
-          setupLineTrace(
-            (forwardLineTrace = UE.NewObject(
-              UE.TraceLineElement.StaticClass(),
-            )),
-            ColorUtils_1.ColorUtils.LinearGreen,
-            ColorUtils_1.ColorUtils.LinearRed,
-            [
-              QueryTypeDefine_1.KuroObjectTypeQuery.WorldStatic,
-              QueryTypeDefine_1.KuroObjectTypeQuery.WorldDynamic,
-              QueryTypeDefine_1.KuroObjectTypeQuery.WorldStaticIgnoreBullet,
-            ],
-          ),
-        (t = forwardLineTrace)),
-    r ? t.SetDrawDebugTrace(2) : t.SetDrawDebugTrace(0),
-    (t.WorldContextObject = e),
-    t.ClearCacheData(),
-    t
+    r ? o.SetDrawDebugTrace(2) : o.SetDrawDebugTrace(0),
+    (o.WorldContextObject = e),
+    o.ClearCacheData(),
+    o
   );
 }
-function backward(e, r, o, t) {
-  var n = tempVector;
-  o.Subtraction(r, n), n.Normalize(), n.Multiply(e, n), t.Subtraction(n, t);
+function backward(e, r, t, o) {
+  var n = Vector_1.Vector.Create();
+  t.Subtraction(r, n), n.Normalize(), n.Multiply(e, n), o.Subtraction(n, o);
 }
-function forwardTrace(e, r, o, t) {
-  var t = getLineTrace(e.Actor, t, 1),
+function traceWall(e, r, t, o) {
+  var o = getLineTrace(e.Actor, o, 0),
     n =
-      (TraceElementCommon_1.TraceElementCommon.SetStartLocation(t, r),
-      TraceElementCommon_1.TraceElementCommon.SetEndLocation(t, o),
-      TraceElementCommon_1.TraceElementCommon.LineTrace(
-        t,
-        exports.CONTEXT + ".ForwardTrace",
-      )),
-    t = t.HitResult;
-  return n && t.bBlockingHit
-    ? (TraceElementCommon_1.TraceElementCommon.GetHitLocation(t, 0, o),
-      r.Equals(o) ? void 0 : (backward(e.ScaledRadius, r, o, o), [!0, o]))
-    : [!1, o];
-}
-function downTrace(e, r, o) {
-  var t = tempVector,
-    o =
-      (t.Set(r.X, r.Y, r.Z + CharacterActorComponent_1.FIX_SPAWN_TRACE_HEIGHT),
-      getLineTrace(e.Actor, o, 0)),
-    r =
       (TraceElementCommon_1.TraceElementCommon.SetStartLocation(o, r),
       TraceElementCommon_1.TraceElementCommon.SetEndLocation(o, t),
       TraceElementCommon_1.TraceElementCommon.LineTrace(
         o,
-        exports.CONTEXT + ".DownTrace",
+        exports.CONTEXT + ".traceWall",
       )),
     o = o.HitResult;
-  return r && o.bBlockingHit
+  return n && o.bBlockingHit
     ? (TraceElementCommon_1.TraceElementCommon.GetHitLocation(o, 0, t),
-      (t.Z += e.ScaledHalfHeight),
-      [!0, t])
+      r.Equals(t) ? void 0 : (backward(e.ScaledRadius, r, t, t), [!0, t]))
+    : [!1, t];
+}
+function traceWater(e, r, t) {
+  var o = Vector_1.Vector.Create(),
+    e =
+      (o.Set(r.X, r.Y, r.Z - CharacterActorComponent_1.FIX_SPAWN_TRACE_HEIGHT),
+      getLineTrace(e.Actor, t, 2)),
+    t =
+      (TraceElementCommon_1.TraceElementCommon.SetStartLocation(e, r),
+      TraceElementCommon_1.TraceElementCommon.SetEndLocation(e, o),
+      TraceElementCommon_1.TraceElementCommon.LineTrace(
+        e,
+        exports.CONTEXT + ".traceWater",
+      )),
+    r = e.HitResult;
+  return t && r.bBlockingHit
+    ? (TraceElementCommon_1.TraceElementCommon.GetHitLocation(r, 0, o), [!0, o])
     : [!1, void 0];
 }
-function getValidLocation(e, r, o, t, n) {
-  return Vector_1.Vector.Distance(r, o) < e.ScaledRadius
-    ? (backward(e.ScaledRadius, r, o, r), r)
-    : (r.Addition(o, t).Division(2, t),
-      (downTrace(e, t, n)[0] ? r : o).DeepCopy(t),
-      getValidLocation(e, r, o, t, n));
+function traceGround(e, r, t) {
+  var o = Vector_1.Vector.Create(),
+    n =
+      (o.Set(r.X, r.Y, r.Z + CharacterActorComponent_1.FIX_SPAWN_TRACE_HEIGHT),
+      getLineTrace(e.Actor, t, 1)),
+    r =
+      (TraceElementCommon_1.TraceElementCommon.SetStartLocation(n, r),
+      TraceElementCommon_1.TraceElementCommon.SetEndLocation(n, o),
+      TraceElementCommon_1.TraceElementCommon.LineTrace(
+        n,
+        exports.CONTEXT + ".traceGround",
+      )),
+    n = n.HitResult;
+  return !r ||
+    !n.bBlockingHit ||
+    (TraceElementCommon_1.TraceElementCommon.GetHitLocation(n, 0, o),
+    (r = traceWater(e, o, t))[0] && r[1].Z >= o.Z + e.ScaledHalfHeight)
+    ? [!1, void 0]
+    : ((o.Z += e.ScaledHalfHeight), [!0, o]);
 }
-function compare(e, r, o, t, n) {
+function compare(e, r, t, o, n) {
   switch (e) {
     case 0:
-      return o < r;
+      return t < r;
     case 1:
-      return o <= r;
+      return t <= r;
     case 2:
-      return r === o;
+      return r === t;
     case 3:
-      return r < o;
+      return r < t;
     case 4:
-      return r <= o;
+      return r <= t;
     case 5:
-      return t <= r && r <= n;
+      return o <= r && r <= n;
     default:
       return !1;
   }
 }
 (exports.getEndSkillBehaviorParamList = getEndSkillBehaviorParamList),
   (exports.getLocationAndDirection = getLocationAndDirection),
-  (exports.forwardTrace = forwardTrace),
-  (exports.downTrace = downTrace),
-  (exports.getValidLocation = getValidLocation),
+  (exports.traceWall = traceWall),
+  (exports.traceGround = traceGround),
   (exports.compare = compare);
 //# sourceMappingURL=SkillBehaviorMisc.js.map

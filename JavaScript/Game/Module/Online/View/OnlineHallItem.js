@@ -16,52 +16,52 @@ const UE = require("ue"),
 class OnlineHallItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor(i) {
     super(),
-      (this.LGi = void 0),
-      (this.DGi = void 0),
-      (this.Q2t = void 0),
-      (this.RGi = void 0),
-      (this.P$t = () => {
-        this.LGi
-          ? 0 < this.LGi.ApplyTimeLeftTime
-            ? this.Q2t.SetText(
-                TimeUtil_1.TimeUtil.GetCoolDown(this.LGi.ApplyTimeLeftTime),
+      (this.LNi = void 0),
+      (this.DNi = void 0),
+      (this.XFt = void 0),
+      (this.RNi = void 0),
+      (this.PYt = () => {
+        this.LNi
+          ? 0 < this.LNi.ApplyTimeLeftTime
+            ? this.XFt.SetText(
+                TimeUtil_1.TimeUtil.GetCoolDown(this.LNi.ApplyTimeLeftTime),
               )
-            : (this.UGi(!0),
-              void 0 !== this.RGi && TimerSystem_1.TimerSystem.Remove(this.RGi),
-              (this.RGi = void 0))
-          : (void 0 !== this.RGi && TimerSystem_1.TimerSystem.Remove(this.RGi),
-            (this.RGi = void 0));
+            : (this.UNi(!0),
+              void 0 !== this.RNi && TimerSystem_1.TimerSystem.Remove(this.RNi),
+              (this.RNi = void 0))
+          : (void 0 !== this.RNi && TimerSystem_1.TimerSystem.Remove(this.RNi),
+            (this.RNi = void 0));
       }),
-      (this.AGi = () => {
-        "OnlineWorldHallView" === this.DGi
+      (this.ANi = () => {
+        "OnlineWorldHallView" === this.DNi
           ? OnlineController_1.OnlineController.ApplyJoinWorldRequest(
-              this.LGi.PlayerId,
+              this.LNi.PlayerId,
               ModelManager_1.ModelManager.OnlineModel.ShowFriend
-                ? Protocol_1.Aki.Protocol.z3s.Proto_QueryJoin
-                : Protocol_1.Aki.Protocol.z3s.Proto_LobbyJoin,
+                ? Protocol_1.Aki.Protocol.H8s.Proto_QueryJoin
+                : Protocol_1.Aki.Protocol.H8s.Proto_LobbyJoin,
             )
           : OnlineController_1.OnlineController.ApplyJoinWorldRequest(
-              this.LGi.PlayerId,
-              Protocol_1.Aki.Protocol.z3s.Proto_QueryJoin,
+              this.LNi.PlayerId,
+              Protocol_1.Aki.Protocol.H8s.Proto_QueryJoin,
             ),
-          this.LGi.SetApplyTime(
+          this.LNi.SetApplyTime(
             TimeUtil_1.TimeUtil.GetServerTime() +
               ModelManager_1.ModelManager.OnlineModel.ApplyCd,
           ),
-          this.UGi(!1),
-          this.Q2t.SetText(
-            TimeUtil_1.TimeUtil.GetCoolDown(this.LGi.ApplyTimeLeftTime),
+          this.UNi(!1),
+          this.XFt.SetText(
+            TimeUtil_1.TimeUtil.GetCoolDown(this.LNi.ApplyTimeLeftTime),
           ),
-          (this.RGi = TimerSystem_1.TimerSystem.Forever(
-            this.P$t,
+          (this.RNi = TimerSystem_1.TimerSystem.Forever(
+            this.PYt,
             TICK_INTERVAL_TIME,
           ));
       }),
-      (this.PGi = () => {
-        (ModelManager_1.ModelManager.OnlineModel.CachePlayerData = this.LGi),
+      (this.PNi = () => {
+        (ModelManager_1.ModelManager.OnlineModel.CachePlayerData = this.LNi),
           UiManager_1.UiManager.OpenView("OnlineProcessView");
       }),
-      (this.DGi = i);
+      (this.DNi = i);
   }
   OnRegisterComponent() {
     (this.ComponentRegisterInfos = [
@@ -79,39 +79,43 @@ class OnlineHallItem extends GridProxyAbstract_1.GridProxyAbstract {
       [11, UE.UIText],
       [12, UE.UIItem],
       [13, UE.UIItem],
+      [14, UE.UIButtonComponent],
+      [15, UE.UIButtonComponent],
       [16, UE.UIButtonComponent],
       [18, UE.UIItem],
-      [20, UE.UISprite],
-      [21, UE.UIItem],
-      [22, UE.UITexture],
-      [23, UE.UIButtonComponent],
+      [19, UE.UISprite],
+      [20, UE.UIItem],
+      [21, UE.UITexture],
+      [22, UE.UIButtonComponent],
     ]),
       (this.BtnBindInfo = [
-        [4, this.AGi],
-        [23, this.PGi],
+        [4, this.ANi],
+        [22, this.PNi],
       ]);
   }
   OnStart() {
     this.GetText(1).SetUIActive(!1),
-      this.GetSprite(20).SetUIActive(!1),
+      this.GetSprite(19).SetUIActive(!1),
       this.GetButton(16).RootUIComp.SetUIActive(!1),
-      (this.Q2t = this.GetText(11));
+      this.GetButton(14).RootUIComp.SetUIActive(!1),
+      this.GetButton(15).RootUIComp.SetUIActive(!1),
+      (this.XFt = this.GetText(11));
   }
   OnBeforeDestroy() {
-    (this.LGi = void 0),
-      (this.DGi = void 0) !== this.RGi &&
-        TimerSystem_1.TimerSystem.Remove(this.RGi),
-      (this.RGi = void 0);
+    (this.LNi = void 0),
+      (this.DNi = void 0) !== this.RNi &&
+        TimerSystem_1.TimerSystem.Remove(this.RNi),
+      (this.RNi = void 0);
   }
-  Refresh(i, e, t) {
-    (this.LGi = i),
-      0 < this.LGi.ApplyTimeLeftTime
-        ? (this.UGi(!1),
-          (this.RGi = TimerSystem_1.TimerSystem.Forever(
-            this.P$t,
+  Refresh(i, t, e) {
+    (this.LNi = i),
+      0 < this.LNi.ApplyTimeLeftTime
+        ? (this.UNi(!1),
+          (this.RNi = TimerSystem_1.TimerSystem.Forever(
+            this.PYt,
             TICK_INTERVAL_TIME,
           )))
-        : this.UGi(!0);
+        : this.UNi(!0);
     var r = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(
         i.HeadId,
       )?.RoleHeadIconBig,
@@ -132,9 +136,8 @@ class OnlineHallItem extends GridProxyAbstract_1.GridProxyAbstract {
         this.GetText(7)),
       o =
         (i.Signature && "" !== i.Signature
-          ? r.SetText(i.Signature)
-          : LguiUtil_1.LguiUtil.SetLocalText(r, "DefaultSign"),
-        this.GetItem(21).SetUIActive(!0),
+          ? (r.SetText(i.Signature), this.GetItem(20).SetUIActive(!0))
+          : this.GetItem(20).SetUIActive(!1),
         this.GetItem(5)),
       h = this.GetItem(6);
     switch (i.PlayerCount) {
@@ -150,20 +153,20 @@ class OnlineHallItem extends GridProxyAbstract_1.GridProxyAbstract {
     var s = ModelManager_1.ModelManager.WorldLevelModel.OriginWorldLevel,
       r = ModelManager_1.ModelManager.OnlineModel.EnterDiff,
       a = this.GetInteractionGroup(8),
-      l = this.GetText(9),
+      n = this.GetText(9),
       r =
         (i.WorldLevel > s + r
           ? (a.SetInteractable(!1),
             (s = i.WorldLevel - r),
-            LguiUtil_1.LguiUtil.SetLocalText(l, "ApplyBtnDisable", s))
-          : (LguiUtil_1.LguiUtil.SetLocalText(l, "ApplyBtnEnable"),
+            LguiUtil_1.LguiUtil.SetLocalText(n, "ApplyBtnDisable", s))
+          : (LguiUtil_1.LguiUtil.SetLocalText(n, "ApplyBtnEnable"),
             a.SetInteractable(!0)),
         i.PlayerCard);
     0 < r &&
       ((s = BackgroundCardById_1.configBackgroundCardById.GetConfig(r)),
-      this.SetTextureByPath(s.LongCardPath, this.GetTexture(22)));
+      this.SetTextureByPath(s.LongCardPath, this.GetTexture(21)));
   }
-  UGi(i) {
+  UNi(i) {
     this.GetButton(4).RootUIComp.SetUIActive(i),
       this.GetItem(12).SetUIActive(i),
       this.GetItem(10).SetUIActive(!i);

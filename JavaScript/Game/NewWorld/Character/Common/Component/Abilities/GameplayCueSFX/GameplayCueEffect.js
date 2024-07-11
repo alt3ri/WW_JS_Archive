@@ -41,12 +41,12 @@ class GameplayCueEffect extends GameplayCueMagnitude_1.GameplayCueMagnitude {
           ["CueId:", this.CueConfig.Id],
         ),
       2 === this.CueConfig.Comp
-        ? ((this.TargetWeaponComp = this.yXo()),
-          (this.TargetCharacterWeapon = this.IXo()),
+        ? ((this.TargetWeaponComp = this.M$o()),
+          (this.TargetCharacterWeapon = this.E$o()),
           this.TargetCharacterWeapon?.Mesh instanceof
             UE.SkeletalMeshComponent &&
             (this.TargetMesh = this.TargetCharacterWeapon.Mesh))
-        : (this.TargetMesh = this.TXo()),
+        : (this.TargetMesh = this.S$o()),
       (this.TargetSocket = FNameUtil_1.FNameUtil.GetDynamicFName(
         this.CueConfig.Socket,
       )),
@@ -76,14 +76,15 @@ class GameplayCueEffect extends GameplayCueMagnitude_1.GameplayCueMagnitude {
     var t = new SkeletalMeshEffectContext_1.SkeletalMeshEffectContext(void 0),
       e =
         ((t.SkeletalMeshComp = this.TargetMesh),
-        this.Entity.CheckGetComponent(157)
-          ?.GetBuffByHandle(this.ActiveHandleId)
-          ?.GetInstigator());
-    (t.EntityId = e ? e.Id : void 0),
+        this.CueComp.GetBuffByHandleId(this.ActiveHandleId)?.GetInstigator());
+    t.EntityId = e ? e.Id : void 0;
+    let s = void 0;
+    e = this.Entity.GetComponent(3);
+    e && (s = e.GetReplaceEffect(this.CueConfig.Path)),
       (this.EffectViewHandle = EffectSystem_1.EffectSystem.SpawnEffect(
         this.ActorInternal,
         this.RelativeTransform.ToUeTransform(),
-        this.CueConfig.Path,
+        s || this.CueConfig.Path,
         "[GameplayCueEffect.OnCreate]",
         t,
         0,
@@ -93,10 +94,10 @@ class GameplayCueEffect extends GameplayCueMagnitude_1.GameplayCueMagnitude {
               EffectSystem_1.EffectSystem.FreezeHandle(t, !0);
         },
       )),
-      this.LXo() &&
+      this.y$o() &&
         (this.CueComp.AddEffectToSet(this.EffectViewHandle),
         this.AttachEffect(),
-        this.DXo(),
+        this.I$o(),
         super.OnCreate());
   }
   OnDestroy() {
@@ -135,7 +136,7 @@ class GameplayCueEffect extends GameplayCueMagnitude_1.GameplayCueMagnitude {
   AttachEffect() {
     var t = EffectSystem_1.EffectSystem.GetEffectActor(this.EffectViewHandle);
     1 === this.CueConfig.Comp || 2 === this.CueConfig.Comp
-      ? (this.RXo(t),
+      ? (this.T$o(t),
         t.K2_AttachToComponent(
           this.TargetMesh,
           this.TargetSocket,
@@ -160,7 +161,7 @@ class GameplayCueEffect extends GameplayCueMagnitude_1.GameplayCueMagnitude {
           !0,
         ));
   }
-  TXo() {
+  S$o() {
     if (this.ActorInternal?.IsValid()) {
       if ("Mesh" === this.CueConfig.CompName) return this.ActorInternal.Mesh;
       var e = this.ActorInternal.K2_GetComponentsByClass(
@@ -181,17 +182,17 @@ class GameplayCueEffect extends GameplayCueMagnitude_1.GameplayCueMagnitude {
         ]);
     }
   }
-  yXo() {
+  M$o() {
     var t;
     return this.ActorInternal?.IsValid() &&
       2 === this.CueConfig.Comp &&
-      (t = this.Entity?.GetComponent(69))?.Valid
+      (t = this.Entity?.GetComponent(71))?.Valid
       ? t
       : void 0;
   }
-  IXo() {
+  E$o() {
     if (this.ActorInternal?.IsValid() && 2 === this.CueConfig.Comp) {
-      var t = this.yXo();
+      var t = this.M$o();
       if (t) {
         t = t.GetWeaponMesh();
         if (t) {
@@ -202,7 +203,7 @@ class GameplayCueEffect extends GameplayCueMagnitude_1.GameplayCueMagnitude {
       }
     }
   }
-  RXo(t) {
+  T$o(t) {
     var e,
       s = this.CueConfig.TargetScaleUp[0],
       i = this.CueConfig.TargetScaleUp[1];
@@ -225,7 +226,7 @@ class GameplayCueEffect extends GameplayCueMagnitude_1.GameplayCueMagnitude {
         s),
       t.SetActorScale3D(t.GetActorScale3D().op_Multiply(e)));
   }
-  LXo() {
+  y$o() {
     var t;
     return (
       !!EffectSystem_1.EffectSystem.IsValid(this.EffectViewHandle) &&
@@ -236,7 +237,7 @@ class GameplayCueEffect extends GameplayCueMagnitude_1.GameplayCueMagnitude {
       )
     );
   }
-  DXo() {
+  I$o() {
     this.EndCallback &&
       EffectSystem_1.EffectSystem.AddFinishCallback(
         this.EffectViewHandle,

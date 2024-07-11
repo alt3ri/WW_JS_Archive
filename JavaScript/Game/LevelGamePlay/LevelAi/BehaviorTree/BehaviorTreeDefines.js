@@ -39,10 +39,9 @@ class BehaviorTreeDefines {
 ((exports.BehaviorTreeDefines = BehaviorTreeDefines).cIe =
   "/Game/Aki/AI/AINPC/LevelAiBT"),
   (BehaviorTreeDefines.uIe = "IsUseLevelAiBehaviorTree"),
-  (BehaviorTreeDefines.BehaviorTreeStateName = "BT_STATE"),
+  (BehaviorTreeDefines.BehaviorTreePatrolStateName = "PATROL_STATE"),
   (BehaviorTreeDefines.LevelAiSwitchName = "LEVEL_AI_STOP"),
-  (BehaviorTreeDefines.PatrolFinishSegmentIndexName =
-    "PATROL_FINISH_SEGMENT_INDEX"),
+  (BehaviorTreeDefines.PatrolFinishName = "PATROL_COMPLETE"),
   (BehaviorTreeDefines.lIe = !1),
   (BehaviorTreeDefines.hIe = !1);
 //# sourceMappingURL=BehaviorTreeDefines.js.map

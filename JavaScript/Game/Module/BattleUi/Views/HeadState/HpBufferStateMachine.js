@@ -4,70 +4,70 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const CommonParamById_1 = require("../../../../../Core/Define/ConfigCommon/CommonParamById");
 class HpBufferStateMachine {
   constructor() {
-    (this.Mke = 0),
-      (this.u1t = 0),
-      (this.c1t = 0),
+    (this.G2e = 0),
+      (this.y_t = 0),
+      (this.I_t = 0),
       (this.TargetPercent = 0),
       (this.CurrentPercent = 0),
       (this.Cce = 0),
-      (this.m1t = -0),
-      (this.d1t = -0),
-      (this.C1t = -0),
-      (this.m1t =
+      (this.T_t = -0),
+      (this.L_t = -0),
+      (this.D_t = -0),
+      (this.T_t =
         CommonParamById_1.configCommonParamById.GetIntConfig("HitDelayTime")),
-      (this.d1t =
+      (this.L_t =
         CommonParamById_1.configCommonParamById.GetIntConfig("HitRefreshTime")),
-      (this.C1t = CommonParamById_1.configCommonParamById.GetIntConfig(
+      (this.D_t = CommonParamById_1.configCommonParamById.GetIntConfig(
         "HitBufferDisappearTime",
       )),
-      (this.Cce = this.C1t);
+      (this.Cce = this.D_t);
   }
   UpdateParams(t) {
     6 === t &&
-      ((this.m1t = CommonParamById_1.configCommonParamById.GetIntConfig(
+      ((this.T_t = CommonParamById_1.configCommonParamById.GetIntConfig(
         "DurabilityHitDelayTime",
       )),
-      (this.C1t = CommonParamById_1.configCommonParamById.GetIntConfig(
+      (this.D_t = CommonParamById_1.configCommonParamById.GetIntConfig(
         "DurabilityHitBufferDisappearTime",
       )));
   }
   UpdatePercent(t) {
     var i;
-    return 2 === this.Mke
+    return 2 === this.G2e
       ? ((i = (this.CurrentPercent - this.TargetPercent) / this.Cce),
         (this.CurrentPercent -= t * i),
         (this.Cce -= t),
         this.Cce <= 0
-          ? ((this.Mke = 0), this.TargetPercent)
+          ? ((this.G2e = 0), this.TargetPercent)
           : this.CurrentPercent)
-      : 1 === this.Mke
-        ? ((this.u1t += t),
-          this.u1t > this.m1t && (this.Mke = 2),
+      : 1 === this.G2e
+        ? ((this.y_t += t),
+          this.y_t > this.T_t && (this.G2e = 2),
           this.CurrentPercent)
         : -1;
   }
   GetHit(t, i) {
     i < t ||
-      (0 === this.Mke
-        ? ((this.Mke = 1),
-          (this.c1t = 1),
-          (this.u1t = 0),
+      (0 === this.G2e
+        ? ((this.G2e = 1),
+          (this.I_t = 1),
+          (this.y_t = 0),
           (this.CurrentPercent = i),
           (this.TargetPercent = t),
-          (this.Cce = this.C1t))
-        : 1 === this.Mke
-          ? ((this.c1t += 1),
-            this.c1t > this.d1t && (this.Mke = 2),
-            (this.u1t = 0),
+          (this.Cce = this.D_t))
+        : 1 === this.G2e
+          ? ((this.I_t += 1),
+            this.I_t > this.L_t && (this.G2e = 2),
+            (this.y_t = 0),
             (this.TargetPercent = t))
-          : 2 === this.Mke &&
-            ((this.TargetPercent = t), (this.Cce = this.C1t)));
+          : 2 === this.G2e &&
+            ((this.TargetPercent = t), (this.Cce = this.D_t)));
   }
   Reset() {
-    this.Mke = 0;
+    this.G2e = 0;
   }
   IsOriginState() {
-    return 0 === this.Mke;
+    return 0 === this.G2e;
   }
 }
 exports.HpBufferStateMachine = HpBufferStateMachine;

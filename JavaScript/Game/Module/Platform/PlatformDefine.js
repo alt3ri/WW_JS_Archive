@@ -1,27 +1,6 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
-  (exports.deviceIdMap =
-    exports.operationMap =
-    exports.inputControllerMap =
-      void 0),
-  (exports.inputControllerMap = new Map([
-    [2, 2],
-    [1, 2],
-    [3, 0],
-    [4, 0],
-    [5, 0],
-    [6, 1],
-    [7, 1],
-  ])),
-  (exports.operationMap = new Map([
-    [2, 1],
-    [1, 1],
-    [3, 2],
-    [4, 2],
-    [5, 2],
-    [6, 2],
-    [7, 2],
-  ]));
+  (exports.deviceIdMap = void 0);
 const dualSenseWirelessController = "1356_3302",
   dualSenseEdgeWirelessController = "1356_3570",
   dualShock4_Cuhzct1x = "1356_1476",
@@ -35,17 +14,17 @@ const dualSenseWirelessController = "1356_3302",
   XboxOneSController = "1118_765",
   xboxWirelessAdapterForWindows = "1118_766";
 exports.deviceIdMap = new Map([
-  [dualSenseWirelessController, 7],
-  [dualSenseEdgeWirelessController, 7],
-  [dualShock4_Cuhzct1x, 7],
-  [dualShock4_Cuhzct2x, 7],
-  [xboxController, 6],
-  [xboxEliteSeries2Controller, 6],
-  [xboxOneController2015, 6],
-  [xboxOneWirelessController, 6],
-  [xboxOneEliteController, 6],
-  [xboxOneController, 6],
-  [XboxOneSController, 6],
-  [xboxWirelessAdapterForWindows, 6],
+  [dualSenseWirelessController, 3],
+  [dualSenseEdgeWirelessController, 3],
+  [dualShock4_Cuhzct1x, 3],
+  [dualShock4_Cuhzct2x, 3],
+  [xboxController, 2],
+  [xboxEliteSeries2Controller, 2],
+  [xboxOneController2015, 2],
+  [xboxOneWirelessController, 2],
+  [xboxOneEliteController, 2],
+  [xboxOneController, 2],
+  [XboxOneSController, 2],
+  [xboxWirelessAdapterForWindows, 2],
 ]);
 //# sourceMappingURL=PlatformDefine.js.map

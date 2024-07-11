@@ -5,23 +5,23 @@ const Log_1 = require("../../../Core/Common/Log"),
   VisibleStateUtil_1 = require("./VisibleStateUtil");
 class BattleUiChildViewData {
   constructor() {
-    (this.lKe = []), (this._Ke = new Map());
+    (this.EQe = []), (this.SQe = new Map());
   }
   Init() {
-    for (let t = (this.lKe.length = 0); t < 23; t++) this.lKe.push(1);
-    this.lKe.push(0);
+    for (let t = (this.EQe.length = 0); t < 23; t++) this.EQe.push(1);
+    this.EQe.push(0);
   }
   OnLeaveLevel() {}
   Clear() {}
   GetChildVisible(t) {
-    return 0 === this.lKe[t];
+    return 0 === this.EQe[t];
   }
   SetChildVisible(t, i, e, l = !0) {
-    var o = this.lKe[i],
+    var o = this.EQe[i],
       e = VisibleStateUtil_1.VisibleStateUtil.SetVisible(o, e, t);
     return (
-      (this.lKe[i] = e),
-      !l || o === e || (0 !== o && 0 !== e) || this.uKe(i),
+      (this.EQe[i] = e),
+      !l || o === e || (0 !== o && 0 !== e) || this.yQe(i),
       0 === e
     );
   }
@@ -31,27 +31,27 @@ class BattleUiChildViewData {
   HideBattleView(i, t) {
     for (let t = 0; t < 24; t++) this.SetChildVisible(i, t, !1, !1);
     if (t) for (const e of t) this.SetChildVisible(i, e, !0, !1);
-    this.cKe();
+    this.IQe();
   }
   ShowBattleView(i) {
     for (let t = 0; t < 24; t++) this.SetChildVisible(i, t, !0, !1);
-    this.cKe();
+    this.IQe();
   }
   AddCallback(t, i) {
-    let e = this._Ke.get(t);
-    e || ((e = []), this._Ke.set(t, e)), e.push(i);
+    let e = this.SQe.get(t);
+    e || ((e = []), this.SQe.set(t, e)), e.push(i);
   }
   RemoveCallback(t, i) {
-    t = this._Ke.get(t);
+    t = this.SQe.get(t);
     t && -1 !== (i = t.indexOf(i)) && t.splice(i, 1);
   }
-  uKe(t) {
-    t = this._Ke.get(t);
+  yQe(t) {
+    t = this.SQe.get(t);
     if (t) for (const i of t) i();
   }
-  cKe() {
+  IQe() {
     try {
-      for (const t of this._Ke.values()) for (const i of t) i();
+      for (const t of this.SQe.values()) for (const i of t) i();
     } catch (t) {
       t instanceof Error
         ? Log_1.Log.CheckError() &&
@@ -65,10 +65,10 @@ class BattleUiChildViewData {
   }
   DebugLogAllChildState() {
     for (let i = 0; i < 25; i++)
-      if (0 !== this.lKe[i])
+      if (0 !== this.EQe[i])
         for (let t = 0; t < 12; t++)
           VisibleStateUtil_1.VisibleStateUtil.GetVisibleByType(
-            this.lKe[i],
+            this.EQe[i],
             t,
           ) ||
             (Log_1.Log.CheckDebug() &&

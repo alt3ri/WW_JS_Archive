@@ -14,183 +14,183 @@ class OperationParam {
 class GenericLayout {
   constructor(t, i, e = void 0) {
     (this.eGe = void 0),
-      (this.dqo = void 0),
-      (this.Cqo = void 0),
+      (this.uGo = void 0),
+      (this.cGo = void 0),
       (this.AnimControllerComponent = void 0),
-      (this.gqo = []),
-      (this.fqo = []),
-      (this.pqo = []),
-      (this.vqo = new Map()),
-      (this.Mqo = void 0),
-      (this.gjt = new Queue_1.Queue()),
-      (this.pHt = !1),
-      (this.Sqo = () => {
+      (this.mGo = []),
+      (this.dGo = []),
+      (this.CGo = []),
+      (this.gGo = new Map()),
+      (this.fGo = void 0),
+      (this.gWt = new Queue_1.Queue()),
+      (this.pjt = !1),
+      (this.pGo = () => {
         this.UnBindLateUpdate();
       }),
       (this.eGe = t),
-      this.eGe.GetOwner().OnDestroyed.Add(this.Sqo),
-      (this.Mqo = e || t.RootUIComp.GetAttachUIChild(0)?.GetOwner()),
-      this.Mqo &&
-        (this.Mqo.GetUIItem().SetUIActive(!1),
-        (this.dqo = new ScrollViewDelegate_1.ScrollViewDelegate(i)),
-        (this.Cqo = new InTurnGridAppearAnimation_1.InTurnGridAppearAnimation(
+      this.eGe.GetOwner().OnDestroyed.Add(this.pGo),
+      (this.fGo = e || t.RootUIComp.GetAttachUIChild(0)?.GetOwner()),
+      this.fGo &&
+        (this.fGo.GetUIItem().SetUIActive(!1),
+        (this.uGo = new ScrollViewDelegate_1.ScrollViewDelegate(i)),
+        (this.cGo = new InTurnGridAppearAnimation_1.InTurnGridAppearAnimation(
           this,
         )),
-        this.Cqo.RegisterAnimController());
+        this.cGo.RegisterAnimController());
   }
-  get RHt() {
-    return this.pHt;
+  get Rjt() {
+    return this.pjt;
   }
-  UHt() {
-    this.pHt = !0;
+  Ujt() {
+    this.pjt = !0;
   }
-  O0t() {
+  Jft() {
     var t;
-    (this.pHt = !1),
-      this.gjt.Empty ||
-        ((t = this.gjt.Pop()),
+    (this.pjt = !1),
+      this.gWt.Empty ||
+        ((t = this.gWt.Pop()),
         this.RefreshByData(t.Data, t.CallBack, t.PlayGridAnim));
   }
   GetRootUiItem() {
     return this.eGe?.RootUIComp;
   }
-  Tke() {
+  V2e() {
     return LguiUtil_1.LguiUtil.CopyItem(
-      this.Mqo.GetUIItem(),
+      this.fGo.GetUIItem(),
       this.GetRootUiItem(),
     );
   }
   GetKey(t) {
-    if (!(t < 0 || t >= this.pqo.length)) {
-      var i = this.pqo[t];
+    if (!(t < 0 || t >= this.CGo.length)) {
+      var i = this.CGo[t];
       if (i) {
-        var e = this.dqo.GetDatas()[t];
+        var e = this.uGo.GetDatas()[t];
         if (e) return i.GetKey(e, t);
       }
     }
   }
   ClearChildren() {
-    for (const i of this.gqo) {
+    for (const i of this.mGo) {
       var t = i.GetOwner();
       t?.IsValid() && t.K2_DestroyActor();
     }
-    (this.gqo.length = 0),
-      (this.fqo.length = 0),
-      (this.pqo.length = 0),
-      this.vqo.clear();
+    (this.mGo.length = 0),
+      (this.dGo.length = 0),
+      (this.CGo.length = 0),
+      this.gGo.clear();
   }
   async LoadGrid(i) {
     var e = [];
-    for (let t = this.gqo.length; t < i; t++) {
-      var s = this.Tke();
-      e.push(this.dqo.CreateGridProxyAsync(t, s.GetOwner())), this.gqo.push(s);
+    for (let t = this.mGo.length; t < i; t++) {
+      var s = this.V2e();
+      e.push(this.uGo.CreateGridProxyAsync(t, s.GetOwner())), this.mGo.push(s);
     }
     await Promise.all(e);
   }
   RefreshByDataDirectly(t) {
     var i = t.length;
-    if (i > this.gqo.length) return !1;
-    this.dqo.SetData(t), this.dqo.ClearSelectInfo(), this.vqo.clear();
-    for (let t = this.fqo.length; t < i; t++) {
-      var e = this.gqo[t];
+    if (i > this.mGo.length) return !1;
+    this.uGo.SetData(t), this.uGo.ClearSelectInfo(), this.gGo.clear();
+    for (let t = this.dGo.length; t < i; t++) {
+      var e = this.mGo[t];
       e.SetUIActive(!0),
-        this.fqo.push(e),
-        this.pqo.push(this.dqo.GetGridProxy(t));
+        this.dGo.push(e),
+        this.CGo.push(this.uGo.GetGridProxy(t));
     }
-    return this.Eqo(), !0;
+    return this.vGo(), !0;
   }
   RefreshByData(t, i, e = !1) {
     var s;
-    this.RHt
-      ? ((s = new OperationParam(t, i, e)), this.gjt.Push(s))
-      : (this.UHt(),
+    this.Rjt
+      ? ((s = new OperationParam(t, i, e)), this.gWt.Push(s))
+      : (this.Ujt(),
         this.RefreshByDataAsync(t, e).finally(() => {
-          i?.(), this.O0t();
+          i?.(), this.Jft();
         }));
   }
-  async RefreshByDataAsync(t, i = !1) {
-    await this.yqo(t),
-      i && this.Cqo && this.Cqo.PlayGridAnim(this.GetDisplayGridNum());
+  async RefreshByDataAsync(t, i = !1, e = t.length) {
+    await this.MGo(t, e),
+      i && this.cGo && this.cGo.PlayGridAnim(this.GetDisplayGridNum());
   }
-  Eqo() {
-    if (0 !== this.fqo.length)
-      for (let t = 0; t < this.fqo.length; t++) this.Iqo(t);
+  vGo() {
+    if (0 !== this.dGo.length)
+      for (let t = 0; t < this.dGo.length; t++) this.EGo(t);
   }
-  Iqo(t) {
-    this.dqo.RefreshGridProxy(t, t);
-    var i = this.pqo[t];
-    this.vqo.set(this.GetKey(t), i);
+  EGo(t) {
+    this.uGo.RefreshGridProxy(t, t);
+    var i = this.CGo[t];
+    this.gGo.set(this.GetKey(t), i);
   }
-  async yqo(t) {
-    var i = t.length,
-      e =
-        (this.dqo.SetData(t),
-        this.dqo.ClearSelectInfo(),
-        this.vqo.clear(),
-        this.fqo.length);
-    if (i <= e) {
-      for (let t = i; t < e; t++) this.gqo[t].SetUIActive(!1);
-      (this.fqo.length = i), (this.pqo.length = i), this.Eqo();
-    } else if (this.gqo.length >= i) {
-      for (let t = e; t < i; t++) {
-        var s = this.gqo[t];
-        s.SetUIActive(!0),
-          this.fqo.push(s),
-          this.pqo.push(this.dqo.GetGridProxy(t));
+  async MGo(t, i) {
+    var e = i,
+      s =
+        (this.uGo.SetData(t),
+        this.uGo.ClearSelectInfo(),
+        this.gGo.clear(),
+        this.dGo.length);
+    if (e <= s) {
+      for (let t = e; t < s; t++) this.mGo[t].SetUIActive(!1);
+      (this.dGo.length = e), (this.CGo.length = e), this.vGo();
+    } else if (this.mGo.length >= e) {
+      for (let t = s; t < e; t++) {
+        var r = this.mGo[t];
+        r.SetUIActive(!0),
+          this.dGo.push(r),
+          this.CGo.push(this.uGo.GetGridProxy(t));
       }
-      this.Eqo();
+      this.vGo();
     } else {
-      var r = this.gqo.length;
-      for (let t = e; t < r; t++) {
-        var h = this.gqo[t];
-        h.SetUIActive(!0),
-          this.fqo.push(h),
-          this.pqo.push(this.dqo.GetGridProxy(t));
-      }
-      this.Eqo(), await this.LoadGrid(i);
-      for (let t = r; t < this.gqo.length; t++) {
-        var a = this.gqo[t];
+      var h = this.mGo.length;
+      for (let t = s; t < h; t++) {
+        var a = this.mGo[t];
         a.SetUIActive(!0),
-          this.fqo.push(a),
-          this.pqo.push(this.dqo.GetGridProxy(t)),
-          this.Iqo(t);
+          this.dGo.push(a),
+          this.CGo.push(this.uGo.GetGridProxy(t));
+      }
+      this.vGo(), await this.LoadGrid(e);
+      for (let t = h; t < this.mGo.length; t++) {
+        var n = this.mGo[t];
+        n.SetUIActive(!0),
+          this.dGo.push(n),
+          this.CGo.push(this.uGo.GetGridProxy(t)),
+          this.EGo(t);
       }
     }
   }
   GetItemByIndex(t) {
-    return this.fqo[t];
+    return this.dGo[t];
   }
   GetItemByKey(t) {
     t = this.GetLayoutItemByKey(t);
-    return this.fqo[t.GridIndex];
+    return this.dGo[t.GridIndex];
   }
   GetLayoutItemByKey(t) {
-    return this.vqo.get(t);
+    return this.gGo.get(t);
   }
   GetLayoutItemMap() {
-    return this.vqo;
+    return this.gGo;
   }
   GetLayoutItemList() {
-    return this.pqo;
+    return this.CGo;
   }
   GetLayoutItemByIndex(t) {
-    var i = this.dqo.IsProxyValid(t);
-    if (i && !(t >= this.pqo.length)) return this.pqo[t];
+    var i = this.uGo.IsProxyValid(t);
+    if (i && !(t >= this.CGo.length)) return this.CGo[t];
   }
   GetDatas() {
-    return this.dqo.GetDatas();
+    return this.uGo.GetDatas();
   }
   SelectGridProxy(t) {
-    this.dqo.SelectGridProxy(t, t, !1);
+    this.uGo.SelectGridProxy(t, t, !1);
   }
   DeselectCurrentGridProxy() {
-    this.dqo.DeselectCurrentGridProxy(!1);
+    this.uGo.DeselectCurrentGridProxy(!1);
   }
   GetSelectedGridIndex() {
-    return this.dqo.GetSelectedGridIndex();
+    return this.uGo.GetSelectedGridIndex();
   }
   GetSelectedProxy() {
-    return this.dqo.GetSelectedProxy();
+    return this.uGo.GetSelectedProxy();
   }
   BindLateUpdate(t) {
     this.eGe.OnLateUpdate.Bind(t);
@@ -202,10 +202,10 @@ class GenericLayout {
     this.eGe?.RootUIComp.SetUIActive(t);
   }
   GetDisplayGridNum() {
-    return this.pqo.length;
+    return this.CGo.length;
   }
   GetPreservedGridNum() {
-    return this.gqo.length;
+    return this.mGo.length;
   }
   GetDisplayGridStartIndex() {
     return 0;
@@ -214,10 +214,10 @@ class GenericLayout {
     return this.GetDisplayGridNum() - 1;
   }
   GetGrid(t) {
-    return this.fqo[t];
+    return this.dGo[t];
   }
   GetGridByDisplayIndex(t) {
-    return this.fqo[t];
+    return this.dGo[t];
   }
   GetGridAnimationInterval() {
     return this.eGe.GetGridAnimationInterval();

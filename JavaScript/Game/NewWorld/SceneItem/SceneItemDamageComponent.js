@@ -25,31 +25,33 @@ const Log_1 = require("../../../Core/Common/Log"),
   EntityComponent_1 = require("../../../Core/Entity/EntityComponent"),
   RegisterComponent_1 = require("../../../Core/Entity/RegisterComponent"),
   Vector_1 = require("../../../Core/Utils/Math/Vector"),
+  IComponent_1 = require("../../../UniverseEditor/Interface/IComponent"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
   LevelGamePlayController_1 = require("../../LevelGamePlay/LevelGamePlayController"),
   ModelManager_1 = require("../../Manager/ModelManager"),
-  SceneTeamController_1 = require("../../Module/SceneTeam/SceneTeamController");
+  SceneTeamController_1 = require("../../Module/SceneTeam/SceneTeamController"),
+  SceneItemHitUtils_1 = require("./Util/SceneItemHitUtils");
 let SceneItemDamageComponent =
   (SceneItemDamageComponent_1 = class SceneItemDamageComponent extends (
     EntityComponent_1.EntityComponent
   ) {
     constructor() {
       super(...arguments),
-        (this.Snn = void 0),
-        (this.C1n = void 0),
-        (this.dCn = -0),
-        (this.CCn = -0),
-        (this.gCn = void 0),
-        (this.Bht = void 0),
+        (this.inn = void 0),
+        (this.Xln = void 0),
+        (this.Qdn = -0),
+        (this.Xdn = -0),
+        (this.$dn = void 0),
+        (this.Qlt = void 0),
         (this.Lo = void 0),
-        (this.nXt = void 0),
-        (this.fCn = void 0),
+        (this.n$t = void 0),
+        (this.Ydn = void 0),
         (this.gIe = () => {
           Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug("SceneItem", 32, "[可破坏物] 改变状态", [
               "State",
-              this.Snn.GetTagNames(),
+              this.inn.GetTagNames(),
             ]);
         });
     }
@@ -57,8 +59,8 @@ let SceneItemDamageComponent =
       var e = e.GetParam(SceneItemDamageComponent_1)[0],
         e =
           ((this.Lo = e),
-          (this.nXt = this.Entity.GetComponent(1)),
-          (this.fCn = Vector_1.Vector.Create(
+          (this.n$t = this.Entity.GetComponent(1)),
+          (this.Ydn = Vector_1.Vector.Create(
             this.Lo.HitPoint.X || 0,
             this.Lo.HitPoint.Y || 0,
             this.Lo.HitPoint.Z || 0,
@@ -66,15 +68,15 @@ let SceneItemDamageComponent =
           this.Entity.GetComponent(0)),
         t = this.Lo.Durability;
       return (
-        (this.dCn = t || 100),
-        (this.CCn = e.GetDurabilityValue()),
+        (this.Qdn = t || 100),
+        (this.Xdn = e.GetDurabilityValue()),
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
             "Entity",
             18,
             "初始化破坏组件完成",
-            ["最大耐久度", this.dCn],
-            ["当前耐久度", this.CCn],
+            ["最大耐久度", this.Qdn],
+            ["当前耐久度", this.Xdn],
             ["PbDataId", e.GetPbDataId()],
           ),
         !0
@@ -82,24 +84,24 @@ let SceneItemDamageComponent =
     }
     OnStart() {
       return (
-        (this.Snn = this.Entity.GetComponent(177)),
-        (this.C1n = this.Entity.GetComponent(138)),
-        this.C1n.RegisterComponent(this, this.Lo),
-        (this.gCn = (e) => {
-          this.M1n(e);
+        (this.inn = this.Entity.GetComponent(180)),
+        (this.Xln = this.Entity.GetComponent(140)),
+        this.Xln.RegisterComponent(this, this.Lo),
+        (this.$dn = (e) => {
+          this.Zln(e);
         }),
         EventSystem_1.EventSystem.AddWithTarget(
           this,
           EventDefine_1.EEventName.OnSceneItemHitByHitData,
-          this.gCn,
+          this.$dn,
         ),
-        (this.Bht = (e) => {
-          this.CCn !== e && (this.CCn = e);
+        (this.Qlt = (e) => {
+          this.Xdn !== e && (this.Xdn = e);
         }),
         EventSystem_1.EventSystem.AddWithTarget(
           this.Entity,
           EventDefine_1.EEventName.OnSceneItemDurabilityChange,
-          this.Bht,
+          this.Qlt,
         ),
         EventSystem_1.EventSystem.AddWithTarget(
           this.Entity,
@@ -111,20 +113,20 @@ let SceneItemDamageComponent =
     }
     OnEnd() {
       return (
-        void 0 !== this.gCn &&
+        void 0 !== this.$dn &&
           (EventSystem_1.EventSystem.RemoveWithTarget(
             this,
             EventDefine_1.EEventName.OnSceneItemHitByHitData,
-            this.gCn,
+            this.$dn,
           ),
-          (this.gCn = void 0)),
-        void 0 !== this.Bht &&
+          (this.$dn = void 0)),
+        void 0 !== this.Qlt &&
           (EventSystem_1.EventSystem.RemoveWithTarget(
             this.Entity,
             EventDefine_1.EEventName.OnSceneItemDurabilityChange,
-            this.Bht,
+            this.Qlt,
           ),
-          (this.Bht = void 0)),
+          (this.Qlt = void 0)),
         EventSystem_1.EventSystem.RemoveWithTarget(
           this.Entity,
           EventDefine_1.EEventName.OnGameplayTagChanged,
@@ -133,7 +135,7 @@ let SceneItemDamageComponent =
         !0
       );
     }
-    M1n(e) {
+    Zln(e) {
       if (this.Lo.MatchRoleOption && 0 < this.Lo.MatchRoleOption.length) {
         if (
           !SceneTeamController_1.SceneTeamController.IsMatchRoleOption(
@@ -143,50 +145,55 @@ let SceneItemDamageComponent =
           return;
       } else if (ModelManager_1.ModelManager.SceneTeamModel.IsPhantomTeam)
         return;
-      var t = e.Attacker.GetComponent(3);
-      !t?.Valid ||
-        (!t.IsRoleAndCtrlByMe && !t.IsSummonsAndCtrlByMe) ||
-        this.CCn <= 0 ||
-        (e.ReBulletData.Base.DamageId &&
-          0 < this.CCn &&
-          ((t =
-            this.Entity.GetComponent(0).GetBaseInfo()?.Category
-              ?.ControlMatchType) &&
-            "关卡.Common.被控物.爆裂鸣晶" === t &&
-            Log_1.Log.CheckDebug() &&
-            Log_1.Log.Debug(
-              "SceneItem",
-              32,
-              "[爆裂鸣晶] ThrowDamageChangeRequest",
-              ["Entity.Valid", this.Entity.Valid],
-            ),
-          LevelGamePlayController_1.LevelGamePlayController.ThrowDamageChangeRequest(
-            this.Entity.Id,
-            e.ReBulletData.Base.DamageId,
-          )));
+      var t = e.Attacker.GetComponent(3),
+        i = SceneItemHitUtils_1.SceneItemHitUtils.CheckHitDataMatchPlayerAttack(
+          { Type: IComponent_1.EHitBulletType.PlayerAttack },
+          e,
+          this.Entity,
+        );
+      t?.Valid &&
+        i &&
+        (this.Xdn <= 0 ||
+          (e.ReBulletData.Base.DamageId &&
+            0 < this.Xdn &&
+            ((t =
+              this.Entity.GetComponent(0).GetBaseInfo()?.Category
+                ?.ControlMatchType) &&
+              "关卡.Common.被控物.爆裂鸣晶" === t &&
+              Log_1.Log.CheckDebug() &&
+              Log_1.Log.Debug(
+                "SceneItem",
+                32,
+                "[爆裂鸣晶] ThrowDamageChangeRequest",
+                ["Entity.Valid", this.Entity.Valid],
+              ),
+            LevelGamePlayController_1.LevelGamePlayController.ThrowDamageChangeRequest(
+              this.Entity.Id,
+              e.ReBulletData.Base.DamageId,
+            ))));
     }
     GetHitPoint() {
-      var e = Vector_1.Vector.Create(this.fCn),
+      var e = Vector_1.Vector.Create(this.Ydn),
         t = Vector_1.Vector.Create(),
         i = Vector_1.Vector.Create();
       return (
-        this.nXt.ActorForwardProxy.Multiply(e.X, i),
+        this.n$t.ActorForwardProxy.Multiply(e.X, i),
         t.AdditionEqual(i),
-        this.nXt.ActorRightProxy.Multiply(e.Y, i),
+        this.n$t.ActorRightProxy.Multiply(e.Y, i),
         t.AdditionEqual(i),
-        this.nXt.ActorUpProxy.Multiply(e.Z, i),
+        this.n$t.ActorUpProxy.Multiply(e.Z, i),
         t.AdditionEqual(i),
-        this.nXt.ActorLocationProxy.Addition(t, t),
+        this.n$t.ActorLocationProxy.Addition(t, t),
         t
       );
     }
     GetMaxDurablePoint() {
-      return this.dCn;
+      return this.Qdn;
     }
   });
 (SceneItemDamageComponent = SceneItemDamageComponent_1 =
   __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(132)],
+    [(0, RegisterComponent_1.RegisterComponent)(134)],
     SceneItemDamageComponent,
   )),
   (exports.SceneItemDamageComponent = SceneItemDamageComponent);

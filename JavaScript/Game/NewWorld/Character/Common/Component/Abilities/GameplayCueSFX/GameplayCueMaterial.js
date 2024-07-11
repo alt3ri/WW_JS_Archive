@@ -10,23 +10,23 @@ const UE = require("ue"),
 class GameplayCueMaterial extends GameplayCueMagnitude_1.GameplayCueMagnitude {
   constructor() {
     super(...arguments),
-      (this.rWt = 0),
-      (this._$o = 0),
-      (this.u$o = (e) => {
-        if (e === this.rWt) {
-          switch (this._$o) {
+      (this.rKt = 0),
+      (this.aYo = 0),
+      (this.hYo = (e) => {
+        if (e === this.rKt) {
+          switch (this.aYo) {
             case 1:
               EventSystem_1.EventSystem.RemoveWithTarget(
                 this.ActorInternal.CharRenderingComponent,
                 EventDefine_1.EEventName.OnRemoveMaterialController,
-                this.u$o,
+                this.hYo,
               );
               break;
             case 2:
               EventSystem_1.EventSystem.RemoveWithTarget(
                 this.ActorInternal.CharRenderingComponent,
                 EventDefine_1.EEventName.OnRemoveMaterialControllerGroup,
-                this.u$o,
+                this.hYo,
               );
           }
           this.EndCallback?.();
@@ -36,7 +36,9 @@ class GameplayCueMaterial extends GameplayCueMagnitude_1.GameplayCueMagnitude {
   OnInit() {
     super.OnInit();
   }
-  OnTick(e) {}
+  OnTick(e) {
+    super.OnTick(e);
+  }
   OnCreate() {
     ResourceSystem_1.ResourceSystem.LoadAsync(
       this.CueConfig.Path,
@@ -46,23 +48,23 @@ class GameplayCueMaterial extends GameplayCueMagnitude_1.GameplayCueMagnitude {
           (this.BeginCallback?.(),
           this.ActorInternal?.IsValid() && this.IsActive)
         ) {
-          switch (this.c$o(e)) {
+          switch (this.lYo(e)) {
             case 1:
-              (this._$o = 1),
-                (this.rWt =
+              (this.aYo = 1),
+                (this.rKt =
                   this.ActorInternal.CharRenderingComponent.AddMaterialControllerData(
                     e,
                   ));
               break;
             case 2:
-              (this._$o = 2),
-                (this.rWt =
+              (this.aYo = 2),
+                (this.rKt =
                   this.ActorInternal.CharRenderingComponent.AddMaterialControllerDataGroup(
                     e,
                   ));
               break;
             case 0:
-              (this._$o = 0),
+              (this.aYo = 0),
                 Log_1.Log.CheckError() &&
                   Log_1.Log.Error(
                     "Battle",
@@ -72,49 +74,49 @@ class GameplayCueMaterial extends GameplayCueMagnitude_1.GameplayCueMagnitude {
                     ["材质路径", this.CueConfig.Path],
                   );
           }
-          this.DXo(), super.OnCreate();
+          this.I$o(), super.OnCreate();
         }
       },
     );
   }
   OnDestroy() {
-    switch ((super.OnDestroy(), this._$o)) {
+    switch ((super.OnDestroy(), this.aYo)) {
       case 1:
         this.ActorInternal.CharRenderingComponent.RemoveMaterialControllerDataWithEnding(
-          this.rWt,
+          this.rKt,
         );
         break;
       case 2:
         this.ActorInternal.CharRenderingComponent.RemoveMaterialControllerDataGroupWithEnding(
-          this.rWt,
+          this.rKt,
         );
     }
   }
   OnSetMagnitude(e) {
-    this.ActorInternal.CharRenderingComponent.SetEffectProgress(e, this.rWt);
+    this.ActorInternal.CharRenderingComponent.SetEffectProgress(e, this.rKt);
   }
-  c$o(e) {
+  lYo(e) {
     return e instanceof UE.PD_CharacterControllerData_C
       ? 1
       : e instanceof UE.PD_CharacterControllerDataGroup_C
         ? 2
         : 0;
   }
-  DXo() {
+  I$o() {
     if (this.EndCallback)
-      switch (this._$o) {
+      switch (this.aYo) {
         case 1:
           EventSystem_1.EventSystem.AddWithTarget(
             this.ActorInternal.CharRenderingComponent,
             EventDefine_1.EEventName.OnRemoveMaterialController,
-            this.u$o,
+            this.hYo,
           );
           break;
         case 2:
           EventSystem_1.EventSystem.AddWithTarget(
             this.ActorInternal.CharRenderingComponent,
             EventDefine_1.EEventName.OnRemoveMaterialControllerGroup,
-            this.u$o,
+            this.hYo,
           );
       }
   }

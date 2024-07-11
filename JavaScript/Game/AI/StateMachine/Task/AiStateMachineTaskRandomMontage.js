@@ -2,7 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AiStateMachineTaskRandomMontage = void 0);
 const Vector_1 = require("../../../../Core/Utils/Math/Vector"),
-  CombatDebugController_1 = require("../../../Utils/CombatDebugController"),
+  CombatLog_1 = require("../../../Utils/CombatLog"),
   AiStateMachine_1 = require("../AiStateMachine"),
   AiStateMachineTask_1 = require("./AiStateMachineTask");
 class AiStateMachineTaskRandomMontage extends AiStateMachineTask_1.AiStateMachineTask {
@@ -20,6 +20,7 @@ class AiStateMachineTaskRandomMontage extends AiStateMachineTask_1.AiStateMachin
         (this.Dne = !1),
           this.Node.Activated &&
             (this.Ine &&
+              this.Rne &&
               (this.Node.ActorComponent.EnableActor(this.Rne),
               (this.Rne = void 0)),
             this.Node.MoveComponent.SetForceSpeed(
@@ -49,7 +50,7 @@ class AiStateMachineTaskRandomMontage extends AiStateMachineTask_1.AiStateMachin
       (this.Dne = !0),
       (this.Playing = !1),
       (this.MontageIndex = this.Node.Owner.GetBlackboard(1)),
-      CombatDebugController_1.CombatDebugController.CombatInfo(
+      CombatLog_1.CombatLog.Info(
         "StateMachineNew",
         this.Node.Entity,
         "随机Montage",
@@ -58,7 +59,7 @@ class AiStateMachineTaskRandomMontage extends AiStateMachineTask_1.AiStateMachin
       (void 0 === this.MontageIndex ||
         this.MontageIndex < 0 ||
         this.MontageIndex >= this.MontageNames.length) &&
-        (CombatDebugController_1.CombatDebugController.CombatError(
+        (CombatLog_1.CombatLog.Error(
           "StateMachineNew",
           this.Node.Entity,
           "播放随机Montage失败，MontageIndex非法",
@@ -98,6 +99,7 @@ class AiStateMachineTaskRandomMontage extends AiStateMachineTask_1.AiStateMachin
   OnExit(t) {
     this.Ine &&
       this.Dne &&
+      this.Rne &&
       (this.Node.ActorComponent.EnableActor(this.Rne), (this.Rne = void 0)),
       this.Node.MontageComponent.EndMontageTask(this.rse),
       (this.rse = void 0),

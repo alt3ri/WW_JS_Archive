@@ -10,7 +10,7 @@ class TsDecoratorCheckFsmState extends UE.BTDecorator_BlueprintBase {
     var o = e.AiController;
     return o
       ? !!(o = o.CharActorComp.Entity.GetComponent(
-          65,
+          67,
         ).StateMachineGroup.GetNodeByName(this.State)) && o.Activated
       : (Log_1.Log.CheckError() &&
           Log_1.Log.Error("BehaviorTree", 6, "错误的Controller类型", [

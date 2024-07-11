@@ -1,21 +1,26 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiViewPending = void 0);
+const CustomPromise_1 = require("../../../Core/Common/CustomPromise");
 class UiViewPending {
-  constructor(t, i) {
-    (this.PendingType = 1), (this.View = t), (this.PendingType = i);
+  constructor(s, i) {
+    (this.PendingType = 1),
+      (this.ExecutePromise = void 0),
+      (this.View = s),
+      (this.PendingType = i),
+      (this.ExecutePromise = new CustomPromise_1.CustomPromise());
   }
-  Equal(t) {
+  Equal(s) {
     return (
-      this.View.Info.Name === t.View.Info.Name &&
-      this.PendingType === t.PendingType
+      this.View.Info.Name === s.View.Info.Name &&
+      this.PendingType === s.PendingType
     );
   }
-  IsPairWith(t) {
+  IsPairWith(s) {
     return (
-      this.View.Info.Name === t.View.Info.Name &&
+      this.View.Info.Name === s.View.Info.Name &&
       1 === this.PendingType &&
-      (2 === t.PendingType || 3 === t.PendingType)
+      (2 === s.PendingType || 3 === s.PendingType)
     );
   }
 }

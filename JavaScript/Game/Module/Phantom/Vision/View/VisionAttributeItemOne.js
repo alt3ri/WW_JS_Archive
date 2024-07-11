@@ -21,18 +21,18 @@ class VisionAttributeItemOne extends UiPanelBase_1.UiPanelBase {
   constructor(t) {
     super(),
       (this.LoadingPromise = new CustomPromise_1.CustomPromise()),
-      (this.g6i = void 0),
-      (this.EPe = void 0),
+      (this.C8i = void 0),
+      (this.SPe = void 0),
       (this.kGe = void 0),
-      (this.f6i = 0),
-      (this.p6i = void 0),
+      (this.g8i = 0),
+      (this.f8i = void 0),
       (this.JGe = (t, e, i) => {
         e = new AttributeSkillStateItem(e);
-        return e.Update(this.g6i, t, this.f6i - 1 === i), { Key: i, Value: e };
+        return e.Update(this.C8i, t, this.g8i - 1 === i), { Key: i, Value: e };
       }),
-      (this.v6i = (t) => {
-        t === this.g6i?.GetUniqueId() &&
-          this.Refresh(this.g6i.GetUniqueId(), !1);
+      (this.p8i = (t) => {
+        t === this.C8i?.GetUniqueId() &&
+          this.Refresh(this.C8i.GetUniqueId(), !1);
       }),
       (this.kqe = () => {}),
       this.CreateThenShowByResourceIdAsync("UiItem_VisionIAttriItemA", t);
@@ -44,9 +44,9 @@ class VisionAttributeItemOne extends UiPanelBase_1.UiPanelBase {
     ];
   }
   OnStart() {
-    (this.p6i = new VisionAttributeSkillButton(this.GetItem(0))),
-      this.p6i.SetOnClickCall(this.kqe),
-      (this.EPe = new LevelSequencePlayer_1.LevelSequencePlayer(
+    (this.f8i = new VisionAttributeSkillButton(this.GetItem(0))),
+      this.f8i.SetOnClickCall(this.kqe),
+      (this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(
         this.GetItem(0),
       )),
       this.AddEventListener(),
@@ -58,37 +58,37 @@ class VisionAttributeItemOne extends UiPanelBase_1.UiPanelBase {
   AddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.PhantomPersonalSkillActive,
-      this.v6i,
+      this.p8i,
     );
   }
   RemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.PhantomPersonalSkillActive,
-      this.v6i,
+      this.p8i,
     );
   }
   RefreshButtonShowState(t) {
     this.GetItem(0).SetUIActive(t);
   }
-  M6i() {
+  v8i() {
     var t = new VisionAttributeVariantOneData();
     return (
-      (t.Desc = this.g6i.GetNormalSkillDesc()),
-      (t.SkillId = this.g6i.GetNormalSkillId()),
+      (t.Desc = this.C8i.GetNormalSkillDesc()),
+      (t.SkillId = this.C8i.GetNormalSkillId()),
       t
     );
   }
-  S6i() {
+  M8i() {
     var t = new Array();
     return (
-      this.g6i.GetUniqueId() < 0
-        ? t.push(this.M6i())
-        : (0 < this.g6i.GetPersonalSkillId() && 0, t.push(this.M6i())),
+      this.C8i.GetUniqueId() < 0
+        ? t.push(this.v8i())
+        : (0 < this.C8i.GetPersonalSkillId() && 0, t.push(this.v8i())),
       t
     );
   }
   Refresh(t, e = !0) {
-    this.g6i =
+    this.C8i =
       ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomBattleData(t);
     var i =
         ModelManager_1.ModelManager.PhantomBattleModel.CheckPhantomIsEquip(t),
@@ -96,32 +96,32 @@ class VisionAttributeItemOne extends UiPanelBase_1.UiPanelBase {
         (this.RefreshButtonShowState(
           i &&
             0 < t &&
-            0 < this.g6i.GetPersonalSkillId() &&
+            0 < this.C8i.GetPersonalSkillId() &&
             ModelManager_1.ModelManager.PhantomBattleModel.CheckPhantomIsMain(
               t,
             ) &&
             !1,
         ),
-        this.S6i());
-    (this.f6i = i.length), this.kGe.RefreshByData(i), this.E6i(e), this.y6i();
+        this.M8i());
+    (this.g8i = i.length), this.kGe.RefreshByData(i), this.E8i(e), this.S8i();
   }
-  y6i() {
-    0 < this.g6i.GetPersonalSkillId() && this.p6i.Update(this.g6i);
+  S8i() {
+    0 < this.C8i.GetPersonalSkillId() && this.f8i.Update(this.C8i);
   }
-  E6i(t = !0) {
-    var e = this.g6i.GetUniqueId();
+  E8i(t = !0) {
+    var e = this.C8i.GetUniqueId();
     let i = !1;
     (i =
-      0 < this.g6i.GetPersonalSkillId()
+      0 < this.C8i.GetPersonalSkillId()
         ? ModelManager_1.ModelManager.PhantomBattleModel.CheckPhantomIsMain(e)
-          ? this.g6i.GetIfActivePersonalSkill()
+          ? this.C8i.GetIfActivePersonalSkill()
           : ModelManager_1.ModelManager.PhantomBattleModel.GetIfVisionSkillState(
               e,
             )
         : i)
-      ? this.EPe.PlaySequencePurely("ClickR")
-      : this.EPe.PlaySequencePurely("ClickL"),
-      t && this.EPe.StopCurrentSequence(!1, t);
+      ? this.SPe.PlaySequencePurely("ClickR")
+      : this.SPe.PlaySequencePurely("ClickL"),
+      t && this.SPe.StopCurrentSequence(!1, t);
   }
   OnBeforeDestroy() {
     this.kGe.ClearChildren(), this.RemoveEventListener();
@@ -131,9 +131,9 @@ exports.VisionAttributeItemOne = VisionAttributeItemOne;
 class VisionAttributeSkillButton extends UiPanelBase_1.UiPanelBase {
   constructor(t) {
     super(),
-      (this.I6i = void 0),
+      (this.y8i = void 0),
       (this.nqe = () => {
-        this.I6i?.();
+        this.y8i?.();
       }),
       this.CreateThenShowByActor(t.GetOwner());
   }
@@ -148,12 +148,12 @@ class VisionAttributeSkillButton extends UiPanelBase_1.UiPanelBase {
       (this.BtnBindInfo = [[0, this.nqe]]);
   }
   SetOnClickCall(t) {
-    this.I6i = t;
+    this.y8i = t;
   }
   Update(t) {
-    this.T6i(t), this.hke(t);
+    this.I8i(t), this.T2e(t);
   }
-  hke(t) {
+  T2e(t) {
     var e = t.GetUniqueId();
     ModelManager_1.ModelManager.PhantomBattleModel.CheckPhantomIsMain(e)
       ? ((t = t.GetIfActivePersonalSkill()),
@@ -170,7 +170,7 @@ class VisionAttributeSkillButton extends UiPanelBase_1.UiPanelBase {
           t ? "VisionSpecialSkill" : "VisionNormalSkill",
         ));
   }
-  T6i(t) {
+  I8i(t) {
     LguiUtil_1.LguiUtil.SetLocalText(this.GetText(4), "VisionNormalSkill"),
       this.GetItem(1).SetUIActive(!1),
       this.GetItem(2).SetUIActive(!1),
@@ -192,15 +192,15 @@ class AttributeSkillStateItem extends UiPanelBase_1.UiPanelBase {
     ];
   }
   Update(t, e, i) {
-    this.L6i(t, e),
+    this.T8i(t, e),
       this.GetItem(5).SetUIActive(!i),
-      this.hke(e),
-      this.D6i(t, e);
+      this.T2e(e),
+      this.L8i(t, e);
   }
-  L6i(t, e) {
+  T8i(t, e) {
     var i = t.GetUniqueId();
     ModelManager_1.ModelManager.PhantomBattleModel.CheckPhantomIsEquip(i)
-      ? this.R6i(t, e)
+      ? this.D8i(t, e)
         ? this.GetItem(0).SetUIActive(!0)
         : ModelManager_1.ModelManager.PhantomBattleModel.CheckPhantomIsMain(i)
           ? this.GetItem(0).SetUIActive(!1)
@@ -208,22 +208,22 @@ class AttributeSkillStateItem extends UiPanelBase_1.UiPanelBase {
             LguiUtil_1.LguiUtil.SetLocalText(this.GetText(1), "VisionNotMain"))
       : this.GetItem(0).SetUIActive(!1);
   }
-  hke(t) {
+  T2e(t) {
     LguiUtil_1.LguiUtil.SetLocalTextNew(
       this.GetText(4),
       t.Desc.MainSkillText,
       ...t.Desc.MainSkillParameter,
     );
   }
-  R6i(t, e) {
+  D8i(t, e) {
     return e.SkillId === t.GetPersonalSkillId() && 0 < e.SkillId;
   }
-  D6i(t, e) {
+  L8i(t, e) {
     var i = t.GetUniqueId(),
       s = ModelManager_1.ModelManager.PhantomBattleModel.CheckPhantomIsEquip(i);
     s &&
     ModelManager_1.ModelManager.PhantomBattleModel.CheckPhantomIsMain(i) &&
-    !this.R6i(t, e) &&
+    !this.D8i(t, e) &&
     s
       ? (this.GetItem(2).SetUIActive(!0),
         LguiUtil_1.LguiUtil.SetLocalText(this.GetText(3), "ItemEquiped"))

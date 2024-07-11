@@ -20,7 +20,7 @@ class TsTaskAddGe extends TsTaskAbortImmediatelyBase_1.default {
     var a,
       i = s.AiController;
     i
-      ? ((a = i.CharActorComp.Entity.CheckGetComponent(157)).AddBuffFromAi(
+      ? ((a = i.CharActorComp.Entity.CheckGetComponent(159)).AddBuffFromAi(
           i.AiCombatMessageId,
           this.TsGeId,
           { InstigatorId: a.CreatureDataId, Reason: "行为树TsTaskAddGe节点" },

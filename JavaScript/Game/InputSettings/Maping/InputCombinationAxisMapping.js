@@ -6,28 +6,28 @@ const Log_1 = require("../../../Core/Common/Log"),
   InputCombinationAxisBinding_1 = require("../Binding/InputCombinationAxisBinding");
 class InputCombinationAxisMapping {
   constructor() {
-    (this.ZSe = new Map()), (this.eEe = new Map()), (this.zSe = new Set());
+    (this.ZEe = new Map()), (this.eSe = new Map()), (this.zEe = new Set());
   }
   Initialize() {
     var i =
       ConfigManager_1.ConfigManager.InputSettingsConfig.GetAllCombinationAxisConfig();
-    if (i) for (const n of i) this.tEe(n);
+    if (i) for (const n of i) this.tSe(n);
   }
   Clear() {
-    for (const i of this.ZSe.values()) i.Clear();
-    this.ZSe.clear(), this.eEe.clear();
+    for (const i of this.ZEe.values()) i.Clear();
+    this.ZEe.clear(), this.eSe.clear();
   }
-  tEe(i) {
+  tSe(i) {
     var n = i.AxisName,
       t = new InputCombinationAxisBinding_1.InputCombinationAxisBinding(),
-      i = (t.Initialize(i), this.ZSe.set(n, t), new Map()),
+      i = (t.Initialize(i), this.ZEe.set(n, t), new Map()),
       n = (t.GetPcKeyNameMap(i), new Map());
-    t.GetGamepadKeyNameMap(n), this.iEe(t, i), this.iEe(t, n);
+    t.GetGamepadKeyNameMap(n), this.iSe(t, i), this.iSe(t, n);
   }
-  iEe(t, i) {
+  iSe(t, i) {
     for (var [e, a] of i) {
-      let i = this.eEe.get(a),
-        n = (i || ((i = new Map()), this.eEe.set(a, i)), i.get(e));
+      let i = this.eSe.get(a),
+        n = (i || ((i = new Map()), this.eSe.set(a, i)), i.get(e));
       n || ((n = []), i.set(e, n)),
         n.push(t),
         Log_1.Log.CheckInfo() &&
@@ -37,23 +37,23 @@ class InputCombinationAxisMapping {
             "[AddKeyMap]",
             ["mainKeyName", a],
             ["secondaryKeyName", e],
-            ["MainKeySet", this.zSe],
+            ["MainKeySet", this.zEe],
           ),
-        this.zSe.add(a);
+        this.zEe.add(a);
     }
   }
   GetCombinationAxisBindingMapByMainKeyName(i) {
-    return this.eEe.get(i);
+    return this.eSe.get(i);
   }
   GetCombinationAxisBindingByKeyName(i, n) {
-    i = this.eEe.get(i);
+    i = this.eSe.get(i);
     if (i) return i.get(n);
   }
   GetCombinationAxisBindingByActionName(i) {
-    return this.ZSe.get(i);
+    return this.ZEe.get(i);
   }
   IsMainKey(i) {
-    return this.zSe.has(i);
+    return this.zEe.has(i);
   }
 }
 exports.InputCombinationAxisMapping = InputCombinationAxisMapping;

@@ -8,7 +8,7 @@ const UE = require("ue"),
   LguiUtil_1 = require("../../../Util/LguiUtil");
 class ReputationTips extends UiViewBase_1.UiViewBase {
   constructor() {
-    super(...arguments), (this.Bni = void 0), (this.g4e = void 0);
+    super(...arguments), (this.bsi = void 0), (this.x5e = void 0);
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -17,17 +17,17 @@ class ReputationTips extends UiViewBase_1.UiViewBase {
     ];
   }
   OnBeforeCreate() {
-    this.g4e = this.OpenParam;
+    this.x5e = this.OpenParam;
   }
   OnStart() {
-    (this.Bni = new ReputationTipsItem(this.GetItem(0))),
+    (this.bsi = new ReputationTipsItem(this.GetItem(0))),
       this.GetItem(1).SetUIActive(!1);
   }
   OnAfterShow() {
-    this.Bni.UpdateItem(this.g4e[0].Item1, this.g4e[0].Item2);
+    this.bsi.UpdateItem(this.x5e[0].Item1, this.x5e[0].Item2);
   }
   OnBeforeDestroy() {
-    this.Bni.Destroy(), (this.Bni = void 0);
+    this.bsi.Destroy(), (this.bsi = void 0);
   }
 }
 exports.ReputationTips = ReputationTips;

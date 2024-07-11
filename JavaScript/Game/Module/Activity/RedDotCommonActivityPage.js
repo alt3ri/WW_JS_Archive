@@ -12,7 +12,10 @@ class RedDotCommonActivityPage extends RedDotBase_1.RedDotBase {
     return !0;
   }
   OnGetEvents() {
-    return [EventDefine_1.EEventName.RefreshCommonActivityRedDot];
+    return [
+      EventDefine_1.EEventName.RefreshCommonActivityRedDot,
+      EventDefine_1.EEventName.RedDotRefreshItemData,
+    ];
   }
   OnCheck(e) {
     return (

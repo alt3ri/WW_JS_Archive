@@ -6,29 +6,29 @@ const UE = require("ue"),
   ConfigMarkItemView_1 = require("./ConfigMarkItemView");
 class LandscapeMarkItemView extends ConfigMarkItemView_1.ConfigMarkItemView {
   constructor(e) {
-    super(e), (this.gDi = void 0);
+    super(e), (this.gRi = void 0);
   }
   OnInitialize() {
-    super.OnInitialize(), this.fDi();
+    super.OnInitialize(), this.fRi();
   }
   GetInteractiveFlag() {
     return !1;
   }
-  async fDi() {
+  async fRi() {
     var e = MarkEffectByMarkId_1.configMarkEffectByMarkId.GetConfig(
       this.Holder.MarkId,
     );
     e &&
       ((e = await this.LoadPrefabAsync(e.EffectResourcePath, this.RootItem)),
-      (this.gDi = e.GetComponentByClass(UE.UIItem.StaticClass())),
+      (this.gRi = e.GetComponentByClass(UE.UIItem.StaticClass())),
       (e = e.GetComponentByClass(UE.UINiagara.StaticClass())),
       2 === this.Holder?.MapType
         ? (e.bAdaptPosAndSizeChanged = !1)
         : (e.bAdaptPosAndSizeChanged = !0));
   }
   OnBeforeDestroy() {
-    this.gDi &&
-      UE.LGUIBPLibrary.DestroyActorWithHierarchy(this.gDi.GetOwner(), !0),
+    this.gRi &&
+      UE.LGUIBPLibrary.DestroyActorWithHierarchy(this.gRi.GetOwner(), !0),
       super.OnBeforeDestroy();
   }
   SetScale(e) {}

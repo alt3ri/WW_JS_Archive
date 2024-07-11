@@ -24,14 +24,14 @@ exports.BattlePassBackgroundPanelParam = BattlePassBackgroundPanelParam;
 class BattlePassBackgroundPanel extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(),
-      (this.iki = void 0),
-      (this.oki = !1),
-      (this.rki = void 0),
-      (this.nki = void 0),
-      (this.aki = () => {
+      (this.r2i = void 0),
+      (this.n2i = !1),
+      (this.s2i = void 0),
+      (this.a2i = void 0),
+      (this.h2i = () => {
         UiManager_1.UiManager.OpenView("BattlePassBuyLevelView");
       }),
-      (this.hki = () => {
+      (this.l2i = () => {
         var e = this.OpenParam;
         (ModelManager_1.ModelManager.BattlePassModel.PayButtonRedDotState = !1),
           UiManager_1.UiManager.OpenView(
@@ -39,15 +39,15 @@ class BattlePassBackgroundPanel extends UiPanelBase_1.UiPanelBase {
             e.WeaponObservers,
           );
       }),
-      (this.lki = () => {
-        this.oki
+      (this._2i = () => {
+        this.n2i
           ? BattlePassController_1.BattlePassController.RequestTakeAllRewardResponse()
           : BattlePassController_1.BattlePassController.TryRequestTaskList(
               ModelManager_1.ModelManager.BattlePassModel.GetAllFinishedTask(),
             );
       }),
       (this.ZGe = () => {
-        this.oki
+        this.n2i
           ? this.GetButton(7).RootUIComp.SetUIActive(
               ModelManager_1.ModelManager.BattlePassModel.CheckHasRewardWaitTake(),
             )
@@ -55,14 +55,14 @@ class BattlePassBackgroundPanel extends UiPanelBase_1.UiPanelBase {
               ModelManager_1.ModelManager.BattlePassModel.CheckHasTaskWaitTake(),
             );
       }),
-      (this.u4e = () => {
+      (this.D5e = () => {
         var e = ModelManager_1.ModelManager.BattlePassModel.BattlePassLevel,
           t = ModelManager_1.ModelManager.BattlePassModel.GetMaxLevel(),
           s =
             (this.GetText(1).SetText(e.toString()),
-            this.GetSprite(3).SetSprite(t === e ? this.rki : this.nki),
-            this.iki.SetEnableClick(e < t),
-            this.iki.SetLocalTextNew(
+            this.GetSprite(3).SetSprite(t === e ? this.s2i : this.a2i),
+            this.r2i.SetEnableClick(e < t),
+            this.r2i.SetLocalTextNew(
               e < t
                 ? "Text_BattlePassLevelBuy_Text"
                 : "Text_BattlePassLevelBuyMax_Text",
@@ -107,14 +107,14 @@ class BattlePassBackgroundPanel extends UiPanelBase_1.UiPanelBase {
       [12, UE.UIItem],
     ]),
       (this.BtnBindInfo = [
-        [7, this.lki],
-        [8, this.hki],
+        [7, this._2i],
+        [8, this.l2i],
       ]);
   }
   async OnCreateAsync() {
-    await Promise.all([this._ki(), this.uki()]);
+    await Promise.all([this.u2i(), this.c2i()]);
   }
-  async _ki() {
+  async u2i() {
     const t = new CustomPromise_1.CustomPromise();
     ResourceSystem_1.ResourceSystem.LoadAsync(
       ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
@@ -122,12 +122,12 @@ class BattlePassBackgroundPanel extends UiPanelBase_1.UiPanelBase {
       ),
       UE.LGUISpriteData_BaseObject,
       (e) => {
-        e.IsValid() && (this.rki = e), t.SetResult(!0);
+        e.IsValid() && (this.s2i = e), t.SetResult(!0);
       },
     ),
       await t.Promise;
   }
-  async uki() {
+  async c2i() {
     const t = new CustomPromise_1.CustomPromise();
     ResourceSystem_1.ResourceSystem.LoadAsync(
       ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
@@ -135,7 +135,7 @@ class BattlePassBackgroundPanel extends UiPanelBase_1.UiPanelBase {
       ),
       UE.LGUISpriteData_BaseObject,
       (e) => {
-        e.IsValid() && (this.nki = e), t.SetResult(!0);
+        e.IsValid() && (this.a2i = e), t.SetResult(!0);
       },
     ),
       await t.Promise;
@@ -151,7 +151,7 @@ class BattlePassBackgroundPanel extends UiPanelBase_1.UiPanelBase {
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.ReceiveBattlePassDataEvent,
-        this.u4e,
+        this.D5e,
       );
   }
   RemoveEventListener() {
@@ -165,14 +165,14 @@ class BattlePassBackgroundPanel extends UiPanelBase_1.UiPanelBase {
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.ReceiveBattlePassDataEvent,
-        this.u4e,
+        this.D5e,
       );
   }
   OnStart() {
-    (this.iki = new ButtonItem_1.ButtonItem(this.GetItem(6))),
-      this.iki.SetFunction(this.aki);
+    (this.r2i = new ButtonItem_1.ButtonItem(this.GetItem(6))),
+      this.r2i.SetFunction(this.h2i);
     var e = this.OpenParam;
-    (this.oki = e.IsRewardPanel), this.u4e(), this.AddEventListener();
+    (this.n2i = e.IsRewardPanel), this.D5e(), this.AddEventListener();
   }
   OnBeforeShow() {
     this.GetItem(10).SetUIActive(!1),
@@ -186,13 +186,13 @@ class BattlePassBackgroundPanel extends UiPanelBase_1.UiPanelBase {
     RedDotController_1.RedDotController.UnBindRedDot("BattlePassPayButton");
   }
   OnAfterShow() {
-    this.AddChild(this.iki);
+    this.AddChild(this.r2i);
   }
   OnBeforeDestroy() {
-    (this.iki = void 0),
+    (this.r2i = void 0),
       this.RemoveEventListener(),
-      (this.rki = void 0),
-      (this.nki = void 0);
+      (this.s2i = void 0),
+      (this.a2i = void 0);
   }
 }
 exports.BattlePassBackgroundPanel = BattlePassBackgroundPanel;

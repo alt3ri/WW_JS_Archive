@@ -1,6 +1,9 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
-  (exports.CommonExchangeData = exports.ExchangeUnitData = void 0);
+  (exports.CommonExchangeViewData =
+    exports.CommonExchangeData =
+    exports.ExchangeUnitData =
+      void 0);
 const Log_1 = require("../../../../Core/Common/Log"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
@@ -27,12 +30,15 @@ class CommonExchangeData extends UiPopViewData_1.UiPopViewData {
   constructor() {
     super(...arguments),
       (this.IsMultipleView = !0),
-      (this.UCi = new ExchangeUnitData()),
-      (this.ACi = new ExchangeUnitData()),
+      (this.Ugi = new ExchangeUnitData()),
+      (this.Agi = new ExchangeUnitData()),
       (this.CancelCallBack = void 0),
       (this.ConfirmNoClose = !1),
       (this.ShowPayGold = !1),
       (this.ConfirmCallBack = void 0);
+  }
+  InitBySrcAndDestItemId(e, t, i = void 0, a = void 0) {
+    this.Ugi.SetDataByItemId(e, i), this.Agi.SetDataByItemId(t, a);
   }
   InitByItemId(e) {
     var t =
@@ -47,24 +53,42 @@ class CommonExchangeData extends UiPopViewData_1.UiPopViewData {
           9,
           "暂不支持消耗数量为1以上的道具兑换, 需要扩展!",
         ),
-      this.UCi.SetDataByItemId(t.Consume.keys().next()?.value),
-      this.ACi.SetDataByItemId(t.ItemId);
+      this.Ugi.SetDataByItemId(t.Consume.keys().next()?.value),
+      this.Agi.SetDataByItemId(t.ItemId);
   }
   GetSrcName() {
-    return this.UCi.Name;
+    return this.Ugi.Name;
   }
   GetSrcItemId() {
-    return this.UCi.ItemId;
+    return this.Ugi.ItemId;
   }
   GetSrcTotalCount() {
-    return this.UCi.TotalCount;
+    return this.Ugi.TotalCount;
   }
   GetDestName() {
-    return this.ACi.Name;
+    return this.Agi.Name;
   }
   GetDestItemId() {
-    return this.ACi.ItemId;
+    return this.Agi.ItemId;
   }
 }
 exports.CommonExchangeData = CommonExchangeData;
+class CommonExchangeViewData {
+  constructor() {
+    (this.MaxExchangeTime = 0),
+      (this.OwnSrcItemNum = 0),
+      (this.ExchangeData = void 0),
+      (this.StartSliderValue = 0),
+      (this.ShowCurrencyList = []),
+      (this.GetConsumeCount = (e, t) => 0),
+      (this.GetConsumeTotalCount = (e, t) => 0),
+      (this.GetGainCount = (e, t) => 0);
+  }
+  CreateData(e, t = 0, i = 0) {
+    (this.MaxExchangeTime = t),
+      (this.OwnSrcItemNum = i),
+      (this.ExchangeData = e);
+  }
+}
+exports.CommonExchangeViewData = CommonExchangeViewData;
 //# sourceMappingURL=CommonExchangeData.js.map

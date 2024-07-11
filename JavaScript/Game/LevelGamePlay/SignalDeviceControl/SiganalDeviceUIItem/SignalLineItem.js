@@ -47,28 +47,37 @@ class LinkingLineItem extends UiPanelBase_1.UiPanelBase {
       this.SprRayHalf.SetUIActive(!1);
   }
   InitIcon(i, e = !1) {
-    var t = ModelManager_1.ModelManager.SignalDeviceModel.CurrentColor,
-      n = LinkingLineItem.ColorSpotIconMap.get(t),
-      n = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(n),
-      n =
-        (this.SetSpriteByPath(n, this.SprSpot, !1),
-        LinkingLineItem.ColorRayIconMap.get(t)),
-      n = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(n),
-      n =
-        (this.SetSpriteByPath(n, this.SprRay, !1),
-        this.SetSpriteByPath(n, this.SprRayHalf, !1),
-        LinkingLineItem.ColorMap.get(t)),
+    var t = 1 === ModelManager_1.ModelManager.SignalDeviceModel.ViewType,
+      n = ModelManager_1.ModelManager.SignalDeviceModel.CurrentColor;
+    let s = LinkingLineItem.ColorSpotIconMap.get(n);
+    t && (s += "CM");
+    var o = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(s);
+    this.SetSpriteByPath(o, this.SprSpot, !1);
+    let a = LinkingLineItem.ColorRayIconMap.get(n);
+    t && (a += "CM");
+    var o = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(a),
       t =
-        (this.SprBg.SetColor(UE.Color.FromHex(n)),
-        this.SprLine.SetColor(UE.Color.FromHex(n)),
-        this.SprLineHalf.SetColor(UE.Color.FromHex(n)),
+        (this.SetSpriteByPath(o, this.SprRay, !1),
+        this.SetSpriteByPath(o, this.SprRayHalf, !1),
+        LinkingLineItem.ColorMap.get(n)),
+      o =
+        (1 === ModelManager_1.ModelManager.SignalDeviceModel.ViewType
+          ? ((o = LinkingLineItem.ColorSprBgMap.get(n)),
+            (n =
+              ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
+                o,
+              )),
+            this.SetSpriteByPath(n, this.SprBg, !1))
+          : this.SprBg.SetColor(UE.Color.FromHex(t)),
+        this.SprLine.SetColor(UE.Color.FromHex(t)),
+        this.SprLineHalf.SetColor(UE.Color.FromHex(t)),
         this.RotateLine(i),
         3 === this.LineType || 4 === this.LineType);
     this.SprBg.SetUIActive(!0),
       this.SprLine.SetUIActive(!e),
       this.SprLineHalf.SetUIActive(e),
       this.SprRay.SetUIActive(!e),
-      this.SprRayHalf.SetUIActive(e || !t),
+      this.SprRayHalf.SetUIActive(e || !o),
       this.SprSpot.SetUIActive(!0);
   }
   RotateLine(i) {
@@ -100,6 +109,12 @@ class LinkingLineItem extends UiPanelBase_1.UiPanelBase {
     [IAction_1.EPieceColorType.Green, "SP_LineGreen"],
     [IAction_1.EPieceColorType.Red, "SP_LineRed"],
     [IAction_1.EPieceColorType.Yellow, "SP_LineYellow"],
+  ])),
+  (LinkingLineItem.ColorSprBgMap = new Map([
+    [IAction_1.EPieceColorType.Blue, "SP_GridBgCMBlue"],
+    [IAction_1.EPieceColorType.Green, "SP_GridBgCMGreen"],
+    [IAction_1.EPieceColorType.Red, "SP_GridBgCMRed"],
+    [IAction_1.EPieceColorType.Yellow, "SP_GridBgCMYellow"],
   ])),
   (LinkingLineItem.ColorMap = new Map([
     [IAction_1.EPieceColorType.Blue, "3B82B9FF"],

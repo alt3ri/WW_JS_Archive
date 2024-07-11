@@ -35,7 +35,7 @@ class LoadingController extends UiControllerBase_1.UiControllerBase {
     );
   }
   static OnRegisterNetEvent() {
-    Net_1.Net.Register(113, LoadingController.Epi);
+    Net_1.Net.Register(113, LoadingController.Svi);
   }
   static OnUnRegisterNetEvent() {
     Net_1.Net.UnRegister(113);
@@ -43,11 +43,11 @@ class LoadingController extends UiControllerBase_1.UiControllerBase {
   static OnAddEvents() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.BeforeLoadMap,
-      LoadingController.I$i,
+      LoadingController.SYi,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.WorldDoneAndCloseLoading,
-        LoadingController.Uje,
+        LoadingController.FWe,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.WorldDone,
@@ -55,25 +55,25 @@ class LoadingController extends UiControllerBase_1.UiControllerBase {
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnUpdateSceneTeam,
-        LoadingController.ypi,
+        LoadingController.yvi,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.TeleportStart,
-        LoadingController.Gfr,
+        LoadingController.bpr,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.TeleportComplete,
-        LoadingController.uht,
+        LoadingController.Ilt,
       );
   }
   static OnRemoveEvents() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.BeforeLoadMap,
-      LoadingController.I$i,
+      LoadingController.SYi,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.WorldDoneAndCloseLoading,
-        LoadingController.Uje,
+        LoadingController.FWe,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.WorldDone,
@@ -81,24 +81,24 @@ class LoadingController extends UiControllerBase_1.UiControllerBase {
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnUpdateSceneTeam,
-        LoadingController.ypi,
+        LoadingController.yvi,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.TeleportStart,
-        LoadingController.Gfr,
+        LoadingController.bpr,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.TeleportComplete,
-        LoadingController.uht,
+        LoadingController.Ilt,
       );
   }
-  static cVs() {
+  static Lzs() {
     UE.NavigationSystemV1.SetGameLoadingFlag(
       GlobalData_1.GlobalData.GameInstance,
       !0,
     );
   }
-  static mVs() {
+  static Dzs() {
     UE.NavigationSystemV1.SetGameLoadingFlag(
       GlobalData_1.GlobalData.GameInstance,
       !1,
@@ -111,13 +111,13 @@ class LoadingController extends UiControllerBase_1.UiControllerBase {
         ? UiManager_1.UiManager.OpenView("UidView")
         : UiManager_1.UiManager.CloseView("UidView"));
   }
-  static async Ipi() {
+  static async Ivi() {
     var e,
       o,
       a = ModelManager_1.ModelManager.SceneTeamModel.GetTeamEntities();
     for (const n of a)
       n.Valid &&
-        (e = n.Entity.GetComponent(157)) &&
+        (e = n.Entity.GetComponent(159)) &&
         e.AddBuff(CharacterBuffIds_1.buffId.Invisible, {
           InstigatorId: e.CreatureDataId,
           Reason: "HandleRoleBuffChangeInLoading",
@@ -126,7 +126,7 @@ class LoadingController extends UiControllerBase_1.UiControllerBase {
       .FinishPromise?.Promise;
     for (const r of a)
       r.Valid &&
-        (o = r.Entity.GetComponent(157)) &&
+        (o = r.Entity.GetComponent(159)) &&
         o.RemoveBuff(
           CharacterBuffIds_1.buffId.Invisible,
           -1,
@@ -247,7 +247,7 @@ class LoadingController extends UiControllerBase_1.UiControllerBase {
   }
 }
 (exports.LoadingController = LoadingController),
-  ((_a = LoadingController).Epi = (e) => {
+  ((_a = LoadingController).Svi = (e) => {
     EventSystem_1.EventSystem.Emit(
       EventDefine_1.EEventName.OnLoadingNetDataDone,
     );
@@ -255,19 +255,19 @@ class LoadingController extends UiControllerBase_1.UiControllerBase {
   (LoadingController.nye = () => {
     _a.UpdateUidViewShow();
   }),
-  (LoadingController.Uje = () => {
-    LoadingController.mVs();
+  (LoadingController.FWe = () => {
+    LoadingController.Dzs();
   }),
-  (LoadingController.I$i = () => {
-    LoadingController.cVs();
+  (LoadingController.SYi = () => {
+    LoadingController.Lzs();
   }),
-  (LoadingController.Gfr = () => {
-    LoadingController.cVs();
+  (LoadingController.bpr = () => {
+    LoadingController.Lzs();
   }),
-  (LoadingController.uht = () => {
-    LoadingController.mVs();
+  (LoadingController.Ilt = () => {
+    LoadingController.Dzs();
   }),
-  (LoadingController.ypi = () => {
-    ModelManager_1.ModelManager.LoadingModel.IsLoadingView && _a.Ipi();
+  (LoadingController.yvi = () => {
+    ModelManager_1.ModelManager.LoadingModel.IsLoadingView && _a.Ivi();
   });
 //# sourceMappingURL=LoadingController.js.map

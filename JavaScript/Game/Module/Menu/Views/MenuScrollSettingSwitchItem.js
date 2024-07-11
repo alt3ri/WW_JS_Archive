@@ -12,16 +12,16 @@ class MenuScrollSettingSwitchItem extends MenuScrollSettingBaseItem_1.MenuScroll
   constructor() {
     super(...arguments),
       (this.Pe = void 0),
-      (this.pBi = () => {
-        this.GetItemClickLimit(this.GetButton(2)) || this.vBi(-1);
+      (this.pbi = () => {
+        this.GetItemClickLimit(this.GetButton(2)) || this.vbi(-1);
       }),
-      (this.MBi = () => {
-        this.GetItemClickLimit(this.GetButton(3)) || this.vBi(1);
+      (this.Mbi = () => {
+        this.GetItemClickLimit(this.GetButton(3)) || this.vbi(1);
       }),
-      (this.SBi = (t, e) => {
+      (this.Ebi = (t, e) => {
         this.Pe.MenuDataFunctionId === t &&
           ((t = this.Pe.MenuDataOptionsNameList[e]),
-          this.EBi(t, e, !1),
+          this.Sbi(t, e, !1),
           this.RefreshInteractionGroup(e));
       });
   }
@@ -36,7 +36,7 @@ class MenuScrollSettingSwitchItem extends MenuScrollSettingBaseItem_1.MenuScroll
   OnStart() {
     this.GetButton(3).SetCanClickWhenDisable(!0),
       this.GetButton(2).SetCanClickWhenDisable(!0),
-      this.yBi();
+      this.ybi();
   }
   OnClear() {
     this.Pe && (this.Pe = void 0),
@@ -44,38 +44,38 @@ class MenuScrollSettingSwitchItem extends MenuScrollSettingBaseItem_1.MenuScroll
       this.GetButton(3).OnClickCallBack.Unbind(),
       EventSystem_1.EventSystem.Has(
         EventDefine_1.EEventName.ChangeConfigValue,
-        this.SBi,
+        this.Ebi,
       ) &&
         EventSystem_1.EventSystem.Remove(
           EventDefine_1.EEventName.ChangeConfigValue,
-          this.SBi,
+          this.Ebi,
         );
   }
   Update(t) {
-    (this.Pe = t), this.mGe(), this.IBi();
+    (this.Pe = t), this.mGe(), this.Ibi();
   }
   mGe() {
     this.GetText(0).ShowTextNew(this.Pe.MenuDataFunctionName ?? "");
   }
-  IBi() {
+  Ibi() {
     this.GetRootItem().SetUIActive(!0);
     var t = this.fde(),
       e = this.Pe.MenuDataOptionsNameList[t];
-    this.EBi(e, t), this.RefreshInteractionGroup(t);
+    this.Sbi(e, t), this.RefreshInteractionGroup(t);
   }
-  yBi() {
-    this.GetButton(2).OnClickCallBack.Bind(this.pBi),
-      this.GetButton(3).OnClickCallBack.Bind(this.MBi),
+  ybi() {
+    this.GetButton(2).OnClickCallBack.Bind(this.pbi),
+      this.GetButton(3).OnClickCallBack.Bind(this.Mbi),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.ChangeConfigValue,
-        this.SBi,
+        this.Ebi,
       );
   }
   SetInteractionActive(t) {
     var e = this.fde();
     this.RefreshInteractionGroup(e, t);
   }
-  EBi(t, e, i = !1) {
+  Sbi(t, e, i = !1) {
     this.GetText(1).ShowTextNew(t), i && this.FireSaveMenuChange(e);
   }
   RefreshInteractionGroup(t, e = !0) {
@@ -87,11 +87,11 @@ class MenuScrollSettingSwitchItem extends MenuScrollSettingBaseItem_1.MenuScroll
       : (this.GetButton(3).SetSelfInteractive(!1),
         this.GetButton(2).SetSelfInteractive(!1));
   }
-  vBi(t) {
+  vbi(t) {
     var e = this.fde(),
       e = Math.floor(e + t),
       t = this.Pe.MenuDataOptionsNameList[e];
-    this.EBi(t, e, !0),
+    this.Sbi(t, e, !0),
       this.RefreshInteractionGroup(e),
       MenuTool_1.FunctionItemViewTool.CheckNotice(this.Pe) &&
         MenuController_1.MenuController.NoticeChange(

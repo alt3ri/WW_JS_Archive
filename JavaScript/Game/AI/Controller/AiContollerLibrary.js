@@ -3,17 +3,16 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.AiControllerLibrary = void 0);
 const UE = require("ue"),
   Log_1 = require("../../../Core/Common/Log"),
-  MathCommon_1 = require("../../../Core/Utils/Math/MathCommon"),
-  Rotator_1 = require("../../../Core/Utils/Math/Rotator"),
   Vector_1 = require("../../../Core/Utils/Math/Vector"),
   MathUtils_1 = require("../../../Core/Utils/MathUtils"),
   CharacterController_1 = require("../../NewWorld/Character/CharacterController"),
+  GravityUtils_1 = require("../../Utils/GravityUtils"),
   MIN_NAVIGATION_FINAL_DIST_SQUARD = 1e4,
   MIN_NAVIGATION_FINAL_HEIGHt = 200,
   DEFAULT_NAVIGATION_BLOCK_LENGTH = 100,
   defaultBlockHalfExtent = new UE.Vector(1, 1, 500);
 class AiControllerLibrary {
-  static NavigationFindPath(t, r, i, o = void 0, e, a) {
+  static NavigationFindPath(t, r, i, e = void 0, a, o) {
     if (
       !UE.NavigationSystemV1.K2_ProjectPointToNavigation(
         t,
@@ -26,53 +25,25 @@ class AiControllerLibrary {
       )
     )
       return (
-        o &&
-          (o.push(Vector_1.Vector.Create(r)),
-          o.push(Vector_1.Vector.Create(i))),
-        !a
+        e &&
+          (e.push(Vector_1.Vector.Create(r)),
+          e.push(Vector_1.Vector.Create(i))),
+        !o
       );
     var l = UE.NavigationSystemV1.FindPathToLocationSynchronously(t, r, i);
-    if (!l)
-      return (
-        Log_1.Log.CheckWarn() &&
-          Log_1.Log.Warn("AI", 43, "没有寻到路", ["from", r], ["to", i]),
-        !1
-      );
+    if (!l) return !1;
     var s = l.PathPoints.Num();
-    if (s < 2)
-      return (
-        Log_1.Log.CheckWarn() &&
-          Log_1.Log.Warn(
-            "AI",
-            43,
-            "寻路点数量小于2",
-            ["from", r],
-            ["to", i],
-            ["length", s],
-          ),
-        !1
-      );
-    a = l.PathPoints.Get(s - 1);
+    if (s < 2) return !1;
+    o = l.PathPoints.Get(s - 1);
     if (
-      UE.Vector.DistSquared2D(i, a) > MIN_NAVIGATION_FINAL_DIST_SQUARD ||
-      (!e && Math.abs(a.Z - i.Z) > MIN_NAVIGATION_FINAL_HEIGHt)
+      UE.Vector.DistSquared2D(i, o) > MIN_NAVIGATION_FINAL_DIST_SQUARD ||
+      (!a && Math.abs(o.Z - i.Z) > MIN_NAVIGATION_FINAL_HEIGHt)
     )
-      return (
-        Log_1.Log.CheckWarn() &&
-          Log_1.Log.Warn(
-            "AI",
-            43,
-            "寻路终点偏差过大",
-            ["from", r],
-            ["to", i],
-            ["finalPoint", a],
-          ),
-        !1
-      );
-    if (o)
-      for (let t = (o.length = 0); t < s; ++t) {
-        var n = l.PathPoints.Get(t);
-        o.push(Vector_1.Vector.Create(n.X, n.Y, n.Z));
+      return !1;
+    if (e)
+      for (let t = (e.length = 0); t < s; ++t) {
+        var c = l.PathPoints.Get(t);
+        e.push(Vector_1.Vector.Create(c.X, c.Y, c.Z));
       }
     return !0;
   }
@@ -84,10 +55,10 @@ class AiControllerLibrary {
       i += Vector_1.Vector.Dist(r[t - 1], r[t]);
     return i;
   }
-  static NavigationBlock(t, r, i, o = !0) {
+  static NavigationBlock(t, r, i, e = !0) {
     r = r.ToUeVector();
     if (
-      o &&
+      e &&
       !UE.NavigationSystemV1.K2_ProjectPointToNavigation(
         t,
         r,
@@ -112,28 +83,28 @@ class AiControllerLibrary {
     t,
     r,
     i,
-    o = DEFAULT_NAVIGATION_BLOCK_LENGTH,
-    e = !0,
+    e = DEFAULT_NAVIGATION_BLOCK_LENGTH,
+    a = !0,
   ) {
-    var a = t.Character.CharacterMovement.MovementMode;
+    var o = t.Character.CharacterMovement.MovementMode;
     return (
-      (1 !== a && 2 !== a) ||
-      (i.Multiply(o, this.cz),
+      (1 !== o && 2 !== o) ||
+      (i.Multiply(e, this.cz),
       this.cz.AdditionEqual(r),
-      this.NavigationBlock(t, r, this.cz, e))
+      this.NavigationBlock(t, r, this.cz, a))
     );
   }
   static NavigationBlockDirectionE(
     t,
     r,
     i,
-    o,
-    e = DEFAULT_NAVIGATION_BLOCK_LENGTH,
-    a = !0,
+    e,
+    a = DEFAULT_NAVIGATION_BLOCK_LENGTH,
+    o = !0,
   ) {
     return (
-      this.GetDirectionVector(i, o, this.fz),
-      this.NavigationBlockDirection(t, r, this.fz, e, a)
+      this.GetDirectionVector(i, e, this.fz),
+      this.NavigationBlockDirection(t, r, this.fz, a, o)
     );
   }
   static GetDirectionVector(t, r, i) {
@@ -150,99 +121,82 @@ class AiControllerLibrary {
         i.Set(i.Y, -i.X, 0);
     }
   }
-  static TurnToTarget(t, r, i, o = !1, e = 0) {
+  static TurnToTarget(t, r, i, e = !1, a = 0) {
     r.Subtraction(t.ActorLocationProxy, this.cz),
-      o
-        ? (MathUtils_1.MathUtils.LookRotationForwardFirst(
-            this.cz,
-            Vector_1.Vector.UpVectorProxy,
-            this.cie,
-          ),
-          t.SetInputRotator(this.cie))
-        : t.SetInputRotatorByNumber(
-            0,
-            this.cz.HeadingAngle() * MathCommon_1.MathCommon.RadToDeg,
-            0,
-          ),
-      0 < e
-        ? ((r = (t.InputRotator.Yaw - t.ActorRotation.Yaw) / e),
+      t.SetInputFacing(this.cz, !e),
+      0 < a
+        ? ((r =
+            GravityUtils_1.GravityUtils.GetAngleOffsetFromCurrentToInputAbs(t) /
+            a),
           t.SetOverrideTurnSpeed(Math.min(r, i)))
         : t.SetOverrideTurnSpeed(i);
   }
-  static TurnToDirect(t, r, i, o = !1, e = 0) {
-    o
-      ? (MathUtils_1.MathUtils.LookRotationForwardFirst(
-          r,
-          Vector_1.Vector.UpVectorProxy,
-          this.cie,
-        ),
-        t.SetInputRotator(this.cie))
-      : t.SetInputRotatorByNumber(
-          0,
-          MathUtils_1.MathUtils.GetAngleByVector2D(r),
-          0,
-        ),
-      0 < e
-        ? ((o = (t.InputRotator.Yaw - t.ActorRotation.Yaw) / e),
-          t.SetOverrideTurnSpeed(Math.min(o, i)))
+  static TurnToDirect(t, r, i, e = !1, a = 0) {
+    this.cz.DeepCopy(r),
+      t.SetInputFacing(this.cz, !e),
+      0 < a
+        ? ((r =
+            GravityUtils_1.GravityUtils.GetAngleOffsetFromCurrentToInputAbs(t) /
+            a),
+          t.SetOverrideTurnSpeed(Math.min(r, i)))
         : t.SetOverrideTurnSpeed(i);
   }
   static ClearInput(t) {
     t && (t = t.AiController.CharActorComp)?.Valid && t.ClearInput();
   }
-  static AllyOnPath(t, r, i, o) {
-    var e = t.CharActorComp,
-      a = e.ActorLocationProxy,
-      l = e.ScaledHalfHeight,
-      s = e.ScaledRadius,
-      n = (this.cz.Set(-r.Y, r.X, 0), this.cz),
-      c = this.fz;
-    for (const u of t.AiPerception.Allies)
-      if (u !== t.CharAiDesignComp.Entity.Id) {
+  static AllyOnPath(t, r, i, e) {
+    var a = t.CharActorComp,
+      o = a.ActorLocationProxy,
+      l = a.ScaledHalfHeight,
+      s = a.ScaledRadius,
+      c = (this.cz.Set(-r.Y, r.X, 0), this.cz),
+      n = this.fz;
+    for (const A of t.AiPerception.Allies)
+      if (A !== t.CharAiDesignComp.Entity.Id) {
         var _ =
           CharacterController_1.CharacterController.GetCharacterActorComponentById(
-            u,
+            A,
           );
         if (
           _ &&
-          (_.ActorLocationProxy.Subtraction(a, c),
-          !(Math.abs(c.Z) > l + _.ScaledHalfHeight))
+          (_.ActorLocationProxy.Subtraction(o, n),
+          !(Math.abs(n.Z) > l + _.ScaledHalfHeight))
         ) {
           var _ = s + _.ScaledRadius,
-            h = Vector_1.Vector.DotProduct(c, r),
-            A = Vector_1.Vector.DotProduct(c, n);
-          if (Math.abs(h) < _ && A < i && -i < A && o === (0 < A ? 2 : 3))
+            h = Vector_1.Vector.DotProduct(n, r),
+            u = Vector_1.Vector.DotProduct(n, c);
+          if (Math.abs(h) < _ && u < i && -i < u && e === (0 < u ? 2 : 3))
             return !0;
-          if (Math.abs(A) < _ && h < i && -i < h && o === (0 < h ? 0 : 1))
+          if (Math.abs(u) < _ && h < i && -i < h && e === (0 < h ? 0 : 1))
             return !0;
         }
       }
     return !1;
   }
-  static AllyBlockDirections(t, r, i, o) {
+  static AllyBlockDirections(t, r, i, e) {
     if (t.AiPerception) {
-      o.clear();
-      var e = t.CharActorComp,
-        a = e.ActorLocationProxy,
-        l = e.ScaledHalfHeight,
-        s = e.ScaledRadius,
-        n = (this.cz.Set(-r.Y, r.X, 0), this.cz),
-        c = this.fz;
-      for (const u of t.AiPerception.Allies) {
+      e.clear();
+      var a = t.CharActorComp,
+        o = a.ActorLocationProxy,
+        l = a.ScaledHalfHeight,
+        s = a.ScaledRadius,
+        c = (this.cz.Set(-r.Y, r.X, 0), this.cz),
+        n = this.fz;
+      for (const A of t.AiPerception.Allies) {
         var _,
           h,
-          A =
+          u =
             CharacterController_1.CharacterController.GetCharacterActorComponentById(
-              u,
+              A,
             );
-        A &&
-          (A.ActorLocationProxy.Subtraction(a, c),
-          Math.abs(c.Z) > l + A.ScaledHalfHeight ||
-            ((A = s + A.ScaledRadius),
-            (_ = Vector_1.Vector.DotProduct(c, r)),
-            (h = Vector_1.Vector.DotProduct(c, n)),
-            Math.abs(_) < A && h < i && -i < h && o.add(0 < h ? 2 : 3),
-            Math.abs(h) < A && _ < i && -i < _ && o.add(0 < _ ? 0 : 1)));
+        u &&
+          (u.ActorLocationProxy.Subtraction(o, n),
+          Math.abs(n.Z) > l + u.ScaledHalfHeight ||
+            ((u = s + u.ScaledRadius),
+            (_ = Vector_1.Vector.DotProduct(n, r)),
+            (h = Vector_1.Vector.DotProduct(n, c)),
+            Math.abs(_) < u && h < i && -i < h && e.add(0 < h ? 2 : 3),
+            Math.abs(h) < u && _ < i && -i < _ && e.add(0 < _ ? 0 : 1)));
       }
     }
   }
@@ -259,7 +213,7 @@ class AiControllerLibrary {
   }
   static InTeamArea(t, r, i = 1) {
     var t = t.CharActorComp.ActorLocationProxy;
-    let o =
+    let e =
       Math.atan2(
         t.Y - r.CachedTargetLocation.Y,
         t.X - r.CachedTargetLocation.X,
@@ -267,10 +221,10 @@ class AiControllerLibrary {
         MathUtils_1.MathUtils.RadToDeg -
       r.CachedControllerYaw -
       r.AngleCenter;
-    for (; 180 < o; ) o -= 360;
-    for (; 180 < -o; ) o += 360;
+    for (; 180 < e; ) e -= 360;
+    for (; 180 < -e; ) e += 360;
     return (
-      !(Math.abs(o) > r.MaxAngleOffset * i) &&
+      !(Math.abs(e) > r.MaxAngleOffset * i) &&
       (t = Vector_1.Vector.DistSquared2D(t, r.CachedTargetLocation)) >=
         MathUtils_1.MathUtils.Square(
           r.DistanceCenter - r.MaxDistanceOffset * i,
@@ -279,45 +233,44 @@ class AiControllerLibrary {
         MathUtils_1.MathUtils.Square(r.DistanceCenter + r.MaxDistanceOffset * i)
     );
   }
-  static InputNearestDirection(t, r, i, o, e, a, l) {
-    var s, n;
+  static InputNearestDirection(t, r, i, e, a, o, l) {
+    var s, c;
     l
-      ? (a
+      ? (o
           ? (r.ToOrientationQuat(i),
             i.Inverse(i),
-            i.RotateVector(l, o),
-            (s = AiControllerLibrary.KPn(o, t.WanderDirectionType, a)),
-            (n = t.GetNearestDirection(r, s)),
-            0 !== s && 1 !== s && n.UnaryNegation(n),
-            AiControllerLibrary.TurnToDirect(t, n, e))
-          : AiControllerLibrary.TurnToDirect(t, l, e),
+            i.RotateVector(l, e),
+            (s = AiControllerLibrary.Wbn(e, t.WanderDirectionType, o)),
+            (c = t.GetNearestDirection(r, s)),
+            0 !== s && 1 !== s && c.UnaryNegation(c),
+            AiControllerLibrary.TurnToDirect(t, c, a))
+          : AiControllerLibrary.TurnToDirect(t, l, a),
         t.ActorQuatProxy.Inverse(i),
-        i.RotateVector(r, o))
+        i.RotateVector(r, e))
       : (t.ActorQuatProxy.Inverse(i),
-        i.RotateVector(r, o),
-        (s = AiControllerLibrary.KPn(o, t.WanderDirectionType, a)),
-        (n =
-          (!a && 2 !== t.WanderDirectionType) || 0 === t.WanderDirectionType
+        i.RotateVector(r, e),
+        (s = AiControllerLibrary.Wbn(e, t.WanderDirectionType, o)),
+        (c =
+          (!o && 2 !== t.WanderDirectionType) || 0 === t.WanderDirectionType
             ? r
             : t.GetNearestDirection(r, s)),
-        AiControllerLibrary.TurnToDirect(t, n, e)),
-      t.InputWanderDirection(r, o);
+        AiControllerLibrary.TurnToDirect(t, c, a)),
+      t.InputWanderDirection(r, e);
   }
-  static KPn(t, r, i) {
-    let o = 0;
+  static Wbn(t, r, i) {
+    let e = 0;
     return (
       0 === r && i
-        ? (o =
+        ? (e =
             Math.abs(t.X) > Math.abs(t.Y) ? (t.X < 0 ? 1 : 0) : t.Y < 0 ? 3 : 2)
         : 1 === r
-          ? (o = t.X < 0 ? 1 : 0)
-          : 2 === r && (o = t.Y < 0 ? 3 : 2),
-      o
+          ? (e = t.X < 0 ? 1 : 0)
+          : 2 === r && (e = t.Y < 0 ? 3 : 2),
+      e
     );
   }
 }
 ((exports.AiControllerLibrary = AiControllerLibrary).cz =
   Vector_1.Vector.Create()),
-  (AiControllerLibrary.fz = Vector_1.Vector.Create()),
-  (AiControllerLibrary.cie = Rotator_1.Rotator.Create());
+  (AiControllerLibrary.fz = Vector_1.Vector.Create());
 //# sourceMappingURL=AiContollerLibrary.js.map

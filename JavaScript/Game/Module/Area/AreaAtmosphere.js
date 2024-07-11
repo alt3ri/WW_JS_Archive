@@ -33,16 +33,16 @@ class AreaAtmosphereActorInfo {
 exports.AreaAtmosphereActorInfo = AreaAtmosphereActorInfo;
 class AreaAtmosphere {
   constructor() {
-    (this.RHe = void 0),
-      (this.UHe = void 0),
+    (this.kje = void 0),
+      (this.Fje = void 0),
       (this.uMe = () => {
-        this.AHe();
+        this.Vje();
       }),
       (this.nye = () => {
-        this.PHe();
+        this.Hje();
       }),
-      (this.PHe = () => {
-        this.RHe && (this.RHe.TargetBlendWeight = 0);
+      (this.Hje = () => {
+        this.kje && (this.kje.TargetBlendWeight = 0);
         var e = ModelManager_1.ModelManager.AreaModel.AreaInfo;
         if (e) {
           let t = e.AtmosphereId;
@@ -56,27 +56,27 @@ class AreaAtmosphere {
             e =
               ConfigManager_1.ConfigManager.AreaConfig.GetAreaAtmosphereInfo(t);
           e &&
-            (this.RHe
-              ? this.RHe.AreaAtmosphereInfo.Id === e.Id
-                ? ((this.RHe.TargetBlendWeight = 1),
-                  this.Z0e(this.RHe, 0),
-                  this.xHe())
-                : this.UHe
-                  ? ((i = this.UHe),
-                    (this.UHe = this.RHe),
-                    (this.RHe = i),
-                    this.RHe.AreaAtmosphereInfo.Id === e.Id
-                      ? ((this.RHe.TargetBlendWeight = 1),
-                        this.Z0e(this.RHe, 0),
-                        this.xHe())
-                      : (this.wHe(e), this.BHe()))
-                  : ((this.UHe = this.RHe),
-                    (this.RHe = new AreaAtmosphereActorInfo()),
-                    this.wHe(e),
-                    this.bHe())
-              : ((this.RHe = new AreaAtmosphereActorInfo()),
-                this.wHe(e),
-                this.bHe()));
+            (this.kje
+              ? this.kje.AreaAtmosphereInfo.Id === e.Id
+                ? ((this.kje.TargetBlendWeight = 1),
+                  this.Z0e(this.kje, 0),
+                  this.jje())
+                : this.Fje
+                  ? ((i = this.Fje),
+                    (this.Fje = this.kje),
+                    (this.kje = i),
+                    this.kje.AreaAtmosphereInfo.Id === e.Id
+                      ? ((this.kje.TargetBlendWeight = 1),
+                        this.Z0e(this.kje, 0),
+                        this.jje())
+                      : (this.Wje(e), this.Kje()))
+                  : ((this.Fje = this.kje),
+                    (this.kje = new AreaAtmosphereActorInfo()),
+                    this.Wje(e),
+                    this.Qje())
+              : ((this.kje = new AreaAtmosphereActorInfo()),
+                this.Wje(e),
+                this.Qje()));
         }
       }),
       this.AU();
@@ -85,14 +85,14 @@ class AreaAtmosphere {
     this.dde();
   }
   Destroy() {
-    this.Cde(), this.AHe();
+    this.Cde(), this.Vje();
   }
-  AHe() {
-    this.RHe && (this.RHe.Clear(), (this.RHe = void 0)),
-      this.UHe && (this.UHe.Clear(), (this.UHe = void 0));
+  Vje() {
+    this.kje && (this.kje.Clear(), (this.kje = void 0)),
+      this.Fje && (this.Fje.Clear(), (this.Fje = void 0));
   }
   OnTick(t) {
-    this.Z0e(this.RHe, t), this.Z0e(this.UHe, t);
+    this.Z0e(this.kje, t), this.Z0e(this.Fje, t);
   }
   Z0e(t, e) {
     if (t && t.IsLoadCompleted && t.CurBlendWeight !== t.TargetBlendWeight) {
@@ -148,7 +148,7 @@ class AreaAtmosphere {
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.ChangeArea,
-        this.PHe,
+        this.Hje,
       );
   }
   Cde() {
@@ -162,27 +162,27 @@ class AreaAtmosphere {
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.ChangeArea,
-        this.PHe,
+        this.Hje,
       );
   }
-  wHe(t) {
-    0 < (this.RHe.AreaAtmosphereInfo = t).FadeTime
-      ? (this.RHe.ChangeSpeed =
+  Wje(t) {
+    0 < (this.kje.AreaAtmosphereInfo = t).FadeTime
+      ? (this.kje.ChangeSpeed =
           1 / (t.FadeTime * TimeUtil_1.TimeUtil.InverseMillisecond))
-      : (this.RHe.ChangeSpeed = 0);
+      : (this.kje.ChangeSpeed = 0);
   }
-  xHe() {
-    this.RHe &&
-      this.RHe.Actor?.IsValid() &&
+  jje() {
+    this.kje &&
+      this.kje.Actor?.IsValid() &&
       Global_1.Global.BaseCharacter &&
-      this.RHe.Actor.K2_SetActorLocation(
+      this.kje.Actor.K2_SetActorLocation(
         Global_1.Global.BaseCharacter.K2_GetActorLocation(),
         !1,
         void 0,
         !0,
       );
   }
-  bHe() {
+  Qje() {
     let t = void 0;
     t = Global_1.Global.BaseCharacter
       ? Global_1.Global.BaseCharacter.GetTransform()
@@ -200,28 +200,28 @@ class AreaAtmosphere {
     (i.bUnbound = !0),
       (i.BlendWeight = 0),
       (i.bEnabled = !1),
-      (this.RHe.Actor = e),
-      (this.RHe.KuroPostProcessComponent = i),
-      (this.RHe.TargetBlendWeight = 1),
-      (this.RHe.CurBlendWeight = 0),
-      (this.RHe.IsLoadCompleted = !1),
-      this.qHe();
+      (this.kje.Actor = e),
+      (this.kje.KuroPostProcessComponent = i),
+      (this.kje.TargetBlendWeight = 1),
+      (this.kje.CurBlendWeight = 0),
+      (this.kje.IsLoadCompleted = !1),
+      this.Xje();
   }
-  BHe() {
-    var t = this.RHe.KuroPostProcessComponent;
-    (this.RHe.TargetBlendWeight = 1),
-      (this.RHe.CurBlendWeight = 0),
-      (this.RHe.IsLoadCompleted = !1),
+  Kje() {
+    var t = this.kje.KuroPostProcessComponent;
+    (this.kje.TargetBlendWeight = 1),
+      (this.kje.CurBlendWeight = 0),
+      (this.kje.IsLoadCompleted = !1),
       (t.PPTODDataAsset = void 0),
       (t.WeatherDataAsset = void 0),
       (t.BlendWeight = 0),
       (t.bEnabled = !1),
-      this.xHe(),
-      this.qHe();
+      this.jje(),
+      this.Xje();
   }
-  qHe() {
-    const e = this.RHe.AreaAtmosphereInfo,
-      i = this.RHe.KuroPostProcessComponent;
+  Xje() {
+    const e = this.kje.AreaAtmosphereInfo,
+      i = this.kje.KuroPostProcessComponent;
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug(
         "Area",
@@ -236,11 +236,11 @@ class AreaAtmosphere {
             UE.KuroTODData,
             (t) => {
               t?.IsValid() &&
-                this.RHe.AreaAtmosphereInfo.Id === e.Id &&
-                ((this.RHe.IsLoadCompleted = !0),
+                this.kje.AreaAtmosphereInfo.Id === e.Id &&
+                ((this.kje.IsLoadCompleted = !0),
                 (i.PPTODDataAsset = t),
                 i.SetPriority(e.Priority),
-                this.Z0e(this.RHe, 0),
+                this.Z0e(this.kje, 0),
                 Log_1.Log.CheckDebug()) &&
                 Log_1.Log.Debug(
                   "Area",
@@ -256,11 +256,11 @@ class AreaAtmosphere {
             UE.KuroWeatherDataAsset,
             (t) => {
               t?.IsValid() &&
-                this.RHe.AreaAtmosphereInfo.Id === e.Id &&
-                ((this.RHe.IsLoadCompleted = !0),
+                this.kje.AreaAtmosphereInfo.Id === e.Id &&
+                ((this.kje.IsLoadCompleted = !0),
                 (i.WeatherDataAsset = t),
                 i.SetPriority(e.Priority),
-                this.Z0e(this.RHe, 0),
+                this.Z0e(this.kje, 0),
                 Log_1.Log.CheckDebug()) &&
                 Log_1.Log.Debug(
                   "Area",

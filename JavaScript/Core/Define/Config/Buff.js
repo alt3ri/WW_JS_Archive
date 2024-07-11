@@ -258,6 +258,11 @@ class Buff {
       (t) => this.extraeffectprobability(t),
     );
   }
+  get BuffAction() {
+    return GameUtils_1.GameUtils.ConvertToArray(this.buffactionLength(), (t) =>
+      this.buffaction(t),
+    );
+  }
   get TagLogic() {
     return GameUtils_1.GameUtils.ConvertToArray(this.taglogicLength(), (t) =>
       this.taglogic(t),
@@ -846,11 +851,24 @@ class Buff {
         )
       : null;
   }
+  GetBuffactionAt(t) {
+    return this.buffaction(t);
+  }
+  buffaction(t, i) {
+    var r = this.J7.__offset(this.z7, 112);
+    return r
+      ? this.J7.__string(this.J7.__vector(this.z7 + r) + 4 * t, i)
+      : null;
+  }
+  buffactionLength() {
+    var t = this.J7.__offset(this.z7, 112);
+    return t ? this.J7.__vector_len(this.z7 + t) : 0;
+  }
   GetTaglogicAt(t, i) {
     return this.taglogic(t);
   }
   taglogic(t, i) {
-    var r = this.J7.__offset(this.z7, 112);
+    var r = this.J7.__offset(this.z7, 114);
     return r
       ? (i || new IntArray_1.IntArray()).__init(
           this.J7.__indirect(this.J7.__vector(this.z7 + r) + 4 * t),
@@ -859,7 +877,7 @@ class Buff {
       : null;
   }
   taglogicLength() {
-    var t = this.J7.__offset(this.z7, 112);
+    var t = this.J7.__offset(this.z7, 114);
     return t ? this.J7.__vector_len(this.z7 + t) : 0;
   }
 }

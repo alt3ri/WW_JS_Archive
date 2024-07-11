@@ -27,9 +27,7 @@ class FormationAttributeController extends ControllerBase_1.ControllerBase {
         EventDefine_1.EEventName.WorldDone,
         this.nye,
       ),
-      (this.zVs = this.zVs - 1e3 * Math.random()),
-      (this.ZVs = this.ZVs - 1e3 * Math.random()),
-      !(this.e9s = !1)
+      !0
     );
   }
   static OnTick(t) {
@@ -49,37 +47,21 @@ class FormationAttributeController extends ControllerBase_1.ControllerBase {
   static GetPredictedServerTime() {
     return Time_1.Time.Now + this.HBe + Net_1.Net.RttMs / 2;
   }
-  static t9s(t) {
-    var e = Time_1.Time.ServerTimeStamp,
-      r = e - t;
-    !this.e9s &&
-      ((0 < r && r > this.ZVs) || (r < 0 && Math.abs(r) > this.zVs)) &&
-      (EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.TimeValidError),
-      Log_1.Log.CheckWarn() &&
-        Log_1.Log.Warn(
-          "TimeUtil",
-          38,
-          "校准时间存在过大误差,退出登录重连",
-          ["clientTime", e],
-          ["ServerTime", t],
-        ),
-      (this.e9s = !0));
-  }
   static OnFormationAttrChanged(t) {
     var e,
       r,
       i = this.Model?.GetData(t);
     i &&
-      ((e = Protocol_1.Aki.Protocol.zns.create()),
-      (r = Protocol_1.Aki.Protocol.NOs.create()),
-      (e.qFn = [r]),
-      (e.GFn = i.Timestamp),
-      (r.OFn = t),
-      (r.NFn = i.Value),
-      (r.kFn = i.Max),
-      (r.FFn = i.BaseMax),
-      (r.VFn = i.Speed),
-      Net_1.Net.Call(16761, e, () => {}),
+      ((e = Protocol_1.Aki.Protocol.Qls.create()),
+      (r = Protocol_1.Aki.Protocol.A4s.create()),
+      (e.u6n = [r]),
+      (e.c6n = i.Timestamp),
+      (r.m6n = t),
+      (r.d6n = i.Value),
+      (r.C6n = i.Max),
+      (r.g6n = i.BaseMax),
+      (r.f6n = i.Speed),
+      Net_1.Net.Call(3564, e, () => {}),
       Log_1.Log.CheckDebug()) &&
       Log_1.Log.Debug(
         "Battle",
@@ -158,7 +140,7 @@ class FormationAttributeController extends ControllerBase_1.ControllerBase {
         ((t = () => {
           var t =
               ModelManager_1.ModelManager.SceneTeamModel.GetCurrentEntity?.Entity?.CheckGetComponent(
-                185,
+                188,
               ),
             e = this.Model.GetConfig(r);
           e &&
@@ -329,41 +311,40 @@ class FormationAttributeController extends ControllerBase_1.ControllerBase {
 }
 (exports.FormationAttributeController = FormationAttributeController),
   ((_a = FormationAttributeController).ConfigList = void 0),
-  (FormationAttributeController.e9s = !1),
-  (FormationAttributeController.zVs = 432e5),
-  (FormationAttributeController.ZVs = 6e4),
   (FormationAttributeController.HBe = 0),
   (FormationAttributeController.VBe = 0),
   (FormationAttributeController.FBe = void 0),
   (FormationAttributeController.FormationAttrNotify = (t) => {
-    var r = MathUtils_1.MathUtils.LongToNumber(t.GFn ?? 0);
+    var r = MathUtils_1.MathUtils.LongToNumber(t.c6n ?? 0);
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug(
         "Battle",
         20,
         "收到队伍属性变化通知",
         ["serverTime", r],
-        ["notify", JSON.stringify(t.qFn)],
+        ["notify", JSON.stringify(t.u6n)],
       );
-    for (const n of t.qFn) {
-      var i = n.OFn ?? 0,
-        o = _a.Model.GetMax(n.OFn ?? 0),
-        a = n.kFn ?? 0,
-        s = n.FFn ?? 0;
-      let t = n.NFn ?? 0,
-        e = n.VFn ?? 0;
+    for (const n of t.u6n) {
+      var i = n.m6n ?? 0,
+        o = _a.Model.GetMax(n.m6n ?? 0),
+        a = n.C6n ?? 0,
+        s = n.g6n ?? 0;
+      let t = n.d6n ?? 0,
+        e = n.f6n ?? 0;
       _a.WBe(i) && ((t = _a.GetValue(i) ?? 0), (e = _a.GetSpeed(i) ?? 0)),
         _a.Model.SetData(i, a, s, t, e, r),
         _a.OnSetMax(i, a, o);
     }
   }),
   (FormationAttributeController.TimeCheck = (t, e, r) => {
+    var i = _a.HBe,
+      o = _a.VBe;
     (_a.HBe = e - Time_1.Time.Now),
       (_a.VBe = Number(r) - Time_1.Time.WorldTime),
-      Time_1.Time.SetServerTimeOffset(Number(_a.HBe)),
-      Time_1.Time.SetTimeCheckServerStopTimeStamp(Number(_a.VBe)),
-      Log_1.Log.CheckDebug() &&
-        Log_1.Log.Debug(
+      Time_1.Time.SyncTime(e, Number(_a.HBe), Number(_a.VBe)),
+      (3e3 < _a.VBe - o || 3e3 < _a.HBe - i) &&
+        Log_1.Log.CheckWarn() &&
+        Log_1.Log.Warn(
           "Battle",
           36,
           "对时通知",
@@ -375,27 +356,26 @@ class FormationAttributeController extends ControllerBase_1.ControllerBase {
         );
   }),
   (FormationAttributeController.TimeCheckNotify = (t) => {
-    var e = MathUtils_1.MathUtils.LongToNumber(t.HFn),
-      r = MathUtils_1.MathUtils.LongToNumber(t.Kxs),
-      t = MathUtils_1.MathUtils.LongToNumber(t.Qxs);
+    var e = MathUtils_1.MathUtils.LongToNumber(t.p6n),
+      r = MathUtils_1.MathUtils.LongToNumber(t.cGs),
+      t = MathUtils_1.MathUtils.LongToNumber(t.dGs);
     _a.TimeCheck(e, r, t);
   }),
   (FormationAttributeController.TimeCheckRequest = () => {
     var t;
     Net_1.Net.IsServerConnected() &&
-      (((t = Protocol_1.Aki.Protocol.Hus.create()).HFn = Time_1.Time.WorldTime),
-      (t.jFn = Time_1.Time.TimeDilation),
-      (t.WFn = ModelManager_1.ModelManager.GeneralLogicTreeModel?.TimeStop
+      (((t = Protocol_1.Aki.Protocol.kCs.create()).p6n = Time_1.Time.WorldTime),
+      (t.v6n = Time_1.Time.TimeDilation),
+      (t.M6n = ModelManager_1.ModelManager.GeneralLogicTreeModel?.TimeStop
         ? 0
         : 1),
-      Net_1.Net.Call(21928, t, (t) => {
+      Net_1.Net.Call(26266, t, (t) => {
         var e, r;
         t &&
-          ((e = MathUtils_1.MathUtils.LongToNumber(t.HFn)),
-          (r = MathUtils_1.MathUtils.LongToNumber(t.Kxs)),
-          (t = MathUtils_1.MathUtils.LongToNumber(t.Qxs)),
-          _a.TimeCheck(e, r, t),
-          _a.t9s(r));
+          ((e = MathUtils_1.MathUtils.LongToNumber(t.p6n)),
+          (r = MathUtils_1.MathUtils.LongToNumber(t.cGs)),
+          (t = MathUtils_1.MathUtils.LongToNumber(t.dGs)),
+          _a.TimeCheck(e, r, t));
       }));
   }),
   (FormationAttributeController.Modifiers = new Map()),
@@ -405,7 +385,7 @@ class FormationAttributeController extends ControllerBase_1.ControllerBase {
     if (_a.ConfigList)
       for (const a of _a.ConfigList.values()) {
         var r = a.Id,
-          i = t.Entity.CheckGetComponent(185),
+          i = t.Entity.CheckGetComponent(188),
           o = _a.Model.GetConfig(r);
         for (const s of o?.ForbidIncreaseTags)
           i?.AddTagAddOrRemoveListener(s, _a.QBe(r));

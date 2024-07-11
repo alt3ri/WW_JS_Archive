@@ -13,24 +13,24 @@ const Rotator_1 = require("../../../../../Core/Utils/Math/Rotator"),
 class ReachAreaBehaviorNode extends TickBehaviorNode_1.TickBehaviorNode {
   constructor() {
     super(...arguments),
-      (this.lXt = void 0),
-      (this._Xt = -0),
+      (this.l$t = void 0),
+      (this._$t = -0),
       (this.E0 = 0),
-      (this.uXt = !1),
-      (this.cXt = Vector_1.Vector.Create()),
-      (this.mXt = "Box"),
-      (this.aXt = []),
+      (this.u$t = !1),
+      (this.c$t = Vector_1.Vector.Create()),
+      (this.m$t = "Box"),
+      (this.a$t = []),
       (this.EffectPathKey = void 0),
       (this.ConditionGrop = void 0),
       (this.wY = 0),
-      (this.dXt = void 0),
-      (this.CXt = void 0),
-      (this.gXt = Vector_1.Vector.Create()),
-      (this.fXt = void 0),
-      (this.pXt = 0),
-      (this.vXt = 0),
+      (this.d$t = void 0),
+      (this.C$t = void 0),
+      (this.g$t = Vector_1.Vector.Create()),
+      (this.f$t = void 0),
+      (this.p$t = 0),
+      (this.v$t = 0),
       (this.OnAfterSubmit = (e) => {
-        this.uXt = !1;
+        this.u$t = !1;
       });
   }
   get CorrelativeEntities() {}
@@ -40,7 +40,7 @@ class ReachAreaBehaviorNode extends TickBehaviorNode_1.TickBehaviorNode {
     if ("ReachArea" !== e.Type) return !1;
     (this.IntervalTime = 500),
       (this.E0 = e.EntityId),
-      (this.aXt = e.MatchRoleOption),
+      (this.a$t = e.MatchRoleOption),
       (this.ConditionGrop = e.PreConditions),
       (this.EffectPathKey = e.EffectPath);
     var t =
@@ -50,21 +50,21 @@ class ReachAreaBehaviorNode extends TickBehaviorNode_1.TickBehaviorNode {
           )
         : void 0;
     if (t) {
-      this._Xt = e.Range;
+      this._$t = e.Range;
       var i = (0, IComponent_1.getComponent)(
           t.ComponentsData,
           "RangeComponent",
         ),
-        r = ((this.mXt = i.Shape.Type), t.Transform.Pos);
+        r = ((this.m$t = i.Shape.Type), t.Transform.Pos);
       switch (i.Shape.Type) {
         case "Sphere":
           var s = i.Shape.Center;
-          (this.lXt = Vector_1.Vector.Create(
+          (this.l$t = Vector_1.Vector.Create(
             r.X + (s?.X ?? 0),
             r.Y + (s?.Y ?? 0),
             r.Z + (s?.Z ?? 0),
           )),
-            (this._Xt = i.Shape.Radius);
+            (this._$t = i.Shape.Radius);
           break;
         case "Box":
           var s = t.Transform.Rot,
@@ -82,24 +82,24 @@ class ReachAreaBehaviorNode extends TickBehaviorNode_1.TickBehaviorNode {
               r.Z + (h?.Z ?? 0),
             ),
             h = Transform_1.Transform.Create(s, a, Vector_1.Vector.OneVector);
-          (this.lXt = a),
-            (this.dXt = Vector_1.Vector.Create(o.X ?? 0, o.Y ?? 0, o.Z ?? 0)),
-            (this.CXt = h);
+          (this.l$t = a),
+            (this.d$t = Vector_1.Vector.Create(o.X ?? 0, o.Y ?? 0, o.Z ?? 0)),
+            (this.C$t = h);
           break;
         case "Cylinder":
           s = i.Shape.Center;
-          (this.fXt = Vector_1.Vector.Create(
+          (this.f$t = Vector_1.Vector.Create(
             r.X ?? 0 + (s?.X ?? 0),
             r.Y + (s?.Y ?? 0),
             r.Z + (s?.Z ?? 0),
           )),
-            (this.pXt = i.Shape.Radius),
-            (this.vXt = i.Shape.Height);
+            (this.p$t = i.Shape.Radius),
+            (this.v$t = i.Shape.Height);
       }
     } else
-      (this.lXt = Vector_1.Vector.Create(e.Pos.X, e.Pos.Y, e.Pos.Z)),
-        (this._Xt = e.Range),
-        (this.mXt = "Sphere");
+      (this.l$t = Vector_1.Vector.Create(e.Pos.X, e.Pos.Y, e.Pos.Z)),
+        (this._$t = e.Range),
+        (this.m$t = "Sphere");
     return !0;
   }
   OnDestroy() {
@@ -108,15 +108,15 @@ class ReachAreaBehaviorNode extends TickBehaviorNode_1.TickBehaviorNode {
   OnTick() {
     this.wY++,
       ModelManager_1.ModelManager.TeleportModel.IsTeleport ||
-        this.uXt ||
+        this.u$t ||
         (!this.Blackboard.IsTracking && this.wY % 2 != 0) ||
         ModelManager_1.ModelManager.SceneTeamModel.IsAllDid() ||
-        (this.MXt() && this.SubmitNode());
+        (this.M$t() && this.SubmitNode());
   }
-  MXt() {
-    if (this.aXt && 0 < this.aXt.length) {
+  M$t() {
+    if (this.a$t && 0 < this.a$t.length) {
       if (
-        !SceneTeamController_1.SceneTeamController.IsMatchRoleOption(this.aXt)
+        !SceneTeamController_1.SceneTeamController.IsMatchRoleOption(this.a$t)
       )
         return !1;
     } else if (ModelManager_1.ModelManager.SceneTeamModel.IsPhantomTeam)
@@ -134,43 +134,43 @@ class ReachAreaBehaviorNode extends TickBehaviorNode_1.TickBehaviorNode {
         this.E0,
       );
       if (!e) return !1;
-      this.cXt.DeepCopy(e.Entity.GetComponent(1).ActorLocationProxy);
+      this.c$t.DeepCopy(e.Entity.GetComponent(1).ActorLocationProxy);
     } else {
       e = GeneralLogicTreeUtil_1.GeneralLogicTreeUtil.GetPlayerLocation();
       if (!e) return !1;
-      this.cXt.DeepCopy(e);
+      this.c$t.DeepCopy(e);
     }
-    if (!this.cXt) return !1;
+    if (!this.c$t) return !1;
     let t = !1;
-    switch (this.mXt) {
+    switch (this.m$t) {
       case "Sphere":
-        this.lXt &&
-          (t = Vector_1.Vector.Distance(this.cXt, this.lXt) < this._Xt);
+        this.l$t &&
+          (t = Vector_1.Vector.Distance(this.c$t, this.l$t) < this._$t);
         break;
       case "Box":
-        this.CXt?.InverseTransformPosition(this.cXt, this.gXt),
+        this.C$t?.InverseTransformPosition(this.c$t, this.g$t),
           (t =
-            this.gXt.X > -this.dXt.X &&
-            this.gXt.X < this.dXt.X &&
-            this.gXt.Y > -this.dXt.Y &&
-            this.gXt.Y < this.dXt.Y &&
-            this.gXt.Z > -this.dXt.Z &&
-            this.gXt.Z < this.dXt.Z);
+            this.g$t.X > -this.d$t.X &&
+            this.g$t.X < this.d$t.X &&
+            this.g$t.Y > -this.d$t.Y &&
+            this.g$t.Y < this.d$t.Y &&
+            this.g$t.Z > -this.d$t.Z &&
+            this.g$t.Z < this.d$t.Z);
         break;
       case "Cylinder":
         var i;
-        !this.fXt ||
-          Vector_1.Vector.Dist2D(this.cXt, this.fXt) > this.pXt ||
-          ((i = this.cXt.Z - this.fXt.Z),
-          (t = i <= this.vXt / 2 && i >= -this.vXt / 2));
+        !this.f$t ||
+          Vector_1.Vector.Dist2D(this.c$t, this.f$t) > this.p$t ||
+          ((i = this.c$t.Z - this.f$t.Z),
+          (t = i <= this.v$t / 2 && i >= -this.v$t / 2));
     }
     return t;
   }
   OnBeforeSubmit() {
-    this.uXt = !0;
+    this.u$t = !0;
   }
   GetTargetPosition() {
-    return this.lXt;
+    return this.l$t;
   }
 }
 exports.ReachAreaBehaviorNode = ReachAreaBehaviorNode;

@@ -13,8 +13,8 @@ class GameplayEnterView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
       (this.TimerId = void 0),
-      (this.jJe = () => {
-        this.Ifi();
+      (this.iZe = () => {
+        this.Tpi();
       });
   }
   OnRegisterComponent() {
@@ -26,19 +26,19 @@ class GameplayEnterView extends UiViewBase_1.UiViewBase {
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.TextLanguageChange,
-      this.jJe,
+      this.iZe,
     );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.TextLanguageChange,
-      this.jJe,
+      this.iZe,
     );
   }
   OnStart() {
-    this.Ifi();
+    this.Tpi();
   }
-  Ifi() {
+  Tpi() {
     var e,
       i = this.OpenParam;
     i &&
@@ -50,9 +50,9 @@ class GameplayEnterView extends UiViewBase_1.UiViewBase {
       this.GetText(1).SetText(i));
   }
   OnAfterPlayStartSequence() {
-    this.TBt();
+    this.Rbt();
   }
-  TBt() {
+  Rbt() {
     this.TimerId = TimerSystem_1.TimerSystem.Delay(() => {
       this.$Oe();
     }, GameplayViewDefine_1.DelayCloseTime);

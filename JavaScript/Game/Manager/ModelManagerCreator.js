@@ -9,6 +9,7 @@ const AudioModel_1 = require("../../Core/Audio/AudioModel"),
   KuroSdkModel_1 = require("../KuroSdk/KuroSdkModel"),
   CipherModel_1 = require("../LevelGamePlay/Cipher/CipherModel"),
   GameSplineModel_1 = require("../LevelGamePlay/Common/GameSplineModel"),
+  DigitalScreenModel_1 = require("../LevelGamePlay/DigitalScreen/DigitalScreenModel"),
   LevelGamePlayModel_1 = require("../LevelGamePlay/LevelGamePlayModel"),
   LevelGeneralModel_1 = require("../LevelGamePlay/LevelGeneralModel"),
   ParkourModel_1 = require("../LevelGamePlay/Parkour/ParkourModel"),
@@ -21,6 +22,12 @@ const AudioModel_1 = require("../../Core/Audio/AudioModel"),
   FormationDataModel_1 = require("../Module/Abilities/FormationDataModel"),
   AchievementModel_1 = require("../Module/Achievement/AchievementModel"),
   BossRushModel_1 = require("../Module/Activity/ActivityContent/BossRush/BossRushModel"),
+  MoonChasingBuildingModel_1 = require("../Module/Activity/ActivityContent/MoonChasing/Main/Build/Model/MoonChasingBuildingModel"),
+  MoonChasingBusinessModel_1 = require("../Module/Activity/ActivityContent/MoonChasing/Main/Business/Model/MoonChasingBusinessModel"),
+  MoonChasingModel_1 = require("../Module/Activity/ActivityContent/MoonChasing/Main/Model/MoonChasingModel"),
+  MoonChasingRewardModel_1 = require("../Module/Activity/ActivityContent/MoonChasing/Main/Reward/Model/MoonChasingRewardModel"),
+  MoonChasingTaskModel_1 = require("../Module/Activity/ActivityContent/MoonChasing/Main/Task/Model/MoonChasingTaskModel"),
+  ActivityRecallModel_1 = require("../Module/Activity/ActivityContent/Recall/ActivityRecallModel"),
   ActivityRunModel_1 = require("../Module/Activity/ActivityContent/Run/ActivityRunModel"),
   ActivityModel_1 = require("../Module/Activity/ActivityModel"),
   AdventureGuideModel_1 = require("../Module/AdventureGuide/AdventureGuideModel"),
@@ -30,6 +37,7 @@ const AudioModel_1 = require("../../Core/Audio/AudioModel"),
   AreaModel_1 = require("../Module/Area/AreaModel"),
   AttributeModel_1 = require("../Module/Attribute/AttributeModel"),
   AutoRunModel_1 = require("../Module/AutoRunMode/AutoRunModel"),
+  BattleInputModel_1 = require("../Module/Battle/Input/BattleInputModel"),
   BattleScoreModel_1 = require("../Module/Battle/Score/BattleScoreModel"),
   SkillCdModel_1 = require("../Module/Battle/SkillCdModel"),
   BattleUiModel_1 = require("../Module/BattleUi/BattleUiModel"),
@@ -134,6 +142,7 @@ const AudioModel_1 = require("../../Core/Audio/AudioModel"),
   SundryModel_1 = require("../Module/Sundry/SundryModel"),
   TeleportModel_1 = require("../Module/Teleport/TeleportModel"),
   TimeOfDayModel_1 = require("../Module/TimeOfDay/TimeOfDayModel"),
+  TowerDefenceModel_1 = require("../Module/TowerDefence/TowerDefenceModel"),
   TowerDetailModel_1 = require("../Module/TowerDetailUi/TowerDetailModel"),
   TowerModel_1 = require("../Module/TowerDetailUi/TowerModel"),
   TrackModel_1 = require("../Module/Track/TrackModel"),
@@ -160,6 +169,7 @@ const AudioModel_1 = require("../../Core/Audio/AudioModel"),
   VisionCaptureModel_1 = require("../NewWorld/SceneItem/Model/VisionCaptureModel"),
   TriggerVolumeModel_1 = require("../NewWorld/TriggerItems/Model/TriggerVolumeModel"),
   RedDotModel_1 = require("../RedDot/RedDotModel"),
+  ScreenEffectModel_1 = require("../Render/Effect/ScreenEffectSystem/ScreenEffectModel"),
   RenderModuleModel_1 = require("../Render/Manager/RenderModuleModel"),
   InputDistributeModel_1 = require("../Ui/InputDistribute/InputDistributeModel"),
   AoiModel_1 = require("../World/Model/AoiModel"),
@@ -285,6 +295,11 @@ class ModelManagerCreator {
       (ModelManager_1.ModelManager.SkillCdModel =
         new SkillCdModel_1.SkillCdModel()),
       ModelManager_1.ModelManager.Add(ModelManager_1.ModelManager.SkillCdModel),
+      (ModelManager_1.ModelManager.BattleInputModel =
+        new BattleInputModel_1.BattleInputModel()),
+      ModelManager_1.ModelManager.Add(
+        ModelManager_1.ModelManager.BattleInputModel,
+      ),
       (ModelManager_1.ModelManager.BattleUiModel =
         new BattleUiModel_1.BattleUiModel()),
       ModelManager_1.ModelManager.Add(
@@ -901,10 +916,55 @@ class ModelManagerCreator {
       ModelManager_1.ModelManager.Add(
         ModelManager_1.ModelManager.BossRushModel,
       ),
+      (ModelManager_1.ModelManager.TowerDefenseModel =
+        new TowerDefenceModel_1.TowerDefenseModel()),
+      ModelManager_1.ModelManager.Add(
+        ModelManager_1.ModelManager.TowerDefenseModel,
+      ),
+      (ModelManager_1.ModelManager.MoonChasingModel =
+        new MoonChasingModel_1.MoonChasingModel()),
+      ModelManager_1.ModelManager.Add(
+        ModelManager_1.ModelManager.MoonChasingModel,
+      ),
+      (ModelManager_1.ModelManager.MoonChasingBusinessModel =
+        new MoonChasingBusinessModel_1.MoonChasingBusinessModel()),
+      ModelManager_1.ModelManager.Add(
+        ModelManager_1.ModelManager.MoonChasingBusinessModel,
+      ),
+      (ModelManager_1.ModelManager.MoonChasingBuildingModel =
+        new MoonChasingBuildingModel_1.MoonChasingBuildingModel()),
+      ModelManager_1.ModelManager.Add(
+        ModelManager_1.ModelManager.MoonChasingBuildingModel,
+      ),
+      (ModelManager_1.ModelManager.MoonChasingTaskModel =
+        new MoonChasingTaskModel_1.MoonChasingTaskModel()),
+      ModelManager_1.ModelManager.Add(
+        ModelManager_1.ModelManager.MoonChasingTaskModel,
+      ),
+      (ModelManager_1.ModelManager.MoonChasingRewardModel =
+        new MoonChasingRewardModel_1.MoonChasingRewardModel()),
+      ModelManager_1.ModelManager.Add(
+        ModelManager_1.ModelManager.MoonChasingRewardModel,
+      ),
       (ModelManager_1.ModelManager.AlertMarkModel =
         new AlertMarksModel_1.AlertMarkModel()),
       ModelManager_1.ModelManager.Add(
         ModelManager_1.ModelManager.AlertMarkModel,
+      ),
+      (ModelManager_1.ModelManager.ActivityRecallModel =
+        new ActivityRecallModel_1.ActivityRecallModel()),
+      ModelManager_1.ModelManager.Add(
+        ModelManager_1.ModelManager.ActivityRecallModel,
+      ),
+      (ModelManager_1.ModelManager.DigitalScreenModel =
+        new DigitalScreenModel_1.DigitalScreenModel()),
+      ModelManager_1.ModelManager.Add(
+        ModelManager_1.ModelManager.DigitalScreenModel,
+      ),
+      (ModelManager_1.ModelManager.ScreenEffectModel =
+        new ScreenEffectModel_1.ScreenEffectModel()),
+      ModelManager_1.ModelManager.Add(
+        ModelManager_1.ModelManager.ScreenEffectModel,
       ),
       ModelManager_1.ModelManager.Init(),
       !0
@@ -935,6 +995,7 @@ class ModelManagerCreator {
       (ModelManager_1.ModelManager.EditBattleTeamModel = void 0),
       (ModelManager_1.ModelManager.MapModel = void 0),
       (ModelManager_1.ModelManager.SkillCdModel = void 0),
+      (ModelManager_1.ModelManager.BattleInputModel = void 0),
       (ModelManager_1.ModelManager.BattleUiModel = void 0),
       (ModelManager_1.ModelManager.InventoryModel = void 0),
       (ModelManager_1.ModelManager.ReConnectModel = void 0),
@@ -1061,8 +1122,12 @@ class ModelManagerCreator {
       (ModelManager_1.ModelManager.RoleSelectModel = void 0),
       (ModelManager_1.ModelManager.RechargeModel = void 0),
       (ModelManager_1.ModelManager.PortalModel = void 0),
+      (ModelManager_1.ModelManager.BossRushModel = void 0),
+      (ModelManager_1.ModelManager.TowerDefenseModel = void 0),
       (ModelManager_1.ModelManager.AlertMarkModel = void 0),
-      !(ModelManager_1.ModelManager.BossRushModel = void 0)
+      (ModelManager_1.ModelManager.ActivityRecallModel = void 0),
+      (ModelManager_1.ModelManager.DigitalScreenModel = void 0),
+      !(ModelManager_1.ModelManager.ScreenEffectModel = void 0)
     );
   }
 }

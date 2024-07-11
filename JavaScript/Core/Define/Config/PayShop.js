@@ -35,6 +35,9 @@ class PayShop {
   get Icon() {
     return this.icon();
   }
+  get SortRule() {
+    return this.sortrule();
+  }
   __init(t, i) {
     return (this.z7 = t), (this.J7 = i), this;
   }
@@ -96,6 +99,10 @@ class PayShop {
   icon(t) {
     var i = this.J7.__offset(this.z7, 20);
     return i ? this.J7.__string(this.z7 + i, t) : null;
+  }
+  sortrule() {
+    var t = this.J7.__offset(this.z7, 22);
+    return t ? this.J7.readInt32(this.z7 + t) : 0;
   }
 }
 exports.PayShop = PayShop;

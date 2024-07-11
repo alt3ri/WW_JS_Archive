@@ -3,6 +3,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.VisionCommonDragItem = void 0);
 const UE = require("ue"),
   CustomPromise_1 = require("../../../../../Core/Common/CustomPromise"),
+  Info_1 = require("../../../../../Core/Common/Info"),
   Log_1 = require("../../../../../Core/Common/Log"),
   Time_1 = require("../../../../../Core/Common/Time"),
   TickSystem_1 = require("../../../../../Core/Tick/TickSystem"),
@@ -22,84 +23,84 @@ const UE = require("ue"),
 class VisionCommonDragItem {
   constructor(t, i, s, e) {
     (this.CeaseAnimationPromise = void 0),
-      (this.Zdo = void 0),
+      (this.YCo = void 0),
       (this.Xy = -1),
-      (this.eCo = void 0),
-      (this.tCo = void 0),
-      (this.iCo = void 0),
-      (this.oCo = void 0),
-      (this.rCo = void 0),
-      (this.nCo = void 0),
-      (this.EBt = void 0),
-      (this.sCo = void 0),
-      (this.aCo = void 0),
-      (this.hCo = void 0),
-      (this.lCo = void 0),
-      (this._Co = void 0),
-      (this.uCo = void 0),
-      (this.cCo = !1),
+      (this.JCo = void 0),
+      (this.zCo = void 0),
+      (this.ZCo = void 0),
+      (this.ego = void 0),
+      (this.tgo = void 0),
+      (this.igo = void 0),
+      (this.Tbt = void 0),
+      (this.ogo = void 0),
+      (this.rgo = void 0),
+      (this.ngo = void 0),
+      (this.sgo = void 0),
+      (this.ago = void 0),
+      (this.hgo = void 0),
+      (this.lgo = !1),
       (this.Uqe = 0),
-      (this.mCo = !1),
-      (this.dCo = !1),
-      (this.LEt = TickSystem_1.TickSystem.InvalidId),
-      (this.CCo = !1),
-      (this.gCo = TickSystem_1.TickSystem.InvalidId),
-      (this.cVe = 0),
-      (this.fCo = Vector_1.Vector.Create()),
-      (this.pCo = void 0),
-      (this.vCo = 0),
-      (this.MCo = 0),
-      (this.SCo = new Vector2D_1.Vector2D(0, 0)),
-      (this.ECo = new Vector2D_1.Vector2D(0, 0)),
-      (this.yCo = new Array()),
-      (this.ICo = !1),
-      (this.TCo = !1),
-      (this.EPe = void 0),
-      (this.LCo = 0),
-      (this.Y6i = void 0),
-      (this.DCo = void 0),
-      (this.RCo = void 0),
-      (this.UCo = void 0),
-      (this.ACo = void 0),
-      (this.PCo = void 0),
-      (this.xCo = void 0),
-      (this.wCo = new Vector2D_1.Vector2D(0, 0)),
-      (this.BCo = new Vector2D_1.Vector2D(0, 0)),
-      (this.bCo = !1),
-      (this.qCo = new Vector2D_1.Vector2D(0, 0)),
-      (this.GCo = !1),
-      (this.NCo = new Vector2D_1.Vector2D(0, 0)),
-      (this.OCo = !1),
-      (this.cTt = void 0),
-      (this.kCo = !1),
-      (this.FCo = (t) => {
+      (this._go = !1),
+      (this.ugo = !1),
+      (this.Gyt = TickSystem_1.TickSystem.InvalidId),
+      (this.cgo = !1),
+      (this.mgo = TickSystem_1.TickSystem.InvalidId),
+      (this.L6e = 0),
+      (this.dgo = Vector_1.Vector.Create()),
+      (this.Cgo = void 0),
+      (this.ggo = 0),
+      (this.fgo = 0),
+      (this.pgo = new Vector2D_1.Vector2D(0, 0)),
+      (this.vgo = new Vector2D_1.Vector2D(0, 0)),
+      (this.Mgo = new Array()),
+      (this.Ego = !1),
+      (this.Sgo = !1),
+      (this.SPe = void 0),
+      (this.ygo = 0),
+      (this.$8i = void 0),
+      (this.Igo = void 0),
+      (this.Tgo = void 0),
+      (this.Lgo = void 0),
+      (this.Dgo = void 0),
+      (this.Rgo = void 0),
+      (this.Ugo = void 0),
+      (this.Ago = new Vector2D_1.Vector2D(0, 0)),
+      (this.Pgo = new Vector2D_1.Vector2D(0, 0)),
+      (this.xgo = !1),
+      (this.wgo = new Vector2D_1.Vector2D(0, 0)),
+      (this.Bgo = !1),
+      (this.bgo = new Vector2D_1.Vector2D(0, 0)),
+      (this.qgo = !1),
+      (this.fLt = void 0),
+      (this.Ggo = !1),
+      (this.Ngo = (t) => {
         ModelManager_1.ModelManager.PhantomBattleModel.CheckIfCanDrag() &&
-          !this.TCo &&
+          !this.Sgo &&
           (ModelManager_1.ModelManager.PhantomBattleModel.CheckIfCanDrag() &&
             ModelManager_1.ModelManager.PhantomBattleModel.SetCurrentDragIndex(
               this.Xy,
             ),
-          (this.cCo = !1),
+          (this.lgo = !1),
           (this.Uqe = 0),
-          (this.dCo = !1),
-          (this.mCo = !1),
-          (this.uCo = void 0),
-          (this.CCo = !1),
-          (this.LEt = TickSystem_1.TickSystem.Add(
+          (this.ugo = !1),
+          (this._go = !1),
+          (this.hgo = void 0),
+          (this.cgo = !1),
+          (this.Gyt = TickSystem_1.TickSystem.Add(
             () => {
-              this.VCo(), (this.Uqe += Time_1.Time.DeltaTime);
+              this.Ogo(), (this.Uqe += Time_1.Time.DeltaTime);
             },
             "DragTick",
             0,
             !0,
           ).Id),
-          this.Y6i) &&
-          this.eCo?.(this.GetCurrentIndex());
+          this.$8i) &&
+          this.JCo?.(this.GetCurrentIndex());
       }),
-      (this.HCo = (t) => {
+      (this.kgo = (t) => {
         var i;
-        this.jCo(),
-          this.WCo(),
+        this.Fgo(),
+          this.Vgo(),
           Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug("UiCommon", 28, "OnPointUp", [
               "OnPointUp",
@@ -109,15 +110,15 @@ class VisionCommonDragItem {
             this.Xy,
           ) &&
             (ModelManager_1.ModelManager.PhantomBattleModel.ClearCurrentDragIndex(),
-            this.kCo
-              ? this.KCo()
-                ? this.QCo(!0)
-                : this.QCo()
-              : this.Y6i
+            this.Ggo
+              ? this.Hgo()
+                ? this.jgo(!0)
+                : this.jgo()
+              : this.$8i
                 ? (Log_1.Log.CheckDebug() &&
                     Log_1.Log.Debug("UiCommon", 28, "OnPointUp", [
                       "this.IfBeginDrag",
-                      this.CCo,
+                      this.cgo,
                     ]),
                   (i = this.Uqe < CLICKTIME),
                   Log_1.Log.CheckDebug() &&
@@ -125,82 +126,82 @@ class VisionCommonDragItem {
                       "timeState",
                       i,
                     ]),
-                  this.CCo || this.QCo())
-                : this.XCo() && this.QCo(!0));
+                  this.cgo || this.jgo())
+                : this.Wgo() && this.jgo(!0));
       }),
-      (this.pCt = (t) => {
-        this.kCo ||
+      (this.Agt = (t) => {
+        this.Ggo ||
           (ModelManager_1.ModelManager.PhantomBattleModel.CheckIfCurrentDragIndex(
             this.Xy,
           ) &&
-            this.Y6i &&
-            ((this.uCo = t), this.Uqe < CLICKTIME || this.TickCheckDrag()));
+            this.$8i &&
+            ((this.hgo = t), this.Uqe < CLICKTIME || this.TickCheckDrag()));
       }),
-      (this.vCt = (t) => {
-        this.kCo ||
+      (this.Pgt = (t) => {
+        this.Ggo ||
           (ModelManager_1.ModelManager.PhantomBattleModel.CheckIfCurrentDragIndex(
             this.Xy,
           ) &&
-            ((this.yCo = []), (this.mCo = !0), (this.CCo = !0)));
+            ((this.Mgo = []), (this._go = !0), (this.cgo = !0)));
       }),
-      (this.$Co = (t) => {
-        this.kCo ||
-          (this.Y6i &&
-            (this.mCo &&
+      (this.Kgo = (t) => {
+        this.Ggo ||
+          (this.$8i &&
+            (this._go &&
               (this.Uqe < CLICKTIME
-                ? this.QCo()
-                : this.bCo || this._Co?.(this, this.yCo, this.bCo),
-              (this.mCo = !1)),
-            this.bCo) &&
-            ((this.bCo = !1),
-            (this.ICo = !1),
-            this.oCo?.(this.GetCurrentIndex(), this.Y6i)));
+                ? this.jgo()
+                : this.xgo || this.ago?.(this, this.Mgo, this.xgo),
+              (this._go = !1)),
+            this.xgo) &&
+            ((this.xgo = !1),
+            (this.Ego = !1),
+            this.ego?.(this.GetCurrentIndex(), this.$8i)));
       }),
-      (this.WFt = (t) => {
+      (this.K3t = (t) => {
         "Cease" === t &&
           (this.CeaseAnimationPromise.SetResult(!0),
-          this.lCo?.(this.GetCurrentIndex()));
+          this.sgo?.(this.GetCurrentIndex()));
       }),
       (this.TickDoCeaseAnimation = async (t) => {
         var i =
             await ControllerHolder_1.ControllerHolder.PhantomBattleController.GetProgressCurveValue(
               t,
-              this.NCo.X,
-              this.qCo.X,
+              this.bgo.X,
+              this.wgo.X,
             ),
           t =
             await ControllerHolder_1.ControllerHolder.PhantomBattleController.GetProgressCurveValue(
               t,
-              this.NCo.Y,
-              this.qCo.Y,
+              this.bgo.Y,
+              this.wgo.Y,
             );
-        this.GCo &&
-          this.OCo &&
-          this.xCo.SetLGUISpaceAbsolutePosition(new UE.Vector(i, t, 0));
+        this.Bgo &&
+          this.qgo &&
+          this.Ugo.SetLGUISpaceAbsolutePosition(new UE.Vector(i, t, 0));
       }),
-      (this.PCo = new UE.Vector2D(0, 0)),
-      (this.ACo = t),
-      (this.Zdo = i),
+      (this.Rgo = new UE.Vector2D(0, 0)),
+      (this.Dgo = t),
+      (this.YCo = i),
       (this.Xy = e),
-      (this.UCo = i.RootUIComp.GetParentAsUIItem()),
-      i.OnPointerDownCallBack.Bind(this.FCo),
-      i.OnPointerUpCallBack.Bind(this.HCo),
-      i.OnPointerDragCallBack.Bind(this.pCt),
-      i.OnPointerBeginDragCallBack.Bind(this.vCt),
-      i.OnPointerEndDragCallBack.Bind(this.$Co);
-    t = this.Zdo.GetOwner().GetComponentByClass(UE.UIItem.StaticClass());
-    (this.xCo = t),
-      (this.EPe = new LevelSequencePlayer_1.LevelSequencePlayer(t)),
-      this.EPe.BindSequenceCloseEvent(this.WFt),
-      (this.cTt = i
+      (this.Lgo = i.RootUIComp.GetParentAsUIItem()),
+      i.OnPointerDownCallBack.Bind(this.Ngo),
+      i.OnPointerUpCallBack.Bind(this.kgo),
+      i.OnPointerDragCallBack.Bind(this.Agt),
+      i.OnPointerBeginDragCallBack.Bind(this.Pgt),
+      i.OnPointerEndDragCallBack.Bind(this.Kgo);
+    t = this.YCo.GetOwner().GetComponentByClass(UE.UIItem.StaticClass());
+    (this.Ugo = t),
+      (this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(t)),
+      this.SPe.BindSequenceCloseEvent(this.K3t),
+      (this.fLt = i
         .GetOwner()
         .GetComponentByClass(UE.LGUICanvas.StaticClass()));
   }
   GetNormalParent() {
-    return this.ACo;
+    return this.Dgo;
   }
   SetActive(t) {
-    this.Zdo?.RootUIComp.SetUIActive(t);
+    this.YCo?.RootUIComp.SetUIActive(t);
   }
   SetScrollViewItem(t) {
     var i = t.GetLGUISpaceAbsolutePositionByPivot(
@@ -209,18 +210,18 @@ class VisionCommonDragItem {
       s = t.Width / 2,
       e = i.X - s,
       h = i.X + s,
-      e = ((this.wCo.X = e), (this.wCo.Y = h), (s = t.Height / 2), i.Y - s),
+      e = ((this.Ago.X = e), (this.Ago.Y = h), (s = t.Height / 2), i.Y - s),
       h = i.Y + s;
-    (this.BCo.X = e), (this.BCo.Y = h);
+    (this.Pgo.X = e), (this.Pgo.Y = h);
   }
   Refresh(t, i) {
-    (this.Y6i = t), (this.kCo = i);
+    (this.$8i = t), (this.Ggo = i);
   }
   StartClickCheckTimer() {
-    this.WCo(),
-      (this.gCo = TickSystem_1.TickSystem.Add(
+    this.Vgo(),
+      (this.mgo = TickSystem_1.TickSystem.Add(
         () => {
-          0 === this.YCo() && (this.HCo(void 0), this.WCo());
+          0 === this.Qgo() && (this.kgo(void 0), this.Vgo());
         },
         "DragTick",
         0,
@@ -228,110 +229,110 @@ class VisionCommonDragItem {
       ).Id);
   }
   GetAnimationTargetPos() {
-    return this.RCo;
+    return this.Tgo;
   }
   SetDragItemHierarchyMax() {
-    this.xCo.SetAsLastHierarchy(),
-      this.cTt.SetSortOrder(HEIGHTCANVASSORT + 1, !0);
+    this.Ugo.SetAsLastHierarchy(),
+      this.fLt.SetSortOrder(HEIGHTCANVASSORT + 1, !0);
   }
   GetCurrentData() {
-    return this.Y6i;
+    return this.$8i;
   }
   CacheStartDragPosition() {
-    var t = this.Zdo.RootUIComp.GetLGUISpaceAbsolutePosition(),
-      i = this.Zdo.RootUIComp.GetLGUISpaceAbsolutePosition();
-    (this.DCo = new Vector2D_1.Vector2D(i.X, i.Y)),
-      (this.RCo = new Vector2D_1.Vector2D(t.X, t.Y));
+    var t = this.YCo.RootUIComp.GetLGUISpaceAbsolutePosition(),
+      i = this.YCo.RootUIComp.GetLGUISpaceAbsolutePosition();
+    (this.Igo = new Vector2D_1.Vector2D(i.X, i.Y)),
+      (this.Tgo = new Vector2D_1.Vector2D(t.X, t.Y));
   }
-  JCo() {
-    this.Zdo.RootUIComp.SetAnchorAlign(4, 4);
+  Xgo() {
+    this.YCo.RootUIComp.SetAnchorAlign(4, 4);
     var t = new UE.Vector(1, 1, 1);
-    this.Zdo.RootUIComp.SetUIItemScale(t),
-      this.Zdo.RootUIComp.SetHorizontalStretch(this.PCo),
-      this.Zdo.RootUIComp.SetVerticalStretch(this.PCo),
-      this.cTt.SetSortOrder(0, !0),
-      this.Zdo.RootUIComp.SetBubbleUpToParent(!0);
+    this.YCo.RootUIComp.SetUIItemScale(t),
+      this.YCo.RootUIComp.SetHorizontalStretch(this.Rgo),
+      this.YCo.RootUIComp.SetVerticalStretch(this.Rgo),
+      this.fLt.SetSortOrder(0, !0),
+      this.YCo.RootUIComp.SetBubbleUpToParent(!0);
   }
   StartDragState() {
     this.CacheStartDragPosition(),
-      (this.TCo = !0),
-      (this.bCo = !1),
-      this.Zdo.RootUIComp.SetAnchorAlign(2, 2),
-      (this.vCo = this.Zdo.RootUIComp.Width),
-      (this.MCo = this.Zdo.RootUIComp.Height),
-      (this.LCo = 0),
-      this.cTt.SetSortOrder(HEIGHTCANVASSORT, !0),
-      this.Zdo.RootUIComp.SetBubbleUpToParent(!1);
+      (this.Sgo = !0),
+      (this.xgo = !1),
+      this.YCo.RootUIComp.SetAnchorAlign(2, 2),
+      (this.ggo = this.YCo.RootUIComp.Width),
+      (this.fgo = this.YCo.RootUIComp.Height),
+      (this.ygo = 0),
+      this.fLt.SetSortOrder(HEIGHTCANVASSORT, !0),
+      this.YCo.RootUIComp.SetBubbleUpToParent(!1);
   }
   ResetPosition() {
-    this.EPe.StopSequenceByKey("Drag", !1, !0),
-      this.ICo && this.zCo(),
-      (this.ICo = !1),
-      this.TCo &&
-        (this.JCo(),
-        this.DCo && this.Zdo.RootUIComp.SetAnchorOffset(this.PCo),
-        (this.TCo = !1));
+    this.SPe.StopSequenceByKey("Drag", !1, !0),
+      this.Ego && this.$go(),
+      (this.Ego = !1),
+      this.Sgo &&
+        (this.Xgo(),
+        this.Igo && this.YCo.RootUIComp.SetAnchorOffset(this.Rgo),
+        (this.Sgo = !1));
   }
   SetToTargetParentAndSetStretch(t) {}
   SetToNormalParent() {
-    this.SetToTargetParentAndSetStretch(this.UCo);
+    this.SetToTargetParentAndSetStretch(this.Lgo);
   }
   SetDragSuccessCallBack(t) {
-    this._Co = t;
+    this.ago = t;
   }
   SetMoveToScrollViewCallBack(t) {
-    this.rCo = t;
+    this.tgo = t;
   }
   SetRemoveFromScrollViewCallBack(t) {
-    this.nCo = t;
+    this.igo = t;
   }
   SetEndDragWhenOnScrollViewCallBack(t) {
-    this.oCo = t;
+    this.ego = t;
   }
   SetOnUnOverlayCallBack(t) {
-    this.iCo = t;
+    this.ZCo = t;
   }
   SetOnOverlayCallBack(t) {
-    this.tCo = t;
+    this.zCo = t;
   }
   SetPointerDownCallBack(t) {
-    this.eCo = t;
+    this.JCo = t;
   }
   SetOnDragAnimationStartFunction(t) {
-    this.hCo = t;
+    this.ngo = t;
   }
   SetOnDragAnimationEndFunction(t) {
-    this.lCo = t;
+    this.sgo = t;
   }
   SetOnClickCallBack(t) {
-    this.EBt = t;
+    this.Tbt = t;
   }
   SetOnClickFailCallBack(t) {
-    this.sCo = t;
+    this.ogo = t;
   }
   SetOnBeginDragCall(t) {
-    this.aCo = t;
+    this.rgo = t;
   }
   SetDragCheckItem(t) {
-    this.pCo = t;
+    this.Cgo = t;
   }
   GetCurrentIndex() {
     return this.Xy;
   }
   TickCheckDrag() {
-    this.LCo <= MOVEPARENTDELAYTIME
-      ? this.LCo++
-      : (this.SetItemToPointerPosition(), this.ZCo());
+    this.ygo <= MOVEPARENTDELAYTIME
+      ? this.ygo++
+      : (this.SetItemToPointerPosition(), this.Ygo());
   }
   ClearStayingItem() {
-    this.yCo = [];
+    this.Mgo = [];
   }
   GetStayingItem() {
-    return this.yCo;
+    return this.Mgo;
   }
   SetItemToPointerPosition() {
     var t, i, s;
-    this.TCo &&
+    this.Sgo &&
       ((s =
         LguiEventSystemManager_1.LguiEventSystemManager.GetPointerEventDataPosition(
           0,
@@ -349,27 +350,27 @@ class VisionCommonDragItem {
         ConfigManager_1.ConfigManager.PhantomBattleConfig.GetVisionScrollerOffsetYDir()),
       (i = s.X + i),
       (s = s.Y + t),
-      (this.fCo.X === i && this.fCo.Y === s) ||
-        ((this.fCo.X = i),
-        (this.fCo.Y = s),
-        this.Zdo.RootUIComp.SetLGUISpaceAbsolutePosition(
+      (this.dgo.X === i && this.dgo.Y === s) ||
+        ((this.dgo.X = i),
+        (this.dgo.Y = s),
+        this.YCo.RootUIComp.SetLGUISpaceAbsolutePosition(
           new UE.Vector(i, s, 0),
         )));
   }
-  WCo() {
-    this.gCo !== TickSystem_1.TickSystem.InvalidId &&
-      (TickSystem_1.TickSystem.Remove(this.gCo),
-      (this.gCo = TickSystem_1.TickSystem.InvalidId));
+  Vgo() {
+    this.mgo !== TickSystem_1.TickSystem.InvalidId &&
+      (TickSystem_1.TickSystem.Remove(this.mgo),
+      (this.mgo = TickSystem_1.TickSystem.InvalidId));
   }
   CheckAndGetCurrentClickState() {
-    return this.cCo;
+    return this.lgo;
   }
-  jCo() {
-    this.LEt !== TickSystem_1.TickSystem.InvalidId &&
-      (TickSystem_1.TickSystem.Remove(this.LEt),
-      (this.LEt = TickSystem_1.TickSystem.InvalidId));
+  Fgo() {
+    this.Gyt !== TickSystem_1.TickSystem.InvalidId &&
+      (TickSystem_1.TickSystem.Remove(this.Gyt),
+      (this.Gyt = TickSystem_1.TickSystem.InvalidId));
   }
-  YCo() {
+  Qgo() {
     var t =
         LguiEventSystemManager_1.LguiEventSystemManager.IsPressComponentIsValid(
           0,
@@ -382,68 +383,68 @@ class VisionCommonDragItem {
     return t && s++, i && s++, s;
   }
   DoCeaseSequence() {
-    (this.ICo = !1),
+    (this.Ego = !1),
       (this.CeaseAnimationPromise = new CustomPromise_1.CustomPromise()),
-      this.EPe.PlayLevelSequenceByName("Cease");
+      this.SPe.PlayLevelSequenceByName("Cease");
   }
   GetCeaseAnimationPromise() {
     return this.CeaseAnimationPromise;
   }
-  zCo() {
-    this.ICo &&
-      (this.EPe.PlayLevelSequenceByName("Fail"),
-      this.lCo?.(this.GetCurrentIndex()));
+  $go() {
+    this.Ego &&
+      (this.SPe.PlayLevelSequenceByName("Fail"),
+      this.sgo?.(this.GetCurrentIndex()));
   }
-  ego() {
-    this.kCo ||
+  Jgo() {
+    this.Ggo ||
       (this.TickCheckDrag(),
-      this.EPe.PlayLevelSequenceByName("Drag"),
-      (this.ICo = !0),
-      this.hCo?.(this.GetCurrentIndex()));
+      this.SPe.PlayLevelSequenceByName("Drag"),
+      (this.Ego = !0),
+      this.ngo?.(this.GetCurrentIndex()));
   }
-  VCo() {
-    2 <= this.YCo() || 0 === this.YCo()
-      ? this.jCo()
+  Ogo() {
+    2 <= this.Qgo() || 0 === this.Qgo()
+      ? this.Fgo()
       : this.Uqe >= CLICKTIME &&
-        (this.jCo(), this.Y6i) &&
-        (this.dCo || (this.ego(), (this.dCo = !0)),
-        this.aCo && this.aCo(this.Xy),
-        this.uCo) &&
-        this.pCt(this.uCo);
+        (this.Fgo(), this.$8i) &&
+        (this.ugo || (this.Jgo(), (this.ugo = !0)),
+        this.rgo && this.rgo(this.Xy),
+        this.hgo) &&
+        this.Agt(this.hgo);
   }
-  QCo(t = !1) {
-    return t || this.XCo()
-      ? (this.EBt?.(this.Xy),
-        (this.cVe = TimeUtil_1.TimeUtil.GetServerTime()),
-        (this.cCo = !0))
-      : ((this.cCo = !1), this.sCo?.(this.Xy), !1);
+  jgo(t = !1) {
+    return t || this.Wgo()
+      ? (this.Tbt?.(this.Xy),
+        (this.L6e = TimeUtil_1.TimeUtil.GetServerTime()),
+        (this.lgo = !0))
+      : ((this.lgo = !1), this.ogo?.(this.Xy), !1);
   }
-  KCo() {
+  Hgo() {
     return (
-      !!ModelManager_1.ModelManager.PlatformModel.IsInGamepad() ||
-      TimeUtil_1.TimeUtil.GetServerTime() - this.cVe > CLICKCALLGAP
+      !!Info_1.Info.IsInGamepad() ||
+      TimeUtil_1.TimeUtil.GetServerTime() - this.L6e > CLICKCALLGAP
     );
   }
-  XCo() {
-    return this.Uqe < CLICKTIME && this.KCo();
+  Wgo() {
+    return this.Uqe < CLICKTIME && this.Hgo();
   }
-  ZCo() {
+  Ygo() {
     const i = new Array();
-    this.pCo?.forEach((t) => {
+    this.Cgo?.forEach((t) => {
       t.CheckIfSelfItem(this.Xy) ||
-        (t.CheckOverlap(this.tgo(), this.igo()) && i.push(t));
+        (t.CheckOverlap(this.zgo(), this.Zgo()) && i.push(t));
     }),
-      this.yCo.forEach((t) => {
-        i.includes(t) || t.ogo();
+      this.Mgo.forEach((t) => {
+        i.includes(t) || t.e0o();
       }),
       i.forEach((t) => {
-        this.yCo.includes(t) || t.rgo();
+        this.Mgo.includes(t) || t.t0o();
       }),
-      (this.yCo = i),
-      0 !== this.wCo.X &&
-        (this.CheckOverlap(this.wCo, this.BCo)
-          ? this.bCo || (this.rCo?.(this.GetCurrentIndex()), (this.bCo = !0))
-          : this.bCo && (this.nCo?.(this.GetCurrentIndex()), (this.bCo = !1)));
+      (this.Mgo = i),
+      0 !== this.Ago.X &&
+        (this.CheckOverlap(this.Ago, this.Pgo)
+          ? this.xgo || (this.tgo?.(this.GetCurrentIndex()), (this.xgo = !0))
+          : this.xgo && (this.igo?.(this.GetCurrentIndex()), (this.xgo = !1)));
   }
   CheckIfSelfItem(t) {
     return t === this.Xy;
@@ -453,36 +454,36 @@ class VisionCommonDragItem {
       t = t.Y,
       e = i.X,
       i = i.Y,
-      h = this.tgo().X,
-      r = this.tgo().Y,
-      a = this.igo().X,
-      o = this.igo().Y;
+      h = this.zgo().X,
+      r = this.zgo().Y,
+      a = this.Zgo().X,
+      o = this.Zgo().Y;
     return s < r && h < t && e < o && a < i;
   }
-  tgo() {
-    var t = this.Zdo.RootUIComp,
-      i = this.vCo / 2,
+  zgo() {
+    var t = this.YCo.RootUIComp,
+      i = this.ggo / 2,
       s = t.GetLGUISpaceCenterAbsolutePosition().X - i,
       t = t.GetLGUISpaceCenterAbsolutePosition().X + i;
-    return (this.SCo.X = s), (this.SCo.Y = t), this.SCo;
+    return (this.pgo.X = s), (this.pgo.Y = t), this.pgo;
   }
-  igo() {
-    var t = this.Zdo.RootUIComp,
-      i = this.MCo / 2,
+  Zgo() {
+    var t = this.YCo.RootUIComp,
+      i = this.fgo / 2,
       s = t.GetLGUISpaceCenterAbsolutePosition().Y - i,
       t = t.GetLGUISpaceCenterAbsolutePosition().Y + i;
-    return (this.ECo.X = s), (this.ECo.Y = t), this.ECo;
+    return (this.vgo.X = s), (this.vgo.Y = t), this.vgo;
   }
-  ogo() {
-    this.iCo?.(this.GetCurrentIndex());
+  e0o() {
+    this.ZCo?.(this.GetCurrentIndex());
   }
-  rgo() {
-    this.tCo?.(this.GetCurrentIndex());
+  t0o() {
+    this.zCo?.(this.GetCurrentIndex());
   }
   GetMiddlePosition() {
     return [
-      this.Zdo.RootUIComp.GetLGUISpaceCenterAbsolutePosition().X,
-      this.Zdo.RootUIComp.GetLGUISpaceCenterAbsolutePosition().Y,
+      this.YCo.RootUIComp.GetLGUISpaceCenterAbsolutePosition().X,
+      this.YCo.RootUIComp.GetLGUISpaceCenterAbsolutePosition().Y,
     ];
   }
   static GetOverlapIndex(t, i) {
@@ -501,12 +502,12 @@ class VisionCommonDragItem {
     return e;
   }
   SetDragComponentToTargetPositionParam(t) {
-    (this.GCo = !0), (this.qCo.X = t.X), (this.qCo.Y = t.Y);
-    t = this.xCo.GetLGUISpaceAbsolutePosition();
-    (this.NCo.X = t.X), (this.NCo.Y = t.Y);
+    (this.Bgo = !0), (this.wgo.X = t.X), (this.wgo.Y = t.Y);
+    t = this.Ugo.GetLGUISpaceAbsolutePosition();
+    (this.bgo.X = t.X), (this.bgo.Y = t.Y);
   }
   SetMovingState(t) {
-    this.OCo = t;
+    this.qgo = t;
   }
 }
 exports.VisionCommonDragItem = VisionCommonDragItem;

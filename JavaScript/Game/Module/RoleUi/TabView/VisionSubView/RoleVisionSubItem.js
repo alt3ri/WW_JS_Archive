@@ -5,7 +5,7 @@ const UE = require("ue"),
   RoleVisionCommonItem_1 = require("./RoleVisionCommonItem");
 class RoleVisionSubItem extends RoleVisionCommonItem_1.RoleVisionCommonItem {
   constructor() {
-    super(...arguments), (this.T7e = () => !1);
+    super(...arguments), (this.Lke = () => !1);
   }
   GetPlusItem() {
     return this.GetItem(8);
@@ -46,7 +46,7 @@ class RoleVisionSubItem extends RoleVisionCommonItem_1.RoleVisionCommonItem {
       (this.BtnBindInfo = [[0, this.OnClickVision]]);
   }
   OnStart() {
-    this.GetExtendToggle(0).CanExecuteChange.Bind(() => this.T7e());
+    this.GetExtendToggle(0).CanExecuteChange.Bind(() => this.Lke());
   }
 }
 exports.RoleVisionSubItem = RoleVisionSubItem;

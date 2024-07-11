@@ -10,13 +10,13 @@ const puerts_1 = require("puerts"),
   PublicUtil_1 = require("../../../../Common/PublicUtil");
 class FaceExpressionConfig extends ConfigBase_1.ConfigBase {
   constructor() {
-    super(...arguments), (this.MZo = void 0), (this.SZo = !1);
+    super(...arguments), (this.fer = void 0), (this.per = !1);
   }
   OnInit() {
-    return (this.MZo = new Map()), !0;
+    return (this.fer = new Map()), !0;
   }
   OnClear() {
-    return !(this.MZo = void 0);
+    return !(this.fer = void 0);
   }
   GetFaceExpressionConfig(i) {
     if (PublicUtil_1.PublicUtil.UseDbConfig()) {
@@ -35,11 +35,11 @@ class FaceExpressionConfig extends ConfigBase_1.ConfigBase {
         }
       );
     }
-    return this.EZo(), this.MZo.get(i);
+    return this.ver(), this.fer.get(i);
   }
-  EZo() {
-    if (!this.SZo) {
-      this.SZo = !0;
+  ver() {
+    if (!this.per) {
+      this.per = !0;
       let e = (0, PublicUtil_1.getConfigPath)(
         IGlobal_1.globalConfig.FaceExpressionConfigPath,
       );
@@ -55,7 +55,7 @@ class FaceExpressionConfig extends ConfigBase_1.ConfigBase {
             (UE.KuroStaticLibrary.LoadFileToString(i, e),
             (i = (0, puerts_1.$unref)(i)),
             JSON.parse(i));
-        for (const r of i) r && !this.MZo.has(r.Id) && this.MZo.set(r.Id, r);
+        for (const r of i) r && !this.fer.has(r.Id) && this.fer.set(r.Id, r);
       } else
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(

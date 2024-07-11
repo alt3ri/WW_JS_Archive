@@ -191,10 +191,10 @@ class LevelConditionRegistry {
     i &&
       ((t = i.GetPbDataId()),
       this.cLe.has(t)
-        ? e?.GetComponent(104)?.SetGuideRange(this.cLe.get(t))
+        ? e?.GetComponent(106)?.SetGuideRange(this.cLe.get(t))
         : (t = i.GetPbEntityInitData()?.BlueprintType) &&
           this.uLe.has(t) &&
-          e?.GetComponent(104)?.SetGuideRange(this.uLe.get(t)));
+          e?.GetComponent(106)?.SetGuideRange(this.uLe.get(t)));
   }
 }
 ((exports.LevelConditionRegistry = LevelConditionRegistry)._Le = new Map()),

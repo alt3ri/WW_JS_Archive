@@ -18,14 +18,14 @@ const MultiTextLang_1 = require("../../../Core/Define/ConfigQuery/MultiTextLang"
 class WeaponHandBookView extends HandBookBaseView_1.HandBookBaseView {
   constructor() {
     super(...arguments),
-      (this.wzt = []),
-      (this.Bzt = []),
-      (this.bzt = void 0),
+      (this.wZt = []),
+      (this.BZt = []),
+      (this.bZt = void 0),
       (this.OnHandBookRead = (e, n) => {
         if (3 === e) {
-          var t = this.Bzt.length;
+          var t = this.BZt.length;
           for (let e = 0; e < t; e++) {
-            var a = this.Bzt[e];
+            var a = this.BZt[e];
             if (a.GetData().Config.Id === n) {
               a.SetNewFlagVisible(!1);
               break;
@@ -37,7 +37,7 @@ class WeaponHandBookView extends HandBookBaseView_1.HandBookBaseView {
         var e = new HandBookCommonItem_1.HandBookCommonItem();
         return (
           e.BindOnExtendToggleStateChanged(this.OnToggleClick),
-          this.Bzt.push(e),
+          this.BZt.push(e),
           e
         );
       }),
@@ -77,16 +77,16 @@ class WeaponHandBookView extends HandBookBaseView_1.HandBookBaseView {
               this.RefreshAttributeItemLayout(e),
               HandBookController_1.HandBookController.SetWeaponMeshShow(
                 e.Id,
-                this.qzt,
+                this.qZt,
               ));
       }),
       (this.Refresh = () => {
-        this.wzt =
+        this.wZt =
           ConfigManager_1.ConfigManager.HandBookConfig.GetWeaponHandBookConfigList();
         var n = [],
-          t = this.wzt.length;
+          t = this.wZt.length;
         for (let e = 0; e < t; e++) {
-          var a = this.wzt[e],
+          var a = this.wZt[e],
             i = ModelManager_1.ModelManager.HandBookModel.GetHandBookInfo(
               3,
               a.Id,
@@ -117,13 +117,13 @@ class WeaponHandBookView extends HandBookBaseView_1.HandBookBaseView {
         ),
           this.RefreshCollectText();
       }),
-      (this.qzt = void 0);
+      (this.qZt = void 0);
   }
   OnStart() {
     this.SetDefaultState(), this.Refresh(), this.RefreshLockText();
   }
   OnAfterShow() {
-    this.bzt =
+    this.bZt =
       UiCameraAnimationManager_1.UiCameraAnimationManager.PushCameraHandleByHandleName(
         "1060",
       );
@@ -237,17 +237,17 @@ class WeaponHandBookView extends HandBookBaseView_1.HandBookBaseView {
   }
   OnBeforePlayCloseSequence() {
     UiCameraAnimationManager_1.UiCameraAnimationManager.PopCameraHandle(
-      this.bzt,
+      this.bZt,
     );
   }
   OnBeforeCreate() {
-    this.qzt = UiSceneManager_1.UiSceneManager.InitWeaponObserver();
+    this.qZt = UiSceneManager_1.UiSceneManager.InitWeaponObserver();
   }
   OnBeforeDestroy() {
-    UiSceneManager_1.UiSceneManager.DestroyWeaponObserver(this.qzt),
-      (this.qzt = void 0),
-      (this.wzt = []),
-      (this.Bzt = []);
+    UiSceneManager_1.UiSceneManager.DestroyWeaponObserver(this.qZt),
+      (this.qZt = void 0),
+      (this.wZt = []),
+      (this.BZt = []);
   }
 }
 exports.WeaponHandBookView = WeaponHandBookView;

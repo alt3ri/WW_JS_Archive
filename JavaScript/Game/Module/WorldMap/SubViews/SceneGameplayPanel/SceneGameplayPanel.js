@@ -24,7 +24,7 @@ const Log_1 = require("../../../../../Core/Common/Log"),
   WorldMapDefine_1 = require("../../WorldMapDefine"),
   TipsListView_1 = require("../TipsListView"),
   SceneGameplayTipGrid_1 = require("./SceneGameplayTipGrid"),
-  POWER_DISCOUNT_HELP_ID = 26,
+  HELP_ID = 88,
   POWER_COST_KEY = "power",
   REBORN_TIME_KEY = "reborn",
   REWARD_SHARE_COUNT = "reward",
@@ -32,32 +32,32 @@ const Log_1 = require("../../../../../Core/Common/Log"),
 class SceneGameplayPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
   constructor() {
     super(...arguments),
-      (this.Nct = void 0),
-      (this.dko = void 0),
-      (this.Vko = void 0),
-      (this.Hko = void 0),
-      (this.jko = void 0),
-      (this.Wko = void 0),
+      (this.Ymt = void 0),
+      (this.u2o = void 0),
+      (this.O2o = void 0),
+      (this.k2o = void 0),
+      (this.F2o = void 0),
+      (this.V2o = void 0),
       (this.IRe = void 0),
-      (this.xko = void 0),
-      (this.$Ut = void 0),
-      (this.a2o = void 0),
-      (this.h2o = !1),
-      (this.CHi = () => {
-        HelpController_1.HelpController.OpenHelpById(POWER_DISCOUNT_HELP_ID);
+      (this.U2o = void 0),
+      (this.ZAt = void 0),
+      (this.rFo = void 0),
+      (this.nFo = !1),
+      (this.mji = () => {
+        HelpController_1.HelpController.OpenHelpById(HELP_ID);
       }),
-      (this.gko = () => {
-        var e = this.dko.IsTracked;
+      (this.m2o = () => {
+        var e = this.u2o.IsTracked;
         MapController_1.MapController.RequestTrackMapMark(
-          this.dko.MarkType,
-          this.dko.MarkId,
+          this.u2o.MarkType,
+          this.u2o.MarkId,
           !e,
         ),
           this.Close();
       }),
       (this.UOe = () => {
         var e = ModelManager_1.ModelManager.MapModel.IsLevelPlayOccupied(
-          this.Nct.Id,
+          this.Ymt.Id,
         );
         e.IsOccupied &&
           ((e =
@@ -66,20 +66,20 @@ class SceneGameplayPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
             )),
           UiManager_1.UiManager.OpenView("QuestView", e.TreeConfigId));
       }),
-      (this.l2o = () => {
+      (this.sFo = () => {
         ModelManager_1.ModelManager.CalabashModel.OnlyShowBattleFettersTab = !0;
         var e =
           MapMarkPhantomGroupByMarkId_1.configMapMarkPhantomGroupByMarkId.GetConfig(
-            this.dko.MarkId,
+            this.u2o.MarkId,
           );
         (ModelManager_1.ModelManager.CalabashModel.OnlyShowPhantomFetterGroupIdList =
           e.ShowRange),
           UiManager_1.UiManager.OpenView("CalabashRootView");
       }),
-      (this._2o = () => {
+      (this.aFo = () => {
         UiManager_1.UiManager.OpenView(
           "SilentAreaRewardPreviewPopView",
-          this.Nct.RewardId,
+          this.Ymt.RewardId,
         );
       });
   }
@@ -91,46 +91,46 @@ class SceneGameplayPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
       WorldMapDefine_1.secondaryUiPanelComponentsRegisterInfoA),
       (this.BtnBindInfo = [
         [15, this.UOe],
-        [18, this.l2o],
+        [18, this.sFo],
       ]);
   }
   OnStart() {
     this.RootItem.SetRaycastTarget(!1),
-      (this.xko = new TipsListView_1.TipsListView()),
-      this.xko.Initialize(this.GetVerticalLayout(5)),
-      (this.$Ut = new ButtonItem_1.ButtonItem(this.GetButton(11).RootUIComp)),
-      this.$Ut.SetFunction(this.gko),
+      (this.U2o = new TipsListView_1.TipsListView()),
+      this.U2o.Initialize(this.GetVerticalLayout(5)),
+      (this.ZAt = new ButtonItem_1.ButtonItem(this.GetButton(11).RootUIComp)),
+      this.ZAt.SetFunction(this.m2o),
       this.GetItem(14).SetUIActive(!0),
       this.GetVerticalLayout(5)?.RootUIComp?.SetUIActive(!0);
   }
   OnBeforeDestroy() {
-    this.xko.Clear(),
-      this.$Ut.Destroy(),
-      (this.a2o = void 0),
-      this.Vko && (this.AddChild(this.Vko), (this.Vko = void 0)),
-      this.Hko && (this.AddChild(this.Hko), (this.Hko = void 0)),
-      (this.jko = void 0),
-      (this.Wko = void 0),
+    this.U2o.Clear(),
+      this.ZAt.Destroy(),
+      (this.rFo = void 0),
+      this.O2o && (this.AddChild(this.O2o), (this.O2o = void 0)),
+      this.k2o && (this.AddChild(this.k2o), (this.k2o = void 0)),
+      (this.F2o = void 0),
+      (this.V2o = void 0),
       this.cG(),
       (ModelManager_1.ModelManager.CalabashModel.OnlyShowBattleFettersTab = !1);
   }
   OnShowWorldMapSecondaryUi(e) {
     e
-      ? ((this.dko = e),
-        this.SetSpriteByPath(this.dko.IconPath, this.GetSprite(0), !1),
-        (this.Nct = ModelManager_1.ModelManager.LevelPlayModel.GetLevelPlayInfo(
+      ? ((this.u2o = e),
+        this.SetSpriteByPath(this.u2o.IconPath, this.GetSprite(0), !1),
+        (this.Ymt = ModelManager_1.ModelManager.LevelPlayModel.GetLevelPlayInfo(
           e.MarkConfig.RelativeId,
         )),
-        this.Nct ||
-          ((this.Nct = new LevelPlay_1.LevelPlayInfo(e.MarkConfig.RelativeId)),
-          this.Nct.InitConfig()),
+        this.Ymt ||
+          ((this.Ymt = new LevelPlay_1.LevelPlayInfo(e.MarkConfig.RelativeId)),
+          this.Ymt.InitConfig()),
         (this.IRe = void 0),
-        (this.h2o =
-          1 === this.dko?.MarkConfig?.RelativeSubType ||
-          2 === this.dko?.MarkConfig?.RelativeSubType),
-        this.h7e(),
-        this.l1i(),
-        this.u2o())
+        (this.nFo =
+          1 === this.u2o?.MarkConfig?.RelativeSubType ||
+          2 === this.u2o?.MarkConfig?.RelativeSubType),
+        this.SHe(),
+        this.l_i(),
+        this.hFo())
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "SceneGameplay",
@@ -139,83 +139,82 @@ class SceneGameplayPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
         );
   }
   OnCloseWorldMapSecondaryUi() {
-    this.xko.Clear(),
+    this.U2o.Clear(),
       this.IRe &&
         (TimerSystem_1.TimerSystem.Remove(this.IRe), (this.IRe = void 0)),
-      (this.a2o = void 0),
+      (this.rFo = void 0),
       (ModelManager_1.ModelManager.CalabashModel.OnlyShowBattleFettersTab = !1);
   }
-  h7e() {
-    (this.jko = ExchangeRewardById_1.configExchangeRewardById.GetConfig(
-      this.Nct.RewardId,
+  SHe() {
+    (this.F2o = ExchangeRewardById_1.configExchangeRewardById.GetConfig(
+      this.Ymt.RewardId,
     )),
-      (this.Wko = this.Nct.FirstRewardId
+      (this.V2o = this.Ymt.FirstRewardId
         ? ExchangeRewardById_1.configExchangeRewardById.GetConfig(
-            this.Nct.FirstRewardId,
+            this.Ymt.FirstRewardId,
           )
         : void 0);
     var e,
       i,
-      t = this.dko.MarkConfigId,
+      t = this.u2o.MarkConfigId,
       r = MapMarkByMarkId_1.configMapMarkByMarkId.GetConfig(t);
     r
-      ? ((e = (i = this.dko.IsRelativeFunctionOpen())
+      ? ((e = (i = this.u2o.IsRelativeFunctionOpen())
           ? r.MarkTitle
           : "UnknownPlace"),
         this.GetText(1).ShowTextNew(e),
         (e = i ? r.MarkDesc : "UnknownPlaceContent"),
         this.GetText(4).ShowTextNew(e),
-        this.c2o(),
+        this.lFo(),
         this.GetItem(9).SetUIActive(!1),
         this.GetItem(12).SetUIActive(!1),
         this.GetItem(8).SetUIActive(!1),
-        (i = this.dko.GetAreaText()) && this.GetText(3).SetText(i),
+        (i = this.u2o.GetAreaText()) && this.GetText(3).SetText(i),
         this.GetButton(18).RootUIComp?.SetUIActive(
-          1 === this.dko.MarkConfig.RelativeSubType,
+          1 === this.u2o.MarkConfig.RelativeSubType,
         ),
         this.InitRewards(),
-        this.Xko())
+        this.W2o())
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error("SceneGameplay", 18, "缺少标记配置", ["MarkId", t]);
   }
-  c2o() {
+  lFo() {
     let e = 0;
     0 <
-      (e = this.jko?.Cost.has(ItemDefines_1.EItemId.Power)
-        ? this.jko.Cost.get(ItemDefines_1.EItemId.Power)
+      (e = this.F2o?.Cost.has(ItemDefines_1.EItemId.Power)
+        ? this.F2o.Cost.get(ItemDefines_1.EItemId.Power)
         : e) &&
-      ((r = this.xko.AddItemByKey(POWER_COST_KEY)).SetIconByItemId(
+      ((r = this.U2o.AddItemByKey(POWER_COST_KEY)).SetIconByItemId(
         ItemDefines_1.EItemId.Power,
       ),
-      r.SetHelpButtonVisible(!1),
-      r.SetClickHelpFunc(this.CHi),
+      r.SetClickHelpFunc(this.mji),
       r.SetLeftText(
         MultiTextLang_1.configMultiTextLang.GetLocalTextNew("CostStamina") ??
           "",
       ),
       r.SetRightText("x" + e.toString())),
-      (this.a2o = this.xko.AddItemByKey(REBORN_TIME_KEY)),
-      this.a2o?.SetLeftText(
+      (this.rFo = this.U2o.AddItemByKey(REBORN_TIME_KEY)),
+      this.rFo?.SetLeftText(
         MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
           "LastTimeToRefresh",
         ) ?? "",
       ),
-      this.a2o?.SetHelpButtonVisible(!1),
-      this.a2o?.SetActive(!1);
+      this.rFo?.SetHelpButtonVisible(!1),
+      this.rFo?.SetActive(!1);
     var i,
       t,
-      r = this.jko.SharedId;
+      r = this.F2o.SharedId;
     0 < r &&
       0 <
         (i =
           ConfigManager_1.ConfigManager.ExchangeRewardConfig.GetShareMaxCount(
-            this.jko.SharedId,
+            this.F2o.SharedId,
           )) &&
       ((r =
         ModelManager_1.ModelManager.ExchangeRewardModel.GetExchangeRewardShareCount(
           r,
         )),
-      (t = this.xko.AddItemByKey(REWARD_SHARE_COUNT)).SetLeftText(
+      (t = this.U2o.AddItemByKey(REWARD_SHARE_COUNT)).SetLeftText(
         MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
           "RemainingCollectTimes",
         ) ?? "",
@@ -229,11 +228,11 @@ class SceneGameplayPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
       ),
       t.SetHelpButtonVisible(!1));
   }
-  Xko() {
+  W2o() {
     var e = ModelManager_1.ModelManager.MapModel.IsLevelPlayOccupied(
-      this.Nct.Id,
+      this.Ymt.Id,
     );
-    this.$Ut.SetActive(!e.IsOccupied),
+    this.ZAt.SetActive(!e.IsOccupied),
       this.GetItem(12).SetUIActive(e.IsOccupied),
       e.IsOccupied &&
         ((e = ModelManager_1.ModelManager.GeneralLogicTreeModel.GetBehaviorTree(
@@ -249,11 +248,11 @@ class SceneGameplayPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
           e.Name,
         )),
         this.GetText(13).SetText(e)),
-      this.GetItem(17).SetUIActive(1 === this.dko.MarkConfig.RelativeSubType);
+      this.GetItem(17).SetUIActive(1 === this.u2o.MarkConfig.RelativeSubType);
   }
   InitRewards() {
     let e = !1;
-    1 === this.dko.MarkConfig.RelativeSubType &&
+    1 === this.u2o.MarkConfig.RelativeSubType &&
       ((i =
         ActivityDoubleRewardController_1.ActivityDoubleRewardController.GetDungeonUpActivity(
           [3],
@@ -264,25 +263,25 @@ class SceneGameplayPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
       ((i = i.GetNumTxtAndParam()),
       LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(20), i[0], i[1], i[2])),
       this.GetItem(19).SetUIActive(e),
-      this.Vko ||
+      this.O2o ||
         ((i = this.GetItem(8).GetOwner()),
         (t = this.GetVerticalLayout(7).RootUIComp),
-        (this.Hko = new SceneGameplayTipGrid_1.SceneGameplayTipGrid()),
-        this.Hko.Initialize(LguiUtil_1.LguiUtil.DuplicateActor(i, t)),
-        (this.Vko = new SceneGameplayTipGrid_1.SceneGameplayTipGrid()),
-        this.Vko.Initialize(LguiUtil_1.LguiUtil.DuplicateActor(i, t)),
-        (this.Vko.OnClickPreviewCall = this._2o));
+        (this.k2o = new SceneGameplayTipGrid_1.SceneGameplayTipGrid()),
+        this.k2o.Initialize(LguiUtil_1.LguiUtil.DuplicateActor(i, t)),
+        (this.O2o = new SceneGameplayTipGrid_1.SceneGameplayTipGrid()),
+        this.O2o.Initialize(LguiUtil_1.LguiUtil.DuplicateActor(i, t)),
+        (this.O2o.OnClickPreviewCall = this.aFo));
     var i = ModelManager_1.ModelManager.WorldLevelModel.CurWorldLevel,
       t =
-        (this.Hko?.SetBtnPreviewVisible(!1),
-        this.Vko.SetBtnPreviewVisible(this.h2o),
-        this.Nct.IsFirstPass);
+        (this.k2o?.SetBtnPreviewVisible(!1),
+        this.O2o.SetBtnPreviewVisible(this.nFo),
+        this.Ymt.IsFirstPass);
     t
-      ? this.$ko(this.Hko, void 0, 0, "")
-      : this.$ko(this.Hko, this.Wko, i, "FirstReward"),
-      this.$ko(this.Vko, this.jko, i, "ProbReward", e);
+      ? this.K2o(this.k2o, void 0, 0, "")
+      : this.K2o(this.k2o, this.V2o, i, "FirstReward"),
+      this.K2o(this.O2o, this.F2o, i, "ProbReward", e);
   }
-  $ko(e, r, a, i, s = !1) {
+  K2o(e, r, a, i, s = !1) {
     if (r) {
       var o = r.PreviewReward;
       let t = void 0;
@@ -315,7 +314,7 @@ class SceneGameplayPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
                 ["兑换奖励ID", r.Id],
               ));
       }
-      if (1 === this.dko.MarkConfig.RelativeSubType) {
+      if (1 === this.u2o.MarkConfig.RelativeSubType) {
         var h,
           _,
           l,
@@ -326,7 +325,7 @@ class SceneGameplayPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
             ),
           g = [];
         for ([h] of t)
-          this.m2o(h) &&
+          this._Fo(h) &&
             ((_ =
               ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfigData(
                 h,
@@ -353,23 +352,23 @@ class SceneGameplayPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
           e.SetActive(!1));
     } else e.SetActive(!1);
   }
-  m2o(e) {
+  _Fo(e) {
     e =
       ConfigManager_1.ConfigManager.InventoryConfig.GetItemDataTypeByConfigId(
         e,
       );
     return 7 === e || 0 === e;
   }
-  l1i() {
+  l_i() {
     let e = "";
-    (e = this.dko.IsTracked
+    (e = this.u2o.IsTracked
       ? "InstanceDungeonEntranceCancelTrack"
       : "InstanceDungeonEntranceTrack"),
-      this.$Ut.SetLocalText(e);
+      this.ZAt.SetLocalText(e);
   }
-  u2o() {
+  hFo() {
     var i = TimeUtil_1.TimeUtil.GetServerTime(),
-      t = this.Nct.RefreshTime;
+      t = this.Ymt.RefreshTime;
     if (t < i) this.cG();
     else {
       t = t - i;
@@ -386,14 +385,14 @@ class SceneGameplayPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
             : "" +
               Math.floor(t / TimeUtil_1.TimeUtil.Hour) +
               ConfigManager_1.ConfigManager.TextConfig.GetTextById("Hour")),
-        this.a2o?.SetRightText(e),
-        void 0 === this.IRe && this.rqo();
+        this.rFo?.SetRightText(e),
+        void 0 === this.IRe && this.tGo();
     }
   }
-  rqo() {
-    this.a2o?.SetActive(!0),
+  tGo() {
+    this.rFo?.SetActive(!0),
       (this.IRe = TimerSystem_1.TimerSystem.Forever(() => {
-        this.u2o();
+        this.hFo();
       }, TimeUtil_1.TimeUtil.InverseMillisecond));
   }
   cG() {
@@ -401,7 +400,7 @@ class SceneGameplayPanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
       TimerSystem_1.TimerSystem.Has(this.IRe) &&
       (TimerSystem_1.TimerSystem.Remove(this.IRe),
       (this.IRe = void 0),
-      this.a2o?.SetActive(!1));
+      this.rFo?.SetActive(!1));
   }
 }
 exports.SceneGameplayPanel = SceneGameplayPanel;

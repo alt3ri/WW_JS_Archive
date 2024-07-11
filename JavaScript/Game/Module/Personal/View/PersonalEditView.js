@@ -3,22 +3,23 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PersonalEditView = void 0);
 const UE = require("ue"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
+  RedDotController_1 = require("../../../RedDot/RedDotController"),
   UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
   PersonalCardComponent_1 = require("./PersonalCardComponent"),
   PersonalHeadPhotoComponent_1 = require("./PersonalHeadPhotoComponent");
 class PersonalEditView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.Z4i = void 0),
-      (this.e5i = void 0),
-      (this.t5i = void 0),
-      (this.g6t = void 0),
-      (this.i5i = 0),
-      (this.o5i = () => {
-        this.e5i.SetActive(!0), this.Z4i.SetActive(!1);
+      (this.z5i = void 0),
+      (this.Z5i = void 0),
+      (this.eVi = void 0),
+      (this.g8t = void 0),
+      (this.tVi = 0),
+      (this.iVi = () => {
+        this.Z5i.SetActive(!0), this.z5i.SetActive(!1);
       }),
-      (this.r5i = () => {
-        this.e5i.SetActive(!1), this.Z4i.SetActive(!0);
+      (this.oVi = () => {
+        this.Z5i.SetActive(!1), this.z5i.SetActive(!0);
       });
   }
   OnRegisterComponent() {
@@ -27,41 +28,50 @@ class PersonalEditView extends UiViewBase_1.UiViewBase {
       [1, UE.UIItem],
       [2, UE.UIExtendToggle],
       [3, UE.UIExtendToggle],
+      [4, UE.UIItem],
     ]),
       (this.BtnBindInfo = [
-        [2, this.o5i],
-        [3, this.r5i],
+        [2, this.iVi],
+        [3, this.oVi],
       ]);
   }
   async OnBeforeStartAsync() {
-    (this.i5i = this.OpenParam),
-      (this.t5i = this.GetItem(0)),
-      (this.g6t = this.GetItem(1)),
-      (this.Z4i = new PersonalCardComponent_1.PersonalCardComponent(
-        this.t5i,
+    (this.tVi = this.OpenParam),
+      (this.eVi = this.GetItem(0)),
+      (this.g8t = this.GetItem(1)),
+      (this.z5i = new PersonalCardComponent_1.PersonalCardComponent(
+        this.eVi,
         !1,
         ModelManager_1.ModelManager.PersonalModel.GetPersonalInfoData(),
       )),
-      (this.e5i =
+      (this.Z5i =
         new PersonalHeadPhotoComponent_1.PersonalHeadPhotoComponent()),
-      await this.e5i.CreateThenShowByActorAsync(this.g6t.GetOwner());
-    var s = ModelManager_1.ModelManager.FunctionModel.IsOpen(10061);
-    this.GetExtendToggle(3).RootUIComp.SetUIActive(s),
-      (this.i5i = s ? this.i5i : 0),
-      1 === this.i5i
+      await this.Z5i.CreateThenShowByActorAsync(this.g8t.GetOwner());
+    var e = ModelManager_1.ModelManager.FunctionModel.IsOpen(10061);
+    this.GetExtendToggle(3).RootUIComp.SetUIActive(e),
+      (this.tVi = e ? this.tVi : 0),
+      RedDotController_1.RedDotController.BindRedDot(
+        "PersonalCard",
+        this.GetItem(4),
+      ),
+      1 === this.tVi
         ? (this.GetExtendToggle(3).SetToggleState(1),
           this.GetExtendToggle(2).SetToggleState(0),
-          this.r5i())
-        : 0 === this.i5i &&
+          this.oVi())
+        : 0 === this.tVi &&
           (this.GetExtendToggle(3).SetToggleState(0),
           this.GetExtendToggle(2).SetToggleState(1),
-          this.o5i());
+          this.iVi());
   }
   OnBeforeDestroy() {
-    (this.t5i = void 0),
-      (this.g6t = void 0),
-      this.Z4i.Destroy(),
-      this.e5i.Destroy();
+    RedDotController_1.RedDotController.UnBindGivenUi(
+      "PersonalCard",
+      this.GetItem(4),
+    ),
+      (this.eVi = void 0),
+      (this.g8t = void 0),
+      this.z5i.Destroy(),
+      this.Z5i.Destroy();
   }
 }
 exports.PersonalEditView = PersonalEditView;

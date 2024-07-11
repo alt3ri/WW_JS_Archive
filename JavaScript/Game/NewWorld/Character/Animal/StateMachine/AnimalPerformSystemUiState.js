@@ -9,78 +9,78 @@ const GameplayTagUtils_1 = require("../../../../../Core/Utils/GameplayTagUtils")
 class AnimalPerformSystemUiState extends AnimalPerformStateBase_1.AnimalPerformStateBase {
   constructor() {
     super(...arguments),
-      (this.cWo = new Map()),
-      (this.mWo = !1),
-      (this.dWo = void 0),
-      (this.UKe = (t) => {
-        this.dWo &&
-          this.dWo === t &&
-          (this.mWo ||
+      (this.lKo = new Map()),
+      (this._Ko = !1),
+      (this.uKo = void 0),
+      (this.FQe = (t) => {
+        this.uKo &&
+          this.uKo === t &&
+          (this._Ko ||
             EventSystem_1.EventSystem.Remove(
               EventDefine_1.EEventName.OpenView,
-              this.UKe,
+              this.FQe,
             ),
-          (this.mWo = !0),
+          (this._Ko = !0),
           EventSystem_1.EventSystem.Add(
             EventDefine_1.EEventName.CloseView,
             this.$Ge,
           ),
           EventSystem_1.EventSystem.Add(
             EventDefine_1.EEventName.OnDeliveryProps,
-            this.CWo,
+            this.cKo,
           ));
       }),
       (this.$Ge = (t) => {
-        this.dWo &&
-          this.dWo === t &&
+        this.uKo &&
+          this.uKo === t &&
           (EventSystem_1.EventSystem.Remove(
             EventDefine_1.EEventName.CloseView,
             this.$Ge,
           ),
           EventSystem_1.EventSystem.Remove(
             EventDefine_1.EEventName.OnDeliveryProps,
-            this.CWo,
+            this.cKo,
           ),
           this.StateMachine.Switch(1));
       }),
-      (this.CWo = (t) => {
+      (this.cKo = (t) => {
         t &&
-          (t = this.cWo.get(t)) &&
+          (t = this.lKo.get(t)) &&
           ((t = GameplayTagUtils_1.GameplayTagUtils.GetGameplayTagByName(t)),
           this.EcologicalInterface.FeedStart(t));
       });
   }
   get SystemUiViewName() {
-    return this.dWo;
+    return this.uKo;
   }
   set SystemUiViewName(t) {
-    this.dWo = t;
+    this.uKo = t;
   }
   OnEnter(t) {
     this.EcologicalInterface?.IsValid() &&
-      this.dWo &&
-      (UiManager_1.UiManager.IsViewShow(this.dWo)
-        ? this.UKe(this.dWo)
-        : ((this.mWo = !1),
+      this.uKo &&
+      (UiManager_1.UiManager.IsViewShow(this.uKo)
+        ? this.FQe(this.uKo)
+        : ((this._Ko = !1),
           EventSystem_1.EventSystem.Add(
             EventDefine_1.EEventName.OpenView,
-            this.UKe,
+            this.FQe,
           )),
       0 === t &&
         this.AnimalEcologicalInterface.StateMachineInitializationComplete(),
-      (t = this.Owner.GetComponent(185)) && this.gWo(t),
+      (t = this.Owner.GetComponent(188)) && this.mKo(t),
       this.EcologicalInterface.SystemUiStart());
   }
   OnExit(t) {
     this.EcologicalInterface?.IsValid() &&
-      (this.Owner.GetComponent(178)?.SetInteractionState(
+      (this.Owner.GetComponent(181)?.SetInteractionState(
         !0,
         "AnimalPerformSystemUiState OnExit",
       ),
       this.EcologicalInterface.SystemUiEnd(),
-      this.Owner.GetComponent(185)?.RemoveTag(1819982634),
-      (this.mWo = !1),
-      (this.dWo = void 0));
+      this.Owner.GetComponent(188)?.RemoveTag(1819982634),
+      (this._Ko = !1),
+      (this.uKo = void 0));
   }
   InitFeedingAnimalConfig(e, i) {
     if (e && i) {
@@ -88,11 +88,11 @@ class AnimalPerformSystemUiState extends AnimalPerformStateBase_1.AnimalPerformS
       for (let t = 0; t < s; ++t) {
         var n = e[t],
           a = i[t];
-        a && this.cWo.set(n, a);
+        a && this.lKo.set(n, a);
       }
     }
   }
-  gWo(t) {
+  mKo(t) {
     t?.Valid &&
       (t.HasTag(502364103) && (t.RemoveTag(502364103), t.AddTag(1900394806)),
       t.HasTag(393622611) && (t.RemoveTag(393622611), t.AddTag(1900394806)),

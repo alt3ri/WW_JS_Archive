@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleResonanceTabViewNew = void 0);
 const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
@@ -9,17 +10,16 @@ const UE = require("ue"),
   RedDotController_1 = require("../../../RedDot/RedDotController"),
   UiTabViewBase_1 = require("../../../Ui/Base/UiTabViewBase"),
   UiManager_1 = require("../../../Ui/UiManager"),
-  RoleController_1 = require("../RoleController"),
-  Log_1 = require("../../../../Core/Common/Log");
+  RoleController_1 = require("../RoleController");
 class RoleResonanceTabViewNew extends UiTabViewBase_1.UiTabViewBase {
   constructor() {
     super(...arguments),
-      (this.plo = void 0),
-      (this._do = void 0),
-      (this.Wmo = (e) => {
-        (this._do = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(e)),
+      (this.d1o = void 0),
+      (this.aCo = void 0),
+      (this.Vdo = (e) => {
+        (this.aCo = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(e)),
           this.PlayMontageStart(),
-          this.qIt();
+          this.FTt();
       });
   }
   OnRegisterComponent() {
@@ -29,34 +29,34 @@ class RoleResonanceTabViewNew extends UiTabViewBase_1.UiTabViewBase {
     ];
   }
   UnBindRedDot() {
-    this._do.IsTrialRole() ||
+    this.aCo.IsTrialRole() ||
       RedDotController_1.RedDotController.UnBindRedDot("RoleResonanceTabHole");
   }
   AddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.RoleSystemChangeRole,
-      this.Wmo,
+      this.Vdo,
     );
   }
   OnStart() {
-    (this.plo = this.OpenParam),
-      void 0 === this.plo
+    (this.d1o = this.OpenParam),
+      void 0 === this.d1o
         ? Log_1.Log.CheckError() &&
           Log_1.Log.Error("Role", 59, "RoleViewAgent为空", [
             "界面名称",
             "RoleResonanceTabViewNew",
           ])
-        : ((this._do = this.plo.GetCurSelectRoleData()),
+        : ((this.aCo = this.d1o.GetCurSelectRoleData()),
           this.PlayMontageStart());
   }
   PlayMontageStart() {
     RoleController_1.RoleController.PlayRoleMontage(7);
   }
   OnBeforeShow() {
-    this.qIt();
+    this.FTt();
   }
-  qIt() {
-    var e = this._do.GetRoleConfig(),
+  FTt() {
+    var e = this.aCo.GetRoleConfig(),
       t = this.GetText(0),
       e =
         ConfigManager_1.ConfigManager.RoleResonanceConfig.GetRoleResonanceList(
@@ -64,11 +64,11 @@ class RoleResonanceTabViewNew extends UiTabViewBase_1.UiTabViewBase {
         ),
       e =
         (t.SetText(
-          this._do.GetResonanceData().GetResonantChainGroupIndex() +
+          this.aCo.GetResonanceData().GetResonantChainGroupIndex() +
             "/" +
             e.length,
         ),
-        this.GetItem(1).SetUIActive(!this._do.IsTrialRole()),
+        this.GetItem(1).SetUIActive(!this.aCo.IsTrialRole()),
         UiManager_1.UiManager.IsViewShow("RoleHandBookRootView"));
     e &&
       t.GetOwner().GetComponentByClass(UE.UIItem.StaticClass()).SetUIActive(!1);
@@ -79,7 +79,7 @@ class RoleResonanceTabViewNew extends UiTabViewBase_1.UiTabViewBase {
   RemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.RoleSystemChangeRole,
-      this.Wmo,
+      this.Vdo,
     );
   }
 }

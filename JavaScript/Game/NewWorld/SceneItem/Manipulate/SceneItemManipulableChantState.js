@@ -7,17 +7,17 @@ const EventDefine_1 = require("../../../Common/Event/EventDefine"),
 class SceneItemManipulableChantState extends SceneItemManipulableBaseState_1.SceneItemManipulableBaseState {
   constructor(e, t, n) {
     super(e),
-      (this.M$i = void 0),
-      (this.inr = void 0),
-      (this.M$i = t),
-      (this.inr = n),
+      (this.pYi = void 0),
+      (this.Znr = void 0),
+      (this.pYi = t),
+      (this.Znr = n),
       (this.StateType = "Reset");
   }
   OnEnter() {
-    this.StartCameraShake(this.M$i),
+    this.StartCameraShake(this.pYi),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.AddSubCameraTag,
-        this.inr,
+        this.Znr,
       ),
       (this.SceneItem.NeedRemoveControllerId = !0);
   }
@@ -25,7 +25,7 @@ class SceneItemManipulableChantState extends SceneItemManipulableBaseState_1.Sce
     this.StopCameraShake(),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.RemoveSubCameraTag,
-        this.inr,
+        this.Znr,
       );
   }
 }

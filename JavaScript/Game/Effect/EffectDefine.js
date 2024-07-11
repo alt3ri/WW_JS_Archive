@@ -9,6 +9,7 @@ const EffectModelMultiEffectSpec_1 = require("./EffectModelMultiEffectSpec"),
   EffectModelGpuParticleSpec_1 = require("./EffectSpec/EffectModelGpuParticleSpec"),
   EffectModelGroupSpec_1 = require("./EffectSpec/EffectModelGroupSpec"),
   EffectModelLightSpec_1 = require("./EffectSpec/EffectModelLightSpec"),
+  EffectModelMaterialControllerSpec_1 = require("./EffectSpec/EffectModelMaterialControllerSpec"),
   EffectModelNiagaraSpec_1 = require("./EffectSpec/EffectModelNiagaraSpec"),
   EffectModelPostProcessSpec_1 = require("./EffectSpec/EffectModelPostProcessSpec"),
   EffectModelSkeletalMeshSpec_1 = require("./EffectSpec/EffectModelSkeletalMeshSpec"),
@@ -28,5 +29,10 @@ exports.effectSpecMap = new Map([
   [10, () => new EffectModelStaticMeshSpec_1.EffectModelStaticMeshSpec()],
   [11, () => new EffectModelTrailSpec_1.EffectModelTrailSpec()],
   [12, () => new EffectModelMultiEffectSpec_1.EffectModelMultiEffectSpec()],
+  [
+    13,
+    () =>
+      new EffectModelMaterialControllerSpec_1.EffectModelMaterialControllerSpec(),
+  ],
 ]);
 //# sourceMappingURL=EffectDefine.js.map

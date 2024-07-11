@@ -8,24 +8,24 @@ const UE = require("ue"),
 class TreasureBoxDetectorMarkItemView extends ServerMarkItemView_1.ServerMarkItemView {
   constructor(e) {
     super(e),
-      (this.KDi = void 0),
-      (this.QDi = void 0),
-      (this.XDi = void 0),
-      (this.KDi = new UE.Vector());
+      (this.KRi = void 0),
+      (this.QRi = void 0),
+      (this.XRi = void 0),
+      (this.KRi = new UE.Vector());
   }
   async GetDetectorRangeComponentAsync() {
     return (
-      this.QDi ||
-        (this.QDi =
+      this.QRi ||
+        (this.QRi =
           new MarkDetectorRangeImageComponent_1.MarkDetectorRangeImageComponent()),
-      this.XDi ||
-        (this.XDi = this.QDi.CreateThenShowByResourceIdAsync(
+      this.XRi ||
+        (this.XRi = this.QRi.CreateThenShowByResourceIdAsync(
           "UiItem_ProbeArea",
           this.RootItem,
           !0,
         )),
-      await this.XDi,
-      this.QDi
+      await this.XRi,
+      this.QRi
     );
   }
   OnInitialize() {
@@ -41,22 +41,22 @@ class TreasureBoxDetectorMarkItemView extends ServerMarkItemView_1.ServerMarkIte
     });
   }
   SetScale(e) {
-    this.KDi.Set(e, e, e),
-      this.RootItem.SetWorldScale3D(this.KDi),
+    this.KRi.Set(e, e, e),
+      this.RootItem.SetWorldScale3D(this.KRi),
       this.GetDetectorRangeComponentAsync().then((e) => {
-        this.KDi.Set(
+        this.KRi.Set(
           1 / this.RootItem.RelativeScale3D.X,
           1 / this.RootItem.RelativeScale3D.Y,
           1 / this.RootItem.RelativeScale3D.Z,
         ),
-          e.GetRootItem().SetRelativeScale3D(this.KDi);
+          e.GetRootItem().SetRelativeScale3D(this.KRi);
       });
   }
   OnBeforeDestroy() {
     super.OnBeforeDestroy(),
-      this.QDi?.Destroy(),
-      (this.QDi = void 0),
-      (this.XDi = void 0);
+      this.QRi?.Destroy(),
+      (this.QRi = void 0),
+      (this.XRi = void 0);
   }
 }
 exports.TreasureBoxDetectorMarkItemView = TreasureBoxDetectorMarkItemView;

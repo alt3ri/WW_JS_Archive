@@ -8,7 +8,7 @@ const Log_1 = require("../../../Core/Common/Log"),
   InputActionBinding_1 = require("../Binding/InputActionBinding");
 class InputActionMapping {
   constructor() {
-    (this.WSe = new Map()), (this.KSe = new Map()), (this.QSe = new Map());
+    (this.WEe = new Map()), (this.KEe = new Map()), (this.QEe = new Map());
   }
   Initialize() {
     var t =
@@ -16,43 +16,43 @@ class InputActionMapping {
     if (t) for (const n of t) this.NewActionBinding(n);
   }
   Clear() {
-    for (const t of this.WSe.values()) t.Clear();
-    this.WSe.clear(), this.KSe.clear(), this.QSe.clear();
+    for (const t of this.WEe.values()) t.Clear();
+    this.WEe.clear(), this.KEe.clear(), this.QEe.clear();
   }
   NewActionBinding(t) {
     var n = t.ActionName,
       i = new InputActionBinding_1.InputActionBinding(),
       t = (i.Initialize(t), i.GetConfigId()),
-      n = (this.WSe.set(n, i), this.KSe.set(t, i), i.GetActionMappingType());
-    let e = this.QSe.get(n);
-    e || ((e = new Set()), this.QSe.set(n, e)), e.add(i);
+      n = (this.WEe.set(n, i), this.KEe.set(t, i), i.GetActionMappingType());
+    let e = this.QEe.get(n);
+    e || ((e = new Set()), this.QEe.set(n, e)), e.add(i);
   }
   RemoveActionBinding(t) {
     var n,
       i,
-      e = this.WSe.get(t);
+      e = this.WEe.get(t);
     e &&
       ((n = e.GetConfigId()),
       (i = e.GetActionMappingType()),
-      this.QSe.get(i)?.delete(e),
-      this.WSe.delete(t),
-      this.KSe.delete(n),
+      this.QEe.get(i)?.delete(e),
+      this.WEe.delete(t),
+      this.KEe.delete(n),
       e.Clear());
   }
   ClearAllActionKeys() {
-    for (const t of this.WSe.values()) t.ClearAllKeys();
+    for (const t of this.WEe.values()) t.ClearAllKeys();
   }
   GetActionBinding(t) {
-    return this.WSe.get(t);
+    return this.WEe.get(t);
   }
   GetActionBindingByConfigId(t) {
-    return this.KSe.get(t);
+    return this.KEe.get(t);
   }
   GetActionBindingByActionMappingType(t) {
-    return this.QSe.get(t);
+    return this.QEe.get(t);
   }
   SetKeys(t, n) {
-    var i = this.WSe.get(t);
+    var i = this.WEe.get(t);
     i
       ? (i.SetKeys(n),
         EventSystem_1.EventSystem.Emit(
@@ -69,7 +69,7 @@ class InputActionMapping {
         );
   }
   RefreshKeysByActionMappings(t, n) {
-    var i = this.WSe.get(t);
+    var i = this.WEe.get(t);
     i
       ? (i.RefreshKeysByActionMappings(n),
         EventSystem_1.EventSystem.Emit(
@@ -86,7 +86,7 @@ class InputActionMapping {
         );
   }
   AddKeys(t, n) {
-    var i = this.WSe.get(t);
+    var i = this.WEe.get(t);
     i
       ? (i.AddKeys(n),
         EventSystem_1.EventSystem.Emit(
@@ -101,7 +101,7 @@ class InputActionMapping {
         ]);
   }
   RemoveKeys(t, n) {
-    var i = this.WSe.get(t);
+    var i = this.WEe.get(t);
     i
       ? (i.RemoveKeys(n),
         EventSystem_1.EventSystem.Emit(
@@ -116,7 +116,7 @@ class InputActionMapping {
         ]);
   }
   RemoveKeysByCondition(t, n) {
-    var i = this.WSe.get(t);
+    var i = this.WEe.get(t);
     i
       ? (i.RemoveKeysByCondition(n),
         EventSystem_1.EventSystem.Emit(

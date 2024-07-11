@@ -30,29 +30,32 @@ const Log_1 = require("../../../../../../Core/Common/Log"),
   ModelManager_1 = require("../../../../../Manager/ModelManager"),
   CombatMessage_1 = require("../../../../../Module/CombatMessage/CombatMessage"),
   SkillMessageController_1 = require("../../../../../Module/CombatMessage/SkillMessageController"),
-  CombatDebugController_1 = require("../../../../../Utils/CombatDebugController"),
-  BulletController_1 = require("../../../../Bullet/BulletController");
-!(function (t) {
-  (t[(t.AddBullet = 1)] = "AddBullet"),
-    (t[(t.RemoveBullet = 2)] = "RemoveBullet"),
-    (t[(t.AddBuff = 3)] = "AddBuff"),
-    (t[(t.RemoveBuff = 4)] = "RemoveBuff"),
-    (t[(t.StartSkill = 5)] = "StartSkill");
-})((ESkillAction = ESkillAction || {}));
+  CombatLog_1 = require("../../../../../Utils/CombatLog"),
+  BulletController_1 = require("../../../../Bullet/BulletController"),
+  TriggerType_1 = require("./Trigger/TriggerType"),
+  GlobalTriggerWhitelist =
+    (!(function (t) {
+      (t[(t.AddBullet = 1)] = "AddBullet"),
+        (t[(t.RemoveBullet = 2)] = "RemoveBullet"),
+        (t[(t.AddBuff = 3)] = "AddBuff"),
+        (t[(t.RemoveBuff = 4)] = "RemoveBuff"),
+        (t[(t.StartSkill = 5)] = "StartSkill");
+    })((ESkillAction = ESkillAction || {})),
+    [1302101064n]);
 let CharacterPassiveSkillComponent = class CharacterPassiveSkillComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments),
-      (this.ikr = void 0),
-      (this.okr = void 0),
-      (this.rkr = void 0),
-      (this.nkr = new Map()),
+      (this.xOr = void 0),
+      (this.wOr = void 0),
+      (this.BOr = void 0),
+      (this.bOr = new Map()),
       (this.LockMap = new Set());
   }
   OnInit() {
     return (
-      (this.ikr = this.Entity.CheckGetComponent(25)),
-      (this.okr = this.Entity.CheckGetComponent(157)),
-      (this.rkr = this.Entity.GetComponent(186)),
+      (this.xOr = this.Entity.CheckGetComponent(25)),
+      (this.wOr = this.Entity.CheckGetComponent(159)),
+      (this.BOr = this.Entity.GetComponent(190)),
       !0
     );
   }
@@ -60,52 +63,62 @@ let CharacterPassiveSkillComponent = class CharacterPassiveSkillComponent extend
     return !0;
   }
   OnActivate() {
-    var t = this.Entity.GetComponent(0).ComponentDataMap.get("vps")?.vps?.IMs;
+    var t = this.Entity.GetComponent(0).ComponentDataMap.get("bys")?.bys?.NIs;
     if (t)
       for (const e of t)
-        this.LearnPassiveSkill(MathUtils_1.MathUtils.LongToBigInt(e.vkn), {
-          CombatMessageId: MathUtils_1.MathUtils.LongToBigInt(e.r4n.s4n),
+        this.LearnPassiveSkill(MathUtils_1.MathUtils.LongToBigInt(e.X4n), {
+          CombatMessageId: MathUtils_1.MathUtils.LongToBigInt(e.G8n.k8n),
         });
     return !0;
   }
   OnClear() {
-    for (const t of this.nkr.keys()) this.ForgetPassiveSkill(t);
+    for (const t of this.bOr.keys()) this.ForgetPassiveSkill(t);
     return !0;
   }
   OnTick(t) {
     this.LockMap.clear();
   }
   GetAllPassiveSkills() {
-    return [...this.nkr.values()];
+    return [...this.bOr.values()];
   }
   HasSkill(t) {
-    return this.nkr.has(t);
+    return this.bOr.has(t);
   }
   LearnPassiveSkill(o, t = void 0) {
     if (this.HasSkill(o)) return !1;
     const l = PassiveSkillById_1.configPassiveSkillById.GetConfig(o);
     if (!l)
       return (
-        Log_1.Log.CheckError() &&
-          Log_1.Log.Error(
-            "Battle",
-            20,
-            "被动技能配置不存在",
-            ["owner", this.Entity.Id],
-            ["skillId", o],
-          ),
+        CombatLog_1.CombatLog.Error(
+          "PassiveSkill",
+          this.Entity,
+          "被动技能配置不存在",
+          ["skillId", o],
+        ),
         !1
       );
-    if (!l.TriggerType)
+    var e = TriggerType_1.ETriggerEvent[l.TriggerType];
+    if (!l.TriggerType || void 0 === e)
       return (
-        Log_1.Log.CheckError() &&
-          Log_1.Log.Error(
-            "Battle",
-            20,
-            "被动技能配置错误，缺少触发类型",
-            ["owner", this.Entity.Id],
-            ["skillId", o],
-          ),
+        CombatLog_1.CombatLog.Error(
+          "PassiveSkill",
+          this.Entity,
+          "被动技能配置错误，缺少触发类型",
+          ["skillId", o],
+        ),
+        !1
+      );
+    if (
+      e === TriggerType_1.ETriggerEvent.GlobalDamageTrigger &&
+      !GlobalTriggerWhitelist.includes(o)
+    )
+      return (
+        CombatLog_1.CombatLog.Error(
+          "PassiveSkill",
+          this.Entity,
+          "禁止白名单之外的被动使用全局伤害监听",
+          ["skillId", o],
+        ),
         !1
       );
     Log_1.Log.CheckInfo() &&
@@ -116,7 +129,7 @@ let CharacterPassiveSkillComponent = class CharacterPassiveSkillComponent extend
         ["owner", this.Entity.Id],
         ["skillId", o],
       );
-    var e = this.ikr.AddTrigger(
+    e = this.xOr.AddTrigger(
       {
         Type: l.TriggerType,
         Preset: l.TriggerPreset,
@@ -128,7 +141,7 @@ let CharacterPassiveSkillComponent = class CharacterPassiveSkillComponent extend
         var s = l.InstigatorType;
         (i = s ? t?.[s] ?? e?.[s] : i) && i instanceof Entity_1.Entity
           ? this.ExecuteAction(o, i)
-          : CombatDebugController_1.CombatDebugController.CombatError(
+          : CombatLog_1.CombatLog.Error(
               "PassiveSkill",
               this.Entity,
               "被动技能目标非法",
@@ -138,21 +151,21 @@ let CharacterPassiveSkillComponent = class CharacterPassiveSkillComponent extend
       },
     );
     return (
-      l.IsDefaultActivated && this.ikr.SetTriggerActive(e, !0),
-      this.nkr.set(o, {
+      l.IsDefaultActivated && this.xOr.SetTriggerActive(e, !0),
+      this.bOr.set(o, {
         SkillId: o,
         TriggerHandle: e,
         Actions: this.ParseActions(l),
         TargetKey: l.InstigatorType,
         CombatMessageId: t?.CombatMessageId,
       }),
-      this.rkr?.InitPassiveSkill(l),
+      this.BOr?.InitPassiveSkill(l),
       this.OnPassiveSkillAdded(o, t),
       !0
     );
   }
   ForgetPassiveSkill(t, e = !1) {
-    var i = this.nkr.get(t);
+    var i = this.bOr.get(t);
     void 0 !== i &&
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
@@ -162,16 +175,16 @@ let CharacterPassiveSkillComponent = class CharacterPassiveSkillComponent extend
           ["owner", this.Entity.Id],
           ["skillId", t],
         ),
-      this.ikr.RemoveTrigger(i.TriggerHandle),
-      this.nkr.delete(t),
+      this.xOr.RemoveTrigger(i.TriggerHandle),
+      this.bOr.delete(t),
       this.OnPassiveSkillRemoved(t, e));
   }
   SetPassiveSkillActive(t, e) {
-    t = this.nkr.get(t);
+    t = this.bOr.get(t);
     void 0 !== t &&
       t.TriggerHandle &&
       0 < t.TriggerHandle &&
-      this.ikr.SetTriggerActive(t.TriggerHandle, e);
+      this.xOr.SetTriggerActive(t.TriggerHandle, e);
   }
   ParseActions(t) {
     var e = [],
@@ -219,9 +232,9 @@ let CharacterPassiveSkillComponent = class CharacterPassiveSkillComponent extend
       }
   }
   ExecuteAction(t, e) {
-    if (this.okr.HasBuffAuthority() && !this.rkr?.IsPassiveSkillInCd(t))
+    if (this.wOr.HasBuffAuthority() && !this.BOr?.IsPassiveSkillInCd(t))
       if (this.LockMap.has(t))
-        CombatDebugController_1.CombatDebugController.CombatError(
+        CombatLog_1.CombatLog.Error(
           "PassiveSkill",
           this.Entity,
           "被动技能在同一次调用栈中重复触发，需要检查技能配置",
@@ -234,24 +247,24 @@ let CharacterPassiveSkillComponent = class CharacterPassiveSkillComponent extend
           ["current executing skill ids", [...this.LockMap]],
         );
       else {
-        var i = this.nkr.get(t);
+        var i = this.bOr.get(t);
         if (void 0 !== i) {
-          this.rkr?.StartPassiveCd(t), this.LockMap.add(t);
-          for (const d of i.Actions)
-            switch (d.Action) {
+          this.BOr?.StartPassiveCd(t), this.LockMap.add(t);
+          for (const u of i.Actions)
+            switch (u.Action) {
               case ESkillAction.AddBullet:
                 var s = e?.GetComponent(1)?.ActorTransform;
                 if (s)
-                  for (const k of d.BulletRowNames)
+                  for (const d of u.BulletRowNames)
                     BulletController_1.BulletController.CreateBulletCustomTarget(
                       this.Entity,
-                      k,
+                      d,
                       s,
                       {},
                       i.CombatMessageId,
                     );
                 else
-                  CombatDebugController_1.CombatDebugController.CombatError(
+                  CombatLog_1.CombatLog.Error(
                     "PassiveSkill",
                     this.Entity,
                     "被动技能目标没有ActorTransform",
@@ -266,38 +279,38 @@ let CharacterPassiveSkillComponent = class CharacterPassiveSkillComponent extend
                   );
                 if (void 0 !== o) {
                   var l = new Array(),
-                    r = d.SummonChild;
+                    r = u.SummonChild;
                   for (const f of o) {
                     var a = f.GetBulletInfo();
-                    d.BulletRowNames.includes(a.BulletRowName) &&
+                    u.BulletRowNames.includes(a.BulletRowName) &&
                       l.push(a.BulletEntityId);
                   }
-                  for (const C of l)
-                    BulletController_1.BulletController.DestroyBullet(C, r, 3);
+                  for (const g of l)
+                    BulletController_1.BulletController.DestroyBullet(g, r, 3);
                 }
                 break;
               case ESkillAction.AddBuff:
-                var n = e.GetComponent(157),
+                var n = e.GetComponent(159),
                   c = `被动技能${t}添加`;
-                for (const S of d.BuffId)
+                for (const S of u.BuffId)
                   n.AddBuff(S, {
-                    InstigatorId: this.okr.CreatureDataId,
+                    InstigatorId: this.wOr.CreatureDataId,
                     PreMessageId: i.CombatMessageId,
                     Reason: c,
                   });
                 break;
               case ESkillAction.RemoveBuff:
-                var h = e.GetComponent(157),
-                  u = `被动技能${t}移除`;
-                for (let t = 0; t < d.BuffId.length; t++) {
-                  var v = d.StackCount[t] ?? -1;
-                  h.RemoveBuff(d.BuffId[t], v, u);
+                var h = e.GetComponent(159),
+                  v = `被动技能${t}移除`;
+                for (let t = 0; t < u.BuffId.length; t++) {
+                  var k = u.StackCount[t] ?? -1;
+                  h.RemoveBuff(u.BuffId[t], k, v);
                 }
                 break;
               case ESkillAction.StartSkill:
                 o = e.CheckGetComponent(33);
                 o &&
-                  o.BeginSkill(d.SkillId, {
+                  o.BeginSkill(u.SkillId, {
                     ContextId: i.CombatMessageId,
                     Context: "PassiveSkillComponent.ExecuteAction",
                   });
@@ -316,7 +329,7 @@ let CharacterPassiveSkillComponent = class CharacterPassiveSkillComponent extend
           t,
           e,
         )),
-      (this.nkr.get(t).CombatMessageId = e));
+      (this.bOr.get(t).CombatMessageId = e));
   }
   OnPassiveSkillRemoved(t, e) {
     e &&
@@ -327,25 +340,25 @@ let CharacterPassiveSkillComponent = class CharacterPassiveSkillComponent extend
   }
   static PassiveSkillAddNotify(t, e) {
     var i = t?.GetComponent(23);
-    for (const s of e.IMs)
-      i?.LearnPassiveSkill(MathUtils_1.MathUtils.LongToBigInt(s.vkn), {
-        CombatMessageId: MathUtils_1.MathUtils.LongToBigInt(s.r4n.s4n),
+    for (const s of e.NIs)
+      i?.LearnPassiveSkill(MathUtils_1.MathUtils.LongToBigInt(s.X4n), {
+        CombatMessageId: MathUtils_1.MathUtils.LongToBigInt(s.G8n.k8n),
       });
   }
   static PassiveSkillRemoveNotify(t, e) {
     var i = t?.GetComponent(23);
-    for (const s of e.OIs)
+    for (const s of e.rAs)
       i?.ForgetPassiveSkill(MathUtils_1.MathUtils.LongToBigInt(s));
   }
 };
 __decorate(
-  [CombatMessage_1.CombatNet.Listen("F2n", !1)],
+  [CombatMessage_1.CombatNet.Listen("g3n", !1)],
   CharacterPassiveSkillComponent,
   "PassiveSkillAddNotify",
   null,
 ),
   __decorate(
-    [CombatMessage_1.CombatNet.Listen("V2n", !1)],
+    [CombatMessage_1.CombatNet.Listen("f3n", !1)],
     CharacterPassiveSkillComponent,
     "PassiveSkillRemoveNotify",
     null,

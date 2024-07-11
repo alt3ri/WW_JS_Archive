@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.PayGiftController = void 0);
-const Protocol_1 = require("../../../Core/Define/Net/Protocol"),
+const Info_1 = require("../../../Core/Common/Info"),
+  Protocol_1 = require("../../../Core/Define/Net/Protocol"),
   Net_1 = require("../../../Core/Net/Net"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../Common/Event/EventSystem"),
@@ -16,66 +17,66 @@ const Protocol_1 = require("../../../Core/Define/Net/Protocol"),
   PayShopDefine_1 = require("./PayShopDefine");
 class PayGiftController extends UiControllerBase_1.UiControllerBase {
   static OnRegisterNetEvent() {
-    Net_1.Net.Register(5162, PayGiftController.h2i);
+    Net_1.Net.Register(16212, PayGiftController.hFi);
   }
   static OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(5162);
+    Net_1.Net.UnRegister(16212);
   }
   static OnShopInfoNotify(e) {
-    (ModelManager_1.ModelManager.PayGiftModel.Version = e.iUs.o8n),
-      ModelManager_1.ModelManager.PayGiftModel.InitDataByServer(e.iUs.tUs);
+    (ModelManager_1.ModelManager.PayGiftModel.Version = e.SBs.G7n),
+      ModelManager_1.ModelManager.PayGiftModel.InitDataByServer(e.SBs.MBs);
   }
   static OnShopInfoReceive(e) {
     e &&
-      ((ModelManager_1.ModelManager.PayGiftModel.Version = e.o8n),
-      ModelManager_1.ModelManager.PayGiftModel.InitDataByServer(e.tUs));
+      ((ModelManager_1.ModelManager.PayGiftModel.Version = e.G7n),
+      ModelManager_1.ModelManager.PayGiftModel.InitDataByServer(e.MBs));
   }
   static async SendPayGiftInfoRequestAsync() {
-    var e = Protocol_1.Aki.Protocol.Kos.create(),
+    var e = Protocol_1.Aki.Protocol.$hs.create(),
       e =
-        ((e.o8n = ModelManager_1.ModelManager.PayGiftModel.Version),
-        await Net_1.Net.CallAsync(12156, e));
+        ((e.G7n = ModelManager_1.ModelManager.PayGiftModel.Version),
+        await Net_1.Net.CallAsync(13863, e));
     if (
       e &&
-      (e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys &&
+      (e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs &&
         ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-          e.lkn,
-          17073,
+          e.O4n,
+          1708,
         ),
-      e.o8n) &&
-      e.cRs
+      e.G7n) &&
+      e.UUs
     ) {
-      (ModelManager_1.ModelManager.PayGiftModel.Version = e.o8n),
-        ModelManager_1.ModelManager.PayGiftModel.InitDataByServer(e.cRs);
+      (ModelManager_1.ModelManager.PayGiftModel.Version = e.G7n),
+        ModelManager_1.ModelManager.PayGiftModel.InitDataByServer(e.UUs);
       var e = ModelManager_1.ModelManager.PayGiftModel.GetDataList(),
-        r = new Array();
-      for (const o of e) r.push(o.ProductId);
+        o = new Array();
+      for (const r of e) o.push(r.ProductId);
       ControllerHolder_1.ControllerHolder.KuroSdkController.QueryProductByProductId(
-        r,
+        o,
       );
     }
   }
   static SendPayGiftInfoRequest() {
-    var e = Protocol_1.Aki.Protocol.Kos.create();
-    (e.o8n = ModelManager_1.ModelManager.PayGiftModel.Version),
-      Net_1.Net.Call(12156, e, (e) => {
+    var e = Protocol_1.Aki.Protocol.$hs.create();
+    (e.G7n = ModelManager_1.ModelManager.PayGiftModel.Version),
+      Net_1.Net.Call(13863, e, (e) => {
         if (
           e &&
-          (e.lkn !== Protocol_1.Aki.Protocol.lkn.Sys &&
+          (e.O4n !== Protocol_1.Aki.Protocol.O4n.NRs &&
             ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-              e.lkn,
-              17073,
+              e.O4n,
+              1708,
             ),
-          e.o8n) &&
-          e.cRs
+          e.G7n) &&
+          e.UUs
         ) {
-          (ModelManager_1.ModelManager.PayGiftModel.Version = e.o8n),
-            ModelManager_1.ModelManager.PayGiftModel.InitDataByServer(e.cRs);
+          (ModelManager_1.ModelManager.PayGiftModel.Version = e.G7n),
+            ModelManager_1.ModelManager.PayGiftModel.InitDataByServer(e.UUs);
           var e = ModelManager_1.ModelManager.PayGiftModel.GetDataList(),
-            r = new Array();
-          for (const o of e) r.push(o.ProductId);
+            o = new Array();
+          for (const r of e) o.push(r.ProductId);
           ControllerHolder_1.ControllerHolder.KuroSdkController.QueryProductByProductId(
-            r,
+            o,
           );
         }
       });
@@ -99,50 +100,50 @@ class PayGiftController extends UiControllerBase_1.UiControllerBase {
           e,
         ))
       : (PayItemController_1.PayItemController.CurrentBlockIosPayState &&
-          1 === ModelManager_1.ModelManager.PlatformModel.PlatformType &&
+          1 === Info_1.Info.PlatformType &&
           ((e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(134)),
           ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
             e,
           )),
-        ((e = Protocol_1.Aki.Protocol.Xos.create()).Ekn = n),
-        (e.o8n = ModelManager_1.ModelManager.PayGiftModel.Version),
-        Net_1.Net.Call(4104, e, (e) => {
-          var r,
-            o,
+        ((e = Protocol_1.Aki.Protocol.jhs.create()).J4n = n),
+        (e.G7n = ModelManager_1.ModelManager.PayGiftModel.Version),
+        Net_1.Net.Call(10370, e, (e) => {
+          var o,
+            r,
             t = ModelManager_1.ModelManager.PayGiftModel.GetPayShopGoodsById(n);
-          e.lkn === Protocol_1.Aki.Protocol.lkn.Sys
-            ? ((r = ConfigManager_1.ConfigManager.ItemConfig.GetItemName(
+          e.O4n === Protocol_1.Aki.Protocol.O4n.NRs
+            ? ((o = ConfigManager_1.ConfigManager.ItemConfig.GetItemName(
                 t.GetGoodsData().ItemId,
               )),
-              (o = ConfigManager_1.ConfigManager.ItemConfig.GetItemDesc(
+              (r = ConfigManager_1.ConfigManager.ItemConfig.GetItemDesc(
                 t.GetGoodsData().ItemId,
               )),
               ControllerHolder_1.ControllerHolder.KuroSdkController.SdkPay(
                 t.GetGetPayGiftData().PayId,
-                e.$Ps,
-                r,
+                e.hBs,
                 o,
-                e.HPs,
+                r,
+                e.lBs,
               ))
-            : e.lkn === Protocol_1.Aki.Protocol.lkn.Proto_ErrPayShopDataChanged
+            : e.O4n === Protocol_1.Aki.Protocol.O4n.Proto_ErrPayShopDataChanged
               ? this.SendPayGiftInfoRequest()
               : ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-                  e.lkn,
-                  14867,
+                  e.O4n,
+                  28176,
                 );
         }));
   }
 }
-(exports.PayGiftController = PayGiftController).h2i = (e) => {
+(exports.PayGiftController = PayGiftController).hFi = (e) => {
   ControllerHolder_1.ControllerHolder.KuroSdkController.CancelCurrentWaitPayItemTimer();
-  var r = { PayItemId: e.Ekn, OrderId: e.$Ps, ItemId: e.G3n, ItemCount: e.g5n };
-  ModelManager_1.ModelManager.PayGiftModel.GetPayGiftDataById(e.jPs.Ekn).Phrase(
-    e.jPs,
+  var o = { PayItemId: e.J4n, OrderId: e.hBs, ItemId: e.f8n, ItemCount: e.YVn };
+  ModelManager_1.ModelManager.PayGiftModel.GetPayGiftDataById(e._Bs.J4n).Phrase(
+    e._Bs,
   ),
-    KuroSdkReport_1.KuroSdkReport.OnPayShopDirectBuy(e.Ekn),
+    KuroSdkReport_1.KuroSdkReport.OnPayShopDirectBuy(e.J4n),
     EventSystem_1.EventSystem.Emit(
       EventDefine_1.EEventName.OnPayItemSuccess,
-      r,
+      o,
     );
 };
 //# sourceMappingURL=PayGiftController.js.map

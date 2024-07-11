@@ -5,14 +5,18 @@ const UE = require("ue"),
   Log_1 = require("../../../../Core/Common/Log"),
   BackgroundCardById_1 = require("../../../../Core/Define/ConfigQuery/BackgroundCardById"),
   PlayerExpByPlayerLevel_1 = require("../../../../Core/Define/ConfigQuery/PlayerExpByPlayerLevel"),
+  Protocol_1 = require("../../../../Core/Define/Net/Protocol"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
+  ConfigManager_1 = require("../../../Manager/ConfigManager"),
   ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
+  RedDotController_1 = require("../../../RedDot/RedDotController"),
   UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
   UiManager_1 = require("../../../Ui/UiManager"),
   NoCircleAttachView_1 = require("../../AutoAttach/NoCircleAttachView"),
   CommonInputViewController_1 = require("../../Common/InputView/Controller/CommonInputViewController"),
+  ConfirmBoxDefine_1 = require("../../ConfirmBox/ConfirmBoxDefine"),
   LguiUtil_1 = require("../../Util/LguiUtil"),
   WorldLevelController_1 = require("../../WorldLevel/WorldLevelController"),
   FunctionController_1 = require("../FunctionController"),
@@ -22,39 +26,39 @@ const UE = require("ue"),
 class FunctionView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.Wft = void 0),
-      (this.B9t = void 0),
-      (this.G9t = void 0),
-      (this.N9t = void 0),
-      (this.O9t = void 0),
-      (this.k9t = void 0),
-      (this.F9t = void 0),
-      (this.V9t = void 0),
-      (this.H9t = new Map()),
-      (this.uft = new Array()),
-      (this.j9t = void 0),
-      (this.W9t = () => {
+      (this.ovt = void 0),
+      (this.B7t = void 0),
+      (this.G7t = void 0),
+      (this.N7t = void 0),
+      (this.O7t = void 0),
+      (this.k7t = void 0),
+      (this.F7t = void 0),
+      (this.V7t = void 0),
+      (this.H7t = new Map()),
+      (this.ypt = new Array()),
+      (this.j7t = void 0),
+      (this.W7t = () => {
         this.CloseMe();
       }),
-      (this.K9t = () => {
+      (this.K7t = () => {
         ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowReturnLoginConfirmBox();
       }),
-      (this.Q9t = () => {
+      (this.Q7t = () => {
         ControllerHolder_1.ControllerHolder.KuroSdkController.OpenNotice();
       }),
-      (this.X9t = () => {
+      (this.X7t = () => {
         FunctionController_1.FunctionController.OpenFunctionRelateView(10020);
       }),
-      (this.$9t = () => {
+      (this.$7t = () => {
         WorldLevelController_1.WorldLevelController.OpenWorldLevelInfoView();
       }),
-      (this.Y9t = () => {
+      (this.Y7t = () => {
         UiManager_1.UiManager.OpenView("TimeOfDaySecondView");
       }),
-      (this.J9t = () => {
+      (this.J7t = () => {
         FunctionController_1.FunctionController.OpenFunctionRelateView(10019);
       }),
-      (this.z9t = () => {
+      (this.z7t = () => {
         ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
           "CopiedMyUid",
         ),
@@ -62,59 +66,79 @@ class FunctionView extends UiViewBase_1.UiViewBase {
             ModelManager_1.ModelManager.PlayerInfoModel.GetId().toString(),
           );
       }),
-      (this.Z9t = () => {
+      (this.Z7t = () => {
         FunctionController_1.FunctionController.OpenFunctionRelateView(10049);
       }),
-      (this.e7t = () => {
+      (this.eHt = () => {
         ModelManager_1.ModelManager.FunctionModel.IsOpen(10060) &&
           UiManager_1.UiManager.OpenView(
             "PersonalRootView",
             ModelManager_1.ModelManager.PersonalModel.GetPersonalInfoData(),
-          );
+          ),
+          ModelManager_1.ModelManager.PersonalModel.TryHidePersonalTip();
       }),
-      (this.t7t = () => {
+      (this.tHt = () => {
         UiManager_1.UiManager.OpenView("PersonalOptionView");
       }),
-      (this.i7t = () => {
+      (this.iHt = () => {
         CommonInputViewController_1.CommonInputViewController.OpenPersonalSignInputView();
       }),
-      (this.o7t = () => {
+      (this.oHt = () => {
         CommonInputViewController_1.CommonInputViewController.OpenSetRoleNameInputView();
       }),
-      (this.r7t = () => {
+      (this.rHt = () => {
         var t;
-        this.Wft.MovingState() ||
-          this.Wft.GetCurrentSelectIndex() <= 0 ||
-          ((t = this.Wft.GetCurrentSelectIndex() - 1),
-          this.Wft.AttachToIndex(t, !1));
+        this.ovt.MovingState() ||
+          this.ovt.GetCurrentSelectIndex() <= 0 ||
+          ((t = this.ovt.GetCurrentSelectIndex() - 1),
+          this.ovt.AttachToIndex(t, !1));
       }),
-      (this.n7t = () => {
+      (this.nHt = () => {
         var t;
-        this.Wft.MovingState() ||
-          this.Wft.GetCurrentSelectIndex() >= this.Wft.GetDataLength() ||
-          ((t = this.Wft.GetCurrentSelectIndex() + 1),
-          this.Wft.AttachToIndex(t, !1));
+        this.ovt.MovingState() ||
+          this.ovt.GetCurrentSelectIndex() >= this.ovt.GetDataLength() ||
+          ((t = this.ovt.GetCurrentSelectIndex() + 1),
+          this.ovt.AttachToIndex(t, !1));
       }),
-      (this.s7t = () => {
-        this.N9t.SetUIActive(!1), this.G9t.SetUIActive(!1);
+      (this.jjs = () => {
+        if (ModelManager_1.ModelManager.GameModeModel.IsMulti) {
+          let t = void 0;
+          (t = ModelManager_1.ModelManager.OnlineModel.GetIsMyTeam()
+            ? new ConfirmBoxDefine_1.ConfirmBoxDataNew(100)
+            : new ConfirmBoxDefine_1.ConfirmBoxDataNew(78)).FunctionMap.set(
+            2,
+            () => {
+              ControllerHolder_1.ControllerHolder.OnlineController.LeaveWorldTeamRequest(
+                ModelManager_1.ModelManager.FunctionModel.PlayerId,
+              ),
+                this.CloseMe();
+            },
+          ),
+            ControllerHolder_1.ControllerHolder.ConfirmBoxController.ShowConfirmBoxNew(
+              t,
+            );
+        }
       }),
-      (this.a7t = () => {
-        this.h7t();
+      (this.sHt = () => {
+        this.N7t.SetUIActive(!1), this.G7t.SetUIActive(!1);
       }),
-      (this.WUt = () => {
-        this.r8t();
+      (this.aHt = () => {
+        this.hHt();
       }),
-      (this.jUt = () => {
+      (this.$At = () => {
+        this.r9t();
+      }),
+      (this.XAt = () => {
         var t = ModelManager_1.ModelManager.FunctionModel.GetPlayerName();
         t && this.GetText(0).SetText(t);
       }),
-      (this.l7t = () => {
-        this._7t();
+      (this.lHt = () => {
+        this._Ht();
       }),
-      (this.u7t = () => {
-        this.c7t();
+      (this.uHt = () => {
+        this.cHt();
       }),
-      (this.m7t = () => {
+      (this.mHt = () => {
         var t,
           e = ModelManager_1.ModelManager.PersonalModel.GetBirthday(),
           i = this.GetText(26);
@@ -124,12 +148,12 @@ class FunctionView extends UiViewBase_1.UiViewBase {
             (e = e % 100),
             LguiUtil_1.LguiUtil.SetLocalText(i, "BirthDay", t, e));
       }),
-      (this.d7t = (t) => {
-        this.BNe(t), this.B9t.SetToggleSelectByIndex(t);
+      (this.dHt = (t) => {
+        this.BNe(t), this.B7t.SetToggleSelectByIndex(t);
       }),
-      (this.C7t = (t, e, i) => {
+      (this.CHt = (t, e, i) => {
         t = new FunctionAttachItemGrid_1.FunctionAttachItemGrid(t);
-        return t.SetNeedAnim(0 === e), this.H9t.set(e, t), t;
+        return t.SetNeedAnim(0 === e), this.H7t.set(e, t), t;
       });
   }
   OnRegisterComponent() {
@@ -166,83 +190,89 @@ class FunctionView extends UiViewBase_1.UiViewBase {
       [29, UE.UIItem],
       [30, UE.UIGridLayout],
       [31, UE.UIItem],
+      [32, UE.UIButtonComponent],
+      [33, UE.UISprite],
+      [34, UE.UIItem],
+      [35, UE.UIItem],
     ]),
       (this.BtnBindInfo = [
-        [6, this.W9t],
-        [7, this.K9t],
-        [8, this.X9t],
-        [3, this.$9t],
-        [12, this.Y9t],
-        [13, this.J9t],
-        [14, this.z9t],
-        [15, this.Q9t],
-        [20, this.Z9t],
-        [21, this.e7t],
-        [22, this.t7t],
-        [24, this.i7t],
-        [27, this.o7t],
-        [17, this.r7t],
-        [16, this.n7t],
+        [6, this.W7t],
+        [7, this.K7t],
+        [8, this.X7t],
+        [3, this.$7t],
+        [12, this.Y7t],
+        [13, this.J7t],
+        [14, this.z7t],
+        [15, this.Q7t],
+        [20, this.Z7t],
+        [21, this.eHt],
+        [22, this.tHt],
+        [24, this.iHt],
+        [27, this.oHt],
+        [17, this.rHt],
+        [16, this.nHt],
+        [32, this.jjs],
       ]);
   }
   OnStart() {
-    (this.G9t = this.GetButton(17).RootUIComp),
-      (this.N9t = this.GetButton(16).RootUIComp),
-      (this.O9t = this.GetItem(19)),
-      (this.k9t = this.GetItem(18)),
-      (this.B9t = new FunctionTabLayout_1.FunctionTabLayout(this.GetItem(28))),
-      (this.Wft = new NoCircleAttachView_1.NoCircleAttachView(
+    (this.G7t = this.GetButton(17).RootUIComp),
+      (this.N7t = this.GetButton(16).RootUIComp),
+      (this.O7t = this.GetItem(19)),
+      (this.k7t = this.GetItem(18)),
+      (this.B7t = new FunctionTabLayout_1.FunctionTabLayout(this.GetItem(28))),
+      (this.ovt = new NoCircleAttachView_1.NoCircleAttachView(
         this.GetItem(10).GetOwner(),
       ));
     var t = this.GetItem(29),
       t =
         (t.SetUIActive(!1),
-        this.Wft.CreateItems(t.GetOwner(), 0, this.C7t),
-        this.Wft.SetDragBeginCallback(this.s7t),
-        this.Wft.SetMoveMultiFactor(50),
-        (this.F9t = new FunctionBottomButtonItem_1.FunctionBottomButtonItem(
+        this.ovt.CreateItems(t.GetOwner(), 0, this.CHt),
+        this.ovt.SetDragBeginCallback(this.sHt),
+        this.ovt.SetMoveMultiFactor(50),
+        (this.F7t = new FunctionBottomButtonItem_1.FunctionBottomButtonItem(
           this.GetButton(8).RootUIComp,
           "FunctionMail",
         )),
-        (this.V9t = new FunctionBottomButtonItem_1.FunctionBottomButtonItem(
+        (this.V7t = new FunctionBottomButtonItem_1.FunctionBottomButtonItem(
           this.GetButton(15).RootUIComp,
           "FunctionNotice",
         )),
         ModelManager_1.ModelManager.FunctionModel.IsOpen(10060)),
       t =
         (this.GetButton(21).RootUIComp.SetRaycastTarget(t),
-        this.g7t(),
-        this.Wft.GetCurrentSelectIndex());
-    this.BNe(t), this.B9t.SetToggleSelectByIndex(t);
+        this.gHt(),
+        this.Wjs(),
+        this.ovt.GetCurrentSelectIndex());
+    this.BNe(t), this.B7t.SetToggleSelectByIndex(t);
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.CurWorldLevelChange,
-      this.a7t,
+      this.aHt,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnSignChange,
-        this.WUt,
+        this.$At,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnNameChange,
-        this.jUt,
+        this.XAt,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnHeadIconChange,
-        this.l7t,
+        this.lHt,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnCardChange,
-        this.u7t,
+        this.uHt,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnBirthChange,
-        this.m7t,
+        this.mHt,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.FunctionGridSelected,
-        this.d7t,
+        this.dHt,
       ),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnFunctionViewShow,
@@ -251,42 +281,42 @@ class FunctionView extends UiViewBase_1.UiViewBase {
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.CurWorldLevelChange,
-      this.a7t,
+      this.aHt,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnSignChange,
-        this.WUt,
+        this.$At,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnNameChange,
-        this.jUt,
+        this.XAt,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnHeadIconChange,
-        this.l7t,
+        this.lHt,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnCardChange,
-        this.u7t,
+        this.uHt,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnBirthChange,
-        this.m7t,
+        this.mHt,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.FunctionGridSelected,
-        this.d7t,
+        this.dHt,
       );
   }
   BNe(t) {
-    this.G9t.SetUIActive(0 < t),
-      this.N9t.SetUIActive(t < this.Wft.GetDataLength() - 1),
-      this.O9t.SetUIActive(this.f7t(t)),
-      this.k9t.SetUIActive(this.p7t(t));
+    this.G7t.SetUIActive(0 < t),
+      this.N7t.SetUIActive(t < this.ovt.GetDataLength() - 1),
+      this.O7t.SetUIActive(this.fHt(t)),
+      this.k7t.SetUIActive(this.pHt(t));
   }
-  f7t(i) {
+  fHt(i) {
     var r = [];
-    for (let t = 0, e = i; t < e; ++t) r.push(...this.uft[t]);
+    for (let t = 0, e = i; t < e; ++t) r.push(...this.ypt[t]);
     for (const e of r) {
       var t =
         ModelManager_1.ModelManager.FunctionModel.GetFunctionItemRedDotName(e);
@@ -297,9 +327,9 @@ class FunctionView extends UiViewBase_1.UiViewBase {
     }
     return !1;
   }
-  p7t(i) {
+  pHt(i) {
     var r = [];
-    for (let t = i + 1, e = this.uft.length; t < e; ++t) r.push(...this.uft[t]);
+    for (let t = i + 1, e = this.ypt.length; t < e; ++t) r.push(...this.ypt[t]);
     for (const e of r) {
       var t =
         ModelManager_1.ModelManager.FunctionModel.GetFunctionItemRedDotName(e);
@@ -311,38 +341,48 @@ class FunctionView extends UiViewBase_1.UiViewBase {
     return !1;
   }
   OnBeforeShow() {
-    this.v7t(), this.M7t(), this.x6e();
+    this.vHt(), this.MHt(), this.K8e();
   }
   OnAfterShow() {
-    this.S7t();
+    this.EHt();
   }
   OnAfterHide() {
-    this.Dpt();
+    this.Ovt();
   }
   OnBeforeDestroy() {
-    for (const t of this.Wft.GetItems()) this.AddChild(t);
-    this.B9t.Destroy(), this.F9t.Destroy(), this.V9t.Destroy();
+    for (const t of this.ovt.GetItems()) this.AddChild(t);
+    this.B7t.Destroy(), this.F7t.Destroy(), this.V7t.Destroy();
   }
-  x6e() {
-    this.F9t.BindRedDot(), this.V9t.BindRedDot();
+  K8e() {
+    this.F7t.BindRedDot(),
+      this.V7t.BindRedDot(),
+      RedDotController_1.RedDotController.BindRedDot(
+        "PersonalCard",
+        this.GetItem(34),
+      );
   }
-  Dpt() {
-    this.F9t.UnBindRedDot(), this.V9t.UnBindRedDot();
+  Ovt() {
+    this.F7t.UnBindRedDot(),
+      this.V7t.UnBindRedDot(),
+      RedDotController_1.RedDotController.UnBindGivenUi(
+        "PersonalCard",
+        this.GetItem(34),
+      );
   }
-  v7t() {
-    this.x9e(),
-      this.E7t(),
-      this.h7t(),
-      this._7t(),
-      this.c7t(),
-      this.r8t(),
-      this.y7t();
+  vHt() {
+    this.K7e(),
+      this.SHt(),
+      this.hHt(),
+      this._Ht(),
+      this.cHt(),
+      this.r9t(),
+      this.yHt();
   }
-  x9e() {
+  K7e() {
     var t = ModelManager_1.ModelManager.FunctionModel.GetPlayerName();
     this.GetText(0).SetText(t);
   }
-  E7t() {
+  SHt() {
     var t,
       e = ModelManager_1.ModelManager.FunctionModel.GetPlayerLevel(),
       e =
@@ -363,33 +403,35 @@ class FunctionView extends UiViewBase_1.UiViewBase {
       ),
       this.GetSprite(9).SetFillAmount(t / e.PlayerExp));
   }
-  h7t() {
+  hHt() {
     LguiUtil_1.LguiUtil.SetLocalText(
       this.GetText(2),
       "WorldLevelNum",
       ModelManager_1.ModelManager.WorldLevelModel.CurWorldLevel,
     );
   }
-  _7t() {
+  _Ht() {
     var t = ModelManager_1.ModelManager.PlayerInfoModel.GetNumberPropById(4);
     const e = this.GetTexture(11);
     e.SetUIActive(!1),
       this.SetRoleIcon("", e, t, void 0, () => {
         e.SetUIActive(!0);
       });
+    t = ModelManager_1.ModelManager.PersonalModel.CheckCanShowPersonalTip();
+    this.GetItem(35).SetUIActive(t);
   }
-  c7t() {
+  cHt() {
     var t = ModelManager_1.ModelManager.PersonalModel.GetCurCardId();
     t &&
       (t = BackgroundCardById_1.configBackgroundCardById.GetConfig(t)) &&
       this.SetTextureByPath(t.FunctionViewCardPath, this.GetTexture(23));
   }
-  r8t() {
+  r9t() {
     var t = ModelManager_1.ModelManager.PersonalModel.GetSignature(),
       e = this.GetText(25);
     t ? e.SetText(t) : LguiUtil_1.LguiUtil.SetLocalText(e, "ClickToSetSign");
   }
-  y7t() {
+  yHt() {
     var t,
       e = ModelManager_1.ModelManager.PersonalModel.GetBirthday(),
       i = this.GetText(26);
@@ -399,31 +441,71 @@ class FunctionView extends UiViewBase_1.UiViewBase {
         (e = e % 100),
         LguiUtil_1.LguiUtil.SetLocalText(i, "BirthDay", t, e));
   }
-  I7t(t) {
+  IHt(t) {
     var e = this.GetItem(31),
       i = e.GetStretchRight();
     e.SetStretchRight(i + t);
   }
-  g7t() {
-    (this.j9t = this.T7t()), this.I7t(this.j9t.OffsetWidth);
+  gHt() {
+    (this.j7t = this.THt()), this.IHt(this.j7t.OffsetWidth);
     var t = ModelManager_1.ModelManager.FunctionModel.GetShowFunctionIdList(),
       e = t.length;
-    this.uft = [];
+    this.ypt = [];
     let i = 0;
-    for (; e > i + this.j9t.TotalGridNumber; )
-      this.uft.push(t.slice(i, i + this.j9t.TotalGridNumber)),
-        (i += this.j9t.TotalGridNumber);
-    this.uft.push(t.slice(i, e));
-    var r = Math.ceil(e / this.j9t.TotalGridNumber);
-    this.B9t.RefreshTab(r),
-      this.Wft.SetBoundDistance(0),
-      this.Wft.ReloadView(r, this.uft);
+    for (; e > i + this.j7t.TotalGridNumber; )
+      this.ypt.push(t.slice(i, i + this.j7t.TotalGridNumber)),
+        (i += this.j7t.TotalGridNumber);
+    this.ypt.push(t.slice(i, e));
+    var r = Math.ceil(e / this.j7t.TotalGridNumber);
+    this.B7t.RefreshTab(r),
+      this.ovt.SetBoundDistance(0),
+      this.ovt.ReloadView(r, this.ypt);
   }
-  L7t(i) {
-    var r = this.uft;
-    let s = -1;
-    for (let t = 0, e = r.length; t < e; ++t) r[t].includes(i) && (s = t);
-    return s;
+  LHt(i) {
+    var r = this.ypt;
+    let n = -1;
+    for (let t = 0, e = r.length; t < e; ++t) r[t].includes(i) && (n = t);
+    return n;
+  }
+  Wjs() {
+    var t,
+      e = this.GetButton(32)?.RootUIComp;
+    ModelManager_1.ModelManager.GameModeModel.IsMulti
+      ? (e?.SetUIActive(!0),
+        (t = ModelManager_1.ModelManager.OnlineModel.GetCurrentTeamListById(
+          ModelManager_1.ModelManager.FunctionModel.PlayerId,
+        )?.PingState),
+        this.pOi(t))
+      : e?.SetUIActive(!1);
+  }
+  pOi(t) {
+    var e,
+      i = this.GetSprite(33);
+    i.SetUIActive(!0),
+      t === Protocol_1.Aki.Protocol.Y8s.Proto_UNKNOWN
+        ? ((e =
+            ConfigManager_1.ConfigManager.UiResourceConfig?.GetResourcePath(
+              "SP_SignalUnknown",
+            )),
+          this.SetSpriteByPath(e, i, !1))
+        : t === Protocol_1.Aki.Protocol.Y8s.Proto_GREAT
+          ? ((e =
+              ConfigManager_1.ConfigManager.UiResourceConfig?.GetResourcePath(
+                "SP_SignalGreat",
+              )),
+            this.SetSpriteByPath(e, i, !1))
+          : t === Protocol_1.Aki.Protocol.Y8s.Proto_GOOD
+            ? ((e =
+                ConfigManager_1.ConfigManager.UiResourceConfig?.GetResourcePath(
+                  "SP_SignalGood",
+                )),
+              this.SetSpriteByPath(e, i, !1))
+            : t === Protocol_1.Aki.Protocol.Y8s.Proto_POOR &&
+              ((e =
+                ConfigManager_1.ConfigManager.UiResourceConfig?.GetResourcePath(
+                  "SP_SignalPoor",
+                )),
+              this.SetSpriteByPath(e, i, !1));
   }
   GetGuideUiItemAndUiItemForShowEx(t) {
     if (1 < t.length || isNaN(Number(t[0])))
@@ -434,7 +516,7 @@ class FunctionView extends UiViewBase_1.UiViewBase {
         ]);
     else {
       var t = Number(t[0]),
-        e = this.L7t(t);
+        e = this.LHt(t);
       if (-1 === e)
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
@@ -444,8 +526,8 @@ class FunctionView extends UiViewBase_1.UiViewBase {
             ["functionId", t],
           );
       else {
-        this.Wft.AttachToIndex(e, !0);
-        e = this.H9t.get(e);
+        this.ovt.AttachToIndex(e, !0);
+        e = this.H7t.get(e);
         if (e) {
           e = e.GetFunctionItem(t);
           if (e.GetActive()) {
@@ -463,7 +545,7 @@ class FunctionView extends UiViewBase_1.UiViewBase {
       }
     }
   }
-  M7t() {
+  MHt() {
     this.GetButton(8).SetSelfInteractive(
       ModelManager_1.ModelManager.FunctionModel.IsOpen(10020),
     ),
@@ -480,16 +562,16 @@ class FunctionView extends UiViewBase_1.UiViewBase {
         ModelManager_1.ModelManager.FunctionModel.IsOpen(10049),
       );
   }
-  S7t() {
+  EHt() {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "Functional",
         11,
         "功能开启界面Start阶段计算数据输出",
-        ["剩余宽度", this.j9t.OffsetWidth],
-        ["显示数量", this.j9t.TotalGridNumber],
+        ["剩余宽度", this.j7t.OffsetWidth],
+        ["显示数量", this.j7t.TotalGridNumber],
       );
-    var t = this.T7t();
+    var t = this.THt();
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "Functional",
@@ -499,22 +581,22 @@ class FunctionView extends UiViewBase_1.UiViewBase {
         ["显示数量", t.TotalGridNumber],
       );
   }
-  T7t() {
+  THt() {
     var t = this.GetItem(29),
       e = this.GetGridLayout(30),
       i = e.GetCellSize(),
       r = e.GetSpacing(),
       e = e.GetPadding(),
-      s = t.GetWidth(),
+      n = t.GetWidth(),
       t = t.GetHeight(),
-      n = (s - e.Left - e.Right) % (i.X + r.X),
-      h = n >= i.X ? 1 : 0,
-      s = Math.floor((s - e.Left - e.Right) / (i.X + r.X)) + h,
-      h = (t - e.Top - e.Bottom) % (i.Y + r.Y) > i.Y ? 1 : 0;
+      o = (n - e.Left - e.Right) % (i.X + r.X),
+      s = o >= i.X ? 1 : 0,
+      n = Math.floor((n - e.Left - e.Right) / (i.X + r.X)) + s,
+      s = (t - e.Top - e.Bottom) % (i.Y + r.Y) > i.Y ? 1 : 0;
     return {
       TotalGridNumber:
-        s * (Math.floor((t - e.Top - e.Bottom) / (i.Y + r.Y)) + h),
-      OffsetWidth: n >= i.X ? n - i.X : n + r.X,
+        n * (Math.floor((t - e.Top - e.Bottom) / (i.Y + r.Y)) + s),
+      OffsetWidth: o >= i.X ? o - i.X : o + r.X,
     };
   }
 }

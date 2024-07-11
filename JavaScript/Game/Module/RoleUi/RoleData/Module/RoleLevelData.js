@@ -37,13 +37,13 @@ class RoleLevelData extends RoleModuleDataBase_1.RoleModuleDataBase {
     return this.Level >= this.GetRoleMaxLevel();
   }
   GetCurrentMaxExp() {
-    return this.Zlo(this.Level + 1);
+    return this.$1o(this.Level + 1);
   }
   GetLevelUpNeedExp() {
-    var e = this.Zlo(this.Level + 1);
+    var e = this.$1o(this.Level + 1);
     return Math.max(0, e - this.Exp);
   }
-  Zlo(e) {
+  $1o(e) {
     e = ConfigManager_1.ConfigManager.RoleConfig.GetRoleLevelConsume(
       this.GetRoleConfig().LevelConsumeId,
       e,

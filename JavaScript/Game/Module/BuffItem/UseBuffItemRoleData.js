@@ -5,11 +5,11 @@ const Log_1 = require("../../../Core/Common/Log"),
   Protocol_1 = require("../../../Core/Define/Net/Protocol"),
   ConfigManager_1 = require("../../Manager/ConfigManager"),
   ModelManager_1 = require("../../Manager/ModelManager");
-var EAttributeId = Protocol_1.Aki.Protocol.KBs;
+var EAttributeId = Protocol_1.Aki.Protocol.Bks;
 const TEN_THOUSANDTH_RATIO = 1e4;
 class UseBuffItemRoleData {
   constructor(t, e, r, i, s, o, u, a) {
-    (this.qgt = 0),
+    (this.X0t = 0),
       (this.RoleName = t),
       (this.Position = e),
       (this.RoleConfigId = r),
@@ -23,18 +23,18 @@ class UseBuffItemRoleData {
     this.CurrentAttribute = t;
   }
   SetUseItemCount(t) {
-    this.qgt = t;
+    this.X0t = t;
   }
   AddUseItemCount() {
     ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
       this.UseItemConfigId,
-    ) <= this.qgt || this.qgt++;
+    ) <= this.X0t || this.X0t++;
   }
   ReduceUseItemCount() {
-    this.qgt <= 1 || this.qgt--;
+    this.X0t <= 1 || this.X0t--;
   }
   get UseItemCount() {
-    return this.qgt;
+    return this.X0t;
   }
   GetUseItemMaxCount() {
     var t = ModelManager_1.ModelManager.InventoryModel,
@@ -45,10 +45,10 @@ class UseBuffItemRoleData {
     return 0 < t ? Math.min(e, t) : e;
   }
   IsMaxItemCount() {
-    return this.qgt >= this.GetUseItemMaxCount();
+    return this.X0t >= this.GetUseItemMaxCount();
   }
   IsMinItemCount() {
-    return this.qgt <= 1;
+    return this.X0t <= 1;
   }
   GetPreviewAttribute() {
     var t = this.GetAddAttribute();
@@ -58,21 +58,21 @@ class UseBuffItemRoleData {
     return this.GetAddAttribute() + this.CurrentAttribute;
   }
   GetAddAttribute() {
-    var t = this.Ggt(this.UseItemConfigId, this.Entity) * this.qgt;
+    var t = this.$0t(this.UseItemConfigId, this.Entity) * this.X0t;
     return Math.floor(t);
   }
   GetEntityId() {
     return this.Entity ? this.Entity.Id : -1;
   }
-  Ggt(e, r) {
+  $0t(e, r) {
     e = ConfigManager_1.ConfigManager.BuffItemConfig.GetBuffItemBuffConfig(e);
     if (e) {
       let t = 0;
-      for (const i of e) t += this.Ngt(i, r);
+      for (const i of e) t += this.Y0t(i, r);
       return t;
     }
   }
-  Ngt(t, e) {
+  Y0t(t, e) {
     let r = 0;
     var i = ConfigManager_1.ConfigManager.BuffItemConfig,
       s = t.ExtraEffectParameters,
@@ -80,7 +80,7 @@ class UseBuffItemRoleData {
     if (0 === o)
       for (const g of t.RoutineExpirationEffects) {
         var u = i.GetBuffConfig(e.Id, g);
-        r += this.Ngt(u, e);
+        r += this.Y0t(u, e);
       }
     else if (4 === o)
       for (const I of s) {
@@ -89,7 +89,7 @@ class UseBuffItemRoleData {
           h = BigInt(I),
           f = i.GetDamageConfig(e.Id, h);
         f
-          ? ((a = this.Ogt(e, f.RelatedProperty)),
+          ? ((a = this.J0t(e, f.RelatedProperty)),
             void 0 === (n = f.CureBaseValue[0])
               ? Log_1.Log.CheckWarn() &&
                 Log_1.Log.Warn(
@@ -112,15 +112,15 @@ class UseBuffItemRoleData {
       }
     else if (101 === o) {
       if (s.length < 2) return r;
-      var o = e.GetComponent(156),
+      var o = e.GetComponent(158),
         _ = Number(s[0]) / TEN_THOUSANDTH_RATIO,
-        o = o.GetCurrentValue(EAttributeId.Tkn);
+        o = o.GetCurrentValue(EAttributeId.e5n);
       r += _ * o + Number(s[1]);
     }
     return r;
   }
-  Ogt(t, e) {
-    return t.GetComponent(156).GetCurrentValue(e);
+  J0t(t, e) {
+    return t.GetComponent(158).GetCurrentValue(e);
   }
 }
 exports.UseBuffItemRoleData = UseBuffItemRoleData;

@@ -14,15 +14,15 @@ const UE = require("ue"),
 class RoleIntroductionView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.zke = 0),
-      (this.Zke = void 0),
+      (this.dFe = 0),
+      (this.CFe = void 0),
       (this.$be = void 0),
-      (this.e2e = void 0),
-      (this.t2e = (i, e, t) => {
+      (this.gFe = void 0),
+      (this.fFe = (i, e, t) => {
         e = new RoleSkillInputItem_1.RoleSkillInputItem(e);
         return e.Update(i), e.SetBgActive(t % 2 == 0), { Key: t, Value: e };
       }),
-      (this.i2e = () => {
+      (this.pFe = () => {
         this.CloseMe();
       });
   }
@@ -39,40 +39,40 @@ class RoleIntroductionView extends UiViewBase_1.UiViewBase {
       [8, UE.UIText],
       [9, UE.UIItem],
     ]),
-      (this.BtnBindInfo = [[0, this.i2e]]);
+      (this.BtnBindInfo = [[0, this.pFe]]);
   }
   async OnBeforeStartAsync() {
-    this.e2e = new BigElementItem_1.BigElementItem();
+    this.gFe = new BigElementItem_1.BigElementItem();
     var i = this.GetItem(4);
-    await this.e2e.CreateByActorAsync(i.GetOwner());
+    await this.gFe.CreateByActorAsync(i.GetOwner());
   }
   OnStart() {
-    (this.Zke = new GenericScrollView_1.GenericScrollView(
+    (this.CFe = new GenericScrollView_1.GenericScrollView(
       this.GetScrollViewWithScrollbar(7),
-      this.t2e,
+      this.fFe,
     )),
       (this.$be = new SimpleGenericLayout_1.SimpleGenericLayout(
         this.GetHorizontalLayout(2),
       )),
-      (this.zke = this.OpenParam),
+      (this.dFe = this.OpenParam),
       this.Refresh();
   }
   Refresh() {
     var i =
         ConfigManager_1.ConfigManager.RoleSkillConfig.GetRoleSkillInputConfigById(
-          this.zke,
+          this.dFe,
         ),
-      e = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(this.zke);
+      e = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(this.dFe);
     if (i && e) {
       const r = this.GetTexture(1),
         s =
           (r.SetUIActive(!1),
-          this.SetRoleIcon(e.FormationRoleCard, r, this.zke, void 0, () => {
+          this.SetRoleIcon(e.FormationRoleCard, r, this.dFe, void 0, () => {
             r.SetUIActive(!0);
           }),
           this.GetText(3).ShowTextNew(e.Name),
-          this.e2e.Refresh(e.ElementId),
-          this.e2e.SetUiActive(!0),
+          this.gFe.Refresh(e.ElementId),
+          this.gFe.SetUiActive(!0),
           this.$be.RebuildLayout(e.QualityId),
           this.GetTexture(5));
       s.SetUIActive(!1),
@@ -87,9 +87,9 @@ class RoleIntroductionView extends UiViewBase_1.UiViewBase {
       t.RemoveLast(1), this.GetText(6).SetText(t.ToString());
       (e = i.SkillInputIdList),
         (i =
-          (this.Zke.RefreshByData(e),
+          (this.CFe.RefreshByData(e),
           ConfigManager_1.ConfigManager.ActivityRoleTrialConfig.GetRoleTrialInfoConfigByRoleId(
-            this.zke,
+            this.dFe,
           )));
       i &&
         (StringUtils_1.StringUtils.IsEmpty(i?.InstanceText)
@@ -99,7 +99,7 @@ class RoleIntroductionView extends UiViewBase_1.UiViewBase {
     }
   }
   OnBeforeDestroy() {
-    this.Zke.ClearChildren();
+    this.CFe.ClearChildren();
   }
 }
 exports.RoleIntroductionView = RoleIntroductionView;

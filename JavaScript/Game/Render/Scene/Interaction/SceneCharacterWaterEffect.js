@@ -181,7 +181,7 @@ class SceneCharacterWaterEffect {
   Enable() {
     this.IsReady &&
       ((this.OwnerStateComponent =
-        this.Owner.CharacterActorComponent?.Entity?.GetComponent(158)),
+        this.Owner.CharacterActorComponent?.Entity?.GetComponent(160)),
       (this.IsEnabled = !0),
       Log_1.Log.CheckInfo()) &&
       Log_1.Log.Info("RenderEffect", 26, "WaterEffect Enabled", [

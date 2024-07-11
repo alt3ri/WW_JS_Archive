@@ -13,6 +13,7 @@ const Log_1 = require("../../../../Core/Common/Log"),
   DraggableComponent_1 = require("../UIComponent/DraggableComponent"),
   DraggableInsideComponent_1 = require("../UIComponent/DraggableInsideComponent"),
   FollowItemComponent_1 = require("../UIComponent/FollowItemComponent"),
+  GamepadInteractComponent_1 = require("../UIComponent/GamepadInteractComponent"),
   InteractComponent_1 = require("../UIComponent/InteractComponent"),
   InteractReleaseComponent_1 = require("../UIComponent/InteractReleaseComponent"),
   InteractWheelComponent_1 = require("../UIComponent/InteractWheelComponent"),
@@ -67,10 +68,10 @@ class HotKeyItemFactory {
     var t =
       ConfigManager_1.ConfigManager.UiNavigationConfig.GetHotKeyMapConfig(n);
     if (t) {
-      var r = this.wbo.get(t.Type);
+      var r = this.Aqo.get(t.Type);
       if (r)
         return (
-          (r = this.Bbo(r, n)).SetHotKeyFunctionType(t.Type),
+          (r = this.Pqo(r, n)).SetHotKeyFunctionType(t.Type),
           await r.CreateThenShowByActorAsync(e),
           r.SetHotKeyType(o),
           r.InitHotKeyLogicMode(),
@@ -90,11 +91,11 @@ class HotKeyItemFactory {
           n,
         ]);
   }
-  static Bbo(e, n) {
+  static Pqo(e, n) {
     return new e(n);
   }
 }
-(exports.HotKeyItemFactory = HotKeyItemFactory).wbo = new Map([
+(exports.HotKeyItemFactory = HotKeyItemFactory).Aqo = new Map([
   ["MarkBookNext", MarkBookComponent_1.MarkBookNextComponent],
   ["MarkBookPrev", MarkBookComponent_1.MarkBookPrevComponent],
   ["NavigationNext", NavigationGroupComponent_1.NavigationGroupNextComponent],
@@ -126,6 +127,8 @@ class HotKeyItemFactory {
     SliderInsideComponent_1.SliderIncreaseInsideComponent,
   ],
   ["SliderReduceInside", SliderInsideComponent_1.SliderReduceInsideComponent],
+  ["SliderIncreaseReverse", SliderComponent_1.SliderIncreaseReverseComponent],
+  ["SliderReduceReverse", SliderComponent_1.SliderReduceReverseComponent],
   [
     "LongTimeToTrigger",
     LongTimeToTriggerComponent_1.LongTimeToTriggerComponent,
@@ -163,5 +166,11 @@ class HotKeyItemFactory {
   ["RoleTurn", RoleInteractComponent_1.RoleTurnComponent],
   ["RoleZoom", RoleInteractComponent_1.RoleZoomComponent],
   ["RoleReset", RoleInteractComponent_1.RoleResetComponent],
+  [
+    "GamepadMoveForward",
+    GamepadInteractComponent_1.GamepadMoveForwardComponent,
+  ],
+  ["GamepadMoveRight", GamepadInteractComponent_1.GamepadMoveRightComponent],
+  ["GamepadCheck", GamepadInteractComponent_1.GamepadCheckComponent],
 ]);
 //# sourceMappingURL=HotKeyItemFactory.js.map

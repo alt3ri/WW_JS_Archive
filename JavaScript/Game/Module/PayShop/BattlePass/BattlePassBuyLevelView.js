@@ -17,26 +17,26 @@ class BattlePassBuyLevelView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
       (this.bOe = void 0),
-      (this.ZNi = void 0),
+      (this.ZOi = void 0),
       (this.WGe = void 0),
-      (this.w0t = 0),
-      (this.eOi = 0),
-      (this.tOi = 0),
-      (this.iOi = 0),
-      (this.oOi = !1),
-      (this.rOi = () => {
+      (this.Wft = 0),
+      (this.eki = 0),
+      (this.tki = 0),
+      (this.iki = 0),
+      (this.oki = !1),
+      (this.rki = () => {
         this.CloseMe();
       }),
-      (this.nOi = () => {
+      (this.nki = () => {
         ControllerHolder_1.ControllerHolder.BattlePassController.RequestBuyBattlePassLevel(
           this.WGe.GetSelectNumber(),
         ),
           this.CloseMe();
       }),
-      (this.sOi = () => {
+      (this.aki = () => {
         this.CloseMe();
       }),
-      (this.PCi = () => {
+      (this.Pgi = () => {
         this.CloseMe();
       }),
       (this.rOe = () =>
@@ -46,8 +46,8 @@ class BattlePassBuyLevelView extends UiViewBase_1.UiViewBase {
       (this.QGe = (e) => {
         this.bl(e);
       }),
-      (this.aOi = () => {
-        0 < this.iOi && (this.hOi(this.iOi).then(this.aOi), (this.iOi = 0));
+      (this.hki = () => {
+        0 < this.iki && (this.lki(this.iki).then(this.hki), (this.iki = 0));
       });
   }
   OnRegisterComponent() {
@@ -64,19 +64,19 @@ class BattlePassBuyLevelView extends UiViewBase_1.UiViewBase {
       [9, UE.UIText],
     ]),
       (this.BtnBindInfo = [
-        [2, this.rOi],
-        [3, this.nOi],
+        [2, this.rki],
+        [3, this.nki],
       ]);
   }
   OnStart() {
-    this.w0t = ModelManager_1.ModelManager.BattlePassModel.BattlePassLevel;
+    this.Wft = ModelManager_1.ModelManager.BattlePassModel.BattlePassLevel;
     var e = ConfigManager_1.ConfigManager.BattlePassConfig.GetBattlePassData(
         ModelManager_1.ModelManager.BattlePassModel.BattlePassId,
       ),
       t =
-        ((this.eOi = e.ConsumeId),
-        ConfigManager_1.ConfigManager.ItemConfig.GetConfig(this.eOi));
-    (this.tOi = e.ConsumeCount),
+        ((this.eki = e.ConsumeId),
+        ConfigManager_1.ConfigManager.ItemConfig.GetConfig(this.eki));
+    (this.tki = e.ConsumeCount),
       this.SetTextureByPath(t.IconSmall, this.GetTexture(8)),
       LguiUtil_1.LguiUtil.SetLocalText(
         this.GetText(9),
@@ -87,28 +87,28 @@ class BattlePassBuyLevelView extends UiViewBase_1.UiViewBase {
         this.GetScrollViewWithScrollbar(0),
         this.rOe,
       )),
-      (this.ZNi = []);
+      (this.ZOi = []);
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.BattlePassMainViewHide,
-      this.sOi,
+      this.aki,
     );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.BattlePassMainViewHide,
-      this.sOi,
+      this.aki,
     );
   }
   OnBeforeShow() {
     var e = this.ChildPopView?.PopItem,
       e =
         (e &&
-          (e.SetCurrencyItemList([this.eOi]),
+          (e.SetCurrencyItemList([this.eki]),
           (e = e
             .GetCurrencyComponent()
-            .GetCurrencyItemList()[0]).SetBeforeButtonFunction(this.PCi),
+            .GetCurrencyItemList()[0]).SetBeforeButtonFunction(this.Pgi),
           e.SetToPayShopFunction()),
         (this.WGe = new NumberSelectComponent_1.NumberSelectComponent(
           this.GetItem(5),
@@ -116,48 +116,48 @@ class BattlePassBuyLevelView extends UiViewBase_1.UiViewBase {
         {
           MaxNumber:
             ModelManager_1.ModelManager.BattlePassModel.GetMaxLevel() -
-            this.w0t,
+            this.Wft,
           GetExchangeTableText: this.KGe,
           ValueChangeFunction: this.QGe,
         });
     this.WGe.Init(e);
   }
   bl(e) {
-    var t = this.w0t + e,
+    var t = this.Wft + e,
       e =
         (LguiUtil_1.LguiUtil.SetLocalTextNew(
           this.GetText(4),
           "Text_BattlePassLevelBuy1_Text",
           t,
         ),
-        e * this.tOi),
+        e * this.tki),
       i = this.GetText(6),
       s =
         (i.SetText(e.toString()),
         ModelManager_1.ModelManager.InventoryModel.GetItemCountByConfigId(
-          this.eOi,
+          this.eki,
         ));
     i.SetChangeColor(s < e, i.changeColor),
       this.GetButton(3).SetSelfInteractive(e <= s),
       this.GetItem(7).SetUIActive(s < e),
-      (this.iOi = t),
-      this.oOi || this.aOi();
+      (this.iki = t),
+      this.oki || this.hki();
   }
-  async hOi(e) {
-    (this.oOi = !0),
+  async lki(e) {
+    (this.oki = !0),
       ModelManager_1.ModelManager.BattlePassModel.GetTargetLevelRewardList(
         e,
-        this.ZNi,
+        this.ZOi,
       ),
-      await this.bOe.RefreshByDataAsync(this.ZNi),
-      8 < this.ZNi.length && this.bOe?.ScrollToLeft(0),
-      (this.oOi = !1);
+      await this.bOe.RefreshByDataAsync(this.ZOi),
+      8 < this.ZOi.length && this.bOe?.ScrollToLeft(0),
+      (this.oki = !1);
   }
   OnDestroy() {
-    (this.iOi = 0),
+    (this.iki = 0),
       (this.bOe = void 0),
-      (this.ZNi.length = 0),
-      (this.ZNi = void 0),
+      (this.ZOi.length = 0),
+      (this.ZOi = void 0),
       this.WGe.Destroy(),
       (this.WGe = void 0);
   }

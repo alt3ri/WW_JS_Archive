@@ -12,6 +12,7 @@ const puerts_1 = require("puerts"),
   Log_1 = require("../Core/Common/Log"),
   LogAnalyzer_1 = require("../Core/Common/LogAnalyzer"),
   Stats_1 = require("../Core/Common/Stats"),
+  Http_1 = require("../Core/Http/Http"),
   ResourceSystem_1 = require("../Core/Resource/ResourceSystem"),
   TickSystem_1 = require("../Core/Tick/TickSystem"),
   MathUtils_1 = require("../Core/Utils/MathUtils"),
@@ -25,8 +26,10 @@ const puerts_1 = require("puerts"),
   GameQualitySettingsManager_1 = require("./GameQualitySettings/GameQualitySettingsManager"),
   Global_1 = require("./Global"),
   GlobalData_1 = require("./GlobalData"),
+  InputController_1 = require("./Input/InputController"),
   InputSettings_1 = require("./InputSettings/InputSettings"),
   InputSettingsManager_1 = require("./InputSettings/InputSettingsManager"),
+  CloudGameManager_1 = require("./Manager/CloudGameManager"),
   ConfigManager_1 = require("./Manager/ConfigManager"),
   ConfigManagerCreator_1 = require("./Manager/ConfigManagerCreator"),
   ControllerManager_1 = require("./Manager/ControllerManager"),
@@ -45,7 +48,6 @@ const puerts_1 = require("puerts"),
   Heartbeat_1 = require("./Module/Login/Heartbeat"),
   ThinkingAnalyticsReporter_1 = require("./Module/LogReport/ThinkingAnalyticsReporter"),
   LogUpload_1 = require("./Module/LogUpload/LogUpload"),
-  OperationsPerformance_1 = require("./Module/PerformanceCollection/OperationsPerformance"),
   PerformanceManager_1 = require("./Module/PerformanceCollection/PerformanceManager"),
   UiCameraAnimationManager_1 = require("./Module/UiCameraAnimation/UiCameraAnimationManager"),
   UiSceneManager_1 = require("./Module/UiComponent/UiSceneManager"),
@@ -60,12 +62,17 @@ const puerts_1 = require("puerts"),
   UiManager_1 = require("./Ui/UiManager"),
   ComponentForceTickController_1 = require("./World/Controller/ComponentForceTickController"),
   GameBudgetAllocatorConfigCreator_1 = require("./World/Define/GameBudgetAllocatorConfigCreator"),
+  EnvironmentalPerceptionController_1 = require("./World/Enviroment/EnvironmentalPerceptionController"),
   TaskSystem_1 = require("./World/Task/TaskSystem");
 class Game {
   static Start(e) {
     Log_1.Log.CheckInfo() && Log_1.Log.Info("Game", 1, "启动 Game"),
       GlobalData_1.GlobalData.Init(e),
       TimeUtil_1.TimeUtil.SetServerTimeStamp(Date.parse(new Date().toString())),
+      EnvironmentalPerceptionController_1.EnvironmentalPerceptionController.InitializeEnvironment(),
+      InputController_1.InputController.InitializeEnvironment(),
+      Http_1.Http.SetHttpThreadActiveMinimumSleepTimeInSeconds(0.005),
+      Http_1.Http.SetHttpThreadIdleMinimumSleepTimeInSeconds(0.033),
       ThinkingAnalyticsReporter_1.ThinkingAnalyticsReporter.Init(),
       LocalStorage_1.LocalStorage.Initialize(),
       LogUpload_1.LogUpload.Init(),
@@ -100,7 +107,7 @@ class Game {
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.ClearSceneBegin,
-        Game.KVs,
+        Game.Wea,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.ReconnectClearData,
@@ -117,7 +124,8 @@ class Game {
       Application_1.Application.AddEditorPreEndPIEHandler(Game._ve);
   }
   static ModuleStart() {
-    ThirdPartySdkManager_1.ThirdPartySdkManager.Init(),
+    CloudGameManager_1.CloudGameManager.Init(),
+      ThirdPartySdkManager_1.ThirdPartySdkManager.Init(),
       ModelManagerCreator_1.ModelManagerCreator.Init(),
       ControllerRegisterManager_1.ControllerRegisterManager.Init(),
       ControllerManager_1.ControllerManager.Init(),
@@ -127,12 +135,13 @@ class Game {
       HudUnitHandleManager_1.HudUnitHandleManager.Init(),
       FightLibrary_1.FightLibrary.Init(),
       PerformanceManager_1.PerformanceManager.Init(),
-      OperationsPerformance_1.OperationsPerformance.Init(),
       PakKeyManager_1.PakKeyManager.Init(),
       UiTimeDilation_1.UiTimeDilation.Init();
   }
   static Shutdown() {
     Log_1.Log.CheckInfo() && Log_1.Log.Info("Game", 25, "Game.Shutdown Start"),
+      Http_1.Http.SetHttpThreadActiveMinimumSleepTimeInSeconds(0),
+      Http_1.Http.SetHttpThreadIdleMinimumSleepTimeInSeconds(0),
       LogAnalyzer_1.LogAnalyzer.Clear(),
       PerformanceManager_1.PerformanceManager.Destroy(),
       Log_1.Log.CheckInfo() &&
@@ -186,6 +195,13 @@ class Game {
           "Game",
           25,
           "Game.Shutdown UiTextTranslationUtils.Destroy Finished",
+        ),
+      InputSettingsManager_1.InputSettingsManager.Clear(),
+      Log_1.Log.CheckInfo() &&
+        Log_1.Log.Info(
+          "Game",
+          64,
+          "Game.Shutdown InputSettingsManager.Clear Finished",
         ),
       Application_1.Application.RemoveEditorPreEndPIEHandler(Game._ve),
       Application_1.Application.Destroy(),
@@ -281,9 +297,9 @@ class Game {
           );
     }
   }
-  static Cve(a, ...e) {
+  static Cve(r, ...e) {
     try {
-      a.Tick(...e);
+      r.Tick(...e);
     } catch (e) {
       e instanceof Error
         ? Log_1.Log.CheckError() &&
@@ -292,7 +308,7 @@ class Game {
             20,
             "Error when execute",
             e,
-            ["this type", a.constructor.name],
+            ["this type", r.constructor.name],
             ["error", e.message],
           )
         : Log_1.Log.CheckError() &&
@@ -300,7 +316,7 @@ class Game {
             "Game",
             20,
             "Error when execute",
-            ["this type", a.constructor.name],
+            ["this type", r.constructor.name],
             ["error", e],
           );
     }
@@ -334,7 +350,7 @@ class Game {
   (Game.cve = () => {
     Game.UnlockLoad();
   }),
-  (Game.KVs = async () => {
+  (Game.Wea = async () => {
     if (GlobalData_1.GlobalData.IsSceneClearing)
       return (
         Log_1.Log.CheckError() &&
@@ -426,7 +442,9 @@ class Game {
         "[Game.ClearSceneAsync] Game.ClearControllerAndModel清理操作完成",
       );
     try {
-      ActorSystem_1.ActorSystem.Clear(), (ActorSystem_1.ActorSystem.State = 0);
+      EffectSystem_1.EffectSystem.ClearPool(),
+        ActorSystem_1.ActorSystem.Clear(),
+        (ActorSystem_1.ActorSystem.State = 0);
     } catch (e) {
       e instanceof Error
         ? Log_1.Log.CheckError() &&

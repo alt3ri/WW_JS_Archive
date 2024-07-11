@@ -21,7 +21,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
       TeachBtn: !0,
     },
     2: {
-      RoleListButton: !1,
+      RoleListButton: !0,
       RoleListButtonRedDot: !1,
       RoleList: !0,
       RoleListNeedTrial: !1,

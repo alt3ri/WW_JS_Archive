@@ -11,13 +11,13 @@ class ActivityPhantomCollectData extends ActivityData_1.ActivityBaseData {
     super(...arguments), (this.PhantomCollectRewardList = void 0);
   }
   PhraseEx(t) {
-    (void 0 !== t && !t.p0s) || (this.PhantomCollectRewardList = t?.p0s?.s0s);
+    (void 0 !== t && !t.qps) || (this.PhantomCollectRewardList = t?.qps?.Eps);
   }
   GetPhantomCollectRewardList() {
     return this.PhantomCollectRewardList ?? [];
   }
   GetPhantomCollectRewardById(e) {
-    return this.PhantomCollectRewardList?.find((t) => t.Ikn === e);
+    return this.PhantomCollectRewardList?.find((t) => t.Z4n === e);
   }
   GetCollectPhantomList() {
     var t =
@@ -31,7 +31,7 @@ class ActivityPhantomCollectData extends ActivityData_1.ActivityBaseData {
     let e = !1;
     return (
       this.PhantomCollectRewardList?.forEach((t) => {
-        t.ckn === Protocol_1.Aki.Protocol.D0s.j0s && (e = !0);
+        t.F4n === Protocol_1.Aki.Protocol.jps.hMs && (e = !0);
       }),
       e
     );
@@ -51,7 +51,7 @@ class ActivityPhantomCollectData extends ActivityData_1.ActivityBaseData {
     var t;
     void 0 !== this.PhantomCollectRewardList &&
       -1 !==
-        (t = this.PhantomCollectRewardList.findIndex((t) => t.Ikn === e.Ikn)) &&
+        (t = this.PhantomCollectRewardList.findIndex((t) => t.Z4n === e.Z4n)) &&
       (this.PhantomCollectRewardList[t] = e);
   }
 }

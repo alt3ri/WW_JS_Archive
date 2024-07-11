@@ -7,6 +7,7 @@ const UE = require("ue"),
   ObjectUtils_1 = require("../../../../Core/Utils/ObjectUtils"),
   GlobalData_1 = require("../../../GlobalData"),
   BlackboardController_1 = require("../../../World/Controller/BlackboardController"),
+  ServerGmController_1 = require("../../../World/Controller/ServerGmController"),
   TsTaskAbortImmediatelyBase_1 = require("./TsTaskAbortImmediatelyBase"),
   DEFAULT_FINISHED_TIME = 6e4;
 class TsTaskPlayAction extends TsTaskAbortImmediatelyBase_1.default {
@@ -34,67 +35,113 @@ class TsTaskPlayAction extends TsTaskAbortImmediatelyBase_1.default {
       (this.TsBlackboardKeyTime = this.BlackboardKeyTime),
       (this.TsMaskInteract = this.MaskInteract));
   }
-  ReceiveExecuteAI(t, s) {
+  ReceiveExecuteAI(e, t) {
     this.InitTsVariables();
-    var e = t.AiController;
-    if (e) {
+    var i = e.AiController;
+    const s = ServerGmController_1.ServerGmController.AnimalDebug;
+    if (
+      (s &&
+        Log_1.Log.CheckInfo() &&
+        Log_1.Log.Info(
+          "AI",
+          6,
+          "AnimalDebug PlayAction",
+          ["Tree", this.TreeAsset?.GetName()],
+          ["aiController", !!i],
+          ["aiComp", !!i?.CharAiDesignComp],
+          ["SelfId", i?.CharActorComp?.Entity.Id],
+        ),
+      i)
+    ) {
       this.OnMontageEnded ||
-        (this.OnMontageEnded = (t, s) => {
+        (this.OnMontageEnded = (e, t) => {
           this.EndTime = Time_1.Time.WorldTime;
         });
-      e = e.CharActorComp.Entity;
-      let s = this.TsLoopTimeMillisecond,
-        t =
+      i = i.CharActorComp.Entity;
+      let t = this.TsLoopTimeMillisecond,
+        e =
           (this.TsBlackboardKeyTime &&
-            (i =
+            (o =
               BlackboardController_1.BlackboardController.GetIntValueByEntity(
-                e.Id,
+                i.Id,
                 this.TsBlackboardKeyTime,
               )) &&
-            (s = i),
+            (t = o),
           this.TsMontageName);
-      var i =
+      var o =
         BlackboardController_1.BlackboardController.GetStringValueByEntity(
-          e.Id,
+          i.Id,
           "TargetMontageName",
         );
-      i &&
-        ((t = i),
+      o &&
+        ((e = o),
         BlackboardController_1.BlackboardController.RemoveValueByEntity(
-          e.Id,
+          i.Id,
           "TargetMontageName",
         )),
-        (this.InteractComponent = e.GetComponent(178)),
+        s &&
+          Log_1.Log.CheckInfo() &&
+          Log_1.Log.Info(
+            "AI",
+            6,
+            "AnimalDebug PlayAction2",
+            ["TsLoopTimeMillisecond", this.TsLoopTimeMillisecond],
+            ["time", t],
+            ["TsMontageName", this.TsMontageName],
+            ["spMontageName", o],
+            ["montageName", e],
+          ),
+        (this.InteractComponent = i.GetComponent(181)),
         this.TsMaskInteract &&
           this.InteractComponent &&
           this.InteractComponent.SetInteractionState(
             !1,
             "TsTaskPlayAction ReceiveExecuteAI",
           ),
-        (this.EndTime = s + Time_1.Time.WorldTime),
-        (this.AnimComp = e.GetComponent(160)),
+        (this.EndTime = t + Time_1.Time.WorldTime),
+        (this.AnimComp = i.GetComponent(162)),
         this.AnimComp &&
-          (i = this.AnimComp.GetMontageResPathByName(t))?.includes("/") &&
-          ResourceSystem_1.ResourceSystem.LoadAsync(i, UE.AnimMontage, (t) => {
-            ObjectUtils_1.ObjectUtils.IsValid(t) &&
-              this.AnimComp?.MainAnimInstance &&
-              (0 === s &&
-                ((this.EndTime = DEFAULT_FINISHED_TIME + Time_1.Time.WorldTime),
-                this.OnMontageEnded) &&
-                this.AnimComp.MainAnimInstance.OnMontageEnded.Add(
-                  this.OnMontageEnded,
-                ),
-              this.AnimComp.MainAnimInstance.Montage_Play(t));
+          ((o = this.AnimComp.GetMontageResPathByName(e)),
+          s &&
+            Log_1.Log.CheckInfo() &&
+            Log_1.Log.Info("AI", 6, "AnimalDebug PlayAction3", [
+              "montageResPath",
+              o,
+            ]),
+          o?.includes("/")) &&
+          ResourceSystem_1.ResourceSystem.LoadAsync(o, UE.AnimMontage, (e) => {
+            s &&
+              Log_1.Log.CheckInfo() &&
+              Log_1.Log.Info(
+                "AI",
+                6,
+                "AnimalDebug PlayAction4",
+                ["montageAsset", e?.GetName()],
+                [
+                  "MainAnimInstance",
+                  this.AnimComp?.MainAnimInstance?.GetName(),
+                ],
+              ),
+              ObjectUtils_1.ObjectUtils.IsValid(e) &&
+                this.AnimComp?.MainAnimInstance &&
+                (0 === t &&
+                  ((this.EndTime =
+                    DEFAULT_FINISHED_TIME + Time_1.Time.WorldTime),
+                  this.OnMontageEnded) &&
+                  this.AnimComp.MainAnimInstance.OnMontageEnded.Add(
+                    this.OnMontageEnded,
+                  ),
+                this.AnimComp.MainAnimInstance.Montage_Play(e));
           });
     } else
       Log_1.Log.CheckError() &&
         Log_1.Log.Error("BehaviorTree", 6, "错误的Controller类型", [
           "Type",
-          t.GetClass().GetName(),
+          e.GetClass().GetName(),
         ]),
         this.FinishExecute(!1);
   }
-  ReceiveTickAI(t, s, e) {
+  ReceiveTickAI(e, t, i) {
     this.EndTime < Time_1.Time.WorldTime &&
       (this.TsMaskInteract &&
         this.InteractComponent &&

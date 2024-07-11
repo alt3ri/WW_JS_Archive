@@ -34,21 +34,21 @@ const Log_1 = require("../../../../../Core/Common/Log"),
 let UiRoleWeaponComponent = class UiRoleWeaponComponent extends UiModelComponentBase_1.UiModelComponentBase {
   constructor() {
     super(...arguments),
-      (this.Qwr = void 0),
-      (this.GBr = void 0),
-      (this.nXt = void 0),
-      (this.SBr = void 0),
-      (this.QBr = void 0),
-      (this.XBr = new Array()),
-      (this.$Br = 0),
-      (this.YBr = new Array()),
-      (this.JBr = new Array()),
-      (this.Jwr = (e) => {
+      (this.ywr = void 0),
+      (this.mBr = void 0),
+      (this.n$t = void 0),
+      (this.Jwr = void 0),
+      (this.yBr = void 0),
+      (this.IBr = new Array()),
+      (this.TBr = 0),
+      (this.LBr = new Array()),
+      (this.DBr = new Array()),
+      (this.Dwr = (e) => {
         this.SetDitherEffect(e);
       }),
       (this.OnRoleIdChange = () => {
         this.RefreshWeaponCase(), this.HideAllWeapon();
-        var e = this.GBr.RoleDataId,
+        var e = this.mBr.RoleDataId,
           t = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(e);
         t &&
           (t.IsTrialRole()
@@ -64,7 +64,7 @@ let UiRoleWeaponComponent = class UiRoleWeaponComponent extends UiModelComponent
               this.SetWeaponByWeaponData(t)));
       }),
       (this.OnRoleMeshLoadComplete = () => {
-        this.zBr();
+        this.RBr();
       }),
       (this.OnAnsBegin = (e) => {
         var t = e.Index;
@@ -76,10 +76,10 @@ let UiRoleWeaponComponent = class UiRoleWeaponComponent extends UiModelComponent
       });
   }
   OnInit() {
-    (this.GBr = this.Owner.CheckGetComponent(11)),
-      (this.Qwr = this.Owner.CheckGetComponent(0)),
-      (this.nXt = this.Owner.CheckGetComponent(1)),
-      (this.SBr = this.Owner.CheckGetComponent(6));
+    (this.mBr = this.Owner.CheckGetComponent(11)),
+      (this.ywr = this.Owner.CheckGetComponent(0)),
+      (this.n$t = this.Owner.CheckGetComponent(1)),
+      (this.Jwr = this.Owner.CheckGetComponent(6));
   }
   OnStart() {
     EventSystem_1.EventSystem.AddWithTarget(
@@ -95,9 +95,9 @@ let UiRoleWeaponComponent = class UiRoleWeaponComponent extends UiModelComponent
       EventSystem_1.EventSystem.AddWithTarget(
         this.Owner,
         EventDefine_1.EEventName.OnUiModelSetDitherEffect,
-        this.Jwr,
+        this.Dwr,
       ),
-      this.SBr?.RegisterAnsTrigger(
+      this.Jwr?.RegisterAnsTrigger(
         "UiWeaponAnsContext",
         this.OnAnsBegin,
         this.OnAnsEnd,
@@ -117,42 +117,42 @@ let UiRoleWeaponComponent = class UiRoleWeaponComponent extends UiModelComponent
       EventSystem_1.EventSystem.RemoveWithTarget(
         this.Owner,
         EventDefine_1.EEventName.OnUiModelSetDitherEffect,
-        this.Jwr,
+        this.Dwr,
       );
-    for (const e of this.XBr)
+    for (const e of this.IBr)
       SkeletalObserverManager_1.SkeletalObserverManager.DestroySkeletalObserver(
         e,
       );
   }
   Refresh() {
-    var t = this.QBr.GetItemConfig().Models;
-    this.$Br = t.length;
-    for (let e = this.XBr.length; e < this.$Br; e++) {
+    var t = this.yBr.GetItemConfig().Models;
+    this.TBr = t.length;
+    for (let e = this.IBr.length; e < this.TBr; e++) {
       var i =
         SkeletalObserverManager_1.SkeletalObserverManager.NewSkeletalObserver(
           2,
         );
-      this.XBr.push(i), this.JBr.push(0), this.HideWeaponByIndex(e);
+      this.IBr.push(i), this.DBr.push(0), this.HideWeaponByIndex(e);
     }
-    for (let e = 0; e < this.$Br; e++) {
-      var o = this.XBr[e].Model;
-      o.CheckGetComponent(18)?.SetWeaponData(this.QBr),
+    for (let e = 0; e < this.TBr; e++) {
+      var o = this.IBr[e].Model;
+      o.CheckGetComponent(18)?.SetWeaponData(this.yBr),
         o.CheckGetComponent(2)?.LoadModelByModelId(t[e]);
     }
   }
   ShowAllWeapon(t = !1) {
-    for (let e = 0; e < this.XBr.length; e++) this.ShowWeaponByIndex(e, t);
+    for (let e = 0; e < this.IBr.length; e++) this.ShowWeaponByIndex(e, t);
   }
   HideAllWeapon(t = !1) {
-    for (let e = 0; e < this.XBr.length; e++) this.HideWeaponByIndex(e, t);
+    for (let e = 0; e < this.IBr.length; e++) this.HideWeaponByIndex(e, t);
   }
   ShowWeaponByIndex(e, t = !1) {
     var i, o;
-    e < 0 || e >= this.XBr.length
+    e < 0 || e >= this.IBr.length
       ? Log_1.Log.CheckError() &&
         Log_1.Log.Error("Weapon", 44, "显示武器索引错误", ["index", e])
-      : (o = (i = this.XBr[e].Model).CheckGetComponent(0))?.GetVisible() ||
-        ((this.JBr[e] = 2),
+      : (o = (i = this.IBr[e].Model).CheckGetComponent(0))?.GetVisible() ||
+        ((this.DBr[e] = 2),
         o?.SetVisible(!0),
         t &&
           UiModelUtil_1.UiModelUtil.SetRenderingMaterial(
@@ -162,36 +162,36 @@ let UiRoleWeaponComponent = class UiRoleWeaponComponent extends UiModelComponent
   }
   HideWeaponByIndex(e, t = !1) {
     var i, o;
-    e < 0 || e >= this.XBr.length
+    e < 0 || e >= this.IBr.length
       ? Log_1.Log.CheckError() &&
         Log_1.Log.Error("Weapon", 44, "隐藏武器索引错误", ["index", e])
-      : (o = (i = this.XBr[e].Model).CheckGetComponent(0))?.GetVisible() &&
-        ((this.JBr[e] = 1), o?.SetVisible(!1), t) &&
+      : (o = (i = this.IBr[e].Model).CheckGetComponent(0))?.GetVisible() &&
+        ((this.DBr[e] = 1), o?.SetVisible(!1), t) &&
         UiModelUtil_1.UiModelUtil.PlayEffectOnRoot(i, "ShowHideWeaponEffect");
   }
   RefreshWeaponCase() {
-    var e = this.GBr.RoleConfigId,
+    var e = this.mBr.RoleConfigId,
       e = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(e),
       e = ModelUtil_1.ModelUtil.GetModelConfig(e.UiMeshId);
     if (e) {
       var t = e.BattleSockets;
-      for (let e = (this.YBr.length = 0); e < t.Num(); e++) {
+      for (let e = (this.LBr.length = 0); e < t.Num(); e++) {
         var i = t.Get(e);
-        this.YBr.push(i);
+        this.LBr.push(i);
       }
     }
   }
   RefreshWeaponDa() {
-    var e = this.QBr.GetBreachLevel();
-    for (const t of this.XBr)
+    var e = this.yBr.GetBreachLevel();
+    for (const t of this.IBr)
       t.Model?.CheckGetComponent(19)?.RefreshWeaponBreachDa(e);
   }
-  zBr() {
-    if (2 === this.Qwr.GetModelLoadState()) {
-      var t = this.nXt.MainMeshComponent;
-      for (let e = 0; e < this.$Br; e++) {
-        var i = this.XBr[e],
-          o = FNameUtil_1.FNameUtil.GetDynamicFName(this.YBr[e]),
+  RBr() {
+    if (2 === this.ywr.GetModelLoadState()) {
+      var t = this.n$t.MainMeshComponent;
+      for (let e = 0; e < this.TBr; e++) {
+        var i = this.IBr[e],
+          o = FNameUtil_1.FNameUtil.GetDynamicFName(this.LBr[e]),
           i = i.Model?.CheckGetComponent(1);
         i?.Actor?.K2_AttachToComponent(t, o, 0, 0, 0, !1),
           i?.Actor?.K2_SetActorRelativeTransform(
@@ -204,27 +204,27 @@ let UiRoleWeaponComponent = class UiRoleWeaponComponent extends UiModelComponent
     }
   }
   SetWeaponByWeaponData(e) {
-    e && ((this.QBr = e), this.Refresh());
+    e && ((this.yBr = e), this.Refresh());
   }
   HasWeapon() {
-    return void 0 !== this.QBr;
+    return void 0 !== this.yBr;
   }
   SetWeaponTransformByIndex(e, t) {
-    e < 0 || e >= this.XBr.length
+    e < 0 || e >= this.IBr.length
       ? Log_1.Log.CheckError() &&
         Log_1.Log.Error("Weapon", 44, "设置武器偏移索引错误", ["index", e])
-      : this.XBr[e].Model?.CheckGetComponent(
+      : this.IBr[e].Model?.CheckGetComponent(
           1,
         )?.MainMeshComponent?.K2_SetRelativeTransform(t, !1, void 0, !1);
   }
   SetDitherEffect(e) {
-    for (const t of this.XBr) t.Model?.CheckGetComponent(0)?.SetDitherEffect(e);
+    for (const t of this.IBr) t.Model?.CheckGetComponent(0)?.SetDitherEffect(e);
   }
   GetWeaponCount() {
-    return this.$Br;
+    return this.TBr;
   }
   OnRoleActiveChange() {
-    this.nXt.Actor.bHidden && this.HideAllWeapon();
+    this.n$t.Actor.bHidden && this.HideAllWeapon();
   }
 };
 (UiRoleWeaponComponent = __decorate(

@@ -24,10 +24,12 @@ const puerts_1 = require("puerts"),
   ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   ScreenEffectSystem_1 = require("../../../Render/Effect/ScreenEffectSystem/ScreenEffectSystem"),
+  UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
   UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase"),
   InputDistributeController_1 = require("../../../Ui/InputDistribute/InputDistributeController"),
   InputMappingsDefine_1 = require("../../../Ui/InputDistribute/InputMappingsDefine"),
   UiManager_1 = require("../../../Ui/UiManager"),
+  LevelSequencePlayer_1 = require("../../Common/LevelSequencePlayer"),
   PlotAudioModel_1 = require("../../Plot/PlotAudioModel"),
   PlotController_1 = require("../../Plot/PlotController"),
   PlotOptionItem_1 = require("../../Plot/PlotView/PlotOptionItem"),
@@ -39,15 +41,16 @@ const puerts_1 = require("puerts"),
   UiNavigationNewController_1 = require("../../UiNavigation/New/UiNavigationNewController"),
   GenericLayout_1 = require("../../Util/Layout/GenericLayout"),
   AUDIO_FADE_TIME = 500,
-  TIME_SKIP_SEQ = 300,
+  TIME_SKIP_SEQ = 100,
   CLICK_AUDIO_EVENT = "play_ui_ia_spl_plot_next",
   FADE_TIME = 200,
   DEFAULT_PATH =
     "/Game/Aki/UI/UIResources/Common/Image/T_CommonDefault_UI.T_CommonDefault_UI",
-  OptionHeight_Offset = 265;
+  OPTIONHEIGHT_OFFSET = 265,
+  PAUSE_REASON = "Subtitle";
 class SubtitleInfo {
   constructor() {
-    (this.ppo = new SequenceDefine_1.PlotSubtitleConfig()),
+    (this.Cvo = new SequenceDefine_1.PlotSubtitleConfig()),
       (this.HasOption = !1),
       (this.ShowAllText = !1),
       (this.ShowOption = !1),
@@ -55,30 +58,30 @@ class SubtitleInfo {
       (this.EnableSkipTime = 0);
   }
   get CurrentConfig() {
-    return this.ppo.Subtitles;
+    return this.Cvo.Subtitles;
   }
   get CurrentDelayTime() {
-    return this.ppo.AudioDelay;
+    return this.Cvo.AudioDelay;
   }
   get CurrentAudioTransitionDuration() {
-    return this.ppo.AudioTransitionDuration;
+    return this.Cvo.AudioTransitionDuration;
   }
   HasSubtitle() {
-    return void 0 !== this.ppo.Subtitles;
+    return void 0 !== this.Cvo.Subtitles;
   }
   SetCurrentSubtitle(t) {
-    this.ppo.CopyFrom(t), this.Qto();
+    this.Cvo.CopyFrom(t), this.Hio();
   }
-  Qto() {
+  Hio() {
     this.HasSubtitle() &&
       ((this.HasOption = 0 < (this.CurrentConfig.Options?.length ?? 0)),
       (this.ShowAllText = !1),
       (this.ShowOption = !1),
       (this.EnableSkipTime =
-        TimeUtil_1.TimeUtil.GetServerTimeStamp() + this.ppo.GuardTime));
+        TimeUtil_1.TimeUtil.GetServerTimeStamp() + this.Cvo.GuardTime));
   }
   Clear() {
-    this.ppo.Clear(),
+    this.Cvo.Clear(),
       (this.HasOption = !1),
       (this.ShowAllText = !1),
       (this.ShowOption = !1),
@@ -86,99 +89,125 @@ class SubtitleInfo {
       (this.EnableSkipTime = 0);
   }
 }
+class SonUiItem extends UiPanelBase_1.UiPanelBase {
+  constructor() {
+    super(...arguments), (this.LevelSequencePlayer = void 0);
+  }
+  async OpenAsync(t, i) {
+    i
+      ? (await this.CreateThenShowByResourceIdAsync(i, t, !0),
+        (this.LevelSequencePlayer =
+          new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem)),
+        this.LevelSequencePlayer?.PlayLevelSequenceByName("Start", !0),
+        this.LevelSequencePlayer?.PlayLevelSequenceByName("Loop", !0))
+      : Log_1.Log.CheckError() &&
+        Log_1.Log.Error("Plot", 46, "打开Ui预览图，但Ui预制体名称为空", [
+          "uiName",
+          i,
+        ]);
+  }
+  async CloseAsync() {
+    this.LevelSequencePlayer?.PlayLevelSequenceByName("Close"),
+      await this.HideAsync(),
+      await this.DestroyAsync();
+  }
+}
 class PlotSubtitleView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
-      (this.vpo = ""),
+      (this.gvo = ""),
       (this.OptionKeys = new Array()),
       (this.OsList = new Array()),
-      (this.Mpo = ""),
-      (this.Spo = void 0),
-      (this.Czi = void 0),
-      (this.gzi = void 0),
-      (this.Mzi = void 0),
-      (this.Epo = !1),
-      (this.ypo = new AudioController_1.PlayResult()),
-      (this.Ipo = new AudioController_1.PlayResult()),
-      (this.Tpo = 0),
-      (this.Wht = 0),
-      (this.Lpo = void 0),
-      (this.Dpo = void 0),
+      (this.fvo = ""),
+      (this.pvo = void 0),
+      (this.cZi = void 0),
       (this.mZi = void 0),
-      (this.Ozi = void 0),
+      (this.vvo = !1),
+      (this.Mvo = new AudioController_1.PlayResult()),
+      (this.Evo = new AudioController_1.PlayResult()),
+      (this.Svo = 0),
+      (this.r1t = 0),
+      (this.yvo = void 0),
+      (this.Ivo = void 0),
+      (this._eo = void 0),
+      (this.qZi = void 0),
       (this.HoverIndex = 0),
-      (this.dZi = void 0),
-      (this.CZi = void 0),
-      (this.gZi = !1),
-      (this.fZi = void 0),
-      (this.cot = !0),
-      (this.hZi = void 0),
+      (this.ueo = void 0),
+      (this.ceo = void 0),
+      (this.meo = !1),
+      (this.deo = void 0),
+      (this.Lrt = !0),
+      (this.neo = void 0),
       (this.B8 = "LevelA"),
       (this.CurOption = new Array()),
-      (this.PZi = 0),
-      (this.wZi = !1),
-      (this.wPn = !1),
-      (this.bZi = !1),
-      (this.qZi = void 0),
-      (this.Rpo = !1),
-      (this.EZi = void 0),
-      (this.yZi = void 0),
-      (this.IZi = void 0),
-      (this.TZi = void 0),
-      (this.DZi = void 0),
-      (this.RZi = void 0),
-      (this.UZi = void 0),
-      (this.R5s = void 0),
-      (this.Yzt = new PlotTextLogic_1.PlotAudioDelegate()),
-      (this.Upo = void 0),
-      (this.OVs = 0),
-      (this.jLn = () => {
-        this.gZi || this.CZi.SetActive(!1);
+      (this.Reo = 0),
+      (this.Aeo = !1),
+      (this.cbn = !1),
+      (this.xeo = !1),
+      (this.weo = void 0),
+      (this.Tvo = !1),
+      (this.veo = void 0),
+      (this.Meo = void 0),
+      (this.Eeo = void 0),
+      (this.Seo = void 0),
+      (this.Ieo = void 0),
+      (this.Teo = void 0),
+      (this.Leo = void 0),
+      (this.vWs = void 0),
+      (this.rca = void 0),
+      (this.oca = void 0),
+      (this.qfa = void 0),
+      (this.YZt = new PlotTextLogic_1.PlotAudioDelegate()),
+      (this.Lvo = void 0),
+      (this.Mta = 0),
+      (this.TRn = () => {
+        this.meo || this.ceo.SetActive(!1);
       }),
-      (this.NZi = () => {
+      (this.beo = () => {
         var t = new PlotOptionItem_1.PlotOptionItem(this);
-        return t.BindOnHover(this.OZi), t;
+        return t.BindOnHover(this.qeo), t;
       }),
-      (this.OZi = (t) => {
-        this.hZi?.SetFollowItemActive(!1),
-          (this.hZi = t).SetFollowItemActive(!0);
+      (this.qeo = (t) => {
+        this.neo?.SetFollowItemActive(!1),
+          (this.neo = t).SetFollowItemActive(!0);
       }),
-      (this.Apo = (t) => {
+      (this.Dvo = (t) => {
         0 < t.TalkItems.length && "LevelA" === this.B8
-          ? this.Meo(!0, !1)
-          : this.Meo(!1, !1);
+          ? this.gto(!0, !1)
+          : this.gto(!1, !1),
+          this.deo?.AddSummary(t.TalkOutline);
       }),
-      (this.Ppo = () => {
-        this.VZi();
+      (this.Rvo = () => {
+        this.Neo();
       }),
-      (this.FZi = () => {
+      (this.t2e = () => {
         ControllerHolder_1.ControllerHolder.FlowController.BackgroundFlow(
           "UI点击跳过(PlotSubtitleView)",
         );
       }),
-      (this.xpo = (t) => {
+      (this.Uvo = (t) => {
         this.GetItem(22).SetUIActive(t);
       }),
       (this.OnBtnSubtitleSkipClick = () => {
         !ModelManager_1.ModelManager.PlotModel.PlotConfig.CanInteractive ||
-          !this.Spo.HasSubtitle() ||
+          !this.pvo.HasSubtitle() ||
           "CenterText" === this.CurrentSubtitle?.Type ||
-          this.Spo.ShowOption ||
-          this.Spo.Skip ||
-          (this.Epo
-            ? (this.wpo(),
+          this.pvo.ShowOption ||
+          this.pvo.Skip ||
+          (this.vvo
+            ? (this.Avo(),
               AudioSystem_1.AudioSystem.PostEvent(CLICK_AUDIO_EVENT))
-            : this.Spo.EnableSkipTime >
+            : this.pvo.EnableSkipTime >
                 TimeUtil_1.TimeUtil.GetServerTimeStamp() ||
               (Log_1.Log.CheckDebug() &&
                 Log_1.Log.Debug("Plot", 18, "点击字幕", [
                   "offset",
-                  this.gzi.GetSelectorOffset(),
+                  this.mZi.GetSelectorOffset(),
                 ]),
-              this.Spo.ShowAllText || 0 === this.gzi.GetSelectorOffset()
-                ? (this.Bpo(),
+              this.pvo.ShowAllText || 0 === this.mZi.GetSelectorOffset()
+                ? (this.Pvo(),
                   AudioSystem_1.AudioSystem.PostEvent(CLICK_AUDIO_EVENT))
-                : this.bpo()));
+                : this.xvo()));
       }),
       (this.OnBtnAutoClick = () => {
         let t = !1;
@@ -190,72 +219,75 @@ class PlotSubtitleView extends UiTickViewBase_1.UiTickViewBase {
           t &&
             ModelManager_1.ModelManager.SequenceModel.IsPlaying &&
             ModelManager_1.ModelManager.SequenceModel.IsPaused &&
-            ((this.Spo.HasSubtitle() && this.Spo.HasOption) || this.wpo());
+            ((this.pvo.HasSubtitle() && this.pvo.HasOption) || this.Avo());
       }),
-      (this.ieo = () => {
+      (this.zeo = () => {
         var t = ModelManager_1.ModelManager.PlotModel.PlotConfig;
-        (t.IsAutoPlay = !1), (t.IsAutoPlayCache = !1), this.HZi();
+        (t.IsAutoPlay = !1), (t.IsAutoPlayCache = !1), this.Oeo(), this.Nna();
       }),
-      (this.oeo = () => {
-        this.SetUiActive(!1), (this.cot = !1);
+      (this.lca = () => {
+        this.kna();
+      }),
+      (this.Zeo = () => {
+        this.Nna(), (this.Lrt = !1);
         var t = ModelManager_1.ModelManager.PlotModel.PlotConfig;
-        (t.IsAutoPlay = !1), (t.IsAutoPlayCache = !1), this.HZi();
+        (t.IsAutoPlay = !1), (t.IsAutoPlayCache = !1), this.Oeo();
       }),
-      (this.kZi = () => {
-        this.hZi?.SetFollowItemActive(!1);
-        var i = this.CZi.GetDisplayGridEndIndex();
+      (this.Geo = () => {
+        this.neo?.SetFollowItemActive(!1);
+        var i = this.ceo.GetDisplayGridEndIndex();
         for (let t = 0; t <= i; t++) {
-          var e = this.CZi.GetLayoutItemByIndex(t);
-          if (e?.GetActive())
+          var e = this.ceo.GetLayoutItemByIndex(t);
+          if (e?.GetActive() && !(t < i && e.CheckToggleGray()))
             return (
-              (e.OptionIndex = this.CurrentSubtitle.Options.indexOf(e.Option)),
-              (this.hZi = e),
-              this.hZi?.SetFollowItemActive(!0),
+              (this.neo = e),
+              this.neo?.SetFollowItemActive(!0),
               void UiNavigationNewController_1.UiNavigationNewController.SetNavigationFocusForView(
-                this.hZi.GetToggleItem().GetRootComponent(),
+                this.neo.GetToggleItem().GetRootComponent(),
+                !0,
               )
             );
         }
       }),
-      (this.$Ji = (t) => {
+      (this.Qzi = (t) => {
         this.RootItem.SetUIActive(!t);
       }),
-      (this.lZt = (t) => {
-        (this.Wht = t),
-          (this.Upo = TimerSystem_1.TimerSystem.Delay(this.qpo, this.Wht));
+      (this.lei = (t) => {
+        (this.r1t = t),
+          (this.Lvo = TimerSystem_1.TimerSystem.Delay(this.wvo, this.r1t));
       }),
-      (this.qpo = () => {
-        (this.Upo = void 0),
-          this.Spo?.HasSubtitle() &&
-            this.Epo &&
-            !this.Spo.ShowOption &&
-            this.Gpo() &&
-            this.wpo();
+      (this.wvo = () => {
+        (this.Lvo = void 0),
+          this.pvo?.HasSubtitle() &&
+            this.vvo &&
+            !this.pvo.ShowOption &&
+            this.Bvo() &&
+            this.Avo();
       }),
-      (this.Cwn = 0),
-      (this.gwn = 0),
-      (this.fwn = void 0),
-      (this.pwn = void 0),
-      (this.vwn = () => {
-        this.Mwn();
+      (this.Pbn = 0),
+      (this.wbn = 0),
+      (this.Bbn = void 0),
+      (this.bbn = void 0),
+      (this.qbn = () => {
+        this.Gbn();
         var s = this.GetScrollView(25),
           h = this.GetItem(26);
         if (s) {
           var o = this.GetText(5),
             r = o.GetTextRenderSize().Y,
             s = s.GetRootComponent();
-          if (r <= s.GetHeight())
-            s.SetHeight(this.OVs), h?.SetHeight(this.OVs + OptionHeight_Offset);
+          if (r <= this.Mta)
+            s.SetHeight(this.Mta), h?.SetHeight(this.Mta + OPTIONHEIGHT_OFFSET);
           else {
             var n = o.GetRenderLineNum(),
               _ = o.GetFontSpaceFinal().Y;
             if (n <= 6)
-              s.SetHeight(r + _), h?.SetHeight(r + _ + OptionHeight_Offset);
+              s.SetHeight(r + _), h?.SetHeight(r + _ + OPTIONHEIGHT_OFFSET);
             else {
               let i = 0;
               for (let t = 1; t <= 6; t++) i += o.GetRenderLineHeight(t) + _;
-              s.SetHeight(i), h?.SetHeight(i + OptionHeight_Offset);
-              r = this.Swn();
+              s.SetHeight(i), h?.SetHeight(i + OPTIONHEIGHT_OFFSET);
+              r = this.Obn();
               let t =
                 CommonParamById_1.configCommonParamById.GetIntConfig(
                   "PlotAutoScrollDelayCharNum",
@@ -265,87 +297,70 @@ class PlotSubtitleView extends UiTickViewBase_1.UiTickViewBase {
                 (s = s - t);
               let e = s;
               1 < n && (e = s - o.GetRenderLineCharNum(0)),
-                (this.Cwn = (e / r) * 1e3),
-                (this.pwn = TimerSystem_1.TimerSystem.Delay(this.Ewn, h));
+                (this.Pbn = (e / r) * 1e3),
+                (this.bbn = TimerSystem_1.TimerSystem.Delay(this.Nbn, h));
             }
           }
         }
       }),
-      (this.Ewn = () => {
-        this.gwn = 0;
-        this.fwn = TimerSystem_1.TimerSystem.Forever(() => {
-          var t = this.gwn / this.Cwn;
+      (this.Nbn = () => {
+        this.wbn = 0;
+        this.Bbn = TimerSystem_1.TimerSystem.Forever(() => {
+          var t = this.wbn / this.Pbn;
           this.GetScrollView(25)?.SetScrollProgress(t),
             1 <= t &&
-              TimerSystem_1.TimerSystem.Has(this.fwn) &&
-              TimerSystem_1.TimerSystem.Remove(this.fwn),
-            (this.gwn += 100);
+              TimerSystem_1.TimerSystem.Has(this.Bbn) &&
+              TimerSystem_1.TimerSystem.Remove(this.Bbn),
+            (this.wbn += 100);
         }, 100);
       }),
-      (this.jZi = async (t) => {
-        this.Spo.HasSubtitle()
+      (this.keo = async (t) => {
+        this.pvo.HasSubtitle()
           ? ControllerHolder_1.ControllerHolder.FlowController.LogError(
               "剧情Seq字幕重复触发",
-              ["curId", this.Spo.CurrentConfig.Id],
+              ["curId", this.pvo.CurrentConfig.Id],
               ["newId", t.Subtitles.Id],
             )
-          : (this.Npo(),
-            this.Spo.Clear(),
-            this.Spo.SetCurrentSubtitle(t),
-            await this.DPn(t, () => {
-              this.Opo();
+          : (this.bvo(),
+            this.pvo.Clear(),
+            this.pvo.SetCurrentSubtitle(t),
+            await this.sbn(t?.Subtitles?.BackgroundConfig, () => {
+              this.qvo();
             }));
       }),
-      (this.kpo = (t) => {
-        this.Epo ? this.wpo() : this.Fpo();
+      (this.Gvo = (t) => {
+        var i = this.pvo.Skip;
+        this.eMo(), this.kvo(), i ? this.Nvo() : this.vvo && this.Avo();
       }),
-      (this.eUt = (t) => {
-        !t || this.cot || ((this.cot = !0), this.SetUiActive(!0));
+      (this.rAt = (t) => {
+        !t || this.Lrt || ((this.Lrt = !0), this.kna());
       }),
-      (this.reo = (t, i) => {
-        0 !== i.TouchType ||
-          this.cot ||
-          ((this.cot = !0), this.SetUiActive(!0));
+      (this.eto = (t, i) => {
+        0 !== i.TouchType || this.Lrt || ((this.Lrt = !0), this.kna());
       }),
-      (this.Vpo = (t) => {
-        this.Spo.HasSubtitle() && this.CurrentSubtitle.Id === t
-          ? this.Spo.Skip
-            ? (Log_1.Log.CheckInfo() &&
-                Log_1.Log.Info("Plot", 36, "Sequence黑幕监听日志-Skip"),
-              this.Hpo())
-            : this.Spo.ShowOption
-              ? (Log_1.Log.CheckInfo() &&
-                  Log_1.Log.Info("Plot", 36, "Sequence黑幕监听日志-ShowOption"),
-                this.jpo())
-              : this.Spo.HasOption
-                ? (Log_1.Log.CheckInfo() &&
-                    Log_1.Log.Info(
-                      "Plot",
-                      36,
-                      "Sequence黑幕监听日志-HasOption",
-                    ),
-                  this.Wpo(),
-                  this.jpo())
+      (this.Ovo = (t, i) => {
+        this.pvo.HasSubtitle() &&
+          this.CurrentSubtitle.Id === t &&
+          (i
+            ? this.pvo.HasOption
+              ? (this.pvo.Skip = !0)
+              : (this.kvo(), this.Nvo())
+            : this.pvo.ShowOption
+              ? this.Fvo()
+              : this.pvo.HasOption
+                ? (this.Vvo(), this.Fvo())
                 : ((t = TimeUtil_1.TimeUtil.GetServerTimeStamp()),
                   "LevelA" !== this.B8 &&
-                  (t - this.Tpo < this.Wht || !this.Gpo()) &&
-                  this.Spo.EnableSkipTime <= t
-                    ? (Log_1.Log.CheckInfo() &&
-                        Log_1.Log.Info(
-                          "Plot",
-                          36,
-                          "Sequence黑幕监听日志-Others",
-                        ),
-                      this.jpo())
-                    : (this.Npo(), this.Hpo()))
-          : Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info("Plot", 36, "Sequence黑幕监听日志-!HasSubtitle");
+                  (t - this.Svo < this.r1t || !this.Bvo()) &&
+                  this.pvo.EnableSkipTime <= t
+                    ? this.Fvo()
+                    : (this.bvo(), this.kvo())));
       }),
-      (this.Kpo = () => {
-        this.Spo.HasSubtitle() &&
-          (this.Npo(), this.Hpo(), this.Qpo(), this.Xpo());
+      (this.Hvo = () => {
+        this.pvo.HasSubtitle() &&
+          (this.bvo(), this.kvo(), this.jvo(), this.Wvo());
       }),
-      (this.$po = (t, i, e) => {
+      (this.Kvo = (t, i, e) => {
         var s;
         t
           ? (t = PlotAudioById_1.configPlotAudioById.GetConfig(i))
@@ -361,7 +376,7 @@ class PlotSubtitleView extends UiTickViewBase_1.UiTickViewBase {
                 s.AudioEventPath,
                 t,
                 s.ExternalSrcName,
-                this.Ipo,
+                this.Evo,
                 void 0,
                 0,
                 void 0,
@@ -370,76 +385,76 @@ class PlotSubtitleView extends UiTickViewBase_1.UiTickViewBase {
                 "读取语音配置为空",
                 ["audioKey", i],
               )
-          : this.Xpo();
+          : this.Wvo();
       }),
-      (this.neo = async (t, i, e, s) => {
-        this.seo(),
-          (this.wZi = t),
-          (this.qZi = i),
+      (this.tto = async (t, i, e, s) => {
+        this.ito(),
+          (this.Aeo = t),
+          (this.weo = i),
           t
             ? i
               ? await this.FadeInBgPhoto(e, s)
               : await this.FadeInBgPhotoMiddle(e, s)
-            : ((this.qZi = !0),
+            : ((this.weo = !0),
               await this.FadeOutBgPhoto(),
-              (this.qZi = !1),
+              (this.weo = !1),
               await this.FadeOutBgPhotoMiddle(),
               s && s());
       }),
-      (this._eo = (t) => {
-        this.PZi < 0 && (this.PZi = 0),
-          this.PZi > FADE_TIME && (this.PZi = FADE_TIME),
-          this.wZi
-            ? ((this.PZi += t),
-              this.qZi
-                ? 1 < this.ueo() && (this.ceo(), this.meo())
-                : 1 < this.deo() && (this.ceo(), this.meo()))
-            : ((this.PZi -= t),
-              this.qZi
-                ? this.ueo() <= 0 && (this.ceo(), this.meo())
-                : this.deo() <= 0 && (this.ceo(), this.meo()));
+      (this.sto = (t) => {
+        this.Reo < 0 && (this.Reo = 0),
+          this.Reo > FADE_TIME && (this.Reo = FADE_TIME),
+          this.Aeo
+            ? ((this.Reo += t),
+              this.weo
+                ? 1 < this.ato() && (this.hto(), this.lto())
+                : 1 < this._to() && (this.hto(), this.lto()))
+            : ((this.Reo -= t),
+              this.weo
+                ? this.ato() <= 0 && (this.hto(), this.lto())
+                : this._to() <= 0 && (this.hto(), this.lto()));
       }),
-      (this.meo = () => {
-        this.qZi
-          ? this.wZi && this.RZi
+      (this.lto = () => {
+        this.weo
+          ? this.Aeo && this.Teo
             ? (Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info("BlackScreen", 46, "Plot图片FadeIn结束"),
-              this.bZi &&
-                (this.EZi.SetTexture(this.yZi.GetTexture()),
-                this.yZi.SetAlpha(0)),
-              this.RZi.SetResult(!0),
-              (this.RZi = void 0),
-              (this.bZi = !0))
-            : !this.wZi &&
-              this.DZi &&
+              this.xeo &&
+                (this.veo.SetTexture(this.Meo.GetTexture()),
+                this.Meo.SetAlpha(0)),
+              this.Teo.SetResult(!0),
+              (this.Teo = void 0),
+              (this.xeo = !0))
+            : !this.Aeo &&
+              this.Ieo &&
               (Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info("BlackScreen", 46, "Plot图片FadeOut结束"),
-              this.DZi.SetResult(!0),
-              (this.DZi = void 0),
-              this.SetTextureByPath(DEFAULT_PATH, this.EZi),
-              (this.bZi = !1))
-          : this.wZi && this.RZi
+              this.Ieo.SetResult(!0),
+              (this.Ieo = void 0),
+              this.SetTextureByPath(DEFAULT_PATH, this.veo),
+              (this.xeo = !1))
+          : this.Aeo && this.Teo
             ? (Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info("BlackScreen", 46, "Plot Middle图片FadeIn结束"),
-              this.bZi,
-              this.RZi.SetResult(!0),
-              (this.RZi = void 0),
-              (this.bZi = !0))
-            : !this.wZi &&
-              this.DZi &&
+              this.xeo,
+              this.Teo.SetResult(!0),
+              (this.Teo = void 0),
+              (this.xeo = !0))
+            : !this.Aeo &&
+              this.Ieo &&
               (Log_1.Log.CheckInfo() &&
                 Log_1.Log.Info("BlackScreen", 46, "Plot Middle图片FadeOut结束"),
-              this.TZi?.SetUIActive(!1),
-              this.DZi.SetResult(!0),
-              (this.DZi = void 0),
-              this.SetTextureByPath(DEFAULT_PATH, this.IZi),
-              (this.bZi = !1)),
-          this.UZi && this.UZi();
+              this.Seo?.SetUIActive(!1),
+              this.Ieo.SetResult(!0),
+              (this.Ieo = void 0),
+              this.SetTextureByPath(DEFAULT_PATH, this.Eeo),
+              (this.xeo = !1)),
+          this.Leo && this.Leo();
       });
   }
-  Meo(t, i = !0) {
-    t !== this.Rpo &&
-      ((this.Rpo = t)
+  gto(t, i = !0) {
+    t !== this.Tvo &&
+      ((this.Tvo = t)
         ? (this.GetSprite(9).SetUIActive(!0),
           i &&
             (this.UiViewSequence.StopSequenceByKey("PlotClose"),
@@ -450,10 +465,10 @@ class PlotSubtitleView extends UiTickViewBase_1.UiTickViewBase {
           : this.GetSprite(9).SetUIActive(!1));
   }
   get Options() {
-    return this.CZi?.GetLayoutItemList();
+    return this.ceo?.GetLayoutItemList();
   }
   get CurrentSubtitle() {
-    return this.Spo?.CurrentConfig;
+    return this.pvo?.CurrentConfig;
   }
   OnRegisterComponent() {
     (this.ComponentRegisterInfos = [
@@ -484,66 +499,74 @@ class PlotSubtitleView extends UiTickViewBase_1.UiTickViewBase {
       [24, UE.UISprite],
       [25, UE.UIScrollViewComponent],
       [26, UE.UIItem],
+      [27, UE.UIItem],
+      [28, UE.UIItem],
+      [29, UE.UIItem],
+      [30, UE.UIItem],
     ]),
       (this.BtnBindInfo = [
         [1, this.OnBtnSubtitleSkipClick],
         [0, this.OnBtnAutoClick],
-        [16, this.oeo],
+        [16, this.Zeo],
       ]);
   }
   OnStart() {
     this.GetButton(2).RootUIComp.SetUIActive(!1),
-      (this.fZi = new PlotSkipComponent_1.PlotSkipComponent(
+      (this.deo = new PlotSkipComponent_1.PlotSkipComponent(
         this.GetButton(2),
-        this.FZi,
-        this.ieo,
+        this.t2e,
+        this.zeo,
+        void 0,
+        this.lca,
       )),
-      this.fZi.EnableSkipButton(!1),
+      this.deo.EnableSkipButton(!1),
       this.GetSprite(19).SetAlpha(0),
-      (this.Spo = new SubtitleInfo()),
-      (this.CZi = new GenericLayout_1.GenericLayout(
+      (this.pvo = new SubtitleInfo()),
+      (this.ceo = new GenericLayout_1.GenericLayout(
         this.GetLayoutBase(7),
-        this.NZi,
+        this.beo,
         this.GetItem(6).GetOwner(),
       )),
-      this.CZi.SetActive(!1),
-      (this.gZi = !1),
-      (this.Czi = this.GetItem(8)
+      this.ceo.SetActive(!1),
+      (this.meo = !1),
+      (this.cZi = this.GetItem(8)
         .GetOwner()
         .GetComponentByClass(UE.LGUIPlayTweenComponent.StaticClass())),
-      (this.gzi = this.GetItem(8)
+      (this.mZi = this.GetItem(8)
         .GetOwner()
         .GetComponentByClass(UE.UIEffectTextAnimation.StaticClass())),
       this.GetItem(6).SetUIActive(!1),
       this.GetItem(22).SetUIActive(!1),
-      (this.Rpo = !1),
+      (this.Tvo = !1),
       this.GetSprite(9).SetUIActive(!1),
-      (this.mZi = this.GetItem(17));
+      (this._eo = this.GetItem(17));
     this.GetButton(1)
       .RootUIComp.GetOwner()
       .GetComponentByClass(UE.UIDraggableComponent.StaticClass())
       .SetActive(!1),
-      this.eeo(!1),
-      this.veo(!1),
-      this.VZi(),
-      (this.Epo = !1),
+      this.Yeo(!1),
+      this.Cto(!1),
+      this.Neo(),
+      (this.vvo = !1),
       this.AddScreenEffectPlotRoot(),
-      (this.cot = !0),
-      this.Yzt.Init(this.lZt),
-      this.UiViewSequence.AddSequenceFinishEvent("ChoiceClose", this.jLn);
+      (this.Lrt = !0),
+      this.YZt.Init(this.lei),
+      this.UiViewSequence.AddSequenceFinishEvent("ChoiceClose", this.TRn);
     var t = this.GetScrollView(25);
     t?.SetCanScroll(!1),
       t?.SetRayCastTargetForScrollView(!1),
-      (this.OVs = t?.GetRootComponent()?.GetHeight() ?? 174),
-      (this.PZi = 0),
-      (this.EZi = this.GetTexture(20)),
-      this.EZi && this.EZi.SetAlpha(0),
-      (this.yZi = this.GetTexture(21)),
-      this.yZi && this.yZi.SetAlpha(0),
-      (this.IZi = this.GetTexture(23)),
-      this.IZi && this.IZi.SetAlpha(0),
-      (this.TZi = this.GetSprite(24)),
-      this.TZi && this.TZi.SetUIActive(!1);
+      (this.Mta = t?.GetRootComponent()?.GetHeight() ?? 174),
+      (this.Reo = 0),
+      (this.veo = this.GetTexture(20)),
+      this.veo && this.veo.SetAlpha(0),
+      (this.Meo = this.GetTexture(21)),
+      this.Meo && this.Meo.SetAlpha(0),
+      (this.Eeo = this.GetTexture(23)),
+      this.Eeo && this.Eeo.SetAlpha(0),
+      (this.Seo = this.GetSprite(24)),
+      this.Seo && this.Seo.SetUIActive(!1),
+      (this.rca = this.GetItem(29)),
+      this.GetItem(30).SetUIActive(!1);
   }
   ResetSubtitle() {
     this.GetText(4).SetText(""),
@@ -562,8 +585,6 @@ class PlotSubtitleView extends UiTickViewBase_1.UiTickViewBase {
       this.Info.Name,
       !0,
     );
-    var t = ModelManager_1.ModelManager.SequenceModel.CurSubtitle;
-    t.Subtitles && this.jZi(t);
   }
   async OnPlayingStartSequenceAsync() {
     this.OpenParam?.DisableAnim ||
@@ -575,51 +596,51 @@ class PlotSubtitleView extends UiTickViewBase_1.UiTickViewBase {
       this.Info.Name,
       !1,
     ),
-      this.RemoveScreenEffectPlotRoot(),
-      this.Mzi && this.Mzi.SetActive(!1),
-      this.Ypo(),
-      this.Qpo(),
-      this.Xpo(),
-      this.Jpo(),
-      this.fZi.EnableSkipButton(!1),
-      ModelManager_1.ModelManager.SequenceModel.CurSubtitle.Clear(),
-      this.CZi.SetActive(!1),
-      this.SetTextureByPath(DEFAULT_PATH, this.EZi),
-      this.SetTextureByPath(DEFAULT_PATH, this.yZi),
-      this.SetTextureByPath(DEFAULT_PATH, this.IZi),
-      (this.bZi = !1),
-      (this.PZi = 0),
-      this.ceo();
+      this.qfa?.Remove(),
+      (this.qfa = void 0),
+      this.GetItem(30).SetUIActive(!1);
   }
   async OnPlayingCloseSequenceAsync() {
     this.OpenParam?.DisableAnim ||
       (await this.PlaySequenceAsync("Close01", !0));
   }
   OnBeforeDestroy() {
-    this.Yzt.Clear(),
-      this.fZi?.OnClear(),
-      (this.fZi = void 0),
-      (this.DZi = void 0),
-      (this.RZi = void 0),
-      this.Mwn();
+    (ModelManager_1.ModelManager.PlotModel.OptionEnable = !0),
+      this.YZt.Clear(),
+      this.deo?.OnClear(),
+      (this.deo = void 0),
+      (this.Ieo = void 0),
+      (this.Teo = void 0),
+      this.SetTextureByPath(DEFAULT_PATH, this.veo),
+      this.SetTextureByPath(DEFAULT_PATH, this.Meo),
+      this.SetTextureByPath(DEFAULT_PATH, this.Eeo),
+      (this.xeo = !1),
+      (this.Reo = 0),
+      this.hto(),
+      this.RemoveScreenEffectPlotRoot(),
+      this.Gbn(),
+      this.Qvo(),
+      this.jvo(),
+      this.Wvo(),
+      this.Xvo();
   }
-  eeo(t) {
-    this.mZi?.SetUIActive(t);
+  Yeo(t) {
+    this._eo?.SetUIActive(t);
   }
-  veo(t) {
+  Cto(t) {
     this.GetItem(18).SetUIActive(t);
   }
-  VZi() {
+  Neo() {
     var t = ModelManager_1.ModelManager.PlotModel.PlotConfig,
       i = t.CanPause;
     this.GetExtendToggle(0).RootUIComp.SetUIActive(i),
       this.GetButton(16).RootUIComp.SetUIActive(i),
       this.GetButton(1).RootUIComp.SetUIActive(t.CanInteractive),
       (this.B8 = t.PlotLevel),
-      this.HZi(),
+      this.Oeo(),
       this.ResetSubtitle();
   }
-  HZi() {
+  Oeo() {
     var t = this.GetExtendToggle(0);
     ModelManager_1.ModelManager.PlotModel.PlotConfig.IsAutoPlay
       ? (t.SetToggleState(0), this.GetItem(14).SetUIActive(!0))
@@ -628,155 +649,168 @@ class PlotSubtitleView extends UiTickViewBase_1.UiTickViewBase {
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.PlotConfigChanged,
-      this.Ppo,
+      this.Rvo,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.HidePlotUi,
-        this.$Ji,
+        this.Qzi,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnInputAnyKey,
-        this.eUt,
+        this.rAt,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.PlotDoingTextShow,
-        this.xpo,
+        this.Uvo,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.PlotStartShowTalk,
-        this.Apo,
+        this.Dvo,
       ),
       SequenceController_1.SequenceController.Event.Add(
         UiAssistant_1.ESequenceEventName.UpdateSeqSubtitle,
-        this.jZi,
+        this.keo,
       ),
       SequenceController_1.SequenceController.Event.Add(
         UiAssistant_1.ESequenceEventName.HandlePlotOptionSelected,
-        this.kpo,
+        this.Gvo,
       ),
       SequenceController_1.SequenceController.Event.Add(
         UiAssistant_1.ESequenceEventName.HandleSeqSubtitleEnd,
-        this.Vpo,
+        this.Ovo,
       ),
       SequenceController_1.SequenceController.Event.Add(
         UiAssistant_1.ESequenceEventName.HandleSubSequenceStop,
-        this.Kpo,
+        this.Hvo,
       ),
       SequenceController_1.SequenceController.Event.Add(
         UiAssistant_1.ESequenceEventName.HandleIndependentSeqAudio,
-        this.$po,
+        this.Kvo,
       ),
-      this.fZi.AddEventListener(),
+      this.deo.AddEventListener(),
       InputDistributeController_1.InputDistributeController.BindTouch(
         InputMappingsDefine_1.touchIdMappings.Touch1,
-        this.reo,
+        this.eto,
       );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.PlotConfigChanged,
-      this.Ppo,
+      this.Rvo,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.HidePlotUi,
-        this.$Ji,
+        this.Qzi,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnInputAnyKey,
-        this.eUt,
+        this.rAt,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.PlotDoingTextShow,
-        this.xpo,
+        this.Uvo,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.PlotStartShowTalk,
-        this.Apo,
+        this.Dvo,
       ),
       SequenceController_1.SequenceController.Event.Remove(
         UiAssistant_1.ESequenceEventName.UpdateSeqSubtitle,
-        this.jZi,
+        this.keo,
       ),
       SequenceController_1.SequenceController.Event.Remove(
         UiAssistant_1.ESequenceEventName.HandlePlotOptionSelected,
-        this.kpo,
+        this.Gvo,
       ),
       SequenceController_1.SequenceController.Event.Remove(
         UiAssistant_1.ESequenceEventName.HandleSeqSubtitleEnd,
-        this.Vpo,
+        this.Ovo,
       ),
       SequenceController_1.SequenceController.Event.Remove(
         UiAssistant_1.ESequenceEventName.HandleSubSequenceStop,
-        this.Kpo,
+        this.Hvo,
       ),
       SequenceController_1.SequenceController.Event.Remove(
         UiAssistant_1.ESequenceEventName.HandleIndependentSeqAudio,
-        this.$po,
+        this.Kvo,
       ),
-      this.fZi.RemoveEventListener(),
+      this.deo.RemoveEventListener(),
       InputDistributeController_1.InputDistributeController.UnBindTouch(
         InputMappingsDefine_1.touchIdMappings.Touch1,
-        this.reo,
+        this.eto,
       );
   }
-  bpo() {
+  xvo() {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug("Plot", 18, "第一次点击，显示完整字幕"),
-      this.Mwn(),
+      this.Gbn(),
       this.GetScrollView(25)?.SetScrollProgress(1),
-      this.Czi.Stop(),
-      this.gzi.SetSelectorOffset(0),
-      (this.Spo.EnableSkipTime =
+      this.cZi.Stop(),
+      this.mZi.SetSelectorOffset(0),
+      (this.pvo.EnableSkipTime =
         TimeUtil_1.TimeUtil.GetServerTimeStamp() + TIME_SKIP_SEQ),
-      (this.Spo.ShowAllText = !0),
-      this.Spo.HasOption && this.Wpo();
+      (this.pvo.ShowAllText = !0),
+      this.pvo.HasOption && this.Vvo();
   }
-  Bpo() {
-    this.Spo.HasOption
-      ? this.Spo.ShowOption || this.Wpo()
+  Pvo() {
+    this.pvo.HasOption
+      ? this.pvo.ShowOption || this.Vvo()
       : (Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("Plot", 18, "第二次点击，跳到下一个镜头或字幕"),
-        (this.Spo.Skip = !0),
-        SequenceController_1.SequenceController.JumpToNextSubtitleOrChildSeq());
+        ControllerHolder_1.ControllerHolder.SequenceController.FinishSubtitle(
+          this.CurrentSubtitle.Id,
+        ));
   }
-  KZi() {
-    switch (this.Spo?.CurrentConfig?.Type) {
+  Nna() {
+    this.GetItem(27)?.SetUIActive(!1), this.GetItem(28)?.SetUIActive(!1);
+  }
+  kna() {
+    this.GetItem(27)?.SetUIActive(!0), this.GetItem(28)?.SetUIActive(!0);
+  }
+  Veo() {
+    switch (this.pvo?.CurrentConfig?.Type) {
       case "Option":
         this.ResetSubtitle(),
-          this.eeo(!1),
-          this.veo(!1),
-          (this.Spo.ShowAllText = !0);
+          this.Yeo(!1),
+          this.Cto(!1),
+          (this.pvo.ShowAllText = !0);
         break;
       case "CenterText":
-        this.zpo();
+        this.$vo();
         break;
       default:
-        this.Zpo(),
-          this.evo(
-            this.Mpo,
-            this.Spo.CurrentDelayTime,
-            this.Spo.CurrentAudioTransitionDuration,
+        this.Yvo(),
+          this.Jvo(
+            this.fvo,
+            this.pvo.CurrentDelayTime,
+            this.pvo.CurrentAudioTransitionDuration,
           ),
-          this.tvo();
+          this.zvo();
     }
   }
-  ivo() {
+  Zvo() {
     this.ResetSubtitle(),
-      this.Qpo(),
-      this.eeo(!1),
-      this.veo(!1),
-      this.Jpo(),
-      this.Spo.Clear();
+      this.jvo(),
+      this.Yeo(!1),
+      this.Cto(!1),
+      this.Xvo(),
+      this.pvo.Clear();
   }
-  Wpo() {
-    this.Spo?.HasOption &&
-      ((this.Spo.ShowOption = !0),
+  Vvo() {
+    this.pvo?.HasOption &&
+      (Log_1.Log.CheckDebug() &&
+        Log_1.Log.Debug("Plot", 27, "显示选项", [
+          "id",
+          this.CurrentSubtitle?.Id,
+        ]),
+      (ModelManager_1.ModelManager.PlotModel.OptionEnable = !0),
+      (this.pvo.ShowOption = !0),
       this.SetOptionsShow(!0),
-      (this.CurOption = this.XZi(this.CurrentSubtitle.Options)),
-      this.CZi.RefreshByData(this.Spo.CurrentConfig.Options, this.kZi),
-      this.tvo());
+      (this.CurOption = this.jeo(this.CurrentSubtitle.Options)),
+      this.ceo.RefreshByData(this.pvo.CurrentConfig.Options, this.Geo),
+      this.zvo());
   }
-  XZi(t) {
+  jeo(t) {
     var i = new Array();
     for (const e of t)
       ModelManager_1.ModelManager.PlotModel.CheckOptionCondition(
@@ -785,110 +819,110 @@ class PlotSubtitleView extends UiTickViewBase_1.UiTickViewBase {
       ) && i.push(e);
     return i;
   }
-  ovo() {
-    this.seo();
+  eMo() {
+    this.ito();
   }
-  evo(t, i, e) {
+  Jvo(t, i, e) {
     StringUtils_1.StringUtils.IsEmpty(t) ||
       ((t = StringUtils_1.StringUtils.IsEmpty(t)
         ? void 0
         : PlotAudioById_1.configPlotAudioById.GetConfig(t)) &&
-        ((this.Dpo = t),
-        (this.Tpo = TimeUtil_1.TimeUtil.GetServerTimeStamp() + i),
-        this.nvo()));
+        ((this.Ivo = t),
+        (this.Svo = TimeUtil_1.TimeUtil.GetServerTimeStamp() + i),
+        this.iMo()));
   }
-  tvo() {
+  zvo() {
     var t;
-    this.Jpo(),
+    this.Xvo(),
       !ModelManager_1.ModelManager.PlotModel.PlotConfig.CanInteractive ||
-      !this.Spo.HasSubtitle() ||
-      this.Spo.ShowOption
-        ? (this.eeo(!1), this.veo(!1))
+      !this.pvo.HasSubtitle() ||
+      this.pvo.ShowOption
+        ? (this.Yeo(!1), this.Cto(!1))
         : (t =
-              this.Spo.EnableSkipTime -
+              this.pvo.EnableSkipTime -
               TimeUtil_1.TimeUtil.GetServerTimeStamp()) < TimerSystem_1.MIN_TIME
-          ? (this.eeo(!0), this.veo(!1))
-          : (this.eeo(!1),
-            this.veo(!0),
-            (this.Ozi = TimerSystem_1.TimerSystem.Delay((t) => {
-              this.eeo(!0), this.veo(!1), (this.Ozi = void 0);
+          ? (this.Yeo(!0), this.Cto(!1))
+          : (this.Yeo(!1),
+            this.Cto(!0),
+            (this.qZi = TimerSystem_1.TimerSystem.Delay((t) => {
+              this.Yeo(!0), this.Cto(!1), (this.qZi = void 0);
             }, t)));
   }
-  Jpo() {
-    this.Ozi &&
-      (TimerSystem_1.TimerSystem.Has(this.Ozi) &&
-        TimerSystem_1.TimerSystem.Remove(this.Ozi),
-      (this.Ozi = void 0));
+  Xvo() {
+    this.qZi &&
+      (TimerSystem_1.TimerSystem.Has(this.qZi) &&
+        TimerSystem_1.TimerSystem.Remove(this.qZi),
+      (this.qZi = void 0));
   }
-  nvo() {
+  iMo() {
     var t;
-    this.Dpo &&
-      ((t = this.Tpo - TimeUtil_1.TimeUtil.GetServerTimeStamp()) <
+    this.Ivo &&
+      ((t = this.Svo - TimeUtil_1.TimeUtil.GetServerTimeStamp()) <
       TimerSystem_1.MIN_TIME
-        ? this.svo()
-        : (this.Lpo = TimerSystem_1.TimerSystem.Delay(() => {
-            this.Dpo && this.svo();
+        ? this.oMo()
+        : (this.yvo = TimerSystem_1.TimerSystem.Delay(() => {
+            this.Ivo && this.oMo();
           }, t)));
   }
-  svo() {
+  oMo() {
     var t =
         ExternalSourceSettingById_1.configExternalSourceSettingById.GetConfig(
-          this.Dpo.ExternalSourceSetting,
+          this.Ivo.ExternalSourceSetting,
         ),
       i = PlotAudioModel_1.PlotAudioModel.GetExternalSourcesMediaName([
-        this.Dpo.IsCheckSex,
-        this.Dpo.FileName,
+        this.Ivo.IsCheckSex,
+        this.Ivo.FileName,
       ]);
-    this.Yzt.Enable(),
+    this.YZt.Enable(),
       AudioController_1.AudioController.PostEventByExternalSourcesByUi(
         t.AudioEventPath,
         i,
         t.ExternalSrcName,
-        this.ypo,
+        this.Mvo,
         void 0,
         PlotTextLogic_1.PLAY_FLAG,
-        this.Yzt.AudioDelegate,
+        this.YZt.AudioDelegate,
       );
   }
-  Qpo() {
-    this.Dpo &&
+  jvo() {
+    this.Ivo &&
       (SequenceController_1.SequenceController.StopMouthAnim(),
-      this.Upo?.Remove(),
-      (this.Upo = void 0),
-      (this.Tpo = 0),
-      (this.Wht = 0),
-      this.Yzt.Disable(),
+      this.Lvo?.Remove(),
+      (this.Lvo = void 0),
+      (this.Svo = 0),
+      (this.r1t = 0),
+      this.YZt.Disable(),
       AudioController_1.AudioController.StopEvent(
-        this.ypo,
+        this.Mvo,
         !0,
         AUDIO_FADE_TIME,
       ),
-      this.avo(),
-      (this.Dpo = void 0));
+      this.rMo(),
+      (this.Ivo = void 0));
   }
-  avo() {
-    void 0 !== this.Lpo &&
-      (TimerSystem_1.TimerSystem.Has(this.Lpo) &&
-        TimerSystem_1.TimerSystem.Remove(this.Lpo),
-      (this.Lpo = void 0));
+  rMo() {
+    void 0 !== this.yvo &&
+      (TimerSystem_1.TimerSystem.Has(this.yvo) &&
+        TimerSystem_1.TimerSystem.Remove(this.yvo),
+      (this.yvo = void 0));
   }
-  Zpo() {
-    var t = this.Spo.CurrentConfig;
+  Yvo() {
+    var t = this.pvo.CurrentConfig;
     if ("LevelA" === this.B8) {
-      let t = PublicUtil_1.PublicUtil.GetFlowConfigLocalText(this.vpo);
+      let t = PublicUtil_1.PublicUtil.GetFlowConfigLocalText(this.gvo);
       StringUtils_1.StringUtils.IsEmpty(t) &&
         (ControllerHolder_1.ControllerHolder.FlowController.LogError(
           "字幕为空",
-          ["id", this.vpo],
+          ["id", this.gvo],
         ),
-        (t = this.vpo)),
+        (t = this.gvo)),
         (t = this.ParseSubtitle(t)),
         this.GetText(12).SetText(t),
         this.GetText(12).SetUIActive(!0),
         Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("Plot", 39, "A级", ["字幕：", t]);
     } else {
-      this.Meo(!0);
+      this.gto(!0);
       var i,
         e = this.GetText(4),
         s = this.GetText(15),
@@ -909,7 +943,7 @@ class PlotSubtitleView extends UiTickViewBase_1.UiTickViewBase {
               StringUtils_1.StringUtils.IsEmpty(t)
                 ? s.SetUIActive(!1)
                 : (s.SetUIActive(!0), s.SetText(t))),
-          PublicUtil_1.PublicUtil.GetFlowConfigLocalText(this.vpo)),
+          PublicUtil_1.PublicUtil.GetFlowConfigLocalText(this.gvo)),
         h = this.ParseSubtitle(h),
         e =
           (this.GetText(5).SetText(h),
@@ -917,100 +951,98 @@ class PlotSubtitleView extends UiTickViewBase_1.UiTickViewBase {
           this.GetText(5).GetDisplayCharLength());
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("Plot", 39, "B级", ["字幕：", h]),
-        this.Czi &&
+        this.cZi &&
           ((i =
             e /
             ModelManager_1.ModelManager.PlotModel.PlotGlobalConfig
               .TextAnimSpeedSeq),
-          this.gzi.SetSelectorOffset(1),
-          (this.Czi.GetPlayTween().duration = i),
-          this.Czi.Play()),
-        TimerSystem_1.TimerSystem.Next(this.vwn);
+          this.mZi.SetSelectorOffset(1),
+          (this.cZi.GetPlayTween().duration = i),
+          this.cZi.Play()),
+        TimerSystem_1.TimerSystem.Next(this.qbn);
     }
   }
-  Swn() {
+  Obn() {
     return ModelManager_1.ModelManager.PlotModel.PlotGlobalConfig
       .TextAnimSpeedSeq;
   }
-  Mwn() {
-    TimerSystem_1.TimerSystem.Has(this.fwn) &&
-      TimerSystem_1.TimerSystem.Remove(this.fwn),
-      TimerSystem_1.TimerSystem.Has(this.pwn) &&
-        TimerSystem_1.TimerSystem.Remove(this.pwn);
+  Gbn() {
+    TimerSystem_1.TimerSystem.Has(this.Bbn) &&
+      TimerSystem_1.TimerSystem.Remove(this.Bbn),
+      TimerSystem_1.TimerSystem.Has(this.bbn) &&
+        TimerSystem_1.TimerSystem.Remove(this.bbn);
   }
-  Opo() {
-    ControllerHolder_1.ControllerHolder.FlowController.FlowSequence.OnSubtitleStart(
-      this.Spo.CurrentConfig.Id,
-    ),
-      this.hvo(),
-      this.lvo(),
-      this._vo(),
-      this.yzi(this.Spo.CurrentConfig.TalkAkEvent),
-      this.KZi();
+  qvo() {
+    this.nMo(),
+      this.sMo(),
+      this.aMo(),
+      this.MZi(this.pvo.CurrentConfig.TalkAkEvent),
+      this.Veo();
   }
-  Hpo() {
-    "LevelB" === this.B8 && this.uvo() && this.Meo(!1), this.ivo(), this.ovo();
+  kvo() {
+    "LevelB" === this.B8 && this.hMo() && this.gto(!1), this.Zvo(), this.eMo();
   }
-  uvo() {
+  hMo() {
     var t =
       ControllerHolder_1.ControllerHolder.FlowController.FlowSequence.GetNextTalkItem();
     return (
       !t || "Option" === t?.Type || this.CurrentSubtitle?.WhoId !== t?.WhoId
     );
   }
-  zpo() {
+  $vo() {
     let t = void 0;
-    var i = this.vpo,
+    var i = this.gvo,
       i =
         ("" !== i
           ? ((t = PublicUtil_1.PublicUtil.GetFlowConfigLocalText(i)),
             (t = this.ParseSubtitle(t)))
           : ControllerHolder_1.ControllerHolder.FlowController.LogError(
               "该字幕没配置对白",
-              ["id", this.Spo.CurrentConfig.Id],
+              ["id", this.pvo.CurrentConfig.Id],
             ),
         ModelManager_1.ModelManager.PlotModel.CenterText);
     (i.Text = t),
       (i.AutoClose = !1),
-      (i.TalkAkEvent = this.Spo?.CurrentConfig?.TalkAkEvent),
-      (i.UniversalTone = this.Spo?.CurrentConfig?.UniversalTone),
+      (i.TalkAkEvent = this.pvo?.CurrentConfig?.TalkAkEvent),
+      (i.UniversalTone = this.pvo?.CurrentConfig?.UniversalTone),
       PlotController_1.PlotController.HandleShowCenterText(!0),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("Plot", 36, "Sequence黑幕监听日志-打开黑幕", [
           "subtitleKey",
-          this.vpo,
+          this.gvo,
         ]);
   }
-  Npo() {
+  bvo() {
     return !(
-      !this.Spo.HasSubtitle() ||
-      "CenterText" !== this.Spo.CurrentConfig.Type ||
-      (this.Ypo(),
+      !this.pvo.HasSubtitle() ||
+      "CenterText" !== this.pvo.CurrentConfig.Type ||
+      (this.Qvo(),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("Plot", 36, "Sequence黑幕监听日志-关闭黑幕"),
       0)
     );
   }
-  Ypo() {
+  Qvo() {
     UiManager_1.UiManager.IsViewOpen("PlotTransitionViewPop") &&
       UiManager_1.UiManager.CloseView("PlotTransitionViewPop");
   }
-  Xpo() {
-    AudioController_1.AudioController.StopEvent(this.Ipo);
+  Wvo() {
+    AudioController_1.AudioController.StopEvent(this.Evo);
   }
-  Fpo() {
-    (this.Spo.Skip = !0),
+  Nvo() {
+    (this.pvo.Skip = !0),
       SequenceController_1.SequenceController.JumpToNextSubtitleOrChildSeq();
   }
-  jpo() {
-    (this.Epo = !0), SequenceController_1.SequenceController.PauseSequence();
+  Fvo() {
+    (this.vvo = !0),
+      SequenceController_1.SequenceController.PauseSequence(PAUSE_REASON);
   }
-  wpo() {
-    SequenceController_1.SequenceController.ResumeSequence(),
-      (this.Epo = !1),
-      this.Hpo();
+  Avo() {
+    SequenceController_1.SequenceController.ResumeSequence(PAUSE_REASON),
+      (this.vvo = !1),
+      this.kvo();
   }
-  yzi(t) {
+  MZi(t) {
     var i, e, s;
     t &&
       (t.Type === IAction_1.EPostAkEvent.Global
@@ -1046,43 +1078,47 @@ class PlotSubtitleView extends UiTickViewBase_1.UiTickViewBase {
                 e,
               ])));
   }
-  hvo() {
-    this.vpo = this.Spo.CurrentConfig.TidTalk;
+  nMo() {
+    this.gvo = this.pvo.CurrentConfig.TidTalk;
   }
-  lvo() {
+  sMo() {
     (this.OptionKeys.length = 0),
       (this.OsList.length = 0),
-      this.Spo.CurrentConfig.Options?.forEach((t) => {
+      this.pvo.CurrentConfig.Options?.forEach((t) => {
         this.OptionKeys.push(t.TidTalkOption), this.OsList.push(t.Icon);
       });
   }
-  _vo() {
-    this.Mpo = this.Spo.CurrentConfig?.PlayVoice
-      ? this.Spo.CurrentConfig.TidTalk
+  aMo() {
+    this.fvo = this.pvo.CurrentConfig?.PlayVoice
+      ? this.pvo.CurrentConfig.TidTalk
       : void 0;
   }
-  seo() {
+  ito() {
     (this.CurOption.length = 0), this.SetOptionsShow(!1);
   }
   SetOptionsShow(t) {
-    t !== this.gZi &&
-      ((ModelManager_1.ModelManager.PlotModel.OptionEnable = t),
-      (this.gZi = t)
-        ? (this.CZi.SetActive(!0),
-          this.CZi.GetRootUiItem().SetRaycastTarget(!0),
-          this.UiViewSequence.PlaySequence("ChoiceStart"))
-        : (this.CZi.GetRootUiItem().SetRaycastTarget(!1),
-          this.UiViewSequence.PlaySequence("ChoiceClose")));
+    t !== this.meo &&
+      ((this.meo = t)
+        ? (this.ceo.SetActive(!0),
+          this.UiViewSequence.PlaySequence("ChoiceStart"),
+          this.GetItem(30).SetUIActive(!0),
+          (this.qfa = TimerSystem_1.TimerSystem.Delay(() => {
+            this.GetItem(30).SetUIActive(!1), (this.qfa = void 0);
+          }, ModelManager_1.ModelManager.PlotModel.PlotGlobalConfig.ProtectOptionTime)))
+        : (this.UiViewSequence.PlaySequence("ChoiceClose"),
+          this.GetItem(30).SetUIActive(!1),
+          this.qfa?.Remove(),
+          (this.qfa = void 0)));
   }
   ParseSubtitle(t) {
     return t
       ? ModelManager_1.ModelManager.PlotModel.PlotTextReplacer.Replace(t)
       : "";
   }
-  Gpo() {
+  Bvo() {
     return (
       !(
-        !this.Spo.HasSubtitle() || "CenterText" !== this.Spo.CurrentConfig.Type
+        !this.pvo.HasSubtitle() || "CenterText" !== this.pvo.CurrentConfig.Type
       ) || ModelManager_1.ModelManager.PlotModel.PlotConfig.IsAutoPlay
     );
   }
@@ -1091,27 +1127,27 @@ class PlotSubtitleView extends UiTickViewBase_1.UiTickViewBase {
       i = ScreenEffectSystem_1.ScreenEffectSystem.GetInstance();
     i?.IsValid() &&
       (i.GetScreenEffectPlotRoot(t),
-      (this.dZi = (0, puerts_1.$unref)(t)),
+      (this.ueo = (0, puerts_1.$unref)(t)),
       (i = this.GetItem(13)),
-      this.dZi?.IsValid()) &&
-      (this.dZi.K2_AttachRootComponentTo(i), Log_1.Log.CheckDebug()) &&
+      this.ueo?.IsValid()) &&
+      (this.ueo.K2_AttachRootComponentTo(i), Log_1.Log.CheckDebug()) &&
       Log_1.Log.Debug("Plot", 39, "PlotSubtitleView::AddScreenEffectPlotRoot");
   }
   RemoveScreenEffectPlotRoot() {
-    this.dZi?.IsValid() &&
-      (this.dZi.K2_DetachFromActor(), Log_1.Log.CheckDebug()) &&
+    this.ueo?.IsValid() &&
+      (this.ueo.K2_DetachFromActor(), Log_1.Log.CheckDebug()) &&
       Log_1.Log.Debug(
         "Plot",
         39,
         "PlotSubtitleView::RemoveScreenEffectPlotRoot",
       ),
-      (this.dZi = void 0);
+      (this.ueo = void 0);
   }
   GetOptionList() {
-    return this.CZi.GetLayoutItemList();
+    return this.ceo.GetLayoutItemList();
   }
   OnTick(t) {
-    this.wPn && this._eo(t);
+    this.cbn && this.sto(t);
   }
   SimulateClickSubtitle() {
     Info_1.Info.IsBuildDevelopmentOrDebug && this.OnBtnSubtitleSkipClick();
@@ -1119,118 +1155,130 @@ class PlotSubtitleView extends UiTickViewBase_1.UiTickViewBase {
   SimulateClickOption() {
     var t;
     Info_1.Info.IsBuildDevelopmentOrDebug &&
-      this.Spo.ShowOption &&
+      this.pvo.ShowOption &&
       ((t =
         ControllerHolder_1.ControllerHolder.FlowController.GetRecommendedOption()),
       (t = this.GetOptionList()[t])) &&
       t.OptionClick(!0);
   }
-  async DPn(t, i) {
-    var e = t.Subtitles?.BackgroundConfig;
+  async sbn(t, i) {
+    var e = t;
     if (e) {
       const o = new CustomPromise_1.CustomPromise();
       var s = () => {
         i && i(), o.SetResult();
       };
-      switch (((this.R5s = e.Type), e.Type)) {
+      switch (((this.vWs = e.Type), e.Type)) {
         case "Clean":
-          this.neo(!1, !0, void 0, s);
+          this.tto(!1, !0, void 0, s);
           break;
         case "Image":
           var h = e;
-          this.RemovePhotoAtOnce(), this.neo(!0, !0, h?.ImageAsset, s);
+          this.RemovePhotoAtOnce(), this.tto(!0, !0, h?.ImageAsset, s);
           break;
         case "Icon":
           h = e;
-          this.RemovePhotoAtOnce(), this.neo(!0, !1, h?.ImageAsset, s);
+          this.RemovePhotoAtOnce(), this.tto(!0, !1, h?.ImageAsset, s);
           break;
         default:
           s();
       }
       await o.Promise;
     } else
-      "Clean" === this.R5s && this.RemovePhotoAtOnce(),
-        (this.R5s = void 0),
+      "Clean" === this.vWs && this.RemovePhotoAtOnce(),
+        (this.vWs = void 0),
         i && i();
   }
-  Seo() {
-    this.wPn = !0;
+  fto() {
+    this.cbn = !0;
   }
-  ceo() {
-    this.wPn = !1;
+  hto() {
+    this.cbn = !1;
   }
-  ueo() {
-    var t = MathUtils_1.MathUtils.GetRangePct(0, FADE_TIME, this.PZi);
-    if (this.bZi && this.wZi) this.yZi.SetAlpha(t);
+  ato() {
+    var t = MathUtils_1.MathUtils.GetRangePct(0, FADE_TIME, this.Reo);
+    if (this.xeo && this.Aeo) this.Meo.SetAlpha(t);
     else {
-      if (!this.wZi && this.EZi.GetAlpha() <= 0) return 0;
-      this.EZi.SetAlpha(t);
+      if (!this.Aeo && this.veo.GetAlpha() <= 0) return 0;
+      this.veo.SetAlpha(t);
     }
     return t;
   }
-  deo() {
-    var t = MathUtils_1.MathUtils.GetRangePct(0, FADE_TIME, this.PZi);
-    return !this.wZi && this.IZi.GetAlpha() <= 0
+  _to() {
+    var t = MathUtils_1.MathUtils.GetRangePct(0, FADE_TIME, this.Reo);
+    return !this.Aeo && this.Eeo.GetAlpha() <= 0
       ? 0
-      : (this.IZi.SetAlpha(t), t);
+      : (this.Eeo.SetAlpha(t), t);
   }
   async FadeInBgPhoto(t, i) {
-    (this.RZi = new CustomPromise_1.CustomPromise()),
-      (this.wZi = !0),
-      (this.PZi = 0),
-      this.bZi
+    (this.Teo = new CustomPromise_1.CustomPromise()),
+      (this.Aeo = !0),
+      (this.Reo = 0),
+      this.xeo
         ? t
-          ? this.SetTextureByPath(t, this.yZi, void 0, () => {
-              (this.UZi = i), this.Seo();
+          ? this.SetTextureByPath(t, this.Meo, void 0, () => {
+              (this.Leo = i), this.fto();
             })
-          : this.SetTextureByPath(DEFAULT_PATH, this.yZi, void 0, () => {
-              (this.UZi = i), this.Seo();
+          : this.SetTextureByPath(DEFAULT_PATH, this.Meo, void 0, () => {
+              (this.Leo = i), this.fto();
             })
         : t
-          ? this.SetTextureByPath(t, this.EZi, void 0, () => {
-              (this.UZi = i), this.Seo();
+          ? this.SetTextureByPath(t, this.veo, void 0, () => {
+              (this.Leo = i), this.fto();
             })
-          : this.SetTextureByPath(DEFAULT_PATH, this.EZi, void 0, () => {
-              (this.UZi = i), this.Seo();
+          : this.SetTextureByPath(DEFAULT_PATH, this.veo, void 0, () => {
+              (this.Leo = i), this.fto();
             }),
-      await this.RZi.Promise;
+      await this.Teo.Promise;
   }
   async FadeOutBgPhoto(t) {
-    (this.PZi = FADE_TIME),
-      (this.UZi = t),
-      (this.DZi = new CustomPromise_1.CustomPromise()),
-      this.Seo(),
-      await this.DZi.Promise;
+    (this.Reo = FADE_TIME),
+      (this.Leo = t),
+      (this.Ieo = new CustomPromise_1.CustomPromise()),
+      this.fto(),
+      await this.Ieo.Promise;
   }
   async FadeInBgPhotoMiddle(t, i) {
-    (this.RZi = new CustomPromise_1.CustomPromise()),
-      (this.wZi = !0),
-      (this.PZi = 0),
+    (this.Teo = new CustomPromise_1.CustomPromise()),
+      (this.Aeo = !0),
+      (this.Reo = 0),
       t
-        ? this.SetTextureByPath(t, this.IZi, void 0, () => {
-            this.TZi?.SetUIActive(!0), (this.UZi = i), this.Seo();
+        ? this.SetTextureByPath(t, this.Eeo, void 0, () => {
+            this.Seo?.SetUIActive(!0), (this.Leo = i), this.fto();
           })
         : (Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn("BlackScreen", 46, "PlotView设置图片,但未找到Path"),
-          this.SetTextureByPath(DEFAULT_PATH, this.IZi, void 0, () => {
-            (this.UZi = i), this.Seo();
+          this.SetTextureByPath(DEFAULT_PATH, this.Eeo, void 0, () => {
+            (this.Leo = i), this.fto();
           })),
-      await this.RZi.Promise;
+      await this.Teo.Promise;
   }
   async FadeOutBgPhotoMiddle(t) {
-    (this.PZi = FADE_TIME),
-      (this.UZi = t),
-      (this.DZi = new CustomPromise_1.CustomPromise()),
-      this.Seo(),
-      await this.DZi.Promise;
+    (this.Reo = FADE_TIME),
+      (this.Leo = t),
+      (this.Ieo = new CustomPromise_1.CustomPromise()),
+      this.fto(),
+      await this.Ieo.Promise;
   }
   async RemovePhotoAtOnce() {
-    this.ceo(),
-      (this.PZi = 0),
-      this._eo(0),
-      (this.UZi = void 0),
-      await this.RZi?.Promise;
+    this.hto(),
+      (this.Reo = 0),
+      this.sto(0),
+      (this.Leo = void 0),
+      await this.Teo?.Promise;
+  }
+  async OpenBackgroundUi(t) {
+    var i;
+    "" === t
+      ? Log_1.Log.CheckWarn() &&
+        Log_1.Log.Warn("Plot", 46, "尝试打开预览图但uiName为空")
+      : (await (i = new SonUiItem()).OpenAsync(this.rca, t),
+        this.oca && (await this.CloseBackgroundUi()),
+        (this.oca = i));
+  }
+  async CloseBackgroundUi() {
+    this.oca && (await this.oca.CloseAsync());
   }
 }
-(exports.PlotSubtitleView = PlotSubtitleView).rvo = void 0;
+(exports.PlotSubtitleView = PlotSubtitleView).tMo = void 0;
 //# sourceMappingURL=PlotSubtitleView.js.map

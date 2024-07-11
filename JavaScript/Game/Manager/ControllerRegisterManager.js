@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ControllerRegisterManager = void 0);
-const Log_1 = require("../../Core/Common/Log"),
+const Info_1 = require("../../Core/Common/Info"),
+  Log_1 = require("../../Core/Common/Log"),
   GameBudgetInterfaceController_1 = require("../../Core/GameBudgetAllocator/GameBudgetInterfaceController"),
   AiModelController_1 = require("../AI/Common/AiModelController"),
   TestModuleBridge_1 = require("../Bridge/TestModuleBridge"),
@@ -24,6 +25,7 @@ const Log_1 = require("../../Core/Common/Log"),
   FormationAttributeController_1 = require("../Module/Abilities/FormationAttributeController"),
   FormationDataController_1 = require("../Module/Abilities/FormationDataController"),
   AchievementController_1 = require("../Module/Achievement/AchievementController"),
+  MoonChasingController_1 = require("../Module/Activity/ActivityContent/MoonChasing/Main/MoonChasingController"),
   ActivityController_1 = require("../Module/Activity/ActivityController"),
   AdventureGuideController_1 = require("../Module/AdventureGuide/AdventureGuideController"),
   AdviceController_1 = require("../Module/Advice/AdviceController"),
@@ -50,7 +52,6 @@ const Log_1 = require("../../Core/Common/Log"),
   RoleSceneInteractController_1 = require("../Module/CombatMessage/RoleSceneInteractController"),
   SkillMessageController_1 = require("../Module/CombatMessage/SkillMessageController"),
   ComboTeachingController_1 = require("../Module/ComboTeach/ComboTeachingController"),
-  FeatureRestrictionTemplate_1 = require("../Module/Common/FeatureRestrictionTemplate"),
   CommonInputViewController_1 = require("../Module/Common/InputView/Controller/CommonInputViewController"),
   ConfirmBoxController_1 = require("../Module/ConfirmBox/ConfirmBoxController"),
   ControlScreenController_1 = require("../Module/ControlScreen/ControlScreenController"),
@@ -131,7 +132,6 @@ const Log_1 = require("../../Core/Common/Log"),
   PlotController_1 = require("../Module/Plot/PlotController"),
   SequenceController_1 = require("../Module/Plot/Sequence/SequenceController"),
   PowerController_1 = require("../Module/Power/PowerController"),
-  ProtocolMonitorController_1 = require("../Module/ProtocolMonitor/ProtocolMonitorController"),
   QuestController_1 = require("../Module/QuestNew/Controller/QuestController"),
   ReConnectController_1 = require("../Module/ReConnect/ReConnectController"),
   ReportController_1 = require("../Module/Report/ReportController"),
@@ -168,6 +168,7 @@ const Log_1 = require("../../Core/Common/Log"),
   CharacterController_1 = require("../NewWorld/Character/CharacterController"),
   CharacterShadowController_1 = require("../NewWorld/Character/CharacterShadowController"),
   DynamicFlowController_1 = require("../NewWorld/Character/Common/Component/Flow/DynamicFlowController"),
+  PerformGroupStateController_1 = require("../NewWorld/Character/Npc/Controller/PerformGroupStateController"),
   RoleAudioController_1 = require("../NewWorld/Character/Role/RoleAudioController"),
   RoleTriggerController_1 = require("../NewWorld/Character/Role/RoleTriggerController"),
   SceneItemBuffController_1 = require("../NewWorld/SceneItem/Controller/SceneItemBuffController"),
@@ -178,9 +179,11 @@ const Log_1 = require("../../Core/Common/Log"),
   LguiEventSystemController_1 = require("../Ui/LguiEventSystem/LguiEventSystemController"),
   CombatDebugController_1 = require("../Utils/CombatDebugController"),
   CombatDebugDrawController_1 = require("../Utils/CombatDebugDrawController"),
+  AceAntiCheatController_1 = require("../World/Controller/AceAntiCheatController"),
   AoiController_1 = require("../World/Controller/AoiController"),
   AttachToActorController_1 = require("../World/Controller/AttachToActorController"),
   BlackboardController_1 = require("../World/Controller/BlackboardController"),
+  BpActorController_1 = require("../World/Controller/BpActorController"),
   ComponentForceTickController_1 = require("../World/Controller/ComponentForceTickController"),
   CreatureController_1 = require("../World/Controller/CreatureController"),
   GameModeController_1 = require("../World/Controller/GameModeController"),
@@ -192,6 +195,7 @@ const Log_1 = require("../../Core/Common/Log"),
   WorldController_1 = require("../World/Controller/WorldController"),
   WorldDebugController_1 = require("../World/Controller/WorldDebugController"),
   EnvironmentalPerceptionController_1 = require("../World/Enviroment/EnvironmentalPerceptionController"),
+  PlayerVelocityController_1 = require("../World/Controller/PlayerVelocityController"),
   ControllerHolder_1 = require("./ControllerHolder"),
   ControllerManager_1 = require("./ControllerManager");
 class ControllerRegisterManager {
@@ -214,8 +218,9 @@ class ControllerRegisterManager {
         !1);
   }
   static OnInit() {
-    (ControllerHolder_1.ControllerHolder.ApplicationController =
-      ApplicationController_1.ApplicationController),
+    return (
+      (ControllerHolder_1.ControllerHolder.ApplicationController =
+        ApplicationController_1.ApplicationController),
       this.qp(ApplicationController_1.ApplicationController),
       (ControllerHolder_1.ControllerHolder.AreaController =
         AreaController_1.AreaController),
@@ -358,6 +363,9 @@ class ControllerRegisterManager {
       (ControllerHolder_1.ControllerHolder.AoiController =
         AoiController_1.AoiController),
       this.qp(AoiController_1.AoiController),
+      (ControllerHolder_1.ControllerHolder.AceAntiCheatController =
+        AceAntiCheatController_1.AceAntiCheatController),
+      this.qp(AceAntiCheatController_1.AceAntiCheatController),
       (ControllerHolder_1.ControllerHolder.PreloadController =
         PreloadController_1.PreloadController),
       this.qp(PreloadController_1.PreloadController),
@@ -367,6 +375,9 @@ class ControllerRegisterManager {
       (ControllerHolder_1.ControllerHolder.WorldController =
         WorldController_1.WorldController),
       this.qp(WorldController_1.WorldController),
+      (ControllerHolder_1.ControllerHolder.BpActorController =
+        BpActorController_1.BpActorController),
+      this.qp(BpActorController_1.BpActorController),
       (ControllerHolder_1.ControllerHolder.AttachToActorController =
         AttachToActorController_1.AttachToActorController),
       this.qp(AttachToActorController_1.AttachToActorController),
@@ -432,9 +443,6 @@ class ControllerRegisterManager {
       (ControllerHolder_1.ControllerHolder.MarqueeController =
         MarqueeController_1.MarqueeController),
       this.qp(MarqueeController_1.MarqueeController),
-      (ControllerHolder_1.ControllerHolder.ProtocolMonitorController =
-        ProtocolMonitorController_1.ProtocolMonitorController),
-      this.qp(ProtocolMonitorController_1.ProtocolMonitorController),
       (ControllerHolder_1.ControllerHolder.TrackController =
         TrackController_1.TrackController),
       this.qp(TrackController_1.TrackController),
@@ -731,6 +739,9 @@ class ControllerRegisterManager {
       (ControllerHolder_1.ControllerHolder.DynamicFlowController =
         DynamicFlowController_1.DynamicFlowController),
       this.qp(DynamicFlowController_1.DynamicFlowController),
+      (ControllerHolder_1.ControllerHolder.PerformGroupStateController =
+        PerformGroupStateController_1.PerformGroupStateController),
+      this.qp(PerformGroupStateController_1.PerformGroupStateController),
       (ControllerHolder_1.ControllerHolder.GamepadController =
         GamepadController_1.GamepadController),
       this.qp(GamepadController_1.GamepadController),
@@ -763,28 +774,31 @@ class ControllerRegisterManager {
       (ControllerHolder_1.ControllerHolder.FragmentMemoryController =
         FragmentMemoryController_1.FragmentMemoryController),
       this.qp(FragmentMemoryController_1.FragmentMemoryController),
+      (ControllerHolder_1.ControllerHolder.MoonChasingController =
+        MoonChasingController_1.MoonChasingController),
+      this.qp(MoonChasingController_1.MoonChasingController),
+      (ControllerHolder_1.ControllerHolder.PlayerVelocityController =
+        PlayerVelocityController_1.PlayerVelocityController),
+      this.qp(PlayerVelocityController_1.PlayerVelocityController),
       (ControllerHolder_1.ControllerHolder.SceneItemMoveController =
         SecenItemMoveController_1.SceneItemMoveController),
       this.qp(SecenItemMoveController_1.SceneItemMoveController),
-      this.qp(ServerGmController_1.ServerGmController);
-    var r =
-      FeatureRestrictionTemplate_1.FeatureRestrictionTemplate
-        .TemplateForPioneerClient;
-    return (
+      this.qp(ServerGmController_1.ServerGmController),
       "true" ===
         PackageConfigUtil_1.PackageConfigUtil.GetPackageConfigOrDefault(
           "WaterMask",
           "false",
-        ) &&
-        r.Check() &&
-        this.qp(WaterMaskController_1.WaterMaskView),
-      TestModuleBridge_1.TestModuleBridge.TryGetTestModuleExports().then(
-        (r) => {
-          r &&
-            r.GmController &&
-            (this.qp(r.GmController), r.GmController.Init());
-        },
-      ),
+        ) && this.qp(WaterMaskController_1.WaterMaskView),
+      Info_1.Info.IsBuildShipping ||
+        TestModuleBridge_1.TestModuleBridge.TryGetTestModuleExports().then(
+          (r) => {
+            r &&
+              r.GmController &&
+              (this.qp(r.GmController),
+              this.PBe(r.GmController),
+              r.GmController.Init());
+          },
+        ),
       this.qp(CommonInputViewController_1.CommonInputViewController),
       !0
     );
@@ -837,6 +851,8 @@ class ControllerRegisterManager {
       this.PBe(
         MultiInteractionActorController_1.MultiInteractionActorController,
       ),
+      this.PBe(BpActorController_1.BpActorController),
+      this.PBe(PlayerVelocityController_1.PlayerVelocityController),
       !0
     );
   }

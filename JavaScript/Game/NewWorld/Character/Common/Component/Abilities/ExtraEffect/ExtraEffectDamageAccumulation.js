@@ -8,42 +8,42 @@ const BulletController_1 = require("../../../../../Bullet/BulletController"),
 class DamageAccumulation extends ExtraEffectBase_1.BuffEffect {
   constructor() {
     super(...arguments),
-      (this.aQo = 0),
-      (this.hQo = 0),
-      (this.lQo = 0),
-      (this._Qo = void 0),
-      (this.uQo = 0),
-      (this.cQo = -0),
+      (this.rXo = 0),
+      (this.nXo = 0),
+      (this.sXo = 0),
+      (this.aXo = void 0),
+      (this.hXo = 0),
+      (this.lXo = -0),
       (this.ine = void 0);
   }
   InitParameters(t) {
     var t = t.ExtraEffectParameters,
       e =
-        ((this.hQo = Number(t[0])),
-        (this.lQo = Number(t[1])),
-        (this._Qo = t[2].split("#").map((t) => BigInt(t))),
+        ((this.nXo = Number(t[0])),
+        (this.sXo = Number(t[1])),
+        (this.aXo = t[2].split("#").map((t) => BigInt(t))),
         (t[3] ?? "").split("#").map((t) => Number(t)));
-    for (const i of e) this.uQo |= 1 << i;
+    for (const i of e) this.hXo |= 1 << i;
     var s = (t[4] ?? "").split("#").map((t) => Number(t));
     switch (s.length) {
       case 1:
-        this.cQo = s[0];
+        this.lXo = s[0];
         break;
       case 2:
-        (this.ine = s[0]), (this.cQo = s[1]);
+        (this.ine = s[0]), (this.lXo = s[1]);
     }
   }
   OnCreated() {
-    this.mQo(0);
+    this._Xo(0);
   }
   OnRemoved(t) {
-    t ? this.mQo(2) : this.mQo(1);
+    t ? this._Xo(2) : this._Xo(1);
   }
   OnStackDecreased(t, e, s) {
-    t < e && this.mQo(3);
+    t < e && this._Xo(3);
   }
   OnExecute(t, e) {
-    t === this.hQo && ((this.aQo += e.Damage), this.mQo(0));
+    t === this.nXo && ((this.rXo += e.Damage), this._Xo(0));
   }
   static ApplyEffects(t, e, s, i) {
     var r,
@@ -56,42 +56,42 @@ class DamageAccumulation extends ExtraEffectBase_1.BuffEffect {
     }
   }
   static GetAccumulation(t) {
-    var e = this.dQo.get(t) ?? 0;
-    return this.dQo.delete(t), e;
+    var e = this.uXo.get(t) ?? 0;
+    return this.uXo.delete(t), e;
   }
-  CQo(t) {
-    return !!(this.uQo & (1 << t));
+  cXo(t) {
+    return !!(this.hXo & (1 << t));
   }
-  mQo(t) {
-    if (this.CQo(t))
+  _Xo(t) {
+    if (this.cXo(t))
       switch (t) {
         case 0: {
           let t = 0;
           var e;
           (t = this.ine
-            ? ((e = this.cQo * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND),
-              this.OwnerEntity.GetComponent(156)?.GetBaseValue(this.ine) * e)
-            : this.cQo) < this.aQo && this.gQo();
+            ? ((e = this.lXo * CharacterAttributeTypes_1.DIVIDED_TEN_THOUSAND),
+              this.OwnerEntity.GetComponent(158)?.GetBaseValue(this.ine) * e)
+            : this.lXo) < this.rXo && this.mXo();
           break;
         }
         default:
-          this.gQo();
+          this.mXo();
       }
   }
-  gQo() {
-    switch (this.lQo) {
+  mXo() {
+    switch (this.sXo) {
       case 1:
-        this.fQo();
+        this.dXo();
         break;
       case 0:
-        this.pQo();
+        this.CXo();
     }
-    this.aQo = 0;
+    this.rXo = 0;
   }
-  pQo() {
+  CXo() {
     var t = this.OwnerBuffComponent.GetBuffByHandle(this.ActiveHandleId);
     if (t?.IsValid())
-      for (const e of this._Qo)
+      for (const e of this.aXo)
         this.OwnerBuffComponent.AddIterativeBuff(
           e,
           t,
@@ -100,12 +100,12 @@ class DamageAccumulation extends ExtraEffectBase_1.BuffEffect {
           `因为其它buff额外效果而移除（前置buff Id=${this.BuffId}, handle=${this.ActiveHandleId}）`,
         );
   }
-  fQo() {
+  dXo() {
     var e = this.OwnerEntity.GetComponent(3)?.ActorTransform,
       s = this.InstigatorEntity.Entity.GetComponent(3)?.Actor;
     if (e && s) {
       var i = this.Buff.MessageId;
-      for (const a of this._Qo)
+      for (const a of this.aXo)
         for (
           let t = 0;
           t < ExtraEffectPassiveEffects_1.DEFAULT_PASSIVE_BULLET_TIMES;
@@ -118,10 +118,10 @@ class DamageAccumulation extends ExtraEffectBase_1.BuffEffect {
             {},
             i,
           );
-          r && DamageAccumulation.dQo.set(r.Id, this.aQo);
+          r && DamageAccumulation.uXo.set(r.Id, this.rXo);
         }
     }
   }
 }
-(exports.DamageAccumulation = DamageAccumulation).dQo = new Map();
+(exports.DamageAccumulation = DamageAccumulation).uXo = new Map();
 //# sourceMappingURL=ExtraEffectDamageAccumulation.js.map

@@ -14,12 +14,12 @@ const UE = require("ue"),
 class SelectedFriendChatView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.pEt = void 0),
-      (this.z9e = () => {
+      (this.Ayt = void 0),
+      (this.cHe = () => {
         var e = new SelectedFriendItem_1.SelectedFriendItem();
-        return e.BindOnClicked(this.vEt), e;
+        return e.BindOnClicked(this.Pyt), e;
       }),
-      (this.vEt = (e) => {
+      (this.Pyt = (e) => {
         Log_1.Log.CheckInfo() &&
           Log_1.Log.Info("Chat", 8, "选择玩家", ["playerId", e]),
           ModelManager_1.ModelManager.FriendModel.IsMyFriend(e)
@@ -43,15 +43,15 @@ class SelectedFriendChatView extends UiViewBase_1.UiViewBase {
   }
   OnStart() {
     var e = this.GetItem(1).GetOwner();
-    (this.pEt = new LoopScrollView_1.LoopScrollView(
+    (this.Ayt = new LoopScrollView_1.LoopScrollView(
       this.GetLoopScrollViewComponent(0),
       e,
-      this.z9e,
+      this.cHe,
     )),
       this.bl();
   }
   OnBeforeDestroy() {
-    this.pEt = void 0;
+    this.Ayt = void 0;
   }
   bl() {
     var e = ModelManager_1.ModelManager.FriendModel,
@@ -59,7 +59,7 @@ class SelectedFriendChatView extends UiViewBase_1.UiViewBase {
       i = [];
     for (const t of e.GetFriendSortedListIds())
       r.IsInPrivateChatRoom(t) || e.HasBlockedPlayer(t) || i.push(t);
-    this.pEt.ReloadData(i), this.GetItem(2).SetUIActive(i.length <= 0);
+    this.Ayt.ReloadData(i), this.GetItem(2).SetUIActive(i.length <= 0);
   }
 }
 exports.SelectedFriendChatView = SelectedFriendChatView;

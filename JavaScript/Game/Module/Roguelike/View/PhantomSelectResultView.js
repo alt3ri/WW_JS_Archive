@@ -10,10 +10,10 @@ const ConfigManager_1 = require("../../../Manager/ConfigManager"),
 class PhantomSelectResultView extends RogueSelectResultBaseView_1.RogueSelectResultBaseView {
   constructor() {
     super(...arguments),
-      (this.Xso = void 0),
-      (this.Dao = void 0),
-      (this.Rao = void 0),
-      (this.Uao = () => {
+      (this.jao = void 0),
+      (this.yho = void 0),
+      (this.Iho = void 0),
+      (this.Tho = () => {
         return new PhantomSelectItem_1.PhantomSelectItem(!1);
       }),
       (this.OnDescModelChange = () => {
@@ -24,23 +24,23 @@ class PhantomSelectResultView extends RogueSelectResultBaseView_1.RogueSelectRes
     var e = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
       RoguelikeDefine_1.PHANTOM_SELECT_ITEM,
     );
-    this.Rao = await UiActorPool_1.UiActorPool.GetAsync(e);
+    this.Iho = await UiActorPool_1.UiActorPool.GetAsync(e);
   }
   OnStart() {
     super.OnStart(),
-      (this.Xso = this.OpenParam),
-      this.Rao.UiItem.SetUIParent(
+      (this.jao = this.OpenParam),
+      this.Iho.UiItem.SetUIParent(
         this.GetHorizontalLayout(3).GetRootComponent(),
       ),
-      (this.Dao = new GenericLayout_1.GenericLayout(
+      (this.yho = new GenericLayout_1.GenericLayout(
         this.GetHorizontalLayout(3),
-        this.Uao,
+        this.Tho,
       ));
   }
   OnBeforeDestroy() {
-    this.Rao &&
+    this.Iho &&
       UiActorPool_1.UiActorPool.RecycleAsync(
-        this.Rao,
+        this.Iho,
         RoguelikeDefine_1.PHANTOM_SELECT_ITEM,
       );
   }
@@ -48,13 +48,13 @@ class PhantomSelectResultView extends RogueSelectResultBaseView_1.RogueSelectRes
     this.Refresh();
   }
   Refresh() {
-    this.Aao(), this.RefreshTitleText();
+    this.Lho(), this.RefreshTitleText();
   }
-  Aao() {
-    this.Dao.RefreshByData([this.Xso.NewRogueGainEntry]);
+  Lho() {
+    this.yho.RefreshByData([this.jao.NewRogueGainEntry]);
   }
   RefreshTitleText() {
-    void 0 === this.Xso.OldRogueGainEntry
+    void 0 === this.jao.OldRogueGainEntry
       ? this.GetText(4).ShowTextNew(RoguelikeDefine_1.ROGUELIKEVIEW_25_TEXT)
       : this.GetText(4).ShowTextNew(RoguelikeDefine_1.ROGUELIKEVIEW_19_TEXT);
   }

@@ -10,13 +10,13 @@ const ue_1 = require("ue"),
 class InstanceDungeonEntranceRewardItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(),
-      (this.Jai = void 0),
-      (this.zai = !0),
-      (this.Zai = 0),
-      (this.ehi = () => {
+      (this.Jhi = void 0),
+      (this.zhi = !0),
+      (this.Zhi = 0),
+      (this.eli = () => {
         return new CommonItemSmallItemGrid_1.CommonItemSmallItemGrid();
       }),
-      (this.uke = () => {
+      (this.R2e = () => {
         UiManager_1.UiManager.OpenView("InstanceDungeonReward");
       });
   }
@@ -30,24 +30,24 @@ class InstanceDungeonEntranceRewardItem extends UiPanelBase_1.UiPanelBase {
       [5, ue_1.UIItem],
       [6, ue_1.UIItem],
     ]),
-      (this.BtnBindInfo = [[1, this.uke]]);
+      (this.BtnBindInfo = [[1, this.R2e]]);
   }
   OnStart() {
-    this.Jai = new GenericScrollViewNew_1.GenericScrollViewNew(
+    this.Jhi = new GenericScrollViewNew_1.GenericScrollViewNew(
       this.GetScrollViewWithScrollbar(0),
-      this.ehi,
+      this.eli,
     );
   }
   OnBeforeDestroy() {
-    this.Jai && (this.Jai = void 0);
+    this.Jhi && (this.Jhi = void 0);
   }
   RefreshReward(e, t) {
-    (this.zai = t),
-      this.Jai.RefreshByDataAsync(e).then(() => {
+    (this.zhi = t),
+      this.Jhi.RefreshByDataAsync(e).then(() => {
         let t = 0;
-        this.Jai?.GetScrollItemList().forEach((e) => {
-          e.SetReceivedVisible(!this.zai),
-            e.SetFirstRewardVisible(t++ < this.Zai);
+        this.Jhi?.GetScrollItemList().forEach((e) => {
+          e.SetReceivedVisible(!this.zhi),
+            e.SetFirstRewardVisible(t++ < this.Zhi);
         });
       });
   }
@@ -69,7 +69,7 @@ class InstanceDungeonEntranceRewardItem extends UiPanelBase_1.UiPanelBase {
         LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(4), e[0], e[1], e[2]));
   }
   SetFirstRewardLength(e) {
-    this.Zai = e;
+    this.Zhi = e;
   }
 }
 exports.InstanceDungeonEntranceRewardItem = InstanceDungeonEntranceRewardItem;

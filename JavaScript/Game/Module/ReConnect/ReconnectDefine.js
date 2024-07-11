@@ -8,33 +8,34 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
       void 0);
 const UE = require("ue");
 var EReconnectProcessStep, ELogoutReason, EBackLoginViewReason;
-!(function (o) {
-  (o[(o.ConvGate = 0)] = "ConvGate"),
-    (o[(o.ConvRet = 1)] = "ConvRet"),
-    (o[(o.ProtoKeyReq = 2)] = "ProtoKeyReq"),
-    (o[(o.ProtoKeyRet = 3)] = "ProtoKeyRet"),
-    (o[(o.ReconvReq = 4)] = "ReconvReq"),
-    (o[(o.ReconvRet = 5)] = "ReconvRet"),
-    (o[(o.ReconvCancel = 6)] = "ReconvCancel"),
-    (o[(o.ReconvSuccess = 7)] = "ReconvSuccess"),
-    (o[(o.ReconvFail = 8)] = "ReconvFail"),
-    (o[(o.Max = 9)] = "Max");
+!(function (e) {
+  (e[(e.ConvGate = 0)] = "ConvGate"),
+    (e[(e.ConvRet = 1)] = "ConvRet"),
+    (e[(e.ProtoKeyReq = 2)] = "ProtoKeyReq"),
+    (e[(e.ProtoKeyRet = 3)] = "ProtoKeyRet"),
+    (e[(e.ReconvReq = 4)] = "ReconvReq"),
+    (e[(e.ReconvRet = 5)] = "ReconvRet"),
+    (e[(e.ReconvCancel = 6)] = "ReconvCancel"),
+    (e[(e.ReconvSuccess = 7)] = "ReconvSuccess"),
+    (e[(e.ReconvFail = 8)] = "ReconvFail"),
+    (e[(e.Max = 9)] = "Max");
 })(
   (EReconnectProcessStep =
     exports.EReconnectProcessStep || (exports.EReconnectProcessStep = {})),
 ),
-  (function (o) {
-    (o[(o.GmBackLoginView = 0)] = "GmBackLoginView"),
-      (o[(o.LogoutNotify = 1)] = "LogoutNotify"),
-      (o[(o.SdkLogoutAccount = 2)] = "SdkLogoutAccount"),
-      (o[(o.LoginViewQuit = 3)] = "LoginViewQuit"),
-      (o[(o.NetWorkMaskViewBackBtn = 4)] = "NetWorkMaskViewBackBtn"),
-      (o[(o.ExitGameConfirmBox = 5)] = "ExitGameConfirmBox");
+  (function (e) {
+    (e[(e.GmBackLoginView = 0)] = "GmBackLoginView"),
+      (e[(e.LogoutNotify = 1)] = "LogoutNotify"),
+      (e[(e.SdkLogoutAccount = 2)] = "SdkLogoutAccount"),
+      (e[(e.LoginViewQuit = 3)] = "LoginViewQuit"),
+      (e[(e.NetWorkMaskViewBackBtn = 4)] = "NetWorkMaskViewBackBtn"),
+      (e[(e.ExitGameConfirmBox = 5)] = "ExitGameConfirmBox"),
+      (e[(e.SdkRenewAccessTokenFailed = 6)] = "SdkRenewAccessTokenFailed");
   })((ELogoutReason = exports.ELogoutReason || (exports.ELogoutReason = {}))),
-  (function (o) {
-    (o[(o.Logout = 0)] = "Logout"),
-      (o[(o.ReconnectMax = 1)] = "ReconnectMax"),
-      (o[(o.ReconnectError = 2)] = "ReconnectError");
+  (function (e) {
+    (e[(e.Logout = 0)] = "Logout"),
+      (e[(e.ReconnectMax = 1)] = "ReconnectMax"),
+      (e[(e.ReconnectError = 2)] = "ReconnectError");
   })(
     (EBackLoginViewReason =
       exports.EBackLoginViewReason || (exports.EBackLoginViewReason = {})),

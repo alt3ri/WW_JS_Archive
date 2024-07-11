@@ -10,99 +10,100 @@ const Log_1 = require("../../../../Core/Common/Log"),
 class CommonSelectResultView extends RogueSelectResultBaseView_1.RogueSelectResultBaseView {
   constructor() {
     super(...arguments),
-      (this.Xso = void 0),
-      (this.$so = void 0),
-      (this.Yso = void 0),
-      (this.U9s = void 0),
-      (this.R9s = void 0),
-      (this.Jso = void 0),
-      (this.zso = void 0),
+      (this.jao = void 0),
+      (this.Wao = void 0),
+      (this.Kao = void 0),
+      (this.pia = void 0),
+      (this.via = void 0),
+      (this.Qao = void 0),
+      (this.Xao = void 0),
       (this.OnDescModelChange = () => {
         this.Refresh();
       });
   }
   OnCloseBtnClick() {
-    !this.Yso.GetRootItem().IsUIActiveInHierarchy() ||
-    (this.Yso.GetRootItem().SetUIActive(!1),
-    this.R9s.GetRootItem().SetUIActive(!1),
-    this.Xso.GetNewUnlockAffixEntry().size <= 0)
-      ? this.CloseMe()
-      : (this.zso.GetRootItem().SetUIActive(!0),
+    !this.Kao.GetRootItem().IsUIActiveInHierarchy() ||
+    (this.Kao.GetRootItem().SetUIActive(!1),
+    this.via.GetRootItem().SetUIActive(!1),
+    this.jao.GetNewUnlockAffixEntry().size <= 0)
+      ? this.CloseMe(this.jao?.CallBack)
+      : (this.Xao.GetRootItem().SetUIActive(!0),
         this.GetText(4).ShowTextNew(RoguelikeDefine_1.ROGUELIKEVIEW_21_TEXT),
-        this.Zso());
+        this.$ao());
   }
   async OnBeforeStartAsync() {
     var e = this.GetHorizontalLayout(3).GetRootComponent(),
       e =
-        ((this.zso = new PhantomSelectItem_1.PhantomSelectItem()),
-        await this.zso.CreateThenShowByResourceIdAsync(
+        ((this.Xao = new PhantomSelectItem_1.PhantomSelectItem()),
+        await this.Xao.CreateThenShowByResourceIdAsync(
           RoguelikeDefine_1.PHANTOM_SELECT_ITEM,
           e,
         ),
-        (this.Yso = new CommonSelectItem_1.CommonSelectItem()),
-        await this.Yso.CreateThenShowByResourceIdAsync(
+        (this.Kao = new CommonSelectItem_1.CommonSelectItem()),
+        await this.Kao.CreateThenShowByResourceIdAsync(
           RoguelikeDefine_1.COMMON_SELECT_ITEM,
           e,
         ),
-        (this.R9s = new CommonSelectItem_1.CommonSelectItem()),
-        await this.R9s.CreateThenShowByResourceIdAsync(
+        (this.via = new CommonSelectItem_1.CommonSelectItem()),
+        await this.via.CreateThenShowByResourceIdAsync(
           RoguelikeDefine_1.COMMON_SELECT_ITEM,
           e,
         ),
-        (this.Xso = this.OpenParam),
-        this.Xso.IsShowCommon && this.eao(),
-        0 < this.Xso.GetNewUnlockAffixEntry().size && !this.Xso.IsShowCommon);
-    e && this.Zso(),
-      this.Yso.SetActive(this.Xso.IsShowCommon),
-      this.R9s.SetActive(
-        void 0 !== this.Xso.ExtraRogueGainEntry && this.Xso.IsShowCommon,
+        (this.jao = this.OpenParam),
+        this.jao.IsShowCommon && this.Yao(),
+        0 < this.jao.GetNewUnlockAffixEntry().size && !this.jao.IsShowCommon);
+    e && this.$ao(),
+      this.Kao.SetActive(this.jao.IsShowCommon),
+      this.via.SetActive(
+        void 0 !== this.jao.ExtraRogueGainEntry && this.jao.IsShowCommon,
       ),
-      this.zso.SetActive(e),
-      this.zso.SetUnlockAttrSet(this.Xso.GetNewUnlockAffixEntry()),
+      this.Xao.SetActive(e),
+      this.Xao.SetUnlockAttrSet(this.jao.GetNewUnlockAffixEntry()),
       this.RefreshTitleText();
   }
-  eao() {
-    this.Yso.Update(this.Xso.SelectRogueGainEntry),
-      this.Yso.SetToggleUnDetermined(),
-      this.Xso.ExtraRogueGainEntry &&
-        (this.R9s.Update(this.Xso.ExtraRogueGainEntry),
-        this.R9s.SetToggleUnDetermined());
+  Yao() {
+    this.jao.SelectRogueGainEntry &&
+      (this.Kao.Update(this.jao.SelectRogueGainEntry),
+      this.Kao.SetToggleUnDetermined()),
+      this.jao.ExtraRogueGainEntry &&
+        (this.via.Update(this.jao.ExtraRogueGainEntry),
+        this.via.SetToggleUnDetermined());
   }
-  Zso() {
-    this.zso.Update(this.Xso.NewRogueGainEntry),
-      this.zso.SetToggleUnDetermined();
+  $ao() {
+    this.Xao.Update(this.jao.NewRogueGainEntry),
+      this.Xao.SetToggleUnDetermined();
   }
   OnBeforeDestroy() {
-    this.Yso?.Destroy(),
-      this.$so &&
+    this.Kao?.Destroy(),
+      this.Wao &&
         UiActorPool_1.UiActorPool.RecycleAsync(
-          this.$so,
+          this.Wao,
           RoguelikeDefine_1.COMMON_SELECT_ITEM,
         ),
-      this.R9s?.Destroy(),
-      this.U9s &&
+      this.via?.Destroy(),
+      this.pia &&
         UiActorPool_1.UiActorPool.RecycleAsync(
-          this.U9s,
+          this.pia,
           RoguelikeDefine_1.COMMON_SELECT_ITEM,
         ),
-      this.zso?.Destroy(),
-      this.Jso &&
+      this.Xao?.Destroy(),
+      this.Qao &&
         UiActorPool_1.UiActorPool.RecycleAsync(
-          this.Jso,
+          this.Qao,
           RoguelikeDefine_1.PHANTOM_SELECT_ITEM,
         );
   }
   Refresh() {
-    this.Yso.RefreshPanel(),
-      this.R9s.RefreshPanel(),
-      this.zso.RefreshPanel(),
+    this.Kao.RefreshPanel(),
+      this.via.RefreshPanel(),
+      this.Xao.RefreshPanel(),
       this.RefreshTitleText();
   }
   RefreshTitleText() {
     let e = void 0;
-    this.Xso.IsShowCommon
+    this.jao.IsShowCommon
       ? (e = RoguelikeDefine_1.ROGUELIKEVIEW_20_TEXT)
-      : 0 < this.Xso.GetNewUnlockAffixEntry().size &&
+      : 0 < this.jao.GetNewUnlockAffixEntry().size &&
         (e = RoguelikeDefine_1.ROGUELIKEVIEW_21_TEXT),
       this.GetText(4).ShowTextNew(e);
   }
@@ -114,7 +115,7 @@ class CommonSelectResultView extends RogueSelectResultBaseView_1.RogueSelectResu
           e,
         ]);
     else if ("Sub" === e[0]) {
-      e = this.zso?.GetSubItem();
+      e = this.Xao?.GetSubItem();
       if (e) return [e, e];
     }
   }

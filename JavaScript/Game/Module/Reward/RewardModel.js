@@ -10,44 +10,44 @@ const UE = require("ue"),
   CHECK_WATER_PROFILE_KEY = "RewardModel_CheckWaterHit";
 class RewardModel extends ModelBase_1.ModelBase {
   constructor() {
-    super(...arguments), (this.yso = void 0), (this.Iso = void 0);
+    super(...arguments), (this.vao = void 0), (this.Mao = void 0);
   }
   koe() {
-    (this.yso = UE.NewObject(UE.TraceSphereElement.StaticClass())),
-      (this.yso.WorldContextObject = GlobalData_1.GlobalData.World),
-      (this.yso.bIsSingle = !0),
-      (this.yso.bIgnoreSelf = !0),
-      this.yso.AddObjectTypeQuery(
+    (this.vao = UE.NewObject(UE.TraceSphereElement.StaticClass())),
+      (this.vao.WorldContextObject = GlobalData_1.GlobalData.World),
+      (this.vao.bIsSingle = !0),
+      (this.vao.bIgnoreSelf = !0),
+      this.vao.AddObjectTypeQuery(
         QueryTypeDefine_1.KuroObjectTypeQuery.WorldStatic,
       ),
-      (this.Iso = UE.NewObject(UE.TraceLineElement.StaticClass())),
-      (this.Iso.WorldContextObject = GlobalData_1.GlobalData.World),
-      (this.Iso.bIsSingle = !0),
-      (this.Iso.bIgnoreSelf = !0),
-      this.Iso.SetTraceTypeQuery(QueryTypeDefine_1.KuroTraceTypeQuery.Water);
+      (this.Mao = UE.NewObject(UE.TraceLineElement.StaticClass())),
+      (this.Mao.WorldContextObject = GlobalData_1.GlobalData.World),
+      (this.Mao.bIsSingle = !0),
+      (this.Mao.bIgnoreSelf = !0),
+      this.Mao.SetTraceTypeQuery(QueryTypeDefine_1.KuroTraceTypeQuery.Water);
   }
   CheckGroundHit(e, t, i) {
-    this.yso || this.koe(),
-      TraceElementCommon_1.TraceElementCommon.SetStartLocation(this.yso, e),
-      this.yso.SetEndLocation(e.X, e.Y, e.Z + i),
-      (this.yso.Radius = t);
+    this.vao || this.koe(),
+      TraceElementCommon_1.TraceElementCommon.SetStartLocation(this.vao, e),
+      this.vao.SetEndLocation(e.X, e.Y, e.Z + i),
+      (this.vao.Radius = t);
     let r = !1;
     e = TraceElementCommon_1.TraceElementCommon.SphereTrace(
-      this.yso,
+      this.vao,
       CHECK_GROUND_PROFILE_KEY,
     );
-    return (r = e && this.yso.HitResult.bBlockingHit ? !0 : r);
+    return (r = e && this.vao.HitResult.bBlockingHit ? !0 : r);
   }
   CheckWaterHit(e, t, i, r) {
-    this.Iso || this.koe(),
-      TraceElementCommon_1.TraceElementCommon.SetStartLocation(this.Iso, e),
-      this.Iso.SetEndLocation(t.X, t.Y, t.Z - i);
+    this.Mao || this.koe(),
+      TraceElementCommon_1.TraceElementCommon.SetStartLocation(this.Mao, e),
+      this.Mao.SetEndLocation(t.X, t.Y, t.Z - i);
     let s = !1;
     e = TraceElementCommon_1.TraceElementCommon.LineTrace(
-      this.Iso,
+      this.Mao,
       CHECK_WATER_PROFILE_KEY,
     );
-    return (s = e && this.Iso.HitResult.bBlockingHit ? !0 : s);
+    return (s = e && this.Mao.HitResult.bBlockingHit ? !0 : s);
   }
 }
 exports.RewardModel = RewardModel;

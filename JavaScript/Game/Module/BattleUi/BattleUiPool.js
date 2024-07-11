@@ -39,23 +39,23 @@ class BattleUiPoolElement {
 }
 class BattleUiPool {
   constructor() {
-    (this.wQe = new Map()),
-      (this.BQe = new Map()),
-      (this.bQe = new UiPrefabLoadModule_1.UiPrefabLoadModule()),
+    (this.WXe = new Map()),
+      (this.KXe = new Map()),
+      (this.QXe = new UiPrefabLoadModule_1.UiPrefabLoadModule()),
       (this.tZ = !1),
-      (this.qQe = void 0),
-      (this.GQe = void 0),
-      (this.NQe = void 0),
-      (this.OQe = void 0);
+      (this.XXe = void 0),
+      (this.$Xe = void 0),
+      (this.YXe = void 0),
+      (this.JXe = void 0);
   }
   async Init() {
     if (!this.tZ) {
-      if (!this.kQe()) return !1;
-      await this.FQe(), (this.tZ = !0);
+      if (!this.zXe()) return !1;
+      await this.ZXe(), (this.tZ = !0);
     }
     return !0;
   }
-  kQe() {
+  zXe() {
     var t = UiLayer_1.UiLayer.WorldSpaceUiRootItem;
     if (!t?.IsValid())
       return (
@@ -63,40 +63,40 @@ class BattleUiPool {
           Log_1.Log.Error("Battle", 18, "WorldSpaceUiRootItem为空"),
         !1
       );
-    this.qQe = t;
+    this.XXe = t;
     t = UiLayer_1.UiLayer.GetLayerRootUiItem(UiLayerType_1.ELayerType.Pool);
     if (!t?.IsValid())
       return (
         Log_1.Log.CheckError() && Log_1.Log.Error("Battle", 18, "PoolRoot为空"),
         !1
       );
-    this.GQe = t;
+    this.$Xe = t;
     t = UiLayer_1.UiLayer.UiRootItem;
     return t?.IsValid()
-      ? ((this.NQe = t),
-        (this.OQe = UiLayer_1.UiLayer.GetBattleViewUnit(0)),
+      ? ((this.YXe = t),
+        (this.JXe = UiLayer_1.UiLayer.GetBattleViewUnit(0)),
         !0)
       : (Log_1.Log.CheckError() &&
           Log_1.Log.Error("Battle", 18, "UiRootItem为空"),
         !1);
   }
-  async FQe() {
+  async ZXe() {
     var t = [];
-    for (const e of headStateConfigList) t.push(this.VQe(e, this.qQe));
+    for (const e of headStateConfigList) t.push(this.e$e(e, this.XXe));
     return (
-      t.push(this.VQe(bossHeadStateConfig, this.GQe)),
-      t.push(this.VQe(damageViewConfig, this.OQe)),
-      t.push(this.VQe(buffItemConfig, this.NQe)),
-      t.push(this.VQe(environmentItemConfig, this.NQe)),
+      t.push(this.e$e(bossHeadStateConfig, this.$Xe)),
+      t.push(this.e$e(damageViewConfig, this.JXe)),
+      t.push(this.e$e(buffItemConfig, this.YXe)),
+      t.push(this.e$e(environmentItemConfig, this.YXe)),
       await Promise.all(t),
       !0
     );
   }
-  async VQe(e, i) {
+  async e$e(e, i) {
     var t = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
         e.ResourceId,
       ),
-      r = await this.bQe.LoadPrefabAsync(t, i);
+      r = await this.QXe.LoadPrefabAsync(t, i);
     if (!r?.IsValid())
       return (
         Log_1.Log.CheckError() &&
@@ -114,11 +114,11 @@ class BattleUiPool {
       var a = LguiUtil_1.LguiUtil.DuplicateActor(r, i);
       o.push(a);
     }
-    return (t.ActorList = o), (t.Actor = r), this.wQe.set(e.ResourceId, t), !0;
+    return (t.ActorList = o), (t.Actor = r), this.WXe.set(e.ResourceId, t), !0;
   }
   GetActor(t, e, i) {
     var r,
-      o = this.wQe.get(t);
+      o = this.WXe.get(t);
     if (o && !(o.ActorList.length <= 0))
       return o.ExistMulti
         ? 1 < o.ActorList.length
@@ -132,10 +132,10 @@ class BattleUiPool {
       ]);
   }
   RecycleActor(t, e, i = !1) {
-    var r = this.wQe.get(t);
+    var r = this.WXe.get(t);
     return r
       ? (e.RootComponent.SetUIActive(!1),
-        i && e.K2_AttachRootComponentTo(this.GQe),
+        i && e.K2_AttachRootComponentTo(this.$Xe),
         r.ExistMulti && r.ActorList.push(e),
         !0)
       : (Log_1.Log.CheckError() &&
@@ -146,13 +146,13 @@ class BattleUiPool {
         !1);
   }
   GetHeadStateView(t) {
-    return this.GetActor(t, this.qQe, !1);
+    return this.GetActor(t, this.XXe, !1);
   }
   RecycleHeadStateView(t, e, i = !1) {
     return !this.tZ || this.RecycleActor(t, e, i);
   }
   GetDamageView() {
-    return this.GetActor(damageViewConfig.ResourceId, this.OQe, !1);
+    return this.GetActor(damageViewConfig.ResourceId, this.JXe, !1);
   }
   RecycleDamageView(t) {
     return this.tZ
@@ -178,25 +178,25 @@ class BattleUiPool {
   async LoadActor(t, e) {
     var i,
       r = void 0;
-    let o = this.wQe.get(t);
+    let o = this.WXe.get(t);
     return o
-      ? this.HQe(o, e)
-      : (r = await this.bQe.LoadPrefabAsync(t, this.GQe))?.IsValid()
-        ? ((o = this.wQe.get(t))
+      ? this.t$e(o, e)
+      : (r = await this.QXe.LoadPrefabAsync(t, this.$Xe))?.IsValid()
+        ? ((o = this.WXe.get(t))
             ? ActorSystem_1.ActorSystem.Put(r)
             : ((o = new BattleUiPoolElement()),
-              this.wQe.set(t, o),
+              this.WXe.set(t, o),
               (i = new Array()).push(r),
               (o.ActorList = i),
               (o.Actor = r),
-              this.wQe.set(t, o)),
-          this.HQe(o, e))
+              this.WXe.set(t, o)),
+          this.t$e(o, e))
         : void (
             Log_1.Log.CheckError() &&
             Log_1.Log.Error("Battle", 18, "加载Actor失败", ["", t])
           );
   }
-  HQe(t, e) {
+  t$e(t, e) {
     var i;
     return 1 < t.ActorList.length
       ? ((i = t.ActorList.pop()).K2_AttachRootComponentTo(e), i)
@@ -205,20 +205,20 @@ class BattleUiPool {
   RecycleActorByPath(t, e, i = !1) {
     return (
       this.tZ &&
-        ((t = this.wQe.get(t))
+        ((t = this.WXe.get(t))
           ? (t.ActorList.push(e),
             e.RootComponent.SetUIActive(!1),
-            i && e.K2_AttachRootComponentTo(this.GQe))
+            i && e.K2_AttachRootComponentTo(this.$Xe))
           : ActorSystem_1.ActorSystem.Put(e)),
       !0
     );
   }
   async LoadSingleActorByPath(t, e) {
-    let i = this.BQe.get(t);
+    let i = this.KXe.get(t);
     return i
       ? (i.K2_AttachRootComponentTo(e), i)
-      : (i = await this.bQe.LoadPrefabAsync(t, e))?.IsValid()
-        ? (this.BQe.set(t, i), i)
+      : (i = await this.QXe.LoadPrefabAsync(t, e))?.IsValid()
+        ? (this.KXe.set(t, i), i)
         : void (
             Log_1.Log.CheckError() &&
             Log_1.Log.Error("Battle", 18, "加载Actor失败", ["", t])
@@ -228,7 +228,7 @@ class BattleUiPool {
     return (
       this.tZ &&
         (t.RootComponent.SetUIActive(!1), e) &&
-        t.K2_AttachRootComponentTo(this.GQe),
+        t.K2_AttachRootComponentTo(this.$Xe),
       !0
     );
   }
@@ -237,15 +237,15 @@ class BattleUiPool {
     return t && this.RecycleSingleActor(t), !0;
   }
   Clear() {
-    this.bQe.Clear();
-    for (const t of this.wQe.values()) t.Clear();
-    this.wQe.clear();
-    for (const e of this.BQe.values()) ActorSystem_1.ActorSystem.Put(e);
-    this.BQe.clear(),
+    this.QXe.Clear();
+    for (const t of this.WXe.values()) t.Clear();
+    this.WXe.clear();
+    for (const e of this.KXe.values()) ActorSystem_1.ActorSystem.Put(e);
+    this.KXe.clear(),
       (this.tZ = !1),
-      (this.qQe = void 0),
-      (this.GQe = void 0),
-      (this.NQe = void 0);
+      (this.XXe = void 0),
+      (this.$Xe = void 0),
+      (this.YXe = void 0);
   }
 }
 exports.BattleUiPool = BattleUiPool;

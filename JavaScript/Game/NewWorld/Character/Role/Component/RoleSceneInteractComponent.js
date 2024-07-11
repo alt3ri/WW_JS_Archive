@@ -20,7 +20,7 @@ var RoleSceneInteractComponent_1,
       return 3 < n && h && Object.defineProperty(e, i, h), h;
     };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
-  (exports.RoleSceneInteractComponent = void 0);
+  (exports.RoleSceneInteractComponent = exports.fixHookSkillIds = void 0);
 const UE = require("ue"),
   Log_1 = require("../../../../../Core/Common/Log"),
   Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
@@ -39,7 +39,9 @@ const UE = require("ue"),
   ModelManager_1 = require("../../../../Manager/ModelManager"),
   CombatMessage_1 = require("../../../../Module/CombatMessage/CombatMessage"),
   GrapplingHookPointComponent_1 = require("../../Custom/Components/GrapplingHookPointComponent"),
-  TRACE_TAG_NAME = "RoleSceneInteract",
+  TRACE_TAG_NAME =
+    ((exports.fixHookSkillIds = new Set([100020, 100021, 100022])),
+    "RoleSceneInteract"),
   PROFILE_KEY = "RoleSceneInteractComponent_FindBestTarget",
   MIN_DIST = 500,
   MIN_DIST_SQUARED = MIN_DIST * MIN_DIST,
@@ -50,7 +52,6 @@ const UE = require("ue"),
   LEFT_RIGHT_SCALE = MIN_UP_DOWN / MIN_LEFT_RIGHT,
   DEFAULT_MIN_LENGTH = 100,
   HOOK_VISION_ID = 1001,
-  fixHookSkillIds = new Set([100020, 100021, 100022]),
   SPHERE_TRACE_RADIUS = 5;
 let RoleSceneInteractComponent =
   (RoleSceneInteractComponent_1 = class RoleSceneInteractComponent extends (
@@ -59,276 +60,302 @@ let RoleSceneInteractComponent =
     constructor() {
       super(...arguments),
         (this.Hte = void 0),
-        (this.zon = void 0),
-        (this.d$e = Vector_1.Vector.Create()),
-        (this.Zon = Vector_1.Vector.Create()),
-        (this.ern = Vector_1.Vector.Create()),
+        (this.won = void 0),
+        (this.LYe = Vector_1.Vector.Create()),
+        (this.Bon = Vector_1.Vector.Create()),
+        (this.bon = Vector_1.Vector.Create()),
         (this.s_e = Vector_1.Vector.Create()),
-        (this.trn = []),
-        (this.irn = !1),
-        (this.orn = new Set()),
-        (this.rrn = void 0),
-        (this.nrn = (t) => {
-          fixHookSkillIds.has(t) &&
-            (this.srn.IsNeedResetSkill() ||
-              this.arn(
+        (this.qon = []),
+        (this.Gon = !1),
+        (this.Non = new Set()),
+        (this.Oon = void 0),
+        (this.kon = (t) => {
+          exports.fixHookSkillIds.has(t) &&
+            (this.Fon.IsNeedResetSkill() ||
+              this.Von(
                 !1,
                 void 0,
                 "使用钩锁技能且不需要切换技能时，删除定点钩索可用标签",
               ),
-            (this.Die = this.hrn),
+            (this.Die = this.Hon),
             this.Die.TryStartCd(),
-            this.lrn(),
-            this._rn(),
+            this.jon(),
+            this.Won(),
             CameraController_1.CameraController.FightCamera.LogicComponent.ExitCameraHook(),
-            (this.crn = !0));
+            (this.Kon = !0),
+            EventSystem_1.EventSystem.Add(
+              EventDefine_1.EEventName.RemoveEntity,
+              this.Fm,
+            ));
         }),
-        (this.mrn = (t, e) => {
-          if (fixHookSkillIds.has(e)) {
-            for (const i of this.drn) this.orn.add(i);
-            for (const s of this.Crn) this.orn.add(s);
-            this.orn.add(this.Die),
-              this.Die?.Valid && (this.Die.ChangeHookPointState(0), this.grn()),
+        (this.Qon = (t, e) => {
+          if (exports.fixHookSkillIds.has(e)) {
+            for (const i of this.Xon) this.Non.add(i);
+            for (const s of this.$on) this.Non.add(s);
+            this.Non.add(this.Die),
+              this.Die?.Valid && (this.Die.ChangeHookPointState(0), this.Yon()),
+              EventSystem_1.EventSystem.Has(
+                EventDefine_1.EEventName.RemoveEntity,
+                this.Fm,
+              ) &&
+                EventSystem_1.EventSystem.Remove(
+                  EventDefine_1.EEventName.RemoveEntity,
+                  this.Fm,
+                ),
               (this.Die = void 0),
-              (this.frn = void 0),
+              (this.Jon = void 0),
               (this.TargetLocation = void 0),
-              this.prn.clear(),
-              (this.crn = !1);
+              this.zon.clear(),
+              (this.Kon = !1);
+          }
+        }),
+        (this.Fm = (t, e) => {
+          if (e.Id === this.Die?.Entity.Id) {
+            var i = this.Entity.GetComponent(33);
+            for (const s of exports.fixHookSkillIds)
+              i.EndSkill(s, "CurrentTarget is Remove");
+            Log_1.Log.CheckError() &&
+              Log_1.Log.Error(
+                "Character",
+                32,
+                "钩锁点在勾的时候被删除，请检查配置",
+                ["PbDataId", e.Entity.GetComponent(0)?.GetPbDataId()],
+              );
           }
         }),
         (this.Die = void 0),
-        (this.vrn = !1),
-        (this.Mrn = !1),
-        (this.hrn = void 0),
-        (this.frn = void 0),
+        (this.Zon = !1),
+        (this.ern = !1),
+        (this.Hon = void 0),
+        (this.Jon = void 0),
         (this.TargetLocation = void 0),
-        (this.Srn = void 0),
-        (this.drn = new Set()),
-        (this.Crn = new Set()),
-        (this.Ern = new Set()),
-        (this.prn = new Set()),
-        (this.Nnr = void 0),
-        (this.yrn = !0),
+        (this.trn = void 0),
+        (this.Xon = new Set()),
+        (this.$on = new Set()),
+        (this.irn = new Set()),
+        (this.zon = new Set()),
+        (this.bsr = void 0),
+        (this.orn = !0),
         (this.Lie = void 0),
+        (this.Fon = void 0),
+        (this.rrn = !1),
+        (this.Kon = !1),
+        (this.nrn = !1),
         (this.srn = void 0),
-        (this.Irn = !1),
-        (this.crn = !1),
-        (this.Trn = !1),
-        (this.Lrn = void 0),
-        (this.D7r = () => {
+        (this.a7r = () => {
           ModelManager_1.ModelManager.RouletteModel.CurrentExploreSkillId ===
           HOOK_VISION_ID
-            ? ((this.irn = !1),
-              this.Irn &&
-                this.arn(
+            ? ((this.Gon = !1),
+              this.rrn &&
+                this.Von(
                   !0,
-                  this.hrn?.GetTagId(),
+                  this.Hon?.GetTagId(),
                   "切换到钩锁技能且NeedAddTag为真时，添加定点钩索可用标签",
                 ))
-            : ((this.irn = !0),
-              this.arn(!1, void 0, "切换到非钩锁技能时，删除定点钩索可用标签"),
-              this.hrn &&
-                (this.hrn.ChangeHookPointState(0), (this.hrn = void 0)));
+            : ((this.Gon = !0),
+              this.Von(!1, void 0, "切换到非钩锁技能时，删除定点钩索可用标签"),
+              this.Hon &&
+                (this.Hon.ChangeHookPointState(0), (this.Hon = void 0)));
         });
     }
     static get Dependencies() {
       return [3, 17];
     }
     get NeedChangeTargetState() {
-      return this.yrn;
+      return this.orn;
     }
     set NeedChangeTargetState(t) {
-      (this.yrn = t) &&
-        void 0 !== this.hrn &&
-        this.hrn.ChangeHookPointState(this.Mrn ? 1 : 2);
+      (this.orn = t) &&
+        void 0 !== this.Hon &&
+        this.Hon.ChangeHookPointState(this.ern ? 1 : 2);
     }
     OnStart() {
       return (
         (this.Hte = this.Entity.GetComponent(3)),
-        (this.zon = this.Entity.GetComponent(34)),
-        (this.Lie = this.Entity.GetComponent(185)),
-        (this.srn = this.Entity.GetComponent(45)),
+        (this.won = this.Entity.GetComponent(35)),
+        (this.Lie = this.Entity.GetComponent(188)),
+        (this.Fon = this.Entity.GetComponent(46)),
         this.Lie.ListenForTagAddOrRemove(283451623, (t, e) => {
-          e && (this.Drn(this.hrn), (this.hrn = void 0));
+          e && (this.arn(this.Hon), (this.Hon = void 0));
         }),
         this.Hte.IsRoleAndCtrlByMe ||
           this.Disable("[RoleSceneInteractComponent.OnStart] 模拟端"),
         this.InitTraceInfo(),
         EventSystem_1.EventSystem.Add(
           EventDefine_1.EEventName.OnChangeSelectedExploreId,
-          this.D7r,
+          this.a7r,
         ),
         EventSystem_1.EventSystem.AddWithTarget(
           this.Entity,
           EventDefine_1.EEventName.CharBeforeSkillWithTarget,
-          this.nrn,
+          this.kon,
         ),
         EventSystem_1.EventSystem.AddWithTarget(
           this.Entity,
           EventDefine_1.EEventName.OnSkillEnd,
-          this.mrn,
+          this.Qon,
         ),
         !0
       );
     }
     InitTraceInfo() {
-      (this.Nnr = UE.NewObject(UE.TraceSphereElement.StaticClass())),
-        (this.Nnr.WorldContextObject = this.Hte.Owner),
-        (this.Nnr.bIsSingle = !0),
-        (this.Nnr.bIgnoreSelf = !0),
-        this.Nnr.AddObjectTypeQuery(
+      (this.bsr = UE.NewObject(UE.TraceSphereElement.StaticClass())),
+        (this.bsr.WorldContextObject = this.Hte.Owner),
+        (this.bsr.bIsSingle = !0),
+        (this.bsr.bIgnoreSelf = !0),
+        this.bsr.AddObjectTypeQuery(
           QueryTypeDefine_1.KuroObjectTypeQuery.WorldStatic,
         ),
-        (this.Nnr.Radius = SPHERE_TRACE_RADIUS);
+        (this.bsr.Radius = SPHERE_TRACE_RADIUS);
     }
     OnEnd() {
       return (
         EventSystem_1.EventSystem.Remove(
           EventDefine_1.EEventName.OnChangeSelectedExploreId,
-          this.D7r,
+          this.a7r,
         ),
         EventSystem_1.EventSystem.RemoveWithTarget(
           this.Entity,
           EventDefine_1.EEventName.CharBeforeSkillWithTarget,
-          this.nrn,
+          this.kon,
         ),
         EventSystem_1.EventSystem.RemoveWithTarget(
           this.Entity,
           EventDefine_1.EEventName.OnSkillEnd,
-          this.mrn,
+          this.Qon,
         ),
         !0
       );
     }
     OnTick(t) {
       Global_1.Global.BaseCharacter === this.Hte.Actor &&
-        (RoleSceneInteractComponent_1.G7r
+        (RoleSceneInteractComponent_1.f7r
           ? ModelManager_1.ModelManager.CameraModel &&
             !this.Lie.HasTag(283451623) &&
-            (this.Rrn(), this.Arn())
+            (this.hrn(), this.lrn())
           : (ModelManager_1.ModelManager.RouletteModel.UnlockExploreSkillDataMap.has(
               HOOK_VISION_ID,
-            ) && (RoleSceneInteractComponent_1.G7r = !0),
-            (this.Srn = void 0)));
+            ) && (RoleSceneInteractComponent_1.f7r = !0),
+            (this.trn = void 0)));
     }
-    Rrn() {
+    hrn() {
       var t = ModelManager_1.ModelManager.CameraModel;
       let e = !1,
         i = !1;
       var s, o;
-      this.Nnr.SetDrawDebugTrace(
+      this.bsr.SetDrawDebugTrace(
         RoleSceneInteractComponent_1.TraceDebug ? 1 : 0,
       ),
-        this.Urn(t),
-        (e = this.Trn),
-        (s = this.Lrn),
+        this._rn(t),
+        (e = this.nrn),
+        (s = this.srn),
         e &&
-          this.zon?.Valid &&
-          ((o = this.zon.GetVisionIdList()),
+          this.won?.Valid &&
+          ((o = this.won.GetVisionIdList()),
           (e = o.Contains(HOOK_VISION_ID)),
           (i = !0)),
-        (this.vrn === e && this.hrn === s && this.Mrn === i) ||
-          ((o = this.hrn),
-          (this.hrn = s),
-          (this.Mrn = i),
+        (this.Zon === e && this.Hon === s && this.ern === i) ||
+          ((o = this.Hon),
+          (this.Hon = s),
+          (this.ern = i),
           o?.Valid && o !== s && o.ChangeHookPointState(0),
           s
             ? (this.NeedChangeTargetState &&
-                this.hrn.ChangeHookPointState(i ? 1 : 2),
+                this.Hon.ChangeHookPointState(i ? 1 : 2),
               EventSystem_1.EventSystem.Emit(
                 EventDefine_1.EEventName.RoleFindFixHook,
                 !0,
                 s.Location,
               ))
-            : this.Drn(o),
-          (this.vrn = e),
-          void 0 !== this.hrn && i
+            : this.arn(o),
+          (this.Zon = e),
+          void 0 !== this.Hon && i
             ? ModelManager_1.ModelManager.RouletteModel
                 .CurrentExploreSkillId !== HOOK_VISION_ID
-              ? (this.Irn = !0)
+              ? (this.rrn = !0)
               : e
-                ? this.arn(
+                ? this.Von(
                     !0,
-                    this.hrn?.GetTagId(),
+                    this.Hon?.GetTagId(),
                     "当前选中的钩锁点有效, 且不需要切换技能",
                   )
-                : this.srn.IsNeedResetSkill() ||
-                  this.arn(!1, void 0, "当前选中的钩锁点无效，且不需要切换技能")
-            : ((this.Irn = !1),
-              this.srn.IsNeedResetSkill() ||
-                this.arn(!1, void 0, "当前未选中点，且不需要切换技能"))),
-        this.Prn(t);
+                : this.Fon.IsNeedResetSkill() ||
+                  this.Von(!1, void 0, "当前选中的钩锁点无效，且不需要切换技能")
+            : ((this.rrn = !1),
+              this.Fon.IsNeedResetSkill() ||
+                this.Von(!1, void 0, "当前未选中点，且不需要切换技能"))),
+        this.crn(t);
     }
-    Drn(t) {
+    arn(t) {
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.RoleFindFixHook,
         !1,
         void 0,
       );
     }
-    Arn() {
-      this.CanActivateFixHook() ? (this.Srn = void 0) : (this.Srn = this.xrn());
+    lrn() {
+      this.CanActivateFixHook() ? (this.trn = void 0) : (this.trn = this.mrn());
     }
     GetSecondaryTarget() {
-      return this.Srn;
+      return this.trn;
     }
     IsInInteractArea(t) {
       t = t.Entity.Id;
-      return this.trn.includes(t);
+      return this.qon.includes(t);
     }
-    Urn(h) {
+    _rn(h) {
       if (h?.CurrentCameraActor) {
         let e = void 0,
           i = void 0,
           s = DEFAULT_MIN_LENGTH,
           o = void 0,
-          n = ((this.trn.length = 0), !1);
-        if ((this.Ern.clear(), this.Nnr)) {
+          n = ((this.qon.length = 0), !1);
+        if ((this.irn.clear(), this.bsr)) {
           let t = !0;
-          for (const l of GrapplingHookPointComponent_1
+          for (const c of GrapplingHookPointComponent_1
             .GrapplingHookPointComponent.AllPoints)
-            if (l.CheckCondition()) {
+            if (c.CheckCondition()) {
               if (
-                l.WasRecentlyRenderOnScreen() &&
-                !l.IsInCd &&
-                l !== this.Die &&
+                c.WasRecentlyRenderOnScreen() &&
+                !c.IsInCd &&
+                c !== this.Die &&
                 (void 0 === e && (e = this.Hte?.ActorLocationProxy),
-                !l.Entity.GetComponent(117)?.IsInState(3))
+                !c.Entity.GetComponent(119)?.IsInState(3))
               ) {
-                var r = Vector_1.Vector.DistSquared(l.Location, e);
-                if (r > l.RadiusSquared) this.orn.has(l) && this.orn.delete(l);
-                else if ((this.Crn.add(l), r < MIN_DIST_SQUARED))
-                  this.prn.delete(l);
+                var r = Vector_1.Vector.DistSquared(c.Location, e);
+                if (r > c.RadiusSquared) this.Non.has(c) && this.Non.delete(c);
+                else if ((this.$on.add(c), r < MIN_DIST_SQUARED))
+                  this.zon.delete(c);
                 else {
-                  l.CameraGaze &&
-                    0 <= l.CameraGaze.LockPriority &&
-                    !this.drn.has(l) &&
-                    !this.orn.has(l) &&
-                    this.Ern.add(l),
+                  c.CameraGaze &&
+                    0 <= c.CameraGaze.LockPriority &&
+                    !this.Xon.has(c) &&
+                    !this.Non.has(c) &&
+                    this.irn.add(c),
                     void 0 === i &&
                       ((i = h.CameraLocation),
-                      this.d$e.FromUeVector(
+                      this.LYe.FromUeVector(
                         h.CurrentCameraActor.GetActorForwardVector(),
                       ),
-                      this.Zon.FromUeVector(
+                      this.Bon.FromUeVector(
                         h.CurrentCameraActor.GetActorRightVector(),
                       ),
-                      this.ern.FromUeVector(
+                      this.bon.FromUeVector(
                         h.CurrentCameraActor.GetActorUpVector(),
                       )),
-                    l.Location.Subtraction(i, this.s_e);
-                  r = this.s_e.DotProduct(this.d$e);
+                    c.Location.Subtraction(i, this.s_e);
+                  r = this.s_e.DotProduct(this.LYe);
                   if (!(r <= 0)) {
-                    var _ = Math.abs(this.s_e.DotProduct(this.Zon) / r);
+                    var _ = Math.abs(this.s_e.DotProduct(this.Bon) / r);
                     if (
-                      !(_ > (this.irn ? MIN_LEFT_RIGHT_SCALE : MIN_LEFT_RIGHT))
+                      !(_ > (this.Gon ? MIN_LEFT_RIGHT_SCALE : MIN_LEFT_RIGHT))
                     ) {
-                      r = Math.abs(this.s_e.DotProduct(this.ern) / r);
-                      if (!(r > (this.irn ? MIN_UP_DOWN_SCALE : MIN_UP_DOWN))) {
-                        this.trn.push(l.Entity.Id),
+                      r = Math.abs(this.s_e.DotProduct(this.bon) / r);
+                      if (!(r > (this.Gon ? MIN_UP_DOWN_SCALE : MIN_UP_DOWN))) {
+                        this.qon.push(c.Entity.Id),
                           TraceElementCommon_1.TraceElementCommon.SetEndLocation(
-                            this.Nnr,
-                            l.Location,
+                            this.bsr,
+                            c.Location,
                           );
                         _ =
                           MathUtils_1.MathUtils.Square(_ * LEFT_RIGHT_SCALE) +
@@ -338,13 +365,13 @@ let RoleSceneInteractComponent =
                           if (
                             (t &&
                               (TraceElementCommon_1.TraceElementCommon.SetStartLocation(
-                                this.Nnr,
+                                this.bsr,
                                 this.Hte.ActorLocation,
                               ),
                               (t = !1)),
                             TraceElementCommon_1.TraceElementCommon.ShapeTrace(
                               this.Hte.Actor.CapsuleComponent,
-                              this.Nnr,
+                              this.bsr,
                               TRACE_TAG_NAME,
                               PROFILE_KEY,
                             ))
@@ -353,38 +380,38 @@ let RoleSceneInteractComponent =
                         } else if (
                           (t &&
                             (TraceElementCommon_1.TraceElementCommon.SetStartLocation(
-                              this.Nnr,
+                              this.bsr,
                               this.Hte.ActorLocation,
                             ),
                             (t = !1)),
                           TraceElementCommon_1.TraceElementCommon.ShapeTrace(
                             this.Hte.Actor.CapsuleComponent,
-                            this.Nnr,
+                            this.bsr,
                             TRACE_TAG_NAME,
                             PROFILE_KEY,
                           ))
                         ) {
                           if (s <= _) continue;
                         } else n = !0;
-                        (s = _), (o = l);
+                        (s = _), (o = c);
                       }
                     }
                   }
                 }
               }
             } else
-              l !== this.Die ||
-                this.crn ||
-                (l.ChangeHookPointState(0),
+              c !== this.Die ||
+                this.Kon ||
+                (c.ChangeHookPointState(0),
                 (this.Die = void 0),
                 EventSystem_1.EventSystem.Emit(
                   EventDefine_1.EEventName.RoleFindFixHook,
                   !1,
                   void 0,
                 ));
-          this.drn.clear();
-          var a = this.drn;
-          (this.drn = this.Crn), (this.Crn = a), (this.Trn = n), (this.Lrn = o);
+          this.Xon.clear();
+          var a = this.Xon;
+          (this.Xon = this.$on), (this.$on = a), (this.nrn = n), (this.srn = o);
         } else
           Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
@@ -392,44 +419,44 @@ let RoleSceneInteractComponent =
               6,
               "RoleInteract: Missing SphereTrace",
             ),
-            (this.Trn = !1),
-            (this.Lrn = void 0);
-      } else (this.Trn = !1), (this.Lrn = void 0);
+            (this.nrn = !1),
+            (this.srn = void 0);
+      } else (this.nrn = !1), (this.srn = void 0);
     }
-    xrn() {
-      if (this.Nnr) {
+    mrn() {
+      if (this.bsr) {
         let t = void 0,
           e = 1 / 0,
           i = void 0,
           s = !0;
-        for (const n of this.drn)
+        for (const n of this.Xon)
           if (
             n.Valid &&
             n.WasRecentlyRenderOnScreen() &&
             n.Entity.Id !== this.Die?.Entity?.Id &&
-            n.Entity.Id !== this.hrn?.Entity?.Id
+            n.Entity.Id !== this.Hon?.Entity?.Id
           ) {
             if (n) {
               void 0 === i && (i = this.Hte.ActorLocationProxy);
               var o = Vector_1.Vector.DistSquared(n.Location, i);
               if (o > n.RadiusSquared) continue;
               if (o > e) continue;
-              if ((this.Crn.add(n), o < MIN_DIST_SQUARED)) continue;
+              if ((this.$on.add(n), o < MIN_DIST_SQUARED)) continue;
               e = o;
             }
             s &&
               (TraceElementCommon_1.TraceElementCommon.SetStartLocation(
-                this.Nnr,
+                this.bsr,
                 this.Hte.ActorLocation,
               ),
               (s = !1)),
               TraceElementCommon_1.TraceElementCommon.SetEndLocation(
-                this.Nnr,
+                this.bsr,
                 n.Location,
               ),
               TraceElementCommon_1.TraceElementCommon.ShapeTrace(
                 this.Hte.Actor.CapsuleComponent,
-                this.Nnr,
+                this.bsr,
                 TRACE_TAG_NAME,
                 PROFILE_KEY,
               ) || (t = n);
@@ -437,32 +464,32 @@ let RoleSceneInteractComponent =
         return t;
       }
     }
-    Prn(t) {
-      for (const i of this.prn) this.drn.has(i) || this.prn.delete(i);
-      for (const s of this.Ern) this.prn.add(s);
+    crn(t) {
+      for (const i of this.zon) this.Xon.has(i) || this.zon.delete(i);
+      for (const s of this.irn) this.zon.add(s);
       if (
-        (this.Ern.clear(),
-        this.frn &&
+        (this.irn.clear(),
+        this.Jon &&
           (t.FightCamera.LogicComponent.CameraGuideController.IsBlending ||
-            this.prn.delete(this.frn),
-          this.prn.has(this.frn) || (this.frn = void 0)),
-        !(this.frn ?? 0 === this.prn.size))
+            this.zon.delete(this.Jon),
+          this.zon.has(this.Jon) || (this.Jon = void 0)),
+        !(this.Jon ?? 0 === this.zon.size))
       ) {
         let t = -1;
         var e = void 0 !== this.Die;
-        for (const o of this.prn)
+        for (const o of this.zon)
           o.CameraGaze.GazeInHook && !e
-            ? this.prn.delete(o)
+            ? this.zon.delete(o)
             : o.CameraGaze.LockPriority > t &&
-              ((this.frn = o), (t = o.CameraGaze.LockPriority));
-        this.frn &&
+              ((this.Jon = o), (t = o.CameraGaze.LockPriority));
+        this.Jon &&
           CameraController_1.CameraController.FightCamera.LogicComponent.ApplyCameraHook(
-            this.frn,
+            this.Jon,
           );
       }
     }
     CanActivateFixHook() {
-      return this.vrn && void 0 !== this.hrn && this.Die !== this.hrn;
+      return this.Zon && void 0 !== this.Hon && this.Die !== this.Hon;
     }
     GetCurrentTargetLocation() {
       return this.TargetLocation
@@ -470,7 +497,7 @@ let RoleSceneInteractComponent =
         : this.Die?.Location.ToUeVector() ?? this.Hte.ActorLocation;
     }
     GetNextTarget() {
-      return this.hrn;
+      return this.Hon;
     }
     GetCurrentTarget() {
       return this.Die;
@@ -479,13 +506,13 @@ let RoleSceneInteractComponent =
       return this.Die.Entity.GetComponent(1).Owner;
     }
     GetNextTargetLocation() {
-      return this.hrn.Location.ToUeVector();
+      return this.Hon.Location.ToUeVector();
     }
     GetGuideSpare() {
-      return this.prn;
+      return this.zon;
     }
     GetNextTargetVector() {
-      return this.hrn.Location;
+      return this.Hon.Location;
     }
     GetInheritSpeed() {
       return this.Die.InheritSpeed;
@@ -500,17 +527,17 @@ let RoleSceneInteractComponent =
         : this.Hte.ActorForward;
     }
     IsLegalExceptSkill() {
-      return this.Mrn;
+      return this.ern;
     }
     GetTargetIsSuiGuangType() {
       var t = this.Die?.GetHookInteractType();
       return !!t && "SuiGuangHook" === t;
     }
-    arn(t, e, i) {
+    Von(t, e, i) {
       t
         ? e &&
           !this.Lie.HasTag(e) &&
-          (this.Lie.AddTag(e), (this.rrn = e), Log_1.Log.CheckInfo()) &&
+          (this.Lie.AddTag(e), (this.Oon = e), Log_1.Log.CheckInfo()) &&
           Log_1.Log.Info(
             "Character",
             32,
@@ -518,10 +545,10 @@ let RoleSceneInteractComponent =
             ["reason", i],
             ["EntityId", this.Entity.Id],
           )
-        : this.rrn &&
-          this.Lie.HasTag(this.rrn) &&
-          (this.Lie.RemoveTag(this.rrn),
-          (this.rrn = void 0),
+        : this.Oon &&
+          this.Lie.HasTag(this.Oon) &&
+          (this.Lie.RemoveTag(this.Oon),
+          (this.Oon = void 0),
           Log_1.Log.CheckInfo()) &&
           Log_1.Log.Info(
             "Character",
@@ -531,31 +558,31 @@ let RoleSceneInteractComponent =
             ["EntityId", this.Entity.Id],
           );
     }
-    lrn() {
+    jon() {
       var t;
       this.Hte.IsAutonomousProxy &&
-        (((t = Protocol_1.Aki.Protocol.yNn.create()).rkn =
+        (((t = Protocol_1.Aki.Protocol.z3n.create()).P4n =
           MathUtils_1.MathUtils.NumberToLong(
             this.Entity.GetComponent(0).GetCreatureDataId(),
           )),
-        (t.M3n = Protocol_1.Aki.Protocol.VBs.create()),
-        (t.M3n.X = this.Die.Location.X),
-        (t.M3n.Y = this.Die.Location.Y),
-        (t.M3n.Z = this.Die.Location.Z),
-        CombatMessage_1.CombatNet.Call(14412, this.Entity, t));
+        (t.e8n = Protocol_1.Aki.Protocol.Pks.create()),
+        (t.e8n.X = this.Die.Location.X),
+        (t.e8n.Y = this.Die.Location.Y),
+        (t.e8n.Z = this.Die.Location.Z),
+        CombatMessage_1.CombatNet.Call(22472, this.Entity, t));
     }
-    _rn() {
+    Won() {
       var t;
       this.Hte.IsAutonomousProxy &&
-        (((t = Protocol_1.Aki.Protocol.u_s.create()).rkn =
+        (((t = Protocol_1.Aki.Protocol.sms.create()).P4n =
           MathUtils_1.MathUtils.NumberToLong(
             this.Die.Entity.GetComponent(0).GetCreatureDataId(),
           )),
-        Net_1.Net.Call(4996, t, (t) => {
-          switch (t.lkn) {
-            case Protocol_1.Aki.Protocol.lkn.Sys:
+        Net_1.Net.Call(8633, t, (t) => {
+          switch (t.O4n) {
+            case Protocol_1.Aki.Protocol.O4n.NRs:
               break;
-            case Protocol_1.Aki.Protocol.lkn.Proto_ErrSceneEntityNotExist:
+            case Protocol_1.Aki.Protocol.O4n.Proto_ErrSceneEntityNotExist:
               Log_1.Log.CheckError() &&
                 Log_1.Log.Error("Character", 32, "钩锁点不存在", [
                   "EntityId",
@@ -564,20 +591,20 @@ let RoleSceneInteractComponent =
               break;
             default:
               ControllerHolder_1.ControllerHolder.ErrorCodeController.OpenErrorCodeTipView(
-                t.lkn,
-                5049,
+                t.O4n,
+                3115,
               );
           }
         }));
     }
-    grn() {
+    Yon() {
       var t;
       this.Hte.IsAutonomousProxy && this.Die?.WillBeDestroyedAfterHook
-        ? (((t = Protocol_1.Aki.Protocol.jds.create()).rkn =
+        ? (((t = Protocol_1.Aki.Protocol.kgs.create()).P4n =
             MathUtils_1.MathUtils.NumberToLong(
               this.Die.Entity.GetComponent(0).GetCreatureDataId(),
             )),
-          Net_1.Net.Call(24445, t, (t) => {}))
+          Net_1.Net.Call(3214, t, (t) => {}))
         : this.Hte.IsAutonomousProxy &&
           this.Die?.WillBeHideAfterHook &&
           ((t = this.Die.Entity),
@@ -589,12 +616,12 @@ let RoleSceneInteractComponent =
           ));
     }
   });
-(RoleSceneInteractComponent.G7r = !1),
+(RoleSceneInteractComponent.f7r = !1),
   (RoleSceneInteractComponent.TraceDebug = !1),
   (RoleSceneInteractComponent.DebugLog = !1),
   (RoleSceneInteractComponent = RoleSceneInteractComponent_1 =
     __decorate(
-      [(0, RegisterComponent_1.RegisterComponent)(87)],
+      [(0, RegisterComponent_1.RegisterComponent)(89)],
       RoleSceneInteractComponent,
     )),
   (exports.RoleSceneInteractComponent = RoleSceneInteractComponent);

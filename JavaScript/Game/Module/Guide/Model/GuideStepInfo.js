@@ -28,12 +28,12 @@ class InitState extends StateBase_1.StateBase {}
 class ExecutingState extends StateBase_1.StateBase {
   constructor() {
     super(...arguments),
-      (this.QYt = !0),
-      (this.XYt = !1),
-      (this.$Yt = void 0),
-      (this.YYt = void 0);
+      (this.QJt = !0),
+      (this.XJt = !1),
+      (this.$Jt = void 0),
+      (this.YJt = void 0);
   }
-  JYt() {
+  JJt() {
     const e = this.Owner;
     if (e.GuideView)
       Log_1.Log.CheckWarn() &&
@@ -53,8 +53,8 @@ class ExecutingState extends StateBase_1.StateBase {
             i.Id,
             (i) => {
               i
-                ? this.QYt
-                  ? t || this.zYt(e)
+                ? this.QJt
+                  ? t || this.zJt(e)
                   : Log_1.Log.CheckWarn() &&
                     Log_1.Log.Warn(
                       "Guide",
@@ -71,30 +71,30 @@ class ExecutingState extends StateBase_1.StateBase {
                   this.Owner.SwitchState(3));
             },
           ),
-            t && this.zYt(e);
+            t && this.zJt(e);
           break;
         }
         default:
           ModelManager_1.ModelManager.GuideModel.OpenGuideView(e);
       }
   }
-  zYt(i) {
+  zJt(i) {
     i = new TutorialListInfo_1.TutorialListInfo(i);
     i.Init(), ModelManager_1.ModelManager.GuideModel.AddTutorialInfo(i);
   }
-  ZYt() {
-    void 0 !== this.YYt &&
-      (TimerSystem_1.TimerSystem.Remove(this.YYt), (this.YYt = void 0));
+  ZJt() {
+    void 0 !== this.YJt &&
+      (TimerSystem_1.TimerSystem.Remove(this.YJt), (this.YJt = void 0));
   }
-  eJt() {
-    void 0 !== this.$Yt &&
-      (TimerSystem_1.TimerSystem.Remove(this.$Yt), (this.$Yt = void 0));
+  ezt() {
+    void 0 !== this.$Jt &&
+      (TimerSystem_1.TimerSystem.Remove(this.$Jt), (this.$Jt = void 0));
   }
-  tJt() {
-    var e = this.Owner.Config.Duration;
-    if (0 !== e && void 0 === this.$Yt) {
-      let i = GUARANTEED_TIME;
-      e > GUARANTEED_TIME &&
+  tzt() {
+    var i = this.Owner.Config.Duration;
+    if (0 !== i && void 0 === this.$Jt) {
+      let e = GUARANTEED_TIME;
+      i > GUARANTEED_TIME &&
         (Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "Guide",
@@ -102,24 +102,24 @@ class ExecutingState extends StateBase_1.StateBase {
             "引导保底时间被配置修改",
             ["步骤Id", this.Owner.Id],
             ["组Id", this.Owner.OwnerGroup.Id],
-            ["新保底时间", e],
+            ["新保底时间", i],
           ),
-        (i = e + OFFSET_TIME)),
-        (this.$Yt = TimerSystem_1.TimerSystem.Delay((i) => {
-          (this.$Yt = void 0),
+        (e = i + OFFSET_TIME)),
+        (this.$Jt = TimerSystem_1.TimerSystem.Delay((i) => {
+          (this.$Jt = void 0),
             Log_1.Log.CheckError() &&
               Log_1.Log.Error(
                 "Guide",
                 17,
-                "[引导步骤][时停设置超过保底时长(30秒)未清除, 触发保底机制恢复时停, 请检查引导配置触发流程是否合理！]",
+                `[引导步骤][时停设置超过保底时长(${e}秒)未清除, 触发保底机制恢复时停, 请检查引导配置触发流程是否合理！]`,
                 ["步骤Id", this.Owner.Id],
               ),
             this.Owner.SwitchState(3);
-        }, i));
+        }, e));
     }
   }
   OnEnter() {
-    this.QYt = !0;
+    this.QJt = !0;
     var i = this.Owner.Config,
       e = i.TimeScale,
       e =
@@ -130,35 +130,35 @@ class ExecutingState extends StateBase_1.StateBase {
             e,
             "GuideStep",
           ),
-          this.tJt()),
+          this.tzt()),
         i.ShowDelay);
     0 < e
-      ? (this.ZYt(),
-        (this.YYt = TimerSystem_1.TimerSystem.Delay((i) => {
-          (this.YYt = void 0), this.iJt();
+      ? (this.ZJt(),
+        (this.YJt = TimerSystem_1.TimerSystem.Delay((i) => {
+          (this.YJt = void 0), this.izt();
         }, e)))
-      : this.iJt();
+      : this.izt();
   }
-  iJt() {
-    this.JYt(),
+  izt() {
+    this.JJt(),
       (this.Owner.ViewData.IsAttachToBattleView =
         UiManager_1.UiManager.IsViewOpen("BattleView")),
-      (this.XYt = this.Owner.SetLimitInputDistribute());
+      (this.XJt = this.Owner.SetLimitInputDistribute());
   }
   OnExit() {
-    this.QYt = !1;
+    this.QJt = !1;
     var i,
       e = this.Owner,
       t = ((e.IsExitingFromExecuting = !0), this.Owner.Config.TimeScale),
       t =
         (t < 1 &&
           !ModelManager_1.ModelManager.GameModeModel.IsMulti &&
-          (this.eJt(),
+          (this.ezt(),
           UiTimeDilation_1.UiTimeDilation.ResetTimeDilationHighLevel(
             "GuideStep",
           ),
           InputDistributeController_1.InputDistributeController.RefreshInputTag()),
-        this.ZYt(),
+        this.ZJt(),
         e.GuideView);
     t &&
       ((i = t.GetViewId()),
@@ -168,22 +168,22 @@ class ExecutingState extends StateBase_1.StateBase {
       ModelManager_1.ModelManager.GuideModel.RemoveStepViewSingletonMap(e),
       e.ClearGuideFocusBehavior(),
       e.ViewData.Clear(),
-      this.XYt &&
+      this.XJt &&
         ModelManager_1.ModelManager.InputDistributeModel.ClearLimitInputDistributeActions(),
       (e.IsExitingFromExecuting = !1);
   }
 }
 class PendingState extends StateBase_1.StateBase {
   constructor() {
-    super(...arguments), (this.xYt = void 0);
+    super(...arguments), (this.xJt = void 0);
   }
   jm() {
-    void 0 !== this.xYt &&
-      (TimerSystem_1.TimerSystem.Remove(this.xYt), (this.xYt = void 0));
+    void 0 !== this.xJt &&
+      (TimerSystem_1.TimerSystem.Remove(this.xJt), (this.xJt = void 0));
   }
   OnEnter() {
     this.jm(),
-      (this.xYt = TimerSystem_1.TimerSystem.Forever(() => {
+      (this.xJt = TimerSystem_1.TimerSystem.Forever(() => {
         this.Owner.CanEnterExecuting() &&
           (this.jm(), this.Owner.SwitchState(1));
       }, 1e3));
@@ -211,9 +211,9 @@ class GuideStepInfo {
       (this.ViewData = void 0),
       (this.GuideView = void 0),
       (this.GuideFocusBehaviorProxy = void 0),
-      (this.oJt = void 0),
-      (this.rJt = void 0),
-      (this.nJt = void 0),
+      (this.ozt = void 0),
+      (this.rzt = void 0),
+      (this.nzt = void 0),
       (this.IsExitingFromExecuting = !1),
       (this.Id = i),
       (this.OwnerGroup = e),
@@ -229,9 +229,9 @@ class GuideStepInfo {
   }
   get Config() {
     return (
-      this.rJt ||
-        (this.rJt = ConfigManager_1.ConfigManager.GuideConfig.GetStep(this.Id)),
-      this.rJt
+      this.rzt ||
+        (this.rzt = ConfigManager_1.ConfigManager.GuideConfig.GetStep(this.Id)),
+      this.rzt
     );
   }
   TryEnterExecuting() {
@@ -286,7 +286,7 @@ class GuideStepInfo {
           ),
         this.StateMachine.Switch(i));
   }
-  sJt() {
+  szt() {
     return (
       !!UiLayer_1.UiLayer.IsUiActive() &&
       !ModelManager_1.ModelManager.BattleUiModel.GetCurRoleData()?.GameplayTagComponent?.HasTag(
@@ -295,7 +295,7 @@ class GuideStepInfo {
       !UiManager_1.UiManager.IsViewShow("PhantomExploreView")
     );
   }
-  aJt() {
+  azt() {
     if (
       4 === this.Config.ContentType &&
       ConfigManager_1.ConfigManager.GuideConfig.GetGuideFocus(this.Id).UseMask
@@ -303,7 +303,7 @@ class GuideStepInfo {
       return !0;
     return !1;
   }
-  hJt() {
+  hzt() {
     var i,
       e = ConfigManager_1.ConfigManager.GuideConfig.GetGuideFocus(this.Id),
       t = e.ViewName;
@@ -347,10 +347,10 @@ class GuideStepInfo {
           ]),
         !1);
   }
-  lJt() {
-    this.nJt ||
+  lzt() {
+    this.nzt ||
       (ModelManager_1.ModelManager.GuideModel.AddGuideLockInput(),
-      (this.nJt = TimerSystem_1.TimerSystem.Delay((i) => {
+      (this.nzt = TimerSystem_1.TimerSystem.Delay((i) => {
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Guide",
@@ -362,31 +362,31 @@ class GuideStepInfo {
       }, 4e3)));
   }
   StopLockInput() {
-    void 0 !== this.nJt &&
+    void 0 !== this.nzt &&
       (ModelManager_1.ModelManager.GuideModel.RemoveGuideLockInput(),
-      TimerSystem_1.TimerSystem.Remove(this.nJt),
-      (this.nJt = void 0));
+      TimerSystem_1.TimerSystem.Remove(this.nzt),
+      (this.nzt = void 0));
   }
   CanEnterExecuting() {
-    if (!this.sJt()) return !1;
+    if (!this.szt()) return !1;
     switch (this.Config.ContentType) {
       case 4: {
-        if (!this.hJt()) return this.StopLockInput(), !1;
-        this.aJt() && this.lJt();
+        if (!this.hzt()) return this.StopLockInput(), !1;
+        this.azt() && this.lzt();
         const e = this.ViewData.GetAttachedView();
         var i;
         return e
-          ? (this.oJt ||
-              ((this.oJt = new UiBehaviorGuideFocus_1.UiBehaviorGuideFocus(e)),
-              this.oJt.SetParam(this)),
-            this.oJt.SetOwner(e),
-            !!this.oJt.PrepareForOpenGuideFocus() &&
+          ? (this.ozt ||
+              ((this.ozt = new UiBehaviorGuideFocus_1.UiBehaviorGuideFocus(e)),
+              this.ozt.SetParam(this)),
+            this.ozt.SetOwner(e),
+            !!this.ozt.PrepareForOpenGuideFocus() &&
               (!(i = UiManager_1.UiManager.GetViewByName("GuideFocusView")) ||
               i.WaitToDestroy ||
               i.IsDestroyOrDestroying
                 ? (this.GuideFocusBehaviorProxy ||
                     ((this.GuideFocusBehaviorProxy =
-                      new UiBehaviorBase_1.UiBehaviorBaseProxy(this.oJt)),
+                      new UiBehaviorBase_1.UiBehaviorBaseProxy(this.ozt)),
                     this.GuideFocusBehaviorProxy.CreateAsync().then(
                       () => {
                         this.GuideFocusBehaviorProxy.StartAsync(),
@@ -423,8 +423,8 @@ class GuideStepInfo {
     }
   }
   ClearGuideFocusBehavior() {
-    this.oJt?.CleanGuideStep(),
-      (this.oJt = void 0),
+    this.ozt?.CleanGuideStep(),
+      (this.ozt = void 0),
       (this.GuideFocusBehaviorProxy = void 0);
   }
   SetLimitInputDistribute() {

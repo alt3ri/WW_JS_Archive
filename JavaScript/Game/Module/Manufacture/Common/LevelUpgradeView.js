@@ -48,11 +48,11 @@ class LevelRewardItem extends LoopScrollSmallItemGrid_1.LoopScrollSmallItemGrid 
 class LevelUpgradeView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.bqt = void 0),
-      (this.qqt = void 0),
-      (this.RNt = !0),
+      (this.NGt = void 0),
+      (this.OGt = void 0),
+      (this.UOt = !0),
       (this.$be = void 0),
-      (this.Gqt = (e, t, o) => {
+      (this.kGt = (e, t, o) => {
         var r = new StarItem();
         return (
           r.CreateThenShowByActor(t.GetOwner()),
@@ -60,26 +60,26 @@ class LevelUpgradeView extends UiViewBase_1.UiViewBase {
           { Key: o, Value: r }
         );
       }),
-      (this.Nqt = () => {
+      (this.FGt = () => {
         return new LevelRewardItem();
       }),
-      (this.Oqt = () => {
-        0 !== this.qqt.length && this.Cl();
+      (this.VGt = () => {
+        0 !== this.OGt.length && this.Cl();
       }),
-      (this.Kyt = () => {
+      (this.eTt = () => {
         this.GetButton(4).GetSelfInteractive()
           ? CommonManager_1.CommonManager.SendLevelRewardRequest()
           : ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
               "ComposeUpgrade",
             );
       }),
-      (this.Wqt = () => {
+      (this.XGt = () => {
         CommonManager_1.CommonManager.SetSelectedLevel(
           CommonManager_1.CommonManager.GetSelectedLevel() - 1,
         ),
           this.bl();
       }),
-      (this.Kqt = () => {
+      (this.$Gt = () => {
         CommonManager_1.CommonManager.SetSelectedLevel(
           CommonManager_1.CommonManager.GetSelectedLevel() + 1,
         ),
@@ -104,38 +104,38 @@ class LevelUpgradeView extends UiViewBase_1.UiViewBase {
       [13, UE.UIItem],
     ]),
       (this.BtnBindInfo = [
-        [4, this.Kyt],
-        [5, this.Wqt],
-        [6, this.Kqt],
+        [4, this.eTt],
+        [5, this.XGt],
+        [6, this.$Gt],
       ]);
   }
   OnBeforeDestroy() {
-    this.bqt && (this.bqt.ClearChildren(), (this.bqt = void 0)),
+    this.NGt && (this.NGt.ClearChildren(), (this.NGt = void 0)),
       this.$be.ClearChildren();
   }
   OnBeforeShow() {
-    this.rFe(), this.ChildPopView?.PopItem?.SetTexBgVisible(!1);
+    this.M3e(), this.ChildPopView?.PopItem?.SetTexBgVisible(!1);
   }
   OnStart() {
-    (this.bqt = new GenericLayout_1.GenericLayout(
+    (this.NGt = new GenericLayout_1.GenericLayout(
       this.GetHorizontalLayout(7),
-      this.Nqt,
+      this.FGt,
     )),
-      (this.qqt = new Array()),
+      (this.OGt = new Array()),
       LguiUtil_1.LguiUtil.SetLocalText(
         this.GetText(12),
         "ComposeUpgradeButtonText",
       ),
       (this.$be = new GenericLayoutNew_1.GenericLayoutNew(
         this.GetHorizontalLayout(11),
-        this.Gqt,
+        this.kGt,
       )),
       this.GetButton(4).SetCanClickWhenDisable(!0),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.SwitchViewType,
         1,
       ),
-      this.RNt && (this.RNt = !1),
+      this.UOt && (this.UOt = !1),
       CommonManager_1.CommonManager.SetSelectedLevel(
         CommonManager_1.CommonManager.GetCurrentRewardLevel(),
       ),
@@ -148,14 +148,14 @@ class LevelUpgradeView extends UiViewBase_1.UiViewBase {
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.UpgradeComposeLevel,
-      this.Oqt,
+      this.VGt,
     );
   }
   OnRemoveEventListener() {
-    this.RNt ||
+    this.UOt ||
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.UpgradeComposeLevel,
-        this.Oqt,
+        this.VGt,
       );
   }
   Cl() {
@@ -165,25 +165,25 @@ class LevelUpgradeView extends UiViewBase_1.UiViewBase {
       this.bl();
   }
   bl() {
-    this.qyi(),
-      this.C4e(),
+    this.qIi(),
+      this.P5e(),
       this.nOe(),
-      this.sct(),
-      this.Fqt(),
-      this.Vqt(),
-      this.rFe(),
-      this.Hqt(),
-      this.jqt(),
+      this.pmt(),
+      this.jGt(),
+      this.WGt(),
+      this.M3e(),
+      this.KGt(),
+      this.QGt(),
       this.sqe(),
-      this.CFs();
+      this.eVs();
   }
-  qyi() {
+  qIi() {
     var e = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
       ComposeDefine_1.COMPOSE_TYPE_TEXTURE_PATH_KEY,
     );
     this.SetTextureByPath(e, this.GetTexture(9));
   }
-  C4e() {
+  P5e() {
     var e = CommonManager_1.CommonManager.GetComposeLevelByLevel(
         CommonManager_1.CommonManager.GetSelectedLevel(),
       ),
@@ -199,14 +199,14 @@ class LevelUpgradeView extends UiViewBase_1.UiViewBase {
       );
     this.GetText(1).SetText(e);
   }
-  sct() {
+  pmt() {
     var e = CommonManager_1.CommonManager.GetComposeMaxLevel(),
       t = new Array(e);
     for (let e = 0; e < CommonManager_1.CommonManager.GetSelectedLevel(); e++)
       t[e] = !0;
     this.$be.RebuildLayoutByDataNew(t);
   }
-  Fqt() {
+  jGt() {
     var e = CommonManager_1.CommonManager.GetCurrentRewardTotalProficiency();
     let t = "";
     (t =
@@ -220,7 +220,7 @@ class LevelUpgradeView extends UiViewBase_1.UiViewBase {
           )),
       this.GetText(2).SetText(t);
   }
-  Vqt() {
+  WGt() {
     var e = CommonManager_1.CommonManager.GetCurrentRewardTotalProficiency(),
       t = CommonManager_1.CommonManager.GetSumExpByLevel(
         CommonManager_1.CommonManager.GetSelectedLevel(),
@@ -228,7 +228,7 @@ class LevelUpgradeView extends UiViewBase_1.UiViewBase {
       e = 1 < (e = MathUtils_1.MathUtils.GetFloatPointFloor(e / t, 3)) ? 1 : e;
     this.GetSprite(3).SetFillAmount(e);
   }
-  rFe() {
+  M3e() {
     var e = CommonManager_1.CommonManager.GetComposeMaxLevel(),
       t = CommonManager_1.CommonManager.GetCurrentRewardLevel(),
       o = CommonManager_1.CommonManager.GetSelectedLevel(),
@@ -243,8 +243,8 @@ class LevelUpgradeView extends UiViewBase_1.UiViewBase {
           )),
           this.GetButton(4).SetSelfInteractive(r <= o && t < e));
   }
-  Hqt() {
-    this.qqt.length = 0;
+  KGt() {
+    this.OGt.length = 0;
     var e = CommonManager_1.CommonManager.GetDropIdByLevel(
       CommonManager_1.CommonManager.GetSelectedLevel(),
     );
@@ -254,17 +254,17 @@ class LevelUpgradeView extends UiViewBase_1.UiViewBase {
       e = ConfigManager_1.ConfigManager.RewardConfig.GetDropPackage(e);
       if (e)
         for (const t of e.DropPreview)
-          this.qqt.push({
+          this.OGt.push({
             RewardId: t[0],
             Count: t[1],
             IsGet:
               CommonManager_1.CommonManager.GetSelectedLevel() <
               CommonManager_1.CommonManager.GetCurrentRewardLevel(),
           });
-      this.bqt.RefreshByData(this.qqt);
+      this.NGt.RefreshByData(this.OGt);
     }
   }
-  jqt() {
+  QGt() {
     this.GetButton(5)
       .GetOwner()
       .GetComponentByClass(UE.UIItem.StaticClass())
@@ -283,7 +283,7 @@ class LevelUpgradeView extends UiViewBase_1.UiViewBase {
         CommonManager_1.CommonManager.GetComposeMaxLevel(),
     );
   }
-  CFs() {
+  eVs() {
     CommonManager_1.CommonManager.GetCurrentRewardLevel() ===
     CommonManager_1.CommonManager.GetSelectedLevel()
       ? RedDotController_1.RedDotController.BindRedDot(

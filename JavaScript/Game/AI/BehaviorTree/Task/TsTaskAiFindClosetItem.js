@@ -75,8 +75,8 @@ class TsTaskAiFindClosetItem extends TsTaskAbortImmediatelyBase_1.default {
             ),
             (i = e.Entity.GetComponent(0)) &&
               (i.GetEntityType() ===
-                Protocol_1.Aki.Protocol.HBs.Proto_SceneItem &&
-                ((i = e.Entity.GetComponent(182).ActorLocation),
+                Protocol_1.Aki.Protocol.wks.Proto_SceneItem &&
+                ((i = e.Entity.GetComponent(185).ActorLocation),
                 BlackboardController_1.BlackboardController.SetVectorValueByEntity(
                   s.Entity.Id,
                   this.TsItemLocationBlackboardKey,

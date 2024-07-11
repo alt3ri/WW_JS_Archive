@@ -15,7 +15,7 @@ const UE = require("ue"),
   ModelManager_1 = require("../../Manager/ModelManager"),
   CampUtils_1 = require("../../NewWorld/Character/Common/Blueprint/Utils/CampUtils"),
   CharacterUnifiedStateTypes_1 = require("../../NewWorld/Character/Common/Component/Abilities/CharacterUnifiedStateTypes"),
-  CombatDebugController_1 = require("../../Utils/CombatDebugController"),
+  CombatLog_1 = require("../../Utils/CombatLog"),
   PROFILE_KEY = "AiPerception_IsActorInSense",
   MINUS_HALF = -180,
   MINUS_QUATER = -90;
@@ -68,11 +68,11 @@ class AiPerception {
       (this.ShareAllyLink = new Set()),
       (this.voe = new Set()),
       (this.Moe = new Set()),
-      (this.Soe = new Set()),
+      (this.Eoe = new Set()),
       (this.f6 = new Array()),
       (this.EntitiesInSense = new Map()),
       (this.EntitiesToAdd = new Map()),
-      (this.Eoe = new Array()),
+      (this.Soe = new Array()),
       (this.yoe = new Map()),
       (this.Ioe = []),
       (this.Lz = Vector_1.Vector.Create()),
@@ -85,27 +85,39 @@ class AiPerception {
       (this.uoe = void 0),
       (this.MaxSenseRange = 0),
       (this.Poe = !1),
+      (this.yna = !1),
       (this.xoe = void 0),
       (this.woe = void 0),
       (this.Boe = void 0),
       (this.boe = void 0),
       (this.qoe = void 0),
-      (this.Goe = void 0),
+      (this.Goe = void 0);
+    var e = t.CharActorComp?.CreatureData;
+    (this.yna = 122000237 === e?.GetPbDataId()),
       (this.E0 = t.CharActorComp.Entity.Id),
       (this.Noe = t.CharActorComp.Actor.Camp),
       this.EntitiesInSense.set(this.E0, 0),
       this.Roe.set(0, new Set()),
       this.Roe.set(1, new Set());
-    let e = -1;
-    for (const r of s) {
-      var h = new AiSenseObject(r);
-      this.Loe.push(h),
-        0 < ++e ||
-          (h.WithAngleHorizontal && ++this.Uoe,
-          h.WithAngleVertical && ++this.Aoe,
-          r.SenseDistanceRange.Max > this.MaxSenseRange &&
-            (this.MaxSenseRange = r.SenseDistanceRange.Max),
-          this.Roe.get(h.AiSense.SenseTarget)?.add(h));
+    let h = -1;
+    for (const n of s) {
+      var r = new AiSenseObject(n);
+      this.Loe.push(r),
+        0 < ++h ||
+          (this.yna &&
+            Log_1.Log.CheckInfo() &&
+            Log_1.Log.Info(
+              "AI",
+              6,
+              "EnableAiSense Init",
+              ["Actor", this.Bte.CharActorComp.Actor.GetName()],
+              ["AiSenseObject", r.AiSense.Id],
+            ),
+          r.WithAngleHorizontal && ++this.Uoe,
+          r.WithAngleVertical && ++this.Aoe,
+          n.SenseDistanceRange.Max > this.MaxSenseRange &&
+            (this.MaxSenseRange = n.SenseDistanceRange.Max),
+          this.Roe.get(r.AiSense.SenseTarget)?.add(r));
     }
     (this.Ooe = i ? i.ShareDis * i.ShareDis : 0), this.koe();
   }
@@ -162,7 +174,7 @@ class AiPerception {
         this.EntitiesInSense.set(this.E0, 0);
     }
     (this.Poe = !t),
-      CombatDebugController_1.CombatDebugController.CombatInfo(
+      CombatLog_1.CombatLog.Info(
         "Ai",
         this.Bte.CharActorComp?.Entity,
         "禁用全部感知",
@@ -191,7 +203,7 @@ class AiPerception {
       this.EntitiesInSense.clear(),
       this.EntitiesInSense.set(this.E0, 0),
       this.EntitiesToAdd.clear(),
-      (this.Eoe.length = 0),
+      (this.Soe.length = 0),
       this.yoe.clear(),
       t && (this.Ioe.length = 0);
   }
@@ -209,12 +221,13 @@ class AiPerception {
         }
       } else this.Koe();
   }
-  Qoe(t, i, s) {
-    var e = this.Bte.CharActorComp.ActorLocationProxy,
-      h = t.GetComponent(1),
-      r = (h.ActorLocationProxy.Subtraction(e, this.Lz), this.Lz.SizeSquared());
-    let n = 0,
-      o = 0;
+  Qoe(t, i, s, e = !1) {
+    var h = this.Bte.CharActorComp.ActorLocationProxy,
+      r = t.GetComponent(1),
+      n = e && r.CreatureData.IsRole(),
+      o = (r.ActorLocationProxy.Subtraction(h, this.Lz), this.Lz.SizeSquared());
+    let a = 0,
+      _ = 0;
     (this.Uoe || this.Aoe) &&
       (this.Lz.FromUeVector(
         this.Bte.CharActorComp.ActorRotation.UnrotateVector(
@@ -222,37 +235,57 @@ class AiPerception {
         ),
       ),
       this.Uoe &&
-        (n = MathUtils_1.MathUtils.RadToDeg * Math.atan2(this.Lz.Y, this.Lz.X)),
+        (a = MathUtils_1.MathUtils.RadToDeg * Math.atan2(this.Lz.Y, this.Lz.X)),
       this.Aoe) &&
-      (o =
-        MathUtils_1.MathUtils.RadToDeg * Math.asin(this.Lz.Z / Math.sqrt(r)));
-    var t = t.GetComponent(89),
-      a = t?.Valid
-        ? t.PositionState
+      (_ =
+        MathUtils_1.MathUtils.RadToDeg * Math.asin(this.Lz.Z / Math.sqrt(o)));
+    var e = t.GetComponent(91),
+      f = e?.Valid
+        ? e.PositionState
         : CharacterUnifiedStateTypes_1.ECharPositionState.Ground,
-      _ = t?.Valid
-        ? t.MoveState
+      c = e?.Valid
+        ? e.MoveState
         : CharacterUnifiedStateTypes_1.ECharMoveState.Other;
-    TraceElementCommon_1.TraceElementCommon.SetStartLocation(this.uoe, e),
+    TraceElementCommon_1.TraceElementCommon.SetStartLocation(this.uoe, h),
       this.Toe.clear();
     for (const l of this.Roe.get(s))
-      if (l.InArea(r, n, o, a, _, i)) {
-        if (!l.AiSense.CantBeBlock) {
+      if (l.InArea(o, a, _, f, c, i)) {
+        if (
+          (n &&
+            Log_1.Log.CheckInfo() &&
+            Log_1.Log.Info(
+              "AI",
+              6,
+              "Mingzhongzhigui Ai InArea",
+              ["actor", r.Owner?.GetName()],
+              ["CantBeBlock", l.AiSense.CantBeBlock],
+            ),
+          !l.AiSense.CantBeBlock)
+        ) {
           if (this.Toe.has(l.AiSense.BlockType)) continue;
           if (
             (this.uoe.SetTraceTypeQuery(l.AiSense.BlockType),
             TraceElementCommon_1.TraceElementCommon.SetEndLocation(
               this.uoe,
-              h.ActorLocationProxy,
+              r.ActorLocationProxy,
             ),
             TraceElementCommon_1.TraceElementCommon.LineTrace(
               this.uoe,
               PROFILE_KEY,
             ))
           ) {
-            var f = this.uoe.HitResult;
-            if (f.bBlockingHit && f.Actors.Get(0) !== h.Owner) {
-              this.Toe.add(l.AiSense.BlockType);
+            var S = this.uoe.HitResult;
+            if (S.bBlockingHit && S.Actors.Get(0) !== r.Owner) {
+              n &&
+                Log_1.Log.CheckInfo() &&
+                Log_1.Log.Info(
+                  "AI",
+                  6,
+                  "Mingzhongzhigui Ai Hit",
+                  ["actor", S.Actors.Get(0)?.GetName()],
+                  ["Comp", S.Components.Get(0)?.GetName()],
+                ),
+                this.Toe.add(l.AiSense.BlockType);
               continue;
             }
           }
@@ -287,19 +320,25 @@ class AiPerception {
           r.Entity?.Valid &&
             r.Entity.Active &&
             (this.EntitiesInSense.has(r.Entity.Id) ||
-              (this.Qoe(r.Entity, !1, i) &&
-                this.EntitiesToAdd.set(r.Entity.Id, i)));
+              (this.Qoe(r.Entity, !1, i, this.yna) &&
+                (this.yna &&
+                  Log_1.Log.CheckInfo() &&
+                  Log_1.Log.Info("AI", 6, "Mingzhongzhigui In Sense", [
+                    "actor",
+                    r.Id,
+                  ]),
+                this.EntitiesToAdd.set(r.Entity.Id, i))));
       }
   }
   joe() {
-    this.Eoe.length = 0;
+    this.Soe.length = 0;
     for (var [t, i] of this.EntitiesInSense) {
       var s;
       t !== this.E0 &&
         ((s = EntitySystem_1.EntitySystem.Get(t))?.Valid && s.Active
           ? this.Qoe(s, !0, i)
             ? this.yoe.delete(t)
-            : this.Eoe.push(t)
+            : this.Soe.push(t)
           : (this.EntitiesInSense.delete(t),
             this.yoe.delete(t),
             this.Allies.delete(t) &&
@@ -327,7 +366,7 @@ class AiPerception {
         (this.EntitiesInSense.delete(e),
         (h = EntitySystem_1.EntitySystem.Get(e))?.Valid && this.Voe(h, !1),
         this.yoe.delete(e));
-    for (const r of this.Eoe)
+    for (const r of this.Soe)
       this.yoe.has(r) ||
         this.yoe.set(
           r,
@@ -407,12 +446,12 @@ class AiPerception {
           e !== t.Actor.Camp ||
           Vector_1.Vector.DistSquared(s, t.ActorLocationProxy) > this.Ooe ||
           (this.voe.add(r.Entity.Id), this.ShareAllyLink.has(r.Entity.Id)) ||
-          ((t = r.Entity.GetComponent(38))?.Valid &&
+          ((t = r.Entity.GetComponent(39))?.Valid &&
             t.AiController.AiPerception?.Moe.add(this.E0));
       for (const n of this.ShareAllyLink)
         this.voe.has(n) ||
           ((i = EntitySystem_1.EntitySystem.Get(n))?.Valid &&
-            (i = i.GetComponent(38))?.Valid &&
+            (i = i.GetComponent(39))?.Valid &&
             i.AiController.AiPerception?.Moe.delete(this.E0));
       var h = this.voe;
       (this.voe = this.ShareAllyLink), (this.ShareAllyLink = h);
@@ -421,18 +460,18 @@ class AiPerception {
   Koe() {
     this.AllEnemies.clear();
     for (const i of this.Enemies) this.AllEnemies.add(i);
-    this.Soe.clear(), (this.f6.length = 0), this.Soe.add(this.E0);
-    for (const s of this.Moe) this.f6.push(s), this.Soe.add(s);
+    this.Eoe.clear(), (this.f6.length = 0), this.Eoe.add(this.E0);
+    for (const s of this.Moe) this.f6.push(s), this.Eoe.add(s);
     for (; 0 < this.f6.length; ) {
       var t = this.f6.pop(),
         t = EntitySystem_1.EntitySystem.Get(t);
       if (t?.Valid) {
-        t = t.GetComponent(38);
+        t = t.GetComponent(39);
         if (t?.Valid && t.AiController.AiPerception) {
           for (const e of t.AiController.AiPerception.Enemies)
             this.AllEnemies.add(e);
           for (const h of t.AiController.AiPerception.Moe)
-            this.Soe.has(h) || (this.Soe.add(h), this.f6.push(h));
+            this.Eoe.has(h) || (this.Eoe.add(h), this.f6.push(h));
         }
       }
     }

@@ -13,15 +13,15 @@ class TrackController extends ControllerBase_1.ControllerBase {
     return (
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnEnterNearbyTrackRange,
-        this.vDo,
+        this.gRo,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnLeaveNearbyTrackRange,
-        this.MDo,
+        this.fRo,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.RemoveNearbyTrack,
-        this.MDo,
+        this.fRo,
       ),
       !0
     );
@@ -30,15 +30,15 @@ class TrackController extends ControllerBase_1.ControllerBase {
     return (
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnEnterNearbyTrackRange,
-        this.vDo,
+        this.gRo,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnLeaveNearbyTrackRange,
-        this.MDo,
+        this.fRo,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.RemoveNearbyTrack,
-        this.MDo,
+        this.fRo,
       ),
       !0
     );
@@ -88,16 +88,16 @@ class TrackController extends ControllerBase_1.ControllerBase {
     );
   }
 }
-((exports.TrackController = TrackController).vDo = (r) => {
+((exports.TrackController = TrackController).gRo = (r) => {
   if (r) {
-    var t = r.GetComponent(144);
+    var t = r.GetComponent(146);
     if (t?.Valid) {
       var n = r.GetComponent(1).CreatureData.GetPbEntityInitData(),
         n = (0, IComponent_1.getComponent)(
           n.ComponentsData,
           "InteractComponent",
         ),
-        e = r.GetComponent(177);
+        e = r.GetComponent(180);
       if (!e || !e.HasTag(1196894179)) {
         let e = 3;
         n && (e = n.Range / 100),
@@ -116,7 +116,7 @@ class TrackController extends ControllerBase_1.ControllerBase {
     }
   }
 }),
-  (TrackController.MDo = (e) => {
+  (TrackController.fRo = (e) => {
     TrackController.EndTrack(3, e.Id);
   });
 //# sourceMappingURL=TrackController.js.map

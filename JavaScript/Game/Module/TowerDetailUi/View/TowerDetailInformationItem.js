@@ -8,8 +8,8 @@ const UE = require("ue"),
 class TowerDetailInformationItem extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
-      (this.MLo = void 0),
-      (this.sft = void 0),
+      (this.fDo = void 0),
+      (this.ppt = void 0),
       this.CreateThenShowByActor(e.GetOwner());
   }
   OnRegisterComponent() {
@@ -21,35 +21,35 @@ class TowerDetailInformationItem extends UiPanelBase_1.UiPanelBase {
     ];
   }
   OnStart() {
-    (this.MLo =
+    (this.fDo =
       new TowerDetailInformationBuffItem_1.TowerDetailInformationBuffItem(
         this.GetItem(1),
       )),
-      (this.sft =
+      (this.ppt =
         new TowerDetailInformationMonsterItem_1.TowerDetailInformationMonsterItem(
           this.GetItem(2),
         ));
   }
-  SLo() {
+  pDo() {
     this.GetItem(1).SetUIActive(!1), this.GetItem(2).SetUIActive(!1);
   }
   Update(e) {
-    this.SLo(),
+    this.pDo(),
       0 === e.Type
         ? (this.GetItem(1).SetUIActive(!0),
-          this.MLo.Update(e.TowerDetailBuffData))
+          this.fDo.Update(e.TowerDetailBuffData))
         : (this.GetItem(2).SetUIActive(!0),
-          this.sft.Update(e.MonsterData, e.Type)),
-      this.ELo(e),
-      this.yLo(e.Type);
+          this.ppt.Update(e.MonsterData, e.Type)),
+      this.vDo(e),
+      this.MDo(e.Type);
   }
   OnBeforeDestroy() {
-    this.sft.Destroy(), this.MLo.Destroy();
+    this.ppt.Destroy(), this.fDo.Destroy();
   }
-  ELo(e) {
+  vDo(e) {
     this.GetText(0).SetText(e.Title);
   }
-  yLo(e) {
+  MDo(e) {
     let t = 0 !== e && 1 !== e ? !1 : !0;
     this.GetItem(3).SetUIActive(t);
   }

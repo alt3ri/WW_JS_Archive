@@ -20,13 +20,13 @@ const UE = require("ue"),
   RenderUtil_1 = require("../../../Utils/RenderUtil");
 class InterpolateFactor {
   constructor() {
-    (this.M6o = 0), (this.Factor = 0);
+    (this.f8o = 0), (this.Factor = 0);
   }
   get Type() {
-    return this.M6o;
+    return this.f8o;
   }
   set Type(i) {
-    this.M6o !== i && (this.M6o = i);
+    this.f8o !== i && (this.f8o = i);
   }
 }
 exports.InterpolateFactor = InterpolateFactor;
@@ -516,8 +516,8 @@ class CharMaterialControlDataCacheMgr {
       (this.r6 = (i) => {
         if (((this.e8 -= i), !(0 < this.e8))) {
           var i = GlobalData_1.GlobalData.IsPlayInEditor
-              ? CharMaterialControlDataCacheMgr.Ohr
-              : CharMaterialControlDataCacheMgr.khr,
+              ? CharMaterialControlDataCacheMgr.qlr
+              : CharMaterialControlDataCacheMgr.Glr,
             t = i - this.e8;
           for (const s of this.DataCacheGcCountDownTime.keys()) {
             var h = this.DataCacheGcCountDownTime.get(s) - t;
@@ -540,8 +540,8 @@ class CharMaterialControlDataCacheMgr {
         }
       }),
       (this.e8 = GlobalData_1.GlobalData.IsPlayInEditor
-        ? CharMaterialControlDataCacheMgr.Ohr
-        : CharMaterialControlDataCacheMgr.khr),
+        ? CharMaterialControlDataCacheMgr.qlr
+        : CharMaterialControlDataCacheMgr.Glr),
       (this.gW = void 0);
   }
   static Get() {
@@ -578,8 +578,8 @@ class CharMaterialControlDataCacheMgr {
       ? (--h.RefCount,
         h.RefCount <= 0 &&
           ((t = GlobalData_1.GlobalData.IsPlayInEditor
-            ? CharMaterialControlDataCacheMgr.Fhr
-            : CharMaterialControlDataCacheMgr.Vhr),
+            ? CharMaterialControlDataCacheMgr.Nlr
+            : CharMaterialControlDataCacheMgr.Olr),
           this.DataCacheGcCountDownTime.set(i, t),
           h.RefCount < 0) &&
           Log_1.Log.CheckError() &&
@@ -596,10 +596,10 @@ class CharMaterialControlDataCacheMgr {
         );
   }
 }
-(CharMaterialControlDataCacheMgr.Vhr = 6e4),
-  (CharMaterialControlDataCacheMgr.Fhr = 0),
-  (CharMaterialControlDataCacheMgr.khr = 1e4),
-  (CharMaterialControlDataCacheMgr.Ohr = 10),
+(CharMaterialControlDataCacheMgr.Olr = 6e4),
+  (CharMaterialControlDataCacheMgr.Nlr = 0),
+  (CharMaterialControlDataCacheMgr.Glr = 1e4),
+  (CharMaterialControlDataCacheMgr.qlr = 10),
   (CharMaterialControlDataCacheMgr.Me = void 0);
 class CharMaterialControlRuntimeData {
   constructor() {
@@ -621,8 +621,8 @@ class CharMaterialControlRuntimeData {
       (this.MotionStartLocation = void 0),
       (this.TargetSkeletalMesh = void 0),
       (this.MotionEndLocation = void 0),
-      (this.Hhr = void 0),
-      (this.jhr = void 0);
+      (this.klr = void 0),
+      (this.Flr = void 0);
   }
   Init(i, t, h) {
     (this.Id = i),
@@ -643,8 +643,8 @@ class CharMaterialControlRuntimeData {
       (this.SelectedAllParts = !1),
       (this.SpecifiedMaterialIndexMap = new Map()),
       (this.ReplaceMaterial = void 0),
-      (this.jhr = void 0),
-      (this.Hhr = void 0);
+      (this.Flr = void 0),
+      (this.klr = void 0);
   }
   Destroy() {
     if (
@@ -652,24 +652,24 @@ class CharMaterialControlRuntimeData {
         this.DataCache.DataName,
       ),
       (this.DataCache = void 0),
-      this.jhr && this.jhr)
+      this.Flr && this.Flr)
     ) {
-      for (const i of this.jhr) i(this.Id);
+      for (const i of this.Flr) i(this.Id);
       this.ClearDestroyCallback();
     }
   }
   ClearDestroyCallback() {
-    this.jhr = void 0;
+    this.Flr = void 0;
   }
   AddDestroyCallback(i) {
     return (
       !!i &&
-      (this.jhr || (this.jhr = new Set()), !this.jhr.has(i)) &&
-      (this.jhr.add(i), !0)
+      (this.Flr || (this.Flr = new Set()), !this.Flr.has(i)) &&
+      (this.Flr.add(i), !0)
     );
   }
   RemoveDestroyCallback(i) {
-    return !!i && !!this.jhr && this.jhr.delete(i);
+    return !!i && !!this.Flr && this.Flr.delete(i);
   }
   SetSpecifiedMaterialIndex(t) {
     (this.SelectedAllBodies =
@@ -776,7 +776,7 @@ class CharMaterialControlRuntimeData {
       ) {
         let i = t;
         this.DataCache.IgnoreTimeDilation || (i = t * h),
-          this.Whr(i),
+          this.Vlr(i),
           (this.CurrentTimeCounter += i),
           (this.WholeLoopTimeCounter += i),
           (this.LoopTimeCounter += i);
@@ -799,7 +799,7 @@ class CharMaterialControlRuntimeData {
     this.HasEntered || (i.StateEnter(this), (this.HasEntered = !0)),
       this.IsDead ? i.StateRevert(this) : i.StateUpdate(this);
   }
-  Whr(i) {
+  Vlr(i) {
     var t = this.DataCache.DataLoopStart,
       h = this.DataCache.DataLoopTime;
     !this.ReadyToDie && this.WholeLoopTimeCounter <= t - i
@@ -837,9 +837,9 @@ class CharMaterialControlRuntimeData {
     2 === this.DataCache.DataType &&
       ((i = MathUtils_1.MathUtils.Clamp(i, 0, 1)),
       (i = this.DataCache.WholeLoopTime * i),
-      this.Khr(i));
+      this.Hlr(i));
   }
-  Khr(i) {
+  Hlr(i) {
     var t = this.DataCache.DataLoopStart,
       h = this.DataCache.DataLoopTime;
     i <= t

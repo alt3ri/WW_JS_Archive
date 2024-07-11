@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RolePreviewAttributeTabView = void 0);
 const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
   MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
@@ -11,18 +12,17 @@ const UE = require("ue"),
   GenericLayoutNew_1 = require("../../Util/Layout/GenericLayoutNew"),
   RoleController_1 = require("../RoleController"),
   RoleFavorUtil_1 = require("../RoleFavor/RoleFavorUtil"),
-  RoleLevelUpSuccessAttributeView_1 = require("../RoleLevel/RoleLevelUpSuccessAttributeView"),
-  Log_1 = require("../../../../Core/Common/Log");
+  RoleLevelUpSuccessAttributeView_1 = require("../RoleLevel/RoleLevelUpSuccessAttributeView");
 class RolePreviewAttributeTabView extends UiTabViewBase_1.UiTabViewBase {
   constructor() {
     super(...arguments),
       (this.RoleViewAgent = void 0),
       (this.RoleInstance = void 0),
-      (this.Qft = void 0),
-      (this.Yuo = (e) => {
+      (this.nvt = void 0),
+      (this.Kco = (e) => {
         this.PlayMontageStartWithReLoop(), this.VC(e);
       }),
-      (this.ndo = (e, t, i) => {
+      (this.iCo = (e, t, i) => {
         var r = new RoleLevelUpSuccessAttributeView_1.RoleAttributeItem();
         return (
           r.SetRootActor(t.GetOwner(), !0), r.Refresh(e), { Key: i, Value: r }
@@ -46,21 +46,21 @@ class RolePreviewAttributeTabView extends UiTabViewBase_1.UiTabViewBase {
             "界面名称",
             "RolePreviewAttributeTabView",
           ])
-        : (this.Qft = new GenericLayoutNew_1.GenericLayoutNew(
+        : (this.nvt = new GenericLayoutNew_1.GenericLayoutNew(
             this.GetVerticalLayout(3),
-            this.ndo,
+            this.iCo,
           ));
   }
   AddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.RoleSystemChangeRole,
-      this.Yuo,
+      this.Kco,
     );
   }
   RemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.RoleSystemChangeRole,
-      this.Yuo,
+      this.Kco,
     );
   }
   OnBeforeShow() {
@@ -70,8 +70,8 @@ class RolePreviewAttributeTabView extends UiTabViewBase_1.UiTabViewBase {
   }
   OnBeforeDestroy() {
     (this.RoleInstance = void 0),
-      this.Qft?.ClearChildren(),
-      (this.Qft = void 0);
+      this.nvt?.ClearChildren(),
+      (this.nvt = void 0);
   }
   PlayMontageStart() {
     RoleController_1.RoleController.PlayRoleMontage(3);
@@ -82,12 +82,12 @@ class RolePreviewAttributeTabView extends UiTabViewBase_1.UiTabViewBase {
   VC(e) {
     (this.RoleInstance =
       ModelManager_1.ModelManager.RoleModel.GetRoleDataById(e)),
-      this.sdo(),
-      this.ado(),
-      this.hdo(),
-      this.ldo();
+      this.oCo(),
+      this.rCo(),
+      this.nCo(),
+      this.sCo();
   }
-  ado() {
+  rCo() {
     var e = this.RoleInstance.GetElementInfo(),
       e =
         (this.SetElementIcon(
@@ -100,10 +100,10 @@ class RolePreviewAttributeTabView extends UiTabViewBase_1.UiTabViewBase {
         ));
     this.GetText(2).SetText(e);
   }
-  sdo() {
+  oCo() {
     this.GetText(0).SetText(this.RoleInstance.GetName());
   }
-  hdo() {
+  nCo() {
     var e =
         ConfigManager_1.ConfigManager.RoleFavorConfig.GetFavorRoleInfoConfig(
           this.RoleInstance.GetRoleId(),
@@ -131,9 +131,9 @@ class RolePreviewAttributeTabView extends UiTabViewBase_1.UiTabViewBase {
     i.push({ Name: "Text_CharacterVoice_Text", CurText: t });
     let r = !0;
     for (const o of i) (o.ShowArrow = !1), (r = !(o.InnerShowBg = r));
-    this.Qft?.RebuildLayoutByDataNew(i);
+    this.nvt?.RebuildLayoutByDataNew(i);
   }
-  ldo() {
+  sCo() {
     var e = this.RoleInstance.GetRoleConfig();
     this.GetText(4).ShowTextNew(e.Introduction);
   }

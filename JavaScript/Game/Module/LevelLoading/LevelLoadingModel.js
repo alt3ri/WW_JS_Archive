@@ -10,36 +10,36 @@ class LevelLoadingModel extends ModelBase_1.ModelBase {
     super(...arguments),
       (this.CameraFadeShowPromise = void 0),
       (this.CameraFadeHidePromise = void 0),
-      (this.Mfi = void 0),
-      (this.Sfi = void 0),
-      (this.Efi = !1);
+      (this.Epi = void 0),
+      (this.Spi = void 0),
+      (this.ypi = !1);
   }
   get IsLoading() {
-    return this.Efi;
+    return this.ypi;
   }
   OnInit() {
-    return (this.Mfi = new Map()), (this.Sfi = new Map()), !0;
+    return (this.Epi = new Map()), (this.Spi = new Map()), !0;
   }
   OnClear() {
     return (
-      this.Mfi?.clear(),
-      (this.Mfi = void 0),
-      this.Sfi?.clear(),
-      !(this.Sfi = void 0)
+      this.Epi?.clear(),
+      (this.Epi = void 0),
+      this.Spi?.clear(),
+      !(this.Spi = void 0)
     );
   }
   SetLoadingState(e) {
     var o;
-    this.Efi !== e &&
+    this.ypi !== e &&
       ((o = "LoadingMode[Fade]"),
-      (this.Efi = e)
+      (this.ypi = e)
         ? (Log_1.Log.CheckInfo() &&
             Log_1.Log.Info("Loading", 7, "LevelLoading:LoadingModeEnable"),
           ResourceSystem_1.ResourceSystem.SetLoadModeInLoading(
             GlobalData_1.GlobalData.World,
             o,
           ))
-        : (this.yfi(),
+        : (this.Ipi(),
           this.ClearLoadingPerforms(),
           Log_1.Log.CheckInfo() &&
             Log_1.Log.Info("Loading", 7, "LevelLoading:LoadingModeDisable"),
@@ -49,7 +49,7 @@ class LevelLoadingModel extends ModelBase_1.ModelBase {
           )));
   }
   AddLoadingReason(e, o) {
-    this.Mfi.set(e, o),
+    this.Epi.set(e, o),
       this.AddLoadingPerform(o),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("Loading", 19, "LevelLoading:AddLoadingReason", [
@@ -59,7 +59,7 @@ class LevelLoadingModel extends ModelBase_1.ModelBase {
   }
   RemoveLoadingReason(e) {
     var o = this.GetPerformByReason(e);
-    this.Mfi.delete(e),
+    this.Epi.delete(e),
       this.RemoveLoadingPerform(o),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("Loading", 19, "LevelLoading:RemoveLoadingReason", [
@@ -68,8 +68,8 @@ class LevelLoadingModel extends ModelBase_1.ModelBase {
         ]);
   }
   AddLoadingPerform(e) {
-    var o = this.Sfi.get(e) ?? 0;
-    this.Sfi.set(e, ++o),
+    var o = this.Spi.get(e) ?? 0;
+    this.Spi.set(e, ++o),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Loading",
@@ -80,33 +80,33 @@ class LevelLoadingModel extends ModelBase_1.ModelBase {
         );
   }
   RemoveLoadingPerform(e) {
-    var o = this.Sfi.get(e);
+    var o = this.Spi.get(e);
     o &&
-      (this.Sfi.set(e, --o), o <= 0) &&
-      (this.Sfi.delete(e), Log_1.Log.CheckInfo()) &&
+      (this.Spi.set(e, --o), o <= 0) &&
+      (this.Spi.delete(e), Log_1.Log.CheckInfo()) &&
       Log_1.Log.Info("Loading", 19, "LevelLoading:RemoveLoadingPerform", [
         "perform",
         e,
       ]);
   }
   GetPerformByReason(e) {
-    return this.Mfi.get(e);
+    return this.Epi.get(e);
   }
-  yfi() {
-    this.Mfi.clear(),
+  Ipi() {
+    this.Epi.clear(),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("Loading", 19, "LevelLoading:ClearLoadingReason");
   }
   ClearLoadingPerforms() {
-    this.Sfi.clear(),
+    this.Spi.clear(),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("Loading", 19, "LevelLoading:ClearLoadingPerforms");
   }
   CheckLoadingPerformsEmpty() {
-    return 0 === this.Sfi.size;
+    return 0 === this.Spi.size;
   }
   CheckCanDoClose(e) {
-    return !!this.IsLoading && !this.Sfi.get(e);
+    return !!this.IsLoading && !this.Spi.get(e);
   }
   FinishCameraShowPromise() {
     this.CameraFadeShowPromise?.SetResult(),

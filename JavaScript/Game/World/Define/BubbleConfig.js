@@ -10,34 +10,34 @@ const puerts_1 = require("puerts"),
   PublicUtil_1 = require("../../Common/PublicUtil");
 class BubbleConfig extends ConfigBase_1.ConfigBase {
   constructor() {
-    super(...arguments), (this.dpr = void 0);
+    super(...arguments), (this.uvr = void 0);
   }
   OnInit() {
-    return (this.dpr = new Map()), !0;
+    return (this.uvr = new Map()), !0;
   }
   OnClear() {
-    return !(this.dpr = void 0);
+    return !(this.uvr = void 0);
   }
-  Cpr(e) {
+  cvr(e) {
     e = BubbleDataByActionGuid_1.configBubbleDataByActionGuid.GetConfig(e, !1);
     if (e) return e;
   }
   GetBubbleData(e) {
     if (PublicUtil_1.PublicUtil.UseDbConfig()) {
-      if (!this.dpr.get(e)) {
-        const t = this.Cpr(e);
+      if (!this.uvr.get(e)) {
+        const t = this.cvr(e);
         if (!t) return;
         var i = JSON.parse(t.Params);
-        this.dpr.set(e, i);
+        this.uvr.set(e, i);
       }
-      const t = this.dpr.get(e);
+      const t = this.uvr.get(e);
       return t ? t : void 0;
     }
-    this.EZo();
-    const t = this.dpr.get(e);
+    this.ver();
+    const t = this.uvr.get(e);
     if (t) return t;
   }
-  EZo() {
+  ver() {
     let e = (0, PublicUtil_1.getConfigPath)(
       IGlobal_1.globalConfig.BubbleConfigPath,
     );
@@ -57,8 +57,8 @@ class BubbleConfig extends ConfigBase_1.ConfigBase {
       for (const r of t)
         r.ActionGuid &&
           (i = r.Params) &&
-          !this.dpr.has(r.ActionGuid) &&
-          this.dpr.set(r.ActionGuid, i);
+          !this.uvr.has(r.ActionGuid) &&
+          this.uvr.set(r.ActionGuid, i);
     } else
       Log_1.Log.CheckError() &&
         Log_1.Log.Error(

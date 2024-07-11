@@ -3,13 +3,16 @@ function ignoreUnderScore(e) {
   return e.startsWith("_");
 }
 function isGuid(e) {
-  return e.endsWith("Guid");
+  return "Guid" === e || "ActionGuid" === e;
 }
 function isActionId(e) {
   return "ActionId" === e;
 }
+function isTemplateOnly(e) {
+  return "EdIsLocked" === e;
+}
 function entityDataIgnoreFunc(e) {
-  return ignoreUnderScore(e) || isGuid(e) || isActionId(e);
+  return ignoreUnderScore(e) || isGuid(e) || isActionId(e) || isTemplateOnly(e);
 }
 function treeDataIgnoreFunc(e) {
   return ignoreUnderScore(e) || isGuid(e) || isActionId(e);
@@ -20,71 +23,71 @@ function flowDataIgnoreFunc(e) {
 function editorFieldIgnoreFunc(e) {
   return ignoreUnderScore(e) || /^Ed[A-Z].*/.test(e);
 }
-function deepEquals(r, o, t) {
-  if (r !== o) {
+function deepEquals(r, t, o) {
+  if (r !== t) {
     var e = typeof r;
-    if (e != typeof o) return !1;
+    if (e != typeof t) return !1;
     if (
       "object" != e ||
       void 0 === r ||
-      void 0 === o ||
+      void 0 === t ||
       null === r ||
-      null === o
+      null === t
     )
       return !1;
     if (r instanceof Array) {
-      if (r.length !== o.length) return !1;
+      if (r.length !== t.length) return !1;
       for (let e = 0; e < r.length; e++)
-        if (!deepEquals(r[e], o[e], t)) return !1;
+        if (!deepEquals(r[e], t[e], o)) return !1;
     } else {
-      for (const n in r) if (!t?.(n) && !deepEquals(r[n], o[n], t)) return !1;
-      for (const i in o)
-        if (!t?.(i) && void 0 === r[i] && void 0 !== o[i]) return !1;
+      for (const n in r) if (!o?.(n) && !deepEquals(r[n], t[n], o)) return !1;
+      for (const i in t)
+        if (!o?.(i) && void 0 === r[i] && void 0 !== t[i]) return !1;
     }
   }
   return !0;
 }
-function clearIgnoreField(r, o) {
-  if (!o || null === r) return r;
+function clearIgnoreField(r, t) {
+  if (!t || null === r) return r;
   if (r instanceof Array) {
-    var t = [];
-    for (let e = 0; e < r.length; e++) t[e] = clearIgnoreField(r[e], o);
-    return t;
+    var o = [];
+    for (let e = 0; e < r.length; e++) o[e] = clearIgnoreField(r[e], t);
+    return o;
   }
   if ("object" != typeof r) return r;
   var e,
     n = {};
   for (const i in r)
-    o(i) ? (n[i] = void 0) : ((e = r[i]), (n[i] = clearIgnoreField(e, o)));
+    t(i) ? (n[i] = void 0) : ((e = r[i]), (n[i] = clearIgnoreField(e, t)));
   return n;
 }
-function createDiff(e, r, o) {
-  if (void 0 === r) return clearIgnoreField(e, o);
+function createDiff(e, r, t) {
+  if (void 0 === r) return clearIgnoreField(e, t);
   if (void 0 === e) return null;
   if ("object" != typeof e || "object" != typeof r) return e;
   if (r instanceof Array)
-    return r.length === e.length && deepEquals(r, e, o)
+    return r.length === e.length && deepEquals(r, e, t)
       ? void 0
-      : clearIgnoreField(e, o);
-  let t = 0;
+      : clearIgnoreField(e, t);
+  let o = 0;
   var n,
     i,
-    f,
     u,
+    f,
     c = {};
   for (const l in e)
-    o?.(l) ||
-      (void 0 === r[l] && ((n = e[l]), (c[l] = clearIgnoreField(n, o)), t++));
+    t?.(l) ||
+      (void 0 === r[l] && ((n = e[l]), (c[l] = clearIgnoreField(n, t)), o++));
   for (const s in r)
-    o?.(s) ||
+    t?.(s) ||
       ((i = e[s]),
-      (f = r[s]),
+      (u = r[s]),
       void 0 !== i
-        ? (u = typeof i) == typeof f && "object" == u
-          ? ((u = createDiff(i, f, o)), void 0 !== (c[s] = u) && t++)
-          : i !== f && ((c[s] = clearIgnoreField(i, o)), t++)
-        : ((c[s] = null), t++));
-  return 0 !== t ? c : void 0;
+        ? (f = typeof i) == typeof u && "object" == f
+          ? ((f = createDiff(i, u, t)), void 0 !== (c[s] = f) && o++)
+          : i !== u && ((c[s] = clearIgnoreField(i, t)), o++)
+        : ((c[s] = null), o++));
+  return 0 !== o ? c : void 0;
 }
 function containsNullField(e) {
   if (void 0 !== e) {
@@ -92,7 +95,7 @@ function containsNullField(e) {
     if ("object" == typeof e)
       if (e instanceof Array) {
         for (const r of e) if (containsNullField(r)) return !0;
-      } else for (const o in e) if (containsNullField(e[o])) return !0;
+      } else for (const t in e) if (containsNullField(e[t])) return !0;
   }
   return !1;
 }
@@ -104,15 +107,15 @@ function removeNullField(e) {
       for (const n of e) r.push(removeNullField(n));
       return r;
     }
-    var o = {};
+    var t = {};
     for (const i in e) {
-      var t = removeNullField(e[i]);
-      o[i] = t;
+      var o = removeNullField(e[i]);
+      t[i] = o;
     }
-    return o;
+    return t;
   }
 }
-function applyDiff(e, r, o) {
+function applyDiff(e, r, t) {
   if (void 0 === e) return r;
   if (null !== e) {
     if (void 0 === r) return e;
@@ -120,39 +123,39 @@ function applyDiff(e, r, o) {
     if ("object" != typeof e) return e;
     if ("object" != typeof r) return e;
     if (r instanceof Array) return e;
-    var t,
+    var o,
       n,
       i,
-      f,
-      u = {};
+      u,
+      f = {};
     for (const c in e)
-      o?.(c) ||
-        (void 0 === r[c] && null !== (t = e[c]) && (u[c] = removeNullField(t)));
+      t?.(c) ||
+        (void 0 === r[c] && null !== (o = e[c]) && (f[c] = removeNullField(o)));
     for (const l in r)
-      o?.(l) ||
+      t?.(l) ||
         ((n = e[l]),
         (i = r[l]),
         void 0 === n
-          ? (u[l] = i)
+          ? (f[l] = i)
           : null !== n &&
-            ((f = typeof n),
-            (u[l] = f == typeof i && "object" == f ? applyDiff(n, i, o) : n)));
-    return u;
+            ((u = typeof n),
+            (f[l] = u == typeof i && "object" == u ? applyDiff(n, i, t) : n)));
+    return f;
   }
 }
-function diffArrays(r, o) {
-  return o && r
+function diffArrays(r, t) {
+  return t && r
     ? {
-        Added: o.filter((e) => !r.includes(e)),
-        Removed: r.filter((e) => !o.includes(e)),
+        Added: t.filter((e) => !r.includes(e)),
+        Removed: r.filter((e) => !t.includes(e)),
       }
     : { Added: [], Removed: [] };
 }
 function matchCategory(e, r) {
   for (const n in e) {
-    var o = e[n],
-      t = r[n];
-    if (void 0 === t || t !== o) return !1;
+    var t = e[n],
+      o = r[n];
+    if (void 0 === o || o !== t) return !1;
   }
   return !0;
 }
@@ -160,24 +163,24 @@ function matchCategoryType(e, r) {
   return void 0 === e || void 0 !== r[e];
 }
 function isEntitiyMatch(e, r) {
-  var o;
+  var t;
   return (
     !(!e || !r) &&
     ((void 0 === e.Category && void 0 === e.CategoryType) ||
-      ((o = void 0 !== (o = e.Category) && matchCategory(o, r)),
+      ((t = void 0 !== (t = e.Category) && matchCategory(t, r)),
       (e = void 0 !== (e = e.CategoryType) && matchCategoryType(e, r)),
-      o) ||
+      t) ||
       e)
   );
 }
 function isMatchCategory(r, e) {
   if (!e.Categories) return !1;
-  let o = !1;
+  let t = !1;
   return (
     e.Categories.forEach((e) => {
-      o = o || matchCategory(e, r);
+      t = t || matchCategory(e, r);
     }),
-    o
+    t
   );
 }
 Object.defineProperty(exports, "__esModule", { value: !0 }),
@@ -194,6 +197,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.flowDataIgnoreFunc =
     exports.treeDataIgnoreFunc =
     exports.entityDataIgnoreFunc =
+    exports.isTemplateOnly =
     exports.isActionId =
     exports.isGuid =
     exports.ignoreUnderScore =
@@ -201,6 +205,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ignoreUnderScore = ignoreUnderScore),
   (exports.isGuid = isGuid),
   (exports.isActionId = isActionId),
+  (exports.isTemplateOnly = isTemplateOnly),
   (exports.entityDataIgnoreFunc = entityDataIgnoreFunc),
   (exports.treeDataIgnoreFunc = treeDataIgnoreFunc),
   (exports.flowDataIgnoreFunc = flowDataIgnoreFunc),

@@ -8,118 +8,118 @@ const EventDefine_1 = require("../../../Common/Event/EventDefine"),
 class ManipulateAimHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
   constructor() {
     super(...arguments),
-      (this.Kii = void 0),
-      (this.Qii = void 0),
-      (this.Xii = void 0),
-      (this.$ii = void 0),
-      (this.Yii = !1),
-      (this.Mii = void 0),
-      (this.Jii = (t, i, s) => {
-        t || this.Qii || this.Kii?.PlayCloseAnim();
+      (this.Qoi = void 0),
+      (this.Xoi = void 0),
+      (this.$oi = void 0),
+      (this.Yoi = void 0),
+      (this.Joi = !1),
+      (this.Moi = void 0),
+      (this.zoi = (t, i, s) => {
+        t || this.Xoi || this.Qoi?.PlayCloseAnim();
       }),
-      (this.zii = (t, i) => {
-        (this.Mii = i),
-          this.Kii
-            ? this.Kii.ResourceId !== this.Mii
-              ? (this.Zii(), this.eoi())
-              : (this.toi(), this.ioi(), this.Kii.PlayStartAnim())
-            : this.eoi();
+      (this.Zoi = (t, i) => {
+        (this.Moi = i),
+          this.Qoi
+            ? this.Qoi.ResourceId !== this.Moi
+              ? (this.eri(), this.tri())
+              : (this.iri(), this.ori(), this.Qoi.PlayStartAnim())
+            : this.tri();
       }),
-      (this.ooi = (t, i) => {
+      (this.rri = (t, i) => {
         t &&
-          ((this.Qii = t.GetComponent(3)),
-          (this.Xii = this.Qii?.Actor.Mesh),
-          (this.$ii = i?.PartSocketName),
-          (this.Yii = i?.IsWeakness),
-          this.Kii
-            ? this.Kii.ResourceId !== this.Mii
-              ? (this.Zii(), this.eoi())
-              : (this.toi(), this.ioi())
-            : this.eoi());
+          ((this.Xoi = t.GetComponent(3)),
+          (this.$oi = this.Xoi?.Actor.Mesh),
+          (this.Yoi = i?.PartSocketName),
+          (this.Joi = i?.IsWeakness),
+          this.Qoi
+            ? this.Qoi.ResourceId !== this.Moi
+              ? (this.eri(), this.tri())
+              : (this.iri(), this.ori())
+            : this.tri());
       }),
-      (this.roi = () => {
-        (this.Qii = void 0),
-          (this.Xii = void 0),
-          (this.$ii = void 0),
-          this.Kii?.SetTargetAimVisible(!1);
+      (this.nri = () => {
+        (this.Xoi = void 0),
+          (this.$oi = void 0),
+          (this.Yoi = void 0),
+          this.Qoi?.SetTargetAimVisible(!1);
       }),
-      (this.noi = () => {
-        (this.Qii = void 0),
-          (this.Xii = void 0),
-          (this.$ii = void 0),
-          (this.Mii = void 0),
-          this.Kii?.PlayCloseAnim();
+      (this.sri = () => {
+        (this.Xoi = void 0),
+          (this.$oi = void 0),
+          (this.Yoi = void 0),
+          (this.Moi = void 0),
+          this.Qoi?.PlayCloseAnim();
       });
   }
   OnDestroyed() {
-    this.Zii(),
-      (this.Kii = void 0),
-      (this.Qii = void 0),
-      (this.Xii = void 0),
-      (this.$ii = void 0);
+    this.eri(),
+      (this.Qoi = void 0),
+      (this.Xoi = void 0),
+      (this.$oi = void 0),
+      (this.Yoi = void 0);
   }
   OnTick(t) {
-    this.toi();
+    this.iri();
   }
   OnAddEvents() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnManipulateSwitchToNewTarget,
-      this.Jii,
+      this.zoi,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnManipulateStartChanting,
-        this.zii,
+        this.Zoi,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.ManipulateStartLockCastTarget,
-        this.ooi,
+        this.rri,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.ManipulateEndLockCastTarget,
-        this.roi,
+        this.nri,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.HiddenManipulateUI,
-        this.noi,
+        this.sri,
       );
   }
   OnRemoveEvents() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnManipulateSwitchToNewTarget,
-      this.Jii,
+      this.zoi,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnManipulateStartChanting,
-        this.zii,
+        this.Zoi,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.ManipulateStartLockCastTarget,
-        this.ooi,
+        this.rri,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.ManipulateEndLockCastTarget,
-        this.roi,
+        this.nri,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.HiddenManipulateUI,
-        this.noi,
+        this.sri,
       );
   }
-  eoi() {
-    this.Mii &&
-      0 !== this.Mii.length &&
-      ((this.Kii = this.NewHudUnitWithReturn(
+  tri() {
+    this.Moi &&
+      0 !== this.Moi.length &&
+      ((this.Qoi = this.NewHudUnitWithReturn(
         ManipulateAimUnit_1.ManipulateAimUnit,
-        this.Mii,
+        this.Moi,
         !0,
         () => {
-          this.Mii !== this.Kii?.ResourceId
-            ? this.Zii()
-            : (this.Kii?.SetCloseAnimCallback(() => {
-                this.Zii();
+          this.Moi !== this.Qoi?.ResourceId
+            ? this.eri()
+            : (this.Qoi?.SetCloseAnimCallback(() => {
+                this.eri();
               }),
-              this.toi(),
-              this.ioi());
+              this.iri(),
+              this.ori());
         },
       )),
       EventSystem_1.EventSystem.Emit(
@@ -128,33 +128,33 @@ class ManipulateAimHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
         1,
       ));
   }
-  Zii() {
-    this.Kii &&
-      (this.DestroyHudUnit(this.Kii),
-      (this.Kii = void 0),
+  eri() {
+    this.Qoi &&
+      (this.DestroyHudUnit(this.Qoi),
+      (this.Qoi = void 0),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.SetCameraAimVisible,
         !0,
         1,
       ));
   }
-  toi() {
+  iri() {
     var t;
-    this.Kii &&
-      !this.Kii.InAsyncLoading() &&
-      ((t = this.soi()) && (t = this.ProjectWorldToScreen(t))
-        ? (this.Kii.SetTargetItemOffset(t.X, t.Y),
-          this.Kii.SetTargetAimVisible(!0))
-        : this.Kii.SetTargetAimVisible(!1));
+    this.Qoi &&
+      !this.Qoi.InAsyncLoading() &&
+      ((t = this.ari()) && (t = this.ProjectWorldToScreen(t))
+        ? (this.Qoi.SetTargetItemOffset(t.X, t.Y),
+          this.Qoi.SetTargetAimVisible(!0))
+        : this.Qoi.SetTargetAimVisible(!1));
   }
-  ioi() {
-    !this.Kii || this.Kii.InAsyncLoading() || this.Kii.SetIsWeakness(this.Yii);
+  ori() {
+    !this.Qoi || this.Qoi.InAsyncLoading() || this.Qoi.SetIsWeakness(this.Joi);
   }
-  soi() {
-    if (this.Qii)
-      return this.Xii && this.$ii && this.Xii.DoesSocketExist(this.$ii)
-        ? this.Xii.GetSocketLocation(this.$ii)
-        : this.Qii.ActorLocation;
+  ari() {
+    if (this.Xoi)
+      return this.$oi && this.Yoi && this.$oi.DoesSocketExist(this.Yoi)
+        ? this.$oi.GetSocketLocation(this.Yoi)
+        : this.Xoi.ActorLocation;
   }
 }
 exports.ManipulateAimHandle = ManipulateAimHandle;

@@ -3,19 +3,19 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.ItemMainTypeMapping = void 0);
 class ItemMainTypeMapping {
   constructor(t) {
-    (this.yci = new Set()), (this.MainType = t);
+    (this.ymi = new Set()), (this.MainType = t);
   }
   Add(t) {
-    this.yci.add(t);
+    this.ymi.add(t);
   }
   Remove(t) {
-    this.yci.delete(t);
+    this.ymi.delete(t);
   }
   GetSet() {
-    return this.yci;
+    return this.ymi;
   }
   HasRedDot() {
-    for (const t of this.yci) if (t.HasRedDot()) return !0;
+    for (const t of this.ymi) if (t.HasRedDot()) return !0;
     return !1;
   }
 }

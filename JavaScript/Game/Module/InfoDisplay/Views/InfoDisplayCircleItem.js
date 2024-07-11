@@ -15,8 +15,8 @@ class InfoDisplayCircleItem extends AutoAttachExhibitionItem_1.AutoAttachExhibit
   constructor() {
     super(...arguments),
       (this.Pe = void 0),
-      (this.osi = ""),
-      (this.rsi = new UE.Vector(ANIMAL_SCALE, ANIMAL_SCALE, ANIMAL_SCALE));
+      (this.rai = ""),
+      (this.nai = new UE.Vector(ANIMAL_SCALE, ANIMAL_SCALE, ANIMAL_SCALE));
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -33,7 +33,7 @@ class InfoDisplayCircleItem extends AutoAttachExhibitionItem_1.AutoAttachExhibit
     ];
   }
   RefreshItem() {
-    (this.osi = this.Pe[this.GetShowItemIndex()]),
+    (this.rai = this.Pe[this.GetShowItemIndex()]),
       this.Aqe(),
       this.GetRootItem().SetHierarchyIndex(0);
   }
@@ -55,13 +55,13 @@ class InfoDisplayCircleItem extends AutoAttachExhibitionItem_1.AutoAttachExhibit
             (i = new UE.Vector(e, e, e)),
             s.SetUIItemScale(i)),
         this.GetRootItem().SetHierarchyIndex(FRONT_HIERACHY))
-      : r.X !== this.rsi.X && s.SetUIItemScale(this.rsi);
+      : r.X !== this.nai.X && s.SetUIItemScale(this.nai);
   }
   SetData(t) {
     this.Pe = t;
   }
   Aqe() {
-    "" !== this.osi && this.SetTextureByPath(this.osi, this.GetTexture(1));
+    "" !== this.rai && this.SetTextureByPath(this.rai, this.GetTexture(1));
   }
   jbe() {
     var t = this.GetAttachItem().ExhibitionView.ItemActor.GetWidth(),
@@ -69,7 +69,7 @@ class InfoDisplayCircleItem extends AutoAttachExhibitionItem_1.AutoAttachExhibit
     t >= LEFT_RANGE &&
       t <= RIGHT_RANGE &&
       (ModelManager_1.ModelManager.InfoDisplayModel.SetCurrentOpenInformationTexture(
-        this.osi,
+        this.rai,
       ),
       InfoDisplayController_1.InfoDisplayController.OpenInfoDisplayImgView());
   }

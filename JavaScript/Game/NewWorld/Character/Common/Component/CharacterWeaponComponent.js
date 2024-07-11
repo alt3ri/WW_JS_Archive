@@ -1,21 +1,21 @@
 "use strict";
 var __decorate =
   (this && this.__decorate) ||
-  function (t, i, e, s) {
+  function (t, i, s, e) {
     var h,
       o = arguments.length,
       r =
         o < 3
           ? i
-          : null === s
-            ? (s = Object.getOwnPropertyDescriptor(i, e))
-            : s;
+          : null === e
+            ? (e = Object.getOwnPropertyDescriptor(i, s))
+            : e;
     if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
-      r = Reflect.decorate(t, i, e, s);
+      r = Reflect.decorate(t, i, s, e);
     else
       for (var a = t.length - 1; 0 <= a; a--)
-        (h = t[a]) && (r = (o < 3 ? h(r) : 3 < o ? h(i, e, r) : h(i, e)) || r);
-    return 3 < o && r && Object.defineProperty(i, e, r), r;
+        (h = t[a]) && (r = (o < 3 ? h(r) : 3 < o ? h(i, s, r) : h(i, s)) || r);
+    return 3 < o && r && Object.defineProperty(i, s, r), r;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharacterWeaponComponent = void 0);
@@ -49,7 +49,7 @@ const UE = require("ue"),
   HULU_BASE_ID = 2e7,
   HULU_PARTY_ID = 1e5;
 class HideWeaponOrder {
-  constructor(t, i, e, s = !0, h = 0) {
+  constructor(t, i, s, e = !0, h = 0) {
     (this.Index = 0),
       (this.Hide = !1),
       (this.WithEffect = !1),
@@ -57,8 +57,8 @@ class HideWeaponOrder {
       (this.ExtraType = 0),
       (this.Index = t),
       (this.Hide = i),
-      (this.WithEffect = e),
-      (this.NormaState = s),
+      (this.WithEffect = s),
+      (this.NormaState = e),
       (this.ExtraType = h);
   }
 }
@@ -69,20 +69,20 @@ class WeaponEquipInfo {
       (this.WeaponBreachLevel = 0);
   }
   SetData(t) {
-    if (!t.Dps && !t.QMs)
+    if (!t.jys && !t._Ts)
       return (
         Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Character",
             58,
             "[武器组件]获取武器配置失败 pb",
-            ["weaponId", t.Dps ?? void 0],
-            ["WeaponBreachLevel", t.QMs ?? void 0],
+            ["weaponId", t.jys ?? void 0],
+            ["WeaponBreachLevel", t._Ts ?? void 0],
           ),
         !1
       );
-    if (this.WeaponId !== t.Dps) {
-      this.WeaponId = t.Dps;
+    if (this.WeaponId !== t.jys) {
+      this.WeaponId = t.jys;
       var i =
         ConfigManager_1.ConfigManager.WeaponConfig.GetWeaponConfigByItemId(
           this.WeaponId,
@@ -98,7 +98,7 @@ class WeaponEquipInfo {
         );
       this.WeaponConfig = i;
     }
-    return (this.WeaponBreachLevel = t.QMs), !0;
+    return (this.WeaponBreachLevel = t._Ts), !0;
   }
 }
 let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComponent_1.EntityComponent {
@@ -107,74 +107,75 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
       (this.Hte = void 0),
       (this.oRe = void 0),
       (this.Lie = void 0),
+      (this.y5r = void 0),
       (this.Hulu = void 0),
-      (this.uQr = 0),
+      (this.WKr = 0),
       (this.HuluHideEffect = 0),
       (this.Paragliding = void 0),
       (this.ParaglidingIsOpen = !1),
       (this.ParaglidingIsHover = !1),
       (this.ParaglidingIsAscent = !1),
-      (this.cQr = -1),
-      (this.mQr = void 0),
-      (this.dQr = 0),
-      (this.CQr = 0),
-      (this.gQr = void 0),
-      (this.fQr = void 0),
-      (this.XHt = !1),
-      (this.pQr = !1),
-      (this.vQr = new Array()),
+      (this.KKr = -1),
+      (this.QKr = void 0),
+      (this.XKr = 0),
+      (this.$Kr = 0),
+      (this.YKr = void 0),
+      (this.JKr = void 0),
+      (this.Xjt = !1),
+      (this.zKr = !1),
+      (this.ZKr = new Array()),
       (this.AiItemMarkId = 0),
       (this.AiWeaponConfigId = 0),
       (this.CacheAiSocketItem = void 0),
-      (this.MQr = void 0),
-      (this.SQr = void 0),
-      (this.EQr = 0),
-      (this.yQr = 0),
-      (this.IQr = void 0),
-      (this.TQr = void 0),
-      (this.LQr = void 0),
-      (this.DQr = void 0),
-      (this.RQr = 0),
-      (this.AQr = void 0),
-      (this.UQr = void 0),
-      (this.PQr = void 0),
-      (this.xQr = void 0),
-      (this.wQr = Vector_1.Vector.Create()),
-      (this.BQr = void 0),
-      (this.bQr = 10),
-      (this.qQr = !0),
+      (this.eQr = void 0),
+      (this.tQr = void 0),
+      (this.iQr = 0),
+      (this.oQr = 0),
+      (this.rQr = void 0),
+      (this.nQr = void 0),
+      (this.sQr = void 0),
+      (this.aQr = void 0),
+      (this.hQr = 0),
+      (this.lQr = void 0),
+      (this._Qr = void 0),
+      (this.uQr = void 0),
+      (this.cQr = void 0),
+      (this.mQr = Vector_1.Vector.Create()),
+      (this.dQr = void 0),
+      (this.CQr = 10),
+      (this.gQr = !0),
       (this.WeaponEquipInfo = void 0),
-      (this.GQr = (t, i) => {
+      (this.fQr = (t, i) => {
         this.SetWeaponVisibleByTag(i, t, !0);
       }),
-      (this.NQr = (t, i) => {
+      (this.pQr = (t, i) => {
         this.SetWeaponVisibleByTag(i, t, !1);
       }),
-      (this.W3r = (t, i, e) => {
+      (this.I3r = (t, i) => {
         var s;
         (t?.Valid
-          ? ((s = t.GetComponent(69)),
-            this.OQr(),
+          ? ((s = t.GetComponent(71)),
+            this.vQr(),
             this.CheckAndHangWeapons(!1),
-            0 === i || e
-              ? (this.kQr(0),
+            i
+              ? (this.MQr(0),
                 this.SyncParagliding(s),
-                (i = t.GetComponent(185)).HasTag(this.yQr) &&
-                  !this.Lie.HasTag(this.yQr) &&
-                  (i.RemoveTag(this.yQr), this.Lie.AddTag(this.yQr)),
+                (i = t.GetComponent(188)).HasTag(this.oQr) &&
+                  !this.Lie.HasTag(this.oQr) &&
+                  (i.RemoveTag(this.oQr), this.Lie.AddTag(this.oQr)),
                 s)
-              : (this.kQr(0), this))
+              : (this.MQr(0), this))
           : this
         ).OpenParagliding(!1);
       }),
-      (this.FQr = (t, i) => {
+      (this.EQr = (t, i) => {
         !i ||
           this.ParaglidingIsOpen ||
-          this.Entity.GetComponent(158).MoveState !==
+          this.Entity.GetComponent(160).MoveState !==
             CharacterUnifiedStateTypes_1.ECharMoveState.Glide ||
           this.OpenParagliding(!0);
       }),
-      (this.VQr = (t, i) => {
+      (this.SQr = (t, i) => {
         !i &&
           this.ParaglidingIsOpen &&
           ((i = EffectSystem_1.EffectSystem.SpawnEffect(
@@ -199,24 +200,24 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
               !1,
             ),
           this.OpenParagliding(!1),
-          this.Lie.RemoveTag(this.yQr));
+          this.Lie.RemoveTag(this.oQr));
       }),
-      (this.HQr = (t, i) => {
+      (this.yQr = (t, i) => {
         this.ParaglidingIsHover = i;
-        var e = this.Paragliding.GetAnimInstance();
-        e && e.SetHover(i);
+        var s = this.Paragliding.GetAnimInstance();
+        s && s.SetHover(i);
       }),
-      (this.z3r = (t, i) => {
+      (this.P3r = (t, i) => {
         this.Hte.IsMoveAutonomousProxy &&
           i === CharacterUnifiedStateTypes_1.ECharMoveState.KnockUp &&
           t !== i &&
           this.ReceiveCharacterKnockUpDropWeapon();
       }),
-      (this.jQr = (t, i) => {
+      (this.IQr = (t, i) => {
         i
           ? EffectSystem_1.EffectSystem.IsValid(this.HuluHideEffect) ||
-            ((i = ModelUtil_1.ModelUtil.GetModelConfig(this.uQr)),
-            this.kQr(0),
+            ((i = ModelUtil_1.ModelUtil.GetModelConfig(this.WKr)),
+            this.MQr(0),
             (this.HuluHideEffect = EffectSystem_1.EffectSystem.SpawnEffect(
               this.Hte.Actor,
               this.Hte.Actor.Mesh.GetSocketTransform(
@@ -251,13 +252,13 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
               (this.HuluHideEffect = 0)),
             this.Lie.HasTag(-1775045118) || this.SetHuluHidden(!1));
       }),
-      (this.WQr = (t, i) => {
+      (this.TQr = (t, i) => {
         i
-          ? (this.kQr(1), this.SetHuluHidden(!1, !1))
-          : (this.kQr(0), this.SetHuluHidden(!1));
+          ? (this.MQr(1), this.SetHuluHidden(!1, !1))
+          : (this.MQr(0), this.SetHuluHidden(!1));
       }),
-      (this.KQr = (t, i) => {
-        switch (this.RQr) {
+      (this.LQr = (t, i) => {
+        switch (this.hQr) {
           case 0:
             this.SetHuluHidden(i, !0, !0);
             break;
@@ -265,23 +266,23 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
             this.SetHuluHidden(i, !1);
         }
       }),
-      (this.QQr = new Set()),
-      (this.XQr = (t, i) => {
-        i ? this.QQr.add(t) : this.QQr.delete(t);
+      (this.DQr = new Set()),
+      (this.RQr = (t, i) => {
+        i ? this.DQr.add(t) : this.DQr.delete(t);
       }),
-      (this.$Qr = () => {
-        this.YQr();
+      (this.UQr = () => {
+        this.AQr();
       });
   }
   static get Dependencies() {
     return [3];
   }
-  get BPr() {
-    return this.cQr;
+  get _Pr() {
+    return this.KKr;
   }
-  set BPr(t) {
-    this.cQr !== t &&
-      ((this.cQr = t), this.Lie) &&
+  set _Pr(t) {
+    this.KKr !== t &&
+      ((this.KKr = t), this.Lie) &&
       (0 === t
         ? this.Lie.HasTag(-2075724632) || this.Lie.AddTag(-2075724632)
         : this.Lie.HasTag(-2075724632) && this.Lie.RemoveTag(-2075724632));
@@ -293,7 +294,7 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
   }
   OnInitData() {
     return (
-      (this.BQr = new UE.Transform()),
+      (this.dQr = new UE.Transform()),
       (this.WeaponEquipInfo = new WeaponEquipInfo()),
       !0
     );
@@ -304,77 +305,78 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
   OnStart() {
     if (
       ((this.Hte = this.Entity.CheckGetComponent(3)),
-      (this.oRe = this.Entity.GetComponent(160)),
-      (this.Lie = this.Entity.GetComponent(185)),
-      (this.XHt =
+      (this.oRe = this.Entity.GetComponent(162)),
+      (this.Lie = this.Entity.GetComponent(188)),
+      (this.y5r = this.Entity.GetComponent(43)),
+      (this.Xjt =
         this.Hte.CreatureData.GetEntityType() ===
-        Protocol_1.Aki.Protocol.HBs.Proto_Player),
-      (this.pQr =
-        this.XHt ||
+        Protocol_1.Aki.Protocol.wks.Proto_Player),
+      (this.zKr =
+        this.Xjt ||
         4 === this.Hte.CreatureData.GetBaseInfo()?.Category.MonsterMatchType),
-      (this.EQr = 0),
+      (this.iQr = 0),
       (this.AiItemMarkId = 0),
       !this.Hte)
     )
       return !1;
-    if ((this.JQr(), this.zQr(), this.ZQr(), this.XHt)) {
+    if ((this.PQr(), this.xQr(), this.wQr(), this.Xjt)) {
       EventSystem_1.EventSystem.AddWithTarget(
         this.Entity,
         EventDefine_1.EEventName.RoleOnStateInherit,
-        this.W3r,
+        this.I3r,
       ),
-        (this.yQr = 1905601506),
-        (this.IQr = this.Lie.ListenForTagAddOrRemove(this.yQr, this.FQr)),
-        (this.TQr = this.Lie.ListenForTagAddOrRemove(262865373, this.VQr)),
-        (this.LQr = this.Lie.ListenForTagAddOrRemove(921953316, this.HQr)),
-        (this.UQr = this.Lie.ListenForTagAddOrRemove(-1660069905, this.jQr)),
-        (this.AQr = this.Lie.ListenForTagAddOrRemove(507209871, this.WQr)),
-        (this.PQr = this.Lie.ListenForTagAddOrRemove(-1775045118, this.KQr)),
-        this.eXr(),
+        (this.oQr = 1905601506),
+        (this.rQr = this.Lie.ListenForTagAddOrRemove(this.oQr, this.EQr)),
+        (this.nQr = this.Lie.ListenForTagAddOrRemove(262865373, this.SQr)),
+        (this.sQr = this.Lie.ListenForTagAddOrRemove(921953316, this.yQr)),
+        (this._Qr = this.Lie.ListenForTagAddOrRemove(-1660069905, this.IQr)),
+        (this.lQr = this.Lie.ListenForTagAddOrRemove(507209871, this.TQr)),
+        (this.uQr = this.Lie.ListenForTagAddOrRemove(-1775045118, this.LQr)),
+        this.BQr(),
         this.InitWeaponVisibleData(),
-        this.d8s();
-      for (const t of this.mQr.CharacterWeapons) this.tXr(t, !0, !1);
+        this.zQs();
+      for (const t of this.QKr.CharacterWeapons) this.bQr(t, !0, !1);
     }
     return !0;
   }
   OnTick(t) {
-    this.pQr && this.CheckAndHangWeapons(!0);
-    for (const e of this.vQr) {
+    this.zKr && this.CheckAndHangWeapons(!0);
+    for (const s of this.ZKr) {
       var i;
-      if (e.Index < 0)
-        for (const s of this.mQr.CharacterWeapons)
-          e.NormaState ||
-            s.VisibleHelper.EnableHiddenInGameByExtraVisibleType(
-              e.ExtraType,
+      if (s.Index < 0)
+        for (const e of this.QKr.CharacterWeapons)
+          s.NormaState ||
+            e.VisibleHelper.EnableHiddenInGameByExtraVisibleType(
+              s.ExtraType,
               !0,
             ),
-            this.tXr(s, e.Hide, e.WithEffect, e.NormaState, e.ExtraType);
+            this.bQr(e, s.Hide, s.WithEffect, s.NormaState, s.ExtraType);
       else
-        e.Index < this.mQr.CharacterWeapons.length
-          ? ((i = this.mQr.CharacterWeapons[e.Index]),
-            e.NormaState ||
+        s.Index < this.QKr.CharacterWeapons.length
+          ? ((i = this.QKr.CharacterWeapons[s.Index]),
+            s.NormaState ||
               i.VisibleHelper.EnableHiddenInGameByExtraVisibleType(
-                e.ExtraType,
+                s.ExtraType,
                 !0,
               ),
-            this.tXr(i, e.Hide, e.WithEffect, e.NormaState, e.ExtraType))
+            this.bQr(i, s.Hide, s.WithEffect, s.NormaState, s.ExtraType))
           : Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn(
               "Character",
               6,
               "隐藏武器选择了错误的武器序号",
-              ["index", e.Index],
+              ["index", s.Index],
               ["BP", this.Hte.Actor.GetName()],
             );
     }
-    if ((this.vQr.length = 0) === this.BPr && 0 < this.QQr.size)
-      for (const h of this.mQr.CharacterWeapons) this.tXr(h, !0, !0);
-    this.iXr(t), this.oXr(), this.rXr();
+    if ((this.ZKr.length = 0) === this._Pr && 0 < this.DQr.size)
+      for (const h of this.QKr.CharacterWeapons) this.bQr(h, !0, !0);
+    this.qQr(t), this.GQr(), this.NQr();
   }
   OnClear() {
     this.ClearWeaponVisibleData(),
-      this.mQr?.Destroy(),
-      (this.mQr = void 0),
+      this.QKr?.Destroy(),
+      (this.QKr = void 0),
       EffectSystem_1.EffectSystem.IsValid(this.HuluHideEffect) &&
         (EffectSystem_1.EffectSystem.StopEffectById(
           this.HuluHideEffect,
@@ -382,32 +384,32 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
           !0,
         ),
         (this.HuluHideEffect = 0)),
-      this.gQr &&
-        (TimerSystem_1.TimerSystem.Remove(this.gQr), (this.gQr = void 0)),
-      this.fQr &&
-        (TimerSystem_1.TimerSystem.Remove(this.fQr), (this.fQr = void 0)),
-      this.XHt
+      this.YKr &&
+        (TimerSystem_1.TimerSystem.Remove(this.YKr), (this.YKr = void 0)),
+      this.JKr &&
+        (TimerSystem_1.TimerSystem.Remove(this.JKr), (this.JKr = void 0)),
+      this.Xjt
         ? (EventSystem_1.EventSystem.RemoveWithTarget(
             this.Entity,
             EventDefine_1.EEventName.RoleOnStateInherit,
-            this.W3r,
+            this.I3r,
           ),
-          this.IQr.EndTask(),
-          this.TQr.EndTask(),
-          this.LQr.EndTask(),
-          (this.IQr = void 0),
-          (this.TQr = void 0),
-          (this.LQr = void 0),
-          this.UQr.EndTask(),
-          (this.UQr = void 0),
-          this.PQr.EndTask(),
-          (this.PQr = void 0),
-          this.AQr.EndTask(),
-          (this.AQr = void 0),
-          this.DQr.forEach((t) => {
+          this.rQr.EndTask(),
+          this.nQr.EndTask(),
+          this.sQr.EndTask(),
+          (this.rQr = void 0),
+          (this.nQr = void 0),
+          (this.sQr = void 0),
+          this._Qr.EndTask(),
+          (this._Qr = void 0),
+          this.uQr.EndTask(),
+          (this.uQr = void 0),
+          this.lQr.EndTask(),
+          (this.lQr = void 0),
+          this.aQr.forEach((t) => {
             t.EndTask();
           }),
-          (this.DQr = []))
+          (this.aQr = []))
         : (this.ClearWeaponForAi(), (this.AiWeaponConfigId = 0));
     var t = this.Paragliding?.GetAnimInstance();
     return (
@@ -421,44 +423,44 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
       !0
     );
   }
-  eXr() {
-    this.Lie.HasTag(this.yQr) && this.OpenParagliding(!0);
+  BQr() {
+    this.Lie.HasTag(this.oQr) && this.OpenParagliding(!0);
   }
-  JQr() {
-    this.mQr = new CharacterWeaponMesh_1.CharacterWeaponMesh();
+  PQr() {
+    this.QKr = new CharacterWeaponMesh_1.CharacterWeaponMesh();
     var t,
       i = this.Hte.Actor.K2_GetComponentsByClass(
         UE.MeshComponent.StaticClass(),
       ),
-      e = new Array();
+      s = new Array();
     for (let t = 0; t < i.Num(); ++t) {
-      var s = i.Get(t);
-      s instanceof UE.SkeletalMeshComponent &&
-        s.GetName().startsWith("WeaponCase") &&
-        (e.push(s), (s.bAbsoluteScale = !1));
+      var e = i.Get(t);
+      e instanceof UE.SkeletalMeshComponent &&
+        e.GetName().startsWith("WeaponCase") &&
+        (s.push(e), (e.bAbsoluteScale = !1));
     }
-    this.XHt
+    this.Xjt
       ? ((t = this.Entity.GetComponent(0).GetRoleConfig().WeaponScale),
-        this.wQr.Set(t[0], t[1], t[2]),
-        this.BQr.SetScale3D(this.wQr.ToUeVector()))
-      : this.wQr.Set(1, 1, 1),
-      this.mQr.Init(e, this.Hte.Actor.Mesh, this.Hte.Actor, !1),
-      0 < this.mQr.CharacterWeapons.length &&
-        (this.XHt
-          ? (this.nXr(), this.EquipWeaponForRole(), this.sXr())
-          : this.pQr &&
-            (this.nXr(),
-            this.sXr(),
-            this.wQr.FromUeVector(
-              this.mQr?.CharacterWeapons[0].Mesh.RelativeScale3D,
+        this.mQr.Set(t[0], t[1], t[2]),
+        this.dQr.SetScale3D(this.mQr.ToUeVector()))
+      : this.mQr.Set(1, 1, 1),
+      this.QKr.Init(s, this.Hte.Actor.Mesh, this.Hte.Actor, !1),
+      0 < this.QKr.CharacterWeapons.length &&
+        (this.Xjt
+          ? (this.OQr(), this.EquipWeaponForRole(), this.kQr())
+          : this.zKr &&
+            (this.OQr(),
+            this.kQr(),
+            this.mQr.FromUeVector(
+              this.QKr?.CharacterWeapons[0].Mesh.RelativeScale3D,
             ))),
-      this.XHt || this.aXr();
+      this.Xjt || this.FQr();
   }
-  nXr() {
+  OQr() {
     var t = this.Entity.GetComponent(0).GetModelConfig(),
       i = t.NormalSockets,
-      e = t.BattleSockets;
-    i.Num() !== e.Num() &&
+      s = t.BattleSockets;
+    i.Num() !== s.Num() &&
       Log_1.Log.CheckError() &&
       Log_1.Log.Error(
         "Character",
@@ -467,8 +469,8 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
         ["Id", this.Hte.Actor.GetName()],
         ["ModelId", t.ID],
       ),
-      (i.Num() > this.mQr.CharacterWeapons.length ||
-        e.Num() > this.mQr.CharacterWeapons.length) &&
+      (i.Num() > this.QKr.CharacterWeapons.length ||
+        s.Num() > this.QKr.CharacterWeapons.length) &&
         (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "Character",
@@ -477,31 +479,31 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
             ["Id", this.Hte.Actor.GetName()],
             ["ModelId", t.ID],
           ),
-        this.mQr.ChangeCharacterWeapons(i.Num()));
-    let s = 0;
-    for (const h of this.mQr.CharacterWeapons)
-      (h.NormalSocket = FNameUtil_1.FNameUtil.GetDynamicFName(i.Get(s))),
-        (h.BattleSocket = FNameUtil_1.FNameUtil.GetDynamicFName(e.Get(s))),
-        ++s;
+        this.QKr.ChangeCharacterWeapons(i.Num()));
+    let e = 0;
+    for (const h of this.QKr.CharacterWeapons)
+      (h.NormalSocket = FNameUtil_1.FNameUtil.GetDynamicFName(i.Get(e))),
+        (h.BattleSocket = FNameUtil_1.FNameUtil.GetDynamicFName(s.Get(e))),
+        ++e;
   }
-  sXr() {
-    this.BPr = 0;
-    for (const t of this.mQr.CharacterWeapons)
-      this.X9o(t, t.NormalSocket, this.BQr, !1);
-    this.HideWeapon(-1, !0, !1), (this.fQr = void 0);
+  kQr() {
+    this._Pr = 0;
+    for (const t of this.QKr.CharacterWeapons)
+      this.W7o(t, t.NormalSocket, this.dQr, !1);
+    this.HideWeapon(-1, !0, !1), (this.JKr = void 0);
   }
-  aXr() {
-    this.hXr();
-    var t = this.Hte.CreatureData?.ComponentDataMap.get("Kvs");
+  FQr() {
+    this.VQr();
+    var t = this.Hte.CreatureData?.ComponentDataMap.get("_ys");
     t &&
-      ((t = t.Kvs?.Dps)
+      ((t = t._ys?.jys)
         ? (this.RegisterCharacterDropWeaponEvent(t),
           this.ChangeWeaponByWeaponByConfigId(t))
-        : ((this.BPr = -1), this.WeaponIn(!1)));
+        : ((this._Pr = -1), this.WeaponIn(!1)));
   }
-  ZQr() {
+  wQr() {
     var t;
-    this.XHt &&
+    this.Xjt &&
       ((t = this.Hte.Actor.AddComponentByClass(
         UE.SkeletalMeshComponent.StaticClass(),
         !1,
@@ -533,7 +535,7 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
       this.Paragliding.SetWorldScale3D(
         Vector_1.Vector.OneVectorProxy.ToUeVector(),
       ),
-      this.lXr(!0),
+      this.HQr(!0),
       Log_1.Log.CheckDebug()) &&
       Log_1.Log.Debug(
         "Weapon",
@@ -543,14 +545,14 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
         ["characterLocation", this.Hte?.ActorLocation?.ToString()],
       );
   }
-  lXr(t) {
+  HQr(t) {
     (this.ParaglidingIsOpen = !t),
       TimerSystem_1.TimerSystem.Next(() => {
         this.Paragliding.SetHiddenInGame(!this.ParaglidingIsOpen);
       });
   }
   OpenParagliding(t) {
-    var i;
+    var i, s;
     (this.ParaglidingIsOpen = t),
       this.Paragliding &&
         ((i = this.Paragliding.GetAnimInstance())
@@ -566,19 +568,19 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
                 ],
                 ["characterLocation", this.Hte?.ActorLocation?.ToString()],
               ),
-            this.Hte &&
+            (s = this.y5r?.GetAkComponent()) &&
               (t
                 ? AudioSystem_1.AudioSystem.PostEvent(
                     "play_role_com_paragliding_open",
-                    this.Hte.Actor,
+                    s,
                   )
                 : AudioSystem_1.AudioSystem.PostEvent(
                     "play_role_com_paragliding_close",
-                    this.Hte.Actor,
+                    s,
                   )),
             i.SetOpenParagliding(t),
             i.SyncAnimStates(void 0),
-            this.lXr(!t),
+            this.HQr(!t),
             t || UE.KuroAnimLibrary.EndAnimNotifyStates(i))
           : Log_1.Log.CheckDebug() &&
             Log_1.Log.Debug("Weapon", 58, "打开滑翔伞: 异步未加载完成返回"));
@@ -588,8 +590,8 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
     ResourceSystem_1.ResourceSystem.LoadAsync(
       i.网格体.ToAssetPathName(),
       UE.SkeletalMesh,
-      (e) => {
-        this.Paragliding.SetSkeletalMesh(e, !1),
+      (s) => {
+        this.Paragliding.SetSkeletalMesh(s, !1),
           ResourceSystem_1.ResourceSystem.LoadAsync(
             i.动画蓝图.ToAssetPathName(),
             UE.Class,
@@ -608,7 +610,7 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
                     "Test",
                     6,
                     "SetNewParagliding Error!",
-                    ["Mesh", e?.GetName()],
+                    ["Mesh", s?.GetName()],
                     ["NewClass", t?.GetName()],
                   );
             },
@@ -617,27 +619,27 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
     );
   }
   SyncParagliding(t) {
-    this.lXr(!t.ParaglidingIsOpen), t.lXr(!0);
+    this.HQr(!t.ParaglidingIsOpen), t.HQr(!0);
     t = t.Paragliding.GetAnimInstance();
     this.Paragliding.GetAnimInstance()?.SyncAnim(t),
       t?.SyncAnim(void 0),
       UE.KuroAnimLibrary.EndAnimNotifyStates(t);
   }
-  zQr() {
+  xQr() {
     var t;
-    this.XHt &&
+    this.Xjt &&
       ((this.HuluHideEffect = 0),
-      (this.xQr = void 0),
+      (this.cQr = void 0),
       (t = this.Entity.GetComponent(0)),
       (t = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(
         t.GetRoleId(),
       )),
-      this._Xr(t.PartyId, 1));
+      this.jQr(t.PartyId, 1));
   }
-  _Xr(t, i) {
+  jQr(t, i) {
     this.Hulu
       ? this.Hte.Actor.CharRenderingComponent.RemoveComponentByCase(6)
-      : ((s = this.Hte.Actor.AddComponentByClass(
+      : ((e = this.Hte.Actor.AddComponentByClass(
           UE.SkeletalMeshComponent.StaticClass(),
           !1,
           MathUtils_1.MathUtils.DefaultTransform,
@@ -651,17 +653,17 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
           0,
           !0,
         ),
-        (this.Hulu = s),
-        this.kQr(0));
-    const e = t * HULU_PARTY_ID + HULU_BASE_ID + i;
-    var s = ModelUtil_1.ModelUtil.GetModelConfig(e);
-    s
+        (this.Hulu = e),
+        this.MQr(0));
+    const s = t * HULU_PARTY_ID + HULU_BASE_ID + i;
+    var e = ModelUtil_1.ModelUtil.GetModelConfig(s);
+    e
       ? ResourceSystem_1.ResourceSystem.LoadAsync(
-          s.网格体.ToAssetPathName(),
+          e.网格体.ToAssetPathName(),
           UE.SkeletalMesh,
           (t) => {
             t
-              ? ((this.uQr = e),
+              ? ((this.WKr = s),
                 this.Hulu.SetSkeletalMesh(t),
                 this.Hte.Actor.CharRenderingComponent.AddComponentByCase(
                   6,
@@ -670,18 +672,18 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
               : Log_1.Log.CheckError() &&
                 Log_1.Log.Error("Character", 58, "该葫芦Id没有配置网格体", [
                   "Id",
-                  e,
+                  s,
                 ]);
           },
         )
       : Log_1.Log.CheckError() &&
-        Log_1.Log.Error("Character", 58, "该葫芦Id没有配置Config", ["Id", e]);
+        Log_1.Log.Error("Character", 58, "该葫芦Id没有配置Config", ["Id", s]);
   }
-  kQr(e) {
-    if (e !== this.RQr) {
+  MQr(s) {
+    if (s !== this.hQr) {
       let t = void 0,
         i = FNameUtil_1.FNameUtil.EMPTY;
-      switch (e) {
+      switch (s) {
         case 0:
           (i = CharacterNameDefines_1.CharacterNameDefines.HULU_SOCKET_NAME),
             (t = this.Hte.Actor.Mesh);
@@ -692,35 +694,35 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
               .HULU_GLIDEING_SOCKET_NAME),
             (t = this.Paragliding);
       }
-      this.Hulu.K2_AttachToComponent(t, i, 0, 0, 0, !0), (this.RQr = e);
+      this.Hulu.K2_AttachToComponent(t, i, 0, 0, 0, !0), (this.hQr = s);
     }
   }
   GetHuluId() {
-    return this.uQr;
+    return this.WKr;
   }
-  SetHuluHidden(t, i = !0, e = !1) {
-    (e && this.Hulu.bHiddenInGame === t) ||
+  SetHuluHidden(t, i = !0, s = !1) {
+    (s && this.Hulu.bHiddenInGame === t) ||
       (!i || t
-        ? (this.xQr &&
-            0 <= this.xQr &&
+        ? (this.cQr &&
+            0 <= this.cQr &&
             (this.Hte.Actor.CharRenderingComponent.RemoveMaterialControllerData(
-              this.xQr,
+              this.cQr,
             ),
-            (this.xQr = void 0)),
+            (this.cQr = void 0)),
           this.Hulu.SetHiddenInGame(t))
-        : (this.xQr &&
-            0 <= this.xQr &&
+        : (this.cQr &&
+            0 <= this.cQr &&
             (this.Hte.Actor.CharRenderingComponent.RemoveMaterialControllerData(
-              this.xQr,
+              this.cQr,
             ),
-            (this.xQr = void 0)),
+            (this.cQr = void 0)),
           this.Hulu.SetHiddenInGame(!0),
           ResourceSystem_1.ResourceSystem.LoadAsync(
             "/Game/Aki/Effect/MaterialController/Common/DA_Fx_HuluStart.DA_Fx_HuluStart",
             UE.PD_CharacterControllerData_C,
             (t) => {
-              1 !== this.RQr &&
-                ((this.xQr =
+              1 !== this.hQr &&
+                ((this.cQr =
                   this.Hte.Actor.CharRenderingComponent.AddMaterialControllerData(
                     t,
                   )),
@@ -728,12 +730,12 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
             },
           )));
   }
-  hXr() {
+  VQr() {
     this.AiWeaponConfigId = 0;
   }
   ClearWeaponForAi() {
-    (this.BPr = 0),
-      this.mQr?.ChangeCharacterWeapons(0),
+    (this._Pr = 0),
+      this.QKr?.ChangeCharacterWeapons(0),
       (this.AiItemMarkId = 0),
       this.UnRegisterCharacterDropWeaponEvent();
   }
@@ -756,21 +758,21 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
   }
   ChangeWeaponByWeaponSocketItem(t) {
     this.OldWeaponHidden(),
-      (this.BPr = 1),
-      (this.MQr = t),
-      this.gQr &&
-        (TimerSystem_1.TimerSystem.Remove(this.gQr), (this.gQr = void 0));
-    t = this.mQr.ChangeCharacterWeapons(this.MQr.Meshes.Num());
+      (this._Pr = 1),
+      (this.eQr = t),
+      this.YKr &&
+        (TimerSystem_1.TimerSystem.Remove(this.YKr), (this.YKr = void 0));
+    t = this.QKr.ChangeCharacterWeapons(this.eQr.Meshes.Num());
     this.Hte.Actor.CharRenderingComponent.Init(this.Hte.Actor.RenderType);
     let i = 0;
-    for (const s of t) {
-      var e = this.MQr.Meshes.Get(i);
-      const h = s.Mesh,
-        o = this.MQr.WeaponEffectPath.AssetPathName?.toString(),
-        r = e.AnimInstanceSoftPtr.ToAssetPathName();
+    for (const e of t) {
+      var s = this.eQr.Meshes.Get(i);
+      const h = e.Mesh,
+        o = this.eQr.WeaponEffectPath.AssetPathName?.toString(),
+        r = s.AnimInstanceSoftPtr.ToAssetPathName();
       h instanceof UE.SkeletalMeshComponent &&
         ResourceSystem_1.ResourceSystem.LoadAsync(
-          e.MeshSoftPtr.ToAssetPathName(),
+          s.MeshSoftPtr.ToAssetPathName(),
           UE.SkeletalMesh,
           (t) => {
             h.SetSkeletalMesh(t),
@@ -784,7 +786,7 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
                   o,
                   UE.PD_CharacterControllerData_C,
                   (t) => {
-                    s.BattleEffectId =
+                    e.BattleEffectId =
                       this.Hte.Actor.CharRenderingComponent.AddMaterialControllerData(
                         t,
                       );
@@ -792,23 +794,23 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
                 );
           },
         ),
-        (s.WeaponHidden = !1),
-        (s.BattleEffectId = void 0),
-        (s.BattleSocket = e.SocketName),
+        (e.WeaponHidden = !1),
+        (e.BattleEffectId = void 0),
+        (e.BattleSocket = s.SocketName),
         ++i;
     }
     this.WeaponOutInternal(0),
-      (this.MQr = void 0),
-      (this.SQr = void 0),
-      this.SQr &&
+      (this.eQr = void 0),
+      (this.tQr = void 0),
+      this.tQr &&
         Log_1.Log.CheckError() &&
         Log_1.Log.Error("Character", 58, "Ai改变武器失败,Config没有被清理", [
           "Id",
-          this.SQr,
+          this.tQr,
         ]);
   }
   EquipWeaponForRole() {
-    var t = this.Entity.GetComponent(0).ComponentDataMap.get("ips")?.ips;
+    var t = this.Entity.GetComponent(0).ComponentDataMap.get("pys")?.pys;
     return !!t && this.EquipWeaponForRoleByWeaponComponent(t);
   }
   EquipWeaponForRoleByWeaponComponent(t) {
@@ -821,8 +823,8 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
             "[武器组件]获取武器配置失败 pb",
             ["Character", this.Hte?.Actor.GetName()],
             ["ConfigId", this.Hte?.CreatureData.GetRoleId()],
-            ["weaponId", t.Dps ?? void 0],
-            ["WeaponBreachLevel", t.QMs ?? void 0],
+            ["weaponId", t.jys ?? void 0],
+            ["WeaponBreachLevel", t._Ts ?? void 0],
           ),
         !1
       );
@@ -830,9 +832,9 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
     if (!t) return !1;
     var i = t.Models;
     if (
-      ((this.qQr = 0 < t.HiddenTime),
-      (this.bQr = t.HiddenTime),
-      i.length !== this.mQr.CharacterWeapons.length)
+      ((this.gQr = 0 < t.HiddenTime),
+      (this.CQr = t.HiddenTime),
+      i.length !== this.QKr.CharacterWeapons.length)
     )
       return (
         Log_1.Log.CheckError() &&
@@ -840,56 +842,49 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
             "Character",
             58,
             "角色配置武器失败 蓝图武器component数量与配置数量不配置",
-            ["Id", this.SQr],
+            ["Id", this.tQr],
             ["ModelIds", i],
           ),
         !1
       );
     let h = 1;
-    for (let t = 0; t < this.EQr; ++t)
+    for (let t = 0; t < this.iQr; ++t)
       this.Hte.Actor.CharRenderingComponent.RemoveComponentByCase(h), (h += 1);
-    let e = 0;
-    for (const o of i) {
-      const r = this.mQr.CharacterWeapons[e].Mesh;
-      if (r instanceof UE.SkeletalMeshComponent) {
-        const h = 1 + e,
-          a = ModelUtil_1.ModelUtil.GetModelConfig(o);
-        a &&
+    let s = 0;
+    for (const e of i) {
+      const o = this.QKr.CharacterWeapons[s].Mesh;
+      if (o instanceof UE.SkeletalMeshComponent) {
+        const h = 1 + s,
+          r = ModelUtil_1.ModelUtil.GetModelConfig(e);
+        r &&
           (ResourceSystem_1.ResourceSystem.LoadAsync(
-            a.网格体.ToAssetPathName(),
+            r.网格体.ToAssetPathName(),
             UE.SkeletalMesh,
             (t) => {
               if (t) {
-                var i = r.GetNumMaterials();
-                for (let t = 0; t < i; ++t) r.SetMaterial(t, void 0);
-                var e = t.Materials,
-                  s = e.Num();
-                r.SetSkeletalMesh(t);
-                for (let t = 0; t < s; ++t)
-                  r.SetMaterial(t, e.Get(t).MaterialInterface);
-                (t = a.动画蓝图.ToAssetPathName()),
+                var i = o.GetNumMaterials();
+                for (let t = 0; t < i; ++t) o.SetMaterial(t, void 0);
+                var s = t.Materials,
+                  e = s.Num();
+                o.SetSkeletalMesh(t);
+                for (let t = 0; t < e; ++t)
+                  o.SetMaterial(t, s.Get(t).MaterialInterface);
+                (t = r.动画蓝图.ToAssetPathName()),
                   (t =
-                    (t && "" !== t
-                      ? ResourceSystem_1.ResourceSystem.LoadAsync(
-                          t,
-                          UE.Class,
-                          (t) => {
-                            t && r.SetAnimClass(t);
-                          },
-                        )
-                      : Log_1.Log.CheckError() &&
-                        Log_1.Log.Error(
-                          "Character",
-                          58,
-                          "[武器组件]角色读取配置武器蓝图失败",
-                          ["ModelId", o],
-                          ["基础动画蓝图", a.动画蓝图.ToAssetPathName()],
-                        ),
+                    (t &&
+                      "" !== t &&
+                      ResourceSystem_1.ResourceSystem.LoadAsync(
+                        t,
+                        UE.Class,
+                        (t) => {
+                          t && o.SetAnimClass(t);
+                        },
+                      ),
                     this.Hte.Actor.CharRenderingComponent.AddComponentByCase(
                       h,
-                      r,
+                      o,
                     ),
-                    a.DA.AssetPathName?.toString()));
+                    r.DA.AssetPathName?.toString()));
                 t &&
                   "" !== t &&
                   ResourceSystem_1.ResourceSystem.LoadAsync(
@@ -898,7 +893,7 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
                     (t) => {
                       t &&
                         WeaponController_1.WeaponController.ApplyWeaponLevelMaterial(
-                          r,
+                          o,
                           t,
                           this.WeaponEquipInfo.WeaponBreachLevel,
                         );
@@ -907,16 +902,16 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
               }
             },
           ),
-          ++e);
+          ++s);
       }
     }
-    return (this.EQr = e), !0;
+    return (this.iQr = s), !0;
   }
   OnEquipWeaponForRoleNotify(t) {
-    this.EquipWeaponForRoleByWeaponComponent(t.ips);
+    this.EquipWeaponForRoleByWeaponComponent(t.pys);
   }
   CheckAndHangWeapons(t) {
-    0 === this.BPr
+    0 === this._Pr
       ? this.Lie.HasTag(-1348147833) && this.WeaponOut()
       : (this.oRe?.Valid && !(this.oRe.BattleIdleEndTime <= 0)) ||
         this.Lie.HasTag(-1348147833) ||
@@ -930,33 +925,33 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
           )) ||
         this.WeaponIn(t);
   }
-  HideWeaponsWhenHideBones(i, e) {
+  HideWeaponsWhenHideBones(i, s) {
     if (this.Hte) {
-      var s = CharacterNameDefines_1.CharacterNameDefines.ROOT;
-      for (const h of this.mQr.CharacterWeapons) {
+      var e = CharacterNameDefines_1.CharacterNameDefines.ROOT;
+      for (const h of this.QKr.CharacterWeapons) {
         let t = h.Mesh.GetAttachSocketName();
         if (!FNameUtil_1.FNameUtil.IsEmpty(t)) {
-          for (; !s.op_Equality(t) && !e.op_Equality(t); )
+          for (; !e.op_Equality(t) && !s.op_Equality(t); )
             t = this.Hte.Actor.Mesh.GetParentBone(t);
-          t.op_Equality(e) && h.Mesh.SetHiddenInGame(i);
+          t.op_Equality(s) && h.Mesh.SetHiddenInGame(i);
         }
       }
     }
   }
-  iXr(t) {
-    if (!(this.CQr >= this.dQr) && this.Hte) {
-      this.CQr += t;
-      var i = Math.min(this.CQr / this.dQr, 1);
-      for (const e of this.mQr.CharacterWeapons)
+  qQr(t) {
+    if (!(this.$Kr >= this.XKr) && this.Hte) {
+      this.$Kr += t;
+      var i = Math.min(this.$Kr / this.XKr, 1);
+      for (const s of this.QKr.CharacterWeapons)
         UE.KismetMathLibrary.TLerp(
-          e.LerpStartTransform,
-          e.LerpEndTransform,
+          s.LerpStartTransform,
+          s.LerpEndTransform,
           i,
-        ).SetScale3D(this.wQr.ToUeVector()),
-          e.Mesh.K2_SetRelativeTransform(
+        ).SetScale3D(this.mQr.ToUeVector()),
+          s.Mesh.K2_SetRelativeTransform(
             UE.KismetMathLibrary.TLerp(
-              e.LerpStartTransform,
-              e.LerpEndTransform,
+              s.LerpStartTransform,
+              s.LerpEndTransform,
               i,
             ),
             !1,
@@ -966,61 +961,61 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
     }
   }
   WeaponInInternal(t, i = 0) {
-    if (((this.BPr = 0), this.Hte))
+    if (((this._Pr = 0), this.Hte))
       if (
-        (this.gQr &&
-          (TimerSystem_1.TimerSystem.Remove(this.gQr), (this.gQr = void 0)),
-        this.fQr &&
-          (TimerSystem_1.TimerSystem.Remove(this.fQr), (this.fQr = void 0)),
-        this.qQr)
+        (this.YKr &&
+          (TimerSystem_1.TimerSystem.Remove(this.YKr), (this.YKr = void 0)),
+        this.JKr &&
+          (TimerSystem_1.TimerSystem.Remove(this.JKr), (this.JKr = void 0)),
+        this.gQr)
       )
         if (
-          ((this.fQr = TimerSystem_1.TimerSystem.Delay(() => {
-            this.HideWeapon(-1, !0, !0), (this.fQr = void 0);
-          }, this.bQr * HIDE_WEAPON_AFTER_WEAPON_IN_DELAY)),
-          (this.dQr = i),
-          (this.CQr = 0) < i || !t)
+          ((this.JKr = TimerSystem_1.TimerSystem.Delay(() => {
+            this.HideWeapon(-1, !0, !0), (this.JKr = void 0);
+          }, this.CQr * HIDE_WEAPON_AFTER_WEAPON_IN_DELAY)),
+          (this.XKr = i),
+          (this.$Kr = 0) < i || !t)
         )
-          for (const e of this.mQr.CharacterWeapons)
-            this.X9o(e, e.NormalSocket, this.BQr, 0 < i), this.tXr(e, !1);
+          for (const s of this.QKr.CharacterWeapons)
+            this.W7o(s, s.NormalSocket, this.dQr, 0 < i), this.bQr(s, !1);
         else {
-          for (const s of this.mQr.CharacterWeapons)
-            s.WeaponHidden || this.tXr(s, !0);
-          this.gQr = TimerSystem_1.TimerSystem.Delay(() => {
-            this.gQr = void 0;
-            for (const t of this.mQr.CharacterWeapons)
+          for (const e of this.QKr.CharacterWeapons)
+            e.WeaponHidden || this.bQr(e, !0);
+          this.YKr = TimerSystem_1.TimerSystem.Delay(() => {
+            this.YKr = void 0;
+            for (const t of this.QKr.CharacterWeapons)
               (t.BattleEffectId =
                 this.Hte.Actor.CharRenderingComponent.AddMaterialControllerData(
                   this.Hte.Actor.WeaponInEffect,
                 )),
-                this.X9o(t, t.NormalSocket, this.BQr, 0 < i),
-                this.tXr(t, !1);
+                this.W7o(t, t.NormalSocket, this.dQr, 0 < i),
+                this.bQr(t, !1);
           }, WEAPON_IN_DELAY);
         }
       else
-        for (const h of this.mQr.CharacterWeapons)
-          this.X9o(h, h.NormalSocket, this.BQr, 0 < i), this.tXr(h, !0);
+        for (const h of this.QKr.CharacterWeapons)
+          this.W7o(h, h.NormalSocket, this.dQr, 0 < i), this.bQr(h, !0);
   }
   WeaponIn(t, i = 0) {
-    0 !== this.BPr && this.WeaponInInternal(t, i);
+    0 !== this._Pr && this.WeaponInInternal(t, i);
   }
   OldWeaponHidden() {
     if (this.Hte) {
-      this.gQr &&
-        (TimerSystem_1.TimerSystem.Remove(this.gQr), (this.gQr = void 0));
-      for (const t of this.mQr.CharacterWeapons) this.tXr(t, !0);
+      this.YKr &&
+        (TimerSystem_1.TimerSystem.Remove(this.YKr), (this.YKr = void 0));
+      for (const t of this.QKr.CharacterWeapons) this.bQr(t, !0);
     }
   }
   WeaponOutInternal(t = 0) {
-    if (((this.BPr = 1), this.Hte)) {
-      this.gQr &&
-        (TimerSystem_1.TimerSystem.Remove(this.gQr), (this.gQr = void 0)),
-        this.fQr &&
-          (TimerSystem_1.TimerSystem.Remove(this.fQr), (this.fQr = void 0)),
-        0 < (this.dQr = t) && (this.CQr = 0);
-      for (const i of this.mQr.CharacterWeapons)
-        this.X9o(i, i.BattleSocket, this.BQr, 0 < t),
-          this.tXr(i, !1),
+    if (((this._Pr = 1), this.Hte)) {
+      this.YKr &&
+        (TimerSystem_1.TimerSystem.Remove(this.YKr), (this.YKr = void 0)),
+        this.JKr &&
+          (TimerSystem_1.TimerSystem.Remove(this.JKr), (this.JKr = void 0)),
+        0 < (this.XKr = t) && (this.$Kr = 0);
+      for (const i of this.QKr.CharacterWeapons)
+        this.W7o(i, i.BattleSocket, this.dQr, 0 < t),
+          this.bQr(i, !1),
           i.BattleEffectId &&
             (this.Hte.Actor.CharRenderingComponent.RemoveMaterialControllerData(
               i.BattleEffectId,
@@ -1029,41 +1024,41 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
     }
   }
   WeaponOut(t = 0) {
-    1 !== this.BPr && this.WeaponOutInternal(t);
+    1 !== this._Pr && this.WeaponOutInternal(t);
   }
-  X9o(t, i, e, s) {
+  W7o(t, i, s, e) {
     var h = this.Hte.Actor.Mesh.GetSocketTransform(i, 0);
-    e.SetScale3D(this.wQr.ToUeVector()),
-      s &&
+    s.SetScale3D(this.mQr.ToUeVector()),
+      e &&
         ((t.LerpStartTransform = UE.KismetMathLibrary.ComposeTransforms(
           t.Mesh.K2_GetComponentToWorld(),
           h.Inverse(),
         )),
-        t.LerpStartTransform.SetScale3D(this.wQr.ToUeVector()),
-        (t.LerpEndTransform = e)),
+        t.LerpStartTransform.SetScale3D(this.mQr.ToUeVector()),
+        (t.LerpEndTransform = s)),
       t.Mesh.K2_AttachToComponent(this.Hte.Actor.Mesh, i, 0, 0, 0, !0),
-      s
+      e
         ? t.Mesh.K2_SetRelativeTransform(t.LerpStartTransform, !1, void 0, !0)
-        : t.Mesh.K2_SetRelativeTransform(e, !1, void 0, !0);
+        : t.Mesh.K2_SetRelativeTransform(s, !1, void 0, !0);
   }
-  ChangeWeaponHangState(t, i, e, s) {
-    if (this.BPr !== t)
+  ChangeWeaponHangState(t, i, s, e) {
+    if (this._Pr !== t)
       switch (t) {
         case 0:
-          this.WeaponIn(!1, s);
+          this.WeaponIn(!1, e);
           break;
         case 1:
-          this.WeaponOut(s);
+          this.WeaponOut(e);
           break;
         default:
           if (
-            ((this.BPr = t),
-            this.gQr &&
-              (TimerSystem_1.TimerSystem.Remove(this.gQr), (this.gQr = void 0)),
-            this.fQr &&
-              (TimerSystem_1.TimerSystem.Remove(this.fQr), (this.fQr = void 0)),
-            i.Num() !== this.mQr.CharacterWeapons.length ||
-              e.Num() !== this.mQr.CharacterWeapons.length)
+            ((this._Pr = t),
+            this.YKr &&
+              (TimerSystem_1.TimerSystem.Remove(this.YKr), (this.YKr = void 0)),
+            this.JKr &&
+              (TimerSystem_1.TimerSystem.Remove(this.JKr), (this.JKr = void 0)),
+            i.Num() !== this.QKr.CharacterWeapons.length ||
+              s.Num() !== this.QKr.CharacterWeapons.length)
           )
             return (
               Log_1.Log.CheckError() &&
@@ -1075,12 +1070,12 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
                 ),
               !1
             );
-          0 < (this.dQr = s) && (this.CQr = 0);
+          0 < (this.XKr = e) && (this.$Kr = 0);
           {
             let t = 0;
-            for (const h of this.mQr.CharacterWeapons)
-              this.X9o(h, i.Get(t), e.Get(t), 0 < s),
-                this.tXr(h, !1),
+            for (const h of this.QKr.CharacterWeapons)
+              this.W7o(h, i.Get(t), s.Get(t), 0 < e),
+                this.bQr(h, !1),
                 h.BattleEffectId &&
                   (this.Hte.Actor.CharRenderingComponent.RemoveMaterialControllerData(
                     h.BattleEffectId,
@@ -1091,33 +1086,33 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
       }
     return !0;
   }
-  HideWeapon(t, i, e, s = !1, h = 0) {
-    this.vQr.push(new HideWeaponOrder(t, i, e, s, h));
+  HideWeapon(t, i, s, e = !1, h = 0) {
+    this.ZKr.push(new HideWeaponOrder(t, i, s, e, h));
   }
-  OQr() {
-    for (const t of this.vQr) t.WithEffect = !1;
+  vQr() {
+    for (const t of this.ZKr) t.WithEffect = !1;
   }
-  oXr() {
-    if (this.mQr?.CharacterWeapons)
-      for (const t of this.mQr.CharacterWeapons)
+  GQr() {
+    if (this.QKr?.CharacterWeapons)
+      for (const t of this.QKr.CharacterWeapons)
         t.SetBuffEffectsHiddenInGame(t.WeaponHidden);
   }
-  tXr(t, i, e = !0, s = !0, h = 0) {
-    s =
-      (0 === this.BPr && 0 < this.QQr.size) ||
-      t.VisibleHelper.RequestAndUpdateHiddenInGame(i, s, h);
-    if (s === t.WeaponHidden) return !1;
-    i && s && t.ReleaseHideEffect(),
-      t.Mesh.SetHiddenInGame(s, !0),
-      s &&
+  bQr(t, i, s = !0, e = !0, h = 0) {
+    e =
+      (0 === this._Pr && 0 < this.DQr.size) ||
+      t.VisibleHelper.RequestAndUpdateHiddenInGame(i, e, h);
+    if (e === t.WeaponHidden) return !1;
+    i && e && t.ReleaseHideEffect(),
+      t.Mesh.SetHiddenInGame(e, !0),
+      e &&
         t.Mesh instanceof UE.SkeletalMeshComponent &&
         ((h = t.Mesh.GetAnimInstance()),
         UE.KuroAnimLibrary.EndAnimNotifyStates(h));
     h = t.WeaponHidden;
     return (
-      (t.WeaponHidden = s),
-      i && s && e && !h && t.ShowHideEffect(),
-      t.SetBuffEffectsHiddenInGame(i && s),
+      (t.WeaponHidden = e),
+      i && e && s && !h && t.ShowHideEffect(),
+      t.SetBuffEffectsHiddenInGame(i && e),
       !0
     );
   }
@@ -1128,16 +1123,16 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
           t,
           this.Entity,
         )),
-      this.uXr(this.CacheAiSocketItem.Tag),
+      this.WQr(this.CacheAiSocketItem.Tag),
       EventSystem_1.EventSystem.AddWithTarget(
         this.Entity,
         EventDefine_1.EEventName.CharOnUnifiedMoveStateChanged,
-        this.z3r,
+        this.P3r,
       ),
       EventSystem_1.EventSystem.AddWithTarget(
         this.Entity,
         EventDefine_1.EEventName.CharOnRoleDeadTargetSelf,
-        this.$Qr,
+        this.UQr,
       );
   }
   UnRegisterCharacterDropWeaponEvent() {
@@ -1148,27 +1143,27 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
           this.AiWeaponConfigId,
           this.Entity,
         )),
-      this.cXr(this.CacheAiSocketItem.Tag),
+      this.KQr(this.CacheAiSocketItem.Tag),
       (this.AiWeaponConfigId = 0),
       EventSystem_1.EventSystem.RemoveWithTarget(
         this.Entity,
         EventDefine_1.EEventName.CharOnUnifiedMoveStateChanged,
-        this.z3r,
+        this.P3r,
       ),
       EventSystem_1.EventSystem.RemoveWithTarget(
         this.Entity,
         EventDefine_1.EEventName.CharOnRoleDeadTargetSelf,
-        this.$Qr,
+        this.UQr,
       ));
   }
   ReceiveCharacterKnockUpDropWeapon() {
     ModelManager_1.ModelManager.AiWeaponModel.Net.SendDiscardWeaponPush(this);
   }
-  YQr() {
+  AQr() {
     0 !== this.AiWeaponConfigId &&
       ModelManager_1.ModelManager.AiWeaponModel.Net.SendDiscardWeaponPush(this);
   }
-  uXr(t) {
+  WQr(t) {
     t = t?.TagId;
     this.Lie ||
       (Log_1.Log.CheckError() &&
@@ -1179,11 +1174,11 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
         )),
       t && !this.Lie.HasTag(t) && this.Lie.AddTag(t);
   }
-  cXr(t) {
+  KQr(t) {
     this.Lie.Active && this.Lie.RemoveTag(t?.TagId);
   }
   get HasWeapon() {
-    return 1 === this.BPr;
+    return 1 === this._Pr;
   }
   ResetWeaponTag() {
     (this.CacheAiSocketItem =
@@ -1191,7 +1186,7 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
         this.AiWeaponConfigId,
         this.Entity,
       )),
-      this.CacheAiSocketItem && this.uXr(this.CacheAiSocketItem.Tag);
+      this.CacheAiSocketItem && this.WQr(this.CacheAiSocketItem.Tag);
   }
   GetWeaponBreachLevel() {
     return this.WeaponEquipInfo ? this.WeaponEquipInfo.WeaponBreachLevel : -1;
@@ -1202,28 +1197,28 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
         this.Entity,
       );
     let i = 0;
-    for (const e of this.mQr.CharacterWeapons)
-      e.VisibleHelper.InitBaseTable(i < t.BaseType.length ? t.BaseType[i] : 0),
-        e.VisibleHelper.InitTagHelper(
+    for (const s of this.QKr.CharacterWeapons)
+      s.VisibleHelper.InitBaseTable(i < t.BaseType.length ? t.BaseType[i] : 0),
+        s.VisibleHelper.InitTagHelper(
           this.Lie,
           i < t.BaseType.length ? t.VisibleTags[i] : "",
-          this.GQr,
+          this.fQr,
           i < t.BaseType.length ? t.HiddenTags[i] : "",
-          this.NQr,
+          this.pQr,
         ),
         i++;
   }
-  d8s() {
+  zQs() {
     var t = this.Hte.CreatureData,
-      i = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(t.GetRoleId());
-    let e = 0;
-    e = i?.IsTrialRole() ? i.GetRoleId() : t.GetPbDataId();
-    i =
-      ConfigManager_1.ConfigManager.WeaponComponentConfig.GetHideWeaponTags(e);
-    (this.DQr = []),
-      i.forEach((t) => {
-        t = this.Lie.ListenForTagAddOrRemove(t, this.XQr);
-        t && this.DQr.push(t);
+      t = ConfigManager_1.ConfigManager.RoleConfig.GetBaseRoleId(t.GetRoleId()),
+      t =
+        ConfigManager_1.ConfigManager.WeaponComponentConfig.GetHideWeaponTags(
+          t,
+        );
+    (this.aQr = []),
+      t.forEach((t) => {
+        t = this.Lie.ListenForTagAddOrRemove(t, this.RQr);
+        t && this.aQr.push(t);
       });
   }
   InitDebugWeaponVisibleDataById(t) {
@@ -1231,56 +1226,56 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
       ConfigManager_1.ConfigManager.WeaponComponentConfig.GetWeaponVisibleConfigById(
         t,
       );
-    let e = 0;
-    for (const s of this.mQr.CharacterWeapons)
-      s.VisibleHelper.InitBaseTable(e < i.BaseType.length ? i.BaseType[e] : 0),
-        s.VisibleHelper.InitTagHelper(
+    let s = 0;
+    for (const e of this.QKr.CharacterWeapons)
+      e.VisibleHelper.InitBaseTable(s < i.BaseType.length ? i.BaseType[s] : 0),
+        e.VisibleHelper.InitTagHelper(
           this.Lie,
-          e < i.BaseType.length ? i.VisibleTags[e] : "",
-          this.GQr,
-          e < i.BaseType.length ? i.HiddenTags[e] : "",
-          this.NQr,
+          s < i.BaseType.length ? i.VisibleTags[s] : "",
+          this.fQr,
+          s < i.BaseType.length ? i.HiddenTags[s] : "",
+          this.pQr,
         ),
-        e++;
-    this.HideWeapon(-1, !0, !1), (this.fQr = void 0);
+        s++;
+    this.HideWeapon(-1, !0, !1), (this.JKr = void 0);
   }
   ClearWeaponVisibleData() {
-    if (this.mQr?.CharacterWeapons)
-      for (const t of this.mQr.CharacterWeapons)
+    if (this.QKr?.CharacterWeapons)
+      for (const t of this.QKr.CharacterWeapons)
         t.VisibleHelper.ClearTagHelper();
   }
-  SetWeaponVisibleByTag(t, i, e) {
+  SetWeaponVisibleByTag(t, i, s) {
     i
-      ? this.HideWeapon(t.Index, !e, !0, !1, 2)
-      : this.HideWeapon(t.Index, e, !0, !1, 2);
+      ? this.HideWeapon(t.Index, !s, !0, !1, 2)
+      : this.HideWeapon(t.Index, s, !0, !1, 2);
   }
   GetCurrentWeaponEquipDebugInfo() {
     let t = "";
     t += `[武器组件]{ weaponId: ${this.WeaponEquipInfo.WeaponId}, 'WeaponBreachLevel:' ${this.WeaponEquipInfo.WeaponBreachLevel}, models:${this.WeaponEquipInfo.WeaponConfig.Models}  }
 `;
-    for (const e of this.mQr.CharacterWeapons) {
-      var i = e.Mesh;
-      t += `[武器组件]{ weaponMesh: ${i.SkeletalMesh.GetName()}, AnimInstance: ${i.GetAnimInstance().GetName()},         BattleSocket: ${e.BattleSocket},NormalSocket: ${e.NormalSocket} }
+    for (const s of this.QKr.CharacterWeapons) {
+      var i = s.Mesh;
+      t += `[武器组件]{ weaponMesh: ${i.SkeletalMesh.GetName()}, AnimInstance: ${i.GetAnimInstance().GetName()},         BattleSocket: ${s.BattleSocket},NormalSocket: ${s.NormalSocket} }
 `;
     }
     return t;
   }
   GetWeaponMesh() {
-    return this.mQr;
+    return this.QKr;
   }
   IsCurrentWeaponHideEffectPlaying() {
     return (
       !!EffectSystem_1.EffectSystem.IsValid(
-        this.mQr?.CharacterWeapons[0]?.WeaponHideEffect ?? 0,
+        this.QKr?.CharacterWeapons[0]?.WeaponHideEffect ?? 0,
       ) &&
       EffectSystem_1.EffectSystem.IsPlaying(
-        this.mQr?.CharacterWeapons[0]?.WeaponHideEffect ?? 0,
+        this.QKr?.CharacterWeapons[0]?.WeaponHideEffect ?? 0,
       )
     );
   }
-  rXr() {
-    if (this.pQr && this.mQr?.CharacterWeapons)
-      for (const t of this.mQr.CharacterWeapons)
+  NQr() {
+    if (this.zKr && this.QKr?.CharacterWeapons)
+      for (const t of this.QKr.CharacterWeapons)
         !t.WeaponHidden &&
         EffectSystem_1.EffectSystem.IsValid(t.WeaponHideEffect) &&
         EffectSystem_1.EffectSystem.IsPlaying(t.WeaponHideEffect)
@@ -1289,7 +1284,7 @@ let CharacterWeaponComponent = class CharacterWeaponComponent extends EntityComp
   }
 };
 (CharacterWeaponComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(69)],
+  [(0, RegisterComponent_1.RegisterComponent)(71)],
   CharacterWeaponComponent,
 )),
   (exports.CharacterWeaponComponent = CharacterWeaponComponent);

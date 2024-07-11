@@ -4,19 +4,19 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const ConfigManager_1 = require("../../../Manager/ConfigManager");
 class InfluenceInstance {
   constructor(e, t, r) {
-    (this.Kri = 0), (this.Id = e), (this.Qri = t), (this.Kri = r);
+    (this.Kni = 0), (this.Id = e), (this.Qni = t), (this.Kni = r);
   }
   get Relation() {
-    return this.Kri;
+    return this.Kni;
   }
   SetRelation(e) {
-    this.Kri = e;
+    this.Kni = e;
   }
   get RewardIndex() {
-    return this.Qri;
+    return this.Qni;
   }
   SetReceiveReward(e) {
-    this.Qri = e;
+    this.Qni = e;
   }
   GetCanReceiveReward() {
     var e = ConfigManager_1.ConfigManager.InfluenceConfig.GetInfluenceConfig(

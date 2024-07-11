@@ -3,10 +3,10 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.FunctionInstance = void 0);
 class FunctionInstance {
   constructor(t, s) {
-    (this.ige = t), (this.w9t = s);
+    (this.ige = t), (this.w7t = s);
   }
   GetFunctionId() {
-    return this.w9t;
+    return this.w7t;
   }
   GetIsShow() {
     return 0 < (1 & this.ige);

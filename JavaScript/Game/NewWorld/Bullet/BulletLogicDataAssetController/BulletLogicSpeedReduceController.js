@@ -6,39 +6,39 @@ const BulletLogicController_1 = require("./BulletLogicController"),
   MIN_WEIGHT = 50;
 class BulletLogicSpeedReduceController extends BulletLogicController_1.BulletLogicController {
   constructor(t, e) {
-    super(t, e), (this._9o = this.Bullet.GetBulletInfo()), (this.u9o = t);
+    super(t, e), (this.a7o = this.Bullet.GetBulletInfo()), (this.h7o = t);
   }
   BulletLogicAction(t = 0) {
     var e,
       l =
-        (l = this._9o.AttackerMoveComp.CharacterWeight) < MIN_WEIGHT
+        (l = this.a7o.AttackerMoveComp.CharacterWeight) < MIN_WEIGHT
           ? MIN_WEIGHT
           : l,
-      o = this._9o.CollisionInfo.GetFirstVictim([1]);
+      o = this.a7o.CollisionInfo.GetFirstVictim([1]);
     o?.Valid &&
       ((e =
         l -
         0.1 *
           (o =
-            (o = o?.GetComponent(161).CharacterWeight) < MIN_WEIGHT
+            (o = o?.GetComponent(163).CharacterWeight) < MIN_WEIGHT
               ? MIN_WEIGHT
               : o) *
-          this.u9o.SpeedDampingRatio),
+          this.h7o.SpeedDampingRatio),
       (o =
         (o =
           0 <
           (o =
-            (l = l + 0.1 * o * this.u9o.SpeedDampingRatio) < TOLERANCE || e < 0
+            (l = l + 0.1 * o * this.h7o.SpeedDampingRatio) < TOLERANCE || e < 0
               ? 0
-              : this._9o.MoveInfo.BulletSpeed * (e / l))
+              : this.a7o.MoveInfo.BulletSpeed * (e / l))
             ? o
-            : 0) < this.u9o.MinSpeed
+            : 0) < this.h7o.MinSpeed
           ? 0
           : o),
-      (this._9o.MoveInfo.BulletSpeed = o));
+      (this.a7o.MoveInfo.BulletSpeed = o));
   }
   BulletLogicActionOnHitObstacles(t = 0) {
-    this.u9o.IsNotThroughObstacles && (this._9o.MoveInfo.BulletSpeed = 0);
+    this.h7o.IsNotThroughObstacles && (this.a7o.MoveInfo.BulletSpeed = 0);
   }
 }
 exports.BulletLogicSpeedReduceController = BulletLogicSpeedReduceController;

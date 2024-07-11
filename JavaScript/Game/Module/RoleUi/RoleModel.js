@@ -20,7 +20,7 @@ const CommonParamById_1 = require("../../../Core/Define/ConfigCommon/CommonParam
   RoleLevelResponseData_1 = require("./RoleLevel/RoleLevelResponseData"),
   RoleSkillResponseData_1 = require("./RoleSkill/RoleSkillResponseData"),
   RoleInstance_1 = require("./View/ViewData/RoleInstance");
-var EAttributeId = Protocol_1.Aki.Protocol.KBs;
+var EAttributeId = Protocol_1.Aki.Protocol.Bks;
 const ConfigCommon_1 = require("../../../Core/Config/ConfigCommon"),
   RolePropertyGrowthByLevelAndBreachLevel_1 = require("../../../Core/Define/ConfigQuery/RolePropertyGrowthByLevelAndBreachLevel"),
   StringBuilder_1 = require("../../../Core/Utils/StringBuilder"),
@@ -33,13 +33,13 @@ const ConfigCommon_1 = require("../../../Core/Config/ConfigCommon"),
 class RoleModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
-      (this.puo = new Map()),
-      (this.vuo = new Map()),
-      (this.Muo = new Set()),
-      (this.Suo = new Map()),
-      (this.Euo = !0),
-      (this.yuo = void 0),
-      (this.Iuo = !1),
+      (this.dco = new Map()),
+      (this.Cco = new Map()),
+      (this.gco = new Set()),
+      (this.fco = new Map()),
+      (this.pco = !0),
+      (this.vco = void 0),
+      (this.Mco = !1),
       (this.RoleTrialIdList = new Set()),
       (this.DefaultSortFunc = (e, t) => {
         var r = e.GetLevelData(),
@@ -52,32 +52,32 @@ class RoleModel extends ModelBase_1.ModelBase {
               ? t.GetRoleConfig().Priority - e.GetRoleConfig().Priority
               : -1;
       }),
-      (this.Tuo = void 0),
-      (this.Luo = void 0),
-      (this.Duo = void 0),
-      (this.Ruo = []),
-      (this.KEn = !1),
+      (this.Eco = void 0),
+      (this.Sco = void 0),
+      (this.yco = void 0),
+      (this.Ico = []),
+      (this.zyn = !1),
       (this.xie = (e, t) => {
         t &&
-          t.Entity?.GetComponent(174).RemoveTagAddOrRemoveListener(
+          t.Entity?.GetComponent(177).RemoveTagAddOrRemoveListener(
             1733479717,
-            this.QEn,
+            this.Zyn,
           ),
           e &&
-            ((t = e.Entity?.GetComponent(174)).AddTagAddOrRemoveListener(
+            ((t = e.Entity?.GetComponent(177)).AddTagAddOrRemoveListener(
               1733479717,
-              this.QEn,
+              this.Zyn,
             ),
-            this.KEn !== t.HasTag(1733479717)) &&
-            ((this.KEn = !this.KEn),
+            this.zyn !== t.HasTag(1733479717)) &&
+            ((this.zyn = !this.zyn),
             EventSystem_1.EventSystem.Emit(
               EventDefine_1.EEventName.OnEnterOrExitUltraSkill,
-              this.KEn,
+              this.zyn,
             ));
       }),
-      (this.QEn = (e, t) => {
+      (this.Zyn = (e, t) => {
         1733479717 === e &&
-          ((this.KEn = t),
+          ((this.zyn = t),
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.OnEnterOrExitUltraSkill,
             t,
@@ -85,10 +85,10 @@ class RoleModel extends ModelBase_1.ModelBase {
       });
   }
   set IsInRoleTrial(e) {
-    (this.Iuo = e), ModelManager_1.ModelManager.OnlineModel.DisableOnline(2, e);
+    (this.Mco = e), ModelManager_1.ModelManager.OnlineModel.DisableOnline(2, e);
   }
   get IsInRoleTrial() {
-    return this.Iuo;
+    return this.Mco;
   }
   OnInit() {
     return (
@@ -109,8 +109,8 @@ class RoleModel extends ModelBase_1.ModelBase {
         LocalStorageDefine_1.ELocalStoragePlayerKey.RoleDataItem,
       ),
       (this.IsInRoleTrial = !1),
-      this.puo.clear(),
-      this.vuo.clear(),
+      this.dco.clear(),
+      this.Cco.clear(),
       !0
     );
   }
@@ -119,20 +119,20 @@ class RoleModel extends ModelBase_1.ModelBase {
     EventSystem_1.EventSystem.Emit(EventDefine_1.EEventName.RoleInfoUpdate);
   }
   RoleChange(e, t) {
-    this.puo.delete(e),
+    this.dco.delete(e),
       this.UpdateRoleInfo(t),
-      this.UpdateMainRoleMap(t.l3n),
+      this.UpdateMainRoleMap(t.O6n),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.RoleSystemChangeRole,
-        t.l3n,
+        t.O6n,
       );
   }
   UpdateRoleInfo(e) {
-    let t = this.puo.get(e.l3n);
+    let t = this.dco.get(e.O6n);
     var r;
-    t || ((t = new RoleInstance_1.RoleInstance(e.l3n)), this.puo.set(e.l3n, t)),
-      this.IsMainRole(e.l3n) &&
-        ((r = ConfigManager_1.ConfigManager.RoleConfig.GetMainRoleById(e.l3n)),
+    t || ((t = new RoleInstance_1.RoleInstance(e.O6n)), this.dco.set(e.O6n, t)),
+      this.IsMainRole(e.O6n) &&
+        ((r = ConfigManager_1.ConfigManager.RoleConfig.GetMainRoleById(e.O6n)),
         MenuController_1.MenuController.SetTargetConfig(88, r.Gender),
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.RefreshMenuSetting,
@@ -141,7 +141,7 @@ class RoleModel extends ModelBase_1.ModelBase {
       t.RefreshRoleInfo(e);
   }
   UpdateMainRoleMap(e) {
-    for (const t of this.Uuo().values()) this.Suo.set(t, e);
+    for (const t of this.Tco().values()) this.fco.set(t, e);
   }
   RoleLevelUp(e, t, r) {
     var n = this.GetRoleInstanceById(e),
@@ -180,7 +180,7 @@ class RoleModel extends ModelBase_1.ModelBase {
   }
   RoleSkillLevelUp(e, t) {
     var r = this.GetRoleInstanceById(e);
-    r && r.RefreshSkillInfo(t.Ckn, t.gkn),
+    r && r.RefreshSkillInfo(t.j4n, t.W4n),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.RoleSkillLevelUp,
         e,
@@ -198,7 +198,7 @@ class RoleModel extends ModelBase_1.ModelBase {
     e && e.RefreshRoleAttr(t, r);
   }
   RoleResonanceLockFinish(e) {
-    this.puo.get(e.l3n).GetResonanceData().SetResonanceLock(e.xDs);
+    this.dco.get(e.O6n).GetResonanceData().SetResonanceLock(e.zws);
   }
   GetRoleViewAgent(e) {
     switch (e) {
@@ -211,31 +211,31 @@ class RoleModel extends ModelBase_1.ModelBase {
     }
   }
   get IsShowMultiSkillDesc() {
-    return this.Euo;
+    return this.pco;
   }
   set IsShowMultiSkillDesc(e) {
-    this.Euo = e;
+    this.pco = e;
   }
   GetRoleList() {
-    var e = Array.from(this.puo.keys()),
-      t = (this.n5i(e), []);
+    var e = Array.from(this.dco.keys()),
+      t = (this.rVi(e), []);
     for (const n of e) {
-      var r = this.puo.get(n);
+      var r = this.dco.get(n);
       1 === r.GetRoleConfig().RoleType && t.push(r);
     }
     return t;
   }
   GetRoleMap() {
-    return this.puo;
+    return this.dco;
   }
   GetRoleRobotMap() {
-    return this.vuo;
+    return this.Cco;
   }
   GetBattleTeamFirstRoleId() {
     return ModelManager_1.ModelManager.SceneTeamModel.GetCurrentTeamItem
       ?.GetConfigId;
   }
-  n5i(e) {
+  rVi(e) {
     e.sort((t, r) => {
       let n = -1,
         o = -1;
@@ -260,23 +260,23 @@ class RoleModel extends ModelBase_1.ModelBase {
     return t
       ? (e > RoleDefine_1.ROBOT_DATA_MIN_ID
           ? (r = this.GetRoleRobotData(e))
-          : !(r = this.puo.get(e)) &&
+          : !(r = this.dco.get(e)) &&
             this.IsMainRole(e) &&
-            ((t = this.GetNewMainRoleId(e)), (r = this.puo.get(t))),
+            ((t = this.GetNewMainRoleId(e)), (r = this.dco.get(t))),
         r)
       : new RoleOnlineInstanceData_1.RoleOnlineInstanceData(e);
   }
   GetNewMainRoleId(e) {
-    return this.Suo.get(e);
+    return this.fco.get(e);
   }
   GetRoleRobotData(e) {
-    let t = this.vuo.get(e);
+    let t = this.Cco.get(e);
     return (
-      t || ((t = new RoleRobotData_1.RoleRobotData(e)), this.vuo.set(e, t)), t
+      t || ((t = new RoleRobotData_1.RoleRobotData(e)), this.Cco.set(e, t)), t
     );
   }
   GetRoleInstanceById(e) {
-    return this.puo.get(e);
+    return this.dco.get(e);
   }
   GetRoleName(e, t = void 0) {
     var r = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(e);
@@ -285,13 +285,13 @@ class RoleModel extends ModelBase_1.ModelBase {
       : ((r = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(e)),
         MultiTextLang_1.configMultiTextLang.GetLocalTextNew(r.Name));
   }
-  Auo(e, t, r) {
+  Lco(e, t, r) {
     let n = 0;
     ModelManager_1.ModelManager.WeaponModel.AutoAddExpItemEx(e, t, r);
     for (const o of t) n += o.SelectedCount * r(o);
     return n;
   }
-  Puo() {
+  Dco() {
     var e = [];
     for (const r of ModelManager_1.ModelManager.RoleModel.GetRoleCostExpList()) {
       var t = {
@@ -308,8 +308,8 @@ class RoleModel extends ModelBase_1.ModelBase {
   }
   GetSelectLevelUpItemNeedMoney(e) {
     var e = this.GetRoleInstanceById(e).GetLevelData().GetLevelUpNeedExp(),
-      t = this.Puo(),
-      e = this.Auo(e, t, (e) => this.GetRoleExpItemExp(e.ItemId));
+      t = this.Dco(),
+      e = this.Lco(e, t, (e) => this.GetRoleExpItemExp(e.ItemId));
     return this.GetMoneyToLevelUp(e);
   }
   GetMoneyToLevelUp(e) {
@@ -372,9 +372,9 @@ class RoleModel extends ModelBase_1.ModelBase {
       var r = new Map();
       let e = void 0;
       for (const n of t)
-        n.Ckn === ItemDefines_1.EItemId.Gold
-          ? (e = n.gkn)
-          : r.set(n.Ckn, n.gkn);
+        n.j4n === ItemDefines_1.EItemId.Gold
+          ? (e = n.W4n)
+          : r.set(n.j4n, n.W4n);
       return { needGold: e, costItemList: r };
     }
   }
@@ -392,13 +392,13 @@ class RoleModel extends ModelBase_1.ModelBase {
     return ConfigManager_1.ConfigManager.RoleConfig.GetRoleExpItemExp(e);
   }
   GetAllRoleList() {
-    return Array.from(this.puo.values());
+    return Array.from(this.dco.values());
   }
   GetRoleIdList() {
-    var e = Array.from(this.puo.keys()),
-      t = (this.n5i(e), []);
+    var e = Array.from(this.dco.keys()),
+      t = (this.rVi(e), []);
     for (const r of e)
-      1 === this.puo.get(r).GetRoleConfig().RoleType && t.push(r);
+      1 === this.dco.get(r).GetRoleConfig().RoleType && t.push(r);
     return t;
   }
   GetRoleTabList() {
@@ -491,14 +491,14 @@ class RoleModel extends ModelBase_1.ModelBase {
   RedDotAttributeTabBreakUpCondition(e) {
     e = this.GetRoleDataById(e);
     return (
-      !e.IsTrialRole() && !!e.GetLevelData().GetRoleNeedBreakUp() && this.xuo(e)
+      !e.IsTrialRole() && !!e.GetLevelData().GetRoleNeedBreakUp() && this.Rco(e)
     );
   }
   RedDotFavorItemActiveCondition(e) {
     e = this.GetRoleDataById(e);
     return !e.IsTrialRole() && e.GetFavorData().IsExistCanUnlockFavorItem();
   }
-  xuo(e) {
+  Rco(e) {
     return e.GetLevelData().IsEnoughBreachConsume();
   }
   RedDotResonanceTabCondition(e) {
@@ -542,9 +542,9 @@ class RoleModel extends ModelBase_1.ModelBase {
   }
   get RoleLevelResponseData() {
     return (
-      this.Tuo ||
-        (this.Tuo = new RoleLevelResponseData_1.RoleLevelResponseData()),
-      this.Tuo
+      this.Eco ||
+        (this.Eco = new RoleLevelResponseData_1.RoleLevelResponseData()),
+      this.Eco
     );
   }
   UpdateLevelViewResponseData(e) {
@@ -555,9 +555,9 @@ class RoleModel extends ModelBase_1.ModelBase {
   }
   get RoleBreachResponseData() {
     return (
-      this.Luo ||
-        (this.Luo = new RoleBreachResponseData_1.RoleBreachResponseData()),
-      this.Luo
+      this.Sco ||
+        (this.Sco = new RoleBreachResponseData_1.RoleBreachResponseData()),
+      this.Sco
     );
   }
   UpdateRoleBreachViewResponseData(e) {
@@ -565,9 +565,9 @@ class RoleModel extends ModelBase_1.ModelBase {
   }
   get RoleSkillResponseData() {
     return (
-      this.Duo ||
-        (this.Duo = new RoleSkillResponseData_1.RoleSkillResponseData()),
-      this.Duo
+      this.yco ||
+        (this.yco = new RoleSkillResponseData_1.RoleSkillResponseData()),
+      this.yco
     );
   }
   GetCurRoleSkillViewDataLocal(e, t) {
@@ -617,7 +617,7 @@ class RoleModel extends ModelBase_1.ModelBase {
         for (let e = 0; e < r; e++) {
           var o = t[e];
           n.push(
-            new SkillNodeDataInfo_1.SkillNodeDataInfo(o.$8n, o.rVn, o.vkn),
+            new SkillNodeDataInfo_1.SkillNodeDataInfo(o.DHn, o.qHn, o.X4n),
           );
         }
         e.SetSkillNodeStateData(n);
@@ -640,15 +640,15 @@ class RoleModel extends ModelBase_1.ModelBase {
       r,
       n,
       o,
-      i = e.l3n,
+      i = e.O6n,
       i = ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(i);
     i &&
       (i = i.GetFavorData()) &&
-      ((t = e.r3n),
-      (r = e.k3n),
-      (n = e.SLs),
-      (o = e.ELs),
-      (e = e.yLs),
+      ((t = e.P6n),
+      (r = e.M8n),
+      (n = e.NPs),
+      (o = e.FPs),
+      (e = e.VPs),
       i.SetFavorLevel(t),
       i.SetFavorExp(r),
       i.UpdateRoleFavorData(0, n),
@@ -656,18 +656,18 @@ class RoleModel extends ModelBase_1.ModelBase {
       i.UpdateRoleFavorData(3, e));
   }
   UpdateRoleFavorNewCanUnLockId(e) {
-    var t = e.l3n;
+    var t = e.O6n;
     ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(t)
       .GetFavorData()
-      .UpdateCanUnlockId(e.t6n, e.DLs);
+      .UpdateCanUnlockId(e.w9n, e.KPs);
   }
   UpdateRoleFavorLevelAndExp(e) {
-    var t = e.l3n,
+    var t = e.O6n,
       t =
         ModelManager_1.ModelManager.RoleModel.GetRoleInstanceById(
           t,
         ).GetFavorData();
-    t.SetFavorLevel(e.r3n), t.SetFavorExp(e.k3n);
+    t.SetFavorLevel(e.P6n), t.SetFavorExp(e.M8n);
   }
   GetRoleSystemRoleList() {
     if (!ModelManager_1.ModelManager.GameModeModel.IsMulti) {
@@ -685,51 +685,51 @@ class RoleModel extends ModelBase_1.ModelBase {
       )
         return e;
       if (0 < e.length) {
-        var o = Array.from(this.puo.keys());
+        var o = Array.from(this.dco.keys());
         for (const a of e) o.push(a);
-        return this.n5i(o), o;
+        return this.rVi(o), o;
       }
     }
     return this.GetRoleIdList();
   }
   GetRoleListHighestLevel() {
     let e = -1;
-    for (var [, t] of this.puo) {
+    for (var [, t] of this.dco) {
       t = t.GetLevelData().GetLevel();
       e = t > e ? t : e;
     }
-    for (var [, r] of this.vuo)
+    for (var [, r] of this.Cco)
       ModelManager_1.ModelManager.SceneTeamModel.GetTeamItem(r.GetDataId(), {
         ParamType: 0,
       }) && ((r = r.GetLevelData().GetLevel()), (e = r > e ? r : e));
     return e;
   }
   UpdateCanChangeRoleIdList(e) {
-    this.Ruo = this.Ruo.concat(e);
+    this.Ico = this.Ico.concat(e);
   }
   GetCanChangeRoleIdList() {
-    return this.Ruo;
+    return this.Ico;
   }
   IsMainRole(e) {
-    return this.Uuo().has(e);
+    return this.Tco().has(e);
   }
-  Uuo() {
-    return 0 === this.Muo.size && this.wuo(), this.Muo;
+  Tco() {
+    return 0 === this.gco.size && this.Uco(), this.gco;
   }
-  wuo() {
+  Uco() {
     var t = ConfigManager_1.ConfigManager.RoleConfig.GetAllMainRoleConfig(),
       r = t.length;
     for (let e = 0; e < r; e++) {
       var n = t[e];
-      this.Muo.add(n.Id);
+      this.gco.add(n.Id);
     }
   }
   GetCurSelectMainRoleId() {
-    for (const e of this.Uuo().values()) if (this.puo.get(e)) return e;
+    for (const e of this.Tco().values()) if (this.dco.get(e)) return e;
   }
   GetCurSelectMainRoleInstance() {
-    for (const t of this.Uuo().values()) {
-      var e = this.puo.get(t);
+    for (const t of this.Tco().values()) {
+      var e = this.dco.get(t);
       if (e) return e;
     }
   }
@@ -761,7 +761,7 @@ class RoleModel extends ModelBase_1.ModelBase {
         return r.Atk;
       case EAttributeId.Proto_Def:
         return r.Def;
-      case EAttributeId.Tkn:
+      case EAttributeId.e5n:
         return r.LifeMax;
     }
     return 0;
@@ -777,7 +777,7 @@ class RoleModel extends ModelBase_1.ModelBase {
         return n.AtkRatio;
       case EAttributeId.Proto_Def:
         return n.DefRatio;
-      case EAttributeId.Tkn:
+      case EAttributeId.e5n:
         return n.LifeMaxRatio;
     }
     return 0;
@@ -843,9 +843,9 @@ class RoleModel extends ModelBase_1.ModelBase {
     return r;
   }
   GetResonantItemRoleMap() {
-    if (!this.yuo) {
+    if (!this.vco) {
       var e;
-      this.yuo = new Map();
+      this.vco = new Map();
       for (const r of ConfigManager_1.ConfigManager.RoleConfig.GetRoleList())
         r.ResonantChainGroupId <= 0 ||
           ((e =
@@ -854,13 +854,13 @@ class RoleModel extends ModelBase_1.ModelBase {
             )) &&
             e.forEach((e) => {
               for (const t of e.ActivateConsume) {
-                let e = this.yuo.get(t[0]);
+                let e = this.vco.get(t[0]);
                 (e = e || new Array()).includes(r.Id) || e.push(r.Id),
-                  this.yuo.set(t[0], e);
+                  this.vco.set(t[0], e);
               }
             }));
     }
-    return this.yuo;
+    return this.vco;
   }
   GetResonantItemRoleId(e) {
     return ConfigManager_1.ConfigManager.InventoryConfig.GetItemConfig(
@@ -902,7 +902,7 @@ class RoleModel extends ModelBase_1.ModelBase {
     );
   }
   InUltraSkill() {
-    return this.KEn;
+    return this.zyn;
   }
 }
 exports.RoleModel = RoleModel;

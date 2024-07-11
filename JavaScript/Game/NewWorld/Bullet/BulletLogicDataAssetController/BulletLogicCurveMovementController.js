@@ -27,32 +27,32 @@ class BulletLogicCurveMovementController extends BulletLogicController_1.BulletL
   constructor(t, e) {
     super(t, e),
       (this.zie = void 0),
-      (this.Wht = -0),
+      (this.r1t = -0),
       (this.uoe = void 0),
-      (this.m9o = 0),
-      (this.d9o = 1),
-      (this.Hte = this.Bullet.GetComponent(152)),
-      (this._9o = this.Bullet.GetBulletInfo());
+      (this._7o = 0),
+      (this.u7o = 1),
+      (this.Hte = this.Bullet.GetComponent(154)),
+      (this.a7o = this.Bullet.GetBulletInfo());
   }
   OnInit() {
     ResourceSystem_1.ResourceSystem.LoadAsync(
       this.LogicController.SplineTrace.ToAssetPathName(),
       UE.Class,
       (t) => {
-        this.C9o(t);
+        this.c7o(t);
       },
     ),
-      (this._9o.BulletDataMain.Execution.MovementReplaced = !0);
+      (this.a7o.BulletDataMain.Execution.MovementReplaced = !0);
   }
   OnBulletDestroy() {
     this.zie &&
       (ActorSystem_1.ActorSystem.Put(this.zie.GetOwner()), (this.zie = void 0));
   }
-  C9o(t) {
+  c7o(t) {
     var e, i;
     this.Bullet?.Valid &&
       this.LogicController.SplineTrace &&
-      ((i = (e = this.g9o())
+      ((i = (e = this.m7o())
         ? UE.KismetMathLibrary.FindLookAtRotation(this.Hte.ActorLocation, e)
         : void 0),
       (i = UE.KismetMathLibrary.MakeTransform(
@@ -72,14 +72,14 @@ class BulletLogicCurveMovementController extends BulletLogicController_1.BulletL
               ? UE.Vector.DistSquared(this.Hte.ActorLocation, e)
               : this.zie.GetSplineLength()),
             e &&
-              ((this.d9o = Math.sqrt(t / i)),
+              ((this.u7o = Math.sqrt(t / i)),
               this.zie
                 .GetOwner()
                 .SetActorScale3D(
-                  Vector_1.Vector.OneVector.op_Multiply(this.d9o),
+                  Vector_1.Vector.OneVector.op_Multiply(this.u7o),
                 )),
-            (this.Wht = this.f9o()),
-            (this.zie.Duration = this.Wht))
+            (this.r1t = this.d7o()),
+            (this.zie.Duration = this.r1t))
           : Log_1.Log.CheckError() &&
             Log_1.Log.Error(
               "Bullet",
@@ -91,16 +91,16 @@ class BulletLogicCurveMovementController extends BulletLogicController_1.BulletL
   }
   BulletLogicAction(t) {
     var e,
-      i = this.m9o;
+      i = this._7o;
     this.zie &&
-      !this._9o.NeedDestroy &&
+      !this.a7o.NeedDestroy &&
       ((e = this.zie.GetLocationAtTime(i, 1, !0)),
       this.Hte.SetActorLocation(e),
       this.LogicController.IsForwardTangent &&
         ((e = this.zie.GetRotationAtTime(i, 1, !0)),
         this.Hte.SetActorRotation(e)),
-      (this.m9o += t * this.Hte.TimeDilation)),
-      i >= this.Wht &&
+      (this._7o += t * this.Hte.TimeDilation)),
+      i >= this.r1t &&
         (ObjectUtils_1.ObjectUtils.SoftObjectReferenceValid(
           this.LogicController.EffectOnReach,
         ) &&
@@ -111,7 +111,7 @@ class BulletLogicCurveMovementController extends BulletLogicController_1.BulletL
             this.LogicController.EffectOnReach.ToAssetPathName(),
             "[BulletLogicCurveMovementController.BulletLogicAction]",
             new EffectContext_1.EffectContext(
-              this._9o.Attacker ? this._9o.Attacker.Id : void 0,
+              this.a7o.Attacker ? this.a7o.Attacker.Id : void 0,
             ),
           )),
         this.LogicController.IsDestroyReach) &&
@@ -138,20 +138,20 @@ class BulletLogicCurveMovementController extends BulletLogicController_1.BulletL
         ColorUtils_1.ColorUtils.LinearRed,
       );
   }
-  g9o() {
-    var t = this._9o.TargetActorComp;
+  m7o() {
+    var t = this.a7o.TargetActorComp;
     if (this.LogicController.UseTargetLocation)
       return BulletUtil_1.BulletUtil.GetTargetLocation(
         t,
         FNameUtil_1.FNameUtil.NONE,
-        this._9o,
+        this.a7o,
       );
     this.uoe || this.koe();
     var e = t?.Valid,
       i = (0, puerts_1.$ref)(void 0),
       t =
         (UE.BPL_Fight_C.获取Actor周围坐标点(
-          e ? t.Owner : this._9o.AttackerActorComp.Actor,
+          e ? t.Owner : this.a7o.AttackerActorComp.Actor,
           e ? this.LogicController.Rotate : this.LogicController.SelfRotate,
           0,
           e ? this.LogicController.Length : this.LogicController.SelfLength,
@@ -181,11 +181,11 @@ class BulletLogicCurveMovementController extends BulletLogicController_1.BulletL
       i
     );
   }
-  f9o() {
+  d7o() {
     var t = this.LogicController.Duration,
       e = this.LogicController.MaxSpeed,
       i = this.LogicController.MinSpeed,
-      s = this.zie.GetSplineLength() * this.d9o,
+      s = this.zie.GetSplineLength() * this.u7o,
       i = 0 < i ? s / i : MathUtils_1.MathUtils.MaxFloat,
       s = 0 < e ? s / e : 0;
     return (

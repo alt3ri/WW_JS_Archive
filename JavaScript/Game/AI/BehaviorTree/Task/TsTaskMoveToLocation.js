@@ -54,7 +54,7 @@ class TsTaskMoveToLocation extends TsTaskAbortImmediatelyBase_1.default {
               (this.HandleMoveEnd = (t) => {
                 1 === t ? this.Finish(!0) : this.Finish(!1);
               }),
-            (this.MoveComp = e.GetComponent(36)),
+            (this.MoveComp = e.GetComponent(37)),
             (e = {
               Points: [{ Index: 0, Position: s, MoveState: this.TsMoveState }],
               Navigation: this.TsNavigationOn,

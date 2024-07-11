@@ -10,8 +10,8 @@ class LevelEventPlayLevelSequence extends LevelGeneralBase_1.LevelEventBase {
       ? e.LevelSequencePath
         ? (t = t)
           ? (t = EntitySystem_1.EntitySystem.Get(t.EntityId))?.Valid
-            ? t.GetComponent(182)?.Owner
-              ? (t = t.GetComponent(147)) && t.HandleSequence(e)
+            ? t.GetComponent(185)?.Owner
+              ? (t = t.GetComponent(149)) && t.HandleSequence(e)
               : Log_1.Log.CheckError() &&
                 Log_1.Log.Error("LevelEvent", 34, "状态控制actor不存在")
             : Log_1.Log.CheckError() &&

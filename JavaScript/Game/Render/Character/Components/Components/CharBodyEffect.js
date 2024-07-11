@@ -1,9 +1,7 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CharBodyEffect = void 0);
-const Log_1 = require("../../../../../Core/Common/Log"),
-  EffectEnvironment_1 = require("../../../../../Core/Effect/EffectEnvironment"),
-  MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
+const MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
   TsBaseCharacter_1 = require("../../../../Character/TsBaseCharacter"),
   EventDefine_1 = require("../../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../../Common/Event/EventSystem"),
@@ -19,19 +17,19 @@ class CharBodyEffect extends CharRenderBase_1.CharRenderBase {
       (this.EffectHandles = []),
       (this.NeedUpdate = !1),
       (this.OnSetActorVisible = (e, t) => {
-        (this.Entity && e !== this.Entity.Id) || this.ear(t);
+        (this.Entity && e !== this.Entity.Id) || this.ehr(t);
       }),
-      (this.ypi = () => {
+      (this.yvi = () => {
         for (const e of ModelManager_1.ModelManager.SceneTeamModel.GetTeamItems())
           if (e.IsControl() && e.EntityHandle?.Entity === this.Entity)
-            return void this.ear(!0);
-        this.ear(!1);
+            return void this.ehr(!0);
+        this.ehr(!1);
       }),
       (this.xie = (e, t) => {
-        e.Entity === this.Entity && this.ear(!0);
+        e.Entity === this.Entity && this.ehr(!0);
       }),
-      (this.C4s = () => {
-        this.ear(!1);
+      (this.m9s = () => {
+        this.ehr(!1);
       });
   }
   GetStatName() {
@@ -44,27 +42,12 @@ class CharBodyEffect extends CharRenderBase_1.CharRenderBase {
     super.Awake(e);
   }
   RegisterEffect(e) {
-    EffectEnvironment_1.EffectEnvironment.UseLog &&
-      Log_1.Log.CheckInfo() &&
-      Log_1.Log.Info("RenderEffect", 26, "Register Body Effect", [
-        "句柄Id",
-        e.Id,
-      ]),
-      this.EffectHandles.push(e),
+    this.EffectHandles.push(e),
       (1 === this.Opacity && this.Visible) ||
         e.GetEffectSpec()?.UpdateBodyEffect(this.Opacity, this.Visible),
       e.AddFinishCallback((t) => {
         var e = this.EffectHandles.findIndex((e) => e.Id === t);
-        0 < e &&
-          (EffectEnvironment_1.EffectEnvironment.UseLog &&
-            Log_1.Log.CheckInfo() &&
-            Log_1.Log.Info(
-              "RenderEffect",
-              26,
-              "特效框架:OnEffectFinished CharBodyEffect",
-              ["句柄Id", t],
-            ),
-          this.EffectHandles.splice(e, 1));
+        0 < e && this.EffectHandles.splice(e, 1);
       });
   }
   Start() {
@@ -79,7 +62,7 @@ class CharBodyEffect extends CharRenderBase_1.CharRenderBase {
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnUpdateSceneTeam,
-        this.ypi,
+        this.yvi,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnChangeRole,
@@ -88,7 +71,7 @@ class CharBodyEffect extends CharRenderBase_1.CharRenderBase {
       EventSystem_1.EventSystem.AddWithTarget(
         this.Entity,
         EventDefine_1.EEventName.OnRoleGoDownFinish,
-        this.C4s,
+        this.m9s,
       )),
       this.OnInitSuccess();
   }
@@ -108,7 +91,7 @@ class CharBodyEffect extends CharRenderBase_1.CharRenderBase {
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnUpdateSceneTeam,
-        this.ypi,
+        this.yvi,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnChangeRole,
@@ -117,14 +100,14 @@ class CharBodyEffect extends CharRenderBase_1.CharRenderBase {
       EventSystem_1.EventSystem.RemoveWithTarget(
         this.Entity,
         EventDefine_1.EEventName.OnRoleGoDownFinish,
-        this.C4s,
+        this.m9s,
       ));
   }
   SetOpacity(e) {
     MathUtils_1.MathUtils.IsNearlyEqual(this.Opacity, e) ||
       ((this.Opacity = e), (this.NeedUpdate = !0));
   }
-  ear(e) {
+  ehr(e) {
     this.Visible !== e && ((this.Visible = e), (this.NeedUpdate = !0));
   }
 }

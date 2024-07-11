@@ -12,16 +12,16 @@ const Log_1 = require("../../../../Core/Common/Log"),
 class RogueScoreHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
   constructor() {
     super(...arguments),
-      (this.Byn = void 0),
-      (this.byn = !1),
-      (this.ayn = 0),
-      (this.Gxn = 0),
-      (this.Oxn = void 0),
-      (this.qxn = void 0),
-      (this.Nxn = void 0),
-      (this.kxn = void 0),
-      (this.kyn = (t, i) => {
-        if (this.byn) {
+      (this.JIn = void 0),
+      (this.zIn = !1),
+      (this.IIn = 0),
+      (this.gBn = 0),
+      (this.fBn = void 0),
+      (this.CBn = void 0),
+      (this.pBn = void 0),
+      (this.vBn = void 0),
+      (this.oTn = (t, i) => {
+        if (this.zIn) {
           t = ModelManager_1.ModelManager.BattleScoreModel?.GetScoreConfig(t);
           if (t && 1 === t.Type) {
             t = t.LevelGroupId;
@@ -34,31 +34,31 @@ class RogueScoreHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
                   ["scoreActionId", t],
                   ["score", i],
                 ),
-              this.Gxn !== t &&
-                ((this.Gxn = t),
-                (this.Oxn =
+              this.gBn !== t &&
+                ((this.gBn = t),
+                (this.fBn =
                   ConfigManager_1.ConfigManager.BattleScoreConfig.GetBattleScoreActionConfigByGroupId(
                     t,
                   )),
-                this.Fyn()),
-              this.Oxn && 0 !== this.Oxn.length)
+                this.rTn()),
+              this.fBn && 0 !== this.fBn.length)
             ) {
-              if (((this.ayn = i), this.ayn < this.Nxn.LowerUpperLimits[0]))
-                this.qxn = void 0;
-              else if (this.ayn >= this.kxn.LowerUpperLimits[1])
-                this.qxn = this.kxn;
+              if (((this.IIn = i), this.IIn < this.pBn.LowerUpperLimits[0]))
+                this.CBn = void 0;
+              else if (this.IIn >= this.vBn.LowerUpperLimits[1])
+                this.CBn = this.vBn;
               else {
-                this.qxn = void 0;
-                for (const s of this.Oxn) {
+                this.CBn = void 0;
+                for (const s of this.fBn) {
                   var e = s.LowerUpperLimits;
-                  if (!(e.length < 2) && this.ayn >= e[0] && this.ayn < e[1]) {
-                    this.qxn = s;
+                  if (!(e.length < 2) && this.IIn >= e[0] && this.IIn < e[1]) {
+                    this.CBn = s;
                     break;
                   }
                 }
               }
-              !this.qxn && this.Byn
-                ? this.Vyn()
+              !this.CBn && this.JIn
+                ? this.nTn()
                 : this.TryActivateRogueScoreUnit();
             }
           }
@@ -67,59 +67,60 @@ class RogueScoreHandle extends HudUnitHandleBase_1.HudUnitHandleBase {
   }
   OnInitialize() {
     if (
-      ((this.byn =
+      ((this.zIn =
         ModelManager_1.ModelManager.RoguelikeModel.CheckInRoguelike() ||
         1 === ModelManager_1.ModelManager.CreatureModel.GetInstanceId()),
-      this.byn)
+      this.zIn)
     )
       for (var [
         t,
         i,
       ] of ModelManager_1.ModelManager.BattleScoreModel.GetScoreMap())
-        0 < i && this.kyn(t, i);
+        0 < i && this.oTn(t, i);
   }
   OnDestroyed() {
-    (this.byn = !1), this.Hyn();
+    (this.zIn = !1), this.sTn();
   }
   OnAddEvents() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.BattleScoreChanged,
-      this.kyn,
+      this.oTn,
     );
   }
   OnRemoveEvents() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.BattleScoreChanged,
-      this.kyn,
+      this.oTn,
     );
   }
-  Fyn() {
-    if (((this.Nxn = void 0), (this.kxn = void 0), this.Oxn)) {
+  rTn() {
+    if (((this.pBn = void 0), (this.vBn = void 0), this.fBn)) {
       let t = MathUtils_1.MathUtils.Int32Max,
         i = 0;
-      for (const s of this.Oxn) {
+      for (const s of this.fBn) {
         var e = s.Level;
-        t > e && ((t = e), (this.Nxn = s)), i < e && ((i = e), (this.kxn = s));
+        t > e && ((t = e), (this.pBn = s)), i < e && ((i = e), (this.vBn = s));
       }
     }
   }
   TryActivateRogueScoreUnit() {
-    this.Byn
-      ? (this.Byn?.SetVisible(!0), this.Vyn())
-      : (this.Byn = this.NewHudUnitWithReturn(
+    this.JIn
+      ? (this.JIn?.SetVisible(!0), this.nTn())
+      : (this.JIn = this.NewHudUnitWithReturn(
           RogueScoreUnit_1.RogueScoreUnit,
           "UiItem_RogueScore",
           !1,
           () => {
-            this.Byn?.SetVisible(void 0 !== this.qxn), this.Vyn();
+            this.JIn?.SetVisible(void 0 !== this.CBn), this.nTn();
           },
+          !0,
         ));
   }
-  Vyn() {
-    this.Byn?.UpdateScore(this.ayn, this.qxn);
+  nTn() {
+    this.JIn?.UpdateScore(this.IIn, this.CBn);
   }
-  Hyn() {
-    this.Byn && (this.DestroyHudUnit(this.Byn), (this.Byn = void 0));
+  sTn() {
+    this.JIn && (this.DestroyHudUnit(this.JIn), (this.JIn = void 0));
   }
 }
 exports.RogueScoreHandle = RogueScoreHandle;

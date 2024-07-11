@@ -39,40 +39,40 @@ let SceneItemProgressControlComponent =
       super(...arguments),
         (this.Rne = void 0),
         (this.Lo = void 0),
-        (this.SIe = void 0),
+        (this.EIe = void 0),
         (this.mBe = void 0),
         (this.Lie = void 0),
-        (this.x1n = void 0),
-        (this.w1n = void 0),
-        (this.B1n = (t, e) => {
+        (this.u1n = void 0),
+        (this.c1n = void 0),
+        (this.m1n = (t, e) => {
           switch (t) {
             case -1152559349:
-              this.b1n(
+              this.d1n(
                 "[SceneItemProgressControlComponent.HandleUpdateState] 状态变为常态, 停止进度控制",
               ),
-                this.q1n(),
-                this.Plt(),
-                this.G1n();
+                this.C1n(),
+                this.H1t(),
+                this.g1n();
               break;
             case -3775711:
-              this.N1n();
+              this.f1n();
               break;
             case 1298716444:
-              this.b1n(
+              this.d1n(
                 "[SceneItemProgressControlComponent.HandleUpdateState] 状态变为完成, 停止进度控制",
               );
           }
         }),
-        (this.ktn = void 0),
-        (this.O1n = !1),
-        (this.k1n = void 0),
-        (this.F1n = 0),
-        (this.V1n = (t) => {
+        (this.vtn = void 0),
+        (this.p1n = !1),
+        (this.v1n = void 0),
+        (this.M1n = 0),
+        (this.E1n = (t) => {
           "CaptureStrategicPoint" === this.Lo.Control.Type &&
-            this.O1n !== t &&
-            ((this.O1n = t), this.H1n());
+            this.p1n !== t &&
+            ((this.p1n = t), this.S1n());
         }),
-        (this.j1n = (t, e) => {
+        (this.y1n = (t, e) => {
           var i = this.Lo.Control;
           if ("CaptureStrategicPoint" === i.Type && e?.Valid) {
             var s = e.Entity.GetComponent(3);
@@ -82,23 +82,23 @@ let SceneItemProgressControlComponent =
                   (t = e.Entity.GetComponent(0).GetBaseInfo()?.Category);
                 if (!t) return;
                 if (!(0, IUtil_1.isEntitiyMatch)(s, t)) return;
-                this.k1n.add(e);
-              } else this.k1n.delete(e);
-              this.H1n();
+                this.v1n.add(e);
+              } else this.v1n.delete(e);
+              this.S1n();
             }
           }
         }),
         (this.zpe = (t, e) => {
-          this.k1n.has(e) && this.j1n(!1, e);
+          this.v1n.has(e) && this.y1n(!1, e);
         });
     }
     OnInitData(t) {
       (t = t.GetParam(SceneItemProgressControlComponent_1)[0]),
         (this.Lo = t),
-        (this.SIe = this.Entity.GetComponent(0)),
-        (this.w1n = new Set()),
+        (this.EIe = this.Entity.GetComponent(0)),
+        (this.c1n = new Set()),
         (this.Rne = void 0),
-        this.q1n(),
+        this.C1n(),
         (t = this.Lo.Control);
       return "CaptureStrategicPoint" !== t.Type
         ? (Log_1.Log.CheckError() &&
@@ -106,25 +106,25 @@ let SceneItemProgressControlComponent =
               "LevelPlay",
               40,
               "[SceneItemProgressControlComponent.OnCreate] 不支持的进度控制类型",
-              ["PbDataId", this.SIe.GetPbDataId()],
+              ["PbDataId", this.EIe.GetPbDataId()],
               ["ProgressCtrlType", t.Type],
             ),
           !1)
-        : ((this.O1n = !1), (this.k1n = new Set()), !0);
+        : ((this.p1n = !1), (this.v1n = new Set()), !0);
     }
     OnStart() {
       if (
-        ((this.mBe = this.Entity.CheckGetComponent(117)),
-        (this.Lie = this.Entity.CheckGetComponent(177)),
+        ((this.mBe = this.Entity.CheckGetComponent(119)),
+        (this.Lie = this.Entity.CheckGetComponent(180)),
         !this.mBe || !this.Lie)
       )
         return !1;
       var t = this.Lo.Control;
       if ("CaptureStrategicPoint" === t.Type) {
-        if (((this.ktn = this.Entity.CheckGetComponent(74)), !this.ktn))
+        if (((this.vtn = this.Entity.CheckGetComponent(76)), !this.vtn))
           return !1;
-        this.ktn.AddOnPlayerOverlapCallback(this.V1n),
-          this.ktn.AddOnEntityOverlapCallback(this.j1n),
+        this.vtn.AddOnPlayerOverlapCallback(this.E1n),
+          this.vtn.AddOnEntityOverlapCallback(this.y1n),
           EventSystem_1.EventSystem.Add(
             EventDefine_1.EEventName.RemoveEntity,
             this.zpe,
@@ -133,21 +133,33 @@ let SceneItemProgressControlComponent =
       return !0;
     }
     OnActivate() {
-      this.W1n(),
-        EventSystem_1.EventSystem.AddWithTarget(
+      this.I1n(),
+        EventSystem_1.EventSystem.HasWithTarget(
           this.Entity,
           EventDefine_1.EEventName.OnSceneItemStateChange,
-          this.B1n,
-        ),
-        this.G1n();
+          this.m1n,
+        )
+          ? Log_1.Log.CheckError() &&
+            Log_1.Log.Error(
+              "Temp",
+              32,
+              "SceneItemProgressControlComponent.OnActivate: 重复添加事件",
+              ["PbDataId", this.EIe.GetPbDataId()],
+            )
+          : EventSystem_1.EventSystem.AddWithTarget(
+              this.Entity,
+              EventDefine_1.EEventName.OnSceneItemStateChange,
+              this.m1n,
+            ),
+        this.g1n();
     }
     OnEnd() {
       return (
         "CaptureStrategicPoint" === this.Lo.Control.Type &&
-          (this.ktn &&
-            (this.ktn.RemoveOnPlayerOverlapCallback(this.V1n),
-            this.ktn.RemoveOnEntityOverlapCallback(this.j1n),
-            (this.ktn = void 0)),
+          (this.vtn &&
+            (this.vtn.RemoveOnPlayerOverlapCallback(this.E1n),
+            this.vtn.RemoveOnEntityOverlapCallback(this.y1n),
+            (this.vtn = void 0)),
           EventSystem_1.EventSystem.Remove(
             EventDefine_1.EEventName.RemoveEntity,
             this.zpe,
@@ -155,87 +167,87 @@ let SceneItemProgressControlComponent =
         EventSystem_1.EventSystem.HasWithTarget(
           this.Entity,
           EventDefine_1.EEventName.OnSceneItemStateChange,
-          this.B1n,
+          this.m1n,
         ) &&
           EventSystem_1.EventSystem.RemoveWithTarget(
             this.Entity,
             EventDefine_1.EEventName.OnSceneItemStateChange,
-            this.B1n,
+            this.m1n,
           ),
         !(this.mBe = void 0)
       );
     }
     OnTick(t) {
-      "CaptureStrategicPoint" === this.Lo.Control.Type && this.K1n(t);
+      "CaptureStrategicPoint" === this.Lo.Control.Type && this.T1n(t);
     }
-    W1n() {
+    I1n() {
       this.mBe?.IsInState(2)
-        ? this.N1n()
-        : this.b1n(
+        ? this.f1n()
+        : this.d1n(
             "[SceneItemProgressControlComponent.HandleUpdateState] 状态未激活, 停止进度控制",
           );
     }
-    Q1n() {
-      var t = Protocol_1.Aki.Protocol.Xns.create();
-      (t.rkn = MathUtils_1.MathUtils.NumberToLong(
-        this.SIe.GetCreatureDataId(),
+    L1n() {
+      var t = Protocol_1.Aki.Protocol.jls.create();
+      (t.P4n = MathUtils_1.MathUtils.NumberToLong(
+        this.EIe.GetCreatureDataId(),
       )),
-        Net_1.Net.Call(9273, t, (t) => {});
+        Net_1.Net.Call(16385, t, (t) => {});
     }
-    G1n() {
+    g1n() {
       var t = this.Lo.Control;
       "CaptureStrategicPoint" !== t.Type ||
-        this.x1n?.CurrentValue !== t.MaxValue ||
+        this.u1n?.CurrentValue !== t.MaxValue ||
         this.mBe?.IsInState(4) ||
-        this.Q1n();
+        this.L1n();
     }
-    X1n() {
+    D1n() {
       return void 0 === this.Rne;
     }
-    N1n() {
-      !this.X1n() &&
+    f1n() {
+      !this.D1n() &&
         this.Enable(
           this.Rne,
           "SceneItemProgressControlComponent.EnableProgressControl",
         ) &&
-        ((this.Rne = void 0), this.$1n(!0));
+        ((this.Rne = void 0), this.R1n(!0));
     }
-    b1n(t) {
-      this.X1n() && ((this.Rne = this.Disable(t)), this.$1n(!1));
+    d1n(t) {
+      this.D1n() && ((this.Rne = this.Disable(t)), this.R1n(!1));
     }
-    $1n(t) {
-      "CaptureStrategicPoint" === this.Lo.Control.Type && this.H1n(),
+    R1n(t) {
+      "CaptureStrategicPoint" === this.Lo.Control.Type && this.S1n(),
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.OnAnyProgressControlEnableStateChange,
           this.Entity,
           t,
-          this.x1n,
+          this.u1n,
         );
     }
-    Plt() {
-      this.w1n.forEach((t) => {
-        t?.(this.x1n);
+    H1t() {
+      this.c1n.forEach((t) => {
+        t?.(this.u1n);
       });
     }
     AddProgressDataChangedCallback(t) {
-      return !(!t || !this.w1n || (this.w1n.add(t), 0));
+      return !(!t || !this.c1n || (this.c1n.add(t), 0));
     }
     RemoveProgressDataChangedCallback(t) {
-      return !(!t || !this.w1n) && this.w1n.delete(t);
+      return !(!t || !this.c1n) && this.c1n.delete(t);
     }
     GetProgressData() {
-      return this.x1n;
+      return this.u1n;
     }
-    q1n() {
+    C1n() {
       var t = this.Lo.Control;
       "CaptureStrategicPoint" === t.Type &&
-        (this.x1n = {
+        (this.u1n = {
           ProgressCtrlType: t.Type,
           CurrentValue: t.InitValue,
           MaxValue: t.MaxValue,
         });
     }
-    Y1n(t) {
+    U1n(t) {
       switch (t) {
         case 0:
           return;
@@ -245,32 +257,32 @@ let SceneItemProgressControlComponent =
           return -1726296883;
       }
     }
-    H1n() {
+    S1n() {
       var t,
-        e = this.F1n;
+        e = this.M1n;
       let i = 0;
       e !==
-        (i = this.X1n()
-          ? 0 < this.k1n.size
-            ? this.O1n
+        (i = this.D1n()
+          ? 0 < this.v1n.size
+            ? this.p1n
               ? 1
               : 2
-            : this.O1n
+            : this.p1n
               ? 3
               : 4
           : i) &&
-        ((this.F1n = i), (e = this.Y1n(e)) !== (t = this.Y1n(i))) &&
+        ((this.M1n = i), (e = this.U1n(e)) !== (t = this.U1n(i))) &&
         this.Lie &&
         (this.Lie.NotifyLock++,
         void 0 !== e && this.Lie.RemoveTag(e),
         void 0 !== t && this.Lie.AddTag(t),
         this.Lie.NotifyLock--);
     }
-    K1n(e) {
+    T1n(e) {
       var i = this.Lo.Control;
       if ("CaptureStrategicPoint" === i.Type) {
         let t = 0;
-        switch (this.F1n) {
+        switch (this.M1n) {
           case 1:
           case 2:
             t = -i.DecreaseSpeed;
@@ -282,19 +294,19 @@ let SceneItemProgressControlComponent =
             return;
         }
         e = MathUtils_1.MathUtils.Clamp(
-          this.x1n.CurrentValue +
+          this.u1n.CurrentValue +
             (e / CommonDefine_1.MILLIONSECOND_PER_SECOND) * t,
           0,
           i.MaxValue,
         );
-        e !== this.x1n.CurrentValue &&
-          ((this.x1n.CurrentValue = e), this.Plt(), this.G1n());
+        e !== this.u1n.CurrentValue &&
+          ((this.u1n.CurrentValue = e), this.H1t(), this.g1n());
       }
     }
   });
 (SceneItemProgressControlComponent = SceneItemProgressControlComponent_1 =
   __decorate(
-    [(0, RegisterComponent_1.RegisterComponent)(114)],
+    [(0, RegisterComponent_1.RegisterComponent)(116)],
     SceneItemProgressControlComponent,
   )),
   (exports.SceneItemProgressControlComponent =

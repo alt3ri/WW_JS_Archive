@@ -1,7 +1,8 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.InputDistributeModel = void 0);
-const Log_1 = require("../../../Core/Common/Log"),
+const Info_1 = require("../../../Core/Common/Info"),
+  Log_1 = require("../../../Core/Common/Log"),
   ModelBase_1 = require("../../../Core/Framework/ModelBase"),
   ConfigManager_1 = require("../../../Game/Manager/ConfigManager"),
   EventDefine_1 = require("../../Common/Event/EventDefine"),
@@ -19,28 +20,28 @@ const Log_1 = require("../../../Core/Common/Log"),
 class InputDistributeModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
-      (this.Zcr = []),
-      (this.emr = new Set()),
-      (this.tmr = []),
-      (this.imr = new Map()),
-      (this.omr = new Map()),
-      (this.rmr = new Map()),
-      (this.nmr = new Map()),
-      (this.smr = new Map()),
-      (this.amr = new Map()),
-      (this.hmr = new Set()),
-      (this.lmr = void 0),
-      (this._mr = void 0),
-      (this.umr = 0);
+      (this.Ymr = []),
+      (this.Jmr = new Set()),
+      (this.zmr = []),
+      (this.Zmr = new Map()),
+      (this.edr = new Map()),
+      (this.tdr = new Map()),
+      (this.idr = new Map()),
+      (this.odr = new Map()),
+      (this.rdr = new Map()),
+      (this.ndr = new Set()),
+      (this.sdr = void 0),
+      (this.hdr = void 0),
+      (this.ldr = 0);
   }
   OnInit() {
     return (
-      this.cmr(),
-      this.mmr(),
-      this.dmr(),
-      this.Cmr(),
-      this.gmr(),
-      this.fmr(),
+      this._dr(),
+      this.udr(),
+      this.cdr(),
+      this.mdr(),
+      this.ddr(),
+      this.Cdr(),
       this.SetInputDistributeTag(
         InputDistributeDefine_1.inputDistributeTagDefine.FightInputRootTag,
       ),
@@ -49,38 +50,38 @@ class InputDistributeModel extends ModelBase_1.ModelBase {
   }
   OnClear() {
     this.ClearAllNotAllowFightInputViewNames(),
-      this.imr.clear(),
-      (this.tmr.length = 0);
-    for (const t of this.nmr.values()) t.Reset();
-    this.nmr.clear();
-    for (const i of this.smr.values()) i.Reset();
-    this.smr.clear();
-    for (const e of this.rmr.values()) e.Reset();
-    return this.rmr.clear(), !0;
+      this.Zmr.clear(),
+      (this.zmr.length = 0);
+    for (const t of this.idr.values()) t.Reset();
+    this.idr.clear();
+    for (const i of this.odr.values()) i.Reset();
+    this.odr.clear();
+    for (const e of this.tdr.values()) e.Reset();
+    return this.tdr.clear(), !0;
   }
-  fmr() {
+  Cdr() {
     for (const i of InputDistributeSetupDefine_1.inputDistributeSetups) {
       var t = new i();
-      this.tmr.push(t);
+      this.zmr.push(t);
     }
   }
   RefreshInputDistributeTag() {
-    for (const t of this.tmr) if (t.OnRefresh()) return;
+    for (const t of this.zmr) if (t.OnRefresh()) return;
   }
-  mmr() {
-    for (var [t, i] of InputDistributeDefine_1.actionTagMap) this.pmr(t, i);
+  udr() {
+    for (var [t, i] of InputDistributeDefine_1.actionTagMap) this.gdr(t, i);
   }
-  dmr() {
-    for (var [t, i] of InputDistributeDefine_1.axisTagMap) this.vmr(t, i);
+  cdr() {
+    for (var [t, i] of InputDistributeDefine_1.axisTagMap) this.fdr(t, i);
   }
-  Cmr() {
-    for (var [t, i] of InputDistributeDefine_1.touchTagMap) this.Mmr(t, i);
+  mdr() {
+    for (var [t, i] of InputDistributeDefine_1.touchTagMap) this.pdr(t, i);
   }
-  gmr() {
-    for (var [t, i] of InputDistributeDefine_1.keyTagMap) this.Smr(t, i);
+  ddr() {
+    for (var [t, i] of InputDistributeDefine_1.keyTagMap) this.vdr(t, i);
   }
   InputAction(i, e) {
-    var t = this.Emr(i);
+    var t = this.Mdr(i);
     if (!t)
       return (
         Log_1.Log.CheckWarn() &&
@@ -92,10 +93,10 @@ class InputDistributeModel extends ModelBase_1.ModelBase {
       );
     if (InputDistributeDelay_1.delayInput.includes(i)) {
       let t = void 0;
-      this.omr.has(i)
-        ? (t = this.omr.get(i))
+      this.edr.has(i)
+        ? (t = this.edr.get(i))
         : ((t = new InputDistributeDelay_1.InputDistributeDelay()),
-          this.omr.set(i, t)),
+          this.edr.set(i, t)),
         t.CheckCondition(i, e) &&
           t.StartDelay(
             ConfigManager_1.ConfigManager.LevelGamePlayConfig
@@ -108,19 +109,19 @@ class InputDistributeModel extends ModelBase_1.ModelBase {
     } else {
       var n = t.GetInputDistributeTag();
       if (n && !this.IsTagMatchAnyCurrentInputTag(n)) return !1;
-      if (!this.ymr(i, n)) return !1;
+      if (!this.Edr(i, n)) return !1;
     }
     return (
       t.InputAction(e),
-      e ? (this.lmr = i) : this.lmr && (this.lmr = void 0),
+      e ? (this.sdr = i) : this.sdr && (this.sdr = void 0),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnInputChangeForCond,
       ),
       !0
     );
   }
-  ymr(t, i) {
-    var i = this.Imr(i);
+  Edr(t, i) {
+    var i = this.Sdr(i);
     return (
       !i ||
       !(
@@ -138,42 +139,52 @@ class InputDistributeModel extends ModelBase_1.ModelBase {
     );
   }
   GetCurrentActionName() {
-    return this.lmr;
+    return this.sdr;
   }
   InputCacheAxisValue(t, i) {
-    t = this.Tmr(t);
+    t = this.ydr(t);
     t && t.InputCacheAxisValue(i);
   }
   InputAxis(t, i) {
-    var e = this.Tmr(t);
+    var e = this.ydr(t);
     if (e) {
       if (this.HasActionLimitSet()) {
-        if (!this.IsActionInLimitSet(t)) return;
+        if (!this.IsActionInLimitSet(t))
+          return void (
+            Info_1.Info.AxisInputOptimize &&
+            0 !== e.GetCacheAxisValue() &&
+            e.InputAxis(0)
+          );
       } else {
         var n = e.GetInputDistributeTag();
-        if (n && !this.IsTagMatchAnyCurrentInputTag(n)) return;
+        if (n && !this.IsTagMatchAnyCurrentInputTag(n))
+          return void (
+            Info_1.Info.AxisInputOptimize &&
+            0 !== e.GetCacheAxisValue() &&
+            e.InputAxis(0)
+          );
       }
       e.InputAxis(i),
-        this.Lmr(t, i),
-        0 < Math.abs(i) ? (this._mr = t) : this._mr && (this._mr = void 0);
+        this.Idr(t, i),
+        0 < Math.abs(i) ? (this.hdr = t) : this.hdr && (this.hdr = void 0);
     }
   }
-  Lmr(t, i) {
-    this.lmr !== t && (this.umr = 0),
+  Idr(t, i) {
+    this.sdr !== t && (this.ldr = 0),
       Math.abs(i) &&
-        Math.abs(i - this.umr) > EMIT_EVENT_AXIS_DELTA &&
-        ((this.lmr = t),
+        Math.abs(i - this.ldr) > EMIT_EVENT_AXIS_DELTA &&
+        ((this.sdr = t),
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.OnInputChangeForCond,
         ),
-        (this.umr = i));
+        (this.ldr = i));
   }
   GetCurrentAxisName() {
-    return this._mr;
+    return this.hdr;
   }
   InputTouch(t, i) {
     var e,
-      n = this.Dmr(t);
+      n = this.Tdr(t);
     n
       ? ((e = n.GetInputDistributeTag()) &&
           !this.IsTagMatchAnyCurrentInputTag(e)) ||
@@ -185,7 +196,7 @@ class InputDistributeModel extends ModelBase_1.ModelBase {
         ]);
   }
   BindAction(t, i) {
-    var e = this.Emr(t);
+    var e = this.Mdr(t);
     e
       ? e.BindAction(i)
       : Log_1.Log.CheckWarn() &&
@@ -195,17 +206,17 @@ class InputDistributeModel extends ModelBase_1.ModelBase {
         ]);
   }
   ExecuteDelayInputAction(t) {
-    var i = this.Emr(t);
+    var i = this.Mdr(t);
     i &&
-      this.omr.has(t) &&
-      this.omr.get(t).IsInputActive(!1) &&
+      this.edr.has(t) &&
+      this.edr.get(t).IsInputActive(!1) &&
       i.InputAction(!1);
   }
   BindActions(t, i) {
     for (const e of t) this.BindAction(e, i);
   }
   UnBindAction(t, i) {
-    var e = this.Emr(t);
+    var e = this.Mdr(t);
     e
       ? e.UnBindAction(i)
       : Log_1.Log.CheckWarn() &&
@@ -219,15 +230,15 @@ class InputDistributeModel extends ModelBase_1.ModelBase {
   UnBindActions(t, i) {
     for (const e of t) this.UnBindAction(e, i);
   }
-  pmr(t, i) {
+  gdr(t, i) {
     i = new InputActionHandle_1.InputActionHandle(i, t);
-    return this.nmr.set(t, i), i;
+    return this.idr.set(t, i), i;
   }
-  Emr(t) {
-    return this.nmr.get(t);
+  Mdr(t) {
+    return this.idr.get(t);
   }
   BindAxis(t, i) {
-    var e = this.Tmr(t);
+    var e = this.ydr(t);
     e
       ? e.BindAxis(i)
       : Log_1.Log.CheckWarn() &&
@@ -240,11 +251,11 @@ class InputDistributeModel extends ModelBase_1.ModelBase {
     for (const e of t) this.BindAxis(e, i);
   }
   GetAxisValue(t) {
-    t = this.Tmr(t);
+    t = this.ydr(t);
     return t ? t.GetCacheAxisValue() : 0;
   }
   UnBindAxis(t, i) {
-    var e = this.Tmr(t);
+    var e = this.ydr(t);
     e
       ? e.UnBindAxis(i)
       : Log_1.Log.CheckWarn() &&
@@ -259,7 +270,7 @@ class InputDistributeModel extends ModelBase_1.ModelBase {
     for (const e of t) this.UnBindAxis(e, i);
   }
   BindTouch(t, i) {
-    var e = this.Dmr(t);
+    var e = this.Tdr(t);
     e
       ? e.BindTouch(i)
       : Log_1.Log.CheckWarn() &&
@@ -272,7 +283,7 @@ class InputDistributeModel extends ModelBase_1.ModelBase {
     for (const e of t) this.BindTouch(e, i);
   }
   UnBindTouch(t, i) {
-    var e = this.Dmr(t);
+    var e = this.Tdr(t);
     e
       ? e.UnBindTouch(i)
       : Log_1.Log.CheckWarn() &&
@@ -286,29 +297,29 @@ class InputDistributeModel extends ModelBase_1.ModelBase {
   UnBindTouches(t, i) {
     for (const e of t) this.UnBindTouch(e, i);
   }
-  vmr(t, i) {
+  fdr(t, i) {
     i = new InputAxisHandle_1.InputAxisHandle(i, t);
-    return this.smr.set(t, i), i;
+    return this.odr.set(t, i), i;
   }
-  Tmr(t) {
-    return this.smr.get(t);
+  ydr(t) {
+    return this.odr.get(t);
   }
-  Mmr(t, i) {
+  pdr(t, i) {
     i = new InputTouchHandle_1.InputTouchHandle(i, t.toString());
-    return this.amr.set(t, i), i;
+    return this.rdr.set(t, i), i;
   }
-  Dmr(t) {
-    return this.amr.get(t);
+  Tdr(t) {
+    return this.rdr.get(t);
   }
-  Smr(t, i) {
+  vdr(t, i) {
     i = new InputKeyHandle_1.InputKeyHandle(i, t);
-    return this.rmr.set(t, i), i;
+    return this.tdr.set(t, i), i;
   }
-  Rmr(t) {
-    return this.rmr.get(t);
+  Ldr(t) {
+    return this.tdr.get(t);
   }
   BindKey(t, i) {
-    var e = this.Rmr(t);
+    var e = this.Ldr(t);
     e
       ? e.BindAction(i)
       : Log_1.Log.CheckWarn() &&
@@ -318,7 +329,7 @@ class InputDistributeModel extends ModelBase_1.ModelBase {
         ]);
   }
   UnBindKey(t, i) {
-    var e = this.Rmr(t);
+    var e = this.Ldr(t);
     e
       ? e.UnBindAction(i)
       : Log_1.Log.CheckWarn() &&
@@ -329,55 +340,55 @@ class InputDistributeModel extends ModelBase_1.ModelBase {
   }
   InputKey(t, i) {
     var e,
-      t = this.Rmr(t);
+      t = this.Ldr(t);
     !t ||
       ((e = t.GetInputDistributeTag()) &&
         !this.IsTagMatchAnyCurrentInputTag(e)) ||
       t.InputKey(i);
   }
   HasAnyNotAllowFightInputViewIsOpen() {
-    return 0 < this.hmr.size;
+    return 0 < this.ndr.size;
   }
   AddNotAllowFightInputViewName(t) {
-    this.hmr.add(t);
+    this.ndr.add(t);
   }
   RemoveNotAllowFightInputViewName(t) {
-    this.hmr.delete(t);
+    this.ndr.delete(t);
   }
   ClearAllNotAllowFightInputViewNames() {
-    this.hmr.clear();
+    this.ndr.clear();
   }
   GetNotAllowFightInputViewNameSet() {
-    return this.hmr;
+    return this.ndr;
   }
-  cmr() {
+  _dr() {
     for (const e of InputDistributeDefine_1.initializeInputDistributeTagDefine) {
       var t = e.Tag,
         i = e.ParentTag,
-        i = this.Imr(i);
-      this.Umr(t, i);
+        i = this.Sdr(i);
+      this.Ddr(t, i);
     }
   }
-  Umr(t, i) {
+  Ddr(t, i) {
     i = new InputDistributeTag_1.InputDistributeTag(t, i);
-    return this.imr.set(t, i), i;
+    return this.Zmr.set(t, i), i;
   }
-  Imr(t) {
-    return this.imr.get(t);
+  Sdr(t) {
+    return this.Zmr.get(t);
   }
   MatchTag(t, i, e = !1) {
-    t = this.Imr(t);
+    t = this.Sdr(t);
     return !!i && t.MatchTag(i.TagName, e);
   }
   IsTagMatchAnyCurrentInputTag(t, i = !1) {
-    return this.IsTagMatchAnyInputDistributeTags(t, this.Zcr, i);
+    return this.IsTagMatchAnyInputDistributeTags(t, this.Ymr, i);
   }
   IsAnyInputDistributeTagsMatchTag(t, i, e = !1) {
     for (const n of t) if (n.MatchTag(i, e)) return !0;
     return !1;
   }
   IsTagMatchAnyInputDistributeTags(t, i, e = !1) {
-    var n = this.Imr(t);
+    var n = this.Sdr(t);
     for (const s of i) if (n.MatchTag(s.TagName, e)) return !0;
     return !1;
   }
@@ -387,21 +398,21 @@ class InputDistributeModel extends ModelBase_1.ModelBase {
         "actionName",
         t,
       ]),
-      this.emr.add(t);
+      this.Jmr.add(t);
   }
   ClearLimitInputDistributeActions() {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info("Input", 8, "[InputDistribute]清除输入分发限制Action"),
-      this.emr.clear();
+      this.Jmr.clear();
   }
   HasActionLimitSet() {
-    return 0 < this.emr.size;
+    return 0 < this.Jmr.size;
   }
   IsActionInLimitSet(t) {
-    return this.emr.has(t);
+    return this.Jmr.has(t);
   }
   AddInputDistributeTag(t) {
-    this.Amr(t) &&
+    this.Rdr(t) &&
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("Input", 8, "[InputDistribute]添加输入分发Tag", [
           "tagName",
@@ -409,17 +420,17 @@ class InputDistributeModel extends ModelBase_1.ModelBase {
         ]),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnInputDistributeTagChanged,
-        this.Zcr,
+        this.Ymr,
       ));
   }
-  Amr(t) {
-    t = this.Imr(t);
-    return !!t && (this.Zcr.push(t), !0);
+  Rdr(t) {
+    t = this.Sdr(t);
+    return !!t && (this.Ymr.push(t), !0);
   }
   SetInputDistributeTag(t) {
-    var i = this.Imr(t);
+    var i = this.Sdr(t);
     i &&
-      ((this.Zcr = [i]),
+      ((this.Ymr = [i]),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("Input", 8, "[InputDistribute]设置输入分发Tag", [
           "tagName",
@@ -427,12 +438,12 @@ class InputDistributeModel extends ModelBase_1.ModelBase {
         ]),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnInputDistributeTagChanged,
-        this.Zcr,
+        this.Ymr,
       ));
   }
   SetInputDistributeTags(t) {
     this.ClearInputDistributeTag();
-    for (const i of t) this.Amr(i);
+    for (const i of t) this.Rdr(i);
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info("Input", 8, "[InputDistribute]设置输入分发Tag", [
         "tagNames",
@@ -440,30 +451,30 @@ class InputDistributeModel extends ModelBase_1.ModelBase {
       ]),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnInputDistributeTagChanged,
-        this.Zcr,
+        this.Ymr,
       );
   }
   RemoveInputDistributeTag(t, i = !1) {
-    var e = this.Imr(t);
+    var e = this.Sdr(t);
     if (e)
       if (i) {
         var n = [];
-        for (const r of this.Zcr) r.MatchTag(e.TagName) && n.push(r);
+        for (const r of this.Ymr) r.MatchTag(e.TagName) && n.push(r);
         for (const u of n) {
-          var s = this.Zcr.indexOf(u);
-          s < 0 || this.Zcr.splice(s, 1);
+          var s = this.Ymr.indexOf(u);
+          s < 0 || this.Ymr.splice(s, 1);
         }
       } else {
-        t = this.Zcr.indexOf(e);
-        t < 0 || this.Zcr.splice(t, 1);
+        t = this.Ymr.indexOf(e);
+        t < 0 || this.Ymr.splice(t, 1);
       }
   }
   ClearInputDistributeTag() {
-    this.Zcr.length = 0;
+    this.Ymr.length = 0;
   }
   IsAllowFightInput() {
     return this.IsAnyInputDistributeTagsMatchTag(
-      this.Zcr,
+      this.Ymr,
       InputDistributeDefine_1.inputDistributeTagDefine.FightInputRootTag,
     );
   }
@@ -471,28 +482,28 @@ class InputDistributeModel extends ModelBase_1.ModelBase {
     return this.IsTagMatchAnyInputDistributeTags(
       InputDistributeDefine_1.inputDistributeTagDefine.FightInputRoot.AxisInput
         .MoveInputTag,
-      this.Zcr,
+      this.Ymr,
     );
   }
   IsAllowFightActionInput() {
     return this.IsTagMatchAnyInputDistributeTags(
       InputDistributeDefine_1.inputDistributeTagDefine.FightInputRoot
         .ActionInputTag,
-      this.Zcr,
+      this.Ymr,
     );
   }
   IsAllowFightCameraRotationInput() {
     return this.IsTagMatchAnyInputDistributeTags(
       InputDistributeDefine_1.inputDistributeTagDefine.FightInputRoot.AxisInput
         .CameraInput.CameraRotationTag,
-      this.Zcr,
+      this.Ymr,
     );
   }
   IsAllowFightCameraZoomInput() {
     return this.IsTagMatchAnyInputDistributeTags(
       InputDistributeDefine_1.inputDistributeTagDefine.FightInputRoot.AxisInput
         .CameraInput.CameraZoomTag,
-      this.Zcr,
+      this.Ymr,
     );
   }
   IsAllowHeadRotation() {
@@ -501,14 +512,14 @@ class InputDistributeModel extends ModelBase_1.ModelBase {
       this.IsTagMatchAnyInputDistributeTags(
         InputDistributeDefine_1.inputDistributeTagDefine.UiInputRoot
           .MouseInputTag,
-        this.Zcr,
+        this.Ymr,
       )
     );
   }
   IsAllowUiInput() {
     return this.IsTagMatchAnyInputDistributeTags(
       InputDistributeDefine_1.inputDistributeTagDefine.UiInputRootTag,
-      this.Zcr,
+      this.Ymr,
     );
   }
   GetActionInputDistributeTagName(t) {

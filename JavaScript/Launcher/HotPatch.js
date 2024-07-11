@@ -28,36 +28,36 @@ const cpp_1 = require("cpp"),
   ResourceUpdate_1 = require("./Update/ResourceUpdate"),
   LauncherAudio_1 = require("./Util/LauncherAudio"),
   LauncherLog_1 = require("./Util/LauncherLog"),
-  ProcedureUtil_1 = require("./Util/ProcedureUtil"),
-  LauncherSerialize_1 = require("./Util/LauncherSerialize");
+  LauncherSerialize_1 = require("./Util/LauncherSerialize"),
+  ProcedureUtil_1 = require("./Util/ProcedureUtil");
 class HotPatch {
   static Start(e, t) {
-    (HotPatch.PSr = e),
-      (HotPatch.xSr = t),
+    (HotPatch.RSr = e),
+      (HotPatch.USr = t),
       LauncherLog_1.LauncherLog.Info("初始化Push"),
       HotPatchPushSdk_1.HotPatchPushSdk.StartPush(),
       LauncherLog_1.LauncherLog.Info("结束Push"),
       HotPatchKuroSdk_1.HotPatchKuroSdk.Init(),
-      HotPatch.wSr.SetupScene(e),
-      HotPatch.xOn.ApplyGameSettings(),
+      HotPatch.HotFixSceneManager.SetupScene(e),
+      HotPatch.Wpa.ApplyGameSettings(),
       LauncherLog_1.LauncherLog.Info("播放启动进入镜头(睁开眼睛)"),
-      HotPatch.wSr.PlayStartLaunchSeq(),
-      HotPatch.wSr.PlayBlackSeq(() => {
+      HotPatch.HotFixSceneManager.PlayStartLaunchSeq(),
+      HotPatch.HotFixSceneManager.PlayBlackSeq(() => {
         HotPatch.ProcessLine(e).catch((e) => {
           LauncherLog_1.LauncherLog.ErrorWithStack(e.message, e);
         });
       });
   }
   static StartLogin() {
-    HotPatch.xSr.MountGamePak(),
+    HotPatch.USr.MountGamePak(),
       LauncherLog_1.LauncherLog.Info(
         "Game Pak mounted, preloading Blueprint Types.",
       ),
       UE.KuroLauncherLibrary.ReloadShaderLibrary(),
       UE.KuroLauncherLibrary.PreloadRequiredBp(),
-      UE.KuroStaticLibrary.IsEditor(HotPatch.xSr) ||
+      UE.KuroStaticLibrary.IsEditor(HotPatch.USr) ||
         UE.KismetSystemLibrary.ExecuteConsoleCommand(
-          HotPatch.xSr.GetWorld(),
+          HotPatch.USr.GetWorld(),
           "DisableAllScreenMessages",
         ),
       UE.Actor.SetKuroNetMode(1),
@@ -68,11 +68,11 @@ class HotPatch {
       UE.WwiseExternalSourceStatics.InitExternalSourceConfigs(),
       require("../Game/Main");
   }
-  static BSr(e) {
+  static PSr(e) {
     UE.KismetSystemLibrary.ControlScreensaver(!0),
       (HotPatch.State = 3),
       LauncherLog_1.LauncherLog.Info("热更完成"),
-      HotPatch.wSr.Destroy(),
+      HotPatch.HotFixSceneManager.Destroy(),
       HotPatch.StartLogin();
   }
   static async ProcessLine(a) {
@@ -87,69 +87,92 @@ class HotPatch {
     const r = new HotFixManager_1.HotFixManager();
     await r.Init(a);
     UE.GameplayStatics.GetPlayerController(a, 0).bShowMouseCursor = !0;
-    await (0, ProcedureUtil_1.whetherRepeatDoOnFailedAsync)(
-      async () => {
-        return {
-          Success:
-            await BaseConfigController_1.BaseConfigController.RequestBaseData(
-              r,
-            ),
-        };
-      },
-      async (e, t) => {
-        return (await r.ShowDialog(
-          !0,
-          "HotFixTipsTitle",
-          "GetRemoteConfigFailed",
-          "HotFixQuit",
-          "HotFixRetry",
-          void 0,
-        ))
-          ? t()
-          : (AppUtil_1.AppUtil.QuitGame(),
-            await r.WaitFrame(),
-            { Success: !0 });
-      },
-    ),
-      ThinkDataLaunchReporter_1.ThinkDataLaunchReporter.InitializeInstance(),
-      AppLinks_1.AppLinks.Init(),
-      LauncherAudio_1.LauncherAudio.Initialize(),
-      HotPatchLogReport_1.HotPatchLogReport.ReportLogin(
-        HotPatchLogReport_1.LoginLogEventDefine.Update,
-        "update_start",
-      );
-    var a = new HotPatchLogReport_1.HotPatchLog(),
-      a =
-        ((a.s_step_id = "start_hot_patch"),
-        HotPatchLogReport_1.HotPatchLogReport.Report(a),
-        new HotPatchLogReport_1.HotPatchLog()),
-      c = { success: !0 },
-      e =
-        ((a.s_step_id = "end_hot_patch"),
-        new HotPatchLogReport_1.HotPatchLog());
-    if (((e.s_step_id = "need_hot_patch_logic"), o)) {
-      (e.s_step_result = "true"),
-        HotPatchLogReport_1.HotPatchLogReport.Report(e);
-      let t = void 0;
-      var o = UE.KuroLauncherLibrary.GetPlatform(),
-        _ =
-          ((t = new (
-            "Android" === o
-              ? AndroidHotPatchProcedure_1.AndroidHotPatchProcedure
-              : "iOS" === o
-                ? IosHotPatchProcedure_1.IosHotPatchProcedure
-                : OthersHotPatchProcedure_1.OthersHotPatchProcedure
-          )(HotPatch.bSr, r)),
-          HotPatchKuroSdk_1.HotPatchKuroSdk.ReportEvent(
-            SdkReportData_1.HotPatchReportData.CreateData(
-              1,
-              new Map([["eventParams", "update_start"]]),
-            ),
+    a = await r.ShowPrivacyProtocolView();
+    if (a) {
+      await (0, ProcedureUtil_1.whetherRepeatDoOnFailedAsync)(
+        async () => {
+          return {
+            Success:
+              await BaseConfigController_1.BaseConfigController.RequestBaseData(
+                r,
+              ),
+          };
+        },
+        async (e, t) => {
+          return (await r.ShowDialog(
+            !0,
+            "HotFixTipsTitle",
+            "GetRemoteConfigFailed",
+            "HotFixQuit",
+            "HotFixRetry",
+            void 0,
+          ))
+            ? t()
+            : (AppUtil_1.AppUtil.QuitGame(),
+              await r.WaitFrame(),
+              { Success: !0 });
+        },
+      ),
+        ThinkDataLaunchReporter_1.ThinkDataLaunchReporter.InitializeInstance(),
+        AppLinks_1.AppLinks.Init(),
+        LauncherAudio_1.LauncherAudio.Initialize();
+      var a = UE.KuroLauncherLibrary.GetPlatform(),
+        c =
+          (HotPatchLogReport_1.HotPatchLogReport.ReportLogin(
+            HotPatchLogReport_1.LoginLogEventDefine.Update,
+            "update_start",
           ),
-          new HotPatchLogReport_1.HotPatchLog());
+          new HotPatchLogReport_1.HotPatchLog()),
+        c =
+          ((c.s_step_id = "start_hot_patch"),
+          HotPatchLogReport_1.HotPatchLogReport.Report(c),
+          new HotPatchLogReport_1.HotPatchLog()),
+        i = { success: !0 },
+        _ =
+          ((c.s_step_id = "end_hot_patch"),
+          new HotPatchLogReport_1.HotPatchLog()),
+        p = UE.KuroVariableFunctionLibrary.HasStringValue("back_to_game"),
+        n = ((_.s_step_id = "need_hot_patch_logic"), { success: !0 });
+      if (((n.info = { NeedHotPatch: o, NeedBackToGame: p }), !o || p)) {
+        (n.success = !1),
+          (_.s_step_result = LauncherSerialize_1.LauncherJson.Stringify(n)),
+          HotPatchLogReport_1.HotPatchLogReport.Report(_),
+          (i.info = n.info),
+          (c.s_step_result = LauncherSerialize_1.LauncherJson.Stringify(i)),
+          HotPatchLogReport_1.HotPatchLogReport.Report(c),
+          LauncherLog_1.LauncherLog.Info(
+            "应用配置了不需要执行热更流程，直接进入游戏",
+            ["NeedHotPatch", o],
+            ["NeedBackToGame", p],
+          ),
+          LanguageUpdateManager_1.LanguageUpdateManager.Init(HotPatch.RSr);
+        const P = await HotPatch.hma(a, r, !0);
+        return P
+          ? (p || (await HotPatch.wSr(r), await HotPatch.BSr(r)),
+            r.Destroy(),
+            void HotPatch.PSr(!1))
+          : void 0;
+      }
+      (_.s_step_result = LauncherSerialize_1.LauncherJson.Stringify(n)),
+        HotPatchLogReport_1.HotPatchLogReport.Report(_);
+      let t = void 0;
+      (t = new (
+        "Android" === a
+          ? AndroidHotPatchProcedure_1.AndroidHotPatchProcedure
+          : "iOS" === a
+            ? IosHotPatchProcedure_1.IosHotPatchProcedure
+            : OthersHotPatchProcedure_1.OthersHotPatchProcedure
+      )(HotPatch.xSr, r)),
+        HotPatchKuroSdk_1.HotPatchKuroSdk.ReportEvent(
+          SdkReportData_1.HotPatchReportData.CreateData(
+            1,
+            new Map([["eventParams", "update_start"]]),
+          ),
+        );
+      o = new HotPatchLogReport_1.HotPatchLog();
       if (
-        ((_.s_step_id = "launcher_hp_pre_start"),
-        HotPatchLogReport_1.HotPatchLogReport.Report(_),
+        ((o.s_step_id = "launcher_hp_pre_start"),
+        HotPatchLogReport_1.HotPatchLogReport.Report(o),
         await t.Start())
       ) {
         HotPatchKuroSdk_1.HotPatchKuroSdk.ReportEvent(
@@ -165,10 +188,10 @@ class HotPatch {
             ),
           ),
           (HotPatch.State = 2);
-        _ = new HotPatchLogReport_1.HotPatchLog();
+        p = new HotPatchLogReport_1.HotPatchLog();
         if (
-          ((_.s_step_id = "launcher_hp_get_remote_ver_config"),
-          HotPatchLogReport_1.HotPatchLogReport.Report(_),
+          ((p.s_step_id = "launcher_hp_get_remote_ver_config"),
+          HotPatchLogReport_1.HotPatchLogReport.Report(p),
           await t.GetRemoteVersionConfig())
         ) {
           HotPatchKuroSdk_1.HotPatchKuroSdk.ReportEvent(
@@ -183,27 +206,27 @@ class HotPatch {
                 new Map([["eventParams", "check_app_version"]]),
               ),
             );
-          var _ = new HotPatchLogReport_1.HotPatchLog(),
-            p =
-              ((_.s_step_id = "check_app_version"),
-              await t.IsAppVersionChange());
-          if (p) {
+          (n = new HotPatchLogReport_1.HotPatchLog()),
+            (_ =
+              ((n.s_step_id = "check_app_version"),
+              await t.IsAppVersionChange()));
+          if (_) {
             LauncherLog_1.LauncherLog.Info(
               "需要更新app",
               ["CurAppVer", UE.KuroLauncherLibrary.GetAppVersion()],
               ["LatestAppVer", RemoteConfig_1.RemoteInfo.Config.PackageVersion],
             );
-            const P = { NeedUpdateApp: !0 };
-            (_.s_step_result = LauncherSerialize_1.LauncherJson.Stringify(P)),
-              HotPatchLogReport_1.HotPatchLogReport.Report(_),
+            const d = { NeedUpdateApp: !0 };
+            (n.s_step_result = LauncherSerialize_1.LauncherJson.Stringify(d)),
+              HotPatchLogReport_1.HotPatchLogReport.Report(n),
               HotPatchLogReport_1.HotPatchLogReport.ReportLogin(
                 HotPatchLogReport_1.LoginLogEventDefine.Update,
                 "update_failed",
               ),
-              (c.success = !1),
-              (c.info = "app need update"),
-              (a.s_step_result = LauncherSerialize_1.LauncherJson.Stringify(c)),
-              HotPatchLogReport_1.HotPatchLogReport.Report(a),
+              (i.success = !1),
+              (i.info = "app need update"),
+              (c.s_step_result = LauncherSerialize_1.LauncherJson.Stringify(i)),
+              HotPatchLogReport_1.HotPatchLogReport.Report(c),
               HotPatchKuroSdk_1.HotPatchKuroSdk.ReportEvent(
                 SdkReportData_1.HotPatchReportData.CreateData(
                   3,
@@ -215,44 +238,44 @@ class HotPatch {
               ),
               void (await r.WaitFrame());
           } else {
-            const P = { NeedUpdateApp: !1 };
-            (_.s_step_result = LauncherSerialize_1.LauncherJson.Stringify(P)),
+            const d = { NeedUpdateApp: !1 };
+            (n.s_step_result = LauncherSerialize_1.LauncherJson.Stringify(d)),
               HotPatchKuroSdk_1.HotPatchKuroSdk.ReportEvent(
                 SdkReportData_1.HotPatchReportData.CreateData(
                   2,
                   new Map([["eventParams", "check_app_version"]]),
                 ),
               );
-            (_.s_step_result = LauncherSerialize_1.LauncherJson.Stringify({
+            (n.s_step_result = LauncherSerialize_1.LauncherJson.Stringify({
               NeedUpdateApp: !1,
             })),
-              HotPatchLogReport_1.HotPatchLogReport.Report(_),
+              HotPatchLogReport_1.HotPatchLogReport.Report(n),
               HotPatchKuroSdk_1.HotPatchKuroSdk.ReportEvent(
                 SdkReportData_1.HotPatchReportData.CreateData(
                   4,
                   new Map([["eventParams", "update_launcher"]]),
                 ),
               );
-            (p = new HotPatchLogReport_1.HotPatchLog()),
-              (_ =
-                ((p.s_step_id = "launcher_hp_update_launcher"),
-                HotPatchLogReport_1.HotPatchLogReport.Report(p),
-                new AppVersionMisc_1.LauncherVersionMisc())),
+            (o = new HotPatchLogReport_1.HotPatchLog()),
               (p =
-                (_.Init(HotPatch.PSr),
+                ((o.s_step_id = "launcher_hp_update_launcher"),
+                HotPatchLogReport_1.HotPatchLogReport.Report(o),
+                new AppVersionMisc_1.LauncherVersionMisc())),
+              (_ =
+                (p.Init(HotPatch.RSr),
                 new UrlPrefixDownload_1.UrlPrefixDownload())),
-              (p = new ResourceUpdate_1.ResourceUpdate(
-                HotPatch.PSr,
-                p,
+              (n = new ResourceUpdate_1.ResourceUpdate(
+                HotPatch.RSr,
                 _,
-                this.bSr,
+                p,
+                this.xSr,
               ));
-            if (await t.UpdateResource(!1, p)) {
-              _ = new HotPatchLogReport_1.HotPatchLog();
+            if (await t.UpdateResource(!1, n)) {
+              o = new HotPatchLogReport_1.HotPatchLog();
               if (
-                ((_.s_step_id = "launcher_hp_mount_launcher"),
-                HotPatchLogReport_1.HotPatchLogReport.Report(_),
-                await t.MountPak(p))
+                ((o.s_step_id = "launcher_hp_mount_launcher"),
+                HotPatchLogReport_1.HotPatchLogReport.Report(o),
+                await t.MountPak(n))
               ) {
                 HotPatchKuroSdk_1.HotPatchKuroSdk.ReportEvent(
                   SdkReportData_1.HotPatchReportData.CreateData(
@@ -261,24 +284,24 @@ class HotPatch {
                   ),
                 );
                 (_ = new HotPatchLogReport_1.HotPatchLog()),
-                  (_ =
+                  (p =
                     ((_.s_step_id = "launcher_hp_wether_reboot_launcher"),
                     HotPatchLogReport_1.HotPatchLogReport.Report(_),
-                    p.GetRevertInfo()));
-                if (p.GetNeedRemount()) {
-                  if (_.NeedRevert) {
-                    for (const d of _.Paks) UE.KuroPakMountStatic.UnmountPak(d);
-                    for (const s of _.Files)
-                      UE.KuroLauncherLibrary.DeleteFile(s);
+                    n.GetRevertInfo()));
+                if (n.GetNeedRemount()) {
+                  if (p.NeedRevert) {
+                    for (const s of p.Paks) UE.KuroPakMountStatic.UnmountPak(s);
+                    for (const H of p.Files)
+                      UE.KuroLauncherLibrary.DeleteFile(H);
                   }
-                  p = new HotPatchLogReport_1.HotPatchLog();
-                  (p.s_step_id = "restart_launcher"),
-                    HotPatchLogReport_1.HotPatchLogReport.Report(p),
-                    (c.success = !0),
-                    (c.info = "restart launcher"),
-                    (a.s_step_result =
-                      LauncherSerialize_1.LauncherJson.Stringify(c)),
-                    HotPatchLogReport_1.HotPatchLogReport.Report(a),
+                  o = new HotPatchLogReport_1.HotPatchLog();
+                  (o.s_step_id = "restart_launcher"),
+                    HotPatchLogReport_1.HotPatchLogReport.Report(o),
+                    (i.success = !0),
+                    (i.info = "restart launcher"),
+                    (c.s_step_result =
+                      LauncherSerialize_1.LauncherJson.Stringify(i)),
+                    HotPatchLogReport_1.HotPatchLogReport.Report(c),
                     LauncherLog_1.LauncherLog.Info(
                       "热更器有更新需要重启，开始重启热更器！",
                     ),
@@ -286,230 +309,237 @@ class HotPatch {
                     r.Destroy(),
                     UE.KuroSqliteLibrary.CloseAllConnections(),
                     UE.GameplayStatics.OpenLevel(
-                      HotPatch.PSr,
+                      HotPatch.RSr,
                       new UE.FName("/Game/Aki/Map/Launch/Bootstrap"),
                     );
                 } else {
-                  var p = new HotPatchLogReport_1.HotPatchLog(),
-                    p =
-                      ((p.s_step_id = "launcher_hp_pak_key_update"),
-                      HotPatchLogReport_1.HotPatchLogReport.Report(p),
-                      PakKeyUpdate_1.PakKeyUpdate.Init(this.bSr),
-                      await PakKeyUpdate_1.PakKeyUpdate.CheckPakKey(
-                        void 0,
-                        void 0,
+                  const P = await HotPatch.hma(a, r);
+                  if (P) {
+                    var _ = new HotPatchLogReport_1.HotPatchLog(),
+                      n =
+                        ((_.s_step_id = "launcher_hp_pak_key_update"),
+                        HotPatchLogReport_1.HotPatchLogReport.Report(_),
+                        PakKeyUpdate_1.PakKeyUpdate.Init(this.xSr),
+                        await PakKeyUpdate_1.PakKeyUpdate.CheckPakKey(
+                          void 0,
+                          void 0,
+                        ),
+                        new HotPatchLogReport_1.HotPatchLog()),
+                      h =
+                        ((n.s_step_id = "launcher_hp_update_resource"),
+                        HotPatchLogReport_1.HotPatchLogReport.Report(n),
+                        new Array()),
+                      o = new AppVersionMisc_1.ResourceVersionMisc(),
+                      _ =
+                        (o.Init(HotPatch.RSr),
+                        new UrlPrefixDownload_1.UrlPrefixDownload()),
+                      n = new ResourceUpdate_1.ResourceUpdate(
+                        HotPatch.RSr,
+                        _,
+                        o,
+                        this.xSr,
                       ),
-                      new HotPatchLogReport_1.HotPatchLog()),
-                    i =
-                      ((p.s_step_id = "launcher_hp_update_resource"),
-                      HotPatchLogReport_1.HotPatchLogReport.Report(p),
-                      new Array()),
-                    p = new AppVersionMisc_1.ResourceVersionMisc(),
-                    n =
-                      (p.Init(HotPatch.PSr),
-                      new UrlPrefixDownload_1.UrlPrefixDownload()),
-                    n = new ResourceUpdate_1.ResourceUpdate(
-                      HotPatch.PSr,
-                      n,
-                      p,
-                      this.bSr,
-                    ),
-                    p =
-                      (i.push(n),
-                      LanguageUpdateManager_1.LanguageUpdateManager.Init(
-                        HotPatch.PSr,
-                      ),
-                      LanguageUpdateManager_1.LanguageUpdateManager.GetAllLanguagesVersionMisc());
-                  for (const H of p) {
-                    var h = new UrlPrefixDownload_1.UrlPrefixDownload(),
-                      h = new ResourceUpdate_1.ResourceUpdate(
-                        HotPatch.PSr,
-                        h,
-                        H,
-                        this.bSr,
-                        !H.NeedUpdate(),
-                      );
-                    i.push(h);
-                  }
-                  if (
-                    (HotPatchKuroSdk_1.HotPatchKuroSdk.ReportEvent(
-                      SdkReportData_1.HotPatchReportData.CreateData(
-                        4,
-                        new Map([["eventParams", "update_voice"]]),
-                      ),
-                    ),
-                    await t.UpdateResource(!0, ...i))
-                  ) {
-                    HotPatchKuroSdk_1.HotPatchKuroSdk.ReportEvent(
-                      SdkReportData_1.HotPatchReportData.CreateData(
-                        5,
-                        new Map([["eventParams", "update_voice"]]),
-                      ),
-                    );
-                    n = new HotPatchLogReport_1.HotPatchLog();
-                    (n.s_step_id = "launcher_hp_pre_complete"),
-                      HotPatchLogReport_1.HotPatchLogReport.Report(n),
-                      t.PreComplete();
-                    let e = void 0;
-                    for (const l of i) {
-                      var u = l.GetRevertInfo();
-                      if (u.NeedRevert)
-                        if (e) {
-                          for (const g of u.Paks) e.Paks.add(g);
-                          for (const L of u.Files) e.Files.add(L);
-                        } else e = u;
+                      _ =
+                        (h.push(n),
+                        LanguageUpdateManager_1.LanguageUpdateManager.Init(
+                          HotPatch.RSr,
+                        ),
+                        LanguageUpdateManager_1.LanguageUpdateManager.GetAllLanguagesVersionMisc());
+                    for (const l of _) {
+                      var e = new UrlPrefixDownload_1.UrlPrefixDownload(),
+                        e = new ResourceUpdate_1.ResourceUpdate(
+                          HotPatch.RSr,
+                          e,
+                          l,
+                          this.xSr,
+                          !l.NeedUpdate(),
+                        );
+                      h.push(e);
                     }
-                    if (_.NeedRevert)
-                      if (e) {
-                        for (const R of _.Paks) e.Paks.add(R);
-                        for (const w of _.Files) e.Files.add(w);
-                      } else e = _;
-                    void 0 !== e &&
-                      e.NeedRevert &&
-                      UE.KuroLauncherLibrary.SetRestartApp(1);
-                    p = new HotPatchLogReport_1.HotPatchLog();
                     if (
-                      ((p.s_step_id = "launcher_hp_wether_restart_app"),
-                      HotPatchLogReport_1.HotPatchLogReport.Report(p),
-                      t.NeedRestart(...i) || (void 0 !== e && e.NeedRevert))
+                      (HotPatchKuroSdk_1.HotPatchKuroSdk.ReportEvent(
+                        SdkReportData_1.HotPatchReportData.CreateData(
+                          4,
+                          new Map([["eventParams", "update_voice"]]),
+                        ),
+                      ),
+                      await t.UpdateResource(!0, ...h))
                     ) {
+                      HotPatchKuroSdk_1.HotPatchKuroSdk.ReportEvent(
+                        SdkReportData_1.HotPatchReportData.CreateData(
+                          5,
+                          new Map([["eventParams", "update_voice"]]),
+                        ),
+                      );
+                      o = new HotPatchLogReport_1.HotPatchLog();
+                      (o.s_step_id = "launcher_hp_pre_complete"),
+                        HotPatchLogReport_1.HotPatchLogReport.Report(o),
+                        t.PreComplete();
+                      let e = void 0;
+                      for (const L of h) {
+                        var u = L.GetRevertInfo();
+                        if (u.NeedRevert)
+                          if (e) {
+                            for (const g of u.Paks) e.Paks.add(g);
+                            for (const R of u.Files) e.Files.add(R);
+                          } else e = u;
+                      }
+                      if (p.NeedRevert)
+                        if (e) {
+                          for (const w of p.Paks) e.Paks.add(w);
+                          for (const f of p.Files) e.Files.add(f);
+                        } else e = p;
+                      void 0 !== e &&
+                        e.NeedRevert &&
+                        UE.KuroLauncherLibrary.SetRestartApp(1);
                       n = new HotPatchLogReport_1.HotPatchLog();
                       if (
-                        ((n.s_step_id = "need_restart_app_to_complete_update"),
+                        ((n.s_step_id = "launcher_hp_wether_restart_app"),
                         HotPatchLogReport_1.HotPatchLogReport.Report(n),
-                        (c.success = !0),
-                        (c.info = "need restart app to complete update"),
-                        (a.s_step_result =
-                          LauncherSerialize_1.LauncherJson.Stringify(c)),
-                        HotPatchLogReport_1.HotPatchLogReport.Report(a),
-                        void 0 !== e && e.NeedRevert)
+                        t.NeedRestart(...h) || (void 0 !== e && e.NeedRevert))
                       ) {
-                        for (const f of e.Paks)
-                          UE.KuroPakMountStatic.UnmountPak(f);
-                        for (const k of e.Files)
-                          UE.KuroLauncherLibrary.DeleteFile(k);
-                      }
-                      _ = UE.KuroLauncherLibrary.NeedRestartApp();
-                      return 0 < _
-                        ? void (
-                            (await r.ShowDialog(
-                              !1,
-                              "HotFixTipsTitle",
-                              1 === _
-                                ? "HotFixRestartToCompleteHotFix"
-                                : "HotFixRestartToRepairFiles",
-                              void 0,
-                              void 0,
-                              "HotFixQuit",
-                            )) &&
-                            ("iOS" === o || "Windows" === o
-                              ? AppUtil_1.AppUtil.QuitGame()
-                              : UE.KuroLauncherLibrary.RestartApplication(
-                                  '@echo off\nset /a "pid=%~1"\nset "exe_path=%~2"\n:waitloop\ntasklist | findstr /C:" %pid% " >nul\nif errorlevel 1 (\n\tgoto launch\n) else (\n\ttaskkill /pid %pid% /f >nul\n\ttimeout /t 1 /nobreak >nul\n\tgoto waitloop\n)\n:launch\nstart "" "%exe_path%"\nexit 0',
-                                ))
-                          )
-                        : void 0;
-                    }
-                    HotPatchKuroSdk_1.HotPatchKuroSdk.ReportEvent(
-                      SdkReportData_1.HotPatchReportData.CreateData(
-                        4,
-                        new Map([["eventParams", "mount_pak"]]),
-                      ),
-                    );
-                    p = new HotPatchLogReport_1.HotPatchLog();
-                    (p.s_step_id = "launcher_hp_mount_resource"),
-                      HotPatchLogReport_1.HotPatchLogReport.Report(p),
-                      (await t.MountPak(...i))
-                        ? (HotPatchKuroSdk_1.HotPatchKuroSdk.ReportEvent(
-                            SdkReportData_1.HotPatchReportData.CreateData(
-                              5,
-                              new Map([["eventParams", "mount_pak"]]),
-                            ),
-                          ),
-                          ((n =
-                            new HotPatchLogReport_1.HotPatchLog()).s_step_id =
-                            "launcher_hp_procedure_complete"),
-                          HotPatchLogReport_1.HotPatchLogReport.Report(n),
-                          await t.Complete(),
-                          LauncherLog_1.LauncherLog.Info(
-                            "热更流程执行完毕，开始进入游戏场景",
-                          ),
-                          HotPatchLogReport_1.HotPatchLogReport.ReportLogin(
-                            HotPatchLogReport_1.LoginLogEventDefine.Update,
-                            "update_success",
-                          ),
-                          (c.success = !0),
-                          (a.s_step_result =
-                            LauncherSerialize_1.LauncherJson.Stringify(c)),
-                          HotPatchLogReport_1.HotPatchLogReport.Report(a),
-                          ((_ =
-                            new HotPatchLogReport_1.HotPatchLog()).s_step_id =
-                            "launcher_hp_check_driver"),
+                        _ = new HotPatchLogReport_1.HotPatchLog();
+                        if (
+                          ((_.s_step_id =
+                            "need_restart_app_to_complete_update"),
                           HotPatchLogReport_1.HotPatchLogReport.Report(_),
-                          await HotPatch.qSr(r),
-                          ((o =
-                            new HotPatchLogReport_1.HotPatchLog()).s_step_id =
-                            "launcher_hp_compile_shader"),
-                          HotPatchLogReport_1.HotPatchLogReport.Report(o),
-                          await HotPatch.GSr(r),
-                          ((p =
-                            new HotPatchLogReport_1.HotPatchLog()).s_step_id =
-                            "launcher_hp_close_view"),
-                          HotPatchLogReport_1.HotPatchLogReport.Report(p),
-                          await r.CloseHotFix(),
-                          ((n =
-                            new HotPatchLogReport_1.HotPatchLog()).s_step_id =
-                            "launcher_hp_call_finish"),
-                          HotPatchLogReport_1.HotPatchLogReport.Report(n),
-                          HotPatch.BSr(!0),
-                          ((_ =
-                            new HotPatchLogReport_1.HotPatchLog()).s_step_id =
-                            "launcher_hp_all_complete"),
-                          HotPatchLogReport_1.HotPatchLogReport.Report(_))
-                        : (HotPatchKuroSdk_1.HotPatchKuroSdk.ReportEvent(
-                            SdkReportData_1.HotPatchReportData.CreateData(
-                              6,
-                              new Map([["eventParams", "mount_pak_failed"]]),
+                          (i.success = !0),
+                          (i.info = "need restart app to complete update"),
+                          (c.s_step_result =
+                            LauncherSerialize_1.LauncherJson.Stringify(i)),
+                          HotPatchLogReport_1.HotPatchLogReport.Report(c),
+                          void 0 !== e && e.NeedRevert)
+                        ) {
+                          for (const S of e.Paks)
+                            UE.KuroPakMountStatic.UnmountPak(S);
+                          for (const k of e.Files)
+                            UE.KuroLauncherLibrary.DeleteFile(k);
+                        }
+                        o = UE.KuroLauncherLibrary.NeedRestartApp();
+                        return 0 < o
+                          ? void (
+                              (await r.ShowDialog(
+                                !1,
+                                "HotFixTipsTitle",
+                                1 === o
+                                  ? "HotFixRestartToCompleteHotFix"
+                                  : "HotFixRestartToRepairFiles",
+                                void 0,
+                                void 0,
+                                "HotFixQuit",
+                              )) &&
+                              ("iOS" === a || "Windows" === a
+                                ? AppUtil_1.AppUtil.QuitGame()
+                                : UE.KuroLauncherLibrary.RestartApplication(
+                                    '@echo off\nset /a "pid=%~1"\nset "exe_path=%~2"\n:waitloop\ntasklist | findstr /C:" %pid% " >nul\nif errorlevel 1 (\n\tgoto launch\n) else (\n\ttaskkill /pid %pid% /f >nul\n\ttimeout /t 1 /nobreak >nul\n\tgoto waitloop\n)\n:launch\nstart "" "%exe_path%"\nexit 0',
+                                  ))
+                            )
+                          : void 0;
+                      }
+                      HotPatchKuroSdk_1.HotPatchKuroSdk.ReportEvent(
+                        SdkReportData_1.HotPatchReportData.CreateData(
+                          4,
+                          new Map([["eventParams", "mount_pak"]]),
+                        ),
+                      );
+                      var p = new HotPatchLogReport_1.HotPatchLog();
+                      (p.s_step_id = "launcher_hp_mount_resource"),
+                        HotPatchLogReport_1.HotPatchLogReport.Report(p),
+                        (await t.MountPak(...h))
+                          ? (HotPatchKuroSdk_1.HotPatchKuroSdk.ReportEvent(
+                              SdkReportData_1.HotPatchReportData.CreateData(
+                                5,
+                                new Map([["eventParams", "mount_pak"]]),
+                              ),
                             ),
-                          ),
-                          HotPatchLogReport_1.HotPatchLogReport.ReportLogin(
-                            HotPatchLogReport_1.LoginLogEventDefine.Update,
-                            "update_failed",
-                          ),
-                          (c.success = !1),
-                          (c.info = "mount game resources failed"),
-                          (a.s_step_result =
-                            LauncherSerialize_1.LauncherJson.Stringify(c)),
-                          HotPatchLogReport_1.HotPatchLogReport.Report(a));
-                  } else
-                    HotPatchKuroSdk_1.HotPatchKuroSdk.ReportEvent(
-                      SdkReportData_1.HotPatchReportData.CreateData(
-                        6,
-                        new Map([
-                          ["eventParams", "update_voice_update_resource_fail"],
-                        ]),
+                            ((n =
+                              new HotPatchLogReport_1.HotPatchLog()).s_step_id =
+                              "launcher_hp_procedure_complete"),
+                            HotPatchLogReport_1.HotPatchLogReport.Report(n),
+                            await t.Complete(),
+                            LauncherLog_1.LauncherLog.Info(
+                              "热更流程执行完毕，开始进入游戏场景",
+                            ),
+                            HotPatchLogReport_1.HotPatchLogReport.ReportLogin(
+                              HotPatchLogReport_1.LoginLogEventDefine.Update,
+                              "update_success",
+                            ),
+                            (i.success = !0),
+                            (c.s_step_result =
+                              LauncherSerialize_1.LauncherJson.Stringify(i)),
+                            HotPatchLogReport_1.HotPatchLogReport.Report(c),
+                            ((_ =
+                              new HotPatchLogReport_1.HotPatchLog()).s_step_id =
+                              "launcher_hp_check_driver"),
+                            HotPatchLogReport_1.HotPatchLogReport.Report(_),
+                            await HotPatch.wSr(r),
+                            ((o =
+                              new HotPatchLogReport_1.HotPatchLog()).s_step_id =
+                              "launcher_hp_compile_shader"),
+                            HotPatchLogReport_1.HotPatchLogReport.Report(o),
+                            await HotPatch.BSr(r),
+                            ((a =
+                              new HotPatchLogReport_1.HotPatchLog()).s_step_id =
+                              "launcher_hp_close_view"),
+                            HotPatchLogReport_1.HotPatchLogReport.Report(a),
+                            await r.CloseHotFix(),
+                            ((p =
+                              new HotPatchLogReport_1.HotPatchLog()).s_step_id =
+                              "launcher_hp_call_finish"),
+                            HotPatchLogReport_1.HotPatchLogReport.Report(p),
+                            HotPatch.PSr(!0),
+                            ((n =
+                              new HotPatchLogReport_1.HotPatchLog()).s_step_id =
+                              "launcher_hp_all_complete"),
+                            HotPatchLogReport_1.HotPatchLogReport.Report(n))
+                          : (HotPatchKuroSdk_1.HotPatchKuroSdk.ReportEvent(
+                              SdkReportData_1.HotPatchReportData.CreateData(
+                                6,
+                                new Map([["eventParams", "mount_pak_failed"]]),
+                              ),
+                            ),
+                            HotPatchLogReport_1.HotPatchLogReport.ReportLogin(
+                              HotPatchLogReport_1.LoginLogEventDefine.Update,
+                              "update_failed",
+                            ),
+                            (i.success = !1),
+                            (i.info = "mount game resources failed"),
+                            (c.s_step_result =
+                              LauncherSerialize_1.LauncherJson.Stringify(i)),
+                            HotPatchLogReport_1.HotPatchLogReport.Report(c));
+                    } else
+                      HotPatchKuroSdk_1.HotPatchKuroSdk.ReportEvent(
+                        SdkReportData_1.HotPatchReportData.CreateData(
+                          6,
+                          new Map([
+                            [
+                              "eventParams",
+                              "update_voice_update_resource_fail",
+                            ],
+                          ]),
+                        ),
                       ),
-                    ),
-                      HotPatchLogReport_1.HotPatchLogReport.ReportLogin(
-                        HotPatchLogReport_1.LoginLogEventDefine.Update,
-                        "update_failed",
-                      ),
-                      (c.success = !1),
-                      (c.info = "update game resources failed"),
-                      (a.s_step_result =
-                        LauncherSerialize_1.LauncherJson.Stringify(c)),
-                      HotPatchLogReport_1.HotPatchLogReport.Report(a);
+                        HotPatchLogReport_1.HotPatchLogReport.ReportLogin(
+                          HotPatchLogReport_1.LoginLogEventDefine.Update,
+                          "update_failed",
+                        ),
+                        (i.success = !1),
+                        (i.info = "update game resources failed"),
+                        (c.s_step_result =
+                          LauncherSerialize_1.LauncherJson.Stringify(i)),
+                        HotPatchLogReport_1.HotPatchLogReport.Report(c);
+                  }
                 }
               } else
                 HotPatchLogReport_1.HotPatchLogReport.ReportLogin(
                   HotPatchLogReport_1.LoginLogEventDefine.Update,
                   "update_failed",
                 ),
-                  (c.success = !1),
-                  (c.info = "mount launcher failed"),
-                  (a.s_step_result =
-                    LauncherSerialize_1.LauncherJson.Stringify(c)),
-                  HotPatchLogReport_1.HotPatchLogReport.Report(a),
+                  (i.success = !1),
+                  (i.info = "mount launcher failed"),
+                  (c.s_step_result =
+                    LauncherSerialize_1.LauncherJson.Stringify(i)),
+                  HotPatchLogReport_1.HotPatchLogReport.Report(c),
                   HotPatchKuroSdk_1.HotPatchKuroSdk.ReportEvent(
                     SdkReportData_1.HotPatchReportData.CreateData(
                       6,
@@ -523,11 +553,11 @@ class HotPatch {
                 HotPatchLogReport_1.LoginLogEventDefine.Update,
                 "update_failed",
               ),
-                (c.success = !1),
-                (c.info = "update launcher failed"),
-                (a.s_step_result =
-                  LauncherSerialize_1.LauncherJson.Stringify(c)),
-                HotPatchLogReport_1.HotPatchLogReport.Report(a),
+                (i.success = !1),
+                (i.info = "update launcher failed"),
+                (c.s_step_result =
+                  LauncherSerialize_1.LauncherJson.Stringify(i)),
+                HotPatchLogReport_1.HotPatchLogReport.Report(c),
                 HotPatchKuroSdk_1.HotPatchKuroSdk.ReportEvent(
                   SdkReportData_1.HotPatchReportData.CreateData(
                     6,
@@ -542,10 +572,10 @@ class HotPatch {
             HotPatchLogReport_1.LoginLogEventDefine.Update,
             "update_failed",
           ),
-            (c.success = !1),
-            (c.info = "get remmote version config failed"),
-            (a.s_step_result = LauncherSerialize_1.LauncherJson.Stringify(c)),
-            HotPatchLogReport_1.HotPatchLogReport.Report(a),
+            (i.success = !1),
+            (i.info = "get remmote version config failed"),
+            (c.s_step_result = LauncherSerialize_1.LauncherJson.Stringify(i)),
+            HotPatchLogReport_1.HotPatchLogReport.Report(c),
             HotPatchKuroSdk_1.HotPatchKuroSdk.ReportEvent(
               SdkReportData_1.HotPatchReportData.CreateData(
                 3,
@@ -557,33 +587,19 @@ class HotPatch {
           HotPatchLogReport_1.LoginLogEventDefine.Update,
           "update_failed",
         ),
-          (c.success = !1),
-          (c.info = "get local app version failed"),
-          (a.s_step_result = LauncherSerialize_1.LauncherJson.Stringify(c)),
-          HotPatchLogReport_1.HotPatchLogReport.Report(a),
+          (i.success = !1),
+          (i.info = "get local app version failed"),
+          (c.s_step_result = LauncherSerialize_1.LauncherJson.Stringify(i)),
+          HotPatchLogReport_1.HotPatchLogReport.Report(c),
           HotPatchKuroSdk_1.HotPatchKuroSdk.ReportEvent(
             SdkReportData_1.HotPatchReportData.CreateData(
               3,
               new Map([["eventParams", "update_start_failed"]]),
             ),
           );
-    } else
-      (e.s_step_result = "false"),
-        HotPatchLogReport_1.HotPatchLogReport.Report(e),
-        (c.success = !0),
-        (c.info = "not need hot patch logic"),
-        (a.s_step_result = LauncherSerialize_1.LauncherJson.Stringify(c)),
-        HotPatchLogReport_1.HotPatchLogReport.Report(a),
-        LauncherLog_1.LauncherLog.Info(
-          "应用配置了不需要执行热更流程，直接进入游戏",
-        ),
-        LanguageUpdateManager_1.LanguageUpdateManager.Init(HotPatch.PSr),
-        await HotPatch.qSr(r),
-        await HotPatch.GSr(r),
-        r.Destroy(),
-        HotPatch.BSr(!1);
+    } else AppUtil_1.AppUtil.QuitGame();
   }
-  static NSr(e, t) {
+  static bSr(e, t) {
     var a = UE.KuroRenderingRuntimeBPPluginBPLibrary.GetRHIDeviceName();
     if (t && !a.includes("Adreno")) return e;
     (t = UE.KuroRenderingRuntimeBPPluginBPLibrary.GetRHIDriverVersion()),
@@ -601,10 +617,51 @@ class HotPatch {
       r
     );
   }
-  static async qSr(e) {
+  static async hma(e, t, a = !1) {
+    var o,
+      r,
+      c = new HotPatchLogReport_1.HotPatchLog(),
+      i =
+        ((c.s_step_id = "launcher_hp_check_ios_devive_support"),
+        { success: !0 });
+    return "iOS" !== e
+      ? ((i.info = { platform: e, noHotPatchProcedure: a }),
+        (c.s_step_result = LauncherSerialize_1.LauncherJson.Stringify(i)),
+        HotPatchLogReport_1.HotPatchLogReport.Report(c),
+        !0)
+      : ((o = new Set()).add("iPad mini4"),
+        o.add("iPad Air2"),
+        (r =
+          UE.KuroRenderingRuntimeBPPluginBPLibrary.GetDeviceProfileBaseProfileName()),
+        (i.info = { platform: e, device: r, noHotPatchProcedure: a }),
+        LauncherLog_1.LauncherLog.Info("print ios device info.", ["device", r]),
+        o.has(r)
+          ? ((i.success = !1),
+            (c.s_step_result = LauncherSerialize_1.LauncherJson.Stringify(i)),
+            HotPatchLogReport_1.HotPatchLogReport.Report(c),
+            LauncherLog_1.LauncherLog.Info(
+              "ios device is not support! app will quit.",
+              ["device", r],
+            ),
+            await t.ShowDialog(
+              !1,
+              "HotFixTipsTitle",
+              "MobileChipOutOfVersion",
+              void 0,
+              void 0,
+              "ConfirmText",
+            ),
+            AppUtil_1.AppUtil.QuitGame(),
+            await t.WaitFrame(),
+            !1)
+          : ((c.s_step_result = LauncherSerialize_1.LauncherJson.Stringify(i)),
+            HotPatchLogReport_1.HotPatchLogReport.Report(c),
+            !0));
+  }
+  static async wSr(e) {
     var t;
     "Android" === UE.KuroLauncherLibrary.GetPlatform() &&
-      0 < (t = HotPatch.NSr(-1, !1)) &&
+      0 < (t = HotPatch.bSr(-1, !1)) &&
       t < 378 &&
       (await e.ShowDialog(
         !1,
@@ -615,7 +672,7 @@ class HotPatch {
         "ConfirmText",
       ));
   }
-  static async GSr(e) {
+  static async BSr(e) {
     UE.KuroLauncherLibrary.ResumeCompileShader();
     let t = UE.KuroLauncherLibrary.GetRemainPrecompileShaders();
     if (t <= 0)
@@ -653,15 +710,15 @@ class HotPatch {
 
         ) {
           var c = (a - t) / a,
-            _ = (100 * c).toFixed(0) + "%";
+            i = (100 * c).toFixed(0) + "%";
           LauncherLog_1.LauncherLog.Debug(
             "precompile shaders progress.",
             ["remain", t],
             ["total", a],
             ["rate", c],
-            ["percent", _],
+            ["percent", i],
           ),
-            await e.UpdateProgress(!0, c, "CompilingShader", _),
+            await e.UpdateProgress(!0, c, "CompilingShader", i),
             await e.WaitFrame(15),
             (t = UE.KuroLauncherLibrary.GetRemainPrecompileShaders());
         }
@@ -679,33 +736,33 @@ class HotPatch {
     (e.s_step_id = "clear_patch_resources"),
       HotPatchLogReport_1.HotPatchLogReport.Report(e),
       new AppVersionMisc_1.LauncherVersionMisc().ClearAllPatchVersion(
-        HotPatch.PSr,
+        HotPatch.RSr,
       );
     new AppVersionMisc_1.ResourceVersionMisc().ClearAllPatchVersion(
-      HotPatch.PSr,
+      HotPatch.RSr,
     ),
-      LanguageUpdateManager_1.LanguageUpdateManager.Init(HotPatch.PSr);
+      LanguageUpdateManager_1.LanguageUpdateManager.Init(HotPatch.RSr);
     e =
       LanguageUpdateManager_1.LanguageUpdateManager.GetAllLanguagesVersionMisc();
-    for (const t of e) t.ClearAllPatchVersion(HotPatch.PSr);
+    for (const t of e) t.ClearAllPatchVersion(HotPatch.RSr);
     UE.KuroPakMountStatic.UnmountAllPaks();
     e = UE.BlueprintPathsLibrary.ProjectSavedDir() + "Resources";
     UE.KuroLauncherLibrary.DeleteDirectory(e),
       AppLinks_1.AppLinks.Destroy(),
       LauncherAudio_1.LauncherAudio.Destroy(),
-      cpp_1.UKuroAnimJsSubsystem.UnregisterUpdateAnimInfoFunction(HotPatch.xSr),
+      cpp_1.UKuroAnimJsSubsystem.UnregisterUpdateAnimInfoFunction(HotPatch.USr),
       UE.KuroSqliteLibrary.CloseAllConnections(),
       UE.KuroPrepareStatementLib.CloseAllConnection(),
       UE.KuroLauncherLibrary.ReloadShaderLibrary(),
       HotFixSceneManager_1.HotFixSceneManager.StopHotPatchBgm(),
       UE.GameplayStatics.OpenLevel(
-        HotPatch.PSr,
+        HotPatch.RSr,
         new UE.FName("/Game/Aki/Map/Launch/Bootstrap"),
       );
   }
 }
 ((exports.HotPatch = HotPatch).State = 0),
-  (HotPatch.bSr = new AppPathMisc_1.AppPathMisc()),
-  (HotPatch.wSr = new HotFixSceneManager_1.HotFixSceneManager()),
-  (HotPatch.xOn = new HotFixGameSettingManager_1.HotFixGameSettingManager());
+  (HotPatch.xSr = new AppPathMisc_1.AppPathMisc()),
+  (HotPatch.HotFixSceneManager = new HotFixSceneManager_1.HotFixSceneManager()),
+  (HotPatch.Wpa = new HotFixGameSettingManager_1.HotFixGameSettingManager());
 //# sourceMappingURL=HotPatch.js.map

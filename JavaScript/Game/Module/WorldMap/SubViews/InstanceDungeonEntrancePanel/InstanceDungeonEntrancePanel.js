@@ -10,7 +10,6 @@ const UE = require("ue"),
   ActivityDoubleRewardController_1 = require("../../../Activity/ActivityContent/DoubleReward/ActivityDoubleRewardController"),
   ButtonItem_1 = require("../../../Common/Button/ButtonItem"),
   HelpController_1 = require("../../../Help/HelpController"),
-  ExchangeRewardModel_1 = require("../../../InstanceDungeon/ExchangeReward/ExchangeRewardModel"),
   InstanceDungeonEntranceController_1 = require("../../../InstanceDungeon/InstanceDungeonEntranceController"),
   InstanceTipGrid_1 = require("../../../InstanceDungeon/InstanceTipGrid"),
   MapController_1 = require("../../../Map/Controller/MapController"),
@@ -21,48 +20,47 @@ const UE = require("ue"),
   WorldMapController_1 = require("../../WorldMapController"),
   WorldMapDefine_1 = require("../../WorldMapDefine"),
   TipsListView_1 = require("../TipsListView"),
+  HELP_ID = 89,
   POWER_COST_KEY = "power",
   COUNT_LIMMIT_KEY = "countLimit";
 class InstanceDungeonEntrancePanel extends WorldMapSecondaryUi_1.WorldMapSecondaryUi {
   constructor() {
     super(...arguments),
-      (this.thi = 0),
-      (this.rhi = []),
-      (this.dko = void 0),
-      (this.xko = void 0),
-      (this.wko = void 0),
-      (this.$Ut = void 0),
+      (this.tli = 0),
+      (this.rli = []),
+      (this.u2o = void 0),
+      (this.U2o = void 0),
+      (this.A2o = void 0),
+      (this.ZAt = void 0),
       (this.OnInstanceRefresh = (e, t, i, n) => {
         var r = new TipsListView_1.InstanceDungeonCostTip();
         return r.SetRootActor(t.GetOwner(), !0), { Key: e, Value: r };
       }),
-      (this.gko = () => {
-        this.dko.IsLocked
+      (this.m2o = () => {
+        this.u2o.IsLocked
           ? (Log_1.Log.CheckInfo() &&
-              Log_1.Log.Info("Map", 50, "追踪", ["markId", this.dko.MarkId]),
+              Log_1.Log.Info("Map", 50, "追踪", ["markId", this.u2o.MarkId]),
             MapController_1.MapController.RequestTrackMapMark(
-              this.dko.MarkType,
-              this.dko.MarkId,
-              !this.dko.IsTracked,
+              this.u2o.MarkType,
+              this.u2o.MarkId,
+              !this.u2o.IsTracked,
             ))
           : (Log_1.Log.CheckInfo() &&
-              Log_1.Log.Info("Map", 50, "追踪", ["markId", this.dko.MarkId]),
-            WorldMapController_1.WorldMapController.TryTeleport(this.dko)),
+              Log_1.Log.Info("Map", 50, "追踪", ["markId", this.u2o.MarkId]),
+            WorldMapController_1.WorldMapController.TryTeleport(this.u2o)),
           this.Close();
       }),
-      (this.CHi = () => {
-        HelpController_1.HelpController.OpenHelpById(
-          ExchangeRewardModel_1.POWER_DISCOUNT_HELP_ID,
-        );
+      (this.mji = () => {
+        HelpController_1.HelpController.OpenHelpById(HELP_ID);
       }),
       (this.sGe = () => {
         return new InstanceTipGrid_1.InstanceTipGrid();
       });
   }
-  get Bko() {
-    return this.thi
+  get P2o() {
+    return this.tli
       ? ConfigManager_1.ConfigManager.InstanceDungeonEntranceConfig.GetConfig(
-          this.thi,
+          this.tli,
         )
       : void 0;
   }
@@ -75,41 +73,41 @@ class InstanceDungeonEntrancePanel extends WorldMapSecondaryUi_1.WorldMapSeconda
   }
   OnStart() {
     this.RootItem.SetRaycastTarget(!1),
-      (this.$Ut = new ButtonItem_1.ButtonItem(this.GetButton(11).RootUIComp)),
-      this.$Ut.SetFunction(this.gko),
+      (this.ZAt = new ButtonItem_1.ButtonItem(this.GetButton(11).RootUIComp)),
+      this.ZAt.SetFunction(this.m2o),
       this.GetItem(14)?.SetUIActive(!0),
       this.GetVerticalLayout(5)?.RootUIComp.SetUIActive(!0),
-      (this.xko = new GenericLayoutAdd_1.GenericLayoutAdd(
+      (this.U2o = new GenericLayoutAdd_1.GenericLayoutAdd(
         this.GetVerticalLayout(5),
         this.OnInstanceRefresh,
       )),
-      (this.wko = new GenericLayout_1.GenericLayout(
+      (this.A2o = new GenericLayout_1.GenericLayout(
         this.GetVerticalLayout(7),
         this.sGe,
       ));
   }
   OnBeforeDestroy() {
-    this.xko.ClearChildren(), this.$Ut.Destroy();
+    this.U2o.ClearChildren(), this.ZAt.Destroy();
   }
   OnShowWorldMapSecondaryUi(e) {
     var t;
     e
-      ? ((this.dko = e),
-        (this.thi =
+      ? ((this.u2o = e),
+        (this.tli =
           0 !== e.MarkConfig.RelativeId
             ? e.MarkConfig.RelativeId
             : ConfigManager_1.ConfigManager.InstanceDungeonEntranceConfig.GetEntranceIdByMarkId(
                 e.MarkConfigId,
               )),
-        this.thi
-          ? (this.h7e(),
+        this.tli
+          ? (this.SHe(),
             InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.InstEntranceDetailRequest(
-              this.thi,
+              this.tli,
             ).finally(() => {
-              this.bko(), this.qko();
+              this.x2o(), this.w2o();
             }),
-            this.l1i(),
-            (t = this.Bko.UnLockCondition) &&
+            this.l_i(),
+            (t = this.P2o.UnLockCondition) &&
               !ModelManager_1.ModelManager.FunctionModel.IsOpen(t) &&
               ((t =
                 ConfigManager_1.ConfigManager.FunctionConfig.GetFunctionCondition(
@@ -137,10 +135,10 @@ class InstanceDungeonEntrancePanel extends WorldMapSecondaryUi_1.WorldMapSeconda
   GetMaxUnlockInstanceList() {
     let e = new Array(),
       t = ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetRecommendLevel(
-        this.rhi[0],
+        this.rli[0],
         ModelManager_1.ModelManager.WorldLevelModel.CurWorldLevel,
       );
-    for (const r of this.rhi) {
+    for (const r of this.rli) {
       var i;
       !ModelManager_1.ModelManager.InstanceDungeonEntranceModel.CheckInstanceUnlock(
         r,
@@ -153,7 +151,7 @@ class InstanceDungeonEntrancePanel extends WorldMapSecondaryUi_1.WorldMapSeconda
         (i > t && ((e = []), (t = i)), e.push(r));
     }
     if (0 === e.length)
-      for (const o of this.rhi) {
+      for (const o of this.rli) {
         var n =
           ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetRecommendLevel(
             o,
@@ -178,30 +176,30 @@ class InstanceDungeonEntrancePanel extends WorldMapSecondaryUi_1.WorldMapSeconda
       e
     );
   }
-  h7e() {
-    var e = this.Bko;
+  SHe() {
+    var e = this.P2o;
     e &&
       (this.GetText(4).ShowTextNew(e.Description),
-      this.SetSpriteByPath(this.dko.IconPath, this.GetSprite(0), !1),
+      this.SetSpriteByPath(this.u2o.IconPath, this.GetSprite(0), !1),
       this.GetText(1).ShowTextNew(e.Name),
-      (e = this.dko.GetAreaText()) && this.GetText(3).SetText(e),
-      this.GetItem(9).SetUIActive(!this.dko.IsFogUnlock),
+      (e = this.u2o.GetAreaText()) && this.GetText(3).SetText(e),
+      this.GetItem(9).SetUIActive(!this.u2o.IsFogUnlock),
       this.GetText(10).ShowTextNew("Instance_Dungeon_Rcommand_Text"),
       this.GetItem(12).SetUIActive(!1),
       this.GetItem(8).SetUIActive(!1));
   }
-  bko() {
-    this.rhi.length = 0;
+  x2o() {
+    this.rli.length = 0;
     var e,
       t =
         ModelManager_1.ModelManager.InstanceDungeonEntranceModel.GetSortedByTitleEntranceInstanceIdList(
-          this.thi,
+          this.tli,
         );
-    for ([e] of Array.from(t).sort((e, t) => e[1] - t[1])) this.rhi.push(e);
-    this.rhi = this.GetMaxUnlockInstanceList();
+    for ([e] of Array.from(t).sort((e, t) => e[1] - t[1])) this.rli.push(e);
+    this.rli = this.GetMaxUnlockInstanceList();
     var i,
       t = ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(
-        this.rhi[0],
+        this.rli[0],
       ),
       n =
         ActivityDoubleRewardController_1.ActivityDoubleRewardController.GetDungeonUpActivity(
@@ -217,15 +215,15 @@ class InstanceDungeonEntrancePanel extends WorldMapSecondaryUi_1.WorldMapSeconda
             n[1],
             n[2],
           )),
-        this.wko.RefreshByData(this.rhi),
+        this.A2o.RefreshByData(this.rli),
         t.RewardId),
       t =
         ConfigManager_1.ConfigManager.ExchangeRewardConfig.GetExchangeRewardConfig(
           n,
         )?.SharedId;
     t &&
-      (this.xko.AddItemToLayout([COUNT_LIMMIT_KEY]),
-      (n = this.xko.GetLayoutItemByKey(COUNT_LIMMIT_KEY)).SetIconVisible(!1),
+      (this.U2o.AddItemToLayout([COUNT_LIMMIT_KEY]),
+      (n = this.U2o.GetLayoutItemByKey(COUNT_LIMMIT_KEY)).SetIconVisible(!1),
       n.SetStarVisible(!1),
       (i = StringUtils_1.StringUtils.Format(
         MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
@@ -248,26 +246,26 @@ class InstanceDungeonEntrancePanel extends WorldMapSecondaryUi_1.WorldMapSeconda
       ),
       n.SetHelpButtonVisible(!1));
   }
-  l1i() {
+  l_i() {
     let e = "";
-    (e = this.dko.IsLocked
-      ? this.dko.IsTracked
+    (e = this.u2o.IsLocked
+      ? this.u2o.IsTracked
         ? "InstanceDungeonEntranceCancelTrack"
         : "InstanceDungeonEntranceTrack"
       : "TeleportFastMove"),
-      this.$Ut.SetLocalText(e);
+      this.ZAt.SetLocalText(e);
   }
-  qko() {
+  w2o() {
     var e,
       t,
       i =
         ModelManager_1.ModelManager.ExchangeRewardModel.GetExchangeNormalConsume(
-          this.rhi[0],
+          this.rli[0],
         );
     i &&
       i[0] &&
-      (this.xko.AddItemToLayout([POWER_COST_KEY]),
-      (e = this.xko.GetLayoutItemByKey(POWER_COST_KEY)).SetStarVisible(!1),
+      (this.U2o.AddItemToLayout([POWER_COST_KEY]),
+      (e = this.U2o.GetLayoutItemByKey(POWER_COST_KEY)).SetStarVisible(!1),
       (t = i[0][0].ItemId),
       e.SetIconByItemId(t),
       e.SetLeftText(
@@ -276,10 +274,10 @@ class InstanceDungeonEntrancePanel extends WorldMapSecondaryUi_1.WorldMapSeconda
       ),
       e.SetHelpButtonVisible(!0),
       e.SetRightText(i[0][1].toString()),
-      e.SetClickHelpFunc(this.CHi));
+      e.SetClickHelpFunc(this.mji));
   }
   OnCloseWorldMapSecondaryUi() {
-    this?.xko?.ClearChildren();
+    this?.U2o?.ClearChildren();
   }
   GetGuideFocusUiItem() {
     return this.GetButton(11)

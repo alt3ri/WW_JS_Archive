@@ -7,7 +7,7 @@ const MultiTextLang_1 = require("../../../../../../Core/Define/ConfigQuery/Multi
   ConfigManager_1 = require("../../../../../Manager/ConfigManager"),
   FilterData_1 = require("../Model/FilterData");
 class FilterTypeFunctionLibrary {
-  static jTt(r, a) {
+  static XLt(r, a) {
     var n = new Array();
     for (const i of r) {
       var e,
@@ -159,13 +159,13 @@ class FilterTypeFunctionLibrary {
     return a;
   }),
   (FilterTypeFunctionLibrary.GetPhantomRarityZeroFilterData = (r) =>
-    _a.jTt(r, 0)),
+    _a.XLt(r, 0)),
   (FilterTypeFunctionLibrary.GetPhantomRarityOneFilterData = (r) =>
-    _a.jTt(r, 1)),
+    _a.XLt(r, 1)),
   (FilterTypeFunctionLibrary.GetPhantomRarityTwoFilterData = (r) =>
-    _a.jTt(r, 2)),
+    _a.XLt(r, 2)),
   (FilterTypeFunctionLibrary.GetPhantomRarityThreeFilterData = (r) =>
-    _a.jTt(r, 3)),
+    _a.XLt(r, 3)),
   (FilterTypeFunctionLibrary.GetItemQualityFilterData = (r) => {
     var a = new Array();
     for (const t of r) {

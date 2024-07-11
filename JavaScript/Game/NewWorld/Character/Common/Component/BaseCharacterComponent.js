@@ -1,26 +1,25 @@
 "use strict";
 var __decorate =
   (this && this.__decorate) ||
-  function (t, e, o, i) {
-    var r,
+  function (t, e, o, r) {
+    var i,
       a = arguments.length,
-      s =
+      n =
         a < 3
           ? e
-          : null === i
-            ? (i = Object.getOwnPropertyDescriptor(e, o))
-            : i;
+          : null === r
+            ? (r = Object.getOwnPropertyDescriptor(e, o))
+            : r;
     if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
-      s = Reflect.decorate(t, e, o, i);
+      n = Reflect.decorate(t, e, o, r);
     else
-      for (var n = t.length - 1; 0 <= n; n--)
-        (r = t[n]) && (s = (a < 3 ? r(s) : 3 < a ? r(e, o, s) : r(e, o)) || s);
-    return 3 < a && s && Object.defineProperty(e, o, s), s;
+      for (var s = t.length - 1; 0 <= s; s--)
+        (i = t[s]) && (n = (a < 3 ? i(n) : 3 < a ? i(e, o, n) : i(e, o)) || n);
+    return 3 < a && n && Object.defineProperty(e, o, n), n;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BaseCharacterComponent = void 0);
 const UE = require("ue"),
-  ActorSystem_1 = require("../../../../../Core/Actor/ActorSystem"),
   Log_1 = require("../../../../../Core/Common/Log"),
   Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
   RegisterComponent_1 = require("../../../../../Core/Entity/RegisterComponent"),
@@ -29,47 +28,27 @@ const UE = require("ue"),
   ObjectUtils_1 = require("../../../../../Core/Utils/ObjectUtils"),
   StringUtils_1 = require("../../../../../Core/Utils/StringUtils"),
   TraceElementCommon_1 = require("../../../../../Core/Utils/TraceElementCommon"),
-  IComponent_1 = require("../../../../../UniverseEditor/Interface/IComponent"),
   TsBaseCharacter_1 = require("../../../../Character/TsBaseCharacter"),
   GlobalData_1 = require("../../../../GlobalData"),
   ModelManager_1 = require("../../../../Manager/ModelManager"),
-  RenderConfig_1 = require("../../../../Render/Config/RenderConfig"),
   ActorUtils_1 = require("../../../../Utils/ActorUtils"),
   CombineMeshTool_1 = require("../../../Character/Common/Blueprint/Utils/CombineMeshTool"),
   BaseActorComponent_1 = require("../../../Common/Component/BaseActorComponent"),
   CustomMovementDefine_1 = require("./Move/CustomMovementDefine"),
   PROFILE_KEY = "CharacterActorComponent_FixBornLocation",
-  DITHER_RATE_PER_SECOND = 0.33,
   FIX_LOCATION_TOLERANCE = 2;
 let BaseCharacterComponent = class BaseCharacterComponent extends BaseActorComponent_1.BaseActorComponent {
   constructor() {
     super(...arguments),
       (this.SubEntityType = 0),
-      (this.EntityType = Protocol_1.Aki.Protocol.HBs.Proto_Npc),
+      (this.EntityType = Protocol_1.Aki.Protocol.wks.Proto_Npc),
       (this.RadiusInternal = 0),
       (this.HalfHeightInternal = 0),
       (this.DefaultRadiusInternal = 0),
       (this.DefaultHalfHeightInternal = 0),
       (this.ModelResPath = ""),
       (this.ClassDefaultObject = void 0),
-      (this.HolographicEffectActor = void 0),
-      (this.SimpleMatControlComponentInternal = void 0),
-      (this.IsInitSimpleMatController = !1),
-      (this.Qxn = !1);
-  }
-  get SimpleMatControlComponent() {
-    if (!this.IsInitSimpleMatController) {
-      this.IsInitSimpleMatController = !0;
-      var t = this.Actor.AddComponentByClass(
-        UE.BP_NPCMaterialController_C.StaticClass(),
-        !1,
-        MathUtils_1.MathUtils.DefaultTransform,
-        !1,
-      );
-      if (!t?.IsValid()) return;
-      this.SimpleMatControlComponentInternal = t;
-    }
-    return this.SimpleMatControlComponentInternal;
+      (this.LBn = !1);
   }
   get Actor() {
     return this.ActorInternal;
@@ -89,166 +68,21 @@ let BaseCharacterComponent = class BaseCharacterComponent extends BaseActorCompo
   get HalfHeight() {
     return this.HalfHeightInternal;
   }
-  tFr() {
-    this.Actor.DitherEffectController?.EnterAppearEffect(
-      DITHER_RATE_PER_SECOND,
-      1,
-      !0,
-    );
-  }
-  ApplySimpleMaterialEffect(e) {
-    "" !== e &&
-      "None" !== e &&
-      this.SimpleMatControlComponent?.IsValid() &&
-      ResourceSystem_1.ResourceSystem.LoadAsync(
-        e,
-        UE.PD_HolographicEffect_C,
-        (t) => {
-          this.Actor?.IsValid() &&
-            this.SimpleMatControlComponent?.IsValid() &&
-            (t?.IsValid()
-              ? ((this.SimpleMatControlComponent.DATA = t),
-                this.SimpleMatControlComponent.StartEffect())
-              : Log_1.Log.CheckError() &&
-                Log_1.Log.Error(
-                  "NPC",
-                  51,
-                  "[BaseCharacterComp.ApplySimpleMaterialEffect] 加载DA失败",
-                  ["EffectPath", e],
-                  ["PbDataId", this.CreatureData.GetPbDataId()],
-                ));
-        },
-      );
-  }
-  RemoveSimpleMaterialEffect() {
-    this.SimpleMatControlComponent?.IsValid() &&
-      this.SimpleMatControlComponent.EndEffect();
-  }
-  iFr() {
-    var t = this.CreatureData.GetPbEntityInitData();
-    t &&
-      (t = (0, IComponent_1.getComponent)(
-        t.ComponentsData,
-        "EntityVisibleComponent",
-      )) &&
-      (t.UseFadeEffect &&
-        this.Actor.DitherEffectController?.EnterAppearEffect(
-          DITHER_RATE_PER_SECOND,
-          1,
-          !0,
-        ),
-      t.UseHolographicEffect) &&
-      this.LoadAndSetHolographicEffect();
-  }
-  LoadAndSetHolographicEffect() {
-    if (!this.HolographicEffectActor?.IsValid()) {
-      var t = this.CreatureData.GetModelConfig()?.DA.AssetPathName?.toString();
-      if (t?.length && "None" !== t)
-        Log_1.Log.CheckDebug() &&
-          Log_1.Log.Debug(
-            "NPC",
-            51,
-            "[BaseCharacterComp.LoadAndSetHolographicEffect] 无法为拼装NPC实体添加投影效果",
-            ["CombineDaPath", t],
-            ["PbDataId", this.CreatureData.GetPbDataId()],
-          );
-      else {
-        const r = RenderConfig_1.RenderConfig.HolographicPath;
-        ResourceSystem_1.ResourceSystem.LoadAsync(
-          r,
-          UE.PD_CharacterControllerDataGroup_C,
-          (t) => {
-            var e, o, i;
-            this.Actor?.IsValid() &&
-              (t?.IsValid()
-                ? (o = (e = this.Owner.K2_GetComponentsByClass(
-                    UE.SkeletalMeshComponent.StaticClass(),
-                  )).Num())
-                  ? ((this.HolographicEffectActor =
-                      ActorSystem_1.ActorSystem.Get(
-                        UE.BP_MaterialControllerRenderActor_C.StaticClass(),
-                        this.Actor.GetOwner().GetTransform(),
-                      )),
-                    (i =
-                      this.HolographicEffectActor).CharRenderingComponent.Init(
-                      7,
-                    ),
-                    i.CharRenderingComponent.AddComponentByCase(0, e.Get(0)),
-                    i.CharRenderingComponent.AddMaterialControllerDataGroup(t))
-                  : Log_1.Log.CheckWarn() &&
-                    Log_1.Log.Warn(
-                      "NPC",
-                      51,
-                      "[BaseCharacterComp.LoadAndSetHolographicEffect] 尝试添加投影效果时找不到实体MeshComp",
-                      ["EffectPath", r],
-                      ["PbDataId", this.CreatureData.GetPbDataId()],
-                      ["SkeletalCompNum", o],
-                    )
-                : Log_1.Log.CheckError() &&
-                  Log_1.Log.Error(
-                    "NPC",
-                    51,
-                    "[BaseCharacterComp.LoadAndSetHolographicEffect] 无法找到投影材质效果DA",
-                    ["EffectPath", r],
-                    ["PbDataId", this.CreatureData.GetPbDataId()],
-                  ));
-          },
-        );
-      }
-    }
-  }
-  SetNpcBornEffect() {
-    2 === this.SubEntityType ? this.tFr() : this.iFr();
-  }
-  SetNpcBornMaterial() {
-    var t;
-    this.Owner.IsA(UE.BP_BaseNPC_C.StaticClass()) &&
-      (t = this.Owner)?.BornEffect &&
-      "" !== (t = t.BornEffect.AssetPathName.toString()) &&
-      "None" !== t &&
-      this.ApplySimpleMaterialEffect(t);
-  }
   SetCamp(t) {
     var e = this.Entity.GetComponent(0);
-    (e?.GetEntityType() !== Protocol_1.Aki.Protocol.HBs.Proto_Npc &&
-      e?.GetEntityType() !== Protocol_1.Aki.Protocol.HBs.Proto_Monster &&
-      e?.GetEntityType() !== Protocol_1.Aki.Protocol.HBs.Proto_Vision) ||
+    (e?.GetEntityType() !== Protocol_1.Aki.Protocol.wks.Proto_Npc &&
+      e?.GetEntityType() !== Protocol_1.Aki.Protocol.wks.Proto_Monster &&
+      e?.GetEntityType() !== Protocol_1.Aki.Protocol.wks.Proto_Vision) ||
       (((e = e?.GetEntityCamp()) || 0 === e) &&
         t instanceof TsBaseCharacter_1.default &&
         (t.Camp = e));
-  }
-  PendingToDestroy() {
-    if (
-      this.EntityType === Protocol_1.Aki.Protocol.HBs.Proto_Npc &&
-      2 === this.SubEntityType
-    )
-      this.Actor.DitherEffectController?.EnterDisappearEffect(
-        DITHER_RATE_PER_SECOND,
-        1,
-      );
-    else {
-      var t = this.Entity.GetComponent(0)?.GetPbEntityInitData();
-      if (!t) return !1;
-      t = (0, IComponent_1.getComponent)(
-        t.ComponentsData,
-        "EntityVisibleComponent",
-      );
-      if (!t || !t.UseFadeEffect) return !1;
-      this.EntityType === Protocol_1.Aki.Protocol.HBs.Proto_Npc &&
-        this.CreatureData.GetVisible() &&
-        this.Actor.DitherEffectController?.EnterDisappearEffect(
-          DITHER_RATE_PER_SECOND,
-          1,
-        );
-    }
-    return !0;
   }
   FixActorLocation(
     t,
     e = !0,
     o = void 0,
-    i = "unknown.FixActorLocation",
-    r = !0,
+    r = "unknown.FixActorLocation",
+    i = !0,
     a = !1,
   ) {
     if (!this.Actor.CapsuleComponent?.IsValid())
@@ -260,36 +94,36 @@ let BaseCharacterComponent = class BaseCharacterComponent extends BaseActorCompo
             "[CharacterActorComponent.FixBornLocation] capsule为空。",
             ["CreatureDataId", this.CreatureDataInternal.GetCreatureDataId()],
             ["PbDataId", this.CreatureDataInternal.GetPbDataId()],
-            ["Context", i],
+            ["Context", r],
           ),
         [!1, void 0]
       );
     var o = o ?? this.ActorLocationProxy,
-      s = ModelManager_1.ModelManager.TraceElementModel.CommonStartLocation,
+      n = ModelManager_1.ModelManager.TraceElementModel.CommonStartLocation,
       a =
         (a
-          ? s.Set(o.X, o.Y, o.Z + this.ScaledRadius)
-          : s.Set(o.X, o.Y, o.Z + this.ScaledHalfHeight),
+          ? n.Set(o.X, o.Y, o.Z + this.ScaledRadius)
+          : n.Set(o.X, o.Y, o.Z + this.ScaledHalfHeight),
         ModelManager_1.ModelManager.TraceElementModel.CommonEndLocation);
     a.Set(o.X, o.Y, o.Z + t);
-    let n = this.FixBornLocationInternal(o, s, a, !1, e, i);
+    let s = this.FixBornLocationInternal(o, n, a, !1, e, r);
     return (
-      !n &&
-        r &&
-        ((s.Z = s.Z + this.ScaledHalfHeight - this.ScaledRadius),
-        (n = this.FixBornLocationInternal(o, s, a, !0, e, i))),
-      n
+      !s &&
+        i &&
+        ((n.Z = n.Z + this.ScaledHalfHeight - this.ScaledRadius),
+        (s = this.FixBornLocationInternal(o, n, a, !0, e, r))),
+      s
     );
   }
   FixBornLocationInternal(
     t,
-    r,
+    i,
     a,
-    s,
-    n = !0,
-    h = "unknown.FixBornLocationInternal",
+    n,
+    s = !0,
+    c = "unknown.FixBornLocationInternal",
   ) {
-    n &&
+    s &&
       Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "Entity",
@@ -300,9 +134,9 @@ let BaseCharacterComponent = class BaseCharacterComponent extends BaseActorCompo
         ["K2_GetActorLocation", this.Actor.K2_GetActorLocation()],
         ["ActorLocationProxy", t],
         ["InitLocation", this.CreatureDataInternal.GetInitLocation()],
-        ["射线开始位置", r],
+        ["射线开始位置", i],
         ["射线结束位置", a],
-        ["Context", h],
+        ["Context", c],
       );
     let e = !1;
     switch (this.Actor.CharacterMovement.MovementMode) {
@@ -331,25 +165,25 @@ let BaseCharacterComponent = class BaseCharacterComponent extends BaseActorCompo
             ["CreatureDataId", this.CreatureDataInternal.GetCreatureDataId()],
             ["PbDataId", this.CreatureDataInternal.GetPbDataId()],
             ["MovementMode", this.Actor.CharacterMovement.MovementMode],
-            ["Context", h],
+            ["Context", c],
           ),
         [!0, t]
       );
     var o = ModelManager_1.ModelManager.TraceElementModel.GetActorTrace();
     (o.WorldContextObject = this.Actor),
       (o.Radius = this.ScaledRadius),
-      TraceElementCommon_1.TraceElementCommon.SetStartLocation(o, r),
+      TraceElementCommon_1.TraceElementCommon.SetStartLocation(o, i),
       TraceElementCommon_1.TraceElementCommon.SetEndLocation(o, a),
       o.ActorsToIgnore.Empty();
-    for (const i of ModelManager_1.ModelManager.WorldModel.ActorsToIgnoreSet)
-      o.ActorsToIgnore.Add(i);
+    for (const r of ModelManager_1.ModelManager.WorldModel.ActorsToIgnoreSet)
+      o.ActorsToIgnore.Add(r);
     var t = TraceElementCommon_1.TraceElementCommon.ShapeTrace(
         this.Actor.CapsuleComponent,
         o,
         PROFILE_KEY,
         PROFILE_KEY,
       ),
-      c = o.HitResult;
+      h = o.HitResult;
     if (
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
@@ -359,36 +193,36 @@ let BaseCharacterComponent = class BaseCharacterComponent extends BaseActorCompo
           ["CreatureDataId", this.CreatureDataInternal.GetCreatureDataId()],
           ["PbDataId", this.CreatureDataInternal.GetPbDataId()],
           ["isHit", t],
-          ["hitResult.bBlockingHit", c.bBlockingHit],
-          ["allowStartPenetrating", s],
-          ["hitResult.bStartPenetrating", c.bStartPenetrating],
-          ["Context", h],
+          ["hitResult.bBlockingHit", h.bBlockingHit],
+          ["allowStartPenetrating", n],
+          ["hitResult.bStartPenetrating", h.bStartPenetrating],
+          ["Context", c],
         ),
-      t && c.bBlockingHit)
+      t && h.bBlockingHit)
     ) {
-      if (!s && c.bStartPenetrating) return [!1, void 0];
-      var _ = ModelManager_1.ModelManager.TraceElementModel.CommonHitLocation;
+      if (!n && h.bStartPenetrating) return [!1, void 0];
+      var l = ModelManager_1.ModelManager.TraceElementModel.CommonHitLocation;
       let e = "";
-      var C = c.Actors.Num();
+      var C = h.Actors.Num();
       let o = -1,
-        i = "";
-      TraceElementCommon_1.TraceElementCommon.GetHitLocation(c, 0, _);
+        r = "";
+      TraceElementCommon_1.TraceElementCommon.GetHitLocation(h, 0, l);
       for (let t = 0; t < C; ++t) {
-        var l = c.Actors.Get(t);
+        var _ = h.Actors.Get(t);
         if (
-          l?.IsValid() &&
-          ((e += l.GetName() + ", "), !l.IsA(UE.Character.StaticClass()))
+          _?.IsValid() &&
+          ((e += _.GetName() + ", "), !_.IsA(UE.Character.StaticClass()))
         ) {
           (o = t),
-            (i = l.GetName()),
-            TraceElementCommon_1.TraceElementCommon.GetHitLocation(c, t, _);
+            (r = _.GetName()),
+            TraceElementCommon_1.TraceElementCommon.GetHitLocation(h, t, l);
           break;
         }
       }
       return (
-        (_.Z += this.ScaledHalfHeight - this.ScaledRadius),
-        (_.Z += FIX_LOCATION_TOLERANCE),
-        n &&
+        (l.Z += this.ScaledHalfHeight - this.ScaledRadius),
+        (l.Z += FIX_LOCATION_TOLERANCE),
+        s &&
           Log_1.Log.CheckInfo() &&
           Log_1.Log.Info(
             "Entity",
@@ -398,20 +232,20 @@ let BaseCharacterComponent = class BaseCharacterComponent extends BaseActorCompo
             ["PbDataId", this.CreatureDataInternal.GetPbDataId()],
             ["Actors", e],
             ["HitLocationIndex", o],
-            ["HitLocationName", i],
-            ["经过修正的位置", _],
-            ["Context", h],
+            ["HitLocationName", r],
+            ["经过修正的位置", l],
+            ["Context", c],
           ),
-        this.Qxn ||
-          ((this.Qxn = !0),
-          (r = this.Entity.GetComponent(160)) &&
-            ((a = r.GetMeshTransform().GetLocation()),
+        this.LBn ||
+          ((this.LBn = !0),
+          (i = this.Entity.GetComponent(162)) &&
+            ((a = i.GetMeshTransform().GetLocation()),
             MathUtils_1.MathUtils.CommonTempVector.Set(
               0,
               0,
               -FIX_LOCATION_TOLERANCE,
             ),
-            r.AddModelLocation(MathUtils_1.MathUtils.CommonTempVector),
+            i.AddModelLocation(MathUtils_1.MathUtils.CommonTempVector),
             Log_1.Log.CheckInfo()) &&
             Log_1.Log.Info(
               "Entity",
@@ -420,11 +254,11 @@ let BaseCharacterComponent = class BaseCharacterComponent extends BaseActorCompo
               ["CreatureDataId", this.CreatureDataInternal.GetCreatureDataId()],
               ["PbDataId", this.CreatureDataInternal.GetPbDataId()],
               ["OrigMeshLocation", a],
-              ["FixMeshLocation", r.GetMeshTransform().GetLocation()],
-              ["Context", h],
+              ["FixMeshLocation", i.GetMeshTransform().GetLocation()],
+              ["Context", c],
             )),
         ModelManager_1.ModelManager.TraceElementModel.ClearActorTrace(),
-        [!0, _]
+        [!0, l]
       );
     }
     return (
@@ -435,45 +269,45 @@ let BaseCharacterComponent = class BaseCharacterComponent extends BaseActorCompo
   InitActorNew(t) {
     var e,
       o = this.CreatureDataInternal,
-      i = o.GetTransform(),
-      r = void 0,
+      r = o.GetTransform(),
+      i = void 0,
       a =
         (this.CreatureDataInternal.SetModelConfig(t),
-        this.oFr(),
+        this.w2r(),
         this.CreatureDataInternal.GetModelConfig());
     if (a) {
-      if ((r = ActorUtils_1.ActorUtils.LoadActorByModelConfig(a, i))?.IsValid())
+      if ((i = ActorUtils_1.ActorUtils.LoadActorByModelConfig(a, r))?.IsValid())
         return (
-          (i = ResourceSystem_1.ResourceSystem.GetLoadedAsset(
+          (r = ResourceSystem_1.ResourceSystem.GetLoadedAsset(
             a.蓝图.ToAssetPathName(),
             UE.Class,
           )),
-          (this.ClassDefaultObject = UE.KuroStaticLibrary.GetDefaultObject(i)),
+          (this.ClassDefaultObject = UE.KuroStaticLibrary.GetDefaultObject(r)),
           ObjectUtils_1.ObjectUtils.SoftObjectPathIsValid(a.DA)
-            ? ((i = a.DA.AssetPathName?.toString())?.length &&
-                "None" !== i &&
-                (i = ResourceSystem_1.ResourceSystem.GetLoadedAsset(
+            ? ((r = a.DA.AssetPathName?.toString())?.length &&
+                "None" !== r &&
+                (r = ResourceSystem_1.ResourceSystem.GetLoadedAsset(
                   a.DA.AssetPathName?.toString(),
                   UE.PD_NpcSetupData_C,
                 ))?.IsValid() &&
-                r instanceof TsBaseCharacter_1.default &&
-                ((e = r.Mesh.GetRelativeTransform()),
-                CombineMeshTool_1.CombineMeshTool.LoadDaConfig(r, e, r.Mesh, i),
-                3 === r.RenderType) &&
-                r.CharRenderingComponent.UpdateNpcDitherComponent(),
+                i instanceof TsBaseCharacter_1.default &&
+                ((e = i.Mesh.GetRelativeTransform()),
+                CombineMeshTool_1.CombineMeshTool.LoadDaConfig(i, e, i.Mesh, r),
+                3 === i.RenderType) &&
+                i.CharRenderingComponent.UpdateNpcDitherComponent(),
               (e = a.动画蓝图.Get()) &&
-                r instanceof TsBaseCharacter_1.default &&
-                r.Mesh.SetAnimClass(e))
-            : r instanceof TsBaseCharacter_1.default &&
+                i instanceof TsBaseCharacter_1.default &&
+                i.Mesh.SetAnimClass(e))
+            : i instanceof TsBaseCharacter_1.default &&
               ActorUtils_1.ActorUtils.LoadAndChangeMeshAnim(
-                r.Mesh,
+                i.Mesh,
                 a.网格体,
                 a.动画蓝图,
               ),
           GlobalData_1.GlobalData.IsPlayInEditor &&
-            (i = this.CreatureDataInternal.GetPbDataId()) &&
-            r.Tags.Add(new UE.FName("PbDataId:" + i)),
-          r
+            (r = this.CreatureDataInternal.GetPbDataId()) &&
+            i.Tags.Add(new UE.FName("PbDataId:" + r)),
+          i
         );
     } else
       Log_1.Log.CheckError() &&
@@ -491,10 +325,10 @@ let BaseCharacterComponent = class BaseCharacterComponent extends BaseActorCompo
       (this.DefaultRadiusInternal = this.RadiusInternal),
       (this.DefaultHalfHeightInternal = this.HalfHeightInternal);
   }
-  oFr() {
+  w2r() {
     if (
       this.CreatureDataInternal.GetEntityType() ===
-      Protocol_1.Aki.Protocol.HBs.Proto_Npc
+      Protocol_1.Aki.Protocol.wks.Proto_Npc
     ) {
       var e = this.CreatureDataInternal.GetModelConfig();
       if (e) {
@@ -511,14 +345,7 @@ let BaseCharacterComponent = class BaseCharacterComponent extends BaseActorCompo
     }
   }
   OnClear() {
-    return (
-      !!super.OnClear() &&
-      (this.SimpleMatControlComponentInternal?.IsValid() &&
-        this.SimpleMatControlComponent.K2_DestroyComponent(this.Actor),
-      this.HolographicEffectActor?.IsValid() &&
-        ActorSystem_1.ActorSystem.Put(this.HolographicEffectActor),
-      !0)
-    );
+    return super.OnClear();
   }
 };
 (BaseCharacterComponent = __decorate(

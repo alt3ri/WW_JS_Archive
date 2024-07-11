@@ -13,20 +13,20 @@ const TICK_LIMITCOUNT = 10;
 class RedDotSystem {
   static PushToEventQueue(e, s) {
     var t;
-    this.Xsr.find((t) => t.Event === e && t.Param === s) ||
-      ((t = new RedDotEventData(e, s)), this.Xsr.push(t));
+    this.Xar.find((t) => t.Event === e && t.Param === s) ||
+      ((t = new RedDotEventData(e, s)), this.Xar.push(t));
   }
-  static $sr() {
-    var t = RedDotSystem.Xsr.shift();
+  static $ar() {
+    var t = RedDotSystem.Xar.shift();
     t && t.HandleEvent();
   }
   static Tick(t) {
-    var e = RedDotSystem.Xsr.length;
+    var e = RedDotSystem.Xar.length;
     if (!(e <= 0)) {
       var s = e > TICK_LIMITCOUNT ? TICK_LIMITCOUNT : e;
-      for (let t = 0; t < s; t++) RedDotSystem.$sr();
+      for (let t = 0; t < s; t++) RedDotSystem.$ar();
     }
   }
 }
-(exports.RedDotSystem = RedDotSystem).Xsr = [];
+(exports.RedDotSystem = RedDotSystem).Xar = [];
 //# sourceMappingURL=RedDotSystem.js.map

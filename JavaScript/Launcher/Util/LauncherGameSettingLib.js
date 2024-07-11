@@ -15,33 +15,42 @@ const puerts_1 = require("puerts"),
   UIVOLUMEFUNCTION = 70;
 class LauncherGameSettingLib {
   static Initialize() {
-    this.$6s();
+    this.Ypa();
   }
-  static $6s() {
-    var e = this.POn();
+  static Ypa() {
+    var e = this.Qpa();
     e &&
-      (this.rGi(e, MASTERVOLUMEFUNCTION),
-      this.rGi(e, VOICEVOLUMEFUNCTION),
-      this.rGi(e, MUSICVOLUMEFUNCTION),
-      this.rGi(e, SFXVOLUMEFUNCTION),
-      this.rGi(e, AMBVOLUMEFUNCTION),
-      this.rGi(e, UIVOLUMEFUNCTION),
-      this.rGi(e, RESOLUTION));
+      (this.rNi(e, MASTERVOLUMEFUNCTION),
+      this.rNi(e, VOICEVOLUMEFUNCTION),
+      this.rNi(e, MUSICVOLUMEFUNCTION),
+      this.rNi(e, SFXVOLUMEFUNCTION),
+      this.rNi(e, AMBVOLUMEFUNCTION),
+      this.rNi(e, UIVOLUMEFUNCTION),
+      this.rNi(e, RESOLUTION));
   }
-  static POn() {
-    var e = LauncherStorageLib_1.LauncherStorageLib.GetGlobal(
-        LauncherStorageLib_1.ELauncherStorageGlobalKey.PlayMenuInfo,
-        "",
-      ),
-      i = e && "" !== e;
-    let t = void 0;
-    return (t = i ? this.BOn(JSON.parse(e)) : t);
+  static Qpa() {
+    let e = LauncherStorageLib_1.LauncherStorageLib.GetGlobal(
+      LauncherStorageLib_1.ELauncherStorageGlobalKey.MenuData,
+      void 0,
+    );
+    return (
+      e ||
+        ((e = new Map()),
+        this.Kpa(e, MASTERVOLUMEFUNCTION),
+        this.Kpa(e, VOICEVOLUMEFUNCTION),
+        this.Kpa(e, MUSICVOLUMEFUNCTION),
+        this.Kpa(e, SFXVOLUMEFUNCTION),
+        this.Kpa(e, AMBVOLUMEFUNCTION),
+        this.Kpa(e, UIVOLUMEFUNCTION),
+        this.Kpa(e, RESOLUTION)),
+      e
+    );
   }
-  static n4s(e, i) {
+  static Kpa(e, i) {
     var t = LauncherConfigLib_1.LauncherConfigLib.GetMenuConfigByFunctionId(i);
     e.set(i, t ? t.OptionsDefault : 0);
   }
-  static rGi(e, i) {
+  static rNi(e, i) {
     var t = e.get(i);
     if (void 0 === t)
       LauncherLog_1.LauncherLog.Info(
@@ -59,31 +68,31 @@ class LauncherGameSettingLib {
         i)
       ) {
         case MASTERVOLUMEFUNCTION:
-          this.s4s("Master_Audio_Bus_Volume", t);
+          this.$pa("Master_Audio_Bus_Volume", t);
           break;
         case VOICEVOLUMEFUNCTION:
-          this.s4s("Vocal_Audio_Bus_Volume", t);
+          this.$pa("Vocal_Audio_Bus_Volume", t);
           break;
         case MUSICVOLUMEFUNCTION:
-          this.s4s("Music_Audio_Bus_Volume", t);
+          this.$pa("Music_Audio_Bus_Volume", t);
           break;
         case SFXVOLUMEFUNCTION:
-          this.s4s("SFX_Audio_Bus_Volume", t);
+          this.$pa("SFX_Audio_Bus_Volume", t);
           break;
         case AMBVOLUMEFUNCTION:
-          this.s4s("AMB_Audio_Bus_Volume", t);
+          this.$pa("AMB_Audio_Bus_Volume", t);
           break;
         case UIVOLUMEFUNCTION:
-          this.s4s("UI_Audio_Bus_Volume", t);
+          this.$pa("UI_Audio_Bus_Volume", t);
           break;
         case RESOLUTION:
-          this.m4s(t);
+          this.Xpa(t);
       }
   }
-  static s4s(e, i) {
+  static $pa(e, i) {
     UE.AkGameplayStatics.SetRTPCValue(void 0, i, 0, void 0, new UE.FName(e));
   }
-  static m4s(e) {
+  static Xpa(e) {
     var i = this.GetResolutionList(),
       i =
         (LauncherLog_1.LauncherLog.Info(
@@ -122,14 +131,6 @@ class LauncherGameSettingLib {
           )),
       i
     );
-  }
-  static BOn(e) {
-    var i = new Map();
-    for (const a in e) {
-      var t = Number(a);
-      isNaN(t) || i.set(t, e[a]);
-    }
-    return i;
   }
 }
 exports.LauncherGameSettingLib = LauncherGameSettingLib;

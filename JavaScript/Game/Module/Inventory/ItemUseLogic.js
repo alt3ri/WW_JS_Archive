@@ -18,13 +18,12 @@ const Log_1 = require("../../../Core/Common/Log"),
   ConfirmBoxDefine_1 = require("../ConfirmBox/ConfirmBoxDefine"),
   ItemDefines_1 = require("../Item/Data/ItemDefines"),
   PowerController_1 = require("../Power/PowerController"),
-  PowerDefines_1 = require("../Power/PowerDefines"),
   RoleDefine_1 = require("../RoleUi/RoleDefine"),
   ScrollingTipsController_1 = require("../ScrollingTips/ScrollingTipsController"),
   InventoryGiftController_1 = require("./InventoryGiftController"),
   InventoryGiftData_1 = require("./InventoryGiftData");
 class ItemUseLogic {
-  static Ici(e, r = 1, o = 0) {
+  static Imi(e, r = 1, o = 0) {
     var n = ModelManager_1.ModelManager.SceneTeamModel.GetTeamItem(o, {
       ParamType: 0,
     });
@@ -34,13 +33,13 @@ class ItemUseLogic {
         "NoneRole",
       );
     else {
-      n = n?.EntityHandle?.Entity?.GetComponent(156);
+      n = n?.EntityHandle?.Entity?.GetComponent(158);
       if (!n) return !1;
       var t = Math.ceil(
         n.GetCurrentValue(CharacterAttributeTypes_1.EAttributeId.Proto_Life),
       );
       Math.ceil(
-        n.GetCurrentValue(CharacterAttributeTypes_1.EAttributeId.Tkn),
+        n.GetCurrentValue(CharacterAttributeTypes_1.EAttributeId.e5n),
       ) <= t
         ? ((n = MultiTextLang_1.configMultiTextLang.GetLocalTextNew("HpFull")),
           ScrollingTipsController_1.ScrollingTipsController.ShowTipsByText(n))
@@ -137,13 +136,13 @@ class ItemUseLogic {
                 ),
                 !0)
               : o
-                ? _a.Ici(e, r, n)
+                ? _a.Imi(e, r, n)
                 : (UiManager_1.UiManager.OpenView("UseBuffItemView", e), !0));
     }
     return !1;
   }),
   (ItemUseLogic.TryUsePowerItem = (e, r = 0) =>
-    e === PowerDefines_1.PowerConst.SingCube &&
+    10800 === e &&
     (PowerController_1.PowerController.RequestPowerViewData(), !0)),
   (ItemUseLogic.TryUseMonthCardItem = (e, r = 0) => {
     var o,
@@ -207,7 +206,7 @@ class ItemUseLogic {
             s.SetItemData(f),
             s.SetNameText(_),
             s.SetRightButtonFunction(() => {
-              ItemUseLogic.Tci(e, s.GetAmount());
+              ItemUseLogic.Tmi(e, s.GetAmount());
             }),
             InventoryGiftController_1.InventoryGiftController.ShowAcquireView(
               s,
@@ -231,7 +230,7 @@ class ItemUseLogic {
       }
     return !0;
   }),
-  (ItemUseLogic.Tci = (e, r) => {
+  (ItemUseLogic.Tmi = (e, r) => {
     0 < r
       ? InventoryGiftController_1.InventoryGiftController.SendItemGiftUseRequest(
           e,

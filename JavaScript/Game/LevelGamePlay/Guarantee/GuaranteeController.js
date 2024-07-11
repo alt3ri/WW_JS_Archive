@@ -55,20 +55,20 @@ class GuaranteeController extends ControllerBase_1.ControllerBase {
   }
   static ExecuteActions(e, t) {
     if (t)
-      for (const r of e) {
-        var n = r.Name,
-          o =
+      for (const o of e) {
+        var n = o.Name,
+          r =
             GuaranteeActionCenter_1.GuaranteeActionCenter.GetGuaranteeAction(n);
-        o &&
+        r &&
           (Log_1.Log.CheckInfo() &&
             Log_1.Log.Info(
               "LevelEvent",
               40,
               "执行保底行为：",
               ["actionName", n],
-              ["ActionInfo", r],
+              ["ActionInfo", o],
             ),
-          o.Execute(r, t));
+          r.Execute(o, t));
       }
   }
 }
@@ -115,79 +115,85 @@ class GuaranteeController extends ControllerBase_1.ControllerBase {
         ["保底行为列表", t],
       );
   }),
-  (GuaranteeController.rIe = (e, t, n) => {
-    _a.aIe(e, t, !0, n);
+  (GuaranteeController.rIe = (e, t, n, r = !1) => {
+    _a.aIe(e, t, !0, n, r);
   }),
-  (GuaranteeController.nIe = (e, t, n) => {
-    _a.aIe(e, t, !1, n);
+  (GuaranteeController.nIe = (e, t, n, r = !1) => {
+    _a.aIe(e, t, !1, n, r);
   }),
-  (GuaranteeController.aIe = (t, n, o, r) => {
-    if (n && 7 !== n.Type && r && r.Name) {
-      var a = GuaranteeActionCenter_1.GuaranteeActionCenter.GetActionFilterMode(
-          r.Name,
+  (GuaranteeController.aIe = (t, n, r, o, a) => {
+    if (n && 7 !== n.Type && o && o.Name) {
+      var _ = GuaranteeActionCenter_1.GuaranteeActionCenter.GetActionFilterMode(
+          o.Name,
         ),
-        _ = ModelManager_1.ModelManager.LevelGeneralModel;
+        i = ModelManager_1.ModelManager.LevelGeneralModel;
       let e = void 0;
       switch (n?.Type) {
         case 4:
-          var i =
+          var l =
             ModelManager_1.ModelManager.InstanceDungeonModel.GetInstanceDungeonInfo();
-          e = i?.TreeId;
+          e = l?.TreeId;
           break;
         case 3:
-          i =
+          var l =
             ModelManager_1.ModelManager.LevelPlayModel.GetProcessingLevelPlayInfo(
               n.LevelPlayId,
             );
-          e = i?.TreeId;
+          e = l?.TreeId;
+          break;
+        case 2:
+          a &&
+            ((l =
+              ModelManager_1.ModelManager.QuestNewModel.GetCurTrackedQuest()),
+            (e = l?.TreeId));
           break;
         case 6:
-          n.BtType !== Protocol_1.Aki.Protocol.NCs.Proto_BtTypeQuest &&
+          (n.BtType !== Protocol_1.Aki.Protocol.tps.Proto_BtTypeQuest || a) &&
             (e = n.TreeIncId);
       }
       e &&
         e !== BigInt(0) &&
-        (o
-          ? _.HasTreeGuaranteeActionInfo(e, r, a) ||
-            (_.AddTreeGuaranteeActionInfo(e, r),
+        (r
+          ? i.HasTreeGuaranteeActionInfo(e, o, _) ||
+            (i.AddTreeGuaranteeActionInfo(e, o),
             Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "LevelEvent",
                 40,
-                "添加行为树保底行为：" + r.Name,
+                "添加行为树保底行为：" + o.Name,
                 ["触发行为", t],
-                ["ActionInfo", r],
+                ["ActionInfo", o],
                 ["treeIncId", e],
               ))
-          : (_.PopTreeGuaranteeActionInfo(e, r),
+          : (i.PopTreeGuaranteeActionInfo(e, o),
             Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "LevelEvent",
                 40,
-                "移除行为树保底行为：" + r.Name,
+                "移除行为树保底行为：" + o.Name,
                 ["触发行为", t],
-                ["ActionInfo", r],
+                ["ActionInfo", o],
                 ["treeIncId", e],
               ))),
-        o
-          ? _.HasSceneGuaranteeActionInfo(r, a) ||
-            (_.AddSceneGuaranteeActionInfo(r),
+        r
+          ? i.HasSceneGuaranteeActionInfo(o, _) ||
+            (i.AddSceneGuaranteeActionInfo(o),
             Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "LevelEvent",
                 40,
-                "添加场景保底行为：" + r.Name,
+                "添加场景保底行为：" + o.Name,
                 ["触发行为", t],
-                ["ActionInfo", r],
+                ["ActionInfo", o],
               ))
-          : (_.PopSceneGuaranteeActionInfo(r),
+          : (i.PopSceneGuaranteeActionInfo(o),
             Log_1.Log.CheckInfo() &&
               Log_1.Log.Info(
                 "LevelEvent",
                 40,
-                "移除场景保底行为：" + r.Name,
+                "移除场景保底行为：" + o.Name,
                 ["触发行为", t],
-                ["ActionInfo", r],
+                ["ActionInfo", o],
               ));
     }
   });

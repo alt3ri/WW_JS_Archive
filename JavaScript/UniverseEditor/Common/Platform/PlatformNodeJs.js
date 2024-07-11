@@ -7,6 +7,9 @@ const child_process_1 = require("child_process"),
   path = require("path"),
   Platform_1 = require("./Platform");
 class PlatformNodeJs extends Platform_1.Platform {
+  constructor() {
+    super(...arguments), (this.Ejs = !0);
+  }
   ReadFile(e) {
     return (0, fs_1.existsSync)(e)
       ? (0, fs_1.readFileSync)(e, "utf8").replace(/^\uFEFF/, "")
@@ -79,16 +82,20 @@ class PlatformNodeJs extends Platform_1.Platform {
     var e = new Date();
     return `${e.getHours()}:${e.getMinutes()}:` + e.getSeconds();
   }
+  SetLogWithTime(e) {
+    this.Ejs = e;
+  }
   Log(e, r) {
+    var t = this.Ejs ? this.ke() + ": " + r : r;
     switch (e) {
       case 0:
-        this.LogLevel <= 0 && console.log(this.ke() + ": " + r);
+        this.LogLevel <= 0 && console.log(t);
         break;
       case 1:
-        this.LogLevel <= 1 && console.warn(this.ke() + ": " + r);
+        this.LogLevel <= 1 && console.warn(t);
         break;
       case 2:
-        this.LogLevel <= 2 && console.error(this.ke() + ": " + r);
+        this.LogLevel <= 2 && console.error(t);
     }
   }
   SetErrorReportFun(e) {}

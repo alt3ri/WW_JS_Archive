@@ -7,7 +7,7 @@ const UE = require("ue"),
 class MainTypeItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this.zGt = 3),
+      (this.ZNt = 3),
       (this.OnClickedCallback = void 0),
       (this.ScrollViewDelegate = void 0),
       (this.GridIndex = 0),
@@ -29,9 +29,9 @@ class MainTypeItem extends UiPanelBase_1.UiPanelBase {
       (this.BtnBindInfo = [[1, this.OnItemButtonClicked]]);
   }
   Refresh(e, t, i) {
-    this.zGt = e;
+    this.ZNt = e;
     let s = "";
-    switch (this.zGt) {
+    switch (this.ZNt) {
       case 1:
         s = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
           "SP_ReagentProduction",
@@ -54,22 +54,22 @@ class MainTypeItem extends UiPanelBase_1.UiPanelBase {
   Clear() {}
   OnSelected(e) {
     this.GetExtendToggle(1).SetToggleState(1, e),
-      this.OnClickedCallback?.(this.zGt);
+      this.OnClickedCallback?.(this.ZNt);
   }
   OnDeselected(e) {
     this.GetExtendToggle(1).SetToggleState(0, !1);
   }
   GetKey(e, t) {
-    return this.zGt;
+    return this.ZNt;
   }
   GetMainType() {
-    return this.zGt;
+    return this.ZNt;
   }
   SetMainTypeCallback(e) {
     this.OnClickedCallback = e;
   }
   SelectedItem() {
-    this.OnClickedCallback && this.OnClickedCallback(this.zGt);
+    this.OnClickedCallback && this.OnClickedCallback(this.ZNt);
   }
 }
 exports.MainTypeItem = MainTypeItem;

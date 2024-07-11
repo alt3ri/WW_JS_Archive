@@ -8,12 +8,12 @@ const Log_1 = require("../../../Core/Common/Log"),
 class NoCircleAttachView extends AutoAttachBaseView_1.AutoAttachBaseView {
   constructor() {
     super(...arguments),
-      (this.LWe = void 0),
+      (this.NKe = void 0),
       (this.U1e = void 0),
-      (this.DWe = !1);
+      (this.OKe = !1);
   }
   SetIfNeedFakeItem(t) {
-    this.DWe = t;
+    this.OKe = t;
   }
   SetControllerItem(t) {
     (this.ControllerItem = t),
@@ -21,9 +21,9 @@ class NoCircleAttachView extends AutoAttachBaseView_1.AutoAttachBaseView {
       (this.ControllerHeight = t.GetHeight());
   }
   FindAutoAttachItem() {
-    return this.RWe();
+    return this.kKe();
   }
-  RWe() {
+  kKe() {
     let i = void 0,
       s = 1e7;
     var e = this.Items.length;
@@ -42,25 +42,25 @@ class NoCircleAttachView extends AutoAttachBaseView_1.AutoAttachBaseView {
       i
     );
   }
-  UWe() {
-    if (void 0 === this.LWe) {
+  FKe() {
+    if (void 0 === this.NKe) {
       let i = 0;
       for (let t = 0; t < 1; t += FLOATDURABLENUM) {
         var s = this.GetCurveValue(this.BoundaryCurve, t);
         i += FLOATDURABLENUM * s * this.MoveBoundary;
       }
-      this.LWe = i;
+      this.NKe = i;
     }
-    return this.LWe;
+    return this.NKe;
   }
   RecalculateMoveOffset(t) {
-    t = this.AWe(t);
+    t = this.VKe(t);
     if (0 === this.AttachDirection) {
-      if (!this.PWe(t)) return 0;
-    } else if (!this.xWe(t)) return 0;
+      if (!this.HKe(t)) return 0;
+    } else if (!this.jKe(t)) return 0;
     return t;
   }
-  wWe(t) {
+  WKe(t) {
     var i = this.FindNearestMiddleItem(),
       s = i.GetCurrentPosition();
     let e = 0;
@@ -79,58 +79,58 @@ class NoCircleAttachView extends AutoAttachBaseView_1.AutoAttachBaseView {
             s
           : i.GetCurrentShowItemIndex() * (this.GetItemSize() + this.Gap) + s);
   }
-  AWe(t) {
+  VKe(t) {
     let i = 0 < t ? 0 : this.DataLength - 1;
     0 !== this.AttachDirection && (i = 0 < t ? this.DataLength - 1 : 0);
     var s,
       e = this.GetShowIndexItem(i);
-    if (!e) return (s = this.wWe(t)), Math.abs(s) < Math.abs(t) ? s : t;
+    if (!e) return (s = this.WKe(t)), Math.abs(s) < Math.abs(t) ? s : t;
     let h = e.GetCurrentPosition(),
       r = (h = -FLOATDURABLENUM < h && h < FLOATDURABLENUM ? 0 : h) + t;
     if ((0 !== this.AttachDirection && (r = h - t), 0 < t)) {
       if (r < 0) return t;
     } else if (0 < r) return t;
-    return this.BWe(t, h);
+    return this.KKe(t, h);
   }
-  BWe(t, i) {
+  KKe(t, i) {
     let s = 0,
       e = 0;
     0 < t ? i < 0 && (e = 0 - i) : 0 < i && (e = 0 - i);
     var h = t - (s = 0 + e),
-      r = this.bWe(t, i),
+      r = this.QKe(t, i),
       h = s + h * r,
       r = i + h;
     return (s =
       0 < t
-        ? r >= this.qWe()
+        ? r >= this.XKe()
           ? 0 < e
-            ? e + this.qWe()
-            : this.qWe() - i
+            ? e + this.XKe()
+            : this.XKe() - i
           : h
-        : r <= -1 * this.qWe()
+        : r <= -1 * this.XKe()
           ? e < 0
-            ? e + -1 * this.qWe()
-            : -1 * (this.qWe() + i)
+            ? e + -1 * this.XKe()
+            : -1 * (this.XKe() + i)
           : h);
   }
-  qWe() {
+  XKe() {
     if (void 0 === this.U1e) {
       let i = 0;
       for (let t = 0; t < this.MoveBoundary; t += 1) {
-        var s = this.bWe(1, t);
+        var s = this.QKe(1, t);
         i += +s;
       }
       this.U1e = i;
     }
     return this.U1e;
   }
-  bWe(t, i) {
-    return this.UWe() <= 0
+  QKe(t, i) {
+    return this.FKe() <= 0
       ? 0
-      : ((i = Math.abs(i) / this.UWe()),
+      : ((i = Math.abs(i) / this.FKe()),
         this.GetCurveValue(this.BoundaryCurve, (i = 1 < i ? 1 : i)));
   }
-  PWe(i) {
+  HKe(i) {
     let s = void 0;
     var e = this.Items.length;
     for (let t = 0; t < e - 1; t++)
@@ -156,7 +156,7 @@ class NoCircleAttachView extends AutoAttachBaseView_1.AutoAttachBaseView {
             return !1;
     return !0;
   }
-  xWe(i) {
+  jKe(i) {
     let s = void 0;
     var e = this.Items.length;
     for (let t = 0; t < e - 1; t++)
@@ -168,12 +168,12 @@ class NoCircleAttachView extends AutoAttachBaseView_1.AutoAttachBaseView {
       for (let t = 0; t < e; t++)
         if (this.Items[t].GetCurrentShowItemIndex() === this.DataLength - 1) {
           var h = this.Items[t].GetCurrentPosition() + i;
-          if (0 - this.Items[t].GetCurrentPosition() + this.UWe() < h)
+          if (0 - this.Items[t].GetCurrentPosition() + this.FKe() < h)
             return !1;
         }
     } else if (s && i < 0) {
       var t = s.GetCurrentPosition() + i,
-        r = s.GetCurrentPosition() + this.UWe();
+        r = s.GetCurrentPosition() + this.FKe();
       if (Math.abs(t) > Math.abs(r)) return !1;
     }
     return !0;
@@ -195,7 +195,7 @@ class NoCircleAttachView extends AutoAttachBaseView_1.AutoAttachBaseView {
   }
   ReloadItems(t, i) {
     var s,
-      e = t > this.ShowItemNum || this.DWe ? this.ShowItemNum + 1 : t;
+      e = t > this.ShowItemNum || this.OKe ? this.ShowItemNum + 1 : t;
     for (let t = 0; t < this.Items.length; t++) this.Items[t].SetUiActive(!1);
     for (let t = 0; t < e; t++)
       t >= this.Items.length &&
@@ -207,7 +207,7 @@ class NoCircleAttachView extends AutoAttachBaseView_1.AutoAttachBaseView {
           this,
         ),
         this.Items.push(s)),
-        this.Items[t].SetIfNeedShowFakeItem(this.DWe),
+        this.Items[t].SetIfNeedShowFakeItem(this.OKe),
         this.Items[t].SetItemIndex(t),
         this.Items[t].SetUiActive(!0),
         this.Items[t].SetData(i),

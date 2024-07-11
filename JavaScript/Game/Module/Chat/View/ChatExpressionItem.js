@@ -6,10 +6,10 @@ const UE = require("ue"),
 class ChatExpressionItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
-      (this.C8e = 0),
-      (this.x$e = void 0),
-      (this.K9e = () => {
-        this.x$e && this.x$e(this.C8e);
+      (this.U9e = 0),
+      (this.jYe = void 0),
+      (this.sHe = () => {
+        this.jYe && this.jYe(this.U9e);
       });
   }
   OnRegisterComponent() {
@@ -18,10 +18,10 @@ class ChatExpressionItem extends GridProxyAbstract_1.GridProxyAbstract {
       [1, UE.UIText],
       [2, UE.UITexture],
     ]),
-      (this.BtnBindInfo = [[0, this.K9e]]);
+      (this.BtnBindInfo = [[0, this.sHe]]);
   }
   Refresh(t, s, i) {
-    this.C8e = t.Id;
+    this.U9e = t.Id;
     var e = t.ExpressionTexturePath;
     const r = this.GetTexture(2);
     r.SetUIActive(!1),
@@ -32,7 +32,7 @@ class ChatExpressionItem extends GridProxyAbstract_1.GridProxyAbstract {
     this.GetText(1).ShowTextNew(e);
   }
   BindOnClicked(t) {
-    this.x$e = t;
+    this.jYe = t;
   }
 }
 exports.ChatExpressionItem = ChatExpressionItem;

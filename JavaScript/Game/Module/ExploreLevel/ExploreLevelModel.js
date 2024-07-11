@@ -8,7 +8,7 @@ const ModelBase_1 = require("../../../Core/Framework/ModelBase"),
 class ExploreLevelModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
-      (this.u5t = new Map()),
+      (this.uVt = new Map()),
       (this.ExploreScoreItemTexturePath = "");
   }
   OnInit() {
@@ -35,7 +35,7 @@ class ExploreLevelModel extends ModelBase_1.ModelBase {
     );
   }
   OnClear() {
-    return this.u5t.clear(), !0;
+    return this.uVt.clear(), !0;
   }
   AddCountryExploreLevelData(e) {
     var r =
@@ -43,10 +43,10 @@ class ExploreLevelModel extends ModelBase_1.ModelBase {
           e,
         ),
       o = new CountryExploreLevelData_1.CountryExploreLevelData();
-    return o.Initialize(e, r), this.u5t.set(e, o), o;
+    return o.Initialize(e, r), this.uVt.set(e, o), o;
   }
   GetCountryExploreLevelData(e) {
-    return this.u5t.get(e);
+    return this.uVt.get(e);
   }
   GetCurrentCountryExploreLevelData() {
     var e = ModelManager_1.ModelManager.AreaModel.GetAreaCountryId();

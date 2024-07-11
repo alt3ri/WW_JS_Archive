@@ -2,10 +2,10 @@
 var __decorate =
   (this && this.__decorate) ||
   function (t, i, e, n) {
-    var s,
-      r = arguments.length,
+    var r,
+      s = arguments.length,
       o =
-        r < 3
+        s < 3
           ? i
           : null === n
             ? (n = Object.getOwnPropertyDescriptor(i, e))
@@ -14,16 +14,18 @@ var __decorate =
       o = Reflect.decorate(t, i, e, n);
     else
       for (var h = t.length - 1; 0 <= h; h--)
-        (s = t[h]) && (o = (r < 3 ? s(o) : 3 < r ? s(i, e, o) : s(i, e)) || o);
-    return 3 < r && o && Object.defineProperty(i, e, o), o;
+        (r = t[h]) && (o = (s < 3 ? r(o) : 3 < s ? r(i, e, o) : r(i, e)) || o);
+    return 3 < s && o && Object.defineProperty(i, e, o), o;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.Entity =
     exports.TickComponentManager =
     exports.DISABLE_REASON_LENGTH_LIMIT =
       void 0);
-const Log_1 = require("../Common/Log"),
+const Info_1 = require("../Common/Info"),
+  Log_1 = require("../Common/Log"),
   Stats_1 = require("../Common/Stats"),
+  Time_1 = require("../Common/Time"),
   CommonDefine_1 = require("../Define/CommonDefine"),
   GameBudgetAllocatorConfig_1 = require("../GameBudgetAllocator/GameBudgetAllocatorConfig"),
   GameBudgetInterfaceController_1 = require("../GameBudgetAllocator/GameBudgetInterfaceController"),
@@ -85,10 +87,10 @@ class TickComponentManager {
   Sort() {
     (this.oW = 0 < this.nW.length || 0 < this.sW.length),
       (this.rW = 0 < this.aW.length || 0 < this.hW.length),
-      this.nW.sort(TickComponentManager.S7),
-      this.sW.sort(TickComponentManager.S7),
-      this.aW.sort(TickComponentManager.S7),
-      this.hW.sort(TickComponentManager.S7);
+      this.nW.sort(TickComponentManager.E7),
+      this.sW.sort(TickComponentManager.E7),
+      this.aW.sort(TickComponentManager.E7),
+      this.hW.sort(TickComponentManager.E7);
   }
   ForceTick(t) {
     for (const i of this.sW) i.Component.ForceTick(t);
@@ -121,7 +123,7 @@ class TickComponentManager {
     }
   }
 }
-(exports.TickComponentManager = TickComponentManager).S7 = (t, i) =>
+(exports.TickComponentManager = TickComponentManager).E7 = (t, i) =>
   t.Priority === i.Priority ? t.Index - i.Index : i.Priority - t.Priority;
 class Entity extends ObjectBase_1.ObjectBase {
   constructor(t, i) {
@@ -148,9 +150,11 @@ class Entity extends ObjectBase_1.ObjectBase {
       (this.OnBudgetTickEnableChangeComponents = void 0),
       (this.TickComponentManager = new TickComponentManager()),
       (this.vW = 0),
+      (this.Gya = 0),
       (this.MW = 0),
-      (this.SW = !1),
-      (this.EW = 1),
+      (this.LastTickFrame = 0),
+      (this.EW = !1),
+      (this.SW = 1),
       (this.yW = void 0),
       (this.IW = void 0),
       (this.TW = -1),
@@ -159,10 +163,10 @@ class Entity extends ObjectBase_1.ObjectBase {
       (this.LocationProxyFunction = void 0);
   }
   get IsEncloseSpace() {
-    return this.SW;
+    return this.EW;
   }
   set IsEncloseSpace(t) {
-    this.SW = t;
+    this.EW = t;
   }
   static StaticGameBudgetConfig(t) {
     return (
@@ -201,7 +205,7 @@ class Entity extends ObjectBase_1.ObjectBase {
     return 0 === this.DW.size;
   }
   get TimeDilation() {
-    return this.EW;
+    return this.SW;
   }
   get IsCreate() {
     return !!(1 & this.pW);
@@ -260,10 +264,10 @@ class Entity extends ObjectBase_1.ObjectBase {
             ["component", t.name],
           );
       else {
-        var s = t.Dependencies;
-        if (s)
-          for (const y of s)
-            if (!this.LW[y])
+        var r = t.Dependencies;
+        if (r)
+          for (const c of r)
+            if (!this.LW[c])
               return void (
                 Log_1.Log.CheckError() &&
                 Log_1.Log.Error(
@@ -273,14 +277,14 @@ class Entity extends ObjectBase_1.ObjectBase {
                   ["Id", this.Id],
                   ["entity", this.constructor.name],
                   ["component", t.name],
-                  ["dependence", y],
+                  ["dependence", c],
                 )
               );
-        var s = EntitySystem_1.EntitySystem.Get(this.Id),
-          r = EntityComponentSystem_1.EntityComponentSystem.Create(t, s, e);
-        if (r) {
-          if (void 0 === i || r.NeedTick || r.ForceTick) {
-            let t = r?.__proto__;
+        var r = EntitySystem_1.EntitySystem.Get(this.Id),
+          s = EntityComponentSystem_1.EntityComponentSystem.Create(t, r, e);
+        if (s) {
+          if (void 0 === i || s.NeedTick || s.ForceTick) {
+            let t = s?.__proto__;
             for (
               ;
               t?.constructor &&
@@ -317,10 +321,10 @@ class Entity extends ObjectBase_1.ObjectBase {
                   )
                 );
               for (; this.LW.length <= h; ) this.LW.push(void 0);
-              (this.LW[h] = r), (t = t?.__proto__);
+              (this.LW[h] = s), (t = t?.__proto__);
             }
             return (
-              this.Components.push(r), this.TickComponentManager.Add(r, i), r
+              this.Components.push(s), this.TickComponentManager.Add(s, i), s
             );
           }
           Log_1.Log.CheckError() &&
@@ -337,7 +341,7 @@ class Entity extends ObjectBase_1.ObjectBase {
     }
   }
   SetTimeDilation(t) {
-    this.EW = t;
+    this.SW = t;
     for (const i of this.Components) i.SetTimeDilation(t);
   }
   ChangeTickInterval(t) {
@@ -345,6 +349,9 @@ class Entity extends ObjectBase_1.ObjectBase {
   }
   GetTickInterval() {
     return this.MW;
+  }
+  GetDeltaSeconds() {
+    return this.Gya;
   }
   RegisterToGameBudgetController(t, i) {
     if (GameBudgetInterfaceController_1.GameBudgetInterfaceController.IsOpen)
@@ -546,8 +553,8 @@ class Entity extends ObjectBase_1.ObjectBase {
   AW() {
     (this.vW = 0),
       (this.MW = 0),
-      (this.EW = 1),
-      (this.SW = !1),
+      (this.SW = 1),
+      (this.EW = !1),
       this.TickComponentManager.Clear(),
       this.DW.clear();
   }
@@ -642,7 +649,8 @@ class Entity extends ObjectBase_1.ObjectBase {
     return !0;
   }
   Enable(t, i) {
-    Log_1.Log.CheckInfo() &&
+    Info_1.Info.IsBuildDevelopmentOrDebug &&
+      Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "Entity",
         3,
@@ -694,11 +702,12 @@ class Entity extends ObjectBase_1.ObjectBase {
     var e,
       t = ++this.vW,
       n = new Array(),
-      s = (this.DW.set(t, [i, n]), void 0);
+      r = (this.DW.set(t, [i, n]), void 0);
     for (let t = this.Components.length - 1; 0 <= t; --t)
-      (e = (s = this.Components[t]).Disable(i)), n.push([s, e]);
+      (e = (r = this.Components[t]).Disable(i)), n.push([r, e]);
     return (
-      Log_1.Log.CheckInfo() &&
+      Info_1.Info.IsBuildDevelopmentOrDebug &&
+        Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "Entity",
           3,
@@ -711,15 +720,13 @@ class Entity extends ObjectBase_1.ObjectBase {
       t
     );
   }
-  ForceTick(i) {
-    if (this.Active) {
-      let t = void 0;
-      (t = this.TickStatTdType || this.gW),
-        this.TickComponentManager.ForceTick(i * this.EW);
-    }
+  ForceTick(t) {
+    this.Active && this.TickComponentManager.ForceTick(t * this.SW);
   }
   ScheduledTick(t, i, e) {
-    (this.MW = i),
+    (this.Gya = t),
+      (this.MW = i),
+      (this.LastTickFrame = Time_1.Time.Frame),
       MathUtils_1.MathUtils.IsNearlyEqual(this.TW, e) ||
         ((this.TW = e), EntityHelper_1.EntitySystemHelper.IsSortDirty) ||
         (EntityHelper_1.EntitySystemHelper.IsSortDirty = !0),
@@ -727,19 +734,13 @@ class Entity extends ObjectBase_1.ObjectBase {
         this.IsInit &&
         this.Tick(t * CommonDefine_1.MILLIONSECOND_PER_SECOND);
   }
-  Tick(i) {
-    if (this.Active) {
-      let t = void 0;
-      (t = this.TickStatTdType || this.gW),
-        this.TickComponentManager.Tick(this.MW, i * this.EW);
-    } else this.TickComponentManager.ClearDelta();
+  Tick(t) {
+    this.Active
+      ? this.TickComponentManager.Tick(this.MW, t * this.SW)
+      : this.TickComponentManager.ClearDelta();
   }
-  ForceAfterTick(i) {
-    if (this.Active) {
-      let t = void 0;
-      (t = this.TickStatTdType || this.gW),
-        this.TickComponentManager.ForceAfterTick(i * this.EW);
-    }
+  ForceAfterTick(t) {
+    this.Active && this.TickComponentManager.ForceAfterTick(t * this.SW);
   }
   ScheduledAfterTick(t, i, e) {
     this.Valid && this.IsInit && this.AfterTick(1e3 * t);
@@ -756,9 +757,7 @@ class Entity extends ObjectBase_1.ObjectBase {
   }
   AfterTick(t) {
     this.Active
-      ? (this.AfterTickStatTdType,
-        this.TickComponentManager.AfterTick(this.MW, t * this.EW),
-        this.AfterTickStatTdType)
+      ? this.TickComponentManager.AfterTick(this.MW, t * this.SW)
       : this.TickComponentManager.ClearDelta();
   }
   OnCreate(t) {

@@ -40,37 +40,37 @@ let CharacterPendulumComponent =
   ) {
     constructor() {
       super(...arguments),
-        (this.Pjr = void 0),
-        (this.xjr = !1),
-        (this.wjr = 0),
-        (this.Bjr = Vector_1.Vector.Create()),
+        (this.ujr = void 0),
+        (this.cjr = !1),
+        (this.mjr = 0),
+        (this.djr = Vector_1.Vector.Create()),
         (this.kCe = ""),
-        (this.bjr = 0),
-        (this.qjr = 0),
-        (this.Gjr = 0),
-        (this.Njr = 0),
-        (this.Ojr = 0),
-        (this.wrr = Vector_1.Vector.Create()),
-        (this.kjr = (t) => {}),
-        (this.Fjr = (t, e, n, i, r) => {});
+        (this.Cjr = 0),
+        (this.gjr = 0),
+        (this.fjr = 0),
+        (this.pjr = 0),
+        (this.vjr = 0),
+        (this.Anr = Vector_1.Vector.Create()),
+        (this.Mjr = (t) => {}),
+        (this.Ejr = (t, e, n, i, r) => {});
     }
     set Hooked(t) {
-      this.xjr = t;
+      this.cjr = t;
     }
     get Hooked() {
-      return this.xjr;
+      return this.cjr;
     }
     set UpLength(t) {
-      this.wjr = t;
+      this.mjr = t;
     }
     get UpLength() {
-      return this.wjr;
+      return this.mjr;
     }
     set GrabPoint(t) {
-      this.Bjr.FromUeVector(t);
+      this.djr.FromUeVector(t);
     }
     get GrabPoint() {
-      return this.Bjr.ToUeVector();
+      return this.djr.ToUeVector();
     }
     set SocketName(t) {
       this.kCe = t;
@@ -79,58 +79,58 @@ let CharacterPendulumComponent =
       return this.kCe;
     }
     set RopeForce(t) {
-      this.bjr = t;
+      this.Cjr = t;
     }
     get RopeForce() {
-      return this.bjr;
+      return this.Cjr;
     }
     set DistanceRopeToActor(t) {
-      this.qjr = t;
+      this.gjr = t;
     }
     get DistanceRopeToActor() {
-      return this.qjr;
+      return this.gjr;
     }
     set AirControl(t) {
-      this.Gjr = t;
+      this.fjr = t;
     }
     get AirControl() {
-      return this.Gjr;
+      return this.fjr;
     }
     OnStart() {
       var t = this.Entity.CheckGetComponent(3),
         t =
-          ((this.Pjr = t.Actor),
+          ((this.ujr = t.Actor),
           EventSystem_1.EventSystem.AddWithTarget(
             this.Entity,
             EventDefine_1.EEventName.CustomMovePendulum,
-            this.kjr,
+            this.Mjr,
           ),
           EventSystem_1.EventSystem.AddWithTarget(
             this.Entity,
             EventDefine_1.EEventName.CharMovementModeChanged,
-            this.Fjr,
+            this.Ejr,
           ),
-          this.Entity.GetComponent(161).CharacterMovement);
-      return (this.Ojr = t.AirControl), !0;
+          this.Entity.GetComponent(163).CharacterMovement);
+      return (this.vjr = t.AirControl), !0;
     }
     OnEnd() {
       return (
         EventSystem_1.EventSystem.RemoveWithTarget(
           this.Entity,
           EventDefine_1.EEventName.CustomMovePendulum,
-          this.kjr,
+          this.Mjr,
         ),
         EventSystem_1.EventSystem.RemoveWithTarget(
           this.Entity,
           EventDefine_1.EEventName.CharMovementModeChanged,
-          this.Fjr,
+          this.Ejr,
         ),
-        this.Vjr(),
+        this.Sjr(),
         !0
       );
     }
     OnTick(t) {
-      1 === this.Njr ? (this.Njr = 0) : this.Hjr(t);
+      1 === this.pjr ? (this.pjr = 0) : this.yjr(t);
     }
     DrawCube(t, e) {
       var n, i, r, s;
@@ -181,24 +181,24 @@ let CharacterPendulumComponent =
           15,
         ));
     }
-    Hjr(t) {
+    yjr(t) {
       var e, n, i;
-      this.xjr &&
-        (this.wrr.FromUeVector(this.Pjr.GetVelocity()),
+      this.cjr &&
+        (this.Anr.FromUeVector(this.ujr.GetVelocity()),
         (e = 1),
         t > LIMIT_FRAME_TIME &&
           ((i =
             t > LIMIT_FRAME_TIME2
               ? t / LIMIT_FRAME_TIME2
               : t / LIMIT_FRAME_TIME),
-          1 < (e = this.wrr.Size() / i)) &&
-          this.wrr.Z < 0 &&
-          ((i = this.Entity.GetComponent(161)),
+          1 < (e = this.Anr.Size() / i)) &&
+          this.Anr.Z < 0 &&
+          ((i = this.Entity.GetComponent(163)),
           (n = t > LIMIT_FRAME_TIME2 ? UPDATE_UP_Z2 : UPDATE_UP_Z),
           CharacterPendulumComponent_1.TmpVector.Set(
             0,
             0,
-            (Math.abs(this.wrr.Z) / e) * n,
+            (Math.abs(this.Anr.Z) / e) * n,
           ),
           i.MoveCharacter(
             CharacterPendulumComponent_1.TmpVector,
@@ -206,33 +206,33 @@ let CharacterPendulumComponent =
             "钩锁.ThrowRopeAndSwing",
           )),
         (e = Vector_1.Vector.Create(
-          this.Pjr.K2_GetActorLocation(),
-        )).Subtraction(this.Bjr, e),
-        (n = Vector_1.Vector.DotProduct(this.wrr, e)),
+          this.ujr.K2_GetActorLocation(),
+        )).Subtraction(this.djr, e),
+        (n = Vector_1.Vector.DotProduct(this.Anr, e)),
         e.Normalize(),
         (i = Vector_1.Vector.Create()),
         e.Multiply(n, i),
         i.Multiply(this.RopeForce, i),
-        (t = this.Entity.GetComponent(161).CharacterMovement),
+        (t = this.Entity.GetComponent(163).CharacterMovement),
         i.Size() > LIMIT_FORCE && (i.Normalize(), i.Multiply(LIMIT_FORCE, i)),
         t.AddForce(i.ToUeVector()),
-        (t.AirControl = this.Gjr));
+        (t.AirControl = this.fjr));
     }
-    Vjr() {
-      (this.xjr = !1),
-        (this.Entity.GetComponent(161).CharacterMovement.AirControl = this.Ojr);
+    Sjr() {
+      (this.cjr = !1),
+        (this.Entity.GetComponent(163).CharacterMovement.AirControl = this.vjr);
     }
     SetPendulumData(t, e, n, i, r, s, o, h, _, a, E) {
-      (this.xjr = !0), (this.Njr = 1);
+      (this.cjr = !0), (this.pjr = 1);
     }
     Reset() {
-      (this.Njr = 0), this.Vjr();
+      (this.pjr = 0), this.Sjr();
     }
   });
 (CharacterPendulumComponent.TmpVector = Vector_1.Vector.Create()),
   (CharacterPendulumComponent = CharacterPendulumComponent_1 =
     __decorate(
-      [(0, RegisterComponent_1.RegisterComponent)(60)],
+      [(0, RegisterComponent_1.RegisterComponent)(62)],
       CharacterPendulumComponent,
     )),
   (exports.CharacterPendulumComponent = CharacterPendulumComponent);

@@ -87,7 +87,7 @@ class TsAnimNotifyStateAddLocationBlackboard extends UE.KuroAnimNotifyState {
       o.set(s, i),
       this.NeedChangeToFlying &&
         e.CharacterActorComponent.Entity.GetComponent(
-          161,
+          163,
         ).CharacterMovement.SetMovementMode(5),
       !0
     );
@@ -108,7 +108,7 @@ class TsAnimNotifyStateAddLocationBlackboard extends UE.KuroAnimNotifyState {
         ? this.Curve.GetFloatValue(e / s.TotalDuration) -
           this.Curve.GetFloatValue(s.RunTime / s.TotalDuration)
         : (e - s.RunTime) / s.TotalDuration;
-      t = t.GetComponent(161);
+      t = t.GetComponent(163);
       s.AddOffset.Multiply(r, tmpVector),
         t.MoveCharacter(tmpVector, a),
         (s.RunTime = e);

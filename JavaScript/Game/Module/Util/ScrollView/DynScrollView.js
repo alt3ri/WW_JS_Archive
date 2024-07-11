@@ -6,169 +6,175 @@ const puerts_1 = require("puerts"),
   InTurnGridAppearAnimation_1 = require("../Grid/GridAnimation/InTurnGridAppearAnimation");
 class DynamicScrollView {
   constructor(t, i, s, e) {
-    (this.Yqo = void 0),
-      (this.Jqo = void 0),
-      (this.zqo = void 0),
-      (this.Zqo = new Map()),
+    (this.QGo = void 0),
+      (this.XGo = void 0),
+      (this.$Go = void 0),
+      (this.YGo = new Map()),
+      (this.JCa = new Map()),
       (this.r7 = void 0),
-      (this.eGo = void 0),
-      (this.Cqo = void 0),
-      (this.tGo = new Map()),
+      (this.JGo = void 0),
+      (this.cGo = void 0),
+      (this.zGo = new Map()),
       (this.LateUpdateCallBack = void 0),
-      (this.iGo = new Map()),
-      (this.oGo = !1),
-      (this.rGo = (i, s) => {
+      (this.ZGo = new Map()),
+      (this.eNo = !1),
+      (this.tNo = (i, s) => {
         const e = this.r7[i];
-        var t = this.tGo.get(s);
-        let r = void 0;
+        var t = this.zGo.get(s);
+        let h = void 0;
         return (
           t
-            ? ((r = t), this.nGo(e, i, s))
-            : ((r = this.Yqo(e, s.GetUIItem(), i)),
+            ? ((h = t), this.iNo(e, i, s))
+            : ((h = this.QGo(e, s.GetUIItem(), i)),
               (t = new Promise((t) => {
-                r.Init(s.GetUIItem()).finally(() => {
-                  r.Update(e, i), t();
+                h.Init(s.GetUIItem()).finally(() => {
+                  h.Update(e, i), t();
                 });
               })),
-              this.tGo.set(s, r),
-              this.iGo.set(s, t)),
-          this.sGo(r, i),
-          (r.SkipDestroyActor = !0),
-          this.Zqo.set(i, r),
-          r.GetUsingItem(e)
+              this.zGo.set(s, h),
+              this.ZGo.set(s, t)),
+          this.oNo(h, i),
+          (h.SkipDestroyActor = !0),
+          this.YGo.set(i, h),
+          h.GetUsingItem(e)
         );
       }),
-      (this.aGo = (t, i) => {
-        this.Zqo.delete(t);
+      (this.rNo = (t, i) => {
+        this.YGo.delete(t);
+        var s = this.JCa.get(t);
+        s && (s(), this.JCa.delete(t));
       }),
-      (this.hGo = () => {
-        this.lGo();
+      (this.nNo = () => {
+        this.sNo();
       }),
-      (this._Go = (t) => {
+      (this.aNo = (t) => {
         t = this.r7[t];
-        return this.zqo.GetItemSize(t);
+        return this.$Go.GetItemSize(t);
       }),
-      (this.$xi = (t) => {
-        this.LateUpdateCallBack?.(t), this.uGo();
+      (this.$wi = (t) => {
+        this.LateUpdateCallBack?.(t), this.hNo();
       }),
-      (this.Yqo = e),
-      (this.zqo = s),
+      (this.QGo = e),
+      (this.$Go = s),
       i.SetUIParent(t.RootUIComp),
-      this.tGo.clear(),
-      (this.eGo = i),
-      (this.Jqo = t),
-      this.Jqo.OnItemUpdate.Bind(this.rGo),
-      this.Jqo.OnItemClear.Bind(this.aGo),
-      this.Jqo.ItemSizeDelegate.Bind(this._Go),
-      this.Jqo.OnDestroyCallBack.Bind(this.hGo),
-      (this.Cqo = new InTurnGridAppearAnimation_1.InTurnGridAppearAnimation(
+      this.zGo.clear(),
+      (this.JGo = i),
+      (this.XGo = t),
+      this.XGo.OnItemUpdate.Bind(this.tNo),
+      this.XGo.OnItemClear.Bind(this.rNo),
+      this.XGo.ItemSizeDelegate.Bind(this.aNo),
+      this.XGo.OnDestroyCallBack.Bind(this.nNo),
+      (this.cGo = new InTurnGridAppearAnimation_1.InTurnGridAppearAnimation(
         this,
       )),
-      this.Cqo.RegisterAnimController();
+      this.cGo.RegisterAnimController();
   }
   async Init() {
-    await this.zqo.Init(this.eGo);
+    await this.$Go.Init(this.JGo);
   }
   GetDisplayGridNum() {
-    return this.Jqo.DisplayItemArray.Num();
+    return this.XGo.DisplayItemArray.Num();
   }
   GetPreservedGridNum() {
-    return this.Jqo.DisplayItemArray.Num() + this.Jqo.IdleItemArray.Num();
+    return this.XGo.DisplayItemArray.Num() + this.XGo.IdleItemArray.Num();
   }
   GetDisplayGridStartIndex() {
     var t = (0, puerts_1.$ref)(0);
-    return this.Jqo.GetItemIndex(0, t), (0, puerts_1.$unref)(t);
+    return this.XGo.GetItemIndex(0, t), (0, puerts_1.$unref)(t);
   }
   GetDisplayGridEndIndex() {
     var t,
-      i = this.Jqo.DisplayItemArray.Num() - 1;
+      i = this.XGo.DisplayItemArray.Num() - 1;
     return i < 0
       ? 0
       : ((t = (0, puerts_1.$ref)(0)),
-        this.Jqo.GetItemIndex(i, t),
+        this.XGo.GetItemIndex(i, t),
         (0, puerts_1.$unref)(t));
   }
   GetGrid(t) {
-    return this.Jqo.GetItem(t)?.GetUIItem();
+    return this.XGo.GetItem(t)?.GetUIItem();
   }
   GetGridByDisplayIndex(t) {
     var i = (0, puerts_1.$ref)(0),
-      t = (this.Jqo.GetItemDisplayIndex(t, i), (0, puerts_1.$unref)(i));
-    return this.Jqo.DisplayItemArray.Get(t)?.GetUIItem();
+      t = (this.XGo.GetItemDisplayIndex(t, i), (0, puerts_1.$unref)(i));
+    return this.XGo.DisplayItemArray.Get(t)?.GetUIItem();
   }
   GetGridAnimationInterval() {
-    return this.Jqo.GetGridAnimationInterval();
+    return this.XGo.GetGridAnimationInterval();
   }
   GetGridAnimationStartTime() {
-    return this.Jqo.GetGridAnimationStartTime();
+    return this.XGo.GetGridAnimationStartTime();
   }
   NotifyAnimationStart() {
-    this.Jqo.SetInAnimation(!0);
+    this.XGo.SetInAnimation(!0);
   }
   NotifyAnimationEnd() {
-    this.Jqo.SetInAnimation(!1);
+    this.XGo.SetInAnimation(!1);
   }
   RefreshByData(t, i = !1) {
-    (this.r7 = t), this.Zqo.clear();
-    var s = this.eGo.GetOwner();
-    this.eGo.SetUIActive(!0),
-      this.Jqo.RefreshByData(s, t.length, i),
-      this.eGo.SetUIActive(!1),
-      this.Jqo.SetInAnimation(!0),
-      this.cGo();
+    (this.r7 = t), this.YGo.clear(), this.JCa.clear();
+    var s = this.JGo.GetOwner();
+    this.JGo.SetUIActive(!0),
+      this.XGo.RefreshByData(s, t.length, i),
+      this.JGo.SetUIActive(!1),
+      this.XGo.SetInAnimation(!0),
+      this.lNo();
   }
-  lGo() {
-    this.oGo && (this.Jqo.OnLateUpdate.Unbind(), (this.oGo = !1));
+  sNo() {
+    this.eNo && (this.XGo.OnLateUpdate.Unbind(), (this.eNo = !1));
   }
-  mGo() {
-    this.oGo || (this.Jqo.OnLateUpdate.Bind(this.$xi), (this.oGo = !0));
+  _No() {
+    this.eNo || (this.XGo.OnLateUpdate.Bind(this.$wi), (this.eNo = !0));
   }
-  async nGo(t, i, s) {
-    var e = this.iGo.get(s);
-    e && (await e, this.tGo.get(s)?.Update(t, i));
+  async iNo(t, i, s) {
+    var e = this.ZGo.get(s);
+    e && (await e, this.zGo.get(s)?.Update(t, i));
   }
-  sGo(t, i) {
+  oNo(t, i) {
     t.SetUiActive(!0);
   }
   GetScrollItemFromIndex(t) {
-    t = this.Zqo.get(t);
+    t = this.YGo.get(t);
     if (t) return t;
   }
   GetScrollItemCount() {
-    return this.Zqo.size;
+    return this.YGo.size;
   }
   GetScrollItemItems() {
-    return Array.from(this.Zqo.values());
+    return Array.from(this.YGo.values());
   }
-  cGo() {
-    this.Cqo && this.Cqo.PlayGridAnim(this.Jqo.DisplayItemArray.Num(), !0);
+  lNo() {
+    this.cGo && this.cGo.PlayGridAnim(this.XGo.DisplayItemArray.Num(), !0);
   }
-  uGo() {
-    this.LateUpdateCallBack || this.lGo();
+  hNo() {
+    this.LateUpdateCallBack || this.sNo();
   }
   BindLateUpdate(t) {
-    (this.LateUpdateCallBack = t), this.mGo();
+    (this.LateUpdateCallBack = t), this._No();
   }
   UnBindLateUpdate() {
     this.LateUpdateCallBack = void 0;
   }
+  AddListenerOnItemClear(t, i) {
+    this.YGo.has(t) && this.JCa.set(t, i);
+  }
   ClearChildren() {
-    for (const t of this.Zqo.values()) t.ClearItem();
-    this.Zqo.clear(), this.Cqo?.Clear();
+    for (const t of this.YGo.values()) t.ClearItem();
+    this.YGo.clear(), this.JCa.clear(), this.cGo?.Clear();
   }
   async ScrollToItemIndex(t, i = !0) {
-    await this.dGo(t, i);
+    await this.uNo(t, i);
   }
-  async dGo(t, i = !0) {
-    await Promise.all(this.iGo.values()),
-      this.Jqo.ScrollToItemIndex(t),
+  async uNo(t, i = !0) {
+    await Promise.all(this.ZGo.values()),
+      this.XGo.ScrollToItemIndex(t),
       i && this.ResetGridController();
   }
   ResetGridController() {
-    this.Cqo && this.Cqo.PlayGridAnim(this.GetDisplayGridNum(), !0);
+    this.cGo && this.cGo.PlayGridAnim(this.GetDisplayGridNum(), !0);
   }
   GetUiAnimController() {
-    return this.Jqo?.GetContent()?.GetComponentByClass(
+    return this.XGo?.GetContent()?.GetComponentByClass(
       UE.UIInturnAnimController.StaticClass(),
     );
   }

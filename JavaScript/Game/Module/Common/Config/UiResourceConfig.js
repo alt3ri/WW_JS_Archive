@@ -1,16 +1,24 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.UiResourceConfig = void 0);
-const LanguageSystem_1 = require("../../../../Core/Common/LanguageSystem"),
+const Info_1 = require("../../../../Core/Common/Info"),
+  LanguageSystem_1 = require("../../../../Core/Common/LanguageSystem"),
+  Log_1 = require("../../../../Core/Common/Log"),
   CommonDefine_1 = require("../../../../Core/Define/CommonDefine"),
   LangOfLogoByName_1 = require("../../../../Core/Define/ConfigQuery/LangOfLogoByName"),
   UiResourceById_1 = require("../../../../Core/Define/ConfigQuery/UiResourceById"),
-  ConfigBase_1 = require("../../../../Core/Framework/ConfigBase"),
-  ModelManager_1 = require("../../../Manager/ModelManager");
+  ConfigBase_1 = require("../../../../Core/Framework/ConfigBase");
 class UiResourceConfig extends ConfigBase_1.ConfigBase {
   GetResourcePath(e) {
-    e = UiResourceById_1.configUiResourceById.GetConfig(e);
-    return UiResourceConfig.GetResourcePathNormal(e);
+    var o = UiResourceById_1.configUiResourceById.GetConfig(e);
+    return o
+      ? UiResourceConfig.GetResourcePathNormal(o)
+      : (Log_1.Log.CheckError() &&
+          Log_1.Log.Error("Resource", 11, "查找资源配置失败", [
+            "ResourceId",
+            e,
+          ]),
+        "");
   }
   GetResourceConfig(e) {
     return UiResourceById_1.configUiResourceById.GetConfig(e);
@@ -35,7 +43,5 @@ class UiResourceConfig extends ConfigBase_1.ConfigBase {
 }
 ((exports.UiResourceConfig = UiResourceConfig).IsPcPlatform = !1),
   (UiResourceConfig.GetResourcePathNormal = (e) =>
-    !ModelManager_1.ModelManager.PlatformModel.IsMobile() && e.PcPath
-      ? e.PcPath
-      : e.Path);
+    !Info_1.Info.IsInTouch() && e.PcPath ? e.PcPath : e.Path);
 //# sourceMappingURL=UiResourceConfig.js.map

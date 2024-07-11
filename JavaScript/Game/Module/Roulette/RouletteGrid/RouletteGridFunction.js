@@ -7,9 +7,10 @@ const Log_1 = require("../../../../Core/Common/Log"),
   RouletteGridBase_1 = require("./RouletteGridBase");
 class RouletteGridFunction extends RouletteGridBase_1.RouletteGridBase {
   Init() {
-    var e;
+    let e = !1;
+    var t;
     this.IsDataValid() &&
-      ((e = ModelManager_1.ModelManager.RouletteModel.UnlockFunctionDataMap.get(
+      ((t = ModelManager_1.ModelManager.RouletteModel.UnlockFunctionDataMap.get(
         this.Data.Id,
       )) ||
         (Log_1.Log.CheckError() &&
@@ -19,11 +20,17 @@ class RouletteGridFunction extends RouletteGridBase_1.RouletteGridBase {
             "[FuncMenuWheel]功能轮盘功能格子对应FuncId不存在或未解锁",
             ["FuncId", this.Data.Id],
           )),
-      (this.Data.Name = e.FuncName),
-      e.FuncMenuIconPath.includes("Atlas")
-        ? ((this.IsIconTexture = !1), this.LoadSpriteIcon(e.FuncMenuIconPath))
-        : ((this.IsIconTexture = !0),
-          this.LoadTextureIcon(e.FuncMenuIconPath))),
+      (this.Data.Name = t.FuncName),
+      t.FuncMenuIconPath.includes("Atlas")
+        ? ((this.IsIconTexture = !1), this.LoadSpriteIcon(t.FuncMenuIconPath))
+        : ((this.IsIconTexture = !0), this.LoadTextureIcon(t.FuncMenuIconPath)),
+      this.Data.ShowRedDot) &&
+      void 0 !== t.UnlockCondition &&
+      (t = ModelManager_1.ModelManager.FunctionModel.GetFunctionItemRedDotName(
+        t.UnlockCondition,
+      )) &&
+      ((e = !0), this.BindRedDot(t)),
+      e || this.SetRedDotVisible(!1),
       1 === this.Data.State && this.IsForbiddenState() && (this.Data.State = 0);
   }
   IsForbiddenState() {

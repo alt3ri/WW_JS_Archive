@@ -79,13 +79,13 @@ class TsTaskSetTag extends TsTaskAbortImmediatelyBase_1.default {
   }
   SetGameplayTag(t) {
     this.TsIsCommonTag &&
-      (s = t.GetComponent(177)) &&
+      (s = t.GetComponent(180)) &&
       ((i = this.TsGameplayTag.TagId),
       (e = s.HasTag(i)),
       this.TsIsAdd && !e ? s.AddTag(i) : !this.TsIsAdd && e && s.RemoveTag(i));
     var s,
       i,
-      e = t.GetComponent(185);
+      e = t.GetComponent(188);
     e &&
       ((s = this.TsGameplayTag.TagId),
       (i = e.HasTag(s)),

@@ -2,6 +2,7 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.RoleListComponent = void 0);
 const UE = require("ue"),
+  Log_1 = require("../../../../Core/Common/Log"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
   RedDotController_1 = require("../../../RedDot/RedDotController"),
@@ -9,8 +10,7 @@ const UE = require("ue"),
   UiCameraAnimationManager_1 = require("../../UiCameraAnimation/UiCameraAnimationManager"),
   GenericScrollViewNew_1 = require("../../Util/ScrollView/GenericScrollViewNew"),
   RoleController_1 = require("../RoleController"),
-  RoleListItem_1 = require("./RoleListItem"),
-  Log_1 = require("../../../../Core/Common/Log");
+  RoleListItem_1 = require("./RoleListItem");
 class RoleListComponent extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -18,18 +18,18 @@ class RoleListComponent extends UiPanelBase_1.UiPanelBase {
       (this.RoleViewAgent = void 0),
       (this.DataList = void 0),
       (this.RoleSystemUiParams = void 0),
-      (this.Hke = () => {
+      (this.nFe = () => {
         var e = new RoleListItem_1.RoleListItem();
         return (
-          (e.ToggleCallBack = this.llo),
-          (e.CanToggleExecuteChange = this.d4e),
+          (e.ToggleCallBack = this.n1o),
+          (e.CanToggleExecuteChange = this.A5e),
           e
         );
       }),
-      (this.d4e = (e) =>
+      (this.A5e = (e) =>
         this.ScrollView.GetGenericLayout().GetSelectedGridIndex() !== e &&
         !UiCameraAnimationManager_1.UiCameraAnimationManager.IsPlayingAnimation()),
-      (this.llo = (e) => {
+      (this.n1o = (e) => {
         this.ScrollView.GetGenericLayout().SelectGridProxy(e),
           this.RoleViewAgent?.SetCurSelectRoleId(this.CurSelectDataId),
           RoleController_1.RoleController.OnSelectedRoleChange(
@@ -63,7 +63,7 @@ class RoleListComponent extends UiPanelBase_1.UiPanelBase {
           ])
         : (this.ScrollView = new GenericScrollViewNew_1.GenericScrollViewNew(
             this.GetScrollViewWithScrollbar(0),
-            this.Hke,
+            this.nFe,
           ));
   }
   UnBindRedDot() {
@@ -87,7 +87,7 @@ class RoleListComponent extends UiPanelBase_1.UiPanelBase {
     var e = this.DataList.findIndex((e) => e.RoleDataId === t);
     e < 0 ||
       e >= this.DataList.length ||
-      (this.llo(e),
+      (this.n1o(e),
       (e = this.ScrollView.GetItemByIndex(e)) && this.ScrollView.ScrollTo(e));
   }
 }

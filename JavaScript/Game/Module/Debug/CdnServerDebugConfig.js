@@ -1,57 +1,59 @@
 "use strict";
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CdnServerDebugConfig = void 0);
-const StringUtils_1 = require("../../../Core/Utils/StringUtils"),
+const Info_1 = require("../../../Core/Common/Info"),
+  StringUtils_1 = require("../../../Core/Utils/StringUtils"),
   TestModuleBridge_1 = require("../../Bridge/TestModuleBridge"),
   PublicUtil_1 = require("../../Common/PublicUtil");
 class CdnServerDebugConfig {
   constructor() {
-    (this.aFt = !1),
-      TestModuleBridge_1.TestModuleBridge.TryGetTestModuleExports().then(
-        (t) => {
-          t && t.CdnServerAddress
-            ? (this.hFt = t.CdnServerAddress)
-            : (this.aFt = !1);
-        },
-      );
+    (this.h3t = !1),
+      Info_1.Info.IsBuildShipping ||
+        TestModuleBridge_1.TestModuleBridge.TryGetTestModuleExports().then(
+          (e) => {
+            e && e.CdnServerAddress
+              ? (this.l3t = e.CdnServerAddress)
+              : (this.h3t = !1);
+          },
+        );
   }
-  TryGetMarqueeDebugUrl(t) {
-    return this.aFt
+  TryGetMarqueeDebugUrl(e) {
+    return this.h3t
       ? PublicUtil_1.PublicUtil.GetMarqueeUrl2(
           PublicUtil_1.PublicUtil.GetGameId(),
-          this.hFt.MarqueeServerId,
+          this.l3t.MarqueeServerId,
         )
-      : t;
+      : e;
   }
-  TryGetGachaDetailDebugUrl(t, e, i) {
-    return this.aFt
+  TryGetGachaDetailDebugUrl(e, t, r) {
+    return this.h3t
       ? StringUtils_1.StringUtils.Format(
-          t,
-          this.hFt?.GachaDetailServerAddressPrefix,
-          this.hFt?.GachaDetailServerId,
+          e,
+          this.l3t?.GachaDetailServerAddressPrefix,
+          this.l3t?.GachaDetailServerId,
         )
-      : StringUtils_1.StringUtils.Format(t, e, i);
+      : StringUtils_1.StringUtils.Format(e, t, r);
   }
-  TryGetGachaRecordDebugUrl(t, e, i) {
-    return this.aFt
+  TryGetGachaRecordDebugUrl(e, t, r) {
+    return this.h3t
       ? StringUtils_1.StringUtils.Format(
-          t,
-          this.hFt?.GachaRecordServerAddressPrefix,
-          this.hFt?.GachaRecordServerId,
+          e,
+          this.l3t?.GachaRecordServerAddressPrefix,
+          this.l3t?.GachaRecordServerId,
         )
-      : StringUtils_1.StringUtils.Format(t, e, i);
+      : StringUtils_1.StringUtils.Format(e, t, r);
   }
-  TryGetGachaInfoDebugUrl(t, e, i) {
-    return this.aFt
+  TryGetGachaInfoDebugUrl(e, t, r) {
+    return this.h3t
       ? StringUtils_1.StringUtils.Format(
-          t,
-          this.hFt?.GachaInfoServerPrefixAddress,
-          this.hFt?.GachaInfoServerId,
+          e,
+          this.l3t?.GachaInfoServerPrefixAddress,
+          this.l3t?.GachaInfoServerId,
         )
-      : StringUtils_1.StringUtils.Format(t, e, i);
+      : StringUtils_1.StringUtils.Format(e, t, r);
   }
-  TryGetNoticeServerPrefixAddress(t) {
-    return this.aFt ? this.hFt?.NoticeServerPrefixAddress : t;
+  TryGetNoticeServerPrefixAddress(e) {
+    return this.h3t ? this.l3t?.NoticeServerPrefixAddress : e;
   }
 }
 (exports.CdnServerDebugConfig = CdnServerDebugConfig).Singleton =

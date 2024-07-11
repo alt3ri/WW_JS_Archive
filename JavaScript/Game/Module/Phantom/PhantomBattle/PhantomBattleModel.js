@@ -40,35 +40,35 @@ exports.LevelUpPastVisionData = LevelUpPastVisionData;
 class PhantomBattleModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
-      (this.rVi = new Map()),
-      (this.nVi = new Map()),
-      (this.sVi = new Map()),
-      (this.aVi = new Map()),
-      (this.hVi = new Map()),
-      (this.lVi = new Array()),
-      (this._Vi = !1),
-      (this.uVi = void 0),
+      (this.o6i = new Map()),
+      (this.r6i = new Map()),
+      (this.n6i = new Map()),
+      (this.s6i = new Map()),
+      (this.a6i = new Map()),
+      (this.h6i = new Array()),
+      (this.l6i = !1),
+      (this._6i = void 0),
       (this.CurrentSelectData = void 0),
       (this.CurrentEquipmentSelectIndex = 0),
       (this.CurrentSelectUniqueId = 0),
-      (this.cVi = void 0),
-      (this.mVi = new UE.Vector()),
-      (this.dVi = new UE.Vector()),
-      (this.CVi = new UE.Rotator()),
-      (this.gVi = new Map()),
-      (this.fVi = []),
-      (this.pVi = void 0),
-      (this.vVi = !1),
-      (this.MVi = 999),
-      (this.SVi = 0),
-      (this.EVi = []),
-      (this.yVi = new Map()),
-      (this.IVi = new Map()),
-      (this.TVi = void 0),
-      (this.LVi = void 0),
-      (this.DVi = void 0),
-      (this.RVi = void 0),
-      (this.UVi = () => {
+      (this.u6i = void 0),
+      (this.c6i = new UE.Vector()),
+      (this.m6i = new UE.Vector()),
+      (this.d6i = new UE.Rotator()),
+      (this.C6i = new Map()),
+      (this.g6i = []),
+      (this.f6i = void 0),
+      (this.p6i = !1),
+      (this.v6i = 999),
+      (this.M6i = 0),
+      (this.E6i = []),
+      (this.S6i = new Map()),
+      (this.y6i = new Map()),
+      (this.I6i = void 0),
+      (this.T6i = void 0),
+      (this.L6i = void 0),
+      (this.D6i = void 0),
+      (this.R6i = () => {
         ControllerHolder_1.ControllerHolder.PhantomBattleController.TryShowReceiveItem();
       }),
       (this.SortAttrList = (t, e) => {
@@ -76,34 +76,34 @@ class PhantomBattleModel extends ModelBase_1.ModelBase {
           i = 0 !== e.Priority;
         return r && i ? t.Priority - e.Priority : r ? -1 : i ? 1 : t.Id - e.Id;
       }),
-      (this.AVi = void 0),
+      (this.U6i = void 0),
       (this.CurrentSelectFetterGroupId = 0),
-      (this.PVi = void 0),
-      (this.xVi = new Array(4, 3, 3, 1, 1)),
-      (this.wVi = new Array()),
-      (this.BVi = new Array()),
-      (this.bVi = 0),
-      (this.qVi = void 0),
-      (this.GVi = void 0),
-      (this.NVi = (t, e) => {
+      (this.A6i = void 0),
+      (this.P6i = new Array(4, 3, 3, 1, 1)),
+      (this.x6i = new Array()),
+      (this.w6i = new Array()),
+      (this.B6i = 0),
+      (this.b6i = void 0),
+      (this.q6i = void 0),
+      (this.G6i = (t, e) => {
         if (t.GetPhantomLevel() !== e.GetPhantomLevel())
           return e.GetPhantomLevel() - t.GetPhantomLevel();
         if (t.GetQuality() !== e.GetQuality())
           return e.GetQuality() - t.GetQuality();
-        var r = this.wVi.includes(t.GetMonsterId()),
-          i = this.wVi.includes(e.GetMonsterId());
+        var r = this.x6i.includes(t.GetMonsterId()),
+          i = this.x6i.includes(e.GetMonsterId());
         if (r && !i) return -1;
         if (i && !r) return 1;
-        (i = this.wVi.indexOf(t.GetMonsterId())),
-          (r = this.wVi.indexOf(e.GetMonsterId())),
-          (i = 0 <= i ? this.BVi[i] : 0),
-          (r = 0 <= r ? this.BVi[r] : 0);
+        (i = this.x6i.indexOf(t.GetMonsterId())),
+          (r = this.x6i.indexOf(e.GetMonsterId())),
+          (i = 0 <= i ? this.w6i[i] : 0),
+          (r = 0 <= r ? this.w6i[r] : 0);
         if (i !== r) return r - i;
-        (r = t.GetFetterGroupId() === this.bVi),
-          (i = e.GetFetterGroupId() === this.bVi);
+        (r = t.GetFetterGroupId() === this.B6i),
+          (i = e.GetFetterGroupId() === this.B6i);
         if (r && i) {
-          var a = this.qVi.includes(t.GetMonsterId()),
-            n = this.qVi.includes(e.GetMonsterId());
+          var a = this.b6i.includes(t.GetMonsterId()),
+            n = this.b6i.includes(e.GetMonsterId());
           if (a && !n) return -1;
           if (n && !a) return 1;
         } else {
@@ -112,11 +112,11 @@ class PhantomBattleModel extends ModelBase_1.ModelBase {
         }
         return t.GetCost() !== e.GetCost()
           ? e.GetCost() - t.GetCost()
-          : ((n = this.GVi.includes(t.GetUniqueId())),
-            (a = this.GVi.includes(e.GetUniqueId())),
+          : ((n = this.q6i.includes(t.GetUniqueId())),
+            (a = this.q6i.includes(e.GetUniqueId())),
             n && !a ? -1 : a && !n ? 1 : e.GetConfigId() - t.GetConfigId());
       }),
-      (this.OVi = (t, e) => {
+      (this.N6i = (t, e) => {
         var r, i;
         return t.GetType() !== e.GetType()
           ? t.GetType() - e.GetType()
@@ -128,72 +128,72 @@ class PhantomBattleModel extends ModelBase_1.ModelBase {
                 ? r.GetPhantomLevel() - i.GetPhantomLevel()
                 : e.GetUniqueId() - t.GetUniqueId());
       }),
-      (this.kVi = new Array());
+      (this.O6i = new Array());
   }
   SetCurrentDragIndex(t) {
-    this.MVi = t;
+    this.v6i = t;
   }
   ClearCurrentDragIndex() {
-    this.MVi = 999;
+    this.v6i = 999;
   }
   CheckIfCurrentDragIndex(t) {
-    return this.MVi === t;
+    return this.v6i === t;
   }
   CheckIfCanDrag() {
-    return 999 === this.MVi;
+    return 999 === this.v6i;
   }
   OnInit() {
     for (const i of ConfigManager_1.ConfigManager.PhantomBattleConfig.GetPhantomItemList()) {
       var e,
         r = 0 !== i.ParentMonsterId ? i.ParentMonsterId : i.MonsterId;
-      let t = this.yVi.get(r);
+      let t = this.S6i.get(r);
       t
         ? 0 !== i.ParentMonsterId
           ? t.push(i.ItemId)
           : 2 === i.QualityId &&
-            ((e = []).push(i.ItemId), (t = e.concat(t)), this.yVi.set(r, t))
-        : ((t = []).push(i.ItemId), this.yVi.set(r, t)),
-        0 !== i.ParentMonsterId && this.IVi.set(i.MonsterId, i.ParentMonsterId);
+            ((e = []).push(i.ItemId), (t = e.concat(t)), this.S6i.set(r, t))
+        : ((t = []).push(i.ItemId), this.S6i.set(r, t)),
+        0 !== i.ParentMonsterId && this.y6i.set(i.MonsterId, i.ParentMonsterId);
     }
     return !0;
   }
   async GetDragCurve() {
     return (
-      this.cVi ||
-        ((this.cVi = new CustomPromise_1.CustomPromise()),
+      this.u6i ||
+        ((this.u6i = new CustomPromise_1.CustomPromise()),
         ResourceSystem_1.ResourceSystem.LoadAsync(
           ConfigManager_1.ConfigManager.PhantomBattleConfig.GetVisionDragCurve(),
           UE.CurveFloat,
           (t) => {
-            this.cVi.SetResult(t);
+            this.u6i.SetResult(t);
           },
         )),
-      await this.cVi.Promise,
-      this.cVi.Promise
+      await this.u6i.Promise,
+      this.u6i.Promise
     );
   }
   SetDefaultSkin(t, e) {
-    for (var [, r] of this.hVi)
+    for (var [, r] of this.a6i)
       t === r.GetConfig()?.MonsterId && r.SetSkinId(e);
   }
   SetUnlockSkinList(t) {
-    this.EVi = t;
+    this.E6i = t;
   }
   ConcatUnlockSkinList(t) {
-    this.EVi = this.EVi.concat(t);
+    this.E6i = this.E6i.concat(t);
   }
   GetSkinIsUnlock(t) {
-    return this.EVi.includes(t);
+    return this.E6i.includes(t);
   }
   GetMonsterSkinListByMonsterId(t) {
-    return this.yVi.get(t);
+    return this.S6i.get(t);
   }
   GetMonsterSkinListHasNew(t) {
     t =
       ConfigManager_1.ConfigManager.PhantomBattleConfig?.GetPhantomItemById(t);
     if (t) {
       t = 0 !== t.ParentMonsterId ? t.ParentMonsterId : t.MonsterId;
-      for (const e of this.yVi.get(t))
+      for (const e of this.S6i.get(t))
         if (
           ModelManager_1.ModelManager.NewFlagModel.HasNewFlag(
             LocalStorageDefine_1.ELocalStoragePlayerKey.VisionSkin,
@@ -205,32 +205,32 @@ class PhantomBattleModel extends ModelBase_1.ModelBase {
     return !1;
   }
   GetMonsterSkinMonsterIdMapByMonsterId(t) {
-    return this.IVi.get(t);
+    return this.y6i.get(t);
   }
   SetMaxCost(t) {
-    this.SVi = t;
+    this.M6i = t;
   }
   GetMaxCost() {
-    return this.SVi;
+    return this.M6i;
   }
   SetRobotPhantomData(t, e) {
-    this.rVi.set(t, e);
+    this.o6i.set(t, e);
   }
   NewPhantomBattleData(t) {
     var e = new PhantomBattleData_1.PhantomBattleData();
-    return e.SetData(t), this.hVi.set(t.Q5n, e), (this._Vi = !0), e;
+    return e.SetData(t), this.a6i.set(t.L9n, e), (this.l6i = !0), e;
   }
   RemovePhantomBattleData(t) {
-    this.hVi.delete(t), (this._Vi = !0);
+    this.a6i.delete(t), (this.l6i = !0);
   }
   GetPhantomDataBase(t) {
     return this.GetPhantomBattleData(t);
   }
   GetPhantomBattleData(t) {
-    return (t < 0 ? this.rVi : this.hVi).get(t);
+    return (t < 0 ? this.o6i : this.a6i).get(t);
   }
   GetPhantomInstanceByItemId(t) {
-    let e = this.aVi.get(t);
+    let e = this.s6i.get(t);
     var r;
     return (
       e ||
@@ -239,7 +239,7 @@ class PhantomBattleModel extends ModelBase_1.ModelBase {
             t,
           )),
         (e = new PhantomBattleInstance_1.PhantomBattleInstance(r)),
-        this.aVi.set(t, e)),
+        this.s6i.set(t, e)),
       e
     );
   }
@@ -255,10 +255,10 @@ class PhantomBattleModel extends ModelBase_1.ModelBase {
     );
   }
   CachePhantomLevelUpData(t) {
-    this.pVi = t;
+    this.f6i = t;
   }
   GetCachePhantomLevelUpData() {
-    return this.pVi;
+    return this.f6i;
   }
   GetLevelUpSuccessData(t) {
     var e =
@@ -271,7 +271,7 @@ class PhantomBattleModel extends ModelBase_1.ModelBase {
         ControllerHolder_1.ControllerHolder.PhantomBattleController.GetPhantomItemDataByUniqueId(
           t,
         ),
-      i = this.FVi(e, t);
+      i = this.k6i(e, t);
     const a = new Array();
     i.forEach((t) => {
       a.push(
@@ -301,10 +301,10 @@ class PhantomBattleModel extends ModelBase_1.ModelBase {
       },
       WiderScrollView: !1,
       AttributeInfo: a,
-      ClickFunction: this.UVi,
+      ClickFunction: this.R6i,
     };
   }
-  FVi(t, e) {
+  k6i(t, e) {
     var i = t.AttrListScrollData,
       a = e.GetMainPropShowAttributeList(1),
       n = a.length,
@@ -341,24 +341,24 @@ class PhantomBattleModel extends ModelBase_1.ModelBase {
       var r = [{ IncId: 0, ItemId: Number.parseInt(i) }, t[i]];
       e.push(r);
     }
-    (this.fVi = e),
-      (this.vVi = !0),
+    (this.g6i = e),
+      (this.p6i = !0),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.PhantomLevelUpReceiveItem,
         e,
       );
   }
   GetVisionLevelUpTag() {
-    return this.vVi;
+    return this.p6i;
   }
   ClearVisionLevelUp() {
-    this.vVi = !1;
+    this.p6i = !1;
   }
   GetTempSaveItemList() {
-    return this.fVi;
+    return this.g6i;
   }
   ClearTempSaveItemList() {
-    this.fVi = [];
+    this.g6i = [];
   }
   GetVisionSortUseDataList(t = 0, e = 0) {
     var r = new Array(),
@@ -396,72 +396,72 @@ class PhantomBattleModel extends ModelBase_1.ModelBase {
     return r;
   }
   GetPhantomBattleDataMap() {
-    return this.hVi;
+    return this.a6i;
   }
   GetUnEquipVisionArray() {
     return (
-      this._Vi &&
-        ((this.lVi = []),
-        (this._Vi = !1),
+      this.l6i &&
+        ((this.h6i = []),
+        (this.l6i = !1),
         this.GetPhantomBattleDataMap().forEach((t, e) => {
-          this.CheckPhantomIsEquip(e) || this.lVi.push(t);
+          this.CheckPhantomIsEquip(e) || this.h6i.push(t);
         })),
-      this.lVi
+      this.h6i
     );
   }
   UpdateRoleEquipmentData(r) {
-    var t = this.GetBattleDataById(r.l3n);
+    var t = this.GetBattleDataById(r.O6n);
     t.GetIncrIdList().forEach((t) => {
-      this.sVi.delete(t);
+      this.n6i.delete(t);
     }),
-      r.c8n.forEach((t) => {
+      r.W7n.forEach((t) => {
         var e = this.GetPhantomEquipOnRoleId(t);
         0 < e && this.GetBattleDataById(e).RemoveIncrIdLocal(t),
-          this.sVi.set(t, r.l3n);
+          this.n6i.set(t, r.O6n);
       }),
-      (this._Vi = !0),
+      (this.l6i = !0),
       t.Phrase(r);
   }
   UpdateRoleEquipmentPropData(t) {
-    this.GetBattleDataById(t.l3n).Phrase(t);
+    this.GetBattleDataById(t.O6n).Phrase(t);
   }
   DeleteBattleData(t) {
-    var e = this.nVi.get(t);
+    var e = this.r6i.get(t);
     e &&
       (e.GetIncrIdList().forEach((t) => {
-        this.sVi.delete(t);
+        this.n6i.delete(t);
       }),
-      (this._Vi = !0),
-      this.nVi.delete(t));
+      (this.l6i = !0),
+      this.r6i.delete(t));
   }
   GetBattleDataById(t) {
-    let e = this.nVi.get(t);
+    let e = this.r6i.get(t);
     return (
       (e = e || new PhantomRoleEquipmentData_1.PhantomRoleEquipmentData()),
-      this.nVi.set(t, e),
+      this.r6i.set(t, e),
       e
     );
   }
   CheckPhantomIsEquip(t) {
-    return t < 0 || (0 !== t && this.sVi.has(t));
+    return t < 0 || (0 !== t && this.n6i.has(t));
   }
   CheckPhantomIsMain(t) {
     var e;
     return t < 0
       ? this.GetPhantomDataBase(t).GetIfMain()
       : !!this.CheckPhantomIsEquip(t) &&
-          ((e = this.sVi.get(t)),
+          ((e = this.n6i.get(t)),
           this.GetBattleDataById(e).CheckPhantomIsMain(t));
   }
   CheckPhantomIsSub(t) {
     var e;
     return (
       !!this.CheckPhantomIsEquip(t) &&
-      ((e = this.sVi.get(t)), this.GetBattleDataById(e).CheckPhantomIsSub(t))
+      ((e = this.n6i.get(t)), this.GetBattleDataById(e).CheckPhantomIsSub(t))
     );
   }
   GetPhantomEquipOnRoleId(t) {
-    if (this.CheckPhantomIsEquip(t)) return this.sVi.get(t);
+    if (this.CheckPhantomIsEquip(t)) return this.n6i.get(t);
   }
   CheckPhantomIndexIsEquipOnRole(t, e) {
     return -1 !== this.GetBattleDataById(t).GetIndexPhantomId(e);
@@ -557,9 +557,9 @@ class PhantomBattleModel extends ModelBase_1.ModelBase {
     var t = e.GetDataMap(),
       r = [];
     for (const e of t.values()) e && r.push(e.GetIncrId());
-    e.ClearPhantomFettersList(), this.VVi(r, e.GetPhantomFettersList());
+    e.ClearPhantomFettersList(), this.F6i(r, e.GetPhantomFettersList());
   }
-  VVi(t, e) {
+  F6i(t, e) {
     const r = new Map();
     t.forEach((t) => {
       var e,
@@ -583,7 +583,7 @@ class PhantomBattleModel extends ModelBase_1.ModelBase {
     var o = new Array(),
       s = this.GetTargetRoleFetterList(r),
       h = new Array();
-    a.push(t.GetIncrId()), this.VVi(a, o);
+    a.push(t.GetIncrId()), this.F6i(a, o);
     for (const l of o) s.includes(l) || h.push(l);
     return h;
   }
@@ -596,7 +596,7 @@ class PhantomBattleModel extends ModelBase_1.ModelBase {
     var o = new Array(),
       r = this.GetTargetRoleFetterList(r),
       s = new Array();
-    a.push(t.GetIncrId()), this.VVi(a, o);
+    a.push(t.GetIncrId()), this.F6i(a, o);
     for (const h of r) o.includes(h) || s.push(h);
     return s;
   }
@@ -666,30 +666,30 @@ class PhantomBattleModel extends ModelBase_1.ModelBase {
       .GetPhantomFettersList();
   }
   GetMeshTransform(t) {
-    return new UE.Transform(this.HVi(t), this.jVi(t), this.WVi(t));
+    return new UE.Transform(this.V6i(t), this.H6i(t), this.j6i(t));
   }
-  WVi(t) {
+  j6i(t) {
     t = this.GetPhantomInstanceByItemId(t).GetModelZoom();
     if (t && 0 < t.length)
       return (
-        (this.mVi.X = t[0]), (this.mVi.Y = t[1]), (this.mVi.Z = t[2]), this.mVi
+        (this.c6i.X = t[0]), (this.c6i.Y = t[1]), (this.c6i.Z = t[2]), this.c6i
       );
   }
-  jVi(t) {
+  H6i(t) {
     t = this.GetPhantomInstanceByItemId(t).GetModelLocation();
     if (t && 0 < t.length)
       return (
-        (this.dVi.X = t[0]), (this.dVi.Y = t[1]), (this.dVi.Z = t[2]), this.dVi
+        (this.m6i.X = t[0]), (this.m6i.Y = t[1]), (this.m6i.Z = t[2]), this.m6i
       );
   }
-  HVi(t) {
+  V6i(t) {
     t = this.GetPhantomInstanceByItemId(t).GetModelRotator();
     if (t && 0 < t.length)
       return (
-        (this.CVi.Roll = t[0]),
-        (this.CVi.Pitch = t[1]),
-        (this.CVi.Yaw = t[2]),
-        this.CVi
+        (this.d6i.Roll = t[0]),
+        (this.d6i.Pitch = t[1]),
+        (this.d6i.Yaw = t[2]),
+        this.d6i
       );
   }
   GetStandAnim(t) {
@@ -711,7 +711,7 @@ class PhantomBattleModel extends ModelBase_1.ModelBase {
       r,
       i = this.GetPhantomDataBase(t);
     let a = !1;
-    for ([e, r] of this.hVi)
+    for ([e, r] of this.a6i)
       if (
         r.GetMonsterId() === i?.GetMonsterId() &&
         e !== t &&
@@ -755,7 +755,7 @@ class PhantomBattleModel extends ModelBase_1.ModelBase {
     );
   }
   ResetLevelUpItemData() {
-    this.gVi.clear();
+    this.C6i.clear();
   }
   GetPhantomItemIdArrayByMonsterId(t) {
     t =
@@ -794,8 +794,8 @@ class PhantomBattleModel extends ModelBase_1.ModelBase {
   }
   GetFetterGroupMonsterMap() {
     return (
-      this.uVi ||
-        ((this.uVi = new Map()),
+      this._6i ||
+        ((this._6i = new Map()),
         ConfigManager_1.ConfigManager.PhantomBattleConfig.GetFetterGroupArray().forEach(
           (t) => {
             var e =
@@ -806,10 +806,10 @@ class PhantomBattleModel extends ModelBase_1.ModelBase {
             e.forEach((t) => {
               r.includes(t) || r.push(t);
             }),
-              this.uVi.set(t.Id, r);
+              this._6i.set(t.Id, r);
           },
         )),
-      this.uVi
+      this._6i
     );
   }
   GetTrialRoleDetailAttrList(t) {
@@ -863,7 +863,7 @@ class PhantomBattleModel extends ModelBase_1.ModelBase {
         for (const e of t.GetMainTrailProp().values()) s.push(e);
         for (const r of t.GetSubTrailPropMap().values()) s.push(r);
       }),
-      this.KVi(s, o, t);
+      this.W6i(s, o, t);
     for (const h of n)
       h.IsShow &&
         ((e =
@@ -883,7 +883,7 @@ class PhantomBattleModel extends ModelBase_1.ModelBase {
         ));
     return i.sort(this.SortAttrList), i;
   }
-  KVi(t, r, e) {
+  W6i(t, r, e) {
     var i,
       a = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(e);
     for (const n of t) {
@@ -899,10 +899,10 @@ class PhantomBattleModel extends ModelBase_1.ModelBase {
     }
   }
   set CurrentSelectedFetter(t) {
-    this.AVi = t;
+    this.U6i = t;
   }
   get CurrentSelectedFetter() {
-    return this.AVi;
+    return this.U6i;
   }
   GetFettersObtainDataList(t) {
     var e = new Array();
@@ -946,14 +946,14 @@ class PhantomBattleModel extends ModelBase_1.ModelBase {
     return e;
   }
   SetPhantomRecommendData(t) {
-    (this.PVi = new RecommendData()),
-      (this.PVi.RoleId = t.l3n),
-      (this.PVi.MonsterIdList = t.sUs),
-      (this.PVi.MainPropId = t.aUs),
-      (this.PVi.FetterGroupId = t.SDs);
+    (this.A6i = new RecommendData()),
+      (this.A6i.RoleId = t.O6n),
+      (this.A6i.MonsterIdList = t.TBs),
+      (this.A6i.MainPropId = t.LBs),
+      (this.A6i.FetterGroupId = t.Nws);
   }
   get PhantomRecommendData() {
-    return this.PVi;
+    return this.A6i;
   }
   CheckIfHasPhantomSatisfiedLevelCondition(t, e) {
     let r = [];
@@ -996,11 +996,11 @@ class PhantomBattleModel extends ModelBase_1.ModelBase {
   }
   GetRecommendEquipUniqueIdList(t) {
     var r = [0, 0, 0, 0, 0];
-    if (!this.PVi || this.PVi.RoleId === t) {
-      var e = this.PVi ? this.PVi.MonsterIdList : [],
-        i = this.PVi ? this.PVi.FetterGroupId : 0,
+    if (!this.A6i || this.A6i.RoleId === t) {
+      var e = this.A6i ? this.A6i.MonsterIdList : [],
+        i = this.A6i ? this.A6i.FetterGroupId : 0,
         a =
-          (this.QVi(e, i, t),
+          (this.K6i(e, i, t),
           ModelManager_1.ModelManager.PhantomBattleModel.GetAllNotEquipPhantomList(
             t,
           ));
@@ -1009,14 +1009,14 @@ class PhantomBattleModel extends ModelBase_1.ModelBase {
           o = ModelManager_1.ModelManager.PhantomBattleModel.GetMaxCost(),
           s = r.length;
         for (let e = 0; e < s; e++) {
-          var h = this.xVi[e];
+          var h = this.P6i[e];
           for (let t = 0; t < n; t++) {
             var l = a[t].GetUniqueId();
             if (!r.includes(l)) {
               var u = a[t].GetCost();
               if (!(h < u))
                 if (
-                  ModelManager_1.ModelManager.PhantomBattleModel.XVi(r) + u <=
+                  ModelManager_1.ModelManager.PhantomBattleModel.Q6i(r) + u <=
                   o
                 ) {
                   r[e] = l;
@@ -1044,20 +1044,20 @@ class PhantomBattleModel extends ModelBase_1.ModelBase {
             t = this.GetPhantomBattleData(t);
             t && i.push(t);
           }),
-        i.sort(this.NVi)
+        i.sort(this.G6i)
       );
     }
   }
-  QVi(t, e, r) {
-    (this.wVi = t), (this.BVi = []);
-    var i = this.wVi.length;
+  K6i(t, e, r) {
+    (this.x6i = t), (this.w6i = []);
+    var i = this.x6i.length;
     for (let t = i - 1; 0 <= t; t--)
-      t !== i - 1 ? this.wVi.push(t) : this.wVi.push(1);
-    (this.bVi = e),
-      (this.GVi = this.GetBattleDataById(r).GetIncrIdList()),
-      (this.qVi = []),
-      this.GVi.forEach((t) => {
-        this.qVi.push(
+      t !== i - 1 ? this.x6i.push(t) : this.x6i.push(1);
+    (this.B6i = e),
+      (this.q6i = this.GetBattleDataById(r).GetIncrIdList()),
+      (this.b6i = []),
+      this.q6i.forEach((t) => {
+        this.b6i.push(
           void 0 !== this.GetPhantomDataBase(t)
             ? this.GetPhantomDataBase(t).GetMonsterId()
             : 0,
@@ -1071,7 +1071,7 @@ class PhantomBattleModel extends ModelBase_1.ModelBase {
     for (const i of e) i.GetConfigId() === t && r++;
     return r;
   }
-  XVi(t) {
+  Q6i(t) {
     let e = 0;
     return (
       t.forEach((t) => {
@@ -1118,7 +1118,7 @@ class PhantomBattleModel extends ModelBase_1.ModelBase {
     return r;
   }
   GetSortedExpMaterialList(t, e) {
-    return this.GetExpMaterialList(t, e, !0).sort(this.OVi);
+    return this.GetExpMaterialList(t, e, !0).sort(this.N6i);
   }
   GetExpMaterialList(t, a = 0, e = !1) {
     var r =
@@ -1136,8 +1136,8 @@ class PhantomBattleModel extends ModelBase_1.ModelBase {
         if (0 === this.GetPhantomBattleData(o.GetUniqueId()).GetPhantomLevel())
           continue;
         if (
-          this.sVi.has(o.GetUniqueId()) &&
-          0 !== this.sVi.get(o.GetUniqueId())
+          this.n6i.has(o.GetUniqueId()) &&
+          0 !== this.n6i.get(o.GetUniqueId())
         )
           continue;
       }
@@ -1249,7 +1249,7 @@ class PhantomBattleModel extends ModelBase_1.ModelBase {
     );
   }
   get QualityUnlockTipsList() {
-    return this.kVi;
+    return this.O6i;
   }
   CacheNewSkinData(t) {
     var e = new VisionUnlockQualityData(),
@@ -1264,7 +1264,7 @@ class PhantomBattleModel extends ModelBase_1.ModelBase {
       );
   }
   CacheNewQualityData(t) {
-    t.lUs.forEach((t) => {
+    t.DBs.forEach((t) => {
       var e = new VisionUnlockQualityData(),
         r =
           ConfigManager_1.ConfigManager.PhantomBattleConfig.GetPhantomItemById(
@@ -1286,33 +1286,33 @@ class PhantomBattleModel extends ModelBase_1.ModelBase {
   }
   GetSortMainAttributeMap() {
     return (
-      this.TVi ||
-        ((this.TVi = new Map()),
-        this.TVi.set(8, 10007),
-        this.TVi.set(6, 10002),
-        this.TVi.set(10, 10010),
-        this.TVi.set(12, 8),
-        this.TVi.set(13, 9),
-        this.TVi.set(14, 35),
-        this.TVi.set(15, 21),
-        this.TVi.set(16, 22),
-        this.TVi.set(17, 23),
-        this.TVi.set(18, 24),
-        this.TVi.set(19, 25),
-        this.TVi.set(20, 26),
-        this.TVi.set(21, 27),
-        this.TVi.set(22, 11)),
-      this.TVi
+      this.I6i ||
+        ((this.I6i = new Map()),
+        this.I6i.set(8, 10007),
+        this.I6i.set(6, 10002),
+        this.I6i.set(10, 10010),
+        this.I6i.set(12, 8),
+        this.I6i.set(13, 9),
+        this.I6i.set(14, 35),
+        this.I6i.set(15, 21),
+        this.I6i.set(16, 22),
+        this.I6i.set(17, 23),
+        this.I6i.set(18, 24),
+        this.I6i.set(19, 25),
+        this.I6i.set(20, 26),
+        this.I6i.set(21, 27),
+        this.I6i.set(22, 11)),
+      this.I6i
     );
   }
   GetSortMainPercentageAttributeMap() {
     return (
-      this.LVi ||
-        ((this.LVi = new Map()),
-        this.LVi.set(9, 10007),
-        this.LVi.set(7, 10002),
-        this.LVi.set(11, 10010)),
-      this.LVi
+      this.T6i ||
+        ((this.T6i = new Map()),
+        this.T6i.set(9, 10007),
+        this.T6i.set(7, 10002),
+        this.T6i.set(11, 10010)),
+      this.T6i
     );
   }
   GetSubAttributeKey(t) {
@@ -1324,32 +1324,32 @@ class PhantomBattleModel extends ModelBase_1.ModelBase {
   }
   GetSortSubAttributeMap() {
     return (
-      this.DVi ||
-        ((this.DVi = new Map()),
-        this.DVi.set(25, 2),
-        this.DVi.set(23, 1),
-        this.DVi.set(27, 3),
-        this.DVi.set(29, 14),
-        this.DVi.set(30, 15),
-        this.DVi.set(32, 7),
-        this.DVi.set(33, 8),
-        this.DVi.set(34, 9),
-        this.DVi.set(35, 10),
-        this.DVi.set(36, 11),
-        this.DVi.set(37, 12),
-        this.DVi.set(38, 13),
-        this.DVi.set(39, 16)),
-      this.DVi
+      this.L6i ||
+        ((this.L6i = new Map()),
+        this.L6i.set(25, 2),
+        this.L6i.set(23, 1),
+        this.L6i.set(27, 3),
+        this.L6i.set(29, 14),
+        this.L6i.set(30, 15),
+        this.L6i.set(36, 11),
+        this.L6i.set(37, 12),
+        this.L6i.set(38, 13),
+        this.L6i.set(39, 16),
+        this.L6i.set(47, 7),
+        this.L6i.set(48, 8),
+        this.L6i.set(49, 9),
+        this.L6i.set(50, 10)),
+      this.L6i
     );
   }
   GetSortSubPercentageAttributeMap() {
     return (
-      this.RVi ||
-        ((this.RVi = new Map()),
-        this.RVi.set(26, 5),
-        this.RVi.set(24, 4),
-        this.RVi.set(28, 6)),
-      this.RVi
+      this.D6i ||
+        ((this.D6i = new Map()),
+        this.D6i.set(26, 5),
+        this.D6i.set(24, 4),
+        this.D6i.set(28, 6)),
+      this.D6i
     );
   }
 }

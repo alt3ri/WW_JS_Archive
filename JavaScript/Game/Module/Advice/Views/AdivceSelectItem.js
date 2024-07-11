@@ -25,8 +25,8 @@ const UE = require("ue"),
 class AdviceSelectItem extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
-      (this.G8e = new Array()),
-      (this.N8e = new Array()),
+      (this.J9e = new Array()),
+      (this.z9e = new Array()),
       this.CreateThenShowByActor(e.GetOwner());
   }
   OnRegisterComponent() {
@@ -41,53 +41,53 @@ class AdviceSelectItem extends UiPanelBase_1.UiPanelBase {
     this.GetItem(2).SetUIActive(!1), this.GetItem(3).SetUIActive(!1);
   }
   RefreshView(e) {
-    this.O8e();
+    this.Z9e();
     let i = 0,
       s = 0;
     e.forEach((e) => {
       var t;
       4 !== e.GetIndex()
-        ? ((t = this.k8e(i))
+        ? ((t = this.e7e(i))
             .GetRootItem()
             .SetUIParent(this.GetScrollViewWithScrollbar(0).ContentUIItem),
           t.RefreshView(e),
           i++)
-        : (this.F8e(s)
+        : (this.t7e(s)
             .GetRootItem()
             .SetUIParent(this.GetScrollViewWithScrollbar(0).ContentUIItem),
           s++);
     });
   }
-  O8e() {
-    this.G8e.forEach((e) => {
+  Z9e() {
+    this.J9e.forEach((e) => {
       e.GetRootItem().SetUIActive(!1),
         e.GetRootItem().SetUIParent(this.RootItem);
     }),
-      this.N8e.forEach((e) => {
+      this.z9e.forEach((e) => {
         e.GetRootItem().SetUIActive(!1),
           e.GetRootItem().SetUIParent(this.RootItem);
       });
   }
-  k8e(e) {
-    return this.G8e.length > e
-      ? (this.G8e[e].GetRootItem().SetUIActive(!0), this.G8e[e])
+  e7e(e) {
+    return this.J9e.length > e
+      ? (this.J9e[e].GetRootItem().SetUIActive(!0), this.J9e[e])
       : ((e = LguiUtil_1.LguiUtil.CopyItem(
           this.GetItem(2),
           void 0,
         )).SetUIActive(!0),
         (e = new AdviceSelectBtnContentItem(e)),
-        this.G8e.push(e),
+        this.J9e.push(e),
         e);
   }
-  F8e(e) {
-    return this.N8e.length > e
-      ? (this.N8e[e].GetRootItem().SetUIActive(!0), this.N8e[e])
+  t7e(e) {
+    return this.z9e.length > e
+      ? (this.z9e[e].GetRootItem().SetUIActive(!0), this.z9e[e])
       : ((e = LguiUtil_1.LguiUtil.CopyItem(
           this.GetItem(3),
           void 0,
         )).SetUIActive(!0),
         (e = new AdviceSelectLineContentItem(e)),
-        this.N8e.push(e),
+        this.z9e.push(e),
         e);
   }
 }
@@ -96,7 +96,7 @@ class AdviceSelectBtnContentItem extends UiPanelBase_1.UiPanelBase {
   constructor(e) {
     super(),
       (this.Pe = void 0),
-      (this.V8e = () => {
+      (this.i7e = () => {
         var e;
         (0 !== this.Pe.GetIndex() && 2 !== this.Pe.GetIndex()) ||
           ((e = 0 === this.Pe.GetIndex() ? 0 : 1),
@@ -114,7 +114,7 @@ class AdviceSelectBtnContentItem extends UiPanelBase_1.UiPanelBase {
               ),
               (this.GetText(1).useChangeColor = !1)));
       }),
-      (this.H8e = () => {
+      (this.o7e = () => {
         var e;
         1 === this.Pe.GetIndex() &&
           (0 <
@@ -131,17 +131,17 @@ class AdviceSelectBtnContentItem extends UiPanelBase_1.UiPanelBase {
               ),
               (this.GetText(1).useChangeColor = !1)));
       }),
-      (this.j8e = () => {
-        this.W8e(), this.K8e();
+      (this.r7e = () => {
+        this.n7e(), this.s7e();
       }),
-      (this.Q8e = () => {
+      (this.a7e = () => {
         (ModelManager_1.ModelManager.AdviceModel.CurrentExpressionId = 0),
-          this.K8e(),
+          this.s7e(),
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.OnSelectAdviceExpression,
           );
       }),
-      (this.X8e = () => {
+      (this.h7e = () => {
         (ModelManager_1.ModelManager.AdviceModel.PreSelectAdviceItemId =
           this.Pe.GetIndex()),
           EventSystem_1.EventSystem.Emit(
@@ -158,25 +158,25 @@ class AdviceSelectBtnContentItem extends UiPanelBase_1.UiPanelBase {
       [3, UE.UIButtonComponent],
     ]),
       (this.BtnBindInfo = [
-        [0, this.X8e],
-        [3, this.Q8e],
+        [0, this.h7e],
+        [3, this.a7e],
       ]);
   }
   OnStart() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnSelectAdviceExpression,
-      this.j8e,
+      this.r7e,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnSelectAdviceWord,
-        this.V8e,
+        this.i7e,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnChangeAdviceWord,
-        this.H8e,
+        this.o7e,
       );
   }
-  W8e() {
+  n7e() {
     var e = ModelManager_1.ModelManager.AdviceModel.CurrentExpressionId;
     3 === this.Pe.GetIndex() &&
       (0 !== e
@@ -189,25 +189,25 @@ class AdviceSelectBtnContentItem extends UiPanelBase_1.UiPanelBase {
   }
   RefreshView(e) {
     (this.Pe = e),
-      this.$8e(),
-      this.Y8e(),
-      this.J8e(),
-      this.V8e(),
-      this.H8e(),
-      this.K8e();
+      this.l7e(),
+      this._7e(),
+      this.u7e(),
+      this.i7e(),
+      this.o7e(),
+      this.s7e();
   }
-  K8e() {
+  s7e() {
     var e;
     3 === this.Pe.GetIndex()
       ? ((e = ModelManager_1.ModelManager.AdviceModel.CurrentExpressionId),
         this.GetButton(3).RootUIComp.SetUIActive(0 !== e))
       : this.GetButton(3).RootUIComp.SetUIActive(!1);
   }
-  Y8e() {
+  _7e() {
     var e = this.Pe.GetIndex();
-    0 !== e && 1 !== e && 2 !== e && 5 !== e && 3 === e && this.W8e();
+    0 !== e && 1 !== e && 2 !== e && 5 !== e && 3 === e && this.n7e();
   }
-  $8e() {
+  l7e() {
     var e = this.Pe.GetIndex();
     let t = "";
     0 === e || 1 === e || 2 === e
@@ -223,7 +223,7 @@ class AdviceSelectBtnContentItem extends UiPanelBase_1.UiPanelBase {
                 : "AdviceFunc_5"),
       LguiUtil_1.LguiUtil.SetLocalText(this.GetText(1), t);
   }
-  J8e() {
+  u7e() {
     var e = this.Pe.GetIndex();
     let t = "";
     0 === e
@@ -246,15 +246,15 @@ class AdviceSelectBtnContentItem extends UiPanelBase_1.UiPanelBase {
   OnBeforeDestroy() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnSelectAdviceExpression,
-      this.j8e,
+      this.r7e,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnSelectAdviceWord,
-        this.V8e,
+        this.i7e,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnChangeAdviceWord,
-        this.H8e,
+        this.o7e,
       );
   }
 }

@@ -84,7 +84,7 @@ class TsTaskFollowTarget extends TsTaskAbortImmediatelyBase_1.default {
     var s = t.AiController;
     s
       ? (this.DelayDie(t),
-        (s = s.CharActorComp).Entity.CheckGetComponent(185).HasTag(-1371021686)
+        (s = s.CharActorComp).Entity.CheckGetComponent(188).HasTag(-1371021686)
           ? (s.SetInputDirect(Vector_1.Vector.ZeroVector), this.OnClear())
           : (this.GetPath(t, i),
             this.FoundPath &&
@@ -101,10 +101,8 @@ class TsTaskFollowTarget extends TsTaskAbortImmediatelyBase_1.default {
                   (this.CurrentNavigationIndex++,
                   this.CurrentNavigationIndex === this.NavigationPath.length)
                     ? this.Finish(!0)
-                    : ((t.Z = 0),
-                      (t.X /= i),
-                      (t.Y /= i),
-                      s.SetInputDirect(t),
+                    : (t.DivisionEqual(i),
+                      s.SetInputDirect(t, !0),
                       AiContollerLibrary_1.AiControllerLibrary.TurnToDirect(
                         s,
                         t,
@@ -116,7 +114,7 @@ class TsTaskFollowTarget extends TsTaskAbortImmediatelyBase_1.default {
     var e = t.AiController;
     if (e) {
       var s = e.CharActorComp,
-        r = s.Entity.CheckGetComponent(47);
+        r = s.Entity.CheckGetComponent(48);
       if (0 !== r.RoleId) {
         this.Source =
           CharacterController_1.CharacterController.GetCharacterActorComponentById(
@@ -139,7 +137,7 @@ class TsTaskFollowTarget extends TsTaskAbortImmediatelyBase_1.default {
           (this.TsIsShowCube &&
             this.DrawCube(new UE.Transform(s.ActorLocation), 5, 0),
           h > this.TsNavigationRadius * this.TsNavigationRadius ||
-            s.Entity.CheckGetComponent(185).HasTag(498191540))
+            s.Entity.CheckGetComponent(188).HasTag(498191540))
         ) {
           if (
             (this.NavigationPath || (this.NavigationPath = new Array()),
@@ -152,7 +150,7 @@ class TsTaskFollowTarget extends TsTaskAbortImmediatelyBase_1.default {
                 "FollowIsCanInput",
                 !0,
               ),
-              s.Entity.CheckGetComponent(158).SetMoveState(
+              s.Entity.CheckGetComponent(160).SetMoveState(
                 CharacterUnifiedStateTypes_1.ECharMoveState.Stand,
               ),
               void this.OnClear()
@@ -175,7 +173,7 @@ class TsTaskFollowTarget extends TsTaskAbortImmediatelyBase_1.default {
             (this.CurrentNavigationIndex = 1),
             (this.NavigationEndTime =
               Time_1.Time.WorldTime + this.TsMaxNavigationMillisecond),
-            s.Entity.CheckGetComponent(158).SetMoveState(
+            s.Entity.CheckGetComponent(160).SetMoveState(
               CharacterUnifiedStateTypes_1.ECharMoveState.Walk,
             ),
             BlackboardController_1.BlackboardController.SetBooleanValueByEntity(
@@ -185,7 +183,7 @@ class TsTaskFollowTarget extends TsTaskAbortImmediatelyBase_1.default {
             );
         }
         h <= this.TsRadius * this.TsRadius &&
-          s.Entity.CheckGetComponent(185).HasTag(248240472) &&
+          s.Entity.CheckGetComponent(188).HasTag(248240472) &&
           AiContollerLibrary_1.AiControllerLibrary.TurnToDirect(
             s,
             this.Source.ActorForwardProxy,
@@ -221,7 +219,7 @@ class TsTaskFollowTarget extends TsTaskAbortImmediatelyBase_1.default {
     var i = t.AiController.CharActorComp;
     if (!i) return !1;
     var e,
-      i = i.Entity.CheckGetComponent(47);
+      i = i.Entity.CheckGetComponent(48);
     if (
       ((this.IsHas =
         !!BlackboardController_1.BlackboardController.GetBooleanValueByEntity(
@@ -239,7 +237,7 @@ class TsTaskFollowTarget extends TsTaskAbortImmediatelyBase_1.default {
       return !1;
     let s = !1;
     for (const h of this.TsTags) {
-      var r = this.Source.Entity.CheckGetComponent(185).HasTag(h?.TagId);
+      var r = this.Source.Entity.CheckGetComponent(188).HasTag(h?.TagId);
       ((this.TsIsInTag && r) || (!this.TsIsInTag && !r)) &&
         (this.IsHas ||
           (BlackboardController_1.BlackboardController.SetIntValueByEntity(

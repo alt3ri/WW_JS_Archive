@@ -10,9 +10,9 @@ const UE = require("ue"),
 class ExploreLevelRewardView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.jIt = void 0),
+      (this.$Tt = void 0),
       (this.sOe = void 0),
-      (this.JSt = () => {
+      (this.lyt = () => {
         UiManager_1.UiManager.CloseView("ExploreLevelRewardView");
       });
   }
@@ -25,17 +25,17 @@ class ExploreLevelRewardView extends UiViewBase_1.UiViewBase {
       [4, UE.UIText],
       [5, UE.UIText],
     ]),
-      (this.BtnBindInfo = [[3, this.JSt]]);
+      (this.BtnBindInfo = [[3, this.lyt]]);
   }
   async OnBeforeStartAsync() {
-    this.jIt = this.OpenParam;
+    this.$Tt = this.OpenParam;
     var e,
       i,
-      t = this.jIt.GetItemList(),
+      t = this.$Tt.GetItemList(),
       r =
         ModelManager_1.ModelManager.ExploreLevelModel.GetCurrentCountryExploreLevelData();
     r &&
-      ((e = (i = this.jIt.GetRewardInfo()).CurrentExploreLevel),
+      ((e = (i = this.$Tt.GetRewardInfo()).CurrentExploreLevel),
       (i = i.TargetExploreLevel),
       (r = r.GetExploreLevelRewardData(i))) &&
       ((r = r.GetScoreTexturePath()),

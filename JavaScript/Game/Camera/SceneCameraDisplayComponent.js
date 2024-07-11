@@ -2,30 +2,32 @@
 var __decorate =
   (this && this.__decorate) ||
   function (e, t, i, r) {
-    var s,
-      n = arguments.length,
-      o =
-        n < 3
+    var n,
+      s = arguments.length,
+      a =
+        s < 3
           ? t
           : null === r
             ? (r = Object.getOwnPropertyDescriptor(t, i))
             : r;
     if ("object" == typeof Reflect && "function" == typeof Reflect.decorate)
-      o = Reflect.decorate(e, t, i, r);
+      a = Reflect.decorate(e, t, i, r);
     else
-      for (var a = e.length - 1; 0 <= a; a--)
-        (s = e[a]) && (o = (n < 3 ? s(o) : 3 < n ? s(t, i, o) : s(t, i)) || o);
-    return 3 < n && o && Object.defineProperty(t, i, o), o;
+      for (var o = e.length - 1; 0 <= o; o--)
+        (n = e[o]) && (a = (s < 3 ? n(a) : 3 < s ? n(t, i, a) : n(t, i)) || a);
+    return 3 < s && a && Object.defineProperty(t, i, a), a;
   };
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.SceneCameraDisplayComponent = exports.SceneSubCamera = void 0);
 const UE = require("ue"),
   ActorSystem_1 = require("../../Core/Actor/ActorSystem"),
+  Log_1 = require("../../Core/Common/Log"),
   PriorityQueue_1 = require("../../Core/Container/PriorityQueue"),
   EntityComponent_1 = require("../../Core/Entity/EntityComponent"),
   RegisterComponent_1 = require("../../Core/Entity/RegisterComponent"),
   EventDefine_1 = require("../Common/Event/EventDefine"),
   EventSystem_1 = require("../Common/Event/EventSystem"),
+  GlobalData_1 = require("../GlobalData"),
   ModelManager_1 = require("../Manager/ModelManager"),
   UiLayerType_1 = require("../Ui/Define/UiLayerType"),
   InputDistributeController_1 = require("../Ui/InputDistribute/InputDistributeController"),
@@ -69,54 +71,71 @@ class SceneSubCamera {
 let SceneCameraDisplayComponent = class SceneCameraDisplayComponent extends EntityComponent_1.EntityComponent {
   constructor() {
     super(...arguments),
-      (this.bxr = void 0),
-      (this.qxr = void 0),
-      (this.Gxr = void 0),
-      (this.Nxr = void 0),
-      (this.Oxr = 0),
+      (this.uxr = void 0),
+      (this.cxr = void 0),
+      (this.mxr = void 0),
+      (this.dxr = void 0),
+      (this.Cxr = 0),
       (this.OnModeChanged = (e, t) => {
         3 === e && this.IsIdle()
-          ? (CameraController_1.CameraController.ExitCameraMode(3, 1, 0, 0),
+          ? (Log_1.Log.CheckInfo() &&
+              Log_1.Log.Info(
+                "Camera",
+                46,
+                "SceneCameraDisplayComponent退出Scene相机",
+              ),
+            CameraController_1.CameraController.ExitCameraMode(
+              3,
+              1,
+              0,
+              0,
+              () => {
+                UE.KismetSystemLibrary.ExecuteConsoleCommand(
+                  GlobalData_1.GlobalData.World,
+                  "r.Shadow.EnableCSMStable 1",
+                );
+              },
+            ),
             this.ClearRemovedSceneCamera())
           : 3 === t && e !== t && this.ClearRemovedSceneCamera();
       }),
       (this.nye = () => {
-        (this.Nxr.Camera =
+        (this.dxr.Camera =
           CameraController_1.CameraController.SpawnCineCamera()),
-          (this.bxr = this.Nxr.Camera),
+          (this.uxr = this.dxr.Camera),
           3 === CameraController_1.CameraController.Model.CameraMode &&
             CameraController_1.CameraController.SetViewTarget(
-              this.bxr,
+              this.uxr,
               "SceneCamera.OnWorldDone",
             );
       }),
       (this.uMe = () => {
-        this.Nxr &&
-          (ActorSystem_1.ActorSystem.Put(this.bxr),
-          (this.Nxr.Camera = void 0),
-          (this.bxr = void 0)),
-          (this.Oxr = 0),
+        this.dxr &&
+          (ActorSystem_1.ActorSystem.Put(this.uxr),
+          (this.dxr.Camera = void 0),
+          (this.uxr = void 0)),
+          (this.Cxr = 0),
           this.ClearRemovedSceneCamera();
       });
   }
   get CineCamera() {
-    return this.qxr.Top.Camera;
+    return this.cxr.Top.Camera;
   }
   get CurSceneSubCamera() {
-    return this.qxr?.Top;
+    return this.cxr?.Top;
   }
   get DefaultSceneSubCamera() {
-    return this.Nxr;
+    return this.dxr;
   }
   OnInit() {
     return (
-      (this.qxr = new PriorityQueue_1.PriorityQueue(SceneSubCamera.Compare)),
-      (this.Gxr = new Array()),
-      (this.Nxr = new SceneSubCamera()),
-      (this.Nxr.Camera = CameraController_1.CameraController.SpawnCineCamera()),
-      (this.Nxr.Type = 2),
-      this.qxr.Push(this.Nxr),
-      (this.bxr = this.Nxr.Camera),
+      (this.cxr = new PriorityQueue_1.PriorityQueue(SceneSubCamera.Compare)),
+      (this.mxr = new Array()),
+      (this.dxr = new SceneSubCamera()),
+      (this.dxr.Camera = CameraController_1.CameraController.SpawnCineCamera()),
+      (this.dxr.Type = 2),
+      this.cxr.Push(this.dxr),
+      (this.uxr = this.dxr.Camera),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.WorldDone,
         this.nye,
@@ -126,7 +145,7 @@ let SceneCameraDisplayComponent = class SceneCameraDisplayComponent extends Enti
         this.uMe,
       ),
       this.Ore(),
-      !!this.bxr
+      !!this.uxr
     );
   }
   Ore() {
@@ -151,8 +170,8 @@ let SceneCameraDisplayComponent = class SceneCameraDisplayComponent extends Enti
   }
   OnClear() {
     return (
-      this.bxr &&
-        (ActorSystem_1.ActorSystem.Put(this.bxr), (this.bxr = void 0)),
+      this.uxr &&
+        (ActorSystem_1.ActorSystem.Put(this.uxr), (this.uxr = void 0)),
       this.kre(),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.WorldDone,
@@ -166,39 +185,39 @@ let SceneCameraDisplayComponent = class SceneCameraDisplayComponent extends Enti
     );
   }
   OnChangeTimeDilation(e) {
-    this.bxr?.IsValid() && (this.bxr.CustomTimeDilation = e);
+    this.uxr?.IsValid() && (this.uxr.CustomTimeDilation = e);
   }
   GetUnBoundSceneCamera(e) {
     var t;
-    if (!this.qxr.Empty)
-      return this.Nxr.IsBinding
+    if (!this.cxr.Empty)
+      return this.dxr.IsBinding
         ? (((t = new SceneSubCamera()).Camera =
             CameraController_1.CameraController.SpawnCineCamera()),
           (t.Type = e),
-          this.qxr.Push(t),
+          this.cxr.Push(t),
           t)
-        : (this.kxr(),
-          (this.Nxr.Type = e),
-          (this.Nxr.IsBinding = !0),
-          this.qxr.Update(this.Nxr),
-          this.Nxr);
+        : (this.gxr(),
+          (this.dxr.Type = e),
+          (this.dxr.IsBinding = !0),
+          this.cxr.Update(this.dxr),
+          this.dxr);
   }
   RemoveBoundSceneCamera(e) {
-    !this.qxr.Empty &&
+    !this.cxr.Empty &&
       e &&
       ((e.IsBinding = !1),
-      this.Nxr === e
-        ? (this.kxr(), this.qxr.Update(this.Nxr))
-        : (this.qxr.Remove(e),
-          this.Gxr.push(e),
-          this.IsIdle() && this.Nxr.CopyData(e)));
+      this.dxr === e
+        ? (this.gxr(), this.cxr.Update(this.dxr))
+        : (this.cxr.Remove(e),
+          this.mxr.push(e),
+          this.IsIdle() && this.dxr.CopyData(e)));
   }
   IsIdle() {
-    return !this.qxr.Empty && this.qxr.Top === this.Nxr && !this.Nxr.IsBinding;
+    return !this.cxr.Empty && this.cxr.Top === this.dxr && !this.dxr.IsBinding;
   }
   ClearRemovedSceneCamera() {
-    for (const e of this.Gxr) e.Clear();
-    this.Gxr.length = 0;
+    for (const e of this.mxr) e.Clear();
+    this.mxr.length = 0;
   }
   UpdateViewTarget(e) {
     void 0 !== e
@@ -221,16 +240,16 @@ let SceneCameraDisplayComponent = class SceneCameraDisplayComponent extends Enti
           !0,
         );
   }
-  kxr() {
-    (this.Nxr.IsBinding = !1),
-      (this.Nxr.Camera.CameraComponent.bConstrainAspectRatio = !1),
-      (this.Nxr.Type = 2),
-      (this.Nxr.IsKeepUi = !0);
+  gxr() {
+    (this.dxr.IsBinding = !1),
+      (this.dxr.Camera.CameraComponent.bConstrainAspectRatio = !1),
+      (this.dxr.Type = 2),
+      (this.dxr.IsKeepUi = !0);
   }
   SetUiActive(e) {
-    e ? 0 < this.Oxr && this.Oxr-- : this.Oxr++,
-      (0 !== this.Oxr && e) ||
-        (1 < this.Oxr && !e) ||
+    e ? 0 < this.Cxr && this.Cxr-- : this.Cxr++,
+      (0 !== this.Cxr && e) ||
+        (1 < this.Cxr && !e) ||
         (UiLayer_1.UiLayer.SetLayerActive(UiLayerType_1.ELayerType.Pop, e),
         UiLayer_1.UiLayer.SetLayerActive(UiLayerType_1.ELayerType.Float, e),
         e

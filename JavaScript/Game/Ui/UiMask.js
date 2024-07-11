@@ -7,16 +7,16 @@ const Log_1 = require("../../Core/Common/Log"),
   MASK_DESTROY_TIME = 2e3;
 class UiMask {
   constructor(i) {
-    (this.Zdr = 0), (this.IRe = void 0), (this.eCr = i);
+    (this.YCr = 0), (this.IRe = void 0), (this.JCr = i);
   }
-  Tit() {
+  kot() {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info(
         "UiMask",
         11,
         "[UiMask]添加定时器",
-        ["MaskTag", this.eCr],
-        ["MaskCount", this.Zdr],
+        ["MaskTag", this.JCr],
+        ["MaskCount", this.YCr],
       ),
       (this.IRe = TimerSystem_1.TimerSystem.Delay(() => {
         Log_1.Log.CheckInfo() &&
@@ -24,41 +24,41 @@ class UiMask {
             "UiMask",
             11,
             "[UiMask]超过保底时间,定时器执行逻辑,解除遮罩",
-            ["MaskTag", this.eCr],
+            ["MaskTag", this.JCr],
           ),
-          this.tCr();
+          this.zCr();
       }, MASK_DESTROY_TIME));
   }
-  p7e() {
+  xHe() {
     void 0 !== this.IRe &&
       (Log_1.Log.CheckInfo() &&
         Log_1.Log.Info(
           "UiMask",
           11,
           "[UiMask]移除定时器",
-          ["MaskTag", this.eCr],
-          ["MaskCount", this.Zdr],
+          ["MaskTag", this.JCr],
+          ["MaskCount", this.YCr],
         ),
       TimerSystem_1.TimerSystem.Remove(this.IRe),
       (this.IRe = void 0));
   }
-  iCr() {
-    (this.Zdr += 1),
-      this.Tit(),
-      UiLayer_1.UiLayer.SetShowMaskLayer(this.eCr, !0);
+  ZCr() {
+    (this.YCr += 1),
+      this.kot(),
+      UiLayer_1.UiLayer.SetShowMaskLayer(this.JCr, !0);
   }
-  oCr() {
-    --this.Zdr,
-      this.Zdr <= 0 && UiLayer_1.UiLayer.SetShowMaskLayer(this.eCr, !1);
+  egr() {
+    --this.YCr,
+      this.YCr <= 0 && UiLayer_1.UiLayer.SetShowMaskLayer(this.JCr, !1);
   }
-  tCr() {
-    (this.Zdr = 0),
+  zCr() {
+    (this.YCr = 0),
       (this.IRe = void 0),
-      UiLayer_1.UiLayer.SetShowMaskLayer(this.eCr, !1);
+      UiLayer_1.UiLayer.SetShowMaskLayer(this.JCr, !1);
   }
   SetMask(i) {
-    i ? (this.p7e(), this.iCr()) : 0 < this.Zdr && this.oCr(),
-      this.Zdr <= 0 && this.p7e();
+    i ? (this.xHe(), this.ZCr()) : 0 < this.YCr && this.egr(),
+      this.YCr <= 0 && this.xHe();
   }
 }
 exports.UiMask = UiMask;

@@ -10,15 +10,15 @@ const UE = require("ue"),
 class MailScrollItemNew extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this.R4e = void 0),
-      (this.Uyi = void 0),
-      (this.Ayi = void 0),
+      (this.H5e = void 0),
+      (this.UIi = void 0),
+      (this.AIi = void 0),
       (this.SelectTrigger = !1),
       (this.IsInit = !1),
       (this.Xy = -1),
       (this.Pe = void 0),
       (this.OnExtendToggleStateChanged = (i) => {
-        1 === i && this?.Uyi(this.Xy, this.Pe);
+        1 === i && this?.UIi(this.Xy, this.Pe);
       });
   }
   OnRegisterComponent() {
@@ -38,7 +38,7 @@ class MailScrollItemNew extends UiPanelBase_1.UiPanelBase {
       (this.Pe = i),
       this.SelectTrigger
         ? (this.OnSelected(!0), (this.SelectTrigger = !1))
-        : t === this.Ayi?.()
+        : t === this.AIi?.()
           ? this.OnSelected(!1)
           : this.OnDeselected(!1),
       this.GetText(1).SetText(i.Title),
@@ -101,10 +101,10 @@ class MailScrollItemNew extends UiPanelBase_1.UiPanelBase {
           this.GetItem(6).SetAlpha(1));
   }
   BindSelectCall(i) {
-    this.Uyi = i;
+    this.UIi = i;
   }
   BindGetSelectedIndexFunction(i) {
-    this.Ayi = i;
+    this.AIi = i;
   }
   OnSelected(i) {
     this.RootActor.GetComponentByClass(
@@ -122,14 +122,14 @@ class MailScrollItemNew extends UiPanelBase_1.UiPanelBase {
   }
   async Init(i) {
     await super.CreateByActorAsync(i.GetOwner(), void 0, !0),
-      (this.R4e = this.RootActor.GetComponentByClass(
+      (this.H5e = this.RootActor.GetComponentByClass(
         UE.UIExtendToggle.StaticClass(),
       )),
-      this.R4e.OnStateChange.Add(this.OnExtendToggleStateChanged),
+      this.H5e.OnStateChange.Add(this.OnExtendToggleStateChanged),
       (this.IsInit = !0);
   }
   ClearItem() {
-    this.R4e.OnStateChange.Clear(), (this.Uyi = void 0), this.Destroy();
+    this.H5e.OnStateChange.Clear(), (this.UIi = void 0), this.Destroy();
   }
 }
 exports.MailScrollItemNew = MailScrollItemNew;

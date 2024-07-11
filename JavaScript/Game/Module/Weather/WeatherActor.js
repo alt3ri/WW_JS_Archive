@@ -11,60 +11,60 @@ const UE = require("ue"),
   ConfigManager_1 = require("../../Manager/ConfigManager");
 class WeatherActor {
   constructor() {
-    (this.bOo = void 0),
-      (this.qOo = void 0),
-      (this.GOo = void 0),
-      (this.NOo = 0),
-      (this.OOo = 0),
-      (this.kOo = 0),
-      (this.FOo = 0),
+    (this.xko = void 0),
+      (this.wko = void 0),
+      (this.Bko = void 0),
+      (this.bko = 0),
+      (this.qko = 0),
+      (this.Gko = 0),
+      (this.Nko = 0),
       (this.Uqe = -0),
-      (this.VOo = -0),
-      (this.HOo = !1),
+      (this.Oko = -0),
+      (this.kko = !1),
       (this.Rqe = TickSystem_1.TickSystem.InvalidId),
-      (this.Mke = !1),
-      (this.LVs = 0),
+      (this.G2e = !1),
+      (this.SZs = 0),
       (this.J_ = () => {
         this.Uqe += Time_1.Time.DeltaTime;
-        var t = this.Uqe / (1e3 * this.VOo),
-          i = MathUtils_1.MathUtils.Lerp(this.NOo, this.kOo, t),
-          s = MathUtils_1.MathUtils.Lerp(this.OOo, this.FOo, t);
-        this.jOo(i), this.WOo(s), 1 <= t && this.jm();
+        var t = this.Uqe / (1e3 * this.Oko),
+          i = MathUtils_1.MathUtils.Lerp(this.bko, this.Gko, t),
+          s = MathUtils_1.MathUtils.Lerp(this.qko, this.Nko, t);
+        this.Fko(i), this.Vko(s), 1 <= t && this.jm();
       }),
-      (this.jOo = (t) => {
-        this.qOo?.IsValid() && (this.qOo.BlendWeight = t);
+      (this.Fko = (t) => {
+        this.wko?.IsValid() && (this.wko.BlendWeight = t);
       }),
-      (this.WOo = (t) => {
-        this.GOo?.IsValid() && (this.GOo.BlendWeight = t);
+      (this.Vko = (t) => {
+        this.Bko?.IsValid() && (this.Bko.BlendWeight = t);
       }),
-      (this.n8e = () => {
+      (this.v9e = () => {
         this.jm(),
-          (this.qOo = void 0),
-          (this.GOo = void 0),
-          (this.bOo = void 0);
+          (this.wko = void 0),
+          (this.Bko = void 0),
+          (this.xko = void 0);
       });
   }
-  KOo() {
-    this.bOo?.IsValid() ||
-      ((this.bOo = ActorSystem_1.ActorSystem.Get(
+  Hko() {
+    this.xko?.IsValid() ||
+      ((this.xko = ActorSystem_1.ActorSystem.Get(
         UE.BP_Weather_C.StaticClass(),
         MathUtils_1.MathUtils.DefaultTransform,
         void 0,
       )),
-      this.bOo.OnDestroyed.Add(this.n8e));
+      this.xko.OnDestroyed.Add(this.v9e));
   }
   BanWeather() {
-    this.Destroy(), (this.HOo = !this.HOo);
+    this.Destroy(), (this.kko = !this.kko);
   }
   SetActorState(t) {
-    this.Mke !== t &&
-      (this.bOo?.IsValid() && this.bOo.SetActorHiddenInGame(!t),
-      (this.Mke = t));
+    this.G2e !== t &&
+      (this.xko?.IsValid() && this.xko.SetActorHiddenInGame(!t),
+      (this.G2e = t));
   }
-  DVs() {
-    0 !== this.LVs &&
-      (ResourceSystem_1.ResourceSystem.CancelAsyncLoad(this.LVs),
-      (this.LVs = 0));
+  EZs() {
+    0 !== this.SZs &&
+      (ResourceSystem_1.ResourceSystem.CancelAsyncLoad(this.SZs),
+      (this.SZs = 0));
   }
   ChangeWeather(t, i) {
     var s;
@@ -77,36 +77,36 @@ class WeatherActor {
           ["targetId", t],
           ["tweentime", i],
         ),
-      this.HOo ||
+      this.kko ||
         ((t =
           ConfigManager_1.ConfigManager.WeatherModuleConfig.GetWeatherConfig(
             t,
           )) &&
           ((t = t.DAPath),
-          this.KOo(),
-          (s = this.bOo).KuroPostProcess_1.BlendWeight >=
+          this.Hko(),
+          (s = this.xko).KuroPostProcess_1.BlendWeight >=
           s.KuroPostProcess_2.BlendWeight
-            ? ((this.qOo = s.KuroPostProcess_1),
-              (this.GOo = s.KuroPostProcess_2))
-            : ((this.qOo = s.KuroPostProcess_2),
-              (this.GOo = s.KuroPostProcess_1)),
-          this.DVs(),
-          (this.LVs = ResourceSystem_1.ResourceSystem.LoadAsync(
+            ? ((this.wko = s.KuroPostProcess_1),
+              (this.Bko = s.KuroPostProcess_2))
+            : ((this.wko = s.KuroPostProcess_2),
+              (this.Bko = s.KuroPostProcess_1)),
+          this.EZs(),
+          (this.SZs = ResourceSystem_1.ResourceSystem.LoadAsync(
             t,
             UE.KuroWeatherDataAsset,
             (t) => {
               t?.IsValid() &&
-                this.GOo?.IsValid() &&
-                ((this.LVs = 0), (this.GOo.WeatherDataAsset = t));
+                this.Bko?.IsValid() &&
+                ((this.SZs = 0), (this.Bko.WeatherDataAsset = t));
             },
           )),
           0 === i
-            ? (this.jOo(0), this.WOo(1))
-            : ((this.NOo = this.qOo.BlendWeight),
-              (this.kOo = 0),
-              (this.OOo = this.GOo.BlendWeight),
-              (this.FOo = 1),
-              (this.VOo = i),
+            ? (this.Fko(0), this.Vko(1))
+            : ((this.bko = this.wko.BlendWeight),
+              (this.Gko = 0),
+              (this.qko = this.Bko.BlendWeight),
+              (this.Nko = 1),
+              (this.Oko = i),
               (this.Uqe = 0),
               (this.Rqe = TickSystem_1.TickSystem.Add(
                 this.J_,
@@ -119,9 +119,9 @@ class WeatherActor {
       (this.Rqe = TickSystem_1.TickSystem.InvalidId));
   }
   Destroy() {
-    this.bOo?.IsValid() && this.bOo.K2_DestroyActor(),
-      (this.Mke = !1),
-      (this.bOo = void 0);
+    this.xko?.IsValid() && this.xko.K2_DestroyActor(),
+      (this.G2e = !1),
+      (this.xko = void 0);
   }
 }
 exports.WeatherActor = WeatherActor;

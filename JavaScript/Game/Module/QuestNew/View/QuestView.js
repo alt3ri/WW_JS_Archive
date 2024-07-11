@@ -4,14 +4,17 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const UE = require("ue"),
   Log_1 = require("../../../../Core/Common/Log"),
   CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById"),
+  QuestTagById_1 = require("../../../../Core/Define/ConfigQuery/QuestTagById"),
   ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem"),
   TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
   Vector2D_1 = require("../../../../Core/Utils/Math/Vector2D"),
+  MultiTextLang_1 = require("../../../../Core/Define/ConfigQuery/MultiTextLang"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
   ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
+  UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase"),
   UiManager_1 = require("../../../Ui/UiManager"),
   CommonItemSmallItemGrid_1 = require("../../Common/ItemGrid/CommonItemSmallItemGrid"),
   CommonTabComponentData_1 = require("../../Common/TabComponent/CommonTabComponentData"),
@@ -29,91 +32,90 @@ const UE = require("ue"),
   QuestDefine_1 = require("../QuestDefine"),
   QuestTypeItem_1 = require("./QuestTypeItem"),
   QuestViewStep_1 = require("./QuestViewStep"),
-  UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase"),
   ALL_QUEST_TYPE = 0,
   LEVEL_HELP = 49;
 class QuestView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
-      (this.Vro = !1),
-      (this.Hro = !1),
-      (this.jro = 0),
-      (this.Wro = !1),
-      (this.Kro = []),
-      (this.Qro = []),
-      (this.Xro = void 0),
+      (this.Nno = !1),
+      (this.Ono = !1),
+      (this.kno = 0),
+      (this.Fno = !1),
+      (this.Vno = []),
+      (this.Hno = []),
+      (this.jno = void 0),
       (this.sOe = void 0),
-      (this.$ro = void 0),
-      (this.cpt = void 0),
-      (this.Yro = 0),
-      (this.Kwn = !1),
+      (this.Wno = void 0),
+      (this.Ivt = void 0),
+      (this.Kno = 0),
+      (this.wGn = !1),
       (this.QuestDescChangeLang = () => {
         var e;
-        this.jro &&
+        this.kno &&
           ((e = ModelManager_1.ModelManager.QuestNewModel.GetQuestDetails(
-            this.jro,
+            this.kno,
           )),
           this.GetText(9).SetText(e));
       }),
-      (this.OZt = (t) => {
-        this.Qro.forEach((e) => {
+      (this.Oei = (t) => {
+        this.Hno.forEach((e) => {
           e.OnSelect(t);
         });
       }),
-      (this.Jro = (e) => {
+      (this.Qno = (e) => {
         var t,
           i =
             ModelManager_1.ModelManager.GeneralLogicTreeModel.GetBehaviorTree(
               e,
             );
         if (i) {
-          if (this.Qro) for (const s of this.Qro) s.UpdateItem(i.TreeConfigId);
-          this.jro &&
+          if (this.Hno) for (const s of this.Hno) s.UpdateItem(i.TreeConfigId);
+          this.kno &&
             (t = ModelManager_1.ModelManager.QuestNewModel?.GetQuest(
-              this.jro,
+              this.kno,
             )) &&
             t.TreeId === e &&
-            this.zro(this.jro, !1);
+            this.Xno(this.kno, !1);
         }
       }),
-      (this.Zro = (e) => {
-        this.eno(e);
+      (this.$no = (e) => {
+        this.Yno(e);
       }),
-      (this.Fwn = (e) => {
-        if (this.Qro) {
-          for (const t of this.Qro) t.UpdateList();
-          this.ino(0);
+      (this.UGn = (e) => {
+        if (this.Hno) {
+          for (const t of this.Hno) t.UpdateList();
+          this.zno(0);
         }
       }),
-      (this.tno = () => {
+      (this.Jno = () => {
         this.GetItem(1).SetUIActive(!0);
       }),
       (this.OnStartSequenceEvent = () => {
-        if (this.Yro) this.eno(this.Yro);
+        if (this.Kno) this.Yno(this.Kno);
         else {
           var e =
             ModelManager_1.ModelManager.QuestNewModel.GetCurTrackedQuest();
-          if (e) this.jro = e.Id;
+          if (e) this.kno = e.Id;
           else
-            for (const i of this.Qro) {
+            for (const i of this.Hno) {
               var t = i.GetDefaultItem();
               if (t) {
-                this.jro = t.QuestId;
+                this.kno = t.QuestId;
                 break;
               }
             }
-          this.eno(this.jro);
+          this.Yno(this.kno);
         }
-        this.Vro = !0;
+        this.Nno = !0;
       }),
-      (this.jmi = (e, t) => {
+      (this.jdi = (e, t) => {
         return new CommonTabItem_1.CommonTabItem();
       }),
-      (this.ino = (e) => {
+      (this.zno = (e) => {
         let t = !0,
           i = void 0;
-        var s = this.Kro[e].MainId;
-        for (const n of this.Qro) {
+        var s = this.Vno[e].MainId;
+        for (const n of this.Hno) {
           var o = s === ALL_QUEST_TYPE,
             r = n.IsQuestEmpty();
           o
@@ -125,15 +127,15 @@ class QuestView extends UiTickViewBase_1.UiTickViewBase {
         this.GetItem(15).SetUIActive(!t),
           this.GetItem(13).SetUIActive(t),
           this.GetItem(13).SetAnchorOffset(Vector2D_1.Vector2D.ZeroVector),
-          (this.Hro = !t),
-          this.Hro
-            ? this.Vro && this.OZt(i.GetDefaultItem()?.QuestId)
-            : ((this.Hro = !1),
+          (this.Ono = !t),
+          this.Ono
+            ? this.Nno && this.Oei(i.GetDefaultItem()?.QuestId)
+            : ((this.Ono = !1),
               this.UiViewSequence.StopSequenceByKey("Sle"),
               this.GetItem(1).SetUIActive(!1));
       }),
       (this.yqe = (e) => {
-        var e = this.Kro[e],
+        var e = this.Vno[e],
           t = ConfigManager_1.ConfigManager.QuestNewConfig.GetQuestTabIcon(
             e.MainId,
           ),
@@ -146,86 +148,103 @@ class QuestView extends UiTickViewBase_1.UiTickViewBase {
           new CommonTabTitleData_1.CommonTabTitleData(e?.MainTypeName ?? ""),
         );
       }),
-      (this.X3e = () => {
+      (this._5e = () => {
         UiManager_1.UiManager.CloseView(this.Info.Name);
       }),
-      (this.$_t = () => {
-        if (this.Wro)
+      (this.uct = () => {
+        if (this.Fno)
           QuestController_1.QuestNewController.RequestTrackQuest(
-            this.jro,
+            this.kno,
             !1,
             1,
           ),
             Log_1.Log.CheckInfo() &&
-              Log_1.Log.Info("Quest", 50, "取消任务追踪", ["任务Id", this.jro]),
-            this.ono(),
-            this.rno();
+              Log_1.Log.Info("Quest", 50, "取消任务追踪", ["任务Id", this.kno]),
+            this.Zno(),
+            this.eso();
         else {
           const s = ModelManager_1.ModelManager.QuestNewModel.GetQuest(
-            this.jro,
+            this.kno,
           );
           if (s) {
             const t = () => {
-              this.Wro ||
-                (ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance() &&
-                  ModelManager_1.ModelManager.GameModeModel.InstanceDungeon
-                    .Id !== s.Tree.DungeonId &&
-                  ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
-                    "QuestTargetNotInCurScene",
-                  )),
+              if (
+                (this.Fno ||
+                  (ControllerHolder_1.ControllerHolder.GameModeController.IsInInstance() &&
+                    ModelManager_1.ModelManager.GameModeModel.InstanceDungeon
+                      .Id !== s.Tree.DungeonId &&
+                    ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
+                      "QuestTargetNotInCurScene",
+                    )),
+                s?.IsSuspend())
+              )
+                Log_1.Log.CheckInfo() &&
+                  Log_1.Log.Info("Quest", 66, "不允许强制切出", [
+                    "任务Id",
+                    this.kno,
+                  ]),
+                  (e =
+                    MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
+                      "Task_NoSwitch_Tips",
+                    )),
+                  ScrollingTipsController_1.ScrollingTipsController.ShowTipsByText(
+                    e,
+                  );
+              else {
                 Log_1.Log.CheckInfo() &&
                   Log_1.Log.Info("Quest", 50, "发送追踪请求至后端", [
                     "任务Id",
-                    this.jro,
+                    this.kno,
                   ]),
-                QuestController_1.QuestNewController.RequestTrackQuest(
-                  this.jro,
-                  !0,
-                  1,
-                );
-              var e = s.GetCurrentActiveChildQuestNode(),
-                t =
-                  GeneralLogicTreeController_1.GeneralLogicTreeController.IsShowNodeTrackDistance(
-                    s.TreeId,
-                    e.NodeId,
-                  ),
-                e = s.GetTrackDistance(e.NodeId);
-              if (t && e) {
-                t = s.GetCurrentActiveChildQuestNode()?.NodeId ?? 0;
-                const i = {
-                  MarkType: 12,
-                  MarkId: s.GetDefaultMark(t),
-                  IsNotFocusTween: !0,
-                  OpenAreaId: 0,
-                };
-                UiManager_1.UiManager.GetViewByName("WorldMapView")
-                  ? UiManager_1.UiManager.CloseViewAsync("WorldMapView").then(
-                      () => {
-                        UiManager_1.UiManager.CloseAndOpenView(
-                          "QuestView",
-                          "WorldMapView",
-                          i,
-                        );
-                      },
-                    )
-                  : UiManager_1.UiManager.CloseAndOpenView(
-                      "QuestView",
-                      "WorldMapView",
-                      i,
-                    );
-              } else
-                this.ono(),
-                  this.rno(),
-                  ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
-                    "FollowQuestStepGuide",
-                  ),
-                  Log_1.Log.CheckInfo() &&
-                    Log_1.Log.Info(
-                      "Quest",
-                      50,
-                      "追踪失败，不满足任务追踪的前置条件",
-                      ["任务Id", this.jro],
-                    );
+                  QuestController_1.QuestNewController.RequestTrackQuest(
+                    this.kno,
+                    !0,
+                    1,
+                  );
+                var e = s.GetCurrentActiveChildQuestNode(),
+                  t =
+                    GeneralLogicTreeController_1.GeneralLogicTreeController.IsShowNodeTrackDistance(
+                      s.TreeId,
+                      e.NodeId,
+                    ),
+                  e = s.GetTrackDistance(e.NodeId);
+                if (t && e) {
+                  t = s.GetCurrentActiveChildQuestNode()?.NodeId ?? 0;
+                  const i = {
+                    MarkType: 12,
+                    MarkId: s.GetDefaultMark(t),
+                    IsNotFocusTween: !0,
+                    OpenAreaId: 0,
+                  };
+                  UiManager_1.UiManager.GetViewByName("WorldMapView")
+                    ? UiManager_1.UiManager.CloseViewAsync("WorldMapView").then(
+                        () => {
+                          UiManager_1.UiManager.OpenView(
+                            "WorldMapView",
+                            i,
+                            () => {
+                              UiManager_1.UiManager.CloseView("QuestView");
+                            },
+                          );
+                        },
+                      )
+                    : UiManager_1.UiManager.OpenView("WorldMapView", i, () => {
+                        UiManager_1.UiManager.CloseView("QuestView");
+                      });
+                } else
+                  this.Zno(),
+                    this.eso(),
+                    ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
+                      "FollowQuestStepGuide",
+                    ),
+                    Log_1.Log.CheckInfo() &&
+                      Log_1.Log.Info(
+                        "Quest",
+                        50,
+                        "追踪失败，不满足任务追踪的前置条件",
+                        ["任务Id", this.kno],
+                      );
+              }
             };
             var e;
             s.IsSuspend()
@@ -234,7 +253,7 @@ class QuestView extends UiTickViewBase_1.UiTickViewBase {
                     "Quest",
                     50,
                     "bSuspend === true 弹出二次确认弹窗 ：",
-                    ["任务Id", this.jro],
+                    ["任务Id", this.kno],
                   ),
                 (e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(
                   162,
@@ -252,20 +271,20 @@ class QuestView extends UiTickViewBase_1.UiTickViewBase {
                     "Quest",
                     50,
                     "bSuspend === false 执行track()",
-                    ["任务Id", this.jro],
+                    ["任务Id", this.kno],
                   ),
                 t());
           } else
             Log_1.Log.CheckError() &&
               Log_1.Log.Error("Quest", 19, "点击追踪按钮时:找不到任务", [
                 "任务Id",
-                this.jro,
+                this.kno,
               ]);
         }
       }),
-      (this.nno = () => {
-        if (this.jro) {
-          var e = ModelManager_1.ModelManager.QuestNewModel.GetQuest(this.jro);
+      (this.tso = () => {
+        if (this.kno) {
+          var e = ModelManager_1.ModelManager.QuestNewModel.GetQuest(this.kno);
           if (e)
             if (e.IsSuspend()) {
               var t = e.GetOccupations();
@@ -285,26 +304,27 @@ class QuestView extends UiTickViewBase_1.UiTickViewBase {
                     break;
                   }
                   if (3 !== i) {
-                    this.eno(s);
+                    this.Yno(s);
                     break;
                   }
                 }
             }
         }
       }),
-      (this.zro = (e, t) => {
+      (this.Xno = (e, t) => {
         QuestController_1.QuestNewController.RedDotRequest(e, 0),
-          (this.jro = e),
-          this.Vro &&
+          (this.kno = e),
+          this.Nno &&
             t &&
-            this.Hro &&
+            this.Ono &&
             this.UiViewSequence.PlaySequencePurely("Sle");
         t = ModelManager_1.ModelManager.QuestNewModel;
         this.GetText(7).SetText(t.GetQuestName(e)),
           this.GetText(9).SetText(t.GetQuestDetails(e)),
-          this.sno(e),
-          this.ano(e),
-          this.hno(e);
+          this.iso(e),
+          this.oso(e),
+          this.rso(e),
+          this.Ofa(e);
       });
   }
   OnRegisterComponent() {
@@ -333,11 +353,14 @@ class QuestView extends UiTickViewBase_1.UiTickViewBase {
       [21, UE.UIItem],
       [22, UE.UISprite],
       [23, UE.UISprite],
+      [24, UE.UIItem],
+      [25, UE.UISprite],
+      [26, UE.UIText],
     ]),
       (this.BtnBindInfo = [
-        [0, this.X3e],
-        [2, this.$_t],
-        [16, this.nno],
+        [0, this._5e],
+        [2, this.uct],
+        [16, this.tso],
       ]);
   }
   async OnBeforeStartAsync() {
@@ -347,7 +370,7 @@ class QuestView extends UiTickViewBase_1.UiTickViewBase {
       this.GetText(14).SetUIActive(!0),
       this.GetItem(1).SetUIActive(!1),
       this.GetItem(17).SetUIActive(!1),
-      this.UiViewSequence.AddSequenceStartEvent("Sle", this.tno),
+      this.UiViewSequence.AddSequenceStartEvent("Sle", this.Jno),
       this.UiViewSequence.AddSequenceStartEvent(
         "Start",
         this.OnStartSequenceEvent,
@@ -356,32 +379,32 @@ class QuestView extends UiTickViewBase_1.UiTickViewBase {
         "ShowView",
         this.OnStartSequenceEvent,
       ),
-      (this.$ro = []),
+      (this.Wno = []),
       (this.sOe = []),
-      (this.Yro = this.OpenParam),
-      this.lno(),
-      await this._no();
+      (this.Kno = this.OpenParam),
+      this.nso(),
+      await this.sso();
   }
   OnBeforeDestroy() {
-    if (this.cpt) {
+    if (this.Ivt) {
       var e;
-      for ([, e] of this.cpt?.GetTabItemMap()) e.Clear();
-      this.cpt.Destroy(), (this.cpt = void 0);
+      for ([, e] of this.Ivt?.GetTabItemMap()) e.Clear();
+      this.Ivt.Destroy(), (this.Ivt = void 0);
     }
-    if (((this.Kro = void 0), this.Qro)) {
-      for (const t of this.Qro) t.Destroy();
-      this.Qro = void 0;
+    if (((this.Vno = void 0), this.Hno)) {
+      for (const t of this.Hno) t.Destroy();
+      this.Hno = void 0;
     }
     if (this.sOe) {
       for (const i of this.sOe) i.Destroy();
       this.sOe = void 0;
     }
-    this.Xro?.Dispose(), (this.Xro = void 0);
+    this.jno?.Dispose(), (this.jno = void 0);
   }
   OnTick(e) {
-    if (this.Qro) for (const t of this.Qro) t.OnTick(e);
+    if (this.Hno) for (const t of this.Hno) t.OnTick(e);
   }
-  lno() {
+  nso() {
     const t =
       ModelManager_1.ModelManager.GameModeModel.InstanceDungeon?.MapConfigId;
     var e =
@@ -405,7 +428,7 @@ class QuestView extends UiTickViewBase_1.UiTickViewBase {
               ));
           return e && t ? e.SortValue - t.SortValue : 0;
         }),
-        (this.Kro.length = 0),
+        (this.Vno.length = 0),
         new Map());
     for (const n of e) {
       var s,
@@ -415,115 +438,115 @@ class QuestView extends UiTickViewBase_1.UiTickViewBase {
         (i.set(r, !0),
         (s = this.GetItem(10)),
         (s = LguiUtil_1.LguiUtil.CopyItem(this.GetItem(17), s)),
-        (o = new QuestTypeItem_1.QuestTypeItem()).Init(s, r, this.OZt),
-        this.Qro.push(o),
+        (o = new QuestTypeItem_1.QuestTypeItem()).Init(s, r, this.Oei),
+        this.Hno.push(o),
         7 === r && o.IsQuestEmpty()) ||
-        this.Kro.push(n);
+        this.Vno.push(n);
     }
   }
-  eno(e) {
+  Yno(e) {
     if (e) {
       const t = ModelManager_1.ModelManager.QuestNewModel.GetQuest(e);
       if (t) {
-        this.jro = t.Id;
-        e = this.Qro.find((e) => e.QuestType === t.MainTypeId);
+        this.kno = t.Id;
+        e = this.Hno.find((e) => e.QuestType === t.MainTypeId);
         if (e) {
           const i = e.GetQuestItem(t.Id);
           i &&
-            ((this.Kwn = !0),
+            ((this.wGn = !0),
             TimerSystem_1.TimerSystem.Delay(() => {
-              this.Kwn &&
+              this.wGn &&
                 (this.GetScrollViewWithScrollbar(18).ScrollTo(i.GetRootItem()),
-                this.OZt(this.jro)),
-                (this.Kwn = !1);
+                this.Oei(this.kno)),
+                (this.wGn = !1);
             }, 200));
         }
-      } else this.jro = QuestDefine_1.INVALID_QUEST_ID;
+      } else this.kno = QuestDefine_1.INVALID_QUEST_ID;
     }
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.UpdateQuestDetails,
-      this.zro,
+      this.Xno,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.GeneralLogicTreeSuspend,
-        this.Jro,
+        this.Qno,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.GeneralLogicTreeCancelSuspend,
-        this.Jro,
+        this.Qno,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnNavigationQuest,
-        this.Zro,
+        this.$no,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.ActivityQuestCountdownEnd,
-        this.Fwn,
+        this.UGn,
       ),
       this.GetText(9).OnSelfLanguageChange.Bind(this.QuestDescChangeLang);
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.UpdateQuestDetails,
-      this.zro,
+      this.Xno,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.GeneralLogicTreeSuspend,
-        this.Jro,
+        this.Qno,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.GeneralLogicTreeCancelSuspend,
-        this.Jro,
+        this.Qno,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnNavigationQuest,
-        this.Zro,
+        this.$no,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.ActivityQuestCountdownEnd,
-        this.Fwn,
+        this.UGn,
       ),
       this.GetText(9).OnSelfLanguageChange.Unbind();
   }
-  async _no() {
+  async sso() {
     const t = new CommonTabComponentData_1.CommonTabComponentData(
-      this.jmi,
-      this.ino,
+      this.jdi,
+      this.zno,
       this.yqe,
     );
-    this.cpt = new TabComponentWithTitle_1.TabComponentWithTitle(
+    this.Ivt = new TabComponentWithTitle_1.TabComponentWithTitle(
       this.GetItem(8),
       t,
     );
     var i = new Array();
-    for (let e = 0; e < this.Kro.length; e++) {
+    for (let e = 0; e < this.Vno.length; e++) {
       const t = new CommonTabItemBase_1.CommonTabItemData();
       (t.Index = e),
-        (t.Data = this.cpt.GetTabComponentData(e)),
+        (t.Data = this.Ivt.GetTabComponentData(e)),
         (t.RedDotName = "QuestTab"),
-        (t.RedDotUid = this.Kro[e].MainId),
+        (t.RedDotUid = this.Vno[e].MainId),
         i.push(t);
     }
-    await this.cpt.RefreshTabItemByDataAsync(i),
-      this.cpt.SelectToggleByIndex(ALL_QUEST_TYPE);
+    await this.Ivt.RefreshTabItemByDataAsync(i),
+      this.Ivt.SelectToggleByIndex(ALL_QUEST_TYPE);
   }
-  ono() {
-    (this.Wro =
-      this.jro ===
+  Zno() {
+    (this.Fno =
+      this.kno ===
       ModelManager_1.ModelManager.QuestNewModel.GetCurTrackedQuest()?.Id),
       LguiUtil_1.LguiUtil.SetLocalText(
         this.GetText(3),
-        this.Wro
+        this.Fno
           ? "InstanceDungeonEntranceCancelTrack"
           : "InstanceDungeonEntranceTrack",
       );
   }
-  rno() {
-    for (const e of this.Qro) e.UpdateListTrackState();
+  eso() {
+    for (const e of this.Hno) e.UpdateListTrackState();
   }
-  sno(i) {
+  iso(i) {
     var s = ModelManager_1.ModelManager.QuestNewModel,
       o = s.GetQuest(i);
     if (o) {
@@ -536,33 +559,33 @@ class QuestView extends UiTickViewBase_1.UiTickViewBase {
         l = o.IsQuestCanPreShow(),
         m = o.IsSuspend() ?? !1,
         u = o.IsQuestHasRecommendPreQuest(),
-        f = o.HasRefOccupiedEntity();
-      this.ono();
+        g = o.HasRefOccupiedEntity();
+      this.Zno();
       let t = void 0;
       if (m) {
         r.SetText(o.GetSuspendText() ?? ""), (t = s.GetQuestLockIconPath(i));
         var m = m && 1 === o.GetSuspendType(),
-          C =
+          f =
             (h.GetRootComponent().SetUIActive(m),
             ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
               "SP_ComIconQuestion",
             )),
-          C =
-            (this.uno(C),
+          f =
+            (this.aso(f),
             CommonParamById_1.configCommonParamById.GetStringConfig(
               "TaskUnableStripColor",
             ) ?? "");
-        _.SetColor(UE.Color.FromHex(C)), a.SetUIActive(m), n.SetUIActive(!0);
-      } else if (f) {
+        _.SetColor(UE.Color.FromHex(f)), a.SetUIActive(m), n.SetUIActive(!0);
+      } else if (g) {
         r.SetText(o.GetRefOccupiedEntityText() ?? ""),
           (t = s.GetQuestLockIconPath(i)),
           h.GetRootComponent().SetUIActive(!1);
-        (C =
+        (f =
           ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
             "SP_ComIconQuestion",
           )),
           (m =
-            (this.uno(C),
+            (this.aso(f),
             CommonParamById_1.configCommonParamById.GetStringConfig(
               "TaskUnableStripColor",
             ) ?? ""));
@@ -570,41 +593,41 @@ class QuestView extends UiTickViewBase_1.UiTickViewBase {
       } else if (l) {
         r.SetText(s.GetShowQuestConditionDescribe(i) ?? ""),
           (t = s.GetQuestLockIconPath(i));
-        f = s.GetUnlockConditions(i);
+        g = s.GetUnlockConditions(i);
         let e = void 0;
-        (C = void 0 !== (e = f ? f.find((e) => "ExploreLevel" === e.Type) : e)),
+        (f = void 0 !== (e = g ? g.find((e) => "ExploreLevel" === e.Type) : e)),
           (m =
-            (h.GetRootComponent().SetUIActive(C),
+            (h.GetRootComponent().SetUIActive(f),
             ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
               "SP_ComIconQuestion",
             ))),
           (l =
-            (this.uno(m),
+            (this.aso(m),
             CommonParamById_1.configCommonParamById.GetStringConfig(
               "TaskUnableStripColor",
             ) ?? ""));
         _.SetColor(UE.Color.FromHex(l)), a.SetUIActive(!1), n.SetUIActive(!0);
       } else if (u) {
-        f = o.GetRecommendPreQuest();
+        g = o.GetRecommendPreQuest();
         let e = "";
-        f?.length && (e = s.GetQuest(f[0])?.Name ?? ""),
+        g?.length && (e = s.GetQuest(g[0])?.Name ?? ""),
           LguiUtil_1.LguiUtil.SetLocalText(r, "QuestRecommendTip", e),
           (t = s.GetQuestLockIconPath(i));
         (h =
           ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
             "SP_IconArrive",
           )),
-          (C =
-            (this.uno(h),
+          (f =
+            (this.aso(h),
             CommonParamById_1.configCommonParamById.GetStringConfig(
               "TaskRemindStripColor",
             ) ?? ""));
-        _.SetColor(UE.Color.FromHex(C)), a.SetUIActive(!0), n.SetUIActive(!0);
+        _.SetColor(UE.Color.FromHex(f)), a.SetUIActive(!0), n.SetUIActive(!0);
       } else n.SetUIActive(!1), a.SetUIActive(!0);
       t && this.SetSpriteByPath(t, e, !0);
     }
   }
-  uno(e) {
+  aso(e) {
     var t = this.GetSprite(23);
     if (t) {
       const i = t
@@ -626,27 +649,27 @@ class QuestView extends UiTickViewBase_1.UiTickViewBase {
       );
     }
   }
-  ano(e) {
+  oso(e) {
     var t = this.GetItem(6),
       e = ModelManager_1.ModelManager.QuestNewModel.GetQuest(e);
     e && e.HasBehaviorTree()
       ? (t.SetUIActive(!0),
-        this.Xro ||
-          ((this.Xro = new QuestViewStep_1.QuestViewStep()), this.Xro.Init(t)),
+        this.jno ||
+          ((this.jno = new QuestViewStep_1.QuestViewStep()), this.jno.Init(t)),
         (e = e.Tree?.CreateShowBridge()),
-        this.Xro.Update(e?.TreeIncId ?? BigInt(0), e?.TrackTextConfig),
-        this.Xro.SetActive(!0))
+        this.jno.Update(e?.TreeIncId ?? BigInt(0), e?.TrackTextConfig),
+        this.jno.SetActive(!0))
       : t.SetUIActive(!1);
   }
-  hno(e) {
-    this.$ro.splice(0, this.$ro.length);
+  rso(e) {
+    this.Wno.splice(0, this.Wno.length);
     var e = ModelManager_1.ModelManager.QuestNewModel.GetDisplayRewardInfo(e),
       t = this.GetItem(19);
     if (e && 0 !== e.length) {
-      t.SetUIActive(!0), e && (this.$ro = e);
+      t.SetUIActive(!0), e && (this.Wno = e);
       const o = this.GetItem(4);
       for (const i of this.sOe) i.SetActive(!1);
-      this.$ro.forEach((e, t) => {
+      this.Wno.forEach((e, t) => {
         let i = void 0;
         var s;
         t > this.sOe.length - 1
@@ -662,22 +685,47 @@ class QuestView extends UiTickViewBase_1.UiTickViewBase {
       });
     } else t.SetUIActive(!1);
   }
+  Ofa(e) {
+    var t,
+      i,
+      s,
+      e = ModelManager_1.ModelManager.QuestNewModel.GetQuest(e);
+    e &&
+      (t = this.GetItem(24)) &&
+      (e.TagId
+        ? (i = QuestTagById_1.configQuestTagById.GetConfig(e.TagId))
+          ? ((s = this.GetSprite(25)) &&
+              (this.SetSpriteByPath(i.BgSpritePath, s, !0), s.SetUIActive(!0)),
+            (s = this.GetText(26)) &&
+              (LguiUtil_1.LguiUtil.SetLocalTextNew(s, i.Text),
+              s.SetUIActive(!0)),
+            t.SetUIActive(!0))
+          : Log_1.Log.CheckError() &&
+            Log_1.Log.Error(
+              "Quest",
+              19,
+              "找不到任务标签配置",
+              ["questId", e.Id],
+              ["TagId", e.TagId],
+            )
+        : t.SetUIActive(!1));
+  }
   GetGuideUiItemAndUiItemForShowEx(e) {
     if (!(1 < e.length || isNaN(Number(e[0])))) {
       var t = Number(e[0]);
       const o = ModelManager_1.ModelManager.QuestNewModel.GetQuest(t);
       if (o) {
-        var i = this.Qro.find((e) => e.QuestType === o.Type);
+        var i = this.Hno.find((e) => e.QuestType === o.Type);
         if (i) {
           var s = i.GetQuestItem(t);
           if (s)
             return (
-              this.jro !== QuestDefine_1.INVALID_QUEST_ID && this.jro
-                ? i.GetQuestItem(this.jro)?.SetSelected(!1)
+              this.kno !== QuestDefine_1.INVALID_QUEST_ID && this.kno
+                ? i.GetQuestItem(this.kno)?.SetSelected(!1)
                 : i.GetDefaultItem().SetSelected(!1),
               i.GetQuestItem(t).SetSelected(!0),
               this.GetScrollViewWithScrollbar(18).ScrollTo(i.GetRootItem()),
-              (this.Kwn = !1),
+              (this.wGn = !1),
               [(t = s.GetTaskToggleItem()), t]
             );
         }

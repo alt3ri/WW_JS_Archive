@@ -21,5 +21,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     16: "FlowChapterStartTips",
     17: "FlowChapterEndTips",
     18: "RemainStarWarningTips",
+    19: "TowerDefenceWaveTipView",
+    20: "RogueSilentAreaFloatTips",
   });
 //# sourceMappingURL=GenericPromptDefine.js.map

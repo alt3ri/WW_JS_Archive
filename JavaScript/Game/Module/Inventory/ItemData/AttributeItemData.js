@@ -8,17 +8,17 @@ class AttributeItemData extends ItemDataBase_1.ItemDataBase {
   constructor(t, e, r, a) {
     super(t, ATTRIBUTE_ITEM_DEFAULT_COUNT, a),
       (this.UniqueId = e),
-      (this.Eci = r);
+      (this.Smi = r);
   }
   GetUniqueId() {
     return this.UniqueId;
   }
   SetFunctionValue(t) {
-    (this.Eci = t), this.OnSetFunctionValue(t);
+    (this.Smi = t), this.OnSetFunctionValue(t);
   }
   OnSetFunctionValue(t) {}
   IsFunctionValue(t) {
-    return 0 < (this.Eci & (1 << t));
+    return 0 < (this.Smi & (1 << t));
   }
   GetIsLock() {
     return this.IsFunctionValue(0);

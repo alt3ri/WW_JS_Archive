@@ -27,29 +27,29 @@ class TaskMarkItem extends ServerMarkItem_1.ServerMarkItem {
       (this.TreeConfigId = 0),
       (this.Tree = void 0),
       (this.NodeId = 0),
-      (this.iDi = 0),
-      (this.oDi = !1),
-      (this.rDi = 0),
-      (this.nDi = void 0),
-      (this.sDi = !0),
-      (this.aDi = !1),
+      (this.iRi = 0),
+      (this.oRi = !1),
+      (this.rRi = 0),
+      (this.nRi = void 0),
+      (this.sRi = !0),
+      (this.aRi = !1),
       (this.MapId = t.MapId);
   }
   get MarkType() {
     return 12;
   }
   get CanShowInDistance() {
-    return this.sDi;
+    return this.sRi;
   }
   set CanShowInDistance(t) {
-    this.sDi !== t && (this.sDi = t) && 1 === this.MapType && (this.aDi = !1);
+    this.sRi !== t && (this.sRi = t) && 1 === this.MapType && (this.aRi = !1);
   }
   Initialize() {
     super.Initialize();
     var t = this.ServerMarkInfo;
     if (
       (this.SetTrackData(t.TrackTarget),
-      (this.rDi = ConfigManager_1.ConfigManager.MapConfig.GetTaskMarkConfig(
+      (this.rRi = ConfigManager_1.ConfigManager.MapConfig.GetTaskMarkConfig(
         this.ConfigId,
       ).IconDistant),
       (this.NodeId = t.NodeId),
@@ -80,13 +80,13 @@ class TaskMarkItem extends ServerMarkItem_1.ServerMarkItem {
           this.Tree.GetRangeMarkShowDis(this.NodeId));
       e
         ? ((this.RangeMarkShowDis = e / ONE_HUNDRED),
-          (this.iDi = Math.pow(e, 2)))
+          (this.iRi = Math.pow(e, 2)))
         : ((e = CommonParamById_1.configCommonParamById.GetIntConfig(
             "dailyquest_trackinfo_mini",
           )),
-          (this.iDi = Math.pow(e, 2)));
+          (this.iRi = Math.pow(e, 2)));
     } else
-      (this.BtType = Protocol_1.Aki.Protocol.NCs.Proto_BtTypeQuest),
+      (this.BtType = Protocol_1.Aki.Protocol.tps.Proto_BtTypeQuest),
         (this.TreeConfigId = t.TreeId);
     var e = ConfigManager_1.ConfigManager.MapConfig.GetTaskMarkConfig(
         this.ConfigId,
@@ -125,10 +125,10 @@ class TaskMarkItem extends ServerMarkItem_1.ServerMarkItem {
     this.InnerView = new TaskMarkItemView_1.TaskMarkItemView(this);
   }
   OnUpdate(t) {
-    this.UpdateItemIsInDistance(t), this.UpdateTrackState(), this.hDi(t);
+    this.UpdateItemIsInDistance(t), this.UpdateTrackState(), this.hRi(t);
   }
   GetTitleText() {
-    if (this.BtType === Protocol_1.Aki.Protocol.NCs.Proto_BtTypeQuest)
+    if (this.BtType === Protocol_1.Aki.Protocol.tps.Proto_BtTypeQuest)
       return ModelManager_1.ModelManager.QuestNewModel.GetQuest(
         this.TreeConfigId,
       )?.Name;
@@ -162,31 +162,31 @@ class TaskMarkItem extends ServerMarkItem_1.ServerMarkItem {
       }
     }
   }
-  lDi(t) {
-    this.nDi ||
-      (this.nDi = Vector_1.Vector.DistSquared2D(t, this.WorldPosition));
+  lRi(t) {
+    this.nRi ||
+      (this.nRi = Vector_1.Vector.DistSquared2D(t, this.WorldPosition));
   }
-  _Di(t) {
+  _Ri(t) {
     var e, i;
-    this.BtType === Protocol_1.Aki.Protocol.NCs.Proto_BtTypeQuest &&
+    this.BtType === Protocol_1.Aki.Protocol.tps.Proto_BtTypeQuest &&
       ((e = this.TreeConfigId),
       (i = ModelManager_1.ModelManager.QuestNewModel.GetQuest(e))) &&
       4 === i.Type &&
-      (this.lDi(t),
-      !this.oDi &&
-        this.nDi &&
-        this.nDi <= this.iDi &&
-        ((this.oDi = !0),
+      (this.lRi(t),
+      !this.oRi &&
+        this.nRi &&
+        this.nRi <= this.iRi &&
+        ((this.oRi = !0),
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.OnEnterDailyQuestNotifyRange,
           e,
           this.NodeId,
           0,
         )),
-      this.oDi) &&
-      this.nDi &&
-      this.nDi > this.iDi &&
-      ((this.oDi = !1),
+      this.oRi) &&
+      this.nRi &&
+      this.nRi > this.iRi &&
+      ((this.oRi = !1),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnEnterDailyQuestNotifyRange,
         e,
@@ -196,15 +196,15 @@ class TaskMarkItem extends ServerMarkItem_1.ServerMarkItem {
   }
   UpdateItemIsInDistance(t) {
     if (0 === this.NodeId) {
-      var e = 1 === this.MapType ? BattleUiDefine_1.CLAMP_RANGE : this.rDi;
+      var e = 1 === this.MapType ? BattleUiDefine_1.CLAMP_RANGE : this.rRi;
       if (!e) return;
-      this.lDi(t),
-        (this.CanShowInDistance = !!this.nDi && this.nDi < e * e * 1e4);
+      this.lRi(t),
+        (this.CanShowInDistance = !!this.nRi && this.nRi < e * e * 1e4);
     }
-    this._Di(t), (this.nDi = void 0);
+    this._Ri(t), (this.nRi = void 0);
   }
   CheckCanShowView() {
-    return this.BtType !== Protocol_1.Aki.Protocol.NCs.Proto_BtTypeQuest
+    return this.BtType !== Protocol_1.Aki.Protocol.tps.Proto_BtTypeQuest
       ? 1 === this.MapType
       : !(
           ("number" == typeof this.TrackTarget &&
@@ -214,13 +214,13 @@ class TaskMarkItem extends ServerMarkItem_1.ServerMarkItem {
           (!this.CanShowInDistance && !this.IsTracked)
         );
   }
-  hDi(t) {
+  hRi(t) {
     var e, i;
     1 === this.MapType &&
-      this.BtType === Protocol_1.Aki.Protocol.NCs.Proto_BtTypeQuest &&
+      this.BtType === Protocol_1.Aki.Protocol.tps.Proto_BtTypeQuest &&
       0 === this.NodeId &&
       this.IsCanShowView &&
-      !this.aDi &&
+      !this.aRi &&
       ((e = ModelManager_1.ModelManager.QuestNewModel.GetQuest(
         this.TreeConfigId,
       ))
@@ -235,7 +235,7 @@ class TaskMarkItem extends ServerMarkItem_1.ServerMarkItem {
           (i.f_pos_y = t.Y),
           (i.f_pos_z = t.Z),
           LogReportController_1.LogReportController.LogReport(i),
-          (this.aDi = !0))
+          (this.aRi = !0))
         : Log_1.Log.CheckError() &&
           Log_1.Log.Error("LogReport", 19, "发送任务日志时,找不到任务对象", [
             "questId",

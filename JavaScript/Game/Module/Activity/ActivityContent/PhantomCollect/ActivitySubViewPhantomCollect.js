@@ -7,6 +7,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const UE = require("ue"),
   Log_1 = require("../../../../../Core/Common/Log"),
   Protocol_1 = require("../../../../../Core/Define/Net/Protocol"),
+  MathUtils_1 = require("../../../../../Core/Utils/MathUtils"),
   EventDefine_1 = require("../../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../../Common/Event/EventSystem"),
   ConfigManager_1 = require("../../../../Manager/ConfigManager"),
@@ -30,10 +31,10 @@ class ActivitySubViewPhantomCollect extends ActivitySubViewBase_1.ActivitySubVie
       (this.ActivityDataBase = void 0),
       (this.TitleComponent = void 0),
       (this.MonsterItemList = []),
-      (this.Ike = (t) => {
+      (this.F2e = (t) => {
         this.RefreshTaskLayout();
       }),
-      (this.Tke = () => new ActivitySubViewPhantomCollectTaskItem());
+      (this.V2e = () => new ActivitySubViewPhantomCollectTaskItem());
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -49,20 +50,20 @@ class ActivitySubViewPhantomCollect extends ActivitySubViewBase_1.ActivitySubVie
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnPhantomCollectUpdate,
-      this.Ike,
+      this.F2e,
     );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnPhantomCollectUpdate,
-      this.Ike,
+      this.F2e,
     );
   }
   OnSetData() {}
   async OnBeforeStartAsync() {
     this.TaskGenericLayout = new GenericLayout_1.GenericLayout(
       this.GetVerticalLayout(6),
-      this.Tke,
+      this.V2e,
     );
     var t = this.GetItem(0),
       e =
@@ -105,7 +106,7 @@ class ActivitySubViewPhantomCollectMonsterItem extends UiPanelBase_1.UiPanelBase
   constructor() {
     super(...arguments),
       (this.MonsterId = 0),
-      (this.Lke = () => {
+      (this.H2e = () => {
         0 !== this.MonsterId &&
           CalabashController_1.CalabashController.JumpToCalabashCollectTabView(
             this.MonsterId,
@@ -118,7 +119,7 @@ class ActivitySubViewPhantomCollectMonsterItem extends UiPanelBase_1.UiPanelBase
       [1, UE.UITexture],
       [2, UE.UIItem],
     ]),
-      (this.BtnBindInfo = [[0, this.Lke]]);
+      (this.BtnBindInfo = [[0, this.H2e]]);
   }
   Refresh(t) {
     this.MonsterId = t;
@@ -145,7 +146,7 @@ class ActivitySubViewPhantomCollectTaskItem extends GridProxyAbstract_1.GridProx
       (this.ItemId = void 0),
       (this.OnBtnGo = () => {
         if (
-          this.Data?.Ikn === Protocol_1.Aki.Protocol.MBs.Proto_PhantomSideQuest
+          this.Data?.Z4n === Protocol_1.Aki.Protocol.hks.Proto_PhantomSideQuest
         ) {
           var e =
             ConfigManager_1.ConfigManager.ActivityPhantomCollectConfig?.GetPhantomCollectConfig(
@@ -175,7 +176,7 @@ class ActivitySubViewPhantomCollectTaskItem extends GridProxyAbstract_1.GridProx
             "PhantomSideQuestNoTask",
           );
         } else
-          this.Data?.Ikn === Protocol_1.Aki.Protocol.MBs.Proto_DataDock &&
+          this.Data?.Z4n === Protocol_1.Aki.Protocol.hks.Proto_DataDock &&
             UiManager_1.UiManager.OpenView("CalabashRootView");
       });
   }
@@ -195,25 +196,25 @@ class ActivitySubViewPhantomCollectTaskItem extends GridProxyAbstract_1.GridProx
     (this.RewardItem = new CommonItemSmallItemGrid_1.CommonItemSmallItemGrid()),
       this.RewardItem.Initialize(this.GetItem(1).GetOwner()),
       this.RewardItem.BindOnExtendTogglePress((t) => {
-        switch (this.Data.ckn) {
-          case Protocol_1.Aki.Protocol.D0s.qms:
-          case Protocol_1.Aki.Protocol.D0s.h3n:
+        switch (this.Data.F4n) {
+          case Protocol_1.Aki.Protocol.jps.Jfs:
+          case Protocol_1.Aki.Protocol.jps.j6n:
             this.ItemId &&
               (ItemController_1.ItemController.OpenItemTipsByItemId(
                 this.ItemId,
               ),
               this.RewardItem.SetLockVisible(!0));
             break;
-          case Protocol_1.Aki.Protocol.D0s.j0s:
+          case Protocol_1.Aki.Protocol.jps.hMs:
             ActivityPhantomCollectController_1.ActivityPhantomCollectController.PhantomCollectRewardReceiveRequest(
-              this.Data.Ikn,
+              this.Data.Z4n,
             ).then((t) => {
               t
                 ? ((this.Data = t), this.Refresh(this.Data, !1, this.GridIndex))
                 : Log_1.Log.CheckError() &&
                   Log_1.Log.Error("Activity", 35, "声骸收集活动领取奖励失败", [
                     "Type",
-                    this.Data.Ikn,
+                    this.Data.Z4n,
                   ]);
             });
         }
@@ -235,11 +236,11 @@ class ActivitySubViewPhantomCollectTaskItem extends GridProxyAbstract_1.GridProx
         ]);
     else {
       let t = 0;
-      e.Ikn === Protocol_1.Aki.Protocol.MBs.Proto_PhantomsCollect
+      e.Z4n === Protocol_1.Aki.Protocol.hks.Proto_PhantomsCollect
         ? (t = o.PhantomReward)
-        : e.Ikn === Protocol_1.Aki.Protocol.MBs.Proto_DataDock
+        : e.Z4n === Protocol_1.Aki.Protocol.hks.Proto_DataDock
           ? (t = o.DataDockReward)
-          : e.Ikn === Protocol_1.Aki.Protocol.MBs.Proto_PhantomSideQuest &&
+          : e.Z4n === Protocol_1.Aki.Protocol.hks.Proto_PhantomSideQuest &&
             (t = o.PhantomSideQuestReward),
         0 !== t &&
           ((s =
@@ -250,27 +251,27 @@ class ActivitySubViewPhantomCollectTaskItem extends GridProxyAbstract_1.GridProx
           (this.ItemId = s[0][0]),
           this.RewardItem.Refresh(r),
           this.RewardItem.SetReceivedVisible(
-            e.ckn === Protocol_1.Aki.Protocol.D0s.qms,
+            e.F4n === Protocol_1.Aki.Protocol.jps.Jfs,
           ),
           this.RewardItem.SetLockVisible(
-            e.ckn === Protocol_1.Aki.Protocol.D0s.h3n,
+            e.F4n === Protocol_1.Aki.Protocol.jps.j6n,
           ),
           this.RewardItem.SetReceivableVisible(
-            e.ckn === Protocol_1.Aki.Protocol.D0s.j0s,
+            e.F4n === Protocol_1.Aki.Protocol.jps.hMs,
           )),
-        e.ckn === Protocol_1.Aki.Protocol.D0s.qms
+        e.F4n === Protocol_1.Aki.Protocol.jps.Jfs
           ? ((s = UE.Color.FromHex("394449FF")),
             this.GetSprite(5).SetColor(s),
             this.GetText(2)?.SetColor(s),
             this.GetButton(0)?.SetSelfInteractive(!1),
             this.GetItem(6).SetUIActive(!0))
-          : e.ckn === Protocol_1.Aki.Protocol.D0s.h3n
+          : e.F4n === Protocol_1.Aki.Protocol.jps.j6n
             ? ((r = UE.Color.FromHex("394449FF")),
               this.GetSprite(5).SetColor(r),
               this.GetText(2)?.SetColor(r),
               this.GetButton(0)?.SetSelfInteractive(!0),
               this.GetItem(6).SetUIActive(!1))
-            : e.ckn === Protocol_1.Aki.Protocol.D0s.j0s &&
+            : e.F4n === Protocol_1.Aki.Protocol.jps.hMs &&
               ((s = UE.Color.FromHex("A28129FF")),
               this.GetSprite(5).SetColor(s),
               this.GetText(2)?.SetColor(s),
@@ -278,29 +279,49 @@ class ActivitySubViewPhantomCollectTaskItem extends GridProxyAbstract_1.GridProx
               this.GetItem(6).SetUIActive(!1));
       var r =
           ConfigManager_1.ConfigManager.ActivityPhantomCollectConfig.GetPhantomCollectTaskDesc(
-            e.Ikn,
+            e.Z4n,
           ),
         s =
           ActivityPhantomCollectController_1.ActivityPhantomCollectController.GetCurrentActivityDataById();
-      LguiUtil_1.LguiUtil.SetLocalTextNew(
-        this.GetText(2),
-        r.Title,
-        s.GetCollectPhantomCount(),
-        s.GetCollectPhantomList().length,
-      ),
-        e.Ikn === Protocol_1.Aki.Protocol.MBs.Proto_PhantomsCollect
-          ? ((s = Math.floor(Math.random() * o.phantomsLength())),
-            LguiUtil_1.LguiUtil.SetLocalTextNew(
-              this.GetText(3),
-              o.PhantomDesc.get(o.Phantoms[s]),
-            ))
-          : LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(3), r.Desc),
-        this.GetButton(4)
-          .GetRootComponent()
-          .SetUIActive(
-            e.Ikn !== Protocol_1.Aki.Protocol.MBs.Proto_PhantomsCollect &&
-              e.ckn !== Protocol_1.Aki.Protocol.D0s.qms,
-          );
+      if (
+        (LguiUtil_1.LguiUtil.SetLocalTextNew(
+          this.GetText(2),
+          r.Title,
+          s.GetCollectPhantomCount(),
+          s.GetCollectPhantomList().length,
+        ),
+        e.Z4n === Protocol_1.Aki.Protocol.hks.Proto_PhantomsCollect)
+      ) {
+        const l = [],
+          n = [],
+          a = MathUtils_1.MathUtils.LargeNumber;
+        o.Phantoms.forEach((t) => {
+          var e;
+          ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomIsUnlock(t)
+            ? ((e =
+                ModelManager_1.ModelManager.PhantomBattleModel.GetPhantomBattleData(
+                  t,
+                )),
+              a > e?.GetQuality()
+                ? ((n.length = 0), n.push(t))
+                : a === e?.GetQuality() && n.push(t))
+            : l.push(t);
+        });
+        s =
+          0 < l.length
+            ? Math.floor(Math.random() * l.length)
+            : Math.floor(Math.random() * n.length);
+        LguiUtil_1.LguiUtil.SetLocalTextNew(
+          this.GetText(3),
+          0 < l.length ? o.PhantomDesc.get(l[s]) : o.PhantomDesc.get(n[s]),
+        );
+      } else LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(3), r.Desc);
+      this.GetButton(4)
+        .GetRootComponent()
+        .SetUIActive(
+          e.Z4n !== Protocol_1.Aki.Protocol.hks.Proto_PhantomsCollect &&
+            e.F4n !== Protocol_1.Aki.Protocol.jps.Jfs,
+        );
     }
   }
 }

@@ -7,10 +7,10 @@ const UE = require("ue"),
 class TutorialDataItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this.PDo = void 0),
-      (this.xDo = void 0),
-      (this.I6e = (t) => {
-        1 === t && ((t = this.GetExtendToggle(2)), this.xDo(this.PDo, t));
+      (this.RRo = void 0),
+      (this.URo = void 0),
+      (this.N8e = (t) => {
+        1 === t && ((t = this.GetExtendToggle(2)), this.URo(this.RRo, t));
       });
   }
   async Init(t) {
@@ -21,10 +21,10 @@ class TutorialDataItem extends UiPanelBase_1.UiPanelBase {
     return (t.IsTypeTitle ? this.GetItem(0) : this.GetRootItem()).GetOwner();
   }
   Update(t, i) {
-    (this.PDo = t).IsTypeTitle ? this.qPt() : this.wDo();
+    (this.RRo = t).IsTypeTitle ? this.kxt() : this.ARo();
   }
   InitData(t) {
-    this.PDo = t;
+    this.RRo = t;
   }
   OnRegisterComponent() {
     (this.ComponentRegisterInfos = [
@@ -34,39 +34,39 @@ class TutorialDataItem extends UiPanelBase_1.UiPanelBase {
       [3, UE.UIItem],
       [4, UE.UIText],
     ]),
-      (this.BtnBindInfo = [[2, this.I6e]]);
+      (this.BtnBindInfo = [[2, this.N8e]]);
   }
   SetOnToggleSelected(t) {
-    this.xDo = t;
+    this.URo = t;
   }
-  qPt() {
+  kxt() {
     this.GetItem(0).SetUIActive(!0),
       this.GetExtendToggle(2).RootUIComp.SetUIActive(!1);
     var t = this.GetText(1);
-    this.PDo.Text
-      ? t.SetText(this.PDo.Text)
-      : LguiUtil_1.LguiUtil.SetLocalTextNew(t, this.PDo.TextId);
+    this.RRo.Text
+      ? t.SetText(this.RRo.Text)
+      : LguiUtil_1.LguiUtil.SetLocalTextNew(t, this.RRo.TextId);
   }
-  wDo() {
+  ARo() {
     this.GetItem(0).SetUIActive(!1);
     var t = this.GetExtendToggle(2),
       i = (t.RootUIComp.SetUIActive(!0), this.GetText(4));
-    this.PDo.Text
-      ? i.SetText(this.PDo.Text)
-      : LguiUtil_1.LguiUtil.SetLocalTextNew(i, this.PDo.TextId),
+    this.RRo.Text
+      ? i.SetText(this.RRo.Text)
+      : LguiUtil_1.LguiUtil.SetLocalTextNew(i, this.RRo.TextId),
       this.RefreshRed(),
       t.SetToggleState(0, !1),
-      this.PDo.Selected && this.OnSelected(!0);
+      this.RRo.Selected && this.OnSelected(!0);
   }
   RefreshRed() {
-    this.PDo.IsTypeTitle ||
-      this.GetItem(3).SetUIActive(this.PDo.SavedData.HasRedDot);
+    this.RRo.IsTypeTitle ||
+      this.GetItem(3).SetUIActive(this.RRo.SavedData.HasRedDot);
   }
   OnSelected(t) {
-    this.GetExtendToggle(2).SetToggleState(1, t), this.I6e(1);
+    this.GetExtendToggle(2).SetToggleState(1, t), this.N8e(1);
   }
   OnBeforeDestroy() {
-    this.PDo && (this.PDo = void 0);
+    this.RRo && (this.RRo = void 0);
   }
 }
 exports.TutorialDataItem = TutorialDataItem;

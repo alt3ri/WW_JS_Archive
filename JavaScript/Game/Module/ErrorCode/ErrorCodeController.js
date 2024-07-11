@@ -36,7 +36,7 @@ class MessageDecodeData extends LogReportDefine_1.CommonLogData {
 class ErrorCodeController extends UiControllerBase_1.UiControllerBase {
   static OnInit() {
     return (
-      Net_1.Net.SetExceptionHandle(ErrorCodeController.X4t),
+      Net_1.Net.SetExceptionHandle(ErrorCodeController.X5t),
       Cpp.FKuroPuertsBridget.RegisterSeriousErrorCallback(
         this.OpenConfirmBoxByText,
       ),
@@ -52,27 +52,27 @@ class ErrorCodeController extends UiControllerBase_1.UiControllerBase {
     );
   }
   static OnRegisterNetEvent() {
-    Net_1.Net.Register(7982, this.$4t), Net_1.Net.Register(19534, this.Y4t);
+    Net_1.Net.Register(10230, this.$5t), Net_1.Net.Register(24425, this.Y5t);
   }
   static OnUnRegisterNetEvent() {
-    Net_1.Net.UnRegister(7982), Net_1.Net.UnRegister(19534);
+    Net_1.Net.UnRegister(10230), Net_1.Net.UnRegister(24425);
   }
   static OpenErrorCodeScrollingTipsView(r, o) {
     var e = ConfigManager_1.ConfigManager.ErrorCodeConfig.GetTextByErrorId(r),
       r =
-        (r === Protocol_1.Aki.Protocol.lkn.Proto_PropRewardTips &&
+        (r === Protocol_1.Aki.Protocol.O4n.Proto_PropRewardTips &&
           ((r = o[0]),
           (o[0] =
             ConfigManager_1.ConfigManager.PropertyIndexConfig.GetPropertyIndexLocalName(
               Number(r),
             ))),
-        ErrorCodeController.J4t(e, o));
+        ErrorCodeController.J5t(e, o));
     ScrollingTipsController_1.ScrollingTipsController.ShowTipsByText(r);
   }
   static OpenErrorCodeTipView(r, o, e = void 0, t = !0, i = !0) {
     var n = ConfigManager_1.ConfigManager.ErrorCodeConfig,
       l = n.GetTextByErrorId(r);
-    let C = ErrorCodeController.J4t(l, e);
+    let C = ErrorCodeController.J5t(l, e);
     (l = n.IsTipsOnly(r)),
       (n =
         PackageConfigUtil_1.PackageConfigUtil.GetPackageConfigOrDefault(
@@ -112,7 +112,7 @@ class ErrorCodeController extends UiControllerBase_1.UiControllerBase {
   }
   static LogOnlyErrorCode(r, o = void 0) {
     var e = ConfigManager_1.ConfigManager.ErrorCodeConfig.GetTextByErrorId(r),
-      r = `[${r}]:` + ErrorCodeController.J4t(e, o);
+      r = `[${r}]:` + ErrorCodeController.J5t(e, o);
     Log_1.Log.CheckError() &&
       Log_1.Log.Error(
         "ErrorCode",
@@ -122,7 +122,7 @@ class ErrorCodeController extends UiControllerBase_1.UiControllerBase {
         ["errorParams", o],
       );
   }
-  static J4t(r, o) {
+  static J5t(r, o) {
     let e = r;
     if (o)
       for (let r = 0; r < o.length; r++) {
@@ -157,34 +157,34 @@ class ErrorCodeController extends UiControllerBase_1.UiControllerBase {
 }
 (exports.ErrorCodeController = ErrorCodeController),
   ((_a = ErrorCodeController).IsErrorCodeOpen = !0),
-  (ErrorCodeController.$4t = (r) => {
+  (ErrorCodeController.$5t = (r) => {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug("Net", 31, "服务端通知客户端消息解码失败:", [
         "notify",
         r,
       ]);
     var o = new MessageDecodeData();
-    (o.s_channel_id = r.Z4n),
-      (o.i_kcp_conv = r.tPs),
-      (o.i_error_code = r.Kms),
-      (o.i_seq_no = r.iPs),
+    (o.s_channel_id = r.BVn),
+      (o.i_kcp_conv = r.Sbs),
+      (o.i_error_code = r.hvs),
+      (o.i_seq_no = r.Ebs),
       (o.s_client_ip = PublicUtil_1.PublicUtil.GetLocalHost()),
       ([o.i_message_id, o.i_crc, o.s_before_hexdump, o.s_after_hexdump] =
-        Net_1.Net.GetCachedMessageData(r.iPs)),
+        Net_1.Net.GetCachedMessageData(r.Ebs)),
       LogReportController_1.LogReportController.LogReport(o);
   }),
-  (ErrorCodeController.Y4t = (r) => {
+  (ErrorCodeController.Y5t = (r) => {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug("Gm", 8, "5651_服务端通知客户端系统提示信息:", [
         "notify",
         r,
       ]);
-    var o = r.Fms,
-      r = r.lkn;
+    var o = r.ivs,
+      r = r.O4n;
     ErrorCodeController.OpenErrorCodeScrollingTipsView(r, o);
   }),
-  (ErrorCodeController.X4t = (r, o, e, t, i) => {
-    o === Protocol_1.Aki.Protocol.lkn.Proto_MsgFunctionClose
+  (ErrorCodeController.X5t = (r, o, e, t, i) => {
+    o === Protocol_1.Aki.Protocol.O4n.Proto_MsgFunctionClose
       ? (ScrollingTipsController_1.ScrollingTipsController.ShowTipsByText(
           MultiTextLang_1.configMultiTextLang.GetLocalTextNew("FunctionClose"),
         ),

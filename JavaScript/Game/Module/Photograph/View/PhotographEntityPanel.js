@@ -15,11 +15,11 @@ const UE = require("ue"),
 class PhotographEntityPanel extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this.EWi = void 0),
-      (this.yWi = void 0),
-      (this.IWi = new Map()),
-      (this.TWi = new Map()),
-      (this.xPt = (t, e, i) => {
+      (this.MKi = void 0),
+      (this.EKi = void 0),
+      (this.SKi = new Map()),
+      (this.yKi = new Map()),
+      (this.qxt = (t, e, i) => {
         var s = new EntityInfoItem();
         return (
           s.SetRootActor(e.GetOwner(), !0),
@@ -40,43 +40,43 @@ class PhotographEntityPanel extends UiPanelBase_1.UiPanelBase {
     ];
   }
   OnStart() {
-    (this.EWi = new GenericLayoutNew_1.GenericLayoutNew(
+    (this.MKi = new GenericLayoutNew_1.GenericLayoutNew(
       this.GetVerticalLayout(1),
-      this.xPt,
+      this.qxt,
     )),
-      (this.yWi = this.GetItem(5)),
+      (this.EKi = this.GetItem(5)),
       PhotographController_1.PhotographController.CloseBlackScreen();
   }
   OnBeforeDestroy() {
-    this.EWi && (this.EWi.ClearChildren(), (this.EWi = void 0)),
-      this.IWi.clear(),
-      this.TWi.clear(),
-      (this.yWi = void 0);
+    this.MKi && (this.MKi.ClearChildren(), (this.MKi = void 0)),
+      this.SKi.clear(),
+      this.yKi.clear(),
+      (this.EKi = void 0);
   }
   Refresh(e) {
-    this.IWi.clear();
-    for (let t = 0; t < e.length; t++) this.IWi.set(e[t].Text, t);
-    this.EWi.RebuildLayoutByDataNew(e);
+    this.SKi.clear();
+    for (let t = 0; t < e.length; t++) this.SKi.set(e[t].Text, t);
+    this.MKi.RebuildLayoutByDataNew(e);
   }
   SetInfoPanelVisible(t) {
     this.GetVerticalLayout(1).RootUIComp.SetUIActive(t);
   }
   UpdateIcons(t) {
     t.length <= 0 &&
-      this.TWi.forEach((t) => {
+      this.yKi.forEach((t) => {
         this.Move(t, new UE.Vector2D(0, 0), !0);
       });
     for (const i of t) {
       var e;
-      this.TWi.has(i.Id)
-        ? this.Move(this.TWi.get(i.Id), i.Vector, i.NotShow)
+      this.yKi.has(i.Id)
+        ? this.Move(this.yKi.get(i.Id), i.Vector, i.NotShow)
         : ((e = new EntityIconItem(
-            LguiUtil_1.LguiUtil.CopyItem(this.yWi, this.GetItem(0)),
+            LguiUtil_1.LguiUtil.CopyItem(this.EKi, this.GetItem(0)),
           )).CreateByActorAsync(e.GetItsItem().GetOwner()),
           e
             ? (e.SetUiActive(!0),
               e.InitSpr(),
-              this.TWi.set(i.Id, e),
+              this.yKi.set(i.Id, e),
               this.Move(e, i.Vector, !0))
             : Log_1.Log.CheckInfo() &&
               Log_1.Log.Info("Photo", 46, "tempUiItem为空", ["名称：", i.Id]));
@@ -93,14 +93,14 @@ class PhotographEntityPanel extends UiPanelBase_1.UiPanelBase {
           );
   }
   GetInfoItemByDesc(t) {
-    t = this.IWi.get(t);
-    if (void 0 !== t) return this.EWi.GetLayoutItemByIndex(t);
+    t = this.SKi.get(t);
+    if (void 0 !== t) return this.MKi.GetLayoutItemByIndex(t);
   }
 }
 exports.PhotographEntityPanel = PhotographEntityPanel;
 class EntityInfoItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
-    super(), (this.UiSequencePlayer = void 0), (this.ILr = !1);
+    super(), (this.UiSequencePlayer = void 0), (this.EDr = !1);
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -116,22 +116,22 @@ class EntityInfoItem extends UiPanelBase_1.UiPanelBase {
       )),
       this.UiSequencePlayer.StopCurrentSequence(!1, !0),
       this.UiSequencePlayer.PlayLevelSequenceByName("Fail"),
-      (this.ILr = !1);
+      (this.EDr = !1);
   }
   Refresh(t) {
     var e = PublicUtil_1.PublicUtil.GetConfigTextByKey(t.Text);
     e && this.GetText(2).SetText(e), this.RefreshFinishState(t.IsFinish);
   }
   RefreshFinishState(t) {
-    t && !this.ILr
+    t && !this.EDr
       ? (this.UiSequencePlayer.StopCurrentSequence(!1, !0),
         this.UiSequencePlayer.PlayLevelSequenceByName("Complete"),
-        (this.ILr = !0))
+        (this.EDr = !0))
       : !t &&
-        this.ILr &&
+        this.EDr &&
         (this.UiSequencePlayer.StopCurrentSequence(!1, !0),
         this.UiSequencePlayer.PlayLevelSequenceByName("Fail"),
-        (this.ILr = !1));
+        (this.EDr = !1));
   }
 }
 exports.EntityInfoItem = EntityInfoItem;

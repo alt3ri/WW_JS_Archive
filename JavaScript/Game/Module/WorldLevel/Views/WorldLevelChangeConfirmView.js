@@ -13,17 +13,17 @@ const UE = require("ue"),
 class WorldLevelChangeConfirmView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.wvo = () => {
+      (this.AMo = () => {
         UiManager_1.UiManager.CloseView("WorldLevelChangeConfirmView");
       }),
-      (this.ZOo = () => {
+      (this.Yko = () => {
         UiManager_1.UiManager.CloseView("WorldLevelChangeConfirmView");
       }),
-      (this.tjt = () => {
+      (this.tWt = () => {
         ModelManager_1.ModelManager.WorldLevelModel.CurWorldLevel >
         ModelManager_1.ModelManager.WorldLevelModel.WorldLevelChangeTarget
           ? Global_1.Global.BaseCharacter?.CharacterActorComponent.Entity.GetComponent(
-              185,
+              188,
             )?.HasTag(1996802261)
             ? ScrollingTipsController_1.ScrollingTipsController.ShowTipsByText(
                 ConfigManager_1.ConfigManager.TextConfig.GetTextById(
@@ -46,20 +46,20 @@ class WorldLevelChangeConfirmView extends UiViewBase_1.UiViewBase {
       [6, UE.UIText],
     ]),
       (this.BtnBindInfo = [
-        [3, this.wvo],
-        [4, this.ZOo],
-        [5, this.tjt],
+        [3, this.AMo],
+        [4, this.Yko],
+        [5, this.tWt],
       ]);
   }
   OnStart() {
-    this.LBt(), this.eko(), this.tko();
+    this.Ubt(), this.Jko(), this.zko();
   }
-  LBt() {
+  Ubt() {
     this.GetText(6).SetText(
       ModelManager_1.ModelManager.WorldLevelModel.WorldLevelMultilingualText,
     );
   }
-  eko() {
+  Jko() {
     LguiUtil_1.LguiUtil.SetLocalText(
       this.GetText(0),
       "LvString",
@@ -71,7 +71,7 @@ class WorldLevelChangeConfirmView extends UiViewBase_1.UiViewBase {
         ModelManager_1.ModelManager.WorldLevelModel.WorldLevelChangeTarget,
       );
   }
-  tko() {
+  zko() {
     var e =
       ConfigManager_1.ConfigManager.TextConfig.GetTextById("WorldLevelINotice");
     this.GetText(2).SetText(e ?? "");

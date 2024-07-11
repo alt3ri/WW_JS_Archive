@@ -13,12 +13,12 @@ const UE = require("ue"),
 class ToolWindowView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.Uwi = void 0),
-      (this.Awi = void 0),
-      (this.Pwi = () => {
+      (this.UBi = void 0),
+      (this.ABi = void 0),
+      (this.PBi = () => {
         UiManager_1.UiManager.OpenView("LogUploadView");
       }),
-      (this.xwi = () => {
+      (this.xBi = () => {
         var e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(168);
         e.FunctionMap.set(2, () => {
           var e = new ConfirmBoxDefine_1.ConfirmBoxDataNew(186);
@@ -48,36 +48,36 @@ class ToolWindowView extends UiViewBase_1.UiViewBase {
   }
   OnStart() {
     this.GetText(0).ShowTextNew("PrefabTextItem_HotfixTool_Text"),
-      (this.Awi = new ToolWindowButtonItem_1.ToolWindowButtonItem(
+      (this.ABi = new ToolWindowButtonItem_1.ToolWindowButtonItem(
         this.GetItem(1),
       ));
     var e = MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
         "PrefabTextItem_HotfixTool_clear_Text",
       ),
       e =
-        (this.Awi.SetText(e),
-        this.Awi.BindCallback(this.xwi),
+        (this.ABi.SetText(e),
+        this.ABi.BindCallback(this.xBi),
         ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
           "SP_Tool_Clean",
         )),
       e =
-        (this.Awi.RefreshIcon(e, () => {
-          this.Awi.SetIconVisible(!0);
+        (this.ABi.RefreshIcon(e, () => {
+          this.ABi.SetIconVisible(!0);
         }),
-        (this.Uwi = new ToolWindowButtonItem_1.ToolWindowButtonItem(
+        (this.UBi = new ToolWindowButtonItem_1.ToolWindowButtonItem(
           this.GetItem(2),
         )),
         MultiTextLang_1.configMultiTextLang.GetLocalTextNew(
           "PrefabTextItem_HotfixTool_upload_Text",
         )),
       e =
-        (this.Uwi.SetText(e),
-        this.Uwi.BindCallback(this.Pwi),
+        (this.UBi.SetText(e),
+        this.UBi.BindCallback(this.PBi),
         ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
           "SP_Tool_Upload",
         ));
-    this.Uwi.RefreshIcon(e, () => {
-      this.Uwi.SetIconVisible(!0);
+    this.UBi.RefreshIcon(e, () => {
+      this.UBi.SetIconVisible(!0);
     }),
       this.GetItem(3).SetUIActive(!1),
       this.GetItem(4).SetUIActive(!1);

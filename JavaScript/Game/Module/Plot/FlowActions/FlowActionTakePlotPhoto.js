@@ -6,14 +6,14 @@ const UiManager_1 = require("../../../Ui/UiManager"),
 class FlowActionTakePlotPhoto extends FlowActionBase_1.FlowActionBase {
   constructor() {
     super(...arguments),
-      (this.Ohi = () => {
+      (this.Oli = () => {
         this.FinishExecute(!0);
       });
   }
   OnExecute() {
     this.ActionInfo.Params
       ? UiManager_1.UiManager.IsViewShow("PlotPhotoView") ||
-        UiManager_1.UiManager.OpenView("PlotPhotoView", this.Ohi)
+        UiManager_1.UiManager.OpenView("PlotPhotoView", this.Oli)
       : this.FinishExecute(!0);
   }
 }

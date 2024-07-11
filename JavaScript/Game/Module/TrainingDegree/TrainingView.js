@@ -6,8 +6,8 @@ const ModelManager_1 = require("../../Manager/ModelManager"),
   TrainingItem_1 = require("./TrainingItem");
 class TrainingView {
   constructor() {
-    (this.E_i = void 0),
-      (this.ADo = (e, i, r) => {
+    (this.Sui = void 0),
+      (this.DRo = (e, i, r) => {
         i = new TrainingItem_1.TrainingItem(i);
         return i.SetData(e), { Key: r, Value: i };
       });
@@ -19,12 +19,12 @@ class TrainingView {
       (r =
         ModelManager_1.ModelManager.TrainingDegreeModel.GetTrainingDataList()) ||
         i.SetUIActive(!1),
-      (this.E_i = new GenericLayoutNew_1.GenericLayoutNew(e, this.ADo)),
-      this.E_i.RebuildLayoutByDataNew(r),
+      (this.Sui = new GenericLayoutNew_1.GenericLayoutNew(e, this.DRo)),
+      this.Sui.RebuildLayoutByDataNew(r),
       i.SetUIActive(!0));
   }
   Clear() {
-    this.E_i && this.E_i.ClearChildren(), (this.E_i = void 0);
+    this.Sui && this.Sui.ClearChildren(), (this.Sui = void 0);
   }
 }
 exports.TrainingView = TrainingView;

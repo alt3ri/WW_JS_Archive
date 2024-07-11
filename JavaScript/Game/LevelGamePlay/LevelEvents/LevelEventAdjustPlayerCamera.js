@@ -207,6 +207,7 @@ class LevelEventAdjustPlayerCamera extends LevelGeneralBase_1.LevelEventBase {
       this.Type,
       this.BaseContext,
       { Name: "RestorePlayerCameraAdjustment" },
+      !0,
     );
   }
 }

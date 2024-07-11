@@ -10,7 +10,7 @@ class LevelEventCheckFlyState extends LevelGeneralBase_1.LevelEventBase {
     var l,
       t = Global_1.Global.BaseCharacter;
     t &&
-      (t.CharacterActorComponent.Entity.GetComponent(158).MoveState ===
+      (t.CharacterActorComponent.Entity.GetComponent(160).MoveState ===
       CharacterUnifiedStateTypes_1.ECharMoveState.Glide
         ? (l = e.get("Success")) &&
           ControllerHolder_1.ControllerHolder.LevelGeneralController.ExecuteActionsByString(

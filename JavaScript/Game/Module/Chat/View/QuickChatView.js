@@ -23,8 +23,8 @@ class QuickChatView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
       (this.ChatInputMaxNum = 0),
-      (this.mEt = []),
-      (this.dEt = (e) => {
+      (this.Tyt = []),
+      (this.Lyt = (e) => {
         var t = ModelManager_1.ModelManager.ChatModel.GetJoinedChatRoom();
         if (t) {
           if (t instanceof PrivateChatRoom_1.PrivateChatRoom) {
@@ -38,12 +38,12 @@ class QuickChatView extends UiViewBase_1.UiViewBase {
                 ])
               );
           }
-          this.ISt(e, Protocol_1.Aki.Protocol.U3n.nMs), this.CloseMe();
+          this.qSt(e, Protocol_1.Aki.Protocol.l8n.SIs), this.CloseMe();
         } else
           Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn("Chat", 5, "当前没有加入任何一个聊天室");
       }),
-      (this.CEt = () => {
+      (this.Dyt = () => {
         this.CloseMe();
       });
   }
@@ -54,15 +54,15 @@ class QuickChatView extends UiViewBase_1.UiViewBase {
       [2, UE.UIItem],
       [3, UE.UIItem],
     ]),
-      (this.BtnBindInfo = [[1, this.CEt]]);
+      (this.BtnBindInfo = [[1, this.Dyt]]);
   }
   OnStart() {
     (this.ChatInputMaxNum =
       CommonParamById_1.configCommonParamById.GetIntConfig("chat_character")),
       this.GetButton(1)?.RootUIComp.SetUIActive(!0),
-      this.gEt();
+      this.Ryt();
   }
-  gEt() {
+  Ryt() {
     var e =
       ConfigManager_1.ConfigManager.ChatConfig.GetAllQuickChatConfigList();
     if (e) {
@@ -76,14 +76,14 @@ class QuickChatView extends UiViewBase_1.UiViewBase {
             l.QuickChatContent,
           );
         i.Refresh(a),
-          i.BindOnClicked(this.dEt),
+          i.BindOnClicked(this.Lyt),
           i.SetActive(!0),
-          this.mEt.push(i);
+          this.Tyt.push(i);
       }
       t.SetUIActive(!1);
     }
   }
-  ISt(e, t) {
+  qSt(e, t) {
     var r, o;
     StringUtils_1.StringUtils.IsEmpty(e)
       ? ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
@@ -121,22 +121,22 @@ class QuickChatView extends UiViewBase_1.UiViewBase {
                   ? ChatController_1.ChatController.ChannelChatRequest(
                       t,
                       e,
-                      Protocol_1.Aki.Protocol.kGs.Proto_MatchTeam,
+                      Protocol_1.Aki.Protocol.DFs.Proto_MatchTeam,
                     )
                   : r instanceof WorldTeamChatRoom_1.WorldChatRoom &&
                     ChatController_1.ChatController.ChannelChatRequest(
                       t,
                       e,
-                      Protocol_1.Aki.Protocol.kGs.Proto_WorldTeam,
+                      Protocol_1.Aki.Protocol.DFs.Proto_WorldTeam,
                     ))
           : Log_1.Log.CheckWarn() &&
             Log_1.Log.Warn("Chat", 8, "当前没有加入任何一个聊天室");
   }
   OnBeforeDestroy() {
-    this.fEt();
+    this.Uyt();
   }
-  fEt() {
-    for (const e of this.mEt) e.Destroy();
+  Uyt() {
+    for (const e of this.Tyt) e.Destroy();
   }
 }
 exports.QuickChatView = QuickChatView;

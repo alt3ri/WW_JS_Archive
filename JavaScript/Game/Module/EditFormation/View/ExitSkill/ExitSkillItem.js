@@ -21,10 +21,10 @@ exports.ExitSkillItemData = ExitSkillItemData;
 class ExitSkillItem extends UiPanelBase_1.UiPanelBase {
   constructor(i) {
     super(),
-      (this.zke = void 0),
+      (this.dFe = void 0),
       (this.j8 = void 0),
-      (this.R4t = !1),
-      (this.EPe = void 0),
+      (this.R5t = !1),
+      (this.SPe = void 0),
       this.CreateThenShowByActor(i.GetOwner());
   }
   OnRegisterComponent() {
@@ -48,30 +48,30 @@ class ExitSkillItem extends UiPanelBase_1.UiPanelBase {
     ];
   }
   OnStart() {
-    this.EPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem);
+    this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem);
   }
   OnBeforeDestroy() {
-    (this.zke = void 0),
+    (this.dFe = void 0),
       (this.j8 = void 0),
-      (this.R4t = !1),
-      this.EPe?.Clear(),
-      (this.EPe = void 0);
+      (this.R5t = !1),
+      this.SPe?.Clear(),
+      (this.SPe = void 0);
   }
   Refresh(i, t) {
     var e = i?.RoleId,
       s = i?.PlayerId;
-    e ? this.U4t(e, i.OnlineIndex, s, t) : this.A4t(!1);
+    e ? this.U5t(e, i.OnlineIndex, s, t) : this.A5t(!1);
     let r = !1;
-    !this.R4t || (this.zke === e && this.j8 === s) || (r = !0),
-      (this.zke = e),
+    !this.R5t || (this.dFe === e && this.j8 === s) || (r = !0),
+      (this.dFe = e),
       (this.j8 = s),
-      (this.R4t = !0),
-      r && this.EPe.PlayLevelSequenceByName("Switch");
+      (this.R5t = !0),
+      r && this.SPe.PlayLevelSequenceByName("Switch");
   }
-  U4t(t, e, s, r) {
+  U5t(t, e, s, r) {
     var o = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(t);
     if (o) {
-      this.A4t(!0);
+      this.A5t(!0);
       var a = o.FormationRoleCard,
         a =
           (this.SetRoleIcon(a, this.GetTexture(2), t),
@@ -118,7 +118,7 @@ class ExitSkillItem extends UiPanelBase_1.UiPanelBase {
       Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn("Formation", 49, "ExitSkillItem,找不到角色配置");
   }
-  A4t(i) {
+  A5t(i) {
     this.GetItem(0).SetUIActive(i),
       this.GetItem(1).SetUIActive(i),
       this.GetItem(6).SetUIActive(!i),

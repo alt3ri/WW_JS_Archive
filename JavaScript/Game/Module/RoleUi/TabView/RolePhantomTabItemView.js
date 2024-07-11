@@ -7,10 +7,10 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const UE = require("ue"),
   Log_1 = require("../../../../Core/Common/Log"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
   UiPanelBase_1 = require("../../../Ui/Base/UiPanelBase"),
-  UiManager_1 = require("../../../Ui/UiManager"),
-  ControllerHolder_1 = require("../../../Manager/ControllerHolder");
+  UiManager_1 = require("../../../Ui/UiManager");
 class RolePhantomAttributeItem extends UiPanelBase_1.UiPanelBase {
   constructor(t) {
     super(), this.CreateThenShowByActor(t.GetOwner());
@@ -75,7 +75,7 @@ class RolePhantomItem extends UiPanelBase_1.UiPanelBase {
       (this.BtnBindInfo = [[0, this.OnClick]]);
   }
   UpdateItem(t) {
-    (this.Id = t), this.Kbe(), this.Pqt(), this.sct();
+    (this.Id = t), this.Kbe(), this.BGt(), this.pmt();
   }
   UpdateTrialItem(t) {
     var e;
@@ -90,7 +90,7 @@ class RolePhantomItem extends UiPanelBase_1.UiPanelBase {
         )),
         this.SetSpriteByPath(e.BackgroundSprite, this.GetSprite(2), !1),
         this.SetItemIcon(this.GetTexture(1), t),
-        this.odo());
+        this.eCo());
   }
   Kbe() {
     var t;
@@ -102,7 +102,7 @@ class RolePhantomItem extends UiPanelBase_1.UiPanelBase {
           )) &&
         this.SetItemIcon(this.GetTexture(1), t.GetConfigId());
   }
-  Pqt() {
+  BGt() {
     var t;
     this.GetSprite(2).SetUIActive(0 !== this.Id),
       0 !== this.Id &&
@@ -115,10 +115,10 @@ class RolePhantomItem extends UiPanelBase_1.UiPanelBase {
         )),
         this.SetSpriteByPath(t.BackgroundSprite, this.GetSprite(2), !1));
   }
-  sct() {
-    this.GetItem(4).SetUIActive(0 !== this.Id), 0 !== this.Id && this.odo();
+  pmt() {
+    this.GetItem(4).SetUIActive(0 !== this.Id), 0 !== this.Id && this.eCo();
   }
-  odo() {
+  eCo() {
     var t =
       ModelManager_1.ModelManager.RoleModel.GetCurSelectMainRoleInstance();
     t &&
@@ -129,7 +129,7 @@ class RolePhantomItem extends UiPanelBase_1.UiPanelBase {
 }
 class RoleMainPhantomItem extends (exports.RolePhantomItem = RolePhantomItem) {
   constructor() {
-    super(...arguments), (this.rdo = void 0);
+    super(...arguments), (this.tCo = void 0);
   }
   OnRegisterComponent() {
     (this.ComponentRegisterInfos = [
@@ -143,10 +143,10 @@ class RoleMainPhantomItem extends (exports.RolePhantomItem = RolePhantomItem) {
       (this.BtnBindInfo = [[0, this.OnClick]]);
   }
   OnStart() {
-    this.rdo = new SkillButtonCompose(this.GetItem(3), this.OnClickSkillButton);
+    this.tCo = new SkillButtonCompose(this.GetItem(3), this.OnClickSkillButton);
   }
   UpdateItem(t) {
-    super.UpdateItem(t), this.rdo.Update(t);
+    super.UpdateItem(t), this.tCo.Update(t);
   }
 }
 exports.RoleMainPhantomItem = RoleMainPhantomItem;
@@ -154,10 +154,10 @@ class SkillButtonCompose extends UiPanelBase_1.UiPanelBase {
   constructor(t, e) {
     super(),
       (this.xe = 0),
-      (this.Kyt = () => {
-        this.EBt && this.EBt();
+      (this.eTt = () => {
+        this.Tbt && this.Tbt();
       }),
-      (this.EBt = e),
+      (this.Tbt = e),
       this.CreateThenShowByActor(t.GetOwner());
   }
   OnRegisterComponent() {
@@ -165,7 +165,7 @@ class SkillButtonCompose extends UiPanelBase_1.UiPanelBase {
       [1, UE.UIButtonComponent],
       [0, UE.UITexture],
     ]),
-      (this.BtnBindInfo = [[1, this.Kyt]]);
+      (this.BtnBindInfo = [[1, this.eTt]]);
   }
   Update(t) {
     (this.xe = t),

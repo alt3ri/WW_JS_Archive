@@ -12,10 +12,10 @@ const Log_1 = require("../../../../../../Core/Common/Log"),
 class PatrolMovePointsLogic {
   constructor() {
     (this.Hte = void 0),
-      (this.lJo = !1),
-      (this._Jo = !1),
+      (this.szo = !1),
+      (this.azo = !1),
       (this.ooe = !1),
-      (this.JYo = -1),
+      (this.XJo = -1),
       (this.TargetIndex = 0),
       (this.TargetPoint = void 0),
       (this.MovePoint = []),
@@ -26,18 +26,18 @@ class PatrolMovePointsLogic {
     this.Hte = t;
   }
   Reset() {
-    (this.TargetIndex = 0), (this.JYo = -1);
+    (this.TargetIndex = 0), (this.XJo = -1);
   }
   CheckMoveLastPoint() {
-    return !this.lJo && this.TargetIndex === this.MovePoint.length - 1;
+    return !this.szo && this.TargetIndex === this.MovePoint.length - 1;
   }
   GetPreviousLocation() {
-    return 0 <= this.JYo ? this.MovePoint[this.JYo].Position : void 0;
+    return 0 <= this.XJo ? this.MovePoint[this.XJo].Position : void 0;
   }
   UpdateMovePoints(t) {
     let i = [],
       e = ((i = Array.isArray(t.Points) ? t.Points : [t.Points]), !0);
-    this.uJo(this.MovePoint, i)
+    this.hzo(this.MovePoint, i)
       ? (e = !1)
       : (Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug(
@@ -45,18 +45,18 @@ class PatrolMovePointsLogic {
             43,
             "移动路径变更",
             ["实体ID", this.Hte.CreatureData.GetPbDataId()],
-            ["PreviousIndex", this.JYo],
+            ["PreviousIndex", this.XJo],
             ["MovePathLength", this.MovePoint.length],
             ["NewMovePathLength", i.length],
           ),
-        (this.JYo = -1),
+        (this.XJo = -1),
         t.Loop &&
           !t.CircleMove &&
           void 0 !== t.StartWithInversePath &&
           (this.ooe = t.StartWithInversePath)),
       (this.MovePoint = i),
-      (this.lJo = t.Loop),
-      (this._Jo = t.CircleMove ?? !1),
+      (this.szo = t.Loop),
+      (this.azo = t.CircleMove ?? !1),
       void 0 !== t.StartIndex &&
       0 <= t.StartIndex &&
       t.StartIndex < this.MovePoint.length
@@ -69,35 +69,35 @@ class PatrolMovePointsLogic {
               ["初始点Index", t.StartIndex],
               ["TargetIndex", this.TargetIndex],
             ),
-          this.cJo(t.StartIndex))
+          this.lzo(t.StartIndex))
         : t.UsePreviousIndex &&
-            0 <= this.JYo &&
-            this.JYo < this.MovePoint.length
-          ? (this.cJo(this.JYo),
+            0 <= this.XJo &&
+            this.XJo < this.MovePoint.length
+          ? (this.lzo(this.XJo),
             this.GetNextPoint() < this.MovePoint.length &&
-              this.cJo(this.GetNextPoint()),
-            Log_1.Log.CheckInfo() &&
-              Log_1.Log.Info(
+              this.lzo(this.GetNextPoint()),
+            Log_1.Log.CheckDebug() &&
+              Log_1.Log.Debug(
                 "AI",
                 43,
                 "使用上次的移动点",
                 ["实体ID", this.Hte.CreatureData.GetPbDataId()],
-                ["PreviousIndex", this.JYo],
+                ["PreviousIndex", this.XJo],
                 ["TargetIndex", this.TargetIndex],
               ))
           : t.UseNearestPoint && e
-            ? this.mJo()
-            : this.cJo(0);
+            ? this._zo()
+            : this.lzo(0);
   }
   ChangeToNextPoint() {
-    this.dJo(this.GetNextPoint());
+    this.uzo(this.GetNextPoint());
   }
   GetNextPoint() {
     let t = 0;
     var i;
     return (
-      this.lJo
-        ? this._Jo
+      this.szo
+        ? this.azo
           ? (t = (this.TargetIndex + 1) % this.MovePoint.length)
           : this.ooe
             ? 0 === this.TargetIndex
@@ -108,12 +108,12 @@ class PatrolMovePointsLogic {
                     "PbDataID",
                     this.Hte.CreatureData.GetPbDataId(),
                   ]),
-                ((i = Protocol_1.Aki.Protocol.YYn.create()).rkn =
+                ((i = Protocol_1.Aki.Protocol.Hes.create()).P4n =
                   MathUtils_1.MathUtils.NumberToLong(
                     this.Hte.CreatureData.GetCreatureDataId(),
                   )),
-                (i.okn = !0),
-                Net_1.Net.Call(10604, i, () => {}))
+                (i.B4n = !0),
+                Net_1.Net.Call(21490, i, () => {}))
               : (t = this.TargetIndex - 1)
             : this.TargetIndex === this.MovePoint.length - 1
               ? ((this.ooe = !0),
@@ -123,12 +123,12 @@ class PatrolMovePointsLogic {
                     "PbDataID",
                     this.Hte.CreatureData.GetPbDataId(),
                   ]),
-                ((i = Protocol_1.Aki.Protocol.YYn.create()).rkn =
+                ((i = Protocol_1.Aki.Protocol.Hes.create()).P4n =
                   MathUtils_1.MathUtils.NumberToLong(
                     this.Hte.CreatureData.GetCreatureDataId(),
                   )),
-                (i.okn = !1),
-                Net_1.Net.Call(10604, i, () => {}))
+                (i.B4n = !1),
+                Net_1.Net.Call(21490, i, () => {}))
               : (t = this.TargetIndex + 1)
         : (t = this.TargetIndex + 1),
       t
@@ -145,56 +145,56 @@ class PatrolMovePointsLogic {
         ),
       t?.Callback && t.Callback(),
       t?.IsHide) &&
-      this.CJo(t);
+      this.czo(t);
   }
-  CJo(t) {
+  czo(t) {
     this.Hte.SkeletalMesh?.SetVisibility(!t.IsHide);
     var i,
-      e = this.Hte.Entity.GetComponent(185);
+      e = this.Hte.Entity.GetComponent(188);
     e &&
       ((i = -841499802),
       t.IsHide ? e.HasTag(i) || e.AddTag(i) : e.HasTag(i) && e.RemoveTag(i));
   }
   UpdatePreIndex() {
     return (
-      this.JYo < 0 &&
+      this.XJo < 0 &&
         (this.ooe
-          ? (this.JYo = Math.min(this.MovePoint.length, this.TargetIndex + 1))
-          : (this.JYo = Math.max(0, this.TargetIndex - 1))),
-      this.JYo
+          ? (this.XJo = Math.min(this.MovePoint.length, this.TargetIndex + 1))
+          : (this.XJo = Math.max(0, this.TargetIndex - 1))),
+      this.XJo
     );
   }
-  gJo(t, i) {
+  mzo(t, i) {
     return (
       t === i ||
       !(!t || !i || t.Index !== i.Index || !t.Position.Equals(i.Position))
     );
   }
-  uJo(i, e) {
+  hzo(i, e) {
     if (i !== e) {
       if (!i || !e) return !1;
       if (i.length !== e.length) return !1;
       var s = i.length;
-      for (let t = 0; t < s; ++t) if (!this.gJo(i[t], e[t])) return !1;
+      for (let t = 0; t < s; ++t) if (!this.mzo(i[t], e[t])) return !1;
     }
     return !0;
   }
-  dJo(t) {
+  uzo(t) {
     return (
-      (this.JYo = this.TargetIndex),
+      (this.XJo = this.TargetIndex),
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
           "AI",
           43,
           "更新移动路径经过点下标",
           ["实体ID", this.Hte.CreatureData.GetPbDataId()],
-          ["PreviousIndex", this.JYo],
+          ["PreviousIndex", this.XJo],
           ["MovePoint.length", this.MovePoint.length],
         ),
-      this.cJo(t)
+      this.lzo(t)
     );
   }
-  cJo(t) {
+  lzo(t) {
     return (
       (this.TargetIndex = t),
       Log_1.Log.CheckDebug() &&
@@ -211,11 +211,11 @@ class PatrolMovePointsLogic {
         : ((this.TargetPoint = void 0), !1)
     );
   }
-  mJo() {
+  _zo() {
     var t = this.UTe();
     (this.TargetIndex = 0 <= t - 1 ? t - 1 : 0),
-      Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info(
+      Log_1.Log.CheckDebug() &&
+        Log_1.Log.Debug(
           "AI",
           43,
           "使用最近的移动点",
@@ -223,7 +223,7 @@ class PatrolMovePointsLogic {
           ["当前最近的点Index", t],
           ["TargetIndex", this.TargetIndex],
         ),
-      this.cJo(t);
+      this.lzo(t);
   }
   UTe() {
     let e = 0,

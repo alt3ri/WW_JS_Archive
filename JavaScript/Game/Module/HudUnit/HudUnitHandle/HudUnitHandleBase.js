@@ -12,28 +12,28 @@ const puerts_1 = require("puerts"),
   CENTER_Y = 62.5;
 class HudUnitHandleBase {
   constructor() {
-    (this.Iii = new Set()),
+    (this.Ioi = new Set()),
       (this.HudEntitySet = void 0),
-      (this.gXe = void 0),
-      (this.MXe = void 0),
-      (this._Xe = (0, puerts_1.$ref)(void 0)),
-      (this.Tii = void 0),
+      (this.R$e = void 0),
+      (this.x$e = void 0),
+      (this.S$e = (0, puerts_1.$ref)(void 0)),
+      (this.Toi = void 0),
       (this.Due = Vector_1.Vector.Create()),
-      (this.CQe = (0, puerts_1.$ref)(0)),
-      (this.fXe = new UE.Vector2D(0, 0)),
-      (this.pXe = new UE.Vector2D(1, -1)),
-      (this.Lii = -0),
-      (this.Dii = -0),
+      (this.DXe = (0, puerts_1.$ref)(0)),
+      (this.U$e = new UE.Vector2D(0, 0)),
+      (this.A$e = new UE.Vector2D(1, -1)),
+      (this.Loi = -0),
+      (this.Doi = -0),
       (this.bG = new UE.Vector2D(0, CENTER_Y)),
-      (this.Rii = Vector_1.Vector.Create()),
-      (this.SXe = Vector_1.Vector.Create()),
+      (this.Roi = Vector_1.Vector.Create()),
+      (this.w$e = Vector_1.Vector.Create()),
       (this.IsHudVisible = !1),
       (this.IsDestroyed = !1);
   }
   Initialize() {
-    (this.gXe = Global_1.Global.CharacterController),
-      (this.MXe = Global_1.Global.CharacterCameraManager),
-      (this.Tii = UiLayer_1.UiLayer.GetBattleViewUnit(1));
+    (this.R$e = Global_1.Global.CharacterController),
+      (this.x$e = Global_1.Global.CharacterCameraManager),
+      (this.Toi = UiLayer_1.UiLayer.GetBattleViewUnit(1));
     var t =
         CommonParamById_1.configCommonParamById.GetIntConfig(
           "MonsterCursorWidthToScreenPercent",
@@ -42,8 +42,8 @@ class HudUnitHandleBase {
         CommonParamById_1.configCommonParamById.GetIntConfig(
           "MonsterCursorHeightToScreenPercent",
         ) / CommonDefine_1.PERCENTAGE_FACTOR;
-    (this.Lii = this.Tii.GetWidth() * t),
-      (this.Dii = this.Tii.GetHeight() * i),
+    (this.Loi = this.Toi.GetWidth() * t),
+      (this.Doi = this.Toi.GetHeight() * i),
       this.OnAddEvents(),
       this.OnInitialize();
   }
@@ -57,11 +57,11 @@ class HudUnitHandleBase {
   }
   Tick(t) {
     this.OnTick(t);
-    for (const i of this.Iii) i.Tick(t);
+    for (const i of this.Ioi) i.Tick(t);
   }
   AfterTick(t) {
     this.OnAfterTick(t);
-    for (const i of this.Iii) i.AfterTick(t);
+    for (const i of this.Ioi) i.AfterTick(t);
   }
   OnInitialize() {}
   OnDestroyed() {}
@@ -73,50 +73,50 @@ class HudUnitHandleBase {
   OnHideHud() {
     this.IsHudVisible = !1;
   }
-  async NewHudUnit(t, i, e = !0) {
+  async NewHudUnit(t, i, e = !0, s = !1) {
     t = new t();
-    if ((await t.Initialize(i, e), !this.IsDestroyed))
-      return this.Iii.add(t), t;
+    if ((await t.Initialize(i, e, s), !this.IsDestroyed))
+      return this.Ioi.add(t), t;
     t.Destroy();
   }
-  NewHudUnitWithReturn(t, i, e = !0, s) {
+  NewHudUnitWithReturn(t, i, e = !0, s, r = !1) {
     t = new t();
-    const r = t;
+    const o = t;
     return (
-      t.Initialize(i, e).then(
+      t.Initialize(i, e, r).then(
         () => {
-          s && s(r);
+          s && s(o);
         },
         () => {},
       ),
-      this.Iii.add(t),
-      r
+      this.Ioi.add(t),
+      o
     );
   }
   DestroyHudUnit(t) {
-    t && (t.Destroy(), this.Iii.delete(t));
+    t && (t.Destroy(), this.Ioi.delete(t));
   }
   DestroyAllHudUnit() {
-    for (const t of this.Iii) t.Destroy();
-    this.Iii.clear();
+    for (const t of this.Ioi) t.Destroy();
+    this.Ioi.clear();
   }
   NewHudEntitySet() {
     (this.HudEntitySet = new HudEntitySet_1.HudEntitySet()),
       this.HudEntitySet.Initialize();
   }
-  UXe() {
+  F$e() {
     return (
-      this.gXe.GetViewportSize(this.CQe, void 0), (0, puerts_1.$unref)(this.CQe)
+      this.R$e.GetViewportSize(this.DXe, void 0), (0, puerts_1.$unref)(this.DXe)
     );
   }
-  AXe() {
+  V$e() {
     return (
-      (this.fXe.X = this.Tii.GetWidth()),
-      (this.fXe.Y = this.Tii.GetHeight()),
-      this.fXe
+      (this.U$e.X = this.Toi.GetWidth()),
+      (this.U$e.Y = this.Toi.GetHeight()),
+      this.U$e
     );
   }
-  PXe(t, i, e, s) {
+  H$e(t, i, e, s) {
     var r = t.X,
       o = t.Y;
     return s && (r * r) / (i * i) + (o * o) / (e * e) <= 1
@@ -125,52 +125,52 @@ class HudUnitHandleBase {
         t.op_Multiply(s));
   }
   ScreenPositionToEllipsePosition(t, i) {
-    var e = this.UXe(),
-      s = this.AXe(),
+    var e = this.F$e(),
+      s = this.V$e(),
       t = t
         .op_Multiply(s.X / e)
         .op_Subtraction(s.op_Multiply(0.5))
-        .op_Multiply(this.pXe);
-    return this.PXe(t, this.Lii, this.Dii, i).op_Addition(this.bG);
+        .op_Multiply(this.A$e);
+    return this.H$e(t, this.Loi, this.Doi, i).op_Addition(this.bG);
   }
-  Uii(t, i) {
-    return i.Subtraction(t, this.Rii), this.Rii;
+  Uoi(t, i) {
+    return i.Subtraction(t, this.Roi), this.Roi;
   }
-  BXe() {
-    return this.MXe.GetCameraRotation().Vector();
+  K$e() {
+    return this.x$e.GetCameraRotation().Vector();
   }
   GetProjectionToFrontPosition(t, i) {
     this.Due.Set(i.X, i.Y, i.Z);
-    var i = this.Uii(t, this.Due),
-      e = this.BXe(),
+    var i = this.Uoi(t, this.Due),
+      e = this.K$e(),
       e = UE.KismetMathLibrary.ProjectVectorOnToVector(
         i.ToUeVector(),
         e,
       ).op_Multiply(2);
     return (
-      this.SXe.Set(e.X, e.Y, e.Z),
-      i.SubtractionEqual(this.SXe),
+      this.w$e.Set(e.X, e.Y, e.Z),
+      i.SubtractionEqual(this.w$e),
       t.Addition(i, this.Due),
       this.Due
     );
   }
   ProjectWorldToScreen(t) {
-    if (UE.GameplayStatics.ProjectWorldToScreen(this.gXe, t, this._Xe))
+    if (UE.GameplayStatics.ProjectWorldToScreen(this.R$e, t, this.S$e))
       return (
-        (t = (0, puerts_1.$unref)(this._Xe)),
-        this.Tii.GetCanvasScaler().ConvertPositionFromViewportToLGUICanvas(t)
+        (t = (0, puerts_1.$unref)(this.S$e)),
+        this.Toi.GetCanvasScaler().ConvertPositionFromViewportToLGUICanvas(t)
       );
   }
   GetInEllipsePosition(t, i) {
-    var e = UE.GameplayStatics.ProjectWorldToScreen(this.gXe, i, this._Xe),
-      s = (0, puerts_1.$unref)(this._Xe);
+    var e = UE.GameplayStatics.ProjectWorldToScreen(this.R$e, i, this.S$e),
+      s = (0, puerts_1.$unref)(this.S$e);
     return e
       ? [this.ScreenPositionToEllipsePosition(s, !0), s]
       : ((e = this.GetProjectionToFrontPosition(t, i)),
         UE.GameplayStatics.ProjectWorldToScreen(
-          this.gXe,
+          this.R$e,
           e.ToUeVector(),
-          this._Xe,
+          this.S$e,
         ),
         [this.ScreenPositionToEllipsePosition(s, !1), void 0]);
   }

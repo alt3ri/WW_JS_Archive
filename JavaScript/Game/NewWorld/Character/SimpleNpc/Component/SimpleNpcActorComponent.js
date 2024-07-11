@@ -41,7 +41,7 @@ const cpp_1 = require("cpp"),
 let SimpleNpcActorComponent = class SimpleNpcActorComponent extends BaseCharacterComponent_1.BaseCharacterComponent {
   constructor() {
     super(...arguments),
-      (this.n8e = () => {
+      (this.v9e = () => {
         this.CreatureDataInternal.GetRemoveState() ||
           (Log_1.Log.CheckError() &&
             Log_1.Log.Error(
@@ -80,7 +80,7 @@ let SimpleNpcActorComponent = class SimpleNpcActorComponent extends BaseCharacte
               (t.EntityId = this.Entity.Id),
               t.CharacterMovement.SetDefaultMovementMode(),
               (this.ActorInternal = t),
-              this.ActorInternal.OnDestroyed.Add(this.n8e),
+              this.ActorInternal.OnDestroyed.Add(this.v9e),
               (t.RenderType = 3),
               this.SetActorVisible(
                 !1,
@@ -99,8 +99,8 @@ let SimpleNpcActorComponent = class SimpleNpcActorComponent extends BaseCharacte
               t.CharRenderingComponent.UpdateNpcDitherComponent(),
               (t.AutoPossessAI = 3),
               (e = this.CreatureDataInternal.GetInitLocation())
-                ? this.PFr(e)
-                : this.PFr(this.ActorLocation),
+                ? this._Fr(e)
+                : this._Fr(this.ActorLocation),
               this.InitSizeInternal(),
               GameBudgetInterfaceController_1.GameBudgetInterfaceController
                 .IsOpen &&
@@ -152,6 +152,7 @@ let SimpleNpcActorComponent = class SimpleNpcActorComponent extends BaseCharacte
         !1);
   }
   OnStart() {
+    super.OnStart();
     var t,
       e = this.Actor;
     return (
@@ -161,7 +162,7 @@ let SimpleNpcActorComponent = class SimpleNpcActorComponent extends BaseCharacte
           e.SetPrimitiveEntityType(
             RenderConfig_1.RenderConfig.GetEntityRenderPriority(
               !1,
-              Protocol_1.Aki.Protocol.HBs.Proto_Npc,
+              Protocol_1.Aki.Protocol.wks.Proto_Npc,
             ),
           ),
           GlobalData_1.GlobalData.IsPlayInEditor &&
@@ -206,14 +207,11 @@ let SimpleNpcActorComponent = class SimpleNpcActorComponent extends BaseCharacte
         0,
         0,
       );
-    var t = Protocol_1.Aki.Protocol.f_s.create(),
+    var t = Protocol_1.Aki.Protocol.cms.create(),
       e = this.Entity.GetComponent(0).GetCreatureDataId();
-    t.sfs.push(MathUtils_1.MathUtils.NumberToLong(e)),
-      Net_1.Net.Call(8784, t, (t) => {}),
-      this.SetNpcBornMaterial(),
-      this.SetNpcBornEffect(),
-      this.Actor.CharRenderingComponent.UpdateNpcDitherComponent(),
-      this.qFr();
+    t.ySs.push(MathUtils_1.MathUtils.NumberToLong(e)),
+      Net_1.Net.Call(7805, t, (t) => {}),
+      this.CFr();
   }
   OnTick(t) {
     super.OnTick(t), this.Actor.DitherEffectController?.Update(t);
@@ -226,7 +224,7 @@ let SimpleNpcActorComponent = class SimpleNpcActorComponent extends BaseCharacte
       ),
       GlobalData_1.GlobalData.BpFightManager.删除Debug的对象(this.Actor),
       this.ActorInternal?.IsValid() &&
-        (this.ActorInternal.OnDestroyed.Remove(this.n8e),
+        (this.ActorInternal.OnDestroyed.Remove(this.v9e),
         this.ActorInternal instanceof TsBaseCharacter_1.default) &&
         (this.ActorInternal.DitherEffectController?.Clear(),
         (this.ActorInternal.DitherEffectController = void 0),
@@ -246,7 +244,7 @@ let SimpleNpcActorComponent = class SimpleNpcActorComponent extends BaseCharacte
     this.OnSetActorActive(!1, t);
   }
   OnChangeTimeDilation(t) {
-    var e = this.Entity.GetComponent(107)?.CurrentTimeScale ?? 1;
+    var e = this.Entity.GetComponent(109)?.CurrentTimeScale ?? 1;
     this.ActorInternal.CustomTimeDilation = t * e;
   }
   OnSetActorActive(e, t) {
@@ -261,13 +259,13 @@ let SimpleNpcActorComponent = class SimpleNpcActorComponent extends BaseCharacte
       t && (e ? t.SetIsDisable(!1, 1) : t.SetIsDisable(!0));
     }
   }
-  qFr() {
+  CFr() {
     var t = this.CreatureDataInternal.GetModelConfig();
     t &&
       t?.IsHiddenWithCamera &&
       this.Actor.CharRenderingComponent.SetCapsuleDither(1);
   }
-  PFr(t) {
+  _Fr(t) {
     BlackboardController_1.BlackboardController.SetVectorValueByEntity(
       this.Entity.Id,
       INIT_LOCATION_KEY,
@@ -278,7 +276,7 @@ let SimpleNpcActorComponent = class SimpleNpcActorComponent extends BaseCharacte
   }
 };
 (SimpleNpcActorComponent = __decorate(
-  [(0, RegisterComponent_1.RegisterComponent)(175)],
+  [(0, RegisterComponent_1.RegisterComponent)(178)],
   SimpleNpcActorComponent,
 )),
   (exports.SimpleNpcActorComponent = SimpleNpcActorComponent);

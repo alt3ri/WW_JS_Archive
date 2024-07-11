@@ -7,7 +7,7 @@ class CostTabItem extends CommonTabItemBase_1.CommonTabItemBase {
   constructor(t) {
     super(),
       (this.wqe = void 0),
-      (this.x4e = (t) => {
+      (this.Bke = (t) => {
         1 === t && this.SelectedCallBack(this.GridIndex);
       }),
       (this.wqe = t);
@@ -23,7 +23,7 @@ class CostTabItem extends CommonTabItemBase_1.CommonTabItemBase {
       [3, UE.UIItem],
       [4, UE.UIItem],
     ]),
-      (this.BtnBindInfo = [[1, this.x4e]]);
+      (this.BtnBindInfo = [[1, this.Bke]]);
   }
   OnStart() {
     super.OnStart(), this.GetExtendToggle(1).SetToggleState(0);

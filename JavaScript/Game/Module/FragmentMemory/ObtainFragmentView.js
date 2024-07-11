@@ -10,12 +10,12 @@ const UE = require("ue"),
 class ObtainFragmentView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.vxn = void 0),
-      (this.tjt = () => {
+      (this.Jwn = void 0),
+      (this.tWt = () => {
         this.CloseMe(() => {
           var e = new FragmentMemoryData_1.FragmentMemoryMainViewOpenData();
-          (e.FragmentMemoryTopicData = this.vxn.GetTopicData()),
-            (e.CurrentSelectId = this.vxn.GetId()),
+          (e.FragmentMemoryTopicData = this.Jwn.GetTopicData()),
+            (e.CurrentSelectId = this.Jwn.GetId()),
             (ModelManager_1.ModelManager.FragmentMemoryModel.MemoryFragmentMainViewTryPlayAnimation =
               "Start02"),
             UiManager_1.UiManager.OpenView("MemoryFragmentMainView", e);
@@ -29,7 +29,7 @@ class ObtainFragmentView extends UiViewBase_1.UiViewBase {
       [2, UE.UIText],
       [3, UE.UIButtonComponent],
     ]),
-      (this.BtnBindInfo = [[3, this.tjt]]);
+      (this.BtnBindInfo = [[3, this.tWt]]);
   }
   OnBeforeShow() {
     var e = this.ChildPopView.PopItem,
@@ -38,30 +38,30 @@ class ObtainFragmentView extends UiViewBase_1.UiViewBase {
           ((e = e).SetCaptionTitleVisible(!1),
           e.SetCaptionTitleIconVisible(!1)),
         this.OpenParam);
-    (this.vxn =
+    (this.Jwn =
       ModelManager_1.ModelManager.FragmentMemoryModel.GetCollectDataById(e)),
       (ModelManager_1.ModelManager.FragmentMemoryModel.CurrentUnlockCollectId = 0),
       this.Og();
   }
   Og() {
-    this.Mxn(), this.C4e(), this.$2e();
+    this.zwn(), this.P5e(), this.u3e();
   }
-  Sxn() {
-    return this.vxn.GetThemeBg();
+  Zwn() {
+    return this.Jwn.GetThemeBg();
   }
-  Mxn() {
-    this.SetTextureByPath(this.Sxn(), this.GetTexture(0));
+  zwn() {
+    this.SetTextureByPath(this.Zwn(), this.GetTexture(0));
   }
-  Exn() {
-    return this.vxn.GetTitle();
+  eBn() {
+    return this.Jwn.GetTitle();
   }
-  C4e() {
-    LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(1), this.Exn());
+  P5e() {
+    LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(1), this.eBn());
   }
   ke() {
-    return this.vxn.GetTimeText();
+    return this.Jwn.GetTimeText();
   }
-  $2e() {
+  u3e() {
     LguiUtil_1.LguiUtil.SetLocalTextNew(
       this.GetText(2),
       "FragmentMemoryCollectTime",

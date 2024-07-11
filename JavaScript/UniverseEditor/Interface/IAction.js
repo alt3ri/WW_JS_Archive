@@ -9,6 +9,7 @@ var EEntityVarMatchType,
   ETeleportTransitionType,
   EFireBulletType,
   ETeleportType,
+  ERogueSelectRoomType,
   ECenterTextShowAnim,
   ETextAlign,
   ETextHorizontal,
@@ -27,6 +28,7 @@ var EEntityVarMatchType,
   ECharacterMoveToPointType,
   ETraceSplineOptionType,
   ECommonTipType,
+  EControlTrackingType,
   EAiEventType,
   EEaseType,
   EFadeInScreenShowType,
@@ -60,11 +62,11 @@ var EEntityVarMatchType,
   EMapMarkState,
   ERegionConfigType,
   EJigsawPieceState,
+  EJigsawShape,
   ESetJigsawItemType,
   ESetJigsawFoundationType;
 Object.defineProperty(exports, "__esModule", { value: !0 }),
-  (exports.EUnlockAtlasSystemType =
-    exports.EUnlockCookSystemType =
+  (exports.EUnlockCookSystemType =
     exports.EUnlockSystemItemType =
     exports.EDetectBattleTagType =
     exports.EDetectBattleConditionType =
@@ -78,6 +80,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.ETextHorizontal =
     exports.ETextAlign =
     exports.ECenterTextShowAnim =
+    exports.ERogueSelectRoomType =
     exports.ETeleportType =
     exports.EFireBulletType =
     exports.ETeleportTransitionType =
@@ -116,6 +119,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
       void 0),
   (exports.ESetJigsawFoundationType =
     exports.ESetJigsawItemType =
+    exports.EJigsawShape =
     exports.EJigsawPieceState =
     exports.ERegionConfigType =
     exports.EMapMarkState =
@@ -149,9 +153,11 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.EFadeInScreenShowType =
     exports.EEaseType =
     exports.EAiEventType =
+    exports.EControlTrackingType =
     exports.ECommonTipType =
     exports.ETraceSplineOptionType =
     exports.ECharacterMoveToPointType =
+    exports.EUnlockAtlasSystemType =
       void 0),
   (exports.actionInterfaceMap = {
     Activate: void 0,
@@ -168,6 +174,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     ChangeActorState: void 0,
     ChangeBehaviorState: void 0,
     ChangeEntityState: void 0,
+    ChangeNpcPerformState: void 0,
     ChangeInteractOptionText: void 0,
     ChangeOtherState: void 0,
     ChangeRandomState: void 0,
@@ -282,9 +289,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     SendAiEvent: void 0,
     FadeInScreen: void 0,
     FadeOutScreen: void 0,
-    HideByRange: void 0,
     HideTargetRange: void 0,
-    ShowAllRangeHided: void 0,
     ShowTargetRange: void 0,
     ShowSpecificEntities: void 0,
     HideSpecificEntities: void 0,
@@ -292,6 +297,8 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     ManualOccupations: void 0,
     AddTrialCharacter: void 0,
     RemoveTrialCharacter: void 0,
+    AddTrialFollowShooter: void 0,
+    RemoveTrialFollowShooter: void 0,
     DestroyQuest: void 0,
     SetCameraAnim: void 0,
     RotatorEntity: void 0,
@@ -325,9 +332,11 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     PlayLevelSequence: void 0,
     SetExploreState: void 0,
     RogueGotoNextFloor: void 0,
+    RogueSelectRoom: void 0,
     RogueActivatePortal: void 0,
     EnableAoiNotify: void 0,
     ChangeEntityPrefabPerformance: void 0,
+    ModifyEntityPerformanceAttribute: void 0,
     ToggleMapMarkState: void 0,
     EnableTemporaryTeleport: void 0,
     EnableActor: void 0,
@@ -352,7 +361,12 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     ServerSetPlayerPos: void 0,
     FixTeleControllerPos: void 0,
     CustomJson: void 0,
+    FixFoundationRelation: void 0,
+    FixShowTargetRange: void 0,
     SetAudioState: void 0,
+    PerformerAiSplineMove: void 0,
+    ExecResurrection: void 0,
+    OpenSystemBoardWithReturn: void 0,
   }),
   (exports.actionInterfaceRecordMap = exports.actionInterfaceMap),
   (function (e) {
@@ -702,7 +716,9 @@ function isPerformanceTypeContainTag(e, t) {
   (exports.getEntityPrefabPerformanceTag = getEntityPrefabPerformanceTag),
   (exports.isPerformanceTypeContainTag = isPerformanceTypeContainTag),
   (function (e) {
-    (e.Directly = "Directly"), (e.Loop = "Loop");
+    (e.Directly = "Directly"),
+      (e.BatchDirectly = "BatchDirectly"),
+      (e.Loop = "Loop");
   })(
     (EChangeEntityState =
       exports.EChangeEntityState || (exports.EChangeEntityState = {})),
@@ -715,7 +731,10 @@ function isPerformanceTypeContainTag(e, t) {
   (function (e) {
     (e.PlayMp4 = "PlayMp4"),
       (e.PlayEffect = "PlayEffect"),
-      (e.CenterText = "CenterText");
+      (e.CenterText = "CenterText"),
+      (e.Seamless = "Seamless"),
+      (e.FadeInScreen = "FadeInScreen"),
+      (e.DigitalScreen = "DigitalScreen");
   })(
     (ETeleportTransitionType =
       exports.ETeleportTransitionType ||
@@ -733,6 +752,9 @@ function isPerformanceTypeContainTag(e, t) {
     (e[(e.FixedPos = 0)] = "FixedPos"),
       (e[(e.NearestEntity = 1)] = "NearestEntity");
   })((ETeleportType = exports.ETeleportType || (exports.ETeleportType = {}))),
+  ((ERogueSelectRoomType =
+    exports.ERogueSelectRoomType || (exports.ERogueSelectRoomType = {})).Role =
+    "Role"),
   (function (e) {
     (e.ShowAll = "ShowAll"),
       (e.FadeOut = "FadeOut"),
@@ -845,9 +867,16 @@ function isPerformanceTypeContainTag(e, t) {
       (e[(e.PrepareCountdown = 11)] = "PrepareCountdown"),
       (e[(e.EnterInRange = 12)] = "EnterInRange"),
       (e[(e.FirstComplete = 13)] = "FirstComplete"),
-      (e[(e.RemainStarWarning = 14)] = "RemainStarWarning");
+      (e[(e.RemainStarWarning = 14)] = "RemainStarWarning"),
+      (e[(e.DreamlessWarning = 15)] = "DreamlessWarning");
   })(
     (ECommonTipType = exports.ECommonTipType || (exports.ECommonTipType = {})),
+  ),
+  (function (e) {
+    (e.Self = "Self"), (e.Other = "Other");
+  })(
+    (EControlTrackingType =
+      exports.EControlTrackingType || (exports.EControlTrackingType = {})),
   ),
   (function (e) {
     (e.CatAndDogPlayFlow = "CatAndDogPlayFlow"),
@@ -1060,6 +1089,9 @@ function isPerformanceTypeContainTag(e, t) {
     (EJigsawPieceState =
       exports.EJigsawPieceState || (exports.EJigsawPieceState = {})),
   ),
+  (function (e) {
+    (e.Circle = "Circle"), (e.Rectangle = "Rectangle");
+  })((EJigsawShape = exports.EJigsawShape || (exports.EJigsawShape = {}))),
   ((ESetJigsawItemType =
     exports.ESetJigsawItemType ||
     (exports.ESetJigsawItemType = {})).MoveJigsawItem = "MoveJigsawItem"),

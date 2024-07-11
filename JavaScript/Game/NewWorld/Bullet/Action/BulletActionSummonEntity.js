@@ -15,15 +15,15 @@ class BulletActionSummonEntity extends BulletActionBase_1.BulletActionBase {
     if (ModelManager_1.ModelManager.GameModeModel.IsMulti) {
       if (
         !(
-          (r !== Protocol_1.Aki.Protocol.HBs.Proto_Player &&
-            r !== Protocol_1.Aki.Protocol.HBs.Proto_Vision) ||
+          (r !== Protocol_1.Aki.Protocol.wks.Proto_Player &&
+            r !== Protocol_1.Aki.Protocol.wks.Proto_Vision) ||
           this.BulletInfo.AttackerActorComp.IsAutonomousProxy
         )
       )
         return;
-      r === Protocol_1.Aki.Protocol.HBs.Proto_Monster &&
+      r === Protocol_1.Aki.Protocol.wks.Proto_Monster &&
         0 === (t = o.GetSummonsVersion()) &&
-        (t = o.ComponentDataMap.get("sps")?.sps?.o8n ?? 1);
+        (t = o.ComponentDataMap.get("yys")?.yys?.G7n ?? 1);
     }
     (this.BulletInfo.SummonAttackerId = e.Id),
       Log_1.Log.CheckDebug() &&

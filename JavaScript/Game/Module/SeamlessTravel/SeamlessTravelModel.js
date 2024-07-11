@@ -7,73 +7,73 @@ const UE = require("ue"),
 class SeamlessTravelModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
-      (this.lpo = !1),
-      (this._po = !1),
-      (this.upo = void 0),
-      (this.cpo = void 0),
-      (this.mpo = void 0),
-      (this.dpo = void 0),
-      (this.Cpo = []),
-      (this.gpo = 0),
-      (this.fpo = void 0);
+      (this.svo = !1),
+      (this.avo = !1),
+      (this.hvo = void 0),
+      (this.lvo = void 0),
+      (this._vo = void 0),
+      (this.uvo = void 0),
+      (this.cvo = []),
+      (this.mvo = 0),
+      (this.dvo = void 0);
   }
   get IsSeamlessTravel() {
-    return this.lpo;
+    return this.svo;
   }
   set IsSeamlessTravel(e) {
-    this._po &&
+    this.avo &&
       Log_1.Log.CheckError() &&
       Log_1.Log.Error("SeamlessTravel", 30, "无缝加载中，禁止修改是否无缝加载"),
-      (this.lpo = e);
+      (this.svo = e);
   }
   get InSeamlessTraveling() {
-    return this._po;
+    return this.avo;
   }
   set InSeamlessTraveling(e) {
-    this._po = e;
+    this.avo = e;
   }
   get SeamlessTravelController() {
-    return this.upo;
+    return this.hvo;
   }
   set SeamlessTravelController(e) {
-    this.upo = e;
+    this.hvo = e;
   }
   get SeamlessTravelPlayer() {
-    return this.cpo;
+    return this.lvo;
   }
   set SeamlessTravelPlayer(e) {
-    this.cpo = e;
+    this.lvo = e;
   }
   get SeamlessTravelCamera() {
-    return this.mpo;
+    return this._vo;
   }
   set SeamlessTravelCamera(e) {
-    this.mpo = e;
+    this._vo = e;
   }
   get SeamlessTravelPlayerEntity() {
-    return this.dpo;
+    return this.uvo;
   }
   set SeamlessTravelPlayerEntity(e) {
-    this.dpo = e;
+    this.uvo = e;
   }
   get SeamlessTravelEffectHandle() {
-    return this.gpo;
+    return this.mvo;
   }
   set SeamlessTravelEffectHandle(e) {
-    this.gpo = e;
+    this.mvo = e;
   }
   get SeamlessTravelEffectPromise() {
-    return this.fpo;
+    return this.dvo;
   }
   set SeamlessTravelEffectPromise(e) {
-    this.fpo = e;
+    this.dvo = e;
   }
   OnClear() {
     return this.ClearSeamlessTravelActor(), !0;
   }
   AddSeamlessTravelActor(e) {
     return e?.IsValid()
-      ? (this.Cpo.push(e),
+      ? (this.cvo.push(e),
         UE.KuroStaticLibrary.SetActorPermanent(e, !0, !1),
         !0)
       : (Log_1.Log.CheckError() &&
@@ -87,7 +87,7 @@ class SeamlessTravelModel extends ModelBase_1.ModelBase {
   RemoveSeamlessTravelActor(e) {
     var s;
     return e?.IsValid()
-      ? (0 <= (s = this.Cpo.indexOf(e)) && this.Cpo.splice(s, 1),
+      ? (0 <= (s = this.cvo.indexOf(e)) && this.cvo.splice(s, 1),
         UE.KuroStaticLibrary.SetActorPermanent(e, !1, !1),
         !0)
       : (Log_1.Log.CheckError() &&
@@ -100,7 +100,7 @@ class SeamlessTravelModel extends ModelBase_1.ModelBase {
   }
   IsSeamlessTravelActor(e) {
     return e?.IsValid()
-      ? 0 <= this.Cpo.indexOf(e)
+      ? 0 <= this.cvo.indexOf(e)
       : (Log_1.Log.CheckError() &&
           Log_1.Log.Error(
             "SeamlessTravel",
@@ -110,9 +110,9 @@ class SeamlessTravelModel extends ModelBase_1.ModelBase {
         !1);
   }
   ClearSeamlessTravelActor() {
-    for (const e of this.Cpo)
+    for (const e of this.cvo)
       e?.IsValid() && UE.KuroStaticLibrary.SetActorPermanent(e, !1, !1);
-    this.Cpo.length = 0;
+    this.cvo.length = 0;
   }
 }
 exports.SeamlessTravelModel = SeamlessTravelModel;

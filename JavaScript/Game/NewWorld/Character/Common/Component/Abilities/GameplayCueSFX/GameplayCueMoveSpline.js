@@ -17,35 +17,36 @@ const puerts_1 = require("puerts"),
 class GameplayCueMoveSpline extends GameplayCueEffect_1.GameplayCueEffect {
   constructor() {
     super(...arguments),
-      (this.m$o = void 0),
-      (this.d$o = (0, puerts_1.$ref)(0)),
-      (this.C$o = (0, puerts_1.$ref)(0)),
-      (this.g$o = (0, puerts_1.$ref)(!1));
+      (this._Yo = void 0),
+      (this.uYo = (0, puerts_1.$ref)(0)),
+      (this.cYo = (0, puerts_1.$ref)(0)),
+      (this.mYo = (0, puerts_1.$ref)(!1));
   }
   OnTick(e) {
     var t;
-    EffectSystem_1.EffectSystem.IsValid(this.EffectViewHandle) &&
-      (t = EffectSystem_1.EffectSystem.GetSureEffectActor(
-        this.EffectViewHandle,
-      )) &&
-      UE.MoveSplineAI_C.元素球跟随(
-        e,
-        t,
-        this.ActorInternal,
-        this.m$o,
-        (0, puerts_1.$unref)(this.d$o),
-        SPLINE_MOVE_SPEED,
-        SPLINE_ROTATION_SPEED,
-        (0, puerts_1.$unref)(this.C$o),
-        (0, puerts_1.$unref)(this.g$o),
-        void 0,
-        this.d$o,
-        this.C$o,
-        this.g$o,
-      );
+    super.OnTick(e),
+      EffectSystem_1.EffectSystem.IsValid(this.EffectViewHandle) &&
+        (t = EffectSystem_1.EffectSystem.GetSureEffectActor(
+          this.EffectViewHandle,
+        )) &&
+        UE.MoveSplineAI_C.元素球跟随(
+          e,
+          t,
+          this.ActorInternal,
+          this._Yo,
+          (0, puerts_1.$unref)(this.uYo),
+          SPLINE_MOVE_SPEED,
+          SPLINE_ROTATION_SPEED,
+          (0, puerts_1.$unref)(this.cYo),
+          (0, puerts_1.$unref)(this.mYo),
+          void 0,
+          this.uYo,
+          this.cYo,
+          this.mYo,
+        );
   }
   OnDestroy() {
-    ActorSystem_1.ActorSystem.Put(this.m$o.GetOwner()), super.OnDestroy();
+    ActorSystem_1.ActorSystem.Put(this._Yo.GetOwner()), super.OnDestroy();
   }
   AttachEffect() {
     var t = [
@@ -61,9 +62,9 @@ class GameplayCueMoveSpline extends GameplayCueEffect_1.GameplayCueEffect {
         new UE.Vector(-TANGENT, 0, 0),
       ],
       s =
-        ((this.m$o = this.f$o()),
-        this.m$o.SetClosedLoop(!0),
-        this.m$o.ClearSplinePoints(),
+        ((this._Yo = this.dYo()),
+        this._Yo.SetClosedLoop(!0),
+        this._Yo.ClearSplinePoints(),
         UE.NewArray(UE.SplinePoint));
     for (let e = 0; e < t.length; e++) {
       var E = new UE.SplinePoint(
@@ -77,9 +78,9 @@ class GameplayCueMoveSpline extends GameplayCueEffect_1.GameplayCueEffect {
       );
       s.Add(E);
     }
-    this.m$o.AddPoints(s);
+    this._Yo.AddPoints(s);
   }
-  f$o() {
+  dYo() {
     var e = ActorSystem_1.ActorSystem.Get(
         UE.Actor.StaticClass(),
         this.ActorInternal.GetTransform(),

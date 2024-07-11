@@ -4,13 +4,13 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const UE = require("ue"),
   DropPackageById_1 = require("../../../../../Core/Define/ConfigQuery/DropPackageById"),
   ConfigManager_1 = require("../../../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../../Manager/ModelManager"),
   UiPanelBase_1 = require("../../../../Ui/Base/UiPanelBase"),
   LoopScrollSmallItemGrid_1 = require("../../../Common/SmallItemGrid/LoopScrollSmallItemGrid"),
   ItemDefines_1 = require("../../../Item/Data/ItemDefines"),
   GenericLayout_1 = require("../../../Util/Layout/GenericLayout"),
-  LguiUtil_1 = require("../../../Util/LguiUtil"),
-  ControllerHolder_1 = require("../../../../Manager/ControllerHolder");
+  LguiUtil_1 = require("../../../Util/LguiUtil");
 class RewardItem extends LoopScrollSmallItemGrid_1.LoopScrollSmallItemGrid {
   constructor() {
     super(...arguments), (this.ConfigId = 0);
@@ -57,9 +57,9 @@ class RewardPreviewListItem extends UiPanelBase_1.UiPanelBase {
       (this.ScrollViewDelegate = void 0),
       (this.GridIndex = 0),
       (this.DisplayIndex = 0),
-      (this.Jko = void 0),
-      (this.zko = void 0),
-      (this.Zko = () => new RewardItem());
+      (this.X2o = void 0),
+      (this.$2o = void 0),
+      (this.Y2o = () => new RewardItem());
   }
   OnRegisterComponent() {
     (this.ComponentRegisterInfos = [
@@ -71,15 +71,15 @@ class RewardPreviewListItem extends UiPanelBase_1.UiPanelBase {
       (this.BtnBindInfo = []);
   }
   OnStart() {
-    this.zko = new GenericLayout_1.GenericLayout(
+    this.$2o = new GenericLayout_1.GenericLayout(
       this.GetGridLayout(2),
-      this.Zko,
+      this.Y2o,
     );
   }
   Refresh(e, t, r) {
-    this.Jko = e;
-    var e = this.Jko[0],
-      i = this.Jko[1],
+    this.X2o = e;
+    var e = this.X2o[0],
+      i = this.X2o[1],
       i = DropPackageById_1.configDropPackageById.GetConfig(i),
       o = e === ModelManager_1.ModelManager.WorldLevelModel.CurWorldLevel,
       a =
@@ -105,7 +105,7 @@ class RewardPreviewListItem extends UiPanelBase_1.UiPanelBase {
         l <= 0) ||
         a.push(d);
     }
-    a.sort((e, t) => e[0] - t[0]), this.zko?.RefreshByData(a);
+    a.sort((e, t) => e[0] - t[0]), this.$2o?.RefreshByData(a);
   }
   Clear() {}
   OnSelected(e) {}

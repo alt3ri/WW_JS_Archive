@@ -20,94 +20,94 @@ const UE = require("ue"),
 class CookView extends UiNavigationView_1.UiNavigationView {
   constructor() {
     super(...arguments),
-      (this.iNt = void 0),
-      (this.TNt = void 0),
-      (this.LNt = void 0),
-      (this.DNt = void 0),
-      (this.RNt = !0),
-      (this.gIt = 0),
-      (this.zke = 0),
+      (this.oOt = void 0),
+      (this.LOt = void 0),
+      (this.DOt = void 0),
+      (this.ROt = void 0),
+      (this.UOt = !0),
+      (this.ETt = 0),
+      (this.dFe = 0),
       (this.t6 = 1),
-      (this.UNt = void 0),
-      (this.ANt = void 0),
-      (this.rNt = (t, e, i) => {
+      (this.AOt = void 0),
+      (this.POt = void 0),
+      (this.nOt = (t, e, i) => {
         e = new CookItemView_1.MaterialItem(e);
         return (
           e.Update(t, i),
-          e.BindOnClickedCallback(this.PNt),
+          e.BindOnClickedCallback(this.xOt),
           { Key: i, Value: e }
         );
       }),
-      (this.xNt = () =>
+      (this.wOt = () =>
         CookController_1.CookController.GetMaxCreateCount(
-          this.gIt,
+          this.ETt,
           ModelManager_1.ModelManager.CookModel.CurrentCookListType,
         )),
-      (this.yqt = (t) => {
-        (this.t6 = t), this.Iqt();
+      (this.LGt = (t) => {
+        (this.t6 = t), this.DGt();
       }),
       (this.bl = () => {
         this.GetActive() &&
           (0 === ModelManager_1.ModelManager.CookModel.CurrentCookListType
-            ? ((this.zke = ModelManager_1.ModelManager.CookModel.GetCookRoleId(
-                this.gIt,
+            ? ((this.dFe = ModelManager_1.ModelManager.CookModel.GetCookRoleId(
+                this.ETt,
               )),
               (ModelManager_1.ModelManager.CookModel.CurrentCookRoleId =
-                this.zke),
-              (this.UNt =
+                this.dFe),
+              (this.AOt =
                 ConfigManager_1.ConfigManager.CookConfig.GetCookFormulaById(
-                  this.gIt,
+                  this.ETt,
                 )))
-            : (this.ANt =
+            : (this.POt =
                 ConfigManager_1.ConfigManager.CookConfig.GetCookProcessedById(
-                  this.gIt,
+                  this.ETt,
                 )),
           (this.t6 = 1),
-          this.hke(),
-          this.wNt(),
-          this.BNt(),
-          this.bNt(),
-          this.rFe(),
-          this.qNt());
+          this.T2e(),
+          this.BOt(),
+          this.bOt(),
+          this.qOt(),
+          this.M3e(),
+          this.GOt());
       }),
-      (this.GNt = () => {
-        (this.zke = ModelManager_1.ModelManager.CookModel.CurrentCookRoleId),
-          this.BNt();
+      (this.NOt = () => {
+        (this.dFe = ModelManager_1.ModelManager.CookModel.CurrentCookRoleId),
+          this.bOt();
       }),
-      (this.NNt = () => {
+      (this.OOt = () => {
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.OpenCookRole,
-          this.gIt,
+          this.ETt,
         );
       }),
-      (this.dIt = () => {
+      (this.Mke = () => {
         0 === ModelManager_1.ModelManager.CookModel.CurrentCookListType
           ? (ModelManager_1.ModelManager.CookModel.CleanAddExp(),
             CookController_1.CookController.SendCookFoodRequest(
-              this.gIt,
-              this.zke,
+              this.ETt,
+              this.dFe,
               this.t6,
             ))
           : CookController_1.CookController.SendFoodProcessRequest(
-              this.gIt,
+              this.ETt,
               ModelManager_1.ModelManager.CookModel.GetTmpMachiningItemList(),
               this.t6,
             );
       }),
-      (this.sNt = () => {
+      (this.aOt = () => {
         ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
           "MaterialShort",
         );
       }),
-      (this.PNt = (t) => {
+      (this.xOt = (t) => {
         ControllerHolder_1.ControllerHolder.ItemController.OpenItemTipsByItemId(
-          t.G3n,
+          t.f8n,
         );
       }),
-      (this.ONt = () => {
+      (this.kOt = () => {
         this.bl();
       }),
-      (this.kNt = () => {
+      (this.FOt = () => {
         var t;
         this.GetActive() &&
           (((t = new CookModel_1.CookRewardPopData()).CookRewardPopType = 2),
@@ -125,36 +125,36 @@ class CookView extends UiNavigationView_1.UiNavigationView {
       [6, UE.UIButtonComponent],
     ]),
       (this.BtnBindInfo = [
-        [3, this.dIt],
-        [6, this.sNt],
+        [3, this.Mke],
+        [6, this.aOt],
       ]);
   }
   OnStart() {
-    (this.TNt = new OpenCookRoleButton(this.GetItem(4))),
-      this.TNt.BindOnCallback(this.NNt),
-      (this.iNt = new GenericLayoutNew_1.GenericLayoutNew(
+    (this.LOt = new OpenCookRoleButton(this.GetItem(4))),
+      this.LOt.BindOnCallback(this.OOt),
+      (this.oOt = new GenericLayoutNew_1.GenericLayoutNew(
         this.GetHorizontalLayout(2),
-        this.rNt,
+        this.nOt,
       )),
-      (this.DNt = new AmountItem(this.GetItem(5))),
-      this.DNt.BindGetMaxCallback(this.xNt),
-      this.DNt.BindSetSumCallback(this.yqt),
-      (this.LNt = new CookItemView_1.IconItem(this.GetItem(1)));
+      (this.ROt = new AmountItem(this.GetItem(5))),
+      this.ROt.BindGetMaxCallback(this.wOt),
+      this.ROt.BindSetSumCallback(this.LGt),
+      (this.DOt = new CookItemView_1.IconItem(this.GetItem(1)));
   }
   OnBeforeDestroy() {
     this.Cde(),
-      this.iNt.ClearChildren(),
-      (this.iNt = void 0),
-      (this.DNt = void 0);
+      this.oOt.ClearChildren(),
+      (this.oOt = void 0),
+      (this.ROt = void 0);
   }
   dde() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.CookSuccess,
-      this.ONt,
+      this.kOt,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.MachiningSuccess,
-        this.kNt,
+        this.FOt,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.MachiningSuccess,
@@ -162,18 +162,18 @@ class CookView extends UiNavigationView_1.UiNavigationView {
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.CloseCookRole,
-        this.GNt,
+        this.NOt,
       );
   }
   Cde() {
-    this.RNt ||
+    this.UOt ||
       (EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.CookSuccess,
-        this.ONt,
+        this.kOt,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.MachiningSuccess,
-        this.kNt,
+        this.FOt,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.MachiningSuccess,
@@ -181,7 +181,7 @@ class CookView extends UiNavigationView_1.UiNavigationView {
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.CloseCookRole,
-        this.GNt,
+        this.NOt,
       ));
   }
   HideView(t) {
@@ -191,62 +191,62 @@ class CookView extends UiNavigationView_1.UiNavigationView {
   ShowView(t) {
     (ModelManager_1.ModelManager.CookModel.CurrentCookViewType = 3),
       this.SetActive(!0),
-      this.RNt && (this.dde(), (this.RNt = !1)),
-      (this.gIt = t),
+      this.UOt && (this.dde(), (this.UOt = !1)),
+      (this.ETt = t),
       this.bl();
   }
-  hke() {
+  T2e() {
     let t = void 0;
     (t = (
       0 === ModelManager_1.ModelManager.CookModel.CurrentCookListType
-        ? this.UNt
-        : this.ANt
+        ? this.AOt
+        : this.POt
     ).Name),
       this.GetText(0).ShowTextNew(t);
   }
-  wNt() {
+  BOt() {
     let t = void 0;
     (t =
       0 === ModelManager_1.ModelManager.CookModel.CurrentCookListType
-        ? this.UNt.FoodItemId
-        : this.ANt.FinalItemId),
-      this.LNt.SetIcon(t),
-      this.LNt.SetQuality(t);
+        ? this.AOt.FoodItemId
+        : this.POt.FinalItemId),
+      this.DOt.SetIcon(t),
+      this.DOt.SetQuality(t);
   }
-  BNt() {
+  bOt() {
     0 === ModelManager_1.ModelManager.CookModel.CurrentCookListType
-      ? (this.TNt.SetActive(!0),
-        this.TNt.RefreshIcon(this.zke),
-        this.TNt.RefreshRedDot(this.zke, this.gIt))
-      : this.TNt.SetActive(!1);
+      ? (this.LOt.SetActive(!0),
+        this.LOt.RefreshIcon(this.dFe),
+        this.LOt.RefreshRedDot(this.dFe, this.ETt))
+      : this.LOt.SetActive(!1);
   }
-  bNt() {
+  qOt() {
     var t = ModelManager_1.ModelManager.CookModel.GetCookMaterialList(
-      this.gIt,
+      this.ETt,
       ModelManager_1.ModelManager.CookModel.CurrentCookListType,
     );
-    this.iNt.RebuildLayoutByDataNew(t);
+    this.oOt.RebuildLayoutByDataNew(t);
   }
-  Iqt() {
-    for (const t of this.iNt.GetLayoutItemMap().values())
+  DGt() {
+    for (const t of this.oOt.GetLayoutItemMap().values())
       t.RefreshNeed(this.t6);
   }
-  rFe() {
+  M3e() {
     var t,
       e = this.GetButton(3)
         .GetOwner()
         .GetComponentByClass(UE.UIInteractionGroup.StaticClass()),
       i = this.GetButton(6).GetOwner();
     0 === ModelManager_1.ModelManager.CookModel.CurrentCookListType
-      ? ((t = CookController_1.CookController.CheckCanCook(this.gIt)),
+      ? ((t = CookController_1.CookController.CheckCanCook(this.ETt)),
         e.SetInteractable(t),
         i.GetUIItem().SetUIActive(!t))
-      : ((t = CookController_1.CookController.CheckCanProcessed(this.gIt)),
+      : ((t = CookController_1.CookController.CheckCanProcessed(this.ETt)),
         e.SetInteractable(t),
         i.GetUIItem().SetUIActive(!t));
   }
-  qNt() {
-    this.DNt.ResetSum(), this.DNt.RefreshAddAndDelButton();
+  GOt() {
+    this.ROt.ResetSum(), this.ROt.RefreshAddAndDelButton();
   }
   GetGuideUiItemAndUiItemForShowEx(t) {
     t = this.GetGuideUiItem(t[1]);
@@ -257,9 +257,9 @@ exports.CookView = CookView;
 class OpenCookRoleButton extends UiPanelBase_1.UiPanelBase {
   constructor(t) {
     super(),
-      (this.yVe = void 0),
-      (this.FNt = () => {
-        this.yVe && this.yVe();
+      (this.G6e = void 0),
+      (this.VOt = () => {
+        this.G6e && this.G6e();
       }),
       this.CreateThenShowByActor(t.GetOwner());
   }
@@ -269,7 +269,7 @@ class OpenCookRoleButton extends UiPanelBase_1.UiPanelBase {
       [1, UE.UITexture],
       [2, UE.UIItem],
     ]),
-      (this.BtnBindInfo = [[0, this.FNt]]);
+      (this.BtnBindInfo = [[0, this.VOt]]);
   }
   RefreshIcon(t) {
     var e = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(t);
@@ -281,38 +281,38 @@ class OpenCookRoleButton extends UiPanelBase_1.UiPanelBase {
     );
   }
   BindOnCallback(t) {
-    this.yVe = t;
+    this.G6e = t;
   }
 }
 class AmountItem extends UiPanelBase_1.UiPanelBase {
   constructor(t) {
     super(),
-      (this.VNt = 1),
-      (this.HNt = void 0),
-      (this.jNt = void 0),
-      (this.WNt = void 0),
-      (this.KNt = (t) => {
-        var e = this.QNt();
-        (this.VNt = e < t ? e : t),
-          this.VNt < 1 && (this.VNt = 1),
-          this.jNt && this.jNt(this.VNt),
-          this.GetText(3).SetText(this.VNt.toString()),
+      (this.HOt = 1),
+      (this.jOt = void 0),
+      (this.WOt = void 0),
+      (this.KOt = void 0),
+      (this.QOt = (t) => {
+        var e = this.XOt();
+        (this.HOt = e < t ? e : t),
+          this.HOt < 1 && (this.HOt = 1),
+          this.WOt && this.WOt(this.HOt),
+          this.GetText(3).SetText(this.HOt.toString()),
           this.RefreshAddAndDelButton();
       }),
       (this._o = () => {
-        (this.VNt += 1),
-          this.jNt && this.jNt(this.VNt),
+        (this.HOt += 1),
+          this.WOt && this.WOt(this.HOt),
           this.RefreshAddAndDelButton(),
-          this.GetText(3).SetText(this.VNt.toString());
+          this.GetText(3).SetText(this.HOt.toString());
       }),
-      (this.CIt = () => {
-        --this.VNt,
-          this.jNt && this.jNt(this.VNt),
+      (this.MTt = () => {
+        --this.HOt,
+          this.WOt && this.WOt(this.HOt),
           this.RefreshAddAndDelButton(),
-          this.GetText(3).SetText(this.VNt.toString());
+          this.GetText(3).SetText(this.HOt.toString());
       }),
-      (this.XNt = () => {
-        this.$Nt();
+      (this.$Ot = () => {
+        this.YOt();
       }),
       this.CreateThenShowByActor(t.GetOwner());
   }
@@ -325,52 +325,52 @@ class AmountItem extends UiPanelBase_1.UiPanelBase {
     ]),
       (this.BtnBindInfo = [
         [0, this._o],
-        [1, this.CIt],
-        [2, this.XNt],
+        [1, this.MTt],
+        [2, this.$Ot],
       ]);
   }
   OnStart() {
-    this.GetText(3).SetText(this.VNt.toString());
+    this.GetText(3).SetText(this.HOt.toString());
   }
-  async YNt() {
-    (this.WNt = new CommonCountPanel_1.CommonItemCountPanel()),
-      await this.WNt.CreateThenShowByResourceIdAsync(
+  async JOt() {
+    (this.KOt = new CommonCountPanel_1.CommonItemCountPanel()),
+      await this.KOt.CreateThenShowByResourceIdAsync(
         "UiItem_ShopCountPanel_Prefab",
         UiLayer_1.UiLayer.GetLayerRootUiItem(UiLayerType_1.ELayerType.Normal),
       ),
-      this.WNt.SetConfirmFunction(this.KNt);
+      this.KOt.SetConfirmFunction(this.QOt);
   }
   ResetSum() {
-    (this.VNt = 1), this.GetText(3).SetText(this.VNt.toString());
+    (this.HOt = 1), this.GetText(3).SetText(this.HOt.toString());
   }
   RefreshAddAndDelButton() {
     this.GetButton(1)
       .GetOwner()
       .GetComponentByClass(UE.UIInteractionGroup.StaticClass())
-      .SetInteractable(1 !== this.VNt),
+      .SetInteractable(1 !== this.HOt),
       this.GetButton(0)
         .GetOwner()
         .GetComponentByClass(UE.UIInteractionGroup.StaticClass())
-        .SetInteractable(this.VNt < this.QNt());
+        .SetInteractable(this.HOt < this.XOt());
   }
   BindGetMaxCallback(t) {
-    this.HNt = t;
+    this.jOt = t;
   }
   BindSetSumCallback(t) {
-    this.jNt = t;
+    this.WOt = t;
   }
-  QNt() {
-    if (this.HNt) {
-      var t = this.HNt();
+  XOt() {
+    if (this.jOt) {
+      var t = this.jOt();
       if (0 !== t) return t;
     }
     return 1;
   }
-  async $Nt() {
-    this.WNt || (await this.YNt()), this.WNt.PlayStartSequence(this.VNt);
+  async YOt() {
+    this.KOt || (await this.JOt()), this.KOt.PlayStartSequence(this.HOt);
     var t =
       ConfigManager_1.ConfigManager.TextConfig.GetTextById("CookInputCount");
-    this.WNt.SetTitleText(t);
+    this.KOt.SetTitleText(t);
   }
 }
 //# sourceMappingURL=CookView.js.map

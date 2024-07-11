@@ -11,11 +11,11 @@ class RandomSystem {
   static GetRandomPercent() {
     return Math.random() * this.RAND_PERCENT;
   }
-  static aVs(e) {
+  static Czs(e) {
     return (e = (e = (e ^= e << 13) ^ (e >> 17)) ^ (e << 5));
   }
   static GetNextRandomSeed(e, t) {
-    var a = RandomSystem.aVs(e);
+    var a = RandomSystem.Czs(e);
     return (
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(
@@ -30,7 +30,7 @@ class RandomSystem {
     );
   }
   static IterateRandomSeed(e, t) {
-    var a = RandomSystem.aVs(e);
+    var a = RandomSystem.Czs(e);
     return (
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug(

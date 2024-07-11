@@ -2,45 +2,43 @@
 Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.BehaviorButton = void 0);
 const UE = require("ue"),
-  GamepadKeyByKeyName_1 = require("../../../../Core/Define/ConfigQuery/GamepadKeyByKeyName"),
-  PcKeyByKeyName_1 = require("../../../../Core/Define/ConfigQuery/PcKeyByKeyName"),
+  Info_1 = require("../../../../Core/Common/Info"),
   ResourceSystem_1 = require("../../../../Core/Resource/ResourceSystem"),
   StringUtils_1 = require("../../../../Core/Utils/StringUtils"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
   InputController_1 = require("../../../Input/InputController"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
-  KeyUtil_1 = require("../../Util/KeyUtil"),
   BattleChildView_1 = require("./BattleChildView/BattleChildView"),
   BattleUiNiagaraItem_1 = require("./BattleUiNiagaraItem"),
   CommonKeyItem_1 = require("./KeyItem/CommonKeyItem");
 class BehaviorButton extends BattleChildView_1.BattleChildView {
   constructor() {
     super(...arguments),
-      (this.Vet = void 0),
-      (this.htt = ""),
-      (this.oot = void 0),
-      (this.rot = void 0),
-      (this.ZMe = ""),
+      (this.tit = void 0),
+      (this.Mit = ""),
+      (this.frt = void 0),
+      (this.prt = void 0),
+      (this.ActionName = ""),
       (this.BehaviorType = 101),
-      (this.xet = void 0),
-      (this.not = void 0),
-      (this.sot = void 0),
-      (this.ytt = 1),
-      (this.Itt = 1),
-      (this.aot = () => {
+      (this.Qtt = void 0),
+      (this.vrt = void 0),
+      (this.Mrt = void 0),
+      (this.qit = 1),
+      (this.Git = 1),
+      (this.Ert = () => {
         var t;
-        0 !== this.ytt &&
-          ((t = this.Vet?.InputAction) && this.hot(t, 1),
+        0 !== this.qit &&
+          ((t = this.tit?.InputAction) && this.Srt(t, 1),
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.OnPressOrReleaseBehaviorButton,
             !0,
             this.BehaviorType,
           ));
       }),
-      (this.lot = () => {
-        var t = this.Vet?.InputAction;
-        t && this.hot(t, 2),
+      (this.yrt = () => {
+        var t = this.tit?.InputAction;
+        t && this.Srt(t, 2),
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.OnPressOrReleaseBehaviorButton,
             !1,
@@ -54,144 +52,122 @@ class BehaviorButton extends BattleChildView_1.BattleChildView {
       [1, UE.UISprite],
       [2, UE.UINiagara],
     ]),
-      ModelManager_1.ModelManager.PlatformModel.IsMobile() ||
+      Info_1.Info.IsInTouch() ||
         this.ComponentRegisterInfos.push([3, UE.UIItem]);
   }
   Initialize(t) {
     super.Initialize(), this.Ore();
-    var e = this.GetSprite(1);
-    (this.rot = e
+    var i = this.GetSprite(1);
+    (this.prt = i
       .GetOwner()
       .GetComponentByClass(UE.UISpriteTransition.StaticClass())),
-      (this.not = new BattleUiNiagaraItem_1.BattleUiNiagaraItem(
+      (this.vrt = new BattleUiNiagaraItem_1.BattleUiNiagaraItem(
         this.GetUiNiagara(2),
       ));
   }
   async InitializeAsync(t) {
-    var e;
-    ModelManager_1.ModelManager.PlatformModel.IsMobile() ||
-      ((e = this.GetItem(3)),
-      (this.xet = new CommonKeyItem_1.CommonKeyItem()),
-      await this.xet.CreateThenShowByActorAsync(e.GetOwner())),
+    var i;
+    Info_1.Info.IsInTouch() ||
+      ((i = this.GetItem(3)),
+      (this.Qtt = new CommonKeyItem_1.CommonKeyItem()),
+      await this.Qtt.CreateThenShowByActorAsync(i.GetOwner())),
       this.RefreshBehaviorButton(t.InputActionType, t.ActionName);
   }
   OnBeforeDestroy() {
-    (this.Vet = void 0),
-      (this.xet = void 0),
-      this.not.Stop(),
-      (this.not = void 0),
-      this.oot &&
-        (ResourceSystem_1.ResourceSystem.CancelAsyncLoad(this.oot),
-        (this.oot = void 0)),
+    (this.tit = void 0),
+      (this.Qtt = void 0),
+      this.vrt.Stop(),
+      (this.vrt = void 0),
+      this.frt &&
+        (ResourceSystem_1.ResourceSystem.CancelAsyncLoad(this.frt),
+        (this.frt = void 0)),
       this.kre(),
-      (this.sot = void 0);
+      (this.Mrt = void 0);
   }
   Ore() {
     var t = this.GetButton(0);
-    t.OnPointDownCallBack.Bind(this.aot), t.OnPointUpCallBack.Bind(this.lot);
+    t.OnPointDownCallBack.Bind(this.Ert), t.OnPointUpCallBack.Bind(this.yrt);
   }
   kre() {
     var t = this.GetButton(0);
     t.OnPointDownCallBack.Unbind(), t.OnPointUpCallBack.Unbind();
   }
   UpdateAlpha() {
-    (this.Itt = this.RootItem.GetAlpha()),
-      this.Itt > this.ytt
-        ? this.RootItem.SetAlpha(this.ytt)
-        : (this.ytt = this.Itt);
+    (this.Git = this.RootItem.GetAlpha()),
+      this.Git > this.qit
+        ? this.RootItem.SetAlpha(this.qit)
+        : (this.qit = this.Git);
   }
   Refresh(t) {
-    (this.Vet = t), this.RefreshVisible();
+    (this.tit = t), this.RefreshVisible();
   }
-  RefreshBehaviorButton(t, e) {
-    (this.BehaviorType = t), (this.ZMe = e), this.xet?.RefreshAction(e);
+  RefreshBehaviorButton(t, i) {
+    (this.BehaviorType = t), (this.ActionName = i), this.Qtt?.RefreshAction(i);
   }
-  hot(t, e) {
-    this.OnInputAction(), InputController_1.InputController.InputAction(t, e);
+  Srt(t, i) {
+    this.OnInputAction(), InputController_1.InputController.InputAction(t, i);
   }
   OnInputAction() {
-    0 !== this.ytt && this.not?.Play();
+    0 !== this.qit && this.vrt?.Play();
   }
   SetBehaviorToggleState(t) {
-    this.Vet &&
-      ((this.Vet.State = t), (t = this.Vet.SkillIconPathList[t]), this._ot(t));
+    this.tit &&
+      ((this.tit.State = t), (t = this.tit.SkillIconPathList[t]), this.Irt(t));
   }
-  _ot(t) {
-    if (!StringUtils_1.StringUtils.IsEmpty(t) && this.htt !== t) {
-      this.oot && ResourceSystem_1.ResourceSystem.CancelAsyncLoad(this.oot);
-      const i = this.GetSprite(1);
-      let e = !0;
-      (this.oot = ResourceSystem_1.ResourceSystem.LoadAsync(
+  Irt(t) {
+    if (!StringUtils_1.StringUtils.IsEmpty(t) && this.Mit !== t) {
+      this.frt && ResourceSystem_1.ResourceSystem.CancelAsyncLoad(this.frt);
+      const e = this.GetSprite(1);
+      let i = !0;
+      (this.frt = ResourceSystem_1.ResourceSystem.LoadAsync(
         t,
         UE.LGUISpriteData_BaseObject,
         (t) => {
-          (e = !1),
-            (this.oot = void 0),
-            i &&
+          (i = !1),
+            (this.frt = void 0),
+            e &&
               t &&
-              (i.SetSprite(t, !1),
-              i.bIsUIActive || i.SetUIActive(!0),
-              this.rot) &&
-              this.rot.SetAllTransitionSprite(t);
+              (e.SetSprite(t, !1),
+              e.bIsUIActive || e.SetUIActive(!0),
+              this.prt) &&
+              this.prt.SetAllTransitionSprite(t);
         },
       )),
-        (this.htt = t),
-        e || (this.oot = void 0);
+        (this.Mit = t),
+        i || (this.frt = void 0);
     }
-  }
-  uot() {
-    var t;
-    if (this.ZMe)
-      return (
-        (t = ModelManager_1.ModelManager.PlatformModel),
-        KeyUtil_1.KeyUtil.GetKeyName(this.ZMe, t.PlatformType)
-      );
-  }
-  GetKeySpritePath() {
-    var t,
-      e,
-      i = this.uot();
-    if (i)
-      return (t = ModelManager_1.ModelManager.PlatformModel).IsPc()
-        ? (e = PcKeyByKeyName_1.configPcKeyByKeyName.GetConfig(i))
-          ? e.KeyIconPath
-          : void 0
-        : t.IsGamepad() &&
-            (e = GamepadKeyByKeyName_1.configGamepadKeyByKeyName.GetConfig(i))
-          ? e.KeyIconPath
-          : void 0;
   }
   RefreshVisible() {
     var t;
     this.RootItem?.IsValid() &&
-      (t = this.cot()) !== this.RootItem.bIsUIActive &&
+      (t = this.Lrt()) !== this.RootItem.bIsUIActive &&
       (t ? (this.Show(), this.RefreshEnable(!0)) : this.Hide());
   }
-  cot() {
+  Lrt() {
     return (
       !(
-        !this.Vet ||
+        !this.tit ||
         (102 === this.BehaviorType &&
           !ModelManager_1.ModelManager.FunctionModel.IsOpen(10031))
-      ) && this.Vet.IsVisible
+      ) && this.tit.IsVisible
     );
   }
   RefreshEnable(t) {}
-  SetVisibleByExploreMode(t, e = !1) {
-    let i = !1;
-    t ? ((this.ytt = this.Itt), (i = !0)) : (this.ytt = 0),
+  SetVisibleByExploreMode(t, i = !1) {
+    let e = !1;
+    t ? ((this.qit = this.Git), (e = !0)) : (this.qit = 0),
       this.RootItem &&
-        (this.RootItem.SetRaycastTarget(i),
-        e
-          ? (this.sot
-              ? this.sot.Stop()
-              : (this.sot = this.RootActor.GetComponentByClass(
+        (this.RootItem.SetRaycastTarget(e),
+        i
+          ? (this.Mrt
+              ? this.Mrt.Stop()
+              : (this.Mrt = this.RootActor.GetComponentByClass(
                   UE.LGUIPlayTweenComponent.StaticClass(),
                 )),
-            ((t = this.sot.GetPlayTween()).from = this.RootItem.GetAlpha()),
-            (t.to = this.ytt),
-            this.sot.Play())
-          : (this.sot && this.sot.Stop(), this.RootItem.SetAlpha(this.ytt)));
+            ((t = this.Mrt.GetPlayTween()).from = this.RootItem.GetAlpha()),
+            (t.to = this.qit),
+            this.Mrt.Play())
+          : (this.Mrt && this.Mrt.Stop(), this.RootItem.SetAlpha(this.qit)));
   }
 }
 exports.BehaviorButton = BehaviorButton;

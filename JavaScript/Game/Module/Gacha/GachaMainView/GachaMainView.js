@@ -4,17 +4,18 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const UE = require("ue"),
   LanguageSystem_1 = require("../../../../Core/Common/LanguageSystem"),
   Log_1 = require("../../../../Core/Common/Log"),
+  Time_1 = require("../../../../Core/Common/Time"),
   Queue_1 = require("../../../../Core/Container/Queue"),
+  CommonDefine_1 = require("../../../../Core/Define/CommonDefine"),
   CommonParamById_1 = require("../../../../Core/Define/ConfigCommon/CommonParamById"),
   TimerSystem_1 = require("../../../../Core/Timer/TimerSystem"),
-  StringBuilder_1 = require("../../../../Core/Utils/StringBuilder"),
   EventDefine_1 = require("../../../Common/Event/EventDefine"),
   EventSystem_1 = require("../../../Common/Event/EventSystem"),
   TimeUtil_1 = require("../../../Common/TimeUtil"),
   ConfigManager_1 = require("../../../Manager/ConfigManager"),
   ControllerHolder_1 = require("../../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../../Manager/ModelManager"),
-  UiViewBase_1 = require("../../../Ui/Base/UiViewBase"),
+  UiTickViewBase_1 = require("../../../Ui/Base/UiTickViewBase"),
   PopupCaptionItem_1 = require("../../../Ui/Common/PopupCaptionItem"),
   UiLayer_1 = require("../../../Ui/UiLayer"),
   UiManager_1 = require("../../../Ui/UiManager"),
@@ -23,6 +24,7 @@ const UE = require("ue"),
   CdnServerDebugConfig_1 = require("../../Debug/CdnServerDebugConfig"),
   CommonExchangeData_1 = require("../../ItemExchange/View/CommonExchangeData"),
   RoleController_1 = require("../../RoleUi/RoleController"),
+  ScrollingTipsController_1 = require("../../ScrollingTips/ScrollingTipsController"),
   GenericLayout_1 = require("../../Util/Layout/GenericLayout"),
   LguiUtil_1 = require("../../Util/LguiUtil"),
   GenericScrollViewNew_1 = require("../../Util/ScrollView/GenericScrollViewNew"),
@@ -40,81 +42,55 @@ class OperationParam {
     (this.OperationType = e), (this.Param = i);
   }
 }
-class GachaMainView extends UiViewBase_1.UiViewBase {
+class GachaMainView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
-      (this.lHt = new Map()),
-      (this._Ht = void 0),
-      (this.uHt = void 0),
-      (this.cHt = void 0),
-      (this.mHt = void 0),
+      (this.ljt = new Map()),
+      (this._jt = void 0),
+      (this.ujt = void 0),
+      (this.cjt = void 0),
+      (this.mjt = void 0),
       (this.lqe = void 0),
-      (this.dHt = void 0),
-      (this.CHt = void 0),
-      (this.gHt = void 0),
-      (this.Cpt = !1),
+      (this.djt = void 0),
+      (this.Cjt = void 0),
+      (this.gjt = void 0),
+      (this.Dvt = !1),
+      (this.z0a = 0),
       (this.TDe = void 0),
-      (this.fHt = new Queue_1.Queue()),
-      (this.pHt = !1),
-      (this.ift = () => {
-        var e = this.vHt;
-        if (e) {
-          var i =
-              ModelManager_1.ModelManager.GachaModel.GetGachaPoolUrlPrefix(),
-            t = ModelManager_1.ModelManager.GachaModel.GetServerArea(),
-            a = new StringBuilder_1.StringBuilder(),
-            r = this.MHt.UrlList;
-          if (r && 0 !== r.length) {
-            for (let e = 0; e < r.length; e++)
-              a.Append(r[e]), e < r.length - 1 && a.Append(",");
-            (t =
-              `{0}/aki/gacha/index.html#/detail?svr_id={1}&player_id=${ModelManager_1.ModelManager.PlayerInfoModel.GetId()?.toString()}&lang=${LanguageSystem_1.LanguageSystem.PackageLanguage}&svr_area=${t}&gacha_id=${e?.Id}&resources_id=${e?.ResourcesId}&gacha_pool_id=${this.SHt}&path=` +
-              encodeURIComponent(a.ToString())),
-              (e =
-                CdnServerDebugConfig_1.CdnServerDebugConfig.Singleton.TryGetGachaDetailDebugUrl(
-                  t,
-                  i,
-                  ModelManager_1.ModelManager.LoginModel.GetServerId(),
-                ));
-            ControllerHolder_1.ControllerHolder.KuroSdkController.CanUseSdk()
-              ? ControllerHolder_1.ControllerHolder.KuroSdkController.OpenWebView(
-                  "",
-                  e,
-                  !0,
-                  !0,
-                )
-              : ModelManager_1.ModelManager.MailModel.OpenWebBrowser(e);
-          } else
-            Log_1.Log.CheckError() &&
-              Log_1.Log.Error(
-                "Gacha",
-                44,
-                "GachaMainView: 卡池详情链接为空",
-                ["GachaId", this.vHt.Id],
-                ["GachaPoolId", this.SHt],
-                ["Language", LanguageSystem_1.LanguageSystem.PackageLanguage],
-              );
-        }
+      (this.fjt = new Queue_1.Queue()),
+      (this.pjt = !1),
+      (this.dpt = () => {
+        this.vjt
+          ? 0 === this.vjt.UsePoolId
+            ? ScrollingTipsController_1.ScrollingTipsController.ShowTipsByTextId(
+                "SelfGacha_NoDetail_Tips",
+              )
+            : UiManager_1.UiManager.OpenView(
+                "GachaPoolDetailView",
+                this.vjt.GetPoolInfo(this.vjt.UsePoolId),
+              )
+          : Log_1.Log.CheckError() &&
+            Log_1.Log.Error("Gacha", 35, "OnHelpBtnClick CurGachaInfo is null");
       }),
-      (this.EHt = () => {
+      (this.Sjt = () => {
         ControllerHolder_1.ControllerHolder.PayShopController.OpenPayShopViewWithTab(
           4,
           1,
         );
       }),
-      (this.yHt = () => {
+      (this.yjt = () => {
         var e, i, t;
-        this.vHt &&
-          ((i = this.vHt.GroupId),
+        this.vjt &&
+          ((i = this.vjt.GroupId),
           (e =
             ModelManager_1.ModelManager.GachaModel.GetGachaRecordUrlPrefix()),
           (t = ModelManager_1.ModelManager.GachaModel.GetServerArea()),
           (i =
             "{0}/aki/gacha/index.html#/record?" +
-            `svr_id={1}&player_id=${ModelManager_1.ModelManager.PlayerInfoModel.GetId()?.toString()}&lang=${LanguageSystem_1.LanguageSystem.PackageLanguage}&gacha_id=${this.vHt?.Id}&gacha_type=${i.toString()}&svr_area=${t}&record_id=` +
+            `svr_id={1}&player_id=${ModelManager_1.ModelManager.PlayerInfoModel.GetId()?.toString()}&lang=${LanguageSystem_1.LanguageSystem.PackageLanguage}&gacha_id=${this.vjt?.Id}&gacha_type=${i.toString()}&svr_area=${t}&record_id=` +
             ModelManager_1.ModelManager.GachaModel.RecordId +
             "&resources_id=" +
-            this.vHt?.ResourcesId),
+            this.vjt?.ResourcesId),
           (t =
             CdnServerDebugConfig_1.CdnServerDebugConfig.Singleton.TryGetGachaRecordDebugUrl(
               i,
@@ -130,55 +106,55 @@ class GachaMainView extends UiViewBase_1.UiViewBase {
               )
             : ModelManager_1.ModelManager.MailModel.OpenWebBrowser(t));
       }),
-      (this.MVe = () => {
+      (this.B6e = () => {
         UiManager_1.UiManager.CloseView(this.Info.Name);
       }),
-      (this.IHt = () => {
+      (this.Ijt = () => {
         var e = ConfigManager_1.ConfigManager.GachaConfig.GetGachaViewInfo(
-          this.SHt,
+          this.Ejt,
         );
         if (e) {
-          var i = e.Type,
-            t = e.PreviewIdList;
-          switch (i) {
+          var e = e.Type,
+            i = this.Mjt.PreviewIdList;
+          switch (e) {
             case 1:
             case 2:
             case 4:
             case 6:
-              var a = [];
-              for (const _ of t) {
-                var r =
+              var t = [];
+              for (const n of i) {
+                var a =
                   ConfigManager_1.ConfigManager.GachaConfig.GetGachaTextureInfo(
-                    _,
+                    n,
                   );
-                a.push(r.TrialId);
+                t.push(a.TrialId);
               }
-              RoleController_1.RoleController.OpenRoleMainView(1, 0, a);
+              RoleController_1.RoleController.OpenRoleMainView(1, 0, t);
               break;
             case 5:
             case 3:
-              var s = [];
-              for (const l of t) {
-                var o =
+              var r = [];
+              for (const _ of i) {
+                var s =
                     ConfigManager_1.ConfigManager.GachaConfig.GetGachaTextureInfo(
-                      l,
+                      _,
                     ),
                   h = new WeaponTrialData_1.WeaponTrialData();
-                h.SetTrialId(o.TrialId), s.push(h);
+                h.SetTrialId(s.TrialId), r.push(h);
               }
-              var n = { WeaponDataList: s, SelectedIndex: 0 };
-              UiManager_1.UiManager.OpenView("WeaponPreviewView", n);
+              var o = { WeaponDataList: r, SelectedIndex: 0 };
+              UiManager_1.UiManager.OpenView("WeaponPreviewView", o);
           }
         }
       }),
-      (this.THt = () => {
-        var e = this.vHt;
+      (this.Tjt = () => {
+        var e = this.vjt;
         e && GachaController_1.GachaController.OpenGachaSelectionView(e);
       }),
       (this.RefreshLeftTime = () => {
-        var e = this.vHt;
+        var e = this.vjt;
         e &&
-          0 !== (e = e.GetPoolEndTimeByPoolInfo(this.MHt)) &&
+          0 !== (e = e.GetPoolEndTimeByPoolInfo(this.Mjt)) &&
           ((e = e - TimeUtil_1.TimeUtil.GetServerTime()) <= 0
             ? GachaController_1.GachaController.GachaInfoRequest(!1)
             : ((e = TimeUtil_1.TimeUtil.GetRemainTimeDataFormat(e)),
@@ -194,79 +170,74 @@ class GachaMainView extends UiViewBase_1.UiViewBase {
                   1e3 * e,
                 )))));
       }),
-      (this.z7t = () => {
-        this.LHt();
+      (this.zHt = () => {
+        this.Ljt();
       }),
-      (this.DHt = () => {
+      (this.Djt = () => {
         var e;
-        this.RHt
-          ? ((e = new OperationParam(1)), this.fHt.Push(e))
-          : (this.UHt(),
-            this.AHt().finally(() => {
-              this.O0t();
+        this.Rjt
+          ? ((e = new OperationParam(1)), this.fjt.Push(e))
+          : (this.Ujt(),
+            this.Ajt().finally(() => {
+              this.Jft();
             }));
       }),
-      (this.PHt = () => {
+      (this.Pjt = () => {
         var e,
           i,
           t,
           a,
-          r = this._Ht.GetGenericLayout().GetSelectedGridIndex();
-        !this.uHt ||
+          r = this._jt.GetGenericLayout().GetSelectedGridIndex();
+        !this.ujt ||
           r < 0 ||
-          r >= this.uHt.length ||
-          ((e = this.uHt[r]),
-          (i = this._Ht?.GetScrollItemByIndex(r)),
+          r >= this.ujt.length ||
+          ((e = this.ujt[r]),
+          (i = this._jt?.GetScrollItemByIndex(r)),
           e &&
             i &&
             (t = (a = e.GachaInfo).UsePoolId) !== e.PoolInfo.Id &&
             (a = a.GetPoolInfo(t)) &&
-            ((e.PoolInfo = a), i.Refresh(e, !0, r), this.DHt(), this.xHt()));
+            ((e.PoolInfo = a), i.Refresh(e, !0, r), this.Djt(), this.xjt()));
       }),
-      (this.wHt = () => {
+      (this.wjt = () => {
         var e = new GachaTagItem_1.GachaTagItem();
         return (
-          (e.SelectCallback = this.BHt), (e.CanExecuteChange = this.Eft), e
+          (e.SelectCallback = this.Bjt), (e.CanExecuteChange = this.Bpt), e
         );
       }),
-      (this.bHt = () => {
+      (this.bjt = () => {
         return new CommonTextItem_1.CommonTextItem();
       }),
-      (this.qHt = () => {
+      (this.qjt = () => {
         return new GachaSmallItemGrid_1.GachaSmallItemGrid();
       }),
-      (this.BHt = (e) => {
+      (this.Bjt = (e) => {
         var i;
-        this.RHt
-          ? ((i = new OperationParam(2, e)), this.fHt.Push(i))
-          : (this.UHt(),
-            this.GHt(e).finally(() => {
-              this.O0t();
+        this.Rjt
+          ? ((i = new OperationParam(2, e)), this.fjt.Push(i))
+          : (this.Ujt(),
+            this.Gjt(e).finally(() => {
+              this.Jft();
             }));
       }),
-      (this.GHt = async (e) => {
-        var i = this._Ht.GetGenericLayout().GetSelectedGridIndex(),
+      (this.Gjt = async (e) => {
+        var i = this._jt.GetGenericLayout().GetSelectedGridIndex(),
           t =
-            (this._Ht.GetGenericLayout().SelectGridProxy(e),
-            ModelManager_1.ModelManager.GachaModel.RecordGachaInfo(this.vHt)),
-          t =
-            (t && this._Ht.GetScrollItemByIndex(e)?.RefreshRedDot(),
-            await this.AHt(),
-            this.vHt);
-        t &&
-          0 === t.UsePoolId &&
-          GachaController_1.GachaController.OpenGachaSelectionView(t),
-          0 <= i && this.xHt();
+            (this._jt.GetGenericLayout().SelectGridProxy(e),
+            ModelManager_1.ModelManager.GachaModel.RecordGachaInfo(this.vjt));
+        t && this._jt.GetScrollItemByIndex(e)?.RefreshRedDot(),
+          await this.Ajt(),
+          0 <= i && this.xjt();
       }),
-      (this.Eft = (e) =>
-        e !== this._Ht?.GetGenericLayout()?.GetSelectedGridIndex()),
-      (this.NHt = () => {
-        var e = this.vHt;
+      (this.Bpt = (e) =>
+        e !== this._jt?.GetGenericLayout()?.GetSelectedGridIndex()),
+      (this.Njt = () => {
+        var e = this.vjt;
         ControllerHolder_1.ControllerHolder.ItemExchangeController.OpenExchangeViewByItemId(
           e.ItemId,
         );
       }),
-      (this.OHt = () => {
+      (this.Ojt = () => {
         var e = ConfigManager_1.ConfigManager.GachaConfig.SecondCurrency();
         const r = new CommonExchangeData_1.CommonExchangeData();
         r.InitByItemId(e),
@@ -307,7 +278,7 @@ class GachaMainView extends UiViewBase_1.UiViewBase {
           );
       });
   }
-  static async kHt(e, i) {
+  static async kjt(e, i) {
     let t = void 0;
     switch (i) {
       case 1:
@@ -338,67 +309,67 @@ class GachaMainView extends UiViewBase_1.UiViewBase {
     }
     return t;
   }
-  get vHt() {
-    return this.FHt.GachaInfo;
+  get vjt() {
+    return this.Fjt.GachaInfo;
   }
-  get SHt() {
-    return this.FHt.PoolInfo.Id;
+  get Ejt() {
+    return this.Fjt.PoolInfo.Id;
   }
-  get MHt() {
-    return this.FHt.PoolInfo;
+  get Mjt() {
+    return this.Fjt.PoolInfo;
   }
-  get FHt() {
-    var e = this._Ht.GetGenericLayout().GetSelectedGridIndex();
-    if (!(!this.uHt || e < 0 || e >= this.uHt.length)) return this.uHt[e];
+  get Fjt() {
+    var e = this._jt.GetGenericLayout().GetSelectedGridIndex();
+    if (!(!this.ujt || e < 0 || e >= this.ujt.length)) return this.ujt[e];
   }
-  get RHt() {
-    return this.pHt;
+  get Rjt() {
+    return this.pjt;
   }
-  UHt() {
-    this.pHt = !0;
+  Ujt() {
+    this.pjt = !0;
   }
-  O0t() {
-    if (((this.pHt = !1), 0 !== this.fHt.Size)) {
-      var e = this.fHt.Pop();
+  Jft() {
+    if (((this.pjt = !1), 0 !== this.fjt.Size)) {
+      var e = this.fjt.Pop();
       if (e)
         switch (e.OperationType) {
           case 0:
-            this.LHt();
+            this.Ljt();
             break;
           case 1:
-            this.DHt();
+            this.Djt();
             break;
           case 2:
-            this.BHt(e?.Param);
+            this.Bjt(e?.Param);
         }
     }
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.ItemExChangeResponse,
-      this.DHt,
+      this.Djt,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.RefreshGachaMainView,
-        this.z7t,
+        this.zHt,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.GachaPoolSelectResponse,
-        this.PHt,
+        this.Pjt,
       );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.ItemExChangeResponse,
-      this.DHt,
+      this.Djt,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.RefreshGachaMainView,
-        this.z7t,
+        this.zHt,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.GachaPoolSelectResponse,
-        this.PHt,
+        this.Pjt,
       );
   }
   OnRegisterComponent() {
@@ -425,86 +396,111 @@ class GachaMainView extends UiViewBase_1.UiViewBase {
       [19, UE.UITexture],
       [20, UE.UITexture],
       [21, UE.UITexture],
+      [22, UE.UIItem],
+      [23, UE.UIButtonComponent],
+      [24, UE.UIText],
     ]),
       (this.BtnBindInfo = [
-        [3, this.ift],
-        [1, this.EHt],
-        [4, this.yHt],
-        [2, this.IHt],
-        [18, this.THt],
+        [3, this.dpt],
+        [1, this.Sjt],
+        [4, this.yjt],
+        [2, this.Ijt],
+        [18, this.Tjt],
+        [23, this.Tjt],
       ]);
   }
   async OnBeforeStartAsync() {
-    (this.Cpt = !0),
-      (this.mHt = new GenericLayout_1.GenericLayout(
+    (this.Dvt = !0),
+      (this.mjt = new GenericLayout_1.GenericLayout(
         this.GetHorizontalLayout(17),
-        this.qHt,
+        this.qjt,
       )),
-      (this.dHt = new GachaButton_1.GachaButton(GachaDefine_1.GACHA_ONE)),
-      (this.CHt = new GachaButton_1.GachaButton(GachaDefine_1.GACHA_TEN)),
+      (this.djt = new GachaButton_1.GachaButton(GachaDefine_1.GACHA_ONE)),
+      (this.Cjt = new GachaButton_1.GachaButton(GachaDefine_1.GACHA_TEN)),
       await Promise.all([
-        this.dHt.CreateThenShowByActorAsync(this.GetItem(5).GetOwner()),
-        this.CHt.CreateThenShowByActorAsync(this.GetItem(6).GetOwner()),
+        this.djt.CreateThenShowByActorAsync(this.GetItem(5).GetOwner()),
+        this.Cjt.CreateThenShowByActorAsync(this.GetItem(6).GetOwner()),
       ]),
-      (this.cHt = new GenericLayout_1.GenericLayout(
+      (this.cjt = new GenericLayout_1.GenericLayout(
         this.GetVerticalLayout(14),
-        this.bHt,
+        this.bjt,
       )),
       (this.lqe = new PopupCaptionItem_1.PopupCaptionItem(this.GetItem(0))),
-      this.lqe.SetCloseCallBack(this.MVe),
-      (this._Ht = new GenericScrollViewNew_1.GenericScrollViewNew(
+      this.lqe.SetCloseCallBack(this.B6e),
+      (this._jt = new GenericScrollViewNew_1.GenericScrollViewNew(
         this.GetScrollViewWithScrollbar(8),
-        this.wHt,
+        this.wjt,
       )),
-      await this.VHt();
+      await this.Vjt(),
+      (this.z0a = Time_1.Time.ServerTimeStamp);
   }
   async OnPlayingStartSequenceAsync() {
-    await this.gHt?.PlayStartSeqAsync();
+    await this.gjt?.PlayStartSeqAsync();
   }
   OnBeforeShow() {
-    this.Cpt || GachaController_1.GachaController.GachaInfoRequest(!1),
-      (this.Cpt = !1);
+    this.Dvt || GachaController_1.GachaController.GachaInfoRequest(!1),
+      (this.Dvt = !1);
   }
-  async AHt() {
+  OnTick(e) {
+    Time_1.Time.ServerTimeStamp - this.z0a >=
+      5 *
+        CommonDefine_1.SECOND_PER_MINUTE *
+        CommonDefine_1.MILLIONSECOND_PER_SECOND &&
+      ((this.z0a = Time_1.Time.ServerTimeStamp),
+      GachaController_1.GachaController.GachaInfoRequest(!1));
+  }
+  async Ajt() {
     UiLayer_1.UiLayer.SetShowMaskLayer("GachaMainViewRefresh", !0),
-      await this.vIt(),
-      await this.HHt(),
-      this.jHt(),
-      this.WHt(),
-      this.KHt(),
+      await this.ITt(),
+      await this.Hjt(),
+      this.jjt(),
+      this.Wjt(),
+      this.Kjt(),
       UiLayer_1.UiLayer.SetShowMaskLayer("GachaMainViewRefresh", !1);
   }
-  async vIt() {
+  async ITt() {
     var e;
-    this.vHt &&
+    this.vjt &&
       (await this.lqe.SetCurrencyItemList([
         ConfigManager_1.ConfigManager.GachaConfig.SecondCurrency(),
-        this.vHt.ItemId,
+        this.vjt.ItemId,
       ]),
       (e = this.lqe.GetCurrencyItemList())) &&
-      (e[0]?.SetButtonFunction(this.OHt),
-      (e = e[1]).SetButtonFunction(this.NHt),
+      (e[0]?.SetButtonFunction(this.Ojt),
+      (e = e[1]).SetButtonFunction(this.Njt),
       e.SetButtonActive(!1));
   }
-  jHt() {
-    if (this.FHt) {
+  jjt() {
+    if (this.Fjt) {
       let e = !1;
-      for (const t of this.vHt.GachaConsumes)
-        if (t.fRs === this.dHt.Times) {
-          this.dHt.Refresh(this.FHt, t.vRs), (e = !0);
+      for (const a of this.vjt.GachaConsumes)
+        if (a.qUs === this.djt.Times) {
+          this.djt.Refresh(this.Fjt, a.GUs), (e = !0);
           break;
         }
       let i = !1;
-      for (const a of this.vHt.GachaConsumes)
-        if (a.fRs === this.CHt.Times) {
-          this.CHt.Refresh(this.FHt, a.vRs), (i = !0);
+      for (const r of this.vjt.GachaConsumes)
+        if (r.qUs === this.Cjt.Times) {
+          this.Cjt.Refresh(this.Fjt, r.GUs), (i = !0);
           break;
         }
-      this.dHt.GetRootItem().SetUIActive(e),
-        this.CHt.GetRootItem().SetUIActive(i);
+      this.djt.GetRootItem().SetUIActive(e && 0 !== this.vjt.UsePoolId),
+        this.Cjt.GetRootItem().SetUIActive(i && 0 !== this.vjt.UsePoolId),
+        this.GetButton(23)?.RootUIComp.SetUIActive(0 === this.vjt.UsePoolId),
+        this.GetItem(22)?.SetUIActive(0 === this.vjt.UsePoolId);
+      var t = ConfigManager_1.ConfigManager.GachaConfig.GetGachaViewInfo(
+        this.Ejt,
+      );
+      t &&
+        (t = t.Type) &&
+        (t =
+          ConfigManager_1.ConfigManager.GachaConfig.GetGachaViewTypeConfig(
+            t,
+          )) &&
+        LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(24), t.GachaButtonTip);
     }
   }
-  KHt() {
+  Kjt() {
     var e,
       i = [],
       t = ModelManager_1.ModelManager.GachaModel.TodayResultCount;
@@ -518,70 +514,71 @@ class GachaMainView extends UiViewBase_1.UiViewBase {
         e,
       )),
       i.push(t)),
-      0 < this.vHt.DailyLimitTimes &&
-        ((e = this.vHt.DailyLimitTimes),
-        (t = this.vHt.TodayTimes),
+      0 < this.vjt.DailyLimitTimes &&
+        ((e = this.vjt.DailyLimitTimes),
+        (t = this.vjt.TodayTimes),
         (t = new LguiUtil_1.TableTextArgNew(
           GachaDefine_1.POOL_TODAY_REST_COUNT,
           e - t,
           e,
         )),
         i.push(t)),
-      0 < this.vHt.TotalLimitTimes &&
-        ((e = this.vHt.TotalLimitTimes),
-        (t = this.vHt.TotalTimes),
+      0 < this.vjt.TotalLimitTimes &&
+        ((e = this.vjt.TotalLimitTimes),
+        (t = this.vjt.TotalTimes),
         (t = new LguiUtil_1.TableTextArgNew(
           GachaDefine_1.POOL_TOTAL_REST_COUNT,
           e - t,
           e,
         )),
         i.push(t)),
-      this.cHt.RefreshByData(i);
+      this.cjt.RefreshByData(i);
   }
-  async HHt() {
+  async Hjt() {
     var e = ConfigManager_1.ConfigManager.GachaConfig.GetGachaViewType(
-      this.SHt,
+      this.Ejt,
     );
-    let i = this.lHt.get(e);
+    let i = this.ljt.get(e);
     if (!i) {
-      if (!(i = await GachaMainView.kHt(this.GetItem(7), e))) return;
-      this.lHt.set(e, i);
+      if (!(i = await GachaMainView.kjt(this.GetItem(7), e))) return;
+      this.ljt.set(e, i);
     }
-    this.gHt !== i && (this.gHt?.SetActive(!1), (this.gHt = i).SetActive(!0)),
-      i.Update(this.FHt);
+    this.gjt !== i && (this.gjt?.SetActive(!1), (this.gjt = i).SetActive(!0)),
+      i.Update(this.Fjt);
   }
-  xHt() {
-    this.gHt?.SetActive(!0),
+  xjt() {
+    this.gjt?.SetActive(!0),
       this.UiViewSequence.HasSequenceNameInPlaying("Switch")
         ? this.UiViewSequence.ReplaySequence("Switch")
         : this.UiViewSequence.PlaySequence("Switch"),
-      this.gHt?.PlaySwitchSeq();
+      this.gjt?.PlaySwitchSeq();
   }
-  WHt() {
+  Wjt() {
     var e,
       i,
       t,
-      a = this.vHt;
+      a = this.vjt;
     a &&
+      this.Mjt &&
       (e = ConfigManager_1.ConfigManager.GachaConfig.GetGachaViewInfo(
-        this.SHt,
+        this.Ejt,
       )) &&
-      (i = e.Type) &&
+      (i = this.Mjt.UiType) &&
       (t =
         ConfigManager_1.ConfigManager.GachaConfig.GetGachaViewTypeConfig(i)) &&
       (LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(9), t.TypeText),
-      (t = a.GetPoolEndTimeByPoolInfo(this.MHt)),
+      (t = a.GetPoolEndTimeByPoolInfo(this.Mjt)),
       this.GetItem(11).SetUIActive(0 < t),
       0 < t
         ? this.RefreshLeftTime()
         : this.TDe &&
           (TimerSystem_1.RealTimeTimerSystem.Remove(this.TDe),
           (this.TDe = void 0)),
-      (t = e.UpList),
+      (t = this.Mjt.UpList),
       (i = ModelManager_1.ModelManager.GachaModel.IsRolePool(i)),
       t && 0 < t.length
         ? (this.GetItem(15)?.SetUIActive(!0),
-          this.mHt?.RefreshByData(t),
+          this.mjt?.RefreshByData(t),
           (t = i ? "Text_GachaUpList1_Text" : "Text_GachaUpList2_Text"),
           LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(16), t))
         : this.GetItem(15)?.SetUIActive(!1),
@@ -589,35 +586,35 @@ class GachaMainView extends UiViewBase_1.UiViewBase {
         ? this.GetButton(18)?.RootUIComp.SetUIActive(!0)
         : this.GetButton(18)?.RootUIComp.SetUIActive(!1),
       this.SetTextureByPath(e.UnderBgTexturePath, this.GetTexture(19)),
-      (a = UE.Color.FromHex(e.ThemeColor)),
+      (a = UE.Color.FromHex(this.Mjt.ThemeColor)),
       this.GetTexture(20)?.SetColor(a),
       (t = this.GetTexture(21)).SetUIActive(i),
       i && t.SetColor(a),
-      LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(10), e.SummaryTitle),
-      LguiUtil_1.LguiUtil.SetLocalTextNew(this.GetText(13), e.SummaryDescribe));
+      this.GetText(10).SetText(this.Mjt.Title),
+      this.GetText(13).SetText(this.Mjt.Description));
   }
-  LHt() {
+  Ljt() {
     var e;
-    this.RHt
-      ? ((e = new OperationParam(0)), this.fHt.Push(e))
-      : (this.UHt(),
-        this.VHt().finally(() => {
-          this.O0t();
+    this.Rjt
+      ? ((e = new OperationParam(0)), this.fjt.Push(e))
+      : (this.Ujt(),
+        this.Vjt().finally(() => {
+          this.Jft();
         }));
   }
-  async VHt() {
+  async Vjt() {
     let e = 0,
       i = 0;
-    var t = this.FHt;
-    t && (i = t.GachaInfo.Id),
-      (this.uHt = ModelManager_1.ModelManager.GachaModel.GetValidGachaList()),
-      this.uHt &&
-        0 !== this.uHt.length &&
-        (0 <= (t = this.uHt.findIndex((e) => e.GachaInfo.Id === i)) &&
-          t < this.uHt.length &&
+    var t = this.Fjt;
+    t ? (i = t.GachaInfo.Id) : this.Dvt && (i = this.OpenParam),
+      (this.ujt = ModelManager_1.ModelManager.GachaModel.GetValidGachaList()),
+      this.ujt &&
+        0 !== this.ujt.length &&
+        (0 <= (t = this.ujt.findIndex((e) => e.GachaInfo.Id === i)) &&
+          t < this.ujt.length &&
           (e = t),
-        await this._Ht.RefreshByDataAsync(this.uHt),
-        await this.GHt(e));
+        await this._jt.RefreshByDataAsync(this.ujt),
+        await this.Gjt(e));
   }
   OnAfterHide() {
     this.TDe &&
@@ -627,8 +624,8 @@ class GachaMainView extends UiViewBase_1.UiViewBase {
     this.lqe?.Destroy();
   }
   SelectGachaTagById(i) {
-    var e = this.uHt.findIndex((e) => e.GachaInfo.Id === i);
-    return 0 <= e && e < this.uHt.length && (this.BHt(e), !0);
+    var e = this.ujt.findIndex((e) => e.GachaInfo.Id === i);
+    return 0 <= e && e < this.ujt.length && (this.Bjt(e), !0);
   }
   GetGuideUiItemAndUiItemForShowEx(e) {
     var i = Number(e[0]);
@@ -637,9 +634,9 @@ class GachaMainView extends UiViewBase_1.UiViewBase {
       if (
         (Log_1.Log.CheckDebug() &&
           Log_1.Log.Debug("Guide", 17, "抽卡聚焦引导", ["配置Id", i]),
-        t && this.dHt)
+        t && this.djt)
       )
-        return [(i = this.dHt.GetRootItem()), i];
+        return [(i = this.djt.GetRootItem()), i];
     }
     Log_1.Log.CheckError() &&
       Log_1.Log.Error("Guide", 54, "聚焦引导extraParam项配置有误", [

@@ -9,14 +9,17 @@ class OpenSystemInformationView extends OpenSystemBase_1.OpenSystemBase {
   async ExecuteOpenView(e, o) {
     if (!e.BoardId) return !1;
     const n = new CustomPromise_1.CustomPromise();
-    return (
-      !!InfoDisplayController_1.InfoDisplayController.OpenInfoDisplay(
-        e.BoardId,
-        (e) => {
-          n.SetResult(e);
-        },
-      ) && n.Promise
-    );
+    var r = {},
+      o =
+        (9 === o?.Type && (r.CanOpenInPlot = !0),
+        InfoDisplayController_1.InfoDisplayController.OpenInfoDisplay(
+          e.BoardId,
+          (e) => {
+            n.SetResult(e);
+          },
+          r,
+        ));
+    return !!o && n.Promise;
   }
   GetViewName(e) {
     let o = void 0;

@@ -12,13 +12,13 @@ const Stats_1 = require("../../../Core/Common/Stats"),
 class SkillCdController extends ControllerBase_1.ControllerBase {
   static OnInit() {
     return (
-      Net_1.Net.Register(13391, this.ZWe),
-      Net_1.Net.Register(3960, this.eKe),
+      Net_1.Net.Register(16938, this.uQe),
+      Net_1.Net.Register(28589, this.cQe),
       !0
     );
   }
   static OnClear() {
-    return Net_1.Net.UnRegister(13391), Net_1.Net.UnRegister(3960), !0;
+    return Net_1.Net.UnRegister(16938), Net_1.Net.UnRegister(28589), !0;
   }
   static OnTick(e) {
     this.IsPause() ||
@@ -29,8 +29,8 @@ class SkillCdController extends ControllerBase_1.ControllerBase {
   static Pause(e, t) {
     var r = this.IsPause(),
       t =
-        ((this.tKe = VisibleStateUtil_1.VisibleStateUtil.SetVisible(
-          this.tKe,
+        ((this.mQe = VisibleStateUtil_1.VisibleStateUtil.SetVisible(
+          this.mQe,
           !t,
           e,
         )),
@@ -42,15 +42,15 @@ class SkillCdController extends ControllerBase_1.ControllerBase {
       );
   }
   static IsPause() {
-    return 0 !== this.tKe;
+    return 0 !== this.mQe;
   }
 }
 ((exports.SkillCdController = SkillCdController).gW = void 0),
-  (SkillCdController.tKe = 0),
-  (SkillCdController.ZWe = (e) => {
+  (SkillCdController.mQe = 0),
+  (SkillCdController.uQe = (e) => {
     ModelManager_1.ModelManager.SkillCdModel?.HandlePlayerSkillInfoPbNotify(e);
   }),
-  (SkillCdController.eKe = (e) => {
+  (SkillCdController.cQe = (e) => {
     ModelManager_1.ModelManager.SkillCdModel?.HandlePassiveSkillNotify(e);
   });
 //# sourceMappingURL=SkillCdController.js.map

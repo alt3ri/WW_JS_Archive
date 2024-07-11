@@ -3,44 +3,44 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
   (exports.CustomMap = void 0);
 class CustomMap {
   constructor() {
-    (this.gpr = new Map()), (this.K7 = new Array()), (this.fpr = new Map());
+    (this.mvr = new Map()), (this.K7 = new Array()), (this.dvr = new Map());
   }
   Size() {
-    return this.gpr.size;
+    return this.mvr.size;
   }
   Set(t, s) {
-    var i = this.gpr.get(t);
+    var i = this.mvr.get(t);
     void 0 !== i
       ? (this.K7[i] = s)
-      : ((i = this.gpr.size),
-        this.gpr.set(t, i),
+      : ((i = this.mvr.size),
+        this.mvr.set(t, i),
         this.K7.push(s),
-        this.fpr.set(i, t));
+        this.dvr.set(i, t));
   }
   Get(t) {
-    t = this.gpr.get(t);
+    t = this.mvr.get(t);
     if (void 0 !== t) return this.K7[t];
   }
   GetByIndex(t) {
-    t = this.fpr.get(t);
+    t = this.dvr.get(t);
     return this.Get(t);
   }
   Contains(t) {
-    return void 0 !== this.gpr.get(t);
+    return void 0 !== this.mvr.get(t);
   }
   Remove(t) {
     var s,
       i,
       h,
-      e = this.gpr.get(t);
+      e = this.mvr.get(t);
     return (
       void 0 !== e &&
-      ((t = this.gpr.delete(t)),
-      (s = this.fpr.delete(e)),
+      ((t = this.mvr.delete(t)),
+      (s = this.dvr.delete(e)),
       1 < this.K7.length
         ? ((i = this.K7.length - 1),
-          (h = this.fpr.get(i)) &&
-            (this.fpr.delete(i), this.gpr.set(h, e), this.fpr.set(e, h)),
+          (h = this.dvr.get(i)) &&
+            (this.dvr.delete(i), this.mvr.set(h, e), this.dvr.set(e, h)),
           (this.K7[e] = this.K7[i]),
           this.K7.splice(i, 1))
         : (this.K7.length = 0),
@@ -49,17 +49,17 @@ class CustomMap {
     );
   }
   RemoveByIndex(t) {
-    t = this.fpr.get(t);
+    t = this.dvr.get(t);
     return void 0 !== t && this.Remove(t);
   }
   Keys() {
-    return this.gpr.keys();
+    return this.mvr.keys();
   }
   GetItems() {
     return this.K7;
   }
   Clear() {
-    this.gpr.clear(), this.fpr.clear(), (this.K7.length = 0);
+    this.mvr.clear(), this.dvr.clear(), (this.K7.length = 0);
   }
 }
 exports.CustomMap = CustomMap;

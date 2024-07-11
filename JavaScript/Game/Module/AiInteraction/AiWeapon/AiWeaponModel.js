@@ -8,11 +8,11 @@ const Log_1 = require("../../../../Core/Common/Log"),
   AiWeaponNet_1 = require("./AiWeaponNet");
 class AiWeaponModel extends ModelBase_1.ModelBase {
   constructor() {
-    super(...arguments), (this.lHe = void 0), (this._He = new Map());
+    super(...arguments), (this.Eje = void 0), (this.Sje = new Map());
   }
   OnInit() {
     var e, t;
-    (this.lHe = new AiWeaponNet_1.AiWeaponNet()), this.lHe.RegisterNet();
+    (this.Eje = new AiWeaponNet_1.AiWeaponNet()), this.Eje.RegisterNet();
     for ([e, t] of DataTableUtil_1.DataTableUtil.LoadAllAiWeaponSockets())
       if (e && t) {
         var o = t.AiModelConfig,
@@ -21,12 +21,12 @@ class AiWeaponModel extends ModelBase_1.ModelBase {
           var i = o.GetKey(e);
           r.add(i);
         }
-        this._He.set(e, r);
+        this.Sje.set(e, r);
       }
     return !0;
   }
   OnClear() {
-    return this.lHe.UnRegisterNet(), !(this.lHe = void 0);
+    return this.Eje.UnRegisterNet(), !(this.Eje = void 0);
   }
   GetStaticWeaponConfig(e) {
     return DataTableUtil_1.DataTableUtil.GetDataTableRowFromName(
@@ -62,11 +62,11 @@ class AiWeaponModel extends ModelBase_1.ModelBase {
     return (
       !!e &&
       ((t = t.GetComponent(0).GetPbModelConfig()),
-      this._He.get(e.WeaponId).has(t.ModelId))
+      this.Sje.get(e.WeaponId).has(t.ModelId))
     );
   }
   get Net() {
-    return this.lHe;
+    return this.Eje;
   }
 }
 exports.AiWeaponModel = AiWeaponModel;

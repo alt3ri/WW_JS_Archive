@@ -4,6 +4,7 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
 const UE = require("ue"),
   Log_1 = require("../../../Core/Common/Log"),
   ConfigManager_1 = require("../../Manager/ConfigManager"),
+  ControllerHolder_1 = require("../../Manager/ControllerHolder"),
   ModelManager_1 = require("../../Manager/ModelManager"),
   UiPanelBase_1 = require("../../Ui/Base/UiPanelBase"),
   AttributeItem_1 = require("../Common/AttributeItem"),
@@ -12,8 +13,7 @@ const UE = require("ue"),
   StarItem_1 = require("../RoleUi/View/StarItem"),
   GenericLayout_1 = require("../Util/Layout/GenericLayout"),
   LguiUtil_1 = require("../Util/LguiUtil"),
-  WeaponInstance_1 = require("./WeaponInstance"),
-  ControllerHolder_1 = require("../../Manager/ControllerHolder");
+  WeaponInstance_1 = require("./WeaponInstance");
 class WeaponDetailTipsComponent extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
@@ -21,11 +21,11 @@ class WeaponDetailTipsComponent extends UiPanelBase_1.UiPanelBase {
       (this.ReplaceButtonItem = void 0),
       (this.CultureButtonItem = void 0),
       (this.CanShowEquip = !1),
-      (this.yOo = void 0),
+      (this.Mko = void 0),
       (this.CanShowLock = !0),
       (this.StarLayout = void 0),
       (this.AttributeLayout = void 0),
-      (this.IOo = (t) => {
+      (this.Eko = (t) => {
         var t = 1 !== t,
           e = this.GetWeaponIncId();
         e <= 0 ||
@@ -34,10 +34,10 @@ class WeaponDetailTipsComponent extends UiPanelBase_1.UiPanelBase {
             t,
           );
       }),
-      (this.sAt = () => {
+      (this.vke = () => {
         return new StarItem_1.StarItem();
       }),
-      (this.Flo = () => new AttributeItem_1.AttributeItem());
+      (this.G1o = () => new AttributeItem_1.AttributeItem());
   }
   OnRegisterComponent() {
     (this.ComponentRegisterInfos = [
@@ -55,30 +55,30 @@ class WeaponDetailTipsComponent extends UiPanelBase_1.UiPanelBase {
       [11, UE.UIItem],
       [12, UE.UIItem],
     ]),
-      (this.BtnBindInfo = [[3, this.IOo]]);
+      (this.BtnBindInfo = [[3, this.Eko]]);
   }
   OnStart() {
     (this.ReplaceButtonItem = new ButtonItem_1.ButtonItem(this.GetItem(11))),
       (this.CultureButtonItem = new ButtonItem_1.ButtonItem(this.GetItem(12))),
       (this.StarLayout = new GenericLayout_1.GenericLayout(
         this.GetHorizontalLayout(4),
-        this.sAt,
+        this.vke,
       )),
       (this.AttributeLayout = new GenericLayout_1.GenericLayout(
         this.GetVerticalLayout(5),
-        this.Flo,
+        this.G1o,
       )),
-      (this.yOo = new CommonEquippedItem_1.CommonEquippedItem()),
-      this.yOo.CreateThenShowByActor(this.GetItem(10).GetOwner());
+      (this.Mko = new CommonEquippedItem_1.CommonEquippedItem()),
+      this.Mko.CreateThenShowByActor(this.GetItem(10).GetOwner());
   }
   SetCanShowEquip(t = !1) {
     (this.CanShowEquip = t),
-      this.CanShowEquip || this.yOo?.SetIconRootItemState(!1);
+      this.CanShowEquip || this.Mko?.SetIconRootItemState(!1);
   }
   SetCanShowLock(t) {
     this.CanShowLock = t;
   }
-  jlo(t) {
+  k1o(t) {
     var t = [
         { PropId: t.FirstPropId, CurveId: t.FirstCurve },
         { PropId: t.SecondPropId, CurveId: t.SecondCurve },
@@ -99,7 +99,7 @@ class WeaponDetailTipsComponent extends UiPanelBase_1.UiPanelBase {
     }
     this.AttributeLayout.RefreshByData(o);
   }
-  kPt(e, i) {
+  jxt(e, i) {
     var o = new Array(i);
     for (let t = 0; t < i; ++t) {
       var n = {
@@ -114,7 +114,7 @@ class WeaponDetailTipsComponent extends UiPanelBase_1.UiPanelBase {
     }
     this.StarLayout.RefreshByData(o);
   }
-  vjt(t) {
+  vWt(t) {
     for (const e of ConfigManager_1.ConfigManager.MappingConfig.GetWeaponConfList())
       if (t === e.Value) {
         this.SetSpriteByPath(e.Icon, this.GetSprite(0), !1);
@@ -143,9 +143,9 @@ class WeaponDetailTipsComponent extends UiPanelBase_1.UiPanelBase {
       i =
         (this.GetText(1).SetColor(a),
         this.GetText(1).ShowTextNew(n),
-        this.vjt(e.WeaponType),
-        this.jlo(e),
-        this.kPt(o, s),
+        this.vWt(e.WeaponType),
+        this.k1o(e),
+        this.jxt(o, s),
         LguiUtil_1.LguiUtil.SetLocalText(
           this.GetText(6),
           "WeaponResonanceItemLevelText",
@@ -174,13 +174,13 @@ class WeaponDetailTipsComponent extends UiPanelBase_1.UiPanelBase {
           : (this.GetText(7).SetUIActive(!1), this.GetText(8).SetUIActive(!1)),
         t);
     n instanceof WeaponInstance_1.WeaponInstance
-      ? (this.TOo(!0),
-        this.LOo(!0),
+      ? (this.Sko(!0),
+        this.yko(!0),
         (o = n.GetIncId()),
         this.ReplaceButtonItem.SetData(o),
         this.CultureButtonItem.SetData(o),
         this.UpdateWeaponLock(n.IsLock()))
-      : (this.TOo(!1), this.LOo(!1));
+      : (this.Sko(!1), this.yko(!1));
   }
   UpdateWeaponLock(t) {
     t = t ? 0 : 1;
@@ -200,24 +200,24 @@ class WeaponDetailTipsComponent extends UiPanelBase_1.UiPanelBase {
     this.CanShowEquip &&
       (e = this.WeaponData) instanceof WeaponInstance_1.WeaponInstance &&
       (0 === (e = e.GetRoleId())
-        ? (this.yOo.SetCurrentEquippedState(!1),
-          this.yOo.SetIconRootItemState(!1),
+        ? (this.Mko.SetCurrentEquippedState(!1),
+          this.Mko.SetIconRootItemState(!1),
           this.ReplaceButtonItem.SetEnableClick(!0))
         : (this.ReplaceButtonItem.SetEnableClick(e !== t),
-          this.yOo.SetCurrentEquippedState(!0),
-          this.yOo.SetIconRootItemState(!0),
+          this.Mko.SetCurrentEquippedState(!0),
+          this.Mko.SetIconRootItemState(!0),
           (t = ModelManager_1.ModelManager.RoleModel.GetRoleDataById(e)),
-          this.yOo.SetEquipIcon(t.GetRoleConfig().RoleHeadIcon),
-          this.yOo.SetEquipText("WeaponTipsRoleText", t.GetName())));
+          this.Mko.SetEquipIcon(t.GetRoleConfig().RoleHeadIcon),
+          this.Mko.SetEquipText("WeaponTipsRoleText", t.GetName())));
   }
   GetWeaponIncId() {
     var t = this.WeaponData;
     return t instanceof WeaponInstance_1.WeaponInstance ? t.GetIncId() ?? 0 : 0;
   }
-  TOo(t) {
+  Sko(t) {
     this.GetExtendToggle(3).RootUIComp.SetUIActive(t && this.CanShowLock);
   }
-  LOo(t) {
+  yko(t) {
     this.ReplaceButtonItem.SetActive(t), this.CultureButtonItem.SetActive(t);
   }
   GetGuideUiItemAndUiItemForShowEx(t) {

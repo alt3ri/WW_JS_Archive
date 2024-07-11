@@ -11,11 +11,11 @@ class CommonResultButton extends UiPanelBase_1.UiPanelBase {
   constructor(t) {
     super(),
       (this.IRe = void 0),
-      (this.tBt = 0),
-      (this.iBt = void 0),
-      (this.oBt = void 0),
-      (this.j7e = () => {
-        this.iBt && this.iBt(), this.DoClickCallBack();
+      (this.rbt = 0),
+      (this.nbt = void 0),
+      (this.sbt = void 0),
+      (this.ije = () => {
+        this.nbt && this.nbt(), this.DoClickCallBack();
       }),
       this.CreateThenShowByActor(t.GetOwner());
   }
@@ -28,28 +28,28 @@ class CommonResultButton extends UiPanelBase_1.UiPanelBase {
       [4, UE.UIText],
       [5, UE.UIItem],
     ]),
-      (this.BtnBindInfo = [[0, this.j7e]]);
+      (this.BtnBindInfo = [[0, this.ije]]);
   }
   OnBeforeDestroy() {
-    this.ClearBtnTimer(), (this.iBt = void 0);
+    this.ClearBtnTimer(), (this.nbt = void 0);
   }
   ResetData() {
-    this.oBt = void 0;
+    this.sbt = void 0;
   }
   SetData(t) {
-    this.oBt = t;
+    this.sbt = t;
   }
   DoClickCallBack() {
-    this.oBt?.GetButtonClickCallBack()?.();
+    this.sbt?.GetButtonClickCallBack()?.();
   }
   DoTimerCallBack(t) {
-    this.oBt?.GetButtonTimerCallBack()?.(t, this);
+    this.sbt?.GetButtonTimerCallBack()?.(t, this);
   }
   DoRefreshCallBack() {
-    this.oBt?.GetButtonRefreshCallBack()?.(this);
+    this.sbt?.GetButtonRefreshCallBack()?.(this);
   }
   SetBtnFunction(t) {
-    this.iBt = t;
+    this.nbt = t;
   }
   SetBtnCanClick(t) {
     var i = this.GetButton(0);
@@ -85,14 +85,14 @@ class CommonResultButton extends UiPanelBase_1.UiPanelBase {
   SetFloatTextWithTimer(t, i, e) {
     this.ClearBtnTimer(),
       i || this.SetBtnCanClick(i),
-      (this.tBt = t),
+      (this.rbt = t),
       (this.IRe = TimerSystem_1.TimerSystem.Loop(
         () => {
-          this.tBt <= 0
+          this.rbt <= 0
             ? i
-              ? this.j7e()
+              ? this.ije()
               : this.SetBtnCanClick(!0)
-            : LguiUtil_1.LguiUtil.SetLocalText(this.GetText(2), e, this.tBt--);
+            : LguiUtil_1.LguiUtil.SetLocalText(this.GetText(2), e, this.rbt--);
         },
         CommonDefine_1.MILLIONSECOND_PER_SECOND,
         t + 1,

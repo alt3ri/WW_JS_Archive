@@ -9,7 +9,7 @@ const UE = require("ue"),
 class RewardItemBar extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this.DFe = void 0),
+      (this.H3e = void 0),
       (this.JGe = (e, t, r) => {
         var i = new CommonItemSmallItemGrid_1.CommonItemSmallItemGrid();
         return i.Initialize(t.GetOwner()), i.Refresh(e), { Key: r, Value: i };
@@ -23,7 +23,7 @@ class RewardItemBar extends UiPanelBase_1.UiPanelBase {
     ];
   }
   OnStart() {
-    (this.DFe = new GenericLayoutNew_1.GenericLayoutNew(
+    (this.H3e = new GenericLayoutNew_1.GenericLayoutNew(
       this.GetGridLayout(1),
       this.JGe,
     )),
@@ -32,7 +32,7 @@ class RewardItemBar extends UiPanelBase_1.UiPanelBase {
       );
   }
   RebuildRewardsByData(e) {
-    this.DFe.RebuildLayoutByDataNew(e);
+    this.H3e.RebuildLayoutByDataNew(e);
   }
 }
 exports.RewardItemBar = RewardItemBar;

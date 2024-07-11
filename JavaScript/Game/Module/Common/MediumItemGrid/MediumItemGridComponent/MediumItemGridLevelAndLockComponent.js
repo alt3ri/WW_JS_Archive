@@ -32,16 +32,16 @@ class MediumItemGridLevelAndLockComponent extends MediumItemGridComponent_1.Medi
     this.GetSprite(0).SetUIActive(e ?? !1);
   }
   SetLevel(e, t) {
-    t ? (this.Sxt(void 0), this.yxt(e)) : (this.yxt(void 0), this.Sxt(e));
+    t ? (this.Twt(void 0), this.Lwt(e)) : (this.Lwt(void 0), this.Twt(e));
   }
-  Sxt(e) {
+  Twt(e) {
     var t = this.GetItem(1);
     void 0 === e
       ? t.IsUIActiveSelf() && t.SetUIActive(!1)
       : (this.GetText(2).SetText(e.toString()),
         t.IsUIActiveSelf() || t.SetUIActive(!0));
   }
-  yxt(e) {
+  Lwt(e) {
     var t = this.GetItem(3);
     void 0 === e
       ? t.IsUIActiveSelf() && t.SetUIActive(!1)

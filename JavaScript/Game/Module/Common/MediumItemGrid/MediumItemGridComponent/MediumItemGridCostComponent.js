@@ -7,7 +7,7 @@ const UE = require("ue"),
   MediumItemGridComponent_1 = require("./MediumItemGridComponent");
 class MediumItemGridCostComponent extends MediumItemGridComponent_1.MediumItemGridComponent {
   constructor() {
-    super(...arguments), (this.gxt = void 0), (this.fxt = void 0);
+    super(...arguments), (this.Mwt = void 0), (this.Ewt = void 0);
   }
   GetResourceId() {
     return "UiItem_ItemEnergy";
@@ -19,8 +19,8 @@ class MediumItemGridCostComponent extends MediumItemGridComponent_1.MediumItemGr
     ];
   }
   OnActivate() {
-    (this.gxt = UE.Color.FromHex(TowerData_1.HIGH_COLOR)),
-      (this.fxt = UE.Color.FromHex(TowerData_1.LOW_COLOR));
+    (this.Mwt = UE.Color.FromHex(TowerData_1.HIGH_COLOR)),
+      (this.Ewt = UE.Color.FromHex(TowerData_1.LOW_COLOR));
   }
   OnRefresh(e) {
     var e = ModelManager_1.ModelManager.TowerModel.GetRoleRemainCost(
@@ -29,8 +29,8 @@ class MediumItemGridCostComponent extends MediumItemGridComponent_1.MediumItemGr
       ),
       t = this.GetText(0),
       e = (t.SetText("" + e), e >= TowerData_1.HIGH_COST);
-    t.SetColor(e ? this.gxt : this.fxt),
-      this.GetItem(1).SetColor(e ? this.gxt : this.fxt),
+    t.SetColor(e ? this.Mwt : this.Ewt),
+      this.GetItem(1).SetColor(e ? this.Mwt : this.Ewt),
       this.SetActive(!0);
   }
 }

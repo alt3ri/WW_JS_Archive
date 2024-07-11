@@ -13,7 +13,7 @@ const Log_1 = require("../../../../Core/Common/Log"),
 class PhantomReplaceView extends PhantomSelectView_1.PhantomSelectView {
   constructor() {
     super(...arguments),
-      (this.Sao = void 0),
+      (this.fho = void 0),
       (this.ConfirmBtn = () => {
         var e = this.RoguelikeChooseData.RogueGainEntryList[0];
         e
@@ -38,12 +38,12 @@ class PhantomReplaceView extends PhantomSelectView_1.PhantomSelectView {
   OnStart() {
     super.OnStart(),
       (this.IsShowChooseTips = !0),
-      (this.Sao = new ButtonItem_1.ButtonItem(this.GetItem(6))),
-      this.Sao.SetFunction(this.GiveUpBtn);
+      (this.fho = new ButtonItem_1.ButtonItem(this.GetItem(6))),
+      this.fho.SetFunction(this.GiveUpBtn);
   }
   RefreshTopPanel() {
     this.TopPanel.RefreshTitle(RoguelikeDefine_1.ROGUELIKEVIEW_1_TEXT);
-    var e = this.Eao(),
+    var e = this.pho(),
       t = ConfigManager_1.ConfigManager.RoguelikeConfig.GetRoguePhantomConfig(
         e[0].ConfigId,
       ),
@@ -59,14 +59,14 @@ class PhantomReplaceView extends PhantomSelectView_1.PhantomSelectView {
     );
   }
   RefreshPhantomSelectItemList() {
-    var e = this.Eao();
+    var e = this.pho();
     this.PhantomSelectItemLayout.RefreshByData(e);
   }
   RefreshBtnText() {
     this.ButtonItem.SetShowText(RoguelikeDefine_1.ROGUELIKEVIEW_14_TEXT),
-      this.Sao.SetShowText("RoguelikeView_26_Text");
+      this.fho.SetShowText("RoguelikeView_26_Text");
   }
-  Eao() {
+  pho() {
     var e = new Array(),
       t = ModelManager_1.ModelManager.RoguelikeModel.RogueInfo.PhantomEntry;
     return (

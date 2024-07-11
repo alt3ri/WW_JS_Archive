@@ -53,6 +53,8 @@ class CharRenderingComponent extends UE.ActorComponent {
       (this.LogicOwner = void 0),
       (this.IsLogicOwnerTsEffectActor = !1),
       (this.IsUiUpdate = 0),
+      (this.DisableFightDither = !1),
+      (this.FightDitherRateCache = 1),
       (this.OnRoleGoDownFinishEventAdded = !1),
       (this.RemoveInteractionOnRoleGoDownFinish = void 0),
       (this.IsInDebugModeInternal = !1),
@@ -176,7 +178,8 @@ class CharRenderingComponent extends UE.ActorComponent {
         break;
       }
     i
-      ? (Log_1.Log.CheckWarn() &&
+      ? (this.IsInDebugMode &&
+          Log_1.Log.CheckWarn() &&
           Log_1.Log.Warn(
             "RenderCharacter",
             41,
@@ -201,7 +204,8 @@ class CharRenderingComponent extends UE.ActorComponent {
         );
   }
   RemoveComponent(e) {
-    Log_1.Log.CheckWarn() &&
+    this.IsInDebugMode &&
+      Log_1.Log.CheckWarn() &&
       Log_1.Log.Warn(
         "RenderCharacter",
         41,
@@ -218,23 +222,13 @@ class CharRenderingComponent extends UE.ActorComponent {
     e && this.RemoveComponentInner(e);
   }
   AddComponentInner(t, i, r) {
-    if (
-      (Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info(
-          "RenderCharacter",
-          14,
-          "添加MeshComponent",
-          ["Actor", this.CachedOwner.GetName()],
-          ["MeshName", t],
-        ),
-      i)
-    ) {
+    if (i) {
       var o = this.GetComponent(
           RenderConfig_1.RenderConfig.IdMaterialContainer,
         ),
-        n = this.GetComponent(RenderConfig_1.RenderConfig.IdMaterialController);
+        s = this.GetComponent(RenderConfig_1.RenderConfig.IdMaterialController);
       let e = !1;
-      n && n.RemoveSkeletalMeshMaterialControllerData(t),
+      s && s.RemoveSkeletalMeshMaterialControllerData(t),
         o &&
           (o.RemoveSkeletalComponent(t), (e = o.AddSkeletalComponent(i, t, r))),
         e ||
@@ -285,26 +279,7 @@ class CharRenderingComponent extends UE.ActorComponent {
     this.Update(e);
   }
   ReceiveEndPlay(e) {
-    2 !== e &&
-      (this.Destroy(),
-      RenderModuleController_1.RenderModuleController.RemoveCharRenderShell(
-        this,
-      )
-        ? Log_1.Log.CheckInfo() &&
-          Log_1.Log.Info("RenderCharacter", 14, "材质控制器已正常销毁", [
-            "Actor",
-            this.GetOwner().GetName(),
-          ])
-        : Log_1.Log.CheckWarn() &&
-          Log_1.Log.Warn("RenderCharacter", 14, "材质控制器销毁失败", [
-            "Actor",
-            this.GetOwner().GetName(),
-          ])),
-      Log_1.Log.CheckInfo() &&
-        Log_1.Log.Info("RenderCharacter", 14, "销毁对象:", [
-          "Actor",
-          this.GetOwner().GetName(),
-        ]);
+    2 !== e && this.Destroy();
   }
   GetDeltaTime() {
     return this.DeltaTime;
@@ -471,13 +446,22 @@ class CharRenderingComponent extends UE.ActorComponent {
         : (e = this.GetComponent(RenderConfig_1.RenderConfig.IdDitherEffect)) &&
           e.UpdateNpcDitherComponent());
   }
-  SetDitherEffect(e, t) {
-    var i = this.GetComponent(RenderConfig_1.RenderConfig.IdDitherEffect);
-    i &&
-      (i.SetDitherEffect(e, t),
-      this.SetBodyEffectOpacity(e),
-      this.SetDecalShadowOpacity(e),
-      this.SetRealtimeShadowOpacity(e));
+  SetDitherEffect(t, i) {
+    var r = this.GetComponent(RenderConfig_1.RenderConfig.IdDitherEffect);
+    if (r) {
+      let e = t;
+      1 === i &&
+        ((this.FightDitherRateCache = t),
+        (e = this.DisableFightDither ? 1 : t)),
+        r.SetDitherEffect(e, i),
+        this.SetBodyEffectOpacity(r.GetDitherRate()),
+        this.SetDecalShadowOpacity(r.GetDitherRate()),
+        this.SetRealtimeShadowOpacity(r.GetDitherRate());
+    }
+  }
+  SetDisableFightDither(e) {
+    (this.DisableFightDither = e),
+      this.SetDitherEffect(this.FightDitherRateCache, 1);
   }
   RegisterBodyEffect(e) {
     var t = this.GetComponent(RenderConfig_1.RenderConfig.IdBodyEffect);
@@ -508,14 +492,14 @@ class CharRenderingComponent extends UE.ActorComponent {
     e && e.UnpossCharacter();
   }
   SetMaterialPropertyFloat(e, t, i, r, o) {
-    var n = this.GetComponent(RenderConfig_1.RenderConfig.IdPropertyModifier);
-    n &&
-      n.SetPropertyFloat(e, t, i, FNameUtil_1.FNameUtil.GetDynamicFName(r), o);
+    var s = this.GetComponent(RenderConfig_1.RenderConfig.IdPropertyModifier);
+    s &&
+      s.SetPropertyFloat(e, t, i, FNameUtil_1.FNameUtil.GetDynamicFName(r), o);
   }
   SetMaterialPropertyColor(e, t, i, r, o) {
-    var n = this.GetComponent(RenderConfig_1.RenderConfig.IdPropertyModifier);
-    n &&
-      n.SetPropertyColor(e, t, i, FNameUtil_1.FNameUtil.GetDynamicFName(r), o);
+    var s = this.GetComponent(RenderConfig_1.RenderConfig.IdPropertyModifier);
+    s &&
+      s.SetPropertyColor(e, t, i, FNameUtil_1.FNameUtil.GetDynamicFName(r), o);
   }
   SetStarScarEnergy(e) {
     var t = this.GetComponent(RenderConfig_1.RenderConfig.IdMaterialContainer);
@@ -645,7 +629,20 @@ class CharRenderingComponent extends UE.ActorComponent {
             EventDefine_1.EEventName.OnRoleGoDownFinish,
             this.RemoveInteractionOnRoleGoDownFinish,
           ),
-          (this.OnRoleGoDownFinishEventAdded = !1));
+          (this.OnRoleGoDownFinishEventAdded = !1)),
+        RenderModuleController_1.RenderModuleController.RemoveCharRenderShell(
+          this,
+        )
+          ? Log_1.Log.CheckDebug() &&
+            Log_1.Log.Debug("RenderCharacter", 14, "材质控制器已正常销毁", [
+              "Actor",
+              this.GetOwner().GetName(),
+            ])
+          : Log_1.Log.CheckWarn() &&
+            Log_1.Log.Warn("RenderCharacter", 14, "材质控制器销毁失败", [
+              "Actor",
+              this.GetOwner().GetName(),
+            ]);
     }
   }
   OnFinalizedLevelSequence() {

@@ -24,11 +24,11 @@ const UE = require("ue"),
   ProtoGachaInfo_1 = require("./ProtoGachaInfo");
 class GachaResult {
   constructor() {
-    (this.u5n = void 0),
-      (this.p5n = []),
+    (this.WVn = void 0),
+      (this.zVn = []),
       (this.IsNew = !0),
-      (this.v5n = []),
-      (this.M5n = void 0);
+      (this.ZVn = []),
+      (this.e9n = void 0);
   }
 }
 exports.GachaResult = GachaResult;
@@ -41,17 +41,17 @@ exports.GachaContentInfo = GachaContentInfo;
 class GachaModel extends ModelBase_1.ModelBase {
   constructor() {
     super(...arguments),
-      (this.Mjt = void 0),
-      (this.Sjt = 0),
-      (this.Ejt = void 0),
-      (this.yjt = void 0),
-      (this.Ijt = void 0),
-      (this.Tjt = !0),
-      (this.Ljt = ""),
-      (this.Djt = void 0),
-      (this.Rjt = []),
-      (this.Ujt = new Map()),
-      (this.Ajt = []);
+      (this.MWt = void 0),
+      (this.EWt = 0),
+      (this.SWt = void 0),
+      (this.yWt = void 0),
+      (this.IWt = void 0),
+      (this.TWt = !0),
+      (this.LWt = ""),
+      (this.DWt = void 0),
+      (this.RWt = []),
+      (this.UWt = new Map()),
+      (this.AWt = []);
   }
   static IsLimit(e) {
     return 0 !== e.BeginTime || 0 !== e.EndTime;
@@ -65,45 +65,45 @@ class GachaModel extends ModelBase_1.ModelBase {
     );
   }
   GetCachedGachaInfo() {
-    return this.Djt.shift();
+    return this.DWt.shift();
   }
   CacheGachaInfo(e) {
-    this.Djt.push(e);
+    this.DWt.push(e);
   }
   set RecordId(e) {
-    this.Ljt = e;
+    this.LWt = e;
   }
   get RecordId() {
-    return this.Ljt;
+    return this.LWt;
   }
   get CanCloseView() {
-    return this.Tjt;
+    return this.TWt;
   }
   set CanCloseView(e) {
-    this.Tjt = e;
+    this.TWt = e;
   }
   get TodayResultCount() {
-    return this.Sjt;
+    return this.EWt;
   }
   set TodayResultCount(e) {
-    this.Sjt = e;
+    this.EWt = e;
   }
   get GachaInfoArray() {
-    return this.Mjt;
+    return this.MWt;
   }
   get CurGachaResult() {
-    return this.Ejt;
+    return this.SWt;
   }
   set CurGachaResult(e) {
-    this.Ejt = e;
+    this.SWt = e;
     var o = new Map();
-    for (const s of this.Ejt) {
-      var r = s?.u5n?.G3n,
-        t = s?.u5n?.g5n;
+    for (const s of this.SWt) {
+      var r = s?.WVn?.f8n,
+        t = s?.WVn?.YVn;
       o.set(r, (o.get(r) ?? 0) + t);
     }
-    for (const n of this.Ejt) {
-      var a = n?.u5n?.G3n,
+    for (const n of this.SWt) {
+      var a = n?.WVn?.f8n,
         i = ConfigManager_1.ConfigManager.GachaConfig.GetRoleInfoById(a);
       i
         ? (n.IsNew = GachaController_1.GachaController.IsNewRole(i.Id))
@@ -121,26 +121,26 @@ class GachaModel extends ModelBase_1.ModelBase {
     }
   }
   GetGachaInfoByResourceId(e) {
-    for (const o of this.Mjt) if (o.ResourcesId === e) return o;
+    for (const o of this.MWt) if (o.ResourcesId === e) return o;
   }
   OnInit() {
-    return (this.Djt = []), !0;
+    return (this.DWt = []), !0;
   }
   OnClear() {
     return (
       (this.CanCloseView = !0),
-      (this.Mjt = void 0),
-      (this.Ejt = void 0),
-      (this.yjt = void 0),
-      (this.Ijt = void 0),
-      (this.Djt.length = 0),
-      !(this.Djt = void 0)
+      (this.MWt = void 0),
+      (this.SWt = void 0),
+      (this.yWt = void 0),
+      (this.IWt = void 0),
+      (this.DWt.length = 0),
+      !(this.DWt = void 0)
     );
   }
   InitGachaInfoMap(e) {
-    this.Mjt = [];
-    for (const o of e) this.Mjt.push(new ProtoGachaInfo_1.ProtoGachaInfo(o));
-    this.Mjt.sort((e, o) => e.Sort - o.Sort);
+    this.MWt = [];
+    for (const o of e) this.MWt.push(new ProtoGachaInfo_1.ProtoGachaInfo(o));
+    this.MWt.sort((e, o) => e.Sort - o.Sort);
   }
   CheckGachaValid(e) {
     return GachaModel.IsValid(e);
@@ -160,7 +160,7 @@ class GachaModel extends ModelBase_1.ModelBase {
       ? [!1, 69]
       : 0 < e.TotalLimitTimes && e.TotalTimes + o > e.TotalLimitTimes
         ? [!1, 129]
-        : 0 <= this.Sjt && o > this.Sjt
+        : 0 <= this.EWt && o > this.EWt
           ? [!1, 130]
           : [!0, void 0];
   }
@@ -172,12 +172,12 @@ class GachaModel extends ModelBase_1.ModelBase {
   }
   RecordGachaInfo(e) {
     return (
-      !this.Ijt.has(e.Id) &&
-      (this.Ijt.add(e.Id),
-      this.yjt.push(e.Id),
+      !this.IWt.has(e.Id) &&
+      (this.IWt.add(e.Id),
+      this.yWt.push(e.Id),
       LocalStorage_1.LocalStorage.SetPlayer(
         LocalStorageDefine_1.ELocalStoragePlayerKey.GachaPoolOpenRecord,
-        this.yjt,
+        this.yWt,
       ),
       EventSystem_1.EventSystem.Emit(
         EventDefine_1.EEventName.OnOpenGachaChanged,
@@ -186,15 +186,15 @@ class GachaModel extends ModelBase_1.ModelBase {
     );
   }
   InitGachaPoolOpenRecord() {
-    (this.yjt =
+    (this.yWt =
       LocalStorage_1.LocalStorage.GetPlayer(
         LocalStorageDefine_1.ELocalStoragePlayerKey.GachaPoolOpenRecord,
       ) ?? []),
-      (this.Ijt = new Set());
-    for (const e of this.yjt) this.Ijt.add(e);
+      (this.IWt = new Set());
+    for (const e of this.yWt) this.IWt.add(e);
   }
   UpdateCount(e, o) {
-    this.Sjt -= o;
+    this.EWt -= o;
     for (const r of this.GachaInfoArray)
       if (r.Id === e) {
         (r.TodayTimes += o), (r.TotalTimes += o);
@@ -206,15 +206,15 @@ class GachaModel extends ModelBase_1.ModelBase {
       (Log_1.Log.CheckWarn() &&
         Log_1.Log.Warn("Gacha", 9, "当前打开过的卡池", [
           "GachaPoolOpenRecord",
-          this.yjt,
+          this.yWt,
         ]),
       this.GachaInfoArray)
     )
-      for (const e of this.GachaInfoArray) if (!this.Ijt.has(e.Id)) return !0;
+      for (const e of this.GachaInfoArray) if (!this.IWt.has(e.Id)) return !0;
     return !1;
   }
   CheckNewGachaPoolById(e) {
-    return !this.Ijt.has(e);
+    return !this.IWt.has(e);
   }
   async PreloadGachaSequence(e) {
     var o = [];
@@ -222,7 +222,7 @@ class GachaModel extends ModelBase_1.ModelBase {
     await Promise.all(o);
   }
   GetLoadedSequence(e) {
-    return this.Ujt.get(e);
+    return this.UWt.get(e);
   }
   async PreloadGachaSequenceOne(e) {
     var o = ConfigManager_1.ConfigManager.GachaConfig.GetGachaTextureInfo(e);
@@ -235,13 +235,13 @@ class GachaModel extends ModelBase_1.ModelBase {
       r.SequencePath,
       UE.LevelSequence,
       (e) => {
-        this.Ujt.set(r.SequencePath, e),
+        this.UWt.set(r.SequencePath, e),
           UE.KuroSequenceRuntimeFunctionLibrary.HandleSeqTexStreaming(e, !0),
           t.SetResult(!0);
       },
       102,
     )),
-      this.Rjt.push(o),
+      this.RWt.push(o),
       await t.Promise,
       (o = ConfigManager_1.ConfigManager.GachaConfig.GetItemIdType(e));
     const a = new CustomPromise_1.CustomPromise();
@@ -257,20 +257,20 @@ class GachaModel extends ModelBase_1.ModelBase {
             a.SetResult(!0);
           },
         )),
-      this.Ajt.push(e),
+      this.AWt.push(e),
       await a.Promise);
   }
   ReleaseLoadGachaSequence() {
-    for (const e of this.Rjt)
+    for (const e of this.RWt)
       ResourceSystem_1.ResourceSystem.CancelAsyncLoad(e);
-    for (const o of this.Ajt)
+    for (const o of this.AWt)
       UiModelResourcesManager_1.UiModelResourcesManager.CancelUiModelResourceLoad(
         o,
       );
-    this.Ujt.forEach((e) => {
+    this.UWt.forEach((e) => {
       UE.KuroSequenceRuntimeFunctionLibrary.HandleSeqTexStreaming(e, !0);
     }),
-      this.Ujt.clear();
+      this.UWt.clear();
   }
   IsRolePool(e) {
     return 1 === e || 4 === e || 2 === e || 6 === e;

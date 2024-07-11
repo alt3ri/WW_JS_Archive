@@ -11,56 +11,49 @@ const Log_1 = require("../../../Core/Common/Log"),
   GlobalData_1 = require("../../GlobalData"),
   ConfigManager_1 = require("../../Manager/ConfigManager"),
   ModelManager_1 = require("../../Manager/ModelManager"),
-  CombatDebugController_1 = require("../../Utils/CombatDebugController"),
+  CombatLog_1 = require("../../Utils/CombatLog"),
   BlackboardMap_1 = require("../Define/BlackboardMap");
 class BlackboardController extends ControllerBase_1.ControllerBase {
   static OnInit() {
     return (
-      Net_1.Net.Register(2169, BlackboardController.vgr),
-      Net_1.Net.Register(12273, BlackboardController.Mgr),
+      Net_1.Net.Register(18875, BlackboardController.g0r),
+      Net_1.Net.Register(23083, BlackboardController.f0r),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.RemoveCreatureDataComponentCache,
-        this.Sgr,
+        this.p0r,
       ),
       !0
     );
   }
   static OnClear() {
     return (
-      Net_1.Net.UnRegister(2169),
-      Net_1.Net.UnRegister(12273),
+      Net_1.Net.UnRegister(18875),
+      Net_1.Net.UnRegister(23083),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.RemoveCreatureDataComponentCache,
-        this.Sgr,
+        this.p0r,
       ),
       !0
     );
   }
-  static Egr(t) {
-    var o = Protocol_1.Aki.Protocol.GKn.create();
-    (o.xFn = t), Net_1.Net.Call(10758, o, (t) => {});
+  static v0r(t) {
+    var o = Protocol_1.Aki.Protocol.UJn.create();
+    (o.s6n = t), Net_1.Net.Call(8512, o, (t) => {});
   }
-  static ygr(t, o) {
+  static M0r(t, o) {
     var r;
-    this.Igr() &&
-      (((r = Protocol_1.Aki.Protocol.NKn.create()).rkn =
+    this.E0r() &&
+      (((r = Protocol_1.Aki.Protocol.bJn.create()).P4n =
         MathUtils_1.MathUtils.NumberToLong(t)),
-      (r.xFn = o),
+      (r.s6n = o),
       this.PushBlackboardParam(t, o));
   }
   static PushBlackboardParam(t, o) {
     let r = this.PendingBlackboardParams.get(t);
     r = r || new Map();
-    for (const e of o)
-      ConfigManager_1.ConfigManager.AiConfig.CheckBlackboardWhiteList(e.Ckn) &&
-        (CombatDebugController_1.CombatDebugController.CombatDebug(
-          "Ai",
-          t,
-          "请求修改黑板值",
-          ["k", e.Ckn],
-          ["v", e[e.gkn]],
-        ),
-        r.set(e.Ckn, e));
+    for (const a of o)
+      ConfigManager_1.ConfigManager.AiConfig.CheckBlackboardWhiteList(a.j4n) &&
+        r.set(a.j4n, a);
     0 < r.size && this.PendingBlackboardParams.set(t, r);
   }
   static GetIntValueByWorld(t) {
@@ -69,13 +62,13 @@ class BlackboardController extends ControllerBase_1.ControllerBase {
   static SetIntValueByWorld(t, o) {
     var r;
     ModelManager_1.ModelManager.BlackboardModel.SetIntValueByWorld(t, o),
-      this.Igr() &&
-        (((r = Protocol_1.Aki.Protocol.l2s.create()).Ikn =
-          Protocol_1.Aki.Protocol.u2s.Proto_BlackboardParamType_Int),
-        (r.Ckn = t),
-        (r.Z3n = o),
+      this.E0r() &&
+        (((r = Protocol_1.Aki.Protocol.Jks.create()).Z4n =
+          Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_Int),
+        (r.j4n = t),
+        (r.B8n = o),
         (t = new Array()).push(r),
-        this.Egr(t));
+        this.v0r(t));
   }
   static GetIntValuesByWorld(t) {
     return ModelManager_1.ModelManager.BlackboardModel.GetIntValuesByWorld(t);
@@ -83,14 +76,14 @@ class BlackboardController extends ControllerBase_1.ControllerBase {
   static SetIntValuesByWorld(t, o) {
     var r;
     ModelManager_1.ModelManager.BlackboardModel.SetIntValuesByWorld(t, o),
-      this.Igr() &&
-        (((r = Protocol_1.Aki.Protocol.l2s.create()).Ikn =
-          Protocol_1.Aki.Protocol.u2s.Proto_BlackboardParamType_IntArray),
-        (r.Ckn = t),
-        (r.D7n = Protocol_1.Aki.Protocol.c2s.create()),
-        (r.D7n.A7n = o),
+      this.E0r() &&
+        (((r = Protocol_1.Aki.Protocol.Jks.create()).Z4n =
+          Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_IntArray),
+        (r.j4n = t),
+        (r.sKn = Protocol_1.Aki.Protocol.eNs.create()),
+        (r.sKn.aKn = o),
         (t = new Array()).push(r),
-        this.Egr(t));
+        this.v0r(t));
   }
   static GetLongValueByWorld(t) {
     return ModelManager_1.ModelManager.BlackboardModel.GetLongValueByWorld(t);
@@ -98,13 +91,13 @@ class BlackboardController extends ControllerBase_1.ControllerBase {
   static SetLongValueByWorld(t, o) {
     var r;
     ModelManager_1.ModelManager.BlackboardModel.SetLongValueByWorld(t, o),
-      this.Igr() &&
-        (((r = Protocol_1.Aki.Protocol.l2s.create()).Ikn =
-          Protocol_1.Aki.Protocol.u2s.Proto_BlackboardParamType_Long),
-        (r.Ckn = t),
-        (r.U7n = MathUtils_1.MathUtils.BigIntToLong(o)),
+      this.E0r() &&
+        (((r = Protocol_1.Aki.Protocol.Jks.create()).Z4n =
+          Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_Long),
+        (r.j4n = t),
+        (r.hKn = MathUtils_1.MathUtils.BigIntToLong(o)),
         (t = new Array()).push(r),
-        this.Egr(t));
+        this.v0r(t));
   }
   static GetLongValuesByWorld(t) {
     return ModelManager_1.ModelManager.BlackboardModel.GetLongValuesByWorld(t);
@@ -112,19 +105,19 @@ class BlackboardController extends ControllerBase_1.ControllerBase {
   static SetLongValuesByWorld(t, o) {
     if (
       (ModelManager_1.ModelManager.BlackboardModel.SetLongValuesByWorld(t, o),
-      this.Igr())
+      this.E0r())
     ) {
-      var r = Protocol_1.Aki.Protocol.l2s.create();
-      (r.Ikn = Protocol_1.Aki.Protocol.u2s.Proto_BlackboardParamType_LongArray),
-        (r.Ckn = t),
-        (r.R7n = Protocol_1.Aki.Protocol.d2s.create()),
-        (r.R7n.A7n = new Array(o.length));
+      var r = Protocol_1.Aki.Protocol.Jks.create();
+      (r.Z4n = Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_LongArray),
+        (r.j4n = t),
+        (r.lKn = Protocol_1.Aki.Protocol.tNs.create()),
+        (r.lKn.aKn = new Array(o.length));
       for (let t = 0; t < o.length; t++) {
-        var e = MathUtils_1.MathUtils.BigIntToLong(o[t]);
-        r.R7n.A7n[t] = e;
+        var a = MathUtils_1.MathUtils.BigIntToLong(o[t]);
+        r.lKn.aKn[t] = a;
       }
       t = new Array();
-      t.push(r), this.Egr(t);
+      t.push(r), this.v0r(t);
     }
   }
   static GetBooleanValueByWorld(t) {
@@ -135,13 +128,13 @@ class BlackboardController extends ControllerBase_1.ControllerBase {
   static SetBooleanValueByWorld(t, o) {
     var r;
     ModelManager_1.ModelManager.BlackboardModel.SetBooleanValueByWorld(t, o),
-      this.Igr() &&
-        (((r = Protocol_1.Aki.Protocol.l2s.create()).Ikn =
-          Protocol_1.Aki.Protocol.u2s.Proto_BlackboardParamType_Boolean),
-        (r.Ckn = t),
-        (r.x7n = o),
+      this.E0r() &&
+        (((r = Protocol_1.Aki.Protocol.Jks.create()).Z4n =
+          Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_Boolean),
+        (r.j4n = t),
+        (r._Kn = o),
         (t = new Array()).push(r),
-        this.Egr(t));
+        this.v0r(t));
   }
   static GetFloatValueByWorld(t) {
     return ModelManager_1.ModelManager.BlackboardModel.GetFloatValueByWorld(t);
@@ -149,13 +142,13 @@ class BlackboardController extends ControllerBase_1.ControllerBase {
   static SetFloatValueByWorld(t, o) {
     var r;
     ModelManager_1.ModelManager.BlackboardModel.SetFloatValueByWorld(t, o),
-      this.Igr() &&
-        (((r = Protocol_1.Aki.Protocol.l2s.create()).Ikn =
-          Protocol_1.Aki.Protocol.u2s.Proto_BlackboardParamType_Float),
-        (r.Ckn = t),
-        (r.P7n = o),
+      this.E0r() &&
+        (((r = Protocol_1.Aki.Protocol.Jks.create()).Z4n =
+          Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_Float),
+        (r.j4n = t),
+        (r.uKn = o),
         (t = new Array()).push(r),
-        this.Egr(t));
+        this.v0r(t));
   }
   static GetFloatValuesByWorld(t) {
     return ModelManager_1.ModelManager.BlackboardModel.GetFloatValuesByWorld(t);
@@ -163,14 +156,14 @@ class BlackboardController extends ControllerBase_1.ControllerBase {
   static SetFloatValuesByWorld(t, o) {
     var r;
     ModelManager_1.ModelManager.BlackboardModel.SetFloatValuesByWorld(t, o),
-      this.Igr() &&
-        (((r = Protocol_1.Aki.Protocol.l2s.create()).Ikn =
-          Protocol_1.Aki.Protocol.u2s.Proto_BlackboardParamType_FloatArray),
-        (r.Ckn = t),
-        (r.B7n = Protocol_1.Aki.Protocol.C2s.create()),
-        (r.B7n.A7n = o),
+      this.E0r() &&
+        (((r = Protocol_1.Aki.Protocol.Jks.create()).Z4n =
+          Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_FloatArray),
+        (r.j4n = t),
+        (r.cKn = Protocol_1.Aki.Protocol.rNs.create()),
+        (r.cKn.aKn = o),
         (t = new Array()).push(r),
-        this.Egr(t));
+        this.v0r(t));
   }
   static GetStringValueByWorld(t) {
     return ModelManager_1.ModelManager.BlackboardModel.GetStringValueByWorld(t);
@@ -178,13 +171,13 @@ class BlackboardController extends ControllerBase_1.ControllerBase {
   static SetStringValueByWorld(t, o) {
     var r;
     ModelManager_1.ModelManager.BlackboardModel.SetStringValueByWorld(t, o),
-      this.Igr() &&
-        (((r = Protocol_1.Aki.Protocol.l2s.create()).Ikn =
-          Protocol_1.Aki.Protocol.u2s.Proto_BlackboardParamType_String),
-        (r.Ckn = t),
-        (r.t4n = o),
+      this.E0r() &&
+        (((r = Protocol_1.Aki.Protocol.Jks.create()).Z4n =
+          Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_String),
+        (r.j4n = t),
+        (r.b8n = o),
         (t = new Array()).push(r),
-        this.Egr(t));
+        this.v0r(t));
   }
   static GetStringValuesByWorld(t) {
     return ModelManager_1.ModelManager.BlackboardModel.GetStringValuesByWorld(
@@ -194,24 +187,24 @@ class BlackboardController extends ControllerBase_1.ControllerBase {
   static SetStringValuesByWorld(t, o) {
     var r;
     ModelManager_1.ModelManager.BlackboardModel.SetStringValuesByWorld(t, o),
-      this.Igr() &&
-        (((r = Protocol_1.Aki.Protocol.l2s.create()).Ikn =
-          Protocol_1.Aki.Protocol.u2s.Proto_BlackboardParamType_StringArray),
-        (r.Ckn = t),
-        (r.w7n = Protocol_1.Aki.Protocol.m2s.create()),
-        (r.w7n.A7n = o),
+      this.E0r() &&
+        (((r = Protocol_1.Aki.Protocol.Jks.create()).Z4n =
+          Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_StringArray),
+        (r.j4n = t),
+        (r.mKn = Protocol_1.Aki.Protocol.iNs.create()),
+        (r.mKn.aKn = o),
         (t = new Array()).push(r),
-        this.Egr(t));
+        this.v0r(t));
   }
   static RemoveValueByWorld(t) {
     var o;
     ModelManager_1.ModelManager.BlackboardModel.RemoveValueByWorld(t),
-      this.Igr() &&
-        (((o = Protocol_1.Aki.Protocol.l2s.create()).Ikn =
-          Protocol_1.Aki.Protocol.u2s.Proto_BlackboardParamType_None),
-        (o.Ckn = t),
+      this.E0r() &&
+        (((o = Protocol_1.Aki.Protocol.Jks.create()).Z4n =
+          Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_None),
+        (o.j4n = t),
         (t = new Array()).push(o),
-        this.Egr(t));
+        this.v0r(t));
   }
   static SetWorldBlackboardsByProtocol(t) {
     if (void 0 !== t) for (const o of t) this.SetWorldBlackboardByProtocol(o);
@@ -231,18 +224,18 @@ class BlackboardController extends ControllerBase_1.ControllerBase {
     );
   }
   static SetIntValueByEntity(t, o, r) {
-    var e =
+    var a =
       ModelManager_1.ModelManager.BlackboardModel.GetCreatureDataComponent(t);
-    e &&
+    a &&
       (ModelManager_1.ModelManager.BlackboardModel.SetIntValueByEntity(t, o, r),
-      this.Igr()) &&
-      (((t = Protocol_1.Aki.Protocol.l2s.create()).Ikn =
-        Protocol_1.Aki.Protocol.u2s.Proto_BlackboardParamType_Int),
-      (t.Ckn = o),
-      (t.Z3n = r),
-      (o = e.GetCreatureDataId()),
+      this.E0r()) &&
+      (((t = Protocol_1.Aki.Protocol.Jks.create()).Z4n =
+        Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_Int),
+      (t.j4n = o),
+      (t.B8n = r),
+      (o = a.GetCreatureDataId()),
       (r = new Array()).push(t),
-      this.ygr(o, r));
+      this.M0r(o, r));
   }
   static GetIntValuesByEntity(t, o) {
     return ModelManager_1.ModelManager.BlackboardModel.GetIntValuesByEntity(
@@ -251,23 +244,23 @@ class BlackboardController extends ControllerBase_1.ControllerBase {
     );
   }
   static SetIntValuesByEntity(t, o, r) {
-    var e =
+    var a =
       ModelManager_1.ModelManager.BlackboardModel.GetCreatureDataComponent(t);
-    e &&
+    a &&
       (ModelManager_1.ModelManager.BlackboardModel.SetIntValuesByEntity(
         t,
         o,
         r,
       ),
-      this.Igr()) &&
-      (((t = Protocol_1.Aki.Protocol.l2s.create()).Ikn =
-        Protocol_1.Aki.Protocol.u2s.Proto_BlackboardParamType_IntArray),
-      (t.Ckn = o),
-      (t.D7n = Protocol_1.Aki.Protocol.c2s.create()),
-      (t.D7n.A7n = r),
-      (o = e.GetCreatureDataId()),
+      this.E0r()) &&
+      (((t = Protocol_1.Aki.Protocol.Jks.create()).Z4n =
+        Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_IntArray),
+      (t.j4n = o),
+      (t.sKn = Protocol_1.Aki.Protocol.eNs.create()),
+      (t.sKn.aKn = r),
+      (o = a.GetCreatureDataId()),
       (r = new Array()).push(t),
-      this.ygr(o, r));
+      this.M0r(o, r));
   }
   static GetLongValueByEntity(t, o) {
     return ModelManager_1.ModelManager.BlackboardModel.GetLongValueByEntity(
@@ -276,22 +269,22 @@ class BlackboardController extends ControllerBase_1.ControllerBase {
     );
   }
   static SetLongValueByEntity(t, o, r) {
-    var e =
+    var a =
       ModelManager_1.ModelManager.BlackboardModel.GetCreatureDataComponent(t);
-    e &&
+    a &&
       (ModelManager_1.ModelManager.BlackboardModel.SetLongValueByEntity(
         t,
         o,
         r,
       ),
-      this.Igr()) &&
-      (((t = Protocol_1.Aki.Protocol.l2s.create()).Ikn =
-        Protocol_1.Aki.Protocol.u2s.Proto_BlackboardParamType_Long),
-      (t.Ckn = o),
-      (t.U7n = MathUtils_1.MathUtils.BigIntToLong(r)),
-      (o = e.GetCreatureDataId()),
+      this.E0r()) &&
+      (((t = Protocol_1.Aki.Protocol.Jks.create()).Z4n =
+        Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_Long),
+      (t.j4n = o),
+      (t.hKn = MathUtils_1.MathUtils.BigIntToLong(r)),
+      (o = a.GetCreatureDataId()),
       (r = new Array()).push(t),
-      this.ygr(o, r));
+      this.M0r(o, r));
   }
   static GetLongValuesByEntity(t, o) {
     return ModelManager_1.ModelManager.BlackboardModel.GetLongValuesByEntity(
@@ -300,28 +293,28 @@ class BlackboardController extends ControllerBase_1.ControllerBase {
     );
   }
   static SetLongValuesByEntity(t, o, r) {
-    var e =
+    var a =
       ModelManager_1.ModelManager.BlackboardModel.GetCreatureDataComponent(t);
     if (
-      e &&
+      a &&
       (ModelManager_1.ModelManager.BlackboardModel.SetLongValuesByEntity(
         t,
         o,
         r,
       ),
-      this.Igr())
+      this.E0r())
     ) {
-      var a = Protocol_1.Aki.Protocol.l2s.create();
-      (a.Ikn = Protocol_1.Aki.Protocol.u2s.Proto_BlackboardParamType_LongArray),
-        (a.Ckn = o),
-        (a.R7n = Protocol_1.Aki.Protocol.d2s.create()),
-        (a.R7n.A7n = new Array(r.length));
+      var e = Protocol_1.Aki.Protocol.Jks.create();
+      (e.Z4n = Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_LongArray),
+        (e.j4n = o),
+        (e.lKn = Protocol_1.Aki.Protocol.tNs.create()),
+        (e.lKn.aKn = new Array(r.length));
       for (let t = 0; t < r.length; t++) {
         var l = MathUtils_1.MathUtils.BigIntToLong(r[t]);
-        a.R7n.A7n[t] = l;
+        e.lKn.aKn[t] = l;
       }
-      (t = e.GetCreatureDataId()), (o = new Array());
-      o.push(a), this.ygr(t, o);
+      (t = a.GetCreatureDataId()), (o = new Array());
+      o.push(e), this.M0r(t, o);
     }
   }
   static GetBooleanValueByEntity(t, o) {
@@ -331,22 +324,22 @@ class BlackboardController extends ControllerBase_1.ControllerBase {
     );
   }
   static SetBooleanValueByEntity(t, o, r) {
-    var e =
+    var a =
       ModelManager_1.ModelManager.BlackboardModel.GetCreatureDataComponent(t);
-    e &&
+    a &&
       (ModelManager_1.ModelManager.BlackboardModel.SetBooleanValueByEntity(
         t,
         o,
         r,
       ),
-      this.Igr()) &&
-      (((t = Protocol_1.Aki.Protocol.l2s.create()).Ikn =
-        Protocol_1.Aki.Protocol.u2s.Proto_BlackboardParamType_Boolean),
-      (t.Ckn = o),
-      (t.x7n = r),
-      (o = e.GetCreatureDataId()),
+      this.E0r()) &&
+      (((t = Protocol_1.Aki.Protocol.Jks.create()).Z4n =
+        Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_Boolean),
+      (t.j4n = o),
+      (t._Kn = r),
+      (o = a.GetCreatureDataId()),
       (r = new Array()).push(t),
-      this.ygr(o, r));
+      this.M0r(o, r));
   }
   static GetFloatValueByEntity(t, o) {
     return ModelManager_1.ModelManager.BlackboardModel.GetFloatValueByEntity(
@@ -355,22 +348,22 @@ class BlackboardController extends ControllerBase_1.ControllerBase {
     );
   }
   static SetFloatValueByEntity(t, o, r) {
-    var e =
+    var a =
       ModelManager_1.ModelManager.BlackboardModel.GetCreatureDataComponent(t);
-    e &&
+    a &&
       (ModelManager_1.ModelManager.BlackboardModel.SetFloatValueByEntity(
         t,
         o,
         r,
       ),
-      this.Igr()) &&
-      (((t = Protocol_1.Aki.Protocol.l2s.create()).Ikn =
-        Protocol_1.Aki.Protocol.u2s.Proto_BlackboardParamType_Float),
-      (t.Ckn = o),
-      (t.P7n = r),
-      (o = e.GetCreatureDataId()),
+      this.E0r()) &&
+      (((t = Protocol_1.Aki.Protocol.Jks.create()).Z4n =
+        Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_Float),
+      (t.j4n = o),
+      (t.uKn = r),
+      (o = a.GetCreatureDataId()),
       (r = new Array()).push(t),
-      this.ygr(o, r));
+      this.M0r(o, r));
   }
   static GetFloatValuesByEntity(t, o) {
     return ModelManager_1.ModelManager.BlackboardModel.GetFloatValuesByEntity(
@@ -379,23 +372,23 @@ class BlackboardController extends ControllerBase_1.ControllerBase {
     );
   }
   static SetFloatValuesByEntity(t, o, r) {
-    var e =
+    var a =
       ModelManager_1.ModelManager.BlackboardModel.GetCreatureDataComponent(t);
-    e &&
+    a &&
       (ModelManager_1.ModelManager.BlackboardModel.SetFloatValuesByEntity(
         t,
         o,
         r,
       ),
-      this.Igr()) &&
-      (((t = Protocol_1.Aki.Protocol.l2s.create()).Ikn =
-        Protocol_1.Aki.Protocol.u2s.Proto_BlackboardParamType_FloatArray),
-      (t.Ckn = o),
-      (t.B7n = Protocol_1.Aki.Protocol.C2s.create()),
-      (t.B7n.A7n = r),
-      (o = e.GetCreatureDataId()),
+      this.E0r()) &&
+      (((t = Protocol_1.Aki.Protocol.Jks.create()).Z4n =
+        Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_FloatArray),
+      (t.j4n = o),
+      (t.cKn = Protocol_1.Aki.Protocol.rNs.create()),
+      (t.cKn.aKn = r),
+      (o = a.GetCreatureDataId()),
       (r = new Array()).push(t),
-      this.ygr(o, r));
+      this.M0r(o, r));
   }
   static GetStringValueByEntity(t, o) {
     return ModelManager_1.ModelManager.BlackboardModel.GetStringValueByEntity(
@@ -404,22 +397,22 @@ class BlackboardController extends ControllerBase_1.ControllerBase {
     );
   }
   static SetStringValueByEntity(t, o, r) {
-    var e =
+    var a =
       ModelManager_1.ModelManager.BlackboardModel.GetCreatureDataComponent(t);
-    e &&
+    a &&
       (ModelManager_1.ModelManager.BlackboardModel.SetStringValueByEntity(
         t,
         o,
         r,
       ),
-      this.Igr()) &&
-      (((t = Protocol_1.Aki.Protocol.l2s.create()).Ikn =
-        Protocol_1.Aki.Protocol.u2s.Proto_BlackboardParamType_String),
-      (t.Ckn = o),
-      (t.t4n = r),
-      (o = e.GetCreatureDataId()),
+      this.E0r()) &&
+      (((t = Protocol_1.Aki.Protocol.Jks.create()).Z4n =
+        Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_String),
+      (t.j4n = o),
+      (t.b8n = r),
+      (o = a.GetCreatureDataId()),
       (r = new Array()).push(t),
-      this.ygr(o, r));
+      this.M0r(o, r));
   }
   static GetStringValuesByEntity(t, o) {
     return ModelManager_1.ModelManager.BlackboardModel.GetStringValuesByEntity(
@@ -428,23 +421,23 @@ class BlackboardController extends ControllerBase_1.ControllerBase {
     );
   }
   static SetStringValuesByEntity(t, o, r) {
-    var e =
+    var a =
       ModelManager_1.ModelManager.BlackboardModel.GetCreatureDataComponent(t);
-    e &&
+    a &&
       (ModelManager_1.ModelManager.BlackboardModel.SetStringValuesByEntity(
         t,
         o,
         r,
       ),
-      this.Igr()) &&
-      (((t = Protocol_1.Aki.Protocol.l2s.create()).Ikn =
-        Protocol_1.Aki.Protocol.u2s.Proto_BlackboardParamType_StringArray),
-      (t.Ckn = o),
-      (t.w7n = Protocol_1.Aki.Protocol.m2s.create()),
-      (t.w7n.A7n = r),
-      (o = e.GetCreatureDataId()),
+      this.E0r()) &&
+      (((t = Protocol_1.Aki.Protocol.Jks.create()).Z4n =
+        Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_StringArray),
+      (t.j4n = o),
+      (t.mKn = Protocol_1.Aki.Protocol.iNs.create()),
+      (t.mKn.aKn = r),
+      (o = a.GetCreatureDataId()),
       (r = new Array()).push(t),
-      this.ygr(o, r));
+      this.M0r(o, r));
   }
   static GetVectorValueByEntity(t, o) {
     return ModelManager_1.ModelManager.BlackboardModel.GetVectorValueByEntity(
@@ -452,15 +445,15 @@ class BlackboardController extends ControllerBase_1.ControllerBase {
       o,
     );
   }
-  static SetVectorValueByGlobal(t, o, r, e) {
+  static SetVectorValueByGlobal(t, o, r, a) {
     ModelManager_1.ModelManager.BlackboardModel.SetVectorValueByWorld(
       t,
       o,
       r,
-      e,
+      a,
     );
   }
-  static SetVectorValueByEntity(t, o, r, e, a) {
+  static SetVectorValueByEntity(t, o, r, a, e) {
     var l =
       ModelManager_1.ModelManager.BlackboardModel.GetCreatureDataComponent(t);
     l &&
@@ -468,20 +461,20 @@ class BlackboardController extends ControllerBase_1.ControllerBase {
         t,
         o,
         r,
-        e,
         a,
+        e,
       ),
-      this.Igr()) &&
-      (((t = Protocol_1.Aki.Protocol.l2s.create()).Ikn =
-        Protocol_1.Aki.Protocol.u2s.Proto_BlackboardParamType_Vector),
-      (t.Ckn = o),
-      (t.b7n = Protocol_1.Aki.Protocol.VBs.create()),
-      (t.b7n.X = r),
-      (t.b7n.Y = e),
-      (t.b7n.Z = a),
+      this.E0r()) &&
+      (((t = Protocol_1.Aki.Protocol.Jks.create()).Z4n =
+        Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_Vector),
+      (t.j4n = o),
+      (t.dKn = Protocol_1.Aki.Protocol.Pks.create()),
+      (t.dKn.X = r),
+      (t.dKn.Y = a),
+      (t.dKn.Z = e),
       (o = l.GetCreatureDataId()),
       (r = new Array()).push(t),
-      this.ygr(o, r));
+      this.M0r(o, r));
   }
   static GetVectorValuesByEntity(t, o) {
     return ModelManager_1.ModelManager.BlackboardModel.GetVectorValuesByEntity(
@@ -490,23 +483,23 @@ class BlackboardController extends ControllerBase_1.ControllerBase {
     );
   }
   static SetVectorValuesByEntity(t, o, r) {
-    var e =
+    var a =
       ModelManager_1.ModelManager.BlackboardModel.GetCreatureDataComponent(t);
-    e &&
+    a &&
       (ModelManager_1.ModelManager.BlackboardModel.SetVectorValuesByEntity(
         t,
         o,
         r,
       ),
-      this.Igr()) &&
-      (((t = Protocol_1.Aki.Protocol.l2s.create()).Ikn =
-        Protocol_1.Aki.Protocol.u2s.Proto_BlackboardParamType_VectorArray),
-      (t.Ckn = o),
-      (t.q7n = Protocol_1.Aki.Protocol.g2s.create()),
-      (t.q7n.A7n = r),
-      (o = e.GetCreatureDataId()),
+      this.E0r()) &&
+      (((t = Protocol_1.Aki.Protocol.Jks.create()).Z4n =
+        Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_VectorArray),
+      (t.j4n = o),
+      (t.CKn = Protocol_1.Aki.Protocol.oNs.create()),
+      (t.CKn.aKn = r),
+      (o = a.GetCreatureDataId()),
       (r = new Array()).push(t),
-      this.ygr(o, r));
+      this.M0r(o, r));
   }
   static GetRotatorValueByEntity(t, o) {
     return ModelManager_1.ModelManager.BlackboardModel.GetRotatorValueByEntity(
@@ -514,7 +507,7 @@ class BlackboardController extends ControllerBase_1.ControllerBase {
       o,
     );
   }
-  static SetRotatorValueByEntity(t, o, r, e, a) {
+  static SetRotatorValueByEntity(t, o, r, a, e) {
     var l =
       ModelManager_1.ModelManager.BlackboardModel.GetCreatureDataComponent(t);
     l &&
@@ -522,20 +515,20 @@ class BlackboardController extends ControllerBase_1.ControllerBase {
         t,
         o,
         r,
-        e,
         a,
+        e,
       ),
-      this.Igr()) &&
-      (((t = Protocol_1.Aki.Protocol.l2s.create()).Ikn =
-        Protocol_1.Aki.Protocol.u2s.Proto_BlackboardParamType_Rotator),
-      (t.Ckn = o),
-      (t.G7n = Protocol_1.Aki.Protocol.iws.create()),
-      (t.G7n.Pitch = r),
-      (t.G7n.Roll = e),
-      (t.G7n.Yaw = a),
+      this.E0r()) &&
+      (((t = Protocol_1.Aki.Protocol.Jks.create()).Z4n =
+        Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_Rotator),
+      (t.j4n = o),
+      (t.gKn = Protocol_1.Aki.Protocol.S2s.create()),
+      (t.gKn.Pitch = r),
+      (t.gKn.Roll = a),
+      (t.gKn.Yaw = e),
       (o = l.GetCreatureDataId()),
       (r = new Array()).push(t),
-      this.ygr(o, r));
+      this.M0r(o, r));
   }
   static GetRotatorValuesByEntity(t, o) {
     return ModelManager_1.ModelManager.BlackboardModel.GetRotatorValuesByEntity(
@@ -544,23 +537,23 @@ class BlackboardController extends ControllerBase_1.ControllerBase {
     );
   }
   static SetRotatorValuesByEntity(t, o, r) {
-    var e =
+    var a =
       ModelManager_1.ModelManager.BlackboardModel.GetCreatureDataComponent(t);
-    e &&
+    a &&
       (ModelManager_1.ModelManager.BlackboardModel.SetRotatorValuesByEntity(
         t,
         o,
         r,
       ),
-      this.Igr()) &&
-      (((t = Protocol_1.Aki.Protocol.l2s.create()).Ikn =
-        Protocol_1.Aki.Protocol.u2s.Proto_BlackboardParamType_RotatorArray),
-      (t.Ckn = o),
-      (t.O7n = Protocol_1.Aki.Protocol.f2s.create()),
-      (t.O7n.A7n = r),
-      (o = e.GetCreatureDataId()),
+      this.E0r()) &&
+      (((t = Protocol_1.Aki.Protocol.Jks.create()).Z4n =
+        Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_RotatorArray),
+      (t.j4n = o),
+      (t.fKn = Protocol_1.Aki.Protocol.nNs.create()),
+      (t.fKn.aKn = r),
+      (o = a.GetCreatureDataId()),
       (r = new Array()).push(t),
-      this.ygr(o, r));
+      this.M0r(o, r));
   }
   static GetEntityIdByEntity(t, o) {
     t = ModelManager_1.ModelManager.BlackboardModel.GetEntityIdByEntity(t, o);
@@ -573,50 +566,50 @@ class BlackboardController extends ControllerBase_1.ControllerBase {
     r &&
       ((r = r.GetCreatureDataId()),
       ModelManager_1.ModelManager.BlackboardModel.SetEntityIdByEntity(t, o, r),
-      this.Igr()) &&
-      (((t = Protocol_1.Aki.Protocol.l2s.create()).Ikn =
-        Protocol_1.Aki.Protocol.u2s.Proto_BlackboardParamType_Entity),
-      (t.Ckn = o),
-      (t.U7n = MathUtils_1.MathUtils.NumberToLong(r)),
+      this.E0r()) &&
+      (((t = Protocol_1.Aki.Protocol.Jks.create()).Z4n =
+        Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_Entity),
+      (t.j4n = o),
+      (t.hKn = MathUtils_1.MathUtils.NumberToLong(r)),
       (o = new Array()).push(t),
-      this.ygr(r, o));
+      this.M0r(r, o));
   }
   static GetEntityIdsByEntity(t, o) {
     t = ModelManager_1.ModelManager.BlackboardModel.GetEntityIdsByEntity(t, o);
     if (t) {
       var r = new Array();
-      for (const e of t)
-        r.push(ModelManager_1.ModelManager.CreatureModel.GetEntity(e)?.Id ?? 0);
+      for (const a of t)
+        r.push(ModelManager_1.ModelManager.CreatureModel.GetEntity(a)?.Id ?? 0);
       return r;
     }
   }
   static SetEntityIdsByEntity(t, o, r) {
-    var e =
+    var a =
       ModelManager_1.ModelManager.BlackboardModel.GetCreatureDataComponent(t);
-    if (e) {
-      var a = new Array();
+    if (a) {
+      var e = new Array();
       for (const i of r)
-        a.push(ModelManager_1.ModelManager.CreatureModel.GetCreatureDataId(i));
+        e.push(ModelManager_1.ModelManager.CreatureModel.GetCreatureDataId(i));
       if (
         (ModelManager_1.ModelManager.BlackboardModel.SetEntityIdsByEntity(
           t,
           o,
-          a,
+          e,
         ),
-        this.Igr())
+        this.E0r())
       ) {
-        var l = Protocol_1.Aki.Protocol.l2s.create();
-        (l.Ikn =
-          Protocol_1.Aki.Protocol.u2s.Proto_BlackboardParamType_EntityArray),
-          (l.Ckn = o),
-          (l.R7n = Protocol_1.Aki.Protocol.d2s.create()),
-          (l.R7n.A7n = new Array(r.length));
-        for (let t = 0; t < a.length; t++) {
-          var n = MathUtils_1.MathUtils.NumberToLong(a[t]);
-          l.R7n.A7n[t] = n;
+        var l = Protocol_1.Aki.Protocol.Jks.create();
+        (l.Z4n =
+          Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_EntityArray),
+          (l.j4n = o),
+          (l.lKn = Protocol_1.Aki.Protocol.tNs.create()),
+          (l.lKn.aKn = new Array(r.length));
+        for (let t = 0; t < e.length; t++) {
+          var n = MathUtils_1.MathUtils.NumberToLong(e[t]);
+          l.lKn.aKn[t] = n;
         }
-        (t = e.GetCreatureDataId()), (o = new Array());
-        o.push(l), this.ygr(t, o);
+        (t = a.GetCreatureDataId()), (o = new Array());
+        o.push(l), this.M0r(t, o);
       }
     }
   }
@@ -625,13 +618,13 @@ class BlackboardController extends ControllerBase_1.ControllerBase {
       t =
         ModelManager_1.ModelManager.BlackboardModel.GetCreatureDataComponent(t);
     t &&
-      (t.RemoveBlackboard(o) || this.Igr()) &&
+      (t.RemoveBlackboard(o) || this.E0r()) &&
       ((t = t.GetCreatureDataId()),
-      ((r = Protocol_1.Aki.Protocol.l2s.create()).Ikn =
-        Protocol_1.Aki.Protocol.u2s.Proto_BlackboardParamType_None),
-      (r.Ckn = o),
+      ((r = Protocol_1.Aki.Protocol.Jks.create()).Z4n =
+        Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_None),
+      (r.j4n = o),
       (o = new Array()).push(r),
-      this.ygr(t, o));
+      this.M0r(t, o));
   }
   static HasValueByEntity(t, o) {
     t = ModelManager_1.ModelManager.BlackboardModel.GetCreatureDataComponent(t);
@@ -642,37 +635,37 @@ class BlackboardController extends ControllerBase_1.ControllerBase {
       ModelManager_1.ModelManager.BlackboardModel.GetCreatureDataComponent(t);
     if (r) {
       r = r.GetBlackboard();
-      if (this.Igr()) {
-        var e = new Array();
+      if (this.E0r()) {
+        var a = new Array();
         for (const o of r.BlackboardMap.keys()) {
-          var a = Protocol_1.Aki.Protocol.l2s.create();
-          (a.Ikn = Protocol_1.Aki.Protocol.u2s.Proto_BlackboardParamType_None),
-            (a.Ckn = o),
-            e.push(a);
+          var e = Protocol_1.Aki.Protocol.Jks.create();
+          (e.Z4n = Protocol_1.Aki.Protocol.Zks.Proto_BlackboardParamType_None),
+            (e.j4n = o),
+            a.push(e);
         }
-        0 < e.length &&
+        0 < a.length &&
           ((t = ModelManager_1.ModelManager.CreatureModel.GetCreatureDataId(t)),
-          this.ygr(t, e));
+          this.M0r(t, a));
       }
       r.Clear();
     }
   }
-  static Igr() {
+  static E0r() {
     return GlobalData_1.GlobalData.Networking();
   }
 }
-((exports.BlackboardController = BlackboardController).Sgr = (t) => {
+((exports.BlackboardController = BlackboardController).p0r = (t) => {
   ModelManager_1.ModelManager.BlackboardModel.RemoveCreatureDataComponent(t);
 }),
-  (BlackboardController.vgr = (t) => {
-    BlackboardController.SetWorldBlackboardsByProtocol(t.xFn);
+  (BlackboardController.g0r = (t) => {
+    BlackboardController.SetWorldBlackboardsByProtocol(t.s6n);
   }),
   (BlackboardController.PendingBlackboardParams = new Map()),
-  (BlackboardController.Mgr = (t) => {
-    var o = MathUtils_1.MathUtils.LongToNumber(t.rkn),
+  (BlackboardController.f0r = (t) => {
+    var o = MathUtils_1.MathUtils.LongToNumber(t.P4n),
       r = ModelManager_1.ModelManager.CreatureModel.GetEntity(o);
     r
-      ? r.Entity.GetComponent(0).SetBlackboardsByProtocol(t.xFn)
+      ? r.Entity.GetComponent(0).SetBlackboardsByProtocol(t.s6n)
       : Log_1.Log.CheckError() &&
         Log_1.Log.Error(
           "World",

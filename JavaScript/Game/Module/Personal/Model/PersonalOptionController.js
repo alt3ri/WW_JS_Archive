@@ -14,24 +14,24 @@ const UE = require("ue"),
   PersonalDefine_1 = require("./PersonalDefine");
 class PersonalOptionController extends UiControllerBase_1.UiControllerBase {
   static InitOptionMap() {
-    this.M4i.set(1, this.S4i),
-      this.M4i.set(2, this.S4i),
-      this.M4i.set(3, this.E4i),
-      this.M4i.set(4, this.E7e),
-      this.M4i.set(5, this.y4i),
-      this.M4i.set(11, this.z9t),
-      this.M4i.set(6, this.I4i),
-      this.M4i.set(7, this.T4i),
-      this.M4i.set(8, this.W0),
-      this.M4i.set(9, this.L4i),
-      this.M4i.set(10, this.D4i),
-      this.M4i.set(12, this.R4i),
-      this.M4i.set(13, this.U4i);
+    this.v5i.set(1, this.M5i),
+      this.v5i.set(2, this.M5i),
+      this.v5i.set(3, this.E5i),
+      this.v5i.set(4, this.qHe),
+      this.v5i.set(5, this.S5i),
+      this.v5i.set(11, this.z7t),
+      this.v5i.set(6, this.y5i),
+      this.v5i.set(7, this.I5i),
+      this.v5i.set(8, this.W0),
+      this.v5i.set(9, this.T5i),
+      this.v5i.set(10, this.L5i),
+      this.v5i.set(12, this.D5i),
+      this.v5i.set(13, this.R5i);
   }
   static GetOptionFunc(e) {
-    return 0 === this.M4i.size && this.InitOptionMap(), this.M4i.get(e);
+    return 0 === this.v5i.size && this.InitOptionMap(), this.v5i.get(e);
   }
-  static A4i() {
+  static U5i() {
     var e = new PersonalDefine_1.PersonalInfoData(),
       r =
         ModelManager_1.ModelManager.FriendModel.GetSelectedPlayerOrItemInstance();
@@ -42,7 +42,7 @@ class PersonalOptionController extends UiControllerBase_1.UiControllerBase {
           (e.CurCardId = r.CurCard),
           (e.Birthday = r.Birthday),
           (e.IsBirthdayDisplay = r.IsBirthdayDisplay),
-          (e.CardUnlockList = r.CardUnlockList),
+          (e.CardDataList = r.CardUnlockList),
           (e.Signature = r.Signature),
           (e.HeadPhotoId = r.PlayerHeadPhoto),
           (e.IsOtherData = !0),
@@ -53,26 +53,26 @@ class PersonalOptionController extends UiControllerBase_1.UiControllerBase {
         : ((r =
             ModelManager_1.ModelManager.OnlineModel.CachePlayerData
               .PlayerDetails),
-          (e.RoleShowList = r.Ygs),
-          (e.CardShowList = r.Jgs),
-          (e.CurCardId = r.zgs ?? void 0),
-          (e.Birthday = r._5n ?? 0),
-          (e.IsBirthdayDisplay = r.Zgs ?? !1),
-          (e.CardUnlockList =
+          (e.RoleShowList = r.dSs),
+          (e.CardShowList = r.mSs),
+          (e.CurCardId = r.CSs ?? void 0),
+          (e.Birthday = r.jVn ?? 0),
+          (e.IsBirthdayDisplay = r.gSs ?? !1),
+          (e.CardDataList =
             ModelManager_1.ModelManager.OnlineModel.CachePlayerData.CardUnlockList),
-          (e.Signature = r.l5n ?? ""),
-          (e.HeadPhotoId = r.$gs ?? void 0),
+          (e.Signature = r.HVn ?? ""),
+          (e.HeadPhotoId = r.sSs ?? void 0),
           (e.IsOtherData = !0),
-          (e.Name = r.e4n ?? ""),
-          (e.PlayerId = r.aFn ?? 0),
-          (e.Level = r.r3n ?? 0),
-          (e.WorldLevel = r.Vgs ?? 0)),
+          (e.Name = r.w8n ?? ""),
+          (e.PlayerId = r.q5n ?? 0),
+          (e.Level = r.P6n ?? 0),
+          (e.WorldLevel = r.nSs ?? 0)),
       e
     );
   }
 }
-((exports.PersonalOptionController = PersonalOptionController).M4i = new Map()),
-  (PersonalOptionController.S4i = () => {
+((exports.PersonalOptionController = PersonalOptionController).v5i = new Map()),
+  (PersonalOptionController.M5i = () => {
     var e = (
       UiManager_1.UiManager.IsViewOpen("OnlineProcessView")
         ? ModelManager_1.ModelManager.OnlineModel
@@ -82,7 +82,7 @@ class PersonalOptionController extends UiControllerBase_1.UiControllerBase {
       ? ChatController_1.ChatController.ChatMutePlayerRequest(e.PlayerId, !1)
       : ChatController_1.ChatController.ChatMutePlayerRequest(e.PlayerId, !0);
   }),
-  (PersonalOptionController.y4i = () => {
+  (PersonalOptionController.S5i = () => {
     var e = (
       UiManager_1.UiManager.IsViewOpen("OnlineProcessView")
         ? ModelManager_1.ModelManager.OnlineModel
@@ -90,7 +90,7 @@ class PersonalOptionController extends UiControllerBase_1.UiControllerBase {
     ).CachePlayerData;
     ReportController_1.ReportController.OpenReportView(e, 2);
   }),
-  (PersonalOptionController.E7e = () => {
+  (PersonalOptionController.qHe = () => {
     var e = ModelManager_1.ModelManager.FriendModel;
     const r = (
       UiManager_1.UiManager.IsViewOpen("OnlineProcessView")
@@ -111,7 +111,7 @@ class PersonalOptionController extends UiControllerBase_1.UiControllerBase {
         e,
       );
   }),
-  (PersonalOptionController.E4i = () => {
+  (PersonalOptionController.E5i = () => {
     const e = ModelManager_1.ModelManager.FriendModel.CachePlayerData;
     var r = new ConfirmBoxDefine_1.ConfirmBoxDataNew(57);
     r.SetTextArgs(e.PlayerName),
@@ -122,7 +122,7 @@ class PersonalOptionController extends UiControllerBase_1.UiControllerBase {
         r,
       );
   }),
-  (PersonalOptionController.z9t = () => {
+  (PersonalOptionController.z7t = () => {
     ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
       "CopiedMyUid",
     ),
@@ -130,23 +130,23 @@ class PersonalOptionController extends UiControllerBase_1.UiControllerBase {
         ModelManager_1.ModelManager.PlayerInfoModel.GetId().toString(),
       );
   }),
-  (PersonalOptionController.I4i = () => {
+  (PersonalOptionController.y5i = () => {
     UiManager_1.UiManager.OpenView("PersonalEditView", 0);
   }),
-  (PersonalOptionController.T4i = () => {
+  (PersonalOptionController.I5i = () => {
     UiManager_1.UiManager.OpenView("PersonalEditView", 1);
   }),
   (PersonalOptionController.W0 = () => {
     CommonInputViewController_1.CommonInputViewController.OpenSetRoleNameInputView();
   }),
-  (PersonalOptionController.L4i = () => {
+  (PersonalOptionController.T5i = () => {
     CommonInputViewController_1.CommonInputViewController.OpenPersonalSignInputView();
   }),
-  (PersonalOptionController.D4i = () => {
+  (PersonalOptionController.L5i = () => {
     UiManager_1.UiManager.OpenView("PersonalBirthView");
   }),
-  (PersonalOptionController.R4i = () => {
-    const e = PersonalOptionController.A4i();
+  (PersonalOptionController.D5i = () => {
+    const e = PersonalOptionController.U5i();
     UiManager_1.UiManager.IsViewOpen("FriendProcessView")
       ? UiManager_1.UiManager.CloseViewAsync("FriendProcessView").then(
           () => {
@@ -163,7 +163,7 @@ class PersonalOptionController extends UiControllerBase_1.UiControllerBase {
           )
         : UiManager_1.UiManager.OpenView("PersonalRootView", e);
   }),
-  (PersonalOptionController.U4i = () => {
+  (PersonalOptionController.R5i = () => {
     CommonInputViewController_1.CommonInputViewController.OpenSetPlayerRemarkNameInputView();
   });
 //# sourceMappingURL=PersonalOptionController.js.map

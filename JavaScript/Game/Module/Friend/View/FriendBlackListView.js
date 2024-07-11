@@ -14,14 +14,14 @@ const UE = require("ue"),
 class FriendBlackListView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.h6t = void 0),
-      (this.l6t = []),
+      (this.h8t = void 0),
+      (this.l8t = []),
       (this.sGe = (e, i, t) => {
         i = new FriendItem_1.FriendItem(this.Info.Name, i);
         return i.Refresh(e, !1, t), { Key: t, Value: i };
       }),
-      (this._6t = () => {
-        this.u6t();
+      (this._8t = () => {
+        this.u8t();
       });
   }
   OnRegisterComponent() {
@@ -35,42 +35,42 @@ class FriendBlackListView extends UiViewBase_1.UiViewBase {
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.UpdateBlackListShow,
-      this._6t,
+      this._8t,
     );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.UpdateBlackListShow,
-      this._6t,
+      this._8t,
     );
   }
   OnStart() {
-    this.c6t(),
-      (this.h6t = new GenericScrollView_1.GenericScrollView(
+    this.c8t(),
+      (this.h8t = new GenericScrollView_1.GenericScrollView(
         this.GetScrollViewWithScrollbar(2),
         this.sGe,
       )),
       FriendController_1.FriendController.RequestBlackList();
   }
-  u6t() {
-    (this.l6t = FriendController_1.FriendController.CreateFriendItemSt(
+  u8t() {
+    (this.l8t = FriendController_1.FriendController.CreateFriendItemSt(
       ModelManager_1.ModelManager.FriendModel.GetBlackListIds(),
       0,
     )),
-      this.h6t.RefreshByData(this.l6t),
-      this.c6t();
+      this.h8t.RefreshByData(this.l8t),
+      this.c8t();
   }
-  c6t() {
+  c8t() {
     var e = this.GetText(0),
       i =
         CommonParamById_1.configCommonParamById.GetIntConfig("blocklist_limit"),
-      t = this.l6t.length;
+      t = this.l8t.length;
     LguiUtil_1.LguiUtil.SetLocalText(e, "FriendBlackListCount", t, i),
-      this.GetItem(3).SetUIActive(this.l6t.length <= 0);
+      this.GetItem(3).SetUIActive(this.l8t.length <= 0);
   }
   OnBeforeDestroy() {
-    this.h6t.ClearChildren(),
-      (this.l6t.length = 0),
+    this.h8t.ClearChildren(),
+      (this.l8t.length = 0),
       ModelManager_1.ModelManager.FriendModel.ResetShowingView();
   }
 }

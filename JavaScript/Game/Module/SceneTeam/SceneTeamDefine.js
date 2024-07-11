@@ -14,11 +14,9 @@ Object.defineProperty(exports, "__esModule", { value: !0 }),
     exports.SPECIAL_CHANGE_ANGLE_LAND =
     exports.SPECIAL_CHANGE_DIS_AIR =
     exports.SPECIAL_CHANGE_DIS_LAND =
-    exports.MAX_ELEMENT_ENERGY =
     exports.SCENE_TEAM_MAX_NUM =
       void 0),
   (exports.SCENE_TEAM_MAX_NUM = 4),
-  (exports.MAX_ELEMENT_ENERGY = 1e4),
   (exports.SPECIAL_CHANGE_DIS_LAND = 200),
   (exports.SPECIAL_CHANGE_DIS_AIR = 150),
   (exports.SPECIAL_CHANGE_ANGLE_LAND = 80),

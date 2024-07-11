@@ -16,7 +16,7 @@ class TsAnimNotifyStateRunRotateBoneToLocation extends UE.KuroAnimNotifyState {
   K2_NotifyBegin(i, t, e) {
     i = i.GetOwner();
     if (i instanceof TsBaseCharacter_1.default) {
-      i = i.CharacterActorComponent.Entity?.GetComponent(160);
+      i = i.CharacterActorComponent.Entity?.GetComponent(162);
       if (
         !(
           i &&
@@ -43,7 +43,7 @@ class TsAnimNotifyStateRunRotateBoneToLocation extends UE.KuroAnimNotifyState {
     t = t.GetOwner();
     if (t instanceof TsBaseCharacter_1.default) {
       if (!t.CharacterActorComponent) return !1;
-      t = t.CharacterActorComponent.Entity?.GetComponent(160);
+      t = t.CharacterActorComponent.Entity?.GetComponent(162);
       if (
         !(
           t &&
@@ -59,7 +59,7 @@ class TsAnimNotifyStateRunRotateBoneToLocation extends UE.KuroAnimNotifyState {
   K2_NotifyTick(i, t, e) {
     i = i.GetOwner();
     if (i instanceof TsBaseCharacter_1.default) {
-      i = i.CharacterActorComponent.Entity?.GetComponent(160);
+      i = i.CharacterActorComponent.Entity?.GetComponent(162);
       if (
         !(
           i &&

@@ -10,86 +10,86 @@ const Protocol_1 = require("../../../Core/Define/Net/Protocol"),
   TimeOfDayModel_1 = require("../TimeOfDay/TimeOfDayModel");
 class PlotTimeOfDay {
   constructor() {
-    (this.cJi = !1),
-      (this.mJi = !1),
+    (this._zi = !1),
+      (this.uzi = !1),
       (this.Uk = !1),
-      (this.dJi = 0),
-      (this.CJi = 0),
-      (this.gJi = !1),
-      (this.fJi = !1),
+      (this.czi = 0),
+      (this.mzi = 0),
+      (this.dzi = !1),
+      (this.Czi = !1),
       (this.IRe = void 0);
   }
   OnPlotStart(e) {
-    this.mJi ||
-      ((this.mJi = e) &&
-        ((this.cJi = !0),
-        (this.gJi =
+    this.uzi ||
+      ((this.uzi = e) &&
+        ((this._zi = !0),
+        (this.dzi =
           ModelManager_1.ModelManager.TimeOfDayModel.TimeRunLockState),
-        (this.fJi =
+        (this.Czi =
           ModelManager_1.ModelManager.TimeOfDayModel.TimeSynLockState),
         (ModelManager_1.ModelManager.TimeOfDayModel.TimeRunLockState = !0),
         (ModelManager_1.ModelManager.TimeOfDayModel.TimeSynLockState = !0),
-        (this.dJi =
+        (this.czi =
           ModelManager_1.ModelManager.TimeOfDayModel.GameTime.Second)));
   }
   OnSeqStart() {
-    this.pJi(),
-      (this.CJi = ModelManager_1.ModelManager.TimeOfDayModel.GameTime.Second),
+    this.gzi(),
+      (this.mzi = ModelManager_1.ModelManager.TimeOfDayModel.GameTime.Second),
       (this.Uk = !1);
   }
   OnSeqEnd() {
-    this.pJi(),
-      (ModelManager_1.ModelManager.TimeOfDayModel.TimeRunLockState = this.cJi),
+    this.gzi(),
+      (ModelManager_1.ModelManager.TimeOfDayModel.TimeRunLockState = this._zi),
       this.Uk &&
-        0 !== this.CJi &&
-        this.CJi !==
+        0 !== this.mzi &&
+        this.mzi !==
           ModelManager_1.ModelManager.TimeOfDayModel.GameTime.Second &&
         TimeOfDayController_1.TimeOfDayController.AdjustTime(
-          this.CJi,
-          Protocol_1.Aki.Protocol.pOs.Proto_LevelPlayAuto,
+          this.mzi,
+          Protocol_1.Aki.Protocol.h4s.Proto_LevelPlayAuto,
         ),
       (this.Uk = !1),
-      (this.CJi = 0);
+      (this.mzi = 0);
   }
   OnPlotEnd() {
-    this.mJi &&
-      ((ModelManager_1.ModelManager.TimeOfDayModel.TimeRunLockState = this.gJi),
-      (ModelManager_1.ModelManager.TimeOfDayModel.TimeSynLockState = this.fJi),
-      this.gJi &&
-        0 !== this.dJi &&
-        this.dJi !==
+    this.uzi &&
+      ((ModelManager_1.ModelManager.TimeOfDayModel.TimeRunLockState = this.dzi),
+      (ModelManager_1.ModelManager.TimeOfDayModel.TimeSynLockState = this.Czi),
+      this.dzi &&
+        0 !== this.czi &&
+        this.czi !==
           ModelManager_1.ModelManager.TimeOfDayModel.GameTime.Second &&
         TimeOfDayController_1.TimeOfDayController.AdjustTime(
-          this.dJi,
-          Protocol_1.Aki.Protocol.pOs.Proto_LevelPlayAuto,
+          this.czi,
+          Protocol_1.Aki.Protocol.h4s.Proto_LevelPlayAuto,
         ),
-      (this.dJi = 0),
-      (this.mJi = !1),
-      (this.cJi = !1));
+      (this.czi = 0),
+      (this.uzi = !1),
+      (this._zi = !1));
   }
   PauseTime() {
-    this.cJi ||
+    this._zi ||
       ((ModelManager_1.ModelManager.TimeOfDayModel.TimeRunLockState = !0),
-      (this.cJi = !0));
+      (this._zi = !0));
   }
   ResumeTime() {
-    this.cJi &&
+    this._zi &&
       ((ModelManager_1.ModelManager.TimeOfDayModel.TimeRunLockState = !1),
-      (this.cJi = !1));
+      (this._zi = !1));
   }
   SetTime(e) {
     TimeOfDayController_1.TimeOfDayController.AdjustTime(
       e,
-      Protocol_1.Aki.Protocol.pOs.Proto_LevelPlayAuto,
+      Protocol_1.Aki.Protocol.h4s.Proto_LevelPlayAuto,
     );
   }
   SetTimeDuration(t, e, o, r) {
-    this.pJi(), (this.Uk = t);
+    this.gzi(), (this.Uk = t);
     let a = e;
     if ((a > TimeOfDayDefine_1.TOD_SECOND_PER_DAY && (a = 0), r <= 0))
       TimeOfDayController_1.TimeOfDayController.AdjustTime(
         a,
-        Protocol_1.Aki.Protocol.pOs.Proto_LevelPlayAuto,
+        Protocol_1.Aki.Protocol.h4s.Proto_LevelPlayAuto,
       );
     else {
       let e = o;
@@ -101,22 +101,22 @@ class PlotTimeOfDay {
         (ModelManager_1.ModelManager.TimeOfDayModel.TimeRunLockState = !1),
         TimeOfDayController_1.TimeOfDayController.AdjustTime(
           a,
-          Protocol_1.Aki.Protocol.pOs.Proto_LevelPlayAuto,
+          Protocol_1.Aki.Protocol.h4s.Proto_LevelPlayAuto,
         ),
         TimeOfDayController_1.TimeOfDayController.ChangeTimeScale(i),
         (this.IRe = TimerSystem_1.TimerSystem.Delay(() => {
           TimeOfDayController_1.TimeOfDayController.AdjustTime(
             o,
-            Protocol_1.Aki.Protocol.pOs.Proto_LevelPlayAuto,
+            Protocol_1.Aki.Protocol.h4s.Proto_LevelPlayAuto,
           ),
             (this.IRe = void 0),
             TimeOfDayController_1.TimeOfDayController.ResumeTimeScale(),
             (ModelManager_1.ModelManager.TimeOfDayModel.TimeRunLockState =
-              this.cJi);
+              this._zi);
         }, r * TimeUtil_1.TimeUtil.InverseMillisecond));
     }
   }
-  pJi() {
+  gzi() {
     this.IRe &&
       (TimerSystem_1.TimerSystem.Has(this.IRe) &&
         TimerSystem_1.TimerSystem.Remove(this.IRe),

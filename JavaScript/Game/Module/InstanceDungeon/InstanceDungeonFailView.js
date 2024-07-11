@@ -15,13 +15,13 @@ class InstanceDungeonFailView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
       (this.NUe = 0),
-      (this.w2e = void 0),
-      (this.Z2t = void 0),
-      (this.q2e = () => {
-        this.rli();
+      (this.$Fe = void 0),
+      (this.e3t = void 0),
+      (this.zFe = () => {
+        this.r1i();
       }),
-      (this.nli = () => {
-        this.F2e(),
+      (this.n1i = () => {
+        this.o3e(),
           InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.RestartInstanceDungeon().finally(
             () => {
               UiManager_1.UiManager.IsViewShow(this.Info.Name) &&
@@ -30,7 +30,7 @@ class InstanceDungeonFailView extends UiViewBase_1.UiViewBase {
           );
       });
   }
-  get Khi() {
+  get Kli() {
     return this.NUe
       ? ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(this.NUe)
       : void 0;
@@ -44,8 +44,8 @@ class InstanceDungeonFailView extends UiViewBase_1.UiViewBase {
       [4, UE.UIVerticalLayout],
     ]),
       (this.BtnBindInfo = [
-        [1, this.q2e],
-        [2, this.nli],
+        [1, this.zFe],
+        [2, this.n1i],
       ]);
   }
   OnStart() {
@@ -53,24 +53,24 @@ class InstanceDungeonFailView extends UiViewBase_1.UiViewBase {
       ModelManager_1.ModelManager.InstanceDungeonEntranceModel.InstanceId),
       UiManager_1.UiManager.IsViewShow("ReviveView") &&
         UiManager_1.UiManager.CloseView("ReviveView"),
-      this.h7e(),
-      this.N2e(),
-      (this.Z2t = new TrainingView_1.TrainingView()),
-      this.Z2t.Show(this.GetVerticalLayout(4)),
+      this.SHe(),
+      this.e3e(),
+      (this.e3t = new TrainingView_1.TrainingView()),
+      this.e3t.Show(this.GetVerticalLayout(4)),
       this.SetButtonUiActive(2, !1);
   }
   OnBeforeDestroy() {
-    this.Z2t && this.Z2t.Clear(), (this.Z2t = void 0), this.F2e();
+    this.e3t && this.e3t.Clear(), (this.e3t = void 0), this.o3e();
   }
-  h7e() {
-    this.GetText(0).ShowTextNew(this.Khi.FailTips);
+  SHe() {
+    this.GetText(0).ShowTextNew(this.Kli.FailTips);
   }
-  N2e() {
-    let e = this.Khi.AutoLeaveTime;
-    this.w2e = TimerSystem_1.TimerSystem.Loop(
+  e3e() {
+    let e = this.Kli.AutoLeaveTime;
+    this.$Fe = TimerSystem_1.TimerSystem.Loop(
       () => {
         e <= 0
-          ? this.rli()
+          ? this.r1i()
           : LguiUtil_1.LguiUtil.SetLocalText(
               this.GetText(3),
               "InstanceDungeonLeftTimeToAutoLeave",
@@ -81,13 +81,13 @@ class InstanceDungeonFailView extends UiViewBase_1.UiViewBase {
       e + 1,
     );
   }
-  F2e() {
-    TimerSystem_1.TimerSystem.Has(this.w2e) &&
-      TimerSystem_1.TimerSystem.Remove(this.w2e),
-      (this.w2e = void 0);
+  o3e() {
+    TimerSystem_1.TimerSystem.Has(this.$Fe) &&
+      TimerSystem_1.TimerSystem.Remove(this.$Fe),
+      (this.$Fe = void 0);
   }
-  rli() {
-    this.F2e(),
+  r1i() {
+    this.o3e(),
       InstanceDungeonEntranceController_1.InstanceDungeonEntranceController.LeaveInstanceDungeon().finally(
         () => {
           UiManager_1.UiManager.IsViewShow(this.Info.Name) && this.CloseMe();

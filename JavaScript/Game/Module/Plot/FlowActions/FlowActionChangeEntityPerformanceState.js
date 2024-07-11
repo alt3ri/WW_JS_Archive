@@ -21,11 +21,11 @@ class FlowActionChangeEntityPerformanceState extends FlowActionBase_1.FlowAction
               ModelManager_1.ModelManager.CreatureModel.GetEntityByPbDataId(e));
           break;
         case IAction_1.EChangeEntityPrefabPerformanceType.Self:
-          (e = this.XXi()),
+          (e = this.K$i()),
             (t = ModelManager_1.ModelManager.CreatureModel.GetEntityById(e));
       }
       t?.IsInit
-        ? (a = t?.Entity?.GetComponent(117))
+        ? (a = t?.Entity?.GetComponent(119))
           ? (o = GameplayTagUtils_1.GameplayTagUtils.GetTagIdByName(
               i.PerformanceTag,
             ))
@@ -55,7 +55,7 @@ class FlowActionChangeEntityPerformanceState extends FlowActionBase_1.FlowAction
           );
     }
   }
-  XXi() {
+  K$i() {
     let e = void 0;
     switch (this.Context.Context.Type) {
       case 1:

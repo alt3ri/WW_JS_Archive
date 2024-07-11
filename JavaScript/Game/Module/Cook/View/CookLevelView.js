@@ -50,11 +50,11 @@ class LevelRewardItem extends LoopScrollSmallItemGrid_1.LoopScrollSmallItemGrid 
 class CookLevelView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.bqt = void 0),
-      (this.qqt = void 0),
+      (this.NGt = void 0),
+      (this.OGt = void 0),
       (this.lGe = void 0),
       (this.$be = void 0),
-      (this.Gqt = (e, t, i) => {
+      (this.kGt = (e, t, i) => {
         var r = new StarItem();
         return (
           r.CreateThenShowByActor(t.GetOwner()),
@@ -62,31 +62,31 @@ class CookLevelView extends UiViewBase_1.UiViewBase {
           { Key: i, Value: r }
         );
       }),
-      (this.Nqt = () => {
+      (this.FGt = () => {
         return new LevelRewardItem();
       }),
-      (this.Oqt = () => {
-        0 !== this.qqt.length && this.Cl();
+      (this.VGt = () => {
+        0 !== this.OGt.length && this.Cl();
       }),
       (this.bl = () => {
-        this.kqt(),
-          this.C4e(),
+        this.HGt(),
+          this.P5e(),
           this.nOe(),
-          this.sct(),
-          this.Fqt(),
-          this.Vqt(),
-          this.rFe(),
-          this.Hqt(),
-          this.jqt(),
+          this.pmt(),
+          this.jGt(),
+          this.WGt(),
+          this.M3e(),
+          this.KGt(),
+          this.QGt(),
           this.sqe();
       }),
-      (this.Kyt = () => {
+      (this.eTt = () => {
         CookController_1.CookController.SendCertificateLevelRewardRequest();
       }),
-      (this.Wqt = () => {
+      (this.XGt = () => {
         --ModelManager_1.ModelManager.CookModel.SelectedCookerLevel, this.bl();
       }),
-      (this.Kqt = () => {
+      (this.$Gt = () => {
         (ModelManager_1.ModelManager.CookModel.SelectedCookerLevel += 1),
           this.bl();
       });
@@ -108,44 +108,44 @@ class CookLevelView extends UiViewBase_1.UiViewBase {
       [12, UE.UIText],
     ]),
       (this.BtnBindInfo = [
-        [5, this.Wqt],
-        [6, this.Kqt],
+        [5, this.XGt],
+        [6, this.$Gt],
       ]);
   }
   OnBeforeDestroy() {
     this.DisableRedDot(),
-      this.bqt && (this.bqt.ClearChildren(), (this.bqt = void 0)),
+      this.NGt && (this.NGt.ClearChildren(), (this.NGt = void 0)),
       this.$be.ClearChildren();
   }
   async OnBeforeStartAsync() {
     (this.lGe = new ConfirmItem()),
       await this.lGe.Initialize(this.GetItem(4)),
-      this.lGe.BindOnClickedCallback(this.Kyt);
+      this.lGe.BindOnClickedCallback(this.eTt);
   }
   OnStart() {
-    (this.bqt = new GenericLayout_1.GenericLayout(
+    (this.NGt = new GenericLayout_1.GenericLayout(
       this.GetHorizontalLayout(7),
-      this.Nqt,
+      this.FGt,
     )),
-      (this.qqt = new Array()),
+      (this.OGt = new Array()),
       LguiUtil_1.LguiUtil.SetLocalText(
         this.GetText(12),
         "CookUpgradeButtonText",
       ),
       (this.$be = new GenericLayoutNew_1.GenericLayoutNew(
         this.GetHorizontalLayout(11),
-        this.Gqt,
+        this.kGt,
       )),
       (ModelManager_1.ModelManager.CookModel.CurrentCookViewType = 4),
       (ModelManager_1.ModelManager.CookModel.SelectedCookerLevel =
         ModelManager_1.ModelManager.CookModel.GetCookerInfo().CookingLevel),
       this.bl(),
-      this.Qqt();
+      this.YGt();
   }
   OnBeforeShow() {
-    this.ChildPopView?.PopItem?.SetTexBgVisible(!1), this.rFe();
+    this.ChildPopView?.PopItem?.SetTexBgVisible(!1), this.M3e();
   }
-  Qqt() {
+  YGt() {
     RedDotController_1.RedDotController.BindRedDot(
       "CookerLevelMain",
       this.lGe.GetRedDot(),
@@ -157,13 +157,13 @@ class CookLevelView extends UiViewBase_1.UiViewBase {
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.UpgradeCookerLevel,
-      this.Oqt,
+      this.VGt,
     );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.UpgradeCookerLevel,
-      this.Oqt,
+      this.VGt,
     );
   }
   ShowView() {
@@ -174,13 +174,13 @@ class CookLevelView extends UiViewBase_1.UiViewBase {
       ModelManager_1.ModelManager.CookModel.GetCookerInfo().CookingLevel),
       this.bl();
   }
-  kqt() {
+  HGt() {
     var e = ConfigManager_1.ConfigManager.UiResourceConfig.GetResourcePath(
       CookDefine_1.COOK_TYPE_TEXTURE_KEY,
     );
     this.SetTextureByPath(e, this.GetTexture(9));
   }
-  C4e() {
+  P5e() {
     var e = ModelManager_1.ModelManager.CookModel.GetCookLevelByLevel(
         ModelManager_1.ModelManager.CookModel.SelectedCookerLevel,
       ),
@@ -196,7 +196,7 @@ class CookLevelView extends UiViewBase_1.UiViewBase {
       );
     this.GetText(1).SetText(e);
   }
-  sct() {
+  pmt() {
     var e = ModelManager_1.ModelManager.CookModel.GetCookerMaxLevel(),
       t = new Array(e);
     for (
@@ -207,7 +207,7 @@ class CookLevelView extends UiViewBase_1.UiViewBase {
       t[e] = !0;
     this.$be.RebuildLayoutByDataNew(t);
   }
-  Fqt() {
+  jGt() {
     var e =
       ModelManager_1.ModelManager.CookModel.GetCookerInfo().TotalProficiencys;
     let t = "";
@@ -222,7 +222,7 @@ class CookLevelView extends UiViewBase_1.UiViewBase {
           )),
       this.GetText(2).SetText(t);
   }
-  Vqt() {
+  WGt() {
     var e =
         ModelManager_1.ModelManager.CookModel.GetCookerInfo().TotalProficiencys,
       t = ModelManager_1.ModelManager.CookModel.GetSumExpByLevel(
@@ -231,11 +231,11 @@ class CookLevelView extends UiViewBase_1.UiViewBase {
       e = 1 < (e = MathUtils_1.MathUtils.GetFloatPointFloor(e / t, 3)) ? 1 : e;
     this.GetSprite(3).SetFillAmount(e);
   }
-  rFe() {
+  M3e() {
     this.lGe.SetEnable();
   }
-  Hqt() {
-    this.qqt.length = 0;
+  KGt() {
+    this.OGt.length = 0;
     var e = ModelManager_1.ModelManager.CookModel.GetDropIdByLevel(
       ModelManager_1.ModelManager.CookModel.SelectedCookerLevel,
     );
@@ -249,12 +249,12 @@ class CookLevelView extends UiViewBase_1.UiViewBase {
             i =
               ModelManager_1.ModelManager.CookModel.GetCookerInfo()
                 .CookingLevel;
-          this.qqt.push({ RewardId: r[0], Count: r[1], IsGet: t < i });
+          this.OGt.push({ RewardId: r[0], Count: r[1], IsGet: t < i });
         }
-      this.bqt.RefreshByData(this.qqt);
+      this.NGt.RefreshByData(this.OGt);
     }
   }
-  jqt() {
+  QGt() {
     this.GetButton(5)
       .GetOwner()
       .GetComponentByClass(UE.UIItem.StaticClass())
@@ -280,11 +280,11 @@ exports.CookLevelView = CookLevelView;
 class ConfirmItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(),
-      (this.Xqt = void 0),
-      (this.dIt = () => {
-        this.Xqt &&
+      (this.JGt = void 0),
+      (this.Mke = () => {
+        this.JGt &&
           (this.GetButton(0).GetSelfInteractive()
-            ? this.Xqt()
+            ? this.JGt()
             : ControllerHolder_1.ControllerHolder.GenericPromptController.ShowPromptByCode(
                 "CookUpgrade",
               ));
@@ -299,7 +299,7 @@ class ConfirmItem extends UiPanelBase_1.UiPanelBase {
       [1, UE.UIText],
       [2, UE.UIItem],
     ]),
-      (this.BtnBindInfo = [[0, this.dIt]]);
+      (this.BtnBindInfo = [[0, this.Mke]]);
   }
   OnStart() {
     this.GetButton(0).SetCanClickWhenDisable(!0);
@@ -328,7 +328,7 @@ class ConfirmItem extends UiPanelBase_1.UiPanelBase {
     return this.GetItem(2);
   }
   BindOnClickedCallback(e) {
-    this.Xqt = e;
+    this.JGt = e;
   }
 }
 //# sourceMappingURL=CookLevelView.js.map

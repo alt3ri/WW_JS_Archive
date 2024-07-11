@@ -8,7 +8,7 @@ const UE = require("ue"),
   TowerCostItem_1 = require("./TowerCostItem");
 class TowerResetItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
-    super(), (this.hDo = void 0), (this.lDo = void 0);
+    super(), (this.nRo = void 0), (this.sRo = void 0);
   }
   OnRegisterComponent() {
     this.ComponentRegisterInfos = [
@@ -18,10 +18,10 @@ class TowerResetItem extends GridProxyAbstract_1.GridProxyAbstract {
     ];
   }
   OnStart() {
-    (this.hDo = new TowerCostItem_1.TowerCostItem()),
-      this.hDo.CreateThenShowByActorAsync(this.GetItem(1).GetOwner()),
-      (this.lDo = new TowerCostItem_1.TowerCostItem()),
-      this.lDo.CreateThenShowByActorAsync(this.GetItem(2).GetOwner());
+    (this.nRo = new TowerCostItem_1.TowerCostItem()),
+      this.nRo.CreateThenShowByActorAsync(this.GetItem(1).GetOwner()),
+      (this.sRo = new TowerCostItem_1.TowerCostItem()),
+      this.sRo.CreateThenShowByActorAsync(this.GetItem(2).GetOwner());
   }
   Refresh(e) {
     var r = ConfigManager_1.ConfigManager.RoleConfig.GetRoleConfig(e),
@@ -34,7 +34,7 @@ class TowerResetItem extends GridProxyAbstract_1.GridProxyAbstract {
         e,
         r.Difficulties,
       );
-    this.hDo.Update(e), this.lDo.Update(e + r.Cost);
+    this.nRo.Update(e), this.sRo.Update(e + r.Cost);
   }
 }
 exports.TowerResetItem = TowerResetItem;

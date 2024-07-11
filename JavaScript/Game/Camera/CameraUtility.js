@@ -6,6 +6,7 @@ const UE = require("ue"),
   CommonParamById_1 = require("../../Core/Define/ConfigCommon/CommonParamById"),
   Protocol_1 = require("../../Core/Define/Net/Protocol"),
   GameplayTagUtils_1 = require("../../Core/Utils/GameplayTagUtils"),
+  MathCommon_1 = require("../../Core/Utils/Math/MathCommon"),
   Rotator_1 = require("../../Core/Utils/Math/Rotator"),
   Vector_1 = require("../../Core/Utils/Math/Vector"),
   MathUtils_1 = require("../../Core/Utils/MathUtils"),
@@ -17,29 +18,29 @@ const UE = require("ue"),
   ActorUtils_1 = require("../Utils/ActorUtils"),
   CameraController_1 = require("./CameraController");
 class CameraUtility {
-  static GetSocketLocation(e, t, r, a = void 0) {
+  static GetSocketLocation(e, t, a, r = void 0) {
     let i = void 0,
       o = void 0;
-    if (e) (i = e), (o = a || ActorUtils_1.ActorUtils.GetEntityByActor(e));
+    if (e) (i = e), (o = r || ActorUtils_1.ActorUtils.GetEntityByActor(e));
     else {
-      if (!a) return void r.Reset();
-      if (!(i = a.Entity.GetComponent(1)?.Owner)) return void r.Reset();
-      o = a;
+      if (!r) return void a.Reset();
+      if (!(i = r.Entity.GetComponent(1)?.Owner)) return void a.Reset();
+      o = r;
     }
     if (this.khe(o))
       return (e = i).Mesh && t?.toString()
-        ? void r.FromUeVector(e.Mesh.GetSocketLocation(t))
-        : void o.Entity.GetComponent(160).GetCameraPosition(r);
-    o.Valid && r.DeepCopy(o.Entity.GetComponent(1).ActorLocationProxy);
+        ? void a.FromUeVector(e.Mesh.GetSocketLocation(t))
+        : void o.Entity.GetComponent(162).GetCameraPosition(a);
+    o.Valid && a.DeepCopy(o.Entity.GetComponent(1).ActorLocationProxy);
   }
   static khe(e) {
     return (
       !!e?.Valid &&
       ((e = e.Entity.GetComponent(0).GetEntityType()) ===
-        Protocol_1.Aki.Protocol.HBs.Proto_Monster ||
-        e === Protocol_1.Aki.Protocol.HBs.Proto_Npc ||
-        e === Protocol_1.Aki.Protocol.HBs.Proto_Player ||
-        e === Protocol_1.Aki.Protocol.HBs.Proto_Vision)
+        Protocol_1.Aki.Protocol.wks.Proto_Monster ||
+        e === Protocol_1.Aki.Protocol.wks.Proto_Npc ||
+        e === Protocol_1.Aki.Protocol.wks.Proto_Player ||
+        e === Protocol_1.Aki.Protocol.wks.Proto_Vision)
     );
   }
   static GetRootTransform(e) {
@@ -49,7 +50,7 @@ class CameraUtility {
     return !(
       !e.Valid ||
       !e.Active ||
-      ((e = e.Entity.GetComponent(185)) &&
+      ((e = e.Entity.GetComponent(188)) &&
         (e.HasTag(1008164187) || e.HasTag(-1243968098)))
     );
   }
@@ -118,15 +119,15 @@ class CameraUtility {
         return !0;
       case 3:
         return e.GetEntityNoBlueprint()?.GetComponent(0)?.IsMonster()
-          ? (r = e.GetController()) instanceof TsAiController_1.default &&
-              !!(r =
-                r.AiController?.AiHateList?.GetCurrentTarget()?.Entity?.GetComponent(
+          ? (a = e.GetController()) instanceof TsAiController_1.default &&
+              !!(a =
+                a.AiController?.AiHateList?.GetCurrentTarget()?.Entity?.GetComponent(
                   3,
                 ))?.Valid &&
               !!(
-                r.Owner instanceof TsBaseCharacter_1.default &&
-                r.IsAutonomousProxy &&
-                r.Owner === Global_1.Global.BaseCharacter
+                a.Owner instanceof TsBaseCharacter_1.default &&
+                a.IsAutonomousProxy &&
+                a.Owner === Global_1.Global.BaseCharacter
               )
           : (Log_1.Log.CheckError() &&
               Log_1.Log.Error(
@@ -137,8 +138,8 @@ class CameraUtility {
             !1);
       case 4:
         return e.GetEntityNoBlueprint()?.GetComponent(0)?.IsMonster()
-          ? !!(r = e.GetEntityNoBlueprint()?.GetComponent(33))?.Valid &&
-              r.SkillTarget ===
+          ? !!(a = e.GetEntityNoBlueprint()?.GetComponent(33))?.Valid &&
+              a.SkillTarget ===
                 ModelManager_1.ModelManager.CharacterModel.GetHandle(
                   Global_1.Global.BaseCharacter?.EntityId ?? 0,
                 )
@@ -150,13 +151,13 @@ class CameraUtility {
               ),
             !1);
       case 2:
-        var r;
+        var a;
         return e.GetEntityNoBlueprint()?.GetComponent(0)?.IsMonster()
-          ? !!(r =
+          ? !!(a =
               Global_1.Global.BaseCharacter?.GetEntityNoBlueprint()?.GetComponent(
                 29,
               ))?.Valid &&
-              r.GetCurrentTarget() ===
+              a.GetCurrentTarget() ===
                 ModelManager_1.ModelManager.CharacterModel.GetHandle(e.EntityId)
           : (Log_1.Log.CheckError() &&
               Log_1.Log.Error(
@@ -169,80 +170,80 @@ class CameraUtility {
         return !1;
     }
   }
-  static CheckApplyCameraModifyCondition(e, t, r = 0, a = void 0) {
+  static CheckApplyCameraModifyCondition(e, t, a = 0, r = void 0) {
     return (
       !!e?.Valid &&
       !!this.Fhe(e, !1, !t.IsSwitchModifier) &&
-      !(!this.Vhe(e, r) || (a && !this.Hhe(r, a)))
+      !(!this.Vhe(e, a) || (r && !this.Hhe(a, r)))
     );
   }
-  static Fhe(e, t = !1, r = !1) {
+  static Fhe(e, t = !1, a = !1) {
     if (!e?.Valid) return !1;
-    var a = e.Entity.GetComponent(0);
-    if (a?.Valid) {
-      (a =
-        a.IsVision() || a.IsMonster()
+    var r = e.Entity.GetComponent(0);
+    if (r?.Valid) {
+      (r =
+        r.IsVision() || r.IsMonster()
           ? ModelManager_1.ModelManager.CreatureModel.GetEntityId(
-              a.GetSummonerId(),
+              r.GetSummonerId(),
             )
           : e.Id),
-        (e = ModelManager_1.ModelManager.SceneTeamModel.GetTeamItem(a, {
+        (e = ModelManager_1.ModelManager.SceneTeamModel.GetTeamItem(r, {
           ParamType: 1,
         }));
-      if (e && ((t && !e.IsMyRole()) || (r && !e.IsControl()))) return !1;
+      if (e && ((t && !e.IsMyRole()) || (a && !e.IsControl()))) return !1;
     }
     return !0;
   }
   static Vhe(e, t) {
     if (!e?.Valid) return !1;
-    var r,
-      a = e.Entity.GetComponent(0);
-    if (!a?.Valid) return !1;
+    var a,
+      r = e.Entity.GetComponent(0);
+    if (!r?.Valid) return !1;
     switch (t) {
       case 0:
         return (
-          a.GetPlayerId() ===
+          r.GetPlayerId() ===
             ModelManager_1.ModelManager.PlayerInfoModel?.GetId() &&
-          (a.IsRole() || a.IsVision())
+          (r.IsRole() || r.IsVision())
         );
       case 1:
         return !0;
       case 3:
-        return a.IsMonster()
-          ? (r = e.Entity.GetComponent(3).Owner?.GetController()) instanceof
+        return r.IsMonster()
+          ? (a = e.Entity.GetComponent(3).Owner?.GetController()) instanceof
               TsAiController_1.default &&
-              !!(r =
-                r.AiController?.AiHateList?.GetCurrentTarget()?.Entity?.GetComponent(
+              !!(a =
+                a.AiController?.AiHateList?.GetCurrentTarget()?.Entity?.GetComponent(
                   3,
                 ))?.Valid &&
               !!(
-                r.Owner instanceof TsBaseCharacter_1.default &&
-                r.IsAutonomousProxy &&
-                r.Owner === Global_1.Global.BaseCharacter
+                a.Owner instanceof TsBaseCharacter_1.default &&
+                a.IsAutonomousProxy &&
+                a.Owner === Global_1.Global.BaseCharacter
               )
           : !1;
       case 4:
-        return a.IsMonster()
-          ? !!(r = e.Entity.GetComponent(33))?.Valid &&
-              r.SkillTarget ===
+        return r.IsMonster()
+          ? !!(a = e.Entity.GetComponent(33))?.Valid &&
+              a.SkillTarget ===
                 ModelManager_1.ModelManager.CharacterModel.GetHandle(
                   Global_1.Global.BaseCharacter?.EntityId ?? 0,
                 )
           : !1;
       case 6:
       case 2:
-        return a.IsMonster()
+        return r.IsMonster()
           ? !(
-              !(r =
+              !(a =
                 Global_1.Global.BaseCharacter?.GetEntityNoBlueprint()?.GetComponent(
                   29,
                 ))?.Valid ||
-              r.ShowTarget !==
+              a.ShowTarget !==
                 ModelManager_1.ModelManager.CharacterModel.GetHandle(e.Id)
             )
           : !1;
       case 5:
-        return a.IsMonster();
+        return r.IsMonster();
       default:
         return !1;
     }
@@ -251,33 +252,33 @@ class CameraUtility {
     return !t || 0 !== e || this.jhe(t);
   }
   static jhe(t) {
-    var r = t.Num();
-    for (let e = 0; e < r; ++e) {
-      var a = t.Get(e);
-      switch (a.ConditionType) {
+    var a = t.Num();
+    for (let e = 0; e < a; ++e) {
+      var r = t.Get(e);
+      switch (r.ConditionType) {
         case 0:
-          if (this.Whe(a)) break;
+          if (this.Whe(r)) break;
           return !1;
         case 1:
-          if (this.Khe(a)) break;
+          if (this.Khe(r)) break;
           return !1;
         case 2:
-          if (this.Qhe(a)) break;
+          if (this.Qhe(r)) break;
           return !1;
         case 3:
-          if (this.Xhe(a)) break;
+          if (this.Xhe(r)) break;
           return !1;
         case 4:
-          if (this.$he(a)) break;
+          if (this.$he(r)) break;
           return !1;
         case 5:
-          if (this.Yhe(a)) break;
+          if (this.Yhe(r)) break;
           return !1;
         case 6:
-          if (this.Jhe(a)) break;
+          if (this.Jhe(r)) break;
           return !1;
         case 7:
-          if (this.zhe(a)) break;
+          if (this.zhe(r)) break;
           return !1;
         default:
           return (
@@ -286,7 +287,7 @@ class CameraUtility {
                 "Camera",
                 58,
                 "未支持的相机 Modify ConditionType",
-                ["ConditionType", a.ConditionType],
+                ["ConditionType", r.ConditionType],
               ),
             !1
           );
@@ -296,7 +297,7 @@ class CameraUtility {
   }
   static Whe(e) {
     var t =
-        Global_1.Global.BaseCharacter.GetEntityNoBlueprint().GetComponent(185),
+        Global_1.Global.BaseCharacter.GetEntityNoBlueprint().GetComponent(188),
       t = e.AnyTag
         ? t.HasAnyTag(
             GameplayTagUtils_1.GameplayTagUtils.ConvertFromUeContainer(
@@ -312,17 +313,17 @@ class CameraUtility {
   }
   static Khe(e) {
     let t = !1;
-    var r = this.GetCameraTargetEntityHandle();
+    var a = this.GetCameraTargetEntityHandle();
     return (
-      r &&
-        ((r = r.Entity.GetComponent(185)),
+      a &&
+        ((a = a.Entity.GetComponent(188)),
         (t = e.AnyTag
-          ? r.HasAnyTag(
+          ? a.HasAnyTag(
               GameplayTagUtils_1.GameplayTagUtils.ConvertFromUeContainer(
                 e.TagToCheck,
               ),
             )
-          : r.HasAllTag(
+          : a.HasAllTag(
               GameplayTagUtils_1.GameplayTagUtils.ConvertFromUeContainer(
                 e.TagToCheck,
               ),
@@ -332,26 +333,26 @@ class CameraUtility {
   }
   static Qhe(e) {
     let t = !1;
-    var r = ModelManager_1.ModelManager.CameraModel.FightCameraFinalDistance;
+    var a = ModelManager_1.ModelManager.CameraModel.FightCameraFinalDistance;
     return (
-      r >= e.ArmLengthMin && r <= e.ArmLengthMax && (t = !0), e.Reverse ? !t : t
+      a >= e.ArmLengthMin && a <= e.ArmLengthMax && (t = !0), e.Reverse ? !t : t
     );
   }
   static Xhe(e) {
     let t = !1;
-    var r,
-      a,
+    var a,
+      r,
       i = this.GetCameraTargetEntityHandle();
     return (
       i &&
-        ((r =
+        ((a =
           ModelManager_1.ModelManager.CameraModel.FightCamera.LogicComponent
             .CameraLocation),
-        (a =
+        (r =
           ModelManager_1.ModelManager.CameraModel.FightCamera.LogicComponent
             .CameraForward),
-        i.Entity.GetComponent(3).ActorLocationProxy.Subtraction(r, this.cz),
-        a.CrossProduct(this.cz, this.cz),
+        i.Entity.GetComponent(3).ActorLocationProxy.Subtraction(a, this.cz),
+        r.CrossProduct(this.cz, this.cz),
         this.cz.Z < 0) &&
         (t = !0),
       e.Reverse ? !t : t
@@ -359,59 +360,59 @@ class CameraUtility {
   }
   static $he(e) {
     let t = !1;
-    var r,
-      a = this.GetCameraTargetEntityHandle();
+    var a,
+      r = this.GetCameraTargetEntityHandle();
     return (
-      a &&
-        ((r =
+      r &&
+        ((a =
           Global_1.Global.BaseCharacter.CharacterActorComponent.SkeletalMesh.GetSocketLocation(
             CharacterNameDefines_1.CharacterNameDefines.ROOT,
           )),
-        (a = a.Entity.GetComponent(3).ActorLocationProxy),
-        (r = Math.abs(r.Z - a.Z)) >= e.LockTargetDeltaZMin) &&
-        r <= e.LockTargetDeltaZMax &&
+        (r = r.Entity.GetComponent(3).ActorLocationProxy),
+        (a = Math.abs(a.Z - r.Z)) >= e.LockTargetDeltaZMin) &&
+        a <= e.LockTargetDeltaZMax &&
         (t = !0),
       e.Reverse ? !t : t
     );
   }
   static Yhe(e) {
     let t = !1;
-    var r;
+    var a;
     return (
       this.GetCameraTargetEntityHandle() &&
-        (r = Math.abs(this.GetPlayerTargetAndCameraYawOffset())) >=
+        (a = Math.abs(this.GetPlayerTargetAndCameraYawOffset())) >=
           e.LockTargetDeltaYawMin &&
-        r <= e.LockTargetDeltaYawMax &&
+        a <= e.LockTargetDeltaYawMax &&
         (t = !0),
       e.Reverse ? !t : t
     );
   }
   static Jhe(e) {
     let t = !1;
-    var r = Global_1.Global.CharacterCameraManager.GetCameraRotation().Pitch;
+    var a = Global_1.Global.CharacterCameraManager.GetCameraRotation().Pitch;
     return (
-      r >= e.LockTargetDeltaPitchMin &&
-        r <= e.LockTargetDeltaPitchMax &&
+      a >= e.LockTargetDeltaPitchMin &&
+        a <= e.LockTargetDeltaPitchMax &&
         (t = !0),
       e.Reverse ? !t : t
     );
   }
   static zhe(e) {
     let t = !1;
-    var r,
-      a,
+    var a,
+      r,
       i = this.GetCameraTargetEntityHandle();
     return (
       i &&
-        ((r =
+        ((a =
           Global_1.Global.BaseCharacter.CharacterActorComponent
             .ActorLocationProxy),
         (i = i.Entity.GetComponent(3).ActorLocationProxy),
-        (r = Vector_1.Vector.DistSquared2D(r, i)),
+        (a = Vector_1.Vector.DistSquared2D(a, i)),
         (i = e.MinLockDistance * e.MinLockDistance),
-        (a = e.MaxLockDistance * e.MaxLockDistance),
-        i <= r) &&
-        r <= a &&
+        (r = e.MaxLockDistance * e.MaxLockDistance),
+        i <= a) &&
+        a <= r &&
         (t = !0),
       e.Reverse ? !t : t
     );
@@ -429,8 +430,24 @@ class CameraUtility {
         (!(e =
           ModelManager_1.ModelManager.SceneInteractionModel.GetEntityByBaseItem(
             e.GetOwner(),
-          )?.Entity.GetComponent(123)) ||
+          )?.Entity.GetComponent(125)) ||
           !e.IsMove()))
+    );
+  }
+  static SetCameraRotationWithString(e) {
+    var t = [];
+    for (const a of e.matchAll(/[+-]?\d+(?<Decimal>\.\d*)?/g)) t.push(a[0]);
+    t.length < 2 || CameraUtility.SetCameraRotationWithAxisString(t[0], t[1]);
+  }
+  static SetCameraRotationWithAxisString(e, t) {
+    (e = MathCommon_1.MathCommon.Warp(
+      parseFloat(e || "0"),
+      -MathCommon_1.MathCommon.RightAngle,
+      MathCommon_1.MathCommon.RightAngle,
+    )),
+      (t = MathUtils_1.MathUtils.WrapAngle(parseFloat(t || "0")));
+    CameraController_1.CameraController.FightCamera.LogicComponent.SetRotation(
+      new UE.Rotator(e, t, 0),
     );
   }
 }

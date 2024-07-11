@@ -12,14 +12,14 @@ const UE = require("ue"),
 class OnlineMultipleApplyView extends UiTickViewBase_1.UiTickViewBase {
   constructor() {
     super(...arguments),
-      (this.bGi = void 0),
-      (this.oNi = () =>
+      (this.bNi = void 0),
+      (this.oOi = () =>
         new OnlineMultipleApplyItem_1.OnlineMultipleApplyItem()),
-      (this.rNi = () => {
+      (this.rOi = () => {
         var e = ModelManager_1.ModelManager.OnlineModel.GetCurrentApplyList();
         e.length <= 0 &&
           UiManager_1.UiManager.CloseView("OnlineMultipleApplyView"),
-          this.bGi.ReloadData(e);
+          this.bNi.ReloadData(e);
       });
   }
   OnRegisterComponent() {
@@ -29,39 +29,39 @@ class OnlineMultipleApplyView extends UiTickViewBase_1.UiTickViewBase {
     ];
   }
   OnStart() {
-    this.nNi();
+    this.nOi();
   }
   OnAddEventListener() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnRefreshApply,
-      this.rNi,
+      this.rOi,
     );
   }
   OnRemoveEventListener() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnRefreshApply,
-      this.rNi,
+      this.rOi,
     );
   }
   OnTick(e) {
-    if (!(this.bGi.IZt < 0)) {
-      var i = this.bGi.GetDisplayGridNum();
-      for (let e = this.bGi.IZt; e < i; e++)
-        this.bGi.UnsafeGetGridProxy(e)?.UpdateCountDownProgressBar();
+    if (!(this.bNi.Iei < 0)) {
+      var i = this.bNi.GetDisplayGridNum();
+      for (let e = this.bNi.Iei; e < i; e++)
+        this.bNi.UnsafeGetGridProxy(e)?.UpdateCountDownProgressBar();
     }
   }
   OnBeforeDestroy() {
-    this.bGi && this.bGi.ClearGridProxies(), (this.bGi = void 0);
+    this.bNi && this.bNi.ClearGridProxies(), (this.bNi = void 0);
   }
   RefreshLoopScrollView() {
-    this.bGi.ReloadData(
+    this.bNi.ReloadData(
       ModelManager_1.ModelManager.OnlineModel.GetCurrentApplyList(),
     );
   }
-  nNi() {
+  nOi() {
     var e = this.GetLoopScrollViewComponent(0),
       i = this.GetItem(1).GetOwner();
-    (this.bGi = new LoopScrollView_1.LoopScrollView(e, i, this.oNi)),
+    (this.bNi = new LoopScrollView_1.LoopScrollView(e, i, this.oOi)),
       this.RefreshLoopScrollView();
   }
 }

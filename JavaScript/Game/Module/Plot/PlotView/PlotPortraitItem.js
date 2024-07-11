@@ -31,37 +31,37 @@ const puerts_1 = require("puerts"),
 class PlotPortraitItem extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
-      (this.wJi = void 0),
-      (this.Xje = 0),
-      (this.BJi = void 0),
-      (this.bJi = void 0),
-      (this.qJi = 0),
-      (this.zzt = 0),
-      (this.GJi = void 0),
-      (this.NJi = void 0),
-      (this.OJi = !1),
-      (this.EPe = void 0),
-      (this.kJi = new AudioController_1.PlayResult()),
+      (this.Pzi = void 0),
+      (this.sKe = 0),
+      (this.xzi = void 0),
+      (this.wzi = void 0),
+      (this.Bzi = 0),
+      (this.zZt = 0),
+      (this.bzi = void 0),
+      (this.qzi = void 0),
+      (this.Gzi = !1),
+      (this.SPe = void 0),
+      (this.Nzi = new AudioController_1.PlayResult()),
       (this.wk = void 0),
       (this.he = void 0),
-      (this.FJi = void 0),
-      (this.VJi = new Map([
+      (this.Ozi = void 0),
+      (this.kzi = new Map([
         [0, "call_01"],
         [1, "call_02"],
         [2, "call_03"],
         [3, "call_04"],
       ])),
-      (this.HJi = new Map([
+      (this.Fzi = new Map([
         [0, "Start01"],
         [1, "Start01"],
         [2, "Start02"],
         [3, "Start03"],
       ])),
       (this.OnTick = (t) => {
-        this.jJi() &&
-          ((this.zzt += t),
-          this.zzt < this.qJi ||
-            ((this.zzt = 0), this.WJi(), this.KJi(t), this.QJi(), this.XJi()));
+        this.Vzi() &&
+          ((this.zZt += t),
+          this.zZt < this.Bzi ||
+            ((this.zZt = 0), this.Hzi(), this.jzi(t), this.Wzi(), this.Kzi()));
       });
   }
   OnRegisterComponent() {
@@ -85,7 +85,7 @@ class PlotPortraitItem extends UiPanelBase_1.UiPanelBase {
     ];
   }
   async OpenAsync(t, i) {
-    (this.wJi = i),
+    (this.Pzi = i),
       await this.CreateThenShowByResourceIdAsync(
         "UiItem_PlotCall_Prefab",
         t,
@@ -98,8 +98,8 @@ class PlotPortraitItem extends UiPanelBase_1.UiPanelBase {
   async SwitchAsync(t) {}
   async OnCreateAsync() {
     const i = new CustomPromise_1.CustomPromise();
-    if (0 === this.wJi.Type) {
-      const s = this.wJi,
+    if (0 === this.Pzi.Type) {
+      const s = this.Pzi,
         r = SpeakerById_1.configSpeakerById.GetConfig(s.WhoId);
       StringUtils_1.StringUtils.IsEmpty(r?.HeadIconAsset)
         ? Log_1.Log.CheckWarn() &&
@@ -126,13 +126,13 @@ class PlotPortraitItem extends UiPanelBase_1.UiPanelBase {
             },
           ),
           await i.Promise);
-    } else if (5 === this.wJi.Type) {
-      const h = this.wJi,
+    } else if (5 === this.Pzi.Type) {
+      const h = this.Pzi,
         o = MonsterDisplayById_1.configMonsterDisplayById.GetConfig(
           h.MonsterDisplayId,
         );
       StringUtils_1.StringUtils.IsEmpty(o?.MonsterPileIconAsset)
-        ? ((this.FJi = PublicUtil_1.PublicUtil.GetConfigIdByTable(3, o.Id)),
+        ? ((this.Ozi = PublicUtil_1.PublicUtil.GetConfigIdByTable(3, o.Id)),
           (this.he = PublicUtil_1.PublicUtil.GetConfigIdByTable(2, o.Id)),
           ResourceSystem_1.ResourceSystem.LoadAsync(
             o.MonsterPileIconAsset,
@@ -159,8 +159,8 @@ class PlotPortraitItem extends UiPanelBase_1.UiPanelBase {
           ]);
     } else {
       var t, e;
-      1 === this.wJi.Type &&
-        ((t = this.wJi),
+      1 === this.Pzi.Type &&
+        ((t = this.Pzi),
         (e = SpeakerById_1.configSpeakerById.GetConfig(t.WhoId))
           ? (this.he = PublicUtil_1.PublicUtil.GetConfigIdByTable(0, e.Id))
           : Log_1.Log.CheckWarn() &&
@@ -168,70 +168,70 @@ class PlotPortraitItem extends UiPanelBase_1.UiPanelBase {
     }
   }
   OnStart() {
-    this.EPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem);
+    this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem);
   }
   OnBeforeShow() {
     switch (
-      (this.$Ji(),
-      (this.Xje = PlotController_1.PlotController.AddTick(this.OnTick)),
-      this.wJi.Type)
+      (this.Qzi(),
+      (this.sKe = PlotController_1.PlotController.AddTick(this.OnTick)),
+      this.Pzi.Type)
     ) {
       case 0:
-        this.YJi();
+        this.Xzi();
         break;
       case 1:
-        this.JJi();
+        this.$zi();
         break;
       case 2:
-        this.zJi();
+        this.Yzi();
         break;
       case 3:
-        this.ZJi();
+        this.Jzi();
         break;
       case 5:
-        this.ezi();
+        this.zzi();
     }
   }
   async OnShowAsyncImplementImplement() {
-    this.OJi = !0;
+    this.Gzi = !0;
     var t = new CustomPromise_1.CustomPromise(),
       i =
-        (0 !== this.kJi.PlayingIds.length &&
-          AudioController_1.AudioController.StopEvent(this.kJi, !0),
+        (0 !== this.Nzi.PlayingIds.length &&
+          AudioController_1.AudioController.StopEvent(this.Nzi, !0),
         AudioController_1.AudioController.SetSwitch(
           AUDIO_GROUP_NAME,
-          this.VJi.get(this.wJi.Type),
+          this.kzi.get(this.Pzi.Type),
           this.RootActor,
         ),
         AudioController_1.AudioController.PostEventByUi(
           ModelManager_1.ModelManager.PlotModel.PlotGlobalConfig
             .CallShowAudioEvent,
-          this.kJi,
+          this.Nzi,
         ),
-        this.HJi.get(this.wJi.Type));
-    i && (await this.EPe.PlaySequenceAsync(i, t));
+        this.Fzi.get(this.Pzi.Type));
+    i && (await this.SPe.PlaySequenceAsync(i, t));
   }
   async OnHideAsyncImplementImplement() {
     AudioController_1.AudioController.PostEventByUi(
       ModelManager_1.ModelManager.PlotModel.PlotGlobalConfig.CallHideAudioEvent,
-      this.kJi,
+      this.Nzi,
     );
     var t = new CustomPromise_1.CustomPromise();
-    await this.EPe.PlaySequenceAsync("Close", t), (this.OJi = !1);
+    await this.SPe.PlaySequenceAsync("Close", t), (this.Gzi = !1);
   }
   OnAfterHide() {
-    PlotController_1.PlotController.RemoveTick(this.Xje);
+    PlotController_1.PlotController.RemoveTick(this.sKe);
   }
   OnBeforeDestroy() {
-    this.EPe.Clear(),
-      (this.EPe = void 0),
+    this.SPe.Clear(),
+      (this.SPe = void 0),
       (this.wk = void 0),
       (this.he = void 0),
-      (this.FJi = void 0),
-      (this.zzt = 0),
-      (this.Xje = 0);
+      (this.Ozi = void 0),
+      (this.zZt = 0),
+      (this.sKe = 0);
   }
-  YJi() {
+  Xzi() {
     this.GetItem(10).SetUIActive(!0),
       this.GetItem(3).SetUIActive(!0),
       this.GetItem(4).SetUIActive(!0),
@@ -246,23 +246,23 @@ class PlotPortraitItem extends UiPanelBase_1.UiPanelBase {
       i.SetNiagaraVarFloat("Size X", t.Width),
       i.SetNiagaraVarFloat("Size Y", t.Height);
   }
-  JJi() {
+  $zi() {
     this.GetItem(10).SetUIActive(!0),
       this.GetItem(3).SetUIActive(!0),
       this.GetItem(5).SetUIActive(!0),
       this.GetText(0).ShowTextNew(this.he ?? StringUtils_1.EMPTY_STRING);
   }
-  zJi() {
+  Yzi() {
     this.GetItem(10).SetUIActive(!0),
       this.GetItem(6).SetUIActive(!0),
       this.GetItem(2).SetUIActive(!0);
   }
-  ZJi() {
+  Jzi() {
     this.GetItem(10).SetUIActive(!0),
       this.GetItem(7).SetUIActive(!0),
       this.GetItem(2).SetUIActive(!0);
   }
-  ezi() {
+  zzi() {
     this.GetItem(9).SetUIActive(!0), this.GetTexture(11).SetTexture(this.wk);
     var t = this.GetUiNiagara(12);
     t.SetNiagaraEmitterCustomTexture("Frame001", "BaseTexture", this.wk),
@@ -272,9 +272,9 @@ class PlotPortraitItem extends UiPanelBase_1.UiPanelBase {
         this.wk,
       ),
       this.GetText(13).ShowTextNew(this.he ?? StringUtils_1.EMPTY_STRING),
-      this.GetText(14).ShowTextNew(this.FJi ?? StringUtils_1.EMPTY_STRING);
+      this.GetText(14).ShowTextNew(this.Ozi ?? StringUtils_1.EMPTY_STRING);
   }
-  $Ji() {
+  Qzi() {
     this.GetItem(2).SetUIActive(!1),
       this.GetItem(4).SetUIActive(!1),
       this.GetItem(5).SetUIActive(!1),
@@ -284,7 +284,7 @@ class PlotPortraitItem extends UiPanelBase_1.UiPanelBase {
       this.GetItem(9).SetUIActive(!1),
       this.GetItem(10).SetUIActive(!1);
   }
-  WJi() {
+  Hzi() {
     var t = Global_1.Global.BaseCharacter.K2_GetActorLocation(),
       i = (0, puerts_1.$ref)(void 0),
       i =
@@ -297,8 +297,8 @@ class PlotPortraitItem extends UiPanelBase_1.UiPanelBase {
         (0, puerts_1.$unref)(i)),
       e = UiLayer_1.UiLayer.UiRootItem.GetCanvasScaler(),
       e =
-        ((this.BJi = e.ConvertPositionFromViewportToLGUICanvas(i)),
-        (this.BJi.Y = UiLayer_1.UiLayer.UiRootItem.Height / 2),
+        ((this.xzi = e.ConvertPositionFromViewportToLGUICanvas(i)),
+        (this.xzi.Y = UiLayer_1.UiLayer.UiRootItem.Height / 2),
         ModelManager_1.ModelManager.CameraModel.CameraLocation);
     e &&
       ((i =
@@ -306,30 +306,30 @@ class PlotPortraitItem extends UiPanelBase_1.UiPanelBase {
         Math.pow(e.Y - t.Y, 2) +
         Math.pow(e.Z - t.Z, 2)),
       (i = Math.sqrt(i)) < ARM_LENGTH_MIN
-        ? (this.BJi.X -= (ARM_LENGTH_MIN - i) * HORI_DEC_RATIO)
+        ? (this.xzi.X -= (ARM_LENGTH_MIN - i) * HORI_DEC_RATIO)
         : i > ARM_LENGTH_MAX &&
-          ((this.BJi.X += (i - ARM_LENGTH_MAX) * HORI_INC_RATIO),
+          ((this.xzi.X += (i - ARM_LENGTH_MAX) * HORI_INC_RATIO),
           (e = MathUtils_1.MathUtils.Clamp(
             1 - (i - ARM_LENGTH_MAX) * SCALE_RATIO,
             0.5,
             1,
           )),
-          this.bJi ? this.bJi.Set(e, e, e) : (this.bJi = new UE.Vector(e))));
+          this.wzi ? this.wzi.Set(e, e, e) : (this.wzi = new UE.Vector(e))));
   }
-  KJi(t) {
+  jzi(t) {
     var i = this.RootItem.GetAnchorOffset(),
       t = MathUtils_1.MathUtils.Clamp(t * VELOCITY_FOLLOW, 0, 1),
-      e = MathUtils_1.MathUtils.Lerp(i.X, this.BJi.X, t),
-      i = MathUtils_1.MathUtils.Lerp(i.Y, this.BJi.Y, t);
+      e = MathUtils_1.MathUtils.Lerp(i.X, this.xzi.X, t),
+      i = MathUtils_1.MathUtils.Lerp(i.Y, this.xzi.Y, t);
     this.RootItem.SetAnchorOffsetX(e), this.RootItem.SetAnchorOffsetY(i);
   }
-  QJi() {
-    this.bJi && this.RootItem.SetUIItemScale(this.bJi);
+  Wzi() {
+    this.wzi && this.RootItem.SetUIItemScale(this.wzi);
   }
-  XJi() {}
-  jJi() {
+  Kzi() {}
+  Vzi() {
     return (
-      this.OJi && this.GetActive() && void 0 !== Global_1.Global.BaseCharacter
+      this.Gzi && this.GetActive() && void 0 !== Global_1.Global.BaseCharacter
     );
   }
 }

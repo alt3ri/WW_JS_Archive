@@ -15,48 +15,49 @@ class FlowShowTalk {
       (this.CurTalkItemIndex = 0),
       (this.Context = void 0),
       (this.B8 = void 0),
-      (this.IXi = void 0),
-      (this.PXi = -1),
-      (this.xXi = !1),
-      (this.FXi = !1),
-      (this.TPn = !1),
-      (this.W4s = !1),
-      (this.K4s = !1),
-      (this.HXi = () => {
-        var t,
-          i = this.CurShowTalk.TalkItems[this.CurTalkItemIndex];
-        i.Options && 0 < i.Options.length
-          ? ((this.Context.CurOptionId = -1),
-            (this.K4s = !0),
-            this.Context.IsBackground
-              ? ((i = this.CurShowTalk.TalkItems[this.CurTalkItemIndex]),
-                (t =
-                  ControllerHolder_1.ControllerHolder.FlowController.GetRecommendedOption(
-                    i,
-                  )),
-                this.HandleShowTalkItemOption(t, i.Options[t].Actions))
-              : EventSystem_1.EventSystem.Emit(
-                  EventDefine_1.EEventName.ShowPlotSubtitleOptions,
-                ))
-          : this.jXi();
+      (this.S$i = void 0),
+      (this.U$i = -1),
+      (this.A$i = !1),
+      (this.O$i = !1),
+      (this.obn = !1),
+      (this.XHs = !1),
+      (this.YHs = !1),
+      (this.F$i = (t) => {
+        var i;
+        t &&
+          ((t = this.CurShowTalk.TalkItems[this.CurTalkItemIndex]).Options &&
+          0 < t.Options.length
+            ? ((this.Context.CurOptionId = -1),
+              (this.YHs = !0),
+              this.Context.IsBackground
+                ? ((t = this.CurShowTalk.TalkItems[this.CurTalkItemIndex]),
+                  (i =
+                    ControllerHolder_1.ControllerHolder.FlowController.GetRecommendedOption(
+                      t,
+                    )),
+                  this.HandleShowTalkItemOption(i, t.Options[i].Actions))
+                : EventSystem_1.EventSystem.Emit(
+                    EventDefine_1.EEventName.ShowPlotSubtitleOptions,
+                  ))
+            : this.V$i());
       }),
-      (this.OnOptionActionCompleted = () => {
-        this.jXi();
+      (this.OnOptionActionCompleted = (t) => {
+        t && this.V$i();
       }),
       (this.SubmitSubtitle = (t) => {
-        this.Context && !this.Context.IsBackground && this.LPn(t);
+        this.Context && !this.Context.IsBackground && this.nbn(t);
       });
   }
   FinishShowTalk() {
-    this.WXi(),
-      (this.xXi = !1),
+    this.H$i(),
+      (this.A$i = !1),
       ModelManager_1.ModelManager.PlotModel.CenterTextTransition(!1),
       ModelManager_1.ModelManager.PlotModel?.GrayOptionMap.clear(),
       (ModelManager_1.ModelManager.PlotModel.CurShowTalk = void 0),
-      (ModelManager_1.ModelManager.PlotModel.OptionEnable = !1),
+      (ModelManager_1.ModelManager.PlotModel.OptionEnable = !0),
       (this.Context.CurTalkId = -1),
-      (this.W4s = !1),
-      (this.K4s = !1),
+      (this.XHs = !1),
+      (this.YHs = !1),
       (this.Context.CurOptionId = -1),
       (this.Context.CurSubActionId = 0),
       (this.Context.CurShowTalk = void 0),
@@ -65,7 +66,7 @@ class FlowShowTalk {
       (this.CurShowTalk = void 0),
       (this.Context = void 0),
       (this.B8 = void 0),
-      (this.TPn = !1),
+      (this.obn = !1),
       PlotController_1.PlotController.ClearUi(),
       ControllerHolder_1.ControllerHolder.FlowController.EnableSkip(!1),
       ControllerHolder_1.ControllerHolder.FlowController.RunNextAction();
@@ -87,14 +88,14 @@ class FlowShowTalk {
       ),
       (ModelManager_1.ModelManager.PlotModel.CurShowTalk = t),
       "Prompt" === this.B8 || this.Context.IsBackground
-        ? this.jXi()
+        ? this.V$i()
         : ControllerHolder_1.ControllerHolder.PlotController.WaitViewCallback(
             (t) => {
-              t && this.jXi();
+              t && this.V$i();
             },
           );
   }
-  jXi() {
+  V$i() {
     var t;
     this.CurShowTalk
       ? (this.CurTalkItemIndex++,
@@ -102,7 +103,7 @@ class FlowShowTalk {
         this.CurTalkItemIndex >= this.CurShowTalk.TalkItems.length
           ? this.FinishShowTalk()
           : ((t = this.CurShowTalk.TalkItems[this.CurTalkItemIndex]),
-            this.KXi(t)))
+            this.j$i(t)))
       : ControllerHolder_1.ControllerHolder.FlowController.LogError(
           "当前不在ShowTalk节点",
         );
@@ -111,11 +112,11 @@ class FlowShowTalk {
     var e = this.CurShowTalk.TalkItems.length;
     for (let t = 0; t < e; t++) {
       var s = this.CurShowTalk.TalkItems[t];
-      if (s.Id === i) return (this.CurTalkItemIndex = t), void this.KXi(s);
+      if (s.Id === i) return (this.CurTalkItemIndex = t), void this.j$i(s);
     }
     this.FinishShowTalk();
   }
-  async KXi(t) {
+  async j$i(t) {
     Log_1.Log.CheckInfo() &&
       Log_1.Log.Info("Plot", 27, "[FlowShowTalk][Subtitle] 字幕显示", [
         "id",
@@ -123,48 +124,48 @@ class FlowShowTalk {
       ]),
       (this.Context.CurTalkId = t.Id),
       (this.Context.CurOptionId = -1),
-      (this.W4s = !1),
-      (this.IXi = t),
-      this.WXi(),
-      (this.FXi = !1),
-      (this.TPn = !1),
-      await this.DPn(),
-      await this.APn(t),
-      await this.UPn(),
-      (this.TPn = !0),
+      (this.XHs = !1),
+      (this.S$i = t),
+      this.H$i(),
+      (this.O$i = !1),
+      (this.obn = !1),
+      await this.sbn(),
+      await this.abn(t),
+      await this.hbn(),
+      (this.obn = !0),
       this.Fc(),
-      this.RPn(),
-      this.Context.IsBackground && this.LPn();
+      this.lbn(),
+      this.Context.IsBackground && this.nbn();
   }
-  LPn(t) {
+  nbn(t) {
     this.CurShowTalk &&
-      !this.W4s &&
-      ((t = t ?? this.IXi),
+      !this.XHs &&
+      ((t = t ?? this.S$i),
       Log_1.Log.CheckDebug() &&
         Log_1.Log.Debug("Plot", 27, "[FlowShowTalk][Subtitle] 字幕完成", [
           "id",
           t.Id,
         ]),
-      (this.W4s = !0),
-      (this.IXi = void 0),
+      (this.XHs = !0),
+      (this.S$i = void 0),
       ControllerHolder_1.ControllerHolder.PlotController.PlotViewManager.OnSubmitSubtitle(),
       ControllerHolder_1.ControllerHolder.FlowController.ExecuteSubActions(
         t.Actions,
-        this.HXi,
+        this.F$i,
       ));
   }
   HandleShowTalkItemOption(t, i) {
     this.Context?.CurShowTalk &&
       -1 === this.Context.CurOptionId &&
-      this.K4s &&
-      ((this.FXi = !0),
+      this.YHs &&
+      ((this.O$i = !0),
       Log_1.Log.CheckInfo() &&
         Log_1.Log.Info("Plot", 27, "[FlowShowTalk][Subtitle] 选择选项", [
           "index",
           t,
         ]),
       (this.Context.CurOptionId = t),
-      (this.K4s = !1),
+      (this.YHs = !1),
       ControllerHolder_1.ControllerHolder.FlowController.SelectOption(
         this.Context.CurTalkId,
         t,
@@ -177,40 +178,40 @@ class FlowShowTalk {
   Skip() {
     var t, i;
     -1 === this.CurTalkItemIndex
-      ? this.jXi()
+      ? this.V$i()
       : this.CurTalkItemIndex < this.CurShowTalk.TalkItems.length
-        ? this.K4s
+        ? this.YHs
           ? ((t = this.CurShowTalk.TalkItems[this.CurTalkItemIndex]),
             (i =
               ControllerHolder_1.ControllerHolder.FlowController.GetRecommendedOption(
                 t,
               )),
             this.HandleShowTalkItemOption(i, t.Options[i].Actions))
-          : !this.W4s &&
-            this.TPn &&
-            this.LPn(this.CurShowTalk.TalkItems[this.CurTalkItemIndex])
+          : !this.XHs &&
+            this.obn &&
+            this.nbn(this.CurShowTalk.TalkItems[this.CurTalkItemIndex])
         : this.FinishShowTalk();
   }
-  WXi() {
-    this.xXi &&
-      !this.FXi &&
+  H$i() {
+    this.A$i &&
+      !this.O$i &&
       ControllerHolder_1.ControllerHolder.FlowController.LogError(
         "遗漏选项C级",
-        ["Miss TalkItem Id", this.PXi],
+        ["Miss TalkItem Id", this.U$i],
       ),
       !this.CurShowTalk?.TalkItems ||
         this.CurTalkItemIndex >= this.CurShowTalk.TalkItems.length ||
-        ((this.xXi =
+        ((this.A$i =
           !!this.CurShowTalk.TalkItems[this.CurTalkItemIndex].Options &&
           0 < this.CurShowTalk.TalkItems[this.CurTalkItemIndex].Options.length),
-        (this.PXi = this.CurShowTalk.TalkItems[this.CurTalkItemIndex].Id));
+        (this.U$i = this.CurShowTalk.TalkItems[this.CurTalkItemIndex].Id));
   }
   Fc() {
     this.Context?.IsBackground ||
-      ModelManager_1.ModelManager.PlotModel.HandlePlayMontage(this.IXi.Montage);
+      ModelManager_1.ModelManager.PlotModel.HandlePlayMontage(this.S$i.Montage);
   }
-  async DPn() {
-    var t = this.IXi?.BackgroundConfig;
+  async sbn() {
+    var t = this.S$i?.BackgroundConfig;
     if (t && "LevelC" === this.B8 && !this.Context.IsBackground) {
       const s = new CustomPromise_1.CustomPromise();
       var i = () => {
@@ -252,16 +253,16 @@ class FlowShowTalk {
       await s.Promise;
     }
   }
-  async APn(t) {
+  async abn(t) {
     "LevelC" === this.B8 &&
       (await ModelManager_1.ModelManager.PlotModel.PlotTemplate.HandleTemplateShowTalk(
         t,
       ));
   }
-  async UPn() {
+  async hbn() {
     if ("LevelC" === this.B8 && !this.Context.IsBackground) {
       const t = new CustomPromise_1.CustomPromise(),
-        i = "CenterText" === this.IXi.Type;
+        i = "CenterText" === this.S$i.Type;
       ControllerHolder_1.ControllerHolder.FlowController.EnableSkip(!1),
         ModelManager_1.ModelManager.PlotModel.CenterTextTransition(i, () => {
           i ||
@@ -271,21 +272,21 @@ class FlowShowTalk {
         await t.Promise;
     }
   }
-  RPn() {
+  lbn() {
     this.Context.IsBackground ||
       ("Prompt" === this.B8 &&
         ControllerHolder_1.ControllerHolder.PlotController.ShowTipsView(
-          this.IXi,
+          this.S$i,
           this.Context.UiParam,
         )) ||
-      ("LevelC" === this.B8 && "CenterText" === this.IXi?.Type
+      ("LevelC" === this.B8 && "CenterText" === this.S$i?.Type
         ? ModelManager_1.ModelManager.PlotModel.ShowTalkCenterText(
-            this.IXi,
+            this.S$i,
             this.SubmitSubtitle,
           )
         : EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.UpdatePlotSubtitle,
-            this.IXi,
+            this.S$i,
           ));
   }
   SelectOption(t, i) {

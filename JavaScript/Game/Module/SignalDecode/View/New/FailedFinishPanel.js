@@ -13,16 +13,16 @@ class FailedFinishPanel extends UiPanelBase_1.UiPanelBase {
   constructor() {
     super(...arguments),
       (this.LevelSequencePlayer = void 0),
-      (this.wvo = () => {
+      (this.AMo = () => {
         UiManager_1.UiManager.CloseView("SignalDecodeView");
       }),
-      (this.Bvo = () => {
+      (this.PMo = () => {
         EventSystem_1.EventSystem.Emit(
           EventDefine_1.EEventName.OnSignalCatchStartAgain,
         ),
           this.Close();
       }),
-      (this.aut = (e) => {
+      (this.yct = (e) => {
         "Close" === e && this.SetUiActive(!1);
       });
   }
@@ -35,15 +35,15 @@ class FailedFinishPanel extends UiPanelBase_1.UiPanelBase {
       [4, UE.UIText],
     ]),
       (this.BtnBindInfo = [
-        [0, this.wvo],
-        [1, this.Bvo],
+        [0, this.AMo],
+        [1, this.PMo],
       ]);
   }
   OnStart() {
     (this.LevelSequencePlayer = new LevelSequencePlayer_1.LevelSequencePlayer(
       this.RootItem,
     )),
-      this.LevelSequencePlayer.BindSequenceCloseEvent(this.aut),
+      this.LevelSequencePlayer.BindSequenceCloseEvent(this.yct),
       3 === ModelManager_1.ModelManager.SignalDecodeModel.CurrentGameplayType &&
         (LguiUtil_1.LguiUtil.SetLocalText(
           this.GetText(3),

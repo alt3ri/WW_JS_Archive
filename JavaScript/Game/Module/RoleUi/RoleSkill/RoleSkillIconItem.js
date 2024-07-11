@@ -8,11 +8,11 @@ const UE = require("ue"),
 class RoleSkillIconItem extends UiPanelBase_1.UiPanelBase {
   constructor(t, i = !1) {
     super(),
-      (this.yco = i),
-      (this.zke = 0),
-      (this.Ico = 0),
+      (this.vmo = i),
+      (this.dFe = 0),
+      (this.Mmo = 0),
       (this.pqe = void 0),
-      (this.Yke = () => {
+      (this.cFe = () => {
         this.pqe && this.pqe();
       }),
       this.CreateThenShowByActor(t.GetOwner());
@@ -24,7 +24,7 @@ class RoleSkillIconItem extends UiPanelBase_1.UiPanelBase {
       [2, UE.UIItem],
       [4, UE.UIItem],
     ]),
-      this.yco
+      this.vmo
         ? (this.ComponentRegisterInfos.push([1, UE.UITexture]),
           this.ComponentRegisterInfos.push([5, UE.UITexture]),
           this.ComponentRegisterInfos.push([6, UE.UITexture]),
@@ -39,43 +39,43 @@ class RoleSkillIconItem extends UiPanelBase_1.UiPanelBase {
             7,
             UE.UIExtendToggleSpriteTransition,
           ])),
-      (this.BtnBindInfo = [[0, this.Yke]]);
+      (this.BtnBindInfo = [[0, this.cFe]]);
   }
   Update(t, i) {
-    (this.zke = t), (this.Ico = i), this.Refresh();
+    (this.dFe = t), (this.Mmo = i), this.Refresh();
   }
   SetId(t, i) {
-    (this.zke = t), (this.Ico = i);
+    (this.dFe = t), (this.Mmo = i);
   }
   Refresh() {
     this.RefreshSkillIcon(), this.RefreshState();
   }
   RefreshState() {
     var t = ModelManager_1.ModelManager.RoleModel.GetRoleSkillTreeNodeLevel(
-      this.zke,
-      this.Ico,
+      this.dFe,
+      this.Mmo,
     );
     this.GetItem(2)?.SetUIActive(0 < t);
-    let i = this.yco ? this.GetTexture(1) : this.GetSprite(1);
+    let i = this.vmo ? this.GetTexture(1) : this.GetSprite(1);
     i?.SetChangeColor(0 < t, i.changeColor),
-      (i = this.yco ? this.GetTexture(5) : this.GetSprite(5))?.SetChangeColor(
+      (i = this.vmo ? this.GetTexture(5) : this.GetSprite(5))?.SetChangeColor(
         0 < t,
         i.changeColor,
       ),
-      (i = this.yco ? this.GetTexture(6) : this.GetSprite(6))?.SetChangeColor(
+      (i = this.vmo ? this.GetTexture(6) : this.GetSprite(6))?.SetChangeColor(
         0 < t,
         i.changeColor,
       );
     var s = ModelManager_1.ModelManager.RoleModel.GetRoleSkillTreeNodeState(
-      this.zke,
-      this.Ico,
+      this.dFe,
+      this.Mmo,
     );
     this.GetItem(4)?.SetUIActive(1 === s),
       this.GetItem(3)?.SetUIActive(1 !== s && 0 === t);
   }
   RefreshSkillIcon() {
     var t = ConfigManager_1.ConfigManager.RoleSkillConfig.GetSkillTreeNode(
-        this.Ico,
+        this.Mmo,
       ),
       i = t.SkillId;
     let s = void 0;
@@ -83,14 +83,14 @@ class RoleSkillIconItem extends UiPanelBase_1.UiPanelBase {
       i && 0 < i
         ? ConfigManager_1.ConfigManager.RoleSkillConfig.GetSkillConfigById(i)
             ?.Icon
-        : t.PropertyNodeIcon) && this.Tco(s);
+        : t.PropertyNodeIcon) && this.Emo(s);
   }
-  Tco(t) {
-    this.yco
-      ? (this.Lco(1, t), this.Lco(5, t), this.Lco(6, t))
-      : (this.Dco(1, t), this.Dco(5, t), this.Dco(6, t));
+  Emo(t) {
+    this.vmo
+      ? (this.Smo(1, t), this.Smo(5, t), this.Smo(6, t))
+      : (this.ymo(1, t), this.ymo(5, t), this.ymo(6, t));
   }
-  Lco(t, i) {
+  Smo(t, i) {
     const s = this.GetTexture(t);
     if (s) {
       const e = this.GetUiExtendToggleTextureTransition(7);
@@ -102,7 +102,7 @@ class RoleSkillIconItem extends UiPanelBase_1.UiPanelBase {
         this.SetTextureByPath(i, s, void 0, t);
     }
   }
-  Dco(t, i) {
+  ymo(t, i) {
     const s = this.GetSprite(t);
     if (s) {
       const e = this.GetUiExtendToggleSpriteTransition(7);
@@ -115,10 +115,10 @@ class RoleSkillIconItem extends UiPanelBase_1.UiPanelBase {
     }
   }
   GetRoleId() {
-    return this.zke;
+    return this.dFe;
   }
   GetSkillNodeId() {
-    return this.Ico;
+    return this.Mmo;
   }
   SetToggleCallBack(t) {
     this.pqe = t;

@@ -16,34 +16,34 @@ const UE = require("ue"),
 class ManufactureHelpRoleView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.sGt = void 0),
-      (this.aGt = void 0),
-      (this.gIt = 0),
-      (this.Gyi = 0),
-      (this.z9e = () => {
+      (this.hNt = void 0),
+      (this.lNt = void 0),
+      (this.ETt = 0),
+      (this.GIi = 0),
+      (this.cHe = () => {
         var e = new HelpRoleItem();
-        return e.BindOnClickedCallback(this.lGt), e;
+        return e.BindOnClickedCallback(this.Tke), e;
       }),
-      (this.xyi = () => {
-        (this.aGt = CommonManager_1.CommonManager.GetHelpRoleItemDataList(
-          this.gIt,
+      (this.xIi = () => {
+        (this.lNt = CommonManager_1.CommonManager.GetHelpRoleItemDataList(
+          this.ETt,
         )),
-          this.sGt.ReloadData(this.aGt),
-          this.wyi();
+          this.hNt.ReloadData(this.lNt),
+          this.wIi();
       }),
-      (this.lGt = (e) => {
-        this.Gyi = e;
+      (this.Tke = (e) => {
+        this.GIi = e;
         let t = 0;
         for (
-          this.sGt.DeselectCurrentGridProxy();
-          t < this.aGt.length && e !== this.aGt[t].RoleId;
+          this.hNt.DeselectCurrentGridProxy();
+          t < this.lNt.length && e !== this.lNt[t].RoleId;
           t++
         );
-        this.sGt.IsGridDisplaying(t) &&
-          (this.sGt.SelectGridProxy(t), this.sGt.RefreshGridProxy(t));
+        this.hNt.IsGridDisplaying(t) &&
+          (this.hNt.SelectGridProxy(t), this.hNt.RefreshGridProxy(t));
       }),
-      (this.dIt = () => {
-        CommonManager_1.CommonManager.SetCurrentRoleId(this.Gyi),
+      (this.Mke = () => {
+        CommonManager_1.CommonManager.SetCurrentRoleId(this.GIi),
           UiManager_1.UiManager.CloseView("ManufactureHelpRoleView"),
           EventSystem_1.EventSystem.Emit(
             EventDefine_1.EEventName.CloseHelpRole,
@@ -57,16 +57,16 @@ class ManufactureHelpRoleView extends UiViewBase_1.UiViewBase {
       [2, UE.UIButtonComponent],
       [3, UE.UIText],
     ]),
-      (this.BtnBindInfo = [[2, this.dIt]]);
+      (this.BtnBindInfo = [[2, this.Mke]]);
   }
   OnBeforeDestroy() {
-    this.sGt && (this.sGt.ClearGridProxies(), (this.sGt = void 0));
+    this.hNt && (this.hNt.ClearGridProxies(), (this.hNt = void 0));
   }
   OnStart() {
-    (this.sGt = new LoopScrollView_1.LoopScrollView(
+    (this.hNt = new LoopScrollView_1.LoopScrollView(
       this.GetLoopScrollViewComponent(0),
       this.GetItem(1).GetOwner(),
-      this.z9e,
+      this.cHe,
     )),
       LguiUtil_1.LguiUtil.SetLocalText(
         this.GetText(3),
@@ -76,32 +76,32 @@ class ManufactureHelpRoleView extends UiViewBase_1.UiViewBase {
         EventDefine_1.EEventName.SwitchViewType,
         0,
       ),
-      (this.gIt = this.OpenParam),
-      (this.Gyi = CommonManager_1.CommonManager.GetCurrentRoleId()),
-      this.xyi();
+      (this.ETt = this.OpenParam),
+      (this.GIi = CommonManager_1.CommonManager.GetCurrentRoleId()),
+      this.xIi();
   }
   OnBeforeShow() {
     this.ChildPopView?.PopItem?.SetTexBgVisible(!1);
   }
-  wyi() {
+  wIi() {
     let e = 0;
     for (
-      this.sGt.DeselectCurrentGridProxy();
-      e < this.aGt.length && this.Gyi !== this.aGt[e].RoleId;
+      this.hNt.DeselectCurrentGridProxy();
+      e < this.lNt.length && this.GIi !== this.lNt[e].RoleId;
       e++
     );
-    this.sGt.ScrollToGridIndex(e), this.sGt.SelectGridProxy(e);
+    this.hNt.ScrollToGridIndex(e), this.hNt.SelectGridProxy(e);
   }
 }
 exports.ManufactureHelpRoleView = ManufactureHelpRoleView;
 class HelpRoleItem extends GridProxyAbstract_1.GridProxyAbstract {
   constructor() {
     super(...arguments),
-      (this.dqt = void 0),
-      (this.Xgt = void 0),
-      (this.Wgt = void 0),
-      (this.Kyt = (e) => {
-        this.Wgt && this.Wgt(this.dqt.RoleId);
+      (this.fGt = void 0),
+      (this.sft = void 0),
+      (this.oft = void 0),
+      (this.eTt = (e) => {
+        this.oft && this.oft(this.fGt.RoleId);
       });
   }
   OnRegisterComponent() {
@@ -111,42 +111,42 @@ class HelpRoleItem extends GridProxyAbstract_1.GridProxyAbstract {
       [2, UE.UIText],
       [3, UE.UIItem],
     ]),
-      (this.BtnBindInfo = [[0, this.Kyt]]);
+      (this.BtnBindInfo = [[0, this.eTt]]);
   }
   OnStart() {
-    (this.Xgt = new SmallItemGrid_1.SmallItemGrid()),
-      this.Xgt.Initialize(this.GetItem(3).GetOwner());
+    (this.sft = new SmallItemGrid_1.SmallItemGrid()),
+      this.sft.Initialize(this.GetItem(3).GetOwner());
   }
   Refresh(e, t, i) {
     e = {
       Type: 2,
-      Data: (this.dqt = e),
+      Data: (this.fGt = e),
       ItemConfigId: e.RoleId,
       IsCookUp: e.IsBuff,
       IsReceivedVisible:
         ModelManager_1.ModelManager.CookModel.CurrentCookRoleId === e.RoleId,
     };
-    this.Xgt.Apply(e),
-      this.Ije(),
-      this.iGt(),
-      this.IVe(t, !1),
+    this.sft.Apply(e),
+      this.qWe(),
+      this.rNt(),
+      this.N6e(t, !1),
       this.GetText(2).OnSelfLanguageChange.Bind(() => {
-        this.iGt();
+        this.rNt();
       });
   }
   Clear() {
     this.GetText(2).OnSelfLanguageChange.Unbind();
   }
   OnBeforeDestroy() {
-    this.Xgt = void 0;
+    this.sft = void 0;
   }
-  Ije() {
-    this.GetText(1).SetText(this.dqt.RoleName);
+  qWe() {
+    this.GetText(1).SetText(this.fGt.RoleName);
   }
-  iGt() {
+  rNt() {
     var e;
-    CommonManager_1.CommonManager.CheckIsBuff(this.dqt.RoleId, this.dqt.ItemId)
-      ? ((e = CommonManager_1.CommonManager.GetInfoText(this.dqt.RoleId)),
+    CommonManager_1.CommonManager.CheckIsBuff(this.fGt.RoleId, this.fGt.ItemId)
+      ? ((e = CommonManager_1.CommonManager.GetInfoText(this.fGt.RoleId)),
         this.GetText(2).SetText(e))
       : ((e = ConfigManager_1.ConfigManager.TextConfig.GetTextById(
           CommonManager_1.CommonManager.GetDefaultRoleText(),
@@ -154,15 +154,15 @@ class HelpRoleItem extends GridProxyAbstract_1.GridProxyAbstract {
         this.GetText(2).SetText(e));
   }
   BindOnClickedCallback(e) {
-    this.Wgt = e;
+    this.oft = e;
   }
   OnSelected(e) {
-    this.IVe(!0);
+    this.N6e(!0);
   }
   OnDeselected(e) {
-    this.IVe(!1);
+    this.N6e(!1);
   }
-  IVe(e, t = !0) {
+  N6e(e, t = !0) {
     var i = this.GetExtendToggle(0);
     e ? i.SetToggleState(1, t) : i.SetToggleState(0, !1);
   }

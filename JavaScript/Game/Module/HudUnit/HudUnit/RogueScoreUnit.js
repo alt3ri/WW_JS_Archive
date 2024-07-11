@@ -84,58 +84,58 @@ const UE = require("ue"),
 class RogueScoreUnit extends HudUnitBase_1.HudUnitBase {
   constructor() {
     super(...arguments),
-      (this.ayn = 0),
-      (this.qxn = void 0),
-      (this.uyn = new RogueScoreMachine_1.RogueScoreMachine()),
-      (this.EPe = void 0),
-      (this.cyn = void 0),
-      (this.myn = void 0),
-      (this.dyn = void 0),
-      (this.Cyn = void 0),
-      (this.gyn = void 0),
-      (this.fyn = -1),
-      (this.Gyt = []),
-      (this.pyn = -1),
-      (this.vyn = []),
-      (this.Myn = []),
-      (this.Syn = []),
-      (this.Eyn = !1),
-      (this.yyn = !1),
-      (this.Iyn = CurveUtils_1.CurveUtils.DefaultPara),
-      (this.Tyn = 0),
-      (this.ort = void 0),
-      (this.eDn = -1),
-      (this.Lyn = (t, i) => {
+      (this.IIn = 0),
+      (this.CBn = void 0),
+      (this.RIn = new RogueScoreMachine_1.RogueScoreMachine()),
+      (this.SPe = void 0),
+      (this.UIn = void 0),
+      (this.AIn = void 0),
+      (this.PIn = void 0),
+      (this.xIn = void 0),
+      (this.wIn = void 0),
+      (this.BIn = -1),
+      (this.XIt = []),
+      (this.bIn = -1),
+      (this.qIn = []),
+      (this.GIn = []),
+      (this.NIn = []),
+      (this.OIn = !1),
+      (this.kIn = !1),
+      (this.FIn = CurveUtils_1.CurveUtils.DefaultPara),
+      (this.VIn = 0),
+      (this.Cnt = void 0),
+      (this.zRn = -1),
+      (this.HIn = (t, i) => {
         var e;
         if (
-          this.ayn !== t &&
-          ((this.ayn = t),
-          this.qxn !== i &&
-            ((s = this.qxn?.Level ?? 0),
-            (e = void 0 !== this.qxn),
-            (this.qxn = i),
-            this.qxn
-              ? (this.Dyn(this.qxn.Level),
-                this.Ryn(this.qxn.Level),
-                this.Ayn(this.qxn.Level),
-                this.Uyn(this.qxn.Level),
-                this.Jzi(this.qxn.Level, this.qxn.Level > s),
-                e && this.Pyn(this.qxn.Level))
-              : (this.SetVisible(!1), this.Jzi(0, !1))),
-          this.qxn)
+          this.IIn !== t &&
+          ((this.IIn = t),
+          this.CBn !== i &&
+            ((s = this.CBn?.Level ?? 0),
+            (e = void 0 !== this.CBn),
+            (this.CBn = i),
+            this.CBn
+              ? (this.jIn(this.CBn.Level),
+                this.WIn(this.CBn.Level),
+                this.KIn(this.CBn.Level),
+                this.QIn(this.CBn.Level),
+                this.XZi(this.CBn.Level, this.CBn.Level > s),
+                e && this.XIn(this.CBn.Level))
+              : (this.SetVisible(!1), this.XZi(0, !1))),
+          this.CBn)
         ) {
-          var i = this.qxn.LowerUpperLimits[0],
-            s = this.qxn.LowerUpperLimits[1];
+          var i = this.CBn.LowerUpperLimits[0],
+            s = this.CBn.LowerUpperLimits[1];
           let e = 0;
           (e = s === i ? 1 : ((e = (t - i) / (s - i)), Math.min(e, 1))),
-            this.Unt(e);
+            this.Fst(e);
         }
       }),
-      (this.syn = () => {
-        (this.yyn = !0),
-          (this.Tyn = Time_1.Time.Now),
-          (this.eDn = UP_EFFECT_TIME),
-          this.tDn(1);
+      (this.yIn = () => {
+        (this.kIn = !0),
+          (this.VIn = Time_1.Time.Now),
+          (this.zRn = UP_EFFECT_TIME),
+          this.ZRn(1);
       });
   }
   OnRegisterComponent() {
@@ -154,14 +154,14 @@ class RogueScoreUnit extends HudUnitBase_1.HudUnitBase {
   async OnCreateAsync() {
     var t = [];
     for (let e = 0; e < scoreTexturePathList.length; e++)
-      t.push(this.xyn(scoreTexturePathList[e], e, this.vyn));
+      t.push(this.$In(scoreTexturePathList[e], e, this.qIn));
     for (let e = 0; e < scoreBgTexturePathList.length; e++)
-      t.push(this.xyn(scoreBgTexturePathList[e], e, this.Myn));
+      t.push(this.$In(scoreBgTexturePathList[e], e, this.GIn));
     for (let e = 0; e < scoreNiagaraPathList.length; e++)
-      t.push(this.wyn(scoreNiagaraPathList[e], e, this.Syn));
-    t.push(this.iDn(SHADER_PATH)), await Promise.all(t);
+      t.push(this.YIn(scoreNiagaraPathList[e], e, this.NIn));
+    t.push(this.eUn(SHADER_PATH)), await Promise.all(t);
   }
-  async xyn(e, t, i) {
+  async $In(e, t, i) {
     const s = new CustomPromise_1.CustomPromise();
     return (
       ResourceSystem_1.ResourceSystem.LoadAsync(
@@ -175,7 +175,7 @@ class RogueScoreUnit extends HudUnitBase_1.HudUnitBase {
       s.Promise
     );
   }
-  async wyn(e, t, i) {
+  async YIn(e, t, i) {
     const s = new CustomPromise_1.CustomPromise();
     return (
       ResourceSystem_1.ResourceSystem.LoadAsync(
@@ -189,14 +189,14 @@ class RogueScoreUnit extends HudUnitBase_1.HudUnitBase {
       s.Promise
     );
   }
-  async iDn(e) {
+  async eUn(e) {
     const t = new CustomPromise_1.CustomPromise();
     return (
       ResourceSystem_1.ResourceSystem.LoadAsync(
         e,
         UE.MaterialParameterCollection,
         (e) => {
-          (this.ort = e), t.SetResult();
+          (this.Cnt = e), t.SetResult();
         },
         103,
       ),
@@ -206,35 +206,35 @@ class RogueScoreUnit extends HudUnitBase_1.HudUnitBase {
   OnStart() {
     Log_1.Log.CheckDebug() &&
       Log_1.Log.Debug("Battle", 18, "[RogueScoreUnit]OnStart"),
-      (this.EPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem)),
-      (this.cyn = this.GetTexture(0)),
-      (this.myn = this.cyn
-        .GetOwner()
-        .GetComponentByClass(UE.UITextureTransitionComponent.StaticClass())),
-      (this.dyn = this.GetTexture(1)),
-      (this.Cyn = this.dyn
-        .GetOwner()
-        .GetComponentByClass(UE.UITextureTransitionComponent.StaticClass())),
-      (this.gyn = this.GetUiNiagara(2));
+      (this.SPe = new LevelSequencePlayer_1.LevelSequencePlayer(this.RootItem)),
+      (this.UIn = this.GetTexture(0)),
+      (this.AIn = this.UIn.GetOwner().GetComponentByClass(
+        UE.UITextureTransitionComponent.StaticClass(),
+      )),
+      (this.PIn = this.GetTexture(1)),
+      (this.xIn = this.PIn.GetOwner().GetComponentByClass(
+        UE.UITextureTransitionComponent.StaticClass(),
+      )),
+      (this.wIn = this.GetUiNiagara(2));
     for (let e = 3; e <= 8; e++) {
       var t = this.GetItem(e);
-      this.Gyt.push(t);
+      this.XIt.push(t);
     }
-    this.uyn.SetUpdateCallback(this.Lyn, this.syn);
+    this.RIn.SetUpdateCallback(this.HIn, this.yIn);
   }
   OnBeforeDestroy() {
-    this.EPe.Clear(), (this.EPe = void 0);
+    this.SPe.Clear(), (this.SPe = void 0);
   }
   async OnShowAsyncImplementImplement() {
-    (this.Eyn = !0),
-      await this.EPe.PlaySequenceAsync(
+    (this.OIn = !0),
+      await this.SPe.PlaySequenceAsync(
         "Start",
         new CustomPromise_1.CustomPromise(),
       ),
-      (this.Eyn = !1);
+      (this.OIn = !1);
   }
   async OnBeforeHideAsync() {
-    await this.EPe.PlaySequenceAsync(
+    await this.SPe.PlaySequenceAsync(
       "Close",
       new CustomPromise_1.CustomPromise(),
     );
@@ -249,89 +249,89 @@ class RogueScoreUnit extends HudUnitBase_1.HudUnitBase {
           ["score", e],
           ["level", t?.Level],
         ),
-      this.uyn.UpdateTargetScore(e, t));
+      this.RIn.UpdateTargetScore(e, t));
   }
-  Dyn(e) {
-    e = this.vyn[e - 1];
-    this.cyn.SetTexture(e),
-      this.myn?.SetAllStateTexture(e),
-      this.cyn.SetSizeFromTexture();
+  jIn(e) {
+    e = this.qIn[e - 1];
+    this.UIn.SetTexture(e),
+      this.AIn?.SetAllStateTexture(e),
+      this.UIn.SetSizeFromTexture();
   }
-  Ryn(e) {
-    var t = this.Myn[e - 1];
-    this.dyn.SetTexture(t),
-      this.Cyn?.SetAllStateTexture(t),
-      this.dyn.SetSizeFromTexture(),
-      this.dyn.SetCustomMaterialVectorParameter(
+  WIn(e) {
+    var t = this.GIn[e - 1];
+    this.PIn.SetTexture(t),
+      this.xIn?.SetAllStateTexture(t),
+      this.PIn.SetSizeFromTexture(),
+      this.PIn.SetCustomMaterialVectorParameter(
         fillColor,
         fillColorList[e - 1],
       ),
-      this.dyn.SetCustomMaterialVectorParameter(
+      this.PIn.SetCustomMaterialVectorParameter(
         flowColorA,
         flowColorListA[e - 1],
       ),
-      this.dyn.SetCustomMaterialVectorParameter(
+      this.PIn.SetCustomMaterialVectorParameter(
         flowColorB,
         flowColorListB[e - 1],
       );
   }
-  Ayn(e) {
+  KIn(e) {
     var e = scoreNiagaraIndexList[e - 1];
-    this.fyn !== e &&
-      ((this.fyn = e),
-      (e = this.Syn[e]),
-      this.gyn.SetNiagaraSystem(e),
-      this.gyn.ActivateSystem(!0));
+    this.BIn !== e &&
+      ((this.BIn = e),
+      (e = this.NIn[e]),
+      this.wIn.SetNiagaraSystem(e),
+      this.wIn.ActivateSystem(!0));
   }
-  Uyn(e) {
+  QIn(e) {
     e -= 1;
-    this.pyn !== e &&
-      (0 <= this.pyn && this.Gyt[this.pyn].SetUIActive(!1),
-      0 <= e && this.Gyt[e].SetUIActive(!0),
-      (this.pyn = e));
+    this.bIn !== e &&
+      (0 <= this.bIn && this.XIt[this.bIn].SetUIActive(!1),
+      0 <= e && this.XIt[e].SetUIActive(!0),
+      (this.bIn = e));
   }
-  Jzi(e, t) {
+  XZi(e, t) {
     (ModelManager_1.ModelManager.BattleScoreModel.RougeScoreMusicState.State =
       musicStateList[e]),
       t
         ? AudioSystem_1.AudioSystem.PostEvent("play_ui_rogue_combo")
         : AudioSystem_1.AudioSystem.PostEvent("play_ui_rogue_combo_down");
   }
-  Pyn(e) {
-    this.Eyn || this.EPe.PlaySequencePurely(sequenceNameList[e - 1]);
+  XIn(e) {
+    this.OIn || this.SPe.PlaySequencePurely(sequenceNameList[e - 1]);
   }
-  Unt(e) {
-    this.dyn.SetCustomMaterialScalarParameter(filledAmount, e);
+  Fst(e) {
+    this.PIn.SetCustomMaterialScalarParameter(filledAmount, e);
   }
-  tDn(e) {
-    this.ort &&
+  ZRn(e) {
+    this.Cnt &&
       UE.KismetMaterialLibrary.SetScalarParameterValue(
         GlobalData_1.GlobalData.GameInstance.GetWorld(),
-        this.ort,
+        this.Cnt,
         rgbSplitProgress,
         e,
       );
   }
   Tick(e) {
     if (this.GetVisible()) {
-      if ((this.uyn.Tick(e), this.yyn)) {
-        let e = Time_1.Time.Now - this.Tyn,
-          t = (e >= UP_ANIM_TIME && ((e = UP_ANIM_TIME), (this.yyn = !1)), 0);
+      if ((this.RIn.Tick(e), this.kIn)) {
+        let e = Time_1.Time.Now - this.VIn,
+          t = (e >= UP_ANIM_TIME && ((e = UP_ANIM_TIME), (this.kIn = !1)), 0);
         t =
           e < HALF_UP_ANIM_TIME
             ? e / HALF_UP_ANIM_TIME
             : (UP_ANIM_TIME - e) / (UP_ANIM_TIME - HALF_UP_ANIM_TIME);
-        var i = this.Iyn.GetCurrentValue(t);
-        this.dyn.SetCustomMaterialScalarParameter(globalInt, 0.1 + 0.9 * i);
+        var i = this.FIn.GetCurrentValue(t);
+        this.PIn.SetCustomMaterialScalarParameter(globalInt, 0.1 + 0.9 * i);
       }
-      0 < this.eDn &&
-        ((this.eDn -= e),
-        this.eDn <= 0
-          ? this.tDn(0)
-          : ((i = this.Iyn.GetCurrentValue(this.eDn / UP_EFFECT_TIME)),
-            this.tDn(i)));
+      0 < this.zRn &&
+        ((this.zRn -= e),
+        this.zRn <= 0
+          ? this.ZRn(0)
+          : ((i = this.FIn.GetCurrentValue(this.zRn / UP_EFFECT_TIME)),
+            this.ZRn(i)));
     }
   }
 }
-(exports.RogueScoreUnit = RogueScoreUnit).ght = void 0;
+(exports.RogueScoreUnit = RogueScoreUnit).Ult = void 0;
 //# sourceMappingURL=RogueScoreUnit.js.map

@@ -9,17 +9,17 @@ const Log_1 = require("../../../Core/Common/Log"),
   ConfigBase_1 = require("../../../Core/Framework/ConfigBase");
 class InstanceDungeonConfig extends ConfigBase_1.ConfigBase {
   constructor() {
-    super(...arguments), (this.tai = new Map());
+    super(...arguments), (this.thi = new Map());
   }
-  iai(e) {
-    let n = this.tai.get(e);
+  ihi(e) {
+    let n = this.thi.get(e);
     return (
       n ||
         ((n = new Array()),
         (n = Array.from(this.GetConfig(e).RecommendLevel)).sort(
           (e, n) => e[0] - n[0],
         ),
-        this.tai.set(e, n)),
+        this.thi.set(e, n)),
       n
     );
   }
@@ -71,7 +71,7 @@ class InstanceDungeonConfig extends ConfigBase_1.ConfigBase {
     return this.GetConfig(e).EnterConditionText ?? void 0;
   }
   GetRecommendLevel(e, n) {
-    e = this.iai(e);
+    e = this.ihi(e);
     if (!e)
       return (
         Log_1.Log.CheckError() &&

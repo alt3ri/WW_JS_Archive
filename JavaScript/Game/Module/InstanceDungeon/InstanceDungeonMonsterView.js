@@ -10,13 +10,13 @@ const ue_1 = require("ue"),
 class InstanceDungeonMonsterView extends UiViewBase_1.UiViewBase {
   constructor() {
     super(...arguments),
-      (this.MPr = 0),
-      (this.Mhi = void 0),
-      (this.Hli = void 0),
-      (this.jli = () => {
+      (this.yyn = 0),
+      (this.Mli = void 0),
+      (this.H1i = void 0),
+      (this.j1i = () => {
         return new InstanceDungeonMonsterGrid_1.InstanceDungeonMonsterGrid();
       }),
-      (this.jhi = () => {
+      (this.jli = () => {
         return new TowerElementItem_1.TowerElementItem();
       });
   }
@@ -29,32 +29,32 @@ class InstanceDungeonMonsterView extends UiViewBase_1.UiViewBase {
     ];
   }
   OnStart() {
-    (this.MPr = this.OpenParam),
+    (this.yyn = this.OpenParam),
       this.GetText(0).ShowTextNew(
-        ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(this.MPr)
+        ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(this.yyn)
           .MonsterTips,
       ),
-      (this.Hli = new GenericLayout_1.GenericLayout(
+      (this.H1i = new GenericLayout_1.GenericLayout(
         this.GetGridLayout(1),
-        this.jli,
+        this.j1i,
       )),
-      (this.Mhi = new GenericLayout_1.GenericLayout(
+      (this.Mli = new GenericLayout_1.GenericLayout(
         this.GetHorizontalLayout(3),
-        this.jhi,
+        this.jli,
       ));
   }
   OnBeforeShow() {
     var e = ConfigManager_1.ConfigManager.InstanceDungeonConfig.GetConfig(
-      this.MPr,
+      this.yyn,
     );
-    this.Hli.RefreshByData(e.MonsterPreview),
+    this.H1i.RefreshByData(e.MonsterPreview),
       0 < e.RecommendElement?.length
         ? (this.GetItem(2)?.SetUIActive(!0),
-          this.Mhi.RefreshByData(e.RecommendElement))
+          this.Mli.RefreshByData(e.RecommendElement))
         : this.GetItem(2)?.SetUIActive(!1);
   }
   OnBeforeDestroy() {
-    this.Hli.ClearChildren();
+    this.H1i.ClearChildren();
   }
 }
 exports.InstanceDungeonMonsterView = InstanceDungeonMonsterView;

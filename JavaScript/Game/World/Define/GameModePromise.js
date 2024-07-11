@@ -8,9 +8,9 @@ class GameModePromise {
   constructor() {
     (this.g8 = void 0),
       (this.d8 = void 0),
-      (this.Gpr = void 0),
+      (this.Bvr = void 0),
       (this.g8 = new Promise((e, o) => {
-        (this.d8 = e), (this.Gpr = o);
+        (this.d8 = e), (this.Bvr = o);
       }));
   }
   get Promise() {
@@ -21,7 +21,7 @@ class GameModePromise {
     GlobalData_1.GlobalData.Networking() && !Net_1.Net.IsServerConnected()
       ? ((o = "账号已经登出"),
         Log_1.Log.CheckError() && Log_1.Log.Error("World", 3, o),
-        this.Gpr(new Error(o)))
+        this.Bvr(new Error(o)))
       : this.d8(e);
   }
 }

@@ -43,7 +43,7 @@ class PreCreateEffect {
       (this.$pe = new Set()),
       (this.Ype = !0),
       (this.Jpe = (e, t) => {
-        e.GetEntityType() === Protocol_1.Aki.Protocol.HBs.Proto_Player &&
+        e.GetEntityType() === Protocol_1.Aki.Protocol.wks.Proto_Player &&
           (EventSystem_1.EventSystem.AddWithTarget(
             t.Entity,
             EventDefine_1.EEventName.AiHateAddOrRemove,
@@ -145,7 +145,7 @@ class PreCreateEffect {
   ove(e) {
     EntitySystem_1.EntitySystem.Get(e.EntityId)
       ?.GetComponent(0)
-      ?.GetEntityType() === Protocol_1.Aki.Protocol.HBs.Proto_Player
+      ?.GetEntityType() === Protocol_1.Aki.Protocol.wks.Proto_Player
       ? this.Wpe.Push(e)
       : (this.jpe.has(e.EntityId) ||
           this.jpe.set(e.EntityId, new Queue_1.Queue()),

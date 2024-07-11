@@ -18,37 +18,37 @@ class ItemController extends UiControllerBase_1.UiControllerBase {
   static OnAddEvents() {
     EventSystem_1.EventSystem.Add(
       EventDefine_1.EEventName.OnItemLock,
-      ItemController.Vmi,
+      ItemController.Vdi,
     ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnLoadingNetDataDone,
-        this.w4e,
+        this.Q5e,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnAddCommonItem,
-        ItemController.Kdi,
+        ItemController.KCi,
       ),
       EventSystem_1.EventSystem.Add(
         EventDefine_1.EEventName.OnAddWeaponItem,
-        ItemController.Qdi,
+        ItemController.QCi,
       );
   }
   static OnRemoveEvents() {
     EventSystem_1.EventSystem.Remove(
       EventDefine_1.EEventName.OnItemLock,
-      ItemController.Vmi,
+      ItemController.Vdi,
     ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnLoadingNetDataDone,
-        this.w4e,
+        this.Q5e,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnAddCommonItem,
-        ItemController.Kdi,
+        ItemController.KCi,
       ),
       EventSystem_1.EventSystem.Remove(
         EventDefine_1.EEventName.OnAddWeaponItem,
-        ItemController.Qdi,
+        ItemController.QCi,
       );
   }
   static OpenItemTipsByItemId(e, t = void 0) {
@@ -118,24 +118,24 @@ class ItemController extends UiControllerBase_1.UiControllerBase {
   void 0),
   (ItemController.LastItemHintAudioLevel = 0),
   (ItemController.IsPrintNoRewardReason = !1),
-  (ItemController.w4e = () => {
+  (ItemController.Q5e = () => {
     ModelManager_1.ModelManager.ItemModel.LoadGetItemConfigIdList();
   }),
-  (ItemController.Kdi = (e, t) => {
+  (ItemController.KCi = (e, t) => {
     var n = ModelManager_1.ModelManager.ItemModel,
-      e = e.Ekn;
+      e = e.J4n;
     n.IsGotItem(e) ||
       (0 !==
         ConfigManager_1.ConfigManager.ItemConfig.GetConfig(e)?.ObtainedShow &&
         (t && ItemController.AddNewItemTip(e), n.AddGetItemConfigIdList(e)));
   }),
-  (ItemController.Qdi = (e, t, n) => {
-    var e = e.Ekn,
+  (ItemController.QCi = (e, t, n) => {
+    var e = e.J4n,
       o = ModelManager_1.ModelManager.ItemModel;
     o.IsGotItem(e) ||
       (n && ItemController.AddNewItemTip(e), o.AddGetItemConfigIdList(e));
   }),
-  (ItemController.Vmi = (e, t) => {
+  (ItemController.Vdi = (e, t) => {
     t
       ? ScrollingTipsController_1.ScrollingTipsController.ShowTipsById(
           "ItemLockSuccess",
